@@ -1,0 +1,104 @@
+Makefiles
+--
+
+The chain of make includes for perl would be:
+
+lang/perl/Makefile - rules/targets specific to 'perl'
+lang/category.mk   - rules/targets common to all 'lang' packages
+gar.mk             - top level rules file
+gar.lib.mk         - top level targets
+gar.conf.mk        - global config
+gar.rc.mk          - user config
+gar.pkg.mk         - sysv packaging addon
+gar.common.mk      - common targets
+
+It's split up like that to be modular.  Once you know where certain
+things are, you don't have to go fishing everywhere to make a change
+to the build system.  In fact, users never need to touch the build
+system makefiles -- just the package makefile, and the rc makefile
+(which can also be $(HOME)/.garrc).
+
+Basically, the steps to add a new package are:
+
+1) Copy a subdir from an existing package of the same category.
+
+2) Edit the makefile:
+    a) update the description and blurb (I use freshmeat.net)
+    b) update MASTER_SITES to point to the source directory
+    c) update DISTFILES to point to the appropriate filename, if
+       necessary (if it's $(GARNAME)-$(GARVERSION).tar.gz like 90%
+       of all software, no changes are needed).
+
+3) Create a spec file using the old one as a template
+    a) Change the 'bitname' and 'pkgname' to be the software name
+       and package name respectively.
+    b) Update the copyright (either url or inline -- see examples)
+
+4) Add a reference to your '.gspec' file(s) to DISTFILES.
+
+5) Run 'make makesum' to update checksums
+6) Run 'make garchive' to cache the source locally
+7) Run 'make extract' to verify package config options, etc.
+
+8) Update Makefile CONFIGURE_ARGS with the flags you want to pass
+   to 'configure' (if appropriate):
+    a) Pass $(DIRPATHS) to set all --prefix,--libdir, etc. paths.
+    b) Use $(prefix), $(libdir), etc. to set individual paths.
+
+9) Try a build by running 'make'
+
+10) Problems? 'make clean && make extract', then edit the source,
+    and run 'make makepatch'.
+    a) copy work/`uname -p`.d/gar-base.diff to your 'files' dir,
+       add it to PATCHFILES in your Makefile.
+    b) Remake checksums to include your patch (make makesum).
+
+11) Ready to go?  Run 'make install' to build, configure, test,
+    install to a fake root (by default /tmp/a, but can be easily
+    changed), and execute 'mkpackage' on any .gspec files that are
+    part of your distribution.
+
+12) At this point, I usually hand tune my prototype and depends, add
+    in pre/post install/remove scripts, etc.  and move these files
+    into the 'files' subdir of my package.  I then add references to
+    these files in DISTFILES, and rebuild my checksums.
+
+Now that I've put in this new package, I can always go in and add
+new patches, change packaging slightly, etc. but most of the work
+is done, and is completely repeatable.
+
+A relatively complex example is the server/apache2.  It builds four
+packages out of one source, and has a lot of supplemental files to
+deal with.  utils/subversion is another good example, with a couple
+of packages built from the source, plus some patches and a bunch of
+custom targets.
+
+When you execute a 'make', GAR attempts to run a set of hook targets
+which packages can take advantage of.  Nearly every stage has a
+pre- and post- target to take advantage of.  Running 'make install'
+executes:
+
+pre-everything
+pre-fetch fetch post-fetch
+pre-checksum checksum post-checksum
+pre-extract extract post-extract
+pre-patch patch post-patch
+pre-configure configure post-configure
+pre-build build post-build
+pre-test test post-test
+pre-package-timestamp
+pre-install install install-license strip post-install
+pre-package package post-package
+post-everything
+
+Only the pre/post targets that need to be managed need to be
+defined.  Most of the packages I have don't define a single custom
+target.  Subversion uses the post-install hook to build all of the
+supplemental targets, such as the language bindings.
+
+The main logic that drives the .gspec files is in bin/mkpackage.
+It has reasonably complete and up to date documentation, so anyone
+can run 'perldoc' on it to get a better idea how the spec files
+are handled.  The environment setup and mkpackage invocation for the
+build system is in gar.pkg.mk.
+

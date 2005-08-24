@@ -1,0 +1,27 @@
+--- XML-SAX-0.12.orig/Makefile.PL	2002-01-21 13:32:59.000000000 -0800
++++ XML-SAX-0.12/Makefile.PL	2004-01-03 17:30:20.185124000 -0800
+@@ -9,20 +9,17 @@
+     },    
+ );
+ 
+-sub MY::install {
++sub MY::pure_install {
+     package MY;
+-    my $script = shift->SUPER::install(@_);
+-    if (ExtUtils::MakeMaker::prompt("Do you want XML::SAX to alter ParserDetails.ini?", "Y") =~ /^y/i) {
+-        $script =~ s/install :: (.*)$/install :: $1 install_sax_pureperl/m;
+-        $script .= <<"INSTALL";
++    my $script = shift->SUPER::pure_install(@_);
++       $script =~ s/pure_install :: (.*)$/pure_install :: $1 install_sax_pureperl/m;
++       $script .= <<"INSTALL";
+ 
+ install_sax_pureperl :
+ \t\@\$(PERL) -MXML::SAX -e "XML::SAX->add_parser(q(XML::SAX::PurePerl))->save_parsers()"
+ 
+ INSTALL
+ 
+-    }
+-
+     return $script;
+ }
+ 

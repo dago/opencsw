@@ -1,0 +1,39 @@
+GARNAME = clearsilver
+GARVERSION = 0.9.14
+CATEGORIES = utils
+
+DESCRIPTION = Language-neutral HTML template system
+define BLURB
+  Clearsilver is a fast, powerful, and language-neutral HTML template system.
+  In both static content sites and dynamic HTML applications, it provides a
+  separation between presentation code and application logic which makes
+  working with your project easier.
+endef
+
+MASTER_SITES = http://www.clearsilver.net/downloads/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWclearsilver.gspec
+
+# Remove hardcoded gcc references
+PATCHFILES += ccbuild.diff
+# Switch off __PRETTY_FUNCTION__ when not using GCC
+PATCHFILES += pretty_function.diff
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-python=$(bindir)/python
+CONFIGURE_ARGS += --with-perl=$(bindir)/perl
+CONFIGURE_ARGS += --with-ruby=$(bindir)/ruby
+CONFIGURE_ARGS += --with-java=/usr/j2se
+CONFIGURE_ARGS += --enable-gettext
+
+# No c-sharp at the moment
+CONFIGURE_ARGS += --disable-csharp
+# Module requires apache 1.3.x
+CONFIGURE_ARGS += --disable-apache
+
+ENABLE_TEST = 0
+
+include ../category.mk
+
+LIBS += -lintl
+export LIBS

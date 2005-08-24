@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru SVN-Mirror-0.55.orig/Makefile.PL SVN-Mirror-0.55/Makefile.PL
+--- SVN-Mirror-0.55.orig/Makefile.PL	2005-02-25 15:25:10.281374000 -0800
++++ SVN-Mirror-0.55/Makefile.PL	2005-02-25 15:25:06.844896000 -0800
+@@ -16,13 +16,13 @@
+         'Term::ReadKey' => '0',
+         'SVN::Simple::Edit' => '0',
+ );
+-features(
+-    'VCP support' => [
+-	-default => 0,
+-        'VCP' => '0.9',
+-        (($^O eq 'MSWin32') ? 'Win32API::GUID' : 'Data::UUID') => 0,
+-    ],
+-);
++#features(
++#    'VCP support' => [
++#	-default => 0,
++#        'VCP' => '0.9',
++#        (($^O eq 'MSWin32') ? 'Win32API::GUID' : 'Data::UUID') => 0,
++#    ],
++#);
+ 
+ include('ExtUtils::AutoInstall');
+ auto_install();

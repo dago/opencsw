@@ -1,0 +1,4 @@
+%var       bitname pm_mimelite
+%var       pkgname CSWpmmimelite
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright url file://%{WORKSRC}/COPYING

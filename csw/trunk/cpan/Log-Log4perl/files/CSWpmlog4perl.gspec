@@ -1,0 +1,4 @@
+%var       bitname pm_log4perl
+%var       pkgname CSWpmlog4perl
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright url file://%{WORKSRC}/LICENSE

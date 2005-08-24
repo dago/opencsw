@@ -1,0 +1,11 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWgcrypt libgcrypt - GNU libcrypt
+P CSWggettext ggettext - GNU gettext
+P CSWgpgerr libgpg_error - GNU gpg related library
+P CSWiconv libiconv - GNU iconv library
+P CSWlibxml2 libxml2 - Xml parser library
+P CSWlibxslt libxslt - XSLT engine for the XML Toolkit
+P CSWzlib zlib - Zlib Data Compression Library
+P SUNWcar Core Architecture, (Root)
+P SUNWcslr Core Solaris Libraries (Root)
+P SUNWlibmsr Math & Microtasking Libraries (Root)

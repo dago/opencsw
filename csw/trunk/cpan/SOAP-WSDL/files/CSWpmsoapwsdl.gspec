@@ -1,0 +1,8 @@
+%var     bitname pm_soapwsdl
+%var     pkgname CSWpmsoapwsdl
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright
+(c) 2004 Martin Kutter
+
+This library is free software, you can use it under the same
+terms as perl itself.

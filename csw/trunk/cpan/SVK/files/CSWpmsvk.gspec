@@ -1,0 +1,4 @@
+%var     bitname pm_svk
+%var     pkgname CSWpmsvk
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright

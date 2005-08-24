@@ -1,0 +1,16 @@
+GARNAME = PerlIO-via-dynamic
+GARVERSION = 0.11
+CATEGORIES = cpan
+AUTHOR = CLKAO
+GARCH = all
+
+DESCRIPTION = dynamic PerlIO layers
+define BLURB
+  PerlIO::via::dynamic is used for creating dynamic PerlIO layers. It is
+  useful when the behavior or the layer depends on variables. You should not
+  use this module as via layer directly (ie :via(dynamic)).
+endef
+
+DISTFILES += CSWpmperlioviadyn.gspec
+
+include ../category.mk

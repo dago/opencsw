@@ -1,0 +1,7 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWapache2 apache2 - Apache 2.0 web server
+P CSWgdbm gdbm - GNU dbm
+P CSWpcre pcre - Perl-compatible regular expression library
+P SUNWcar Core Architecture, (Root)
+P SUNWcslr Core Solaris Libraries (Root)
+P SUNWlibmsr Math & Microtasking Libraries (Root)

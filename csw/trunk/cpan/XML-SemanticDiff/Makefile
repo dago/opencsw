@@ -1,0 +1,18 @@
+GARNAME = XML-SemanticDiff
+GARVERSION = 0.95
+CATEGORIES = cpan
+AUTHOR = KHAMPTON
+GARCH = all
+
+DESCRIPTION = extension for comparing XML documents.
+define BLURB
+  XML::SematicDiff provides a way to compare the contents and structure of two
+  XML documents. By default, it returns a list of hashrefs where each hashref
+  describes a single difference between the two docs.
+endef
+
+DISTFILES += CSWpmxmlsemdiff.gspec CSWpmxmlsemdiff.depend
+
+DEPENDS += cpan/libxml-perl
+
+include ../category.mk

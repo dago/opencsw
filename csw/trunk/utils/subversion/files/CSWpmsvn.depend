@@ -1,0 +1,17 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWapache2rt apache2rt - apache 2.0 runtime libraries
+P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
+P CSWexpat expat - XML Parser Toolkit
+P CSWgdbm gdbm - GNU dbm
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWoldap openldap - ldap clients,libraries and server
+P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
+P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWsvn subversion - Version control rethought
+P CSWswigplrt swigplrt - SWIG perl runtime library
+P CSWzlib zlib - Zlib Data Compression Library
+P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWkvm Core Architecture, (Kvm)
+P SUNWlibms Sun WorkShop Bundled shared libm
+P CSWperl perl - A high-level, general-purpose programming language

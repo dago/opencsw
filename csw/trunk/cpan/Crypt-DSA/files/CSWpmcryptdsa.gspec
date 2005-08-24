@@ -1,0 +1,8 @@
+%var       bitname pm_cryptdsa
+%var       pkgname CSWpmcryptdsa
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright
+Except where otherwise noted, Crypt::DSA is Copyright 2001
+Benjamin Trott. All rights reserved. Crypt::DSA is free
+software; you may redistribute it and/or modify it under
+the same terms as Perl itself.

@@ -1,0 +1,8 @@
+d none /opt/csw ? ? ?
+d none /opt/csw/bin ? ? ?
+f none /opt/csw/bin/vim-minimal=$basedir/opt/csw/bin/vim-minimal 0755 root bin
+s none /opt/csw/bin/ex=vim-minimal
+s none /opt/csw/bin/view=vim-minimal
+s none /opt/csw/bin/rview=vim-minimal
+f none /opt/csw/bin/vimdiff-minimal=$basedir/opt/csw/bin/vim-minimaldiff 0755 root bin
+f none /opt/csw/bin/xxd=$basedir/opt/csw/bin/xxd 0755 root bin

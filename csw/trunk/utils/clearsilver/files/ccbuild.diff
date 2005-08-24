@@ -1,0 +1,62 @@
+diff --speed-large-files --minimal -Nru clearsilver-0.9.14.orig/dso/Makefile clearsilver-0.9.14/dso/Makefile
+--- clearsilver-0.9.14.orig/dso/Makefile	2005-06-02 22:38:58.068006000 -0700
++++ clearsilver-0.9.14/dso/Makefile	2005-06-02 22:37:57.227002000 -0700
+@@ -17,7 +17,7 @@
+ all: $(TARGETS)
+ 
+ $(NEO_SO): $(NEO_STATIC_LIBS) $(DEP_LIBS) Makefile 
+-	 /usr/bin/ld  -rpath ../libs -shared -o libneo.so -whole-archive ../libs/libneo_cgi.a ../libs/libneo_cs.a ../libs/libneo_utl.a -no-whole-archive $(LIBS)
++	 ld  -rpath ../libs -shared -o libneo.so -whole-archive ../libs/libneo_cgi.a ../libs/libneo_cs.a ../libs/libneo_utl.a -no-whole-archive $(LIBS)
+ 
+ #	$(LDSHARED) -o $@ $(LDFLAGS) -Wl,-whole-archive $(DLIBS)
+ 
+@@ -26,7 +26,7 @@
+ 	$(INSTALL) $(TARGETS) $(DESTDIR)$(PYTHON_SITE)
+ 
+ dsotest: dsotest.c $(NEO_SO)
+-	gcc -o dsotest dsotest.c -lneo -L. -I..
++	$(CC) -o dsotest dsotest.c -lneo -L. -I..
+ 
+ clean:
+ 	$(RM) *.o 
+diff --speed-large-files --minimal -Nru clearsilver-0.9.14.orig/rules.mk.in clearsilver-0.9.14/rules.mk.in
+--- clearsilver-0.9.14.orig/rules.mk.in	2005-06-02 22:38:58.061869000 -0700
++++ clearsilver-0.9.14/rules.mk.in	2005-06-02 22:38:41.227929000 -0700
+@@ -73,13 +73,13 @@
+ PERL	   = @PERL@
+ RUBY       = @RUBY@
+ 
+-CFLAGS     = @CFLAGS@ -Wall -I$(NEOTONIC_ROOT) @CPPFLAGS@
++CFLAGS     = @CFLAGS@ -I$(NEOTONIC_ROOT) @CPPFLAGS@
+ CPPFLAGS   = -I$(NEOTONIC_ROOT) @CPPFLAGS@
+ OUTPUT_OPTION = -o $@
+ LD         = $(CC) -o
+ LDFLAGS    = -L$(LIB_DIR) @LDFLAGS@
+-LDSHARED   = $(CC) -shared -fPic
+-CPPLDSHARED   = $(CPP) -shared -fPic
++LDSHARED   = $(CC) -KPIC
++CPPLDSHARED   = $(CPP) -KPIC
+ AR         = @AR@ cr
+ RANLIB     = @RANLIB@
+ DEP_LIBS   = $(DLIBS:-l%=$(LIB_DIR)lib%.a)
+@@ -93,7 +93,7 @@
+ 
+ ## I don't really feel like writing a configure thing for this yet
+ ifeq ($(OSNAME),SunOS)
+-LDSHARED   = ld -G -fPIC
++LDSHARED   = ld -G -FPIC
+ endif
+ 
+ ## --------------win32 options
+@@ -141,8 +141,9 @@
+ 	@echo "** OSNAME: $(OSTYPE)"
+ 	@rm -f Makefile.depends
+ 	@touch Makefile.depends
+-	@for II in `$(LS) -1 *.c`; do \
+-		gcc -M -MG ${CFLAGS} $$II >> Makefile.depends; \
++	@for II in "" $(wildcard *.c) ; do \
++		test -z "$$II" && continue ; \
++		$(CC) -xM ${CFLAGS} $$II >> Makefile.depends; \
+ 	done;
+ 	@echo "** (done) "
+ 

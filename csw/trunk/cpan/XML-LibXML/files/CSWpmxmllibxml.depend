@@ -1,0 +1,5 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmlibxml2com pm_libxml2com - routines and constants common for XML::LibXML and XML::GDOME
+P CSWpmxmlnssupp pm_xmlnssupp - a simple generic namespace support class
+P CSWpmxmlsax pm_xmlsax - Simple API for XML

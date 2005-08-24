@@ -1,0 +1,86 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+
+# Enable the perl module
+chroot $PKG_INSTALL_ROOT \
+    $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n perl mod_perl.so
+
+# Add a configuration sample
+if [ -z "`grep 'IfModule mod_perl.c' $AP2_CONFIG`" ]; then
+    cp $AP2_CONFIG $AP2_CONFIG.pre-MP2
+
+    echo "Adding mod_perl configuration to $AP2_CONFIG..."
+    cat <<CONFIG >> $AP2_CONFIG
+
+# Added by $PKGINST
+<IfModule mod_perl.c>
+    PerlSwitches -wT
+    PerlRequire /opt/csw/apache2/etc/startup.pl
+
+    Alias /cgi-perl/ /opt/csw/apache2/share/cgi-perl/
+    <Location /cgi-perl/>
+        SetHandler perl-script
+        PerlResponseHandler ModPerl::Registry
+        PerlOptions +ParseHeaders
+        Options +ExecCGI
+    </Location>
+
+    <Location /perl-status>
+        SetHandler perl-script
+        PerlHandler Apache2::Status
+        Order allow,deny
+        Deny from all
+        Allow from 127.0.0.1
+    </Location>
+</IfModule>
+CONFIG
+
+else
+    echo "Fixing references to Apache:: handlers in existing config..."
+    cp $AP2_CONFIG $AP2_CONFIG.pre-MP2.RC5
+    sed -e 's,Apache::,Apache2::,g' \
+        $AP2_CONFIG.pre-MP2.RC5 > $AP2_CONFIG
+fi
+
+# Create the startup script
+AP2_STARTUP="$AP2_CONFDIR/startup.pl"
+if [ ! -f "$AP2_STARTUP" ]; then
+    echo "Copying mod_perl startup script..."
+    cp $AP2_STARTUP.CSW $AP2_STARTUP
+    chmod 555 $AP2_STARTUP
+else
+    echo "Fixing references to Apache:: in existing startup script..."
+    cp $AP2_STARTUP $AP2_STARTUP.pre-MP2.RC5
+    sed -e 's,Apache::,Apache2::,g' \
+        -e 's,use Apache2 .*$,,g'   \
+        $AP2_STARTUP.pre-MP2.RC5 > $AP2_STARTUP
+fi
+
+# Finito
+cat <<END
+
+NOTICE: mod_perl is enabled in $AP2_CONFIG
+but the server was not restarted.  Standard modules are pre-loaded
+in the $AP2_STARTUP
+script.  Please examine your mod_perl configuration and restart
+apache.
+
+WARNING: mod_perl2 has undergone an API name change in the transition
+from RC4 to RC5.  Any handlers which use mod_perl2 features in the
+Apache:: namespace need to be modified to use the Apache2:: namespace.
+If you have existing Apache:: handlers defined in an existing
+httpd.conf, the post-install procedure of this package has already
+fixed your namespace references.  Likewise, any Apache:: modules
+loaded in the startup.pl script were also modified during
+post-install.
+
+END

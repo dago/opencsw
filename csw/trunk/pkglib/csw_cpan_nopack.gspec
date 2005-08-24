@@ -1,0 +1,4 @@
+%include url file://%{GARDIR}/pkglib/csw_vars.gspec
+%include url file://%{GARDIR}/pkglib/csw_prototype.gspec
+%pkginfo url file://%{GARDIR}/pkglib/csw/pkginfo
+%depend  url file://%{GARDIR}/pkglib/csw/depend.perl

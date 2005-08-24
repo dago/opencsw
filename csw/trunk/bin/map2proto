@@ -1,0 +1,15 @@
+#!/opt/csw/bin/perl -lw
+#
+# $Id: map2proto 1084 2005-04-15 16:31:39Z comand $
+# $URL: http://cryptic.sfbay:5957/svn/csw/bin/map2proto $
+#
+# map2proto - turn a pkgmap into a prototype
+#
+
+use strict;
+
+while (<>) {
+    chomp ; my @F = split;
+    next unless @F > 3;
+    print join(" ", ($F[1] =~ /f|d|i/) ? @F[1..$#F-3] : @F[1..$#F]);
+}

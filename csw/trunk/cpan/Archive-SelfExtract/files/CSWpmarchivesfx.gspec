@@ -1,0 +1,8 @@
+%var     bitname pm_archivesfx
+%var     pkgname CSWpmarchivesfx
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright
+Copyright 2004 Greg Fast (gdf@speakeasy.net)
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

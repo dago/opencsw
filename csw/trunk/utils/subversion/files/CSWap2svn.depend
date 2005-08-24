@@ -1,0 +1,10 @@
+I CSWap2-svn ap2_subversion - subversion module for apache 2.0
+P CSWcommon common - common files and dirs for CSW packages
+P CSWapache2 apache2 - Apache 2.0 web server
+P CSWap2prefork ap2_prefork - Apache 2.0 prefork MPM
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWsvn subversion - Version control rethought
+P CSWzlib zlib - Zlib Data Compression Library
+P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWkvm Core Architecture, (Kvm)

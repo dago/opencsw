@@ -1,0 +1,4 @@
+%var     bitname pm_extutcbuilder
+%var     pkgname CSWpmextutcbuilder
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright

@@ -1,0 +1,4 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmcgi pm_cgi - simple common gateway interface class
+P CSWpmhtmltemplate pm_htmltemplate - Perl module to use HTML Templates from CGI scripts

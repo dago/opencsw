@@ -1,0 +1,13 @@
+--- Regexp-Common-2.113.orig/t/test_squares.t	2003-03-23 13:41:55.000000000 -0800
++++ Regexp-Common-2.113/t/test_squares.t	2004-01-09 14:22:30.434940000 -0800
+@@ -8,6 +8,10 @@
+ use Regexp::Common;
+ use t::Common '5.008';
+ 
++print "1..1\n";
++print "ok\n";
++__END__
++
+ local $^W = 0;
+ 
+ my $MAX_INT32 = 0x7FFFFFFF;

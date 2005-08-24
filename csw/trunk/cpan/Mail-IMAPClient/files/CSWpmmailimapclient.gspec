@@ -1,0 +1,4 @@
+%var       bitname pm_mailimapclient
+%var       pkgname CSWpmmailimapclient
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright url file://%{WORKSRC}/Copying

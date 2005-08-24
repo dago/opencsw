@@ -1,0 +1,44 @@
+diff --speed-large-files --minimal -Nru mod_python-3.1.4.orig/configure.in mod_python-3.1.4/configure.in
+--- mod_python-3.1.4.orig/configure.in	2005-03-14 08:47:14.894392000 -0800
++++ mod_python-3.1.4/configure.in	2005-03-14 08:47:07.065512000 -0800
+@@ -28,6 +28,28 @@
+ AC_PROG_INSTALL
+ AC_PROG_MAKE_SET
+ 
++# check for --with-apxs
++AC_MSG_CHECKING(for --with-flex)
++AC_ARG_WITH(flex, [--with-flex=PATH 	Path to flex],
++[
++  if test -x "$withval"
++  then
++    AC_MSG_RESULT([$withval executable, good])
++    LEX=$withval
++  else
++    echo
++    AC_MSG_ERROR([$withval not found or not executable])
++  fi
++],
++AC_MSG_RESULT(no))
++
++if test -z "$LEX"; then
++    AC_PROG_LEX
++    if test -z "$LEX"; then
++        AC_MSG_ERROR([cannot locate flex])
++    fi
++fi
++
+ dnl Replace `main' with a function in -lm:
+ AC_CHECK_LIB(m, main)
+ 
+diff --speed-large-files --minimal -Nru mod_python-3.1.4.orig/src/Makefile.in mod_python-3.1.4/src/Makefile.in
+--- mod_python-3.1.4.orig/src/Makefile.in	2005-03-14 08:47:14.857497000 -0800
++++ mod_python-3.1.4/src/Makefile.in	2005-03-14 08:45:04.855728000 -0800
+@@ -21,7 +21,7 @@
+ MKDEP=@MKDEP@
+ 
+ # requires flex 2.5.31 for reentrant support
+-LEX=/usr/local/bin/flex
++LEX=@LEX@
+ INCLUDES=@INCLUDES@
+ LIBS=@LIBS@
+ LDFLAGS=@LDFLAGS@

@@ -1,0 +1,25 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmalgannotate pm_algorithmannotate - represent a series of changes in annotate form
+P CSWpmalgdiff pm_algorithmdiff - compute intelligent differences between two files/lists
+P CSWpmclone pm_clone - recursively copy Perl datatypes
+P CSWpmcompresszlib pm_compresszlib - Interface to zlib compression library
+P CSWpmdatahier pm_datahier - handle data in a hierarchical structure
+P CSWpmfiletype pm_filetype - determine file type using magic
+P CSWpmfreezethaw pm_freezethaw - converting Perl structures to strings and back.
+P CSWpmiodigest pm_iodigest - calculate digests while reading or writing
+P CSWpmlclemktxtlex pm_lclemktxtlex - use other catalog formats in Maketext
+P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
+P CSWpmperlioeol pm_perlioeol - PerlIO layer for normalizing line endings
+P CSWpmperlioviadyn pm_perlioviadyn - dynamic PerlIO layers
+P CSWpmperlioviasym pm_perlioviasym - PerlIO layers for creating symlinks
+P CSWpmpodescapes pm_podescapes - %var bitname pm_podescapes
+P CSWpmpodsimple pm_podsimple - framework for parsing Pod
+P CSWpmregexpshellish pm_regexpshellish - shell-like regular expressions
+P CSWpmsvn pm_subversion - subversion perl language binding
+P CSWpmsvnmirror pm_svnmirror - mirror remote repository to local Subversion repository
+P CSWpmsvnsimple pm_svnsimple - a simple interface for driving svn delta editors
+P CSWpmtimedate pm_timedate - parse date strings into time values
+P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)
+P CSWpmyaml pm_yaml - YAML Aint Markup Language
+P CSWsvn subversion - Version control rethought

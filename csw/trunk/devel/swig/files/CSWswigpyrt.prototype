@@ -1,0 +1,6 @@
+d none /opt/csw ? ? ?
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libswigpy.so.0.0.0=$basedir/opt/csw/lib/libswigpy.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libswigpy.so.0=libswigpy.so.0.0.0
+s none /opt/csw/lib/libswigpy.so=libswigpy.so.0.0.0
+f none /opt/csw/lib/libswigpy.la=$basedir/opt/csw/lib/libswigpy.la 0755 root bin

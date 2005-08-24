@@ -1,0 +1,19 @@
+GARNAME = Sort-Versions
+GARVERSION = 1.5
+CATEGORIES = cpan
+AUTHOR = EDAVIS
+GARCH = all
+
+DESCRIPTION = a module for sorting of revision-like numbers.
+define BLURB
+  Sort::Versions allows easy sorting of mixed non-numeric and numeric strings,
+  like the 'version numbers' that many shared library systems and revision
+  control packages use. This is quite useful if you are trying to deal with
+  shared libraries. It can also be applied to applications that intersperse
+  variable-width numeric fields within text. Other applications can
+  undoubtedly be found.
+endef
+
+DISTFILES += CSWpmsortver.gspec
+
+include ../category.mk

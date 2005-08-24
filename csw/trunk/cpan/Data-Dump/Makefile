@@ -1,0 +1,17 @@
+GARNAME = Data-Dump
+GARVERSION = 1.06
+CATEGORIES = cpan
+AUTHOR = GAAS
+GARCH = all
+
+DESCRIPTION = pretty printing of data structures
+define BLURB
+  This module provides a single function called dump() that takes a list of
+  values as its argument and produces a string as its result. The string
+  contains Perl code that, when evaled, produces a deep copy of the original
+  arguments. The string is formatted for easy reading.
+endef
+
+DISTFILES += CSWpmdatadump.gspec
+
+include ../category.mk

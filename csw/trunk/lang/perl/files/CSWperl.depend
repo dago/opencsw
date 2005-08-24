@@ -1,0 +1,7 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWbdb3 berkeleydb3 - file based pseudo-database library
+P CSWgdbm gdbm - GNU dbm
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWlibms Sun WorkShop Bundled shared libm

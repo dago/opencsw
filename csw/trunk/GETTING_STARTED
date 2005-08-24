@@ -1,0 +1,539 @@
+# $Id: GETTING_STARTED 1249 2005-05-11 16:47:52Z comand $
+
+=head1 CSW Build System - Getting Started Guide
+
+=head2 Introduction
+
+The CSW build system was developed to manage large package builds with many
+inter-dependencies.  It is based on the GARNOME project
+[L<http://cipherfunk.org/garnome/>], which itself is based on the GAR ports
+system, developed for the Linux BBC (bootable business card) project
+[L<http://www.lnx-bbc.org/garchitecture.html>].  There is a great deal of
+information on the GAR Architecture home page, nearly all of which is relevant
+to the CSW build system.  There are some minor departures, as neither Linux
+BBC nor GARNOME are concerned with building packages, but the core build
+system is still very similar to the systems used in these two projects.
+
+The CSW build system is designed to store all of the information necessary to
+build and create Solaris packages in a single directory hierarchy.  Package
+inter-dependencies can be easily expressed, and are followed when doing bulk
+builds.  The system separates build management from package creation, with the
+bulk of package creation managed by a Perl script and simple package .spec
+files.  GNU make manages the build, using a I<cookie> system to track the
+progress of a build.
+
+This quick start guide will walk through the addition of a new package to the
+build system.  It is by no means an exhaustive guide for the build system.
+If you have any questions regarding the build system, or run into trouble when
+attempting something out of the ordinary, please contact me at
+comand@blastwave.org, or send a mail to the maintainers@lists.blastwave.org
+mailing list.
+
+=head2 Environment
+
+The first step is to set up your environment.  As the CSW system was developed
+using GNU tools named normally (e.g. without the 'g' prefix), it is necessary
+to create some custom links to ensure the correct tool versions can be picked
+up.  By default, the directory C<$(HOME)/bin> is placed near the start of the
+PATH.  This is well suited for soft linking the required 'g' prefixed
+utilities from /opt/csw/bin (or the bootstrap install directory, if
+appropriate) into a path you control.  The following utilities must be in the
+PATH for builds to work (real name in parens, where GNU tools should be
+soft linked to their non-prefix names):
+
+ make (gmake), tar (gtar), wget, md5sum (gmd5sum), grep (ggrep)
+ patch (gpatch), diff (gdiff), ln (gln), mv (gmv), cp (gcp)
+ bzip2, unzip, gzip, find (gfind), xargs (gxargs), install (ginstall),
+ perl
+
+=head2 Creating the Package Directory
+
+To get started, copy the gar.cswrc.mk file to your local home directory:
+
+ $ cp gar.cswrc.mk ~/.garrc
+
+Edit this file, adding your own name to C<SPKG_VENDOR>, email address in
+C<SPKG_EMAIL>, and other settings.  C<SPKG_EXPORT> is where built packages will
+be placed.  C<GARCHIVEDIR> is where to cache downloaded sources, and
+C<GARCHIVEPATH> is a space separated list of paths to look for cached software
+in.
+
+Once you have set up your own environment, the next step is to  Determine the
+correct package category.
+
+First, choose a category from the list:
+
+ apps        - Applications (e.g. trac)
+ cpan        - Perl modules from CPAN (e.g. IPC-Run)
+ devel       - Developent utilities (e.g. bison)
+ gnome       - GNOME applications/system (e.g. gaim)
+ lang        - Programming languages and support (e.g. perl)
+ lib         - Libraries (e.g. bdb)
+ net         - Network Utilities (e.g. curl)
+ server      - Network Servers (e.g. apache)
+ utils       - General Utilities (e.g. sudo)
+ xtra        - Extras (e.g. icon sets)
+
+Once you've determined the most appropriate category for your new
+package, copy the package template into the category directory, and configure
+the Makefile.
+
+ $ cp -R template apps/povray
+
+=head2 Setting up the Makefile
+
+Within the apps/povray subdirectory, there will be a Makefile, a 'files'
+directory, and a sample package spec.  Start with the Makefile.  The template
+Makefile looks like this:
+
+ GARNAME = PACKAGE
+ GARVERSION = 1.0
+ CATEGORIES = CATEGORY
+ 
+ DESCRIPTION = BRIEF DESCRIPTION
+ define BLURB
+   LONG DESCRIPTION
+ endef
+ 
+ MASTER_SITES =
+ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+ DISTFILES += CSWpackage.gspec
+ 
+ CONFIGURE_ARGS = $(DIRPATHS)
+ 
+ include ../category.mk
+
+C<GARNAME> is the name of the software, as it is downloaded from the source
+site.  For our Povray package, we should set:
+
+ GARNAME = povray
+
+As we want to build Povray version 3.6.1, we set C<GARVERSION> to:
+
+ GARVERSION = 3.6.1
+
+And to round out the header, we need to ensure the category is properly
+set:
+
+ CATEGORY = apps
+
+The C<DESCRIPTION> string will be used to construct the pkginfo C<NAME>
+variable during packaging.  The C<BLURB> is a free-form field which can be used
+to enter longer descriptions of the package -- it is typically filled with
+text from the 'About' section of the package's freshmeat.net entry.
+
+For Povray:
+
+ DESCRIPTION = A high-quality tool for creating 3D graphics
+ define BLURB
+   The Persistence of Vision Raytracer is a high-quality tool for creating 3D
+   graphics. It is available in official versions for Windows, Mac OS/Mac OS X,
+   and i86 Linux.  
+ endef
+
+=head2 Describing the Download
+
+Next, C<MASTER_SITES> needs to be set up.  This is a space separated path
+which may include file, http or ftp URLs.  Usually, most packages only require
+a single entry to C<MASTER_SITES>.  There are some predefined master sites to
+assist with common situations -- C<SF_MIRROR> is for SourceForge.net,
+C<CPAN_MIRROR> for CPAN modules, C<GNU_MIRROR> for GNU based software, and
+C<NGNU_MIRROR> for non-GNU projects hosted by GNU.  These mirror settings can
+be found near the bottom of the gar.conf.mk file in the csw root directory.
+
+For Povray, we need to set the single Povray source repo.  The primary
+download link for Povray is a redirect:
+
+ http://www.povray.org/redirect/www.povray.org/ftp/pub/povray/Official/Unix/povray-3.6.tar.gz
+
+Unraveling the redirect, we get the following path:
+
+ http://www.povray.org/ftp/pub/povray/Official/Unix/
+
+and file:
+
+ povray-3.6.1.tar.bz2
+
+In the Makefile, set:
+
+ MASTER_SITES = http://www.povray.org/ftp/pub/povray/Official/Unix/
+
+and:
+
+ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+
+The package template assumes .tar.gz extensions, but it is able to handle a
+wide variety of archive types.  Using tar.bz2 limits disk usage for the
+software cache (C<GARCHIVE>) and reduces download times for uncached software.
+
+The other template entry for C<DISTFILES> is for a .gspec file.  This is a
+package spec file which describes how to create Solaris packages.  For now,
+this file can be left in the C<DISTFILES> list.  We will configure it later
+when it's time to create our first Solaris package.
+
+In addition to the C<DISTFILES> variable, a C<PATCHFILES> variable is provided
+to deal explicitly with patches.  Custom patches should be stored in the
+C<files> directory.  Patches which can be downloaded via http and ftp URLs can
+also be included in the space separated patch list.  These patches will be
+automatically applied prior to the configure stage.
+
+=head2 Fetching Software
+
+Now that the basics of the software package are set up, it's time to download
+the software.  This can be done by invoking 'make fetch'.  This must be
+executed from a system with external network access.  If proxies are required,
+set the C<http_proxy> and/or C<ftp_proxy> environmental variables within your
+C<~/.garrc> file.  The system uses C<wget> to fetch software, and wget will
+respect these environmental variables.  Other access methods, including SOCKS,
+can be configured to allow external access.
+
+After a successful C<make fetch>, the package will be in the newly created
+C<download> directory within apps/povray.  The next step is to run C<make
+makesum>.  This creates a C<checksums> file in the apps/povray directory
+containing md5 sums for all files contained in the C<DISTFILES> and
+C<PATCHFILES> lists.  In this example, running C<make makesum> will result in
+a checksums file with the povray archive, and our template C<.gspec> file.
+Verify that the md5 sum of the file matches the source (most software will
+have md5 sums posted somewhere on the download site).  Once the checksum is
+created, it will be easy to tell if the source was tampered with in some way
+since your last download (e.g.  updated without changing versions, malicious
+tampering, etc).
+
+Next, to save bandwidth, we can cache the software in our C<GARCHIVE>
+directory.  Run C<make garchive> to copy any downloaded software.  Files which
+are included in the C<files> directory will not be cached in C<GARCHIVE>.
+Only files which were fetched from some remote location (file, ftp, http) will
+be cached.
+
+=head2 Configure the Software
+
+The next steps really don't involve the build system much.  This stage of the
+process involves determining how the package needs to be built, including
+configure arguments, environmental variables, compiler flags, etc.  For simple
+packages, nearly all of these are managed by the default template.
+
+The first step here is to extract the package.  To do this, run 'make
+extract'.  This extracts the downloaded archive into the subdirectory
+
+ work/`uname -p`.d/povray-3.6.1
+
+This step also copies any other C<DISTFILES> in the files directory into your
+C<work/`uname -p`.d> directory.  This directory can be referenced from the
+Makefile as C<$(WORKDIR)>.  The actual directory that Povray is extracted into
+is accessible via C<$(WORKSRC)>.  C<WORKSRC> is constructed as:
+
+ $(WORKDIR)/$(GARNAME)-$(GARVERSION)
+
+For povray, we do end up with the expected WORKSRC from the extraction of the
+package.  Some packages do not behave as expected, with regard to how the
+extract.  A situation that would require a change to WORKSRC would be a
+package which extracts into a version-less directory (e.g. povray-3.6.1.tar.bz2
+extracts into C<$(WORKDIR)/PovRay> instead of C<$(WORDIR)/povray-3.6.1>).  In
+these cases, C<WORKSRC> can be overridden in the Makefile.
+
+ NOTE: It is important that any overridable variables are set before the
+       'include' line for category.mk.  Any custom make rules need to be
+       defined after this include line.
+
+Now that the software is extracted, change into the WORKSRC directory and
+examine the package.  The package build procedure follows a well defined
+order:
+
+ configure
+ build
+ test
+ install/package
+
+ NOTE: install and package are interlinked.  Running an installation
+       assumes you are going to create a package, as time stamps must be
+       created before any files are copied.  After the initial install/package
+       is complete, it is then possible to re-run 'make package' to fine tune
+       packages.  More on this later.
+
+For each of the primary stages, there is an argument variable.  To pass
+arguments to the configure stage:
+
+CONFIGURE_ARGS = --with-foo --without-bar
+
+Passing arguments to other stages is less common, but possible with the
+variables:
+
+ BUILD_ARGS
+ TEST_ARGS
+ INSTALL_ARGS
+
+In general, the build system can handle most builds automatically (e.g. with
+no custom code to write).  In situations where certain stages cannot be
+handled by the automatic rules, use the *_SCRIPTS variables to set up custom
+rule sets.  For instance, to configure using a custom 'Configure' script
+provided by the package:
+
+ CONFIGURE_SCRIPTS = custom
+ 
+ include ../category.mk
+ 
+ configure-custom:
+     @echo "Custom installation here"
+     @$(MAKECOOKIE)
+
+ NOTE: The $(MAKECOOKIE) variable is a "canned command sequence" which
+       creates a tracking cookie in cookies/<uname -p>.d.  This means that
+       once a target is complete, the cookie will prevent it from being
+       re-run.  This enables large parallel builds from re-building dependency
+       packages.
+
+For povray, we don't need to do much.  The package is well behaved, and
+requires few arguments to build (the system allows for a lot of customization
+for packages that don't behave well).  In order to direct povray to install
+into /opt/csw instead of the default /usr/local, there are two options --
+direct everything to a pre-determined prefix, or direct individual directories
+to where they belong in /opt/csw.  The former is suitable for packages which
+need to be installed all into one directory.  BerkeleyDB is a good example,
+which would take a configuration argument like:
+
+ CONFIGURE_ARGS = --prefix=$(prefix)
+
+As Blastwave embodies some directory standards which are not upheld by some
+software installation routines, it is better to go with the latter for most
+packages.  This involves defining the following variable in the Makefile
+(which is defined in the default template):
+
+ CONFIGURE_ARGS = $(DIRPATHS)
+
+The C<DIRPATHS> variable expands to a list of configure options like
+C<--bindir> and C<--libdir>.  The full list of directories specified is near
+the top of gar.conf.mk.  Some software cannot handle all of the entries
+present in DIRPATHS, and will complain or altogether fail.  In these cases,
+the C<NODIRPATHS> variable can be set to a list of directories I<not> to
+include in C<DIRPATHS>.  For instance, to exclude the library and manual
+directories from the C<DIRPATHS> list:
+
+ NODIRPATHS = libdir mandir
+
+This is not necessary for Povray -- in fact, the default CONFIGURE_ARGS which
+come in the default template are sufficient for this package.
+
+=head2 Build the software
+
+Now that we've figured out how to fetch and configure the software, it's time
+to clean up and try a build.  From the apps/povray directory, run C<make
+clean> to clean up any cookies, sources, and other files laying around in the
+apps/povray directory.
+
+To ensure the package will actually build, prior to starting any work on
+packaging, run C<make build>.  This will run through the following steps and
+hooks:
+
+ pre-everything
+ pre-fetch fetch post-fetch
+ pre-checksum checksum post-checksum
+ pre-extract extract post-extract
+ pre-patch patch post-patch
+ pre-configure configure post-configure
+ pre-build build post-build
+ 
+Any of the pre- and post- steps above can be written into the package
+Makefile, if required.  These can be used to perform any special fix-ups that
+are required.  Povray, along with the vast majority of software, requires none
+of these hooks in order to build.
+
+The C<build> step will change directory into C<$(WORKDIR)> and run C<make>
+with the standard build environment.  Variables available to each stage are
+listed near the bottom of gar.conf.mk, in the C<STAGE_EXPORTS> variable.
+These will be set in the environment for the target Makefile (e.g. the
+Makefile distributed with Povray).
+
+If the build succeeds, it is time to install and package the software.  If the
+build fails for some reason, the build can be re-run as many times as
+necessary to get it to pass.  If changes to the package are required, patches
+can be created.
+
+=head2 Creating Patches
+
+Creating custom patches within the system is easy.  First, clean up the
+directory by running C<make clean>.  Ensure any changes you might have made
+are recorded somewhere before running this step.  Then, run C<make extract> to
+extract a fresh set of sources to the work directory.  Make any necessary
+modifications in this directory, but beware that running any scripts (like
+configure, or aclocal) that create files that were not present in the source
+package will result in large patches, possibly containing generated
+information which should not be in the patch.
+
+When all necessary changes are committed to the working source, run C<make
+makepatch> from the package top directory.  This will extract a fresh version
+of the source, and run a recursive diff between the two directories.  When
+this is complete, a new file C<gar-base.diff> will be present in the
+C<$(WORKDIR)>.  Move this file into C<files>, rename the patch to represent
+what it does (e.g. install-fix.diff), and add the patch name to the
+C<PATCHFILES> list in the Makefile.  Then, re-run C<make makesum> to update
+the checksums file for your new patch.
+
+ NOTE: The system is supposed to be able to move the patch from $(WORKDIR)
+       to the files directory automatically.  Due to a bug in one of the
+       GNU utilities, the last step of make patch will error.  This does
+       not affect the content of the patch at all.
+
+=head2 Creating the Spec
+
+Creating a .gspec file for your package is easy.  These are simple
+configuration files with few variables.  Specs have a built-in include system,
+which allows common information to be set in global files, with specific
+information within a package spec overriding variables it needs to change.
+
+Full documentation for .gspec files is available in the C<mkpackage> script,
+present in the csw/bin subdirectory.  Just run C<mkpackage --manual> to get a
+paginated man page, or run perldoc to get other formats (including HTML).
+
+The default .gspec file included in the template files directory contains the
+following:
+
+ %var       bitname package
+ %var       pkgname CSWpackage
+ %include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+ %copyright url file://%{WORKSRC}/LICENSE
+
+Each I<directive> starts with a C<%> character.  The C<bitname> is the name to
+be given to the Blastwave package (also known as the C<software name>).  The
+C<pkgname> is the name of the package (the pkginfo C<PKG> field).  The
+C<%include> line pulls in a gspec which defines commands for creating packages
+with dynamic dependencies.  This will scan all binaries in the installation
+directory and determine which packages provide these dependencies.  This will
+build the prototype and the depend file automatically.  The final
+C<%copyright> line provides a URL to what will be the package copyright
+notice.  In the case the copyright is embedded in a larger file, such as a
+Makefile or a README document, the copyright can be specified in-line as:
+
+ %copyright
+ Copyright 2005 Some Person, Inc.
+ All rights reserved.
+
+For POVray, the .gspec file would be renamed CSWpovray.gspec, and would
+contain the following lines:
+
+ %var       bitname povray
+ %var       pkgname CSWpovray
+ %include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+ %copyright url file://%{WORKSRC}/COPYING
+
+Once these changes are complete, update the Makefile with the new .gspec name,
+and re-run C<make makesum> to update the checksums file.
+
+=head2 Building the Package
+
+Once everything is set up, including the Makefile, patches, and spec file, it
+is time to build the package.  This is done by issuing the C<make install>
+command.  Running this when the package is already built runs the following
+steps and hooks:
+
+ pre-test test post-test
+ pre-package-timestamp
+ pre-install install post-install
+ pre-package package post-package
+
+Of the above pre/post steps, pre-package-timestamp is the only target that
+cannot be overridden.  It creates a cookie for you immediately before
+installing the software that is used to create the prototype.  Any files newer
+than the time stamp in the destination directory will be included in the
+prototype.  All other pre/post hooks are available for override.
+
+The test steps are controlled by two main variables.  When C<make test> is
+invoked, the system will run C<make test> within the C<WORKSRC> directory.  In
+the event the test target is called something other than I<test>, use the
+C<TEST_TARGET> variable to set the real target name.  For instance, most GNU
+software uses a C<check> target instead, so the following would cause C<make
+test> from the package directory to invoke C<make check> in the C<WORKSRC>:
+
+ TEST_TARGET = check
+
+In some cases, there is no test target available.  A large proportion of test
+software will have a test rule, but it may be empty.  Some packages do not
+include a test rule at all, so invoking C<make test> will cause a build
+failure.  In these cases, or in cases where tests are very time-consuming or
+require external support (e.g. running servers, network access), the tests can
+be disabled altogether by setting:
+
+ ENABLE_TEST = 0
+
+This will skip the pre-test, test, and post-test targets for this package.
+
+Once the test targets have executed, the system will create the time stamp, and
+begin installing into a fake root directory.  The top level variable
+C<DESTDIR> is set by the build system to support software which uses it.  Some
+packages require a small patch to get them to honor C<DESTDIR>.  This can be
+done by using the C<makepatch> target described above.  By default, C<DESTDIR>
+is set to /tmp/a.  This can be overridden in the C<~/.garrc>.  Ensure that
+this directory is cleaned up before starting the install process, if need be.
+
+To install and create packages, run C<make install>.  This will run the
+install target in C<WORKSRC> using the C<INSTALL_ENV> and C<INSTALL_ARGS>, if
+any, provided by the package Makefile.  Immediately before installing the
+files, the build system will create the time stamp cookie.  The gspec files
+which are included from C<pkglib> in the root directory of the build system
+use this cookie to locate files which were changed since the cookie was
+created (ctime).  The files are then installed to the C<DESTDIR>.
+
+When all files are installed, the package targets run.  The main package
+target, defined in the gar.pkg.mk make module, invokes C<mkpackage> to process
+any .gspec files present in the C<$(WORKDIR)>.  It is possible to provide more
+than one .gspec for a particular software package, in order to build more than
+one package out of the same source tree.  In this case, it is necessary to
+include custom prototype files for the process, one per package.  See the
+server/apache2 build configuration for a good example of how this is done.
+
+The .gspec files are processed as mini-scripts -- each admin file has a
+separate directive (e.g. C<%prototype>, C<%pkginfo>, ...).  Each directive can
+reference a file, URL, or executable.  When an executable is specified, the
+command can be a pipeline, which allows information to be transformed using
+purpose built scripts.
+
+A couple of key utilities to create package admin files are used by the build
+system.  For instance, the C<cswproto> script in csw/bin is used to create
+prototypes, using the install cookie as a reference time, and a list of paths
+included in CSWcommon.  The resulting prototype will fit the basic
+requirements for Blastwave package installation.
+
+The C<mkpackage> script will create the package, transfer it, name it
+according to Blastwave standards, compress it, and move it into the
+SPKG_EXPORT directory defined in C<~/.garrc>.  It then cleans up the spool
+directory, to ensure that the package can be re-created without any errors
+from pkgmk.
+
+If the package was not created successfully, the C<package> cookie will not be
+created, so running C<make package> after the installation completes will
+attempt the packaging.  Any package admin files generated since the first run
+will not be re-generated.  These can be removed from the work directory
+manually to force C<mkpackage> to regenerate them.
+
+If the package was created successfully, but did not contain the correct
+information, the package cookie needs to be removed before running C<make
+package> again.  Be sure to pick the cookie appropriate to your current
+system.
+
+It is sometimes appropriate to take files which C<mkpackage> generates, and
+move them into the files directory, and add them to the C<DISTFILES> list.
+The example given above, storing prototypes for splitting a single
+installation into multiple packages, is one common example.  Another is
+storing dynamically generated C<depend> files.  Any admin file which exists
+will override any rules in the .gspec which would build that file.  Making the
+depend file part of the DISTFILES will eliminate the need for probing dynamic
+dependencies every time the package is built.
+
+=head2 Clean Up
+
+Now that the build is working, and packages can be successfully built, the
+directory can be cleaned up and checked into version control.  First, run the
+C<make clean> target.  This will delete any working files, as well as any
+cookies.
+
+Next, clean up any .svn working copy directories that might be in your
+copied template directory.  This is easily done:
+
+ $ cd apps/povray
+ $ find . -type d -name .svn -exec rm -r {} \;
+
+Finally, add and commit the new source into version control:
+
+ $ cd apps/povray
+ $ svn add `pwd`
+ $ svn commit -m "adding povray 3.6.1"
+

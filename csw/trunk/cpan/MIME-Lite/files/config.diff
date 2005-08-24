@@ -1,0 +1,36 @@
+diff --minimal --speed-large-files -Nru MIME-Lite-3.01_04.orig/Makefile.PL MIME-Lite-3.01_04/Makefile.PL
+--- MIME-Lite-3.01_04.orig/Makefile.PL	2004-05-07 10:04:57.000000000 -0700
++++ MIME-Lite-3.01_04/Makefile.PL	2004-05-17 16:17:26.501373000 -0700
+@@ -5,6 +5,8 @@
+ # Makefile:
+ #------------------------------------------------------------
+ 
++=head1 COMMENTED
++
+ print "MIME::Lite is designed to take advantage of a variety of external modules\n",
+       "if they are not present then MIME::Lite will attempt to do its best\n",
+       "but its strongly recommend that you install them.\n\n",
+@@ -19,15 +21,22 @@
+       "automatically installed if they arent already present\n";
+ my %prereq;
+ if (prompt("Add prereqs?",'Yes')=~/y/i) {
+-    %prereq=(
++
++=cut
++
++    my %prereq=(
+               'Mail::Address'     => 1.62,
+               'MIME::Types'       => 1.13,
+               'File::Basename'    => undef,
+               'MIME::Base64'      => undef,
+               'MIME::QuotedPrint' => undef,
+             );
++
++=head1 COMMENTED
++
+ }
+ 
++=cut
+ 
+ 
+ 

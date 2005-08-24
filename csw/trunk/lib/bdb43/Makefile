@@ -1,0 +1,49 @@
+GARNAME = db
+GARVERSION = 4.3.27
+CATEGORIES = lib
+
+DESCRIPTION = embedded database libraries and utilities
+define BLURB
+  Berkeley DB (libdb) is a programmatic toolkit that provides embedded database
+  support for both traditional and client/server applications. It includes
+  b+tree, queue, extended linear hashing, fixed, and variable-length record
+  access methods, transactions, locking, logging, shared memory caching and
+  database recovery. DB supports C, C++, Java, and Perl APIs. It is available
+  for a wide variety of UNIX platforms as well as Windows NT and Windows 95
+  (MSVC 4, 5 and 6).
+endef
+
+MASTER_SITES = http://www.sleepycat.com/update/snapshot/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += CSWbdb43.gspec CSWbdb43.depend CSWbdb43.prototype
+DISTFILES += CSWbdb43doc.gspec CSWbdb43doc.depend CSWbdb43doc.prototype
+
+WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
+
+CONFIGURE_SCRIPTS = dist
+
+CONFIGURE_ARGS  = --prefix $(prefix)/bdb43
+CONFIGURE_ARGS += --disable-cryptography
+CONFIGURE_ARGS += --enable-compat185
+CONFIGURE_ARGS += --enable-rpc
+CONFIGURE_ARGS += --enable-cxx
+CONFIGURE_ARGS += --enable-java
+CONFIGURE_ARGS += --enable-tcl
+CONFIGURE_ARGS += --with-tcl=$(libdir)
+CONFIGURE_ARGS += --enable-o_direct
+
+# bdb tests are time consuming
+ENABLE_TEST = 0
+
+include ../category.mk
+
+LIBS += -lnsl
+export LIBS
+
+PATH := /usr/j2se/bin:$(PATH)
+export PATH
+
+configure-dist:
+	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
+	@$(MAKECOOKIE)
+

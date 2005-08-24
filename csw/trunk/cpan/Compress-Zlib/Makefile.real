@@ -1,0 +1,15 @@
+GARNAME = Compress-Zlib
+GARVERSION = 1.34
+CATEGORIES = cpan
+AUTHOR = PMQS
+
+DESCRIPTION = Interface to zlib compression library
+define BLURB
+  The Compress::Zlib module provides a Perl interface to the zlib compression
+  library (see /AUTHOR for details about where to get zlib). Most of the
+  functionality provided by zlib is available in Compress::Zlib.
+endef
+
+DISTFILES += CSWpmcompresszlib.gspec
+
+include ../category.mk

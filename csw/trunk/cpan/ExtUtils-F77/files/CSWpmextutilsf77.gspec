@@ -1,0 +1,4 @@
+%var       bitname pm_extutilsf77
+%var       pkgname CSWpmextutilsf77
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright url file://%{WORKSRC}/COPYING

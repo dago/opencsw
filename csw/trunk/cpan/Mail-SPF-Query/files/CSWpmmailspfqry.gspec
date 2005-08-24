@@ -1,0 +1,8 @@
+%var     bitname pm_mailspfqry
+%var     pkgname CSWpmmailspfqry
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright
+Released under the same terms as Perl.
+
+Copyright (C) 2003 Meng Weng Wong <mengwong+spf@pobox.com>
+

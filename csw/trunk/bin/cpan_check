@@ -1,0 +1,76 @@
+#!/usr/local/perl5/bin/perl -lw
+#
+# $Id: cpan_check 1084 2005-04-15 16:31:39Z comand $
+# $URL: http://cryptic.sfbay:5957/svn/csw/bin/cpan_check $
+#
+# cpan_check - Check CPAN for module updates.
+#
+
+use strict;
+use File::Basename;
+use LWP::UserAgent;
+
+eval {
+    require Sort::Versions;
+    import Sort::Versions;
+};
+die "Sort::Versions is required for $0"
+    if $@;
+
+my $std_ext = ".tar.gz";
+
+sub parse_modfile {
+	my $file = shift || return;
+	$file = basename $file;
+	# Try and separate the package name from it's version
+	my ($mname, $mvers) = $file =~ /^(.+?)[-\.\_](\d.*?)$std_ext$/;
+    return unless $mvers;
+	return ( $mname, $mvers );
+}
+
+# Check for the argument
+my $distfile = shift || die "Usage: $0 module_file";
+my ($distmod, $distvers) = parse_modfile($distfile);
+
+die "Unable to parse module file name: $distfile"
+	unless (defined $distmod && defined $distvers);
+
+# Get the distribution directory
+my $distdir = dirname $distfile;
+$distdir .= "/";
+
+my $UA = LWP::UserAgent->new( env_proxy => 1, keep_alive => 1 );
+
+# Retrieve the directory listing
+my $rsp = $UA->get( $distdir );
+unless ($rsp->is_success) {
+	print "ERROR: Listing for $distdir failed: " .
+	      "[" . $rsp->code . "] " .  $rsp->message;
+	exit 2;
+}
+
+# Parse the listing...
+my @versions;
+foreach my $line (split /\n/, $rsp->content) {
+    my ($file) = $line =~ /HREF=\"([^\"]+)\"/i; next unless ($file && $file =~ /$std_ext$/);
+	my ($name, $version) = parse_modfile($file); next unless $version;
+	push @versions, $version if ($distmod eq $name);
+}
+
+# Check for updated versions
+my @uprev;
+foreach (@versions) { push @uprev, $_ if (versioncmp($distvers, $_) == -1) }
+
+if (@uprev) {
+    @uprev = sort { versioncmp($b, $a) } @uprev;
+    if ($uprev[0] =~ /_/) {
+        print "   Development releases: ", join(", ", @uprev);
+    }
+    else {
+        print "   Latest release: $uprev[0]";
+        print "   Also available: ", join(", ", @uprev[1..$#uprev])
+            if @uprev > 1;
+    }
+}
+
+0;

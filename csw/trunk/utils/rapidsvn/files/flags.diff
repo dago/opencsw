@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru rapidsvn-0.7.0.orig/configure.in rapidsvn-0.7.0/configure.in
+--- rapidsvn-0.7.0.orig/configure.in	2004-11-19 15:45:48.660389000 -0500
++++ rapidsvn-0.7.0/configure.in	2004-11-19 15:45:30.521326000 -0500
+@@ -7,8 +7,8 @@
+ AC_PROG_LIBTOOL
+ 
+ abs_srcdir="`cd $srcdir && pwd`"
+-CPPFLAGS="$CPPFLAGS -Wall -g -fexceptions -I$abs_srcdir/include"
+-CXXFLAGS="$CXXFLAGS -Wall -g -fexceptions"
++CPPFLAGS="$CPPFLAGS -g -I$abs_srcdir/include"
++CXXFLAGS="$CXXFLAGS -g"
+ 
+ dnl
+ dnl APR

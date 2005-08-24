@@ -1,0 +1,7 @@
+%var       bitname pm_pdfapi2
+%var       pkgname CSWpmpdfapi2
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright url file://%{WORKSRC}/LICENSE
+%depend
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmcompresszlib pm_compresszlib - Interface to zlib compression library

@@ -1,0 +1,12 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
+P CSWexpat expat - XML Parser Toolkit
+P CSWgdbm gdbm - GNU dbm
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWoldap openldap - ldap clients,libraries and server
+P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
+P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWzlib zlib - Zlib Data Compression Library
+P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWlibms Sun WorkShop Bundled shared libm

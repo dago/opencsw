@@ -1,0 +1,8 @@
+%var     bitname pm_soaplite
+%var     pkgname CSWpmsoaplite
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright
+Copyright (C) 2000-2001 Paul Kulchenko. All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

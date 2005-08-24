@@ -1,0 +1,4 @@
+%var       bitname pm_htmlscrubber
+%var       pkgname CSWpmhtmlscrubber
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright url file://%{WORKSRC}/LICENSE

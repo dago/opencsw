@@ -1,0 +1,6 @@
+%var       bitname pm_datecalc
+%var       pkgname CSWpmdcalc
+%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright url file://%{WORKSRC}/Artistic.txt
+%depend
+P CSWpmbitvec pm_bitvector - Efficient bit vector, set of integers and big int math library.

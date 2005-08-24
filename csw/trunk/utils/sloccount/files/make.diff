@@ -1,0 +1,30 @@
+diff --speed-large-files --minimal -Nru sloccount-2.24.ori/Makefile sloccount-2.24/Makefile
+--- sloccount-2.24.ori/Makefile	2004-04-25 19:55:19.000000000 -0700
++++ sloccount-2.24/Makefile	2004-07-30 07:47:14.541238000 -0700
+@@ -9,7 +9,7 @@
+ # Set this for where to store the man pages and executables.
+ # If you want to store this as part of an official distribution,
+ # change this to "/usr":
+-PREFIX=/usr/local
++PREFIX=$(DESTDIR)$(prefix)
+ 
+ # Set "EXE_SUFFIX" to ".exe" if you're running on Windows, like this:
+ # EXE_SUFFIX=.exe
+@@ -18,7 +18,7 @@
+ # Set this to your C compiler, if it's not "gcc"; a likely alternative is "cc".
+ # The "-Wall" option turns on warnings in gcc.  gcc users might also want
+ # to consider using "-Werror", which turns warnings into errors.
+-CC=gcc -Wall
++#CC=gcc -Wall
+ 
+ # Set this to the name of your "install" program.  On some systems,
+ # "install -C" would be useful (so unchanged files won't be modified),
+@@ -48,7 +48,7 @@
+ NAME=sloccount
+ VERSION=2.24
+ RPM_VERSION=1
+-ARCH=i386
++ARCH=$(GARCH)
+ VERSIONEDNAME=$(NAME)-$(VERSION)
+ INSTALL_DIR=$(PREFIX)/bin
+ MAN_DIR=$(PREFIX)/share/man

@@ -1,0 +1,759 @@
+#!/opt/csw/bin/perl -w
+# 
+# $Id: mkpackage 1187 2005-04-29 21:37:47Z comand $
+# $URL: http://cryptic.sfbay:5957/svn/csw/bin/mkpackage $
+# 
+# mkpackage - produce Solaris packages
+#
+
+use strict;
+use Cwd;
+use File::Basename;
+use File::Spec::Functions;
+use Getopt::Long;
+use Pod::Usage;
+use Data::Dumper;
+
+my $VERSION = "1.0";
+
+# Discover network support
+my ($HAS_LWP_SUPPORT, $HAS_CURL_SUPPORT) = (0, 0);
+eval {
+    require LWP::UserAgent;
+    import LWP::UserAgent;
+};
+$HAS_LWP_SUPPORT = $@ ? 0 : 1;
+my $LWP;
+
+unless ($HAS_LWP_SUPPORT) {
+    my $curlbin = `which curl`; chomp $curlbin;
+    $HAS_CURL_SUPPORT = $curlbin if $curlbin !~ /no curl/;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Configuration
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+my $self = basename $0;
+
+my %config;
+
+# Exit Codes
+my %exit = (
+    ok                  => 0,
+    usage               => 1,
+    file_not_found      => 2,
+    file_not_readable   => 3,
+    file_not_writable   => 4,
+    dir_not_found       => 5,
+    dir_create_failed   => 6,
+    prog_not_executable => 7,
+    prog_wrong_version  => 8,
+    prog_exec_error     => 9,
+    spec_error          => 10,
+    unknown             => 42,
+);
+
+my %SPEC_TYPE = (
+    CONTENT => '_content',
+    URL     => 'url',
+    EXEC    => 'exec',
+);
+my $SPEC_TYPE;
+{ my $tmp = join "|", grep { !/^_/ } values %SPEC_TYPE;
+  $SPEC_TYPE = qr/^($tmp)$/;
+}
+
+# Valid directives
+my $DIRECTIVE;
+my @SPECDIRS = qw/
+    include cvar var
+/;
+my @ADMFILES = qw/
+    prototype checkinstall compver copyright depend pkginfo
+    postinstall postremove preinstall preremove request space
+/; # NOTE: prototype must be first in this list!
+{ my $tmp = join "|", @ADMFILES, @SPECDIRS;
+  $DIRECTIVE = qr/^\%($tmp)/;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# NO USER SERVICABLE PARTS BEYOND HERE
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub error {
+    my ($code, $message) = @_;
+    print STDERR $message, "\n";
+    exit ($code || $exit{unknown});
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub usage_error {
+    pod2usage(
+        -exitstatus => $exit{usage},
+        -verbose    => 0,
+        -msg        => shift,
+    );
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub process_arguments {
+
+    # Options
+    my %args;
+    my %options = (
+        'spec|s=s'     => \$args{spec},
+        'destdir|d=s'  => \$args{destdir},
+        'workdir|w=s'  => \$args{workdir},
+        'basedir|b=s'  => \$args{basedir},
+        'spooldir|p=s' => \$args{spooldir},
+        'tmpdir|t=s'   => \$args{tmpdir},
+        'transfer!'    => \$config{transfer},
+        'overwrite!'   => \$config{overwrite},
+        'compress!'    => \$config{compress},
+        'help|h'       => \$args{help},
+        'man|m'        => \$args{man},
+        'version|V'    => sub {
+            print "$self v$VERSION\n";
+            exit $exit{usage};
+        },
+    );
+    GetOptions( %options ) or pod2usage();
+
+    # Help (--help) and/or Manual (--man)
+    pod2usage( 1 )             if $args{help};
+    pod2usage( -verbose => 2 ) if $args{man};
+
+    # Spec Filename (--spec)
+    usage_error("Spec (--spec) is a required argument")
+        unless $args{spec};
+
+    error($exit{file_not_found}, "Cannot locate '$args{spec}'")
+        unless -f $args{spec};
+    error($exit{file_not_readable}, "Cannot read '$args{spec}'")
+        unless -r $args{spec};
+
+    $config{spec} = $args{spec};
+    $config{specname}  = basename $config{spec}, ".gspec";
+    $config{protoname} = $config{specname} . ".prototype";
+
+    # Working dir (--workdir)
+    $config{workdir} = $args{workdir} || getcwd();
+    error($exit{dir_not_found},
+        "Cannot access --workdir '$config{workdir}'")
+            unless -d $config{workdir};
+
+    # Destination directory (--destdir)
+    $config{destdir} = $args{destdir} || $config{workdir};
+    unless (-d $config{destdir}) {
+        print STDERR "  exec( mkdir -p $config{destdir} )\n";
+        system("mkdir -p $config{destdir}")
+            and error($exit{dir_create_failed},
+                "Cannot create destination dir '$config{destdir}'");
+    }
+
+    # Base dir (--basedir)
+    $config{basedir} = $args{basedir} || '/';
+    error($exit{dir_not_found},
+        "Cannot access --basedir '$config{basedir}'")
+            unless -d $config{basedir};
+
+    # Spool dir (--spooldir)
+    $config{spooldir} = $args{spooldir} || '/var/spool/pkg';
+    error($exit{dir_not_found},
+        "Cannot access --spooldir '$config{spooldir}'")
+            unless -d $config{spooldir};
+
+    # Temporary dir (--tmpdir)
+    $config{tmpdir} = $args{tmpdir} || '/tmp';
+    error($exit{dir_not_found},
+        "Cannot access --tmpdir '$config{tmpdir}'")
+            unless -d $config{tmpdir};
+
+    # Supply defaults for --no/x flag arguments
+    $config{compress}  = 1 unless defined $config{compress};
+    $config{transfer}  = 1 unless defined $config{transfer};
+    $config{overwrite} = 1 unless defined $config{overwrite};
+
+    # Export variables to the spec
+    foreach my $var qw(specname destdir workdir basedir spooldir tmpdir) {
+        $ENV{'MKP_' . uc $var} = $config{$var};
+    }
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub env_replace {
+    local $_ = shift;
+    while (/\%\{/) {
+        my ($var) = $_ =~ /\%\{([^\}]+)\}/;
+        my $val = $ENV{$var} || '';
+        print STDERR "WARNING: Environment var '$var' not set"
+            if $val eq '';
+
+        print STDERR "  + replacing \%{$var} with '$val'\n";
+
+        s/\%\{[^\}]+?\}/$val/;
+    }
+    return $_;
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub parse_spec {
+    my $specfile = $config{spec};
+
+    my @content = @{ load_content($SPEC_TYPE{URL}, "file://$specfile", 0) };
+
+    my ($directive, $spec);
+    for (my $i = 0; $i <= $#content; $i++) {
+        local $_ = $content[$i];
+        local $. = $i + 1;
+
+        if (/$DIRECTIVE/) {
+            $directive = lc $1;
+
+            my (undef, $type, $args) = split /\s+/, $_, 3;
+            next unless $type;
+            chomp $args;
+
+            # Special directives
+            if ($directive eq 'var' or
+                $directive eq 'cvar')
+            {
+                error($exit{spec_error},
+                    "Directive '$directive' requires a name and value argument")
+                        unless $type and defined $args;
+
+                $config{$type} = env_replace $args;
+                my $envvar = "MKP_" . uc $type;
+
+                unless ($directive eq 'cvar' and exists $ENV{$envvar}) {
+                    $ENV{$envvar} = $config{$type};
+                    print STDERR "+ setting ENV{$envvar} = " .
+                        $config{$type} . "\n";
+                }
+                else {
+                    print STDERR "+ variable $envvar is already set\n";
+                }
+
+                next;
+            }
+
+            error($exit{spec_error},
+                "Unknown type '$type' at line $.")
+                    unless $type =~ $SPEC_TYPE;
+
+            error($exit{spec_error},
+                "Type '$type' requires arguments at $specfile line $.")
+                    unless $args;
+
+            if ($directive eq 'include') {
+                my @subspec = @{ load_content($type, $args, $.) };
+                if (@subspec) {
+                    splice @content, $i, 1, @subspec;
+                    $i -= 1;
+                }
+                else {
+                    splice @content, $i, 1, ();
+                    print STDERR "WARNING: Include at line $. " .
+                                 "generated no content."
+                }
+            }
+            else {
+                push @{ $spec->{$directive} }, [ $type, $args, $. ];
+            }
+        }
+        else {
+            push @{ $spec->{$directive} }, [ $SPEC_TYPE{CONTENT}, $_, $. ]
+                if $directive;
+        }
+    }
+
+    #if ($config{dumponly}) {
+    #    foreach (sort keys %$spec) {
+    #        my @key_items = @{$spec->{$_}};
+    #        for (my $i = 0; $i < $#key_items; $i++) {
+    #            my $fields = scalar @{$key_items[$i]};
+    #            my $format = "%-10s"x($fields - 1);
+    #            printf "$_ $format\n", @{$key_items[$i]}[0..$fields-1];
+    #        }
+    #    }
+    #    exit 0;
+    #}
+
+    return $spec;
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub load_content {
+    my ($type, $args, $line) = @_;
+    error($exit{unknown}, "internal error: load_content($type,$args)")
+        unless $type and $args;
+
+    my $specfile = $config{spec};
+    $args = env_replace( $args );
+
+    my @content;
+
+    if ($type eq $SPEC_TYPE{URL}) {
+
+        # What scheme?
+        my $scheme;
+        if ($args =~ m#(\w+)://#) { $scheme = $1 }
+
+        if ($scheme eq 'file') {
+            (my $fpath = $args) =~ s#file:\/{1,2}##;
+            error($exit{file_not_found},
+                "Cannot access file $fpath at $specfile line $line")
+                    unless -f $fpath;
+
+            # Load the content
+            open INCLUDE, $fpath
+                or error($exit{file_not_readable},
+                    "Cannot read file $fpath at $specfile line $line");
+            while (<INCLUDE>) { push @content, $_ }
+            close INCLUDE;
+        }
+        else {
+
+            if ($HAS_LWP_SUPPORT) {
+                # Lazy init the LWP agent
+                $LWP = LWP::UserAgent->new( env_proxy => 1 )
+                    unless defined $LWP;
+
+                # Retrieve content
+                my $rsp = $LWP->get( $args );
+                error($exit{file_not_found},
+                    "Unable to access $args at $specfile line $line: " .
+                    $rsp->code . ": " . $rsp->message)
+                        unless $rsp->is_success;
+
+                @content = split /\n/, $rsp->content;
+            }
+            elsif ($HAS_CURL_SUPPORT) {
+
+                # Use curl to grab the content
+                @content = `$HAS_CURL_SUPPORT -s $args`;
+                my $ec = $? >> 8;
+
+                error($exit{prog_exec_error},
+                    "Failed to get $args with curl " .
+                    "at $specfile line $line")
+                        if $ec;
+            }
+            else {
+                error($exit{usage},
+                    "No network support for 'url' directive " .
+                    "at $specfile line $line");
+            }
+        }
+    }
+    elsif ($type eq $SPEC_TYPE{EXEC}) {
+
+        # Get content back from the exec
+        print STDERR "  exec( $args )\n";
+        @content = `$args`;
+        my $ec = $? >> 8;
+        error($exit{prog_exec_error},
+            "Failed to execute '$args' at $specfile line $line")
+                if $ec;
+    }
+    elsif ($type eq $SPEC_TYPE{CONTENT}) {
+        push @content, $args;
+    }
+    else {
+        error($exit{spec_error},
+            "Unknown include type '$type' at line $line");
+    }
+
+    print STDERR "WARNING: No content was generated by '$type' at ",
+                 "$specfile line $line\n"
+        unless @content;
+
+    return \@content;
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub write_file {
+    my ($filename, $content) = @_;
+
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub create_files {
+    my $spec     = shift;
+    my $specname = $config{specname};
+    my $workdir  = $config{workdir};
+    my $protopath;
+
+    # First things first, check for required items
+    foreach my $required qw(pkginfo prototype) {
+        my $rpath = catfile $workdir, "$specname.$required";
+        error($exit{spec_error},
+            "Required package resource '$specname.$required' not specified")
+                unless -f $rpath or exists $spec->{$required};
+    }
+
+    # Next, generate admin file content
+    foreach my $admtype (@ADMFILES) {
+        next unless exists $spec->{$admtype};
+
+        print STDERR "+ processing $admtype\n";
+
+        my $admfile = catfile $workdir, "$specname.$admtype";
+
+        # Allow other admin files to read the prototype!
+        $protopath = $ENV{MKP_PROTOTYPE} = $admfile if $admtype eq 'prototype';
+
+        # Handle overwrite permission
+        if (-f $admfile) {
+            if ($config{overwrite}) {
+                print STDERR "WARNING: Overwriting existing file $admfile\n";
+            }
+            else {
+                print STDERR "WARNING: Not re-creating existing file $admfile\n";
+                next;
+            }
+        }
+
+        my @admcontent;
+        foreach my $item (@{ $spec->{$admtype} }) {
+            push @admcontent, @{ load_content @$item };
+        }
+
+        # Only do a content replace within 'pkginfo' includes
+        if ($admtype eq 'pkginfo') {
+            for (my $i = 0; $i < $#admcontent; $i++) {
+                $admcontent[$i] = env_replace( $admcontent[$i] );
+            }
+        }
+
+        # Write content to file
+        if (@admcontent) {
+
+            print STDERR "+ removing duplicate lines from $admfile\n";
+
+            # Remove duplicate lines, preserve order
+            my @uniqadm;
+            foreach my $adm (@admcontent) {
+                my $found;
+                foreach my $uni (@uniqadm) {
+                    if ($adm eq $uni) { $found++ ; last }
+                }
+                push @uniqadm, $adm unless $found;
+            }
+
+            print STDERR "+ writing $admfile\n";
+
+            open OUT, ">$admfile"
+                or error($exit{file_not_writable},
+                    "Unable to write $admfile: $!");
+            foreach my $line (@uniqadm) { print OUT $line }
+            close OUT;
+        }
+
+    }
+
+    # Last of all, write admin file content to the prototype
+    print STDERR "+ writing admin entries to $protopath\n";
+
+    my %writeadm;
+    foreach my $admtype (@ADMFILES) {
+        next if $admtype eq 'prototype';
+        system(qq{grep "i $admtype" $protopath >/dev/null 2>&1});
+        my $es = $? >> 8;
+
+        $writeadm{$admtype}++ if $es;
+    }
+
+    # Write entries which are not already in the prototype...
+    if (keys %writeadm) {
+        open PROTO, ">>$protopath"
+            or die "Failed to open $protopath for append: $!";
+
+        foreach my $admtype (sort keys %writeadm) {
+            my $admfile = "$specname.$admtype";
+            my $admpath = catfile $workdir, $admfile;
+            print PROTO "i $admtype=$admfile\n" if -f $admpath;
+        }
+        close PROTO;
+    }
+
+    return $protopath;
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub clean_spool {
+    my $spooldir = $config{spooldir};
+    my $specname = $config{specname};
+
+    my $existing_pkgspool = catfile $spooldir, $specname;
+    if (-d $existing_pkgspool) {
+        print STDERR "  exec( rm -r $existing_pkgspool )\n";
+        system("rm -r $existing_pkgspool")
+            and error($exit{prog_exec_error},
+                "Failed to remove $existing_pkgspool");
+    }
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub make_package {
+    my $proto = shift;
+
+    clean_spool;
+
+    print STDERR "  exec( pkgmk -f $proto basedir=$config{basedir} )\n";
+    system("pkgmk -f $proto basedir=$config{basedir}")
+        and error($exit{prog_exec_error},
+            "Failed to create $config{specname} using $proto\n");
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+sub transfer_package {
+    my $spooldir = $config{spooldir};
+    my $destdir  = $config{destdir};
+    my $tmpdir   = $config{tmpdir};
+    my $pkgname  = $config{pkgname};
+    my $pkgfile  = $config{pkgfile};
+
+    my $tmppkg   = catfile $tmpdir, $pkgfile;
+
+    print STDERR "  exec( pkgtrans -s $spooldir $tmppkg $pkgname )\n";
+    system("pkgtrans -s $spooldir $tmppkg $pkgname >/dev/null 2>&1")
+        and error($exit{prog_exec_error},
+            "Failed to transfer package $pkgname to $tmppkg");
+
+    if ($config{compress}) {
+        print STDERR "  exec( gzip -f $tmppkg )\n";
+        system("gzip -f $tmppkg")
+            and error($exit{prog_exec_error},
+                "Failed to compress package $tmppkg");
+
+        $tmppkg .= ".gz";
+    }
+
+    if ($tmpdir ne $destdir) {
+        print STDERR "  exec( mv $tmppkg $destdir )\n";
+        system("mv $tmppkg $destdir")
+            and error($exit{file_not_writable},
+                "Failed to move $tmppkg to $destdir");
+    }
+
+    clean_spool;
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# MAIN EXECUTION
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+process_arguments;
+
+my $spec = parse_spec;
+my $protopath = create_files $spec;
+make_package $protopath;
+transfer_package if $config{transfer};
+
+exit $exit{ok};
+
+__END__
+
+=head1 NAME
+
+mkpackage - Create one or more Solaris packages from a 'spec' file.
+
+=head1 SYNOPSIS
+
+ mkpackage --spec <filename> [--workdir <path> [--destpkg <file>]
+           [--basedir <path>] [--no/compress] [--no/transfer]
+           [--help] [--man] [--version]
+
+ Options:
+
+    --spec          Full path to spec file.
+    --no/compress   Enable or disable package compression.
+    --no/transfer   Enable or disable package transfer.
+    --destpkg       Full path to package destination if 'transfer'
+                    is enabled.  (Default: current directory)
+    --workdir       Working directory path.  (Default: current directory)
+    --basedir       Package base directory to use when calling pkgmk.
+                    (Default: '/')
+    --spooldir      Where package spools are created when pkgmk is run.
+                    (Default: '/var/spool/pkg')
+    --tmpdir        Temporary directory. (Default: '/tmp')
+
+=head1 DESCRIPTION
+
+mkpackage is a tool for building one or more Solaris packages from a
+specification file.  This specification file determines the contents of each
+package and the final name for the package.  Command line options to mkpackage
+control whether the package is I<transferred> from the Solaris spool directory
+into a bitstream format, and whether that bitstream is compressed.  The output
+filename and directory for bitstream packages may also be configured.
+
+=head1 OPTIONS
+
+=over 8
+
+=item --spec,-s
+
+Full path to the package spec file.  See L<SPEC FILE FORMAT> for more
+information regarding the content of this file.
+
+=item --workdir,-w
+
+Directory where all administrative and temporary packaging files will be
+created.  Default is the current working directory.
+
+=item --basedir,-b
+
+Directory from which all files will be packaged.  This is passed to the C<-r>
+argument of pkgmk.  Note that no path fixups are done on the prototype content
+automatically.  This needs to be considered when using C<--basedir>.  The
+default is root ('C</>').
+
+=item --spooldir,-p
+
+Directory in which C<pkgmk> will create package spools.  By default this will
+be the system package spool directory C</var/spool/pkg>.
+
+=item --tempdir,-t
+
+Directory in which bitstream format packages will be created and optionally
+compressed.  The default is C</tmp>.
+
+=item --compress/--nocompress
+
+Turn compression of the final package stream file on or off.  Default is on,
+but only when C<--transfer> is enabled.
+
+=item --transfer/--notransfer
+
+Enable transfer of spooled package data into bitstream format files after
+building the package.  This is on by default.  If it is turned off, the
+new package will be left in /var/spool/pkg.
+
+=item --destpkg,-d
+
+Destination path (including filename) for bitstream package files when
+using C<--transfer>.
+
+=back
+
+=head1 SPEC FILE FORMAT
+
+=head2 Directives
+
+Directives are used to create the administrative files necessary to package
+software.  Each directive must be prefixed with the C<%> character.  An
+argument may be passed to any of the directives, which may be of the following
+format:
+
+    %directive scheme argument
+
+Where scheme is one of the following:
+
+=over 4
+
+=item url
+
+Insert the result of a url request.  Argument must be a well formed URI which
+is supported by libwww-perl.  See the documentation for LWP::UserAgent for
+more details.  Variable replacement will be done in the URL before the request
+is sent.  Any unexpanded variables will be replaced with the string C<UNKNOWN>.
+
+=item exec
+
+Insert the output of a command.  One or more arguments may be specified, which
+will be executed as a single command.
+
+=back
+
+Content will be inserted into the spec as though it was specified in-line at
+that point in the file.  Variable replacement is done as soon as the input is
+read.  Note that variable replacement is only done on directives of type
+C<pkginfo> for includes, and all files for content specified directly in the
+spec file.
+
+Directives may be specified without an argument.  Any content listed after the
+directive in the spec file will be added to the appropriate administrative
+file up to the next valid directive.
+
+Valid directives:
+
+=over 4
+
+=item checkinstall
+
+=item compver
+
+=item copyright
+
+=item depend
+
+=item pkginfo
+
+=item postinstall
+
+=item postremove
+
+=item preinstall
+
+=item preremove
+
+=item prototype
+
+=item request
+
+=item space
+
+These items create content for the package file of the same name.
+
+=item include
+
+Include the content from this directive as though it was originally in the
+current spec file.
+
+=back
+
+See the Solaris Package Administrator's Guide for more details regarding the
+purpose and content of each of these files.  If a working directory copy of
+any file exists, and the directive related to that file is specified, the
+existing file will be overwritten.  Ensure that if static copies of any of the
+administrative files are present, no directive of the same name is used.
+
+=head2 Environment
+
+Environment variables may be used in spec files.  Any spec file variables that
+are not replaced at the end of processing will be replaced with the string
+'UNKNOWN'.  For instance, to set package info variables using the environment:
+
+    %pkginfo url http://%{PACKAGE_SERVER}/admin/pkginfo.standard
+    %pkginfo
+    PSTAMP=%{LOGNAME}@%{HOSTNAME}-%{exec gdate -s '+%s'}
+    %prototype exec find %{SPKG_BASEDIR} -cnewer %{SPKG_TIMESTAMP}
+
+mkpackage also exports a set of variables to spec files.  The following
+variables are available for use with all spec directives:
+
+ MKP_SPECNAME  - File name of this spec, without the .gspec suffix.
+ MKP_DESTPKG   - Full package destination path, as specified to --destpkg.
+ MKP_WORKDIR   - Working directory, as specified to --workdir.
+ MKP_BASEDIR   - Package base directory, as specified to --basedir.
+ MKP_SPOOLDIR  - Package spool directory, as specified to --spooldir.
+ MKP_TMPDIR    - Temporary directory, as specified to --tmpdir.
+
+Additionally, for directives other than C<%prototype>, the following
+variables are available:
+
+ MKP_PROTOTYPE - Path to the prototype file without administrative entries.
+
+=head1 AUTHOR & COPYRIGHT
+
+ Cory Omand <Cory.Omand@Sun.com>
+ SSG Operations Engineering
+ Sun Microsystems, Inc.
+
+ Copyright 2005 Sun Microsystems, Inc.  All rights reserved.
+ Use is subject to license terms.
+
+=cut

@@ -1,0 +1,4 @@
+%var     bitname pm_podcoverage
+%var     pkgname CSWpmpodcov
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright

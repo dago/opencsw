@@ -1,0 +1,3 @@
+%var     bitname pm_mailsendmail
+%var     pkgname CSWpmmailsendmail
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec

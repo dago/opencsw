@@ -1,0 +1,165 @@
+#!/opt/csw/bin/perl -w
+#
+# $Id: depmaker 1307 2005-06-02 20:28:34Z comand $
+# $URL: http://cryptic.sfbay:5957/svn/csw/bin/depmaker $
+#
+# depmaker - find package dependencies for a list of files
+#
+
+use strict;
+use File::Basename;
+use Getopt::Long qw/:config no_ignore_case gnu_getopt/;
+use File::Spec::Functions qw/canonpath rel2abs splitdir catfile/;
+use Data::Dumper;
+
+my $self = basename $0;
+my $VERSION = "1.0";
+
+# Get command line options
+my $do_script = 1;
+my $be_quiet  = 0;
+my (@nodep, %nodep, $rootdir);
+GetOptions(
+    'script!'   => \$do_script,
+    'quiet|q'   => \$be_quiet,
+    'root=s'    => \$rootdir,
+    'nodep=s'   => \@nodep,
+    'help|h'    => \&usage,
+    'version|V' => sub {
+        print STDERR "$self v$VERSION\n";
+        exit 2;
+    },
+) or usage();
+
+foreach (@nodep) { $nodep{$_} = 1 };
+
+sub usage {
+    print STDERR "Usage: $self [--no/script] [--nodep <pkg>] [--root <path>] < path_list > depend\n";
+    exit 1;
+}
+sub msg {
+    return if $be_quiet;
+    print STDERR @_;
+}
+
+msg "root directory      : $rootdir\n" if $rootdir;
+msg "skip depends for    : " . join(", ", sort keys %nodep) . "\n";
+msg "script dependencies : " . ($do_script ? "enabled" : "disabled") . "\n";
+msg "\n";
+
+msg "processing path list...\n";
+
+# Analyze the incoming path list...
+my %depfiles;
+foreach (<>) {
+    chomp; my ($filename) = split /=/, $_;
+    local $_ = $rootdir ? 
+        canonpath(catfile($rootdir, $filename)) : $filename;
+
+    next unless -f;
+
+    my ($ftype) = `/bin/file -h $_`;
+
+    my @depfiles;
+    if ($do_script and $ftype =~ /script/) {
+        # Extract an interpreter dependency...
+        my ($bangpath) = `head -1 $_`; chomp $bangpath;
+        $bangpath =~ s/^#!\s*(\S+)(\s.+)?/$1/;
+
+        msg "$_ ... $bangpath script";
+
+        # Compensate for /bin -> /usr/bin
+        $bangpath = "/usr$bangpath" if $bangpath =~ '^/bin';
+        $depfiles{$bangpath}++;
+
+    }
+    elsif ($ftype =~ /dynamically linked/) {
+
+        msg "$_ ...  dynamically linked... ";
+
+        # Extract dynamic library dependencies...
+        my @ldinfo = `/usr/bin/ldd $_`;
+        my $depcount;
+        foreach my $libspec (@ldinfo) {
+            next if $libspec =~ /not found/;
+
+            chomp $libspec; my @F = reverse split /\s+/, $libspec;
+            $depfiles{$F[0]}++;
+            $depcount++;
+        }
+        if ($depcount) {
+            msg "$depcount " . ($depcount > 1 ? "entries" : "entry") . "\n";
+        }
+        else {
+            msg "no entries" . "\n";
+        }
+    }
+}
+
+msg "searching package database for dependencies...\n";
+
+# Look for all files that had dependencies in the system install
+# install database, and store the package names...
+my %deppkg;
+foreach my $depfile (sort keys %depfiles) {
+
+    if (-l $depfile) {
+        # Read through link, resolve absolute path...
+        $depfile = rel2abs(readlink($depfile), dirname($depfile));
+
+        # This is a bit convoluted, but canonpath can't
+        # resolve '/a/dir/../../b' to '/b'.  This mainly affects
+        # /usr/platform links.
+        while ($depfile =~ /\.\./) {
+            my @path = splitdir(dirname($depfile));
+            for (my $i = 0; $i < $#path; $i++) {
+                if ($path[$i] eq '..') {
+                    # Delete '..' and previous path element.
+                    splice @path, $i - 1, 2, ();
+                    last;
+                }
+            }
+            $depfile = catfile(@path, basename $depfile);
+        }
+    }
+
+    # Fix up library paths
+    $depfile =~ s#lib/sparcv[\w\+]+/#lib/#;
+    $depfile =~ s#lib/pentium/#lib/#;
+    $depfile =~ s#lib/i\d{2,3}/#lib/#;
+
+    msg sprintf("    %-55s :", $depfile);
+
+    # Let pkgchk tell us which packages have marks on this file.
+    my $in_data = 0;
+    foreach (`pkgchk -l -p $depfile 2>/dev/null`) {
+        if (/Referenced by/i)  { $in_data = 1 ; next }
+        if (/Current status/i) { last }
+
+        if ($in_data) {
+            foreach my $pkg (split) {
+                chomp $pkg;
+                $deppkg{$pkg}++;
+                msg " $pkg";
+            }
+        }
+    }
+    msg "\n";
+}
+
+# For each of the package names found in the last phase, look up
+# the necessary information to build a depend entry...
+foreach my $pkgname (sort keys %deppkg) {
+    if ($nodep{$pkgname}) {
+        msg "Skipping dependency $pkgname\n";
+        next;
+    }
+
+    my ($info) = `pkginfo $pkgname`; chomp $info;
+
+    # Get rid of the category, normalize space
+    my @infofields = split /\s+/, $info;
+    $info = join " ", @infofields[1..$#infofields];
+
+    print "P $info\n";
+}

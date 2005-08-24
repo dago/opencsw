@@ -1,0 +1,28 @@
+diff -Nru --speed-large-files --minimal Gnome2-Wnck-0.03.orig/xs/WnckScreen.xs Gnome2-Wnck-0.03/xs/WnckScreen.xs
+--- Gnome2-Wnck-0.03.orig/xs/WnckScreen.xs	2003-12-12 15:11:55.000000000 -0800
++++ Gnome2-Wnck-0.03/xs/WnckScreen.xs	2004-04-06 10:03:55.625909000 -0700
+@@ -95,14 +95,12 @@
+ wnck_screen_force_update (screen)
+ 	WnckScreen *screen
+ 
+-#if WNCK_CHECK_VERSION(2,0,0)
+-
+ ##  int wnck_screen_get_workspace_count (WnckScreen *screen) 
+ int
+ wnck_screen_get_workspace_count (screen)
+ 	WnckScreen *screen
+ 
+-#endif
++#if WNCK_CHECK_VERSION(2,0,0)
+ 
+ ##  void wnck_screen_change_workspace_count (WnckScreen *screen, int count) 
+ void
+@@ -110,6 +108,8 @@
+ 	WnckScreen *screen
+ 	int count
+ 
++#endif
++
+ ##  gboolean wnck_screen_net_wm_supports (WnckScreen *screen, const char *atom) 
+ gboolean
+ wnck_screen_net_wm_supports (screen, atom)

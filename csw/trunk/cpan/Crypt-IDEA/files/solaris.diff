@@ -1,0 +1,158 @@
+diff -Nru --minimal --speed-large-files Crypt-IDEA-1.02.orig/IDEA.xs Crypt-IDEA-1.02/IDEA.xs
+--- Crypt-IDEA-1.02.orig/IDEA.xs	2003-01-18 18:48:04.000000000 -0800
++++ Crypt-IDEA-1.02/IDEA.xs	2003-12-30 16:35:24.393645000 -0800
+@@ -27,7 +27,7 @@
+ 		if (key_len != sizeof(idea_user_key))
+ 			croak("Invalid key");
+ 
+-		idea_expand_key((u_int16_t *)key, ks);
++		idea_expand_key((uint16_t *)key, ks);
+ 
+ 		ST(0) = sv_2mortal(newSVpv((char *)ks, sizeof(ks)));
+ 	}
+@@ -38,13 +38,13 @@
+ 	STRLEN	ks_len = NO_INIT
+     CODE:
+ 	{
+-		u_int16_t	iks[52];
++		uint16_t	iks[52];
+ 
+ 		ks = (char *) SvPV(ST(0), ks_len);
+ 		if (ks_len != sizeof(idea_ks))
+ 			croak("Invalid key schedule");
+ 
+-		idea_invert_key((u_int16_t *)ks, iks);
++		idea_invert_key((uint16_t *)ks, iks);
+ 
+ 		ST(0) = sv_2mortal(newSVpv((char *)iks, sizeof(iks)));
+ 	}
+@@ -74,7 +74,7 @@
+ 		if (!SvUPGRADE(output, SVt_PV))
+ 			croak("cannot use output argument as lvalue");
+ 
+-		idea_crypt((u_int16_t *)input, (u_int16_t *)SvGROW(output, output_len), (u_int16_t *)ks);
++		idea_crypt((uint16_t *)input, (uint16_t *)SvGROW(output, output_len), (uint16_t *)ks);
+ 
+ 		SvCUR_set(output, output_len);
+ 		*SvEND(output) = '\0';
+diff -Nru --minimal --speed-large-files Crypt-IDEA-1.02.orig/_idea.c Crypt-IDEA-1.02/_idea.c
+--- Crypt-IDEA-1.02.orig/_idea.c	1999-05-22 13:30:47.000000000 -0700
++++ Crypt-IDEA-1.02/_idea.c	2003-12-30 16:36:05.743533000 -0800
+@@ -5,8 +5,6 @@
+ 
+ #include "idea.h"
+ 
+-#include <endian.h>
+-
+ #define KEYS_PER_ROUND	6
+ #define ROUNDS			8 
+ #define KEYLEN			(KEYS_PER_ROUND*ROUNDS+4)
+@@ -14,8 +12,8 @@
+ /*
+  *	Multiplication modulo (2**16)+1
+  */
+-static u_int16_t
+-mul(u_int16_t a, u_int16_t b)
++static uint16_t
++mul(uint16_t a, uint16_t b)
+ {
+ 	int32_t p;
+ 
+@@ -38,10 +36,10 @@
+ /*
+  * Compute inverse of x, modulo (2**16)+1, using Euclidean gcd algorithm
+  */
+-static u_int16_t
+-inv(u_int16_t x)
++static uint16_t
++inv(uint16_t x)
+ {
+-	u_int16_t t0, t1, q, y;
++	uint16_t t0, t1, q, y;
+ 
+ 	if (x <= 1)	/* Since zero and one are self inverse */
+ 		return x;
+@@ -72,23 +70,16 @@
+  *	Encryption and decryption
+  */
+ void
+-idea_crypt(u_int16_t * in, u_int16_t * out, u_int16_t * key)
++idea_crypt(uint16_t * in, uint16_t * out, uint16_t * key)
+ {
+ 	int i = ROUNDS;
+-	u_int16_t x0, x1, x2, x3, t0, t1;
++	uint16_t x0, x1, x2, x3, t0, t1;
+ 
+ 	x0 = *(in++);
+ 	x1 = *(in++);
+ 	x2 = *(in++);
+ 	x3 = *(in);
+ 
+-#if (BYTE_ORDER == LITTLE_ENDIAN)
+-	x0 = x0 >> 8 | x0 << 8;
+-	x1 = x1 >> 8 | x1 << 8;
+-	x2 = x2 >> 8 | x2 << 8;
+-	x3 = x3 >> 8 | x3 << 8;
+-#endif
+-
+ 	do {
+ 		x0 = mul(x0, *(key++));
+ 		x1 += *(key++);
+@@ -114,13 +105,6 @@
+ 	x2 = t0 + *(key++);
+ 	x3 = mul(x3, *key);
+ 
+-#if (BYTE_ORDER == LITTLE_ENDIAN)
+-	x0 = x0 >> 8 | x0 << 8;
+-	x1 = x1 >> 8 | x1 << 8;
+-	x2 = x2 >> 8 | x2 << 8;
+-	x3 = x3 >> 8 | x3 << 8;
+-#endif
+-
+ 	*(out++) = x0;
+ 	*(out++) = x1;
+ 	*(out++) = x2;
+@@ -132,7 +116,7 @@
+  *	Create decryption key
+  */
+ void
+-idea_invert_key(u_int16_t * key, u_int16_t * invKey)
++idea_invert_key(uint16_t * key, uint16_t * invKey)
+ {
+ 	int i;
+ 
+@@ -165,17 +149,12 @@
+  *	Expand user key of 128 bits to full of 832 bits
+  */
+ void
+-idea_expand_key(u_int16_t * userKey, u_int16_t * key)
++idea_expand_key(uint16_t * userKey, uint16_t * key)
+ {
+ 	int i, j;
+ 
+-#if (BYTE_ORDER == LITTLE_ENDIAN)
+-	for(i = 0; i < 8; i++)
+-		key[i] = userKey[i] << 8 | userKey[i] >> 8;
+-#else
+ 	for(i = 0; i < 8; i++)
+ 		key[i] = userKey[i];
+-#endif
+ 
+ 	j = 0;
+ 	for(; i < KEYLEN; i++)
+diff -Nru --minimal --speed-large-files Crypt-IDEA-1.02.orig/idea.h Crypt-IDEA-1.02/idea.h
+--- Crypt-IDEA-1.02.orig/idea.h	1999-05-22 13:30:47.000000000 -0700
++++ Crypt-IDEA-1.02/idea.h	2003-12-30 16:36:15.788270000 -0800
+@@ -2,9 +2,9 @@
+ 
+ #define IDEA_KS_SIZE 104
+ 
+-typedef u_int16_t idea_cblock[4];
+-typedef u_int16_t idea_user_key[8];
+-typedef u_int16_t idea_ks[52];
++typedef uint16_t idea_cblock[4];
++typedef uint16_t idea_user_key[8];
++typedef uint16_t idea_ks[52];
+ 
+ void idea_crypt(idea_cblock in, idea_cblock out, idea_ks key);
+ void idea_invert_key(idea_ks key, idea_ks inv_key);

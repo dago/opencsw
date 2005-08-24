@@ -1,0 +1,13 @@
+#!/bin/perl -w
+
+use strict;
+
+while (<>) {
+    next if /^i/;
+    my @F = split;
+    $F[2] =~ s/^.+=(.+)/$1/;
+    $F[2] = "/tmp/a/$F[2]" unless $F[2] =~ m#\$basedir#;
+    $F[2] =~ s#\$basedir#/tmp/a#;
+    $F[2] =~ s#//#/#g;
+    print $F[2], "\n";
+}

@@ -1,0 +1,22 @@
+#!/opt/csw/bin/perl -w
+# 
+# $Id: stripbin 1084 2005-04-15 16:31:39Z comand $
+# $URL: http://cryptic.sfbay:5957/svn/csw/bin/stripbin $
+#
+# stripbin - strip binaries found in the target directory
+#
+
+use strict;
+
+my $bindir = $ARGV[0] || die "Usage: $0 <binary dir>";
+
+foreach my $file (glob "$bindir/*") {
+	my ($filechar) = `file $file`;
+	die "Failed to get characteristics for file $file" unless (($? >> 8) == 0);
+
+	if ($filechar =~ /ELF/ && $filechar =~ /not stripped/) {
+		print "Stripping $file ... ";
+		system "strip", $file and die "Failed.";
+		print "Done.\n";
+	}
+}

@@ -1,0 +1,12 @@
+$virtual1 = {
+              'test' => {
+                            'database' => 'test',
+                            'password' => '',
+                            'attributes' => {},
+                            'port' => '',
+                            'username' => '',
+                            'host' => 'localhost',
+                            'driver' => 'mysql',
+                            'connect' => 'DBI:mysql:database=test;host=localhost'
+                        }
+            };

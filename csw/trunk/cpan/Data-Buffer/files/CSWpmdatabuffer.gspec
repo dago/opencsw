@@ -1,0 +1,8 @@
+%var     bitname pm_databuffer
+%var     pkgname CSWpmdatabuffer
+%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright
+Except where otherwise noted, Data::Buffer is Copyright 2001
+Benjamin Trott. All rights reserved. Data::Buffer is free
+software; you may redistribute it and/or modify it under
+the same terms as Perl itself.
