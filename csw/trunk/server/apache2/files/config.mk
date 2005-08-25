@@ -14,7 +14,7 @@ CONFIGURE_ARGS += --with-dbm=db43
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-ldap-lib=$(libdir)
 CONFIGURE_ARGS += --with-ldap-include=$(includedir)
-CONFIGURE_ARGS += --with-perl=$(bindir)/perl
+CONFIGURE_ARGS += --with-perl=/usr/bin/perl
 CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --with-iconv=$(prefix)
 CONFIGURE_ARGS += --with-z=$(prefix)
