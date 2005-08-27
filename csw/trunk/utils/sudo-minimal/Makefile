@@ -2,7 +2,7 @@ GARNAME = sudo
 GARVERSION = 1.6.8p9
 CATEGORIES = utils
 
-DESCRIPTION = Provides limited super user privileges to specific users
+DESCRIPTION = Provides limited super user privileges - minimal config
 define BLURB
   Sudo (superuser do) allows a system administrator to give certain users (or
   groups of users) the ability to run some (or all) commands as root while
