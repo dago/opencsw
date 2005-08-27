@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWsudo - sudo - Provides limited super user privileges to specific users
+P CSWsudo-common - sudo_common - sudo common files
 P CSWlibnet libnet - the libnet packet construction library
 P CSWoldap openldap - ldap clients,libraries and server
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
