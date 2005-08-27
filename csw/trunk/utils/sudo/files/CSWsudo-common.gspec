@@ -1,4 +1,4 @@
-%var       bitname sudo
-%var       pkgname CSWsudo
+%var       bitname sudo_common
+%var       pkgname CSWsudo-common
 %include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
 %copyright url file://%{WORKSRC}/LICENSE
