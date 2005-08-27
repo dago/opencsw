@@ -1,7 +1,8 @@
 6d0346abd16914956bc7ea4f17fc85fb  download/sudo-1.6.8p9.tar.gz
-256804f241f2a153666865597a294186  download/CSWsudo.gspec
-4253f4b954fb12702c5ccc76a9da90d6  download/CSWsudo.postinstall
-44fabb4ce87e861516533d80274a52c0  download/CSWsudo.space
-731c490a08eaf2f51485901422d61ddf  download/CSWsudo.prototype
-ad5c39ccc850939479dd4c1e5859718f  download/CSWsudo.depend
+2294307be1b76557b59ca33110ca9224  download/CSWsudo-minimal.gspec
+6c7ceeca418afe0dd743f896a24d9bf9  download/CSWsudo-minimal.postinstall
+f265f92173f0067272f8db84ab0ee683  download/CSWsudo-minimal.prototype
+541c439d1d964c061c9ea449b4c595c5  download/CSWsudo-minimal.depend
+44fabb4ce87e861516533d80274a52c0  download/CSWsudo-minimal.space
+8e0055dc5b5ae53c15c71e70c85e7d41  download/CSWsudo-minimal.postremove
 157b2e5e38ca54eb36e0364706bd0292  download/install.diff
