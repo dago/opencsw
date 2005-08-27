@@ -1,14 +1,12 @@
 #!/bin/sh
 
-# install script to copy over template files to real ones, if appropriate
-#
-# I was hoping that either the 'e' or the 'v' designation in the
-# prototype file would make pkgadd not overwrite the files if changed.
-# Unfortunately, it does not seem to work like that.
-# So, this script is neccessary instead
-#
-
 CONFDIR=$BASEDIR/opt/csw/etc
+BINDIR=$BASEDIR/opt/csw/bin
+
+# Set up links
+cd $BINDIR
+rm -f sudo
+ln -sf sudo.noldap sudo
 
 # check if the sudoers file exists before overwriting it.
 if [ ! -f $CONFDIR/sudoers ] ; then
@@ -18,4 +16,6 @@ if [ ! -f $CONFDIR/sudoers ] ; then
 else
 	echo "sudoers already exists. Not copying sudoers.CSW"
 fi
+
+exit 0
 

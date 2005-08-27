@@ -1,0 +1,12 @@
+#!/bin/sh
+
+BINDIR=$BASEDIR/opt/csw/bin
+
+OTHERSUDO=`ls -1 sudo.* | head -1`
+if [ -n $OTHERSUDO ]; then
+    rm -f sudo
+    ln -sf $OTHERSUDO sudo
+fi
+
+exit 0
+
