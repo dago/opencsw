@@ -9,8 +9,8 @@ define BLURB
 	is a compelling replacement for CVS in the open source community.
 endef
 
-#MASTER_SITES = http://subversion.tigris.org/tarballs/
-MASTER_SITES = http://fornix.brain.org/subversion/
+MASTER_SITES = http://subversion.tigris.org/tarballs/
+#MASTER_SITES = http://fornix.brain.org/subversion/
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
