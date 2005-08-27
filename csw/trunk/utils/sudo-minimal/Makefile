@@ -12,15 +12,15 @@ endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += CSWsudo.gspec CSWsudo.postinstall CSWsudo.space
-DISTFILES += CSWsudo.prototype CSWsudo.depend
+DISTFILES += CSWsudo-minimal.gspec CSWsudo-minimal.postinstall 
+DISTFILES += CSWsudo-minimal.prototype CSWsudo-minimal.depend
+DISTFILES += CSWsudo-minimal.space CSWsudo-minimal.postremove
 
 # Original maintainer's patch to disable strip on install
 PATCHFILES = install.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
-CONFIGURE_ARGS += --with-ldap=$(prefix)
 
 TEST_TARGET = check
 
