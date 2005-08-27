@@ -1,5 +1,5 @@
 d none /opt/csw/bin ? ? ?
-f none /opt/csw/bin/sudo.noldap=$basedir/opt/csw/bin/sudo 4111 root root
+f none /opt/csw/bin/sudo.minimal=$basedir/opt/csw/bin/sudo 4111 root root
 l none /opt/csw/bin/sudoedit=/opt/csw/bin/sudo
 d none /opt/csw/sbin ? ? ?
 f none /opt/csw/sbin/visudo=$basedir/opt/csw/sbin/visudo 0111 root root

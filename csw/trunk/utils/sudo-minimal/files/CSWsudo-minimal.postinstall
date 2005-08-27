@@ -6,7 +6,7 @@ BINDIR=$BASEDIR/opt/csw/bin
 # Set up links
 cd $BINDIR
 rm -f sudo
-ln -sf sudo.noldap sudo
+ln -sf sudo.minimal sudo
 
 # check if the sudoers file exists before overwriting it.
 if [ ! -f $CONFDIR/sudoers ] ; then
