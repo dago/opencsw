@@ -1,0 +1,2 @@
+d none /opt/csw/bin ? ? ?
+f none /opt/csw/bin/sudo.ldap=$basedir/opt/csw/bin/sudo 4111 root root

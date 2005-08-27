@@ -1,0 +1,4 @@
+%var       bitname sudo
+%var       pkgname CSWsudo
+%include   url file://%{GARDIR}/pkglib/csw_standard.gspec
+%copyright url file://%{WORKSRC}/LICENSE

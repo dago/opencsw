@@ -1,0 +1,8 @@
+#!/bin/sh
+
+BINDIR=$BASEDIR/opt/csw/sbin
+
+cd $BINDIR
+rm -f sudo
+ln -sf sudo.ldap sudo
+

@@ -1,0 +1,7 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWsudo - sudo - Provides limited super user privileges to specific users
+P CSWlibnet libnet - the libnet packet construction library
+P CSWoldap openldap - ldap clients,libraries and server
+P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWsasl sasl - Simple Authentication and Security Layer
+P SUNWcsl Core Solaris, (Shared Libs)
