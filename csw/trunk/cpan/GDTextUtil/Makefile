@@ -1,4 +1,18 @@
-all:
+GARNAME = GDTextUtil
+GARVERSION = 0.86
+CATEGORIES = cpan
+AUTHOR = MVERB
+GARCH = all
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = text utilities for use with GD
+define BLURB
+  This module provides a font-independent way of dealing with text in GD, for
+  use with the GD::Text::* modules and GD::Graph.
+endef
+
+DISTFILES += CSWpmgdtxtu.gspec CSWpmgdtxtu.depend
+
+DEPENDS += cpan/GD
+
+include ../category.mk
+
