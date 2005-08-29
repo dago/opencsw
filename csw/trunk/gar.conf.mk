@@ -92,7 +92,11 @@ SUN_AS_OPT   ?= -xarch=$(OPTARCH)
 GNU_CC_HOME   = /opt/csw/gcc3
 GNU_CC        = gcc
 GNU_CXX       = g++
-GNU_CC_OPT   ?= -O2 -pipe -mcpu=$(OPTARCH)
+ifeq ($(OPTARCH),386)
+GNU_CC_OPT   ?= -O2 -pipe -mtune=i686
+else
+GNU_CC_OPT   ?= -O2 -pipe -mtune=$(OPTARCH)
+endif
 GNU_CXX_OPT  ?= $(GNU_CC_OPT)
 GNU_AS_OPT   ?=
 
