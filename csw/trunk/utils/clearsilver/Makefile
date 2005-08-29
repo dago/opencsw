@@ -1,4 +1,5 @@
 GARNAME = clearsilver
+#GARVERSION = 0.10.1
 GARVERSION = 0.9.14
 CATEGORIES = utils
 
@@ -19,11 +20,13 @@ PATCHFILES += ccbuild.diff
 # Switch off __PRETTY_FUNCTION__ when not using GCC
 PATCHFILES += pretty_function.diff
 
+#GARCOMPILER = GNU
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-python=$(bindir)/python
-CONFIGURE_ARGS += --with-perl=$(bindir)/perl
-CONFIGURE_ARGS += --with-ruby=$(bindir)/ruby
-CONFIGURE_ARGS += --with-java=/usr/j2se
+#CONFIGURE_ARGS += --with-perl=$(bindir)/perl
+#CONFIGURE_ARGS += --with-ruby=$(bindir)/ruby
+#CONFIGURE_ARGS += --with-java=/usr/j2se
 CONFIGURE_ARGS += --enable-gettext
 
 # No c-sharp at the moment
@@ -31,9 +34,17 @@ CONFIGURE_ARGS += --disable-csharp
 # Module requires apache 1.3.x
 CONFIGURE_ARGS += --disable-apache
 
+# Temporary
+CONFIGURE_ARGS += --disable-perl
+CONFIGURE_ARGS += --disable-ruby
+CONFIGURE_ARGS += --disable-java
+
 ENABLE_TEST = 0
 
 include ../category.mk
 
 LIBS += -lintl
 export LIBS
+
+pre-configure:
+	@echo $(CONFIGURE_ENV)
