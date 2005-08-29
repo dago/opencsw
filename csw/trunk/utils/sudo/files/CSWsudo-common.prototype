@@ -1,5 +1,3 @@
-d none /opt/csw/bin ? ? ?
-l none /opt/csw/bin/sudoedit=/opt/csw/bin/sudo
 d none /opt/csw/sbin ? ? ?
 f none /opt/csw/sbin/visudo=$basedir/opt/csw/sbin/visudo 0111 root root
 f none /opt/csw/etc/sudoers.CSW=$basedir/opt/csw/etc/sudoers.CSW 0440 root root

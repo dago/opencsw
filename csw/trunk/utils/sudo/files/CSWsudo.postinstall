@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BINDIR=$BASEDIR/opt/csw/sbin
+BINDIR=$BASEDIR/opt/csw/bin
 
 cd $BINDIR
 rm -f sudo sudoedit
