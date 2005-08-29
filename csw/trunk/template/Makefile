@@ -13,4 +13,10 @@ DISTFILES += CSWpackage.gspec
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+# Remove the following rules and uncomment the
+# include before building.
+all: .DEFAULT
+.DEFAULT:
+	@true
+
+#include ../category.mk
