@@ -3,6 +3,9 @@
 BINDIR=$BASEDIR/opt/csw/sbin
 
 cd $BINDIR
-rm -f sudo
-ln -sf sudo.ldap sudo
+rm -f sudo sudoedit
+ln -f sudo.ldap sudo
+ln -f sudo.ldap sudoedit
+
+exit 0
 

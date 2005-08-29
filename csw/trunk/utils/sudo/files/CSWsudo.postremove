@@ -2,10 +2,14 @@
 
 BINDIR=$BASEDIR/opt/csw/bin
 
+cd $BINDIR
+rm -f sudo sudoedit
+
 OTHERSUDO=`ls -1 sudo.* | head -1`
 if [ -n $OTHERSUDO ]; then
     rm -f sudo
-    ln -sf $OTHERSUDO sudo
+    ln -f $OTHERSUDO sudo
+    ln -f $OTHERSUDO sudoedit
 fi
 
 exit 0
