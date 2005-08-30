@@ -21,6 +21,9 @@ endef
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWap2modphp5.gspec
 
+# Fix up configure script
+PATCHFILES += config.diff
+
 #DEPENDS += server/apache2 server/mysql4
 
 # Configuration
@@ -68,8 +71,8 @@ CONFIGURE_ARGS += --with-mcal=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql4
-CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/mysql4
-CONFIGURE_ARGS += --with-ncurses=shared,$(prefix)
+CONFIGURE_ARGS += --with-mysqli
+#CONFIGURE_ARGS += --with-ncurses=shared,$(prefix)
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
 CONFIGURE_ARGS += --with-pgsql=shared,$(prefix)/postgresql
@@ -86,6 +89,12 @@ include ../category.mk
 
 EXTRA_LIB = $(prefix)/bdb43/lib
 EXTRA_INC = $(prefix)/bdb43/include
+
+# This is required so that we don't try to regen the
+# sqlite parser.
+pre-build:
+	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
+	@$(MAKECOOKIE)
 
 #post-install:
 #	@cp -f $(WORKSRC)/php.ini-recommended $(sysconfdir)/php.ini
