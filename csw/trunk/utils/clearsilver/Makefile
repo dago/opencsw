@@ -1,6 +1,6 @@
 GARNAME = clearsilver
-#GARVERSION = 0.10.1
-GARVERSION = 0.9.14
+GARVERSION = 0.10.1
+#GARVERSION = 0.9.14
 CATEGORIES = utils
 
 DESCRIPTION = Language-neutral HTML template system
@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://www.clearsilver.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWclearsilver.gspec
+#DISTFILES += CSWclearsilver.gspec
 
 # Remove hardcoded gcc references
 PATCHFILES += ccbuild.diff

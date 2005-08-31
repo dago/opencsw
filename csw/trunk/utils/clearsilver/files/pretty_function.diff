@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru clearsilver-0.9.13.orig/util/neo_err.h clearsilver-0.9.13/util/neo_err.h
---- clearsilver-0.9.13.orig/util/neo_err.h	2005-05-25 17:05:14.839820000 -0400
-+++ clearsilver-0.9.13/util/neo_err.h	2005-05-25 17:04:56.027755000 -0400
+diff --speed-large-files --minimal -Nru clearsilver-0.10.1.orig/util/neo_err.h clearsilver-0.10.1/util/neo_err.h
+--- clearsilver-0.10.1.orig/util/neo_err.h	2005-08-31 12:22:22.245771000 -0400
++++ clearsilver-0.10.1/util/neo_err.h	2005-08-31 12:22:06.196979000 -0400
 @@ -12,6 +12,12 @@
  #ifndef __NEO_ERR_H_
  #define __NEO_ERR_H_ 1
@@ -21,25 +21,25 @@ diff --speed-large-files --minimal -Nru clearsilver-0.9.13.orig/util/neo_err.h c
 -   nerr_raisef(__PRETTY_FUNCTION__,__FILE__,__LINE__,e,f,##a)
 +   nerr_raisef(PRETTY_FUNCTION,__FILE__,__LINE__,e,f,##a)
  
- NEOERR *nerr_raisef (const char *func, const char *file, int lineno, NERR_TYPE error, 
-                     const char *fmt, ...);
+ NEOERR *nerr_raisef (const char *func, const char *file, int lineno, 
+                      NERR_TYPE error, const char *fmt, ...);
  
  #define nerr_raise_errno(e,f,a...) \
 -   nerr_raise_errnof(__PRETTY_FUNCTION__,__FILE__,__LINE__,e,f,##a)
 +   nerr_raise_errnof(PRETTY_FUNCTION,__FILE__,__LINE__,e,f,##a)
  
- NEOERR *nerr_raise_errnof (const char *func, const char *file, int lineno, int error, 
-                     const char *fmt, ...);
+ NEOERR *nerr_raise_errnof (const char *func, const char *file, int lineno, 
+                            int error, const char *fmt, ...);
 @@ -87,7 +93,7 @@
   * returns: a pointer to an error
   */
  #define nerr_pass(e) \
 -   nerr_passf(__PRETTY_FUNCTION__,__FILE__,__LINE__,e)
 +   nerr_passf(PRETTY_FUNCTION,__FILE__,__LINE__,e)
- NEOERR *nerr_passf (const char *func, const char *file, int lineno, NEOERR *err);
+ NEOERR *nerr_passf (const char *func, const char *file, int lineno, 
+                     NEOERR *err);
  
- /* function: nerr_pass_ctx
-@@ -104,7 +110,7 @@
+@@ -105,7 +111,7 @@
   * returns: a pointer to an error
   */
  #define nerr_pass_ctx(e,f,a...) \
