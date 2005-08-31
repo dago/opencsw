@@ -32,7 +32,7 @@ DISTFILES += CSWphp5devel.gspec CSWphp5devel.prototype CSWphp5devel.depend
 
 # PHP Apache2 SAPI
 DISTFILES += CSWap2modphp5.gspec CSWap2modphp5.prototype CSWap2modphp5.depend 
-DISTFILES += CSWap2modphp5.space CSWap2modphp5.postinstall CSWap2modphp5.postremove
+DISTFILES += CSWap2modphp5.space CSWap2modphp5.postinstall CSWap2modphp5.preremove
 
 # PHP Extensions
 include files/extensions.mk
