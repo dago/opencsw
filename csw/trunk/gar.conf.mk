@@ -173,10 +173,12 @@ CPAN_MIRROR  = $(CPAN_ROOT)/authors/id/$(AUTHOR_ID)/
 
 # Compiler version
 ifeq ($(CC),gcc)
-CC_VERSION = $(shell $(CC_HOME)/gcc -v 2>&1| grep version | nawk '{ print $$NF }')
+CC_VERSION  = $(shell $(CC_HOME)/bin/gcc -v 2>&1| grep version)
+CXX_VERSION = $(CC_VERSION)
 endif
 ifeq ($(CC),cc)
-CC_VERSION = $(shell $(CC_HOME)/cc -V 2>&1| grep cc: | sed -e 's/cc: //')
+CC_VERSION  = $(shell $(CC_HOME)/bin/cc -V 2>&1| grep cc: | sed -e 's/cc: //')
+CXX_VERSION = $(shell $(CC_HOME)/bin/CC -V 2>&1| grep CC: | sed -e 's/CC: //')
 endif
 
 # Put these variables in the environment during the
@@ -186,7 +188,7 @@ STAGE_EXPORTS += datadir sysconfdir sharedstatedir localstatedir libdir
 STAGE_EXPORTS += optlibdir infodir lispdir includedir mandir docdir sourcedir
 STAGE_EXPORTS += perl_bindir CPPFLAGS CFLAGS CXXFLAGS LDFLAGS LD_RUN_PATH
 STAGE_EXPORTS += ASFLAGS OPTFLAGS LIBS CC CXX LD_OPTIONS
-STAGE_EXPORTS += CC_HOME CC_VERSION VENDORNAME VENDORSTAMP
+STAGE_EXPORTS += CC_HOME CC_VERSION CXX_VERSION VENDORNAME VENDORSTAMP
 
 CONFIGURE_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 BUILD_ENV     += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
