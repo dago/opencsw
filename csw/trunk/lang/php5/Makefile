@@ -16,13 +16,36 @@ define BLURB
   available.
 endef
 
-# Can't do direct downloads of PHP
+# Can't do direct downloads of PHP from php.net
+#MASTER_SITES = ftp://some.php.source.com/
+MASTER_SITES = ftp://ftp.cac.washington.edu/imap/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWap2modphp5.gspec
+DISTFILES += c-client.tar.Z
+
+IMAPDIR  = imap-2004f
+C_CLIENT = ../$(IMAPDIR)
+
+# PHP Core
+DISTFILES += CSWphp5.gspec CSWphp5.prototype CSWphp5.depend
+DISTFILES += CSWphp5devel.gspec CSWphp5devel.prototype CSWphp5devel.depend
+
+# PHP Apache2 SAPI
+DISTFILES += CSWap2modphp5.gspec CSWap2modphp5.prototype CSWap2modphp5.depend 
+DISTFILES += CSWap2modphp5.space CSWap2modphp5.postinstall CSWap2modphp5.postremove
+
+# PHP Extensions
+include files/extensions.mk
+
+# Apply patches from the workdir
+PATCHDIR = $(WORKDIR)
+PATCHDIRLEVEL = 0
 
 # Fix up configure script
 PATCHFILES += config.diff
+
+# Fix ssl paths for uw-imap c-client
+PATCHFILES += imap-ssl.diff
 
 #DEPENDS += server/apache2 server/mysql4
 
@@ -37,7 +60,7 @@ CONFIGURE_ARGS += --disable-static
 # Features
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --enable-dom=shared
-CONFIGURE_ARGS += --with-openssl=shared,$(prefix)/ssl
+CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
 CONFIGURE_ARGS += --with-kerberos=$(prefix)
 CONFIGURE_ARGS += --with-zlib=shared,$(prefix)
 CONFIGURE_ARGS += --enable-bcmath=shared
@@ -48,7 +71,7 @@ CONFIGURE_ARGS += --with-iconv=shared,$(prefix)
 CONFIGURE_ARGS += --enable-dba=shared
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
-CONFIGURE_ARGS += --with-db3=$(prefix)
+#CONFIGURE_ARGS += --with-db3=$(prefix)
 CONFIGURE_ARGS += --with-db4=$(prefix)/bdb43
 CONFIGURE_ARGS += --with-inifile
 CONFIGURE_ARGS += --enable-dio=shared
@@ -66,32 +89,31 @@ CONFIGURE_ARGS += --enable-gd-jis-conv
 CONFIGURE_ARGS += --enable-exif=shared
 CONFIGURE_ARGS += --with-gettext=shared,$(prefix)
 CONFIGURE_ARGS += --with-gmp=shared,$(prefix)
-#CONFIGURE_ARGS += --with-imap=$(WORKSRC)/imap
-#CONFIGURE_ARGS += --with-kerberos=$(prefix)
-#CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
+CONFIGURE_ARGS += --with-imap=$(C_CLIENT)
+CONFIGURE_ARGS += --with-kerberos=$(prefix)
+CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
 CONFIGURE_ARGS += --with-ldap=shared,$(prefix)
 CONFIGURE_ARGS += --with-ldap-sasl=$(prefix)
-CONFIGURE_ARGS += --with-mbstring=shared
-#CONFIGURE_ARGS += --with-mcve=shared,$(prefix)
-#CONFIGURE_ARGS += --with-openssl-dir=$(prefix)/ssl
+CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql4
 CONFIGURE_ARGS += --with-mysqli=shared
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
-CONFIGURE_ARGS += --with-pgsql=shared,$(prefix)/postgresql
+CONFIGURE_ARGS += --with-pgsql=shared,$(prefix)/postgresql/bin/sparcv8
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --enable-shmop=shared
-CONFIGURE_ARGS += --enable-simplexml=shared
-CONFIGURE_ARGS += --enable-snmp=shared,$(prefix)
+#CONFIGURE_ARGS += --enable-simplexml=shared
+CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
-CONFIGURE_ARGS += --with-sqlite=shared
+CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
+CONFIGURE_ARGS += --enable-sqlite-utf8
 CONFIGURE_ARGS += --enable-sysvmsg=shared
 CONFIGURE_ARGS += --enable-sysvsem=shared
 CONFIGURE_ARGS += --enable-sysvshm=shared
-CONFIGURE_ARGS += --enable-xml=shared
+CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --with-expat-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-yp=shared
@@ -99,6 +121,7 @@ CONFIGURE_ARGS += --enable-yp=shared
 # Need a fix for ncurses.h use of stdbool.h
 #CONFIGURE_ARGS += --with-ncurses=shared,$(prefix)
 
+# Some tests are failing -- report submitted to PHP QA
 ENABLE_TEST = 0
 
 include ../category.mk
@@ -108,12 +131,19 @@ INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
 EXTRA_LIB = $(prefix)/bdb43/lib
 EXTRA_INC = $(prefix)/bdb43/include
 
+# Build the imap client library first
+pre-configure:
+	@( cd $(WORKDIR)/$(IMAPDIR) ; $(BUILD_ENV) make soc )
+	@$(MAKECOOKIE)
+
 # This is required so that we don't try to regen the
 # sqlite parser.
 pre-build:
 	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
 	@$(MAKECOOKIE)
 
+# Copy over a starter config file
 post-install:
-	@cp -f $(WORKSRC)/php.ini-recommended $(DESTDIR)$(sysconfdir)/php.ini
+	@cp -f $(WORKSRC)/php.ini-recommended $(DESTDIR)$(prefix)/php5/lib/php.ini
+	@$(MAKECOOKIE)
 

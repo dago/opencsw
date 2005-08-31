@@ -1,6 +1,6 @@
 diff --speed-large-files --minimal -Nru php-5.0.4.orig/configure php-5.0.4/configure
---- php-5.0.4.orig/configure	2005-08-30 20:35:07.319841000 -0400
-+++ php-5.0.4/configure	2005-08-30 20:32:40.451704000 -0400
+--- php-5.0.4.orig/configure	2005-08-31 11:58:09.764200000 -0400
++++ php-5.0.4/configure	2005-08-31 11:55:06.574465000 -0400
 @@ -6530,10 +6530,7 @@
      else
        APXS_SYSCONFDIR='$(INSTALL_ROOT)'`$APXS -q SYSCONFDIR`
@@ -31,17 +31,6 @@ diff --speed-large-files --minimal -Nru php-5.0.4.orig/configure php-5.0.4/confi
    if test -x "$MYSQL_CONFIG" && $MYSQL_CONFIG $MYSQL_LIB_CFG > /dev/null 2>&1; then
      MYSQLI_INCLINE=`$MYSQL_CONFIG --cflags | sed -e "s/'//g"`
      MYSQLI_LIBLINE=`$MYSQL_CONFIG $MYSQL_LIB_CFG | sed -e "s/'//g"`
-@@ -70766,8 +70763,8 @@
- 
-   if test -n "$PG_CONFIG"; then
-     echo "$ac_t""$PG_CONFIG" 1>&6
--    PGSQL_INCLUDE=`$PG_CONFIG --includedir`
--    PGSQL_LIBDIR=`$PG_CONFIG --libdir`
-+    PGSQL_INCLUDE=/opt/csw/postgresql/include
-+    PGSQL_LIBDIR=/opt/csw/postgresql/lib
-     cat >> confdefs.h <<\EOF
- #define HAVE_PG_CONFIG_H 1
- EOF
 @@ -72930,7 +72927,7 @@
    echo $ac_n "(cached) $ac_c" 1>&6
  else

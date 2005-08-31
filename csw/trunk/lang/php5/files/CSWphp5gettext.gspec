@@ -1,0 +1,5 @@
+%var       bitname php5_gettext
+%var       pkgname CSWphp5gettext
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - GNU gettext Extension
+%copyright url file://%{WORKSRC}/LICENSE

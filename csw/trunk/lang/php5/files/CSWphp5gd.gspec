@@ -1,0 +1,5 @@
+%var       bitname php5_gd
+%var       pkgname CSWphp5gd
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - GD Extension
+%copyright url file://%{WORKSRC}/LICENSE

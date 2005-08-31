@@ -1,0 +1,5 @@
+%var       bitname php5_mssql
+%var       pkgname CSWphp5mssql
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - MSSQL Extension
+%copyright url file://%{WORKSRC}/LICENSE

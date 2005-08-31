@@ -1,0 +1,13 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWgcrypt libgcrypt - GNU libcrypt
+P CSWggettext ggettext - GNU gettext
+P CSWgpgerr libgpg_error - GNU gpg related library
+P CSWiconv libiconv - GNU iconv library
+P CSWlibnet libnet - the libnet packet construction library
+P CSWlibxml2 libxml2 - XML Parser Library
+P CSWlibxslt libxslt - XSLT engine for the XML Toolkit
+P CSWzlib zlib - Zlib Data Compression Library
+P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWkvm Core Architecture, (Kvm)
+P SUNWlibms Sun WorkShop Bundled shared libm

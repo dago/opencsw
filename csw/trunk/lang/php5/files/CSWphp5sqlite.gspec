@@ -1,0 +1,5 @@
+%var       bitname php5_sqlite
+%var       pkgname CSWphp5sqlite
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - SQLite Extension
+%copyright url file://%{WORKSRC}/LICENSE

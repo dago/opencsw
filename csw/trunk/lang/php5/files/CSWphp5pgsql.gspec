@@ -1,0 +1,5 @@
+%var       bitname php5_pgsql
+%var       pkgname CSWphp5pgsql
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - PostgreSQL Extension
+%copyright url file://%{WORKSRC}/LICENSE

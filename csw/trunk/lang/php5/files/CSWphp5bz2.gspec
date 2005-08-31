@@ -1,0 +1,5 @@
+%var       bitname php5_bz2
+%var       pkgname CSWphp5bz2
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - bzip2 Extension
+%copyright url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,5 @@
+%var       bitname php5_ldap
+%var       pkgname CSWphp5ldap
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - OpenLDAP Extension
+%copyright url file://%{WORKSRC}/LICENSE

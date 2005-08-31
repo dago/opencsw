@@ -1,0 +1,5 @@
+%var       bitname php5_gmp
+%var       pkgname CSWphp5gmp
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - GnuMP Extension
+%copyright url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,15 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWexpat expat - XML Parser Toolkit
+P CSWfconfig fontconfig - Font configuration and customization library
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWgd gd - libgd, Graphics creation library and utilities
+P CSWjpeg jpeg - lib and tools for JPEG image format
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWt1lib t1lib - Type1 font renderering library
+P CSWxpm xpm - library for X11 PixMap format (libXpm.so.4.11)
+P CSWzlib zlib - Zlib Data Compression Library
+P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWkvm Core Architecture, (Kvm)
+P SUNWlibms Sun WorkShop Bundled shared libm
+P SUNWxwplt X Window System platform software

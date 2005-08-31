@@ -1,0 +1,5 @@
+%var       bitname php5_mysqli
+%var       pkgname CSWphp5mysqli
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - MySQLi Extension
+%copyright url file://%{WORKSRC}/LICENSE

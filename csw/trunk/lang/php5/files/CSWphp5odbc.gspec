@@ -1,0 +1,5 @@
+%var       bitname php5_odbc
+%var       pkgname CSWphp5odbc
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - unixODBC Extension
+%copyright url file://%{WORKSRC}/LICENSE

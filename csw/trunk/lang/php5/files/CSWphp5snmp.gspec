@@ -1,0 +1,5 @@
+%var       bitname php5_snmp
+%var       pkgname CSWphp5snmp
+%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var	   desc PHP 5 - NetSNMP Extension
+%copyright url file://%{WORKSRC}/LICENSE
