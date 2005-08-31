@@ -1,7 +1,19 @@
 diff --speed-large-files --minimal -Nru php-5.0.4.orig/configure php-5.0.4/configure
---- php-5.0.4.orig/configure	2005-08-30 11:45:32.815309000 -0400
-+++ php-5.0.4/configure	2005-08-30 11:43:05.935250000 -0400
-@@ -28896,7 +28896,7 @@
+--- php-5.0.4.orig/configure	2005-08-30 20:35:07.319841000 -0400
++++ php-5.0.4/configure	2005-08-30 20:32:40.451704000 -0400
+@@ -6530,10 +6530,7 @@
+     else
+       APXS_SYSCONFDIR='$(INSTALL_ROOT)'`$APXS -q SYSCONFDIR`
+       APACHE_HOOKS_INSTALL="\$(mkinstalldirs) '$APXS_LIBEXECDIR' && \
+-                      \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+-                       $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+-                             -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                             -i -a -n php5 $SAPI_SHARED"
++                      \$(mkinstalldirs) '$APXS_SYSCONFDIR'"
+     fi
+   fi
+ 
+@@ -28896,7 +28893,7 @@
  
  if test "$PHP_FAM" != "no"; then
    
@@ -10,7 +22,7 @@ diff --speed-large-files --minimal -Nru php-5.0.4.orig/configure php-5.0.4/confi
  SEARCH_FOR="/include/fam.h"  # you most likely want to change this
  if test -r $PHP_FAM/$SEARCH_FOR; then # path given as parameter
    FAM_DIR=$PHP_FAM
-@@ -57524,7 +57524,7 @@
+@@ -57524,7 +57521,7 @@
    else
      MYSQL_LIB_CFG='--libs'
    fi
@@ -19,7 +31,7 @@ diff --speed-large-files --minimal -Nru php-5.0.4.orig/configure php-5.0.4/confi
    if test -x "$MYSQL_CONFIG" && $MYSQL_CONFIG $MYSQL_LIB_CFG > /dev/null 2>&1; then
      MYSQLI_INCLINE=`$MYSQL_CONFIG --cflags | sed -e "s/'//g"`
      MYSQLI_LIBLINE=`$MYSQL_CONFIG $MYSQL_LIB_CFG | sed -e "s/'//g"`
-@@ -70766,8 +70766,8 @@
+@@ -70766,8 +70763,8 @@
  
    if test -n "$PG_CONFIG"; then
      echo "$ac_t""$PG_CONFIG" 1>&6
@@ -30,7 +42,7 @@ diff --speed-large-files --minimal -Nru php-5.0.4.orig/configure php-5.0.4/confi
      cat >> confdefs.h <<\EOF
  #define HAVE_PG_CONFIG_H 1
  EOF
-@@ -72930,7 +72930,7 @@
+@@ -72930,7 +72927,7 @@
    echo $ac_n "(cached) $ac_c" 1>&6
  else
    ac_save_LIBS="$LIBS"
