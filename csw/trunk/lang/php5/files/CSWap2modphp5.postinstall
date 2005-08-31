@@ -22,7 +22,7 @@ if [ -z "`grep 'IfModule libphp5.c' $AP2_CONFIG`" ]; then
     cat <<CONFIG >> $AP2_CONFIG
 
 # Added by $PKGINST
-<IfModule libphp5.c>
+<IfModule mod_php5.c>
     <IfModule mod_mime.c>
         AddType application/x-httpd-php .php
         AddType application/x-httpd-php-source .phps
