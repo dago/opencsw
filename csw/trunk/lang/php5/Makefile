@@ -17,8 +17,10 @@ define BLURB
 endef
 
 # Can't do direct downloads of PHP from php.net
-#MASTER_SITES = ftp://some.php.source.com/
+#MASTER_SITES = http://www.php.net/downloads.php
 MASTER_SITES = ftp://ftp.cac.washington.edu/imap/
+
+SPKG_SOURCEURL = http://www.php.net/downloads.php
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += c-client.tar.Z
