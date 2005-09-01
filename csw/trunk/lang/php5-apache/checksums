@@ -1,0 +1,8 @@
+fb1aac107870f897d26563a9cc5053c0  download/php-5.0.4.tar.bz2
+cba4655d4a8c15b76e43ef35640027ac  download/CSWmodphp5.gspec
+f4415b2b975be4b5f65e0e129a544c54  download/CSWmodphp5.prototype
+3e96c8df7dea17668af65c2e1c142bec  download/CSWmodphp5.depend
+0dd379f20ceb32fc77bb3a9bf045097f  download/CSWmodphp5.space
+a15e78bd1bed911591a88569f5853ac6  download/CSWmodphp5.postinstall
+f6ce10546e0e6e86a27963138694ebd3  download/CSWmodphp5.preremove
+89f4914b8ad8cf95facb42fde2ce9330  download/config.diff
