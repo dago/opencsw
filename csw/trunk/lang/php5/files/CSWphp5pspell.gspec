@@ -1,5 +1,7 @@
-%var       bitname php5_pspell
-%var       pkgname CSWphp5pspell
-%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%var	   desc PHP 5 - pspell Extension
-%copyright url file://%{WORKSRC}/LICENSE
+%var            bitname php5_pspell
+%var            pkgname CSWphp5pspell
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%postinstall    url file://%{WORKDIR}/ext_enable.sh
+%postremove     url file://%{WORKDIR}/ext_disable.sh
+%var	        desc PHP 5 - pspell Extension
+%copyright      url file://%{WORKSRC}/LICENSE

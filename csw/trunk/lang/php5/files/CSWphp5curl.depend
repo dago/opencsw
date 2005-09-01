@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWcurl curl - Library and tool for common Internet protocols
 P CSWiconv libiconv - GNU iconv library
 P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA

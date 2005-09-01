@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWlibnet libnet - the libnet packet construction library
 P CSWoldap openldap - ldap clients,libraries and server
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.

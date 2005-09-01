@@ -28,6 +28,9 @@ DISTFILES += c-client.tar.Z
 IMAPDIR  = imap-2004f
 C_CLIENT = ../$(IMAPDIR)
 
+# Auxilliary files
+DISTFILES += php.ini ext_enable.sh ext_disable.sh
+
 # PHP Core
 DISTFILES += CSWphp5.gspec CSWphp5.prototype CSWphp5.depend
 DISTFILES += CSWphp5devel.gspec CSWphp5devel.prototype CSWphp5devel.depend
@@ -144,8 +147,7 @@ pre-build:
 	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
 	@$(MAKECOOKIE)
 
-# Copy over a starter config file
+# Copy over a starter config file (based on php.ini-recommended)
 post-install:
-	@cp -f $(WORKSRC)/php.ini-recommended $(DESTDIR)$(prefix)/php5/lib/php.ini
+	@sed -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini > $(DESTDIR)$(prefix)/php5/lib/php.ini
 	@$(MAKECOOKIE)
-

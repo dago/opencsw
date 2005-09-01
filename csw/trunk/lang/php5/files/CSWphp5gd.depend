@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWexpat expat - XML Parser Toolkit
 P CSWfconfig fontconfig - Font configuration and customization library
 P CSWftype2 freetype2 - The free and portable high quality font engine

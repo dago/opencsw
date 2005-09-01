@@ -2,6 +2,8 @@ d none /opt/csw/php5 0755 root bin
 d none /opt/csw/php5/bin 0755 root bin
 f none /opt/csw/php5/bin/pear=$basedir/opt/csw/php5/bin/pear 0755 root bin
 f none /opt/csw/php5/bin/php=$basedir/opt/csw/php5/bin/php 0755 root bin
+d none /opt/csw/bin ? ? ?
+l none /opt/csw/bin/php5=/opt/csw/php5/bin/php
 d none /opt/csw/php5/etc 0755 root bin
 f none /opt/csw/php5/etc/pear.conf=$basedir/opt/csw/php5/etc/pear.conf 0644 root bin
 d none /opt/csw/php5/lib 0755 root bin

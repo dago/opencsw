@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWgcrypt libgcrypt - GNU libcrypt
 P CSWggettext ggettext - GNU gettext
 P CSWgpgerr libgpg_error - GNU gpg related library

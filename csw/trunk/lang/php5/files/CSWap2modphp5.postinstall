@@ -15,7 +15,7 @@ chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n php5 libphp5.so
 
 # Add a configuration sample
-if [ -z "`grep 'IfModule libphp5.c' $AP2_CONFIG`" ]; then
+if [ -z "`grep 'IfModule mod_php5.c' $AP2_CONFIG`" ]; then
     cp $AP2_CONFIG $AP2_CONFIG.pre-PHP5
 
     echo "Adding libphp5 configuration to $AP2_CONFIG..."

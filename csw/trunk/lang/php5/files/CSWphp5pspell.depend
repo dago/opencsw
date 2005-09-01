@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWaspell aspell - The GNU spell checker (core package only, no dictionary)
 P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library

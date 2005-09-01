@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5 (core)
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWncurses ncurses - ncurses library and utilities
 P CSWreadline readline - library to enable interactive line editing
 P SUNWcsl Core Solaris, (Shared Libs)

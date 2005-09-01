@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Processor 5 (core)
+P CSWphp5 php5 - PHP Hypertext Processor 5
 P CSWap2prefork ap2_prefork - Apache 2.0 prefork MPM
 P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
 P CSWiconv libiconv - GNU iconv library
