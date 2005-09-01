@@ -45,7 +45,11 @@ CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql4
 CONFIGURE_ARGS += --with-mysqli=shared
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
+ifeq ($(shell /bin/uname -p),sparc)
 CONFIGURE_ARGS += --with-pgsql=shared,$(prefix)/postgresql/bin/sparcv8
+else
+CONFIGURE_ARGS += --with-pgsql=shared,$(prefix)/postgresql/bin
+endif
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
