@@ -1,5 +1,5 @@
 GARNAME = pv
-GARVERSION = 0.8.0
+GARVERSION = 0.9.2
 CATEGORIES = utils
 
 DESCRIPTION = pipeviewer, like cat with progress indications
@@ -13,19 +13,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://unc.dl.sourceforge.net/sourceforge/pipeviewer/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-
-# Disable generation of TeX documentation
-PATCHFILES = notexi.diff
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWpv.gspec CSWpv.depend CSWpv.prototype
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-RPM_BUILD_ROOT=""
-export RPM_BUILD_ROOT
-
-INSTALL_OVERRIDE_DIRS = RPM_BUILD_ROOT
-
-# One test fails (eta)
-ENABLE_TEST = 0
 
 include ../category.mk
