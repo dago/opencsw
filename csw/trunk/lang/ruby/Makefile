@@ -17,8 +17,7 @@ MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-#DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
-DISTFILES += CSWruby.gspec
+DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
 
 # Compile against OSSL 0.9.8
 PATCHFILES += ossl-0.9.8.diff
