@@ -1,4 +1,4 @@
-#!/usr/bin/perl -lw
+#!/opt/csw/bin/perl -lw
 #
 # $Id: cswproto 1276 2005-06-02 17:45:37Z comand $
 # $URL: http://cryptic.sfbay:5957/svn/csw/bin/cswproto $
@@ -7,9 +7,10 @@
 #
 
 use strict;
-use Getopt::Std;
+use Getopt::Long qw/:config no_ignore_case/;
 use vars qw/
-    $opt_h $opt_s $opt_v @XPATS @XFORMS %Common $StdOwn $StdGrp $StdDirPerm
+    $opt_h $opt_s %srcvars %cmpvars @XPATS @XFORMS %Common
+    $StdOwn $StdGrp $StdDirPerm
 /;
 # atime=8,mtime=9,ctime=10
 use constant TIME_FIELD => 10;
@@ -34,33 +35,69 @@ $StdDirPerm = '0755';
     qr{perllocal\.pod},
 );
 
+# Do variable replacements in a text string
+sub replace {
+    my ($rdata, $text) = @_;
+    return unless $rdata and (ref($rdata) eq 'HASH') and $text;
+    $$text =~ s/$rdata->{$_}/\$$_/g foreach (keys %$rdata);
+}
+
 #
 # MAIN EXECUTION
 #
 
 # Process command line arguments
-getopts("hs:v:");
+my $test;
+GetOptions(
+    'v=s%'    => \%srcvars,
+    'V=s%'    => \%cmpvars,
+    'stamp=s' => \$opt_s,
+    'help'    => \$opt_h,
+);
+
 die <<"_USAGE_" if $opt_h;
-Usage: $0 [-h] [-s <timestamp>] [-v var=value] path1[=path1] path2[=path2]
+Usage: $0 [-h] [-s <timestamp>] [-v var=value] [-V var=value]
+       path1[=path1] path2[=path2]
+
+    -s      Timestamp source.
+            The path to a file to be used as the base timestamp for prototype
+            operations.  If this is specified, all source file creation times
+            are compared to the creation time of this file.  Files created
+            *before* this time will be excluded from the prototype.
+
+    -v      Source replacement variable.
+            This is a name=value pair to be used for inserting replacement
+            variables into the prototype.  The -v flag will replace parts of
+            the source path only with variable names which can be supplied to
+            pkgmk at package creation time.  This option can be specified
+            multiple times.
+
+    -V      Replacement variable.
+            This is a name=value pair to be used for inserting replacement
+            variables into the prototype.  The -v flag will replace parts of
+            each prototype path with variable names which can be supplied to
+            pkgmk at package creation time.  This option can be specified
+            multiple times.
+
+    -h      Display brief usage.
+
+    pathN   The remainder of arguments to this command will be specified
+            directly to pkgproto.  These arguments specify which paths are to
+            be included in the prototype.  This can be specified as
+            pathX=pathY to use a different prefix for files in the prototype
+            than were present on the build system.
+
 _USAGE_
+
 die "error: timestamp not found\n" if $opt_s and ! -r $opt_s;
 die "error: one or more pkgproto patterns required\n" unless @ARGV;
 
 my $s_time = $opt_s ? (stat($opt_s))[TIME_FIELD] : 0;
 
-my ($repl_var, $repl_pat);
-if ($opt_v) {
-    ($repl_var, $repl_pat) = split /=/, $opt_v;
-    die "error: invalid replacement '-v $opt_v'\n"
-        unless defined $repl_var and defined $repl_pat;
-    
-    eval { $repl_pat = qr/$repl_pat/ };
-    die "error: invalid replacement: $@\n" if $@;
-}
-
 # Load common path contents
 while (<DATA>) { chomp; $Common{$_} = 1 }
 
+# Create the prototype
 my $PPAT = join ' ' => @ARGV;
 open PROTO, "pkgproto $PPAT |"
     or die "failed to open pipe to pkgproto: $!";
@@ -81,8 +118,8 @@ while (<PROTO>) {
             next unless $f_time >= $s_time;
         }
 
-        if (($f_src ne $f_dst) && $repl_var) {
-            $f_src =~ s/$repl_pat/\$$repl_var/;
+        if ($f_src ne $f_dst) {
+            replace(\%srcvars, \$f_src);
             $F[2] = join '=', $f_dst, $f_src;
         }
     }
@@ -107,8 +144,11 @@ while (<PROTO>) {
 }
 close PROTO;
 
+# Do variable replacements, and 
 foreach my $item (sort { $a->[2] cmp $b->[2] } @prototype) {
-    print join " " => @$item;
+    my $line = join " " => @$item;
+    replace(\%cmpvars, \$line);
+    print $line;
 }
 
 # Common directories (CSWcommon plus a few others)
