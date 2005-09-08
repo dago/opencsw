@@ -57,7 +57,7 @@ GetOptions(
 
 die <<"_USAGE_" if $opt_h;
 Usage: $0 [-h] [-s <timestamp>] [-v var=value] [-V var=value]
-       path1[=path1] path2[=path2]
+       path1[=path1] ... pathN[=pathN]
 
     -s      Timestamp source.
             The path to a file to be used as the base timestamp for prototype
