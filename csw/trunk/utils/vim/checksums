@@ -1,6 +1,5 @@
 821fda8f14d674346b87e3ef9cb96389  download/vim-6.3.tar.bz2
-1dc9d9df510bc61bccea0d53a09cca6e  download/CSWvim.gspec
-3f462cacc85625a20157c36f216ada6c  download/CSWvim.depend
-140bfd2986067248ec388ecd516c41b4  download/CSWvim.prototype
+1a14f0f28d88f70c633b7ce867ee8c8c  download/CSWgvim.gspec
+140bfd2986067248ec388ecd516c41b4  download/CSWgvim.prototype
 e54af4548b965b1c563ec5288bbd71e1  download/CSWvimrt.gspec
 dee8bffea8549d0325ce4747ce7c20a2  download/CSWvimrt.prototype

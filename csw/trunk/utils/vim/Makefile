@@ -2,7 +2,7 @@ GARNAME = vim
 GARVERSION = 6.3
 CATEGORIES = utils
 
-DESCRIPTION = Vi IMproved
+DESCRIPTION = Vi IMproved with GTK+ support
 define BLURB
   Vim is an almost fully-compatible version of the Unix editor Vi. Many new
   features have been added including multi-level undo, syntax highlighting,
@@ -13,7 +13,8 @@ endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWvim.gspec CSWvim.depend CSWvim.prototype
+#DISTFILES += CSWvim.gspec CSWvim.depend CSWvim.prototype
+DISTFILES += CSWgvim.gspec CSWgvim.prototype
 DISTFILES += CSWvimrt.gspec CSWvimrt.prototype
 
 WORKSRC = $(WORKDIR)/$(GARNAME)63
