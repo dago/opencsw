@@ -1,5 +1,5 @@
-%var       bitname vim_minimal
-%var       pkgname CSWvim-minimal
+%var       bitname vim
+%var       pkgname CSWvim
 %include   url file://%{GARDIR}/pkglib/csw_standard.gspec
 %copyright
 Vim is Charityware.  You can use and copy it as much as you like, but you are

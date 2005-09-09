@@ -15,7 +15,7 @@ MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 WORKSRC = $(WORKDIR)/$(GARNAME)63
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWvim-minimal.gspec CSWvim-minimal.prototype CSWvim-minimal.depend
+DISTFILES += CSWvim.gspec CSWvim.prototype CSWvim.depend
 
 #DEPENDS = utils/mktemp lib/ncurses
 
@@ -23,8 +23,8 @@ INSTALL_SCRIPTS = minimal
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
-CONFIGURE_ARGS += --with-tlib=ncurses
-CONFIGURE_ARGS += --with-vim-name="vim-minimal"
+CONFIGURE_ARGS += --with-tlib=curses
+CONFIGURE_ARGS += --with-vim-name="vim-nox"
 CONFIGURE_ARGS += --disable-xim
 CONFIGURE_ARGS += --without-x
 CONFIGURE_ARGS += --enable-gui=no
@@ -37,6 +37,7 @@ ENABLE_TEST = 0
 include ../category.mk
 
 install-minimal:
-	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src installvimbin installlinks installtools
+	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src \
+		installvimbin installlinks installtools
 	@$(MAKECOOKIE)
 	$(DONADA)
