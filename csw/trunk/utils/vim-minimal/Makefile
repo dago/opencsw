@@ -2,7 +2,7 @@ GARNAME = vim
 GARVERSION = 6.3
 CATEGORIES = utils
 
-DESCRIPTION = Vi Improved - minimal configuration
+DESCRIPTION = Vi Improved
 define BLURB
   Vim is an almost fully-compatible version of the Unix editor Vi. Many new
   features have been added including multi-level undo, syntax highlighting,
@@ -15,7 +15,8 @@ MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 WORKSRC = $(WORKDIR)/$(GARNAME)63
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWvim.gspec CSWvim.prototype CSWvim.depend
+#DISTFILES += CSWvim.gspec CSWvim.prototype CSWvim.depend
+DISTFILES += CSWvim.gspec CSWvim.prototype
 
 #DEPENDS = utils/mktemp lib/ncurses
 
@@ -42,6 +43,7 @@ include ../category.mk
 # Avoid direct depends for perl/python
 LD_OPTIONS += -zlazyload
 
+# Don't install the runtime
 install-minimal:
 	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src \
 		installvimbin installlinks installtools
