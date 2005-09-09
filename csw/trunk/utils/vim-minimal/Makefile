@@ -30,11 +30,17 @@ CONFIGURE_ARGS += --without-x
 CONFIGURE_ARGS += --enable-gui=no
 CONFIGURE_ARGS += --disable-gpm
 CONFIGURE_ARGS += --enable-static --disable-shared
+CONFIGURE_ARGS += --enable-perlinterp
+CONFIGURE_ARGS += --enable-pythoninterp
+CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.3/config/
 
 # Test requires controlling terminal
 ENABLE_TEST = 0
 
 include ../category.mk
+
+# Avoid direct depends for perl/python
+LD_OPTIONS += -zlazyload
 
 install-minimal:
 	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src \

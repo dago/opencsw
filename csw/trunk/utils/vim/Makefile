@@ -26,7 +26,7 @@ WORKSRC = $(WORKDIR)/$(GARNAME)63
 #DEPENDS = utils/mktemp lib/ncurses
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-tlib=ncurses
+CONFIGURE_ARGS += --with-tlib=curses
 CONFIGURE_ARGS += --with-features=huge 
 CONFIGURE_ARGS += --enable-gui=gnome2
 CONFIGURE_ARGS += --enable-perlinterp
@@ -38,5 +38,6 @@ ENABLE_TEST = 0
 
 include ../category.mk
 
+# Avlid direct depends for perl/python
 LD_OPTIONS += -zlazyload
 
