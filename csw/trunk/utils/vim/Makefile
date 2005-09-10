@@ -2,7 +2,7 @@ GARNAME = vim
 GARVERSION = 6.3
 CATEGORIES = utils
 
-DESCRIPTION = Vi Improved
+DESCRIPTION = Vi IMproved
 define BLURB
   Vim is an almost fully-compatible version of the Unix editor Vi. Many new
   features have been added including multi-level undo, syntax highlighting,
@@ -28,7 +28,7 @@ CONFIGURE_ARGS += --without-x
 CONFIGURE_ARGS += --enable-gui=no
 CONFIGURE_ARGS += --disable-gpm
 CONFIGURE_ARGS += --enable-static --disable-shared
-CONFIGURE_ARGS += --enable-perlinterp
+#CONFIGURE_ARGS += --enable-perlinterp
 CONFIGURE_ARGS += --enable-pythoninterp
 CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.3/config/
 
