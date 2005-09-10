@@ -1,5 +1,6 @@
 GARNAME = emacs
-GARVERSION = 21.3
+GARVERSION = 21.4
+PATCHLEVEL = a
 CATEGORIES = utils
 
 DESCRIPTION = Emacs editor
@@ -11,16 +12,23 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATCHLEVEL).tar.gz
 DISTFILES += CSWemacs.gspec
 #DISTFILES += CSWemacsrt.gspec CSWemacs.gspec CSWxemacs.gspec
 #DISTFILES += CSWemacsrt.prototype CSWemacs.prototype CSWxemacs.prototype
 
+# Force make to acknowledge DESTDIR
+#PATCHFILES += destdir.diff
+
 CONFIGURE_ARGS  = $(DIRPATHS)
-#CONFIGURE_ARGS += 
+CONFIGURE_ARGS += --with-kerberos5
 
 # Test requires controlling terminal
 ENABLE_TEST = 0
 
 include ../category.mk
+
+pre-configure:
+	@touch $(WORKSRC)/configure
+	@$(MAKECOOKIE)
 
