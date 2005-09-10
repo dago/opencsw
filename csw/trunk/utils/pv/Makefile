@@ -12,9 +12,14 @@ define BLURB
   completion.
 endef
 
+# Project URL
+SPKG_SOURCEURL = http://www.ivarch.com/programs/pv.shtml
+
+# Source files
 MASTER_SITES = http://unc.dl.sourceforge.net/sourceforge/pipeviewer/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWpv.gspec CSWpv.depend CSWpv.prototype
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
