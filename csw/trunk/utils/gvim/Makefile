@@ -13,9 +13,7 @@ endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-#DISTFILES += CSWvim.gspec CSWvim.depend CSWvim.prototype
 DISTFILES += CSWgvim.gspec CSWgvim.prototype
-DISTFILES += CSWvimrt.gspec CSWvimrt.prototype
 
 WORKSRC = $(WORKDIR)/$(GARNAME)63
 
@@ -25,8 +23,11 @@ WORKSRC = $(WORKDIR)/$(GARNAME)63
 
 #DEPENDS = utils/mktemp lib/ncurses
 
+INSTALL_SCRIPTS = minimal
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-tlib=curses
+CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --with-features=huge 
 CONFIGURE_ARGS += --enable-gui=gnome2
 CONFIGURE_ARGS += --enable-perlinterp
@@ -40,4 +41,11 @@ include ../category.mk
 
 # Avlid direct depends for perl/python
 LD_OPTIONS += -zlazyload
+
+# Don't install the runtime
+install-minimal:
+	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src \
+		installvimbin installlinks installtools
+	@$(MAKECOOKIE)
+	$(DONADA)
 

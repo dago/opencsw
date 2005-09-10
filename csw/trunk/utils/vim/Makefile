@@ -15,17 +15,14 @@ MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 WORKSRC = $(WORKDIR)/$(GARNAME)63
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-#DISTFILES += CSWvim.gspec CSWvim.prototype CSWvim.depend
 DISTFILES += CSWvim.gspec CSWvim.prototype
+DISTFILES += CSWvimrt.gspec CSWvimrt.prototype
 
 #DEPENDS = utils/mktemp lib/ncurses
-
-INSTALL_SCRIPTS = minimal
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
 CONFIGURE_ARGS += --with-tlib=curses
-CONFIGURE_ARGS += --with-vim-name="vim-nox"
 CONFIGURE_ARGS += --disable-xim
 CONFIGURE_ARGS += --without-x
 CONFIGURE_ARGS += --enable-gui=no
@@ -43,9 +40,3 @@ include ../category.mk
 # Avoid direct depends for perl/python
 LD_OPTIONS += -zlazyload
 
-# Don't install the runtime
-install-minimal:
-	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src \
-		installvimbin installlinks installtools
-	@$(MAKECOOKIE)
-	$(DONADA)

@@ -1,13 +1,12 @@
 d none /opt/csw ? ? ?
 d none /opt/csw/bin ? ? ?
-f none /opt/csw/bin/vim=$basedir/opt/csw/bin/vim 0755 root bin
-s none /opt/csw/bin/gvim=vim
-s none /opt/csw/bin/gview=vim
-s none /opt/csw/bin/rgvim=vim
-s none /opt/csw/bin/rgview=vim
-s none /opt/csw/bin/evim=vim
-s none /opt/csw/bin/eview=vim
-s none /opt/csw/bin/gvimdiff=vim
-s none /opt/csw/bin/rvim=vim
-s none /opt/csw/bin/vimdiff=vim
-f none /opt/csw/bin/vimtutor=$basedir/opt/csw/bin/vimtutor 0755 root bin
+f none /opt/csw/bin/vim-x11=$basedir/opt/csw/bin/vim-x11 0755 root bin
+s none /opt/csw/bin/gvim=vim-x11
+s none /opt/csw/bin/gview=vim-x11
+s none /opt/csw/bin/rgvim=vim-x11
+s none /opt/csw/bin/rgview=vim-x11
+s none /opt/csw/bin/evim=vim-x11
+s none /opt/csw/bin/eview=vim-x11
+s none /opt/csw/bin/gvimdiff=vim-x11
+s none /opt/csw/bin/rvim=vim-x11
+s none /opt/csw/bin/vimdiff=vim-x11
