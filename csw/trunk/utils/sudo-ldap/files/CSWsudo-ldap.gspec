@@ -1,5 +1,5 @@
 %var       bitname sudo_ldap
 %var       pkgname CSWsudoldap
 %include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%var       desc sudo with LDAP support
+%var       desc Provides limited super user privileges (LDAP Enabled)
 %copyright url file://%{WORKSRC}/LICENSE
