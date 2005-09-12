@@ -2,7 +2,7 @@
 878aa4b575c1d9fd2f0d0d0106c49ee2  download/CSWsudo.gspec
 2264728d06b220edf5e47eb9da2b7e66  download/CSWsudo.postinstall
 f265f92173f0067272f8db84ab0ee683  download/CSWsudo.prototype
-541c439d1d964c061c9ea449b4c595c5  download/CSWsudo.depend
+73c76dde034dc4178bb344724741718d  download/CSWsudo.depend
 44fabb4ce87e861516533d80274a52c0  download/CSWsudo.space
 e9bd76af1d6c4110121d6d784c910b3d  download/CSWsudo.postremove
 39ef8c90aa72a777601170eb61bf0a7c  download/CSWsudo-common.gspec

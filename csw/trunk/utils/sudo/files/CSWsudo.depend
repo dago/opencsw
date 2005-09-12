@@ -1,3 +1,4 @@
+I CSWsudo-minimal sudo_minimal
 P CSWcommon common - common files and dirs for CSW packages
 P CSWsudo-common sudo_common - sudo common files
 P SUNWcsl Core Solaris, (Shared Libs)
