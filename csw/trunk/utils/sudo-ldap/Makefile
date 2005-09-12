@@ -13,12 +13,9 @@ endef
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 
-DISTFILES += CSWsudo.gspec CSWsudo.postinstall CSWsudo.space
-DISTFILES += CSWsudo.prototype CSWsudo.depend CSWsudo.postremove
-
-DISTFILES += CSWsudo-common.gspec CSWsudo-common.postinstall
-DISTFILES += CSWsudo-common.prototype CSWsudo-common.depend
-DISTFILES += CSWsudo-common.space
+DISTFILES += CSWsudo-ldap.gspec CSWsudo-ldap.postinstall
+DISTFILES += CSWsudo-ldap.prototype CSWsudo-ldap.depend
+DISTFILES += CSWsudo-ldap.space CSWsudo-ldap.postremove
 
 # Original maintainer's patch to disable strip on install
 PATCHFILES = install.diff
@@ -31,7 +28,3 @@ TEST_TARGET = check
 
 include ../category.mk
 
-post-install:
-	@( cd $(DESTDIR)$(sysconfdir) ; mv sudoers sudoers.CSW )
-	@$(MAKECOOKIE)
-	$(DONADA)
