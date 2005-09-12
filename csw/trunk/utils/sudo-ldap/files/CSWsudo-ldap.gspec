@@ -1,4 +1,5 @@
-%var       bitname sudo
-%var       pkgname CSWsudo
+%var       bitname sudo_ldap
+%var       pkgname CSWsudoldap
 %include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var       desc sudo with LDAP support
 %copyright url file://%{WORKSRC}/LICENSE
