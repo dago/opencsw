@@ -35,27 +35,11 @@ $StdDirPerm = '0755';
     qr{perllocal\.pod},
 );
 
-# Do variable replacements in a text string
-sub replace {
-    my ($rdata, $text) = @_;
-    return unless $rdata and (ref($rdata) eq 'HASH') and $text;
-    $$text =~ s/$rdata->{$_}/\$$_/g foreach (keys %$rdata);
-}
+# Print usage information and exit
+sub usage {
+    print ($@, "\n") if $@;
 
-#
-# MAIN EXECUTION
-#
-
-# Process command line arguments
-my $test;
-GetOptions(
-    'v=s%'    => \%srcvars,
-    'V=s%'    => \%cmpvars,
-    'stamp=s' => \$opt_s,
-    'help'    => \$opt_h,
-);
-
-die <<"_USAGE_" if $opt_h;
+    die <<"_USAGE_";
 Usage: $0 [-h] [-s <timestamp>] [-v var=value] [-V var=value]
        path1[=path1] ... pathN[=pathN]
 
@@ -88,9 +72,30 @@ Usage: $0 [-h] [-s <timestamp>] [-v var=value] [-V var=value]
             than were present on the build system.
 
 _USAGE_
+}
 
-die "error: timestamp not found\n" if $opt_s and ! -r $opt_s;
-die "error: one or more pkgproto patterns required\n" unless @ARGV;
+# Do variable replacements in a text string
+sub replace {
+    my ($rdata, $text) = @_;
+    return unless $rdata and (ref($rdata) eq 'HASH') and $text;
+    $$text =~ s/$rdata->{$_}/\$$_/g foreach (keys %$rdata);
+}
+
+#
+# MAIN EXECUTION
+#
+
+# Process command line arguments
+my $test;
+GetOptions(
+    'v=s%'    => \%srcvars,
+    'V=s%'    => \%cmpvars,
+    'stamp=s' => \$opt_s,
+    'help'    => \$opt_h,
+) or usage;
+
+usage "error: timestamp not found\n" if $opt_s and ! -r $opt_s;
+usage "error: one or more pkgproto patterns required\n" unless @ARGV;
 
 my $s_time = $opt_s ? (stat($opt_s))[TIME_FIELD] : 0;
 
