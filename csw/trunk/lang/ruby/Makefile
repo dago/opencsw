@@ -18,14 +18,18 @@ MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
+DISTFILES += CSWrubytk.gspec CSWrubytk.depend CSWrubytk.prototype
 
 # Compile against OSSL 0.9.8
 PATCHFILES += ossl-0.9.8.diff
 
-#LIBDEPS += lib/ncurses
+#LIBDEPS += lib/iconv lib/gdbm lib/ncurses lib/readline
+#LIBDEPS += lib/zlib lib/openssl lib/bdb3
+#LIBDEPS += lang/tcl lang/tk
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread
+CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-tcl-dir=$(prefix)
 CONFIGURE_ARGS += --with-tk-dir=$(prefix)
 CONFIGURE_ARGS += --with-dbm-dir=$(prefix)
@@ -37,4 +41,9 @@ CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
 include ../category.mk
+
+# Replace current build arch in prototype
+pre-install:
+	@perl -i -plne "s/%GARCH%/$(GARCH)/g" $(wildcard $(WORKDIR)/*.prototype)
+	@$(MAKECOOKIE)
 

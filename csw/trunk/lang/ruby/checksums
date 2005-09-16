@@ -1,5 +1,8 @@
 8ffc79d96f336b80f2690a17601dea9b  download/ruby-1.8.2.tar.gz
 8fe428387f1b5eb065e87dc0563da337  download/CSWruby.gspec
-c403694549fc72811a483ba3d09f8aa0  download/CSWruby.depend
-61f9ba6d4ab0441f0a7f4cf70ffc071a  download/CSWruby.prototype
+353393665142f6cce3e9b3c172f9ea25  download/CSWruby.depend
+a68f8b5cc7015ea526e602fbe155ba3e  download/CSWruby.prototype
+875c413b023a56d1f952af75ca3cc289  download/CSWrubytk.gspec
+17ee95585acd0a4f504177a72fbf4e7c  download/CSWrubytk.depend
+73303b8f6d5edf26f49d448d267eceea  download/CSWrubytk.prototype
 58c132d475e7cd90388a993546bff933  download/ossl-0.9.8.diff
