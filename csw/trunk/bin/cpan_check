@@ -1,76 +1,131 @@
-#!/usr/local/perl5/bin/perl -lw
+#!/opt/csw/bin/perl -lw
 #
-# $Id: cpan_check 1084 2005-04-15 16:31:39Z comand $
-# $URL: http://cryptic.sfbay:5957/svn/csw/bin/cpan_check $
+# $Id$
+# $URL$
 #
 # cpan_check - Check CPAN for module updates.
 #
 
 use strict;
+use Data::Dumper;
 use File::Basename;
-use LWP::UserAgent;
+use Time::Local qw/timelocal/;
+use vars qw/$HAS_LWP $MODULE_EXT/;
 
+# Check for LWP support
+$HAS_LWP = 0;
 eval {
-    require Sort::Versions;
-    import Sort::Versions;
+    require LWP::UserAgent;
+    import LWP::UserAgent;
+    $HAS_LWP = 1;
 };
-die "Sort::Versions is required for $0"
-    if $@;
 
-my $std_ext = ".tar.gz";
+# Standard module extension
+$MODULE_EXT = ".tar.gz";
 
-sub parse_modfile {
-	my $file = shift || return;
-	$file = basename $file;
-	# Try and separate the package name from it's version
-	my ($mname, $mvers) = $file =~ /^(.+?)[-\.\_](\d.*?)$std_ext$/;
+# Month lookup table
+my @MONTHS = qw/Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec/;
+my %MONTHS;
+for (my $i = 0; $i < @MONTHS; $i++) { $MONTHS{$MONTHS[$i]} = $i }
+
+# Parse a module filename to get version information
+sub fileinfo {
+    my $file = shift;
+    return unless $file;
+
+    $file = basename $file;
+
+    my ($mname, $mvers) = $file =~ /^(.+?)[-\.\_](\d.*?)$MODULE_EXT$/;
     return unless $mvers;
-	return ( $mname, $mvers );
+    return ($mname, $mvers);
 }
 
-# Check for the argument
-my $distfile = shift || die "Usage: $0 module_file";
-my ($distmod, $distvers) = parse_modfile($distfile);
+# Get a directory listing
+sub get_listing {
+    my $dir = shift;
 
-die "Unable to parse module file name: $distfile"
-	unless (defined $distmod && defined $distvers);
+    my @listing;
+    if ($HAS_LWP) {
+        my $ua = LWP::UserAgent->new(env_proxy => 1);
+        my $rsp = $ua->get($dir);
+        die "failed to list $dir: [" . $rsp->code . "] " . $rsp->message
+            unless $rsp->is_success;
 
-# Get the distribution directory
-my $distdir = dirname $distfile;
-$distdir .= "/";
-
-my $UA = LWP::UserAgent->new( env_proxy => 1, keep_alive => 1 );
-
-# Retrieve the directory listing
-my $rsp = $UA->get( $distdir );
-unless ($rsp->is_success) {
-	print "ERROR: Listing for $distdir failed: " .
-	      "[" . $rsp->code . "] " .  $rsp->message;
-	exit 2;
-}
-
-# Parse the listing...
-my @versions;
-foreach my $line (split /\n/, $rsp->content) {
-    my ($file) = $line =~ /HREF=\"([^\"]+)\"/i; next unless ($file && $file =~ /$std_ext$/);
-	my ($name, $version) = parse_modfile($file); next unless $version;
-	push @versions, $version if ($distmod eq $name);
-}
-
-# Check for updated versions
-my @uprev;
-foreach (@versions) { push @uprev, $_ if (versioncmp($distvers, $_) == -1) }
-
-if (@uprev) {
-    @uprev = sort { versioncmp($b, $a) } @uprev;
-    if ($uprev[0] =~ /_/) {
-        print "   Development releases: ", join(", ", @uprev);
+        @listing = split(/\n/, $rsp->content);
     }
     else {
-        print "   Latest release: $uprev[0]";
-        print "   Also available: ", join(", ", @uprev[1..$#uprev])
-            if @uprev > 1;
+        @listing = `curl -s $dir`;
     }
+
+    return @listing;
 }
 
-0;
+# Get module information
+sub get_modinfo {
+    my $moddir  = shift;
+    my $modname = shift;
+    return unless $moddir and $modname;
+
+    my @listing = get_listing($moddir);
+
+    # Parse the listing...
+    my $vinfo;
+    foreach my $line (@listing) {
+        my ($file, $d, $m, $y, $H, $M) = $line =~
+          /<a href.+?>(\S+)<\/a>\s*(\d{2})-(\w{3})-(\d{4})\s+(\d{2}):(\d{2})/i;
+
+        next unless $file && $file =~ /$MODULE_EXT$/;
+        my ($mname, $mver) = fileinfo($file);
+        next unless $mver and $mname;
+        next if $mname ne $modname;
+
+        $vinfo->{$mver} = timelocal(0, $M, $H, $d, $MONTHS{$m}, $y - 1900);
+    }
+
+    return $vinfo;
+}
+
+#
+# MAIN EXECUTION
+#
+
+my $distfile = shift @ARGV;
+die "Usage: $0 module_file" unless $distfile;
+
+my ($modname, $modvers) = fileinfo($distfile);
+die "Unable to parse module file name: $distfile"
+    unless $modname && defined $modvers;
+
+# Get the distribution directory
+my $distdir = dirname($distfile) . "/";
+
+# Get a list of modules...
+my $info = get_modinfo($distdir, $modname)
+    or die "Unable to retrieve module information for $modname!\n";
+
+warn "Cannot find current module version for $modname!\n"
+    unless exists $info->{$modvers};
+
+# Remove the current version...
+my $currel = delete $info->{$modvers};
+
+# Find the versions which are newer than that one
+my @uprev;
+foreach my $ver (sort { $info->{$a} <=> $info->{$b} } keys %$info) {
+    push @uprev, $ver if $info->{$ver} >= $currel;
+}
+
+if (@uprev) {
+    print "Updates are available for $modname:";
+    my @ndev = grep(!/_/, @uprev);
+    my @dev  = grep(/_/,@uprev);
+    print "Recommended: ", pop @ndev;
+    print "Also available: ", join(", ", @ndev) if @ndev;
+    print "Development releases: ", join(", ", @dev) if @dev;
+}
+else {
+    print "$modname $modvers is current.";
+}
+
+exit 0;
+
