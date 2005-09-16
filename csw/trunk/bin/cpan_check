@@ -103,11 +103,9 @@ my $distdir = dirname($distfile) . "/";
 my $info = get_modinfo($distdir, $modname)
     or die "Unable to retrieve module information for $modname!\n";
 
-warn "Cannot find current module version for $modname!\n"
-    unless exists $info->{$modvers};
-
-# Remove the current version...
-my $currel = delete $info->{$modvers};
+# Remove the current version.  If the module has been pulled
+# from CPAN, assume no current release (update to latest).
+my $currel = delete $info->{$modvers} || 0;
 
 # Find the versions which are newer than that one
 my @uprev;
