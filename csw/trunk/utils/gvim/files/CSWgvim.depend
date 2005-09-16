@@ -25,12 +25,14 @@ P CSWlibpopt libpopt - Command line option parsing library
 P CSWlibxft2 libxft2 - FreeType-based font drawing library for X
 P CSWlibxml2 libxml2 - XML Parser Library
 P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWncurses ncurses - ncurses library and utilities
 P CSWorbit2 orbit2 - ORBit 2.x CORBA tools and libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWpango libpango - Library for laying out and rendering text
 P CSWperl perl - A high-level, general-purpose programming language
 P CSWzlib zlib - Zlib Data Compression Library
 P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWkvm Core Architecture, (Kvm)
 P SUNWlibms Sun WorkShop Bundled shared libm
 P SUNWxwice ICE components
 P SUNWxwplt X Window System platform software

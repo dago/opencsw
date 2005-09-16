@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWgvim.gspec CSWgvim.prototype
+DISTFILES += CSWgvim.gspec CSWgvim.prototype #CSWgvim.depend
 
 WORKSRC = $(WORKDIR)/$(GARNAME)63
 
@@ -26,7 +26,7 @@ WORKSRC = $(WORKDIR)/$(GARNAME)63
 INSTALL_SCRIPTS = minimal
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-tlib=curses
+CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --with-features=huge 
 CONFIGURE_ARGS += --enable-gui=gnome2
