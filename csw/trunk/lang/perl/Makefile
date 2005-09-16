@@ -14,7 +14,6 @@ endef
 
 MASTER_SITES = $(CPAN_ROOT)/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWperl.gspec
 DISTFILES += CSWperl.gspec CSWperl.prototype CSWperl.depend
 DISTFILES += CSWperldoc.gspec CSWperldoc.prototype CSWperldoc.depend
 
@@ -44,8 +43,8 @@ CONFIGURE_ARGS += -Doptimize="$(OPTFLAGS)"
 CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
 CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(GARVERSION)
-CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/csw
-CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/csw
+CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
+CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
 CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
 CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
 CONFIGURE_ARGS += -Dsiteprefix=/usr
@@ -74,6 +73,7 @@ post-install:
 	@( cd $(DESTDIR)$(libdir) ; \
 		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(GARVERSION) \
 		$(DESTDIR)$(libdir) ; \
+		chmod 755 $(DESTDIR)$(libdir)/libperl.so.$(GARVERSION) ; \
 		ln -s libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
 		ln -s libperl.so.$(GARVERSION) libperl.so )
 	@$(MAKECOOKIE)
