@@ -113,17 +113,21 @@ foreach my $ver (sort { $info->{$a} <=> $info->{$b} } keys %$info) {
     push @uprev, $ver if $info->{$ver} >= $currel;
 }
 
+printf "$modname $modvers: ";
+
 if (@uprev) {
-    print "Updates are available for $modname:";
+    print "Updates available.";
+
     my @ndev = grep(!/_/, @uprev);
     my @dev  = grep(/_/,@uprev);
-    print "Recommended: ", pop @ndev;
-    print "Also available: ", join(", ", @ndev) if @ndev;
-    print "Development releases: ", join(", ", @dev) if @dev;
+    print "    Recommended: ", pop @ndev;
+    print "          Older: ", join(", ", @ndev) if @ndev;
+    print "    Development: ", join(", ", @dev) if @dev;
 }
 else {
-    print "$modname $modvers is current.";
+    print "No updates available.";
 }
+print "-"x40;
 
 exit 0;
 
