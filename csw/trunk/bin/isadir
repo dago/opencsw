@@ -1,7 +1,7 @@
 #!/usr/bin/perl -lw
 #
-# $Id: isadir 1084 2005-04-15 16:31:39Z comand $
-# $URL: http://cryptic.sfbay:5957/svn/csw/bin/isadir $
+# $Id$
+# $URL$
 #
 # isadir - print the appropriate ISA subdirectory given a chosen
 #          isa (E.g. isaname v9b -> sparcv9+vis2)

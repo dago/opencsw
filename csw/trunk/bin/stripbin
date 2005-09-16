@@ -1,7 +1,7 @@
 #!/opt/csw/bin/perl -w
 # 
-# $Id: stripbin 1084 2005-04-15 16:31:39Z comand $
-# $URL: http://cryptic.sfbay:5957/svn/csw/bin/stripbin $
+# $Id$
+# $URL$
 #
 # stripbin - strip binaries found in the target directory
 #

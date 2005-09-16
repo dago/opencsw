@@ -1,7 +1,7 @@
 #!/opt/csw/bin/perl -w
 #
-# $Id: depmaker 1307 2005-06-02 20:28:34Z comand $
-# $URL: http://cryptic.sfbay:5957/svn/csw/bin/depmaker $
+# $Id$
+# $URL$
 #
 # depmaker - find package dependencies for a list of files
 #

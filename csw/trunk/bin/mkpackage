@@ -1,7 +1,7 @@
 #!/opt/csw/bin/perl -w
 # 
-# $Id: mkpackage 1187 2005-04-29 21:37:47Z comand $
-# $URL: http://cryptic.sfbay:5957/svn/csw/bin/mkpackage $
+# $Id$
+# $URL$
 # 
 # mkpackage - produce Solaris packages
 #
@@ -10,7 +10,7 @@ use strict;
 use Cwd;
 use File::Basename;
 use File::Spec::Functions;
-use Getopt::Long;
+use Getopt::Long qw/:config no_ignore_case/;
 use Pod::Usage;
 use Data::Dumper;
 
@@ -102,10 +102,10 @@ sub process_arguments {
     # Options
     my %args;
     my %options = (
+        'v=s'          => \%{ $config{pkgvars} },
         'spec|s=s'     => \$args{spec},
         'destdir|d=s'  => \$args{destdir},
         'workdir|w=s'  => \$args{workdir},
-        'basedir|b=s'  => \$args{basedir},
         'spooldir|p=s' => \$args{spooldir},
         'tmpdir|t=s'   => \$args{tmpdir},
         'transfer!'    => \$config{transfer},
@@ -152,12 +152,6 @@ sub process_arguments {
                 "Cannot create destination dir '$config{destdir}'");
     }
 
-    # Base dir (--basedir)
-    $config{basedir} = $args{basedir} || '/';
-    error($exit{dir_not_found},
-        "Cannot access --basedir '$config{basedir}'")
-            unless -d $config{basedir};
-
     # Spool dir (--spooldir)
     $config{spooldir} = $args{spooldir} || '/var/spool/pkg';
     error($exit{dir_not_found},
@@ -176,7 +170,7 @@ sub process_arguments {
     $config{overwrite} = 1 unless defined $config{overwrite};
 
     # Export variables to the spec
-    foreach my $var qw(specname destdir workdir basedir spooldir tmpdir) {
+    foreach my $var qw(specname destdir workdir spooldir tmpdir) {
         $ENV{'MKP_' . uc $var} = $config{$var};
     }
 }
@@ -501,8 +495,14 @@ sub make_package {
 
     clean_spool;
 
-    print STDERR "  exec( pkgmk -f $proto basedir=$config{basedir} )\n";
-    system("pkgmk -f $proto basedir=$config{basedir}")
+    # Build the variable list
+    my @vars;
+    push @vars, join("=", $_, $config{pkgvars}{$_})
+        foreach (sort keys %{$config{pkgvars}});
+    my $vars = join(" ", @vars);
+
+    print STDERR "  exec( pkgmk -f $proto $vars )\n";
+    system("pkgmk -f $proto $vars")
         and error($exit{prog_exec_error},
             "Failed to create $config{specname} using $proto\n");
 }
@@ -563,23 +563,60 @@ mkpackage - Create one or more Solaris packages from a 'spec' file.
 
 =head1 SYNOPSIS
 
- mkpackage --spec <filename> [--workdir <path> [--destpkg <file>]
-           [--basedir <path>] [--no/compress] [--no/transfer]
-           [--help] [--man] [--version]
+ mkpackage --spec <path> [--workdir <path>] [--destpkg <file>]
+           [--destpkg <path>] [--spooldir <path>] [--no/compress]
+           [--no/transfer] [-v var=value] [--help] [--man] [--version]
 
  Options:
 
-    --spec          Full path to spec file.
+    --spec          Package specification.
+                    This is the full path to the package specification
+                    file.  See the L<SPEC FILE FORMAT> section of the
+                    documentation for more details.
+
+    --workdir       Working directory.
+                    Intermediate packaging files will be stored in
+                    this directory.  Default is the current working
+                    directory.
+
+    --destpkg       Package destination.
+                    Full path to place the transferred package stream
+                    file.  Default is the current working directory.
+
+    --spooldir      Package spool directory.
+                    This option allows the default pkgmk spool
+                    directory to be changed.  Default is
+                    C</var/spool/pkg>.
+
+    --tmpdir        Temporary directory.
+                    Where to create temporary files during the package
+                    build process.  Default is C</tmp>.
+
     --no/compress   Enable or disable package compression.
+                    By default, packages created with mkpackage will
+                    be compressed using gzip.  Specify --nocompress to
+                    disable this compression step.
+
     --no/transfer   Enable or disable package transfer.
-    --destpkg       Full path to package destination if 'transfer'
-                    is enabled.  (Default: current directory)
-    --workdir       Working directory path.  (Default: current directory)
-    --basedir       Package base directory to use when calling pkgmk.
-                    (Default: '/')
-    --spooldir      Where package spools are created when pkgmk is run.
-                    (Default: '/var/spool/pkg')
-    --tmpdir        Temporary directory. (Default: '/tmp')
+                    By default, mkpackage creates "package stream"
+                    files from packaged contents using pkgtrans.
+                    Specifying --notransfer will cause the package to
+                    be left in the spool directory (See --spooldir).
+
+    --no/overwrite  Enable or disable generated file overwrite.
+                    When generating package administrative files, the
+                    default behavior is to overwrite any files that
+                    may already exist.  Specifying --nooverwrite will
+                    skip regeneration of files that already exist.
+
+    -v var=value    Build time variables.
+                    Specify one or more variable replacements for
+                    pkgmk during the package build stage.  This option
+                    can be specified multiple times.
+
+    --help          Display brief usage.
+    --man           Display manual page.
+    --version       Display version information.
 
 =head1 DESCRIPTION
 
@@ -604,13 +641,6 @@ information regarding the content of this file.
 Directory where all administrative and temporary packaging files will be
 created.  Default is the current working directory.
 
-=item --basedir,-b
-
-Directory from which all files will be packaged.  This is passed to the C<-r>
-argument of pkgmk.  Note that no path fixups are done on the prototype content
-automatically.  This needs to be considered when using C<--basedir>.  The
-default is root ('C</>').
-
 =item --spooldir,-p
 
 Directory in which C<pkgmk> will create package spools.  By default this will
@@ -631,6 +661,13 @@ but only when C<--transfer> is enabled.
 Enable transfer of spooled package data into bitstream format files after
 building the package.  This is on by default.  If it is turned off, the
 new package will be left in /var/spool/pkg.
+
+=item --overwrite/--nooverwrite
+
+Enable or disable overwriting of existing packaging files.  If a packaging
+file is to be created by a spec file command, and it already exists, by
+default it will be overwritten.  Use --nooverwrite to leave existing files
+intact.
 
 =item --destpkg,-d
 
@@ -738,7 +775,6 @@ variables are available for use with all spec directives:
  MKP_SPECNAME  - File name of this spec, without the .gspec suffix.
  MKP_DESTPKG   - Full package destination path, as specified to --destpkg.
  MKP_WORKDIR   - Working directory, as specified to --workdir.
- MKP_BASEDIR   - Package base directory, as specified to --basedir.
  MKP_SPOOLDIR  - Package spool directory, as specified to --spooldir.
  MKP_TMPDIR    - Temporary directory, as specified to --tmpdir.
 

@@ -1,7 +1,7 @@
 #!/opt/csw/bin/perl -lw
 # 
-# $Id: pkgmanifest 1084 2005-04-15 16:31:39Z comand $
-# $URL: http://cryptic.sfbay:5957/svn/csw/bin/pkgmanifest $
+# $Id$
+# $URL$
 #
 # pkgmanifest - strip one or more path levels from a list of files.
 #

@@ -1,7 +1,7 @@
 #!/opt/csw/bin/perl -lw
 #
-# $Id: cswproto 1276 2005-06-02 17:45:37Z comand $
-# $URL: http://cryptic.sfbay:5957/svn/csw/bin/cswproto $
+# $Id$
+# $URL$
 #
 # cswproto - Fix up package prototypes according to CSW standards.
 #
