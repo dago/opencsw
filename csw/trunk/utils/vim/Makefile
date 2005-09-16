@@ -22,7 +22,7 @@ DISTFILES += CSWvimrt.gspec CSWvimrt.prototype
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
-CONFIGURE_ARGS += --with-tlib=curses
+CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --disable-xim
 CONFIGURE_ARGS += --without-x
 CONFIGURE_ARGS += --enable-gui=no
