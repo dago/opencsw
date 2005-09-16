@@ -1,5 +1,5 @@
 GARNAME = perl
-GARVERSION = 5.8.6
+GARVERSION = 5.8.7
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language.
@@ -14,6 +14,7 @@ endef
 
 MASTER_SITES = $(CPAN_ROOT)/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWperl.gspec
 DISTFILES += CSWperl.gspec CSWperl.prototype CSWperl.depend
 DISTFILES += CSWperldoc.gspec CSWperldoc.prototype CSWperldoc.depend
 
@@ -22,29 +23,42 @@ DISTFILES += CSWperldoc.gspec CSWperldoc.prototype CSWperldoc.depend
 # Custom configure
 CONFIGURE_SCRIPTS = perl
 
+# Compatable with all prior patch revs
+INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6
+
 # Configuration flags
-CONFIGURE_ARGS += -Dprefix=$(prefix)
-CONFIGURE_ARGS += -Doptimize="$(OPTFLAGS)"
-CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
-CONFIGURE_ARGS += -Dldflags="$(LDFLAGS)"
-CONFIGURE_ARGS += -Dloclibpth=$(libdir)
-CONFIGURE_ARGS += -Dlocincpth=$(includedir)
-CONFIGURE_ARGS += -Dinc_version_list="5.8.0 5.8.2 5.8.4"
-CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
-CONFIGURE_ARGS += -Duselargefiles
-CONFIGURE_ARGS += -Dusethreads
-CONFIGURE_ARGS += -Dprivlib=$(libdir)/perl/$(GARVERSION)
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
-CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
-CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
-CONFIGURE_ARGS += -Dvendorarch=$(datadir)/perl/csw
-CONFIGURE_ARGS += -Dsiteprefix=$(prefix)
-CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/csw
-CONFIGURE_ARGS += -Dsitearch=$(datadir)/perl/csw
+CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
+CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
+CONFIGURE_ARGS += -Dcf_email=$(SPKG_EMAIL)
+CONFIGURE_ARGS += -Dinc_version_list="$(INC_COMPAT)"
+CONFIGURE_ARGS += -Dldflags="$(LDFLAGS)"
+CONFIGURE_ARGS += -Dlibperl=libperl.so.$(GARVERSION)
+CONFIGURE_ARGS += -Dlocincpth=$(includedir)
+CONFIGURE_ARGS += -Dloclibpth=$(libdir)
 CONFIGURE_ARGS += -Dman1dir=$(mandir)/man1
+CONFIGURE_ARGS += -Dman1ext=1
 CONFIGURE_ARGS += -Dman3dir=$(mandir)/man3
+CONFIGURE_ARGS += -Dman3ext=3perl
+CONFIGURE_ARGS += -Doptimize="$(OPTFLAGS)"
+CONFIGURE_ARGS += -Dperladmin="root@localhost"
+CONFIGURE_ARGS += -Dprefix=$(prefix)
+CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(GARVERSION)
+CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/csw
+CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
 CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
+CONFIGURE_ARGS += -Dsiteprefix=/usr
+CONFIGURE_ARGS += -Duselargefiles
+CONFIGURE_ARGS += -Duseshrplib
+CONFIGURE_ARGS += -Dusesitecustomize
+CONFIGURE_ARGS += -Dusethreads
+CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
+CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
+CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
+
+# Tests take a long time
+ENABLE_TEST = 0
 
 include ../category.mk
 
@@ -52,3 +66,15 @@ include ../category.mk
 configure-perl:
 	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
 	@$(MAKECOOKIE)
+
+# Make links to libperl
+LIB_MINOR = $(shell echo $(GARVERSION) | cut -f1-2 -d.)
+LIB_PATH  = $(libdir)/perl/$(GARVERSION)/CORE
+post-install:
+	@( cd $(DESTDIR)$(libdir) ; \
+		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(GARVERSION) \
+		$(DESTDIR)$(libdir) ; \
+		ln -s libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
+		ln -s libperl.so.$(GARVERSION) libperl.so )
+	@$(MAKECOOKIE)
+
