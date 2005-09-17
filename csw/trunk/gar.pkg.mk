@@ -45,8 +45,8 @@ package:
 			$(PKG_ENV) mkpackage --spec $$spec \
 								 --destdir $(SPKG_EXPORT) \
 								 --workdir $(WORKDIR) \
-								 --basedir $(DESTDIR)/ \
-								 --nooverwrite ; \
+                                 --nooverwrite \
+                                 -v basedir=$(DESTDIR) ; \
 		done ; \
 	else \
 		echo " ==> No specs defined for $(GARNAME)" ; \
