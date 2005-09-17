@@ -1,5 +1,5 @@
 GARNAME = rapidsvn
-GARVERSION = 0.7.2
+GARVERSION = 0.8.0
 CATEGORIES = utils
 
 DESCRIPTION = Subversion GUI
