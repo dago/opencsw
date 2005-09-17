@@ -1,6 +1,6 @@
 # RCS ID: $Id: gar.common.mk,v 1.2 2004/08/18 20:24:25 comand Exp $
 #
-# gar.system.mk - General routines used by multiple packages.  For instance,
+# gar.common.mk - General routines used by multiple packages.  For instance,
 #                 setting up server instances prior to testing.
 #
 
