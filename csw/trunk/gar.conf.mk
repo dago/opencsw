@@ -29,7 +29,8 @@ GARCHIVEPATH ?= /export/garchive
 GARCOMPILER ?= SUN
 
 # Architecture
-GARCH ?= $(shell uname -p)
+GARCH    ?= $(shell uname -p)
+GAROSREL ?= $(shell uname -r)
 
 # These are the standard directory name variables from all GNU
 # makefiles.  They're also used by autoconf, and can be adapted
@@ -77,7 +78,7 @@ optlibdir := $(libdir)/$(OPTDIR)
 endif
 
 # Forte Compiler Configuration
-SUN_CC_HOME   = /opt/SUNWspro
+SUN_CC_HOME  ?= /opt/studio/SOS8/SUNWspro
 SUN_CC        = cc
 SUN_CXX       = CC
 #SUN_CC_OPT   ?= -fast -xarch=$(OPTARCH) -xstrconst -xildoff
@@ -189,6 +190,7 @@ STAGE_EXPORTS += optlibdir infodir lispdir includedir mandir docdir sourcedir
 STAGE_EXPORTS += perl_bindir CPPFLAGS CFLAGS CXXFLAGS LDFLAGS LD_RUN_PATH
 STAGE_EXPORTS += ASFLAGS OPTFLAGS LIBS CC CXX LD_OPTIONS
 STAGE_EXPORTS += CC_HOME CC_VERSION CXX_VERSION VENDORNAME VENDORSTAMP
+STAGE_EXPORTS += GARCH GAROSREL
 
 CONFIGURE_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 BUILD_ENV     += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
