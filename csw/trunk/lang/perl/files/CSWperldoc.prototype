@@ -44,7 +44,6 @@ f none /opt/csw/share/man/man1/perldebug.1=$basedir/opt/csw/share/man/man1/perld
 f none /opt/csw/share/man/man1/perldelta.1=$basedir/opt/csw/share/man/man1/perldelta.1 0644 root bin
 f none /opt/csw/share/man/man1/perldgux.1=$basedir/opt/csw/share/man/man1/perldgux.1 0644 root bin
 f none /opt/csw/share/man/man1/perldiag.1=$basedir/opt/csw/share/man/man1/perldiag.1 0644 root bin
-f none /opt/csw/share/man/man1/perldoc.1=$basedir/opt/csw/share/man/man1/perldoc.1 0644 root bin
 f none /opt/csw/share/man/man1/perldos.1=$basedir/opt/csw/share/man/man1/perldos.1 0644 root bin
 f none /opt/csw/share/man/man1/perldsc.1=$basedir/opt/csw/share/man/man1/perldsc.1 0644 root bin
 f none /opt/csw/share/man/man1/perlebcdic.1=$basedir/opt/csw/share/man/man1/perlebcdic.1 0644 root bin
