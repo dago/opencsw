@@ -1,4 +1,4 @@
-# CVS ID: $Id: gar.pkg.mk,v 1.6 2004/09/16 17:33:24 comand Exp $
+# RCS ID: $Id$
 #
 # gar.pkg.mk - Build Solaris packages
 #

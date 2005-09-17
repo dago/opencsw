@@ -1,6 +1,6 @@
 #-*- mode: Fundamental; tab-width: 4; -*-
 # ex:ts=4
-# $Id: gar.conf.mk,v 1.17 2004/10/29 18:19:25 comand Exp $
+# $Id$
 
 # This file contains configuration variables that are global to
 # the GAR system.  Users wishing to make a change on a

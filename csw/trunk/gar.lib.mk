@@ -1,6 +1,6 @@
 #-*- mode: Fundamental; tab-width: 4; -*-
 # ex:ts=4 sw=4
-# $Id: gar.lib.mk,v 1.6 2004/10/01 21:56:54 comand Exp $
+# $Id$
 
 # Original Concept Copyright (C) 2001 Nick Moffitt
 # 
