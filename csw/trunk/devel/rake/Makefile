@@ -10,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://rubyforge.org/frs/download.php/5924/
-DISTFILES = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES += CSWrake.gspec CSWrake.depend CSWrake.prototype
 
 BUILD_SCRIPTS     =
 CONFIGURE_SCRIPTS =
@@ -19,5 +20,5 @@ INSTALL_SCRIPTS   = ruby
 include ../category.mk
 
 install-ruby:
-	@( cd $(WORKSRC) ; ruby install.rb )
+	@( cd $(WORKSRC) ; $(INSTALL_ENV) ruby install.rb )
 	@$(MAKECOOKIE)
