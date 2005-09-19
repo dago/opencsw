@@ -308,14 +308,46 @@ build-%/Jamfile:
 	@( cd $* ; $(BUILD_ENV) bjam $(JAMFLAGS) $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
+# Ruby makefiles
+build-%/Rakefile:
+	@echo " ==> Running rake in $*"
+	@( cd $* ; $(BUILD_ENV) rake $(RAKEFLAGS) $(BUILD_ARGS) )
+	@$(MAKECOOKIE)
+
+build-%/rakefile:
+	@echo " ==> Running rake in $*"
+	@( cd $* ; $(BUILD_ENV) rake $(RAKEFLAGS) $(BUILD_ARGS) )
+	@$(MAKECOOKIE)
+
 #################### TEST RULES ####################
 
 TEST_TARGET ?= test
 
 # Run tests on pre-built sources
 test-%/Makefile:
-	@echo " ==> Running tests in $*"
+	@echo " ==> Running make $(TEST_TARGET) in $*"
 	@$(BUILD_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(MAKECOOKIE)
+
+install-%/makefile:
+	@echo " ==> Running make $(TEST_TARGET) in $*"
+	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(MAKECOOKIE)
+
+install-%/GNUmakefile:
+	@echo " ==> Running make $(TEST_TARGET) in $*"
+	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(MAKECOOKIE)
+
+# Ruby makefiles
+test-%/Rakefile:
+	@echo " ==> Running rake $(TEST_TARGET) in $*"
+	@( cd $* ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
+	@$(MAKECOOKIE)
+
+test-%/rakefile:
+	@echo " ==> Running rake $(TEST_TARGET) in $*"
+	@( cd $* ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
 	@$(MAKECOOKIE)
 
 ################# INSTALL RULES ####################
@@ -334,6 +366,17 @@ install-%/makefile:
 install-%/GNUmakefile:
 	@echo " ==> Running make install in $*"
 	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@$(MAKECOOKIE)
+
+# Ruby makefiles
+install-%/Rakefile:
+	@echo " ==> Running rake install in $*"
+	@( cd $* ; $(INSTALL_ENV) rake $(RAKEFLAGS) $(INSTALL_ARGS) )
+	@$(MAKECOOKIE)
+
+install-%/rakefile:
+	@echo " ==> Running rake install in $*"
+	@( cd $* ; $(INSTALL_ENV) rake $(RAKEFLAGS) $(INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
 # pkg-config scripts
