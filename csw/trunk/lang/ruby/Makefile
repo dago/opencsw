@@ -19,8 +19,9 @@ MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
 DISTFILES += CSWrubytk.gspec CSWrubytk.depend CSWrubytk.prototype
+DISTFILES += CSWrubydoc.gspec CSWrubydoc.depend CSWrubydoc.prototype
 
-# Compile against OSSL 0.9.8
+# Compile against OpenSSL 0.9.8
 PATCHFILES += ossl-0.9.8.diff
 
 #LIBDEPS += lib/iconv lib/gdbm lib/ncurses lib/readline
@@ -46,4 +47,22 @@ include ../category.mk
 pre-install:
 	@perl -i -plne "s/%GARCH%/$(GARCH)/g" $(wildcard $(WORKDIR)/*.prototype)
 	@$(MAKECOOKIE)
+
+post-install: rubydoc
+	@$(MAKECOOKIE)
+
+# Doing a 'make install-doc' in $(WORKSRC) tries to install
+# docs to the real prefix.  This target installs to the packaging
+# prefix instead.
+rubydoc:
+	( cd $(WORKSRC) ; \
+		LD_LIBRARY_PATH=$(DESTDIR)$(libdir) \
+		$(DESTDIR)$(bindir)/ruby \
+			-I $(DESTDIR)$(libdir)/ruby/1.8 \
+			-I $(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.8 \
+			bin/rdoc \
+				--all \
+				--ri-system \
+				--op $(DESTDIR)$(datadir)/ri/1.8/system \
+				$(DESTDIR)$(libdir)/ruby/1.8 )
 
