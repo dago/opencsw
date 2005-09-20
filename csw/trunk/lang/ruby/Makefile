@@ -28,7 +28,10 @@ PATCHFILES += ossl-0.9.8.diff
 #LIBDEPS += lib/zlib lib/openssl lib/bdb3
 #LIBDEPS += lang/tcl lang/tk
 
+datadir = $(prefix)/share/ruby
+
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-sitedir=$(datadir)/site_ruby
 CONFIGURE_ARGS += --enable-pthread
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-tcl-dir=$(prefix)
@@ -48,7 +51,13 @@ pre-install:
 	@perl -i -plne "s/%GARCH%/$(GARCH)/g" $(wildcard $(WORKDIR)/*.prototype)
 	@$(MAKECOOKIE)
 
-post-install: rubydoc
+post-install: rubydoc rbconfig
+	@$(MAKECOOKIE)
+
+# Fix up rbconfig
+rbconfig:
+	@gsed -i -e s,$(DESTDIR),, \
+		$(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.8/rbconfig.rb
 	@$(MAKECOOKIE)
 
 # Doing a 'make install-doc' in $(WORKSRC) tries to install
@@ -65,4 +74,5 @@ rubydoc:
 				--ri-system \
 				--op $(DESTDIR)$(datadir)/ri/1.8/system \
 				$(DESTDIR)$(libdir)/ruby/1.8 )
+	@$(MAKECOOKIE)
 
