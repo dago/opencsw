@@ -638,11 +638,10 @@ f none /opt/csw/lib/ruby/1.8/yaml/syck.rb=$basedir/opt/csw/lib/ruby/1.8/yaml/syc
 f none /opt/csw/lib/ruby/1.8/yaml/types.rb=$basedir/opt/csw/lib/ruby/1.8/yaml/types.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/yaml/yamlnode.rb=$basedir/opt/csw/lib/ruby/1.8/yaml/yamlnode.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/yaml/ypath.rb=$basedir/opt/csw/lib/ruby/1.8/yaml/ypath.rb 0644 root bin
+d none /opt/csw/lib/ruby/site_ruby 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby/1.8 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8 0755 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/man1 ? ? ?
 f none /opt/csw/share/man/man1/ruby.1=$basedir/opt/csw/share/man/man1/ruby.1 0644 root bin
-d none /opt/csw/share/ruby 0755 root bin
-d none /opt/csw/share/ruby/site_ruby 0755 root bin
-d none /opt/csw/share/ruby/site_ruby/1.8 0755 root bin
-d none /opt/csw/share/ruby/site_ruby/1.8/%GARCH%-solaris2.8 0755 root bin
