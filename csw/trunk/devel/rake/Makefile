@@ -22,3 +22,10 @@ include ../category.mk
 install-ruby:
 	@( cd $(WORKSRC) ; $(INSTALL_ENV) ruby install.rb )
 	@$(MAKECOOKIE)
+
+# Copy samples and project docs
+post-install:
+	@mkdir -p $(DESTDIR)$(docdir)
+	@cp -R $(WORKSRC)/doc $(DESTDIR)$(docdir)/rake
+	@$(MAKECOOKIE)
+
