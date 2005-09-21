@@ -11,12 +11,6 @@
 -include $(GARDIR)/gar.rc.mk
 -include $(HOME)/.garrc
 
-# Top-level package variables
-SPKG_PSTAMP ?= $(LOGNAME)@$(HOSTNAME)-$(shell date '+%Y%m%d%H%M%S')
-
-# Where to put finished packages
-SPKG_EXPORT ?= /tmp/build-$(shell date '+%d.%b.%Y')
-
 # A directory containing cached files. It can be created
 # manually, or with 'make garchive' once you've started
 # downloading required files (say with 'make paranoid-checksum'.
@@ -40,24 +34,24 @@ DESTIMG ?= $(LOGNAME)-$(shell hostname)
 
 # Directory config
 prefix ?= /opt/csw
-exec_prefix = $(prefix)
-bindir = $(exec_prefix)/bin
-gnudir = $(exec_prefix)/gnu
-sbindir = $(exec_prefix)/sbin
-libexecdir = $(exec_prefix)/libexec
-datadir = $(prefix)/share
-sysconfdir = $(prefix)/etc
-sharedstatedir = $(prefix)/share
-localstatedir = $(prefix)/var
-libdir = $(exec_prefix)/lib
-infodir = $(sharedstatedir)/info
-lispdir = $(sharedstatedir)/emacs/site-lisp
-includedir = $(prefix)/include
-mandir = $(sharedstatedir)/man
-docdir = $(sharedstatedir)/doc
-sourcedir = $(prefix)/src
-licensedir = $(prefix)/licenses
-sharedperl = $(sharedstatedir)/perl
+exec_prefix ?= $(prefix)
+bindir ?= $(exec_prefix)/bin
+gnudir ?= $(exec_prefix)/gnu
+sbindir ?= $(exec_prefix)/sbin
+libexecdir ?= $(exec_prefix)/libexec
+datadir ?= $(prefix)/share
+sysconfdir ?= $(prefix)/etc
+sharedstatedir ?= $(prefix)/share
+localstatedir ?= $(prefix)/var
+libdir ?= $(exec_prefix)/lib
+infodir ?= $(sharedstatedir)/info
+lispdir ?= $(sharedstatedir)/emacs/site-lisp
+includedir ?= $(prefix)/include
+mandir ?= $(sharedstatedir)/man
+docdir ?= $(sharedstatedir)/doc
+sourcedir ?= $(prefix)/src
+licensedir ?= $(prefix)/licenses
+sharedperl ?= $(sharedstatedir)/perl
 
 # the DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.  Each different DESTIMG has its own
