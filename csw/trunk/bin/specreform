@@ -1,0 +1,15 @@
+#!/bin/perl -pln
+#
+# specreform - Reformat gspec files.
+#
+# Usage: specreform < orig.gspec > new.gspec
+#
+
+# All items line up on 3x tabstop (ts=4)
+$fmt_col = "12";
+
+if (/^%/) {
+    @a = split; $d = shift @a;
+    $p = $fmt_col - length($d);
+    $_ = $d . " "x$p . join(" ", @a);
+}
