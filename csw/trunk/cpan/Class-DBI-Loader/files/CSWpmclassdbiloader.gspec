@@ -2,6 +2,6 @@
 %var        pkgname CSWpmclassdbiloader
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 This library is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

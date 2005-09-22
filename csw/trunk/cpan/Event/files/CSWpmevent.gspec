@@ -1,7 +1,7 @@
-%var     bitname pm_event
-%var     pkgname CSWpmevent
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%var        bitname pm_event
+%var        pkgname CSWpmevent
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  
 Copyright © 1997 Joshua Nathaniel Pritikin & Graham Barr
 
 Copyright © 1998, 1999, 2000, 2001, 2002, 2003, 2004 Joshua Nathaniel Pritikin

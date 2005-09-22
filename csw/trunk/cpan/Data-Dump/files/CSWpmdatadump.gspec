@@ -2,7 +2,7 @@
 %var        pkgname CSWpmdatadump
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 1998-1999,2003-2004 Gisle Aas.
 Copyright 1996-1998 Gurusamy Sarathy.
 

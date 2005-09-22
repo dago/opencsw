@@ -2,7 +2,7 @@
 %var        pkgname CSWpmschedulecron
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 1999,2000 Roland Huss.
 
 This library is free software; you can redistribute it and/or

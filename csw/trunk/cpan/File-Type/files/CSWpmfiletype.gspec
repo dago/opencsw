@@ -2,7 +2,7 @@
 %var        pkgname CSWpmfiletype
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 2003-2004 Fotango Ltd.
 
 Licensed under the same terms as Perl itself.

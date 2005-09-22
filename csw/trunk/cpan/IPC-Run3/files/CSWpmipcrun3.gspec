@@ -2,5 +2,5 @@
 %var        pkgname CSWpmipcrun3
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 2003, R. Barrie Slaymaker, Jr., All Rights Reserved

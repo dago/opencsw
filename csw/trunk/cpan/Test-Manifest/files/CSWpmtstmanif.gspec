@@ -2,7 +2,7 @@
 %var        pkgname CSWpmtstmanif
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 2002, C<brian d foy>, All Rights Reserved
 
 You may use and distribute this module under the same terms

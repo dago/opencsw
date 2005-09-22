@@ -2,7 +2,7 @@
 %var        pkgname CSWpmdbdanydata
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 This module is copyright (c), 2001 by Jeff Zucker
 All rights reserved.
 

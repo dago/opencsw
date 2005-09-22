@@ -1,11 +1,11 @@
-%var     bitname pm_httpwebdav
-%var     pkgname CSWpmhttpwebdav
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_httpwebdav
+%var        pkgname CSWpmhttpwebdav
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 
-%depend
+%depend     
 P CSWneon neon - HTTP and WebDAV client library
 
-%copyright
+%copyright  
 Copyright (c) 2001 Gerald Richter / ecos gmbh (www.ecos.de)
 
 You may distribute under the terms of either the GNU General Public

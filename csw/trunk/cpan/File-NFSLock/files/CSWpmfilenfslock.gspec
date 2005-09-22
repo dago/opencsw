@@ -2,7 +2,7 @@
 %var        pkgname CSWpmfilenfslock
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (C) 2001
 Paul T Seamons
 paul@seamons.com

@@ -1,7 +1,7 @@
-%var     bitname pm_stringcrc32
-%var     pkgname CSWpmstringcrc32
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%var        bitname pm_stringcrc32
+%var        pkgname CSWpmstringcrc32
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  
 CRC algorithm code taken from CRC-32 by Craig Bruce.
 The module stuff is inspired by a similar perl module called
 String::CRC by David Sharnoff & Matthew Dillon.

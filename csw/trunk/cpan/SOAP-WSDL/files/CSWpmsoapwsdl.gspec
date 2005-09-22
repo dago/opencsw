@@ -2,7 +2,7 @@
 %var        pkgname CSWpmsoapwsdl
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 (c) 2004 Martin Kutter
 
 This library is free software, you can use it under the same

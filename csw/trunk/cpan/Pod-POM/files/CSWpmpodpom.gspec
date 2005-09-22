@@ -2,7 +2,7 @@
 %var        pkgname CSWpmpodpom
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (C) 2000-2002 Andy Wardley.  All Rights Reserved.
 
 This module is free software; you can redistribute it and/or

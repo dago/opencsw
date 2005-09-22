@@ -2,7 +2,7 @@
 %var        pkgname CSWpmparsesyslog
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (c) 2001, Swiss Federal Institute of Technology, Zurich.
 All Rights Reserved.
 

@@ -2,7 +2,7 @@
 %var        pkgname CSWpmregexpshellish
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 1999, Barrie Slaymaker <barries@slaysys.com>
 
 You may distribute under the terms of either the GNU General Public

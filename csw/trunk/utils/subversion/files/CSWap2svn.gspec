@@ -1,5 +1,5 @@
-%var         bitname ap2_subversion
-%var         pkgname CSWap2svn
-%include     url file://%{GARDIR}/pkglib/csw_standard.gspec
-%var         desc Subversion modules for Apache 2.0
-%copyright   url file://%{WORKSRC}/COPYING
+%var        bitname ap2_subversion
+%var        pkgname CSWap2svn
+%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
+%var        desc Subversion modules for Apache 2.0
+%copyright  url file://%{WORKSRC}/COPYING

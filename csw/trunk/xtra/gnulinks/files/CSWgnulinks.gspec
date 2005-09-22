@@ -1,6 +1,6 @@
-%var       bitname gnulinks
-%var       pkgname CSWgnulinks
-%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright
+%var        bitname gnulinks
+%var        pkgname CSWgnulinks
+%include    url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%copyright  
 Copyright 2005 Blastwave.org
 This package is in the public domain.

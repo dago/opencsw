@@ -1,7 +1,7 @@
-%var     bitname pm_ipcsharelite
-%var     pkgname CSWpmipcsharelite
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%var        bitname pm_ipcsharelite
+%var        pkgname CSWpmipcsharelite
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  
 Copyright 1998-2002, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>. 
 All rights reserved.
 

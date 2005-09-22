@@ -1,7 +1,7 @@
-%var     bitname pm_gtk2trayicon
-%var     pkgname CSWpmgtk2trayicon
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%var        bitname pm_gtk2trayicon
+%var        pkgname CSWpmgtk2trayicon
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  
 Copyright 2003 by the gtk2-perl team.
 
 This library is free software; you can redistribute it and/or

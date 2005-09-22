@@ -2,7 +2,7 @@
 %var        pkgname CSWpmcursesui
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
           Maintained by Marcus Thiesen (marcus@cpan.thiesenweb.de)
            Copyright (c) 2001-2002 Maurice Makaay
                    All rights reserved.

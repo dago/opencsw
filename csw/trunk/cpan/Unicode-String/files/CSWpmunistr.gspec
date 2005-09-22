@@ -1,7 +1,7 @@
-%var       bitname pm_unicodestring
-%var       pkgname CSWpmunistr
-%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%var        bitname pm_unicodestring
+%var        pkgname CSWpmunistr
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  
 COPYRIGHT
 
   © 1997-2000 Gisle Aas. All rights reserved.

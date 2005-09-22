@@ -2,5 +2,5 @@
 %var        pkgname CSWpmtiemldbm
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 2002 Rob Casey, robau@cpan.org

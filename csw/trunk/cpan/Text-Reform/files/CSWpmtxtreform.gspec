@@ -2,7 +2,7 @@
 %var        pkgname CSWpmtxtreform
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (c) 1997-2001, Damian Conway. All Rights Reserved.
 This module is free software. It may be used, redistributed
 and/or modified under the terms of the Perl Artistic License

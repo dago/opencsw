@@ -2,7 +2,7 @@
 %var        pkgname CSWpmimagesize
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 This file copyright (c) 2000 by Randy J. Ray, all rights reserved
 
 Copying and distribution are permitted under the terms of the Artistic

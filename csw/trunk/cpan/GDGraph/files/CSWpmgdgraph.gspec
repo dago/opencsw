@@ -2,7 +2,7 @@
 %var        pkgname CSWpmgdgraph
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 COPYRIGHT
 
 GD::Graph

@@ -2,7 +2,7 @@
 %var        pkgname CSWpmmodulescandeps
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 2002, 2003 by Autrijus Tang <autrijus@autrijus.org>.
 
 All rights reserved.  You can redistribute and/or modify

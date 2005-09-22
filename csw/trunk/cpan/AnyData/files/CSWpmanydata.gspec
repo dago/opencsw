@@ -2,6 +2,6 @@
 %var        pkgname CSWpmanydata
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 This module is copyright (c), 2000 by Jeff Zucker.
 It may be freely distributed under the same terms as Perl itself.

@@ -2,7 +2,7 @@
 %var        pkgname CSWpmobjrelater
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.
 

@@ -2,7 +2,7 @@
 %var        pkgname CSWpmtiecrypthash
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (c) 2000, Vipul Ved Prakash.  All rights reserved.
 This code is based on Damian Conway's Tie::SecureHash.
 

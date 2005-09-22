@@ -2,7 +2,7 @@
 %var        pkgname CSWpmtmplextract
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 2001, 2002, 2003, 2004
 by Autrijus Tang <autrijus@autrijus.org>.
 

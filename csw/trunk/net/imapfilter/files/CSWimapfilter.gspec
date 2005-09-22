@@ -1,4 +1,4 @@
-%var       bitname imapfilter
-%var       pkgname CSWimapfilter
-%include   url file://%{GARDIR}/pkglib/csw_standard.gspec
-%copyright url file://%{WORKSRC}/LICENSE
+%var        bitname imapfilter
+%var        pkgname CSWimapfilter
+%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
+%copyright  url file://%{WORKSRC}/LICENSE

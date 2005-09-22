@@ -2,7 +2,7 @@
 %var        pkgname CSWpmtxtquoted
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (C) 2002-2003 Kasei Limited                                                              
 Copyright (C) 2003-2004 Simon Cozens                                                               
 Copyright (C) 2004 Best Practical Solutions, LLC                                                   

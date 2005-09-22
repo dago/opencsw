@@ -2,7 +2,7 @@
 %var        pkgname CSWpmipcountry
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (C) 2002,2003 Nigel Wetters Gourlay. All Rights Reserved.
 
 NO WARRANTY. This module is free software; you can redistribute 

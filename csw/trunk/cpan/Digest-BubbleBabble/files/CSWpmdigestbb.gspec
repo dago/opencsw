@@ -2,7 +2,7 @@
 %var        pkgname CSWpmdigestbb
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Except where otherwise noted, Digest::BubbleBabble is Copyright
 2001 Benjamin Trott. All rights reserved. Digest::BubbleBabble is
 free software; you may redistribute it and/or modify it under

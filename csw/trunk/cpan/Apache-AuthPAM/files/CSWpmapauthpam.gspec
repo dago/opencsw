@@ -2,6 +2,6 @@
 %var        pkgname CSWpmapauthpam
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 This apache perl module is Free Software, and can be used under 
 the terms of the GNU General Public License v2.0 or later.

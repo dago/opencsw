@@ -2,7 +2,7 @@
 %var        pkgname CSWpmtreesimple
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 2004 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>

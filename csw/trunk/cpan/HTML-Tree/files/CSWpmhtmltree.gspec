@@ -2,7 +2,7 @@
 %var        pkgname CSWpmhtmltree
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 1995-1998 Gisle Aas; copyright 1999-2002 Sean M. Burke.
 (Except the articles contained in HTML::Tree::AboutObjects,
 HTML::Tree::AboutTrees, and HTML::Tree::Scanning, which are all

@@ -1,7 +1,7 @@
-%var       bitname docbook_xsl
-%var       pkgname CSWdocbook-xsl
-%include   url file://%{GARDIR}/pkglib/csw_standard.gspec
-%copyright
+%var        bitname docbook_xsl
+%var        pkgname CSWdocbook-xsl
+%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
+%copyright  
 Copyright (C) 1999, 2000, 2001, 2002 Norman Walsh
 
 Permission is hereby granted, free of charge, to any person

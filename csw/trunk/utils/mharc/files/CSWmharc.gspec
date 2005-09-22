@@ -1,4 +1,4 @@
-%var       bitname mharc
-%var       pkgname CSWmharc
-%include   url file://%{GARDIR}/pkglib/csw_standard.gspec
-%copyright url file://%{WORKSRC}/COPYING
+%var        bitname mharc
+%var        pkgname CSWmharc
+%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
+%copyright  url file://%{WORKSRC}/COPYING

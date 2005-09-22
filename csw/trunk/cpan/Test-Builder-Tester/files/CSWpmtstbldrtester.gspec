@@ -2,7 +2,7 @@
 %var        pkgname CSWpmtstbldrtester
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright Mark Fowler E<lt>mark@twoshortplanks.comE<gt> 2002, 2004.
 
 Some code taken from B<Test::More> and B<Test::Catch>, written by by

@@ -2,7 +2,7 @@
 %var        pkgname CSWpmarchivetar
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 This module is
 copyright (c) 2002 Jos Boumans E<lt>kane@cpan.orgE<gt>.
 All rights reserved.

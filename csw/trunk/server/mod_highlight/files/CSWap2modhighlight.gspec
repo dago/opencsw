@@ -1,7 +1,7 @@
-%var       bitname ap2_modhighlight
-%var       pkgname CSWap2modhighlight
-%include   url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright
+%var        bitname ap2_modhighlight
+%var        pkgname CSWap2modhighlight
+%include    url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%copyright  
 Copyright 2004 Edward Rudd and Paul Querna
 
 Licensed under the Apache License, Version 2.0 (the "License");

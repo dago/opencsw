@@ -1,5 +1,5 @@
-%var       bitname xchat_tcl
-%var       pkgname CSWxchat-tcl
-%include   url file://%{GARDIR}/pkglib/csw_standard.gspec
-%var       desc xchat tcl plugin
-%copyright url file://%{WORKSRC}/COPYING
+%var        bitname xchat_tcl
+%var        pkgname CSWxchat-tcl
+%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
+%var        desc xchat tcl plugin
+%copyright  url file://%{WORKSRC}/COPYING

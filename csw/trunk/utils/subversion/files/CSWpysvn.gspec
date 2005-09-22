@@ -1,5 +1,5 @@
-%var       bitname pysvn
-%var       pkgname CSWpysvn
-%include   url file://%{GARDIR}/pkglib/csw_standard.gspec
-%var       desc Subversion Python language binding
-%copyright url file://%{WORKSRC}/COPYING
+%var        bitname pysvn
+%var        pkgname CSWpysvn
+%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
+%var        desc Subversion Python language binding
+%copyright  url file://%{WORKSRC}/COPYING

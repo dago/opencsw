@@ -1,7 +1,7 @@
-%var     bitname pm_compresszlib
-%var     pkgname CSWpmcompresszlib
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%var        bitname pm_compresszlib
+%var        pkgname CSWpmcompresszlib
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  
              Copyright (c) 1995-2004 Paul Marquess. All rights reserved.
             This program is free software; you can redistribute it and/or
                 modify it under the same terms as Perl itself.

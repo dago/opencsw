@@ -1,7 +1,7 @@
-%var       bitname pm_gd
-%var       pkgname CSWpmgd
-%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%var        bitname pm_gd
+%var        pkgname CSWpmgd
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  
 COPYRIGHT INFO
 
 The GD.pm interface is copyright 1995-2004, Lincoln D. Stein.  It is

@@ -2,7 +2,7 @@
 %var        pkgname CSWpmcgisession
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright (C) 2001-2002 Sherzod Ruzmetov <sherzodr@cpan.org>. All rights
 reserved.
 

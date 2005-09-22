@@ -1,4 +1,4 @@
-%var       bitname pm_curses
-%var       pkgname CSWpmcurses
-%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright url file://%{WORKSRC}/Copying
+%var        bitname pm_curses
+%var        pkgname CSWpmcurses
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright  url file://%{WORKSRC}/Copying

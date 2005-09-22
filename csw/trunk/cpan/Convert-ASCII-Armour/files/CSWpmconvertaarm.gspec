@@ -2,4 +2,4 @@
 %var        pkgname CSWpmconvertaarm
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright    url file://%{WORKSRC}/ARTISTIC
+%copyright  url file://%{WORKSRC}/ARTISTIC

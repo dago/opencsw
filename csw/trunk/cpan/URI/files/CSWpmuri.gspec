@@ -2,7 +2,7 @@
 %var        pkgname CSWpmuri
 %var        arch all
 %include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright
+%copyright  
 Copyright 1998-2003 Gisle Aas.
 Copyright 1998 Graham Barr.
 
