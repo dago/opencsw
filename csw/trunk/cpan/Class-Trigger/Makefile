@@ -2,7 +2,6 @@ GARNAME = Class-Trigger
 GARVERSION = 0.09
 CATEGORIES = cpan
 AUTHOR = MIYAGAWA
-GARCH = all
 
 DESCRIPTION = mixin to add / call inheritable triggers
 define BLURB

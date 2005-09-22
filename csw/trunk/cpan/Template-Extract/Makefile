@@ -2,7 +2,6 @@ GARNAME = Template-Extract
 GARVERSION = 0.38
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
-GARCH = all
 
 DESCRIPTION = use TT2 syntax to extract data from documents
 define BLURB

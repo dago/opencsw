@@ -2,7 +2,6 @@ GARNAME = IO-Digest
 GARVERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = calculate digests while reading or writing
 define BLURB

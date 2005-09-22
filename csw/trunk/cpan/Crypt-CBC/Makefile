@@ -2,7 +2,6 @@ GARNAME = Crypt-CBC
 GARVERSION = 2.12
 CATEGORIES = cpan
 AUTHOR = LDS
-GARCH = all
 
 DESCRIPTION = encrypt data with cipher block chaining mode
 define BLURB

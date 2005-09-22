@@ -1,7 +1,6 @@
 GARNAME = psh
 GARVERSION = 1.8
 CATEGORIES = cpan
-GARCH = all
 
 DESCRIPTION = simple interactive Perl shell
 define BLURB

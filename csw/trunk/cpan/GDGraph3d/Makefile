@@ -1,4 +1,17 @@
-all:
+GARNAME = GDGraph3d
+GARVERSION = 0.56
+CATEGORIES = cpan
+AUTHOR = WADG
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = create 3D graphs with GD and GD::Graph
+define BLURB
+  This is the GD::Graph3d extensions module. It provides 3D graphs for the
+  GD::Graph module by Martien Verbruggen, which in turn generates graph using
+  Lincoln Stein's GD.pm.
+endef
+
+DISTFILES += CSWpmgdgr3d.gspec CSWpmgdgr3d.depend
+
+DEPENDS += cpan/GDGraph
+
+include ../category.mk

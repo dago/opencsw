@@ -2,7 +2,6 @@ GARNAME = Net-CIDR-Lite
 GARVERSION = 0.15
 CATEGORIES = cpan
 AUTHOR = DOUGW
-GARCH = all
 
 DESCRIPTION = extension for merging IPv4 or IPv6 CIDR addresses
 define BLURB

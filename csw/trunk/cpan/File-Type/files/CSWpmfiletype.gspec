@@ -1,6 +1,7 @@
-%var     bitname pm_filetype
-%var     pkgname CSWpmfiletype
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_filetype
+%var        pkgname CSWpmfiletype
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 2003-2004 Fotango Ltd.
 

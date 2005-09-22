@@ -1,6 +1,7 @@
-%var     bitname pm_mldbm
-%var     pkgname CSWpmmldbm
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_mldbm
+%var        pkgname CSWpmmldbm
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright (c) 1995-98 Gurusamy Sarathy.  All rights reserved.
 

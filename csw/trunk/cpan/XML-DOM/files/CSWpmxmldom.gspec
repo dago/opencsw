@@ -1,6 +1,7 @@
-%var     bitname pm_xmldom
-%var     pkgname CSWpmxmldom
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_xmldom
+%var        pkgname CSWpmxmldom
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright (c) 1999,2000 Enno Derksen
 All rights reserved.

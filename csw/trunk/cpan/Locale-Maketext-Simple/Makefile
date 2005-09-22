@@ -2,7 +2,6 @@ GARNAME = Locale-Maketext-Simple
 GARVERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
-GARCH = all
 
 DESCRIPTION = simple interface to Locale::Maketext::Lexicon
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Class-DBI-mysql
 GARVERSION = 0.23
 CATEGORIES = cpan
 AUTHOR = TMTM
-GARCH = all
 
 DESCRIPTION = extensions to Class::DBI for MySQL
 define BLURB

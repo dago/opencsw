@@ -2,7 +2,6 @@ GARNAME = Carp-Clan
 GARVERSION = 5.3
 CATEGORIES = cpan
 AUTHOR = STBEY
-GARCH = all
 
 DESCRIPTION = report errors from perspective of caller of a "clan" of modules
 define BLURB

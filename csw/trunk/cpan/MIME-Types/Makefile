@@ -2,7 +2,6 @@ GARNAME = MIME-Types
 GARVERSION = 1.15
 CATEGORIES = cpan
 AUTHOR = MARKOV
-GARCH = all
 
 DESCRIPTION = definition of MIME types
 define BLURB

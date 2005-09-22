@@ -2,7 +2,6 @@ GARNAME = XML-Simple
 GARVERSION = 2.14
 CATEGORIES = cpan
 AUTHOR = GRANTM
-GARCH = all
 
 DESCRIPTION = easy API for maintaining XML
 define BLURB

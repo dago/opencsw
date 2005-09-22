@@ -2,7 +2,6 @@ GARNAME = Crypt-Random
 GARVERSION = 1.25
 CATEGORIES = cpan
 AUTHOR = VIPUL
-GARCH = all
 
 DESCRIPTION = cryptographically secure, true random number generator.
 define BLURB

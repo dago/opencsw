@@ -2,7 +2,6 @@ GARNAME = AnyData
 GARVERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = JZUCKER
-GARCH = all
 
 DESCRIPTION = easy access to data in many formats
 define BLURB

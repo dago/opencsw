@@ -2,7 +2,6 @@ GARNAME = Object-Realize-Later
 GARVERSION = 0.15
 CATEGORIES = cpan
 AUTHOR = MARKOV
-GARCH = all
 
 DESCRIPTION = delayed creation of objects
 define BLURB

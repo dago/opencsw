@@ -2,7 +2,6 @@ GARNAME = Data-ShowTable
 GARVERSION = 3.3
 CATEGORIES = cpan
 AUTHOR = AKSTE
-GARCH = all
 
 DESCRIPTION = routines to display tabular data in several formats.
 define BLURB

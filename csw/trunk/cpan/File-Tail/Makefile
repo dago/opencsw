@@ -2,7 +2,6 @@ GARNAME = File-Tail
 GARVERSION = 0.99.1
 CATEGORIES = cpan
 AUTHOR = MGRABNAR
-GARCH = all
 
 DESCRIPTION = Perl extension for reading from continously updated files
 define BLURB

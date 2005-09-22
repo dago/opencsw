@@ -2,7 +2,6 @@ GARNAME = Array-Compare
 GARVERSION = 1.12
 CATEGORIES = cpan
 AUTHOR = DAVECROSS
-GARCH = all
 
 DESCRIPTION = extension for comparing arrays.
 define BLURB

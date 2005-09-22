@@ -2,7 +2,6 @@ GARNAME = HTML-Format
 GARVERSION = 2.04
 CATEGORIES = cpan
 AUTHOR = SBURKE
-GARCH = all
 
 DESCRIPTION = format HTML as plaintext
 define BLURB

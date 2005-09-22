@@ -1,6 +1,7 @@
-%var     bitname pm_inline
-%var     pkgname CSWpminline
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_inline
+%var        pkgname CSWpminline
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright (c) 2000, 2001, 2002. Brian Ingerson. All rights reserved.
 

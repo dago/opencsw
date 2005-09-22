@@ -2,7 +2,6 @@ GARNAME = Parse-RecDescent
 GARVERSION = 1.94
 CATEGORIES = cpan
 AUTHOR = DCONWAY
-GARCH = all
 
 DESCRIPTION = generate recursive-descent parsers
 define BLURB

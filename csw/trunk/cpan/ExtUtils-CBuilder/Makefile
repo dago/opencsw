@@ -2,7 +2,6 @@ GARNAME = ExtUtils-CBuilder
 GARVERSION = 0.11
 CATEGORIES = cpan
 AUTHOR = KWILLIAMS
-GARCH = all
 
 DESCRIPTION = compile and link C code for Perl modules
 define BLURB

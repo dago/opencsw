@@ -2,7 +2,6 @@ GARNAME = Statistics-Descriptive
 GARVERSION = 2.6
 CATEGORIES = cpan
 AUTHOR = COLINK
-GARCH = all
 
 DESCRIPTION = module of basic descriptive statistical functions.
 define BLURB

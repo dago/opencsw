@@ -2,7 +2,6 @@ GARNAME = Log-Log4perl
 GARVERSION = 0.51
 CATEGORIES = cpan
 AUTHOR = MSCHILLI
-GARCH = all
 
 DESCRIPTION = Log4j implementation for Perl
 define BLURB

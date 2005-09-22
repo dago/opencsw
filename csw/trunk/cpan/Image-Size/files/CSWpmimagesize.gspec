@@ -1,6 +1,7 @@
-%var     bitname pm_imagesize
-%var     pkgname CSWpmimagesize
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_imagesize
+%var        pkgname CSWpmimagesize
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 This file copyright (c) 2000 by Randy J. Ray, all rights reserved
 

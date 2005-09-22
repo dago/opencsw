@@ -1,6 +1,7 @@
-%var     bitname pm_termcap
-%var     pkgname CSWpmtermcap
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_termcap
+%var        pkgname CSWpmtermcap
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 1995-2001 (c) perl5 porters.
 

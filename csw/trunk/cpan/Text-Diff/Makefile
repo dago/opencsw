@@ -2,7 +2,6 @@ GARNAME = Text-Diff
 GARVERSION = 0.35
 CATEGORIES = cpan
 AUTHOR = RBS
-GARCH = all
 
 DESCRIPTION = perform diffs on files and record sets
 define BLURB

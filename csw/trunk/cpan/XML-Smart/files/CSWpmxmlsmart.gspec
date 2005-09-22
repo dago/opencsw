@@ -1,6 +1,7 @@
-%var     bitname pm_xmlsmart
-%var     pkgname CSWpmxmlsmart
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_xmlsmart
+%var        pkgname CSWpmxmlsmart
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 This program is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.

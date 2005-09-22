@@ -2,7 +2,6 @@ GARNAME = Devel-Cycle
 GARVERSION = 1.04
 CATEGORIES = cpan
 AUTHOR = LDS
-GARCH = all
 
 DESCRIPTION = find memory cycles in objects
 define BLURB

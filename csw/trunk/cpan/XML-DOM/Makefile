@@ -2,7 +2,6 @@ GARNAME = XML-DOM
 GARVERSION = 1.43
 CATEGORIES = cpan
 AUTHOR = TJMATHER
-GARCH = all
 
 DESCRIPTION = module for building DOM Level 1 compliant document structures
 define BLURB

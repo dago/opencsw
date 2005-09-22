@@ -2,7 +2,6 @@ GARNAME = Schedule-Cron
 GARVERSION = 0.9
 CATEGORIES = cpan
 AUTHOR = ROLAND
-GARCH = all
 
 DESCRIPTION = cron-like scheduler for Perl subroutines
 define BLURB

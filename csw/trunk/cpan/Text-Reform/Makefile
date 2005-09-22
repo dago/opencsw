@@ -1,4 +1,12 @@
-all:
+GARNAME = Text-Reform
+GARVERSION = 1.11
+CATEGORIES = cpan
+AUTHOR = DCONWAY
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = manual text wrapping and reformatting
+define BLURB
+endef
+
+DISTFILES += CSWpmtxtreform.gspec
+
+include ../category.mk

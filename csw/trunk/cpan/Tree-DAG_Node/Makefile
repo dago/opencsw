@@ -2,7 +2,6 @@ GARNAME = Tree-DAG_Node
 GARVERSION = 1.05
 CATEGORIES = cpan
 AUTHOR = SBURKE
-GARCH = all
 
 DESCRIPTION = (super)class for representing nodes in a tree
 define BLURB

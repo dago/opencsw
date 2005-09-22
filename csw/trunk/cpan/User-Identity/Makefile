@@ -2,7 +2,6 @@ GARNAME = User-Identity
 GARVERSION = 0.90
 CATEGORIES = cpan
 AUTHOR = MARKOV
-GARCH = all
 
 DESCRIPTION = maintains info about a physical person
 define BLURB

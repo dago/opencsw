@@ -2,7 +2,6 @@ GARNAME = POE
 GARVERSION = 0.31
 CATEGORIES = cpan
 AUTHOR = RCAPUTO
-GARCH = all
 
 DESCRIPTION = portable multitasking and networking framework for Perl
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Class-Loader
 GARVERSION = 2.03
 CATEGORIES = cpan
 AUTHOR = VIPUL
-GARCH = all
 
 DESCRIPTION = load modules and create objects on demand.
 define BLURB

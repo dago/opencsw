@@ -1,4 +1,14 @@
-all:
+GARNAME = MailTools
+GARVERSION = 1.67
+CATEGORIES = cpan
+AUTHOR = MARKOV
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = various mail manipulation modules
+define BLURB
+  Includes Mail::Address, Mail::Cap, Mail::Field, Mail::Filter, Mail::Header,
+  Mail::Internet, Mail::Mailer, Mail::Send and Mail::Util.
+endef
+
+DISTFILES += CSWpmmailtools.gspec
+
+include ../category.mk

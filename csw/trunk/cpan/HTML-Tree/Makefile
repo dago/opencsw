@@ -2,7 +2,6 @@ GARNAME = HTML-Tree
 GARVERSION = 3.18
 CATEGORIES = cpan
 AUTHOR = SBURKE
-GARCH = all
 
 DESCRIPTION = modules for making parse trees from HTML source.
 define BLURB

@@ -1,6 +1,7 @@
-%var     bitname pm_datahier
-%var     pkgname CSWpmdatahier
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_datahier
+%var        pkgname CSWpmdatahier
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 2003-2004 by Chia-liang Kao clkao@clkao.org.
 

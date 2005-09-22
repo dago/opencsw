@@ -2,7 +2,6 @@ GARNAME = IO-String
 GARVERSION = 1.06
 CATEGORIES = cpan
 AUTHOR = GAAS
-GARCH = all
 
 DESCRIPTION = emulate file interface for in-core strings
 define BLURB

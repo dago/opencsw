@@ -2,7 +2,6 @@ GARNAME = Digest-BubbleBabble
 GARVERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = BTROTT
-GARCH = all
 
 DESCRIPTION = Create bubble-babble fingerprints
 define BLURB

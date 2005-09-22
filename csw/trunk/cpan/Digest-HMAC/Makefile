@@ -2,7 +2,6 @@ GARNAME = Digest-HMAC
 GARVERSION = 1.01
 CATEGORIES = cpan
 AUTHOR = GAAS
-GARCH = all
 
 DESCRIPTION = keyed-hashing for message authentication
 define BLURB

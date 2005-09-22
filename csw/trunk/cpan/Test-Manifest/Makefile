@@ -2,7 +2,6 @@ GARNAME = Test-Manifest
 GARVERSION = 1.14
 CATEGORIES = cpan
 AUTHOR = BDFOY
-GARCH = all
 
 DESCRIPTION = interact with a t/test_manifest file
 define BLURB

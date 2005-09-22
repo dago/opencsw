@@ -2,7 +2,6 @@ GARNAME = Class-DBI-Pg
 GARVERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = IKEBE
-GARCH = all
 
 DESCRIPTION = Class::DBI extension for Postgres
 define BLURB

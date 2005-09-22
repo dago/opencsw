@@ -2,7 +2,6 @@ GARNAME = Class-Inspector
 GARVERSION = 1.08
 CATEGORIES = cpan
 AUTHOR = ADAMK
-GARCH = all
 
 DESCRIPTION = provides information about classes
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Convert-PEM
 GARVERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = BTROTT
-GARCH = all
 
 DESCRIPTION = read/write encrypted ASN.1 PEM files
 define BLURB

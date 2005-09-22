@@ -2,7 +2,6 @@ GARNAME = HTML-Element-Extended
 GARVERSION = 1.13
 CATEGORIES = cpan
 AUTHOR = MSISK
-GARCH = all
 
 DESCRIPTION = manipulate a table composed of HTML::Element style components.
 define BLURB

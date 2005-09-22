@@ -2,7 +2,6 @@ GARNAME = Crypt-CAST5_PP
 GARVERSION = 1.02
 CATEGORIES = cpan
 AUTHOR = BOBMATH
-GARCH = all
 
 DESCRIPTION = CAST5 block cipher in pure Perl
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Algorithm-Annotate
 GARVERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = represent a series of changes in annotate form
 define BLURB

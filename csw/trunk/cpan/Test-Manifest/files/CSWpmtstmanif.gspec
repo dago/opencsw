@@ -1,6 +1,7 @@
-%var     bitname pm_tstmanif
-%var     pkgname CSWpmtstmanif
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_tstmanif
+%var        pkgname CSWpmtstmanif
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 2002, C<brian d foy>, All Rights Reserved
 

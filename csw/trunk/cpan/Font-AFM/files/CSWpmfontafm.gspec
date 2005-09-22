@@ -1,6 +1,7 @@
-%var       bitname pm_fontafm
-%var       pkgname CSWpmfontafm
-%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_fontafm
+%var        pkgname CSWpmfontafm
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 1995-1998 Gisle Aas. All rights reserved.
 

@@ -1,6 +1,7 @@
-%var     bitname pm_subuplevel
-%var     pkgname CSWpmsubuplevel
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_subuplevel
+%var        pkgname CSWpmsubuplevel
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright by Michael G Schwern
 

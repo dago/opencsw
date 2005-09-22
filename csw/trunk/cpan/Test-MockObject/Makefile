@@ -2,7 +2,6 @@ GARNAME = Test-MockObject
 GARVERSION = 0.20
 CATEGORIES = cpan
 AUTHOR = CHROMATIC
-GARCH = all
 
 DESCRIPTION = extension for emulating troublesome interfaces
 define BLURB

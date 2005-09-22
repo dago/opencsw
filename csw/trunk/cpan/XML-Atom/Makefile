@@ -2,7 +2,6 @@ GARNAME = XML-Atom
 GARVERSION = 0.11
 CATEGORIES = cpan
 AUTHOR = BTROTT
-GARCH = all
 
 DESCRIPTION = Atom feed and API implementation
 define BLURB

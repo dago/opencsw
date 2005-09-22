@@ -2,7 +2,6 @@ GARNAME = DateManip
 GARVERSION = 5.42a
 CATEGORIES = cpan
 AUTHOR = SBECK
-GARCH = all
 
 DESCRIPTION = Date manipulation routines
 define BLURB

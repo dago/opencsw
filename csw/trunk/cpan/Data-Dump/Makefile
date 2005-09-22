@@ -2,7 +2,6 @@ GARNAME = Data-Dump
 GARVERSION = 1.06
 CATEGORIES = cpan
 AUTHOR = GAAS
-GARCH = all
 
 DESCRIPTION = pretty printing of data structures
 define BLURB

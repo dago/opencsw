@@ -1,6 +1,7 @@
-%var     bitname pm_txtautofmt
-%var     pkgname CSWpmtxtautofmt
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_txtautofmt
+%var        pkgname CSWpmtxtautofmt
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright (c) 1997-2000, Damian Conway. All Rights Reserved. This module
 is free software. It may be used, redistributed and/or modified under

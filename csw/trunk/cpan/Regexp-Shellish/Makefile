@@ -2,7 +2,6 @@ GARNAME = Regexp-Shellish
 GARVERSION = 0.93
 CATEGORIES = cpan
 AUTHOR = RBS
-GARCH = all
 
 DESCRIPTION = shell-like regular expressions
 define BLURB

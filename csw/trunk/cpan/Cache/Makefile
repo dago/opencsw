@@ -2,7 +2,6 @@ GARNAME = Cache
 GARVERSION = 2.02
 CATEGORIES = cpan
 AUTHOR = CLEISHMAN
-GARCH = all
 
 DESCRIPTION = new cache interface.
 define BLURB

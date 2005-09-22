@@ -1,6 +1,7 @@
-%var     bitname pm_iodigest
-%var     pkgname CSWpmiodigest
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_iodigest
+%var        pkgname CSWpmiodigest
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 2004 by Chia-liang Kao clkao@clkao.org.
 

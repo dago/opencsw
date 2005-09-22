@@ -2,7 +2,6 @@ GARNAME = Pod-POM
 GARVERSION = 0.17
 CATEGORIES = cpan
 AUTHOR = ABW
-GARCH = all
 
 DESCRIPTION = POD Object Model
 define BLURB

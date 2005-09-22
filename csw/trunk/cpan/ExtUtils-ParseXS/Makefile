@@ -1,4 +1,19 @@
-all:
+GARNAME = ExtUtils-ParseXS
+GARVERSION = 2.09
+CATEGORIES = cpan
+AUTHOR = KWILLIAMS
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = converts Perl XS code into C code
+define BLURB
+  ExtUtils::ParseXS will compile XS code into C code by embedding the
+  constructs necessary to let C functions manipulate Perl values and creates
+  the glue necessary to let Perl access those functions. The compiler uses
+  typemaps to determine how to map C function parameters and variables to Perl
+  values.
+endef
+
+DISTFILES += CSWpmextutparsexs.gspec
+
+BUILDDEPS += cpan/ExtUtils-CBuilder
+
+include ../category.mk

@@ -2,7 +2,6 @@ GARNAME = Exception-Class-DBI
 GARVERSION = 0.92
 CATEGORIES = cpan
 AUTHOR = DWHEELER
-GARCH = all
 
 DESCRIPTION = DBI exception objects
 define BLURB

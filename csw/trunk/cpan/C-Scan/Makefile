@@ -2,7 +2,6 @@ GARNAME = C-Scan
 GARVERSION = 0.74
 CATEGORIES = cpan
 AUTHOR = HVDS
-GARCH = all
 
 DESCRIPTION = Scan C language files for easily recognized constructs.
 define BLURB

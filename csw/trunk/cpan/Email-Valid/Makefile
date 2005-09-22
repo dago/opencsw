@@ -2,7 +2,6 @@ GARNAME = Email-Valid
 GARVERSION = 0.15
 CATEGORIES = cpan
 AUTHOR = MAURICE
-GARCH = all
 
 DESCRIPTION = check validity of Internet email addresses
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Apache-Test
 GARVERSION = 1.22
 CATEGORIES = cpan
 AUTHOR = GEOFF
-GARCH = all
 
 DESCRIPTION = Test.pm wrapper with helpers for testing Apache
 define BLURB

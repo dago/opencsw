@@ -2,7 +2,6 @@ GARNAME = DBD-File
 GARVERSION = 0.33
 CATEGORIES = cpan
 AUTHOR = JZUCKER
-GARCH = all
 
 DESCRIPTION = base class for writing DBI drivers for plain files
 define BLURB

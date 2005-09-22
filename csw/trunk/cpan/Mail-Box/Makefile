@@ -2,7 +2,6 @@ GARNAME = Mail-Box
 GARVERSION = 2.060
 CATEGORIES = cpan
 AUTHOR = MARKOV
-GARCH = all
 
 DESCRIPTION = manage a mailbox, a folder with messages
 define BLURB

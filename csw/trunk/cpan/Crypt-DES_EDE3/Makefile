@@ -2,7 +2,6 @@ GARNAME = Crypt-DES_EDE3
 GARVERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = BTROTT
-GARCH = all
 
 DESCRIPTION = Triple-DES EDE encryption/decryption
 define BLURB

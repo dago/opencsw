@@ -2,7 +2,6 @@ GARNAME = FreezeThaw
 GARVERSION = 0.43
 CATEGORIES = cpan
 AUTHOR = ILYAZ
-GARCH = all
 
 DESCRIPTION = converting Perl structures to strings and back.
 define BLURB

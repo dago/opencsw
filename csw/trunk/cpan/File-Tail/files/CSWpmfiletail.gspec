@@ -1,6 +1,7 @@
-%var     bitname pm_filetail
-%var     pkgname CSWpmfiletail
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_filetail
+%var        pkgname CSWpmfiletail
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright (c) 1997,1998,1999 Matija Grabnar.
 

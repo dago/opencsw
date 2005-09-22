@@ -2,7 +2,6 @@ GARNAME = Apache-PAR
 GARVERSION = 0.30
 CATEGORIES = cpan
 AUTHOR = NBYRD
-GARCH = all
 
 DESCRIPTION = PAR extension for mod_perl
 define BLURB

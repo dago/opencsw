@@ -2,7 +2,6 @@ GARNAME = Sort-Versions
 GARVERSION = 1.5
 CATEGORIES = cpan
 AUTHOR = EDAVIS
-GARCH = all
 
 DESCRIPTION = a module for sorting of revision-like numbers.
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Crypt-DH
 GARVERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = BTROTT
-GARCH = all
 
 DESCRIPTION = Diffie-Hellman key exchange system
 define BLURB

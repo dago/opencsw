@@ -2,7 +2,6 @@ GARNAME = Archive-SelfExtract
 GARVERSION = 1.3
 CATEGORIES = cpan
 AUTHOR = GREGFAST
-GARCH = any
 
 DESCRIPTION = bundle compressed archives with Perl code
 define BLURB

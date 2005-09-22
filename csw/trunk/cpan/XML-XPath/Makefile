@@ -2,7 +2,6 @@ GARNAME = XML-XPath
 GARVERSION = 1.13
 CATEGORIES = cpan
 AUTHOR = MSERGEANT
-GARCH = all
 
 DESCRIPTION = a set of modules for parsing and evaluating XPath statements
 define BLURB

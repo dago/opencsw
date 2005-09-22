@@ -2,7 +2,6 @@ GARNAME = Tie-EncryptedHash
 GARVERSION = 1.21
 CATEGORIES = cpan
 AUTHOR = VIPUL
-GARCH = all
 
 DESCRIPTION = hashes (and objects based on hashes) with encrypting fields.
 define BLURB

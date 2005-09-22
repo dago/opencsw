@@ -1,6 +1,7 @@
-%var     bitname pm_htmltagset
-%var     pkgname CSWpmhtmltagset
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_htmltagset
+%var        pkgname CSWpmhtmltagset
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 1999,2000 Sean M. Burke <sburke@cpan.org>; Copyright
 1995-2000 Gisle Aas; all rights reserved.

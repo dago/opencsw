@@ -2,7 +2,6 @@ GARNAME = Class-DBI-SQLite
 GARVERSION = 0.09
 CATEGORIES = cpan
 AUTHOR = MIYAGAWA
-GARCH = all
 
 DESCRIPTION = extension to Class::DBI for sqlite
 define BLURB

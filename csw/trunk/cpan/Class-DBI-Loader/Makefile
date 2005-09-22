@@ -2,7 +2,6 @@ GARNAME = Class-DBI-Loader
 GARVERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = IKEBE
-GARCH = all
 
 DESCRIPTION = dynamic definition of Class::DBI sub classes.
 define BLURB

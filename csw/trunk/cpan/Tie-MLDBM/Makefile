@@ -2,7 +2,6 @@ GARNAME = Tie-MLDBM
 GARVERSION = 1.04
 CATEGORIES = cpan
 AUTHOR = ROBAU
-GARCH = all
 
 DESCRIPTION = multi-level storage and locking class
 define BLURB

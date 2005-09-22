@@ -1,4 +1,15 @@
-all:
+GARNAME = MIME-tools
+GARVERSION = 6.200_02
+CATEGORIES = cpan
+AUTHOR = ERYQ
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = modules for parsing and creating MIME entities
+define BLURB
+  Modules for parsing (and creating!) MIME entities
+endef
+
+DISTFILES += CSWpmmimetools.gspec CSWpmmimetools.depend
+
+DEPENDS += cpan/Unicode-Map cpan/Unicode-String
+
+include ../category.mk

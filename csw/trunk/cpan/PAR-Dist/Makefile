@@ -2,7 +2,6 @@ GARNAME = PAR-Dist
 GARVERSION = 0.07
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
-GARCH = all
 
 DESCRIPTION = create and manipulate PAR distributions
 define BLURB

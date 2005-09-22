@@ -2,7 +2,6 @@ GARNAME = Algorithm-Diff
 GARVERSION = 1.15
 CATEGORIES = cpan
 AUTHOR = NEDKONZ
-GARCH = all
 
 DESCRIPTION = compute intelligent differences between two files/lists
 define BLURB

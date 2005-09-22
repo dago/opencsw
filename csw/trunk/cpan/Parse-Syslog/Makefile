@@ -2,7 +2,6 @@ GARNAME = Parse-Syslog
 GARVERSION = 1.03
 CATEGORIES = cpan
 AUTHOR = DSCHWEI
-GARCH = all
 
 DESCRIPTION = parse Unix syslog files
 define BLURB

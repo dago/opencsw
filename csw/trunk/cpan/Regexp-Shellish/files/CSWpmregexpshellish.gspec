@@ -1,6 +1,7 @@
-%var     bitname pm_regexpshellish
-%var     pkgname CSWpmregexpshellish
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_regexpshellish
+%var        pkgname CSWpmregexpshellish
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 1999, Barrie Slaymaker <barries@slaysys.com>
 

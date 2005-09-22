@@ -2,7 +2,6 @@ GARNAME = String-ShellQuote
 GARVERSION = 1.02
 CATEGORIES = cpan
 AUTHOR = ROSCH
-GARCH = all
 
 DESCRIPTION = quote strings for passing through the shell
 define BLURB

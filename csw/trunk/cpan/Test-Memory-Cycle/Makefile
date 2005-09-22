@@ -2,7 +2,6 @@ GARNAME = Test-Memory-Cycle
 GARVERSION = 1.00
 CATEGORIES = cpan
 AUTHOR = PETDANCE
-GARCH = all
 
 DESCRIPTION = check for memory leaks and circular memory references
 define BLURB

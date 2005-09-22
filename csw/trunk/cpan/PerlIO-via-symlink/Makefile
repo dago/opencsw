@@ -2,7 +2,6 @@ GARNAME = PerlIO-via-symlink
 GARVERSION = 0.05
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = PerlIO layers for creating symlinks
 define BLURB

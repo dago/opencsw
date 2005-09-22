@@ -1,4 +1,17 @@
-all:
+GARNAME = IO-Zlib
+GARVERSION = 1.04
+CATEGORIES = cpan
+AUTHOR = TOMHUGHES
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = IO:: style interface to Compress::Zlib
+define BLURB
+  IO::Zlib provides an IO:: style interface to Compress::Zlib and hence to
+  gzip/zlib compressed files. It provides many of the same methods as the
+  IO::Handle interface.
+endef
+
+DISTFILES += CSWpmiozlib.gspec CSWpmiozlib.depend
+
+DEPENDS += cpan/Compress-Zlib
+
+include ../category.mk

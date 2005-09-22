@@ -2,7 +2,6 @@ GARNAME = ExtUtils-Depends
 GARVERSION = 0.205
 CATEGORIES = cpan
 AUTHOR = RMCFARLA
-GARCH = all
 
 DESCRIPTION = easily build XS extensions that depend on XS extensions
 define BLURB

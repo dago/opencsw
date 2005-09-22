@@ -1,4 +1,16 @@
-all:
+GARNAME = Log-Dispatch
+GARVERSION = 2.10
+CATEGORIES = cpan
+AUTHOR = DROLSKY
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = dispatches messages to one or more outputs
+define BLURB
+  This module manages a set of Log::Dispatch::* objects, allowing you to add
+  and remove output objects as desired.
+endef
+
+DISTFILES += CSWpmlogdispatch.gspec CSWpmlogdispatch.depend
+
+DEPENDS += cpan/Module-Build
+
+include ../category.mk

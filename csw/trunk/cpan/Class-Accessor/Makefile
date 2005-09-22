@@ -2,7 +2,6 @@ GARNAME = Class-Accessor
 GARVERSION = 0.19
 CATEGORIES = cpan
 AUTHOR = KASEI
-GARCH = all
 
 DESCRIPTION = automated accessor generation
 define BLURB

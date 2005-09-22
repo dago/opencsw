@@ -2,7 +2,6 @@ GARNAME = Tie-IxHash
 GARVERSION = 1.21
 CATEGORIES = cpan
 AUTHOR = GSAR
-GARCH = all
 
 DESCRIPTION = ordered associative arrays for Perl
 define BLURB

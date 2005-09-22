@@ -2,7 +2,6 @@ GARNAME = SVN-Mirror
 GARVERSION = 0.59
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = mirror remote repository to local Subversion repository
 define BLURB

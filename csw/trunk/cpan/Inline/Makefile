@@ -2,7 +2,6 @@ GARNAME = Inline
 GARVERSION = 0.44
 CATEGORIES = cpan
 AUTHOR = INGY
-GARCH = all
 
 DESCRIPTION = write Perl subroutines in other programming languages.
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = ExtUtils-F77
 GARVERSION = 1.14
 CATEGORIES = cpan
 AUTHOR = KGB
-GARCH = all
 
 DESCRIPTION = simple interface to F77 libs
 define BLURB

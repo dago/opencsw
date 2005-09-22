@@ -2,7 +2,6 @@ GARNAME = UNIVERSAL-moniker
 GARVERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = KASEI
-GARCH = all
 
 DESCRIPTION = add a moniker method to UNIVERSAL
 define BLURB

@@ -1,6 +1,7 @@
-%var       bitname pm_i18nlangtags
-%var       pkgname CSWpmi18nlangtags
-%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_i18nlangtags
+%var        pkgname CSWpmi18nlangtags
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 1998+, Sean M. Burke <sburke@cpan.org>, all rights
 reserved.

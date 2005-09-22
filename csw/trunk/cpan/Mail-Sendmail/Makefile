@@ -2,7 +2,6 @@ GARNAME = Mail-Sendmail
 GARVERSION = 0.79
 CATEGORIES = cpan
 AUTHOR = MIVKOVIC
-GARCH = all
 
 DESCRIPTION = simple platform independent mailer
 define BLURB

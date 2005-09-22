@@ -2,7 +2,6 @@ GARNAME = Convert-ASCII-Armour
 GARVERSION = 1.4
 CATEGORIES = cpan
 AUTHOR = VIPUL
-GARCH = all
 
 DESCRIPTION = convert binary octets into ASCII armoured messages.
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = MIME-Lite
 GARVERSION = 3.01_04
 CATEGORIES = cpan
 AUTHOR = YVES
-GARCH = all
 
 DESCRIPTION = low-calorie MIME generator
 define BLURB

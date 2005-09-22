@@ -2,7 +2,6 @@ GARNAME = XML-Twig
 GARVERSION = 3.17
 CATEGORIES = cpan
 AUTHOR = MIROD
-GARCH = all
 
 DESCRIPTION = a module for processing huge XML documents in tree mode.
 define BLURB

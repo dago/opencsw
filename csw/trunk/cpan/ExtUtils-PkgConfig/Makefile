@@ -2,7 +2,6 @@ GARNAME = ExtUtils-PkgConfig
 GARVERSION = 1.07
 CATEGORIES = cpan
 AUTHOR = RMCFARLA
-GARCH = all
 
 DESCRIPTION = simplistic interface to pkg-config
 define BLURB

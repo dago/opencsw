@@ -2,7 +2,6 @@ GARNAME = GD-Barcode
 GARVERSION = 1.15
 CATEGORIES = cpan
 AUTHOR = KWITKNR
-GARCH = all
 
 DESCRIPTION = create barcode images with GD
 define BLURB

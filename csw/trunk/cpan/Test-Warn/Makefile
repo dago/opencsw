@@ -2,7 +2,6 @@ GARNAME = Test-Warn
 GARVERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = BIGJ
-GARCH = all
 
 DESCRIPTION = extension to test methods for warnings
 define BLURB

@@ -1,6 +1,7 @@
-%var     bitname pm_ipcountry
-%var     pkgname CSWpmipcountry
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_ipcountry
+%var        pkgname CSWpmipcountry
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright (C) 2002,2003 Nigel Wetters Gourlay. All Rights Reserved.
 

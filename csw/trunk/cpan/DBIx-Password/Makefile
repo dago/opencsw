@@ -2,7 +2,6 @@ GARNAME = DBIx-Password
 GARVERSION = 1.8
 CATEGORIES = cpan
 AUTHOR = KROW
-GARCH = all
 
 DESCRIPTION = create a global password file for DB passwords
 define BLURB

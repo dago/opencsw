@@ -2,7 +2,6 @@ GARNAME = Module-Signature
 GARVERSION = 0.44
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
-GARCH = all
 
 DESCRIPTION = module signature file manipulation
 define BLURB

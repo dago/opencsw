@@ -1,6 +1,7 @@
-%var     bitname pm_xmltwig
-%var     pkgname CSWpmxmltwig
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_xmltwig
+%var        pkgname CSWpmxmltwig
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
        Copyright (c) 1999-2004, Michel Rodriguez. All Rights Reserved.
      This module is free software. It may be used, redistributed

@@ -2,7 +2,6 @@ GARNAME = Class-WhiteHole
 GARVERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = MSCHWERN
-GARCH = all
 
 DESCRIPTION = base class to treat unhandled method calls as errors
 define BLURB

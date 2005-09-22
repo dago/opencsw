@@ -2,7 +2,6 @@ GARNAME = DBIx-ContextualFetch
 GARVERSION = 1.02
 CATEGORIES = cpan
 AUTHOR = TMTM
-GARCH = all
 
 DESCRIPTION = add contextual fetches to DBI
 define BLURB

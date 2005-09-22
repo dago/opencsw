@@ -2,7 +2,6 @@ GARNAME = SOAP-Lite
 GARVERSION = 0.55
 CATEGORIES = cpan
 AUTHOR = KULCHENKO
-GARCH = all
 
 DESCRIPTION = client and server side SOAP implementation
 define BLURB

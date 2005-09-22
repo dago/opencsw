@@ -2,7 +2,6 @@ GARNAME = SVK
 GARVERSION = 0.993
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = a distributed version control system
 define BLURB

@@ -1,6 +1,7 @@
-%var     bitname pm_htmlmason
-%var     pkgname CSWpmhtmlmason
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_htmlmason
+%var        pkgname CSWpmhtmlmason
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Mason was originally developed for the Internet technology group at
 CMP Media, a publisher of technology magazines. CMP

@@ -2,7 +2,6 @@ GARNAME = Class-Container
 GARVERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = KWILLIAMS
-GARCH = all
 
 DESCRIPTION = glues object frameworks together transparently
 define BLURB

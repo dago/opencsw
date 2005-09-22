@@ -2,7 +2,6 @@ GARNAME = SQL-Statement
 GARVERSION = 1.14
 CATEGORIES = cpan
 AUTHOR = JZUCKER
-GARCH = all
 
 DESCRIPTION = SQL parsing and processing engine
 define BLURB

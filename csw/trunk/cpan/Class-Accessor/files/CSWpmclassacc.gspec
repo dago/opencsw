@@ -1,3 +1,4 @@
-%var     bitname pm_classacc
-%var     pkgname CSWpmclassacc
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_classacc
+%var        pkgname CSWpmclassacc
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec

@@ -2,7 +2,6 @@ GARNAME = CGI.pm
 GARVERSION = 3.08
 CATEGORIES = cpan
 AUTHOR = LDS
-GARCH = all
 
 DESCRIPTION = simple common gateway interface class
 define BLURB

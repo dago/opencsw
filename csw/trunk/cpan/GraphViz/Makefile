@@ -2,7 +2,6 @@ GARNAME = GraphViz
 GARVERSION = 2.02
 CATEGORIES = cpan
 AUTHOR = LBROCARD
-GARCH = all
 
 DESCRIPTION = interface to the GraphViz graphing tool
 define BLURB

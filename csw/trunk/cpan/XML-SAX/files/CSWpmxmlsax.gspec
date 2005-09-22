@@ -1,4 +1,5 @@
-%var       bitname pm_xmlsax
-%var       pkgname CSWpmxmlsax
-%include   url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright url file://%{WORKSRC}/LICENSE
+%var        bitname pm_xmlsax
+%var        pkgname CSWpmxmlsax
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright    url file://%{WORKSRC}/LICENSE

@@ -2,7 +2,6 @@ GARNAME = DBD-AnyData
 GARVERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = JZUCKER
-GARCH = all
 
 DESCRIPTION = DBI access to XML, CSV and other formats
 define BLURB

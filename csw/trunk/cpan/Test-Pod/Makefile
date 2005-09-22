@@ -2,7 +2,6 @@ GARNAME = Test-Pod
 GARVERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = PETDANCE
-GARCH = all
 
 DESCRIPTION = check for POD errors in files
 define BLURB

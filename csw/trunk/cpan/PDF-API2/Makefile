@@ -2,7 +2,6 @@ GARNAME = PDF-API2
 GARVERSION = 0.41
 CATEGORIES = cpan
 AUTHOR = AREIBENS
-GARCH = all
 
 DESCRIPTION = create and modify PDF files
 define BLURB

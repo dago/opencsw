@@ -2,7 +2,6 @@ GARNAME = Heap
 GARVERSION = 0.71
 CATEGORIES = cpan
 AUTHOR = JMM
-GARCH = all
 
 DESCRIPTION = extensions for keeping data partially sorted
 define BLURB

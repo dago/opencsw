@@ -2,7 +2,6 @@ GARNAME = Tie-DBI
 GARVERSION = 1.01
 CATEGORIES = cpan
 AUTHOR = LDS
-GARCH = all
 
 DESCRIPTION = tie hashes to DBI relational databases
 define BLURB

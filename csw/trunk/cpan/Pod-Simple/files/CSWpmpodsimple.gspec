@@ -1,6 +1,7 @@
-%var     bitname pm_podsimple
-%var     pkgname CSWpmpodsimple
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_podsimple
+%var        pkgname CSWpmpodsimple
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright (c) 2002 Sean M. Burke.  All rights reserved.
 

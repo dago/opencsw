@@ -2,7 +2,6 @@ GARNAME = Net-SSH-Perl
 GARVERSION = 1.25
 CATEGORIES = cpan
 AUTHOR = DROLSKY
-GARCH = all
 
 DESCRIPTION = client Interface to SSH
 define BLURB

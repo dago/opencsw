@@ -2,7 +2,6 @@ GARNAME = XML-RegExp
 GARVERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = TJMATHER
-GARCH = all
 
 DESCRIPTION = regular expressions for XML tokens
 define BLURB

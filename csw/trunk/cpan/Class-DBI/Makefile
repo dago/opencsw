@@ -2,7 +2,6 @@ GARNAME = Class-DBI
 GARVERSION = 0.96
 CATEGORIES = cpan
 AUTHOR = TMTM
-GARCH = all
 
 DESCRIPTION = simple database abstraction
 define BLURB

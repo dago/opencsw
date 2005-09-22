@@ -2,7 +2,6 @@ GARNAME = File-MMagic
 GARVERSION = 1.22
 CATEGORIES = cpan
 AUTHOR = KNOK
-GARCH = all
 
 DESCRIPTION = Guess file type
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = IPC-Run
 GARVERSION = 0.78
 CATEGORIES = cpan
 AUTHOR = RBS
-GARCH = all
 
 DESCRIPTION = system and background procs w/ piping, redirs, ptys (Unix, Win32)
 define BLURB

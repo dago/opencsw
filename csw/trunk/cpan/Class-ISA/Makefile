@@ -2,7 +2,6 @@ GARNAME = Class-ISA
 GARVERSION = 0.33
 CATEGORIES = cpan
 AUTHOR = SBURKE
-GARCH = all
 
 DESCRIPTION = report the search path for a class ISA tree
 define BLURB

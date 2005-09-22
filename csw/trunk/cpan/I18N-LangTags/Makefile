@@ -2,7 +2,6 @@ GARNAME = I18N-LangTags
 GARVERSION = 0.35
 CATEGORIES = cpan
 AUTHOR = SBURKE
-GARCH = all
 
 DESCRIPTION = functions for dealing with RFC3066-style language tags
 define BLURB

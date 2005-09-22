@@ -1,4 +1,16 @@
-all:
+GARNAME = TimeDate
+GARVERSION = 1.16
+CATEGORIES = cpan
+AUTHOR = GBARR
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = parse date strings into time values
+define BLURB
+  Date::Parse provides two routines for parsing date strings into time values.
+endef
+
+DISTFILES += CSWpmtimedate.gspec
+
+# Module version numbers defeat Sort::Versions
+MANUAL_UPDATE = 1
+
+include ../category.mk

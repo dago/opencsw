@@ -2,7 +2,6 @@ GARNAME = AppConfig
 GARVERSION = 1.56
 CATEGORIES = cpan
 AUTHOR = ABW
-GARCH = all
 
 DESCRIPTION = Perl5 module for configuration files and command line arguments.
 define BLURB

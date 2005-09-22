@@ -2,7 +2,6 @@ GARNAME = Unicode-MapUTF8
 GARVERSION = 1.09
 CATEGORIES = cpan
 AUTHOR = SNOWHARE
-GARCH = all
 
 DESCRIPTION = conversions to and from arbitrary character sets and UTF8
 define BLURB

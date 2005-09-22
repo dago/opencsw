@@ -2,7 +2,6 @@ GARNAME = Ima-DBI
 GARVERSION = 0.33
 CATEGORIES = cpan
 AUTHOR = TMTM
-GARCH = all
 
 DESCRIPTION = database connection caching and organization
 define BLURB

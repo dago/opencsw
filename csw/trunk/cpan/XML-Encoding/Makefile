@@ -2,7 +2,6 @@ GARNAME = XML-Encoding
 GARVERSION = 1.01
 CATEGORIES = cpan
 AUTHOR = COOPERCL
-GARCH = all
 
 DESCRIPTION = module for parsing XML encoding maps.
 define BLURB

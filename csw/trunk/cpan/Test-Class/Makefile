@@ -2,7 +2,6 @@ GARNAME = Test-Class
 GARVERSION = 0.11
 CATEGORIES = cpan
 AUTHOR = ADIE
-GARCH = all
 
 DESCRIPTION = easily create test classes in an xUnit style.
 define BLURB

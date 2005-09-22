@@ -2,7 +2,6 @@ GARNAME = Term-Cap
 GARVERSION = 1.09
 CATEGORIES = cpan
 AUTHOR = JSTOWE
-GARCH = all
 
 DESCRIPTION = termcap interface
 define BLURB

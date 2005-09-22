@@ -2,7 +2,6 @@ GARNAME = Array-Window
 GARVERSION = 0.4
 CATEGORIES = cpan
 AUTHOR = ADAMK
-GARCH = all
 
 DESCRIPTION = calculate windows/subsets/pages of arrays.
 define BLURB

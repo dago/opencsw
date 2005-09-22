@@ -2,7 +2,6 @@ GARNAME = Error
 GARVERSION = 0.15
 CATEGORIES = cpan
 AUTHOR = UARUN
-GARCH = all
 
 DESCRIPTION = error/exception handling in an OO-ish way
 define BLURB

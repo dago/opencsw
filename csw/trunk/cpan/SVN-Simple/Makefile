@@ -2,7 +2,6 @@ GARNAME = SVN-Simple
 GARVERSION = 0.27
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = a simple interface for driving svn delta editors
 define BLURB

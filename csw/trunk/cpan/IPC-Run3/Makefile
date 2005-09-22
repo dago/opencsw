@@ -2,7 +2,6 @@ GARNAME = IPC-Run3
 GARVERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = RBS
-GARCH = all
 
 DESCRIPTION = run a subprocess in batch mode (a la system) on Unix, Win32, etc.
 define BLURB

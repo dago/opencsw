@@ -2,7 +2,6 @@ GARNAME = Text-Autoformat
 GARVERSION = 1.12
 CATEGORIES = cpan
 AUTHOR = DCONWAY
-GARCH = all
 
 DESCRIPTION = automatic text wrapping and reformatting
 define BLURB

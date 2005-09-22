@@ -2,7 +2,6 @@ GARNAME = Graph
 GARVERSION = 0.20105
 CATEGORIES = cpan
 AUTHOR = JHI
-GARCH = all
 
 DESCRIPTION = graph operations
 define BLURB

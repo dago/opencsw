@@ -2,7 +2,6 @@ GARNAME = XML-Smart
 GARVERSION = 1.6.9
 CATEGORIES = cpan
 AUTHOR = GMPASSOS
-GARCH = all
 
 DESCRIPTION = a smart, easy and powerful way to access/create XML files/data.
 define BLURB

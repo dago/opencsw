@@ -2,7 +2,6 @@ GARNAME = Data-Buffer
 GARVERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = BTROTT
-GARCH = all
 
 DESCRIPTION = read/write buffer class
 define BLURB

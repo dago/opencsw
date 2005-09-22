@@ -2,7 +2,6 @@ GARNAME = Mail-SPF-Query
 GARVERSION = 1.997
 CATEGORIES = cpan
 AUTHOR = FREESIDE
-GARCH = all
 
 DESCRIPTION = query sender policy framework
 define BLURB

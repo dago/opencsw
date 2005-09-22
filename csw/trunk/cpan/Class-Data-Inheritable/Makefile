@@ -2,7 +2,6 @@ GARNAME = Class-Data-Inheritable
 GARVERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = MSCHWERN
-GARCH = all
 
 DESCRIPTION = inheritable, overridable class data
 define BLURB

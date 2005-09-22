@@ -2,7 +2,6 @@ GARNAME = Crypt-Primes
 GARVERSION = 0.50
 CATEGORIES = cpan
 AUTHOR = VIPUL
-GARCH = all
 
 DESCRIPTION = prime number generator suitable for cryptographic applications.
 define BLURB

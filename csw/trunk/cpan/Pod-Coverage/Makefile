@@ -2,7 +2,6 @@ GARNAME = Pod-Coverage
 GARVERSION = 0.17
 CATEGORIES = cpan
 AUTHOR = RCLAMP
-GARCH = all
 
 DESCRIPTION = checks if the documentation of a module is comprehensive
 define BLURB

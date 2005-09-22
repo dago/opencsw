@@ -2,7 +2,6 @@ GARNAME = Data-Hierarchy
 GARVERSION = 0.21
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = handle data in a hierarchical structure
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Devel-Trace
 GARVERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = MJD
-GARCH = all
 
 DESCRIPTION = print out each line before it is executed
 define BLURB

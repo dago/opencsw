@@ -2,7 +2,6 @@ GARNAME = XML-SemanticDiff
 GARVERSION = 0.95
 CATEGORIES = cpan
 AUTHOR = KHAMPTON
-GARCH = all
 
 DESCRIPTION = extension for comparing XML documents.
 define BLURB

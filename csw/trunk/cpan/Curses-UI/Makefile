@@ -2,7 +2,6 @@ GARNAME = Curses-UI
 GARVERSION = 0.95
 CATEGORIES = cpan
 AUTHOR = MARCUS
-GARCH = all
 
 DESCRIPTION = a curses based OO user interface framework
 define BLURB

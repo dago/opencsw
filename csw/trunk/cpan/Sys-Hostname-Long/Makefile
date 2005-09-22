@@ -2,7 +2,6 @@ GARNAME = Sys-Hostname-Long
 GARVERSION = 1.2
 CATEGORIES = cpan
 AUTHOR = SCOTT
-GARCH = all
 
 DESCRIPTION = try every conceivable way to get full hostname
 define BLURB

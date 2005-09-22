@@ -2,7 +2,6 @@ GARNAME = File-Remove
 GARVERSION = 0.29
 CATEGORIES = cpan
 AUTHOR = RSOD
-GARCH = all
 
 DESCRIPTION = remove files and directories
 define BLURB

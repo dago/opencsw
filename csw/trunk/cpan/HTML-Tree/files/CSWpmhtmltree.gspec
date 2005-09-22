@@ -1,6 +1,7 @@
-%var     bitname pm_htmltree
-%var     pkgname CSWpmhtmltree
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_htmltree
+%var        pkgname CSWpmhtmltree
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 1995-1998 Gisle Aas; copyright 1999-2002 Sean M. Burke.
 (Except the articles contained in HTML::Tree::AboutObjects,

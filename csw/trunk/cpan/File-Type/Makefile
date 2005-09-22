@@ -2,7 +2,6 @@ GARNAME = File-Type
 GARVERSION = 0.22
 CATEGORIES = cpan
 AUTHOR = PMISON
-GARCH = all
 
 DESCRIPTION = determine file type using magic
 define BLURB

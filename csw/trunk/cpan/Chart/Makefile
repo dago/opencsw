@@ -2,7 +2,6 @@ GARNAME = Chart
 GARVERSION = 2.3
 CATEGORIES = cpan
 AUTHOR = CHARTGRP
-GARCH = all
 
 DESCRIPTION = Charting library based on GD.
 define BLURB

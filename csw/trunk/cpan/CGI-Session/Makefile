@@ -2,7 +2,6 @@ GARNAME = CGI-Session
 GARVERSION = 3.95
 CATEGORIES = cpan
 AUTHOR = SHERZODR
-GARCH = all
 
 DESCRIPTION = persistent session data in CGI applications
 define BLURB

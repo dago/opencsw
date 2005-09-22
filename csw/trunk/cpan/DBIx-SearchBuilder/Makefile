@@ -1,4 +1,15 @@
-all:
+GARNAME = DBIx-SearchBuilder
+GARVERSION = 1.26
+CATEGORIES = cpan
+AUTHOR = JESSE
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = encapsulate SQL queries and rows in simple perl objects
+define BLURB
+  Encapsulate SQL queries and rows in simple perl objects
+endef
+
+DISTFILES += CSWpmdbixsrchbuilder.gspec CSWpmdbixsrchbuilder.depend
+
+DEPENDS += cpan/Want cpan/Class-ReturnValue
+
+include ../category.mk

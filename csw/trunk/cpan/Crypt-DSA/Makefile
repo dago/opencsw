@@ -2,7 +2,6 @@ GARNAME = Crypt-DSA
 GARVERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = BTROTT
-GARCH = all
 
 DESCRIPTION = DSA signatures and key generation
 define BLURB

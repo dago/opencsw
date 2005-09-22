@@ -2,7 +2,6 @@ GARNAME = Module-ScanDeps
 GARVERSION = 0.51
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
-GARCH = all
 
 DESCRIPTION = recursively scan Perl code for dependencies
 define BLURB

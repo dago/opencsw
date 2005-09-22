@@ -2,7 +2,6 @@ GARNAME = Frontier-RPC
 GARVERSION = 0.07b4
 CATEGORIES = cpan
 AUTHOR = KMACLEOD
-GARCH = all
 
 DESCRIPTION = issue Frontier XML RPC requests to a server.
 define BLURB

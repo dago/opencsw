@@ -2,7 +2,6 @@ GARNAME = Test-Differences
 GARVERSION = 0.47
 CATEGORIES = cpan
 AUTHOR = RBS
-GARCH = all
 
 DESCRIPTION = test strings and data structures and show differences
 define BLURB

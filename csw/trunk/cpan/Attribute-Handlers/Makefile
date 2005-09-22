@@ -2,7 +2,6 @@ GARNAME = Attribute-Handlers
 GARVERSION = 0.78
 CATEGORIES = cpan
 AUTHOR = ABERGMAN
-GARCH = all
 
 DESCRIPTION = simpler definition of attribute handlers
 define BLURB

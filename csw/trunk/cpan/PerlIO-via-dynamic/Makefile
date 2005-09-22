@@ -2,7 +2,6 @@ GARNAME = PerlIO-via-dynamic
 GARVERSION = 0.11
 CATEGORIES = cpan
 AUTHOR = CLKAO
-GARCH = all
 
 DESCRIPTION = dynamic PerlIO layers
 define BLURB

@@ -2,7 +2,6 @@ GARNAME = Image-Size
 GARVERSION = 2.992
 CATEGORIES = cpan
 AUTHOR = RJRAY
-GARCH = all
 
 DESCRIPTION = read the dimensions of an image in several popular formats
 define BLURB

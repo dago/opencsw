@@ -2,7 +2,6 @@ GARNAME = SOAP-WSDL
 GARVERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = MKUTTER
-GARCH = all
 
 DESCRIPTION = Web Service Descriptor Language support for SOAP::Lite
 define BLURB

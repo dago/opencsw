@@ -1,6 +1,7 @@
-%var     bitname pm_tmplextract
-%var     pkgname CSWpmtmplextract
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_tmplextract
+%var        pkgname CSWpmtmplextract
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 2001, 2002, 2003, 2004
 by Autrijus Tang <autrijus@autrijus.org>.

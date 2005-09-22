@@ -2,7 +2,6 @@ GARNAME = sol-inst
 GARVERSION = 0.90a
 CATEGORIES = cpan
 AUTHOR = CHRISJ
-GARCH = all
 
 DESCRIPTION = access basic Solaris installation information
 define BLURB

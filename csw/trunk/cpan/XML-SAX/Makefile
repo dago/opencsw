@@ -1,4 +1,20 @@
-all:
+GARNAME = XML-SAX
+GARVERSION = 0.12
+CATEGORIES = cpan
+AUTHOR = MSERGEANT
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = Simple API for XML
+define BLURB
+  XML::SAX is a SAX parser access API for Perl. It includes classes and APIs
+  required for implementing SAX drivers, along with a factory class for
+  returning any SAX parser installed on the user's system.
+endef
+
+DISTFILES += CSWpmxmlsax.gspec CSWpmxmlsax.depend
+
+DEPENDS += cpan/XML-NamespaceSupport
+
+# Enable modification of ParserDetails.ini
+PATCHFILES = parser.diff
+
+include ../category.mk

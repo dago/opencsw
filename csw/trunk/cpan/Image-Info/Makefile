@@ -2,7 +2,6 @@ GARNAME = Image-Info
 GARVERSION = 1.16
 CATEGORIES = cpan
 AUTHOR = GAAS
-GARCH = all
 
 DESCRIPTION = extract meta information from image files
 define BLURB

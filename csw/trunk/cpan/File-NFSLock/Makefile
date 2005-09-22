@@ -2,7 +2,6 @@ GARNAME = File-NFSLock
 GARVERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = BBB
-GARCH = all
 
 DESCRIPTION = Perl module to do NFS (or not) locking
 define BLURB

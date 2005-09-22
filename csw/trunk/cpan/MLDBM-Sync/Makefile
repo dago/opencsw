@@ -2,7 +2,6 @@ GARNAME = MLDBM-Sync
 GARVERSION = 0.30
 CATEGORIES = cpan
 AUTHOR = CHAMAS
-GARCH = all
 
 DESCRIPTION = safe concurrent access to MLDBM databases
 define BLURB

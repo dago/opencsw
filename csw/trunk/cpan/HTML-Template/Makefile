@@ -2,7 +2,6 @@ GARNAME = HTML-Template
 GARVERSION = 2.7
 CATEGORIES = cpan
 AUTHOR = SAMTREGAR
-GARCH = all
 
 DESCRIPTION = Perl module to use HTML Templates from CGI scripts
 define BLURB

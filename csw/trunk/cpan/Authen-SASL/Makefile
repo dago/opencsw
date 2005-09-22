@@ -2,7 +2,6 @@ GARNAME = Authen-SASL
 GARVERSION = 2.09
 CATEGORIES = cpan
 AUTHOR = GBARR
-GARCH = all
 
 DESCRIPTION = SASL Authentication framework
 define BLURB

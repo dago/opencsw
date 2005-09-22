@@ -2,7 +2,6 @@ GARNAME = HTML-CalendarMonth
 GARVERSION = 1.15
 CATEGORIES = cpan
 AUTHOR = MSISK
-GARCH = all
 
 DESCRIPTION = extension for generating and manipulating HTML calendar
 define BLURB

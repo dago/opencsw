@@ -1,6 +1,7 @@
-%var     bitname pm_gdbarcode
-%var     pkgname CSWpmgdbarcode
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_gdbarcode
+%var        pkgname CSWpmgdbarcode
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 The GD::Barocde module is Copyright (c) 2000 Kawai Takanori. Japan.
 All rights reserved.

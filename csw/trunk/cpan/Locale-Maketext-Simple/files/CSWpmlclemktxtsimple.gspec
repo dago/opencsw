@@ -1,6 +1,7 @@
-%var     bitname pm_lclemktxtsimple
-%var     pkgname CSWpmlclemktxtsimple
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_lclemktxtsimple
+%var        pkgname CSWpmlclemktxtsimple
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 2003, 2004 by Autrijus Tang <autrijus@autrijus.org>.
 

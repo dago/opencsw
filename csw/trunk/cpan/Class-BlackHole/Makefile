@@ -2,7 +2,6 @@ GARNAME = Class-BlackHole
 GARVERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = SBURKE
-GARCH = all
 
 DESCRIPTION = base class to treat unhandled method calls as no-ops
 define BLURB

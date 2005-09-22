@@ -1,6 +1,7 @@
-%var     bitname pm_parserecdescent
-%var     pkgname CSWpmparserecdescent
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_parserecdescent
+%var        pkgname CSWpmparserecdescent
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
      Copyright (c) 1997-2000, Damian Conway. All Rights Reserved.
      This module is free software. It may be used, redistributed

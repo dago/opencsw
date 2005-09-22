@@ -1,6 +1,7 @@
-%var     bitname pm_testdifferences
-%var     pkgname CSWpmtestdifferences
-%include url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%var        bitname pm_testdifferences
+%var        pkgname CSWpmtestdifferences
+%var        arch all
+%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright
 Copyright 2001 Barrie Slaymaker, All Rights Reserved.
 
