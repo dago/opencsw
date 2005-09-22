@@ -1,5 +1,5 @@
 GARNAME = ruby
-GARVERSION = 1.8.2
+GARVERSION = 1.8.3
 CATEGORIES = lang
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
@@ -24,7 +24,9 @@ DISTFILES += CSWrubydoc.gspec CSWrubydoc.depend CSWrubydoc.prototype
 endif
 
 # Compile against OpenSSL 0.9.8
+ifeq ($(GARVERSION),1.8.2)
 PATCHFILES += ossl-0.9.8.diff
+endif
 
 #LIBDEPS += lib/iconv lib/gdbm lib/ncurses lib/readline
 #LIBDEPS += lib/zlib lib/openssl lib/bdb3
@@ -50,7 +52,10 @@ include ../category.mk
 
 # Replace current build arch in prototype
 pre-install:
-	@perl -i -plne "s/%GARCH%/$(GARCH)/g" $(wildcard $(WORKDIR)/*.prototype)
+	@for proto in "" $(wildcard $(WORKDIR)/*.prototype) ; do \
+		test -z "$$proto" && continue ; \
+		gsed -i -e s,%GARCH%,$(GARCH),g $$proto ; \
+	done
 	@$(MAKECOOKIE)
 
 PI_TARGETS  = samples rbconfig
