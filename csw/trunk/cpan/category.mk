@@ -24,16 +24,12 @@ AUTHOR_ID ?= $(GEN_AUTHOR_ID)
 include ../../gar.mk
 
 # Fix package packlist for installation
-#pre-package:
-#	@packlist=$(shell find $(DESTDIR)$(prefix) \
-#		-type f -name .packlist -cnewer $(SPKG_TIMESTAMP)) ; \
-#	if test -n "$$packlist" ; then \
-#		sed -i -e s,$(DESTDIR),,g $$packlist ; \
-#	else \
-#		echo "  (!!!) Cannot locate packlist" ; \
-#		false ; \
-#	fi
-#	$(DONADA)
+pre-package:
+	@for plist in $(shell find $(DESTDIR)$(prefix) \
+		-name .packlist -cnewer $(SPKG_TIMESTAMP)) ; do \
+		sed -i -e s,$(DESTDIR),,g $$plist ; \
+	done
+	@$(MAKECOOKIE)
 
 # Enable scripts to see prereqs
 PERL5LIB  = $(DESTDIR)$(libdir)/perl/csw
