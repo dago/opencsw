@@ -1,4 +1,13 @@
-all:
+GARNAME = Proc-ProcessTable
+GARVERSION = 0.40
+CATEGORIES = cpan
+AUTHOR = DURIST
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = extension to access the unix process table.
+define BLURB
+  Perl interface to the unix process table.
+endef
+
+DISTFILES += CSWpmprocprocesstbl.gspec
+
+include ../category.mk

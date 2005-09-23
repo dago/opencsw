@@ -1,4 +1,15 @@
-all:
+GARNAME = Want
+GARVERSION = 0.09
+CATEGORIES = cpan
+AUTHOR = ROBIN
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = a generalisation of wantarray
+define BLURB
+  This module generalises the mechanism of the wantarray function, allowing a
+  function to determine in some detail how its return value is going to be
+  immediately used.
+endef
+
+DISTFILES += CSWpmwant.gspec
+
+include ../category.mk

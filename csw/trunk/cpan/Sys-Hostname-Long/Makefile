@@ -1,5 +1,5 @@
 GARNAME = Sys-Hostname-Long
-GARVERSION = 1.2
+GARVERSION = 1.4
 CATEGORIES = cpan
 AUTHOR = SCOTT
 
