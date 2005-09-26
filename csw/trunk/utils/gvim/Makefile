@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWgvim.gspec CSWgvim.prototype #CSWgvim.depend
+DISTFILES += CSWgvim.gspec CSWgvim.prototype CSWgvim.depend
 
 WORKSRC = $(WORKDIR)/$(GARNAME)63
 
