@@ -10,3 +10,4 @@ P CSWsasl sasl - Simple Authentication and Security Layer
 P CSWzlib zlib - Zlib Data Compression Library
 P SUNWcsl Core Solaris, (Shared Libs)
 P SUNWlibms Sun WorkShop Bundled shared libm
+P SUNWpl5u Perl 5.005_03
