@@ -38,9 +38,6 @@ DISTFILES += CSWap2suexec.postinstall CSWap2suexec.preremove
 # Patch aprutil to explicitly use GNU iconv
 #PATCHFILES += iconv.diff
 
-# Patch mod_ssl to build with OpenSSL 0.9.8
-PATCHFILES += openssl.diff
-
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --enable-suexec

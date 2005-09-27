@@ -32,3 +32,4 @@ a04f643c5f939b435dc91eb0990149c0  download/CSWap2prefork.preremove
 9af3a7e74c6f08f9e49a9bd7843dacca  download/CSWap2suexec.postinstall
 eaa47d0433f5ae71d0de1831a2efcef5  download/CSWap2suexec.preremove
 3e33ff459b87ad32c307e1e703141dcc  download/openssl.diff
+80cbb0383c3ef89db0feb9685798adcf  download/perl.diff

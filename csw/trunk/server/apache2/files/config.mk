@@ -1,7 +1,17 @@
+# Source location
 MASTER_SITES = http://www.ibiblio.com/pub/mirrors/apache/httpd/
+
+# Visitor information
+SPKG_SOURCEURL = http://httpd.apache.org/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += config.layout
+
+# Patch mod_ssl to build with OpenSSL 0.9.8
+PATCHFILES += openssl.diff
+
+# Patch configure to use SUNWpl5u
+PATCHFILES += perl.diff
 
 # Build Configuration
 CONFIGURE_ARGS  = --prefix=$(prefix)
