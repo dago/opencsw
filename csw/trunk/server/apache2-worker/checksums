@@ -8,3 +8,5 @@ b2e94d1566bd402e5aba3d3165a005e4  download/CSWap2worker.postinstall
 9768d3bb939fa2a169a2363f96fb6402  download/CSWap2worker.preremove
 12ad8e8a38e6c2be7cefd073205654c6  download/CSWap2worker.postremove
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2worker.space
+3e33ff459b87ad32c307e1e703141dcc  download/openssl.diff
+80cbb0383c3ef89db0feb9685798adcf  download/perl.diff
