@@ -35,9 +35,6 @@ DISTFILES += CSWapache2-manual.depend
 DISTFILES += CSWap2suexec.gspec CSWap2suexec.prototype CSWap2suexec.depend
 DISTFILES += CSWap2suexec.postinstall CSWap2suexec.preremove
 
-# Patch aprutil to explicitly use GNU iconv
-#PATCHFILES += iconv.diff
-
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --enable-suexec
