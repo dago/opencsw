@@ -1,5 +1,5 @@
 GARNAME = db
-GARVERSION = 4.3.27
+GARVERSION = 4.3.29
 CATEGORIES = lib
 
 DESCRIPTION = embedded database libraries and utilities
@@ -13,7 +13,7 @@ define BLURB
   (MSVC 4, 5 and 6).
 endef
 
-MASTER_SITES = http://www.sleepycat.com/update/snapshot/
+MASTER_SITES = http://downloads.sleepycat.com/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWbdb43.gspec CSWbdb43.depend CSWbdb43.prototype
 DISTFILES += CSWbdb43doc.gspec CSWbdb43doc.depend CSWbdb43doc.prototype
