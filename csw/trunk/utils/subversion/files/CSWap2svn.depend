@@ -7,4 +7,3 @@ P CSWiconv libiconv - GNU iconv library
 P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)

@@ -3,4 +3,3 @@ P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWlibpq libpq - libraries needed by postgresql server and clients
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)

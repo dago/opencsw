@@ -3,5 +3,4 @@ P CSWcommon common - common files and dirs for CSW packages
 P CSWvimrt vimrt - vim shared runtime and documentation
 P CSWncurses ncurses - ncurses library and utilities
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)
 P SUNWlibms Sun WorkShop Bundled shared libm

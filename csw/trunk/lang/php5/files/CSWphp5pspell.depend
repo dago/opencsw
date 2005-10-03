@@ -4,6 +4,5 @@ P CSWaspell aspell - The GNU spell checker (core package only, no dictionary)
 P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)
 P SUNWlibC Sun Workshop Compilers Bundled libC
 P SUNWlibms Sun WorkShop Bundled shared libm

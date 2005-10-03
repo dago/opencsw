@@ -3,4 +3,3 @@ P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWncurses ncurses - ncurses library and utilities
 P CSWreadline readline - library to enable interactive line editing
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)

@@ -3,4 +3,3 @@ P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWfreetds freetds - Implementation of the TDS protocol used by MS SQL Server and Sybase
 P CSWiconv libiconv - GNU iconv library
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)

@@ -12,6 +12,5 @@ P CSWsvn subversion - Version control rethought
 P CSWswigplrt swigplrt - SWIG perl runtime library
 P CSWzlib zlib - Zlib Data Compression Library
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)
 P SUNWlibms Sun WorkShop Bundled shared libm
 P CSWperl perl - A high-level, general-purpose programming language

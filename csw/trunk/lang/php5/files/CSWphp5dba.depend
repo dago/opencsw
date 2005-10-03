@@ -3,4 +3,3 @@ P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
 P CSWgdbm gdbm - GNU dbm
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)

@@ -10,6 +10,5 @@ P CSWt1lib t1lib - Type1 font renderering library
 P CSWxpm xpm - library for X11 PixMap format (libXpm.so.4.11)
 P CSWzlib zlib - Zlib Data Compression Library
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)
 P SUNWlibms Sun WorkShop Bundled shared libm
 P SUNWxwplt X Window System platform software
