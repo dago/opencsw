@@ -18,9 +18,8 @@ DISTFILES += CSWflex.gspec CSWflex.prototype
 # Force Makefile to honor DESTDIR
 PATCHFILES += install.diff
 
-DEPENDS = devel/bison
+#DEPENDS = devel/bison
 
 CONFIGURE_ARGS = --prefix=$(prefix)
-#CONFIGURE_ARGS = --prefix=$(prefix)/oflex
 
 include ../category.mk
