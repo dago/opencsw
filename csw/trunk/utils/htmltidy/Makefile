@@ -1,5 +1,5 @@
 GARNAME = htmltidy
-GARVERSION = 2004.08.10
+GARVERSION = 2005.09.21
 CATEGORIES = utils
 
 DESCRIPTION = Cleans up HTML source and formats it nicely.
