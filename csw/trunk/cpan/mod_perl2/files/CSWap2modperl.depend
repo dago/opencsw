@@ -7,5 +7,4 @@ P CSWiconv libiconv - GNU iconv library
 P CSWoldap openldap - ldap clients,libraries and server
 P CSWperl perl - A high-level, general-purpose programming language
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)
 P SUNWlibms Sun WorkShop Bundled shared libm
