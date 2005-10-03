@@ -15,7 +15,7 @@ MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 WORKSRC = $(WORKDIR)/$(GARNAME)63
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWvim.gspec CSWvim.prototype
+DISTFILES += CSWvim.gspec CSWvim.prototype CSWvim.depend
 DISTFILES += CSWvimrt.gspec CSWvimrt.prototype
 
 #DEPENDS = utils/mktemp lib/ncurses

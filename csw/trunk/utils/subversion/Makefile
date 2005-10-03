@@ -71,6 +71,9 @@ LIBS += -lintl -liconv
 # Libdir is a bit non-standard
 LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 
+# Where C++ is used, be sure to include the right libs
+CXXFLAGS += -library=Cstd,Crun
+
 #pre-configure:
 #	@( cd $(WORKSRC) ; ./autogen.sh )
 #	@$(MAKECOOKIE)
@@ -104,7 +107,7 @@ swig-java:
 
 javahl:
 	@echo " ==> Building Javahl bindings"
-	@$(BUILD_ENV) make -C $(WORKSRC) javahl
+	$(BUILD_ENV) make -C $(WORKSRC) javahl
 	@$(INSTALL_ENV) make -C $(WORKSRC) install-javahl
 	# This requires JUnit 3.8.1+ to be installed
 	#@$(TEST_ENV) make -C $(WORKSRC) check-javahl
