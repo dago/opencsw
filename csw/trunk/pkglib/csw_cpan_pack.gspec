@@ -2,4 +2,4 @@
 %pkginfo    url file://%{GARDIR}/pkglib/csw/pkginfo
 %depend     url file://%{GARDIR}/pkglib/csw/depend.perl
 %prototype  exec pkgproto %{DESTDIR}=/ | %{GARBIN}/cswproto -p `find %{DESTDIR}%{prefix} -cnewer %{SPKG_TIMESTAMP} -name .packlist`
-%depend     exec awk '$1 ~ /f/{print $3}' %{MKP_PROTOTYPE} | %{GARBIN}/depmaker --root %{DESTDIR} --noscript --nodep %{MKP_PKGNAME}
+%depend     exec awk '$1 ~ /f/{print $3}' %{MKP_PROTOTYPE} | %{GARBIN}/depmaker --root %{DESTDIR} --noscript --nodep %{MKP_PKGNAME} --nodep SUNWkvm
