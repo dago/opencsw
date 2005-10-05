@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 5.0.4
+GARVERSION = 5.0.5
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
@@ -51,6 +51,9 @@ PATCHFILES += config.diff
 
 # Fix ssl paths for uw-imap c-client
 PATCHFILES += imap-ssl.diff
+
+# Don't hardcode $(CC)
+PATCHFILES += imap-cc.diff
 
 #DEPENDS += server/apache2 server/mysql4
 

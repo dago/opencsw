@@ -1,4 +1,4 @@
-fb1aac107870f897d26563a9cc5053c0  download/php-5.0.4.tar.bz2
+b5d4ca75bbb11ee5b830fa67213d9f7f  download/php-5.0.5.tar.bz2
 9407d839a668bc683aba326b928989d8  download/c-client.tar.Z
 a711dfd7f67054646691d889282ba72e  download/php.ini
 df7e857e1b866e6e78d68f965ebd0554  download/ext_enable.sh
@@ -72,5 +72,6 @@ ebd6f2359b2219770a543f85e99119ae  download/CSWphp5snmp.gspec
 d95d693007a521e045d1848849abb7e5  download/CSWphp5xsl.gspec
 56598fa8e3b4074fd8d66545b129a2f7  download/CSWphp5xsl.prototype
 c394f7c4e19294126fdbe11c67a3a93d  download/CSWphp5xsl.depend
-89f4914b8ad8cf95facb42fde2ce9330  download/config.diff
+61f17437a2649e59c45bbf0f894d40f0  download/config.diff
 d22bc5c2bd2ad664ea1e9c8f95d17189  download/imap-ssl.diff
+c7898c50f3422d43f1a63e1ea29363d3  download/imap-cc.diff
