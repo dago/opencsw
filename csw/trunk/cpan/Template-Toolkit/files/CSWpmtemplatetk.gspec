@@ -1,7 +1,7 @@
-%var        bitname pm_templatetk
-%var        pkgname CSWpmtemplatetk
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_templatetk
+%var            pkgname CSWpmtemplatetk
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
         Copyright (C) 1996-2004 Andy Wardley.  All Rights Reserved
         Copyright (C) 1998-2002 Canon Research Centre Europe Ltd.
           

@@ -1,7 +1,7 @@
-%var        bitname pm_perlioeol
-%var        pkgname CSWpmperlioeol
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_perlioeol
+%var            pkgname CSWpmperlioeol
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 Copyright 2004 by Autrijus Tang <autrijus@autrijus.org>.
 
 All rights reserved.  You can redistribute and/or modify

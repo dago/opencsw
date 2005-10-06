@@ -1,8 +1,8 @@
-%var        bitname pm_parsesyslog
-%var        pkgname CSWpmparsesyslog
-%var        arch all
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_parsesyslog
+%var            pkgname CSWpmparsesyslog
+%var            arch all
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 Copyright (c) 2001, Swiss Federal Institute of Technology, Zurich.
 All Rights Reserved.
 

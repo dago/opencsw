@@ -1,7 +1,7 @@
-%var        bitname gvim
-%var        pkgname CSWgvim
-%include    url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright  
+%var            bitname gvim
+%var            pkgname CSWgvim
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%copyright      
 Vim is Charityware.  You can use and copy it as much as you like, but you are
 encouraged to make a donation to orphans in Uganda.  Please read the file
 "runtime/doc/uganda.txt" for details (do ":help uganda" inside Vim).                                                

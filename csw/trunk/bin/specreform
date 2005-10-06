@@ -6,7 +6,7 @@
 #
 
 # All items line up on 3x tabstop (ts=4)
-$fmt_col = "12";
+$fmt_col = "16";
 
 if (/^%/) {
     @a = split; $d = shift @a;

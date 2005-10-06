@@ -1,7 +1,7 @@
-%var        bitname pm_cryptripemd160
-%var        pkgname CSWpmcryptripemd160
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_cryptripemd160
+%var            pkgname CSWpmcryptripemd160
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 The RIPEMD160 extension may be redistributed under the same terms as Perl.
 The RIPEMD160 algorithm is published in "Fast Software Encryption, LNCS 1039,
 D. Gollmann (Ed.), pp.71-82".

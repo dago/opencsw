@@ -1,7 +1,7 @@
-%var        bitname pm_termreadkey
-%var        pkgname CSWpmtermreadkey
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_termreadkey
+%var            pkgname CSWpmtermreadkey
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
  Copyright (C) 1994-1999 Kenneth Albanowski.
                2001,2002 Jonathan Stowe
 

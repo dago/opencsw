@@ -47,12 +47,11 @@ CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --disable-mod-activation
-#CONFIGURE_ARGS += --enable-dso
 CONFIGURE_ARGS += --with-ssl
 CONFIGURE_ARGS += --with-zlib
 CONFIGURE_ARGS += --enable-swig-bindings=all
 CONFIGURE_ARGS += --enable-javahl
-CONFIGURE_ARGS += --with-neon=$(prefix)
+CONFIGURE_ARGS += --with-neon=$(DESTDIR)$(prefix)
 CONFIGURE_ARGS += --with-jdk=/usr/j2se
 
 TEST_TARGET = check
@@ -74,9 +73,8 @@ LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 # Where C++ is used, be sure to include the right libs
 CXXFLAGS += -library=Cstd,Crun
 
-#pre-configure:
-#	@( cd $(WORKSRC) ; ./autogen.sh )
-#	@$(MAKECOOKIE)
+pre-configure:
+	@gsed -i -e s,0.24.7,0.25.3, $(WORKSRC)/configure
 
 post-install: swig-py swig-pl javahl svnbook
 	@$(MAKECOOKIE)

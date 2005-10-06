@@ -1,4 +1,4 @@
-%var        bitname subversion
-%var        pkgname CSWsvn
-%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
-%copyright  url file://%{WORKSRC}/COPYING
+%var            bitname subversion
+%var            pkgname CSWsvn
+%include        url file://%{GARDIR}/pkglib/csw_standard.gspec
+%copyright      url file://%{WORKSRC}/COPYING

@@ -1,5 +1,5 @@
-%var        bitname ap2_suexec
-%var        pkgname CSWap2suexec
-%include    url file://%{GARDIR}/pkglib/csw_standard.gspec
-%var        desc Apache 2.0 suEXEC support
-%copyright  url file://%{WORKSRC}/LICENSE
+%var            bitname ap2_suexec
+%var            pkgname CSWap2suexec
+%include        url file://%{GARDIR}/pkglib/csw_standard.gspec
+%var            desc Apache 2.0 suEXEC support
+%copyright      url file://%{WORKSRC}/LICENSE

@@ -1,8 +1,8 @@
-%var        bitname pm_emailvalid
-%var        pkgname CSWpmemailvalid
-%var        arch all
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_emailvalid
+%var            pkgname CSWpmemailvalid
+%var            arch all
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 Copyright 1998-2003, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>. 
 All rights reserved.
 

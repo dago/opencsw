@@ -1,7 +1,7 @@
-%var        bitname pm_dbdpg
-%var        pkgname CSWpmdbdpg
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_dbdpg
+%var            pkgname CSWpmdbdpg
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 Portions Copyright (c) 1994,1995,1996,1997 Tim Bunce
 Copyright (c) 1997,1998,1999,2000 Edmund Mergl
 Copyright (c) 2002 Jeffrey W. Baker

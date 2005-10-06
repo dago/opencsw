@@ -1,8 +1,8 @@
-%var        bitname pm_gdgraph3d
-%var        pkgname CSWpmgdgr3d
-%var        arch all
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_gdgraph3d
+%var            pkgname CSWpmgdgr3d
+%var            arch all
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 COPYRIGHT
     Copyright (c) 1999,2000 Wadsack-Allen. All rights reserved.
 

@@ -1,7 +1,7 @@
-%var        bitname php5_sqlite
-%var        pkgname CSWphp5sqlite
-%include    url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%postinstallurl file://%{WORKDIR}/ext_enable.sh
-%postremove url file://%{WORKDIR}/ext_disable.sh
-%var        desc PHP 5 - SQLite Extension
-%copyright  url file://%{WORKSRC}/LICENSE
+%var            bitname php5_sqlite
+%var            pkgname CSWphp5sqlite
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%postinstall    url file://%{WORKDIR}/ext_enable.sh
+%postremove     url file://%{WORKDIR}/ext_disable.sh
+%var            desc PHP 5 - SQLite Extension
+%copyright      url file://%{WORKSRC}/LICENSE

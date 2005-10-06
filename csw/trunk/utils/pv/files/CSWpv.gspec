@@ -1,6 +1,6 @@
-%var        bitname pv
-%var        pkgname CSWpv
-%include    url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%postinstallurl file://%{GARDIR}/pkglib/csw/geninfodir
-%postremove url file://%{GARDIR}/pkglib/csw/geninfodir
-%copyright  url file://%{WORKSRC}/doc/COPYING
+%var            bitname pv
+%var            pkgname CSWpv
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%postinstall    url file://%{GARDIR}/pkglib/csw/geninfodir
+%postremove     url file://%{GARDIR}/pkglib/csw/geninfodir
+%copyright      url file://%{WORKSRC}/doc/COPYING

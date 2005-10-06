@@ -1,8 +1,8 @@
-%var        bitname pm_digesthmac
-%var        pkgname CSWpmdigesthmac
-%var        arch all
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_digesthmac
+%var            pkgname CSWpmdigesthmac
+%var            arch all
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 Copyright 1998-2001 Gisle Aas.
 Copyright 1998 Graham Barr.
 

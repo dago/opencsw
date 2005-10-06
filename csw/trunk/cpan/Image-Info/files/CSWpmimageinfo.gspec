@@ -1,8 +1,8 @@
-%var        bitname pm_imageinfo
-%var        pkgname CSWpmimageinfo
-%var        arch all
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_imageinfo
+%var            pkgname CSWpmimageinfo
+%var            arch all
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 Copyright 1999-2004, Gisle Aas.
 
 This library is free software; you can redistribute it and/or

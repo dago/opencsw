@@ -72,7 +72,7 @@ optlibdir := $(libdir)/$(OPTDIR)
 endif
 
 # Forte Compiler Configuration
-SUN_CC_HOME  ?= /opt/studio/SOS8/SUNWspro
+SUN_CC_HOME  ?= /opt/studio/SOS10/SUNWspro
 SUN_CC        = cc
 SUN_CXX       = CC
 #SUN_CC_OPT   ?= -fast -xarch=$(OPTARCH) -xstrconst -xildoff

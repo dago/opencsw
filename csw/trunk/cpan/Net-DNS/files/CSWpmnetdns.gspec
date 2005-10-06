@@ -1,7 +1,7 @@
-%var        bitname pm_netdns
-%var        pkgname CSWpmnetdns
-%include    url file://%{GARDIR}/pkglib/csw_cpan.gspec
-%copyright  
+%var            bitname pm_netdns
+%var            pkgname CSWpmnetdns
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      
 Copyright (c) 1997-2002 Michael Fuhr.
 
 Portions Copyright (c) 2002-2004 Chris Reinhardt.
