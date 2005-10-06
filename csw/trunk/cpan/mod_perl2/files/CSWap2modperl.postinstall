@@ -44,11 +44,6 @@ if [ -z "`grep 'IfModule mod_perl.c' $AP2_CONFIG`" ]; then
 </IfModule>
 CONFIG
 
-else
-    echo "Fixing references to Apache:: handlers in existing config..."
-    cp $AP2_CONFIG $AP2_CONFIG.pre-MP2.RC5
-    sed -e 's,Apache::,Apache2::,g' \
-        $AP2_CONFIG.pre-MP2.RC5 > $AP2_CONFIG
 fi
 
 # Create the startup script
@@ -57,12 +52,6 @@ if [ ! -f "$AP2_STARTUP" ]; then
     echo "Copying mod_perl startup script..."
     cp $AP2_STARTUP.CSW $AP2_STARTUP
     chmod 555 $AP2_STARTUP
-else
-    echo "Fixing references to Apache:: in existing startup script..."
-    cp $AP2_STARTUP $AP2_STARTUP.pre-MP2.RC5
-    sed -e 's,Apache::,Apache2::,g' \
-        -e 's,use Apache2 .*$,,g'   \
-        $AP2_STARTUP.pre-MP2.RC5 > $AP2_STARTUP
 fi
 
 # Finito
@@ -74,13 +63,11 @@ in the $AP2_STARTUP
 script.  Please examine your mod_perl configuration and restart
 apache.
 
-WARNING: mod_perl2 has undergone an API name change in the transition
-from RC4 to RC5.  Any handlers which use mod_perl2 features in the
-Apache:: namespace need to be modified to use the Apache2:: namespace.
-If you have existing Apache:: handlers defined in an existing
-httpd.conf, the post-install procedure of this package has already
-fixed your namespace references.  Likewise, any Apache:: modules
-loaded in the startup.pl script were also modified during
-post-install.
+WARNING: mod_perl2 no longer places modules in the Apache:: namespace.
+Instead, it uses the Apache2:: namespace for the core modules, along with
+the ModPerl:: and APR:: namespaces.  Please ensure that any applications
+that were written or are running under mod_perl2 prior to 2.0.0-RC5 are
+updated to use the new API.  This includes any existing httpd.conf or
+startup.pl entries.
 
 END
