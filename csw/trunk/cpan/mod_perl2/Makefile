@@ -1,6 +1,6 @@
 GARNAME = mod_perl2
-DISTVERSION = 2.0.1
-GARVERSION = $(subst -,,$(DISTVERSION))
+DISTVERSION = 2.0.2-dev
+GARVERSION = $(subst -dev,,$(DISTVERSION))
 CATEGORIES = cpan
 
 DESCRIPTION = Persistent Perl interpreter for Apache 2.0
@@ -23,8 +23,8 @@ endef
 #          _default_ vhost, causing a lookup of 255.255.255.255.
 #
 
-MASTER_SITES = http://perl.apache.org/dist/
-#MASTER_SITES = http://people.apache.org/~gozer/mp2/
+MASTER_SITES  = http://perl.apache.org/dist/
+MASTER_SITES += http://people.apache.org/~pgollucci/mp2/
 MODDIST = mod_perl-$(DISTVERSION).tar.gz 
 WORKSRC = $(WORKDIR)/mod_perl-$(DISTVERSION)
 
