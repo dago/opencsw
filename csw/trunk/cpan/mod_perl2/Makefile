@@ -1,6 +1,6 @@
 GARNAME = mod_perl2
-DISTVERSION = 2.0.2-dev
-GARVERSION = $(subst -dev,,$(DISTVERSION))
+DISTVERSION = 2.0.2-RC2
+GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = cpan
 
 DESCRIPTION = Persistent Perl interpreter for Apache 2.0

@@ -1,8 +1,8 @@
-fd9cb8ce794bb3ae3c8c288e18bf5b8f  download/mod_perl-2.0.1.tar.gz
-a64abbff590bc63b93afa90390ba66db  download/CSWap2modperl.gspec
-2b964f196d17c7ca23f595b2ade6d36b  download/CSWap2modperl.prototype
-f0e9695d2de67e6ba0877649ce20f71f  download/CSWap2modperl.depend
-0aea8f559d1696a408d5a06e582b31c0  download/CSWap2modperl.postinstall
+4ffd9ba95baf804868e2ed3ab271e84c  download/mod_perl-2.0.2-RC2.tar.gz
+2aef72887839dce520944eafc4c766a1  download/CSWap2modperl.gspec
+0ae4a2a204063a41703b3c165b7d1a59  download/CSWap2modperl.prototype
+ea2c8db9557b8155028da142784bf38d  download/CSWap2modperl.depend
+fa6cbc4b5a24a6e2e4e5c99ad4684a2f  download/CSWap2modperl.postinstall
 9872cb727dbb6df1151654603f83e80e  download/CSWap2modperl.preremove
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2modperl.space
 4aa0fc5876b33fa32ff8a18a7c70a82a  download/startup.pl.CSW
