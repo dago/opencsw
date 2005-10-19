@@ -1,5 +1,5 @@
 GARNAME = vim
-GARVERSION = 6.3
+GARVERSION = 6.4
 CATEGORIES = utils
 
 DESCRIPTION = Vi IMproved with GTK+ support
@@ -15,7 +15,7 @@ MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWgvim.gspec CSWgvim.prototype CSWgvim.depend
 
-WORKSRC = $(WORKDIR)/$(GARNAME)63
+WORKSRC = $(WORKDIR)/$(GARNAME)64
 
 # When the DIGRAPH feature is turned on, EXTERN 'e_number'
 # conflicts with perl CORE (found in 5.8.3).

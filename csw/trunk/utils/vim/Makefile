@@ -1,5 +1,5 @@
 GARNAME = vim
-GARVERSION = 6.3
+GARVERSION = 6.4
 CATEGORIES = utils
 
 DESCRIPTION = Vi IMproved
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
-WORKSRC = $(WORKDIR)/$(GARNAME)63
+WORKSRC = $(WORKDIR)/$(GARNAME)64
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWvim.gspec CSWvim.prototype CSWvim.depend
