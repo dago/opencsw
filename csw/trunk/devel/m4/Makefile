@@ -1,5 +1,5 @@
 GARNAME = m4
-GARVERSION = 1.4
+GARVERSION = 1.4.3
 CATEGORIES = devel
 
 DESCRIPTION = Standard Unix macro processor with extensions
@@ -13,9 +13,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWgm4.gspec
 
-CONFIGURE_ARGS = --prefix=$(prefix)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --program-prefix="g"
 
 TEST_TARGET = check
 
