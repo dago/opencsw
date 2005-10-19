@@ -17,3 +17,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 include ../category.mk
+
+# Prevent libagraph grammar from being regenerated
+# Fixes graphviz bug 469
+pre-build:
+	@touch $(WORKSRC)/agraph/grammar.[ch]
+
