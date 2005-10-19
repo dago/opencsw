@@ -1,5 +1,5 @@
 GARNAME = graphviz
-GARVERSION = 1.18
+GARVERSION = 2.6
 CATEGORIES = utils
 
 DESCRIPTION = Graph drawing utilities with web and graphical interfaces.
