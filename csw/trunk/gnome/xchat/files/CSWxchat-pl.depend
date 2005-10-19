@@ -6,6 +6,5 @@ P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
 P CSWperl perl - A high-level, general-purpose programming language
 P CSWxchat xchat - GTK+ based IRC client, similar to AmIRC (Amiga).
 P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWkvm Core Architecture, (Kvm)
 P SUNWlibms Sun WorkShop Bundled shared libm
 P SUNWxwplt X Window System platform software
