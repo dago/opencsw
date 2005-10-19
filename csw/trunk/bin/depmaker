@@ -58,7 +58,7 @@ foreach (<>) {
 
     next unless -f;
 
-    my ($ftype) = `/bin/file -h $_`;
+    my ($ftype) = `/bin/file -h '$_'`;
 
     my @depfiles;
     if ($do_script and $ftype =~ /script/) {
