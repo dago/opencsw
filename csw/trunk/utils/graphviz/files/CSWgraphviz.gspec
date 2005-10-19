@@ -1,4 +1,4 @@
 %var            bitname graphviz
 %var            pkgname CSWgraphviz
 %include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright      
+%copyright      url file://%{WORKSRC}/COPYING
