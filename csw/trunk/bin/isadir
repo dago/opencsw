@@ -7,11 +7,10 @@
 #          isa (E.g. isaname v9b -> sparcv9+vis2)
 #
 
-my $optarch = shift @ARGV;
-chomp($optarch = `uname -p`) unless $optarch;
+chomp($arch = `uname -p`);
 
 my $isadir;
-if ($optarch eq 'sparc') {
+if ($arch eq 'sparc') {
     my $isa  = shift or exit 0;
 
     my $visid = substr($isa, length($isa) - 1);
@@ -20,9 +19,9 @@ if ($optarch eq 'sparc') {
             : (($visid eq 'a' or $visid eq 'b') ? "+vis" : "");
 
     $isa = substr($isa,0,length($isa) - 1) if $vis;
-    $isadir = "$optarch$isa$vis";
+    $isadir = "$arch$isa$vis";
 }
 else {
-    $isadir = $optarch;
+    $isadir = $arch;
 }
 print $isadir;
