@@ -767,7 +767,7 @@ are not replaced at the end of processing will be replaced with the string
     %pkginfo url http://%{PACKAGE_SERVER}/admin/pkginfo.standard
     %pkginfo
     PSTAMP=%{LOGNAME}@%{HOSTNAME}-%{exec gdate -s '+%s'}
-    %prototype exec find %{SPKG_BASEDIR} -cnewer %{SPKG_TIMESTAMP}
+    %prototype exec find %{SPKG_BASEDIR} -cnewer %{TIMESTAMP}
 
 mkpackage also exports a set of variables to spec files.  The following
 variables are available for use with all spec directives:
