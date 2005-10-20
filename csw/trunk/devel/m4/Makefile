@@ -16,9 +16,15 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWgm4.gspec
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+ifneq ($(OPTARCH),386)
+NODIRPATHS = --bindir
+CONFIGURE_ARGS += $(DIRPATHS) --bindir=$(optbindir)
+else
+CONFIGURE_ARGS += $(DIRPATHS)
+endif
 CONFIGURE_ARGS += --program-prefix="g"
 
 TEST_TARGET = check
 
 include ../category.mk
+
