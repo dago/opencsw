@@ -43,8 +43,10 @@ http//%:
 	@wget -T 10 -c -P $(PARTIALDIR) http://$*
 
 # download an ftp URL (colons omitted)
+#ftp//%: 
+#	@wget -T 10 -c --passive-ftp -P $(PARTIALDIR) ftp://$*
 ftp//%: 
-	@wget -T 10 -c --passive-ftp -P $(PARTIALDIR) ftp://$*
+	@wget -T 10 -c -P $(PARTIALDIR) ftp://$*
 
 # link to a local copy of the file
 # (absolute path)
