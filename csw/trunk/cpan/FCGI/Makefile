@@ -1,4 +1,12 @@
-all:
+GARNAME = FCGI
+GARVERSION = 0.67
+CATEGORIES = cpan
+AUTHOR = SKIMO
 
-.DEFAULT:
-	@echo "Build disabled"
+DESCRIPTION = fast CGI module
+define BLURB
+endef
+
+DISTFILES += CSWpmfcgi.gspec
+
+include ../category.mk
