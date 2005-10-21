@@ -82,6 +82,7 @@ SUN_CXX       = CC
 SUN_CC_OPT   ?= -O -xarch=$(OPTARCH)
 SUN_CXX_OPT  ?= -O -xarch=$(OPTARCH)
 SUN_AS_OPT   ?= -xarch=$(OPTARCH)
+SUN_LD_OPT   ?= -xarch=$(OPTARCH)
 
 # GNU Compiler Configuration
 GNU_CC_HOME   = /opt/csw/gcc3
@@ -102,7 +103,7 @@ CXX      = $($(GARCOMPILER)_CXX)
 CFLAGS   = $($(GARCOMPILER)_CC_OPT)
 CXXFLAGS = $($(GARCOMPILER)_CXX_OPT)
 CPPFLAGS = $($(GARCOMPILER)_CPP_FLAGS)
-LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS)
+LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS) $($(GARCOMPILER)_LD_OPT)
 ASFLAGS  = $($(GARCOMPILER)_AS_OPT)
 OPTFLAGS = $($(GARCOMPILER)_CC_OPT)
 LIBS     =
@@ -163,7 +164,8 @@ GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GARNAME)/
 #CPAN_ROOT	  = ftp://cpan.sfbay/pub/CPAN
 #CPAN_ROOT    = ftp://ftp.nas.nasa.gov/pub/perl/CPAN
 #CPAN_ROOT    = ftp://cpan.pair.com/pub/CPAN
-CPAN_ROOT    = http://mirrors.ibiblio.org/pub/mirrors/CPAN
+#CPAN_ROOT    = http://mirrors.ibiblio.org/pub/mirrors/CPAN
+CPAN_ROOT    = ftp://ftp.nrc.ca/pub/CPAN
 CPAN_MIRROR  = $(CPAN_ROOT)/authors/id/$(AUTHOR_ID)/
 
 # Compiler version
