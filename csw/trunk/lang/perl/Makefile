@@ -27,10 +27,12 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
+CONFIGURE_ARGS += -Dcc=$(CC)
 CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
 CONFIGURE_ARGS += -Dcf_email=$(SPKG_EMAIL)
 CONFIGURE_ARGS += -Dinc_version_list="$(INC_COMPAT)"
+CONFIGURE_ARGS += -Dld=$(CC)
 CONFIGURE_ARGS += -Dldflags="$(LDFLAGS)"
 CONFIGURE_ARGS += -Dlibperl=libperl.so.$(GARVERSION)
 CONFIGURE_ARGS += -Dlocincpth=$(includedir)
@@ -66,15 +68,38 @@ configure-perl:
 	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
 	@$(MAKECOOKIE)
 
+post-install: libperl perlconf
+
 # Make links to libperl
 LIB_MINOR = $(shell echo $(GARVERSION) | cut -f1-2 -d.)
 LIB_PATH  = $(libdir)/perl/$(GARVERSION)/CORE
-post-install:
+libperl:
 	@( cd $(DESTDIR)$(libdir) ; \
 		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(GARVERSION) \
 		$(DESTDIR)$(libdir) ; \
 		chmod 755 $(DESTDIR)$(libdir)/libperl.so.$(GARVERSION) ; \
 		ln -s libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
 		ln -s libperl.so.$(GARVERSION) libperl.so )
+	@$(MAKECOOKIE)
+
+# Remove build paths from Config
+perlconf:
+	@( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION) ; \
+        /bin/perl -i -lne "\
+            next if /config_arg[1-9]/; \
+            s/^config_args=.+$$/config_args=''/; \
+            s/^config_argc=.+$$/config_argc='0'/; \
+            s,-I$(DESTDIR)$(includedir),,g; \
+            s,-[LR]$(DESTDIR)$(libdir),,g; \
+            s,( -I$(includedir))+,\$$1,g; \
+            s,( -[LR]$(libdir))+,\$$1,g; \
+            s, (-L)?$(CC_HOME)\S+,,g; \
+            if (/^\w+=/) { \
+                s/\s{2,}(\-)/ \-/g; \
+                s/(^\w+=.) /\$$1/; \
+                s/ (.)$$/\$$1/g; \
+            } \
+            print \
+        " Config.pm Config_heavy.pl )
 	@$(MAKECOOKIE)
 
