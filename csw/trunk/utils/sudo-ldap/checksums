@@ -1,8 +1,8 @@
 6d0346abd16914956bc7ea4f17fc85fb  download/sudo-1.6.8p9.tar.gz
-f11757c7ca11f24d748333366344ae49  download/CSWsudo-ldap.gspec
+cb27d6664accae35303ad5255e1174f3  download/CSWsudo-ldap.gspec
 f9eeac02cdb8e5a3c2d13b65f76a6cf2  download/CSWsudo-ldap.postinstall
 46836bbf7f99f08bd26a1ff595c3fa7b  download/CSWsudo-ldap.prototype
-4c41bd3042faf60feeccf424e1ad64b6  download/CSWsudo-ldap.depend
+34ed27d751c292a6418c28cd9b6564d6  download/CSWsudo-ldap.depend
 44fabb4ce87e861516533d80274a52c0  download/CSWsudo-ldap.space
 cc346986b765441205b04e076a80ba0e  download/CSWsudo-ldap.postremove
 157b2e5e38ca54eb36e0364706bd0292  download/install.diff
