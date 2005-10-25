@@ -6,7 +6,7 @@ P CSWgdbm gdbm - GNU dbm
 P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
 P CSWlibnet libnet - the libnet packet construction library
-P CSWoldap openldap - ldap clients,libraries and server
+P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
 P CSWsasl sasl - Simple Authentication and Security Layer
 P CSWzlib zlib - Zlib Data Compression Library
