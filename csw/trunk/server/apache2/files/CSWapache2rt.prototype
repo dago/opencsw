@@ -120,14 +120,14 @@ f none /opt/csw/apache2/lib/apr.exp=$basedir/opt/csw/apache2/lib/apr.exp 0644 ro
 f none /opt/csw/apache2/lib/aprutil.exp=$basedir/opt/csw/apache2/lib/aprutil.exp 0644 root bin
 f none /opt/csw/apache2/lib/libapr-0.a=$basedir/opt/csw/apache2/lib/libapr-0.a 0644 root bin
 f none /opt/csw/apache2/lib/libapr-0.la=$basedir/opt/csw/apache2/lib/libapr-0.la 0644 root bin
-f none /opt/csw/apache2/lib/libapr-0.so.0.9.6=$basedir/opt/csw/apache2/lib/libapr-0.so.0.9.6 0755 root bin
-s none /opt/csw/apache2/lib/libapr-0.so.0=libapr-0.so.0.9.6
-s none /opt/csw/apache2/lib/libapr-0.so=libapr-0.so.0.9.6
+f none /opt/csw/apache2/lib/libapr-0.so.0.9.7=$basedir/opt/csw/apache2/lib/libapr-0.so.0.9.7 0755 root bin
+s none /opt/csw/apache2/lib/libapr-0.so.0=libapr-0.so.0.9.7
+s none /opt/csw/apache2/lib/libapr-0.so=libapr-0.so.0.9.7
 f none /opt/csw/apache2/lib/libaprutil-0.a=$basedir/opt/csw/apache2/lib/libaprutil-0.a 0644 root bin
 f none /opt/csw/apache2/lib/libaprutil-0.la=$basedir/opt/csw/apache2/lib/libaprutil-0.la 0644 root bin
-f none /opt/csw/apache2/lib/libaprutil-0.so.0.9.6=$basedir/opt/csw/apache2/lib/libaprutil-0.so.0.9.6 0755 root bin
-s none /opt/csw/apache2/lib/libaprutil-0.so.0=libaprutil-0.so.0.9.6
-s none /opt/csw/apache2/lib/libaprutil-0.so=libaprutil-0.so.0.9.6
+f none /opt/csw/apache2/lib/libaprutil-0.so.0.9.7=$basedir/opt/csw/apache2/lib/libaprutil-0.so.0.9.7 0755 root bin
+s none /opt/csw/apache2/lib/libaprutil-0.so.0=libaprutil-0.so.0.9.7
+s none /opt/csw/apache2/lib/libaprutil-0.so=libaprutil-0.so.0.9.7
 d none /opt/csw/apache2/man 0755 root bin
 d none /opt/csw/apache2/man/man8 0755 root bin
 f none /opt/csw/apache2/man/man8/apxs.8=$basedir/opt/csw/apache2/man/man8/apxs.8 0644 root bin

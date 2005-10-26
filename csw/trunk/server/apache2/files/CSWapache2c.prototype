@@ -65,6 +65,7 @@ f none /opt/csw/apache2/libexec/mod_vhost_alias.so=$basedir/opt/csw/apache2/libe
 d none /opt/csw/apache2/man ? ? ?
 d none /opt/csw/apache2/man/man1 0755 root bin
 f none /opt/csw/apache2/man/man1/dbmmanage.1=$basedir/opt/csw/apache2/man/man1/dbmmanage.1 0644 root bin
+f none /opt/csw/apache2/man/man1/htdbm.1=$basedir/opt/csw/apache2/man/man1/htdbm.1 0644 root bin
 f none /opt/csw/apache2/man/man1/htdigest.1=$basedir/opt/csw/apache2/man/man1/htdigest.1 0644 root bin
 f none /opt/csw/apache2/man/man1/htpasswd.1=$basedir/opt/csw/apache2/man/man1/htpasswd.1 0644 root bin
 d none /opt/csw/apache2/man/man8 ? ? ?
@@ -97,7 +98,6 @@ f none /opt/csw/apache2/share/error/HTTP_GONE.html.var=$basedir/opt/csw/apache2/
 f none /opt/csw/apache2/share/error/HTTP_INTERNAL_SERVER_ERROR.html.var=$basedir/opt/csw/apache2/share/error/HTTP_INTERNAL_SERVER_ERROR.html.var 0644 root bin
 f none /opt/csw/apache2/share/error/HTTP_LENGTH_REQUIRED.html.var=$basedir/opt/csw/apache2/share/error/HTTP_LENGTH_REQUIRED.html.var 0644 root bin
 f none /opt/csw/apache2/share/error/HTTP_METHOD_NOT_ALLOWED.html.var=$basedir/opt/csw/apache2/share/error/HTTP_METHOD_NOT_ALLOWED.html.var 0644 root bin
-f none /opt/csw/apache2/share/error/HTTP_NOT_ACCEPTABLE.html.var=$basedir/opt/csw/apache2/share/error/HTTP_NOT_ACCEPTABLE.html.var 0644 root bin
 f none /opt/csw/apache2/share/error/HTTP_NOT_FOUND.html.var=$basedir/opt/csw/apache2/share/error/HTTP_NOT_FOUND.html.var 0644 root bin
 f none /opt/csw/apache2/share/error/HTTP_NOT_IMPLEMENTED.html.var=$basedir/opt/csw/apache2/share/error/HTTP_NOT_IMPLEMENTED.html.var 0644 root bin
 f none /opt/csw/apache2/share/error/HTTP_PRECONDITION_FAILED.html.var=$basedir/opt/csw/apache2/share/error/HTTP_PRECONDITION_FAILED.html.var 0644 root bin
