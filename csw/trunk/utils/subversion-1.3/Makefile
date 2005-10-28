@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.2.3
+DISTVERSION = 1.3.0-rc1
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -9,8 +9,8 @@ define BLURB
 	is a compelling replacement for CVS in the open source community.
 endef
 
-MASTER_SITES = http://subversion.tigris.org/tarballs/
-#MASTER_SITES = http://fornix.brain.org/subversion/
+#MASTER_SITES = http://subversion.tigris.org/tarballs/
+MASTER_SITES = http://lolut.utbm.info/pub/subversion-1.3.0-rc1/
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
@@ -51,7 +51,7 @@ CONFIGURE_ARGS += --with-ssl
 CONFIGURE_ARGS += --with-zlib
 CONFIGURE_ARGS += --enable-swig-bindings=all
 CONFIGURE_ARGS += --enable-javahl
-CONFIGURE_ARGS += --with-neon=$(prefix)
+CONFIGURE_ARGS += --with-neon=$(DESTDIR)$(prefix)
 CONFIGURE_ARGS += --with-jdk=/usr/j2se
 
 TEST_TARGET = check
@@ -73,9 +73,9 @@ LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 # Where C++ is used, be sure to include the right libs
 CXXFLAGS += -library=Cstd,Crun
 
-post-install: swig-py swig-pl javahl svnbook
-	@$(MAKECOOKIE)
-	$(DONADA)
+#post-install: swig-py swig-pl javahl svnbook
+#	@$(MAKECOOKIE)
+#	$(DONADA)
 
 swig-py:
 	@echo " ==> Building SWIG Python bindings"
