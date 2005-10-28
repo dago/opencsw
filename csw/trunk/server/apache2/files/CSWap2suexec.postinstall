@@ -20,3 +20,5 @@ NOTICE: mod_suexec is enabled in $AP2_CONFIG but the server
 was not restarted.  Please configure suexec and restart apache.
 
 END
+
+exit 0

@@ -21,3 +21,5 @@ NOTICE: mod_python is enabled in $AP2_CONFIG but the server
 was not restarted.  Please configure mod_python and restart apache.
 
 END
+
+exit 0

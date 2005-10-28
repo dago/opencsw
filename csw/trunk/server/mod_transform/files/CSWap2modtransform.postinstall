@@ -23,3 +23,5 @@ server was not restarted.  Please configure mod_transform
 and restart apache.
 
 END
+
+exit 0
