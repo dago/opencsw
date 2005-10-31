@@ -5,7 +5,7 @@ P CSWexpat expat - XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
 P CSWiconv libiconv - GNU iconv library
 P CSWlibnet libnet - the libnet packet construction library
-P CSWoldap openldap - ldap clients,libraries and server
+P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWperl perl - A high-level, general-purpose programming language.
 P CSWsasl sasl - Simple Authentication and Security Layer
