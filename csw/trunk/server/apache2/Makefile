@@ -52,11 +52,18 @@ include files/rules.mk
 LIBS += -lnsl
 export LIBS
 
-post-install:
+post-install: install-httpd-conf fix-libtool
+
+install-httpd-conf:
 	@for file in $(AP2_CONFIG) ; do \
 		install $(WORKDIR)/$$file $(DESTDIR)$(prefix)/apache2/etc ; \
 	done
 	install -d $(DESTDIR)/etc/init.d
 	install $(WORKDIR)/$(AP2_RC) $(DESTDIR)/etc/init.d
+	@$(MAKECOOKIE)
+
+fix-libtool:
+	@sed -i -e s,/export/home/comand/bin/sed,$(bindir)/gsed,g \
+		$(DESTDIR)$(prefix)/apache2/share/build/libtool
 	@$(MAKECOOKIE)
 

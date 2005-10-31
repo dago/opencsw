@@ -10,8 +10,8 @@ DISTFILES += config.layout
 # Patch mod_ssl to build with OpenSSL 0.9.8
 PATCHFILES += openssl.diff
 
-# Patch configure to use SUNWpl5u
-PATCHFILES += perl.diff
+# Patch APU to absolutely use GNU iconv
+PATCHFILES += apu-iconv.diff
 
 # Build Configuration
 CONFIGURE_ARGS  = --prefix=$(prefix)

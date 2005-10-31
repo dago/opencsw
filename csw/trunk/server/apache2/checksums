@@ -8,7 +8,7 @@ d41d8cd98f00b204e9800998ecf8427e  download/CSWapache2.prototype
 592e5c6b4b041f83e10db41feae1ed51  download/CSWapache2.depend
 f42d61eb4bd444d0a21c2ed057d8d8be  download/CSWapache2rt.gspec
 11e1507d1b6f44c9ed9849ad450c4d75  download/CSWapache2rt.prototype
-93fd655af7e0d055c8ac88d8b0f86853  download/CSWapache2rt.depend
+2fe5024cd12c77b6f7b420288d56923b  download/CSWapache2rt.depend
 c2718325d1f4495704f8b1c8b21b787c  download/CSWapache2c.gspec
 fbb0dec46ad2da736497c719ddc37750  download/CSWapache2c.prototype
 30bfd4340052e22d0fe9b001e81bc7ee  download/CSWapache2c.depend
@@ -29,7 +29,7 @@ c09d444a253cb4c6b4b4308aa13afe92  download/CSWapache2-manual.gspec
 366e44ff89975ecb906b26df6483ef36  download/CSWap2suexec.gspec
 8af8ef673182f2f6014495afaded5a8b  download/CSWap2suexec.prototype
 698b39b3e2e99f2fddbe5a33cb65126b  download/CSWap2suexec.depend
-9af3a7e74c6f08f9e49a9bd7843dacca  download/CSWap2suexec.postinstall
+878f959efbd7818419f24fcc59249cab  download/CSWap2suexec.postinstall
 eaa47d0433f5ae71d0de1831a2efcef5  download/CSWap2suexec.preremove
 3e33ff459b87ad32c307e1e703141dcc  download/openssl.diff
-80cbb0383c3ef89db0feb9685798adcf  download/perl.diff
+63158cb98a76785104704bac8ae08d52  download/apu-iconv.diff
