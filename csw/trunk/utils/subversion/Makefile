@@ -26,9 +26,6 @@ DISTFILES += CSWpysvn.gspec CSWpysvn.prototype CSWpysvn.depend
 # SVN Java Binding
 DISTFILES += CSWjavasvn.gspec CSWjavasvn.prototype CSWjavasvn.depend
 
-# Fix: "Can't create a converter from 'native' to 'UTF-8'"
-#PATCHFILES += utf.diff
-
 # Fix: Use 'gdiff' instead of 'diff'
 PATCHFILES += gdiff.diff
 
