@@ -30,6 +30,6 @@ c09d444a253cb4c6b4b4308aa13afe92  download/CSWapache2-manual.gspec
 8af8ef673182f2f6014495afaded5a8b  download/CSWap2suexec.prototype
 698b39b3e2e99f2fddbe5a33cb65126b  download/CSWap2suexec.depend
 878f959efbd7818419f24fcc59249cab  download/CSWap2suexec.postinstall
-eaa47d0433f5ae71d0de1831a2efcef5  download/CSWap2suexec.preremove
+51c416ecd9716883a025a387b7468a81  download/CSWap2suexec.preremove
 3e33ff459b87ad32c307e1e703141dcc  download/openssl.diff
 63158cb98a76785104704bac8ae08d52  download/apu-iconv.diff

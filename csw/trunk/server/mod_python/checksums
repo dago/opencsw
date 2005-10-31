@@ -2,7 +2,7 @@
 4e8acd0b74bc470e89f5189b3dac64bf  download/CSWap2modpython.gspec
 e3fa258c401d719379dd019fe475dc2c  download/CSWap2modpython.depend
 34bf89a8a76bee08232ccbbee4c51329  download/CSWap2modpython.prototype
-5fb1b361709e741bc69bbe478f261b31  download/CSWap2modpython.postinstall
-b8f875e36be296ee8cc43b7ebbec94ce  download/CSWap2modpython.preremove
+c90fd82dd677ea1d59de9070be4dfaa6  download/CSWap2modpython.postinstall
+fc93520598d4c6efce15a53544255f3e  download/CSWap2modpython.preremove
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2modpython.space
 8d630c4b2e173cdda73ced31ac892f4a  download/lex.diff
