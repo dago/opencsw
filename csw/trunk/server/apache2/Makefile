@@ -22,7 +22,7 @@ DISTFILES += CSWapache2.gspec CSWapache2.prototype CSWapache2.depend
 DISTFILES += CSWapache2rt.gspec CSWapache2rt.prototype CSWapache2rt.depend
 # Apache server (core)
 DISTFILES += CSWapache2c.gspec CSWapache2c.prototype CSWapache2c.depend
-DISTFILES += CSWapache2c.space CSWapache2c.postinstall CSWapache2c.preremove
+DISTFILES += CSWapache2c.space CSWapache2c.postinstall
 # Apache prefork MPM (default)
 DISTFILES += CSWap2prefork.gspec CSWap2prefork.prototype CSWap2prefork.depend
 DISTFILES += CSWap2prefork.preinstall CSWap2prefork.postinstall
