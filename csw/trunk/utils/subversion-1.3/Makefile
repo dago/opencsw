@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.3.0-rc1
+DISTVERSION = 1.3.0-rc2
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -10,8 +10,9 @@ define BLURB
 endef
 
 #MASTER_SITES = http://subversion.tigris.org/tarballs/
-MASTER_SITES = http://lolut.utbm.info/pub/subversion-1.3.0-rc1/
-DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
+MASTER_SITES = http://lolut.utbm.info/pub/subversion-1.3.0/rc2/
+#DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(DISTVERSION)-nodeps.tar.bz2
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 # SVN
@@ -47,11 +48,6 @@ CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --disable-mod-activation
-CONFIGURE_ARGS += --with-ssl
-CONFIGURE_ARGS += --with-zlib
-CONFIGURE_ARGS += --enable-swig-bindings=all
-CONFIGURE_ARGS += --enable-javahl
-CONFIGURE_ARGS += --with-neon=$(DESTDIR)$(prefix)
 CONFIGURE_ARGS += --with-jdk=/usr/j2se
 
 TEST_TARGET = check
@@ -79,7 +75,11 @@ CXXFLAGS += -library=Cstd,Crun
 
 swig-py:
 	@echo " ==> Building SWIG Python bindings"
+	@touch \
+		$(WORKSRC)/subversion/bindings/perl/*.c \
+		$(WORKSRC)/subversion/bindings/perl/*.py
 	@$(BUILD_ENV) make -C $(WORKSRC) swig-py
+	@$(TEST_ENV) make -C $(WORKSRC) check-swig-py
 	@$(INSTALL_ENV) make -C $(WORKSRC) install-swig-py \
 		swig_pydir=$(libdir)/python2.3/libsvn \
 		swig_pydir_extra=$(libdir)/python2.3/svn
@@ -87,9 +87,21 @@ swig-py:
 
 swig-pl:
 	@echo " ==> Building SWIG Perl bindings"
+	@touch \
+		$(WORKSRC)/subversion/bindings/perl/*.c \
+		$(WORKSRC)/subversion/bindings/perl/*.pm
 	@$(BUILD_ENV) make -C $(WORKSRC) swig-pl
+	@$(BUILD_ENV) make -C $(WORKSRC) check-swig-pl
 	@$(TEST_ENV) make -C $(WORKSRC) check-swig-pl
 	@$(INSTALL_ENV) make DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
+	@$(MAKECOOKIE)
+
+swig-rb:
+	@echo " ==> Building SWIG Ruby bindings"
+	@touch $(WORKSRC)/subversion/bindings/perl/*.c
+	@$(BUILD_ENV) make -C $(WORKSRC) swig-rb
+	@$(TEST_ENV) make -C $(WORKSRC) check-swig-rb
+	@$(INSTALL_ENV) make -C $(WORKSRC) install-swig-rb
 	@$(MAKECOOKIE)
 
 swig-java:

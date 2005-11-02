@@ -1,0 +1,5 @@
+%var            bitname rbsvn
+%var            pkgname CSWrbsvn
+%include        url file://%{GARDIR}/pkglib/csw_standard.gspec
+%var            desc Subversion Ruby language binding
+%copyright      url file://%{WORKSRC}/COPYING
