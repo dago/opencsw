@@ -77,9 +77,19 @@ LIBS += -lintl -liconv
 # Libdir is a bit non-standard
 LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 
-post-install: svn-python svn-perl svn-ruby svn-java contrib
+# Which bindings to build
+BINDING_LANGS   = python perl ruby java
+BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
+
+post-install: $(BINDING_TARGETS) contrib rbsvn-prototype
 	@$(MAKECOOKIE)
 	$(DONADA)
+
+rbsvn-prototype:
+	@if test -f $(WORKDIR)/CSWrbsvn.prototype ; then \
+		gsed -i -e s,%GARCH%,$(GARCH),g $(WORKDIR)/CSWrbsvn.prototype \
+	fi
+	@$(MAKECOOKIE)
 
 svn-python:
 	@echo " ==> Building Python bindings"
