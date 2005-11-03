@@ -1,5 +1,5 @@
 %include        url file://%{GARDIR}/pkglib/csw_vars.gspec
 %pkginfo        url file://%{GARDIR}/pkglib/csw/pkginfo
-%prototype      exec %{GARBIN}/cswproto -s %{SPKG_TIMESTAMP} -v basedir=%{DESTDIR} %{DESTDIR}%{prefix}=%{prefix}
+%prototype      exec %{GARBIN}/cswproto -s %{TIMESTAMP} -v basedir=%{DESTDIR} %{DESTDIR}%{prefix}=%{prefix}
 %depend         url file://%{GARDIR}/pkglib/csw/depend.perl
 %depend         exec awk '$1 ~ /f/{print $3}' %{MKP_PROTOTYPE} | %{GARBIN}/depmaker --root %{DESTDIR} --noscript --nodep %{MKP_PKGNAME} --nodep SUNWkvm

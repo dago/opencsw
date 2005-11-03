@@ -16,7 +16,6 @@ SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
 SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 
-SPKG_TIMESTAMP  = $(COOKIEDIR)/spkg.$(GARNAME)-$(GARVERSION).build_stamp
 SPKG_EXPORT    ?= $(WORKDIR)
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
@@ -27,18 +26,22 @@ PKG_EXPORTS  = GARNAME GARVERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
 PKG_EXPORTS += CURDIR WORKDIR WORKSRC
 PKG_EXPORTS += SPKG_REVSTAMP SPKG_PKGNAME SPKG_DESC SPKG_VERSION SPKG_CATEGORY
 PKG_EXPORTS += SPKG_VENDOR SPKG_EMAIL SPKG_PSTAMP SPKG_BASEDIR SPKG_CLASSES
-PKG_EXPORTS += SPKG_OSNAME SPKG_TIMESTAMP SPKG_SOURCEURL SPKG_PACKAGER
+PKG_EXPORTS += SPKG_OSNAME SPKG_SOURCEURL SPKG_PACKAGER TIMESTAMP
 
 PKG_ENV  = $(BUILD_ENV)
 PKG_ENV += $(foreach EXP,$(PKG_EXPORTS),$(EXP)="$($(EXP))")
 
-# Target for timestamping
-pre-package-timestamp: $(SPKG_TIMESTAMP)
-	@$(MAKECOOKIE)
-	$(DONADA)
+# package - Use the mkpackage utility to create Solaris packages
+PACKAGE_TARGETS = package-create
 
-# Call mkpackage for the package step
-package:
+package: install pre-package $(PACKAGE_TARGETS) post-package
+
+# returns true if package has completed successfully, false otherwise
+package-p:
+	@$(foreach COOKIEFILE,$(PACKAGE_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
+
+# Call mkpackage to transmogrify one or more gspecs into packages
+package-create:
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			echo "   ==> Processing $$spec" ; \
@@ -53,12 +56,9 @@ package:
 	fi
 	$(DONADA)
 
+# Update the dependency database
 dependb:
 	@dependb --db $(SPKG_DEPEND_DB) \
              --parent $(CATEGORIES)/$(GARNAME) \
              --add $(DEPENDS)
 
-CLEAN_TARGETS += stamp
-clean-stamp:
-	@echo " ==> Removing $(SPKG_TIMESTAMP)"
-	@rm -f $(SPKG_TIMESTAMP)

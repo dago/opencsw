@@ -26,7 +26,7 @@ include ../../gar.mk
 # Fix package packlist for installation
 pre-package:
 	@for plist in $(shell find $(DESTDIR)$(prefix) \
-		-name .packlist -cnewer $(SPKG_TIMESTAMP)) ; do \
+		-name .packlist -cnewer $(TIMESTAMP)) ; do \
 		sed -i -e s,$(DESTDIR),,g $$plist ; \
 	done
 	@$(MAKECOOKIE)

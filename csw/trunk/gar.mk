@@ -250,15 +250,25 @@ build-p:
 	@$(foreach COOKIEFILE,$(BUILD_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 # Build multiple architectures into the same package
-BUILD_ARCH_LIST ?= v9 v8plusa v8plus v8
-build-march:
-	@$(MAKE) timestamp
+BUILD_ARCH_LIST ?= v8 v9
+install-march:
 	@echo " ==> Multi Architecture Build: $(BUILD_ARCH_LIST)"
 	@for arch in $(BUILD_ARCH_LIST) ; do \
-		$(BUILD_ENV) OPTARCH=$$arch $(MAKE) install ; \
-		$(MAKE) clean-source-chain ; \
+        ( $(CONFIGURE_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
+            OPTARCH=$$arch $(MAKE) configure ) || exit 1 ; \
+        ( $(BUILD_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
+            OPTARCH=$$arch $(MAKE) build ) || exit 1 ; \
+        ( $(TEST_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
+            OPTARCH=$$arch $(MAKE) test ) || exit 1 ; \
+        ( $(INSTALL_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
+            OPTARCH=$$arch $(MAKE) install ) || exit 1 ; \
+        ( $(CONFIGURE_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
+            OPTARCH=$$arch $(MAKE) clean-source ) || exit 1 ; \
 	done
-	@$(MAKE) package
+
+
+		$(MAKE) clean-source ; \
+	done
 
 # build and test, unless ENABLE_TEST = 0
 ifneq ($(ENABLE_TEST),0)
@@ -270,11 +280,20 @@ endif
 test: pre-test $(TEST_TARGETS) post-test
 	$(DONADA)
 
+# timestamp - create a standard timestamp cookie
+TIMESTAMP = $(COOKIEDIR)/timestamp
+timestamp:
+	@echo " ==> Creating timestamp cookie"
+	@$(MAKECOOKIE)
+
+remove-timestamp:
+	@echo " ==> Removing timestamp cookie"
+	@-rm -f $(TIMESTAMP)
+
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE))) strip
 
-# This is where the gar.pkg.mk targets are wrapped in (pre-package, package post-package)
-install: build $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) pre-package-timestamp pre-install $(INSTALL_TARGETS) post-install pre-package package post-package
+install: build $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) timestamp pre-install $(INSTALL_TARGETS) post-install
 	$(DONADA)
 
 # returns true if install has completed successfully, false
@@ -373,7 +392,7 @@ love:
 	@echo "not war!"
 
 # these targets do not have actual corresponding files
-.PHONY: all fetch-list beaujolais fetch-p checksum-p extract-p patch-p configure-p build-p install-p love
+.PHONY: all fetch-list beaujolais fetch-p checksum-p extract-p patch-p configure-p build-p install-p package-p love
 
 # apparently this makes all previous rules non-parallelizable,
 # but the actual builds of the packages will be, according to
