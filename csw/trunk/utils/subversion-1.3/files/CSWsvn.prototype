@@ -24,6 +24,7 @@ f none /opt/csw/include/subversion-1/svn_fs.h=$basedir/opt/csw/include/subversio
 f none /opt/csw/include/subversion-1/svn_hash.h=$basedir/opt/csw/include/subversion-1/svn_hash.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_io.h=$basedir/opt/csw/include/subversion-1/svn_io.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_md5.h=$basedir/opt/csw/include/subversion-1/svn_md5.h 0644 root bin
+f none /opt/csw/include/subversion-1/svn_nls.h=$basedir/opt/csw/include/subversion-1/svn_nls.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_opt.h=$basedir/opt/csw/include/subversion-1/svn_opt.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_path.h=$basedir/opt/csw/include/subversion-1/svn_path.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_pools.h=$basedir/opt/csw/include/subversion-1/svn_pools.h 0644 root bin
@@ -35,7 +36,6 @@ f none /opt/csw/include/subversion-1/svn_repos.h=$basedir/opt/csw/include/subver
 f none /opt/csw/include/subversion-1/svn_sorts.h=$basedir/opt/csw/include/subversion-1/svn_sorts.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_string.h=$basedir/opt/csw/include/subversion-1/svn_string.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_subst.h=$basedir/opt/csw/include/subversion-1/svn_subst.h 0644 root bin
-f none /opt/csw/include/subversion-1/svn_test.h=$basedir/opt/csw/include/subversion-1/svn_test.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_time.h=$basedir/opt/csw/include/subversion-1/svn_time.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_types.h=$basedir/opt/csw/include/subversion-1/svn_types.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_utf.h=$basedir/opt/csw/include/subversion-1/svn_utf.h 0644 root bin
@@ -122,6 +122,8 @@ f none /opt/csw/share/doc/subversion/contrib/client-side/asvn=$basedir/opt/csw/s
 f none /opt/csw/share/doc/subversion/contrib/client-side/diff-to-logmsg.vim=$basedir/opt/csw/share/doc/subversion/contrib/client-side/diff-to-logmsg.vim 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/diff3wrap.bat=$basedir/opt/csw/share/doc/subversion/contrib/client-side/diff3wrap.bat 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/diffwrap.bat=$basedir/opt/csw/share/doc/subversion/contrib/client-side/diffwrap.bat 0644 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/mucc-test.sh=$basedir/opt/csw/share/doc/subversion/contrib/client-side/mucc-test.sh 0644 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/mucc.c=$basedir/opt/csw/share/doc/subversion/contrib/client-side/mucc.c 0644 root bin
 d none /opt/csw/share/doc/subversion/contrib/client-side/psvn 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/psvn/psvn.el=$basedir/opt/csw/share/doc/subversion/contrib/client-side/psvn/psvn.el 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/search-svnlog.pl=$basedir/opt/csw/share/doc/subversion/contrib/client-side/search-svnlog.pl 0755 root bin
@@ -131,6 +133,8 @@ d none /opt/csw/share/doc/subversion/contrib/client-side/svn-push 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svn-push/svn-push.c=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn-push/svn-push.c 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svn.vim=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn.vim 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svn_all_diffs.pl=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn_all_diffs.pl 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/svn_apply_autoprops.py=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn_apply_autoprops.py 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/svn_export_empty_files.py=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn_export_empty_files.py 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svn_load_dirs.README=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn_load_dirs.README 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svn_load_dirs.pl.in=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn_load_dirs.pl.in 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svn_load_dirs.pl=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svn_load_dirs.pl 0755 root bin
@@ -139,7 +143,10 @@ f none /opt/csw/share/doc/subversion/contrib/client-side/svn_update.pl=$basedir/
 f none /opt/csw/share/doc/subversion/contrib/client-side/svncopy.README=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svncopy.README 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svncopy.pl.in=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svncopy.pl.in 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/svncopy.pl=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svncopy.pl 0755 root bin
-f none /opt/csw/share/doc/subversion/contrib/client-side/svnmerge=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svnmerge 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/svnmerge.README=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svnmerge.README 0644 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/svnmerge.py=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svnmerge.py 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/svnmerge.sh=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svnmerge.sh 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/client-side/svnmerge_test.py=$basedir/opt/csw/share/doc/subversion/contrib/client-side/svnmerge_test.py 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/testsvncopy.pl.in=$basedir/opt/csw/share/doc/subversion/contrib/client-side/testsvncopy.pl.in 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/testsvncopy.pl=$basedir/opt/csw/share/doc/subversion/contrib/client-side/testsvncopy.pl 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/client-side/vc-svn.el=$basedir/opt/csw/share/doc/subversion/contrib/client-side/vc-svn.el 0644 root bin
@@ -147,15 +154,18 @@ f none /opt/csw/share/doc/subversion/contrib/client-side/wcgrep=$basedir/opt/csw
 d none /opt/csw/share/doc/subversion/contrib/hook-scripts 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/hook-scripts/README=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/README 0644 root bin
 f none /opt/csw/share/doc/subversion/contrib/hook-scripts/check-case-insensitive.pl=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/check-case-insensitive.pl 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/hook-scripts/check-case-insensitive.py=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/check-case-insensitive.py 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/hook-scripts/check-mime-type.pl=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/check-mime-type.pl 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/hook-scripts/commit-block-joke.py=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/commit-block-joke.py 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/hook-scripts/pre-commit-check.py=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/pre-commit-check.py 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/hook-scripts/pre-lock-require-needs-lock.py=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/pre-lock-require-needs-lock.py 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/hook-scripts/svn2rss.py=$basedir/opt/csw/share/doc/subversion/contrib/hook-scripts/svn2rss.py 0755 root bin
 d none /opt/csw/share/doc/subversion/contrib/server-side 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/server-side/authz_svn_group.py=$basedir/opt/csw/share/doc/subversion/contrib/server-side/authz_svn_group.py 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/server-side/backup-recipe.sh=$basedir/opt/csw/share/doc/subversion/contrib/server-side/backup-recipe.sh 0755 root bin
+f none /opt/csw/share/doc/subversion/contrib/server-side/svn-fast-backup=$basedir/opt/csw/share/doc/subversion/contrib/server-side/svn-fast-backup 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/server-side/svn-obliterate.py=$basedir/opt/csw/share/doc/subversion/contrib/server-side/svn-obliterate.py 0755 root bin
 f none /opt/csw/share/doc/subversion/contrib/server-side/svnmirror.sh=$basedir/opt/csw/share/doc/subversion/contrib/server-side/svnmirror.sh 0755 root bin
-f none /opt/csw/share/doc/subversion/svn-book.pdf=$basedir/opt/csw/share/doc/subversion/svn-book.pdf 0644 root bin
-f none /opt/csw/share/doc/subversion/svn-book.html=$basedir/opt/csw/share/doc/subversion/svn-book.html 0644 root bin
 d none /opt/csw/share/locale ? ? ?
 d none /opt/csw/share/locale/de ? ? ?
 d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?

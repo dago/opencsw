@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWapache2rt apache2rt - apache 2.0 runtime libraries
+P CSWapache2rt apache2rt - Apache 2.0 runtime libraries
 P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
 P CSWexpat expat - XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
@@ -9,8 +9,6 @@ P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
 P CSWlibnet libnet - the libnet packet construction library
 P CSWneon neon - HTTP and WebDAV client library
 P CSWoldaprt openldap_rt - ldap runtime libraries
-P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
+P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWsasl sasl - Simple Authentication and Security Layer
 P CSWzlib zlib - Zlib Data Compression Library
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm

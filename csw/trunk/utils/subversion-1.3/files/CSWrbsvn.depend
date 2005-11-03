@@ -10,6 +10,7 @@ P CSWlibnet libnet - the libnet packet construction library
 P CSWneon neon - HTTP and WebDAV client library
 P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWruby ruby - An object-oriented language for quick and easy programming.
 P CSWsasl sasl - Simple Authentication and Security Layer
 P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library
