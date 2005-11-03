@@ -75,12 +75,8 @@ endif
 SUN_CC_HOME  ?= /opt/studio/SOS10/SUNWspro
 SUN_CC        = cc
 SUN_CXX       = CC
-#SUN_CC_OPT   ?= -fast -xarch=$(OPTARCH) -xstrconst -xildoff
-#SUN_CXX_OPT  ?= -fast -xarch=$(OPTARCH) -xildoff
-#SUN_CC_OPT   ?= -xO3 -xarch=$(OPTARCH) -xstrconst -xildoff
-#SUN_CXX_OPT  ?= -xO3 -xarch=$(OPTARCH) -xildoff
-SUN_CC_OPT   ?= -O -xarch=$(OPTARCH)
-SUN_CXX_OPT  ?= -O -xarch=$(OPTARCH)
+SUN_CC_OPT   ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
+SUN_CXX_OPT  ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
 SUN_AS_OPT   ?= -xarch=$(OPTARCH)
 SUN_LD_OPT   ?= -xarch=$(OPTARCH)
 
@@ -148,8 +144,8 @@ GNOME_MIRROR = $(GNOME_ROOT)/$(GARNAME)/$(GNOME_SUBV)/
 
 # SourceForge
 #SF_ROOT   = http://unc.dl.sourceforge.net/sourceforge
-#SF_ROOT   = http://easynews.dl.sourceforge.net/sourceforge
-SF_ROOT   = http://dl.sourceforge.net/sourceforge
+SF_ROOT   = http://easynews.dl.sourceforge.net/sourceforge
+#SF_ROOT   = http://dl.sourceforge.net/sourceforge
 SF_MIRROR = $(SF_ROOT)
 
 # GNU
