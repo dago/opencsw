@@ -1,5 +1,5 @@
 GARNAME = neon
-GARVERSION = 0.25.3
+GARVERSION = 0.25.4
 CATEGORIES = lib
 
 DESCRIPTION = HTTP and WebDAV client library
