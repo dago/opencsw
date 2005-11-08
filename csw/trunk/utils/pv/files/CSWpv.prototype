@@ -2,7 +2,7 @@ d none /opt/csw/bin ? ? ?
 f none /opt/csw/bin/pv=$basedir/opt/csw/bin/pv 0755 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/info ? ? ?
-f none /opt/csw/share/info/pv.info.gz=$basedir/opt/csw/share/info/pv.info.gz 0644 root bin
+f none /opt/csw/share/info/pv.info=$basedir/opt/csw/share/info/pv.info 0644 root bin
 d none /opt/csw/share/locale ? ? ?
 d none /opt/csw/share/locale/de ? ? ?
 d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
@@ -18,4 +18,4 @@ d none /opt/csw/share/locale/pt/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/pt/LC_MESSAGES/pv.mo=$basedir/opt/csw/share/locale/pt/LC_MESSAGES/pv.mo 0644 root bin
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/man1 0755 root bin
-f none /opt/csw/share/man/man1/pv.1.gz=$basedir/opt/csw/share/man/man1/pv.1.gz 0644 root bin
+f none /opt/csw/share/man/man1/pv.1=$basedir/opt/csw/share/man/man1/pv.1 0644 root bin
