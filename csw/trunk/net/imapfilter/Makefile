@@ -1,5 +1,5 @@
 GARNAME = imapfilter
-GARVERSION = 1.0.1
+GARVERSION = 1.1.1
 CATEGORIES = net
 
 DESCRIPTION = IMAP mail filtering utility

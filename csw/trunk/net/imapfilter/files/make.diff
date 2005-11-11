@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru imapfilter-1.0.1.orig/configure imapfilter-1.0.1/configure
---- imapfilter-1.0.1.orig/configure	2005-08-22 14:49:02.675300000 -0400
-+++ imapfilter-1.0.1/configure	2005-08-22 14:48:55.928873000 -0400
+diff --speed-large-files --minimal -Nru imapfilter-1.1.1.orig/configure imapfilter-1.1.1/configure
+--- imapfilter-1.1.1.orig/configure	2005-11-11 14:42:17.992451000 -0500
++++ imapfilter-1.1.1/configure	2005-11-11 14:41:50.415788000 -0500
 @@ -13,10 +13,10 @@
  incdirs="-I/usr/local/include"
  libdirs="-L/usr/local/lib"
@@ -15,7 +15,7 @@ diff --speed-large-files --minimal -Nru imapfilter-1.0.1.orig/configure imapfilt
  libssl="-lssl"
  libcrypto="-lcrypto"
  
-@@ -181,22 +181,22 @@
+@@ -184,24 +184,24 @@
  imapfilter.o: version.h
  
  install: \$(BIN)
@@ -27,9 +27,11 @@ diff --speed-large-files --minimal -Nru imapfilter-1.0.1.orig/configure imapfilt
 -	cp -f \$(AUXILIARY_LUA) \$(SHAREDIR) && \\
 -		chmod 0644 \$(SHAREDIR)/\$(AUXILIARY_LUA)
 -	if test ! -d \$(MANDIR)/man1; then mkdir -p \$(MANDIR)/man1; fi
--	cp -f \$(MAN_BIN) \$(MANDIR)/man1 && chmod 0644 \$(MANDIR)/man1/\$(MAN_BIN)
+-	cp -f \$(MAN_BIN) \$(MANDIR)/man1 && \\
+-		chmod 0644 \$(MANDIR)/man1/\$(MAN_BIN)
 -	if test ! -d \$(MANDIR)/man5; then mkdir -p \$(MANDIR)/man5; fi
--	cp -f \$(MAN_CONFIG) \$(MANDIR)/man5 && chmod 0644 \$(MANDIR)/man5/\$(MAN_CONFIG)
+-	cp -f \$(MAN_CONFIG) \$(MANDIR)/man5 && \\
+-		chmod 0644 \$(MANDIR)/man5/\$(MAN_CONFIG)
 +	if test ! -d \$(DESTDIR)\$(BINDIR); then mkdir -p \$(DESTDIR)\$(BINDIR); fi
 +	cp -f \$(BIN) \$(DESTDIR)\$(BINDIR) && chmod 0755 \$(DESTDIR)\$(BINDIR)/\$(BIN)
 +	if test ! -d \$(DESTDIR)\$(SHAREDIR); then mkdir -p \$(DESTDIR)\$(SHAREDIR); fi
@@ -38,9 +40,11 @@ diff --speed-large-files --minimal -Nru imapfilter-1.0.1.orig/configure imapfilt
 +	cp -f \$(AUXILIARY_LUA) \$(DESTDIR)\$(SHAREDIR) && \\
 +		chmod 0644 \$(DESTDIR)\$(SHAREDIR)/\$(AUXILIARY_LUA)
 +	if test ! -d \$(DESTDIR)\$(MANDIR)/man1; then mkdir -p \$(DESTDIR)\$(MANDIR)/man1; fi
-+	cp -f \$(MAN_BIN) \$(DESTDIR)\$(MANDIR)/man1 && chmod 0644 \$(DESTDIR)\$(MANDIR)/man1/\$(MAN_BIN)
++	cp -f \$(MAN_BIN) \$(DESTDIR)\$(MANDIR)/man1 && \\
++		chmod 0644 \$(DESTDIR)\$(MANDIR)/man1/\$(MAN_BIN)
 +	if test ! -d \$(DESTDIR)\$(MANDIR)/man5; then mkdir -p \$(DESTDIR)\$(MANDIR)/man5; fi
-+	cp -f \$(MAN_CONFIG) \$(DESTDIR)\$(MANDIR)/man5 && chmod 0644 \$(DESTDIR)\$(MANDIR)/man5/\$(MAN_CONFIG)
++	cp -f \$(MAN_CONFIG) \$(DESTDIR)\$(MANDIR)/man5 && \\
++		chmod 0644 \$(DESTDIR)\$(MANDIR)/man5/\$(MAN_CONFIG)
  
  deinstall:
 -	rm -f \$(BINDIR)/\$(BIN) \$(SHAREDIR)/\$(INTERFACE_LUA) \\
