@@ -266,10 +266,6 @@ install-march:
             OPTARCH=$$arch $(MAKE) clean-source ) || exit 1 ; \
 	done
 
-
-		$(MAKE) clean-source ; \
-	done
-
 # build and test, unless ENABLE_TEST = 0
 ifneq ($(ENABLE_TEST),0)
 TEST_TARGETS = $(addprefix test-,$(TEST_SCRIPTS))
