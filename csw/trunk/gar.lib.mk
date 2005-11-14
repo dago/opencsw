@@ -287,6 +287,11 @@ configure-%/Imakefile:
 	@cd $* && $(CONFIGURE_ENV) xmkmf $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
+configure-rbsetup:
+	@echo " ==> Running $@ in $(WORKSRC)"
+	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ruby setup.rb config )
+	@$(MAKECOOKIE)
+
 #################### BUILD RULES ####################
 
 # build from a standard gnu-style makefile's default rule.
@@ -321,6 +326,11 @@ build-%/rakefile:
 	@( cd $* ; $(BUILD_ENV) rake $(RAKEFLAGS) $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
+build-rbsetup:
+	@echo " ==> Running $@ in $(WORKSRC)"
+	@( cd $(WORKSRC) ; $(BUILD_ENV) ruby setup.rb setup )
+	@$(MAKECOOKIE)
+
 #################### TEST RULES ####################
 
 TEST_TARGET ?= test
@@ -331,12 +341,12 @@ test-%/Makefile:
 	@$(BUILD_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
-install-%/makefile:
+test-%/makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
 	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
-install-%/GNUmakefile:
+test-%/GNUmakefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
 	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
@@ -379,6 +389,12 @@ install-%/Rakefile:
 install-%/rakefile:
 	@echo " ==> Running rake install in $*"
 	@( cd $* ; $(INSTALL_ENV) rake $(RAKEFLAGS) $(INSTALL_ARGS) )
+	@$(MAKECOOKIE)
+
+install-rbsetup:
+	@echo " ==> Running $@ in $(WORKSRC)"
+	@( cd $(WORKSRC) ; \
+		$(INSTALL_ENV) ruby setup.rb install --prefix=$(DESTDIR) )
 	@$(MAKECOOKIE)
 
 # pkg-config scripts
