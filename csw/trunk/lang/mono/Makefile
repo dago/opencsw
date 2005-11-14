@@ -1,5 +1,5 @@
 GARNAME = mono
-GARVERSION = 1.0.5
+GARVERSION = 1.1.10
 CATEGORIES = lang
 
 DESCRIPTION = Mono Runtime
@@ -10,12 +10,13 @@ define BLURB
   based on the ECMA standards for C# and  the Common Language Infrastructure.
 endef
 
-MASTER_SITES = http://www.go-mono.com/archive/1.0.5/
+MASTER_SITES = http://go-mono.com/sources/mono-1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWmono.gspec CSWmono.depend CSWmono.prototype
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+ENABLE_TEST = 0
 
 include ../category.mk
