@@ -31,6 +31,11 @@ PKG_EXPORTS += SPKG_OSNAME SPKG_SOURCEURL SPKG_PACKAGER TIMESTAMP
 PKG_ENV  = $(BUILD_ENV)
 PKG_ENV += $(foreach EXP,$(PKG_EXPORTS),$(EXP)="$($(EXP))")
 
+# Canned command for generating admin file names
+# Usage: $(call admfiles,SUNWpackage,depend copyright)
+# pkg.gspec is added by default.
+admfiles = $(1).gspec $(foreach PKG,$(1),$(foreach ADM,$(2),$(PKG).$(ADM)))
+
 # package - Use the mkpackage utility to create Solaris packages
 PACKAGE_TARGETS = package-create
 
