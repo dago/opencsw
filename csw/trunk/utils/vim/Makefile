@@ -25,6 +25,7 @@ CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
 CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --disable-xim
 CONFIGURE_ARGS += --without-x
+CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-cscope
 CONFIGURE_ARGS += --enable-gui=no
 CONFIGURE_ARGS += --disable-gpm

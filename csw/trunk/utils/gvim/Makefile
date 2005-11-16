@@ -30,6 +30,7 @@ CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --with-features=huge 
 CONFIGURE_ARGS += --enable-cscope
+CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-gui=gnome2
 CONFIGURE_ARGS += --enable-perlinterp
 CONFIGURE_ARGS += --enable-pythoninterp
