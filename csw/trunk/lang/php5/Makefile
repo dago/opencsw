@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 5.0.5
+GARVERSION = 5.1.1
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
@@ -32,12 +32,11 @@ C_CLIENT = ../$(IMAPDIR)
 DISTFILES += php.ini ext_enable.sh ext_disable.sh
 
 # PHP Core
-DISTFILES += CSWphp5.gspec CSWphp5.prototype CSWphp5.depend
-DISTFILES += CSWphp5devel.gspec CSWphp5devel.prototype CSWphp5devel.depend
+DISTFILES += $(call admfiles,CSWphp5,prototype depend)
+DISTFILES += $(call admfiles,CSWphp5devel,prototype depend)
 
 # PHP Apache2 SAPI
-DISTFILES += CSWap2modphp5.gspec CSWap2modphp5.prototype CSWap2modphp5.depend 
-DISTFILES += CSWap2modphp5.space CSWap2modphp5.postinstall CSWap2modphp5.preremove
+DISTFILES += $(call admfiles,CSWap2modphp5,prototype depend space postinstall preremove)
 
 # PHP Extensions
 include files/extensions.mk
@@ -61,8 +60,8 @@ PATCHFILES += imap-cc.diff
 include files/config.mk
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-imap=$(C_CLIENT)
-CONFIGURE_ARGS += --with-kerberos=$(prefix)
 CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
+CONFIGURE_ARGS += --with-kerberos=$(prefix)
 
 # Some tests are failing -- report submitted to PHP QA
 ENABLE_TEST = 0
