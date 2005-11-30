@@ -13,6 +13,9 @@ PATCHFILES += openssl.diff
 # Patch APU to absolutely use GNU iconv
 PATCHFILES += apu-iconv.diff
 
+# http://issues.apache.org/bugzilla/show_bug.cgi?id=37145
+PATCHFILES += 37145_2.0.x.diff
+
 # Build Configuration
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS  = --enable-layout=csw
