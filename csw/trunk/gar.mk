@@ -211,6 +211,9 @@ makepatch: $(SCRATCHDIR) $(FILEDIR) $(FILEDIR)/gar-base.diff
 beaujolais: makepatch makesum clean build
 	$(DONADA)
 
+update: makesum garchive clean
+	$(DONADA)
+
 # configure		- Runs either GNU configure, one or more local
 # 				  configure scripts or nothing, depending on
 # 				  what's available.
@@ -276,20 +279,10 @@ endif
 test: pre-test $(TEST_TARGETS) post-test
 	$(DONADA)
 
-# timestamp - create a standard timestamp cookie
-TIMESTAMP = $(COOKIEDIR)/timestamp
-timestamp:
-	@echo " ==> Creating timestamp cookie"
-	@$(MAKECOOKIE)
-
-remove-timestamp:
-	@echo " ==> Removing timestamp cookie"
-	@-rm -f $(TIMESTAMP)
-
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE))) strip
 
-install: build $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) timestamp pre-install $(INSTALL_TARGETS) post-install
+install: build $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install $(POST_INSTALL_TARGETS) 
 	$(DONADA)
 
 # returns true if install has completed successfully, false
