@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.3.0-rc2
+DISTVERSION = 1.3.0-rc4
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -14,8 +14,8 @@ endef
 #DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 
 # Development site
-MASTER_SITES  = http://lolut.utbm.info/pub/subversion-1.3.0/rc2/
-DISTFILES  = $(GARNAME)-$(DISTVERSION)-nodeps.tar.bz2
+MASTER_SITES  = http://lolut.utbm.info/pub/subversion-1.3.0/rc4/
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 
 # JUnit
 #MASTER_SITES += $(SF_MIRROR)/junit/
@@ -87,7 +87,7 @@ post-install: $(BINDING_TARGETS) contrib rbsvn-prototype
 
 rbsvn-prototype:
 	@if test -f $(WORKDIR)/CSWrbsvn.prototype ; then \
-		gsed -i -e s,%GARCH%,$(GARCH),g $(WORKDIR)/CSWrbsvn.prototype \
+		gsed -i -e s,%GARCH%,$(GARCH),g $(WORKDIR)/CSWrbsvn.prototype ; \
 	fi
 	@$(MAKECOOKIE)
 
