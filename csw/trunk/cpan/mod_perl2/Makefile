@@ -3,7 +3,7 @@ DISTVERSION = 2.0.2
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = cpan
 
-DESCRIPTION = Persistent Perl interpreter for Apache 2.0
+DESCRIPTION = Persistent Perl interpreter for Apache 2.x
 define BLURB
   The Apache/Perl integration project brings together the full power of the
   Perl programming language and the Apache HTTP server. With mod_perl it is

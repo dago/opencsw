@@ -3,7 +3,7 @@ GARVERSION = 2.06-dev
 CATEGORIES = cpan
 AUTHOR = JOESUF
 
-DESCRIPTION = methods for dealing with client request data
+DESCRIPTION = methods for dealing with Apache request data
 define BLURB
   Apache::Request is a subclass of the Apache class, which adds methods for
   parsing GET requests and POST requests where Content-type is one of
@@ -13,7 +13,7 @@ endef
 
 DISTFILES += CSWpmapreq2.gspec
 
-BUILDDEPS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
+DEPENDS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
 
 CONFIGURE_ARGS  = --enable-perl-glue
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
