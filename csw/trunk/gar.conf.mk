@@ -52,10 +52,15 @@ docdir ?= $(sharedstatedir)/doc
 sourcedir ?= $(prefix)/src
 licensedir ?= $(prefix)/licenses
 sharedperl ?= $(sharedstatedir)/perl
+perllib ?= $(libdir)/perl
+perlcswlib ?= $(perllib)/csw
+perlpackroot ?= $(perlcswlib)/auto
 
 # the DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.  Each different DESTIMG has its own
 # DESTDIR.
+#TMPDIR  ?= /tmp
+#DESTDIR ?= $(TMPDIR)/$(GARNAME)-$(GARVERSION)
 DESTDIR ?= /tmp/a
 
 BUILD_PREFIX ?= /opt/csw
@@ -160,8 +165,8 @@ GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GARNAME)/
 #CPAN_ROOT	  = ftp://cpan.sfbay/pub/CPAN
 #CPAN_ROOT    = ftp://ftp.nas.nasa.gov/pub/perl/CPAN
 #CPAN_ROOT    = ftp://cpan.pair.com/pub/CPAN
-#CPAN_ROOT    = http://mirrors.ibiblio.org/pub/mirrors/CPAN
-CPAN_ROOT    = ftp://ftp.nrc.ca/pub/CPAN
+CPAN_ROOT    = http://mirrors.ibiblio.org/pub/mirrors/CPAN
+#CPAN_ROOT    = ftp://ftp.nrc.ca/pub/CPAN
 CPAN_MIRROR  = $(CPAN_ROOT)/authors/id/$(AUTHOR_ID)/
 
 # Compiler version
