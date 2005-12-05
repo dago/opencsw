@@ -7,7 +7,7 @@ define BLURB
   LONG DESCRIPTION
 endef
 
-DISTFILES += $(call admfiles,CSWartsgcc,depend)
+DISTFILES += $(call admfiles,CSWartsgcc,)
 
 #DEPENDS += lib/audiofile lib/glib2 lib/iconv
 #DEPENDS += lib/libogg lib/libxml2 lib/libxrender lib/libxslt

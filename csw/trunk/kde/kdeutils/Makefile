@@ -7,7 +7,7 @@ define BLURB
   LONG DESCRIPTION
 endef
 
-DISTFILES += $(call admfiles,CSWkdeutilsgcc,depend)
+DISTFILES += $(call admfiles,CSWkdeutilsgcc,)
 
 DEPENDS +=
 

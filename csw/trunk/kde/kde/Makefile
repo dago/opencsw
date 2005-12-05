@@ -9,7 +9,7 @@ endef
 
 PKGDIST    =
 DISTFILES += $(call admfiles,CSWkdegcc,depend)
-DISTFILES += $(call admfiles,CSWkdegccdtlogin,depend)
+DISTFILES += $(call admfiles,CSWkdegccdtlogin,)
 
 DEPENDS += lib/qt-gcc kde/arts
 DEPENDS += kde/kdelibs kde/kdebase kde/kdeutils kde/kdenetwork kde/kdeadmin

@@ -7,7 +7,7 @@ define BLURB
   LONG DESCRIPTION
 endef
 
-DISTFILES += $(call admfiles,CSWkdeaccessgcc,depend)
+DISTFILES += $(call admfiles,CSWkdeaccessgcc,)
 
 DEPENDS += kde/arts lib/qt-gcc
 

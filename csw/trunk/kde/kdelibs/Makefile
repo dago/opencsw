@@ -7,7 +7,7 @@ define BLURB
   LONG DESCRIPTION
 endef
 
-DISTFILES += $(call admfiles,CSWkdelibs,depend)
+DISTFILES += $(call admfiles,CSWkdelibs,)
 
 #DEPENDS += lib/audiofile lib/glib2 lib/iconv lib/jasper
 #DEPENDS += lib/jpeg lib/libart lib/libcups lib/libidn lib/libmad
