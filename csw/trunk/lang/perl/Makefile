@@ -93,6 +93,7 @@ perlconf:
             s,-[LR]$(DESTDIR)$(libdir),,g; \
             s,( -I$(includedir))+,\$$1,g; \
             s,( -[LR]$(libdir))+,\$$1,g; \
+			s,-R $(libdir)/perl/5.8.7/CORE,-R $(libdir),; \
             s, (-L)?$(CC_HOME)\S+,,g; \
             if (/^\w+=/) { \
                 s/\s{2,}(\-)/ \-/g; \
