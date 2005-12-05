@@ -16,6 +16,6 @@ endef
 
 DISTFILES += CSWpmextutxsbld.gspec
 
-BUILDDEPS += cpan/Parse-RecDescent cpan/Tie-IxHash
+DEPENDS += cpan/Parse-RecDescent cpan/Tie-IxHash
 
 include ../category.mk

@@ -23,12 +23,17 @@ AUTHOR_ID ?= $(GEN_AUTHOR_ID)
 
 include ../../gar.mk
 
+# Canned commands for finding packlist files
+find_packlist = $(shell find $(1) -type f -name .packlist | head -1)
+find_newest_packlist = $(shell find $(1) -type f -name .pakclist -cnewer $(TIMESTAMP))
+
 # Fix package packlist for installation
+PERL_PACKLIST ?= $(call find_newest_packlist $(DESTDIR)$(perlpackroot))
 pre-package:
-	@for plist in $(shell find $(DESTDIR)$(prefix) \
-		-name .packlist -cnewer $(TIMESTAMP)) ; do \
-		sed -i -e s,$(DESTDIR),,g $$plist ; \
-	done
+	@if test -n "$(PERL_PACKLIST)" && test -f "$(PERL_PACKLIST)" ; then \
+		echo " ==> Fixing Perl Packlist: $(PERL_PACKLIST)" ; \
+		sed -i -e s,$(DESTDIR),,g $(PERL_PACKLIST) ; \
+	fi
 	@$(MAKECOOKIE)
 
 # Enable scripts to see prereqs

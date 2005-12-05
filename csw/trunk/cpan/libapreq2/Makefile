@@ -15,4 +15,11 @@ DISTFILES += CSWpmapreq2.gspec
 
 BUILDDEPS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
 
+CONFIGURE_ARGS  = --enable-perl-glue
+CONFIGURE_ARGS += --with-perl=$(bindir)/perl
+CONFIGURE_ARGS += --with-apache2-apxs=$(prefix)/apache2/sbin/apxs
+CONFIGURE_ARGS += --with-apr-config=$(prefix)/apache2/bin/apr-config
+CONFIGURE_ARGS += --with-apu-config=$(prefix)/apache2/bin/apu-config
+CONFIGURE_ARGS += --with-expat=$(prefix)
+
 include ../category.mk
