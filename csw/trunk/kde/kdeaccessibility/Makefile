@@ -9,7 +9,7 @@ endef
 
 DISTFILES += $(call admfiles,CSWkdeaccessgcc,depend)
 
-DEPENDS +=
+DEPENDS += kde/arts lib/qt-gcc
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
