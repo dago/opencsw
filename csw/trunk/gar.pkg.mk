@@ -36,10 +36,28 @@ PKG_ENV += $(foreach EXP,$(PKG_EXPORTS),$(EXP)="$($(EXP))")
 # pkg.gspec is added by default.
 admfiles = $(1).gspec $(foreach PKG,$(1),$(foreach ADM,$(2),$(PKG).$(ADM)))
 
-# package - Use the mkpackage utility to create Solaris packages
-PACKAGE_TARGETS = package-create
+# Standard sets of admin files for use with admfiles
+ADMSTANDARD = prototype depend
+ADMISCRIPTS = preinstall postinstall
+ADMUSCRIPTS = preremove postremove
+ADMSCRIPTS  = $(ADMISCRIPTS) $(ADMUSCRIPTS)
+ADMFULLSTD  = $(ADMSTANDARD) $(ADMSCRIPTS) space
+ADMADDON    = $(ADMSTANDARD) postinstall preremove
 
-package: install pre-package $(PACKAGE_TARGETS) post-package
+# timestamp - Create a pre-installation timestamp
+TIMESTAMP = $(COOKIEDIR)/timestamp
+PRE_INSTALL_TARGETS += timestamp
+timestamp:
+	@echo " ==> Creating timestamp cookie"
+	@$(MAKECOOKIE)
+
+remove-timestamp:
+	@echo " ==> Removing timestamp cookie"
+	@-rm -f $(TIMESTAMP)
+
+# package - Use the mkpackage utility to create Solaris packages
+POST_INSTALL_TARGETS += package
+package: install pre-package package-create post-package
 
 # returns true if package has completed successfully, false otherwise
 package-p:
