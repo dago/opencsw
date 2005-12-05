@@ -1,0 +1,16 @@
+GARNAME = kdeadmin
+GARVERSION = 3.5.0
+CATEGORIES = kde
+
+DESCRIPTION = Administration utilities for KDE (gcc3)
+define BLURB
+  LONG DESCRIPTION
+endef
+
+DISTFILES += $(call admfiles,CSWkdeadmingcc,depend)
+
+DEPENDS +=
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+include ../category.mk
