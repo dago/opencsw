@@ -1,5 +1,5 @@
 GARNAME = rails
-GARVERSION = 0.13.1
+GARVERSION = 0.14.3
 CATEGORIES = server
 
 DESCRIPTION = Ruby web application framework
@@ -9,14 +9,20 @@ define BLURB
 	for the Model.
 endef
 
+activerecord     = 1.13.0
+actionpack       = 1.11.0
+actionmailer     = 1.1.3
+activesupport    = 1.2.3
+actionwebservice = 0.9.3
+
 MASTER_SITES = http://rubyforge.org/frs/download.php/5176/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += activerecord-1.11.1.tgz
-DISTFILES += actionpack-1.9.1.tgz
-DISTFILES += actionmailer-1.0.1.tgz
-DISTFILES += activesupport-1.1.1.tgz
-DISTFILES += actionwebservice-0.8.1.tgz
+DISTFILES += activerecord-$(activerecord).tgz
+DISTFILES += actionpack-$(actionpack).tgz
+DISTFILES += actionmailer-$(actionmailer).tgz
+DISTFILES += activesupport-$(activesupport).tgz
+DISTFILES += actionwebservice-$(actionwebservice).tgz
 
 #DISTFILES += CSWrails.gspec
 #DISTFILES += CSWrails.depend
