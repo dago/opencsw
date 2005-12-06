@@ -9,9 +9,6 @@ HTTPD=$APACHE_SBIN/httpd
 
 [ -f "$APACHE_ENV" ] && . $APACHE_ENV
 
-APACHE_SSL=${APACHE_SSL:-'0'}
-[ $APACHE_SSL -eq 1 ] && HTTPD="$HTTPD -DSSL"
-
 PATH=$APACHE_SBIN:$PATH
 
 ULIMIT_MAX_FILES="ulimit -S -n `ulimit -H -n`"
@@ -24,6 +21,9 @@ option=$1
 case $option in 
 'start')
     ;;
+'startssl')
+    APACHE_SSL=1
+    ;;
 'stop')
     ;;
 'restart')
@@ -32,10 +32,13 @@ case $option in
     option=graceful
     ;;
 *)
-    echo "Usage: $0 { start | stop | restart | reload }"
+    echo "Usage: $0 { start | startssl | stop | restart | reload }"
     exit 1
     ;;
 esac    
+
+APACHE_SSL=${APACHE_SSL:-'0'}
+[ $APACHE_SSL -eq 1 ] && HTTPD="$HTTPD -DSSL"
 
 $HTTPD -f $APACHE_CONF -k $option
 exit $?

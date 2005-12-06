@@ -5,6 +5,7 @@ digraph csw {
         apache2 -> ap2_prefork -> apache2c -> apache2rt;
         label = "core packages";
     }
+    apache2_devel -> apache2rt;
     apache2_manual -> apache2;
     ap2_suexec -> apache2;
     ap2_worker -> apache2c;

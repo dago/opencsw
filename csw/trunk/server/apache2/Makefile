@@ -1,5 +1,5 @@
 GARNAME = httpd
-GARVERSION = 2.0.55
+GARVERSION = 2.2.0
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
@@ -10,12 +10,6 @@ endef
 
 include files/config.mk
 
-# Configuration Files
-AP2_CONFIG = httpd.conf.tmpl ssl.conf.tmpl
-AP2_RC     = cswapache2
-
-# Apache template/layout files
-DISTFILES += $(AP2_CONFIG) $(AP2_RC)
 # Apache dummy toplevel package
 DISTFILES += $(call admfiles,CSWapache2,$(ADMSTANDARD))
 # Apache runtime
@@ -24,10 +18,14 @@ DISTFILES += $(call admfiles,CSWapache2rt,$(ADMSTANDARD))
 DISTFILES += $(call admfiles,CSWapache2c,$(ADMSTANDARD) space postinstall)
 # Apache prefork MPM (default)
 DISTFILES += $(call admfiles,CSWap2prefork,$(ADMFULLSTD))
-# Apache manual
-DISTFILES += $(call admfiles,CSWapache2-manual,$(ADMSTANDARD))
 # Apache mod_suexec
 DISTFILES += $(call admfiles,CSWap2suexec,$(ADMADDON))
+# Apache manual
+DISTFILES += $(call admfiles,CSWapache2-manual,$(ADMSTANDARD))
+# Apache devel support
+DISTFILES += $(call admfiles,CSWapache2-devel,$(ADMSTANDARD))
+# Configuration templates
+DISTFILES += cswapache2 httpd.conf.tmpl httpd-ssl.conf.tmpl
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
@@ -46,14 +44,18 @@ include files/rules.mk
 LIBS += -lnsl
 export LIBS
 
+STRIP_DIRS  = $(DESTDIR)$(prefix)/apache2/sbin
+STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
+
 post-install: install-httpd-conf fix-libtool
 
+AP2ROOT = $(prefix)/apache2
+
 install-httpd-conf:
-	@for file in $(AP2_CONFIG) ; do \
-		install $(WORKDIR)/$$file $(DESTDIR)$(prefix)/apache2/etc ; \
-	done
-	install -d $(DESTDIR)/etc/init.d
-	install $(WORKDIR)/$(AP2_RC) $(DESTDIR)/etc/init.d
+	@install -d $(DESTDIR)/etc/init.d
+	@install $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
+	-@install $(WORKDIR)/httpd.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc
+	-@install $(WORKDIR)/httpd-ssl.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc/extra
 	@$(MAKECOOKIE)
 
 fix-libtool:

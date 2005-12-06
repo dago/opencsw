@@ -2,5 +2,5 @@
 %var            pkgname CSWapache2-manual
 %var            arch all
 %include        url file://%{GARDIR}/pkglib/csw_standard.gspec
-%var            desc Apache 2.0 manual
+%var            desc Apache 2.2 manual
 %copyright      url file://%{WORKSRC}/LICENSE
