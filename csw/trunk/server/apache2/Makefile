@@ -17,23 +17,17 @@ AP2_RC     = cswapache2
 # Apache template/layout files
 DISTFILES += $(AP2_CONFIG) $(AP2_RC)
 # Apache dummy toplevel package
-DISTFILES += CSWapache2.gspec CSWapache2.prototype CSWapache2.depend
+DISTFILES += $(call admfiles,CSWapache2,$(ADMSTANDARD))
 # Apache runtime
-DISTFILES += CSWapache2rt.gspec CSWapache2rt.prototype CSWapache2rt.depend
+DISTFILES += $(call admfiles,CSWapache2rt,$(ADMSTANDARD))
 # Apache server (core)
-DISTFILES += CSWapache2c.gspec CSWapache2c.prototype CSWapache2c.depend
-DISTFILES += CSWapache2c.space CSWapache2c.postinstall
+DISTFILES += $(call admfiles,CSWapache2c,$(ADMSTANDARD) space postinstall)
 # Apache prefork MPM (default)
-DISTFILES += CSWap2prefork.gspec CSWap2prefork.prototype CSWap2prefork.depend
-DISTFILES += CSWap2prefork.preinstall CSWap2prefork.postinstall
-DISTFILES += CSWap2prefork.preremove CSWap2prefork.postremove
-DISTFILES += CSWap2prefork.space 
+DISTFILES += $(call admfiles,CSWap2prefork,$(ADMFULLSTD))
 # Apache manual
-DISTFILES += CSWapache2-manual.gspec CSWapache2-manual.prototype
-DISTFILES += CSWapache2-manual.depend
+DISTFILES += $(call admfiles,CSWapache2-manual,$(ADMSTANDARD))
 # Apache mod_suexec
-DISTFILES += CSWap2suexec.gspec CSWap2suexec.prototype CSWap2suexec.depend
-DISTFILES += CSWap2suexec.postinstall CSWap2suexec.preremove
+DISTFILES += $(call admfiles,CSWap2suexec,$(ADMADDON))
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
