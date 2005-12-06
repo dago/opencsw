@@ -1,0 +1,4 @@
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libneon.so.25.0.4=$basedir/opt/csw/lib/libneon.so.25.0.4 0755 root bin
+s none /opt/csw/lib/libneon.so.25=libneon.so.25.0.4 root bin
+s none /opt/csw/lib/libneon.so=libneon.so.25.0.4 root bin
