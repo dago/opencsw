@@ -15,14 +15,14 @@ chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n perl mod_perl.so
 
 # Add a configuration sample
-if [ -z "`grep 'IfModule mod_perl.c' $AP2_CONFIG`" ]; then
+if [ -z "`grep 'IfModule perl_module' $AP2_CONFIG`" ]; then
     cp $AP2_CONFIG $AP2_CONFIG.pre-MP2
 
     echo "Adding mod_perl configuration to $AP2_CONFIG..."
     cat <<CONFIG >> $AP2_CONFIG
 
 # Added by $PKGINST
-<IfModule mod_perl.c>
+<IfModule perl_module>
     PerlSwitches -wT
     PerlRequire /opt/csw/apache2/etc/startup.pl
 

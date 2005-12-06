@@ -9,5 +9,4 @@ P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWperl perl - A high-level, general-purpose programming language.
 P CSWsasl sasl - Simple Authentication and Security Layer
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm
+P CSWsqlite sqlite - An embeddable SQL engine in a C library
