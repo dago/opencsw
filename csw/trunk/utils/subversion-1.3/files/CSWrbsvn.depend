@@ -12,5 +12,6 @@ P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWruby ruby - An object-oriented language for quick and easy programming.
 P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWsqlite sqlite - An embeddable SQL engine in a C library
 P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library

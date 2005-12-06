@@ -1,7 +1,7 @@
 I CSWap2-svn ap2_subversion - subversion module for apache 2.0
 P CSWcommon common - common files and dirs for CSW packages
-P CSWapache2 apache2 - Apache 2.0 web server
 P CSWap2prefork ap2_prefork - Apache 2.0 prefork MPM
+P CSWapache2 apache2 - Apache 2.0 web server
 P CSWapache2rt apache2rt - Apache 2.0 runtime libraries
 P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
 P CSWexpat expat - XML Parser Toolkit

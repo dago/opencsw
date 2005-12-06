@@ -54,8 +54,8 @@ NODIRPATHS = --libdir --libexecdir
 SVNLIB = $(prefix)/lib/svn
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
-CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
-CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
+CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-1-config
+CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-1-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --with-jdk=/usr/jdk/j2sdk1.4.2_02/j2se

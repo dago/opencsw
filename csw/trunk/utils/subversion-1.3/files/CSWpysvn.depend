@@ -12,5 +12,6 @@ P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
 P CSWpython python - The Python language interpreter
 P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWsqlite sqlite - An embeddable SQL engine in a C library
 P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library
