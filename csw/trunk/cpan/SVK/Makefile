@@ -12,17 +12,23 @@ endef
 DISTFILES += CSWpmsvk.gspec CSWpmsvk.depend
 
 DEPENDS += utils/subversion
-DEPENDS += cpan/Compress-Zlib cpan/FreezeThaw cpan/SVN-Mirror
+
+# Core
 DEPENDS += cpan/Algorithm-Annotate cpan/Algorithm-Diff cpan/YAML
 DEPENDS += cpan/Regexp-Shellish cpan/Data-Hierarchy cpan/Clone
 DEPENDS += cpan/Pod-Escapes cpan/Pod-Simple cpan/PerlIO-via-dynamic
 DEPENDS += cpan/PerlIO-via-symlink cpan/IO-Digest cpan/SVN-Simple
-DEPENDS += cpan/TimeDate cpan/File-Type cpan/PerlIO-eol
-DEPENDS += cpan/Locale-Maketext-Lexicon cpan/Locale-Maketext-Simple
-DEPENDS += cpan/URI
+DEPENDS += cpan/TimeDate cpan/File-Type cpan/URI cpan/PerlIO-eol
+DEPENDS += cpan/Class-Autouse
+
+# Features
+DEPENDS += cpan/Locale-Maketext-Simple
+DEPENDS += cpan/IO-Pager
+DEPENDS += cpan/SVN-Mirror
+DEPENDS += cpan/Compress-Zlib cpan/FreezeThaw
 
 include ../category.mk
 
-pre-test:
-	-@mv -f $(WORKSRC)/t/50dav.t $(WORKSRC)/t/50dav.t.disabled
-	@$(MAKECOOKIE)
+#pre-test:
+#	-@mv -f $(WORKSRC)/t/50dav.t $(WORKSRC)/t/50dav.t.disabled
+#	@$(MAKECOOKIE)

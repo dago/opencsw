@@ -9,6 +9,6 @@ define BLURB
   determine the MIME type of that file.
 endef
 
-DISTFILES += CSWpmfiletype.gspec
+DISTFILES = $(call admfiles,CSWpmfiletype,depend prototype)
 
 include ../category.mk

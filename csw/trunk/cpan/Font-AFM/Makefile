@@ -10,6 +10,6 @@ define BLURB
   font and the metrics of the various glyphs in the font.
 endef
 
-DISTFILES += CSWpmfontafm.gspec
+DISTFILES = $(call admfiles,CSWpmfontafm,depend prototype)
 
 include ../category.mk

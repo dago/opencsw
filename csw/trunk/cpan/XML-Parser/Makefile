@@ -15,7 +15,7 @@ define BLURB
   options given at XML::Parser creation time.
 endef
 
-DISTFILES += CSWpmxmlparser.gspec CSWpmxmlparser.depend
+DISTFILES = $(call admfiles,CSWpmxmlparser,depend prototype)
 
 DEPENDS += lib/expat
 

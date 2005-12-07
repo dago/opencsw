@@ -10,6 +10,6 @@ define BLURB
   objects.
 endef
 
-DISTFILES += CSWpmclone.gspec
+DISTFILES = $(call admfiles,CSWpmclone,depend prototype)
 
 include ../category.mk

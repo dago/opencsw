@@ -9,13 +9,10 @@ define BLURB
   repository. 
 endef
 
-DISTFILES += CSWpmsvnmirror.gspec CSWpmsvnmirror.depend
+DISTFILES = $(call admfiles,CSWpmsvnmirror,depend)
 
 DEPENDS += utils/subversion
-DEPENDS += cpan/TermReadKey cpan/SVN-Simple cpan/URI
-
-# Not quite ready for prime time
-PATCHFILES += novcp.diff
-#DEPENDS += cpan/VCP cpan/Data-UUID
+DEPENDS += cpan/TermReadKey cpan/SVN-Simple cpan/URI cpan/VCP
+DEPENDS += cpan/Data-UUID cpan/Class-Accessor
 
 include ../category.mk

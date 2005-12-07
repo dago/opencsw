@@ -8,6 +8,6 @@ define BLURB
   This module automagically generates accessor/mutators for your class.
 endef
 
-DISTFILES += CSWpmclassacc.gspec
+DISTFILES = $(call admfiles,CSWpmclassacc,depend prototype)
 
 include ../category.mk

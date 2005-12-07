@@ -9,7 +9,7 @@ define BLURB
   data attached to a hierarchical environment (like filesystem).
 endef
 
-DISTFILES += CSWpmdatahier.gspec CSWpmdatahier.depend
+DISTFILES = $(call admfiles,CSWpmdatahier,depend prototype)
 
 DEPENDS += cpan/Clone
 

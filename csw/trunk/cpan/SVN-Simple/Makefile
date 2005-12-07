@@ -11,7 +11,7 @@ define BLURB
   commits to a subversion repository easily.
 endef
 
-DISTFILES += CSWpmsvnsimple.gspec CSWpmsvnsimple.depend
+DISTFILES = $(call admfiles,CSWpmsvnsimple,depend prototype)
 
 DEPENDS += utils/subversion
 

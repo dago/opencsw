@@ -8,6 +8,6 @@ define BLURB
   Compute `intelligent' differences between two files / lists
 endef
 
-DISTFILES += CSWpmalgdiff.gspec
+DISTFILES = $(call admfiles,CSWpmalgdiff,depend prototype)
 
 include ../category.mk

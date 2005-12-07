@@ -9,6 +9,6 @@ define BLURB
   line ending. It works for both input and output handles.
 endef
 
-DISTFILES += CSWpmperlioeol.gspec
+DISTFILES = $(call admfiles,CSWpmperlioeol,depend prototype)
 
 include ../category.mk

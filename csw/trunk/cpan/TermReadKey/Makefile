@@ -13,7 +13,7 @@ define BLURB
   Term::ReadKey" on any architecture and have a good likelyhood of it working.
 endef
 
-DISTFILES += CSWpmtermreadkey.gspec CSWpmtermreadkey.depend
+DISTFILES = $(call admfiles,CSWpmtermreadkey,depend prototype)
 
 DEPENDS += lib/ncurses
 

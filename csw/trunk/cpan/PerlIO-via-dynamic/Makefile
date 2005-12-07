@@ -10,6 +10,6 @@ define BLURB
   use this module as via layer directly (ie :via(dynamic)).
 endef
 
-DISTFILES += CSWpmperlioviadyn.gspec
+DISTFILES = $(call admfiles,CSWpmperlioviadyn,depend prototype)
 
 include ../category.mk

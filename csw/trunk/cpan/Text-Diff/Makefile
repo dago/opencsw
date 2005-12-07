@@ -12,7 +12,7 @@ define BLURB
   slower on larger files.
 endef
 
-DISTFILES += CSWpmtextdiff.gspec CSWpmtextdiff.depend
+DISTFILES = $(call admfiles,CSWpmtextdiff,depend prototype)
 
 DEPENDS += cpan/Algorithm-Diff
 

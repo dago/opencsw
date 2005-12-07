@@ -9,6 +9,6 @@ define BLURB
   localization formats, such as Gettext, Msgcat, and so on.
 endef
 
-DISTFILES += CSWpmlclemktxtlex.gspec
+DISTFILES = $(call admfiles,CSWpmlclemktxtlex,depend prototype)
 
 include ../category.mk

@@ -9,7 +9,7 @@ define BLURB
   to alleviate the need of creating Language Classes for module authors.
 endef
 
-DISTFILES += CSWpmlclemktxtsimple.gspec CSWpmlclemktxtsimple.depend
+DISTFILES = $(call admfiles,CSWpmlclemktxtsimple,depend prototype)
 
 DEPENDS += cpan/Locale-Maketext-Lexicon
 

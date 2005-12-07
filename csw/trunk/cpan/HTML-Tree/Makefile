@@ -10,7 +10,7 @@ define BLURB
   refer to: HTML::TreeBuilder and HTML::Element.
 endef
 
-DISTFILES += CSWpmhtmltree.gspec CSWpmhtmltree.depend
+DISTFILES = $(call admfiles,CSWpmhtmltree,depend prototype)
 
 DEPENDS += cpan/HTML-Parser
 

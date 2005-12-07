@@ -10,7 +10,7 @@ define BLURB
   the digests after written a file.
 endef
 
-DISTFILES += CSWpmiodigest.gspec CSWpmiodigest.depend
+DISTFILES = $(call admfiles,CSWpmiodigest,depend prototype)
 
 DEPENDS += cpan/PerlIO-via-dynamic
 

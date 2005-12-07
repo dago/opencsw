@@ -9,6 +9,6 @@ define BLURB
   **, where ** is like * but matches /. 
 endef
 
-DISTFILES += CSWpmregexpshellish.gspec
+DISTFILES = $(call admfiles,CSWpmregexpshellish,depend prototype)
 
 include ../category.mk

@@ -10,7 +10,7 @@ define BLURB
   tables and forms is not implemented.
 endef
 
-DISTFILES += CSWpmhtmlfmt.gspec CSWpmhtmlfmt.depend
+DISTFILES = $(call admfiles,CSWpmhtmlfmt,depend prototype)
 
 DEPENDS += cpan/Font-AFM
 

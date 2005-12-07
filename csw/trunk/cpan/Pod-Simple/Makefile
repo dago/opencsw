@@ -11,7 +11,7 @@ define BLURB
   the perlpod man page; the most common formatter is called "perldoc".
 endef
 
-DISTFILES += CSWpmpodsimple.gspec CSWpmpodsimple.depend
+DISTFILES = $(call admfiles,CSWpmpodsimple,depend prototype)
 
 DEPENDS += cpan/Pod-Escapes
 

@@ -10,6 +10,7 @@ define BLURB
   updated by RFC 2732).
 endef
 
-DISTFILES += CSWpmuri.gspec
+PKGNAME = CSWpmuri
+PKGADM  = depend prototype
 
 include ../category.mk

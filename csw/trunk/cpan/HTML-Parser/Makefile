@@ -11,10 +11,7 @@ define BLURB
   invoked.
 endef
 
-DISTFILES += CSWpmhtmlparser.gspec CSWpmhtmlparser.depend
-
-# Decode unicode entities
-PATCHFILES = unicode.diff
+DISTFILES = $(call admfiles,CSWpmhtmlparser,depend prototype)
 
 DEPENDS += cpan/HTML-Tagset
 

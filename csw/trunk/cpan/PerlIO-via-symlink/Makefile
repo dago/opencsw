@@ -9,6 +9,6 @@ define BLURB
   the file handle.
 endef
 
-DISTFILES += CSWpmperlioviasym.gspec
+DISTFILES = $(call admfiles,CSWpmperlioviasym,depend prototype)
 
 include ../category.mk

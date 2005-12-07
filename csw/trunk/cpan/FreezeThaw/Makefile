@@ -11,7 +11,7 @@ define BLURB
   stringify operator yet.
 endef
 
-DISTFILES += CSWpmfreezethaw.gspec
+DISTFILES = $(call admfiles,CSWpmfreezethaw,depend prototype)
 
 include ../category.mk
 

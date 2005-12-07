@@ -10,6 +10,6 @@ define BLURB
   formatters.
 endef
 
-DISTFILES += CSWpmpodescapes.gspec
+DISTFILES = $(call admfiles,CSWpmpodescapes,depend prototype)
 
 include ../category.mk

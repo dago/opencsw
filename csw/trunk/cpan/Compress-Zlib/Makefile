@@ -10,6 +10,6 @@ define BLURB
   functionality provided by zlib is available in Compress::Zlib.
 endef
 
-DISTFILES += CSWpmcompresszlib.gspec
+DISTFILES = $(call admfiles,CSWpmcompresszlib,depend prototype)
 
 include ../category.mk

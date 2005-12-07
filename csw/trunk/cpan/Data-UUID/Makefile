@@ -11,7 +11,7 @@ define BLURB
   generated until 3400 CE.
 endef
 
-DISTFILES += CSWpmdatauuid.gspec
+DISTFILES = $(call admfiles,CSWpmdatauuid,)
 
 CONFIGURE_ENV += PERL_MM_USE_DEFAULT=1
 

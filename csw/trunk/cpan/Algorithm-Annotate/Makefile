@@ -9,7 +9,7 @@ define BLURB
   simliar to cvs annotate.
 endef
 
-DISTFILES += CSWpmalgannotate.gspec CSWpmalgannotate.depend
+DISTFILES = $(call admfiles,CSWpmalgannotate,depend prototype)
 
 DEPENDS += cpan/Algorithm-Diff
 

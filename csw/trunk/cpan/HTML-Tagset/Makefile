@@ -9,7 +9,7 @@ define BLURB
   parsing operations.
 endef
 
-DISTFILES += CSWpmhtmltagset.gspec
+DISTFILES = $(call admfiles,CSWpmhtmltagset,depend prototype)
 
 CONFIGURE_ARGS = -n
 
