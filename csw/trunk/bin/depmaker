@@ -18,7 +18,7 @@ my $VERSION = "1.0";
 # Get command line options
 my $do_script = 1;
 my $be_quiet  = 0;
-my (@nodep, %nodep, $rootdir);
+my (@nodep, $rootdir);
 GetOptions(
     'script!'   => \$do_script,
     'quiet|q'   => \$be_quiet,
@@ -31,19 +31,31 @@ GetOptions(
     },
 ) or usage();
 
-foreach (@nodep) { $nodep{$_} = 1 };
+# Compile package patterns
+{
+my @nodep_re;
+foreach my $pat (@nodep) { push @nodep_re, qr!$pat! }
+@nodep = @nodep_re;
+}
 
 sub usage {
     print STDERR "Usage: $self [--no/script] [--nodep <pkg>] [--root <path>] < path_list > depend\n";
     exit 1;
 }
+
 sub msg {
     return if $be_quiet;
     print STDERR @_;
 }
 
+sub exclude {
+    my $path = shift;
+    foreach my $pat (@nodep) { return 1 if $path =~ $pat }
+    return 0;
+}
+
 msg "root directory      : $rootdir\n" if $rootdir;
-msg "skip depends for    : " . join(", ", sort keys %nodep) . "\n";
+msg "skip depends for    : " . join(", ", sort @nodep) . "\n";
 msg "script dependencies : " . ($do_script ? "enabled" : "disabled") . "\n";
 msg "\n";
 
@@ -150,7 +162,7 @@ foreach my $depfile (sort keys %depfiles) {
 # For each of the package names found in the last phase, look up
 # the necessary information to build a depend entry...
 foreach my $pkgname (sort keys %deppkg) {
-    if ($nodep{$pkgname}) {
+    if (exclude($pkgname)) {
         msg "Skipping dependency $pkgname\n";
         next;
     }
