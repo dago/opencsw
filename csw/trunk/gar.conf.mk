@@ -165,9 +165,19 @@ GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GARNAME)/
 #CPAN_ROOT	  = ftp://cpan.sfbay/pub/CPAN
 #CPAN_ROOT    = ftp://ftp.nas.nasa.gov/pub/perl/CPAN
 #CPAN_ROOT    = ftp://cpan.pair.com/pub/CPAN
-CPAN_ROOT    = http://mirrors.ibiblio.org/pub/mirrors/CPAN
+#CPAN_ROOT    = http://mirrors.ibiblio.org/pub/mirrors/CPAN
 #CPAN_ROOT    = ftp://ftp.nrc.ca/pub/CPAN
+CPAN_ROOT    = http://mirror.cc.columbia.edu/pub/software/cpan
 CPAN_MIRROR  = $(CPAN_ROOT)/authors/id/$(AUTHOR_ID)/
+
+# KDE
+KDE_ROOT     = ftp://ftp.gtlib.cc.gatech.edu/pub/kde
+KDE_VERSION  = 3.5
+KDE_DIST     = stable
+KDE_MIRROR   = $(KDE_ROOT)/$(KDE_DIST)/$(KDE_VERSION)/src/
+
+# GNOME
+GNOME_MIRROR =
 
 # Compiler version
 ifeq ($(CC),gcc)
