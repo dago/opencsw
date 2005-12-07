@@ -25,7 +25,7 @@ include ../../gar.mk
 
 # Canned commands for finding packlist files
 find_packlist = $(shell find $(1) -type f -name .packlist | head -1)
-find_newest_packlist = $(shell find $(1) -type f -name .pakclist -cnewer $(TIMESTAMP))
+find_newest_packlist = $(shell find $(1) -type f -name .packlist -cnewer $(TIMESTAMP))
 
 # Fix package packlist for installation
 PERL_PACKLIST ?= $(call find_newest_packlist $(DESTDIR)$(perlpackroot))
