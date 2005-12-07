@@ -13,6 +13,6 @@ DISTFILES = $(call admfiles,CSWpmsvnmirror,depend)
 
 DEPENDS += utils/subversion
 DEPENDS += cpan/TermReadKey cpan/SVN-Simple cpan/URI cpan/VCP
-DEPENDS += cpan/Data-UUID cpan/Class-Accessor
+DEPENDS += cpan/Data-UUID cpan/Class-Accessor cpan/File-chdir
 
 include ../category.mk
