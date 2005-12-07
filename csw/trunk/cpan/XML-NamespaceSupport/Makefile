@@ -10,6 +10,6 @@ define BLURB
   to namespace URI map, and provides a number of basic checks.
 endef
 
-DISTFILES += CSWpmxmlnssupp.gspec
+DISTFILES += $(call admfiles,CSWpmxmlnssupp,prototype)
 
 include ../category.mk

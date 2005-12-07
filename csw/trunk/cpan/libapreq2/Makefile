@@ -11,15 +11,21 @@ define BLURB
   manpage for more details.
 endef
 
-DISTFILES += CSWpmapreq2.gspec
+DISTFILES = $(call admfiles,CSWpmapreq2,depend prototype)
 
 DEPENDS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
+DEPENDS += cpan/mod_perl2
 
 CONFIGURE_ARGS  = --enable-perl-glue
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --with-apache2-apxs=$(prefix)/apache2/sbin/apxs
-CONFIGURE_ARGS += --with-apr-config=$(prefix)/apache2/bin/apr-config
-CONFIGURE_ARGS += --with-apu-config=$(prefix)/apache2/bin/apu-config
+CONFIGURE_ARGS += --with-apr-config=$(prefix)/apache2/bin/apr-1-config
+CONFIGURE_ARGS += --with-apu-config=$(prefix)/apache2/bin/apu-1-config
 CONFIGURE_ARGS += --with-expat=$(prefix)
 
+# Must be installed to test
+ENABLE_TEST = 0
+
 include ../category.mk
+
+pre-package: test

@@ -12,6 +12,6 @@ define BLURB
   operations can also be performed on the IxHash.
 endef
 
-DISTFILES += CSWpmtieixhash.gspec
+DISTFILES = $(call admfiles,CSWpmtieixhash,depend prototype)
 
 include ../category.mk

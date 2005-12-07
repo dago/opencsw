@@ -3,8 +3,8 @@
 MASTER_SITES ?= $(CPAN_MIRROR)
 
 # This is common to most modules - override in module makefile if different
-MODDIST ?= $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES := $(MODDIST) $(DISTFILES)
+MODDIST   ?= $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(MODDIST)
 
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1

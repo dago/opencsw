@@ -9,6 +9,6 @@ define BLURB
   parsers from simple yacc-like grammar specifications.
 endef
 
-DISTFILES += CSWpmparserecdescent.gspec
+DISTFILES = $(call admfiles,CSWpmparserecdescent,depend prototype)
 
 include ../category.mk

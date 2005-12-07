@@ -14,7 +14,7 @@ define BLURB
 	the time you only have to rerun XSBuilder to get your new Perl API.
 endef
 
-DISTFILES += CSWpmextutxsbld.gspec
+DISTFILES = $(call admfiles,CSWpmextutxsbld,depend prototype)
 
 DEPENDS += cpan/Parse-RecDescent cpan/Tie-IxHash
 

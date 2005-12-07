@@ -1,7 +1,7 @@
 GARNAME = Apache-Test
-GARVERSION = 1.26
+GARVERSION = 1.27
 CATEGORIES = cpan
-AUTHOR = GEOFF
+AUTHOR = PGOLLUCCI
 
 DESCRIPTION = Test.pm wrapper with helpers for testing Apache
 define BLURB
@@ -9,7 +9,7 @@ define BLURB
   testing an Apache server.
 endef
 
-DISTFILES += CSWpmapachetst.gspec
+DISTFILES = $(call admfiles,CSWpmapachetst,depend prototype)
 
 APACHE_TEST_HTTPD = $(prefix)/apache2/sbin/httpd
 export APACHE_TEST_HTTPD

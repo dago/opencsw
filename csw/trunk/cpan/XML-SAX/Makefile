@@ -10,7 +10,7 @@ define BLURB
   returning any SAX parser installed on the user's system.
 endef
 
-DISTFILES += CSWpmxmlsax.gspec CSWpmxmlsax.depend
+DISTFILES += $(call admfiles,CSWpmxmlsax,depend prototype)
 
 DEPENDS += cpan/XML-NamespaceSupport
 

@@ -11,7 +11,7 @@ define BLURB
   several packages which are not described in this section.
 endef
 
-DISTFILES += CSWpmxmllibxml.gspec CSWpmxmllibxml.depend
+DISTFILES += $(call admfiles,CSWpmxmllibxml,depend prototype)
 
 DEPENDS += cpan/XML-LibXML-Common cpan/XML-NamespaceSupport cpan/XML-SAX
 
