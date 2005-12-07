@@ -9,7 +9,7 @@
 use strict;
 use Getopt::Long qw/:config no_ignore_case/;
 use vars qw/
-    $opt_h $opt_s %srcvars %cmpvars @XPATS @XFORMS %Common
+    $opt_h $opt_s %srcvars %cmpvars @XPATS @XFORMS @Common
     $StdOwn $StdGrp $StdDirPerm
 /;
 # atime=8,mtime=9,ctime=10
@@ -81,6 +81,15 @@ sub replace {
     $$text =~ s/$rdata->{$_}/\$$_/g foreach (keys %$rdata);
 }
 
+# Check whether a path is a 'common' file, defined in __DATA__
+sub is_common {
+    my $path = shift;
+    foreach my $pat (@Common) {
+        return 1 if $path =~ /$pat$/;
+    }
+    return 0;
+}
+
 #
 # MAIN EXECUTION
 #
@@ -100,7 +109,10 @@ usage "error: one or more pkgproto patterns required\n" unless @ARGV;
 my $s_time = $opt_s ? (stat($opt_s))[TIME_FIELD] : 0;
 
 # Load common path contents
-while (<DATA>) { chomp; $Common{$_} = 1 }
+while (<DATA>) {
+    chomp; next if /^\s*$/;
+    push @Common, qr!$_!;
+}
 
 # Create the prototype
 my $PPAT = join ' ' => @ARGV;
@@ -138,7 +150,7 @@ while (<PROTO>) {
     # And finally, write out the line properly if the path is part
     # of the common set in DATA.  Also, fix up dir permissions/file
     # ownership.
-    if ($Common{$F[2]}) {
+    if (is_common($F[2])) {
         $F[3] = $F[4] = $F[5] = '?';
     }
     else {
@@ -163,6 +175,7 @@ __DATA__
 /opt/csw/share/perl/site_perl
 /opt/csw/lib/perl
 /opt/csw/lib/perl/csw
+/opt/csw/lib/perl/csw/auto
 /opt/csw/lib/perl/site_perl
 /opt/csw
 /opt/csw/bin
@@ -299,4 +312,5 @@ __DATA__
 /opt/csw/share/locale/zh_TW.Big5/LC_MESSAGES
 /opt/csw/share/locale/zh_TW/LC_MESSAGES
 /opt/csw/share/man
+/opt/csw/share/man/man\d
 /opt/csw/var
