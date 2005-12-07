@@ -1,0 +1,18 @@
+#!/opt/csw/bin/perl -lw
+#
+# $Id:$
+# $URL:$
+#
+# pmwhere - find out where a perl module is being loaded from
+#
+
+use strict;
+use Data::Dumper;
+
+foreach my $module (@ARGV) {
+    eval { require "$module.pm" } or die;
+    $module =~ s#::#/#g;
+    foreach (keys %INC) {
+        print $INC{$_} if m#$module#;
+    }
+}
