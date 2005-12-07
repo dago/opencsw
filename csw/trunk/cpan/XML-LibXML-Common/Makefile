@@ -10,7 +10,7 @@ define BLURB
   may coexist within the same scripts.
 endef
 
-DISTFILES += CSWpmlibxml2com.gspec CSWpmlibxml2com.depend
+DISTFILES += $(call admfiles,CSWpmxmllibxmlcom,depend prototype)
 
 DEPENDS += lib/libxml2
 
