@@ -59,7 +59,8 @@ remove-timestamp:
 	@-rm -f $(TIMESTAMP)
 
 # package - Use the mkpackage utility to create Solaris packages
-package: install pre-package package-create post-package
+POST_INSTALL_TARGETS += pre-package package-create post-package
+package: install
 	$(DONADA)
 	@$(MAKECOOKIE)
 
