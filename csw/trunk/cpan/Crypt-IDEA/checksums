@@ -1,4 +1,6 @@
-c9c453c402b1fc494faa9dd3be793a4a  download/Crypt-IDEA-1.02.tar.gz
-fc746405d6eb65357f5833f87337523d  download/CSWpmcryptidea.gspec
-a8d6c187c5c860662f20454bd37b0c6f  download/solaris.diff
-2a511841f7d3843190c14f6cc05b79cb  download/test_suite.diff
+1f50f1e36b4238b862499d881f4cb629  download/CSWpmcryptidea.gspec
+6e0d583c86d7f74b43769810714242aa  download/CSWpmcryptidea.depend
+ad4fce57a35e26395caff69af4744c24  download/CSWpmcryptidea.prototype
+8a969cea58b6f63a4a0599a7e220d489  download/Crypt-IDEA-1.04.tar.gz
+21873ae2253d2dcc6f377fdf919e3cc5  download/typedef.diff
+8ccf57dc892ce18666f43e5d3234d4cb  download/byteorder.diff

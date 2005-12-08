@@ -1,0 +1,13 @@
+diff --speed-large-files --minimal -Nru Crypt-IDEA-1.04.orig/idea.h Crypt-IDEA-1.04/idea.h
+--- Crypt-IDEA-1.04.orig/idea.h	2005-12-08 02:23:44.326653000 -0500
++++ Crypt-IDEA-1.04/idea.h	2005-12-08 02:23:07.255949000 -0500
+@@ -2,6 +2,9 @@
+ 
+ #define IDEA_KS_SIZE 104
+ 
++#include <inttypes.h>
++typedef uint16_t u_int16_t;
++
+ typedef u_int16_t idea_cblock[4];
+ typedef u_int16_t idea_user_key[8];
+ typedef u_int16_t idea_ks[52];

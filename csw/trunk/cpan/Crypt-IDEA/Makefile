@@ -1,5 +1,5 @@
 GARNAME = Crypt-IDEA
-GARVERSION = 1.02
+GARVERSION = 1.04
 CATEGORIES = cpan
 AUTHOR = DPARIS
 
@@ -8,12 +8,13 @@ define BLURB
   This perl extension is an implementation of the IDEA block cipher algorithm.
 endef
 
-DISTFILES += CSWpmcryptidea.gspec
+DISTFILES = $(call admfiles,CSWpmcryptidea,depend prototype)
 
-# Allow IDEA to build on Solaris
-PATCHFILES  = solaris.diff
+# Define u_int16_t in terms of a type Solaris knows about
+PATCHFILES += typedef.diff
 
-# Full IDEA test suite
-PATCHFILES += test_suite.diff
+# 1.04 was supposed to fix byte order, but the fix only worked
+# for 32-bit systems.
+PATCHFILES += byteorder.diff
 
 include ../category.mk
