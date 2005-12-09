@@ -12,7 +12,7 @@ define BLURB
   work as a Hash and an Array at the same time!
 endef
 
-DISTFILES += CSWpmxmlsmart.gspec CSWpmxmlsmart.depend
+DISTFILES = $(call admfiles,CSWpmxmlsmart,depend prototype)
 
 DEPENDS += cpan/Object-MultiType
 

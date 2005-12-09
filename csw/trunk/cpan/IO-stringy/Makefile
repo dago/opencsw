@@ -10,6 +10,6 @@ define BLURB
   IO::Scalar, IO::ScalarArray, and IO::Lines.
 endef
 
-DISTFILES += CSWpmiostringy.gspec
+DISTFILES = $(call admfiles,CSWpmiostringy,)
 
 include ../category.mk

@@ -17,7 +17,7 @@ define BLURB
   streams inside the files.
 endef
 
-DISTFILES += CSWpmarchivezip.gspec CSWpmarchivezip.depend
+DISTFILES = $(call admfiles,CSWpmarchivezip,depend prototype)
 
 # Fix bug affecting Archive::SelfExtract
 PATCHFILES += seek.diff

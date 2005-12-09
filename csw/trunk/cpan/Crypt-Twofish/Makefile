@@ -11,6 +11,6 @@ define BLURB
   <URL:http://www.counterpane.com/twofish.html>.
 endef
 
-DISTFILES += CSWpmcrypttwofish.gspec
+DISTFILES = $(call admfiles,CSWpmcrypttwofish,depend prototype)
 
 include ../category.mk

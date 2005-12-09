@@ -8,9 +8,6 @@ define BLURB
   Date::Parse provides two routines for parsing date strings into time values.
 endef
 
-DISTFILES += CSWpmtimedate.gspec
-
-# Module version numbers defeat Sort::Versions
-MANUAL_UPDATE = 1
+DISTFILES = $(call admfiles,CSWpmtimedate,depend prototype)
 
 include ../category.mk

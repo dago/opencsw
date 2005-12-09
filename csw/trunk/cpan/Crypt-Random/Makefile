@@ -13,7 +13,7 @@ define BLURB
   specified interval.
 endef
 
-DISTFILES += CSWpmcryptrandom.gspec CSWpmcryptrandom.depend
+DISTFILES = $(call admfiles,CSWpmcryptrandom,depend)
 
 DEPENDS += cpan/Math-Pari cpan/Class-Loader
 

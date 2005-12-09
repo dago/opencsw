@@ -10,6 +10,6 @@ define BLURB
   Glob object at the same time.
 endef
 
-DISTFILES += CSWpmobjmultitype.gspec
+DISTFILES = $(call admfiles,CSWpmobjmultitype,depend prototype)
 
 include ../category.mk

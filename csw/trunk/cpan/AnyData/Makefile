@@ -12,6 +12,6 @@ define BLURB
   The DBD::AnyData module adds a DBI/SQL interface for those same formats.
 endef
 
-DISTFILES += CSWpmanydata.gspec
+DISTFILES = $(call admfiles,CSWpmanydata,depend prototype)
 
 include ../category.mk

@@ -11,6 +11,6 @@ define BLURB
   large amounts of memory, and decrease the script load time a great deal.
 endef
 
-DISTFILES = $(call admfiles,CSWpmclassacc,depend prototype)
+DISTFILES = $(call admfiles,CSWpmclassautouse,depend prototype)
 
 include ../category.mk

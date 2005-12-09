@@ -11,7 +11,7 @@ define BLURB
   remote machines or databases.
 endef
 
-DISTFILES += CSWpmcache.gspec CSWpmcache.depend
+DISTFILES = $(call admfiles,CSWpmcache,depend prototype)
 
 DEPENDS += cpan/Heap cpan/IO-String cpan/File-NFSLock
 DEPENDS += cpan/Digest-SHA1 cpan/TimeDate

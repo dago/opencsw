@@ -1,7 +1,14 @@
 GARNAME = Math-Pari
-GARVERSION = 2.010603
+GARVERSION = 2.010702
 CATEGORIES = cpan
 AUTHOR = ILYAZ
+
+# Note: This package does not use CSWparigp -- it builds a local
+# static pari library, which gets linked with the Pari module shared
+# object.  Passing 'parilib' to Makefile.PL won't find the CSW
+# includes.  CSWparigp doesn't have the static lib, and linking with
+# a shared libpari does't appear to be supported.
+PARIGP_VERSION = 2.1.7
 
 DESCRIPTION = interface to PARI numerical analysis library
 define BLURB
@@ -13,13 +20,20 @@ define BLURB
 endef
 
 MASTER_SITES = $(CPAN_MIRROR) http://pari.math.u-bordeaux.fr/pub/pari/unix/
-DISTFILES += pari-2.1.6.tgz
-DISTFILES += CSWpmmathpari.gspec
+DISTFILES += pari-$(PARIGP_VERSION).tgz
+DISTFILES += $(call admfiles,CSWpmmathpari,depend prototype)
 
-CONFIGURE_ARGS = paridir=../pari-2.1.6
+# Fix PariBuild to work with sun4u/v
+#PATCHFILES += rt12324.diff
+
+CONFIGURE_ARGS = paridir=../pari-$(PARIGP_VERSION)
 
 # Avoid oddness - check for updates manually
 MANUAL_UPDATE = 1
+
+# Manually loading Math::Pari works fine, but for some
+# reason the test suite can't load the shared object.
+#ENABLE_TEST = 0
 
 include ../category.mk
 

@@ -10,6 +10,6 @@ define BLURB
   procedure developed by C. Adams and S. Tavares.
 endef
 
-DISTFILES += CSWpmcryptcast5pp.gspec
+DISTFILES = $(call admfiles,CSWpmcryptcast5pp,depend prototype)
 
 include ../category.mk

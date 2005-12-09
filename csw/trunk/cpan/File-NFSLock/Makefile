@@ -10,6 +10,6 @@ define BLURB
   presented in Mail::Folder::Maildir).
 endef
 
-DISTFILES += CSWpmfilenfslock.gspec
+DISTFILES = $(call admfiles,CSWpmfilenfslock,depend prototype)
 
 include ../category.mk

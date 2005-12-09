@@ -11,7 +11,7 @@ define BLURB
   "message digest" of the input.
 endef
 
-DISTFILES += CSWpmdigestsha1.gspec
+DISTFILES = $(call admfiles,CSWpmdigestsha1,depend prototype)
 
 # Missing alias for reset -> new
 PATCHFILES = reset.diff

@@ -10,7 +10,7 @@ define BLURB
   which, when run, unpacks the archive and then runs the code.
 endef
 
-DISTFILES += CSWpmarchivesfx.gspec CSWpmarchivesfx.depend
+DISTFILES = $(call admfiles,CSWpmarchivesfx,depend)
 
 DEPENDS += cpan/Archive-Zip cpan/IO-stringy
 

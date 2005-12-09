@@ -14,6 +14,6 @@ define BLURB
   used by it instead of hard-coding their names.
 endef
 
-DISTFILES += CSWpmclassloader.gspec
+DISTFILES = $(call admfiles,CSWpmclassloader,depend prototype)
 
 include ../category.mk

@@ -13,6 +13,6 @@ define BLURB
   that you have in a string variable.
 endef
 
-DISTFILES += CSWpmiostring.gspec
+DISTFILES = $(call admfiles,CSWpmiostring,depend prototype)
 
 include ../category.mk

@@ -1,5 +1,5 @@
 GARNAME = Crypt-IDEA
-GARVERSION = 1.04
+GARVERSION = 1.06
 CATEGORIES = cpan
 AUTHOR = DPARIS
 
@@ -9,12 +9,5 @@ define BLURB
 endef
 
 DISTFILES = $(call admfiles,CSWpmcryptidea,depend prototype)
-
-# Define u_int16_t in terms of a type Solaris knows about
-PATCHFILES += typedef.diff
-
-# 1.04 was supposed to fix byte order, but the fix only worked
-# for 32-bit systems.
-PATCHFILES += byteorder.diff
 
 include ../category.mk

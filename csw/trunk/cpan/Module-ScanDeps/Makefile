@@ -9,6 +9,6 @@ define BLURB
   hash reference.
 endef
 
-DISTFILES += CSWpmmodulescandeps.gspec
+DISTFILES = $(call admfiles,CSWpmmodulescandeps,depend prototype)
 
 include ../category.mk

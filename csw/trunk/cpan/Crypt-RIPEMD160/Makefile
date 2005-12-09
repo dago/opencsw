@@ -9,6 +9,6 @@ define BLURB
   algorithm from within Perl programs.
 endef
 
-DISTFILES += CSWpmcryptripemd160.gspec
+DISTFILES = $(call admfiles,CSWpmcryptripemd160,depend prototype)
 
 include ../category.mk

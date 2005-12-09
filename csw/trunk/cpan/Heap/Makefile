@@ -11,6 +11,6 @@ define BLURB
   if a reversed compare routine is provided).
 endef
 
-DISTFILES += CSWpmheap.gspec
+DISTFILES = $(call admfiles,CSWpmheap,depend prototype)
 
 include ../category.mk
