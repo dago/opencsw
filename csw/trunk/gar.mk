@@ -276,7 +276,7 @@ else
 TEST_TARGETS =
 endif
 
-test: pre-test $(TEST_TARGETS) post-test
+test: build pre-test $(TEST_TARGETS) post-test
 	$(DONADA)
 
 # install		- Test and install the results of a build.
