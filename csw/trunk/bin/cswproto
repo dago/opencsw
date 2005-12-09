@@ -33,6 +33,7 @@ $StdDirPerm = '0755';
     qr{^/opt$},
     qr{^/opt/csw$},
     qr{perllocal\.pod},
+    qr{^/opt/csw/lib/perl/\d\.\d+\.\d$},
 );
 
 # Print usage information and exit
@@ -172,6 +173,7 @@ foreach my $item (sort { $a->[2] cmp $b->[2] } @prototype) {
 __DATA__
 /opt/csw/share/perl
 /opt/csw/share/perl/csw
+/opt/csw/share/perl/csw/auto
 /opt/csw/share/perl/site_perl
 /opt/csw/lib/perl
 /opt/csw/lib/perl/csw
