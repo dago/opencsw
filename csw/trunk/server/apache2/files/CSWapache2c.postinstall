@@ -8,14 +8,17 @@ AP2_CONFDIR=$AP2_PREFIX/etc
 
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
 AP2_CONFIG_SSL=$AP2_CONFDIR/extras/httpd-ssl.conf
+AP2_CONFIG_SSL_OLD=$AP2_CONFDIR/ssl.conf
 
 # Don't overwrite config if it exists
+warn_update=0
 echo "Checking configuration files:"
-for config in $AP2_CONFIG $AP2_CONFIG_SSL ; do
+for config in $AP2_CONFIG $AP2_CONFIG_SSL $AP2_CONFIG_SSL_OLD ; do
     if [ -f $config ]; then 
-        echo "Updating syntax of current httpd.conf file to Apache 2.2"
+        echo "Updating syntax of $config to Apache 2.2"
         $AP2_BINDIR/update20to22 $config
-    else
+        warn_update=1
+    elif [ -f $config.tmpl ]; then
         echo "Creating $config from template"
         hostname=`hostname`
         sed -e s,@HOSTNAME@,$hostname,g   \
@@ -30,5 +33,15 @@ echo "Cleaning up templates..."
 rm -f $AP2_CONFIG.tmpl $AP2_CONFIG_SSL.tmpl
 removef $PKGINST $AP2_CONFIG.tmpl $AP2_CONFIG_SSL.tmpl
 removef -f $PKGINST
+
+if [ $warn_update -eq 1 ] ; then
+cat << EOF
+
+*** NOTICE: Existing configuration files have been updated to
+*** Apache 2.2 syntax.  Additional files can be updated using
+*** /opt/csw/apache2/sbin/update20to22.
+
+EOF
+fi
 
 exit 0
