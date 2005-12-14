@@ -230,11 +230,11 @@ normal-patch-%:
 	@echo " ==> Creating patch $@"
 	@EXTRACTDIR=$(SCRATCHDIR) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) extract
 	@mv $(SCRATCHDIR)/$(BASEWORKSRC) $(WORKSRC).orig
-	@cd $(WORKDIR); \
+	@( cd $(WORKDIR); \
 		if diff --speed-large-files --minimal -Nru $(BASEWORKSRC).orig $(BASEWORKSRC) > gar-base.diff; then :; else \
-			cd -; \
+			cd $(CURDIR); \
 			mv -f $(WORKDIR)/gar-base.diff $@; \
-		fi
+		fi )
 
 ### PATCH FILE TYPE MAPPINGS ###
 # These rules specify which of the above patch action rules to use for a given
