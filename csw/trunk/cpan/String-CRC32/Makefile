@@ -11,6 +11,6 @@ define BLURB
   files.
 endef
 
-DISTFILES += CSWpmstringcrc32.gspec
+DISTFILES = $(call admfiles,CSWpmstringcrc32,depend prototype)
 
 include ../category.mk
