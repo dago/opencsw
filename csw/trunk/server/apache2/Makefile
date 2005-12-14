@@ -11,21 +11,22 @@ endef
 include files/config.mk
 
 # Apache dummy toplevel package
-DISTFILES += $(call admfiles,CSWapache2,$(ADMSTANDARD))
-# Apache runtime
-DISTFILES += $(call admfiles,CSWapache2rt,$(ADMSTANDARD))
+DISTFILES += $(call admfiles,CSWapache2,depend prototype)
 # Apache server (core)
-DISTFILES += $(call admfiles,CSWapache2c,$(ADMSTANDARD) space postinstall)
+CSWapache2c_admfiles = depend prototype postinstall space
+DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))
 # Apache prefork MPM (default)
-DISTFILES += $(call admfiles,CSWap2prefork,$(ADMFULLSTD))
+CSWap2prefork_admfiles = depend prototype preinstall postinstall
+CSWap2prefork_admfiles = preremove postremove space
+DISTFILES += $(call admfiles,CSWap2prefork,$(CSWap2prefork_admfiles))
 # Apache mod_suexec
-DISTFILES += $(call admfiles,CSWap2suexec,$(ADMADDON))
+CSWap2suexec_admfiles = depend prototype postinstall preremove
+DISTFILES += $(call admfiles,CSWap2suexec,$(CSWap2suexec_admfiles))
 # Apache manual
-DISTFILES += $(call admfiles,CSWapache2-manual,$(ADMSTANDARD))
-# Apache devel support
-DISTFILES += $(call admfiles,CSWapache2-devel,$(ADMSTANDARD))
+DISTFILES += $(call admfiles,CSWapache2-manual,depend prototype)
 # Configuration templates
 DISTFILES += cswapache2 httpd.conf.tmpl httpd-ssl.conf.tmpl
+DISTFILES += update20to22
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
@@ -38,28 +39,19 @@ CONFIGURE_ARGS += --with-suexec-gidmin=100
 CONFIGURE_ARGS += --with-suexec-logfile=$(prefix)/apache2/var/log/suexec_log
 CONFIGURE_ARGS += --with-suexec-bin=$(prefix)/apache2/sbin/suexec
 
+# Fixup target variables
+APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
+LIBTOOL_LADIR = $(APACHE_ROOT)/lib
+STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
+
 include ../category.mk
 include files/rules.mk
 
-LIBS += -lnsl
-export LIBS
-
-STRIP_DIRS  = $(DESTDIR)$(prefix)/apache2/sbin
-STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
-
-post-install: install-httpd-conf fix-libtool
-
-AP2ROOT = $(prefix)/apache2
-
-install-httpd-conf:
+post-install:
 	@install -d $(DESTDIR)/etc/init.d
 	@install $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
-	-@install $(WORKDIR)/httpd.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc
-	-@install $(WORKDIR)/httpd-ssl.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc/extra
-	@$(MAKECOOKIE)
-
-fix-libtool:
-	@sed -i -e s,/export/home/comand/bin/sed,$(bindir)/gsed,g \
-		$(DESTDIR)$(prefix)/apache2/share/build/libtool
+	@install $(WORKDIR)/httpd.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc
+	@install $(WORKDIR)/httpd-ssl.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc/extra
+	@install $(WORKDIR)/update20to22 $(DESTDIR)$(AP2ROOT)/sbin
 	@$(MAKECOOKIE)
 

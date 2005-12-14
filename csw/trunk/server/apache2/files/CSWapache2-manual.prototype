@@ -728,3 +728,6 @@ f none /opt/csw/apache2/share/manual/vhosts/name-based.html.fr=$basedir/opt/csw/
 f none /opt/csw/apache2/share/manual/vhosts/name-based.html.ja.euc-jp=$basedir/opt/csw/apache2/share/manual/vhosts/name-based.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/name-based.html.ko.euc-kr=$basedir/opt/csw/apache2/share/manual/vhosts/name-based.html.ko.euc-kr 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/name-based.html=$basedir/opt/csw/apache2/share/manual/vhosts/name-based.html 0644 root bin
+i copyright=CSWapache2-manual.copyright
+i depend=CSWapache2-manual.depend
+i pkginfo=CSWapache2-manual.pkginfo

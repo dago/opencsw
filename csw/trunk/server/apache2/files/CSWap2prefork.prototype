@@ -1,3 +1,6 @@
 d none /opt/csw/apache2 ? ? ?
 d none /opt/csw/apache2/sbin ? ? ?
 f none /opt/csw/apache2/sbin/httpd.prefork=$basedir/opt/csw/apache2/sbin/httpd 0755 root bin
+i copyright=CSWap2prefork.copyright
+i depend=CSWap2prefork.depend
+i pkginfo=CSWap2prefork.pkginfo

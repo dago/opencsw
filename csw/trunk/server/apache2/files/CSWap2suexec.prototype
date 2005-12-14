@@ -6,3 +6,6 @@ d none /opt/csw/apache2/man/man8 ? ? ?
 f none /opt/csw/apache2/man/man8/suexec.8=$basedir/opt/csw/apache2/man/man8/suexec.8 0644 root bin
 d none /opt/csw/apache2/sbin ? ? ?
 f none /opt/csw/apache2/sbin/suexec=$basedir/opt/csw/apache2/sbin/suexec 4755 root bin
+i copyright=CSWap2suexec.copyright
+i depend=CSWap2suexec.depend
+i pkginfo=CSWap2suexec.pkginfo

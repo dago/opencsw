@@ -1,5 +1,5 @@
-%var            bitname ap22_suexec
-%var            pkgname CSWap22suexec
-%include        url file://%{GARDIR}/pkglib/csw_standard.gspec
+%var            bitname ap2_suexec
+%var            pkgname CSWap2suexec
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
 %var            desc Apache 2.2 suEXEC support
 %copyright      url file://%{WORKSRC}/LICENSE
