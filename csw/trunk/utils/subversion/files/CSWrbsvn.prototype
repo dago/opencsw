@@ -38,7 +38,6 @@ f none /opt/csw/lib/ruby/site_ruby/1.8/svn/repos.rb=$basedir/opt/csw/lib/ruby/si
 f none /opt/csw/lib/ruby/site_ruby/1.8/svn/util.rb=$basedir/opt/csw/lib/ruby/site_ruby/1.8/svn/util.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/svn/wc.rb=$basedir/opt/csw/lib/ruby/site_ruby/1.8/svn/wc.rb 0644 root bin
 d none /opt/csw/lib/svn ? ? ?
-f none /opt/csw/lib/svn/libsvn_swig_ruby-1.a=$basedir/opt/csw/lib/svn/libsvn_swig_ruby-1.a 0644 root bin
 f none /opt/csw/lib/svn/libsvn_swig_ruby-1.la=$basedir/opt/csw/lib/svn/libsvn_swig_ruby-1.la 0755 root bin
 f none /opt/csw/lib/svn/libsvn_swig_ruby-1.so.0.0.0=$basedir/opt/csw/lib/svn/libsvn_swig_ruby-1.so.0.0.0 0755 root bin
 s none /opt/csw/lib/svn/libsvn_swig_ruby-1.so.0=libsvn_swig_ruby-1.so.0.0.0 root bin

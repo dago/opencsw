@@ -1,15 +1,8 @@
-I CSWap2-svn ap2_subversion - subversion module for apache 2.0
+I CSWap2-svn
 P CSWcommon common - common files and dirs for CSW packages
 P CSWap2prefork ap2_prefork - Apache 2.0 prefork MPM
 P CSWapache2 apache2 - Apache 2.0 web server
-P CSWapache2rt apache2rt - Apache 2.0 runtime libraries
-P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
-P CSWexpat expat - XML Parser Toolkit
-P CSWgdbm gdbm - GNU dbm
 P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
-P CSWlibnet libnet - the libnet packet construction library
-P CSWossl openssl - The Open Source toolkit for SSL and TLS.
-P CSWsasl sasl - Simple Authentication and Security Layer
-P CSWsvn subversion - Version control rethought
+P CSWsvn subversion - Version Control Rethought
 P CSWzlib zlib - Zlib Data Compression Library

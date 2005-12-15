@@ -24,18 +24,18 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 # SVN
-DISTFILES += CSWsvn.gspec CSWsvn.prototype CSWsvn.depend
+DISTFILES += $(call admfiles,CSWsvn,depend prototype)
 # SVN Apache Module
-DISTFILES += CSWap2svn.gspec CSWap2svn.prototype CSWap2svn.depend
-DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
+CSWap2svn_admfiles = depend prototype postinstall preremove
+DISTFILES += $(call admfiles,CSWap2svn,$(CSWap2svn_admfiles))
 # SVN Perl Binding
-DISTFILES += CSWpmsvn.gspec CSWpmsvn.prototype CSWpmsvn.depend
+DISTFILES += $(call admfiles,CSWpmsvn,depend prototype)
 # SVN Python Binding
-DISTFILES += CSWpysvn.gspec CSWpysvn.prototype CSWpysvn.depend
+DISTFILES += $(call admfiles,CSWpysvn,depend prototype)
 # SVN Ruby Binding
-DISTFILES += CSWrbsvn.gspec CSWrbsvn.prototype CSWrbsvn.depend
+DISTFILES += $(call admfiles,CSWrbsvn,depend prototype)
 # SVN Java Binding
-DISTFILES += CSWjavasvn.gspec CSWjavasvn.prototype CSWjavasvn.depend
+DISTFILES += $(call admfiles,CSWjavasvn,depend prototype)
 
 # Fix: Use 'gdiff' instead of 'diff'
 PATCHFILES += gdiff.diff
@@ -54,11 +54,14 @@ NODIRPATHS = --libdir --libexecdir
 SVNLIB = $(prefix)/lib/svn
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
-CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-1-config
-CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-1-config
+CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
+CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --with-jdk=/usr/jdk/j2sdk1.4.2_02/j2se
+CONFIGURE_ARGS += --enable-javahl
+CONFIGURE_ARGS += --with-neon=$(prefix)
+CONFIGURE_ARGS += --with-zlib
 #CONFIGURE_ARGS += --with-junit=../junit3.8.1/junit.jar
 
 TEST_TARGET = check

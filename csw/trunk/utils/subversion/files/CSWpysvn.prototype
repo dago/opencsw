@@ -56,7 +56,6 @@ f none /opt/csw/lib/python2.3/svn/repos.pyc=$basedir/opt/csw/lib/python2.3/svn/r
 f none /opt/csw/lib/python2.3/svn/wc.py=$basedir/opt/csw/lib/python2.3/svn/wc.py 0644 root bin
 f none /opt/csw/lib/python2.3/svn/wc.pyc=$basedir/opt/csw/lib/python2.3/svn/wc.pyc 0644 root bin
 d none /opt/csw/lib/svn ? ? ?
-f none /opt/csw/lib/svn/libsvn_swig_py-1.a=$basedir/opt/csw/lib/svn/libsvn_swig_py-1.a 0644 root bin
 f none /opt/csw/lib/svn/libsvn_swig_py-1.la=$basedir/opt/csw/lib/svn/libsvn_swig_py-1.la 0755 root bin
 f none /opt/csw/lib/svn/libsvn_swig_py-1.so.0.0.0=$basedir/opt/csw/lib/svn/libsvn_swig_py-1.so.0.0.0 0755 root bin
 s none /opt/csw/lib/svn/libsvn_swig_py-1.so.0=libsvn_swig_py-1.so.0.0.0
