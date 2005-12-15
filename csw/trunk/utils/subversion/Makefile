@@ -46,8 +46,8 @@ PATCHFILES += binding.diff
 # Fix: Ensure javahl links against libCrun and libCstd
 PATCHFILES += javahl.diff
 
-#DEPENDS = server/apache2 devel/swig
-#DEPENDS = lib/neon
+DEPENDS = server/apache2
+DEPENDS = lib/neon
 
 NODIRPATHS = --libdir --libexecdir
 
