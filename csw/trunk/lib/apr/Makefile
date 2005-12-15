@@ -1,5 +1,5 @@
 GARNAME = apr
-GARVERSION = 1.0.0
+GARVERSION = 1.2.2
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime
@@ -9,13 +9,31 @@ define BLURB
   interface to underlying platform-specific implementations.
 endef
 
-MASTER_SITES = http://apache.gnusoft.net/apr/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://apache.mirrored.ca/apr/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWapr,depend prototype)
+DISTFILES += config.layout
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-threads --enable-other-child
-
-# APR Tests are very time consuming...
-ENABLE_TEST = 0
+CONFIGURE_ARGS  = --prefix=$(prefix)
+CONFIGURE_ARGS += --enable-layout=csw
+CONFIGURE_ARGS += --enable-threads
+CONFIGURE_ARGS += --enable-other-child
 
 include ../category.mk
+
+pre-configure:
+	@sed -e s,INSTALL_PREFIX,$(prefix),g \
+		$(WORKDIR)/config.layout > $(WORKSRC)/config.layout
+	@$(MAKECOOKIE)
+
+post-install: create-link fix-libtool
+
+create-link:
+	@( cd $(DESTDIR)$(bindir) ; ln -s apr-1-config apr-config )
+	@$(MAKECOOKIE)
+
+fix-libtool:
+	@sed -i -e s,/export/home/comand/bin/sed,$(bindir)/gsed,g \
+		$(DESTDIR)$(prefix)/apache2/share/build/libtool
+	@$(MAKECOOKIE)
+

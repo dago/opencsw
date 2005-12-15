@@ -1,0 +1,4 @@
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libaprutil.so.0.2.2=$basedir/opt/csw/lib/libaprutil.so.0.2.2 0755 root bin
+s none /opt/csw/lib/libaprutil.so.0=libaprutil.so.0.2.2 root bin
+s none /opt/csw/lib/libaprutil.so=libaprutil.so.0.2.2 root bin
