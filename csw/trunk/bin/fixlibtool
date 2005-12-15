@@ -1,0 +1,15 @@
+#!/bin/ksh
+#
+# $Id:$
+# $URL:$
+#
+# fixlibtool - remove build-only settings from libtool .la files
+#
+
+# Remove references to temporary directories
+/bin/perl -i.bak -plne '
+    if (/^dependency_libs/) {
+        s# -[ILR]\s*/tmp\S+##g;
+        s# -[ILR]\s*/\S+/ # #g;
+    }
+    ' $@
