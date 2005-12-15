@@ -1,8 +1,8 @@
 GARNAME = db
-GARVERSION = 4.3.29
+GARVERSION = 4.4.16
 CATEGORIES = lib
 
-DESCRIPTION = BerkeleyDB 4.3 libraries and utilities
+DESCRIPTION = embedded database libraries and utilities
 define BLURB
   Berkeley DB (libdb) is a programmatic toolkit that provides embedded database
   support for both traditional and client/server applications. It includes
@@ -15,26 +15,25 @@ endef
 
 MASTER_SITES = http://downloads.sleepycat.com/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWbdb43,depend prototype)
-DISTFILES += $(call admfiles,CSWbdb43-devel,depend prototype)
-DISTFILES += $(call admfiles,CSWbdb43-doc,depend prototype)
+DISTFILES += $(call admfiles,CSWbdb44,depend prototype)
+DISTFILES += $(call admfiles,CSWbdb44-devel,depend prototype)
+DISTFILES += $(call admfiles,CSWbdb44-doc,depend prototype)
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 CONFIGURE_SCRIPTS = dist
 
-CONFIGURE_ARGS  = --prefix $(prefix)/bdb43
+CONFIGURE_ARGS  = --prefix=$(prefix)/bdb44
 CONFIGURE_ARGS += --disable-cryptography
 CONFIGURE_ARGS += --enable-compat185
+CONFIGURE_ARGS += --enable-o_direct
 CONFIGURE_ARGS += --enable-rpc
 CONFIGURE_ARGS += --enable-cxx
 CONFIGURE_ARGS += --enable-java
 CONFIGURE_ARGS += --enable-tcl
 CONFIGURE_ARGS += --with-tcl=$(libdir)
-CONFIGURE_ARGS += --enable-o_direct
 
-LIBTOOL_LADIR   = $(DESTDIR)$(prefix)/bdb43/lib
-STRIP_DIRS     += $(DESTDIR)$(prefix)/bdb43/bin
+LIBTOOL_LADIR   = $(DESTDIR)$(prefix)/bdb44/lib
 
 # bdb tests are time consuming
 ENABLE_TEST = 0
