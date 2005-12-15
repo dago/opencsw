@@ -9,8 +9,8 @@
 use strict;
 use File::Basename;
 use Getopt::Long qw/:config no_ignore_case gnu_getopt/;
-use File::Spec::Functions qw/canonpath rel2abs splitdir catfile/;
-use Data::Dumper;
+use File::Spec::Functions qw/canonpath catfile/;
+use File::Temp qw/tempfile/;
 
 my $self = basename $0;
 my $VERSION = "1.0";
@@ -31,12 +31,8 @@ GetOptions(
     },
 ) or usage();
 
-# Compile package patterns
-{
-my @nodep_re;
-foreach my $pat (@nodep) { push @nodep_re, qr!$pat! }
-@nodep = @nodep_re;
-}
+# Join package patterns
+my $nodep = join "|", @nodep;
 
 sub usage {
     print STDERR "Usage: $self [--no/script] [--nodep <pkg>] [--root <path>] < path_list > depend\n";
@@ -64,10 +60,22 @@ msg "processing path list...\n";
 # Analyze the incoming path list...
 my %depfiles;
 foreach (<>) {
-    chomp; my ($filename) = split /=/, $_;
-    local $_ = $rootdir ? 
-        canonpath(catfile($rootdir, $filename)) : $filename;
+    chomp;
 
+    # Prepend the root directory, if supplied
+    my ($filedst,$filesrc) = split /=/, $_;
+    $filesrc = $filedst unless $filesrc;
+    if ($rootdir) {
+        if ($filesrc =~ /^\$basedir/) {
+            $filesrc =~ s/^\$basedir/$rootdir/;
+        }
+        else {
+            $filesrc = catfile($rootdir, $filesrc);
+        }
+        $filesrc = canonpath($filesrc);
+    }
+
+    local $_ = $filesrc;
     next unless -f;
 
     my ($ftype) = `/bin/file -h '$_'`;
@@ -86,92 +94,40 @@ foreach (<>) {
 
     }
     elsif ($ftype =~ /dynamically linked/) {
+        msg "$_\n";
 
-        msg "$_ ...  dynamically linked... ";
-
-        # Extract dynamic library dependencies...
-        my @ldinfo = `/usr/bin/ldd $_`;
-        my $depcount;
-        foreach my $libspec (@ldinfo) {
-            next if $libspec =~ /not found/;
-
-            chomp $libspec; my @F = reverse split /\s+/, $libspec;
-            $depfiles{$F[0]}++;
-            $depcount++;
-        }
-        if ($depcount) {
-            msg "$depcount " . ($depcount > 1 ? "entries" : "entry") . "\n";
-        }
-        else {
-            msg "no entries" . "\n";
+        foreach (`dump -Lv $_`) {
+            next unless /NEEDED/; chomp;
+            my (undef, undef, $lib) = split;
+            $depfiles{$lib}++ if $lib;
         }
     }
 }
+exit 0 unless scalar keys %depfiles;
+
+# Write dependency paths out to a temp file
+my ($deptmp_fh, $deptmp) = tempfile;
+print $deptmp_fh $_, "\n" foreach (sort keys %depfiles);
 
 msg "searching package database for dependencies...\n";
 
 # Look for all files that had dependencies in the system install
 # install database, and store the package names...
-my %deppkg;
-foreach my $depfile (sort keys %depfiles) {
+$nodep = "-v '$nodep'" if $nodep;
+my $query;
+   $query .= $nodep ? "egrep $nodep " : "cat ";
+   $query .= "/var/sadm/install/contents ";
+   $query .= "| fgrep -f $deptmp ";
+   $query .= "| gawk '{print \$NF}' ";
+   $query .= "| sort | uniq";
 
-    if (-l $depfile) {
-        # Read through link, resolve absolute path...
-        $depfile = rel2abs(readlink($depfile), dirname($depfile));
+chomp(my @deppkg = `$query`);
 
-        # This is a bit convoluted, but canonpath can't
-        # resolve '/a/dir/../../b' to '/b'.  This mainly affects
-        # /usr/platform links.
-        while ($depfile =~ /\.\./) {
-            my @path = splitdir(dirname($depfile));
-            for (my $i = 0; $i < $#path; $i++) {
-                if ($path[$i] eq '..') {
-                    # Delete '..' and previous path element.
-                    splice @path, $i - 1, 2, ();
-                    last;
-                }
-            }
-            $depfile = catfile(@path, basename $depfile);
-        }
-    }
-
-    # Fix up library paths
-    $depfile =~ s#lib/sparcv[\w\+]+/#lib/#;
-    $depfile =~ s#lib/pentium/#lib/#;
-    $depfile =~ s#lib/i\d{2,3}/#lib/#;
-
-    msg sprintf("    %-55s :", $depfile);
-
-    # Let pkgchk tell us which packages have marks on this file.
-    my $in_data = 0;
-    foreach (`pkgchk -l -p $depfile 2>/dev/null`) {
-        if (/Referenced by/i)  { $in_data = 1 ; next }
-        if (/Current status/i) { last }
-
-        if ($in_data) {
-            foreach my $pkg (split) {
-                chomp $pkg;
-                $deppkg{$pkg}++;
-                msg " $pkg";
-            }
-        }
-    }
-    msg "\n";
+foreach (sort @deppkg) {
+    my ($desc) = `pkginfo $_` or next;
+    chomp $desc;
+    my ($class, $pkginst, $desc) = split /\s+/, $desc, 3;
+    print "P $pkginst $desc\n";
 }
 
-# For each of the package names found in the last phase, look up
-# the necessary information to build a depend entry...
-foreach my $pkgname (sort keys %deppkg) {
-    if (exclude($pkgname)) {
-        msg "Skipping dependency $pkgname\n";
-        next;
-    }
-
-    my ($info) = `pkginfo $pkgname`; chomp $info;
-
-    # Get rid of the category, normalize space
-    my @infofields = split /\s+/, $info;
-    $info = join " ", @infofields[1..$#infofields];
-
-    print "P $info\n";
-}
+exit 0;
