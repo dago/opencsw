@@ -523,8 +523,8 @@ sub transfer_package {
             "Failed to transfer package $pkgname to $tmppkg");
 
     if ($config{compress}) {
-        print STDERR "  exec( gzip -f $tmppkg )\n";
-        system("gzip -f $tmppkg")
+        print STDERR "  exec( gzip -9 -f $tmppkg )\n";
+        system("gzip -9 -f $tmppkg")
             and error($exit{prog_exec_error},
                 "Failed to compress package $tmppkg");
 
