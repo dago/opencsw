@@ -1,3 +1,9 @@
-d3b91bebca61db9d92d4f234a3a1aa1f  download/rapidsvn-0.8.0.tar.gz
-93ca92b7af332a5e95586c0ff5bb206a  download/CSWrapidsvn.gspec
+45f608d932e8b152b49ed3ad77b42226  download/rapidsvn-0.9.0.tar.gz
+bcd2b51745320a3018ef7aa8add971a0  download/CSWrapidsvn.gspec
+554c43f3c3086a8229bd4021be747aed  download/CSWrapidsvn.depend
+6c20f3e4c327ff4e710944c436d28fe3  download/CSWrapidsvn.prototype
+16ce54f60a234ae0bec5f2eebf97dcf1  download/CSWsvncpp.gspec
+b2d74eb6645f9d95b2fd0b9506efb91b  download/CSWsvncpp.depend
+fa261f92364cd9431a55465016af5439  download/CSWsvncpp.prototype
 b6e350166d0ce8cec55aecc7a80ffb50  download/flags.diff
+a899ac7367f95c7684e188d222e6a620  download/manpage.diff
