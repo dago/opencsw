@@ -1,31 +1,19 @@
-GARNAME = cvs
-GARVERSION = 1.12.5
+GARNAME = xrestop
+GARVERSION = 0.3
 CATEGORIES = utils
 
-DESCRIPTION = The Concurrent Versioning System.
+DESCRIPTION = 'top' like staticstics for X11 server side resource usage
 define BLURB
-  CVS is a version control system, which allows you to keep old
-  versions of files (usually source code), keep a log of who, when,
-  and why changes occurred, etc., like RCS or SCCS. Unlike the
-  simpler systems, CVS does not just operate on one file at a time
-  or one directory at a time, but operates on hierarchical collections
-  of directories consisting of version controlled files. CVS helps
-  to manage releases and to control the concurrent editing of source
-  files among multiple authors. CVS allows triggers to enable/log/control
-  various operations and works well over a wide area network.
+  Xrestop uses the X-Resource extension to provide 'top' like statistics of
+  each connected X11 client's server side resource usage. It is intended as a
+  developer tool to aid more efficient server resource usage and debug server
+  side leakage.  It should work with any server supporting the X-Resource
+  extension, including the freedesktop.org server and XFree86 4.3+. "xdpyinfo
+  | grep Resource" should tell you if your server supports this extension. 
 endef
 
-# Master site won't work for cvs, as the download mechanism is a
-# CGI script that uses a database ID to select the file rather than
-# the file name.  Download a copy manually.
-
-DISTFILES = $(DISTNAME).tar.bz2
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-# Test suite won't run as root!
-ENABLE_TEST = 0
+MASTER_SITES = http://www.freedesktop.org/software/xrestop/
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES   += $(call admfiles,CSWxrestop,)
 
 include ../category.mk
