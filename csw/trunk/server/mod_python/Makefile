@@ -18,6 +18,8 @@ DISTFILES += CSWap2modpython.postinstall
 DISTFILES += CSWap2modpython.preremove
 DISTFILES += CSWap2modpython.space
 
+#DEPENDS += lang/python
+
 # Source hard codes path to flex
 PATCHFILES += lex.diff
 
