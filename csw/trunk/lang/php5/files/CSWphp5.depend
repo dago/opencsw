@@ -1,5 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
+P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
 P CSWiconv libiconv - GNU iconv library
 P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
 P CSWlibmm libmm - Shared Memory Allocation abstraction library
@@ -7,5 +7,3 @@ P CSWlibnet libnet - the libnet packet construction library
 P CSWlibxml2 libxml2 - XML Parser Library
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWzlib zlib - Zlib Data Compression Library
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm

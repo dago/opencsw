@@ -1,8 +1,3 @@
 P CSWcommon common - common files and dirs for CSW packages
 P CSWphp5 php5 - PHP Hypertext Preprocessor 5
 P CSWaspell aspell - The GNU spell checker (core package only, no dictionary)
-P CSWggettext ggettext - GNU gettext
-P CSWiconv libiconv - GNU iconv library
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibC Sun Workshop Compilers Bundled libC
-P SUNWlibms Sun WorkShop Bundled shared libm

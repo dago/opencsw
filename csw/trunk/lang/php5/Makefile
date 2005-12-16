@@ -45,7 +45,7 @@ include files/extensions.mk
 PATCHDIR = $(WORKDIR)
 PATCHDIRLEVEL = 0
 
-# Fix up configure script
+# Disable apache module activation
 PATCHFILES += config.diff
 
 # Fix ssl paths for uw-imap c-client
@@ -53,6 +53,9 @@ PATCHFILES += imap-ssl.diff
 
 # Don't hardcode $(CC)
 PATCHFILES += imap-cc.diff
+
+# Respect my CFLAGS
+PATCHFILES += imap-cflags.diff
 
 #DEPENDS += server/apache2 server/mysql4
 
@@ -72,6 +75,11 @@ INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
 
 EXTRA_LIB = $(prefix)/bdb43/lib
 EXTRA_INC = $(prefix)/bdb43/include
+
+PHP5ROOT    = $(DESTDIR)$(prefix)/php5
+STRIP_DIRS += $(PHP5ROOT)/lib/php/extensions/*/
+STRIP_DIRS += $(PHP5ROOT)/bin
+STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
 
 # Build the imap client library first
 pre-configure:

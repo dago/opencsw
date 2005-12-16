@@ -1,7 +1,7 @@
-%var            bitname php5_fam
-%var            pkgname CSWphp5fam
+%var            bitname php5_pdoodbc
+%var            pkgname CSWphp5pdoodbc
 %include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
 %postinstall    url file://%{WORKDIR}/ext_enable.sh
 %postremove     url file://%{WORKDIR}/ext_disable.sh
-%var            desc PHP 5 - FAM Extension
+%var            desc PHP 5 - unixODBC PDO Extension
 %copyright      url file://%{WORKSRC}/LICENSE
