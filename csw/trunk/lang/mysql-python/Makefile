@@ -8,8 +8,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)/$(call TOLOWER,$(GARNAME))/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWpymysql.gspec CSWpymysql.depend
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES   += $(call admfiles,CSWpymysql,depend prototype)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = pymodule
