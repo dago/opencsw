@@ -28,6 +28,8 @@ DISTFILES += $(call admfiles,CSWapache2-manual,depend prototype)
 DISTFILES += cswapache2 httpd.conf.tmpl httpd-ssl.conf.tmpl
 DISTFILES += update20to22
 
+DEPENDS += lib/apr-util
+
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --enable-suexec
@@ -50,8 +52,8 @@ include files/rules.mk
 post-install:
 	@install -d $(DESTDIR)/etc/init.d
 	@install $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
-	@install $(WORKDIR)/httpd.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc
-	@install $(WORKDIR)/httpd-ssl.conf.tmpl $(DESTDIR)$(AP2ROOT)/etc/extra
-	@install $(WORKDIR)/update20to22 $(DESTDIR)$(AP2ROOT)/sbin
+	@install $(WORKDIR)/httpd.conf.tmpl $(APACHE_ROOT)/etc
+	@install $(WORKDIR)/httpd-ssl.conf.tmpl $(APACHE_ROOT)/etc/extra
+	@install $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 	@$(MAKECOOKIE)
 

@@ -8,7 +8,7 @@ define BLURB
   best around in terms of functionality, efficiency, security and speed.
 endef
 
-include ../apache2-2.2.0/files/config.mk
+include ../apache2/files/config.mk
 
 # Apache worker MPM
 DISTFILES += CSWap2worker.gspec CSWap2worker.prototype CSWap2worker.depend
@@ -16,11 +16,11 @@ DISTFILES += CSWap2worker.preinstall CSWap2worker.postinstall
 DISTFILES += CSWap2worker.preremove CSWap2worker.postremove
 DISTFILES += CSWap2worker.space 
 
+DEPENDS   += server/apache2
+
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=worker
 
 include ../category.mk
-include ../apache2-2.2.0/files/rules.mk
+include ../apache2/files/rules.mk
 
-LIBS += -lnsl
-export LIBS
