@@ -1,5 +1,6 @@
 GARNAME = libapreq2
-GARVERSION = 2.06-dev
+GARVERSION = 2.06
+DISTVERSION = $(GARVERSION)-dev
 CATEGORIES = cpan
 AUTHOR = JOESUF
 
@@ -13,6 +14,10 @@ endef
 
 DISTFILES = $(call admfiles,CSWpmapreq2,depend prototype)
 
+DISTNAME = $(GARNAME)-$(DISTVERSION)
+WORKSRC  = $(WORKDIR)/$(DISTNAME)
+
+MODDIST  = $(DISTNAME).tar.gz
 DEPENDS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
 DEPENDS += cpan/mod_perl2
 
@@ -26,6 +31,12 @@ CONFIGURE_ARGS += --with-expat=$(prefix)
 # Must be installed to test
 ENABLE_TEST = 0
 
+LIBTOOL_LADIR = $(DESTDIR)$(libdir)
+STRIP_DIRS   += $(DESTDIR)$(prefix)/apache2/libexec
+
 include ../category.mk
+
+# Remove this when it's not dev
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_dev
 
 pre-package: test

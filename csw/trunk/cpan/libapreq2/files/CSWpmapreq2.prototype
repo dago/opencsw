@@ -1,27 +1,26 @@
 d none /opt/csw/apache2 ? ? ?
-d none /opt/csw/apache2/bin ? ? ?
-f none /opt/csw/apache2/bin/apreq2-config=/tmp/a/opt/csw/apache2/bin/apreq2-config 0755 root bin
+d none /opt/csw/apache2/libexec ? ? ?
+f none /opt/csw/apache2/libexec/mod_apreq2.so=$basedir/opt/csw/apache2/libexec/mod_apreq2.so 0755 root bin
 d none /opt/csw/apache2/include ? ? ?
 d none /opt/csw/apache2/include/apreq2 0755 root bin
-f none /opt/csw/apache2/include/apreq2/apreq.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_cookie.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_cookie.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_error.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_error.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_module.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_module.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_module_apache2.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_module_apache2.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_param.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_param.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_parser.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_parser.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_util.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_util.h 0644 root bin
-f none /opt/csw/apache2/include/apreq2/apreq_version.h=/tmp/a/opt/csw/apache2/include/apreq2/apreq_version.h 0644 root bin
-d none /opt/csw/apache2/lib ? ? ?
-f none /opt/csw/apache2/lib/libapreq2.a=/tmp/a/opt/csw/apache2/lib/libapreq2.a 0644 root bin
-f none /opt/csw/apache2/lib/libapreq2.la=/tmp/a/opt/csw/apache2/lib/libapreq2.la 0755 root bin
-f none /opt/csw/apache2/lib/libapreq2.so.3.1.3=/tmp/a/opt/csw/apache2/lib/libapreq2.so.3.1.3 0755 root bin
-s none /opt/csw/apache2/lib/libapreq2.so.3=libapreq2.so.3.1.3
-s none /opt/csw/apache2/lib/libapreq2.so=libapreq2.so.3.1.3
-d none /opt/csw/apache2/libexec ? ? ?
-f none /opt/csw/apache2/libexec/mod_apreq2.a=/tmp/a/opt/csw/apache2/libexec/mod_apreq2.a 0644 root bin
-f none /opt/csw/apache2/libexec/mod_apreq2.la=/tmp/a/opt/csw/apache2/libexec/mod_apreq2.la 0755 root bin
-f none /opt/csw/apache2/libexec/mod_apreq2.so=/tmp/a/opt/csw/apache2/libexec/mod_apreq2.so 0755 root bin
+f none /opt/csw/apache2/include/apreq2/apreq_module_apache2.h=$basedir/opt/csw/apache2/include/apreq2/apreq_module_apache2.h 0644 root bin
+d none /opt/csw/bin ? ? ?
+f none /opt/csw/bin/apreq2-config=$basedir/opt/csw/bin/apreq2-config 0755 root bin
+d none /opt/csw/include ? ? ?
+d none /opt/csw/include/apreq2 0755 root bin
+f none /opt/csw/include/apreq2/apreq.h=$basedir/opt/csw/include/apreq2/apreq.h 0644 root bin
+f none /opt/csw/include/apreq2/apreq_cookie.h=$basedir/opt/csw/include/apreq2/apreq_cookie.h 0644 root bin
+f none /opt/csw/include/apreq2/apreq_error.h=$basedir/opt/csw/include/apreq2/apreq_error.h 0644 root bin
+f none /opt/csw/include/apreq2/apreq_module.h=$basedir/opt/csw/include/apreq2/apreq_module.h 0644 root bin
+f none /opt/csw/include/apreq2/apreq_param.h=$basedir/opt/csw/include/apreq2/apreq_param.h 0644 root bin
+f none /opt/csw/include/apreq2/apreq_parser.h=$basedir/opt/csw/include/apreq2/apreq_parser.h 0644 root bin
+f none /opt/csw/include/apreq2/apreq_util.h=$basedir/opt/csw/include/apreq2/apreq_util.h 0644 root bin
+f none /opt/csw/include/apreq2/apreq_version.h=$basedir/opt/csw/include/apreq2/apreq_version.h 0644 root bin
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libapreq2.la=$basedir/opt/csw/lib/libapreq2.la 0755 root bin
+f none /opt/csw/lib/libapreq2.so.3.1.3=$basedir/opt/csw/lib/libapreq2.so.3.1.3 0755 root bin
+s none /opt/csw/lib/libapreq2.so.3=libapreq2.so.3.1.3
+s none /opt/csw/lib/libapreq2.so=libapreq2.so.3.1.3
 d none /opt/csw/lib ? ? ?
 d none /opt/csw/lib/perl ? ? ?
 d none /opt/csw/lib/perl/csw ? ? ?
@@ -29,6 +28,7 @@ d none /opt/csw/lib/perl/csw/APR 0755 root bin
 f none /opt/csw/lib/perl/csw/APR/DummyVersions.pm=$basedir/opt/csw/lib/perl/csw/APR/DummyVersions.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request.pm=$basedir/opt/csw/lib/perl/csw/APR/Request.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request.pod=$basedir/opt/csw/lib/perl/csw/APR/Request.pod 0444 root bin
+d none /opt/csw/lib/perl/csw/APR/Request 0755 root bin
 f none /opt/csw/lib/perl/csw/APR/Request/Apache2.pm=$basedir/opt/csw/lib/perl/csw/APR/Request/Apache2.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request/Apache2.pod=$basedir/opt/csw/lib/perl/csw/APR/Request/Apache2.pod 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request/CGI.pm=$basedir/opt/csw/lib/perl/csw/APR/Request/CGI.pm 0444 root bin
@@ -59,12 +59,16 @@ f none /opt/csw/lib/perl/csw/auto/APR/Request/CGI/CGI.so=$basedir/opt/csw/lib/pe
 d none /opt/csw/lib/perl/csw/auto/APR/Request/Cookie 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Cookie/Cookie.bs=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Cookie/Cookie.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Cookie/Cookie.so=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Cookie/Cookie.so 0555 root bin
+d none /opt/csw/lib/perl/csw/auto/APR/Request/Error 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Error/Error.bs=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Error/Error.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Error/Error.so=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Error/Error.so 0555 root bin
+d none /opt/csw/lib/perl/csw/auto/APR/Request/Hook 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Hook/Hook.bs=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Hook/Hook.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Hook/Hook.so=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Hook/Hook.so 0555 root bin
+d none /opt/csw/lib/perl/csw/auto/APR/Request/Param 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Param/Param.bs=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Param/Param.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Param/Param.so=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Param/Param.so 0555 root bin
+d none /opt/csw/lib/perl/csw/auto/APR/Request/Parser 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Parser/Parser.bs=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Parser/Parser.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Parser/Parser.so=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Parser/Parser.so 0555 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Request.bs=$basedir/opt/csw/lib/perl/csw/auto/APR/Request/Request.bs 0444 root bin
