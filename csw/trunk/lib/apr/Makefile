@@ -34,6 +34,6 @@ create-link:
 
 fix-libtool:
 	@sed -i -e s,/export/home/comand/bin/sed,$(bindir)/gsed,g \
-		$(DESTDIR)$(prefix)/apache2/share/build/libtool
+		$(DESTDIR)$(datadir)/apr/build-1/libtool
 	@$(MAKECOOKIE)
 

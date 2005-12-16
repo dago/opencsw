@@ -35,11 +35,15 @@ DEPENDS    += lib/bdb43
 endif
 
 DEPENDS += lib/apr
+#DEPENDS += lib/expat
+#DEPENDS += lib/iconv
+#DEPENDS += server/mysql
+#DEPENDS += server/pgsql
 #DEPENDS += lib/openldap
 
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --enable-layout=csw
-CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
+CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-dbm=db$(BDB_VERSION)
 CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb$(BDB_VERSION)
