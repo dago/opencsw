@@ -1,8 +1,6 @@
+I CSWperlmods
+I CSWpmdigest
+I CSWpmi18nlangtags
 P CSWcommon common - common files and dirs for CSW packages
-P CSWbdb3 berkeleydb3 - file based pseudo-database library
+P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
 P CSWgdbm gdbm - GNU dbm
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm
-I CSWperlmods common - THIS IS A FAKE INCOMPATIBILITY
-I CSWpmdigest common - THIS IS A FAKE INCOMPATIBILITY
-I CSWpmi18nlangtags pm_i18nlangtags - functions for dealing with RFC3066-style lang tags

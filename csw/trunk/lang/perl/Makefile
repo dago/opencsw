@@ -25,6 +25,8 @@ CONFIGURE_SCRIPTS = perl
 # Compatable with all prior patch revs
 INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6
 
+PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.3 -ldl -lm -lpthread -lc
+
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
 CONFIGURE_ARGS += -Dcc=$(CC)
@@ -57,6 +59,11 @@ CONFIGURE_ARGS += -Dusethreads
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
+CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
+CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/bdb43/lib /opt/csw/lib"
+
+EXTRA_LIB += $(prefix)/bdb43/lib
+EXTRA_INC += $(prefix)/bdb43/include
 
 # Tests take a long time
 ENABLE_TEST = 0
