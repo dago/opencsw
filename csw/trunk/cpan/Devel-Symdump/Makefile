@@ -8,6 +8,6 @@ define BLURB
   This little package serves to access the symbol table of perl.
 endef
 
-DISTFILES += CSWpmdevelsymdump.gspec
+DISTFILES += $(call admfiles,CSWpmdevelsymdump,depend prototype)
 
 include ../category.mk

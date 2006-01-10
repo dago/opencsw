@@ -11,6 +11,6 @@ define BLURB
   arguments. The string is formatted for easy reading.
 endef
 
-DISTFILES += CSWpmdatadump.gspec
+DISTFILES += $(call admfiles,CSWpmdatadump,depend prototype)
 
 include ../category.mk

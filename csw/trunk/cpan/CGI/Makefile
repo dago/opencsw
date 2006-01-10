@@ -17,6 +17,6 @@ define BLURB
   cookies, cascading style sheets, server push, and frames.
 endef
 
-DISTFILES += CSWpmcgi.gspec
+DISTFILES = $(call admfiles,CSWpmcgi,depend prototype)
 
 include ../category.mk
