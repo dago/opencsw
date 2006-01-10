@@ -1,5 +1,6 @@
 %var            bitname pm_libwww
 %var            pkgname CSWpmlibwww
+%var            arch all
 %include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright      
 1995-2004 Gisle Aas. All rights reserved.
