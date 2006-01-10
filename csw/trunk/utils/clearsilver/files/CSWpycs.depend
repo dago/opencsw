@@ -1,0 +1,4 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWggettext ggettext - GNU gettext
+P CSWpython python - The Python 2.3 language interpreter
+P CSWzlib zlib - Zlib Data Compression Library

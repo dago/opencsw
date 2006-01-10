@@ -1,6 +1,5 @@
 GARNAME = clearsilver
 GARVERSION = 0.10.1
-#GARVERSION = 0.9.14
 CATEGORIES = utils
 
 DESCRIPTION = Language-neutral HTML template system
@@ -13,20 +12,25 @@ endef
 
 MASTER_SITES = http://www.clearsilver.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += CSWclearsilver.gspec
+DISTFILES += $(call admfiles,CSWcs,depend prototype)
+DISTFILES += $(call admfiles,CSWpmcs,depend prototype)
+DISTFILES += $(call admfiles,CSWpycs,depend prototype)
 
 # Remove hardcoded gcc references
 PATCHFILES += ccbuild.diff
 # Switch off __PRETTY_FUNCTION__ when not using GCC
 PATCHFILES += pretty_function.diff
+# Fix lib specification
+PATCHFILES += libspec.diff
 
 #GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-python=$(bindir)/python
-#CONFIGURE_ARGS += --with-perl=$(bindir)/perl
+CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 #CONFIGURE_ARGS += --with-ruby=$(bindir)/ruby
-#CONFIGURE_ARGS += --with-java=/usr/j2se
+CONFIGURE_ARGS += --disable-ruby
+CONFIGURE_ARGS += --with-java=/usr/jdk/j2se1.4.2_02/j2se
 CONFIGURE_ARGS += --enable-gettext
 
 # No c-sharp at the moment
@@ -35,9 +39,8 @@ CONFIGURE_ARGS += --disable-csharp
 CONFIGURE_ARGS += --disable-apache
 
 # Temporary
-CONFIGURE_ARGS += --disable-perl
-CONFIGURE_ARGS += --disable-ruby
-CONFIGURE_ARGS += --disable-java
+#CONFIGURE_ARGS += --disable-perl
+#CONFIGURE_ARGS += --disable-java
 
 ENABLE_TEST = 0
 
