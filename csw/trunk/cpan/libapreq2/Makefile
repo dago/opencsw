@@ -12,7 +12,11 @@ define BLURB
   manpage for more details.
 endef
 
-DISTFILES = $(call admfiles,CSWpmapreq2,depend prototype)
+DISTFILES  = $(call admfiles,CSWlibapreq2,depend prototype)
+DISTFILES += $(call admfiles,CSWlibapreq2-devel,depend prototype)
+CSWap2modapreq2_admfiles = depend prototype postinstall preremove
+DISTFILES += $(call admfiles,CSWap2modapreq2,$(CSWap2modapreq2_admfiles))
+DISTFILES += $(call admfiles,CSWpmapreq2,depend prototype)
 
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 WORKSRC  = $(WORKDIR)/$(DISTNAME)
