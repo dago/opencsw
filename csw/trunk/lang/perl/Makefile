@@ -17,7 +17,15 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWperl.gspec CSWperl.prototype CSWperl.depend
 DISTFILES += CSWperldoc.gspec CSWperldoc.prototype CSWperldoc.depend
 
-#LIBDEPS += lib/db lib/gdbm
+# Sys::Syslog core version update (pre-5.8.8)
+MASTER_SITES += $(CPAN_MIRROR)/S/SA/SAPER/
+DISTFILES += Sys-Syslog-0.10.tar.gz
+
+# Fix a sprintf vunerability
+PATCHFILES += sprintf-5.8.7.diff
+
+#LIBDEPS += lib/bdb43
+#LIBDEPS += lib/gdbm
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
@@ -75,12 +83,12 @@ configure-perl:
 	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
 	@$(MAKECOOKIE)
 
-post-install: libperl perlconf
+post-install: libperl perlconf syslog-update
 
 # Make links to libperl
 LIB_MINOR = $(shell echo $(GARVERSION) | cut -f1-2 -d.)
 LIB_PATH  = $(libdir)/perl/$(GARVERSION)/CORE
-libperl:
+libperl: install
 	@( cd $(DESTDIR)$(libdir) ; \
 		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(GARVERSION) \
 		$(DESTDIR)$(libdir) ; \
@@ -90,7 +98,7 @@ libperl:
 	@$(MAKECOOKIE)
 
 # Remove build paths from Config
-perlconf:
+perlconf: install
 	@( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION) ; \
         /bin/perl -i -lne "\
             next if /config_arg[1-9]/; \
@@ -111,3 +119,11 @@ perlconf:
         " Config.pm Config_heavy.pl )
 	@$(MAKECOOKIE)
 
+# Update Sys-Syslog until 5.8.8 is released
+syslog-update: install
+	@( cd $(WORKDIR)/Sys-Syslog-0.10 ; \
+			 $(CONFIGURE_ENV) perl Makefile.PL ; \
+					 $(BUILD_ENV) make ; \
+						$(TEST_ENV) make test ; \
+				 $(INSTALL_ENV) make install DESTDIR=$(DESTDIR) )
+	@$(MAKECOOKIE)

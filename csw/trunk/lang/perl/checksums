@@ -5,3 +5,5 @@ bc75a04b47f2ae5295625596c7e8b581  download/CSWperl.prototype
 6aae367e04cb9eaf39a545e7ffb023e2  download/CSWperldoc.gspec
 27e992309efa11297782fffbb653156a  download/CSWperldoc.prototype
 a79e722dbbaee8fae1b8e658d4b57f3e  download/CSWperldoc.depend
+8fc1f24fc7890e4fd8360e7e9f293099  download/Sys-Syslog-0.10.tar.gz
+e1ce6f6cf32434db77f78be5938af09c  download/sprintf-5.8.7.diff
