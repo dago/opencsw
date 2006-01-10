@@ -71,3 +71,5 @@ updated to use the new API.  This includes any existing httpd.conf or
 startup.pl entries.
 
 END
+
+exit 0
