@@ -1,4 +1,0 @@
-%var            bitname swigpyrt
-%var            pkgname CSWswigpyrt
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

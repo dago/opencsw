@@ -1,6 +1,0 @@
-d none /opt/csw ? ? ?
-d none /opt/csw/lib ? ? ?
-f none /opt/csw/lib/libswigtcl8.so.0.0.0=$basedir/opt/csw/lib/libswigtcl8.so.0.0.0 0755 root bin
-s none /opt/csw/lib/libswigtcl8.so.0=libswigtcl8.so.0.0.0
-s none /opt/csw/lib/libswigtcl8.so=libswigtcl8.so.0.0.0
-f none /opt/csw/lib/libswigtcl8.la=$basedir/opt/csw/lib/libswigtcl8.la 0755 root bin

@@ -1,5 +1,5 @@
 GARNAME = swig
-GARVERSION = 1.3.21
+GARVERSION = 1.3.27
 CATEGORIES = devel
 
 DESCRIPTION = A scripting interface generator for C/C++ code.
@@ -18,29 +18,26 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWswig.gspec CSWswig.prototype
-DISTFILES += CSWswigplrt.gspec CSWswigplrt.prototype
-DISTFILES += CSWswigpyrt.gspec CSWswigpyrt.prototype
-DISTFILES += CSWswigtclrt.gspec CSWswigtclrt.prototype
-DISTFILES += CSWswigphp4rt.gspec CSWswigphp4rt.prototype
-DISTFILES += CSWswigguilert.gspec CSWswigguilert.prototype
+DISTFILES += $(call admfiles,CSWswig,depend prototype)
 
-# Make M4 macro install respect DESTDIR
-PATCHFILES += macro.diff
+# Prevent automake from attempting to regenerate everything
+PATCHFILES += am.diff
 
-UPCASE  = $(shell echo $(1) | tr '[a-z]' '[A-Z')
-WORKSRC = $(WORKDIR)/$(call UPCASE,$(GARNAME))-$(GARVERSION)
+# Languages we *do* have
+#DEPEND += lang/tcl lang/python lang/perl lang/guile
+#DEPEND += lang/ruby lang/php4 lang/ocaml
+#DEPEND += lang/lua
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# Languages we don't have yet
+#DEPEND += lang/pike lang/chicken lang/mono lang/mzscheme 
+
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-tcl=$(prefix)
-CONFIGURE_ARGS += --with-python=$(bindir)/python
-CONFIGURE_ARGS += --with-perl5=$(bindir)/perl
+
+# Configure finds most things, but point to a more current Java
 CONFIGURE_ARGS += --with-java=/usr/j2se/bin/java
 CONFIGURE_ARGS += --with-javac=/usr/j2se/bin/javac
 CONFIGURE_ARGS += --with-javaincl=/usr/j2se/include
-
-# Ruby runtime doesn't compile with SunCC
-#CONFIGURE_ARGS += --with-ruby=$(bindir)/ruby
 
 # Not sure if this was meant to run by non-developers
 TEST_TARGET = check
@@ -48,16 +45,12 @@ ENABLE_TEST = 0
 
 include ../category.mk
 
-docsubdir = $(DESTDIR)$(docdir)/$(GARNAME)-$(GARVERSION)
-
-post-install: install-swig-runtime install-swig-doc
-
-install-swig-runtime:
-	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) -C $(WORKSRC) install-runtime
+post-install: install-swig-doc
 
 install-swig-doc:
-	@mkdir -p $(docsubdir)
-	@cp -R $(WORKSRC)/Doc $(docsubdir)
-	@cp -R $(WORKSRC)/Examples $(docsubdir)
+	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)
 	$(DONADA)
+
