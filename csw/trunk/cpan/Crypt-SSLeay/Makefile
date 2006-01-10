@@ -10,10 +10,13 @@ define BLURB
   perldoc LWP for more information on POST requests.
 endef
 
-DISTFILES += CSWpmcryptssleay.gspec CSWpmcryptssleay.depend
+DISTFILES += $(call admfiles,CSWpmcryptssleay,depend)
 
-DEPENDS += lib/openssl
+# Point build to CSW ossl
+#PATCHFILES += cswssl.diff
 
-CONFIGURE_ARGS = --default $(tool_prefix)
+#DEPENDS += lib/openssl
+
+CONFIGURE_ARGS = --default $(prefix)
 
 include ../category.mk
