@@ -12,12 +12,16 @@ endef
 MASTER_SITES = http://apache.mirrored.ca/apr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWapr,depend prototype)
+DISTFILES += $(call admfiles,CSWapr-devel,depend prototype)
 DISTFILES += config.layout
 
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --enable-layout=csw
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-other-child
+
+# Tests verified: 1.2.2
+ENABLE_TEST = 0
 
 include ../category.mk
 
