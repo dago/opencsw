@@ -77,7 +77,7 @@ package-create:
 								 --destdir $(SPKG_EXPORT) \
 								 --workdir $(WORKDIR) \
                                  --nooverwrite \
-                                 -v basedir=$(DESTDIR) ; \
+                                 -v basedir=$(DESTDIR) || exit 2 ; \
 		done ; \
 	else \
 		echo " ==> No specs defined for $(GARNAME)" ; \
