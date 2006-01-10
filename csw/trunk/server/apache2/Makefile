@@ -16,8 +16,8 @@ DISTFILES += $(call admfiles,CSWapache2,depend prototype)
 CSWapache2c_admfiles = depend prototype postinstall space
 DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))
 # Apache prefork MPM (default)
-CSWap2prefork_admfiles = depend prototype preinstall postinstall
-CSWap2prefork_admfiles = preremove postremove space
+CSWap2prefork_admfiles  = depend prototype preinstall postinstall
+CSWap2prefork_admfiles += preremove postremove space
 DISTFILES += $(call admfiles,CSWap2prefork,$(CSWap2prefork_admfiles))
 # Apache mod_suexec
 CSWap2suexec_admfiles = depend prototype postinstall preremove
