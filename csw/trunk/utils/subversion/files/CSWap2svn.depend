@@ -4,5 +4,5 @@ P CSWap2prefork ap2_prefork - Apache 2.0 prefork MPM
 P CSWapache2 apache2 - Apache 2.0 web server
 P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
-P CSWsvn subversion - Version Control Rethought
+P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library

@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.3.0-rc4
+DISTVERSION = 1.3.0
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -10,11 +10,10 @@ define BLURB
 endef
 
 # Release site
-#MASTER_SITES = http://subversion.tigris.org/tarballs/
-#DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
-
+MASTER_SITES = http://subversion.tigris.org/tarballs/
 # Development site
-MASTER_SITES  = http://lolut.utbm.info/pub/subversion-1.3.0/rc4/
+#MASTER_SITES  = http://lolut.utbm.info/pub/subversion-1.3.0/rc4/
+
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 
 # JUnit
@@ -36,6 +35,8 @@ DISTFILES += $(call admfiles,CSWpysvn,depend prototype)
 DISTFILES += $(call admfiles,CSWrbsvn,depend prototype)
 # SVN Java Binding
 DISTFILES += $(call admfiles,CSWjavasvn,depend prototype)
+# SVN Development Support
+DISTFILES += $(call admfiles,CSWsvn-devel,depend prototype)
 
 # Fix: Use 'gdiff' instead of 'diff'
 PATCHFILES += gdiff.diff
@@ -92,7 +93,6 @@ rbsvn-prototype:
 	@if test -f $(WORKDIR)/CSWrbsvn.prototype ; then \
 		gsed -i -e s,%GARCH%,$(GARCH),g $(WORKDIR)/CSWrbsvn.prototype ; \
 	fi
-	@$(MAKECOOKIE)
 
 svn-python:
 	@echo " ==> Building Python bindings"

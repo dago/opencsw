@@ -7,8 +7,7 @@ P CSWexpat expat -  XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
 P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
-P CSWmysql4rt mysql4rt - run-time libraries for mysql4
 P CSWoldaprt openldap_rt - ldap runtime libraries
-P CSWsqlite sqlite - An embeddable SQL engine in a C library
-P CSWsvn - Version Control Rethought
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
+P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library
