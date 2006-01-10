@@ -96,9 +96,10 @@ foreach (<>) {
     elsif ($ftype =~ /dynamically linked/) {
         msg "$_\n";
 
-        foreach (`dump -Lv $_`) {
-            next unless /NEEDED/; chomp;
-            my (undef, undef, $lib) = split;
+        foreach my $line (`dump -Lv $_`) {
+            next unless $line =~ /NEEDED/; chomp $line;
+            my (undef, undef, $lib) = split /\s+/, $line;
+            msg "    $lib\n";    
             $depfiles{$lib}++ if $lib;
         }
     }
