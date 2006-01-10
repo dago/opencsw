@@ -1,5 +1,5 @@
 GARNAME = ruby
-GARVERSION = 1.8.3
+GARVERSION = 1.8.4
 CATEGORIES = lang
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
@@ -51,12 +51,11 @@ CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 include ../category.mk
 
 # Replace current build arch in prototype
-pre-install:
+pre-package:
 	@for proto in "" $(wildcard $(WORKDIR)/*.prototype) ; do \
 		test -z "$$proto" && continue ; \
 		gsed -i -e s,%GARCH%,$(GARCH),g $$proto ; \
 	done
-	@$(MAKECOOKIE)
 
 PI_TARGETS  = samples rbconfig
 ifneq ($(SKIP_RUBYDOC),1)
@@ -76,7 +75,7 @@ rbconfig:
 samples:
 	@mkdir -p $(DESTDIR)$(datadir)
 	@cp -R $(WORKSRC)/sample $(DESTDIR)$(datadir)
-	@for ext in bigdecimal dl tk tcltklib ; do \
+	@for ext in bigdecimal dl tk ; do \
 		cp -R $(WORKSRC)/ext/$$ext/sample $(DESTDIR)$(datadir)/sample/$$ext ; \
 	done
 	@$(MAKECOOKIE)

@@ -7,7 +7,7 @@ f none /opt/csw/bin/ruby=$basedir/opt/csw/bin/ruby 0755 root bin
 f none /opt/csw/bin/testrb=$basedir/opt/csw/bin/testrb 0755 root bin
 d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/libruby-static.a=$basedir/opt/csw/lib/libruby-static.a 0644 root bin
-s none /opt/csw/lib/libruby.so.1.8.3=libruby.so.1 root bin
+s none /opt/csw/lib/libruby.so.1.8.4=libruby.so.1 root bin
 f none /opt/csw/lib/libruby.so.1=$basedir/opt/csw/lib/libruby.so.1 0755 root bin
 s none /opt/csw/lib/libruby.so=libruby.so.1 root bin
 d none /opt/csw/lib/ruby 0755 root bin
@@ -37,7 +37,6 @@ f none /opt/csw/lib/ruby/1.8/date/format.rb=$basedir/opt/csw/lib/ruby/1.8/date/f
 f none /opt/csw/lib/ruby/1.8/date2.rb=$basedir/opt/csw/lib/ruby/1.8/date2.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/debug.rb=$basedir/opt/csw/lib/ruby/1.8/debug.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/delegate.rb=$basedir/opt/csw/lib/ruby/1.8/delegate.rb 0644 root bin
-d none /opt/csw/lib/ruby/1.8/digest 0755 root bin
 d none /opt/csw/lib/ruby/1.8/dl 0755 root bin
 f none /opt/csw/lib/ruby/1.8/dl/import.rb=$basedir/opt/csw/lib/ruby/1.8/dl/import.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/dl/struct.rb=$basedir/opt/csw/lib/ruby/1.8/dl/struct.rb 0644 root bin
@@ -655,7 +654,6 @@ f none /opt/csw/lib/ruby/1.8/yaml/ypath.rb=$basedir/opt/csw/lib/ruby/1.8/yaml/yp
 d none /opt/csw/lib/ruby/site_ruby 0755 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8 0755 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8 0755 root bin
-d none /opt/csw/share ? ? ?
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/man1 ? ? ?
 f none /opt/csw/share/man/man1/ruby.1=$basedir/opt/csw/share/man/man1/ruby.1 0644 root bin

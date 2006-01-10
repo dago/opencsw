@@ -1,10 +1,10 @@
-63d6c2bddd6af86664e338b31f3189a6  download/ruby-1.8.3.tar.gz
-e3cab62f6a158e77f0ab4714a13c44ef  download/CSWruby.gspec
+bd8c2e593e1fa4b01fd98eaf016329bb  download/ruby-1.8.4.tar.gz
+02e2e297bbc2243ef4bc65de360941ee  download/CSWruby.gspec
 353393665142f6cce3e9b3c172f9ea25  download/CSWruby.depend
-6b7c73fe697d152d27c93c3c233f6967  download/CSWruby.prototype
-9914df6eed2093887ae15230dca84800  download/CSWrubytk.gspec
+f037f7dd923f18e771af117b8dd86649  download/CSWruby.prototype
+b2f1264fc09d57fbe1cb4f084e80e293  download/CSWrubytk.gspec
 17ee95585acd0a4f504177a72fbf4e7c  download/CSWrubytk.depend
-245969c35a78263ac842f966d04e3b3b  download/CSWrubytk.prototype
-2f87d162afb72aa6db35df2755ac5575  download/CSWrubydoc.gspec
+7fb47aae4dbe066760012851eef716b8  download/CSWrubytk.prototype
+15ebe5502c6de0ed06a4bac2a9c15e21  download/CSWrubydoc.gspec
 e7008a946bb7e696418e34c41ca9a109  download/CSWrubydoc.depend
-be3faa056994edf82fbea2868457a0e2  download/CSWrubydoc.prototype
+f4f7df84a211cdd56e356c42ef505750  download/CSWrubydoc.prototype
