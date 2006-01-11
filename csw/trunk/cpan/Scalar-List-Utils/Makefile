@@ -11,6 +11,9 @@ define BLURB
   being individual extensions would be wasteful.
 endef
 
-DISTFILES += CSWpmscalarlist.gspec
+DISTFILES += $(call admfiles,CSWpmscalarlist,depend prototype)
 
-include ../category.mk
+# Version 1.18 is included in CSWperl
+#include ../category.mk
+.DEFAULT:
+	@true
