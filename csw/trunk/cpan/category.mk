@@ -5,6 +5,7 @@ MASTER_SITES ?= $(CPAN_MIRROR)
 # This is common to most modules - override in module makefile if different
 MODDIST   ?= $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(MODDIST)
+CHECKPATH ?= $(CPAN_MIRROR)
 
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
@@ -47,14 +48,16 @@ TEST_ENV      += PERL5LIB=$(PERL5LIB)
 INSTALL_ENV   += PERL5LIB=$(PERL5LIB)
 
 # Configure a target using Makefile.PL
+PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
-	@( cd $* ; $(CONFIGURE_ENV) perl Makefile.PL INSTALLDIRS=vendor $(CONFIGURE_ARGS) )
+	@( cd $* ; $(CONFIGURE_ENV) perl Makefile.PL $(PERL_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
+PERLBUILD_CONFIGURE_ARGS ?= installdirs=vendor
 configure-%/Build.PL:
 	@echo " ==> Running Build.PL in $*"
-	@( cd $* ; $(CONFIGURE_ENV) perl Build.PL installdirs=vendor $(CONFIGURE_ARGS) )
+	@( cd $* ; $(CONFIGURE_ENV) perl Build.PL $(PERLBUILD_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 build-%/Build:
@@ -76,8 +79,7 @@ install-%/Build:
 update-check:
 	@echo " ==> Update Check: $(GARNAME) $(GARVERSION)"
 	@if test "x$(MANUAL_UPDATE)" != "x0" ; then \
-		cpan_check $(MASTER_SITES)$(DISTFILES) | \
-			tee -a ../update_results.txt ; \
+		cpan_check $(CHECKPATH)$(MODDIST) 2>>../update_results.txt ; \
 	else \
 		echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED" ; \
 	fi

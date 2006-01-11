@@ -1,6 +1,7 @@
 GARNAME = psh
 GARVERSION = 1.8
 CATEGORIES = cpan
+AUTHOR = GREGOR
 
 DESCRIPTION = simple interactive Perl shell
 define BLURB
@@ -8,9 +9,7 @@ define BLURB
   power of Perl scripting. It aspires to be your primary login shell.
 endef
 
-MASTER_SITES = http://www.gregorpurdy.com/gregor/$(GARNAME)/
-
-DISTFILES += CSWpsh.gspec CSWpsh.depend
+DISTFILES += $(call admfiles,CSWpsh,depend)
 
 DEPENDS += cpan/Term-ReadLine-Gnu cpan/BSD-Resource
 
