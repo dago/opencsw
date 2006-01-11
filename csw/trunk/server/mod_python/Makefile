@@ -11,12 +11,8 @@ endef
 
 MASTER_SITES = http://www.ibiblio.org/pub/mirrors/apache/httpd/modpython/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += CSWap2modpython.gspec
-DISTFILES += CSWap2modpython.depend
-DISTFILES += CSWap2modpython.prototype
-DISTFILES += CSWap2modpython.postinstall
-DISTFILES += CSWap2modpython.preremove
-DISTFILES += CSWap2modpython.space
+pkgfiles   = depend prototype postinstall preremove space
+DISTFILES += $(call admfiles,CSWap2modpython,$(pkgfiles))
 
 #DEPENDS += lang/python
 
