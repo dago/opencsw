@@ -1,3 +1,4 @@
+I CSWphp5fam
 P CSWcommon common - common files and dirs for CSW packages
 P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
 P CSWiconv libiconv - GNU iconv library
@@ -6,4 +7,5 @@ P CSWlibmm libmm - Shared Memory Allocation abstraction library
 P CSWlibnet libnet - the libnet packet construction library
 P CSWlibxml2 libxml2 - XML Parser Library
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWunixodbc unixodbc - ODBC access to data sources
 P CSWzlib zlib - Zlib Data Compression Library

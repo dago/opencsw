@@ -4,8 +4,8 @@ d990e63c6c2ef498391d5c338270c405  download/php.ini
 df7e857e1b866e6e78d68f965ebd0554  download/ext_enable.sh
 1bcefac30d3975c0b4baf88386de43fc  download/ext_disable.sh
 3589e999f6185efadba7f92bd95e4dd0  download/CSWphp5.gspec
-894822a4fd05ff7f4cc1498d3d0ba0f8  download/CSWphp5.prototype
-c9657204f212a4e89b54455887e69687  download/CSWphp5.depend
+fe93b5f1ab08b19f1e03de63b47aa7a8  download/CSWphp5.prototype
+ea613f4ace3ac0e903f091b869a7c7a6  download/CSWphp5.depend
 36ec026f726c218ac60073a0236cd9d5  download/CSWphp5devel.gspec
 8cdd9bcf876417e70f15da9b9dd8cebe  download/CSWphp5devel.prototype
 3e8aaa03a833f54403cfa858ace2f22c  download/CSWphp5devel.depend
