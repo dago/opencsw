@@ -1,7 +1,8 @@
-GARNAME = mod_perl2
+GARNAME = mod_perl
 DISTVERSION = 2.0.2
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = cpan
+AUTHOR = PGOLLUCCI
 
 DESCRIPTION = Persistent Perl interpreter for Apache 2.x
 define BLURB
@@ -23,19 +24,18 @@ endef
 #          _default_ vhost, causing a lookup of 255.255.255.255.
 #
 
-MASTER_SITES  = http://perl.apache.org/dist/
-MASTER_SITES += http://people.apache.org/~pgollucci/mp2/
-MODDIST = mod_perl-$(DISTVERSION).tar.gz 
-WORKSRC = $(WORKDIR)/mod_perl-$(DISTVERSION)
+#MASTER_SITES  = http://perl.apache.org/dist/
+#MASTER_SITES += http://people.apache.org/~pgollucci/mp2/
+#MODDIST = mod_perl-$(DISTVERSION).tar.gz 
+#WORKSRC = $(WORKDIR)/mod_perl-$(DISTVERSION)
 
-DISTFILES += CSWap2modperl.gspec CSWap2modperl.prototype CSWap2modperl.depend
-DISTFILES += CSWap2modperl.postinstall CSWap2modperl.preremove
-DISTFILES += CSWap2modperl.space startup.pl.CSW
+pkgfiles   = prototype depend postinstall preremove space
+DISTFILES += $(call admfiles,CSWap2modperl,$(pkgfiles))
+DISTFILES += startup.pl.CSW
 
 #BUILDDEPS += cpan/Apache-Test server/apache2
 
 CONFIGURE_ARGS  = MP_APXS=$(prefix)/apache2/sbin/apxs
-#CONFIGURE_ARGS += MP_AP_DESTDIR=$(DESTDIR)
 CONFIGURE_ARGS += MP_PROMPT_DEFAULT=1
 CONFIGURE_ARGS += MP_DEBUG=1
 
