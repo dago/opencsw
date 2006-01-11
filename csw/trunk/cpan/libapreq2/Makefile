@@ -23,7 +23,7 @@ WORKSRC  = $(WORKDIR)/$(DISTNAME)
 
 MODDIST  = $(DISTNAME).tar.gz
 DEPENDS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
-DEPENDS += cpan/mod_perl2
+#DEPENDS += cpan/mod_perl2
 
 CONFIGURE_ARGS  = --enable-perl-glue
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl

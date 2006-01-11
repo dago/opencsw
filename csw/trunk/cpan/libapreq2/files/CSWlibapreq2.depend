@@ -5,6 +5,5 @@ P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
 P CSWexpat expat -  XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
 P CSWiconv libiconv - GNU iconv library
-P CSWmysql4rt mysql4rt - run-time libraries for mysql4
 P CSWoldaprt openldap_rt - ldap runtime libraries
-P CSWsqlite sqlite - An embeddable SQL engine in a C library
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
