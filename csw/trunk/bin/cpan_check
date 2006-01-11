@@ -21,7 +21,7 @@ eval {
 };
 
 # Standard module extension
-$MODULE_EXT = ".tar.gz";
+$MODULE_EXT = qr/\.(tar\.(gz|bz2)|tgz)/;
 
 # Month lookup table
 my @MONTHS = qw/Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec/;
@@ -113,21 +113,23 @@ foreach my $ver (sort { $info->{$a} <=> $info->{$b} } keys %$info) {
     push @uprev, $ver if $info->{$ver} >= $currel;
 }
 
-printf "$modname $modvers: ";
-
+# Print version info
 if (@uprev) {
-    print "Updates available.";
-
     my @ndev = grep(!/_/, @uprev);
-    my @dev  = grep(/_/,@uprev);
-    print "    Recommended: ", pop @ndev;
-    print "          Older: ", join(", ", @ndev) if @ndev;
-    print "    Development: ", join(", ", @dev) if @dev;
+    my @dev  = grep( /_/, @uprev);
+
+    if (@ndev) {
+        print "$modname $modvers:";
+
+        my $rec = pop @ndev;
+        print "    Recommended: ", $rec;
+        print "          Older: ", join(", ", @ndev) if @ndev;
+        print "    Development: ", join(", ", @dev) if @dev;
+
+        # Output info to automate udpates
+        print STDERR "$modname|$rec";
+    }
 }
-else {
-    print "No updates available.";
-}
-print "-"x40;
 
 exit 0;
 
