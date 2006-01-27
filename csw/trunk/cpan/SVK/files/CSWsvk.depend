@@ -17,7 +17,7 @@ P CSWpmtimedate pm_timedate - parse date strings into time values
 P CSWpmfiletype pm_filetype - determine file type using magic
 P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)
 P CSWpmperlioeol pm_perlioeol - PerlIO layer for normalizing line endings
-P CSWpmclassacc pm_classacc - Run-time class loading on first method call
+P CSWpmclsaccessor pm_clsaccessor - Automated accessor generation
 P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
 P CSWpmiopager pm_iopager - Select a pager, optionally pipe it output if destination is a TTY
 P CSWpmsvnmirror pm_svnmirror - mirror remote repository to local Subversion repository

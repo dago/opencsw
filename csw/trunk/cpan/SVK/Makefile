@@ -9,7 +9,7 @@ define BLURB
   Subversion filesystem but provides additional features.
 endef
 
-DISTFILES = $(call admfiles,CSWpmsvk,depend prototype)
+DISTFILES = $(call admfiles,CSWsvk,depend prototype)
 
 DEPENDS += utils/subversion
 
