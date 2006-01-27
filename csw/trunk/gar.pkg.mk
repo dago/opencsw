@@ -84,6 +84,20 @@ package-create:
 	fi
 	$(DONADA)
 
+# Reset working directory for repackaging
+package-reset:
+	@echo " ==> Reset packaging state for $(GARNAME) ($(DESTIMG))"
+	@if test -d $(COOKIEDIR) ; then \
+		rm -f $(COOKIEDIR)/package* ; \
+		if test -d $(WORKDIR) ; then \
+			rm -f $(WORKDIR)/CSW* ; \
+			cp $(FILEDIR)/CSW* $(WORKDIR) ; \
+		fi ; \
+	fi
+
+# Reset and repackage
+repackage: package-reset package
+
 # Update the dependency database
 dependb:
 	@dependb --db $(SPKG_DEPEND_DB) \
