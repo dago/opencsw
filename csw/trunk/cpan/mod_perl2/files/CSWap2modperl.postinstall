@@ -1,5 +1,7 @@
 #!/bin/sh
 
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+
 CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
 AP2_PREFIX=$CSW_PREFIX/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
@@ -7,68 +9,40 @@ AP2_LIBEXEC=$AP2_PREFIX/libexec
 AP2_CONFDIR=$AP2_PREFIX/etc
 
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
-
-PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+AP2_EXTRADIR=$AP2_CONFDIR/extra
 
 # Enable the perl module
 chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n perl mod_perl.so
 
-# Add a configuration sample
-if [ -z "`grep 'IfModule perl_module' $AP2_CONFIG`" ]; then
-    cp $AP2_CONFIG $AP2_CONFIG.pre-MP2
+# Add an include line, but only if an existing config is not detected
+if [ -z "`egrep 'IfModule (mod_perl|perl_module)|extra/httpd-perl.conf'`" ]
+then
+    cat << END >> $AP2_CONFIG
 
-    echo "Adding mod_perl configuration to $AP2_CONFIG..."
-    cat <<CONFIG >> $AP2_CONFIG
-
-# Added by $PKGINST
-<IfModule perl_module>
-    PerlSwitches -wT
-    PerlRequire /opt/csw/apache2/etc/startup.pl
-
-    Alias /cgi-perl/ /opt/csw/apache2/share/cgi-perl/
-    <Location /cgi-perl/>
-        SetHandler perl-script
-        PerlResponseHandler ModPerl::Registry
-        PerlOptions +ParseHeaders
-        Options +ExecCGI
-    </Location>
-
-    <Location /perl-status>
-        SetHandler perl-script
-        PerlHandler Apache2::Status
-        Order allow,deny
-        Deny from all
-        Allow from 127.0.0.1
-    </Location>
-</IfModule>
-CONFIG
-
+Include etc/extra/httpd-perl.conf
+END
 fi
 
-# Create the startup script
-AP2_STARTUP="$AP2_CONFDIR/startup.pl"
-if [ ! -f "$AP2_STARTUP" ]; then
-    echo "Copying mod_perl startup script..."
-    cp $AP2_STARTUP.CSW $AP2_STARTUP
-    chmod 555 $AP2_STARTUP
-fi
+# Copy templates
+for tmpl in $AP2_CONFDIR/startup.pl.CSW $AP2_EXTRADIR/httpd-perl.conf.CSW
+do
+    dstdir=`dirname $tmpl`
+    dstfile=$dstdir/`basename $tmpl .CSW`
+    if [ ! -f "$dstfile" ]; then
+        echo "Creating $dstfile"
+        cp $tmpl $dstfile
+    fi
+done
+chmod 555 $AP2_CONFDIR/startup.pl
 
 # Finito
 cat <<END
 
-NOTICE: mod_perl is enabled in $AP2_CONFIG
-but the server was not restarted.  Standard modules are pre-loaded
-in the $AP2_STARTUP
-script.  Please examine your mod_perl configuration and restart
-apache.
+NOTICE: mod_perl is enabled in httpd.conf but the server was not restarted.
+Standard modules are pre-loaded in the startup.pl script.
 
-WARNING: mod_perl2 no longer places modules in the Apache:: namespace.
-Instead, it uses the Apache2:: namespace for the core modules, along with
-the ModPerl:: and APR:: namespaces.  Please ensure that any applications
-that were written or are running under mod_perl2 prior to 2.0.0-RC5 are
-updated to use the new API.  This includes any existing httpd.conf or
-startup.pl entries.
+Please examine your mod_perl configuration and restart apache.
 
 END
 

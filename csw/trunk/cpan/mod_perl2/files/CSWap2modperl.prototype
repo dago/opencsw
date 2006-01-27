@@ -1,5 +1,6 @@
 d none /opt/csw/apache2 ? ? ?
 d none /opt/csw/apache2/etc ? ? ?
+f none /opt/csw/apache2/etc/extra/httpd-perl.conf.CSW=$basedir/opt/csw/apache2/etc/extra/httpd-perl.conf.CSW 0644 root bin
 f none /opt/csw/apache2/etc/startup.pl.CSW=$basedir/opt/csw/apache2/etc/startup.pl.CSW 0755 root bin
 d none /opt/csw/apache2/include ? ? ?
 f none /opt/csw/apache2/include/mod_perl.h=$basedir/opt/csw/apache2/include/mod_perl.h 0644 root bin

@@ -31,7 +31,7 @@ endef
 
 pkgfiles   = prototype depend postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modperl,$(pkgfiles))
-DISTFILES += startup.pl.CSW
+DISTFILES += startup.pl.CSW httpd-perl.conf.CSW
 
 #BUILDDEPS += cpan/Apache-Test server/apache2
 
@@ -58,6 +58,12 @@ install-custom:
 
 post-install:
 	install -d $(DESTDIR)$(prefix)/apache2/etc
-	install -m 0755 $(WORKDIR)/startup.pl.CSW $(DESTDIR)$(prefix)/apache2/etc
+	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	install -m 0755 \
+		$(WORKDIR)/startup.pl.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc
+	install -m 0644 \
+		$(WORKDIR)/httpd-perl.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra
 	@$(MAKECOOKIE)
 
