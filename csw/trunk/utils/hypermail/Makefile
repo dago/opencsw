@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += CSWhypermail.gspec CSWhypermail.prototype CSWhypermail.depend
+DISTFILES   += $(call admfiles,CSWhypermail,depend prototype)
 
 # configure cancels out env LDFLAGS by default
 PATCHFILES += ldflag.diff
@@ -28,7 +28,21 @@ CONFIGURE_ARGS += --with-cgidir=$(docdir)/$(GARNAME)/cgi-bin
 CONFIGURE_ARGS += --with-htmldir=$(docdir)/$(GARNAME)
 CONFIGURE_ARGS += --enable-libfnv
 
+# GNU make doesn't like the project makefiles
+BUILD_SCRIPTS = custom
+INSTALL_SCRIPTS = custom
+
 # No test target
 ENABLE_TEST = 0
 
 include ../category.mk
+
+LD_OPTIONS += -z muldefs
+export LD_OPTIONS
+
+build-custom:
+	@( cd $(WORKSRC) ; $(BUILD_ENV) /usr/ccs/bin/make $(BUILD_ARGS) )
+
+install-custom:
+	@( cd $(WORKSRC) ; $(BUILD_ENV) /usr/ccs/bin/make $(INSTALL_ARGS) install )
+
