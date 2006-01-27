@@ -20,14 +20,14 @@ DISTFILES += CSWap2modruby.gspec
 
 CONFIGURE_SCRIPTS = ruby
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = --prefix=$(prefix)
+CONFIGURE_ARGS += --mandir=$(mandir)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
-#CONFIGURE_ARGS += --with-python=$(bindir)/python
-#CONFIGURE_ARGS += --with-flex=$(prefix)/flex-2.5.31/bin/flex
+CONFIGURE_ARGS += --with-apr-includes=$(shell apr-config --includedir)
 
 include ../category.mk
 
 configure-ruby:
 	( cd $(WORKSRC) ; \
-		$(CONFIGURE_ENV) ruby ./configure.rb $(CONFIGURE_ARGS) )
+		$(CONFIGURE_ENV) ./configure.rb $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
