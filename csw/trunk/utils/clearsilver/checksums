@@ -1,13 +1,10 @@
-02f52354728c1f3603ce4d02a1eec824  download/clearsilver-0.10.1.tar.gz
+10e19526e87b712068e9073469b10d94  download/clearsilver-0.10.2.tar.gz
 6ba5b392f39abffb57e300c5457dc9b9  download/CSWcs.gspec
 8093298b67861e241b0d2499c9f2ff89  download/CSWcs.depend
 ef6ecb1a6b3d0f52bec8575fa9b86078  download/CSWcs.prototype
 d5df8568bb2f71f8fb9eb6579f7f220f  download/CSWpmcs.gspec
-a79e722dbbaee8fae1b8e658d4b57f3e  download/CSWpmcs.depend
+9ebd2fa96ac23e41c6d49743c203628c  download/CSWpmcs.depend
 c6255e042c84fbb8fa18d4f1b997c75a  download/CSWpmcs.prototype
-e95677e7050a7cc44b33cbab1d2e0453  download/CSWpycs.gspec
-35fd198a2fbd6ae868cf4f6245e7a449  download/CSWpycs.depend
+78010155e92a05a3e43615b77921fd69  download/CSWpycs.gspec
+3e73686f67d307dc174528baa97ef8cd  download/CSWpycs.depend
 701eead92731e47083a3f2636b1c3288  download/CSWpycs.prototype
-40189c4d57604d96ef722af1f1f7ce56  download/ccbuild.diff
-b3a3135cc559bcb2bb7a8b5e0d8b5c67  download/pretty_function.diff
-9cf21efd96c79cce99934aa4b475d691  download/libspec.diff

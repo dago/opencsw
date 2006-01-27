@@ -1,4 +1,6 @@
 P CSWcommon common - common files and dirs for CSW packages
+P CSWgcc3core gcc3core - GNU C Compiler
+P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
 P CSWggettext ggettext - GNU gettext
 P CSWpython python - The Python 2.3 language interpreter
 P CSWzlib zlib - Zlib Data Compression Library
