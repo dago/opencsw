@@ -1,0 +1,15 @@
+#!/bin/ksh
+
+mv catalog catalog.old
+mv descriptions descriptions.old
+
+for pkg in `ls -1 *.pkg *.pkg.gz 2>/dev/null`  ; do
+    eval `gzcat $pkg | perl -lne '
+        if    (/PKG=(\S+)/)       { print "PKG=$1" }
+        elsif (/NAME=((\S+).+$)/) { print "NAME=$2\nDESC=\"$1\"" }
+        elsif (/VERSION=(\S+)/)   { print "VERSION=$1" ; exit }'`
+
+    print "$DESC"
+    print "$NAME $VERSION $PKG $pkg $(md5sum $pkg | awk '{print $1}')" >> catalog
+    print "$DESC" >> descriptions 
+done

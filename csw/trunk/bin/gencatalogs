@@ -1,0 +1,16 @@
+#!/bin/ksh
+
+program_dir=`dirname $0`
+gencatalog=$program_dir/gencatalog
+
+if [ ! -x $gencatalog ] ; then
+    echo "Cannot execute $gencatalog"
+    exit 2
+fi
+
+for arch in sparc i386
+do
+    echo " ==> Generating catalog for $arch"
+    ( cd $arch/5.10 && $gencatalog )
+    echo " ==> $arch done."
+done
