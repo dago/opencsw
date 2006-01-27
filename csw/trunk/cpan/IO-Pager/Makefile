@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MODDIST   = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES = $(call admfiles,CSWpmiostring,depend prototype)
+DISTFILES = $(call admfiles,CSWpmiopager,depend prototype)
 
 # Tests are mostly visual verification
 ENABLE_TEST = 0
