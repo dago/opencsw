@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 5.1.1
+GARVERSION = 5.1.2
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
@@ -29,10 +29,11 @@ IMAPDIR  = imap-2004f
 C_CLIENT = ../$(IMAPDIR)
 
 # Auxilliary files
-DISTFILES += php.ini ext_enable.sh ext_disable.sh
+DISTFILES += php.ini phpext
+DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh 
 
 # PHP Core
-DISTFILES += $(call admfiles,CSWphp5,prototype depend)
+DISTFILES += $(call admfiles,CSWphp5,prototype depend postinstall)
 DISTFILES += $(call admfiles,CSWphp5devel,prototype depend)
 
 # PHP Apache2 SAPI
@@ -95,4 +96,5 @@ pre-build:
 # Copy over a starter config file (based on php.ini-recommended)
 post-install:
 	@sed -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini > $(DESTDIR)$(prefix)/php5/lib/php.ini
+	@cp $(WORKDIR)/phpext $(DESTDIR)$(prefix)/php5/bin
 	@$(MAKECOOKIE)

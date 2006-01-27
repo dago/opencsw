@@ -1,7 +1,7 @@
 %var            bitname php5_odbc
 %var            pkgname CSWphp5odbc
 %include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%postinstall    url file://%{WORKDIR}/ext_enable.sh
-%postremove     url file://%{WORKDIR}/ext_disable.sh
+%postinstall    url file://%{WORKDIR}/CSWphp5_ext_enable.sh
+%postremove     url file://%{WORKDIR}/CSWphp5_ext_disable.sh
 %var            desc PHP 5 - unixODBC Extension
 %copyright      url file://%{WORKSRC}/LICENSE

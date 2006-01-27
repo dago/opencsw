@@ -9,5 +9,3 @@ P CSWlibnet libnet - the libnet packet construction library
 P CSWlibxml2 libxml2 - XML Parser Library
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWzlib zlib - Zlib Data Compression Library
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm

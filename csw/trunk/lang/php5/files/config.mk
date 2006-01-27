@@ -71,6 +71,8 @@ CONFIGURE_ARGS += --enable-sysvshm=shared
 CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --with-expat-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
+CONFIGURE_ARGS += --enable-wddx=shared
+CONFIGURE_ARGS += --enable-xmlreader=shared
 
 # Previously distributed extensions moved to PECL
 #CONFIGURE_ARGS += --enable-dio=shared

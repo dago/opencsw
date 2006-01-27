@@ -6,11 +6,12 @@ f none /opt/csw/php5/bin/pear=$basedir/opt/csw/php5/bin/pear 0755 root bin
 f none /opt/csw/php5/bin/peardev=$basedir/opt/csw/php5/bin/peardev 0755 root bin
 f none /opt/csw/php5/bin/pecl=$basedir/opt/csw/php5/bin/pecl 0755 root bin
 f none /opt/csw/php5/bin/php=$basedir/opt/csw/php5/bin/php 0755 root bin
+f none /opt/csw/php5/bin/phpext=$basedir/opt/csw/php5/bin/phpext 0755 root bin
 d none /opt/csw/php5/etc 0755 root bin
 f none /opt/csw/php5/etc/pear.conf=$basedir/opt/csw/php5/etc/pear.conf 0644 root bin
 d none /opt/csw/php5/lib 0755 root bin
 d none /opt/csw/php5/lib/php 0755 root bin
-f none /opt/csw/php5/lib/php.ini=$basedir/opt/csw/php5/lib/php.ini 0644 root bin
+f none /opt/csw/php5/lib/php.ini.CSW=$basedir/opt/csw/php5/lib/php.ini 0644 root bin
 d none /opt/csw/php5/lib/php/.channels 0755 root bin
 d none /opt/csw/php5/lib/php/.channels/.alias 0755 root bin
 v none /opt/csw/php5/lib/php/.channels/.alias/pear.txt=$basedir/opt/csw/php5/lib/php/.channels/.alias/pear.txt 0644 root bin
@@ -176,6 +177,7 @@ f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/sockets.so=$ba
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/sysvmsg.so=$basedir/opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/sysvmsg.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/sysvsem.so=$basedir/opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/sysvsem.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/sysvshm.so=$basedir/opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/sysvshm.so 0755 root bin
+f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/xmlreader.so=$basedir/opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/xmlreader.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/zlib.so=$basedir/opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/zlib.so 0755 root bin
 f none /opt/csw/php5/lib/php/pearcmd.php=$basedir/opt/csw/php5/lib/php/pearcmd.php 0644 root bin
 f none /opt/csw/php5/lib/php/peclcmd.php=$basedir/opt/csw/php5/lib/php/peclcmd.php 0644 root bin

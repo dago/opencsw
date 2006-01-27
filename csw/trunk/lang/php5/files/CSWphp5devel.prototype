@@ -58,7 +58,6 @@ f none /opt/csw/php5/include/php/Zend/zend_objects_API.h=$basedir/opt/csw/php5/i
 f none /opt/csw/php5/include/php/Zend/zend_operators.h=$basedir/opt/csw/php5/include/php/Zend/zend_operators.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_ptr_stack.h=$basedir/opt/csw/php5/include/php/Zend/zend_ptr_stack.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_qsort.h=$basedir/opt/csw/php5/include/php/Zend/zend_qsort.h 0644 root bin
-f none /opt/csw/php5/include/php/Zend/zend_reflection_api.h=$basedir/opt/csw/php5/include/php/Zend/zend_reflection_api.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_stack.h=$basedir/opt/csw/php5/include/php/Zend/zend_stack.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_static_allocator.h=$basedir/opt/csw/php5/include/php/Zend/zend_static_allocator.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_stream.h=$basedir/opt/csw/php5/include/php/Zend/zend_stream.h 0644 root bin
@@ -83,6 +82,19 @@ d none /opt/csw/php5/include/php/ext/gd 0755 root bin
 f none /opt/csw/php5/include/php/ext/gd/gdcache.h=$basedir/opt/csw/php5/include/php/ext/gd/gdcache.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/gd/gdttf.h=$basedir/opt/csw/php5/include/php/ext/gd/gdttf.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/gd/php_gd.h=$basedir/opt/csw/php5/include/php/ext/gd/php_gd.h 0644 root bin
+d none /opt/csw/php5/include/php/ext/hash 0755 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_adler32.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_adler32.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_crc32.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_crc32.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_gost.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_gost.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_haval.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_haval.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_md.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_md.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_ripemd.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_ripemd.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_sha.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_sha.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_snefru.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_snefru.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_tiger.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_tiger.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_types.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_types.h 0644 root bin
+f none /opt/csw/php5/include/php/ext/hash/php_hash_whirlpool.h=$basedir/opt/csw/php5/include/php/ext/hash/php_hash_whirlpool.h 0644 root bin
 d none /opt/csw/php5/include/php/ext/iconv 0755 root bin
 f none /opt/csw/php5/include/php/ext/iconv/php_have_bsd_iconv.h=$basedir/opt/csw/php5/include/php/ext/iconv/php_have_bsd_iconv.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/iconv/php_have_glibc_iconv.h=$basedir/opt/csw/php5/include/php/ext/iconv/php_have_glibc_iconv.h 0644 root bin
@@ -166,7 +178,6 @@ f none /opt/csw/php5/include/php/ext/standard/php_smart_str.h=$basedir/opt/csw/p
 f none /opt/csw/php5/include/php/ext/standard/php_smart_str_public.h=$basedir/opt/csw/php5/include/php/ext/standard/php_smart_str_public.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/standard/php_standard.h=$basedir/opt/csw/php5/include/php/ext/standard/php_standard.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/standard/php_string.h=$basedir/opt/csw/php5/include/php/ext/standard/php_string.h 0644 root bin
-f none /opt/csw/php5/include/php/ext/standard/php_sunfuncs.h=$basedir/opt/csw/php5/include/php/ext/standard/php_sunfuncs.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/standard/php_type.h=$basedir/opt/csw/php5/include/php/ext/standard/php_type.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/standard/php_uuencode.h=$basedir/opt/csw/php5/include/php/ext/standard/php_uuencode.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/standard/php_var.h=$basedir/opt/csw/php5/include/php/ext/standard/php_var.h 0644 root bin

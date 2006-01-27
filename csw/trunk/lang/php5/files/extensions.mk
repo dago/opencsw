@@ -20,6 +20,7 @@ XLIST += readline
 XLIST += snmp
 XLIST += sqlite
 XLIST += pdosqlite
+XLIST += wddx
 XLIST += xsl
 
 DISTFILES += $(foreach N,$(XLIST),$(call admfiles,CSWphp5$(N),prototype depend))
