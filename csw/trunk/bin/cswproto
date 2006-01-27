@@ -179,6 +179,7 @@ __DATA__
 /opt/csw/lib/perl/csw
 /opt/csw/lib/perl/csw/auto
 /opt/csw/lib/perl/site_perl
+/opt/csw/lib/pkgconfig
 /opt/csw
 /opt/csw/bin
 /opt/csw/bin/i486
