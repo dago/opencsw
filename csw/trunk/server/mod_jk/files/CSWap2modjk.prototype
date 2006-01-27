@@ -1,0 +1,6 @@
+d none /opt/csw/apache2 ? ? ?
+d none /opt/csw/apache2/etc ? ? ?
+d none /opt/csw/apache2/etc/extra ? ? ?
+f none /opt/csw/apache2/etc/extra/httpd-jk.conf.CSW=$basedir/opt/csw/apache2/etc/extra/httpd-jk.conf.CSW 0644 root bin
+d none /opt/csw/apache2/libexec ? ? ?
+f none /opt/csw/apache2/libexec/mod_jk.so=$basedir/opt/csw/apache2/libexec/mod_jk.so 0755 root bin
