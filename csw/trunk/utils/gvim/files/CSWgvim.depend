@@ -31,7 +31,3 @@ P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWpango libpango - Library for laying out and rendering text
 P CSWperl perl - A high-level, general-purpose programming language
 P CSWzlib zlib - Zlib Data Compression Library
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm
-P SUNWxwice ICE components
-P SUNWxwplt X Window System platform software
