@@ -11,6 +11,13 @@ APXS=$AP2_BINDIR/apxs
 
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 
+# Enable base DAV functionality
+chroot $PKG_INSTALL_ROOT \
+    $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav mod_dav.so
+
+chroot $PKG_INSTALL_ROOT \
+    $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav_fs mod_dav_fs.so
+
 # Enable the dav_svn module
 chroot $PKG_INSTALL_ROOT \
     $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav_svn mod_dav_svn.so
@@ -68,7 +75,7 @@ fi
 
 cat <<END
 
-Subversion module for Apache 2.0.x is now installed.  The web server
+Subversion module for Apache 2.2 is now installed.  The web server
 was NOT restarted.  Please configure mod_dav_svn and restart apache
 manually.
 

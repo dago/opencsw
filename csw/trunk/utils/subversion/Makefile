@@ -55,8 +55,10 @@ NODIRPATHS = --libdir --libexecdir
 SVNLIB = $(prefix)/lib/svn
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
-CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
-CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-config
+#CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
+#CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-config
+CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
+CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --with-jdk=/usr/jdk/j2sdk1.4.2_02/j2se
@@ -77,6 +79,7 @@ include ../category.mk
 
 # Add libintl when linking
 LIBS += -lintl -liconv
+export LIBS
 
 # Libdir is a bit non-standard
 LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
@@ -85,7 +88,7 @@ LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 BINDING_LANGS   = python perl ruby java
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
-post-install: $(BINDING_TARGETS) contrib rbsvn-prototype
+post-install: $(BINDING_TARGETS) contrib rbsvn-prototype fix-config-vars
 	@$(MAKECOOKIE)
 	$(DONADA)
 
@@ -148,3 +151,5 @@ contrib: $(DESTDIR)$(docdir)
 	@cp -vr $(WORKSRC)/contrib $(DESTDIR)$(docdir)
 	@$(MAKECOOKIE)
 
+fix-config-vars:
+	@replacer $(DESTDIR)
