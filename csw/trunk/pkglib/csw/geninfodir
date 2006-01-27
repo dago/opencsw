@@ -1,11 +1,11 @@
 # This script updates the info dir file for texinfo
 
-if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
 
 savepath=$PATH
 PATH=/usr/bin:/opt/csw/bin
 
-/usr/sbin/chroot $PKG_ROOT_DIR /opt/csw/sbin/mkdirentries
+/usr/sbin/chroot $PKG_INSTALL_ROOT /opt/csw/sbin/mkdirentries
 
 PATH=$savepath
 
