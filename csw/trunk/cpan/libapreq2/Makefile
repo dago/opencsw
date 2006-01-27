@@ -25,11 +25,13 @@ MODDIST  = $(DISTNAME).tar.gz
 DEPENDS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
 #DEPENDS += cpan/mod_perl2
 
+AP2_ROOT = $(prefix)/apache2
+
 CONFIGURE_ARGS  = --enable-perl-glue
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
-CONFIGURE_ARGS += --with-apache2-apxs=$(prefix)/apache2/sbin/apxs
-CONFIGURE_ARGS += --with-apr-config=$(bindir)/apr-config
-CONFIGURE_ARGS += --with-apu-config=$(bindir)/apu-config
+CONFIGURE_ARGS += --with-apache2-apxs=$(AP2_ROOT)/sbin/apxs
+CONFIGURE_ARGS += --with-apr-config=$(AP2_ROOT)/bin/apr-config
+CONFIGURE_ARGS += --with-apu-config=$(AP2_ROOT)/bin/apu-config
 CONFIGURE_ARGS += --with-expat=$(prefix)
 
 # Must be installed to test
