@@ -12,6 +12,3 @@ P CSWlibxrender libxrender - fontconfig.org Xrender library
 P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
 P CSWpango libpango - Library for laying out and rendering text
 P CSWzlib zlib - Zlib Data Compression Library
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm
-P SUNWxwplt X Window System platform software

@@ -5,6 +5,3 @@ P CSWiconv libiconv - GNU iconv library
 P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
 P CSWtcl tcl - Tool Command Language
 P CSWxchat xchat - GTK+ based IRC client, similar to AmIRC (Amiga).
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm
-P SUNWxwplt X Window System platform software
