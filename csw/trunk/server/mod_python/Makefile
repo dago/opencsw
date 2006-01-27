@@ -18,6 +18,8 @@ DISTFILES += $(call admfiles,CSWap2modpython,$(pkgfiles))
 
 # Source hard codes path to flex
 PATCHFILES += lex.diff
+# Compensate for changes in the APR ABI
+PATCHFILES += apr.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs

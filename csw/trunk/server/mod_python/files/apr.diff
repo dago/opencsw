@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru mod_python-3.1.4.orig/src/connobject.c mod_python-3.1.4/src/connobject.c
+--- mod_python-3.1.4.orig/src/connobject.c	2006-01-18 19:09:59.733321000 -0500
++++ mod_python-3.1.4/src/connobject.c	2006-01-18 19:09:22.466114000 -0500
+@@ -78,7 +78,7 @@
+     rc = ap_get_brigade(c->input_filters, bb, mode, APR_BLOCK_READ, bufsize);
+     Py_END_ALLOW_THREADS;
+ 
+-    if (! APR_STATUS_IS_SUCCESS(rc)) {
++    if (!rc) {
+         PyErr_SetObject(PyExc_IOError, 
+                         PyString_FromString("Connection read error"));
+         return NULL;
+diff --speed-large-files --minimal -Nru mod_python-3.1.4.orig/src/filterobject.c mod_python-3.1.4/src/filterobject.c
+--- mod_python-3.1.4.orig/src/filterobject.c	2006-01-18 19:09:59.300983000 -0500
++++ mod_python-3.1.4/src/filterobject.c	2006-01-18 19:09:42.612394000 -0500
+@@ -178,7 +178,7 @@
+                                   APR_BLOCK_READ, self->readbytes);
+         Py_END_ALLOW_THREADS;
+ 
+-        if (!APR_STATUS_IS_EAGAIN(self->rc) && !APR_STATUS_IS_SUCCESS(self->rc)) {
++        if (!APR_STATUS_IS_EAGAIN(self->rc) && !self->rc) {
+             PyErr_SetObject(PyExc_IOError, 
+                             PyString_FromString("Input filter read error"));
+             return NULL;
