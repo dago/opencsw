@@ -1,7 +1,4 @@
-d none /opt/csw/bin ? ? ?
-f none /opt/csw/bin/apr-1-config=$basedir/opt/csw/bin/apr-1-config 0755 root bin
-s none /opt/csw/bin/apr-config=apr-1-config root bin
-d none /opt/csw/include 0755 root bin
+d none /opt/csw/include ? ? ?
 d none /opt/csw/include/apr-1 0755 root bin
 f none /opt/csw/include/apr-1/apr.h=$basedir/opt/csw/include/apr-1/apr.h 0644 root bin
 f none /opt/csw/include/apr-1/apr_allocator.h=$basedir/opt/csw/include/apr-1/apr_allocator.h 0644 root bin
@@ -43,7 +40,7 @@ d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/apr.exp=$basedir/opt/csw/lib/apr.exp 0644 root bin
 f none /opt/csw/lib/libapr-1.a=$basedir/opt/csw/lib/libapr-1.a 0644 root bin
 f none /opt/csw/lib/libapr-1.la=$basedir/opt/csw/lib/libapr-1.la 0755 root bin
-d none /opt/csw/lib/pkgconfig 0755 root bin
+d none /opt/csw/lib/pkgconfig ? ? ?
 f none /opt/csw/lib/pkgconfig/apr-1.pc=$basedir/opt/csw/lib/pkgconfig/apr-1.pc 0644 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/apr 0755 root bin

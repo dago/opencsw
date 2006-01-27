@@ -1,8 +1,5 @@
-d none /opt/csw/bin ? ? ?
-f none /opt/csw/bin/apu-1-config=$basedir/opt/csw/bin/apu-1-config 0755 root bin
-s none /opt/csw/bin/apu-config=apu-1-config root bin
-d none /opt/csw/include 0755 root bin
-d none /opt/csw/include/apr-1 0755 root bin
+d none /opt/csw/include ? ? ?
+d none /opt/csw/include/apr-1 ? ? ?
 f none /opt/csw/include/apr-1/apr_anylock.h=$basedir/opt/csw/include/apr-1/apr_anylock.h 0644 root bin
 f none /opt/csw/include/apr-1/apr_base64.h=$basedir/opt/csw/include/apr-1/apr_base64.h 0644 root bin
 f none /opt/csw/include/apr-1/apr_buckets.h=$basedir/opt/csw/include/apr-1/apr_buckets.h 0644 root bin
@@ -35,5 +32,5 @@ d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/aprutil.exp=$basedir/opt/csw/lib/aprutil.exp 0644 root bin
 f none /opt/csw/lib/libaprutil.a=$basedir/opt/csw/lib/libaprutil.a 0644 root bin
 f none /opt/csw/lib/libaprutil.la=$basedir/opt/csw/lib/libaprutil.la 0755 root bin
-d none /opt/csw/lib/pkgconfig 0755 root bin
+d none /opt/csw/lib/pkgconfig ? ? ?
 f none /opt/csw/lib/pkgconfig/apr-util-1.pc=$basedir/opt/csw/lib/pkgconfig/apr-util-1.pc 0644 root bin
