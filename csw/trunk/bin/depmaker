@@ -122,6 +122,8 @@ my $query;
    $query .= "| gawk '{print \$NF}' ";
    $query .= "| sort | uniq";
 
+close $deptmp_fh;
+
 chomp(my @deppkg = `$query`);
 
 foreach (sort @deppkg) {
