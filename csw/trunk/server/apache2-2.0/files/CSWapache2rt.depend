@@ -10,5 +10,3 @@ P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
 P CSWperl perl - A high-level, general-purpose programming language.
 P CSWsasl sasl - Simple Authentication and Security Layer
 P CSWzlib zlib - Zlib Data Compression Library
-P SUNWcsl Core Solaris, (Shared Libs)
-P SUNWlibms Sun WorkShop Bundled shared libm
