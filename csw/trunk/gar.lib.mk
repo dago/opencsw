@@ -222,7 +222,7 @@ gz-patch-%:
 # apply normal patches
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@$(GARPATCH) <$(DOWNLOADDIR)/$*
+	$(GARPATCH) <$(DOWNLOADDIR)/$*
 	@$(MAKECOOKIE)
 
 # This is used by makepatch
