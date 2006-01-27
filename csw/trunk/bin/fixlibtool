@@ -7,7 +7,7 @@
 #
 
 # Remove references to temporary directories
-/bin/perl -i.bak -plne '
+/bin/perl -i -plne '
     if (/^dependency_libs/) {
         s# -[ILR]\s*/tmp\S+##g;
         s# -[ILR]\s*/\S+/ # #g;
