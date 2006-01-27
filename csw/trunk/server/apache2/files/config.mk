@@ -7,9 +7,6 @@ SPKG_SOURCEURL = http://httpd.apache.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += config.layout
 
-# Patch APU to absolutely use GNU iconv
-#PATCHFILES += apu-iconv.diff
-
 # Build Configuration
 CONFIGURE_ARGS += --enable-layout=csw
 CONFIGURE_ARGS += --enable-ssl
@@ -39,22 +36,37 @@ CONFIGURE_ARGS += --enable-ssl
 CONFIGURE_ARGS += --enable-cgid
 CONFIGURE_ARGS += --enable-dav-lock
 
-CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
-CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-config
 CONFIGURE_ARGS += --with-z=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 
+ifeq ($(USE_EXTERNAL_APR),1)
+CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
+CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-config
+else
+# APR
+#CONFIGURE_ARGS += --enable-threads
+#CONFIGURE_ARGS += --enable-other-child
+
 # APR-Util
-#CONFIGURE_ARGS += --with-ldap
+CONFIGURE_ARGS += --with-ldap
 #CONFIGURE_ARGS += --with-ldap-lib=$(libdir)
 #CONFIGURE_ARGS += --with-ldap-include=$(includedir)
-#CONFIGURE_ARGS += --with-dbm=db43
-#CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb43
-#CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
+CONFIGURE_ARGS += --with-dbm=db43
+CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb43
+CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
 #CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql4
-#CONFIGURE_ARGS += --with-sqlite2=$(prefix)
-#CONFIGURE_ARGS += --with-expat=$(prefix)
-#CONFIGURE_ARGS += --with-iconv=$(prefix)
+CONFIGURE_ARGS += --with-sqlite2=no
+CONFIGURE_ARGS += --with-expat=$(prefix)
+CONFIGURE_ARGS += --with-iconv=$(prefix)
+
+# Patch APU to absolutely use GNU iconv
+PATCHFILES += apu-iconv.diff
+
+# Required for bdb43
+LIBS = -lnsl
+export LIBS
+
+endif
 
 # Extra libpath
 EXTRA_LIB = $(prefix)/bdb43/lib

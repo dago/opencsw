@@ -9,10 +9,10 @@ while (<>) {
     s#access_module\s+(libexec)/mod_access\.so#authz_host_module $1/mod_authz_host.so#;
     s#auth_ldap_module\s+(libexec)/mod_auth_ldap\.so#authnz_ldap_module $1/mod_authnz_ldap.so#;
     if (m{auth_module\s+libexec/mod_auth.so}) {
-        print "LoadModule auth_basic_module mod_auth_basic.so\n";
-        print "LoadModule authn_file_module mod_authn_file.so\n";
-        print "LoadModule authz_user_module mod_authz_user.so\n";
-        print "LoadModule authz_groupfile_module mod_authz_groupfile.so\n";
+        print "LoadModule auth_basic_module libexec/mod_auth_basic.so\n";
+        print "LoadModule authn_file_module libexec/mod_authn_file.so\n";
+        print "LoadModule authz_user_module libexec/mod_authz_user.so\n";
+        print "LoadModule authz_groupfile_module libexec/mod_authz_groupfile.so\n";
         next;
     }
 

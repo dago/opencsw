@@ -16,30 +16,24 @@ if [ "x$ULIMIT_MAX_FILES" != "x" ]; then
     $ULIMIT_MAX_FILES
 fi
 
-option=$1
+cmd=$1
 
-case $option in 
+case $cmd in 
 'start')
-    ;;
-'startssl')
-    APACHE_SSL=1
     ;;
 'stop')
     ;;
 'restart')
     ;;
 'reload')
-    option=graceful
+    cmd=graceful
     ;;
 *)
-    echo "Usage: $0 { start | startssl | stop | restart | reload }"
+    echo "Usage: $0 { start | stop | restart | reload }"
     exit 1
     ;;
 esac    
 
-APACHE_SSL=${APACHE_SSL:-'0'}
-[ $APACHE_SSL -eq 1 ] && HTTPD="$HTTPD -DSSL"
-
-$HTTPD -f $APACHE_CONF -k $option
+$HTTPD -f $APACHE_CONF -k $cmd
 exit $?
 

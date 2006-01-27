@@ -172,6 +172,7 @@ f none /opt/csw/apache2/sbin/httpd=$basedir/opt/csw/apache2/sbin/httpd 0755 root
 f none /opt/csw/apache2/sbin/httxt2dbm=$basedir/opt/csw/apache2/sbin/httxt2dbm 0755 root bin
 f none /opt/csw/apache2/sbin/logresolve=$basedir/opt/csw/apache2/sbin/logresolve 0755 root bin
 f none /opt/csw/apache2/sbin/rotatelogs=$basedir/opt/csw/apache2/sbin/rotatelogs 0755 root bin
+f none /opt/csw/apache2/sbin/update20to22=$basedir/opt/csw/apache2/sbin/update20to22 0755 root bin
 d none /opt/csw/apache2/share 0755 root bin
 d none /opt/csw/apache2/share/build 0755 root bin
 f none /opt/csw/apache2/share/build/config.nice=$basedir/opt/csw/apache2/share/build/config.nice 0755 root bin

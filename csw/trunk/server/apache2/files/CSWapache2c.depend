@@ -1,12 +1,10 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWapr apr - Apache Portable Runtime
-P CSWaprutil aprutil - Apache Portable Runtime Utilities
+P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
 P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
 P CSWexpat expat -  XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
 P CSWiconv libiconv - GNU iconv library
 P CSWlibnet libnet - the libnet packet construction library
-P CSWmysql4rt mysql4rt - run-time libraries for mysql4
 P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWsasl sasl - Simple Authentication and Security Layer

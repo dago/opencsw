@@ -10,25 +10,30 @@ endef
 
 include files/config.mk
 
-# Apache dummy toplevel package
+# Dummy toplevel package
 DISTFILES += $(call admfiles,CSWapache2,depend prototype)
-# Apache server (core)
+# Runtime
+DISTFILES += $(call admfiles,CSWapache2rt,depend prototype)
+# Server (core)
 CSWapache2c_admfiles = depend prototype postinstall space
 DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))
-# Apache prefork MPM (default)
+# Prefork MPM (default)
 CSWap2prefork_admfiles  = depend prototype preinstall postinstall
 CSWap2prefork_admfiles += preremove postremove space
 DISTFILES += $(call admfiles,CSWap2prefork,$(CSWap2prefork_admfiles))
-# Apache mod_suexec
+# mod_suexec
 CSWap2suexec_admfiles = depend prototype postinstall preremove
 DISTFILES += $(call admfiles,CSWap2suexec,$(CSWap2suexec_admfiles))
-# Apache manual
+# Manual
 DISTFILES += $(call admfiles,CSWapache2-manual,depend prototype)
+# Development support
+DISTFILES += $(call admfiles,CSWapache2-devel,depend prototype)
+
 # Configuration templates
 DISTFILES += cswapache2 httpd.conf.tmpl httpd-ssl.conf.tmpl
 DISTFILES += update20to22
 
-DEPENDS += lib/apr-util
+#DEPENDS += lib/apr-util
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
@@ -49,11 +54,16 @@ STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 include ../category.mk
 include files/rules.mk
 
-post-install:
+post-install: fix-config-vars copy-local-files 
+	@$(MAKECOOKIE)
+
+copy-local-files:
 	@install -d $(DESTDIR)/etc/init.d
 	@install $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
 	@install $(WORKDIR)/httpd.conf.tmpl $(APACHE_ROOT)/etc
 	@install $(WORKDIR)/httpd-ssl.conf.tmpl $(APACHE_ROOT)/etc/extra
 	@install $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
-	@$(MAKECOOKIE)
+
+fix-config-vars:
+	@replacer $(DESTDIR)
 
