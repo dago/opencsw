@@ -107,7 +107,6 @@ CPPFLAGS = $($(GARCOMPILER)_CPP_FLAGS)
 LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS) $($(GARCOMPILER)_LD_OPT)
 ASFLAGS  = $($(GARCOMPILER)_AS_OPT)
 OPTFLAGS = $($(GARCOMPILER)_CC_OPT)
-LIBS     =
 
 # allow us to link to libraries we installed
 EXT_CCINC = $(foreach EINC,$(EXTRA_INC) $(includedir), -I$(EINC))
@@ -197,7 +196,7 @@ STAGE_EXPORTS  = DESTDIR prefix exec_prefix bindir optbindir sbindir libexecdir
 STAGE_EXPORTS += datadir sysconfdir sharedstatedir localstatedir libdir
 STAGE_EXPORTS += optlibdir infodir lispdir includedir mandir docdir sourcedir
 STAGE_EXPORTS += perl_bindir CPPFLAGS CFLAGS CXXFLAGS LDFLAGS LD_RUN_PATH
-STAGE_EXPORTS += ASFLAGS OPTFLAGS LIBS CC CXX LD_OPTIONS
+STAGE_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
 STAGE_EXPORTS += CC_HOME CC_VERSION CXX_VERSION VENDORNAME VENDORSTAMP
 STAGE_EXPORTS += GARCH GAROSREL
 
