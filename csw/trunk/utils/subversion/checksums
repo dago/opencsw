@@ -4,7 +4,7 @@ f57bfe7b56bc5a363bc8533e074b0594  download/CSWsvn.depend
 b99cb6262eeb26db371f415d7bf8c3b7  download/CSWsvn.prototype
 acac9dfe69328d1986e6d68c323331bb  download/CSWap2svn.gspec
 ce6d2022e5c4e54fb30c7ed09670606a  download/CSWap2svn.depend
-e64b61dd5eaf8997bcad12a35b45e87e  download/CSWap2svn.prototype
+862b9a1d4f39e7ad56920db859d02c54  download/CSWap2svn.prototype
 09a4f25fdb82e1c01611317ae688e852  download/CSWap2svn.postinstall
 586b9c9924c1547d44451a84d2aca702  download/CSWap2svn.preremove
 69ddd475391ceb8706771aefffc8dc0f  download/CSWpmsvn.gspec
