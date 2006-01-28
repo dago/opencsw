@@ -29,7 +29,7 @@ IMAPDIR  = imap-2004f
 C_CLIENT = ../$(IMAPDIR)
 
 # Auxilliary files
-DISTFILES += php.ini phpext
+DISTFILES += php.ini.CSW httpd-php5.conf.CSW phpext
 DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh 
 
 # PHP Core
@@ -93,8 +93,18 @@ pre-build:
 	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
 	@$(MAKECOOKIE)
 
-# Copy over a starter config file (based on php.ini-recommended)
+# Copy over template config files and utility scripts
 post-install:
-	@sed -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini > $(DESTDIR)$(prefix)/php5/lib/php.ini
-	@cp $(WORKDIR)/phpext $(DESTDIR)$(prefix)/php5/bin
+	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	install -m 0644 \
+		$(WORKDIR)/httpd-php5.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra
+	install -m 0755 \
+		$(WORKDIR)/phpext \
+		$(DESTDIR)$(prefix)/php5/bin
+	gsed -i -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini.CSW
+	install -d $(DESTDIR)$(prefix)/apache2/etc
+	install -m 0644 \
+		$(WORKDIR)/php.ini.CSW \
+		$(DESTDIR)$(prefix)/php5/lib
 	@$(MAKECOOKIE)

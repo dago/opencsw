@@ -5,79 +5,52 @@ AP2_PREFIX=$CSW_PREFIX/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
 AP2_LIBEXEC=$AP2_PREFIX/libexec
 AP2_CONFDIR=$AP2_PREFIX/etc
-
+AP2_EXTRADIR=$AP2_CONFDIR/extra
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
 APXS=$AP2_BINDIR/apxs
 
+# Enable modules
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
-
-# Enable base DAV functionality
 chroot $PKG_INSTALL_ROOT \
     $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav mod_dav.so
-
 chroot $PKG_INSTALL_ROOT \
     $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav_fs mod_dav_fs.so
-
-# Enable the dav_svn module
 chroot $PKG_INSTALL_ROOT \
     $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav_svn mod_dav_svn.so
-
-# Enable the authz_svn module
 chroot $PKG_INSTALL_ROOT \
     $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n authz_svn mod_authz_svn.so
 
-# Add example
-if [ ! -z "`grep $PKGINST $AP2_CONFIG`" ]; then
+# Configure mod_dav_svn in httpd.conf
+if [ -n "`egrep 'IfModule (mod_dav_svn|dav_svn_module)' $AP2_CONFIG`" ]
+then
+    echo "Existing mod_dav_svn configuration detected"
+elif [ -n "`egrep '#Include etc/extra/httpd-svn.conf' $AP2_CONFIG`" ]; then
+    echo "Re-enabling existing config"
+    perl -i -plne 's,^#(Include etc/extra/httpd-svn.conf),$1,' $AP2_CONFIG
+else
+    echo "Adding Include for extra/http-svn.conf to httpd.conf"
+    cat << END >> $AP2_CONFIG
 
-    cat >>$AP2_CONFIG <<END
-
-# Added by $PKGINST
-#<IfModule mod_dav_svn.c>
-#<Location /repos>
-#    DAV svn
-#    SVNPath /absolute/path/to/repository
-#</Location>
-#</IfModule>
-#<IfModule mod_authz_svn.c>
-#    AuthzSVNAccessFile etc/svn_access.conf
-#</IfModule>
+Include etc/extra/httpd-svn.conf
 END
-
 fi
 
-# Output sample svn_access configuration
-SVN_ACCESS=$AP2_CONFDIR/svn_access.conf
+# Copy templates
+for file in $AP2_EXTRADIR/httpd-svn.conf $AP2_CONFDIR/svn_access.conf
+do
+    if [ ! -f $file ]; then
+        echo "Creating $file"
+        cp $file.CSW $file
+    else
+        echo "Preserving existing $file"
+    fi
+done
 
-if [ ! -f $SVN_ACCESS ]; then
-
-    cat >>$SVN_ACCESS <<END
-[groups]
-foo = john, bob
-bar = john, mike
-
-[/]
-* = r
-
-[foo:/]
-@foo = rw
-
-[foo:/branch/john]
-bob = r
-
-[foo:/branch/bob]
-john = r
-
-[bar:/]
-@bar = rw
-END
-
-fi
-
+# Finito
 cat <<END
 
-Subversion module for Apache 2.2 is now installed.  The web server
-was NOT restarted.  Please configure mod_dav_svn and restart apache
-manually.
+NOTICE: mod_dav, mod_dav_fs, mod_dav_svn, and mod_authz_svn are enabled in
+httpd.conf, but the server was not restarted.  Please examine your mod_dav_svn configuration and restart apache.
 
 END
 

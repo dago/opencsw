@@ -5,39 +5,45 @@ AP2_PREFIX=$CSW_PREFIX/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
 AP2_LIBEXEC=$AP2_PREFIX/libexec
 AP2_CONFDIR=$AP2_PREFIX/etc
-
+AP2_EXTRADIR=$AP2_CONFDIR/extra
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
 
-PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
-
 # Enable the PHP module
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n php5 libphp5.so
 
-# Add a configuration sample
-if [ -z "`grep 'IfModule mod_php5.c' $AP2_CONFIG`" ]; then
-    cp $AP2_CONFIG $AP2_CONFIG.pre-PHP5
+# Configure mod_php5 in httpd.conf
+if [ -n "`egrep 'IfModule (mod_php|php_module)' $AP2_CONFIG`" ]
+then
+    echo "Existing mod_php5 configuration detected"
+elif [ -n "`egrep '#Include etc/extra/httpd-php5.conf' $AP2_CONFIG`" ]; then
+    echo "Re-enabling existing config"
+    perl -i -plne 's,^#(Include etc/extra/httpd-php5.conf),$1,' $AP2_CONFIG
+else
+    echo "Adding Include for extra/http-php5.conf to httpd.conf"
+    cat << END >> $AP2_CONFIG
 
-    echo "Adding libphp5 configuration to $AP2_CONFIG..."
-    cat <<CONFIG >> $AP2_CONFIG
-
-# Added by $PKGINST
-<IfModule php5_module>
-    <IfModule mime_module>
-        AddType application/x-httpd-php .php
-        AddType application/x-httpd-php-source .phps
-    </IfModule>
-</IfModule>
-CONFIG
-
+Include etc/extra/httpd-php5.conf
+END
 fi
+
+# Copy templates
+for file in $AP2_EXTRADIR/httpd-php5.conf $CSW_PREFIX/php5/lib/php.ini
+do
+    if [ ! -f $file ]; then
+        echo "Creating $file"
+        cp $file.CSW $file
+    else
+        echo "Preserving existing $file"
+    fi
+done
 
 # Finito
 cat <<END
 
-NOTICE: PHP 5 is enabled in $AP2_CONFIG
-but the server was not restarted.  Please examine your PHP
-configuration and restart apache.
+NOTICE: mod_php5 is enabled in httpd.conf but the server was not restarted.
+Please examine your php5 configuration and restart apache.
 
 END
 

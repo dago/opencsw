@@ -11,8 +11,6 @@ endef
 
 # Release site
 MASTER_SITES = http://subversion.tigris.org/tarballs/
-# Development site
-#MASTER_SITES  = http://lolut.utbm.info/pub/subversion-1.3.0/rc4/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 
@@ -37,6 +35,9 @@ DISTFILES += $(call admfiles,CSWrbsvn,depend prototype)
 DISTFILES += $(call admfiles,CSWjavasvn,depend prototype)
 # SVN Development Support
 DISTFILES += $(call admfiles,CSWsvn-devel,depend prototype)
+
+# Templates
+DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 
 # Fix: Use 'gdiff' instead of 'diff'
 PATCHFILES += gdiff.diff
@@ -88,7 +89,13 @@ LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 BINDING_LANGS   = python perl ruby java
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
-post-install: $(BINDING_TARGETS) contrib rbsvn-prototype fix-config-vars
+PI_DEPENDS  = $(BINDING_TARGETS)
+PI_DEPENDS += contrib
+PI_DEPENDS += rbsvn-prototype
+PI_DEPENDS += fix-config-vars
+PI_DEPENDS += copy-templates
+
+post-install: $(PI_DEPENDS)
 	@$(MAKECOOKIE)
 	$(DONADA)
 
@@ -153,3 +160,14 @@ contrib: $(DESTDIR)$(docdir)
 
 fix-config-vars:
 	@replacer $(DESTDIR)
+
+copy-templates:
+	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	install -m 0644 \
+		$(WORKDIR)/httpd-svn.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra
+	install -m 0644 \
+		$(WORKDIR)/svn_access.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc
+	@$(MAKECOOKIE)
+

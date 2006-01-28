@@ -1,3 +1,6 @@
 d none /opt/csw/apache2 ? ? ?
+d none /opt/csw/apache2/etc ? ? ?
+d none /opt/csw/apache2/etc/extra ? ? ?
+f none /opt/csw/apache2/etc/extra/httpd-php5.conf.CSW=$basedir/opt/csw/apache2/etc/extra/httpd-php5.conf.CSW 0644 root bin
 d none /opt/csw/apache2/libexec ? ? ?
 f none /opt/csw/apache2/libexec/libphp5.so=$basedir/opt/csw/apache2/libexec/libphp5.so 0755 root bin

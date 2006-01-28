@@ -5,12 +5,10 @@ AP_PREFIX=$CSW_PREFIX/apache
 AP_BINDIR=$AP_PREFIX/bin
 AP_LIBEXEC=$AP_PREFIX/libexec
 AP_CONFDIR=$AP_PREFIX/conf
-
 AP_CONFIG=$AP_CONFDIR/httpd.conf
 
-PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
-
 # Enable the PHP module
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 chroot $PKG_INSTALL_ROOT \
     $AP_BINDIR/apxs -S LIBEXECDIR=$AP_LIBEXEC -e -a -n php5 libphp5.so
 
@@ -35,9 +33,8 @@ fi
 # Finito
 cat <<END
 
-NOTICE: PHP 5 is enabled in $AP_CONFIG
-but the server was not restarted.  Please examine your PHP
-configuration and restart apache.
+NOTICE: mod_php5 is enabled in httpd.conf but the server was not restarted.
+Please examine your php5 configuration and restart apache.
 
 END
 

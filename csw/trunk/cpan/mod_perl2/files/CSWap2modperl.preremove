@@ -13,6 +13,7 @@ PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -A -n perl mod_perl.so
 
+echo "Disabling httpd-perl.conf in httpd.conf"
 perl -i -plne 's,(?<!#)(Include etc/extra/httpd-perl.conf),#$1,' $AP2_CONFIG
 
 cat <<END
