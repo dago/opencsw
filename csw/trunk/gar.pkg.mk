@@ -88,11 +88,10 @@ package-create:
 package-reset:
 	@echo " ==> Reset packaging state for $(GARNAME) ($(DESTIMG))"
 	@if test -d $(COOKIEDIR) ; then \
-		rm -f $(COOKIEDIR)/package* ; \
-		if test -d $(WORKDIR) ; then \
-			rm -f $(WORKDIR)/CSW* ; \
-			cp $(FILEDIR)/CSW* $(WORKDIR) ; \
-		fi ; \
+		if test -d $(WORKDIR) ; then rm -f $(WORKDIR)/*CSW* ; fi ; \
+		rm -f $(COOKIEDIR)/*extract*CSW* \
+				  $(COOKIEDIR)/*checksum*CSW* \
+					$(COOKIEDIR)/package* ; \
 	fi
 
 # Reset and repackage
