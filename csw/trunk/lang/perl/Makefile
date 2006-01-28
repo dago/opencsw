@@ -1,5 +1,6 @@
 GARNAME = perl
-GARVERSION = 5.8.7
+DISTVERSION = 5.8.8-RC1
+GARVERSION = $(subst -RC1,,$(DISTVERSION))
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language.
@@ -12,23 +13,26 @@ define BLURB
   libraries.
 endef
 
-MASTER_SITES = $(CPAN_ROOT)/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = $(CPAN_ROOT)/authors/id/N/NW/NWCLARK/
+#MASTER_SITES = $(CPAN_ROOT)/src/
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += CSWperl.gspec CSWperl.prototype CSWperl.depend
 DISTFILES += CSWperldoc.gspec CSWperldoc.prototype CSWperldoc.depend
 
+WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
+
 # Sys::Syslog core version update (pre-5.8.8)
-MASTER_SITES += $(CPAN_MIRROR)/S/SA/SAPER/
-DISTFILES    += Sys-Syslog-0.10.tar.gz
-CORE_UPDATES += Sys-Syslog-0.10
+#MASTER_SITES += $(CPAN_MIRROR)/S/SA/SAPER/
+#DISTFILES    += Sys-Syslog-0.10.tar.gz
+#CORE_UPDATES += Sys-Syslog-0.10
 
 # List::Util update
-MASTER_SITES += $(CPAN_MIRROR)/G/GB/GBARR
-DISTFILES    += Scalar-List-Utils-1.18.tar.gz
-CORE_UPDATES += Scalar-List-Utils-1.18
+#MASTER_SITES += $(CPAN_MIRROR)/G/GB/GBARR
+#DISTFILES    += Scalar-List-Utils-1.18.tar.gz
+#CORE_UPDATES += Scalar-List-Utils-1.18
 
 # Fix a sprintf vunerability
-PATCHFILES += sprintf-5.8.7.diff
+#PATCHFILES += sprintf-5.8.7.diff
 
 #LIBDEPS += lib/bdb43
 #LIBDEPS += lib/gdbm
@@ -37,7 +41,7 @@ PATCHFILES += sprintf-5.8.7.diff
 CONFIGURE_SCRIPTS = perl
 
 # Compatable with all prior patch revs
-INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6
+INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7
 
 PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.3 -ldl -lm -lpthread -lc
 
@@ -89,7 +93,8 @@ configure-perl:
 	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
 	@$(MAKECOOKIE)
 
-post-install: libperl perlconf install-updates
+#post-install: libperl perlconf install-updates
+post-install: libperl perlconf
 	@$(MAKECOOKIE)
 
 # Make links to libperl
