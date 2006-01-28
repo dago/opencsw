@@ -13,27 +13,42 @@ PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n jk mod_jk.so
 
-if [ -z "`egrep 'IfModule (mod_perl|perl_module)|extra/httpd-perl.conf'`" ]
-then
+# Configure mod_jk in httpd.conf
+if [ -n "`egrep 'IfModule (mod_jk|jk_module)' $AP2_CONFIG`" ]
+then 
+    echo "Existing mod_jk configuration detected"
+elif [ -n "`egrep '#Include etc/extra/httpd-jk.conf' $AP2_CONFIG`" ]; then
+    echo "Re-enabling existing config"
+    perl -i -plne 's,^#(Include etc/extra/httpd-jk.conf),$1,' $AP2_CONFIG
+else
+    echo "Adding Include for extra/http-jk.conf to httpd.conf"
     cat << END >> $AP2_CONFIG
 
 Include etc/extra/httpd-jk.conf
 END
-
-# Copy template
-dstfile=$AP2_EXTRADIR/httpd-jk.conf
-tmpl=$dstfile.CSW
-if [ ! -f $dstfile ]; then
-    echo "Creating $dstfile"
-    cp $tmpl $dstfile
 fi
+
+# Copy templates
+for file in $AP2_EXTRADIR/httpd-jk.conf
+do
+    if [ ! -f $file ]; then
+        echo "Creating $file"
+        cp $file.CSW $file
+    else
+        echo "Preserving existing $file"
+    fi
+done
 
 # Finito
 cat << END
 
 NOTICE: mod_jk is enabled in httpd.conf, but the server was not restarted.
-Please examine the mod_jk specific configuration in
-$AP2_EXTRADIR/httpd-jk.conf and restart apache.
+Please examine your mod_jk configuration and restart apache.
+
+NOTICE: mod_proxy_ajp, included with Apache 2.1 and later, replaces the
+functionality of mod_jk.  Please consider migrating your configuration from
+mod_jk to mod_proxy_ajp.  A configuration sample is provided in
+httpd-jk.conf.
 
 END
 

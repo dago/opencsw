@@ -25,6 +25,11 @@ ADMINFILES = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modjk,$(ADMINFILES))
 DISTFILES += httpd-jk.conf.CSW
 
+AUXCONFIG += workers.properties
+AUXCONFIG += workers.properties.minimal
+AUXCONFIG += uriworkermap.properties
+DISTFILES += $(AUXCONFIG)
+
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)-src/jk/native
 
 # Make apxs install to the temp dir
@@ -42,9 +47,24 @@ ENABLE_TEST = 0
 include ../category.mk
 
 pre-install:
-	mkdir -p $(DESTDIR)$(prefix)/apache2/libexec \
-			     $(DESTDIR)$(prefix)/apache2/etc/extra
+	install -d \
+		$(DESTDIR)$(prefix)/apache2/libexec \
+		$(DESTDIR)$(prefix)/apache2/etc/extra \
+		$(DESTDIR)$(datadir)/ap2modjk \
+		$(DESTDIR)$(docdir)/ap2modjk
 
 post-install:
-	cp $(WORKDIR)/httpd-jk.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
+	install -m 0644 \
+		$(WORKDIR)/httpd-jk.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra
+	for prop in $(AUXCONFIG) ; do \
+		install -m 0644 $(WORKDIR)/$$prop $(DESTDIR)$(datadir)/ap2modjk ; \
+	done
+	for doc in LICENSE NOTICE ; do \
+		install -m 0644 $(WORKSRC)/../../$$doc $(DESTDIR)$(docdir)/ap2modjk ; \
+	done
+	for doc in CHANGES NEWS README STATUS.txt ; do \
+		install -m 0644 $(WORKSRC)/$$doc $(DESTDIR)$(docdir)/ap2modjk ; \
+	done
+	@$(MAKECOOKIE)
 
