@@ -2,7 +2,7 @@ GARNAME = pysqlite
 GARVERSION = 2.0.5
 CATEGORIES = lang
 
-DESCRIPTION = SQLite support for Python
+DESCRIPTION = SQLite3 support for Python
 define BLURB
   SQLite support for Python
 endef
