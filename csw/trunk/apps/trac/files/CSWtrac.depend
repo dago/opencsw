@@ -1,0 +1,5 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWpython python - The Python 2.3 language interpreter
+P CSWpycs pyclearsilver - Clearsilver Python language binding
+P CSWpysvn pysvn - Subversion Python language binding
+P CSWpysqlite2 pysqlite2 - SQLite3 support for Python

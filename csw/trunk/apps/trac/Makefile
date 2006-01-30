@@ -1,19 +1,40 @@
-GARNAME = graphviz
-GARVERSION = 1.10
-CATEGORIES = utils
+GARNAME = trac
+GARVERSION = 0.9.3
+CATEGORIES = apps
 
-DESCRIPTION = Graph drawing utilities with web and graphical interfaces.
+DESCRIPTION = Integrated SCM and Project Management
 define BLURB
-    graphviz is a set of graph drawing tools and libraries. It supports
-    hierarchical and mass-spring drawings; although the tools are scalable, their
-    emphasis is on making very good drawings of reasonably-sized graphs.
+	Trac is an enhanced wiki and issue tracking system for software development
+	projects. Trac uses a minimalistic approach to web-based software project
+	management. Our mission; to help developers write great software while
+	staying out of the way. Trac should impose as little as possible on a team's
+	established development process and policies.
 endef
 
-MASTER_SITES = http://www.graphviz.org/pub/graphviz/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://ftp.edgewall.com/pub/$(GARNAME)/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWtrac,)
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+TEST_SCRIPTS =
+INSTALL_SCRIPTS = custom
+INSTALL_ARGS = --root=$(DESTDIR)
 
 include ../category.mk
+
+install-custom:
+	@echo " ==> Installing $(GARNAME)"
+	@( cd $(WORKSRC) ; $(INSTALL_ENV) python ./setup.py install $(INSTALL_ARGS) )
+	$(DONADA)
+
+post-install: copy-docs
+	$(DONADA)
+
+copy-docs:
+	@install -d $(DESTDIR)$(docdir)/trac
+	@cp -R $(WORKSRC)/contrib $(DESTDIR)$(docdir)/trac
+	@for f in COPYING ChangeLog INSTALL README README.tracd UPGRADE ; do \
+		install -m 0644 $(WORKSRC)/$$f $(DESTDIR)$(docdir)/trac ; \
+	done
+
