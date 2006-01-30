@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://ftp.edgewall.com/pub/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWtrac,)
+DISTFILES += $(call admfiles,CSWtrac,depend prototype)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
