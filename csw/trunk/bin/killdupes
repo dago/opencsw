@@ -18,13 +18,6 @@ foreach my $file (@ARGV) {
 foreach my $pkg (sort keys %packages) {
     if (scalar @{$packages{$pkg}} > 1) {
 
-        # Write dupes out to a tempfile
-        my $tfile = "/tmp/kd.$pkg.$$";
-        open TFILE, ">>$tfile" or die "Cannot open file: $!";
-        print TFILE foreach @{$packages{$pkg}};
-        close TFILE;
-
-        # Use ckitem for menu selection
         my @unlink;
         if ($opt_n) {
             my %finfo;
@@ -35,8 +28,16 @@ foreach my $pkg (sort keys %packages) {
             pop @unlink;
         }
         else {
+            # Write dupes out to a tempfile
+            my $tfile = "/tmp/kd.$pkg.$$";
+            open TFILE, ">>$tfile" or die "Cannot open file: $!";
+            print TFILE foreach @{$packages{$pkg}};
+            close TFILE;
+
+            # Use ckitem for menu selection
             my ($rst) = `ckitem -p "Keep which file" -f $tfile`;
             unlink $tfile;
+
             chomp $rst; last if $rst eq 'q';
             @unlink = grep { !/$rst/ } @{$packages{$pkg}};
         }
