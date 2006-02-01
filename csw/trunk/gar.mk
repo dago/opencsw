@@ -212,7 +212,6 @@ beaujolais: makepatch makesum clean build
 	$(DONADA)
 
 update: makesum garchive clean
-	$(DONADA)
 
 # configure		- Runs either GNU configure, one or more local
 # 				  configure scripts or nothing, depending on
