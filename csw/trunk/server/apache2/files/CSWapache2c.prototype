@@ -151,7 +151,6 @@ f none /opt/csw/apache2/man/man1/htpasswd.1=$basedir/opt/csw/apache2/man/man1/ht
 d none /opt/csw/apache2/man/man8 0755 root bin
 f none /opt/csw/apache2/man/man8/ab.8=$basedir/opt/csw/apache2/man/man8/ab.8 0644 root bin
 f none /opt/csw/apache2/man/man8/apachectl.8=$basedir/opt/csw/apache2/man/man8/apachectl.8 0644 root bin
-f none /opt/csw/apache2/man/man8/apxs.8=$basedir/opt/csw/apache2/man/man8/apxs.8 0644 root bin
 f none /opt/csw/apache2/man/man8/htcacheclean.8=$basedir/opt/csw/apache2/man/man8/htcacheclean.8 0644 root bin
 f none /opt/csw/apache2/man/man8/httpd.8=$basedir/opt/csw/apache2/man/man8/httpd.8 0644 root bin
 f none /opt/csw/apache2/man/man8/logresolve.8=$basedir/opt/csw/apache2/man/man8/logresolve.8 0644 root bin
@@ -159,7 +158,6 @@ f none /opt/csw/apache2/man/man8/rotatelogs.8=$basedir/opt/csw/apache2/man/man8/
 d none /opt/csw/apache2/sbin 0755 root bin
 f none /opt/csw/apache2/sbin/ab=$basedir/opt/csw/apache2/sbin/ab 0755 root bin
 f none /opt/csw/apache2/sbin/apachectl=$basedir/opt/csw/apache2/sbin/apachectl 0755 root bin
-f none /opt/csw/apache2/sbin/apxs=$basedir/opt/csw/apache2/sbin/apxs 0755 root bin
 f none /opt/csw/apache2/sbin/checkgid=$basedir/opt/csw/apache2/sbin/checkgid 0755 root bin
 f none /opt/csw/apache2/sbin/dbmmanage=$basedir/opt/csw/apache2/sbin/dbmmanage 0755 root bin
 f none /opt/csw/apache2/sbin/envvars-std=$basedir/opt/csw/apache2/sbin/envvars-std 0644 root bin
