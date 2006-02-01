@@ -24,3 +24,8 @@ install-custom:
 	@echo " ==> Installing $(GARNAME)"
 	@( cd $(WORKSRC); $(INSTALL_ENV) python ./setup.py install $(INSTALL_ARGS) )
 
+post-install:
+	install -d $(DESTDIR)$(docdir)
+	mv $(DESTDIR)$(prefix)/pysqlite2-doc $(DESTDIR)$(docdir)/pysqlite2
+	$(DONADA)
+
