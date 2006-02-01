@@ -1,7 +1,7 @@
 2aef72887839dce520944eafc4c766a1  download/CSWap2modperl.gspec
 4abe98c82d6b357ef49ef85766dcecbf  download/CSWap2modperl.prototype
 727ad7cd35a131b3b49bdf4426e0ac2d  download/CSWap2modperl.depend
-b66839a1f70c7ce3b54309bb94431131  download/CSWap2modperl.postinstall
+bce39a803cbcc9ab82458cef8d57b650  download/CSWap2modperl.postinstall
 b266995026ff19ad4366b4518e648006  download/CSWap2modperl.preremove
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2modperl.space
 4aa0fc5876b33fa32ff8a18a7c70a82a  download/startup.pl.CSW
