@@ -1,5 +1,5 @@
 GARNAME = db
-GARVERSION = 4.4.16
+GARVERSION = 4.4.20
 CATEGORIES = lib
 
 DESCRIPTION = embedded database libraries and utilities

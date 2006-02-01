@@ -1,4 +1,4 @@
-d none /opt/csw/bdb44 0755 root bin
+d none /opt/csw/bdb44 ? ? ?
 d none /opt/csw/bdb44/docs 0755 root bin
 d none /opt/csw/bdb44/docs/api_c 0755 root bin
 f none /opt/csw/bdb44/docs/api_c/api_core.html=$basedir/opt/csw/bdb44/docs/api_c/api_core.html 0444 root bin
@@ -171,7 +171,6 @@ f none /opt/csw/bdb44/docs/api_c/mutex_set_tas_spins.html=$basedir/opt/csw/bdb44
 f none /opt/csw/bdb44/docs/api_c/mutex_stat.html=$basedir/opt/csw/bdb44/docs/api_c/mutex_stat.html 0444 root bin
 f none /opt/csw/bdb44/docs/api_c/mutex_unlock.html=$basedir/opt/csw/bdb44/docs/api_c/mutex_unlock.html 0444 root bin
 f none /opt/csw/bdb44/docs/api_c/object.html=$basedir/opt/csw/bdb44/docs/api_c/object.html 0444 root bin
-f none /opt/csw/bdb44/docs/api_c/pindex.src=$basedir/opt/csw/bdb44/docs/api_c/pindex.src 0444 root bin
 f none /opt/csw/bdb44/docs/api_c/rep_elect.html=$basedir/opt/csw/bdb44/docs/api_c/rep_elect.html 0444 root bin
 f none /opt/csw/bdb44/docs/api_c/rep_limit.html=$basedir/opt/csw/bdb44/docs/api_c/rep_limit.html 0444 root bin
 f none /opt/csw/bdb44/docs/api_c/rep_list.html=$basedir/opt/csw/bdb44/docs/api_c/rep_list.html 0444 root bin
@@ -549,6 +548,7 @@ f none /opt/csw/bdb44/docs/gsg/C/joins.html=$basedir/opt/csw/bdb44/docs/gsg/C/jo
 f none /opt/csw/bdb44/docs/gsg/C/keyCreator.html=$basedir/opt/csw/bdb44/docs/gsg/C/keyCreator.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/C/preface.html=$basedir/opt/csw/bdb44/docs/gsg/C/preface.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/C/readSecondary.html=$basedir/opt/csw/bdb44/docs/gsg/C/readSecondary.html 0444 root bin
+f none /opt/csw/bdb44/docs/gsg/C/returns.html=$basedir/opt/csw/bdb44/docs/gsg/C/returns.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/C/secondaryCursor.html=$basedir/opt/csw/bdb44/docs/gsg/C/secondaryCursor.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/C/secondaryDelete.html=$basedir/opt/csw/bdb44/docs/gsg/C/secondaryDelete.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/C/usingDbt.html=$basedir/opt/csw/bdb44/docs/gsg/C/usingDbt.html 0444 root bin
@@ -587,6 +587,7 @@ f none /opt/csw/bdb44/docs/gsg/CXX/joins.html=$basedir/opt/csw/bdb44/docs/gsg/CX
 f none /opt/csw/bdb44/docs/gsg/CXX/keyCreator.html=$basedir/opt/csw/bdb44/docs/gsg/CXX/keyCreator.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/CXX/preface.html=$basedir/opt/csw/bdb44/docs/gsg/CXX/preface.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/CXX/readSecondary.html=$basedir/opt/csw/bdb44/docs/gsg/CXX/readSecondary.html 0444 root bin
+f none /opt/csw/bdb44/docs/gsg/CXX/returns.html=$basedir/opt/csw/bdb44/docs/gsg/CXX/returns.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/CXX/secondaryCursor.html=$basedir/opt/csw/bdb44/docs/gsg/CXX/secondaryCursor.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/CXX/secondaryDelete.html=$basedir/opt/csw/bdb44/docs/gsg/CXX/secondaryDelete.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg/CXX/usingDbt.html=$basedir/opt/csw/bdb44/docs/gsg/CXX/usingDbt.html 0444 root bin
@@ -723,6 +724,7 @@ f none /opt/csw/bdb44/docs/gsg_txn/JAVA/deadlock.jpg=$basedir/opt/csw/bdb44/docs
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/enabletxn.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/enabletxn.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/envopen.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/envopen.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/filemanagement.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/filemanagement.html 0444 root bin
+f none /opt/csw/bdb44/docs/gsg_txn/JAVA/gettingStarted.css=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/gettingStarted.css 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/hotfailover.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/hotfailover.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/index.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/index.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/inmem_txnexample_java.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/inmem_txnexample_java.html 0444 root bin
@@ -733,6 +735,7 @@ f none /opt/csw/bdb44/docs/gsg_txn/JAVA/logconfig.html=$basedir/opt/csw/bdb44/do
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/logfileremoval.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/logfileremoval.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/maxtxns.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/maxtxns.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/nestedtxn.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/nestedtxn.html 0444 root bin
+f none /opt/csw/bdb44/docs/gsg_txn/JAVA/perftune-intro.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/perftune-intro.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/preface.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/preface.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/readblock.jpg=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/readblock.jpg 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/readmodifywrite.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/readmodifywrite.html 0444 root bin
@@ -743,6 +746,7 @@ f none /opt/csw/bdb44/docs/gsg_txn/JAVA/rwlocks1.jpg=$basedir/opt/csw/bdb44/docs
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/simplelock.jpg=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/simplelock.jpg 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/txn_ccursor.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/txn_ccursor.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/txnconcurrency.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/txnconcurrency.html 0444 root bin
+f none /opt/csw/bdb44/docs/gsg_txn/JAVA/txncursor.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/txncursor.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/txnexample_java.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/txnexample_java.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/txnindices.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/txnindices.html 0444 root bin
 f none /opt/csw/bdb44/docs/gsg_txn/JAVA/txnnowait.html=$basedir/opt/csw/bdb44/docs/gsg_txn/JAVA/txnnowait.html 0444 root bin
@@ -1193,7 +1197,6 @@ f none /opt/csw/bdb44/docs/ref/build_win/intro.html=$basedir/opt/csw/bdb44/docs/
 f none /opt/csw/bdb44/docs/ref/build_win/notes.html=$basedir/opt/csw/bdb44/docs/ref/build_win/notes.html 0444 root bin
 f none /opt/csw/bdb44/docs/ref/build_win/small.html=$basedir/opt/csw/bdb44/docs/ref/build_win/small.html 0444 root bin
 f none /opt/csw/bdb44/docs/ref/build_win/test.html=$basedir/opt/csw/bdb44/docs/ref/build_win/test.html 0444 root bin
-f none /opt/csw/bdb44/docs/ref/build_win/unicode.html=$basedir/opt/csw/bdb44/docs/ref/build_win/unicode.html 0444 root bin
 d none /opt/csw/bdb44/docs/ref/cam 0755 root bin
 f none /opt/csw/bdb44/docs/ref/cam/app.html=$basedir/opt/csw/bdb44/docs/ref/cam/app.html 0444 root bin
 f none /opt/csw/bdb44/docs/ref/cam/fail.html=$basedir/opt/csw/bdb44/docs/ref/cam/fail.html 0444 root bin
