@@ -12,6 +12,6 @@ define BLURB
   that and many more
 endef
 
-DISTFILES += CSWpmcgisession.gspec
+DISTFILES += $(call admfiles,CSWpmcgisession,depend prototype)
 
 include ../category.mk
