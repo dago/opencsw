@@ -14,7 +14,7 @@ use Getopt::Long qw/:config no_ignore_case/;
 use Pod::Usage;
 use Data::Dumper;
 
-my $VERSION = "1.0";
+my $VERSION = "1.1";
 
 # Discover network support
 my ($HAS_LWP_SUPPORT, $HAS_CURL_SUPPORT) = (0, 0);
@@ -81,9 +81,12 @@ my @ADMFILES = qw/
 # NO USER SERVICABLE PARTS BEYOND HERE
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+sub eprint { print STDERR "mkp: " . join(" ", @_) . "\n" }
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 sub error {
-    my ($code, $message) = @_;
-    print STDERR $message, "\n";
+    my $code = shift;
+    print STDERR join(" ", @_) . "\n";
     exit ($code || $exit{unknown});
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -97,6 +100,24 @@ sub usage_error {
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+sub vexec {
+    my $cmdline = shift;
+
+    eprint "vexec( $cmdline )";
+
+    if (wantarray) {
+        my @content = `$cmdline`;
+        my $ec = $? >> 8;
+        error($exit{prog_exec_error}, @_) unless $ec == 0;
+        return @content;
+    }
+    else {
+        system($cmdline) and error($exit{prog_exec_error}, @_);
+    }
+    return 1;
+}
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 sub process_arguments {
 
     # Options
@@ -107,10 +128,12 @@ sub process_arguments {
         'destdir|d=s'  => \$args{destdir},
         'workdir|w=s'  => \$args{workdir},
         'spooldir|p=s' => \$args{spooldir},
+        'pkgroot|r=s'  => \$args{pkgroot},
         'tmpdir|t=s'   => \$args{tmpdir},
         'transfer!'    => \$config{transfer},
         'overwrite!'   => \$config{overwrite},
         'compress!'    => \$config{compress},
+        'usebzip'      => \$config{usebzip},
         'help|h'       => \$args{help},
         'man|m'        => \$args{man},
         'version|V'    => sub {
@@ -146,10 +169,8 @@ sub process_arguments {
     # Destination directory (--destdir)
     $config{destdir} = $args{destdir} || $config{workdir};
     unless (-d $config{destdir}) {
-        print STDERR "  exec( mkdir -p $config{destdir} )\n";
-        system("mkdir -p $config{destdir}")
-            and error($exit{dir_create_failed},
-                "Cannot create destination dir '$config{destdir}'");
+        run("mkdir -p $config{destdir}", $exit{dir_create_failed},
+            "Cannot create destination dir '$config{destdir}'");
     }
 
     # Spool dir (--spooldir)
@@ -164,10 +185,17 @@ sub process_arguments {
         "Cannot access --tmpdir '$config{tmpdir}'")
             unless -d $config{tmpdir};
 
+    # Package root dir (--pkgroot)
+    $config{pkgroot} = $args{pkgroot} || '/';
+    error($exit{dir_not_found},
+        "Cannot access --pkgroot '$config{pkgroot}'")
+            unless -d $config{pkgroot};
+
     # Supply defaults for --no/x flag arguments
-    $config{compress}  = 1 unless defined $config{compress};
+    $config{compress}  = 0 unless defined $config{compress};
     $config{transfer}  = 1 unless defined $config{transfer};
-    $config{overwrite} = 1 unless defined $config{overwrite};
+    $config{overwrite} = 0 unless defined $config{overwrite};
+    $config{usebzip}   = 0 unless defined $config{usebzip};
 
     # Export variables to the spec
     foreach my $var qw(specname destdir workdir spooldir tmpdir) {
@@ -181,11 +209,9 @@ sub env_replace {
     while (/\%\{/) {
         my ($var) = $_ =~ /\%\{([^\}]+)\}/;
         my $val = $ENV{$var} || '';
-        print STDERR "WARNING: Environment var '$var' not set"
-            if $val eq '';
+        eprint "WARNING: ENV variable '$var' is not set" if $val eq '';
 
-        print STDERR "  + replacing \%{$var} with '$val'\n";
-
+        eprint "replacing \%{$var} with '$val'";
         s/\%\{[^\}]+?\}/$val/;
     }
     return $_;
@@ -222,11 +248,10 @@ sub parse_spec {
 
                 unless ($directive eq 'cvar' and exists $ENV{$envvar}) {
                     $ENV{$envvar} = $config{$type};
-                    print STDERR "+ setting ENV{$envvar} = " .
-                        $config{$type} . "\n";
+                    eprint "setting ENV{$envvar} = $config{$type}";
                 }
                 else {
-                    print STDERR "+ variable $envvar is already set\n";
+                    eprint "variable $envvar is already set";
                 }
 
                 next;
@@ -247,9 +272,9 @@ sub parse_spec {
                     $i -= 1;
                 }
                 else {
-                    splice @content, $i, 1, ();
-                    print STDERR "WARNING: Include at $specfile line $. " .
-                                 "generated no content."
+                    #splice @content, $i, 1, ();
+                    eprint "WARNING: \%include at $specfile line $. " .
+                           "generated no content.";
                 }
             }
             else {
@@ -261,18 +286,6 @@ sub parse_spec {
                 if $directive;
         }
     }
-
-    #if ($config{dumponly}) {
-    #    foreach (sort keys %$spec) {
-    #        my @key_items = @{$spec->{$_}};
-    #        for (my $i = 0; $i < $#key_items; $i++) {
-    #            my $fields = scalar @{$key_items[$i]};
-    #            my $format = "%-10s"x($fields - 1);
-    #            printf "$_ $format\n", @{$key_items[$i]}[0..$fields-1];
-    #        }
-    #    }
-    #    exit 0;
-    #}
 
     return $spec;
 }
@@ -304,6 +317,7 @@ sub load_content {
             open INCLUDE, $fpath
                 or error($exit{file_not_readable},
                     "Cannot read file $fpath at $specfile line $line");
+
             while (<INCLUDE>) { push @content, $_ }
             close INCLUDE;
         }
@@ -315,7 +329,7 @@ sub load_content {
                     unless defined $LWP;
 
                 # Retrieve content
-                my $rsp = $LWP->get( $args );
+                my $rsp = $LWP->get($args);
                 error($exit{file_not_found},
                     "Unable to access $args at $specfile line $line: " .
                     $rsp->code . ": " . $rsp->message)
@@ -326,30 +340,20 @@ sub load_content {
             elsif ($HAS_CURL_SUPPORT) {
 
                 # Use curl to grab the content
-                @content = `$HAS_CURL_SUPPORT -s $args`;
-                my $ec = $? >> 8;
-
-                error($exit{prog_exec_error},
-                    "Failed to get $args with curl " .
-                    "at $specfile line $line")
-                        if $ec;
+                @content = vexec("$HAS_CURL_SUPPORT -s $args",
+                    "Failed to get $args with curl at $specfile line $line");
             }
             else {
-                error($exit{usage},
-                    "No network support for 'url' directive " .
-                    "at $specfile line $line");
+                error($exit{usage}, "No network support: cannot process " .
+                    "'url' directive at $specfile line $line");
             }
         }
     }
     elsif ($type eq $SPEC_TYPE{EXEC}) {
 
         # Get content back from the exec
-        print STDERR "  exec( $args )\n";
-        @content = `$args`;
-        my $ec = $? >> 8;
-        error($exit{prog_exec_error},
-            "Failed to execute '$args' at $specfile line $line")
-                if $ec;
+        @content = vexec($args, 
+            "Failed to execute '$args' at $specfile line $line");
     }
     elsif ($type eq $SPEC_TYPE{CONTENT}) {
         push @content, $args;
@@ -359,10 +363,9 @@ sub load_content {
             "Unknown include type '$type' at $specfile line $line");
     }
 
-    print STDERR "WARNING: No content was generated by '$type' at ",
-                 "$specfile line $line\n"
-        unless @content;
-
+    eprint "WARNING: No content was generated by '$type' at " .
+           "$specfile line $line" unless @content;
+           
     return \@content;
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -381,34 +384,31 @@ sub create_files {
 
     # First things first, check for required items
     foreach my $required qw(pkginfo prototype) {
-        my $rpath = catfile $workdir, "$specname.$required";
         error($exit{spec_error},
-            "Required package resource '$specname.$required' not specified")
-                unless -f $rpath or exists $spec->{$required};
+            "Required package resource \%$required not specified")
+                unless exists $spec->{$required};
     }
 
     # Next, generate admin file content
     foreach my $admtype (@ADMFILES) {
         next unless exists $spec->{$admtype};
 
-        print STDERR "+ processing $admtype\n";
+        eprint "processing $admtype";
 
         my $admfile = catfile $workdir, "$specname.$admtype";
+        my $admfile_name = basename $admfile;
 
         # Allow other admin files to read the prototype!
         $protopath = $ENV{MKP_PROTOTYPE} = $admfile if $admtype eq 'prototype';
 
         # Handle overwrite permission
-        if (-f $admfile) {
-            if ($config{overwrite}) {
-                print STDERR "WARNING: Overwriting existing file $admfile\n";
-            }
-            else {
-                print STDERR "WARNING: Not re-creating existing file $admfile\n";
-                next;
-            }
+        if (-f $admfile and not $config{overwrite}) {
+            eprint "  using existing $admfile_name";
+            next;
         }
+        eprint "WARNING: Overwriting $admtype $admfile_name" if $config{overwrite};
 
+        eprint "  generating $admfile_name";
         my @admcontent;
         foreach my $item (@{ $spec->{$admtype} }) {
             push @admcontent, @{ load_content @$item };
@@ -429,7 +429,7 @@ sub create_files {
              or $admtype eq 'pkginfo'
              or $admtype eq 'space')
             {
-                print STDERR "+ removing duplicate lines from $admfile\n";
+                eprint "removing duplicate lines from $admfile_name";
 
                 # Remove duplicate lines, preserve order
                 my @uniqadm;
@@ -443,19 +443,19 @@ sub create_files {
                 @admcontent = @uniqadm;
             }
 
-            print STDERR "+ writing $admfile\n";
+            eprint "  writing $admfile_name";
 
             open OUT, ">$admfile"
                 or error($exit{file_not_writable},
                     "Unable to write $admfile: $!");
-            foreach my $line (@admcontent) { print OUT $line }
+
+            print OUT $_ foreach (@admcontent);
             close OUT;
         }
-
     }
 
     # Last of all, write admin file content to the prototype
-    print STDERR "+ writing admin entries to $protopath\n";
+    eprint "writing admin entries to " . basename $protopath;
 
     my %writeadm;
     foreach my $admtype (@ADMFILES) {
@@ -469,7 +469,8 @@ sub create_files {
     # Write entries which are not already in the prototype...
     if (keys %writeadm) {
         open PROTO, ">>$protopath"
-            or die "Failed to open $protopath for append: $!";
+            or error($exit{file_not_writable},
+                "Failed to open $protopath for append: $!");
 
         foreach my $admtype (sort keys %writeadm) {
             my $admfile = "$specname.$admtype";
@@ -488,12 +489,8 @@ sub clean_spool {
     my $specname = $config{specname};
 
     my $existing_pkgspool = catfile $spooldir, $specname;
-    if (-d $existing_pkgspool) {
-        print STDERR "  exec( rm -r $existing_pkgspool )\n";
-        system("rm -r $existing_pkgspool")
-            and error($exit{prog_exec_error},
-                "Failed to remove $existing_pkgspool");
-    }
+    vexec("rm -r $existing_pkgspool", "Failed to remove $existing_pkgspool")
+        if -d $existing_pkgspool;
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -506,12 +503,11 @@ sub make_package {
     my @vars;
     push @vars, join("=", $_, $config{pkgvars}{$_})
         foreach (sort keys %{$config{pkgvars}});
+
     my $vars = join(" ", @vars);
 
-    print STDERR "  exec( pkgmk -f $proto $vars )\n";
-    system("pkgmk -f $proto $vars")
-        and error($exit{prog_exec_error},
-            "Failed to create $config{specname} using $proto\n");
+    vexec("pkgmk -r $config{pkgroot} -f $proto $vars",
+         "Failed to create $config{specname} using $proto");
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -520,31 +516,22 @@ sub transfer_package {
     my $destdir  = $config{destdir};
     my $tmpdir   = $config{tmpdir};
     my $pkgname  = $config{pkgname};
-    my $pkgfile  = $config{pkgfile};
-
+    my $pkgfile  = $config{pkgfile} || "$config{bitname}.pkg";
     my $tmppkg   = catfile $tmpdir, $pkgfile;
 
-    print STDERR "  exec( pkgtrans -s $spooldir $tmppkg $pkgname )\n";
-    system("pkgtrans -s $spooldir $tmppkg $pkgname >/dev/null 2>&1")
-        and error($exit{prog_exec_error},
-            "Failed to transfer package $pkgname to $tmppkg");
+    vexec("pkgtrans -s $spooldir $tmppkg $pkgname",
+         "Failed to transfer package $pkgname to $tmppkg");
 
     if ($config{compress}) {
-        print STDERR "  exec( gzip -9 -f $tmppkg )\n";
-        system("gzip -9 -f $tmppkg")
-            and error($exit{prog_exec_error},
-                "Failed to compress package $tmppkg");
+        my $compress = $config{usebzip}
+            ? 'bzip2 -9 -f %s'
+            : 'gzip -9 -f %s';
 
-        $tmppkg .= ".gz";
+        vexec(sprintf($compress, $tmppkg), "Failed to compress $tmppkg");
+        $tmppkg .= $config{usebzip} ? ".bz2" : ".gz";
     }
 
-    if ($tmpdir ne $destdir) {
-        print STDERR "  exec( mv $tmppkg $destdir )\n";
-        system("mv $tmppkg $destdir")
-            and error($exit{file_not_writable},
-                "Failed to move $tmppkg to $destdir");
-    }
-
+    vexec("mv $tmppkg $destdir") if $tmpdir ne $destdir;
     clean_spool;
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
