@@ -5,9 +5,10 @@ AP2_PREFIX=$CSW_PREFIX/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
 AP2_LIBEXEC=$AP2_PREFIX/libexec
 AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_EXTRADIR=$AP2_CONFDIR/extra
 
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
-AP2_CONFIG_SSL=$AP2_CONFDIR/extras/httpd-ssl.conf
+AP2_CONFIG_SSL=$AP2_EXTRADIR/httpd-ssl.conf
 AP2_CONFIG_SSL_OLD=$AP2_CONFDIR/ssl.conf
 
 # Don't overwrite config if it exists
@@ -18,21 +19,15 @@ for config in $AP2_CONFIG $AP2_CONFIG_SSL $AP2_CONFIG_SSL_OLD ; do
         echo "Updating syntax of $config to Apache 2.2"
         $AP2_BINDIR/update20to22 $config
         warn_update=1
-    elif [ -f $config.tmpl ]; then
+    elif [ -f $config.CSW ]; then
         echo "Creating $config from template"
         hostname=`hostname`
         sed -e s,@HOSTNAME@,$hostname,g   \
             -e s,@USER@,nobody,g          \
             -e s,@GROUP@,nobody,g         \
-            -e s,@ADMIN@,root@$hostname,g $config.tmpl > $config
+            -e s,@ADMIN@,root@$hostname,g $config.CSW > $config
     fi
 done
-
-# Clean up templates
-echo "Cleaning up templates..."
-rm -f $AP2_CONFIG.tmpl $AP2_CONFIG_SSL.tmpl
-removef $PKGINST $AP2_CONFIG.tmpl $AP2_CONFIG_SSL.tmpl
-removef -f $PKGINST
 
 if [ $warn_update -eq 1 ] ; then
 cat << EOF

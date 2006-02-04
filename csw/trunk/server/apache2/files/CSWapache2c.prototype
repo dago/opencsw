@@ -21,10 +21,10 @@ f none /opt/csw/apache2/etc/extra/httpd-info.conf=$basedir/opt/csw/apache2/etc/e
 f none /opt/csw/apache2/etc/extra/httpd-languages.conf=$basedir/opt/csw/apache2/etc/extra/httpd-languages.conf 0644 root bin
 f none /opt/csw/apache2/etc/extra/httpd-mpm.conf=$basedir/opt/csw/apache2/etc/extra/httpd-mpm.conf 0644 root bin
 f none /opt/csw/apache2/etc/extra/httpd-multilang-errordoc.conf=$basedir/opt/csw/apache2/etc/extra/httpd-multilang-errordoc.conf 0644 root bin
-f none /opt/csw/apache2/etc/extra/httpd-ssl.conf.tmpl=$basedir/opt/csw/apache2/etc/extra/httpd-ssl.conf.tmpl 0644 root bin
+f none /opt/csw/apache2/etc/extra/httpd-ssl.conf.CSW=$basedir/opt/csw/apache2/etc/extra/httpd-ssl.conf.CSW 0644 root bin
 f none /opt/csw/apache2/etc/extra/httpd-userdir.conf=$basedir/opt/csw/apache2/etc/extra/httpd-userdir.conf 0644 root bin
 f none /opt/csw/apache2/etc/extra/httpd-vhosts.conf=$basedir/opt/csw/apache2/etc/extra/httpd-vhosts.conf 0644 root bin
-f none /opt/csw/apache2/etc/httpd.conf.tmpl=$basedir/opt/csw/apache2/etc/httpd.conf.tmpl 0644 root bin
+f none /opt/csw/apache2/etc/httpd.conf.CSW=$basedir/opt/csw/apache2/etc/httpd.conf.CSW 0644 root bin
 f none /opt/csw/apache2/etc/magic=$basedir/opt/csw/apache2/etc/magic 0644 root bin
 f none /opt/csw/apache2/etc/mime.types=$basedir/opt/csw/apache2/etc/mime.types 0644 root bin
 d none /opt/csw/apache2/include 0755 root bin

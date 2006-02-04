@@ -30,7 +30,7 @@ DISTFILES += $(call admfiles,CSWapache2-manual,depend prototype)
 DISTFILES += $(call admfiles,CSWapache2-devel,depend prototype)
 
 # Configuration templates
-DISTFILES += cswapache2 httpd.conf.tmpl httpd-ssl.conf.tmpl
+DISTFILES += cswapache2 httpd.conf.CSW httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
 #DEPENDS += lib/apr-util
@@ -60,8 +60,8 @@ post-install: fix-config-vars copy-local-files
 copy-local-files:
 	@install -d $(DESTDIR)/etc/init.d
 	@install $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
-	@install $(WORKDIR)/httpd.conf.tmpl $(APACHE_ROOT)/etc
-	@install $(WORKDIR)/httpd-ssl.conf.tmpl $(APACHE_ROOT)/etc/extra
+	@install $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
+	@install $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
 	@install $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 
 fix-config-vars:
