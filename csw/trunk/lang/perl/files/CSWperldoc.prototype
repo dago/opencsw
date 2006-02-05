@@ -178,7 +178,6 @@ f none /opt/csw/share/man/man3/CGI::Util.3perl=$basedir/opt/csw/share/man/man3/C
 f none /opt/csw/share/man/man3/CPAN.3perl=$basedir/opt/csw/share/man/man3/CPAN.3perl 0644 root bin
 f none /opt/csw/share/man/man3/CPAN::FirstTime.3perl=$basedir/opt/csw/share/man/man3/CPAN::FirstTime.3perl 0644 root bin
 f none /opt/csw/share/man/man3/CPAN::Nox.3perl=$basedir/opt/csw/share/man/man3/CPAN::Nox.3perl 0644 root bin
-f none /opt/csw/share/man/man3/CPAN::Version.3perl=$basedir/opt/csw/share/man/man3/CPAN::Version.3perl 0644 root bin
 f none /opt/csw/share/man/man3/Carp.3perl=$basedir/opt/csw/share/man/man3/Carp.3perl 0644 root bin
 f none /opt/csw/share/man/man3/Carp::Heavy.3perl=$basedir/opt/csw/share/man/man3/Carp::Heavy.3perl 0644 root bin
 f none /opt/csw/share/man/man3/Class::ISA.3perl=$basedir/opt/csw/share/man/man3/Class::ISA.3perl 0644 root bin

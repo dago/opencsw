@@ -1,6 +1,5 @@
 GARNAME = perl
-DISTVERSION = 5.8.8-RC1
-GARVERSION = $(subst -RC1,,$(DISTVERSION))
+GARVERSION = 5.8.8
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language.
@@ -15,24 +14,9 @@ endef
 
 MASTER_SITES = $(CPAN_ROOT)/authors/id/N/NW/NWCLARK/
 #MASTER_SITES = $(CPAN_ROOT)/src/
-DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWperl.gspec CSWperl.prototype CSWperl.depend
 DISTFILES += CSWperldoc.gspec CSWperldoc.prototype CSWperldoc.depend
-
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
-
-# Sys::Syslog core version update (pre-5.8.8)
-#MASTER_SITES += $(CPAN_MIRROR)/S/SA/SAPER/
-#DISTFILES    += Sys-Syslog-0.10.tar.gz
-#CORE_UPDATES += Sys-Syslog-0.10
-
-# List::Util update
-#MASTER_SITES += $(CPAN_MIRROR)/G/GB/GBARR
-#DISTFILES    += Scalar-List-Utils-1.18.tar.gz
-#CORE_UPDATES += Scalar-List-Utils-1.18
-
-# Fix a sprintf vunerability
-#PATCHFILES += sprintf-5.8.7.diff
 
 #LIBDEPS += lib/bdb43
 #LIBDEPS += lib/gdbm
@@ -132,21 +116,21 @@ perlconf:
 	@$(MAKECOOKIE)
 
 # Install core updates
-install-updates: remove-obsolete
-	@for d in "" $(CORE_UPDATES) ; do \
-		test -z "$$d" && continue ; \
-		( cd $(WORKDIR)/$$d ; \
-		$(CONFIGURE_ENV) perl Makefile.PL ; \
-		$(BUILD_ENV) make ; \
-		$(TEST_ENV) make test ; \
-		$(INSTALL_ENV) make install INSTALLDIRS=perl DESTDIR=$(DESTDIR) ) ; \
-	done
-	@$(MAKECOOKIE)
+#install-updates: remove-obsolete
+#	@for d in "" $(CORE_UPDATES) ; do \
+#		test -z "$$d" && continue ; \
+#		( cd $(WORKDIR)/$$d ; \
+#		$(CONFIGURE_ENV) perl Makefile.PL ; \
+#		$(BUILD_ENV) make ; \
+#		$(TEST_ENV) make test ; \
+#		$(INSTALL_ENV) make install INSTALLDIRS=perl DESTDIR=$(DESTDIR) ) ; \
+#	done
+#	@$(MAKECOOKIE)
 
 # Remove old modules
-remove-obsolete:
-	-@rm -f $(DESTDIR)$(datadir)/perl/$(GARVERSION)/List/Util.pm \
-			$(DESTDIR)$(datadir)/perl/$(GARVERSION)/Scalar/Util.pm
-	-@rmdir $(DESTDIR)$(datadir)/perl/$(GARVERSION)/List \
-			$(DESTDIR)$(datadir)/perl/$(GARVERSION)/Scalar
+#remove-obsolete:
+#	-@rm -f $(DESTDIR)$(datadir)/perl/$(GARVERSION)/List/Util.pm \
+#			$(DESTDIR)$(datadir)/perl/$(GARVERSION)/Scalar/Util.pm
+#	-@rmdir $(DESTDIR)$(datadir)/perl/$(GARVERSION)/List \
+#			$(DESTDIR)$(datadir)/perl/$(GARVERSION)/Scalar
 
