@@ -1,3 +1,4 @@
+# vim: ts=4 sw=2 noet
 # RCS ID: $Id$
 #
 # gar.pkg.mk - Build Solaris packages
@@ -76,8 +77,8 @@ package-create:
 			$(PKG_ENV) mkpackage --spec $$spec \
 								 --destdir $(SPKG_EXPORT) \
 								 --workdir $(WORKDIR) \
-                                 --nooverwrite \
-                                 -v basedir=$(DESTDIR) || exit 2 ; \
+								 --compress \
+								 -v basedir=$(DESTDIR) || exit 2 ; \
 		done ; \
 	else \
 		echo " ==> No specs defined for $(GARNAME)" ; \
