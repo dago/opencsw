@@ -12,5 +12,6 @@ P CSWpmdbdmysql pm_dbdmysql - MySQL driver for the Perl5 Database Interface
 P CSWpmdbdsqlite pm_dbdsqlite - Self Contained RDBMS in a DBI Driver
 P CSWpmdbi pm_dbi - Database independent interface for Perl
 P CSWpymysql pymysql - MySQL support for Python
-P CSWpysqlite pysqlite - SQLite support for Python
+P CSWpysqlite2 pysqlite2 - SQLite3 support for Python
 P CSWpython python - The Python language interpreter
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
