@@ -71,7 +71,7 @@ d17315a3056cff9ba51781d223d1d33f  download/CSWphp5readline.prototype
 d808c704e708ccffe48901074c6540ea  download/CSWphp5readline.depend
 0cb632460208ea2f79f4c22146692eea  download/CSWphp5snmp.gspec
 9fa2b2f734ebae76248cdfb91ff0c28c  download/CSWphp5snmp.prototype
-0c46a532d1e208b7382e74343866f4ff  download/CSWphp5snmp.depend
+6730d2719abfb5f5655edf6857e3a3b4  download/CSWphp5snmp.depend
 bb2f0fe08e2b892b4e52df6f1938e0ee  download/CSWphp5sqlite.gspec
 66dc73cba276f3d2ba678bd135bb09cc  download/CSWphp5sqlite.prototype
 640d063af6709ff067d2a5b27b57a227  download/CSWphp5sqlite.depend
@@ -88,3 +88,4 @@ b28f5c3b0e2fe3e525c6ff6e4a9846fe  download/CSWphp5xsl.depend
 d22bc5c2bd2ad664ea1e9c8f95d17189  download/imap-ssl.diff
 c7898c50f3422d43f1a63e1ea29363d3  download/imap-cc.diff
 bafc0237e20c42ce0f2621bb7e783230  download/imap-cflags.diff
+09851a0390be5e2ae05ff9773ef64840  download/snmp-hack.diff

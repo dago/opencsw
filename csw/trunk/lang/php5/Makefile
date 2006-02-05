@@ -58,6 +58,9 @@ PATCHFILES += imap-cc.diff
 # Respect my CFLAGS
 PATCHFILES += imap-cflags.diff
 
+# Horrible, but necessary due to net-snmp linking with -lwrap
+PATCHFILES += snmp-hack.diff
+
 #DEPENDS += server/apache2 server/mysql4
 
 # Configuration

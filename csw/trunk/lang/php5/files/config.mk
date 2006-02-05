@@ -59,6 +59,7 @@ CONFIGURE_ARGS += --with-readline=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --enable-shmop=shared
 #CONFIGURE_ARGS += --enable-simplexml=shared
+CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
