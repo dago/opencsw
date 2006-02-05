@@ -169,7 +169,7 @@ sub process_arguments {
     # Destination directory (--destdir)
     $config{destdir} = $args{destdir} || $config{workdir};
     unless (-d $config{destdir}) {
-        run("mkdir -p $config{destdir}", $exit{dir_create_failed},
+        vexec("mkdir -p $config{destdir}", $exit{dir_create_failed},
             "Cannot create destination dir '$config{destdir}'");
     }
 
