@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWpackage.gspec
+DISTFILES += $(call admfiles,CSWpackage,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
