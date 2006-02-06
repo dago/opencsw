@@ -125,7 +125,8 @@ LD_RUN_PATH = $(call MAKEPATH,$(LD_RUN_DIRS))
 # allow us to use programs we just built
 PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
 PATH := $(DESTDIR)$(gnudir):$(DESTDIR)$(bindir):$(DESTDIR)$(sbindir):$(PATH)
-PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/gnu:$(BUILD_PREFIX)/sbin:/opt/csw/bin:$(PATH)
+PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/gnu:$(BUILD_PREFIX)/sbin:$(PATH)
+PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 PATH := $(HOME)/bin:$(CC_HOME)/bin:$(PATH):$(GARBIN)
 
 # This is for foo-config chaos
