@@ -1,4 +1,19 @@
 #!/bin/perl -lw
+#
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# killdupes - Remove duplicate packages from a directory, with or
+#             without user interaction.  Note that this only works
+#             for packages named according to blastwave standards.
+#
 
 use strict;
 use File::Basename;
@@ -20,6 +35,7 @@ foreach my $pkg (sort keys %packages) {
 
         my @unlink;
         if ($opt_n) {
+            # Non-interactive
             my %finfo;
             foreach my $file (@{$packages{$pkg}}) {
                 $finfo{$file} = (stat($file))[9];

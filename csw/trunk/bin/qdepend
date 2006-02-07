@@ -1,10 +1,16 @@
 #!/bin/perl -w
 #
 # $Id:$
-# $URL:$
 #
-# qdepend - Quick depend formatter for use with installed
-#           packages.
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# qdepend - Quick depend formatter for use with installed packages.
 #
 
 use strict;
@@ -24,3 +30,4 @@ foreach my $pkg (@ARGV) {
     chomp($pinfo);
     print "$DEPTYPE $pinfo\n";
 }
+
