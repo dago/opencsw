@@ -1,1 +1,1 @@
-%depend         exec awk '$1 ~ /f/{print $3}' %{MKP_PROTOTYPE} | %{GARBIN}/depmaker --root %{DESTDIR} --nodep %{MKP_PKGNAME} %{DEPMAKER_EXTRA_ARGS}
+%depend         exec awk '$1 ~ /f/{print $3}' %{prototype} | %{GARBIN}/depmaker --root %{DESTDIR} --nodep %{pkgname} %{DEPMAKER_EXTRA_ARGS}
