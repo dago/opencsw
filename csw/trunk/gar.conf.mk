@@ -1,5 +1,3 @@
-#-*- mode: Fundamental; tab-width: 4; -*-
-# ex:ts=4
 # $Id$
 
 # This file contains configuration variables that are global to
@@ -8,16 +6,15 @@
 # specify environment variables on the make command-line.
 
 # Pick up user information
--include $(GARDIR)/gar.rc.mk
 -include $(HOME)/.garrc
 
 # A directory containing cached files. It can be created
 # manually, or with 'make garchive' once you've started
 # downloading required files (say with 'make paranoid-checksum'.
-GARCHIVEDIR ?= /export/garchive
+GARCHIVEDIR ?= /export/medusa/src
 
 # Space separated list of paths to search for DISTFILES.
-GARCHIVEPATH ?= /export/garchive
+GARCHIVEPATH ?= /export/medusa/src
 
 # Select compiler (GNU/SUN)
 GARCOMPILER ?= SUN

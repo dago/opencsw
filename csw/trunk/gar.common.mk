@@ -1,4 +1,11 @@
-# RCS ID: $Id$
+# $Id$
+#
+# Copyright 2006 Cory Omand
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
 #
 # gar.common.mk - General routines used by multiple packages.  For instance,
 #                 setting up server instances prior to testing.

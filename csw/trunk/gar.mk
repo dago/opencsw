@@ -1,7 +1,5 @@
-#-*- mode: Fundamental; tab-width: 4; -*-
-# ex:ts=4 sw=4
 # $Id$
-
+#
 # Copyright (C) 2001 Nick Moffitt
 # 
 # Redistribution and/or use, with or without modification, is

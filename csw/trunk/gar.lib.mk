@@ -1,13 +1,12 @@
-#-*- mode: Fundamental; tab-width: 4; -*-
-# ex:ts=4 sw=4
 # $Id$
-
-# Original Concept Copyright (C) 2001 Nick Moffitt
+#
+# Copyright (C) 2001 Nick Moffitt
 # 
 # Redistribution and/or use, with or without modification, is
 # permitted.  This software is without warranty of any kind.  The
 # author(s) shall not be liable in the event that use of the
 # software causes damage.
+#
 
 # cookies go here, so we have to be able to find them for
 # dependency checking.
