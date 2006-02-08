@@ -1095,7 +1095,7 @@ any.  By default, pkgfile will be set to C<%{pkgname}.pkg>.
 
 =back
 
-=head2 Known Issues
+=head1 KNOWN ISSUES
 
 Long lines in spec files cannot be broken with line continuation characters.
 So far, this has not been a problem, because parameterized paths are relatively
