@@ -1,5 +1,11 @@
-# vim: ts=4 sw=2 noet
-# RCS ID: $Id$
+# $Id$
+#
+# Copyright 2006 Cory Omand
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
 #
 # gar.pkg.mk - Build Solaris packages
 #
@@ -8,9 +14,9 @@ SPKG_REVSTAMP  ?= ,REV=$(shell date '+%Y.%m.%d')
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
-SPKG_SOURCEURL ?= Unknown
+SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
 SPKG_PACKAGER  ?= Unknown
-SPKG_VENDOR    ?= Unknown
+SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_EMAIL     ?= Unknown
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
