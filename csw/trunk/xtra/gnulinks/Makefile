@@ -1,7 +1,8 @@
 GARNAME = gnulinks
-GARVERSION = 1.0
+GARVERSION = 1.1
 CATEGORIES = xtra
-GARCH = all
+
+SPKG_SOURCEURL = No Source
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
 define BLURB
