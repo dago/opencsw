@@ -14,7 +14,7 @@
 #
 
 use strict;
-use Cwd;
+use Cwd qw/abs_path getcwd/;
 use File::Basename;
 use File::Spec::Functions;
 use Getopt::Long qw/:config no_ignore_case/;
@@ -174,8 +174,16 @@ sub _exec {
 # Effects  : This function causes the calling program to exit.
 #
 sub vexec {
-    eval { _exec(@_) };
-    error( @{$@} ) if $@;
+    if (wantarray) {
+        my @content;
+        eval { @content = _exec(@_) };
+        error( @{$@} ) if $@;
+        return @content;
+    }
+    else {
+        eval { _exec(@_) };
+        error( @{$@} ) if $@;
+    }
     return 1;
 }
 
@@ -495,11 +503,11 @@ sub get_content {
 
         # Fix relative file URIs
         if ( $source =~ m#file://# ) {
-            $source =~ s#file://(?=[^/])#$ENV{PWD}/#;
+            $source =~ s#file://(?=[^/])#$config{workdir}/#;
             $source =~ s#file://##;
         }
         elsif ( $source !~ m#^\w+://# ) {
-            $source =~ s#^(?=[^/])#$ENV{PWD}/#;
+            $source =~ s#^(?=[^/])#$config{workdir}/#;
         }
 
         if ( $source !~ m#^\w+://# ) {
@@ -507,6 +515,8 @@ sub get_content {
             #
             # Plain text file
             #
+
+            $source = abs_path($source);
 
             die [ $exit{file_not_found}, "cannot access $source" ]
               unless -f $source;
@@ -624,7 +634,7 @@ sub create_files {
 
                 error(
                       ( $@ and ref($@) eq 'ARRAY' )
-                    ? ( @{$@}, "in ???" )
+                    ? ( @{$@}, "at $item->[2] line $item->[3]" )
                     : ( $exit{unknown}, "$@ at $item->[2] line $item->[3]" )
                   )
                   if $@;
@@ -633,7 +643,7 @@ sub create_files {
 
         # Only do a content replace within 'pkginfo' includes
         if ( $admtype eq 'pkginfo' ) {
-            for ( my $i = 0 ; $i < $#admcontent ; $i++ ) {
+            for ( my $i = 0 ; $i <= $#admcontent ; $i++ ) {
                 $admcontent[$i] = env_replace( $admcontent[$i] );
             }
         }
