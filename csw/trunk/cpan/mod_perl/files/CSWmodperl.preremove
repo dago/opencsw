@@ -1,7 +1,7 @@
 #!/bin/sh
 
 AP_ROOT=$PKG_ROOT_DIR/opt/csw/apache
-AP_CONF=$AP_ROOT/etc/httpd.conf
+AP_CONF=$AP_ROOT/conf/httpd.conf
 AP_LIBEXEC=$AP_ROOT/libexec
 APXS=$AP_ROOT/bin/apxs
 
