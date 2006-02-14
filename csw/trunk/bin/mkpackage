@@ -14,7 +14,7 @@
 #
 
 use strict;
-use Cwd qw/abs_path getcwd/;
+use Cwd qw/abs_path cwd/;
 use File::Basename;
 use File::Spec::Functions;
 use Getopt::Long qw/:config no_ignore_case/;
@@ -290,8 +290,11 @@ sub process_arguments {
     $config{spec} = "file://$config{spec}"
       unless $config{spec} =~ m#^(\w+)://#;
 
+    # Current dir
+    $config{curdir} = cwd();
+
     # Working dir (--workdir)
-    $config{workdir} = $args{workdir} || getcwd();
+    $config{workdir} = $args{workdir} || $config{curdir};
     error( $exit{dir_not_found}, "Cannot access --workdir '$config{workdir}'" )
       unless -d $config{workdir};
 
@@ -503,11 +506,11 @@ sub get_content {
 
         # Fix relative file URIs
         if ( $source =~ m#file://# ) {
-            $source =~ s#file://(?=[^/])#$config{workdir}/#;
+            $source =~ s#file://(?=[^/])#$config{curdir}/#;
             $source =~ s#file://##;
         }
         elsif ( $source !~ m#^\w+://# ) {
-            $source =~ s#^(?=[^/])#$config{workdir}/#;
+            $source =~ s#^(?=[^/])#$config{curdir}/#;
         }
 
         if ( $source !~ m#^\w+://# ) {
@@ -516,13 +519,12 @@ sub get_content {
             # Plain text file
             #
 
-            $source = abs_path($source);
-
-            die [ $exit{file_not_found}, "cannot access $source" ]
+            die [ $exit{file_not_found}, "cannot access $source ($!)" ]
               unless -f $source;
 
+
             open FILE, $source
-              or die [ $exit{file_not_readable}, "cannot open $source: $!" ];
+              or die [ $exit{file_not_readable}, "cannot open $source ($!)" ];
 
             push @content, <FILE>;
             close FILE;
@@ -540,7 +542,8 @@ sub get_content {
                 my $r = $UA->get($source);
                 die [
                     $exit{file_not_found},
-                    "cannot access $source (" . $r->code . ": " . $r->message
+                        "cannot access $source (" . $r->code . ": " .
+                        $r->message . ")"
                   ]
                   unless $r->is_success;
 
