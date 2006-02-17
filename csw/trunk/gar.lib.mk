@@ -413,7 +413,7 @@ install-%/setup.rb:
 PYINSTALL_CMD ?= install
 install-%/setup.py:
 	@echo " ==> Running setup.py $(PYINSTALL_CMD) in $*"
-	( cd $* ; $(INSTALL_ENV) python ./setup.py $(PYINSTALL_CMD) $(INSTALL_ARGS) )
+	@( cd $* ; $(INSTALL_ENV) python ./setup.py $(PYINSTALL_CMD) $(INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
 # pkg-config scripts
