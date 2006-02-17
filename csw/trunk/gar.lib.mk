@@ -286,9 +286,9 @@ configure-%/Imakefile:
 	@cd $* && $(CONFIGURE_ENV) xmkmf $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
-configure-rbsetup:
-	@echo " ==> Running $@ in $(WORKSRC)"
-	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ruby setup.rb config )
+configure-%/setup.rb:
+	@echo " ==> Running setup.rb config in $*"
+	@( cd $* ; $(CONFIGURE_ENV) ruby ./setup.rb config $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 #################### BUILD RULES ####################
@@ -325,9 +325,17 @@ build-%/rakefile:
 	@( cd $* ; $(BUILD_ENV) rake $(RAKEFLAGS) $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
-build-rbsetup:
-	@echo " ==> Running $@ in $(WORKSRC)"
-	@( cd $(WORKSRC) ; $(BUILD_ENV) ruby setup.rb setup )
+build-%/setup.rb:
+	@echo " ==> Running setup.rb setup in $*"
+	@( cd $* ; $(BUILD_ENV) ruby ./setup.rb setup $(BUILD_ARGS) )
+	@$(MAKECOOKIE)
+
+# This can be: build, build_py, build_ext, build_clib, build_scripts
+# See setup.py --help-commands for details
+PYBUILD_CMD ?= build
+build-%/setup.py:
+	@echo " ==> Running setup.py $(PYBUILD_TYPE) in $*"
+	@( cd $* ; $(BUILD_ENV) python ./setup.py $(PYBUILD_CMD) $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
 #################### TEST RULES ####################
@@ -361,6 +369,11 @@ test-%/rakefile:
 	@( cd $* ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
 	@$(MAKECOOKIE)
 
+test-%/setup.py:
+	@echo " ==> Running setup.py test in $*"
+	@( cd $* ; $(TEST_ENV) python ./setup.py test $(TEST_ARGS) )
+	@$(MAKECOOKIE)
+
 ################# INSTALL RULES ####################
 
 # just run make install and hope for the best.
@@ -390,10 +403,17 @@ install-%/rakefile:
 	@( cd $* ; $(INSTALL_ENV) rake $(RAKEFLAGS) $(INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
-install-rbsetup:
-	@echo " ==> Running $@ in $(WORKSRC)"
-	@( cd $(WORKSRC) ; \
-		$(INSTALL_ENV) ruby setup.rb install --prefix=$(DESTDIR) )
+install-%/setup.rb:
+	@echo " ==> Running setup.rb install in $*"
+	@( cd $* ; $(INSTALL_ENV) ruby ./setup.rb install --prefix=$(DESTDIR) )
+	@$(MAKECOOKIE)
+
+# This can be: install, install_lib, install_headers, install_scripts,
+# or install_data.  See setup.py --help-commands for details.
+PYINSTALL_CMD ?= install
+install-%/setup.py:
+	@echo " ==> Running setup.py $(PYINSTALL_CMD) in $*"
+	( cd $* ; $(INSTALL_ENV) python ./setup.py $(PYINSTALL_CMD) $(INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
 # pkg-config scripts

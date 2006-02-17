@@ -12,11 +12,12 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWpymysql,depend prototype)
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = pymodule
-INSTALL_SCRIPTS = pymodule
+BUILD_SCRIPTS = $(WORKSRC)/setup.py
+TEST_SCRIPTS =
+INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
-# No test suite (tsk, tsk)
-ENABLE_TEST = 0
+INSTALL_ARGS  = --root=$(DESTDIR)
+INSTALL_ARGS += --prefix=$(prefix)
 
 include ../category.mk
 
@@ -27,12 +28,3 @@ LD_OPTIONS := -R/opt/csw/mysql4/lib/mysql/\$$ISALIST $(LD_OPTIONS)
 PATH       := $(mysql_bindir):$(PATH)
 export LD_OPTIONS PATH
 
-build-pymodule:
-	@echo " ==> Running custom install for $(GARNAME)"
-	@( cd $(WORKSRC) ; $(BUILD_ENV) \
-		python setup.py build )
-
-install-pymodule:
-	@echo " ==> Running custom install for $(GARNAME)"
-	@( cd $(WORKSRC) ; $(INSTALL_ENV) \
-		python setup.py install --prefix=$(DESTDIR)$(prefix) )

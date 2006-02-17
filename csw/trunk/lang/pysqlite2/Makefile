@@ -12,17 +12,14 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpysqlite2,depend prototype)
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = 
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+BUILD_SCRIPTS = $(WORKSRC)/setup.py
+TEST_SCRIPTS = 
+INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 INSTALL_ARGS += --root=$(DESTDIR)
+INSTALL_ARGS += --prefix=$(prefix)
 
 include ../category.mk
-
-install-custom:
-	@echo " ==> Installing $(GARNAME)"
-	@( cd $(WORKSRC); $(INSTALL_ENV) python ./setup.py install $(INSTALL_ARGS) )
 
 post-install:
 	install -d $(DESTDIR)$(docdir)

@@ -9,23 +9,16 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/$(call TOLOWER,$(GARNAME))/
 WORKSRC = $(WORKDIR)/$(GARNAME)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWpysqlite.gspec
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = pymodule
-INSTALL_SCRIPTS = pymodule
+BUILD_SCRIPTS = $(WORKSRC)/setup.py
+TEST_SCRIPTS =
+INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
-# No test target
-ENABLE_TEST = 0
+INSTALL_ARGS  = --root=$(DESTDIR)
+INSTALL_ARGS += --prefix=$(prefix)
 
 include ../category.mk
 
-build-pymodule:
-	@echo " ==> Running custom install for $(GARNAME)"
-	@( cd $(WORKSRC) ; $(BUILD_ENV) python setup.py build )
-
-install-pymodule:
-	@echo " ==> Running custom install for $(GARNAME)"
-	@( cd $(WORKSRC) ; \
-		python setup.py install --prefix=$(DESTDIR)$(prefix) )
