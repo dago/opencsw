@@ -13,7 +13,7 @@ include files/config.mk
 # Dummy toplevel package
 DISTFILES += $(call admfiles,CSWapache2,depend prototype)
 # Runtime
-DISTFILES += $(call admfiles,CSWapache2rt,depend prototype)
+DISTFILES += $(call admfiles,CSWapache2rt,depend prototype checkinstall)
 # Server (core)
 CSWapache2c_admfiles = depend prototype postinstall space
 DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))

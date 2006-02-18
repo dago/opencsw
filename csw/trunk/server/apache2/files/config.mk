@@ -39,7 +39,7 @@ CONFIGURE_ARGS += --enable-dav-lock
 CONFIGURE_ARGS += --with-z=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 
-ifeq ($(USE_EXTERNAL_APR),1)
+ifdef USE_EXTERNAL_APR
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-config
 else
