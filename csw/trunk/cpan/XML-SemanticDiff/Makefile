@@ -10,7 +10,7 @@ define BLURB
   describes a single difference between the two docs.
 endef
 
-DISTFILES += CSWpmxmlsemdiff.gspec CSWpmxmlsemdiff.depend
+DISTFILES += $(call admfiles,CSWpmxmlsemdiff,depend prototype)
 
 DEPENDS += cpan/libxml-perl
 
