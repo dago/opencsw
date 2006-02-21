@@ -17,7 +17,7 @@ use strict;
 use Cwd qw/abs_path cwd/;
 use File::Basename;
 use File::Spec::Functions;
-use Getopt::Long qw/:config no_ignore_case/;
+use Getopt::Long qw/:config no_ignore_case gnu_getopt/;
 use Pod::Usage;
 use vars qw/
   $TOOLVERSION $REVISION $VERSION
@@ -27,7 +27,7 @@ use vars qw/
   $DIRECTIVE_START %VALID_DIRECTIVES/;
 
 # Tool Version/Revision Information
-$TOOLVERSION = "1.2";
+$TOOLVERSION = "1.3";
 ($REVISION) = q/$Revision$/ =~ /(\d+)/;
 $VERSION = sprintf '%s (r%d)', $TOOLVERSION, $REVISION;
 
@@ -103,7 +103,7 @@ $DIRECTIVE       = qr/^$DIRECTIVE_START(\w+)/;
 # Arguments: @_ - message portions, which will be joined by space, and
 #                 concluded with a newline character.
 #
-sub eprint { print STDERR "mkp: " . join( " ", @_ ) . "\n" }
+sub eprint { print STDERR "mkp: ".join( " ", @_ )."\n" unless $config{quiet} }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Function : error
@@ -115,7 +115,7 @@ sub eprint { print STDERR "mkp: " . join( " ", @_ ) . "\n" }
 #
 sub error {
     my $code = shift;
-    eprint "ERROR:", join( " ", @_ ), "\n";
+    print STDERR "ERROR:", join( " ", @_ ), "\n";
     exit( $code || $exit{unknown} );
 }
 
@@ -249,8 +249,10 @@ sub process_arguments {
 
     # Options
     my %args;
-    my %options = (
+    GetOptions(
         'v=s'          => \%{ $config{pkgvars} },
+        'D=s'          => \@{ $config{dumpvars} },
+        'A'            => \$config{dumpall},
         'spec|s=s'     => \$args{spec},
         'destdir|d=s'  => \$args{destdir},
         'workdir|w=s'  => \$args{workdir},
@@ -261,14 +263,14 @@ sub process_arguments {
         'overwrite!'   => \$config{overwrite},
         'compress!'    => \$config{compress},
         'usebzip'      => \$config{usebzip},
+        'quiet|q'      => \$config{quiet},
         'help'         => \$args{help},
         'manual'       => \$args{man},
         'version|V'    => sub {
             print "$SELF v$VERSION\n";
             exit $exit{usage};
         },
-    );
-    GetOptions(%options) or pod2usage();
+    ) or pod2usage();
 
     # Help (--help) and/or Manual (--man)
     pod2usage(1) if $args{help};
@@ -334,6 +336,31 @@ sub process_arguments {
     foreach my $var qw(specname destdir workdir spooldir pkgroot tmpdir) {
         $ENV{$var} = $config{$var};
     }
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : dumpenv
+# Purpose  : Dump ENV variables after parsing the spec.
+# Arguments: $dumpvars - Array ref of desired variables.  Empty dumps all.
+#            $spec - Spec structure returned by parse().
+# Returns  : This function causes the calling program to exit.
+#
+sub dumpenv {
+    my $dumpvars = shift;
+    my $spec = shift;
+
+    my @vars = @$dumpvars ? @$dumpvars : keys %ENV;
+    if (@vars == 1) {
+        print $ENV{$vars[0]}, "\n";
+    }
+    else {
+        foreach my $var (@vars) {
+            my $val = exists $ENV{$var} ? $ENV{$var} : '';
+            printf "%s=%s\n", $var, $val;
+        }
+    }
+
+    exit $exit{ok};
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -789,7 +816,9 @@ sub transfer_package {
 
 process_arguments;
 
-my $spec      = parse $config{spec};
+my $spec = parse $config{spec};
+dumpenv([], $spec)                if $config{dumpall};
+dumpenv($config{dumpvars}, $spec) if @{$config{dumpvars}};
 my $protopath = create_files $spec;
 make_package $protopath;
 transfer_package if $config{transfer};
@@ -807,10 +836,10 @@ mkpackage - Create one or more Solaris packages from a 'spec' file.
 
 =head1 SYNOPSIS
 
- mkpackage --spec <path> [--destdir <path>] [--workdir <path>]
+ mkpackage [-D <var>|-A] --spec <path> [--destdir <path>] [--workdir <path>]
         [--spooldir <path>] [--pkgroot <path>] [--tmpdir <path>]
         [--[no]transfer] [--[no]overwrite] [--[no]compress] [--usebzip]
-        [-v var=value...] [--help] [--manual] [--version]
+        [-v var=value...] [--quiet] [--help] [--manual] [--version]
 
 =head1 DESCRIPTION
 
@@ -822,6 +851,27 @@ into a bitstream format, and whether that bitstream is compressed.  The output
 filename and directory for bitstream packages may also be configured.
 
 =head1 OPTIONS
+
+=head2 -D
+
+Dump the value of one or more environment variables to STDOUT after the spec
+is parsed.  This option can be specified more than once to dump the values of
+multiple variables.  When -D is specified only once, the value is dumped, if
+it exists, or an empty string is output if the value is not set.  If -D is
+specified more than once, the values are printed out as:
+
+ variable=value
+
+Use --quiet to only print out the variable value (or list of variables).
+
+=head2 -A
+
+Dump the value of all environment variables to STDOUT after the spec is
+parsed. Values are output as:
+
+ variable=value
+
+Use --quiet to only print out the variable value (or list of variables).
 
 =head2 --spec,-s
 
@@ -887,6 +937,10 @@ specified, mkpackage will compress bitstream packages using gzip.  Specifying
 
 Build time variables.  Specify one or more variable replacements for pkgmk
 during the package build stage.  This option can be specified multiple times.
+
+=head2 --quiet,-q
+
+Suppress all informational messages.
 
 =head2 --help
 
