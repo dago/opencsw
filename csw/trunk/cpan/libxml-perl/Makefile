@@ -7,9 +7,6 @@ DESCRIPTION = Perl SAX parser using XML::Parser
 define BLURB
 endef
 
-DISTFILES += CSWpmlibxmlperl.gspec
-
-# Fix UTF typo in stream.t
-PATCHFILES = stream_utf.diff
+DISTFILES += $(call admfiles,CSWpmlibxmlperl,depend prototype)
 
 include ../category.mk
