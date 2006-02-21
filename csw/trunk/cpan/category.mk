@@ -22,6 +22,12 @@ GEN_AUTHOR_ID := $(GEN_AUTHOR_ID)/$(shell echo ${AUTHOR} | cut -c1,2)
 GEN_AUTHOR_ID := $(GEN_AUTHOR_ID)/$(AUTHOR)
 AUTHOR_ID ?= $(GEN_AUTHOR_ID)
 
+# Source URL
+TOLOWER = $(shell echo $(1) | tr '[A-Z]' '[a-z]')
+SPKG_SOURCEURL  = http://search.cpan.org
+SPKG_SOURCEURL := $(SPKG_SOURCEURL)/~$(call TOLOWER,$(AUTHOR))
+SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
+
 include ../../gar.mk
 
 # Canned commands for finding packlist files
