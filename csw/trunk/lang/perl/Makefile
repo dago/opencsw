@@ -13,20 +13,23 @@ define BLURB
 endef
 
 MASTER_SITES = $(CPAN_ROOT)/authors/id/N/NW/NWCLARK/
-#MASTER_SITES = $(CPAN_ROOT)/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWperl.gspec CSWperl.prototype CSWperl.depend
-DISTFILES += CSWperldoc.gspec CSWperldoc.prototype CSWperldoc.depend
 
-#LIBDEPS += lib/bdb43
-#LIBDEPS += lib/gdbm
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWperl,depend prototype)
+DISTFILES += $(call admfiles,CSWperldoc,depend prototype)
+
+LIBDEPS += lib/bdb43
+LIBDEPS += lib/gdbm
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
 
 # Compatable with all prior patch revs
-INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7
+PL_MAJOR   = 5.8
+PL_PATCH   = 0 2 4 6 7
+INC_COMPAT = $(foreach REV,$(PL_PATCH),$(PL_MAJOR).$(REV))
 
+# Force use of db-4.3
 PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.3 -ldl -lm -lpthread -lc
 
 # Configuration flags
@@ -77,7 +80,6 @@ configure-perl:
 	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
 	@$(MAKECOOKIE)
 
-#post-install: libperl perlconf install-updates
 post-install: libperl perlconf
 	@$(MAKECOOKIE)
 
@@ -104,7 +106,7 @@ perlconf:
             s,-[LR]$(DESTDIR)$(libdir),,g; \
             s,( -I$(includedir))+,\$$1,g; \
             s,( -[LR]$(libdir))+,\$$1,g; \
-            s,-R $(libdir)/perl/5.8.7/CORE,-R $(libdir),; \
+            s,-R $(libdir)/perl/$(GARVERSION)/CORE,-R $(libdir),; \
             s, (-L)?$(CC_HOME)\S+,,g; \
             if (/^\w+=/) { \
                 s/\s{2,}(\-)/ \-/g; \
@@ -114,23 +116,4 @@ perlconf:
             print \
         " Config.pm Config_heavy.pl )
 	@$(MAKECOOKIE)
-
-# Install core updates
-#install-updates: remove-obsolete
-#	@for d in "" $(CORE_UPDATES) ; do \
-#		test -z "$$d" && continue ; \
-#		( cd $(WORKDIR)/$$d ; \
-#		$(CONFIGURE_ENV) perl Makefile.PL ; \
-#		$(BUILD_ENV) make ; \
-#		$(TEST_ENV) make test ; \
-#		$(INSTALL_ENV) make install INSTALLDIRS=perl DESTDIR=$(DESTDIR) ) ; \
-#	done
-#	@$(MAKECOOKIE)
-
-# Remove old modules
-#remove-obsolete:
-#	-@rm -f $(DESTDIR)$(datadir)/perl/$(GARVERSION)/List/Util.pm \
-#			$(DESTDIR)$(datadir)/perl/$(GARVERSION)/Scalar/Util.pm
-#	-@rmdir $(DESTDIR)$(datadir)/perl/$(GARVERSION)/List \
-#			$(DESTDIR)$(datadir)/perl/$(GARVERSION)/Scalar
 
