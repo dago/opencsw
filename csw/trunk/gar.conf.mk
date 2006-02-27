@@ -1,4 +1,7 @@
+# vim: ft=make ts=4 sw=4 noet
+#
 # $Id$
+#
 
 # This file contains configuration variables that are global to
 # the GAR system.  Users wishing to make a change on a
@@ -108,7 +111,11 @@ OPTFLAGS = $($(GARCOMPILER)_CC_OPT)
 # allow us to link to libraries we installed
 EXT_CCINC = $(foreach EINC,$(EXTRA_INC) $(includedir), -I$(EINC))
 EXT_CCLIB = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -L$(ELIB))
+ifdef NOISALIST
+EXT_LDOPT = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -R$(ELIB))
+else
 EXT_LDOPT = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -R$(ELIB)/\$$ISALIST -R$(ELIB))
+endif
 
 CFLAGS     += -I$(DESTDIR)$(includedir) $(EXT_CCINC) 
 CPPFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CCINC)
