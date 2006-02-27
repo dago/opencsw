@@ -1,3 +1,5 @@
+# vim: ft=make ts=4 sw=4 noet
+#
 # $Id$
 #
 # Copyright 2006 Cory Omand
@@ -25,6 +27,8 @@ SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 
 SPKG_EXPORT    ?= $(WORKDIR)
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
+
+PKGGET_DESTDIR ?=
 
 DEPMAKER_EXTRA_ARGS = --noscript --nodep SUNW
 
@@ -79,10 +83,10 @@ package-p:
 package-create:
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
-			echo "   ==> Processing $$spec" ; \
+			echo "   ==> Processing $$spec $(WORKDIR) => $(CURDIR)/$(WORKDIR)" ; \
 			$(PKG_ENV) mkpackage --spec $$spec \
 								 --destdir $(SPKG_EXPORT) \
-								 --workdir $(WORKDIR) \
+								 --workdir $(CURDIR)/$(WORKDIR) \
 								 --compress \
 								 -v basedir=$(DESTDIR) || exit 2 ; \
 		done ; \
@@ -90,6 +94,33 @@ package-create:
 		echo " ==> No specs defined for $(GARNAME)" ; \
 	fi
 	$(DONADA)
+
+# Verify all packages
+package-verify:
+	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
+			$(PKG_ENV) mkpackage -qs $$spec -D pkgfile >> /tmp/verify.$$ ; \
+		done ; \
+	fi
+	@for file in `cat /tmp/verify.$$` ; do \
+		checkpkg $(SPKG_EXPORT)/$$file.gz || exit 2 ; \
+		mv $(SPKG_EXPORT)/$$file.gz $(PKGGET_DESTDIR) ; \
+		make -C $(PKGGET_DESTDIR)/.. ; \
+	done
+	@rm -f /tmp/verify.$$
+
+# Install all bitnames from this directory
+package-install:
+	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
+			$(PKG_ENV) mkpackage -qs $$spec -D bitname >> /tmp/install.$$ ; \
+		done ; \
+	fi
+	echo pkg-get -s $(PKGGET_DESTDIR) -U
+	@for bitname in `cat /tmp/install.$$` ; do \
+		echo pkg-get -s $(PKGGET_DESTDIR) -f -i $$bitname ; \
+	done
+	@rm -f /tmp/install.$$
 
 # Reset working directory for repackaging
 package-reset:
