@@ -6,6 +6,9 @@ else
 pg_config = $(prefix)/postgresql/bin
 endif
 
+PATH := $(PATH):$(prefix)/mysql5/bin
+export PATH
+
 # Configuration
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --enable-force-cgi-redirect
@@ -47,9 +50,9 @@ CONFIGURE_ARGS += --with-ldap-sasl=$(prefix)
 CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-pdo=shared
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
-CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql4
-CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/mysql4
-CONFIGURE_ARGS += --with-mysqli=shared
+CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql5
+CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/mysql5
+CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/mysql5/bin/mysql_config
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pgsql=shared,$(pg_config)
@@ -74,6 +77,10 @@ CONFIGURE_ARGS += --with-expat-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-wddx=shared
 CONFIGURE_ARGS += --enable-xmlreader=shared
+CONFIGURE_ARGS += --enable-pcntl=shared
+CONFIGURE_ARGS += --enable-fastcgi
+CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
+CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 
 # Previously distributed extensions moved to PECL
 #CONFIGURE_ARGS += --enable-dio=shared

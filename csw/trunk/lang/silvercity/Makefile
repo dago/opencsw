@@ -1,5 +1,5 @@
 GARNAME = SilverCity
-GARVERSION = 0.9.6
+GARVERSION = 0.9.5
 CATEGORIES = utils
 
 DESCRIPTION = Lexical analysis package for Python
@@ -10,7 +10,7 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/silvercity/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsilvercity,depend prototype)
+DISTFILES += $(call admfiles,CSWsilvercity,depend prototype copyright)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
@@ -20,10 +20,12 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS  = --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
 
+GARCOMPILER = GNU
+
 include ../category.mk
 
 # When you pass a C++ source file to gcc, it invokes g++ for you
 # without complaints.  However, passing a C++ source file to cc just
 # results in an error.  So we fool python into using CC instead.
-CC = $(CXX)
-CFLAGS = $(CXXFLAGS)
+#CC = $(CXX)
+#CFLAGS = $(CXXFLAGS)

@@ -57,7 +57,7 @@ pre-package:
 		gsed -i -e s,%GARCH%,$(GARCH),g $$proto ; \
 	done
 
-PI_TARGETS  = samples rbconfig
+PI_TARGETS  = samples rbconfig rbscripts
 ifneq ($(SKIP_RUBYDOC),1)
 PI_TARGETS += rubydoc
 endif
@@ -96,3 +96,10 @@ rubydoc:
 				$(DESTDIR)$(libdir)/ruby/1.8 )
 	@$(MAKECOOKIE)
 
+# Some scripts come with /usr/local/bin/ruby hard coded.
+rbscripts:
+	@echo " ==> Fixing shebang path in distributed ruby scripts"
+	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
+		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby}g" {} \;
+	@$(MAKECOOKIE)
+		

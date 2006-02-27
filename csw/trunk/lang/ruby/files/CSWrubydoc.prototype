@@ -1305,7 +1305,6 @@ d none /opt/csw/share/doc/ruby/ri/1.8/system/IRB 0755 root bin
 d none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/Abort 0755 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/Abort/cdesc-Abort.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/Abort/cdesc-Abort.yaml 0644 root bin
 d none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context 0755 root bin
-f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/_set_last_value-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/_set_last_value-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/cdesc-Context.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/cdesc-Context.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/change_workspace-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/change_workspace-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/debug%3f-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/Context/debug%3f-i.yaml 0644 root bin
@@ -1578,7 +1577,6 @@ d none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/StdioOutputMethod 0755 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/StdioOutputMethod/cdesc-StdioOutputMethod.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/StdioOutputMethod/cdesc-StdioOutputMethod.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/StdioOutputMethod/print-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/StdioOutputMethod/print-i.yaml 0644 root bin
 d none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace 0755 root bin
-f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/__evaluate__-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/__evaluate__-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/cdesc-WorkSpace.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/cdesc-WorkSpace.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/evaluate-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/evaluate-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/filter_backtrace-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/IRB/WorkSpace/filter_backtrace-i.yaml 0644 root bin
@@ -2868,7 +2866,6 @@ f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/def_tail_option-i.yaml
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/define-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/define-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/define_head-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/define_head-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/define_tail-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/define_tail-i.yaml 0644 root bin
-f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/each_const-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/each_const-c.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/environment-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/environment-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/help-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/help-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/inc-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/inc-c.yaml 0644 root bin
@@ -2893,9 +2890,7 @@ f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/reject-i.yaml=$basedir
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/release-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/release-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/remove-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/remove-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/search-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/search-i.yaml 0644 root bin
-f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/search_const-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/search_const-c.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/separator-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/separator-i.yaml 0644 root bin
-f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/show_version-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/show_version-c.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/summarize-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/summarize-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/terminate-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/terminate-c.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/terminate-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/OptionParser/terminate-i.yaml 0644 root bin
@@ -7906,7 +7901,6 @@ f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/rfc2822-i.yaml=$basedir/opt/cs
 f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/rfc822-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/Time/rfc822-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/to_yaml-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/Time/to_yaml-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/w3cdtf-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/Time/w3cdtf-c.yaml 0644 root bin
-f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/w3cdtf-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/Time/w3cdtf-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/xmlschema-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/Time/xmlschema-c.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/xmlschema-i.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/Time/xmlschema-i.yaml 0644 root bin
 f none /opt/csw/share/doc/ruby/ri/1.8/system/Time/yaml_new-c.yaml=$basedir/opt/csw/share/doc/ruby/ri/1.8/system/Time/yaml_new-c.yaml 0644 root bin
