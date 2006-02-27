@@ -5,7 +5,7 @@ c52b5c460ce335f4c6878b0e2cc01caf  download/CSWap2modjk.gspec
 f4781a01cc678a752a800198918e5687  download/CSWap2modjk.postinstall
 5eb4612d15fdf4fd8498d97c79ed8e4b  download/CSWap2modjk.preremove
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2modjk.space
-baa35f4d28f2f08f11fb3da1fef208cf  download/httpd-jk.conf.CSW
+43136ccdd67533557a2e4953249f755f  download/httpd-jk.conf.CSW
 7824a6e972faae3d9ec7b06a47b70105  download/workers.properties
 b69613899d749ba2a40d1acbbbe13ba9  download/workers.properties.minimal
 594aca8f50b11134fd3396e348bd2f12  download/uriworkermap.properties

@@ -3,8 +3,8 @@
 #   JkWorkersFile etc/workers.properties
     JkWorkerProperty worker.list=ajp13w
     JkWorkerProperty worker.ajp13w.type=ajp13
-    JkWorkerProperty worker.ajp13w.type=localhost
-    JkWorkerProperty worker.ajp13w.type=8009
+    JkWorkerProperty worker.ajp13w.host=localhost
+    JkWorkerProperty worker.ajp13w.port=8009
 
     # Example mount points that work with the Jetty demo and the default
     # workers.properties.  Uncomment to activate.
