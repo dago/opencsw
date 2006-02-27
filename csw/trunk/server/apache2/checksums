@@ -5,7 +5,7 @@ a7467a756cbd980d4cfe3c2cfb6a9e35  download/config.layout
 d41d8cd98f00b204e9800998ecf8427e  download/CSWapache2.prototype
 a37b455604d26b77b3201fadcb94008f  download/CSWapache2rt.gspec
 0ad42255973bc5cec2f764bff67f5ad7  download/CSWapache2rt.depend
-7b0d43a411f4e0d6b590b03f803c3a04  download/CSWapache2rt.prototype
+e01f51442e8654cd92b76abbb230c245  download/CSWapache2rt.prototype
 523b1f316a67090dfc08fe7506cb1aa0  download/CSWapache2rt.checkinstall
 902989d64468c4c979f7ef43ca5a5384  download/CSWapache2c.gspec
 25270f568e2638869c6f8d831d6e591e  download/CSWapache2c.depend
@@ -30,9 +30,9 @@ b51c66e56d932fb9b6f3cb337b72813a  download/CSWapache2-manual.gspec
 87564bd3b23426ce7299735d2b02a68f  download/CSWapache2-manual.prototype
 bf27bb344fe4ce9d1ef60e1889bf9456  download/CSWapache2-devel.gspec
 8cf87a6da05459bdaa7c2dfc977e882f  download/CSWapache2-devel.depend
-c54f87325962cd5644766fd9822385e6  download/CSWapache2-devel.prototype
+1dcb340c4574b1777e73f44b47e80d0b  download/CSWapache2-devel.prototype
 5af190869d0724026d1680edd7ccfcef  download/cswapache2
 85f882652fccf49a2679ce4ba2876187  download/httpd.conf.CSW
 796a7d5095ce154c274a2ccfd60ec753  download/httpd-ssl.conf.CSW
-9636f8b89d00410580011a4bb9f8cd71  download/update20to22
+033a19975c59bffcc5b144628f8a8e06  download/update20to22
 308836569bf0cc1be27ac45e3123e0c2  download/apu-iconv.diff

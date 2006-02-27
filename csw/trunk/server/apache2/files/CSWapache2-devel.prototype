@@ -124,8 +124,6 @@ d none /opt/csw/apache2/share 0755 root bin
 d none /opt/csw/apache2/share/build 0755 root bin
 f none /opt/csw/apache2/share/build/apr_rules.mk=$basedir/opt/csw/apache2/share/build/apr_rules.mk 0644 root bin
 f none /opt/csw/apache2/share/build/config.nice=$basedir/opt/csw/apache2/share/build/config.nice 0755 root bin
-f none /opt/csw/apache2/share/build/config_vars.mk=$basedir/opt/csw/apache2/share/build/config_vars.mk 0644 root bin
-f none /opt/csw/apache2/share/build/instdso.sh=$basedir/opt/csw/apache2/share/build/instdso.sh 0755 root bin
 f none /opt/csw/apache2/share/build/library.mk=$basedir/opt/csw/apache2/share/build/library.mk 0644 root bin
 f none /opt/csw/apache2/share/build/libtool=$basedir/opt/csw/apache2/share/build/libtool 0755 root bin
 f none /opt/csw/apache2/share/build/ltlib.mk=$basedir/opt/csw/apache2/share/build/ltlib.mk 0644 root bin
