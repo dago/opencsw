@@ -1,3 +1,5 @@
+# vim: ft=make ts=4 sw=4 noet
+#
 # $Id$
 #
 # Copyright 2006 Cory Omand

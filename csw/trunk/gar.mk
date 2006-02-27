@@ -1,3 +1,5 @@
+# vim: ft=make ts=4 sw=4 noet
+#
 # $Id$
 #
 # Copyright (C) 2001 Nick Moffitt

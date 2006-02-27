@@ -1,3 +1,4 @@
+# vim: ft=make ts=4 sw=4 noet
 # This makefile is to be included from Makefiles in each category
 # directory.
 %:
