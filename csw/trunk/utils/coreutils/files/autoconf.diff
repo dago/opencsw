@@ -1,0 +1,12 @@
+Binary files coreutils-5.94.orig/.NEWS.swp and coreutils-5.94/.NEWS.swp differ
+diff --speed-large-files --minimal -Nru coreutils-5.94.orig/Makefile.in coreutils-5.94/Makefile.in
+--- coreutils-5.94.orig/Makefile.in	2006-02-17 17:48:18.641296000 -0500
++++ coreutils-5.94/Makefile.in	2006-02-17 17:46:42.922854000 -0500
+@@ -384,7 +384,6 @@
+ 	esac;
+ 
+ $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
+-	$(SHELL) ./config.status --recheck
+ 
+ $(top_srcdir)/configure:  $(am__configure_deps)
+ 	cd $(srcdir) && $(AUTOCONF)
