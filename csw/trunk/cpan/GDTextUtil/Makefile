@@ -9,7 +9,7 @@ define BLURB
   use with the GD::Text::* modules and GD::Graph.
 endef
 
-DISTFILES += CSWpmgdtxtu.gspec CSWpmgdtxtu.depend
+DISTFILES += $(call admfiles,CSWpmgdtextut,depend)
 
 DEPENDS += cpan/GD
 

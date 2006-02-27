@@ -10,7 +10,7 @@ define BLURB
   Lincoln Stein's GD.pm.
 endef
 
-DISTFILES += CSWpmgdgr3d.gspec CSWpmgdgr3d.depend
+DISTFILES += $(call admfiles,CSWpmgdgraph3d,depend)
 
 DEPENDS += cpan/GDGraph
 

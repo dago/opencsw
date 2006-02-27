@@ -13,10 +13,10 @@ endef
 DISTFILES += $(call admfiles,CSWpmcryptssleay,depend)
 
 # Point build to CSW ossl
-#PATCHFILES += cswssl.diff
+PATCHFILES += cswssl.diff
 
 #DEPENDS += lib/openssl
 
-CONFIGURE_ARGS = --default $(prefix)
+#CONFIGURE_ARGS = --default $(prefix)
 
 include ../category.mk

@@ -14,7 +14,7 @@ define BLURB
   the Template Toolkit.
 endef
 
-DISTFILES += CSWpmtemplatetk.gspec CSWpmtemplatetk.depend
+DISTFILES += $(call admfiles,CSWpmtt2,depend)
 
 DEPENDS += cpan/DBI cpan/GD cpan/GDTextUtil cpan/GDGraph cpan/GDGraph3d
 DEPENDS += cpan/Pod-POM cpan/XML-Parser cpan/XML-DOM cpan/XML-RSS

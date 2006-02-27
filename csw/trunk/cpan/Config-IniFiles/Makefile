@@ -10,6 +10,6 @@ define BLURB
   sections can be grouped, and settings can be accessed from a tied hash.
 endef
 
-DISTFILES += CSWpmconfiginifiles.gspec
+DISTFILES += $(call admfiles,CSWpmcfginifls,depend prototype)
 
 include ../category.mk

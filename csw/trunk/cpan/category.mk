@@ -57,7 +57,7 @@ INSTALL_ENV   += PERL5LIB=$(PERL5LIB)
 PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
-	@( cd $* ; $(CONFIGURE_ENV) perl Makefile.PL $(PERL_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
+	( cd $* ; $(CONFIGURE_ENV) perl Makefile.PL $(PERL_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 PERLBUILD_CONFIGURE_ARGS ?= installdirs=vendor

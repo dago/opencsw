@@ -3,14 +3,9 @@
 %var            arch all
 %include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
 %copyright      
-COPYRIGHT
-
-GD::Graph
-Copyright (c) 1999-2002 Martien Verbruggen. All rights reserved.
-Chart::PNGgraph
-Copyright (c) 1999 Steve Bonds.  All rights reserved.
-GIFgraph
-Copyright (c) 1995-1999 Martien Verbruggen. All rights reserved.
+GD::Graph       Copyright (c) 1999-2002 Martien Verbruggen. All rights reserved.
+Chart::PNGgraph Copyright (c) 1999 Steve Bonds.  All rights reserved.
+GIFgraph        Copyright (c) 1995-1999 Martien Verbruggen. All rights reserved.
 
 This package is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.

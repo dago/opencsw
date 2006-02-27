@@ -13,6 +13,8 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmxmllibxml,depend prototype)
 
-DEPENDS += cpan/XML-LibXML-Common cpan/XML-NamespaceSupport cpan/XML-SAX
+DEPENDS += cpan/XML-LibXML-Common
+DEPENDS += cpan/XML-NamespaceSupport
+DEPENDS += cpan/XML-SAX
 
 include ../category.mk

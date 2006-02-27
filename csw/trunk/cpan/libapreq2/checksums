@@ -1,6 +1,6 @@
 e2120169625742386ab5b61cb8a89992  download/CSWlibapreq2.gspec
 4369e9482eb1294b61b077842495985a  download/CSWlibapreq2.depend
-3c7dc7b81a643a294b74fc129d5898ef  download/CSWlibapreq2.prototype
+acbfefdd6518c82f8d7bf1a5a22056fa  download/CSWlibapreq2.prototype
 68e6e6723731fc5268b633c993f9a95f  download/CSWlibapreq2-devel.gspec
 a4ea454cbe3183b782c01b5b7a287a52  download/CSWlibapreq2-devel.depend
 911a2f4a2118067ba86f80514e1e0586  download/CSWlibapreq2-devel.prototype
@@ -12,4 +12,4 @@ f38ea79bded79147b61a7834be39abda  download/CSWap2modapreq2.preremove
 3c9bdbd68773dd08436164cd0de39484  download/CSWpmapreq2.gspec
 9f21e6818caca77fa29427a4317c446c  download/CSWpmapreq2.depend
 c72f92e132b37dffb4e210e93b5ba06f  download/CSWpmapreq2.prototype
-e245db341c4967e0a23b7f767d6486d9  download/libapreq2-2.06-dev.tar.gz
+6f2e5e4a14e8b190dead0fe91fc13080  download/libapreq2-2.07.tar.gz

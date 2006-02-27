@@ -1,6 +1,5 @@
 GARNAME = libapreq2
-GARVERSION = 2.06
-DISTVERSION = $(GARVERSION)-dev
+GARVERSION = 2.07
 CATEGORIES = cpan
 AUTHOR = JOESUF
 
@@ -18,10 +17,7 @@ CSWap2modapreq2_admfiles = depend prototype postinstall preremove
 DISTFILES += $(call admfiles,CSWap2modapreq2,$(CSWap2modapreq2_admfiles))
 DISTFILES += $(call admfiles,CSWpmapreq2,depend prototype)
 
-DISTNAME = $(GARNAME)-$(DISTVERSION)
-WORKSRC  = $(WORKDIR)/$(DISTNAME)
-
-MODDIST  = $(DISTNAME).tar.gz
+MODDIST  = $(GARNAME)-$(GARVERSION).tar.gz
 DEPENDS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
 #DEPENDS += cpan/mod_perl2
 
@@ -33,6 +29,8 @@ CONFIGURE_ARGS += --with-apache2-apxs=$(AP2_ROOT)/sbin/apxs
 CONFIGURE_ARGS += --with-apr-config=$(AP2_ROOT)/bin/apr-config
 CONFIGURE_ARGS += --with-apu-config=$(AP2_ROOT)/bin/apu-config
 CONFIGURE_ARGS += --with-expat=$(prefix)
+
+PERL_CONFIGURE_ARGS =
 
 # Must be installed to test
 ENABLE_TEST = 0

@@ -1,7 +1,7 @@
 GARNAME = Net-SSLeay
-GARVERSION = 1.25
+GARVERSION = 1.30
 CATEGORIES = cpan
-AUTHOR = SAMPO
+AUTHOR = FLORA
 
 DESCRIPTION = extension for using OpenSSL
 define BLURB
@@ -16,11 +16,15 @@ DISTNAME = $(subst -,_,$(GARNAME)).pm-$(GARVERSION)
 MODDIST  = $(DISTNAME).tar.gz
 WORKSRC  = $(WORKDIR)/$(DISTNAME)
 
-DISTFILES += CSWpmnetssleay.gspec
+DISTFILES += $(call admfiles,CSWpmnetssleay,depend prototype)
 
-CONFIGURE_ARGS = $(tool_prefix)
+# Convince Makefile.PL to use our OpenSSL
+PATCHFILES += ossl-0.9.8a.diff
+
+PERL_CONFIGURE_ARGS = $(prefix) INSTALLDIRS=vendor
 
 # Test disabled: Bug 3287
 ENABLE_TEST = 0
 
 include ../category.mk
+
