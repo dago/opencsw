@@ -1,5 +1,5 @@
 GARNAME = rapidsvn
-GARVERSION = 0.9.0
+GARVERSION = 0.9.1
 CATEGORIES = utils
 
 DESCRIPTION = Subversion GUI
@@ -12,11 +12,15 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrapidsvn,depend prototype)
 DISTFILES += $(call admfiles,CSWsvncpp,depend prototype)
 
-# Don't hardcode antisocial CFLAGS/CXXFLAGS!
-PATCHFILES += flags.diff
+# RapidSVN 0.9.1 omits the manpage from the dist archive
+DISTFILES += rapidsvn.xml
 
-# no generated Makefile in manpage dir, so install it manually
-PATCHFILES += manpage.diff
+# Remove gcc C/CXXFLAGS, and fix autoconf tests
+PATCHFILES += configure.diff
+
+# This should be separated out of CSWkdelibsgcc
+KSGML = $(prefix)/kde-gcc/share/apps/ksgmltools2
+DOCBOOK_MANPAGE = $(KSGML)/docbook/xsl/manpages/docbook.xsl
 
 SVNLIB = $(prefix)/lib/svn
 
@@ -25,16 +29,14 @@ CONFIGURE_ARGS += --with-apr-config=$(prefix)/apache2/bin/apr-1-config
 CONFIGURE_ARGS += --with-apu-config=$(prefix)/apache2/bin/apu-1-config
 CONFIGURE_ARGS += --with-svn-lib=$(SVNLIB)
 CONFIGURE_ARGS += --with-svn-include=$(includedir)
+CONFIGURE_ARGS += --with-docbook-xsl-manpages=$(DOCBOOK_MANPAGE)
 
-EXTRA_LIB = $(prefix)/bdb4/lib $(SVNLIB)
-EXTRA_INC = $(prefix)/bdb4/include
+EXTRA_LIB = $(prefix)/bdb43/lib $(SVNLIB)
+EXTRA_INC = $(prefix)/bdb43/include
 
 TEST_TARGET = check
 
 include ../category.mk
-
-# Libdir is a bit non-standard
-#LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 
 pre-configure:
 	@echo " ==> Regenerating build tools..."
@@ -47,13 +49,11 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 pre-build:
-	@echo " ==> Compensating for NEONLIBS + CC.."
-	@( cd $(WORKSRC) ; \
-		gsed -i.bak -e 's/-fast -xarch=v8 -xstrconst -xildoff/$(OPTFLAGS)/g' \
-			Makefile src/Makefile )
-	@$(MAKECOOKIE)
+	@cp $(WORKDIR)/rapidsvn.xml $(WORKSRC)/doc/manpage
 
 post-install:
-	@install -d $(DESTDIR)$(mandir)/man1
-	@install $(WORKSRC)/doc/manpage/rapidsvn.1 $(DESTDIR)$(mandir)/man1
+	install -d $(DESTDIR)$(mandir)/man1
+	( cd $(WORKSRC)/doc/manpage ; make manpage-yes )
+	install $(WORKSRC)/doc/manpage/rapidsvn.1 $(DESTDIR)$(mandir)/man1
+	@$(MAKECOOKIE)
 
