@@ -8,10 +8,10 @@ AP2_CONFDIR=$AP2_PREFIX/etc
 AP2_EXTRADIR=$AP2_CONFDIR/extra
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
 
-# Enable the apreq2 module
+# Enable the apreq module
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 chroot $PKG_INSTALL_ROOT \
-    $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n apreq2 mod_apreq2.so
+    $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n apreq mod_apreq2.so
 
 # Finito
 cat <<END

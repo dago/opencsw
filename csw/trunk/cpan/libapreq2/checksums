@@ -7,8 +7,8 @@ a4ea454cbe3183b782c01b5b7a287a52  download/CSWlibapreq2-devel.depend
 60e00314eb9748a13d3d2fbece715915  download/CSWap2modapreq2.gspec
 079a318d9f7ede0c2d72fdae7e16776f  download/CSWap2modapreq2.depend
 f51318051849f0a8ec9eb9efdd41e97a  download/CSWap2modapreq2.prototype
-663844dfe9efde1d2411c0933e745db3  download/CSWap2modapreq2.postinstall
-f38ea79bded79147b61a7834be39abda  download/CSWap2modapreq2.preremove
+1b232fb2b8b585eca307327b826455cb  download/CSWap2modapreq2.postinstall
+23cf6d9b0cd407b84bc038e4f7330fc8  download/CSWap2modapreq2.preremove
 3c9bdbd68773dd08436164cd0de39484  download/CSWpmapreq2.gspec
 9f21e6818caca77fa29427a4317c446c  download/CSWpmapreq2.depend
 c72f92e132b37dffb4e210e93b5ba06f  download/CSWpmapreq2.prototype

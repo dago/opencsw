@@ -39,6 +39,9 @@ ENABLE_TEST = 0
 LIBTOOL_LADIR = $(DESTDIR)$(libdir)
 STRIP_DIRS   += $(DESTDIR)$(prefix)/apache2/libexec
 
+EXTRA_INC = $(prefix)/bdb43/include
+EXTRA_LIB = $(prefix)/bdb43/lib
+
 include ../category.mk
 
 pre-package: test
