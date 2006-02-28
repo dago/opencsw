@@ -29,6 +29,7 @@ CONFIGURE_ARGS += --with-apache2-apxs=$(AP2_ROOT)/sbin/apxs
 CONFIGURE_ARGS += --with-apr-config=$(AP2_ROOT)/bin/apr-config
 CONFIGURE_ARGS += --with-apu-config=$(AP2_ROOT)/bin/apu-config
 CONFIGURE_ARGS += --with-expat=$(prefix)
+CONFIGURE_ARGS += --with-mm-opts="INSTALLDIRS=vendor"
 
 PERL_CONFIGURE_ARGS =
 
@@ -40,7 +41,5 @@ STRIP_DIRS   += $(DESTDIR)$(prefix)/apache2/libexec
 
 include ../category.mk
 
-# Remove this when it's not dev
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_dev
-
 pre-package: test
+
