@@ -1,17 +1,23 @@
 GARNAME = expat
-GARVERSION = 1.95.6
+GARVERSION = 2.0.0
 CATEGORIES = lib
-
-SPKG_PKGNAME = CSWexpat
-SPKG_BITNAME = expat
 
 DESCRIPTION = XML Parser Toolkit
 define BLURB
-  Expat is a fast, non-validating, stream-oriented XML parsing library.
+	This is James Clark's Expat XML parser library in C. It is a stream oriented
+	parser that requires setting handlers to deal with the structure that the
+	parser discovers in the document.
 endef
 
-MASTER_SITES = http://unc.dl.sourceforge.net/sourceforge/expat/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = $(SF_MIRRORS)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWexpat,depend prototype)
+DISTFILES += $(call admfiles,CSWexpat-devel,depend prototype)
+
+# Compatibility libraries
+EXTLIBS   += libexpat.so.0.4.0
+EXTLIBS   += libexpat.so.0.5.0
+DISTFILES += $(EXTLIBS)
 
 # The expat 'check' target tries to compile tests that use GCC
 # constructs -- won't compile under Forte without hackery.
@@ -20,6 +26,9 @@ ENABLE_TEST = 0
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir 
-
 include ../category.mk
+
+post-install:
+	@for extlib in $(EXTLIBS) ; do \
+	    install -m 0755 $(WORKDIR)/$$extlib $(DESTDIR)$(libdir) ; \
+	done
