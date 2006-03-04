@@ -12,8 +12,9 @@ define BLURB
   and, to some extent, ISO 8601 (where applicable).
 endef
 
-DISTFILES += CSWpmdcalc.gspec CSWpmdcalc.depend
+DISTFILES += $(call admfiles,CSWpmdatecalc,depend prototype)
 
-DEPENDS += cpan/Carp-Clan cpan/Bit-Vector
+DEPENDS += cpan/Carp-Clan
+DEPENDS += cpan/Bit-Vector
 
 include ../category.mk

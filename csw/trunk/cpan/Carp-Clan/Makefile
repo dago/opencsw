@@ -10,6 +10,6 @@ define BLURB
   inside the "qw()" term (or argument list).
 endef
 
-DISTFILES += CSWpmcarpclan.gspec
+DISTFILES += $(call admfiles,CSWpmcarpclan,prototype)
 
 include ../category.mk

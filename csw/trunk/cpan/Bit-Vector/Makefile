@@ -7,6 +7,6 @@ DESCRIPTION = Efficient bit vector, set of integers and big int math library.
 define BLURB
 endef
 
-DISTFILES += CSWpmbitvec.gspec
+DISTFILES += $(call admfiles,CSWpmbitvec,prototype)
 
 include ../category.mk
