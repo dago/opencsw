@@ -16,6 +16,9 @@ DISTFILES += $(call admfiles,CSWap2modpython,$(pkgfiles))
 
 #DEPENDS += lang/python
 
+# Fix refs to APR_STATUS_IS_SUCCESS
+PATCHFILES += apr.diff
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-python=$(bindir)/python
