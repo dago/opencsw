@@ -102,6 +102,7 @@ perlconf:
             next if /config_arg[1-9]/; \
             s/^config_args=.+$$/config_args=''/; \
             s/^config_argc=.+$$/config_argc='0'/; \
+            s,/opt/csw/gnu/,/opt/csw/bin/g,; \
             s,-I$(DESTDIR)$(includedir),,g; \
             s,-[LR]$(DESTDIR)$(libdir),,g; \
             s,( -I$(includedir))+,\$$1,g; \
