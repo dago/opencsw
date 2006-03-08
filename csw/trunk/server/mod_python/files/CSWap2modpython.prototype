@@ -1,9 +1,9 @@
-d none /opt/csw/apache2 ? ? ?
-d none /opt/csw/apache2/libexec ? ? ?
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
 f none /opt/csw/apache2/libexec/mod_python.so=$basedir/opt/csw/apache2/libexec/mod_python.so 0755 root bin
 d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python2.3 ? ? ?
-d none /opt/csw/lib/python2.3/site-packages ? ? ?
+d none /opt/csw/lib/python2.3 0755 root bin
+d none /opt/csw/lib/python2.3/site-packages 0755 root bin
 d none /opt/csw/lib/python2.3/site-packages/mod_python 0755 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/Cookie.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/Cookie.py 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/Cookie.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/Cookie.pyc 0644 root bin
@@ -18,6 +18,9 @@ f none /opt/csw/lib/python2.3/site-packages/mod_python/_psp.so=$basedir/opt/csw/
 f none /opt/csw/lib/python2.3/site-packages/mod_python/apache.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/apache.py 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/apache.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/apache.pyc 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/apache.pyo=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/apache.pyo 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/cache.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/cache.py 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/cache.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/cache.pyc 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/cache.pyo=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/cache.pyo 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/cgihandler.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/cgihandler.py 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/cgihandler.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/cgihandler.pyc 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/cgihandler.pyo=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/cgihandler.pyo 0644 root bin
@@ -27,6 +30,12 @@ f none /opt/csw/lib/python2.3/site-packages/mod_python/psp.pyo=$basedir/opt/csw/
 f none /opt/csw/lib/python2.3/site-packages/mod_python/publisher.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/publisher.py 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/publisher.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/publisher.pyc 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/publisher.pyo=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/publisher.pyo 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/python22.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/python22.py 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/python22.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/python22.pyc 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/python22.pyo=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/python22.pyo 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/testhandler.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/testhandler.py 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/testhandler.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/testhandler.pyc 0644 root bin
+f none /opt/csw/lib/python2.3/site-packages/mod_python/testhandler.pyo=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/testhandler.pyo 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/util.py=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/util.py 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/util.pyc=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/util.pyc 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/util.pyo=$basedir/opt/csw/lib/python2.3/site-packages/mod_python/util.pyo 0644 root bin

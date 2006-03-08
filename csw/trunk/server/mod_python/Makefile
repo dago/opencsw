@@ -1,5 +1,5 @@
 GARNAME = mod_python
-GARVERSION = 3.1.4
+GARVERSION = 3.2.8
 CATEGORIES = server
 
 DESCRIPTION = an Apache/Python integration module
@@ -15,11 +15,6 @@ pkgfiles   = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modpython,$(pkgfiles))
 
 #DEPENDS += lang/python
-
-# Source hard codes path to flex
-PATCHFILES += lex.diff
-# Compensate for changes in the APR ABI
-PATCHFILES += apr.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
