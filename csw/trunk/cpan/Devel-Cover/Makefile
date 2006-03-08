@@ -8,6 +8,6 @@ define BLURB
   This module provides code coverage metrics for Perl.
 endef
 
-DISTFILES += CSWpmdevelcover.gspec
+DISTFILES += $(call admfiles,CSWpmdevelcover,prototype)
 
 include ../category.mk
