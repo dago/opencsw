@@ -1,6 +1,5 @@
 GARNAME = Frontier-RPC
-DISTVERSION = 0.07b4
-GARVERSION = $(subst b,.,$(DISTVERSION))
+GARVERSION = 0.07b4
 CATEGORIES = cpan
 AUTHOR = KMACLEOD
 
@@ -11,8 +10,10 @@ define BLURB
   XML-RPC special data types.
 endef
 
-MODDIST    = $(GARNAME)-$(DISTVERSION).tar.gz
-DISTFILES += CSWpmfrontierrpc.gspec CSWpmfrontierrpc.depend
+DISTFILES += $(call admfiles,CSWpmfrontierrpc,depend prototype)
+
+# See http://rt.cpan.org/Public/Bug/Display.html?id=18299
+PATCHFILES += XMLRPC-mp2.diff
 
 DEPENDS += cpan/HTML-Parser cpan/URI
 DEPENDS += cpan/libwww-perl cpan/XML-Parser
