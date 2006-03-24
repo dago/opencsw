@@ -1,3 +1,4 @@
+apps/trac|CSWtrac|trac - Integrated SCM and Project Management
 cpan/Algorithm-Annotate|CSWpmalgannotate|pm_algorithmannotate - represent a series of changes in annotate form
 cpan/Algorithm-Diff|CSWpmalgdiff|pm_algorithmdiff - compute intelligent differences between two files/lists
 cpan/AnyData|CSWpmanydata|pm_anydata - easy access to data in many formats
@@ -48,7 +49,7 @@ cpan/Class-Trigger|CSWpmclasstrigger|pm_classtrigger - mixin to add / call inher
 cpan/Class-WhiteHole|CSWpmclasswhitehole|pm_classwhitehole - base class to treat unhandled method calls as errors
 cpan/Clone|CSWpmclone|pm_clone - recursively copy Perl datatypes
 cpan/Compress-Zlib|CSWpmcompresszlib|pm_compresszlib - Interface to zlib compression library
-cpan/Config-IniFiles|CSWpmconfiginifiles|pm_configinifiles - a module for reading .ini-style configuration files.
+cpan/Config-IniFiles|CSWpmcfginifls|pm_configinifiles - a module for reading .ini-style configuration files.
 cpan/Convert-ASCII-Armour|CSWpmconvertaarm|pm_convertasciiarmour - convert binary octets into ASCII armoured messages.
 cpan/Convert-ASN1|CSWpmconvertasn1|pm_convertasn1 - ASN.1 Encode/Decode library
 cpan/Convert-BinHex|CSWpmconvertbinhex|pm_convertbinhex - extract data from Macintosh BinHex files
@@ -93,7 +94,7 @@ cpan/Data-Flow|CSWpmdataflow|pm_dataflow - simple-minded recipe-controlled build
 cpan/Data-Hierarchy|CSWpmdatahier|pm_datahier - handle data in a hierarchical structure
 cpan/Data-ShowTable|CSWpmdatashowtable|pm_datashowtable - routines to display tabular data in several formats.
 cpan/Data-UUID|CSWpmdatauuid|pm_datauuid - extension for generating unique identifiers
-cpan/Date-Calc|CSWpmdcalc|pm_datecalc - Gregorian calendar date calculations.
+cpan/Date-Calc|CSWpmdatecalc|pm_datecalc - Gregorian calendar date calculations.
 cpan/Date-Simple|CSWpmdatesimple|pm_datesimple - a simple date object
 cpan/DateManip|CSWpmdatemanip|pm_datemanip - Date manipulation routines
 cpan/Devel-Cover|CSWpmdevelcover|pm_develcover - Code coverage metrics for Perl 
@@ -135,8 +136,8 @@ cpan/Frontier-RPC|CSWpmfrontierrpc|pm_frontierrpc - XML-RPC client interface
 cpan/GD-Barcode|CSWpmgdbarcode|pm_gdbarcode - create barcode images with GD
 cpan/GD|CSWpmgd|pm_gd - interface to Gd Graphics Library
 cpan/GDGraph|CSWpmgdgraph|pm_gdgraph - graph plotting module
-cpan/GDGraph3d|CSWpmgdgr3d|pm_gdgraph3d - create 3D graphs with GD and GD::Graph
-cpan/GDTextUtil|CSWpmgdtxtu|pm_gdtextutils - text utilities for use with GD
+cpan/GDGraph3d|CSWpmgdgraph3d|pm_gdgraph3d - create 3D graphs with GD and GD::Graph
+cpan/GDTextUtil|CSWpmgdtextut|pm_gdtextut - text utilities for use with GD
 cpan/Geography-Countries|CSWpmgeocountries|pm_geocountries - 2-letter, 3-letter, and numerical codes for countries.
 cpan/Gimp|CSWpmgimp|pm_gimp - Perl extension for writing Gimp extensions
 cpan/Glib|CSWpmglib|pm_glib - wrappers for the GLib utility and Object libraries
@@ -201,6 +202,7 @@ cpan/Math-Bezier|CSWpmmathbezier|pm_mathbezier - solution of Bezier curves
 cpan/Math-GMP|CSWpmmathgmp|pm_mathgmp - high speed arbitrary size integer math
 cpan/Math-Pari|CSWpmmathpari|pm_mathpari - interface to PARI numerical analysis library
 cpan/Module-Build|CSWpmmodulebuild|pm_modulebuild - build and install Perl modules
+cpan/Module-Pluggable|CSWpmmoduleplug|pm_moduleplug - automatically give your module the ability to have plugins
 cpan/Module-ScanDeps|CSWpmmodulescandeps|pm_modulescandeps - recursively scan Perl code for dependencies
 cpan/Module-Signature|CSWpmmodulesignature|pm_modulesignature - module signature file manipulation
 cpan/Module-Versions-Report|CSWpmmodversrpt|pm_modversrpt - report versions of all modules in memory
@@ -218,6 +220,7 @@ cpan/POE|CSWpmpoe|pm_poe - portable multitasking and networking framework for Pe
 cpan/Params-Validate|CSWpmprmsvldt|pm_prmsvldt - validate method/function parameters
 cpan/Parse-RecDescent|CSWpmparserecdescent|pm_parserecdescent - %var bitname pm_parserecdescent
 cpan/Parse-Syslog|CSWpmparsesyslog|pm_parsesyslog - parse Unix syslog files
+cpan/Perl-Tidy|CSWperltidy|perltidy - simple interactive Perl shell
 cpan/PerlIO-eol|CSWpmperlioeol|pm_perlioeol - PerlIO layer for normalizing line endings
 cpan/PerlIO-via-dynamic|CSWpmperlioviadyn|pm_perlioviadyn - dynamic PerlIO layers
 cpan/PerlIO-via-symlink|CSWpmperlioviasym|pm_perlioviasym - PerlIO layers for creating symlinks
@@ -235,6 +238,7 @@ cpan/SOAP-WSDL|CSWpmsoapwsdl|pm_soapwsdl - Web Service Descriptor Language suppo
 cpan/SQL-Statement|CSWpmsqlstatement|pm_sqlstatement - SQL parsing and processing engine
 cpan/SVK|CSWsvk|svk - a distributed version control system
 cpan/SVN-Mirror|CSWpmsvnmirror|pm_svnmirror - mirror remote repository to local Subversion repository
+cpan/SVN-Notify|CSWpmsvnnotify|pm_svnnotify - Subversion activity notification
 cpan/SVN-Simple|CSWpmsvnsimple|pm_svnsimple - a simple interface for driving svn delta editors
 cpan/Scalar-List-Utils|CSWpmscalarlist|pm_scalarlistutils - a selection of general-utility list and scalar subroutines.
 cpan/Schedule-Cron|CSWpmschedulecron|pm_schedulecron - cron-like scheduler for Perl subroutines
@@ -250,7 +254,8 @@ cpan/Sub-Uplevel|CSWpmsubuplevel|pm_subuplevel - apparently run a function in a 
 cpan/Sys-Hostname-Long|CSWpmsyshostnamelong|pm_syshostnamelong - try every conceivable way to get full hostname
 cpan/Syslog|CSWpmunixsyslog|pm_unixsyslog - interface to the UNIX syslog(3) calls
 cpan/Template-Extract|CSWpmtmplextract|pm_tmplextract - use TT2 syntax to extract data from documents
-cpan/Template-Toolkit|CSWpmtemplatetk|pm_templatetk - front-end module to the Template Toolkit
+cpan/Template-TAL|CSWpmtemplatetal|pm_templatetal - Process TAL templates with Perl
+cpan/Template-Toolkit|CSWpmtt2|pm_tt2 - front-end module to the Template Toolkit
 cpan/Term-Cap|CSWpmtermcap|pm_termcap - termcap interface
 cpan/Term-ReadLine-Gnu|CSWpmtermreadlinegnu|pm_termreadlinegnu - extension for the GNU Readline/History Library
 cpan/TermReadKey|CSWpmtermreadkey|pm_termreadkey - module for simple terminal control
@@ -264,11 +269,13 @@ cpan/Test-Memory-Cycle|CSWpmtestmemcycle|pm_testmemcycle - check for memory leak
 cpan/Test-MockObject|CSWpmtstmockobject|pm_tstmockobject - extension for emulating troublesome interfaces
 cpan/Test-Pod|CSWpmtestpod|pm_testpod - check for POD errors in files
 cpan/Test-Warn|CSWpmtestwarn|pm_testwarn - extension to test methods for warnings
+cpan/Test-XML|CSWpmtestxml|pm_testxml - Compare XML in perl tests
 cpan/Text-Autoformat|CSWpmtxtautofmt|pm_txtautofmt - automatic text wrapping and reformatting
 cpan/Text-CSV_XS|CSWpmtextcsvxs|pm_textcsvxs - comma-separated values manipulation routines
 cpan/Text-Diff|CSWpmtextdiff|pm_textdiff - perform diffs on files and record sets
 cpan/Text-Quoted|CSWpmtxtquoted|pm_txtquoted - extract the structure of a quoted mail message
 cpan/Text-Reform|CSWpmtxtreform|pm_txtreform - manual text wrapping and reformatting
+cpan/Text-Scraper|CSWpmtextscraper|pm_textscraper - Structured data from (un)structured text
 cpan/Text-Template|CSWpmtexttemplate|pm_texttemplate - expand template text with embedded Perl
 cpan/Text-Wrapper|CSWpmtextwrap|pm_textwrap - simple word wrapping routine
 cpan/Tie-DBI|CSWpmtiedbi|pm_tiedbi - tie hashes to DBI relational databases
@@ -319,6 +326,7 @@ cpan/libapreq2|CSWlibapreq2-devel|libapreq2_devel - Apache Request Library devel
 cpan/libapreq2|CSWlibapreq2|libapreq2 - Apache Request Library
 cpan/libwww-perl|CSWpmlibwww|pm_libwww - a general-purpose Web API for Perl, based on W3C libwww.
 cpan/libxml-perl|CSWpmlibxmlperl|pm_libxmlperl - Perl SAX parser using XML::Parser
+cpan/mod_perl|CSWmodperl|mod_perl - Persistent Perl interpreter for Apache 1.3.x
 cpan/mod_perl2|CSWap2modperl|ap2_modperl - Persistent Perl interpreter for Apache 2.x
 cpan/perl-ldap|CSWpmldap|pm_ldap - Lightweight Directory Access Protocol
 cpan/psh|CSWpsh|psh - simple interactive Perl shell
@@ -359,8 +367,6 @@ lang/lua|CSWlua|lua - light-weight language designed for extending applications
 lang/mono|CSWmono|mono - Mono Runtime
 lang/mysql-python|CSWpymysql|pymysql - MySQL support for Python
 lang/mysql-ruby|CSWrbmysql|rbmysql - Ruby MySQL Extension
-lang/perl-5.8.7|CSWperl|perl - A high-level, general-purpose programming language.
-lang/perl-5.8.7|CSWperldoc|perldoc - Perl documentation
 lang/perl|CSWperl|perl - A high-level, general-purpose programming language.
 lang/perl|CSWperldoc|perldoc - Perl documentation
 lang/php5-apache|CSWmodphp5|mod_php5 - PHP 5 - Apache 1.3.x Module
@@ -389,11 +395,15 @@ lang/php5|CSWphp5pdopgsql|php5_pdopgsql - PHP 5 - PostgreSQL PDO Extension
 lang/php5|CSWphp5pdoodbc|php5_pdoodbc - PHP 5 - unixODBC PDO Extension
 lang/php5|CSWphp5pdosqlite|php5_pdosqlite - PHP 5 - SQLite PDO Extension
 lang/php5|CSWphp5wddx|php5_wddx - PHP 5 - WDDX Extension
+lang/pydocutils|CSWpydocutils|pydocutils - Documentation Utiltiies for Python
+lang/pysetuptools|CSWpysetuptools|pysetuptools - Distribution Utiltiies for Python
 lang/pysqlite|CSWpysqlite|pysqlite - SQLite support for Python
+lang/pysqlite2|CSWpysqlite2|pysqlite2 - SQLite3 support for Python
 lang/ruby|CSWruby|ruby - An object-oriented language for quick and easy programming.
 lang/ruby|CSWrubytk|rubytk - Ruby Tcl/Tk Extension
 lang/ruby|CSWrubydoc|rubydoc - Ruby documentation
 lang/rubygems|CSWrubygems|rubygems - Ruby package manager
+lang/silvercity|CSWsilvercity|silvercity - Lexical analysis package for Python
 lib/apr-util|CSWaprutil|aprutil - Apache Portable Runtime Utilities
 lib/apr-util|CSWaprutil-devel|aprutil_devel - Apache Portable Runtime Utility development support
 lib/apr|CSWapr|apr - Apache Portable Runtime
@@ -407,6 +417,8 @@ lib/bdb44|CSWbdb44|berkeleydb44 - BerkeleyDB 4.4 documentation
 lib/bdb44|CSWbdb44-devel|berkeleydb44_devel - BerkeleyDB 4.4 development support
 lib/boost|CSWboost|boost - A collection of C++ libraries
 lib/docbook|CSWdocbook-xsl|docbook_xsl - docbook xsl stylesheets
+lib/expat|CSWexpat|expat - XML Parser Toolkit
+lib/expat|CSWexpat-devel|expat_devel - XML Parsing Toolkit - Development Support
 lib/libevent|CSWlibevent|libevent - event notification library
 lib/libevent|CSWlibevent-devel|libevent_devel - libevent development support
 lib/neon|CSWneon-devel|neon_devel - Neon HTTP and WebDAV development support
@@ -416,6 +428,7 @@ lib/qt-gcc|CSWqtgcc|qt_gcc - TrollTech C++ application framework
 lib/qt|CSWqt|qt - TrollTech C++ application framework
 net/imapfilter|CSWimapfilter|imapfilter - IMAP mail filtering utility
 net/memcached|CSWmemcached|memcached - distributed memory object caching system
+net/pound|CSWpound|pound - reverse proxy load balancer
 server/apache2-2.0|CSWapache2|apache2 - Apache 2.0 web server
 server/apache2-2.0|CSWapache2c|apache2c - Apache 2.0 web server (core)
 server/apache2-2.0|CSWapache2-manual|apache2_manual - Apache 2.0 manual
@@ -431,6 +444,7 @@ server/apache2|CSWap2suexec|ap2_suexec - Apache 2.2 suEXEC support
 server/apache2|CSWap2prefork|ap2_prefork - Apache 2.2 prefork MPM
 server/apache2|CSWapache2rt|apache2rt - Apache 2.2 runtime libraries
 server/apache2|CSWapache2-devel|apache2_devel - Apache 2.2 development support
+server/mod_auth_pam|CSWap2modauthpam|ap2_modauthpam - Implements basic authentication on top of PAM
 server/mod_highlight|CSWap2modhighlight|ap2_modhighlight - Syntax highlighting module for Apache 2.0
 server/mod_jk|CSWap2modjk|ap2_mod_jk - AJP connector module for Apache 2
 server/mod_python|CSWap2modpython|ap2_modpython - an Apache/Python integration module
@@ -440,6 +454,7 @@ server/mod_transform|CSWap2modtransform|ap2_modtransform - XSLT filter for Apach
 server/rails|CSWap2modruby|ap2_modruby - Ruby web application framework
 server/resin|CSWap2modcaucho|ap2_modcaucho - JSP and Servlet engine.
 server/resin|CSWresin|resin - JSP and Servlet engine.
+utils/authz-tools|CSWauthztools|authztools - tools to manipulate authz files
 utils/clearsilver|CSWcs|clearsilver - Language-neutral HTML template system
 utils/clearsilver|CSWpmcs|pm_clearsilver - Clearsilver Perl language binding
 utils/clearsilver|CSWpycs|pyclearsilver - Clearsilver Python language binding
@@ -466,10 +481,11 @@ utils/subversion-1.2|CSWsvn|subversion - Subversion Perl language binding
 utils/subversion-1.2|CSWjavasvn|javasvn - Subversion Java language binding
 utils/subversion-1.2|CSWap2svn|ap2_subversion - Subversion modules for Apache 2.0
 utils/subversion-1.2|CSWpysvn|pysvn - Subversion Python language binding
+utils/subversion-static|CSWsvn|subversion - Version control rethought
 utils/subversion|CSWap2svn|ap2_subversion - Subversion modules for Apache 2.2
 utils/subversion|CSWjavasvn|javasvn - Subversion Java language binding
 utils/subversion|CSWpmsvn|pm_subversion - Subversion Perl language binding
-utils/subversion|CSWsvn-devel|svn_devel - Subversion development support
+utils/subversion|CSWsvn-devel|subversion_devel - Subversion development support
 utils/subversion|CSWpysvn|pysvn - Subversion Python language binding
 utils/subversion|CSWrbsvn|rbsvn - Subversion Ruby language binding
 utils/subversion|CSWsvn|subversion - Subversion Ruby language binding
