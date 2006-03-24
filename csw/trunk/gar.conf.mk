@@ -127,11 +127,16 @@ LD_RUN_DIRS += $(libdir)
 LD_RUN_PATH = $(call MAKEPATH,$(LD_RUN_DIRS))
 
 # allow us to use programs we just built
+#PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
+#PATH := $(DESTDIR)$(gnudir):$(DESTDIR)$(bindir):$(DESTDIR)$(sbindir):$(PATH)
+#PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/gnu:$(BUILD_PREFIX)/sbin:$(PATH)
+#PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
+#PATH := $(HOME)/bin:$(CC_HOME)/bin:$(PATH):$(GARBIN)
+
 PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
-PATH := $(DESTDIR)$(gnudir):$(DESTDIR)$(bindir):$(DESTDIR)$(sbindir):$(PATH)
-PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/gnu:$(BUILD_PREFIX)/sbin:$(PATH)
-PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
-PATH := $(HOME)/bin:$(CC_HOME)/bin:$(PATH):$(GARBIN)
+PATH := $(DESTDIR)$(bindir):$(DESTDIR)$(sbindir):$(PATH)
+PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/sbin:$(PATH)
+PATH := $(CC_HOME)/bin:$(PATH):$(GARBIN)
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH := $(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
@@ -152,29 +157,30 @@ GNOME_SUBV   = $(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')
 GNOME_MIRROR = $(GNOME_ROOT)/$(GARNAME)/$(GNOME_SUBV)/
 
 # SourceForge
-#SF_ROOT   = http://unc.dl.sourceforge.net/sourceforge
-SF_ROOT   = http://easynews.dl.sourceforge.net/sourceforge
-#SF_ROOT   = http://dl.sourceforge.net/sourceforge
-SF_MIRROR = $(SF_ROOT)
+SF_SITES    ?= umn easynews unc
+SF_DLSERVER  = dl.sourceforge.net/sourceforge
+SF_MIRRORS   = $(foreach S,$(SF_SITES),http://$(S).$(SF_DLSERVER)/$(GARNAME)/)
+SF_MIRRORS  += http://$(SF_DLSERVER)/$(GARNAME)/
+
+# Keep this for compatibility
+SF_MIRROR    = http://easynews.dl.sourceforge.net/sourceforge
 
 # GNU
 GNU_SITE     = http://www.ibiblio.org/pub/mirrors/gnu/ftp
-#GNU_SITE     = ftp://ftp.gnu.org
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
 GNU_MIRROR   = $(GNU_GNUROOT)/$(GARNAME)/
 GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GARNAME)/
 
 # CPAN
-#CPAN_ROOT	  = ftp://cpan.sfbay/pub/CPAN
-#CPAN_ROOT    = ftp://ftp.nas.nasa.gov/pub/perl/CPAN
-#CPAN_ROOT    = ftp://cpan.pair.com/pub/CPAN
-#CPAN_ROOT    = http://mirrors.ibiblio.org/pub/mirrors/CPAN
-#CPAN_ROOT    = ftp://ftp.nrc.ca/pub/CPAN
-#CPAN_ROOT    = http://mirror.cc.columbia.edu/pub/software/cpan
-CPAN_ROOT    = http://search.cpan.org/CPAN
-#CPAN_ROOT    = http://mirrors.kernel.org/cpan
-CPAN_MIRROR  = $(CPAN_ROOT)/authors/id/$(AUTHOR_ID)/
+CPAN_SITES   = ftp://cpan.sfbay/pub/CPAN
+CPAN_SITES   = http://search.cpan.org/CPAN
+CPAN_SITES   = ftp://ftp.nrc.ca/pub/CPAN
+CPAN_SITES   = ftp://ftp.nas.nasa.gov/pub/perl/CPAN
+CPAN_SITES   = http://mirrors.ibiblio.org/pub/mirrors/CPAN
+CPAN_SITES   = ftp://cpan.pair.com/pub/CPAN
+CPAN_SITES   = http://mirrors.kernel.org/cpan
+CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
 
 # KDE
 KDE_ROOT     = ftp://ftp.gtlib.cc.gatech.edu/pub/kde
@@ -187,12 +193,12 @@ GNOME_MIRROR =
 
 # Compiler version
 ifeq ($(CC),gcc)
-CC_VERSION  = $(shell $(CC_HOME)/bin/gcc -v 2>&1| grep version)
+CC_VERSION  = $(shell $(CC_HOME)/bin/gcc -v 2>&1| ggrep version)
 CXX_VERSION = $(CC_VERSION)
 endif
 ifeq ($(CC),cc)
-CC_VERSION  = $(shell $(CC_HOME)/bin/cc -V 2>&1| grep cc: | sed -e 's/cc: //')
-CXX_VERSION = $(shell $(CC_HOME)/bin/CC -V 2>&1| grep CC: | sed -e 's/CC: //')
+CC_VERSION  = $(shell $(CC_HOME)/bin/cc -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
+CXX_VERSION = $(shell $(CC_HOME)/bin/CC -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
 endif
 
 # Put these variables in the environment during the
