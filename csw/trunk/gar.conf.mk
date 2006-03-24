@@ -173,13 +173,12 @@ GNU_MIRROR   = $(GNU_GNUROOT)/$(GARNAME)/
 GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GARNAME)/
 
 # CPAN
-CPAN_SITES   = ftp://cpan.sfbay/pub/CPAN
-CPAN_SITES   = http://search.cpan.org/CPAN
-CPAN_SITES   = ftp://ftp.nrc.ca/pub/CPAN
-CPAN_SITES   = ftp://ftp.nas.nasa.gov/pub/perl/CPAN
-CPAN_SITES   = http://mirrors.ibiblio.org/pub/mirrors/CPAN
-CPAN_SITES   = ftp://cpan.pair.com/pub/CPAN
-CPAN_SITES   = http://mirrors.kernel.org/cpan
+CPAN_SITES  += http://search.cpan.org/CPAN
+CPAN_SITES  += ftp://ftp.nrc.ca/pub/CPAN
+CPAN_SITES  += ftp://ftp.nas.nasa.gov/pub/perl/CPAN
+CPAN_SITES  += http://mirrors.ibiblio.org/pub/mirrors/CPAN
+CPAN_SITES  += ftp://cpan.pair.com/pub/CPAN
+CPAN_SITES  += http://mirrors.kernel.org/cpan
 CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
 
 # KDE
