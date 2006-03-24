@@ -70,8 +70,8 @@ include $(GARDIR)/gar.lib.mk
 # This is to make dirs as needed by the base rules
 $(sort $(DOWNLOADDIR) $(PARTIALDIR) $(COOKIEDIR) $(WORKSRC) $(WORKDIR) $(EXTRACTDIR) $(FILEDIR) $(SCRATCHDIR) $(INSTALL_DIRS) $(GARCHIVEDIR) $(GARPKGDIR) $(STAGINGDIR)) $(COOKIEDIR)/%:
 	@if test -d $@; then : ; else \
-		install -d $@; \
-		echo "install -d $@"; \
+		ginstall -d $@; \
+		echo "ginstall -d $@"; \
 	fi
 
 # These stubs are wildcarded, so that the port maintainer can
@@ -157,7 +157,7 @@ MAKESUM_TARGETS =  $(addprefix $(DOWNLOADDIR)/,$(filter-out $(NOCHECKSUM),$(ALLF
 
 makesum: fetch $(MAKESUM_TARGETS)
 	@if test "x$(MAKESUM_TARGETS)" != "x "; then \
-		md5sum $(MAKESUM_TARGETS) > $(CHECKSUM_FILE) ; \
+		gmd5sum $(MAKESUM_TARGETS) > $(CHECKSUM_FILE) ; \
 		echo "Checksums made for $(MAKESUM_TARGETS)" ; \
 		cat $(CHECKSUM_FILE) ; \
 	fi
@@ -294,7 +294,7 @@ LIBTOOL_LADIR ?= $(DESTDIR)$(libdir)
 fixlibtool:
 	@if test -d $(LIBTOOL_LADIR) ; then \
 		echo " => Fixing libtool configs in $(LIBTOOL_LADIR)" ; \
-		find $(LIBTOOL_LADIR) -name '*.la' -exec fixlibtool {} + ; \
+		gfind $(LIBTOOL_LADIR) -name '*.la' -exec fixlibtool {} + ; \
 	fi
 	$(DONADA)
 	@$(MAKECOOKIE)
@@ -355,6 +355,10 @@ clean-dirs:
 		rm -rf $$target ; \
 	done ; \
 
+# Clean an image
+imageclean:
+	@-rm -rf $(COOKIEDIR) $(WORKDIR)
+
 # Print package dependencies
 PKGDEP_LIST = $(filter-out $(BUILDDEPS),$(DEPEND_LIST))
 printdepends:
@@ -370,7 +374,7 @@ printdepends:
 
 # Update inter-package depends
 makedepend:
-	@for gspec in `find $(CURDIR) -type f -name '*.gspec' | grep files`; do \
+	@for gspec in `gfind $(CURDIR) -type f -name '*.gspec' | ggrep files`; do \
 		pkgname=`basename $$gspec .gspec` ; \
 		pkgfiles=`dirname $$gspec` ; \
 		pkgdir=`dirname $$pkgfiles` ; \

@@ -1,6 +1,6 @@
 
 # Set the CPAN mirror in gar.conf.mk
-MASTER_SITES ?= $(CPAN_MIRROR)
+MASTER_SITES ?= $(CPAN_MIRRORS)
 
 # This is common to most modules - override in module makefile if different
 MODDIST   ?= $(GARNAME)-$(GARVERSION).tar.gz
@@ -39,7 +39,7 @@ PERL_PACKLIST ?= $(call find_newest_packlist $(DESTDIR)$(perlpackroot))
 pre-package:
 	@if test -n "$(PERL_PACKLIST)" && test -f "$(PERL_PACKLIST)" ; then \
 		echo " ==> Fixing Perl Packlist: $(PERL_PACKLIST)" ; \
-		sed -i -e s,$(DESTDIR),,g $(PERL_PACKLIST) ; \
+		gsed -i -e s,$(DESTDIR),,g $(PERL_PACKLIST) ; \
 	fi
 	@$(MAKECOOKIE)
 
@@ -57,13 +57,17 @@ INSTALL_ENV   += PERL5LIB=$(PERL5LIB)
 PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
-	( cd $* ; $(CONFIGURE_ENV) perl Makefile.PL $(PERL_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
+	( cd $* ; \
+	    $(CONFIGURE_ENV) perl Makefile.PL \
+	        $(PERL_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 PERLBUILD_CONFIGURE_ARGS ?= installdirs=vendor
 configure-%/Build.PL:
 	@echo " ==> Running Build.PL in $*"
-	@( cd $* ; $(CONFIGURE_ENV) perl Build.PL $(PERLBUILD_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
+	@( cd $* ; \
+	    $(CONFIGURE_ENV) perl Build.PL \
+	        $(PERLBUILD_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 build-%/Build:

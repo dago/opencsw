@@ -53,7 +53,7 @@ ftp//%:
 # (absolute path)
 file///%: 
 	@if test -f /$*; then \
-		ln -sf /$* $(PARTIALDIR)/$(notdir $*); \
+		gln -sf /$* $(PARTIALDIR)/$(notdir $*); \
 	else \
 		false; \
 	fi
@@ -62,7 +62,7 @@ file///%:
 # (relative path)
 file//%: 
 	@if test -f $*; then \
-		ln -sf "$(CURDIR)/$*" $(PARTIALDIR)/$(notdir $*); \
+		gln -sf "$(CURDIR)/$*" $(PARTIALDIR)/$(notdir $*); \
 	else \
 		false; \
 	fi
@@ -86,9 +86,9 @@ svn-http//%:
 # error out if it mentions the file without an "OK".
 checksum-%: $(CHECKSUM_FILE) 
 	@echo " ==> Running checksum on $*"
-	@if grep -- '$*' $(CHECKSUM_FILE); then \
-		if LC_ALL="C" LANG="C" md5sum -c $(CHECKSUM_FILE) 2>&1 | \
-			grep -- '$*' | grep -v ':[ ]\+OK'; then \
+	@if ggrep -- '$*' $(CHECKSUM_FILE); then \
+		if LC_ALL="C" LANG="C" gmd5sum -c $(CHECKSUM_FILE) 2>&1 | \
+			ggrep -- '$*' | ggrep -v ':[ ]\+OK'; then \
 			echo '(!!!) $* failed checksum test!' 1>&2; \
 			false; \
 		else \
@@ -119,19 +119,19 @@ TAR_ARGS = --no-same-owner -m
 # rule to extract uncompressed tarballs
 tar-extract-%:
 	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
-	@tar $(TAR_ARGS) -xf $(DOWNLOADDIR)/$* -C $(EXTRACTDIR)
+	@gtar $(TAR_ARGS) -xf $(DOWNLOADDIR)/$* -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
 # rule to extract files with tar xzf
 tar-gz-extract-%:
 	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
-	@gzip -dc $(DOWNLOADDIR)/$* | tar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
+	@gzip -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
 # rule to extract files with tar and bzip
 tar-bz-extract-%:
 	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
-	@bzip2 -dc $(DOWNLOADDIR)/$* | tar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
+	@bzip2 -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
 # rule to extract files with unzip
@@ -154,7 +154,8 @@ deb-bin-extract-%:
 	@rm debian-binary && \
 		mv *.tar.gz $(DOWNLOADDIR) && \
 			mkdir $(WORKSRC) && \
-				tar $(TAR_ARGS) -xvz -C $(WORKSRC) -f $(DOWNLOADDIR)/data.tar.gz
+				gtar $(TAR_ARGS) -xvz -C $(WORKSRC) \
+					-f $(DOWNLOADDIR)/data.tar.gz
 	@$(MAKECOOKIE)
 
 ### EXTRACT FILE TYPE MAPPINGS ###
@@ -205,7 +206,7 @@ extract-%: cp-extract-%
 PATCHDIR ?= $(WORKSRC)
 PATCHDIRLEVEL ?= 1
 PATCHDIRFUZZ ?= 2
-GARPATCH = patch -d$(PATCHDIR) -p$(PATCHDIRLEVEL) -F$(PATCHDIRFUZZ)
+GARPATCH = gpatch -d$(PATCHDIR) -p$(PATCHDIRLEVEL) -F$(PATCHDIRFUZZ)
 BASEWORKSRC = $(shell basename $(WORKSRC))
 
 # apply bzipped patches
@@ -223,7 +224,7 @@ gz-patch-%:
 # apply normal patches
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	$(GARPATCH) <$(DOWNLOADDIR)/$*
+	@$(GARPATCH) <$(DOWNLOADDIR)/$*
 	@$(MAKECOOKIE)
 
 # This is used by makepatch
@@ -232,7 +233,7 @@ normal-patch-%:
 	@EXTRACTDIR=$(SCRATCHDIR) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) extract
 	@mv $(SCRATCHDIR)/$(BASEWORKSRC) $(WORKSRC).orig
 	@( cd $(WORKDIR); \
-		if diff --speed-large-files --minimal -Nru $(BASEWORKSRC).orig $(BASEWORKSRC) > gar-base.diff; then :; else \
+		if gdiff --speed-large-files --minimal -Nru $(BASEWORKSRC).orig $(BASEWORKSRC) > gar-base.diff; then :; else \
 			cd $(CURDIR); \
 			mv -f $(WORKDIR)/gar-base.diff $@; \
 		fi )
@@ -482,7 +483,7 @@ MANIFEST_ENV += WORKSRC=$(WORKSRC)
 # FIXME: using -D may not be the right thing to do!
 install-$(MANIFEST_FILE):
 	@echo " ==> Installing from $(MANIFEST_FILE)"
-	$(MANIFEST_ENV) ; $(foreach ZORCH,$(shell cat $(MANIFEST_FILE)), install -Dc $(join $(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_FLAGS)),$(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_LINE))) $(word 1,$(MANIFEST_LINE)) $(word 2,$(MANIFEST_LINE)) ;)
+	$(MANIFEST_ENV) ; $(foreach ZORCH,$(shell cat $(MANIFEST_FILE)), ginstall -Dc $(join $(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_FLAGS)),$(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_LINE))) $(word 1,$(MANIFEST_LINE)) $(word 2,$(MANIFEST_LINE)) ;)
 	@$(MAKECOOKIE)
 
 #################### DEPENDENCY RULES ####################
@@ -523,12 +524,12 @@ imgdep-%:
 gzip-info-man: gzip-info gzip-man
 
 gzip-info:
-	find $(DESTDIR) -type f -iname *.info* -not -iname *.gz | \
-		xargs -r gzip --force
+	gfind $(DESTDIR) -type f -iname *.info* -not -iname *.gz | \
+		gxargs -r gzip --force
 
 gzip-man:
-	find $(DESTDIR) -type f -iname *.[1-8] -size +2 -print | \
-		xargs -r gzip --force
+	gfind $(DESTDIR) -type f -iname *.[1-8] -size +2 -print | \
+		gxargs -r gzip --force
 
 include $(addprefix $(GARDIR)/,$(EXTRA_LIBS))
 

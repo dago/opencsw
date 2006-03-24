@@ -83,7 +83,7 @@ package-p:
 package-create:
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
-			echo "   ==> Processing $$spec $(WORKDIR) => $(CURDIR)/$(WORKDIR)" ; \
+			echo " ==> Processing $$spec" ; \
 			$(PKG_ENV) mkpackage --spec $$spec \
 								 --destdir $(SPKG_EXPORT) \
 								 --workdir $(CURDIR)/$(WORKDIR) \
@@ -105,7 +105,7 @@ package-verify:
 	@for file in `cat /tmp/verify.$$` ; do \
 		checkpkg $(SPKG_EXPORT)/$$file.gz || exit 2 ; \
 		mv $(SPKG_EXPORT)/$$file.gz $(PKGGET_DESTDIR) ; \
-		make -C $(PKGGET_DESTDIR)/.. ; \
+		$(MAKE) -C $(PKGGET_DESTDIR)/.. ; \
 	done
 	@rm -f /tmp/verify.$$
 

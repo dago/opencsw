@@ -11,7 +11,7 @@ paranoid-%:
 	done
 
 unbuilt:
-	@(find . -mindepth 3 -maxdepth 3 -name work | cut -d/ -f 3; find . -mindepth 2 -maxdepth 2 | cut -d/ -f3) | sort | uniq -u
+	@(gfind . -mindepth 3 -maxdepth 3 -name work | cut -d/ -f 3; gfind . -mindepth 2 -maxdepth 2 | cut -d/ -f3) | sort | uniq -u
 
 export BUILDLOG ?= $(shell pwd)/buildlog.txt
 
@@ -31,7 +31,7 @@ rebuildpkgdb:
 	@bin/build_pkgdb > pkg.db
 
 cvsdesc:
-	@for package in $(shell find . -type d -mindepth 2 -maxdepth 2 -not -name 'CVS' -a -not -name '00CPAN_Module_Template' | sed -e 's/^\.\///') ; do \
+	@for package in $(shell gfind . -type d -mindepth 2 -maxdepth 2 -not -name 'CVS' -a -not -name '00CPAN_Module_Template' | gsed -e 's/^\.\///') ; do \
 		printf "%-36s%s\n" sunx/$$package "$(call pkgdesc,$$package)" ; \
 	done
 
