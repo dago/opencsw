@@ -12,7 +12,8 @@ define BLURB
   libraries.
 endef
 
-MASTER_SITES = $(CPAN_ROOT)/authors/id/N/NW/NWCLARK/
+MASTER_SITES   = http://search.cpan.org/CPAN/authors/id/N/NW/NWCLARK/
+SPKG_SOURCEURL = http://search.cpan.org/~nwclark/perl/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWperl,depend prototype)
@@ -66,6 +67,7 @@ CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
 CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/bdb43/lib /opt/csw/lib"
+CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
 EXTRA_LIB += $(prefix)/bdb43/lib
 EXTRA_INC += $(prefix)/bdb43/include
@@ -102,7 +104,6 @@ perlconf:
             next if /config_arg[1-9]/; \
             s/^config_args=.+$$/config_args=''/; \
             s/^config_argc=.+$$/config_argc='0'/; \
-            s,/opt/csw/gnu/,/opt/csw/bin/g,; \
             s,-I$(DESTDIR)$(includedir),,g; \
             s,-[LR]$(DESTDIR)$(libdir),,g; \
             s,( -I$(includedir))+,\$$1,g; \
