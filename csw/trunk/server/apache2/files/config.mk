@@ -7,6 +7,17 @@ SPKG_SOURCEURL = http://httpd.apache.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += config.layout
 
+ifdef ENABLE_DEPENDENCY_BUILD
+DEPEND += lib/libiconv
+DEPEND += lib/openssl
+DEPEND += lib/openldap
+DEPEND += lib/berkeleydb43
+DEPEND += lib/sqlite3
+DEPEND += lib/expat
+DEPEND += server/postgres
+DEPEND += server/mysql
+endif
+
 # Build Configuration
 CONFIGURE_ARGS += --enable-layout=csw
 CONFIGURE_ARGS += --enable-ssl

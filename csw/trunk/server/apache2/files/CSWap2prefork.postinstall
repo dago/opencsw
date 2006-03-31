@@ -4,6 +4,7 @@ CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
 AP2_PREFIX=$CSW_PREFIX/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
 AP2_HTTPD=$AP2_BINDIR/httpd
+AP2_CTRL=$AP2_BINDIR/apachectl
 
 # Fix MPM links
 [ -x $AP2_HTTPD ] && mv $AP2_HTTPD $AP2_HTTPD.prefork-save
@@ -13,9 +14,9 @@ installf $PKGINST $AP2_HTTPD
 installf -f $PKGINST
 
 # Start apache
-if [ -z "$PKG_INSTALL_ROOT" ]; then
+if [ -z "$PKG_INSTALL_ROOT" ] && [ -x $AP2_HTTPD ]; then
     echo Starting apache...
-    $AP2_BINDIR/apachectl start
+    $AP2_CTRL start
 fi
 
 exit 0

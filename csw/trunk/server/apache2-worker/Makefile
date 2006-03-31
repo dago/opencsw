@@ -11,10 +11,9 @@ endef
 include ../apache2/files/config.mk
 
 # Apache worker MPM
-DISTFILES += CSWap2worker.gspec CSWap2worker.prototype CSWap2worker.depend
-DISTFILES += CSWap2worker.preinstall CSWap2worker.postinstall
-DISTFILES += CSWap2worker.preremove CSWap2worker.postremove
-DISTFILES += CSWap2worker.space 
+CSWADMIN   = depend prototype postinstall postremove space
+DISTFILES += $(call admfiles,CSWap2worker,$(CSWADMIN))
+DISTFILES += CSWapache2.killproc
 
 DEPENDS   += server/apache2
 

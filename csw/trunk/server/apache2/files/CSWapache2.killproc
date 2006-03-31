@@ -7,8 +7,7 @@ AP2_BINDIR=$AP2_PREFIX/sbin
 # Stop apache
 if [ -z "$PKG_INSTALL_ROOT" ]; then
     echo Stopping apache...
-    $AP2_BINDIR/apachectl stop
-    sleep 2
+    /usr/bin/pkill -f apache2/sbin/httpd
 fi
 
 exit 0

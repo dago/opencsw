@@ -16,9 +16,11 @@ warn_update=0
 echo "Checking configuration files:"
 for config in $AP2_CONFIG $AP2_CONFIG_SSL $AP2_CONFIG_SSL_OLD ; do
     if [ -f $config ]; then 
-        echo "Updating syntax of $config to Apache 2.2"
-        $AP2_BINDIR/update20to22 $config
-        warn_update=1
+        if [ -n "`grep mod_auth.so $config`" ]; then
+            echo "Updating syntax of $config to Apache 2.2"
+            $AP2_BINDIR/update20to22 $config
+            warn_update=1
+        fi
     elif [ -f $config.CSW ]; then
         echo "Creating $config from template"
         hostname=`hostname`
@@ -38,5 +40,32 @@ cat << EOF
 
 EOF
 fi
+
+# Copy templates
+template_list="\
+    share/htdocs/index.html \
+    etc/extra/httpd-autoindex.conf \
+    etc/extra/httpd-dav.conf \
+    etc/extra/httpd-default.conf \
+    etc/extra/httpd-info.conf \
+    etc/extra/httpd-languages.conf \
+    etc/extra/httpd-mpm.conf \
+    etc/extra/httpd-multilang-errordoc.conf \
+    etc/extra/httpd-userdir.conf \
+    etc/extra/httpd-vhosts.conf \
+    etc/magic \
+    etc/mime.types"
+
+echo Copying CSW templates:
+for file in $template_list
+do
+    filepath=/opt/csw/apache2/$file
+    if [ ! -f "$filepath" ] && [ -f "$filepath.CSW" ]; then
+        echo "  creating $filepath"
+        cp $filepath.CSW $filepath
+    else
+        echo "  preserving $filepath"
+    fi
+done
 
 exit 0

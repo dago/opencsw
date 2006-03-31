@@ -18,8 +18,7 @@ DISTFILES += $(call admfiles,CSWapache2rt,depend prototype checkinstall)
 CSWapache2c_admfiles = depend prototype postinstall space
 DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))
 # Prefork MPM (default)
-CSWap2prefork_admfiles  = depend prototype preinstall postinstall
-CSWap2prefork_admfiles += preremove postremove space
+CSWap2prefork_admfiles  = depend prototype postinstall postremove space
 DISTFILES += $(call admfiles,CSWap2prefork,$(CSWap2prefork_admfiles))
 # mod_suexec
 CSWap2suexec_admfiles = depend prototype postinstall preremove
@@ -29,11 +28,12 @@ DISTFILES += $(call admfiles,CSWapache2-manual,depend prototype)
 # Development support
 DISTFILES += $(call admfiles,CSWapache2-devel,depend prototype)
 
+# Standard package bits
+DISTFILES += CSWapache2.killproc
+
 # Configuration templates
 DISTFILES += cswapache2 httpd.conf.CSW httpd-ssl.conf.CSW
 DISTFILES += update20to22
-
-#DEPENDS += lib/apr-util
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
@@ -54,16 +54,41 @@ STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 include ../category.mk
 include files/rules.mk
 
-post-install: fix-config-vars copy-local-files 
+post-install: copy-local-files create-templates fix-config-vars
+
+# Copy in specialized templates
+copy-local-files:
+	@ginstall -d $(DESTDIR)/etc/init.d
+	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
+	@ginstall $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
+	@ginstall $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
+	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 	@$(MAKECOOKIE)
 
-copy-local-files:
-	@install -d $(DESTDIR)/etc/init.d
-	@install $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
-	@install $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
-	@install $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
-	@install $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
+# Create stock templates
+template_list  = share/htdocs/index.html
+template_list += etc/extra/httpd-autoindex.conf
+template_list += etc/extra/httpd-dav.conf
+template_list += etc/extra/httpd-default.conf
+template_list += etc/extra/httpd-info.conf
+template_list += etc/extra/httpd-languages.conf
+template_list += etc/extra/httpd-mpm.conf
+template_list += etc/extra/httpd-multilang-errordoc.conf
+template_list += etc/extra/httpd-userdir.conf
+template_list += etc/extra/httpd-vhosts.conf
+template_list += etc/magic
+template_list += etc/mime.types
 
+create-templates:
+	@echo "  => Creating template files"
+	@( cd $(DESTDIR)$(prefix)/apache2 ; \
+			for file in $(template_list) ; do \
+				gmv -v $$file $$file.CSW ; \
+			done )
+	@$(MAKECOOKIE)
+
+# Fix install path references
 fix-config-vars:
 	@replacer $(DESTDIR)
+	@$(MAKECOOKIE)
 
