@@ -1,15 +1,33 @@
 
-# Details for the pgsql extension 
+# Can't do direct downloads of PHP from php.net
+#MASTER_SITES = http://www.php.net/downloads.php
+SPKG_SOURCEURL = http://www.php.net/downloads.php
+DISTFILES     += $(GARNAME)-$(GARVERSION).tar.bz2
+
+# Disable Tests (report submitted to PHP QA)
+ENABLE_TEST = 0
+
+# PostgreSQL
 ifeq ($(shell /bin/uname -p),sparc)
 pg_config = $(prefix)/postgresql/bin/sparcv8
 else
 pg_config = $(prefix)/postgresql/bin
 endif
 
+# MySQL 5
 PATH := $(PATH):$(prefix)/mysql5/bin
 export PATH
 
-# Configuration
+# BerkeleyDB
+EXTRA_LIB += $(prefix)/bdb43/lib
+EXTRA_INC += $(prefix)/bdb43/lib
+
+# IMAP C Client
+MASTER_SITES += ftp://ftp.cac.washington.edu/imap/
+DISTFILES    += c-client.tar.Z
+IMAPVERSION   = imap-2004f
+
+# SAPI Common Configuration
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --enable-force-cgi-redirect
 CONFIGURE_ARGS += --enable-discard-path
@@ -17,6 +35,8 @@ CONFIGURE_ARGS += --enable-discard-path
 CONFIGURE_ARGS += --disable-static
 
 # Features
+CONFIGURE_ARGS += --with-imap=../$(IMAPVERSION)
+CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --enable-dom=shared
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)

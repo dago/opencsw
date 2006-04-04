@@ -20,62 +20,29 @@ define BLURB
   available.
 endef
 
-# Can't do direct downloads of PHP from php.net
-#MASTER_SITES = http://www.php.net/downloads.php
-MASTER_SITES = ftp://ftp.cac.washington.edu/imap/
-
-SPKG_SOURCEURL = http://www.php.net/downloads.php
-
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += c-client.tar.Z
-
-IMAPDIR  = imap-2004f
-C_CLIENT = ../$(IMAPDIR)
-
 # PHP Apache SAPI
-DISTFILES += CSWmodphp5.gspec CSWmodphp5.prototype CSWmodphp5.depend 
-DISTFILES += CSWmodphp5.space CSWmodphp5.postinstall CSWmodphp5.preremove
+ADMFILES   = depend prototype preremove postinstall space
+DISTFILES += $(call admfiles,CSWmodphp5,$(ADMFILES))
 
-# Apply patches from the workdir
-PATCHDIR = $(WORKDIR)
-PATCHDIRLEVEL = 0
+# Patches
+include files/patches.mk
 
-# Fix up configure script
-PATCHFILES += config.diff
+# Dependencies
+include files/depend.mk
+DEPENDS += server/apache
 
-# Fix ssl paths for uw-imap c-client
-PATCHFILES += imap-ssl.diff
-
-# Don't hardcode $(CC)
-PATCHFILES += imap-cc.diff
-
-#DEPENDS += server/apache2 server/mysql4
-
-# Configuration
+# SAPI Common Configuration
 include files/config.mk
+
+# Apache SAPI Specific Configuration
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache/bin/apxs
-CONFIGURE_ARGS += --with-imap=$(C_CLIENT)
-CONFIGURE_ARGS += --with-kerberos=$(prefix)
-CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
 
-# Some tests are failing -- report submitted to PHP QA
-ENABLE_TEST = 0
-
+# System Rules/Configuration
 include ../category.mk
 
-INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
+# Common Rules
+include files/rules.mk
 
-EXTRA_LIB = $(prefix)/bdb43/lib
-EXTRA_INC = $(prefix)/bdb43/include
-
-# Build the imap client library first
-pre-configure:
-	@( cd $(WORKDIR)/$(IMAPDIR) ; $(BUILD_ENV) make soc )
-	@$(MAKECOOKIE)
-
-# This is required so that we don't try to regen the
-# sqlite parser.
-pre-build:
-	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
-	@$(MAKECOOKIE)
+# SAPI Specific Rules
+STRIP_DIRS += $(DESTDIR)$(prefix)/apache/libexec
 

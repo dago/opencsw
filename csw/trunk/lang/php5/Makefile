@@ -16,18 +16,6 @@ define BLURB
   available.
 endef
 
-# Can't do direct downloads of PHP from php.net
-#MASTER_SITES = http://www.php.net/downloads.php
-MASTER_SITES = ftp://ftp.cac.washington.edu/imap/
-
-SPKG_SOURCEURL = http://www.php.net/downloads.php
-
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += c-client.tar.Z
-
-IMAPDIR  = imap-2004f
-C_CLIENT = ../$(IMAPDIR)
-
 # Auxilliary files
 DISTFILES += php.ini.CSW httpd-php5.conf.CSW phpext
 DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh 
@@ -37,77 +25,47 @@ DISTFILES += $(call admfiles,CSWphp5,prototype depend postinstall)
 DISTFILES += $(call admfiles,CSWphp5devel,prototype depend)
 
 # PHP Apache2 SAPI
-DISTFILES += $(call admfiles,CSWap2modphp5,prototype depend space postinstall preremove)
+ADMFILES   = depend prototype postinstall preremove space
+DISTFILES += $(call admfiles,CSWap2modphp5,$(ADMFILES))
 
 # PHP Extensions
 include files/extensions.mk
 
-# Apply patches from the workdir
-PATCHDIR = $(WORKDIR)
-PATCHDIRLEVEL = 0
+# Patches
+include files/patches.mk
 
-# Disable apache module activation
-PATCHFILES += config.diff
+# Dependencies
+include files/depend.mk
+DEPENDS += server/apache2
 
-# Fix ssl paths for uw-imap c-client
-PATCHFILES += imap-ssl.diff
-
-# Don't hardcode $(CC)
-PATCHFILES += imap-cc.diff
-
-# Respect my CFLAGS
-PATCHFILES += imap-cflags.diff
-
-# Horrible, but necessary due to net-snmp linking with -lwrap
-PATCHFILES += snmp-hack.diff
-
-#DEPENDS += server/apache2 server/mysql4
-
-# Configuration
+# SAPI Common Configuration
 include files/config.mk
+
+# Apache2 SAPI Specific Configuration
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
-CONFIGURE_ARGS += --with-imap=$(C_CLIENT)
-CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
-CONFIGURE_ARGS += --with-kerberos=$(prefix)
 
-# Some tests are failing -- report submitted to PHP QA
-ENABLE_TEST = 0
-
+# System Rules/Configuration
 include ../category.mk
 
-INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
+# Common Rules
+include files/rules.mk
 
-EXTRA_LIB = $(prefix)/bdb43/lib
-EXTRA_INC = $(prefix)/bdb43/include
-
-PHP5ROOT    = $(DESTDIR)$(prefix)/php5
-STRIP_DIRS += $(PHP5ROOT)/lib/php/extensions/*/
-STRIP_DIRS += $(PHP5ROOT)/bin
+# SAPI Specific Rules
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
-
-# Build the imap client library first
-pre-configure:
-	@( cd $(WORKDIR)/$(IMAPDIR) ; $(BUILD_ENV) make soc )
-	@$(MAKECOOKIE)
-
-# This is required so that we don't try to regen the
-# sqlite parser.
-pre-build:
-	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
-	@$(MAKECOOKIE)
 
 # Copy over template config files and utility scripts
 post-install:
-	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	install -m 0644 \
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0644 \
 		$(WORKDIR)/httpd-php5.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
-	install -m 0755 \
+	ginstall -m 0755 \
 		$(WORKDIR)/phpext \
 		$(DESTDIR)$(prefix)/php5/bin
 	gsed -i -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini.CSW
-	install -d $(DESTDIR)$(prefix)/apache2/etc
-	install -m 0644 \
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc
+	ginstall -m 0644 \
 		$(WORKDIR)/php.ini.CSW \
 		$(DESTDIR)$(prefix)/php5/lib
 	@$(MAKECOOKIE)
+
