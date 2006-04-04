@@ -1,5 +1,5 @@
 GARNAME = neon
-GARVERSION = 0.25.4
+GARVERSION = 0.25.5
 CATEGORIES = lib
 
 DESCRIPTION = Neon HTTP and WebDAV client library
@@ -31,7 +31,7 @@ post-install:
 		gunzip $(WORKDIR)/libneon.so.24.0.7.$(GARCH).gz ; \
 	fi
 	@if test -f $(WORKDIR)/libneon.so.24.0.7.$(GARCH) ; then \
-		install -m0755 \
+		ginstall -m0755 \
 			$(WORKDIR)/libneon.so.24.0.7.$(GARCH) \
 			$(DESTDIR)$(libdir)/libneon.so.24.0.7 ; \
 	fi
