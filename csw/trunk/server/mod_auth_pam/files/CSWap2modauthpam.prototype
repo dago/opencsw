@@ -10,12 +10,6 @@ f none /opt/csw/share/doc/ap2modauthpam/configure.html=$basedir/opt/csw/share/do
 f none /opt/csw/share/doc/ap2modauthpam/faq.html=$basedir/opt/csw/share/doc/ap2modauthpam/faq.html 0644 root bin
 f none /opt/csw/share/doc/ap2modauthpam/install.html=$basedir/opt/csw/share/doc/ap2modauthpam/install.html 0644 root bin
 d none /opt/csw/share/doc/ap2modauthpam/samples 0755 root bin
-d none /opt/csw/share/doc/ap2modauthpam/samples/CVS 0755 root bin
-f none /opt/csw/share/doc/ap2modauthpam/samples/CVS/Entries=$basedir/opt/csw/share/doc/ap2modauthpam/samples/CVS/Entries 0644 root bin
-f none /opt/csw/share/doc/ap2modauthpam/samples/CVS/Repository=$basedir/opt/csw/share/doc/ap2modauthpam/samples/CVS/Repository 0644 root bin
-f none /opt/csw/share/doc/ap2modauthpam/samples/CVS/Root=$basedir/opt/csw/share/doc/ap2modauthpam/samples/CVS/Root 0644 root bin
-f none /opt/csw/share/doc/ap2modauthpam/samples/CVS/Tag=$basedir/opt/csw/share/doc/ap2modauthpam/samples/CVS/Tag 0644 root bin
-f none /opt/csw/share/doc/ap2modauthpam/samples/CVS/Template=$basedir/opt/csw/share/doc/ap2modauthpam/samples/CVS/Template 0644 root bin
 f none /opt/csw/share/doc/ap2modauthpam/samples/dot-htaccess=$basedir/opt/csw/share/doc/ap2modauthpam/samples/dot-htaccess 0644 root bin
 f none /opt/csw/share/doc/ap2modauthpam/samples/httpd-rh6+=$basedir/opt/csw/share/doc/ap2modauthpam/samples/httpd-rh6+ 0644 root bin
 f none /opt/csw/share/doc/ap2modauthpam/samples/httpd=$basedir/opt/csw/share/doc/ap2modauthpam/samples/httpd 0644 root bin

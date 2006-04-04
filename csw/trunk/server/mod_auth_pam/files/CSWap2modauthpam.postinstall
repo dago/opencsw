@@ -8,17 +8,21 @@ AP2_CONFDIR=$AP2_PREFIX/etc
 AP2_EXTRADIR=$AP2_CONFDIR/extra
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
 
-# Enable the auth_pam module
+# Enable the auth_pam modules
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n \
     auth_pam mod_auth_pam.so
 
+chroot $PKG_INSTALL_ROOT \
+    $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n \
+    auth_sys_group mod_auth_sys_group.so
+
 # Finito
 cat <<END
 
-NOTICE: mod_auth_pam is enabled in httpd.conf but the server was not restarted.
-Please configure mod_auth_pam and restart apache.
+NOTICE: mod_auth_pam and mod_auth_sys_group are enabled in httpd.conf but the
+server was not restarted.  Please check your configuration and restart apache.
 
 END
 
