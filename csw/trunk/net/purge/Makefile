@@ -2,9 +2,6 @@ GARNAME = purge
 GARVERSION = 20040201
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWpurge
-SPKG_BITNAME = purge
-
 DESCRIPTION = Purge squid cache entries.
 define BLURB
   The purge tool is a kind of magnifying glass into your squid-2 cache. You
@@ -16,6 +13,8 @@ endef
 MASTER_SITES = http://www.wa.apana.org.au/~dean/sources/
 DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.gz
 WORKSRC = $(WORKDIR)/$(GARNAME)
+
+DISTFILES += $(call admfiles,CSWpurge,copyright)
 
 # Build with SunONE
 PATCHFILES  = suncc.diff
@@ -29,4 +28,8 @@ INSTALL_SCRIPTS = custom
 include ../category.mk
 
 install-custom:
-	@install -m 755 $(WORKSRC)/$(GARNAME) $(DESTDIR)$(sbindir)
+	@ginstall -d $(DESTDIR)$(docdir)/purge $(DESTDIR)$(sbindir)
+	@ginstall -m 755 $(WORKSRC)/$(GARNAME) $(DESTDIR)$(sbindir)
+	@ginstall -m 644 $(WORKSRC)/README     $(DESTDIR)$(docdir)/purge
+	@$(MAKECOOKIE)
+
