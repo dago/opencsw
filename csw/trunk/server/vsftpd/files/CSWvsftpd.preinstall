@@ -1,70 +1,54 @@
-#! /bin/sh -x
-# script de preinstallation du package BAOvsftpd
+#!/bin/sh
+# preinstallation script for vsftpd
 
 #############################
-# Declaration des variables #
+# variables declaration     #
 #############################
 PASSWD=/etc/passwd
 GROUP=/etc/group
 INSTALL_PATH=${BASEDIR}
 
-##########################################
-# Ajoute le groupe specifie en parametre #
-# s'il n'existe pas                      #
-##########################################
-Test_Grp()
+###########################################
+# create the given group if it doesn't exist #
+###########################################
+create_group()
 {
-NAME=$1
-GID=$2
-if /usr/bin/grep "^$NAME" $GROUP > /dev/null
-then 
-	/usr/bin/echo "Le groupe $NAME existe"
-else 
-	/usr/sbin/groupadd -g $GID $NAME 
-	/usr/bin/echo "Le groupe $NAME a ete cree"
-fi
+	NAME=$1
+	GID=$2
+	if /usr/bin/grep "^$NAME" $GROUP > /dev/null; then 
+		/usr/bin/echo "group $NAME already exists"
+	else 
+		/usr/sbin/groupadd -g $GID $NAME 
+		/usr/bin/echo "group $NAME created"
+	fi
 }
 
 ##################################################
-# Ajoute l'utilisateur specifie en 1er paramètre #
-# s'il n'existe pas.                             #
-# le 2nd paramètre correspond à l'UID, le        #
-# troisième au GID, le 4ème au Home, le 5ème au  #
-# shell et le 6ème à un commentaire              #
+# create the given user if it doesn't exist      #
+# paramters are: userid gid home shell gecos     #
 ##################################################
-Test_User()
+create_user()
 {
-NAME=$1
-UID=$2
-GID=$3
-HOME=$4
-SHELL=$5
-COMMENT=$6
+	NAME=$1
+	UID=$2
+	GID=$3
+	HOME=$4
+	SHELL=$5
+	COMMENT=$6
 
-if /usr/bin/grep "^$NAME" $PASSWD > /dev/null
-then 
-	/usr/bin/echo "L'utilisateur $NAME existe"
-else 
-	/usr/sbin/useradd -u $UID -g $GID -c "$COMMENT" -d $HOME -s $SHELL $NAME
-	/usr/bin/pwconv
-	/usr/bin/echo "L'utilisateur $NAME a ete cree"
-
-fi
+	if /usr/bin/grep "^$NAME" $PASSWD > /dev/null; then 
+		/usr/bin/echo "user $NAME already exists"
+	else 
+		/usr/sbin/useradd -u $UID -g $GID -c "$COMMENT" -d $HOME -s $SHELL $NAME
+		/usr/bin/pwconv
+		/usr/bin/echo "user $NAME created"
+	fi
 }
 
 ##########
 # main() #
 ##########
-# Création des groupes particuliers
-echo "Création des groupes particuliers..."
+echo "Creating privilege separation user..."
 
-Test_Grp vsftp 972
-Test_Grp virtual 973
-Test_Grp ftpsecure 974
-
-# Création des utilisateurs particuliers
-echo "Création des utilisateurs particuliers..."
-
-Test_User vsftp 9720 972 /home/vsftp /bin/false "Anonymous user pour VsFtpd"
-Test_User virtual 9730 973 /home/virtual /bin/false "Virtual User pour vsftpd"
-Test_User ftpsecure 9740 974 /var/opt/bao/empty/vsftpd /bin/false "privsep user pour vsftpd"
+create_group ftpsecure 974
+create_user ftpsecure 9740 974 /opt/csw/var/empty/vsftpd /bin/false "vsftpd privsep user"
