@@ -12,7 +12,7 @@ AP2_CONFIG=$AP2_CONFDIR/httpd.conf
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 chroot $PKG_INSTALL_ROOT \
     $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -A -n \
-    auth_mysql mod_auth_mysql.so
+    mysql_auth mod_auth_mysql.so
 
 cat <<END
 
