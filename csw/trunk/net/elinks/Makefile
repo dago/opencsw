@@ -12,7 +12,8 @@ endef
 
 MASTER_SITES = http://elinks.cz/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWelinks,changelog)
+DISTFILES += $(call admfiles,CSWelinks,prototype,depend)
+DISTFILES += changelog.CSW
 
 # suppress the rdynamic test which doesn't
 # work correctly
@@ -39,5 +40,5 @@ pre-configure:
 	touch $(WORKSRC)/config.status
 
 post-install:
-	@ginstall -D $(WORKDIR)/CSWelinks.changelog $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW 
+	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW 
 
