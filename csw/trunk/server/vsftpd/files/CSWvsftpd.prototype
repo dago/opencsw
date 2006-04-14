@@ -1,0 +1,25 @@
+f smfno /etc/init.d/cswvsftpd=$basedir/etc/init.d/cswvsftpd 0755 root sys
+s smfno /etc/rc0.d/K15cswvsftpd=../init.d/cswvsftpd
+s smfno /etc/rc1.d/K15cswvsftpd=../init.d/cswvsftpd
+s smfno /etc/rc2.d/S85cswvsftpd=../init.d/cswvsftpd
+d none /opt/csw/etc/vsftpd 0755 root bin
+f none /opt/csw/etc/vsftpd/vsftpd.conf.CSW=$basedir/opt/csw/etc/vsftpd/vsftpd.conf.CSW 0755 root bin
+f none /opt/csw/etc/vsftpd/vsftpd.userlist.CSW=$basedir/opt/csw/etc/vsftpd/vsftpd.userlist.CSW 0755 root bin
+f none /opt/csw/sbin/vsftpd=$basedir/opt/csw/sbin/vsftpd 0755 root bin
+d none /opt/csw/share/doc/vsftpd 0755 root bin
+f none /opt/csw/share/doc/vsftpd/README.CSW=$basedir/opt/csw/share/doc/vsftpd/README.CSW 0755 root bin
+f none /opt/csw/share/doc/vsftpd/changelog.CSW=$basedir/opt/csw/share/doc/vsftpd/changelog.CSW 0755 root bin
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man/man5 ? ? ?
+f none /opt/csw/share/man/man5/vsftpd.conf.5=$basedir/opt/csw/share/man/man5/vsftpd.conf.5 0644 root bin 
+d none /opt/csw/share/man/man8 ? ? ?
+f none /opt/csw/share/man/man8/vsftpd.8=$basedir/opt/csw/share/man/man8/vsftpd.8 0644 root bin
+d none /opt/csw/var/empty/vsftpd 0700 root sys
+d smfyes /opt/csw/var/svc 0755 root bin
+d smfyes /opt/csw/var/svc/manifest 0755 root bin
+d smfyes /opt/csw/var/svc/manifest/network 0755 root bin
+f smfyes /opt/csw/var/svc/manifest/network/vsftpd.xml=$basedir/opt/csw/var/svc/manifest/network/vsftpd.xml 0644 root bin
+d smfyes /opt/csw/lib/svc 0755 root bin
+d smfyes /opt/csw/lib/svc/method 0755 root bin
+f smfyes /opt/csw/lib/svc/method/svc-vsftpd=$basedir/opt/csw/lib/svc/method/svc-vsftpd 0755 root bin

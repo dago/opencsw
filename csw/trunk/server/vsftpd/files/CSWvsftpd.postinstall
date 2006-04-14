@@ -1,0 +1,26 @@
+# vsftpd - postinstall script
+# Add SMF capability
+#
+# Set variable smf depending on the availability of SMF binaries
+smf=no
+if [ -f $BASEDIR/usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm ]
+then
+  smf=yes
+fi
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+if [ $smf = no ]
+then
+  # Start vsftpd with rc script
+  chroot $PKG_ROOT_DIR /etc/init.d/cswvsftpd start >/dev/null 2>&1
+else
+  # Register with SMF
+  chroot $PKG_ROOT_DIR /usr/sbin/svccfg import /opt/csw/var/svc/manifest/network/vsftpd.xml >/dev/null 2>&1
+  # Enable the service
+  chroot $PKG_ROOT_DIR /usr/sbin/svcadm enable svc:network/cswvsftpd >/dev/null 2>&1
+  echo "vsftpd is using Service Management Facility."
+  echo "The FMRI is: svc:network/cswvsftpd:default"
+fi
+
+exit 0
