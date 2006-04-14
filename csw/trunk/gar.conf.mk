@@ -61,13 +61,15 @@ perlpackroot ?= $(perlcswlib)/auto
 # DESTDIR.
 #TMPDIR  ?= /tmp
 #DESTDIR ?= $(TMPDIR)/$(GARNAME)-$(GARVERSION)
-DESTDIR ?= /tmp/a
+DESTDIR ?= /tmp/${LOGNAME}
 
 BUILD_PREFIX ?= /opt/csw
 
 # Optimization Architecture
-OPTARCH_sparc ?= v8
-OPTARCH_i386  ?= 386
+ARCHLIST_sparc ?= v8 v9
+OPTARCH_sparc  ?= v8
+ARCHLIST_i386  ?= 386 pentium pentium_pro pentium_pro+mmx
+OPTARCH_i386   ?= 386
 
 OPTARCH := $(OPTARCH_$(GARCH))
 OPTDIR   = $(shell $(GARBIN)/isadir $(OPTARCH))
@@ -159,7 +161,8 @@ GNOME_MIRROR = $(GNOME_ROOT)/$(GARNAME)/$(GNOME_SUBV)/
 # SourceForge
 SF_SITES    ?= umn easynews unc
 SF_DLSERVER  = dl.sourceforge.net/sourceforge
-SF_MIRRORS   = $(foreach S,$(SF_SITES),http://$(S).$(SF_DLSERVER)/$(GARNAME)/)
+SF_PROJ     ?= $(GARNAME)
+SF_MIRRORS   = $(foreach S,$(SF_SITES),http://$(S).$(SF_DLSERVER)/$(SF_PROJ)/)
 SF_MIRRORS  += http://$(SF_DLSERVER)/$(GARNAME)/
 
 # Keep this for compatibility
