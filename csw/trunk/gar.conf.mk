@@ -60,8 +60,7 @@ perlpackroot ?= $(perlcswlib)/auto
 # filesystem root should be.  Each different DESTIMG has its own
 # DESTDIR.
 #TMPDIR  ?= /tmp
-#DESTDIR ?= $(TMPDIR)/$(GARNAME)-$(GARVERSION)
-DESTDIR ?= /tmp/${LOGNAME}
+DESTDIR ?= /tmp/csw-build.${LOGNAME}
 
 BUILD_PREFIX ?= /opt/csw
 
