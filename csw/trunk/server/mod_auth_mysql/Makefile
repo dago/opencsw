@@ -35,7 +35,7 @@ AP2_SBIN      = $(AP2_ROOT)/sbin
 APXS          = $(AP2_SBIN)/apxs
 
 # MySQL paths
-MYSQL_VERSION = mysql4
+MYSQL_VERSION = mysql5
 MYSQL_ROOT    = $(prefix)/$(MYSQL_VERSION)
 MYSQL_BIN     = $(MYSQL_ROOT)/bin
 MYSQL_CONFIG  = $(MYSQL_BIN)/mysql_config
