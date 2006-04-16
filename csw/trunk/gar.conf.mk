@@ -11,6 +11,11 @@
 # Pick up user information
 -include $(HOME)/.garrc
 
+# Outbound proxies
+http_proxy = http://svn:8080
+ftp_proxy  = http://svn:8080
+export http_proxy ftp_proxy
+
 # A directory containing cached files. It can be created
 # manually, or with 'make garchive' once you've started
 # downloading required files (say with 'make paranoid-checksum'.
