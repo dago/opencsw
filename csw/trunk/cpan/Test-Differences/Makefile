@@ -10,7 +10,7 @@ define BLURB
   utility may be just what's needed.
 endef
 
-DISTFILES += CSWpmtestdifferences.gspec CSWpmtestdifferences.depend
+DISTFILES += $(call admfiles,CSWpmtestdiff,depend prototype)
 
 DEPENDS += cpan/Text-Diff
 
