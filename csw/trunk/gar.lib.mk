@@ -108,7 +108,7 @@ checksum-%: $(CHECKSUM_FILE)
 
 $(GARCHIVEDIR)/%: $(GARCHIVEDIR)
 	@if [ -h $(DOWNLOADDIR)/$* ]; then :; else \
-		cp -Lr $(DOWNLOADDIR)/$* $@; \
+		gcp -Lr $(DOWNLOADDIR)/$* $@; \
 	fi
 
 
