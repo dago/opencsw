@@ -1,5 +1,5 @@
 GARNAME = CGI-Application
-GARVERSION = 4.04
+GARVERSION = 4.06
 CATEGORIES = cpan
 AUTHOR = MARKSTOS
 
@@ -11,7 +11,7 @@ define BLURB
   document, easier to write, and easier to evolve.
 endef
 
-DISTFILES += CSWpmcgiapp.gspec CSWpmcgiapp.depend
+DISTFILES += $(call admfiles,CSWpmcgiapp,depend prototype)
 
 DEPENDS += cpan/HTML-Template cpan/CGI
 
