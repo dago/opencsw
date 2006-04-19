@@ -1,5 +1,5 @@
 GARNAME = trac
-GARVERSION = 0.9.4
+GARVERSION = 0.9.5
 CATEGORIES = apps
 
 DESCRIPTION = Integrated SCM and Project Management
@@ -35,6 +35,6 @@ copy-docs:
 	@install -d $(DESTDIR)$(docdir)/trac
 	@cp -R $(WORKSRC)/contrib $(DESTDIR)$(docdir)/trac
 	@for f in COPYING ChangeLog INSTALL README README.tracd UPGRADE ; do \
-		install -m 0644 $(WORKSRC)/$$f $(DESTDIR)$(docdir)/trac ; \
+		ginstall -m 0644 $(WORKSRC)/$$f $(DESTDIR)$(docdir)/trac ; \
 	done
 
