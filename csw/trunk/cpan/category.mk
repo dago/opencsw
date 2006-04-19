@@ -5,7 +5,7 @@ MASTER_SITES ?= $(CPAN_MIRRORS)
 # This is common to most modules - override in module makefile if different
 MODDIST   ?= $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(MODDIST)
-CHECKPATH ?= $(CPAN_MIRROR)
+CHECKPATH ?= $(firstword $(CPAN_MIRRORS))
 
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
@@ -57,7 +57,7 @@ INSTALL_ENV   += PERL5LIB=$(PERL5LIB)
 PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
-	( cd $* ; \
+	@( cd $* ; \
 	    $(CONFIGURE_ENV) perl Makefile.PL \
 	        $(PERL_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
