@@ -1,5 +1,5 @@
 GARNAME = Math-Pari
-GARVERSION = 2.010702
+GARVERSION = 2.010704
 CATEGORIES = cpan
 AUTHOR = ILYAZ
 
@@ -19,7 +19,8 @@ define BLURB
   ftp://megrez.math.u-bordeaux.fr/pub/pari, or Math::libPARI).
 endef
 
-MASTER_SITES = $(CPAN_MIRROR) http://pari.math.u-bordeaux.fr/pub/pari/unix/
+MASTER_SITES  = http://pari.math.u-bordeaux.fr/pub/pari/unix/
+MASTER_SITES += $(CPAN_MIRRORS)
 DISTFILES += pari-$(PARIGP_VERSION).tgz
 DISTFILES += $(call admfiles,CSWpmmathpari,depend prototype)
 
