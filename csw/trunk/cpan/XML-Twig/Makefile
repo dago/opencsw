@@ -10,7 +10,7 @@ define BLURB
   allowing you to output the parts of it that have been completely processed.
 endef
 
-DISTFILES = $(call admfiles,CSWpmxmltwig,depend)
+DISTFILES = $(call admfiles,CSWpmxmltwig,depend prototype)
 
 DEPENDS += cpan/XML-Parser
 
