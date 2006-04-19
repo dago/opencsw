@@ -17,6 +17,9 @@ CSWap2modapreq2_admfiles = depend prototype postinstall preremove
 DISTFILES += $(call admfiles,CSWap2modapreq2,$(CSWap2modapreq2_admfiles))
 DISTFILES += $(call admfiles,CSWpmapreq2,depend prototype)
 
+# Ensure args are requestrecs
+PATCHFILES += requestrec.diff
+
 MODDIST  = $(GARNAME)-$(GARVERSION).tar.gz
 DEPENDS += cpan/Apache-Test cpan/ExtUtils-XSBuilder
 #DEPENDS += cpan/mod_perl2
@@ -34,13 +37,13 @@ CONFIGURE_ARGS += --with-mm-opts="INSTALLDIRS=vendor"
 PERL_CONFIGURE_ARGS =
 
 # Must be installed to test
-ENABLE_TEST = 0
+#ENABLE_TEST = 0
 
 LIBTOOL_LADIR = $(DESTDIR)$(libdir)
 STRIP_DIRS   += $(DESTDIR)$(prefix)/apache2/libexec
 
 EXTRA_INC = $(prefix)/bdb43/include
-EXTRA_LIB = $(prefix)/bdb43/lib
+EXTRA_LIB = $(prefix)/bdb43/lib $(prefix)/apache2/lib
 
 include ../category.mk
 
