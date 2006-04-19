@@ -12,7 +12,7 @@ define BLURB
   compressed or gzipped tar files.
 endef
 
-DISTFILES += CSWpmarchivetar.gspec CSWpmarchivetar.depend
+DISTFILES += $(call admfiles,CSWpmarchivetar,depend prototype)
 
 DEPENDS += cpan/IO-Zlib
 

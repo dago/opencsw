@@ -13,6 +13,6 @@ define BLURB
   goal!
 endef
 
-DISTFILES += CSWpmextutcbuilder.gspec
+DISTFILES += $(call admfiles,CSWpmextutcbuilder,depend prototype)
 
 include ../category.mk

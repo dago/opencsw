@@ -10,7 +10,7 @@ define BLURB
   IO::Handle interface.
 endef
 
-DISTFILES += CSWpmiozlib.gspec CSWpmiozlib.depend
+DISTFILES += $(call admfiles,CSWpmiozlib,depend prototype)
 
 DEPENDS += cpan/Compress-Zlib
 

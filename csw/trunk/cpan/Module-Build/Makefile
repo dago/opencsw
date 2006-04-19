@@ -1,5 +1,5 @@
 GARNAME = Module-Build
-GARVERSION = 0.2611
+GARVERSION = 0.2612
 CATEGORIES = cpan
 AUTHOR = KWILLIAMS
 
@@ -11,8 +11,10 @@ define BLURB
   much more straightforward way than with MakeMaker.
 endef
 
-DISTFILES += CSWpmmodulebuild.gspec CSWpmmodulebuild.depend
+DISTFILES += $(call admfiles,CSWpmmodulebuild,)
 
 DEPENDS += cpan/YAML cpan/ExtUtils-ParseXS cpan/Archive-Tar
+
+CONFIGURE_ARGS = destdir=$(DESTDIR)
 
 include ../category.mk
