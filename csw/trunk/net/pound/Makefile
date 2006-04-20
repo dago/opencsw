@@ -1,5 +1,5 @@
 GARNAME = Pound
-GARVERSION = 2.0.2
+GARVERSION = 2.0.4
 CATEGORIES = net
 
 DESCRIPTION = reverse proxy load balancer
@@ -15,8 +15,13 @@ MASTER_SITES = http://www.apsis.ch/pound/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWpound,)
 
-# Respect my $DESTDIR
+# Install properly when
+#    (a) destdir does not exist, and
+#    (b) installing as non root.
 PATCHFILES += install.diff
+
+# Look for regcomp() instead of pcreposix_regcomp()
+PATCHFILES += pcre.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-super
