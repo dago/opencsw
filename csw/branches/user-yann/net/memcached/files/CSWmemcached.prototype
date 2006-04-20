@@ -1,0 +1,6 @@
+d none /opt/csw/bin ? ? ?
+f none /opt/csw/bin/memcached=$basedir/opt/csw/bin/memcached 0755 root bin
+d none /opt/csw/share ? ? ?
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man1 ? ? ?
+f none /opt/csw/share/man/man1/memcached.1=$basedir/opt/csw/share/man/man1/memcached.1 0644 root bin

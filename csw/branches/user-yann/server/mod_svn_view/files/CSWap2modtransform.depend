@@ -1,0 +1,5 @@
+P CSWcommon common - common files and dirs for CSW packages
+P SUNWcsl Core Solaris, (Shared Libs)
+P SUNWlibms Sun WorkShop Bundled shared libm
+P CSWapache2 apache2 - apache 2.0 web server
+P CSWpython python - The Python language interpreter

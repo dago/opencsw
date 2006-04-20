@@ -1,0 +1,5 @@
+d none /opt/csw/apache2 ? ? ?
+d none /opt/csw/apache2/lib ? ? ?
+f none /opt/csw/apache2/lib/libapreq2.so.3.5.7=$basedir/opt/csw/apache2/lib/libapreq2.so.3.5.7 0755 root bin
+s none /opt/csw/apache2/lib/libapreq2.so.3=libapreq2.so.3.5.7 root bin
+s none /opt/csw/apache2/lib/libapreq2.so=libapreq2.so.3.5.7 root bin

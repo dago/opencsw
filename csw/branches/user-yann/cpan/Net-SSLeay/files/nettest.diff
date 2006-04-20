@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru Net_SSLeay.pm-1.30.orig/test.pl Net_SSLeay.pm-1.30/test.pl
+--- Net_SSLeay.pm-1.30.orig/test.pl	2006-01-30 03:43:39.675305000 -0500
++++ Net_SSLeay.pm-1.30/test.pl	2006-01-30 03:43:30.517264000 -0500
+@@ -163,6 +163,8 @@
+ 					&Net::SSLeay::FILETYPE_PEM());
+ print &test(13, $r);
+ 
++exit 0;
++
+ #app.iplanet.com
+ my @sites = qw(
+ www.cdw.com

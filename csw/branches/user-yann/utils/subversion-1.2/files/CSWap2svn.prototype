@@ -1,0 +1,4 @@
+d none /opt/csw/apache2 ? ? ?
+d none /opt/csw/apache2/libexec ? ? ?
+f none /opt/csw/apache2/libexec/mod_dav_svn.so=$basedir/opt/csw/apache2/libexec/mod_dav_svn.so 0755 root bin
+f none /opt/csw/apache2/libexec/mod_authz_svn.so=$basedir/opt/csw/apache2/libexec/mod_authz_svn.so 0755 root bin

@@ -1,0 +1,15 @@
+d none /opt/csw/apache2 ? ? ?
+d none /opt/csw/apache2/libexec ? ? ?
+f none /opt/csw/apache2/libexec/mod_auth_pam.so=$basedir/opt/csw/apache2/libexec/mod_auth_pam.so 0755 root bin
+f none /opt/csw/apache2/libexec/mod_auth_sys_group.so=$basedir/opt/csw/apache2/libexec/mod_auth_sys_group.so 0755 root bin
+d none /opt/csw/share ? ? ?
+d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share/doc/ap2modauthpam 0755 root bin
+f none /opt/csw/share/doc/ap2modauthpam/README=$basedir/opt/csw/share/doc/ap2modauthpam/README 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/configure.html=$basedir/opt/csw/share/doc/ap2modauthpam/configure.html 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/faq.html=$basedir/opt/csw/share/doc/ap2modauthpam/faq.html 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/install.html=$basedir/opt/csw/share/doc/ap2modauthpam/install.html 0644 root bin
+d none /opt/csw/share/doc/ap2modauthpam/samples 0755 root bin
+f none /opt/csw/share/doc/ap2modauthpam/samples/dot-htaccess=$basedir/opt/csw/share/doc/ap2modauthpam/samples/dot-htaccess 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/samples/httpd-rh6+=$basedir/opt/csw/share/doc/ap2modauthpam/samples/httpd-rh6+ 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/samples/httpd=$basedir/opt/csw/share/doc/ap2modauthpam/samples/httpd 0644 root bin

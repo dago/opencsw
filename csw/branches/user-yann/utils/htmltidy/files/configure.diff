@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru tidy.orig/build/gnuauto/configure.in tidy/build/gnuauto/configure.in
+--- htmltidy.orig/build/gnuauto/configure.in	2004-08-02 03:14:58.000000000 -0400
++++ htmltidy/build/gnuauto/configure.in	2004-09-11 20:16:00.178950000 -0400
+@@ -72,7 +72,7 @@
+ if test $debug_build = yes; then
+ 	CFLAGS="$save_cflags -g"
+ else
+-	CFLAGS="-O2 $save_cflags"
++	CFLAGS="$save_cflags"
+ fi
+ # 
+ # =============================================

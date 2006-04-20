@@ -1,0 +1,66 @@
+diff --speed-large-files --minimal -Nru php-5.1.2.orig/configure php-5.1.2/configure
+--- php-5.1.2.orig/configure	2005-11-28 18:39:54.055981000 -0500
++++ php-5.1.2/configure	2005-11-28 18:06:54.786301000 -0500
+@@ -4422,7 +4422,7 @@
+   $APXS -q -S CFLAGS="$APXS_CFLAGS" CFLAGS >/dev/null 2>&1
+ 
+   if test "$?" != "0"; then
+-    APACHE_INSTALL="$APXS -i -a -n php5 $SAPI_SHARED" # Old apxs does not have -S option
++    APACHE_INSTALL="$APXS -i -n php5 $SAPI_SHARED" # Old apxs does not have -S option
+   else 
+     APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
+     if test -z `$APXS -q SYSCONFDIR`; then
+@@ -4435,7 +4435,7 @@
+                       \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+                        $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                              -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                             -i -a -n php5 $SAPI_SHARED"
++                             -i -n php5 $SAPI_SHARED"
+     fi
+   fi
+ 
+@@ -5539,7 +5539,7 @@
+                 \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+                  $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                        -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                       -i -a -n php5"
++                       -i -n php5"
+   fi
+ 
+   case $host_alias in
+@@ -6369,7 +6369,7 @@
+                 \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+                  $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                        -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                       -i -a -n php5"
++                       -i -n php5"
+   fi
+ 
+   case $host_alias in
+@@ -7368,7 +7368,7 @@
+   $APXS -q -S CFLAGS="$APXS_CFLAGS" CFLAGS >/dev/null 2>&1
+ 
+   if test "$?" != "0"; then
+-    APACHE_HOOKS_INSTALL="$APXS -i -a -n php5 $SAPI_SHARED" # Old apxs does not have -S option
++    APACHE_HOOKS_INSTALL="$APXS -i -n php5 $SAPI_SHARED" # Old apxs does not have -S option
+   else 
+     APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
+     if test -z `$APXS -q SYSCONFDIR`; then
+@@ -7381,7 +7381,7 @@
+                       \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
+                        $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
+                              -S SYSCONFDIR='$APXS_SYSCONFDIR' \
+-                             -i -a -n php5 $SAPI_SHARED"
++                             -i -n php5 $SAPI_SHARED"
+     fi
+   fi
+ 
+@@ -78048,7 +78048,7 @@
+   echo $ac_n "(cached) $ac_c" 1>&6
+ else
+   ac_save_LIBS="$LIBS"
+-LIBS="-lreadline  $LIBS"
++LIBS="-lreadline -lcurses $LIBS"
+ cat > conftest.$ac_ext <<EOF
+ #line 78054 "configure"
+ #include "confdefs.h"

@@ -1,0 +1,36 @@
+diff --speed-large-files --minimal -Nru CGI-SpeedyCGI-2.22.orig/Makefile.PL CGI-SpeedyCGI-2.22/Makefile.PL
+--- CGI-SpeedyCGI-2.22.orig/Makefile.PL	2005-04-29 16:45:24.702774000 -0400
++++ CGI-SpeedyCGI-2.22/Makefile.PL	2005-04-29 16:44:17.811151000 -0400
+@@ -6,6 +6,8 @@
+     import SpeedyMake qw(%write_makefile_common);
+ }
+ 
++=head
++
+ print <<END;
+ 
+ Optional mod_speedycgi support.
+@@ -18,9 +20,14 @@
+ END
+ print "Compile mod_speedycgi (default no)? ";
+ 
++=cut
++
+ my @dirs = qw(src speedy_backend speedy);
+ my $macro = $write_makefile_common{macro};
+ my $apache_module = 0;
++
++=head
++
+ if (<STDIN> =~ /y/i) {
+     die "ERROR: Command 'apxs -q CC' failed.\n"
+ 	unless $macro->{APACHE_APXS_WORKS};
+@@ -29,6 +36,8 @@
+     $apache_module = 1;
+ }
+ 
++=cut
++
+ WriteMakefile(
+     NAME		=> 'CGI::SpeedyCGI',
+     VERSION_FROM	=> 'src/SpeedyCGI.src',

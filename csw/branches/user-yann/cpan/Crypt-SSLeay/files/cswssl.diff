@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru Crypt-SSLeay-0.51.orig/Makefile.PL Crypt-SSLeay-0.51/Makefile.PL
+--- Crypt-SSLeay-0.51.orig/Makefile.PL	2005-12-17 22:54:13.934874000 -0500
++++ Crypt-SSLeay-0.51/Makefile.PL	2005-12-17 22:53:50.065923000 -0500
+@@ -13,7 +13,7 @@
+ chdir($currdir) || die("can't change to $currdir: $!");
+ 
+ # FIND POSSIBLE SSL INSTALLATIONS
+-my @POSSIBLE_SSL_DIRS = qw(/usr/local/openssl /usr/local/ssl /local/ssl /opt/ssl /usr/local /local /usr);
++my @POSSIBLE_SSL_DIRS = qw(/opt/csw);
+ if($^O eq 'MSWin32') {
+     unshift(@POSSIBLE_SSL_DIRS, 'c:/openssl');
+ }

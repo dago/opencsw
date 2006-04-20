@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru SVN-Mirror-0.67.orig/Makefile.PL SVN-Mirror-0.67/Makefile.PL
+--- SVN-Mirror-0.67.orig/Makefile.PL	2005-12-07 18:04:22.089337000 -0500
++++ SVN-Mirror-0.67/Makefile.PL	2005-12-07 18:04:10.852822000 -0500
+@@ -19,13 +19,13 @@
+         'File::chdir' => '0',
+         'Class::Accessor' => '0',
+ );
+-features(
+-    'VCP support' => [
+-	-default => 0,
+-        'VCP' => '0.9',
+-        (($^O eq 'MSWin32') ? 'Win32API::GUID' : 'Data::UUID') => 0,
+-    ],
+-) unless $^O eq 'MSWin32'; # VCP support currently requires symlinks
++#features(
++#    'VCP support' => [
++#	-default => 0,
++#        'VCP' => '0.9',
++#        (($^O eq 'MSWin32') ? 'Win32API::GUID' : 'Data::UUID') => 0,
++#    ],
++#) unless $^O eq 'MSWin32'; # VCP support currently requires symlinks
+ 
+ include('ExtUtils::AutoInstall');
+ auto_install();

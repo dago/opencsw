@@ -1,0 +1,18 @@
+[groups]
+foo = john, bob
+bar = john, mike
+
+[/]
+* = r
+
+[foo:/]
+@foo = rw
+
+[foo:/branch/john]
+bob = r
+
+[foo:/branch/bob]
+john = r
+
+[bar:/]
+@bar = rw

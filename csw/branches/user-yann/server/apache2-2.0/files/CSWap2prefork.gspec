@@ -1,0 +1,5 @@
+%var            bitname ap2_prefork
+%var            pkgname CSWap2prefork
+%include        url file://%{GARDIR}/pkglib/csw_standard.gspec
+%var            desc Apache 2.0 prefork MPM
+%copyright      url file://%{WORKSRC}/LICENSE

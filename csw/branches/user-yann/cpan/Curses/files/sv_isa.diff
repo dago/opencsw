@@ -1,0 +1,11 @@
+--- Curses-1.06.orig/Curses.c	2001-07-25 10:10:38.000000000 -0700
++++ Curses-1.06/Curses.c	2003-12-30 22:22:56.395089000 -0800
+@@ -272,7 +272,7 @@
+ SV *sv;
+ int argnum;
+ {
+-    if (Perl_sv_isa(sv, "Curses::Window")) {
++    if (sv_isa(sv, "Curses::Window")) {
+       WINDOW *ret = (WINDOW *)SvIV((SV*)SvRV(sv));
+       return ret;
+     }

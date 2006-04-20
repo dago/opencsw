@@ -1,0 +1,27 @@
+diff --speed-large-files --minimal -Nru Event-Lib-0.10.orig/Lib.xs Event-Lib-0.10/Lib.xs
+--- Event-Lib-0.10.orig/Lib.xs	2005-12-20 13:20:00.523393000 -0500
++++ Event-Lib-0.10/Lib.xs	2005-12-20 13:19:50.739400000 -0500
+@@ -80,8 +80,12 @@
+ #ifdef WIN32
+ #define THEINLINE __forceinline
+ #else
++#ifdef __sun
++#define THEINLINE
++#else
+ #define THEINLINE inline
+ #endif
++#endif
+ 
+ THEINLINE void make_timeval (struct timeval *tv, double t) {
+     tv->tv_sec = (long)t;
+@@ -94,6 +98,10 @@
+     return t2t - t1t;
+ }
+ 
++#ifdef __sun
++#pragma inline(make_timeval, delta_timeval)
++#endif
++
+ #ifdef HAVE_LOG_CALLBACKS
+ static const char* str[] = { "debug", "msg", "warn", "err", "???" };
+ 

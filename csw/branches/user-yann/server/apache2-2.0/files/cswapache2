@@ -1,0 +1,42 @@
+#!/sbin/sh
+
+APACHE_HOME=/opt/csw/apache2
+APACHE_SBIN=$APACHE_HOME/sbin
+APACHE_ETC=$APACHE_HOME/etc
+APACHE_CONF=$APACHE_ETC/httpd.conf
+APACHE_ENV=$APACHE_SBIN/envvars
+HTTPD=$APACHE_SBIN/httpd
+
+[ -f "$APACHE_ENV" ] && . $APACHE_ENV
+
+APACHE_SSL=${APACHE_SSL:-'0'}
+[ $APACHE_SSL -eq 1 ] && HTTPD="$HTTPD -DSSL"
+
+PATH=$APACHE_SBIN:$PATH
+
+ULIMIT_MAX_FILES="ulimit -S -n `ulimit -H -n`"
+if [ "x$ULIMIT_MAX_FILES" != "x" ]; then
+    $ULIMIT_MAX_FILES
+fi
+
+option=$1
+
+case $option in 
+'start')
+    ;;
+'stop')
+    ;;
+'restart')
+    ;;
+'reload')
+    option=graceful
+    ;;
+*)
+    echo "Usage: $0 { start | stop | restart | reload }"
+    exit 1
+    ;;
+esac    
+
+$HTTPD -f $APACHE_CONF -k $option
+exit $?
+

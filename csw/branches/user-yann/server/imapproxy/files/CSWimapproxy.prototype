@@ -1,0 +1,13 @@
+f none /opt/csw/etc/imapproxy.conf.CSW=$basedir/opt/csw/etc/imapproxy.conf 0644 root bin
+f none /etc/init.d/imapproxy=$basedir/etc/init.d/imapproxy 0744 root bin
+l none /etc/rc0.d/K10imapproxy=/etc/init.d/imapproxy
+l none /etc/rc1.d/K10imapproxy=/etc/init.d/imapproxy
+l none /etc/rc2.d/K10imapproxy=/etc/init.d/imapproxy
+l none /etc/rc3.d/S99imapproxy=/etc/init.d/imapproxy
+l none /etc/rcS.d/K10imapproxy=/etc/init.d/imapproxy
+d none /opt/csw/share/doc/doc/imapproxy 0755 root bin
+f none /opt/csw/share/doc/imapproxy/ChangeLog=$basedir/opt/csw/share/doc/imapproxy/ChangeLog 0644 root bin
+f none /opt/csw/share/doc/imapproxy/README=$basedir/opt/csw/share/doc/imapproxy/README 0644 root bin
+f none /opt/csw/share/doc/imapproxy/changelog.CSW=$basedir/opt/csw/share/doc/imapproxy/changelog.CSW 0644 root bin
+f none /opt/csw/sbin/in.imapproxyd=$basedir/opt/csw/sbin/in.imapproxyd 0755 root bin
+f none /opt/csw/sbin/pimpstat=$basedir/opt/csw/sbin/pimpstat 0755 root bin
