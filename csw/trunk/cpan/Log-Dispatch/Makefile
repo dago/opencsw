@@ -9,8 +9,12 @@ define BLURB
   and remove output objects as desired.
 endef
 
-DISTFILES += CSWpmlogdispatch.gspec CSWpmlogdispatch.depend
+DISTFILES += $(call admfiles,CSWpmlogdispatch,depend prototype)
 
 DEPENDS += cpan/Module-Build
+DEPENDS += cpan/Test-More
+DEPENDS += cpan/Params-Validate
+
+CONFIGURE_ARGS = destdir=$(DESTDIR)
 
 include ../category.mk
