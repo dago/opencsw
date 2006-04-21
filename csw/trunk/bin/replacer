@@ -14,15 +14,35 @@
 #
 
 ROOTDIR=${1:-'.'}
+shift
 
-for file in `find $ROOTDIR -type f | xargs grep -l $ROOTDIR`
+if [ -z "$@" ]; then
+    print "Usage: $0 <root_path> <replace_path>.."
+    exit 1
+fi
+
+for subdir in $@
 do
-    if [ ! -z "`file $file | egrep 'ELF|ar archive'`" ] ||
-       [ ! -z "`echo $file | egrep '.bak'`" ]; then
-        continue
-    fi
-    /bin/perl -i -plne "
-        s#-[ILR]\s*$ROOTDIR\S+\s+##;
-        s#$ROOTDIR/#/#;
-    " $file
+    for file in `gfind $ROOTDIR -type f | xargs ggrep -l $subdir`
+    do
+        ok=true
+
+        # Skip backups and static libraries
+        if [[ "$file" == *.bak ]]; then ok=false ; fi
+        if [[ "$file" == *.a   ]]; then ok=false ; fi
+
+        # Skip ELF binaries and archives
+        ftype="`file $file 2>&1`"
+        if [[ "$ftype" == *ELF*       ]]; then ok=false ; fi
+        if [[ "$ftype" == *:*archive* ]]; then ok=false ; fi
+
+        if $ok ; then
+            /bin/perl -i -plne "
+                s#-[ILR]\s*$subdir\S+\s+##g;
+                s#$subdir/#/#g;
+            " $file
+        fi
+
+    done
 done
+
