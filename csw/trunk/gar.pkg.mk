@@ -71,6 +71,12 @@ remove-timestamp:
 
 # package - Use the mkpackage utility to create Solaris packages
 POST_INSTALL_TARGETS += pre-package package-create post-package
+
+# check package, unless ENABLE_CHECK = 0
+ifneq ($(ENABLE_CHECK),0)
+POST_INSTALL_TARGETS += package-check
+endif
+
 package: install
 	$(DONADA)
 	@$(MAKECOOKIE)
@@ -95,15 +101,23 @@ package-create:
 	fi
 	$(DONADA)
 
+# check if the package is blastwave compliant
+package-check:
+	@echo " ==> Checking blastwave compliance"
+	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
+			checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $$spec -D pkgfile`.gz || exit 2 ; \
+		done ; \
+	fi
+
 # Verify all packages
-package-verify:
+package-verify: package-check
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			$(PKG_ENV) mkpackage -qs $$spec -D pkgfile >> /tmp/verify.$$ ; \
 		done ; \
 	fi
 	@for file in `cat /tmp/verify.$$` ; do \
-		checkpkg $(SPKG_EXPORT)/$$file.gz || exit 2 ; \
 		mv $(SPKG_EXPORT)/$$file.gz $(PKGGET_DESTDIR) ; \
 		$(MAKE) -C $(PKGGET_DESTDIR)/.. ; \
 	done
