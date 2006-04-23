@@ -1,0 +1,6 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWiconv libiconv - GNU iconv library
+P CSWlibnet libnet - the libnet packet construction library
+P CSWlibxml2 libxml2 - XML Parser Library
+P CSWzlib zlib - Zlib Data Compression Library

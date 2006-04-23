@@ -1,0 +1,9 @@
+d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib/perl ? ? ?
+d none /opt/csw/lib/perl/site_perl ? ? ?
+f none /opt/csw/lib/perl/site_perl/ClearSilver.pm=$basedir/opt/csw/lib/perl/site_perl/ClearSilver.pm 0444 root bin
+d none /opt/csw/lib/perl/site_perl/auto ? ? ?
+d none /opt/csw/lib/perl/site_perl/auto/ClearSilver 0755 root bin
+f none /opt/csw/lib/perl/site_perl/auto/ClearSilver/.packlist=$basedir/opt/csw/lib/perl/site_perl/auto/ClearSilver/.packlist 0644 root bin
+f none /opt/csw/lib/perl/site_perl/auto/ClearSilver/ClearSilver.bs=$basedir/opt/csw/lib/perl/site_perl/auto/ClearSilver/ClearSilver.bs 0444 root bin
+f none /opt/csw/lib/perl/site_perl/auto/ClearSilver/ClearSilver.so=$basedir/opt/csw/lib/perl/site_perl/auto/ClearSilver/ClearSilver.so 0555 root bin

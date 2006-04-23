@@ -1,0 +1,5 @@
+%var            bitname pm_htmltemplate
+%var            pkgname CSWpmhtmltemplate
+%var            arch all
+%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%copyright      url file://%{WORKSRC}/GPL

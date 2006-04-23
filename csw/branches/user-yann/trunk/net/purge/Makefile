@@ -1,0 +1,35 @@
+GARNAME = purge
+GARVERSION = 20040201
+CATEGORIES = net
+
+DESCRIPTION = Purge squid cache entries.
+define BLURB
+  The purge tool is a kind of magnifying glass into your squid-2 cache. You
+  can use purge to have a look at what URLs are stored in which file within
+  your cache. The purge tool can also be used to release objects which URLs
+  match user specified regular expressions.
+endef
+
+MASTER_SITES = http://www.wa.apana.org.au/~dean/sources/
+DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.gz
+WORKSRC = $(WORKDIR)/$(GARNAME)
+
+DISTFILES += $(call admfiles,CSWpurge,copyright)
+
+# Build with SunONE
+PATCHFILES  = suncc.diff
+# ISO C++ says strstr returns a const char*
+PATCHFILES += isocc.diff
+
+CONFIGURE_SCRIPTS =
+TEST_SCRIPTS =
+INSTALL_SCRIPTS = custom
+
+include ../category.mk
+
+install-custom:
+	@ginstall -d $(DESTDIR)$(docdir)/purge $(DESTDIR)$(sbindir)
+	@ginstall -m 755 $(WORKSRC)/$(GARNAME) $(DESTDIR)$(sbindir)
+	@ginstall -m 644 $(WORKSRC)/README     $(DESTDIR)$(docdir)/purge
+	@$(MAKECOOKIE)
+

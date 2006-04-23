@@ -1,0 +1,10 @@
+760aecf26a071e15141170636af43456  download/httpd-2.2.0.tar.gz
+a7467a756cbd980d4cfe3c2cfb6a9e35  download/config.layout
+ea19d80da257ab9d31aa6c52ad04e1f1  download/CSWap2worker.gspec
+6bdaaf04c48504abe1c2ac38873f8523  download/CSWap2worker.depend
+4386a35e2c608fa7b0a7f64861a8414c  download/CSWap2worker.prototype
+b2e94d1566bd402e5aba3d3165a005e4  download/CSWap2worker.postinstall
+12ad8e8a38e6c2be7cefd073205654c6  download/CSWap2worker.postremove
+0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2worker.space
+a28ef637c388f2e40abaa5f8ed04c84c  download/CSWapache2.killproc
+308836569bf0cc1be27ac45e3123e0c2  download/apu-iconv.diff

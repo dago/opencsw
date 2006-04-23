@@ -1,0 +1,32 @@
+diff --speed-large-files --minimal -Nru Archive-Zip-1.14.orig/lib/Archive/Zip.pm Archive-Zip-1.14/lib/Archive/Zip.pm
+--- Archive-Zip-1.14.orig/lib/Archive/Zip.pm	2004-10-21 08:26:02.000000000 -0700
++++ Archive-Zip-1.14/lib/Archive/Zip.pm	2005-02-16 09:02:14.760014000 -0800
+@@ -311,19 +311,15 @@
+ {
+ 	my $fh = shift;
+ 
+-	if ( UNIVERSAL::isa( $fh, 'IO::Scalar' ) )
+-	{
+-		return 0;
+-	}
+-	elsif ( UNIVERSAL::isa( $fh, 'IO::String' ) )
+-	{
+-		return 1;
+-	}
+-	elsif ( UNIVERSAL::can( $fh, 'stat' ) )
+-	{
+-		return -f $fh;
+-	}
+-	return UNIVERSAL::can( $fh, 'seek' );
++    # Can't seek in a pipe
++    return 0 if -p $fh;
++
++    # File must exist on win32
++    return -f $fh if $^O eq 'MSWin32';
++
++    # Normal seek/stat test
++    return ( UNIVERSAL::can( $fh, 'stat' ) and
++             UNIVERSAL::can( $fh, 'seek' ) ) ? 1 : 0;
+ }
+ 
+ # Return an opened IO::Handle

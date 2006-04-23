@@ -1,0 +1,27 @@
+diff -Nru --minimal --speed-large-files Pod-POM-0.17.orig/t/htmlview.t Pod-POM-0.17/t/htmlview.t
+--- Pod-POM-0.17.orig/t/htmlview.t	2003-10-16 15:01:19.084170000 -0700
++++ Pod-POM-0.17/t/htmlview.t	2003-10-16 15:01:36.589343000 -0700
+@@ -164,11 +164,6 @@
+ 
+ =head1 TESTING FOR AND BEGIN
+ 
+-=for html    <br>
+-<p>
+-blah blah
+-</p>
+-
+ intermediate text
+ 
+ =begin html
+@@ -280,11 +275,6 @@
+ <p>Destructor method</p>
+ <h1>TESTING FOR AND BEGIN</h1>
+ 
+-<br>
+-<p>
+-blah blah
+-</p>
+-
+ <p>intermediate text</p>
+ <p><more>
+ HTML

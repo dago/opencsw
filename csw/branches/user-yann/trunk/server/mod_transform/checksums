@@ -1,0 +1,8 @@
+8b27adea2536f105470b4bedc418ab3b  download/mod_transform-0.6.0.tar.gz
+fd3137002d000044a17a866c471a8d5c  download/CSWap2modtransform.gspec
+82cba46738fb3430a35be6eb19ad2b1c  download/CSWap2modtransform.prototype
+f2cbb6fff3c5a6190b5d76b9e1568720  download/CSWap2modtransform.depend
+0ca3bc10ac9a7293059c246c8fe4e896  download/CSWap2modtransform.postinstall
+7b2b6bab8a2c47d267d09a19633aad68  download/CSWap2modtransform.preremove
+dc485113aa6b522a0799b4241f177cb5  download/gcc.diff
+bdffd57105d3516ea8bf36e098690743  download/install.diff

@@ -1,0 +1,15 @@
+d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib/perl ? ? ?
+d none /opt/csw/lib/perl/csw ? ? ?
+d none /opt/csw/lib/perl/csw/PerlIO 0755 root bin
+f none /opt/csw/lib/perl/csw/PerlIO/eol.pm=$basedir/opt/csw/lib/perl/csw/PerlIO/eol.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto ? ? ?
+d none /opt/csw/lib/perl/csw/auto/PerlIO 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/PerlIO/eol 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/PerlIO/eol/.packlist=$basedir/opt/csw/lib/perl/csw/auto/PerlIO/eol/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/PerlIO/eol/eol.bs=$basedir/opt/csw/lib/perl/csw/auto/PerlIO/eol/eol.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/PerlIO/eol/eol.so=$basedir/opt/csw/lib/perl/csw/auto/PerlIO/eol/eol.so 0555 root bin
+d none /opt/csw/share ? ? ?
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man3 ? ? ?
+f none /opt/csw/share/man/man3/PerlIO::eol.3perl=$basedir/opt/csw/share/man/man3/PerlIO::eol.3perl 0444 root bin

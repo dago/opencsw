@@ -1,0 +1,58 @@
+diff --speed-large-files --minimal -Nru hypermail-2.1.8.orig/Makefile.in hypermail-2.1.8/Makefile.in
+--- hypermail-2.1.8.orig/Makefile.in	2005-06-01 14:42:30.771427000 -0700
++++ hypermail-2.1.8/Makefile.in	2005-06-01 14:41:23.851427000 -0700
+@@ -4,22 +4,22 @@
+ 
+ @SET_MAKE@
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
++prefix=$(DESTDIR)@prefix@
++exec_prefix=$(DESTDIR)@exec_prefix@
+ 
+ # This is where you want hypermail to be installed
+-bindir=@bindir@
++bindir=$(DESTDIR)@bindir@
+ 
+ # This is where the man page goes
+-mandir=@mandir@
++mandir=$(DESTDIR)@mandir@
+ 
+ srcdir=@srcdir@
+ 
+ # This is where the HTML documentation goes
+-htmldir=@htmldir@
++htmldir=$(DESTDIR)@htmldir@
+ 
+ # This is where your CGI programs live
+-cgidir=@cgidir@
++cgidir=$(DESTDIR)@cgidir@
+ 
+ INSTALL_PROG=@INSTALL@
+ 
+diff --speed-large-files --minimal -Nru hypermail-2.1.8.orig/src/Makefile.in hypermail-2.1.8/src/Makefile.in
+--- hypermail-2.1.8.orig/src/Makefile.in	2005-06-01 14:42:30.856446000 -0700
++++ hypermail-2.1.8/src/Makefile.in	2005-06-01 14:41:46.484163000 -0700
+@@ -3,17 +3,17 @@
+ #
+ @SET_MAKE@
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
++prefix=$(DESTDIR)@prefix@
++exec_prefix=$(DESTDIR)@exec_prefix@
+  
+ # This is where you want hypermail to be installed
+-bindir=@bindir@
++bindir=$(DESTDIR)@bindir@
+  
+ # This is where the man page goes
+-mandir=@mandir@
++mandir=$(DESTDIR)@mandir@
+ 
+ # This is where your CGI programs live
+-cgidir=@cgidir@
++cgidir=$(DESTDIR)@cgidir@
+ 
+ # Executable program suffix (.exe for windows, null for Unix systems)
+ SUFFIX=@suffix@

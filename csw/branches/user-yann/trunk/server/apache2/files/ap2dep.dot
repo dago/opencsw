@@ -1,0 +1,11 @@
+digraph csw {
+    subgraph core {
+        style=filled;
+        color=lightgrey;
+        apache2 -> ap2_prefork -> apache2c -> aprutil -> apr;
+        label = "core packages";
+    }
+    apache2_manual -> apache2;
+    ap2_suexec -> apache2;
+    ap2_worker -> apache2c;
+}

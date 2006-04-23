@@ -1,0 +1,3 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmcryptosslrand pm_cryptosslrand - routines for accessing the OpenSSL pseudo-random number generator

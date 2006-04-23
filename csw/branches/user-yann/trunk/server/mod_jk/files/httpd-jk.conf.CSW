@@ -1,0 +1,35 @@
+<IfModule jk_module>
+    JkShmFile var/JkShmFile
+#   JkWorkersFile etc/workers.properties
+    JkWorkerProperty worker.list=ajp13w
+    JkWorkerProperty worker.ajp13w.type=ajp13
+    JkWorkerProperty worker.ajp13w.host=localhost
+    JkWorkerProperty worker.ajp13w.port=8009
+
+    # Example mount points that work with the Jetty demo and the default
+    # workers.properties.  Uncomment to activate.
+    <IfDefine JK_JETTY_DEMO>
+    JkMount /jetty/* ajp13w
+    JkMount /demo/* ajp13w
+    </IfDefine>
+    <IfDefine JK_DEFAULT_CONTEXT>
+    JkMount /examples/* ajp13w
+    JkMount /javadoc/* ajp13w
+    JkMount /servlets/* ajp13w
+    JkMount /jsp-examples/* ajp13w
+    </IfDefine>
+</IfModule>
+
+# NOTE: The above basic configuration can also be implemented using
+# mod_proxy_ajp, included with Apache 2.2 and later.  The basic worker
+# properties above can be implemented in mod_proxy_ajp as follows:
+#
+#<IfModule proxy_ajp_module>
+#   ProxyPass /jetty ajp://localhost:8009/jetty
+#   ProxyPass /demo ajp://localhost:8009/demo
+#   ProxyPass /examples ajp://localhost:8009/examples
+#   ProxyPass /javadoc ajp://localhost:8009/javadoc
+#   ProxyPass /servlets ajp://localhost:8009/servlets
+#   ProxyPass /jsp-examples ajp://localhost:8009/jsp-examples
+#</IfModule>
+

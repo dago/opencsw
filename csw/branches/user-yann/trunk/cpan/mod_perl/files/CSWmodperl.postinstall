@@ -1,0 +1,42 @@
+#!/bin/sh
+
+AP_ROOT=$PKG_ROOT_DIR/opt/csw/apache
+AP_CONF=$AP_ROOT/conf/httpd.conf
+AP_LIBEXEC=$AP_ROOT/libexec
+APXS=$AP_ROOT/bin/apxs
+
+# Look for "AddModule perl_module" or some variant thereof
+[ -z "`grep perl_module $AP_CONF`" ] && exit 0
+
+# Back up the existing config
+cp $AP_CONF $AP_CONF.pre-perl
+
+# Enable the perl module
+chroot ${PKG_ROOT_DIR:-'/'} \
+    $APXS -S LIBEXECDIR=$AP_LIBEXEC -e -a -n perl libperl.so
+
+cat >>$CONFFILE <<END
+
+# Added by $PKGINST
+<IfModule mod_perl.c>
+  PerlModule Apache::Registry
+  Alias /perl/ /opt/csw/apache/perl/
+  <Location /perl>
+    SetHandler perl-script 
+    PerlHandler Apache::Registry
+    PerlSendHeader On 
+    Options +ExecCGI
+  </Location>
+</IfModule>
+END
+
+# Finito
+cat <<END
+
+NOTICE: mod_perl is enabled in httpd.conf but the server was not restarted.
+Please examine your mod_perl configuration and restart apache.
+
+END
+
+exit 0
+

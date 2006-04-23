@@ -1,0 +1,58 @@
+--- Net-SSH-Perl-1.24.orig/Makefile.PL	2003-11-09 20:03:19.000000000 -0800
++++ Net-SSH-Perl-1.24/Makefile.PL	2004-01-09 13:40:51.204983000 -0800
+@@ -62,6 +62,9 @@
+         }
+     }
+ } else {
++
++=head1 AUTO ANSWER
++
+     print<<MSG;
+ This is Net::SSH::Perl.
+ 
+@@ -87,10 +90,16 @@
+     my $p = prompt("\nWhich protocol(s) do you plan to use?", 3);
+     print "\n";
+ 
++=cut
++
++	my $p = 3; # Both
++
+     for my $mod (keys %{ $BASE_PREREQS{$p} }) {
+         $prereq{$mod} = $BASE_PREREQS{$p}{$mod};
+     }
+ 
++=head1 AUTO ANSWER
++
+     print<<MSG;
+ 
+ Some of the Net::SSH::Perl ciphers depend on a Crypt:: module from
+@@ -107,6 +116,10 @@
+     my $c = prompt("\nEnter your choices, separated by spaces:", 1);
+     print "\n";
+ 
++=cut
++
++	my $c = 4; # Blowfish
++
+     for my $id (split /\s+/, $c) {
+         next unless $cryptmod[$id-1]->[1];
+         $prereq{ $cryptmod[$id-1]->[1] } = '0';
+@@ -147,6 +160,8 @@
+ 
+     print "\nChecking for optional modules\n\n";
+ 
++=head1 AUTO ANSWER
++
+     unless (check_module('Digest::BubbleBabble', 0.01, \$missing)) {
+         print<<MSG, "\n";
+ Digest::BubbleBabble is required if you want to generate bubble babble
+@@ -159,6 +174,8 @@
+         print "\n";
+     }
+ 
++=cut
++
+     unless (check_module('Crypt::RSA', 1.37, \$missing)) {
+         print<<MSG, "\n";
+ Crypt::RSA is required if you wish to use the ssh-rsa public

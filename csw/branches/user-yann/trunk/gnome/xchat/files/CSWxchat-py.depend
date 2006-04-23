@@ -1,0 +1,7 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWiconv libiconv - GNU iconv library
+P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
+P CSWpython python - The Python language interpreter
+P CSWxchat xchat - GTK+ based IRC client, similar to AmIRC (Amiga).
