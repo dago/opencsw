@@ -77,6 +77,11 @@ ifneq ($(ENABLE_CHECK),0)
 POST_INSTALL_TARGETS += package-check
 endif
 
+# quit on warning unless IGNORE_CHECK_WARNINGS = 1
+ifneq ($(IGNORE_CHECK_WARNINGS),1)
+CHECKPKG_OPTIONS = "-e"
+endif
+
 package: install
 	$(DONADA)
 	@$(MAKECOOKIE)
@@ -106,7 +111,7 @@ package-check:
 	@echo " ==> Checking blastwave compliance"
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
-			checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $$spec -D pkgfile`.gz || exit 2 ; \
+			checkpkg $(CHECKPKG_OPTIONS) $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $$spec -D pkgfile`.gz || exit 2 ; \
 		done ; \
 	fi
 
