@@ -251,23 +251,6 @@ build: configure pre-build $(BUILD_TARGETS) post-build
 build-p:
 	@$(foreach COOKIEFILE,$(BUILD_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# Build multiple architectures into the same package
-BUILD_ARCH_LIST ?= v8 v9
-install-march:
-	@echo " ==> Multi Architecture Build: $(BUILD_ARCH_LIST)"
-	@for arch in $(BUILD_ARCH_LIST) ; do \
-        ( $(CONFIGURE_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
-            OPTARCH=$$arch $(MAKE) configure ) || exit 1 ; \
-        ( $(BUILD_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
-            OPTARCH=$$arch $(MAKE) build ) || exit 1 ; \
-        ( $(TEST_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
-            OPTARCH=$$arch $(MAKE) test ) || exit 1 ; \
-        ( $(INSTALL_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
-            OPTARCH=$$arch $(MAKE) install ) || exit 1 ; \
-        ( $(CONFIGURE_ENV) bindir=$(optbindir) libdir=$(optlibdir) \
-            OPTARCH=$$arch $(MAKE) clean-source ) || exit 1 ; \
-	done
-
 # build and test, unless ENABLE_TEST = 0
 ifneq ($(ENABLE_TEST),0)
 TEST_TARGETS = $(addprefix test-,$(TEST_SCRIPTS))
@@ -286,18 +269,21 @@ strip:
 		stripbin $$target ; \
 	done
 	$(DONADA)
-	@$(MAKECOOKIE)
 
-# fixlibtool - Fix libtool config files
-POST_INSTALL_TARGETS := fixlibtool $(POST_INSTALL_TARGETS)
-LIBTOOL_LADIR ?= $(DESTDIR)$(libdir)
-fixlibtool:
-	@if test -d $(LIBTOOL_LADIR) ; then \
-		echo " => Fixing libtool configs in $(LIBTOOL_LADIR)" ; \
-		gfind $(LIBTOOL_LADIR) -name '*.la' -exec fixlibtool {} + ; \
+# fixconfig - Remove build-time paths config files
+POST_INSTALL_TARGETS := fixconfig $(POST_INSTALL_TARGETS)
+FIXCONFIG_DIRS    ?= $(DESTDIR)$(libdir)
+FIXCONFIG_RMPATHS ?= $(DESTDIR)
+fixconfig:
+	@if test "x$(FIXCONFIG_DIRS)" != "x" ; then \
+		for path in $(FIXCONFIG_DIRS) ; do \
+			if test -d $$path ; then \
+				echo "  ==> fixconfig: $$path" ; \
+				replacer $$path $(FIXCONFIG_RMPATHS) ; \
+			fi ; \
+		done ; \
 	fi
 	$(DONADA)
-	@$(MAKECOOKIE)
 
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE)))
