@@ -1,0 +1,9 @@
+d none bin 0755 root bin
+f none bin/jhead 0755 root bin
+d none share 0755 root bin
+d none share/man 0755 root bin
+d none share/man/man1 0755 root bin
+f none share/man/man1/jhead.1 0755 root bin
+d none share/doc 0755 root bin
+d none share/doc/jhead 0755 root bin
+f none share/doc/jhead/changes.txt 0755 root bin
