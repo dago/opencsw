@@ -37,6 +37,7 @@ do
         if [[ "$ftype" == *:*archive* ]]; then ok=false ; fi
 
         if $ok ; then
+            echo $file
             /bin/perl -i -plne "
                 s#-[ILR]\s*$subdir\S+\s+##g;
                 s#$subdir/#/#g;
