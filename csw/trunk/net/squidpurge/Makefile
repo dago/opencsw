@@ -10,11 +10,13 @@ define BLURB
   match user specified regular expressions.
 endef
 
-MASTER_SITES = http://www.wa.apana.org.au/~dean/sources/
+BASEURL = http://www.wa.apana.org.au/~dean
+SPKG_SRCURL  = $(BASEURL)/squidpurge/
+MASTER_SITES = $(BASEURL)/sources/
 DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.gz
 WORKSRC = $(WORKDIR)/$(GARNAME)
 
-DISTFILES += $(call admfiles,CSWpurge,copyright)
+DISTFILES += $(call admfiles,CSWsquidpurge,copyright)
 
 # Build with SunONE
 PATCHFILES  = suncc.diff
