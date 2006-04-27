@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.3.0
+DISTVERSION = 1.3.1
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 # Release site
-MASTER_SITES = http://subversion.tigris.org/tarballs/
+MASTER_SITES = http://subversion.tigris.org/downloads/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 
@@ -82,6 +82,11 @@ include ../category.mk
 LIBS += -lintl -liconv
 export LIBS
 
+# Fixconfig variables
+FIXCONFIG_DIRS    += $(DESTDIR)$(libdir)/svn
+FIXCONFIG_DIRS    += $(DESTDIR)$(libdir)/perl/site_perl/auto/SVN/_Core
+FIXCONFIG_RMPATHS += $(DESTDIR) $(CURDIR)
+
 # Libdir is a bit non-standard
 LDFLAGS += -L$(DESTDIR)$(prefix)/lib/svn
 
@@ -92,12 +97,10 @@ BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 PI_DEPENDS  = $(BINDING_TARGETS)
 PI_DEPENDS += contrib
 PI_DEPENDS += rbsvn-prototype
-PI_DEPENDS += fix-config-vars
 PI_DEPENDS += copy-templates
 
 post-install: $(PI_DEPENDS)
 	@$(MAKECOOKIE)
-	$(DONADA)
 
 rbsvn-prototype:
 	@if test -f $(WORKDIR)/CSWrbsvn.prototype ; then \
@@ -109,11 +112,11 @@ svn-python:
 	@touch \
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
-	@$(BUILD_ENV)   make -C $(WORKSRC) swig-py
-	@$(INSTALL_ENV) make -C $(WORKSRC) install-swig-py \
+	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py \
 		swig_pydir=$(libdir)/python2.3/libsvn \
 		swig_pydir_extra=$(libdir)/python2.3/svn
-	#@$(TEST_ENV)    make -C $(WORKSRC) check-swig-py
+	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
 svn-perl:
@@ -121,24 +124,24 @@ svn-perl:
 	@touch \
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.c \
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.pm
-	@$(BUILD_ENV)   make -C $(WORKSRC) swig-pl
-	@$(INSTALL_ENV) make DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
-	#@$(TEST_ENV)    make -C $(WORKSRC) check-swig-pl
+	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-pl
+	@$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
+	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-pl
 	@$(MAKECOOKIE)
 
 svn-ruby:
 	@echo " ==> Building Ruby bindings"
 	@touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
-	@$(BUILD_ENV)   make -C $(WORKSRC) swig-rb
-	@$(INSTALL_ENV) make -C $(WORKSRC) install-swig-rb
-	#@$(TEST_ENV)    make -C $(WORKSRC) check-swig-rb
+	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-rb
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-rb
+	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-rb
 	@$(MAKECOOKIE)
 
 svn-java:
 	@echo " ==> Building Java bindings"
-	@$(BUILD_ENV)   make -C $(WORKSRC) javahl
-	@$(INSTALL_ENV) make -C $(WORKSRC) install-javahl
-	#@$(TEST_ENV)    make -C $(WORKSRC) check-javahl
+	@$(BUILD_ENV)   gmake -C $(WORKSRC) javahl
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-javahl
+	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-javahl
 	@$(MAKECOOKIE)
 
 docdir := $(docdir)/$(GARNAME)
@@ -149,24 +152,21 @@ $(DESTDIR)$(docdir):
 svnbook: $(DESTDIR)$(docdir)
 	@echo " ==> Installing svn book"
 	( cd $(WORKSRC)/doc/book ; \
-	  cp svn-book.html $(DESTDIR)$(docdir) ; \
-	  cp svn-book.pdf $(DESTDIR)$(docdir) )
+	  ginstall svn-book.html $(DESTDIR)$(docdir) ; \
+	  ginstall svn-book.pdf $(DESTDIR)$(docdir) )
 	@$(MAKECOOKIE)
 
 contrib: $(DESTDIR)$(docdir)
 	@echo " ==> Installing contrib scripts"
-	@cp -vr $(WORKSRC)/contrib $(DESTDIR)$(docdir)
+	@gcp -vr $(WORKSRC)/contrib $(DESTDIR)$(docdir)
 	@$(MAKECOOKIE)
 
-fix-config-vars:
-	@replacer $(DESTDIR)
-
 copy-templates:
-	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	install -m 0644 \
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0644 \
 		$(WORKDIR)/httpd-svn.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
-	install -m 0644 \
+	ginstall -m 0644 \
 		$(WORKDIR)/svn_access.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc
 	@$(MAKECOOKIE)
