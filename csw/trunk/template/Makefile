@@ -1,16 +1,22 @@
-GARNAME = SDL
-GARVERSION = 1.2.9
-CATEGORIES = lib
+GARNAME = PACKAGE
+GARVERSION = 1.0
+CATEGORIES = CATEGORY
 
-DESCRIPTION = Simple DirectMedia Layer library
+DESCRIPTION = BRIEF DESCRIPTION
 define BLURB
-   Simple DirectMedia Layer is a cross-platform multimedia library designed to provide low level access to audio, keyboard, mouse, joystick, 3D hardware via OpenGL, and 2D video framebuffer. It is used by MPEG playback software, emulators, and many popular games, including the award winning Linux port of "Civilization: Call To Power."
+  LONG DESCRIPTION
 endef
 
-MASTER_SITES = http://www.libsdl.org/release/
+MASTER_SITES = 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibsdl,)
+DISTFILES += $(call admfiles,CSWpackage,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+# Remove the following rules and uncomment the
+# include before building.
+all: .DEFAULT
+.DEFAULT:
+	@true
+
+#include ../category.mk
