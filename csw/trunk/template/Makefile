@@ -1,22 +1,16 @@
-GARNAME = PACKAGE
-GARVERSION = 1.0
-CATEGORIES = CATEGORY
+GARNAME = SDL
+GARVERSION = 1.2.9
+CATEGORIES = lib
 
-DESCRIPTION = BRIEF DESCRIPTION
+DESCRIPTION = Simple DirectMedia Layer library
 define BLURB
   LONG DESCRIPTION
 endef
 
-MASTER_SITES = 
+MASTER_SITES = http://www.libsdl.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpackage,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# Remove the following rules and uncomment the
-# include before building.
-all: .DEFAULT
-.DEFAULT:
-	@true
-
-#include ../category.mk
+include ../category.mk
