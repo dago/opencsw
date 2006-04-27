@@ -37,8 +37,8 @@ do
     pkgname="CSW$softname"
 
     if [ "$category" = "cpan" ]; then
-        softname="pm_$softname"
         pkgname="CSWpm$softname"
+        softname="pm_$softname"
     fi
 
     sed -i -e s,PACKAGE,$distname, \
