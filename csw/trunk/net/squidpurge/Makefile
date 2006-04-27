@@ -16,7 +16,7 @@ MASTER_SITES = $(BASEURL)/sources/
 DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.gz
 WORKSRC = $(WORKDIR)/$(GARNAME)
 
-DISTFILES += $(call admfiles,CSWsquidpurge,copyright)
+DISTFILES += $(call admfiles,CSWsquidpurge,prototype copyright)
 
 # Build with SunONE
 PATCHFILES  = suncc.diff
@@ -30,8 +30,8 @@ INSTALL_SCRIPTS = custom
 include ../category.mk
 
 install-custom:
-	@ginstall -d $(DESTDIR)$(docdir)/purge $(DESTDIR)$(sbindir)
+	@ginstall -d $(DESTDIR)$(docdir)/squidpurge $(DESTDIR)$(sbindir)
+	@ginstall -m 644 $(WORKSRC)/README     $(DESTDIR)$(docdir)/squidpurge
 	@ginstall -m 755 $(WORKSRC)/$(GARNAME) $(DESTDIR)$(sbindir)
-	@ginstall -m 644 $(WORKSRC)/README     $(DESTDIR)$(docdir)/purge
 	@$(MAKECOOKIE)
 
