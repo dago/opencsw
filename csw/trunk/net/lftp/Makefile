@@ -13,6 +13,9 @@ DISTFILES += $(call admfiles,CSWlftp,prototype depend)
 DISTFILES += changelog.CSW
 DISTFILES += i.conf r.conf
 
+# adding the conf classe for handling configuration files
+SPKG_CLASSES = none conf
+
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
 # (patch only mandatory to compile with gnutls)
