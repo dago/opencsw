@@ -11,6 +11,7 @@ MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlftp,prototype depend)
 DISTFILES += changelog.CSW
+DISTFILES += i.conf r.conf
 
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
