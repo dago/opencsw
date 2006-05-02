@@ -1,0 +1,36 @@
+GARNAME = bash_completion
+GARVERSION = 20060301
+CATEGORIES = xtra
+
+DESCRIPTION = Programmable completion for bash
+define BLURB
+  Since v2.04, bash has allowed you to intelligently program and extend its standard completion behavior to achieve complex command lines with just a few keystrokes. Imagine typing ssh [Tab] and being able to complete on hosts from your ~/.ssh/known_hosts files. Or typing man 3 str [Tab] and getting a list of all string handling functions in the UNIX manual. mount system: [Tab] would complete on all exported file-systems from the host called system, while make [Tab] would complete on all targets in Makefile. This project was conceived to produce programmable completion routines for the most common Linux/UNIX commands, reducing the amount of typing sysadmins and programmers need to do on a daily basis.
+endef
+
+MASTER_SITES = http://www.caliban.org/files/bash/
+DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWbash_completion,)
+
+WORKSRC = $(WORKDIR)/$(GARNAME)
+
+# no configure/Makefile
+CONFIGURE_SCRIPTS = dummy
+BUILD_SCRIPTS = dummy
+INSTALL_SCRIPTS = manual
+ENABLE_TEST = 0
+
+configure-dummy:
+
+build-dummy:
+
+install-manual:
+	@ginstall -d $(DESTDIR)$(sysconfigdir)
+	@ginstall -d $(DESTDIR)$(sysconfigdir)/bash_completion.d
+	@ginstall -D $(WORKSRC)/bash_completion $(DESTDIR)$(sysconfdir)/bash_completion
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@( for FILE in BUGS README TODO Changelog; do \
+		ginstall -D $(WORKSRC)/$$FILE $(DESTDIR)$(docdir)/$(GARNAME)/$$FILE; \
+	done )
+
+
+include ../category.mk
