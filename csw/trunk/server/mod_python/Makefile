@@ -28,3 +28,5 @@ include ../category.mk
 
 pre-configure:
 	@( cd $(WORKSRC) ; autoconf )
+	@$(MAKECOOKIE)
+
