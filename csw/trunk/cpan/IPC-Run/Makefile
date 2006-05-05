@@ -11,6 +11,6 @@ define BLURB
   supported and may be mixed.
 endef
 
-DISTFILES += CSWpmipcrun.gspec
+DISTFILES += $(call admfiles,CSWpmipcrun,prototype)
 
 include ../category.mk
