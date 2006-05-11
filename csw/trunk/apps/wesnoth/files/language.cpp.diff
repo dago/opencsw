@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru wesnoth-1.0.2.orig/src/language.cpp wesnoth-1.0.2/src/language.cpp
+--- wesnoth-1.0.2.orig/src/language.cpp	2006-05-10 17:33:08.906444000 -0400
++++ wesnoth-1.0.2/src/language.cpp	2006-05-10 17:33:01.036436000 -0400
+@@ -133,7 +133,7 @@
+ 	// FIXME: add configure check for unsetenv
+ #ifndef _WIN32
+ #ifndef SOLARIS
+-	unsetenv ("LANGUAGE"); // void so no return value to check
++//	unsetenv ("LANGUAGE"); // void so no return value to check
+ #endif
+ #endif
+ 
