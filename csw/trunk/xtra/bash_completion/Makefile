@@ -10,6 +10,10 @@ endef
 MASTER_SITES = http://www.caliban.org/files/bash/
 DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWbash_completion,)
+DISTFILES += $(shell cd files; for FILE in *.completion; do echo $$FILE; done)
+
+# add blastwave paths
+PATCHFILES = blastwave.patch
 
 WORKSRC = $(WORKDIR)/$(GARNAME)
 
@@ -24,9 +28,13 @@ configure-dummy:
 build-dummy:
 
 install-manual:
-	@ginstall -d $(DESTDIR)$(sysconfigdir)
-	@ginstall -d $(DESTDIR)$(sysconfigdir)/bash_completion.d
+	@ginstall -d $(DESTDIR)$(sysconfdir)
+	@ginstall -d $(DESTDIR)$(sysconfdir)/bash_completion.d
 	@ginstall -D $(WORKSRC)/bash_completion $(DESTDIR)$(sysconfdir)/bash_completion
+	@( for FILE in $(WORKDIR)/*.completion; do \
+		NFILE="`basename $$FILE | sed -e 's/\.completion$$//'`"; \
+		ginstall -D $$FILE $(DESTDIR)$(sysconfdir)/bash_completion.d/$$NFILE; \
+	done )
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@( for FILE in BUGS README TODO Changelog; do \
 		ginstall -D $(WORKSRC)/$$FILE $(DESTDIR)$(docdir)/$(GARNAME)/$$FILE; \
