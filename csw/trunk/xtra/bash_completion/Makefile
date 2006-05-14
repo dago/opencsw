@@ -18,14 +18,10 @@ PATCHFILES = blastwave.patch
 WORKSRC = $(WORKDIR)/$(GARNAME)
 
 # no configure/Makefile
-CONFIGURE_SCRIPTS = dummy
-BUILD_SCRIPTS = dummy
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
 INSTALL_SCRIPTS = manual
-ENABLE_TEST = 0
-
-configure-dummy:
-
-build-dummy:
+TEST_SCRIPTS =
 
 install-manual:
 	@ginstall -d $(DESTDIR)$(sysconfdir)
