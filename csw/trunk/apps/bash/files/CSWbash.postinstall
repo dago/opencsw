@@ -31,9 +31,12 @@ else
 EOF
 fi
 
-if /usr/bin/grep "^${BASEDIR}/opt/csw/bin/bash$" ${BASEDIR}/etc/shells 2> /dev/null > /dev/null; then
-	echo "${BASEDIR}/etc/shells is UNCHANGED because entry ${BASEDIR}/opt/csw/bin/bash does already exists."
+THE_SHELL="`echo "${BASEDIR}/opt/csw/bin/bash" | /usr/bin/sed -e 's/\/\/*/\//g'`"
+
+if /usr/bin/cat "${BASEDIR}/etc/shells" | /usr/bin/sed -e 's/\/\/*/\//g' | /usr/bin/grep "$THE_SHELL" 2>/dev/null >/dev/null; then
+	echo "${BASEDIR}/etc/shells is UNCHANGED because entry $THE_SHELL does already exists."
 else
-	echo "${BASEDIR}/opt/csw/bin/bash" >> ${BASEDIR}/etc/shells
-	echo "ADDED ${BASEDIR}/opt/csw/bin/bash to ${BASEDIR}/etc/shells."
+	echo "$THE_SHELL" >> ${BASEDIR}/etc/shells
+	echo "ADDED $THE_SHELL to ${BASEDIR}/etc/shells."
 fi
+

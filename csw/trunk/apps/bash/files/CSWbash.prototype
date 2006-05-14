@@ -1,10 +1,10 @@
-f none /opt/csw/bin/bash 0755 root bin
-f none /opt/csw/bin/bashbug 0555 root bin
+f none /opt/csw/bin/bash=$basedir/opt/csw/bin/bash 0755 root bin
+f none /opt/csw/bin/bashbug=$basedir/opt/csw/bin/bash 0555 root bin
 d none /opt/csw/share/doc/bash 0755 root bin
 f none /opt/csw/share/doc/bash/changelog.CSW=$basedir/opt/csw/share/doc/bash/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/bash/README=$basedir/opt/csw/share/doc/bash/README 0644 root bin
 f none /opt/csw/share/doc/bash/FAQ=$basedir/opt/csw/share/doc/bash/FAQ 0644 root bin
-f none /opt/csw/share/info/bash.info 0644 root bin
+f none /opt/csw/share/info/bash.info=$basedir/opt/csw/bin/bash 0644 root bin
 d none /opt/csw/share/locale/en@boldquot
 d none /opt/csw/share/locale/en@boldquot/LC_MESSAGES
 f none /opt/csw/share/locale/en@boldquot/LC_MESSAGES/bash.mo=$basedir/opt/csw/share/locale/en@boldquot/LC_MESSAGES/bash.mo 0644 root bin

@@ -20,6 +20,13 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk
 
+# We touch these file to avoid aclocal/autoconf
+# configure to be run again
+pre-configure:
+	touch $(WORKSRC)/aclocal.m4
+	touch $(WORKSRC)/configure
+	touch $(WORKSRC)/config.status
+
 post-install:
 	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 	@ginstall -D $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)/README

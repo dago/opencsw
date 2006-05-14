@@ -1,9 +1,9 @@
 ef5304c4b22aaa5088972c792ed45d72  download/bash-3.1.tar.gz
 0397a16cd457cf06baa3426f5045556e  download/CSWbash.gspec
-0c4180c57994d33eeb522ad45b23fef6  download/CSWbash.prototype
-22be7be7262175e7f20c78e5b230f553  download/CSWbash.postinstall
-809201d504c157d34992f7728f9fd6e4  download/CSWbash.postremove
-573b8784f4f5f70bb86196a72b0979b6  download/CSWbash.depend
+fd47748c69882a8dd98ead38cb22a2ef  download/CSWbash.prototype
+bcc9760316385d49ff31c2ed72f4be4a  download/CSWbash.postinstall
+e4f780c6d7e0f2d4ba991a087481f7f0  download/CSWbash.postremove
+19ba01a8db96c3eef576919ac2c2f902  download/CSWbash.depend
 0eb4a31e88b7e3df8da73f450164420b  download/changelog.CSW
 c0d33bdfed6e4e6a9ae9200b77cd5c99  download/bash31-001.patch
 0c9be3bad344d04b79c4eac9eb39624c  download/bash31-002.patch
