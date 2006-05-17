@@ -13,17 +13,19 @@
 # replacer - replace or remove references to the specified directory.
 #
 
-ROOTDIR=${1:-'.'}
-shift
-
-if [ -z "$@" ]; then
+function usage {
     print "Usage: $0 <root_path> <replace_path>.."
     exit 1
-fi
+}
+
+ROOTDIR=${1:-'.'}
+[ $# -ge 1 ] && shift
+
+[ -z "$@" ] && usage
 
 for subdir in $@
 do
-    for file in `gfind $ROOTDIR -type f | xargs ggrep -l $subdir`
+    for file in `gfind $ROOTDIR -type f | gxargs -r ggrep -l $subdir`
     do
         ok=true
 
@@ -46,4 +48,6 @@ do
 
     done
 done
+
+exit 0
 
