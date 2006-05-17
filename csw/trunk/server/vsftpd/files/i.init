@@ -1,0 +1,54 @@
+#
+# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# i.init - class script which install init.d script and runlevels
+#          symlinks
+#
+set -x
+umask 0022
+LANG=C
+export LANG
+
+read_conf_value () 
+{
+    _VAR="$1"
+    _FILE="$2"
+    eval ${_VAR}=\"`/usr/bin/sed -n -e "/^# *$_VAR:/ s/^.*$_VAR: *\(.*[^ ]\) *$/\1/p" ${_FILE}`\"
+}
+
+
+while read SRC DEST; do
+	SERVICENAME=`/usr/bin/basename $DEST`
+
+	cp "$SRC" "$DEST"
+	chown root:sys "$DEST"
+	chmod 740 "$DEST"
+
+	read_conf_value chkconfig "$SRC"
+	set -- $chkconfig
+
+	RUNLEVEL="$1"
+	START_PRIORITY_LEVEL="$2"
+	STOP_PRIORITY_LEVEL="$3"
+
+	for LEVEL in 0 1 2 3 S; do
+		_LEVELDIR="/etc/rc${LEVEL}.d"
+		if echo "${RUNLEVEL}" | grep "${LEVEL}" >/dev/null; then
+			if [ ! -f "$_LEVELDIR/S${START_PRIORITY_LEVEL}${SERVICENAME}" ]; then
+				if [ $LEVEL -ne 3 ] || [ ! -f "/etc/rc2.d/S${START_PRIORITY_LEVEL}${SERVICENAME}" ]; then
+					ln -s "${DEST}" "$_LEVELDIR/S${START_PRIORITY_LEVEL}${SERVICENAME}"
+				fi
+			fi
+		else
+			if [ ! -f "$_LEVELDIR/K${STOP_PRIORITY_LEVEL}${SERVICENAME}" ]; then 
+				ln -s "${DEST}" "$_LEVELDIR/K${STOP_PRIORITY_LEVEL}${SERVICENAME}"
+			fi
+		fi
+	done
+done

@@ -5,6 +5,10 @@
 # Adapted by Yann Rouillard <yann@blastwave.org>
 #
 
+# chkconfig stuff
+# chkconfig: 2 85 15
+# description: a very secure and fast GPL'd FTP server
+ 
 ################################
 # Variable intialization #
 ################################

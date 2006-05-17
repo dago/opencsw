@@ -1,3 +1,30 @@
-${BASEDIR}/etc/init.d/cswvsftpd stop
+# vsftpd - preremove script
+# Add SMF capability
+#
+if [ -z "$PKG_INSTALL_ROOT" ]; then 
+	PKG_INSTALL_ROOT=/
+fi
+set -x
+
+if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/svcadm" ]; then
+	/usr/bin/awk '{ if ( $3 == "smf" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
+	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
+		if /usr/bin/echo "$FPATH" | /usr/bin/grep -v "^/" >/dev/null; then	
+			FPATH="$BASEDIR/$FPATH"
+		fi
+		EXT="`/usr/bin/echo \"$FPATH\" | /usr/bin/awk -F. '{ print $(NF) }'`"
+		chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import $FPATH >/dev/null 2>&1
+		
+		for FMRI in `chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$FPATH"`; do
+  			chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI" >/dev/null 2>&1
+		done
+	done
+else
+	# Start vsftpd with rc script
+	awk " \$0 ~ / -$PKG( |$)/ && \$3 == \"init\" { print \$1 }" "$PKG_INSTALL_ROOT/var/sadm/install/contents" 2>/dev/null | \
+	while read FILE; do
+		chroot "$PKG_INSTALL_ROOT" $FILE stop
+	done
+fi
 
 exit 0

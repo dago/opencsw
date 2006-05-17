@@ -1,26 +1,32 @@
 # vsftpd - postinstall script
 # Add SMF capability
 #
-# Set variable smf depending on the availability of SMF binaries
-smf=no
-if [ -f $BASEDIR/usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm ]
-then
-  smf=yes
+set -x
+if [ -z "$PKG_INSTALL_ROOT" ]; then 
+	PKG_INSTALL_ROOT=/
 fi
 
-if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
-
-if [ $smf = no ]
-then
-  # Start vsftpd with rc script
-  chroot $PKG_ROOT_DIR /etc/init.d/cswvsftpd start >/dev/null 2>&1
+if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/svcadm" ]; then
+	/usr/bin/awk '{ if ( $3 == "smf" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
+	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
+		if /usr/bin/echo "$FPATH" | /usr/bin/grep -v "^/" >/dev/null; then	
+			FPATH="$BASEDIR/$FPATH"
+		fi
+		EXT="`/usr/bin/echo \"$FPATH\" | /usr/bin/awk -F. '{ print $(NF) }'`"
+		chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import $FPATH >/dev/null 2>&1
+		
+		for FMRI in `chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$FPATH"`; do
+  			chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm enable "$FMRI" >/dev/null 2>&1
+		done
+	done
 else
-  # Register with SMF
-  chroot $PKG_ROOT_DIR /usr/sbin/svccfg import /opt/csw/var/svc/manifest/network/vsftpd.xml >/dev/null 2>&1
-  # Enable the service
-  chroot $PKG_ROOT_DIR /usr/sbin/svcadm enable svc:network/cswvsftpd >/dev/null 2>&1
-  echo "vsftpd is using Service Management Facility."
-  echo "The FMRI is: svc:network/cswvsftpd:default"
+	# Start vsftpd with rc script
+	/usr/bin/awk '{ if ( $3 == "init" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
+	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
+		if /usr/bin/echo "$FPATH" | /usr/bin/grep "^/etc/init.d/" >/dev/null; then	
+			chroot "$PKG_INSTALL_ROOT" $FPATH start
+		fi
+	done
 fi
 
 exit 0

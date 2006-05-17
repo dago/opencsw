@@ -1,18 +1,15 @@
 trap `exit 3` 15
+set -x
 # Assign Solaris release class to install release specific files
-smf=no
-if [ -f $BASEDIR/usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm ] ; then smf=yes ; fi
-if [ $smf = yes ]
-then
-        CLASSES='none smfyes'
+if [ -f "$BASEDIR/usr/sbin/svccfg" -a -f "$BASEDIR/usr/sbin/svcadm" ]; then
+        CLASSES="$CLASSES smf"
 else
-        CLASSES='none smfno'
+        CLASSES="$CLASSES init"
 fi
 
 # Make env variables available to other packaging scripts
-
 cat >$1 <<!
-CLASSES='$CLASSES'
+CLASSES=$CLASSES
 !
 
 exit 0

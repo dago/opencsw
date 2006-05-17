@@ -16,7 +16,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWvsftpd,prototype checkinstall preinstall postinstall preremove)
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf.CSW vsftpd.userlist.CSW
-DISTFILES += cswvsftpd vsftpd.xml svc-vsftpd i.smfyes i.smfno
+DISTFILES += cswvsftpd vsftpd.xml svc-vsftpd i.init r.init i.smf r.smf
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -32,13 +32,12 @@ PATCHFILES += csw_paths.patch
 PATCHFILES += csw_build_system.patch
 
 # patch to workaround the fact that 
-# solaris libc doesn't have tm_gmtoff
+# solaris libc doesn t have tm_gmtoff
 PATCHFILES += tm_gmtoff.patch
 
 # patch to add DESTDIR support to 
 # vsftpd makfile
 PATCHFILES += destdir.patch
-
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS = fake
@@ -73,8 +72,10 @@ post-install:
 	cd $(DESTDIR)/etc/rc0.d; rm -f K15cswvsftpd; ln -sf ../init.d/cswvsftpd K15cswvsftpd )
 	ginstall -D $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
-	ginstall -D $(WORKDIR)/i.smfyes $(DESTDIR)/i.smfyes
-	ginstall -D $(WORKDIR)/i.smfno $(DESTDIR)/i/smfno
+	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
+	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
+	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.smf
+	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.smf
 	ginstall -D $(WORKDIR)/vsftpd.conf.CSW $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.conf.CSW
 	ginstall -D $(WORKDIR)/vsftpd.userlist.CSW $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.userlist.CSW
 	ginstall -D $(WORKDIR)/vsftpd.xml $(DESTDIR)$(localstatedir)/svc/manifest/network/vsftpd.xml
