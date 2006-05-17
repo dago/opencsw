@@ -16,11 +16,11 @@ PATCHFILES = language.cpp.diff
 
 CONFIGURE_ARGS = --prefix=$(prefix) LDFLAGS='-lsunmath -lintl'
 CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib
-CONFIGURE_ARGS += --with-server-uid=60001
-CONFIGURE_ARGS += --with-server-gid=60001
+#CONFIGURE_ARGS += --with-server-uid=60001
+#CONFIGURE_ARGS += --with-server-gid=60001
 CONFIGURE_ARGS += --disable-nls
-CONFIGURE_ARGS += --enable-server
-CONFIGURE_ARGS += --enable-campaign-server
+#CONFIGURE_ARGS += --enable-server
+#CONFIGURE_ARGS += --enable-campaign-server
 CONFIGURE_ARGS += --enable-tools
 CONFIGURE_ARGS += --enable-editor
 CONFIGURE_ARGS += --with-kde
