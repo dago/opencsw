@@ -4,7 +4,7 @@ CATEGORIES = apps
 
 DESCRIPTION = a free turn-based strategy game with a fanasy theme
 define BLURB
-Build up a great army, gradually turning raw recruits into hardened veterans. In later games, recall your toughest warriors and form a deadly host against whom none can stand! Choose units from a large pool of specialists, and hand-pick a force with the right strengths to fight well on different terrains against all manner of opposition.  
+  Build up a great army, gradually turning raw recruits into hardened veterans. In later games, recall your toughest warriors and form a deadly host against whom none can stand! Choose units from a large pool of specialists, and hand-pick a force with the right strengths to fight well on different terrains against all manner of opposition.  
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
