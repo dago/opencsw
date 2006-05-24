@@ -15,8 +15,13 @@ MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWvsftpd,prototype checkinstall preinstall postinstall preremove)
 DISTFILES += changelog.CSW README.CSW
-DISTFILES += vsftpd.conf.CSW vsftpd.userlist.CSW
-DISTFILES += cswvsftpd vsftpd.xml svc-vsftpd i.init r.init i.smf r.smf
+DISTFILES += vsftpd.conf vsftpd.userlist
+DISTFILES += cswvsftpd vsftpd.xml svc-vsftpd 
+DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
+
+# adding configuration handling classes
+# (init/smf classes are dynamically added in checkinstall)
+SPKG_CLASSES = none conf
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -42,11 +47,18 @@ PATCHFILES += destdir.patch
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS = fake
 
+GARCOMPILER = GNU
+
 ENABLE_TEST = 0
 
 include ../category.mk
 
-CFLAGS += -I/usr/include -Idummyinc
+ifeq ($(GARCOMPILER),GNU)
+CFLAGS += -idirafter dummyinc
+else
+CFLAGS += -I/usr/include -Idummyinc 
+endif
+
 INSTALL_ENV += INSTALL="ginstall"
 
 # no configure step with vsftpd
@@ -64,20 +76,14 @@ pre-install:
 # we install additionnal files
 post-install:
 	ginstall -D $(WORKDIR)/cswvsftpd $(DESTDIR)/etc/init.d/cswvsftpd
-	ginstall -d $(DESTDIR)/etc/rc2.d
-	ginstall -d $(DESTDIR)/etc/rc1.d
-	ginstall -d $(DESTDIR)/etc/rc0.d
-	( cd $(DESTDIR)/etc/rc2.d; rm -f S85cswvsftpd; ln -sf ../init.d/cswvsftpd S85cswvsftpd; \
-	cd $(DESTDIR)/etc/rc1.d; rm -f K15cswvsftpd; ln -sf ../init.d/cswvsftpd K15cswvsftpd; \
-	cd $(DESTDIR)/etc/rc0.d; rm -f K15cswvsftpd; ln -sf ../init.d/cswvsftpd K15cswvsftpd )
 	ginstall -D $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
 	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
 	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.smf
 	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.smf
-	ginstall -D $(WORKDIR)/vsftpd.conf.CSW $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.conf.CSW
-	ginstall -D $(WORKDIR)/vsftpd.userlist.CSW $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.userlist.CSW
+	ginstall -D $(WORKDIR)/vsftpd.conf $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.conf
+	ginstall -D $(WORKDIR)/vsftpd.userlist $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.userlist
 	ginstall -D $(WORKDIR)/vsftpd.xml $(DESTDIR)$(localstatedir)/svc/manifest/network/vsftpd.xml
 	ginstall -D $(WORKDIR)/svc-vsftpd $(DESTDIR)$(libdir)/svc/method/svc-vsftpd
 	

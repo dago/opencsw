@@ -5,53 +5,86 @@ William Pool (Puddle) 02/05
 Service manifest for vsftpd
 E-mail:
 Modified for CSWmysql5 by Alex Moore 01/06
-Modified for CSWvsftpd by Yann Rouillard 04/06
+Modified for CSWvsftpd by Yann Rouillard 05/06
 -->
 
-<service_bundle type='manifest' name='vsftpd:vsftpd'>
+<service_bundle type='manifest' name='CSWvsftpd:vsftpd'>
 
-<service
-name='network/cswvsftpd'
-type='service'
-version='1'>
-<create_default_instance enabled='false' />
-<single_instance />
+	<service
+		name='network/cswvsftpd'
+		type='service'
+		version='1'>
 
-<dependency name='fs'
-grouping='require_all'
-restart_on='none'
-type='service'>
-<service_fmri value='svc:/system/filesystem/local' />
-</dependency>
+		<single_instance />
 
-<dependency name='net'
-grouping='require_all'
-restart_on='none'
-type='service'>
-<service_fmri value='svc:/network/loopback' />
-</dependency>
+		<instance name='default' enabled='false'>
+			<dependency name='fs'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/system/filesystem/local' />
+			</dependency>
 
-<exec_method
-type='method'
-name='start'
-exec='/opt/csw/lib/svc/method/svc-vsftpd start'
-timeout_seconds='-1'>
-</exec_method>
+			<dependency name='net'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/network/loopback' />
+			</dependency>
 
-<exec_method
-type='method'
-name='stop'
-exec='/opt/csw/lib/svc/method/svc-vsftpd stop'
-timeout_seconds='-1'>
-</exec_method>
+			<dependency
+				name='config-file-vsftpd'
+				grouping='optional_all'
+				restart_on='refresh'
+				type='path'>
+				<service_fmri
+					value='file://localhost/opt/csw/etc/vsftpd/vsftpd.conf' />
+			</dependency>
 
-<exec_method
-type='method'
-name='restart'
-exec='/opt/csw/lib/svc/method/svc-vsftpd restart'
-timeout_seconds='-1'>
-</exec_method>
+			<dependent
+				name='cswvsftpd_multi-user'
+				grouping='optional_all'
+				restart_on='none'>
+				<service_fmri
+					value='svc:/milestone/multi-user' />
+			</dependent>
 
-</service>
+			<exec_method
+				type='method'
+				name='start'
+				exec='/opt/csw/lib/svc/method/svc-vsftpd start'
+				timeout_seconds='-1'>
+			</exec_method>
+
+			<exec_method
+				type='method'
+				name='stop'
+				exec='/opt/csw/lib/svc/method/svc-vsftpd stop'
+				timeout_seconds='-1'>
+			</exec_method>
+
+			<exec_method
+				type='method'
+				name='restart'
+				exec='/opt/csw/lib/svc/method/svc-vsftpd restart'
+				timeout_seconds='-1'>
+			</exec_method>
+		</instance>
+
+		<template>
+			<common_name>
+				<loctext xml:lang='C'>
+				A very secure and fast GPL'd FTP server	
+				</loctext>
+			</common_name>
+			<documentation>
+				<manpage title='vsftpd.conf' section='5M'
+					manpath='/opt/csw/share/man' />
+				<manpage title='vsftpd' section='8M'
+					manpath='/opt/csw/share/man' />
+			</documentation>
+		</template>
+					
+	</service>
 
 </service_bundle>

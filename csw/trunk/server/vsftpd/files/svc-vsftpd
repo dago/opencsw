@@ -5,6 +5,11 @@
 # Adapted by Yann Rouillard <yann@blastwave.org>
 #
 
+# treat unset variable as error
+set -u
+# exit immediately on error line
+set -e
+
 . /lib/svc/share/smf_include.sh
 
 ################################
@@ -30,12 +35,15 @@ OPTIONS=""
 #
 check_config_file()
 {
-    [ ! -f ${CONF_FILE} ] && return 1;
+	if [ ! -f ${CONF_FILE} ]; then
+		echo "vsftpd: ERROR: configuration file $CONF_FILE doesn't exist." >&2
+		exit $SMF_EXIT_ERR_CONFIG;
+	fi	
 
     if /usr/bin/egrep -i "^ *listen(_ipv6)? *= *yes" ${CONF_FILE} > /dev/null; then
 	if /usr/bin/egrep -i "^ *background *= *yes" ${CONF_FILE} > /dev/null; then
 	    echo "vsftpd: ERROR: this script doesn't work with background option enabled in $CONF_FILE." >&2
-	    return 1
+	    exit $SMF_EXIT_ERR_CONFIG
 	fi
 
 	# As the csw package default configuration is anonymous access only and doesn't automatically create the ftp user,
@@ -43,12 +51,15 @@ check_config_file()
 	if /usr/bin/egrep -i "^ *anonymous_enable *= *yes" ${CONF_FILE} > /dev/null; then
 	    FTP_USER=`/usr/bin/awk -F= '$0 ~ /^ *ftp_username *=/ { print $2; exit }' ${CONF_FILE}`
 	    FTP_USER=${FTP_USER:-ftp}
-	    getent passwd $FTP_USER >/dev/null || echo "vsftpd: WARNING: You should create the user $FTP_USER for anonymous ftp access to work."
+	    getent passwd $FTP_USER >/dev/null || {
+		echo "vsftpd: WARNING: You should create the user $FTP_USER for anonymous ftp access to work."
+	    	exit $SMF_EXIT_MON_DEGRADE
+	    }
 	fi
 
 	return 0
     fi
-    return 1
+    exit $SMF_EXIT_ERR_CONFIG
 }
 
 
@@ -58,8 +69,7 @@ check_config_file()
 #
 check_proc()
 {
-    if [ -f $1 ]
-    then
+    if [ -f $1 ]; then
 	_PID=`cat $1 | head -1`
 	if [ -n "$_PID" ]; then
 	    _COMMAND=`ps -p $_PID -o comm | tail -1`
@@ -149,7 +159,7 @@ status()
 
 # We don't do anything if vsftpd is not configured
 # or is configured in inetd mode
-check_config_file || exit 0
+check_config_file
 
 case "$1" in
   start) start ;;

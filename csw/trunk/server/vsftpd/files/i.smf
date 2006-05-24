@@ -18,11 +18,16 @@
 # /opt/csw/lib/svc/method
 # /opt/csw/lib/svc/method/svc-softname
 set -x
+
+if [ -z "$PKG_INSTALL_ROOT" ]; then
+	PKG_INSTALL_ROOT="/"
+fi
+
 while read SRC DEST; do
 	EXT="`/usr/bin/echo $DEST | /usr/bin/awk -F. '{ print $(NF) }'`"
         "$BASEDIR/usr/bin/cp" "$SRC" "$DEST" || exit 2
 	if [ "$EXT" = "xml" ]; then
-		chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import "$SRC"
+		chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import "$DEST"
 	fi
 done
 

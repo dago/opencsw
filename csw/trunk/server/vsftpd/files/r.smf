@@ -18,13 +18,20 @@
 # /opt/csw/lib/svc/method
 # /opt/csw/lib/svc/method/svc-softname
 set -x
+
+if [ -z "$PKG_INSTALL_ROOT" ]; then
+	PKG_INSTALL_ROOT="/"
+fi
+
 while read DEST; do
 	EXT="`/usr/bin/echo $DEST | /usr/bin/awk -F. '{ print $(NF) }'`"
-        "$BASEDIR/usr/bin/cp" "$SRC" "$DEST" || exit 2
 	if [ "$EXT" = "xml" ]; then
 		for FRMI in `chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$DEST"`; do
 			chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg delete "$FRMI" >/dev/null 2>&1
 		done
+	fi
+        if [ ! -d "$DEST" ]; then
+		"$BASEDIR/usr/bin/rm" "$DEST" || exit 2
 	fi
 done
 

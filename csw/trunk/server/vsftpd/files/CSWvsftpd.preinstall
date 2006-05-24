@@ -18,7 +18,7 @@ create_group()
 	if /usr/bin/grep "^$NAME" $GROUP > /dev/null; then 
 		/usr/bin/echo "group $NAME already exists"
 	else 
-		/usr/sbin/groupadd -g $GID $NAME 
+		/usr/sbin/groupadd $NAME 
 		/usr/bin/echo "group $NAME created"
 	fi
 }
@@ -30,16 +30,14 @@ create_group()
 create_user()
 {
 	NAME=$1
-	UID=$2
-	GID=$3
-	HOME=$4
-	SHELL=$5
-	COMMENT=$6
+	HOME=$2
+	SHELL=$3
+	COMMENT=$4
 
 	if /usr/bin/grep "^$NAME" $PASSWD > /dev/null; then 
 		/usr/bin/echo "user $NAME already exists"
 	else 
-		/usr/sbin/useradd -u $UID -g $GID -c "$COMMENT" -d $HOME -s $SHELL $NAME
+		/usr/sbin/useradd -c "$COMMENT" -d $HOME -s $SHELL $NAME
 		/usr/bin/pwconv
 		/usr/bin/echo "user $NAME created"
 	fi
@@ -50,5 +48,5 @@ create_user()
 ##########
 echo "Creating privilege separation user..."
 
-create_group ftpsecure 974
-create_user ftpsecure 9740 974 /opt/csw/var/empty/vsftpd /bin/false "vsftpd privsep user"
+create_group ftpsecure 
+create_user ftpsecure /opt/csw/var/empty/vsftpd /bin/false "vsftpd privsep user"

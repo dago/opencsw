@@ -6,18 +6,35 @@ if [ -z "$PKG_INSTALL_ROOT" ]; then
 fi
 set -x
 
+STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.state" 
+rm -f "$STATE_FILE"
+
 if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/svcadm" ]; then
-	/usr/bin/awk '{ if ( $3 == "smf" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
-	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
-		if /usr/bin/echo "$FPATH" | /usr/bin/grep -v "^/" >/dev/null; then	
-			FPATH="$BASEDIR/$FPATH"
+	awk " \$0 ~ / -?$PKG( |$)/ && \$3 == \"smf\" { print \$1 }" "$PKG_INSTALL_ROOT/var/sadm/install/contents" 2>/dev/null | \
+	while read FILE; do
+		if /usr/bin/echo "$FILE" | /usr/bin/grep -v "^/" >/dev/null; then	
+			FILE="$BASEDIR/$FILE"
 		fi
-		EXT="`/usr/bin/echo \"$FPATH\" | /usr/bin/awk -F. '{ print $(NF) }'`"
-		chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import $FPATH >/dev/null 2>&1
-		
-		for FMRI in `chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$FPATH"`; do
-  			chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI" >/dev/null 2>&1
-		done
+
+		EXT="`/usr/bin/echo \"$FILE\" | /usr/bin/awk -F. '{ print $(NF) }'`"
+		if [ "$EXT" = "xml" ]; then			
+			for FMRI in `chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$FILE" | /usr/bin/awk -F: ' NF > 2 { print $0 }'`; do
+				STATE=`/usr/sbin/svccfg -s "$FMRI" listprop general/enabled | /usr/bin/awk '{ print $3 }'`		
+				if [ "$STATE" != "true" ]; then
+					STATE="disabled"
+				else
+					STATE="enabled"
+				fi
+				TEMP_STATE=`/usr/sbin/svccfg -s "$FMRI" listprop general_ovr/enabled | /usr/bin/awk '{ print $3 }'`		
+				if [ "$TEMP_STATE" != "true" ]; then
+					TEMP_STATE="disabled"
+				else
+					TEMP_STATE="enabled"
+				fi	
+				echo "$FMRI $STATE $TEMP_STATE" >> "$STATE_FILE"
+				chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI" >/dev/null 2>&1
+			done
+		fi
 	done
 else
 	# Start vsftpd with rc script
