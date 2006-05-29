@@ -1,5 +1,0 @@
-%var            bitname apache2c
-%var            pkgname CSWapache2c
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%var            desc Apache 2.0 web server (core)
-%copyright      url file://%{WORKSRC}/LICENSE
