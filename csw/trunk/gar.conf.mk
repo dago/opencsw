@@ -188,12 +188,6 @@ CPAN_SITES  += ftp://cpan.pair.com/pub/CPAN
 CPAN_SITES  += http://mirrors.kernel.org/cpan
 CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
 
-# KDE
-KDE_ROOT     = ftp://ftp.gtlib.cc.gatech.edu/pub/kde
-KDE_VERSION  = 3.5
-KDE_DIST     = stable
-KDE_MIRROR   = $(KDE_ROOT)/$(KDE_DIST)/$(KDE_VERSION)/src/
-
 # GNOME
 GNOME_MIRROR =
 
