@@ -136,8 +136,8 @@ chomp(my @deppkg = `$query`);
 foreach (sort @deppkg) {
     my ($desc) = `pkginfo $_` or next;
     chomp $desc;
-    my ($class, $pkginst, $desc) = split /\s+/, $desc, 3;
-    print "P $pkginst $desc\n";
+    my ($class, $pkginst, $pdesc) = split /\s+/, $desc, 3;
+    print "P $pkginst $pdesc\n";
 }
 
 exit 0;
