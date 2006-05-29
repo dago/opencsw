@@ -2,9 +2,6 @@ GARNAME = wget
 GARVERSION = 1.9.1
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWwget
-SPKG_BITNAME = wget
-
 DESCRIPTION = A network utility to retrieve files from the Web.
 define BLURB
   GNU Wget is a utility for noninteractive download of files from the Web. It
