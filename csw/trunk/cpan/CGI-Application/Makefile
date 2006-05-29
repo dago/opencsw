@@ -13,6 +13,6 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmcgiapp,depend prototype)
 
-DEPENDS += cpan/HTML-Template cpan/CGI
+DEPENDS += cpan/HTML-Template
 
 include ../category.mk
