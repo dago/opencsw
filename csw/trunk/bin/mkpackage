@@ -1,33 +1,28 @@
-#!/opt/csw/bin/perl -w
+#!/bin/env perl -w
 #
 # $Id$
-#
-# Copyright 2006 Cory Omand <comand@blastwave.org>
-# All rights reserved.  Use is subject to license terms.
-#
-# Redistribution and/or use, with or without modification, is
-# permitted.  This software is without warranty of any kind.  The
-# author(s) shall not be liable in the event that use of the
-# software causes damage.
 #
 # mkpackage - produce Solaris packages from a specification.
 #
 
+require 5.008004;
+
 use strict;
-use Cwd qw/abs_path cwd/;
+use Cwd qw/cwd/;
 use File::Basename;
 use File::Spec::Functions;
 use Getopt::Long qw/:config no_ignore_case gnu_getopt/;
+use POSIX;
 use Pod::Usage;
 use vars qw/
   $TOOLVERSION $REVISION $VERSION
   $HAS_LWP_SUPPORT $UA $HAS_CURL_SUPPORT
   %config %exit $SELF %SPEC_TYPE $SPEC_TYPE
   $DIRECTIVE @SPECDIRS @ADMFILES
-  $DIRECTIVE_START %VALID_DIRECTIVES/;
+  $DIRECTIVE_START %VALID_DIRECTIVES %SCRIPTADM/;
 
 # Tool Version/Revision Information
-$TOOLVERSION = "1.3";
+$TOOLVERSION = "1.4";
 ($REVISION) = q/$Revision$/ =~ /(\d+)/;
 $VERSION = sprintf '%s (r%d)', $TOOLVERSION, $REVISION;
 
@@ -83,10 +78,18 @@ $SELF = basename $0;
 @SPECDIRS = qw/
   include var cvar
   /;
+
+# NOTE: prototype must be first in this list!
 @ADMFILES = qw/
   prototype checkinstall compver copyright depend pkginfo
-  postinstall postremove preinstall preremove request space
-  /;    # NOTE: prototype must be first in this list!
+  preinstall postinstall preremove postremove request space
+  /;
+
+# Admin files that are scripts
+%SCRIPTADM = map { $_ => 1 } qw/
+  checkinstall compver preinstall postinstall preremove
+  postremove request
+  /;
 
 %VALID_DIRECTIVES = map { $_ => 1 } ( @SPECDIRS, @ADMFILES );
 
@@ -103,7 +106,10 @@ $DIRECTIVE       = qr/^$DIRECTIVE_START(\w+)/;
 # Arguments: @_ - message portions, which will be joined by space, and
 #                 concluded with a newline character.
 #
-sub eprint { print STDERR "mkp: ".join( " ", @_ )."\n" unless $config{quiet} }
+sub eprint {
+    print STDERR "mkp: " . join( " ", @_ ) . "\n"
+      unless $config{quiet};
+}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Function : error
@@ -114,9 +120,10 @@ sub eprint { print STDERR "mkp: ".join( " ", @_ )."\n" unless $config{quiet} }
 # Effects  : This function causes the calling program to exit.
 #
 sub error {
-    my $code = shift;
+    my $code = $exit{unknown};
+    $code = shift if $_[0] =~ /^\d+$/;
     print STDERR "ERROR:", join( " ", @_ ), "\n";
-    exit( $code || $exit{unknown} );
+    exit($code);
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -151,8 +158,9 @@ sub _exec {
 
     if (wantarray) {
         my @content = `$cmdline`;
-        my $ec      = $? >> 8;
-        die \@_ unless $ec == 0;
+        die [ $exit{prog_exec_error}, @_ ]
+            unless WIFEXITED($?) and WEXITSTATUS($?) == 0;
+
         return @content;
     }
     else {
@@ -251,12 +259,13 @@ sub process_arguments {
     my %args;
     GetOptions(
         'v=s'          => \%{ $config{pkgvars} },
-        'D=s'          => \@{ $config{dumpvars} },
-        'A'            => \$config{dumpall},
+        'dump|D=s'     => \@{ $config{dumpvars} },
+        'dumpall|A'    => \$config{dumpall},
         'spec|s=s'     => \$args{spec},
         'destdir|d=s'  => \$args{destdir},
         'workdir|w=s'  => \$args{workdir},
         'spooldir|p=s' => \$args{spooldir},
+        'pkgbase|b=s'  => \$args{pkgbase},
         'pkgroot|r=s'  => \$args{pkgroot},
         'tmpdir|t=s'   => \$args{tmpdir},
         'transfer!'    => \$config{transfer},
@@ -270,11 +279,17 @@ sub process_arguments {
             print "$SELF v$VERSION\n";
             exit $exit{usage};
         },
-    ) or pod2usage();
+      )
+      or pod2usage();
 
     # Help (--help) and/or Manual (--man)
     pod2usage(1) if $args{help};
     pod2usage( -verbose => 2 ) if $args{man};
+
+    # Dump (-D) and dump all (-A)
+    usage_error("Dump (-D) and Dump all (-A) are exclusive")
+      if $config{dumpall}
+      and @{ $config{dumpvars} };
 
     # Spec Filename (--spec)
     usage_error("Spec (--spec) is a required argument")
@@ -321,10 +336,15 @@ sub process_arguments {
     error( $exit{dir_not_found}, "Cannot access --tmpdir '$config{tmpdir}'" )
       unless -d $config{tmpdir};
 
+    # Package base dir (--pkgbase)
+    $config{pkgbase} = $args{pkgbase} || '';
+    error( $exit{dir_not_found}, "Cannot access --pkgbase '$config{pkgbase}'" )
+      if $config{pkgbase} and not -d $config{pkgbase};
+
     # Package root dir (--pkgroot)
-    $config{pkgroot} = $args{pkgroot} || '/';
+    $config{pkgroot} = $args{pkgroot} || '';
     error( $exit{dir_not_found}, "Cannot access --pkgroot '$config{pkgroot}'" )
-      unless -d $config{pkgroot};
+      if $config{pkgroot} and not -d $config{pkgroot};
 
     # Supply defaults for --no/x flag arguments
     $config{compress}  = 0 unless defined $config{compress};
@@ -333,9 +353,9 @@ sub process_arguments {
     $config{usebzip}   = 0 unless defined $config{usebzip};
 
     # Export variables to the spec
-    foreach my $var qw(specname destdir workdir spooldir pkgroot tmpdir) {
-        $ENV{$var} = $config{$var};
-    }
+    $ENV{$_} = $config{$_} foreach qw/
+      specname destdir workdir spooldir pkgbase pkgroot tmpdir
+      /;
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -347,17 +367,15 @@ sub process_arguments {
 #
 sub dumpenv {
     my $dumpvars = shift;
-    my $spec = shift;
+    my $spec     = shift;
 
     my @vars = @$dumpvars ? @$dumpvars : keys %ENV;
-    if (@vars == 1) {
-        print $ENV{$vars[0]}, "\n";
-    }
-    else {
-        foreach my $var (@vars) {
-            my $val = exists $ENV{$var} ? $ENV{$var} : '';
-            printf "%s=%s\n", $var, $val;
-        }
+    my $multi = @vars > 1;
+
+    foreach my $var (@vars) {
+        my $val = exists $ENV{$var} ? $ENV{$var} : '';
+        printf "$var=" if $multi;
+        printf "$val\n";
     }
 
     exit $exit{ok};
@@ -457,24 +475,36 @@ sub parse {
                   unless $dtype
                   and defined $argv;
 
-                # Set the specified variable
-                $config{$dtype} = env_replace $argv;
-
-                # cvar means that if the named variable is already set, then it
-                # will not be overwritten
+                # cvar means that if the named variable is already set in ENV,
+                # it will not be overwritten by subsequent %vars.
                 if ( $dname ne 'cvar' or not exists $ENV{$dtype} ) {
-                    $ENV{$dtype} = $config{$dtype};
-                    eprint "set ENV{$dtype} = $ENV{$dtype}";
+                    $config{$dtype} = $ENV{$dtype} = env_replace $argv;
+                    eprint "set ENV{$dtype} = '$ENV{$dtype}'";
                 }
                 else {
-                    eprint "cvar ENV{$dtype} is already set"
+                    eprint "cvar ENV{$dtype} is already set ($ENV{$dtype})"
                       if $dname eq 'cvar';
                 }
             }
             else {
 
-                # Record the directive
-                push @{ $spec->{$dname} }, [ $dtype, $argv, $source, $lineno ];
+                # If the content is a script, overwrite the existing spec
+                # reference, otherwise spec lines are additive.
+                my $specline = [ $dtype, $argv, $source, $lineno ];
+                if ($SCRIPTADM{$dname}) {
+
+                    if ($spec->{$dname}) {
+                        eprint "WARNING: $dname\@$source line $lineno";
+                        eprint "WARNING: overrides";
+                        eprint "WARNING: $dname\@$spec->{$dname}[0][2]" .
+                          " line " . $spec->{$dname}[0][3];
+                    }
+
+                    $spec->{$dname} = [ $specline ];
+                }
+                else {
+                    push @{ $spec->{$dname} }, $specline;
+                }
             }
         }
         else {
@@ -549,7 +579,6 @@ sub get_content {
             die [ $exit{file_not_found}, "cannot access $source ($!)" ]
               unless -f $source;
 
-
             open FILE, $source
               or die [ $exit{file_not_readable}, "cannot open $source ($!)" ];
 
@@ -567,14 +596,14 @@ sub get_content {
 
                 # Retrieve content
                 my $r = $UA->get($source);
-                die [
-                    $exit{file_not_found},
-                        "cannot access $source (" . $r->code . ": " .
-                        $r->message . ")"
-                  ]
+                die [ $exit{file_not_found},
+                        "cannot access $source ("
+                      . $r->code . ": "
+                      . $r->message
+                      . ")" ]
                   unless $r->is_success;
 
-                @content = split /\n/, $r->content;
+                @content = map { "$_\n" } split( /\n/, $r->content );
             }
             elsif ($HAS_CURL_SUPPORT) {
 
@@ -671,8 +700,8 @@ sub create_files {
             }
         }
 
-        # Only do a content replace within 'pkginfo' includes
-        if ( $admtype eq 'pkginfo' ) {
+        # Do content replace within 'pkginfo' and 'copyright' includes
+        if ( $admtype eq 'pkginfo' or $admtype eq 'copyright' ) {
             for ( my $i = 0 ; $i <= $#admcontent ; $i++ ) {
                 $admcontent[$i] = env_replace( $admcontent[$i] );
             }
@@ -770,12 +799,16 @@ sub make_package {
     push @vars, join( "=", $_, $config{pkgvars}{$_} )
       foreach ( sort keys %{ $config{pkgvars} } );
 
-    my $vars = join( " ", @vars );
+    my @pkgmk;
+    push @pkgmk, "pkgmk";
+    push @pkgmk, "-d $config{spooldir}";
+    push @pkgmk, "-r $config{pkgroot}" if $config{pkgroot};
+    push @pkgmk, "-b $config{pkgbase}" if $config{pkgbase};
+    push @pkgmk, "-f $proto";
+    push @pkgmk, join(" ", @vars);
 
-    vexec(
-        "pkgmk -r $config{pkgroot} -f $proto $vars",
-        "Failed to create $config{specname} using $proto"
-    );
+    vexec( join(" ", @pkgmk),
+        "Failed to create $config{specname} using $proto" );
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -784,15 +817,12 @@ sub make_package {
 #            from the command line and from spec files.
 #
 sub transfer_package {
-    my $spooldir = $config{spooldir};
-    my $destdir  = $config{destdir};
-    my $tmpdir   = $config{tmpdir};
-    my $pkgname  = $config{pkgname} || $config{specname};
-    my $pkgfile  = $config{pkgfile} || "$pkgname.pkg";
-    my $tmppkg   = catfile $tmpdir, $pkgfile;
+    my $pkgname = $config{pkgname} || $config{specname};
+    my $pkgfile = $config{pkgfile} || "$pkgname.pkg";
+    my $tmppkg = catfile $config{tmpdir}, $pkgfile;
 
     vexec(
-        "pkgtrans -s $spooldir $tmppkg $pkgname",
+        "pkgtrans -s $config{spooldir} $tmppkg $pkgname",
         "Failed to transfer package $pkgname to $tmppkg"
     );
 
@@ -806,7 +836,9 @@ sub transfer_package {
         $tmppkg .= $config{usebzip} ? ".bz2" : ".gz";
     }
 
-    vexec("mv $tmppkg $destdir") if $tmpdir ne $destdir;
+    vexec("mv $tmppkg $config{destdir}")
+      if $config{tmpdir} ne $config{destdir};
+
     clean_spool;
 }
 
@@ -817,8 +849,9 @@ sub transfer_package {
 process_arguments;
 
 my $spec = parse $config{spec};
-dumpenv([], $spec)                if $config{dumpall};
-dumpenv($config{dumpvars}, $spec) if @{$config{dumpvars}};
+dumpenv( [], $spec )                if $config{dumpall};
+dumpenv( $config{dumpvars}, $spec ) if @{ $config{dumpvars} };
+
 my $protopath = create_files $spec;
 make_package $protopath;
 transfer_package if $config{transfer};
@@ -836,10 +869,11 @@ mkpackage - Create one or more Solaris packages from a 'spec' file.
 
 =head1 SYNOPSIS
 
- mkpackage [-D <var>|-A] --spec <path> [--destdir <path>] [--workdir <path>]
+ mkpackage --spec <path> [--destdir <path>] [--workdir <path>]
         [--spooldir <path>] [--pkgroot <path>] [--tmpdir <path>]
-        [--[no]transfer] [--[no]overwrite] [--[no]compress] [--usebzip]
-        [-v var=value...] [--quiet] [--help] [--manual] [--version]
+        [--[no]transfer] [--[no]overwrite] [--[no]compress]
+        [--usebzip] [-v var=value...] [--dump <var>|-dumpall] [--quiet]
+        [--help] [--manual] [--version]
 
 =head1 DESCRIPTION
 
@@ -851,27 +885,6 @@ into a bitstream format, and whether that bitstream is compressed.  The output
 filename and directory for bitstream packages may also be configured.
 
 =head1 OPTIONS
-
-=head2 -D
-
-Dump the value of one or more environment variables to STDOUT after the spec
-is parsed.  This option can be specified more than once to dump the values of
-multiple variables.  When -D is specified only once, the value is dumped, if
-it exists, or an empty string is output if the value is not set.  If -D is
-specified more than once, the values are printed out as:
-
- variable=value
-
-Use --quiet to only print out the variable value (or list of variables).
-
-=head2 -A
-
-Dump the value of all environment variables to STDOUT after the spec is
-parsed. Values are output as:
-
- variable=value
-
-Use --quiet to only print out the variable value (or list of variables).
 
 =head2 --spec,-s
 
@@ -895,10 +908,15 @@ files will be created.  (Default: current working directory)
 Package spool directory.  This option allows the default pkgmk spool directory
 to be changed.  (Default: /var/spool/pkg)
 
+=head2 --pkgbase,-b
+
+Package base directory.  This path will be passed to the pkgmk -b option when
+the package is created.  (Default: none).
+
 =head2 --pkgroot,-r
 
 Package root directory.  This path will be passed to the pkgmk -r option when
-the package is created.  (Default: /).
+the package is created.  (Default: none).
 
 =head2 --tmpdir,-t
 
@@ -938,6 +956,20 @@ specified, mkpackage will compress bitstream packages using gzip.  Specifying
 Build time variables.  Specify one or more variable replacements for pkgmk
 during the package build stage.  This option can be specified multiple times.
 
+=head2 --dump,-D
+
+Dump name=value pair of one or more environment variables to STDOUT after the
+spec is parsed.  This option can be specified more than once to dump the
+values of multiple variables.  The output format is suitable for use with
+shell C<eval> (if used with --quiet) so variables can be utilized in makefiles
+and scripts.
+
+=head2 --dumpall,-A
+
+Dump name=value pairs for all environment variables to STDOUT after the spec
+is parsed.  Use --quiet to only print out the variable value (or list of
+variables).
+
 =head2 --quiet,-q
 
 Suppress all informational messages.
@@ -964,7 +996,7 @@ types of directives may take differing numbers of arguments.  The most common
 type of directive accepts a content scheme, which determines how the next
 argument will be handled.  These directives are of the following form:
 
-    %directive scheme argument
+ %directive scheme argument
 
 Where I<scheme> is one of the following:
 
@@ -973,12 +1005,12 @@ Where I<scheme> is one of the following:
 =item url
 
 Insert the result of a URL request.  Argument must be a well formed URI which
-is supported by libwww-perl.  See the documentation for LWP::UserAgent for more
+is supported by libwww-perl.  See the documentation for UserAgent for more
 details.  Variable replacement will be done in the URL before the request is
 sent.  Any unexpanded variables in the URL will be replaced with an empty
 string.  Consider the following directive:
 
-    %copyright     url file:///%{PWD}/LICENSE.txt
+ %copyright     url file:///%{PWD}/LICENSE.txt
 
 This directive fetches the specified URL resource, and uses the content as the
 package copyright file.
@@ -988,7 +1020,7 @@ package copyright file.
 Insert the output of a command.  One or more arguments may be specified, which
 will be executed as a single command.  For instance:
 
-    %prototype     exec cswproto -v basedir=%{DESTDIR} %{DESTDIR}=/
+ %prototype     exec cswproto -v basedir=%{DESTDIR} %{DESTDIR}=/
 
 This directive executes the C<cswproto> program, passing in the specified
 arguments, and uses the resulting content as the package prototype.  Multiple
@@ -1014,20 +1046,20 @@ without an argument.  All non-directive lines in the spec file listed after
 the no-argument directive will be added to the specified administrative file,
 up to the next valid directive.  For instance:
 
-    %depend
-    P SUNWlibm
-    %copyright
-    Copyright 2006 Foomatic, Inc.
-    All rights reserved.
+ %depend
+ P SUNWlibm
+ %copyright
+ Copyright 2006 Foomatic, Inc.
+ All rights reserved.
 
 The lines after the C<%depend> directive will be made part of the package
 depend file, and the C<%copyright> lines will be made part of the package
 copyright.  Directives with and without scheme arguments can also be used
 multiple times in the same spec file:
 
-    %depend
-    P CSWcommon - base directory structure
-    %depend     exec find %{DESTDIR} -type f | depmaker
+ %depend
+ P CSWcommon - base directory structure
+ %depend     exec find %{DESTDIR} -type f | depmaker
 
 This will add the static depend, and also append any dynamic dependencies
 generated by the C<%depend> exec directive.
@@ -1107,10 +1139,10 @@ to set variables in the environment prior to calling mkpackage.  When
 replacing %{variables} found in spec files, the environment is consulted for a
 variable of the same name.  Consider the following spec file snippet:
 
-    %pkginfo url http://%{PACKAGE_SERVER}/admin/pkginfo.standard
-    %pkginfo
-    PSTAMP=%{LOGNAME}@%{HOSTNAME}-%{exec gdate -s '+%s'}
-    %prototype exec find %{SPKG_BASEDIR} -cnewer %{TIMESTAMP}
+ %pkginfo url http://%{PACKAGE_SERVER}/admin/pkginfo.standard
+ %pkginfo
+ PSTAMP=%{LOGNAME}@%{HOSTNAME}-%{exec gdate -s '+%s'}
+ %prototype exec find %{SPKG_BASEDIR} -cnewer %{TIMESTAMP}
 
 Standard variables such as C<$LOGNAME> and C<$HOSTNAME> would be replaced into
 the C<%{LOGNAME}> and C<%{HOSTNAME}> placeholders from the environment.
@@ -1177,6 +1209,11 @@ easy to avoid.
 
  Copyright 2006 Cory Omand <comand@blastwave.org>
  All rights reserved.  Use is subject to license terms.
+ 
+ Redistribution and/or use, with or without modification, is
+ permitted.  This software is without warranty of any kind.  The
+ author(s) shall not be liable in the event that use of the
+ software causes damage.
 
 =cut
 

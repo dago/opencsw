@@ -26,6 +26,10 @@ SPKG_CLASSES   ?= none
 SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 
 SPKG_EXPORT    ?= $(WORKDIR)
+SPKG_PKGROOT   ?= $(DESTDIR)
+SPKG_PKGBASE   ?= $(CURDIR)/$(WORKDIR)
+SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
+
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 PKGGET_DESTDIR ?=
@@ -85,6 +89,7 @@ package: install
 package-p:
 	@$(foreach COOKIEFILE,$(PACKAGE_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
+
 # Call mkpackage to transmogrify one or more gspecs into packages
 package-create:
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
@@ -92,9 +97,10 @@ package-create:
 			echo " ==> Processing $$spec" ; \
 			$(PKG_ENV) mkpackage --spec $$spec \
 								 --destdir $(SPKG_EXPORT) \
-								 --workdir $(CURDIR)/$(WORKDIR) \
-								 --compress \
-								 -v basedir=$(DESTDIR) || exit 2 ; \
+								 --workdir $(SPKG_WORKDIR) \
+								 --pkgbase $(SPKG_PKGBASE) \
+								 --pkgroot $(SPKG_PKGROOT) \
+								 --compress || exit 2 ; \
 		done ; \
 	else \
 		echo " ==> No specs defined for $(GARNAME)" ; \

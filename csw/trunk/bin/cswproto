@@ -14,11 +14,15 @@
 #
 
 use strict;
+use File::Basename;
+use File::Spec::Functions qw/catfile/;
 use Getopt::Long qw/:config no_ignore_case/;
+use POSIX;
+
 use vars qw/
-    $opt_h $opt_s %srcvars %cmpvars @XPATS @XFORMS @Common
-    $StdOwn $StdGrp $StdDirPerm
-/;
+    @XPATS @XFORMS @Common $StdOwn $StdGrp $StdDirPerm $stamp $root
+    /;
+
 # atime=8,mtime=9,ctime=10
 use constant TIME_FIELD => 10;
 
@@ -40,36 +44,21 @@ $StdDirPerm = '0755';
     qr{^/opt$},
     qr{^/opt/csw$},
     qr{perllocal\.pod},
-    qr{^/opt/csw/lib/perl/\d\.\d+\.\d$},
 );
 
 # Print usage information and exit
 sub usage {
-    print ($@, "\n") if $@;
+    print join(" ", @_) if @_;
 
-    die <<"_USAGE_";
-Usage: $0 [-h] [-s <timestamp>] [-v var=value] [-V var=value]
-       path1[=path1] ... pathN[=pathN]
+    my $program = basename $0;
+    print <<"_USAGE_";
+Usage: $program [-h] [-s <timestamp>] path1[=path1] ... pathN[=pathN]
 
     -s      Timestamp source.
             The path to a file to be used as the base timestamp for prototype
             operations.  If this is specified, all source file creation times
             are compared to the creation time of this file.  Files created
             *before* this time will be excluded from the prototype.
-
-    -v      Source replacement variable.
-            This is a name=value pair to be used for inserting replacement
-            variables into the prototype.  The -v flag will replace parts of
-            the source path only with variable names which can be supplied to
-            pkgmk at package creation time.  This option can be specified
-            multiple times.
-
-    -V      Replacement variable.
-            This is a name=value pair to be used for inserting replacement
-            variables into the prototype.  The -v flag will replace parts of
-            each prototype path with variable names which can be supplied to
-            pkgmk at package creation time.  This option can be specified
-            multiple times.
 
     -h      Display brief usage.
 
@@ -78,15 +67,9 @@ Usage: $0 [-h] [-s <timestamp>] [-v var=value] [-V var=value]
             be included in the prototype.  This can be specified as
             pathX=pathY to use a different prefix for files in the prototype
             than were present on the build system.
-
 _USAGE_
-}
 
-# Do variable replacements in a text string
-sub replace {
-    my ($rdata, $text) = @_;
-    return unless $rdata and (ref($rdata) eq 'HASH') and $text;
-    $$text =~ s/$rdata->{$_}/\$$_/g foreach (keys %$rdata);
+    exit 1;
 }
 
 # Check whether a path is a 'common' file, defined in __DATA__
@@ -98,6 +81,18 @@ sub is_common {
     return 0;
 }
 
+# Returns true if the file should be excluded, false otherwise.
+sub exclude {
+    my $path = shift;
+
+    return 1 unless $path;
+
+    die "Path $path is not readable by current user!\n" unless -r $path;
+
+    my $time = (stat($path))[TIME_FIELD];
+    return ($time >= $stamp) ? 0 : 1;
+}
+
 #
 # MAIN EXECUTION
 #
@@ -105,101 +100,114 @@ sub is_common {
 # Process command line arguments
 my $test;
 GetOptions(
-    'v=s%'    => \%srcvars,
-    'V=s%'    => \%cmpvars,
-    'stamp=s' => \$opt_s,
-    'help'    => \$opt_h,
+    'root=s'  => \$root,
+    'stamp=s' => \$stamp,
+    'help'    => \&usage,
 ) or usage;
 
-usage "error: timestamp not found\n" if $opt_s and ! -r $opt_s;
-usage "error: one or more pkgproto patterns required\n" unless @ARGV;
+usage "Error: timestamp '$stamp' not readable" if $stamp and not -r $stamp;
+usage "Error: one or more pkgproto patterns required" unless @ARGV;
 
-my $s_time = $opt_s ? (stat($opt_s))[TIME_FIELD] : 0;
+$stamp = $stamp ? (stat($stamp))[TIME_FIELD] : 0;
 
 # Load common path contents
 while (<DATA>) {
-    chomp; next if /^\s*$/;
-    push @Common, qr!$_!;
+    chomp; next if /^\s*$/ or /^#/;
+    push @Common, qr#$_$#;
 }
-
-# Create the prototype
-my $PPAT = join ' ' => @ARGV;
-open PROTO, "pkgproto $PPAT |"
-    or die "failed to open pipe to pkgproto: $!";
 
 my @prototype;
+
+foreach my $protopat (@ARGV) {
+    my ($actual, $virtual) = split /=/, $protopat;
+
+    my @pproto = `/usr/bin/pkgproto $protopat`;
+    die "Failed to generate prototype"
+        unless WIFEXITED($?) and WEXITSTATUS($?) == 0;
+
 SPECLINE:
-while (<PROTO>) {
-    do { print; next } if /^(?:i|!)/;
-    chomp; my @F = split;
+    foreach my $entry (@pproto) {
+        chomp $entry;
+        do { print $entry; next } if $entry =~ /^(?:i|\!)/;
 
-    # Only add this if it's newer than $s_time
-    if (index($F[2], '=') != -1) {
-        my ($f_dst, $f_src) = split /=/, $F[2], 2;
-        $f_src = $f_dst unless $f_src;
+        my @F = split /\s+/, $entry;
+        my ($lhs, $rhs) = split /=/, $F[2];
 
-        if (-r $f_src) {
-            my $f_time = (stat($f_src))[TIME_FIELD];
-            next unless $f_time >= $s_time;
+        # Find the real path
+        my $realpath;
+        if ($F[0] eq 's') {
+            $realpath = substr($lhs, 0, 1) ne '/'
+                ? catfile($actual, $lhs)
+                : $lhs;
+        }
+        else {
+            $F[2] = $lhs if $lhs and $rhs;
+            $realpath = $rhs
+                ? $rhs
+                : (substr($lhs, 0, 1) ne '/' ? catfile($actual, $lhs) : $lhs);
         }
 
-        if ($f_src ne $f_dst) {
-            replace(\%srcvars, \$f_src);
-            $F[2] = join '=', $f_dst, $f_src;
+        # Then do path transforms
+        foreach my $xform (@XFORMS)  { $F[2] =~ s/$xform->[0]/$xform->[1]/g }
+        $F[2] =~ s/$root// if $root;
+        next unless $F[2];
+
+        # Then process any excludes
+        foreach my $pattern (@XPATS) { next SPECLINE if $F[2] =~ $pattern   }
+
+        # And finally, write out the line properly if the path is part
+        # of the common set in DATA.  Also, fix up dir permissions/file
+        # ownership.
+        if (is_common($F[2])) {
+            $F[3] = $F[4] = $F[5] = '?';
         }
-    }
+        else {
+            next if exclude($realpath);
+            $F[3] = $StdDirPerm if $F[0] eq 'd';
+            ($F[4], $F[5]) = ( $StdOwn, $StdGrp );
+        }
 
-    # First process any excludes
-    foreach my $pattern (@XPATS) { next SPECLINE if $F[2] =~ $pattern   }
-
-    # Then do path transforms
-    foreach my $xform (@XFORMS)  { $F[2] =~ s/$xform->[0]/$xform->[1]/g }
-
-    # And finally, write out the line properly if the path is part
-    # of the common set in DATA.  Also, fix up dir permissions/file
-    # ownership.
-    if (is_common($F[2])) {
-        $F[3] = $F[4] = $F[5] = '?';
+        push @prototype, [ grep { defined $_ } @F ];
     }
-    else {
-        $F[3] = $StdDirPerm if $F[0] eq 'd';
-        ($F[4], $F[5]) = ( $StdOwn, $StdGrp );
-    }
-    push @prototype, [ grep { defined $_ } @F ];
 }
-close PROTO;
 
-# Do variable replacements, and 
-foreach my $item (sort { $a->[2] cmp $b->[2] } @prototype) {
-    my $line = join " " => @$item;
-    replace(\%cmpvars, \$line);
-    print $line;
-}
+print join " " => @$_ foreach (sort { $a->[2] cmp $b->[2] } @prototype);
 
 # Common directories (CSWcommon plus a few others)
 __DATA__
-/opt/csw/share/perl
-/opt/csw/share/perl/csw
-/opt/csw/share/perl/csw/auto
-/opt/csw/share/perl/site_perl
-/opt/csw/lib/perl
-/opt/csw/lib/perl/csw
-/opt/csw/lib/perl/csw/auto
-/opt/csw/lib/perl/site_perl
-/opt/csw/lib/pkgconfig
 /opt/csw
 /opt/csw/bin
+/opt/csw/bin/i386
 /opt/csw/bin/i486
 /opt/csw/bin/pentium
+/opt/csw/bin/pentium_pro
+/opt/csw/bin/pentium_pro\+mmx
+/opt/csw/bin/sparcv8
+/opt/csw/bin/sparcv8plus
+/opt/csw/bin/sparcv8plus\+vis
+/opt/csw/bin/sparcv9
 /opt/csw/doc
 /opt/csw/info
 /opt/csw/lib
 /opt/csw/lib/32
+/opt/csw/lib/64
 /opt/csw/lib/X11
 /opt/csw/lib/X11/app-defaults
 /opt/csw/lib/i386
 /opt/csw/lib/locale
 /opt/csw/lib/pentium
+/opt/csw/lib/pentium_pro
+/opt/csw/lib/pentium_pro\+mmx
+/opt/csw/lib/perl
+/opt/csw/lib/perl/csw
+/opt/csw/lib/perl/csw/auto
+/opt/csw/lib/perl/site_perl
+/opt/csw/lib/pkgconfig
+/opt/csw/lib/sparcv8
+/opt/csw/lib/sparcv8plus
+/opt/csw/lib/sparcv8plus\+vis
+/opt/csw/lib/sparcv9
+/opt/csw/lib/sparcv9\+vis2
 /opt/csw/man
 /opt/csw/sbin
 /opt/csw/share
@@ -323,4 +331,8 @@ __DATA__
 /opt/csw/share/locale/zh_TW/LC_MESSAGES
 /opt/csw/share/man
 /opt/csw/share/man/man\d
+/opt/csw/share/perl
+/opt/csw/share/perl/csw
+/opt/csw/share/perl/csw/auto
+/opt/csw/share/perl/site_perl
 /opt/csw/var
