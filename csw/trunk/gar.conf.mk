@@ -61,11 +61,10 @@ perllib ?= $(libdir)/perl
 perlcswlib ?= $(perllib)/csw
 perlpackroot ?= $(perlcswlib)/auto
 
-# the DESTDIR is used at INSTALL TIME ONLY to determine what the
-# filesystem root should be.  Each different DESTIMG has its own
-# DESTDIR.
-#TMPDIR  ?= /tmp
-DESTDIR ?= /tmp/csw-build.${LOGNAME}
+# DESTDIR is used at INSTALL TIME ONLY to determine what the
+# filesystem root should be.
+DESTROOT ?= /export/home/$(LOGNAME)
+DESTDIR  ?= $(DESTROOT)/csw-build.$(GAROSREL)-$(GARCH)
 
 BUILD_PREFIX ?= /opt/csw
 
