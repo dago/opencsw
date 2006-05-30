@@ -1,8 +1,8 @@
 d none /opt/csw/apache2 ? ? ?
 d none /opt/csw/apache2/libexec ? ? ?
-f none /opt/csw/apache2/libexec/mod_suexec.so=$basedir/opt/csw/apache2/libexec/mod_suexec.so 0755 root bin
+f none /opt/csw/apache2/libexec/mod_suexec.so 0755 root bin
 d none /opt/csw/apache2/man ? ? ?
 d none /opt/csw/apache2/man/man8 ? ? ?
-f none /opt/csw/apache2/man/man8/suexec.8=$basedir/opt/csw/apache2/man/man8/suexec.8 0644 root bin
+f none /opt/csw/apache2/man/man8/suexec.8 0644 root bin
 d none /opt/csw/apache2/sbin ? ? ?
-f none /opt/csw/apache2/sbin/suexec=$basedir/opt/csw/apache2/sbin/suexec 4755 root bin
+f none /opt/csw/apache2/sbin/suexec 4755 root bin

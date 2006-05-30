@@ -12,7 +12,6 @@ endef
 DISTFILES += $(call admfiles,CSWpmlogdispatch,depend prototype)
 
 DEPENDS += cpan/Module-Build
-DEPENDS += cpan/Test-More
 DEPENDS += cpan/Params-Validate
 
 CONFIGURE_ARGS = destdir=$(DESTDIR)

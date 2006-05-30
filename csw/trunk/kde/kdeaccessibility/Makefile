@@ -1,5 +1,4 @@
 GARNAME = kdeaccessibility
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Accessibility apps for KDE environment (gcc3)

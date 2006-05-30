@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 4.3.6
+GARVERSION = 4.4.2
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
@@ -15,7 +15,7 @@ define BLURB
   commercial PHP-based application packages are available.
 endef
 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+#DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 DEPENDS += server/apache2 server/mysql4
 

@@ -2,9 +2,6 @@ GARNAME = nmap
 GARVERSION = 3.50
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWbalance
-SPKG_BITNAME = balance
-
 DESCRIPTION = A network exploration tool and security/port scanner
 define BLURB
   Nmap is a utility for network exploration or security auditing. It supports
@@ -22,6 +19,8 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 # Compile against gtk+-2.0 (2.4.0)
 PATCHFILES = gtk20.diff
+
+DEPENDS += lib/gtk2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libpcre=included

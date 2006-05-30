@@ -1,9 +1,6 @@
 GARNAME = ethereal
-GARVERSION = 0.10.3
+GARVERSION = 0.99.0
 CATEGORIES = net
-
-SPKG_PKGNAME = CSWethereal
-SPKG_BITNAME = ethereal
 
 DESCRIPTION = A GUI network protocol analyzer.
 define BLURB
@@ -16,7 +13,8 @@ endef
 MASTER_SITES = http://www.ethereal.com/distribution/
 DISTFILES = $(DISTNAME).tar.bz2
 
-LIBDEPS += lib/libpcap
+DEPENDS += lib/libpcap
+DEPENDS += lib/gtk2
 
 INSTALL_ARGS = install_root=$(DESTDIR)$(prefix)
 

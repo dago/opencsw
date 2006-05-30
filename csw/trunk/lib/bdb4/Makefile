@@ -13,7 +13,7 @@ define BLURB
   (MSVC 4, 5 and 6).
 endef
 
-MASTER_SITES = http://www.sleepycat.com/update/snapshot/
+MASTER_SITES = ftp://ftp.sleepycat.com/releases/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWbdb4.gspec
 

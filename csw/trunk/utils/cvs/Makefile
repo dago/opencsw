@@ -1,5 +1,5 @@
 GARNAME = cvs
-GARVERSION = 1.12.5
+GARVERSION = 1.12.13
 CATEGORIES = utils
 
 DESCRIPTION = The Concurrent Versioning System.

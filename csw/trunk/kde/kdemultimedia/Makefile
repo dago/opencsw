@@ -1,5 +1,4 @@
 GARNAME = kdemultimedia
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Multimedia apps for KDE (gcc3)

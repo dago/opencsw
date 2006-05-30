@@ -1,5 +1,4 @@
 GARNAME = kdevelop
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = KDE Integrated Development Environment (gcc3)

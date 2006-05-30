@@ -16,7 +16,7 @@ endef
 # Unstable branch
 #MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
 
-DISTFILES += CSWpmextutpkgconf.gspec
+DISTFILES += $(call admfiles,CSWpmextutpkgconf,)
 
 include ../category.mk
 

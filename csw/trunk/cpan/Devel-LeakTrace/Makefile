@@ -10,7 +10,7 @@ define BLURB
   running program.
 endef
 
-DISTFILES += CSWpmdevleaktrace.gspec CSWpmdevleaktrace.depend
+DISTFILES += $(call admfiles,CSWpmdevleaktrace,depend)
 
 DEPENDS += lib/glib2
 DEPENDS += cpan/Module-Build

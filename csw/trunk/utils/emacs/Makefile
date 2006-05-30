@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATCHLEVEL).tar.gz
-DISTFILES += CSWemacs.gspec
+#DISTFILES += CSWemacs.gspec
 #DISTFILES += CSWemacsrt.gspec CSWemacs.gspec CSWxemacs.gspec
 #DISTFILES += CSWemacsrt.prototype CSWemacs.prototype CSWxemacs.prototype
 

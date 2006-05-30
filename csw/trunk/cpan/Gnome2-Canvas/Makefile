@@ -14,7 +14,7 @@ endef
 # Unstable branch
 #MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
 
-DISTFILES += CSWpmgnome2canvas.gspec CSWpmgnome2canvas.depend
+DISTFILES += $(call admfiles,CSWpmgnome2canvas,depend)
 
 DEPENDS += cpan/Gtk2
 

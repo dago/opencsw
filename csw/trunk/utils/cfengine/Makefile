@@ -1,5 +1,5 @@
 GARNAME = cfengine
-GARVERSION = 2.1.3
+GARVERSION = 2.1.20
 CATEGORIES = utils
 
 DESCRIPTION = A tool for administering Networks of Diverse Machines

@@ -16,15 +16,18 @@ endef
 #
 # #if (defined(__STDC__) && !defined(UNIXCPP)) || defined(ANSICPP)
 
-MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/gtk+/2.4/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = ftp://ftp.gtk.org/pub/gtk/v2.4/
+
+DISTFILES = gtk+-$(GARVERSION).tar.bz2
+WORKSRC = $(WORKDIR)/gtk+-$(GARVERSION)
 
 LIBDEPS += lib/atk
 LIBDEPS += lib/pango
 LIBDEPS += lib/xcursor
 LIBDEPS += xtra/hicolor-icon-theme
 
-CONFIGURE_ARGS = $(DIRPATHS) --enable-debug=yes
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-debug=yes
 
 TEST_TARGET = check
 

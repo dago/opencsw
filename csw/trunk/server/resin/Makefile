@@ -12,8 +12,8 @@ endef
 
 MASTER_SITES = http://www.caucho.com/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWresin.gspec
-DISTFILES += CSWap2modcaucho.gspec
+#DISTFILES += CSWresin.gspec
+#DISTFILES += CSWap2modcaucho.gspec
 
 #DEPENDS = server/apache2
 

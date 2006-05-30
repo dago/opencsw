@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES  = http://tmtm.org/downloads/mysql/ruby/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += CSWrbmysql.gspec #CSWrbmysql.depend CSWrbmysql.prototype
+DISTFILES += $(call admfiles,CSWrbmysql,)
 
 #DEPENDS += lang/ruby server/mysql4
 

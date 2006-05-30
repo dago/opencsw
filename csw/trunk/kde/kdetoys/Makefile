@@ -1,5 +1,4 @@
 GARNAME = kdetoys
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Fun apps for KDE (gcc3)

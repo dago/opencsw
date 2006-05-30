@@ -1,5 +1,5 @@
 GARNAME = gftp
-GARVERSION = 2.0.17
+GARVERSION = 2.0.18
 CATEGORIES = utils
 
 DESCRIPTION = A multithreaded ftp app for X.

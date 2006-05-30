@@ -12,7 +12,7 @@ define BLURB
   values.
 endef
 
-DISTFILES += CSWpmextutparsexs.gspec
+DISTFILES += $(call admfiles,CSWpmextutparsexs,prototype)
 
 BUILDDEPS += cpan/ExtUtils-CBuilder
 

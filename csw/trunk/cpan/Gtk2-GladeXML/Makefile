@@ -19,7 +19,7 @@ endef
 # Unstable branch
 #MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
 
-DISTFILES += CSWpmgtk2gladexml.gspec CSWpmgtk2gladexml.depend
+DISTFILES += $(call admfiles,CSWpmgtk2gladexml,depend)
 
 DEPENDS += cpan/Gtk2
 

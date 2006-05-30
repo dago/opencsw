@@ -1,5 +1,4 @@
 GARNAME = kdegraphics
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Graphic utilities for KDE (gcc3)

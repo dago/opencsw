@@ -1,5 +1,4 @@
 GARNAME = kdeadmin
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Administration utilities for KDE (gcc3)

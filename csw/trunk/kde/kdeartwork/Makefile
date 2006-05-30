@@ -1,5 +1,4 @@
 GARNAME = kdeartwork
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Additional artwork for KDE (gcc3)

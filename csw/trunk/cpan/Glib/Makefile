@@ -15,10 +15,11 @@ endef
 # Unstable branch
 #MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
 
-DISTFILES += CSWpmglib.gspec
+DISTFILES += $(call admfiles,CSWpmglib,)
 
-BUILDDEPS += lib/glib2
-BUILDDEPS += cpan/ExtUtils-Depends cpan/ExtUtils-PkgConfig
+DEPENDS += lib/glib2
+DEPENDS += cpan/ExtUtils-Depends
+DEPENDS += cpan/ExtUtils-PkgConfig
 
 include ../category.mk
 

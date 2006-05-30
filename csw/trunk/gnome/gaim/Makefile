@@ -1,5 +1,5 @@
 GARNAME = gaim
-GARVERSION = 0.75
+GARVERSION = 2.0.0beta3
 CATEGORIES = gnome
 
 DESCRIPTION = A GTK2-based instant messaging client.
@@ -11,7 +11,7 @@ define BLURB
 	affiliated with AOL TimeWarner, Microsoft, or Yahoo.
 endef
 
-MASTER_SITES = http://dl.sourceforge.net/gaim/
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 ifneq ($(BUILD_XDEPS),0)

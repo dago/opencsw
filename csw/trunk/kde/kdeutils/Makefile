@@ -1,5 +1,4 @@
 GARNAME = kdeutils
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Utilities for the KDE (gcc3)

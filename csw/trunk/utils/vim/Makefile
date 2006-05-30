@@ -1,5 +1,5 @@
 GARNAME = vim
-GARVERSION = 6.4
+GARVERSION = 7.0
 CATEGORIES = utils
 
 DESCRIPTION = Vi IMproved
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
-WORKSRC = $(WORKDIR)/$(GARNAME)64
+WORKSRC = $(WORKDIR)/$(GARNAME)70
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWvim.gspec CSWvim.prototype CSWvim.depend
-DISTFILES += CSWvimrt.gspec CSWvimrt.prototype
+DISTFILES += $(call admfiles,CSWvim,depend prototype)
+DISTFILES += $(call admfiles,CSWvimrt,prototype)
 
 #DEPENDS = utils/mktemp lib/ncurses
 
@@ -29,7 +29,8 @@ CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-cscope
 CONFIGURE_ARGS += --enable-gui=no
 CONFIGURE_ARGS += --disable-gpm
-CONFIGURE_ARGS += --enable-static --disable-shared
+CONFIGURE_ARGS += --enable-static
+CONFIGURE_ARGS += --disable-shared
 #CONFIGURE_ARGS += --enable-perlinterp
 CONFIGURE_ARGS += --enable-pythoninterp
 CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.3/config/
@@ -41,4 +42,5 @@ include ../category.mk
 
 # Avoid direct depends for perl/python
 LD_OPTIONS += -zlazyload
+export LD_OPTIONS
 

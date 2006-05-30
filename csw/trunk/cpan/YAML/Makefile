@@ -11,6 +11,7 @@ define BLURB
   structures of most modern programming languages. (Including Perl!!!)
 endef
 
-DISTFILES = $(call admfiles,CSWpmyaml,depend prototype)
+#DISTFILES = $(call admfiles,CSWpmyaml,depend prototype)
+DISTFILES = $(call admfiles,CSWpmyaml,depend)
 
 include ../category.mk

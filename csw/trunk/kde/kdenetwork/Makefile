@@ -1,5 +1,4 @@
 GARNAME = kdenetwork
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Networking apps for KDE (gcc3)

@@ -1,5 +1,4 @@
 GARNAME = kdegames
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Games for KDE (gcc3)

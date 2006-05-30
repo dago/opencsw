@@ -13,13 +13,13 @@ endef
 MASTER_SITES = http://www.xmms.org/files/1.2.x/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
-ifneq ($(BUILD_XDEPS),0)
-LIBDEPS = lib/libvorbis
-endif
+DEPENDS = lib/libvorbis
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-glib-prefix=/usr/sfw --with-gtk-prefix=/usr/sfw
-CONFIGURE_ARGS += --with-ogg=$(tool_prefix) --with-voris=$(tool_prefix)
+CONFIGURE_ARGS += --with-glib-prefix=/usr/sfw
+CONFIGURE_ARGS += --with-gtk-prefix=/usr/sfw
+CONFIGURE_ARGS += --with-ogg=$(prefix)
+CONFIGURE_ARGS += --with-vorbis=$(prefix)
 
 # No test suite
 ENABLE_TEST = 0

@@ -1,5 +1,4 @@
 GARNAME = kdelibs
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Base set of libraries needed by KDE programs (gcc3)

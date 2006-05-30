@@ -1,5 +1,4 @@
 GARNAME = kdepim
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Personal Information Management apps for KDE (gcc3)

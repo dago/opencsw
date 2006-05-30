@@ -9,7 +9,7 @@ define BLURB
   the Gtk2::TextView widget and uses Pod::Parser for manipulating POD data.
 endef
 
-DISTFILES += CSWpmgtk2podviewer.gspec CSWpmgtk2podviewer.depend
+DISTFILES += $(call admfiles,CSWpmgtk2podviewer,depend)
 
 DEPENDS += cpan/Gtk2
 

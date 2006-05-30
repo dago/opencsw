@@ -1,7 +1,7 @@
 b8c118d4360846829beb30b02a6b91a7  download/perl-5.8.8.tar.gz
 c942693e2f71d2cc4d9f6784926c29b3  download/CSWperl.gspec
-349e2571576f41755b83fd2bc0664642  download/CSWperl.prototype
 054fbaf3e55473f7ceab45e508648e58  download/CSWperl.depend
+9d1d8d15c0b888578ac2da7ef05e362f  download/CSWperl.prototype
 6aae367e04cb9eaf39a545e7ffb023e2  download/CSWperldoc.gspec
-76a21de9a45db2276d8f2c5da3da60c1  download/CSWperldoc.prototype
 a79e722dbbaee8fae1b8e658d4b57f3e  download/CSWperldoc.depend
+735bd4040da811cc6269b04d7fc3de11  download/CSWperldoc.prototype

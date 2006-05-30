@@ -2,9 +2,6 @@ GARNAME = freetype
 GARVERSION = 2.1.5
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWftype2
-SPKG_BITNAME = freetype2
-
 DESCRIPTION = A free and portable TrueType font rendering engine
 define BLURB
   FreeType 2 is a high-quality and portable font engine that is capable of

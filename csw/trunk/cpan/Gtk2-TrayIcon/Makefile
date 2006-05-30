@@ -12,7 +12,7 @@ endef
 # Unstable branch
 #MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
 
-DISTFILES += CSWpmgtk2trayicon.gspec CSWpmgtk2trayicon.depend
+DISTFILES += $(call admfiles,CSWpmgtk2trayicon,depend)
 
 DEPENDS += cpan/Gtk2
 

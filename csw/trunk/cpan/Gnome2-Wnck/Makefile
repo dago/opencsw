@@ -12,7 +12,7 @@ endef
 # Unstable Branch
 #MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
 
-DISTFILES += CSWpmgnome2wnck.gspec CSWpmgnome2wnck.depend
+DISTFILES += $(call admfiles,CSWpmgnome2wnck,depend)
 
 # Looks like the wrong function is ifdef'd out in
 # wnck versions < 2.

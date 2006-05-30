@@ -11,6 +11,6 @@ define BLURB
   unspecified additional parameters were passed in.
 endef
 
-DISTFILES += CSWpmprmsvldt.gspec
+DISTFILES += $(call admfiles,CSWpmprmsvldt,prototype)
 
 include ../category.mk

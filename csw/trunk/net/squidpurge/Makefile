@@ -31,7 +31,7 @@ include ../category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(docdir)/squidpurge $(DESTDIR)$(sbindir)
-	@ginstall -m 644 $(WORKSRC)/README     $(DESTDIR)$(docdir)/squidpurge
-	@ginstall -m 755 $(WORKSRC)/$(GARNAME) $(DESTDIR)$(sbindir)
+	@ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(docdir)/squidpurge
+	@ginstall -m 755 $(WORKSRC)/purge  $(DESTDIR)$(sbindir)/squidpurge
 	@$(MAKECOOKIE)
 

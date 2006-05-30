@@ -13,9 +13,10 @@ endef
 # Unstable branch
 #MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
 
-DISTFILES += CSWpmgnome2.gspec CSWpmgnome2.depend
+DISTFILES += $(call admfiles,CSWpmgnome2,depend)
 
-DEPENDS += cpan/Gnome2-VFS cpan/Gnome2-Canvas
+DEPENDS += cpan/Gnome2-VFS
+DEPENDS += cpan/Gnome2-Canvas
 
 # Tests require Gnome session manager
 ENABLE_TEST = 0

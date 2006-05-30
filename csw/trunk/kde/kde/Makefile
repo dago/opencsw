@@ -1,5 +1,4 @@
 GARNAME = kde
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = The K Desktop Environment (KDE) (gcc3)

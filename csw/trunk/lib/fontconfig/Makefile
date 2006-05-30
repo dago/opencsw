@@ -13,7 +13,7 @@ define BLURB
   font patterns and returns the nearest matching font.
 endef
 
-MASTER_SITES = http://freedesktop.org/~fontconfig/release/
+MASTER_SITES = http://www.fontconfig.org/release/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
 CONFIGURE_ARGS = $(DIRPATHS)

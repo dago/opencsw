@@ -2,15 +2,12 @@ GARNAME = tcp_wrappers
 GARVERSION = 7.6
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWtcpwrap
-SPKG_BITNAME = tcpwrappers
-
 DESCRIPTION = Socket Wrappers
 define BLURB
   Socket Wrappers is an improved version of tcp_wrappers by Wietse Venema.
 endef
 
-MASTER_SITES = http://www.web-insights.net/$(GARNAME)/
+MASTER_SITES = http://ftp.porcupine.org/pub/security/
 DISTNAME = $(GARNAME)_$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
 WORKSRC = $(WORKDIR)/$(DISTNAME)

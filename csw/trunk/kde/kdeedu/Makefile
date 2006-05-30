@@ -1,5 +1,4 @@
 GARNAME = kdeedu
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Collection of educational apps for KDE (gcc3)

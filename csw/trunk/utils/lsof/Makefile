@@ -1,5 +1,5 @@
 GARNAME = lsof
-GARVERSION = 4.71
+GARVERSION = 4.77
 CATEGORIES = utils
 
 DESCRIPTION = List open files
@@ -14,7 +14,7 @@ MASTER_SITES = ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/
 
 TOPDIST   = $(GARNAME)_$(GARVERSION)
 SRCDIST   = $(TOPDIST)_src
-DISTFILES = $(TOPDIST).tar.bz2
+#DISTFILES = $(TOPDIST).tar.bz2
 WORKSRC   = $(WORKDIR)/$(TOPDIST)/$(SRCDIST)
 
 CONFIGURE_SCRIPTS = custom

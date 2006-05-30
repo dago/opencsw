@@ -14,5 +14,6 @@ DISTFILES += $(call admfiles,CSWpmcgiapplogdisp,depend prototype)
 
 DEPENDS += cpan/Log-Dispatch
 DEPENDS += cpan/CGI-Application
+DEPENDS += cpan/UNIVERSAL-require
 
 include ../category.mk

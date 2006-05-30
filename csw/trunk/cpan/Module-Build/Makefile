@@ -11,9 +11,11 @@ define BLURB
   much more straightforward way than with MakeMaker.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodulebuild,)
+DISTFILES += $(call admfiles,CSWpmmodulebuild,depend prototype)
 
-DEPENDS += cpan/YAML cpan/ExtUtils-ParseXS cpan/Archive-Tar
+DEPENDS += cpan/YAML
+DEPENDS += cpan/ExtUtils-ParseXS
+DEPENDS += cpan/Archive-Tar
 
 CONFIGURE_ARGS = destdir=$(DESTDIR)
 

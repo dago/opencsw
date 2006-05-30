@@ -13,7 +13,7 @@ DISTFILES = $(GARNAME)-$(DISTVERSION).tar.gz
 WORKSRC = $(WORKDIR)/$(GARNAME)
 
 # Specs and pre-built prototypes
-DISTFILES += CSWesvn.gspec
+#DISTFILES += CSWesvn.gspec
 #DISTFILES += CSWesvn.gspec CSWesvn.prototype
 
 # Patch hard coded install paths

@@ -1,5 +1,4 @@
 GARNAME = kdesdk
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = Software Development Kit for KDE (gcc3)

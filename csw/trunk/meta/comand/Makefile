@@ -7,13 +7,16 @@ define BLURB
 	Put targets for autobuild into the 'toplevel' meta build
 endef
 
-DEPENDS += lang/php5
-DEPENDS += lang/php5-apache
-DEPENDS += cpan/mod_perl2
-DEPENDS += cpan/libapreq2
-DEPENDS += server/mod_python
-DEPENDS += utils/subversion
-DEPENDS += cpan/SVK
+DEPENDS += server/apache2
+#DEPENDS += server/apache2-worker
+#DEPENDS += lang/php5
+#DEPENDS += lang/php5-apache
+#DEPENDS += cpan/mod_perl2
+#DEPENDS += cpan/libapreq2
+#DEPENDS += server/mod_python
+#DEPENDS += server/mod_jk
+#DEPENDS += utils/subversion
+#DEPENDS += cpan/SVK
 
 include ../category.mk
 

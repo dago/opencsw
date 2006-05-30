@@ -1,5 +1,5 @@
 GARNAME = apache
-GARVERSION = 1.3.31
+GARVERSION = 1.3.36
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.

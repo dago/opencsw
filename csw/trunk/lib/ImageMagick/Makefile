@@ -1,6 +1,6 @@
 GARNAME = ImageMagick
-GARVERSION = 5.5.7
-GARSUBREV = 10
+GARVERSION = 6.2.7
+GARSUBREV = 8
 CATEGORIES = lib
 
 SPKG_PKGNAME = CSWimagick
@@ -8,13 +8,13 @@ SPKG_BITNAME = imagemagick
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
 define BLURB
-  ImageMagickTM 5.5.7 is a robust collection of tools and libraries offered
-  under a usage license to read, write, and manipulate an image in many image
-  formats (over 89 major formats) including popular formats like TIFF, JPEG,
-  PNG, PDF, PhotoCD, and GIF.
+  ImageMagick is a robust collection of tools and libraries offered under a
+  usage license to read, write, and manipulate an image in many image formats
+  (over 89 major formats) including popular formats like TIFF, JPEG, PNG, PDF,
+  PhotoCD, and GIF.
 endef
 
-MASTER_SITES = ftp://ftp.imagemagick.org/pub/$(GARNAME)/
+MASTER_SITES = ftp://ftp.fifi.org/pub/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION)-$(GARSUBREV).tar.bz2
 
 CONFIGURE_ARGS  = $(DIRPATHS)

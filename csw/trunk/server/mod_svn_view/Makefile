@@ -17,9 +17,9 @@ endef
 
 # SVN only at this time
 #MASTER_SITES = http://www.outoforder.cc/downloads/$(GARNAME)/
-MASTER_SITES = svn-http://svn.outoforder.cc/svn/$(GARNAME)/trunk/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWap2modsvnview.gspec
+#MASTER_SITES = svn-http://svn.outoforder.cc/svn/$(GARNAME)/trunk/
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#DISTFILES += $(call admfiles,CSWap2modsvnview,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs

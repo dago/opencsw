@@ -1,5 +1,4 @@
 GARNAME = quanta
-GARVERSION = 3.5.0
 CATEGORIES = kde
 
 DESCRIPTION = The KDE Web Development Tool (gcc3)

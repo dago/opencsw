@@ -1,5 +1,5 @@
-GARNAME = mysql4
-GARVERSION = 4.0.20
+GARNAME = mysql
+GARVERSION = 4.1.18
 CATEGORIES = server
 
 SPKG_PKGNAME = CSWmysql4
@@ -12,7 +12,7 @@ define BLURB
   client programs/libraries.
 endef
 
-MASTER_SITES = http://mysql.he.net/Downloads/MySQL-4.0/
+MASTER_SITES = http://mysql.he.net/Downloads/MySQL-4.1/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 DB_USER = mysqld

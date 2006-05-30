@@ -2,9 +2,6 @@ GARNAME = glib2
 GARVERSION = 2.4.0
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWglib2
-SPKG_BITNAME = glib2
-
 DESCRIPTION = The GLib library of C routines.
 define BLURB
   GLib is a library containing many useful C routines for things such as trees,
@@ -12,10 +9,13 @@ define BLURB
   has been split off as of the developers' version 1.1.0.
 endef
 
-MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/glib/2.4/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = ftp://ftp.gtk.org/pub/gtk/v2.4/
 
-CONFIGURE_ARGS = $(DIRPATHS) --enable-debug=yes
+DISTFILES = glib-$(GARVERSION).tar.bz2
+WORKSRC = $(WORKDIR)/glib-$(GARVERSION)
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-debug=yes
 
 TEST_TARGET = check
 

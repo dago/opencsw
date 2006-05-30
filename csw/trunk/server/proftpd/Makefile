@@ -1,5 +1,5 @@
 GARNAME = proftpd
-GARVERSION = 1.2.9
+GARVERSION = 1.3.0
 CATEGORIES = server
 
 SPKG_PKGNAME = CSWproftpd

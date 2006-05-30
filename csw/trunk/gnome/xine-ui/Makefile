@@ -1,5 +1,5 @@
 GARNAME = xine-ui
-GARVERSION = 0.9.23
+GARVERSION = 0.99.4
 CATEGORIES = gnome
 
 DESCRIPTION = Xine media player user interface.
@@ -7,7 +7,8 @@ define BLURB
     # Blurb goes here
 endef
 
-MASTER_SITES = http://aleron.dl.sourceforge.net/sourceforge/xine/
+SF_PROJ = xine
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
 LIBDEPS = lib/xine-lib
