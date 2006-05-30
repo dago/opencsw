@@ -18,4 +18,7 @@ DEPENDS += cpan/CGI-Application
 
 CONFIGURE_ARGS = destdir=$(DESTDIR)
 
+APACHE_TEST_HTTPD=$(prefix)/apache2/sbin/httpd
+export APACHE_TEST_HTTPD
+
 include ../category.mk
