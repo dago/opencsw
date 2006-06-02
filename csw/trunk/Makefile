@@ -35,4 +35,17 @@ cvsdesc:
 		printf "%-36s%s\n" sunx/$$package "$(call pkgdesc,$$package)" ; \
 	done
 
+GARDIR=$(CURDIR)
+include gar.mk
+
+pkgclean:
+	@if test -d "$(DESTDIR)" ; then \
+		echo " ==> Removing $(DESTDIR)" ; \
+		rm -rf $(DESTDIR) ; \
+	fi
+	@if test -d "$(SPKG_SPOOLDIR)" ; then \
+		echo " ==> Removing $(SPKG_SPOOLDIR)" ; \
+		rm -rf $(SPKG_SPOOLDIR) ; \
+	fi
+
 .PHONY: unbuilt
