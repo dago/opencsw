@@ -12,8 +12,8 @@
 -include $(HOME)/.garrc
 
 # Outbound proxies
-http_proxy = http://svn:8080
-ftp_proxy  = http://svn:8080
+http_proxy ?= http://svn:8080
+ftp_proxy  ?= http://svn:8080
 export http_proxy ftp_proxy
 
 # A directory containing cached files. It can be created
