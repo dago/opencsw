@@ -25,6 +25,7 @@ SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
 SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 
+SPKG_SPOOLDIR  ?= /export/medusa/$(LOGNAME)/csw-spool.$(GAROSREL)-$(GARCH)
 SPKG_EXPORT    ?= $(WORKDIR)
 SPKG_PKGROOT   ?= $(DESTDIR)
 SPKG_PKGBASE   ?= $(CURDIR)/$(WORKDIR)
@@ -93,13 +94,15 @@ package-p:
 # Call mkpackage to transmogrify one or more gspecs into packages
 package-create:
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+		ginstall -d $(SPKG_SPOOLDIR) ; \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			echo " ==> Processing $$spec" ; \
 			$(PKG_ENV) mkpackage --spec $$spec \
-								 --destdir $(SPKG_EXPORT) \
-								 --workdir $(SPKG_WORKDIR) \
-								 --pkgbase $(SPKG_PKGBASE) \
-								 --pkgroot $(SPKG_PKGROOT) \
+								 --spooldir $(SPKG_SPOOLDIR) \
+								 --destdir  $(SPKG_EXPORT) \
+								 --workdir  $(SPKG_WORKDIR) \
+								 --pkgbase  $(SPKG_PKGBASE) \
+								 --pkgroot  $(SPKG_PKGROOT) \
 								 --compress || exit 2 ; \
 		done ; \
 	else \
