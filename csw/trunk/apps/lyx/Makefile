@@ -16,9 +16,11 @@ MASTER_SITES = ftp://ftp.lyx.org/pub/lyx/stable/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlyx,depend prototype postinstall)
 
+LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
+
 #CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS = LD_OPTIONS='-R/opt/csw/kde-gcc/lib -R/opt/csw/lib/$ISALIST -R/opt/csw/lib' 
-CONFIGURE_ARGS += PATH="/opt/csw/kde-gcc/bin:$$PATH"
+#CONFIGURE_ARGS = LD_OPTIONS='-R/opt/csw/kde-gcc/lib -R/opt/csw/lib/$ISALIST -R/opt/csw/lib' 
+CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
 CONFIGURE_ARGS += LIBS=-laspell LDFLAGS=-laspell
 CONFIGURE_ARGS += QTDIR=/opt/csw/kde-gcc
 CONFIGURE_ARGS += CC=/opt/csw/gcc3/bin/gcc
