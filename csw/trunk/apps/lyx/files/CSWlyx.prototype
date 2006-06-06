@@ -87,6 +87,7 @@ d none /opt/csw/kde-gcc/share/lyx/clipart 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/clipart/platypus.eps 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/configure 0755 root bin
 d none /opt/csw/kde-gcc/share/lyx/doc 0755 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/README.CSW 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Customization.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/DocStyle.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Extended.lyx 0644 root bin
