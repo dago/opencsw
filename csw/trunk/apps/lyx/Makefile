@@ -1,9 +1,6 @@
 GARNAME = lyx
 GARVERSION = 1.4.1
 CATEGORIES = applications
-SPKG_PACKAGER   = Markus Mayer
-SPKG_EMAIL      = mmayer@blastwave.org
-
 
 DESCRIPTION = WYSIWYM document processor
 define BLURB
@@ -18,8 +15,6 @@ DISTFILES += $(call admfiles,CSWlyx,depend prototype postinstall)
 
 LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-#CONFIGURE_ARGS = $(DIRPATHS)
-#CONFIGURE_ARGS = LD_OPTIONS='-R/opt/csw/kde-gcc/lib -R/opt/csw/lib/$ISALIST -R/opt/csw/lib' 
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
 CONFIGURE_ARGS += LIBS=-laspell LDFLAGS=-laspell
 CONFIGURE_ARGS += QTDIR=/opt/csw/kde-gcc
@@ -34,8 +29,16 @@ CONFIGURE_ARGS += --with-frontend=qt --enable-compression-support
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw
 CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
 
-
 # lyx doesn't have a test target
 TEST_TARGET =
 
 include ../category.mk
+
+BINFILES = $(DESTDIR)$(prefix)/kde-gcc/bin/lyx
+BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/lyxclient
+BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/tex2lyx
+
+post-install:
+	cp -p download/README.CSW $(DESTDIR)$(prefix)/kde-gcc/share/lyx/doc
+	/usr/ccs/bin/strip $(BINFILES)
+	/usr/ccs/bin/mcs -d $(BINFILES)
