@@ -39,6 +39,6 @@ BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/lyxclient
 BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/tex2lyx
 
 post-install:
-	cp -p download/README.CSW $(DESTDIR)$(prefix)/kde-gcc/share/lyx/doc
+	cp -p files/README.CSW $(DESTDIR)$(prefix)/kde-gcc/share/lyx/doc
 	/usr/ccs/bin/strip $(BINFILES)
 	/usr/ccs/bin/mcs -d $(BINFILES)
