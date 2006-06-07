@@ -1,0 +1,3 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmcryptcbc pm_cryptcbc - cryptographically secure, true random number generator.

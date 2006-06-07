@@ -1,0 +1,19 @@
+GARNAME = Class-Loader
+GARVERSION = 2.03
+CATEGORIES = cpan
+AUTHOR = VIPUL
+
+DESCRIPTION = load modules and create objects on demand.
+define BLURB
+  Certain applications like to defer the decision to use a particular module
+  till runtime. This is possible in perl, and is a useful trick in situations
+  where the type of data is not known at compile time and the application
+  doesn't wish to pre-compile modules to handle all types of data it can work
+  with. Loading modules at runtime can also provide flexible interfaces for
+  perl modules. Modules can let the programmer decide what modules will be
+  used by it instead of hard-coding their names.
+endef
+
+DISTFILES = $(call admfiles,CSWpmclassloader,depend prototype)
+
+include ../category.mk

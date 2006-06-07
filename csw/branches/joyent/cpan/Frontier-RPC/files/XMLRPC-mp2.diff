@@ -1,0 +1,81 @@
+diff --speed-large-files --minimal -Nru Frontier-RPC-0.07b4.orig/lib/Apache/XMLRPC.pm Frontier-RPC-0.07b4/lib/Apache/XMLRPC.pm
+--- Frontier-RPC-0.07b4.orig/lib/Apache/XMLRPC.pm	2006-03-22 16:35:09.410381000 -0500
++++ Frontier-RPC-0.07b4/lib/Apache/XMLRPC.pm	2006-03-22 16:35:01.135782000 -0500
+@@ -10,33 +10,60 @@
+ 
+ package Apache::XMLRPC;
+ 
+-use Apache::Constants qw(:common);
++use strict;
++use warnings;
++
+ use Frontier::RPC2;
++use constant MP2 =>
++  ( exists $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 );
++
++BEGIN {
++    if (MP2) {
++        require Apache2::ServerUtil;
++        require Apache2::Const;
++        Apache2::Const->import( -compile => 'OK' );
++    }
++    else {
++        require Apache::Constants;
++        Apache::Constants->import('OK');
++    }
++}
+ 
+ sub handler {
+-   my $r = shift;
++    my $r = shift;
+ 
+-   my $conf = $r->server_root_relative( $r->dir_config( "XMLRPC_Config" ) );
++    my $path = $r->dir_config( "XMLRPC_Config" );
++    my $conf = MP2
++        ? Apache2::ServerUtil::server_root_relative( $r->pool, $path )
++        : $r->server_root_relative( $path );
+ 
+-   if( -f $conf ) {
+-      unless( $rt = do $conf ) {
+-         die "Couldn\'t parse conf file ($conf): $@\n"   if $@;
+-         die "Couldn\'t compile conf file ($conf): $!\n" unless defined $rt;
+-         die "Couldn\'t run conf file ($conf)\n"         unless $rt;
+-      }
+-   }
++    if ( -f $conf ) {
++        unless ( my $rt = do $conf ) {
++            die "Couldn\'t parse conf file ($conf): $@\n" if $@;
++            die "Couldn\'t compile conf file ($conf): $!\n" unless defined $rt;
++            die "Couldn\'t run conf file ($conf)\n"         unless $rt;
++        }
++    }
+ 
+-   my $decoder = Frontier::RPC2->new();
++    my $decoder = Frontier::RPC2->new();
+ 
+-   my $content;
+-   $r->read( $content, $r->header_in( 'Content-length' ) );
++    my $clength = MP2
++        ? $r->headers_in->{'Content-length'}
++        : $r->header_in('Content-length');
+ 
+-   my $answer = $decoder->serve( $content, $Apache::XMLRPC::map );
++    if (defined $clength and $clength >= 0) {
++        my ($content, $answer);
+ 
+-   $r->send_http_header();
+-   $r->print($answer);
++        $r->read( $content, $clength );
+ 
+-   return OK;
++        no warnings 'once'; # Prevent warnings on XMLRPC::map
++        $answer = $decoder->serve( $content, $Apache::XMLRPC::map );
++
++        $r->send_http_header() unless MP2;
++        $r->print( $answer );
++    }
++
++    return MP2 ? Apache2::Const::OK() : Apache::Constants::OK();
+ }
+ 
+ 1;

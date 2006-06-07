@@ -1,0 +1,12 @@
+diff -ur native.orig/apache-2.0/Makefile.in native/apache-2.0/Makefile.in
+--- native.orig/apache-2.0/Makefile.in	2006-01-25 01:23:39.060773000 -0500
++++ native/apache-2.0/Makefile.in	2006-01-25 01:24:07.185369000 -0500
+@@ -71,7 +71,7 @@
+ install_dynamic:
+ 	@echo ""
+ 	@echo "Installing files to Apache Modules Directory..."
+-	$(APXS) -i mod_jk.la
++	$(APXS) -S LIBEXECDIR=${DESTDIR}${APACHE_DIR}/libexec -i mod_jk.la
+ 	@echo ""
+ 	@echo "Please be sure to arrange ${APACHE_DIR}/conf/httpd.conf..."
+ 	@echo ""

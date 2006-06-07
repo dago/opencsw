@@ -1,0 +1,31 @@
+diff --speed-large-files --minimal -Nru libapreq2-2.07.orig/glue/perl/lib/Apache2/Cookie.pm libapreq2-2.07/glue/perl/lib/Apache2/Cookie.pm
+--- libapreq2-2.07.orig/glue/perl/lib/Apache2/Cookie.pm	2006-03-30 15:38:22.190911000 -0500
++++ libapreq2-2.07/glue/perl/lib/Apache2/Cookie.pm	2006-03-30 15:36:32.507324000 -0500
+@@ -13,6 +13,10 @@
+ 
+ sub new {
+     my ($class, $r, %attrs) = @_;
++    die "argument is not an Apache2::RequestRec object"
++        unless ref($r)
++        and UNIVERSAL::isa($r, 'Apache2::RequestRec');
++
+     my ($name)  = grep {defined} delete $attrs{name} , delete $attrs{-name};
+     my ($value) = grep {defined} delete $attrs{value}, delete $attrs{-value};
+     return unless defined $name and defined $value;
+diff --speed-large-files --minimal -Nru libapreq2-2.07.orig/glue/perl/lib/Apache2/Request.pm libapreq2-2.07/glue/perl/lib/Apache2/Request.pm
+--- libapreq2-2.07.orig/glue/perl/lib/Apache2/Request.pm	2006-03-30 15:38:22.225054000 -0500
++++ libapreq2-2.07/glue/perl/lib/Apache2/Request.pm	2006-03-30 15:37:03.251079000 -0500
+@@ -12,7 +12,12 @@
+ 
+ sub new {
+     my $class = shift;
+-    my $req = $class->APR::Request::Apache2::handle(shift);
++    my $r = shift;
++    die "argument is not an Apache2::RequestRec object"
++        unless ref($r)
++        and UNIVERSAL::isa($r, 'Apache2::RequestRec');
++
++    my $req = $class->APR::Request::Apache2::handle($r);
+     my %attrs = @_;
+ 
+     while (my ($k, $v) = each %attrs) {

@@ -1,0 +1,21 @@
+Only in work/main.d/DBIx-Password-1.8: .cache
+diff -ur tmp/DBIx-Password-1.8/Makefile.PL work/main.d/DBIx-Password-1.8/Makefile.PL
+--- tmp/DBIx-Password-1.8/Makefile.PL	2002-01-10 11:04:35.000000000 -0800
++++ work/main.d/DBIx-Password-1.8/Makefile.PL	2003-06-20 16:39:58.816688000 -0700
+@@ -8,14 +8,14 @@
+ my $dumped;
+ 
+ if (-e '.cache') {
+-	print "Oh, I can see that you have run me before, should I reuse these?(y or n)\n";
+-	my $answer  = getLine();
+-	if($answer eq 'y') {
++#	print "Oh, I can see that you have run me before, should I reuse these?(y or n)\n";
++#	my $answer  = getLine();
++#	if($answer eq 'y') {
+ 		open(FILEHANDLE, "<.cache");
+ 		my @file = <FILEHANDLE>;
+ 		$dumped = join ('', @file);
+ 		goto JUMPOINT;
+-	}
++#	}
+ }

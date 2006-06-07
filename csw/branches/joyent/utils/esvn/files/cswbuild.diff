@@ -1,0 +1,68 @@
+diff --speed-large-files --minimal -Nru esvn.orig/Makefile esvn/Makefile
+--- esvn.orig/Makefile	2005-01-19 21:16:19.281619000 -0500
++++ esvn/Makefile	2005-01-19 21:14:41.662829000 -0500
+@@ -16,14 +16,14 @@
+ install:
+ 	make -f esvn.mak install
+ 	make -f esvn-diff-wrapper.mak install
+-	mkdir -p /usr/share/doc/esvn
+-	cp -f -r html-docs /usr/share/doc/esvn
++	mkdir -p /opt/csw/share/doc/esvn
++	cp -f -r html-docs /opt/csw/share/doc/esvn
+ 
+ #cp -f esvn.pdf /usr/share/doc/esvn
+ 
+ install-doc:	
+-	mkdir -p /usr/share/doc/esvn
+-	cp -f -r html-docs /usr/share/doc/esvn
++	mkdir -p /opt/csw/share/doc/esvn
++	cp -f -r html-docs /opt/csw/share/doc/esvn
+ 
+ #cp -f esvn.pdf /usr/share/doc/esvn
+ 
+diff --speed-large-files --minimal -Nru esvn.orig/esvn-diff-wrapper.pro esvn/esvn-diff-wrapper.pro
+--- esvn.orig/esvn-diff-wrapper.pro	2005-01-19 21:16:18.911185000 -0500
++++ esvn/esvn-diff-wrapper.pro	2005-01-19 21:13:23.703298000 -0500
+@@ -177,7 +177,7 @@
+ 
+ MAKEFILE = esvn-diff-wrapper.mak
+ target.files = esvn-diff-wrapper
+-target.path = /usr/bin 
++target.path = /opt/csw/bin 
+ INSTALLS += target 
+ unix{
+   UI_DIR = .ui
+diff --speed-large-files --minimal -Nru esvn.orig/esvn.pro esvn/esvn.pro
+--- esvn.orig/esvn.pro	2005-01-19 21:16:19.221874000 -0500
++++ esvn/esvn.pro	2005-01-19 21:12:59.025221000 -0500
+@@ -252,15 +252,15 @@
+   MAKEFILE = esvn.mak
+   VER=$$system(cat VERSION)
+ 
+-  target.path  = /usr/bin
++  target.path  = /opt/csw/bin
+   tarhet.files = esvn
+   INSTALLS += target
+ 
+-  icons.path = /usr/share/pixmaps
++  icons.path = /opt/csw/share/pixmaps
+   icons.files = images/esvn.png
+   INSTALLS += icons
+ 
+-  desktop.path = /usr/share/applications
++  desktop.path = /opt/csw/share/applications
+   desktop.files = eSvn.desktop
+   INSTALLS += desktop
+ 
+diff --speed-large-files --minimal -Nru esvn.orig/src/mainwindow.cpp esvn/src/mainwindow.cpp
+--- esvn.orig/src/mainwindow.cpp	2005-01-19 21:15:33.717179000 -0500
++++ esvn/src/mainwindow.cpp	2005-01-19 21:13:54.974482000 -0500
+@@ -61,7 +61,7 @@
+ 	dlg_startup_ 	= new dlg_startup(this);
+ 	dlg_help_		= new dlg_help(this);
+ 
+-	dlg_help_->tx_help->mimeSourceFactory()->addFilePath("/usr/share/doc/esvn/html-docs");
++	dlg_help_->tx_help->mimeSourceFactory()->addFilePath("/opt/csw/share/doc/esvn/html-docs");
+ 
+ 	dlg_verupdate_	= new dlg_verupdate(this);
+ 	dlg_verupdate_->lb_stable_url->hide();

@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru flex-2.5.31.orig/filter.c flex-2.5.31/filter.c
+--- flex-2.5.31.orig/filter.c	2005-04-05 11:30:08.630015000 -0700
++++ flex-2.5.31/filter.c	2005-04-05 11:30:00.510011000 -0700
+@@ -158,9 +158,9 @@
+ 			int     r;
+ 
+ 			/* setup streams again */
+-			if ((stdin = fdopen (0, "r")) == NULL)
++			if (fdopen (0, "r") == NULL)
+ 				flexfatal (_("fdopen(0) failed"));
+-			if ((stdout = fdopen (1, "w")) == NULL)
++			if (fdopen (1, "w") == NULL)
+ 				flexfatal (_("fdopen(1) failed"));
+ 
+ 			if ((r = chain->filter_func (chain)) == -1)
+@@ -181,7 +181,7 @@
+ 	if (dup2 (pipes[1], 1) == -1)
+ 		flexfatal (_("dup2(pipes[1],1)"));
+ 	close (pipes[1]);
+-	if ((stdout = fdopen (1, "w")) == NULL)
++	if (fdopen (1, "w") == NULL)
+ 		flexfatal (_("fdopen(1) failed"));
+ 
+ 	return true;

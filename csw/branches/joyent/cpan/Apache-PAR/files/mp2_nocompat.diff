@@ -1,0 +1,58 @@
+diff --speed-large-files --minimal -Nru Apache-PAR-0.30.orig/t/conf/extra.conf.in Apache-PAR-0.30/t/conf/extra.conf.in
+--- Apache-PAR-0.30.orig/t/conf/extra.conf.in	2003-08-14 20:51:56.000000000 -0700
++++ Apache-PAR-0.30/t/conf/extra.conf.in	2004-01-14 13:32:28.793901000 -0800
+@@ -14,7 +14,7 @@
+ <Location /test/registryroot>
+ Options +ExecCGI
+ SetHandler perl-script
+-PerlHandler Apache::PAR::Registry
++PerlResponseHandler Apache::PAR::Registry
+ PerlSetVar PARRegistryPath /
+ </Location>
+ 
+@@ -22,32 +22,32 @@
+ <Location /test/registry2>
+ Options +ExecCGI
+ SetHandler perl-script
+-PerlHandler Apache::PAR::Registry
++PerlResponseHandler Apache::PAR::Registry
+ PerlSetVar PARRegistryPath scripts2/
+ </Location>
+ 
+ Alias /test/perlrunroot/ @ServerRoot@/par/perlrun.par/
+ <Location /test/perlrunroot>
+ Options +ExecCGI
+-PerlSendHeader on
++PerlOptions +ParseHeaders
+ SetHandler perl-script
+-PerlHandler Apache::PAR::PerlRun
++PerlResponseHandler Apache::PAR::PerlRun
+ PerlSetVar PARPerlRunPath /
+ </Location>
+ 
+ Alias /test/perlrun2/ @ServerRoot@/par/perlrun.par/
+ <Location /test/perlrun2>
+ Options +ExecCGI
+-PerlSendHeader on
++PerlOptions +ParseHeaders
+ SetHandler perl-script
+-PerlHandler Apache::PAR::PerlRun
++PerlResponseHandler Apache::PAR::PerlRun
+ PerlSetVar PARPerlRunPath scripts2/
+ </Location>
+ 
+ Alias /test/static2/ @ServerRoot@/par/static.par/
+ <Location /test/static2>
+ SetHandler perl-script
+-PerlHandler Apache::PAR::Static
++PerlResponseHandler Apache::PAR::Static
+ PerlSetVar PARStaticFilesPath /
+ </Location>
+ 
+@@ -76,4 +76,4 @@
+ #</PERL>
+ 
+ #PerlModule Apache::PAR
+-PerlInitHandler Apache::PAR
+\ No newline at end of file
++PerlInitHandler Apache::PAR

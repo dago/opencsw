@@ -1,0 +1,52 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_EXTRADIR=$AP2_CONFDIR/extra
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+
+# Enable the perl module
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+chroot $PKG_INSTALL_ROOT \
+    $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n perl mod_perl.so
+
+# Configure mod_perl in httpd.conf
+if [ -n "`egrep 'IfModule (mod_perl|perl_module)' $AP2_CONFIG`" ]
+then
+    echo "Existing mod_perl configuration detected"
+elif [ -n "`egrep '#Include etc/extra/httpd-perl.conf' $AP2_CONFIG`" ]; then
+    echo "Re-enabling existing config"
+    perl -i -plne 's,^#(Include etc/extra/httpd-perl.conf),$1,' $AP2_CONFIG
+else
+    echo "Adding Include for extra/http-perl.conf to httpd.conf"
+    cat << END >> $AP2_CONFIG
+
+Include etc/extra/httpd-perl.conf
+END
+fi
+
+# Copy templates
+for file in $AP2_CONFDIR/startup.pl $AP2_EXTRADIR/httpd-perl.conf
+do
+    if [ ! -f "$file" ]; then
+        echo "Creating $file"
+        cp $file.CSW $file
+    else
+        echo "Preserving existing $file"
+    fi
+done
+chmod 555 $AP2_CONFDIR/startup.pl
+
+# Finito
+cat <<END
+
+NOTICE: mod_perl is enabled in httpd.conf but the server was not restarted.
+Please examine your mod_perl configuration and restart apache.  Standard
+modules are pre-loaded in the startup.pl script.
+
+END
+
+exit 0

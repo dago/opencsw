@@ -1,0 +1,29 @@
+GARNAME = gdbm
+GARVERSION = 1.8.3
+CATEGORIES = lib
+
+SPKG_PKGNAME = CSWgdbm
+SPKG_BITNAME = gdbm
+
+DESCRIPTION = GNU database library for C
+define BLURB
+  gdbm is a database indexing library replacement for the traditional
+  'dbm' and 'ndbm' libraries. gdm is useful for those who need to write
+  C applications and need access to a simple and efficient database.
+endef
+
+MASTER_SITES = $(GNU_MIRROR)
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+
+# Makefile install permissions patch
+PATCHFILES = perms.diff
+
+# gdbm package has no test suite
+ENABLE_TEST = 0
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+INSTALL_ROOT = $(DESTDIR)
+export INSTALL_ROOT
+
+include ../category.mk

@@ -1,0 +1,3 @@
+%cvar           arch %{GARCH}
+%var            desc %{SPKG_DESC}
+%var            pkgfile %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-CSW.pkg

@@ -1,0 +1,4 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWruby ruby - An object-oriented language for quick and easy programming.
+P CSWtcl tcl - Tool Command Language
+P CSWtk tk - GUI toolkit for tcl

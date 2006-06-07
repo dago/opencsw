@@ -1,0 +1,17 @@
+diff --speed-large-files --minimal -Nru MySQL-python-1.0.0.orig/setup.py MySQL-python-1.0.0/setup.py
+--- MySQL-python-1.0.0.orig/setup.py	2004-11-03 14:07:54.491727000 -0500
++++ MySQL-python-1.0.0/setup.py	2004-11-03 14:07:44.527983000 -0500
+@@ -61,8 +61,11 @@
+     include_dirs = ['%s/include/mysql' % LOCALBASE]
+     library_dirs = ['%s/lib/mysql' % LOCALBASE]
+ elif sys.platform == "sunos5": # Solaris 2.8 + gcc
+-    runtime_library_dirs.append('/usr/local/lib:/usr/openwin/lib:/usr/dt/lib') 
+-    extra_compile_args.append("-fPIC")
++    runtime_library_dirs.append('/opt/csw/mysql4/lib/mysql:/opt/csw/lib')
++    library_dirs = ['/opt/csw/mysql4/lib/mysql', '/opt/csw/lib']
++    include_dirs = ['/opt/csw/mysql4/include/mysql', '/opt/csw/include']
++    CC_OPTIMIZE = os.environ.get('CC_OPTIMIZE', '');
++    extra_compile_args = ['%s -KPIC -mt' % CC_OPTIMIZE]
+ elif sys.platform == "win32": # Ugh
+     include_dirs = [r'c:\mysql\include']
+     library_dirs = [r'c:\mysql\lib\opt']

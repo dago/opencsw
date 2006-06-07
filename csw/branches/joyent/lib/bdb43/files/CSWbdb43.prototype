@@ -1,0 +1,45 @@
+d none /opt/csw/bdb43 0755 root bin
+d none /opt/csw/bdb43/bin 0755 root bin
+f none /opt/csw/bdb43/bin/berkeley_db_svc 0555 root bin
+f none /opt/csw/bdb43/bin/db_archive 0555 root bin
+f none /opt/csw/bdb43/bin/db_checkpoint 0555 root bin
+f none /opt/csw/bdb43/bin/db_deadlock 0555 root bin
+f none /opt/csw/bdb43/bin/db_dump 0555 root bin
+f none /opt/csw/bdb43/bin/db_load 0555 root bin
+f none /opt/csw/bdb43/bin/db_printlog 0555 root bin
+f none /opt/csw/bdb43/bin/db_recover 0555 root bin
+f none /opt/csw/bdb43/bin/db_stat 0555 root bin
+f none /opt/csw/bdb43/bin/db_upgrade 0555 root bin
+f none /opt/csw/bdb43/bin/db_verify 0555 root bin
+d none /opt/csw/bdb43/docs 0755 root bin
+d none /opt/csw/bdb43/docs/sleepycat 0755 root bin
+f none /opt/csw/bdb43/docs/sleepycat/legal.html 0444 root bin
+f none /opt/csw/bdb43/docs/sleepycat/license.html 0444 root bin
+d none /opt/csw/bdb43/docs/utility 0755 root bin
+f none /opt/csw/bdb43/docs/utility/berkeley_db_svc.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_archive.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_checkpoint.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_deadlock.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_dump.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_load.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_printlog.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_recover.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_stat.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_upgrade.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/db_verify.html 0444 root bin
+f none /opt/csw/bdb43/docs/utility/index.html 0444 root bin
+d none /opt/csw/bdb43/lib 0755 root bin
+f none /opt/csw/bdb43/lib/db.jar 0444 root bin
+f none /opt/csw/bdb43/lib/libdb-4.3.so 0755 root bin
+s none /opt/csw/bdb43/lib/libdb-4.so=libdb-4.3.so root bin
+s none /opt/csw/bdb43/lib/libdb.so=libdb-4.3.so root bin
+f none /opt/csw/bdb43/lib/libdb_cxx-4.3.so 0755 root bin
+s none /opt/csw/bdb43/lib/libdb_cxx-4.so=libdb_cxx-4.3.so root bin
+s none /opt/csw/bdb43/lib/libdb_cxx.so=libdb_cxx-4.3.so root bin
+f none /opt/csw/bdb43/lib/libdb_java-4.3.so 0755 root bin
+s none /opt/csw/bdb43/lib/libdb_java-4.3_g.so=libdb_java-4.3.so root bin
+s none /opt/csw/bdb43/lib/libdb_java-4.so=libdb_java-4.3.so root bin
+s none /opt/csw/bdb43/lib/libdb_java.so=libdb_java-4.3.so root bin
+f none /opt/csw/bdb43/lib/libdb_tcl-4.3.so 0755 root bin
+s none /opt/csw/bdb43/lib/libdb_tcl-4.so=libdb_tcl-4.3.so root bin
+s none /opt/csw/bdb43/lib/libdb_tcl.so=libdb_tcl-4.3.so root bin
