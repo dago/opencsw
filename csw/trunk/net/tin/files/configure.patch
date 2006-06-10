@@ -1,0 +1,8 @@
+--- tin-1.8.2.orig/configure	2006-06-07 18:30:19.764885000 -0700
++++ tin-1.8.2/configure	2006-06-08 20:21:32.160150000 -0700
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/ksh
+ 
+ # Guess values for system-dependent variables and create Makefiles.
+ # Generated automatically using autoconf version 2.13.20030927 
