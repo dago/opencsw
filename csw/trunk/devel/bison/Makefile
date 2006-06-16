@@ -23,5 +23,7 @@ TEST_TARGET = check
 include ../category.mk
 
 post-install:
-	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/bison
-	/usr/ccs/bin/mcs -d $(DESTDIR)$(prefix)/bin/bison
+	(cd $(DESTDIR)$(prefix)/bin; \
+	/usr/ccs/bin/strip bison; \
+	/usr/ccs/bin/mcs -d bison; \
+	mv yacc gyacc)
