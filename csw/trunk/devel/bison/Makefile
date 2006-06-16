@@ -1,5 +1,5 @@
 GARNAME = bison
-GARVERSION = 1.875
+GARVERSION = 2.3
 CATEGORIES = devel
 
 SPKG_PKGNAME = CSWbison
@@ -12,11 +12,16 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWbison,depend prototype)
 
+TAR_ARGS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include ../category.mk
 
+post-install:
+	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/bison
+	/usr/ccs/bin/mcs -d $(DESTDIR)$(prefix)/bin/bison
