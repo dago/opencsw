@@ -114,7 +114,7 @@ $(GARCHIVEDIR)/%: $(GARCHIVEDIR)
 
 #################### EXTRACT RULES ####################
 
-TAR_ARGS = --no-same-owner -m
+TAR_ARGS = --no-same-owner
 
 # rule to extract uncompressed tarballs
 tar-extract-%:
