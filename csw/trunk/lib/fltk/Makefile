@@ -14,6 +14,9 @@ DISTFILES += $(call admfiles,CSWfltk,)
 # include -L/opt/csw/lib in linking path
 PATCHFILES = makeincludes.diff
 
-CONFIGURE_ARGS = --prefix=$(prefix) --disable-localpng --disable-localjpeg --disable-localzlib --enable-shared
+#CONFIGURE_ARGS = --prefix=$(prefix) --disable-localpng --disable-localjpeg --disable-localzlib --enable-shared
+
+CONFIGURE_ARGS = $(DIRPATHS) --mandir=/opt/csw/share/man --disable-localpng --disable-localjpeg --disable-localzlib --enable-shared
+
 
 include ../category.mk
