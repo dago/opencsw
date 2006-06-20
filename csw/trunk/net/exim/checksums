@@ -1,4 +1,5 @@
 8dc4a2d1b0281dd3942d4a2e48bda393  download/CSWexim.depend
 da9ceb428e7b2622cf6ee6422d3cca8a  download/CSWexim.gspec
 a8efc92427192fd3b7b5e71decc8cc31  download/exim-4.62.tar.bz2
-0384574a06783be6624e0e4457d676d9  files/Makefile.patch
+5ddcb50013dfb91fa6df1e43130caaf4  files/Makefile.patch
+232afcbf096d506de840e81bbc40777d  files/exim_install.patch

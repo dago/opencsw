@@ -18,10 +18,14 @@ MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWexim,depend)
 
-PATCHFILES = Makefile.patch
-PATCHDIRLEVEL = 0
+PATCHFILES = Makefile.patch exim_install.patch
+#PATCHDIRLEVEL = 0
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
+
+# EXIM_VERSION will be used by scripts/exim_install
+EXIM_VERSION = $(GARVERSION)
+export EXIM_VERSION
 
 # exim doesn't use configure
 CONFIGURE_SCRIPTS =
@@ -33,7 +37,7 @@ include ../category.mk
 
 pre-patch:
 	(cd $(WORKSRC); \
-	cp -p src/EDITME Local/Makefile; \
-	cp -p exim_monitor/EDITME Local/eximon.conf)
+	test -r Local/Makefile || cp -p src/EDITME Local/Makefile; \
+	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf)
 post-patch:
 	(cd $(WORKSRC); make makefile)

@@ -1,9 +1,6 @@
---- src/EDITME	src/EDITME  2006-04-28 03:32:22.000000000 -0700
-+++ Local/Makefile	src/EDITME  2006-06-14 22:08:22.000000000 -0700
-@@ -1,8 +1,11 @@
--# $Cambridge: exim/exim-src/src/EDITME,v 1.16 2005/10/12 15:45:38 ph10 Exp $
-+# $Cambridge: exim/exim-src/src/EDITME,v 1.15 2005/09/19 14:42:31 ph10 Exp $
- 
+--- exim-4.62.orig/Local/Makefile	2006-04-28 03:32:22.000000000 -0700
++++ exim-4.62/Local/Makefile	2006-06-19 21:35:06.405133000 -0700
+@@ -3,6 +3,9 @@
  ##################################################
  #          The Exim mail transport agent         #
  ##################################################
