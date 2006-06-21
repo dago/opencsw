@@ -17,10 +17,7 @@ SF_PROJ = lex
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = flex-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += CSWflex-new.gspec
-
-# Fix lvalue assignment on fdopen()
-PATCHFILES = suncc.diff
+DISTFILES += $(call admfiles,CSWflex-new,depend prototype)
 
 DEPENDS = devel/bison
 
