@@ -1,5 +1,5 @@
 GARNAME = flex
-GARVERSION = 2.5.31
+GARVERSION = 2.5.33
 CATEGORIES = devel
 
 DESCRIPTION = A tool for generating text-scanning programs.
@@ -11,7 +11,10 @@ define BLURB
   new features such as exclusive start conditions.
 endef
 
-MASTER_SITES = $(SF_MIRROR)/lex/
+SPKG_SOURCEURL = http://flex.sourceforge.net/
+
+SF_PROJ = lex
+MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = flex-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += CSWflex-new.gspec
