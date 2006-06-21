@@ -16,22 +16,36 @@ endef
 
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWexim,depend)
+DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
+	preinstall preremove request)
+DISTFILES += i.smfyes i.smfno space
 
 PATCHFILES = Makefile.patch exim_install.patch
-#PATCHDIRLEVEL = 0
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-# EXIM_VERSION will be used by scripts/exim_install
+# scripts/exim_install has been patched to use this variable
 EXIM_VERSION = $(GARVERSION)
 export EXIM_VERSION
+
+# Local/Makefile has been patched to use these:
+CSW_CC = $(SUN_CC)
+CSW_OPT = $(SUN_CC_OPT)
+export CSW_CC CSW_OPT
 
 # exim doesn't use configure
 CONFIGURE_SCRIPTS =
 
+# We don't want exim_install to create the exim symlink or run chown
+BUILD_ARGS = "INSTALL_ARG=-no_symlink -no_chown"
+
 # exim doesn't have a test target
 TEST_TARGET =
+
+# We use this to strip binaries after we're done building
+BINS =  exim exim_dbmbuild exim_dumpdb exim_fixdb exim_lock exim_tidydb
+BINS += eximon.bin
+
 
 include ../category.mk
 
@@ -41,3 +55,9 @@ pre-patch:
 	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf)
 post-patch:
 	(cd $(WORKSRC); make makefile)
+
+post-install:
+	(cd $(DESTDIR)$(prefix)/sbin; \
+	mv exim-$(GARVERSION) exim; \
+	/usr/ccs/bin/strip $(BINS); \
+	/usr/ccs/bin/mcs -d $(BINS))

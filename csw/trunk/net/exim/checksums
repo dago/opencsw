@@ -1,5 +1,14 @@
-8dc4a2d1b0281dd3942d4a2e48bda393  download/CSWexim.depend
-da9ceb428e7b2622cf6ee6422d3cca8a  download/CSWexim.gspec
 a8efc92427192fd3b7b5e71decc8cc31  download/exim-4.62.tar.bz2
-5ddcb50013dfb91fa6df1e43130caaf4  files/Makefile.patch
+8dc4a2d1b0281dd3942d4a2e48bda393  download/CSWexim.depend
+b9287ee8bc8043e63e8dd1f0c3fd5c58  download/CSWexim.gspec
+4c51b67692b12679afadad7e9e12053f  download/CSWexim.postinstall
+84f769da2068c4400ae9f489af6a6fae  download/CSWexim.postremove
+8475607c59fa3d21a9e0bf3c543f9758  download/CSWexim.preinstall
+52e5fa6be55b10ef3e74f67065256c93  download/CSWexim.preremove
+a3681b51fedfbc0863e4b78c8f0d9d7c  download/CSWexim.prototype
+5e1092887b15ef547a5dd82eabe90a5f  download/CSWexim.request
+236034cfa5f330a186ce8b68e2783bd3  files/Makefile.patch
 232afcbf096d506de840e81bbc40777d  files/exim_install.patch
+023011fb893a6c7c65a596559a3bc3e9  files/i.smfno
+867f8d3ecf9dbd00e75ef2f9929ac827  files/i.smfyes
+f49c3339aa897df97abf1baf54582fb8  files/space

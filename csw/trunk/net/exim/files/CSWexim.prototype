@@ -1,0 +1,34 @@
+d none /opt/csw/etc 0755 root bin
+d none /opt/csw/etc/exim 0755 root bin
+f none /opt/csw/etc/exim/aliases 0644 root bin
+f none /opt/csw/etc/exim/exim.conf 0644 root bin
+d none /opt/csw/sbin ? ? ?
+f none /opt/csw/sbin/exicyclog 0755 root bin
+f none /opt/csw/sbin/exigrep 0755 root bin
+f none /opt/csw/sbin/exim 0755 root bin
+f none /opt/csw/sbin/exim_checkaccess 0755 root bin
+f none /opt/csw/sbin/exim_dbmbuild 0755 root bin
+f none /opt/csw/sbin/exim_dumpdb 0755 root bin
+f none /opt/csw/sbin/exim_fixdb 0755 root bin
+f none /opt/csw/sbin/exim_lock 0755 root bin
+f none /opt/csw/sbin/exim_tidydb 0755 root bin
+f none /opt/csw/sbin/eximon 0755 root bin
+f none /opt/csw/sbin/eximon.bin 0755 root bin
+f none /opt/csw/sbin/eximstats 0755 root bin
+f none /opt/csw/sbin/exinext 0755 root bin
+f none /opt/csw/sbin/exipick 0755 root bin
+f none /opt/csw/sbin/exiqgrep 0755 root bin
+f none /opt/csw/sbin/exiqsumm 0755 root bin
+f none /opt/csw/sbin/exiwhat 0755 root bin
+i copyright=CSWexim.copyright
+i depend=CSWexim.depend
+i pkginfo=CSWexim.pkginfo
+i preinstall=CSWexim.preinstall
+i postinstall=CSWexim.postinstall
+i preremove=CSWexim.preremove
+i postremove=CSWexim.postremove
+i request=CSWexim.request
+i checkinstall
+i i.smfno
+i i.smfyes
+i space
