@@ -13,9 +13,11 @@ endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgvim,depend prototype)
+DISTFILES += $(call admfiles,CSWgvim,prototype depend)
 
 WORKSRC = $(WORKDIR)/$(GARNAME)70
+
+include files/vim_patches.mk
 
 #DEPENDS = utils/mktemp lib/ncurses
 

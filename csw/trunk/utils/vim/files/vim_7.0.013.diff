@@ -1,0 +1,154 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.013
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.013
+Problem:    Insert mode completion: using CTRL-L to add an extra character
+	    also deselects the current match, making it impossible to use
+	    CTRL-L a second time.
+Solution:   Keep the current match.  Also make CTRL-L work at the original
+	    text, using the first displayed match.
+Files:	    src/edit.c
+
+
+*** ../vim-7.0.012/src/edit.c	Wed May 10 15:22:49 2006
+--- src/edit.c	Thu May 11 10:38:54 2006
+***************
+*** 751,757 ****
+  		    continue;
+  		}
+  
+! 		/* Pressing CTRL-Y selects the current match.  Shen
+  		 * compl_enter_selects is set the Enter key does the same. */
+  		if (c == Ctrl_Y || (compl_enter_selects
+  				   && (c == CAR || c == K_KENTER || c == NL)))
+--- 751,757 ----
+  		    continue;
+  		}
+  
+! 		/* Pressing CTRL-Y selects the current match.  When
+  		 * compl_enter_selects is set the Enter key does the same. */
+  		if (c == Ctrl_Y || (compl_enter_selects
+  				   && (c == CAR || c == K_KENTER || c == NL)))
+***************
+*** 3046,3052 ****
+      ins_compl_delete();
+      ins_bytes(compl_leader + curwin->w_cursor.col - compl_col);
+      compl_used_match = FALSE;
+-     compl_enter_selects = FALSE;
+  
+      if (compl_started)
+  	ins_compl_set_original_text(compl_leader);
+--- 3046,3051 ----
+***************
+*** 3076,3081 ****
+--- 3075,3081 ----
+  	compl_restarting = FALSE;
+      }
+  
++ #if 0   /* disabled, made CTRL-L, BS and typing char jump to original text. */
+      if (!compl_used_match)
+      {
+  	/* Go to the original text, since none of the matches is inserted. */
+***************
+*** 3087,3092 ****
+--- 3087,3094 ----
+  	compl_curr_match = compl_shown_match;
+  	compl_shows_dir = compl_direction;
+      }
++ #endif
++     compl_enter_selects = !compl_used_match;
+  
+      /* Show the popup menu with a different set of matches. */
+      ins_compl_show_pum();
+***************
+*** 3175,3184 ****
+      char_u	*p;
+      int		len = curwin->w_cursor.col - compl_col;
+      int		c;
+  
+      p = compl_shown_match->cp_str;
+      if ((int)STRLEN(p) <= len)   /* the match is too short */
+! 	return;
+      p += len;
+  #ifdef FEAT_MBYTE
+      c = mb_ptr2char(p);
+--- 3177,3208 ----
+      char_u	*p;
+      int		len = curwin->w_cursor.col - compl_col;
+      int		c;
++     compl_T	*cp;
+  
+      p = compl_shown_match->cp_str;
+      if ((int)STRLEN(p) <= len)   /* the match is too short */
+!     {
+! 	/* When still at the original match use the first entry that matches
+! 	 * the leader. */
+! 	if (compl_shown_match->cp_flags & ORIGINAL_TEXT)
+! 	{
+! 	    p = NULL;
+! 	    for (cp = compl_shown_match->cp_next; cp != NULL
+! 				 && cp != compl_first_match; cp = cp->cp_next)
+! 	    {
+! 		if (ins_compl_equal(cp, compl_leader,
+! 						   (int)STRLEN(compl_leader)))
+! 		{
+! 		    p = cp->cp_str;
+! 		    break;
+! 		}
+! 	    }
+! 	    if (p == NULL || (int)STRLEN(p) <= len)
+! 		return;
+! 	}
+! 	else
+! 	    return;
+!     }
+      p += len;
+  #ifdef FEAT_MBYTE
+      c = mb_ptr2char(p);
+***************
+*** 4100,4105 ****
+--- 4124,4144 ----
+  		&& compl_shown_match->cp_next != NULL
+  		&& compl_shown_match->cp_next != compl_first_match)
+  	    compl_shown_match = compl_shown_match->cp_next;
++ 
++ 	/* If we didn't find it searching forward, and compl_shows_dir is
++ 	 * backward, find the last match. */
++ 	if (compl_shows_dir == BACKWARD
++ 		&& !ins_compl_equal(compl_shown_match,
++ 				      compl_leader, (int)STRLEN(compl_leader))
++ 		&& (compl_shown_match->cp_next == NULL
++ 		    || compl_shown_match->cp_next == compl_first_match))
++ 	{
++ 	    while (!ins_compl_equal(compl_shown_match,
++ 				      compl_leader, (int)STRLEN(compl_leader))
++ 		    && compl_shown_match->cp_prev != NULL
++ 		    && compl_shown_match->cp_prev != compl_first_match)
++ 		compl_shown_match = compl_shown_match->cp_prev;
++ 	}
+      }
+  
+      if (allow_get_expansion && insert_match
+*** ../vim-7.0.012/src/version.c	Thu May 11 19:30:09 2006
+--- src/version.c	Fri May 12 19:03:32 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     13,
+  /**/
+
+-- 
+I'm writing a book.  I've got the page numbers done.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

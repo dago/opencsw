@@ -18,6 +18,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWvim,depend prototype)
 DISTFILES += $(call admfiles,CSWvimrt,prototype)
 
+include files/vim_patches.mk
+
 #DEPENDS = utils/mktemp lib/ncurses
 
 CONFIGURE_ARGS  = $(DIRPATHS)

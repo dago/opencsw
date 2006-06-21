@@ -1,0 +1,118 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.010
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.010
+Problem:    The spellfile plugin required typing login name and password.
+Solution:   Use "anonymous" and "vim7user" by default.  No need to setup a
+	    .netrc file.
+Files:	    runtime/autoload/spellfile.vim
+
+
+*** ../vim-7.0.009/runtime/autoload/spellfile.vim	Wed May 10 15:22:54 2006
+--- runtime/autoload/spellfile.vim	Wed May 10 17:55:15 2006
+***************
+*** 1,9 ****
+  " Vim script to download a missing spell file
+  " Maintainer:	Bram Moolenaar <Bram@vim.org>
+! " Last Change:	2006 Feb 01
+  
+  if !exists('g:spellfile_URL')
+!   let g:spellfile_URL = 'ftp://ftp.vim.org/pub/vim/unstable/runtime/spell'
+  endif
+  let s:spellfile_URL = ''    " Start with nothing so that s:donedict is reset.
+  
+--- 1,9 ----
+  " Vim script to download a missing spell file
+  " Maintainer:	Bram Moolenaar <Bram@vim.org>
+! " Last Change:	2006 May 10
+  
+  if !exists('g:spellfile_URL')
+!   let g:spellfile_URL = 'ftp://ftp.vim.org/pub/vim/runtime/spell'
+  endif
+  let s:spellfile_URL = ''    " Start with nothing so that s:donedict is reset.
+  
+***************
+*** 61,73 ****
+      new
+      setlocal bin
+      echo 'Downloading ' . fname . '...'
+!     exe 'Nread ' g:spellfile_URL . '/' . fname
+      if getline(2) !~ 'VIMspell'
+        " Didn't work, perhaps there is an ASCII one.
+        g/^/d
+        let fname = a:lang . '.ascii.spl'
+        echo 'Could not find it, trying ' . fname . '...'
+!       exe 'Nread ' g:spellfile_URL . '/' . fname
+        if getline(2) !~ 'VIMspell'
+  	echo 'Sorry, downloading failed'
+  	bwipe!
+--- 61,73 ----
+      new
+      setlocal bin
+      echo 'Downloading ' . fname . '...'
+!     call spellfile#Nread(fname)
+      if getline(2) !~ 'VIMspell'
+        " Didn't work, perhaps there is an ASCII one.
+        g/^/d
+        let fname = a:lang . '.ascii.spl'
+        echo 'Could not find it, trying ' . fname . '...'
+!       call spellfile#Nread(fname)
+        if getline(2) !~ 'VIMspell'
+  	echo 'Sorry, downloading failed'
+  	bwipe!
+***************
+*** 95,101 ****
+  	g/^/d
+  	let fname = substitute(fname, '\.spl$', '.sug', '')
+  	echo 'Downloading ' . fname . '...'
+! 	exe 'Nread ' g:spellfile_URL . '/' . fname
+  	if getline(2) !~ 'VIMsug'
+  	  echo 'Sorry, downloading failed'
+  	else
+--- 95,101 ----
+  	g/^/d
+  	let fname = substitute(fname, '\.spl$', '.sug', '')
+  	echo 'Downloading ' . fname . '...'
+! 	call spellfile#Nread(fname)
+  	if getline(2) !~ 'VIMsug'
+  	  echo 'Sorry, downloading failed'
+  	else
+***************
+*** 108,111 ****
+--- 108,118 ----
+  
+      bwipe
+    endif
++ endfunc
++ 
++ " Read "fname" from the ftp server.
++ function! spellfile#Nread(fname)
++   let machine = substitute(g:spellfile_URL, 'ftp://\([^/]*\).*', '\1', '')
++   let dir = substitute(g:spellfile_URL, 'ftp://[^/]*/\(.*\)', '\1', '')
++   exe 'Nread "' . machine . ' anonymous vim7user ' . dir . '/' . a:fname . '"'
+  endfunc
+*** ../vim-7.0.009/src/version.c	Wed May 10 17:51:22 2006
+--- src/version.c	Wed May 10 17:53:53 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     10,
+  /**/
+
+-- 
+I AM THANKFUL...
+...for the mess to clean after a party because it means I have
+been surrounded by friends.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

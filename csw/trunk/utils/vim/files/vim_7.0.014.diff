@@ -1,0 +1,189 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.014
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.014
+Problem:    Compiling gui_xmebw.c fails on Dec Alpha Tru64. (Rolfe)
+Solution:   Disable some code for Motif 1.2 and older.
+Files:	    src/gui_xmebw.c
+
+
+*** ../vim-7.0.013/src/gui_xmebw.c	Wed May 10 15:22:49 2006
+--- src/gui_xmebw.c	Thu May 11 19:09:32 2006
+***************
+*** 480,486 ****
+  	    || (eb->core.height <= 2 * eb->primitive.highlight_thickness))
+  	return;
+  
+! #ifndef LESSTIF_VERSION
+      {
+  	XmDisplay	dpy;
+  
+--- 480,486 ----
+  	    || (eb->core.height <= 2 * eb->primitive.highlight_thickness))
+  	return;
+  
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+      {
+  	XmDisplay	dpy;
+  
+***************
+*** 641,647 ****
+      GC		tmp_gc = NULL;
+      Boolean	replaceGC = False;
+      Boolean	deadjusted = False;
+! #ifndef LESSTIF_VERSION
+      XmDisplay	dpy = (XmDisplay)XmGetXmDisplay(XtDisplay(eb));
+      Boolean	etched_in = dpy->display.enable_etched_in_menu;
+  #else
+--- 641,647 ----
+      GC		tmp_gc = NULL;
+      Boolean	replaceGC = False;
+      Boolean	deadjusted = False;
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+      XmDisplay	dpy = (XmDisplay)XmGetXmDisplay(XtDisplay(eb));
+      Boolean	etched_in = dpy->display.enable_etched_in_menu;
+  #else
+***************
+*** 726,732 ****
+  	if ((((ShellWidget) XtParent(XtParent(eb)))->shell.popped_up)
+  		&& _XmGetInDragMode((Widget) eb))
+  	{
+! #ifndef LESSTIF_VERSION
+  	    XmDisplay dpy = (XmDisplay) XmGetXmDisplay(XtDisplay(wid));
+  	    Boolean etched_in = dpy->display.enable_etched_in_menu;
+  #else
+--- 726,732 ----
+  	if ((((ShellWidget) XtParent(XtParent(eb)))->shell.popped_up)
+  		&& _XmGetInDragMode((Widget) eb))
+  	{
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+  	    XmDisplay dpy = (XmDisplay) XmGetXmDisplay(XtDisplay(wid));
+  	    Boolean etched_in = dpy->display.enable_etched_in_menu;
+  #else
+***************
+*** 810,816 ****
+  
+      if (Lab_IsMenupane(eb))
+      {
+! #ifndef LESSTIF_VERSION
+  	XmDisplay dpy = (XmDisplay) XmGetXmDisplay(XtDisplay(wid));
+  	Boolean etched_in = dpy->display.enable_etched_in_menu;
+  #else
+--- 810,816 ----
+  
+      if (Lab_IsMenupane(eb))
+      {
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+  	XmDisplay dpy = (XmDisplay) XmGetXmDisplay(XtDisplay(wid));
+  	Boolean etched_in = dpy->display.enable_etched_in_menu;
+  #else
+***************
+*** 1150,1156 ****
+  Redisplay(Widget w, XEvent *event, Region region)
+  {
+      XmEnhancedButtonWidget  eb = (XmEnhancedButtonWidget) w;
+! #ifndef LESSTIF_VERSION
+      XmDisplay		    dpy;
+      XtEnum		    default_button_emphasis;
+  #endif
+--- 1150,1156 ----
+  Redisplay(Widget w, XEvent *event, Region region)
+  {
+      XmEnhancedButtonWidget  eb = (XmEnhancedButtonWidget) w;
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+      XmDisplay		    dpy;
+      XtEnum		    default_button_emphasis;
+  #endif
+***************
+*** 1162,1168 ****
+      if (!XtIsRealized((Widget)eb))
+  	return;
+  
+! #ifndef LESSTIF_VERSION
+      dpy = (XmDisplay)XmGetXmDisplay(XtDisplay(eb));
+      default_button_emphasis = dpy->display.default_button_emphasis;
+  #endif
+--- 1162,1168 ----
+      if (!XtIsRealized((Widget)eb))
+  	return;
+  
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+      dpy = (XmDisplay)XmGetXmDisplay(XtDisplay(eb));
+      default_button_emphasis = dpy->display.default_button_emphasis;
+  #endif
+***************
+*** 1241,1247 ****
+      {
+  	int adjust = 0;
+  
+! #ifndef LESSTIF_VERSION
+  	/*
+  	 *  NOTE: PushButton has two types of shadows: primitive-shadow and
+  	 *  default-button-shadow.  If pushbutton is in a menu only primitive
+--- 1241,1247 ----
+      {
+  	int adjust = 0;
+  
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+  	/*
+  	 *  NOTE: PushButton has two types of shadows: primitive-shadow and
+  	 *  default-button-shadow.  If pushbutton is in a menu only primitive
+***************
+*** 1289,1295 ****
+  			  adjust, adjust, rectwidth, rectheight, borderwidth);
+  	    }
+  
+! #ifndef LESSTIF_VERSION
+  	    switch (default_button_emphasis)
+  	    {
+  		case XmINTERNAL_HIGHLIGHT:
+--- 1289,1295 ----
+  			  adjust, adjust, rectwidth, rectheight, borderwidth);
+  	    }
+  
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+  	    switch (default_button_emphasis)
+  	    {
+  		case XmINTERNAL_HIGHLIGHT:
+***************
+*** 1365,1371 ****
+  		    default_button_shadow_thickness =
+  			       eb->pushbutton.default_button_shadow_thickness;
+  
+! #ifndef LESSTIF_VERSION
+  		/*
+  		 * Compute location of bounding box to contain the
+  		 * defaultButtonShadow.
+--- 1365,1371 ----
+  		    default_button_shadow_thickness =
+  			       eb->pushbutton.default_button_shadow_thickness;
+  
+! #if !defined(LESSTIF_VERSION) && (XmVersion > 1002)
+  		/*
+  		 * Compute location of bounding box to contain the
+  		 * defaultButtonShadow.
+*** ../vim-7.0.013/src/version.c	Fri May 12 19:10:03 2006
+--- src/version.c	Fri May 12 19:23:12 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     14,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+126. You brag to all of your friends about your date Saturday night...but
+     you don't tell them it was only in a chat room.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

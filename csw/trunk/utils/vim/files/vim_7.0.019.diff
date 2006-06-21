@@ -1,0 +1,46 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.019
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.019
+Problem:    Repeating "VjA789" may cause a crash. (James Vega)
+Solution:   Check the cursor column after moving it to another line.
+Files:	    src/ops.c
+
+
+*** ../vim-7.0.018/src/ops.c	Sun Apr 30 20:45:12 2006
+--- src/ops.c	Tue Jun 20 12:49:46 2006
+***************
+*** 2413,2418 ****
+--- 2413,2419 ----
+  	else
+  	{
+  	    curwin->w_cursor = oap->end;
++ 	    check_cursor_col();
+  
+  	    /* Works just like an 'i'nsert on the next character. */
+  	    if (!lineempty(curwin->w_cursor.lnum)
+*** ../vim-7.0.018/src/version.c	Mon Jun 19 10:56:20 2006
+--- src/version.c	Tue Jun 20 12:55:10 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     19,
+  /**/
+
+-- 
+Two cows are standing together in a field.  One asks the other:
+"So what do you think about this Mad Cow Disease?"
+The other replies: "That doesn't concern me. I'm a helicopter."
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
