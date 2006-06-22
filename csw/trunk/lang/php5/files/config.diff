@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru php-5.1.2.orig/configure php-5.1.2/configure
---- php-5.1.2.orig/configure	2005-11-28 18:39:54.055981000 -0500
-+++ php-5.1.2/configure	2005-11-28 18:06:54.786301000 -0500
+diff --speed-large-files --minimal -Nru php-5.1.4.orig/configure php-5.1.4/configure
+--- php-5.1.4.orig/configure	2005-11-28 18:39:54.055981000 -0500
++++ php-5.1.4/configure	2005-11-28 18:06:54.786301000 -0500
 @@ -4422,7 +4422,7 @@
    $APXS -q -S CFLAGS="$APXS_CFLAGS" CFLAGS >/dev/null 2>&1
  

@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru php-5.1.2.orig/configure php-5.1.2/configure
---- php-5.1.2.orig/configure	2006-02-04 01:50:06.700798000 -0500
-+++ php-5.1.2/configure	2006-02-04 01:46:43.819918000 -0500
+diff --speed-large-files --minimal -Nru php-5.1.4.orig/configure php-5.1.2/configure
+--- php-5.1.4.orig/configure	2006-02-04 01:50:06.700798000 -0500
++++ php-5.1.4/configure	2006-02-04 01:46:43.819918000 -0500
 @@ -86206,6 +86206,9 @@
      builtin and then its argument prototype would still apply.  */
  char snmp_parse_oid();
@@ -21,9 +21,9 @@ diff --speed-large-files --minimal -Nru php-5.1.2.orig/configure php-5.1.2/confi
  int main() {
  init_snmp()
  ; return 0; }
-diff --speed-large-files --minimal -Nru php-5.1.2.orig/ext/snmp/php_snmp.h php-5.1.2/ext/snmp/php_snmp.h
---- php-5.1.2.orig/ext/snmp/php_snmp.h	2006-02-04 01:48:30.483671000 -0500
-+++ php-5.1.2/ext/snmp/php_snmp.h	2006-02-04 01:47:16.212525000 -0500
+diff --speed-large-files --minimal -Nru php-5.1.4.orig/ext/snmp/php_snmp.h php-5.1.2/ext/snmp/php_snmp.h
+--- php-5.1.4.orig/ext/snmp/php_snmp.h	2006-02-04 01:48:30.483671000 -0500
++++ php-5.1.4/ext/snmp/php_snmp.h	2006-02-04 01:47:16.212525000 -0500
 @@ -34,6 +34,9 @@
  extern zend_module_entry snmp_module_entry;
  #define snmp_module_ptr &snmp_module_entry

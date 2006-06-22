@@ -7,12 +7,12 @@ STRIP_DIRS += $(PHP5ROOT)/bin
 
 # Build the imap client library first
 pre-configure:
-	@( cd $(WORKDIR)/$(IMAPDIR) ; $(BUILD_ENV) make soc )
+	( cd $(WORKDIR)/$(IMAPVERSION) ; $(BUILD_ENV) make soc )
 	@$(MAKECOOKIE)
 
 # This is required so that we don't try to regen the
 # sqlite parser.
-pre-build:
-	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
-	@$(MAKECOOKIE)
+#pre-build:
+#	@touch $(WORKSRC)/ext/sqlite/libsqlite/src/parse.c
+#	@$(MAKECOOKIE)
 
