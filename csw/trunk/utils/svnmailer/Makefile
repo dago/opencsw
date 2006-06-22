@@ -1,5 +1,7 @@
 GARNAME = svnmailer
-GARVERSION = 1.0.8
+GARVERSION = 1.1.0
+GARSVNREV  = r1373
+GARRELEASE = dev-$(GARSVNREV)
 CATEGORIES = utils
 
 DESCRIPTION = A tool to post subversion repository information.
@@ -7,6 +9,9 @@ define BLURB
   Svnmailer is a tool to post subversion repository commit information by
   mail, news or XML (to a CIA tracker).
 endef
+
+DISTNAME = $(GARNAME)-$(GARVERSION)-$(GARRELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
@@ -16,15 +21,12 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS += --root=$(DESTDIR)
 
 MASTER_SITES = http://storage.perlig.de/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWsvnmailer,depend prototype)
+DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES += $(call admfiles,CSWsvnmailer,depend)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# Fix doc install paths
+PATCHFILES += install-doc.diff
 
 include ../category.mk
 
-post-install:
-	@mkdir -p $(DESTDIR)$(docdir)
-	@cp -R $(WORKSRC)/docs $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(WORKSRC)/README $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(MAKECOOKIE)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(GARSVNREV)
