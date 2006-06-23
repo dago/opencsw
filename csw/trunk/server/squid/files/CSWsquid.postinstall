@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Squid-cache postinstall script
+
+PATH=/usr/bin:/usr/sbin
+export PATH
+
+if [ -f /opt/csw/etc/squid.conf ]; then
+	/etc/init.d/cswsquid start
+fi
+
+exit 0

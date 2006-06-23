@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Squid-cache preremove script
+
+PATH=/usr/bin:/usr/sbin
+export PATH
+
+/etc/init.d/cswsquid stop
+
+exit 0
