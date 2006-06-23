@@ -13,14 +13,15 @@ DISTFILES += $(call admfiles,CSWwesnoth,)
 GARCOMPILER ?= GNU
 
 PATCHFILES = language.cpp.diff
+PATCHFILES += Makefile.am.diff
 
-CONFIGURE_ARGS = --prefix=$(prefix) LDFLAGS='-lsunmath -lintl'
+CONFIGURE_ARGS = --prefix=$(prefix) --mandir=/opt/csw/share/man LDFLAGS='-lsunmath -lintl'
 CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib
-#CONFIGURE_ARGS += --with-server-uid=60001
-#CONFIGURE_ARGS += --with-server-gid=60001
+CONFIGURE_ARGS += --with-server-uid=60001
+CONFIGURE_ARGS += --with-server-gid=60001
 CONFIGURE_ARGS += --disable-nls
-#CONFIGURE_ARGS += --enable-server
-#CONFIGURE_ARGS += --enable-campaign-server
+CONFIGURE_ARGS += --enable-server
+CONFIGURE_ARGS += --enable-campaign-server
 CONFIGURE_ARGS += --enable-tools
 CONFIGURE_ARGS += --enable-editor
 CONFIGURE_ARGS += --with-kde
@@ -29,3 +30,7 @@ CONFIGURE_ARGS += --with-gnome
 ENABLE_TEST = 0
 
 include ../category.mk
+
+pre-configure:
+	( cd $(WORKSRC) ; aclocal ; autoconf ; automake -a )
+	@$(MAKECOOKIE)
