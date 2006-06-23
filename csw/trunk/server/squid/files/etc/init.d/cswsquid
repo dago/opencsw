@@ -6,12 +6,14 @@ case "$1" in
         echo 'starting squid server.'
         /opt/csw/sbin/squid -D &
         fi
+	exit 0
         ;;
 'stop')
 	if [ -f /opt/csw/sbin/squid -a -f /opt/csw/etc/squid.conf ]; then
-	echo 'stopping squid server...'
-        /opt/csw/sbin/squid -k shutdown && sleep 15
-        exit 0
+	echo 'stopping squid server... please wait for squid to cleanup...'
+        /opt/csw/sbin/squid -k shutdown && sleep 30
+	fi
+	exit 0
         ;;
 
 *)
