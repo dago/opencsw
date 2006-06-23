@@ -161,19 +161,6 @@
  
  #------------------------------------------------------------------------------
  # Compiling Exim with experimental features. These are documented in
-@@ -348,9 +352,9 @@
- # installed on your system (www.libspf2.org). Depending on where it is installed
- # you may have to edit the CFLAGS and LDFLAGS lines.
- 
--# EXPERIMENTAL_SPF=yes
--# CFLAGS  += -I/usr/local/include
--# LDFLAGS += -lspf2
-+EXPERIMENTAL_SPF=yes
-+CFLAGS  += -I$(HOME)/compile/spf2
-+LDFLAGS += -lspf2
- 
- # Uncomment the following lines to add SRS (Sender rewriting scheme) support.
- # You need to have libsrs_alt installed on your system (srs.mirtol.com).
 @@ -440,6 +444,7 @@
  
  # ALT_CONFIG_PREFIX=/some/directory/

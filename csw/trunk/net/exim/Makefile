@@ -37,7 +37,7 @@ export CSW_CC CSW_OPT
 CONFIGURE_SCRIPTS =
 
 # We don't want exim_install to create the exim symlink or run chown
-BUILD_ARGS = "INSTALL_ARG=-no_symlink -no_chown"
+INSTALL_ARGS = "INSTALL_ARG=-no_symlink -no_chown"
 
 # exim doesn't have a test target
 TEST_TARGET =
@@ -61,3 +61,8 @@ post-install:
 	mv exim-$(GARVERSION) exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
+	(cd $(DESTDIR)$(prefix)/etc/exim; \
+	for i in *; do \
+		echo "$$i -> $$i.CSW"; \
+		mv "$$i" "$$i.CSW";	\
+	done)
