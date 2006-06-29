@@ -1,13 +1,7 @@
 d none /opt/csw/bin ? ? ?
 f none /opt/csw/bin/snort 0755 root bin
-
 d none /opt/csw/etc ? ? ?
-f none /opt/csw/etc/unicode.map 0644 root bin
 f none /opt/csw/etc/snort.conf.CSW 0664 root bin
-f none /opt/csw/etc/sid-msg.map 0644 root bin
-f none /opt/csw/etc/reference.config 0644 root bin
-f none /opt/csw/etc/gen-msg.map 0644 root bin
-f none /opt/csw/etc/classification.config 0644 root bin
 d none /opt/csw/lib ? ? ?
 d none /opt/csw/lib/locale ? ? ?
 d none /opt/csw/lib/snort_dynamicengine 0755 root bin
