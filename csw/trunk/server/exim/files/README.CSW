@@ -1,18 +1,26 @@
-IMPORTANT NOTE:
+IMPORTANT NOTES:
 
-This Exim package includes the exiscan patch. This means this Exim
-version supports integration of Spamassassin and Clamav (both of
-which are also available from Blastwave), as well as some other
-nice features (like blocking e-mails with certain attachment-types,
-e.g. '.scr' or '.vbs').
+Sender Policy Framework (SPF)
+-----------------------------
 
-As of release 4.43 the Blastwave Exim package supports the Sender
-Policy Framework (SPF).
+Releases 4.43-4.51 of the Exim package support the Sender Policy
+Framework (SPF) based on libspf2-1.0.0. Later release are using
+libspf2-1.2.x. (There has been an API change between libspf2-1.0.x and
+libspf2-1.2.x.)
 
-Starting with release 4.50 Exim already includes the functionality
-formerly distributed as exiscan patches. Hence this patch is no
-longer applied to the CSWexim package. However, the samples on how to
-use exiscan are still included with the package.
+Also, please be aware that SPF support is still experimental. See
+http://thread.gmane.org/gmane.mail.exim.exiscan.user/2245 (the archive
+of the Exiscan mailing-list) for information about problems that can
+potentially to occur when using libspf2.
+
+Exiscan
+-------
+
+Starting with release 4.50 the Exim source already includes the
+functionality formerly distributed as exiscan patches.
+
+Links and further reading
+-------------------------
 
 For more information on exiscan please see:
   /opt/csw/doc/exim/exiscan-acl-spec.txt
@@ -27,7 +35,10 @@ Exim can be found at:
 Additional examples for using SPF can be found at:
   http://www.xmn-berlin.de/~marte/exim/exim4_exiscan-acl.html
   http://slett.net/spam-filtering-for-mx/exim-spf.html
-(at least on Nov. 10, 2004 these links were working)
+(at least as of Oct 8, 2005 these links were working)
+
+Libspf2 lives here:
+  http://www.libspf2.org/
 
 -- 
 Markus Mayer
