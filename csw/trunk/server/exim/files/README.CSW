@@ -1,0 +1,34 @@
+IMPORTANT NOTE:
+
+This Exim package includes the exiscan patch. This means this Exim
+version supports integration of Spamassassin and Clamav (both of
+which are also available from Blastwave), as well as some other
+nice features (like blocking e-mails with certain attachment-types,
+e.g. '.scr' or '.vbs').
+
+As of release 4.43 the Blastwave Exim package supports the Sender
+Policy Framework (SPF).
+
+Starting with release 4.50 Exim already includes the functionality
+formerly distributed as exiscan patches. Hence this patch is no
+longer applied to the CSWexim package. However, the samples on how to
+use exiscan are still included with the package.
+
+For more information on exiscan please see:
+  /opt/csw/doc/exim/exiscan-acl-spec.txt
+and 
+  /opt/csw/doc/exim/exiscan-acl-examples.txt
+or visit the exiscan homepage at
+  http://duncanthrax.net/exiscan-acl/
+
+Exim can be found at:
+  http://www.exim.org/
+
+Additional examples for using SPF can be found at:
+  http://www.xmn-berlin.de/~marte/exim/exim4_exiscan-acl.html
+  http://slett.net/spam-filtering-for-mx/exim-spf.html
+(at least on Nov. 10, 2004 these links were working)
+
+-- 
+Markus Mayer
+mmayer@blastwave.org
