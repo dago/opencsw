@@ -2,8 +2,8 @@ GARNAME = openvpn
 GARVERSION = 2.0.7
 CATEGORIES = server
 
-SPKG_PKGNAME = CSWsquid
-SPKG_BITNAME = squid
+SPKG_PKGNAME = CSWopenvpn
+SPKG_BITNAME = openvpn
 
 DESCRIPTION = secure IP tunnel daemon
 define BLURB
