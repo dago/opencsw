@@ -2,5 +2,3 @@
 %var            pkgname CSWlftp
 %include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
-%pkginfo
-CLASSES=none conf
