@@ -10,7 +10,8 @@ endef
 
 MASTER_SITES = http://www.webdav.org/cadaver/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcadav,)
+DISTFILES += $(call admfiles,CSWcadav,prototype depend)
+DISTFILES += changelog.CSW
 
 # add destdir support to makefile
 PATCHFILES = destdir.patch
@@ -22,4 +23,6 @@ ENABLE_TEST = 0
 
 include ../category.mk
 
+post-install:
+	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 
