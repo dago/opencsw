@@ -26,6 +26,15 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # instead of gnutls, no need to change that
 CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 
+# I got a coredump with lftp compiled with cc
+# the one compiled with gcc doesn't seem to have this problem
+GARCOMPILER = GNU
+
+# for debug build
+#CONFIGURE_ARGS += --with-debug
+#GNU_CC_OPT = -g
+#GNU_CXX_OPT = -g
+
 ENABLE_TEST = 0
 
 include ../category.mk
