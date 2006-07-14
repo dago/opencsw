@@ -28,3 +28,7 @@ include ../category.mk
 post-extract:
 	( mv $(WORKDIR)/mozilla $(WORKDIR)/firefox-1.5.0.4 )
 	@$(MAKECOOKIE)
+
+pre-configure:
+	( mv $(HOME)/.mozconfig $(HOME)/.mozconfig.pre-CSWfirefox-build )
+	( cp $(FILEDIR)/.mozconfig $(HOME)/.mozconfig )
