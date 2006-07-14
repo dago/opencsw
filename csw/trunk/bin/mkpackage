@@ -18,7 +18,7 @@ use vars qw/
   $TOOLVERSION $REVISION $VERSION
   $HAS_LWP_SUPPORT $UA $HAS_CURL_SUPPORT
   %config %exit $SELF %SPEC_TYPE $SPEC_TYPE
-  $DIRECTIVE @SPECDIRS @ADMFILES
+  $DIRECTIVE @SPECDIRS @ADMFILES @SPECIAL
   $DIRECTIVE_START %VALID_DIRECTIVES %SCRIPTADM/;
 
 # Tool Version/Revision Information
@@ -91,7 +91,10 @@ $SELF = basename $0;
   postremove request
   /;
 
-%VALID_DIRECTIVES = map { $_ => 1 } ( @SPECDIRS, @ADMFILES );
+# Special directives
+@SPECIAL = qw/classaction/;
+
+%VALID_DIRECTIVES = map { $_ => 1 } ( @SPECDIRS, @ADMFILES, @SPECIAL );
 
 $DIRECTIVE_START = '%';
 $DIRECTIVE       = qr/^$DIRECTIVE_START(\w+)/;
