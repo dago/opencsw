@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/1.5.0.4/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
-DISTFILES += $(call admfiles,CSWfirefox,)
+DISTFILES += $(call admfiles,CSWfirefox, depend prototype)
 
 PERL="/opt/csw/bin/perl"
 PERL5"=/opt/csw/bin/perl"
@@ -24,3 +24,7 @@ CONFIGURE_ARGS = --prefix=/opt/csw/libexec/firefox
 ENABLE_TEST = 0
 
 include ../category.mk
+
+post-extract:
+	( mv $(WORKDIR)/mozilla $(WORKDIR)/firefox-1.5.0.4 )
+	@$(MAKECOOKIE)
