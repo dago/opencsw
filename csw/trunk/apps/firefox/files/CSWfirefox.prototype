@@ -3529,7 +3529,7 @@ f none /opt/csw/libexec/firefox/share/idl/firefox-1.5.0.4/xpcexception.idl 0644 
 f none /opt/csw/libexec/firefox/share/idl/firefox-1.5.0.4/xpcjsid.idl 0644 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/doc ? ? ?
-s none /opt/csw/bin/firefox=../libexec/bin/firefox
+s none /opt/csw/bin/firefox=../libexec/firefox/bin/firefox
 i copyright=CSWfirefox.copyright
 i depend=CSWfirefox.depend
 i pkginfo=CSWfirefox.pkginfo
