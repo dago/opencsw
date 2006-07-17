@@ -3,7 +3,6 @@ f none /opt/csw/bin/snort 0755 root bin
 d none /opt/csw/etc ? ? ?
 f none /opt/csw/etc/snort.conf.CSW 0664 root bin
 d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/locale ? ? ?
 d none /opt/csw/lib/snort_dynamicengine 0755 root bin
 f none /opt/csw/lib/snort_dynamicengine/libsf_engine.a 0644 root bin
 f none /opt/csw/lib/snort_dynamicengine/libsf_engine.la 0755 root bin
