@@ -46,7 +46,6 @@ TEST_TARGET =
 BINS =  exim exim_dbmbuild exim_dumpdb exim_fixdb exim_lock exim_tidydb
 BINS += eximon.bin
 
-
 include ../category.mk
 
 pre-patch:
@@ -56,13 +55,30 @@ pre-patch:
 post-patch:
 	(cd $(WORKSRC); make makefile)
 
+DOC_LIST = ChangeLog Exim3.upgrade Exim4.upgrade NewStuff OptionLists.txt
+DOC_LIST += README README.SIEVE dbm.discuss.txt filter.txt pcrepattern.txt
+DOC_LIST += pcretest.txt spec.txt
+
 post-install:
 	(cd $(DESTDIR)$(prefix)/sbin; \
 	mv exim-$(GARVERSION) exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
 	(cd $(DESTDIR)$(prefix)/etc/exim; \
-	for i in *; do \
-		echo "$$i -> $$i.CSW"; \
-		mv "$$i" "$$i.CSW";	\
+	for i in aliases exim.conf; do \
+		if [ -r "$$i" ]; then \
+			echo "$$i -> $$i.CSW"; \
+			mv "$$i" "$$i.CSW";	\
+		fi \
 	done)
+	files/create_rc.d.sh $(DESTDIR)
+	mkdir -p $(DESTDIR)$(prefix)/var/svc/manifest/network
+	cp -p files/exim.xml  $(DESTDIR)$(prefix)/var/svc/manifest/network
+	mkdir -p $(DESTDIR)$(prefix)/lib/svc/method
+	cp -p $(DESTDIR)/etc/init.d/cswexim $(DESTDIR)$(prefix)/lib/svc/method/svc-exim
+	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
+	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
+	(cd $(WORKSRC)/doc; \
+	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
+	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/ChangeLog
+	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/spec.txt

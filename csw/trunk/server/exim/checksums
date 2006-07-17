@@ -5,7 +5,7 @@ b9287ee8bc8043e63e8dd1f0c3fd5c58  download/CSWexim.gspec
 84f769da2068c4400ae9f489af6a6fae  download/CSWexim.postremove
 8475607c59fa3d21a9e0bf3c543f9758  download/CSWexim.preinstall
 52e5fa6be55b10ef3e74f67065256c93  download/CSWexim.preremove
-f0c7456c46118788e8567903759d231b  download/CSWexim.prototype
+e7a05c9cfc1e54d6381c433b6a4d7859  download/CSWexim.prototype
 5e1092887b15ef547a5dd82eabe90a5f  download/CSWexim.request
 3fe0ee355be83c400fc8207760f7090b  files/Makefile.patch
 232afcbf096d506de840e81bbc40777d  files/exim_install.patch
