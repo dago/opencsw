@@ -18,7 +18,7 @@ MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
 	preinstall preremove request)
-DISTFILES += i.smfyes i.smfno space
+DISTFILES += i.smfyes i.smfno space checkinstall
 
 PATCHFILES = Makefile.patch exim_install.patch
 
@@ -75,9 +75,11 @@ post-install:
 	mkdir -p $(DESTDIR)$(prefix)/var/svc/manifest/network
 	cp -p files/exim.xml  $(DESTDIR)$(prefix)/var/svc/manifest/network
 	mkdir -p $(DESTDIR)$(prefix)/lib/svc/method
-	cp -p $(DESTDIR)/etc/init.d/cswexim $(DESTDIR)$(prefix)/lib/svc/method/svc-exim
+	cp -p $(DESTDIR)/etc/init.d/cswexim \
+		$(DESTDIR)$(prefix)/lib/svc/method/svc-exim
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
+	cp -p files/exim-env.sh $(DESTDIR)$(prefix)/etc/exim/exim-env.sh.CSW
 	(cd $(WORKSRC)/doc; \
 	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/ChangeLog

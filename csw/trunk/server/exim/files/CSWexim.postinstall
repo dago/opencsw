@@ -1,6 +1,6 @@
 #!/sbin/sh
 CONFDIR=$BASEDIR/opt/csw/etc/exim
-CONFFILES="aliases"
+CONFFILES="aliases exim.conf exim-env.sh"
 PATH=/bin:/usr/bin:"$PATH"
 export PATH
 

@@ -15,6 +15,7 @@ d none /opt/csw/etc 0755 root bin
 d none /opt/csw/etc/exim 0755 root bin
 f none /opt/csw/etc/exim/aliases.CSW 0644 root bin
 f none /opt/csw/etc/exim/exim.conf.CSW 0644 root bin
+f none /opt/csw/etc/exim/exim-env.sh.CSW 0644 root bin
 d none /opt/csw/sbin ? ? ?
 f none /opt/csw/sbin/exicyclog 0755 root bin
 f none /opt/csw/sbin/exigrep 0755 root bin
@@ -65,6 +66,7 @@ i postinstall=CSWexim.postinstall
 i preremove=CSWexim.preremove
 i postremove=CSWexim.postremove
 i request=CSWexim.request
+i checkinstall
 i i.smfno
 i i.smfyes
 i space
