@@ -1,0 +1,122 @@
+#
+# Copyright 2006 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# preremove script which save the current state of 
+# services (enabled/disabled/...)
+#
+
+# returns the list of manifest file
+get_manifest_list ()
+{
+	if [ -n "$MANIFEST_FILES" ]; then
+		echo "$MANIFEST_FILES"
+		return 0
+	fi
+
+	# we just search for file with class smf and extension xml 
+	# in the list of installed files by this package
+	awk " \$0 ~ / -?$PKG( |$)/ && \$3 == \"smf\" { print \$1 }" "$PKG_INSTALL_ROOT/var/sadm/install/contents" 2>/dev/null | \
+	while read FPATH; do
+		if /usr/bin/echo "$FPATH" | /usr/bin/grep -v "^/" >/dev/null; then	
+			FPATH="$BASEDIR/$FPATH"
+		fi
+		
+		EXT="`/usr/bin/echo $FPATH | /usr/bin/awk -F. '{ print $(NF) }'`"
+		if [ "$EXT" = "xml" ]; then
+			echo $FPATH
+		fi
+	done
+}
+
+
+# returns the list of init scripts
+get_init_list ()
+{
+	if [ -n "$INIT_FILES" ]; then
+		echo "$INIT_FILES"
+		return 0
+	fi
+
+	# we just search for file with class init 
+	# in the list of installed files by this package
+	awk " \$0 ~ / -$PKG( |$)/ && \$3 == \"init\" { print \$1 }" "$PKG_INSTALL_ROOT/var/sadm/install/contents" 2>/dev/null | \
+	while read FPATH; do
+		if /usr/bin/echo "$FPATH" | /usr/bin/grep "^/etc/init.d/" >/dev/null; then	
+			echo "$FPATH"
+		fi
+	done
+}
+
+
+# returns the list of frmi defined in a given manifest file
+get_fmri_list ()
+{
+	chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$1" | awk -F: ' NF > 2 { print $0 }'
+}
+
+
+# returns the current state of the service for smf based launch scripts
+read_smf_service_state ()
+{
+	PERMANENT_STATE=`/usr/sbin/svccfg -s "$1" listprop general/enabled | /usr/bin/awk '{ print $3 }'`
+	if [ "$PERMANENT_STATE" != "true" ]; then
+		PERMANENT_STATE="disabled"
+	else
+		PERMANENT_STATE="enabled"
+	fi
+
+#	TEMPORARY_STATE=`/usr/sbin/svccfg -s "$1" listprop general_ovr/enabled | /usr/bin/awk '{ print $3 }'`
+#	if [ "$TEMPORARY_STATE" != "true" ]; then
+#		TEMPORARY_STATE="disabled"
+#	else
+#		TEMPORARY_STATE="enabled"
+#	fi
+}
+
+read_conf_value () 
+{
+    _VAR="$1"
+    _FILE="$2"
+    eval ${_VAR}=\"`/usr/bin/sed -n -e "/^# *$_VAR:/ s/^.*$_VAR: *\(.*[^ ]\) *$/\1/p" ${_FILE}`\"
+}
+
+
+# save the service state in the state file
+save_service_state ()
+{
+	echo "$1 $PERMANENT_STATE" >> "$STATE_FILE"
+}
+
+
+if [ -z "$PKG_INSTALL_ROOT" ]; then 
+	PKG_INSTALL_ROOT=/
+fi
+
+STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.state" 
+rm -f "$STATE_FILE"
+
+if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/svcadm" ]; then
+
+	get_manifest_list | while read MANIFEST_FILE; do
+		for FMRI in `get_fmri_list "$MANIFEST_FILE"`; do
+			read_smf_service_state "$FMRI"
+			save_service_state "$FMRI"
+			chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI"
+		done
+	done
+
+else
+
+	get_init_list | while read INIT_FILE; do
+		chroot "$PKG_INSTALL_ROOT" "$INIT_FILE" stop
+	done
+
+fi
+
+exit 0

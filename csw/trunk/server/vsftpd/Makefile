@@ -13,15 +13,20 @@ endef
 
 MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWvsftpd,prototype checkinstall preinstall postinstall preremove)
+DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall)
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd vsftpd.xml svc-vsftpd 
-DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
+DISTFILES += i.init r.init i.smf r.smf i.sconf r.sconf
+DISTFILES += csw_smf csw_smf_postinstall csw_smf_preremove csw_smf_checkinstall
+
+#CONF_FILES = /opt/csw/etc/vsftpd/vsftpd.conf
+#INIT_FILES = /etc/init.d/cswvsftpd
+#MANIFEST_FILES = /opt/csw/var/svc/manifest/network/vsftpd.xml
 
 # adding configuration handling classes
 # (init/smf classes are dynamically added in checkinstall)
-SPKG_CLASSES = none conf
+SPKG_CLASSES = none sconf
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -44,15 +49,21 @@ PATCHFILES += tm_gmtoff.patch
 # vsftpd makfile
 PATCHFILES += destdir.patch
 
+# 
+#
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS = fake
 
-GARCOMPILER = GNU
+GARCOMPILER = SUN
 
 ENABLE_TEST = 0
 
 include ../category.mk
 
+PKG_EXPORTS += INIT_FILES MANIFEST_FILES 
+
+# dummyinc must be the last include directory
+# to search
 ifeq ($(GARCOMPILER),GNU)
 CFLAGS += -idirafter dummyinc
 else

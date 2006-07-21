@@ -1,0 +1,170 @@
+#
+# Copyright 2006 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# postinstall script which restore the previous state of 
+# services (enabled/disabled/...)
+#
+
+# returns the list of manifest file
+get_manifest_list ()
+{
+	if [ -n "$MANIFEST_FILES" ]; then
+		echo "$MANIFEST_FILES"
+		return 0
+	fi
+
+	# we just search for file with class smf and extension xml in the prototype/pkgmap file
+	# of the package
+	/usr/bin/awk '{ if ( $3 == "smf" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
+	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
+		if /usr/bin/echo "$FPATH" | /usr/bin/grep -v "^/" >/dev/null; then	
+			FPATH="$BASEDIR/$FPATH"
+		fi
+		
+		EXT="`/usr/bin/echo $FPATH | /usr/bin/awk -F. '{ print $(NF) }'`"
+		if [ "$EXT" = "xml" ]; then
+			echo $FPATH
+		fi
+	done
+}
+
+# returns the list of init scripts
+get_init_list ()
+{
+	if [ -n "$INIT_FILES" ]; then
+		echo "$INIT_FILES"
+		return 0
+	fi
+
+	# we just search for file with class init in the prototype/pkgmap file
+	# of the package
+	/usr/bin/awk '{ if ( $3 == "init" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
+	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
+		if /usr/bin/echo "$FPATH" | /usr/bin/grep "^/etc/init.d/" >/dev/null; then	
+			echo "$FPATH"
+		fi
+	done
+}
+
+# returns the list of frmi defined in a given manifest file
+get_fmri_list ()
+{
+	chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$1" | awk -F: ' NF > 2 { print $0 }'
+}
+
+
+# retrieve the previous state of a service
+load_smf_service_state ()
+{
+	SERVICE_STATE="disabled"
+
+	if [ -f "$STATE_FILE" ]; then
+		set -- `/usr/bin/awk " \\\$1 == \"$1\" { print \\\$2 } " "$STATE_FILE"`
+		if [ "$1" = "enabled" ]; then
+			SERVICE_STATE="enabled"
+		fi
+		return 0
+	fi
+	return 1
+}
+
+# retrieve the previous state of a service
+load_init_service_state ()
+{
+	_INIT_FILE="$1"
+	SERVICE_STATE="disabled"
+
+	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
+	# we just search for any startup script in runlevels
+	if [ -n "`/usr/bin/find -L /etc/rc[S0-6].d -inum \"$_INUM\" -name \"S??*\"`" ]; then
+		SERVICE_STATE="enabled"
+	fi		
+}
+
+
+# retrieve the autoenable value for the given service
+get_autoenable ()
+{
+	SERVICE_STATE="enabled"
+
+	for _FILE in /opt/csw/etc/csw.conf /etc/opt/csw/csw.conf; do
+		if [ -f "$PKG_INSTALL_ROOT/$_FILE" ]; then
+			. "$PKG_INSTALL_ROOT/$_FILE"
+			if [ -n "$1" ]; then
+				eval SERVICE_STATE=$$autoenable_$1
+			fi
+			if [ -z "$SERVICE_STATE" ]; then
+				SERVICE_STATE="$autoenable_daemons"
+			fi
+		fi
+	done
+
+	if [ "$SERVICE_STATE" != "no" ]; then
+		SERVICE_STATE="enabled"
+		return 0
+	else
+		SERVICE_STATE="disabled"
+		return 1
+	fi
+}
+
+
+
+if [ -z "$PKG_INSTALL_ROOT" ]; then 
+	PKG_INSTALL_ROOT=/
+fi
+
+
+# is SMF available ?
+if [ "$SMF" = "yes" ]; then
+
+	STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.state" 
+
+	get_manifest_list | while read MANIFEST_FILE; do
+		for FMRI in `get_fmri_list "$MANIFEST_FILE"`; do
+			load_smf_service_state "$FMRI"
+			# no previous service state, so we rely on autoenable
+			# configuration variable, if this service can be autoenabled !
+			if [ "$?" -ne 0 ] && [ "$CAN_BE_AUTOENABLED" != "no" ]; then
+				get_autoenable
+			fi	
+
+			if [ "$SERVICE_STATE" = "enabled" ]; then
+				chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm enable "$FMRI" >/dev/null 2>&1
+			else
+				chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI" >/dev/null 2>&1
+			fi
+		done
+	done
+
+	rm -f "$STATE_FILE"
+
+else
+	get_init_list | while read INIT_FILE; do
+		load_init_service_state "$INIT_FILE"
+		if [ "$SERVICE_STATE" = "enabled" ]; then
+			if get_autoenable; then
+				if [ "$CAN_BE_AUTOENABLED" != "no" ]; then
+					# we copy the configuration file to be able 
+					# to enable the service
+					for CONF_FILE in $SERVICE_CONF_FILES; do
+						if [ ! -f $CONF_FILE ]; then
+							cp ${CONF_FILE}.CSW $CONF_FILE
+						fi
+					done
+				fi
+				chroot "$PKG_INSTALL_ROOT" "$INIT_FILE" start
+			fi
+		fi
+	done
+
+fi
+
+
+exit 0

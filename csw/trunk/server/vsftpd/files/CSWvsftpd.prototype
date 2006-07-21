@@ -4,8 +4,8 @@ i i.smf
 i r.smf
 e init /etc/init.d/cswvsftpd 0755 root sys
 d none /opt/csw/etc/vsftpd 0755 root bin
-e conf /opt/csw/etc/vsftpd/vsftpd.conf 0755 root bin
-e conf /opt/csw/etc/vsftpd/vsftpd.userlist 0755 root bin
+e sconf /opt/csw/etc/vsftpd/vsftpd.conf 0755 root bin
+e sconf /opt/csw/etc/vsftpd/vsftpd.userlist 0755 root bin
 f none /opt/csw/sbin/vsftpd 0755 root bin
 d none /opt/csw/share/doc/vsftpd 0755 root bin
 f none /opt/csw/share/doc/vsftpd/README.CSW 0755 root bin

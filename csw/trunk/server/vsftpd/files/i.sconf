@@ -1,0 +1,34 @@
+# PKGINST parameter provided by installation service
+umask 0022
+
+while read SRC DEST; do
+  if [ ! -f "${PKG_INSTALL_ROOT}/$DEST" ] && [ "$SMF" = "yes" ]; then
+      # with smf we can install configuration file with real filename as
+      # we can just disable service launch
+      cp "$SRC" "${PKG_INSTALL_ROOT}/$DEST"
+  else
+      cp "$SRC" "${PKG_INSTALL_ROOT}/$DEST.CSW"
+  fi
+done
+
+# Unfortunately pkgadd doesn't backup the source file if the destination file is identical.
+# It's a problem with zones installation where pkgadd try to find the backup files, so
+# we do the backup manually
+awk '{ if ( $3 == "conf" ) print $2,$3,$4,$5,$6,$7  }' $INST_DATADIR/$PKG/pkgmap | \
+    while read FTYPE CLASS FPATH MODE OWNER GROUP; do
+        if echo $FPATH | grep "^/" >/dev/null; then
+            INST_PATH="$INST_DATADIR/$PKG/root/$FPATH"
+            SAVE_PATH="$PKGSAV/pspool/$PKG/root/$FPATH"
+        else
+            INST_PATH="$INST_DATADIR/$PKG/reloc/$FPATH"
+            SAVE_PATH="$PKGSAV/pspool/$PKG/reloc/$FPATH"
+        fi
+
+        if [ ! -f "$SAVE_PATH" ]; then
+            mkdir -p "`LANG=C dirname $SAVE_PATH`"
+            cp "$INST_PATH" "$SAVE_PATH"
+        fi
+     done
+
+exit 0
+

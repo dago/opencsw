@@ -8,12 +8,13 @@
 # software causes damage.
 #
 # r.init - class script which remove init.d script and runlevels
-#          symlinks
+#          symlinks and save symlinks modification if any
 #
 set -x
 umask 0022
 LANG=C
 export LANG
+
 
 read_conf_value () 
 {
@@ -23,28 +24,71 @@ read_conf_value ()
 }
 
 
-while read DEST; do
-	SERVICENAME=`/usr/bin/basename $DEST`
+read_init_info ()
+{
+	_INIT_FILE="$1"
+	# we just search for all files referencing the init scripts
+	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
+	/usr/bin/find -L /etc/rc[S0-6].d -inum "$_INUM" | while read _RCLINK; do
+		_LEVEL=`echo $_RCLINK | cut -b8`
+		_PRIORITY=`echo $_RCLINK | cut -b12-14` 		
+		printf "$_LEVEL $_PRIORITY "
+	done
+	printf "\n"
+}
 
-	read_conf_value chkconfig "$DEST"
+# save the state of a service
+save_init_info ()
+{
+	_INIT_FILE="$1"
+	_INIT_INFO_FILE="$2"
+
+	_DEFAULT_INIT_INFO=""
+	_INIT_INFO=""
+
+	# we read chkconfig init info to check if runlevels symlinks
+	# have been changed from the default setup
+	read_conf_value chkconfig "$_INIT_FILE"
 	set -- $chkconfig
 
 	RUNLEVEL="$1"
 	START_PRIORITY_LEVEL="$2"
 	STOP_PRIORITY_LEVEL="$3"
 
-	for LEVEL in 0 1 2 3 S; do
-		_LEVELDIR="/etc/rc${LEVEL}.d"
-		if echo "${RUNLEVEL}" | grep "${LEVEL}" >/dev/null; then
-			if [ -f "$_LEVELDIR/S${START_PRIORITY_LEVEL}${SERVICENAME}" ]; then
-				rm "$_LEVELDIR/S${START_PRIORITY_LEVEL}${SERVICENAME}"
-			fi
+	for _LEVEL in 0 1 2 3 S; do
+		if echo "${RUNLEVEL}" | grep "${_LEVEL}" >/dev/null; then
+			_DEFAULT_INIT_INFO="$_DEFAULT_INIT_INFO $_LEVEL S$START_PRIORITY_LEVEL"	
 		else
-			if [ -f "$_LEVELDIR/K${STOP_PRIORITY_LEVEL}${SERVICENAME}" ]; then 
-				rm "$_LEVELDIR/K${STOP_PRIORITY_LEVEL}${SERVICENAME}"
-			fi
+			_DEFAULT_INIT_INFO="$_DEFAULT_INIT_INFO $_LEVEL K$START_PRIORITY_LEVEL"	
 		fi
 	done
+
+	_INIT_INFO="`read_init_info \"$_INIT_FILE\"`"
+
+	if [ " $_INIT_INFO" != "$_DEFAULT_INIT_INFO " ]; then
+		echo "$_INIT_FILE $_INIT_INFO" >> "$_INIT_INFO_FILE"
+	fi
+}
+
+# delete all runlevels symlinks for the given init script
+delete_runlevel_symlinks ()
+{
+	_INIT_FILE="$1"
+
+	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
+	/usr/bin/find -L /etc/rc[S0-6].d -inum "$_INUM" -exec rm '{}' ';'
+}
+
+INIT_INFO_FILE="/var/tmp/$PKG.initinfo"
+rm -f "$INIT_INFO_FILE"
+
+while read DEST; do
+	if [ -z "$DEST" ]; then
+		continue
+	fi
+
+	save_init_info "$DEST" "$INIT_INFO_FILE"	
+	delete_runlevel_symlinks "$DEST"
 
 	rm "$DEST"
 done
