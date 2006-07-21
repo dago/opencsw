@@ -16,9 +16,8 @@ PERL5"=/opt/csw/bin/perl"
 CFLAGS=-xlibmil
 CXXFLAGS="-xlibmil -xlibmopt -features=tmplife -norunpath"
 LDFLAGS="-R'\$\$ORIGIN:\$\$ORIGIN/..' -L/opt/csw/lib -R/opt/csw/lib"
-LD_OPTIONS=-lsunmath
 
-export PERL PERL5 CFLAGS CXXFLAGS LDFLAGS LD_OPTIONS
+export PERL PERL5 CFLAGS CXXFLAGS LDFLAGS
 
 CONFIGURE_ARGS = --prefix=/opt/csw/libexec/firefox
 
