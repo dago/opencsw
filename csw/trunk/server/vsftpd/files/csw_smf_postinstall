@@ -43,7 +43,7 @@ load_init_service_state ()
 
 	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
 	# we just search for any startup script in runlevels
-	if [ -n "`/usr/bin/find -L /etc/rc[S0-6].d -inum \"$_INUM\" -name \"S??*\"`" ]; then
+	if [ -n "`/usr/bin/find /etc/rc[S0-6].d -follow -inum \"$_INUM\" -name \"S??*\"`" ]; then
 		SERVICE_STATE="enabled"
 	fi		
 }
@@ -85,7 +85,7 @@ fi
 # is SMF available ?
 if [ "$SMF" = "yes" ]; then
 
-	STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.state" 
+	STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.smfinfo" 
 
 	for FILE in $MANIFEST_FILES; do
 		for FMRI in `get_fmri_list "$FILE"`; do
@@ -116,11 +116,11 @@ if [ "$SMF" = "yes" ]; then
 
 else
 	for FILE in $INIT_FILES; do
-		load_init_service_state "$INIT_FILE"
+		load_init_service_state "$FILE"
 		if [ "$SERVICE_STATE" = "enabled" ]; then
 			if get_autoenable; then
 				if [ "$CAN_BE_AUTOENABLED" != "no" ]; then
-					# we copy the configuration file to be able 
+					# we copy the service configuration file to be able 
 					# to enable the service
 					for CONF_FILE in $SERVICE_CONF_FILES; do
 						if [ ! -f $CONF_FILE ]; then
@@ -128,7 +128,7 @@ else
 						fi
 					done
 				fi
-				chroot "$PKG_INSTALL_ROOT" "$INIT_FILE" start
+				chroot "$PKG_INSTALL_ROOT" "$FILE" start
 			fi
 		fi
 	done

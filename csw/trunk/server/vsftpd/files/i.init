@@ -10,7 +10,6 @@
 # i.init - class script which install init.d script and runlevels
 #          symlinks
 #
-set -x
 umask 0022
 LANG=C
 export LANG

@@ -95,7 +95,7 @@ post-install:
 	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.init
 	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
 	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
-	ginstall -D $(WORKDIR)/vsftpd.conf $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.conf
+	ginstall -D $(WORKDIR)/vsftpd.conf $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.conf.CSW
 	ginstall -D $(WORKDIR)/vsftpd.userlist $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.userlist
 	ginstall -D $(WORKDIR)/vsftpd.xml $(DESTDIR)$(localstatedir)/svc/manifest/network/vsftpd.xml
 	ginstall -D $(WORKDIR)/svc-vsftpd $(DESTDIR)$(libdir)/svc/method/svc-vsftpd

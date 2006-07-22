@@ -55,7 +55,7 @@ if [ -z "$PKG_INSTALL_ROOT" ]; then
 	PKG_INSTALL_ROOT=/
 fi
 
-STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.state" 
+STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.smfinfo" 
 rm -f "$STATE_FILE"
 
 if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/svcadm" ]; then
@@ -70,7 +70,7 @@ if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/sv
 
 else
 	for FILE in $INIT_FILES; do
-		chroot "$PKG_INSTALL_ROOT" "$INIT_FILE" stop
+		chroot "$PKG_INSTALL_ROOT" "$FILE" stop
 	done
 
 fi

@@ -10,7 +10,6 @@
 # r.init - class script which remove init.d script and runlevels
 #          symlinks and save symlinks modification if any
 #
-set -x
 umask 0022
 LANG=C
 export LANG
@@ -29,7 +28,7 @@ read_init_info ()
 	_INIT_FILE="$1"
 	# we just search for all files referencing the init scripts
 	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
-	/usr/bin/find -L /etc/rc[S0-6].d -inum "$_INUM" | while read _RCLINK; do
+	/usr/bin/find /etc/rc[S0-6].d -follow -inum "$_INUM" | while read _RCLINK; do
 		_LEVEL=`echo $_RCLINK | cut -b8`
 		_PRIORITY=`echo $_RCLINK | cut -b12-14` 		
 		printf "$_LEVEL $_PRIORITY "
@@ -76,7 +75,7 @@ delete_runlevel_symlinks ()
 	_INIT_FILE="$1"
 
 	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
-	/usr/bin/find -L /etc/rc[S0-6].d -inum "$_INUM" -exec rm '{}' ';'
+	/usr/bin/find /etc/rc[S0-6].d -follow -inum "$_INUM" -exec rm '{}' ';'
 }
 
 INIT_INFO_FILE="/var/tmp/$PKG.initinfo"
