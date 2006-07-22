@@ -11,46 +11,6 @@
 # services (enabled/disabled/...)
 #
 
-# returns the list of manifest file
-get_manifest_list ()
-{
-	if [ -n "$MANIFEST_FILES" ]; then
-		echo "$MANIFEST_FILES"
-		return 0
-	fi
-
-	# we just search for file with class smf and extension xml in the prototype/pkgmap file
-	# of the package
-	/usr/bin/awk '{ if ( $3 == "smf" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
-	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
-		if /usr/bin/echo "$FPATH" | /usr/bin/grep -v "^/" >/dev/null; then	
-			FPATH="$BASEDIR/$FPATH"
-		fi
-		
-		EXT="`/usr/bin/echo $FPATH | /usr/bin/awk -F. '{ print $(NF) }'`"
-		if [ "$EXT" = "xml" ]; then
-			echo $FPATH
-		fi
-	done
-}
-
-# returns the list of init scripts
-get_init_list ()
-{
-	if [ -n "$INIT_FILES" ]; then
-		echo "$INIT_FILES"
-		return 0
-	fi
-
-	# we just search for file with class init in the prototype/pkgmap file
-	# of the package
-	/usr/bin/awk '{ if ( $3 == "init" ) print $2,$3,$4,$5,$6,$7  }' "$INST_DATADIR/$PKG/pkgmap" | \
-	while read FTYPE CLASS FPATH MODE OWNER GROUP; do
-		if /usr/bin/echo "$FPATH" | /usr/bin/grep "^/etc/init.d/" >/dev/null; then	
-			echo "$FPATH"
-		fi
-	done
-}
 
 # returns the list of frmi defined in a given manifest file
 get_fmri_list ()
@@ -73,6 +33,7 @@ load_smf_service_state ()
 	fi
 	return 1
 }
+
 
 # retrieve the previous state of a service
 load_init_service_state ()
@@ -126,14 +87,22 @@ if [ "$SMF" = "yes" ]; then
 
 	STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.state" 
 
-	get_manifest_list | while read MANIFEST_FILE; do
-		for FMRI in `get_fmri_list "$MANIFEST_FILE"`; do
+	for FILE in $MANIFEST_FILES; do
+		for FMRI in `get_fmri_list "$FILE"`; do
 			load_smf_service_state "$FMRI"
 			# no previous service state, so we rely on autoenable
 			# configuration variable, if this service can be autoenabled !
 			if [ "$?" -ne 0 ] && [ "$CAN_BE_AUTOENABLED" != "no" ]; then
 				get_autoenable
 			fi	
+
+			# we copy the configuration file to be able 
+			# to enable the service
+			for CONF_FILE in $SERVICE_CONF_FILES; do
+				if [ ! -f $CONF_FILE ]; then
+					cp ${CONF_FILE}.CSW $CONF_FILE
+				fi
+			done
 
 			if [ "$SERVICE_STATE" = "enabled" ]; then
 				chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm enable "$FMRI" >/dev/null 2>&1
@@ -146,7 +115,7 @@ if [ "$SMF" = "yes" ]; then
 	rm -f "$STATE_FILE"
 
 else
-	get_init_list | while read INIT_FILE; do
+	for FILE in $INIT_FILES; do
 		load_init_service_state "$INIT_FILE"
 		if [ "$SERVICE_STATE" = "enabled" ]; then
 			if get_autoenable; then

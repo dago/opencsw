@@ -17,8 +17,6 @@
 # /opt/csw/lib/svc
 # /opt/csw/lib/svc/method
 # /opt/csw/lib/svc/method/svc-softname
-set -x
-
 if [ -z "$PKG_INSTALL_ROOT" ]; then
 	PKG_INSTALL_ROOT="/"
 fi

@@ -17,7 +17,7 @@ DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall)
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd vsftpd.xml svc-vsftpd 
-DISTFILES += i.init r.init i.smf r.smf i.sconf r.sconf
+DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
 DISTFILES += csw_smf csw_smf_postinstall csw_smf_preremove csw_smf_checkinstall
 
 #CONF_FILES = /opt/csw/etc/vsftpd/vsftpd.conf
@@ -26,7 +26,7 @@ DISTFILES += csw_smf csw_smf_postinstall csw_smf_preremove csw_smf_checkinstall
 
 # adding configuration handling classes
 # (init/smf classes are dynamically added in checkinstall)
-SPKG_CLASSES = none sconf
+SPKG_CLASSES = none conf
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -91,8 +91,10 @@ post-install:
 	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
 	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
-	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.smf
-	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.smf
+	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.init
+	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.init
+	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
+	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
 	ginstall -D $(WORKDIR)/vsftpd.conf $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.conf
 	ginstall -D $(WORKDIR)/vsftpd.userlist $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.userlist
 	ginstall -D $(WORKDIR)/vsftpd.xml $(DESTDIR)$(localstatedir)/svc/manifest/network/vsftpd.xml
