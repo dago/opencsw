@@ -1,5 +1,5 @@
 GARNAME = vsftpd
-GARVERSION = 2.0.4
+GARVERSION = 2.0.5
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast GPL'd FTP server.
@@ -43,7 +43,8 @@ PATCHFILES += csw_build_system.patch
 
 # patch to workaround the fact that 
 # solaris libc doesn t have tm_gmtoff
-PATCHFILES += tm_gmtoff.patch
+# update: not useful anymore since 2.0.5
+# PATCHFILES += tm_gmtoff.patch
 
 # patch to add DESTDIR support to 
 # vsftpd makfile
