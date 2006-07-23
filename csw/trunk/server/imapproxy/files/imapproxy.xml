@@ -52,21 +52,14 @@ Modified for CSWimapproxy by Yann Rouillard 07/06
 			<exec_method
 				type='method'
 				name='start'
-				exec='/opt/csw/lib/svc/method/svc-imapproxy start'
+				exec='/opt/csw/sbin/in.imapproxyd'
 				timeout_seconds='-1'>
 			</exec_method>
 
 			<exec_method
 				type='method'
 				name='stop'
-				exec='/opt/csw/lib/svc/method/svc-imapproxy stop'
-				timeout_seconds='-1'>
-			</exec_method>
-
-			<exec_method
-				type='method'
-				name='restart'
-				exec='/opt/csw/lib/svc/method/svc-imapproxy restart'
+				exec=':kill'
 				timeout_seconds='-1'>
 			</exec_method>
 		</instance>

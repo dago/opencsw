@@ -42,13 +42,13 @@ ENABLE_TEST = 0
 include ../category.mk
 
 post-install:
-	ginstall -d $(DESTDIR)/etc/init.d $(DESTDIR)/etc/rc2.d $(DESTDIR)/etc/rc0.d
-	rm -rf $(DESTDIR)/etc/rc2.d/*imapproxy $(DESTDIR)/etc/rc0.d/*imapproxy
+	ginstall -d $(DESTDIR)/etc/init.d 
 	ginstall -d $(DESTDIR)$(sysconfdir)
-	@( cd $(WORKSRC); $(MAKE) DESTDIR=$(DESTDIR) install-conf install-init )
 	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 	ginstall -D $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(GARNAME)/ChangeLog
 	ginstall -D $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)/README
+	ginstall -D $(WORKSRC)/README.known_issues $(DESTDIR)$(docdir)/$(GARNAME)/README.known_issues
+	ginstall -D $(WORKSRC)/README.ssl $(DESTDIR)$(docdir)/$(GARNAME)/README.ssl
 	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
 	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
 	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.init

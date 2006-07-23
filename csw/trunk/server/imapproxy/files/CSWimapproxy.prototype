@@ -16,4 +16,3 @@ d smf /opt/csw/var/svc/manifest/network 0755 root bin
 e smf /opt/csw/var/svc/manifest/network/imapproxy.xml 0644 root bin
 d smf /opt/csw/lib/svc 0755 root bin
 d smf /opt/csw/lib/svc/method 0755 root bin
-f smf /opt/csw/lib/svc/method/svc-imapproxy 0755 root bin
