@@ -1,4 +1,4 @@
-vsftpd (2.0.4,REV=2006.07.23) unstable
+vsftpd (2.0.5,REV=2006.07.23) unstable
 
   * New upstream version.
   * Added smf and csw.conf support.
