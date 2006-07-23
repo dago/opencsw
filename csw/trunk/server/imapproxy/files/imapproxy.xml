@@ -25,6 +25,13 @@ Modified for CSWimapproxy by Yann Rouillard 07/06
 				<service_fmri value='svc:/system/filesystem/local' />
 			</dependency>
 
+			<dependency name='network-service'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/network/service' />
+			</dependency>
+			    
 			<dependency name='net'
 				grouping='require_all'
 				restart_on='none'
@@ -53,7 +60,7 @@ Modified for CSWimapproxy by Yann Rouillard 07/06
 				type='method'
 				name='start'
 				exec='/opt/csw/sbin/in.imapproxyd'
-				timeout_seconds='-1'>
+				timeout_seconds='60'>
 			</exec_method>
 
 			<exec_method
