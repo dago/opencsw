@@ -941,7 +941,6 @@ f none /opt/csw/share/errors/Turkish/ERR_WRITE_ERROR 0644 root bin
 f none /opt/csw/share/errors/Turkish/ERR_ZERO_SIZE_OBJECT 0644 root bin
 d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/RunCache 0755 root bin
-f none /opt/csw/bin/RunAccel 0755 root bin
 f none /opt/csw/bin/squidclient 0755 root bin
 d none /opt/csw/sbin 0755 root bin
 f none /opt/csw/sbin/squid 0755 root bin
@@ -952,7 +951,6 @@ f none /opt/csw/libexec/cachemgr.cgi 0755 root bin
 f none /opt/csw/libexec/squid_ldap_auth 0755 root bin
 f none /opt/csw/libexec/smb_auth 0755 root bin
 f none /opt/csw/libexec/smb_auth.sh 0755 root bin
-f none /opt/csw/libexec/wb_auth 0755 root bin
 f none /opt/csw/libexec/yp_auth 0755 root bin
 f none /opt/csw/libexec/pam_auth 0755 root bin
 f none /opt/csw/libexec/sasl_auth 0755 root bin

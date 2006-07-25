@@ -1,5 +1,5 @@
 GARNAME = squid
-GARVERSION = 2.5.STABLE14
+GARVERSION = 2.6.STABLE1
 CATEGORIES = server
 
 SPKG_PKGNAME = CSWsquid
@@ -12,9 +12,9 @@ define BLURB
   bandwith usage. Squid runs on all popular Unix and Windows platforms.
 endef
 
-MASTER_SITES = http://www.squid-cache.org/Versions/v2/2.5/
+MASTER_SITES = http://www.squid-cache.org/Versions/v2/2.6/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWsquid, depend copyright prototype postinstall preremove)
+DISTFILES += $(call admfiles,CSWsquid, depend prototype copyright postinstall preremove)
 
 CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --with-large-files
@@ -27,12 +27,12 @@ CONFIGURE_ARGS += --enable-referer-log
 CONFIGURE_ARGS += --enable-arp-acl
 CONFIGURE_ARGS += --enable-snmp
 CONFIGURE_ARGS += --enable-auth=basic
-CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,winbind,YP,PAM,SASL,NCSA
+CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
 
 TEST_TARGET = check
 
 include ../category.mk
 
 post-install:
-	( cp -r $(WORKSRC)/../../../files/etc $(DESTDIR)/etc )
+	( cp -r $(FILEDIR)/etc $(DESTDIR)/etc )
 	@$(MAKECOOKIE)
