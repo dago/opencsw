@@ -20,7 +20,7 @@ DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcyrusimapd,prototype)
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += i.services r.services services
-DISTFILES += i.init r.init i.smf r.smf
+DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
 DISTFILES += cswcyrus
 DISTFILES += imapd.conf cyrus.conf
 
@@ -101,8 +101,8 @@ post-install:
 
 	# we install the documentation
 	cp -r $(WORKSRC)/doc/* $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd
-	cp $(WORKSRC)/changelog.CSW $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd/changelog.CSW
-	cp $(WORKSRC)/README.CSW $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd/README.CSW
+	cp $(WORKDIR)/changelog.CSW $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd/changelog.CSW
+	cp $(WORKDIR)/README.CSW $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd/README.CSW
 
 	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
 	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
@@ -125,8 +125,8 @@ post-install:
 	  done )
 	
 	# we install the default config files
-	ginstall -D $(WORKDIR)/imapd.conf $(DESTDIR)/$(sysconfdir)/imapd.conf
-	ginstall -D $(WORKDIR)/cyrus.conf $(DESTDIR)/$(sysconfdir)/cyrus.conf.CSW
+	ginstall -D $(WORKDIR)/imapd.conf $(DESTDIR)/$(sysconfdir)/cyrus/imapd.conf
+	ginstall -D $(WORKDIR)/cyrus.conf $(DESTDIR)/$(sysconfdir)/cyrus/cyrus.conf.CSW
 
 #	mkdir -p $(DESTDIR)/$(prefix)/share/doc/cyrus_inratools
 #	cp $(WORKSRC)/cyrus_inratools.changelog $(DESTDIR)/$(prefix)/share/doc/cyrus_inratools/changelog.CSW

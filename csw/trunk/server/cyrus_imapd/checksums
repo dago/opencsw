@@ -10,6 +10,8 @@ d9be2b23e852ede317e260b919e10dda  download/i.init
 5c1a4a41808b1fa66f8aac60bd4606f6  download/r.init
 9ee1892b4dc5d781d032b865340fdae7  download/i.smf
 c1303341cc11640a4433a22b9abd3241  download/r.smf
+0a8cf43a62fbd5d640220039b838bfad  download/i.conf
+5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
 e4cd161888033ec9c49380ac05040302  download/cswcyrus
 c2226f19a4ab3fbea61204b31785d598  download/imapd.conf
 fdb3416ec41f3a56d1594ca25a6dcd7d  download/cyrus.conf
