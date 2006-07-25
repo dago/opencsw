@@ -24,6 +24,9 @@ DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
 DISTFILES += cswcyrus
 DISTFILES += imapd.conf cyrus.conf
 
+DISTFILES += $(call admfiles,CSWpmcyrus,prototype,depend)
+
+
 SPKG_CLASSES = services
 
 # University of Athens patchs to allow autocreation of mailboxes
