@@ -36,7 +36,7 @@ Sender Policy Framework (SPF)
 -----------------------------
 
 Releases 4.43-4.51 of the Exim package support the Sender Policy
-Framework (SPF) based on libspf2-1.0.0. Later release are using
+Framework (SPF) based on libspf2-1.0.0. Later releases are using
 libspf2-1.2.x. (There has been an API change between libspf2-1.0.x and
 libspf2-1.2.x.)
 
