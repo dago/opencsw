@@ -6,7 +6,7 @@
 #
 
 # chkconfig stuff
-# chkconfig: 2 85 15
+# chkconfig: 3 85 15
 # description: a very secure and fast GPL'd FTP server
  
 ################################
