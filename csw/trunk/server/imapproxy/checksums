@@ -3,10 +3,10 @@ bacfa0d91dd78060de9edf9b2a3e7bf4  download/CSWimapproxy.gspec
 8561d6888054b81f0281986a9057a0d8  download/CSWimapproxy.prototype
 5d51df28803c859277b7f6c3b68acf9e  download/imapproxy.conf
 a69b7d2ccc689b73714743686c4655f8  download/changelog.CSW
-b214d6b5d3df0e6f3ed65e037d2508dd  download/cswimapproxy
+5f24584e01cbf3b9f6afc8c016aee825  download/cswimapproxy
 2d586e6018bd82b6ac4c49b75ff837ad  download/imapproxy.xml
 d41d8cd98f00b204e9800998ecf8427e  download/svc-imapproxy
-d9be2b23e852ede317e260b919e10dda  download/i.init
+5793acaf39773a2c005c32235b82b5ca  download/i.init
 5c1a4a41808b1fa66f8aac60bd4606f6  download/r.init
 9ee1892b4dc5d781d032b865340fdae7  download/i.smf
 c1303341cc11640a4433a22b9abd3241  download/r.smf

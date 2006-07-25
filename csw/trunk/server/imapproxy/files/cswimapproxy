@@ -3,7 +3,7 @@
 #
 
 # chkconfig stuff
-# chkconfig: 2 99 10
+# chkconfig: 3 99 10
 # description: A caching IMAP proxy server
  
 ################################
