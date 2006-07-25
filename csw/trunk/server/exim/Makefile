@@ -20,7 +20,7 @@ DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
 	preinstall preremove request)
 DISTFILES += i.smfyes i.smfno space checkinstall
 
-PATCHFILES = Makefile.patch exim_install.patch
+PATCHFILES = Makefile.patch exim_install.patch spf2.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -28,10 +28,14 @@ LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 EXIM_VERSION = $(GARVERSION)
 export EXIM_VERSION
 
+# This is needed for the SPF2 workaround:
+PWD = $(shell pwd)
+
 # Local/Makefile has been patched to use these:
 CSW_CC = $(SUN_CC)
 CSW_OPT = $(SUN_CC_OPT)
-export CSW_CC CSW_OPT
+CSW_WORKSRC = $(PWD)/$(WORKSRC)
+export CSW_CC CSW_OPT CSW_WORKSRC
 
 # exim doesn't use configure
 CONFIGURE_SCRIPTS =
@@ -51,7 +55,9 @@ include ../category.mk
 pre-patch:
 	(cd $(WORKSRC); \
 	test -r Local/Makefile || cp -p src/EDITME Local/Makefile; \
-	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf)
+	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf; \
+	test -d spf2 || cp -pr /opt/csw/include/spf2 .)
+
 post-patch:
 	(cd $(WORKSRC); make makefile)
 

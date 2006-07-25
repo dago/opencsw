@@ -1,16 +1,20 @@
 --- exim-4.62.orig/Local/Makefile	2006-04-28 03:32:22.000000000 -0700
-+++ exim-4.62/Local/Makefile	2006-06-19 21:35:06.405133000 -0700
-@@ -3,6 +3,9 @@
- ##################################################
++++ exim-4.62/Local/Makefile	2006-07-22 10:01:58.914985000 -0700
+@@ -4,6 +4,13 @@
  #          The Exim mail transport agent         #
  ##################################################
-+CC=$(CSW_CC)
-+CFLAGS=-DHAVE_NS_TYPE -I/opt/csw/include $(CSW_OPT)
-+LDFLAGS=-R/opt/csw/mysql4/lib/mysql -R/opt/csw/postgresql/lib
  
++# -I (CSW_WORKSRC).. is needed for the SPF2 hack (to pick up patched SPF2
++# headers locally)
++
++CC=$(CSW_CC)
++CFLAGS=-DHAVE_NS_TYPE -I$(CSW_WORKSRC) -I/opt/csw/include $(CSW_OPT)
++LDFLAGS=-R/opt/csw/mysql4/lib/mysql -R/opt/csw/postgresql/lib
++
  # This is the template for Exim's main build-time configuration file. It
  # contains settings that are independent of any operating system. These are
-@@ -100,7 +103,7 @@
+ # things that are mostly sysadmin choices. The items below are divided into
+@@ -100,7 +107,7 @@
  # /usr/local/sbin. The installation script will try to create this directory,
  # and any superior directories, if they do not exist.
  
@@ -19,7 +23,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -116,7 +119,7 @@
+@@ -116,7 +123,7 @@
  # don't exist. It will also install a default runtime configuration if this
  # file does not exist.
  
@@ -28,7 +32,7 @@
  
  # It is possible to specify a colon-separated list of files for CONFIGURE_FILE.
  # In this case, Exim will use the first of them that exists when it is run.
-@@ -134,7 +137,7 @@
+@@ -134,7 +141,7 @@
  # owner of a local mailbox.) Specifying these values as root is very strongly
  # discouraged.
  
@@ -37,7 +41,7 @@
  
  # If you specify EXIM_USER as a name, this is looked up at build time, and the
  # uid number is built into the binary. However, you can specify that this
-@@ -176,13 +179,14 @@
+@@ -176,13 +183,14 @@
  
  # Almost all installations choose this:
  
@@ -53,7 +57,7 @@
  
  # If you need extra header file search paths on all compiles, put the -I
  # options in INCLUDE.  If you want the extra searches only for certain
-@@ -214,7 +218,7 @@
+@@ -214,7 +222,7 @@
  
  # This one is very special-purpose, so is not included by default.
  
@@ -62,7 +66,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -235,7 +239,7 @@
+@@ -235,7 +243,7 @@
  # This one is special-purpose, and commonly not required, so it is not
  # included by default.
  
@@ -71,7 +75,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -244,9 +248,9 @@
+@@ -244,9 +252,9 @@
  # MBX, is included only when requested. If you do not know what this is about,
  # leave these settings commented out.
  
@@ -84,7 +88,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -261,17 +265,17 @@
+@@ -261,17 +269,17 @@
  LOOKUP_DBM=yes
  LOOKUP_LSEARCH=yes
  
@@ -111,7 +115,7 @@
  # LOOKUP_SQLITE=yes
  # LOOKUP_WHOSON=yes
  
-@@ -294,7 +298,7 @@
+@@ -294,7 +302,7 @@
  # LDAP_LIB_TYPE=OPENLDAP1
  # LDAP_LIB_TYPE=OPENLDAP2
  # LDAP_LIB_TYPE=NETSCAPE
@@ -120,7 +124,7 @@
  
  # If you don't set any of these, Exim assumes the original University of
  # Michigan (OpenLDAP 1) library.
-@@ -306,11 +310,12 @@
+@@ -306,11 +314,12 @@
  # the command for linking Exim itself, not on any auxiliary programs. You
  # don't need to set LOOKUP_INCLUDE if the relevant directories are already
  # specified in INCLUDE. The settings below are just examples; -lpq is for
@@ -136,7 +140,7 @@
  
  #------------------------------------------------------------------------------
  # Compiling the Exim monitor: If you want to compile the Exim monitor, a
-@@ -322,7 +327,6 @@
+@@ -322,7 +331,6 @@
  
  EXIM_MONITOR=eximon.bin
  
@@ -144,7 +148,7 @@
  #------------------------------------------------------------------------------
  # Compiling Exim with content scanning support: If you want to compile Exim
  # with support for message body content scanning, set WITH_CONTENT_SCAN to
-@@ -330,14 +334,14 @@
+@@ -330,14 +338,14 @@
  # and the MIME ACL. Please read the documentation to learn more about these
  # features.
  
@@ -161,7 +165,22 @@
  
  #------------------------------------------------------------------------------
  # Compiling Exim with experimental features. These are documented in
-@@ -440,6 +444,7 @@
+@@ -348,9 +356,11 @@
+ # installed on your system (www.libspf2.org). Depending on where it is installed
+ # you may have to edit the CFLAGS and LDFLAGS lines.
+ 
+-# EXPERIMENTAL_SPF=yes
+-# CFLAGS  += -I/usr/local/include
+-# LDFLAGS += -lspf2
++EXPERIMENTAL_SPF=yes
++# Need to add this directory to the global CFLAGS for now, so it'll pick up the
++# private copy of the headers before the system ones.
++#CFLAGS  += 
++LDFLAGS += -lspf2
+ 
+ # Uncomment the following lines to add SRS (Sender rewriting scheme) support.
+ # You need to have libsrs_alt installed on your system (srs.mirtol.com).
+@@ -440,6 +450,7 @@
  
  # ALT_CONFIG_PREFIX=/some/directory/
  # ALT_CONFIG_PREFIX=/some/directory/exim.conf-
@@ -169,7 +188,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -473,10 +478,10 @@
+@@ -473,10 +484,10 @@
  # included in the Exim binary. You will then need to set up the run time
  # configuration to make use of the mechanism(s) selected.
  
@@ -184,7 +203,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -484,7 +489,7 @@
+@@ -484,7 +495,7 @@
  # Cyrus SASL library installed before trying to build Exim, and you probably
  # want to uncomment the following line:
  
@@ -193,7 +212,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -513,7 +518,7 @@
+@@ -513,7 +524,7 @@
  # the Sieve filter support. For those OS where iconv() is known to be installed
  # as standard, the file in OS/Makefile-xxxx contains
  #
@@ -202,7 +221,7 @@
  #
  # If you are not using one of those systems, but have installed iconv(), you
  # need to uncomment that line above. In some cases, you may find that iconv()
-@@ -523,6 +528,7 @@
+@@ -523,6 +534,7 @@
  # HAVE_ICONV=yes
  # CFLAGS=-O -I/usr/local/include
  # EXTRALIBS_EXIM=-L/usr/local/lib -liconv
@@ -210,7 +229,7 @@
  #
  # but of course there may need to be other things in CFLAGS and EXTRALIBS_EXIM
  # as well.
-@@ -562,10 +568,10 @@
+@@ -562,10 +574,10 @@
  # leave these settings commented out.
  
  # This setting is required for any TLS support (either OpenSSL or GnuTLS)
@@ -223,7 +242,7 @@
  
  # Uncomment these settings if you are using GnuTLS
  # USE_GNUTLS=yes
-@@ -617,6 +623,7 @@
+@@ -617,6 +629,7 @@
  # install them in the directory you have defined.
  
  # INFO_DIRECTORY=/usr/share/info
@@ -231,7 +250,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -630,6 +637,7 @@
+@@ -630,6 +643,7 @@
  # to form the final file names. Some installations may want something like this:
  
  # LOG_FILE_PATH=/var/log/exim_%slog
@@ -239,7 +258,7 @@
  
  # which results in files with names /var/log/exim_mainlog, etc. The directory
  # in which the log files are placed must exist; Exim does not try to create
-@@ -686,7 +694,7 @@
+@@ -686,7 +700,7 @@
  # If the exigrep utility is fed compressed log files, it tries to uncompress
  # them using this command.
  
@@ -248,7 +267,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -705,7 +713,7 @@
+@@ -705,7 +719,7 @@
  # that the local_scan API is made available by the linker. You may also need
  # to add -ldl to EXTRALIBS so that dlopen() is available to Exim.
  
@@ -257,7 +276,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -715,7 +723,7 @@
+@@ -715,7 +729,7 @@
  # support, which is intended for use in conjunction with the SMTP AUTH
  # facilities, is included only when requested by the following setting:
  
@@ -266,7 +285,7 @@
  
  # You probably need to add -lpam to EXTRALIBS, and in some releases of
  # GNU/Linux -ldl is also needed.
-@@ -812,7 +820,7 @@
+@@ -812,7 +826,7 @@
  # (the value doesn't matter), the symbolic link is not created or moved. You
  # will then have to "turn Exim on" by setting up the link manually.
  
@@ -275,7 +294,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -824,7 +832,7 @@
+@@ -824,7 +838,7 @@
  # aliases). The following setting can be changed to specify a different
  # location for the system alias file.
  
@@ -284,7 +303,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -1072,6 +1080,7 @@
+@@ -1072,6 +1086,7 @@
  
  # If PID_FILE_PATH is not defined, Exim writes a file in its spool directory
  # using the name "exim-daemon.pid".
