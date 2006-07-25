@@ -4,6 +4,12 @@ d none /opt/csw/share/doc/bash 0755 root bin
 f none /opt/csw/share/doc/bash/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/bash/README 0644 root bin
 f none /opt/csw/share/doc/bash/FAQ 0644 root bin
+f none /opt/csw/share/doc/bash/RBASH 0644 root bin
+f none /opt/csw/share/doc/bash/NEWS 0644 root bin
+f none /opt/csw/share/doc/bash/NOTES 0644 root bin
+f none /opt/csw/share/doc/bash/POSIX 0644 root bin
+f none /opt/csw/share/doc/bash/AUTHORS 0644 root bin
+f none /opt/csw/share/doc/bash/INTRO 0644 root bin
 f none /opt/csw/share/info/bash.info 0644 root bin
 d none /opt/csw/share/locale/en@boldquot
 d none /opt/csw/share/locale/en@boldquot/LC_MESSAGES

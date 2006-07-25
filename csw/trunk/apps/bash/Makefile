@@ -29,6 +29,7 @@ pre-configure:
 
 post-install:
 	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
-	@ginstall -D $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)/README
-	@ginstall -D $(WORKSRC)/doc/FAQ $(DESTDIR)$(docdir)/$(GARNAME)/FAQ
+	@( for FILE in README RBASH NEWS NOTES POSIX AUTHORS doc/FAQ doc/INTRO; do \
+		 ginstall -D $(WORKSRC)/$$FILE $(DESTDIR)$(docdir)/$(GARNAME)/`basename $$FILE`; \
+	done )
 
