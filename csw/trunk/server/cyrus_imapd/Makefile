@@ -66,6 +66,10 @@ CONFIGURE_ARGS += --enable-idled
 CONFIGURE_ARGS += --enable-murder 
 CONFIGURE_ARGS += --enable-replication
 
+# we add the args so perl libraries are installed
+# in the correct path
+INSTALL_ARGS = INSTALLDIRS=vendor
+
 ENABLE_TEST = 0
 
 
