@@ -4,11 +4,9 @@
 #
 # Yann Rouillard <yann@blastwave.org>
 
-## RUNLEVEL: 23
-## START_PRIORITY_LEVEL: 90
-## STOP_PRIORITY_LEVEL: 10
-## CONF_DIR: /opt/csw/etc/cyrus
-#
+# chkconfig stuff
+# chkconfig: 3 90 10
+# description: Pop and Imap server from the Cyrus mail system
 
 PID_FILE="/var/run/cyrus-master.pid"
 COMMAND=/opt/csw/sbin/cyrus-master
