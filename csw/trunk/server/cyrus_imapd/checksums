@@ -1,7 +1,7 @@
 e2e337270b2e56ba64cd99158fed1efc  download/cyrus-imapd-2.3.3.tar.gz
 861bafed138aedac1e5d4702642cdbe2  download/CSWcyrusimapd.gspec
 47f96caba60ecd418b896dd782e92b50  download/CSWcyrusimapd.prototype
-e63f41143573709b67ac6b6ca4377dc3  download/changelog.CSW
+e63f41143573709b67ac6b6ca4377dc3  download/cyrus_imapd.changelog.CSW
 654c5f2241557dbe0db3ba5cfb77c658  download/README.CSW
 79211aee56db01e15566ced1ba4078da  download/i.services
 149ac6b6d82ef9ef4bb1b314f1a1cac4  download/r.services
@@ -12,13 +12,14 @@ d9be2b23e852ede317e260b919e10dda  download/i.init
 c1303341cc11640a4433a22b9abd3241  download/r.smf
 0a8cf43a62fbd5d640220039b838bfad  download/i.conf
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
-e4cd161888033ec9c49380ac05040302  download/cswcyrus
+a5326ab0d66431d057db02c5ae9c5e4a  download/cswcyrus
 c2226f19a4ab3fbea61204b31785d598  download/imapd.conf
 fdb3416ec41f3a56d1594ca25a6dcd7d  download/cyrus.conf
 fc4ccbab082483321acd1ee83f2bdd1f  download/CSWpmcyrus.gspec
 2542bf9027fceb536588fee4eac93e92  download/CSWpmcyrus.prototype
-22289c132147b3fe788a0779d4211ea4  download/CSWcyrusimapdutils.gspec
+7cb4e93aeea3383024f01262be742461  download/CSWcyrusimapdutils.gspec
 7e99e825a1d6b134b91392beec1807f4  download/CSWcyrusimapdutils.prototype
+369b210ac172d5dd13293fc57376343b  download/cyrus_imapd_utils.changelog.CSW
 2a9e8869b8ec28dfbbece7019b3cd118  download/cyrus-imapd-2.3.3-autocreate-0.10-1.diff
 66755e8118f56e9f8c9409ff5ad9cf25  download/cyrus-imapd-2.3.3-autosieve-0.6.0.diff
 6127a7b62ec4679a54985f6a2d915e52  download/cyrus-imapd-acceptinvalidfrom.patch

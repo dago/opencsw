@@ -18,7 +18,7 @@ endef
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
 DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcyrusimapd,prototype)
-DISTFILES += changelog.CSW README.CSW
+DISTFILES += cyrus_imapd.changelog.CSW README.CSW
 DISTFILES += i.services r.services services
 DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
 DISTFILES += cswcyrus
@@ -26,8 +26,9 @@ DISTFILES += imapd.conf cyrus.conf
 
 DISTFILES += $(call admfiles,CSWpmcyrus,prototype,depend)
 DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype,depend)
+DISTFILES += cyrus_imapd_utils.changelog.CSW
 
-SPKG_CLASSES = services
+SPKG_CLASSES = none services
 
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
@@ -108,7 +109,9 @@ post-install:
 
 	# we install the documentation
 	cp -r $(WORKSRC)/doc/* $(DESTDIR)/$(docdir)/cyrus_imapd
-	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)/$(docdir)/cyrus_imapd/changelog.CSW
+	( for PKG in cyrus_imapd cyrus_imapd_utils; do \
+		ginstall -D $(WORKDIR)/$$PKG.changelog.CSW $(DESTDIR)/$(docdir)/$$PKG/changelog.CSW; \
+	  done )
 	ginstall -D $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/cyrus_imapd/README.CSW
 
 	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
@@ -135,7 +138,4 @@ post-install:
 	ginstall -D $(WORKDIR)/imapd.conf $(DESTDIR)/$(sysconfdir)/cyrus/imapd.conf
 	ginstall -D $(WORKDIR)/cyrus.conf $(DESTDIR)/$(sysconfdir)/cyrus/cyrus.conf.CSW
 
-	( for PKG in cyrus_imapd cyrus_imapd_utils; do \
-		ginstall -D $(WORKSRC)/$$PKG.changelog.CSW $(DESTDIR)/$(docdir)/$$PKG/changelog.CSW; \
-	  done )
 	@$(MAKECOOKIE)

@@ -1,4 +1,4 @@
-%var            bitname cyrus_impad_utils
+%var            bitname cyrus_imapd_utils
 %var            pkgname CSWcyrusimapdutils
 %var            desc Various admin utilities for Cyrus Imapd/Popd
 %include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
