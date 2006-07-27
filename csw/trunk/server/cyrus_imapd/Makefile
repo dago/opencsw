@@ -25,7 +25,7 @@ DISTFILES += cswcyrus
 DISTFILES += imapd.conf cyrus.conf
 
 DISTFILES += $(call admfiles,CSWpmcyrus,prototype,depend)
-
+DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype,depend)
 
 SPKG_CLASSES = services
 
@@ -98,7 +98,7 @@ pre-install:
 post-install:
 	# we install binary under tools as part of the package
 	cp -r $(WORKSRC)/tools/* $(DESTDIR)$(sbindir)
-	cp $(DESTDIR)$(sbindir)/arbitronsort.pl $(DESTDIR)$(sbindir)/arbitronsort
+	ginstall -D $(DESTDIR)$(sbindir)/arbitronsort.pl $(DESTDIR)$(sbindir)/arbitronsort
 
 	# we want perl script to use blastwave perl
 	perl -pi -e 's/exec\s+perl/exec \/opt\/csw\/bin\/perl/g' $(DESTDIR)$(sbindir)/*
@@ -107,9 +107,9 @@ post-install:
 	    done )
 
 	# we install the documentation
-	cp -r $(WORKSRC)/doc/* $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd
-	cp $(WORKDIR)/changelog.CSW $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd/changelog.CSW
-	cp $(WORKDIR)/README.CSW $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd/README.CSW
+	cp -r $(WORKSRC)/doc/* $(DESTDIR)/$(docdir)/cyrus_imapd
+	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)/$(docdir)/cyrus_imapd/changelog.CSW
+	ginstall -D $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/cyrus_imapd/README.CSW
 
 	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
 	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
@@ -126,22 +126,16 @@ post-install:
 	ginstall -D $(WORKDIR)/services $(DESTDIR)/etc/inet/services
 
 	# we rename some tools with too generic names
-	cp $(DESTDIR)/$(sbindir)/mkimap $(DESTDIR)/$(sbindir)/mkdirs
+	ginstall -D $(DESTDIR)/$(sbindir)/mkimap $(DESTDIR)/$(sbindir)/mkdirs
 	( for FILE in mkdirs mknewsgroups dohash undohash rehash; do \
-		cp $(DESTDIR)/$(sbindir)/$$FILE $(DESTDIR)/$(sbindir)/cyrus-$$FILE; \
+		ginstall -D $(DESTDIR)/$(sbindir)/$$FILE $(DESTDIR)/$(sbindir)/cyrus-$$FILE; \
 	  done )
 	
 	# we install the default config files
 	ginstall -D $(WORKDIR)/imapd.conf $(DESTDIR)/$(sysconfdir)/cyrus/imapd.conf
 	ginstall -D $(WORKDIR)/cyrus.conf $(DESTDIR)/$(sysconfdir)/cyrus/cyrus.conf.CSW
 
-#	mkdir -p $(DESTDIR)/$(prefix)/share/doc/cyrus_inratools
-#	cp $(WORKSRC)/cyrus_inratools.changelog $(DESTDIR)/$(prefix)/share/doc/cyrus_inratools/changelog.CSW
-#	
-#	mkdir -p $(DESTDIR)/$(prefix)/share/doc/cyrus
-#	cp $(WORKSRC)/cyrus.changelog $(DESTDIR)/$(prefix)/share/doc/cyrus/changelog.CSW
-#	
-#	mkdir -p $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd_utils
-#	cp $(WORKSRC)/cyrus_imapd_utils.changelog $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd_utils/changelog.CSW
-	
+	( for PKG in cyrus_imapd cyrus_imapd_utils; do \
+		ginstall -D $(WORKSRC)/$$PKG.changelog.CSW $(DESTDIR)/$(docdir)/$$PKG/changelog.CSW; \
+	  done )
 	@$(MAKECOOKIE)
