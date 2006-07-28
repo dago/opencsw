@@ -4,7 +4,8 @@ cyrus_imapd (2.3.1,REV=2005.12.20_2) unstable
   * Added idled daemon (--enable-idled).
   * Enabled murder features (--enable-murder).
   * Enabled replication features (--enable-replication).
-  * Updated autocreate/sieve patches.
+  * Updated autocreate/sieve and nobarenewlines patches.
+  * Removed munge8bit patch (integrated upstream)
 
  -- Yann Rouillard <yann@blastwave.org>  Tue, 20 Dec 2005 23:40:36 +0100
 

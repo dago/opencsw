@@ -1,5 +1,5 @@
 GARNAME = cyrus_imapd
-GARVERSION = 2.3.3
+GARVERSION = 2.3.7
 CATEGORIES = server
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
@@ -32,8 +32,9 @@ SPKG_CLASSES = none services conf
 
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
-PATCHFILES = cyrus-imapd-2.3.3-autocreate-0.10-1.diff cyrus-imapd-2.3.3-autosieve-0.6.0.diff 
+PATCHFILES = cyrus-imapd-2.3.7-autocreate-0.10-1.diff cyrus-imapd-2.3.3-autosieve-0.6.0.diff 
  
+# UPDATE: not necessary anymore, integrated upstream
 # This patch adds a new option which allows cyrus to
 # accept mails with 8bits characters in header
 # PATCHFILES += cyrus-imapd-2.2.7-munge8bit.patch
@@ -45,7 +46,7 @@ PATCHFILES += cyrus-imapd-acceptinvalidfrom.patch
 
 # This patch makes cyrus more tolerant with mails containing
 # contains bare newlines
-PATCHFILES += cyrus-imapd-2.1.15-nobarenewlinescheck.patch 
+PATCHFILES += cyrus-imapd-2.3.7-nobarenewlinescheck.patch 
 
 # master is a too common name, so we rename it cyrus-master
 # this patch does a part of this job

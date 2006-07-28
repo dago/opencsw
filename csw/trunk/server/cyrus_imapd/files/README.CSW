@@ -79,18 +79,21 @@ The w flags tells sendmail users are local, these are generic mailer flags expla
 http://www.sendmail.org/~ca/email/doc8.8/op-sh-5.html#sh-5.4
 
 
-
 - Differences with upstream version
 
 Several patches have been applied so Cyrus is more useable in production environment
 
- - cyrus-imapd-2.2.12-autocreate-0.9.2.diff and cyrus-imapd-2.2.12-autosievefolder-0.6.diff, available at http://email.uoa.gr/projects/cyrus/ 
-   These patches enable automatic inbox creation and automatic folder creation when a sieve filter requires it
+ - cyrus-imapd-2.3.7-autocreate-0.10-1.diff and cyrus-imapd-2.3.3-autosieve-0.6.0.diff, 
+   available at http://email.uoa.gr/projects/cyrus/ 
+   These patches enable automatic inbox creation and automatic folder creation when a 
+   sieve filter requires it
 
- - cyrus-imapd-2.2.7-munge8bit.patch, cyrus-imapd-acceptinvalidfrom.patch and cyrus-imapd-2.1.55-nobarenewlinescheck.patch, available in
-   the Fedora Core package
-   These patches make Cyrus more tolerant with non-standard emails sent by a lot of bad mail user agent, they allow respectively to accept 8bits
-   characters in header (configurable in /opt/csw/etc/cyrus/imapd.conf), to accept email with colon-less From ("From john@doe") header and to allow 
-   email with a bare newline in it.
+ - cyrus-imapd-acceptinvalidfrom.patch and cyrus-imapd-2.3.7-nobarenewlinescheck.patch, 
+   available in the Fedora Core package and own-made.
+   These patches make Cyrus more tolerant with non-standard emails sent by a lot of bad 
+   mail user agent, they allow respectively to accept 8bits characters in header 
+   (configurable in /opt/csw/etc/cyrus/imapd.conf), to accept email with colon-less From 
+   ("From john@doe") header and to allow email with a bare newline in it.
+ 
  
 
