@@ -5,7 +5,7 @@
 %include        url file://%{CURDIR}/files/csw_smf
 %pkginfo
 MANIFEST_FILES="/opt/csw/var/svc/manifest/network/cyrus_imapd.xml"
-INIT_FILES="/etc/init.d/cswcyrus_imapd
-SERVICE_CONF_FILES="/opt/csw/etc/cyrus/cyrus.conf
+INIT_FILES="/etc/init.d/cswcyrus"
+SERVICE_CONF_FILES="/opt/csw/etc/cyrus/cyrus.conf"
 CAN_BE_AUTOENABLED="yes"
 

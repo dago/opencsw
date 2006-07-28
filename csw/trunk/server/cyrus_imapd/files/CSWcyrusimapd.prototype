@@ -1,3 +1,9 @@
+i i.init
+i r.init
+i i.conf
+i r.conf
+i i.smf
+i r.smf
 i i.services
 i r.services
 e services /etc/inet/services
