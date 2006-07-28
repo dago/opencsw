@@ -59,7 +59,7 @@ Modified for CSWcyrusimapd by Yann Rouillard 07/06
 			<exec_method
 				type='method'
 				name='start'
-				exec='/opt/csw/sbin/cyrus-master'
+				exec='/opt/csw/sbin/cyrus-master -d'
 				timeout_seconds='60'>
 			</exec_method>
 

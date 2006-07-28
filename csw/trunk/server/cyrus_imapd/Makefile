@@ -17,18 +17,18 @@ endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
 DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcyrusimapd,prototype,preinstall)
+DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend)
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
 DISTFILES += i.services r.services services
 DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
-DISTFILES += cswcyrus
+DISTFILES += cswcyrus cyrus_imapd.xml
 DISTFILES += imapd.conf cyrus.conf
 
 DISTFILES += $(call admfiles,CSWpmcyrus,prototype,depend)
-DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype,depend)
+DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype depend)
 DISTFILES += cyrus_imapd_utils.changelog.CSW
 
-SPKG_CLASSES = none services
+SPKG_CLASSES = none services conf
 
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
@@ -66,6 +66,7 @@ CONFIGURE_ARGS += --with-perl=$(prefix)/bin/perl
 CONFIGURE_ARGS += --enable-idled 
 CONFIGURE_ARGS += --enable-murder 
 CONFIGURE_ARGS += --enable-replication
+CONFIGURE_ARGS += --without-snmp
 
 # we add the args so perl libraries are installed
 # in the correct path
@@ -122,6 +123,8 @@ post-install:
 	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
 	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
 	ginstall -D $(WORKDIR)/cswcyrus $(DESTDIR)/etc/init.d/cswcyrus
+
+	#ginstall -D $(WORKDIR)/cyrus_imapd.xml $(DESTDIR)/$(prefix)/svc/manifest/network/cyrus_imapd.xml
 
 	# the services file containg cyrus service definition
 	ginstall -D $(WORKDIR)/i.services $(DESTDIR)/i.services
