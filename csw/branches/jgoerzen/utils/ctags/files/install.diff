@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru ctags-5.5.4.orig/Makefile.in ctags-5.5.4/Makefile.in
+--- ctags-5.5.4.orig/Makefile.in	2005-01-27 11:22:14.851370000 -0500
++++ ctags-5.5.4/Makefile.in	2005-01-27 11:19:56.676032000 -0500
+@@ -16,13 +16,13 @@
+ # GNU Autoconf variables. These are set by the "configure" script when it
+ # runs.
+ #
+-exec_prefix = @exec_prefix@
+-prefix	= @prefix@
+-bindir	= @bindir@
+-srcdir	= @srcdir@
+-libdir	= @libdir@
+-incdir	= @includedir@
+-mandir	= @mandir@
++exec_prefix = $(DESTDIR)@exec_prefix@
++prefix	= $(DESTDIR)@prefix@
++bindir	= $(DESTDIR)@bindir@
++srcdir	= @srcdir@
++libdir	= $(DESTDIR)@libdir@
++incdir	= $(DESTDIR)@includedir@
++mandir	= $(DESTDIR)@mandir@
+ SLINK	= @LN_S@
+ STRIP	= @STRIP@
+ CC	= @CC@

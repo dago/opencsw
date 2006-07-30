@@ -1,0 +1,20 @@
+diff -ur imap-2004f.orig/src/osdep/unix/Makefile imap-2004f/src/osdep/unix/Makefile
+--- imap-2004f.orig/src/osdep/unix/Makefile	2005-12-15 17:11:12.426664000 -0500
++++ imap-2004f/src/osdep/unix/Makefile	2005-12-15 18:28:32.444140000 -0500
+@@ -129,7 +129,6 @@
+  dummy.o pseudo.o netmsg.o flstring.o fdstring.o \
+  rfc822.o nntp.o smtp.o imap4r1.o pop3.o \
+  unix.o mbx.o mmdf.o tenex.o mtx.o news.o phile.o mh.o mx.o
+-CFLAGS=-g
+ 
+ CAT=cat
+ MAKE=make
+@@ -681,7 +680,7 @@
+ 	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
+ 	 ACTIVEFILE=/usr/share/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+-	 BASECFLAGS="-g -O -w" \
++	 BASECFLAGS="$(CFLAGS)" \
+ 	 BASELDFLAGS="-lsocket -lnsl -lgen" \
+ 	 RANLIB=true CC=/opt/SUNWspro/bin/cc
+ 

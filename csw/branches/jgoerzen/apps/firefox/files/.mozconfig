@@ -1,0 +1,12 @@
+. $topsrcdir/browser/config/mozconfig
+ac_add_options --enable-optimize="-xO3"
+ac_add_options --disable-tests
+ac_add_options --disable-debug
+ac_add_options --enable-xft
+ac_add_options --enable-svg
+ac_add_options --disable-freetype2
+ac_add_options --disable-auto-deps
+ac_add_options --disable-tests
+ac_add_options --enable-shared
+ac_add_options --enable-default-toolkit=gtk2
+ac_add_options --enable-official-branding

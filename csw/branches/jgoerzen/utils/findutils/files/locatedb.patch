@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/Makefile.in findutils-4.1/Makefile.in
+--- findutils-4.1.orig/Makefile.in	1994-11-05 06:45:56.000000000 -0800
++++ findutils-4.1/Makefile.in	2003-07-29 07:31:56.444240000 -0700
+@@ -50,7 +50,7 @@
+ DIST_FILES = $(DIST_CONF) $(SOURCES) $(TEXINFOS) $(INFOS) $(MANS) $(DIST_OTHER)
+ 
+ DIST_OTHER = COPYING ChangeLog TODO install-sh config.h.in stamp-h.in
+-SUBDIRS = lib find xargs locate doc testsuite
++SUBDIRS = lib find xargs doc testsuite
+ CONFIG_HEADER = config.h
+ 
+ all:: ${ALL}

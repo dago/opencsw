@@ -1,0 +1,35 @@
+--- purge.orig/Makefile	2000-09-21 06:05:31.000000000 -0700
++++ purge/Makefile	2004-05-24 09:55:49.415750000 -0700
+@@ -49,22 +49,22 @@
+ # use these for the SUN CC compiler (for STL, see below or above)
+ # You must define this for Solaris 2.x: CXXFLAGS = -DSOLARIS 
+ CC	= cc
+-#CXX	= CC -DHAS_BOOL -DHAS_PSIGNAL -DHAS_MUTABLE
+-#CXXFLAGS = -DSOLARIS  '-library=%none,Cstd,Crun' 
+-#CXXFLAGS += -dalign -ftrap=%none -fsimple -xlibmil
+-#OPT_NORM = -xtarget=ultra2 -xO4
+-#EXTRALIB += -lnsl -lsocket
+-#LD	= CC
++CXX	= CC -DHAS_BOOL -DHAS_PSIGNAL -DHAS_MUTABLE
++CXXFLAGS = -DSOLARIS  '-library=%none,Cstd,Crun' 
++CXXFLAGS += -dalign -ftrap=%none -fsimple -xlibmil
++OPT_NORM = -O
++EXTRALIB += -lnsl -lsocket
++LD	= CC
+ #
+ ## g++ settings for Solaris on Ultra Sparcs (comment out all of above):
+-CXXFLAGS += -DSOLARIS # -ggdb
+-OPT_NORM = -O2 # -mcpu=supersparc
+-LD	= $(CC)
++#CXXFLAGS += -DSOLARIS # -ggdb
++#OPT_NORM = -O2 # -mcpu=supersparc
++#LD	= $(CC)
+ ##
+ #EXTRALIB += -lnsl -lsocket -Wl,-Bstatic -lstdc++ -Wl,-Bdynamic
+ else
+ # old SunOS 4.1.x, not supported!
+-CXXFLAGS += -DSUN
++#CXXFLAGS += -DSUN
+ endif
+ endif
+ 

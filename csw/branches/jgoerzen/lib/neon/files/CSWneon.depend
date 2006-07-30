@@ -1,0 +1,5 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWexpat expat - XML Parser Toolkit
+P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
+P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWzlib zlib - Zlib Data Compression Library

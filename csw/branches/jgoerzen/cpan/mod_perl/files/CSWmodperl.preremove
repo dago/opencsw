@@ -1,0 +1,21 @@
+#!/bin/sh
+
+AP_ROOT=$PKG_ROOT_DIR/opt/csw/apache
+AP_CONF=$AP_ROOT/conf/httpd.conf
+AP_LIBEXEC=$AP_ROOT/libexec
+APXS=$AP_ROOT/bin/apxs
+
+# Enable the perl module
+chroot ${PKG_ROOT_DIR:-'/'} \
+    $APXS -S LIBEXECDIR=$AP_LIBEXEC -e -A -n perl libperl.so
+
+# Finito
+cat <<END
+
+NOTICE: mod_perl is disabled in httpd.conf but the server was not restarted.
+Please examine your configuration and restart apache.
+
+END
+
+exit 0
+

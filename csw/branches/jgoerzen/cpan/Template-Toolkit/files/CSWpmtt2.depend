@@ -1,0 +1,12 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmdbi pm_dbi - database independent interface for Perl
+P CSWpmgd pm_gd - interface to Gd Graphics Library
+P CSWpmgdgraph3d pm_gdgraph3d - create 3D graphs with GD and GD::Graph
+P CSWpmgdgraph pm_gdgraph - graph plotting module
+P CSWpmgdtxtu pm_gdtextutils - text utilities for use with GD
+P CSWpmpodpom pm_podpom - POD Object Model
+P CSWpmxmldom pm_xmldom - module for building DOM Level 1 compliant document structures
+P CSWpmxmlparser pm_xmlparser - a module for parsing XML documents
+P CSWpmxmlrss pm_xmlrss - creates and updates RSS files
+P CSWpmxmlxpath pm_xmlxpath - a set of modules for parsing and evaluating XPath statements

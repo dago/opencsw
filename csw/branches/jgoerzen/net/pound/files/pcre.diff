@@ -1,0 +1,30 @@
+diff --speed-large-files --minimal -Nru Pound-2.0.4.orig/configure Pound-2.0.4/configure
+--- Pound-2.0.4.orig/configure	2006-04-20 11:58:22.506753000 -0400
++++ Pound-2.0.4/configure	2006-04-20 11:58:14.881735000 -0400
+@@ -3218,9 +3218,9 @@
+   echo 'Missing OpenSSL (-lssl) - aborted'; exit 1
+ fi
+ 
+-echo "$as_me:$LINENO: checking for pcreposix_regcomp in -lpcreposix" >&5
+-echo $ECHO_N "checking for pcreposix_regcomp in -lpcreposix... $ECHO_C" >&6
+-if test "${ac_cv_lib_pcreposix_pcreposix_regcomp+set}" = set; then
++echo "$as_me:$LINENO: checking for regcomp in -lpcreposix" >&5
++echo $ECHO_N "checking for regcomp in -lpcreposix... $ECHO_C" >&6
++if test "${ac_cv_lib_pcreposix_regcomp+set}" = set; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+@@ -3238,11 +3238,11 @@
+ #endif
+ /* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+-char pcreposix_regcomp ();
++char regcomp ();
+ int
+ main ()
+ {
+-pcreposix_regcomp ();
++regcomp ();
+   ;
+   return 0;
+ }

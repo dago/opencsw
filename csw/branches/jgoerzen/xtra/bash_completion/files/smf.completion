@@ -1,0 +1,104 @@
+#
+# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+
+_smf_complete_frmi ()
+{
+	local cur="$1" prefix="$2"
+	local IFS=$'\t\n' 
+	local colons nb_colons frmi pattern=""
+
+	if [[ "$cur" == "$prefix"* ]]; then
+		prefix="$cur"
+	fi
+
+	colons=${cur//[^:]/}
+	nb_colons=${#colons}
+
+	# solaris sed doesn't seem to support \(pattern\)\{number\} regex
+	while [[ "$nb_colons" -ne 0 ]]; do
+		pattern="$pattern[^:]*:"
+		nb_colons=$(( nb_colons - 1 ))
+	done
+		
+	if [[ -n "$pattern" ]]; then
+		frmi="$(svcs -H -o FMRI "$prefix*" 2>/dev/null | sed -n -e "s/$pattern//p")"
+	else
+		frmi="$(svcs -H -o FMRI "$prefix*" 2>/dev/null)"
+	fi
+	
+	cur="${cur##*:}"
+	COMPREPLY=( $(compgen -W "$frmi" -- ${cur}) )
+}
+
+have svcadm &&
+_svcadm ()
+{
+        local cur prev command command_list command_option i
+        COMPREPLY=()
+        command_list="enable disable restart refresh clear mark milestone"
+        cur="${COMP_WORDS[COMP_CWORD]}"
+        prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+	for (( i=0; i < ${#COMP_WORDS[@]}-1; i++ )); do
+                if [[ ${COMP_WORDS[i]} == @(enable|disable|restart|refresh|clear|mark|milestone) ]]; then
+                        command=${COMP_WORDS[i]}
+                fi
+        done
+
+        if [[ -z "$command" ]]; then
+                if [[ ${cur} == -* ]] ; then
+                        COMPREPLY=( $(compgen -W "-v" -- ${cur}) )
+                else
+                        COMPREPLY=( $(compgen -W "$command_list" -- ${cur}) )
+                fi
+        else
+                case "$command" in
+                        enable)
+			if [[ ${cur} == -* ]]; then
+				COMPREPLY=( $(compgen -W "-r -s -t" -- ${cur}) )
+                        else
+                                _smf_complete_frmi "${cur}" "svc:"
+                        fi;;
+
+                        disable)
+			if [[ ${cur} == -* ]]; then
+				COMPREPLY=( $(compgen -W "-s -t" -- ${cur}) )
+                        else
+                                _smf_complete_frmi "${cur}" "svc:"
+                        fi;;
+
+			restart)
+                                _smf_complete_frmi "${cur}" "svc:";;
+			refresh)	
+                                _smf_complete_frmi "${cur}" "svc:";;
+			clear)
+                                _smf_complete_frmi "${cur}" "svc:";;
+			mark)
+			if [[ ${cur} == -* ]]; then
+				COMPREPLY=( $(compgen -W "-I -t" -- ${cur}) )
+			else
+				if [[ "$prev" == @(degraded|maintenance) ]]; then
+					_smf_complete_frmi "${cur}" "svc:"
+				else
+					COMPREPLY=( $(compgen -W "degraded maintenance" -- ${cur}) )
+				fi
+                        fi;;
+
+			milestone)
+			if [[ ${cur} == -* ]]; then
+				COMPREPLY=( $(compgen -W "-d" -- ${cur}) )
+			else
+				_smf_complete_frmi "${cur}" "svc:/milestone/"
+			fi;;
+                esac
+        fi
+} &&
+complete -F _svcadm svcadm
+

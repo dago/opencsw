@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# This script exists for the sole purpose of making sure the required
+# account and group "exim" exist already.
+# It also replaces the existing default sendmail installation
+
+EXIMHOME=/opt/csw/sbin
+EXIMUSER=exim
+EXIMGROUP=exim
+
+if [ "$PKG_ROOT_DIR" = "" ]; then
+  PKG_ROOT_DIR="/"
+fi
+
+#First check target machines password file, THEN check
+#NIS/NIS+/whatever
+
+grep "^$EXIMUSER:" $PKG_ROOT_DIR/etc/passwd >/dev/null
+if [ $? -ne 0 ]; then
+  getent passwd $EXIMUSER >/dev/null
+  if [ $? -ne 0 ]; then
+    NEEDUSER=1
+  fi
+fi
+
+grep "^$EXIMGROUP:" $PKG_ROOT_DIR/etc/group >/dev/null
+if [ $? -ne 0 ]; then
+  getent group $EXIMGROUP >/dev/null
+  if [ $? -ne 0 ]; then
+    NEEDGROUP=1
+  fi
+fi
+
+if [ "$NEEDGROUP" = 1 ]; then
+  echo adding group $EXIMGROUP
+  chroot $PKG_ROOT_DIR /usr/sbin/groupadd $EXIMGROUP
+else
+  echo group $EXIMGROUP detected
+fi
+
+if [ "$NEEDUSER" = 1 ]; then
+  echo adding user $EXIMUSER
+  chroot $PKG_ROOT_DIR /usr/sbin/useradd -g $EXIMGROUP $EXIMUSER
+  chroot $PKG_ROOT_DIR /usr/sbin/usermod -s /bin/false -d $EXIMHOME $EXIMUSER
+else
+  echo user $EXIMUSER detected
+fi

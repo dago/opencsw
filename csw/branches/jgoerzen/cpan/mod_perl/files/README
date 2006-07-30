@@ -1,0 +1,19 @@
+This is a package of "mod_perl". See http://perl.apache.org
+for documentation.
+
+As well as enabling the module in httpd.conf, it also creates and
+configures a directory for perl handler use: /opt/csw/apache/perl
+Executable perl scripts in that directory will be directly handled by
+the mod_perl module. 
+A test routine is provided. test it by using
+links http://localhost/perl/test.pl
+
+As mentioned by the postinstall script, you will have to manually 
+restart the server, for the changes to take effect.
+(you can do this safely, with  /opt/csw/apache/bin/apache restart)
+
+NOTE:
+This mod_perl module has in its @INC path
+ (in additional to the normal dirs)
+  /opt/csw/apache/lib/perl
+

@@ -1,0 +1,19 @@
+diff --speed-large-files --minimal -Nru Authen-PAM-0.15.orig/test.pl Authen-PAM-0.15/test.pl
+--- Authen-PAM-0.15.orig/test.pl	2004-11-08 23:30:39.000000000 -0800
++++ Authen-PAM-0.15/test.pl	2005-02-11 11:12:05.510009000 -0800
+@@ -120,6 +120,7 @@
+ #    skip(10, 'custom fail delay function is not supported by your PAM library');
+ #  }
+ 
++=head1 TEST DISABLED
+    if ($login_name) {
+      print
+        "---- Now, you may be prompted to enter the password of '$login_name'.\n";
+@@ -139,6 +140,7 @@
+       if ($res != PAM_SUCCESS());
+     $failures = $old_failures; # Authentication failures don't count
+   }
++=cut
+ 
+ #  if (HAVE_PAM_FAIL_DELAY()) {
+ #    ok(12, $res == $fd_status);

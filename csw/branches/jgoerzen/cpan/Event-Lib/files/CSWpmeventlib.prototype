@@ -1,0 +1,15 @@
+d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib/perl ? ? ?
+d none /opt/csw/lib/perl/csw ? ? ?
+d none /opt/csw/lib/perl/csw/Event 0755 root bin
+f none /opt/csw/lib/perl/csw/Event/Lib.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto ? ? ?
+d none /opt/csw/lib/perl/csw/auto/Event 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Event/Lib 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/Event/Lib/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/Event/Lib/Lib.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/Event/Lib/Lib.so 0555 root bin
+d none /opt/csw/share ? ? ?
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man3 ? ? ?
+f none /opt/csw/share/man/man3/Event::Lib.3perl 0444 root bin

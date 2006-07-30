@@ -1,0 +1,57 @@
+#
+# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+
+have pkgrm &&
+_pkgrm ()
+{
+    local cur prev i spool;
+    COMPREPLY=();
+    cur="${COMP_WORDS[COMP_CWORD]}";
+    prev="${COMP_WORDS[COMP_CWORD-1]}";
+
+    # if a spool directory was given
+    # we must complete with the package
+    # available in this directory
+    spool=/var/sadm/pkg;
+    i=${#COMP_WORDS[*]};
+    while [[ $i -gt 0 ]]; do
+        i=$((i-1));
+        case "${COMP_WORDS[$i]}" in
+            -s)
+                spool="${COMP_WORDS[$((i+1))]}";
+                break
+            ;;
+        esac;
+    done;
+
+    case $prev in
+        -a | -V)
+            _filedir
+        ;;
+        -s | -R)
+            _filedir -d
+        ;;
+        -Y)
+
+        ;;
+        *)
+            if [[ ${cur} == -* ]]; then
+                local opts="-a -A -n -M -R -s -v -V -Y";
+                COMPREPLY=($(compgen -W "${opts}" -- ${cur}));
+                return 0;
+            else
+		COMPREPLY=($(compgen -W "$(/bin/ls -1 $spool)" -- ${cur}));
+                return 0;
+            fi
+        ;;
+    esac
+} &&
+complete -F _pkgrm pkgrm
+

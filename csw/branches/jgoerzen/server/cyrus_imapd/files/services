@@ -1,0 +1,21 @@
+pop3            110/tcp         pop-3           # POP version 3
+pop3            110/udp         pop-3
+nntp            119/tcp         readnews untp   # USENET News Transfer Protocol
+imap2           143/tcp         imap            # Interim Mail Access P 2 and 4
+imap2           143/udp         imap
+imsp            406/tcp                 	# Interactive Mail Support Protocol
+imsp            406/udp
+nntps           563/tcp         snntp           # NNTP over SSL
+nntps           563/udp         snntp
+acap            674/tcp    			# ACAP
+acap            674/udp	   			# ACAP
+imaps           993/tcp                         # IMAP over SSL
+imaps           993/udp
+pop3s           995/tcp                         # POP-3 over SSL
+pop3s           995/udp
+kpop            1109/tcp                        # Pop with Kerberos
+sieve           2000/tcp                        # Sieve mail filter daemon
+lmtp      	2003/tcp			# Local Mail Transfer Protocol
+fud       	4201/udp
+
+

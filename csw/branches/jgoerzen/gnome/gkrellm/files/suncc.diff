@@ -1,0 +1,157 @@
+diff -Nru --speed-large-files --minimal gkrellm-2.1.26.orig/Makefile gkrellm-2.1.26/Makefile
+--- gkrellm-2.1.26.orig/Makefile	2004-02-22 17:49:08.000000000 -0800
++++ gkrellm-2.1.26/Makefile	2004-03-04 21:29:28.169516000 -0800
+@@ -116,7 +116,7 @@
+ export MANDIR SMANDIR MANDIRMODE MANMODE
+ export OS_NAME OS_RELEASE
+ 
+-enable_nls=1
++enable_nls=0
+ debug=0
+ export enable_nls
+ export debug
+@@ -135,7 +135,6 @@
+ 	echo "Cflags: -I$(INCLUDEDIR)" >> gkrellm.pc
+ 
+ install: install_gkrellm.pc
+-	(cd po && ${MAKE} install)
+ 	(cd src && ${MAKE} install)
+ 	(cd server && ${MAKE} install)
+ 
+@@ -231,25 +230,13 @@
+ 		SYS_LIBS="-lkvm -pthread" gkrellmd )
+ 
+ solaris: gkrellm.pc
+-	(cd po && ${MAKE} MSGFMT_OPT="-v -o" \
+-		LOCALEDIR=/usr/local/share/locale all)
+-ifeq ($(OS_RELEASE),5.8)
+-	(cd src && ${MAKE} CC=gcc \
+-		CFLAGS="-Wno-implicit-int" \
++	(cd src && ${MAKE} \
+ 		SYS_LIBS="-lkstat -lkvm -ldevinfo -lresolv -lsocket -lX11 -lintl" \
+-		LINK_FLAGS="" gkrellm )
+-	(cd server && ${MAKE} CC=gcc \
+-		CFLAGS="-Wno-implicit-int -DSOLARIS_8" \
++		LINK_FLAGS="$(LDFLAGS)" gkrellm )
++	(cd server && ${MAKE} \
++		CFLAGS="$(CFLAGS) -DSOLARIS_8" \
+ 		SYS_LIBS="-lkstat -lkvm -ldevinfo -lsocket -lnsl -lintl" \
+-		LINK_FLAGS="" gkrellmd )
+-else
+-	(cd src && ${MAKE} CC=gcc \
+-		CFLAGS="-Wno-implicit-int" \
+-		SYS_LIBS="-lkstat -lkvm -ldevinfo -lresolv -lsocket -lX11" LINK_FLAGS="" gkrellm )
+-	(cd server && ${MAKE} CC=gcc \
+-		CFLAGS="-Wno-implicit-int" \
+-		SYS_LIBS="-lkstat -lkvm -ldevinfo -lsocket -lnsl" LINK_FLAGS="" gkrellmd )
+-endif
++		LINK_FLAGS="$(LDFLAGS)" gkrellmd )
+ 
+ gnome-gtop: gkrellm.pc
+ 	(cd po && ${MAKE} all)
+diff -Nru --speed-large-files --minimal gkrellm-2.1.26.orig/server/Makefile gkrellm-2.1.26/server/Makefile
+--- gkrellm-2.1.26.orig/server/Makefile	2003-12-11 10:32:40.000000000 -0800
++++ gkrellm-2.1.26/server/Makefile	2004-03-04 21:29:09.592831000 -0800
+@@ -13,8 +13,7 @@
+ MANMODE ?= 644
+ MANDIRMODE ?= 755
+ INSTALL ?= install
+-LINK_FLAGS ?= -Wl,-E
+-CC ?= gcc
++LINK_FLAGS ?= $(LDFLAGS)
+ STRIP ?= -s
+ 
+ PKG_INCLUDE = `$(PKG_CONFIG) --cflags glib-2.0 gthread-2.0`
+@@ -23,12 +22,12 @@
+ GLIB12_INCLUDE = `glib-config --cflags gthread`
+ GLIB12_LIB = `glib-config --libs gthread`
+ 
+-FLAGS = -O2 -I.. $(PKG_INCLUDE) $(GTOP_INCLUDE)
++FLAGS = $(CFLAGS) -I.. $(PKG_INCLUDE) $(GTOP_INCLUDE)
+ ifeq ($(glib12),1)
+-FLAGS = -O2 -I.. $(GLIB12_INCLUDE) $(GTOP_INCLUDE)
++FLAGS = $(CFLAGS) -I.. $(GLIB12_INCLUDE) $(GTOP_INCLUDE)
+ endif
+ ifeq ($(glib12),yes)
+-FLAGS = -O2 -I.. $(GLIB12_INCLUDE) $(GTOP_INCLUDE)
++FLAGS = $(CFLAGS) -I.. $(GLIB12_INCLUDE) $(GTOP_INCLUDE)
+ endif
+ 
+ FLAGS+= $(PTHREAD_INC)
+@@ -71,7 +70,7 @@
+ endif
+ 
+ 
+-override CC += -Wall $(FLAGS)
++override CC += $(FLAGS)
+ 
+ OS_NAME=$(shell uname -s)
+ OS_RELEASE=$(shell uname -r)
+@@ -110,15 +109,9 @@
+ 	$(MAKE) SYS_LIBS="-lkvm -pthread" gkrellmd
+ 
+ solaris:
+-ifeq ($(OS_RELEASE),5.8)
+-	$(MAKE) CFLAGS="-Wno-implicit-int" \
++	$(MAKE) \
+ 		SYS_LIBS="-lkstat -lkvm -ldevinfo -lsocket -lnsl -lintl" \
+-		LINK_FLAGS="" gkrellmd
+-else
+-	$(MAKE) CFLAGS="-Wno-implicit-int" \
+-		SYS_LIBS="-lkstat -lkvm -ldevinfo -lsocket -lnsl" \
+-		LINK_FLAGS="" gkrellmd
+-endif
++		LINK_FLAGS="$(LDFLAGS)" gkrellmd
+ 
+ install:
+ 	$(INSTALL) -d -m $(INSTALLDIRMODE) $(SINSTALLDIR)
+diff -Nru --speed-large-files --minimal gkrellm-2.1.26.orig/src/Makefile gkrellm-2.1.26/src/Makefile
+--- gkrellm-2.1.26.orig/src/Makefile	2004-01-09 09:32:49.000000000 -0800
++++ gkrellm-2.1.26/src/Makefile	2004-03-04 21:31:07.576932000 -0800
+@@ -16,7 +16,7 @@
+ MANMODE ?= 644
+ MANDIRMODE ?= 755
+ INSTALL ?= install
+-LINK_FLAGS ?= -Wl,-E
++LINK_FLAGS ?= $(LDFLAGS)
+ SMC_LIBS ?= -L/usr/X11R6/lib -lSM -lICE
+ 
+ ifeq ($(without-ssl),1)
+@@ -36,7 +36,6 @@
+     EXTRAOBJS ?= md5c.o
+ endif
+ 
+-CC ?= gcc
+ STRIP ?= -s
+ 
+ GKRELLM_INCLUDES = gkrellm.h gkrellm-public-proto.h
+@@ -45,7 +44,7 @@
+ 
+ PKG_LIB = `$(PKG_CONFIG) --libs gtk+-2.0 gthread-2.0`
+ 
+-FLAGS = -O2 -I.. $(PKG_INCLUDE) $(GTOP_INCLUDE)
++FLAGS = $(CFLAGS) -I.. $(PKG_INCLUDE) $(GTOP_INCLUDE)
+ FLAGS+= $(PTHREAD_INC)
+ 
+ LIBS = $(PKG_LIB) $(GTOP_LIBS) $(SMC_LIBS) $(SYS_LIBS) $(SSL_LIBS)
+@@ -73,7 +72,7 @@
+ endif
+ 
+ 
+-override CC += -Wall $(FLAGS)
++override CC += $(FLAGS)
+ 
+ OBJS =	main.o alerts.o battery.o base64.o clock.o cpu.o disk.o fs.o \
+ 	hostname.o inet.o mail.o mem.o net.o proc.o sensors.o uptime.o \
+@@ -128,8 +127,9 @@
+ 	$(MAKE) GTK_CONFIG=gtk-config GTOP_LIBS= SYS_LIBS="-lkvm -pthread" gkrellm
+ 
+ solaris:
+-	$(MAKE) CFLAGS="-Wno-implicit-int" \
+-		SYS_LIBS="-lkstat -lkvm -ldevinfo" gkrellm
++	$(MAKE) \
++		SYS_LIBS="-lkstat -lkvm -ldevinfo" \
++		LINK_FLAGS="$(LDFLAGS)" gkrellm
+ 
+ install:
+ 	$(INSTALL) -d -m $(INSTALLDIRMODE) $(INSTALLDIR)

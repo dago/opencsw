@@ -1,0 +1,4 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmxmlparser pm_xmlparser - a module for parsing XML documents
+P CSWpmxmlsax pm_xmlsax - Simple API for XML

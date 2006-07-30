@@ -1,0 +1,27 @@
+--- Inline-0.44.orig/C/Makefile.PL	2002-10-28 10:26:08.000000000 -0800
++++ Inline-0.44/C/Makefile.PL	2004-04-15 17:39:48.548769669 -0700
+@@ -13,7 +13,7 @@
+ }
+ else {
+     for my $lib (split $delim, $ENV{PATH}) {
+-	$found = -f File::Spec->catfile($lib,"$cc$exe") and last;
++	$found = -e File::Spec->catfile($lib,"$cc$exe") and last;
+     }
+ }
+ 
+@@ -57,10 +57,11 @@
+ 
+ my $answer = '';
+ my $default = $found ? "y" : "n";
+-while (1) {
+-    $answer = prompt ('Do you want to install Inline::C?', $default); 
+-    last if $answer =~ /^(y|yes|n|no)$/i;
+-}
++#while (1) {
++#    $answer = prompt ('Do you want to install Inline::C?', $default); 
++#    last if $answer =~ /^(y|yes|n|no)$/i;
++#}
++$answer = 'y';
+ 
+ if ($answer =~ /^(y|yes)$/i) {
+     WriteMakefile(

@@ -1,0 +1,30 @@
+GARNAME = xchat
+GARVERSION = 2.4.3
+CATEGORIES = gnome
+
+DESCRIPTION = GTK+ based IRC client, similar to AmIRC (Amiga).
+define BLURB
+  X-Chat is a fully-featured graphical IRC client using the GTK toolkit.
+  Optionally it can be compiled to use GNOME and Perl scripting.
+endef
+
+MASTER_SITES = http://xchat.org/files/source/2.4/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += CSWxchat.gspec CSWxchat.depend CSWxchat.prototype
+DISTFILES += CSWxchat-pl.gspec CSWxchat-pl.depend CSWxchat-pl.prototype
+DISTFILES += CSWxchat-py.gspec CSWxchat-py.depend CSWxchat-py.prototype
+DISTFILES += CSWxchat-tcl.gspec CSWxchat-tcl.depend CSWxchat-tcl.prototype
+
+# Remove hardcoded use of -lutil for the python plugin
+PATCHFILES += pylibs.diff
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-openssl=$(prefix)
+CONFIGURE_ARGS += --enable-textfe
+CONFIGURE_ARGS += --enable-tcl=$(libdir)
+CONFIGURE_ARGS += --enable-shm
+CONFIGURE_ARGS += --enable-ipv6
+
+TEST_TARGET = check
+
+include ../category.mk
