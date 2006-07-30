@@ -7,7 +7,7 @@ define BLURB
  The award-winning, free Web browser is better than ever. Browse the Web with confidence - Firefox protects you from viruses, spyware and pop-ups. Enjoy improvements to performance, ease of use and privacy. It's easy to import your favorites and settings and get started. Download Firefox now and get the most out of the Web. 
 endef
 
-MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/1.5.0.5/source/
+MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
 DISTFILES += $(call admfiles,CSWfirefox, depend )
 
