@@ -1,0 +1,69 @@
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/lib/argmatch.c lftp-3.5.2/lib/argmatch.c
+--- lftp-3.5.2.orig/lib/argmatch.c	2006-07-24 03:54:53.000000000 -0400
++++ lftp-3.5.2/lib/argmatch.c	2006-08-01 19:07:07.199518000 -0400
+@@ -27,7 +27,7 @@
+ /* Specification.  */
+ #include "argmatch.h"
+ 
+-#include <stdbool.h>
++#include "../lib/stdbool.h"
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/lib/human.h lftp-3.5.2/lib/human.h
+--- lftp-3.5.2.orig/lib/human.h	2006-07-24 03:54:53.000000000 -0400
++++ lftp-3.5.2/lib/human.h	2006-08-01 19:05:50.530273000 -0400
+@@ -23,7 +23,7 @@
+ # define HUMAN_H_ 1
+ 
+ # include <limits.h>
+-# include <stdbool.h>
++# include "../lib/stdbool.h"
+ 
+ # if HAVE_STDINT_H
+ #  include <stdint.h>
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/lib/modechange.h lftp-3.5.2/lib/modechange.h
+--- lftp-3.5.2.orig/lib/modechange.h	2006-07-24 03:54:53.000000000 -0400
++++ lftp-3.5.2/lib/modechange.h	2006-08-01 19:06:22.630063000 -0400
+@@ -22,7 +22,7 @@
+ #if ! defined MODECHANGE_H_
+ # define MODECHANGE_H_
+ 
+-# include <stdbool.h>
++# include "../lib/stdbool.h"
+ # include <sys/types.h>
+ 
+ /* Special operations flags.  */
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/lib/quotearg.c lftp-3.5.2/lib/quotearg.c
+--- lftp-3.5.2.orig/lib/quotearg.c	2006-07-24 03:54:53.000000000 -0400
++++ lftp-3.5.2/lib/quotearg.c	2006-08-01 19:07:02.309562000 -0400
+@@ -30,7 +30,7 @@
+ #include <ctype.h>
+ #include <errno.h>
+ #include <limits.h>
+-#include <stdbool.h>
++#include "../lib/stdbool.h"
+ #include <stdlib.h>
+ #include <string.h>
+ 
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/lib/stdbool_.h lftp-3.5.2/lib/stdbool_.h
+--- lftp-3.5.2.orig/lib/stdbool_.h	2006-07-24 03:54:53.000000000 -0400
++++ lftp-3.5.2/lib/stdbool_.h	2006-08-01 19:02:45.741360000 -0400
+@@ -74,7 +74,7 @@
+   /* A compiler known to have 'bool'.  */
+   /* If the compiler already has both 'bool' and '_Bool', we can assume they
+      are the same types.  */
+-# if !@HAVE__BOOL@
++# if @HAVE__BOOL@
+ typedef bool _Bool;
+ # endif
+ #else
+@@ -100,7 +100,7 @@
+ enum { false = 0, true = 1 };
+ # else
+    /* With this compiler, trust the _Bool type if the compiler has it.  */
+-#  if !@HAVE__BOOL@
++#  if @HAVE__BOOL@
+ typedef enum { _Bool_must_promote_to_int = -1, false = 0, true = 1 } _Bool;
+ #  endif
+ # endif

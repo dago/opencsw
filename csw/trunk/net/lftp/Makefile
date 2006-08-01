@@ -16,6 +16,11 @@ DISTFILES += i.conf r.conf
 # adding the conf classe for handling configuration files
 SPKG_CLASSES = none conf
 
+# correct some bugs preventing compilation
+# with sun cc
+PATCHFILES = sun_cc_compilation_fix.patch
+PATCHFILES += sun_cc_bool_compilation_fix.patch
+
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
 # (patch only mandatory to compile with gnutls)
@@ -28,7 +33,7 @@ CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 
 # I got a coredump with lftp compiled with cc
 # the one compiled with gcc doesn't seem to have this problem
-GARCOMPILER = GNU
+# GARCOMPILER = GNU
 
 # for debug build
 #CONFIGURE_ARGS += --with-debug

@@ -1,7 +1,7 @@
 lftp (3.5.2) unstable
 
    * New upstream version.
-   * Added missing gcc dependancies (closes: #0001705)
+   * Switched back to Sun Studio (closes: #0001705)
 
  -- Yann Rouillard <yann@blastwave.org>  Tue,  1 Aug 2006 15:12:31 +0200
 lftp (3.5.1) unstable
