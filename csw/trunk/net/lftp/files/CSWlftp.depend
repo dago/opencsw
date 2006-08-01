@@ -4,5 +4,3 @@ P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWreadline readline - library to enable interactive line editing
-P CSWgcc3g++rt - GNU C++ Compiler Run Time
-P CSWgcc3corert - GNU C Compiler Run Time
