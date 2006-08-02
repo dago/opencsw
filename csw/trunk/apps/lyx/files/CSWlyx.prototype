@@ -85,16 +85,16 @@ f none /opt/csw/kde-gcc/share/lyx/bind/xemacs.bind 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/chkconfig.ltx 0644 root bin
 d none /opt/csw/kde-gcc/share/lyx/clipart 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/clipart/platypus.eps 0644 root bin
-f none /opt/csw/kde-gcc/share/lyx/configure 0755 root bin
+f none /opt/csw/kde-gcc/share/lyx/configure.py 0755 root bin
 d none /opt/csw/kde-gcc/share/lyx/doc 0755 root bin
-f none /opt/csw/kde-gcc/share/lyx/doc/README.CSW 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Customization.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/DocStyle.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Extended.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/FAQ.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Intro.lyx 0644 root bin
-f none /opt/csw/kde-gcc/share/lyx/doc/LaTeXConfig.lyx.in 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/LaTeXConfig.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/LaTeXConfig.lyx.in 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/README.CSW 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Reference.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/TOC.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Tutorial.lyx 0644 root bin
@@ -608,6 +608,7 @@ f none /opt/csw/kde-gcc/share/lyx/images/math/overleftarrow.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/overleftrightarrow.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/overline.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/overrightarrow.xpm 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/images/math/overset.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/parallel.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/partial.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/perp.xpm 0644 root bin
@@ -723,6 +724,7 @@ f none /opt/csw/kde-gcc/share/lyx/images/math/underleftrightarrow.xpm 0644 root 
 f none /opt/csw/kde-gcc/share/lyx/images/math/underline.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/underrightarrow.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/underscore.xpm 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/images/math/underset.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/uparrow.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/uparrow2.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/math/updownarrow.xpm 0644 root bin
@@ -912,6 +914,7 @@ f none /opt/csw/kde-gcc/share/lyx/layouts/g-brief2.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/heb-article.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/heb-letter.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/hollywood.layout 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/layouts/ijmpc.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/ijmpd.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/jgrga.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/kluwer.layout 0644 root bin
@@ -1006,7 +1009,8 @@ f none /opt/csw/kde-gcc/share/lyx/lyxrc.defaults 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/lyxrc.example 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/packages.lst 0644 root bin
 d none /opt/csw/kde-gcc/share/lyx/scripts 0755 root bin
-f none /opt/csw/kde-gcc/share/lyx/scripts/TeXFiles.sh 0755 root bin
+f none /opt/csw/kde-gcc/share/lyx/scripts/TeXFiles.py 0755 root bin
+f none /opt/csw/kde-gcc/share/lyx/scripts/clean_dvi.py 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/convertDefault.sh 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/fen2ascii.py 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/fig2pdftex.sh 0755 root bin
@@ -1032,6 +1036,7 @@ f none /opt/csw/kde-gcc/share/lyx/templates/elsart.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/g-brief-de.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/g-brief-en.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/hollywood.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/templates/ijmpc.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/ijmpd.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/kluwer.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/koma-letter2.lyx 0644 root bin

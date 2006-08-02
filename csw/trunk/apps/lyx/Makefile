@@ -1,5 +1,5 @@
 GARNAME = lyx
-GARVERSION = 1.4.1
+GARVERSION = 1.4.2
 CATEGORIES = applications
 
 DESCRIPTION = WYSIWYM document processor
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.lyx.org/pub/lyx/stable/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlyx,depend prototype postinstall)
 
 LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
@@ -38,7 +38,19 @@ BINFILES = $(DESTDIR)$(prefix)/kde-gcc/bin/lyx
 BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/lyxclient
 BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/tex2lyx
 
+# Looks like lib/configure (which is a Python script as of 1.4.2) is no longer
+# called during configure stage. That means we are missing LaTeXConfig.lyx and
+# other files created by it. Run it now.
+post-configure:
+	(cd $(WORKSRC)/lib; \
+	chmod 755 configure.py; \
+	./configure.py)
+
 post-install:
+	(cd $(WORKSRC)/lib; \
+	cp -p doc/LaTeXConfig.lyx $(DESTDIR)$(prefix)/kde-gcc/share/lyx/doc; \
+	cp -p lyxrc.defaults packages.lst textclass.lst \
+		$(DESTDIR)$(prefix)/kde-gcc/share/lyx)
 	cp -p files/README.CSW $(DESTDIR)$(prefix)/kde-gcc/share/lyx/doc
 	/usr/ccs/bin/strip $(BINFILES)
 	/usr/ccs/bin/mcs -d $(BINFILES)
