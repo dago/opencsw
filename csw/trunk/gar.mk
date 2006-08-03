@@ -283,7 +283,6 @@ fixconfig:
 			fi ; \
 		done ; \
 	fi
-	$(DONADA)
 
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE)))
