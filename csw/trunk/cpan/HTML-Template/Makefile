@@ -15,7 +15,7 @@ define BLURB
   HTML - from the data, which you generate in the Perl script.
 endef
 
-DISTFILES += $(call admfiles,CSWpmhtmltemplate,prototype)
+DISTFILES += $(call admfiles,CSWpmhtmltmpl,prototype)
 
 CONFIGURE_ARGS = -n
 
