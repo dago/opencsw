@@ -13,6 +13,8 @@ MASTER_SITES = ftp://ftp.lyx.org/pub/lyx/stable/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlyx,depend prototype postinstall)
 
+PATCHFILES = solaris.patch
+
 LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
