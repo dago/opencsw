@@ -15,10 +15,10 @@ create_group()
 {
 	NAME=$1
 	GID=$2
-	if /usr/bin/grep "^$NAME" $GROUP > /dev/null; then 
+	if /chroot "$PKG_INSTALL_ROOT" usr/bin/grep "^$NAME" $GROUP > /dev/null; then 
 		/usr/bin/echo "group $NAME already exists"
 	else 
-		/usr/sbin/groupadd $NAME 
+		chroot "$PKG_INSTALL_ROOT" /usr/sbin/groupadd $NAME 
 		/usr/bin/echo "group $NAME created"
 	fi
 }
@@ -30,15 +30,16 @@ create_group()
 create_user()
 {
 	NAME=$1
-	HOME=$2
-	SHELL=$3
-	COMMENT=$4
+	GROUP=$2
+	HOME=$3
+	SHELL=$4
+	COMMENT=$5
 
-	if /usr/bin/grep "^$NAME" $PASSWD > /dev/null; then 
+	if chroot "$PKG_INSTALL_ROOT" /usr/bin/grep "^$NAME:" $PASSWD > /dev/null; then 
 		/usr/bin/echo "user $NAME already exists"
 	else 
-		/usr/sbin/useradd -c "$COMMENT" -d $HOME -s $SHELL $NAME
-		/usr/bin/pwconv
+		chroot "$PKG_INSTALL_ROOT" /usr/sbin/useradd -g "$GROUP" -c "$COMMENT" -d $HOME -s $SHELL $NAME
+		chroot "$PKG_INSTALL_ROOT" /usr/bin/pwconv
 		/usr/bin/echo "user $NAME created"
 	fi
 }
@@ -46,7 +47,13 @@ create_user()
 ##########
 # main() #
 ##########
-echo "Creating privilege separation user..."
 
+if [ -z "$PKG_INSTALL_ROOT" ]; then 
+	PKG_INSTALL_ROOT=/
+fi
+
+echo "Creating privilege separation user..."
 create_group ftpsecure 
-create_user ftpsecure /opt/csw/var/empty/vsftpd /bin/false "vsftpd privsep user"
+create_user ftpsecure ftpsecure /opt/csw/var/empty/vsftpd /bin/false "vsftpd privsep user"
+echo "Creating ftp user for anonymous access..."
+create_user ftp nogroup /opt/csw/var/ftp /bin/false "ftp user for anonymous access"

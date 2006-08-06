@@ -7,4 +7,3 @@
 MANIFEST_FILES="/opt/csw/var/svc/manifest/network/vsftpd.xml"
 INIT_FILES="/etc/init.d/cswvsftpd"
 SERVICE_CONF_FILES="/opt/csw/etc/vsftpd/vsftpd.conf"
-CAN_BE_AUTOENABLED="no"
