@@ -16,7 +16,7 @@ c1303341cc11640a4433a22b9abd3241  download/r.smf
 9b2ae27f98333b73ff2b16ed98ee896a  download/i.conf
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
 dd4a61f48a8b85c30ddab7f161c181db  download/csw_smf
-f8b6aaaf543029aa245806bed2d51c2c  download/csw_smf_postinstall
+e519696ff2f1a74089e2e8ab2ce074b6  download/csw_smf_postinstall
 45ceb346bcaaf3824a5d9d98d8b2c9ad  download/csw_smf_preremove
 5b23fe4695201a2842176cf08f2667ae  download/csw_smf_checkinstall
 281c51282cabd9475cceef363bbc699b  download/build_options.patch
