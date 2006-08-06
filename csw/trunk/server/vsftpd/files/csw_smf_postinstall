@@ -89,6 +89,15 @@ if [ "$SMF" = "yes" ]; then
 
 	STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.smfinfo" 
 
+        # we always copy the service configuration file in the smf case
+	# as svcadm can be used to disable the service, instead of relying
+	# on the presence of the configuration file
+	for CONF_FILE in $SERVICE_CONF_FILES; do
+		if [ ! -f $CONF_FILE ]; then
+			cp ${CONF_FILE}.CSW $CONF_FILE
+		fi
+	done
+
 	for FILE in $MANIFEST_FILES; do
 		for FMRI in `get_fmri_list "$FILE"`; do
 			load_smf_service_state "$FMRI"

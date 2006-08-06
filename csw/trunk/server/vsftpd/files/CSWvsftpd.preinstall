@@ -15,10 +15,10 @@ create_group()
 {
 	NAME=$1
 	GID=$2
-	if /chroot "$PKG_INSTALL_ROOT" usr/bin/grep "^$NAME" $GROUP > /dev/null; then 
+	if /usr/sbin/chroot "$PKG_INSTALL_ROOT" usr/bin/grep "^$NAME" $GROUP > /dev/null; then 
 		/usr/bin/echo "group $NAME already exists"
 	else 
-		chroot "$PKG_INSTALL_ROOT" /usr/sbin/groupadd $NAME 
+		/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/groupadd $NAME 
 		/usr/bin/echo "group $NAME created"
 	fi
 }
@@ -35,11 +35,11 @@ create_user()
 	SHELL=$4
 	COMMENT=$5
 
-	if chroot "$PKG_INSTALL_ROOT" /usr/bin/grep "^$NAME:" $PASSWD > /dev/null; then 
+	if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/grep "^$NAME:" $PASSWD > /dev/null; then 
 		/usr/bin/echo "user $NAME already exists"
 	else 
-		chroot "$PKG_INSTALL_ROOT" /usr/sbin/useradd -g "$GROUP" -c "$COMMENT" -d $HOME -s $SHELL $NAME
-		chroot "$PKG_INSTALL_ROOT" /usr/bin/pwconv
+		/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/useradd -g "$GROUP" -c "$COMMENT" -d $HOME -s $SHELL $NAME
+		/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/pwconv
 		/usr/bin/echo "user $NAME created"
 	fi
 }

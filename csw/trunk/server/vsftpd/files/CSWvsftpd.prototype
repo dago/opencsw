@@ -2,7 +2,7 @@ i i.smf
 i r.smf
 i i.conf
 i r.conf
-e init /etc/init.d/cswvsftpd 0744 root sys
+f init /etc/init.d/cswvsftpd 0744 root sys
 l init /etc/rc0.d/K15cswvsftpd=../../etc/init.d/cswvsftpd 0744 root sys
 l init /etc/rc1.d/K15cswvsftpd=../../etc/init.d/cswvsftpd 0744 root sys
 l init /etc/rc2.d/K15cswvsftpd=../../etc/init.d/cswvsftpd 0744 root sys
