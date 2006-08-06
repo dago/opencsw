@@ -15,7 +15,7 @@ f6ce22a6959b93e500a4ae800295c2ee  download/vsftpd.conf
 c1303341cc11640a4433a22b9abd3241  download/r.smf
 9b2ae27f98333b73ff2b16ed98ee896a  download/i.conf
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
-ba590cdc1cc54f9c49624b6a7a7a5506  download/csw_smf
+dd4a61f48a8b85c30ddab7f161c181db  download/csw_smf
 f8b6aaaf543029aa245806bed2d51c2c  download/csw_smf_postinstall
 45ceb346bcaaf3824a5d9d98d8b2c9ad  download/csw_smf_preremove
 5b23fe4695201a2842176cf08f2667ae  download/csw_smf_checkinstall
