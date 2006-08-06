@@ -58,7 +58,7 @@ get_autoenable ()
 		if [ -f "$PKG_INSTALL_ROOT/$_FILE" ]; then
 			. "$PKG_INSTALL_ROOT/$_FILE"
 			if [ -n "$1" ]; then
-				eval SERVICE_STATE=$$autoenable_$1
+				eval SERVICE_STATE=\$autoenable_$1
 			fi
 			if [ -z "$SERVICE_STATE" ]; then
 				SERVICE_STATE="$autoenable_daemons"
@@ -81,11 +81,22 @@ if [ -z "$PKG_INSTALL_ROOT" ]; then
 	PKG_INSTALL_ROOT=/
 fi
 
+set -- $NAME
+SOFTWARE_NAME="$1"
 
 # is SMF available ?
 if [ "$SMF" = "yes" ]; then
 
 	STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.smfinfo" 
+
+        # we always copy the service configuration file in the smf case
+	# as svcadm can be used to disable the service, instead of relying
+	# on the presence of the configuration file
+	for CONF_FILE in $SERVICE_CONF_FILES; do
+		if [ ! -f $CONF_FILE ]; then
+			cp ${CONF_FILE}.CSW $CONF_FILE
+		fi
+	done
 
 	for FILE in $MANIFEST_FILES; do
 		for FMRI in `get_fmri_list "$FILE"`; do
@@ -93,16 +104,8 @@ if [ "$SMF" = "yes" ]; then
 			# no previous service state, so we rely on autoenable
 			# configuration variable, if this service can be autoenabled !
 			if [ "$?" -ne 0 ] && [ "$CAN_BE_AUTOENABLED" != "no" ]; then
-				get_autoenable
+				get_autoenable "$SOFTWARE_NAME"
 			fi	
-
-			# we copy the configuration file to be able 
-			# to enable the service
-			for CONF_FILE in $SERVICE_CONF_FILES; do
-				if [ ! -f $CONF_FILE ]; then
-					cp ${CONF_FILE}.CSW $CONF_FILE
-				fi
-			done
 
 			if [ "$SERVICE_STATE" = "enabled" ]; then
 				chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm enable "$FMRI" >/dev/null 2>&1
@@ -118,7 +121,7 @@ else
 	for FILE in $INIT_FILES; do
 		load_init_service_state "$FILE"
 		if [ "$SERVICE_STATE" = "enabled" ]; then
-			if get_autoenable; then
+			if get_autoenable "$SOFTWARE_NAME"; then
 				if [ "$CAN_BE_AUTOENABLED" != "no" ]; then
 					# we copy the service configuration file to be able 
 					# to enable the service

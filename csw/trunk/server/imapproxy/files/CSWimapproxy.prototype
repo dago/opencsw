@@ -1,9 +1,11 @@
-i i.init
-i r.init
 i i.smf
 i r.smf
 f none /opt/csw/etc/imapproxy.conf.CSW 0644 root bin
-e init /etc/init.d/cswimapproxy 0744 root bin
+f init /etc/init.d/cswimapproxy 0744 root sys
+l init /etc/rc0.d/K10cswimapproxy=../../etc/init.d/cswimapproxy 0744 root sys
+l init /etc/rc1.d/K10cswimapproxy=../../etc/init.d/cswimapproxy 0744 root sys
+l init /etc/rc2.d/K10cswimapproxy=../../etc/init.d/cswimapproxy 0744 root sys
+l init /etc/rc3.d/S90cswimapproxy=../../etc/init.d/cswimapproxy 0744 root sys
 d none /opt/csw/share/doc/doc/imapproxy 0755 root bin
 f none /opt/csw/share/doc/imapproxy/ChangeLog 0644 root bin
 f none /opt/csw/share/doc/imapproxy/README 0644 root bin
