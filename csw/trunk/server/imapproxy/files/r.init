@@ -78,7 +78,7 @@ delete_runlevel_symlinks ()
 	/usr/bin/find /etc/rc[S0-6].d -follow -inum "$_INUM" -exec rm '{}' ';'
 }
 
-INIT_INFO_FILE="/var/tmp/$PKG.initinfo"
+INIT_INFO_FILE="${PKG_INSTALL_ROOT}/tmp/$PKG.initinfo"
 rm -f "$INIT_INFO_FILE"
 
 while read DEST; do
