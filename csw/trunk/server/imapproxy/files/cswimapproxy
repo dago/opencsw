@@ -84,7 +84,7 @@ status()
 
 # We don't do anything if configuration file
 # is not present
-#[ -f "$CONF_FILE" ] || exit 0
+[ -f "$CONF_FILE" ] || exit 0
 
 case "$1" in
   start) start ;;

@@ -56,7 +56,7 @@ post-install:
 	ginstall -D $(WORKDIR)/imapproxy.conf $(DESTDIR)$(sysconfdir)/imapproxy.conf.CSW
 	ginstall -D $(WORKDIR)/imapproxy.xml $(DESTDIR)$(localstatedir)/svc/manifest/network/imapproxy.xml
 	ginstall -D $(WORKDIR)/cswimapproxy $(DESTDIR)/etc/init.d/cswimapproxy
-	ginstall -D $(WORKDIR)/svc-imapproxy $(DESTDIR)$(libdir)/svc/method/svc-imapproxy
+#	ginstall -D $(WORKDIR)/svc-imapproxy $(DESTDIR)$(libdir)/svc/method/svc-imapproxy
 	@$(MAKECOOKIE)
 
 
