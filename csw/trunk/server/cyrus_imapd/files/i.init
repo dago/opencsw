@@ -43,7 +43,12 @@ load_init_info ()
 
 		for LEVEL in 0 1 2 3 S; do
 			if echo "${RUNLEVEL}" | grep "${LEVEL}" >/dev/null; then
-		 		INIT_INFO="$INIT_INFO $LEVEL S$START_PRIORITY_LEVEL"	
+				# if service was started in level 2, we do not need
+				# to create the start link in level 3
+				[ "${LEVEL}" = "3" ] && echo "${RUNLEVEL}" | grep "2" >/dev/null
+				if [ $? -ne 0 ]; then
+					INIT_INFO="$INIT_INFO $LEVEL S$START_PRIORITY_LEVEL"	
+				fi
 			else
 		 		INIT_INFO="$INIT_INFO $LEVEL K$STOP_PRIORITY_LEVEL"	
 			fi
@@ -68,7 +73,7 @@ EOF
 	done
 }
 
-INIT_INFO_FILE="/var/tmp/$PKG.initinfo"
+INIT_INFO_FILE="$PKG_INSTALL_ROOT/tmp/$PKG.initinfo"
 
 while read SRC DEST; do
 	SERVICENAME=`/usr/bin/basename $DEST`

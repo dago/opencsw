@@ -1,5 +1,3 @@
-i i.init
-i r.init
 i i.conf
 i r.conf
 i i.smf
@@ -7,7 +5,11 @@ i r.smf
 i i.services
 i r.services
 e services /etc/inet/services
-e init /etc/init.d/cswcyrus 0755 root bin
+f init /etc/init.d/cswcyrus 0744 root sys
+l init /etc/rc0.d/K10cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
+l init /etc/rc1.d/K10cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
+l init /etc/rc2.d/K10cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
+l init /etc/rc3.d/S90cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
 d none /opt/csw/etc/cyrus 0755 root bin
 e conf /opt/csw/etc/cyrus/imapd.conf 0640 root mail
 f none /opt/csw/etc/cyrus/cyrus.conf.CSW 0640 root mail

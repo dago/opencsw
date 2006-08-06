@@ -8,6 +8,9 @@
 # software causes damage.
 #
 # i.smf - class script which install smf related files
+# 	  This class will simply copy file except for the
+# 	  manifest file which, in addition, will imported 
+# 	  in the svc repository
 #
 # use this class for the following files:
 # /opt/csw/var/svc
@@ -17,6 +20,7 @@
 # /opt/csw/lib/svc
 # /opt/csw/lib/svc/method
 # /opt/csw/lib/svc/method/svc-softname
+#
 if [ -z "$PKG_INSTALL_ROOT" ]; then
 	PKG_INSTALL_ROOT="/"
 fi
@@ -24,6 +28,7 @@ fi
 while read SRC DEST; do
 	EXT="`/usr/bin/echo $DEST | /usr/bin/awk -F. '{ print $(NF) }'`"
         "$BASEDIR/usr/bin/cp" "$SRC" "$DEST" || exit 2
+	# the .xml file is the manifest file
 	if [ "$EXT" = "xml" ]; then
 		chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import "$DEST"
 	fi

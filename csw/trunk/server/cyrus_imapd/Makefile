@@ -20,7 +20,7 @@ DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend)
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
 DISTFILES += i.services r.services services
-DISTFILES += i.init r.init i.smf r.smf i.conf r.conf
+DISTFILES += i.smf r.smf i.conf r.conf
 DISTFILES += cswcyrus cyrus_imapd.xml
 DISTFILES += imapd.conf cyrus.conf
 
@@ -119,8 +119,8 @@ post-install:
 	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
 	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
 	
-	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.init
-	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.init
+#	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.init
+#	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.init
 	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
 	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
 	ginstall -D $(WORKDIR)/cswcyrus $(DESTDIR)/etc/init.d/cswcyrus

@@ -27,20 +27,6 @@ read_smf_service_state ()
 	else
 		PERMANENT_STATE="enabled"
 	fi
-
-#	TEMPORARY_STATE=`/usr/sbin/svccfg -s "$1" listprop general_ovr/enabled | /usr/bin/awk '{ print $3 }'`
-#	if [ "$TEMPORARY_STATE" != "true" ]; then
-#		TEMPORARY_STATE="disabled"
-#	else
-#		TEMPORARY_STATE="enabled"
-#	fi
-}
-
-read_conf_value () 
-{
-    _VAR="$1"
-    _FILE="$2"
-    eval ${_VAR}=\"`/usr/bin/sed -n -e "/^# *$_VAR:/ s/^.*$_VAR: *\(.*[^ ]\) *$/\1/p" ${_FILE}`\"
 }
 
 
@@ -55,7 +41,7 @@ if [ -z "$PKG_INSTALL_ROOT" ]; then
 	PKG_INSTALL_ROOT=/
 fi
 
-STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.smfinfo" 
+STATE_FILE="$PKG_INSTALL_ROOT/tmp/$PKG.smfinfo" 
 rm -f "$STATE_FILE"
 
 if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/svcadm" ]; then
