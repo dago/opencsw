@@ -14,6 +14,7 @@ use File::Spec::Functions;
 use Getopt::Long qw/:config no_ignore_case gnu_getopt/;
 use POSIX;
 use Pod::Usage;
+use Term::ANSIColor;
 use vars qw/
   $TOOLVERSION $REVISION $VERSION
   $HAS_LWP_SUPPORT $UA $HAS_CURL_SUPPORT
@@ -60,6 +61,7 @@ $SELF = basename $0;
     prog_wrong_version  => 8,
     prog_exec_error     => 9,
     spec_error          => 10,
+    dumped_env          => 11,
     unknown             => 42,
 );
 
@@ -101,28 +103,62 @@ $DIRECTIVE       = qr/^$DIRECTIVE_START(\w+)/;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Function : eprint
+# Function : _log
 # Purpose  : Convenience print function
 # Arguments: @_ - message portions, which will be joined by space, and
 #                 concluded with a newline character.
 #
-sub eprint {
-    print STDERR "mkp: " . join( " ", @_ ) . "\n"
+sub _log {
+    my $fh = shift;
+    my $color = shift;
+    print $fh colored("mkp: " . join( " ", @_ ), $color) . "\n"
       unless $config{quiet};
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Function : error
+# Function : Important
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Important { _log(\*STDOUT, "blue", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Info
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Info { _log(\*STDOUT, "cyan", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Warn
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Warn { _log(\*STDOUT, "yellow", "WARNING:", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Error
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Error { _log(\*STDERR, "red", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Die
 # Purpose  : Convenience print and exit function
 # Arguments: $code - exit code (see %exit)
 #            @_ - message portions, which will be joined by space, and
 #                 concluded with a newline character.
 # Effects  : This function causes the calling program to exit.
 #
-sub error {
+sub Die {
     my $code = $exit{unknown};
     $code = shift if $_[0] =~ /^\d+$/;
-    print STDERR "ERROR:", join( " ", @_ ), "\n";
+    elog("ERROR: ", @_);
     exit($code);
 }
 
@@ -154,7 +190,7 @@ sub usage_error {
 sub _exec {
     my $cmdline = shift;
 
-    eprint "exec( $cmdline )";
+    Important "exec( $cmdline )";
 
     if (wantarray) {
         my @content = `$cmdline`;
@@ -185,12 +221,12 @@ sub vexec {
     if (wantarray) {
         my @content;
         eval { @content = _exec(@_) };
-        error( @{$@} ) if $@;
+        Die( @{$@} ) if $@;
         return @content;
     }
     else {
         eval { _exec(@_) };
-        error( @{$@} ) if $@;
+        Die( @{$@} ) if $@;
     }
     return 1;
 }
@@ -226,21 +262,21 @@ sub env_replace {
                   vexec( $argv,
                     "Failed to execute shell replacement command '$var'" );
 
-                eprint "WARNING: '\%{$var}' created no output" if $val eq '';
+                warn "WARNING: '\%{$var}' created no output" if $val eq '';
                 $val =~ s/^\s*|\s*$//g;
             }
             else {
-                error( $exit{spec_error},
+                Die( $exit{spec_error},
                     "whitespace in variable name '$var'" );
             }
         }
         else {
             $val = $ENV{$var} || '';
-            eprint "WARNING: environment variable '$var' is not set"
+            Error "WARNING: environment variable '$var' is not set"
               if $val eq '';
         }
 
-        eprint "replacing \%{$var} with '$val'";
+        Info "replacing \%{$var} with '$val'";
         s/\%\{[^\}]+?\}/$val/;
     }
     return $_;
@@ -295,9 +331,9 @@ sub process_arguments {
     usage_error("Spec (--spec) is a required argument")
       unless $args{spec};
 
-    error( $exit{file_not_found}, "Cannot locate '$args{spec}'" )
+    Die( $exit{file_not_found}, "Cannot locate '$args{spec}'" )
       unless -f $args{spec};
-    error( $exit{file_not_readable}, "Cannot read '$args{spec}'" )
+    Die( $exit{file_not_readable}, "Cannot read '$args{spec}'" )
       unless -r $args{spec};
 
     $config{spec}      = $args{spec};
@@ -312,7 +348,7 @@ sub process_arguments {
 
     # Working dir (--workdir)
     $config{workdir} = $args{workdir} || $config{curdir};
-    error( $exit{dir_not_found}, "Cannot access --workdir '$config{workdir}'" )
+    Die( $exit{dir_not_found}, "Cannot access --workdir '$config{workdir}'" )
       unless -d $config{workdir};
 
     # Destination directory (--destdir)
@@ -327,23 +363,23 @@ sub process_arguments {
 
     # Spool dir (--spooldir)
     $config{spooldir} = $args{spooldir} || '/var/spool/pkg';
-    error( $exit{dir_not_found},
+    Die( $exit{dir_not_found},
         "Cannot access --spooldir '$config{spooldir}'" )
       unless -d $config{spooldir};
 
     # Temporary dir (--tmpdir)
     $config{tmpdir} = $args{tmpdir} || '/tmp';
-    error( $exit{dir_not_found}, "Cannot access --tmpdir '$config{tmpdir}'" )
+    Die( $exit{dir_not_found}, "Cannot access --tmpdir '$config{tmpdir}'" )
       unless -d $config{tmpdir};
 
     # Package base dir (--pkgbase)
     $config{pkgbase} = $args{pkgbase} || '';
-    error( $exit{dir_not_found}, "Cannot access --pkgbase '$config{pkgbase}'" )
+    Die( $exit{dir_not_found}, "Cannot access --pkgbase '$config{pkgbase}'" )
       if $config{pkgbase} and not -d $config{pkgbase};
 
     # Package root dir (--pkgroot)
     $config{pkgroot} = $args{pkgroot} || '';
-    error( $exit{dir_not_found}, "Cannot access --pkgroot '$config{pkgroot}'" )
+    Die( $exit{dir_not_found}, "Cannot access --pkgroot '$config{pkgroot}'" )
       if $config{pkgroot} and not -d $config{pkgroot};
 
     # Supply defaults for --no/x flag arguments
@@ -378,7 +414,7 @@ sub dumpenv {
         printf "$val\n";
     }
 
-    exit $exit{ok};
+    exit $exit{dumped_env};
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -401,10 +437,12 @@ sub parse {
     my $specuri = shift;
     my $uritype = shift || $SPEC_TYPE{URL};
 
+    Important "processing $specuri";
+
     # Bootstrap the main spec
     my $content;
     eval { $content = get_content( $uritype, $specuri ) };
-    error(
+    Die(
           ( $@ and ref($@) eq 'ARRAY' )
         ? ( @{$@}, "in $specuri" )
         : ( $exit{unknown}, "$@ in $specuri" )
@@ -414,7 +452,6 @@ sub parse {
     # Process the main spec.  The array ref returned by get_content
     # contains array references, one for each line of content in the
     # specified file.
-    #
 
     my ( $dname, $spec, $line );
     for ( my $i = 0 ; $i <= $#{@$content} ; $i++ ) {
@@ -425,7 +462,7 @@ sub parse {
         if ( $line =~ /$DIRECTIVE/ ) {
             $dname = lc $1;
 
-            error( $exit{spec_error},
+            Die( $exit{spec_error},
                 "invalid directive '$dname' at $source line $lineno" )
               unless exists $VALID_DIRECTIVES{$dname};
 
@@ -439,28 +476,28 @@ sub parse {
             if ( $dname eq 'include' ) {
 
                 # dir:%include
-                error( $exit{spec_error},
+                Die( $exit{spec_error},
                     "\%include requires type and URI at $source line $lineno" )
                   unless $dtype
                   and $argv;
 
-                error( $exit{spec_error},
+                Die( $exit{spec_error},
                     "invalid include type '$dtype' at $source line $lineno" )
                   unless $dtype =~ $SPEC_TYPE;
 
                 # Retrieve the %included content
-                eprint "include $argv";
+                Important "include $argv";
 
                 my $inc;
                 eval { $inc = get_content( $dtype, $argv ) };
-                error(
+                Die(
                       ( $@ and ref($@) eq 'ARRAY' )
                     ? ( @{$@}, "at $source line $lineno" )
                     : ( $exit{unknown}, "$@ at $source line $lineno" )
                   )
                   if $@;
 
-                eprint "WARNING: empty include at $source line $lineno"
+                Warn "empty include at $source line $lineno"
                   unless @$inc;
 
                 # Splice into the array we're looping through
@@ -470,7 +507,7 @@ sub parse {
             elsif ( $dname eq 'var' or $dname eq 'cvar' ) {
 
                 # dir:%var
-                error( $exit{spec_error},
+                Die( $exit{spec_error},
                     "\%$dname needs name and value at $source line $lineno" )
                   unless $dtype
                   and defined $argv;
@@ -479,10 +516,10 @@ sub parse {
                 # it will not be overwritten by subsequent %vars.
                 if ( $dname ne 'cvar' or not exists $ENV{$dtype} ) {
                     $config{$dtype} = $ENV{$dtype} = env_replace $argv;
-                    eprint "set ENV{$dtype} = '$ENV{$dtype}'";
+                    Info "set ENV{$dtype} = '$ENV{$dtype}'";
                 }
                 else {
-                    eprint "cvar ENV{$dtype} is already set ($ENV{$dtype})"
+                    Info "cvar ENV{$dtype} is already set ($ENV{$dtype})"
                       if $dname eq 'cvar';
                 }
             }
@@ -494,9 +531,9 @@ sub parse {
                 if ($SCRIPTADM{$dname}) {
 
                     if ($spec->{$dname}) {
-                        eprint "WARNING: $dname\@$source line $lineno";
-                        eprint "WARNING: overrides";
-                        eprint "WARNING: $dname\@$spec->{$dname}[0][2]" .
+                        Warn "$dname\@$source line $lineno";
+                        Warn "overrides";
+                        Warn "$dname\@$spec->{$dname}[0][2]" .
                           " line " . $spec->{$dname}[0][3];
                     }
 
@@ -515,14 +552,13 @@ sub parse {
                   [ $SPEC_TYPE{CONTENT}, $line, $source, $lineno ];
             }
             elsif ( $dname eq 'include' or $dname eq 'var' ) {
-                error( $exit{spec_error},
+                Die( $exit{spec_error},
                     "inline content is not allowed for \%$dname" );
             }
             else {
 
                 # In-line content, but no idea where it goes!
-                eprint "WARNING: ignoring in-line content at "
-                  . "$source line $lineno";
+                Warn "ignoring in-line content at $source line $lineno";
             }
         }
     }
@@ -648,7 +684,7 @@ sub create_files {
 
     # First things first, check for required items
     foreach my $required qw(pkginfo prototype) {
-        error( $exit{spec_error},
+        Die( $exit{spec_error},
             "Required package resource \%$required not specified" )
           unless exists $spec->{$required};
     }
@@ -657,7 +693,7 @@ sub create_files {
     foreach my $admtype (@ADMFILES) {
         next unless exists $spec->{$admtype};
 
-        eprint "processing $admtype";
+        Important "processing $admtype";
 
         my $admfile      = catfile $workdir, "$specname.$admtype";
         my $admfile_name = basename $admfile;
@@ -667,14 +703,13 @@ sub create_files {
 
         # Handle overwrite permission
         if ( -f $admfile and not $config{overwrite} ) {
-            eprint "  using existing $admfile_name";
+            Warn "using existing $admfile_name";
             next;
         }
 
-        eprint "WARNING: overwriting $admtype $admfile_name"
-          if $config{overwrite};
+        Warn "overwriting $admtype $admfile_name" if $config{overwrite};
 
-        eprint "  generating $admfile_name";
+        Info "  generating $admfile_name";
 
         my @admcontent;
         foreach my $item ( @{ $spec->{$admtype} } ) {
@@ -685,13 +720,13 @@ sub create_files {
             else {
                 eval {
                     my @content = @{ get_content @$item };
-                    eprint "WARNING: empty \%$admtype at $source line $lineno"
+                    Warn "empty \%$admtype at $source line $lineno"
                       unless @content;
 
                     foreach my $i (@content) { push @admcontent, $i->[2] }
                 };
 
-                error(
+                Die(
                       ( $@ and ref($@) eq 'ARRAY' )
                     ? ( @{$@}, "at $item->[2] line $item->[3]" )
                     : ( $exit{unknown}, "$@ at $item->[2] line $item->[3]" )
@@ -715,7 +750,7 @@ sub create_files {
                 or $admtype eq 'pkginfo'
                 or $admtype eq 'space' )
             {
-                eprint "removing duplicate lines from $admfile_name";
+                Info "removing duplicate lines from $admfile_name";
 
                 # Remove duplicate lines, preserve order
                 my @uniqadm;
@@ -729,11 +764,11 @@ sub create_files {
                 @admcontent = @uniqadm;
             }
 
-            eprint "  writing $admfile_name";
+            Info "  writing $admfile_name";
 
             open OUT, ">$admfile"
               or
-              error( $exit{file_not_writable}, "unable to write $admfile: $!" );
+              Die( $exit{file_not_writable}, "unable to write $admfile: $!" );
 
             print OUT $_ foreach (@admcontent);
             close OUT;
@@ -741,7 +776,7 @@ sub create_files {
     }
 
     # Last of all, write admin file content to the prototype
-    eprint "writing admin entries to " . basename $protopath;
+    Important "writing admin entries to " . basename $protopath;
 
     my %writeadm;
     foreach my $admtype (@ADMFILES) {
@@ -755,7 +790,7 @@ sub create_files {
     # Write entries which are not already in the prototype...
     if ( keys %writeadm ) {
         open PROTO, ">>$protopath"
-          or error( $exit{file_not_writable},
+          or Die( $exit{file_not_writable},
             "Failed to open $protopath for append: $!" );
 
         foreach my $admtype ( sort keys %writeadm ) {
