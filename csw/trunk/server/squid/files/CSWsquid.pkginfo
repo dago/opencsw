@@ -1,8 +1,0 @@
-PKG=CSWsquid
-NAME=squid - Squid Web Proxy Cache
-ARCH=sparc
-VERSION=2.5,REV=2006.06.20,rev=STABLE14
-CATEGORY=application
-VENDOR=http://www.squid-cache.org/  packaged for CSW by Jake Goerzen
-HOTLINE=http://www.blastwave.org/bugtrack/
-EMAIL=jgoerzen@blastwave.org

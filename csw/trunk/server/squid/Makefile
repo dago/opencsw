@@ -1,9 +1,10 @@
 GARNAME = squid
-GARVERSION = 2.6.STABLE1
+GARVERSION = 2.6
 CATEGORIES = server
-
-SPKG_PKGNAME = CSWsquid
-SPKG_BITNAME = squid
+RELEASE = STABLE2
+DISTVERSION = $(GARVERSION).$(RELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
+REVSTAMP := $(REVSTAMP)_$(RELEASE)
 
 DESCRIPTION = High performance Web proxy cache
 define BLURB
@@ -13,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v2/2.6/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWsquid, depend prototype copyright postinstall preremove)
 
 CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
