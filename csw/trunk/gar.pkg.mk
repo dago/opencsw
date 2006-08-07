@@ -103,7 +103,8 @@ package-create:
 								 --workdir  $(SPKG_WORKDIR) \
 								 --pkgbase  $(SPKG_PKGBASE) \
 								 --pkgroot  $(SPKG_PKGROOT) \
-								 --compress || exit 2 ; \
+								 --compress \
+								 $(MKPACKAGE_ARGS) || exit 2 ; \
 		done ; \
 	else \
 		echo " ==> No specs defined for $(GARNAME)" ; \
