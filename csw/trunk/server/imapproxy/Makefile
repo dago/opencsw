@@ -1,5 +1,5 @@
 GARNAME = imapproxy
-GARVERSION = 1.2.5rc1
+GARVERSION = 1.2.4
 CATEGORIES = server
 
 DESCRIPTION = A caching IMAP proxy server
