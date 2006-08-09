@@ -41,7 +41,7 @@ case "$1" in
   restart)
     echo "Restarting MTA: \c"
     kill `cat "$PIDFILE"`
-    $DAEMON -bd -q30m
+    $DAEMON $EXIM_PARAMS
     echo "exim."
     ;;
   reload|force-reload)
