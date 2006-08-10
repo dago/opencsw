@@ -4,7 +4,6 @@ CATEGORIES = server
 RELEASE = STABLE2
 DISTVERSION = $(GARVERSION).$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
-REVSTAMP := $(REVSTAMP)_$(RELEASE)
 
 DESCRIPTION = High performance Web proxy cache
 define BLURB
@@ -33,6 +32,8 @@ CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
 TEST_TARGET = check
 
 include ../category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
 
 post-install:
 	( cp -r $(FILEDIR)/etc $(DESTDIR)/etc )
