@@ -19,7 +19,7 @@ f none /opt/csw/etc/exim/exim-env.sh.CSW 0644 root bin
 d none /opt/csw/sbin ? ? ?
 f none /opt/csw/sbin/exicyclog 0755 root bin
 f none /opt/csw/sbin/exigrep 0755 root bin
-f none /opt/csw/sbin/exim 0755 root bin
+f none /opt/csw/sbin/exim 4711 root bin
 f none /opt/csw/sbin/exim_checkaccess 0755 root bin
 f none /opt/csw/sbin/exim_dbmbuild 0755 root bin
 f none /opt/csw/sbin/exim_dumpdb 0755 root bin
