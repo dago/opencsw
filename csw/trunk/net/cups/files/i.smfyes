@@ -1,0 +1,7 @@
+#!/sbin/sh
+echo "Installing class <smfyes>."
+while read src dest; do
+	$BASEDIR/usr/bin/cp -p $src $dest || exit 2
+	echo $dest
+done
+exit 0

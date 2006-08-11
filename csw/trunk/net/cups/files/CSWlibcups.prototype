@@ -1,0 +1,9 @@
+d none /opt/csw ? ? ?
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libcups.so.2 0755 root bin
+s none /opt/csw/lib/libcups.so=libcups.so.2 root bin
+f none /opt/csw/lib/libcupsimage.so.2 0755 root bin
+s none /opt/csw/lib/libcupsimage.so=libcupsimage.so.2 root bin
+i copyright=CSWlibcups.copyright
+i depend=CSWlibcups.depend
+i pkginfo=CSWlibcups.pkginfo
