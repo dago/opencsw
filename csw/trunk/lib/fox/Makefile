@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://www.fox-toolkit.org/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWfox,)
+DISTFILES += $(call admfiles,CSWfoxrt, prototype )
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-release --with-shape=no --with-xshm=no --disable-threadsafe
 

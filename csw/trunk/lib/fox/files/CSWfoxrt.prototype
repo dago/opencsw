@@ -1,0 +1,26 @@
+d none /opt/csw/bin ? ? ?
+f none /opt/csw/bin/Adie.stx 0755 root bin
+f none /opt/csw/bin/PathFinder 0755 root bin
+f none /opt/csw/bin/adie 0755 root bin
+f none /opt/csw/bin/fox-config 0755 root bin
+f none /opt/csw/bin/foxcalculator 0755 root bin
+f none /opt/csw/bin/reswrap 0755 root bin
+f none /opt/csw/bin/shutterbug 0755 root bin
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libCHART-1.4.so.0.0.33 0755 root bin
+s none /opt/csw/lib/libCHART-1.4.so.0=libCHART-1.4.so.0.0.33 root bin
+s none /opt/csw/lib/libCHART-1.4.so=libCHART-1.4.so.0.0.33 root bin
+f none /opt/csw/lib/libFOX-1.4.so.0.0.33 0755 root bin
+s none /opt/csw/lib/libFOX-1.4.so.0=libFOX-1.4.so.0.0.33 root bin
+s none /opt/csw/lib/libFOX-1.4.so=libFOX-1.4.so.0.0.33 root bin
+d none /opt/csw/share ? ? ?
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man1 ? ? ?
+f none /opt/csw/share/man/man1/PathFinder.1 0644 root bin
+f none /opt/csw/share/man/man1/adie.1 0644 root bin
+f none /opt/csw/share/man/man1/calculator.1 0644 root bin
+f none /opt/csw/share/man/man1/reswrap.1 0644 root bin
+f none /opt/csw/share/man/man1/shutterbug.1 0644 root bin
+i copyright=CSWfox.copyright
+i depend=CSWfoxrt.depend
+i pkginfo=CSWfoxrt.pkginfo
