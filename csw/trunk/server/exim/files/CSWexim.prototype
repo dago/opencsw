@@ -1,6 +1,6 @@
 d smfno /etc 0755 ? ?
 d smfno /etc/init.d 0755 ? ?
-f smfno /etc/init.d/cswexim 0755 ? ?
+f smfno /etc/init.d/cswexim 0755 root sys
 d smfno /etc/rc0.d 0755 ? ?
 s smfno /etc/rc0.d/K14cswexim=../init.d/cswexim
 d smfno /etc/rc1.d 0755 ? ?
