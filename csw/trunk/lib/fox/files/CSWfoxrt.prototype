@@ -21,6 +21,6 @@ f none /opt/csw/share/man/man1/adie.1 0644 root bin
 f none /opt/csw/share/man/man1/calculator.1 0644 root bin
 f none /opt/csw/share/man/man1/reswrap.1 0644 root bin
 f none /opt/csw/share/man/man1/shutterbug.1 0644 root bin
-i copyright=CSWfox.copyright
+i copyright=CSWfoxrt.copyright
 i depend=CSWfoxrt.depend
 i pkginfo=CSWfoxrt.pkginfo
