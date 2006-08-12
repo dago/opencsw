@@ -1,6 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
 P CSWbonobo2 libbonobo2 - GNOME component and compound document system
-P CSWevolution-ds evolution_ds - evolution database backend server
 P CSWfconfig fontconfig - A library for configuring and customizing font access.
 P CSWftype2 freetype2 - The free and portable high quality font engine
 P CSWgconf2 gconf2 - GNOME configuration database system

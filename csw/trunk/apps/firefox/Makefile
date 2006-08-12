@@ -1,5 +1,5 @@
 GARNAME = firefox
-GARVERSION = 1.5.0.5
+GARVERSION = 1.5.0.6
 CATEGORIES = apps
 
 DESCRIPTION = mozilla.org browser
