@@ -72,17 +72,22 @@ f none /opt/csw/lib/cups/monitor/tbcp 0755 root bin
 d none /opt/csw/lib/cups/notifier 0755 root bin
 f none /opt/csw/lib/cups/notifier/mailto 0755 root bin
 f none /opt/csw/lib/cups/notifier/testnotify 0755 root bin
-d none /opt/csw/share//locale ? ? ?
+d none /opt/csw/share/locale ? ? ?
 d none /opt/csw/share/locale/de ? ? ?
-f none /opt/csw/share/locale/de/cups_de.po 0644 root bin
+d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/de/LC_MESSAGES/cups_de.po 0644 root bin
 d none /opt/csw/share/locale/es ? ? ?
-f none /opt/csw/share/locale/es/cups_es.po 0644 root bin
+d none /opt/csw/share/locale/es/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/es/LC_MESSAGES/cups_es.po 0644 root bin
 d none /opt/csw/share/locale/ja ? ? ?
-f none /opt/csw/share/locale/ja/cups_ja.po 0644 root bin
+d none /opt/csw/share/locale/ja/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/ja/LC_MESSAGES/cups_ja.po 0644 root bin
 d none /opt/csw/share/locale/pl ? ? ?
-f none /opt/csw/share/locale/pl/cups_pl.po 0644 root bin
+d none /opt/csw/share/locale/pl/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/pl/LC_MESSAGES/cups_pl.po 0644 root bin
 d none /opt/csw/share/locale/sv ? ? ?
-f none /opt/csw/share/locale/sv/cups_sv.po 0644 root bin
+d none /opt/csw/share/locale/sv/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/sv/LC_MESSAGES/cups_sv.po 0644 root bin
 d none /opt/csw/sbin ? ? ?
 f none /opt/csw/sbin/cupsd 0755 root bin
 d none /opt/csw/share ? ? ?
@@ -561,15 +566,15 @@ d none /opt/csw/share/man/man1m ? ? ?
 f none /opt/csw/share/man/man1m/cupsd.1m 0644 root bin
 d none /opt/csw/var ? ? ?
 d none /opt/csw/var/cache ? ? ?
-d none /opt/csw/var/cache/cups 0755 root bin
+d none /opt/csw/var/cache/cups 0775 root lp
 d none /opt/csw/var/log ? ? ?
 d none /opt/csw/var/log/cups 0755 root bin
 d none /opt/csw/var/run ? ? ?
 d none /opt/csw/var/run/cups 0755 root bin
 d none /opt/csw/var/run/cups/certs 0755 root bin
 d none /opt/csw/var/spool ? ? ?
-d none /opt/csw/var/spool/cups 0755 root bin
-d none /opt/csw/var/spool/cups/tmp 0755 root bin
+d none /opt/csw/var/spool/cups 0710 root lp
+d none /opt/csw/var/spool/cups/tmp 1770 root bin
 i copyright=CSWcupsd.copyright
 i depend=CSWcupsd.depend
 i pkginfo=CSWcupsd.pkginfo

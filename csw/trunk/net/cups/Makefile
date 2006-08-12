@@ -2,7 +2,7 @@ GARNAME = cups
 GARVERSION = 1.2.2
 CATEGORIES = net
 
-DESCRIPTION = Library and Header Files for the Common UNIX Printing System
+#DESCRIPTION = The Common UNIX Printing System
 define BLURB
   CUPS provides a portable printing layer for UNIX(R)-based operating
   systems.  It is developed and maintained by Easy Software Products to
@@ -18,6 +18,7 @@ DISTFILES += $(call admfiles,CSWcupsd,depend prototype postinstall preremove \
 DISTFILES += $(call admfiles,CSWcupsclient,depend prototype)
 DISTFILES += $(call admfiles,CSWcupsdoc,depend prototype)
 DISTFILES += $(call admfiles,CSWcupsdev,depend prototype)
+DISTFILES += $(call admfiles,CSWcups,depend prototype)
 
 DISTFILES += i.smfyes i.smfno space checkinstall
 
@@ -51,7 +52,18 @@ post-install:
 #	/usr/ccs/bin/strip $(BINS); \
 #	/usr/ccs/bin/mcs -d $(BINS))
 	(cd $(DESTDIR)$(prefix)/share; \
-	test -d ../lib/locale && test -d locale || mv ../lib/locale .)
+	if [ ! -d locale ]; then \
+		test -d ../lib/locale && mv ../lib/locale .; \
+		cd locale; \
+		for i in *; do \
+			echo "Processing $$i..."; \
+			cd $$i; \
+			mkdir LC_MESSAGES; \
+			mv cups*.po LC_MESSAGES; \
+			cd ..; \
+		done \
+	fi \
+	)
 	(cd $(DESTDIR)$(prefix)/etc/cups; \
 	for i in cupsd.conf; do \
 		if [ -r "$$i" ]; then \
