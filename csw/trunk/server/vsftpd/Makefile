@@ -2,7 +2,7 @@ GARNAME = vsftpd
 GARVERSION = 2.0.5
 CATEGORIES = server
 
-DESCRIPTION = A very secure and fast GPL'd FTP server.
+DESCRIPTION = A very secure and fast FTP server.
 define BLURB
   vsftpd is a secure and fast FTP server for UNIX-like systems
   that is used on many large and critical Internet sites. 
