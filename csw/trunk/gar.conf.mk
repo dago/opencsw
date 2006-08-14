@@ -63,7 +63,7 @@ perlpackroot ?= $(perlcswlib)/auto
 
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
-DESTROOT ?= /export/home/$(LOGNAME)
+DESTROOT ?= $(HOME)
 DESTDIR  ?= $(DESTROOT)/csw-build.$(GAROSREL)-$(GARCH)
 
 BUILD_PREFIX ?= /opt/csw
