@@ -1,7 +1,7 @@
 GARNAME = AppConfig
-GARVERSION = 1.56
+GARVERSION = 1.63
 CATEGORIES = cpan
-AUTHOR = ABW
+AUTHOR = ADAMK
 
 DESCRIPTION = Perl5 module for configuration files and command line arguments.
 define BLURB
@@ -11,6 +11,8 @@ define BLURB
   script parameters.
 endef
 
-DISTFILES += CSWpmappconfig.gspec
+DISTFILES += $(call admfiles,CSWpmappconfig,depend prototype)
+
+DEPENDS += cpan/File-HomeDir
 
 include ../category.mk
