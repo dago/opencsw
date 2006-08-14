@@ -132,16 +132,10 @@ LD_RUN_DIRS += $(libdir)
 LD_RUN_PATH = $(call MAKEPATH,$(LD_RUN_DIRS))
 
 # allow us to use programs we just built
-#PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
-#PATH := $(DESTDIR)$(gnudir):$(DESTDIR)$(bindir):$(DESTDIR)$(sbindir):$(PATH)
-#PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/gnu:$(BUILD_PREFIX)/sbin:$(PATH)
-#PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
-#PATH := $(HOME)/bin:$(CC_HOME)/bin:$(PATH):$(GARBIN)
-
 PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
 PATH := $(DESTDIR)$(bindir):$(DESTDIR)$(sbindir):$(PATH)
 PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/sbin:$(PATH)
-PATH := $(CC_HOME)/bin:$(GARBIN):$(PATH)
+PATH := $(HOME)/bin:$(CC_HOME)/bin:$(GARBIN):$(PATH)
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH := $(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
