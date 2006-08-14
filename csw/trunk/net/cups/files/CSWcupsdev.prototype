@@ -1,6 +1,6 @@
-d none /opt/csw ? ? ?
+d none /opt/csw 0755 root bin
 f none /opt/csw/bin/cups-config 0755 root bin
-d none /opt/csw/include ? ? ?
+d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/cups 0755 root bin
 f none /opt/csw/include/cups/adminutil.h 0644 root bin
 f none /opt/csw/include/cups/array.h 0644 root bin
@@ -16,8 +16,8 @@ f none /opt/csw/include/cups/md5.h 0644 root bin
 f none /opt/csw/include/cups/ppd.h 0644 root bin
 f none /opt/csw/include/cups/raster.h 0644 root bin
 f none /opt/csw/include/cups/transcode.h 0644 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/cups-config.1 0644 root bin
 i copyright=CSWcupsdev.copyright
 i depend=CSWcupsdev.depend

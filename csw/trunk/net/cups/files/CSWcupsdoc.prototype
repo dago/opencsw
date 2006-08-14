@@ -1,6 +1,6 @@
-d none /opt/csw ? ? ?
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/cups 0755 root bin
 f none /opt/csw/share/doc/cups/cups-printable.css 0644 root bin
 f none /opt/csw/share/doc/cups/cups.css 0644 root bin

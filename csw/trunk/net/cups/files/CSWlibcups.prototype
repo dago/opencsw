@@ -1,5 +1,5 @@
-d none /opt/csw ? ? ?
-d none /opt/csw/lib ? ? ?
+d none /opt/csw 0755 root bin
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libcups.so.2 0755 root bin
 s none /opt/csw/lib/libcups.so=libcups.so.2 root bin
 f none /opt/csw/lib/libcupsimage.so.2 0755 root bin
