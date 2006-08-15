@@ -19,7 +19,7 @@ use vars qw/
   $TOOLVERSION $REVISION $VERSION
   $HAS_LWP_SUPPORT $UA $HAS_CURL_SUPPORT
   %config %exit $SELF %SPEC_TYPE $SPEC_TYPE
-  $DIRECTIVE @SPECDIRS @ADMFILES
+  $DIRECTIVE @SPECDIRS @ADMFILES %FLAGS %HASMERGE
   $DIRECTIVE_START %VALID_DIRECTIVES %SCRIPTADM/;
 
 # Tool Version/Revision Information
@@ -65,6 +65,9 @@ $SELF = basename $0;
     unknown             => 42,
 );
 
+# Content flags
+%FLAGS = map { $_ => $_ } qw/none merge/;
+
 # Spec Content Types
 %SPEC_TYPE = (
     CONTENT => '_content',
@@ -96,7 +99,7 @@ $SELF = basename $0;
 %VALID_DIRECTIVES = map { $_ => 1 } ( @SPECDIRS, @ADMFILES );
 
 $DIRECTIVE_START = '%';
-$DIRECTIVE       = qr/^$DIRECTIVE_START(\w+)/;
+$DIRECTIVE       = qr/^$DIRECTIVE_START(\w+)(?:\:(\w+))?/;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # NO USER SERVICABLE PARTS BEYOND HERE
@@ -158,7 +161,7 @@ sub Error { _log(\*STDERR, "red", @_) }
 sub Die {
     my $code = $exit{unknown};
     $code = shift if $_[0] =~ /^\d+$/;
-    elog("ERROR: ", @_);
+    Error("ERROR: ", @_);
     exit($code);
 }
 
@@ -453,7 +456,7 @@ sub parse {
     # contains array references, one for each line of content in the
     # specified file.
 
-    my ( $dname, $spec, $line );
+    my ( $dname, $spec, $line, $flag );
     for ( my $i = 0 ; $i <= $#{@$content} ; $i++ ) {
 
         my ( $source, $lineno, $line ) = @{ $content->[$i] };
@@ -461,6 +464,14 @@ sub parse {
         # If this line starts with a directive..
         if ( $line =~ /$DIRECTIVE/ ) {
             $dname = lc $1;
+            $flag = $2 || $FLAGS{none};
+
+            Die( $exit{spec_error},
+                "invalid directive flag '$flag' at $source line $lineno" )
+              unless exists $FLAGS{$flag};
+
+            # Flag this directive for merge later
+            $HASMERGE{$dname}++ if $flag eq $FLAGS{merge};
 
             Die( $exit{spec_error},
                 "invalid directive '$dname' at $source line $lineno" )
@@ -527,7 +538,7 @@ sub parse {
 
                 # If the content is a script, overwrite the existing spec
                 # reference, otherwise spec lines are additive.
-                my $specline = [ $dtype, $argv, $source, $lineno ];
+                my $specline = [ $dtype, $argv, $source, $lineno, $flag ];
                 if ($SCRIPTADM{$dname}) {
 
                     if ($spec->{$dname}) {
@@ -549,7 +560,7 @@ sub parse {
 
                 # Attribute this in-line text to the current directive
                 push @{ $spec->{$dname} },
-                  [ $SPEC_TYPE{CONTENT}, $line, $source, $lineno ];
+                  [ $SPEC_TYPE{CONTENT}, $line, $source, $lineno, $flag ];
             }
             elsif ( $dname eq 'include' or $dname eq 'var' ) {
                 Die( $exit{spec_error},
@@ -693,7 +704,7 @@ sub create_files {
     foreach my $admtype (@ADMFILES) {
         next unless exists $spec->{$admtype};
 
-        Important "processing $admtype";
+        Important "Processing $admtype";
 
         my $admfile      = catfile $workdir, "$specname.$admtype";
         my $admfile_name = basename $admfile;
@@ -703,21 +714,40 @@ sub create_files {
 
         # Handle overwrite permission
         if ( -f $admfile and not $config{overwrite} ) {
-            Warn "using existing $admfile_name";
-            next;
+            Warn "Using existing $admfile_name";
+            next unless $HASMERGE{$admtype};
         }
 
-        Warn "overwriting $admtype $admfile_name" if $config{overwrite};
+        if ($config{overwrite}) {
+            Warn "Overwriting $admtype $admfile_name";
+        }
+        elsif ($HASMERGE{$admtype}) {
+            Warn "Modifying $admtype $admfile_name";
+        } else {
+            Info "Generating $admfile_name";
+        }
 
-        Info "  generating $admfile_name";
+        # If we're merging content for this admin type
 
         my @admcontent;
+        if ($HASMERGE{$admtype} and not $config{overwrite}) {
+            Info "Merging $admtype content with $admfile_name";
+            open ADM, $admfile
+                or Die($exit{file_not_readable},
+                    "Cannot open '$admfile' for read: $!");
+
+            local $/ = undef;
+            @admcontent = <ADM>;
+            close ADM;
+        }
+
         foreach my $item ( @{ $spec->{$admtype} } ) {
-            my ( $ctype, $line, $source, $lineno ) = @$item;
+            my ( $ctype, $line, $source, $lineno, $flag ) = @$item;
+
             if ( $ctype eq $SPEC_TYPE{CONTENT} ) {
                 push @admcontent, $line;
             }
-            else {
+            elsif (! -f $admfile or $config{overwrite}) {
                 eval {
                     my @content = @{ get_content @$item };
                     Warn "empty \%$admtype at $source line $lineno"
@@ -736,7 +766,9 @@ sub create_files {
         }
 
         # Do content replace within 'pkginfo' and 'copyright' includes
-        if ( $admtype eq 'pkginfo' or $admtype eq 'copyright' ) {
+        if ( $admtype eq 'pkginfo' or
+             $admtype eq 'copyright' or
+             $admtype eq 'prototype') {
             for ( my $i = 0 ; $i <= $#admcontent ; $i++ ) {
                 $admcontent[$i] = env_replace( $admcontent[$i] );
             }
@@ -750,7 +782,7 @@ sub create_files {
                 or $admtype eq 'pkginfo'
                 or $admtype eq 'space' )
             {
-                Info "removing duplicate lines from $admfile_name";
+                Info "Removing duplicate lines from $admfile_name";
 
                 # Remove duplicate lines, preserve order
                 my @uniqadm;
@@ -764,7 +796,7 @@ sub create_files {
                 @admcontent = @uniqadm;
             }
 
-            Info "  writing $admfile_name";
+            Info "Writing $admfile_name";
 
             open OUT, ">$admfile"
               or
@@ -773,10 +805,13 @@ sub create_files {
             print OUT $_ foreach (@admcontent);
             close OUT;
         }
+        else {
+            Error("HAS NO CONTENT!");
+        }
     }
 
     # Last of all, write admin file content to the prototype
-    Important "writing admin entries to " . basename $protopath;
+    Important "Writing admin entries to " . basename $protopath;
 
     my %writeadm;
     foreach my $admtype (@ADMFILES) {
