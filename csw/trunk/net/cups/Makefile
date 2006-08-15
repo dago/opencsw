@@ -10,6 +10,11 @@ define BLURB
   in MacOS(R) X and most Linux(R) distributions.
 endef
 
+# compiling the PHP portion otherwise picks up the system cups.h instead of
+# its own
+EXTRA_INC = $(shell pwd)/$(WORKSRC)/cups
+export EXTRA_INC
+
 MASTER_SITES = http://ftp.easysw.com/pub/cups/1.2.2/
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2
 DISTFILES += $(call admfiles,CSWlibcups,depend prototype)
