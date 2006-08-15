@@ -10,9 +10,12 @@ define BLURB
   interface to James Clark's expat library.
 endef
 
-DISTFILES += CSWpmxmldom.gspec CSWpmxmldom.depend
+DISTFILES += $(call admfiles,CSWpmxmldom,depend)
 
-DEPENDS += cpan/XML-Parser cpan/XML-RegExp cpan/libxml-perl cpan/libwww-perl
+DEPENDS += cpan/XML-Parser
+DEPENDS += cpan/XML-RegExp
+DEPENDS += cpan/libwww-perl
+DEPENDS += cpan/libxml-perl
 
 # I don't know enough about Unicode to debug this test, but I suspect
 # it's just a matter of the test not being properly maintained.

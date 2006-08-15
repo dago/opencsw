@@ -1,7 +1,7 @@
 %var            bitname pm_xmlregexp
 %var            pkgname CSWpmxmlregexp
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 1999,2000 Enno Derksen
 All rights reserved.

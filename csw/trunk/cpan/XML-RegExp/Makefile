@@ -10,6 +10,6 @@ define BLURB
   EntityRef, CharRef, Reference, Name, NmToken, and AttValue.
 endef
 
-DISTFILES += CSWpmxmlregexp.gspec
+DISTFILES += $(call admfiles,CSWpmxmlregexp,depend prototype)
 
 include ../category.mk

@@ -1,5 +1,5 @@
 GARNAME = Template-Toolkit
-GARVERSION = 2.14
+GARVERSION = 2.15
 CATEGORIES = cpan
 AUTHOR = ABW
 
@@ -14,14 +14,18 @@ define BLURB
   the Template Toolkit.
 endef
 
-DISTFILES += $(call admfiles,CSWpmtt2,depend)
+DISTFILES += $(call admfiles,CSWpmtt2,depend prototype)
+DISTFILES += $(call admfiles,CSWpmtt2-common,depend prototype)
 
-DEPENDS += cpan/DBI cpan/GD cpan/GDTextUtil cpan/GDGraph cpan/GDGraph3d
-DEPENDS += cpan/Pod-POM cpan/XML-Parser cpan/XML-DOM cpan/XML-RSS
-DEPENDS += cpan/XML-XPath
+#DEPENDS += cpan/DBI
+DEPENDS += cpan/GD cpan/GDTextUtil cpan/GDGraph cpan/GDGraph3d
+DEPENDS += cpan/XML-Parser cpan/XML-RSS cpan/XML-XPath
+DEPENDS += cpan/AppConfig
+DEPENDS += cpan/Pod-POM cpan/XML-DOM
 
-CONFIGURE_ARGS  = TT_PREFIX=$(datadir)/tt2
+CONFIGURE_ARGS  = TT_PREFIX=$(DESTDIR)$(datadir)/tt2
 CONFIGURE_ARGS += TT_ACCEPT=y
-CONFIGURE_ARGS += TT_DBI=n
+
+FIXCONFIG_DIRS = $(DESTDIR)
 
 include ../category.mk
