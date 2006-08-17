@@ -1,4 +1,0 @@
-I CSWvim-minimal vim_minimal - Vi Improved - minimal configuration
-P CSWcommon common - common files and dirs for CSW packages
-P CSWvimrt vimrt - vim shared runtime and documentation
-P CSWncurses ncurses - ncurses library and utilities

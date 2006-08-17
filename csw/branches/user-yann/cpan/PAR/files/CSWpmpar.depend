@@ -1,5 +1,0 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
-P CSWpmarchivezip pm_archivezip - provide an interface to ZIP archive files.
-P CSWpmmodulescandeps pm_modulescandeps - recursively scan Perl code for dependencies
-P CSWpmmodulesignature pm_modulesignature - module signature file manipulation

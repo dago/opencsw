@@ -1,6 +1,0 @@
-d none /opt/csw/php5 ? ? ?
-d none /opt/csw/php5/lib ? ? ?
-d none /opt/csw/php5/lib/php ? ? ?
-d none /opt/csw/php5/lib/php/extensions ? ? ?
-d none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922 ? ? ?
-f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/pdo_sqlite.so=$basedir/opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/pdo_sqlite.so 0755 root bin

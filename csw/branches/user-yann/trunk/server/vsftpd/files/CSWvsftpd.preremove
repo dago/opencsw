@@ -1,3 +1,0 @@
-${BASEDIR}/etc/init.d/cswvsftpd stop
-
-exit 0

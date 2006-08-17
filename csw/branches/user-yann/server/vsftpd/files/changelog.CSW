@@ -1,8 +1,0 @@
-vsftpd (2.0.3,REV=2005.11.03) unstable
-
-  * Now configuration file is not automatically installed on the first
-    install and vsftpd is automatically restarted after upgrade.
-  * Changed default path to be more blastwave compliant.
-	
- -- Yann Rouillard <yann@blastwave.org>  Thu,  3 Nov 2005 14:51:29 +0100
-

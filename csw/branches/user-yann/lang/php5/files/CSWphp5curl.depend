@@ -1,6 +1,0 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5
-P CSWcurlrt curlrt - Library for common Internet protocols Runtime
-P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
-P CSWossl openssl - The Open Source toolkit for SSL and TLS.
-P CSWzlib zlib - Zlib Data Compression Library

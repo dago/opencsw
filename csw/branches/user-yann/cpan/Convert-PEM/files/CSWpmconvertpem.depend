@@ -1,4 +1,0 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
-P CSWpmconvertasn1 pm_convertasn1 - ASN.1 Encode/Decode library
-P CSWpmcryptdesede3 pm_cryptdesede3 - Triple-DES EDE encryption/decryption

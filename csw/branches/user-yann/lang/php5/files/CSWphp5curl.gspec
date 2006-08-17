@@ -1,7 +1,0 @@
-%var            bitname php5_curl
-%var            pkgname CSWphp5curl
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%postinstall    url file://%{WORKDIR}/CSWphp5_ext_enable.sh
-%postremove     url file://%{WORKDIR}/CSWphp5_ext_disable.sh
-%var            desc PHP 5 - cURL Extension
-%copyright      url file://%{WORKSRC}/LICENSE

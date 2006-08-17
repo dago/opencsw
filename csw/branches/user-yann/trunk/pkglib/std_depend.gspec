@@ -1,1 +1,0 @@
-%depend         exec awk '$1 ~ /f/{print $3}' %{prototype} | %{GARBIN}/depmaker --root %{DESTDIR} --nodep %{pkgname} %{DEPMAKER_EXTRA_ARGS}

@@ -1,3 +1,0 @@
-%var            bitname purge
-%var            pkgname CSWpurge
-%include        url file://%{GARDIR}/pkglib/csw_standard.gspec

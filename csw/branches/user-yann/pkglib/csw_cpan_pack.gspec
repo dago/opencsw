@@ -1,5 +1,0 @@
-%include        url file://%{GARDIR}/pkglib/csw_vars.gspec
-%pkginfo        url file://%{GARDIR}/pkglib/csw/pkginfo
-%depend         url file://%{GARDIR}/pkglib/csw/depend.perl
-%prototype      exec pkgproto %{DESTDIR}=/ | %{GARBIN}/cswproto -p `find %{DESTDIR}%{prefix} -cnewer %{TIMESTAMP} -name .packlist`
-%depend         exec awk '$1 ~ /f/{print $3}' %{prototype} | %{GARBIN}/depmaker --root %{DESTDIR} --nodep %{pkgname} %{DEPMAKER_EXTRA_ARGS}
