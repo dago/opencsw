@@ -1,0 +1,4 @@
+%var            bitname mhonarc
+%var            pkgname CSWmhonarc
+%include        url file://%{GARDIR}/pkglib/csw_standard.gspec
+%copyright      url file://%{WORKSRC}/COPYING

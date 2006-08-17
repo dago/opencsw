@@ -1,0 +1,20 @@
+<IfModule perl_module>
+    PerlSwitches -wT
+    PerlRequire /opt/csw/apache2/etc/startup.pl
+
+    Alias /cgi-perl/ /opt/csw/apache2/share/cgi-perl/
+    <Location /cgi-perl/>
+        SetHandler perl-script
+        PerlResponseHandler ModPerl::Registry
+        PerlOptions +ParseHeaders
+        Options +ExecCGI
+    </Location>
+
+    <Location /perl-status>
+        SetHandler perl-script                                       
+        PerlHandler Apache2::Status
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.1
+    </Location>
+</IfModule>

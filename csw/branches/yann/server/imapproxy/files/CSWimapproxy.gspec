@@ -1,0 +1,9 @@
+%var            bitname imapproxy
+%var            pkgname CSWimapproxy
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING
+%include        url file://%{CURDIR}/files/csw_smf
+%pkginfo
+MANIFEST_FILES="/opt/csw/var/svc/manifest/network/imapproxy.xml"
+SERVICE_CONF_FILES="/opt/csw/etc/imapproxy.conf"
+CAN_BE_AUTOENABLED="no"

@@ -1,0 +1,99 @@
+#!/bin/sh
+# /etc/init.d/imapproxy
+#
+
+# chkconfig stuff
+# chkconfig: 3 99 10
+# description: A caching IMAP proxy server
+ 
+################################
+# Variable initialization #
+################################
+PROGNAME=in.imapproxyd
+BINPATH=/opt/csw/sbin
+INIT_FILE=/etc/init.d/cswimapproxy
+CONF_DIR=/opt/csw/etc
+CONF_FILE=$CONF_DIR/imapproxy.conf
+OPTIONS=""
+
+
+####################
+# Useful functions #
+####################
+
+start()
+{
+    if pgrep -f "^$BINPATH/$PROGNAME -f $CONF_FILE$" >/dev/null; then
+	/usr/bin/echo "$PROGNAME is already running."
+    else
+	/usr/bin/echo "Starting $PROGNAME: \c"
+	# imapproxy can be stuck if some case.
+	# For example if it can't resolve the imap server name at startup
+	# it will not fork and will retry to resolve the name (for a long time)
+	# so we launch it in background, we wait and then we test if
+	# the process has not died
+	$BINPATH/$PROGNAME -f $CONF_FILE &
+	sleep 1
+	# if the fork occured the backgrounded process shouldn't
+	# exist anymore
+	if pgrep -f "^$BINPATH/$PROGNAME -f $CONF_FILE$" >/dev/null; then
+            /usr/bin/echo "OK."
+	else
+            /usr/bin/echo "Failed."
+	fi
+    fi
+}
+
+
+stop()
+{
+    if pgrep -f "^$BINPATH/$PROGNAME -f $CONF_FILE$" >/dev/null; then
+	/usr/bin/echo "Stopping $PROGNAME: \c"
+	pkill -15 -f "^$BINPATH/$PROGNAME -f $CONF_FILE$"
+	/usr/bin/echo "OK."
+    else
+	/usr/bin/echo "$PROGNAME is not running."
+    fi
+}
+
+
+restart()
+{
+    stop
+    start
+}
+
+
+status()
+{
+
+    pgrep -f "^$BINPATH/$PROGNAME -f $CONF_FILE$" >/dev/null
+    RET=$?
+
+    if [ "$RET" -eq 0 ]; then
+	/usr/bin/echo "$PROGNAME is running."
+    else
+	/usr/bin/echo "$PROGNAME is not running."
+    fi
+
+    return $RET
+}
+
+
+[ -x ${BINPATH}/${PROGNAME} ] || exit 5
+
+# We don't do anything if configuration file
+# is not present
+[ -f "$CONF_FILE" ] || exit 0
+
+case "$1" in
+  start) start ;;
+  stop) stop ;;
+  restart) restart ;;
+  reload) reload ;;
+  status) status ;;
+  *)
+    /usr/bin/echo "Usage: $INIT_FILE {start|stop|restart|reload|status}"
+    exit 1
+    ;;
+esac

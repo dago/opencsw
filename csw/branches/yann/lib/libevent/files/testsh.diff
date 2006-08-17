@@ -1,0 +1,9 @@
+diff --speed-large-files --minimal -Nru libevent-1.1a.orig/test/test.sh libevent-1.1a/test/test.sh
+--- libevent-1.1a.orig/test/test.sh	2005-12-12 15:41:17.867710000 -0500
++++ libevent-1.1a/test/test.sh	2005-12-12 15:41:08.306587000 -0500
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ setup () {
+ 	 export EVENT_NOKQUEUE=yes

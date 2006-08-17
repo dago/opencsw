@@ -1,0 +1,7 @@
+838492f95de0964e31e633bfa07a0682  download/squid-2.6.STABLE2.tar.bz2
+fa6e31a69a8809fe0369e01e1e2df192  download/CSWsquid.gspec
+80de73bc5a5260afa095741563231f58  download/CSWsquid.depend
+ca01a650e044db58f282732f8b9ddbc5  download/CSWsquid.prototype
+c492e2d6d32ec5c1aad0e0609a141ce9  download/CSWsquid.copyright
+84f3b2fdb7dfd33f05096f5b2051e80e  download/CSWsquid.postinstall
+97d93eadab6a33c4e0cabf76b351364d  download/CSWsquid.preremove

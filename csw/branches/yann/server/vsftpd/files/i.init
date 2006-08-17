@@ -1,0 +1,88 @@
+#
+# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# i.init - class script which install init.d script and runlevels
+#          symlinks
+#
+umask 0022
+LANG=C
+export LANG
+
+read_conf_value () 
+{
+    _VAR="$1"
+    _FILE="$2"
+    eval ${_VAR}=\"`/usr/bin/sed -n -e "/^# *$_VAR:/ s/^.*$_VAR: *\(.*[^ ]\) *$/\1/p" ${_FILE}`\"
+}
+
+
+# retrieve the state of a service
+load_init_info ()
+{
+	_INIT_FILE="$1"
+	_INIT_INFO=""
+	if [ -f "$INIT_INFO_FILE" ]; then
+		INIT_INFO="`awk \" \\\$1 == \\\"$_INIT_FILE\\\" { print \\\$2,\\\$3,\\\$4,\\\$5,\\\$6,\\\$7,\\\$8,\\\$9,\\\$10,\\\$11,\\\$12,\\\$13,\\\$14,\\\$15,\\\$16,\\\$17 }\" "$INIT_INFO_FILE"`"
+		return 0
+	fi
+	if [ -z "$INIT_INFO" ]; then
+		# No previous init info saved, we find the init info
+		# from the chkconfig info in the init file
+		read_conf_value chkconfig "$SRC"
+		set -- $chkconfig
+
+		RUNLEVEL="$1"
+		START_PRIORITY_LEVEL="$2"
+		STOP_PRIORITY_LEVEL="$3"
+
+		for LEVEL in 0 1 2 3 S; do
+			if echo "${RUNLEVEL}" | grep "${LEVEL}" >/dev/null; then
+				# if service was started in level 2, we do not need
+				# to create the start link in level 3
+				[ "${LEVEL}" = "3" ] && echo "${RUNLEVEL}" | grep "2" >/dev/null
+				if [ $? -ne 0 ]; then
+					INIT_INFO="$INIT_INFO $LEVEL S$START_PRIORITY_LEVEL"	
+				fi
+			else
+		 		INIT_INFO="$INIT_INFO $LEVEL K$STOP_PRIORITY_LEVEL"	
+			fi
+		done
+	fi
+}
+
+
+restore_runlevel_symlinks ()
+{
+	_INIT_FILE="$1"
+	_INIT_INFO="$2"
+	_SERVICE_NAME="`basename \"$_INIT_FILE\"`"
+	while [ -n "$_INIT_INFO" ]; do
+		read _LEVEL _PRIORITY _INIT_INFO <<EOF
+$_INIT_INFO
+EOF
+                _LEVELDIR="/etc/rc${_LEVEL}.d"
+		if [ ! -f "$_LEVELDIR/${_PRIORITY}${_SERVICE_NAME}" ]; then
+			ln -s "${_INIT_FILE}" "$_LEVELDIR/${_PRIORITY}${_SERVICE_NAME}" 
+		fi
+	done
+}
+
+INIT_INFO_FILE="$PKG_INSTALL_ROOT/tmp/$PKG.initinfo"
+
+while read SRC DEST; do
+	SERVICENAME=`/usr/bin/basename $DEST`
+
+	cp "$SRC" "$DEST"
+	chown root:sys "$DEST"
+	chmod 740 "$DEST"
+
+	load_init_info "$DEST"
+	restore_runlevel_symlinks "$DEST" "$INIT_INFO"
+
+done

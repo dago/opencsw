@@ -1,0 +1,33 @@
+ppkg-get
+================
+
+pkg-get is tool to automatically download, install or upgrade
+solaris package from a remote repository, taking care of
+retrieving required dependancies.
+
+ppkg-get is a perl rewrite of original pkg-get tool written
+by Philip Brown.
+
+Compared to pkg-get, pkg-get are:
+  - multiple site alias support:
+	you can define multiple site alias in the configuration
+	file with syntax: url[site1] = http://...
+	you will use this site: ppkg-get -s site1 -i package
+
+  - dependancies are displayed before package installation:
+	the user will be informed about dependancies to install before
+    	any package is installed.
+
+  - server site dependancies support:
+	ppkg-get can obtain dependancies information from repository
+	that support it, in this case it will be able to display the 
+	list of required dependancies before downloading and installing 
+	a single byte.
+
+  - solaris package name support:
+	you can install software using software name of solaris package name.
+	ppkg-get install emacs or ppkg-get install CSWemacs equally work.
+
+---
+Yann Rouillard
+

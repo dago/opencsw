@@ -1,0 +1,11 @@
+o genmdesc doesn't properly list ../io-layer/libwapi.la in it's dependencies.
+  Fixed on command line manually -- need a patch.
+
+o libtool is creating wonky -Wl arguments.  It passes -z allextract to ld as
+  -Wl,-z -Wl,allextract, when it should pass -Wl,-z allextract.  This was
+  fixed by editing mono-1.1.10/libtool.
+
+o mono-1.1.10/mono/mini/mini-arch.h is not evaluated correctly on Solaris x86.
+  It expects __i386__ to be defined on x86, but apparently it is not on
+  Solaris.  Works fine for SPARC, though.
+

@@ -1,0 +1,23 @@
+GARNAME = ExtUtils-PkgConfig
+GARVERSION = 1.07
+CATEGORIES = cpan
+AUTHOR = RMCFARLA
+
+DESCRIPTION = simplistic interface to pkg-config
+define BLURB
+  The pkg-config program retrieves information about installed libraries,
+  usually for the purposes of compiling against and linking to them.
+  ExtUtils::PkgConfig is a very simplistic interface to this utility, intended
+  for use in the Makefile.PL of perl extensions which bind libraries that
+  pkg-config knows. It is really just boilerplate code that you would've
+  written yourself.
+endef
+
+# Unstable branch
+#MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
+
+DISTFILES += $(call admfiles,CSWpmextutpkgconf,)
+
+include ../category.mk
+
+AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl

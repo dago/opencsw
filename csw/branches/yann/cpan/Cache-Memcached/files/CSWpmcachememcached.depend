@@ -1,0 +1,3 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmstringcrc32 pm_stringcrc32 - interface for cyclic redundency check generation

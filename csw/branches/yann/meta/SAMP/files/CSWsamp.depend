@@ -1,0 +1,17 @@
+P CSWap2modperl ap2_modperl - Persistent Perl interpreter for Apache 2.x
+P CSWap2modphp5 ap2_modphp5 - PHP 5 - Apache 2.0.x Module
+P CSWap2modpython ap2_modpython - an Apache/Python integration module
+P CSWapache2 apache2 - Apache 2.2 web server
+P CSWmemcached memcached - distributed memory object caching system
+P CSWmysql4 mysql4 - MySQL database management system - server files
+P CSWperl perl - A high-level, general-purpose programming language.
+P CSWphp5 php5 - PHP Hypertext Processor 5
+P CSWpmapreq2 pm_apreq2 - methods for dealing with Apache request data
+P CSWpmcachememcached pm_cachememcached - client library for memcached
+P CSWpmdbdmysql pm_dbdmysql - MySQL driver for the Perl5 Database Interface
+P CSWpmdbdsqlite pm_dbdsqlite - Self Contained RDBMS in a DBI Driver
+P CSWpmdbi pm_dbi - Database independent interface for Perl
+P CSWpymysql pymysql - MySQL support for Python
+P CSWpysqlite2 pysqlite2 - SQLite3 support for Python
+P CSWpython python - The Python language interpreter
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library

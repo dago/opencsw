@@ -1,0 +1,3 @@
+%var            bitname squidpurge
+%var            pkgname CSWsquidpurge
+%include        url file://%{GARDIR}/pkglib/csw_standard.gspec

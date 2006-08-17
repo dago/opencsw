@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru sh-utils-2.0.orig/configure sh-utils-2.0/configure
+--- sh-utils-2.0.orig/configure	1999-08-14 05:51:35.000000000 -0700
++++ sh-utils-2.0/configure	2004-02-17 11:50:59.258634000 -0800
+@@ -887,7 +887,7 @@
+ EOF
+ 
+ 
+-ALL_LINGUAS="cs de el es fr it nl no pl pt pt_BR ru sk sv zh"
++ALL_LINGUAS="cs de el es fr it nl no pl pt pt_BR ru sk sv"
+ 
+ 
+       echo $ac_n "checking for perl5.003 or newer""... $ac_c" 1>&6

@@ -1,0 +1,27 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
+P CSWbdb43 berkeleydb43 - embedded database libraries and utilities
+P CSWexpat expat - XML Parser Toolkit
+P CSWfconfig fontconfig - A library for configuring and customizing font access.
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWgdbm gdbm - GNU dbm
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWgtk2 gtk2 - GTK+, The GIMP Toolkit
+P CSWiconv libiconv - GNU iconv library
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWlibnet libnet - the libnet packet construction library
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWoldaprt openldap_rt - ldap runtime libraries
+P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWpango libpango - Library for laying out and rendering text
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWsqlite sqlite - An embeddable SQL engine in a C library
+P CSWsunmath libsunmath - Sun maths library
+P CSWsvn subversion - Version control rethought
+P CSWsvncpp svncpp - Subversion C++ language binding
+P CSWwxwidgetscommon wxwidgets_common - common files for wxwidgets (no Unicode)
+P CSWwxwidgetsgtk2 wxwidgets_gtk2 - gtk2 support for wxwidgets (no Unicode)
+P CSWzlib zlib - Zlib Data Compression Library
