@@ -79,6 +79,7 @@ version=`sed -n 's/^VERSION=//p' $TMPFILE`
 desc=`sed -n 's/^DESC=//p' $TMPFILE`
 email=`sed -n 's/^EMAIL=//p' $TMPFILE`
 maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
+source_url=`sed -n 's/^VENDOR= *\([^ ]*\) .*for CSW by.*/\1/p' $TMPFILE`
 hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
 basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
 pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
@@ -154,8 +155,20 @@ if [ "$desc" = "" ] ; then errquit ERROR in $f: no description in either NAME or
 if [ ${#desc} -gt 100 ] ; then errquit ERROR in $f: description too long ; fi
 if [ "$version" = "" ] ; then errquit ERROR in $f: VERSION field blank ;  fi
 if [ "$maintname" = "" ] ; then errquit ERROR in $f: maintainer name not detected. Fill out VENDOR field properly ; fi
+if [ "$source_url" = "" ] ; then errquit ERROR in $f: source url not detected. Fill out VENDOR field properly ; fi
 if [ "$email" = "" ] ; then errquit ERROR in $f: EMAIL field blank ; fi
 if [ "$hotline" = "" ] ; then errquit ERROR in $f: HOTLINE field blank ; fi
+
+# Verify if the source url is valid
+print ""
+print "Testing source url $source_url..."
+wget -O /dev/null $source_url
+if [[ $? -ne 0 ]]; then
+	print "WARNING: $source_url is not a valid url or doesn't point to a valid page"
+	if [[ "$WARNING_ERROR" -eq 1 ]]; then
+		exit 1
+	fi
+fi
 
 
 case $version in
