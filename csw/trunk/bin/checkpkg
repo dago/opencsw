@@ -385,7 +385,7 @@ fi
 			continue
 		fi
 
-		libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
+		libpkg=`grep "^[^=]*/$lib[ =]" $EXTRACTDIR/shortcatalog |
 		      sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
 
 		if [[ -z "$libpkg" ]] ; then
