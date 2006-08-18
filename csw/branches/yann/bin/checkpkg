@@ -385,25 +385,55 @@ fi
 			continue
 		fi
 
-		libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
+		libpkg=`grep "^[^=]*/$lib[ =]" $EXTRACTDIR/shortcatalog |
 		      sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
 
 		if [[ -z "$libpkg" ]] ; then
 			print ERROR: cannot find package for $lib
 		else
-			print $libpkg | fmt -1 >>$EXTRACTDIR/libpkgs
+			print $lib $libpkg >>$EXTRACTDIR/libpkgs
 		fi
 	done
 	sort -u $EXTRACTDIR/libpkgs >$EXTRACTDIR/libpkgs.x
 	mv $EXTRACTDIR/libpkgs.x $EXTRACTDIR/libpkgs
 
-	diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs >/dev/null
-	if [[ $? -ne 0 ]] ; then
-		print SUGGESTION: you may want to add some or all of the following as depends:
-		print '   (Feel free to ignore SUNW or SPRO packages)'
-		diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs | fgrep '>'
+	while read pkgs; do
+		set -- $pkgs
+		lib=$1; shift
+		found="no"
+		if echo $* | egrep "SUNW|SPRO" >/dev/null; then
+			file="$EXTRACTDIR/sunpkgs"
+		else
+			file="$EXTRACTDIR/otherpkgs"
+		fi
+
+		for pkg in $*; do
+			if grep -w $pkg $EXTRACTDIR/deppkgs >/dev/null; then
+				found="yes"
+				break;
+			fi
+		done
+
+		if [[ "$found" != yes ]]; then
+			echo "`echo $* | sed -e 's/ / or /g'` (provides $lib)" >> $file
+		fi
+
+	done < $EXTRACTDIR/libpkgs
+
+	if [[ -f $EXTRACTDIR/sunpkgs ]]; then
+		print
+		print SUGGESTION: you may want to add some or all of the following Sun dependancies as depends:
+		cat $EXTRACTDIR/sunpkgs
 	fi
 
+	if [[ -f $EXTRACTDIR/otherpkgs ]]; then
+		print
+		print WARNING: the following dependancies are missing in the depend file:
+		cat $EXTRACTDIR/otherpkgs
+                if [[ "$WARNING_ERROR" -eq 1 ]]; then
+                                exit 1
+		fi
+	fi
 
 #listbinaries /tmp/$pkgname
 
