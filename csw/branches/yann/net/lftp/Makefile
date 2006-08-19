@@ -37,9 +37,9 @@ CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 # GARCOMPILER = GNU
 
 # for debug build
-CONFIGURE_ARGS += --with-debug
-SUN_CC_OPT=-g
-SUN_CXX_OPT=-g
+#CONFIGURE_ARGS += --with-debug
+#SUN_CC_OPT=-g
+#SUN_CXX_OPT=-g
 #GNU_CC_OPT = -g
 #GNU_CXX_OPT = -g
 
