@@ -1,3 +1,12 @@
+lftp (3.5.4) unstable
+ 
+   * New upstream version.
+   * Removed sun_cc_compilation_fix.patch not necessary anymore.
+   * Added MakeRef_macro.patch to fixed a incorrect macro call 
+     which caused segmentation fault with sftp protocol.
+ 
+  -- Yann Rouillard <yann@blastwave.org>  Sat, 19 Aug 2006 20:24:04 +0200
+ 
 lftp (3.5.2) unstable
 
    * New upstream version.
