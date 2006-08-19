@@ -1,5 +1,5 @@
 GARNAME = lftp
-GARVERSION = 3.5.2
+GARVERSION = 3.5.4
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
@@ -18,8 +18,9 @@ SPKG_CLASSES = none conf
 
 # correct some bugs preventing compilation
 # with sun cc
-PATCHFILES = sun_cc_compilation_fix.patch
+# PATCHFILES = sun_cc_compilation_fix.patch
 PATCHFILES += sun_cc_bool_compilation_fix.patch
+PATCHFILES += MakeRef_macro.patch
 
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
@@ -37,6 +38,8 @@ CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 
 # for debug build
 #CONFIGURE_ARGS += --with-debug
+#SUN_CC_OPT=-g
+#SUN_CXX_OPT=-g
 #GNU_CC_OPT = -g
 #GNU_CXX_OPT = -g
 
