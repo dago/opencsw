@@ -1,5 +1,4 @@
 f none /opt/csw/bin/elinks 0755 root bin
-f none /opt/csw/lib/charset.alias 0644 root bin
 d none /opt/csw/share/doc/elinks 0755 root bin
 f none /opt/csw/share/doc/elinks/changelog.CSW 0755 root bin
 d none /opt/csw/share/locale 0755 root bin
@@ -54,7 +53,6 @@ f none /opt/csw/share/locale/is/LC_MESSAGES/elinks.mo 0644 root bin
 d none /opt/csw/share/locale/it 0755 root bin
 d none /opt/csw/share/locale/it/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/it/LC_MESSAGES/elinks.mo 0644 root bin
-f none /opt/csw/share/locale/locale.alias 0644 root bin 
 d none /opt/csw/share/locale/lt 0755 root bin
 d none /opt/csw/share/locale/lt/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/lt/LC_MESSAGES/elinks.mo 0644 root bin
