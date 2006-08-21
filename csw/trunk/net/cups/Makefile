@@ -11,8 +11,10 @@ define BLURB
 endef
 
 # compiling the PHP portion otherwise picks up the system cups.h instead of
-# its own
-EXTRA_INC = $(shell pwd)/$(WORKSRC)/cups
+# its own; placing /usr/include before the workdir, though, or else we end up
+# including CUPS' string.h as opposed to the one in /usr/include
+EXTRA_INC = /usr/include
+EXTRA_INC += $(shell pwd)/$(WORKSRC)/cups
 export EXTRA_INC
 
 MASTER_SITES = http://ftp.easysw.com/pub/cups/1.2.2/
