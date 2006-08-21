@@ -17,7 +17,20 @@ EXTRA_INC = /usr/include
 EXTRA_INC += $(shell pwd)/$(WORKSRC)/cups
 export EXTRA_INC
 
-MASTER_SITES = http://ftp.easysw.com/pub/cups/1.2.2/
+#MASTER_SITES = http://ftp.easysw.com/pub/cups/1.2.2/
+#MASTER_SITES = http://www.cups.org/
+# These are the source mirrors published on the CUPS home-page.
+CUPS_MIRRORS = http://ftp.easysw.com/pub
+CUPS_MIRRORS += ftp://ftp2.easysw.com/pub
+CUPS_MIRRORS += ftp://ftp3.easysw.com/pub
+CUPS_MIRRORS += http://www.nu6.org/_/mirror/ftp.easysw.com/pub
+CUPS_MIRRORS += http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
+CUPS_MIRRORS += ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
+CUPS_MIRRORS += http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub
+# Complete the mirror paths by adding /cups/x.y.z/ at the end.
+FULL_MIRRORS = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
+MASTER_SITES += $(FULL_MIRRORS)
+
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2
 DISTFILES += $(call admfiles,CSWlibcups,depend prototype)
 DISTFILES += $(call admfiles,CSWcupsd,depend prototype postinstall preremove \
