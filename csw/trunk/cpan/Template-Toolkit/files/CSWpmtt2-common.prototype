@@ -81,10 +81,6 @@ f none /opt/csw/lib/perl/csw/Template/View.pm 0444 root bin
 d none /opt/csw/lib/perl/csw/auto ? ? ?
 d none /opt/csw/lib/perl/csw/auto/Template 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/Template/.packlist 0644 root bin
-d none /opt/csw/lib/perl/csw/auto/Template/Stash 0755 root bin
-d none /opt/csw/lib/perl/csw/auto/Template/Stash/XS 0755 root bin
-f none /opt/csw/lib/perl/csw/auto/Template/Stash/XS/XS.bs 0444 root bin
-f none /opt/csw/lib/perl/csw/auto/Template/Stash/XS/XS.so 0555 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/man1 ? ? ?

@@ -12,9 +12,9 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmxmldom,depend)
 
-DEPENDS += cpan/XML-Parser
+#DEPENDS += cpan/XML-Parser
 DEPENDS += cpan/XML-RegExp
-DEPENDS += cpan/libwww-perl
+#DEPENDS += cpan/libwww-perl
 DEPENDS += cpan/libxml-perl
 
 # I don't know enough about Unicode to debug this test, but I suspect

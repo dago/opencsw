@@ -3,7 +3,7 @@ GARVERSION = 2.15
 CATEGORIES = cpan
 AUTHOR = ABW
 
-DESCRIPTION = front-end module to the Template Toolkit
+DESCRIPTION = Template Toolkit 2
 define BLURB
   This documentation describes the Template module which is the direct Perl
   interface into the Template Toolkit. It covers the use of the module and
@@ -18,8 +18,8 @@ DISTFILES += $(call admfiles,CSWpmtt2,depend prototype)
 DISTFILES += $(call admfiles,CSWpmtt2-common,depend prototype)
 
 #DEPENDS += cpan/DBI
-DEPENDS += cpan/GD cpan/GDTextUtil cpan/GDGraph cpan/GDGraph3d
-DEPENDS += cpan/XML-Parser cpan/XML-RSS cpan/XML-XPath
+#DEPENDS += cpan/GD cpan/GDTextUtil cpan/GDGraph cpan/GDGraph3d
+#DEPENDS += cpan/XML-Parser cpan/XML-RSS cpan/XML-XPath
 DEPENDS += cpan/AppConfig
 DEPENDS += cpan/Pod-POM cpan/XML-DOM
 

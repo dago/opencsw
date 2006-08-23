@@ -17,7 +17,7 @@ endef
 
 DISTFILES += CSWpmpodpom.gspec CSWpmpodpom.depend
 
-DEPENDS += cpan/Text-Diff
+#DEPENDS += cpan/Text-Diff
 
 # The 'htmlview' function is currently broken (0.17)
 # =for sections are being ignored!
