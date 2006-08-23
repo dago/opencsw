@@ -1,5 +1,5 @@
-%include        url file://%{GARDIR}/pkglib/csw_vars.gspec
-%pkginfo        url file://%{GARDIR}/pkglib/csw/pkginfo
+%include        url file://%{PKGLIB}/csw_vars.gspec
+%pkginfo        url file://%{PKGLIB}/csw/pkginfo
 %prototype      exec cswproto -s %{TIMESTAMP} -r %{DESTDIR} %{DESTDIR}
-%depend         url file://%{GARDIR}/pkglib/csw/depend.perl
+%depend         url file://%{PKGLIB}/csw/depend.perl
 %depend         exec gawk '$1 ~ /f/{print $3}' %{prototype} | depmaker --root %{DESTDIR} --nodep %{pkgname} %{DEPMAKER_EXTRA_ARGS}
