@@ -731,14 +731,16 @@ sub create_files {
 
         my @admcontent;
         if ($HASMERGE{$admtype} and not $config{overwrite}) {
-            Info "Merging $admtype content with $admfile_name";
-            open ADM, $admfile
-                or Die($exit{file_not_readable},
-                    "Cannot open '$admfile' for read: $!");
+            if (-f $admfile) {
+                Info "Merging $admtype content with $admfile_name";
+                open ADM, $admfile
+                    or Die($exit{file_not_readable},
+                        "Cannot open '$admfile' for read: $!");
 
-            local $/ = undef;
-            @admcontent = <ADM>;
-            close ADM;
+                local $/ = undef;
+                @admcontent = <ADM>;
+                close ADM;
+            }
         }
 
         foreach my $item ( @{ $spec->{$admtype} } ) {
