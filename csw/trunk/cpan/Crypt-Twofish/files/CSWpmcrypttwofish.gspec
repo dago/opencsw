@@ -1,6 +1,6 @@
 %var            bitname pm_crypttwofish
 %var            pkgname CSWpmcrypttwofish
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Abhijit Menon-Sen <ams@wiw.org>
 

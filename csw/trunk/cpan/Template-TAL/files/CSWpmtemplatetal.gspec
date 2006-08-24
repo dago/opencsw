@@ -1,7 +1,7 @@
 %var            bitname pm_templatetal
 %var            pkgname CSWpmtemplatetal
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright
 Written by Tom Insam, Copyright 2005 Fotango Ltd. All Rights Reserved.
 

@@ -1,6 +1,6 @@
 %var            bitname pm_xmlparser
 %var            pkgname CSWpmxmlparser
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 1998-2000 Larry Wall and Clark Cooper.
 All rights reserved.

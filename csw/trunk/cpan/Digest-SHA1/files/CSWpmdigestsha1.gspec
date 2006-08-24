@@ -1,6 +1,6 @@
 %var            bitname pm_digestsha1
 %var            pkgname CSWpmdigestsha1
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 1999-2003 Gisle Aas.
 Copyright 1997 Uwe Hollerbach.

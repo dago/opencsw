@@ -1,6 +1,6 @@
 %var            bitname pm_par
 %var            pkgname CSWpmpar
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2002, 2003, 2004 by Autrijus Tang <autrijus@autrijus.org>.
 

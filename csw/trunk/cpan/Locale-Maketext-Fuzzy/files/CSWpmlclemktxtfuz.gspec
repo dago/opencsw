@@ -1,7 +1,7 @@
 %var            bitname pm_lclemktxtfuz
 %var            pkgname CSWpmlclemktxtfuz
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2002 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
 

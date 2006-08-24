@@ -1,7 +1,7 @@
 %var            bitname pm_extutxsbld
 %var            pkgname CSWpmextutxsbld
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2000-2001 Doug MacEachern
 Copyright (c) 2001-2004 Gerald Richter / ecos gmbh (www.ecos.de)

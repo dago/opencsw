@@ -1,6 +1,6 @@
 %var            bitname pm_want
 %var            pkgname CSWpmwant
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2001, Robin Houston. All Rights Reserved.
 This module is free software. It may be used,

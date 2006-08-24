@@ -1,6 +1,6 @@
 %var            bitname pm_eventlib
 %var            pkgname CSWpmeventlib
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (C) 2004-2005 by Tassilo von Parseval
 

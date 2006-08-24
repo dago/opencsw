@@ -1,5 +1,5 @@
 %var            bitname pm_convertasciiarmour
 %var            pkgname CSWpmconvertaarm
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      url file://%{WORKSRC}/ARTISTIC

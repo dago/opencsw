@@ -1,7 +1,7 @@
 %var            bitname pm_objrelater
 %var            pkgname CSWpmobjrelater
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Written by Mark Overmeer (mark@overmeer.net).  See the ChangeLog for
 other contributors.

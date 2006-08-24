@@ -1,6 +1,6 @@
 %var            bitname pm_gtk2trayicon
 %var            pkgname CSWpmgtk2trayicon
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2003 by the gtk2-perl team.
 

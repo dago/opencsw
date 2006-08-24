@@ -1,7 +1,7 @@
 %var            bitname pm_modulebuild
 %var            pkgname CSWpmmodulebuild
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright
 Copyright (c) 1999, Ken Williams.  All rights reserved.
         

@@ -1,7 +1,7 @@
 %var            bitname pm_htmlfmt
 %var            pkgname CSWpmhtmlfmt
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 © 1995-2002 Gisle Aas and Sean M. Burke.  All rights reserved.
 

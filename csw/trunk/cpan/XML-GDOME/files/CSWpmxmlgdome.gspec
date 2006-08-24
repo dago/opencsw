@@ -1,6 +1,6 @@
 %var            bitname pm_xmlgdome
 %var            pkgname CSWpmxmlgdome
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2001, 2002 T.J. Mather.
 Copyright 2001, AxKit.com Ltd. All rights reserved.

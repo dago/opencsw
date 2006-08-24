@@ -1,7 +1,7 @@
 %var            bitname pm_testexceptions
 %var            pkgname CSWpmtestexceptions
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2002-2003 Adrian Howard, All Rights Reserved.
 

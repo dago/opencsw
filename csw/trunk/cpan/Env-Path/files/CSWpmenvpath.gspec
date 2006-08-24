@@ -1,6 +1,6 @@
 %var            bitname pm_envpath
 %var            pkgname CSWpmenvpath
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2000-2001 David Boyce. All rights reserved.  This Perl
 program is free software; you may redistribute and/or modify it under

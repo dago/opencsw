@@ -1,7 +1,7 @@
 %var            bitname pm_univrequire
 %var            pkgname CSWpmunivrequire
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2001, 2005 by Michael G Schwern <schwern@pobox.com>.
 

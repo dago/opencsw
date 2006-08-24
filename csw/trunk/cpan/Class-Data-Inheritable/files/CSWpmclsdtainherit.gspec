@@ -1,7 +1,7 @@
 %var            bitname pm_clsdtainherit
 %var            pkgname CSWpmclsdtainherit
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2000, Damian Conway and Michael G Schwern. All
 Rights Reserved.  This module is free software. It may be used,

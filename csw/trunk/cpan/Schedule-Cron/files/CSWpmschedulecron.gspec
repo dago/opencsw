@@ -1,7 +1,7 @@
 %var            bitname pm_schedulecron
 %var            pkgname CSWpmschedulecron
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 1999,2000 Roland Huss.
 

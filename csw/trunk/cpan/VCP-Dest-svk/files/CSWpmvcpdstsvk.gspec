@@ -1,6 +1,6 @@
 %var            bitname pm_vcpdstsvk
 %var            pkgname CSWpmvcpdstsvk
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2004 by Chia-liang Kao clkao@clkao.org.
 

@@ -1,7 +1,7 @@
 %var            bitname pm_iozlib
 %var            pkgname CSWpmiozlib
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) Tom Hughes <tom@compton.nu>.
 

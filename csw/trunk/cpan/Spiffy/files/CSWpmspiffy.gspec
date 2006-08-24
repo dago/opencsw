@@ -1,7 +1,7 @@
 %var            bitname pm_spiffy
 %var            pkgname CSWpmspiffy
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2004. Brian Ingerson. All rights reserved.
 

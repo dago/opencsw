@@ -1,6 +1,6 @@
 %var            bitname pm_unixsyslog
 %var            pkgname CSWpmunixsyslog
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (C) 1999,2000,2001,2002 Marcus Harnisch
 

@@ -1,6 +1,6 @@
 %var            bitname pm_htmlparser
 %var            pkgname CSWpmhtmlparser
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 1995-2004 Gisle Aas. All rights reserved.
 1999-2000 Michael A. Chase.  All rights reserved.

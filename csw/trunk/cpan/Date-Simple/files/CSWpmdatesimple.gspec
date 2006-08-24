@@ -1,4 +1,4 @@
 %var            bitname pm_datesimple
 %var            pkgname CSWpmdatesimple
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      url file://%{WORKSRC}/COPYING

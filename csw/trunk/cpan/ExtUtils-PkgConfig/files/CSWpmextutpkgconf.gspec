@@ -1,7 +1,7 @@
 %var            bitname pm_extutpkgconf
 %var            pkgname CSWpmextutpkgconf
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2003-2004 by muppet, Ross McFarland, and the gtk2-perl team
 

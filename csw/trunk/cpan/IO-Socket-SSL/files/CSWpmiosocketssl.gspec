@@ -1,7 +1,7 @@
 %var            bitname pm_iosocketssl
 %var            pkgname CSWpmiosocketssl
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 The rewrite of this module is Copyright (C) 2002-2004 Peter Behroozi.
 

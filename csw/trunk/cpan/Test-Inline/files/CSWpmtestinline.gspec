@@ -1,7 +1,7 @@
 %var            bitname pm_testinline
 %var            pkgname CSWpmtestinline
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2002 by Michael G Schwern E<lt>schwern@pobox.comE<gt>.
 

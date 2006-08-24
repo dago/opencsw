@@ -1,7 +1,7 @@
 %var            bitname pm_yaml
 %var            pkgname CSWpmyaml
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2001, 2002. Brian Ingerson. All rights reserved.
 

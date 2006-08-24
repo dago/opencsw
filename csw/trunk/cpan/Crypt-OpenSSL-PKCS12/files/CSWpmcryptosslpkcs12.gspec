@@ -1,6 +1,6 @@
 %var            bitname pm_cryptosslpkcs12
 %var            pkgname CSWpmcryptosslpkcs12
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2004 by Daniel Sully
 

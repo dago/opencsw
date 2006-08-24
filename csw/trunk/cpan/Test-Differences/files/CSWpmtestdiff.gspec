@@ -1,7 +1,7 @@
 %var            bitname pm_testdiff
 %var            pkgname CSWpmtestdiff
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2001 Barrie Slaymaker, All Rights Reserved.
 

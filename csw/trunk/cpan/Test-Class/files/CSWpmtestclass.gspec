@@ -1,7 +1,7 @@
 %var            bitname pm_testclass
 %var            pkgname CSWpmtestclass
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2002 Adrian Howard, All Rights Reserved.
 

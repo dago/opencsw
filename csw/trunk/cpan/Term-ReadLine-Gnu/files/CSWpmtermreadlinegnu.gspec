@@ -1,6 +1,6 @@
 %var            bitname pm_termreadlinegnu
 %var            pkgname CSWpmtermreadlinegnu
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2001 Hiroo Hayashi.  All rights reserved.
 

@@ -1,6 +1,6 @@
 %var            bitname pm_iotty
 %var            pkgname CSWpmiotty
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Now all code is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

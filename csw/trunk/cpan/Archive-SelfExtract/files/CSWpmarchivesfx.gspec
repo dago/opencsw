@@ -1,7 +1,7 @@
 %var            bitname pm_archivesfx
 %var            pkgname CSWpmarchivesfx
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 2004 Greg Fast (gdf@speakeasy.net)
 

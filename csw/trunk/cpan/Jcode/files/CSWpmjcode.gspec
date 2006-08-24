@@ -1,6 +1,6 @@
 %var            bitname pm_jcode
 %var            pkgname CSWpmjcode
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright 1999 Dan Kogai.
 

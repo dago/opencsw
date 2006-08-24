@@ -1,7 +1,7 @@
 %var            bitname pm_mailtools
 %var            pkgname CSWpmmailtools
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 All files contained in this installation are Copyright (c) 1995-2003
 Graham Barr unless otherwise specified. All rights reserved.

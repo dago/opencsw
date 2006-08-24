@@ -1,7 +1,7 @@
 %var            bitname pm_graphviz
 %var            pkgname CSWpmgraphviz
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (C) 2000-1, Leon Brocard
 

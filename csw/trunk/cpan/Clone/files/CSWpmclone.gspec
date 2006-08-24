@@ -1,6 +1,6 @@
 %var            bitname pm_clone
 %var            pkgname CSWpmclone
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Ray Finch, rdf@cpan.org
 

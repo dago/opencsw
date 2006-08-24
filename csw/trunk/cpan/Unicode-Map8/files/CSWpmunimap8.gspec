@@ -1,6 +1,6 @@
 %var            bitname pm_unicodemap8
 %var            pkgname CSWpmunimap8
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 © 1998-1999 Gisle Aas. All rights reserved.
 

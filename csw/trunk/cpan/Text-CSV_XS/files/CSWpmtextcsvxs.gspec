@@ -1,6 +1,6 @@
 %var            bitname pm_textcsvxs
 %var            pkgname CSWpmtextcsvxs
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 1998 Jochen Wiedmann. All rights reserved.
 Portions Copyright (c) 1997 Alan Citterman. All rights reserved.

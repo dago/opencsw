@@ -1,6 +1,6 @@
 %var            bitname pm_netssleay
 %var            pkgname CSWpmnetssleay
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 The distribution and use of this module are subject to the conditions
 listed in LICENSE file at the root of OpenSSL-0.9.7b

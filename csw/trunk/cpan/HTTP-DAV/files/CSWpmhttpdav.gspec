@@ -1,6 +1,6 @@
 %var            bitname pm_httpdav
 %var            pkgname CSWpmhttpdav
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 
 %depend         
 P CSWneon neon - HTTP and WebDAV client library

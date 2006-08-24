@@ -1,6 +1,6 @@
 %var            bitname pm_calendar_csa
 %var            pkgname CSWpmccsa
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 1997 Kenneth Albanowski. All rights reserved.
 This program is free software; you can redistribute it and/or

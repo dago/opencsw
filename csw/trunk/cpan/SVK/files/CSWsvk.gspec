@@ -1,7 +1,7 @@
 %var            bitname svk
 %var            pkgname CSWsvk
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright
 Copyright 2003-2005 by Chia-liang Kao <clkao@clkao.org>.
     

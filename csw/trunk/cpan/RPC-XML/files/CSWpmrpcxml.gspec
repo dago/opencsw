@@ -1,4 +1,4 @@
 %var            bitname pm_rpcxml
 %var            pkgname CSWpmrpcxml
-%include        url file://%{GARDIR}/pkglib/csw_cpan.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
