@@ -1,7 +1,7 @@
 %var            bitname neon_devel
 %var            pkgname CSWneon-devel
 %var            desc Neon HTTP and WebDAV development support
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      
 neon is licensed under the GNU Library GPL; see src/COPYING.LIB for
 full details.  The manual is licensed under the terms of the GNU FDL;

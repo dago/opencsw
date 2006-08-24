@@ -1,6 +1,6 @@
 %var            bitname libevent
 %var            pkgname CSWlibevent
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright
 Copyright (c) 2000-2004 Niels Provos <provos@citi.umich.edu>
 All rights reserved.
