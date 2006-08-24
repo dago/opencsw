@@ -1,6 +1,6 @@
 %var            bitname ap2_modauthpam
 %var            pkgname CSWap2modauthpam
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright
 Copyright (c) 2000 Ingo Luetkebohle, All rights reserved.
 

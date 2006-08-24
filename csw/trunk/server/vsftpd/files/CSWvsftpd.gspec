@@ -1,6 +1,6 @@
 %var            bitname vsftpd
 %var            pkgname CSWvsftpd
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/LICENSE
 %include        url file://%{WORKDIR}/csw_smf
 %pkginfo

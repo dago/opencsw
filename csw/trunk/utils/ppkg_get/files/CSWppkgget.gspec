@@ -1,6 +1,6 @@
 %var            bitname ppkg_get
 %var            pkgname CSWppkgget
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright
 Copyright 2006 Yann Rouillard <yann@blastwave.org>
 All rights reserved.  Use is subject to license terms.

@@ -1,7 +1,7 @@
 %var            bitname vimrt
 %var            pkgname CSWvimrt
 %var            arch all
-%include        url file://%{GARDIR}/pkglib/csw_standard.gspec
+%include        url file://%{PKGLIB}/csw_standard.gspec
 %var            desc vim shared runtime and documentation
 %copyright      
 Vim is Charityware.  You can use and copy it as much as you like, but you are
