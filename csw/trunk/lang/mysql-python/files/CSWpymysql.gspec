@@ -1,6 +1,6 @@
 %var            bitname pymysql
 %var            pkgname CSWpymysql
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      
 License
 
