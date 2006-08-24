@@ -1,3 +1,3 @@
 d none /opt/csw/apache2 ? ? ?
 d none /opt/csw/apache2/sbin ? ? ?
-f none /opt/csw/apache2/sbin/httpd.prefork 0755 root bin
+f none /opt/csw/apache2/sbin/httpd.prefork=/opt/csw/apache2/sbin/httpd 0755 root bin

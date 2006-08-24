@@ -94,8 +94,11 @@ f none /opt/csw/apache2/share/manual/handler.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/handler.html.es 0644 root bin
 f none /opt/csw/apache2/share/manual/handler.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/handler.html.ko.euc-kr 0644 root bin
+f none /opt/csw/apache2/share/manual/handler.html.ru.koi8-r 0644 root bin
 f none /opt/csw/apache2/share/manual/handler.html 0644 root bin
 d none /opt/csw/apache2/share/manual/howto 0755 root bin
+f none /opt/csw/apache2/share/manual/howto/access.html 0644 root bin
+f none /opt/csw/apache2/share/manual/howto/access.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/howto/auth.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/howto/auth.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/howto/auth.html.ko.euc-kr 0644 root bin
@@ -171,6 +174,7 @@ f none /opt/csw/apache2/share/manual/invoking.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/invoking.html.es 0644 root bin
 f none /opt/csw/apache2/share/manual/invoking.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/invoking.html.ko.euc-kr 0644 root bin
+f none /opt/csw/apache2/share/manual/invoking.html.ru.koi8-r 0644 root bin
 f none /opt/csw/apache2/share/manual/invoking.html 0644 root bin
 f none /opt/csw/apache2/share/manual/license.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/license.html 0644 root bin
@@ -213,6 +217,7 @@ f none /opt/csw/apache2/share/manual/mod/directives.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/directives.html.es 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/directives.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/directives.html.ko.euc-kr 0644 root bin
+f none /opt/csw/apache2/share/manual/mod/directives.html.ru.koi8-r 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/directives.html 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/event.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/event.html 0644 root bin
@@ -488,6 +493,7 @@ f none /opt/csw/apache2/share/manual/mod/quickreference.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/quickreference.html.es 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/quickreference.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/quickreference.html.ko.euc-kr 0644 root bin
+f none /opt/csw/apache2/share/manual/mod/quickreference.html.ru.koi8-r 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/quickreference.html 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/worker.html.de 0644 root bin
 f none /opt/csw/apache2/share/manual/mod/worker.html.en 0644 root bin
@@ -565,6 +571,7 @@ f none /opt/csw/apache2/share/manual/programs/httxt2dbm.html 0644 root bin
 f none /opt/csw/apache2/share/manual/programs/index.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/programs/index.html.es 0644 root bin
 f none /opt/csw/apache2/share/manual/programs/index.html.ko.euc-kr 0644 root bin
+f none /opt/csw/apache2/share/manual/programs/index.html.ru.koi8-r 0644 root bin
 f none /opt/csw/apache2/share/manual/programs/index.html 0644 root bin
 f none /opt/csw/apache2/share/manual/programs/logresolve.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/programs/logresolve.html.ko.euc-kr 0644 root bin
@@ -683,7 +690,6 @@ f none /opt/csw/apache2/share/manual/suexec.html.ko.euc-kr 0644 root bin
 f none /opt/csw/apache2/share/manual/suexec.html 0644 root bin
 f none /opt/csw/apache2/share/manual/upgrading.html.de 0644 root bin
 f none /opt/csw/apache2/share/manual/upgrading.html.en 0644 root bin
-f none /opt/csw/apache2/share/manual/upgrading.html.fr 0644 root bin
 f none /opt/csw/apache2/share/manual/upgrading.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/upgrading.html.ko.euc-kr 0644 root bin
 f none /opt/csw/apache2/share/manual/upgrading.html.pt-br 0644 root bin
@@ -713,6 +719,7 @@ f none /opt/csw/apache2/share/manual/vhosts/index.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/index.html.fr 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/index.html.ja.euc-jp 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/index.html.ko.euc-kr 0644 root bin
+f none /opt/csw/apache2/share/manual/vhosts/index.html.ru.koi8-r 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/index.html 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/ip-based.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/vhosts/ip-based.html.fr 0644 root bin

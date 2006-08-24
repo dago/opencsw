@@ -1,5 +1,5 @@
 GARNAME = httpd
-GARVERSION = 2.2.0
+GARVERSION = 2.2.3
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
@@ -9,6 +9,9 @@ define BLURB
 endef
 
 include files/config.mk
+
+# Re-enable 'startssl'
+PATCHFILES += startssl.diff
 
 # Dummy toplevel package
 DISTFILES += $(call admfiles,CSWapache2,depend prototype)
@@ -29,7 +32,7 @@ DISTFILES += $(call admfiles,CSWapache2-manual,depend prototype)
 DISTFILES += $(call admfiles,CSWapache2-devel,depend prototype)
 
 # Standard package bits
-DISTFILES += CSWapache2.killproc
+DISTFILES += CSWapache2.killproc cswapache2 svc-cswapache2 cswapache2.xml
 
 # Configuration templates
 DISTFILES += cswapache2 httpd.conf.CSW httpd-ssl.conf.CSW
@@ -54,7 +57,14 @@ STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 include ../category.mk
 include files/rules.mk
 
-post-install: copy-local-files create-templates fix-config-vars
+FIXCONFIG_DIRS     = $(DESTDIR)
+FIXCONFIG_RMPATHS  = $(DESTDIR)
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr-util
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr-util/include
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr/include
+
+post-install: copy-local-files create-templates
 
 # Copy in specialized templates
 copy-local-files:
@@ -85,10 +95,5 @@ create-templates:
 			for file in $(template_list) ; do \
 				gmv -v $$file $$file.CSW ; \
 			done )
-	@$(MAKECOOKIE)
-
-# Fix install path references
-fix-config-vars:
-	@replacer $(DESTDIR)
 	@$(MAKECOOKIE)
 
