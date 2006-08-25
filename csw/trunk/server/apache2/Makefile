@@ -35,7 +35,8 @@ DISTFILES += $(call admfiles,CSWapache2-devel,depend prototype)
 DISTFILES += CSWapache2.killproc cswapache2 svc-cswapache2 cswapache2.xml
 
 # Configuration templates
-DISTFILES += cswapache2 httpd.conf.CSW httpd-ssl.conf.CSW
+DISTFILES += httpd.conf.CSW
+DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
 # Build Configuration

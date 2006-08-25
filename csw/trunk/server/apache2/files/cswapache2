@@ -17,7 +17,7 @@ start|startssl)
 	/bin/rm -f ${PIDFILE}
 	/bin/mkdir -p `dirname $PIDFILE`
     cmd=$1
-    if [ "$cmd" == "startssl" ]; then
+    if [ "$cmd" = "startssl" ]; then
         cmd="$cmd -DSSL"
     fi
 	;;
