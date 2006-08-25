@@ -34,7 +34,7 @@ ea89128d0f643e1b8040466a9f6ec953  download/cswapache2
 d53f52d3133e528c509abafb2710c165  download/svc-cswapache2
 e07ac241173255cad71139ccc48d7813  download/cswapache2.xml
 ea89128d0f643e1b8040466a9f6ec953  download/cswapache2
-85f882652fccf49a2679ce4ba2876187  download/httpd.conf.CSW
+589bc38ed532f0d6d375ae02f0fd52db  download/httpd.conf.CSW
 796a7d5095ce154c274a2ccfd60ec753  download/httpd-ssl.conf.CSW
 033a19975c59bffcc5b144628f8a8e06  download/update20to22
 308836569bf0cc1be27ac45e3123e0c2  download/apu-iconv.diff
