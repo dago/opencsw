@@ -1,5 +1,5 @@
 GARNAME = rrdtool
-GARVERSION = 1.0.46
+GARVERSION = 1.2.15
 CATEGORIES = utils
 
 DESCRIPTION = time-series data logging and graphing.
@@ -11,14 +11,18 @@ endef
 
 MASTER_SITES = http://people.ee.ethz.ch/~oetiker/webtools/rrdtool/pub/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += $(call admfiles,CSWrrdtool,prototype)
 
-CONFIGURE_ARGS  = --prefix=$(DESTDIR)$(prefix)/$(GARNAME)
-CONFIGURE_ARGS += --enable-local-libpng --enable-local-zlib
-
-EXTRA_INC = /usr/sfw/include
-EXTRA_LIB = /usr/sfw/lib
-export EXTRA_INC EXTRA_LIB
+CONFIGURE_ARGS  = $(DIRPATHS) --enable-perl --disable-python
 
 TEST_TARGET = check
 
+env:
+	@echo $(WORKDIR)
+	@echo $(WORKROOTDIR)
+	@echo $(COOKIEDIR)
+	@echo $(COOKIEROOTDIR)
+
 include ../category.mk
+
+
