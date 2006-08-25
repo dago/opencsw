@@ -7,8 +7,8 @@
 #
 
 APACHE_HOME=/opt/csw/apache2
-CONF_FILE=$APACHE_HOME/etc/apache2/httpd.conf
-PIDFILE=$APACHE_HOME/var/run/apache2/httpd.pid
+CONF_FILE=$APACHE_HOME/etc/httpd.conf
+PIDFILE=$APACHE_HOME/var/run/httpd.pid
 
 [ ! -f ${CONF_FILE} ] &&  exit 1
 
@@ -36,4 +36,4 @@ stop)
 	;;
 esac
 
-exec ${APACHE_HOME}/bin/apachectl $cmd 2>&1
+exec ${APACHE_HOME}/sbin/apachectl $cmd 2>&1

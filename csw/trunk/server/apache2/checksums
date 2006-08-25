@@ -30,10 +30,10 @@ e14dde24b9b6753a28c292d046311034  download/CSWapache2-devel.gspec
 8cf87a6da05459bdaa7c2dfc977e882f  download/CSWapache2-devel.depend
 7a1f73088325e2957ac288ef2b1be00a  download/CSWapache2-devel.prototype
 833e97a47e52ce69ba6b3ab245bbbd13  download/CSWapache2.killproc
-ea89128d0f643e1b8040466a9f6ec953  download/cswapache2
-d53f52d3133e528c509abafb2710c165  download/svc-cswapache2
+019024e17d77cd05cb9528e9b4a91410  download/cswapache2
+dddd985ec6ddd455e15a007c128f9cab  download/svc-cswapache2
 e07ac241173255cad71139ccc48d7813  download/cswapache2.xml
-ea89128d0f643e1b8040466a9f6ec953  download/cswapache2
+019024e17d77cd05cb9528e9b4a91410  download/cswapache2
 589bc38ed532f0d6d375ae02f0fd52db  download/httpd.conf.CSW
 796a7d5095ce154c274a2ccfd60ec753  download/httpd-ssl.conf.CSW
 033a19975c59bffcc5b144628f8a8e06  download/update20to22
