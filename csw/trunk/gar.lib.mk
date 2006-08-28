@@ -134,6 +134,19 @@ tar-bz-extract-%:
 	@bzip2 -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
+# extract compressed single files
+bz-extract-%:
+	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
+	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@bzip2 -d $(WORKDIR)/$*
+	@$(MAKECOOKIE)
+
+gz-extract-%:
+	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
+	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@gzip -d $(WORKDIR)/$*
+	@$(MAKECOOKIE)
+
 # rule to extract files with unzip
 zip-extract-%:
 	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
@@ -194,6 +207,12 @@ extract-%.ZIP: zip-extract-%.ZIP
 	@$(MAKECOOKIE)
 
 extract-%.deb: deb-bin-extract-%.deb
+	@$(MAKECOOKIE)
+
+extract-%.bz2: bz-extract-%.bz2
+	@$(MAKECOOKIE)
+
+extract-%.gz: gz-extract-%.gz
 	@$(MAKECOOKIE)
 
 # anything we don't know about, we just assume is already
