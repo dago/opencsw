@@ -27,6 +27,9 @@ GARCHIVEPATH ?= /export/medusa/src
 # Select compiler (GNU/SUN)
 GARCOMPILER ?= SUN
 
+# Build flavor (OPT/DBG/...)
+GARFLAVOR ?= OPT
+
 # Architecture
 GARCH    ?= $(shell uname -p)
 GAROSREL ?= $(shell uname -r)
@@ -81,19 +84,36 @@ optbindir := $(bindir)/$(OPTDIR)
 optlibdir := $(libdir)/$(OPTDIR)
 endif
 
+#
 # Forte Compiler Configuration
-SUN_CC_HOME  ?= /opt/studio/SOS10/SUNWspro
+#
+
+SUN_CC_PKG   ?= SOS11
+SUN_CC_HOME  ?= /opt/studio/$(SUN_CC_PKG)/SUNWspro
 SUN_CC        = cc
 SUN_CXX       = CC
+
+# Optimized
 SUN_CC_OPT   ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
 SUN_CXX_OPT  ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
 SUN_AS_OPT   ?= -xarch=$(OPTARCH)
 SUN_LD_OPT   ?= -xarch=$(OPTARCH)
 
+# Debug
+SUN_CC_DBG   ?= -g
+SUN_CXX_DBG  ?= -g
+SUN_AS_DBG   ?=
+SUN_LD_DBG   ?=
+
+#
 # GNU Compiler Configuration
+#
+
 GNU_CC_HOME   = /opt/csw/gcc3
 GNU_CC        = gcc
 GNU_CXX       = g++
+
+# Optimized
 ifeq ($(OPTARCH),386)
 GNU_CC_OPT   ?= -O2 -pipe -mtune=i686
 else
@@ -102,16 +122,24 @@ endif
 GNU_CXX_OPT  ?= $(GNU_CC_OPT)
 GNU_AS_OPT   ?=
 
-# Build compiler options
+# Debug
+GNU_CC_DBG   ?= -g
+GNU_CXX_DBG  ?= -g
+GNU_AS_DBG   ?=
+
+#
+# Construct compiler options
+#
+
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
 CXX      = $($(GARCOMPILER)_CXX)
-CFLAGS   = $($(GARCOMPILER)_CC_OPT)
-CXXFLAGS = $($(GARCOMPILER)_CXX_OPT)
+CFLAGS   = $($(GARCOMPILER)_CC_$(GARFLAVOR))
+CXXFLAGS = $($(GARCOMPILER)_CXX_$(GARFLAVOR))
 CPPFLAGS = $($(GARCOMPILER)_CPP_FLAGS)
-LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS) $($(GARCOMPILER)_LD_OPT)
-ASFLAGS  = $($(GARCOMPILER)_AS_OPT)
-OPTFLAGS = $($(GARCOMPILER)_CC_OPT)
+LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS) $($(GARCOMPILER)_LD_$(GARFLAVOR))
+ASFLAGS  = $($(GARCOMPILER)_AS_$(GARFLAVOR))
+OPTFLAGS = $($(GARCOMPILER)_CC_$(GARFLAVOR))
 
 # allow us to link to libraries we installed
 EXT_CCINC = $(foreach EINC,$(EXTRA_INC) $(includedir), -I$(EINC))
