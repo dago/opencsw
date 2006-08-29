@@ -11,6 +11,6 @@ define BLURB
   hash-array.
 endef
 
-DISTFILES += CSWpmdatashowtable.gspec
+DISTFILES += $(call admfiles,CSWpmdatashowtable,prototype)
 
 include ../category.mk
