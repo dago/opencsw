@@ -3,7 +3,7 @@
 # Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
-# ident	"@(#)http-apache2	1.2	04/11/11 SMI"
+# ident    "@(#)http-apache2    1.2    04/11/11 SMI"
 #
 
 APACHE_HOME=/opt/csw/apache2
@@ -14,26 +14,30 @@ PIDFILE=$APACHE_HOME/var/run/httpd.pid
 
 case "$1" in
 start|startssl)
-	/bin/rm -f ${PIDFILE}
-	/bin/mkdir -p `dirname $PIDFILE`
+    /bin/rm -f ${PIDFILE}
+    /bin/mkdir -p `dirname $PIDFILE`
     cmd=$1
     if [ "$cmd" = "startssl" ]; then
         cmd="$cmd -DSSL"
     fi
-	;;
+    ;;
 restart)
     cmd="restart"
     ;;
 graceful)
-	cmd="graceful"
-	;;
+    cmd="graceful"
+    ;;
 stop)
-	cmd="stop"
-	;;
+    cmd="stop"
+    if [ ! -x ${APACHE_HOME}/httpd ]; then
+        pkill httpd
+        exit 0
+    fi
+    ;;
 *)
-	echo "Usage: $0 {start|startssl|stop|restart|graceful}"
-	exit 1
-	;;
+    echo "Usage: $0 {start|startssl|stop|restart|graceful}"
+    exit 1
+    ;;
 esac
 
 exec ${APACHE_HOME}/sbin/apachectl $cmd 2>&1
