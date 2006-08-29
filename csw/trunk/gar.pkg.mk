@@ -12,7 +12,6 @@
 # gar.pkg.mk - Build Solaris packages
 #
 
-SPKG_REVSTAMP  ?= ,REV=$(shell date '+%Y.%m.%d')
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
@@ -37,6 +36,17 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 PKGGET_DESTDIR ?=
 
 DEPMAKER_EXTRA_ARGS = --noscript --nodep SUNW
+
+# Construct a revision stamp
+ifeq ($(GARFLAVOR),DBG)
+SPKG_FULL_REVSTAMP=1
+endif
+
+ifeq ($(SPKG_FULL_REVSTAMP),1)
+SPKG_REVSTAMP  ?= ,REV=$(shell date '+%Y.%m.%d.%H.%M')
+else
+SPKG_REVSTAMP  ?= ,REV=$(shell date '+%Y.%m.%d')
+endif
 
 # Is this a full or incremental build?
 SPKG_INCREMENTAL ?= 1
