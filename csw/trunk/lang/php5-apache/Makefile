@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 5.1.4
+GARVERSION = 5.1.6
 CATEGORIES = lang
 
 # This directory is for the build and packaging of the Apache 1.3.x

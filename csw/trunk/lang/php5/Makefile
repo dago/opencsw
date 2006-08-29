@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 5.1.4
+GARVERSION = 5.1.6
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
