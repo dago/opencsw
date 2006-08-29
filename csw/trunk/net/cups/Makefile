@@ -10,12 +10,10 @@ define BLURB
   in MacOS(R) X and most Linux(R) distributions.
 endef
 
-# compiling the PHP portion otherwise picks up the system cups.h instead of
-# its own; placing /usr/include before the workdir, though, or else we end up
-# including CUPS' string.h as opposed to the one in /usr/include
-EXTRA_INC = /usr/include
-EXTRA_INC += $(shell pwd)/$(WORKSRC)/cups
-export EXTRA_INC
+# This patch is also required to make the above work. Without it, the include
+# path for SSL (which is /opt/csw/include) gets prepended and the compile ends
+# up (yet again) picking up the installed cups.h over the one in this package.
+PATCHFILES = Makedefs.in.patch
 
 #MASTER_SITES = http://ftp.easysw.com/pub/cups/1.2.2/
 #MASTER_SITES = http://www.cups.org/
@@ -40,7 +38,7 @@ DISTFILES += $(call admfiles,CSWcupsdoc,depend prototype)
 DISTFILES += $(call admfiles,CSWcupsdev,depend prototype)
 DISTFILES += $(call admfiles,CSWcups,depend prototype)
 
-DISTFILES += i.smfyes i.smfno space checkinstall
+DISTFILES += i.smfyes i.smfno space checkinstall Makedefs.in.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -64,14 +62,24 @@ export DSTROOT
 # Don't run tests (at least for now); there are some LD_LIBRARY_PATH issues
 TEST_TARGET = 
 
+SPKG_SOURCEURL = http://www.cups.org/
+
 include ../category.mk
 
+PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
+
+post-configure:
+	(test -d $(PRIVATE_CUPS_INC) || mkdir -p $(PRIVATE_CUPS_INC); \
+	cd $(WORKSRC)/cups; \
+	cp -p adminutil.h array.h cups.h dir.h file.h http.h i18n.h ipp.h \
+		language.h md5.h ppd.h transcode.h $(PRIVATE_CUPS_INC); \
+	cd ../filter; \
+	cp -p image.h raster.h $(PRIVATE_CUPS_INC))
+
 post-install:
-#	(cd $(DESTDIR)$(prefix)/sbin; \
-#	mv exim-$(GARVERSION) exim; \
-#	/usr/ccs/bin/strip $(BINS); \
-#	/usr/ccs/bin/mcs -d $(BINS))
-	(cd $(DESTDIR)$(prefix)/share; \
+	(test -d $(DESTDIR)$(prefix)/share || \
+	mkdir $(DESTDIR)$(prefix)/share; \
+	cd $(DESTDIR)$(prefix)/share; \
 	if [ ! -d locale ]; then \
 		test -d ../lib/locale && mv ../lib/locale .; \
 		cd locale; \
