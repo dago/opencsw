@@ -9,7 +9,7 @@ define BLURB
   and Pareto.
 endef
 
-DISTFILES += CSWpmchart.gspec CSWpmchart.depend
+DISTFILES += $(call admfiles,CSWpmchart,depend prototype)
 
 DEPENDS += cpan/GD
 
