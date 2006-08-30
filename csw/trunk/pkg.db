@@ -1,4 +1,11 @@
+apps/bash|CSWbash|bash - A sh-compatible command language interpreter
+apps/bugzilla|CSWbugzilla|bugzilla - Integrated SCM and Project Management
+apps/firefox|CSWfirefox|firefox - mozilla.org browser
+apps/flphoto|CSWflphoto|flphoto - basic image management and display program based on the FLTK toolkit
+apps/lyx|CSWlyx|lyx - WYSIWYM document processor
 apps/trac|CSWtrac|trac - Integrated SCM and Project Management
+apps/tsclient|CSWtsclient|tsclient - a frontend for rdesktop and other remote desktop tool
+apps/wesnoth|CSWwesnoth|wesnoth - a free turn-based strategy game with a fanasy theme
 cpan/Algorithm-Annotate|CSWpmalgannotate|pm_algorithmannotate - represent a series of changes in annotate form
 cpan/Algorithm-Diff|CSWpmalgdiff|pm_algorithmdiff - compute intelligent differences between two files/lists
 cpan/AnyData|CSWpmanydata|pm_anydata - easy access to data in many formats
@@ -20,7 +27,10 @@ cpan/Authen-SASL|CSWpmauthensasl|pm_authensasl - SASL Authentication framework
 cpan/BSD-Resource|CSWpmbsdresource|pm_bsdresource - BSD process resource limit and priority functions
 cpan/Bit-Vector|CSWpmbitvec|pm_bitvector - Efficient bit vector, set of integers and big int math library.
 cpan/C-Scan|CSWpmcscan|pm_cscan - Scan C language files for easily recognized constructs.
+cpan/CGI-Application-Dispatch|CSWpmcgiappdisp|pm_cgiappdisp - Dispatch requests to CGI::Application based objects
+cpan/CGI-Application-Plugin-LogDispatch|CSWpmcgiapplogdisp|pm_cgiapplogdisp - Add Log::Dispatch support to CGI::Application
 cpan/CGI-Application|CSWpmcgiapp|pm_cgiapp - Framework for building reusable web-applications
+cpan/CGI-Builder|CSWpmcgibuilder|pm_cgibuilder - Framework to build simple or complex web-apps
 cpan/CGI-Session|CSWpmcgisession|pm_cgisession - persistent session data in CGI applications
 cpan/CGI-SpeedyCGI|CSWpmspeedycgi|pm_speedycgi - Speed up perl scripts by running them persistently
 cpan/CGI|CSWpmcgi|pm_cgi - simple common gateway interface class
@@ -123,6 +133,7 @@ cpan/ExtUtils-ParseXS|CSWpmextutparsexs|pm_extutparsexs - converts Perl XS code 
 cpan/ExtUtils-PkgConfig|CSWpmextutpkgconf|pm_extutpkgconf - simplistic interface to pkg-config
 cpan/ExtUtils-XSBuilder|CSWpmextutxsbld|pm_extutxsbld - parse C header files and create XS glue code
 cpan/FCGI|CSWpmfcgi|pm_fcgi - fast CGI module
+cpan/File-HomeDir|CSWpmfilehomedir|pm_filehomedir - Get the home directory for yourself or other users
 cpan/File-MMagic|CSWpmfilemmagic|pm_filemmagic - Guess file type
 cpan/File-Modified|CSWpmfilemodified|pm_filemodified - checks intelligently if files have changed
 cpan/File-NFSLock|CSWpmfilenfslock|pm_filenfslock - Perl module to do NFS (or not) locking
@@ -160,7 +171,7 @@ cpan/HTML-Mason|CSWpmhtmlmason|pm_htmlmason - high-performance, dynamic web site
 cpan/HTML-Parser|CSWpmhtmlparser|pm_htmlparser - HTML parser class
 cpan/HTML-Scrubber|CSWpmhtmlscrubber|pm_htmlscrubber - extension for scrubbing/sanitizing html
 cpan/HTML-Tagset|CSWpmhtmltagset|pm_htmltagset - data tables useful in parsing HTML
-cpan/HTML-Template|CSWpmhtmltemplate|pm_htmltemplate - Perl module to use HTML Templates from CGI scripts
+cpan/HTML-Template|CSWpmhtmltmpl|pm_htmltemplate - Perl module to use HTML Templates from CGI scripts
 cpan/HTML-Tree|CSWpmhtmltree|pm_htmltree - modules for making parse trees from HTML source.
 cpan/HTTP-Body|CSWpmhttpbody|pm_httpbody - HTTP Body Parser
 cpan/HTTP-DAV|CSWpmhttpdav|pm_httpdav - A WebDAV client library for Perl5
@@ -171,6 +182,7 @@ cpan/IO-Pager|CSWpmiopager|pm_iopager - Select a pager, optionally pipe it outpu
 cpan/IO-Socket-SSL|CSWpmiosocketssl|pm_iosocketssl - nearly transparent SSL encapsulation for IO::Socket::INET.
 cpan/IO-String|CSWpmiostring|pm_iostring - emulate file interface for in-core strings
 cpan/IO-Tty|CSWpmiotty|pm_iotty - pseudo TTY object class
+cpan/IO-Util|CSWpmioutil|pm_ioutil - A selection of general-utility IO functions
 cpan/IO-Zlib|CSWpmiozlib|pm_iozlib - IO:: style interface to Compress::Zlib
 cpan/IO-stringy|CSWpmiostringy|pm_iostringy - I/O on in-core objects like strings and arrays
 cpan/IP-Country|CSWpmipcountry|pm_ipcountry - fast lookup of country codes from IP addresses
@@ -210,6 +222,7 @@ cpan/Net-CIDR-Lite|CSWpmnetcidrlite|pm_netcidrlite - extension for merging IPv4 
 cpan/Net-DNS|CSWpmnetdns|pm_netdns - interface to the DNS resolver
 cpan/Net-SSH-Perl|CSWpmnetsshperl|pm_netsshperl - client Interface to SSH
 cpan/Net-SSLeay|CSWpmnetssleay|pm_netssleay - extension for using OpenSSL
+cpan/OOTools|CSWpmootools|pm_ootools - Easily create constructors and lvalue accessors
 cpan/Object-MultiType|CSWpmobjmultitype|pm_objmultitype - objects as hash, array, scalar, code and glob at same time.
 cpan/Object-Realize-Later|CSWpmobjrelater|pm_objrelater - delayed creation of objects
 cpan/PAR-Dist|CSWpmpardist|pm_pardist - create and manipulate PAR distributions
@@ -220,6 +233,7 @@ cpan/POE|CSWpmpoe|pm_poe - portable multitasking and networking framework for Pe
 cpan/Params-Validate|CSWpmprmsvldt|pm_prmsvldt - validate method/function parameters
 cpan/Parse-RecDescent|CSWpmparserecdescent|pm_parserecdescent - %var bitname pm_parserecdescent
 cpan/Parse-Syslog|CSWpmparsesyslog|pm_parsesyslog - parse Unix syslog files
+cpan/PatchReader|CSWpmpatchreader|pm_patchreader - Utilities to read and manipulate patches and CVS
 cpan/Perl-Tidy|CSWperltidy|perltidy - simple interactive Perl shell
 cpan/PerlIO-eol|CSWpmperlioeol|pm_perlioeol - PerlIO layer for normalizing line endings
 cpan/PerlIO-via-dynamic|CSWpmperlioviadyn|pm_perlioviadyn - dynamic PerlIO layers
@@ -255,13 +269,14 @@ cpan/Sys-Hostname-Long|CSWpmsyshostnamelong|pm_syshostnamelong - try every conce
 cpan/Syslog|CSWpmunixsyslog|pm_unixsyslog - interface to the UNIX syslog(3) calls
 cpan/Template-Extract|CSWpmtmplextract|pm_tmplextract - use TT2 syntax to extract data from documents
 cpan/Template-TAL|CSWpmtemplatetal|pm_templatetal - Process TAL templates with Perl
-cpan/Template-Toolkit|CSWpmtt2|pm_tt2 - front-end module to the Template Toolkit
+cpan/Template-Toolkit|CSWpmtt2|pm_tt2 - Template Toolkit 2
+cpan/Template-Toolkit|CSWpmtt2-common|pm_tt2common - Template Toolkit 2 (common)
 cpan/Term-Cap|CSWpmtermcap|pm_termcap - termcap interface
 cpan/Term-ReadLine-Gnu|CSWpmtermreadlinegnu|pm_termreadlinegnu - extension for the GNU Readline/History Library
 cpan/TermReadKey|CSWpmtermreadkey|pm_termreadkey - module for simple terminal control
 cpan/Test-Builder-Tester|CSWpmtstbldrtester|pm_tstbldrtester - test testsuites built with Test::Builder
 cpan/Test-Class|CSWpmtestclass|pm_testclass - easily create test classes in an xUnit style.
-cpan/Test-Differences|CSWpmtestdifferences|pm_testdifferences - test strings and data structures and show differences
+cpan/Test-Differences|CSWpmtestdiff|pm_testdiff - test strings and data structures and show differences
 cpan/Test-Exception|CSWpmtestexceptions|pm_testexceptions - test functions for exception based code
 cpan/Test-Inline|CSWpmtestinline|pm_testinline - inlining your tests next to the code being tested.
 cpan/Test-Manifest|CSWpmtstmanif|pm_tstmanif - interact with a t/test_manifest file
@@ -276,6 +291,7 @@ cpan/Text-Diff|CSWpmtextdiff|pm_textdiff - perform diffs on files and record set
 cpan/Text-Quoted|CSWpmtxtquoted|pm_txtquoted - extract the structure of a quoted mail message
 cpan/Text-Reform|CSWpmtxtreform|pm_txtreform - manual text wrapping and reformatting
 cpan/Text-Scraper|CSWpmtextscraper|pm_textscraper - Structured data from (un)structured text
+cpan/Text-Tabs+Wrap|CSWpmtxtabwrap|pm_txtabwrap - Text wrapping and tab expansion.
 cpan/Text-Template|CSWpmtexttemplate|pm_texttemplate - expand template text with embedded Perl
 cpan/Text-Wrapper|CSWpmtextwrap|pm_textwrap - simple word wrapping routine
 cpan/Tie-DBI|CSWpmtiedbi|pm_tiedbi - tie hashes to DBI relational databases
@@ -289,6 +305,7 @@ cpan/Tk|CSWpmtk|pm_tk - write Tk applications in Perl.
 cpan/Tree-DAG_Node|CSWpmtreedagnode|pm_treedagnode - (super)class for representing nodes in a tree
 cpan/Tree-Simple|CSWpmtreesimple|pm_treesimple - a simple tree object
 cpan/UNIVERSAL-moniker|CSWpmunivmoniker|pm_univmoniker - add a moniker method to UNIVERSAL
+cpan/UNIVERSAL-require|CSWpmunivrequire|pm_univrequire - require modules from a variable
 cpan/URI|CSWpmuri|pm_uri -  Uniform Resource Identifiers (absolute and relative)
 cpan/Unicode-Map|CSWpmunimap|pm_unicodemap - maps charsets from and to utf16 unicode
 cpan/Unicode-Map8|CSWpmunimap8|pm_unicodemap8 - mapping table between 8-bit chars and Unicode
@@ -331,11 +348,13 @@ cpan/mod_perl2|CSWap2modperl|ap2_modperl - Persistent Perl interpreter for Apach
 cpan/perl-ldap|CSWpmldap|pm_ldap - Lightweight Directory Access Protocol
 cpan/psh|CSWpsh|psh - simple interactive Perl shell
 cpan/sol-inst|CSWpmsolinst|pm_solinst - access basic Solaris installation information
-devel/flex-2.5.31|CSWflex-new|flex_new - A tool for generating text-scanning programs.
+devel/bison|CSWbison|bison - GNU Project parser generator (yacc replacement)
 devel/flex-2.5.4a|CSWflex|flex - older version of the 'flex' parser generator
+devel/flex|CSWflex-new|flex_new - A tool for generating text-scanning programs.
 devel/m4|CSWgm4|gm4 - Standard Unix macro processor with extensions
 devel/rake|CSWrake|rake - Simple ruby build program similar to make
 devel/swig|CSWswig|swig - A scripting interface generator for C/C++ code.
+gnome/ogle_gui|CSWoglegui|oglegui - gtk user interface for Ogle DVD player 
 gnome/xchat|CSWxchat|xchat - GTK+ based IRC client, similar to AmIRC (Amiga).
 gnome/xchat|CSWxchat-tcl|xchat_tcl - xchat tcl plugin
 gnome/xchat|CSWxchat-py|xchat_py - xchat python plugin
@@ -395,6 +414,8 @@ lang/php5|CSWphp5pdopgsql|php5_pdopgsql - PHP 5 - PostgreSQL PDO Extension
 lang/php5|CSWphp5pdoodbc|php5_pdoodbc - PHP 5 - unixODBC PDO Extension
 lang/php5|CSWphp5pdosqlite|php5_pdosqlite - PHP 5 - SQLite PDO Extension
 lang/php5|CSWphp5wddx|php5_wddx - PHP 5 - WDDX Extension
+lang/php5|CSWphp5mcrypt|php5_mcrypt - PHP 5 - libmcrypt Extension
+lang/php5|CSWphp5mhash|php5_mhash - PHP 5 - libmhash Extension
 lang/pydocutils|CSWpydocutils|pydocutils - Documentation Utiltiies for Python
 lang/pysetuptools|CSWpysetuptools|pysetuptools - Distribution Utiltiies for Python
 lang/pysqlite|CSWpysqlite|pysqlite - SQLite support for Python
@@ -404,6 +425,7 @@ lang/ruby|CSWrubytk|rubytk - Ruby Tcl/Tk Extension
 lang/ruby|CSWrubydoc|rubydoc - Ruby documentation
 lang/rubygems|CSWrubygems|rubygems - Ruby package manager
 lang/silvercity|CSWsilvercity|silvercity - Lexical analysis package for Python
+lib/a52dec|CSWliba52|a52dec - a free ATSC A/52 stream decoder
 lib/apr-util|CSWaprutil|aprutil - Apache Portable Runtime Utilities
 lib/apr-util|CSWaprutil-devel|aprutil_devel - Apache Portable Runtime Utility development support
 lib/apr|CSWapr|apr - Apache Portable Runtime
@@ -419,23 +441,48 @@ lib/boost|CSWboost|boost - A collection of C++ libraries
 lib/docbook|CSWdocbook-xsl|docbook_xsl - docbook xsl stylesheets
 lib/expat|CSWexpat|expat - XML Parser Toolkit
 lib/expat|CSWexpat-devel|expat_devel - XML Parsing Toolkit - Development Support
+lib/fltk|CSWfltk|fltk - Fast light Tool Kit
+lib/fox|CSWfoxrt|foxrt - Fox Toolkit runtime
+lib/fox|CSWfox|fox - Fox Toolkit runtime
+lib/guile|CSWguile|guile - GNU extensibility library
+lib/guile|CSWguilelib12|guilelib12 - GNU extensibility library
+lib/libdvdread|CSWlibdvdread|libdvdread - provides a simple foundation for reading DVD-Video images
 lib/libevent|CSWlibevent|libevent - event notification library
 lib/libevent|CSWlibevent-devel|libevent_devel - libevent development support
+lib/libglade|CSWlibglade|libglade - library to load Glade XML user interface files at runtime
+lib/libgphoto2|CSWlibgphoto2|libgphoto2 - libgphoto2 - libgphoto2 is a library that can be used by applications to access digital cameras
+lib/libsdl|CSWlibsdl|libsdl - Simple DirectMedia Layer library
+lib/mm|CSWlibmm|libmm - Shared Memory Allocation abstraction library.
+lib/ncurses|CSWncurses|ncurses - ncurses library and utilities
 lib/neon|CSWneon-devel|neon_devel - Neon HTTP and WebDAV development support
 lib/neon|CSWneon|neon - Neon HTTP and WebDAV development support
+lib/openexr|CSWopenexr|openexr - high dynamic-range (HDR) image file format developed by Industrial Light & Magic
 lib/pari|CSWparigp|parigp - efficient computations in number theory
 lib/qt-gcc|CSWqtgcc|qt_gcc - TrollTech C++ application framework
 lib/qt|CSWqt|qt - TrollTech C++ application framework
+lib/sdlimage|CSWsdlimage|sdlimage - SDL image file loading library
+lib/sdlmixer|CSWsdlmixer|sdlmixer - multi-channel audio mixer library
+lib/sdlnet|CSWsdlnet|sdlnet - A small cross-platform network library for SDL
+lib/sdlsound|CSWsdlsound|sdlsound - A library that handles the decoding of several popular sound file formats
+lib/sdlttf|CSWsdlttf|sdlttf - TrueType font rendering library for SDL applications
+lib/sword|CSWsword|sword - SWORD Engine (gcc3)
+net/cadaver|CSWcadav|cadaver - WebDAV commandline tool
+net/cups|CSWcupsdev|cupsdev - Development files for the Common UNIX Printing System
+net/cups|CSWcupsclient|cupsclient - Client portion of the Common UNIX Printing System
+net/cups|CSWcups|cups - The Common UNIX Printing System
+net/cups|CSWcupsd|cupsd - Server portion of the Common UNIX Printing System
+net/cups|CSWcupsdoc|cupsdoc - Documentation for the Common UNIX Printing System
+net/cups|CSWlibcups|libcups - Libraries for the Common UNIX Printing System
+net/elinks|CSWelinks|elinks - An advanced text mode web browser
+net/exim|CSWexim|exim - The Exim Mail Transfer Agent
 net/imapfilter|CSWimapfilter|imapfilter - IMAP mail filtering utility
+net/lftp|CSWlftp|lftp - sophisticated command-line ftp/http client
 net/memcached|CSWmemcached|memcached - distributed memory object caching system
+net/micq|CSWmicq|micq - terminal-based ICQ client
 net/pound|CSWpound|pound - reverse proxy load balancer
-server/apache2-2.0|CSWapache2|apache2 - Apache 2.0 web server
-server/apache2-2.0|CSWapache2c|apache2c - Apache 2.0 web server (core)
-server/apache2-2.0|CSWapache2-manual|apache2_manual - Apache 2.0 manual
-server/apache2-2.0|CSWap2suexec|ap2_suexec - Apache 2.0 suEXEC support
-server/apache2-2.0|CSWapache2rt|apache2rt - Apache 2.0 runtime libraries
-server/apache2-2.0|CSWap2prefork|ap2_prefork - Apache 2.0 prefork MPM
-server/apache2-worker-2.0|CSWap2worker|ap2_worker - Apache 2.0 worker MPM
+net/snort|CSWsnort|snort - The open source Network Intrusion Detection System
+net/squidpurge|CSWsquidpurge|squidpurge - Purge squid cache entries.
+net/tin|CSWtin|tin - terminal-based news reader
 server/apache2-worker|CSWap2worker|ap2_worker - Apache 2.2 worker MPM
 server/apache2|CSWapache2|apache2 - Apache 2.2 web server
 server/apache2|CSWapache2c|apache2c - Apache 2.2 web server (core)
@@ -444,6 +491,12 @@ server/apache2|CSWap2suexec|ap2_suexec - Apache 2.2 suEXEC support
 server/apache2|CSWap2prefork|ap2_prefork - Apache 2.2 prefork MPM
 server/apache2|CSWapache2rt|apache2rt - Apache 2.2 runtime libraries
 server/apache2|CSWapache2-devel|apache2_devel - Apache 2.2 development support
+server/cyrus_imapd|CSWcyrusimapdutils|cyrus_imapd_utils - Various admin utilities for Cyrus Imapd/Popd
+server/cyrus_imapd|CSWpmcyrus|pm_cyrus - Perl interface to Cyrus Imap functions
+server/cyrus_imapd|CSWcyrusimapd|cyrus_imapd - Perl interface to Cyrus Imap functions
+server/exim|CSWexim|exim - The Exim Mail Transfer Agent
+server/imapproxy|CSWimapproxy|imapproxy - A caching IMAP proxy server
+server/mod_auth_mysql|CSWap2modauthmysql|ap2_modauthmysql - Implements basic authentication on top of MySQL
 server/mod_auth_pam|CSWap2modauthpam|ap2_modauthpam - Implements basic authentication on top of PAM
 server/mod_highlight|CSWap2modhighlight|ap2_modhighlight - Syntax highlighting module for Apache 2.0
 server/mod_jk|CSWap2modjk|ap2_mod_jk - AJP connector module for Apache 2
@@ -451,9 +504,12 @@ server/mod_python|CSWap2modpython|ap2_modpython - an Apache/Python integration m
 server/mod_ruby|CSWap2modruby|ap2_modruby - an Apache/Ruby integration module
 server/mod_svn_view|CSWap2modtransform|ap2_modtransform - Subversion repository viewer
 server/mod_transform|CSWap2modtransform|ap2_modtransform - XSLT filter for Apache 2.0
+server/openvpn|CSWopenvpn|openvpn - secure IP tunnel daemon
 server/rails|CSWap2modruby|ap2_modruby - Ruby web application framework
 server/resin|CSWap2modcaucho|ap2_modcaucho - JSP and Servlet engine.
 server/resin|CSWresin|resin - JSP and Servlet engine.
+server/squid|CSWsquid|squid - High performance Web proxy cache
+server/vsftpd|CSWvsftpd|vsftpd - A very secure and fast FTP server.
 utils/authz-tools|CSWauthztools|authztools - tools to manipulate authz files
 utils/clearsilver|CSWcs|clearsilver - Language-neutral HTML template system
 utils/clearsilver|CSWpmcs|pm_clearsilver - Clearsilver Perl language binding
@@ -463,25 +519,27 @@ utils/emacs|CSWemacsrt|emacsrt - emacs shared runtime and documentation
 utils/emacs|CSWemacs|emacs - emacs shared runtime and documentation
 utils/emacs|CSWxemacs|xemacs - emacs shared runtime and documentation
 utils/esvn|CSWesvn|esvn - A GUI frontend to the Subversion revision system
+utils/gm4|CSWgm4|gm4 - GNU m4 Unix macro processor
+utils/gphoto2|CSWgphoto2|gphoto2 - gphoto2 is a command-line frontend to libgphoto2
 utils/graphviz|CSWgraphviz|graphviz - Graph drawing utilities with web and graphical interfaces.
 utils/graphviz2|CSWgraphviz2|graphviz2 - Graph drawing utilities with web and graphical interfaces.
+utils/gtar|CSWgtar|gtar - GNU tape archiver
 utils/gvim|CSWgvim|gvim - Vi IMproved with GTK+ support
 utils/htmltidy|CSWhtmltidy|htmltidy - Cleans up HTML source and formats it nicely.
 utils/hypermail|CSWhypermail|hypermail - mail archive tool
+utils/jhead|CSWjhead|jhead - EXIF parser for JPEG images
+utils/joe|CSWjoe|joe - Joe's Own Editor
 utils/mharc|CSWmharc|mharc - Perl scripts for generating web-based mail archives
 utils/mhonarc|CSWmhonarc|mhonarc - mail-to-HTML converter
+utils/mkpackage|CSWmkpackage|mkpackage - Solaris package build tool.
 utils/namazu|CSWnamazu|namazu - full-text search engine
+utils/pkg_update_watch|CSWpkgupdatewatch|pkg_update_watch - Package updates watcher
+utils/ppkg_get|CSWppkgget|ppkg_get - Perl rewrite of origine pkg-get tools
 utils/pv|CSWpv|pv - pipeviewer, like cat with progress indications
 utils/pwsafe|CSWpwsafe|pwsafe - command-line password database.
 utils/rapidsvn|CSWsvncpp|svncpp - Subversion C++ language binding
 utils/rapidsvn|CSWrapidsvn|rapidsvn - Subversion C++ language binding
 utils/sloccount|CSWslocc|sloccount - A suite of programs for counting physical source lines of code.
-utils/subversion-1.2|CSWpmsvn|pm_subversion - Subversion Perl language binding
-utils/subversion-1.2|CSWsvn|subversion - Subversion Perl language binding
-utils/subversion-1.2|CSWjavasvn|javasvn - Subversion Java language binding
-utils/subversion-1.2|CSWap2svn|ap2_subversion - Subversion modules for Apache 2.0
-utils/subversion-1.2|CSWpysvn|pysvn - Subversion Python language binding
-utils/subversion-static|CSWsvn|subversion - Version control rethought
 utils/subversion|CSWap2svn|ap2_subversion - Subversion modules for Apache 2.2
 utils/subversion|CSWjavasvn|javasvn - Subversion Java language binding
 utils/subversion|CSWpmsvn|pm_subversion - Subversion Perl language binding
@@ -492,7 +550,9 @@ utils/subversion|CSWsvn|subversion - Subversion Ruby language binding
 utils/sudo-ldap|CSWsudoldap|sudo_ldap - Provides limited super user privileges (LDAP Enabled)
 utils/sudo|CSWsudo|sudo - Provides limited super user privileges
 utils/sudo|CSWsudo-common|sudo_common - sudo common files
+utils/svnmailer|CSWsvnmailer|svnmailer - A tool to post subversion repository information.
 utils/vim|CSWvim|vim - Vi IMproved
 utils/vim|CSWvimrt|vimrt - vim shared runtime and documentation
 utils/xrestop|CSWxrestop|xrestop - 'top' like staticstics for X11 server side resource usage
+xtra/bash_completion|CSWbashcmplt|bash_completion - Programmable completion for bash
 xtra/gnulinks|CSWgnulinks|gnulinks - Creates native symlinks for GNU tools in /opt/csw/gnu

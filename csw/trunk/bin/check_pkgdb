@@ -24,7 +24,7 @@ getopts('hr:d:o:');
 die "Usage: $0 [-r <rootdir>] [-d <dbfile>] [-o <outfile>] item\n"
     if defined $opt_h or scalar @ARGV == 0;
 
-my $root  = $opt_r || '/export/home/comand/Documents/Work/csw';
+my $root  = $opt_r || "$ENV{HOME}/csw";
 my $pkgdb = $opt_d || catfile($root, 'pkg.db');
 
 # Build the database if it does not exist, otherwise load it

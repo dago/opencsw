@@ -15,7 +15,7 @@
 
 GARROOT=${1:-'/export/medusa/comand/csw'}
 
-for makefile in `find $GARROOT -mindepth 3 -maxdepth 3 -name Makefile \
+for makefile in `gfind $GARROOT -mindepth 3 -maxdepth 3 -name Makefile \
     | grep -v meta | sort`
 do
     GARDIR=`dirname $makefile`
