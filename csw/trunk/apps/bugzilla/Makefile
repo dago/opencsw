@@ -11,6 +11,9 @@ MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/webtools/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWbugzilla,prototype depend)
 
+# Adjust the shebang path for all scripts
+PATCHFILES += perlpath.diff
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS =
