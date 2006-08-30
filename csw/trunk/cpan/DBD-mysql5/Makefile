@@ -20,10 +20,17 @@ DEPENDS += server/mysql5
 # Module version numbers defeat Sort::Versions
 MANUAL_UPDATE = 1
 
-CONFIGURE_ARGS  = --mysql_config=$(prefix)/mysql5/bin/mysql_config
+myroot = $(prefix)/mysql5
+mylib = $(myroot)/lib/mysql
+mybin = $(myroot)/bin
+mycfg = $(mybin)/mysql_config
+
+CONFIGURE_ARGS  = --mysql_config=$(mycfg)
+CONFIGURE_ARGS += --libs="-R$(mylib) $(shell $(mycfg) --libs)"
 CONFIGURE_ARGS += --ssl
 
 # Tests require MySQL to be running
 ENABLE_TEST = 0
 
 include ../category.mk
+
