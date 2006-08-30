@@ -4,8 +4,7 @@ P CSWpmappconfig pm_appconfig - Perl5 module for configuration files and command
 P CSWpmtimedate pm_timedate - parse date strings into time values
 P CSWpmdbi pm_dbi - database independent interface for Perl
 P CSWpmdatashowtable pm_datashowtable - routines to display tabular data in several formats.
-P CSWpmdbdmysql pm_dbdmysql - MySQL driver for the Perl5 Database Interface (DBI)
-P CSWpmdbdpg pm_dbdpg - PostgreSQL database driver for the DBI module
+P CSWpmdbdmysql5 pm_dbdmysql5 - MySQL 5.x DBI Driver.
 P CSWpmtt2 pm_tt2 - Template Toolkit 2
 P CSWpmtt2-common pm_tt2common - Template Toolkit 2 (common)
 P CSWpmtxtabwrap pm_txtabwrap - Text wrapping and tab expansion.
