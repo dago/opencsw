@@ -10,9 +10,6 @@ endef
 
 include files/config.mk
 
-# Re-enable 'startssl'
-PATCHFILES += startssl.diff
-
 # Dummy toplevel package
 DISTFILES += $(call admfiles,CSWapache2,depend prototype)
 # Runtime

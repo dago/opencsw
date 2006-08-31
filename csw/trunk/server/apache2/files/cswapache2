@@ -18,7 +18,7 @@ start|startssl)
     /bin/mkdir -p `dirname $PIDFILE`
     cmd=$1
     if [ "$cmd" = "startssl" ]; then
-        cmd="$cmd -DSSL"
+        cmd="start -DSSL"
     fi
     ;;
 restart)
@@ -40,4 +40,4 @@ stop)
     ;;
 esac
 
-exec ${APACHE_HOME}/sbin/apachectl $cmd 2>&1
+exec ${APACHE_HOME}/sbin/apachectl -k $cmd 2>&1
