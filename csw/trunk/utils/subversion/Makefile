@@ -9,6 +9,9 @@ define BLURB
 	is a compelling replacement for CVS in the open source community.
 endef
 
+# Vendor site
+SPKG_SOURCEURL = http://subversion.tigris.org/
+
 # Release site
 MASTER_SITES = http://subversion.tigris.org/downloads/
 
