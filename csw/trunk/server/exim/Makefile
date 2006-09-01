@@ -1,5 +1,5 @@
 GARNAME = exim
-GARVERSION = 4.62
+GARVERSION = 4.63
 CATEGORIES = server
 
 DESCRIPTION = The Exim Mail Transfer Agent
@@ -18,6 +18,7 @@ MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
 	preinstall preremove request)
+DISTFILES += Makefile.patch exim_install.patch spf2.patch
 DISTFILES += i.smfyes i.smfno space checkinstall
 
 PATCHFILES = Makefile.patch exim_install.patch spf2.patch
