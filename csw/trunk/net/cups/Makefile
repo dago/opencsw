@@ -1,5 +1,5 @@
 GARNAME = cups
-GARVERSION = 1.2.2
+GARVERSION = 1.2.3
 CATEGORIES = net
 
 #DESCRIPTION = The Common UNIX Printing System
@@ -15,8 +15,6 @@ endef
 # up (yet again) picking up the installed cups.h over the one in this package.
 PATCHFILES = Makedefs.in.patch
 
-#MASTER_SITES = http://ftp.easysw.com/pub/cups/1.2.2/
-#MASTER_SITES = http://www.cups.org/
 # These are the source mirrors published on the CUPS home-page.
 CUPS_MIRRORS = http://ftp.easysw.com/pub
 CUPS_MIRRORS += ftp://ftp2.easysw.com/pub
