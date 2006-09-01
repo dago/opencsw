@@ -142,22 +142,20 @@ ASFLAGS  = $($(GARCOMPILER)_AS_$(GARFLAVOR))
 OPTFLAGS = $($(GARCOMPILER)_CC_$(GARFLAVOR))
 
 # allow us to link to libraries we installed
-EXT_CCINC = $(foreach EINC,$(EXTRA_INC) $(includedir), -I$(EINC))
-EXT_CCLIB = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -L$(ELIB))
+EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir), -I$(EINC))
+EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -L$(ELIB))
+
+LDOPT_LIBS = $(libdir) $(EXTRA_LIB)
 ifdef NOISALIST
-EXT_LDOPT = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -R$(ELIB))
+LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS), -R$(ELIB))
 else
-EXT_LDOPT = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -R$(ELIB)/\$$ISALIST -R$(ELIB))
+LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS), -R$(ELIB)/\$$ISALIST -R$(ELIB))
 endif
 
-CFLAGS     += -I$(DESTDIR)$(includedir) $(EXT_CCINC) 
-CPPFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CCINC)
-CXXFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CCINC)
-LDFLAGS    += -L$(DESTDIR)$(libdir) $(EXT_CCLIB) 
-LD_OPTIONS += $(EXT_LDOPT)
-
-LD_RUN_DIRS += $(libdir)
-LD_RUN_PATH = $(call MAKEPATH,$(LD_RUN_DIRS))
+CFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS) 
+CPPFLAGS += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS)
+CXXFLAGS += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS)
+LDFLAGS  += -L$(DESTDIR)$(libdir) $(EXT_LDFLAGS)
 
 # allow us to use programs we just built
 PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
