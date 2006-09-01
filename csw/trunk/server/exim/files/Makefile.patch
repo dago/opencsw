@@ -9,7 +9,7 @@
 +
 +CC=$(CSW_CC)
 +CFLAGS=-DHAVE_NS_TYPE -I$(CSW_WORKSRC) -I/opt/csw/include $(CSW_OPT)
-+LDFLAGS=-R/opt/csw/mysql4/lib/mysql -R/opt/csw/postgresql/lib
++LDFLAGS=-R/opt/csw/mysql5/lib/mysql -R/opt/csw/postgresql/lib
 +
  # This is the template for Exim's main build-time configuration file. It
  # contains settings that are independent of any operating system. These are
@@ -134,9 +134,9 @@
  # LOOKUP_INCLUDE=-I /usr/local/ldap/include -I /usr/local/mysql/include -I /usr/local/pgsql/include
 -# LOOKUP_LIBS=-L/usr/local/lib -lldap -llber -lmysqlclient -lpq -lgds -lsqlite3
 -
-+LOOKUP_INCLUDE=-I /opt/csw/mysql4/include/mysql -I /opt/csw/postgresql/include
++LOOKUP_INCLUDE=-I /opt/csw/mysql5/include/mysql -I /opt/csw/postgresql/include
 +# LOOKUP_LIBS=-L/usr/local/lib -lldap -llber -lmysqlclient -lpq -lgds
-+LOOKUP_LIBS=-L/opt/csw/mysql4/lib/mysql -L/opt/csw/postgresql/lib -lldap -llber -lmysqlclient -lpq #-lgds
++LOOKUP_LIBS=-L/opt/csw/mysql5/lib/mysql -L/opt/csw/postgresql/lib -lldap -llber -lmysqlclient -lpq #-lgds
  
  #------------------------------------------------------------------------------
  # Compiling the Exim monitor: If you want to compile the Exim monitor, a
