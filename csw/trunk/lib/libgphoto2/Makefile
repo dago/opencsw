@@ -9,15 +9,20 @@ define BLURB
   protocol, to allow a complete modularity.
 endef
 
+PATCHFILES = sunstudio.patch
+
 MASTER_SITES = http://www.gphoto.org/proj/libgphoto2/
 #MASTER_SITES = http://superb-west.dl.sourceforge.net/sourceforge/gphoto/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibgphoto2,)
+DISTFILES += $(call admfiles,CSWlibgphoto2,prototype depend)
+DISTFILES += sunstudio.patch
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-libusb=no
 #--with-exif-prefix=/opt/csw
 
-# Remove the following rules and uncomment the
-# include before building.
+# libgphoto2 doesn't have a test target
+TEST_TARGET =
+
+SPKG_SOURCEURL = http://www.gphoto.org/
 
 include ../category.mk

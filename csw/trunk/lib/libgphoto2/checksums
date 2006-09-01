@@ -1,2 +1,5 @@
 69827311733e39fafa9f77bb05e55b77  download/libgphoto2-2.2.1.tar.bz2
-9530552302ef5ee521d69bebe4d68b65  download/CSWlibgphoto2.gspec
+8a4e74ec63da543f34cae20d351adbd4  download/CSWlibgphoto2.gspec
+2156033c1b284fec3e8c9a306f1a45af  download/sunstudio.patch
+4903ee25f6b0f482c116db8fcbcb0b78  download/CSWlibgphoto2.prototype
+706a69ba6b57544cc010e471ae7ffb1b  download/CSWlibgphoto2.depend
