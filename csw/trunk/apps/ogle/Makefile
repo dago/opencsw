@@ -11,7 +11,7 @@ MASTER_SITES = http://www.dtek.chalmers.se/groups/dvd/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWogle,)
 
-PATCHFILES = solaris-audio.diff
+PATCHFILES = configure.in.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
