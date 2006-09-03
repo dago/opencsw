@@ -17,9 +17,6 @@ MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 DISTFILES  = Python-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWpython24,)
 
-# Configure some site specific variables
-PATCHFILES = site-config.diff
-
 WORKSRC = $(WORKDIR)/Python-$(GARVERSION)
 
 DEPENDS += lib/expat
