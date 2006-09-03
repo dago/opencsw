@@ -19,6 +19,16 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWperl,depend prototype)
 DISTFILES += $(call admfiles,CSWperldoc,depend prototype)
 
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/K/KW/KWILLIAMS/
+CORE_UPDATES  += PathTools-3.19
+CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
+
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
+CORE_UPDATES  += CGI.pm-3.23
+CORE_OBSOLETE += CGI*
+
+DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
+
 LIBDEPS += lib/bdb43
 LIBDEPS += lib/gdbm
 
@@ -76,16 +86,18 @@ EXTRA_INC += $(prefix)/bdb43/include
 ENABLE_TEST = 0
 
 include ../category.mk
+ifneq ($(CORE_UPDATES),)
+POST_TARGETS = install-core-updates
+include files/updatecore.mk
+endif
 
 # How to configure Perl
 configure-perl:
 	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
 	@$(MAKECOOKIE)
 
-post-install: libperl perlconf
-	@$(MAKECOOKIE)
-
 # Make links to libperl
+POST_TARGETS += libperl
 LIB_MINOR = $(shell echo $(GARVERSION) | cut -f1-2 -d.)
 LIB_PATH  = $(libdir)/perl/$(GARVERSION)/CORE
 libperl:
@@ -98,6 +110,7 @@ libperl:
 	@$(MAKECOOKIE)
 
 # Remove build paths from Config
+POST_TARGETS += perlconf
 perlconf:
 	@( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION) ; \
         /bin/perl -i -lne "\
@@ -117,5 +130,9 @@ perlconf:
             } \
             print \
         " Config.pm Config_heavy.pl )
+	@$(MAKECOOKIE)
+
+# Invoke post-install targets
+post-install: $(POST_TARGETS)
 	@$(MAKECOOKIE)
 

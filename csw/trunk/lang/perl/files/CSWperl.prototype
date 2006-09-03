@@ -10,7 +10,7 @@ f none /opt/csw/bin/h2xs 0755 root bin
 f none /opt/csw/bin/instmodsh 0755 root bin
 f none /opt/csw/bin/libnetcfg 0755 root bin
 f none /opt/csw/bin/perl5.8.8 0755 root bin
-l none /opt/csw/bin/perl=/opt/csw/bin/perl5.8.8 root bin
+l none /opt/csw/bin/perl=perl5.8.8
 f none /opt/csw/bin/perlbug 0755 root bin
 f none /opt/csw/bin/perlcc 0755 root bin
 f none /opt/csw/bin/perldoc 0755 root bin
@@ -25,16 +25,17 @@ f none /opt/csw/bin/pod2usage 0755 root bin
 f none /opt/csw/bin/podchecker 0755 root bin
 f none /opt/csw/bin/podselect 0755 root bin
 f none /opt/csw/bin/prove 0755 root bin
-l none /opt/csw/bin/psed=/opt/csw/bin/s2p root bin
-l none /opt/csw/bin/pstruct=/opt/csw/bin/c2ph root bin
+l none /opt/csw/bin/psed=s2p
+l none /opt/csw/bin/pstruct=c2ph
 f none /opt/csw/bin/s2p 0755 root bin
 f none /opt/csw/bin/splain 0755 root bin
 f none /opt/csw/bin/xsubpp 0755 root bin
 d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/libperl.so.5.8.8 0755 root bin
-s none /opt/csw/lib/libperl.so.5.8=libperl.so.5.8.8 root bin
-s none /opt/csw/lib/libperl.so=libperl.so.5.8.8 root bin
-d none /opt/csw/lib/perl 0755 root bin
+s none /opt/csw/lib/libperl.so.5.8=libperl.so.5.8.8
+s none /opt/csw/lib/libperl.so=libperl.so.5.8.8
+d none /opt/csw/lib/perl ? ? ?
+d none /opt/csw/lib/perl/5.8.8 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/.packlist 0644 root bin
 d none /opt/csw/lib/perl/5.8.8/B 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/B.pm 0444 root bin
@@ -144,6 +145,16 @@ f none /opt/csw/lib/perl/5.8.8/Errno.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/Fcntl.pm 0444 root bin
 d none /opt/csw/lib/perl/5.8.8/File 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/File/Glob.pm 0444 root bin
+d none /opt/csw/lib/perl/5.8.8/File/Spec 0755 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/Cygwin.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/Epoc.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/Functions.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/Mac.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/OS2.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/Unix.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/VMS.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/File/Spec/Win32.pm 0444 root bin
 d none /opt/csw/lib/perl/5.8.8/Filter 0755 root bin
 d none /opt/csw/lib/perl/5.8.8/Filter/Util 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/Filter/Util/Call.pm 0444 root bin
@@ -203,7 +214,10 @@ f none /opt/csw/lib/perl/5.8.8/auto/B/C/C.so 0555 root bin
 d none /opt/csw/lib/perl/5.8.8/auto/ByteLoader 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/ByteLoader/ByteLoader.bs 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/ByteLoader/ByteLoader.so 0555 root bin
+d none /opt/csw/lib/perl/5.8.8/auto/CGI 0755 root bin
+f none /opt/csw/lib/perl/5.8.8/auto/CGI/.packlist 0644 root bin
 d none /opt/csw/lib/perl/5.8.8/auto/Cwd 0755 root bin
+f none /opt/csw/lib/perl/5.8.8/auto/Cwd/.packlist 0644 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/Cwd/Cwd.bs 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/Cwd/Cwd.so 0555 root bin
 d none /opt/csw/lib/perl/5.8.8/auto/DB_File 0755 root bin
@@ -545,20 +559,18 @@ f none /opt/csw/lib/perl/5.8.8/re.pm 0444 root bin
 d none /opt/csw/lib/perl/5.8.8/threads 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/threads.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/threads/shared.pm 0444 root bin
-d none /opt/csw/lib/perl/site_perl 0755 root bin
+d none /opt/csw/lib/perl/site_perl ? ? ?
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/man1 ? ? ?
 f none /opt/csw/share/man/man1/a2p.1 0644 root bin
-f none /opt/csw/share/man/man1/c2ph.1 0644 root bin
+l none /opt/csw/share/man/man1/c2ph.1=pstruct.1
 f none /opt/csw/share/man/man1/cpan.1 0644 root bin
 f none /opt/csw/share/man/man1/dprofpp.1 0644 root bin
 f none /opt/csw/share/man/man1/enc2xs.1 0644 root bin
 f none /opt/csw/share/man/man1/find2perl.1 0644 root bin
 f none /opt/csw/share/man/man1/h2ph.1 0644 root bin
 f none /opt/csw/share/man/man1/h2xs.1 0644 root bin
-f none /opt/csw/share/man/man1/instmodsh.1 0644 root bin
-f none /opt/csw/share/man/man1/libnetcfg.1 0644 root bin
 f none /opt/csw/share/man/man1/perl.1 0644 root bin
 f none /opt/csw/share/man/man1/perlbug.1 0644 root bin
 f none /opt/csw/share/man/man1/perlcc.1 0644 root bin
@@ -574,16 +586,15 @@ f none /opt/csw/share/man/man1/pod2usage.1 0644 root bin
 f none /opt/csw/share/man/man1/podchecker.1 0644 root bin
 f none /opt/csw/share/man/man1/podselect.1 0644 root bin
 f none /opt/csw/share/man/man1/prove.1 0644 root bin
-l none /opt/csw/share/man/man1/psed.1=/opt/csw/share/man/man1/s2p.1 root bin
-l none /opt/csw/share/man/man1/pstruct.1=/opt/csw/share/man/man1/c2ph.1 root bin
-f none /opt/csw/share/man/man1/s2p.1 0644 root bin
+f none /opt/csw/share/man/man1/psed.1 0644 root bin
+f none /opt/csw/share/man/man1/pstruct.1 0644 root bin
+l none /opt/csw/share/man/man1/s2p.1=psed.1
 f none /opt/csw/share/man/man1/splain.1 0644 root bin
 f none /opt/csw/share/man/man1/xsubpp.1 0644 root bin
-d none /opt/csw/share/perl 0755 root bin
+d none /opt/csw/share/perl ? ? ?
 d none /opt/csw/share/perl/5.8.8 0755 root bin
 f none /opt/csw/share/perl/5.8.8/AnyDBM_File.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Attribute 0755 root bin
-d none /opt/csw/share/perl/5.8.8/Attribute/Handlers 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Attribute/Handlers.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/AutoLoader.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/AutoSplit.pm 0444 root bin
@@ -603,29 +614,6 @@ f none /opt/csw/share/perl/5.8.8/CGI/Pretty.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/CGI/Push.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/CGI/Switch.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/CGI/Util.pm 0444 root bin
-d none /opt/csw/share/perl/5.8.8/CGI/eg 0755 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/RunMeFirst 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/caution.xbm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/clickable_image.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/cookie.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/crash.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/customize.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/diff_upload.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/dna_small_gif.uu 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/file_upload.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/frameset.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/index.html 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/internal_links.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/javascript.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/make_links.pl 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/monty.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/multiple_forms.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/nph-clock.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/nph-multipart.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/popup.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/save_state.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/tryit.cgi 0444 root bin
-f none /opt/csw/share/perl/5.8.8/CGI/eg/wilogo_gif.uu 0444 root bin
 d none /opt/csw/share/perl/5.8.8/CPAN 0755 root bin
 f none /opt/csw/share/perl/5.8.8/CPAN.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/CPAN/FirstTime.pm 0444 root bin
@@ -741,26 +729,14 @@ f none /opt/csw/share/perl/5.8.8/File/Copy.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/File/DosGlob.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/File/Find.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/File/Path.pm 0444 root bin
-d none /opt/csw/share/perl/5.8.8/File/Spec 0755 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/Cygwin.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/Epoc.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/Functions.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/Mac.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/OS2.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/Unix.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/VMS.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/File/Spec/Win32.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/File/Temp.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/File/stat.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/FileCache.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/FileHandle.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Filter 0755 root bin
-d none /opt/csw/share/perl/5.8.8/Filter/Simple 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Filter/Simple.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/FindBin.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Getopt 0755 root bin
-d none /opt/csw/share/perl/5.8.8/Getopt/Long 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Getopt/Long.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Getopt/Std.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Hash 0755 root bin
@@ -781,7 +757,6 @@ f none /opt/csw/share/perl/5.8.8/IPC/Open3.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/List 0755 root bin
 f none /opt/csw/share/perl/5.8.8/List/Util.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Locale 0755 root bin
-d none /opt/csw/share/perl/5.8.8/Locale/Codes 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Locale/Constants.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Locale/Constants.pod 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Locale/Country.pm 0444 root bin
@@ -819,7 +794,6 @@ f none /opt/csw/share/perl/5.8.8/Memoize/ExpireTest.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Memoize/NDBM_File.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Memoize/SDBM_File.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Memoize/Storable.pm 0444 root bin
-d none /opt/csw/share/perl/5.8.8/NEXT 0755 root bin
 f none /opt/csw/share/perl/5.8.8/NEXT.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Net 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Net/Cmd.pm 0444 root bin
@@ -888,11 +862,9 @@ f none /opt/csw/share/perl/5.8.8/Search/Dict.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/SelectSaver.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/SelfLoader.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Shell.pm 0444 root bin
-d none /opt/csw/share/perl/5.8.8/Switch 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Switch.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Symbol.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Term 0755 root bin
-d none /opt/csw/share/perl/5.8.8/Term/ANSIColor 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Term/ANSIColor.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Term/Cap.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Term/Complete.pm 0444 root bin
@@ -913,12 +885,10 @@ f none /opt/csw/share/perl/5.8.8/Test/Harness/Point.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Test/Harness/Straps.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Test/Harness/TAP.pod 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Test/More.pm 0444 root bin
-d none /opt/csw/share/perl/5.8.8/Test/Simple 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Test/Simple.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Test/Tutorial.pod 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Text 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Text/Abbrev.pm 0444 root bin
-d none /opt/csw/share/perl/5.8.8/Text/Balanced 0755 root bin
 f none /opt/csw/share/perl/5.8.8/Text/Balanced.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Text/ParseWords.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/Text/Soundex.pm 0444 root bin
@@ -1004,8 +974,6 @@ f none /opt/csw/share/perl/5.8.8/open2.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/open3.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/overload.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/perl5db.pl 0444 root bin
-d none /opt/csw/share/perl/5.8.8/pod 0755 root bin
-f none /opt/csw/share/perl/5.8.8/pod/perldiag.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pwd.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/shellwords.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/sigtrap.pm 0444 root bin
@@ -1508,8 +1476,8 @@ d none /opt/csw/share/perl/5.8.8/unicore/lib/nt 0755 root bin
 f none /opt/csw/share/perl/5.8.8/unicore/lib/nt/De.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/unicore/lib/nt/Di.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/unicore/lib/nt/Nu.pl 0444 root bin
-f none /opt/csw/share/perl/5.8.8/unicore/mktables.lst 0444 root bin
 f none /opt/csw/share/perl/5.8.8/unicore/mktables 0444 root bin
+f none /opt/csw/share/perl/5.8.8/unicore/mktables.lst 0444 root bin
 f none /opt/csw/share/perl/5.8.8/unicore/version 0444 root bin
 f none /opt/csw/share/perl/5.8.8/utf8.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/utf8_heavy.pl 0444 root bin
@@ -1519,4 +1487,3 @@ f none /opt/csw/share/perl/5.8.8/vmsish.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/warnings 0755 root bin
 f none /opt/csw/share/perl/5.8.8/warnings.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/warnings/register.pm 0444 root bin
-d none /opt/csw/share/perl/site_perl 0755 root bin
