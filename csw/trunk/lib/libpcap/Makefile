@@ -2,16 +2,14 @@ GARNAME = libpcap
 GARVERSION = 0.8.3
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWlibpcap
-SPKG_BITNAME = libpcap
-
 DESCRIPTION = Libraries for network diagnostics
 define BLURB
   A system-independent interface for user-level network packet capture.
 endef
 
 MASTER_SITES = http://www.tcpdump.org/release/ 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWlibpcap,)
 
 # Shared libraries patch
 PATCHFILES = solib.diff

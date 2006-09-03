@@ -1,12 +1,10 @@
 GARNAME = automake
 GARVERSION = 1.4-p6
 CATEGORIES = bootstrap
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-
-SPKG_PKGNAME = CSWautomake14
-SPKG_BITNAME = automake14
 
 MASTER_SITES = http://ftp.gnu.org/gnu/automake/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWautomake14,)
 
 DESCRIPTION = GNU automake
 define BLURB

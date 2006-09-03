@@ -2,9 +2,6 @@ GARNAME = balance
 GARVERSION = 3.11
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWbalance
-SPKG_BITNAME = balance
-
 DESCRIPTION = A TCP proxy and load balancer.
 define BLURB
   Balance is a simple but powerful generic TCP proxy with round-robin load
@@ -13,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.inlab.de/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWbalance,)
 
 # Configure for build with SunONE
 PATCHFILES = build.diff

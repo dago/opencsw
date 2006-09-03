@@ -2,9 +2,6 @@ GARNAME = gdbm
 GARVERSION = 1.8.3
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWgdbm
-SPKG_BITNAME = gdbm
-
 DESCRIPTION = GNU database library for C
 define BLURB
   gdbm is a database indexing library replacement for the traditional
@@ -13,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWgdbm,)
 
 # Makefile install permissions patch
 PATCHFILES = perms.diff

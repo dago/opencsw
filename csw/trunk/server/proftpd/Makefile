@@ -2,9 +2,6 @@ GARNAME = proftpd
 GARVERSION = 1.3.0
 CATEGORIES = server
 
-SPKG_PKGNAME = CSWproftpd
-SPKG_BITNAME = proftpd
-
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
 define BLURB
   ProFTPD is a proven, high-performance, scalable FTP server written from
@@ -16,7 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.proftpd.org/distrib/source/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWproftpd,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

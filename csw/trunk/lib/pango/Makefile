@@ -2,9 +2,6 @@ GARNAME = pango
 GARVERSION = 1.4.0
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWpango
-SPKG_BITNAME = pango
-
 DESCRIPTION = A framework for the layout and rendering of international text.
 define BLURB
   The goal of the Pango project is to provide an Open Source framework for the
@@ -14,7 +11,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.4/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWpango,)
 
 LIBDEPS += lib/xft
 

@@ -14,17 +14,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.iu.hio.no/pub/$(GARNAME)/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += $(call admfiles,CSWcfengine,)
 
 # Requires GNU texi
 PATCHFILES = nodoc.diff
-
-SPKG_PKGNAME = SUNWt6cfe
-SPKG_BASEDIR = /usr/local
-
-tool_prefix=/usr/local/tools
-main_prefix=$(tool_prefix)
-export tool_prefix main_prefix
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-DCE

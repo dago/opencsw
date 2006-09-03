@@ -2,9 +2,6 @@ GARNAME = xinetd
 GARVERSION = 2.3.13
 CATEGORIES = server
 
-SPKG_PKGNAME = CSWxinetd
-SPKG_BITNAME = xinetd
-
 DESCRIPTION = Powerful inetd replacement
 define BLURB
   xinetd is a replacement for inetd, the internet services daemon. Anybody can
@@ -15,7 +12,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.xinetd.org/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWxinetd,)
 
 LIBDEPS += lib/tcp_wrappers
 

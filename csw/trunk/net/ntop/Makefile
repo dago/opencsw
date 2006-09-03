@@ -2,9 +2,6 @@ GARNAME = ntop
 GARVERSION = 2.2
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWntop
-SPKG_BITNAME = ntop
-
 DESCRIPTION = A network traffic usage monitor.
 define BLURB
   ntop is a network probe that shows network usage in a way similar to what top
@@ -16,7 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
-DISTFILES = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES += $(call admfiles,CSWntop,)
 
 LIBDEPS += utils/rrdtool
 

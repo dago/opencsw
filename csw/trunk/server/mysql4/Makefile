@@ -2,9 +2,6 @@ GARNAME = mysql
 GARVERSION = 4.1.18
 CATEGORIES = server
 
-SPKG_PKGNAME = CSWmysql4
-SPKG_BITNAME = mysql4
-
 DESCRIPTION = A fast SQL database server.
 define BLURB
   MySQL is a widely used and fast SQL database server. It is a client/server
@@ -13,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://mysql.he.net/Downloads/MySQL-4.1/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWmysql4,)
 
 DB_USER = mysqld
 

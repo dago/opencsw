@@ -2,9 +2,6 @@ GARNAME = openssl
 GARVERSION = 0.9.7d
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWopenssl
-SPKG_BITNAME = openssl
-
 DESCRIPTION = The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
 define BLURB
   The OpenSSL Project is a collaborative effort to develop a robust,
@@ -14,7 +11,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.openssl.org/source/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += $(call admfiles,CSWopenssl,)
 
 # Don't ask for confirmation about compile config
 PATCHFILES = dontask.diff

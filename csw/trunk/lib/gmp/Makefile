@@ -2,9 +2,6 @@ GARNAME = gmp
 GARVERSION = 4.1.2
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWgmp
-SPKG_BITNAME = gmp
-
 DESCRIPTION = The GNU MP Bignum Library
 define BLURB
   GMP is a free library for arbitrary precision arithmetic, operating on signed
@@ -21,7 +18,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWgmp,)
 
 TEST_TARGET = check
 

@@ -2,9 +2,6 @@ GARNAME = libvorbis
 GARVERSION = 1.0.1
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWlibvorbis
-SPKG_BITNAME = libvorbis
-
 DESCRIPTION = Vorbis codec library.
 define BLURB
   Ogg Vorbis is a high-quality lossy audio codec that is free of intellectual
@@ -13,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.vorbis.com/files/1.0.1/unix/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWlibvorbis,)
 
 LIBDEPS += lib/libogg
 

@@ -2,9 +2,6 @@ GARNAME = ncftp
 GARVERSION = 3.1.9
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWncftp
-SPKG_BITNAME = ncftp
-
 DESCRIPTION = File Transfer Protocol (FTP) client applications.
 define BLURB
   NcFTP Client (also known as NcFTP) is a set of application programs
@@ -14,6 +11,8 @@ endef
 
 MASTER_SITES = ftp://ftp.ncftp.com/ncftp/
 DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.bz2
+DISTFILES += $(call admfiles,CSWncftp,)
+
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
 
 LIBDEPS += lib/ncurses

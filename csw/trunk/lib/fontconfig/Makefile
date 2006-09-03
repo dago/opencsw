@@ -2,9 +2,6 @@ GARNAME = fontconfig
 GARVERSION = 2.2.1
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWfconfig
-SPKG_BITNAME = fontconfig
-
 DESCRIPTION = A library for configuring and customizing font access.
 define BLURB
   Fontconfig is a library for configuring and customizing font access. It
@@ -14,7 +11,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.fontconfig.org/release/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += $(call admfiles,CSWfconfig,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

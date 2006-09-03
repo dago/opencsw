@@ -2,9 +2,6 @@ GARNAME = tin
 GARVERSION = 1.8.2
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWtin
-SPKG_BITNAME = tin
-
 DESCRIPTION = terminal-based news reader
 define BLURB
   tin is an easy-to-use USENET news reader for the console using NNTP.

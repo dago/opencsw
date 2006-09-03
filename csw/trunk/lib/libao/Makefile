@@ -2,9 +2,6 @@ GARNAME = libao
 GARVERSION = 0.8.4
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWlibao
-SPKG_BITNAME = libao
-
 DESCRIPTION = Cross-platform audio library
 define BLURB
   libao is a way to easily add cross-platform audio output to your program.
@@ -13,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.xiph.org/ao/src/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWlibao,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

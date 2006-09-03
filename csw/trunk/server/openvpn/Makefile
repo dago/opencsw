@@ -2,9 +2,6 @@ GARNAME = openvpn
 GARVERSION = 2.0.7
 CATEGORIES = server
 
-SPKG_PKGNAME = CSWopenvpn
-SPKG_BITNAME = openvpn
-
 DESCRIPTION = secure IP tunnel daemon
 define BLURB
 OpenVPN is a full-featured SSL VPN solution which can accomodate a wide range of configurations, including remote access, site-to-site VPNs, WiFi security, and enterprise-scale remote access solutions with load balancing, failover, and fine-grained access-controls

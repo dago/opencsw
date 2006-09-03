@@ -2,9 +2,6 @@ GARNAME = readline
 GARVERSION = 4.3
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWreadline
-SPKG_BITNAME = readline
-
 DESCRIPTION = GNU readline
 define BLURB
   The Readline library provides a set of functions for use by applications
@@ -16,7 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWreadline,)
 
 LIBDEPS += lib/ncurses
 

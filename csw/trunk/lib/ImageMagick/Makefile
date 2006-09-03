@@ -3,9 +3,6 @@ GARVERSION = 6.2.7
 GARSUBREV = 8
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWimagick
-SPKG_BITNAME = imagemagick
-
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
 define BLURB
   ImageMagick is a robust collection of tools and libraries offered under a
@@ -15,7 +12,8 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.fifi.org/pub/$(GARNAME)/
-DISTFILES = $(GARNAME)-$(GARVERSION)-$(GARSUBREV).tar.bz2
+DISTFILES  = $(GARNAME)-$(GARVERSION)-$(GARSUBREV).tar.bz2
+DISTFILES += $(call admfiles,CSWimagick,)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl

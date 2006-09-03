@@ -2,9 +2,6 @@ GARNAME = lynx
 GARVERSION = 2.8.5
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWlynx
-SPKG_BITNAME = lynx
-
 DESCRIPTION = lynx - text browser for the World Wide Web
 define BLURB
   Lynx is a web browser, a software program used by people to navigate
@@ -15,7 +12,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://lynx.isc.org/release/
-DISTFILES = $(GARNAME)$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWlynx,)
+
 WORKSRC = $(WORKDIR)/$(subst .,-,$(GARNAME)$(GARVERSION))
 
 #LIBDEPS += lib/ncurses lib/openssl

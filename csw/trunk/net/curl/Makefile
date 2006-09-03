@@ -2,9 +2,6 @@ GARNAME = curl
 GARVERSION = 7.15.3
 CATEGORIES = net
 
-SPKG_PKGNAME = CSWcurl
-SPKG_BITNAME = curl
-
 DESCRIPTION = Command line tool and library for client-side URL transfers.
 define BLURB
   curl and libcurl is a tool for transferring files using URL syntax. It
@@ -17,7 +14,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://curl.haxx.se/download/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWcurl,)
 
 LIBDEPS += lib/openssl
 

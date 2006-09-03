@@ -2,9 +2,6 @@ GARNAME = gd
 GARVERSION = 2.0.22
 CATEGORIES = lib
 
-SPKG_PKGNAME = CSWgd
-SPKG_BITNAME = gd
-
 DESCRIPTION = A library used to create PNG images
 define BLURB
   gd is a library used to create PNG, JPEG, or WBMP images. It has many nice
@@ -12,7 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.boutell.com/gd/http/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += $(call admfiles,CSWgd,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

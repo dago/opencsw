@@ -2,9 +2,6 @@ GARNAME = bison
 GARVERSION = 2.3
 CATEGORIES = devel
 
-SPKG_PKGNAME = CSWbison
-SPKG_BITNAME = bison
-
 DESCRIPTION = GNU Project parser generator (yacc replacement)
 define BLURB
   Bison is a parser generator in the style of yacc(1). It should be upwardly
