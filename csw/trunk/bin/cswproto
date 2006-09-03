@@ -135,10 +135,12 @@ SPECLINE:
 
         # Find the real path
         my $realpath;
-        if ($F[0] eq 's') {
+        if ($F[0] eq 's' or $F[0] eq 'l') {
             $realpath = substr($lhs, 0, 1) ne '/'
                 ? catfile($actual, $lhs)
                 : $lhs;
+
+            $F[2] = join "=", $lhs, basename($rhs) if $F[0] eq 'l';
         }
         else {
             $F[2] = $lhs if $lhs and $rhs;
@@ -164,7 +166,8 @@ SPECLINE:
         else {
             next if exclude($realpath);
             $F[3] = $StdDirPerm if $F[0] eq 'd';
-            ($F[4], $F[5]) = ( $StdOwn, $StdGrp );
+            ($F[4], $F[5]) = ( $StdOwn, $StdGrp )
+                unless $F[0] eq 's' or $F[0] eq 'l';
         }
 
         push @prototype, [ grep { defined $_ } @F ];
