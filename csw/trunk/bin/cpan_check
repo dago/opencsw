@@ -67,6 +67,28 @@ sub get_listing {
     return @listing;
 }
 
+# Parse a HTML directory listing
+sub parse_listing {
+    my $line = shift;
+    my ($file, $d, $m, $y, $H, $M);
+
+    ($file, $d, $m, $y, $H, $M) = $line =~
+      /<a\s+href="([^"]+)">.+<\/a>.+?  # file
+       (\d{2})-(\w{3})-(\d{4})\s+    # date (DD-MMM-YYYY)
+       (\d{2}):(\d{2})               # time (HH:MM)
+      /ix;
+
+    unless ($file and $d and $m and $y) {
+        ($file, $y, $m, $d, $H, $M) = $line =~
+          /<a\s+href=\"([^\"]+)\">.+<\/a>.+?  # file
+          (\d{4})-(\w{3})-(\d{2})\s+        # date (YYYY-MMM-DD)
+          (\d{2}):(\d{2})                   # time (HH:MM)
+          /ix;
+    }
+
+    return ($file, $d, $m, $y, $H, $M);
+}
+
 # Get module information
 sub get_modinfo {
     my $moddir  = shift;
@@ -78,8 +100,7 @@ sub get_modinfo {
     # Parse the listing...
     my $vinfo;
     foreach my $line (@listing) {
-        my ($file, $d, $m, $y, $H, $M) = $line =~
-          /<a href=\"([^\"]+)\">.+<\/a>\s*(\d{2})-(\w{3})-(\d{4})\s+(\d{2}):(\d{2})/i;
+        my ($file, $d, $m, $y, $H, $M) = parse_listing($line);
 
         next unless $file && $file =~ /$MODULE_EXT$/;
         my ($mname, $mver) = fileinfo($file);
