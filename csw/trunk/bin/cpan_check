@@ -79,7 +79,7 @@ sub get_modinfo {
     my $vinfo;
     foreach my $line (@listing) {
         my ($file, $d, $m, $y, $H, $M) = $line =~
-          /<a href.+?>(\S+)<\/a>\s*(\d{2})-(\w{3})-(\d{4})\s+(\d{2}):(\d{2})/i;
+          /<a href=\"([^\"]+)\">.+<\/a>\s*(\d{2})-(\w{3})-(\d{4})\s+(\d{2}):(\d{2})/i;
 
         next unless $file && $file =~ /$MODULE_EXT$/;
         my ($mname, $mver) = fileinfo($file);
