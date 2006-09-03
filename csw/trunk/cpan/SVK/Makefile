@@ -29,6 +29,3 @@ DEPENDS += cpan/Compress-Zlib cpan/FreezeThaw
 
 include ../category.mk
 
-#pre-test:
-#	-@mv -f $(WORKSRC)/t/50dav.t $(WORKSRC)/t/50dav.t.disabled
-#	@$(MAKECOOKIE)
