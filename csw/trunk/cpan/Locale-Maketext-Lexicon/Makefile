@@ -1,5 +1,5 @@
 GARNAME = Locale-Maketext-Lexicon
-GARVERSION = 0.60
+GARVERSION = 0.62
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
 

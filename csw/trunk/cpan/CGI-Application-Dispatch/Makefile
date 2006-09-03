@@ -1,5 +1,5 @@
 GARNAME = CGI-Application-Dispatch
-GARVERSION = 1.04
+GARVERSION = 2.02
 CATEGORIES = cpan
 AUTHOR = WONKO
 
