@@ -156,8 +156,6 @@ f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/exif.so 0755 r
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/ftp.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/iconv.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/mbstring.so 0755 root bin
-f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/odbc.so 0755 root bin
-f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/openssl.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/pcntl.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/pdo.so 0755 root bin
 f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20050922/shmop.so 0755 root bin

@@ -1,10 +1,10 @@
-eb0b1d2dcf11e38ce9794eb76b2ff80c  download/php.ini.CSW
+0110b96202e83048117d1b4fdd4fed7d  download/php.ini.CSW
 a71677d80f5cfd1aeb03547dfdeb705a  download/httpd-php5.conf.CSW
 90ae3cef3692d7e566c47d89fe39c43d  download/phpext
 2af05d584256fdaec3c0310036f48ab3  download/CSWphp5_ext_enable.sh
 cd8db6ea4bcd000635b404d909f6c001  download/CSWphp5_ext_disable.sh
 d50e24088861d202c3fd55b46a4eff0e  download/CSWphp5.gspec
-2fecd93c21df11ffb9ee11614bdbdd82  download/CSWphp5.prototype
+e04adcf0f9b79614e5549c30afc54c23  download/CSWphp5.prototype
 ea613f4ace3ac0e903f091b869a7c7a6  download/CSWphp5.depend
 15b20870714bbd9aa391086bfc2d216c  download/CSWphp5.postinstall
 883e5ee2553ce6a4d2436146636ff172  download/CSWphp5devel.gspec
@@ -34,6 +34,9 @@ e057571396d86fa6351d27393b85494f  download/CSWphp5gettext.depend
 4108e0eaa5ab325e6cc5b99dc2a45ecf  download/CSWphp5gmp.gspec
 3e7a46b45e611ad8db3e25b4c167d297  download/CSWphp5gmp.prototype
 37a2711af710418b8f76711c21876a58  download/CSWphp5gmp.depend
+bb90d137f362ffb2dfa87edfbd7c5f8b  download/CSWphp5imap.gspec
+11e6a7006261c2bfe82b3dd0817aebc6  download/CSWphp5imap.prototype
+d4e9bf9dd0e8cf30de5552663c8b16ec  download/CSWphp5imap.depend
 31de1a299283d1c962c04f3d073b33c7  download/CSWphp5ldap.gspec
 18a813b4cffcc2034b9fe99e8da09ddb  download/CSWphp5ldap.prototype
 326b99461198e02758a410979cf62353  download/CSWphp5ldap.depend
@@ -58,6 +61,9 @@ c3623899b721430d356d12fc12a799de  download/CSWphp5pdomysql.gspec
 2d3e3d1856ef8a3fff925828986fdea6  download/CSWphp5odbc.gspec
 cceaac7a4b14b86a2f9e06ab4fc22fec  download/CSWphp5odbc.prototype
 9bd6f3de19432912bed5cd5891cc4cc5  download/CSWphp5odbc.depend
+1cfcf9e4dddfb52e165247bb40a348fb  download/CSWphp5openssl.gspec
+ec80dfdc19d3079db4ae97c36edba250  download/CSWphp5openssl.prototype
+201f48365c566aecdfa01949e641eada  download/CSWphp5openssl.depend
 b720318d8a71cf083b88440e0db4d105  download/CSWphp5pdoodbc.gspec
 731a326dd045ea6f9701e9e647f54088  download/CSWphp5pdoodbc.prototype
 9bd6f3de19432912bed5cd5891cc4cc5  download/CSWphp5pdoodbc.depend
@@ -89,9 +95,5 @@ d41d8cd98f00b204e9800998ecf8427e  download/CSWphp5wddx.depend
 2f33d8bea7adb4abed275b80e2a32c90  download/CSWphp5xsl.prototype
 b28f5c3b0e2fe3e525c6ff6e4a9846fe  download/CSWphp5xsl.depend
 08e423aa314369d4392a36b3f7246afc  download/php-5.1.6.tar.bz2
-9407d839a668bc683aba326b928989d8  download/c-client.tar.Z
 77c251ec8cd91c41d6d849830e3b5982  download/config.diff
-d22bc5c2bd2ad664ea1e9c8f95d17189  download/imap-ssl.diff
-c7898c50f3422d43f1a63e1ea29363d3  download/imap-cc.diff
-bafc0237e20c42ce0f2621bb7e783230  download/imap-cflags.diff
 f0070c705a1db2b2ac3eaa8925ee87ec  download/snmp-hack.diff

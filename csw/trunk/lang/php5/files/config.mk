@@ -23,9 +23,9 @@ EXTRA_LIB += $(prefix)/bdb43/lib
 EXTRA_INC += $(prefix)/bdb43/lib
 
 # IMAP C Client
-MASTER_SITES += ftp://ftp.cac.washington.edu/imap/
-DISTFILES    += c-client.tar.Z
-IMAPVERSION   = imap-2004f
+#MASTER_SITES += ftp://ftp.cac.washington.edu/imap/
+#DISTFILES    += c-client.tar.Z
+#IMAPVERSION   = imap-2004f
 
 # SAPI Common Configuration
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
@@ -33,9 +33,10 @@ CONFIGURE_ARGS += --enable-force-cgi-redirect
 CONFIGURE_ARGS += --enable-discard-path
 #CONFIGURE_ARGS += --enable-debug
 CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 
 # Features
-CONFIGURE_ARGS += --with-imap=../$(IMAPVERSION)
+CONFIGURE_ARGS += --with-imap=shared,$(prefix)
 CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --enable-dom=shared
