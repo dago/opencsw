@@ -5,6 +5,8 @@ DISTVERSION = $(GARVERSION)$(GARRELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lang
 
+SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
+
 DESCRIPTION = A high-level scripting language.
 define BLURB
   Python is an interpreted, interactive, object-oriented programming language.
@@ -16,7 +18,6 @@ define BLURB
   an extension language for applications that need a programmable interface.
 endef
 
-http://www.python.org/ftp/python/2.5/Python-2.5c1.tar.bz2
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWpython24,)
