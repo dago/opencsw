@@ -1,0 +1,4 @@
+%var            bitname python24
+%var            pkgname CSWpython24
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE
