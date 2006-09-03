@@ -206,6 +206,7 @@ CPAN_SITES  += http://mirrors.ibiblio.org/pub/mirrors/CPAN
 CPAN_SITES  += ftp://cpan.pair.com/pub/CPAN
 CPAN_SITES  += http://mirrors.kernel.org/cpan
 CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
+CPAN_FIRST_MIRROR = $(firstword $(CPAN_SITES))/authors/id
 
 # GNOME
 GNOME_MIRROR =
