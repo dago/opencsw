@@ -11,14 +11,12 @@ APXS=$AP2_BINDIR/apxs
 
 # Enable modules
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
-chroot $PKG_INSTALL_ROOT \
-    $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav mod_dav.so
-chroot $PKG_INSTALL_ROOT \
-    $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav_fs mod_dav_fs.so
-chroot $PKG_INSTALL_ROOT \
-    $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n dav_svn mod_dav_svn.so
-chroot $PKG_INSTALL_ROOT \
-    $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n authz_svn mod_authz_svn.so
+for mod in dav dav_fs dav_svn authz_svn
+do
+    perl -i -lne "print unless /^#?LoadModule.*mod_$mod.so/" $AP2_CONFIG
+    chroot $PKG_INSTALL_ROOT \
+        $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n $mod mod_$mod.so
+done
 
 # Configure mod_dav_svn in httpd.conf
 if [ -n "`egrep 'IfModule (mod_dav_svn|dav_svn_module)' $AP2_CONFIG`" ]
