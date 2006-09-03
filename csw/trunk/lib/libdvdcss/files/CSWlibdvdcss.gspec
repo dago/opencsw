@@ -1,0 +1,4 @@
+%var            bitname libdvdcss
+%var            pkgname CSWlibdvdcss
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING
