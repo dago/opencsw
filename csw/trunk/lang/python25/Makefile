@@ -1,5 +1,8 @@
-GARNAME = python
-GARVERSION = 2.4.3
+GARNAME = Python
+GARVERSION = 2.5
+GARRELEASE = c1
+DISTVERSION = $(GARVERSION)$(GARRELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
@@ -13,11 +16,12 @@ define BLURB
   an extension language for applications that need a programmable interface.
 endef
 
+http://www.python.org/ftp/python/2.5/Python-2.5c1.tar.bz2
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
-DISTFILES  = Python-$(GARVERSION).tar.bz2
+DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWpython24,)
 
-WORKSRC = $(WORKDIR)/Python-$(GARVERSION)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DEPENDS += lib/expat
 DEPENDS += lib/openssl
