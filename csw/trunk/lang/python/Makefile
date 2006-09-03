@@ -2,9 +2,6 @@ GARNAME = python
 GARVERSION = 2.3.5
 CATEGORIES = lang
 
-SPKG_PKGNAME = CSWpython
-SPKG_PKGNAME = python
-
 DESCRIPTION = A high-level scripting language.
 define BLURB
   Python is an interpreted, interactive, object-oriented programming language.
