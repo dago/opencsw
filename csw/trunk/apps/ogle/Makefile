@@ -11,10 +11,15 @@ MASTER_SITES = http://www.dtek.chalmers.se/groups/dvd/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWogle,)
 
-PATCHFILES = configure.in.diff
+#PATCHFILES = configure.in.diff
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) --disable-mmx
 
 ENABLE_TEST=0
 
 include ../category.mk
+
+# Cannot do this yet (libtool problems)
+#pre-configure:
+#	( cd $(WORKSRC) ; ./autogen.sh )
+#	@$(MAKECOOKIE)
