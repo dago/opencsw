@@ -1,5 +1,5 @@
 %var            bitname pm_procprocesstbl
-%var            pkgname CSWpmprocprocesstbl
+%var            pkgname CSWpmproctbl
 %include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 1998-2003 Daniel J. Urist. All rights reserved.
