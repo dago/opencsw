@@ -11,7 +11,7 @@ define BLURB
   used.
 endef
 
-DISTFILES += $(call admfiles,CSWpmlibwww,depend)
+DISTFILES += $(call admfiles,CSWpmlibwww,depend prototype)
 
 DEPENDS += cpan/URI cpan/HTML-Parser
 DEPENDS += cpan/Crypt-SSLeay cpan/Data-Dump
