@@ -20,7 +20,16 @@ endef
 
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWpython24,)
+DISTFILES += $(call admfiles,CSWpython25,)
+
+# Configure
+PATCHFILES += setup.diff
+
+# Add lib/python2.3/site-packages to the sys.path
+PATCHFILES += sitepath.diff
+
+# Fix rcs tool path in faqwiz
+PATCHFILES += faqwiz.diff
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
@@ -29,6 +38,11 @@ DEPENDS += lib/openssl
 DEPENDS += lib/db
 DEPENDS += lib/gdbm
 
-CONFIGURE_ARGS = $(DIRPATHS) 
+CONFIGURE_ARGS  = $(DIRPATHS) 
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --with-fpectl
+
+
 
 include ../category.mk
