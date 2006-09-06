@@ -34,7 +34,7 @@ d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/libperl.so.5.8.8 0755 root bin
 s none /opt/csw/lib/libperl.so.5.8=libperl.so.5.8.8
 s none /opt/csw/lib/libperl.so=libperl.so.5.8.8
-d none /opt/csw/lib/perl ? ? ?
+d none /opt/csw/lib/perl 0755 root bin
 d none /opt/csw/lib/perl/5.8.8 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/.packlist 0644 root bin
 d none /opt/csw/lib/perl/5.8.8/B 0755 root bin
@@ -214,10 +214,7 @@ f none /opt/csw/lib/perl/5.8.8/auto/B/C/C.so 0555 root bin
 d none /opt/csw/lib/perl/5.8.8/auto/ByteLoader 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/ByteLoader/ByteLoader.bs 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/ByteLoader/ByteLoader.so 0555 root bin
-d none /opt/csw/lib/perl/5.8.8/auto/CGI 0755 root bin
-f none /opt/csw/lib/perl/5.8.8/auto/CGI/.packlist 0644 root bin
 d none /opt/csw/lib/perl/5.8.8/auto/Cwd 0755 root bin
-f none /opt/csw/lib/perl/5.8.8/auto/Cwd/.packlist 0644 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/Cwd/Cwd.bs 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/auto/Cwd/Cwd.so 0555 root bin
 d none /opt/csw/lib/perl/5.8.8/auto/DB_File 0755 root bin
@@ -559,7 +556,7 @@ f none /opt/csw/lib/perl/5.8.8/re.pm 0444 root bin
 d none /opt/csw/lib/perl/5.8.8/threads 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/threads.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/threads/shared.pm 0444 root bin
-d none /opt/csw/lib/perl/site_perl ? ? ?
+d none /opt/csw/lib/perl/site_perl 0755 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/man1 ? ? ?
@@ -591,7 +588,7 @@ f none /opt/csw/share/man/man1/pstruct.1 0644 root bin
 l none /opt/csw/share/man/man1/s2p.1=psed.1
 f none /opt/csw/share/man/man1/splain.1 0644 root bin
 f none /opt/csw/share/man/man1/xsubpp.1 0644 root bin
-d none /opt/csw/share/perl ? ? ?
+d none /opt/csw/share/perl 0755 root bin
 d none /opt/csw/share/perl/5.8.8 0755 root bin
 f none /opt/csw/share/perl/5.8.8/AnyDBM_File.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/Attribute 0755 root bin
