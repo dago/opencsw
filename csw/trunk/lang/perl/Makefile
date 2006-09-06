@@ -19,6 +19,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWperl,depend prototype)
 DISTFILES += $(call admfiles,CSWperldoc,depend prototype)
 
+# Core module updateS
 MASTER_SITES  += $(CPAN_FIRST_MIRROR)/K/KW/KWILLIAMS/
 CORE_UPDATES  += PathTools-3.19
 CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
@@ -27,8 +28,13 @@ MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
 CORE_UPDATES  += CGI.pm-3.23
 CORE_OBSOLETE += CGI*
 
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
+CORE_UPDATES  += Test-Simple-0.64
+CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
+
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
+# Dependencies
 LIBDEPS += lib/bdb43
 LIBDEPS += lib/gdbm
 
