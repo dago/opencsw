@@ -2,7 +2,6 @@ GARNAME = cups
 GARVERSION = 1.2.3
 CATEGORIES = net
 
-#DESCRIPTION = The Common UNIX Printing System
 define BLURB
   CUPS provides a portable printing layer for UNIX(R)-based operating
   systems.  It is developed and maintained by Easy Software Products to
@@ -54,8 +53,6 @@ export DSOFLAGS
 # everybody else calls DESTDIR.
 DSTROOT = $(DESTDIR)
 export DSTROOT
-
-#WORKSRC ?= $(WORKDIR)/cups-$(GARVERSION)
 
 # Don't run tests (at least for now); there are some LD_LIBRARY_PATH issues
 TEST_TARGET = 
