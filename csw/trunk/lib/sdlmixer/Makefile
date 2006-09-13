@@ -12,6 +12,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlmixer,)
 
 CONFIGURE_ARGS = --prefix=$(prefix) LDFLAGS=-lsunmath
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

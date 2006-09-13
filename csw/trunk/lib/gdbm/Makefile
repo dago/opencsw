@@ -17,7 +17,7 @@ DISTFILES += $(call admfiles,CSWgdbm,)
 PATCHFILES = perms.diff
 
 # gdbm package has no test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

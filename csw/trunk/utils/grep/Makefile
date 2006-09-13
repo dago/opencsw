@@ -25,7 +25,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 # Spencer bre test #16 fails
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

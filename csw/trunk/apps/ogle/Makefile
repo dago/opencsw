@@ -15,7 +15,7 @@ DISTFILES += $(call admfiles,CSWogle,)
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-mmx
 
-ENABLE_TEST=0
+TEST_SCRIPTS =
 
 include ../category.mk
 

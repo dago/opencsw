@@ -25,7 +25,7 @@ WORKSRC = $(WORKDIR)/$(GARNAME)
 CONFIGURE_SCRIPTS =
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 # Exports for the makefile
 APXS = $(prefix)/apache2/sbin/apxs

@@ -40,7 +40,7 @@ CONFIGURE_ARGS += --disable-ruby
 CONFIGURE_ARGS += --disable-java
 
 # No test target
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

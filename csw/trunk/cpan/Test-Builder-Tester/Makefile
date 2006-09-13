@@ -15,6 +15,6 @@ DISTFILES += $(call admfiles,CSWpmtstbldrtester,prototype)
 
 # Seems that tests might assume a newer version of Test-Simple than is
 # provided with Perl 5.8.8.
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

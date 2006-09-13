@@ -22,6 +22,6 @@ LIBDEPS += lib/openssl
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
 
 # Not gonna do it
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

@@ -15,7 +15,7 @@ DISTFILES += CSWpmclassdbimysql.gspec CSWpmclassdbimysql.depend
 DEPENDS += cpan/DBD-mysql cpan/Class-DBI
 
 # Tests require MySQL to be running
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

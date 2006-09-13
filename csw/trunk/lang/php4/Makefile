@@ -20,7 +20,7 @@ endef
 DEPENDS += server/apache2 server/mysql4
 
 # Some tests fail (3 of 300)
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 # Configuration
 CONFIGURE_ARGS  = $(DIRPATHS)

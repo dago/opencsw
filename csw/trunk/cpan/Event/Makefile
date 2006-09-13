@@ -13,8 +13,4 @@ endef
 
 DISTFILES += CSWpmevent.gspec
 
-# Package appears to behave correctly, but some tests dump core!
-# Bugs forwarded to author.
-#ENABLE_TEST = 0
-
 include ../category.mk

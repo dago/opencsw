@@ -12,6 +12,6 @@ DISTFILES += $(call admfiles,CSWtsclient,)
 PATCHFILES = support.c.diff
 CONFIGURE_ARGS = --prefix=$(prefix) LD_OPTIONS='-lsocket -lnsl'
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

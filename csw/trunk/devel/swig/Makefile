@@ -41,7 +41,7 @@ CONFIGURE_ARGS += --with-javaincl=/usr/j2se/include
 
 # Not sure if this was meant to run by non-developers
 TEST_TARGET = check
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

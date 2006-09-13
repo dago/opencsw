@@ -14,9 +14,6 @@ DISTFILES += CSWpmgimp.gspec CSWpmgimp.depend
 DEPENDS += utils/gimp
 DEPENDS += cpan/PDL cpan/Gtk2
 
-# Test suite currently broken
-#ENABLE_TEST = 0
-
 include ../category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/Gimp2

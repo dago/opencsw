@@ -43,7 +43,7 @@ CONFIGURE_ARGS += MP_DEBUG=1
 #CONFIGURE_ARGS += MP_USE_GTOP=1
 
 # MP2 must be installed for test to work
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
 

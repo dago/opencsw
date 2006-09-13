@@ -36,7 +36,7 @@ CONFIGURE_ARGS += --with-tcl=$(libdir)
 LIBTOOL_LADIR   = $(DESTDIR)$(prefix)/bdb44/lib
 
 # bdb tests are time consuming
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

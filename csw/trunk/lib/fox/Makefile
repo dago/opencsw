@@ -16,7 +16,7 @@ LD=CC
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-release --with-shape=no --with-xshm=no --disable-threadsafe
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

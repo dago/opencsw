@@ -33,7 +33,7 @@ BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
 # No test target
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

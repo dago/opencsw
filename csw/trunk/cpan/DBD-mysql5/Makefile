@@ -30,7 +30,7 @@ CONFIGURE_ARGS += --libs="-R$(mylib) $(shell $(mycfg) --libs)"
 CONFIGURE_ARGS += --ssl
 
 # Tests require MySQL to be running
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

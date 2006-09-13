@@ -13,7 +13,7 @@ DISTFILES += $(call admfiles,CSWopenvpn, prototype )
 
 CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

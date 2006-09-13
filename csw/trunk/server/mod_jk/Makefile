@@ -42,7 +42,7 @@ CONFIGURE_ARGS += --enable-prefork
 CONFIGURE_ARGS += --disable-static
 
 # No test suite available
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

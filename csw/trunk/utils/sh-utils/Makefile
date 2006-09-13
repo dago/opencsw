@@ -19,7 +19,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 TEST_TARGET = check
 
 # Some tests require a controlling terminal
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

@@ -14,6 +14,6 @@ MODDIST   = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES = $(call admfiles,CSWpmiopager,depend prototype)
 
 # Tests are mostly visual verification
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

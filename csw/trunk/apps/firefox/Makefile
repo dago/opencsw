@@ -20,7 +20,7 @@ export PERL CFLAGS CXXFLAGS LDFLAGS
 
 CONFIGURE_ARGS = --prefix=/opt/csw/libexec/firefox
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

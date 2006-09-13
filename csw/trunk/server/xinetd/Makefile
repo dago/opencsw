@@ -21,6 +21,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libwrap=$(libdir)
 
 # No test/check target
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

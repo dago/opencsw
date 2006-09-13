@@ -15,6 +15,6 @@ DISTFILES = $(call admfiles,CSWpmarchivesfx,depend)
 DEPENDS += cpan/Archive-Zip cpan/IO-stringy
 
 # Archive-Zip bug
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

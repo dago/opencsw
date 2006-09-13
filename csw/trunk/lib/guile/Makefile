@@ -14,7 +14,7 @@ DISTFILES += $(call admfiles,CSWguilelib12,$(ADMSTANDARD))
 
 CONFIGURE_ARGS = $(DIRPATHS) 
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 BUILD_64BIT = yes
 
 include ../category.mk

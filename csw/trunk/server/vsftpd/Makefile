@@ -57,7 +57,7 @@ CONFIGURE_SCRIPTS = fake
 
 GARCOMPILER = SUN
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

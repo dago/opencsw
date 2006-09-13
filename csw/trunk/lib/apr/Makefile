@@ -21,7 +21,7 @@ CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-other-child
 
 # Tests verified: 1.2.2
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

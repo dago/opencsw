@@ -74,7 +74,7 @@ CONFIGURE_ARGS += --with-zlib
 TEST_TARGET = check
 
 # Tests take *forever*
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 EXTRA_LIB = $(prefix)/bdb43/lib $(SVNLIB)
 EXTRA_INC = $(prefix)/bdb43/include

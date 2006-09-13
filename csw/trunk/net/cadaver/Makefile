@@ -19,7 +19,7 @@ PATCHFILES = destdir.patch
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-nls
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

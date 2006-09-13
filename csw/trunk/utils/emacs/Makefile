@@ -24,7 +24,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-kerberos5
 
 # Test requires controlling terminal
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

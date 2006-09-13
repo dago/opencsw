@@ -13,6 +13,6 @@ DISTFILES += CSWpmapachedbi.gspec CSWpmapachedbi.depend
 DEPENDS += cpan/DBI
 
 # Tests require MySQL to be running
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

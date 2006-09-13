@@ -21,7 +21,7 @@ CONFIGURE_ARGS += --with-shared
 CONFIGURE_ARGS += --disable-overwrite
 CONFIGURE_ARGS += --without-ada
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

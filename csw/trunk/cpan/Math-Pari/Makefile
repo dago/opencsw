@@ -32,10 +32,6 @@ CONFIGURE_ARGS = paridir=../pari-$(PARIGP_VERSION)
 # Avoid oddness - check for updates manually
 MANUAL_UPDATE = 1
 
-# Manually loading Math::Pari works fine, but for some
-# reason the test suite can't load the shared object.
-#ENABLE_TEST = 0
-
 include ../category.mk
 
 # Modify AUTHOR ID

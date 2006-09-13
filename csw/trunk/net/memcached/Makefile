@@ -22,7 +22,7 @@ DEPENDS += lib/libevent
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

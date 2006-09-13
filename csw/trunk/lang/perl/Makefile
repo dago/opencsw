@@ -89,7 +89,7 @@ EXTRA_LIB += $(prefix)/bdb43/lib
 EXTRA_INC += $(prefix)/bdb43/include
 
 # Tests take a long time
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 ifneq ($(CORE_UPDATES),)

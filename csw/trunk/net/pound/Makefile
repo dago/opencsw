@@ -29,6 +29,6 @@ CONFIGURE_ARGS += --enable-msdav
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 
 # No test suite available
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

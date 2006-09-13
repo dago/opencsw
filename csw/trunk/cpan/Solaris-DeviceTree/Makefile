@@ -15,6 +15,6 @@ endef
 DISTFILES += CSWpmsoldevtree.gspec
 
 # devtree script tests don't operate correctly
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

@@ -17,6 +17,6 @@ DISTFILES += CSWmono.gspec CSWmono.depend CSWmono.prototype
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

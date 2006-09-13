@@ -15,6 +15,6 @@ DISTFILES = $(call admfiles,CSWpmcryptrijndael,depend prototype)
 # not on Solaris/SPARC 64-bit.  This does not appear to be a show
 # stopper, as the tests are able to recover the plaintext, but are
 # not seeing the expected encrypted text.
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

@@ -37,7 +37,7 @@ LIBTOOL_LADIR   = $(DESTDIR)$(prefix)/bdb43/lib
 STRIP_DIRS     += $(DESTDIR)$(prefix)/bdb43/bin
 
 # bdb tests are time consuming
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

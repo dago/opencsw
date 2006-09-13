@@ -24,6 +24,6 @@ DEPENDS = devel/bison
 CONFIGURE_ARGS = --prefix=$(prefix)/$(GARNAME)-$(GARVERSION)
 
 TEST_TARGET = check
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

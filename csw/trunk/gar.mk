@@ -251,13 +251,7 @@ build: configure pre-build $(BUILD_TARGETS) post-build
 build-p:
 	@$(foreach COOKIEFILE,$(BUILD_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# build and test, unless ENABLE_TEST = 0
-ifneq ($(ENABLE_TEST),0)
 TEST_TARGETS = $(addprefix test-,$(TEST_SCRIPTS))
-else
-TEST_TARGETS =
-endif
-
 test: build pre-test $(TEST_TARGETS) post-test
 	$(DONADA)
 

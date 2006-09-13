@@ -43,7 +43,7 @@ CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 #GNU_CC_OPT = -g
 #GNU_CXX_OPT = -g
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

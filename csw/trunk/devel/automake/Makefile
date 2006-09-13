@@ -23,6 +23,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 # Some tests fail
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

@@ -12,7 +12,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlttf,)
 
 PATCHFILES = SDL_ttf.c.diff
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk

@@ -38,6 +38,6 @@ INSTALL_ARGS += INCLUDEDIR=$(includedir)
 INSTALL_ARGS += LOCALEDIR=$(sharedstatedir)/locale
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

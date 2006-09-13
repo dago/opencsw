@@ -37,7 +37,7 @@ WORKSRC = $(WORKDIR)/up-$(GARNAME)-$(GARVERSION)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

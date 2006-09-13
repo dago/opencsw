@@ -41,7 +41,7 @@ LIBPNG  = -I/usr/sfw/include -L/usr/sfw/lib -lpng12 -lz -lm
 export LIBTIFF LIBJPEG LIBPNG
 
 # Tests don't quite work properly
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 TEST_TARGET = check
 
 include ../category.mk

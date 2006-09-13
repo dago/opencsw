@@ -19,7 +19,7 @@ DISTFILES  = tar-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWgtar,depend prototype)
 
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

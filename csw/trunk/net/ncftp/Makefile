@@ -24,6 +24,6 @@ SYSCONFDIR = $(sysconfdir)
 INSTALL_OVERRIDE_DIRS = prefix exec_prefix BINDIR SYSCONFDIR mandir
 
 # No test target in the makefile
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

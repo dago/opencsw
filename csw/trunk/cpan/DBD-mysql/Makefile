@@ -23,6 +23,6 @@ MANUAL_UPDATE = 1
 CONFIGURE_ARGS = --ssl
 
 # Tests require MySQL to be running
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

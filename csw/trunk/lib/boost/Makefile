@@ -30,7 +30,7 @@ BUILD_ARGS  = --prefix=$(DESTDIR)$(prefix)
 BUILD_ARGS += -sTOOLS=sunpro
 BUILD_ARGS += --with-python-root=$(prefix)
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

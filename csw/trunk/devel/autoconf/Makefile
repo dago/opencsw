@@ -20,6 +20,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 # Tests take a loooooonnng time.
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

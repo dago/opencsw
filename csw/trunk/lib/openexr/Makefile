@@ -13,6 +13,6 @@ DISTFILES += $(call admfiles,CSWopenexr,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

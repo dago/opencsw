@@ -22,6 +22,6 @@ CONFIGURE_ARGS += --with-ogg=$(prefix)
 CONFIGURE_ARGS += --with-vorbis=$(prefix)
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

@@ -27,7 +27,7 @@ CONFIGURE_ARGS += --enable-editor
 CONFIGURE_ARGS += --with-kde
 CONFIGURE_ARGS += --with-gnome
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

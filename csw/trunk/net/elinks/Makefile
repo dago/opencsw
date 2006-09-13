@@ -28,7 +28,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-88-colors 
 CONFIGURE_ARGS += --enable-256-colors 
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

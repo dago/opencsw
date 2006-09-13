@@ -19,7 +19,4 @@ WORKSRC   = $(WORKDIR)/$(MODDISTP)
 DEPENDS += cpan/Regexp-Shellish cpan/Text-Diff cpan/XML-AutoWriter
 DEPENDS += cpan/XML-Parser cpan/IPC-Run3 cpan/PodToHTML cpan/HTML-Tree
 
-# Check back soon...
-#ENABLE_TEST = 0
-
 include ../category.mk

@@ -19,7 +19,7 @@ DEPENDS += cpan/Gnome2-VFS
 DEPENDS += cpan/Gnome2-Canvas
 
 # Tests require Gnome session manager
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

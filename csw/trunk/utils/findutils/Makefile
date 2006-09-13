@@ -30,7 +30,7 @@ CONFIGURE_ARGS += --infodir=/opt/csw/share/info
 TEST_TARGET = check
 
 # Test requires DejaGNU to be installed
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

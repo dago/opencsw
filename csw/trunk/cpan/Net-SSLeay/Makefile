@@ -24,7 +24,7 @@ PATCHFILES += ossl-0.9.8a.diff
 PERL_CONFIGURE_ARGS = $(prefix) INSTALLDIRS=vendor
 
 # Test disabled: Bug 3287
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

@@ -20,6 +20,6 @@ DEPENDS += cpan/MIME-Types
 
 # Test seems to work, but wierd test harness makes it difficult
 # to tell why the test fails.  Disable for now.
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

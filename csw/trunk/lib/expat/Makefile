@@ -22,7 +22,7 @@ DISTFILES += $(EXTLIBS)
 # The expat 'check' target tries to compile tests that use GCC
 # constructs -- won't compile under Forte without hackery.
 TEST_TARGET = check
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -33,7 +33,7 @@ INSTALL_OVERRIDE_DIRS  = prefix exec_prefix bindir sbindir mandir
 INSTALL_OVERRIDE_DIRS += nmapdatadir deskdir
 
 # No test suite for nmap
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

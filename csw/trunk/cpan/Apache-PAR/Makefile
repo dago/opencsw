@@ -23,7 +23,7 @@ BUILDDEPS += cpan/Apache-Test
 
 # Tests don't quite work right with MP2
 # This is acknowledged by the module maintainer -- should be fixed soon.
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

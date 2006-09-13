@@ -38,7 +38,7 @@ CONFIGURE_ARGS += --enable-pythoninterp
 CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.3/config/
 
 # Test requires controlling terminal
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

@@ -18,6 +18,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 INSTALL_ARGS = -j1
 
 # No test suite for icons
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

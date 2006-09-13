@@ -60,7 +60,7 @@ EXTRA_INC += $(prefix)/bdb$(BDB_VERSION)/include
 #EXTRA_INC += $(prefix)/mysql$(MYSQL_VERSION)/include/mysql
 
 # Tests verified: 1.2.2
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

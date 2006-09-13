@@ -36,9 +36,6 @@ CONFIGURE_ARGS += --with-mm-opts="INSTALLDIRS=vendor"
 
 PERL_CONFIGURE_ARGS =
 
-# Must be installed to test
-#ENABLE_TEST = 0
-
 LIBTOOL_LADIR = $(DESTDIR)$(libdir)
 STRIP_DIRS   += $(DESTDIR)$(prefix)/apache2/libexec
 

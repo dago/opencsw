@@ -13,6 +13,6 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

@@ -20,7 +20,7 @@ CONFIGURE_ARGS += --enable-debug=yes
 TEST_TARGET = check
 
 # Bug #136867 (child-watch)
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

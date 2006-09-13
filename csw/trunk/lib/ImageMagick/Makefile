@@ -20,7 +20,7 @@ CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --enable-shared --disable-static
 
 # Test has to be run *after* install
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

@@ -17,8 +17,4 @@ DEPENDS += cpan/XML-RegExp
 #DEPENDS += cpan/libwww-perl
 DEPENDS += cpan/libxml-perl
 
-# I don't know enough about Unicode to debug this test, but I suspect
-# it's just a matter of the test not being properly maintained.
-#ENABLE_TEST = 0
-
 include ../category.mk

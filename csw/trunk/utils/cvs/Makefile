@@ -26,6 +26,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 # Test suite won't run as root!
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

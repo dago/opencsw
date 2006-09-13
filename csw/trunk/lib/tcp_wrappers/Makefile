@@ -20,7 +20,7 @@ BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk
 

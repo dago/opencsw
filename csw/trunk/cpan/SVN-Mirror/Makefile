@@ -20,6 +20,6 @@ DEPENDS += cpan/Class-Accessor cpan/File-chdir
 PATCHFILES += novcp.diff
 
 # Test suite takes >20m, 0.67/SPARC
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

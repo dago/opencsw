@@ -13,6 +13,6 @@ DISTFILES += $(call admfiles,CSWlibglade,)
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

@@ -73,7 +73,7 @@ CONFIGURE_ARGS += --without-snmp
 # in the correct path
 INSTALL_ARGS = INSTALLDIRS=vendor
 
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 
 include ../category.mk

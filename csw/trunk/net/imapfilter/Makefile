@@ -24,6 +24,6 @@ PATCHFILES += make.diff
 CONFIGURE_ARGS = -d $(prefix) -m $(mandir)
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 include ../category.mk

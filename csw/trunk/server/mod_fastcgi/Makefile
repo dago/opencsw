@@ -21,7 +21,7 @@ PATCHFILES += apr_compat.diff
 CONFIGURE_SCRIPTS =
 
 # No test suite
-ENABLE_TEST = 0
+TEST_SCRIPTS =
 
 STRIP_DIRS = $(DESTDIR)$(prefix)/apache2/libexec
 
