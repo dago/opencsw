@@ -1,0 +1,53 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.053
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.053
+Problem:    Shortening a directory name may fail when there are multi-byte
+	    characters.
+Solution:   Copy the correct bytes. (Titov Anatoly)
+Files:	    src/misc1.c
+
+
+*** ../vim-7.0.052/src/misc1.c	Sun Apr 30 20:49:14 2006
+--- src/misc1.c	Tue Aug  8 11:23:45 2006
+***************
+*** 4492,4498 ****
+  		int l = mb_ptr2len(s);
+  
+  		while (--l > 0)
+! 		    *d++ = *s++;
+  	    }
+  # endif
+  	}
+--- 4492,4498 ----
+  		int l = mb_ptr2len(s);
+  
+  		while (--l > 0)
+! 		    *d++ = *++s;
+  	    }
+  # endif
+  	}
+*** ../vim-7.0.052/src/version.c	Tue Aug 15 21:42:18 2006
+--- src/version.c	Tue Aug 15 22:23:44 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     53,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+150. You find yourself counting emoticons to get to sleep.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

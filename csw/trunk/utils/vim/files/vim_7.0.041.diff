@@ -1,0 +1,81 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.041
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.041
+Problem:    cursor([1, 1]) doesn't work. (Peter Hodge)
+Solution:   Allow leaving out the third item of the list and use zero for the
+	    virtual column offset.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.040/src/eval.c	Sun Jul 23 21:52:16 2006
+--- src/eval.c	Mon Jul 10 23:03:13 2006
+***************
+*** 16465,16473 ****
+      long	i = 0;
+      long	n;
+  
+!     /* List must be: [fnum, lnum, col, coladd] */
+!     if (arg->v_type != VAR_LIST || l == NULL
+! 				      || l->lv_len != (fnump == NULL ? 3 : 4))
+  	return FAIL;
+  
+      if (fnump != NULL)
+--- 16465,16476 ----
+      long	i = 0;
+      long	n;
+  
+!     /* List must be: [fnum, lnum, col, coladd], where "fnum" is only there
+!      * when "fnump" isn't NULL and "coladd" is optional. */
+!     if (arg->v_type != VAR_LIST
+! 	    || l == NULL
+! 	    || l->lv_len < (fnump == NULL ? 2 : 3)
+! 	    || l->lv_len > (fnump == NULL ? 3 : 4))
+  	return FAIL;
+  
+      if (fnump != NULL)
+***************
+*** 16493,16500 ****
+  #ifdef FEAT_VIRTUALEDIT
+      n = list_find_nr(l, i, NULL);
+      if (n < 0)
+! 	return FAIL;
+!     posp->coladd = n;
+  #endif
+  
+      return OK;
+--- 16496,16504 ----
+  #ifdef FEAT_VIRTUALEDIT
+      n = list_find_nr(l, i, NULL);
+      if (n < 0)
+! 	posp->coladd = 0;
+!     else
+! 	posp->coladd = n;
+  #endif
+  
+      return OK;
+*** ../vim-7.0.040/src/version.c	Sun Jul 23 21:52:16 2006
+--- src/version.c	Sun Jul 23 21:59:43 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     41,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+43. You tell the kids they can't use the computer because "Daddy's got work to
+    do" and you don't even have a job.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

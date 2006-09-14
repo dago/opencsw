@@ -1,0 +1,90 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.028 (extra)
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.028 (extra)
+Problem:    OS/2: Vim doesn't compile with gcc 3.2.1.
+Solution:   Add argument to after_pathsep(), don't define vim_handle_signal(),
+	    define HAVE_STDARG_H. (David Sanders)
+Files:	    src/os_unix.c, src/vim.h, src/os_os2_cfg.h
+
+
+*** ../vim-7.0.027/src/os_unix.c	Thu Jun 22 18:06:48 2006
+--- src/os_unix.c	Sat Jun 17 21:00:14 2006
+***************
+*** 4971,4977 ****
+  		    if (((*file)[*num_file] = alloc(len + 2)) != NULL)
+  		    {
+  			STRCPY((*file)[*num_file], p);
+! 			if (!after_pathsep((*file)[*num_file] + len))
+  			{
+  			    (*file)[*num_file][len] = psepc;
+  			    (*file)[*num_file][len + 1] = NUL;
+--- 4971,4978 ----
+  		    if (((*file)[*num_file] = alloc(len + 2)) != NULL)
+  		    {
+  			STRCPY((*file)[*num_file], p);
+! 			if (!after_pathsep((*file)[*num_file],
+! 						    (*file)[*num_file] + len))
+  			{
+  			    (*file)[*num_file][len] = psepc;
+  			    (*file)[*num_file][len + 1] = NUL;
+*** ../vim-7.0.027/src/vim.h	Sun Apr 30 20:27:22 2006
+--- src/vim.h	Sat Jun 17 20:59:31 2006
+***************
+*** 1983,1989 ****
+  /* values for vim_handle_signal() that are not a signal */
+  #define SIGNAL_BLOCK	-1
+  #define SIGNAL_UNBLOCK  -2
+! #if !defined(UNIX) && !defined(VMS)
+  # define vim_handle_signal(x) 0
+  #endif
+  
+--- 1983,1989 ----
+  /* values for vim_handle_signal() that are not a signal */
+  #define SIGNAL_BLOCK	-1
+  #define SIGNAL_UNBLOCK  -2
+! #if !defined(UNIX) && !defined(VMS) && !defined(OS2)
+  # define vim_handle_signal(x) 0
+  #endif
+  
+*** ../vim-7.0.027/src/os_os2_cfg.h	Sun Jun 13 18:47:02 2004
+--- src/os_os2_cfg.h	Sat Jun 17 20:58:56 2006
+***************
+*** 183,188 ****
+--- 183,191 ----
+  /* Define if you have the ANSI C header files. */
+  /* #undef STDC_HEADERS */
+  
++ /* added by David Sanders */
++ #define HAVE_STDARG_H 1
++ 
+  /* instead, we check a few STDC things ourselves */
+  #define HAVE_STDLIB_H	1
+  #undef HAVE_STRING_H	/* On EMX it is better to use strings.h */
+*** ../vim-7.0.027/src/version.c	Thu Jun 22 19:34:23 2006
+--- src/version.c	Thu Jun 22 19:41:06 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     28,
+  /**/
+
+-- 
+BRIDGEKEEPER: What is the air-speed velocity of an unladen swallow?
+ARTHUR:       What do you mean?  An African or European swallow?
+BRIDGEKEEPER: Er ...  I don't know that ... Aaaaarrrrrrggghhh!
+   BRIDGEKEEPER is cast into the gorge.
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

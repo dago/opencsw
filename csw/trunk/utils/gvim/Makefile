@@ -1,5 +1,5 @@
 GARNAME = vim
-GARVERSION = 7.0
+DISTVERSION = 7.0
 CATEGORIES = utils
 
 DESCRIPTION = Vi IMproved with GTK+ support
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgvim,prototype depend)
 
 WORKSRC = $(WORKDIR)/$(GARNAME)70

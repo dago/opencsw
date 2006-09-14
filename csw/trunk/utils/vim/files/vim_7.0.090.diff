@@ -1,0 +1,81 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.090
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.090
+Problem:    Cancelling the conform() dialog on the console with Esc requires
+	    typing it twice. (Benji Fisher)
+Solution:   When the start of an escape sequence is found use 'timeoutlen' or
+	    'ttimeoutlen'.
+Files:	    src/misc1.c
+
+
+*** ../vim-7.0.089/src/misc1.c	Sun Sep  3 16:39:51 2006
+--- src/misc1.c	Tue Sep  5 20:31:43 2006
+***************
+*** 3016,3021 ****
+--- 3016,3022 ----
+      int		len = 0;
+      int		n;
+      int		save_mapped_ctrl_c = mapped_ctrl_c;
++     int		waited = 0;
+  
+      mapped_ctrl_c = FALSE;	/* mappings are not used here */
+      for (;;)
+***************
+*** 3034,3044 ****
+  	    /* Replace zero and CSI by a special key code. */
+  	    n = fix_input_buffer(buf + len, n, FALSE);
+  	    len += n;
+  	}
+  
+! 	/* incomplete termcode: get more characters */
+! 	if ((n = check_termcode(1, buf, len)) < 0)
+  	    continue;
+  	/* found a termcode: adjust length */
+  	if (n > 0)
+  	    len = n;
+--- 3035,3050 ----
+  	    /* Replace zero and CSI by a special key code. */
+  	    n = fix_input_buffer(buf + len, n, FALSE);
+  	    len += n;
++ 	    waited = 0;
+  	}
++ 	else if (len > 0)
++ 	    ++waited;	    /* keep track of the waiting time */
+  
+! 	/* Incomplete termcode and not timed out yet: get more characters */
+! 	if ((n = check_termcode(1, buf, len)) < 0
+! 	       && (!p_ttimeout || waited * 100L < (p_ttm < 0 ? p_tm : p_ttm)))
+  	    continue;
++ 
+  	/* found a termcode: adjust length */
+  	if (n > 0)
+  	    len = n;
+*** ../vim-7.0.089/src/version.c	Tue Sep  5 18:28:45 2006
+--- src/version.c	Tue Sep  5 20:49:01 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     90,
+  /**/
+
+-- 
+GUARD #1:  Where'd you get the coconut?
+ARTHUR:    We found them.
+GUARD #1:  Found them?  In Mercea?  The coconut's tropical!
+ARTHUR:    What do you mean?
+GUARD #1:  Well, this is a temperate zone.
+                                  The Quest for the Holy Grail (Monty Python)
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

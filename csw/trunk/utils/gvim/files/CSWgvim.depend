@@ -17,7 +17,6 @@ P CSWlibgnomeui libgnomeui - The main GNOME 2 UI library
 P CSWlibnet libnet - the libnet packet construction library
 P CSWlibpopt libpopt - Command line option parsing library
 P CSWlibxml2 libxml2 - XML Parser Library
-P CSWmodperl mod_perl - Persistent Perl interpreter for Apache 1.3.x
 P CSWncurses ncurses - ncurses library and utilities
 P CSWorbit2 orbit2 - ORBit 2.x CORBA tools and libs
 P CSWpango libpango - Library for laying out and rendering text

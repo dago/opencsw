@@ -1,0 +1,74 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.057 (extra)
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.057 (extra, after 7.0.45)
+Problem:    Win32: Compilation problem with Borland C 5.5.
+Solution:   Include vim.h as before. (Mark S. Williams)
+Files:	    src/if_ole.cpp
+
+
+*** ../vim-7.0.056/src/if_ole.cpp	Tue Aug  8 17:06:21 2006
+--- src/if_ole.cpp	Sun Aug 13 12:57:24 2006
+***************
+*** 13,26 ****
+   * See os_mswin.c for the client side.
+   */
+  
+  extern "C" {
+! #include "vim.h"
+  }
+  
+  #include <windows.h>
+  #include <oleauto.h>
+  
+  extern "C" {
+  extern HWND s_hwnd;
+  extern HWND vim_parent_hwnd;
+  }
+--- 13,35 ----
+   * See os_mswin.c for the client side.
+   */
+  
++ /*
++  * We have some trouble with order of includes here.  For Borland it needs to
++  * be different from MSVC...
++  */
++ #ifndef __BORLANDC__
+  extern "C" {
+! # include "vim.h"
+  }
++ #endif
+  
+  #include <windows.h>
+  #include <oleauto.h>
+  
+  extern "C" {
++ #ifdef __BORLANDC__
++ # include "vim.h"
++ #endif
+  extern HWND s_hwnd;
+  extern HWND vim_parent_hwnd;
+  }
+*** ../vim-7.0.056/src/version.c	Wed Aug 16 17:06:22 2006
+--- src/version.c	Wed Aug 16 17:35:57 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     57,
+  /**/
+
+-- 
+Send $25.00 for handy leaflet on how to make money by selling leaflets
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

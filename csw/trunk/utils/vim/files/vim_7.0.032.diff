@@ -1,0 +1,53 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.032 (extra)
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.032 (extra, after 7.0.027)
+Problem:    Missing semicolon.
+Solution:   Add the semicolon.
+Files:	    src/gui_w48.c
+
+
+*** ../vim-7.0.031/src/gui_w48.c	Thu Jun 22 19:34:23 2006
+--- src/gui_w48.c	Fri Jun 23 16:36:09 2006
+***************
+*** 1665,1671 ****
+      }
+      if (msg.message == WM_USER)
+      {
+! 	MyTranslateMessage(&msg)
+  	DispatchMessage(&msg);
+  	return;
+      }
+--- 1665,1671 ----
+      }
+      if (msg.message == WM_USER)
+      {
+! 	MyTranslateMessage(&msg);
+  	DispatchMessage(&msg);
+  	return;
+      }
+*** ../vim-7.0.031/src/version.c	Fri Jun 23 16:33:41 2006
+--- src/version.c	Fri Jun 23 16:37:24 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     32,
+  /**/
+
+-- 
+Snoring is prohibited unless all bedroom windows are closed and securely
+locked.
+		[real standing law in Massachusetts, United States of America]
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

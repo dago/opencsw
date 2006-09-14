@@ -1,0 +1,46 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.058
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.058
+Problem:    The gbk and and gb18030 encodings are not recognized.
+Solution:   Add aliases to cp936. (Edward L. Fox)
+Files:	    src/mbyte.c
+
+
+*** ../vim-7.0.057/src/mbyte.c	Sat May 13 17:10:00 2006
+--- src/mbyte.c	Sat Aug 12 22:59:55 2006
+***************
+*** 363,368 ****
+--- 363,370 ----
+      {"932",		IDX_CP932},
+      {"949",		IDX_CP949},
+      {"936",		IDX_CP936},
++     {"gbk",		IDX_CP936},
++     {"gb18030",		IDX_CP936},	/* only 99% the same */
+      {"950",		IDX_CP950},
+      {"eucjp",		IDX_EUC_JP},
+      {"unix-jis",	IDX_EUC_JP},
+*** ../vim-7.0.057/src/version.c	Wed Aug 16 17:36:21 2006
+--- src/version.c	Wed Aug 16 18:04:14 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     58,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+162. You go outside and look for a brightness knob to turn down the sun.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

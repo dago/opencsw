@@ -1,0 +1,50 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.073
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.073
+Problem:    Insert mode completion: Typing <CR> sometimes selects the original
+	    text instead of keeping what was typed.  (Justin Constantino)
+Solution:   Don't let <CR> select the original text if there is no popup menu.
+Files:	    src/edit.c
+
+
+*** ../vim-7.0.072/src/edit.c	Tue Aug 29 17:28:56 2006
+--- src/edit.c	Tue Aug 29 17:40:06 2006
+***************
+*** 3097,3102 ****
+--- 3097,3106 ----
+  
+      /* Show the popup menu with a different set of matches. */
+      ins_compl_show_pum();
++ 
++     /* Don't let Enter select the original text when there is no popup menu. */
++     if (compl_match_array == NULL)
++ 	compl_enter_selects = FALSE;
+  }
+  
+  /*
+*** ../vim-7.0.072/src/version.c	Tue Aug 29 18:16:37 2006
+--- src/version.c	Tue Aug 29 18:35:33 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     73,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+269. You wonder how you can make your dustbin produce Sesame Street's
+     Oscar's the Garbage Monster song when you empty it.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

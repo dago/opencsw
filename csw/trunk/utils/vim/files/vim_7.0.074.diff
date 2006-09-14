@@ -1,0 +1,270 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.074 (extra)
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.074 (extra)
+Problem:    Win32: tooltips were not converted from 'encoding' to Unicode.
+Solution:   Set the tooltip to use Unicode and do the conversion.  Also
+	    cleanup the code for the tab pages tooltips. (Yukihiro Nakadaira)
+Files:	    src/gui_w32.c, src/gui_w48.c
+
+
+*** ../vim-7.0.073/src/gui_w32.c	Sat May  6 23:43:11 2006
+--- src/gui_w32.c	Tue Aug 29 21:16:58 2006
+***************
+*** 889,1005 ****
+  # ifdef FEAT_MBYTE
+  	    case TTN_GETDISPINFOW:
+  # endif
+! 	    case TTN_NEEDTEXT:
+! # ifdef FEAT_GUI_TABLINE
+! 		if (gui_mch_showing_tabline()
+! 			&& ((LPNMHDR)lParam)->hwndFrom ==
+! 					       TabCtrl_GetToolTips(s_tabhwnd))
+  		{
+! 		    LPNMTTDISPINFO	lpdi;
+! 		    POINT		pt;
+! 		    static char		*tt_text = NULL;
+! 		    static int		tt_text_len = 0;
+! 
+! 		    /*
+! 		     * Mouse is over the GUI tabline. Display the tooltip
+! 		     * for the tab under the cursor
+! 		     */
+! 		    lpdi = (LPNMTTDISPINFO)lParam;
+! 		    lpdi->hinst = NULL;
+! 		    lpdi->szText[0] = '\0';
+! 
+! 		    /*
+! 		     * Get the cursor position within the tab control
+! 		     */
+! 		    GetCursorPos(&pt);
+! 		    if (ScreenToClient(s_tabhwnd, &pt) != 0)
+! 		    {
+! 			TCHITTESTINFO htinfo;
+! 			int idx;
+  
+  			/*
+! 			 * Get the tab under the cursor
+  			 */
+! 			htinfo.pt.x = pt.x;
+! 			htinfo.pt.y = pt.y;
+! 			idx = TabCtrl_HitTest(s_tabhwnd, &htinfo);
+! 			if (idx != -1)
+  			{
+! 			    tabpage_T *tp;
+  
+! 			    tp = find_tabpage(idx + 1);
+! 			    if (tp != NULL)
+  			    {
+! #  ifdef FEAT_MBYTE
+! 				WCHAR	*wstr = NULL;
+! #  endif
+! 				get_tabline_label(tp, TRUE);
+! #  ifdef FEAT_MBYTE
+! 				if (enc_codepage >= 0
+! 					     && (int)GetACP() != enc_codepage)
+! 				{
+! 				    wstr = enc_to_ucs2(NameBuff, NULL);
+! 				    if (wstr != NULL)
+! 				    {
+! 					int wlen;
+! 
+! 					wlen = ((int)wcslen(wstr) + 1)
+! 							      * sizeof(WCHAR);
+! 					if (tt_text_len < wlen)
+! 					{
+! 					    tt_text = vim_realloc(tt_text,
+! 									wlen);
+! 					    if (tt_text != NULL)
+! 						tt_text_len = wlen;
+! 					}
+! 					if (tt_text != NULL)
+! 					    wcscpy((WCHAR *)tt_text, wstr);
+! 					lpdi->lpszText = tt_text;
+! 					vim_free(wstr);
+! 				    }
+! 				}
+! 				if (wstr == NULL)
+! #  endif
+! 				{
+! 				    int len;
+  
+! 				    len = (int)STRLEN(NameBuff) + 1;
+! 				    if (tt_text_len < len)
+! 				    {
+! 					tt_text = vim_realloc(tt_text, len);
+! 					if (tt_text != NULL)
+! 					    tt_text_len = len;
+! 				    }
+! 				    if (tt_text != NULL)
+! 					STRCPY(tt_text, NameBuff);
+! 				    lpdi->lpszText = tt_text;
+  				}
+  			    }
+  			}
+  		    }
+- 		}
+- 		else
+  # endif
+- 		{
+  # ifdef FEAT_TOOLBAR
+! 		    LPTOOLTIPTEXT	lpttt;
+! 		    UINT		idButton;
+! 		    int			idx;
+! 		    vimmenu_T		*pMenu;
+! 
+! 		    lpttt = (LPTOOLTIPTEXT)lParam;
+! 		    idButton = (UINT) lpttt->hdr.idFrom;
+! 		    pMenu = gui_mswin_find_menu(root_menu, idButton);
+! 		    if (pMenu)
+  		    {
+! 			idx = MENU_INDEX_TIP;
+! 			if (pMenu->strings[idx])
+  			{
+! 			    lpttt->hinst = NULL;  /* string, not resource */
+! 			    lpttt->lpszText = pMenu->strings[idx];
+  			}
+! 		    }
+  # endif
+  		}
+  		break;
+  # ifdef FEAT_GUI_TABLINE
+--- 889,978 ----
+  # ifdef FEAT_MBYTE
+  	    case TTN_GETDISPINFOW:
+  # endif
+! 	    case TTN_GETDISPINFO:
+  		{
+! 		    LPNMHDR		hdr = (LPNMHDR)lParam;
+! 		    char_u		*str = NULL;
+! 		    static void		*tt_text = NULL;
+! 
+! 		    vim_free(tt_text);
+! 		    tt_text = NULL;
+  
++ # ifdef FEAT_GUI_TABLINE
++ 		    if (gui_mch_showing_tabline()
++ 			   && hdr->hwndFrom == TabCtrl_GetToolTips(s_tabhwnd))
++ 		    {
++ 			POINT		pt;
+  			/*
+! 			 * Mouse is over the GUI tabline. Display the
+! 			 * tooltip for the tab under the cursor
+! 			 *
+! 			 * Get the cursor position within the tab control
+  			 */
+! 			GetCursorPos(&pt);
+! 			if (ScreenToClient(s_tabhwnd, &pt) != 0)
+  			{
+! 			    TCHITTESTINFO htinfo;
+! 			    int idx;
+  
+! 			    /*
+! 			     * Get the tab under the cursor
+! 			     */
+! 			    htinfo.pt.x = pt.x;
+! 			    htinfo.pt.y = pt.y;
+! 			    idx = TabCtrl_HitTest(s_tabhwnd, &htinfo);
+! 			    if (idx != -1)
+  			    {
+! 				tabpage_T *tp;
+  
+! 				tp = find_tabpage(idx + 1);
+! 				if (tp != NULL)
+! 				{
+! 				    get_tabline_label(tp, TRUE);
+! 				    str = NameBuff;
+  				}
+  			    }
+  			}
+  		    }
+  # endif
+  # ifdef FEAT_TOOLBAR
+! #  ifdef FEAT_GUI_TABLINE
+! 		    else
+! #  endif
+! 		    {
+! 			UINT		idButton;
+! 			vimmenu_T	*pMenu;
+! 
+! 			idButton = (UINT) hdr->idFrom;
+! 			pMenu = gui_mswin_find_menu(root_menu, idButton);
+! 			if (pMenu)
+! 			    str = pMenu->strings[MENU_INDEX_TIP];
+! 		    }
+! # endif
+! 		    if (str != NULL)
+  		    {
+! # ifdef FEAT_MBYTE
+! 			if (hdr->code == TTN_GETDISPINFOW)
+  			{
+! 			    LPNMTTDISPINFOW	lpdi = (LPNMTTDISPINFOW)lParam;
+! 
+! 			    tt_text = enc_to_ucs2(str, NULL);
+! 			    lpdi->lpszText = tt_text;
+! 			    /* can't show tooltip if failed */
+  			}
+! 			else
+  # endif
++ 			{
++ 			    LPNMTTDISPINFO	lpdi = (LPNMTTDISPINFO)lParam;
++ 
++ 			    if (STRLEN(str) < sizeof(lpdi->szText)
++ 				    || ((tt_text = vim_strsave(str)) == NULL))
++ 				vim_strncpy(lpdi->szText, str,
++ 						sizeof(lpdi->szText) - 1);
++ 			    else
++ 				lpdi->lpszText = tt_text;
++ 			}
++ 		    }
+  		}
+  		break;
+  # ifdef FEAT_GUI_TABLINE
+*** ../vim-7.0.073/src/gui_w48.c	Fri Jun 23 16:44:32 2006
+--- src/gui_w48.c	Tue Aug 29 21:14:31 2006
+***************
+*** 2194,2200 ****
+--- 2194,2211 ----
+  	return;
+  
+      if (showit)
++     {
++ # ifdef FEAT_MBYTE
++ #  ifndef TB_SETUNICODEFORMAT
++     /* For older compilers.  We assume this never changes. */
++ #   define TB_SETUNICODEFORMAT 0x2005
++ #  endif
++ 	/* Enable/disable unicode support */
++ 	int uu = (enc_codepage >= 0 && (int)GetACP() != enc_codepage);
++ 	SendMessage(s_toolbarhwnd, TB_SETUNICODEFORMAT, (WPARAM)uu, (LPARAM)0);
++ # endif
+  	ShowWindow(s_toolbarhwnd, SW_SHOW);
++     }
+      else
+  	ShowWindow(s_toolbarhwnd, SW_HIDE);
+  }
+*** ../vim-7.0.073/src/version.c	Tue Aug 29 18:36:55 2006
+--- src/version.c	Tue Aug 29 21:28:00 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     74,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+271. You collect hilarious signatures from all 250 mailing lists you
+     are subscribed to.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

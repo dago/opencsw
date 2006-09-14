@@ -1,5 +1,5 @@
 GARNAME = vim
-GARVERSION = 7.0
+DISTVERSION = 7.0
 CATEGORIES = utils
 
 DESCRIPTION = Vi IMproved
@@ -14,7 +14,7 @@ endef
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
 WORKSRC = $(WORKDIR)/$(GARNAME)70
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWvim,depend prototype)
 DISTFILES += $(call admfiles,CSWvimrt,prototype)
 

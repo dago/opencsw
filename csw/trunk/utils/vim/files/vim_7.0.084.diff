@@ -1,0 +1,221 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.084
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.084
+Problem:    The garbage collector may do its work while some Lists or
+	    Dictionaries are used internally, e.g., by ":echo" that runs into
+	    the more-prompt or ":echo [garbagecollect()]".
+Solution:   Only do garbage collection when waiting for a character at the
+	    toplevel.  Let garbagecollect() set a flag that is handled at the
+	    toplevel before waiting for a character.
+Files:	    src/eval.c, src/getchar.c, src/globals.h, src/main.c
+
+
+*** ../vim-7.0.083/src/eval.c	Sun Sep  3 15:38:02 2006
+--- src/eval.c	Tue Sep  5 11:49:38 2006
+***************
+*** 6074,6079 ****
+--- 6074,6083 ----
+      tabpage_T	*tp;
+  #endif
+  
++     /* Only do this once. */
++     want_garbage_collect = FALSE;
++     may_garbage_collect = FALSE;
++ 
+      /*
+       * 1. Go through all accessible variables and mark all lists and dicts
+       *    with copyID.
+***************
+*** 9636,9642 ****
+      typval_T	*argvars;
+      typval_T	*rettv;
+  {
+!     garbage_collect();
+  }
+  
+  /*
+--- 9640,9648 ----
+      typval_T	*argvars;
+      typval_T	*rettv;
+  {
+!     /* This is postponed until we are back at the toplevel, because we may be
+!      * using Lists and Dicts internally.  E.g.: ":echo [garbagecollect()]". */
+!     want_garbage_collect = TRUE;
+  }
+  
+  /*
+*** ../vim-7.0.083/src/getchar.c	Wed May  3 23:19:24 2006
+--- src/getchar.c	Tue Sep  5 12:55:54 2006
+***************
+*** 1451,1457 ****
+  {
+      updatescript(0);
+  #ifdef FEAT_EVAL
+!     garbage_collect();
+  #endif
+  }
+  
+--- 1451,1458 ----
+  {
+      updatescript(0);
+  #ifdef FEAT_EVAL
+!     if (may_garbage_collect)
+! 	garbage_collect();
+  #endif
+  }
+  
+***************
+*** 1502,1507 ****
+--- 1503,1515 ----
+      int		i;
+  #endif
+  
++ #ifdef FEAT_EVAL
++     /* Do garbage collection when garbagecollect() was called previously and
++      * we are now at the toplevel. */
++     if (may_garbage_collect && want_garbage_collect)
++ 	garbage_collect();
++ #endif
++ 
+      /*
+       * If a character was put back with vungetc, it was already processed.
+       * Return it directly.
+***************
+*** 1511,1523 ****
+  	c = old_char;
+  	old_char = -1;
+  	mod_mask = old_mod_mask;
+- 	return c;
+      }
+! 
+!     mod_mask = 0x0;
+!     last_recorded_len = 0;
+!     for (;;)			/* this is done twice if there are modifiers */
+      {
+  	if (mod_mask)		/* no mapping after modifier has been read */
+  	{
+  	    ++no_mapping;
+--- 1519,1531 ----
+  	c = old_char;
+  	old_char = -1;
+  	mod_mask = old_mod_mask;
+      }
+!     else
+      {
++       mod_mask = 0x0;
++       last_recorded_len = 0;
++       for (;;)			/* this is done twice if there are modifiers */
++       {
+  	if (mod_mask)		/* no mapping after modifier has been read */
+  	{
+  	    ++no_mapping;
+***************
+*** 1695,1702 ****
+  	}
+  #endif
+  
+! 	return c;
+      }
+  }
+  
+  /*
+--- 1703,1722 ----
+  	}
+  #endif
+  
+! 	break;
+!       }
+      }
++ 
++ #ifdef FEAT_EVAL
++     /*
++      * In the main loop "may_garbage_collect" can be set to do garbage
++      * collection in the first next vgetc().  It's disabled after that to
++      * avoid internally used Lists and Dicts to be freed.
++      */
++     may_garbage_collect = FALSE;
++ #endif
++ 
++     return c;
+  }
+  
+  /*
+*** ../vim-7.0.083/src/globals.h	Sat Sep  2 14:52:41 2006
+--- src/globals.h	Tue Sep  5 11:46:10 2006
+***************
+*** 300,308 ****
+  #endif
+  
+  #ifdef FEAT_EVAL
+! EXTERN scid_T	current_SID INIT(= 0);	    /* ID of script being sourced or
+! 					       was sourced to define the
+! 					       current function. */
+  #endif
+  
+  #if defined(FEAT_EVAL) || defined(FEAT_SYN_HL)
+--- 300,315 ----
+  #endif
+  
+  #ifdef FEAT_EVAL
+! /* Garbage collection can only take place when we are sure there are no Lists
+!  * or Dictionaries being used internally.  This is flagged with
+!  * "may_garbage_collect" when we are at the toplevel.
+!  * "want_garbage_collect" is set by the garbagecollect() function, which means
+!  * we do garbage collection before waiting for a char at the toplevel. */
+! EXTERN int	may_garbage_collect INIT(= FALSE);
+! EXTERN int	want_garbage_collect INIT(= FALSE);
+! 
+! /* ID of script being sourced or was sourced to define the current function. */
+! EXTERN scid_T	current_SID INIT(= 0);
+  #endif
+  
+  #if defined(FEAT_EVAL) || defined(FEAT_SYN_HL)
+*** ../vim-7.0.083/src/main.c	Tue Aug 29 17:28:56 2006
+--- src/main.c	Tue Sep  5 12:33:47 2006
+***************
+*** 1130,1135 ****
+--- 1130,1145 ----
+  	 */
+  	update_curswant();
+  
++ #ifdef FEAT_EVAL
++ 	/*
++ 	 * May perform garbage collection when waiting for a character, but
++ 	 * only at the very toplevel.  Otherwise we may be using a List or
++ 	 * Dict internally somewhere.
++ 	 * "may_garbage_collect" is reset in vgetc() which is invoked through
++ 	 * do_exmode() and normal_cmd().
++ 	 */
++ 	may_garbage_collect = (!cmdwin && !noexmode);
++ #endif
+  	/*
+  	 * If we're invoked as ex, do a round of ex commands.
+  	 * Otherwise, get and execute a normal mode command.
+*** ../vim-7.0.083/src/version.c	Sun Sep  3 16:39:51 2006
+--- src/version.c	Tue Sep  5 12:51:28 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     84,
+  /**/
+
+-- 
+LAUNCELOT: At last!   A call!  A cry of distress ...
+           (he draws his sword, and turns to CONCORDE)
+           Concorde!  Brave, Concorde ... you shall not have died in vain!
+CONCORDE:  I'm not quite dead, sir ...
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

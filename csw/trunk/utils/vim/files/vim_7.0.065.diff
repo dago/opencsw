@@ -1,0 +1,52 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.065 (extra)
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.065 (extra)
+Problem:    Mac: left-right movement of the scrollwheel causes up-down
+	    scrolling.
+Solution:   Ignore mouse wheel events that are not up-down. (Nicolas Weber)
+Files:	    src/gui_mac.c
+
+
+*** ../vim-7.0.064/src/gui_mac.c	Wed May  3 00:03:26 2006
+--- src/gui_mac.c	Tue Aug 22 13:41:12 2006
+***************
+*** 2480,2485 ****
+--- 2480,2491 ----
+      UInt32	mod;
+      SInt32	delta;
+      int_u	vim_mod;
++     EventMouseWheelAxis axis;
++ 
++     if (noErr == GetEventParameter(theEvent, kEventParamMouseWheelAxis,
++ 			  typeMouseWheelAxis, NULL, sizeof(axis), NULL, &axis)
++ 	    && axis != kEventMouseWheelAxisY)
++ 	goto bail; /* Vim only does up-down scrolling */
+  
+      if (noErr != GetEventParameter(theEvent, kEventParamMouseWheelDelta,
+  			      typeSInt32, NULL, sizeof(SInt32), NULL, &delta))
+*** ../vim-7.0.064/src/version.c	Tue Aug 22 19:58:22 2006
+--- src/version.c	Tue Aug 22 21:38:07 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     65,
+  /**/
+
+-- 
+Spam seems to be something useful to novices.  Later you realize that
+it's a bunch of indigestable junk that only clogs your system.
+Applies to both the food and the e-mail!
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

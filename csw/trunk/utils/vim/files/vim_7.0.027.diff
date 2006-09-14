@@ -1,0 +1,48 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.027 (extra)
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.027 (extra)
+Problem:    Win32: When compiled with SNIFF gvim may hang on exit.
+Solution:   Translate and dispatch the WM_USER message. (Mathias Michaelis)
+Files:	    src/gui_w48.c
+
+
+*** ../vim-7.0.026/src/gui_w48.c	Thu Apr 27 01:52:16 2006
+--- src/gui_w48.c	Sat Jun 17 13:23:26 2006
+***************
+*** 1664,1670 ****
+--- 1664,1674 ----
+  	/* request is handled in normal.c */
+      }
+      if (msg.message == WM_USER)
++     {
++ 	MyTranslateMessage(&msg)
++ 	DispatchMessage(&msg);
+  	return;
++     }
+  #endif
+  
+  #ifdef MSWIN_FIND_REPLACE
+*** ../vim-7.0.026/src/version.c	Thu Jun 22 18:06:48 2006
+--- src/version.c	Thu Jun 22 18:20:40 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     27,
+  /**/
+
+-- 
+SIGFUN -- signature too funny (core dumped)
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

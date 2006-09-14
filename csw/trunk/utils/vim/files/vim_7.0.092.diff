@@ -1,0 +1,104 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.092
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.092 (after 7.0.082 and 7.0.084)
+Problem:    The list of internal function arguments is obsolete now that
+	    garbage collection is only done at the toplevel.
+Solution:   Remove the list of all arguments to internal functions.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.091/src/eval.c	Wed Sep  6 22:14:42 2006
+--- src/eval.c	Sat Sep  9 12:00:28 2006
+***************
+*** 248,264 ****
+  };
+  
+  /*
+-  * Struct used to make a list of all arguments used in internal functions.
+-  */
+- typedef struct av_list_item_S av_list_item_T;
+- struct av_list_item_S {
+-     av_list_item_T  *avl_next;
+-     typval_T	    *avl_argvars;
+- };
+- 
+- av_list_item_T *argvars_list = NULL;
+- 
+- /*
+   * Info used by a ":for" loop.
+   */
+  typedef struct
+--- 248,253 ----
+***************
+*** 6069,6075 ****
+      int		i;
+      funccall_T	*fc;
+      int		did_free = FALSE;
+-     av_list_item_T *av;
+  #ifdef FEAT_WINDOWS
+      tabpage_T	*tp;
+  #endif
+--- 6058,6063 ----
+***************
+*** 6110,6120 ****
+  	set_ref_in_ht(&fc->l_avars.dv_hashtab, copyID);
+      }
+  
+-     /* arguments for internal functions */
+-     for (av = argvars_list; av != NULL; av = av->avl_next)
+- 	for (i = 0; av->avl_argvars[i].v_type != VAR_UNKNOWN; ++i)
+- 	    set_ref_in_item(&av->avl_argvars[i], copyID);
+- 
+      /*
+       * 2. Go through the list of dicts and free items without the copyID.
+       */
+--- 6098,6103 ----
+***************
+*** 7558,7578 ****
+  		    error = ERROR_TOOMANY;
+  		else
+  		{
+- 		    av_list_item_T  av_list_item;
+- 
+- 		    /* Add the arguments to the "argvars_list" to avoid the
+- 		     * garbage collector not seeing them.  This isn't needed
+- 		     * for user functions, because the arguments are available
+- 		     * in the a: hashtab. */
+- 		    av_list_item.avl_argvars = argvars;
+- 		    av_list_item.avl_next = argvars_list;
+- 		    argvars_list = &av_list_item;
+- 
+  		    argvars[argcount].v_type = VAR_UNKNOWN;
+  		    functions[i].f_func(argvars, rettv);
+  		    error = ERROR_NONE;
+- 
+- 		    argvars_list = av_list_item.avl_next;
+  		}
+  	    }
+  	}
+--- 7541,7549 ----
+*** ../vim-7.0.091/src/version.c	Wed Sep  6 22:14:42 2006
+--- src/version.c	Sat Sep  9 12:04:55 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     92,
+  /**/
+
+-- 
+"Hegel was right when he said that we learn from history that man can
+never learn anything from history."       (George Bernard Shaw)
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
