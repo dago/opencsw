@@ -17,19 +17,11 @@ define BLURB
 endef
 
 # Auxilliary files
-DISTFILES += php.ini.CSW httpd-php5.conf.CSW phpext
-DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh 
-
-# PHP Core
-DISTFILES += $(call admfiles,CSWphp5,prototype depend postinstall)
-DISTFILES += $(call admfiles,CSWphp5devel,prototype depend)
+DISTFILES += httpd-php5.conf.CSW
 
 # PHP Apache2 SAPI
 ADMFILES   = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modphp5,$(ADMFILES))
-
-# PHP Extensions
-include files/extensions.mk
 
 # Patches
 include files/patches.mk
@@ -59,13 +51,5 @@ post-install:
 	ginstall -m 0644 \
 		$(WORKDIR)/httpd-php5.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0755 \
-		$(WORKDIR)/phpext \
-		$(DESTDIR)$(prefix)/php5/bin
-	gsed -i -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini.CSW
-	ginstall -d $(DESTDIR)$(prefix)/apache2/etc
-	ginstall -m 0644 \
-		$(WORKDIR)/php.ini.CSW \
-		$(DESTDIR)$(prefix)/php5/lib
 	@$(MAKECOOKIE)
 

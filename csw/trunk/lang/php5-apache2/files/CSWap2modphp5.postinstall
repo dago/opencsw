@@ -29,7 +29,7 @@ END
 fi
 
 # Copy templates
-for file in $AP2_EXTRADIR/httpd-php5.conf $CSW_PREFIX/php5/lib/php.ini
+for file in $AP2_EXTRADIR/httpd-php5.conf
 do
     if [ ! -f $file ]; then
         echo "Creating $file"

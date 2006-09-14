@@ -30,7 +30,7 @@ EXTRA_INC += $(prefix)/bdb43/lib
 # SAPI Common Configuration
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --enable-force-cgi-redirect
-CONFIGURE_ARGS += --enable-discard-path
+#CONFIGURE_ARGS += --enable-discard-path
 #CONFIGURE_ARGS += --enable-debug
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin

@@ -17,16 +17,12 @@ define BLURB
 endef
 
 # Auxilliary files
-DISTFILES += php.ini.CSW httpd-php5.conf.CSW phpext
+DISTFILES += php.ini.CSW phpext
 DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh 
 
-# PHP Core
+# PHP CGI SAPI + Core
 DISTFILES += $(call admfiles,CSWphp5,prototype depend postinstall)
 DISTFILES += $(call admfiles,CSWphp5devel,prototype depend)
-
-# PHP Apache2 SAPI
-ADMFILES   = depend prototype postinstall preremove space
-DISTFILES += $(call admfiles,CSWap2modphp5,$(ADMFILES))
 
 # PHP Extensions
 include files/extensions.mk
@@ -36,13 +32,14 @@ include files/patches.mk
 
 # Dependencies
 include files/depend.mk
-DEPENDS += server/apache2
 
 # SAPI Common Configuration
 include files/config.mk
 
-# Apache2 SAPI Specific Configuration
-CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
+# SAPI Specific Configuration
+CONFIGURE_ARGS += --enable-cli
+CONFIGURE_ARGS += --enable-cgi
+CONFIGURE_ARGS += --enable-fastcgi
 
 # System Rules/Configuration
 include ../category.mk
@@ -54,16 +51,23 @@ include files/rules.mk
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
 
 # Copy over template config files and utility scripts
-post-install:
-	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0644 \
-		$(WORKDIR)/httpd-php5.conf.CSW \
-		$(DESTDIR)$(prefix)/apache2/etc/extra
+post-install: install-templates install-cli
+
+php5_root = $(DESTDIR)$(prefix)/php5
+php5_bin = $(php5_root)/bin
+php5_lib = $(php5_root)/lib
+
+install-cli:
+	@echo " ==> Installing the PHP5 CLI SAPI"
+	@mv $(php5_bin)/php $(php5_bin)/php-cgi
+	@( cd $(WORKSRC) ; $(INSTALL_ENV) make install-cli )
+	@$(MAKECOOKIE)
+
+install-templates:
 	ginstall -m 0755 \
 		$(WORKDIR)/phpext \
 		$(DESTDIR)$(prefix)/php5/bin
 	gsed -i -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini.CSW
-	ginstall -d $(DESTDIR)$(prefix)/apache2/etc
 	ginstall -m 0644 \
 		$(WORKDIR)/php.ini.CSW \
 		$(DESTDIR)$(prefix)/php5/lib

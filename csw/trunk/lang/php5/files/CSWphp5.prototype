@@ -6,6 +6,7 @@ f none /opt/csw/php5/bin/pear 0755 root bin
 f none /opt/csw/php5/bin/peardev 0755 root bin
 f none /opt/csw/php5/bin/pecl 0755 root bin
 f none /opt/csw/php5/bin/php 0755 root bin
+f none /opt/csw/php5/bin/php-cgi 0755 root bin
 f none /opt/csw/php5/bin/phpext 0755 root bin
 d none /opt/csw/php5/etc 0755 root bin
 f none /opt/csw/php5/etc/pear.conf 0644 root bin
