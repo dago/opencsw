@@ -1,6 +1,6 @@
 GARNAME = Python
 GARVERSION = 2.5
-GARRELEASE = c1
+GARRELEASE = c2
 DISTVERSION = $(GARVERSION)$(GARRELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lang
@@ -42,7 +42,5 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --with-fpectl
-
-
 
 include ../category.mk
