@@ -102,6 +102,6 @@ PATCHFILES += vim_7.0.100.diff
 PATCHFILES += vim_7.0.101.diff
 
 LASTPATCH = $(word $(words $(PATCHFILES)), $(PATCHFILES))
-PATCHVER = `echo ${LASTPATCH} | sed -e s,vim_$(DISTVERSION).,, -e s,.diff,,`
-GARVERSION = $(DISTVERSION).$(PATCHVER)
+PATCHREV = $(patsubst vim_$(DISTVERSION).%.diff,%,$(LASTPATCH))
+GARVERSION = $(DISTVERSION).$(PATCHREV)
 
