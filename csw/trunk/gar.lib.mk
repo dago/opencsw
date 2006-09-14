@@ -292,7 +292,7 @@ DIRPATHS = $(filter-out $(addsuffix %,$(NODIRPATHS)), $(TMP_DIRPATHS))
 # script.
 configure-%/configure:
 	@echo " ==> Running configure in $*"
-	@cd $* && $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
+	cd $* && $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
 configure-%/autogen.sh:
