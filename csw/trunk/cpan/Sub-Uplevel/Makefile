@@ -10,6 +10,6 @@ define BLURB
   avoided.  THIS IS NOT THE SORT OF THING YOU WANT TO DO EVERYDAY
 endef
 
-DISTFILES += CSWpmsubuplevel.gspec
+DISTFILES += $(call admfiles,CSWpmsubuplevel,prototype)
 
 include ../category.mk

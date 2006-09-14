@@ -12,7 +12,7 @@ define BLURB
   module for you.
 endef
 
-DISTFILES += $(call admfiles,CSWpmtestlongstring,)
+DISTFILES += $(call admfiles,CSWpmtestlongstr,)
 
 BUILDDEPS += cpan/Test-Builder-Tester
 

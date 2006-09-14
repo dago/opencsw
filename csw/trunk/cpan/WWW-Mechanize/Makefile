@@ -3,7 +3,7 @@ GARVERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = PETDANCE
 
-DESCRIPTION = handy web browsing in a Perl object
+DESCRIPTION = Handy web browsing in a Perl object
 define BLURB
   WWW::Mechanize, or Mech for short, helps you automate interaction with a
   website. It supports performing a sequence of page fetches including
@@ -13,9 +13,16 @@ define BLURB
   of the URLs you've visited, which can be queried and revisited.
 endef
 
-DISTFILES += CSWpmwwwmechanize.gspec CSWpmwwwmechanize.depend
+DISTFILES += $(call admfiles,CSWpmwwwmechanize,depend)
 
 DEPENDS   += cpan/libwww-perl
-BUILDDEPS += cpan/Test-Warn cpan/Test-Pod cpan/Test-Memory-Cycle
+DEPENDS   += cpan/HTML-Parser
+
+BUILDDEPS += cpan/Test-LongString
+BUILDDEPS += cpan/Test-Warn
+BUILDDEPS += cpan/Test-Pod
+BUILDDEPS += cpan/Test-Memory-Cycle
+
+CONFIGURE_ARGS = -n
 
 include ../category.mk
