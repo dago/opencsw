@@ -1,4 +1,5 @@
 d none /opt/csw 0755 root bin
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/cups-config 0755 root bin
 d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/cups 0755 root bin
