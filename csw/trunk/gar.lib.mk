@@ -231,19 +231,19 @@ BASEWORKSRC = $(shell basename $(WORKSRC))
 # apply bzipped patches
 bz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@bzip2 -dc $(DOWNLOADDIR)/$* |$(GARPATCH)
+	@bzip2 -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
 	@$(MAKECOOKIE)
 
 # apply gzipped patches
 gz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@gzip -dc $(DOWNLOADDIR)/$* |$(GARPATCH)
+	@gzip -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
 	@$(MAKECOOKIE)
 
 # apply normal patches
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@$(GARPATCH) <$(DOWNLOADDIR)/$*
+	$(GARPATCH) < $(DOWNLOADDIR)/$*
 	@$(MAKECOOKIE)
 
 # This is used by makepatch
