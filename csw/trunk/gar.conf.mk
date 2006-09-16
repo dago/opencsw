@@ -142,14 +142,14 @@ ASFLAGS  = $($(GARCOMPILER)_AS_$(GARFLAVOR))
 OPTFLAGS = $($(GARCOMPILER)_CC_$(GARFLAVOR))
 
 # allow us to link to libraries we installed
-EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir), -I$(EINC))
-EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir), -L$(ELIB))
+EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir),-I$(EINC))
+EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir),-L$(ELIB))
 
 LDOPT_LIBS = $(libdir) $(EXTRA_LIB)
 ifdef NOISALIST
-LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS), -R$(ELIB))
+LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS),-R$(ELIB))
 else
-LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS), -R$(ELIB)/\$$ISALIST -R$(ELIB))
+LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS),-R$(ELIB)/\$$ISALIST -R$(ELIB))
 endif
 
 CFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS) 
