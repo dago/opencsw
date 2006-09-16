@@ -239,7 +239,11 @@ INSTALL_ENV   += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 # Standard Scripts
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
 BUILD_SCRIPTS     ?= $(WORKSRC)/Makefile
+ifeq ($(SKIPTEST),1)
 TEST_SCRIPTS      ?= $(WORKSRC)/Makefile
+else
+TEST_SCRIPTS       =
+endif
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
 
 # Global environment
