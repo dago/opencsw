@@ -1,7 +1,7 @@
 4ca69757678272f718b1041c810d82d8  download/vim-7.0.tar.bz2
 59c166f15ad9e4db7aeef3ce7f6d89d9  download/CSWvim.gspec
 a2611dc1f1dbaf39651fab633b434ba6  download/CSWvim.depend
-1b27adebedccc1972f95e950428f013e  download/CSWvim.prototype
+0f81073bdefc37b888f8f8172d11ad86  download/CSWvim.prototype
 c1ead6a1fa0f1a38b80689134cac8ca9  download/CSWvimrt.gspec
 d2beec0e89dc20e5ffc3a8fd1d46cd77  download/CSWvimrt.prototype
 f0a2d3a337ae83e9e2d95156a78325bb  download/vim_7.0.001.diff
@@ -94,3 +94,11 @@ aa947738d736bb74d977fd11ddedd161  download/vim_7.0.096.diff
 0cb8160f6bdf2c16196bc8748b7cb18b  download/vim_7.0.099.diff
 ddefb9daf30ce8b31c96e77a26013581  download/vim_7.0.100.diff
 61e25e7b601ab5f94ca2f3cacc5ddac1  download/vim_7.0.101.diff
+fcb6a3664647f5e9677ea3d4e504019b  download/vim_7.0.102.diff
+b29233c537c4f536112a5017de5fa562  download/vim_7.0.103.diff
+cd4ff38887b42929b50e47c480230027  download/vim_7.0.104.diff
+9704dc79455791ab0da95aa19d1eec2a  download/vim_7.0.105.diff
+73cfa6f8ec957e9fbb6a46d3fb7e77d3  download/vim_7.0.106.diff
+ef5e8288dff28a6dababfd499bb2f8ca  download/vim_7.0.107.diff
+70d09239ee44914630622d6719f3e0dd  download/vim_7.0.108.diff
+1aa1aa1b365979c686db5c5fed7954ed  download/vim_7.0.109.diff
