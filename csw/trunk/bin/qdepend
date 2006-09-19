@@ -1,6 +1,6 @@
-#!/bin/perl -w
+#!/bin/env perl
 #
-# $Id:$
+# $Id$
 #
 # Copyright 2006 Cory Omand <comand@blastwave.org>
 # All rights reserved.  Use is subject to license terms.
@@ -14,6 +14,9 @@
 #
 
 use strict;
+
+# Use warnings
+$^W = 1;
 
 @ARGV or die "Usage: $0 [P|I|R] <pkg> ... <pkgN>\n";
 

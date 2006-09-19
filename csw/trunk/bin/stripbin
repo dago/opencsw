@@ -1,4 +1,4 @@
-#!/opt/csw/bin/perl -w
+#!/bin/env perl
 # 
 # $Id$
 #
@@ -14,6 +14,11 @@
 #
 
 use strict;
+
+# Add newlines
+$\ = "\n";
+# Use warnings
+$^W = 1;
 
 my $bindir = $ARGV[0] || die "Usage: $0 <binary dir>";
 

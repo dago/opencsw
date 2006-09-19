@@ -1,4 +1,4 @@
-#!/usr/bin/perl -lw
+#!/bin/env perl
 #
 # $Id$
 #
@@ -13,6 +13,8 @@
 # isadir - print the appropriate ISA subdirectory given a chosen
 #          compiler isa (E.g. isaname v9b -> sparcv9+vis2)
 #
+
+$\ = "\n";
 
 chomp($arch = `uname -p`);
 
