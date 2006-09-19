@@ -1,4 +1,4 @@
-#!/bin/perl -pln
+#!/bin/env perl -pln
 #
 # $Id$
 #

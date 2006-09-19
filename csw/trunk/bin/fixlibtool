@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# $Id:$
+# $Id$
 #
 # Copyright 2006 Cory Omand <comand@blastwave.org>
 # All rights reserved.  Use is subject to license terms.
@@ -14,7 +14,7 @@
 #
 
 # Remove references to temporary directories
-/bin/perl -i -plne '
+perl -i -plne '
     if (/^dependency_libs/) {
         s# -[ILR]\s*/tmp\S+##g;
         s# -[ILR]\s*/\S+/ # #g;

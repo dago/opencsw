@@ -1,4 +1,4 @@
-#!/opt/csw/bin/perl -lw
+#!/bin/env perl -lw
 # 
 # $Id$
 #

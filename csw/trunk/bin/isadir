@@ -1,4 +1,4 @@
-#!/bin/env perl
+#!/bin/env perl -lw
 #
 # $Id$
 #
@@ -14,9 +14,9 @@
 #          compiler isa (E.g. isaname v9b -> sparcv9+vis2)
 #
 
-$\ = "\n";
+use strict;
 
-chomp($arch = `uname -p`);
+chomp(my $arch = `uname -p`);
 
 my $isadir;
 if ($arch eq 'sparc') {

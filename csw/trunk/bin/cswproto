@@ -1,4 +1,4 @@
-#!/bin/env perl
+#!/bin/env perl -lw
 #
 # $Id$
 #
@@ -14,12 +14,6 @@
 #
 
 use strict;
-
-# Add newlines
-$\ = "\n";
-# Use warnings
-$^W = 1;
-
 use File::Basename;
 use File::Spec::Functions qw/catfile/;
 use Getopt::Long qw/:config no_ignore_case/;

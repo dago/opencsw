@@ -1,4 +1,4 @@
-#!/bin/env perl
+#!/bin/env perl -w
 #
 # $Id$
 #
@@ -8,7 +8,6 @@
 require 5.008004;
 
 use strict;
-use warnings;
 use Cwd qw/cwd/;
 use File::Basename;
 use File::Spec::Functions;
