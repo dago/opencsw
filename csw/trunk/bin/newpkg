@@ -41,12 +41,12 @@ do
         softname="pm_$softname"
     fi
 
-    sed -i -e s,PACKAGE,$distname, \
+    gsed -i -e s,PACKAGE,$distname, \
            -e s,CATEGORY,$category, \
            -e s,CSWpackage,$pkgname, $distname/Makefile
 
     mv $distname/files/CSWpackage.gspec $distname/files/$pkgname.gspec
-    sed -i -e s,CSWpackage,$pkgname, \
+    gsed -i -e s,CSWpackage,$pkgname, \
            -e s,package,$softname, $distname/files/$pkgname.gspec
 
     print "Created skeleton build dir for $distname"
