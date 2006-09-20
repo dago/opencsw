@@ -1,3 +1,10 @@
+# TODO:
+#  - Test the build in Solaris 8 environment -- including SPARC.
+#    I currently have only tested this package on Solaris Express x86.
+# 
+#  - Fix mysql dependency. It currently builds against SUNWmysqlu;
+#    this needs to be changed to CSWmysql5rt
+#
 GARNAME = sysbench
 GARVERSION = 0.4.7
 CATEGORIES = utils

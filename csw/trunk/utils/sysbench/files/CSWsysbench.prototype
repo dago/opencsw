@@ -6,6 +6,3 @@ d none /opt/csw/share ? ? ?
 d none /opt/csw/share/doc ? ? ?
 d none /opt/csw/share/doc/sysbench 0755 root bin
 f none /opt/csw/share/doc/sysbench/manual.html 0644 root bin
-i copyright=CSWsysbench.copyright
-i depend=CSWsysbench.depend
-i pkginfo=CSWsysbench.pkginfo
