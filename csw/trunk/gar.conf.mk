@@ -16,6 +16,9 @@ http_proxy ?= http://svn:8080
 ftp_proxy  ?= http://svn:8080
 export http_proxy ftp_proxy
 
+# Don't do full-dependency builds by default
+SKIPDEPEND ?= 1
+
 # A directory containing cached files. It can be created
 # manually, or with 'make garchive' once you've started
 # downloading required files (say with 'make paranoid-checksum'.
