@@ -1,0 +1,18 @@
+--- SOAP-Lite-0.60.orig/Makefile.PL	2004-01-21 15:07:53.597992000 -0800
++++ SOAP-Lite-0.60/Makefile.PL	2004-01-21 15:09:17.232278000 -0800
+@@ -67,6 +67,7 @@
+ 
+ $help and print($helptext), exit;
+ 
++if ($prompt) {
+ ExtUtils::MakeMaker::prompt(<<EOI . "Press <enter> to see the detailed list.");
+ 
+ We are about to install SOAP::Lite and for your convenience will provide
+@@ -77,6 +78,7 @@
+ Installed transports can be used for both SOAP::Lite and XMLRPC::Lite.
+ 
+ EOI
++}
+ 
+ # This hash will contain a list of all perl modules we would like to
+ # explicitly depend upon in our Makefile

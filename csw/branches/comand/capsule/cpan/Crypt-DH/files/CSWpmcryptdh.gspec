@@ -1,0 +1,9 @@
+%var            bitname pm_cryptdh
+%var            pkgname CSWpmcryptdh
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Except where otherwise noted, Crypt::DH is Copyright 2001
+Benjamin Trott. All rights reserved. Crypt::DH is free
+software; you may redistribute it and/or modify it under
+the same terms as Perl itself.

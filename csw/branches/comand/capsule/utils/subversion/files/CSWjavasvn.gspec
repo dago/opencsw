@@ -1,0 +1,5 @@
+%var            bitname javasvn
+%var            pkgname CSWjavasvn
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc Subversion Java language binding
+%copyright      url file://%{WORKSRC}/COPYING

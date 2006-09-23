@@ -1,0 +1,10 @@
+%var            bitname pmtools
+%var            pkgname CSWpmtools
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1999 Tom Christiansen
+
+This is free software.  You may modify it and distribute it
+under Perl's Artistic Licence.  Modified versions must be
+clearly indicated.

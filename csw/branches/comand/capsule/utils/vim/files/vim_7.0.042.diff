@@ -1,0 +1,54 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.042
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.042
+Problem:    When pasting a block of text in Insert mode Vim hangs or crashes.
+	    (Noam Halevy)
+Solution:   Avoid that the cursor is positioned past the NUL of a line.
+Files:	    src/ops.c
+
+
+*** ../vim-7.0.041/src/ops.c	Tue Jun 20 20:29:13 2006
+--- src/ops.c	Sun Jul 23 22:36:39 2006
+***************
+*** 3493,3500 ****
+--- 3493,3507 ----
+  # endif
+  	if (flags & PUT_CURSEND)
+  	{
++ 	    colnr_T len;
++ 
+  	    curwin->w_cursor = curbuf->b_op_end;
+  	    curwin->w_cursor.col++;
++ 
++ 	    /* in Insert mode we might be after the NUL, correct for that */
++ 	    len = (colnr_T)STRLEN(ml_get_curline());
++ 	    if (curwin->w_cursor.col > len)
++ 		curwin->w_cursor.col = len;
+  	}
+  	else
+  	    curwin->w_cursor.lnum = lnum;
+*** ../vim-7.0.041/src/version.c	Sun Jul 23 22:07:55 2006
+--- src/version.c	Sun Jul 23 22:35:13 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     42,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+45. You buy a Captain Kirk chair with a built-in keyboard and mouse.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

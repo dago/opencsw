@@ -1,0 +1,66 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.064
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.064
+Problem:    Using uninitialized variable. (Tony Mechelynck)
+Solution:   When not used set "temp" to zero.  Also avoid a warning for
+	    "files" in ins_compl_dictionaries().
+Files:	    src/edit.c
+
+
+*** ../vim-7.0.063/src/edit.c	Wed Aug 16 21:26:19 2006
+--- src/edit.c	Thu Aug 17 22:28:34 2006
+***************
+*** 2760,2765 ****
+--- 2760,2766 ----
+  	}
+  	else
+  # endif
++ 	    if (count > 0)	/* avoid warning for using "files" uninit */
+  	{
+  	    ins_compl_files(count, files, thesaurus, flags,
+  							&regmatch, buf, &dir);
+***************
+*** 3222,3228 ****
+      int	    c;
+  {
+      char_u	*ptr;
+-     int		temp;
+      int		want_cindent;
+      int		retval = FALSE;
+  
+--- 3223,3228 ----
+***************
+*** 3378,3383 ****
+--- 3378,3384 ----
+  	    if (compl_curr_match != NULL || compl_leader != NULL || c == Ctrl_E)
+  	    {
+  		char_u	*p;
++ 		int	temp = 0;
+  
+  		/*
+  		 * If any of the original typed text has been changed, eg when
+*** ../vim-7.0.063/src/version.c	Wed Aug 16 22:03:35 2006
+--- src/version.c	Tue Aug 22 19:56:05 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     64,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+200. You really believe in the concept of a "paperless" office.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

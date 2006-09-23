@@ -1,0 +1,3 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWphp5 php5 - PHP Hypertext Preprocessor 5
+P CSWlibmhash libmhash - The mhash library provides an easy way to access strong hashes such as MD5, SHA1 and other algorithms.

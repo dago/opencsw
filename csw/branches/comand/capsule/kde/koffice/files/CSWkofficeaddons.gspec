@@ -1,0 +1,4 @@
+%var            bitname koffice_addons
+%var            pkgname CSWkofficeaddons
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

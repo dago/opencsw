@@ -1,0 +1,4 @@
+%var            bitname pm_develtrace
+%var            pkgname CSWpmdeveltrace
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec

@@ -1,0 +1,74 @@
+diff --speed-large-files --minimal -Nru flphoto-1.2.orig/Fl_Image_Display.cxx flphoto-1.2/Fl_Image_Display.cxx
+--- flphoto-1.2.orig/Fl_Image_Display.cxx	2003-09-15 10:40:42.000000000 -0400
++++ flphoto-1.2/Fl_Image_Display.cxx	2006-06-28 00:43:27.264655000 -0400
+@@ -670,7 +670,7 @@
+   val /= 2.2;
+ 
+   for (i = 0; i < 256; i ++)
+-    gamma_lut_[i] = (int)(255.0 * pow(i / 255.0, val) + 0.5);
++    gamma_lut_[i] = (int)(255.0 * pow(i / 255.0, static_cast<double>(val)) + 0.5);
+ }
+ 
+ 
+diff --speed-large-files --minimal -Nru flphoto-1.2.orig/Makefile.in flphoto-1.2/Makefile.in
+--- flphoto-1.2.orig/Makefile.in	2003-09-13 19:00:35.000000000 -0400
++++ flphoto-1.2/Makefile.in	2006-06-28 00:45:01.424656000 -0400
+@@ -51,7 +51,7 @@
+ CFLAGS		=	@CFLAGS@ @CPPFLAGS@ $(OPTIM)
+ CXXFLAGS	=	@CXXFLAGS@ @CPPFLAGS@ $(OPTIM)
+ LDFLAGS		=	@LDFLAGS@ $(OPTIM)
+-LIBS		=	@LIBS@
++LIBS		=	@LIBS@ -lpng -ljpeg -lCrun -lgphoto2_port
+ OPTIM		=	@OPTIM@ @DEFS@
+ 
+ 
+diff --speed-large-files --minimal -Nru flphoto-1.2.orig/export.cxx flphoto-1.2/export.cxx
+--- flphoto-1.2.orig/export.cxx	2003-09-14 02:43:29.000000000 -0400
++++ flphoto-1.2/export.cxx	2006-06-28 00:43:27.264669000 -0400
+@@ -59,7 +59,10 @@
+ };
+ #endif // HAVE_LIBJPEG
+ 
+-
++extern "C" {
++#  include <jpeglib.h>
++#  include "transupp.h"
++};
+ 
+ //
+ // Local functions...
+diff --speed-large-files --minimal -Nru flphoto-1.2.orig/gamma.cxx flphoto-1.2/gamma.cxx
+--- flphoto-1.2.orig/gamma.cxx	2003-09-16 22:44:26.000000000 -0400
++++ flphoto-1.2/gamma.cxx	2006-06-28 00:43:27.264680000 -0400
+@@ -157,7 +157,7 @@
+ 
+     if (y >= 25 && y < 75)
+     {
+-      g = (int)(255.0 * pow(0.5, val) + 0.5);
++      g = (int)(255.0 * pow(0.5, static_cast<double>(val)) + 0.5);
+ 
+       for (x = 25; x < 75; x ++)
+ 	ptr[x] = g;
+diff --speed-large-files --minimal -Nru flphoto-1.2.orig/image.cxx flphoto-1.2/image.cxx
+--- flphoto-1.2.orig/image.cxx	2003-10-21 23:49:41.000000000 -0400
++++ flphoto-1.2/image.cxx	2006-06-28 00:43:27.264700000 -0400
+@@ -77,7 +77,6 @@
+ #include <FL/filename.H>
+ #include "Fl_EXIF_Data.H"
+ 
+-#ifdef HAVE_LIBJPEG
+ // Some releases of the Cygwin JPEG libraries don't have a correctly
+ // updated header file for the INT32 data type; the following define
+ // from Shane Hill seems to be a usable workaround...
+@@ -88,11 +87,8 @@
+ #  include <jpeglib.h>
+ #  include "transupp.h"
+ };
+-#endif // HAVE_LIBJPEG
+ 
+-#ifdef HAVE_LIBPNG
+ #  include <png.h>
+-#endif // HAVE_LIBPNG
+ 
+ 
+ //

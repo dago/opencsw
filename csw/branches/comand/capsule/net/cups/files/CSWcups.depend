@@ -1,0 +1,5 @@
+P      CSWlibcups      Libraries for the Common UNIX Printing System
+P      CSWcupsclient   Client portion of the Common UNIX Printing System
+P      CSWcupsd        Server portion of the Common UNIX Printing System
+P      CSWcupsdev      Development files for the Common UNIX Printing System
+P      CSWcupsdoc      Documentation for the Common UNIX Printing System

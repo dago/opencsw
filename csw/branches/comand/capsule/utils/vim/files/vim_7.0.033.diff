@@ -1,0 +1,69 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.033
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.033
+Problem:    When pasting text, with the menu or CTRL-V, autoindent is removed.
+Solution:   Use "x<BS>" to avoid indent to be removed. (Benji Fisher)
+Files:	    runtime/autoload/paste.vim
+
+
+*** ../vim-7.0.032/runtime/autoload/paste.vim	Fri Apr 21 23:57:39 2006
+--- runtime/autoload/paste.vim	Fri Jun 23 17:18:48 2006
+***************
+*** 1,6 ****
+  " Vim support file to help with paste mappings and menus
+  " Maintainer:	Bram Moolenaar <Bram@vim.org>
+! " Last Change:	2006 Apr 21
+  
+  " Define the string to use for items that are present both in Edit, Popup and
+  " Toolbar menu.  Also used in mswin.vim and macmap.vim.
+--- 1,6 ----
+  " Vim support file to help with paste mappings and menus
+  " Maintainer:	Bram Moolenaar <Bram@vim.org>
+! " Last Change:	2006 Jun 23
+  
+  " Define the string to use for items that are present both in Edit, Popup and
+  " Toolbar menu.  Also used in mswin.vim and macmap.vim.
+***************
+*** 12,18 ****
+  if has("virtualedit")
+    let paste#paste_cmd = {'n': ":call paste#Paste()<CR>"}
+    let paste#paste_cmd['v'] = '"-c<Esc>' . paste#paste_cmd['n']
+!   let paste#paste_cmd['i'] = '<Esc>' . paste#paste_cmd['n'] . 'gi'
+  
+    func! paste#Paste()
+      let ove = &ve
+--- 12,18 ----
+  if has("virtualedit")
+    let paste#paste_cmd = {'n': ":call paste#Paste()<CR>"}
+    let paste#paste_cmd['v'] = '"-c<Esc>' . paste#paste_cmd['n']
+!   let paste#paste_cmd['i'] = 'x<BS><Esc>' . paste#paste_cmd['n'] . 'gi'
+  
+    func! paste#Paste()
+      let ove = &ve
+*** ../vim-7.0.032/src/version.c	Fri Jun 23 16:44:32 2006
+--- src/version.c	Fri Jun 23 17:18:56 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     33,
+  /**/
+
+-- 
+Yesterday, all my deadlines seemed so far away
+now it looks as though it's freeze in four days
+oh I believe in cvs..
+    [ CVS log "Beatles style" for FreeBSD ports/INDEX, Satoshi Asami ]
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

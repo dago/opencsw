@@ -1,0 +1,63 @@
+i copyright
+i pkginfo
+d none /opt/csw 0755 root bin
+d none /opt/csw/bin 0755 root bin
+d none /opt/csw/etc 0755 root bin
+d none /opt/csw/etc/joe 0755 root bin
+d none /opt/csw/etc/joe/charmaps 0755 root bin
+d none /opt/csw/etc/joe/syntax 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/joe 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/bin/joe 0755 root bin
+f none /opt/csw/bin/termidx 0755 root bin
+f none /opt/csw/etc/joe/charmaps/klingon 0644 root bin
+f none /opt/csw/etc/joe/jmacsrc 0644 root bin
+f none /opt/csw/etc/joe/joerc 0644 root bin
+f none /opt/csw/etc/joe/jpicorc 0644 root bin
+f none /opt/csw/etc/joe/jstarrc 0644 root bin
+f none /opt/csw/etc/joe/rjoerc 0644 root bin
+f none /opt/csw/etc/joe/syntax/4gl.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/ada.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/asm.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/awk.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/c.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/cobol.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/conf.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/csh.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/css.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/diff.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/fortran.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/html.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/java.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/lisp.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/mail.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/mason.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/ocaml.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/pascal.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/perl.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/php.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/ps.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/python.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/sed.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/sh.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/sml.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/sql.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/tcl.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/tex.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/verilog.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/vhdl.jsf 0644 root bin
+f none /opt/csw/etc/joe/syntax/xml.jsf 0644 root bin
+f none /opt/csw/share/doc/joe/ChangeLog 0644 root bin
+f none /opt/csw/share/doc/joe/HACKING 0644 root bin
+f none /opt/csw/share/doc/joe/HINTS 0644 root bin
+f none /opt/csw/share/doc/joe/LIST 0644 root bin
+f none /opt/csw/share/doc/joe/NEWS 0644 root bin
+f none /opt/csw/share/doc/joe/README 0644 root bin
+f none /opt/csw/share/man/man1/joe.1 0644 root bin
+s none /opt/csw/bin/jmacs=joe
+s none /opt/csw/bin/jpico=joe
+s none /opt/csw/bin/jstar=joe
+s none /opt/csw/bin/rjoe=joe

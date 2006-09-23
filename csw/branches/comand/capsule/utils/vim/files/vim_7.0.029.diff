@@ -1,0 +1,48 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.029
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.029
+Problem:    getchar() may not position the cursor after a space.
+Solution:   Position the cursor explicitly.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.028/src/eval.c	Thu Jun 22 18:02:06 2006
+--- src/eval.c	Thu Jun 22 21:00:00 2006
+***************
+*** 9792,9797 ****
+--- 9792,9800 ----
+      varnumber_T		n;
+      int			error = FALSE;
+  
++     /* Position the cursor.  Needed after a message that ends in a space. */
++     windgoto(msg_row, msg_col);
++ 
+      ++no_mapping;
+      ++allow_keys;
+      if (argvars[0].v_type == VAR_UNKNOWN)
+*** ../vim-7.0.028/src/version.c	Thu Jun 22 19:47:11 2006
+--- src/version.c	Thu Jun 22 20:55:43 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     29,
+  /**/
+
+-- 
+BEDEVERE: How do you know so much about swallows?
+ARTHUR:   Well you have to know these things when you're a king, you know.
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

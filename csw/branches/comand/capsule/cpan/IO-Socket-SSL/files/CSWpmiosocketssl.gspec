@@ -1,0 +1,11 @@
+%var            bitname pm_iosocketssl
+%var            pkgname CSWpmiosocketssl
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+The rewrite of this module is Copyright (C) 2002-2004 Peter Behroozi.
+
+The original versions of this module are Copyright (C) 1999-2002 Marko Asplund.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

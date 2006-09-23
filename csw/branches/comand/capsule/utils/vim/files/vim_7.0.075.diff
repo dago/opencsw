@@ -1,0 +1,45 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.075
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.075
+Problem:    winsaveview() did not store the actual value of the desired cursor
+	    column.  This could move the cursor in the matchparen plugin.
+Solution:   Call update_curswant() before using the value w_curswant.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.074/src/eval.c	Tue Aug 29 17:28:56 2006
+--- src/eval.c	Tue Aug 29 21:53:26 2006
+***************
+*** 16232,16237 ****
+--- 16232,16238 ----
+  #ifdef FEAT_VIRTUALEDIT
+      dict_add_nr_str(dict, "coladd", (long)curwin->w_cursor.coladd, NULL);
+  #endif
++     update_curswant();
+      dict_add_nr_str(dict, "curswant", (long)curwin->w_curswant, NULL);
+  
+      dict_add_nr_str(dict, "topline", (long)curwin->w_topline, NULL);
+*** ../vim-7.0.074/src/version.c	Tue Aug 29 21:30:15 2006
+--- src/version.c	Tue Aug 29 21:57:03 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     75,
+  /**/
+
+-- 
+Women are probably the main cause of free software starvation.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

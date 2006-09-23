@@ -1,0 +1,9 @@
+%var            bitname pm_tiecrypthash
+%var            pkgname CSWpmtiecrypthash
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2000, Vipul Ved Prakash.  All rights reserved.
+This code is based on Damian Conway's Tie::SecureHash.
+
+License: Artistic

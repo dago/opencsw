@@ -1,0 +1,7 @@
+%var            bitname pm_procprocesstbl
+%var            pkgname CSWpmproctbl
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1998-2003 Daniel J. Urist. All rights reserved.
+This package is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

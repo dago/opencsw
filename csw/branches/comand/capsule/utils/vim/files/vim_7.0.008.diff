@@ -1,0 +1,74 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.008
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.008
+Problem:    Can't call a function that uses both <SID> and {expr}. (Thomas)
+Solution:   Check both the expanded and unexpanded name for <SID>.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.007/src/eval.c	Wed May 10 15:22:49 2006
+--- src/eval.c	Wed May 10 12:11:42 2006
+***************
+*** 11372,11378 ****
+  	    if (argvars[2].v_type != VAR_UNKNOWN)
+  	    {
+  		char_u	*xp_name;
+! 		int		xp_namelen;
+  		long	argt;
+  
+  		rettv->vval.v_string = NULL;
+--- 11372,11378 ----
+  	    if (argvars[2].v_type != VAR_UNKNOWN)
+  	    {
+  		char_u	*xp_name;
+! 		int	xp_namelen;
+  		long	argt;
+  
+  		rettv->vval.v_string = NULL;
+***************
+*** 18963,18969 ****
+      else if (lead > 0)
+      {
+  	lead = 3;
+! 	if (eval_fname_sid(lv.ll_exp_name != NULL ? lv.ll_exp_name : *pp))
+  	{
+  	    /* It's "s:" or "<SID>" */
+  	    if (current_SID <= 0)
+--- 18963,18970 ----
+      else if (lead > 0)
+      {
+  	lead = 3;
+! 	if ((lv.ll_exp_name != NULL && eval_fname_sid(lv.ll_exp_name))
+! 						       || eval_fname_sid(*pp))
+  	{
+  	    /* It's "s:" or "<SID>" */
+  	    if (current_SID <= 0)
+*** ../vim-7.0.007/src/version.c	Wed May 10 17:38:05 2006
+--- src/version.c	Wed May 10 17:39:46 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     8,
+  /**/
+
+-- 
+From "know your smileys":
+ %	Bike accident.  A bit far-fetched, I suppose; although...
+             o      _     _         _
+     _o     /\_   _ \\o  (_)\__/o  (_)
+   _< \_   _>(_) (_)/<_    \_| \   _|/' \/
+  (_)>(_) (_)        (_)   (_)    (_)'  _\o_
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

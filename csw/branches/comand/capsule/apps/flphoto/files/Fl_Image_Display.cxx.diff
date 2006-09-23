@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru flphoto-1.2.orig/Fl_Image_Display.cxx flphoto-1.2/Fl_Image_Display.cxx
+--- flphoto-1.2.orig/Fl_Image_Display.cxx	2003-09-15 10:40:42.000000000 -0400
++++ flphoto-1.2/Fl_Image_Display.cxx	2006-06-27 23:47:49.162533000 -0400
+@@ -670,7 +670,7 @@
+   val /= 2.2;
+ 
+   for (i = 0; i < 256; i ++)
+-    gamma_lut_[i] = (int)(255.0 * pow(i / 255.0, val) + 0.5);
++    gamma_lut_[i] = (int)(255.0 * pow(i / 255.0, static_cast<double>(val)) + 0.5);
+ }
+ 
+ 

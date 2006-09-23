@@ -1,0 +1,80 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.025
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.025
+Problem:    Crash when removing an element of a:000.  (Nikolai Weibull)
+Solution:   Mark the a:000 list with VAR_FIXED.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.024/src/eval.c	Thu Jun 22 17:33:49 2006
+--- src/eval.c	Thu Jun 22 17:56:50 2006
+***************
+*** 13250,13256 ****
+  	if (argvars[2].v_type != VAR_UNKNOWN)
+  	    EMSG2(_(e_toomanyarg), "remove()");
+  	else if ((d = argvars[0].vval.v_dict) != NULL
+! 		&& !tv_check_lock(d->dv_lock, (char_u *)"remove()"))
+  	{
+  	    key = get_tv_string_chk(&argvars[1]);
+  	    if (key != NULL)
+--- 13254,13260 ----
+  	if (argvars[2].v_type != VAR_UNKNOWN)
+  	    EMSG2(_(e_toomanyarg), "remove()");
+  	else if ((d = argvars[0].vval.v_dict) != NULL
+! 		&& !tv_check_lock(d->dv_lock, (char_u *)"remove() argument"))
+  	{
+  	    key = get_tv_string_chk(&argvars[1]);
+  	    if (key != NULL)
+***************
+*** 13270,13276 ****
+      else if (argvars[0].v_type != VAR_LIST)
+  	EMSG2(_(e_listdictarg), "remove()");
+      else if ((l = argvars[0].vval.v_list) != NULL
+! 	    && !tv_check_lock(l->lv_lock, (char_u *)"remove()"))
+      {
+  	int	    error = FALSE;
+  
+--- 13274,13280 ----
+      else if (argvars[0].v_type != VAR_LIST)
+  	EMSG2(_(e_listdictarg), "remove()");
+      else if ((l = argvars[0].vval.v_list) != NULL
+! 	    && !tv_check_lock(l->lv_lock, (char_u *)"remove() argument"))
+      {
+  	int	    error = FALSE;
+  
+***************
+*** 19693,19698 ****
+--- 19697,19703 ----
+      v->di_tv.vval.v_list = &fc.l_varlist;
+      vim_memset(&fc.l_varlist, 0, sizeof(list_T));
+      fc.l_varlist.lv_refcount = 99999;
++     fc.l_varlist.lv_lock = VAR_FIXED;
+  
+      /*
+       * Set a:firstline to "firstline" and a:lastline to "lastline".
+*** ../vim-7.0.024/src/version.c	Thu Jun 22 17:33:49 2006
+--- src/version.c	Thu Jun 22 17:59:17 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     25,
+  /**/
+
+-- 
+BRIDGEKEEPER: What is your favorite colour?
+GAWAIN:       Blue ...  No yelloooooww!
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

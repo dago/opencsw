@@ -1,0 +1,11 @@
+%var            bitname pm_gd
+%var            pkgname CSWpmgd
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+COPYRIGHT INFO
+
+The GD.pm interface is copyright 1995-2004, Lincoln D. Stein.  It is
+covered by the Perl "Artistic License", which allows for free usage
+and redistribution.  See the Artistic License in the Perl source
+package for details.
+

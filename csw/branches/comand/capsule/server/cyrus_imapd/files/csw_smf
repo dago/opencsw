@@ -1,0 +1,3 @@
+%postinstall	url file://%{CURDIR}/files/csw_smf_postinstall
+%preremove	url file://%{CURDIR}/files/csw_smf_preremove
+%checkinstall	url file://%{CURDIR}/files/csw_smf_checkinstall

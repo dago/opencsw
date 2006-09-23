@@ -1,0 +1,8 @@
+%var            bitname pysetuptools
+%var            pkgname CSWpysetuptools
+%var            arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright
+Author: Phillip J. Eby <peak at eby-sarna.com>
+License: PSF (http://www.python.org/2.3.2/license.html) or
+         ZPL (http://www.zope.org/Resources/ZPL)

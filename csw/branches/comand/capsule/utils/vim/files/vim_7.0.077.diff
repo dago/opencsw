@@ -1,0 +1,98 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.077
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.077
+Problem:    ":unlet v:this_session" causes a crash. (Marius Roets)
+Solution:   When trying to unlet a fixed variable give an error message.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.076/src/eval.c	Tue Aug 29 21:59:25 2006
+--- src/eval.c	Sat Sep  2 13:43:20 2006
+***************
+*** 701,706 ****
+--- 701,707 ----
+  static void list_one_var_a __ARGS((char_u *prefix, char_u *name, int type, char_u *string));
+  static void set_var __ARGS((char_u *name, typval_T *varp, int copy));
+  static int var_check_ro __ARGS((int flags, char_u *name));
++ static int var_check_fixed __ARGS((int flags, char_u *name));
+  static int tv_check_lock __ARGS((int lock, char_u *name));
+  static void copy_tv __ARGS((typval_T *from, typval_T *to));
+  static int item_copy __ARGS((typval_T *from, typval_T *to, int deep, int copyID));
+***************
+*** 3364,3369 ****
+--- 3365,3372 ----
+  	hi = hash_find(ht, varname);
+  	if (!HASHITEM_EMPTY(hi))
+  	{
++ 	    if (var_check_fixed(HI2DI(hi)->di_flags, name))
++ 		return FAIL;
+  	    if (var_check_ro(HI2DI(hi)->di_flags, name))
+  		return FAIL;
+  	    delete_var(ht, hi);
+***************
+*** 17818,17824 ****
+  }
+  
+  /*
+!  * Return TRUE if di_flags "flags" indicate read-only variable "name".
+   * Also give an error message.
+   */
+      static int
+--- 17821,17827 ----
+  }
+  
+  /*
+!  * Return TRUE if di_flags "flags" indicates variable "name" is read-only.
+   * Also give an error message.
+   */
+      static int
+***************
+*** 17834,17839 ****
+--- 17837,17859 ----
+      if ((flags & DI_FLAGS_RO_SBX) && sandbox)
+      {
+  	EMSG2(_(e_readonlysbx), name);
++ 	return TRUE;
++     }
++     return FALSE;
++ }
++ 
++ /*
++  * Return TRUE if di_flags "flags" indicates variable "name" is fixed.
++  * Also give an error message.
++  */
++     static int
++ var_check_fixed(flags, name)
++     int		flags;
++     char_u	*name;
++ {
++     if (flags & DI_FLAGS_FIX)
++     {
++ 	EMSG2(_("E795: Cannot delete variable %s"), name);
+  	return TRUE;
+      }
+      return FALSE;
+*** ../vim-7.0.076/src/version.c	Tue Aug 29 22:35:11 2006
+--- src/version.c	Sat Sep  2 13:39:36 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     77,
+  /**/
+
+-- 
+            ### Hiroshima 45, Chernobyl 86, Windows 95 ###
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

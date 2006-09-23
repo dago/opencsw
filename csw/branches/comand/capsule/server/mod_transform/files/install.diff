@@ -1,0 +1,25 @@
+diff --speed-large-files --minimal -Nru mod_transform-0.6.0.orig/src/Makefile.in mod_transform-0.6.0/src/Makefile.in
+--- mod_transform-0.6.0.orig/src/Makefile.in	2005-06-02 13:16:01.557445000 -0700
++++ mod_transform-0.6.0/src/Makefile.in	2005-06-02 13:15:53.809137000 -0700
+@@ -562,8 +562,10 @@
+ 	rm -f mod_transform.so
+ 
+ install: make_so
+-	@${APXS_BIN} -i -n transform mod_transform.so
+-	cp ../include/mod_transform.h ${AP_INCLUDEDIR}
++	mkdir -p ${DESTDIR}${AP_LIBEXECDIR}
++	mkdir -p ${DESTDIR}${AP_INCLUDEDIR}
++	cp mod_transform.so ${DESTDIR}${AP_LIBEXECDIR}
++	cp ../include/mod_transform.h ${DESTDIR}${AP_INCLUDEDIR}
+ 	@echo ""
+ 	@echo ""
+ 	@echo "***********************************************"
+@@ -576,7 +578,7 @@
+ 	@echo ""
+ 
+ activate: make_so
+-	@${APXS_BIN} -i -a -n transform mod_transform.so
++	@true
+ 	@echo ""
+ 	@echo ""
+ 	@echo "***********************************************"

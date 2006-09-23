@@ -1,0 +1,7 @@
+%var            bitname pm_develsymdump
+%var            pkgname CSWpmdevelsymdump
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This package is Copyright (C) 1994-2000 by Andreas König. It may be
+copied, used and redistributed under the same terms as perl itself.

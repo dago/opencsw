@@ -1,0 +1,4 @@
+%var            bitname python25
+%var            pkgname CSWpython25
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

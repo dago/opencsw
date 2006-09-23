@@ -1,0 +1,8 @@
+%var            bitname pm_cryptprimes
+%var            pkgname CSWpmcryptprimes
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1998-2000, Vipul Ved Prakash. All rights reserved. This
+code is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.

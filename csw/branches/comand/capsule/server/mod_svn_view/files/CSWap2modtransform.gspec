@@ -1,0 +1,4 @@
+%var            bitname ap2_modtransform
+%var            pkgname CSWap2modtransform
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru SDL_ttf-2.0.6.orig/SDL_ttf.c SDL_ttf-2.0.6/SDL_ttf.c
+--- SDL_ttf-2.0.6.orig/SDL_ttf.c	2006-05-04 14:20:01.221353000 -0400
++++ SDL_ttf-2.0.6/SDL_ttf.c	2006-05-04 14:19:45.577302000 -0400
+@@ -39,6 +39,8 @@
+ #define FREEA(p) free(p)
+ #endif
+ 
++#include <ft2build.h>
++#include FT_FREETYPE_H
+ #include <freetype/freetype.h>
+ #include <freetype/ftoutln.h>
+ #include <freetype/ttnameid.h>

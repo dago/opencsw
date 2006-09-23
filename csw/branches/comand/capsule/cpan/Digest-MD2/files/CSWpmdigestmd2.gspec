@@ -1,0 +1,9 @@
+%var            bitname pm_digestmd2
+%var            pkgname CSWpmdigestmd2
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 1998-2003 Gisle Aas.
+Copyright 1990-1992 RSA Data Security, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

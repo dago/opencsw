@@ -1,0 +1,45 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.063
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.063
+Problem:    Tiny chance for a memory leak. (coverity)
+Solution:   Free pointer when next memory allocation fails.
+Files:	    src/eval.c
+
+
+*** ../vim-7.0.062/src/eval.c	Wed Aug 16 19:34:59 2006
+--- src/eval.c	Wed Aug 16 21:33:24 2006
+***************
+*** 18811,18816 ****
+--- 18811,18817 ----
+  		if (dict_add(fudi.fd_dict, fudi.fd_di) == FAIL)
+  		{
+  		    vim_free(fudi.fd_di);
++ 		    vim_free(fp);
+  		    goto erret;
+  		}
+  	    }
+*** ../vim-7.0.062/src/version.c	Wed Aug 16 21:42:34 2006
+--- src/version.c	Wed Aug 16 22:02:57 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     63,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+167. You have more than 200 websites bookmarked.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

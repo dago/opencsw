@@ -1,0 +1,53 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.103
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.103 (after 7.0.101)
+Problem:    Compiler warning for uninitialized variable. (Tony Mechelynck)
+Solution:   Init variable.
+Files:	    src/spell.c
+
+
+*** ../vim-7.0.102/src/spell.c	Tue Sep 12 22:24:48 2006
+--- src/spell.c	Wed Sep 13 20:46:22 2006
+***************
+*** 9251,9257 ****
+  			       'spellfile' */
+      int		undo;	    /* TRUE for "zug", "zuG", "zuw" and "zuW" */
+  {
+!     FILE	*fd;
+      buf_T	*buf = NULL;
+      int		new_spf = FALSE;
+      char_u	*fname;
+--- 9251,9257 ----
+  			       'spellfile' */
+      int		undo;	    /* TRUE for "zug", "zuG", "zuw" and "zuW" */
+  {
+!     FILE	*fd = NULL;
+      buf_T	*buf = NULL;
+      int		new_spf = FALSE;
+      char_u	*fname;
+*** ../vim-7.0.102/src/version.c	Thu Sep 14 10:25:34 2006
+--- src/version.c	Thu Sep 14 10:47:39 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     103,
+  /**/
+
+-- 
+ARTHUR: Go on, Bors, chop its head off.
+BORS:   Right.  Silly little bleeder.  One rabbit stew coming up.
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

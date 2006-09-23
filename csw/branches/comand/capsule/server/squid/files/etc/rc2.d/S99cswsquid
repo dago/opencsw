@@ -1,0 +1,19 @@
+#!/sbin/sh
+
+case "$1" in
+'start')
+        if [ -f /opt/csw/sbin/squid -a -f /opt/csw/etc/squid.conf ]; then
+        echo 'starting squid server.'
+        /opt/csw/sbin/squid -D &
+        fi
+        ;;
+'stop')
+        /opt/csw/sbin/squid -k shutdown
+        exit 0
+        ;;
+
+*)
+        echo "Usage: $0 { start | stop }"
+        exit 1
+        ;;
+esac

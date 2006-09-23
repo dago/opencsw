@@ -1,0 +1,47 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.050
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.050
+Problem:    After using the netbeans interface close command a stale pointer
+	    may be used.
+Solution:   Clear the pointer to the closed buffer. (Xaview de Gaye)
+Files:	    src/netbeans.c
+
+
+*** ../vim-7.0.049/src/netbeans.c	Sun Apr 23 00:21:07 2006
+--- src/netbeans.c	Fri Aug  4 23:02:54 2006
+***************
+*** 1986,1991 ****
+--- 1986,1993 ----
+  	    if (buf->bufp != NULL)
+  		do_buffer(DOBUF_WIPE, DOBUF_FIRST, FORWARD,
+  						     buf->bufp->b_fnum, TRUE);
++ 	    buf->bufp = NULL;
++ 	    buf->initDone = FALSE;
+  	    doupdate = 1;
+  /* =====================================================================*/
+  	}
+*** ../vim-7.0.049/src/version.c	Tue Aug  8 20:56:11 2006
+--- src/version.c	Tue Aug  8 21:35:25 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     50,
+  /**/
+
+-- 
+From "know your smileys":
+ :-E	Has major dental problems
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

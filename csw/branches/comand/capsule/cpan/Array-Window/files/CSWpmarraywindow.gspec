@@ -1,0 +1,5 @@
+%var            bitname pm_arraywindow
+%var            pkgname CSWpmarraywindow
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,234 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.022
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.022
+Problem:    Using buffer.append() in Ruby may append the line to the wrong
+	    buffer. (Alex Norman)
+Solution:   Properly switch to the buffer to do the appending.  Also for
+	    buffer.delete() and setting a buffer line.
+Files:	    src/if_ruby.c
+
+
+*** ../vim-7.0.021/src/if_ruby.c	Sun Apr 30 20:25:42 2006
+--- src/if_ruby.c	Tue Jun 20 21:01:23 2006
+***************
+*** 643,653 ****
+  
+  static VALUE set_buffer_line(buf_T *buf, linenr_T n, VALUE str)
+  {
+!     buf_T *savebuf = curbuf;
+!     char *line = STR2CSTR(str);
+  
+!     if (n > 0 && n <= buf->b_ml.ml_line_count && line != NULL) {
+  	curbuf = buf;
+  	if (u_savesub(n) == OK) {
+  	    ml_replace(n, (char_u *)line, TRUE);
+  	    changed();
+--- 643,665 ----
+  
+  static VALUE set_buffer_line(buf_T *buf, linenr_T n, VALUE str)
+  {
+!     char	*line = STR2CSTR(str);
+! #ifdef FEAT_AUTOCMD
+!     aco_save_T	aco;
+! #else
+!     buf_T	*save_curbuf = curbuf;
+! #endif
+  
+!     if (n > 0 && n <= buf->b_ml.ml_line_count && line != NULL)
+!     {
+! #ifdef FEAT_AUTOCMD
+! 	/* set curwin/curbuf for "buf" and save some things */
+! 	aucmd_prepbuf(&aco, buf);
+! #else
+  	curbuf = buf;
++ 	curwin->w_buffer = buf;
++ #endif
++ 
+  	if (u_savesub(n) == OK) {
+  	    ml_replace(n, (char_u *)line, TRUE);
+  	    changed();
+***************
+*** 655,664 ****
+  	    syn_changed(n); /* recompute syntax hl. for this line */
+  #endif
+  	}
+! 	curbuf = savebuf;
+  	update_curbuf(NOT_VALID);
+      }
+!     else {
+  	rb_raise(rb_eIndexError, "index %d out of buffer", n);
+  	return Qnil; /* For stop warning */
+      }
+--- 667,685 ----
+  	    syn_changed(n); /* recompute syntax hl. for this line */
+  #endif
+  	}
+! 
+! #ifdef FEAT_AUTOCMD
+! 	/* restore curwin/curbuf and a few other things */
+! 	aucmd_restbuf(&aco);
+! 	/* Careful: autocommands may have made "buf" invalid! */
+! #else
+! 	curwin->w_buffer = save_curbuf;
+! 	curbuf = save_curbuf;
+! #endif
+  	update_curbuf(NOT_VALID);
+      }
+!     else
+!     {
+  	rb_raise(rb_eIndexError, "index %d out of buffer", n);
+  	return Qnil; /* For stop warning */
+      }
+***************
+*** 676,687 ****
+  
+  static VALUE buffer_delete(VALUE self, VALUE num)
+  {
+!     buf_T *buf = get_buf(self);
+!     buf_T *savebuf = curbuf;
+!     long n = NUM2LONG(num);
+  
+!     if (n > 0 && n <= buf->b_ml.ml_line_count) {
+  	curbuf = buf;
+  	if (u_savedel(n, 1) == OK) {
+  	    ml_delete(n, 0);
+  
+--- 697,720 ----
+  
+  static VALUE buffer_delete(VALUE self, VALUE num)
+  {
+!     buf_T	*buf = get_buf(self);
+!     long	n = NUM2LONG(num);
+! #ifdef FEAT_AUTOCMD
+!     aco_save_T	aco;
+! #else
+!     buf_T	*save_curbuf = curbuf;
+! #endif
+  
+!     if (n > 0 && n <= buf->b_ml.ml_line_count)
+!     {
+! #ifdef FEAT_AUTOCMD
+! 	/* set curwin/curbuf for "buf" and save some things */
+! 	aucmd_prepbuf(&aco, buf);
+! #else
+  	curbuf = buf;
++ 	curwin->w_buffer = buf;
++ #endif
++ 
+  	if (u_savedel(n, 1) == OK) {
+  	    ml_delete(n, 0);
+  
+***************
+*** 691,700 ****
+  
+  	    changed();
+  	}
+! 	curbuf = savebuf;
+  	update_curbuf(NOT_VALID);
+      }
+!     else {
+  	rb_raise(rb_eIndexError, "index %d out of buffer", n);
+      }
+      return Qnil;
+--- 724,742 ----
+  
+  	    changed();
+  	}
+! 
+! #ifdef FEAT_AUTOCMD
+! 	/* restore curwin/curbuf and a few other things */
+! 	aucmd_restbuf(&aco);
+! 	/* Careful: autocommands may have made "buf" invalid! */
+! #else
+! 	curwin->w_buffer = save_curbuf;
+! 	curbuf = save_curbuf;
+! #endif
+  	update_curbuf(NOT_VALID);
+      }
+!     else
+!     {
+  	rb_raise(rb_eIndexError, "index %d out of buffer", n);
+      }
+      return Qnil;
+***************
+*** 702,714 ****
+  
+  static VALUE buffer_append(VALUE self, VALUE num, VALUE str)
+  {
+!     buf_T *buf = get_buf(self);
+!     buf_T *savebuf = curbuf;
+!     char *line = STR2CSTR(str);
+!     long n = NUM2LONG(num);
+  
+!     if (n >= 0 && n <= buf->b_ml.ml_line_count && line != NULL) {
+  	curbuf = buf;
+  	if (u_inssub(n + 1) == OK) {
+  	    ml_append(n, (char_u *) line, (colnr_T) 0, FALSE);
+  
+--- 744,768 ----
+  
+  static VALUE buffer_append(VALUE self, VALUE num, VALUE str)
+  {
+!     buf_T	*buf = get_buf(self);
+!     char	*line = STR2CSTR(str);
+!     long	n = NUM2LONG(num);
+! #ifdef FEAT_AUTOCMD
+!     aco_save_T	aco;
+! #else
+!     buf_T	*save_curbuf = curbuf;
+! #endif
+  
+!     if (n >= 0 && n <= buf->b_ml.ml_line_count && line != NULL)
+!     {
+! #ifdef FEAT_AUTOCMD
+! 	/* set curwin/curbuf for "buf" and save some things */
+! 	aucmd_prepbuf(&aco, buf);
+! #else
+  	curbuf = buf;
++ 	curwin->w_buffer = buf;
++ #endif
++ 
+  	if (u_inssub(n + 1) == OK) {
+  	    ml_append(n, (char_u *) line, (colnr_T) 0, FALSE);
+  
+***************
+*** 718,724 ****
+  
+  	    changed();
+  	}
+! 	curbuf = savebuf;
+  	update_curbuf(NOT_VALID);
+      }
+      else {
+--- 772,786 ----
+  
+  	    changed();
+  	}
+! 
+! #ifdef FEAT_AUTOCMD
+! 	/* restore curwin/curbuf and a few other things */
+! 	aucmd_restbuf(&aco);
+! 	/* Careful: autocommands may have made "buf" invalid! */
+! #else
+! 	curwin->w_buffer = save_curbuf;
+! 	curbuf = save_curbuf;
+! #endif
+  	update_curbuf(NOT_VALID);
+      }
+      else {
+*** ../vim-7.0.021/src/version.c	Tue Jun 20 20:49:42 2006
+--- src/version.c	Tue Jun 20 18:42:35 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     22,
+  /**/

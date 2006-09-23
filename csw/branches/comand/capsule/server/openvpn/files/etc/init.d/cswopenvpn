@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Start/Stop script for CSW OpenVPN daemon
+#
+# Multiple openvpd daemon processes are possible, but this script will
+# only handle the first one.
+
+OPENVPN_CONF=/etc/csw/openvpn/openvpn.conf
+PATH=$/opt/csw/bin:$PATH
+OPENVPN_DAEMON=/opt/csw/sbin/openvpn
+
+case $1 in
+'start')
+        if [ -f $OPENVPN_CONF ]; then
+                printf "Starting OpenVPN daemon..."
+                $OPENVPN_DAEMON --config $OPENVPN_CONF --daemon
+                printf "DONE \n"
+        fi
+        ;;
+'stop')
+        pkill -TERM openvpn && printf "OpenVPN daemon stopped\n"
+        ;;
+*)
+        echo "Usage: $0 { start | stop }"
+        exit 1
+        ;;
+esac
+

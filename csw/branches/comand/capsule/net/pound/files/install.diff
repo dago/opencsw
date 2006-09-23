@@ -1,0 +1,20 @@
+diff --speed-large-files --minimal -Nru Pound-2.0.4.orig/Makefile.in Pound-2.0.4/Makefile.in
+--- Pound-2.0.4.orig/Makefile.in	2006-04-20 11:48:10.435120000 -0400
++++ Pound-2.0.4/Makefile.in	2006-04-20 11:48:03.519186000 -0400
+@@ -46,11 +46,11 @@
+ $(OBJS):	pound.h
+ 
+ install:	all
+-		[ -d ${DESTDIR}@sbindir@ ] || mkdir ${DESTDIR}@sbindir@
+-		@INSTALL@ -o bin -g bin -m 555 -s pound ${DESTDIR}@sbindir@/pound
+-		[ -d ${DESTDIR}@mandir@ ] || mkdir ${DESTDIR}@mandir@
+-		[ -d ${DESTDIR}@mandir@/man8 ] || mkdir ${DESTDIR}@mandir@/man8
+-		@INSTALL@ -o bin -g bin -m 644 pound.8 ${DESTDIR}@mandir@/man8/pound.8
++		[ -d ${DESTDIR}@sbindir@ ] || mkdir -p ${DESTDIR}@sbindir@
++		@INSTALL@ -m 555 -s pound ${DESTDIR}@sbindir@/pound
++		[ -d ${DESTDIR}@mandir@ ] || mkdir -p ${DESTDIR}@mandir@
++		[ -d ${DESTDIR}@mandir@/man8 ] || mkdir -p ${DESTDIR}@mandir@/man8
++		@INSTALL@ -m 644 pound.8 ${DESTDIR}@mandir@/man8/pound.8
+ 
+ clean:
+ 		rm -f pound $(OBJS)

@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru Math-Pari-2.010603.orig/utils/Math/PariBuild.pm Math-Pari-2.010603/utils/Math/PariBuild.pm
+--- Math-Pari-2.010603.orig/utils/Math/PariBuild.pm	2005-12-08 03:20:25.108137000 -0500
++++ Math-Pari-2.010603/utils/Math/PariBuild.pm	2005-12-08 03:20:00.761998000 -0500
+@@ -723,7 +723,7 @@
+     my $type = (split ' ', $Config{myuname})[4];
+     if ($type =~ /^sun3/) {
+       $machine = 'm68k';
+-    } elsif ($type =~ /^sun4[ce]?/) {
++    } elsif ($type =~ /^sun4[ceuv]?/) {
+       $machine = 'sparcv7';
+     } elsif ($type =~ /^sun4[dm]/) {
+       local $ENV{PATH} = "$ENV{PATH}:/dev/sbin";

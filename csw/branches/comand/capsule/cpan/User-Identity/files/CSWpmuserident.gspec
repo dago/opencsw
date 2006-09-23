@@ -1,0 +1,9 @@
+%var            bitname pm_userident
+%var            pkgname CSWpmuserident
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2003 Mark Overmeer
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

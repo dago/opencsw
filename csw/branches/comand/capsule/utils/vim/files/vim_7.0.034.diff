@@ -1,0 +1,63 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.034
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.034
+Problem:    After doing completion and typing more characters or using BS
+	    repeating with "." didn't work properly. (Martin Stubenschrott)
+Solution:   Don't put BS and other characters in the redo buffer right away,
+	    do this when finishing completion.
+Files:	    src/edit.c
+
+
+*** ../vim-7.0.033/src/edit.c	Thu Jun 22 16:48:43 2006
+--- src/edit.c	Fri Jun 23 17:50:47 2006
+***************
+*** 3020,3028 ****
+      if ((int)(p - line) - (int)compl_col <= 0)
+  	return K_BS;
+  
+-     /* For redo we need to repeat this backspace. */
+-     AppendCharToRedobuff(K_BS);
+- 
+      /* Deleted more than what was used to find matches or didn't finish
+       * finding all matches: need to look for matches all over again. */
+      if (curwin->w_cursor.col <= compl_col + compl_length
+--- 3020,3025 ----
+***************
+*** 3121,3130 ****
+      else
+  #endif
+  	ins_char(c);
+- 
+-     /* For redo we need to count this character so that the number of
+-      * backspaces is correct. */
+-     AppendCharToRedobuff(c);
+  
+      /* If we didn't complete finding matches we must search again. */
+      if (compl_was_interrupted)
+--- 3118,3123 ----
+*** ../vim-7.0.033/src/version.c	Fri Jun 23 17:26:02 2006
+--- src/version.c	Fri Jun 23 17:59:04 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     34,
+  /**/
+
+-- 
+A parent can be arrested if his child cannot hold back a burp during a church
+service.
+		[real standing law in Nebraska, United States of America]
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

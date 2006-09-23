@@ -1,0 +1,5 @@
+%var            bitname php5
+%var            pkgname CSWphp5
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc PHP Hypertext Processor 5
+%copyright      url file://%{WORKSRC}/LICENSE

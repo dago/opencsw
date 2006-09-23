@@ -1,0 +1,723 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.060
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.060 (after 7.0.51)
+Problem:    Code for temporarily switching to another buffer is duplicated in
+	    quite a few places.
+Solution:   Use aucmd_prepbuf() and aucmd_restbuf() also when FEAT_AUTOCMD is
+	    not defined.
+Files:	    src/buffer.c, src/eval.c, src/fileio.c, src/if_ruby.c,
+	    src/if_perl.xs, src/quickfix.c, src/structs.h
+
+
+*** ../vim-7.0.059/src/buffer.c	Thu Apr 27 01:49:30 2006
+--- src/buffer.c	Wed Aug 16 14:36:17 2006
+***************
+*** 5420,5430 ****
+      buf_T	*newbuf;
+      int		differ = TRUE;
+      linenr_T	lnum;
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+- #else
+-     buf_T	*old_curbuf = curbuf;
+- #endif
+      exarg_T	ea;
+  
+      /* Allocate a buffer without putting it in the buffer list. */
+--- 5420,5426 ----
+***************
+*** 5439,5451 ****
+  	return TRUE;
+      }
+  
+- #ifdef FEAT_AUTOCMD
+      /* set curwin/curbuf to buf and save a few things */
+      aucmd_prepbuf(&aco, newbuf);
+- #else
+-     curbuf = newbuf;
+-     curwin->w_buffer = newbuf;
+- #endif
+  
+      if (ml_open(curbuf) == OK
+  	    && readfile(buf->b_ffname, buf->b_fname,
+--- 5435,5442 ----
+***************
+*** 5466,5478 ****
+      }
+      vim_free(ea.cmd);
+  
+- #ifdef FEAT_AUTOCMD
+      /* restore curwin/curbuf and a few other things */
+      aucmd_restbuf(&aco);
+- #else
+-     curbuf = old_curbuf;
+-     curwin->w_buffer = old_curbuf;
+- #endif
+  
+      if (curbuf != newbuf)	/* safety check */
+  	wipe_buffer(newbuf, FALSE);
+--- 5457,5464 ----
+*** ../vim-7.0.059/src/eval.c	Sun Jul 23 22:07:55 2006
+--- src/eval.c	Wed Aug 16 14:38:32 2006
+***************
+*** 14184,14194 ****
+      typval_T	*rettv;
+  {
+      buf_T	*buf;
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+- #else
+-     buf_T	*save_curbuf;
+- #endif
+      char_u	*varname, *bufvarname;
+      typval_T	*varp;
+      char_u	nbuf[NUMBUFLEN];
+--- 14184,14190 ----
+***************
+*** 14205,14216 ****
+      if (buf != NULL && varname != NULL && varp != NULL)
+      {
+  	/* set curbuf to be our buf, temporarily */
+- #ifdef FEAT_AUTOCMD
+  	aucmd_prepbuf(&aco, buf);
+- #else
+- 	save_curbuf = curbuf;
+- 	curbuf = buf;
+- #endif
+  
+  	if (*varname == '&')
+  	{
+--- 14201,14207 ----
+***************
+*** 14237,14247 ****
+  	}
+  
+  	/* reset notion of buffer */
+- #ifdef FEAT_AUTOCMD
+  	aucmd_restbuf(&aco);
+- #else
+- 	curbuf = save_curbuf;
+- #endif
+      }
+  }
+  
+--- 14228,14234 ----
+*** ../vim-7.0.059/src/fileio.c	Sun Apr 30 20:33:48 2006
+--- src/fileio.c	Wed Aug 16 14:39:23 2006
+***************
+*** 6450,6466 ****
+      int		old_ro = buf->b_p_ro;
+      buf_T	*savebuf;
+      int		saved = OK;
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+  
+      /* set curwin/curbuf for "buf" and save some things */
+      aucmd_prepbuf(&aco, buf);
+- #else
+-     buf_T	*save_curbuf = curbuf;
+- 
+-     curbuf = buf;
+-     curwin->w_buffer = buf;
+- #endif
+  
+      /* We only want to read the text from the file, not reset the syntax
+       * highlighting, clear marks, diff status, etc.  Force the fileformat
+--- 6450,6459 ----
+***************
+*** 6573,6586 ****
+  	    curbuf->b_p_ro |= old_ro;
+      }
+  
+- #ifdef FEAT_AUTOCMD
+      /* restore curwin/curbuf and a few other things */
+      aucmd_restbuf(&aco);
+      /* Careful: autocommands may have made "buf" invalid! */
+- #else
+-     curwin->w_buffer = save_curbuf;
+-     curbuf = save_curbuf;
+- #endif
+  }
+  
+  /*ARGSUSED*/
+--- 6566,6574 ----
+***************
+*** 8088,8093 ****
+--- 8076,8082 ----
+   * Search a window for the current buffer.  Save the cursor position and
+   * screen offset.
+   * Set "curbuf" and "curwin" to match "buf".
++  * When FEAT_AUTOCMD is not defined another version is used, see below.
+   */
+      void
+  aucmd_prepbuf(aco, buf)
+***************
+*** 8151,8156 ****
+--- 8140,8146 ----
+  /*
+   * Cleanup after executing autocommands for a (hidden) buffer.
+   * Restore the window as it was (if possible).
++  * When FEAT_AUTOCMD is not defined another version is used, see below.
+   */
+      void
+  aucmd_restbuf(aco)
+***************
+*** 9063,9069 ****
+--- 9053,9089 ----
+      return retval;
+  }
+  
++ #else	/* FEAT_AUTOCMD */
++ 
++ /*
++  * Prepare for executing commands for (hidden) buffer "buf".
++  * This is the non-autocommand version, it simply saves "curbuf" and sets
++  * "curbuf" and "curwin" to match "buf".
++  */
++     void
++ aucmd_prepbuf(aco, buf)
++     aco_save_T	*aco;		/* structure to save values in */
++     buf_T	*buf;		/* new curbuf */
++ {
++     aco->save_buf = buf;
++     curbuf = buf;
++     curwin->w_buffer = buf;
++ }
++ 
++ /*
++  * Restore after executing commands for a (hidden) buffer.
++  * This is the non-autocommand version.
++  */
++     void
++ aucmd_restbuf(aco)
++     aco_save_T	*aco;		/* structure holding saved values */
++ {
++     curbuf = aco->save_buf;
++     curwin->w_buffer = curbuf;
++ }
++ 
+  #endif	/* FEAT_AUTOCMD */
++ 
+  
+  #if defined(FEAT_AUTOCMD) || defined(FEAT_WILDIGN) || defined(PROTO)
+  /*
+*** ../vim-7.0.059/src/if_ruby.c	Tue Jun 20 21:08:02 2006
+--- src/if_ruby.c	Wed Aug 16 14:41:11 2006
+***************
+*** 644,664 ****
+  static VALUE set_buffer_line(buf_T *buf, linenr_T n, VALUE str)
+  {
+      char	*line = STR2CSTR(str);
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+- #else
+-     buf_T	*save_curbuf = curbuf;
+- #endif
+  
+      if (n > 0 && n <= buf->b_ml.ml_line_count && line != NULL)
+      {
+- #ifdef FEAT_AUTOCMD
+  	/* set curwin/curbuf for "buf" and save some things */
+  	aucmd_prepbuf(&aco, buf);
+- #else
+- 	curbuf = buf;
+- 	curwin->w_buffer = buf;
+- #endif
+  
+  	if (u_savesub(n) == OK) {
+  	    ml_replace(n, (char_u *)line, TRUE);
+--- 644,655 ----
+***************
+*** 668,681 ****
+  #endif
+  	}
+  
+- #ifdef FEAT_AUTOCMD
+  	/* restore curwin/curbuf and a few other things */
+  	aucmd_restbuf(&aco);
+  	/* Careful: autocommands may have made "buf" invalid! */
+! #else
+! 	curwin->w_buffer = save_curbuf;
+! 	curbuf = save_curbuf;
+! #endif
+  	update_curbuf(NOT_VALID);
+      }
+      else
+--- 659,668 ----
+  #endif
+  	}
+  
+  	/* restore curwin/curbuf and a few other things */
+  	aucmd_restbuf(&aco);
+  	/* Careful: autocommands may have made "buf" invalid! */
+! 
+  	update_curbuf(NOT_VALID);
+      }
+      else
+***************
+*** 699,719 ****
+  {
+      buf_T	*buf = get_buf(self);
+      long	n = NUM2LONG(num);
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+- #else
+-     buf_T	*save_curbuf = curbuf;
+- #endif
+  
+      if (n > 0 && n <= buf->b_ml.ml_line_count)
+      {
+- #ifdef FEAT_AUTOCMD
+  	/* set curwin/curbuf for "buf" and save some things */
+  	aucmd_prepbuf(&aco, buf);
+- #else
+- 	curbuf = buf;
+- 	curwin->w_buffer = buf;
+- #endif
+  
+  	if (u_savedel(n, 1) == OK) {
+  	    ml_delete(n, 0);
+--- 686,697 ----
+***************
+*** 725,738 ****
+  	    changed();
+  	}
+  
+- #ifdef FEAT_AUTOCMD
+  	/* restore curwin/curbuf and a few other things */
+  	aucmd_restbuf(&aco);
+  	/* Careful: autocommands may have made "buf" invalid! */
+! #else
+! 	curwin->w_buffer = save_curbuf;
+! 	curbuf = save_curbuf;
+! #endif
+  	update_curbuf(NOT_VALID);
+      }
+      else
+--- 703,712 ----
+  	    changed();
+  	}
+  
+  	/* restore curwin/curbuf and a few other things */
+  	aucmd_restbuf(&aco);
+  	/* Careful: autocommands may have made "buf" invalid! */
+! 
+  	update_curbuf(NOT_VALID);
+      }
+      else
+***************
+*** 747,767 ****
+      buf_T	*buf = get_buf(self);
+      char	*line = STR2CSTR(str);
+      long	n = NUM2LONG(num);
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+- #else
+-     buf_T	*save_curbuf = curbuf;
+- #endif
+  
+      if (n >= 0 && n <= buf->b_ml.ml_line_count && line != NULL)
+      {
+- #ifdef FEAT_AUTOCMD
+  	/* set curwin/curbuf for "buf" and save some things */
+  	aucmd_prepbuf(&aco, buf);
+- #else
+- 	curbuf = buf;
+- 	curwin->w_buffer = buf;
+- #endif
+  
+  	if (u_inssub(n + 1) == OK) {
+  	    ml_append(n, (char_u *) line, (colnr_T) 0, FALSE);
+--- 721,732 ----
+***************
+*** 773,786 ****
+  	    changed();
+  	}
+  
+- #ifdef FEAT_AUTOCMD
+  	/* restore curwin/curbuf and a few other things */
+  	aucmd_restbuf(&aco);
+  	/* Careful: autocommands may have made "buf" invalid! */
+! #else
+! 	curwin->w_buffer = save_curbuf;
+! 	curbuf = save_curbuf;
+! #endif
+  	update_curbuf(NOT_VALID);
+      }
+      else {
+--- 738,747 ----
+  	    changed();
+  	}
+  
+  	/* restore curwin/curbuf and a few other things */
+  	aucmd_restbuf(&aco);
+  	/* Careful: autocommands may have made "buf" invalid! */
+! 
+  	update_curbuf(NOT_VALID);
+      }
+      else {
+*** ../vim-7.0.059/src/if_perl.xs	Wed Aug 16 18:19:41 2006
+--- src/if_perl.xs	Wed Aug 16 14:45:15 2006
+***************
+*** 1068,1097 ****
+  	    line = SvPV(ST(i),PL_na);
+  	    if (lnum > 0 && lnum <= vimbuf->b_ml.ml_line_count && line != NULL)
+  	    {
+- #ifdef FEAT_AUTOCMD
+  		aco_save_T	aco;
+  
+  		/* set curwin/curbuf for "vimbuf" and save some things */
+  		aucmd_prepbuf(&aco, vimbuf);
+- #else
+- 		buf_T	*save_curbuf = curbuf;
+  
+- 		curbuf = vimbuf;
+- 		curwin->w_buffer = vimbuf;
+- #endif
+  		if (u_savesub(lnum) == OK)
+  		{
+  		    ml_replace(lnum, (char_u *)line, TRUE);
+  		    changed_bytes(lnum, 0);
+  		}
+! #ifdef FEAT_AUTOCMD
+  		/* restore curwin/curbuf and a few other things */
+  		aucmd_restbuf(&aco);
+  		/* Careful: autocommands may have made "vimbuf" invalid! */
+- #else
+- 		curwin->w_buffer = save_curbuf;
+- 		curbuf = save_curbuf;
+- #endif
+  	    }
+  	}
+      }
+--- 1068,1087 ----
+  	    line = SvPV(ST(i),PL_na);
+  	    if (lnum > 0 && lnum <= vimbuf->b_ml.ml_line_count && line != NULL)
+  	    {
+  		aco_save_T	aco;
+  
+  		/* set curwin/curbuf for "vimbuf" and save some things */
+  		aucmd_prepbuf(&aco, vimbuf);
+  
+  		if (u_savesub(lnum) == OK)
+  		{
+  		    ml_replace(lnum, (char_u *)line, TRUE);
+  		    changed_bytes(lnum, 0);
+  		}
+! 
+  		/* restore curwin/curbuf and a few other things */
+  		aucmd_restbuf(&aco);
+  		/* Careful: autocommands may have made "vimbuf" invalid! */
+  	    }
+  	}
+      }
+***************
+*** 1128,1158 ****
+  	    {
+  		if (lnum > 0 && lnum <= vimbuf->b_ml.ml_line_count)
+  		{
+- 		    buf_T	*save_curbuf = curbuf;
+- #ifdef FEAT_AUTOCMD
+  		    aco_save_T	aco;
+  
+  		    /* set curwin/curbuf for "vimbuf" and save some things */
+  		    aucmd_prepbuf(&aco, vimbuf);
+! #else
+! 		    curbuf = vimbuf;
+! 		    curwin->w_buffer = vimbuf;
+! #endif
+  		    if (u_savedel(lnum, 1) == OK)
+  		    {
+  			ml_delete(lnum, 0);
+  			deleted_lines_mark(lnum, 1L);
+! 			if (save_curbuf == curbuf)
+  			    check_cursor();
+  		    }
+! #ifdef FEAT_AUTOCMD
+  		    /* restore curwin/curbuf and a few other things */
+  		    aucmd_restbuf(&aco);
+  		    /* Careful: autocommands may have made "vimbuf" invalid! */
+! #else
+! 		    curwin->w_buffer = save_curbuf;
+! 		    curbuf = save_curbuf;
+! #endif
+  		    update_curbuf(VALID);
+  		}
+  	    }
+--- 1118,1140 ----
+  	    {
+  		if (lnum > 0 && lnum <= vimbuf->b_ml.ml_line_count)
+  		{
+  		    aco_save_T	aco;
+  
+  		    /* set curwin/curbuf for "vimbuf" and save some things */
+  		    aucmd_prepbuf(&aco, vimbuf);
+! 
+  		    if (u_savedel(lnum, 1) == OK)
+  		    {
+  			ml_delete(lnum, 0);
+  			deleted_lines_mark(lnum, 1L);
+! 			if (aco.save_buf == curbuf)
+  			    check_cursor();
+  		    }
+! 
+  		    /* restore curwin/curbuf and a few other things */
+  		    aucmd_restbuf(&aco);
+  		    /* Careful: autocommands may have made "vimbuf" invalid! */
+! 
+  		    update_curbuf(VALID);
+  		}
+  	    }
+***************
+*** 1179,1208 ****
+  	    line = SvPV(ST(i),PL_na);
+  	    if (lnum >= 0 && lnum <= vimbuf->b_ml.ml_line_count && line != NULL)
+  	    {
+- #ifdef FEAT_AUTOCMD
+  		aco_save_T	aco;
+  
+  		/* set curwin/curbuf for "vimbuf" and save some things */
+  		aucmd_prepbuf(&aco, vimbuf);
+- #else
+- 		buf_T	*save_curbuf = curbuf;
+  
+- 		curbuf = vimbuf;
+- 		curwin->w_buffer = vimbuf;
+- #endif
+  		if (u_inssub(lnum + 1) == OK)
+  		{
+  		    ml_append(lnum, (char_u *)line, (colnr_T)0, FALSE);
+  		    appended_lines_mark(lnum, 1L);
+  		}
+! #ifdef FEAT_AUTOCMD
+  		/* restore curwin/curbuf and a few other things */
+  		aucmd_restbuf(&aco);
+  		/* Careful: autocommands may have made "vimbuf" invalid! */
+! #else
+! 		curwin->w_buffer = save_curbuf;
+! 		curbuf = save_curbuf;
+! #endif
+  		update_curbuf(VALID);
+  	    }
+  	}
+--- 1161,1181 ----
+  	    line = SvPV(ST(i),PL_na);
+  	    if (lnum >= 0 && lnum <= vimbuf->b_ml.ml_line_count && line != NULL)
+  	    {
+  		aco_save_T	aco;
+  
+  		/* set curwin/curbuf for "vimbuf" and save some things */
+  		aucmd_prepbuf(&aco, vimbuf);
+  
+  		if (u_inssub(lnum + 1) == OK)
+  		{
+  		    ml_append(lnum, (char_u *)line, (colnr_T)0, FALSE);
+  		    appended_lines_mark(lnum, 1L);
+  		}
+! 
+  		/* restore curwin/curbuf and a few other things */
+  		aucmd_restbuf(&aco);
+  		/* Careful: autocommands may have made "vimbuf" invalid! */
+! 
+  		update_curbuf(VALID);
+  	    }
+  	}
+*** ../vim-7.0.059/src/quickfix.c	Tue Jun 20 20:49:42 2006
+--- src/quickfix.c	Wed Aug 16 14:43:06 2006
+***************
+*** 2463,2494 ****
+      qf_info_T	*qi;
+  {
+      buf_T	*buf;
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+- #else
+-     buf_T	*save_curbuf;
+- #endif
+  
+      /* Check if a buffer for the quickfix list exists.  Update it. */
+      buf = qf_find_buf(qi);
+      if (buf != NULL)
+      {
+- #ifdef FEAT_AUTOCMD
+  	/* set curwin/curbuf to buf and save a few things */
+  	aucmd_prepbuf(&aco, buf);
+- #else
+- 	save_curbuf = curbuf;
+- 	curbuf = buf;
+- #endif
+  
+  	qf_fill_buffer(qi);
+  
+- #ifdef FEAT_AUTOCMD
+  	/* restore curwin/curbuf and a few other things */
+  	aucmd_restbuf(&aco);
+- #else
+- 	curbuf = save_curbuf;
+- #endif
+  
+  	(void)qf_win_pos_update(qi, 0);
+      }
+--- 2463,2481 ----
+***************
+*** 2977,2986 ****
+  #if defined(FEAT_AUTOCMD) && defined(FEAT_SYN_HL)
+      char_u	*save_ei = NULL;
+  #endif
+- #ifndef FEAT_AUTOCMD
+-     buf_T	*save_curbuf;
+- #else
+      aco_save_T	aco;
+      char_u	*au_name =  NULL;
+      int		flags = 0;
+      colnr_T	col;
+--- 2964,2971 ----
+  #if defined(FEAT_AUTOCMD) && defined(FEAT_SYN_HL)
+      char_u	*save_ei = NULL;
+  #endif
+      aco_save_T	aco;
++ #ifdef FEAT_AUTOCMD
+      char_u	*au_name =  NULL;
+      int		flags = 0;
+      colnr_T	col;
+***************
+*** 3201,3224 ****
+  		     * need to be done now, in that buffer.  And the modelines
+  		     * need to be done (again).  But not the window-local
+  		     * options! */
+- #if defined(FEAT_AUTOCMD)
+  		    aucmd_prepbuf(&aco, buf);
+- #else
+- 		    save_curbuf = curbuf;
+- 		    curbuf = buf;
+- 		    curwin->w_buffer = curbuf;
+- #endif
+  #if defined(FEAT_AUTOCMD) && defined(FEAT_SYN_HL)
+  		    apply_autocmds(EVENT_FILETYPE, buf->b_p_ft,
+  						     buf->b_fname, TRUE, buf);
+  #endif
+  		    do_modelines(OPT_NOWIN);
+- #if defined(FEAT_AUTOCMD)
+  		    aucmd_restbuf(&aco);
+- #else
+- 		    curbuf = save_curbuf;
+- 		    curwin->w_buffer = curbuf;
+- #endif
+  		}
+  	    }
+  	}
+--- 3186,3198 ----
+***************
+*** 3319,3329 ****
+  {
+      buf_T	*newbuf;
+      int		failed = TRUE;
+- #ifdef FEAT_AUTOCMD
+      aco_save_T	aco;
+- #else
+-     buf_T	*old_curbuf = curbuf;
+- #endif
+  
+      /* Allocate a buffer without putting it in the buffer list. */
+      newbuf = buflist_new(NULL, NULL, (linenr_T)1, BLN_DUMMY);
+--- 3293,3299 ----
+***************
+*** 3333,3345 ****
+      /* Init the options. */
+      buf_copy_options(newbuf, BCO_ENTER | BCO_NOHELP);
+  
+- #ifdef FEAT_AUTOCMD
+      /* set curwin/curbuf to buf and save a few things */
+      aucmd_prepbuf(&aco, newbuf);
+- #else
+-     curbuf = newbuf;
+-     curwin->w_buffer = newbuf;
+- #endif
+  
+      /* Need to set the filename for autocommands. */
+      (void)setfname(curbuf, fname, NULL, FALSE);
+--- 3303,3310 ----
+***************
+*** 3370,3382 ****
+  	}
+      }
+  
+- #ifdef FEAT_AUTOCMD
+      /* restore curwin/curbuf and a few other things */
+      aucmd_restbuf(&aco);
+- #else
+-     curbuf = old_curbuf;
+-     curwin->w_buffer = old_curbuf;
+- #endif
+  
+      if (!buf_valid(newbuf))
+  	return NULL;
+--- 3335,3342 ----
+*** ../vim-7.0.059/src/structs.h	Sun Apr  9 23:52:16 2006
+--- src/structs.h	Wed Aug 16 19:30:48 2006
+***************
+*** 2213,2230 ****
+  
+  /*
+   * Struct to save values in before executing autocommands for a buffer that is
+!  * not the current buffer.
+   */
+  typedef struct
+  {
+      buf_T	*save_buf;	/* saved curbuf */
+      buf_T	*new_curbuf;	/* buffer to be used */
+      win_T	*save_curwin;	/* saved curwin, NULL if it didn't change */
+      win_T	*new_curwin;	/* new curwin if save_curwin != NULL */
+      pos_T	save_cursor;	/* saved cursor pos of save_curwin */
+      linenr_T	save_topline;	/* saved topline of save_curwin */
+! #ifdef FEAT_DIFF
+      int		save_topfill;	/* saved topfill of save_curwin */
+  #endif
+  } aco_save_T;
+  
+--- 2213,2232 ----
+  
+  /*
+   * Struct to save values in before executing autocommands for a buffer that is
+!  * not the current buffer.  Without FEAT_AUTOCMD only "curbuf" is remembered.
+   */
+  typedef struct
+  {
+      buf_T	*save_buf;	/* saved curbuf */
++ #ifdef FEAT_AUTOCMD
+      buf_T	*new_curbuf;	/* buffer to be used */
+      win_T	*save_curwin;	/* saved curwin, NULL if it didn't change */
+      win_T	*new_curwin;	/* new curwin if save_curwin != NULL */
+      pos_T	save_cursor;	/* saved cursor pos of save_curwin */
+      linenr_T	save_topline;	/* saved topline of save_curwin */
+! # ifdef FEAT_DIFF
+      int		save_topfill;	/* saved topfill of save_curwin */
++ # endif
+  #endif
+  } aco_save_T;
+  
+*** ../vim-7.0.059/src/version.c	Wed Aug 16 18:19:41 2006
+--- src/version.c	Wed Aug 16 19:31:01 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     60,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+164. You got out to buy software, instead of going out for a beer.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

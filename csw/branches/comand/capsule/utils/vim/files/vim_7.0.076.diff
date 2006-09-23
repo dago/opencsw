@@ -1,0 +1,76 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.076
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.076 (after 7.0.010)
+Problem:    Automatic downloading of spell files only works for ftp.
+Solution:   Don't add login and password for non-ftp URLs. (Alexander Patrakov)
+Files:      runtime/autoload/spellfile.vim
+
+
+*** ../vim-7.0.075/runtime/autoload/spellfile.vim	Sat May 13 14:29:16 2006
+--- runtime/autoload/spellfile.vim	Tue Aug 29 22:17:03 2006
+***************
+*** 1,6 ****
+  " Vim script to download a missing spell file
+  " Maintainer:	Bram Moolenaar <Bram@vim.org>
+! " Last Change:	2006 May 10
+  
+  if !exists('g:spellfile_URL')
+    let g:spellfile_URL = 'ftp://ftp.vim.org/pub/vim/runtime/spell'
+--- 1,6 ----
+  " Vim script to download a missing spell file
+  " Maintainer:	Bram Moolenaar <Bram@vim.org>
+! " Last Change:	2006 Aug 29
+  
+  if !exists('g:spellfile_URL')
+    let g:spellfile_URL = 'ftp://ftp.vim.org/pub/vim/runtime/spell'
+***************
+*** 110,118 ****
+    endif
+  endfunc
+  
+! " Read "fname" from the ftp server.
+  function! spellfile#Nread(fname)
+!   let machine = substitute(g:spellfile_URL, 'ftp://\([^/]*\).*', '\1', '')
+!   let dir = substitute(g:spellfile_URL, 'ftp://[^/]*/\(.*\)', '\1', '')
+!   exe 'Nread "' . machine . ' anonymous vim7user ' . dir . '/' . a:fname . '"'
+  endfunc
+--- 110,123 ----
+    endif
+  endfunc
+  
+! " Read "fname" from the server.
+  function! spellfile#Nread(fname)
+!   if g:spellfile_URL =~ '^ftp://'
+!     " for an ftp server use a default login and password to avoid a prompt
+!     let machine = substitute(g:spellfile_URL, 'ftp://\([^/]*\).*', '\1', '')
+!     let dir = substitute(g:spellfile_URL, 'ftp://[^/]*/\(.*\)', '\1', '')
+!     exe 'Nread "' . machine . ' anonymous vim7user ' . dir . '/' . a:fname . '"'
+!   else
+!     exe 'Nread ' g:spellfile_URL . '/' . a:fname
+!   endif
+  endfunc
+*** ../vim-7.0.075/src/version.c	Tue Aug 29 21:59:25 2006
+--- src/version.c	Tue Aug 29 22:31:45 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     76,
+  /**/
+
+-- 
+This sentence is not sure that it exists, but if it does, it will
+certainly consider the possibility that other sentences exist.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

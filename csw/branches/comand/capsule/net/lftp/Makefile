@@ -1,0 +1,53 @@
+GARNAME = lftp
+GARVERSION = 3.5.5rc2
+CATEGORIES = net
+
+DESCRIPTION = sophisticated command-line ftp/http client
+define BLURB
+   lftp is a sophisticated command line based file transfer program. Supported protocols include FTP, HTTP, SFTP, and FISH. It has a multithreaded design allowing you to issue and execute multiple commands simultaneously or in the background. It also features mirroring capabilities and will reconnect and continue transfers in the event of a disconnection. Also, if you quit the program while transfers are still in progress, it will switch to nohup mode and finish the transfers in the background. Additional protocols supported: FTP over HTTP proxy, HTTPS and FTP over SSL. There are lots of tunable parameters, including rate limitation, number of connections limitation and more.
+endef
+
+MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/devel/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWlftp,prototype depend)
+DISTFILES += changelog.CSW
+DISTFILES += i.conf r.conf
+
+# adding the conf classe for handling configuration files
+SPKG_CLASSES = none conf
+
+# correct some bugs preventing compilation
+# with sun cc
+# PATCHFILES = sun_cc_compilation_fix.patch
+PATCHFILES += sun_cc_bool_compilation_fix.patch
+#PATCHFILES += MakeRef_macro.patch
+
+# do some type conversion before munmap call
+# so lftp can be compiled with sun cc 
+# (patch only mandatory to compile with gnutls)
+#PATCHFILES = munmap.patch
+
+CONFIGURE_ARGS = $(DIRPATHS)
+# previous maintainer compiled with openssl
+# instead of gnutls, no need to change that
+CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
+
+# I got a coredump with lftp compiled with cc
+# the one compiled with gcc doesn't seem to have this problem
+# GARCOMPILER = GNU
+
+# for debug build
+#CONFIGURE_ARGS += --with-debug
+#SUN_CC_OPT=-g
+#SUN_CXX_OPT=-g
+#GNU_CC_OPT = -g
+#GNU_CXX_OPT = -g
+
+TEST_SCRIPTS =
+
+include ../category.mk
+
+post-install:
+	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
+	@ginstall $(WORKDIR)/i.conf $(WORKDIR)/r.conf $(DESTDIR)
+

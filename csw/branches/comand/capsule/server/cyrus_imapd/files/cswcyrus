@@ -1,0 +1,74 @@
+#!/sbin/sh
+#
+# Cyrus startup script for blastwave
+#
+# Yann Rouillard <yann@blastwave.org>
+
+# chkconfig stuff
+# chkconfig: 3 90 10
+# description: Pop and Imap server from the Cyrus mail system
+
+PID_FILE="/var/run/cyrus-master.pid"
+COMMAND=/opt/csw/sbin/cyrus-master
+
+[ -f /opt/csw/etc/cyrus/cyrus.conf ] || exit 0
+
+check_proc ()
+{
+    if [ -f $1 ]; then
+        _PID=`cat $1 | head -1`
+        _COMMAND=`ps -p $_PID -o comm | tail -1`
+        [ "x$_COMMAND" = "x$2" ]
+    else
+        return 1
+    fi
+}
+
+
+case "$1" in
+    'start')
+	# Start Daemons.
+	if check_proc $PID_FILE $COMMAND; then
+	    echo "Cyrus seems to be already running. If it's not the case, you might want to delete the file $PID_FILE";
+	else
+	    /usr/ucb/echo -n "Starting Cyrus..."
+	    $COMMAND -d -p $PID_FILE
+	    if [ "$?" -eq 0 ]; then
+		echo "Ok" 
+	    else
+		echo "Failed"
+	    fi
+	fi
+	;;
+    
+    'stop')
+	#stop daemons.
+        if check_proc $PID_FILE $COMMAND; then
+	    /usr/ucb/echo -n "Stopping Cyrus..."
+	    kill `cat $PID_FILE`
+	    rm $PID_FILE
+	    echo "Ok"
+	else
+	    echo "Cyrus is not running";
+	fi
+	;;
+    
+   'restart')
+	$0 stop
+	$0 start
+	;;
+
+    'status')
+	if [ -r $PID_FILE ];then
+	    echo "Cyrus is running."
+	else
+	    echo "Cyrus is not running";
+	fi
+	;;	
+    
+    *)
+	echo "usage: cyrus {start|stop|restart|status}"
+	exit 1
+esac
+
+exit 0

@@ -1,0 +1,11 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWapache2 apache2 - apache 2.0 web server
+P CSWapache2rt apache2rt - apache 2.0 runtime libraries
+P CSWexpat expat - XML Parser Toolkit
+P CSWgdbm gdbm - GNU dbm
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWiconv libiconv - GNU iconv library
+P CSWlibgtop libgtop - library that fetches system related information
+P CSWoldap openldap - ldap clients,libraries and server
+P CSWperl perl - A high-level, general-purpose programming language

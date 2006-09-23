@@ -1,0 +1,22 @@
+%var            bitname pm_httpdav
+%var            pkgname CSWpmhttpdav
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+
+%depend         
+P CSWneon neon - HTTP and WebDAV client library
+
+%copyright      
+This module is Copyright (C) 2001 by
+
+   Patrick Collins
+   G03 Gloucester Place, Kensington
+   Sydney, Australia
+
+   mailto:pcollins@cpan.org
+   Phone: +61 2 9663 4916
+
+All rights reserved.
+
+You may distribute this module under the terms of either the GNU General
+Public License or the Artistic License, as specified in the Perl README
+file.

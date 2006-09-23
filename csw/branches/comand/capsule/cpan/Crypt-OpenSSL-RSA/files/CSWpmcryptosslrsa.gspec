@@ -1,0 +1,7 @@
+%var            bitname pm_cryptosslrsa
+%var            pkgname CSWpmcryptosslrsa
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2001-2004 Ian Robertson.  Crypt::OpenSSL::RSA is free
+software; you may redistribute it and/or modify it under the same
+terms as Perl itself.

@@ -1,0 +1,12 @@
+b815a666329f7de097775113547539e0  download/jakarta-tomcat-connectors-1.2.15-src.tar.gz
+689adfe56022cf121b384e27d5c1402b  download/CSWap2modjk.gspec
+43c992b019672fe3bacdbe4fababb500  download/CSWap2modjk.depend
+36e88e72dcc7970ad5d95944f1d9600a  download/CSWap2modjk.prototype
+f4781a01cc678a752a800198918e5687  download/CSWap2modjk.postinstall
+5eb4612d15fdf4fd8498d97c79ed8e4b  download/CSWap2modjk.preremove
+0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2modjk.space
+43136ccdd67533557a2e4953249f755f  download/httpd-jk.conf.CSW
+7824a6e972faae3d9ec7b06a47b70105  download/workers.properties
+b69613899d749ba2a40d1acbbbe13ba9  download/workers.properties.minimal
+594aca8f50b11134fd3396e348bd2f12  download/uriworkermap.properties
+be1cf4299b0d117ebb951efddd2702b5  download/install.diff

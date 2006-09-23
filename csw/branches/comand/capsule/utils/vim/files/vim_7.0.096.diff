@@ -1,0 +1,82 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.096
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.096
+Problem:    taglist() returns the filename relative to the tags file, while
+	    the directory of the tags file is unknown. (Hari Krishna Dara)
+Solution:   Expand the file name. (Yegappan Lakshmanan)
+Files:	    src/tag.c
+
+
+*** ../vim-7.0.095/src/tag.c	Thu Apr 27 23:40:34 2006
+--- src/tag.c	Sun Sep 10 13:42:41 2006
+***************
+*** 3787,3792 ****
+--- 3787,3793 ----
+  {
+      int		num_matches, i, ret;
+      char_u	**matches, *p;
++     char_u	*full_fname;
+      dict_T	*dict;
+      tagptrs_T	tp;
+      long	is_static;
+***************
+*** 3809,3823 ****
+  	    if (list_append_dict(list, dict) == FAIL)
+  		ret = FAIL;
+  
+  	    if (add_tag_field(dict, "name", tp.tagname, tp.tagname_end) == FAIL
+! 		    || add_tag_field(dict, "filename", tp.fname,
+! 							 tp.fname_end) == FAIL
+  		    || add_tag_field(dict, "cmd", tp.command,
+  						       tp.command_end) == FAIL
+  		    || add_tag_field(dict, "kind", tp.tagkind,
+  						      tp.tagkind_end) == FAIL
+  		    || dict_add_nr_str(dict, "static", is_static, NULL) == FAIL)
+  		ret = FAIL;
+  
+  	    if (tp.command_end != NULL)
+  	    {
+--- 3810,3827 ----
+  	    if (list_append_dict(list, dict) == FAIL)
+  		ret = FAIL;
+  
++ 	    full_fname = tag_full_fname(&tp);
+  	    if (add_tag_field(dict, "name", tp.tagname, tp.tagname_end) == FAIL
+! 		    || add_tag_field(dict, "filename", full_fname,
+! 							 NULL) == FAIL
+  		    || add_tag_field(dict, "cmd", tp.command,
+  						       tp.command_end) == FAIL
+  		    || add_tag_field(dict, "kind", tp.tagkind,
+  						      tp.tagkind_end) == FAIL
+  		    || dict_add_nr_str(dict, "static", is_static, NULL) == FAIL)
+  		ret = FAIL;
++ 
++ 	    vim_free(full_fname);
+  
+  	    if (tp.command_end != NULL)
+  	    {
+*** ../vim-7.0.095/src/version.c	Sun Sep 10 13:22:26 2006
+--- src/version.c	Sun Sep 10 13:52:01 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     96,
+  /**/
+
+-- 
+The early bird gets the worm. If you want something else for
+breakfast, get up later.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
