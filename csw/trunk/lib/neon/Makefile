@@ -16,8 +16,8 @@ DISTFILES += $(call admfiles,CSWneon,$(ADMSTANDARD))
 DISTFILES += $(call admfiles,CSWneon-devel,$(ADMSTANDARD))
 
 # Compatibility libraries
-DISTFILES += libneon.so.24.0.7.i386.gz
-DISTFILES += libneon.so.24.0.7.sparc.gz
+DISTFILES += libneon.so.24.0.7.i386.bz2
+DISTFILES += libneon.so.24.0.7.sparc.bz2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
