@@ -3,6 +3,18 @@
 PATH=/bin:/usr/bin:"$PATH"
 export PATH
 
+is_usr_readonly()
+{
+  mount | grep '^/usr ' | grep 'read only' >/dev/null
+  if [ $? = 0 ]; then
+    echo 1
+  else
+    echo 0
+  fi
+}
+
+readonly_usr=`is_usr_readonly`
+
 # in Solaris 8 it's in /usr/bin; in Solaris 9 in /usr/sbin 
 if [ -r "$BASEDIR/usr/bin/newaliases" ]; then
   NEWALIASES="$BASEDIR/usr/bin/newaliases"
@@ -11,11 +23,15 @@ elif [ -r "$BASEDIR/usr/sbin/newaliases" ]; then
 fi
 
 if [ "$SENDMAIL_ACTION" = "replace" ] ; then
-  rm -f "$BASEDIR/usr/lib/sendmail" && echo "$BASEDIR/usr/lib/sendmail removed"
-  rm -f "$NEWALIASES" && echo "$NEWALIASES removed"
-  rm -f "$BASEDIR/usr/bin/mailq" && echo "$BASEDIR/usr/bin/mailq removed"
-  test -r "$BASEDIR/usr/lib/sendmail.OFF" && mv -f "$BASEDIR/usr/lib/sendmail.OFF" "$BASEDIR/usr/lib/sendmail" && echo "Renaming $BASEDIR/usr/lib/sendmail.OFF to sendmail"
-  test -r "$NEWALIASES.OFF" && mv -f "$NEWALIASES.OFF" "$NEWALIASES" && echo "Renaming $NEWALIASES.OFF to newaliases"
-  test -r "$BASEDIR/usr/bin/mailq.OFF" && mv -f "$BASEDIR/usr/bin/mailq.OFF" "$BASEDIR/usr/bin/mailq" && echo "Renaming $BASEDIR/usr/bin/mailq.OFF to mailq"
-  exit 0
+  if [ "$readonly_usr" = "1" ]; then
+    echo "Your /usr partition is readonly. Cannot make modifications to it."
+  else
+    rm -f "$BASEDIR/usr/lib/sendmail" && echo "$BASEDIR/usr/lib/sendmail removed"
+    rm -f "$NEWALIASES" && echo "$NEWALIASES removed"
+    rm -f "$BASEDIR/usr/bin/mailq" && echo "$BASEDIR/usr/bin/mailq removed"
+    test -r "$BASEDIR/usr/lib/sendmail.OFF" && mv -f "$BASEDIR/usr/lib/sendmail.OFF" "$BASEDIR/usr/lib/sendmail" && echo "Renaming $BASEDIR/usr/lib/sendmail.OFF to sendmail"
+    test -r "$NEWALIASES.OFF" && mv -f "$NEWALIASES.OFF" "$NEWALIASES" && echo "Renaming $NEWALIASES.OFF to newaliases"
+    test -r "$BASEDIR/usr/bin/mailq.OFF" && mv -f "$BASEDIR/usr/bin/mailq.OFF" "$BASEDIR/usr/bin/mailq" && echo "Renaming $BASEDIR/usr/bin/mailq.OFF to mailq"
+    exit 0
+  fi
 fi
