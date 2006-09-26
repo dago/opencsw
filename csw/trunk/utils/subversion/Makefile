@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.3.2
+DISTVERSION = 1.4.0
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -24,7 +24,7 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 # SVN
-DISTFILES += $(call admfiles,CSWsvn,depend prototype)
+DISTFILES += $(call admfiles,CSWsvn,depend prototype checkinstall)
 # SVN Apache Module
 CSWap2svn_admfiles = depend prototype postinstall preremove
 DISTFILES += $(call admfiles,CSWap2svn,$(CSWap2svn_admfiles))
@@ -101,6 +101,7 @@ PI_DEPENDS  = $(BINDING_TARGETS)
 PI_DEPENDS += contrib
 PI_DEPENDS += rbsvn-prototype
 PI_DEPENDS += copy-templates
+PI_DEPENDS += install-man
 
 post-install: $(PI_DEPENDS)
 	@$(MAKECOOKIE)
@@ -172,5 +173,11 @@ copy-templates:
 	ginstall -m 0644 \
 		$(WORKDIR)/svn_access.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc
+	@$(MAKECOOKIE)
+
+install-man:
+	ginstall -m 0644 \
+		$(WORKSRC)/subversion/svnsync/svnsync.1 \
+		$(DESTDIR)$(mandir)/man1
 	@$(MAKECOOKIE)
 

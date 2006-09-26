@@ -11,6 +11,7 @@ f none /opt/csw/include/subversion-1/svn_ctype.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_dav.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_delta.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_diff.h 0644 root bin
+f none /opt/csw/include/subversion-1/svn_dso.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_error.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_error_codes.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_fs.h 0644 root bin
@@ -31,6 +32,7 @@ f none /opt/csw/include/subversion-1/svn_string.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_subst.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_time.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_types.h 0644 root bin
+f none /opt/csw/include/subversion-1/svn_user.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_utf.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_version.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_wc.h 0644 root bin
