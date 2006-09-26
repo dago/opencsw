@@ -8,3 +8,7 @@ b15a8c1d4430e560838a03ec63eca6b3  download/CSWbdb44-devel.depend
 3504f1aaf3736b0e4d7aeaa520e50c61  download/CSWbdb44-doc.gspec
 7e78e963a84b5f0e4c2dacd3b25bec9a  download/CSWbdb44-doc.depend
 28d7da520fb018d57dd27d186588a423  download/CSWbdb44-doc.prototype
+66584d621355df055b6e05b4a02e9c3e  download/patch.4.4.20.1.diff
+85df93a0867f6cace3501671cdeb6ed1  download/patch.4.4.20.2.diff
+88ee91889ebf5498b22b2e7bed945d41  download/patch.4.4.20.3.diff
+c2ef7b3e59460c35950fab5f2faa3fc0  download/patch.4.4.20.4.diff

@@ -21,6 +21,10 @@ DISTFILES += $(call admfiles,CSWbdb44-doc,depend prototype)
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
+PATCHDIR = $(WORKSRC)/..
+PATCHDIRLEVEL = 0
+PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*.diff))
+
 CONFIGURE_SCRIPTS = dist
 
 CONFIGURE_ARGS  = --prefix=$(prefix)/bdb44
