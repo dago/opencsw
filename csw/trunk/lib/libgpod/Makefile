@@ -14,6 +14,7 @@ SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibgpod,)
+PATCHFILES += headerdir.diff
 
 GARCOMPILER = GNU
 
