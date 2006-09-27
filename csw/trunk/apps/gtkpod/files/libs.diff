@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru gtkpod-0.99.4.orig/configure gtkpod-0.99.4/configure
+--- gtkpod-0.99.4.orig/configure	2006-03-05 09:00:41.000000000 -0500
++++ gtkpod-0.99.4/configure	2006-09-26 21:19:02.275624000 -0400
+@@ -8288,7 +8288,7 @@
+ s,@host_os@,$host_os,;t t
+ s,@CC@,$CC,;t t
+ s,@CFLAGS@,$CFLAGS,;t t
+-s,@LDFLAGS@,$LDFLAGS,;t t
++s,@LDFLAGS@,$LDFLAGS -lrt -lgthread-2.0,;t t
+ s,@CPPFLAGS@,$CPPFLAGS,;t t
+ s,@ac_ct_CC@,$ac_ct_CC,;t t
+ s,@EXEEXT@,$EXEEXT,;t t

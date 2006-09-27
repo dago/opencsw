@@ -1,0 +1,33 @@
+diff --speed-large-files --minimal -Nru gtkpod-0.99.4.orig/src/info.c gtkpod-0.99.4/src/info.c
+--- gtkpod-0.99.4.orig/src/info.c	2005-11-26 08:44:41.000000000 -0500
++++ gtkpod-0.99.4/src/info.c	2006-09-26 21:27:01.397123000 -0400
+@@ -529,7 +529,7 @@
+ 
+ /* we'll use statvfs to determine free space on the iPod where
+    available, df otherwise */
+-#ifdef HAVE_statvfs
++#ifdef HAVE_STATVFS
+ #include <sys/types.h>
+ #include <sys/statvfs.h>
+ /* update space_ipod_free and space_ipod_used */
+diff --speed-large-files --minimal -Nru gtkpod-0.99.4.orig/src/misc_confirm.c gtkpod-0.99.4/src/misc_confirm.c
+--- gtkpod-0.99.4.orig/src/misc_confirm.c	2005-12-09 09:55:34.000000000 -0500
++++ gtkpod-0.99.4/src/misc_confirm.c	2006-09-26 21:27:17.859246000 -0400
+@@ -40,7 +40,7 @@
+ #include "prefs.h"
+ #include "info.h"
+ 
+-#ifdef HAVE_statvfs
++#ifdef HAVE_STATVFS
+ #include <sys/types.h>
+ #include <sys/statvfs.h>
+ #endif
+@@ -836,7 +836,7 @@
+ static gint ipod_directories_number (gchar *mp)
+ {
+     const gint default_nr = 20;
+-#ifdef HAVE_statvfs
++#ifdef HAVE_STATVFS
+     struct statvfs stat;
+     int	status;
+     gdouble size;
