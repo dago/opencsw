@@ -1,0 +1,38 @@
+1 d none /opt/csw/include ? ? ?
+1 d none /opt/csw/include/gpod 0755 root bin
+1 f none /opt/csw/include/gpod/ipod-device.h 0644 root bin
+1 f none /opt/csw/include/gpod/itdb.h 0644 root bin
+1 d none /opt/csw/lib ? ? ?
+1 f none /opt/csw/lib/libgpod.a 0644 root bin
+1 f none /opt/csw/lib/libgpod.la 0755 root bin
+1 s none /opt/csw/lib/libgpod.so=libgpod.so.0.302.0
+1 s none /opt/csw/lib/libgpod.so.0=libgpod.so.0.302.0
+1 f none /opt/csw/lib/libgpod.so.0.302.0 0755 root bin
+1 d none /opt/csw/lib/pkgconfig ? ? ?
+1 f none /opt/csw/lib/pkgconfig/libgpod-1.0.pc 0644 root bin
+1 d none /opt/csw/share ? ? ?
+1 d none /opt/csw/share/locale ? ? ?
+1 d none /opt/csw/share/locale/de ? ? ?
+1 d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
+1 f none /opt/csw/share/locale/de/LC_MESSAGES/libgpod.mo 0644 root bin
+1 d none /opt/csw/share/locale/es ? ? ?
+1 d none /opt/csw/share/locale/es/LC_MESSAGES ? ? ?
+1 f none /opt/csw/share/locale/es/LC_MESSAGES/libgpod.mo 0644 root bin
+1 d none /opt/csw/share/locale/fr ? ? ?
+1 d none /opt/csw/share/locale/fr/LC_MESSAGES ? ? ?
+1 f none /opt/csw/share/locale/fr/LC_MESSAGES/libgpod.mo 0644 root bin
+1 d none /opt/csw/share/locale/he ? ? ?
+1 d none /opt/csw/share/locale/he/LC_MESSAGES ? ? ?
+1 f none /opt/csw/share/locale/he/LC_MESSAGES/libgpod.mo 0644 root bin
+1 d none /opt/csw/share/locale/it ? ? ?
+1 d none /opt/csw/share/locale/it/LC_MESSAGES ? ? ?
+1 f none /opt/csw/share/locale/it/LC_MESSAGES/libgpod.mo 0644 root bin
+1 d none /opt/csw/share/locale/ja ? ? ?
+1 d none /opt/csw/share/locale/ja/LC_MESSAGES ? ? ?
+1 f none /opt/csw/share/locale/ja/LC_MESSAGES/libgpod.mo 0644 root bin
+1 d none /opt/csw/share/locale/sv ? ? ?
+1 d none /opt/csw/share/locale/sv/LC_MESSAGES ? ? ?
+1 f none /opt/csw/share/locale/sv/LC_MESSAGES/libgpod.mo 0644 root bin
+1 i copyright=CSWlibgpod.copyright
+1 i depend=CSWlibgpod.depend
+1 i pkginfo=CSWlibgpod.pkginfo
