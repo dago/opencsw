@@ -7,11 +7,6 @@ export PATH
 is_usr_readonly()
 {
   mount | grep '^/usr ' | grep 'read only' >/dev/null
-  if [ $? = 0 ]; then
-    echo 1
-  else
-    echo 0
-  fi
 }
 
 class=smfno
@@ -47,9 +42,9 @@ done
 
 echo ""
 
-readonly_usr=`is_usr_readonly`
+is_usr_readonly
 
-if [ "$readonly_usr" = "1" -a  "$SENDMAIL_ACTION" != "leave" ]; then
+if [ $? -eq 0 -a  "$SENDMAIL_ACTION" != "leave" ]; then
   echo "Your /usr partition is readonly. Cannot make modifications to it."
 else
   ### Now handle the sendmail files
@@ -68,7 +63,7 @@ else
 
   if [ "$SENDMAIL_ACTION" = "replace" ]; then
     # Make backup of sendmail files
-    if [ ! -r "$NEWALIASES.OFF" ]  && [ -r "$NEWALIASES" ] ; then
+    if [ ! -r "$NEWALIASES.OFF" ]  && [ -r "$NEWALIASES" ]; then
       echo "Moving $NEWALIASES to newaliases.OFF"
       mv "$NEWALIASES" "$NEWALIASES.OFF"
     fi

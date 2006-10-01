@@ -6,14 +6,7 @@ export PATH
 is_usr_readonly()
 {
   mount | grep '^/usr ' | grep 'read only' >/dev/null
-  if [ $? = 0 ]; then
-    echo 1
-  else
-    echo 0
-  fi
 }
-
-readonly_usr=`is_usr_readonly`
 
 # in Solaris 8 it's in /usr/bin; in Solaris 9 in /usr/sbin 
 if [ -r "$BASEDIR/usr/bin/newaliases" ]; then
@@ -22,8 +15,9 @@ elif [ -r "$BASEDIR/usr/sbin/newaliases" ]; then
   NEWALIASES="$BASEDIR/usr/sbin/newaliases"
 fi
 
-if [ "$SENDMAIL_ACTION" = "replace" ] ; then
-  if [ "$readonly_usr" = "1" ]; then
+if [ "$SENDMAIL_ACTION" = "replace" ]; then
+  is_usr_readonly
+  if [ $? -eq 0 ]; then
     echo "Your /usr partition is readonly. Cannot make modifications to it."
   else
     rm -f "$BASEDIR/usr/lib/sendmail" && echo "$BASEDIR/usr/lib/sendmail removed"

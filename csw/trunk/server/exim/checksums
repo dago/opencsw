@@ -1,8 +1,8 @@
 dde2d5f7106d51607409af94174db46c  download/exim-4.63.tar.bz2
 01a715f5e05f5e8a2044421ca37d1a1f  download/CSWexim.depend
 5e30fed7ebdaf3556d58b6be39b7720b  download/CSWexim.gspec
-08a8af9ad00a76de748ea761e31dbfc8  download/CSWexim.postinstall
-7904c8b30efed6e99be06c557eff0dfa  download/CSWexim.postremove
+0dd22717c0a647bc839629b0d8dab674  download/CSWexim.postinstall
+22a91f0bba9a10fe679e19f0510a9534  download/CSWexim.postremove
 8475607c59fa3d21a9e0bf3c543f9758  download/CSWexim.preinstall
 0fcd5dbd8b0fbc0dace5d55696aede37  download/CSWexim.preremove
 6245152bffa093cad308baafa986144a  download/CSWexim.prototype
