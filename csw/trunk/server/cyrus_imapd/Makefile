@@ -24,7 +24,7 @@ DISTFILES += i.smf r.smf i.conf r.conf
 DISTFILES += cswcyrus cyrus_imapd.xml
 DISTFILES += imapd.conf cyrus.conf
 
-DISTFILES += $(call admfiles,CSWpmcyrus,prototype,depend)
+DISTFILES += $(call admfiles,CSWpmcyrus,prototype depend)
 DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype depend)
 DISTFILES += cyrus_imapd_utils.changelog.CSW
 
@@ -117,7 +117,7 @@ post-install:
 	ginstall -D $(DESTDIR)$(sbindir)/arbitronsort.pl $(DESTDIR)$(sbindir)/arbitronsort
 
 	# we want perl script to use blastwave perl
-	perl -pi -e 's/exec\s+perl/exec \/opt\/csw\/bin\/perl/g' $(DESTDIR)$(sbindir)/*
+	perl -pi -e 's/exec\s+perl/exec \/opt\/csw\/bin\/perl/g' $(DESTDIR)$(sbindir)/* $(DESTDIR)$(bindir)/*
 	( for FILE in convert-sieve.pl mupdate-loadgen.pl translatesieve undohash upgradesieve arbitronsort; do \
 	    perl -pi -e 's/^#!\/usr\/(local\/)?bin\/perl/#!\/usr\/bin\/perl/' $(DESTDIR)$(sbindir)/$$FILE; \
 	    done )

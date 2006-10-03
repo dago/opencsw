@@ -18,6 +18,7 @@ c2226f19a4ab3fbea61204b31785d598  download/imapd.conf
 fdb3416ec41f3a56d1594ca25a6dcd7d  download/cyrus.conf
 fdb06983e1a6fdde58ec25834742cf5d  download/CSWpmcyrus.gspec
 2542bf9027fceb536588fee4eac93e92  download/CSWpmcyrus.prototype
+e08a9c59006f386d17d6cb30a85e2ccd  download/CSWpmcyrus.depend
 d47ff67f45001cdda175616a543d7052  download/CSWcyrusimapdutils.gspec
 7e99e825a1d6b134b91392beec1807f4  download/CSWcyrusimapdutils.prototype
 bc7973259ee16a57e012bfdb5d3ff175  download/CSWcyrusimapdutils.depend
