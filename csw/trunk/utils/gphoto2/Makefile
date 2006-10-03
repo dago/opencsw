@@ -9,10 +9,39 @@ define BLURB
   supports more than 700 cameras.
 endef
 
-MASTER_SITES = 
+MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgphoto2,)
+DISTFILES += $(call admfiles,CSWgphoto2,prototype depend)
+# 'cc' is a shell script to hack around libtool craziness
+DISTFILES += cc
 
-CONFIGURE_ARGS = $(DIRPATHS)
+DEPENDS += lib/libgphoto2
+
+PWD = $(shell pwd)
+LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
+# Make sure we pick up libgphoto2 from our local installation rather than
+# the system libraries
+LIBGPHOTO2_CFLAGS = $(DESTDIR)$(includedir)/gphoto2
+LIBGPHOTO2_LIBS = -L$(DESTDIR)$(libdir) -lgphoto2
+LIBINTL = -lintl
+INTLLIB = $(LIBINTL)
+
+export LD_OPTIONS LIBGPHOTO2_CFLAGS LIBGPHOTO2_LIBS LIBINTL INTLLIB
+
+SUN_CPP_FLAGS = -D__EXTENSIONS__
+EXTRA_INC = $(DESTDIR)$(includedir)/gphoto2
+EXT_LDFLAGS = $(DESTDIR)$(libdir)
+
+CONFIGURE_ARGS = PATH="$(PWD)/$(WORKDIR):$$PATH"
+CONFIGURE_ARGS += $(DIRPATHS) --without-libintl-prefix
+
+# gphoto2 doesn't have a test target
+#TEST_TARGET =
+
+SPKG_SOURCEURL = http://www.gphoto.org/
 
 include ../category.mk
+
+# This ensures that make picks up the 'cc' shell script as compiler
+PATH := $(PWD)/$(WORKDIR):$(PATH)
+export PATH

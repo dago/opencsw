@@ -1,0 +1,52 @@
+#!/bin/ksh
+
+CPPFLAGS=""
+CFLAGS=''
+LDFLAGS=""
+LIBS=""
+ARGS=""
+CC=/opt/SUNWspro/bin/${0##*/}
+
+while true
+do
+	[[ -z "$1" ]] && break
+
+case $1 in
+	-I*|-D*|-G)
+		CPPFLAGS="$CPPFLAGS $1"
+		;;
+
+	-l*)
+		LIBS="$LIBS $1"
+		LDFLAGS='-Wl,-zlazyload -L/export/home/mmayer/build.5.8-sparc/opt/csw/lib -L/opt/csw/lib -R/opt/csw/lib/$ISALIST'
+		;;
+
+	-o|-h)
+		CFLAGS="$CFLAGS $1 $2"
+		shift
+		;;
+
+	/opt/csw/lib/lib*)
+		lib=${1##/opt/csw/lib/lib}
+		lib=${lib%.so}
+		LIBS="$LIBS -l$lib"
+		;;
+
+	-R|-L|-g)
+		shift
+		;;
+
+	-R*|-L*)
+		;;
+
+	*)
+		ARGS="$ARGS $1"
+		;;
+
+esac
+
+shift
+done
+
+echo $CC $CPPFLAGS $CFLAGS $ARGS $LDFLAGS $LIBS
+$CC $CPPFLAGS $LDFLAGS $CFLAGS $ARGS $LIBS
