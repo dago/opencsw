@@ -21,4 +21,4 @@ f none /opt/csw/share/man/man3/Cyrus::IMAP::Admin.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Cyrus::IMAP::IMSP.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Cyrus::IMAP::Shell.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Cyrus::SIEVE::managesieve.3perl 0444 root bin
-
+f none /opt/csw/share/doc/pm_cyrus/changelog.CSW 0644 root bin

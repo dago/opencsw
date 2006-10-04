@@ -1,10 +1,10 @@
-cyrus_imapd (2.3.7,REV=2006.09.28) unstable
+cyrus_imapd (2.3.7,REV=2006.10.03) unstable
 
   * Fixed "Unknown code imap 54" bug.
 
  -- Yann Rouillard <yann@blastwave.org>  Fri, 29 Sep 2006 02:07:45 +0200
 
-cyrus_imapd (2.3.1,REV=2005.12.20_2) unstable
+cyrus_imapd (2.3.1,REV=2005.12.20) unstable
 
   * New upstream version.
   * Added idled daemon (--enable-idled).

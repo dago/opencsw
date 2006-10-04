@@ -3,7 +3,7 @@ ad3af42cd170ce3ac94ce60f2450348b  download/CSWcyrusimapd.gspec
 ba94ebce9004d724adfad5e5f2171ab8  download/CSWcyrusimapd.prototype
 5111a5573aa6d4878b852780aeae8a27  download/CSWcyrusimapd.preinstall
 ab5f64b5b84a8a8b6f332a3b226afc8e  download/CSWcyrusimapd.depend
-424e49be47b8988556bae72602e9b1da  download/cyrus_imapd.changelog.CSW
+d3a68c39b17e9a494bbe73f71a67752e  download/cyrus_imapd.changelog.CSW
 b283bf26b26a05cb45389961844c5ed7  download/README.CSW
 79211aee56db01e15566ced1ba4078da  download/i.services
 149ac6b6d82ef9ef4bb1b314f1a1cac4  download/r.services
@@ -17,12 +17,13 @@ a5326ab0d66431d057db02c5ae9c5e4a  download/cswcyrus
 c2226f19a4ab3fbea61204b31785d598  download/imapd.conf
 fdb3416ec41f3a56d1594ca25a6dcd7d  download/cyrus.conf
 fdb06983e1a6fdde58ec25834742cf5d  download/CSWpmcyrus.gspec
-2542bf9027fceb536588fee4eac93e92  download/CSWpmcyrus.prototype
+7c3bf5eab1d9e408b97ffe06b6d921ff  download/CSWpmcyrus.prototype
 e08a9c59006f386d17d6cb30a85e2ccd  download/CSWpmcyrus.depend
 d47ff67f45001cdda175616a543d7052  download/CSWcyrusimapdutils.gspec
 7e99e825a1d6b134b91392beec1807f4  download/CSWcyrusimapdutils.prototype
 bc7973259ee16a57e012bfdb5d3ff175  download/CSWcyrusimapdutils.depend
-369b210ac172d5dd13293fc57376343b  download/cyrus_imapd_utils.changelog.CSW
+996a47e323b8cb85f5371fd62c16eb39  download/cyrus_imapd_utils.changelog.CSW
+1fd722de60c0de13cb09c319ed0abdbb  download/pm_cyrus.changelog.CSW
 9cbebaeeafa6eb3320eafa594c253bc1  download/compile_et
 5375c25c8bc325a90553d0be87a64a04  download/et_c.awk
 d1d86e61463a1dfefccbadedb11a8604  download/et_h.awk

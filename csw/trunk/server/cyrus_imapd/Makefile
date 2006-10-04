@@ -27,6 +27,7 @@ DISTFILES += imapd.conf cyrus.conf
 DISTFILES += $(call admfiles,CSWpmcyrus,prototype depend)
 DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype depend)
 DISTFILES += cyrus_imapd_utils.changelog.CSW
+DISTFILES += pm_cyrus.changelog.CSW
 
 # compile_et is not provided by krb5lib_dev so we must provide our own version
 # taken from the krb5 source.
@@ -124,7 +125,7 @@ post-install:
 
 	# we install the documentation
 	cp -r $(WORKSRC)/doc/* $(DESTDIR)/$(docdir)/cyrus_imapd
-	( for PKG in cyrus_imapd cyrus_imapd_utils; do \
+	( for PKG in cyrus_imapd cyrus_imapd_utils pm_cyrus; do \
 		ginstall -D $(WORKDIR)/$$PKG.changelog.CSW $(DESTDIR)/$(docdir)/$$PKG/changelog.CSW; \
 	  done )
 	ginstall -D $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/cyrus_imapd/README.CSW

@@ -1,3 +1,9 @@
+cyrus_imapd_utils (2.3.7,REV=2006.10.03) unstable
+
+  * Forced cyradm to use blastwave perl.
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 29 Sep 2006 02:07:45 +0200
+
 cyrus_imapd_utils (2.3.7) unstable
 
   * New upstream version.
