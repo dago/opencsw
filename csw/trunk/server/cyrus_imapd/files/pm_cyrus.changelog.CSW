@@ -1,0 +1,5 @@
+pm_cyrus (2.3.7,REV=2006.10.03) unstable
+
+  * Added CSWperl dependancy
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 29 Sep 2006 02:07:45 +0200
