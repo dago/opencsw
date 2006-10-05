@@ -1,16 +1,36 @@
+1 d none /opt/csw/bin ? ? ?
 1 d none /opt/csw/include ? ? ?
 1 d none /opt/csw/include/gpod 0755 root bin
-1 f none /opt/csw/include/gpod/ipod-device.h 0644 root bin
 1 f none /opt/csw/include/gpod/itdb.h 0644 root bin
 1 d none /opt/csw/lib ? ? ?
 1 f none /opt/csw/lib/libgpod.a 0644 root bin
 1 f none /opt/csw/lib/libgpod.la 0755 root bin
-1 s none /opt/csw/lib/libgpod.so=libgpod.so.0.302.0
-1 s none /opt/csw/lib/libgpod.so.0=libgpod.so.0.302.0
-1 f none /opt/csw/lib/libgpod.so.0.302.0 0755 root bin
+1 s none /opt/csw/lib/libgpod.so=libgpod.so.0.400.0
+1 s none /opt/csw/lib/libgpod.so.0=libgpod.so.0.400.0
+1 f none /opt/csw/lib/libgpod.so.0.400.0 0755 root bin
 1 d none /opt/csw/lib/pkgconfig ? ? ?
 1 f none /opt/csw/lib/pkgconfig/libgpod-1.0.pc 0644 root bin
 1 d none /opt/csw/share ? ? ?
+1 d none /opt/csw/share/gtk-doc/html/libgpod 0755 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/ch01.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/ch02.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/home.png 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/index.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/index.sgml 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/left.png 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-Artwork.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-Device.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-File-handling-functions.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-Low-level-functions.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-Playlists.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-The-Itdb-iTunesDB-structure.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-Time-handling.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod-Tracks.html 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod.devhelp 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/libgpod.devhelp2 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/right.png 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/style.css 0644 root bin
+1 f none /opt/csw/share/gtk-doc/html/libgpod/up.png 0644 root bin
 1 d none /opt/csw/share/locale ? ? ?
 1 d none /opt/csw/share/locale/de ? ? ?
 1 d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?

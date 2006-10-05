@@ -1,5 +1,5 @@
 GARNAME = libgpod
-GARVERSION = 0.3.2
+GARVERSION = 0.4.0
 CATEGORIES = lib
 
 DESCRIPTION = Interface to Apple iPods

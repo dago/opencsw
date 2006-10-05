@@ -1,5 +1,5 @@
-c9c41625347a33efd9441c4e71fdd04e  download/libgpod-0.3.2.tar.gz
+e427e0409b0cb2d7e76b17915b1396fa  download/libgpod-0.4.0.tar.gz
 8f1c6d2bfafebf008dfcf2fb0e79f391  download/CSWlibgpod.gspec
-da196b9dce5a7902f861b53c1955a352  download/CSWlibgpod.depend
-70be118a091f4345b14c32af6d8e032e  download/CSWlibgpod.prototype
-d45919611608ed8a03893b8a1e589365  download/headerdir.diff
+f51bea3bae3418796725543830b5bc52  download/CSWlibgpod.depend
+3b7d2d93b60e48e2921c2b9e8beb821d  download/CSWlibgpod.prototype
+8a31dfbe468ce8d064b0865d9aec0d16  download/headerdir.diff
