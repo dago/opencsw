@@ -26,13 +26,14 @@ LIBGPHOTO2_LIBS = -L$(DESTDIR)$(libdir) -lgphoto2
 LIBINTL = -lintl
 INTLLIB = $(LIBINTL)
 
+LIBGPHOTO_PATH = $(DESTDIR)$(libdir)
 export LD_OPTIONS LIBGPHOTO2_CFLAGS LIBGPHOTO2_LIBS LIBINTL INTLLIB
+export LIBGPHOTO_PATH
 
 SUN_CPP_FLAGS = -D__EXTENSIONS__
 EXTRA_INC = $(DESTDIR)$(includedir)/gphoto2
 EXT_LDFLAGS = $(DESTDIR)$(libdir)
 
-CONFIGURE_ARGS = PATH="$(PWD)/$(WORKDIR):$$PATH"
 CONFIGURE_ARGS += $(DIRPATHS) --without-libintl-prefix
 
 # gphoto2 doesn't have a test target

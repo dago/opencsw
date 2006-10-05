@@ -1,7 +1,7 @@
 #!/bin/ksh
 
 CPPFLAGS=""
-CFLAGS=''
+CFLAGS=""
 LDFLAGS=""
 LIBS=""
 ARGS=""
@@ -20,7 +20,9 @@ case $1 in
 		# libtool is lying about this one, we don't need -lltdl
 		if [ "$1" != "ltdl" ]; then
 			LIBS="$LIBS $1"
-			LDFLAGS='-Wl,-zlazyload -L/export/home/mmayer/build.5.8-sparc/opt/csw/lib -L/opt/csw/lib -R/opt/csw/lib/$ISALIST'
+			LDFLAGS="-Wl,-zlazyload -L$LIBGPHOTO_PATH"
+			LDFLAGS="$LDFLAGS -L/opt/csw/lib"
+			LDFLAGS="$LDFLAGS -R/opt/csw/lib/\$ISALIST"
 		fi
 		;;
 
