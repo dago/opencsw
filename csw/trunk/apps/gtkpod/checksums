@@ -1,6 +1,5 @@
-5d153249b2586ffefc47e0f4a58ef58e  download/gtkpod-0.99.4.tar.gz
+f04b67605204d9076d30d83b72b78463  download/gtkpod-0.99.8.tar.gz
 841ed864508a52ef5b9c816c5172cd5e  download/CSWgtkpod.gspec
-262ef7cb313f7fe0298107c3c86c217e  download/CSWgtkpod.depend
-f54dd9f6313a6dc9f8ba9fd4bf94f7a9  download/gthread-fix.diff
-9f2dd19fbc15506fad5ed5c793481f70  download/libs.diff
-a3451d9eec4dd047ef691d55d0386446  download/statvfs.diff
+4d6439f332e59e25e7c7f905f732247a  download/CSWgtkpod.depend
+34621fea77d9c01eb90d1cf4f0e98de8  download/gthread-fix.diff
+4f0ba1c1bc98804af909fa2b043a6fb3  download/libs.diff

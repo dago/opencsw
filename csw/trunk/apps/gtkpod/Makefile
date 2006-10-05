@@ -1,5 +1,5 @@
 GARNAME = gtkpod
-GARVERSION = 0.99.4
+GARVERSION = 0.99.8
 CATEGORIES = apps
 
 DESCRIPTION = gtk2 application for Apple iPods
@@ -15,7 +15,7 @@ SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWgtkpod,depend)
-PATCHFILES += gthread-fix.diff libs.diff statvfs.diff
+PATCHFILES += gthread-fix.diff libs.diff
 
 GARCOMPILER = GNU
 

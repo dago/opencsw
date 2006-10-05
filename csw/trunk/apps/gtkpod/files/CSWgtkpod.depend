@@ -9,3 +9,8 @@ P	CSWpango
 P	CSWzlib
 P	CSWlibcairo
 P	CSWggettext
+P	CSWlibxrender
+P	CSWfconfig
+P	CSWftype2
+P	CSWiconv
+P	CSWpng
