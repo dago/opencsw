@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
-DISTFILES += $(call admfiles,CSWfirefox, depend )
+DISTFILES += $(call admfiles,CSWfirefox, depend postinstall )
 
 PERL="/opt/csw/bin/perl"
 CFLAGS=-xlibmil
