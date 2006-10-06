@@ -15,12 +15,18 @@ SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWgtkpod,depend)
-PATCHFILES += gthread-fix.diff libs.diff
+PATCHFILES += gthread-fix.diff libs.diff mp4v2.diff
 
 GARCOMPILER = GNU
 
 LIBDEPS += lib/libgpod
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += CPPFLAGS="-I. -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+
+CONFIGURE_SCRIPTS = custom $(WORKSRC)/configure
 
 include ../category.mk
+
+configure-custom:
+	@touch $(WORKSRC)/config.h
