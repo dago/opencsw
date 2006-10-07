@@ -195,9 +195,8 @@ Display the list of available package updates.
 
   -h, --help\t\t\tdisplay this help message
   -c, --config-file FILE\tuse an alternate configuration file
-  -m, --mail MAIL\t\tuse the given email address to send mail report
-\t\t\t\tabout available updates
-  -o, --stdout\t\t\tdisplay updates info on standard output
+  -m, --mail [MAIL]\t\tsend the report by mail to root or 
+\t\t\t\tto the given email address if present
 
 EOF
 }
@@ -206,17 +205,16 @@ EOF
 # By default we send email to the local root
 my $email;
 my $help;
-my $stdout;
+my $stdout = 1;
 my $config_file = "/etc/opt/csw/pkg-update-watch.conf";
 
 # Adding standard path for pkg-get
 $PATH .= ":/opt/csw/bin:/usr/sfw/bin:/opt/csw/bin:/usr/local/public/bin";
 
 GetOptions("h|help" => \$help,
-	   "m|mail=s" => \$email,
+	   "m|mail:s" => \$email,
 	   "s|site=s" => \$site,
-	   "c|config-file=s" => \$config_file,
-	   "o|stdout" => \$stdout);
+	   "c|config-file=s" => \$config_file);
 
 if ($help) {
     print_help;
@@ -228,12 +226,15 @@ my $options = parse_config_file ($config_file);
 $site = $options->{site} if not defined $site and exists $options->{site};
 $pkg_get_options = "-s $site " if $site;
 
-if (not defined $email) {
-    if (exists $options->{mailtos}) {
-	$email = $options->{mailtos};
-    } else {
-	$email = "root";
-    }
+if (defined $email) {
+    $stdout = 0;
+    if ($email eq "") {
+	if (exists $options->{mailtos}) {
+	    $email = $options->{mailtos};
+	} else {
+	    $email = "root";
+        }
+    }	
 }
 	
 
