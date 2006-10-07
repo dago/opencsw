@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Blastwave Firefox Community Edition preremove script
+# Blastwave.org Firefox Community Edition preremove script
 
 FIREFOX_VERSION=firefox-1.5.0.7
 rm /opt/csw/libexec/firefox/lib/${FIREFOX_VERSION}/plugins/libjavaplugin_oji.so

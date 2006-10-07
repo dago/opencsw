@@ -1,24 +1,26 @@
 #!/bin/sh
 #
-# Blastwave Firefox Community Edition postinstall script
+# Blastwave.org Firefox Community Edition postinstall script
 
 FIREFOX_VERSION=firefox-1.5.0.7
 UNAME_P=`uname -p`
 UNAME_R=`uname -r`
 
 PLUGIN_PATH="/opt/csw/libexec/firefox/lib/${FIREFOX_VERSION}/plugins"
-JRE_SOL8="/usr/j2se/jre/plugins/${UNAME_P}/ns600"
-JRE_SOL9="/usr/j2se/jre/plugins/${UNAME_P}/ns610"
+JRE_SOL8='/usr/j2se/jre/plugins/${UNAME_P}/ns600/libjavaplugin_oji.so'
+JRE_SOL9='/usr/j2se/jre/plugins/${UNAME_P}/ns610/libjavaplugin_oji.so'
 
 pkginfo -q SUNWj3rt
 if [ $? -eq 0 ]; then
   echo Solaris $UNAME_R $UNAME_P
   echo "SUNWj3rt is currently installed..."
   echo "Installing Java plugin..."
-  if [ "$UNAME_R"=="5.8" ]; then
-    cd $PLUGIN_PATH && ln -s $JRE_SOL8/libjavaplugin_oji.so libjavaplugin_oji.so
+  if [ "$UNAME_R" = "5.8" ]; then
+    echo "Solaris 8"
+    cd $PLUGIN_PATH && ln -s $JRE_SOL8 libjavaplugin_oji.so
   else
-    cp $PLUGIN_PATH && ln -s $JRE_SOL9/libjavaplugin_oji.so libjavaplugin_oji.so
+    echo "Solaris 9+"
+    cd $PLUGIN_PATH && ln -s $JRE_SOL9 libjavaplugin_oji.so
   fi
 fi
 
