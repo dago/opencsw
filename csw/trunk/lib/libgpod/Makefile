@@ -14,10 +14,13 @@ SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibgpod,depend prototype)
-PATCHFILES += headerdir.diff
+PATCHFILES += headerdir.diff taglib-notest.diff
 
 GARCOMPILER = GNU
 
+DEPENDS += lang/pyeyed3
+
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += TAGLIB_CFLAGS="-I/opt/csw/include/taglib" TAGLIB_LIBS="-ltag"
 
 include ../category.mk
