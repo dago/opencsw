@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
-DISTFILES += $(call admfiles,CSWfirefox, depend postinstall )
+DISTFILES += $(call admfiles,CSWfirefox, depend postinstall preremove )
 
 PERL="/opt/csw/bin/perl"
 CFLAGS=-xlibmil
@@ -41,3 +41,5 @@ pre-install:
 	( cp $(FILEDIR)/firefox.desktop $(DESTDIR)/opt/csw/share/applications/firefox.desktop )
 	( mkdir -p $(DESTDIR)/opt/csw/share/gnome/mime-info )
 	( cp $(FILEDIR)/firefox.keys $(DESTDIR)/opt/csw/share/gnome/mime-info/firefox.keys )
+post-install:
+	( rm -rf $(DESTDIR)/opt/csw/libexec/firefox/include )

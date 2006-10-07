@@ -1,4 +1,5 @@
 518cbd99a3fe663237070013e5cdb1a4  download/firefox-1.5.0.7-source.tar.bz2
 3cc981390e527e1343f6c450d839eceb  download/CSWfirefox.gspec
 4fe8ba59686360d2363bb80619aae05d  download/CSWfirefox.depend
-4afadde6ba6513bc6ae0712b2c26eb3a  download/CSWfirefox.postinstall
+d7831c32e075199ee052d4d083e6c63c  download/CSWfirefox.postinstall
+d7ef311b532c94a3b371757430fd5ba5  download/CSWfirefox.preremove
