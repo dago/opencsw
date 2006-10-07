@@ -15,12 +15,6 @@ pkginfo -q SUNWj3rt
 if [ $? -eq 0 ]; then
   echo "SUNWj3rt is currently installed..."
   echo "Installing Java plugin..."
-
-echo $JRE_SOL8
-echo $JRE_SOL9
-echo $JRE_SOL10
-
-
   if [ "$UNAME_R"=="5.8" ]; then
     cd $PLUGIN_PATH && ln -s $JRE_SOL8/libjavaplugin_oji.so libjavaplugin_oji.so
   elif [ $UNAME_R=="5.9" ]; then
@@ -28,9 +22,8 @@ echo $JRE_SOL10
   elif [ $UNAME_R=="5.10" ]; then
     cd $PLUGIN_PATH && ln -s $JRE_SOL10/libjavaplugin_oji.so libjavaplugin_oji.so
   else
-    echo "Unknown version of Solaris. No plugins installed"
+    echo "No plugins installed since I'm not sure which Solaris version."
   fi
-
 fi
 
 #TODO  maybe postinstall script can give option to go and get this.
