@@ -10,6 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = 
+SPKG_SOURCEURL = http://svn.blastwave.org/browser/csw/trunk/utils/pkg_update_watch/files
 DISTFILES  = pkg-update-watch
 DISTFILES += $(call admfiles,CSWpkgupdatewatch,prototype)
 DISTFILES += pkg-update-watch.conf
