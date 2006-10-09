@@ -7,8 +7,8 @@ UNAME_P=`uname -p`
 UNAME_R=`uname -r`
 
 PLUGIN_PATH="/opt/csw/libexec/firefox/lib/${FIREFOX_VERSION}/plugins"
-JRE_SOL8="/usr/j2se/jre/plugins/${UNAME_P}/ns600/libjavaplugin_oji.so"
-JRE_SOL9="/usr/j2se/jre/plugins/${UNAME_P}/ns610/libjavaplugin_oji.so"
+JRE_SOL8="/usr/j2se/jre/plugin/${UNAME_P}/ns600/libjavaplugin_oji.so"
+JRE_SOL9="/usr/j2se/jre/plugin/${UNAME_P}/ns610/libjavaplugin_oji.so"
 
 pkginfo -q SUNWj3rt
 if [ $? -eq 0 ]; then
