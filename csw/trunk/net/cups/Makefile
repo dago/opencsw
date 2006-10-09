@@ -1,5 +1,5 @@
 GARNAME = cups
-GARVERSION = 1.2.3
+GARVERSION = 1.2.4
 CATEGORIES = net
 
 define BLURB
