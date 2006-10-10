@@ -1,5 +1,5 @@
 GARNAME = libdvdread
-GARVERSION = 0.9.6
+GARVERSION = 0.9.7
 CATEGORIES = lib
 
 DESCRIPTION = provides a simple foundation for reading DVD-Video images
