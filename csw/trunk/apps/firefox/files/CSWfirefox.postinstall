@@ -26,7 +26,14 @@ if [ $? -eq 0 ]; then
   fi
 fi
 
-#TODO  maybe postinstall script can give option to go and get this.
-#http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_7_solaris_sparc.tar.gz
+# if wget is installed/ in path/ trie and get flash
+
+if [ "$UNAME_P" = "sparc" ]; then 
+wget --tries=5 -P/tmp/CSWfirefox http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_7_solaris_sparc.tar.gz
+fi
+
+if [ "$UNAME_P" = "i386" ]; then
+wget --tries=5 -P/tmp/CSWfirefox http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_7_solaris_x86.tar.gz
+fi
 
 exit 0
