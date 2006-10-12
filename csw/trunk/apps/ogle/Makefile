@@ -9,11 +9,12 @@ endef
 
 MASTER_SITES = http://www.dtek.chalmers.se/groups/dvd/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWogle,)
+DISTFILES += $(call admfiles,CSWogle, depend )
 
 #PATCHFILES = configure.in.diff
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-mmx
+CONFIGURE_ARGS += --with-libmlib=/export/home/jgoerzen/MediaLib
 
 TEST_SCRIPTS =
 
