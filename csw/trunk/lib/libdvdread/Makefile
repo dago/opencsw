@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://www.dtek.chalmers.se/groups/dvd/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibdvdread,)
+DISTFILES += $(call admfiles,CSWlibdvdread, depend )
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
