@@ -28,3 +28,6 @@ pre-install:
 	( cp $(WORKSRC)/etc/reference.config $(DESTDIR)/opt/csw/etc/reference.config )
 	( cp $(WORKSRC)/etc/generators $(DESTDIR)/opt/csw/etc/generators )
 	@$(MAKECOOKIE)
+
+post-install:
+	( rm -rf $(DESTDIR)/opt/csw/src )
