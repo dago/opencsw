@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Blastwave.org Firefox Community Edition postinstall script
+# Blastwave.org Firefox Community Edition web browser postinstall script
 
 FIREFOX_VERSION=firefox-1.5.0.7
 UNAME_P=`uname -p`
@@ -27,13 +27,12 @@ if [ $? -eq 0 ]; then
 fi
 
 # if wget is installed/ in path/ trie and get flash
+#if [ "$UNAME_P" = "sparc" ]; then 
+#wget --tries=5 -P/tmp/CSWfirefox http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_7_solaris_sparc.tar.gz
+#fi
 
-if [ "$UNAME_P" = "sparc" ]; then 
-wget --tries=5 -P/tmp/CSWfirefox http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_7_solaris_sparc.tar.gz
-fi
-
-if [ "$UNAME_P" = "i386" ]; then
-wget --tries=5 -P/tmp/CSWfirefox http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_7_solaris_x86.tar.gz
-fi
+#if [ "$UNAME_P" = "i386" ]; then
+#wget --tries=5 -P/tmp/CSWfirefox http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_7_solaris_x86.tar.gz
+#fi
 
 exit 0
