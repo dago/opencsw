@@ -1,5 +1,5 @@
 GARNAME = snort
-GARVERSION = 2.6.0
+GARVERSION = 2.6.0.2
 CATEGORIES = net
 
 DESCRIPTION = The open source Network Intrusion Detection System
@@ -9,9 +9,9 @@ endef
 
 MASTER_SITES = http://www.snort.org/dl/current/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsnort, prototype )
+DISTFILES += $(call admfiles,CSWsnort, depend )
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) --libdir=/opt/csw/lib
 
 TEST_SCRIPTS =
 
@@ -19,5 +19,6 @@ include ../category.mk
 
 pre-install:
 	( mkdir -p $(DESTDIR)/opt/csw/etc )
-	( cp -r $(WORKSRC)/etc/snort.conf $(DESTDIR)/opt/csw/etc/snort.conf.CSW )
+	( cp $(WORKSRC)/etc/snort.conf $(DESTDIR)/opt/csw/etc/snort.conf.CSW )
+	( cp $(WORKSRC)/etc/unicode.map $(DESTDIR)/opt/csw/etc/unicode.map )
 	@$(MAKECOOKIE)
