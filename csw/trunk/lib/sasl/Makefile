@@ -1,5 +1,5 @@
 GARNAME = sasl
-GARVERSION = 2.1.21
+GARVERSION = 2.1.22
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer
@@ -41,6 +41,10 @@ DISTFILES += cswsaslauthd.init saslauthd.init.CSW
 PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff
 
 #INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir
+
+EXTRA_LIBS += /opt/csw/bdb4/lib
+EXTRA_LIBS += /opt/csw/mysql4/lib
+EXTRA_LIBS += /opt/csw/postgresql/lib
 
 # SASL configuration
 CONFIGURE_ARGS = $(DIRPATHS) 
