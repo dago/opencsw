@@ -1,2 +1,4 @@
-66cf8dacec848eb11a70632fe9f21807  download/ncftp-3.1.9-src.tar.bz2
-48fe11718ed9944ccd1dfa4207dd9a12  download/CSWncftp.gspec
+384b7f01d725c89ccd30692628b3ac1b  download/ncftp-3.2.0-src.tar.bz2
+22825be4246e37b86d4b5ad58f63974a  download/CSWncftp.gspec
+f52b45c3c795753b4ce943dc304b49d5  download/CSWncftp.depend
+a0d80d971e7d8f337915e5a90041c4b9  download/Makefile.in.diff

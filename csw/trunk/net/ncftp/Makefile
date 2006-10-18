@@ -1,5 +1,5 @@
 GARNAME = ncftp
-GARVERSION = 3.1.9
+GARVERSION = 3.2.0
 CATEGORIES = net
 
 DESCRIPTION = File Transfer Protocol (FTP) client applications.
@@ -11,17 +11,13 @@ endef
 
 MASTER_SITES = ftp://ftp.ncftp.com/ncftp/
 DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.bz2
-DISTFILES += $(call admfiles,CSWncftp,)
+DISTFILES += $(call admfiles,CSWncftp,depend)
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
 
-LIBDEPS += lib/ncurses
+CONFIGURE_ARGS = $(DIRPATHS) --without-ncurses
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-BINDIR = $(bindir)
-SYSCONFDIR = $(sysconfdir)
-INSTALL_OVERRIDE_DIRS = prefix exec_prefix BINDIR SYSCONFDIR mandir
+PATCHFILES = Makefile.in.diff
 
 # No test target in the makefile
 TEST_SCRIPTS =
