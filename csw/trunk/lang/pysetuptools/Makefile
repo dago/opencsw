@@ -1,5 +1,5 @@
 GARNAME = setuptools
-GARVERSION = 0.6a10
+GARVERSION = 0.6c3
 CATEGORIES = lang
 
 SPKG_SOURCEURL = http://peak.telecommunity.com/DevCenter/setuptools
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://cheeseshop.python.org/packages/source/s/setuptools/
-DISTFILES = $(GARNAME)-$(GARVERSION).zip
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpysetuptools,depend prototype)
 
 CONFIGURE_SCRIPTS =
