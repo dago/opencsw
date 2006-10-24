@@ -20,7 +20,7 @@ use vars qw/
   $HAS_LWP_SUPPORT $UA $HAS_CURL_SUPPORT
   %config %exit $SELF %SPEC_TYPE $SPEC_TYPE
   $DIRECTIVE @SPECDIRS @ADMFILES %FLAGS %HASMERGE
-  $DIRECTIVE_START %VALID_DIRECTIVES %SCRIPTADM/;
+  $DIRECTIVE_START %VALID_DIRECTIVES %SCRIPTADM $ARCH/;
 
 # Tool Version/Revision Information
 $TOOLVERSION = "1.4";
@@ -64,6 +64,10 @@ $SELF = basename $0;
     dumped_env          => 11,
     unknown             => 42,
 );
+
+# Architecture
+($ARCH) = `/bin/uname -p`;
+chomp $ARCH;
 
 # Content flags
 %FLAGS = map { $_ => $_ } qw/none merge/;
@@ -706,7 +710,8 @@ sub create_files {
 
         Important "Processing $admtype";
 
-        my $admfile      = catfile $workdir, "$specname.$admtype";
+        my $admfile = catfile $workdir, "$specname.$admtype-$ARCH";
+        $admfile = catfile $workdir, "$specname.$admtype" unless -f $admfile;
         my $admfile_name = basename $admfile;
 
         # Allow other admin files to read the prototype!
