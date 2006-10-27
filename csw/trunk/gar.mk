@@ -266,7 +266,7 @@ strip:
 
 # fixconfig - Remove build-time paths config files
 POST_INSTALL_TARGETS := fixconfig $(POST_INSTALL_TARGETS)
-FIXCONFIG_DIRS    ?= $(DESTDIR)$(libdir)
+FIXCONFIG_DIRS    ?= $(DESTDIR)$(libdir) $(DESTDIR)$(bindir)
 FIXCONFIG_RMPATHS ?= $(DESTDIR)
 fixconfig:
 	@if test "x$(FIXCONFIG_DIRS)" != "x" ; then \
