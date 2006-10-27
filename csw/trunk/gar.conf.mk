@@ -148,7 +148,7 @@ OPTFLAGS = $($(GARCOMPILER)_CC_$(GARFLAVOR))
 EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir),-I$(EINC))
 EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir),-L$(ELIB))
 
-LDOPT_LIBS = $(libdir) $(EXTRA_LIB)
+LDOPT_LIBS ?= $(libdir) $(EXTRA_LIB)
 ifdef NOISALIST
 LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS),-R$(ELIB))
 else
