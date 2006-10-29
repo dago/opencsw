@@ -1,5 +1,5 @@
 GARNAME = firefox
-GARVERSION = 1.5.0.7
+GARVERSION = 2.0
 CATEGORIES = apps
 
 DESCRIPTION = Firefox Community Edition web browser

@@ -2,7 +2,7 @@
 #
 # Blastwave.org Firefox Community Edition web browser postinstall script
 
-FIREFOX_VERSION=firefox-1.5.0.7
+FIREFOX_VERSION=firefox-2.0
 UNAME_P=`uname -p`
 UNAME_R=`uname -r`
 
