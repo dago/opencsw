@@ -1,4 +1,5 @@
 d none /opt/csw 0755 root bin
+d none /opt/csw/bin 0755 root bin
 d none /opt/csw/kde-gcc 0755 root bin
 d none /opt/csw/kde-gcc/bin 0755 root bin
 f none /opt/csw/kde-gcc/bin/lyx 0755 root bin
