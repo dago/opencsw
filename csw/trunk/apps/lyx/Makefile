@@ -15,8 +15,6 @@ DISTFILES += $(call admfiles,CSWlyx,depend prototype postinstall)
 
 PATCHFILES = solaris.patch
 
-LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
-
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
 CONFIGURE_ARGS += LIBS=-laspell LDFLAGS=-laspell
 CONFIGURE_ARGS += QTDIR=/opt/csw/kde-gcc
@@ -35,6 +33,9 @@ CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
 TEST_TARGET =
 
 include ../category.mk
+
+LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
+export LD_OPTIONS
 
 BINFILES = $(DESTDIR)$(prefix)/kde-gcc/bin/lyx
 BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/lyxclient
