@@ -1,5 +1,5 @@
 GARNAME = kile
-GARVERSION = 1.9
+GARVERSION = 1.9.2
 CATEGORIES = applications
 
 DESCRIPTION = An integrated LaTeX environment
@@ -9,7 +9,8 @@ define BLURB
   example) and SPARC.
 endef
 
-MASTER_SITES = http://kent.dl.sourceforge.net/sourceforge/kile/
+SF_PROJ = kile
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWkile,depend)
 
@@ -47,10 +48,10 @@ TEST_TARGET =
 
 include ../category.mk
 
-#BINFILES = $(DESTDIR)$(prefix)/kde-gcc/bin/lyx
-#BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/lyxclient
-#BINFILES += $(DESTDIR)$(prefix)/kde-gcc/bin/tex2lyx
+SPKG_SOURCEURL = http://kile.sourceforge.net/
+
+BINFILES = $(DESTDIR)$(prefix)/kde-gcc/bin/kile
 
 post-install:
-#	/usr/ccs/bin/strip $(BINFILES)
-#	/usr/ccs/bin/mcs -d $(BINFILES)
+	/usr/ccs/bin/strip $(BINFILES)
+	/usr/ccs/bin/mcs -d $(BINFILES)
