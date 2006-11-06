@@ -32,6 +32,14 @@
                  <service_fmri value='svc:/network/loopback' />
          </dependency>
 
+         <dependency
+                 name='name-services'
+                 grouping='require_all'
+                 restart_on='none'
+                 type='service'>
+                 <service_fmri value='svc:/milestone/name-services' />
+         </dependency>
+
          <exec_method
                  type='method'
                  name='start'
