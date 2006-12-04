@@ -1,3 +1,10 @@
+lftp (3.5.6) unstable
+ 
+   * New upstream version.
+   * Removed MakeRef_macro.patch not necessary anymore.
+ 
+  -- Yann Rouillard <yann@blastwave.org>  Mon,  4 Dec 2006 23:07:36 +0100
+ 
 lftp (3.5.4) unstable
  
    * New upstream version.
