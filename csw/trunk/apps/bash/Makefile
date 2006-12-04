@@ -1,5 +1,5 @@
 GARNAME = bash
-GARVERSION = 3.1
+GARVERSION = 3.2
 CATEGORIES = apps
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -14,7 +14,7 @@ DISTFILES += $(call admfiles,CSWbash,prototype postinstall postremove depend)
 DISTFILES += changelog.CSW
 
 PATCHDIRLEVEL = 2
-PATCHFILES = $(shell cd files; for FILE in bash31-???.patch; do echo $$FILE; done)
+PATCHFILES = $(shell cd files; for FILE in bash32-???.patch; do echo $$FILE; done)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
