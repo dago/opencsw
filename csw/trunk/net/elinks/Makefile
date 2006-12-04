@@ -1,5 +1,5 @@
 GARNAME = elinks
-GARVERSION = 0.11.1
+GARVERSION = 0.11.2
 CATEGORIES = net
 
 DESCRIPTION = An advanced text mode web browser
@@ -27,6 +27,8 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-88-colors 
 CONFIGURE_ARGS += --enable-256-colors 
+# ecma support not stable enough
+# CONFIGURE_ARGS += --enable-sm-scripting
 
 TEST_SCRIPTS =
 
