@@ -79,6 +79,16 @@ The w flags tells sendmail users are local, these are generic mailer flags expla
 http://www.sendmail.org/~ca/email/doc8.8/op-sh-5.html#sh-5.4
 
 
+- Performance problems
+
+Its seems acl group checking can cause performance problems in some cases.
+See http://www.spinics.net/lists/info-cyrus/msg02295.html
+
+If it's your case, disable group checking in imapd.conf:
+
+unix_group_enable:0
+
+
 - Differences with upstream version
 
 Several patches have been applied so Cyrus is more useable in production environment
