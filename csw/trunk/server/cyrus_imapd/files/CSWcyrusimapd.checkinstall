@@ -1,0 +1,13 @@
+
+if [ ! -f ${BASEDIR}/usr/bin/getent ]; then
+	cat <<EOF
+Installation of this package requires the file /usr/bin/getent 
+which is currently missing.
+This file is provided by the package SUNWnisu for solaris 7/8/9
+and the package SUNWcsu for solaris >= 10.
+Please install this package before installing cyrus_imapd.
+EOF
+	exit 1
+fi
+exit 0
+

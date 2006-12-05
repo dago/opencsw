@@ -17,7 +17,7 @@ endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
 DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend)
+DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend checkinstall)
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
 DISTFILES += i.services r.services services
 DISTFILES += i.smf r.smf i.conf r.conf
