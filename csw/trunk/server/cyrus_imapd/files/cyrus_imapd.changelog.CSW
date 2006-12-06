@@ -1,3 +1,10 @@
+cyrus_imapd (2.3.7,REV=2006.12.06) unstable
+
+ * Added information about unix_group_enable option.
+ * Added checkinstall test for /usr/bin/getent presence.
+
+ -- Yann Rouillard <yann@blastwave.org>  Wed,  6 Dec 2006 19:06:01 +0100
+
 cyrus_imapd (2.3.7,REV=2006.10.03) unstable
 
   * Fixed "Unknown code imap 54" bug.
