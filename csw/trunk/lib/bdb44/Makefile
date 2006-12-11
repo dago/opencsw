@@ -37,9 +37,9 @@ CONFIGURE_ARGS += --enable-java
 CONFIGURE_ARGS += --enable-tcl
 CONFIGURE_ARGS += --with-tcl=$(libdir)
 
-LIBTOOL_LADIR   = $(DESTDIR)$(prefix)/bdb44/lib
+FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb44/lib
 
-# bdb tests are time consuming
+# bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
 include ../category.mk
