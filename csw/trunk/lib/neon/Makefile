@@ -1,5 +1,5 @@
 GARNAME = neon
-GARVERSION = 0.25.5
+GARVERSION = 0.26.2
 CATEGORIES = lib
 
 DESCRIPTION = Neon HTTP and WebDAV client library
@@ -10,29 +10,29 @@ define BLURB
   be easily implemented.
 endef
 
+# Compatibility libraries
+LIBNAME = libneon.so
+COMPATVERS = 24.0.7 25.0.5
+COMPATLIBS = $(foreach A,i386 sparc, \
+						     $(foreach V,$(COMPATVERS),$(LIBNAME).$(V).$(A).bz2))
+
 MASTER_SITES = http://www.webdav.org/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWneon,$(ADMSTANDARD))
 DISTFILES += $(call admfiles,CSWneon-devel,$(ADMSTANDARD))
-
-# Compatibility libraries
-DISTFILES += libneon.so.24.0.7.i386.bz2
-DISTFILES += libneon.so.24.0.7.sparc.bz2
+DISTFILES += $(COMPATLIBS)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --with-ssl
+CONFIGURE_ARGS += --with-ssl=gnutls
 CONFIGURE_ARGS += --with-expat
 
 include ../category.mk
 
 post-install:
-	@if test -f $(WORKDIR)/libneon.so.24.0.7.$(GARCH).gz ; then \
-		gunzip $(WORKDIR)/libneon.so.24.0.7.$(GARCH).gz ; \
-	fi
-	@if test -f $(WORKDIR)/libneon.so.24.0.7.$(GARCH) ; then \
-		ginstall -m0755 \
-			$(WORKDIR)/libneon.so.24.0.7.$(GARCH) \
-			$(DESTDIR)$(libdir)/libneon.so.24.0.7 ; \
-	fi
+	@echo $(DISTFILES)
+	@for version in $(COMPATVERS) ; do \
+		ginstall -m 755 $(WORKDIR)/$(LIBNAME).$$version.$(GARCH) \
+			$(DESTDIR)$(libdir)/$(LIBNAME).$$version ; \
+	done
 	@$(MAKECOOKIE)

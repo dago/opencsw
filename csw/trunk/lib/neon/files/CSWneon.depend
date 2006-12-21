@@ -3,3 +3,6 @@ P CSWexpat expat - XML Parser Toolkit
 P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWzlib zlib - Zlib Data Compression Library
+P CSWgcrypt libgcrypt - GNU libcrypt
+P CSWgnutls gnutls - GNU Transport Layer Security lib and tools
+P CSWgpgerr libgpg_error - GNU gpg related library

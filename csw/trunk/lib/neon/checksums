@@ -1,9 +1,11 @@
-b5fdb71dd407f0a3de0f267d27c9ab17  download/neon-0.25.5.tar.gz
+65ff7f6d962305b984a60d6ec5b189b5  download/neon-0.26.2.tar.gz
 643aa565e0d9f38f0153ab72b6dc5621  download/CSWneon.gspec
-2294b3901a8a43911b15188f930d4305  download/CSWneon.prototype
-930feb3f09e24b03e07c9dddf59223d3  download/CSWneon.depend
+783b086238a8a3131b899e23bda17f66  download/CSWneon.prototype
+77068a62810783cc79c90e335b685999  download/CSWneon.depend
 5e17c5dc62032a174e4e39fa33720aff  download/CSWneon-devel.gspec
-d30fc433b0e733eff416751d7fcbf2fe  download/CSWneon-devel.prototype
-f8faa8f0648906f079c97131f5df36e5  download/CSWneon-devel.depend
+62adf9b5e79c6161bf325ac658e3e1ac  download/CSWneon-devel.prototype
+daade6443b7ddc032ae2189142f21094  download/CSWneon-devel.depend
 6cfe5756d2535dcc58a3e2172f9ebfd7  download/libneon.so.24.0.7.i386.bz2
+2ec300963220886ef877638a0566f81e  download/libneon.so.25.0.5.i386.bz2
 20cc0db965f00da7664af5bc7bb9e45d  download/libneon.so.24.0.7.sparc.bz2
+c66a07f1ab8d0f8110062e94e9871b69  download/libneon.so.25.0.5.sparc.bz2
