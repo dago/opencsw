@@ -6,3 +6,6 @@ P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
 P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library
+P CSWgcrypt libgcrypt - GNU libcrypt
+P CSWgnutls gnutls - GNU Transport Layer Security lib and tools
+P CSWgpgerr libgpg_error - GNU gpg related library

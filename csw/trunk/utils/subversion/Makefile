@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.4.0
+DISTVERSION = 1.4.2
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -41,6 +41,9 @@ DISTFILES += $(call admfiles,CSWsvn-devel,depend prototype)
 
 # Templates
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
+
+# Fix: Allow neon 0.26.2
+PATCHFILES += neon-version.diff
 
 # Fix: Use 'gdiff' instead of 'diff'
 PATCHFILES += gdiff.diff

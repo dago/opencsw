@@ -1,2 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
 P CSWsvn subversion - Version control rethought
+P CSWgcrypt libgcrypt - GNU libcrypt
+P CSWgnutls gnutls - GNU Transport Layer Security lib and tools
+P CSWgpgerr libgpg_error - GNU gpg related library
