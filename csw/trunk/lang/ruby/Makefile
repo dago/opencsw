@@ -1,6 +1,10 @@
 GARNAME = ruby
-GARVERSION = 1.8.4
+DISTVERSION = 1.8.5
+PATCHLEVEL = p2
+GARVERSION = $(DISTVERSION)$(PATCHLEVEL)
 CATEGORIES = lang
+
+WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL)
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -16,17 +20,15 @@ endef
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.gz 
 DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
 DISTFILES += CSWrubytk.gspec CSWrubytk.depend CSWrubytk.prototype
 ifneq ($(SKIP_RUBYDOC),1)
 DISTFILES += CSWrubydoc.gspec CSWrubydoc.depend CSWrubydoc.prototype
 endif
 
-# Compile against OpenSSL 0.9.8
-ifeq ($(GARVERSION),1.8.2)
-PATCHFILES += ossl-0.9.8.diff
-endif
+# Force the dbm extension to build
+PATCHFILES += dbm.diff
 
 #LIBDEPS += lib/iconv lib/gdbm lib/ncurses lib/readline
 #LIBDEPS += lib/zlib lib/openssl lib/bdb3
@@ -41,7 +43,6 @@ CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-tcl-dir=$(prefix)
 CONFIGURE_ARGS += --with-tk-dir=$(prefix)
 CONFIGURE_ARGS += --with-dbm-dir=$(prefix)
-CONFIGURE_ARGS += --with-dbm-type=db
 CONFIGURE_ARGS += --with-gdbm-dir=$(prefix)
 CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
 CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
