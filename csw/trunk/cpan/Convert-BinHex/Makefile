@@ -11,6 +11,6 @@ define BLURB
   into into binary data.
 endef
 
-DISTFILES += CSWpmconvertbinhex.gspec
+DISTFILES += $(call admfiles,CSWpmconvertbinhex,prototype)
 
 include ../category.mk
