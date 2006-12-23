@@ -46,6 +46,7 @@ CONFIGURE_ARGS += --with-suexec-uidmin=100
 CONFIGURE_ARGS += --with-suexec-gidmin=100
 CONFIGURE_ARGS += --with-suexec-logfile=$(prefix)/apache2/var/log/suexec_log
 CONFIGURE_ARGS += --with-suexec-bin=$(prefix)/apache2/sbin/suexec
+CONFIGURE_ARGS += --enable-rule=SSL_EXPERIMENTAL
 
 # Fixup target variables
 APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
@@ -54,6 +55,8 @@ STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
 include ../category.mk
 include files/rules.mk
+
+CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 
 FIXCONFIG_DIRS     = $(DESTDIR)
 FIXCONFIG_RMPATHS  = $(DESTDIR)
