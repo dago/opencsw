@@ -9,6 +9,6 @@ define BLURB
   Mail::Internet, Mail::Mailer, Mail::Send and Mail::Util.
 endef
 
-DISTFILES += CSWpmmailtools.gspec
+DISTFILES += $(call admfiles,CSWpmmailtools,prototype)
 
 include ../category.mk
