@@ -75,6 +75,8 @@ EOF
 
 INIT_INFO_FILE="$PKG_INSTALL_ROOT/tmp/$PKG.initinfo"
 
+[ ! -f "$INIT_INFO_FILE" ] && exit 0
+
 while read SRC DEST; do
     SERVICENAME=`/usr/bin/basename $DEST`
 
