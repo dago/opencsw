@@ -36,7 +36,7 @@ CONFIGURE_ARGS += --with-mm-opts="INSTALLDIRS=vendor"
 
 PERL_CONFIGURE_ARGS =
 
-LIBTOOL_LADIR = $(DESTDIR)$(libdir)
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/apache2/lib
 STRIP_DIRS   += $(DESTDIR)$(prefix)/apache2/libexec
 
 EXTRA_INC = $(prefix)/bdb43/include
@@ -44,5 +44,9 @@ EXTRA_LIB = $(prefix)/bdb43/lib $(prefix)/apache2/lib
 
 include ../category.mk
 
-pre-package: test
+pre-package: test fix-cfgscript
+
+fix-cfgscript:
+	@perl -i -plne 's/(APREQ_(?:SOURCE|BUILD)_DIR=).*$$/\1""/' \
+		$(DESTDIR)$(prefix)/apache2/bin/apreq2-config
 

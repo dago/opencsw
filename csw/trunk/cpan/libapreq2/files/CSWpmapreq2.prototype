@@ -2,7 +2,6 @@ d none /opt/csw/lib ? ? ?
 d none /opt/csw/lib/perl ? ? ?
 d none /opt/csw/lib/perl/csw ? ? ?
 d none /opt/csw/lib/perl/csw/APR 0755 root bin
-f none /opt/csw/lib/perl/csw/APR/DummyVersions.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request.pod 0444 root bin
 d none /opt/csw/lib/perl/csw/APR/Request 0755 root bin
