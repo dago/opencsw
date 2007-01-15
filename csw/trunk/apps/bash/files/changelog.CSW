@@ -1,3 +1,9 @@
+bash (3.2,REV=2007.01.15) unstable
+
+  * Added bash patches bash32-006, bash32-007, bash32-008 and bash32-009
+
+ -- Yann Rouillard  <yann@blastwave.org>  Mon, 15 Jan 2007 23:48:35 +0100
+
 bash (3.2) unstable
 
   * New upstream version.
