@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = http://elinks.cz/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWelinks,prototype,depend)
+DISTFILES += $(call admfiles,CSWelinks,prototype depend)
 DISTFILES += changelog.CSW
 
 # suppress the rdynamic test which doesn't
@@ -29,6 +29,7 @@ CONFIGURE_ARGS += --enable-88-colors
 CONFIGURE_ARGS += --enable-256-colors 
 # ecma support not stable enough
 # CONFIGURE_ARGS += --enable-sm-scripting
+CONFIGURE_ARGS += --disable-sm-scripting
 
 TEST_SCRIPTS =
 
