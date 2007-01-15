@@ -48,6 +48,8 @@ TEST_SCRIPTS =
 include ../category.mk
 
 post-install:
+	# po are not installed correctly (I should find a better fix)
+	cd $(WORKSRC)/po && $(MAKE) DESTDIR=$(DESTDIR) install_sh=$(CURDIR)/$(WORKSRC)/install-sh install
 	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 	@ginstall $(WORKDIR)/i.conf $(WORKDIR)/r.conf $(DESTDIR)
 
