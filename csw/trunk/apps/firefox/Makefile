@@ -1,6 +1,7 @@
 GARNAME = firefox
 GARVERSION = 2.0
 CATEGORIES = apps
+DISTNAME = $(GARNAME)
 
 DESCRIPTION = Firefox Community Edition web browser
 define BLURB
@@ -18,14 +19,14 @@ LDFLAGS="-R'\$\$ORIGIN:\$\$ORIGIN/..' -L/opt/csw/lib -R/opt/csw/lib"
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
 
-CONFIGURE_ARGS = --prefix=/opt/csw/libexec/firefox
+CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/firefox
 
 TEST_SCRIPTS =
 
 include ../category.mk
 
 post-extract:
-	( mv $(WORKDIR)/mozilla $(WORKDIR)/$(GARNAME)-$(GARVERSION) )
+	( mv $(WORKDIR)/mozilla $(WORKDIR)/$(DISTNAME) )
 	@$(MAKECOOKIE)
 
 pre-configure:
@@ -33,13 +34,20 @@ pre-configure:
 	( cp $(FILEDIR)/.mozconfig $(HOME)/.mozconfig )
 
 pre-install:
-	( mkdir -p $(DESTDIR)/opt/csw/bin )
-	( cd $(DESTDIR)/opt/csw/bin && ln -s ../libexec/firefox/bin/firefox )
+	( if [ ! -d $(DESTDIR)/opt/csw/bin ] ; then mkdir -p $(DESTDIR)/opt/csw/bin ; fi )
+	( cd $(DESTDIR)/opt/csw/bin && if [ -f firefox ] ; then rm firefox ; fi  && ln -s ../mozilla/firefox/bin/firefox . )
 	( mkdir -p $(DESTDIR)/opt/csw/share/pixmaps )
-	( cp $(WORKDIR)/$(GARNAME)-$(GARVERSION)/other-licenses/branding/firefox/mozicon128.png $(DESTDIR)/opt/csw/share/pixmaps/firefox.png )
+	( cp $(WORKDIR)/$(DISTNAME)/other-licenses/branding/firefox/mozicon128.png $(DESTDIR)/opt/csw/share/pixmaps/firefox.png )
 	( mkdir -p $(DESTDIR)/opt/csw/share/applications )
 	( cp $(FILEDIR)/firefox.desktop $(DESTDIR)/opt/csw/share/applications/firefox.desktop )
 	( mkdir -p $(DESTDIR)/opt/csw/share/gnome/mime-info )
 	( cp $(FILEDIR)/firefox.keys $(DESTDIR)/opt/csw/share/gnome/mime-info/firefox.keys )
+
 post-install:
-	( rm -rf $(DESTDIR)/opt/csw/libexec/firefox/include )
+	( rm -rf $(DESTDIR)/opt/csw/mozilla/firefox/include )
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | grep ELF | grep -e 'executable' -e 'dynamic lib' | grep 'not stripped' && strip {}"  \; )
+	( mv $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp && gsed -e s\_-L$(DESTDIR)/opt/csw/lib\_\_g  $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp > $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config && rm $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp )
+	( mv $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp && gsed -e s\_-L$(DESTDIR)/opt/csw/lib\_\_g  $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp > $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc && rm $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp )
+	( gfind $(DESTDIR)/opt/csw -name chromelist.txt -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORKDIR)/$(DISTNAME)/\_\_g {}.temp > {} && rm {}.temp"  \; )
+	( gfind $(DESTDIR)/opt/csw/mozilla/firefox -name "*.js" -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORKDIR)/$(DISTNAME)/\_\_g {}.temp > {} && rm {}.temp"  \; )
+	( gfind $(DESTDIR)/opt/csw/mozilla/firefox -name "*.jar" -exec bash -c "`pwd`/removeBuildPathFromJar.sh {} `pwd` $(WORKDIR) $(DISTNAME)" \; )
