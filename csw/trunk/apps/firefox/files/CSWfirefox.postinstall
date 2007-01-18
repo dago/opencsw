@@ -2,11 +2,11 @@
 #
 # Blastwave.org Firefox Community Edition web browser postinstall script
 
-FIREFOX_VERSION=firefox-2.0
+FIREFOX_VERSION=firefox
 UNAME_P=`uname -p`
 UNAME_R=`uname -r`
 
-PLUGIN_PATH="/opt/csw/libexec/firefox/lib/${FIREFOX_VERSION}/plugins"
+PLUGIN_PATH="/opt/csw/mozilla/firefox/lib/plugins"
 JRE_SOL8="/usr/j2se/jre/plugin/${UNAME_P}/ns600/libjavaplugin_oji.so"
 JRE_SOL9="/usr/j2se/jre/plugin/${UNAME_P}/ns610/libjavaplugin_oji.so"
 
