@@ -1,5 +1,5 @@
 GARNAME = cups
-GARVERSION = 1.2.4
+GARVERSION = 1.2.7
 CATEGORIES = net
 
 define BLURB
@@ -85,8 +85,10 @@ post-install:
 			mv cups*.po LC_MESSAGES; \
 			cd ..; \
 		done \
-	fi \
-	)
+	fi)
+	(cd $(DESTDIR); \
+	mv usr/share/* ./$(prefix)/share; \
+	rmdir -p usr/share)
 	(cd $(DESTDIR)$(prefix)/etc/cups; \
 	for i in cupsd.conf; do \
 		if [ -r "$$i" ]; then \

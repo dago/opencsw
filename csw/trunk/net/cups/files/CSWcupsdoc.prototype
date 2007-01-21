@@ -1,3 +1,7 @@
+d none /opt/csw 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/cups 0755 root bin
 d none /opt/csw/share/doc/cups/help 0755 root bin
 f none /opt/csw/share/doc/cups/help/api-array.html 0644 root bin
 f none /opt/csw/share/doc/cups/help/api-cups.html 0644 root bin

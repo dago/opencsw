@@ -5,6 +5,7 @@ d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/cups 0755 root bin
 f none /opt/csw/include/cups/adminutil.h 0644 root bin
 f none /opt/csw/include/cups/array.h 0644 root bin
+f none /opt/csw/include/cups/backend.h 0644 root bin
 f none /opt/csw/include/cups/cups.h 0644 root bin
 f none /opt/csw/include/cups/dir.h 0644 root bin
 f none /opt/csw/include/cups/file.h 0644 root bin
