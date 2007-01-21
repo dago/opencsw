@@ -1,5 +1,5 @@
---- exim-4.62.orig/Local/Makefile	2006-04-28 03:32:22.000000000 -0700
-+++ exim-4.62/Local/Makefile	2006-07-22 10:01:58.914985000 -0700
+--- exim-4.66.orig/Local/Makefile	2007-01-08 06:25:36.000000000 -0800
++++ exim-4.66/Local/Makefile	2007-01-20 18:23:42.784718000 -0800
 @@ -4,6 +4,13 @@
  #          The Exim mail transport agent         #
  ##################################################
@@ -188,22 +188,24 @@
  
  
  #------------------------------------------------------------------------------
-@@ -473,10 +484,10 @@
+@@ -473,11 +484,11 @@
  # included in the Exim binary. You will then need to set up the run time
  # configuration to make use of the mechanism(s) selected.
  
 -# AUTH_CRAM_MD5=yes
 -# AUTH_CYRUS_SASL=yes
+-# AUTH_DOVECOT=yes
 -# AUTH_PLAINTEXT=yes
 -# AUTH_SPA=yes
 +AUTH_CRAM_MD5=yes
 +AUTH_CYRUS_SASL=yes
++AUTH_DOVECOT=yes
 +AUTH_PLAINTEXT=yes
 +AUTH_SPA=yes
  
  
  #------------------------------------------------------------------------------
-@@ -484,7 +495,7 @@
+@@ -485,7 +496,7 @@
  # Cyrus SASL library installed before trying to build Exim, and you probably
  # want to uncomment the following line:
  
@@ -212,7 +214,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -513,7 +524,7 @@
+@@ -514,7 +525,7 @@
  # the Sieve filter support. For those OS where iconv() is known to be installed
  # as standard, the file in OS/Makefile-xxxx contains
  #
@@ -221,7 +223,7 @@
  #
  # If you are not using one of those systems, but have installed iconv(), you
  # need to uncomment that line above. In some cases, you may find that iconv()
-@@ -523,6 +534,7 @@
+@@ -524,6 +535,7 @@
  # HAVE_ICONV=yes
  # CFLAGS=-O -I/usr/local/include
  # EXTRALIBS_EXIM=-L/usr/local/lib -liconv
@@ -229,7 +231,7 @@
  #
  # but of course there may need to be other things in CFLAGS and EXTRALIBS_EXIM
  # as well.
-@@ -562,10 +574,10 @@
+@@ -576,10 +588,10 @@
  # leave these settings commented out.
  
  # This setting is required for any TLS support (either OpenSSL or GnuTLS)
@@ -242,7 +244,7 @@
  
  # Uncomment these settings if you are using GnuTLS
  # USE_GNUTLS=yes
-@@ -617,6 +629,7 @@
+@@ -631,6 +643,7 @@
  # install them in the directory you have defined.
  
  # INFO_DIRECTORY=/usr/share/info
@@ -250,7 +252,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -630,6 +643,7 @@
+@@ -644,6 +657,7 @@
  # to form the final file names. Some installations may want something like this:
  
  # LOG_FILE_PATH=/var/log/exim_%slog
@@ -258,7 +260,7 @@
  
  # which results in files with names /var/log/exim_mainlog, etc. The directory
  # in which the log files are placed must exist; Exim does not try to create
-@@ -686,7 +700,7 @@
+@@ -700,7 +714,7 @@
  # If the exigrep utility is fed compressed log files, it tries to uncompress
  # them using this command.
  
@@ -267,7 +269,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -705,7 +719,7 @@
+@@ -719,7 +733,7 @@
  # that the local_scan API is made available by the linker. You may also need
  # to add -ldl to EXTRALIBS so that dlopen() is available to Exim.
  
@@ -276,7 +278,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -715,7 +729,7 @@
+@@ -729,7 +743,7 @@
  # support, which is intended for use in conjunction with the SMTP AUTH
  # facilities, is included only when requested by the following setting:
  
@@ -285,7 +287,7 @@
  
  # You probably need to add -lpam to EXTRALIBS, and in some releases of
  # GNU/Linux -ldl is also needed.
-@@ -812,7 +826,7 @@
+@@ -826,7 +840,7 @@
  # (the value doesn't matter), the symbolic link is not created or moved. You
  # will then have to "turn Exim on" by setting up the link manually.
  
@@ -294,7 +296,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -824,7 +838,7 @@
+@@ -838,7 +852,7 @@
  # aliases). The following setting can be changed to specify a different
  # location for the system alias file.
  
@@ -303,7 +305,7 @@
  
  
  #------------------------------------------------------------------------------
-@@ -1072,6 +1086,7 @@
+@@ -1086,6 +1100,7 @@
  
  # If PID_FILE_PATH is not defined, Exim writes a file in its spool directory
  # using the name "exim-daemon.pid".
