@@ -19,6 +19,7 @@ CONFIGURE_SCRIPTS =
 # jhead doesn't have a test target
 TEST_TARGET = 
 
-DESTDIR = opt/csw
+SPKG_SOURCEURL = http://www.sentex.net/~mwandel/jhead/
+SPKG_PKGBASE = $(DESTDIR)$(prefix)
 
 include ../category.mk
