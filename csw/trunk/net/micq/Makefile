@@ -4,10 +4,12 @@ CATEGORIES = net
 
 DESCRIPTION = terminal-based ICQ client
 define BLURB
-  LONG DESCRIPTION
+  mICQ is a very portable text-mode ICQ clone - it is known to compile under
+  Linux, Solaris, BSD, AIX, HPUX, Windows, AmigaOS and with restrictions
+  BeOS.
 endef
 
-MASTER_SITES = 
+MASTER_SITES = http://www.micq.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWmicq,prototype depend)
 
