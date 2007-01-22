@@ -10,6 +10,7 @@ endef
 
 MASTER_SITES = http://cybercom.net/~dcoffin/dcraw/
 DISTFILES  = dcraw.c dcraw.1
+DISTFILES += clean_crw.c
 DISTFILES += $(call admfiles,CSWdcraw,prototype depend)
 DISTFILES += Makefile LICENSE
 
@@ -17,7 +18,8 @@ CONFIGURE_SCRIPTS =
 #BUILD_SCRIPTS =
 TEST_TARGET =
 
-COPY_FILES = download/dcraw.c download/dcraw.1 download/Makefile
+COPY_FILES = download/dcraw.c download/dcraw.1 download/clean_crw.c
+COPY_FILES += download/Makefile
 
 SPKG_SOURCEURL = http://cybercom.net/~dcoffin/dcraw/
 SPKG_PKGBASE = $(DESTDIR)$(prefix)
