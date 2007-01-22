@@ -1,5 +1,5 @@
 GARNAME = kile
-GARVERSION = 1.9.2
+GARVERSION = 1.9.3
 CATEGORIES = applications
 
 DESCRIPTION = An integrated LaTeX environment
