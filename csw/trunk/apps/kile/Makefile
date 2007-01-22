@@ -12,7 +12,7 @@ endef
 SF_PROJ = kile
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWkile,depend)
+DISTFILES += $(call admfiles,CSWkile,depend prototype)
 
 # Compile with GCC
 GARCOMPILER = GNU
