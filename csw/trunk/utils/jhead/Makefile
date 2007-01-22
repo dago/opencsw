@@ -1,5 +1,5 @@
 GARNAME = jhead
-GARVERSION = 2.5
+GARVERSION = 2.7
 CATEGORIES = utils
 
 DESCRIPTION = EXIF parser for JPEG images
