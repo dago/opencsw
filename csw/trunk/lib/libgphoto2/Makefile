@@ -18,7 +18,14 @@ DISTFILES += sunstudio.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-CONFIGURE_ARGS = $(DIRPATHS) --with-libusb=no
+LIBUSB_LIBS="-L/usr/sfw/lib -R/usr/sfw/lib -lusb"
+LIBUSB_CFLAGS=-I/usr/sfw/include
+
+export LIBUSB_LIBS
+export LIBUSB_CFLAGS
+
+CONFIGURE_ARGS = $(DIRPATHS)
+#--with-libusb=no
 #--with-exif-prefix=/opt/csw
 
 # libgphoto2 doesn't have a test target
@@ -27,3 +34,8 @@ TEST_TARGET =
 SPKG_SOURCEURL = http://www.gphoto.org/
 
 include ../category.mk
+
+post-configure:
+	(cd $(WORKSRC); \
+	test -d $(DESTDIR)/opt/csw/include || mkdir -p $(DESTDIR)/opt/csw/include \
+	cp -pr gphoto2 $(DESTDIR)/opt/csw/include)
