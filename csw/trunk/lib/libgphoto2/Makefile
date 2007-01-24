@@ -11,11 +11,12 @@ endef
 
 PATCHFILES = sunstudio.patch
 
-MASTER_SITES = http://www.gphoto.org/proj/libgphoto2/
-#MASTER_SITES = http://superb-west.dl.sourceforge.net/sourceforge/gphoto/
+MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibgphoto2,prototype depend)
 DISTFILES += sunstudio.patch
+
+LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-libusb=no
 #--with-exif-prefix=/opt/csw
