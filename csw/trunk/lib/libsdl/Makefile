@@ -1,5 +1,5 @@
 GARNAME = SDL
-GARVERSION = 1.2.9
+GARVERSION = 1.2.11
 CATEGORIES = lib
 
 DESCRIPTION = Simple DirectMedia Layer library
@@ -9,8 +9,9 @@ endef
 
 MASTER_SITES = http://www.libsdl.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibsdl,)
+DISTFILES += $(call admfiles,CSWlibsdl, depend )
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-video-dga
 
 include ../category.mk
