@@ -1,7 +1,7 @@
 GARNAME = ruby
 DISTVERSION = 1.8.5
-PATCHLEVEL = p2
-GARVERSION = $(DISTVERSION)$(PATCHLEVEL)
+PATCHLEVEL = p12
+GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL)
@@ -50,6 +50,8 @@ CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
 include ../category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
 
 # Replace current build arch in prototype
 pre-package:
