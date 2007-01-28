@@ -1,7 +1,7 @@
 0110b96202e83048117d1b4fdd4fed7d  download/php.ini.CSW
 90ae3cef3692d7e566c47d89fe39c43d  download/phpext
-2af05d584256fdaec3c0310036f48ab3  download/CSWphp5_ext_enable.sh
-cd8db6ea4bcd000635b404d909f6c001  download/CSWphp5_ext_disable.sh
+de56d3571f4484284d106af158bffc38  download/CSWphp5_ext_enable.sh
+89e79becc9d7698c5c561581f2b098bc  download/CSWphp5_ext_disable.sh
 d50e24088861d202c3fd55b46a4eff0e  download/CSWphp5.gspec
 eecc546704ae849620cf635e8adc56b5  download/CSWphp5.prototype
 ea613f4ace3ac0e903f091b869a7c7a6  download/CSWphp5.depend
@@ -87,6 +87,6 @@ d41d8cd98f00b204e9800998ecf8427e  download/CSWphp5wddx.depend
 4f08f193b70a0e655800d048d0f70b61  download/CSWphp5xsl.gspec
 2f33d8bea7adb4abed275b80e2a32c90  download/CSWphp5xsl.prototype
 b28f5c3b0e2fe3e525c6ff6e4a9846fe  download/CSWphp5xsl.depend
-08e423aa314369d4392a36b3f7246afc  download/php-5.1.6.tar.bz2
-77c251ec8cd91c41d6d849830e3b5982  download/config.diff
-f0070c705a1db2b2ac3eaa8925ee87ec  download/snmp-hack.diff
+e6029fafcee029edcfa2ceed7a005333  download/php-5.2.0.tar.bz2
+d160589aaf137e70ee9923a257725891  download/config.diff
+7a02421b1f50477c637f570d0ac79bd3  download/snmp-hack.diff

@@ -9,8 +9,10 @@ PHP_INI=$CSW_PREFIX/php5/lib/php.ini
 PHP_BIN=$CSW_PREFIX/php5/bin
 PHP_EXTMGR=$PHP_BIN/phpext
 
-PHPEXT=`echo $PKGINST | sed -e 's,CSWphp5,,' -e 's,\..*,,'`
-PHPEXT=${PHPEXT:-${PKGINST}}
+if [ -z "$PHPEXT" ]; then
+    PHPEXT=`echo $PKGINST | sed -e 's,CSWphp5,,' -e 's,\..*,,'`
+    PHPEXT=${PHPEXT:-${PKGINST}}
+fi
 
 # Bail if php.ini does not exist
 if [ ! -f $PHP_INI ]; then

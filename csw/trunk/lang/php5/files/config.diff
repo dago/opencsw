@@ -1,7 +1,7 @@
-diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/configure
---- php-5.1.6.orig/configure	2005-11-28 18:39:54.055981000 -0500
-+++ php-5.1.6/configure	2005-11-28 18:06:54.786301000 -0500
-@@ -4422,7 +4422,7 @@
+diff --speed-large-files --minimal -Nru php-5.2.0.orig/configure php-5.2.0/configure
+--- php-5.2.0.orig/configure	2006-10-31 21:01:06.000000000 -0500
++++ php-5.2.0/configure	2006-11-06 11:34:06.134879000 -0500
+@@ -4472,7 +4472,7 @@
    $APXS -q -S CFLAGS="$APXS_CFLAGS" CFLAGS >/dev/null 2>&1
  
    if test "$?" != "0"; then
@@ -10,7 +10,7 @@ diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/confi
    else 
      APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
      if test -z `$APXS -q SYSCONFDIR`; then
-@@ -4435,7 +4435,7 @@
+@@ -4485,7 +4485,7 @@
                        \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                         $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                               -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -19,7 +19,7 @@ diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/confi
      fi
    fi
  
-@@ -5539,7 +5539,7 @@
+@@ -5589,7 +5589,7 @@
                  \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                   $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                         -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -28,7 +28,7 @@ diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/confi
    fi
  
    case $host_alias in
-@@ -6369,7 +6369,7 @@
+@@ -6419,7 +6419,7 @@
                  \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                   $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                         -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -37,7 +37,7 @@ diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/confi
    fi
  
    case $host_alias in
-@@ -7368,7 +7368,7 @@
+@@ -7418,7 +7418,7 @@
    $APXS -q -S CFLAGS="$APXS_CFLAGS" CFLAGS >/dev/null 2>&1
  
    if test "$?" != "0"; then
@@ -46,7 +46,7 @@ diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/confi
    else 
      APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
      if test -z `$APXS -q SYSCONFDIR`; then
-@@ -7381,7 +7381,7 @@
+@@ -7431,7 +7431,7 @@
                        \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                         $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                               -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -55,12 +55,12 @@ diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/confi
      fi
    fi
  
-@@ -78048,7 +78048,7 @@
+@@ -79981,7 +79981,7 @@
    echo $ac_n "(cached) $ac_c" 1>&6
  else
    ac_save_LIBS="$LIBS"
 -LIBS="-lreadline  $LIBS"
 +LIBS="-lreadline -lcurses $LIBS"
  cat > conftest.$ac_ext <<EOF
- #line 78054 "configure"
+ #line 79987 "configure"
  #include "confdefs.h"

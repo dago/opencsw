@@ -34,6 +34,7 @@ CONFIGURE_ARGS += --enable-force-cgi-redirect
 #CONFIGURE_ARGS += --enable-debug
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
+CONFIGURE_ARGS += --enable-memory-limit
 
 # Features
 CONFIGURE_ARGS += --with-imap=shared,$(prefix)
@@ -66,8 +67,12 @@ CONFIGURE_ARGS += --enable-gd-jis-conv
 CONFIGURE_ARGS += --enable-exif=shared
 CONFIGURE_ARGS += --with-gettext=shared,$(prefix)
 CONFIGURE_ARGS += --with-gmp=shared,$(prefix)
+ifeq ($(usesunldap),1)
+CONFIGURE_ARGS += --with-ldap=shared,/usr
+else
 CONFIGURE_ARGS += --with-ldap=shared,$(prefix)
 CONFIGURE_ARGS += --with-ldap-sasl=$(prefix)
+endif
 CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-pdo=shared
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
@@ -82,7 +87,7 @@ CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
 CONFIGURE_ARGS += --with-readline=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --enable-shmop=shared
-#CONFIGURE_ARGS += --enable-simplexml=shared
+CONFIGURE_ARGS += --enable-simplexml=shared
 CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
 CONFIGURE_ARGS += --enable-soap=shared
@@ -95,13 +100,23 @@ CONFIGURE_ARGS += --enable-sysvsem=shared
 CONFIGURE_ARGS += --enable-sysvshm=shared
 CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --with-expat-dir=$(prefix)
+CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-wddx=shared
 CONFIGURE_ARGS += --enable-xmlreader=shared
 CONFIGURE_ARGS += --enable-pcntl=shared
-CONFIGURE_ARGS += --enable-fastcgi
 CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
+CONFIGURE_ARGS += --with-mime-magic=shared
+CONFIGURE_ARGS += --enable-json=shared
+CONFIGURE_ARGS += --enable-filter=shared
+CONFIGURE_ARGS += --enable-zip=shared
+
+# Stuff from CSQamp
+CONFIGURE_ARGS += --enable-spl=shared
+CONFIGURE_ARGS += --with-pcre-regex
+CONFIGURE_ARGS += --enable-session=shared
+CONFIGURE_ARGS += --with-pear
 
 # Previously distributed extensions moved to PECL
 #CONFIGURE_ARGS += --enable-dio=shared

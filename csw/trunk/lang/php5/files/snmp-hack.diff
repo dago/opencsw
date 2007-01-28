@@ -1,6 +1,6 @@
 diff --speed-large-files --minimal -Nru php-5.1.6.orig/configure php-5.1.6/configure
---- php-5.1.6.orig/configure	2006-02-04 01:50:06.700798000 -0500
-+++ php-5.1.6/configure	2006-02-04 01:46:43.819918000 -0500
+--- php-5.2.0.orig/configure	2006-02-04 01:50:06.700798000 -0500
++++ php-5.2.0/configure	2006-02-04 01:46:43.819918000 -0500
 @@ -86206,6 +86206,9 @@
      builtin and then its argument prototype would still apply.  */
  char snmp_parse_oid();
