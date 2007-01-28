@@ -1,5 +1,5 @@
-GARNAME = jakarta-tomcat-connectors
-GARVERSION = 1.2.15
+GARNAME = tomcat-connectors
+GARVERSION = 1.2.19
 CATEGORIES = server
 
 DESCRIPTION = AJP connector module for Apache 2
@@ -30,7 +30,7 @@ AUXCONFIG += workers.properties.minimal
 AUXCONFIG += uriworkermap.properties
 DISTFILES += $(AUXCONFIG)
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)-src/jk/native
+WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)-src/native
 
 # Make apxs install to the temp dir
 PATCHFILES += install.diff
