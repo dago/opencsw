@@ -5,6 +5,7 @@ AP2_PREFIX=$CSW_PREFIX/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
 AP2_HTTPD=$AP2_BINDIR/httpd
 AP2_CTRL=$AP2_BINDIR/apachectl
+AP2_CONF=$AP2_PREFIX/httpd.conf
 SVCADM=/usr/sbin/svcadm
 
 # Fix MPM links
@@ -13,6 +14,20 @@ cd $AP2_BINDIR
 ln httpd.prefork httpd
 installf $PKGINST $AP2_HTTPD
 installf -f $PKGINST
+
+[ ! -f $AP2_CONF ] && exit 0
+
+if [ -x $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+    . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -x $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+    . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+if [ "$autoenable_daemons" = "no"  -o \
+     "$autoenable_apache2" = "no" ]; then
+    exit 0
+fi
 
 # Start apache
 if [ -z "$PKG_INSTALL_ROOT" ] && [ -x $AP2_HTTPD ]; then

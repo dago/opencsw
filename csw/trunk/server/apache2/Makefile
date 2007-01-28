@@ -65,7 +65,11 @@ FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr-util/include
 FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr
 FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr/include
 
-post-install: copy-local-files create-templates
+post-install: rename-httpd copy-local-files create-templates
+
+rename-httpd:
+	@( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.prefork )
+	@$(MAKECOOKIE)
 
 # Copy in specialized templates
 copy-local-files:
