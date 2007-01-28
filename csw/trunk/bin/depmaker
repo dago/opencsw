@@ -1,4 +1,4 @@
-#!/bin/env perl -lw
+#!/bin/env perl -w
 #
 # $Id$
 #
@@ -107,7 +107,7 @@ foreach (<>) {
         foreach my $line (`dump -Lv $_`) {
             next unless $line =~ /NEEDED/; chomp $line;
             my (undef, undef, $lib) = split /\s+/, $line;
-            msg "    $lib\n";    
+            #msg "    $lib\n";    
             $depfiles{$lib}++ if $lib;
         }
     }
