@@ -15,13 +15,15 @@
 
 use strict;
 
+my $root = $ARGV[0] || "";
+
 my %files;
 while (<>) {
     next if /^i/;
     my @F = split;
     $F[2] =~ s/^.+=(.+)/$1/;
-    $F[2] = "/tmp/a/$F[2]" unless $F[2] =~ m#\$basedir#;
-    $F[2] =~ s#\$basedir#/tmp/a#;
+    $F[2] = "$root/$F[2]" unless $F[2] =~ m#\$basedir#;
+    $F[2] =~ s#\$basedir#$root#;
     $F[2] =~ s#//#/#g;
     $files{$F[2]}++;
 }
