@@ -19,6 +19,8 @@ DISTFILES += $(call admfiles,CSWbdb44,depend prototype)
 DISTFILES += $(call admfiles,CSWbdb44-devel,depend prototype)
 DISTFILES += $(call admfiles,CSWbdb44-doc,depend prototype)
 
+SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
+
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
