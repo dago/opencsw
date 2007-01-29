@@ -1,6 +1,6 @@
-diff -ru libgphoto2-2.2.1.orig/camlibs/digita/digita.c libgphoto2-2.2.1/camlibs/digita/digita.c
---- libgphoto2-2.2.1.orig/camlibs/digita/digita.c	2006-04-18 18:54:15.000000000 -0700
-+++ libgphoto2-2.2.1/camlibs/digita/digita.c	2006-07-26 15:07:27.628400000 -0700
+diff -ru libgphoto2-2.3.1.orig/camlibs/digita/digita.c libgphoto2-2.3.1/camlibs/digita/digita.c
+--- libgphoto2-2.3.1.orig/camlibs/digita/digita.c	2006-11-25 06:47:24.000000000 -0800
++++ libgphoto2-2.3.1/camlibs/digita/digita.c	2007-01-27 22:21:12.059500000 -0800
 @@ -26,9 +26,7 @@
  #include <errno.h>
  #include <fcntl.h>
@@ -11,31 +11,20 @@ diff -ru libgphoto2-2.2.1.orig/camlibs/digita/digita.c libgphoto2-2.2.1/camlibs/
  #ifdef OS2
  #include <db.h>
  #endif
-diff -ru libgphoto2-2.2.1.orig/camlibs/mars/mars.h libgphoto2-2.2.1/camlibs/mars/mars.h
---- libgphoto2-2.2.1.orig/camlibs/mars/mars.h	2006-04-18 18:54:15.000000000 -0700
-+++ libgphoto2-2.2.1/camlibs/mars/mars.h	2006-07-26 15:15:07.183841000 -0700
-@@ -46,6 +46,7 @@
- int mars_read_data         (Camera *camera, GPPort *port, char *data, int size);
- int mars_read_picture_data (Camera *camera, Info *info,
- 				GPPort *port, char *data, int size, int n);
-+#undef M_READ
- int M_READ (GPPort *port, char *data, int size);
- int M_COMMAND (GPPort *port, char *command, int size, char *response);
- int mars_routine (Info *info, GPPort *port, 
-diff -ru libgphoto2-2.2.1.orig/camlibs/ptp2/library.c libgphoto2-2.2.1/camlibs/ptp2/library.c
---- libgphoto2-2.2.1.orig/camlibs/ptp2/library.c	2006-06-15 22:08:21.000000000 -0700
-+++ libgphoto2-2.2.1/camlibs/ptp2/library.c	2006-07-26 15:20:09.672107000 -0700
-@@ -1707,7 +1707,6 @@
- 	return N_("Unknown");
- }
+diff -ru libgphoto2-2.3.1.orig/camlibs/mars/mars.c libgphoto2-2.3.1/camlibs/mars/mars.c
+--- libgphoto2-2.3.1.orig/camlibs/mars/mars.c	2006-11-25 06:47:25.000000000 -0800
++++ libgphoto2-2.3.1/camlibs/mars/mars.c	2007-01-27 22:42:40.632238000 -0800
+@@ -37,6 +37,7 @@
+ #define INIT 		0xb5
+ #define GET_DATA 	0x0f
  
--#pragma pack(1)
- struct canon_theme_entry {
- 	uint16_t	unknown1;
- 	uint32_t	offset;
-diff -ru libgphoto2-2.2.1.orig/camlibs/sierra/epson-desc.c libgphoto2-2.2.1/camlibs/sierra/epson-desc.c
---- libgphoto2-2.2.1.orig/camlibs/sierra/epson-desc.c	2006-04-18 18:54:10.000000000 -0700
-+++ libgphoto2-2.2.1/camlibs/sierra/epson-desc.c	2006-07-26 15:41:17.407332000 -0700
++#undef M_READ
+ static int 
+ M_READ (GPPort *port, char *data, int size) 
+ {
+diff -ru libgphoto2-2.3.1.orig/camlibs/sierra/epson-desc.c libgphoto2-2.3.1/camlibs/sierra/epson-desc.c
+--- libgphoto2-2.3.1.orig/camlibs/sierra/epson-desc.c	2006-11-25 06:47:22.000000000 -0800
++++ libgphoto2-2.3.1/camlibs/sierra/epson-desc.c	2007-01-27 22:21:12.089153000 -0800
 @@ -42,7 +42,7 @@
   * the name/value union, and so it is the default value initialized.
   *
@@ -63,9 +52,9 @@ diff -ru libgphoto2-2.2.1.orig/camlibs/sierra/epson-desc.c libgphoto2-2.2.1/caml
  };
  static const RegisterDescriptorType ep3000z_reg_24[] = { 
  	{
-diff -ru libgphoto2-2.2.1.orig/camlibs/sierra/nikon-desc.c libgphoto2-2.2.1/camlibs/sierra/nikon-desc.c
---- libgphoto2-2.2.1.orig/camlibs/sierra/nikon-desc.c	2006-04-18 18:54:10.000000000 -0700
-+++ libgphoto2-2.2.1/camlibs/sierra/nikon-desc.c	2006-07-26 15:25:14.340100000 -0700
+diff -ru libgphoto2-2.3.1.orig/camlibs/sierra/nikon-desc.c libgphoto2-2.3.1/camlibs/sierra/nikon-desc.c
+--- libgphoto2-2.3.1.orig/camlibs/sierra/nikon-desc.c	2006-11-25 06:47:22.000000000 -0800
++++ libgphoto2-2.3.1/camlibs/sierra/nikon-desc.c	2007-01-27 22:21:12.126487000 -0800
 @@ -38,7 +38,7 @@
   * the name/value union, and so it is the default value initialized.
   *
@@ -120,9 +109,9 @@ diff -ru libgphoto2-2.2.1.orig/camlibs/sierra/nikon-desc.c libgphoto2-2.2.1/caml
  	}
  };
  static const RegisterDescriptorType cp880_reg_71[] = { 
-diff -ru libgphoto2-2.2.1.orig/camlibs/sierra/olympus-desc.c libgphoto2-2.2.1/camlibs/sierra/olympus-desc.c
---- libgphoto2-2.2.1.orig/camlibs/sierra/olympus-desc.c	2006-04-18 18:54:10.000000000 -0700
-+++ libgphoto2-2.2.1/camlibs/sierra/olympus-desc.c	2006-07-26 15:26:34.676217000 -0700
+diff -ru libgphoto2-2.3.1.orig/camlibs/sierra/olympus-desc.c libgphoto2-2.3.1/camlibs/sierra/olympus-desc.c
+--- libgphoto2-2.3.1.orig/camlibs/sierra/olympus-desc.c	2006-11-25 06:47:22.000000000 -0800
++++ libgphoto2-2.3.1/camlibs/sierra/olympus-desc.c	2007-01-27 22:21:12.163140000 -0800
 @@ -43,7 +43,7 @@
   * the name/value union, and so it is the default value initialized.
   *
@@ -213,9 +202,9 @@ diff -ru libgphoto2-2.2.1.orig/camlibs/sierra/olympus-desc.c libgphoto2-2.2.1/ca
  };
  static const RegisterDescriptorType oly750uz_reg_103[] = { 
  	{
-diff -ru libgphoto2-2.2.1.orig/libgphoto2_port/ptpip/ptpip.c libgphoto2-2.2.1/libgphoto2_port/ptpip/ptpip.c
---- libgphoto2-2.2.1.orig/libgphoto2_port/ptpip/ptpip.c	2006-04-18 18:54:26.000000000 -0700
-+++ libgphoto2-2.2.1/libgphoto2_port/ptpip/ptpip.c	2006-07-26 15:03:50.587446000 -0700
+diff -ru libgphoto2-2.3.1.orig/libgphoto2_port/ptpip/ptpip.c libgphoto2-2.3.1/libgphoto2_port/ptpip/ptpip.c
+--- libgphoto2-2.3.1.orig/libgphoto2_port/ptpip/ptpip.c	2006-11-25 06:47:35.000000000 -0800
++++ libgphoto2-2.3.1/libgphoto2_port/ptpip/ptpip.c	2007-01-27 22:21:12.196618000 -0800
 @@ -63,6 +63,7 @@
  #define CHECK(result) {int r=(result); if (r<0) return (r);}
  
@@ -224,10 +213,10 @@ diff -ru libgphoto2-2.2.1.orig/libgphoto2_port/ptpip/ptpip.c libgphoto2-2.2.1/li
  };
  
  GPPortType
-diff -ru libgphoto2-2.2.1.orig/packaging/generic/print-camera-list.c libgphoto2-2.2.1/packaging/generic/print-camera-list.c
---- libgphoto2-2.2.1.orig/packaging/generic/print-camera-list.c	2006-04-18 18:54:05.000000000 -0700
-+++ libgphoto2-2.2.1/packaging/generic/print-camera-list.c	2006-09-01 11:20:16.062798000 -0700
-@@ -614,54 +614,54 @@
+diff -ru libgphoto2-2.3.1.orig/packaging/generic/print-camera-list.c libgphoto2-2.3.1/packaging/generic/print-camera-list.c
+--- libgphoto2-2.3.1.orig/packaging/generic/print-camera-list.c	2006-12-24 07:16:19.000000000 -0800
++++ libgphoto2-2.3.1/packaging/generic/print-camera-list.c	2007-01-27 22:48:23.740508000 -0800
+@@ -1004,77 +1004,77 @@
  
  /** list of supported output formats */
  static const output_format_t formats[] = {
@@ -276,20 +265,8 @@ diff -ru libgphoto2-2.2.1.orig/packaging/generic/print-camera-list.c libgphoto2-
 -	 end_func: fdi_device_end_func
 -	},
 -	{name: "udev-rules",
--	 descr: "udev rules file",
--	 help: "Put it into /etc/udev/libgphoto2.rules",
--	 paramdescr: "<PATH_TO_HOTPLUG_SCRIPT>",
--	 begin_func: udev_begin_func, 
--	 camera_func: udev_camera_func,
--	 end_func: udev_end_func
--	},
--	{name: "idlist",
--	 descr: "list of IDs and names",
--	 help: "grep for an ID to find the device name",
--	 paramdescr: NULL,
--	 begin_func: empty_begin_func, 
--	 camera_func: idlist_camera_func,
--	 end_func: empty_end_func
+-	 descr: "udev < 0.98 rules file",
+-	 help: "Put it into /etc/udev/rules.d/90-libgphoto2.rules, set file mode, owner, group\n"
 +	 .paramdescr="<NAME_OF_HOTPLUG_SCRIPT>",
 +	 .begin_func=empty_begin_func,
 +	 .camera_func=hotplug_camera_func,
@@ -312,11 +289,54 @@ diff -ru libgphoto2-2.2.1.orig/packaging/generic/print-camera-list.c libgphoto2-
 +	 .end_func=fdi_device_end_func
 +	},
 +	{.name="udev-rules",
-+	 .descr="udev rules file",
-+	 .help="Put it into /etc/udev/libgphoto2.rules",
-+	 .paramdescr="<PATH_TO_HOTPLUG_SCRIPT>",
++	 .descr="udev < 0.98 rules file",
++	 .help="Put it into /etc/udev/rules.d/90-libgphoto2.rules, set file mode, owner, group\n"
+ 	 "        or add script to run. This rule files also uses the\n"
+ 	 "        check-ptp-camera script included in libgphoto2 source. Either put it to\n"
+ 	 "        /lib/udev/check-ptp-camera or adjust the path in the generated rules file.",
+-	 paramdescr: "( <PATH_TO_SCRIPT> | [mode <mode>|owner <owner>|group <group>]* ) ",
+-	 begin_func: udev_begin_func, 
+-	 camera_func: udev_camera_func,
+-	 end_func: udev_end_func
+-	},
+-	{name: "udev-rules-0.98",
+-	 descr: "udev >= 0.98 rules file",
+-	 help:
++	 .paramdescr="( <PATH_TO_SCRIPT> | [mode <mode>|owner <owner>|group <group>]* ) ",
 +	 .begin_func=udev_begin_func, 
 +	 .camera_func=udev_camera_func,
++	 .end_func=udev_end_func
++	},
++	{.name="udev-rules-0.98",
++	 .descr="udev >= 0.98 rules file",
++	 .help=
+ 	 "Put it into /etc/udev/rules.d/90-libgphoto2.rules, set file mode, owner, group\n"
+ 	 "        or add script to run, for udev >= 0.98. This rule files also uses the\n"
+ 	 "        check-ptp-camera script included in libgphoto2 source. Either put it to\n"
+ 	 "        /lib/udev/check-ptp-camera or adjust the path in the generated rules file.",
+-	 paramdescr: "( <PATH_TO_SCRIPT> | [mode <mode>|owner <owner>|group <group>]* ) ",
+-	 begin_func: udev_098_begin_func, 
+-	 camera_func: udev_098_camera_func,
+-	 end_func: udev_end_func
+-	},
+-	{name: "idlist",
+-	 descr: "list of IDs and names",
+-	 help: "grep for an ID to find the device name",
+-	 paramdescr: NULL,
+-	 begin_func: empty_begin_func, 
+-	 camera_func: idlist_camera_func,
+-	 end_func: empty_end_func
+-	},
+-	{name: "gp2ddb",
+-	 descr: "gphoto2 device database (PRE-ALPHA)",
+-	 help: "PRE-ALPHA test stage, do not use for production! Machine parseable.",
+-	 paramdescr: NULL,
+-	 begin_func: ddb_begin_func,
+-	 camera_func: ddb_camera_func,
+-	 end_func: ddb_end_func
++	 .paramdescr="( <PATH_TO_SCRIPT> | [mode <mode>|owner <owner>|group <group>]* ) ",
++	 .begin_func=udev_098_begin_func, 
++	 .camera_func=udev_098_camera_func,
 +	 .end_func=udev_end_func
 +	},
 +	{.name="idlist",
@@ -326,6 +346,14 @@ diff -ru libgphoto2-2.2.1.orig/packaging/generic/print-camera-list.c libgphoto2-
 +	 .begin_func=empty_begin_func, 
 +	 .camera_func=idlist_camera_func,
 +	 .end_func=empty_end_func
++	},
++	{.name="gp2ddb",
++	 .descr="gphoto2 device database (PRE-ALPHA)",
++	 .help="PRE-ALPHA test stage, do not use for production! Machine parseable.",
++	 .paramdescr=NULL,
++	 .begin_func=ddb_begin_func,
++	 .camera_func=ddb_camera_func,
++	 .end_func=ddb_end_func
  	},
  	{NULL, NULL, NULL, NULL, 
  	 NULL, NULL, NULL}

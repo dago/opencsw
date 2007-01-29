@@ -1,5 +1,5 @@
 GARNAME = libgphoto2
-GARVERSION = 2.2.1
+GARVERSION = 2.3.1
 CATEGORIES = lib
 
 DESCRIPTION = libgphoto2 - libgphoto2 is a library that can be used by applications to access digital cameras
@@ -18,11 +18,19 @@ DISTFILES += sunstudio.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-LIBUSB_LIBS="-L/usr/sfw/lib -R/usr/sfw/lib -lusb"
+LIBUSB_LIBS=-L/usr/sfw/lib -R/usr/sfw/lib -lusb
 LIBUSB_CFLAGS=-I/usr/sfw/include
+
+# We need these directories in EXTRA_INC to make sure they appear before
+# -I/opt/csw/include in CFLAGS. While 'configure' does make sure to add
+# these directories to CFLAGS, it does so after -I/opt/csw/include, which
+# means the build is at risk of picking up system installed (i.e. older)
+# libgphoto2 includes from /opt/csw/include first.
+EXTRA_INC=../.. ../../libgphoto2_port ../libgphoto2_port/gphoto2
 
 export LIBUSB_LIBS
 export LIBUSB_CFLAGS
+#export EXTRA_INC
 
 CONFIGURE_ARGS = $(DIRPATHS)
 #--with-libusb=no
@@ -38,4 +46,8 @@ include ../category.mk
 post-configure:
 	(cd $(WORKSRC); \
 	test -d $(DESTDIR)/opt/csw/include || mkdir -p $(DESTDIR)/opt/csw/include \
-	cp -pr gphoto2 $(DESTDIR)/opt/csw/include)
+	cp -pr gphoto2 $(DESTDIR)/opt/csw/include;\
+	cp -pr libgphoto2_port/gphoto2 $(DESTDIR)/opt/csw/include)
+
+post-build:
+	rm -rf $(DESTDIR)/opt/csw/include
