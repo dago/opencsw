@@ -1,5 +1,5 @@
 GARNAME = clearsilver
-GARVERSION = 0.10.2
+GARVERSION = 0.10.4
 CATEGORIES = utils
 
 DESCRIPTION = Language-neutral HTML template system
@@ -16,12 +16,11 @@ DISTFILES += $(call admfiles,CSWcs,depend prototype)
 DISTFILES += $(call admfiles,CSWpmcs,depend prototype)
 DISTFILES += $(call admfiles,CSWpycs,depend prototype)
 
-# Remove hardcoded gcc references
-#PATCHFILES += ccbuild.diff
-# Switch off __PRETTY_FUNCTION__ when not using GCC
-#PATCHFILES += pretty_function.diff
-# Fix lib specification
-#PATCHFILES += libspec.diff
+# Remove an unneeded linux-only header
+PATCHFILES += linuxheader.diff
+
+# Use vendor install for the perl module
+PATCHFILES += perlbuild.diff
 
 GARCOMPILER = GNU
 
@@ -56,8 +55,8 @@ pre-configure:
 	@echo $(CONFIGURE_ENV)
 
 # Why is this necessary!?
-post-install:
-	@mkdir -p $(DESTDIR)$(libdir)/python2.3/site-packages/
-	-@mv $(DESTDIR)/neo_cgi.so $(DESTDIR)$(libdir)/python2.3/site-packages/
-	@$(MAKECOOKIE)
+#post-install:
+#	@mkdir -p $(DESTDIR)$(libdir)/python2.3/site-packages/
+#	-@mv $(DESTDIR)/neo_cgi.so $(DESTDIR)$(libdir)/python2.3/site-packages/
+#	@$(MAKECOOKIE)
 
