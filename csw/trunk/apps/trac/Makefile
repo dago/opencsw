@@ -1,5 +1,5 @@
 GARNAME = trac
-GARVERSION = 0.9.6
+GARVERSION = 0.10.3
 CATEGORIES = apps
 
 DESCRIPTION = Integrated SCM and Project Management
@@ -14,6 +14,8 @@ endef
 MASTER_SITES = http://ftp.edgewall.com/pub/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWtrac,depend prototype)
+
+SPKG_SOURCEURL = http://trac.edgewall.org/wiki/TracDownload
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
