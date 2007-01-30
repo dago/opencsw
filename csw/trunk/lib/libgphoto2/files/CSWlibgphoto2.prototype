@@ -1,3 +1,4 @@
+d none /opt/csw ? ? ?
 d none /opt/csw/bin ? ? ?
 f none /opt/csw/bin/gphoto2-config 0755 root bin
 f none /opt/csw/bin/gphoto2-port-config 0755 root bin
@@ -11,6 +12,7 @@ f none /opt/csw/include/gphoto2/gphoto2-filesys.h 0644 root bin
 f none /opt/csw/include/gphoto2/gphoto2-library.h 0644 root bin
 f none /opt/csw/include/gphoto2/gphoto2-list.h 0644 root bin
 f none /opt/csw/include/gphoto2/gphoto2-port-info-list.h 0644 root bin
+f none /opt/csw/include/gphoto2/gphoto2-port-library.h 0644 root bin
 f none /opt/csw/include/gphoto2/gphoto2-port-log.h 0644 root bin
 f none /opt/csw/include/gphoto2/gphoto2-port-portability.h 0644 root bin
 f none /opt/csw/include/gphoto2/gphoto2-port-result.h 0644 root bin
@@ -224,8 +226,6 @@ f none /opt/csw/lib/libgphoto2_port/0.7.1/usb.so 0755 root bin
 d none /opt/csw/lib/pkgconfig ? ? ?
 f none /opt/csw/lib/pkgconfig/libgphoto2.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/libgphoto2_port.pc 0644 root bin
-d none /opt/csw/lib/udev 0755 root bin
-f none /opt/csw/lib/udev/check-ptp-camera 0755 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/doc ? ? ?
 d none /opt/csw/share/doc/libgphoto2 0755 root bin

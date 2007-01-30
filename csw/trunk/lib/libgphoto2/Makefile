@@ -2,7 +2,7 @@ GARNAME = libgphoto2
 GARVERSION = 2.3.1
 CATEGORIES = lib
 
-DESCRIPTION = libgphoto2 - libgphoto2 is a library that can be used by applications to access digital cameras
+DESCRIPTION = libgphoto2 - library to be used by applications to access digital cameras
 define BLURB
   libgphoto2 is the core library designed to allow access to digital camera
   by external programs. It abstracts communication ports and camera
@@ -32,8 +32,12 @@ export LIBUSB_LIBS
 export LIBUSB_CFLAGS
 #export EXTRA_INC
 
+OS_RELEASE=`uname -r`
+
 CONFIGURE_ARGS = $(DIRPATHS)
-#--with-libusb=no
+ifeq ($OS_REL, 5.8)
+	CONFIGURE_ARGS += --with-libusb=no
+endif
 #--with-exif-prefix=/opt/csw
 
 # libgphoto2 doesn't have a test target
@@ -49,5 +53,5 @@ post-configure:
 	cp -pr gphoto2 $(DESTDIR)/opt/csw/include;\
 	cp -pr libgphoto2_port/gphoto2 $(DESTDIR)/opt/csw/include)
 
-post-build:
-	rm -rf $(DESTDIR)/opt/csw/include
+#post-build:
+#	rm -rf $(DESTDIR)/opt/csw/include
