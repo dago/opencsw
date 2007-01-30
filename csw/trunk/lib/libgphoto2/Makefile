@@ -18,9 +18,6 @@ DISTFILES += sunstudio.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-LIBUSB_LIBS=-L/usr/sfw/lib -R/usr/sfw/lib -lusb
-LIBUSB_CFLAGS=-I/usr/sfw/include
-
 # We need these directories in EXTRA_INC to make sure they appear before
 # -I/opt/csw/include in CFLAGS. While 'configure' does make sure to add
 # these directories to CFLAGS, it does so after -I/opt/csw/include, which
@@ -28,8 +25,6 @@ LIBUSB_CFLAGS=-I/usr/sfw/include
 # libgphoto2 includes from /opt/csw/include first.
 EXTRA_INC=../.. ../../libgphoto2_port ../libgphoto2_port/gphoto2
 
-export LIBUSB_LIBS
-export LIBUSB_CFLAGS
 #export EXTRA_INC
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -41,6 +36,11 @@ SUPPORT_USB=$(shell if [ $(OS_RELEASE) -ge 10 ]; then echo 1; else echo 0; fi)
 
 ifeq ($(SUPPORT_USB), 0)
 	CONFIGURE_ARGS += --with-libusb=no
+else
+	LIBUSB_LIBS=-L/usr/sfw/lib -R/usr/sfw/lib -lusb
+	LIBUSB_CFLAGS=-I/usr/sfw/include
+	export LIBUSB_LIBS
+	export LIBUSB_CFLAGS
 endif
 
 #--with-exif-prefix=/opt/csw
@@ -54,9 +54,12 @@ include ../category.mk
 
 post-configure:
 	(cd $(WORKSRC); \
-	test -d $(DESTDIR)/opt/csw/include || mkdir -p $(DESTDIR)/opt/csw/include \
+	test -d $(DESTDIR)/opt/csw/include || mkdir -p $(DESTDIR)/opt/csw/include; \
 	cp -pr gphoto2 $(DESTDIR)/opt/csw/include;\
-	cp -pr libgphoto2_port/gphoto2 $(DESTDIR)/opt/csw/include)
+	cp -p libgphoto2_port/gphoto2/*.h $(DESTDIR)/opt/csw/include/gphoto2)
 
 #post-build:
 #	rm -rf $(DESTDIR)/opt/csw/include
+
+post-install:
+	cp -p files/README.CSW $(DESTDIR)/opt/csw/share/doc/libgphoto2
