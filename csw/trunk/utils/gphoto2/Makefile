@@ -1,5 +1,5 @@
 GARNAME = gphoto2
-GARVERSION = 2.2.0
+GARVERSION = 2.3.1
 CATEGORIES = utils
 
 DESCRIPTION = gphoto2 is a command-line frontend to libgphoto2
