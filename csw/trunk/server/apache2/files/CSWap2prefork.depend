@@ -1,7 +1,7 @@
 P CSWcommon common - common files and dirs for CSW packages
 P CSWapache2c apache2c - Apache 2.2 web server (core)
 P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
-P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
+P CSWbdb44 berkeleydb44 - BerkeleyDB 4.4 libraries and utilities
 P CSWexpat expat -  XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
 P CSWiconv libiconv - GNU iconv library

@@ -11,7 +11,7 @@ ifdef ENABLE_DEPENDENCY_BUILD
 DEPEND += lib/libiconv
 DEPEND += lib/openssl
 DEPEND += lib/openldap
-DEPEND += lib/berkeleydb43
+DEPEND += lib/berkeleydb44
 DEPEND += lib/sqlite3
 DEPEND += lib/expat
 DEPEND += server/postgres
@@ -62,8 +62,8 @@ else
 CONFIGURE_ARGS += --with-ldap
 #CONFIGURE_ARGS += --with-ldap-lib=$(libdir)
 #CONFIGURE_ARGS += --with-ldap-include=$(includedir)
-CONFIGURE_ARGS += --with-dbm=db43
-CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb43
+CONFIGURE_ARGS += --with-dbm=db44
+CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb44
 CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
 #CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql4
 CONFIGURE_ARGS += --with-sqlite2=no
@@ -73,13 +73,13 @@ CONFIGURE_ARGS += --with-iconv=$(prefix)
 # Patch APU to absolutely use GNU iconv
 PATCHFILES += apu-iconv.diff
 
-# Required for bdb43
+# Required for bdb44
 LIBS = -lnsl
 export LIBS
 
 endif
 
 # Extra libpath
-EXTRA_LIB = $(prefix)/bdb43/lib
-EXTRA_INC = $(prefix)/bdb43/include
+EXTRA_LIB = $(prefix)/bdb44/lib
+EXTRA_INC = $(prefix)/bdb44/include
 

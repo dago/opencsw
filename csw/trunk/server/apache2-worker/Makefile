@@ -1,5 +1,5 @@
 GARNAME = httpd
-GARVERSION = 2.2.3
+GARVERSION = 2.2.4
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
@@ -16,6 +16,8 @@ DISTFILES += $(call admfiles,CSWap2worker,$(CSWADMIN))
 DISTFILES += CSWapache2.killproc
 
 DEPENDS   += server/apache2
+
+APACHE_ROOT = $(DESTDIR)$(prefix)/apache2
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=worker
