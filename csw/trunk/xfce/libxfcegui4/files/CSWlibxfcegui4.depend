@@ -1,0 +1,9 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWglib2 
+P CSWlibatk 
+P CSWlibcairo
+P CSWgtk2
+P CSWggettext 
+P CSWpango 
+P CSWstartupnotif 
+P CSWlibxfce4util

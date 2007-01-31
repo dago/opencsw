@@ -1,0 +1,15 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWlibxrender
+P CSWlibatk
+P CSWlibcairo
+P CSWexpat
+P CSWfconfig
+P CSWftype2
+P CSWglib2
+P CSWgtk2
+P CSWiconv
+P CSWggettext
+P CSWpango
+P CSWpng
+P CSWzlib
+P CSWlibxfce4util
