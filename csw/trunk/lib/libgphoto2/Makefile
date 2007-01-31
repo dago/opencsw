@@ -13,7 +13,10 @@ PATCHFILES = sunstudio.patch
 
 MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibgphoto2,prototype depend)
+DISTFILES += $(call admfiles,CSWlibgphoto2,depend \
+	prototype.i386.sol10 prototype.i386.sol8 \
+	prototype.sparc.sol10 prototype.sparc.sol8)
+
 DISTFILES += sunstudio.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
@@ -32,6 +35,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # This is a bit of a hack. If I find a nicer way of doing this, I'll re-
 # implement it.
 OS_RELEASE=$(shell uname -r | sed -e 's/^5\.//')
+OS_PLATFORM=$(shell uname -p)
 SUPPORT_USB=$(shell if [ $(OS_RELEASE) -ge 10 ]; then echo 1; else echo 0; fi)
 
 ifeq ($(SUPPORT_USB), 0)
@@ -43,6 +47,8 @@ else
 	export LIBUSB_CFLAGS
 endif
 
+PROTOTYPE=CSW$(GARNAME).prototype.$(OS_PLATFORM).sol$(OS_RELEASE)
+
 #--with-exif-prefix=/opt/csw
 
 # libgphoto2 doesn't have a test target
@@ -51,6 +57,11 @@ TEST_TARGET =
 SPKG_SOURCEURL = http://www.gphoto.org/
 
 include ../category.mk
+
+post-extract:
+	(cd $(WORKSRC)/..; \
+	rm -f CSW$(GARNAME).prototype; \
+	ln -s $(PROTOTYPE) CSW$(GARNAME).prototype)
 
 post-configure:
 	(cd $(WORKSRC); \
