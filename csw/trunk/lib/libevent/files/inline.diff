@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru libevent-1.2a.orig/event_tagging.c libevent-1.2a/event_tagging.c
+--- libevent-1.2a.orig/event_tagging.c	2006-11-28 21:15:37.000000000 -0500
++++ libevent-1.2a/event_tagging.c	2007-01-31 02:01:39.779115000 -0500
+@@ -149,7 +149,7 @@
+ 	    EVBUFFER_LENGTH(_buf));
+ }
+ 
+-static int __inline
++inline static int
+ decode_int_internal(u_int32_t *pnumber, struct evbuffer *evbuf, int dodrain)
+ {
+ 	u_int32_t number = 0;
+diff --speed-large-files --minimal -Nru libevent-1.2a.orig/http.c libevent-1.2a/http.c
+--- libevent-1.2a.orig/http.c	2006-12-02 16:30:04.000000000 -0500
++++ libevent-1.2a/http.c	2007-01-31 02:01:39.819330000 -0500
+@@ -1337,7 +1337,7 @@
+ 
+ /* Requires that headers and response code are already set up */
+ 
+-static __inline void
++inline static void
+ evhttp_send(struct evhttp_request *req, struct evbuffer *databuf)
+ {
+ 	struct evhttp_connection *evcon = req->evcon;

@@ -1,5 +1,5 @@
 GARNAME = libevent
-GARVERSION = 1.1
+GARVERSION = 1.2
 PATCHREV = a
 DISTVERSION = $(GARVERSION)$(PATCHREV)
 CATEGORIES = lib
@@ -17,11 +17,14 @@ DISTFILES    = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibevent,depend prototype)
 DISTFILES   += $(call admfiles,CSWlibevent-devel,depend prototype)
 
-# See: http://forum.sun.com/thread.jspa?threadID=26396&tstart=0 
-PATCHFILES += devpoll.diff
-
 # Adjust test.sh shell
 PATCHFILES += testsh.diff
+
+# Some functions are marked __inline -- gccism?
+PATCHFILES += inline.diff
+
+# Types are assumed to work, but they don't.
+PATCHFILES += types.diff
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
@@ -31,6 +34,9 @@ CONFIGURE_ARGS += --with-rtsig
 TEST_TARGET = verify
 
 include ../category.mk
+
+LIBS += -lresolv -lnsl
+export LIBS
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHREV)
 
