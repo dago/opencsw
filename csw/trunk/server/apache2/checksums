@@ -4,16 +4,16 @@ a8d5878f31f6a2081bc178351b2dda1e  download/CSWapache2.gspec
 579de043c57f6b0f8896e16b25652c6a  download/CSWapache2.depend
 d41d8cd98f00b204e9800998ecf8427e  download/CSWapache2.prototype
 c3d5a482125aa27e63e434bc65154b1c  download/CSWapache2rt.gspec
-7cd2a3e3bfbabb7d8c5fccba0be4843e  download/CSWapache2rt.depend
+44c9e321da9f1f38f6788de8c3f23c1f  download/CSWapache2rt.depend
 e242af4c569e2e7a4144f06e22a7bb18  download/CSWapache2rt.prototype
 523b1f316a67090dfc08fe7506cb1aa0  download/CSWapache2rt.checkinstall
 c71f421945f1eea7b098abb96bef4f92  download/CSWapache2c.gspec
-b8b607d61c81dd70a293e3fb53c65d9d  download/CSWapache2c.depend
+d58a3f5850621687e0291ebe4354178e  download/CSWapache2c.depend
 f76b7f67564ce066e5e6303fd93454b0  download/CSWapache2c.prototype
 5d570a4d50053eaa30a25c730f496bb0  download/CSWapache2c.postinstall
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWapache2c.space
 5bc2d908f90108670ea72f09dce54d12  download/CSWap2prefork.gspec
-063b7a6a11b604353ddf6db62fa4b9d2  download/CSWap2prefork.depend
+09054c4fe5d6f63f32ecbb5c056acab0  download/CSWap2prefork.depend
 447999ad5477523d7bab535ab5c1a771  download/CSWap2prefork.prototype
 ac927d5e9c3d1a7f871212182ee90b86  download/CSWap2prefork.postinstall
 e7a3b72167e2ff3db8a229bb7a0da6e5  download/CSWap2prefork.postremove
@@ -37,3 +37,4 @@ ab4d6f9f925c0dfa3faf176440131f6e  download/httpd.conf.CSW
 796a7d5095ce154c274a2ccfd60ec753  download/httpd-ssl.conf.CSW
 033a19975c59bffcc5b144628f8a8e06  download/update20to22
 308836569bf0cc1be27ac45e3123e0c2  download/apu-iconv.diff
+ff2669a49f337093ffcb38dbd5d98430  download/configure.apr.diff

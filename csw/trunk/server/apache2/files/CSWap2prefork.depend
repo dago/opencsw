@@ -6,6 +6,7 @@ P CSWexpat expat -  XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
 P CSWiconv libiconv - GNU iconv library
 P CSWlibnet libnet - the libnet packet construction library
+P CSWlibpq libpq - libraries needed by postgresql server and clients
 P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - The Open Source toolkit for SSL and TLS.
 P CSWsasl sasl - Simple Authentication and Security Layer

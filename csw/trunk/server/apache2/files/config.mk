@@ -15,7 +15,7 @@ DEPEND += lib/berkeleydb44
 DEPEND += lib/sqlite3
 DEPEND += lib/expat
 DEPEND += server/postgres
-DEPEND += server/mysql
+DEPEND += server/mysql5
 endif
 
 # Build Configuration
@@ -65,13 +65,28 @@ CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-dbm=db44
 CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb44
 CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
-#CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql4
+# This requires apr_dbd_mysql.c to work properly, which is not distributed
+# with apr-util, apparently.
+#CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
 CONFIGURE_ARGS += --with-sqlite2=no
 CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --with-iconv=$(prefix)
 
 # Patch APU to absolutely use GNU iconv
 PATCHFILES += apu-iconv.diff
+
+# Patches for global sysvsem from steleman
+ifeq ($(GAROSREL),5.10)
+USE_NONPORTABLE_ATOMICS = 1
+endif
+ifeq ($(GAROSREL),5.11)
+USE_NONPORTABLE_ATOMICS = 1
+endif
+ifdef USE_NONPORTABLE_ATOMICS
+PATCHFILES += configure.apr.diff
+PATCHFILES += apr_atomic.c.diff
+CONFIGURE_ARGS += --enable-nonportable-atomics
+endif
 
 # Required for bdb44
 LIBS = -lnsl
@@ -80,6 +95,6 @@ export LIBS
 endif
 
 # Extra libpath
-EXTRA_LIB = $(prefix)/bdb44/lib
-EXTRA_INC = $(prefix)/bdb44/include
+EXTRA_LIB = $(prefix)/bdb44/lib $(prefix)/postgresql/lib
+EXTRA_INC = $(prefix)/bdb44/include $(prefix)/postgresql/include
 

@@ -5,6 +5,7 @@ P CSWgdbm gdbm - GNU dbm
 P CSWggettext ggettext - GNU gettext
 P CSWgsed gsed - The GNU non-interactive text Stream-oriented EDitor (sed)
 P CSWiconv libiconv - GNU iconv library
+P CSWlibpq libpq - libraries needed by postgresql server and clients
 P CSWoldaprt openldap_rt - ldap runtime libraries
 P CSWossl openssl - OpenSSL Secure Sockets Layer lib and utilities
 P CSWperl perl - A high-level, general-purpose programming language.
