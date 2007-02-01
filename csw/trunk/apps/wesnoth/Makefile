@@ -1,5 +1,5 @@
 GARNAME = wesnoth
-GARVERSION = 1.0.2
+GARVERSION = 1.2.1
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based strategy game with a fanasy theme
@@ -7,13 +7,15 @@ define BLURB
   Build up a great army, gradually turning raw recruits into hardened veterans. In later games, recall your toughest warriors and form a deadly host against whom none can stand! Choose units from a large pool of specialists, and hand-pick a force with the right strengths to fight well on different terrains against all manner of opposition.  
 endef
 
+MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWwesnoth,)
+DISTFILES += $(call admfiles,CSWwesnoth, depend )
 
 GARCOMPILER ?= GNU
 
-PATCHFILES = language.cpp.diff
-PATCHFILES += Makefile.am.diff
+PATCHFILES = gar-base.diff
+#PATCHFILES = language.cpp.diff
+#PATCHFILES += Makefile.am.diff
 
 CONFIGURE_ARGS = --prefix=$(prefix) --mandir=/opt/csw/share/man LDFLAGS='-lsunmath -lintl'
 CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib
@@ -31,6 +33,6 @@ TEST_SCRIPTS =
 
 include ../category.mk
 
-pre-configure:
-	( cd $(WORKSRC) ; aclocal ; autoconf ; automake -a )
-	@$(MAKECOOKIE)
+#pre-configure:
+#	( cd $(WORKSRC) ; aclocal ; autoconf ; automake -a )
+#	@$(MAKECOOKIE)
