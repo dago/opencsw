@@ -13,9 +13,7 @@ DISTFILES += $(call admfiles,CSWwesnoth, depend )
 
 GARCOMPILER ?= GNU
 
-PATCHFILES = gar-base.diff
-#PATCHFILES = language.cpp.diff
-#PATCHFILES += Makefile.am.diff
+PATCHFILES = language.cpp.diff
 
 CONFIGURE_ARGS = --prefix=$(prefix) --mandir=/opt/csw/share/man LDFLAGS='-lsunmath -lintl'
 CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib

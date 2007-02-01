@@ -1,3 +1,4 @@
 685deee0f92807eddb2b448c8997cd01  download/wesnoth-1.2.1.tar.gz
 724aaa92df2d85d3e69b96837786cb64  download/CSWwesnoth.gspec
-288c920d3b597dca787004709c602420  download/gar-base.diff
+9060626d8f3bebb849fcd169149c959a  download/CSWwesnoth.depend
+59968804e93a18220d7d18e8252fff8d  download/language.cpp.diff
