@@ -1,15 +1,15 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWlibxrender
-P CSWlibatk
-P CSWlibcairo
-P CSWexpat
-P CSWfconfig
-P CSWftype2
-P CSWglib2
-P CSWgtk2
-P CSWiconv
-P CSWggettext
-P CSWpango
-P CSWpng
-P CSWzlib
-P CSWlibxfce4util
+P CSWexpat expat -  XML Parser Toolkit
+P CSWfconfig fontconfig - A library for configuring and customizing font access.
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWiconv libiconv - GNU iconv library
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWlibxfce4util libxfce4util - Xfce Utilities Library
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWpango libpango - Library for laying out and rendering text
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWzlib zlib - Zlib Data Compression Library
