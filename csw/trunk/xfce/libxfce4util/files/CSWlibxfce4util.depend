@@ -1,5 +1,4 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWglib2 
-P CSWiconv
-P CSWggettext
-
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWiconv libiconv - GNU iconv library
