@@ -21,3 +21,5 @@ LDFLAGS  += -L/opt/csw/lib -R/opt/csw/lib
 
 CONFIGURE_ARGS = --prefix=/opt/csw --disable-debug --enable-final 
 
+post-install:
+	( mv $(DESTDIR)/opt/csw/lib/gtk-2.0/2.10.0/engines $(DESTDIR)/opt/csw/lib/gtk-2.0 )
