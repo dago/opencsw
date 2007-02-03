@@ -1,1 +1,6 @@
 P CSWcommon common - common files and dirs for CSW packages
+P CSWggettext ggettext - GNU gettext
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWpango libpango - Library for laying out and rendering text
