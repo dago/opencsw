@@ -18,3 +18,6 @@ LDFLAGS  += -L/opt/csw/lib -R/opt/csw/lib
 
 # Configure common options
 CONFIGURE_ARGS = --prefix=/opt/csw --disable-debug --enable-final --mandir=/opt/csw/share/man
+
+# pkg-config
+PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig
