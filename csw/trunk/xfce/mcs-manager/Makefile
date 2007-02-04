@@ -9,7 +9,6 @@ endef
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxfce_mcs_manager, depend)
 
-DEPENDS = xfce/libxfce4util
 LIBDEPS = xfce/libxfce4util
 
 include ../category.mk

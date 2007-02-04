@@ -13,11 +13,10 @@ include ../../gar.mk
 # Compiler options
 CFLAGS   += -xlibmil
 CXXFLAGS += -xlibmil -xlibmopt -features=tmplife -norunpath
-CPPFLAGS += -I$(DESTDIR)/opt/csw/include/xfce4
-LDFLAGS  += -L/opt/csw/lib -R/opt/csw/lib
+EXTRA_INC = $(DESTDIR)$(includedir)/xfce4
 
 # Configure common options
-CONFIGURE_ARGS = --prefix=/opt/csw --disable-debug --enable-final --mandir=/opt/csw/share/man
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-debug
+CONFIGURE_ARGS += --enable-final
 
-# pkg-config
-PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig
