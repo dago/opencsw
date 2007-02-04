@@ -1,0 +1,13 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWexpat expat -  XML Parser Toolkit
+P CSWfconfig fontconfig - A library for configuring and customizing font access.
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWpango libpango - Library for laying out and rendering text
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWstartupnotif startup_notif - Library for tracking P startup
+P CSWsunmath libsunmath - Sun maths library
+P CSWzlib zlib - Zlib Data Compression Library
