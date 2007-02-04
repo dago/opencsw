@@ -31,6 +31,7 @@ do
 
         # Skip backups and static libraries
         if [[ "$file" == *.bak ]]; then ok=false ; fi
+        if [[ "$file" == *~    ]]; then ok=false ; fi
         if [[ "$file" == *.a   ]]; then ok=false ; fi
 
         # Skip ELF binaries and archives
