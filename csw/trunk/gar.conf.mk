@@ -174,6 +174,7 @@ PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/sbin:$(PATH)
 PATH := $(HOME)/bin:$(CC_HOME)/bin:$(GARBIN):$(PATH)
 
 # This is for foo-config chaos
+PKG_CONFIG_PATH := $(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 PKG_CONFIG_PATH := $(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 
 # Let's see if we can get gtk-doc going 100%
@@ -233,18 +234,23 @@ endif
 
 # Put these variables in the environment during the
 # configure, build, test, and install stages
-STAGE_EXPORTS  = DESTDIR prefix exec_prefix bindir optbindir sbindir libexecdir
-STAGE_EXPORTS += datadir sysconfdir sharedstatedir localstatedir libdir
-STAGE_EXPORTS += optlibdir infodir lispdir includedir mandir docdir sourcedir
-STAGE_EXPORTS += perl_bindir CPPFLAGS CFLAGS CXXFLAGS LDFLAGS LD_RUN_PATH
-STAGE_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
-STAGE_EXPORTS += CC_HOME CC_VERSION CXX_VERSION VENDORNAME VENDORSTAMP
-STAGE_EXPORTS += GARCH GAROSREL
+COMMON_EXPORTS  = prefix exec_prefix bindir optbindir sbindir libexecdir
+COMMON_EXPORTS += datadir sysconfdir sharedstatedir localstatedir libdir
+COMMON_EXPORTS += optlibdir infodir lispdir includedir mandir docdir sourcedir
+COMMON_EXPORTS += CPPFLAGS CFLAGS CXXFLAGS LDFLAGS LD_RUN_PATH
+COMMON_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
+COMMON_EXPORTS += CC_HOME CC_VERSION CXX_VERSION VENDORNAME VENDORSTAMP
+COMMON_EXPORTS += GARCH GAROSREL
 
-CONFIGURE_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
-BUILD_ENV     += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
-TEST_ENV      += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
-INSTALL_ENV   += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
+_CONFIGURE_EXPORTS = $(COMMON_EXPORTS) PKG_CONFIG_PATH DESTDIR
+_BUILD_EXPORTS = $(COMMON_EXPORTS)
+_TEST_EXPORTS = $(COMMON_EXPORTS)
+_INSTALL_EXPORTS = $(COMMON_EXPORTS) DESTDIR
+
+CONFIGURE_ENV += $(foreach TTT,$(_CONFIGURE_EXPORTS),$(TTT)="$($(TTT))")
+BUILD_ENV     += $(foreach TTT,$(_BUILD_EXPORTS),$(TTT)="$($(TTT))")
+TEST_ENV      += $(foreach TTT,$(_TEST_EXPORTS),$(TTT)="$($(TTT))")
+INSTALL_ENV   += $(foreach TTT,$(_INSTALL_EXPORTS),$(TTT)="$($(TTT))")
 
 # Standard Scripts
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
@@ -257,7 +263,7 @@ endif
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
 
 # Global environment
-export PATH BUILD_XDEPS PKG_CONFIG_PATH XML_CATALOG_FILES
+export PATH PKG_CONFIG_PATH XML_CATALOG_FILES
 
 # prepend the local file listing
 FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
