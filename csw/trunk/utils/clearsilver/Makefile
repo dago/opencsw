@@ -43,6 +43,8 @@ TEST_SCRIPTS =
 
 include ../category.mk
 
+# The perl binding needs to use the Sun compiler, regardless of whether the
+# main extension uses gcc.
 ifeq ($(GARCOMPILER),GNU)
 PATH := $(PATH):$(SUN_CC_HOME)/bin
 export PATH
@@ -50,13 +52,4 @@ endif
 
 LIBS += -lintl
 export LIBS
-
-pre-configure:
-	@echo $(CONFIGURE_ENV)
-
-# Why is this necessary!?
-#post-install:
-#	@mkdir -p $(DESTDIR)$(libdir)/python2.3/site-packages/
-#	-@mv $(DESTDIR)/neo_cgi.so $(DESTDIR)$(libdir)/python2.3/site-packages/
-#	@$(MAKECOOKIE)
 
