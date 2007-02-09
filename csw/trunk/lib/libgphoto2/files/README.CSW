@@ -19,6 +19,8 @@ USB support has been tested on a Sun Ultra 60 workstation running
 Solaris 10 using a Canon PowerShot G1 and a Canon PowerShot S50.
 
 Please refer to [1] for more information on how to set up your USB
-camera with Solaris (this is a one-time step per camera model).
+camera with Solaris (this is a one-time step per camera model). A text
+version of this file is included as in this package as
+/opt/csw/share/doc/libgphoto2/solaris-10-usb-digital-camera-howto.txt.
 
 [1] http://technopark02.blogspot.com/2005/06/solaris-10-usb-digital-camera-howto.html

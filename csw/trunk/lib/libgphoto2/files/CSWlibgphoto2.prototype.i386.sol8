@@ -232,6 +232,7 @@ f none /opt/csw/share/doc/libgphoto2/NEWS 0644 root bin
 f none /opt/csw/share/doc/libgphoto2/README 0644 root bin
 f none /opt/csw/share/doc/libgphoto2/README.CSW 0644 root bin
 f none /opt/csw/share/doc/libgphoto2/README.apidocs 0644 root bin
+f none /opt/csw/share/doc/libgphoto2/solaris-10-usb-digital-camera-howto.txt 0644 root bin
 d none /opt/csw/share/doc/libgphoto2/apidocs.html 0755 root bin
 f none /opt/csw/share/doc/libgphoto2/apidocs.html/__stdint_8h-source.html 0644 root bin
 f none /opt/csw/share/doc/libgphoto2/apidocs.html/annotated.html 0644 root bin

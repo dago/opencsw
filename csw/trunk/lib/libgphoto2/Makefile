@@ -74,3 +74,4 @@ post-configure:
 
 post-install:
 	cp -p files/README.CSW $(DESTDIR)/opt/csw/share/doc/libgphoto2
+	cp -p files/solaris-10-usb-digital-camera-howto.txt $(DESTDIR)/opt/csw/share/doc/libgphoto2

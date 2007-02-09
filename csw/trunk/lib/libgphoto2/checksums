@@ -2,8 +2,8 @@
 37f85e34e5b6031ddf6cac8b8782ac4f  download/libgphoto2-2.3.1.tar.bz2
 8a4e74ec63da543f34cae20d351adbd4  download/CSWlibgphoto2.gspec
 706a69ba6b57544cc010e471ae7ffb1b  download/CSWlibgphoto2.depend
-f98c1c402b69dc0c11792ff9a97fbc10  download/CSWlibgphoto2.prototype.sparc.sol8
-823e1c671b7ea377373313489ffd9f0b  download/CSWlibgphoto2.prototype.sparc.sol10
-ea3455771b53eb5c7c5df0c3a38bd29f  download/CSWlibgphoto2.prototype.i386.sol8
-5a91543f43a42a43fa3c8ce8e663820b  download/CSWlibgphoto2.prototype.i386.sol10
+56d20cd438d3109cee2288c472297689  download/CSWlibgphoto2.prototype.sparc.sol8
+30f77ed5d0498deff10166c1f53c40cd  download/CSWlibgphoto2.prototype.sparc.sol10
+f6d2aab3344a7138c3a3478a8bb38f74  download/CSWlibgphoto2.prototype.i386.sol8
+783ec3101f7627c1ca1a3991e4a5a4f3  download/CSWlibgphoto2.prototype.i386.sol10
 4e5c17dd66fb10eb86ea8919f9f1629d  download/sunstudio.patch
