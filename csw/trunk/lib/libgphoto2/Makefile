@@ -16,8 +16,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibgphoto2,depend \
 	prototype.i386.sol10 prototype.i386.sol8 \
 	prototype.sparc.sol10 prototype.sparc.sol8)
-
 DISTFILES += sunstudio.patch
+# 'cc' is a shell script to hack around libtool craziness
+DISTFILES += cc
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -29,6 +30,9 @@ LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 EXTRA_INC=../.. ../../libgphoto2_port ../libgphoto2_port/gphoto2
 
 #export EXTRA_INC
+
+LIBGPHOTO_PATH = $(DESTDIR)$(libdir)
+export LIBGPHOTO_PATH
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -57,6 +61,10 @@ TEST_TARGET =
 SPKG_SOURCEURL = http://www.gphoto.org/
 
 include ../category.mk
+
+# This ensures that make picks up the 'cc' shell script as compiler
+PATH := $(PWD)/$(WORKDIR):$(PATH)
+export PATH
 
 post-extract:
 	(cd $(WORKSRC)/..; \
