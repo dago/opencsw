@@ -11,5 +11,12 @@ DISTFILES += $(call admfiles,CSWlibxfcegui4, depend)
 
 LIBDEPS = xfce/libxfce4util
 
+# Patch for the exo-mount.c file
+PATCHFILES += configure.in.diff
+PATCHFILES += configure.diff
+
 include ../category.mk
+
+# Configure common options
+CONFIGURE_ARGS += --enable-xinerama
 
