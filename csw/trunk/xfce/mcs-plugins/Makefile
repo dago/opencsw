@@ -10,7 +10,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxfce_mcs_plugins, depend)
 
 # Patch for the exo-mount.c file
-# PATCHFILES += exo.diff
+PATCHFILES += configure.in.diff
+PATCHFILES += configure.diff
 
 include ../category.mk
 

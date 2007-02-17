@@ -2,3 +2,5 @@
 445dcb0162de8a72f18796f898501de8  download/CSWxfce_mcs_plugins.gspec
 9fb0f202d1e8a6cc77bc185071c0db2c  download/CSWxfce_mcs_plugins.depend
 95213345e3ccd224a30b2be01e9c06b9  download/xfce-mcs-plugins-4.4.0.tar.bz2
+2a21b911007db87b64582dbde489be59  download/configure.in.diff
+52a356f3a19d20c3e14cdeeeefbe04fe  download/configure.diff
