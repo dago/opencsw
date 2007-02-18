@@ -1,0 +1,58 @@
+diff --speed-large-files --minimal -Nru xfce4-panel-4.4.0.orig/panel/panel-item-manager.c xfce4-panel-4.4.0/panel/panel-item-manager.c
+--- xfce4-panel-4.4.0.orig/panel/panel-item-manager.c	2007-01-20 17:33:00.000000000 +0100
++++ xfce4-panel-4.4.0/panel/panel-item-manager.c	2007-02-18 13:04:29.944097000 +0100
+@@ -256,9 +256,13 @@
+ 
+             if ((value = xfce_rc_read_entry (rc, "Comment", NULL)))
+                 class->comment = g_strdup (value);
++            else
++                class->comment = g_strdup ("");
+ 
+             if ((value = xfce_rc_read_entry (rc, "Icon", NULL)))
+                 class->icon = g_strdup (value);
++            else
++                class->icon = g_strdup ("");
+ 
+             class->unique = 
+                 xfce_rc_read_bool_entry (rc, "X-XFCE-Unique", FALSE);
+@@ -296,7 +300,12 @@
+     }
+     else
+     {
+-        dirs = xfce_resource_dirs (XFCE_RESOURCE_DATA);
++        dirs = xfce_resource_dirs (XFCE_RESOURCE_DATA);	
++        if (dirs == NULL)
++        {
++            DBG ("xfce_resource_dirs returns NULL pointer. Exiting from update_plugin_list"); 
++            return;
++        }
+     }
+     
+     for (d = dirs; *d != NULL || !datadir_used; ++d)
+@@ -313,6 +322,12 @@
+             dirname = g_build_filename (DATADIR, "xfce4", "panel-plugins", 
+                                         NULL);
+             datadir_used = TRUE;
++            if (dirs == NULL)
++            {
++                DBG ("g_build_filename returns NULL pointer. Exiting from update_plugin_list"); 
++                g_strfreev (dirs);
++                return;
++            }
+         }
+         else
+         {
+@@ -323,6 +338,13 @@
+         }
+         
+         gdir = g_dir_open (dirname, 0, NULL);
++        if (dirs == NULL)
++        {
++            DBG ("g_dir_open(%s) returns NULL pointer. Exiting from update_plugin_list", dirname); 
++            g_free (dirname);
++            g_strfreev (dirs);
++            return;
++        }
+ 
+         DBG (" + directory: %s", dirname);
+         

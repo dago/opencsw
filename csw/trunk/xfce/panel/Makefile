@@ -9,4 +9,6 @@ endef
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxfce_panel, depend)
 
+PATCHFILES += panel-item-manager.c.diff
+
 include ../category.mk
