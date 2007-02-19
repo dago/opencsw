@@ -33,6 +33,9 @@ f none /opt/csw/kde-gcc/share/locale/fi/LC_MESSAGES/lyx.mo 0644 root bin
 d none /opt/csw/kde-gcc/share/locale/fr 0755 root bin
 d none /opt/csw/kde-gcc/share/locale/fr/LC_MESSAGES 0755 root bin
 f none /opt/csw/kde-gcc/share/locale/fr/LC_MESSAGES/lyx.mo 0644 root bin
+d none /opt/csw/kde-gcc/share/locale/gl 0755 root bin
+d none /opt/csw/kde-gcc/share/locale/gl/LC_MESSAGES 0755 root bin
+f none /opt/csw/kde-gcc/share/locale/gl/LC_MESSAGES/lyx.mo 0644 root bin
 d none /opt/csw/kde-gcc/share/locale/hu 0755 root bin
 d none /opt/csw/kde-gcc/share/locale/hu/LC_MESSAGES 0755 root bin
 f none /opt/csw/kde-gcc/share/locale/hu/LC_MESSAGES/lyx.mo 0644 root bin
@@ -88,13 +91,33 @@ f none /opt/csw/kde-gcc/share/lyx/bind/sv_menus.bind 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/bind/xemacs.bind 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/chkconfig.ltx 0644 root bin
 d none /opt/csw/kde-gcc/share/lyx/clipart 0755 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/BoxInsetDefault.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/ComentNotaImagen.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/CommentNoteImage.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/CuadroMinipag.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/GreyedOutNoteImage.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/GrisNotaImagen.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/LyXNoteImage.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/NotaLyXImagen.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/endnotes.pdf 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/etiqueta.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/float.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/flotante.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/footnote.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/label.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/notapie.png 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/clipart/platypus.eps 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/reference2.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/referencia2.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/with_fntright.pdf 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/clipart/without_fntright.pdf 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/configure.py 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/configure.pyc 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/configure.pyo 0644 root bin
 d none /opt/csw/kde-gcc/share/lyx/doc 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Customization.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/DocStyle.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/EmbeddedObjects.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Extended.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/FAQ.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/Intro.lyx 0644 root bin
@@ -116,6 +139,7 @@ f none /opt/csw/kde-gcc/share/lyx/doc/de_Intro.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/de_TOC.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/de_Tutorial.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/de_UserGuide.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/es_EmbeddedObjects.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/es_Intro.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/es_TOC.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/es_Tutorial.lyx 0644 root bin
@@ -134,6 +158,9 @@ f none /opt/csw/kde-gcc/share/lyx/doc/fr_Intro.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/fr_TOC.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/fr_Tutorial.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/fr_UserGuide.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/gl_Intro.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/gl_TOC.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/doc/gl_Tutorial.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/he_Intro.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/he_TOC.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/doc/he_Tutorial.lyx 0644 root bin
@@ -185,6 +212,18 @@ f none /opt/csw/kde-gcc/share/lyx/examples/aa_sample.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/aas_sample.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/amsart-test.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/amsbook-test.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-g4-mask.jpg 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-g4.jpg 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-icsi-logo.pdf 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight1-mask.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight1.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight2-mask.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight2.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight3-mask.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight3.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight4-mask.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamer-knight4.png 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/beamerlyxexample1.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/ca_splash.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/chess-article.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/chessgame.lyx 0644 root bin
@@ -225,6 +264,9 @@ f none /opt/csw/kde-gcc/share/lyx/examples/fr_mathed.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/fr_multicol.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/fr_splash.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/g-brief2.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/gl_exemplo_bruto.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/gl_exemplo_lyxificado.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/examples/gl_splash.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/he_example_raw.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/he_he_example_lyxified.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/examples/he_he_example_raw.lyx 0644 root bin
@@ -304,6 +346,7 @@ f none /opt/csw/kde-gcc/share/lyx/images/index-insert.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/label-insert.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/layout-document.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/layout-paragraph.xpm 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/images/layout.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/layout_Description.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/layout_Enumerate.xpm 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/images/layout_Itemize.xpm 0644 root bin
@@ -901,7 +944,9 @@ f none /opt/csw/kde-gcc/share/lyx/layouts/amsmaths-plain.inc 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/amsmaths-seq.inc 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/amsmaths.inc 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/apa.layout 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/layouts/arab-article.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/article.layout 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/layouts/beamer.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/book.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/broadway.layout 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/layouts/chess.layout 0644 root bin
@@ -1041,6 +1086,9 @@ f none /opt/csw/kde-gcc/share/lyx/scripts/clean_dvi.pyo 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/convertDefault.py 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/convertDefault.pyc 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/convertDefault.pyo 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/scripts/date.py 0755 root bin
+f none /opt/csw/kde-gcc/share/lyx/scripts/date.pyc 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/scripts/date.pyo 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/fen2ascii.py 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/fen2ascii.pyc 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/scripts/fen2ascii.pyo 0644 root bin
@@ -1077,9 +1125,12 @@ f none /opt/csw/kde-gcc/share/lyx/templates/README.new_templates 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/aa.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/aastex.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/agu_article.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/templates/beamer-conference-ornate-20min.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/templates/de_beamer-conference-ornate-20min.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/dinbrief.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/docbook_article.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/elsart.lyx 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/templates/fr_beamer-conference-ornate-20min.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/g-brief-de.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/g-brief-en.lyx 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/templates/hollywood.lyx 0644 root bin
@@ -1103,9 +1154,11 @@ f none /opt/csw/kde-gcc/share/lyx/tex/revtex.cls 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/textclass.lst 0644 root bin
 d none /opt/csw/kde-gcc/share/lyx/ui 0755 root bin
 f none /opt/csw/kde-gcc/share/lyx/ui/classic.ui 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/ui/default-alltoolbars.ui 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/ui/default-autotoolbars.ui 0644 root bin
 f none /opt/csw/kde-gcc/share/lyx/ui/default.ui 0644 root bin
-f none /opt/csw/kde-gcc/share/lyx/ui/stdmenus.ui 0644 root bin
-f none /opt/csw/kde-gcc/share/lyx/ui/stdtoolbars.ui 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/ui/stdmenus.inc 0644 root bin
+f none /opt/csw/kde-gcc/share/lyx/ui/stdtoolbars.inc 0644 root bin
 s none /opt/csw/bin/lyx=../kde-gcc/bin/lyx
 s none /opt/csw/bin/lyxclient=../kde-gcc/bin/lyxclient
 s none /opt/csw/bin/tex2lyx=../kde-gcc/bin/tex2lyx

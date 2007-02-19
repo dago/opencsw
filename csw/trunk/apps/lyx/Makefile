@@ -1,5 +1,5 @@
 GARNAME = lyx
-GARVERSION = 1.4.3
+GARVERSION = 1.4.4
 CATEGORIES = applications
 
 DESCRIPTION = WYSIWYM document processor
