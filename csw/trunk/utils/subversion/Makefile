@@ -79,8 +79,8 @@ TEST_TARGET = check
 # Tests take *forever*
 TEST_SCRIPTS =
 
-EXTRA_LIB = $(prefix)/bdb43/lib $(SVNLIB)
-EXTRA_INC = $(prefix)/bdb43/include
+EXTRA_LIB = $(prefix)/bdb44/lib $(SVNLIB)
+EXTRA_INC = $(prefix)/bdb44/include
 
 include ../category.mk
 
