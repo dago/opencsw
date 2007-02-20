@@ -1,5 +1,5 @@
 GARNAME = mod_python
-GARVERSION = 3.2.8
+GARVERSION = 3.3.1
 CATEGORIES = server
 
 DESCRIPTION = an Apache/Python integration module
@@ -16,9 +16,6 @@ DISTFILES += $(call admfiles,CSWap2modpython,$(pkgfiles))
 
 #DEPENDS += lang/python
 
-# Fix refs to APR_STATUS_IS_SUCCESS
-PATCHFILES += apr.diff
-
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-python=$(bindir)/python
@@ -28,5 +25,17 @@ include ../category.mk
 
 pre-configure:
 	@( cd $(WORKSRC) ; autoconf )
+	@$(MAKECOOKIE)
+
+DESTDOC = $(DESTDIR)$(docdir)/ap2_mod_jk
+
+post-install: install-doc
+
+install-doc:
+	@install -d $(DESTDOC)
+	@for file in COPYRIGHT CREDITS LICENSE NEWS NOTICE README ; do \
+	  ginstall -m 0644 $(WORKSRC)/$$file $(DESTDOC) ; \
+	done
+	@( cd $(WORKSRC) ; gcp -vR examples doc-html $(DESTDOC) )
 	@$(MAKECOOKIE)
 
