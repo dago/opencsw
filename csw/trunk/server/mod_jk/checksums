@@ -1,5 +1,5 @@
-9c3b7135a4992c7f39d5f7aef9c25b30  download/tomcat-connectors-1.2.19-src.tar.gz
-689adfe56022cf121b384e27d5c1402b  download/CSWap2modjk.gspec
+f10709339009b3be9398d3a838d9cabd  download/tomcat-connectors-1.2.20-src.tar.gz
+da3c0df06571efa952998e637ca10cde  download/CSWap2modjk.gspec
 43c992b019672fe3bacdbe4fababb500  download/CSWap2modjk.depend
 36e88e72dcc7970ad5d95944f1d9600a  download/CSWap2modjk.prototype
 f4781a01cc678a752a800198918e5687  download/CSWap2modjk.postinstall
@@ -10,3 +10,4 @@ f4781a01cc678a752a800198918e5687  download/CSWap2modjk.postinstall
 b69613899d749ba2a40d1acbbbe13ba9  download/workers.properties.minimal
 594aca8f50b11134fd3396e348bd2f12  download/uriworkermap.properties
 25c3855d2af69021dfc63e9d4b1ed78a  download/install.diff
+7c6ff5425f542ec5eb80954f8a470519  download/logging.diff
