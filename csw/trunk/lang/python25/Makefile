@@ -20,7 +20,7 @@ endef
 
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWpython25,)
+DISTFILES += $(call admfiles,CSWpython,depend prototype postinstall)
 
 # Configure
 PATCHFILES += setup.diff
@@ -30,6 +30,9 @@ PATCHFILES += sitepath.diff
 
 # Fix rcs tool path in faqwiz
 PATCHFILES += faqwiz.diff
+
+# Install to lib/python instead of lib/python$(VERSION)
+PATCHFILES += instdir.diff
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 

@@ -99,7 +99,7 @@ diff --speed-large-files --minimal -Nru Python-2.5c1.orig/setup.py Python-2.5c1/
 -
 -        db_inc_paths = std_variants + db_inc_paths
 -
-+        db_inc_paths = [ '/opt/csw/bdb43/include' ]
++        db_inc_paths = [ '/opt/csw/bdb44/include' ]
  
          db_ver_inc_map = {}
  
@@ -123,7 +123,7 @@ diff --speed-large-files --minimal -Nru Python-2.5c1.orig/setup.py Python-2.5c1/
          # underlying db library.  May BSD-ish Unixes incorporate db 1.85
          # symbols into libc and place the include file in /usr/include.
 -        f = "/usr/include/db.h"
-+        f = "/opt/csw/include/db.h"
++        f = "/opt/csw/bdb44/include/db_185.h"
          if os.path.exists(f):
              data = open(f).read()
              m = re.search(r"#s*define\s+HASHVERSION\s+2\s*", data)
