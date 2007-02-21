@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 5.2.0
+GARVERSION = 5.2.1
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
@@ -18,7 +18,8 @@ endef
 
 # Auxilliary files
 DISTFILES += php.ini.CSW phpext
-DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh 
+DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh
+DISTFILES += CSWphp5_ext.depend
 
 # PHP CGI SAPI + Core
 DISTFILES += $(call admfiles,CSWphp5,prototype depend postinstall)

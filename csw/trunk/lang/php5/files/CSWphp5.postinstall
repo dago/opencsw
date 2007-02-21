@@ -6,7 +6,17 @@ PHP_INI=$PKG_INSTALL_ROOT/opt/csw/php5/lib/php.ini
 if [ ! -f $PHP_INI ]; then
     cp -p $PHP_INI.CSW $PHP_INI
 else
-    echo "php.ini already exists.  Not copying php.ini.CSW"
+    cat << _EOT_
+php.ini already exists.  Not copying php.ini.CSW
+
+******************************************************************************
+* NOTICE: The existing php.ini file is from an older version of PHP5.  The new
+* php.ini.CSW is based on php.ini-recommended from the PHP 5.2.1 distribution.
+*
+* Please consider merging any local configuration changes into a copy of the
+* most recent CSW configuration file.
+******************************************************************************
+_EOT_
 fi
 
 exit 0

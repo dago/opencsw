@@ -48,7 +48,6 @@ f none /opt/csw/php5/include/php/Zend/zend_language_parser.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_language_scanner.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_list.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_llist.h 0644 root bin
-f none /opt/csw/php5/include/php/Zend/zend_mm.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_modules.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_multibyte.h 0644 root bin
 f none /opt/csw/php5/include/php/Zend/zend_multiply.h 0644 root bin
@@ -111,7 +110,6 @@ d none /opt/csw/php5/include/php/ext/mbstring/libmbfl 0755 root bin
 f none /opt/csw/php5/include/php/ext/mbstring/libmbfl/config.h 0644 root bin
 d none /opt/csw/php5/include/php/ext/pcre 0755 root bin
 d none /opt/csw/php5/include/php/ext/pcre/pcrelib 0755 root bin
-f none /opt/csw/php5/include/php/ext/pcre/pcrelib/internal.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcre.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcre_internal.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcre_scanner.h 0644 root bin

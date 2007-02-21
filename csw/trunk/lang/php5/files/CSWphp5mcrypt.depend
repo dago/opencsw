@@ -1,3 +1,0 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5
-P CSWlibmcrypt libmcrypt - GPL replacement for Unix crypt that supports a wide range of algorithms and modes

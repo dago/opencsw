@@ -19,8 +19,8 @@ PATH := $(PATH):$(prefix)/mysql5/bin
 export PATH
 
 # BerkeleyDB
-EXTRA_LIB += $(prefix)/bdb43/lib
-EXTRA_INC += $(prefix)/bdb43/lib
+EXTRA_LIB += $(prefix)/bdb44/lib
+EXTRA_INC += $(prefix)/bdb44/lib
 
 # IMAP C Client
 #MASTER_SITES += ftp://ftp.cac.washington.edu/imap/
@@ -52,7 +52,7 @@ CONFIGURE_ARGS += --with-iconv=shared,$(prefix)
 CONFIGURE_ARGS += --enable-dba=shared
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
-CONFIGURE_ARGS += --with-db4=$(prefix)/bdb43
+CONFIGURE_ARGS += --with-db4=$(prefix)/bdb44
 CONFIGURE_ARGS += --with-inifile
 CONFIGURE_ARGS += --enable-ftp=shared
 CONFIGURE_ARGS += --with-gd=shared,$(prefix)
@@ -104,6 +104,7 @@ CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-wddx=shared
 CONFIGURE_ARGS += --enable-xmlreader=shared
+CONFIGURE_ARGS += --with-xmlrpc=shared
 CONFIGURE_ARGS += --enable-pcntl=shared
 CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)

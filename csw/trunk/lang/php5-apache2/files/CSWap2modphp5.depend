@@ -1,11 +1,6 @@
+P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
 P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Processor 5
-P CSWap2prefork ap2_prefork - Apache 2.0 prefork MPM
-P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
 P CSWiconv libiconv - GNU iconv library
-P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
-P CSWlibmm libmm - Shared Memory Allocation abstraction library
-P CSWlibnet libnet - the libnet packet construction library
 P CSWlibxml2 libxml2 - XML Parser Library
-P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWphp5 php5 - PHP Hypertext Processor 5
 P CSWzlib zlib - Zlib Data Compression Library
