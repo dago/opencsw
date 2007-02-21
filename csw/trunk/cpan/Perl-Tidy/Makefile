@@ -1,15 +1,16 @@
 GARNAME = Perl-Tidy
-GARVERSION = 20031021
+GARVERSION = 20060719
 CATEGORIES = utils
 
-DESCRIPTION = simple interactive Perl shell
+DESCRIPTION = Indent and reformat Perl scripts.
 define BLURB
-  The Perl Shell (psh) combines aspects of bash and other shells with the
-  power of Perl scripting. It aspires to be your primary login shell.
+  Perltidy is a Perl script which indents and reformats Perl scripts. The
+  formatting is controlled by command line parameters; the default formatting
+  follows the suggestions in perlstyle(1).
 endef
 
 MASTER_SITES = $(SF_MIRROR)/perltidy/
 
-DISTFILES += $(call admfiles,CSWperltidy,)
+DISTFILES += $(call admfiles,CSWperltidy,prototype)
 
 include ../category.mk
