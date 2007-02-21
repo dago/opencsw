@@ -35,7 +35,7 @@ CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 # Dependencies
-LIBDEPS += lib/bdb43
+LIBDEPS += lib/bdb44
 LIBDEPS += lib/gdbm
 
 # Custom configure
@@ -46,8 +46,8 @@ PL_MAJOR   = 5.8
 PL_PATCH   = 0 2 4 6 7
 INC_COMPAT = $(foreach REV,$(PL_PATCH),$(PL_MAJOR).$(REV))
 
-# Force use of db-4.3
-PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.3 -ldl -lm -lpthread -lc
+# Force use of db-4.4
+PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.4 -ldl -lm -lpthread -lc
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
@@ -82,11 +82,11 @@ CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
-CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/bdb43/lib /opt/csw/lib"
+CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/bdb44/lib /opt/csw/lib"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
-EXTRA_LIB += $(prefix)/bdb43/lib
-EXTRA_INC += $(prefix)/bdb43/include
+EXTRA_LIB += $(prefix)/bdb44/lib
+EXTRA_INC += $(prefix)/bdb44/include
 
 # Tests take a long time
 TEST_SCRIPTS =

@@ -2,5 +2,5 @@ I CSWperlmods
 I CSWpmdigest
 I CSWpmi18nlangtags
 P CSWcommon common - common files and dirs for CSW packages
-P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
+P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
 P CSWgdbm gdbm - GNU dbm
