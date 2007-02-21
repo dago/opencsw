@@ -1,5 +1,5 @@
 GARNAME = xchat
-GARVERSION = 2.4.3
+GARVERSION = 2.8.0
 CATEGORIES = gnome
 
 DESCRIPTION = GTK+ based IRC client, similar to AmIRC (Amiga).
@@ -8,7 +8,7 @@ define BLURB
   Optionally it can be compiled to use GNOME and Perl scripting.
 endef
 
-MASTER_SITES = http://xchat.org/files/source/2.4/
+MASTER_SITES = http://xchat.org/files/source/2.8/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWxchat.gspec CSWxchat.depend CSWxchat.prototype
 DISTFILES += CSWxchat-pl.gspec CSWxchat-pl.depend CSWxchat-pl.prototype
