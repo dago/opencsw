@@ -89,7 +89,8 @@ remove-timestamp:
 	@-rm -f $(TIMESTAMP)
 
 # package - Use the mkpackage utility to create Solaris packages
-POST_INSTALL_TARGETS += pre-package package-create post-package
+POST_INSTALL_TARGETS += pre-package package-create post-package 
+POST_INSTALL_TARGETS += package-restore-la
 
 # check package, unless ENABLE_CHECK = 0
 ifneq ($(ENABLE_CHECK),0)
@@ -103,7 +104,6 @@ package: install
 # returns true if package has completed successfully, false otherwise
 package-p:
 	@$(foreach COOKIEFILE,$(PACKAGE_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
-
 
 # Call mkpackage to transmogrify one or more gspecs into packages
 package-create:
@@ -128,11 +128,13 @@ package-create:
 # check if the package is blastwave compliant
 package-check:
 	@echo " ==> Checking blastwave compliance"
+ifneq ($(SPKG_SKIP_COMPLIANCE_CHECK), 1)
 	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $$spec -D pkgfile`.gz || exit 2 ; \
 		done ; \
 	fi
+endif
 
 # Verify all packages
 package-verify: package-check
@@ -165,9 +167,14 @@ package-reset:
 	@echo " ==> Reset packaging state for $(GARNAME) ($(DESTIMG))"
 	@if test -d $(COOKIEDIR) ; then \
 		if test -d $(WORKDIR) ; then rm -f $(WORKDIR)/*CSW* ; fi ; \
-		rm -f $(COOKIEDIR)/*extract*CSW* \
-				  $(COOKIEDIR)/*checksum*CSW* \
-					$(COOKIEDIR)/package* ; \
+		( cd $(COOKIEDIR) ; \
+			rm -f \
+				*extract*CSW* \
+				*checksum*CSW* \
+				package* \
+				pre-package \
+				post-package \
+				) ; \
 	fi
 
 # Reset and repackage
@@ -178,4 +185,9 @@ dependb:
 	@dependb --db $(SPKG_DEPEND_DB) \
              --parent $(CATEGORIES)/$(GARNAME) \
              --add $(DEPENDS)
+
+# Replace original .la files
+package-restore-la:
+	@echo " ==> Restoring original libtool .la files"
+	restorer $(DESTDIR)
 
