@@ -441,7 +441,7 @@ fi
 
 	if [[ -f $EXTRACTDIR/otherpkgs ]]; then
 		print
-		print WARNING: the following dependancies are missing in the depend file:
+		print WARNING: the following dependancies are missing in the $f depend file:
 		cat $EXTRACTDIR/otherpkgs
                 if [[ "$WARNING_ERROR" -eq 1 ]]; then
                                 exit 1
