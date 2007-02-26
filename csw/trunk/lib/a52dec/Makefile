@@ -11,7 +11,7 @@ MASTER_SITES = http://liba52.sourceforge.net/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWliba52,)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) --enable-shared
 
 
 include ../category.mk
