@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://liba52.sourceforge.net/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWa52dec, depend)
+DISTFILES += $(call admfiles,CSWliba52, depend)
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static
 
