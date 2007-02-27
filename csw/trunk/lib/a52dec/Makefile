@@ -9,9 +9,9 @@ endef
 
 MASTER_SITES = http://liba52.sourceforge.net/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWliba52,)
+DISTFILES += $(call admfiles,CSWliba52, depend)
 
-CONFIGURE_ARGS = $(DIRPATHS) --enable-shared
+CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static
 
 
 include ../category.mk
