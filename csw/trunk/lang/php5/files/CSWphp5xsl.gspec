@@ -6,5 +6,3 @@
 %postremove     url file://%{WORKDIR}/CSWphp5_ext_disable.sh
 %var            desc PHP 5 - XSL Extension
 %copyright      url file://%{WORKSRC}/LICENSE
-%depend
-P CSWphp5dom  php5_dom - PHP 5 - XML DOM Extension
