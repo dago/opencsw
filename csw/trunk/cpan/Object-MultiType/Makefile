@@ -2,7 +2,6 @@ GARNAME = Object-MultiType
 GARVERSION = 0.05
 CATEGORIES = cpan
 AUTHOR = GMPASSOS
-CARCH = all
 
 DESCRIPTION = objects as hash, array, scalar, code and glob at same time.
 define BLURB
