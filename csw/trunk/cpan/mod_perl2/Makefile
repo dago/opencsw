@@ -1,5 +1,5 @@
 GARNAME = mod_perl
-DISTVERSION = 2.0.2
+DISTVERSION = 2.0.3
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = cpan
 AUTHOR = PGOLLUCCI
@@ -9,8 +9,8 @@ define BLURB
   The Apache/Perl integration project brings together the full power of the
   Perl programming language and the Apache HTTP server. With mod_perl it is
   possible to write Apache modules entirely in Perl. In addition, the
-  persistent interpreter embedded in the server avoids the overhead of starting
-  an external interpreter and the penalty of Perl start-up time.
+  persistent interpreter embedded in the server avoids the overhead of
+  starting an external interpreter and the penalty of Perl start-up time.
 endef
 
 #
@@ -49,20 +49,20 @@ INSTALL_SCRIPTS = custom
 
 include ../category.mk
 
-LDFLAGS += -L$(prefix)/bdb43/lib
-LD_OPTIONS += -R$(prefix)/bdb43/lib
+LDFLAGS += -L$(prefix)/bdb44/lib
+LD_OPTIONS += -R$(prefix)/bdb44/lib
 
 install-custom:
 	( cd $(WORKSRC) ; $(INSTALL_ENV) make install DESTDIR=$(DESTDIR) )
 	@$(MAKECOOKIE)
 
 post-install:
-	install -d $(DESTDIR)$(prefix)/apache2/etc
-	install -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	install -m 0755 \
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0755 \
 		$(WORKDIR)/startup.pl.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc
-	install -m 0644 \
+	ginstall -m 0644 \
 		$(WORKDIR)/httpd-perl.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
 	@$(MAKECOOKIE)

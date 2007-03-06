@@ -97,6 +97,7 @@ f none /opt/csw/lib/perl/csw/Apache2/BuildConfig.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/CmdParms.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Command.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Connection.pm 0444 root bin
+f none /opt/csw/lib/perl/csw/Apache2/ConnectionUtil.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Const.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Directive.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Filter.pm 0444 root bin
@@ -243,6 +244,9 @@ f none /opt/csw/lib/perl/csw/auto/Apache2/Command/Command.so 0555 root bin
 d none /opt/csw/lib/perl/csw/auto/Apache2/Connection 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/Apache2/Connection/Connection.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/Apache2/Connection/Connection.so 0555 root bin
+d none /opt/csw/lib/perl/csw/auto/Apache2/ConnectionUtil 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/Apache2/ConnectionUtil/ConnectionUtil.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/Apache2/ConnectionUtil/ConnectionUtil.so 0555 root bin
 d none /opt/csw/lib/perl/csw/auto/Apache2/Const 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/Apache2/Const/Const.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/Apache2/Const/Const.so 0555 root bin
@@ -345,6 +349,7 @@ f none /opt/csw/share/man/man3/Apache2::Build.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Apache2::CmdParms.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Apache2::Command.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Apache2::Connection.3perl 0444 root bin
+f none /opt/csw/share/man/man3/Apache2::ConnectionUtil.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Apache2::Const.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Apache2::Directive.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Apache2::Filter.3perl 0444 root bin
