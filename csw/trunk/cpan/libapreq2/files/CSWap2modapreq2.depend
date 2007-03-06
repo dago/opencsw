@@ -1,10 +1,9 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWap2prefork ap2_prefork - Apache 2.2 prefork MPM
+P CSWapache2 apache2 - Apache 2.2 web server
 P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
-P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
+P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
+P CSWcommon common - common files and dirs for CSW packages
 P CSWexpat expat -  XML Parser Toolkit
-P CSWgdbm gdbm - GNU dbm
 P CSWiconv libiconv - GNU iconv library
 P CSWlibapreq2 libapreq2 - Apache Request Library
-P CSWoldaprt openldap_rt - ldap runtime libraries
-P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
+P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
+P CSWperl perl - A high-level, general-purpose programming language
