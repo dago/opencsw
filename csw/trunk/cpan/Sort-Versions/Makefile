@@ -13,6 +13,6 @@ define BLURB
   undoubtedly be found.
 endef
 
-DISTFILES += CSWpmsortver.gspec
+DISTFILES += $(call admfiles,CSWpmsortver,prototype)
 
 include ../category.mk
