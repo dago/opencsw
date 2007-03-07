@@ -66,5 +66,6 @@ c75d314921d14f6ca01770ece24431da  download/CSWphp5sqlite.gspec
 6e26d0ddba093b3f2986701188c36588  download/CSWphp5wddx.prototype
 58ba92a544570ec4b613bcc409a42a23  download/CSWphp5xsl.gspec
 1d09cda20bea89b6a6645e95e940431e  download/CSWphp5xsl.prototype
+6dfad06a8e365a8d42563e8c1a8bd9ac  download/CSWphp5xsl.postinstall
 261218e3569a777dbd87c16a15f05c8d  download/php-5.2.1.tar.bz2
 a03ecfbc83c95890b9167f7324e5d7a8  download/config.diff
