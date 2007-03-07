@@ -89,9 +89,10 @@ install-%/Build:
 update-check:
 	@echo " ==> Update Check: $(GARNAME) $(GARVERSION)"
 	@if test "x$(MANUAL_UPDATE)" != "x0" ; then \
-		cpan_check $(CHECKPATH)$(MODDIST) 2>>../update_results.txt ; \
+	    cpan_check $(CHECKPATH)$(MODDIST) \
+	               $(CURDIR)/../update_results.txt ; \
 	else \
-		echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED" ; \
+	    echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED" ; \
 	fi
 	
 # Print HTML info for modules
