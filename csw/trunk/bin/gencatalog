@@ -13,8 +13,8 @@
 # gencatalog - generate a blastwave v1 style catalog and description file.
 #
 
-mv catalog catalog.old
-mv descriptions descriptions.old
+cp catalog catalog.old
+cp descriptions descriptions.old
 
 for pkg in `ls -1 *.pkg *.pkg.gz 2>/dev/null`  ; do
     eval `gzcat $pkg | perl -lne '
@@ -23,6 +23,10 @@ for pkg in `ls -1 *.pkg *.pkg.gz 2>/dev/null`  ; do
         elsif (/VERSION=(\S+)/)   { print "VERSION=$1" ; exit }'`
 
     print "$DESC"
-    print "$NAME $VERSION $PKG $pkg $(md5sum $pkg | awk '{print $1}')" >> catalog
-    print "$DESC" >> descriptions 
+    print "$NAME $VERSION $PKG $pkg $(md5sum $pkg | awk '{print $1}')" >> catalog.new
+    print "$DESC" >> descriptions.new 
 done
+
+mv catalog.new catalog
+mv descriptions.new descriptions
+
