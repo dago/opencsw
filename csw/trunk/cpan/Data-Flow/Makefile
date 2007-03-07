@@ -1,13 +1,15 @@
 GARNAME = Data-Flow
-GARVERSION = 0.08
+GARVERSION = 0.09
 CATEGORIES = cpan
-AUTHOR = RADOS
+AUTHOR = ILYAZ
 
 DESCRIPTION = simple-minded recipe-controlled build of data
 define BLURB
   Perl extension for simple-minded recipe-controlled build of data.
 endef
 
-DISTFILES += CSWpmdataflow.gspec
+DISTFILES += $(call admfiles,CSWpmdataflow,)
 
 include ../category.mk
+
+AUTHOR_ID := $(AUTHOR_ID)/modules
