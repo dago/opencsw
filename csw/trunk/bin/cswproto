@@ -44,7 +44,7 @@ $StdDirPerm = '0755';
     qr{^/opt$},
     qr{^/opt/csw$},
     qr{perllocal\.pod},
-    qr{\.la~},
+    qr{~$},
 );
 
 # Print usage information and exit
