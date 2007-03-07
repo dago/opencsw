@@ -156,15 +156,15 @@ if (@uprev) {
     my @dev  = grep( /_/, @uprev);
 
     if (@ndev) {
-        print "$modname $modvers:";
+        print "$modname $modvers:\n";
 
         my $rec = pop @ndev;
-        print "    Recommended: ", $rec;
-        print "          Older: ", join(", ", @ndev) if @ndev;
-        print "    Development: ", join(", ", @dev) if @dev;
+        print "    Recommended: ", $rec, "\n";
+        print "          Older: ", join(", ", @ndev), "\n" if @ndev;
+        print "    Development: ", join(", ", @dev), "\n" if @dev;
 
         # Output info to automate udpates
-        print $outfh "$modname|$rec";
+        print $outfh "$modname|$rec", "\n";
     }
 }
 
