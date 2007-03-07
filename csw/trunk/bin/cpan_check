@@ -120,6 +120,15 @@ sub get_modinfo {
 my $distfile = shift @ARGV;
 die "Usage: $0 module_file" unless $distfile;
 
+my $outfh;
+my $outfile = shift @ARGV;
+if ($outfile) {
+    open $outfh, ">>$outfile"
+        or die "Failed to open update file '$outfile': $!\n";
+} else {
+    $outfh = \*STDERR;
+}
+
 my ($modname, $modvers) = fileinfo($distfile);
 die "Unable to parse module file name: $distfile"
     unless $modname && defined $modvers;
@@ -155,7 +164,7 @@ if (@uprev) {
         print "    Development: ", join(", ", @dev) if @dev;
 
         # Output info to automate udpates
-        print STDERR "$modname|$rec";
+        print $outfh "$modname|$rec";
     }
 }
 
