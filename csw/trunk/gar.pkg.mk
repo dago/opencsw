@@ -191,3 +191,6 @@ package-restore-la:
 	@echo " ==> Restoring original libtool .la files"
 	restorer $(DESTDIR)
 
+pkgenv:
+	@$(PKG_ENV) env
+
