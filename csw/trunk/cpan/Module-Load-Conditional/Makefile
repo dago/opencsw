@@ -9,7 +9,7 @@ define BLURB
   any of the modules you have installed on your system during runtime.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodloadcond,depend)
+DISTFILES += $(call admfiles,CSWpmmodloadcond,depend prototype)
 
 DEPENDS += cpan/Params-Check
 DEPENDS += cpan/Module-Load

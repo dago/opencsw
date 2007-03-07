@@ -1,0 +1,11 @@
+%var            bitname pm_yamlsyck
+%var            pkgname CSWpmyamlsyck
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2005, 2006, 2007 by Audrey Tang <cpan@audreyt.org>.
+
+This software is released under the MIT license cited below.
+
+The libsyck code bundled with this library is released by
+"why the lucky stiff", under a BSD-style license.  See the COPYING
+file for details.

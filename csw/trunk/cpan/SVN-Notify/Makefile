@@ -1,5 +1,5 @@
 GARNAME = SVN-Notify
-GARVERSION = 2.63
+GARVERSION = 2.64
 CATEGORIES = cpan
 AUTHOR = DWHEELER
 
@@ -12,9 +12,14 @@ define BLURB
 	single message.
 endef
 
-#DISTFILES = $(call admfiles,CSWpmsvnnotify,depend prototype)
-DISTFILES = $(call admfiles,CSWpmsvnnotify,)
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
 
-#DEPENDS += utils/subversion cpan/Module-Build
+DISTFILES = $(call admfiles,CSWpmsvnnotify,prototype)
+
+#DEPENDS += utils/subversion
+#DEPENDS += cpan/Module-Build
 
 include ../category.mk

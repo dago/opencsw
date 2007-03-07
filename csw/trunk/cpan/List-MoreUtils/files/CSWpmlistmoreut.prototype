@@ -1,0 +1,15 @@
+d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib/perl ? ? ?
+d none /opt/csw/lib/perl/csw ? ? ?
+d none /opt/csw/lib/perl/csw/List 0755 root bin
+f none /opt/csw/lib/perl/csw/List/MoreUtils.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto ? ? ?
+d none /opt/csw/lib/perl/csw/auto/List 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/List/MoreUtils 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/List/MoreUtils/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/List/MoreUtils/MoreUtils.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/List/MoreUtils/MoreUtils.so 0555 root bin
+d none /opt/csw/share ? ? ?
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man3 ? ? ?
+f none /opt/csw/share/man/man3/List::MoreUtils.3perl 0444 root bin
