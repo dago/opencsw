@@ -86,7 +86,7 @@ svn-http//%:
 # error out if it mentions the file without an "OK".
 checksum-%: $(CHECKSUM_FILE) 
 	@echo " ==> Running checksum on $*"
-	@if ggrep -- '$*' $(CHECKSUM_FILE); then \
+	@if gegrep -- '/$*$$' $(CHECKSUM_FILE); then \
 		if LC_ALL="C" LANG="C" gmd5sum -c $(CHECKSUM_FILE) 2>&1 | \
 			ggrep -- '$*' | ggrep -v ':[ ]\+OK'; then \
 			echo '(!!!) $* failed checksum test!' 1>&2; \
