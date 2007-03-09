@@ -132,4 +132,5 @@ else
 
 fi
 
-# BEGIN smf/postinstall
+exit 0
+# END smf/postinstall
