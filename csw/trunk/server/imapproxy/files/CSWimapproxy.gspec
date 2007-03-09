@@ -2,8 +2,7 @@
 %var            pkgname CSWimapproxy
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
-%include        url file://%{CURDIR}/files/csw_smf
-%pkginfo
-MANIFEST_FILES="/opt/csw/var/svc/manifest/network/imapproxy.xml"
-SERVICE_CONF_FILES="/opt/csw/etc/imapproxy.conf"
-CAN_BE_AUTOENABLED="no"
+%var            initname cswimapproxy
+%var            INIT_KILL_PRIO 99
+%var            INIT_START_PRIO 10
+%include        url file://%{PKGLIB}/smf_enabled.gspec

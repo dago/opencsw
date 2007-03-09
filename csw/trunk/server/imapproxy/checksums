@@ -1,10 +1,11 @@
 c6dfb09fdbd8c0af862dd02049ae39e9  download/up-imapproxy-1.2.5.tar.gz
-8f3e3e9bb2935bb01e1c4a080525dd70  download/CSWimapproxy.gspec
-380851039b389c01237223d57d565aeb  download/CSWimapproxy.prototype
+bf9108959991ffaadbb5d110d5a9230e  download/CSWimapproxy.gspec
+ff5709cf477aa1af50aae3068e89e507  download/CSWimapproxy.prototype
 5d51df28803c859277b7f6c3b68acf9e  download/imapproxy.conf
 0ba5e180728eb5f08f31aa67fb531ae3  download/changelog.CSW
 78549b892d38abf3e86cc29e39777bd6  download/cswimapproxy
-2d586e6018bd82b6ac4c49b75ff837ad  download/imapproxy.xml
+2d586e6018bd82b6ac4c49b75ff837ad  download/cswimapproxy.xml
+78549b892d38abf3e86cc29e39777bd6  download/svc-cswimapproxy
 3113a92e6a9296c1d41a3816ef618b85  download/i.smf
 c1303341cc11640a4433a22b9abd3241  download/r.smf
 437dbb40606bc71ef786abd7e77343f7  download/md5_include.patch
