@@ -1,5 +1,5 @@
 GARNAME = imapproxy
-GARVERSION = 1.2.4
+GARVERSION = 1.2.5
 CATEGORIES = server
 
 DESCRIPTION = A caching IMAP proxy server
@@ -51,12 +51,9 @@ post-install:
 	ginstall -D $(WORKSRC)/README.ssl $(DESTDIR)$(docdir)/$(GARNAME)/README.ssl
 	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
 	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
-#	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.init
-#	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.init
 	ginstall -D $(WORKDIR)/imapproxy.conf $(DESTDIR)$(sysconfdir)/imapproxy.conf.CSW
 	ginstall -D $(WORKDIR)/imapproxy.xml $(DESTDIR)$(localstatedir)/svc/manifest/network/imapproxy.xml
 	ginstall -D $(WORKDIR)/cswimapproxy $(DESTDIR)/etc/init.d/cswimapproxy
-#	ginstall -D $(WORKDIR)/svc-imapproxy $(DESTDIR)$(libdir)/svc/method/svc-imapproxy
 	@$(MAKECOOKIE)
 
 

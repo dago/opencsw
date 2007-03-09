@@ -41,9 +41,9 @@ load_init_service_state ()
 	_INIT_FILE="$1"
 	SERVICE_STATE="disabled"
 
-	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
+	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }' 2>/dev/null`
 	# we just search for any startup script in runlevels
-	if [ -n "`/usr/bin/find /etc/rc[S0-6].d -follow -inum \"$_INUM\" -name \"S??*\"`" ]; then
+	if [ -n "`/usr/bin/find /etc/rc[S0-6].d -follow -inum \"$_INUM\" -name \"S??*\" 2>/dev/null`" ]; then
 		SERVICE_STATE="enabled"
 	fi		
 }
