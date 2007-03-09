@@ -1,5 +1,5 @@
 GARNAME = cadaver
-GARVERSION = 0.22.3
+GARVERSION = 0.22.5
 CATEGORIES = net
 
 DESCRIPTION = WebDAV commandline tool
