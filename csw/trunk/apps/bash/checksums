@@ -4,7 +4,7 @@
 bcc9760316385d49ff31c2ed72f4be4a  download/CSWbash.postinstall
 589297e4f9a43d0c82632e99423db7ef  download/CSWbash.postremove
 573b8784f4f5f70bb86196a72b0979b6  download/CSWbash.depend
-abbc54ab98de0acdf1114653f1d7e498  download/changelog.CSW
+b6b39b6df394885db7dddef4f3266cdb  download/changelog.CSW
 d8e10c754f477e3f3a581af566b89301  download/bash32-001.patch
 d38a5288b2f0ea6c9ac76b66cc74ef7d  download/bash32-002.patch
 0b90d37911827d8cb95f3b4353cc225e  download/bash32-003.patch
@@ -14,3 +14,4 @@ d38a5288b2f0ea6c9ac76b66cc74ef7d  download/bash32-002.patch
 dcd0cc5d801607827f7c851e72b0eabc  download/bash32-007.patch
 bb3c7dd11198c0ab93d0e960bebf6256  download/bash32-008.patch
 434a6f29b0ca5f1ab784b2437ae8eaed  download/bash32-009.patch
+2efff04dd246fcf63bd4b99f77c9a081  download/bash32-010.patch
