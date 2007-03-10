@@ -23,7 +23,7 @@ PATCHFILES += requestrec.diff
 MODDIST  = $(GARNAME)-$(GARVERSION).tar.gz
 DEPENDS += cpan/Apache-Test
 DEPENDS += cpan/ExtUtils-XSBuilder
-#DEPENDS += cpan/mod_perl2
+DEPENDS += cpan/mod_perl2
 
 AP2_ROOT = $(prefix)/apache2
 
