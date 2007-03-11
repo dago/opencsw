@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://utopia.knoware.nl/~hlub/uck/rlwrap/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWrlwrap,depend prototpe)
+DISTFILES += $(call admfiles,CSWrlwrap,depend prototype)
 DISTFILES += changelog.CSW
 
 CONFIGURE_ARGS = $(DIRPATHS)

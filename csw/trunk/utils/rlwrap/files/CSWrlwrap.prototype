@@ -1,5 +1,4 @@
 f none /opt/csw/bin/rlwrap 0755 root bin
-d none /opt/csw/share/doc 0644 root bin
 f none /opt/csw/share/doc/rlwrap/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/rlwrap/AUTHORS 0644 root bin
 f none /opt/csw/share/doc/rlwrap/BUGS 0644 root bin
