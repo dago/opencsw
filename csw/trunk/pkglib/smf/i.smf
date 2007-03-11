@@ -31,7 +31,7 @@ while read SRC DEST; do
 
     # the .xml file is the manifest file
     if [ "$EXT" = "xml" ]; then
-        chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import "$DEST"
+        /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg import "$DEST"
     fi
 done
 

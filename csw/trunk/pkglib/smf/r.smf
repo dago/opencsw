@@ -25,11 +25,11 @@ fi
 while read DEST; do
     EXT="`/usr/bin/echo $DEST | /usr/bin/awk -F. '{ print $(NF) }'`"
     if [ "$EXT" = "xml" ]; then
-        for FRMI in `chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$DEST"`; do
-            chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg delete "$FRMI" >/dev/null 2>&1
+        for FRMI in `/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$DEST"`; do
+            /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg delete "$FRMI" >/dev/null 2>&1
         done
     fi
-        if [ ! -d "$DEST" ]; then
+    if [ ! -d "$DEST" ]; then
         "$BASEDIR/usr/bin/rm" "$DEST" || exit 2
     fi
 done

@@ -15,7 +15,7 @@
 # returns the list of frmi defined in a given manifest file
 get_fmri_list ()
 {
-    chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$1" | awk -F: ' NF > 2 { print $0 }'
+    /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$1" | awk -F: ' NF > 2 { print $0 }'
 }
 
 
@@ -32,20 +32,6 @@ load_smf_service_state ()
         return 0
     fi
     return 1
-}
-
-
-# retrieve the previous state of a service
-load_init_service_state ()
-{
-    _INIT_FILE="$1"
-    SERVICE_STATE="disabled"
-
-    _INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
-    # we just search for any startup script in runlevels
-    if [ -n "`/usr/bin/find /etc/rc[S0-6].d -follow -inum \"$_INUM\" -name \"S??*\"`" ]; then
-        SERVICE_STATE="enabled"
-    fi
 }
 
 
@@ -102,9 +88,9 @@ if [ "$SMF" = "yes" ]; then
             done
 
             if [ "$SERVICE_STATE" = "enabled" ]; then
-                chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm enable "$FMRI" >/dev/null 2>&1
+                /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm enable "$FMRI" >/dev/null 2>&1
             else
-                chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI" >/dev/null 2>&1
+                /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI" >/dev/null 2>&1
             fi
         done
     done
@@ -112,21 +98,20 @@ if [ "$SMF" = "yes" ]; then
     rm -f "$STATE_FILE"
 
 else
+    # with init scripts, we don't save/restore the state
+    # This behaviour was refused by Phil Brown
     for FILE in $INIT_FILES; do
-        load_init_service_state "$FILE"
-        if [ "$SERVICE_STATE" = "enabled" ]; then
-            if get_autoenable; then
-                if [ "$CAN_BE_AUTOENABLED" != "no" ]; then
-                    # we copy the service configuration file to be able 
-                    # to enable the service
-                    for CONF_FILE in $SERVICE_CONF_FILES; do
-                        if [ ! -f $CONF_FILE ]; then
-                            cp ${CONF_FILE}.CSW $CONF_FILE
-                        fi
-                    done
-                fi
-                chroot "$PKG_INSTALL_ROOT" "$FILE" start
+	if get_autoenable; then
+            if [ "$CAN_BE_AUTOENABLED" != "no" ]; then
+                # we copy the service configuration file to be able 
+                # to enable the service
+                for CONF_FILE in $SERVICE_CONF_FILES; do
+                    if [ ! -f $CONF_FILE ]; then
+                        cp ${CONF_FILE}.CSW $CONF_FILE
+                    fi
+                done
             fi
+            /usr/sbin/chroot "$PKG_INSTALL_ROOT" "$FILE" start
         fi
     done
 
