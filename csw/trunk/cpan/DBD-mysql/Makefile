@@ -1,7 +1,7 @@
 GARNAME = DBD-mysql
-GARVERSION = 2.9008
+GARVERSION = 4.003
 CATEGORIES = cpan
-AUTHOR = RUDY
+AUTHOR = CAPTTOFU
 
 DESCRIPTION = MySQL driver for the Perl5 Database Interface (DBI)
 define BLURB

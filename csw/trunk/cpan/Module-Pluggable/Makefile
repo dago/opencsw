@@ -1,5 +1,5 @@
 GARNAME = Module-Pluggable
-GARVERSION = 3.1
+GARVERSION = 3.5
 CATEGORIES = cpan
 AUTHOR = SIMONW
 

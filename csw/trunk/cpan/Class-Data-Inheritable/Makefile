@@ -1,7 +1,7 @@
 GARNAME = Class-Data-Inheritable
-GARVERSION = 0.02
+GARVERSION = 0.06
 CATEGORIES = cpan
-AUTHOR = MSCHWERN
+AUTHOR = TMTM
 
 DESCRIPTION = inheritable, overridable class data
 define BLURB
@@ -11,6 +11,6 @@ define BLURB
   and can be overriden.
 endef
 
-DISTFILES += CSWpmclsdtainherit.gspec
+DISTFILES += $(call admfiles,CSWpmclsdtainherit,)
 
 include ../category.mk
