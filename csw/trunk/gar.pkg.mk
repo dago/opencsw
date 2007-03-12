@@ -90,7 +90,7 @@ remove-timestamp:
 
 # package - Use the mkpackage utility to create Solaris packages
 POST_INSTALL_TARGETS += pre-package package-create post-package 
-POST_INSTALL_TARGETS += package-restore-la
+#POST_INSTALL_TARGETS += package-restore-la
 
 # check package, unless ENABLE_CHECK = 0
 ifneq ($(ENABLE_CHECK),0)
@@ -187,9 +187,9 @@ dependb:
              --add $(DEPENDS)
 
 # Replace original .la files
-package-restore-la:
-	@echo " ==> Restoring original libtool .la files"
-	restorer $(DESTDIR)
+#package-restore-la:
+#	@echo " ==> Restoring original libtool .la files"
+#	restorer $(DESTDIR)
 
 pkgenv:
 	@$(PKG_ENV) env
