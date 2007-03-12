@@ -160,7 +160,6 @@ f none /opt/csw/lib/python/compiler/transformer.py 0644 root bin
 f none /opt/csw/lib/python/compiler/visitor.py 0644 root bin
 d none /opt/csw/lib/python/config 0755 root bin
 f none /opt/csw/lib/python/config/Makefile 0644 root bin
-f none /opt/csw/lib/python/config/Makefile~ 0644 root bin
 f none /opt/csw/lib/python/config/Setup 0644 root bin
 f none /opt/csw/lib/python/config/Setup.config 0644 root bin
 f none /opt/csw/lib/python/config/Setup.local 0644 root bin

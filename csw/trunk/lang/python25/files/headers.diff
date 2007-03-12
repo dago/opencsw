@@ -1,0 +1,15 @@
+diff --speed-large-files --minimal -Nru Python-2.5.orig/Include/pyport.h Python-2.5/Include/pyport.h
+--- Python-2.5.orig/Include/pyport.h	2006-06-10 08:23:46.000000000 -0400
++++ Python-2.5/Include/pyport.h	2007-03-12 14:56:55.002460000 -0400
+@@ -492,11 +492,6 @@
+ in platform-specific #ifdefs.
+ **************************************************************************/
+ 
+-#ifdef SOLARIS
+-/* Unchecked */
+-extern int gethostname(char *, int);
+-#endif
+-
+ #ifdef __BEOS__
+ /* Unchecked */
+ /* It's in the libs, but not the headers... - [cjh] */

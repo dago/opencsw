@@ -34,6 +34,9 @@ PATCHFILES += faqwiz.diff
 # Install to lib/python instead of lib/python$(VERSION)
 PATCHFILES += instdir.diff
 
+# Overrule bad decision about what Solaris headers provide
+PATCHFILES += headers.diff
+
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DEPENDS += lib/expat
