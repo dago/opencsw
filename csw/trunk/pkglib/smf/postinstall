@@ -38,7 +38,7 @@ load_smf_service_state ()
 # retrieve the autoenable value for the given service
 get_autoenable ()
 {
-    SERVICE_STATE="enabled"
+    SERVICE_STATE=""
 
     for _FILE in /opt/csw/etc/csw.conf /etc/opt/csw/csw.conf; do
         if [ -f "$PKG_INSTALL_ROOT/$_FILE" ]; then
