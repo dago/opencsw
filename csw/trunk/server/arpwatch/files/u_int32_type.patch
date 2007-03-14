@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru arpwatch-2.1a15.orig/arpwatch.h arpwatch-2.1a15/arpwatch.h
+--- arpwatch-2.1a15.orig/arpwatch.h	2000-09-30 19:40:55.000000000 -0400
++++ arpwatch-2.1a15/arpwatch.h	2007-03-13 19:09:59.643316000 -0400
+@@ -1,5 +1,7 @@
+ /* @(#) $Id: arpwatch.h,v 1.29 2000/09/30 23:40:49 leres Exp $ (LBL) */
+ 
++#include <net/ppp_defs.h>
++
+ #define ARPFILE "arp.dat"
+ #define ETHERCODES "ethercodes.dat"
+ #define CHECKPOINT (15*60)		/* Checkpoint time in seconds */

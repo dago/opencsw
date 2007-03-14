@@ -1,0 +1,10 @@
+cebfeb99c4a7c2a6cee2564770415fe7  download/arpwatch.tar.gz
+abb83636e05d9df605dbf236aadd3ac3  download/CSWarpwatch.gspec
+2aa9a97b195671e0a018ceb525916d82  download/CSWarpwatch.depend
+864b45bdb6e38dec395c403bb7244b27  download/CSWarpwatch.prototype
+eb8018dfbddffbc7ad53bbf31b910d45  download/cswarpwatch.xml
+d41d8cd98f00b204e9800998ecf8427e  download/svc-cswarpwatch
+c7ccf0bce6da21098b74c94d1d82d343  download/cswarpwatch
+957cf9e24219884d790bf91f15464795  download/u_int32_type.patch
+231dc35e1a1af3b928b4ac2912867412  download/no_root_build.patch
+5546bc85950f2a0e701fac9246ab70b5  download/file_location.patch
