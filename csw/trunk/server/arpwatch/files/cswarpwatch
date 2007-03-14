@@ -13,6 +13,8 @@ if [ -f /etc/default/arpwatch ]; then
         . /etc/default/arpwatch
 fi
 
+[ -f /opt/csw/etc/arpwatch.conf ] || exit 0
+
 check_proc ()
 {
     if [ -f $1 ]; then

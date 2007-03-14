@@ -1,6 +1,8 @@
 %var            bitname arpwatch
 %var            pkgname CSWarpwatch
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%pkginfo:merge
+SERVICE_CONF_FILES=/opt/csw/etc/arpwatch.conf
 %var            initname cswarpwatch
 %var            INIT_KILL_PRIO 99
 %var            INIT_START_PRIO 10

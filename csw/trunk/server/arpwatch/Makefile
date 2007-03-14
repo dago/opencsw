@@ -11,7 +11,7 @@ MASTER_SITES = ftp://ftp.ee.lbl.gov/
 DISTFILES = $(GARNAME).tar.gz
 DISTFILES += $(call admfiles,CSWarpwatch,depend prototype)
 # Smf/init stuffs
-DISTFILES += cswarpwatch.xml svc-cswarpwatch cswarpwatch
+DISTFILES += cswarpwatch.xml svc-cswarpwatch cswarpwatch arpwatch.conf
 
 # This patch add an system header include 
 # in arpwatch.h so u_int32 is defined
