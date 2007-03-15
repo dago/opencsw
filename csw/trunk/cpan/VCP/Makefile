@@ -16,7 +16,12 @@ MODDISTP  = $(GARNAME)-autrijus-snapshot-$(DISTVERSION)
 MODDIST   = $(MODDISTP).tar.gz
 WORKSRC   = $(WORKDIR)/$(MODDISTP)
 
-DEPENDS += cpan/Regexp-Shellish cpan/Text-Diff cpan/XML-AutoWriter
-DEPENDS += cpan/XML-Parser cpan/IPC-Run3 cpan/PodToHTML cpan/HTML-Tree
+DEPENDS += cpan/HTML-Tree
+DEPENDS += cpan/IPC-Run3
+DEPENDS += cpan/PodToHTML
+DEPENDS += cpan/Regexp-Shellish
+DEPENDS += cpan/Text-Diff
+DEPENDS += cpan/XML-AutoWriter
+DEPENDS += cpan/XML-Parser
 
 include ../category.mk

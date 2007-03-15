@@ -12,4 +12,8 @@ endef
 
 DISTFILES = $(call admfiles,CSWpmcompresszlib,depend prototype)
 
+DEPENDS += cpan/Compress-Raw-Zlib
+DEPENDS += cpan/IO-Compress-Base
+DEPENDS += cpan/IO-Compress-Zlib
+
 include ../category.mk
