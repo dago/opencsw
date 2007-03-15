@@ -6,7 +6,7 @@ de56d3571f4484284d106af158bffc38  download/CSWphp5_ext_enable.sh
 d50e24088861d202c3fd55b46a4eff0e  download/CSWphp5.gspec
 0c449ef4d355025352b7fa6dea5690e5  download/CSWphp5.prototype
 8ac034c99c76b1b393103e65b08e324f  download/CSWphp5.depend
-5b5e2a288168f6c4cc6c57cb85e8892c  download/CSWphp5.postinstall
+8139c9c02a2f62bac64041fdd0e90bf6  download/CSWphp5.postinstall
 883e5ee2553ce6a4d2436146636ff172  download/CSWphp5devel.gspec
 fc33d7400f33b45111865113f3dab2f4  download/CSWphp5devel.prototype
 3e8aaa03a833f54403cfa858ace2f22c  download/CSWphp5devel.depend
