@@ -1,5 +1,6 @@
 %var            bitname pm_prmscheck
 %var            pkgname CSWpmprmscheck
+%var            arch all
 %include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright
 This module is copyright (c) 2002 Jos Boumans <kane@cpan.org>. All

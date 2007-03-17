@@ -19,9 +19,9 @@ DEPENDS += cpan/Class-Accessor
 DEPENDS += cpan/File-chdir
 
 # VCP Support (disabled for now)
-DEPENDS += cpan/VCP
-DEPENDS += cpan/Data-UUID
-#PATCHFILES += novcp.diff
+#DEPENDS += cpan/VCP
+#DEPENDS += cpan/Data-UUID
+PATCHFILES += novcp.diff
 
 # Test suite takes >20m, 0.67/SPARC
 TEST_SCRIPTS =

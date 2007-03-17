@@ -1,7 +1,7 @@
 GARNAME = Pod-Simple
-GARVERSION = 3.02
+GARVERSION = 3.05
 CATEGORIES = cpan
-AUTHOR = SBURKE
+AUTHOR = ARANDAL
 
 DESCRIPTION = framework for parsing Pod
 define BLURB
