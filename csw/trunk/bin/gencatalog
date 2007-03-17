@@ -29,4 +29,5 @@ done
 
 mv catalog.new catalog
 mv descriptions.new descriptions
+rm -f catalog.old descriptions.old
 
