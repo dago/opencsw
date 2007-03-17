@@ -2,6 +2,7 @@ apps/bash|CSWbash|bash - A sh-compatible command language interpreter
 apps/bugzilla|CSWbugzilla|bugzilla - Bugzilla defect tracking system.
 apps/firefox|CSWfirefox|firefox - Firefox Community Edition web browser
 apps/flphoto|CSWflphoto|flphoto - basic image management and display program based on the FLTK toolkit
+apps/freeciv|CSWfreeciv|freeciv - a free turn-based multiplayer strategy game (gcc3)
 apps/gtkpod|CSWgtkpod|gtkpod - gtk2 application for Apple iPods
 apps/kdesvn|CSWkdesvn|kdesvn - A Subversion client for KDE
 apps/kile|CSWkile|kile - An integrated LaTeX environment
@@ -19,6 +20,7 @@ cpan/Apache-PAR|CSWpmapachepar|pm_apachepar - PAR extension for mod_perl
 cpan/Apache-Session|CSWpmapachesess|pm_apachesess - a persistence framework for session data
 cpan/Apache-Template|CSWpmapachetmpl|pm_apachetmpl - apache/mod_perl interface to the Template Toolkit
 cpan/Apache-Test|CSWpmapachetst|pm_apachetst - Test.pm wrapper with helpers for testing Apache
+cpan/App-CLI|CSWpmappcli|pm_appcli - Dispatcher module for command line interface programs
 cpan/AppConfig|CSWpmappconfig|pm_appconfig - Perl5 module for configuration files and command line arguments.
 cpan/Archive-Extract|CSWpmarchiveextract|pm_archiveextract - A generic archive extracting mechanism
 cpan/Archive-SelfExtract|CSWpmarchivesfx|pm_archivesfx - bundle compressed archives with Perl code
@@ -64,6 +66,7 @@ cpan/Class-ReturnValue|CSWpmclassretval|pm_classretval - a return-value object.
 cpan/Class-Trigger|CSWpmclasstrigger|pm_classtrigger - mixin to add / call inheritable triggers
 cpan/Class-WhiteHole|CSWpmclasswhitehole|pm_classwhitehole - base class to treat unhandled method calls as errors
 cpan/Clone|CSWpmclone|pm_clone - recursively copy Perl datatypes
+cpan/Compress-Raw-Zlib|CSWpmcomprawzlib|pm_comprawzlib - Low-Level Interface to zlib compression library
 cpan/Compress-Zlib|CSWpmcompresszlib|pm_compresszlib - Interface to zlib compression library
 cpan/Config-IniFiles|CSWpmcfginifls|pm_configinifiles - a module for reading .ini-style configuration files.
 cpan/Convert-ASCII-Armour|CSWpmconvertaarm|pm_convertasciiarmour - convert binary octets into ASCII armoured messages.
@@ -133,7 +136,7 @@ cpan/Event-Lib|CSWpmeventlib|pm_eventlib - Perl extentions for event-based progr
 cpan/Event|CSWpmevent|pm_event - event loop processing
 cpan/Exception-Class-DBI|CSWpmexceptclsdbi|pm_exceptclsdbi - DBI exception objects
 cpan/Exception-Class|CSWpmexceptcls|pm_exceptcls - declare real exception classes in Perl
-cpan/ExtUtils-AutoInstall|CSWpmextutilsautoinst|pm_extutilsautoinst - Automatic install of dependencies via CPAN
+cpan/ExtUtils-AutoInstall|CSWpmextutautoinst|pm_extutautoinst - Automatic install of dependencies via CPAN
 cpan/ExtUtils-CBuilder|CSWpmextutcbuilder|pm_extutcbuilder - compile and link C code for Perl modules
 cpan/ExtUtils-Depends|CSWpmextutilsdepends|pm_extutilsdepends - easily build XS extensions that depend on XS extensions
 cpan/ExtUtils-F77|CSWpmextutilsf77|pm_extutilsf77 - simple interface to F77 libs
@@ -187,6 +190,8 @@ cpan/HTTP-Body|CSWpmhttpbody|pm_httpbody - HTTP Body Parser
 cpan/HTTP-DAV|CSWpmhttpdav|pm_httpdav - A WebDAV client library for Perl5
 cpan/Heap|CSWpmheap|pm_heap - extensions for keeping data partially sorted
 cpan/I18N-LangTags|CSWpmi18nlangtags|pm_i18nlangtags - functions for dealing with RFC3066-style language tags
+cpan/IO-Compress-Base|CSWpmiocompbase|pm_iocompbase - Base Class for IO::Compress modules
+cpan/IO-Compress-Zlib|CSWpmiocompzlib|pm_iocompzlib - Read and write gzip and zip files/buffers.
 cpan/IO-Digest|CSWpmiodigest|pm_iodigest - calculate digests while reading or writing
 cpan/IO-Pager|CSWpmiopager|pm_iopager - Select a pager, optionally pipe it output if destination is a TTY
 cpan/IO-Socket-SSL|CSWpmiosocketssl|pm_iosocketssl - nearly transparent SSL encapsulation for IO::Socket::INET.
@@ -205,6 +210,7 @@ cpan/Image-Info|CSWpmimageinfo|pm_imageinfo - extract meta information from imag
 cpan/Image-Size|CSWpmimagesize|pm_imagesize - read the dimensions of an image in several popular formats
 cpan/Inline|CSWpminline|pm_inline - write Perl subroutines in other programming languages.
 cpan/Jcode|CSWpmjcode|pm_jcode - japanese charset handler
+cpan/List-MoreUtils|CSWpmlistmoreut|pm_listmoreut - Provide the stuff missing in List::Util
 cpan/Locale-Maketext-Fuzzy|CSWpmlclemktxtfuz|pm_lclemktxtfuz - maketext from already interpolated strings
 cpan/Locale-Maketext-Lexicon|CSWpmlclemktxtlex|pm_lclemktxtlex - use other catalog formats in Maketext
 cpan/Locale-Maketext-Simple|CSWpmlclemktxtsimple|pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
@@ -254,6 +260,7 @@ cpan/Params-Validate|CSWpmprmsvldt|pm_prmsvldt - validate method/function parame
 cpan/Parse-RecDescent|CSWpmparserecdescent|pm_parserecdescent - %var bitname pm_parserecdescent
 cpan/Parse-Syslog|CSWpmparsesyslog|pm_parsesyslog - parse Unix syslog files
 cpan/PatchReader|CSWpmpatchreader|pm_patchreader - Utilities to read and manipulate patches and CVS
+cpan/Path-Class|CSWpmpathclass|pm_pathclass - Cross-platform path specification manipulation
 cpan/Perl-Tidy|CSWperltidy|perltidy - Indent and reformat Perl scripts.
 cpan/PerlIO-eol|CSWpmperlioeol|pm_perlioeol - PerlIO layer for normalizing line endings
 cpan/PerlIO-via-dynamic|CSWpmperlioviadyn|pm_perlioviadyn - dynamic PerlIO layers
@@ -357,6 +364,7 @@ cpan/XML-Simple|CSWpmxmlsimple|pm_xmlsimple - easy API for maintaining XML
 cpan/XML-Smart|CSWpmxmlsmart|pm_xmlsmart - a smart, easy and powerful way to access/create XML files/data.
 cpan/XML-Twig|CSWpmxmltwig|pm_xmltwig - a module for processing huge XML documents in tree mode.
 cpan/XML-XPath|CSWpmxmlxpath|pm_xmlxpath - a set of modules for parsing and evaluating XPath statements
+cpan/YAML-Syck|CSWpmyamlsyck|pm_yamlsyck - Fast, lightweight YAML loader and dumper
 cpan/YAML|CSWpmyaml|pm_yaml - YAML Aint Markup Language
 cpan/libapreq2|CSWpmapreq2|pm_apreq2 - libapreq2 Perl language bindings
 cpan/libapreq2|CSWap2modapreq2|ap2_modapreq2 - libapreq2 filter module for Apache 2
@@ -624,16 +632,25 @@ utils/vim|CSWvim|vim - Vi IMproved
 utils/vim|CSWvimrt|vimrt - vim shared runtime and documentation
 utils/xrestop|CSWxrestop|xrestop - 'top' like staticstics for X11 server side resource usage
 xfce/appfinder|CSWxfceappfinder|xfce_appfinder - Xfce Application Finder
+xfce/desktop|CSWxfcedesktop|xfce_desktop - Xfce Desktop Manager
+xfce/devtools|CSWxfcedevtools|xfce_devtools - Xfce Development Tools
 xfce/exo|CSWxfceexo|xfce_exo - Xfce Extensions Library 
-xfce/gtk-xfce-engine|CSWgtkxfceengine|gtkxfceengine - Xfce GTK theme engine 
+xfce/gtk-xfce-engine|CSWxfceengine|xfce_engine - Xfce GTK theme engine 
 xfce/icon-theme|CSWxfceicontheme|xfce_icon_theme - Xfce Icon Theme
 xfce/libxfce4mcs|CSWlibxfce4mcs|libxfce4mcs - Xfce Settings Manager Library 
 xfce/libxfce4util|CSWlibxfce4util|libxfce4util - Xfce Utilities Library 
 xfce/libxfcegui4|CSWlibxfcegui4|libxfcegui4 - Xfce Widget Library 
 xfce/mcs-manager|CSWxfcemcsmanager|xfce_mcs_manager - Xfce Settings Manager 
 xfce/mcs-plugins|CSWxfcemcsplugins|xfce_mcs_plugins - Xfce Settings Manager Plugins
+xfce/mixer|CSWxfcemixer|xfce_mixer - Xfce Volume Control
+xfce/mousepad|CSWxfcemousepad|xfce_mousepad - Xfce Mousepad Text Editor
+xfce/orage|CSWxfceorage|xfce_orage - Xfce Orage Calendar
 xfce/panel|CSWxfcepanel|xfce_panel - Xfce Panel
+xfce/print|CSWxfceprint|xfce_print - Xfce Printing Helper
+xfce/session|CSWxfcesession|xfce_session - Xfce Session Manager
+xfce/terminal|CSWxfceterminal|xfce_terminal - Xfce Terminal Emulator
 xfce/utils|CSWxfceutils|xfce_utils - Xfce Utilities
+xfce/xfwm4-themes|CSWxfcexfwm4themes|xfce_xfwm4_themes - Xfce Window Manager Themes
 xfce/xfwm4|CSWxfcexfwm4|xfce_xfwm4 - Xfce Window Manager 
 xtra/bash_completion|CSWbashcmplt|bash_completion - Programmable completion for bash
 xtra/gnulinks|CSWgnulinks|gnulinks - Creates native symlinks for GNU tools in /opt/csw/gnu
