@@ -3,6 +3,5 @@ P CSWapache2 apache2 - Apache 2.2 web server
 P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
 P CSWexpat expat -  XML Parser Toolkit
 P CSWiconv libiconv - GNU iconv library
-P CSWmodperl mod_perl - Persistent Perl interpreter for Apache 1.3.x
 P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
 P CSWperl perl - A high-level, general-purpose programming language.
