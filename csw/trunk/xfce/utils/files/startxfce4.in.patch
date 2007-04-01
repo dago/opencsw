@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru xfce-utils-4.4.0.orig/scripts/startxfce4.in xfce-utils-4.4.0/scripts/startxfce4.in
+--- xfce-utils-4.4.0.orig/scripts/startxfce4.in	2007-01-20 18:02:51.000000000 +0100
++++ xfce-utils-4.4.0/scripts/startxfce4.in	2007-04-01 19:48:08.133216800 +0200
+@@ -61,7 +61,7 @@
+   SERVERRC="/etc/X11/xinit/xserverrc $SERVERRC"
+ fi
+ 
+-if ! test x"$SERVERRC" = x""
++if test ! x"$SERVERRC" = x""
+ then
+   SERVERRC="-- $SERVERRC"
+ fi
