@@ -23,5 +23,5 @@ export CFLAGS CXXFLAGS LDFLAGS
 
 include ../category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests
+CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --with-xml=libxml
 
