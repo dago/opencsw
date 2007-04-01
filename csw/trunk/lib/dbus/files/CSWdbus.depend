@@ -1,2 +1,5 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWexpat  expat -  XML Parser Toolkit
+P CSWcommon      common - common files and dirs for CSW packages
+P CSWiconv       libiconv - GNU iconv library
+P CSWlibxml2     libxml2 - XML Parser Library
+P CSWzlib        zlib - Zlib Data Compression Library
+
