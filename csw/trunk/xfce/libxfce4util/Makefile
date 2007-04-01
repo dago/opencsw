@@ -9,4 +9,6 @@ endef
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibxfce4util, depend)
 
+PATCHFILES = debug.h.patch
+
 include ../category.mk

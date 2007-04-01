@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru libxfce4util-4.4.0.orig/libxfce4util/debug.h libxfce4util-4.4.0/libxfce4util/debug.h
+--- libxfce4util-4.4.0.orig/libxfce4util/debug.h	2007-01-20 10:55:57.000000000 +0100
++++ libxfce4util-4.4.0/libxfce4util/debug.h	2007-04-01 23:20:28.351706800 +0200
+@@ -37,6 +37,8 @@
+ #define __DBG_FUNC__    __func__
+ #elif defined(__GNUC__) && __GNUC__ >= 3
+ #define __DBG_FUNC__	__FUNCTION__
++#elif defined(__SVR4) && defined(__sun)
++#define __DBG_FUNC__	__func__
+ #else
+ #define __DBG_FUNC__    "??"
+ #endif
