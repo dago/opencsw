@@ -12,7 +12,9 @@ endef
 MASTER_SITES  = http://dbus.freedesktop.org/releases/dbus/
 DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz 
 PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES    += $(call admfiles,CSWdbus, depend )
+DISTFILES    += CSWdbus.gspec CSWdbus.prototype CSWdbus.depend
+DISTFILES    += CSWlibdbus.gspec CSWlibdbus.prototype CSWlibdbus.depend
+DISTFILES    += CSWlibdbusdevel.gspec CSWlibdbusdevel.prototype CSWlibdbusdevel.depend
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
