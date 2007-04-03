@@ -7,8 +7,14 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibxfce4util, depend)
+DISTFILES += CSWlibxfce4util.depend CSWlibxfce4util.gspec CSWlibxfce4util.prototype
+DISTFILES += CSWlibxfce4utildoc.depend CSWlibxfce4utildoc.gspec CSWlibxfce4utildoc.prototype
+DISTFILES += CSWlibxfce4utildevel.depend CSWlibxfce4utildevel.gspec CSWlibxfce4utildevel.prototype
 
 PATCHFILES = debug.h.patch
 
 include ../category.mk
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | grep ELF | grep -e 'executable' -e 'dynamic lib' | grep 'not stripped' && strip {}"  \; )
+
