@@ -1,0 +1,44 @@
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libxfce4mcs-client.la 0755 root bin
+f none /opt/csw/lib/libxfce4mcs-client.so.3.0.4 0755 root bin
+s none /opt/csw/lib/libxfce4mcs-client.so.3=libxfce4mcs-client.so.3.0.4
+s none /opt/csw/lib/libxfce4mcs-client.so=libxfce4mcs-client.so.3.0.4
+f none /opt/csw/lib/libxfce4mcs-manager.la 0755 root bin
+f none /opt/csw/lib/libxfce4mcs-manager.so.3.0.4 0755 root bin
+s none /opt/csw/lib/libxfce4mcs-manager.so.3=libxfce4mcs-manager.so.3.0.4
+s none /opt/csw/lib/libxfce4mcs-manager.so=libxfce4mcs-manager.so.3.0.4
+d none /opt/csw/share/locale ? ? ?
+d none /opt/csw/share/locale/ca ? ? ?
+d none /opt/csw/share/locale/ca/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/cs ? ? ?
+d none /opt/csw/share/locale/cs/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/de ? ? ?
+d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/fi ? ? ?
+d none /opt/csw/share/locale/fi/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/fr ? ? ?
+d none /opt/csw/share/locale/fr/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/gl ? ? ?
+d none /opt/csw/share/locale/gl/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/he ? ? ?
+d none /opt/csw/share/locale/he/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/ja ? ? ?
+d none /opt/csw/share/locale/ja/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/ko ? ? ?
+d none /opt/csw/share/locale/ko/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/lt ? ? ?
+d none /opt/csw/share/locale/lt/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/nl ? ? ?
+d none /opt/csw/share/locale/nl/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/pl ? ? ?
+d none /opt/csw/share/locale/pl/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/pt_BR ? ? ?
+d none /opt/csw/share/locale/pt_BR/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/uk ? ? ?
+d none /opt/csw/share/locale/uk/LC_MESSAGES ? ? ?
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/var ? ? ?
+i copyright=CSWlibxfce4mcs.copyright
+i depend=CSWlibxfce4mcs.depend
+i pkginfo=CSWlibxfce4mcs.pkginfo
