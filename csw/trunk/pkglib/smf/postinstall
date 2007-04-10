@@ -76,7 +76,7 @@ if [ "$SMF" = "yes" ]; then
             # no previous service state, so we rely on autoenable
             # configuration variable, if this service can be autoenabled !
             if [ "$?" -ne 0 ] && [ "$CAN_BE_AUTOENABLED" != "no" ]; then
-                get_autoenable
+                get_autoenable $SERVICE_NAME
             fi    
 
             # we copy the configuration file to be able 
@@ -101,7 +101,7 @@ else
     # with init scripts, we don't save/restore the state
     # This behaviour was refused by Phil Brown
     for FILE in $INIT_FILES; do
-	if get_autoenable; then
+	if get_autoenable $SERVICE_NAME; then
             if [ "$CAN_BE_AUTOENABLED" != "no" ]; then
                 # we copy the service configuration file to be able 
                 # to enable the service
