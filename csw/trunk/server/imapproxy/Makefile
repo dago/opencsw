@@ -15,7 +15,7 @@ MASTER_SITES = http://www.imapproxy.org/downloads/
 DISTFILES  = up-$(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWimapproxy,prototype,depend)
 DISTFILES += imapproxy.conf
-DISTFILES += changelog.CSW
+DISTFILES += changelog.CSW README.CSW
 # init and smf stuffs
 DISTFILES += cswimapproxy cswimapproxy.xml svc-cswimapproxy
 DISTFILES += i.smf r.smf
