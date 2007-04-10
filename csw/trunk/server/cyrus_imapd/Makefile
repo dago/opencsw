@@ -1,5 +1,5 @@
 GARNAME = cyrus_imapd
-GARVERSION = 2.3.7
+GARVERSION = 2.3.8
 CATEGORIES = server
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
@@ -37,7 +37,7 @@ SPKG_CLASSES = none services conf
 
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
-PATCHFILES = cyrus-imapd-2.3.7-autocreate-0.10-1.diff cyrus-imapd-2.3.3-autosieve-0.6.0.diff 
+PATCHFILES = cyrus-imapd-2.3.8-autocreate-0.10-0.diff cyrus-imapd-2.3.8-autosieve-0.6.0.diff 
  
 # UPDATE: not necessary anymore, integrated upstream
 # This patch adds a new option which allows cyrus to
