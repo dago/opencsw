@@ -6,6 +6,7 @@
 %cvar   INIT_RC3 S
 %cvar   INIT_RCS K
 %cvar   CAN_BE_AUTOENABLED yes
+%cvar   SERVICE_CONF_FILES 
 %prototype:merge
 i i.smf=%{PKGLIB}/smf/i.smf
 i r.smf=%{PKGLIB}/smf/r.smf
@@ -34,6 +35,7 @@ f smf /opt/csw/lib/svc/method/svc-%{initname}=svc-%{initname} 0755 root bin
 MANIFEST_FILES="/opt/csw/var/svc/manifest/site/%{initname}.xml"
 INIT_FILES="/etc/init.d/%{initname}"
 CAN_BE_AUTOENABLED="%{CAN_BE_AUTOENABLED}"
+SERVICE_CONF_FILES="%{SERVICE_CONF_FILES}"
 %checkinstall:merge url file://%{PKGLIB}/smf/checkinstall
 %postinstall:merge  url file://%{PKGLIB}/smf/postinstall
 %preremove:merge    url file://%{PKGLIB}/smf/preremove
