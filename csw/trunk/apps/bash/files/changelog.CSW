@@ -1,3 +1,10 @@
+bash (3.2,REV=2007.04.10) unstable
+
+  * Added bash patches bash32-011, bash32-012, bash32-013, bash32-014 and
+  bash32-015.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 10 Apr 2007 21:02:35 +0200
+
 bash (3.2,REV=2007.03.10) unstable
 
   * Added bash patches bash32-010
