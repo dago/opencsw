@@ -1,5 +1,5 @@
 GARNAME = lftp
-GARVERSION = 3.5.9
+GARVERSION = 3.5.10
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
@@ -18,9 +18,12 @@ SPKG_CLASSES = none conf
 
 # correct some bugs preventing compilation
 # with sun cc
-# PATCHFILES = sun_cc_compilation_fix.patch
-PATCHFILES += sun_cc_bool_compilation_fix.patch
-#PATCHFILES += MakeRef_macro.patch
+#PATCHFILES += sun_cc_bool_compilation_fix.patch
+# this patch need autoconf >= 2.60 not available
+# on blastave machines so we will regenerate 
+# configure on another machine and copy it during
+# the pre-configure.
+DISTFILES += configure config.h.in
 
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
@@ -46,6 +49,10 @@ CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 TEST_SCRIPTS =
 
 include ../category.mk
+
+pre-configure: 
+	cp $(WORKDIR)/configure $(WORKSRC)/configure
+	cp $(WORKDIR)/config.h.in $(WORKSRC)/include/config.h.in
 
 post-install:
 	# po are not installed correctly (I should find a better fix)

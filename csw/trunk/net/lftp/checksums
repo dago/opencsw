@@ -1,8 +1,9 @@
-9f82eb227eec414a8cd5cec2df8fcbaa  download/lftp-3.5.9.tar.gz
+8ba21d5264224136eb3ab562a3150a3e  download/lftp-3.5.10.tar.gz
 47fdb80e4575a9a70d69b146974620df  download/CSWlftp.gspec
 43bda4e4c23afc1fe8b437f01deb06fa  download/CSWlftp.prototype
 851ed4dbf957a38f9c957dd1e85d86d2  download/CSWlftp.depend
-e94038841f7a75c2593454d7be385eb8  download/changelog.CSW
+28830a95bae64e2e2b44ed9e54ff1ba3  download/changelog.CSW
 c206032b351355f90cb84002351c5157  download/i.conf
 51abe2144219c1af4c79c2e8b7e81cb9  download/r.conf
-54924e0b5b2f46fc2d3445b1a1e8f904  download/sun_cc_bool_compilation_fix.patch
+ae980065f0d8729b307bcf806b7a643c  download/configure
+689fa959dca279f054356f2871686056  download/config.h.in
