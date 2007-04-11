@@ -1,15 +1,8 @@
 i i.conf
 i r.conf
-i i.smf
-i r.smf
 i i.services
 i r.services
 e services /etc/inet/services
-f init /etc/init.d/cswcyrus 0744 root sys
-l init /etc/rc0.d/K10cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
-l init /etc/rc1.d/K10cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
-l init /etc/rc2.d/K10cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
-l init /etc/rc3.d/S90cswcyrus=../../etc/init.d/cswcyrus 0744 root sys
 d none /opt/csw/etc/cyrus 0755 root bin
 e conf /opt/csw/etc/cyrus/imapd.conf 0640 root mail
 f none /opt/csw/etc/cyrus/cyrus.conf.CSW 0640 root mail
@@ -306,9 +299,3 @@ f none /opt/csw/share/doc/cyrus_imapd/text/sieve 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/text/specs 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/README.CSW 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/changelog.CSW 0644 root bin
-d smf /opt/csw/var/svc 0755 root bin
-d smf /opt/csw/var/svc/manifest 0755 root bin
-d smf /opt/csw/var/svc/manifest/network 0755 root bin
-e smf /opt/csw/var/svc/manifest/network/cyrus_imapd.xml=cyrus_imapd.xml 0644 root bin
-d smf /opt/csw/lib/svc 0755 root bin
-d smf /opt/csw/lib/svc/method 0755 root bin

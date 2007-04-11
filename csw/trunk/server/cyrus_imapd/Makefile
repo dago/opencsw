@@ -20,8 +20,8 @@ DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend checkinstall)
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
 DISTFILES += i.services r.services services
-DISTFILES += i.smf r.smf i.conf r.conf
-DISTFILES += cswcyrus cyrus_imapd.xml
+DISTFILES += i.conf r.conf
+DISTFILES += cswcyrus cswcyrus.xml svc-cswcyrus
 DISTFILES += imapd.conf cyrus.conf
 
 DISTFILES += $(call admfiles,CSWpmcyrus,prototype depend)
@@ -132,14 +132,7 @@ post-install:
 
 	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
 	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
-	
-#	ginstall -D $(WORKDIR)/i.init $(DESTDIR)/i.init
-#	ginstall -D $(WORKDIR)/r.init $(DESTDIR)/r.init
-	ginstall -D $(WORKDIR)/i.smf $(DESTDIR)/i.smf
-	ginstall -D $(WORKDIR)/r.smf $(DESTDIR)/r.smf
 	ginstall -D $(WORKDIR)/cswcyrus $(DESTDIR)/etc/init.d/cswcyrus
-
-	#ginstall -D $(WORKDIR)/cyrus_imapd.xml $(DESTDIR)/$(prefix)/svc/manifest/network/cyrus_imapd.xml
 
 	# the services file containg cyrus service definition
 	ginstall -D $(WORKDIR)/i.services $(DESTDIR)/i.services

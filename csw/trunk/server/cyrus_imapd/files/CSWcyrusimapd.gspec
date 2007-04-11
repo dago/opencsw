@@ -2,10 +2,10 @@
 %var            pkgname CSWcyrusimapd
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYRIGHT
-%include        url file://%{CURDIR}/files/csw_smf
-%pkginfo
-MANIFEST_FILES="/opt/csw/var/svc/manifest/network/cyrus_imapd.xml"
-INIT_FILES="/etc/init.d/cswcyrus"
-SERVICE_CONF_FILES="/opt/csw/etc/cyrus/cyrus.conf"
-CAN_BE_AUTOENABLED="yes"
-
+%var            initname cswcyrus
+%var            INIT_KILL_PRIO 99
+%var            INIT_START_PRIO 10
+%var            CAN_BE_AUTOENABLED yes
+%var		SERVICE_CONF_FILES /opt/csw/etc/cyrus/cyrus.conf
+%var            SERVICE_NAME cyrus_imapd
+%include        url file://%{PKGLIB}/smf_enabled.gspec
