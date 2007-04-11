@@ -128,25 +128,11 @@ post-install:
 	( for PKG in cyrus_imapd cyrus_imapd_utils pm_cyrus; do \
 		ginstall -D $(WORKDIR)/$$PKG.changelog.CSW $(DESTDIR)/$(docdir)/$$PKG/changelog.CSW; \
 	  done )
-	ginstall -D $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/cyrus_imapd/README.CSW
-
-	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
-	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
-	ginstall -D $(WORKDIR)/cswcyrus $(DESTDIR)/etc/init.d/cswcyrus
-
-	# the services file containg cyrus service definition
-	ginstall -D $(WORKDIR)/i.services $(DESTDIR)/i.services
-	ginstall -D $(WORKDIR)/r.services $(DESTDIR)/r.services
-	ginstall -D $(WORKDIR)/services $(DESTDIR)/etc/inet/services
 
 	# we rename some tools with too generic names
 	ginstall -D $(DESTDIR)/$(sbindir)/mkimap $(DESTDIR)/$(sbindir)/mkdirs
 	( for FILE in mkdirs mknewsgroups dohash undohash rehash; do \
 		ginstall -D $(DESTDIR)/$(sbindir)/$$FILE $(DESTDIR)/$(sbindir)/cyrus-$$FILE; \
 	  done )
-	
-	# we install the default config files
-	ginstall -D $(WORKDIR)/imapd.conf $(DESTDIR)/$(sysconfdir)/cyrus/imapd.conf
-	ginstall -D $(WORKDIR)/cyrus.conf $(DESTDIR)/$(sysconfdir)/cyrus/cyrus.conf.CSW
 	@$(MAKECOOKIE)
 	

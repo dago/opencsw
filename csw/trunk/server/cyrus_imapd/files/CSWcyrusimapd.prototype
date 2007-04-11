@@ -1,11 +1,11 @@
-i i.conf
-i r.conf
-i i.services
-i r.services
-e services /etc/inet/services
+i i.conf=i.conf
+i r.conf=r.conf
+i i.services=i.services
+i r.services=r.services
+e services /etc/inet/services=services
 d none /opt/csw/etc/cyrus 0755 root bin
-e conf /opt/csw/etc/cyrus/imapd.conf 0640 root mail
-f none /opt/csw/etc/cyrus/cyrus.conf.CSW 0640 root mail
+e conf /opt/csw/etc/cyrus/imapd.conf=imapd.conf 0640 root mail
+f none /opt/csw/etc/cyrus/cyrus.conf.CSW=cyrus.conf 0640 root mail
 d none /opt/csw/var/cyrus 0755 cyrus mail
 d none /opt/csw/var/cyrus/sieve 0755 cyrus mail
 d none /opt/csw/var/cyrus/config 0755 cyrus mail
@@ -297,5 +297,5 @@ f none /opt/csw/share/doc/cyrus_imapd/text/readme 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/text/sieve-protocol 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/text/sieve 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/text/specs 0644 root bin
-f none /opt/csw/share/doc/cyrus_imapd/README.CSW 0644 root bin
+f none /opt/csw/share/doc/cyrus_imapd/README.CSW=README.CSW 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/changelog.CSW 0644 root bin
