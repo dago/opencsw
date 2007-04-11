@@ -10,8 +10,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWlibxfce4util.depend CSWlibxfce4util.gspec CSWlibxfce4util.prototype
 DISTFILES += CSWlibxfce4utildoc.depend CSWlibxfce4utildoc.gspec CSWlibxfce4utildoc.prototype
 DISTFILES += CSWlibxfce4utildevel.depend CSWlibxfce4utildevel.gspec CSWlibxfce4utildevel.prototype
+# DISTFILES += $(call admfiles,CSWlibxfce4util, depend)
 
-PATCHFILES = debug.h.patch
+# PATCHFILES = debug.h.patch
 
 include ../category.mk
 

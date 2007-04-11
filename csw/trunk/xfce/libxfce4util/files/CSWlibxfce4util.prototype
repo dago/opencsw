@@ -1,27 +1,33 @@
 d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/libxfce4util.a 0644 root bin
 f none /opt/csw/lib/libxfce4util.la 0755 root bin
-f none /opt/csw/lib/libxfce4util.so.4.0.1 0755 root bin
-s none /opt/csw/lib/libxfce4util.so.4=libxfce4util.so.4.0.1
-s none /opt/csw/lib/libxfce4util.so=libxfce4util.so.4.0.1
+f none /opt/csw/lib/libxfce4util.so.4.0.2 0755 root bin
+s none /opt/csw/lib/libxfce4util.so.4=libxfce4util.so.4.0.2
+s none /opt/csw/lib/libxfce4util.so=libxfce4util.so.4.0.2
 d none /opt/csw/sbin ? ? ?
 f none /opt/csw/sbin/xfce4-kiosk-query 0755 root bin
+d none /opt/csw/share ? ? ?
 d none /opt/csw/share/locale ? ? ?
+d none /opt/csw/share/locale/ar/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/ar/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/ca ? ? ?
 d none /opt/csw/share/locale/ca/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/ca/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/cs ? ? ?
 d none /opt/csw/share/locale/cs/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/cs/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/cy 0755 root bin
 d none /opt/csw/share/locale/cy/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/cy/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/de ? ? ?
 d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/de/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/dz 0755 root bin
 d none /opt/csw/share/locale/dz/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/dz/LC_MESSAGES/libxfce4util.mo 0644 root bin
+d none /opt/csw/share/locale/en_GB/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/en_GB/LC_MESSAGES/libxfce4util.mo 0644 root bin
+d none /opt/csw/share/locale/eu ? ? ?
+d none /opt/csw/share/locale/eu/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/eu/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/fi ? ? ?
 d none /opt/csw/share/locale/fi/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/fi/LC_MESSAGES/libxfce4util.mo 0644 root bin
@@ -34,10 +40,12 @@ f none /opt/csw/share/locale/gl/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/he ? ? ?
 d none /opt/csw/share/locale/he/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/he/LC_MESSAGES/libxfce4util.mo 0644 root bin
+d none /opt/csw/share/locale/it ? ? ?
+d none /opt/csw/share/locale/it/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/it/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/ja ? ? ?
 d none /opt/csw/share/locale/ja/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/ja/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/ka 0755 root bin
 d none /opt/csw/share/locale/ka/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/ka/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/ko ? ? ?
@@ -46,7 +54,6 @@ f none /opt/csw/share/locale/ko/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/lt ? ? ?
 d none /opt/csw/share/locale/lt/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/lt/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/mk 0755 root bin
 d none /opt/csw/share/locale/mk/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/mk/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/nl ? ? ?
@@ -58,6 +65,11 @@ f none /opt/csw/share/locale/pl/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/pt_BR ? ? ?
 d none /opt/csw/share/locale/pt_BR/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/pt_BR/LC_MESSAGES/libxfce4util.mo 0644 root bin
+d none /opt/csw/share/locale/sq/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/sq/LC_MESSAGES/libxfce4util.mo 0644 root bin
+d none /opt/csw/share/locale/tr ? ? ?
+d none /opt/csw/share/locale/tr/LC_MESSAGES ? ? ?
+f none /opt/csw/share/locale/tr/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/uk ? ? ?
 d none /opt/csw/share/locale/uk/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/uk/LC_MESSAGES/libxfce4util.mo 0644 root bin

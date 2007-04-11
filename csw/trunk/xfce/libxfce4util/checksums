@@ -1,12 +1,11 @@
-543fb8efe96d6e83f897a7c64c48e9e6  download/libxfce4util-4.4.0.tar.bz2
+0e4011c57ca2b4491e715455a40c30bc  download/libxfce4util-4.4.1.tar.bz2
 e0f35081b12f2f0b399eefabc4d1111d  download/CSWlibxfce4util.depend
 69530d614ca88fe56efbd715372f45e2  download/CSWlibxfce4util.gspec
-69059a1722079ad12e1496ac92fd3c1c  download/CSWlibxfce4util.prototype
+1155ee24ae4fcd0fbe4ce36aa5e2c4f9  download/CSWlibxfce4util.prototype
 8093298b67861e241b0d2499c9f2ff89  download/CSWlibxfce4utildoc.depend
 ca67a9461e4ab8124d1c0234d8ddde27  download/CSWlibxfce4utildoc.gspec
-cd8aca16dac72206ed105d1d1e160e1e  download/CSWlibxfce4utildoc.prototype
+bded93a3ddd1e2f8eb2f6c3378e8ae55  download/CSWlibxfce4utildoc.prototype
 8093298b67861e241b0d2499c9f2ff89  download/CSWlibxfce4utildevel.depend
 207d90bbf8cef50611b48cbffd11fc04  download/CSWlibxfce4utildevel.gspec
-6ce4ab389970022c93f7dae115e2e5aa  download/CSWlibxfce4utildevel.prototype
-543fb8efe96d6e83f897a7c64c48e9e6  download/libxfce4util-4.4.0.tar.bz2
-99b885ef082fe1150d0d80e2602f5d83  download/debug.h.patch
+9b508d0ae2e8e5410a5c321eab232522  download/CSWlibxfce4utildevel.prototype
+0e4011c57ca2b4491e715455a40c30bc  download/libxfce4util-4.4.1.tar.bz2
