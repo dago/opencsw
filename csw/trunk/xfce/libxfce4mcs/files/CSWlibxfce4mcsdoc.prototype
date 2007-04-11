@@ -10,6 +10,7 @@ f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs-mcs-client.html 0644 
 f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs-mcs-common.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs-mcs-manager.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs.devhelp 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs.devhelp2 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4mcs/right.png 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4mcs/style.css 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4mcs/up.png 0644 root bin
