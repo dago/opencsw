@@ -7,13 +7,11 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibxfcegui4, depend)
+DISTFILES += CSWlibxfcegui4.depend CSWlibxfcegui4.gspec CSWlibxfcegui4.prototype
+DISTFILES += CSWlibxfcegui4doc.depend CSWlibxfcegui4doc.gspec CSWlibxfcegui4doc.prototype
+DISTFILES += CSWlibxfcegui4devel.depend CSWlibxfcegui4devel.gspec CSWlibxfcegui4devel.prototype
 
 LIBDEPS = xfce/libxfce4util
-
-# Patch for the exo-mount.c file
-PATCHFILES += configure.in.diff
-PATCHFILES += configure.diff
 
 include ../category.mk
 

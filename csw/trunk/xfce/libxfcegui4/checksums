@@ -1,6 +1,11 @@
-130cf67881f79c4f6ec4881a1d0d588f  download/libxfcegui4-4.4.0.tar.bz2
-09e0ea3c5e9633e390e3c742b7b12640  download/CSWlibxfcegui4.gspec
+1e695429e9b7fbfb1bb5e78f6006be43  download/libxfcegui4-4.4.1.tar.bz2
 5151758e293a5d9c9008dec6a0b3285c  download/CSWlibxfcegui4.depend
-130cf67881f79c4f6ec4881a1d0d588f  download/libxfcegui4-4.4.0.tar.bz2
-49d7441ca553d75d644bed82f7749193  download/configure.in.diff
-13d259ca5f05b1ab4f25501b1ef5531e  download/configure.diff
+09e0ea3c5e9633e390e3c742b7b12640  download/CSWlibxfcegui4.gspec
+4cce8a700896a41122e178e8e33a0596  download/CSWlibxfcegui4.prototype
+8093298b67861e241b0d2499c9f2ff89  download/CSWlibxfcegui4doc.depend
+b31cc05a9a6be9ed5a8b449c4860630f  download/CSWlibxfcegui4doc.gspec
+41183ac70faf21907d0a5625b8aecbc0  download/CSWlibxfcegui4doc.prototype
+8093298b67861e241b0d2499c9f2ff89  download/CSWlibxfcegui4devel.depend
+109cca509c940eeb31f6c901f2385f86  download/CSWlibxfcegui4devel.gspec
+611936ecb17c68f21b8eb3b214a4c913  download/CSWlibxfcegui4devel.prototype
+1e695429e9b7fbfb1bb5e78f6006be43  download/libxfcegui4-4.4.1.tar.bz2
