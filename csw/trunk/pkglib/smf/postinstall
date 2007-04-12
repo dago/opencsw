@@ -43,14 +43,15 @@ get_autoenable ()
     for _FILE in /opt/csw/etc/csw.conf /etc/opt/csw/csw.conf; do
         if [ -f "$PKG_INSTALL_ROOT/$_FILE" ]; then
             . "$PKG_INSTALL_ROOT/$_FILE"
-            if [ -n "$1" ]; then
-                eval SERVICE_STATE=$$autoenable_$1
-            fi
-            if [ -z "$SERVICE_STATE" ]; then
-                SERVICE_STATE="$autoenable_daemons"
-            fi
         fi
     done
+
+    if [ -n "$1" ]; then
+	eval SERVICE_STATE=\$autoenable_$1
+    fi
+    if [ -z "$SERVICE_STATE" ]; then
+	SERVICE_STATE="$autoenable_daemons"
+    fi
 
     if [ "$SERVICE_STATE" != "no" ]; then
         SERVICE_STATE="enabled"
