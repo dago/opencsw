@@ -13,3 +13,4 @@ P CSWlibxrender libxrender - fontconfig.org Xrender library
 P CSWpango libpango - Library for laying out and rendering text
 P CSWpng png - library for Portable Network Graphics format (PNG)
 P CSWzlib zlib - Zlib Data Compression Library
+P CSWsunmath

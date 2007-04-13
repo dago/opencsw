@@ -12,7 +12,6 @@ DISTFILES += $(call admfiles,CSWxfce_exo, depend)
 
 #  Patch for the exo-mount.c file
 PATCHFILES = exo.diff
-LIBDEPS = xfce/libxfce4util
 
 include ../category.mk
 
