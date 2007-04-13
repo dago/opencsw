@@ -19,11 +19,9 @@ INSTALL_SCRIPTS = custom
 
 include ../category.mk
 
-LD_OPTIONS='-lsocket -lnsl'
-
 configure-custom:
 	( chmod +x $(WORKDIR)/daimonin/client/make/linux/configure )
-	( cd $(WORKDIR)/daimonin*/client/make/linux ; ./configure )
+	( cd $(WORKDIR)/daimonin/client/make/linux ; ./configure )
 	@$(MAKECOOKIE)
 
 build-custom:
