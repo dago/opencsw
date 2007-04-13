@@ -7,4 +7,5 @@
 %var            INIT_START_PRIO 10
 %var		CAN_BE_AUTOENABLED no
 %var            SERVICE_CONF_FILES /opt/csw/etc/imapproxy.conf
+%var            SERVICE_NAME imapproxy
 %include        url file://%{PKGLIB}/smf_enabled.gspec
