@@ -1,5 +1,12 @@
 8b73acc98d0938d1193b31316823b6db  download/exo-0.3.2.tar.bz2
-994a38db22046d63f603d6f30a3e5b11  download/CSWxfce_exo.gspec
-5f819ce32def475efab8a0463b979744  download/CSWxfce_exo.depend
+ce688e1ee076d984d96ef30800bebf3c  download/CSWxfceexo.depend
+994a38db22046d63f603d6f30a3e5b11  download/CSWxfceexo.gspec
+8bbf866e6c0011fbe828cc36af3fa9a2  download/CSWxfceexo.prototype
+8093298b67861e241b0d2499c9f2ff89  download/CSWxfceexodoc.depend
+0e8e22b744454d442e8dc61e3f5c16e5  download/CSWxfceexodoc.gspec
+d48f8c6b00ef8aea513ce0ffbf647f4a  download/CSWxfceexodoc.prototype
+d9b8d0cba0f659233e1d5f1429446480  download/CSWxfceexodevel.depend
+43c158204fa4d4fd49bcc1c1544954af  download/CSWxfceexodevel.gspec
+e9002f446be97d8d2b08e4042539c1d9  download/CSWxfceexodevel.prototype
 8b73acc98d0938d1193b31316823b6db  download/exo-0.3.2.tar.bz2
 8c7d7c0ae9140ca43404bc67928c832e  download/exo.diff
