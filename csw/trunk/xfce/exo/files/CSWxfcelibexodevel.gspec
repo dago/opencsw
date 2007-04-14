@@ -1,0 +1,5 @@
+%var            bitname xfce_libexo_devel
+%var            pkgname CSWxfcelibexodevel
+%var		desc Xfce Extensions Library Headers
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

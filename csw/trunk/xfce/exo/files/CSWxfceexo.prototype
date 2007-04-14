@@ -10,16 +10,6 @@ d none /opt/csw/etc/xdg/xfce4 0755 root bin
 f none /opt/csw/etc/xdg/xfce4/helpers.rc 0644 root bin
 d none /opt/csw/lib ? ? ?
 d none /opt/csw/lib/gtk-2.0/engines 0755 root bin
-f none /opt/csw/lib/libexo-0.3.a 0644 root bin
-f none /opt/csw/lib/libexo-0.3.la 0755 root bin
-f none /opt/csw/lib/libexo-0.3.so.0.4.0 0755 root bin
-s none /opt/csw/lib/libexo-0.3.so.0=libexo-0.3.so.0.4.0
-s none /opt/csw/lib/libexo-0.3.so=libexo-0.3.so.0.4.0
-f none /opt/csw/lib/libexo-hal-0.3.a 0644 root bin
-f none /opt/csw/lib/libexo-hal-0.3.la 0755 root bin
-f none /opt/csw/lib/libexo-hal-0.3.so.0.4.0 0755 root bin
-s none /opt/csw/lib/libexo-hal-0.3.so.0=libexo-hal-0.3.so.0.4.0
-s none /opt/csw/lib/libexo-hal-0.3.so=libexo-hal-0.3.so.0.4.0
 d none /opt/csw/lib/python2.3/site-packages 0755 root bin
 d none /opt/csw/lib/python2.3/site-packages/exo-0.3 0755 root bin
 f none /opt/csw/lib/python2.3/site-packages/exo-0.3/_exo.a 0644 root bin
