@@ -7,11 +7,12 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfce_mcs_manager, depend)
+DISTFILES += CSWxfcemcsmanagerdevel.depend CSWxfcemcsmanagerdevel.gspec CSWxfcemcsmanagerdevel.prototype
+DISTFILES += CSWxfcemcsmanagerdoc.depend CSWxfcemcsmanagerdoc.gspec CSWxfcemcsmanagerdoc.prototype
+DISTFILES += CSWxfcemcsmanager.depend CSWxfcemcsmanager.gspec CSWxfcemcsmanager.prototype
+
+# DISTFILES += $(call admfiles,CSWxfce_mcs_manager, depend)
 
 LIBDEPS = xfce/libxfce4util
-
-# PATCHFILES += configure.in.diff
-# PATCHFILES += configure.diff
 
 include ../category.mk
