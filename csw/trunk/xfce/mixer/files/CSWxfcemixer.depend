@@ -11,11 +11,11 @@ P CSWlibcairo libcairo - The Cairo 2D Graphics Library
 P CSWlibxfce4mcs libxfce4mcs - Xfce Settings Manager Library
 P CSWlibxfce4util libxfce4util - Xfce Utilities Library
 P CSWlibxfcegui4 libxfcegui4 - Xfce Widget Library
+P CSWlibxfcepanel libxfcepanel - Xfce Panel Library
 P CSWlibxml2 libxml2 - XML Parser Library
 P CSWlibxrender libxrender - fontconfig.org Xrender library
 P CSWpango libpango - Library for laying out and rendering text
 P CSWpng png - library for Portable Network Graphics format (PNG)
 P CSWstartupnotif startup_notif - Library for tracking P startup
 P CSWsunmath libsunmath - Sun maths library
-P CSWxfcepanel xfce_panel - Xfce Panel
 P CSWzlib zlib - Zlib Data Compression Library

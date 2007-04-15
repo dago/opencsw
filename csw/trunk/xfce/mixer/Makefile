@@ -7,6 +7,6 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfce_mixer, depend)
+DISTFILES += $(call admfiles,CSWxfcemixer, depend)
 
 include ../category.mk
