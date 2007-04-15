@@ -1,0 +1,5 @@
+%var            bitname libxfceprint
+%var            pkgname CSWlibxfceprint
+%var		desc Xfce Printing Helper Library
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

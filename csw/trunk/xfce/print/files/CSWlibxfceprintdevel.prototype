@@ -1,0 +1,15 @@
+d none /opt/csw/include ? ? ?
+d none /opt/csw/include/xfce4 0755 root bin
+d none /opt/csw/include/xfce4/libxfprint 0755 root bin
+f none /opt/csw/include/xfce4/libxfprint/common.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfprint/job.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfprint/libxfprint.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfprint/printer-list-window.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfprint/printer-queue-window.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfprint/printer.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfprint/printing-system.h 0644 root bin
+d none /opt/csw/lib/pkgconfig ? ? ?
+f none /opt/csw/lib/pkgconfig/xfprint-1.0.pc 0644 root bin
+i copyright=CSWlibxfceprintdevel.copyright
+i depend=CSWlibxfceprintdevel.depend
+i pkginfo=CSWlibxfceprintdevel.pkginfo
