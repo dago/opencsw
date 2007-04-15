@@ -10,5 +10,8 @@ endef
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxfcemousepad, depend)
 
+PATCHFILES += configure.in.diff
+PATCHFILES += configure.diff
+
 include ../category.mk
 
