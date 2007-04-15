@@ -7,9 +7,8 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfce_utils, depend)
-
-PATCHFILES  = startxfce4.in.patch
+DISTFILES += CSWxfceutils.depend CSWxfceutils.gspec CSWxfceutils.prototype
+DISTFILES += CSWxfceutilsdoc.depend CSWxfceutilsdoc.gspec CSWxfceutilsdoc.prototype
 
 include ../category.mk
 
