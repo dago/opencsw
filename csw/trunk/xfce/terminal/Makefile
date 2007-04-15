@@ -8,7 +8,12 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfceterminal, depend)
+DISTFILES += CSWxfceterminal.depend CSWxfceterminal.gspec CSWxfceterminal.prototype
+DISTFILES += CSWxfceterminaldoc.depend CSWxfceterminaldoc.gspec CSWxfceterminaldoc.prototype
+
+PATCHFILES += configure.in.diff
+PATCHFILES += configure.diff
 
 include ../category.mk
 
+CONFIGURE_ARGS += --enable-dbus
