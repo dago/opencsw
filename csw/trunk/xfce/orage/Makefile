@@ -7,7 +7,9 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfceorage, depend)
+#DISTFILES += $(call admfiles,CSWxfceorage, depend)
+DISTFILES += CSWxfceorage.depend CSWxfceorage.gspec CSWxfceorage.prototype
+DISTFILES += CSWxfceoragedoc.depend CSWxfceoragedoc.gspec CSWxfceoragedoc.prototype
 
 include ../category.mk
 
