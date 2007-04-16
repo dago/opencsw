@@ -7,8 +7,13 @@ define BLURB
    Xfce Thunar File Manager 
 endef
 
-DISTFILES   = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES  += $(call admfiles,CSWxfcethunar, depend)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += CSWxfcethunar.depend CSWxfcethunar.gspec CSWxfcethunar.prototype
+DISTFILES += CSWlibxfcethunar.depend CSWlibxfcethunar.gspec CSWlibxfcethunar.prototype
+DISTFILES += CSWxfcethunardoc.depend CSWxfcethunardoc.gspec CSWxfcethunardoc.prototype
+DISTFILES += CSWlibxfcethunardev.depend CSWlibxfcethunardev.gspec CSWlibxfcethunardev.prototype
+
+# DISTFILES  += $(call admfiles,CSWxfcethunar, depend)
 
 PATCHFILES  = thunar-vfs-path-private.h.diff 
 PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
