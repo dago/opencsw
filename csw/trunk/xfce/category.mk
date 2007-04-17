@@ -10,8 +10,6 @@ DISTFILES    += $(PKGDIST)
 
 include ../../gar.mk
 
-# Compiler options
-# Compiler options
 CFLAGS   += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS += -xlibmil -xlibmopt -features=tmplife -norunpath
 CPPFLAGS += -I$(DESTDIR)/opt/csw/include/xfce4
@@ -21,11 +19,12 @@ LDFLAGS  += -L/opt/csw/lib -R/opt/csw/lib
 PKG_CONFIG_PATH += $(DESTDIR)/opt/csw/lib/pkgconfig
 
 # Configure common options
-CONFIGURE_ARGS  = $(DIRPATHS)
-# CONFIGURE_ARGS += --prefix=/opt/csw
+CONFIGURE_ARGS  = --prefix=/opt/csw 
+CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --enable-final
 CONFIGURE_ARGS += --enable-xinerama
 CONFIGURE_ARGS += --enable-dbus
-# CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 
+# pkg-config
+PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig

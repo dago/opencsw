@@ -1,6 +1,8 @@
-95213345e3ccd224a30b2be01e9c06b9  download/xfce-mcs-plugins-4.4.0.tar.bz2
-445dcb0162de8a72f18796f898501de8  download/CSWxfce_mcs_plugins.gspec
-9fb0f202d1e8a6cc77bc185071c0db2c  download/CSWxfce_mcs_plugins.depend
-95213345e3ccd224a30b2be01e9c06b9  download/xfce-mcs-plugins-4.4.0.tar.bz2
-2a21b911007db87b64582dbde489be59  download/configure.in.diff
-52a356f3a19d20c3e14cdeeeefbe04fe  download/configure.diff
+99f05b5ce95f24c205731565210aa8a9  download/xfce-mcs-plugins-4.4.1.tar.bz2
+8346533cb9a708c9db7d9ec75dc59850  download/CSWxfcemcsplugins.depend
+445dcb0162de8a72f18796f898501de8  download/CSWxfcemcsplugins.gspec
+190d72e26816c76464498bed7f5d51f0  download/CSWxfcemcsplugins.prototype
+8093298b67861e241b0d2499c9f2ff89  download/CSWxfcemcspluginsdoc.depend
+7492f93308d1ee2bc0e1917f0d39e204  download/CSWxfcemcspluginsdoc.gspec
+75436945b5899e731d70dde8483ec822  download/CSWxfcemcspluginsdoc.prototype
+99f05b5ce95f24c205731565210aa8a9  download/xfce-mcs-plugins-4.4.1.tar.bz2

@@ -7,8 +7,11 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfce_panel, depend)
+DISTFILES += CSWxfcepaneldoc.depend CSWxfcepaneldoc.gspec CSWxfcepaneldoc.prototype
+DISTFILES += CSWxfcepanel.depend CSWxfcepanel.gspec CSWxfcepanel.prototype
+DISTFILES += CSWlibxfcepanel.depend CSWlibxfcepanel.gspec CSWlibxfcepanel.prototype
+DISTFILES += CSWlibxfcepaneldevel.depend CSWlibxfcepaneldevel.gspec CSWlibxfcepaneldevel.prototype
 
-PATCHFILES += panel-item-manager.c.diff
+# DISTFILES += $(call admfiles,CSWxfcepanel, depend)
 
 include ../category.mk

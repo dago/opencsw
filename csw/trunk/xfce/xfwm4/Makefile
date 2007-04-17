@@ -11,4 +11,4 @@ DISTFILES += $(call admfiles,CSWxfce_xfwm4, depend)
 
 include ../category.mk
 
-CONFIGURE_ARGS +=  --enable-xsync --enable-render --enable-randr
+CONFIGURE_ARGS +=  --enable-xsync --enable-render --enable-randr --enable-xinerama
