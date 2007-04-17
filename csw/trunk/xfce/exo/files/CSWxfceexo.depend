@@ -14,4 +14,5 @@ P CSWpango libpango - Library for laying out and rendering text
 P CSWpng png - library for Portable Network Graphics format (PNG)
 P CSWsunmath libsunmath - Sun maths library
 P CSWxfcelibexo xfce_libexo - Xfce Extensions Library
+P CSWxfcelibexo xfce_libexo - Xfce Extensions Library
 P CSWzlib zlib - Zlib Data Compression Library

@@ -19,3 +19,6 @@ PATCHFILES = exo.diff
 include ../category.mk
 
 CONFIGURE_ARGS += --enable-python --enable-hal
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | grep ELF | grep -e 'executable' -e 'dynamic lib' | grep 'not stripped' && strip {}"  \; )
