@@ -18,3 +18,5 @@ include ../category.mk
 # Configure common options
 CONFIGURE_ARGS += --enable-xinerama
 
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
