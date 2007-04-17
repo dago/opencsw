@@ -14,5 +14,5 @@ DISTFILES += CSWlibxfce4utildevel.depend CSWlibxfce4utildevel.gspec CSWlibxfce4u
 include ../category.mk
 
 post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | grep ELF | grep -e 'executable' -e 'dynamic lib' | grep 'not stripped' && strip {}"  \; )
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 
