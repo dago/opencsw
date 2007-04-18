@@ -7,8 +7,15 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfce_xfwm4, depend)
+DISTFILES += CSWxfcexfwm4.depend CSWxfcexfwm4.gspec CSWxfcexfwm4.prototype
+DISTFILES += CSWxfcexfwm4doc.depend CSWxfcexfwm4doc.gspec CSWxfcexfwm4doc.prototype
+
+PATCHFILES = frame.c.diff
 
 include ../category.mk
 
 CONFIGURE_ARGS +=  --enable-xsync --enable-render --enable-randr --enable-xinerama
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+
