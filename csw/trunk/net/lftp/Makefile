@@ -1,5 +1,5 @@
 GARNAME = lftp
-GARVERSION = 3.5.10
+GARVERSION = 3.5.11
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
@@ -16,6 +16,7 @@ DISTFILES += i.conf r.conf
 # adding the conf classe for handling configuration files
 SPKG_CLASSES = none conf
 
+# NOT NECESSARY ANYMORE: patch accepted upstream
 # correct some bugs preventing compilation
 # with sun cc
 #PATCHFILES += sun_cc_bool_compilation_fix.patch
@@ -23,7 +24,7 @@ SPKG_CLASSES = none conf
 # on blastave machines so we will regenerate 
 # configure on another machine and copy it during
 # the pre-configure.
-DISTFILES += configure config.h.in
+#DISTFILES += configure config.h.in
 
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
@@ -34,12 +35,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
 CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
-
-# I got a coredump with lftp compiled with cc
-# the one compiled with gcc doesn't seem to have this problem
-# GARCOMPILER = GNU
-
+#
 # for debug build
+#GARCOMPILER = GNU
 #CONFIGURE_ARGS += --with-debug
 #SUN_CC_OPT=-g
 #SUN_CXX_OPT=-g
@@ -50,9 +48,10 @@ TEST_SCRIPTS =
 
 include ../category.mk
 
-pre-configure: 
-	cp $(WORKDIR)/configure $(WORKSRC)/configure
-	cp $(WORKDIR)/config.h.in $(WORKSRC)/include/config.h.in
+# NOT NECESSARY ANYMORE: patch accepted upstream
+#pre-configure: 
+	#cp $(WORKDIR)/configure $(WORKSRC)/configure
+	#cp $(WORKDIR)/config.h.in $(WORKSRC)/include/config.h.in
 
 post-install:
 	# po are not installed correctly (I should find a better fix)
