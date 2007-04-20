@@ -12,6 +12,12 @@ define BLURB
    * draft-delany-domainkeys-base
 endef
 
-DISTFILES += $(call admfiles,CSWpmmaildkim,depend)
+DISTFILES += $(call admfiles,CSWpmmaildkim,depend,prototype)
+
+DEPENDS += cpan/Crypt-OpenSSL-RSA
+DEPENDS += cpan/Digest-SHA1
+DEPENDS += cpan/Error
+DEPENDS += cpan/MailTools
+DEPENDS += cpan/Net-DNS
 
 include ../category.mk
