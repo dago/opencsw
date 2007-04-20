@@ -1,5 +1,6 @@
 apps/bash|CSWbash|bash - A sh-compatible command language interpreter
 apps/bugzilla|CSWbugzilla|bugzilla - Bugzilla defect tracking system.
+apps/daimonin|CSWdaimonin|daimonin - FREE online role playing game (MMORPG)
 apps/firefox|CSWfirefox|firefox - Firefox Community Edition web browser
 apps/flphoto|CSWflphoto|flphoto - basic image management and display program based on the FLTK toolkit
 apps/freeciv|CSWfreeciv|freeciv - a free turn-based multiplayer strategy game (gcc3)
@@ -83,6 +84,7 @@ cpan/Crypt-DH|CSWpmcryptdh|pm_cryptdh - Diffie-Hellman key exchange system
 cpan/Crypt-DSA|CSWpmcryptdsa|pm_cryptdsa - DSA signatures and key generation
 cpan/Crypt-IDEA|CSWpmcryptidea|pm_cryptidea - Perl interface to IDEA block cipher
 cpan/Crypt-OpenPGP|CSWpmcryptopenpgp|pm_cryptopenpgp - pure-Perl OpenPGP implementation
+cpan/Crypt-OpenSSL-Bignum|CSWpmcryptosslbignum|pm_cryptosslbignum - Crypt::OpenSSL::Bignum - OpenSSL's multiprecision integer arithmetic
 cpan/Crypt-OpenSSL-DSA|CSWpmcryptossldsa|pm_cryptossldsa - digital signature algorithm using OpenSSL
 cpan/Crypt-OpenSSL-PKCS12|CSWpmcryptosslpkcs12|pm_cryptosslpkcs12 - Perl extension to OpenSSL PKCS12 API.
 cpan/Crypt-OpenSSL-RSA|CSWpmcryptosslrsa|pm_cryptosslrsa - RSA encoding and decoding, using the openSSL libraries
@@ -225,6 +227,7 @@ cpan/MLDBM-Sync|CSWpmmldbmsync|pm_mldbmsync - safe concurrent access to MLDBM da
 cpan/MLDBM|CSWpmmldbm|pm_mldbm - store multi-level hash structure in single level tied hash
 cpan/Mail-Box-Parser-C|CSWpmmailboxpc|pm_mailboxpc - parsing folders for MailBox with C routines
 cpan/Mail-Box|CSWpmmailbox|pm_mailbox - manage a mailbox, a folder with messages
+cpan/Mail-DKIM|CSWpmmaildkim|pm_maildkim - Mail::DKIM
 cpan/Mail-IMAPClient|CSWpmmailimapclient|pm_mailimapclient - IMAP Client API
 cpan/Mail-SPF-Query|CSWpmmailspfqry|pm_mailspfqry - query sender policy framework
 cpan/Mail-Sendmail|CSWpmmailsendmail|pm_mailsendmail - simple platform independent mailer
@@ -479,6 +482,9 @@ lib/bdb44|CSWbdb44-doc|berkeleydb44_doc - BerkeleyDB 4.4 documentation
 lib/bdb44|CSWbdb44-devel|berkeleydb44_devel - BerkeleyDB 4.4 development support
 lib/bdb44|CSWbdb44|berkeleydb44 - BerkeleyDB 4.4 development support
 lib/boost|CSWboost|boost - A collection of C++ libraries
+lib/dbus|CSWlibdbus|libdbus - DBus Message Bus System - dynamic libraries
+lib/dbus|CSWlibdbusdevel|libdbus_devel - DBus Message Bus System - development headers
+lib/dbus|CSWdbus|dbus - DBus Message Bus System - development headers
 lib/docbook|CSWdocbook-xsl|docbook_xsl - docbook xsl stylesheets
 lib/expat|CSWexpat-devel|expat_devel - XML Parsing Toolkit - Development Support
 lib/expat|CSWexpat|expat - XML Parsing Toolkit - Development Support
@@ -558,6 +564,7 @@ server/apache2|CSWap2suexec|ap2_suexec - Apache 2.2 suEXEC support
 server/apache2|CSWapache2-devel|apache2_devel - Apache 2.2 development support
 server/apache2|CSWapache2rt|apache2rt - Apache 2.2 runtime libraries
 server/apache2|CSWap2prefork|ap2_prefork - Apache 2.2 prefork MPM
+server/arpwatch|CSWarpwatch|arpwatch - A network monitoring tool for tracking IP/MAC addresses on a network.
 server/cyrus_imapd|CSWcyrusimapdutils|cyrus_imapd_utils - Various admin utilities for Cyrus Imapd/Popd
 server/cyrus_imapd|CSWpmcyrus|pm_cyrus - Perl interface to Cyrus Imap functions
 server/cyrus_imapd|CSWcyrusimapd|cyrus_imapd - Perl interface to Cyrus Imap functions
@@ -614,6 +621,7 @@ utils/pv|CSWpv|pv - pipeviewer, like cat with progress indications
 utils/pwsafe|CSWpwsafe|pwsafe - command-line password database.
 utils/rapidsvn|CSWrapidsvn|rapidsvn - Subversion GUI
 utils/rapidsvn|CSWsvncpp|svncpp - Subversion C++ language binding
+utils/rlwrap|CSWrlwrap|rlwrap - A readline wrapper
 utils/rrdtool|CSWrrdtool|rrdtool - time-series data logging and graphing.
 utils/sloccount|CSWslocc|sloccount - A suite of programs for counting physical source lines of code.
 utils/subversion|CSWsvn-devel|subversion_devel - Subversion development support
@@ -632,25 +640,56 @@ utils/vim|CSWvim|vim - Vi IMproved
 utils/vim|CSWvimrt|vimrt - vim shared runtime and documentation
 utils/xrestop|CSWxrestop|xrestop - 'top' like staticstics for X11 server side resource usage
 xfce/appfinder|CSWxfceappfinder|xfce_appfinder - Xfce Application Finder
-xfce/desktop|CSWxfcedesktop|xfce_desktop - Xfce Desktop Manager
+xfce/desktop|CSWxfcedesktopdoc|xfce_desktop_doc - Xfce Desktop Manager Documentation
+xfce/desktop|CSWxfcedesktop|xfce_desktop - Xfce Desktop Manager Documentation
 xfce/devtools|CSWxfcedevtools|xfce_devtools - Xfce Development Tools
-xfce/exo|CSWxfceexo|xfce_exo - Xfce Extensions Library 
+xfce/exo|CSWxfcelibexodevel|xfce_libexo_devel - Xfce Extensions Library Headers
+xfce/exo|CSWxfceexodevel|xfce_exo_devel - Xfce Extensions Library Headers
+xfce/exo|CSWxfceexodoc|xfce_exo_doc - Xfce Extensions Library Documentation
+xfce/exo|CSWxfcelibexo|xfce_libexo - Xfce Extensions Library Documentation
+xfce/exo|CSWxfceexo|xfce_exo - Xfce Extensions Library Documentation
 xfce/gtk-xfce-engine|CSWxfceengine|xfce_engine - Xfce GTK theme engine 
 xfce/icon-theme|CSWxfceicontheme|xfce_icon_theme - Xfce Icon Theme
 xfce/libxfce4mcs|CSWlibxfce4mcs|libxfce4mcs - Xfce Settings Manager Library 
+xfce/libxfce4mcs|CSWlibxfce4mcsdevel|libxfce4mcs_devel - Xfce Settings Manager Library Headers
+xfce/libxfce4mcs|CSWlibxfce4mcsdoc|libxfce4mcs_doc - Xfce Settings Manager Library Documentation
 xfce/libxfce4util|CSWlibxfce4util|libxfce4util - Xfce Utilities Library 
+xfce/libxfce4util|CSWlibxfce4utildoc|libxfce4util_doc - Xfce Utilities Library Documentation
+xfce/libxfce4util|CSWlibxfce4utildevel|libxfce4util_devel - Xfce Utilities Library Headers
 xfce/libxfcegui4|CSWlibxfcegui4|libxfcegui4 - Xfce Widget Library 
+xfce/libxfcegui4|CSWlibxfcegui4devel|libxfcegui4_devel - %var desc Xfce Widget Library Headers
+xfce/libxfcegui4|CSWlibxfcegui4doc|libxfcegui4_doc - Xfce Widget Library Documentation
 xfce/mcs-manager|CSWxfcemcsmanager|xfce_mcs_manager - Xfce Settings Manager 
+xfce/mcs-manager|CSWxfcemcsmanagerdev|xfce_mcs_manager_dev - Xfce Settings Manager Headers
+xfce/mcs-manager|CSWxfcemcsmanagerdoc|xfce_mcs_manager_doc - Xfce Settings Manager Documentation
 xfce/mcs-plugins|CSWxfcemcsplugins|xfce_mcs_plugins - Xfce Settings Manager Plugins
+xfce/mcs-plugins|CSWxfcemcspluginsdoc|xfce_mcs_plugins_doc - Xfce Settings Manager Plugins Documentation
 xfce/mixer|CSWxfcemixer|xfce_mixer - Xfce Volume Control
 xfce/mousepad|CSWxfcemousepad|xfce_mousepad - Xfce Mousepad Text Editor
 xfce/orage|CSWxfceorage|xfce_orage - Xfce Orage Calendar
+xfce/orage|CSWxfceoragedoc|xfce_orage_doc - Xfce Orage Calendar Documentation
 xfce/panel|CSWxfcepanel|xfce_panel - Xfce Panel
+xfce/panel|CSWxfcepaneldoc|xfce_panel_doc - Xfce Panel Documentation
+xfce/panel|CSWlibxfcepanel|libxfcepanel - Xfce Panel Library
+xfce/panel|CSWlibxfcepaneldevel|libxfcepaneldevel - Xfce Panel Library Headers
 xfce/print|CSWxfceprint|xfce_print - Xfce Printing Helper
+xfce/print|CSWxfceprintdoc|xfce_print_doc - Xfce Printing Helper Documentation
+xfce/print|CSWlibxfceprint|libxfceprint - Xfce Printing Helper Library
+xfce/print|CSWlibxfceprintdevel|libxfceprint_devel - Xfce Printing Helper Library Headers
 xfce/session|CSWxfcesession|xfce_session - Xfce Session Manager
+xfce/session|CSWlibxfcesessiondev|libxfcesessiondev - Xfce Session Manager Library Headers
+xfce/session|CSWxfcesessiondoc|xfce_session_doc - Xfce Session Manager Documentation
+xfce/session|CSWlibxfcesession|libxfcesession - Xfce Session Manager Library
 xfce/terminal|CSWxfceterminal|xfce_terminal - Xfce Terminal Emulator
+xfce/terminal|CSWxfceterminaldoc|xfce_terminal_doc - Xfce Terminal Emulator Documentation
+xfce/thunar|CSWxfcethunar|xfce_thunar - Xfce Thunar File Manager
+xfce/thunar|CSWlibxfcethunardev|libxfcethunardev - Xfce Thunar File Manager Library Headers
+xfce/thunar|CSWxfcethunardoc|xfce_thunar_doc - Xfce Thunar File Manager Documentation
+xfce/thunar|CSWlibxfcethunar|libxfcethunar - Xfce Thunar File Manager Library
 xfce/utils|CSWxfceutils|xfce_utils - Xfce Utilities
+xfce/utils|CSWxfceutilsdoc|xfce_utils_doc - Xfce Utilities Documentation
 xfce/xfwm4-themes|CSWxfcexfwm4themes|xfce_xfwm4_themes - Xfce Window Manager Themes
 xfce/xfwm4|CSWxfcexfwm4|xfce_xfwm4 - Xfce Window Manager 
+xfce/xfwm4|CSWxfcexfwm4doc|xfce_xfwm4_doc - Xfce Window Manager Documentation
 xtra/bash_completion|CSWbashcmplt|bash_completion - Programmable completion for bash
 xtra/gnulinks|CSWgnulinks|gnulinks - Creates native symlinks for GNU tools in /opt/csw/gnu
