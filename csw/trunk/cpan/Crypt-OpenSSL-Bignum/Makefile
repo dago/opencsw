@@ -13,6 +13,8 @@ define BLURB
   Crypt::OpenSSL::RSA.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcryptosslbignum,)
+DISTFILES += $(call admfiles,CSWpmcryptosslbignum,depend prototype)
+
+DEPENDS += lib/openssl
 
 include ../category.mk
