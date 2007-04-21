@@ -8,10 +8,13 @@ endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWxfcepaneldoc.depend CSWxfcepaneldoc.gspec CSWxfcepaneldoc.prototype
-DISTFILES += CSWxfcepanel.depend CSWxfcepanel.gspec CSWxfcepanel.prototype
-DISTFILES += CSWlibxfcepanel.depend CSWlibxfcepanel.gspec CSWlibxfcepanel.prototype
 DISTFILES += CSWlibxfcepaneldevel.depend CSWlibxfcepaneldevel.gspec CSWlibxfcepaneldevel.prototype
+DISTFILES += CSWlibxfcepanel.depend CSWlibxfcepanel.gspec CSWlibxfcepanel.prototype
+DISTFILES += CSWxfcepanel.depend CSWxfcepanel.gspec CSWxfcepanel.prototype
 
 # DISTFILES += $(call admfiles,CSWxfcepanel, depend)
 
 include ../category.mk
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

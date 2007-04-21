@@ -16,6 +16,6 @@ P CSWpng png - library for Portable Network Graphics format (PNG)
 P CSWstartupnotif startup_notif - Library for tracking P startup
 P CSWsunmath libsunmath - Sun maths library
 P CSWvte vte - The GNOME virtual terminal emulator
-P CSWxfceexo xfce_exo - Xfce Extensions Library
+P CSWxfcelibexo 
 P CSWzlib zlib - Zlib Data Compression Library
 

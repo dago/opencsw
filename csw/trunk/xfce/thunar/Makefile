@@ -21,3 +21,7 @@ PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
 include ../category.mk
 
 CONFIGURE_ARGS += --with-x --enable-dbus
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+

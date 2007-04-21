@@ -19,3 +19,7 @@ CONFIGURE_ARGS +=   --enable-desktop-menu
 CONFIGURE_ARGS +=   --enable-panel-plugin
 
 include ../category.mk
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+

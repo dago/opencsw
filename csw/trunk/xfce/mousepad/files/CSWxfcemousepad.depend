@@ -16,4 +16,17 @@ P CSWpng png - library for Portable Network Graphics format (PNG)
 P CSWstartupnotif startup_notif - Library for tracking P startup
 P CSWsunmath libsunmath - Sun maths library
 P CSWzlib zlib - Zlib Data Compression Library
-
+P CSWgconf2
+P CSWgcrypt
+P CSWgnutls
+P CSWgpgerr
+P CSWjpeg
+P CSWlibcups
+P CSWlibexif
+P CSWlibpopt
+P CSWlibxfce4mcs
+P CSWlibxft2
+P CSWlibxml2
+P CSWorbit2
+P CSWvte
+P CSWxfcelibexo

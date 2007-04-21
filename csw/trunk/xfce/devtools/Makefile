@@ -11,3 +11,6 @@ DISTFILES += $(call admfiles,CSWxfcedevtools, depend)
 
 include ../category.mk
 
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+

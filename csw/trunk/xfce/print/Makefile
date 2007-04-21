@@ -17,3 +17,7 @@ DISTFILES += CSWlibxfceprintdevel.depend CSWlibxfceprintdevel.gspec CSWlibxfcepr
 include ../category.mk
 
 CONFIGURE_ARGS += --enable-bsdlpr --enable-cups
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+
