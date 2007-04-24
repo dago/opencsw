@@ -17,9 +17,9 @@ endef
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
-	preinstall preremove request)
+	preinstall preremove request space checkinstall)
 DISTFILES += Makefile.patch exim_install.patch spf2.patch
-DISTFILES += i.smfyes i.smfno space checkinstall
+DISTFILES += i.smfyes i.smfno
 
 PATCHFILES = Makefile.patch exim_install.patch spf2.patch
 

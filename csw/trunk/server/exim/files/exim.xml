@@ -56,8 +56,8 @@
 
          <exec_method
                  type='method'
-                 name='reload'
-                 exec='/opt/csw/lib/svc/method/svc-exim reload'
+                 name='refresh'
+                 exec='/opt/csw/lib/svc/method/svc-exim refresh'
                  timeout_seconds='-1'>
          </exec_method>
 

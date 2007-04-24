@@ -33,6 +33,6 @@ else
 fi
 
 # Make env variables available
-cat >$1 << EOF
+cat >>$1 << EOF
 SENDMAIL_ACTION=$SENDMAIL_ACTION
 EOF

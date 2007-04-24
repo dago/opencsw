@@ -44,7 +44,7 @@ case "$1" in
     $DAEMON $EXIM_PARAMS
     echo "exim."
     ;;
-  reload|force-reload)
+  reload|refresh|force-reload)
     echo "Reloading exim configuration files"
     kill -1 `cat "$PIDFILE"`
     ;;

@@ -67,7 +67,7 @@ i postinstall=CSWexim.postinstall
 i preremove=CSWexim.preremove
 i postremove=CSWexim.postremove
 i request=CSWexim.request
-i checkinstall
+i checkinstall=CSWexim.checkinstall
+i space=CSWexim.space
 i i.smfno
 i i.smfyes
-i space
