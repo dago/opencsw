@@ -1,7 +1,7 @@
 GARNAME = SOAP-Lite
-GARVERSION = 0.55
+GARVERSION = 0.69
 CATEGORIES = cpan
-AUTHOR = KULCHENKO
+AUTHOR = BYRNE
 
 DESCRIPTION = client and server side SOAP implementation
 define BLURB
@@ -10,11 +10,16 @@ define BLURB
   client and server side.
 endef
 
-DISTFILES += CSWpmsoaplite.gspec CSWpmsoaplite.depend
+DISTFILES += $(call admfiles,CSWpmsoaplite,depend prototype)
 
-DEPENDS += cpan/URI cpan/XML-Parser cpan/libwww-perl
-DEPENDS += cpan/MIME-Lite cpan/MIME-tools cpan/Compress-Zlib
+DEPENDS += cpan/URI
+DEPENDS += cpan/XML-Parser
+DEPENDS += cpan/libwww-perl
+DEPENDS += cpan/MIME-Lite
+DEPENDS += cpan/MIME-tools
+DEPENDS += cpan/Compress-Zlib
 
 CONFIGURE_ARGS = --noprompt
 
 include ../category.mk
+
