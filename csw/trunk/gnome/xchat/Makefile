@@ -1,5 +1,5 @@
 GARNAME = xchat
-GARVERSION = 2.8.0
+GARVERSION = 2.8.2
 CATEGORIES = gnome
 
 DESCRIPTION = GTK+ based IRC client, similar to AmIRC (Amiga).
@@ -18,6 +18,9 @@ DISTFILES += CSWxchat-tcl.gspec CSWxchat-tcl.depend CSWxchat-tcl.prototype
 # Remove hardcoded use of -lutil for the python plugin
 PATCHFILES += pylibs.diff
 
+# Fix compile-time errors
+PATCHFILES += fixes.diff
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-openssl=$(prefix)
 CONFIGURE_ARGS += --enable-textfe
@@ -26,5 +29,8 @@ CONFIGURE_ARGS += --enable-shm
 CONFIGURE_ARGS += --enable-ipv6
 
 TEST_TARGET = check
+
+EXTRA_INC = $(prefix)/bdb44/include
+EXTRA_LIB = $(prefix)/bdb44/lib
 
 include ../category.mk
