@@ -13,6 +13,14 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWscrn,depend prototype)
+
+# this patch increases the maximum number of simultaneously allowed windows per screen session.
+PATCHFILES = screen-maxwin.patch
+
+# patch used by the previous maintainer Derek Morr, I don't know exactly what it is supposed
+# to do or fix but I keep it to no introduce any breakage
+PATCHFILES += screen-utmp.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
