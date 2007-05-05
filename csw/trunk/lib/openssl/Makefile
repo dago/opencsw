@@ -46,16 +46,46 @@ CXXFLAGS += -noex -mt
 INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
 
 
+post-patch: flavors-post-patch
+
+pre-configure: flavors-pre-configure
+	echo " ==> Creating configure script for  $* flavor"
+	ln -sf Configure $(WORKSRC)/configure
+
+configure-custom: flavors-configure
+	gmake CONFIGURE_ARGS="$(CONFIGURE_ARGS) $($(GARCH)_CONFIGURE_TARGET)" configure-$(WORKSRC)/configure
+
+build-custom: build-$(WORKSRC)/Makefile flavors-build
+
+install-custom: install-$(WORKSRC)/Makefile flavors-install
+
+
+
+#
+# The following targets deals with generation of pentium/amd64/sparcv9
+# optimized libraries and binaries
+#
+flavors-%:
+	@( if [ "$*" = "configure" ]; then \
+       	  	TARGET="/$*"; \
+	   elif [ "$*"  = "pre-configure" ] || [ "$*" = "post-patch" ]; then \
+	   	TARGET=""; \
+	   else \
+	   	TARGET="/Makefile"; \
+	   fi; \
+	   for FLAVOR in $($(GARCH)_FLAVORS); do \
+		gmake flavor-$*-$$FLAVOR$$TARGET; \
+	   done )
+
 flavor-post-patch-%:
 	echo " ==> Creating $* flavor"
 	rm -rf $(WORKSRC).$*
-	cp -a $(WORKSRC) $(WORKSRC).$*
+	gcp -a $(WORKSRC) $(WORKSRC).$*
 	$(MAKECOOKIE)
 
 flavor-pre-configure-%:
 	echo " ==> Creating configure script for  $* flavor"
-	rm -f $(WORKSRC).$*/configure
-	ln -s Configure $(WORKSRC).$*/configure
+	ln -sf Configure $(WORKSRC).$*/configure
 	$(MAKECOOKIE)
 
 flavor-configure-%/configure:
@@ -70,35 +100,4 @@ flavor-install-%/Makefile:
 	ginstall -d $(DESTDIR)$(bindir)/$* 
 	cd $(WORKSRC).$* && cp libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$*
 	cd $(WORKSRC).$* && cp apps/openssl $(DESTDIR)$(bindir)/$*
-
-
-post-patch:
-	@( for FLAVOR in $($(GARCH)_FLAVORS); do \
-		gmake flavor-post-patch-$$FLAVOR; \
-	   done )
-
-pre-configure:
-	echo " ==> Creating configure script for  $* flavor"
-	rm -f $(WORKSRC)/configure 
-	ln -s Configure $(WORKSRC)/configure
-	@( for FLAVOR in $($(GARCH)_FLAVORS); do \
-		gmake flavor-pre-configure-$$FLAVOR; \
-	   done )
-
-configure-custom:
-	gmake CONFIGURE_ARGS="$(CONFIGURE_ARGS) $($(GARCH)_CONFIGURE_TARGET)" configure-$(WORKSRC)/configure
-	@( for FLAVOR in $($(GARCH)_FLAVORS); do \
-		gmake flavor-configure-$$FLAVOR/configure; \
-	   done )
-
-build-custom: build-$(WORKSRC)/Makefile
-	@( for FLAVOR in $($(GARCH)_FLAVORS); do \
-		gmake flavor-build-$$FLAVOR/Makefile; \
-	   done )
-	
-
-install-custom: install-$(WORKSRC)/Makefile
-	@( for FLAVOR in $($(GARCH)_FLAVORS); do \
-		gmake flavor-install-$$FLAVOR/Makefile \
-	   done )
 
