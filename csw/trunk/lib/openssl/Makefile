@@ -43,6 +43,7 @@ CONFIGURE_ARGS = --prefix=$(prefix) shared
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
+CLEAN_SCRIPTS = custom
 
 include ../category.mk
 
@@ -84,6 +85,11 @@ install_lib: build flavors-install_lib
 	cd $(WORKSRC) && cp -f libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/
 	$(MAKECOOKIE)
 
+
+# we should also clean previous build
+clean-custom: clean-all
+	gmake GARVERSION=0.9.7 GARREVISION=m clean-all
+	gmake GARVERSION=0.9.6 GARREVISION=m clean-all
 
 #
 # The following targets deals with generation of 
