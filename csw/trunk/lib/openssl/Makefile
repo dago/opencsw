@@ -38,7 +38,6 @@ sparc_CONFIGURE_OS_COMPILER	 	= solaris-sparcv8-cc
 sparcv8plus_CONFIGURE_OS_COMPILER	= solaris-sparcv9-cc
 sparcv9_CONFIGURE_OS_COMPILER		= solaris64-sparcv9-cc
 
-
 CONFIGURE_ARGS = --prefix=$(prefix) shared
 
 CONFIGURE_SCRIPTS = custom
@@ -50,8 +49,9 @@ include ../category.mk
 CFLAGS   += -mt -xstrconst
 CXXFLAGS += -noex -mt
 
-INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
 
+
+INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
 
 post-patch: flavors-post-patch
 
