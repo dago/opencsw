@@ -58,8 +58,14 @@ configure-custom: flavors-configure
 
 build-custom: build-$(WORKSRC)/Makefile flavors-build
 
-install-custom: install-$(WORKSRC)/Makefile flavors-install
+install-custom: install-$(WORKSRC)/Makefile flavors-install-lib flavors-install-bin
 	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
+	$(MAKECOOKIE)
+
+install-lib: build flavors-install-lib
+	ginstall -d $(DESTDIR)$(libdir) 
+	ginstall -d $(DESTDIR)$(bindir) 
+	cd $(WORKSRC) && cp -f libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/
 	$(MAKECOOKIE)
 
 
@@ -96,10 +102,15 @@ flavor-configure-%/configure:
 flavor-build-%/Makefile:
 	gmake build-$(WORKSRC).$*/Makefile 
 
-flavor-install-%/Makefile:
-	@echo " ==> Installing libraries and binaries from $(WORKSRC).$*"
+flavor-install-lib-%/Makefile:
+	@echo " ==> Installing libraries from $(WORKSRC).$*"
 	ginstall -d $(DESTDIR)$(libdir)/$* 
+	cd $(WORKSRC).$* && cp -f libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$*
+	$(MAKECOOKIE)
+
+flavor-install-bin-%/Makefile:
+	@echo " ==> Installing binaries from $(WORKSRC).$*"
 	ginstall -d $(DESTDIR)$(bindir)/$* 
-	cd $(WORKSRC).$* && cp libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$*
-	cd $(WORKSRC).$* && cp apps/openssl $(DESTDIR)$(bindir)/$*
+	cd $(WORKSRC).$* && cp -f apps/openssl $(DESTDIR)$(bindir)/$*
+	$(MAKECOOKIE)
 
