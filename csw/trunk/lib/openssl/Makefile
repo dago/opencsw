@@ -58,7 +58,8 @@ configure-custom: flavors-configure
 build-custom: build-$(WORKSRC)/Makefile flavors-build
 
 install-custom: install-$(WORKSRC)/Makefile flavors-install
-
+	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
+	$(MAKECOOKIE)
 
 
 #
