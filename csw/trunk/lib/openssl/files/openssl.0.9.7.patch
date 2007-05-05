@@ -1,0 +1,23 @@
+*** openssl-0.9.7k/Configure	Mon Apr 24 09:32:55 2006
+--- openssl-0.9.7k-new/Configure	Thu Sep  7 23:29:38 2006
+***************
+*** 180,187 ****
+  "solaris64-x86_64-gcc","gcc:-m64 -O3 -Wall -DL_ENDIAN -DMD32_REG_T=int::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK RC4_CHAR BF_PTR2 DES_INT DES_UNROLL:asm/x86_64-gcc.o::::::asm/rc4-x86_64.o:::dlfcn:solaris-shared:-fPIC:-m64 -shared -static-libgcc:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+  
+  #### Solaris x86 with Sun C setups
+! "solaris-x86-cc","cc:-fast -O -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR::::::::::dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+! "solaris64-x86_64-cc","cc:-fast -xarch=amd64 -xstrconst -Xa -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK RC4_CHAR BF_PTR2 DES_INT DES_UNROLL::::::::::dlfcn:solaris-shared:-KPIC:-xarch=amd64 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+  
+  #### SPARC Solaris with GNU C setups
+  "solaris-sparcv7-gcc","gcc:-O3 -fomit-frame-pointer -Wall -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR::::::::::dlfcn:solaris-shared:-fPIC:-shared:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+--- 180,189 ----
+  "solaris64-x86_64-gcc","gcc:-m64 -O3 -Wall -DL_ENDIAN -DMD32_REG_T=int::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK RC4_CHAR BF_PTR2 DES_INT DES_UNROLL:asm/x86_64-gcc.o::::::asm/rc4-x86_64.o:::dlfcn:solaris-shared:-fPIC:-m64 -shared -static-libgcc:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+  
+  #### Solaris x86 with Sun C setups
+! "solaris-x86-cc","cc:-fast -xdepend=no -O -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR::::::::::dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+! "solaris-386-cc","cc:-fast -xdepend=no -xarch=386  -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR::::::::::dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+! "solaris-pentium-cc","cc:-fast -xdepend=no -xpentium -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR::::::::::dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+! "solaris64-x86_64-cc","cc:-fast -xdepend=no -xarch=amd64 -xstrconst -Xa -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK RC4_CHAR BF_PTR2 DES_INT DES_UNROLL::::::::::dlfcn:solaris-shared:-KPIC:-xarch=amd64 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+  
+  #### SPARC Solaris with GNU C setups
+  "solaris-sparcv7-gcc","gcc:-O3 -fomit-frame-pointer -Wall -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR::::::::::dlfcn:solaris-shared:-fPIC:-shared:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
