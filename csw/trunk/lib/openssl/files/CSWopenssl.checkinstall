@@ -1,0 +1,29 @@
+#!/bin/sh
+
+PLATFORM=`/usr/bin/uname -p`
+VERSION=`/usr/bin/uname -r`
+
+# Solaris 8 requires patches to have /dev/random and /dev/urandom.
+if [ $VERSION -eq "5.8" ]; then
+
+	if [ ! -c $PKG_ROOT_DIR/dev/random ]; then
+		echo "ERROR: /dev/random must exist."
+		err=1
+	fi
+
+	if [ ! -c $PKG_ROOT_DIR/dev/urandom ]; then
+		echo "ERROR: /dev/urandom must exist."
+		err=1
+	fi
+
+	if [ "$err" = "1" ]; then
+		if [ $PLATFORM -eq "sparc" ]; then
+			echo "Please install patch 112438."
+		elif [ $PLATFORM -eq "i386" ]; then
+			echo "Please install patch 112439."
+		fi
+		exit 1
+	fi
+fi
+
+exit 0

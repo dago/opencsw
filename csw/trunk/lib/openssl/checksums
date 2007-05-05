@@ -1,3 +1,7 @@
-1b49e90fc8a75c3a507c0a624529aca5  download/openssl-0.9.7d.tar.gz
+3a7ff24f6ea5cd711984722ad654b927  download/openssl-0.9.8e.tar.gz
 b23884ff119b43aa80d8b768ca289a10  download/CSWopenssl.gspec
-4929903c2544ee08292e2e20d8c85039  download/dontask.diff
+ea07fe9ea8a91fecbb84f6349b12a371  download/CSWopenssl.checkinstall
+8093298b67861e241b0d2499c9f2ff89  download/CSWopenssl.depend
+bd6cd0851e18ab3e28f4067f2da7cb62  download/CSWopenssl.preremove
+fc9fdb3e2e8e70e0fe3ed41f747c26b3  download/CSWopenssl.prototype
+a7ff9d7dcac3e29f34b06d170a8b902f  download/openssl.patch
