@@ -49,8 +49,9 @@ INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
 post-patch: flavors-post-patch
 
 pre-configure: flavors-pre-configure
-	echo " ==> Creating configure script for  $* flavor"
-	ln -sf Configure $(WORKSRC)/configure
+	echo " ==> Creating configure script"
+	cd $(WORKSRC) && ln -nf Configure configure
+	$(MAKECOOKIE)
 
 configure-custom: flavors-configure
 	gmake CONFIGURE_ARGS="$(CONFIGURE_ARGS) $($(GARCH)_CONFIGURE_TARGET)" configure-$(WORKSRC)/configure
@@ -85,8 +86,8 @@ flavor-post-patch-%:
 	$(MAKECOOKIE)
 
 flavor-pre-configure-%:
-	echo " ==> Creating configure script for  $* flavor"
-	ln -sf Configure $(WORKSRC).$*/configure
+	echo " ==> Creating configure script for $* flavor"
+	cd $(WORKSRC).$* && ln -nf Configure configure
 	$(MAKECOOKIE)
 
 flavor-configure-%/configure:
