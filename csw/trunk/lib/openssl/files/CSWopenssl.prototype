@@ -754,14 +754,12 @@ s none /opt/csw/ssl/man/man3/RSA_padding_add_PKCS1_OAEP.3=RSA_padding_add_PKCS1_
 f none /opt/csw/ssl/man/man3/RSA_padding_add_PKCS1_type_1.3 0644 root bin
 s none /opt/csw/ssl/man/man3/RSA_padding_add_PKCS1_type_2.3=RSA_padding_add_PKCS1_type_1.3
 s none /opt/csw/ssl/man/man3/RSA_padding_add_SSLv23.3=RSA_padding_add_PKCS1_type_1.3
-s none /opt/csw/ssl/man/man3/RSA_padding_ad
-d_none.3=RSA_padding_add_PKCS1_type_1.3
+s none /opt/csw/ssl/man/man3/RSA_padding_add_none.3=RSA_padding_add_PKCS1_type_1.3
 s none /opt/csw/ssl/man/man3/RSA_padding_check_PKCS1_OAEP.3=RSA_padding_add_PKCS1_type_1.3
 s none /opt/csw/ssl/man/man3/RSA_padding_check_PKCS1_type_1.3=RSA_padding_add_PKCS1_type_1.3
 s none /opt/csw/ssl/man/man3/RSA_padding_check_PKCS1_type_2.3=RSA_padding_add_PKCS1_type_1.3
 s none /opt/csw/ssl/man/man3/RSA_padding_check_SSLv23.3=RSA_padding_add_PKCS1_type_1.3
-s none /opt/csw/ssl/man/man3/RSA_padding_chec
-k_none.3=RSA_padding_add_PKCS1_type_1.3
+s none /opt/csw/ssl/man/man3/RSA_padding_check_none.3=RSA_padding_add_PKCS1_type_1.3
 f none /opt/csw/ssl/man/man3/RSA_print.3 0644 root bin
 s none /opt/csw/ssl/man/man3/RSA_print_fp.3=RSA_print.3
 s none /opt/csw/ssl/man/man3/RSA_private_decrypt.3=RSA_public_encrypt.3
