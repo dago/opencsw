@@ -70,6 +70,13 @@ f none /opt/csw/include/openssl/ui_compat.h 0644 root bin
 f none /opt/csw/include/openssl/x509.h 0644 root bin
 f none /opt/csw/include/openssl/x509_vfy.h 0644 root bin
 f none /opt/csw/include/openssl/x509v3.h 0644 root bin
+d none /opt/csw/lib/amd64
+f none /opt/csw/lib/amd64/libcrypto.a 0644 root bin
+f none /opt/csw/lib/amd64/libcrypto.so.0.9.7 0755 root bin
+f none /opt/csw/lib/amd64/libcrypto.so.0.9.8 0755 root bin
+f none /opt/csw/lib/amd64/libssl.a 0644 root bin
+f none /opt/csw/lib/amd64/libssl.so.0.9.7 0755 root bin
+f none /opt/csw/lib/amd64/libssl.so.0.9.8 0755 root bin
 d none /opt/csw/lib/engines
 f none /opt/csw/lib/engines/lib4758cca.so 0555 root bin
 f none /opt/csw/lib/engines/libaep.so 0555 root bin
