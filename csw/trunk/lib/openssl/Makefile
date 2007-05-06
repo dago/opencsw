@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://www.openssl.org/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARREVISION).tar.gz 
-DISTFILES += $(call admfiles,CSWopenssl,checkinstall depend preremove prototype)
+DISTFILES += $(call admfiles,CSWopenssl,checkinstall depend preremove prototype-i386 prototype-sparc)
 DISTNAME   = $(GARNAME)-$(GARVERSION)$(GARREVISION)
 
 # We will compile older versions to include previous libraries
