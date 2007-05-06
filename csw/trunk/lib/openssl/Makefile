@@ -16,126 +16,112 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARREVISION).tar.gz
 DISTFILES += $(call admfiles,CSWopenssl,checkinstall depend preremove prototype-i386 prototype-sparc)
 DISTNAME   = $(GARNAME)-$(GARVERSION)$(GARREVISION)
 
-# We will compile older versions to include previous libraries
-# for the sake of comptability, so we need to have the following
+# We will include the following previous versions of libraries 
+# for comptatibility reasons
+OLD_VERSIONS	= 0.9.7m 0.9.6m
+
+# As we need to compile several versions, we need to have
 # directories (or files) version dependant
-WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).d/$(GARVERSION)
-COOKIEROOTDIR	= cookies.$(GARVERSION)
+WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).d/$(GARVERSION)/$(ISA)
+COOKIEROOTDIR	= cookies.$(GARVERSION).$(ISA)
 CHECKSUM_FILE	= checksums.$(GARVERSION)
 
 # add the solaris-386-cc, solaris-pentium-cc,... targets
 PATCHFILES = openssl.$(GARVERSION).patch
 
-# We will compile optimized version of libraries
-i386_FLAVORS		 = pentium amd64
-sparc_FLAVORS		 = sparcv8plus sparcv9
+# The list of optimized libraries we will compile
+# by arch
+i386_ISALIST		= pentium amd64
+sparc_ISALIST		= sparcv8plus sparcv9
 
-i386_CONFIGURE_OS_COMPILER	 	= solaris-386-cc
-pentium_CONFIGURE_OS_COMPILER 		= solaris-pentium-cc
-amd64_CONFIGURE_OS_COMPILER	 	= solaris64-x86_64-cc
+# The corresponding os/compiler to pass to the
+# openssl Configure script
+i386_OS_COMPILER 	= solaris-386-cc
+pentium_OS_COMPILER	= solaris-pentium-cc
+amd64_OS_COMPILER 	= solaris64-x86_64-cc
 
-sparc_CONFIGURE_OS_COMPILER	 	= solaris-sparcv8-cc
-sparcv8plus_CONFIGURE_OS_COMPILER	= solaris-sparcv9-cc
-sparcv9_CONFIGURE_OS_COMPILER		= solaris64-sparcv9-cc
+sparc_OS_COMPILER 	= solaris-sparcv8-cc
+sparcv8plus_OS_COMPILER	= solaris-sparcv9-cc
+sparcv9_OS_COMPILER	= solaris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(prefix) shared
+# Let's determine the appropriate os/compiler couple
+# to pass to the openssl Configure script
+ifndef ISA
+OS_COMPILER = $($(GARCH)_OS_COMPILER)
+else
+OS_COMPILER = $($(ISA)_OS_COMPILER)
+NOISALIST   = 1
+endif
 
-CONFIGURE_SCRIPTS = custom
-BUILD_SCRIPTS = custom
-INSTALL_SCRIPTS = custom
-CLEAN_SCRIPTS = custom
+CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER)
 
 include ../category.mk
 
 CFLAGS   += -mt -xstrconst
 CXXFLAGS += -noex -mt
 
-
+# If we are building optimized libraries, we will install
+# the libraries in $(libdir)/$(ISA) and will set the RUNPATH
+# accordingly
+ifdef ISA
+LDOPT_LIBS = $(libdir)/$(ISA) 
+LDFLAGS  += -L$(libdir)/$(ISA)
+ISA_LIBDIR = $(ISA)
+endif
 
 INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
 
-post-patch: flavors-post-patch
-
-pre-configure: flavors-pre-configure
-	echo " ==> Creating configure script"
+pre-configure: 
+	echo " ==> Creating configure script $(ISA) $(OS_COMPILER)"
 	cd $(WORKSRC) && ln -nf Configure configure
 	$(MAKECOOKIE)
 
-configure-custom: flavors-configure
-	gmake CONFIGURE_ARGS="$(CONFIGURE_ARGS) $($(GARCH)_CONFIGURE_OS_COMPILER)" configure-$(WORKSRC)/configure
-
-build-custom: build-$(WORKSRC)/Makefile flavors-build
-
-install-custom: install-$(WORKSRC)/Makefile flavors-install
+install-certs: build install-$(WORKSRC)/Makefile
 	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
 	$(MAKECOOKIE)
 
-# That's not finished ! we now compile and install 
-# older version of libraries
-post-install:
-	gmake GARVERSION=0.9.7 GARREVISION=m install_lib
-	gmake GARVERSION=0.9.6 GARREVISION=m install_lib
+
+# before making the package, we also need to install:
+# 	- optimized build of libraries and binaries (pentium, sparcv9, ...)
+# 	- previous build of libraries for comptatibility reasons
+post-install: install-certs
+	( for ISA in $($(GARCH)_ISALIST); do \
+		gmake GARVERSION=$(GARVERSION) GARREVISION=$(GARREVISION) ISA=$$ISA install-optimized-lib-and-bin; \
+		for VERSION in $(OLD_VERSIONS); do \
+			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
+			GARREVISION=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
+			gmake GARVERSION=$$GARVERSION GARREVISION=$$GARREVISION ISA=$$ISA install-old-libraries; \
+		done; \
+	  done )
 
 
-# This target is used to only install libraries from 
-# previous openssl versions included in the package
-install_lib: build flavors-install_lib
-	ginstall -d $(DESTDIR)$(libdir) 
-	ginstall -d $(DESTDIR)$(bindir) 
-	cd $(WORKSRC) && cp -f libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/
+# For optimized flavor build (pentium, sparvc9, ...), we only
+# install binaries and libraries
+install-optimized-lib-and-bin: build
+	@echo " ==> Installing optimized libraries and binaries from $(WORKSRC)"
+	ginstall -d $(DESTDIR)$(libdir)/$(ISA)
+	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
+	ginstall -d $(DESTDIR)$(bindir)/$(ISA_LIBDIR)
+	cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir)/$(ISA_LIBDIR)
+	$(MAKECOOKIE)
+
+# For previous versions build, we will only install the so files
+install-old-libraries: build
+	@echo " ==> Installing old libraries from $(WORKSRC)"
+	ginstall -d $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
+	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
 	$(MAKECOOKIE)
 
 
-# we should also clean previous build
-clean-custom: clean-all
-	gmake GARVERSION=0.9.7 GARREVISION=m clean-all
-	gmake GARVERSION=0.9.6 GARREVISION=m clean-all
+clean-everything: clean
+	( for ISA in "" $($(GARCH)_ISALIST); do \
+		gmake GARVERSION=$(GARVERSION) GARREVISION=$(GARREVISION) ISA=$$ISA clean; \
+		for VERSION in $(OLD_VERSIONS); do \
+			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
+			GARREVISION=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
+			gmake GARVERSION=$$GARVERSION GARREVISION=$$GARREVISION ISA=$$ISA clean; \
+		done; \
+	  done )
 
-#
-# The following targets deals with generation of 
-# pentium/amd64/sparcv9/... optimized libraries and binaries
-#
-flavors-%:
-	@( if [ "$*" = "configure" ]; then \
-       	  	TARGET="/$*"; \
-	   elif [ "$*"  = "pre-configure" ] || [ "$*" = "post-patch" ]; then \
-	   	TARGET=""; \
-	   else \
-	   	TARGET="/Makefile"; \
-	   fi; \
-	   for FLAVOR in $($(GARCH)_FLAVORS); do \
-		gmake flavor-$*-$$FLAVOR$$TARGET; \
-	   done )
-
-flavor-post-patch-%:
-	echo " ==> Creating $* flavor"
-	rm -rf $(WORKSRC).$*
-	gcp -a $(WORKSRC) $(WORKSRC).$*
-	$(MAKECOOKIE)
-
-flavor-pre-configure-%:
-	echo " ==> Creating configure script for $* flavor"
-	cd $(WORKSRC).$* && ln -nf Configure configure
-	$(MAKECOOKIE)
-
-flavor-configure-%/configure:
-	gmake CONFIGURE_ARGS="$(CONFIGURE_ARGS) $($(*)_CONFIGURE_OS_COMPILER)" configure-$(WORKSRC).$*/configure
-
-flavor-build-%/Makefile:
-	gmake build-$(WORKSRC).$*/Makefile 
-
-flavor-install-%/Makefile:
-	@echo " ==> Installing libraries and binaries from $(WORKSRC).$*"
-	ginstall -d $(DESTDIR)$(bindir)/$* 
-	ginstall -d $(DESTDIR)$(libdir)/$* 
-	cd $(WORKSRC).$* && cp -f libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$*
-	cd $(WORKSRC).$* && cp -f apps/openssl $(DESTDIR)$(bindir)/$*
-	$(MAKECOOKIE)
-
-flavor-install_lib-%/Makefile:
-	@echo " ==> Installing libraries from $(WORKSRC).$*"
-	ginstall -d $(DESTDIR)$(libdir)/$* 
-	cd $(WORKSRC).$* && cp -f libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/$*
-	$(MAKECOOKIE)
 
 
