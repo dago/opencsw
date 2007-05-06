@@ -1,6 +1,6 @@
 GARNAME = openssl
 GARVERSION = 0.9.8
-GARREVISION = e
+RELEASE = e
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -12,9 +12,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.openssl.org/source/
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARREVISION).tar.gz 
+DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz 
 DISTFILES += $(call admfiles,CSWopenssl,checkinstall depend preremove prototype-i386 prototype-sparc)
-DISTNAME   = $(GARNAME)-$(GARVERSION)$(GARREVISION)
+DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
 
 # We will include the following previous versions of libraries 
 # for comptatibility reasons
@@ -57,6 +57,8 @@ CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER)
 
 include ../category.mk
 
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+
 CFLAGS   += -mt -xstrconst
 CXXFLAGS += -noex -mt
 
@@ -83,17 +85,16 @@ install-certs: build install-$(WORKSRC)/Makefile
 
 # before making the package, we also need to install:
 # 	- optimized build of libraries and binaries (pentium, sparcv9, ...)
-# 	- previous build of libraries for comptatibility reasons
+# 	- previous build of libraries for compatibility reasons
 post-install: install-certs
 	( for ISA in $($(GARCH)_ISALIST); do \
-		gmake GARVERSION=$(GARVERSION) GARREVISION=$(GARREVISION) ISA=$$ISA install-optimized-lib-and-bin; \
+		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
 		for VERSION in $(OLD_VERSIONS); do \
 			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
-			GARREVISION=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
-			gmake GARVERSION=$$GARVERSION GARREVISION=$$GARREVISION ISA=$$ISA install-old-libraries; \
+			RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
+			gmake GARVERSION=$$GARVERSION RELEASE=$$RELEASE ISA=$$ISA install-old-libraries; \
 		done; \
 	  done )
-
 
 # For optimized flavor build (pentium, sparvc9, ...), we only
 # install binaries and libraries
@@ -112,16 +113,13 @@ install-old-libraries: build
 	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
 	$(MAKECOOKIE)
 
-
 clean-everything: clean
 	( for ISA in "" $($(GARCH)_ISALIST); do \
-		gmake GARVERSION=$(GARVERSION) GARREVISION=$(GARREVISION) ISA=$$ISA clean; \
+		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA clean; \
 		for VERSION in $(OLD_VERSIONS); do \
 			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
-			GARREVISION=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
-			gmake GARVERSION=$$GARVERSION GARREVISION=$$GARREVISION ISA=$$ISA clean; \
+			RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
+			gmake GARVERSION=$$GARVERSION RELEASE=$$RELEASE ISA=$$ISA clean; \
 		done; \
 	  done )
-
-
 
