@@ -55,9 +55,6 @@ OS_COMPILER = $($(ISA)_OS_COMPILER)
 NOISALIST   = 1
 endif
 
-# we also strip libraries (without forgetting optimized ones)
-STRIP_DIRS = $(DESTDIR)$(libdir) $(foreach _ISA, $($(GARCH)_ISALIST), $(DESTDIR)$(libdir)/$(_ISA))
-
 CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER)
 
 include ../category.mk
@@ -88,6 +85,11 @@ install-certs: build install-$(WORKSRC)/Makefile
 	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
 	$(MAKECOOKIE)
 
+# we remove every debug information except symbol table
+# (should rather be done in the gar scripts)
+striplib:
+	strip -x $(DESTDIR)$(libdir)/$(ISA_LIBDIR)/*.so
+	strip -x $(DESTDIR)$(libdir)/engines/*.so
 
 # before making the package, we also need to install:
 # 	- optimized build of libraries and binaries (pentium, sparcv9, ...)
@@ -95,8 +97,7 @@ install-certs: build install-$(WORKSRC)/Makefile
 #
 # we also add write access to ensure library stripping will work
 # 
-post-install: install-certs
-	chmod -R u+w $(DESTDIR)/$(libdir)
+post-install: install-certs striplib
 	( for ISA in $($(GARCH)_ISALIST); do \
 		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
 		for VERSION in $(OLD_VERSIONS); do \
@@ -108,7 +109,7 @@ post-install: install-certs
 
 # For optimized flavor build (pentium, sparvc9, ...), we only
 # install binaries and libraries
-install-optimized-lib-and-bin: build
+install-optimized-lib-and-bin: build striplib
 	@echo " ==> Installing optimized libraries and binaries from $(WORKSRC)"
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA)
 	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
@@ -117,7 +118,7 @@ install-optimized-lib-and-bin: build
 	$(MAKECOOKIE)
 
 # For previous versions build, we will only install the so files
-install-old-libraries: build
+install-old-libraries: build striplib
 	@echo " ==> Installing old libraries from $(WORKSRC)"
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
 	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
