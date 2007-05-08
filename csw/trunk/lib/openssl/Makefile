@@ -31,18 +31,20 @@ PATCHFILES = openssl.$(GARVERSION).patch
 
 # The list of optimized libraries we will compile
 # by arch
-i386_ISALIST		= pentium amd64
-sparc_ISALIST		= sparcv8plus sparcv9
+i386_ISALIST		= pentium_pro amd64
+sparc_ISALIST		= sparcv8plus+vis sparcv9
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
 i386_OS_COMPILER 	= solaris-386-cc
 pentium_OS_COMPILER	= solaris-pentium-cc
+pentium_pro_OS_COMPILER	= solaris-pentium_pro-cc
 amd64_OS_COMPILER 	= solaris64-x86_64-cc
 
-sparc_OS_COMPILER 	= solaris-sparcv8-cc
-sparcv8plus_OS_COMPILER	= solaris-sparcv9-cc
-sparcv9_OS_COMPILER	= solaris64-sparcv9-cc
+sparc_OS_COMPILER 		= solaris-sparcv8-cc
+sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
+sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
+sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
 # Let's determine the appropriate os/compiler couple
 # to pass to the openssl Configure script
