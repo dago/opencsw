@@ -72,6 +72,7 @@ ISA_LIBDIR = $(ISA)
 endif
 
 INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
+CONFIGURE_ENV += PERL="/usr/bin/perl"
 
 pre-configure: 
 	echo " ==> Creating configure script $(ISA) $(OS_COMPILER)"
