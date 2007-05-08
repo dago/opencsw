@@ -88,8 +88,10 @@ install-certs: build install-$(WORKSRC)/Makefile
 # we remove every debug information except symbol table
 # (should rather be done in the gar scripts)
 striplib:
-	strip -x $(DESTDIR)$(libdir)/$(ISA_LIBDIR)/*.so
-	strip -x $(DESTDIR)$(libdir)/engines/*.so
+	chmod -R u+w $(DESTDIR)$(libdir)/$(ISA_LIBDIR)/
+	strip -x $(DESTDIR)$(libdir)/$(ISA_LIBDIR)/*.so*
+	chmod -R u+w $(DESTDIR)$(libdir)/engines
+	strip -x $(DESTDIR)$(libdir)/engines/*.so*
 
 # before making the package, we also need to install:
 # 	- optimized build of libraries and binaries (pentium, sparcv9, ...)

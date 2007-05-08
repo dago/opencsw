@@ -71,9 +71,7 @@ f none /opt/csw/include/openssl/x509.h 0644 root bin
 f none /opt/csw/include/openssl/x509_vfy.h 0644 root bin
 f none /opt/csw/include/openssl/x509v3.h 0644 root bin
 d none /opt/csw/lib/amd64
-f none /opt/csw/lib/amd64/libcrypto.a 0644 root bin
 f none /opt/csw/lib/amd64/libcrypto.so.0.9.8 0755 root bin
-f none /opt/csw/lib/amd64/libssl.a 0644 root bin
 f none /opt/csw/lib/amd64/libssl.so.0.9.8 0755 root bin
 d none /opt/csw/lib/engines
 f none /opt/csw/lib/engines/lib4758cca.so 0555 root bin
@@ -85,19 +83,15 @@ f none /opt/csw/lib/engines/libgmp.so 0555 root bin
 f none /opt/csw/lib/engines/libnuron.so 0555 root bin
 f none /opt/csw/lib/engines/libsureware.so 0555 root bin
 f none /opt/csw/lib/engines/libubsec.so 0555 root bin
-f none /opt/csw/lib/libcrypto.a 0644 root bin
 s none /opt/csw/lib/libcrypto.so=libcrypto.so.0.9.8
 f none /opt/csw/lib/libcrypto.so.0.9.7 0555 root bin
 f none /opt/csw/lib/libcrypto.so.0.9.8 0555 root bin
-f none /opt/csw/lib/libssl.a 0644 root bin
 s none /opt/csw/lib/libssl.so=libssl.so.0.9.8
 f none /opt/csw/lib/libssl.so.0.9.7 0555 root bin
 f none /opt/csw/lib/libssl.so.0.9.8 0555 root bin
 d none /opt/csw/lib/pentium_pro
-f none /opt/csw/lib/pentium_pro/libcrypto.a 0644 root bin
 f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.7 0755 root bin
 f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.8 0755 root bin
-f none /opt/csw/lib/pentium_pro/libssl.a 0644 root bin
 f none /opt/csw/lib/pentium_pro/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/pentium_pro/libssl.so.0.9.8 0755 root bin
 d none /opt/csw/lib/pkgconfig
