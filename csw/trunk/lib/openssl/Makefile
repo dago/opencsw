@@ -18,7 +18,7 @@ DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
 
 # We will include the following previous versions of libraries 
 # for comptatibility reasons
-OLD_VERSIONS	= 0.9.7m 0.9.6m
+OLD_VERSIONS	= 0.9.7m
 
 # As we need to compile several versions, we need to have
 # directories (or files) version dependant
