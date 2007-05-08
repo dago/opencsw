@@ -55,6 +55,9 @@ OS_COMPILER = $($(ISA)_OS_COMPILER)
 NOISALIST   = 1
 endif
 
+# we also strip libraries (without forgetting optimized ones)
+STRIP_DIRS = $(DESTDIR)$(libdir) $(foreach _ISA, $($(GARCH)_ISALIST), $(DESTDIR)$(libdir)/$(_ISA))
+
 CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER)
 
 include ../category.mk
@@ -89,7 +92,11 @@ install-certs: build install-$(WORKSRC)/Makefile
 # before making the package, we also need to install:
 # 	- optimized build of libraries and binaries (pentium, sparcv9, ...)
 # 	- previous build of libraries for compatibility reasons
+#
+# we also add write access to ensure library stripping will work
+# 
 post-install: install-certs
+	chmod -R u+w $(DESTDIR)/$(libdir)
 	( for ISA in $($(GARCH)_ISALIST); do \
 		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
 		for VERSION in $(OLD_VERSIONS); do \
