@@ -88,8 +88,11 @@ install-certs: build install-$(WORKSRC)/Makefile
 # we remove every debug information except symbol table
 # (should rather be done in the gar scripts)
 striplib:
-	chmod -R u+w $(DESTDIR)$(libdir)/$(ISA_LIBDIR)/
-	strip -x $(DESTDIR)$(libdir)/$(ISA_LIBDIR)/*.so*
+	chmod -R u+w $(DESTDIR)$(libdir)
+	strip -x $(DESTDIR)$(libdir)/*.so*
+	( for ISA in $($(GARCH)_ISALIST); do \
+		strip -x $(DESTDIR)$(libdir)/$$_ISA/*.so*; \
+	  done )
 	chmod -R u+w $(DESTDIR)$(libdir)/engines
 	strip -x $(DESTDIR)$(libdir)/engines/*.so*
 
@@ -99,19 +102,22 @@ striplib:
 #
 # we also add write access to ensure library stripping will work
 # 
-post-install: install-certs striplib
+post-install: install-certs 
 	( for ISA in $($(GARCH)_ISALIST); do \
 		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
-		for VERSION in $(OLD_VERSIONS); do \
-			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
-			RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
+	  done )
+	( for VERSION in $(OLD_VERSIONS); do \
+		GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
+		RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
+		for ISA in "" $($(GARCH)_ISALIST); do \
 			gmake GARVERSION=$$GARVERSION RELEASE=$$RELEASE ISA=$$ISA install-old-libraries; \
 		done; \
 	  done )
+	gmake striplib
 
 # For optimized flavor build (pentium, sparvc9, ...), we only
 # install binaries and libraries
-install-optimized-lib-and-bin: build striplib
+install-optimized-lib-and-bin: build 
 	@echo " ==> Installing optimized libraries and binaries from $(WORKSRC)"
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA)
 	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
@@ -120,7 +126,7 @@ install-optimized-lib-and-bin: build striplib
 	$(MAKECOOKIE)
 
 # For previous versions build, we will only install the so files
-install-old-libraries: build striplib
+install-old-libraries: build 
 	@echo " ==> Installing old libraries from $(WORKSRC)"
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
 	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
