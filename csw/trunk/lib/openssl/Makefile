@@ -91,7 +91,7 @@ striplib:
 	chmod -R u+w $(DESTDIR)$(libdir)
 	strip -x $(DESTDIR)$(libdir)/*.so*
 	( for ISA in $($(GARCH)_ISALIST); do \
-		strip -x $(DESTDIR)$(libdir)/$$_ISA/*.so*; \
+		strip -x $(DESTDIR)$(libdir)/$$ISA/*.so*; \
 	  done )
 	chmod -R u+w $(DESTDIR)$(libdir)/engines
 	strip -x $(DESTDIR)$(libdir)/engines/*.so*
