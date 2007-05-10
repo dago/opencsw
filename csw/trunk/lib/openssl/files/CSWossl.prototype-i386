@@ -98,6 +98,8 @@ d none /opt/csw/lib/pkgconfig
 f none /opt/csw/lib/pkgconfig/libcrypto.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/libssl.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/openssl.pc 0644 root bin
+d none /opt/csw/share/doc/openssl
+f none /opt/csw/share/doc/openssl/changelog.CSW 644 root bin
 d none /opt/csw/ssl
 d none /opt/csw/ssl/certs
 f none /opt/csw/ssl/certs/1e49180d.0 0644 root bin

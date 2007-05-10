@@ -102,6 +102,8 @@ s none /opt/csw/lib/sparcv9/libssl.so=libssl.so.0.9.8
 s none /opt/csw/lib/sparcv9/libssl.so.0=libssl.so.0.9.8
 f none /opt/csw/lib/sparcv9/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv9/libssl.so.0.9.8 0755 root bin
+d none /opt/csw/share/doc/openssl
+f none /opt/csw/share/doc/openssl/changelog.CSW 644 root bin
 d none /opt/csw/ssl
 d none /opt/csw/ssl/certs
 f none /opt/csw/ssl/certs/1e49180d.0 0644 root bin

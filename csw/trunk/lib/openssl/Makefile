@@ -13,8 +13,9 @@ endef
 
 MASTER_SITES = http://www.openssl.org/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz 
-DISTFILES += $(call admfiles,CSWossl,checkinstall depend preremove prototype-i386 prototype-sparc)
+DISTFILES += $(call admfiles,CSWossl,checkinstall depend prototype-i386 prototype-sparc)
 DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
+DISTFILES += changelog.CSW
 
 # We will include the following previous versions of libraries 
 # for comptatibility reasons
@@ -103,6 +104,7 @@ striplib:
 # we also add write access to ensure library stripping will work
 # 
 post-install: install-certs 
+	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)/$(docdir)/$(GARNAME)/changelog.CSW
 	( for ISA in $($(GARCH)_ISALIST); do \
 		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
 	  done )
