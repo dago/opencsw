@@ -1,0 +1,11 @@
+--- elinks-0.11.1.orig/src/intl/gettext/loadmsgcat.c
++++ elinks-0.11.1/src/intl/gettext/loadmsgcat.c
+@@ -247,7 +247,7 @@
+ 	{
+ 		struct string filename;
+ 
+-		if (init_string(&filename)
++		if (init_string(&filename) && 0
+ 		    && add_filename_to_string(&filename, domain_file)) {
+ 			fd = open(filename.source, O_RDONLY | O_BINARY);
+ 		}
