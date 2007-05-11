@@ -1,3 +1,10 @@
+elinks (0.11.3) unstable
+
+  * New upstream version.
+  * Security path for CVE-2007-2027.
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 11 May 2007 21:59:53 +0200
+
 elinks (0.11.2) unstable
 
   * New upstream version.

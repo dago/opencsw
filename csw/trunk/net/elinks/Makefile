@@ -1,5 +1,5 @@
 GARNAME = elinks
-GARVERSION = 0.11.2
+GARVERSION = 0.11.3
 CATEGORIES = net
 
 DESCRIPTION = An advanced text mode web browser
@@ -18,6 +18,9 @@ DISTFILES += changelog.CSW
 # suppress the rdynamic test which doesn't
 # work correctly
 PATCHFILES = configure_no_rdynamic.patch
+
+# Debian security path for CVE-2007-2027
+PATCHFILES += elinks-417789.diff
 
 # we use bash instead of sh as the Makefiles
 # use "test -e" unsupported with sun sh
