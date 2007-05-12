@@ -1,0 +1,31 @@
+#!/bin/sh
+
+
+#checks for /dev/random are done in checkinstall
+
+grep '^sshd:' $PKG_ROOT_DIR/etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+	getent passwd sshd >/dev/null
+	if [ $? -ne 0 ] ; then
+		NEEDUSER=1
+	fi
+fi
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then
+	PKG_ROOT_DIR=/
+fi
+
+if [ "$NEEDUSER" = 1 ] ; then
+	echo Adding required sshd user
+	chroot $PKG_ROOT_DIR /usr/sbin/useradd -d /var/run -c 'sshd nonpriv userid' -s /bin/false sshd
+fi
+
+if [ "$PKG_ROOT_DIR" = "/" ] ; then
+	# paranoia in case we are overwriting CURRENTLY RUNNING DEMON!
+	if [ -x /opt/csw/sbin/sshd ] ; then
+		mv /opt/csw/sbin/sshd /opt/csw/sbin/sshd.old
+	fi
+fi
+
+#this gets done via the prototype file
+#	mkdir $PKG_ROOT_DIR/var/empty
