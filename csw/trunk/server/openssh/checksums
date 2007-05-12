@@ -1,9 +1,10 @@
 6a7fa99f44d9e1b5b04d15256e1405bb  download/openssh-4.6p1.tar.gz
-b0001cb12201a0e3c85a5ffcdffd4702  download/CSWossh.gspec
+82de2a101febfb512bab693027082cb5  download/CSWossh.gspec
 3d49ea84cc43ebe328cbcbaed102de43  download/CSWossh.checkinstall
 3dc2331bf6bf1ae12e8bd90bbfa26c16  download/CSWossh.depend
-fcfe1450365894aa13c5d00ce1c03dd7  download/CSWossh.postinstall
-94251679b10a619c7a66511759ac6f1b  download/CSWossh.preinstall
-208b2097a378773f7c2e4a56cb8c6d5b  download/CSWossh.preremove
-fef69dcbc67dfedf6bb0d86c11c71828  download/CSWossh.prototype
-0c7fca2f4bee3ecd489ebd85fdd8cdee  download/sshd_config.CSW
+17c548727c158b2b9b9ec28be8489b35  download/CSWossh.preinstall
+2b1b66c6b67e6bccc337d0c493eeae84  download/CSWossh.prototype
+0c7fca2f4bee3ecd489ebd85fdd8cdee  download/sshd_config
+1ab99bc5ac0fbb9b56b0c8258b57d3ba  download/cswopenssh
+1ab99bc5ac0fbb9b56b0c8258b57d3ba  download/svc-cswopenssh
+5d15faeaf5f798d565b4b7eb2d4daa44  download/cswopenssh.xml

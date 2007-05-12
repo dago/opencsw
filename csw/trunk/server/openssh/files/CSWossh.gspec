@@ -2,3 +2,9 @@
 %var            pkgname CSWossh
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/LICENCE
+%var            initname cswopenssh
+%var            INIT_KILL_PRIO 99
+%var            INIT_START_PRIO 10
+%var            SERVICE_CONF_FILES /opt/csw/etc/ssh/sshd_config
+%var            SERVICE_NAME openssh
+%include        url file://%{PKGLIB}/smf_enabled.gspec

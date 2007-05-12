@@ -20,12 +20,3 @@ if [ "$NEEDUSER" = 1 ] ; then
 	chroot $PKG_ROOT_DIR /usr/sbin/useradd -d /var/run -c 'sshd nonpriv userid' -s /bin/false sshd
 fi
 
-if [ "$PKG_ROOT_DIR" = "/" ] ; then
-	# paranoia in case we are overwriting CURRENTLY RUNNING DEMON!
-	if [ -x /opt/csw/sbin/sshd ] ; then
-		mv /opt/csw/sbin/sshd /opt/csw/sbin/sshd.old
-	fi
-fi
-
-#this gets done via the prototype file
-#	mkdir $PKG_ROOT_DIR/var/empty
