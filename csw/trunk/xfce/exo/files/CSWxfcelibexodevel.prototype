@@ -1,6 +1,6 @@
 d none /opt/csw/include ? ? ?
-d none /opt/csw/include/exo-0.3/exo 0755 root bin
-d none /opt/csw/include/exo-0.3/exo-hal 0755 root bin
+d none /opt/csw/include/exo-0.3/exo ? ? ?
+d none /opt/csw/include/exo-0.3/exo-hal ? ? ?
 f none /opt/csw/include/exo-0.3/exo-hal/exo-hal.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-binding.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-cell-renderer-ellipsized-text.h 0644 root bin
