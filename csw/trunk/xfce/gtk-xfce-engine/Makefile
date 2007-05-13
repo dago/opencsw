@@ -24,4 +24,4 @@ CONFIGURE_ARGS = --prefix=/opt/csw --disable-debug --enable-final
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
-	( if [ -d $(DESTDIR)/opt/csw/lib/gtk-2.0/2.10.0/engines ] ; then  mv $(DESTDIR)/opt/csw/lib/gtk-2.0/2.10.0/engines $(DESTDIR)/opt/csw/lib/gtk-2.0 ; rmdir $(DESTDIR)/opt/csw/lib/gtk-2.0/2.10.0 ; fi ; )
+	( if [ -d $(DESTDIR)/opt/csw/lib/gtk-2.0/2.10.0/engines ] ; then  cp -frpv $(DESTDIR)/opt/csw/lib/gtk-2.0/2.10.0/engines $(DESTDIR)/opt/csw/lib/gtk-2.0 ; rm -fr $(DESTDIR)/opt/csw/lib/gtk-2.0/2.10.0 ; fi ; )
