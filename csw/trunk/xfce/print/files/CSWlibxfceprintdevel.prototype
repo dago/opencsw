@@ -1,6 +1,6 @@
 d none /opt/csw/include ? ? ?
-d none /opt/csw/include/xfce4 0755 root bin
-d none /opt/csw/include/xfce4/libxfprint 0755 root bin
+d none /opt/csw/include/xfce4 ? ? ?
+d none /opt/csw/include/xfce4/libxfprint ? ? ?
 f none /opt/csw/include/xfce4/libxfprint/common.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfprint/job.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfprint/libxfprint.h 0644 root bin
