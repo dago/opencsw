@@ -7,7 +7,7 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfce_appfinder, depend)
+DISTFILES += CSWxfceappfinder.depend CSWxfceappfinder.gspec CSWxfceappfinder.prototype
 
 include ../category.mk
 
