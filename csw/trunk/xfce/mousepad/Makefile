@@ -8,7 +8,8 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfcemousepad, depend)
+DISTFILES += CSWxfcemousepad.depend CSWxfcemousepad.gspec CSWxfcemousepad.prototype
+
 
 # PATCHFILES += configure.in.diff
 # PATCHFILES += configure.diff
