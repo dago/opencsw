@@ -1,5 +1,5 @@
 d none /opt/csw/include ? ? ?
-d none /opt/csw/include/xfce4/libxfce4panel 0755 root bin
+d none /opt/csw/include/xfce4/libxfce4panel ? ? ?
 f none /opt/csw/include/xfce4/libxfce4panel/xfce-arrow-button.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfce4panel/xfce-hvbox.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfce4panel/xfce-itembar.h 0644 root bin

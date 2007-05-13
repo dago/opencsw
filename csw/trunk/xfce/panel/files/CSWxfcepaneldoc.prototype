@@ -1,7 +1,7 @@
 d none /opt/csw/share ? ? ?
-d none /opt/csw/share/gtk-doc 0755 root bin
-d none /opt/csw/share/gtk-doc/html 0755 root bin
-d none /opt/csw/share/gtk-doc/html/libxfce4panel 0755 root bin
+d none /opt/csw/share/gtk-doc ? ? ?
+d none /opt/csw/share/gtk-doc/html ? ? ?
+d none /opt/csw/share/gtk-doc/html/libxfce4panel ? ? ?
 f none /opt/csw/share/gtk-doc/html/libxfce4panel/XfceArrowButton.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4panel/XfceExternalPanelPlugin.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4panel/XfceHVBox.html 0644 root bin
@@ -22,9 +22,9 @@ f none /opt/csw/share/gtk-doc/html/libxfce4panel/libxfce4panel.devhelp2 0644 roo
 f none /opt/csw/share/gtk-doc/html/libxfce4panel/right.png 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4panel/style.css 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4panel/up.png 0644 root bin
-d none /opt/csw/share/xfce4 0755 root bin
-d none /opt/csw/share/xfce4/doc/C 0755 root bin
-d none /opt/csw/share/xfce4/doc/C/images 0755 root bin
+d none /opt/csw/share/xfce4 ? ? ?
+d none /opt/csw/share/xfce4/doc/C ? ? ?
+d none /opt/csw/share/xfce4/doc/C/images ? ? ?
 f none /opt/csw/share/xfce4/doc/C/images/add_item_dialog.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/C/images/default_bottom_panel.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/C/images/default_top_panel.png 0644 root bin
