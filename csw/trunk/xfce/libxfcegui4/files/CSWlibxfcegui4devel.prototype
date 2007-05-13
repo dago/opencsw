@@ -1,6 +1,6 @@
 d none /opt/csw/include ? ? ?
-d none /opt/csw/include/xfce4 0755 root bin
-d none /opt/csw/include/xfce4/libxfcegui4 0755 root bin
+d none /opt/csw/include/xfce4 ? ? ?
+d none /opt/csw/include/xfce4/libxfcegui4 ? ? ?
 f none /opt/csw/include/xfce4/libxfcegui4/dialogs.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfcegui4/gtk_style.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfcegui4/gtktoxevent.h 0644 root bin
