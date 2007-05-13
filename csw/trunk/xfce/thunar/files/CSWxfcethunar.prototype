@@ -1,10 +1,10 @@
 d none /opt/csw/bin ? ? ?
 f none /opt/csw/bin/Thunar 0755 root bin
 s none /opt/csw/bin/thunar=Thunar
-d none /opt/csw/etc/xdg 0755 root bin
-d none /opt/csw/etc/xdg/Thunar 0755 root bin
+d none /opt/csw/etc/xdg ? ? ?
+d none /opt/csw/etc/xdg/Thunar ? ? ?
 f none /opt/csw/etc/xdg/Thunar/uca.xml 0644 root bin
-d none /opt/csw/libexec 0755 root bin
+d none /opt/csw/libexec ? ? ?
 f none /opt/csw/libexec/ThunarBulkRename 0755 root bin
 f none /opt/csw/libexec/ThunarHelp 0755 root bin
 f none /opt/csw/libexec/thunar-sendto-email 0755 root bin
@@ -13,24 +13,24 @@ f none /opt/csw/libexec/thunar-vfs-mime-cleaner-1 0755 root bin
 f none /opt/csw/libexec/thunar-vfs-pixbuf-thumbnailer-1 0755 root bin
 f none /opt/csw/libexec/thunar-vfs-update-thumbnailers-cache-1 0755 root bin
 d none /opt/csw/share ? ? ?
-d none /opt/csw/share/Thunar 0755 root bin
-d none /opt/csw/share/Thunar/sendto 0755 root bin
+d none /opt/csw/share/Thunar ? ? ?
+d none /opt/csw/share/Thunar/sendto ? ? ?
 f none /opt/csw/share/Thunar/sendto/thunar-sendto-email.desktop 0644 root bin
-d none /opt/csw/share/applications 0755 root bin
+d none /opt/csw/share/applications ? ? ?
 f none /opt/csw/share/applications/Thunar-bulk-rename.desktop 0644 root bin
 f none /opt/csw/share/applications/Thunar-folder-handler.desktop 0644 root bin
 f none /opt/csw/share/applications/Thunar.desktop 0644 root bin
-d none /opt/csw/share/icons/hicolor/16x16/apps 0755 root bin
+d none /opt/csw/share/icons/hicolor/16x16/apps ? ? ?
 f none /opt/csw/share/icons/hicolor/16x16/apps/Thunar.png 0644 root bin
-d none /opt/csw/share/icons/hicolor/16x16/stock/navigation 0755 root bin
+d none /opt/csw/share/icons/hicolor/16x16/stock/navigation ? ? ?
 f none /opt/csw/share/icons/hicolor/16x16/stock/navigation/stock_thunar-shortcuts.png 0644 root bin
 f none /opt/csw/share/icons/hicolor/16x16/stock/navigation/stock_thunar-templates.png 0644 root bin
-d none /opt/csw/share/icons/hicolor/24x24 0755 root bin
-d none /opt/csw/share/icons/hicolor/24x24/apps 0755 root bin
+d none /opt/csw/share/icons/hicolor/24x24 ? ? ?
+d none /opt/csw/share/icons/hicolor/24x24/apps ? ? ?
 f none /opt/csw/share/icons/hicolor/24x24/apps/Thunar.png 0644 root bin
-d none /opt/csw/share/icons/hicolor/48x48/apps 0755 root bin
+d none /opt/csw/share/icons/hicolor/48x48/apps ? ? ?
 f none /opt/csw/share/icons/hicolor/48x48/apps/Thunar.png 0644 root bin
-d none /opt/csw/share/icons/hicolor/scalable/apps 0755 root bin
+d none /opt/csw/share/icons/hicolor/scalable/apps ? ? ?
 f none /opt/csw/share/icons/hicolor/scalable/apps/Thunar.svg 0644 root bin
 d none /opt/csw/share/locale ? ? ?
 d none /opt/csw/share/locale/az ? ? ?
@@ -49,12 +49,12 @@ f none /opt/csw/share/locale/cs/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/de ? ? ?
 d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/de/LC_MESSAGES/Thunar.mo 0644 root bin
-d none /opt/csw/share/locale/dz/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/dz/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/dz/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/el ? ? ?
 d none /opt/csw/share/locale/el/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/el/LC_MESSAGES/Thunar.mo 0644 root bin
-d none /opt/csw/share/locale/eo/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/eo/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/eo/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/es ? ? ?
 d none /opt/csw/share/locale/es/LC_MESSAGES ? ? ?
@@ -86,7 +86,7 @@ f none /opt/csw/share/locale/it/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/ja ? ? ?
 d none /opt/csw/share/locale/ja/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/ja/LC_MESSAGES/Thunar.mo 0644 root bin
-d none /opt/csw/share/locale/ka/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/ka/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/ka/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/ko ? ? ?
 d none /opt/csw/share/locale/ko/LC_MESSAGES ? ? ?
@@ -94,7 +94,7 @@ f none /opt/csw/share/locale/ko/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/lt ? ? ?
 d none /opt/csw/share/locale/lt/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/lt/LC_MESSAGES/Thunar.mo 0644 root bin
-d none /opt/csw/share/locale/mk/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/mk/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/mk/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/nl ? ? ?
 d none /opt/csw/share/locale/nl/LC_MESSAGES ? ? ?
@@ -124,7 +124,7 @@ f none /opt/csw/share/locale/uk/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/vi ? ? ?
 d none /opt/csw/share/locale/vi/LC_MESSAGES ? ? ?
 d none /opt/csw/share/locale/zh_CN ? ? ?
-d none /opt/csw/share/locale/zh_CN/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/zh_CN/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/zh_CN/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/locale/zh_TW ? ? ?
 d none /opt/csw/share/locale/zh_TW/LC_MESSAGES ? ? ?
@@ -132,11 +132,11 @@ f none /opt/csw/share/locale/zh_TW/LC_MESSAGES/Thunar.mo 0644 root bin
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/man1 ? ? ?
 f none /opt/csw/share/man/man1/Thunar.1 0644 root bin
-d none /opt/csw/share/pixmaps 0755 root bin
-d none /opt/csw/share/pixmaps/Thunar 0755 root bin
+d none /opt/csw/share/pixmaps ? ? ?
+d none /opt/csw/share/pixmaps/Thunar ? ? ?
 f none /opt/csw/share/pixmaps/Thunar/Thunar-about-logo.png 0644 root bin
 f none /opt/csw/share/pixmaps/Thunar/Thunar-fallback-icon.png 0644 root bin
-d none /opt/csw/share/thumbnailers 0755 root bin
+d none /opt/csw/share/thumbnailers ? ? ?
 f none /opt/csw/share/thumbnailers/thunar-vfs-font-thumbnailer-1.desktop 0644 root bin
 i copyright=CSWxfcethunar.copyright
 i depend=CSWxfcethunar.depend
