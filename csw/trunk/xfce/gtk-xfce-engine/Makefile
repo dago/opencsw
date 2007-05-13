@@ -8,7 +8,8 @@ endef
 
 GARVERSION = 2.4.1
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgtkxfceengine, depend)
+DISTFILES += CSWgtkxfceengine.depend CSWgtkxfceengine.gspec CSWgtkxfceengine.prototype
+
 
 include ../category.mk
 
