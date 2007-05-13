@@ -1,6 +1,6 @@
 d none /opt/csw/include ? ? ?
-d none /opt/csw/include/xfce4 0755 root bin
-d none /opt/csw/include/xfce4/libxfce4mcs 0755 root bin
+d none /opt/csw/include/xfce4 ? ? ?
+d none /opt/csw/include/xfce4/libxfce4mcs ? ? ?
 f none /opt/csw/include/xfce4/libxfce4mcs/mcs-client-enum-types.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfce4mcs/mcs-client.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfce4mcs/mcs-common.h 0644 root bin
