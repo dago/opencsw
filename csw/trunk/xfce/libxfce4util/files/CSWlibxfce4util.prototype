@@ -8,7 +8,7 @@ d none /opt/csw/sbin ? ? ?
 f none /opt/csw/sbin/xfce4-kiosk-query 0755 root bin
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/locale ? ? ?
-d none /opt/csw/share/locale/ar/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/ar/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/ar/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/ca ? ? ?
 d none /opt/csw/share/locale/ca/LC_MESSAGES ? ? ?
@@ -16,14 +16,14 @@ f none /opt/csw/share/locale/ca/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/cs ? ? ?
 d none /opt/csw/share/locale/cs/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/cs/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/cy/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/cy/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/cy/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/de ? ? ?
 d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/de/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/dz/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/dz/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/dz/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/en_GB/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/en_GB/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/en_GB/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/eu ? ? ?
 d none /opt/csw/share/locale/eu/LC_MESSAGES ? ? ?
@@ -46,7 +46,7 @@ f none /opt/csw/share/locale/it/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/ja ? ? ?
 d none /opt/csw/share/locale/ja/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/ja/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/ka/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/ka/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/ka/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/ko ? ? ?
 d none /opt/csw/share/locale/ko/LC_MESSAGES ? ? ?
@@ -54,7 +54,7 @@ f none /opt/csw/share/locale/ko/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/lt ? ? ?
 d none /opt/csw/share/locale/lt/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/lt/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/mk/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/mk/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/mk/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/nl ? ? ?
 d none /opt/csw/share/locale/nl/LC_MESSAGES ? ? ?
@@ -65,7 +65,7 @@ f none /opt/csw/share/locale/pl/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/pt_BR ? ? ?
 d none /opt/csw/share/locale/pt_BR/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/pt_BR/LC_MESSAGES/libxfce4util.mo 0644 root bin
-d none /opt/csw/share/locale/sq/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/sq/LC_MESSAGES ? ? ?
 f none /opt/csw/share/locale/sq/LC_MESSAGES/libxfce4util.mo 0644 root bin
 d none /opt/csw/share/locale/tr ? ? ?
 d none /opt/csw/share/locale/tr/LC_MESSAGES ? ? ?

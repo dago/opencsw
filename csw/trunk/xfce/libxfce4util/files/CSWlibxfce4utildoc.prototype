@@ -1,5 +1,5 @@
 d none /opt/csw/share ? ? ?
-d none /opt/csw/share/gtk-doc/html/libxfce4util 0755 root bin
+d none /opt/csw/share/gtk-doc/html/libxfce4util ? ? ?
 f none /opt/csw/share/gtk-doc/html/libxfce4util/home.png 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4util/index.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfce4util/index.sgml 0644 root bin

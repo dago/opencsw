@@ -1,5 +1,5 @@
 d none /opt/csw/include ? ? ?
-d none /opt/csw/include/xfce4/libxfce4util 0755 root bin
+d none /opt/csw/include/xfce4/libxfce4util ? ? ?
 f none /opt/csw/include/xfce4/libxfce4util/debug.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfce4util/i18n.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfce4util/libxfce4util-config.h 0644 root bin
