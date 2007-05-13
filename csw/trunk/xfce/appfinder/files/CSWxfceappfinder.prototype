@@ -138,6 +138,6 @@ f none /opt/csw/share/xfce4/doc/fr/images/appfinder-handle-popup.png 0644 root b
 f none /opt/csw/share/xfce4/doc/fr/images/appfinder-item-popup.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/fr/images/default_appfinder.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/fr/xfce4-appfinder.html 0644 root bin
-i copyright=CSWxfce_appfinder.copyright
-i depend=CSWxfce_appfinder.depend
-i pkginfo=CSWxfce_appfinder.pkginfo
+i copyright=CSWxfceappfinder.copyright
+i depend=CSWxfceappfinder.depend
+i pkginfo=CSWxfceappfinder.pkginfo
