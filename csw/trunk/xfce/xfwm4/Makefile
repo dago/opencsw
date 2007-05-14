@@ -14,7 +14,7 @@ PATCHFILES = frame.c.diff
 
 include ../category.mk
 
-CONFIGURE_ARGS +=  --enable-xsync --enable-render --enable-randr --enable-xinerama
+CONFIGURE_ARGS +=  --enable-xsync --enable-render --enable-randr --enable-xinerama --enable-compositor
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

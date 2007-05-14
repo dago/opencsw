@@ -1,6 +1,6 @@
 d none /opt/csw/share/doc ? ? ?
-d none /opt/csw/share/xfce4/doc/C 0755 root bin
-d none /opt/csw/share/xfce4/doc/C/images 0755 root bin
+d none /opt/csw/share/xfce4/doc/C ? ? ?
+d none /opt/csw/share/xfce4/doc/C/images ? ? ?
 f none /opt/csw/share/xfce4/doc/C/images/compose_shortcut.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/C/images/decoration_style.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/C/images/focus.png 0644 root bin
@@ -10,8 +10,8 @@ f none /opt/csw/share/xfce4/doc/C/images/titlebar.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/C/images/workspace_margins.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/C/images/xfwm_workspaces.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/C/xfwm4.html 0644 root bin
-d none /opt/csw/share/xfce4/doc/fr 0755 root bin
-d none /opt/csw/share/xfce4/doc/fr/images 0755 root bin
+d none /opt/csw/share/xfce4/doc/fr ? ? ?
+d none /opt/csw/share/xfce4/doc/fr/images ? ? ?
 f none /opt/csw/share/xfce4/doc/fr/images/compose_shortcut.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/fr/images/decoration_style.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/fr/images/focus.png 0644 root bin
@@ -22,8 +22,8 @@ f none /opt/csw/share/xfce4/doc/fr/images/titlebar.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/fr/images/workspace_margins.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/fr/images/xfwm_workspaces.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/fr/xfwm4.html 0644 root bin
-d none /opt/csw/share/xfce4/doc/it 0755 root bin
-d none /opt/csw/share/xfce4/doc/it/images 0755 root bin
+d none /opt/csw/share/xfce4/doc/it ? ? ?
+d none /opt/csw/share/xfce4/doc/it/images ? ? ?
 f none /opt/csw/share/xfce4/doc/it/images/compose_shortcut.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/it/images/decoration_style.png 0644 root bin
 f none /opt/csw/share/xfce4/doc/it/images/focus.png 0644 root bin
