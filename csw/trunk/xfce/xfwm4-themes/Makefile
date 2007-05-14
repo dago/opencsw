@@ -7,7 +7,7 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxfce_xfwm4_themes, depend)
+DISTFILES += CSWxfcexfwm4themes.depend CSWxfcexfwm4themes.gspec CSWxfcexfwm4themes.prototype
 
 include ../category.mk
 
