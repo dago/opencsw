@@ -1,7 +1,7 @@
 GARNAME = Crypt-SSLeay
-GARVERSION = 0.51
+GARVERSION = 0.54
 CATEGORIES = cpan
-AUTHOR = CHAMAS
+AUTHOR = DLAND
 
 DESCRIPTION = OpenSSL glue that provides LWP https support
 define BLURB
@@ -10,13 +10,13 @@ define BLURB
   perldoc LWP for more information on POST requests.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcryptssleay,depend)
+DISTFILES += $(call admfiles,CSWpmcryptssleay,depend prototype)
 
-# Point build to CSW ossl
-PATCHFILES += cswssl.diff
+# Don't ask about networked tests -- the answer is no.
+PATCHFILES += noask.diff
 
 #DEPENDS += lib/openssl
 
-#CONFIGURE_ARGS = --default $(prefix)
+CONFIGURE_ARGS = --lib=$(prefix)
 
 include ../category.mk
