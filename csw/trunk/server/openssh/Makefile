@@ -15,13 +15,17 @@ endef
 
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWossh,checkinstall depend preinstall prototype) 
+DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall prototype) 
 DISTFILES += sshd_config
 DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
+DISTFILES += i.conf r.conf
+
+SPKG_CLASSES = none conf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-kerberos5=$(prefix)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/ssh
+CONFIGURE_ARGS += --with-solaris-contracts
 
 include ../category.mk
 
