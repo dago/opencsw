@@ -26,6 +26,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-kerberos5=$(prefix)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/ssh
 CONFIGURE_ARGS += --with-solaris-contracts
+CONFIGURE_ARGS += --with-pam
 
 include ../category.mk
 
