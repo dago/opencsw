@@ -754,7 +754,7 @@ sub create_files {
             if ( $ctype eq $SPEC_TYPE{CONTENT} ) {
                 push @admcontent, $line;
             }
-            elsif (! -f $admfile or $config{overwrite}) {
+            elsif (! -f $admfile or $config{overwrite} or $flag eq $FLAGS{merge}) {
                 eval {
                     my @content = @{ get_content @$item };
                     Warn "empty \%$admtype at $source line $lineno"
