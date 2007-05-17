@@ -20,7 +20,7 @@ case $1 in
                 fi     
         fi
 
-        /opt/csw/sbin/ssh
+        /opt/csw/sbin/sshd
         ;;
 'stop')
         if [ -f "$PIDFILE" ]; then
