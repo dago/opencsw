@@ -27,8 +27,16 @@
 				<service_fmri value='svc:/milestone/network'/>
 			</dependency>
 
+			<dependency name='config_file'
+				grouping='require_all'
+				restart_on='restart'
+				type='path'>
+				<service_fmri
+					value='file://localhost/opt/csw/etc/ssh/sshd_config' />
+			</dependency>
+
 			<dependent
-				name='cswvsftpd_multi-user'
+				name='cswopenssh_multi-user-server'
 				restart_on='none'
 				grouping='optional_all'>
 				<service_fmri value='svc:/milestone/multi-user-server'/>
