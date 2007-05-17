@@ -8,7 +8,7 @@ f none /opt/csw/bin/ssh-add 0755 root bin
 f none /opt/csw/bin/ssh-agent 0755 root bin
 f none /opt/csw/bin/ssh-keygen 0755 root bin
 f none /opt/csw/bin/ssh-keyscan 0755 root bin
-f none /opt/csw/etc/ssh/moduli 0644 root bin
+e conf /opt/csw/etc/ssh/moduli 0644 root bin
 e conf /opt/csw/etc/ssh/ssh_config 0644 root bin
 f none /opt/csw/etc/ssh/sshd_config.CSW=sshd_config 0744 root bin
 d none /opt/csw/libexec

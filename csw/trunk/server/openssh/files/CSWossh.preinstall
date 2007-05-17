@@ -30,6 +30,7 @@ for FILE in ssh_config sshd_config moduli ssh_host_dsa_key ssh_host_dsa_key.pub 
 			echo "         sshd_config and ssh_config files are now under /opt/csw/etc/ssh."
 			mkdir -p "$PKG_ROOT_DIR/opt/csw/etc/ssh"
 			chown root:bin "$PKG_ROOT_DIR/opt/csw/etc/ssh"
+			MOVE_CONF_FILE=1
 		fi
 		echo "Moving file /opt/csw/etc/$FILE -> /opt/csw/etc/ssh/$FILE ..."
 		mv "$PKG_ROOT_DIR/opt/csw/etc/$FILE" "$PKG_ROOT_DIR/opt/csw/etc/ssh/$FILE"
