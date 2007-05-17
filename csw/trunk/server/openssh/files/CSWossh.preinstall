@@ -37,5 +37,7 @@ for FILE in ssh_config sshd_config moduli ssh_host_dsa_key ssh_host_dsa_key.pub 
 done
 
 # previous openssh package doesn't stop openssh so we do it ourself
-pkill -15 -P 1 -f /opt/csw/sbin/sshd
+pkill -15 -P 1 -f "^/opt/csw/sbin/sshd$"
+
+true
 
