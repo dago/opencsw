@@ -2,7 +2,7 @@
 d1c2c49bcd3b65a601946e8316b0b018  download/CSWossh.gspec
 3dc2331bf6bf1ae12e8bd90bbfa26c16  download/CSWossh.depend
 1d3d6d477c09e59c514e637fa3a2f7a4  download/CSWossh.checkinstall
-8001bc865d82646aef90a6030f243359  download/CSWossh.preinstall
+a64218de09053fbcb35c1fb6f0ae42ce  download/CSWossh.preinstall
 86c544cd009b0f9aa032190c200f8734  download/CSWossh.prototype
 0c7fca2f4bee3ecd489ebd85fdd8cdee  download/sshd_config
 c4aef2f34e6c249a06e2ef9603047652  download/cswopenssh

@@ -23,7 +23,7 @@ fi
 # Configuration file are now under /opt/csw/etc/ssh 
 # instead of /opt/csw/etc
 MOVE_CONF_FILE=0
-for FILE in ssh_config sshd_config moduli; do
+for FILE in ssh_config sshd_config moduli ssh_host_dsa_key ssh_host_dsa_key.pub ssh_host_rsa_key ssh_host_rsa_key.pub; do
 	if [ -f "$PKG_ROOT_DIR/opt/csw/etc/$FILE" ]; then
 		if [ "$MOVE_CONF_FILE" -eq 0 ]; then
 			echo "WARNING: Openssh configuration files location has been changed !"
