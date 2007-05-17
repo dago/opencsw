@@ -1,5 +1,6 @@
 i i.conf=i.conf
 i r.conf=r.conf
+f none /etc/init.d/openssh=openssh 0755 root bin
 f none /opt/csw/bin/scp 0755 root bin
 f none /opt/csw/bin/sftp 0755 root bin
 s none /opt/csw/bin/slogin=./ssh

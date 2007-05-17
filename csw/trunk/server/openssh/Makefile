@@ -19,6 +19,7 @@ DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall prototype)
 DISTFILES += sshd_config
 DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
 DISTFILES += i.conf r.conf
+DISTFILES += openssh
 
 SPKG_CLASSES = none conf
 
