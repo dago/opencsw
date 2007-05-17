@@ -10,7 +10,10 @@ endef
 
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
-DISTFILES += $(call admfiles,CSWfirefox, depend postinstall postremove )
+# DISTFILES += $(call admfiles,CSWfirefox, depend postinstall postremove )
+DISTFILES += CSWfirefox.depend CSWfirefox.gspec CSWfirefox.prototype
+DISTFILES += CSWfirefoxrt.depend CSWfirefoxrt.gspec CSWfirefoxrt.prototype
+DISTFILES += CSWfirefoxdevel.depend CSWfirefoxdevel.gspec CSWfirefoxdevel.prototype
 
 PERL="/opt/csw/bin/perl"
 CFLAGS=-xlibmil
@@ -46,7 +49,6 @@ pre-install:
 	( cp $(FILEDIR)/firefox.keys $(DESTDIR)/opt/csw/share/gnome/mime-info/firefox.keys )
 
 post-install:
-	# ( rm -rf $(DESTDIR)/opt/csw/mozilla/firefox/include )
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | grep ELF | grep -e 'executable' -e 'dynamic lib' | grep 'not stripped' && strip {}"  \; )
 	( mv $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp && gsed -e s\_-L$(DESTDIR)/opt/csw/lib\_\_g  $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp > $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config && rm $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp )
 	( mv $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp && gsed -e s\_-L$(DESTDIR)/opt/csw/lib\_\_g  $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp > $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc && rm $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp )
