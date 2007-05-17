@@ -118,5 +118,5 @@ else
 
 fi
 
-exit 0
+true
 # END smf/postinstall

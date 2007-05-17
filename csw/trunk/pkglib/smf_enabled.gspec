@@ -7,7 +7,7 @@
 %cvar   INIT_RCS K
 %cvar   CAN_BE_AUTOENABLED yes
 %cvar   SERVICE_CONF_FILES 
-%cvar   SERVICE_NAME
+%cvar   SERVICE_NAME	%{bitname}
 %prototype:merge
 i i.smf=%{PKGLIB}/smf/i.smf
 i r.smf=%{PKGLIB}/smf/r.smf

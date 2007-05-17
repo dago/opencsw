@@ -1,4 +1,4 @@
 %cvar           arch %{GARCH}
 %cvar           desc %{SPKG_DESC}
 %cvar           pkgfile %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-CSW.pkg
-%cvar           initname %{bitname}
+%cvar           initname csw%{bitname}

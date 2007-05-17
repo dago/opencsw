@@ -17,5 +17,5 @@ CLASSES=$CLASSES
 SMF="$SMF"
 !
 
-exit 0
+true
 # END smf/checkinstall
