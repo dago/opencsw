@@ -11,7 +11,7 @@ endef
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
 # DISTFILES += $(call admfiles,CSWfirefox, depend postinstall postremove )
-DISTFILES += CSWfirefox.depend CSWfirefox.gspec CSWfirefox.prototype
+DISTFILES += CSWfirefox.depend CSWfirefox.gspec CSWfirefox.prototype CSWfirefox.postinstall CSWfirefox.postremove
 DISTFILES += CSWfirefoxrt.depend CSWfirefoxrt.gspec CSWfirefoxrt.prototype
 DISTFILES += CSWfirefoxdevel.depend CSWfirefoxdevel.gspec CSWfirefoxdevel.prototype
 

@@ -1,11 +1,13 @@
 24398e3d98673a2a92a01a8f771ca12a  download/firefox-2.0.0.3-source.tar.bz2
-8093298b67861e241b0d2499c9f2ff89  download/CSWfirefox.depend
+fd98e3a08d336484d3429848485469f5  download/CSWfirefox.depend
 3cc981390e527e1343f6c450d839eceb  download/CSWfirefox.gspec
 e27855a6b57c654ecec50fd682df73e3  download/CSWfirefox.prototype
+f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
+6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
 8093298b67861e241b0d2499c9f2ff89  download/CSWfirefoxrt.depend
 3cc981390e527e1343f6c450d839eceb  download/CSWfirefoxrt.gspec
 9aff801400d16a6d2b36e5ce0376bb9a  download/CSWfirefoxrt.prototype
-8093298b67861e241b0d2499c9f2ff89  download/CSWfirefoxdevel.depend
+d71c90ba9ebe6a83b0f7beed2b30905c  download/CSWfirefoxdevel.depend
 3cc981390e527e1343f6c450d839eceb  download/CSWfirefoxdevel.gspec
 a909225788a07af7918b82ed76be6e6b  download/CSWfirefoxdevel.prototype
 91eb79c06f04197d584c6a17267ebcc3  download/autoconf.mk.in.diff
