@@ -53,7 +53,7 @@
 			<exec_method
 				name='stop'
 				type='method'
-				exec='/opt/csw/lib/svc/method/svc-cswopenssh stop'
+				exec='/opt/csw/lib/svc/method/svc-cswopenssh stop'>
 				<method_context/>
 			</exec_method>
 

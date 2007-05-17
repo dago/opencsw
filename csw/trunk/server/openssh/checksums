@@ -7,7 +7,7 @@ d1c2c49bcd3b65a601946e8316b0b018  download/CSWossh.gspec
 0c7fca2f4bee3ecd489ebd85fdd8cdee  download/sshd_config
 c4aef2f34e6c249a06e2ef9603047652  download/cswopenssh
 8e23e1f856f36e8e084a9283d22a7cbf  download/svc-cswopenssh
-60a2ec0bb6b1845a2df77ce749392199  download/cswopenssh.xml
+c006d398c223122ff95b8b5bcf1dbd79  download/cswopenssh.xml
 9b2ae27f98333b73ff2b16ed98ee896a  download/i.conf
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
 fd50a65230ec1ead7949e8500844b0bf  download/openssh
