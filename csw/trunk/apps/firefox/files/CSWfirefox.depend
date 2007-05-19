@@ -26,3 +26,7 @@ P CSWpango libpango - library for laying out and rendering international text
 P CSWseamonkey seamonkey - WorldWideFamous internet suite (web browser,mail,composer,irc) - was Mozilla suite
 P CSWthunderbird thunderbird - Mozilla Thunderbird Mail Client
 P CSWzlib zlib - Zlib Data Compression Library
+P CSWggettext  ggettext - GNU gettext
+P CSWgnomekeyring  gnomekeyring - keep password and other secrets for users
+P CSWlibcairo  libcairo - The Cairo 2D Graphics Library
+P CSWiconv  libiconv - GNU iconv library
