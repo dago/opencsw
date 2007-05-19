@@ -91,7 +91,7 @@ cp proto.temp proto
 
 # lib/searchplugins stuff goes to main
 grep -v /opt/csw/mozilla/firefox/lib/searchplugins proto > proto.temp
-grep /opt/csw/mozilla/firefox/lib/icons proto >> CSWfirefox.prototype
+grep /opt/csw/mozilla/firefox/lib/searchplugins proto >> CSWfirefox.prototype
 cp proto.temp proto
 
 # share stuff goes to main
