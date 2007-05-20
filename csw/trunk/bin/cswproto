@@ -88,9 +88,9 @@ sub exclude {
 
     return 1 unless $path;
 
-    die "Path $path is not readable by current user!\n" unless -r $path;
+    die "Path $path is not readable by current user!\n" unless -r $path or -l $path;
 
-    my $time = (stat($path))[TIME_FIELD];
+    my $time = (lstat($path))[TIME_FIELD];
     return ($time >= $stamp) ? 0 : 1;
 }
 
