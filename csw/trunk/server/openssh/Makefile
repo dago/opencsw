@@ -17,7 +17,7 @@ MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall prototype) 
 DISTFILES += sshd_config
-DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
+DISTFILES += cswopenssh.init svc-cswopenssh cswopenssh.xml
 DISTFILES += i.conf r.conf
 DISTFILES += openssh
 
