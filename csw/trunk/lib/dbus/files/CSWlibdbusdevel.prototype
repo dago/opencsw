@@ -1,6 +1,5 @@
-d none /opt/csw/bin ? ? ?
-d none /opt/csw/include ? ? ?
-d none /opt/csw/include/dbus-1.0/dbus ? ? ?
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/dbus-1.0/dbus 0755 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-address.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-bus.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-connection.h 0644 root bin
@@ -17,10 +16,9 @@ f none /opt/csw/include/dbus-1.0/dbus/dbus-signature.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-threads.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-types.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus.h 0644 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/dbus-1.0/include/dbus ? ? ?
+d none /opt/csw/lib/dbus-1.0/include/dbus 0755 root bin
 f none /opt/csw/lib/dbus-1.0/include/dbus/dbus-arch-deps.h 0644 root bin
-d none /opt/csw/lib/pkgconfig ? ? ?
+d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/dbus-1.pc 0644 root bin
 i copyright=CSWlibdbusdevel.copyright
 i depend=CSWlibdbusdevel.depend
