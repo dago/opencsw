@@ -13,7 +13,10 @@ endef
 
 MASTER_SITES = http://www.openssl.org/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz 
-DISTFILES += $(call admfiles,CSWossl,checkinstall depend prototype-i386 prototype-sparc)
+DISTFILES += $(call admfiles,CSWossl,depend prototype)
+DISTFILES += $(call admfiles,CSWosslrt,checkinstall depend prototype-i386 prototype-sparc)
+DISTFILES += $(call admfiles,CSWossldevel,depend prototype-i386 prototype-sparc)
+DISTFILES += $(call admfiles,CSWosslutils,depend prototype)
 DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
 DISTFILES += changelog.CSW
 
@@ -104,7 +107,6 @@ striplib:
 # we also add write access to ensure library stripping will work
 # 
 post-install: install-certs 
-	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)/$(docdir)/$(GARNAME)/changelog.CSW
 	( for ISA in $($(GARCH)_ISALIST); do \
 		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
 	  done )
@@ -133,6 +135,16 @@ install-old-libraries: build
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
 	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
 	$(MAKECOOKIE)
+
+makesum-everything: makesum
+	( for ISA in "" $($(GARCH)_ISALIST); do \
+		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA makesum; \
+		for VERSION in $(OLD_VERSIONS); do \
+			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
+			RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
+			gmake GARVERSION=$$GARVERSION RELEASE=$$RELEASE ISA=$$ISA makesum; \
+		done; \
+	  done )
 
 clean-everything: clean
 	( for ISA in "" $($(GARCH)_ISALIST); do \

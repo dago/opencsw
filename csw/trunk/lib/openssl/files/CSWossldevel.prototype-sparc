@@ -1,5 +1,3 @@
-f none /opt/csw/bin/c_rehash 0755 root bin
-f none /opt/csw/bin/openssl 0755 root bin
 d none /opt/csw/include/openssl
 f none /opt/csw/include/openssl/aes.h 0644 root bin
 f none /opt/csw/include/openssl/asn1.h 0644 root bin
@@ -70,134 +68,21 @@ f none /opt/csw/include/openssl/ui_compat.h 0644 root bin
 f none /opt/csw/include/openssl/x509.h 0644 root bin
 f none /opt/csw/include/openssl/x509_vfy.h 0644 root bin
 f none /opt/csw/include/openssl/x509v3.h 0644 root bin
-d none /opt/csw/lib/amd64
-f none /opt/csw/lib/amd64/libcrypto.so.0.9.8 0755 root bin
-f none /opt/csw/lib/amd64/libssl.so.0.9.8 0755 root bin
-d none /opt/csw/lib/engines
-f none /opt/csw/lib/engines/lib4758cca.so 0555 root bin
-f none /opt/csw/lib/engines/libaep.so 0555 root bin
-f none /opt/csw/lib/engines/libatalla.so 0555 root bin
-f none /opt/csw/lib/engines/libchil.so 0555 root bin
-f none /opt/csw/lib/engines/libcswift.so 0555 root bin
-f none /opt/csw/lib/engines/libgmp.so 0555 root bin
-f none /opt/csw/lib/engines/libnuron.so 0555 root bin
-f none /opt/csw/lib/engines/libsureware.so 0555 root bin
-f none /opt/csw/lib/engines/libubsec.so 0555 root bin
-s none /opt/csw/lib/libcrypto.so=libcrypto.so.0.9.8
-f none /opt/csw/lib/libcrypto.so.0.9.7 0555 root bin
-f none /opt/csw/lib/libcrypto.so.0.9.8 0555 root bin
-s none /opt/csw/lib/libssl.so=libssl.so.0.9.8
-f none /opt/csw/lib/libssl.so.0.9.7 0555 root bin
-f none /opt/csw/lib/libssl.so.0.9.8 0555 root bin
-d none /opt/csw/lib/pentium_pro
-f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.7 0755 root bin
-f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.8 0755 root bin
-f none /opt/csw/lib/pentium_pro/libssl.so.0.9.7 0755 root bin
-f none /opt/csw/lib/pentium_pro/libssl.so.0.9.8 0755 root bin
+f none /opt/csw/lib/libssl.a 0644 root bin
+f none /opt/csw/lib/libcrypto.a 0644 root bin 
+d none /opt/csw/lib/sparcv8plus+vis
+f none /opt/csw/lib/sparcv8plus+vis/libcrypto.a 0644 root bin
+f none /opt/csw/lib/sparcv8plus+vis/libssl.a 0644 root bin
+d none /opt/csw/lib/sparcv9
+f none /opt/csw/lib/sparcv9/libcrypto.a 0644 root bin
+f none /opt/csw/lib/sparcv9/libssl.a 0644 root bin
 d none /opt/csw/lib/pkgconfig
 f none /opt/csw/lib/pkgconfig/libcrypto.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/libssl.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/openssl.pc 0644 root bin
-d none /opt/csw/share/doc/openssl
-f none /opt/csw/share/doc/openssl/changelog.CSW 644 root bin
-d none /opt/csw/ssl
-d none /opt/csw/ssl/certs
-f none /opt/csw/ssl/certs/1e49180d.0 0644 root bin
-f none /opt/csw/ssl/certs/2edf7016.0 0644 root bin
-f none /opt/csw/ssl/certs/56e607f4.0 0644 root bin
-f none /opt/csw/ssl/certs/6adf0799.0 0644 root bin
-f none /opt/csw/ssl/certs/7651b327.0 0644 root bin
-f none /opt/csw/ssl/certs/7a9820c1.0 0644 root bin
-f none /opt/csw/ssl/certs/843b6c51.0 0644 root bin
-f none /opt/csw/ssl/certs/878cf4c6.0 0644 root bin
-f none /opt/csw/ssl/certs/RegTP-5R.pem 0644 root bin
-f none /opt/csw/ssl/certs/RegTP-6R.pem 0644 root bin
-f none /opt/csw/ssl/certs/a3c60019.0 0644 root bin
-f none /opt/csw/ssl/certs/aad3d04d.0 0644 root bin
-f none /opt/csw/ssl/certs/argena.pem 0644 root bin
-f none /opt/csw/ssl/certs/argeng.pem 0644 root bin
-f none /opt/csw/ssl/certs/c33a80d4.0 0644 root bin
-f none /opt/csw/ssl/certs/cdd7aee7.0 0644 root bin
-f none /opt/csw/ssl/certs/d4e39186.0 0644 root bin
-f none /opt/csw/ssl/certs/ddc328ff.0 0644 root bin
-d none /opt/csw/ssl/certs/demo
-f none /opt/csw/ssl/certs/demo/ca-cert.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/dsa-ca.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/dsa-pca.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/nortelCA.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/pca-cert.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/timCA.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/tjhCA.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/vsigntca.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng1.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng2.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng3.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng4.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng5.pem 0644 root bin
-d none /opt/csw/ssl/certs/expired
-f none /opt/csw/ssl/certs/expired/ICE-CA.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/ICE-root.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/ICE-user.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/ICE.crl 0644 root bin
-f none /opt/csw/ssl/certs/expired/RegTP-4R.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/factory.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/rsa-cca.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/rsa-ssca.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/vsign2.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/vsign3.pem 0644 root bin
-f none /opt/csw/ssl/certs/f73e89fd.0 0644 root bin
-f none /opt/csw/ssl/certs/thawteCb.pem 0644 root bin
-f none /opt/csw/ssl/certs/thawteCp.pem 0644 root bin
-f none /opt/csw/ssl/certs/vsign1.pem 0644 root bin
-f none /opt/csw/ssl/certs/vsign3.pem 0644 root bin
-f none /opt/csw/ssl/certs/vsignss.pem 0644 root bin
-f none /opt/csw/ssl/certs/wellsfgo.pem 0644 root bin
+d none /opt/csw/share/doc/openssl_devel
+f none /opt/csw/share/doc/openssl_devel/changelog.CSW=changelog.CSW 644 root bin
 d none /opt/csw/ssl/man
-d none /opt/csw/ssl/man/man1
-f none /opt/csw/ssl/man/man1/CA.pl.1 0644 root bin
-f none /opt/csw/ssl/man/man1/asn1parse.1 0644 root bin
-f none /opt/csw/ssl/man/man1/ca.1 0644 root bin
-f none /opt/csw/ssl/man/man1/ciphers.1 0644 root bin
-f none /opt/csw/ssl/man/man1/crl.1 0644 root bin
-f none /opt/csw/ssl/man/man1/crl2pkcs7.1 0644 root bin
-f none /opt/csw/ssl/man/man1/dgst.1 0644 root bin
-f none /opt/csw/ssl/man/man1/dhparam.1 0644 root bin
-f none /opt/csw/ssl/man/man1/dsa.1 0644 root bin
-f none /opt/csw/ssl/man/man1/dsaparam.1 0644 root bin
-f none /opt/csw/ssl/man/man1/ec.1 0644 root bin
-f none /opt/csw/ssl/man/man1/ecparam.1 0644 root bin
-f none /opt/csw/ssl/man/man1/enc.1 0644 root bin
-f none /opt/csw/ssl/man/man1/errstr.1 0644 root bin
-f none /opt/csw/ssl/man/man1/gendsa.1 0644 root bin
-f none /opt/csw/ssl/man/man1/genrsa.1 0644 root bin
-s none /opt/csw/ssl/man/man1/md2.1=dgst.1
-s none /opt/csw/ssl/man/man1/md4.1=dgst.1
-s none /opt/csw/ssl/man/man1/md5.1=dgst.1
-s none /opt/csw/ssl/man/man1/mdc2.1=dgst.1
-f none /opt/csw/ssl/man/man1/nseq.1 0644 root bin
-f none /opt/csw/ssl/man/man1/ocsp.1 0644 root bin
-f none /opt/csw/ssl/man/man1/openssl.1 0644 root bin
-f none /opt/csw/ssl/man/man1/passwd.1 0644 root bin
-f none /opt/csw/ssl/man/man1/pkcs12.1 0644 root bin
-f none /opt/csw/ssl/man/man1/pkcs7.1 0644 root bin
-f none /opt/csw/ssl/man/man1/pkcs8.1 0644 root bin
-f none /opt/csw/ssl/man/man1/rand.1 0644 root bin
-f none /opt/csw/ssl/man/man1/req.1 0644 root bin
-s none /opt/csw/ssl/man/man1/ripemd160.1=dgst.1
-f none /opt/csw/ssl/man/man1/rsa.1 0644 root bin
-f none /opt/csw/ssl/man/man1/rsautl.1 0644 root bin
-f none /opt/csw/ssl/man/man1/s_client.1 0644 root bin
-f none /opt/csw/ssl/man/man1/s_server.1 0644 root bin
-f none /opt/csw/ssl/man/man1/s_time.1 0644 root bin
-f none /opt/csw/ssl/man/man1/sess_id.1 0644 root bin
-s none /opt/csw/ssl/man/man1/sha.1=dgst.1
-s none /opt/csw/ssl/man/man1/sha1.1=dgst.1
-f none /opt/csw/ssl/man/man1/smime.1 0644 root bin
-f none /opt/csw/ssl/man/man1/speed.1 0644 root bin
-f none /opt/csw/ssl/man/man1/spkac.1 0644 root bin
-f none /opt/csw/ssl/man/man1/verify.1 0644 root bin
-f none /opt/csw/ssl/man/man1/version.1 0644 root bin
-f none /opt/csw/ssl/man/man1/x509.1 0644 root bin
 d none /opt/csw/ssl/man/man3
 s none /opt/csw/ssl/man/man3/ASN1_OBJECT_free.3=ASN1_OBJECT_new.3
 f none /opt/csw/ssl/man/man3/ASN1_OBJECT_new.3 0644 root bin
@@ -1157,17 +1042,3 @@ f none /opt/csw/ssl/man/man3/threads.3 0644 root bin
 f none /opt/csw/ssl/man/man3/ui.3 0644 root bin
 f none /opt/csw/ssl/man/man3/ui_compat.3 0644 root bin
 f none /opt/csw/ssl/man/man3/x509.3 0644 root bin
-d none /opt/csw/ssl/man/man5
-f none /opt/csw/ssl/man/man5/config.5 0644 root bin
-f none /opt/csw/ssl/man/man5/x509v3_config.5 0644 root bin
-d none /opt/csw/ssl/man/man7
-s none /opt/csw/ssl/man/man7/Modes_of_DES.7=des_modes.7
-f none /opt/csw/ssl/man/man7/des_modes.7 0644 root bin
-d none /opt/csw/ssl/misc
-f none /opt/csw/ssl/misc/CA.pl 0755 root bin
-f none /opt/csw/ssl/misc/CA.sh 0755 root bin
-f none /opt/csw/ssl/misc/c_hash 0755 root bin
-f none /opt/csw/ssl/misc/c_info 0755 root bin
-f none /opt/csw/ssl/misc/c_issuer 0755 root bin
-f none /opt/csw/ssl/misc/c_name 0755 root bin
-f none /opt/csw/ssl/openssl.cnf 0644 root bin
