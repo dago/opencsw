@@ -62,7 +62,7 @@ OS_COMPILER = $($(ISA)_OS_COMPILER)
 NOISALIST   = 1
 endif
 
-CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER)
+CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER) --install_prefix=$(DESTDIR)
 
 include ../category.mk
 
@@ -80,15 +80,12 @@ LDFLAGS  += -L$(libdir)/$(ISA)
 ISA_LIBDIR = $(ISA)
 endif
 
-CONFIGURE_ENV += PERL="/usr/bin/perl"
+# We want the csw perl to be used
+CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
 
-# By default, the install target put man page under
+# By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
-
-# Openssl Makefile use INSTALL_PREFIX variable
-# instead of the commonly used DESTDIR
-INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
 
 
 pre-configure: 
