@@ -1,0 +1,5 @@
+%var            bitname dbus_glib_devel
+%var		desc	 DBus GLib Bindings Headers
+%var            pkgname CSWdbusglibdevel
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING
