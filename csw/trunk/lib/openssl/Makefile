@@ -12,13 +12,16 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.openssl.org/source/
+DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz 
 DISTFILES += $(call admfiles,CSWossl,depend prototype)
 DISTFILES += $(call admfiles,CSWosslrt,checkinstall depend prototype-i386 prototype-sparc)
 DISTFILES += $(call admfiles,CSWossldevel,depend prototype-i386 prototype-sparc)
 DISTFILES += $(call admfiles,CSWosslutils,depend prototype)
-DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
 DISTFILES += changelog.CSW
+DISTFILES += i.conf r.conf
+
+SPKG_CLASSES = none conf
 
 # We will include the following previous versions of libraries 
 # for comptatibility reasons
@@ -107,6 +110,8 @@ striplib:
 # we also add write access to ensure library stripping will work
 # 
 post-install: install-certs 
+	[ -f $(DESTDIR)$(prefix)/ssl/openssl.cnf ] && \
+		ginstall -D $(DESTDIR)$(prefix)/ssl/openssl.cnf $(DESTDIR)$(sysconfdir)/ssl/openssl.cnf
 	( for ISA in $($(GARCH)_ISALIST); do \
 		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
 	  done )

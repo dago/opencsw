@@ -61,4 +61,6 @@ f none /opt/csw/ssl/misc/c_hash 0755 root bin
 f none /opt/csw/ssl/misc/c_info 0755 root bin
 f none /opt/csw/ssl/misc/c_issuer 0755 root bin
 f none /opt/csw/ssl/misc/c_name 0755 root bin
-f none /opt/csw/ssl/openssl.cnf 0644 root bin
+s none /opt/csw/ssl/openssl.cnf=/opt/csw/etc/ssl/openssl.cnf 0644 root bin
+d none /opt/csw/etc/ssl
+e conf /opt/csw/etc/ssl/openssl.cnf 0644 root bin
