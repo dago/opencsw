@@ -80,8 +80,16 @@ LDFLAGS  += -L$(libdir)/$(ISA)
 ISA_LIBDIR = $(ISA)
 endif
 
-INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
 CONFIGURE_ENV += PERL="/usr/bin/perl"
+
+# By default, the install target put man page under
+# /opt/csw/ssl/man, but we want them under /opt/csw/share/man
+INSTALL_ARGS += MANDIR=$(mandir)
+
+# Openssl Makefile use INSTALL_PREFIX variable
+# instead of the commonly used DESTDIR
+INSTALL_ARGS += INSTALL_PREFIX=$(DESTDIR)
+
 
 pre-configure: 
 	echo " ==> Creating configure script $(ISA) $(OS_COMPILER)"
