@@ -112,7 +112,7 @@ else
 	FILES2CHECK = ""
 endif
 
-checknew_by_mail: 
+check-upstream-and-mail:
 	@if [ -n '$(FILES2CHECK)' ]; then \
 		NEW_FILES=""; \
 		for FILE in $(FILES2CHECK) ""; do \
@@ -138,12 +138,12 @@ checknew_by_mail:
 			  echo "Please consider updating your blastwave package." ; \
 			  echo ""; \
 			  echo "---"; \
-			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s "[svn.blastwave.org] $(GARNAME) upstream update notification !" $(GARNAME); \
+			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s "[svn.blastwave.org] $(GARNAME) upstream update notification" $(GARNAME); \
 		fi; \
 	fi
 	
 
-checknew: 
+check-upstream: 
 	@if [ -n '$(FILES2CHECK)' ]; then \
 		NEW_FILES=""; \
 		for FILE in $(FILES2CHECK) ""; do \

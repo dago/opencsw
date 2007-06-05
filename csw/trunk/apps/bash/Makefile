@@ -1,6 +1,6 @@
 GARNAME = bash
 GARVERSION = 3.2
-PATCHLEVEL = 17
+PATCHLEVEL = 16
 CATEGORIES = apps
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 
-CHECKNEW_FILES = 'bash-(\d+\.\d+).tar.gz' '$(PATCHFILE_PREFIX)-(\d+)'
+CHECKNEW_FILES = bash-(\d+\.\d+).tar.gz $(PATCHFILE_PREFIX)-(\d+)
 
 # Patches download location
 MASTER_SITES = $(GNU_MIRROR)/bash-$(GARVERSION)-patches/
