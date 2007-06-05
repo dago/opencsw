@@ -101,6 +101,69 @@ checksum-%: $(CHECKSUM_FILE)
 	fi
 		
 
+#################### CHECKNEW RULES ####################
+
+# check a new upstream files are available
+
+UW_ARGS = $(addprefix -u ,$(MASTER_SITES))
+ifneq ($(CHECKNEW_FILES),)
+	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(CHECKNEW_FILES))))
+else
+	FILES2CHECK = ""
+endif
+
+checknew_by_mail: 
+	@if [ -n '$(FILES2CHECK)' ]; then \
+		NEW_FILES=""; \
+		for FILE in $(FILES2CHECK) ""; do \
+			[ -n "$$FILE" ] || continue; \
+			if test -f $(COOKIEDIR)/checknew-$$FILE || echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
+				: ; \
+			else \
+				NEW_FILES="$$FILE $$NEW_FILES"; \
+			fi; \
+			$(MAKE) checknew-$$FILE >/dev/null; \
+		done; \
+		if [ -n "$$NEW_FILES" ]; then \
+			{ echo "Hello dear $(GARNAME) maintainer,"; \
+			  echo ""; \
+			  echo "The upstream notification job has detected the availability of new files for $(GARNAME)."; \
+			  echo ""; \
+			  echo "The following upstream file(s):"; \
+			  echo "    $$NEW_FILES"; \
+			  echo ""; \
+			  echo "is/are available at the following url(s):"; \
+			  echo "    $(MASTER_SITES)"; \
+			  echo ""; \
+			  echo "Please consider updating your blastwave package." ; \
+			  echo ""; \
+			  echo "---"; \
+			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s "[svn.blastwave.org] $(GARNAME) upstream update notification !" $(GARNAME); \
+		fi; \
+	fi
+	
+
+checknew: 
+	@if [ -n '$(FILES2CHECK)' ]; then \
+		NEW_FILES=""; \
+		for FILE in $(FILES2CHECK) ""; do \
+			[ -n "$$FILE" ] || continue; \
+			if test -f $(COOKIEDIR)/checknew-$$FILE || echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
+				: ; \
+			else \
+				NEW_FILES="$$FILE $$NEW_FILES"; \
+			fi; \
+			$(MAKE) checknew-$$FILE >/dev/null; \
+		done; \
+		if [ -n "$$NEW_FILES" ]; then \
+			echo "New upstream files available for $(GARNAME): $$NEW_FILES"; \
+		fi; \
+	fi
+	
+checknew-%:
+	@$(MAKECOOKIE)
+
+
 #################### GARCHIVE RULES ####################
 
 # while we're here, let's just handle how to back up our
