@@ -1,37 +1,20 @@
 GARNAME = bash
 GARVERSION = 3.2
-PATCHLEVEL = 17
 CATEGORIES = apps
 
 DESCRIPTION = A sh-compatible command language interpreter
 define BLURB
+  LONG DESCRIPTION
   GNU Bash is an sh-compatible command language interpreter that executes commands read from the standard input or from a file. Bash also incorporates useful features from the Korn and C shells (ksh and csh). Bash is intended to be a conforming implementation of the IEEE POSIX Shell and Tools specification (IEEE Working Group 1003.2).
 endef
 
-
-CHECKNEW_FILES = 'bash-(\d+\.\d+).tar.gz' '$(PATCHFILE_PREFIX)-(\d+)'
-
-# Patches download location
-MASTER_SITES = $(GNU_MIRROR)/bash-$(GARVERSION)-patches/
-# Main archive location
-MASTER_SITES += $(GNU_MIRROR)
+MASTER_SITES = ftp://ftp.cwru.edu/pub/bash/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWbash,prototype postinstall postremove depend)
 DISTFILES += changelog.CSW
 
-PATCHFILE_PREFIX = bash$(subst .,,$(GARVERSION))
 PATCHDIRLEVEL = 2
-# we generate the list of patches from the PATCHLEVEL
-PATCHFILES = $(shell LEVEL=1; \
-	        PREFIX_0="00"; \
-	     	while [ $$LEVEL -le $(PATCHLEVEL)  ]; do \
-			echo $(PATCHFILE_PREFIX)-$$PREFIX_0$$LEVEL; \
-			LEVEL=`expr $$LEVEL + 1`; \
-			if [ $$LEVEL -ge 10 ]; then \
-				PREFIX_0="0"; \
-			fi; \
-		done )
-
+PATCHFILES = $(shell cd files; for FILE in bash32-???.patch; do echo $$FILE; done)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -44,8 +27,8 @@ pre-configure:
 	touch $(WORKSRC)/configure
 	touch $(WORKSRC)/config.status
 
-
 post-install:
+	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 	@( for FILE in README RBASH NEWS NOTES POSIX AUTHORS doc/FAQ doc/INTRO; do \
 		 ginstall -D $(WORKSRC)/$$FILE $(DESTDIR)$(docdir)/$(GARNAME)/`basename $$FILE`; \
 	done )

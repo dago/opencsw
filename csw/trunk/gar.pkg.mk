@@ -107,7 +107,7 @@ package-p:
 
 # Call mkpackage to transmogrify one or more gspecs into packages
 package-create:
-	if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		ginstall -d $(SPKG_SPOOLDIR) ; \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			echo " ==> Processing $$spec" ; \
@@ -129,7 +129,7 @@ package-create:
 package-check:
 	@echo " ==> Checking blastwave compliance"
 ifneq ($(SPKG_SKIP_COMPLIANCE_CHECK), 1)
-	if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $$spec -D pkgfile`.gz || exit 2 ; \
 		done ; \
@@ -138,7 +138,7 @@ endif
 
 # Verify all packages
 package-verify: package-check
-	if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			$(PKG_ENV) mkpackage -qs $$spec -D pkgfile >> /tmp/verify.$$ ; \
 		done ; \
@@ -151,7 +151,7 @@ package-verify: package-check
 
 # Install all bitnames from this directory
 package-install:
-	if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
+	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
 		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
 			$(PKG_ENV) mkpackage -qs $$spec -D bitname >> /tmp/install.$$ ; \
 		done ; \

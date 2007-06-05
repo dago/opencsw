@@ -1,5 +1,5 @@
 GARNAME = elinks
-GARVERSION = 0.11.2
+GARVERSION = 0.11.3
 CATEGORIES = net
 
 DESCRIPTION = An advanced text mode web browser
@@ -10,7 +10,6 @@ define BLURB
   scripts. It has limited support for CSS and Javascript.
 endef
 
-CHECKNEW_FILES = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 MASTER_SITES = http://elinks.cz/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWelinks,prototype depend)

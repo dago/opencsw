@@ -1,5 +1,5 @@
 GARNAME = lftp
-GARVERSION = 3.5.10
+GARVERSION = 3.5.11
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
@@ -7,7 +7,6 @@ define BLURB
    lftp is a sophisticated command line based file transfer program. Supported protocols include FTP, HTTP, SFTP, and FISH. It has a multithreaded design allowing you to issue and execute multiple commands simultaneously or in the background. It also features mirroring capabilities and will reconnect and continue transfers in the event of a disconnection. Also, if you quit the program while transfers are still in progress, it will switch to nohup mode and finish the transfers in the background. Additional protocols supported: FTP over HTTP proxy, HTTPS and FTP over SSL. There are lots of tunable parameters, including rate limitation, number of connections limitation and more.
 endef
 
-GARVERSION_PATTERN = (\d+\.\d+\.\d+)
 MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlftp,prototype depend)
@@ -58,7 +57,3 @@ post-install:
 	# po are not installed correctly (I should find a better fix)
 	cd $(WORKSRC)/po && $(MAKE) DESTDIR=$(DESTDIR) install_sh=$(CURDIR)/$(WORKSRC)/install-sh install
 
-upstream-watch:
-	( for SITE in $(MASTER_SITES); do \
-		upstream_watch $(GARNAME) $(GARVERSION) "$$SITE/$(GARNAME)-$(GARVERSION_PATTERN)\.tar\.gz" && break || true; \
-	  done )

@@ -1,7 +1,7 @@
 f none /opt/csw/bin/bash 0755 root bin
 f none /opt/csw/bin/bashbug 0555 root bin
 d none /opt/csw/share/doc/bash 0755 root bin
-f none /opt/csw/share/doc/bash/changelog.CSW=changelog.CSW 0644 root bin
+f none /opt/csw/share/doc/bash/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/bash/README 0644 root bin
 f none /opt/csw/share/doc/bash/FAQ 0644 root bin
 f none /opt/csw/share/doc/bash/RBASH 0644 root bin
