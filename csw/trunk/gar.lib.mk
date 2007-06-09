@@ -106,8 +106,8 @@ checksum-%: $(CHECKSUM_FILE)
 # check a new upstream files are available
 
 UW_ARGS = $(addprefix -u ,$(MASTER_SITES))
-ifneq ($(CHECKNEW_FILES),)
-	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(CHECKNEW_FILES))))
+ifneq ($(UFILES_REGEX),)
+	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX))))
 else
 	FILES2CHECK = ""
 endif
@@ -125,7 +125,8 @@ check-upstream-and-mail:
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
 		if [ -n "$$NEW_FILES" ]; then \
-			{ echo "Hello dear $(GARNAME) maintainer,"; \
+			{ echo ""; \
+			  echo "Hello dear $(GARNAME) maintainer,"; \
 			  echo ""; \
 			  echo "The upstream notification job has detected the availability of new files for $(GARNAME)."; \
 			  echo ""; \
@@ -138,7 +139,7 @@ check-upstream-and-mail:
 			  echo "Please consider updating your blastwave package." ; \
 			  echo ""; \
 			  echo "---"; \
-			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s "[svn.blastwave.org] $(GARNAME) upstream update notification" $(GARNAME); \
+			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn.blastwave.org] $(GARNAME) upstream update notification' $(GARNAME); \
 		fi; \
 	fi
 	
@@ -156,7 +157,7 @@ check-upstream:
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
 		if [ -n "$$NEW_FILES" ]; then \
-			echo "New upstream files available for $(GARNAME): $$NEW_FILES"; \
+			echo "$(GARNAME): new upstream files available: $$NEW_FILES"; \
 		fi; \
 	fi
 	

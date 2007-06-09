@@ -1,4 +1,4 @@
-#!/bin/bash  -x
+#!/bin/ksh
 #
 # Copyright 2007 Yann Rouillard <yann@blastwave.org>
 # All rights reserved.  Use is subject to license terms.
@@ -60,5 +60,5 @@ while [ $# -ne 1 ]; do
 	shift
 done
 
-eval mail $MAIL_OPTIONS $EMAIL
+eval mailx $MAIL_OPTIONS $EMAIL
 
