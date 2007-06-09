@@ -8,8 +8,8 @@ define BLURB
   GNU Bash is an sh-compatible command language interpreter that executes commands read from the standard input or from a file. Bash also incorporates useful features from the Korn and C shells (ksh and csh). Bash is intended to be a conforming implementation of the IEEE POSIX Shell and Tools specification (IEEE Working Group 1003.2).
 endef
 
-
-CHECKNEW_FILES = bash-(\d+\.\d+).tar.gz $(PATCHFILE_PREFIX)-(\d+)
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = bash-(\d+\.\d+).tar.gz $(PATCHFILE_PREFIX)-(\d+)
 
 # Patches download location
 MASTER_SITES = $(GNU_MIRROR)/bash-$(GARVERSION)-patches/
