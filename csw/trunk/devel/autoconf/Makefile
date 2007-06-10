@@ -34,3 +34,4 @@ post-install:
 	@echo " ==> Fixing install anomalies"
 
 	@rm -f $(DESTDIR)$(prefix)/share/info/dir
+	@rm -f $(DESTDIR)$(prefix)/share/info/standards.info
