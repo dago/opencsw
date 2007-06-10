@@ -6,8 +6,6 @@
 # Modified for exim by Tim Cutts <timc@chiark.greenend.org.uk>
 # Modified for Blastwave by Markus Mayer <mmayer@blastwave.org>
 
-set -e
-
 # Exit if exim runs from /etc/inetd.conf
 if [ -f /etc/inetd.conf ] && grep "^ *\([0-9.]\+:\)\?smtp" /etc/inetd.conf >/dev/null; then
     exit 0
@@ -29,7 +27,7 @@ test -z "$EXIM_PARAMS" && EXIM_PARAMS="-bd -q30m"
 
 case "$1" in
   start)
-    echo "Starting MTA:\c "
+    echo "Starting MTA: \c"
     $DAEMON $EXIM_PARAMS
     echo "exim."
     ;;
