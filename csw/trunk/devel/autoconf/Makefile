@@ -28,13 +28,9 @@ include ../category.mk
 # Package has two bad string which should be ignored:
 #   ;;; from file /export/medusa/dam/build/csw/devel/autoconf/work/dam-ra.d/autoconf-2.61/lib/emacs/elc.15767/autoconf-mode.el
 #   ;;; from file /export/medusa/dam/build/csw/devel/autoconf/work/dam-ra.d/autoconf-2.61/lib/emacs/elc.15767/autotest-mode.el
-# As we don't want the whole test to be skipped we strip the offending part from the comments
-#SPKG_SKIP_COMPLIANCE_CHECK = 1
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/emacs/site-lisp
 
 post-install:
 	@echo " ==> Fixing install anomalies"
 
-	@for f in share/emacs/site-lisp/autoconf-mode.elc share/emacs/site-lisp/autotest-mode.elc; do \
-		perl -pi -e 's!/export/medusa!! if( /^;;;/ )' $(DESTDIR)$(prefix)/$$f; \
-	done
 	@rm -f $(DESTDIR)$(prefix)/share/info/dir
