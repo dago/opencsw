@@ -1,6 +1,6 @@
-d none /opt/csw/include ? ? ?
-d none /opt/csw/include/exo-0.3/exo ? ? ?
-d none /opt/csw/include/exo-0.3/exo-hal ? ? ?
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/exo-0.3/exo 0755 root bin
+d none /opt/csw/include/exo-0.3/exo-hal 0755 root bin
 f none /opt/csw/include/exo-0.3/exo-hal/exo-hal.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-binding.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-cell-renderer-ellipsized-text.h 0644 root bin
@@ -29,8 +29,7 @@ f none /opt/csw/include/exo-0.3/exo/exo-utils.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-wrap-table.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-xsession-client.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo.h 0644 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/pkgconfig ? ? ?
+d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/exo-0.3.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/exo-hal-0.3.pc 0644 root bin
 i copyright=CSWxfcelibexodevel.copyright
