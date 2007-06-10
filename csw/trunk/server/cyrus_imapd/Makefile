@@ -16,6 +16,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = cyrus-imapd-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend checkinstall)
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
