@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWexpat expat -  XML Parser Toolkit
 P CSWfconfig fontconfig - A library for configuring and customizing font access.
 P CSWftype2 freetype2 - The free and portable high quality font engine

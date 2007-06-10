@@ -1,5 +1,6 @@
+I CSWxfcelauncher
+I CSWxfcexffm
 I CSWxfcelibs - lightweight desktop environment, core libraries
-P CSWcommon common - common files and dirs for CSW packages
 P CSWggettext ggettext - GNU gettext
 P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
 P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development

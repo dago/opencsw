@@ -20,6 +20,11 @@ CONFIGURE_ARGS +=   --enable-panel-plugin
 
 include ../category.mk
 
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
+CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/thunar-vfs-1
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/thunarx-1
+
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 

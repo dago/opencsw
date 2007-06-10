@@ -11,7 +11,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWxfceexo.depend CSWxfceexo.gspec CSWxfceexo.prototype
 DISTFILES += CSWxfcelibexo.depend CSWxfcelibexo.gspec CSWxfcelibexo.prototype
 DISTFILES += CSWxfceexodoc.depend CSWxfceexodoc.gspec CSWxfceexodoc.prototype
-DISTFILES += CSWxfcelibexodevel.depend CSWxfcelibexodevel.gspec CSWxfcelibexodevel.prototype
+DISTFILES += CSWxfcelibexodev.depend CSWxfcelibexodev.gspec CSWxfcelibexodev.prototype
 
 #  Patch for the exo-mount.c file
 PATCHFILES = exo.diff

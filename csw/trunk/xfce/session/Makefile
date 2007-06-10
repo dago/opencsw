@@ -17,6 +17,8 @@ DISTFILES += CSWlibxfcesessiondev.depend CSWlibxfcesessiondev.gspec CSWlibxfcese
 include ../category.mk
 
 CONFIGURE_ARGS += --enable-dbus
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
+CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

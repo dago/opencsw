@@ -5,7 +5,7 @@ diff --speed-large-files --minimal -Nru Thunar-0.8.0.orig/thunar-vfs/thunar-vfs-
  G_BEGIN_DECLS;
  
  /* Support macros for compilers that don't support proper inlining */
-+#if !defined(G_CAN_INLINE) && !defined(__THUNAR_VFS_PATH_C__) && !defined(__THUNAR_VFS_INFO_C__)
++#if !defined(G_CAN_INLINE) && !defined(__THUNAR_VFS_PATH_C__) && !defined(__THUNAR_VFS_INFO_C__) && !defined(TRUE)
 +
  #define thunar_vfs_path_ref(path)         (exo_atomic_inc (&(THUNAR_VFS_PATH ((path))->ref_count)), path)
  #define thunar_vfs_path_is_root(path)     (THUNAR_VFS_PATH ((path))->parent == NULL)
@@ -13,7 +13,7 @@ diff --speed-large-files --minimal -Nru Thunar-0.8.0.orig/thunar-vfs/thunar-vfs-
  #define thunar_vfs_path_get_parent(path)  (THUNAR_VFS_PATH ((path))->parent)
  #define thunar_vfs_path_get_scheme(path)  (THUNAR_VFS_PATH ((path))->ref_count & THUNAR_VFS_PATH_SCHEME_MASK)
  
-+#endif /* !defined(G_CAN_INLINE) && !defined(__THUNAR_VFS_PATH_C__) && !defined(__THUNAR_VFS_INFO_C__) */
++#endif /* !defined(G_CAN_INLINE) && !defined(__THUNAR_VFS_PATH_C__) && !defined(__THUNAR_VFS_INFO_C__) && !defined(TRUE) */
 +
  /* global shared variables */
  extern ThunarVfsPath *_thunar_vfs_path_trash_root G_GNUC_INTERNAL;

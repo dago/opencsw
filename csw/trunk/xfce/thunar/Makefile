@@ -20,7 +20,11 @@ PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
 
 include ../category.mk
 
-CONFIGURE_ARGS += --with-x --enable-dbus
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
+CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/exo-0.3/
+
+CONFIGURE_ARGS += --with-x --enable-dbus --with-volume-manager=auto
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

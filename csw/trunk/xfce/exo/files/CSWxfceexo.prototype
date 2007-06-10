@@ -10,7 +10,7 @@ f none /opt/csw/etc/xdg/xfce4/helpers.rc 0644 root bin
 d none /opt/csw/lib/gtk-2.0/engines 0755 root bin
 d none /opt/csw/lib/python2.5/site-packages 0755 root bin
 d none /opt/csw/lib/python2.5/site-packages/exo-0.3 0755 root bin
-f none /opt/csw/lib/python2.5/site-packages/exo-0.3/_exo.a 0644 root bin
+f none /opt/csw/lib/python2.5/site-packages/exo-0.3/_exo.a 0755 root bin
 f none /opt/csw/lib/python2.5/site-packages/exo-0.3/_exo.la 0755 root bin
 f none /opt/csw/lib/python2.5/site-packages/exo-0.3/_exo.so 0755 root bin
 d none /opt/csw/lib/python2.5/site-packages/exo-0.3/exo 0755 root bin

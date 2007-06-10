@@ -29,9 +29,11 @@ f none /opt/csw/include/exo-0.3/exo/exo-utils.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-wrap-table.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo-xsession-client.h 0644 root bin
 f none /opt/csw/include/exo-0.3/exo/exo.h 0644 root bin
+f none /opt/csw/lib/libexo-0.3.a 0755 root bin
+f none /opt/csw/lib/libexo-hal-0.3.a 0755 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/exo-0.3.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/exo-hal-0.3.pc 0644 root bin
-i copyright=CSWxfcelibexodevel.copyright
-i depend=CSWxfcelibexodevel.depend
-i pkginfo=CSWxfcelibexodevel.pkginfo
+i copyright=CSWxfcelibexodev.copyright
+i depend=CSWxfcelibexodev.depend
+i pkginfo=CSWxfcelibexodev.pkginfo

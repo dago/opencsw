@@ -14,7 +14,7 @@ include ../../gar.mk
 # Compiler options
 CFLAGS   += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS += -xlibmil -xlibmopt -features=tmplife -norunpath
-CPPFLAGS += -I$(DESTDIR)/opt/csw/include/xfce4
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/xfce4 
 LDFLAGS  += -L/opt/csw/lib -R/opt/csw/lib
 
 # pkg-config options
@@ -28,4 +28,3 @@ CONFIGURE_ARGS += --enable-final
 CONFIGURE_ARGS += --enable-xinerama
 CONFIGURE_ARGS += --enable-dbus
 # CONFIGURE_ARGS += --mandir=/opt/csw/share/man
-

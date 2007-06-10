@@ -1,4 +1,4 @@
-%var            bitname xfce_libexo_devel
+%var            bitname xfce_libexodev
 %var            pkgname CSWxfcelibexodevel
 %var		desc Xfce Extensions Library Headers
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec

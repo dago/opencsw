@@ -1,8 +1,7 @@
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/orage ? ? ?
-d none /opt/csw/share/orage/doc ? ? ?
-d none /opt/csw/share/orage/doc/C ? ? ?
-d none /opt/csw/share/orage/doc/C/images ? ? ?
+d none /opt/csw/share/orage 0755 root bin
+d none /opt/csw/share/orage/doc 0755 root bin
+d none /opt/csw/share/orage/doc/C 0755 root bin
+d none /opt/csw/share/orage/doc/C/images 0755 root bin
 f none /opt/csw/share/orage/doc/C/images/default_calendar.png 0644 root bin
 f none /opt/csw/share/orage/doc/C/images/orage_appointment.png 0644 root bin
 f none /opt/csw/share/orage/doc/C/images/orage_appointment_alarm.png 0644 root bin

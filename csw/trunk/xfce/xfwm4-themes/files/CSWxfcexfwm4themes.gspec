@@ -1,4 +1,4 @@
-%var            bitname xfce_xfwm4_themes
-%var            pkgname CSWxfcexfwm4themes
+%var            bitname xfce_xfwmthemes
+%var            pkgname CSWxfcexfwmthemes
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING

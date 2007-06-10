@@ -1,6 +1,5 @@
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/gtk-doc/html ? ? ?
-d none /opt/csw/share/gtk-doc/html/libxfcegui4 ? ? ?
+d none /opt/csw/share/gtk-doc/html 0755 root bin
+d none /opt/csw/share/gtk-doc/html/libxfcegui4 0755 root bin
 f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceAboutDialog.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceAppMenuItem.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceFramebox.html 0644 root bin

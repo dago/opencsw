@@ -14,6 +14,9 @@ PATCHFILES = xinitrc.patch
 
 include ../category.mk
 
+CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
+CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
+
 CONFIGURE_ARGS += --enable-dbus
 
 post-install:

@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWexpat
 P CSWfconfig
 P CSWftype2
@@ -30,3 +29,4 @@ P CSWsunmath
 P CSWvte
 P CSWxfcelibexo
 P CSWzlib
+P CSWxfcexfwm

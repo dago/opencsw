@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWexpat expat -  XML Parser Toolkit
 P CSWfconfig fontconfig - A library for configuring and customizing font access.
 P CSWftype2 freetype2 - The free and portable high quality font engine
@@ -21,4 +20,5 @@ P CSWstartupnotif startup_notif - Library for tracking P startup
 P CSWsunmath libsunmath - Sun maths library
 P CSWxfcelibexo xfce_libexo - Xfce Extensions Library
 P CSWzlib zlib - Zlib Data Compression Library
-
+P CSWdbusglib dbus_glib - DBus GLib Bindings
+P CSWlibdbus libdbus - DBus Message Bus System - dynamic libraries
