@@ -16,11 +16,11 @@ if [ -r /usr/lib/sendmail ]; then
     fi
   else
     echo "Found an existing sendmail installation."
-    echo "You have following choices with for installing postfix:"
+    echo "You have following choices with for installing exim:"
     echo " 1. Send mail only, without changing existing sendmail"
     echo "    installation."
     echo " 2. Rename existing sendmail binaries to *.OFF and replace"
-    echo "    them with binaries provided by postfix."
+    echo "    them with binaries provided by exim."
 
     /usr/bin/printf "Enter your choice [1,2] (default 1): "
     read usrin
