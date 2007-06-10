@@ -19,13 +19,13 @@ PIDFILE=/var/run/exim.pid
 ENVFILE=/opt/csw/etc/exim/exim-env.sh
 
 # Exit if there's no exim binary
-test -x $DAEMON || exit 0
+test -x "$DAEMON" || exit 0
 
 # Read customizable environment if it exists
-test -r $ENVFILE && . $ENVFILE
+test -r "$ENVFILE" && . "$ENVFILE"
 
 # Use default parameters if $ENVFILE doesn't set $EXIM_PARAMS
-test -z $EXIM_PARAMS && EXIM_PARAMS="-bd -q30m"
+test -z "$EXIM_PARAMS" && EXIM_PARAMS="-bd -q30m"
 
 case "$1" in
   start)
