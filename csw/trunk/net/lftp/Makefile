@@ -8,6 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlftp,prototype depend)
 DISTFILES += changelog.CSW

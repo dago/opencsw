@@ -11,6 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://elinks.cz/download/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWelinks,prototype depend)
 DISTFILES += changelog.CSW

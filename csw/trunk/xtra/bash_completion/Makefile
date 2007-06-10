@@ -8,6 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.caliban.org/files/bash/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+).tar.gz
+
 DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWbash_completion,)
 DISTFILES += $(shell cd files; for FILE in *.completion; do echo $$FILE; done)

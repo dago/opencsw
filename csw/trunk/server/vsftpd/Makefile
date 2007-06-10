@@ -12,6 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall)
 DISTFILES += changelog.CSW README.CSW

@@ -14,6 +14,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall prototype) 
 DISTFILES += sshd_config

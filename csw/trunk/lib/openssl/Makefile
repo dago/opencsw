@@ -12,6 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.openssl.org/source/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
+
 DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz 
 DISTFILES += $(call admfiles,CSWossl,depend prototype)

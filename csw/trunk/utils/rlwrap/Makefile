@@ -8,6 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://utopia.knoware.nl/~hlub/uck/rlwrap/
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrlwrap,depend prototype)
 DISTFILES += changelog.CSW
