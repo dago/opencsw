@@ -6,7 +6,7 @@ diff --speed-large-files --minimal -Nru cyrus-sasl-2.1.21.orig/saslauthd/Makefil
  
  saslauthd.8: saslauthd.mdoc
 -	nroff -mdoc $(srcdir)/saslauthd.mdoc > $(srcdir)/saslauthd.8
-+	groff -mdoc $(srcdir)/saslauthd.mdoc > $(srcdir)/saslauthd.8
++	sed -e '/.Sh/a\.ll 65' $(srcdir)/saslauthd.mdoc | gnroff -c -mdoc > $(srcdir)/saslauthd.8
  
  install-data-local: saslauthd.8
  	$(mkinstalldirs) $(DESTDIR)$(mandir)/cat8
@@ -18,7 +18,7 @@ diff --speed-large-files --minimal -Nru cyrus-sasl-2.1.21.orig/saslauthd/Makefil
  
  saslauthd.8: saslauthd.mdoc
 -	nroff -mdoc $(srcdir)/saslauthd.mdoc > $(srcdir)/saslauthd.8
-+	groff -mdoc $(srcdir)/saslauthd.mdoc > $(srcdir)/saslauthd.8
++	sed -e '/.Sh/a\.ll 65' $(srcdir)/saslauthd.mdoc | gnroff -c -mdoc > $(srcdir)/saslauthd.8
  
  install-data-local: saslauthd.8
  	$(mkinstalldirs) $(DESTDIR)$(mandir)/cat8

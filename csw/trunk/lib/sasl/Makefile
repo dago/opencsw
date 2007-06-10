@@ -25,6 +25,9 @@ BUILD_ENV = _REENTRANT=1
 
 TEST_TARGET = check
 
+SED=/usr/bin/sed
+EGREP=/usr/bin/egrep
+max_cmd_line=65535
 
 # SASL libraries and utilities
 DISTFILES += $(call admfiles,CSWsasl,$(ADMSTANDARD) $(ADMISCRIPTS))
@@ -38,7 +41,7 @@ DISTFILES += $(call admfiles,CSWsaslgssapi,$(ADMSTANDARD))
 # Init files for SASLAUTHD
 DISTFILES += cswsaslauthd.init saslauthd.init.CSW
 
-PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff
+PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
 
 #INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir
 
