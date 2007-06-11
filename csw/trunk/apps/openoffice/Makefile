@@ -16,7 +16,7 @@ DISTFILES += OOo_$(GARVERSION)_src_system.tar.bz2
 DISTFILES += OOo_$(GARVERSION)_src_binfilter.tar.bz2
 DISTFILES += OOo_$(GARVERSION)_src_l10n.tar.bz2
 # Mozilla prebuild libraries 
-DISTFILES += SOLARISC52Sinc SOLARISC52Slib SOLARISC52Sruntime SOLARISC52Sinc SOLARISC52Slib SOLARISC52Sruntime
+DISTFILES += SOLARISC52Iinc SOLARISC52Ilib SOLARISC52Iruntime SOLARISC52Sinc SOLARISC52Slib SOLARISC52Sruntime
 
 DISTFILES += $(call admfiles,CSWooocommon,prototype)
 DISTFILES += $(call admfiles,CSWooocore,prototype)
@@ -62,6 +62,7 @@ CONFIGURE_ARGS += --with-system-jpeg
 CONFIGURE_ARGS += --with-system-freetype
 CONFIGURE_ARGS += --with-system-curl
 CONFIGURE_ARGS += --with-system-expat
+CONFIGURE_ARGS += --with-system-nas
 # CSW icu is outdated for now
 #CONFIGURE_ARGS += --with-system-icu
 
@@ -86,7 +87,7 @@ COMMON_EXPORTS += X_LDFLAGS
 
 # Configure need the xmkmf tool
 XMKMF=/usr/openwin/bin/xmkmf
-COMMON_EXPORTS += xmkmf
+COMMON_EXPORTS += XMKMF
 
 # There is a bug in pkg format configure option
 # we need to set it manually
@@ -108,12 +109,16 @@ post-extract:
 # 2. By default, Sun Pango is used instead of CSW pango, to avoid this, we make
 #    sure /opt/csw/lib is read before /usr/lib
 # 3. (don't remember the cairo stuffs)
+# 4. We add "-I/opt/csw/include" in the CFLAGSCXX so the expat include files are found
+#    when the built-in sablot is compiled (why isn't CPPFLAGS taken in account ?!)
 #
 post-configure:
+	perl -pi -e 's,PYTHON_CFLAGS=.*,PYTHON_CFLAGS=\"-I/opt/csw/include/python2.5\",' $(WORKSRC)/SolarisX86Env.Set.sh
+	perl -pi -e 's,PYTHON_LIBS=.*,PYTHON_LIBS=\"-L/opt/csw/lib -lpython2.5\",' $(WORKSRC)/SolarisX86Env.Set.sh
 	perl -pi -e 's,LD_LIBRARY_PATH=\"(.*)\",LD_LIBRARY_PATH=\"$$1:$(libdir):$(CURDIR)/$(WORKSRC)/stlport/unxsoli4.pro/lib/\",' $(WORKSRC)/Solaris*Env.Set.sh
 	perl -pi -e 's,\s+(-L$(libdir)\s+)?-L/usr/lib, -L$(libdir) -L/usr/lib,' $(WORKSRC)/Solaris*Env.Set.sh
 	perl -pi -e 's,CAIRO_CFLAGS=\"(.*)\",CAIRO_CFLAGS=\"$$1 -I/usr/include\",' $(WORKSRC)/Solaris*Env.Set.sh
-	#perl -pi -e 's,CFLAGSCXX\s*=\s*(.*),CFLAGSCXX=$$1 -I$(includedir),' $(WORKSRC)/solenv/inc/unxsoli4.mk
+	perl -pi -e 's,CFLAGSCXX\s*=\s*(.*),CFLAGSCXX=$$1 -I$(includedir),' $(WORKSRC)/solenv/inc/unxsoli4.mk
 	@$(MAKECOOKIE)
 
 
