@@ -28,6 +28,10 @@ DISTFILES += $(foreach lang, $(OOO_LANGS), $(LANG_DISTFILES))
 
 DISTNAME = OOF$(SRCNUM)_$(MILESTONE)
 
+# Patches
+# Fix a missing -lXt option when linking with libaudio
+PATCHFILES = vcl_build_options.patch
+
 #####################################################################
 # Configure parameters and build environment 
 #####################################################################
