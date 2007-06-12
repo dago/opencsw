@@ -1,0 +1,97 @@
+diff --speed-large-files --minimal -Nru OOF640_m14.orig/ OOF640_m14/
+--- OOF680_m14.orig/canvas/source/cairo/cairo_canvashelper.cxx	2007-02-01 12:55:26.000000000 -0500
++++ OOF680_m14.orig/canvas/source/cairo/cairo_canvashelper.cxx	2007-06-12 16:21:20.383261000 -0400
+@@ -159,14 +159,14 @@
+         if( viewState.Clip.is() ) {
+ 	    OSL_TRACE ("view clip\n");
+ 
+-	    aViewMatrix.x0 = round( aViewMatrix.x0 );
+-	    aViewMatrix.y0 = round( aViewMatrix.y0 );
++	    aViewMatrix.x0 = floor( aViewMatrix.x0 + 0.5 );
++	    aViewMatrix.y0 = floor( aViewMatrix.y0 + 0.5 );
+ 	    cairo_set_matrix( mpCairo, &aViewMatrix );
+ 	    doPolyPolygonPath( viewState.Clip, Clip );
+ 	}
+ 
+-	aCombinedMatrix.x0 = round( aCombinedMatrix.x0 );
+-	aCombinedMatrix.y0 = round( aCombinedMatrix.y0 );
++	aCombinedMatrix.x0 = floor( aCombinedMatrix.x0 + 0.5 );
++	aCombinedMatrix.y0 = floor( aCombinedMatrix.y0 + 0.5 );
+ 	cairo_set_matrix( mpCairo, &aCombinedMatrix );
+ 
+         if( renderState.Clip.is() ) {
+@@ -626,8 +626,8 @@
+  			if( aTexture.RepeatModeX == rendering::TexturingMode::REPEAT &&
+ 			    aTexture.RepeatModeY == rendering::TexturingMode::REPEAT )
+ 			    cairo_pattern_set_extend( pPattern, CAIRO_EXTEND_REPEAT );
+-			aScaledTextureMatrix.x0 = round( aScaledTextureMatrix.x0 );
+-			aScaledTextureMatrix.y0 = round( aScaledTextureMatrix.y0 );
++			aScaledTextureMatrix.x0 = floor( aScaledTextureMatrix.x0 + 0.5 );
++			aScaledTextureMatrix.y0 = floor( aScaledTextureMatrix.y0 + 0.5 );
+ 			cairo_pattern_set_matrix( pPattern, &aScaledTextureMatrix );
+ 
+ 			cairo_set_source( pCairo, pPattern );
+@@ -753,8 +753,8 @@
+ 		cairo_matrix_transform_point( &aOrigMatrix, &nX, &nY );
+ 
+ 		if( ! bIsBezier ) {
+-		    nX = round( nX );
+-		    nY = round( nY );
++		    nX = floor( nX + 0.5 );
++		    nY = floor( nY + 0.5 );
+ 		}
+ 
+ 		if( aOperation == Stroke ) {
+@@ -778,8 +778,8 @@
+ 		    cairo_matrix_transform_point( &aOrigMatrix, &nX, &nY );
+ 
+ 		    if( ! bIsBezier ) {
+-			nX = round( nX );
+-			nY = round( nY );
++			nX = floor( nX + 0.5 );
++			nY = floor( nY + 0.5 );
+ 		    }
+ 
+ 		    if( aOperation == Stroke ) {
+@@ -1070,13 +1070,13 @@
+ 				! ::rtl::math::approxEqual( aMatrix.yy, 1 ) &&
+ 				::rtl::math::approxEqual( aMatrix.x0, 0 ) &&
+ 				::rtl::math::approxEqual( aMatrix.y0, 0 ) &&
+-				round( rSize.Width * aMatrix.xx ) > 8 &&
+-				round( rSize.Height* aMatrix.yy ) > 8 )
++				floor( rSize.Width * aMatrix.xx + 0.5 ) > 8 &&
++				floor( rSize.Height* aMatrix.yy + 0.5 ) > 8 )
+ 				{
+ 					double dWidth, dHeight;
+ 
+-					dWidth = round( rSize.Width * aMatrix.xx );
+-					dHeight = round( rSize.Height* aMatrix.yy );
++					dWidth = floor( rSize.Width * aMatrix.xx + 0.5 );
++					dHeight = floor( rSize.Height* aMatrix.yy + 0.5 );
+                                         aBitmapSize.Width = static_cast<sal_Int32>( dWidth );
+                                         aBitmapSize.Height = static_cast<sal_Int32>( dHeight );
+ 
+--- OOF680_m14.orig/canvas/source/cairo/cairo_spritehelper.cxx	2007-02-01 12:55:26.000000000 -0500
++++ OOF680_m14.orig/canvas/source/cairo/cairo_spritehelper.cxx	2007-06-12 16:21:20.383261000 -0400
+@@ -138,8 +138,8 @@
+  				       aTransform.get( 0, 0 ), aTransform.get( 1, 0 ), aTransform.get( 0, 1 ),
+  				       aTransform.get( 1, 1 ), aTransform.get( 0, 2 ), aTransform.get( 1, 2 ) );
+ 
+- 		    aMatrix.x0 = round( aMatrix.x0 );
+- 		    aMatrix.y0 = round( aMatrix.y0 );
++ 		    aMatrix.x0 = floor( aMatrix.x0 + 0.5 );
++ 		    aMatrix.y0 = floor( aMatrix.y0 + 0.5 );
+ 
+ 		    cairo_matrix_init( &aInverseMatrix, aMatrix.xx, aMatrix.yx, aMatrix.xy, aMatrix.yy, aMatrix.x0, aMatrix.y0 );
+ 		    cairo_matrix_invert( &aInverseMatrix );
+@@ -148,8 +148,8 @@
+  		    cairo_set_matrix( pCairo, &aMatrix );
+  		}
+ 
+- 		fX = round( fX );
+- 		fY = round( fY );
++ 		fX = floor( fX + 0.5 );
++ 		fY = floor( fY + 0.5 );
+ 
+ 		cairo_matrix_t aOrigMatrix;
+ 		cairo_get_matrix( pCairo, &aOrigMatrix );

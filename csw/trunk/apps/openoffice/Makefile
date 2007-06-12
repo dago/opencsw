@@ -30,7 +30,15 @@ DISTNAME = OOF$(SRCNUM)_$(MILESTONE)
 
 # Patches
 # Fix a missing -lXt option when linking with libaudio
+# and an incorrect libjpeg linking option
 PATCHFILES = csw_build_env.patch
+
+# Fix a missing X include in cairo_cairo.cxx
+PATCHFILES += cairo_x_include.patch
+
+# the round function is defined in C99 and is not available
+# in solaris 8/9, this patch replace round (x) by floor (x+0.5)
+PATCHFILES += no_round.patch
 
 #####################################################################
 # Configure parameters and build environment 
@@ -112,7 +120,7 @@ post-extract:
 #    so we add some path to LD_LIBRARY_PATH
 # 2. By default, Sun Pango is used instead of CSW pango, to avoid this, we make
 #    sure /opt/csw/lib is read before /usr/lib
-# 3. (don't remember the cairo stuffs)
+# 3. We want Cairo to use CSW Xrender so we add /opt/csw/include in the include path search
 # 4. We add "-I/opt/csw/include" in the CFLAGSCXX so the expat include files are found
 #    when the built-in sablot is compiled (why isn't CPPFLAGS taken in account ?!)
 # 5. We add "-I/opt/csw/include" in SOLARINC so the build process correctly find
@@ -123,7 +131,7 @@ post-configure:
 	perl -pi -e 's,PYTHON_LIBS=.*,PYTHON_LIBS=\"-L/opt/csw/lib -lpython2.5\",' $(WORKSRC)/SolarisX86Env.Set.sh
 	perl -pi -e 's,LD_LIBRARY_PATH=\"(.*)\",LD_LIBRARY_PATH=\"$$1:$(libdir):$(CURDIR)/$(WORKSRC)/stlport/unxsoli4.pro/lib/\",' $(WORKSRC)/Solaris*Env.Set.sh
 	perl -pi -e 's,\s+(-L$(libdir)\s+)?-L/usr/lib, -L$(libdir) -L/usr/lib,' $(WORKSRC)/Solaris*Env.Set.sh
-	perl -pi -e 's,CAIRO_CFLAGS=\"(.*)\",CAIRO_CFLAGS=\"$$1 -I/usr/include\",' $(WORKSRC)/Solaris*Env.Set.sh
+	perl -pi -e 's,CAIRO_CFLAGS=\"(.*)\",CAIRO_CFLAGS=\"$$1 -I/opt/csw/include\",' $(WORKSRC)/Solaris*Env.Set.sh
 	perl -pi -e 's,CFLAGSCXX\s*=\s*(.*),CFLAGSCXX=$$1 -I$(includedir),' $(WORKSRC)/solenv/inc/unxsoli4.mk
 	perl -pi -e 's,SOLARINC=\"(.*)\",SOLARINC=\"$$1 -I$(includedir)\",' $(WORKSRC)/Solaris*Env.Set.sh
 	@$(MAKECOOKIE)
