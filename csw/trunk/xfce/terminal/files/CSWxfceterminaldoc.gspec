@@ -1,4 +1,4 @@
-%var            bitname xfce_terminal_doc
+%var            bitname xfce_terminaldoc
 %var            pkgname CSWxfceterminaldoc
 %var		arch all
 %var		desc Xfce Terminal Emulator Documentation

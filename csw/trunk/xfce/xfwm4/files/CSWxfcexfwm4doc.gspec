@@ -1,4 +1,4 @@
-%var            bitname xfce_xfwm_doc
+%var            bitname xfce_xfwmdoc
 %var            pkgname CSWxfcexfwmdoc
 %var		arch all
 %var		desc Xfce Window Manager Documentation

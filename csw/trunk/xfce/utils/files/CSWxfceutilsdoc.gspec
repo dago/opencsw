@@ -1,4 +1,4 @@
-%var            bitname xfce_utils_doc
+%var            bitname xfce_utilsdoc
 %var            pkgname CSWxfceutilsdoc
 %var		arch all
 %var		desc  Xfce Utilities Documentation

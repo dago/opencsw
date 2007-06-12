@@ -1,4 +1,4 @@
-%var            bitname xfce_panel_doc
+%var            bitname xfce_paneldoc
 %var            pkgname CSWxfcepaneldoc
 %var 		desc Xfce Panel Documentation
 %var		arch all

@@ -8,7 +8,7 @@ endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWxfcepaneldoc.depend CSWxfcepaneldoc.gspec CSWxfcepaneldoc.prototype
-DISTFILES += CSWlibxfcepaneldevel.depend CSWlibxfcepaneldevel.gspec CSWlibxfcepaneldevel.prototype
+DISTFILES += CSWlibxfcepaneldev.depend CSWlibxfcepaneldev.gspec CSWlibxfcepaneldev.prototype
 DISTFILES += CSWlibxfcepanel.depend CSWlibxfcepanel.gspec CSWlibxfcepanel.prototype
 DISTFILES += CSWxfcepanel.depend CSWxfcepanel.gspec CSWxfcepanel.prototype
 

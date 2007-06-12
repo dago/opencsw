@@ -7,7 +7,7 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWxfcemcsmanagerdevel.depend CSWxfcemcsmanagerdevel.gspec CSWxfcemcsmanagerdevel.prototype
+DISTFILES += CSWxfcemcsmanagerdev.depend CSWxfcemcsmanagerdev.gspec CSWxfcemcsmanagerdev.prototype
 DISTFILES += CSWxfcemcsmanagerdoc.depend CSWxfcemcsmanagerdoc.gspec CSWxfcemcsmanagerdoc.prototype
 DISTFILES += CSWxfcemcsmanager.depend CSWxfcemcsmanager.gspec CSWxfcemcsmanager.prototype
 

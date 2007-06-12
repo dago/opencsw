@@ -1,4 +1,4 @@
-%var            bitname xfce_thunar_doc
+%var            bitname xfce_thunardoc
 %var            pkgname CSWxfcethunardoc
 %var		desc Xfce Thunar File Manager Documentation
 %var		arch all

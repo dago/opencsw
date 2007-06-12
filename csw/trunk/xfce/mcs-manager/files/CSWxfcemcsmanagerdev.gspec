@@ -1,4 +1,4 @@
-%var            bitname xfce_mcs_manager_dev
+%var            bitname xfce_mcs_managerdev
 %var            pkgname CSWxfcemcsmanagerdev
 %var		desc Xfce Settings Manager Headers
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec

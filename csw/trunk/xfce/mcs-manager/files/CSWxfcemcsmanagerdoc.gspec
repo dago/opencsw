@@ -1,4 +1,4 @@
-%var            bitname xfce_mcs_manager_doc
+%var            bitname xfce_mcs_managerdoc
 %var            pkgname CSWxfcemcsmanagerdoc
 %var		desc Xfce Settings Manager Documentation
 %var		arch all

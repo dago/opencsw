@@ -1,4 +1,4 @@
-%var            bitname xfce_session_doc
+%var            bitname xfce_sessiondoc
 %var            pkgname CSWxfcesessiondoc
 %var		arch	all
 %var		desc Xfce Session Manager Documentation

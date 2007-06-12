@@ -23,11 +23,11 @@ for i in /opt/csw/share/icons/hicolor/48x48/apps/xfce-edit.png        \
          /opt/csw/share/icons/hicolor/48x48/apps/xfce-utils.png ; 
 
     do echo Removing file : $i
-    removef $PKGINST $i
+    removef CSWxfcepanel $i
     rm -f $i
 
 done
 
-removef -f $PKGINST || exit 2
+removef -f CSWxfcepanel || exit 2
 
 exit 0

@@ -48,8 +48,9 @@ f none /opt/csw/include/xfce4/libxfcegui4/xfce_scaled_image.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfcegui4/xfce_systemtray.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfcegui4/xfce_togglebutton.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfcegui4/xinerama.h 0644 root bin
+f none /opt/csw/lib/libxfcegui4.a 0644 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/libxfcegui4-1.0.pc 0644 root bin
-i copyright=CSWlibxfcegui4devel.copyright
-i depend=CSWlibxfcegui4devel.depend
-i pkginfo=CSWlibxfcegui4devel.pkginfo
+i copyright=CSWlibxfcegui4dev.copyright
+i depend=CSWlibxfcegui4dev.depend
+i pkginfo=CSWlibxfcegui4dev.pkginfo

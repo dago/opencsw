@@ -14,6 +14,6 @@ f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-plugin.h 0644 root bin
 f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-window.h 0644 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/libxfce4panel-1.0.pc 0644 root bin
-i copyright=CSWlibxfcepaneldevel.copyright
-i depend=CSWlibxfcepaneldevel.depend
-i pkginfo=CSWlibxfcepaneldevel.pkginfo
+i copyright=CSWlibxfcepaneldev.copyright
+i depend=CSWlibxfcepaneldev.depend
+i pkginfo=CSWlibxfcepaneldev.pkginfo

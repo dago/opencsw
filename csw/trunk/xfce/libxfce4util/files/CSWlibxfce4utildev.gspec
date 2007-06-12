@@ -1,5 +1,5 @@
-%var            bitname libxfce4util_devel
+%var            bitname libxfce4utildev
 %var            desc  Xfce Utilities Library Headers
-%var            pkgname CSWlibxfce4utildevel
+%var            pkgname CSWlibxfce4utildev
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING

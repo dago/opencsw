@@ -9,3 +9,4 @@ P CSWlibcairo libcairo - The Cairo 2D Graphics Library
 P CSWlibxfce4util libxfce4util - Xfce Utilities Library
 P CSWpango libpango - Library for laying out and rendering text
 P CSWstartupnotif startup_notif - Library for tracking application startup
+P CSWlibxfcegui4dep

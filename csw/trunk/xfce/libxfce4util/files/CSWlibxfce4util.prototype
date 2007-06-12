@@ -1,4 +1,3 @@
-f none /opt/csw/lib/libxfce4util.a 0644 root bin
 f none /opt/csw/lib/libxfce4util.la 0755 root bin
 f none /opt/csw/lib/libxfce4util.so.4.0.2 0755 root bin
 s none /opt/csw/lib/libxfce4util.so.4=libxfce4util.so.4.0.2

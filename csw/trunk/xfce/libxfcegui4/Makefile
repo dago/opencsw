@@ -7,9 +7,10 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWlibxfcegui4.depend CSWlibxfcegui4.gspec CSWlibxfcegui4.prototype
+DISTFILES += CSWlibxfcegui4.depend CSWlibxfcegui4.gspec CSWlibxfcegui4.prototype 
+DISTFILES += CSWlibxfcegui4dep.depend CSWlibxfcegui4dep.gspec CSWlibxfcegui4dep.prototype CSWlibxfcegui4dep.preinstall
 DISTFILES += CSWlibxfcegui4doc.depend CSWlibxfcegui4doc.gspec CSWlibxfcegui4doc.prototype
-DISTFILES += CSWlibxfcegui4devel.depend CSWlibxfcegui4devel.gspec CSWlibxfcegui4devel.prototype
+DISTFILES += CSWlibxfcegui4dev.depend CSWlibxfcegui4dev.gspec CSWlibxfcegui4dev.prototype
 
 LIBDEPS = xfce/libxfce4util
 
