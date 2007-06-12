@@ -30,7 +30,7 @@ DISTNAME = OOF$(SRCNUM)_$(MILESTONE)
 
 # Patches
 # Fix a missing -lXt option when linking with libaudio
-PATCHFILES = vcl_build_options.patch
+PATCHFILES = csw_build_env.patch
 
 #####################################################################
 # Configure parameters and build environment 
@@ -115,6 +115,8 @@ post-extract:
 # 3. (don't remember the cairo stuffs)
 # 4. We add "-I/opt/csw/include" in the CFLAGSCXX so the expat include files are found
 #    when the built-in sablot is compiled (why isn't CPPFLAGS taken in account ?!)
+# 5. We add "-I/opt/csw/include" in SOLARINC so the build process correctly find
+#    the jpeg headers
 #
 post-configure:
 	perl -pi -e 's,PYTHON_CFLAGS=.*,PYTHON_CFLAGS=\"-I/opt/csw/include/python2.5\",' $(WORKSRC)/SolarisX86Env.Set.sh
@@ -123,6 +125,7 @@ post-configure:
 	perl -pi -e 's,\s+(-L$(libdir)\s+)?-L/usr/lib, -L$(libdir) -L/usr/lib,' $(WORKSRC)/Solaris*Env.Set.sh
 	perl -pi -e 's,CAIRO_CFLAGS=\"(.*)\",CAIRO_CFLAGS=\"$$1 -I/usr/include\",' $(WORKSRC)/Solaris*Env.Set.sh
 	perl -pi -e 's,CFLAGSCXX\s*=\s*(.*),CFLAGSCXX=$$1 -I$(includedir),' $(WORKSRC)/solenv/inc/unxsoli4.mk
+	perl -pi -e 's,SOLARINC=\"(.*)\",SOLARINC=\"$$1 -I$(includedir)\",' $(WORKSRC)/Solaris*Env.Set.sh
 	@$(MAKECOOKIE)
 
 
