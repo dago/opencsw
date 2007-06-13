@@ -1,7 +1,7 @@
 4563eeebae66828e30b72e2c1d90a92c  download/dbus-glib-0.73.tar.gz
 4e968829bc52f3e5d275c51d6fb6abdf  download/CSWdbusglib.gspec
-66076d337ed90c795b43cda0b46309f6  download/CSWdbusglib.prototype
-890e495e479bab0b7797af0d324e6ab0  download/CSWdbusglib.depend
-cd530248d5269d3503a59b756e4f3586  download/CSWdbusglibdevel.gspec
-2420258e7620d9de5c1e5e8ee64dba09  download/CSWdbusglibdevel.prototype
-cf10113b33bc6b4ba5ca8d3533b23eba  download/CSWdbusglibdevel.depend
+c9226d5022515cf22bef5053f74362f3  download/CSWdbusglib.prototype
+e96d3f83010daba71be1f84c8d040174  download/CSWdbusglib.depend
+fdba920e74efe491d775a8670a2be900  download/CSWdbusglibdev.gspec
+ed4f9b77acbae2e85121e6f03b20afb1  download/CSWdbusglibdev.prototype
+edf1a2ece80570bee1f185794ddfa7a4  download/CSWdbusglibdev.depend

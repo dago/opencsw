@@ -20,6 +20,7 @@ d none /opt/csw/lib/dbus-1.0/include/dbus 0755 root bin
 f none /opt/csw/lib/dbus-1.0/include/dbus/dbus-arch-deps.h 0644 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/dbus-1.pc 0644 root bin
-i copyright=CSWlibdbusdevel.copyright
-i depend=CSWlibdbusdevel.depend
-i pkginfo=CSWlibdbusdevel.pkginfo
+f none /opt/csw/lib/libdbus-1.a 0644 root bin
+i copyright=CSWlibdbusdev.copyright
+i depend=CSWlibdbusdev.depend
+i pkginfo=CSWlibdbusdev.pkginfo

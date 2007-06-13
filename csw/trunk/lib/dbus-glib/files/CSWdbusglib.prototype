@@ -1,5 +1,4 @@
 f none /opt/csw/bin/dbus-binding-tool 0755 root bin
-f none /opt/csw/lib/libdbus-glib-1.a 0644 root bin
 f none /opt/csw/lib/libdbus-glib-1.la 0755 root bin
 f none /opt/csw/lib/libdbus-glib-1.so.2.1.0 0755 root bin
 s none /opt/csw/lib/libdbus-glib-1.so.2=libdbus-glib-1.so.2.1.0

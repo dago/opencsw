@@ -5,6 +5,7 @@ f none /opt/csw/include/dbus-1.0/dbus/dbus-glib-error-enum.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-glib-lowlevel.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-glib.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-gtype-specialized.h 0644 root bin
+f none /opt/csw/lib/libdbus-glib-1.a 0644 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/dbus-glib-1.pc 0644 root bin
 d none /opt/csw/share/gtk-doc/html 0755 root bin
@@ -30,6 +31,6 @@ f none /opt/csw/share/gtk-doc/html/dbus-glib/left.png 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/right.png 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/style.css 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/up.png 0644 root bin
-i copyright=CSWdbusglibdevel.copyright
-i depend=CSWdbusglibdevel.depend
-i pkginfo=CSWdbusglibdevel.pkginfo
+i copyright=CSWdbusglibdev.copyright
+i depend=CSWdbusglibdev.depend
+i pkginfo=CSWdbusglibdev.pkginfo

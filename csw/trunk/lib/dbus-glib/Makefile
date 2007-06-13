@@ -14,7 +14,7 @@ DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz 
 
 DISTFILES    += CSWdbusglib.gspec CSWdbusglib.prototype CSWdbusglib.depend
-DISTFILES    += CSWdbusglibdevel.gspec CSWdbusglibdevel.prototype CSWdbusglibdevel.depend
+DISTFILES    += CSWdbusglibdev.gspec CSWdbusglibdev.prototype CSWdbusglibdev.depend
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
