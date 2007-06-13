@@ -1,0 +1,143 @@
+ License
+
+   The Eclipse Foundation makes available all content in this plug-in ("Content"). Unless otherwise indicated below, the Content
+   is provided to you under the terms and conditions of the Eclipse Public License Version 1.0 ("EPL"). A copy of the EPL is
+   available at http://www.eclipse.org/legal/epl-v10.html. For purposes of the EPL, "Program" will mean the Content.
+
+   If you did not receive this Content directly from the Eclipse Foundation, the Content is being redistributed by another party
+   ("Redistributor") and different terms and conditions may apply to your use of any object code in the Content. Check the
+   Redistributor's license that was provided with the Content. If no such license exists, contact the Redistributor. Unless
+   otherwise indicated below, the terms and conditions of the EPL still apply to any source code in the Content and such source
+   code may be obtained at http://www.eclipse.org.
+
+  Third Party Content
+
+   The Content includes items that have been sourced from third parties as set out below. If you did not receive this Content
+   directly from the Eclipse Foundation, the following is provided for informational purposes only, and you should look to the
+   Redistributor's license for terms and conditions of use.
+
+    GTK+ Binding
+
+   The "GTK+ Binding" is a binding to the GTK+ API. The Content may include any or all of the following files:
+
+   The following files in the plug-in JAR shall be defined as the native code portion of the GTK+ Binding:
+     * libswt-atk-gtk-xxxx.so (where "xxxx" is the version number)
+     * libswt-pi-gtk-xxxx.so (where "xxxx" is the version number)
+
+   The following files in both the plug-in JAR and the src.zip shall be defined respectively as the bytecode and source code
+   portions of the GTK+ Binding:
+     * The contents of the directory org/eclipse/swt/internal/accessibility/gtk (but not including any sub-directories)
+     * The contents of the directory org/eclipse/swt/internal/cde (but not including any sub-directories)
+     * The contents of the directory org/eclipse/swt/internal/gtk (but not including any sub-directories)
+     * The contents of the directory org/eclipse/swt/internal/kde (but not including any sub-directories)
+
+   The GTK+ Binding contains portions of GTK+ ("Library"). GTK+ is made available by The Free Software Foundation. Use of the
+   Library is governed by the terms and conditions of the GNU Lesser General Public License Version 2.1 ("LGPL"). Use of the GTK+
+                                                                                                                       About (p2 of 4)
+   Binding on a standalone basis, is also governed by the terms and conditions of the LGPL. A copy of the LGPL is provided with
+   the Content (lgpl-v21.txt) and is also available at http://www.gnu.org/licenses/lgpl.html.
+
+   In accordance with Section 6 of the LGPL, you may combine or link a "work that uses the Library" (e.g. the SWT) with the
+   Library to produce a work containing portions of the Library (e.g. the GTK+ Binding) and distribute that work under the terms
+   of your choice (e.g. the EPL) provided you comply with all other terms and conditions of Section 6 as well as other Sections
+   of the LGPL. Please note, if you modify the GTK+ Binding such modifications shall be governed by the terms and conditions of
+   the LGPL. Also note, the terms of the EPL permit you to modify the combined work and the source code of the combined work is
+   provided for debugging purposes so there is no need to reverse engineer the combined work.
+
+    Independent JPEG Group's JPEG software release 6b
+
+   This software is based in part on the work of the Independent JPEG Group's JPEG software release 6b ("LIBJPEG"). LIBJPEG was
+   used to implement the decoding of JPEG format files in Java (TM). The Content does NOT include any portion of the LIBJPEG file
+   ansi2knr.c.
+
+   Your use of LIBJPEG is subject to the terms and conditions located in the about_files/IJG_README file which is included with
+   the Content.
+
+   The IJG's website is located at http://ijg.org.
+
+   The class org.eclipse.swt.internal.image.JPEGFileFormat is based on following files from LIBJPEG:
+     * cderror.h
+     * cdjpeg.h
+     * jchuff.h
+     * jdcolor.c
+     * jdct.h
+     * jdhuff.h
+     * jerror.h
+     * jidctint.c
+     * jinclude.h
+     * jmemsys.h
+     * jmorecfg.h
+     * jpegint.h
+     * jpeglib.h
+     * jversion.h
+     * transupp.h
+
+   The class org.eclipse.swt.internal.image.JPEGDecoder is based on the following files from LIBJPEG:
+     * jcapimin.c
+     * jcapistd.c
+     * jccoefct.c
+     * jccolor.c
+     * jcdctmgr.c
+     * jchuff.c
+     * jcinit.c
+     * jcmainct.c
+     * jcmarker.c
+     * jcmaster.c
+     * jcomapi.c
+     * jcparam.c
+     * jcphuff.c
+     * jcprepct.c
+     * jcsample.c
+     * jctrans.c
+     * jdapimin.c
+     * jdapistd.c
+     * jdatadst.c
+     * jdatasrc.c
+     * jdcoefct.c
+     * jdcolor.c
+     * jddctmgr.c
+     * jdhuff.c
+     * jdinput.c
+     * jdmainct.c
+     * jdmarker.c
+     * jdmaster.c
+     * jdmerge.c
+     * jdphuff.c
+     * jdpostct.c
+     * jdsample.c
+     * jdtrans.c
+     * jerror.c
+     * jfdctflt.c
+     * jfdctfst.c
+     * jfdctint.c
+     * jidctflt.c
+     * jidctfst.c
+     * jidctint.c
+     * jidctred.c
+     * jpegtran.c
+     * jquant1.c
+     * jquant2.c
+     * jutils.c
+     * cderror.h
+     * cdjpeg.h
+     * jchuff.h
+     * jconfig.h
+     * jdct.h
+     * jdhuff.h
+     * jerror.h
+     * jinclude.h
+     * jmorecfg.h
+     * jpegint.h
+     * jpeglib.h
+     * jversion.h
+     * transupp.h
+
+   The following changes were made to the LIBJPEG code in the Content:
+    1. In Java, pointer math is not allowed so indexing was used instead.
+    2. Function pointers were replaced with switch statements.
+    3. The virtual memory, tracing and progress monitoring were removed.
+    4. The error handling was simplified and now uses Java exceptions.
+
+   Java and all Java-based trademarks and logos are trademarks or registered trademarks of Sun Microsystems, Inc. in the United
+   States and other countries.
+
