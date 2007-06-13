@@ -1,7 +1,9 @@
 GARNAME = firefox
-GARVERSION = 2.0.0.3
+GARVERSION = 2.0.0.4
 CATEGORIES = apps
 DISTNAME = $(GARNAME)
+
+DESTDIR = $(DESTROOT)/build.$(GARNAME).$(GAROSREL)-$(GARCH)
 
 DESCRIPTION = Firefox Community Edition web browser
 define BLURB
@@ -10,10 +12,10 @@ endef
 
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
-# DISTFILES += $(call admfiles,CSWfirefox, depend postinstall postremove )
-DISTFILES += CSWfirefoxrt.depend CSWfirefoxrt.gspec CSWfirefoxrt.prototype
-DISTFILES += CSWfirefoxdevel.depend CSWfirefoxdevel.gspec CSWfirefoxdevel.prototype
-DISTFILES += CSWfirefox.depend CSWfirefox.gspec CSWfirefox.prototype CSWfirefox.postinstall CSWfirefox.postremove
+DISTFILES += $(call admfiles,CSWfirefox, depend postinstall postremove )
+# DISTFILES += CSWfirefoxrt.depend CSWfirefoxrt.gspec CSWfirefoxrt.prototype
+# DISTFILES += CSWfirefoxdevel.depend CSWfirefoxdevel.gspec CSWfirefoxdevel.prototype
+# DISTFILES += CSWfirefox.depend CSWfirefox.gspec CSWfirefox.prototype CSWfirefox.postinstall CSWfirefox.postremove
 
 PERL="/opt/csw/bin/perl"
 CFLAGS=-xlibmil

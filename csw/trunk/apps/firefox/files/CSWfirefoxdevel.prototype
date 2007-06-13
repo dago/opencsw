@@ -974,6 +974,7 @@ f none /opt/csw/mozilla/firefox/share/idl/nsIUploadChannel.idl 0644 root bin
 f none /opt/csw/mozilla/firefox/share/idl/nsIUrlClassifierDBService.idl 0644 root bin
 f none /opt/csw/mozilla/firefox/share/idl/nsIUrlClassifierStreamUpdater.idl 0644 root bin
 f none /opt/csw/mozilla/firefox/share/idl/nsIUrlClassifierTable.idl 0644 root bin
+f none /opt/csw/mozilla/firefox/share/idl/nsIUrlClassifierUtils.idl 0644 root bin
 f none /opt/csw/mozilla/firefox/share/idl/nsIUrlListManager.idl 0644 root bin
 f none /opt/csw/mozilla/firefox/share/idl/nsIUserCertPicker.idl 0644 root bin
 f none /opt/csw/mozilla/firefox/share/idl/nsIUserInfo.idl 0644 root bin
@@ -2823,6 +2824,7 @@ d none /opt/csw/mozilla/firefox/include/url-classifier 0755 root bin
 f none /opt/csw/mozilla/firefox/include/url-classifier/nsIUrlClassifierDBService.h 0644 root bin
 f none /opt/csw/mozilla/firefox/include/url-classifier/nsIUrlClassifierStreamUpdater.h 0644 root bin
 f none /opt/csw/mozilla/firefox/include/url-classifier/nsIUrlClassifierTable.h 0644 root bin
+f none /opt/csw/mozilla/firefox/include/url-classifier/nsIUrlClassifierUtils.h 0644 root bin
 f none /opt/csw/mozilla/firefox/include/url-classifier/nsIUrlListManager.h 0644 root bin
 d none /opt/csw/mozilla/firefox/include/urlformatter 0755 root bin
 f none /opt/csw/mozilla/firefox/include/urlformatter/nsIURLFormatter.h 0644 root bin

@@ -1,15 +1,8 @@
 d none /opt/csw/mozilla ? ? ?
 d none /opt/csw/mozilla/firefox ? ? ?
 d none /opt/csw/mozilla/firefox/lib ? ? ?
-d none /opt/csw/mozilla/firefox/lib/cpu 0755 root bin
-d none /opt/csw/mozilla/firefox/lib/cpu/sparcv8plus 0755 root bin
-f none /opt/csw/mozilla/firefox/lib/cpu/sparcv8plus/libnspr_flt4.so 0755 root bin
-f none /opt/csw/mozilla/firefox/lib/libfreebl_32fpu_3.chk 0644 root bin
-f none /opt/csw/mozilla/firefox/lib/libfreebl_32fpu_3.so 0755 root bin
-f none /opt/csw/mozilla/firefox/lib/libfreebl_32int64_3.chk 0644 root bin
-f none /opt/csw/mozilla/firefox/lib/libfreebl_32int64_3.so 0755 root bin
-f none /opt/csw/mozilla/firefox/lib/libfreebl_32int_3.chk 0644 root bin
-f none /opt/csw/mozilla/firefox/lib/libfreebl_32int_3.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libfreebl3.chk 0644 root bin
+f none /opt/csw/mozilla/firefox/lib/libfreebl3.so 0755 root bin
 f none /opt/csw/mozilla/firefox/lib/libgfxpsshar.so 0755 root bin
 f none /opt/csw/mozilla/firefox/lib/libgkgfx.so 0755 root bin
 f none /opt/csw/mozilla/firefox/lib/libgtkembedmoz.so 0755 root bin

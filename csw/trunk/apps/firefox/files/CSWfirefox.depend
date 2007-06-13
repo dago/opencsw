@@ -19,12 +19,8 @@ P CSWlibpopt libpopt - Command line option parsing library
 P CSWlibxft2 libxft2 - FreeType-based font drawing library for X
 P CSWlibxml2 libxml2 - XML Parser Library
 P CSWlibxrender libxrender - fontconfig.org Xrender library
-P CSWmozilla mozilla - Web browser and internet suite with Gecko SDK
-P CSWooocore ooocore - OpenOffice.org core binaries
 P CSWorbit2 orbit2 - ORBit 2.x CORBA tools and libs
 P CSWpango libpango - library for laying out and rendering international text
-P CSWseamonkey seamonkey - WorldWideFamous internet suite (web browser,mail,composer,irc) - was Mozilla suite
-P CSWthunderbird thunderbird - Mozilla Thunderbird Mail Client
 P CSWzlib zlib - Zlib Data Compression Library
 P CSWggettext  ggettext - GNU gettext
 P CSWgnomekeyring  gnomekeyring - keep password and other secrets for users
