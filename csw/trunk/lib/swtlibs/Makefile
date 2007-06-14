@@ -51,6 +51,7 @@ install-none:
 	( mkdir -p $(DESTDIR)/opt/csw/share/swt )
 	( cp $(WORKDIR)/$(DISTNAME)/swt.jar $(DESTDIR)/opt/csw/share/swt )
 	( cp $(WORKDIR)/$(DISTNAME)/*.so $(DESTDIR)/opt/csw/lib )
+	( rm $(DESTDIR)/opt/csw/lib/libswt-mozilla-gtk-*.so )
 	@$(MAKECOOKIE)
 
 post-install:
