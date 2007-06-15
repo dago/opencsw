@@ -1,3 +1,5 @@
+d none /opt/csw/bin ? ? ?
+f none /opt/csw/bin/event_rpcgen.py 0755 root bin
 d none /opt/csw/include ? ? ?
 f none /opt/csw/include/evdns.h 0644 root bin
 f none /opt/csw/include/event.h 0644 root bin
