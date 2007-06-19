@@ -85,7 +85,7 @@ CONFIGURE_ARGS += --with-package-format=portable
 
 # configure script is under the subdirectory config_office
 CONFIGURE_SCRIPTS = $(WORKSRC)/config_office/configure
-BUILD_SCRIPTS = icu all-modules 
+BUILD_SCRIPTS = icu all-modules langpack
 INSTALL_SCRIPTS = core-and-common langpack
 
 include ../category.mk
@@ -105,6 +105,10 @@ COMMON_EXPORTS += XMKMF
 # we need to set it manually
 PKGFORMAT=pkg
 COMMON_EXPORTS += PKGFORMAT
+
+# Build instructions need bash to be used to 
+# work correctly
+SHELL = /opt/csw/bin/bash
 
 # For now we directly use mozilla prebuilt binaries
 # available http://tools.openoffice.org/moz_prebuild/$(SRCNUM)/
@@ -155,6 +159,12 @@ build-icu: bootstrap
 build-all-modules: bootstrap
 	( . $(WORKSRC)/SolarisX86Env.Set.sh; \
 	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) perl $$SOLARENV/bin/build.pl --all )
+	@$(MAKECOOKIE)
+	
+build-langpack: bootstrap
+	( . $(WORKSRC)/SolarisX86Env.Set.sh; \
+	  cd $(WORKSRC)/instsetoo_native/util; \
+       	  $(BUILD_ENV) dmake ooolanguagepack )
 	@$(MAKECOOKIE)
 	
 
