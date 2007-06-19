@@ -94,6 +94,9 @@ include ../category.mk
 # we export $(MAKE) so configure use gmake instead of make
 COMMON_EXPORTS += MAKE
 
+# Extra libraries location to put in the RUNPATH
+EXTRA_LIBS = $(prefix)/OpenOffice.org/program $(libexecdir)/firefox $(libdir)/mozilla $(libexecdir)/thunderbird $(libdir)/evolution/nss/lib
+
 X_LDFLAGS = -L$(libdir)
 COMMON_EXPORTS += X_LDFLAGS
 
