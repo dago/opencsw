@@ -1,7 +1,7 @@
 GARNAME = openoffice
-GARVERSION = 2.2.0
+GARVERSION = 2.2.1
 SRCNUM=680
-MILESTONE=m14
+MILESTONE=m18
 CATEGORIES = apps
 
 DESCRIPTION = An Open Source version of StarOffice.
@@ -15,9 +15,11 @@ DISTFILES  = OOo_$(GARVERSION)_src_core.tar.bz2
 DISTFILES += OOo_$(GARVERSION)_src_system.tar.bz2
 DISTFILES += OOo_$(GARVERSION)_src_binfilter.tar.bz2
 DISTFILES += OOo_$(GARVERSION)_src_l10n.tar.bz2
+
 # Mozilla prebuild libraries 
 DISTFILES += SOLARISC52Iinc SOLARISC52Ilib SOLARISC52Iruntime SOLARISC52Sinc SOLARISC52Slib SOLARISC52Sruntime
 
+# Base packages
 DISTFILES += $(call admfiles,CSWooocommon,prototype)
 DISTFILES += $(call admfiles,CSWooocore,prototype)
 
@@ -26,9 +28,14 @@ OOO_LANGS = af bg ca cs cy da de el en-GB en-US es et fr gl hr hu it lt nb nl nn
 LANG_DISTFILES = $(call admfiles, CSWoooui$(shell echo $(lang) | tr '[A-Z]' '[a-z]' | tr -d '-'),prototype depend)
 DISTFILES += $(foreach lang, $(OOO_LANGS), $(LANG_DISTFILES))
 
+# This file add CSW paths to Openoffice Build environment variables
+DISTFILES += SolarisCSWEnv.Set.sh
+
 DISTNAME = OOF$(SRCNUM)_$(MILESTONE)
 
+
 # Patches
+#
 # Fix a missing -lXt option when linking with libaudio
 # and an incorrect libjpeg linking option
 PATCHFILES = csw_build_env.patch
@@ -49,7 +56,7 @@ CONFIGURE_ARGS += --with-ant-home=$(libdir)/ant/
 
 CONFIGURE_ARGS += --enable-cairo
 CONFIGURE_ARGS += --with-java=java
-CONFIGURE_ARGS += --with-jdk-home=/usr/j2se
+CONFIGURE_ARGS += --with-jdk-home=$(ls -1d /usr/jdk/j2sdk1.4.2_* | sort | tail -1)
 CONFIGURE_ARGS += --with-lang="$(OOO_LANGS)"
 
 # for now we disable some stuff to build successfully
@@ -82,7 +89,6 @@ CONFIGURE_ARGS += --with-system-nas
 CONFIGURE_ARGS += --enable-epm
 CONFIGURE_ARGS += --with-package-format=portable
 
-
 # configure script is under the subdirectory config_office
 CONFIGURE_SCRIPTS = $(WORKSRC)/config_office/configure
 BUILD_SCRIPTS = icu all-modules langpack
@@ -90,12 +96,20 @@ INSTALL_SCRIPTS = core-and-common langpack
 
 include ../category.mk
 
+# Extra libraries location to put in the RUNPATH
+EXTRA_LIBS = $(prefix)/OpenOffice.org/program 
+EXTRA_LIBS += $(libexecdir)/firefox
+EXTRA_LIBS += $(libdir)/mozilla
+EXTRA_LIBS += $(libexecdir)/thunderbird 
+EXTRA_LIBS += $(libdir)/evolution/nss/lib
+
+#
+# Build environment variables
+#
+
 # some component (icu) doesn't build with make, so
 # we export $(MAKE) so configure use gmake instead of make
 COMMON_EXPORTS += MAKE
-
-# Extra libraries location to put in the RUNPATH
-EXTRA_LIBS = $(prefix)/OpenOffice.org/program $(libexecdir)/firefox $(libdir)/mozilla $(libexecdir)/thunderbird $(libdir)/evolution/nss/lib
 
 X_LDFLAGS = -L$(libdir)
 COMMON_EXPORTS += X_LDFLAGS
@@ -112,6 +126,12 @@ COMMON_EXPORTS += PKGFORMAT
 # Build instructions need bash to be used to 
 # work correctly
 SHELL = /opt/csw/bin/bash
+
+# For a faster build
+# (see http://wiki.services.openoffice.org/wiki/Building_OpenOffice.org)
+BUILD_ENV += NO_HIDS=TRUE
+BUILD_ENV += nodep=TRUE
+
 
 # For now we directly use mozilla prebuilt binaries
 # available http://tools.openoffice.org/moz_prebuild/$(SRCNUM)/
@@ -132,16 +152,18 @@ post-extract:
 #    when the built-in sablot is compiled (why isn't CPPFLAGS taken in account ?!)
 # 5. We add "-I/opt/csw/include" in SOLARINC so the build process correctly find
 #    the jpeg headers
+# 6. We add "-I/opt/csw/lib" in SOLARLIB so the build process find expat lib 
 #
-post-configure:
-	perl -pi -e 's,PYTHON_CFLAGS=.*,PYTHON_CFLAGS=\"-I/opt/csw/include/python2.5\",' $(WORKSRC)/SolarisX86Env.Set.sh
-	perl -pi -e 's,PYTHON_LIBS=.*,PYTHON_LIBS=\"-L/opt/csw/lib -lpython2.5\",' $(WORKSRC)/SolarisX86Env.Set.sh
-	perl -pi -e 's,LD_LIBRARY_PATH=\"(.*)\",LD_LIBRARY_PATH=\"$$1:$(libdir):$(CURDIR)/$(WORKSRC)/stlport/unxsoli4.pro/lib/\",' $(WORKSRC)/Solaris*Env.Set.sh
-	perl -pi -e 's,\s+(-L$(libdir)\s+)?-L/usr/lib, -L$(libdir) -L/usr/lib,' $(WORKSRC)/Solaris*Env.Set.sh
-	perl -pi -e 's,CAIRO_CFLAGS=\"(.*)\",CAIRO_CFLAGS=\"$$1 -I/opt/csw/include\",' $(WORKSRC)/Solaris*Env.Set.sh
-	perl -pi -e 's,CFLAGSCXX\s*=\s*(.*),CFLAGSCXX=$$1 -I$(includedir),' $(WORKSRC)/solenv/inc/unxsoli4.mk
-	perl -pi -e 's,SOLARINC=\"(.*)\",SOLARINC=\"$$1 -I$(includedir)\",' $(WORKSRC)/Solaris*Env.Set.sh
-	@$(MAKECOOKIE)
+#post-configure:
+#	perl -pi -e 's,PYTHON_CFLAGS=.*,PYTHON_CFLAGS=\"-I/opt/csw/include/python2.5\",' $(WORKSRC)/Solaris*Env.Set.sh
+#	perl -pi -e 's,PYTHON_LIBS=.*,PYTHON_LIBS=\"-L/opt/csw/lib -lpython2.5\",' $(WORKSRC)/Solaris*Env.Set.sh
+#	perl -pi -e 's,LD_LIBRARY_PATH=\"(.*)\",LD_LIBRARY_PATH=\"$$1:$(libdir):$(CURDIR)/$(WORKSRC)/stlport/unxsoli4.pro/lib/\",' $(WORKSRC)/Solaris*Env.Set.sh
+#	perl -pi -e 's,\s+(-L$(libdir)\s+)?-L/usr/lib, -L$(libdir) -L/usr/lib,' $(WORKSRC)/Solaris*Env.Set.sh
+#	perl -pi -e 's,CAIRO_CFLAGS=\"(.*)\",CAIRO_CFLAGS=\"$$1 -I/opt/csw/include\",' $(WORKSRC)/Solaris*Env.Set.sh
+#	perl -pi -e 's,CFLAGSCXX\s*=\s*(.*),CFLAGSCXX=$$1 -I$(includedir),' $(WORKSRC)/solenv/inc/unxsol*4.mk
+#	perl -pi -e 's,SOLARINC=\"(.*)\",SOLARINC=\"$$1 -I$(includedir)\",' $(WORKSRC)/Solaris*Env.Set.sh
+#	perl -pi -e 's,SOLARLIB=\"(.*)\",SOLARLIB=\"$$1 -L$(libdir)\",' $(WORKSRC)/Solaris*Env.Set.sh
+#	@$(MAKECOOKIE)
 
 
 #####################################################################
@@ -155,17 +177,17 @@ bootstrap:
 
 # we separately build icu because it needs 
 build-icu: bootstrap
-	( . $(WORKSRC)/SolarisX86Env.Set.sh; \
-	  cd $(WORKSRC)/icu && perl $$SOLARENV/bin/build.pl )
+	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
+	  cd $(WORKSRC)/icu && build )
 	@$(MAKECOOKIE)
 
 build-all-modules: bootstrap
-	( . $(WORKSRC)/SolarisX86Env.Set.sh; \
-	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) perl $$SOLARENV/bin/build.pl --all )
+	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
+	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) build --dlv_switch -link --all )
 	@$(MAKECOOKIE)
 	
 build-langpack: bootstrap
-	( . $(WORKSRC)/SolarisX86Env.Set.sh; \
+	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
 	  cd $(WORKSRC)/instsetoo_native/util; \
        	  $(BUILD_ENV) dmake ooolanguagepack )
 	@$(MAKECOOKIE)
