@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru OOF640_m14.orig/ OOF640_m14/
+--- OOF680_m14.orig/canvas/source/cairo/cairo_cairo.cxx 2006-09-16 23:17:37.000000000 -0400
++++ OOF680_m14/canvas/source/cairo/cairo_cairo.cxx      2007-06-12 08:11:26.768944000 -0400
+@@ -36,8 +36,9 @@
+ 
+ // MARKER(update_precomp.py): autogen include statement, do not remove
+ #include "precompiled_canvas.hxx"
+-#include <X11/extensions/Xrender.h>
++#include <X11/X.h>
+ #include <X11/Xlib.h>
++#include <X11/extensions/Xrender.h>
+ #include "cairo_cairo.hxx"
+ #include "cairo_helper.hxx"
+
