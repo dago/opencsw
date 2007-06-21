@@ -107,6 +107,10 @@ EXTRA_LIBS += $(libdir)/evolution/nss/lib
 # Build environment variables
 #
 
+
+# Number of cpus for parallel builds
+NB_CPUS = $(shell mpstat | tail +2 | wc -l)
+
 # some component (icu) doesn't build with make, so
 # we export $(MAKE) so configure use gmake instead of make
 COMMON_EXPORTS += MAKE
@@ -183,7 +187,7 @@ build-icu: bootstrap
 
 build-all-modules: bootstrap
 	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
-	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) build --dlv_switch -link --all )
+	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) build --dlv_switch -link --all -P$(NB_CPUS))
 	@$(MAKECOOKIE)
 	
 build-langpack: bootstrap
