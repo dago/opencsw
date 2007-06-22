@@ -56,7 +56,7 @@ CONFIGURE_ARGS += --with-ant-home=$(libdir)/ant/
 
 CONFIGURE_ARGS += --enable-cairo
 CONFIGURE_ARGS += --with-java=java
-CONFIGURE_ARGS += --with-jdk-home=$(ls -1d /usr/jdk/j2sdk1.4.2_* | sort | tail -1)
+CONFIGURE_ARGS += --with-jdk-home=$(shell ls -1d /usr/jdk/j2sdk1.4.2_* | sort | tail -1)
 CONFIGURE_ARGS += --with-lang="$(OOO_LANGS)"
 
 # for now we disable some stuff to build successfully
@@ -87,7 +87,7 @@ CONFIGURE_ARGS += --with-system-nas
 
 # we will create the package ourself
 CONFIGURE_ARGS += --enable-epm
-CONFIGURE_ARGS += --with-package-format=portable
+CONFIGURE_ARGS += --with-package-format=pkg
 
 # configure script is under the subdirectory config_office
 CONFIGURE_SCRIPTS = $(WORKSRC)/config_office/configure
@@ -146,30 +146,6 @@ post-extract:
 	@$(MAKECOOKIE)
 
 
-# We need additionnal tweaks in the configure-generated Solaris$(ARCH)Env.Set:
-# 1. checkdll sometimes fails because it can't find some depen 
-#    so we add some path to LD_LIBRARY_PATH
-# 2. By default, Sun Pango is used instead of CSW pango, to avoid this, we make
-#    sure /opt/csw/lib is read before /usr/lib
-# 3. We want Cairo to use CSW Xrender so we add /opt/csw/include in the include path search
-# 4. We add "-I/opt/csw/include" in the CFLAGSCXX so the expat include files are found
-#    when the built-in sablot is compiled (why isn't CPPFLAGS taken in account ?!)
-# 5. We add "-I/opt/csw/include" in SOLARINC so the build process correctly find
-#    the jpeg headers
-# 6. We add "-I/opt/csw/lib" in SOLARLIB so the build process find expat lib 
-#
-#post-configure:
-#	perl -pi -e 's,PYTHON_CFLAGS=.*,PYTHON_CFLAGS=\"-I/opt/csw/include/python2.5\",' $(WORKSRC)/Solaris*Env.Set.sh
-#	perl -pi -e 's,PYTHON_LIBS=.*,PYTHON_LIBS=\"-L/opt/csw/lib -lpython2.5\",' $(WORKSRC)/Solaris*Env.Set.sh
-#	perl -pi -e 's,LD_LIBRARY_PATH=\"(.*)\",LD_LIBRARY_PATH=\"$$1:$(libdir):$(CURDIR)/$(WORKSRC)/stlport/unxsoli4.pro/lib/\",' $(WORKSRC)/Solaris*Env.Set.sh
-#	perl -pi -e 's,\s+(-L$(libdir)\s+)?-L/usr/lib, -L$(libdir) -L/usr/lib,' $(WORKSRC)/Solaris*Env.Set.sh
-#	perl -pi -e 's,CAIRO_CFLAGS=\"(.*)\",CAIRO_CFLAGS=\"$$1 -I/opt/csw/include\",' $(WORKSRC)/Solaris*Env.Set.sh
-#	perl -pi -e 's,CFLAGSCXX\s*=\s*(.*),CFLAGSCXX=$$1 -I$(includedir),' $(WORKSRC)/solenv/inc/unxsol*4.mk
-#	perl -pi -e 's,SOLARINC=\"(.*)\",SOLARINC=\"$$1 -I$(includedir)\",' $(WORKSRC)/Solaris*Env.Set.sh
-#	perl -pi -e 's,SOLARLIB=\"(.*)\",SOLARLIB=\"$$1 -L$(libdir)\",' $(WORKSRC)/Solaris*Env.Set.sh
-#	@$(MAKECOOKIE)
-
-
 #####################################################################
 # Build instructions
 #####################################################################
@@ -182,12 +158,12 @@ bootstrap:
 # we separately build icu because it needs 
 build-icu: bootstrap
 	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
-	  cd $(WORKSRC)/icu && build )
+	  cd $(WORKSRC)/icu && perl $$SOLARENV/bin/build.pl )
 	@$(MAKECOOKIE)
 
 build-all-modules: bootstrap
 	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
-	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) build --dlv_switch -link --all -P$(NB_CPUS))
+	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) perl $$SOLARENV/bin/build.pl --dlv_switch -link --all -P$(NB_CPUS))
 	@$(MAKECOOKIE)
 	
 build-langpack: bootstrap

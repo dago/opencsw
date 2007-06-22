@@ -18,5 +18,7 @@ CAIRO_CFLAGS="$CAIRO_CFLAGS -I/opt/csw/include"
 # We add CSW paths to compiler include and 
 # linker library search directory paths
 SOLARINC="$SOLARINC -I/opt/csw/include" 
-SOLARLIB="$SOLARLIB -L/opt/csw/lib"
+# we make sure /opt/csw/lib is read befire /usr/lib so
+# csw pango is used instead of sun one
+SOLARLIB="`echo $SOLARLIB | sed -e 's,-L/usr/lib,-L/opt/csw/lib -L/usr/lib,'`"
 
