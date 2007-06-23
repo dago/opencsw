@@ -1,3 +1,7 @@
+List of changes in sasl-2.1.22,REV=2007.06.10 
+- upgraded sasl to version 2.1.22
+- runpath was not applied for libraries [#1566][#1637][#1934][#2268] 
+
 List of changes in sasl-2.1.21,REV=2006.03.09
 - /opt/csw/etc/sasldb2 is a directory [#1393]
 - preinstall script is using PKG_INSTALL_ROOT variable instead of PKG_ROOT_DIR
