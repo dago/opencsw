@@ -96,7 +96,7 @@ a2499a8203f11b3ea4a8ff22ca197a18  download/CSWooouiptbr.gspec
 ed9bdc76d8443c0f85c2017cd904c641  download/CSWooouizu.gspec
 c07944f0a1a663efabee6f4136111919  download/CSWooouizu.prototype
 0a204ae5e1c383c5e12b9019d628b884  download/CSWooouizu.depend
-9e5e6532c35b822a346896c6ba4013b9  download/SolarisCSWEnv.Set.sh
+cc7fdc2661185f26433a4574b90f46ef  download/SolarisCSWEnv.Set.sh
 df26b089ef0f9c815bb5fce4774a578d  download/csw_build_env.patch
 8078584659e3fd4152d626b1f47da03d  download/cairo_x_include.patch
 60f193ac1b8ed850017b7c1858fe4d20  download/no_round.patch

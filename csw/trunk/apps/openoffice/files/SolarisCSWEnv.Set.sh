@@ -21,4 +21,3 @@ SOLARINC="$SOLARINC -I/opt/csw/include"
 # we make sure /opt/csw/lib is read befire /usr/lib so
 # csw pango is used instead of sun one
 SOLARLIB="`echo $SOLARLIB | sed -e 's,-L/usr/lib,-L/opt/csw/lib -L/usr/lib,'`"
-

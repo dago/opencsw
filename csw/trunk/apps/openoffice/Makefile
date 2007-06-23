@@ -122,6 +122,10 @@ COMMON_EXPORTS += X_LDFLAGS
 XMKMF=/usr/openwin/bin/xmkmf
 COMMON_EXPORTS += XMKMF
 
+# Xinerama headers are not available under Solaris 8
+USE_XINERAMA="NO"
+COMMON_EXPORTS += USE_XINERAMA
+
 # There is a bug in pkg format configure option
 # we need to set it manually
 PKGFORMAT=pkg
@@ -133,8 +137,8 @@ SHELL = /opt/csw/bin/bash
 
 # For a faster build
 # (see http://wiki.services.openoffice.org/wiki/Building_OpenOffice.org)
-BUILD_ENV += NO_HIDS=TRUE
-BUILD_ENV += nodep=TRUE
+#BUILD_ENV += NO_HIDS=TRUE
+#BUILD_ENV += nodep=TRUE
 
 
 # For now we directly use mozilla prebuilt binaries
