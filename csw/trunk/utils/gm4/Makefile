@@ -1,5 +1,5 @@
 GARNAME = gm4
-GARVERSION = 1.4.5
+GARVERSION = 1.4.9
 CATEGORIES = utils
 
 DESCRIPTION = GNU m4 Unix macro processor
