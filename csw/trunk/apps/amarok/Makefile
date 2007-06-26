@@ -11,6 +11,7 @@ endef
 MASTER_SITES = ftp://ftp.kde.org/pub/kde/stable/amarok/$(GARVERSION)/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWamarok,depend)
+PATCHFILES = disable-broken-languages.diff
 
 GARCOMPILER = GNU
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
