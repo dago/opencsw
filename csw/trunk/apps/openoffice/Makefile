@@ -109,7 +109,7 @@ EXTRA_LIBS += $(libdir)/evolution/nss/lib
 
 
 # Number of cpus for parallel builds
-NB_CPUS = $(shell mpstat | tail +2 | wc -l)
+NB_CPUS = $(shell mpstat | tail +2 | wc -l | awk '{ print $1 }')
 
 # some component (icu) doesn't build with make, so
 # we export $(MAKE) so configure use gmake instead of make
@@ -137,8 +137,8 @@ SHELL = /opt/csw/bin/bash
 
 # For a faster build
 # (see http://wiki.services.openoffice.org/wiki/Building_OpenOffice.org)
-#BUILD_ENV += NO_HIDS=TRUE
-#BUILD_ENV += nodep=TRUE
+BUILD_ENV += NO_HIDS=TRUE
+BUILD_ENV += nodep=TRUE
 
 
 # For now we directly use mozilla prebuilt binaries
@@ -162,12 +162,12 @@ bootstrap:
 # we separately build icu because it needs 
 build-icu: bootstrap
 	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
-	  cd $(WORKSRC)/icu && perl $$SOLARENV/bin/build.pl )
+ 	  cd $(WORKSRC)/icu && perl $$SOLARENV/bin/build.pl )
 	@$(MAKECOOKIE)
 
 build-all-modules: bootstrap
 	( . $(WORKSRC)/Solaris*Env.Set.sh && . $(WORKDIR)/SolarisCSWEnv.Set.sh && \
-	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) perl $$SOLARENV/bin/build.pl --dlv_switch -link --all -P$(NB_CPUS))
+	  cd $(WORKSRC)/instsetoo_native && $(BUILD_ENV) perl $$SOLARENV/bin/build.pl --all -P$(NB_CPUS))
 	@$(MAKECOOKIE)
 	
 build-langpack: bootstrap
