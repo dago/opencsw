@@ -14,16 +14,30 @@ endef
 
 MASTER_SITES = http://www.cmake.org/files/v2.4/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcmake,prototype)
+DISTFILES += $(call admfiles,CSWcmake)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-datadir = /share/$(GARNAME)
+datadir = /share/$(GARNAME)-$(GARVERSION)
 sharedstatedir = /share
+docdir = /share/doc/$(GARNAME)-$(GARVERSION)
 
 include ../category.mk
 
 pre-configure:
 	@echo $(DIRPATHS)
-	(cd $(WORKSRC); ./bootstrap)
+	@echo "Docdir: $(docdir)"
+	(cd $(WORKSRC); ./bootstrap	\
+		-parallel=4		\
+		--prefix=$(prefix)	\
+		--datadir=$(datadir)	\
+		--docdir=$(docdir)	\
+		--mandir=/man		\
+	)
+	@$(MAKECOOKIE)
+
+post-install:
+	# Fix broken docdir-config
+	@rm -rf $(DESTDIR)$(prefix)/share/doc
+	@mv $(DESTDIR)$(prefix)/doc $(DESTDIR)$(prefix)/share/doc
 	@$(MAKECOOKIE)
