@@ -16,11 +16,11 @@ MASTER_SITES = http://www.cmake.org/files/v2.4/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcmake)
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
 datadir = /share/$(GARNAME)-$(GARVERSION)
 sharedstatedir = /share
 docdir = /share/doc/$(GARNAME)-$(GARVERSION)
+
+CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 
 include ../category.mk
 
@@ -34,10 +34,4 @@ pre-configure:
 		--docdir=$(docdir)	\
 		--mandir=/man		\
 	)
-	@$(MAKECOOKIE)
-
-post-install:
-	# Fix broken docdir-config
-	@rm -rf $(DESTDIR)$(prefix)/share/doc
-	@mv $(DESTDIR)$(prefix)/doc $(DESTDIR)$(prefix)/share/doc
 	@$(MAKECOOKIE)
