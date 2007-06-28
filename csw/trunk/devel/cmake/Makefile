@@ -24,11 +24,15 @@ CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 
 include ../category.mk
 
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Modules
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Templates
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)$(docdir)
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/man/man1
+
 pre-configure:
 	@echo $(DIRPATHS)
 	@echo "Docdir: $(docdir)"
 	(cd $(WORKSRC); ./bootstrap	\
-		-parallel=4		\
 		--prefix=$(prefix)	\
 		--datadir=$(datadir)	\
 		--docdir=$(docdir)	\
