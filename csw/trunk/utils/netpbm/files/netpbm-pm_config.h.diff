@@ -1,0 +1,52 @@
+diff --speed-large-files --minimal -Nru netpbm-10.26.42.orig/pm_config.in.h netpbm-10.26.42/pm_config.in.h
+--- netpbm-10.26.42.orig/pm_config.in.h	2004-08-24 17:21:46.000000000 -0400
++++ netpbm-10.26.42/pm_config.in.h	2007-06-21 11:42:52.416466000 -0400
+@@ -30,6 +30,48 @@
+ /* #define MSDOS */
+ #endif
+
++/* Add declarations which are not available in Solaris 8 */ 
++#if defined(_CHAR_IS_SIGNED)
++typedef char                    int_fast8_t;
++#else
++#if defined(__STDC__)
++typedef signed char             int_fast8_t;
++#endif
++#endif
++typedef int                     int_fast16_t;
++typedef int                     int_fast32_t;
++#ifdef  _LP64
++typedef long                    int_fast64_t;
++#else   /* _ILP32 */
++typedef long long               int_fast64_t;
++#endif
++
++typedef unsigned char           uint_fast8_t;
++typedef unsigned int            uint_fast16_t;
++typedef unsigned int            uint_fast32_t;
++#ifdef  _LP64
++typedef unsigned long           uint_fast64_t;
++#else   /* _ILP32 */
++typedef unsigned long long      uint_fast64_t;
++#endif
++
++#if defined(_CHAR_IS_SIGNED) || defined(__STDC__)
++#define INT_FAST8_MAX   INT8_MAX
++#endif
++#define INT_FAST16_MAX INT16_MAX
++#define INT_FAST32_MAX INT32_MAX
++#ifdef INT64_MAX
++#define INT_FAST64_MAX INT64_MAX
++#endif
++
++#define UINT_FAST8_MAX  UINT8_MAX
++#define UINT_FAST16_MAX UINT16_MAX
++#define UINT_FAST32_MAX UINT32_MAX
++#ifdef UINT64_MAX
++#define UINT_FAST64_MAX UINT64_MAX
++#endif
++
++
+ /* Switch macros like _POSIX_SOURCE are supposed to add features from
+    the indicated standard to the C library.  A source file defines one
+    of these macros to declare that it uses features of that standard

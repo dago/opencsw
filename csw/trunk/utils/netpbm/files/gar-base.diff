@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru netpbm-10.26.42.orig/GNUmakefile netpbm-10.26.42/GNUmakefile
+--- netpbm-10.26.42.orig/GNUmakefile	2004-10-16 16:27:50.000000000 -0400
++++ netpbm-10.26.42/GNUmakefile	2007-06-23 11:49:29.790538000 -0400
+@@ -177,7 +177,7 @@
+ 	  echo "  make package PKGDIR=/tmp/newnetpbm "; \
+ 	  false; \
+ 	  fi
+-	mkdir $(PKGDIR)
++	mkdir -p $(PKGDIR)
+ 	echo "Netpbm install package made by 'make package'" \
+ 	    >$(PKGDIR)/pkginfo
+ 	date >>$(PKGDIR)/pkginfo

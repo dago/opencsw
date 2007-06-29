@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+ETCDIR=$PKG_ROOT_DIR/opt/csw/etc
+
+# check if the manweb.conf file exists before overwriting it.
+if [ ! -f $ETCDIR/manweb.conf ] ; then
+        cp -p $ETCDIR/manweb.conf.CSW $ETCDIR/manweb.conf
+	echo "manweb.conf doesn't exists. Copying manweb.conf.CSW to manweb.conf"
+else
+        echo "manweb.conf already exists. Not copying manweb.conf.CSW"
+fi
+
+exit 0
