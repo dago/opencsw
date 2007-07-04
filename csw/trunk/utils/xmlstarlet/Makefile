@@ -11,19 +11,51 @@ define BLURB
   diff, patch, join, etc utilities.
 endef
 
+PWD = $(shell pwd)
+
+LIBXMLNAME = libxml2
+LIBXMLVERSION = 2.6.29
+LIBXMLSRC = $(PWD)/$(WORKDIR)/$(LIBXMLNAME)-$(LIBXMLVERSION)
+
+LIBXSLTNAME = libxslt
+LIBXSLTVERSION = 1.1.21
+LIBXSLTSRC = $(PWD)/$(WORKDIR)/$(LIBXSLTNAME)-$(LIBXSLTVERSION)
+
+
 SF_PROJ = xmlstar
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES  = ftp://xmlsoft.org/libxml2/
+MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWxmlstarlet,)
+DISTFILES += $(LIBXMLNAME)-$(LIBXMLVERSION).tar.gz
+DISTFILES += $(LIBXSLTNAME)-$(LIBXSLTVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWxmlstarlet,depend)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-cc.patch
 
-pre-configure:
-	@echo " ==> Reconfiguring"
-	@(cd $(WORKSRC); autoreconf -fi)
+include ../category.mk
+
+configure-$(LIBXMLSRC)/configure:
+	echo $(CONFIGURE_ENV)
+	@echo " ==> Running configure in $(LIBXMLSRC)"
+	cd $(LIBXMLSRC) && ./configure \
+		--enable-shared=no --enable-static=yes
 	@$(MAKECOOKIE)
 
-#CONFIGURE_ARGS = $(DIRPATHS) --with-libxml-prefix=$(prefix) --with-libxslt-prefix=$(prefix) --with-libiconf-prefix=$(prefix)
-CONFIGURE_ARGS = $(DIRPATHS) 
+configure-$(LIBXSLTSRC)/configure:
+	@echo " ==> Running configure in $(LIBXSLTSRC)"
+	cd $(LIBXSLTSRC) && ./configure \
+		--with-libxml-src=$(LIBXMLSRC) \
+		--with-crypto=no
+	@$(MAKECOOKIE)
 
-include ../category.mk
+CONFIGURE_ARGS = $(DIRPATHS) \
+	--with-libxml-src=$(LIBXMLSRC) \
+	--with-libxslt-src=$(LIBXSLTSRC) \
+	--with-libiconv-include-prefix=$(prefix)/include \
+	--with-libiconv-libs-prefix=$(prefix)/lib
+
+pre-configure: configure-$(LIBXMLSRC)/configure configure-$(LIBXSLTSRC)/configure
+	@$(MAKECOOKIE)
+
+pre-build: build-$(LIBXMLSRC)/Makefile build-$(LIBXSLTSRC)/Makefile
+	@$(MAKECOOKIE)
