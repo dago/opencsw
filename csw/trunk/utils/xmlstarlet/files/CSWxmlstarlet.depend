@@ -1,2 +1,5 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWzlib zlib - Zlib Data Compression Library
+P CSWzlib    zlib - Zlib Data Compression Library
+P CSWiconv   libiconv - GNU iconv library
+P CSWlibxml2 libxml2 - XML Parser Library
+P CSWlibxslt libxslt - XSLT engine for the XML Toolkit
+P CSWgcrypt  libgcrypt - GNU libcrypt

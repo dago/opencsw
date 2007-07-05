@@ -1,6 +1,4 @@
 8deb71834bcdfb4443c258a1f0042fce  download/xmlstarlet-1.0.1.tar.gz
-8b99b6e8b08e838438d9e6b639d79ebd  download/libxml2-2.6.29.tar.gz
-59fe34e85692f71df2a38c2ee291b3ca  download/libxslt-1.1.21.tar.gz
 3ac6206a6444ab090bb9ec5401e71f13  download/CSWxmlstarlet.gspec
-583f29a27adee3a3dad77dcb03832919  download/CSWxmlstarlet.depend
-bfb24619ac22d70d8c398e47a1f71dd5  download/xmlstarlet-1.0.1-cc.patch
+76cb40ba37abe0209a1aca0ef71c4494  download/CSWxmlstarlet.depend
+43fc74b5208249a730dd910533a05cc8  download/xmlstarlet-1.0.1-cc.patch
