@@ -11,7 +11,8 @@ ff0b6850e85ee45619fe3eca7ec63f46  download/SOLARISC52Slib
 792056d36c3b5295493eaee0556deed0  download/CSWooocommon.gspec
 a874939be3a4beb784d1b98db785a931  download/CSWooocommon.prototype
 4af6e87e8c35cd4b51ba86351de29d60  download/CSWooocore.gspec
-0f56a07fda5996298e93e79e74f6eacd  download/CSWooocore.prototype
+0f56a07fda5996298e93e79e74f6eacd  download/CSWooocore.prototype-i386
+536e42b08982b391d67451fbaa44bbf9  download/CSWooocore.prototype-sparc
 b8cfd4695913b114f69bc4fb0d9d0a4e  download/CSWooouiaf.gspec
 f52241de31fbfa47f73171b3ead5ecd9  download/CSWooouiaf.prototype
 0a204ae5e1c383c5e12b9019d628b884  download/CSWooouiaf.depend

@@ -21,7 +21,7 @@ DISTFILES += SOLARISC52Iinc SOLARISC52Ilib SOLARISC52Iruntime SOLARISC52Sinc SOL
 
 # Base packages
 DISTFILES += $(call admfiles,CSWooocommon,prototype)
-DISTFILES += $(call admfiles,CSWooocore,prototype)
+DISTFILES += $(call admfiles,CSWooocore,prototype-i386 prototype-sparc)
 
 # Localized packages 
 OOO_LANGS = af bg ca cs cy da de el en-GB en-US es et fr gl hr hu it lt nb nl nn pl pt pt-BR sk sl sv zu
@@ -184,7 +184,7 @@ build-langpack: bootstrap
 install-core-and-common: 
 	ginstall -d $(DESTDIR)$(prefix)/OpenOffice.org
 	( for PKG in $(WORKSRC)/instsetoo_native/unxsol?4.pro/OpenOffice/pkg/install/en-US/packages/*; do \
-		tar cf - -C $$PKG/reloc . | tar xf - -C $(DESTDIR)$(prefix)/OpenOffice.org; \
+		tar cf - -C $$PKG/reloc . | (cd $(DESTDIR)$(prefix)/OpenOffice.org && tar xf - ); \
 	  done)
 	ginstall -D $(WORKSRC)/solver/$(SRCNUM)/unxsol?4.pro/bin/ConnectivityTools.jar \
 		$(DESTDIR)$(prefix)/OpenOffice.org/program/classes/ConnectivityTools.jar
@@ -201,7 +201,7 @@ install-core-and-common:
 
 install-langpack-%:
 	( for PKG in $(WORKSRC)/instsetoo_native/unxsol?4.pro/OpenOffice_languagepack/pkg/install/$*/packages/*; do \
-		tar cf - -C $$PKG/reloc . | tar xf - -C $(DESTDIR)$(prefix)/OpenOffice.org; \
+		tar cf - -C $$PKG/reloc . | (cd $(DESTDIR)$(prefix)/OpenOffice.org && tar xf - ); \
 	  done )
 	@$(MAKECOOKIE)
 
