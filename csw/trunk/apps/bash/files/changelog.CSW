@@ -1,3 +1,11 @@
+bash (3.2,REV=2007.07.08) unreleased
+
+  * Added system-wide rc file support (file /etc/bash.bashrc).
+  * Added system-wide logout file support (file /etc/bash.logout).
+  * Now read bashrc files if launched by ssh. 
+
+ -- Yann Rouillard  <yann@blastwave.org>  Sun,  8 Jul 2007 12:25:19 +0200
+
 bash (3.2,REV=2007.04.10) unstable
 
   * Added bash patches bash32-011, bash32-012, bash32-013, bash32-014 and
