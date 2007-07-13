@@ -14,6 +14,6 @@ define BLURB
   simple markup language sounds appealing, SDF may be useful to you.
 endef
 
-DISTFILES += CSWpmsdf.gspec
+DISTFILES += $(call admfiles,CSWpmsdf,prototype)
 
 include ../category.mk
