@@ -264,6 +264,7 @@ f none /opt/csw/share/cmake-2.4.6/Templates/UtilityHeader.dsptemplate 0644 root 
 f none /opt/csw/share/cmake-2.4.6/Templates/cmake_install.cmake 0644 root bin
 f none /opt/csw/share/cmake-2.4.6/Templates/staticLibFooter.dsptemplate 0644 root bin
 f none /opt/csw/share/cmake-2.4.6/Templates/staticLibHeader.dsptemplate 0644 root bin
+d none /opt/csw/share/cmake-2.4.6/include 0755 root bin
 f none /opt/csw/share/cmake-2.4.6/include/cmCPluginAPI.h 0644 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/cmake-2.4.6 0755 root bin
