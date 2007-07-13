@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWautoconf,depend)
+DISTFILES += $(call admfiles,CSWautoconf,depend prototype)
 
 DEPENDS = utils/sed utils/sh-utils
 
