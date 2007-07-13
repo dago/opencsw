@@ -28,3 +28,8 @@ CONFIGURE_ENV += LIBXSLT_CFLAGS="$(shell $(bindir)/xslt-config --cflags)"
 CONFIGURE_ENV += LIBXSLT_LIBS="$(shell $(bindir)/xslt-config --libs) -lexslt"
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+post-install:
+	@echo " ==> Renaming program to xmlstarlet"
+	@mv $(DESTDIR)$(prefix)/bin/xml $(DESTDIR)$(prefix)/bin/xmlstarlet
+	@$(MAKECOOKIE)
