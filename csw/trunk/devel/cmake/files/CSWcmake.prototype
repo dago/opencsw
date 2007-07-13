@@ -1,7 +1,9 @@
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/ccmake 0755 root bin
 f none /opt/csw/bin/cmake 0755 root bin
 f none /opt/csw/bin/cpack 0755 root bin
 f none /opt/csw/bin/ctest 0755 root bin
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/cmake-2.4.6 0755 root bin
 d none /opt/csw/share/cmake-2.4.6/Modules 0755 root bin
 f none /opt/csw/share/cmake-2.4.6/Modules/AddFileDependencies.cmake 0644 root bin
@@ -263,6 +265,7 @@ f none /opt/csw/share/cmake-2.4.6/Templates/cmake_install.cmake 0644 root bin
 f none /opt/csw/share/cmake-2.4.6/Templates/staticLibFooter.dsptemplate 0644 root bin
 f none /opt/csw/share/cmake-2.4.6/Templates/staticLibHeader.dsptemplate 0644 root bin
 f none /opt/csw/share/cmake-2.4.6/include/cmCPluginAPI.h 0644 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/cmake-2.4.6 0755 root bin
 f none /opt/csw/share/doc/cmake-2.4.6/Copyright.txt 0644 root bin
 f none /opt/csw/share/doc/cmake-2.4.6/ccmake.html 0644 root bin
@@ -271,6 +274,8 @@ f none /opt/csw/share/doc/cmake-2.4.6/cmake.html 0644 root bin
 f none /opt/csw/share/doc/cmake-2.4.6/cmake.txt 0644 root bin
 f none /opt/csw/share/doc/cmake-2.4.6/ctest.html 0644 root bin
 f none /opt/csw/share/doc/cmake-2.4.6/ctest.txt 0644 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/ccmake.1 0644 root bin
 f none /opt/csw/share/man/man1/cmake.1 0644 root bin
 f none /opt/csw/share/man/man1/ctest.1 0644 root bin
