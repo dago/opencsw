@@ -14,7 +14,7 @@ endef
 SF_PROJ = xmlstar
 MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWxmlstarlet,depend)
+DISTFILES += $(call admfiles,CSWxmlstarlet,depend prototype)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-cc.patch
 
