@@ -14,7 +14,7 @@ endef
 
 MASTER_SITES = http://www.cmake.org/files/v2.4/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcmake)
+DISTFILES += $(call admfiles,CSWcmake,prototype)
 
 datadir = /share/$(GARNAME)-$(GARVERSION)
 sharedstatedir = /share
