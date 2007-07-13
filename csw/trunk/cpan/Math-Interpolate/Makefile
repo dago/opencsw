@@ -10,6 +10,6 @@ define BLURB
   value lies in a sorted list.
 endef
 
-DISTFILES += CSWpmmathinterpolate.gspec
+DISTFILES += $(call admfiles,CSWpmmathinterpolate,prototype)
 
 include ../category.mk
