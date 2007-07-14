@@ -1,5 +1,5 @@
 GARNAME = MPlayer
-GARVERSION = 1.0rc1
+GARVERSION = 1.0rc1#will be try3
 CATEGORIES = APPS
 
 DESCRIPTION = media player
@@ -9,7 +9,7 @@ endef
 
 
 MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www3.mplayerhq.hu/MPlayer/releases/codecs/ http://www.mplayerhq.hu/MPlayer/skins/
-PATCH_SITES = http://www.mplayerhq.hu/MPlayer/patches/
+#PATCH_SITES = http://www.mplayerhq.hu/MPlayer/patches/
 
 DISTFILES  = MPlayer-$(GARVERSION).tar.bz2
 DISTFILES += essential-20061022.tar.bz2
@@ -19,8 +19,8 @@ DISTFILES += $(call admfiles,CSWmplayer,depend)
 PATCHFILES = fix-configure-sh-errors.diff
 PATCHFILES += fix-solaris8-llrint.diff
 PATCHFILES += fix-stdint.h-lazy.diff
-PATCHFILES += asmrules_fix_20061231.diff
-PATCHFILES += cddb_fix_20070605.diff
+PATCHFILES += security-asmrules_fix_20061231.diff
+PATCHFILES += security-cddb_fix_20070605.diff
 
 GARCOMPILER = GNU
 #doesn't work well on sparc!! GNU_CC_OPT = -O2 -pipe -mtune=i686 -fomit-frame-pointer
