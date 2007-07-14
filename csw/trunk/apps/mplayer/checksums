@@ -4,3 +4,7 @@ e4e2020d11b681aac898103b3ba723c4  download/Blue-1.7.tar.bz2
 f0d603b8b014155a2b1ff1e01c066812  download/CSWmplayer.gspec
 942e9d191fae02d61adc73756dae9581  download/CSWmplayer.depend
 0ac273f009d67395e17527467e062013  download/fix-configure-sh-errors.diff
+27806fbe1dc1906ba6388a4077df6f88  download/fix-solaris8-llrint.diff
+dc641e5d56466a7733725d2a74b187cd  download/fix-stdint.h-lazy.diff
+f0b71c38b1207c1d604be091876ac051  download/asmrules_fix_20061231.diff
+bd8a233ea31c6686a956387ad28c5c5c  download/cddb_fix_20070605.diff
