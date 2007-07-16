@@ -1,4 +1,5 @@
 %var            bitname mplayer
 %var            pkgname CSWmplayer
+%var            SPKG_VERSION 1.0rc1try3
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/LICENSE
