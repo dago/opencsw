@@ -15,9 +15,8 @@ PATCHFILES = disable-broken-languages.diff
 
 GARCOMPILER = GNU
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
-CONFIGURE_ARGS += LDFLAGS="-L/opt/csw/kde-gcc/lib -L/opt/csw/lib -lintl $$LD_FLAGS"
-CONFIGURE_ARGS += LD_OPTIONS="-R/opt/csw/kde-gcc/lib -R/opt/csw/lib/$ISALIST $$LD_OPTIONS"
-CONFIGURE_ARGS += --prefix=$(prefix)/kde-gcc --with-qt-dir=/opt/csw/kde-gcc --with-qt-libraries=/opt/csw/kde-gcc/lib --disable-debug
+CONFIGURE_ARGS += LDFLAGS="-R/opt/csw/kde-gcc/lib -L/opt/csw/kde-gcc/lib"
+CONFIGURE_ARGS += --prefix=$(prefix)/kde-gcc --with-qt-dir=/opt/csw/kde-gcc --with-qt-libraries=/opt/csw/kde-gcc/lib --disable-debug --disable-rpath
 
 include ../category.mk
 
