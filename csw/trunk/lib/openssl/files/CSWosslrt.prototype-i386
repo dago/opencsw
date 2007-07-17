@@ -1,5 +1,7 @@
 d none /opt/csw/lib/amd64
+s none /opt/csw/lib/amd64/libcrypto.so=libcrypto.so.0.9.8
 f none /opt/csw/lib/amd64/libcrypto.so.0.9.8 0755 root bin
+s none /opt/csw/lib/amd64/libssl.so=libssl.so.0.9.8
 f none /opt/csw/lib/amd64/libssl.so.0.9.8 0755 root bin
 d none /opt/csw/lib/engines
 f none /opt/csw/lib/engines/lib4758cca.so 0555 root bin
