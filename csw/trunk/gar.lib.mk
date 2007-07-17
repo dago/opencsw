@@ -344,6 +344,9 @@ patch-%.diff: normal-patch-%.diff
 patch-%.patch: normal-patch-%.patch
 	@$(MAKECOOKIE)
 
+patch-%: normal-patch-%
+	@$(MAKECOOKIE)
+
 #################### CONFIGURE RULES ####################
 
 TMP_DIRPATHS = --prefix=$(prefix) --exec_prefix=$(exec_prefix) --bindir=$(bindir) --sbindir=$(sbindir) --libexecdir=$(libexecdir) --datadir=$(datadir) --sysconfdir=$(sysconfdir) --sharedstatedir=$(sharedstatedir) --localstatedir=$(localstatedir) --libdir=$(libdir) --infodir=$(infodir) --lispdir=$(lispdir) --includedir=$(includedir) --mandir=$(mandir)
