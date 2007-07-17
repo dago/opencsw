@@ -22,11 +22,16 @@ CONFIGURE_ARGS += --prefix=$(prefix)/kde-gcc --with-qt-dir=/opt/csw/kde-gcc --wi
 
 include ../category.mk
 
-#I'm having all manner of issues with the final linking of amarok, reset any GAR inherited LD_OPTIONS, then remove the wl= statements from libtool, they're confusing GCC
+#I'm having all manner of issues with the final RUNPATH linking of amarok
+#**not needed? First, remove the wl= statements from libtool, they're causing GCC to not honour $LD_OPTIONS
+#Second, set our own LD_OPTIONS, as the kde-gcc/lib dir _MUST_ be first for qt to work
 
-LD_OPTIONS=
+jw:
+	( echo $(LD_OPTIONS) )
 
-post-configure: remove-wl
+LD_OPTIONS := "-R/opt/csw/kde-gcc/lib:/opt/csw/\$$ISALIST:/opt/csw/lib"
+
+#post-configure: remove-wl
 post-install: fix-libs
 
 remove-wl:
