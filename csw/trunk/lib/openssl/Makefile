@@ -85,7 +85,9 @@ ISA_LIBDIR = $(ISA)
 endif
 
 # We want the csw perl to be used
-CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
+#CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
+# For now we want the sun perl to be used
+CONFIGURE_ENV += PERL="/usr/bin/perl"
 
 # By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man

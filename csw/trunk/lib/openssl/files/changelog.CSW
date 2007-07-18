@@ -1,4 +1,10 @@
-openssl (0.9.8,REV=2007.06.02_rev=e) unstable
+openssl (0.9.8,REV=2007.07.17_rev=e) unstable
+
+ * Added amd64 libraries symlinks (libssl.so -> libssl.so.0.9.8, ...).
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 17 Jul 2007 23:26:37 +0200
+
+openssl (0.9.8,REV=2007.06.02_rev=e) UNRELEASED
 
  * openssl scripts now use /opt/csw/bin/perl instead of /usr/bin/perl.
  * manpages are now under /opt/csw/share/man instead of /opt/csw/ssl/man.
