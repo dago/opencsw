@@ -1,5 +1,5 @@
 GARNAME = wesnoth
-GARVERSION = 1.2.1
+GARVERSION = 1.2.5
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based strategy game with a fanasy theme
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWwesnoth, depend )
 
 GARCOMPILER ?= GNU
