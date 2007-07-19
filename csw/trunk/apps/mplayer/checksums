@@ -1,9 +1,8 @@
 18c05d88e22c3b815a43ca8d7152ccdc  download/MPlayer-1.0rc1.tar.bz2
-abcf4a3abc16cf88c9df7e0a77e9b941  download/essential-20061022.tar.bz2
 e4e2020d11b681aac898103b3ba723c4  download/Blue-1.7.tar.bz2
 876b4eb976cacc6d722139825524b58f  download/CSWmplayer.gspec
-0ac273f009d67395e17527467e062013  download/fix-configure-sh-errors.diff
+0ac273f009d67395e17527467e062013  download/fix-configure-variables.diff
 27806fbe1dc1906ba6388a4077df6f88  download/fix-solaris8-llrint.diff
-dc641e5d56466a7733725d2a74b187cd  download/fix-stdint.h-lazy.diff
+29afd7668d553b721603eb39668dd7bb  download/fix-configure-stdint.h-detection.diff
 7c094773e8ceabfd921f1db9d975daad  download/security-asmrules_fix_20061231.diff
 f20789cbfff1563067573c9ad401f231  download/security-cddb_fix_20070605.diff

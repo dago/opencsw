@@ -1,0 +1,39 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/configure MPlayer-1.0rc1/configure
+--- MPlayer-1.0rc1.orig/configure	2006-10-23 11:32:31.000000000 +1300
++++ MPlayer-1.0rc1/configure	2007-07-19 00:23:23.339721338 +1200
+@@ -2827,6 +2827,21 @@
+   fi
+ fi
+ 
++def_have_inttypes='#define HAVE_INTTYPES_H 1'
++
++cat > $TMPC << EOF
++#include <stdint.h>
++int main(void) { return 0; }
++EOF
++_have_stdint=no
++cc_check && _have_stdint=yes
++if test "$_have_stdint" = yes ; then
++  _def_have_stdint='#define HAVE_STDINT_H 1'
++else
++  _def_have_stdint='#undef HAVE_STDINT_H'
++fi
++echores "stdint.h detected"
++
+ 
+ echocheck "int_fastXY_t in inttypes.h"
+ cat > $TMPC << EOF
+@@ -8181,8 +8196,11 @@
+ /* round function is available */
+ $_def_round
+ 
+-/* yes, we have inttypes.h */
+-#define HAVE_INTTYPES_H 1
++/* Do we have inttypes.h ? (note: required) */
++$_def_have_inttypes
++
++/* Do we have stdint.h ? */
++$_def_have_stdint
+ 
+ /* int_fastXY_t emulation */
+ $_def_fast_inttypes
