@@ -2,7 +2,6 @@ P CSWcommon common - common files and dirs for CSW packages
 P CSWaalib aalib - Ascii art graphics library
 P CSWaudiofile audiofile - Silicon Graphics Audio File Library
 P CSWesound esound - EsounD, The Enlightened Sound Daemon
-P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
 P CSWgcc4corert gcc4corert - GNU C Compiler Run Time
 P CSWggettext ggettext - GNU gettext
 P CSWglib2 glib2 - the low-level core library for GTK+ and GNOME
