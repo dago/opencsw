@@ -19,14 +19,21 @@ DISTFILES += $(call admfiles,CSWmplayer)
 
 PATCHFILES  = fix-configure-variables.diff
 PATCHFILES += fix-solaris8-llrint.diff
-#PATCHFILES += fix-stdint.h-lazy.diff
+PATCHFILES += fix-stdint.h-includes.diff
 PATCHFILES += fix-configure-stdint.h-detection.diff
 PATCHFILES += security-asmrules_fix_20061231.diff
 PATCHFILES += security-cddb_fix_20070605.diff
 
 GARCOMPILER = GNU
 #doesn't work well on sparc!! GNU_CC_OPT = -O2 -pipe -mtune=i686 -fomit-frame-pointer
-GNU_CC_OPT = -O2 -pipe -fomit-frame-pointer
+
+ifeq ($(GARCH),i386)
+	GNU_CC_OPT = -O2 -pipe -mtune=i686 -fomit-frame-pointer
+else
+	GNU_CC_OPT = -O2 -pipe -mtune=ultrasparc
+endif
+
+#GNU_CC_OPT="-O2 -pipe -mtune=v1"
 
 CONFIGURE_ARGS  = --with-codecsdir=/opt/csw/share/codecs --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
@@ -38,8 +45,9 @@ CONFIGURE_ARGS += --as=/opt/csw/bin/gas
 include ../category.mk
 
 ##ISA opt area start##
+#i686 is Pentium Pro and above
 
-i386_ISALIST	= i486 i586 i686
+i386_ISALIST	= i686 pentium3 pentium4
 sparc_ISALIST	= sparcv8plus+vis sparcv9
 
 jw:
