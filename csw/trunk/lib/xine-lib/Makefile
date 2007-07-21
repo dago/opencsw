@@ -21,9 +21,10 @@ endif
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS  = --prefix=/opt/csw/
-CONFIGURE_ARGS += --infodir=/opt/csw/share/doc/xine/
-CONFIGURE_ARGS += --x-includes=/usr/X11/include --x-libraries=/usr/X11/include
+#NODIRPATHS += --infodir
+
+CONFIGURE_ARGS  = $(DIRPATHS) docdir=/opt/csw/share/doc/xine
+CONFIGURE_ARGS += --x-includes=/usr/X11/include --x-libraries=/usr/X11/lib
 CONFIGURE_ARGS += CC="/opt/csw/gcc4/bin/gcc"
 CONFIGURE_ARGS += CXX="/opt/csw/gcc4/bin/g++"
 
