@@ -9,8 +9,8 @@ endef
 
 MASTER_SITES = www.xine.de
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWxine-lib)
-DISTFILES += CSWxine-lib.$(GAROSREL).depend
+DISTFILES += $(call admfiles,CSWxine-lib,$(GAROSREL).depend)
+#DISTFILES += CSWxine-lib.$(GAROSREL).depend
 
 
 #Solaris 8 Patches
@@ -20,8 +20,6 @@ endif
 
 
 GARCOMPILER = GNU
-
-#NODIRPATHS += --infodir
 
 CONFIGURE_ARGS  = $(DIRPATHS) docdir=/opt/csw/share/doc/xine
 CONFIGURE_ARGS += --x-includes=/usr/X11/include --x-libraries=/usr/X11/lib
