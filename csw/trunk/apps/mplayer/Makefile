@@ -9,11 +9,8 @@ endef
 
 
 MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www3.mplayerhq.hu/MPlayer/releases/codecs/ http://www.mplayerhq.hu/MPlayer/skins/
-#PATCH_SITES = http://www.mplayerhq.hu/MPlayer/patches/
 
 DISTFILES  = $(GARNAME)-1.0rc1.tar.bz2
-#DISTFILES += essential-20061022.tar.bz2
-#DISTFILES += all-20061022.tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
 DISTFILES += $(call admfiles,CSWmplayer)
 
@@ -23,6 +20,7 @@ PATCHFILES += fix-stdint.h-includes.diff
 PATCHFILES += fix-configure-stdint.h-detection.diff
 PATCHFILES += security-asmrules_fix_20061231.diff
 PATCHFILES += security-cddb_fix_20070605.diff
+###v8 build PATCHFILES += sparc-v8build.diff
 
 GARCOMPILER = GNU
 #doesn't work well on sparc!! GNU_CC_OPT = -O2 -pipe -mtune=i686 -fomit-frame-pointer
@@ -30,17 +28,16 @@ GARCOMPILER = GNU
 ifeq ($(GARCH),i386)
 	GNU_CC_OPT = -O2 -pipe -mtune=i686 -fomit-frame-pointer
 else
-	GNU_CC_OPT = -O2 -pipe -mtune=ultrasparc
+	GNU_CC_OPT = -O2 -pipe -mv8
 endif
 
-#GNU_CC_OPT="-O2 -pipe -mtune=v1"
 
 CONFIGURE_ARGS  = --with-codecsdir=/opt/csw/share/codecs --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
+CONFIGURE_ARGS += --mandir=share/man
 CONFIGURE_ARGS += --enable-gui
 CONFIGURE_ARGS += --disable-libcdio
-CONFIGURE_ARGS += --mandir=share/man
-CONFIGURE_ARGS += --as=/opt/csw/bin/gas
+#CONFIGURE_ARGS += --as=/opt/csw/bin/gas
 
 include ../category.mk
 
