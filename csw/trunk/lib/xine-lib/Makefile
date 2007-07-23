@@ -1,16 +1,15 @@
-GARNAME = xine-lib
+GARNAME = xinelib
 GARVERSION = hg
 CATEGORIES = APPS
 
-DESCRIPTION = Xine-lib 1.1.8 (HG test version)
+DESCRIPTION = Xine-lib 1.1.8 (HG test build)
 define BLURB
   LONG DESCRIPTION
 endef
 
 MASTER_SITES = www.xine.de
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWxine-lib,$(GAROSREL).depend)
-#DISTFILES += CSWxine-lib.$(GAROSREL).depend
+DISTFILES += $(call admfiles,CSWxinelib,$(GAROSREL).depend)
 
 
 #Solaris 8 Patches
@@ -28,3 +27,7 @@ CONFIGURE_ARGS += CXX="/opt/csw/gcc4/bin/g++"
 
 include ../category.mk
 LD_OPTIONS :=
+
+pre-package:
+	(cp files/CSW$(GARNAME).$(GAROSREL).depend $(WORKSRC)/../CSW$(GARNAME).depend)
+
