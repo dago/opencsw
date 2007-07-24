@@ -1,3 +1,30 @@
+# Beware, this Makefile is really ugly because:
+#  - we must also build and include in the package the
+#    libraries of the previous version for comptability reason
+#    (this may be better solved by a different package name for
+#     each soname: openssl0.9.8, openssl0.9.7, ...) 
+#  
+#  - we also build optimized libraries (amd64, pentium_pro, sparcv9, ...)
+#    (support for optimized libraries or binaries should rather be done
+#     in the GAR system but none has worked on this for now)
+#
+#  - under x86, we must build the packages in 2 steps,
+#     * first, on solaris 8, to generate Solaris >= 8 compatible libraries
+#     * then, on solaris 10, to generate amd64 optimized libraries
+#    (ugly as hell and we lose the automatization)
+#
+# So build instructions for x86 are really special:
+#    - put the GAR tree and the target build directory on a NFS shared space
+#      between the Solaris 8 and the solaris 10 build machines.
+#
+#    - on solaris 8, type:
+#    		gmake i386_ISALIST=pentium_pro post-install	
+#
+#    - then, on solaris 10, type:
+#    		gmake package
+#
+#  ANY better solution is welcome
+#    		
 GARNAME = openssl
 GARVERSION = 0.9.8
 RELEASE = e
@@ -36,6 +63,18 @@ OLD_VERSIONS	= 0.9.7m
 WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).d/$(GARVERSION)/$(ISA)
 COOKIEROOTDIR	= cookies.$(GARVERSION).$(ISA)
 CHECKSUM_FILE	= checksums.$(GARVERSION)
+
+
+## For x86 ##
+# for x86, we must share cookie work dir between sol10 and sol8
+# so we make them arch-dependant instead of hostname dependant
+DESTIMG	= $(LOGNAME)-$(GARCH)
+# we also make the target build directory (which looks like build.$(GAROSREL)-$(GARCH))
+# identical between sol10 and sol8 by forcing the OS name used
+GAROSREL = 5.8
+# we force the OS for pkginfo, pkg filename so the final package step 
+# performed on solaris 10 x86 really produce SunOS5.8 labelled packages.
+SPKG_OSNAME = SunOS5.8
 
 # add the solaris-386-cc, solaris-pentium-cc,... targets
 PATCHFILES = openssl.$(GARVERSION).patch
