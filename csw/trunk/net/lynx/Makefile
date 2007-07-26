@@ -1,5 +1,5 @@
 GARNAME = lynx
-GARVERSION = 2.8.5
+GARVERSION = 2.8.6
 CATEGORIES = net
 
 DESCRIPTION = lynx - text browser for the World Wide Web
