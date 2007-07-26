@@ -1,15 +1,15 @@
-GARNAME = xinelib
+GARNAME = libxine
 GARVERSION = hg
 CATEGORIES = APPS
 
 DESCRIPTION = Xine-lib 1.1.8 (HG test build)
 define BLURB
-  LONG DESCRIPTION
+This is a work in progress. Curretly only working under solaris 10. Solaris 8 is yet to come
 endef
 
 MASTER_SITES = www.xine.de
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWxinelib,$(GAROSREL).depend)
+DISTFILES += $(call admfiles,CSWlibxine,$(GAROSREL).depend)
 
 
 #Solaris 8 Patches
@@ -20,8 +20,10 @@ endif
 
 GARCOMPILER = GNU
 
+#Excluding imagemagick and gnomevfs to cut down on dependancies
 CONFIGURE_ARGS  = $(DIRPATHS) docdir=/opt/csw/share/doc/xine
 CONFIGURE_ARGS += --x-includes=/usr/X11/include --x-libraries=/usr/X11/lib
+CONFIGURE_ARGS += --without-imagemagick --disable-gnomevfs
 CONFIGURE_ARGS += CC="/opt/csw/gcc4/bin/gcc"
 CONFIGURE_ARGS += CXX="/opt/csw/gcc4/bin/g++"
 

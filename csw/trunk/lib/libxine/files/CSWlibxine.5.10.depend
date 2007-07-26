@@ -1,10 +1,5 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWbonobo2
-P CSWgconf2
-P CSWgnomevfs2
-P CSWimagemagick
-P CSWorbit2
-P CSWsambalib
+P CSWsambalib - Tools to access a server's filespace and printers via SMB (lib)
 P CSWaalib aalib - Ascii art graphics library
 P CSWaudiofile audiofile - Silicon Graphics Audio File Library
 P CSWesound esound - EsounD, The Enlightened Sound Daemon
