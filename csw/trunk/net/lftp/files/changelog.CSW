@@ -1,3 +1,15 @@
+lftp (3.5.11,REV=2007.07.28) unstable
+
+  * Depends on openssl_rt rather than openssl.
+
+   -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 17:30:07 +0200
+
+lftp (3.5.11) unstable
+
+   * New upstream version.
+
+  -- Yann Rouillard <yann@blastwave.org>  Wed, 06 May 2007 04:42:47 +0200
+
 lftp (3.5.10) unstable
 
    * New upstream version.

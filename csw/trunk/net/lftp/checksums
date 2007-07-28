@@ -1,7 +1,7 @@
 25e7d041d25cf6c2335bd3848f4f1e05  download/lftp-3.5.11.tar.gz
 47fdb80e4575a9a70d69b146974620df  download/CSWlftp.gspec
 766b47783fdd9d34e036d7a55dd07f49  download/CSWlftp.prototype
-851ed4dbf957a38f9c957dd1e85d86d2  download/CSWlftp.depend
-28830a95bae64e2e2b44ed9e54ff1ba3  download/changelog.CSW
-c206032b351355f90cb84002351c5157  download/i.conf
+a5e3df86b17e4f1e81fcfaac7e9cedcd  download/CSWlftp.depend
+cacd2f0e37f7af2f034d40f9ef627c5f  download/changelog.CSW
+3a01fb949dfe799507720c311222cd96  download/i.conf
 51abe2144219c1af4c79c2e8b7e81cb9  download/r.conf
