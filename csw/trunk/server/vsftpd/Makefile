@@ -82,13 +82,4 @@ pre-install:
 	 ln -sf $(DESTDIR)$(mandir) $(DESTDIR)$(prefix)/man; \
 	 install -d $(DESTDIR)$(docdir)/vsftpd )
 
-# we install additionnal files
-post-install:
-	ginstall -D $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
-	ginstall -D $(WORKDIR)/i.conf $(DESTDIR)/i.conf
-	ginstall -D $(WORKDIR)/r.conf $(DESTDIR)/r.conf
-	ginstall -D $(WORKDIR)/vsftpd.conf $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.conf.CSW
-	ginstall -D $(WORKDIR)/vsftpd.userlist $(DESTDIR)$(sysconfdir)/$(GARNAME)/vsftpd.userlist
-	
 
