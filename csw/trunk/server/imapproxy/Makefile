@@ -21,7 +21,7 @@ DISTFILES += $(call admfiles,CSWimapproxy,prototype,depend)
 DISTFILES += imapproxy.conf
 DISTFILES += changelog.CSW README.CSW
 # init and smf stuffs
-DISTFILES += cswimapproxy cswimapproxy.xml svc-cswimapproxy
+DISTFILES += cswimapproxy.init cswimapproxy.xml svc-cswimapproxy
 DISTFILES += i.smf r.smf
 
 # imapproxy lacks include of openssl/md5.h
