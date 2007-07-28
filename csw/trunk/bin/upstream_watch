@@ -91,7 +91,7 @@ sub get_file_list
 	$http_proxy_cmd = "set http:proxy $ENV{HTTP_PROXY};" if exists $ENV{HTTP_PROXY};
 	$http_proxy_cmd = "set http:proxy $ENV{http_proxy};" if exists $ENV{http_proxy};
 
-	open (FH, "lftp -q -c \"$ftp_proxy_cmd $http_proxy_cmd open $url/; ls\" 2>/dev/null |");
+	open (FH, "lftp -q -c \"set net:timeout 10; set net:max-retries 1; $ftp_proxy_cmd $http_proxy_cmd open $url/ && ls\" 2>/dev/null |");
 
 	while (my $line = <FH>) {
 		my @cols = split (/\s+/, $line);
