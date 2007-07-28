@@ -1,13 +1,6 @@
 #!/bin/sh
 # preinstallation script for vsftpd
 
-#############################
-# variables declaration     #
-#############################
-PASSWD=/etc/passwd
-GROUP=/etc/group
-INSTALL_PATH=${BASEDIR}
-
 ###########################################
 # create the given group if it doesn't exist #
 ###########################################
@@ -15,7 +8,7 @@ create_group()
 {
 	NAME=$1
 	GID=$2
-	if /usr/sbin/chroot "$PKG_INSTALL_ROOT" usr/bin/grep "^$NAME" $GROUP > /dev/null; then 
+	if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent group $NAME > /dev/null; then 
 		/usr/bin/echo "group $NAME already exists"
 	else 
 		/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/groupadd $NAME 
@@ -35,7 +28,7 @@ create_user()
 	SHELL=$4
 	COMMENT=$5
 
-	if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/grep "^$NAME:" $PASSWD > /dev/null; then 
+	if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd $NAME > /dev/null; then 
 		/usr/bin/echo "user $NAME already exists"
 	else 
 		/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/useradd -g "$GROUP" -c "$COMMENT" -d $HOME -s $SHELL $NAME
