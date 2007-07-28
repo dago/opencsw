@@ -1,3 +1,9 @@
+pm_cyrus (2.3.8,REV=2007.07.28) unstable
+
+  * Now depends on openssl_rt rather than openssl.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 17:30:07 +0200 
+
 pm_cyrus (2.3.8) unstable
 
  * New upstream version.

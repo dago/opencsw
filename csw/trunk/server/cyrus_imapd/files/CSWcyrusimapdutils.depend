@@ -1,5 +1,5 @@
 P       CSWpmcyrus
-P       CSWossl         - openssl - OpenSSL Secure Sockets Layer lib and utilities
+P       CSWosslrt         - openssl - OpenSSL Secure Sockets Layer lib and utilities
 P       CSWsasl         - sasl - Simple Authentication and Security Layer
 P       CSWbdb4         - berkeleydb4 - embedded database libraries and utilities
 P	CSWkrb5lib

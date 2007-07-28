@@ -2,7 +2,7 @@
 %var            pkgname CSWcyrusimapd
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYRIGHT
-%var            initname cswcyrus
+%var            RC_INIT_SCRIPT cswcyrus
 %var            INIT_KILL_PRIO 99
 %var            INIT_START_PRIO 10
 %var            CAN_BE_AUTOENABLED yes

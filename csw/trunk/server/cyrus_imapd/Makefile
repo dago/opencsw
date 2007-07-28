@@ -25,7 +25,7 @@ DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend checkinst
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
 DISTFILES += i.services r.services services
 DISTFILES += i.conf r.conf
-DISTFILES += cswcyrus cswcyrus.xml svc-cswcyrus
+DISTFILES += cswcyrus.init cswcyrus.xml svc-cswcyrus
 DISTFILES += imapd.conf cyrus.conf
 
 DISTFILES += $(call admfiles,CSWpmcyrus,prototype depend)
