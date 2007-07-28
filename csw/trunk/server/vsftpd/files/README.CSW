@@ -9,13 +9,7 @@ Default configuration:
 
 	The default installation enables anonymous access only, and configure vsftpd in
 	standalone mode (not inetd).  
-	However anonymous access requires a ftp user which is not automatically created 
-	by this package.
-	Simply create this user with the following command line:
-
-		useradd -d /path/to/ftp/directory -s /bin/false ftp	
-
-	vsftpd is not automatically launched on first install for this reason.
+	Anonymous access requires a ftp user which is automatically created by this package.
 
 Virtual users setup:
 
