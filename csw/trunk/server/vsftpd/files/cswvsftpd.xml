@@ -8,7 +8,7 @@ Modified for CSWmysql5 by Alex Moore 01/06
 Modified for CSWvsftpd by Yann Rouillard 05/06
 -->
 
-<service_bundle type='manifest' name='CSWvsftpd:vsftpd'>
+<service_bundle type='manifest' name='CSWvsftpd:cswvsftpd'>
 
 	<service
 		name='network/cswvsftpd'
@@ -52,21 +52,21 @@ Modified for CSWvsftpd by Yann Rouillard 05/06
 			<exec_method
 				type='method'
 				name='start'
-				exec='/opt/csw/lib/svc/method/svc-vsftpd start'
+				exec='/opt/csw/lib/svc/method/svc-cswvsftpd start'
 				timeout_seconds='-1'>
 			</exec_method>
 
 			<exec_method
 				type='method'
 				name='stop'
-				exec='/opt/csw/lib/svc/method/svc-vsftpd stop'
+				exec='/opt/csw/lib/svc/method/svc-cswvsftpd stop'
 				timeout_seconds='-1'>
 			</exec_method>
 
 			<exec_method
 				type='method'
 				name='restart'
-				exec='/opt/csw/lib/svc/method/svc-vsftpd restart'
+				exec='/opt/csw/lib/svc/method/svc-cswvsftpd restart'
 				timeout_seconds='-1'>
 			</exec_method>
 		</instance>

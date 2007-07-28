@@ -1,8 +1,16 @@
+vsftpd (2.0.5,REV=2007.07.28) unstable
+
+  * Depends on openssl_rt rather than openssl.
+  * Updated README.CSW about ftp user creation.
+  * Now uses gar smf integration script.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 18:47:15 +0200
+
 vsftpd (2.0.5,REV=2006.07.23) unstable
 
   * New upstream version.
   * Added smf and csw.conf support.
-  Ã*ftp user for anonymous access is now created autoamtically on 
+  * ftp user for anonymous access is now created autoamtically on 
     postinstall.
 
  -- Yann Rouillard <yann@blastwave.org>  Sun, 23 Jul 2006 11:16:32 +0200
