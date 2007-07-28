@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://lynx.isc.org/release/
 DISTFILES  = $(GARNAME)$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlynx,)
+DISTFILES += $(call admfiles,CSWlynx,depend)
 
 WORKSRC = $(WORKDIR)/$(subst .,-,$(GARNAME)$(GARVERSION))
 
