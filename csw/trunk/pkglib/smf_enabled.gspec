@@ -33,7 +33,7 @@ d smf /opt/csw/lib/svc ? ? ?
 d smf /opt/csw/lib/svc/method ? ? ?
 f smf /opt/csw/lib/svc/method/%{SMF_SCRIPT}=%{SMF_SCRIPT} 0755 root bin
 %pkginfo:merge
-MANIFEST_FILES="/opt/csw/var/svc/manifest/site/%{SMF_MANIFEST}.xml"
+MANIFEST_FILES="/opt/csw/var/svc/manifest/site/%{SMF_MANIFEST}"
 INIT_FILES="/etc/init.d/%{RC_INIT_SCRIPT}"
 CAN_BE_AUTOENABLED="%{CAN_BE_AUTOENABLED}"
 SERVICE_CONF_FILES="%{SERVICE_CONF_FILES}"
