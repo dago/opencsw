@@ -25,7 +25,7 @@ CONFIGURE_ARGS += --with-slang-library=/opt/csw/lib --with-slrnpull
 CONFIGURE_ARGS += --enable-setgid-code --enable-spool
 CONFIGURE_ARGS += --with-mta=/usr/lib/sendmail --enable-hardcode-libs
 
-BUILD_ARGS = install install-contrib
+INSTALL_ARGS = install install-contrib
 
 # slrn doesn't have a test target
 TEST_TARGET =
