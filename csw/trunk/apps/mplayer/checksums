@@ -5,5 +5,6 @@ e4e2020d11b681aac898103b3ba723c4  download/Blue-1.7.tar.bz2
 27806fbe1dc1906ba6388a4077df6f88  download/fix-solaris8-llrint.diff
 dc641e5d56466a7733725d2a74b187cd  download/fix-stdint.h-includes.diff
 29afd7668d553b721603eb39668dd7bb  download/fix-configure-stdint.h-detection.diff
+d3dfbaac2431cbc2949449064a7576b5  download/fix-ffmpeg-gcc-error.diff
 7c094773e8ceabfd921f1db9d975daad  download/security-asmrules_fix_20061231.diff
 f20789cbfff1563067573c9ad401f231  download/security-cddb_fix_20070605.diff
