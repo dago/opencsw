@@ -61,16 +61,32 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 #
 ###Script functionality/Order###
 #
-# 1) Gmake optbuild runs the standard gar framework through the optbuild for 
+# 1) gmake optbuild runs the standard gar framework through the optbuild for 
 #	loop. If you supply no arguements, it will use the default GAR target
 #	of "build", which in turn will kick of a seperate build of Mplayer
 #	for each of the targets in $ISATARGET, which is i386/sparc specific.
 # 2) Once we have a optimised build of each of the $ISATARGETS, we want to 
 #	install the $BASEISA into the gar spool dir ($DESTDIR).
+#	This works against my little loop. Need to understand this better
+#	Later we do want to copy the binaries, which is helped by the install
+#	phase. So install is helpful, but post-install really needs to be
+#	singular. The cp phase can be run many times but the isaexec symlink
+#	really only want to be run once.
+
+
+
+
 #	This gives us an unoptimised build of the entire package, as per normal.
+### A standard gmake install should do this, though simply using the lowest
+### in the $ISATARGET list (i.e $BASEISA) should achieve the same thing
+#
 # 3) Next we want to copy the optimised binaries or libraries from our optimised
 #	builds, into the the $BASEISA spool, but into an $ISAEXEC compatable
 #	directory structure.
+#	The gmake post-install step should hopefully take care of this.
+### The order of the loop will matter here though, need to be careful
+#
+#
 # 4) Our post-install scripts could in theory take care of this, the next GAR
 #	phase is pre-package, which could be another target.
 #
@@ -170,26 +186,21 @@ optbuild:
 	(for TARGET in $(ISATARGETS); do \
 	gmake ISA=$$TARGET $$ACTION; done)
 
-##This gets us as far as building. Now for the packaging. This gets tricky
-
 ###Tidy ups and files below
 # We need the skins dir copied into the master spool dir
 # We need the default font copied into the master spool dir
 # Finally, suck in all the optimised binaries
 
-post-install: skins fonts # codecs
+post-install: skins fonts use-isaexec copy-opt-bins
 
-post-install-optbuild: use-isaexec copy-opt-bins
-#ifeq ($(ISA),$(BASEISA))
+#post-install-optbuild: use-isaexec copy-opt-bins
 
-#else
-# 	skins fonts
-#endif
-
+# Loop-safe, though redundant
 skins:
 	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/skins/default)
 	(cp -r $(WORKSRC)/../Blue/* $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/skins/default)
 
+# Loop-safe, though redundant
 fonts:
 	(ln -f -s /usr/openwin/lib/X11/fonts/TrueType/Arial.ttf $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/subfont.ttf)
 
@@ -197,19 +208,22 @@ codecs:
 	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/lib/codecs)
 	(cp -r $(WORKSRC)/../all-20061022/* $(DESTDIR)$(BUILD_PREFIX)/share/codecs) 
 
+# Loop-safe, though redundant
 use-isaexec:
-	(for bin in $(shell cd $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/; gfind ./ -maxdepth 1 -type f); do \
+	(cd $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/)
+	(for bin in (gfind ./ -maxdepth 1 -type f); do \
 	echo gln -f /opt/csw/bin/isaexec $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$$bin; done)
 
+# Needs to Loop, shouldn't clobber use-isaexec, actually requires that
+# gmake install has been run, as it's using the $DESTDIR var
 copy-opt-bins:
 	(mkdir -p $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
 	(cp $(DESTDIR)$(BUILD_PREFIX)/bin/* $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
 
+
 run-anywhere-build:
-
-
+	(gmake ISA=pentium)
 CONFIGURE_ARGS += --enable-runtime-cpudetection
-	gmake ISA=pentium
 
 clean-everything:
 	gmake optbuild ACTION=clean
