@@ -1,5 +1,6 @@
 GARNAME = openssh
-GARVERSION = 4.6p1
+GARVERSION = 4.6
+RELEASE = p1
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
@@ -18,12 +19,16 @@ MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTVERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
+
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall prototype) 
 DISTFILES += sshd_config
 DISTFILES += cswopenssh.init svc-cswopenssh cswopenssh.xml
 DISTFILES += i.conf r.conf
 DISTFILES += openssh
+
 
 SPKG_CLASSES = none conf
 
@@ -35,3 +40,4 @@ CONFIGURE_ARGS += --with-pam
 
 include ../category.mk
 
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
