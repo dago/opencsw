@@ -1,5 +1,5 @@
 GARNAME = micq
-GARVERSION = 0.5.2
+GARVERSION = 0.5.4.2
 CATEGORIES = net
 
 DESCRIPTION = terminal-based ICQ client
@@ -12,6 +12,9 @@ endef
 MASTER_SITES = http://www.micq.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWmicq,prototype depend)
+DISTFILES += micq.patch
+
+PATCHFILES = micq.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

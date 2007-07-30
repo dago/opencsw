@@ -4,3 +4,4 @@ P	CSWiconv	libiconv - GNU iconv library
 P	CSWgpgerr	libgpg_error - GNU gpg related library
 P	CSWtcl		tcl - Tool Command Language
 P	CSWzlib		zlib - Zlib Data Compression Library
+P	CSWotr		otr - off the record library and toolkit
