@@ -40,4 +40,4 @@ CONFIGURE_ARGS += --with-pam
 
 include ../category.mk
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
