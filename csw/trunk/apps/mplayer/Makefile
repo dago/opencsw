@@ -26,7 +26,7 @@ GARCOMPILER = GNU
 
 DISTFILES  = $(GARNAME)-1.0rc1.tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
-DISTFILES += $(call admfiles,CSWmplayer)
+DISTFILES += $(call admfiles,CSWmplayer,depend)
 
 PATCHFILES  = fix-configure-variables.diff
 PATCHFILES += fix-solaris8-llrint.diff
@@ -149,13 +149,17 @@ endif
 # pentium_pro+mmx=pentium2
 # 64-bit can be athlon, but I expect -m64 will be what we're after
 
+#If statement for gcc!
 pentium_dir 	= pentium
 pentium-mmx_dir = pentium+mmx
 pentium2_dir 	= pentium_pro+mmx
 
 #Sparc next!
-# insert here
-# and insert here
+# ?? = sparcv8
+# ?? = sparcv8plus
+# ?? = sparcv8plus+vis
+# ?? = sparcv9
+# ?? = sparcv9plus+vis2 
 
 ISAEXEC_DIR = $($(ISA)_dir)
 
@@ -163,6 +167,11 @@ ISAEXEC_DIR = $($(ISA)_dir)
 # For a single optimised build use gmake ISA=your-target-here.
 # For all optimised versions ($ISAEXEC), use gmake optbuild 
 ISA ?= $(BASEISA)
+
+#Which binaries do you want to use $ISAEXEC for?
+# Note: These must be the full paths!
+ISAEXEC_BINS = opt/csw/bin/mplayer opt/csw/bin/mencoder
+
 
 # Inclue all standard GAR variables and functionality from here onward:
 include ../category.mk
@@ -173,7 +182,6 @@ DESTDIR := $(DESTDIR)-$(ISA)
 
 ####Mplayer specific optimisation notes####
 # Mplayer uses mtune, not march for optimisation so we want to set this to suit
-## --enable-runtime-cpudetection allows the binary to run anywhere, use for i386
 
 CFLAGS = -O2 -pipe -mtune=$(ISA)
 CPPFLAGS = $(CFLAGS)
@@ -181,26 +189,43 @@ CXXFLAGS = $(CFLAGS)
 ASFLAGS = $(CFLAGS)
 OPTFLAGS = $(CFLAGS)
 
-# The main target used by this Makefile for creating $ISAEXEC format pkgs.
+
+
+# This is the main target used by this Makefile for creating $ISAEXEC format pkgs.
+# This for loop is very important for handling the $DESTDIR var as it applies in
+# the post-install steps (I.E the ISA-specific dirs)
+
 optbuild:
 	(for TARGET in $(ISATARGETS); do \
 	gmake ISA=$$TARGET $$ACTION; done)
+
+
+# optpkg is for running the packaging step outside for the optbuild for loop.
+# I think this will achieve that. We only want the one package. By this point all
+# of the binaries should be where we want them, and the prototype updated to suit
+# isaexec of our $ISAEXEC_BINS
+
+optpkg: optbuild package
 
 ###Tidy ups and files below
 # We need the skins dir copied into the master spool dir
 # We need the default font copied into the master spool dir
 # Finally, suck in all the optimised binaries
 
-post-install: skins fonts use-isaexec copy-opt-bins
+post-install: skins fonts copy-opt-bins
 
 #post-install-optbuild: use-isaexec copy-opt-bins
 
-# Loop-safe, though redundant
+#### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
+#	the expanded $(DESTDIR) variable which includes their expanded path
+#	In Mplayer's case we don't actually need the skins/fonts in each ISA build
+#	but pulling them out of the loop is proving tricky 
+
+
 skins:
 	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/skins/default)
 	(cp -r $(WORKSRC)/../Blue/* $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/skins/default)
 
-# Loop-safe, though redundant
 fonts:
 	(ln -f -s /usr/openwin/lib/X11/fonts/TrueType/Arial.ttf $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/subfont.ttf)
 
@@ -208,40 +233,34 @@ codecs:
 	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/lib/codecs)
 	(cp -r $(WORKSRC)/../all-20061022/* $(DESTDIR)$(BUILD_PREFIX)/share/codecs) 
 
-# Loop-safe, though redundant
-use-isaexec:
-	(cd $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/)
-	(for bin in (gfind ./ -maxdepth 1 -type f); do \
-	echo gln -f /opt/csw/bin/isaexec $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$$bin; done)
+# This should just be run the once
+# This sets up the dependancies correctly, but you'll have to do the depend manually
+# In Mplayer's case I'm going to have to hard code the name, as the tarball has it
+# as "MPlayer", not "mplayer", so I can't simply change the $(GARNAME)
+pre-package:
+	(echo "l none /opt/csw/bin/mplayer=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype)
+	(echo "l none /opt/csw/bin/mencoder=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype)
 
-# Needs to Loop, shouldn't clobber use-isaexec, actually requires that
-# gmake install has been run, as it's using the $DESTDIR var
+#use-isaexec:
+#	@if test ! -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/isaexec ; then cp /opt/csw/bin/isaexec $(BASE_DESTDIR)$(BUILD_PREFIX)/bin; fi
+#	(cd $(BASE_DESTDIR)$(BUILD_PREFIX))
+#	( for bin in $(ISAEXEC_BINS); do gln -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/isaexec  $(BASE_DESTDIR)$(BUILD_PREFIX)/$$bin; done)
+
+# Must be called from optbuild for the DESTDIR var to be inherited, and we need to
+# loop this for each ISATARGET
 copy-opt-bins:
 	(mkdir -p $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
-	(cp $(DESTDIR)$(BUILD_PREFIX)/bin/* $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
+	(cd $(DESTDIR); if test ! -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR)/* ; then mv $(ISAEXEC_BINS) $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR); fi )
 
 
+
+###not yet implemented, mplayer specific
+## --enable-runtime-cpudetection allows the binary to run anywhere, use for i386
 run-anywhere-build:
 	(gmake ISA=pentium)
 CONFIGURE_ARGS += --enable-runtime-cpudetection
 
 clean-everything:
+
+#This doesn't clean out our extra DESTDIRS... need fixing
 	gmake optbuild ACTION=clean
-
-
-###old stuff follows:
-
-# As a minimum, we create a i686/mv8 build to provide backward compatablitiy
-# with the tradational GAR system. 
-#To build all ISA's for your $ARCH, use "gmake isaexec" 
-
-#opt: 
-#	(
-#	( echo $(GARCH) ) #GARCH is 'i386'
-#	( echo $(GARCH)_ISALIST )  #GARCH is 'i386_ISALIST'
-
-#	( for ISA in "" $($(GARCH)_ISALIST); do echo $$ISA; done )
-#	( cd $(WORKSRC) if [ -f mplayer.i* ] then rm mplayer.* fi && \
-	for ISA in $($(GARCH)_ISALIST); do \
-	 	GNU_CC_OPT="-O2 -pipe -mtune=$$ISA" gmake && mv mplayer mplayer.$$ISA; done )
-
