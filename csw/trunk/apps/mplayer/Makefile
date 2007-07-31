@@ -41,7 +41,7 @@ PATCHFILES += security-cddb_fix_20070605.diff
 
 CONFIGURE_ARGS  = --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
-CONFIGURE_ARGS += --mandir=/share/man
+CONFIGURE_ARGS += --mandir=share/man
 CONFIGURE_ARGS += --enable-gui
 CONFIGURE_ARGS += --disable-libcdio
 CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
@@ -66,7 +66,7 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 #	of "build", which in turn will kick of a seperate build of Mplayer
 #	for each of the targets in $ISATARGET, which is i386/sparc specific.
 # 2) Once we have a optimised build of each of the $ISATARGETS, we want to 
-#	install the $BASEISA into the gar spool dir ($DESTDIR).
+#	install the $BASEISA into the gar install dir ($DESTDIR).
 #	This works against my little loop. Need to understand this better
 #	Later we do want to copy the binaries, which is helped by the install
 #	phase. So install is helpful, but post-install really needs to be
@@ -81,7 +81,7 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 ### in the $ISATARGET list (i.e $BASEISA) should achieve the same thing
 #
 # 3) Next we want to copy the optimised binaries or libraries from our optimised
-#	builds, into the the $BASEISA spool, but into an $ISAEXEC compatable
+#	builds, into the the $BASEISA install dir, but into an $ISAEXEC compatable
 #	directory structure.
 #	The gmake post-install step should hopefully take care of this.
 ### The order of the loop will matter here though, need to be careful
@@ -107,7 +107,7 @@ DESTIMG=$(GARNAME)-$(ISA)
 # 
 # To create optimised binaries for each of the $ISATARGETS in the final .pkg we
 # actually have to build multiple copies of mplayer, only to then simply copy
-# only the resultant optimised binaries or libraries to the spool folder, for
+# only the resultant optimised binaries or libraries to the install dir, for
 # pickup in the packaging phase of the gar build as per normal.
 #
 # First we need to work out which arch this build host is using and then set
@@ -116,7 +116,7 @@ DESTIMG=$(GARNAME)-$(ISA)
 # $ISATARGETS represents the optimised cpu targets.
 # These targets can be used in a couple of ways. We need to feed a desired 
 # optimisation target into our compiler, but we also need to create and copy
-# the binaries into the $ISAEXEC folder struction in the final spool layout.
+# the binaries into the $ISAEXEC dir structure for the final install layout.
 #
 # Unfortunately for GCC at least, these names don't match, and 64-bit is even
 # worse.
@@ -131,7 +131,7 @@ DESTIMG=$(GARNAME)-$(ISA)
 # The $BASEISA represents the minimum optimisation level, but it's also used as
 # the base (master) template for creating the package. All other $ISATARGET 
 # builds will have their binaries and libraries copied into the $BASEISA 
-# spool, prior to final packaging.
+# install dir, prior to final packaging.
 
 ifeq ($(shell uname -p),i386)
  ISATARGETS = pentium pentium-mmx pentium2
@@ -149,7 +149,7 @@ endif
 # pentium_pro+mmx=pentium2
 # 64-bit can be athlon, but I expect -m64 will be what we're after
 
-#If statement for gcc!
+#If statement for gcc needed!
 pentium_dir 	= pentium
 pentium-mmx_dir = pentium+mmx
 pentium2_dir 	= pentium_pro+mmx
@@ -198,18 +198,18 @@ OPTFLAGS = $(CFLAGS)
 optbuild:
 	(for TARGET in $(ISATARGETS); do \
 	gmake ISA=$$TARGET $$ACTION; done)
-
+ACTION ?= install
 
 # optpkg is for running the packaging step outside for the optbuild for loop.
 # I think this will achieve that. We only want the one package. By this point all
 # of the binaries should be where we want them, and the prototype updated to suit
 # isaexec of our $ISAEXEC_BINS
 
-optpkg: optbuild package
+optpkg: optbuild jw-pre-package package
 
 ###Tidy ups and files below
-# We need the skins dir copied into the master spool dir
-# We need the default font copied into the master spool dir
+# We need the skins dir copied into the master install dir
+# We need the default font copied into the master install dir
 # Finally, suck in all the optimised binaries
 
 post-install: skins fonts copy-opt-bins
@@ -237,7 +237,10 @@ codecs:
 # This sets up the dependancies correctly, but you'll have to do the depend manually
 # In Mplayer's case I'm going to have to hard code the name, as the tarball has it
 # as "MPlayer", not "mplayer", so I can't simply change the $(GARNAME)
-pre-package:
+#
+# This is being run multiple times, I don't understand why. I'm using the jw prefix
+# in an attempt to stop the standard GAR libraries picking it up
+jw-pre-package:
 	(echo "l none /opt/csw/bin/mplayer=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype)
 	(echo "l none /opt/csw/bin/mencoder=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype)
 
