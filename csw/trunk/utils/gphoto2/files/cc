@@ -5,7 +5,7 @@ CFLAGS=""
 LDFLAGS=""
 LIBS=""
 ARGS=""
-CC=/opt/SUNWspro/bin/${0##*/}
+CC=/opt/studio/SOS11/SUNWspro/bin/${0##*/}
 
 while true
 do
