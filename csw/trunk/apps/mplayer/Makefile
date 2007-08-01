@@ -41,7 +41,7 @@ PATCHFILES += security-cddb_fix_20070605.diff
 
 CONFIGURE_ARGS  = --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
-CONFIGURE_ARGS += --mandir=share/man
+CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
 CONFIGURE_ARGS += --disable-libcdio
 CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
@@ -189,32 +189,104 @@ CXXFLAGS = $(CFLAGS)
 ASFLAGS = $(CFLAGS)
 OPTFLAGS = $(CFLAGS)
 
+###Fix the standard POST_INSTALL_TARGET Definition##
+# By default Gar uses the install: target to install and then create a package.
+# The package target simply points at install:
+# With this ISAEXEC framework, we actually need to separate these steps out!
+#
+# By setting the POST_INSTALL_TARGETS to the below, we're stripping off the
+# packaging phase of the install: target.
+# With the packaging steps striped, make install only installs the package into
+# it's $DESTDIR as you would expect.
+#
+# We save the full unedited definiton of $PACKAGE for later, as we still to need
+# to build a package at the end.
+# I've created a full-package: target which runs $(FULL_PACKAGE). This will be the final step
+
+PLAIN_PACKAGE := $(POST_INSTALL_TARGETS)
+POST_INSTALL_TARGETS := strip fixconfig
+
+# 1) "gmake optbuild" runs the following gar steps on each of the $ISALIST
+#	build
+#	(pre/post)-install (pre-install calls timestamp, skins, fonts, and merge-opt-bins)
+#	post-install (calls strip/fixconfig)
+#	 ===> timestamp (creates a timestamp to track all new files for packaging)
+#	 ===> skins (copies the Mplayer skins into the install dirs)
+#	 ===> fonts (creates a symlink for the Mplayer OSD font)
+#	 ===> merge-opt-bins (Moves the optimised $ISAEXEC_BINS from each $ISALIST
+#			into the appropriate $ISAEXEC_DIR within the $BASEISA
+#			$DESTDIR dir)
+# The $BASISA $DESTDIR should now contain our full ISAEXEC'ed package layout
+#
+# 2) gmake full-package (which won't run through the loop) will just act apon the
+#	$BASEISA. It will run the following steps
+#	build (already done)
+#	(pre/post)-install, and it's dependancies (already done)
+#	pre-package package-create post-package package-check
+#	 ==> pre-package (This appends our ISAEXEC hard links into the prototype)
+#	package-create (Should merge our prototype)
+#	post-package (not defined)
+#	 ==> package-check (The final test of our package)
+
 
 
 # This is the main target used by this Makefile for creating $ISAEXEC format pkgs.
 # This for loop is very important for handling the $DESTDIR var as it applies in
 # the post-install steps (I.E the ISA-specific dirs)
 
+# I think the best plan of attack here is to avoid the install target for the loop
+# Lets just stage everything first
 optbuild:
 	(for TARGET in $(ISATARGETS); do \
-	gmake ISA=$$TARGET $$ACTION; done)
-ACTION ?= install
+	echo "POST_INSTALL_TARGETS=$(POST_INSTALL_TARGETS)"; \
+	gmake -e ISA=$$TARGET loop-targets; done)
+#was: gmake ISA=$$TARGET $$ACTION; done)
+
+
+#Use ACTION=pre-install , that's about as close as you can get without kicking the
+#whole thing off
 
 # optpkg is for running the packaging step outside for the optbuild for loop.
+# optbuild hasn't actually copied any files yet
 # I think this will achieve that. We only want the one package. By this point all
 # of the binaries should be where we want them, and the prototype updated to suit
 # isaexec of our $ISAEXEC_BINS
 
-optpkg: optbuild jw-pre-package package
+#run once, for the BASEISA
+optpkg: package-create
+
+loop-targets: build plain-install
+
+# This target is copied from gar.pkg.mk, just with $(POST_INSTALL_TARGETS) stripped
+# from the end.
+plain-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install
+	@echo " loop-targets phase: POST_INSTALL_TARGETS=$(POST_INSTALL_TARGETS)"
+
+
+
+# pre-install doesn't create the timestamps for us, install does (before pre-install)
+# So I'm manually running it here
+
+######Actually, the only thing wrong with the main "install" target, is the fact
+######That it runs POST_INSTALL_TARGETS += pre-package package-create post-package
+# If we just undefine POST_INSTALL_TARGETS
+
+#install: runs the lot, and importantly the main install target that comes after
+# pre-install, is actually a variable - $(INSTALL_TARGETS)
+# That target by default contains misc stuff, nothing too important. If you skip ahead to post-install, it will carry on without sucking in install:
+# strip, pre-package package-create post-package package-check
+
+# I need the optbins to be sucked in before the package-create step. At that point
+# it's running the pkgtrans to pkg it up.
+
 
 ###Tidy ups and files below
 # We need the skins dir copied into the master install dir
 # We need the default font copied into the master install dir
 # Finally, suck in all the optimised binaries
 
-post-install: skins fonts copy-opt-bins
-
-#post-install-optbuild: use-isaexec copy-opt-bins
+post-install: skins fonts merge-opt-bins
+	@echo "===> Finished Mplayer post-install target <==="
 
 #### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
 #	the expanded $(DESTDIR) variable which includes their expanded path
@@ -238,20 +310,27 @@ codecs:
 # In Mplayer's case I'm going to have to hard code the name, as the tarball has it
 # as "MPlayer", not "mplayer", so I can't simply change the $(GARNAME)
 #
-# This is being run multiple times, I don't understand why. I'm using the jw prefix
-# in an attempt to stop the standard GAR libraries picking it up
-jw-pre-package:
-	(echo "l none /opt/csw/bin/mplayer=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype)
-	(echo "l none /opt/csw/bin/mencoder=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype)
 
-#use-isaexec:
-#	@if test ! -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/isaexec ; then cp /opt/csw/bin/isaexec $(BASE_DESTDIR)$(BUILD_PREFIX)/bin; fi
-#	(cd $(BASE_DESTDIR)$(BUILD_PREFIX))
-#	( for bin in $(ISAEXEC_BINS); do gln -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/isaexec  $(BASE_DESTDIR)$(BUILD_PREFIX)/$$bin; done)
+#Should be able to use the ISA_BINS var here, maybe a foreach loop?
+pre-package:
+	@echo " ===> Starting Mplayer pre-package target <==="
+	@if test ! -f  $(COOKIEDIR)/pre-package ; then \
+	echo "l none /opt/csw/bin/mplayer=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype; \
+	echo "l none /opt/csw/bin/mencoder=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype; \
+	touch $(COOKIEDIR)/pre-package; fi  
+
+
+#The standard un-edited package target
+full-package:
+	make $(PLAIN_PACKAGE)
+
+#The whole shebang!
+all-in-one: optbuild full-package
 
 # Must be called from optbuild for the DESTDIR var to be inherited, and we need to
-# loop this for each ISATARGET
-copy-opt-bins:
+# loop this for each ISATARGET. The CD step should be later, or merged with _BINS
+merge-opt-bins:
+	@echo "====> Running merge-opt-bins <===="
 	(mkdir -p $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
 	(cd $(DESTDIR); if test ! -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR)/* ; then mv $(ISAEXEC_BINS) $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR); fi )
 
@@ -264,6 +343,5 @@ run-anywhere-build:
 CONFIGURE_ARGS += --enable-runtime-cpudetection
 
 clean-everything:
-
 #This doesn't clean out our extra DESTDIRS... need fixing
 	gmake optbuild ACTION=clean
