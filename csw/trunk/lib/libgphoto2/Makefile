@@ -63,8 +63,8 @@ SPKG_SOURCEURL = http://www.gphoto.org/
 include ../category.mk
 
 # This ensures that make picks up the 'cc' shell script as compiler
-PATH := $(PWD)/$(WORKDIR):$(PATH)
-export PATH
+#PATH := $(PWD)/$(WORKDIR):$(PATH)
+#export PATH
 
 post-extract:
 	(cd $(WORKSRC)/..; \
