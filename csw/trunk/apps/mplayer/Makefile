@@ -26,7 +26,7 @@ GARCOMPILER = GNU
 
 DISTFILES  = $(GARNAME)-1.0rc1.tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
-DISTFILES += $(call admfiles,CSWmplayer,depend)
+DISTFILES += $(call admfiles,CSWmplayer,depend,prototype)
 
 PATCHFILES  = fix-configure-variables.diff
 PATCHFILES += fix-solaris8-llrint.diff
@@ -48,9 +48,6 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 #CONFIGURE_ARGS += --with-codecsdir=/opt/csw/share/codecs ## win32 stuff
 
 
-
-
-
 ###Framework for an $ISAEXEC optimised build###
 # To allow for the same build to run multiple times without each version
 # clobbering the  non-unique work/cookie folders each time, we append the
@@ -59,19 +56,59 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 # merging mulitple builds anyway, and i386 build types don't match sparc types.
 #
 #
-###Script functionality/Order###
+
+#####################Script Overview and notes############################
+# 1) gmake optbuild: runs the standard gar framework through the optbuild for 
+#	loop. This loop allows for each of the targets in $ISATARGET to be build
+#	using the appropriate compiler flags for optimisation.
+#	The optbuild target takes us to the end of the install step.
+#	When all the building is done, we're going to only want the one package,
+#	not N versions, so all the resultant binaries are merged into the $BASEISA
+#	$DESTDIR. It's this BASEISA that will be used for our resultant ISAEXEC pkg
 #
-# 1) gmake optbuild runs the standard gar framework through the optbuild for 
-#	loop. If you supply no arguements, it will use the default GAR target
-#	of "build", which in turn will kick of a seperate build of Mplayer
-#	for each of the targets in $ISATARGET, which is i386/sparc specific.
-# 2) Once we have a optimised build of each of the $ISATARGETS, we want to 
-#	install the $BASEISA into the gar install dir ($DESTDIR).
-#	This works against my little loop. Need to understand this better
-#	Later we do want to copy the binaries, which is helped by the install
-#	phase. So install is helpful, but post-install really needs to be
-#	singular. The cp phase can be run many times but the isaexec symlink
-#	really only want to be run once.
+#	Gar in it's current form, merges and overlaps the install & package phases.
+#	We want the install phase to be run in a for loop, and the package phase to
+#	be run once, on our $BASEISA, so I've had to explictly split the phases.
+#	See the only-install: and only-package: targets for the implementation.
+#
+# 2) gmake only-package: Runs the standard packing steps on the $BASEISA	
+#	install dir ($DESTDIR), however I've run into a problem with the mkpackage
+#	perl script's handling of the prototype file. We need it to merge both our 
+#	standard directory structure, and also our "inserted" isaexec hardlinks.
+#	The pre-package step can add the appropriate lines to the prototype file,
+#	however mkpackage will then either 1) overwrite it anyway, or 2) in merge
+#	mode it will take our 2 isaexec lines, and then _ONLY_ add the adm files.
+#
+#	My sneaky workaround for this is to add the extra lines in the post-package
+#	target, followed by re-running the package-create step. On the second "lap"
+#	the prototype already contains a full file/dir layout, and our isaexec
+#	hardlink, so it simply merges the adm files. The admfiles are actually 
+#	already there, but mkpackage is smart enough to remove the duplicate lines!) 
+#	It's not the prettiest, and I'm open to better ideas. I really do want to
+#	keep the prototyping step dynamically generated, as it will save time.
+#
+#	This completes our isaexec build.
+
+### Makefile order ###
+# 1) "gmake optbuild" runs the following gar steps on each of the $ISALIST
+#	build (and all of it's dependanies - extract/patch/etc etc)
+#	pre-install (calls timestamp, skins, fonts, and merge-opt-bins)
+#	 ===> timestamp (creates a timestamp to track all new files for packaging)
+#	 ===> skins (copies the Mplayer skins into the install dirs)
+#	 ===> fonts (creates a symlink for the Mplayer OSD font)
+#	 ===> merge-opt-bins (Moves the optimised $ISAEXEC_BINS from each $ISALIST
+#			into the appropriate $ISAEXEC_DIR within the $BASEISA
+#			$DESTDIR dir)
+#	install (standard install target)
+#	post-install (calls strip/fixconfig)
+# The $BASISA $DESTDIR now contain all ISAEXEC'ed bins, in the correct layout.
+#
+# 2) gmake only-package (which won't run through the loop) will just act apon the
+#	$BASEISA. It will run the following steps
+#	pre-package 	(empty)
+#	package-create	(creates the package as per normal)
+#	post-package	(Sneakily adds the isaexec symlinks, and reruns package-create)
+#	package-check	(Standard target)
 
 
 
@@ -181,6 +218,7 @@ BASE_DESTDIR :=$(DESTDIR)-$(BASEISA)
 DESTDIR := $(DESTDIR)-$(ISA)
 
 ####Mplayer specific optimisation notes####
+
 # Mplayer uses mtune, not march for optimisation so we want to set this to suit
 
 CFLAGS = -O2 -pipe -mtune=$(ISA)
@@ -206,30 +244,6 @@ OPTFLAGS = $(CFLAGS)
 PLAIN_PACKAGE := $(POST_INSTALL_TARGETS)
 POST_INSTALL_TARGETS := strip fixconfig
 
-# 1) "gmake optbuild" runs the following gar steps on each of the $ISALIST
-#	build
-#	(pre/post)-install (pre-install calls timestamp, skins, fonts, and merge-opt-bins)
-#	post-install (calls strip/fixconfig)
-#	 ===> timestamp (creates a timestamp to track all new files for packaging)
-#	 ===> skins (copies the Mplayer skins into the install dirs)
-#	 ===> fonts (creates a symlink for the Mplayer OSD font)
-#	 ===> merge-opt-bins (Moves the optimised $ISAEXEC_BINS from each $ISALIST
-#			into the appropriate $ISAEXEC_DIR within the $BASEISA
-#			$DESTDIR dir)
-# The $BASISA $DESTDIR should now contain our full ISAEXEC'ed package layout
-#
-# 2) gmake full-package (which won't run through the loop) will just act apon the
-#	$BASEISA. It will run the following steps
-#	build (already done)
-#	(pre/post)-install, and it's dependancies (already done)
-#	pre-package package-create post-package package-check
-#	 ==> pre-package (This appends our ISAEXEC hard links into the prototype)
-#	package-create (Should merge our prototype)
-#	post-package (not defined)
-#	 ==> package-check (The final test of our package)
-
-
-
 # This is the main target used by this Makefile for creating $ISAEXEC format pkgs.
 # This for loop is very important for handling the $DESTDIR var as it applies in
 # the post-install steps (I.E the ISA-specific dirs)
@@ -238,13 +252,14 @@ POST_INSTALL_TARGETS := strip fixconfig
 # Lets just stage everything first
 optbuild:
 	(for TARGET in $(ISATARGETS); do \
-	echo "POST_INSTALL_TARGETS=$(POST_INSTALL_TARGETS)"; \
-	gmake -e ISA=$$TARGET loop-targets; done)
+	gmake -e ISA=$$TARGET build only-install; done)
 #was: gmake ISA=$$TARGET $$ACTION; done)
 
 
 #Use ACTION=pre-install , that's about as close as you can get without kicking the
 #whole thing off
+
+loop-targets: build only-install
 
 # optpkg is for running the packaging step outside for the optbuild for loop.
 # optbuild hasn't actually copied any files yet
@@ -252,20 +267,12 @@ optbuild:
 # of the binaries should be where we want them, and the prototype updated to suit
 # isaexec of our $ISAEXEC_BINS
 
-#run once, for the BASEISA
-optpkg: package-create
-
-loop-targets: build plain-install
 
 # This target is copied from gar.pkg.mk, just with $(POST_INSTALL_TARGETS) stripped
 # from the end.
-plain-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install
-	@echo " loop-targets phase: POST_INSTALL_TARGETS=$(POST_INSTALL_TARGETS)"
+only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install
 
 
-
-# pre-install doesn't create the timestamps for us, install does (before pre-install)
-# So I'm manually running it here
 
 ######Actually, the only thing wrong with the main "install" target, is the fact
 ######That it runs POST_INSTALL_TARGETS += pre-package package-create post-package
@@ -286,7 +293,6 @@ plain-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) 
 # Finally, suck in all the optimised binaries
 
 post-install: skins fonts merge-opt-bins
-	@echo "===> Finished Mplayer post-install target <==="
 
 #### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
 #	the expanded $(DESTDIR) variable which includes their expanded path
@@ -312,20 +318,26 @@ codecs:
 #
 
 #Should be able to use the ISA_BINS var here, maybe a foreach loop?
-pre-package:
-	@echo " ===> Starting Mplayer pre-package target <==="
-	@if test ! -f  $(COOKIEDIR)/pre-package ; then \
+
+post-package:
+	@echo " ===> Starting Mplayer post-package phase <==="
+	@if test ! -f  $(COOKIEDIR)/post-package ; then \
 	echo "l none /opt/csw/bin/mplayer=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype; \
 	echo "l none /opt/csw/bin/mencoder=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype; \
-	touch $(COOKIEDIR)/pre-package; fi  
+	touch $(COOKIEDIR)/post-package; fi
+	#Sneaky wrapper to re-run package-create with our newly added isaexecs!
+	rm $(COOKIEDIR)/package-create
+	@echo " Running gmake package-create for a second time"
+	gmake package-create
 
 
-#The standard un-edited package target
-full-package:
-	make $(PLAIN_PACKAGE)
+#A edited package target that doesn't re-run the install steps.
+only-package:
+	gmake pre-package package-create post-package package-check
 
-#The whole shebang!
-all-in-one: optbuild full-package
+
+#The whole shabang!
+all-in-one: optbuild only-package
 
 # Must be called from optbuild for the DESTDIR var to be inherited, and we need to
 # loop this for each ISATARGET. The CD step should be later, or merged with _BINS
@@ -341,7 +353,3 @@ merge-opt-bins:
 run-anywhere-build:
 	(gmake ISA=pentium)
 CONFIGURE_ARGS += --enable-runtime-cpudetection
-
-clean-everything:
-#This doesn't clean out our extra DESTDIRS... need fixing
-	gmake optbuild ACTION=clean
