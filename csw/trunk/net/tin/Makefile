@@ -1,5 +1,5 @@
 GARNAME = tin
-GARVERSION = 1.8.2
+GARVERSION = 1.8.3
 CATEGORIES = net
 
 DESCRIPTION = terminal-based news reader
@@ -16,6 +16,7 @@ DISTFILES += $(call admfiles,CSWtin,depend)
 PATCHFILES = configure.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-coffee
 CONFIGURE_ARGS += --enable-ipv6 --enable-curses
 CONFIGURE_ARGS += --x-includes=/usr/openwin/include
 CONFIGURE_ARGS += --x-libraries=/usr/openwin/lib 
