@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = ftp://ftp.tin.org/pub/news/clients/tin/stable/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWtin,depend)
+DISTFILES += $(call admfiles,CSWtin,prototype depend)
 
 PATCHFILES = configure.patch
 
