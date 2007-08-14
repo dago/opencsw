@@ -14,10 +14,10 @@ f none /opt/csw/lib/$arch64/libsenet.so=$WORKDIR64/sex/net/lib/.libs/libsenet.so
 f none /opt/csw/lib/$arch64/libsegui.so=$WORKDIR64/sex/gui/lib/.libs/libsegui.so
 d none /opt/csw/lib/app-defaults 0755
 f none /opt/csw/lib/app-defaults/Segui=$WORKDIR/sex/gui/lib/Segui
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1m ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1m 0755 root bin
 f none /opt/csw/share/man/man1m/se.1m=$WORKDIR/doc/se.1m
-d none /opt/csw ? ? ?
+d none /opt/csw 0755 root bin
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/se 0755 root bin
@@ -205,7 +205,7 @@ f none /opt/csw/share/se/examples/virtual_adrian.se=$WORKDIR/adrian/examples/vir
 f none /opt/csw/share/se/examples/pea.se=$WORKDIR/adrian/examples/pea.se 0644 root other
 f none /opt/csw/share/se/examples/peac.se=$WORKDIR/adrian/examples/peac.se 0644 root other
 f none /opt/csw/share/se/examples/mon_cm.se=$WORKDIR/adrian/examples/mon_cm.se 0644 root other
-d none /opt/csw/etc ? ? ?
+d none /opt/csw/etc 0755 root bin
 d none /opt/csw/etc/init.d 0755 root other
 f none /opt/csw/etc/init.d/vader=$WORKDIR/etc/init.d/vader 0644 root other
 f none /opt/csw/etc/init.d/percol=$WORKDIR/etc/init.d/percol 0644 root other

@@ -42,6 +42,10 @@ WORKSRC = $(WORKDIR)/se
 OPTARCH_sparcv9 = v9
 OPTARCH_amd64   = amd64
 
+INSTALL_SCRIPTS = custom
+
+CLEAN_SCRIPTS = custom
+
 include ../category.mk
 
 ifdef ISA
@@ -68,7 +72,6 @@ pre-configure:
 	@(cd $(WORKSRC); autoreconf -if)
 	$(MAKECOOKIE)
 
-INSTALL_SCRIPTS = custom
 install-custom:
 	# Nothing gets installed, everything is picked up on packaging
 	$(MAKECOOKIE)
@@ -78,6 +81,6 @@ pre-package:
 	gmake ISA=$(ARCH64) build
 	$(MAKECOOKIE)
 
-post-clean:
-	@gmake ISA=$(ARCH64) clean
+clean-custom: clean-all
+	gmake ISA=$(ARCH64) clean-all
 
