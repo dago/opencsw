@@ -1,6 +1,7 @@
 GARNAME = openssh
 GARVERSION = 4.6
 RELEASE = p1
+GSSKEX_VERSION = 20070312
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
@@ -14,7 +15,7 @@ define BLURB
   and supports all SSH protocol versions.
 endef
 
-MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
+MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
@@ -24,11 +25,15 @@ DISTNAME = $(GARNAME)-$(DISTVERSION)
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall prototype) 
+DISTFILES += changelog.CSW
 DISTFILES += sshd_config
 DISTFILES += cswopenssh.init svc-cswopenssh cswopenssh.xml
 DISTFILES += i.conf r.conf
 DISTFILES += openssh
 
+PATCHDIRLEVEL = 0
+# The GSSAPI key exchange patch
+PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
 
 SPKG_CLASSES = none conf
 
@@ -39,5 +44,11 @@ CONFIGURE_ARGS += --with-solaris-contracts
 CONFIGURE_ARGS += --with-pam
 
 include ../category.mk
+
+
+# we re-run autoconf because of the GSSAPI key exchange patch
+pre-configure:
+	cd $(WORKSRC) && autoconf
+	@$(MAKECOOKIE)
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
