@@ -1,3 +1,10 @@
 a9d7e463e8030c61d4617316124d1a06  download/orca-snapshot-r529.tar.bz2
 179b8d51aa340057f5831538035a4112  download/CSWorca.gspec
-8bdad9148590f3850015ddc52555cfcb  download/CSWorca.depend
+43808f3b0f4f2c09b499c55b038fcd76  download/CSWorca.depend
+3c82510dfd822b5ef52451a45b610520  download/CSWorca.prototype
+b279f29aa59822b41ae7957d2e8b6b2e  download/CSWorca-collector.gspec
+f4def3132a16af0a55713b6d7560c290  download/CSWorca-collector.depend
+c97b764e7f58e5f96141c92553f306aa  download/CSWorca-collector.prototype
+029c3cdd385c06b30aed79ea7e6f553f  download/CSWorca-web.gspec
+0390894875ef40b9b40b42bab9f9fdab  download/CSWorca-web.depend
+51883afcb04288c5d0348a1e5500e8a8  download/CSWorca-web.prototype

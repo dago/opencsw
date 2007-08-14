@@ -5,17 +5,32 @@ CATEGORIES = utils
 
 DESCRIPTION = A system performance monitoring tool
 define BLURB
-  The SE Toolkit is
-  * An interpreter for a programming language that is both a subset of C and C++.
-    Syntactically, it looks like C, but it contains a limited class mechanism.
-  * Include files for use by toolkit scripts.
-  * A bunch of example scripts.
-  * A set of extensions for writing GUIs and "network aware" scripts.
+  Orca is a tool useful for plotting arbitrary data from text files onto
+  a directory on a Web server.  It has the following features:
+
+    * Creates an HTML tree of HTML and image (PNG or GIF) files.
+    * Creates an index of URL links listing all available targets.
+    * Creates an index of URL links listing all different plot types.
+    * No separate CGI set up required.
+    * Can be run under cron or it can sleep itself waiting for file updates
+      based on when the file was last updated.
+    * Configuration file based.
+    * Reads arbitrarily formatted text or binary data files.
+    * Watches data files for updates and sleeps between reads.
+    * Finds new files at specified times.
+    * Remembers the last modification times for files so they do not have to
+      be reread continuously.
+    * Allows arbitrary grouping of data from different files into the same
+      or different plots.
+    * Allows arbitrary math performed on data read from one file.
+
 endef
 
 MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWorca,depend)
+DISTFILES += $(call admfiles,CSWorca,depend prototype)
+DISTFILES += $(call admfiles,CSWorca-collector,depend prototype)
+DISTFILES += $(call admfiles,CSWorca-web,depend prototype)
 
 CONFIGURE_ARGS = $(DIRPATHS) \
 	--with-html-dir=$(prefix)/apache2/share/htdocs/orca \
