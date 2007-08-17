@@ -1,7 +1,6 @@
-openssh (4.6,REV=2007.08.13_rev=p1) unstable
+openssh (4.6,REV=2007.08.17_rev=p1) unstable
 
-  * Added GSSAPI key exchange patch 
+  * Added GSSAPI key exchange patch.
+  * Added spurious error log patch (see openssh bug 1306).
 
- -- Yann Rouillard <yann@pleiades.fr.eu.org>  Mon, 13 Aug 2007 19:59:07 +0200
-
-
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 17 Aug 2007 21:15:51 +0200
