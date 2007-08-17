@@ -34,6 +34,9 @@ DISTFILES += openssh
 PATCHDIRLEVEL = 0
 # The GSSAPI key exchange patch
 PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
+# Fix mantis bug 2564 without waiting for 4.7 
+# stolen from https://bugzilla.mindrot.org/show_bug.cgi?id=1306
+PATCHFILES += spurious_log_fix.patch
 
 SPKG_CLASSES = none conf
 

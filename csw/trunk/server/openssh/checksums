@@ -13,3 +13,4 @@ c4aef2f34e6c249a06e2ef9603047652  download/cswopenssh.init
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
 fd50a65230ec1ead7949e8500844b0bf  download/openssh
 9607f2faa8a50078d74f1169b5040599  download/openssh-4.6p1-gsskex-20070312.patch
+cce5300e339b33d44a54f93fcda169d8  download/spurious_log_fix.patch
