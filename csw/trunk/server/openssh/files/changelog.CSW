@@ -2,5 +2,7 @@ openssh (4.6,REV=2007.08.17_rev=p1) unstable
 
   * Added GSSAPI key exchange patch.
   * Added spurious error log patch (see openssh bug 1306).
+  * Enabled Solaris contract support for Solaris 10 to avoid
+  ssh disconnections when ssh daemon is restarted.
 
  -- Yann Rouillard <yann@blastwave.org>  Fri, 17 Aug 2007 21:15:51 +0200

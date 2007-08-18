@@ -53,18 +53,10 @@
 			<exec_method
 				name='stop'
 				type='method'
-				exec='/opt/csw/lib/svc/method/svc-cswopenssh stop'
-				timeout_seconds='60'>
-				<method_context/>
-			</exec_method>
-
-			<!-- <exec_method
-				name='stop'
-				type='method'
 				exec=':kill'
 				timeout_seconds='60'>
 				<method_context/>
-			</exec_method> -->
+			</exec_method>
 
 			<property_group
 				name='startd'
