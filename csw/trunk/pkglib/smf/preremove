@@ -65,7 +65,7 @@ if [ -f "$PKG_INSTALL_ROOT/usr/sbin/svccfg" -a -f "$PKG_INSTALL_ROOT/usr/sbin/sv
         for FMRI in `get_fmri_list "$FILE"`; do
             read_smf_service_state "$FMRI"
             save_service_state "$FMRI"
-            /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI"
+            /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm -s disable "$FMRI"
         done
     done
 
