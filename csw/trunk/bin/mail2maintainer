@@ -41,6 +41,8 @@ function maintainer2mail
 	echo "$_MAINTAINER@blastwave.org"
 }
 
+PATH=$PATH:/opt/csw/bin:/usr/sfw/bin
+
 if [[ -z "$1" ]]; then
 	cat <<EOF
 Usage: mail2maintainer [mail options] package_name
