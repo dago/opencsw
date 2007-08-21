@@ -20,6 +20,8 @@ endif
 
 GARCOMPILER = GNU
 
+CONFIGURE_SCRIPTS = custom
+
 #Excluding imagemagick and gnomevfs to cut down on dependancies
 CONFIGURE_ARGS  = $(DIRPATHS) docdir=/opt/csw/share/doc/xine
 CONFIGURE_ARGS += --x-includes=/usr/X11/include --x-libraries=/usr/X11/lib
@@ -33,3 +35,7 @@ LD_OPTIONS :=
 pre-package:
 	(cp files/CSW$(GARNAME).$(GAROSREL).depend $(WORKSRC)/../CSW$(GARNAME).depend)
 
+configure-custom:
+	@echo "Custom installation here"
+	cd $(WORKSRC); ./autogen.sh $(CONFIGURE_ARGS)
+	@$(MAKECOOKIE)
