@@ -9,7 +9,7 @@ endef
 SF_PROJ = easytag
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWeasytag)
+DISTFILES += $(call admfiles,CSWeasytag,depend)
 
 # Compile with GCC
 GARCOMPILER = GNU
