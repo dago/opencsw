@@ -1,3 +1,9 @@
+rlwrap (0.28,REV=2007.08.21) unstable
+
+  * Replaced "? ? ?" with "0755 root bin" in the prototype
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 21 Aug 2007 22:49:36 +0200
+ 
 rlwrap (0.28,REV=2007.03.11) unstable
 
   * First version.
