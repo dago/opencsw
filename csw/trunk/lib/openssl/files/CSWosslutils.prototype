@@ -1,9 +1,9 @@
 f none /opt/csw/bin/c_rehash 0755 root bin
 f none /opt/csw/bin/openssl 0755 root bin
-d none /opt/csw/share/doc/openssl_utils
+d none /opt/csw/share/doc/openssl_utils 0755 root bin
 f none /opt/csw/share/doc/openssl_utils/changelog.CSW=changelog.CSW 644 root bin
-d none /opt/csw/share/man
-d none /opt/csw/share/man/man1
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/CA.pl.1 0644 root bin
 f none /opt/csw/share/man/man1/asn1parse.1 0644 root bin
 f none /opt/csw/share/man/man1/ca.1 0644 root bin
@@ -48,13 +48,13 @@ f none /opt/csw/share/man/man1/spkac.1 0644 root bin
 f none /opt/csw/share/man/man1/verify.1 0644 root bin
 f none /opt/csw/share/man/man1/version.1 0644 root bin
 f none /opt/csw/share/man/man1/x509.1 0644 root bin
-d none /opt/csw/share/man/man5
+d none /opt/csw/share/man/man5 0755 root bin
 f none /opt/csw/share/man/man5/config.5 0644 root bin
 f none /opt/csw/share/man/man5/x509v3_config.5 0644 root bin
-d none /opt/csw/share/man/man7
+d none /opt/csw/share/man/man7 0755 root bin
 s none /opt/csw/share/man/man7/Modes_of_DES.7=des_modes.7
 f none /opt/csw/share/man/man7/des_modes.7 0644 root bin
-d none /opt/csw/ssl/misc
+d none /opt/csw/ssl/misc 0755 root bin
 f none /opt/csw/ssl/misc/CA.pl 0755 root bin
 f none /opt/csw/ssl/misc/CA.sh 0755 root bin
 f none /opt/csw/ssl/misc/c_hash 0755 root bin
@@ -62,5 +62,5 @@ f none /opt/csw/ssl/misc/c_info 0755 root bin
 f none /opt/csw/ssl/misc/c_issuer 0755 root bin
 f none /opt/csw/ssl/misc/c_name 0755 root bin
 s none /opt/csw/ssl/openssl.cnf=/opt/csw/etc/ssl/openssl.cnf 0644 root bin
-d none /opt/csw/etc/ssl
+d none /opt/csw/etc/ssl 0755 root bin
 e conf /opt/csw/etc/ssl/openssl.cnf 0644 root bin

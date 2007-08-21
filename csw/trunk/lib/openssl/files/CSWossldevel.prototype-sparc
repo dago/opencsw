@@ -1,4 +1,4 @@
-d none /opt/csw/include/openssl
+d none /opt/csw/include/openssl 0755 root bin
 f none /opt/csw/include/openssl/aes.h 0644 root bin
 f none /opt/csw/include/openssl/asn1.h 0644 root bin
 f none /opt/csw/include/openssl/asn1_mac.h 0644 root bin
@@ -70,20 +70,20 @@ f none /opt/csw/include/openssl/x509_vfy.h 0644 root bin
 f none /opt/csw/include/openssl/x509v3.h 0644 root bin
 f none /opt/csw/lib/libssl.a 0644 root bin
 f none /opt/csw/lib/libcrypto.a 0644 root bin 
-d none /opt/csw/lib/sparcv8plus+vis
+d none /opt/csw/lib/sparcv8plus+vis 0755 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libcrypto.a 0644 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libssl.a 0644 root bin
-d none /opt/csw/lib/sparcv9
+d none /opt/csw/lib/sparcv9 0755 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.a 0644 root bin
 f none /opt/csw/lib/sparcv9/libssl.a 0644 root bin
-d none /opt/csw/lib/pkgconfig
+d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/libcrypto.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/libssl.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/openssl.pc 0644 root bin
-d none /opt/csw/share/doc/openssl_devel
+d none /opt/csw/share/doc/openssl_devel 0755 root bin
 f none /opt/csw/share/doc/openssl_devel/changelog.CSW=changelog.CSW 644 root bin
-d none /opt/csw/share/man
-d none /opt/csw/share/man/man3
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
 s none /opt/csw/share/man/man3/ASN1_OBJECT_free.3=ASN1_OBJECT_new.3
 f none /opt/csw/share/man/man3/ASN1_OBJECT_new.3 0644 root bin
 s none /opt/csw/share/man/man3/ASN1_STRING_cmp.3=ASN1_STRING_length.3

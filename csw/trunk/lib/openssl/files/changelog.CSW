@@ -1,3 +1,9 @@
+openssl (0.9.8,REV=2007.08.21_rev=e) unstable
+
+ * Replaced "? ? ?" with "0755 root bin" in the prototype.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 17 Jul 2007 23:26:37 +0200
+
 openssl (0.9.8,REV=2007.07.22_rev=e) unstable
 
  * Added amd64 libraries symlinks (libssl.so -> libssl.so.0.9.8, ...).
