@@ -1,3 +1,7 @@
+cadaver (0.22.5,REV=2007.08.21) unstable
+
+  * Replaced "? ? ?" with "0755 root bin" in the prototype. 
+
 cadaver (0.22.5,REV=2007.07.28) unstable
 
   * Depends on openssl_rt rather than openssl.
