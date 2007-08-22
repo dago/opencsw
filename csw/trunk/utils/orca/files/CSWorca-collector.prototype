@@ -1,7 +1,4 @@
 d none /opt/csw/bin 0755 root bin
-f none /opt/csw/bin/orca 0755 root bin
-f none /opt/csw/bin/orca-aix-stat 0755 root bin
-f none /opt/csw/bin/orca-hp-stat 0755 root bin
 f none /opt/csw/bin/orca_services_running 0755 root bin
 f none /opt/csw/bin/orcallator_column 0755 root bin
 f none /opt/csw/bin/orcallator_running 0755 root bin
@@ -13,15 +10,13 @@ f none /opt/csw/bin/start_orcallator 0755 root bin
 f none /opt/csw/bin/stop_orca_services 0755 root bin
 f none /opt/csw/bin/stop_orcallator 0755 root bin
 d none /opt/csw/lib 0755 root bin
-d none /opt/csw/lib/SE/3.5 0755 root bin
-f none /opt/csw/lib/SE/3.5/live_rules.se=/opt/csw/lib/SE/3.4/live_rules.se 0644 root bin
-f none /opt/csw/lib/SE/3.5/orca_p_netstat_class.se=/opt/csw/lib/SE/3.4/orca_p_netstat_class.se 0644 root bin
-f none /opt/csw/lib/SE/3.5/orca_p_vmstat_class.se=/opt/csw/lib/SE/3.4/orca_p_vmstat_class.se 0644 root bin
-f none /opt/csw/lib/SE/3.5/orca_process_class.se=/opt/csw/lib/SE/3.5/orca_process_class.se 0644 root bin
-f none /opt/csw/lib/SE/3.5/workinfo_class.se=/opt/csw/lib/SE/3.5/workinfo_class.se 0644 root bin
-f none /opt/csw/lib/orcallator.se 0644 root bin
+d none /opt/csw/lib/orca 0755 root bin
+f none /opt/csw/lib/orca/orcallator.se 0644 root bin
 d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/orca_services 0755 root bin
+d none /var/opt/csw 0755 root bin
+d none /var/opt/csw/orca 0755 root bin
+d none /var/opt/csw/orca/orcallator 0755 root bin
 i copyright=CSWorca-collector.copyright
 i depend=CSWorca-collector.depend
 i pkginfo=CSWorca-collector.pkginfo

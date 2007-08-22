@@ -4,3 +4,4 @@ P CSWpmmathinterpolate  pm_mathinterpolate - Useful routines for interpolating d
 P CSWrrd                rrdtool - Round Robin Database graphing tool
 P CSWsetoolkit          setoolkit - A system performance monitoring tool
 P CSWgawk               gawk - GNU AWK
+P CSWbzip2              bzip2 - a high-quality block-sorting file compressor

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+ORCA_ETCDIR=${CSW_PREFIX}/etc
+
+# Copy templates
+template_list="\
+    orcallator.cfg \
+    winallator.cfg \
+    procallator.cfg \
+    orca_services.cfg"
+
+echo Removing unmodified CSW templates:
+for file in $template_list
+do
+    filepath=${ORCA_ETCDIR}/$file
+    if [ -f "${filepath}" ] && [ -f "${filepath}.CSW" ] && cmp -s "${filepath}" "${filepath}.CSW"; then
+        echo "  removing $filepath"
+        rm -f "${filepath}"
+    else
+        echo "  preserving $filepath"
+    fi
+done
+
+exit 0
