@@ -22,6 +22,8 @@ docdir = /share/doc/$(GARNAME)-$(GARVERSION)
 
 CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 
+SKIPTEST = 1
+
 include ../category.mk
 
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Modules
@@ -32,7 +34,11 @@ FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/man/man1
 pre-configure:
 	@echo $(DIRPATHS)
 	@echo "Docdir: $(docdir)"
-	(cd $(WORKSRC); CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" ./bootstrap	\
+	# Do NOT include the CSW include pathes here
+	(cd $(WORKSRC); /usr/bin/env \
+		CFLAGS="$($(GARCOMPILER)_CC_$(GARFLAVOR))" \
+		CXXFLAGS="$($(GARCOMPILER)_CXX_$(GARFLAVOR))" \
+		./bootstrap \
 		--prefix=$(prefix)	\
 		--datadir=$(datadir)	\
 		--docdir=$(docdir)	\
