@@ -1,0 +1,61 @@
+#!/sbin/sh
+###############################################################################
+#
+#   SMF start script for: monlog system monitoring daemon
+#
+###############################################################################
+
+. /lib/svc/share/smf_include.sh
+
+#------------------------------------------------------------------------------
+# initalize variables, existence of files is checked in manifest
+#------------------------------------------------------------------------------
+
+SE=/opt/RICHPse/bin/se
+MONLOG=/opt/RICHPse/examples/monlog.se
+
+#------------------------------------------------------------------------------
+# helper function to retrieve service configuration properties
+#------------------------------------------------------------------------------
+
+getprop ()
+{
+    FMRI=svc:/application/se-toolkit/orcallator
+    PROP=orcallator/$2
+    WORK="`svcprop -p $PROP $FMRI 2>/dev/null`"
+
+    if [ $? -ne 0 -a -n "$3" ]
+    then
+        echo "property '$PROP' is not set, assuming default '$3'" >&2
+        WORK="$3"
+    fi
+
+    #--------------------------------------------------------------
+    # svcprop escapes blanks in a returned string with backslashes
+    # (like 'one\ two\ three'), so we do not need to escape the
+    # quotation in the following eval statement. After eval we get
+    # something like 'VNAME=one\ two\ three'.
+    #--------------------------------------------------------------
+
+    eval $1="$WORK"
+}
+
+#------------------------------------------------------------------------------
+# retrieve service configuration properties
+#------------------------------------------------------------------------------
+
+getprop INTERVAL interval 60
+
+#------------------------------------------------------------------------------
+# start monlog
+#------------------------------------------------------------------------------
+
+$SE $MONLOG $INTERVAL &
+
+if [ $? -ne 0 ]
+then
+    echo "error starting '$SE'."
+    exit $SMF_EXIT_ERR_FATAL
+fi
+
+exit $SMF_EXIT_OK
