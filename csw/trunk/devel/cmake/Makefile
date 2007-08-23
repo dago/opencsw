@@ -1,5 +1,5 @@
 GARNAME = cmake
-GARVERSION = 2.4.6
+GARVERSION = 2.4.7
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
@@ -32,7 +32,7 @@ FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/man/man1
 pre-configure:
 	@echo $(DIRPATHS)
 	@echo "Docdir: $(docdir)"
-	(cd $(WORKSRC); ./bootstrap	\
+	(cd $(WORKSRC); CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" ./bootstrap	\
 		--prefix=$(prefix)	\
 		--datadir=$(datadir)	\
 		--docdir=$(docdir)	\
