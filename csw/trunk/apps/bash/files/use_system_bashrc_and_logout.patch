@@ -1,6 +1,6 @@
 diff --speed-large-files --minimal -Nru bash-3.2.orig/config-top.h bash-3.2/config-top.h
---- ./bash-3.2.orig/config-top.h	2005-04-29 16:36:34.000000000 -0400
-+++ ./bash-3.2/config-top.h	2007-07-08 06:15:52.345236000 -0400
+--- config-top.h.orig	2005-04-29 16:36:34.000000000 -0400
++++ config-top.h	2007-07-08 06:15:52.345236000 -0400
 @@ -73,10 +73,10 @@
  #define KSH_COMPATIBLE_SELECT
  

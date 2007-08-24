@@ -1,6 +1,6 @@
 GARNAME = bash
 GARVERSION = 3.2
-PATCHLEVEL = 17
+PATCHLEVEL = 25
 CATEGORIES = apps
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -20,7 +20,7 @@ DISTFILES += $(call admfiles,CSWbash,prototype postinstall postremove depend)
 DISTFILES += changelog.CSW
 
 PATCHFILE_PREFIX = bash$(subst .,,$(GARVERSION))
-PATCHDIRLEVEL = 2
+PATCHDIRLEVEL = 0
 # we generate the list of patches from the PATCHLEVEL
 PATCHFILES = $(shell LEVEL=1; \
 	        PREFIX_0="00"; \
