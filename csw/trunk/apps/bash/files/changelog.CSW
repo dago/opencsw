@@ -1,3 +1,10 @@
+bash (3.2,REV=2007.08.24) unstable
+
+  * Added bash patches bash32-018 to bash-025.
+  * Replaced "? ? ?" with "0755 root bin" in the prototype. 
+
+ -- Yann Rouillard  <yann@blastwave.org>  Fri, 24 Aug 2007 01:30:56 +0200
+
 bash (3.2,REV=2007.07.17) unreleased
 
   * Added system-wide rc file support (file /etc/bash.bashrc).

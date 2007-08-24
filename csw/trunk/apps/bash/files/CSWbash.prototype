@@ -11,8 +11,8 @@ f none /opt/csw/share/doc/bash/POSIX 0644 root bin
 f none /opt/csw/share/doc/bash/AUTHORS 0644 root bin
 f none /opt/csw/share/doc/bash/INTRO 0644 root bin
 f none /opt/csw/share/info/bash.info 0644 root bin
-d none /opt/csw/share/locale/en@boldquot
-d none /opt/csw/share/locale/en@boldquot/LC_MESSAGES
+d none /opt/csw/share/locale/en@boldquot 0755 root bin
+d none /opt/csw/share/locale/en@boldquot/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/en@boldquot/LC_MESSAGES/bash.mo 0644 root bin
 d none /opt/csw/share/locale/en@quot 0755 root bin
 d none /opt/csw/share/locale/en@quot/LC_MESSAGES 0755 root bin
