@@ -1,5 +1,5 @@
 GARNAME = lftp
-GARVERSION = 3.5.12
+GARVERSION = 3.5.13
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
@@ -28,7 +28,7 @@ SPKG_CLASSES = none conf
 CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
-CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
+CONFIGURE_ARGS += --with-gnutls --with-openssl=/opt/csw
 
 TEST_SCRIPTS =
 
