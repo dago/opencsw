@@ -1,3 +1,10 @@
+lftp (3.5.13,REV=2007.08.24) unstable
+
+  * New upstream version.
+  * Removed static libraries files.
+
+   -- Yann Rouillard <yann@blastwave.org>  Fri, 24 Aug 2007 01:50:48 +0200
+
 lftp (3.5.12,REV=2007.08.17) unstable
 
   * New upstream version.
