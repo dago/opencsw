@@ -17,6 +17,8 @@ f none /opt/csw/libexec/sftp-server 0755 root bin
 f none /opt/csw/libexec/ssh-keysign 4711 root bin
 f none /opt/csw/sbin/sshd 0755 root bin
 f none /opt/csw/share/Ssh.bin 0644 root bin
+d none /opt/csw/share/doc/openssh 0755 root bin
+f none /opt/csw/share/doc/openssh/changelog.CSW=changelog.CSW 0644 root bin
 f none /opt/csw/share/man/man1/scp.1 0644 root bin
 f none /opt/csw/share/man/man1/sftp.1 0644 root bin
 s none /opt/csw/share/man/man1/slogin.1=./ssh.1
@@ -30,4 +32,6 @@ f none /opt/csw/share/man/man5/sshd_config.5 0644 root bin
 f none /opt/csw/share/man/man8/sftp-server.8 0644 root bin
 f none /opt/csw/share/man/man8/ssh-keysign.8 0644 root bin
 f none /opt/csw/share/man/man8/sshd.8 0644 root bin
+d none /opt/csw/share/openssh 0755 root bin
+f none /opt/csw/share/openssh/openssh_restart_workaround.sh=openssh_restart_workaround.sh 0755 root bin
 d none /var/empty

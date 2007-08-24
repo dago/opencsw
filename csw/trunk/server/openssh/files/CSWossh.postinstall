@@ -3,26 +3,15 @@
 # Dirty hack to avoid openssh not being restarted under Solaris 10
 # because of a bug in the previous package (<= 4.6,REV=2007.07.30_rev=p1)
 #
-# we wait for openssh to quit the 'online*' state and then we clear 
-# service state if it is in maintenance
+# we launch a script which will wait for openssh to quit the 'online*' 
+# state and then will clear its service state if it is in maintenance
 #
-( if [ -f "$BASEDIR/usr/sbin/svccfg" -a -f "$BASEDIR/usr/sbin/svcadm" ]; then
-	STATE="`svcs -H svc:/network/cswopenssh:default 2>/dev/null | awk '{ print $1 }'`"
-	if [ "$STATE" = 'online*' ]; then
-	       #/usr/bin/echo "Previous openssh service not yet properly disabled. Waiting for it...\c"
-		while [ "$STATE" = 'online*' ]; do
-			sleep 1
-			#/usr/bin/echo ".\c"
-			STATE="`svcs -H svc:/network/cswopenssh:default | awk '{ print $1 }'`"
-
-		done
-		#/usr/bin/echo 
-	fi
-	if [ "$STATE" = "maintenance" ]; then
-		# we clear the service state so it can be properly enabled on postinstall
-		svcadm clear svc:/network/cswopenssh:default 2>/dev/null
-	fi
-fi ) &
-
+# we must use ctrun to run this script so it is started under a new
+# contract id and hence is not killed when the ssh service is disabled
+# even if pkg-get/pkgadd was started from an ssh connection
+#
+if [ -f "$BASEDIR/usr/sbin/svccfg" -a -f "$BASEDIR/usr/sbin/svcadm" ]; then
+	/bin/ctrun /opt/csw/share/openssh/openssh_restart_workaround.sh &
+fi
 
 

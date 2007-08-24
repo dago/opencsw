@@ -40,26 +40,5 @@ done
 # previous openssh package (< 4.6p1) doesn't stop openssh so we do it ourself
 pkill -15 -P 1 -f "^/opt/csw/sbin/sshd$"
 
-
-# Dirty hack to avoid openssh not being restarted under Solaris 10
-# because of a bug in the previous package (<= 4.6,REV=2007.07.30_rev=p1)
-if [ -f "$BASEDIR/usr/sbin/svccfg" -a -f "$BASEDIR/usr/sbin/svcadm" ]; then
-	STATE="`svcs -H svc:/network/cswopenssh:default 2>/dev/null | awk '{ print $1 }'`"
-	if [ "$STATE" = 'online*' ]; then
-	       /usr/bin/echo "Previous openssh service not yet properly disabled. Waiting for it...\c"
-		while [ "$STATE" = 'online*' ]; do
-			sleep 1
-			/usr/bin/echo ".\c"
-			STATE="`svcs -H svc:/network/cswopenssh:default | awk '{ print $1 }'`"
-
-		done
-		/usr/bin/echo 
-	fi
-	if [ "$STATE" = "maintenance" ]; then
-		# we clear the service state so it can be properly enabled on postinstall
-		svcadm clear svc:/network/cswopenssh:default 2>/dev/null
-	fi
-fi
-
 true
 

@@ -31,6 +31,10 @@ DISTFILES += cswopenssh.init svc-cswopenssh cswopenssh.xml
 DISTFILES += i.conf r.conf
 DISTFILES += openssh
 
+# Script created to workaround a upgrade bug between 
+# package = 4.6,REV=2007.07.30_rev=p1 and later package
+DISTFILES += openssh_restart_workaround.sh
+
 PATCHDIRLEVEL = 0
 # The GSSAPI key exchange patch
 PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
