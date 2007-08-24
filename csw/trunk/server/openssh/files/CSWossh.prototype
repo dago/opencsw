@@ -12,7 +12,7 @@ f none /opt/csw/bin/ssh-keyscan 0755 root bin
 e conf /opt/csw/etc/ssh/moduli 0644 root bin
 e conf /opt/csw/etc/ssh/ssh_config 0644 root bin
 f none /opt/csw/etc/ssh/sshd_config.CSW=sshd_config 0744 root bin
-d none /opt/csw/libexec
+d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/sftp-server 0755 root bin
 f none /opt/csw/libexec/ssh-keysign 4711 root bin
 f none /opt/csw/sbin/sshd 0755 root bin
