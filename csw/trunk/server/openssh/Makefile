@@ -24,7 +24,7 @@ DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall prototype) 
+DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall postinstall prototype) 
 DISTFILES += changelog.CSW
 DISTFILES += sshd_config
 DISTFILES += cswopenssh.init svc-cswopenssh cswopenssh.xml
