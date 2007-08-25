@@ -1,4 +1,4 @@
-%var            bitname qt_docs
-%var            pkgname CSWqtdocs
+%var            bitname qt_demos
+%var            pkgname CSWqt4-demos
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      exec cat %{WORKSRC}/OPENSOURCE-NOTICE.TXT %{WORKSRC}/LICENSE.GPL %{WORKSRC}/GPL_EXCEPTION.TXT %{WORKSRC}/GPL_EXCEPTION_ADDENDUM.TXT
