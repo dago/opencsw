@@ -1,0 +1,6 @@
+%var            bitname pm_cryptopenpgp
+%var            pkgname CSWpmcryptopenpgp
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Except where otherwise noted, Crypt::OpenPGP is Copyright 2001 Benjamin
+Trott, cpan@stupidfool.org. All rights reserved.

@@ -1,0 +1,205 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.035
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.035
+Problem:    Insert mode completion works when typed but not when replayed from
+	    a register. (Hari Krishna Dara)
+	    Also: Mappings for Insert mode completion don't always work.
+Solution:   When finding a non-completion key in the input don't interrupt
+	    completion when it wasn't typed.
+	    Do use mappings when checking for typeahead while still finding
+	    completions.  Avoids that completion is interrupted too soon.
+	    Use "compl_pending" in a different way.
+Files:	    src/edit.c
+
+
+*** ../vim-7.0.034/src/edit.c	Fri Jun 23 17:59:26 2006
+--- src/edit.c	Fri Jun 23 21:32:42 2006
+***************
+*** 4166,4173 ****
+      {
+  	if (compl_shows_dir == FORWARD && compl_shown_match->cp_next != NULL)
+  	{
+- 	    if (compl_pending != 0)
+- 		--compl_pending;
+  	    compl_shown_match = compl_shown_match->cp_next;
+  	    found_end = (compl_first_match != NULL
+  			   && (compl_shown_match->cp_next == compl_first_match
+--- 4166,4171 ----
+***************
+*** 4176,4189 ****
+  	else if (compl_shows_dir == BACKWARD
+  					&& compl_shown_match->cp_prev != NULL)
+  	{
+- 	    if (compl_pending != 0)
+- 		++compl_pending;
+  	    found_end = (compl_shown_match == compl_first_match);
+  	    compl_shown_match = compl_shown_match->cp_prev;
+  	    found_end |= (compl_shown_match == compl_first_match);
+  	}
+  	else
+  	{
+  	    if (advance)
+  	    {
+  		if (compl_shows_dir == BACKWARD)
+--- 4174,4197 ----
+  	else if (compl_shows_dir == BACKWARD
+  					&& compl_shown_match->cp_prev != NULL)
+  	{
+  	    found_end = (compl_shown_match == compl_first_match);
+  	    compl_shown_match = compl_shown_match->cp_prev;
+  	    found_end |= (compl_shown_match == compl_first_match);
+  	}
+  	else
+  	{
++ 	    if (!allow_get_expansion)
++ 	    {
++ 		if (advance)
++ 		{
++ 		    if (compl_shows_dir == BACKWARD)
++ 			compl_pending -= todo + 1;
++ 		    else
++ 			compl_pending += todo + 1;
++ 		}
++ 		return -1;
++ 	    }
++ 
+  	    if (advance)
+  	    {
+  		if (compl_shows_dir == BACKWARD)
+***************
+*** 4191,4204 ****
+  		else
+  		    ++compl_pending;
+  	    }
+- 	    if (!allow_get_expansion)
+- 		return -1;
+  
+  	    /* Find matches. */
+  	    num_matches = ins_compl_get_exp(&compl_startpos);
+! 	    if (compl_pending != 0 && compl_direction == compl_shows_dir
+  								   && advance)
+! 		compl_shown_match = compl_curr_match;
+  	    found_end = FALSE;
+  	}
+  	if ((compl_shown_match->cp_flags & ORIGINAL_TEXT) == 0
+--- 4199,4225 ----
+  		else
+  		    ++compl_pending;
+  	    }
+  
+  	    /* Find matches. */
+  	    num_matches = ins_compl_get_exp(&compl_startpos);
+! 
+! 	    /* handle any pending completions */
+! 	    while (compl_pending != 0 && compl_direction == compl_shows_dir
+  								   && advance)
+! 	    {
+! 		if (compl_pending > 0 && compl_shown_match->cp_next != NULL)
+! 		{
+! 		    compl_shown_match = compl_shown_match->cp_next;
+! 		    --compl_pending;
+! 		}
+! 		if (compl_pending < 0 && compl_shown_match->cp_prev != NULL)
+! 		{
+! 		    compl_shown_match = compl_shown_match->cp_prev;
+! 		    ++compl_pending;
+! 		}
+! 		else
+! 		    break;
+! 	    }
+  	    found_end = FALSE;
+  	}
+  	if ((compl_shown_match->cp_flags & ORIGINAL_TEXT) == 0
+***************
+*** 4307,4315 ****
+  	return;
+      count = 0;
+  
+!     ++no_mapping;
+      c = vpeekc_any();
+-     --no_mapping;
+      if (c != NUL)
+      {
+  	if (vim_is_ctrl_x_key(c) && c != Ctrl_X && c != Ctrl_R)
+--- 4328,4336 ----
+  	return;
+      count = 0;
+  
+!     /* Check for a typed key.  Do use mappings, otherwise vim_is_ctrl_x_key()
+!      * can't do its work correctly. */
+      c = vpeekc_any();
+      if (c != NUL)
+      {
+  	if (vim_is_ctrl_x_key(c) && c != Ctrl_X && c != Ctrl_R)
+***************
+*** 4319,4330 ****
+  	    (void)ins_compl_next(FALSE, ins_compl_key2count(c),
+  						    c != K_UP && c != K_DOWN);
+  	}
+! 	else if (c != Ctrl_R)
+! 	    compl_interrupted = TRUE;
+      }
+      if (compl_pending != 0 && !got_int)
+! 	(void)ins_compl_next(FALSE, compl_pending > 0
+! 				      ? compl_pending : -compl_pending, TRUE);
+  }
+  
+  /*
+--- 4340,4366 ----
+  	    (void)ins_compl_next(FALSE, ins_compl_key2count(c),
+  						    c != K_UP && c != K_DOWN);
+  	}
+! 	else
+! 	{
+! 	    /* Need to get the character to have KeyTyped set.  We'll put it
+! 	     * back with vungetc() below. */
+! 	    c = safe_vgetc();
+! 
+! 	    /* Don't interrupt completion when the character wasn't typed,
+! 	     * e.g., when doing @q to replay keys. */
+! 	    if (c != Ctrl_R && KeyTyped)
+! 		compl_interrupted = TRUE;
+! 
+! 	    vungetc(c);
+! 	}
+      }
+      if (compl_pending != 0 && !got_int)
+!     {
+! 	int todo = compl_pending > 0 ? compl_pending : -compl_pending;
+! 
+! 	compl_pending = 0;
+! 	(void)ins_compl_next(FALSE, todo, TRUE);
+!     }
+  }
+  
+  /*
+*** ../vim-7.0.034/src/version.c	Fri Jun 23 17:59:26 2006
+--- src/version.c	Fri Jun 23 21:35:39 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     35,
+  /**/
+
+-- 
+So when I saw the post to comp.editors, I rushed over to the FTP site to
+grab it.  So I yank apart the tarball, light x candles, where x= the
+vim version multiplied by the md5sum of the source divided by the MAC of
+my NIC (8A3FA78155A8A1D346C3C4A), put on black robes, dim the lights,
+wave a dead chicken over the hard drive, and summon the power of GNU GCC
+with the magic words "make config ; make!".
+		[Jason Spence, compiling Vim 5.0]
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

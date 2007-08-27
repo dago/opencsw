@@ -1,0 +1,89 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.104
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.104
+Problem:    The CursorHoldI event only triggers once in Insert mode.  It also
+	    triggers after CTRL-V and other two-key commands.
+Solution:   Set "did_cursorhold" before getting a second key.  Reset
+	    "did_cursorhold" after handling a command.
+Files:	    src/edit.c, src/fileio.c
+
+
+*** ../vim-7.0.103/src/edit.c	Tue Aug 29 18:36:55 2006
+--- src/edit.c	Tue Sep 12 21:12:10 2006
+***************
+*** 707,712 ****
+--- 707,717 ----
+  	lastc = c;			/* remember previous char for CTRL-D */
+  	c = safe_vgetc();
+  
++ #ifdef FEAT_AUTOCMD
++ 	/* Don't want K_CURSORHOLD for the second key, e.g., after CTRL-V. */
++ 	did_cursorhold = TRUE;
++ #endif
++ 
+  #ifdef FEAT_RIGHTLEFT
+  	if (p_hkmap && KeyTyped)
+  	    c = hkmap(c);		/* Hebrew mode mapping */
+***************
+*** 1388,1393 ****
+--- 1393,1404 ----
+  #endif
+  	    break;
+  	}   /* end of switch (c) */
++ 
++ #ifdef FEAT_AUTOCMD
++ 	/* If typed something may trigger CursorHoldI again. */
++ 	if (c != K_CURSORHOLD)
++ 	    did_cursorhold = FALSE;
++ #endif
+  
+  	/* If the cursor was moved we didn't just insert a space */
+  	if (arrow_used)
+*** ../vim-7.0.103/src/fileio.c	Sat Sep  9 14:51:43 2006
+--- src/fileio.c	Tue Sep 12 20:58:55 2006
+***************
+*** 8289,8295 ****
+  {
+      int		state;
+  
+!     if (!did_cursorhold && has_cursorhold() && !Recording)
+      {
+  	state = get_real_state();
+  	if (state == NORMAL_BUSY || (state & INSERT) != 0)
+--- 8289,8299 ----
+  {
+      int		state;
+  
+!     if (!did_cursorhold && has_cursorhold() && !Recording
+! #ifdef FEAT_INS_EXPAND
+! 	    && !ins_compl_active()
+! #endif
+! 	    )
+      {
+  	state = get_real_state();
+  	if (state == NORMAL_BUSY || (state & INSERT) != 0)
+*** ../vim-7.0.103/src/version.c	Thu Sep 14 10:48:00 2006
+--- src/version.c	Thu Sep 14 11:05:33 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     104,
+  /**/
+
+-- 
+A hamburger walks into a bar, and the bartender says: "I'm sorry,
+but we don't serve food here."
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

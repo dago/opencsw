@@ -1,0 +1,10 @@
+%var            bitname pm_cryptosslbignum
+%var            pkgname CSWpmcryptosslbignum
+%var            desc Crypt::OpenSSL::Bignum - OpenSSL's multiprecision integer arithmetic
+#%var            arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+Copyright (c) 2003 Ian Robertson.  Crypt::OpenSSL::RSA is free
+software; you may redistribute it and/or modify it under the same
+terms as Perl itself.

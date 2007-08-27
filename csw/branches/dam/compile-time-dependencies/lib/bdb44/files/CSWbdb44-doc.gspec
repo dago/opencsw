@@ -1,0 +1,6 @@
+%var            bitname berkeleydb44_doc
+%var            pkgname CSWbdb44-doc
+%var            arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc BerkeleyDB 4.4 documentation
+%copyright      url file://%{WORKSRC}/../LICENSE

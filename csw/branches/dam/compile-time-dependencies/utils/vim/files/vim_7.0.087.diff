@@ -1,0 +1,262 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.087
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.087
+Problem:    After ":file fname" and ":saveas fname" the 'autochdir' option
+	    does not take effect. (Yakov Lerner)
+	    Commands for handling 'autochdir' are repeated many times.
+Solution:   Add the DO_AUTOCHDIR macro and do_autochdir().  Use it for
+	    ":file fname" and ":saveas fname".
+Files:	    src/proto/buffer.pro, src/buffer.c, src/ex_cmds.c, src/macros.h,
+	    src/option.c, src/window.c
+
+
+*** ../vim-7.0.086/src/proto/buffer.pro	Sun Apr 30 20:25:32 2006
+--- src/proto/buffer.pro	Tue Sep  5 16:25:40 2006
+***************
+*** 10,15 ****
+--- 10,16 ----
+  extern int do_buffer __ARGS((int action, int start, int dir, int count, int forceit));
+  extern void set_curbuf __ARGS((buf_T *buf, int action));
+  extern void enter_buffer __ARGS((buf_T *buf));
++ extern void do_autochdir __ARGS((void));
+  extern buf_T *buflist_new __ARGS((char_u *ffname, char_u *sfname, linenr_T lnum, int flags));
+  extern void free_buf_options __ARGS((buf_T *buf, int free_p_ff));
+  extern int buflist_getfile __ARGS((int n, linenr_T lnum, int options, int forceit));
+*** ../vim-7.0.086/src/buffer.c	Tue Aug 29 16:52:01 2006
+--- src/buffer.c	Tue Sep  5 15:18:19 2006
+***************
+*** 434,445 ****
+      if (usingNetbeans)
+  	netbeans_file_closed(buf);
+  #endif
+! #ifdef FEAT_AUTOCHDIR
+!     /* Change directories when the acd option is set on. */
+!     if (p_acd && curbuf->b_ffname != NULL
+! 				     && vim_chdirfile(curbuf->b_ffname) == OK)
+! 	shorten_fnames(TRUE);
+! #endif
+  
+      /*
+       * Remove the buffer from the list.
+--- 434,441 ----
+      if (usingNetbeans)
+  	netbeans_file_closed(buf);
+  #endif
+!     /* Change directories when the 'acd' option is set. */
+!     DO_AUTOCHDIR
+  
+      /*
+       * Remove the buffer from the list.
+***************
+*** 1422,1433 ****
+  	netbeans_file_activated(curbuf);
+  #endif
+  
+! #ifdef FEAT_AUTOCHDIR
+!     /* Change directories when the acd option is set on. */
+!     if (p_acd && curbuf->b_ffname != NULL
+! 				     && vim_chdirfile(curbuf->b_ffname) == OK)
+! 	shorten_fnames(TRUE);
+! #endif
+  
+  #ifdef FEAT_KEYMAP
+      if (curbuf->b_kmap_state & KEYMAP_INIT)
+--- 1418,1425 ----
+  	netbeans_file_activated(curbuf);
+  #endif
+  
+!     /* Change directories when the 'acd' option is set. */
+!     DO_AUTOCHDIR
+  
+  #ifdef FEAT_KEYMAP
+      if (curbuf->b_kmap_state & KEYMAP_INIT)
+***************
+*** 1435,1440 ****
+--- 1427,1444 ----
+  #endif
+      redraw_later(NOT_VALID);
+  }
++ 
++ #if defined(FEAT_AUTOCHDIR) || defined(PROTO)
++ /*
++  * Change to the directory of the current buffer.
++  */
++     void
++ do_autochdir()
++ {
++     if (curbuf->b_ffname != NULL && vim_chdirfile(curbuf->b_ffname) == OK)
++ 	shorten_fnames(TRUE);
++ }
++ #endif
+  
+  /*
+   * functions for dealing with the buffer list
+*** ../vim-7.0.086/src/ex_cmds.c	Tue Aug 29 17:28:56 2006
+--- src/ex_cmds.c	Tue Sep  5 15:24:58 2006
+***************
+*** 2458,2463 ****
+--- 2458,2465 ----
+  #ifdef FEAT_AUTOCMD
+  	apply_autocmds(EVENT_BUFFILEPOST, NULL, NULL, FALSE, curbuf);
+  #endif
++ 	/* Change directories when the 'acd' option is set. */
++ 	DO_AUTOCHDIR
+      }
+      /* print full file name if :cd used */
+      fileinfo(FALSE, FALSE, eap->forceit);
+***************
+*** 2675,2682 ****
+  				 eap, eap->append, eap->forceit, TRUE, FALSE);
+  
+  	/* After ":saveas fname" reset 'readonly'. */
+! 	if (eap->cmdidx == CMD_saveas && retval == OK)
+! 	    curbuf->b_p_ro = FALSE;
+      }
+  
+  theend:
+--- 2677,2689 ----
+  				 eap, eap->append, eap->forceit, TRUE, FALSE);
+  
+  	/* After ":saveas fname" reset 'readonly'. */
+! 	if (eap->cmdidx == CMD_saveas)
+! 	{
+! 	    if (retval == OK)
+! 		curbuf->b_p_ro = FALSE;
+! 	    /* Change directories when the 'acd' option is set. */
+! 	    DO_AUTOCHDIR
+! 	}
+      }
+  
+  theend:
+***************
+*** 3547,3557 ****
+  	foldUpdateAll(curwin);
+  #endif
+  
+! #ifdef FEAT_AUTOCHDIR
+! 	if (p_acd && curbuf->b_ffname != NULL
+! 				     && vim_chdirfile(curbuf->b_ffname) == OK)
+! 	    shorten_fnames(TRUE);
+! #endif
+  	/*
+  	 * Careful: open_buffer() and apply_autocmds() may change the current
+  	 * buffer and window.
+--- 3554,3562 ----
+  	foldUpdateAll(curwin);
+  #endif
+  
+! 	/* Change directories when the 'acd' option is set. */
+! 	DO_AUTOCHDIR
+! 
+  	/*
+  	 * Careful: open_buffer() and apply_autocmds() may change the current
+  	 * buffer and window.
+***************
+*** 3718,3729 ****
+      if (p_im)
+  	need_start_insertmode = TRUE;
+  
+! #ifdef FEAT_AUTOCHDIR
+!     /* Change directories when the acd option is set on. */
+!     if (p_acd && curbuf->b_ffname != NULL
+! 				     && vim_chdirfile(curbuf->b_ffname) == OK)
+! 	shorten_fnames(TRUE);
+! #endif
+  
+  #if defined(FEAT_SUN_WORKSHOP) || defined(FEAT_NETBEANS_INTG)
+      if (gui.in_use && curbuf->b_ffname != NULL)
+--- 3723,3730 ----
+      if (p_im)
+  	need_start_insertmode = TRUE;
+  
+!     /* Change directories when the 'acd' option is set. */
+!     DO_AUTOCHDIR
+  
+  #if defined(FEAT_SUN_WORKSHOP) || defined(FEAT_NETBEANS_INTG)
+      if (gui.in_use && curbuf->b_ffname != NULL)
+*** ../vim-7.0.086/src/macros.h	Wed Mar  1 23:00:25 2006
+--- src/macros.h	Tue Sep  5 15:15:30 2006
+***************
+*** 276,278 ****
+--- 276,284 ----
+  # define MB_CHARLEN(p)		STRLEN(p)
+  # define PTR2CHAR(p)		((int)*(p))
+  #endif
++ 
++ #ifdef FEAT_AUTOCHDIR
++ # define DO_AUTOCHDIR if (p_acd) do_autochdir();
++ #else
++ # define DO_AUTOCHDIR
++ #endif
+*** ../vim-7.0.086/src/option.c	Tue Aug 29 17:28:56 2006
+--- src/option.c	Tue Sep  5 15:20:04 2006
+***************
+*** 7326,7334 ****
+  #ifdef FEAT_AUTOCHDIR
+      else if ((int *)varp == &p_acd)
+      {
+! 	if (p_acd && curbuf->b_ffname != NULL
+! 				     && vim_chdirfile(curbuf->b_ffname) == OK)
+! 	    shorten_fnames(TRUE);
+      }
+  #endif
+  
+--- 7326,7333 ----
+  #ifdef FEAT_AUTOCHDIR
+      else if ((int *)varp == &p_acd)
+      {
+! 	/* Change directories when the 'acd' option is set now. */
+! 	DO_AUTOCHDIR
+      }
+  #endif
+  
+*** ../vim-7.0.086/src/window.c	Tue Aug 29 17:28:56 2006
+--- src/window.c	Tue Sep  5 15:20:35 2006
+***************
+*** 3954,3966 ****
+      setmouse();			/* in case jumped to/from help buffer */
+  #endif
+  
+! #ifdef FEAT_AUTOCHDIR
+!     /* Change directories when the 'acd' option is set on and after
+!      * switching windows. */
+!     if (p_acd && curbuf->b_ffname != NULL
+! 				     && vim_chdirfile(curbuf->b_ffname) == OK)
+! 	shorten_fnames(TRUE);
+! #endif
+  }
+  
+  #endif /* FEAT_WINDOWS */
+--- 3954,3961 ----
+      setmouse();			/* in case jumped to/from help buffer */
+  #endif
+  
+!     /* Change directories when the 'acd' option is set. */
+!     DO_AUTOCHDIR
+  }
+  
+  #endif /* FEAT_WINDOWS */
+*** ../vim-7.0.086/src/version.c	Tue Sep  5 15:36:30 2006
+--- src/version.c	Tue Sep  5 15:52:45 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     87,
+  /**/
+
+-- 
+Overflow on /dev/null, please empty the bit bucket.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

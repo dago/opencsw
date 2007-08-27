@@ -1,0 +1,6 @@
+%var            bitname pm_apachesess
+%var            pkgname CSWpmapachesess
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Apache::Session is Copyright (c) 1998, 1999, 2000, 2001, 2004  Jeffrey William
+Baker <jwbaker@acm.org>.  Distribute under the same terms as Perl itself.

@@ -1,0 +1,22 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
+P CSWgcc3g++rt gcc3g++rt - GNU C++ Compiler Run Time
+P CSWggettext ggettext - GNU gettext
+P CSWglib glib - utility library commonly associated with GNOME programs
+P CSWgtk gtk - the Gimp ToolKit library, libgtk
+P CSWiconv libiconv - GNU iconv library
+P CSWjpeg jpeg - lib and tools for JPEG image format
+P CSWkdebasegcc kdebase_gcc - Base packages for the K Desktop Environment (KDE)
+P CSWkdelibsgcc kdelibs_gcc - Base set of libraries needed by KDE programs (gcc3)
+P CSWlibart libart - High performance 2D graphics library
+P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
+P CSWlibxine libxine - Library for audio and video media playback
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWpcre pcre - Perl-compatible regular expression library
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWqtgcc qt_gcc - TrollTech C++ application framework
+P CSWruby ruby - An object-oriented language for quick and easy programming.
+P CSWtaglibgcc taglib_gcc - library for reading and editing the meta-data of several popular audio formats
+P CSWxmms xmms - X MultiMedia System audio player
+P CSWzlib zlib - Zlib Data Compression Library

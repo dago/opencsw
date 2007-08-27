@@ -1,0 +1,21 @@
+diff --speed-large-files --minimal -Nru x/doc.orig/pnmtopng.html x/doc/pnmtopng.html
+--- doc.orig/pnmtopng.html	2005-09-25 20:19:36.000000000 -0400
++++ doc/pnmtopng.html	2005-11-20 10:02:25.078711000 -0500
+@@ -100,7 +100,7 @@
+ 
+ <pre>
+ <kbd>
+-   pnmtopng -phys 800 800 0 input.pnm >output.png
++   pnmtopng -phys 800 800 0 input.pnm &gt;output.png
+ </kbd>
+ </pre>
+ 
+@@ -108,7 +108,7 @@
+ 
+ <pre>
+ <kbd>
+-   pnmtopng -size &quot;800 800 0&quot; input.pnm >output.png
++   pnmtopng -size &quot;800 800 0&quot; input.pnm &gt;output.png
+ </kbd>
+ </pre>
+ 

@@ -1,0 +1,32 @@
+--- jhead-2.5.orig/makefile	2006-01-08 09:13:16.000000000 -0800
++++ jhead-2.5/makefile	2007-01-21 18:29:55.424938000 -0800
+@@ -4,12 +4,27 @@
+ OBJ=.
+ SRC=.
+ 
++myprefix?=/opt/csw
++
+ all: jhead
+ 
+ objs = $(OBJ)/jhead.o $(OBJ)/jpgfile.o $(OBJ)/exif.o $(OBJ)/gpsinfo.o $(OBJ)/makernote.o 
+ 
+ $(OBJ)/%.o:$(SRC)/%.c
+-	${CC} -O3 -Wall -c $< -o $@
++	${CC} $(CFLAGS) -c $< -o $@
+ 
+ jhead: $(objs) jhead.h
+-	${CC} -o jhead $(objs) -lm
++	${CC} $(LDFLAGS) -o jhead $(objs) -lm
++
++install: all
++	echo DESTDIR=$(DESTDIR)
++	sed '1,/^Liscence:/d' < readme.txt >COPYING
++	test -x /usr/ccs/bin/strip && /usr/ccs/bin/strip jhead
++	test -x /usr/ccs/bin/mcs && /usr/ccs/bin/mcs -d jhead
++	ginstall -D jhead $(DESTDIR)$(myprefix)/bin/jhead
++	ginstall -D jhead.1.gz $(DESTDIR)$(myprefix)/share/man/man1/jhead.1.gz
++	ginstall -D changes.txt $(DESTDIR)$(myprefix)/share/doc/jhead/changes.txt
++	gzip -d $(DESTDIR)$(myprefix)/share/man/man1/jhead.1.gz
++
++clean:
++	rm -f *.o jhead

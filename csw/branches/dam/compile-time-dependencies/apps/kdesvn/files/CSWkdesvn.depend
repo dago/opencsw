@@ -1,0 +1,607 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWORBit orbit - ORBit CORBA tools and libraries, plus libIDL
+
+P CSWXvfb xvfb - X11 Virtual Frame Buffer
+P CSWa2ps a2ps - Any to PostScript filter
+P CSWaalib aalib - Ascii art graphics library
+P CSWangband angband - classic textmapped dungeon adventure
+P CSWant ant - Ant, a Java-based build tool
+P CSWap2prefork ap2_prefork - Apache 2.2 prefork MPM
+P CSWapache apache - apache webserver with mod_ssl included
+P CSWapache2-devel apache2_devel - Apache 2.2 development support
+P CSWapache2c apache2c - Apache 2.2 web server (core)
+P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
+P CSWartsgcc arts_gcc - Analog RealTime Synthesizer for KDE (gcc3)
+P CSWaspell aspell - The GNU spell checker (core package only, no dictionary)
+P CSWatspi atspi - An Assistive Technology Service provider Interface
+P CSWaudiofile audiofile - Silicon Graphics Audio File Library
+P CSWautoconf autoconf - GNU auto-configuration tool
+P CSWautogen autogen - The Automated Text and Program Generation Tool
+P CSWautomake automake - Makefile.in generator
+P CSWbash bash - A sh-compatible command language interpreter
+P CSWbdb3 berkeleydb3 - file based pseudo-database library
+P CSWbdb4 berkeleydb4 - Embedded database libraries and utilities
+P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
+P CSWbdb43-devel berkeleydb43_devel - BerkeleyDB 4.3 development support
+P CSWbinutils binutils - GNU 'binary utilities': gas, gld, gprof, and others
+P CSWbison bison - GNU Project parser generator (yacc replacement)
+P CSWblackbox blackbox - A window manager for X11 written in C++
+P CSWbonobo2 libbonobo2 - GNOME component and compound document system
+P CSWbzip2 bzip2 - a high-quality block-sorting file compressor
+P CSWccache ccache - A fast compiler cache.
+P CSWcgilib cgilib - The CGI Library
+P CSWchmlib chmlib - Library designed for accessing MS ITSS files (chm)
+P CSWcontrolcenter control_center - The Control Center for GNOME
+P CSWcourierauth courier_auth - Generic authentication API for Courier mail services
+P CSWcourierimap courier_imap - Server that provides IMAP access to Maildirs
+P CSWcsnobol4 csnobol4 - Macro Implementation of SNOBOL4 in C
+P CSWcswutils cswutils - Utilities for CSW maintainers at blastwave.org
+P CSWcupsclient cupsclient - Client portion of the Common UNIX Printing System
+P CSWcupsd cupsd - Server portion of the Common UNIX Printing System
+P CSWcupsdev cupsdev - Development files for the Common UNIX Printing System
+P CSWcupsdoc cupsdoc - Documentation for the Common UNIX Printing System
+P CSWcurl curl - Library and tool for common Internet protocols
+P CSWcurlrt curlrt - Library for common Internet protocols Runtime
+P CSWcvs cvs - Concurrent Versions System
+P CSWdasher dasher - Information efficient text-entry interface
+P CSWdbh dbh - Disk based hash tables, dbh
+P CSWdejagnu dejagnu - The GNU Testing Framework
+P CSWdialog dialog - a script-interpreter which provides a set of curses widgets.
+P CSWdiffutils diffutils - GNU diff and related utils
+P CSWdistcc distcc - distributed compilation across different hosts
+P CSWdoxygen doxygen - A documentation system for programming languages
+P CSWdtopfutils desktopfileutils - utilities for working with desktop entries and .menu files
+P CSWeel eel - The Eazel Extensions Library for GNOME
+P CSWemacs emacs - the Emacs editor
+P CSWeog eog - Eye Of Gnome image viewer
+P CSWepiphany epiphany - The web browser for the GNOME Desktop
+P CSWesound esound - EsounD, The Enlightened Sound Daemon
+P CSWespgs espgs - ESP Ghostscript, a PostScript and PDF interpreter for use with CUPS
+P CSWeventlog eventlog - replacement of the simple syslog API
+P CSWevolution-ds evolution_ds - Evolution database backend server
+P CSWexpat expat -  XML Parser Toolkit
+P CSWexpect expect - Tool for automating interactive applications
+P CSWfaac libfaac - AAC encoder library and tool
+P CSWfakeroot fakeroot - fake rootpermission environment for pkg building
+P CSWfam fam - File Alteration Monitor, daemon and interface library
+P CSWfconfig fontconfig - A library for configuring and customizing font access.
+P CSWfftw2 fftw2 - C library for computing the discrete Fourier transform
+P CSWfiglet figlet - Figlet 2.2.1
+P CSWfileroller fileroller - The GNOME archive manager
+P CSWfindutils findutils - A set of utilities for searching a filesystem
+P CSWfirefox firefox - mozilla.org browser
+P CSWflac libflac - FLAC audio codec support library
+P CSWflex flex - older version of the 'flex' parser generator
+P CSWflex-new flex_new - A tool for generating text-scanning programs.
+P CSWfltk fltk - Fast light Tool Kit
+P CSWfnlib fnlib - A color font rendering library for X11.
+P CSWfortune fortune - provides fortune cookies on demand
+P CSWfox fox - Fox Toolkit
+P CSWfoxrt foxrt - Fox Toolkit runtime
+P CSWfreeglut freeglut - An alternative to the OpenGL Utility Toolkit (GLUT) library
+P CSWfreetds freetds - Implementation of the TDS protocol used by MS SQL Server and Sybase
+P CSWfreetype freetype - A free, high quality, and portable font engine.
+P CSWfribidi fribidi - The Unicode 4.1.0 Bidirectional Algorithm API
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWgail gail - Accessibility support for GTK+ and libgnomecanvas
+P CSWgaim gaim - GNU instant messenger client
+P CSWgal gal - GNOME Application Libs
+P CSWgal2 gal2 - GNOME Application Libs
+P CSWgawk gawk - GNU AWK
+P CSWgcalctool gcalctool - The GNOME multi-precision Calculator
+P CSWgcc2core gcc2core - GNU C Compiler
+P CSWgcc2corert gcc2corert - GNU C Compiler Run Time
+P CSWgcc2g++ gcc2g++ - GNU C++ Compiler
+P CSWgcc2g++rt gcc2g++rt - GNU C++ Compiler Run Time
+P CSWgcc3ada gcc3ada - GNU Ada Compiler
+P CSWgcc3adart gcc3adart - GNU Ada Compiler Run Time
+P CSWgcc3core gcc3core - GNU C Compiler
+P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
+P CSWgcc3g++ gcc3g++ - GNU C++ Compiler
+P CSWgcc3g++rt gcc3g++rt - GNU C++ Compiler Run Time
+P CSWgcc3g77 gcc3g77 - GNU FORTRAN Compiler
+P CSWgcc3g77rt gcc3g77rt - GNU FORTRAN 77 Compiler Run Time
+P CSWgconf2 gconf2 - GNOME configuration database system
+P CSWgconfeditor gconfeditor - GNOME configuration system editor
+P CSWgcrypt libgcrypt - GNU libcrypt
+P CSWgd gd - libgd, Graphics creation library and utilities
+P CSWgdb gdb - The GNU Debugger
+P CSWgdbm gdbm - GNU dbm
+P CSWgdkpixbuf gdk_pixbuf - GNOME tools for pixmap manupulation
+P CSWgdome2 gdome2 - libgdome is a DOM level2 Implementation
+P CSWgengetopt gengetopt - parses the command line options
+P CSWgeos geos - A C++ port of the Java Topology Suite (JTS), a GIS library
+P CSWgfile fileutils - GNU file utilities
+P CSWggettext ggettext - GNU gettext
+P CSWggettextdoc ggettextdoc - documentation, examples, and locales for GNU gettext
+P CSWggrep ggrep - GNU grep
+P CSWggv ggv - The GNOME Ghostscript viewer
+P CSWgimplibs gimplibs - The GIMP libraries and headers
+P CSWgimpprint gimpprint - High quality print drivers for Postscript and PCL printers
+P CSWglade libglade - glade interface lib for GNOME progs
+P CSWglib glib - utility library commonly associated with GNOME programs
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWgm4 gm4 - GNU m4 Unix macro processor
+P CSWgmake gmake - GNU make
+P CSWgnet libgnet - network library based on glib
+P CSWgnome2userdocs gnome2userdocs - Documents for the GNOME desktop environment
+P CSWgnomeapplets gnome_applets - Various applets for GNOME 2 panel
+P CSWgnomedesktop gnomedesktop - Additional UI API for GNOME
+P CSWgnomedocutils gnomedocutils - collection of documentation utilities for the GNOME
+P CSWgnomedtlogin gnome_dtlogin - GNOME 2 dtlogin integration
+P CSWgnomegames gnome_games - Games for GNOME
+P CSWgnomeicontheme gnome_icon_theme - The GNOME icon theme library
+P CSWgnomekeyring gnomekeyring - keep password and other secrets for users
+P CSWgnomekeyringmgr gnomekeyringmgr - GNOME keyring manager
+P CSWgnomemag gnomemag - GNOME screen magnification services
+P CSWgnomemedia gnomemedia - Multimedia applications for GNOME
+P CSWgnomemenus gnome_menus - Implementation of the FreeDesktop Desktop Menu Spec
+P CSWgnomemime2 gnomemime2 - MIME type database for GNOME
+P CSWgnomenetstatus gnome_netstatus - The GNOME network interface status applet
+P CSWgnomepanel gnome_panel - Launch and/or dock GNOME 2 applications
+P CSWgnomesession gnome_session - The GNOME Session Manager
+P CSWgnomespeech gnomespeech - GNOME text-to-speech API
+P CSWgnomesysmon gnomesysmon - The GNOME2 system monitor program
+P CSWgnometerminal gnome_terminal - GNOME terminal emulator application
+P CSWgnomethemes gnome_themes - Official themes for the GNOME desktop environment
+P CSWgnomevfs2 gnomevfs2 - GNOME Virtual File System
+P CSWgnopernicus gnopernicus - Collection of accessibility apps for GNOME
+P CSWgnulinks gnulinks - Creates native symlinks for GNU tools in /opt/csw/gnu
+P CSWgnupg gnupg - RFC 2440 compliant tool for secure communication and data storage. (gpg binary)
+P CSWgnuplot gnuplot - The Gnuplot Plotting Utility
+P CSWgnutls gnutls - GNU Transport Layer Security lib and tools
+P CSWgok gok - The GNOME On-screen Keyboard
+P CSWgpdf gpdf - The GNOME PDF Viewer
+P CSWgpgerr libgpg_error - GNU gpg related library
+P CSWgpgme gpgme - GPGME - GnuPG Made Easy
+P CSWgraphvis graphviz - Graph Drawing Programs from AT&T Research and Lucent Bell Labs
+P CSWgroff groff - GNU roff/troff/nroff
+P CSWgs ghostscript - GPL Ghostscript, a PostScript and PDF interpreter for previewing, conversion and printing
+P CSWgsed gsed - The GNU non-interactive text Stream-oriented EDitor (sed)
+P CSWgsfonts gsfonts - Fonts and AFMs for use with GhostScript
+P CSWgsmake gnustep_make - The GNUstep Makefile Package
+P CSWgstplugins gstplugins - GStreamer plugins handling various media types
+P CSWgstpluginsgood gstplugins_good - GStreamer Plugins (Good)
+P CSWgstreamer gstreamer - The open-source multimedia framework
+P CSWgtar gtar - GNU tape archiver
+P CSWgtk gtk - the Gimp ToolKit library, libgtk
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWgtkengines gtk_engines - A collection of basic theme engines for GTK+
+P CSWgtkhtml gtkhtml - An HTML rendering/editing library
+P CSWgtkhtml31 gtkhtml31 - An HTML rendering/editing library
+P CSWgtksourceview gtksourceview - syntax highlighting GtkTextView widget
+P CSWgtkspell gtkspell - Spell checking enhancement for the GtkTextView widget
+P CSWgucharmap gucharmap - The Unicode character map and font viewer for GNOME
+P CSWguile guile - GNU extensibility library
+P CSWguilelib12 guilelib12 - GNU extensibility library (shared libraries)
+P CSWgvim gvim - Vi IMproved with GTK+ support
+P CSWgwrap gwrap - A tool for exporting C libraries into Scheme interpreters
+P CSWgxine gxine - A gtk+ frontend for xine
+P CSWhicoloricontheme hicolor_icon_theme - freedesktop.org base icon theme
+P CSWicewm icewm - IceWM is fast and small X11 window manager
+P CSWiconv libiconv - GNU iconv library
+P CSWid3lib id3lib - library for manipulating ID3v1/v1.1 and ID3v2 tags
+P CSWijs ijs - IJS (InkJet Server) raster image transport protocol library
+P CSWimagemagick imagemagick - The ImageMagick Image Manipulation Tool & Libraries
+P CSWimap imap - mail server daemon (UW)
+P CSWimap-devel imap_devel - UW IMAP C-Client (devel)
+P CSWimaprt imaprt - UW IMAP C-Client (runtime)
+P CSWimlib imlib - image library, primarily used by GNOME programs
+P CSWimlib2 imlib2 - image handling library.
+P CSWintltool intltool - A collection of tools for internationalization
+P CSWiozone iozone - IO benchmarking tool
+P CSWisaexec isaexec - sneaky wrapper around Sun isaexec
+P CSWjasper jasper - An image data software toolkit for JPEG-2000 codec standard
+P CSWjbig2dec jbig2dec - decoder implementing JBIG2 bi-level image compression
+P CSWjbigkit jbigkit - JBIG kit, a data compression algorithm for bi-level high-resolution images
+P CSWjdicts jdicts - japanese related dictionaries kanjidic edict radkfile
+P CSWjed jed - editor based on slang
+P CSWjoe joe - Joe's Own Editor
+P CSWjove jove - Jonathan's Own Version of Emacs (editor)
+P CSWjpeg jpeg - lib and tools for JPEG image format
+P CSWjython jython - Python for Java
+P CSWkdeaddonsgcc kdeaddons_gcc -  Additional plugins/scripts for KDE (gcc3)
+P CSWkdebasegcc kdebase_gcc - Base packages for the K Desktop Environment (KDE)
+P CSWkdegamesgcc kdegames_gcc - Games for KDE (gcc3)
+P CSWkdelibsgcc kdelibs_gcc - Base set of libraries needed by KDE programs (gcc3)
+P CSWkdemultimediagcc kdemultimedia_gcc - Multimedia apps for KDE (gcc3)
+P CSWkdepimgcc kdepim_gcc - Personal Information Management apps for KDE (gcc3)
+P CSWkofficeaddons koffice_addons - Additional templates and Thesauri for KOffice v1.3.x
+P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
+P CSWkrb5libdev krb5_lib_dev - MIT Kerberos 5 developer libraries
+P CSWksh ksh - KornShell 93 command and programming language
+P CSWlame lame - LAME is an LGPL MP3 encoder
+P CSWlatex2html latex2html - a converter written in Perl that converts LATEX documents to HTML
+P CSWlcms lcms - The little color management system and tools
+P CSWlftp lftp - sophisticated command-line ftp/http client
+P CSWlib765 lib765 - floppy controller emulation for emulators
+P CSWlibXv libxv - X.Org's Xvideo extension headers and archive libraries
+P CSWliba52 liba52 - a free ATSC A/52 stream decoder
+P CSWlibao libao - Cross-platform audio library
+P CSWlibart libart - High performance 2D graphics library
+P CSWlibast libast - Library of Assorted Spiffy Things
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibbonoboui libbonoboui - UI code for the GNOME 2 Object Activation Framework
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWlibclamav libclamav - Clam AntiVirus libraries and header files
+P CSWlibcroco libcroco - A CSS parsing and manipulation toolkit
+P CSWlibcups libcups - Libraries for the Common UNIX Printing System
+P CSWlibdsk libdsk - library for accessing discs and disc image files
+P CSWlibdvdread libdvdread - provides a simple foundation for reading DVD-Video images
+P CSWlibetpan libetpan - A mail library for low-level mail handling network protocols
+P CSWlibevent libevent - event notification library
+P CSWlibevent-devel libevent_devel - libevent development support
+P CSWlibexif libexif - EXIF Tag Parsing Library
+P CSWlibfpx libfpx - Flashpix OpenSource Toolkit Library
+P CSWlibgailgnome libgail_gnome - GNOME Accessibility Implementation Module
+P CSWlibgc libgc - Conservative garbage collector for C and C++
+P CSWlibglade2 libglade2 - library for loading glade user interface desc files
+P CSWlibgmp libgmp - GNU Multiple Precision Arithmetic Library
+P CSWlibgnome libgnome - The main GNOME library
+P CSWlibgnomecanvas libgnomecanvas - Gnome2 Canvas Lib
+P CSWlibgnomecups libgnomecups - GNOME library for CUPS interaction
+P CSWlibgnomeprint libgnomeprint - The GNOME 2 print library
+P CSWlibgnomeprintui libgnomeprintui - The GNOME 2 print UI library
+P CSWlibgnomeui libgnomeui - The main GNOME 2 UI library
+P CSWlibgphoto2 libgphoto2 - libgphoto2 is a library that can be used by applications to access digital cameras
+P CSWlibgsf libgsf - GNOME Structured File Library
+P CSWlibgtkhtml libgtkhtml - Lightweight HTML rendering engine
+P CSWlibgtop libgtop - GNOME top library
+P CSWlibicu libicu - International Components for Unicode
+P CSWlibid3tag libid3tag - a library for reading and (eventually) writing ID3 tags
+P CSWlibidl libidl - Library for handling CORBA IDL
+P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
+P CSWlibmad libmad - MPEG Audio Decoder
+P CSWlibmcal libmcal - Modular Calendar Access Library
+P CSWlibmcrypt libmcrypt -  GPL replacement for Unix crypt that supports a wide range of algorithms and modes
+P CSWlibmhash libmhash - The mhash library provides an easy way to access strong hashes such as MD5, SHA1 and other algorithms.
+P CSWlibmilter libmilter - Sendmail MTA milter files
+P CSWlibmm libmm - Shared Memory Allocation abstraction library
+P CSWlibmng libmng - Library for Multiple-image Network Graphics format (MNG)
+P CSWlibmpfr libmpfr - GNU Multiple Precision floating-point arithmetic library
+P CSWlibnasl libnasl - Nessus Attack Scripting Language
+P CSWlibnet libnet - the libnet packet construction library
+P CSWlibnids libnids - implementation of an e-component of network intrusion detection
+P CSWlibofx libofx - library designed to allow applications to very easily support OFX command responses
+P CSWlibogg libogg - Ogg bitstream format support library
+P CSWliboil liboil - Library of optimized inner loops
+P CSWlibpcap libpcap - Libpcap is a system-independent interface for user-level packet capture
+P CSWlibpopt libpopt - Command line option parsing library
+P CSWlibpq libpq - libraries needed by postgresql server and clients
+P CSWlibrsvg librsvg - Scalable Vector Graphics library
+P CSWlibsdl libsdl - Simple DirectMedia Layer library
+P CSWlibsoup libsoup - HTTP library implementation
+P CSWlibsoup2 libsoup2 - HTTP client/server library for GNOME
+P CSWlibspectrum libspectrum - library for reading ZX spectrum emulator images
+P CSWlibspf2 libspf2 - Library that implements Sender Policy Framework
+P CSWlibtool libtool - Generic library support script
+P CSWlibwbxml2 libwbxml2 - A WBXML parser and encoder
+P CSWlibwnck libwnck - Library used for writing pagers and tasks lists
+P CSWlibwww libwww - the W3C Protocol Library
+P CSWlibxcomposite libxcomposite - X11 Xcomposite, Xdamage, and Xfixes ext headers and libs
+P CSWlibxft2 libxft2 - FreeType-based font drawing library for X
+P CSWlibxine libxine - Library for audio and video media playback
+P CSWlibxklavier libxklavier - high-level API for X Keyboard Extension
+P CSWlibxml libxml - lib for xml use, commonly associated with GNOME
+P CSWlibxml2 libxml2 - XML Parser Library
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWlibxslt libxslt - XSLT engine for the XML Toolkit
+P CSWlinks links - text-based WWW browser
+P CSWloudmouth loudmouth - The Lightweight Jabber client library
+P CSWlua lua - a powerful light-weight programming language
+P CSWlynx lynx - text browser for the World Wide Web
+P CSWlzo lzo - A data compression library with very fast (de)compression.
+P CSWmaildrop maildrop - Mail delivery agent with filtering abilities
+P CSWmesa mesalibs - The Mesa 3D OpenGL-like library API
+P CSWmetacity metacity - A light-weight window manager for GNOME
+P CSWmgetty mgetty - An intelligent getty with fax and voice modem support
+P CSWmikmod libmikmod - library and player for MOD audio files and other types
+P CSWmodperl mod_perl - Persistent Perl interpreter for Apache 1.3.x
+P CSWmono mono - .Net Runtime and Compiler
+P CSWmozilla mozilla - Web browser and internet suite with Gecko SDK
+P CSWmsmtp msmtp - Command line SMTP client
+P CSWmtx mtx - SCSI Media Changer and Backup Device Control
+P CSWmyodbc myodbc - MySQL ODBC driver
+P CSWmysql4 mysql4 - MySQL 4 database management system - server files
+P CSWmysql4client mysql4client - MySQL 4 database client executables
+P CSWmysql4devel mysql4devel - MySQL 4 development support
+P CSWmysql4rt mysql4rt - run-time libraries for mysql4
+P CSWmysql5 mysql5 - MySQL 5 database management system - server files
+P CSWmysql5client mysql5client - MySQL 5 database client executables
+P CSWmysql5devel mysql5devel - MySQL 5 development support
+P CSWmysql5rt mysql5rt - run-time libraries for mysql5
+P CSWnagios nagios - nagios network monitoring base package (no plugins)
+P CSWnamazu namazu - a Full-Text Search Engine
+P CSWnano nano - Enhanced clone of the Pico text editor
+P CSWnas nas - Network Audio System
+P CSWnautilus nautilus - File manager for the GNOME desktop
+P CSWnautiluscdburner nautiluscdburner - CD burner view for Nautilus
+P CSWncurses ncurses - ncurses library and utilities
+P CSWneon neon - Neon HTTP and WebDAV client library
+P CSWneon-devel neon_devel - Neon HTTP and WebDAV client library
+P CSWnessus nessus - a free, powerful, up-to-date and easy to use security scanner
+P CSWnessuslib nessuslib - libraries used by nessus
+P CSWnetpbm netpbm - Netpbm is a toolkit for manipulation of graphic images
+P CSWnetsnmp netsnmp - lib and tools for SNMP usage
+P CSWngrep ngrep - network grep
+P CSWnmap nmap - A network exploration tool and security/port scanner.
+P CSWnmh nmh - a powerful electronic mail handling system
+P CSWocaml ocaml - Objective Caml is an implementation of the ML language
+P CSWogle ogle - The first opensource DVD player to support DVD menus
+P CSWoldap openldap - OpenLDAP standalone server and update replication daemons (oldap)
+P CSWoldapclient openldap_client - OpenLDAP client executables (oldapclient)
+P CSWoldapdevel openldap_devel - OpenLDAP development support (oldapdevel)
+P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
+P CSWopenal openal - A 3D positional spatialized sound library (gcc3)
+P CSWopencdk opencdk - open crypto development kit
+P CSWopenexr openexr - high dynamic-range (HDR) image file format developed by Industrial Light & Magic
+P CSWopenobex openobex - An Object Exchange (OBEX) protocol implementation
+P CSWopensp opensp - a SGML parser called OpenSP
+P CSWorbit2 orbit2 - ORBit 2.x CORBA tools and libs
+P CSWosndsys osndsys - Open Sound System headers
+P CSWossh openssh - OpenSSH Secure Shell
+P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWpango libpango - Library for laying out and rendering text
+P CSWparigp parigp - PARI/GP is a package which is aimed at efficient computations in number theory
+P CSWpcre pcre - Perl-compatible regular expression library
+P CSWperl perl - A high-level, general-purpose programming language.
+P CSWperldoc perldoc - Perl documentation
+P CSWphp5 php5 - PHP Hypertext Processor 5
+P CSWpil pil - Python Imaging Library
+P CSWpilotlink pilotlink - Free package to manage palmos based PDAs with Unix
+P CSWpkgconfig pkgconfig - Tool for determining the configuration of installed software
+P CSWpkgget pkg_get - CSW version of automated package download tool
+P CSWplib plib - Portable game Library for joystick/sound/OpenGL GUI/3D math (gcc3)
+P CSWpmalgdiff pm_algorithmdiff - compute intelligent differences between two files/lists
+P CSWpmapachedbi pm_apachedbi - Initiate a persistent database connection
+P CSWpmapachereq pm_apachereq - Apache Request C library
+P CSWpmapachesess pm_apachesess - A persistence framework for session data
+P CSWpmapachetst pm_apachetst - Test pm wrapper with helpers for testing Apache
+P CSWpmarchivetar pm_archivetar - Module for manipulation of tar archives
+P CSWpmarchivezip pm_archivezip - Provides an interface to ZIP archive files
+P CSWpmauthensasl pm_authensasl - SASL Authentication framework
+P CSWpmcachecache pm_cachecache - the Cache interface
+P CSWpmcachesmptimexp pm_cachesmptimexp - A lightweight cache with timed expiration
+P CSWpmcapitalization pm_capitalization - no capitalization on method names
+P CSWpmcfginifls pm_configinifiles - a module for reading .ini-style configuration files.
+P CSWpmclassretval pm_classretval - return-value obj - treat it as boolean,array or object
+P CSWpmclone pm_clone - Recursively copy Perl datatypes
+P CSWpmclsaccessor pm_clsaccessor - Automated accessor generation
+P CSWpmclscontainer pm_clscontainer - Glues object frameworks together transparently
+P CSWpmclsdtainherit pm_clsdtainherit - Inheritable, overridable class data
+P CSWpmcompresszlib pm_compresszlib - Interface to zlib compression library
+P CSWpmconvertasn1 pm_convertasn1 - ASN.1 Encode/Decode library
+P CSWpmconvertbinhex pm_convertbinhex - Perl module to extract data from Macintosh BinHex files
+P CSWpmconverttnef pm_converttnef - Perl module to read TNEF files
+P CSWpmcryptdes pm_cryptdes - Perl DES encryption module
+P CSWpmcryptrijndael pm_cryptrijndael - Crypt::CBC compliant Rijndael encryption module
+P CSWpmcryptssleay pm_cryptssleay - OpenSSL glue that provides LWP https support
+P CSWpmdbdmysql pm_dbdmysql - MySQL driver for the Perl5 Database Interface
+P CSWpmdbdoracle pm_dbdoracle - Perl DBD::Oracle module
+P CSWpmdbdpg pm_dbdpg - PostgreSQL database driver for the DBI module
+P CSWpmdbdsqlite pm_dbdsqlite - Self Contained RDBMS in a DBI Driver
+P CSWpmdbi pm_dbi - Database independent interface for Perl
+P CSWpmdbixdbschema pm_dbixdbschema - Database-independent schema objects
+P CSWpmdbixsrchbuilder pm_dbixsrchbuilder - Encapsulate SQL queries and rows in perl objects
+P CSWpmdevelsymdump pm_develsymdump - dump symbol names or the symbol table
+P CSWpmdevstacktrace pm_devstacktrace - Stack trace and stack trace frame objects
+P CSWpmdigesthmac pm_digesthmac - keyed-hashing for message authentication
+P CSWpmdigestnilsimsa pm_digestnilsimsa - Perl version of Nilsimsa code
+P CSWpmdigestsha pm_digestsha - Perl extension for SHA-1/224/256/384/512
+P CSWpmdigestsha1 pm_digestsha1 - interface to the SHA-1 Algorithm
+P CSWpmerror pm_error - Error/exception handling
+P CSWpmexceptcls pm_exceptcls - Allows declaration of Perl exception classes
+P CSWpmextutcbuilder pm_extutcbuilder - Compile and link C code for Perl modules
+P CSWpmextutparsexs pm_extutparsexs - convert Perl XS code into C code
+P CSWpmfcgi pm_fcgi - Fast CGI module
+P CSWpmfilemmagic pm_filemmagic - file command like perl5 module
+P CSWpmfontafm pm_fontafm - Interface to Adobe Font Metrics files
+P CSWpmfreezethaw pm_freezethaw - Convert Perl structures to strings and back
+P CSWpmgd pm_gd - Interface to Gd Graphics Library
+P CSWpmgdgraph pm_gdgraph - Graph plotting module for use with GD
+P CSWpmgdgraph3d pm_gdgraph3d - 3d extensions module for GD::Graph
+P CSWpmgdtextut pm_gdtextut - Text utilities for use with GD
+P CSWpmgeocountries pm_geocountries - 2-letter, 3-letter, and numerical codes for countries
+P CSWpmglib pm_glib - Perl wrappers for the GLib utility and Object libraries
+P CSWpmhooklexwrap pm_hooklexwrap - Lexically scoped subroutine wrappers
+P CSWpmhtmlfmt pm_htmlfmt - Format HTML as plaintext, PostScript or RTF
+P CSWpmhtmlmason pm_htmlmason - High performance, dynamic web site authoring system
+P CSWpmhtmlparser pm_htmlparser - HTML parser class
+P CSWpmhtmlscrubber pm_htmlscrubber - Perl extension for scrubbing/sanitizing html
+P CSWpmhtmltagset pm_htmltagset - data tables useful in parsing HTML
+P CSWpmhtmltmpl pm_htmltemplate - HTML::Template, a module for using HTML Templates with Perl
+P CSWpmhtmltree pm_htmltree - Parser that builds a HTML syntax tree
+P CSWpmhttpsvrmason pm_httpsvrmason - Abstract baseclass for a standalone mason server
+P CSWpmhttpsvrsimp pm_httpsvrsimp - Simple standalone HTTP daemon
+P CSWpmiosocketinet6 pm_iosocketinet6 - Object interface for AF_INET|AF_INET6 domain sockets
+P CSWpmiosocketssl pm_iosocketssl - Perl extension for using OpenSSL
+P CSWpmiostringy pm_iostringy - Perl I/O on in-core objects like strings and arrays
+P CSWpmiozlib pm_iozlib - IO:: style interface to the Compress::Zlib package
+P CSWpmipcountry pm_ipcountry - Fast lookup of country codes from IP address
+P CSWpmipcshrlite pm_ipcshrlite - Lightweight interface to shared memory
+P CSWpmlclemktxtfuz pm_lclemktxtfuz - Maketext from already interpolated strings
+P CSWpmlclemktxtlex pm_lclemktxtlex - Use other catalog formats in Maketext
+P CSWpmldap pm_ldap - A client interface to LDAP servers
+P CSWpmlibwww pm_libwww - a collection of perlmodules which provide an api to the World Wide Web
+P CSWpmlogdispatch pm_logdispatch - Dispatch messages to noe or more outputs
+P CSWpmmailimapclient pm_mailimapclient - Perl IMAP Client API
+P CSWpmmailspfqry pm_mailspfqry - query Sender Policy Framework for an IP,email,helo
+P CSWpmmailtools pm_mailtools - various mail manipulation modules
+P CSWpmmd5 pm_md5 - a perl module supporting MD5 backwards compatibility (use Digest::MD5 not this)
+P CSWpmmimebase64 pm_mimebase64 - Encoding and decoding of base64 strings
+P CSWpmmimelite pm_mimelite - Perl MIME::Lite module
+P CSWpmmimetools pm_mimetools - Perl modules for parsing and creating MIME entities
+P CSWpmmimetypes pm_mimetypes - Perl MIME::Types module
+P CSWpmmldbm pm_mldbm - Store multi-level hash structure in single level tied hash
+P CSWpmmodrefresh pm_modrefresh - Refresh %INC files when updated on disk
+P CSWpmmodulebuild pm_modulebuild - Build and install Perl modules
+P CSWpmmodulesign pm_modulesign - Module signature file manipulation
+P CSWpmmodversrpt pm_modversrpt - Report versions of all modules in memory
+P CSWpmnetcidr pm_netcidr - Manipulate IPv4/IPv6 netblocks in CIDR notation
+P CSWpmnetcidrlite pm_netcidrlite - Perl extension for merging IPv4 or IPv6 CIDR addresses
+P CSWpmnetdaemon pm_netdaemon - Perl extension for portable daemons
+P CSWpmnetdns pm_netdns - interface to the DNS resolver
+P CSWpmnetsnmp pm_netsnmp - Object oriented interface to SNMP
+P CSWpmnetssleay pm_netssleay - extension for using OpenSSL
+P CSWpmpardist pm_pardist - Create and manipulate PAR distributions
+P CSWpmplrpc pm_plrpc - Perl extension for writing perl RPC servers and clients
+P CSWpmpodescapes pm_podescapes - for resolving Pod E<..> sequences
+P CSWpmpodsimple pm_podsimple - Framework for parsing Pod
+P CSWpmprmsvldt pm_prmsvldt - validate method/function parameters
+P CSWpmproctbl pm_procprocesstbl - Perl extension to access the unix process table
+P CSWpmregexpcom pm_regexpcom - Provide commonly requested regular expressions
+P CSWpmsocket6 pm_socket6 - IPv6 related part of the C socket.h defines and structure manipulators
+P CSWpmspeedycgi pm_speedycgi - Speed up perl scripts by running them persistently
+P CSWpmspiffy pm_spiffy - Perl Spiffy module
+P CSWpmsubuplevel pm_subuplevel - Apparently run a function in a higher stack frame
+P CSWpmsvn pm_subversion - Subversion Perl language binding
+P CSWpmsyshostnamelong pm_syshostnamelong - Try every conceivable way to get full hostname
+P CSWpmtermreadkey pm_termreadkey - Perl module for simple terminal control
+P CSWpmtestinline pm_testinline - Inlining your tests next to the code being tested.
+P CSWpmtestlongstr pm_testlongstr - Tests strings for equality, with more helpful failure
+P CSWpmtestpod pm_testpod - Check for POD errors in files
+P CSWpmtestwwwmech pm_testwwwmech - Testing-specific WWW::Mechanize subclass
+P CSWpmtextdiff pm_textdiff - perform diffs on files and record sets
+P CSWpmtexttemplate pm_texttemplate - Expand template text with embedded Perl
+P CSWpmtextwikifmt pm_textwikifmt - Translate Wiki formatted text into other formats
+P CSWpmtextwrap pm_textwrap - Word wrapping routine
+P CSWpmtimedate pm_timedate - Parse date strings into time values
+P CSWpmtimemods pm_timemods - Time parsing modules
+P CSWpmtk pm_tk - a Graphical User Interface ToolKit perl module
+P CSWpmtreesimple pm_treesimple - A simple tree object
+P CSWpmtstbldrtester pm_tstbldrtester - Test testsuites that have been built with Test::Builder
+P CSWpmtstexcept pm_tstexcept - Test functions for exception based code
+P CSWpmtstmanif pm_tstmanif - Interact with a t/test_manifest file
+P CSWpmtxtautofmt pm_txtautofmt - Automatic text wrapping and reformatting
+P CSWpmtxtquoted pm_txtquoted - Extract the structure of a quoted mail message
+P CSWpmtxtreform pm_txtreform - Manual text wrapping and reformatting
+P CSWpmunixsyslog pm_unixsyslog - Perl interface to the UNIX system logger
+P CSWpmuri pm_uri - Uniform Resource Identifiers (absolute and relative)
+P CSWpmwant pm_want - A generalisation of wantarray
+P CSWpmwwwmechanize pm_wwwmechanize - Handy web browsing in a Perl object
+P CSWpmxmlnssupp pm_xmlnssupp - Simple generic namespace support class
+P CSWpmxmlparser pm_xmlparser - A perl module for parsing XML documents
+P CSWpmxmlrss pm_xmlrss - Create and update RSS files
+P CSWpmxmlsax pm_xmlsax - Simple API for XML
+P CSWpmxmlsimple pm_xmlsimple - Perl XML::Simple module
+P CSWpmxmlxpath pm_xmlxpath - Perl XML::Xpath Module
+P CSWpmyaml pm_yaml - Perl YAML module
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWpoppler poppler - pdf backend
+P CSWpostgresql postgresql - advanced open source database system
+P CSWproj proj - PROJ.4 Cartographic Projections library
+P CSWpsutils psutils - Utilities for manipulating PostScript documents, eg, booklet and n-up printing
+P CSWpth pth -  GNU Pth - The GNU Portable Threads 2.0.0
+P CSWpygtk pygtk - Python Bindings for GTK
+P CSWpyorbit pyorbit - Python bindings to ORBIT
+P CSWpysvn pysvn - Subversion Python language binding
+P CSWpython python - The Python 2.3 language interpreter
+P CSWqt qt - The Trolltech Qt C++ framework library
+P CSWqt4 qt4 - Qt application framework
+P CSWqtgcc qt_gcc - TrollTech C++ application framework
+P CSWrake rake - Simple ruby build program similar to make
+P CSWreadline readline - library to enable interactive line editing
+P CSWrenderdev render_dev - fontconfig.org render development files
+P CSWrhythmbox rhythmbox - The music management application for GNOME
+P CSWrrd rrdtool - Round Robin Database graphing tool
+P CSWrsync rsync - free alternative to rdist that uses rcp or scp
+P CSWruby ruby - An object-oriented language for quick and easy programming.
+P CSWrxvt rxvt - lightweight terminal emulator with widechar support, plus rclock
+P CSWsambalib samba_lib - Tools to access a server's filespace and printers via SMB (lib)
+P CSWsambalibdev samba_libdev - Tools to access a server's filespace and printers via SMB (dev)
+P CSWsaneback saneback - SANE scanning libraries and the command line program scanimage
+P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWschilybase schilybase - A collection of common files from J. Schilling
+P CSWschilyutils schilyutils - A collection of utilities from J. Schilling
+P CSWscli scli - A collection of SNMP command line management tools
+P CSWscribus scribus - A comprehensive desktop publishing program (gcc3)
+P CSWscrn screen - A window manager that multiplexes a physical terminal
+P CSWscrollkeeper scrollkeeper - a cataloging system for documentation on open systems
+P CSWsdlimage sdlimage - SDL image file loading library
+P CSWsdlmixer sdlmixer - multi-channel audio mixer library
+P CSWsdlnet sdlnet - A small cross-platform network library for SDL
+P CSWsdlttf sdlttf - TrueType font rendering library for SDL applications
+P CSWsendmail sendmail - Sendmail MTA
+P CSWsharedmimeinfo shared_mime_info - freedesktop.org common MIME database
+P CSWshutils shutils - GNU shell utilities
+P CSWsigc++ libsigc++ - Typesafe Callback Framework for C++
+P CSWsimgear simgear - A library toolkit for simulations/games (gcc3)
+P CSWslang slang - library primarily to provide an alternative to libcurses
+P CSWslib slib - a portable Scheme library
+P CSWsmartmontools smartmontools - S.M.A.R.T. utility toolset
+P CSWspamassassin spamassassin - A mail filter which attempts to identify spam using text analysis
+P CSWspeex libspeex - Speex audio codec support library
+P CSWsqlite sqlite - An embeddable SQL engine in a C library
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
+P CSWstar star - Standard TAR (a POSIX compliant TAR and a configurable secure RMT remote tape server)
+P CSWstartupnotif startup_notif - Library for tracking application startup
+P CSWstlport stlport - a C++ Standard Library implementation (from Sun Studio 10 with patch 117830-07)
+P CSWsudo sudo - Provides limited super user privileges
+P CSWsudo-common sudo_common - sudo common files
+P CSWsunfortran sunfortran - Sun Studio 11 Fortran Dynamic Libraries
+P CSWsunmath libsunmath - Sun maths library
+P CSWsunperf sunperf - Sun Studio 11 PerfLib
+P CSWsvn subversion - Version control rethought
+P CSWsvn-devel subversion_devel - Subversion development support
+P CSWswig swig - Simplified Wrapper and Interface Generator
+P CSWswigguilert swigguilert - SWIG guile runtime library
+P CSWswigphp4rt swigphp4rt - SWIG php runtime library
+P CSWswigplrt swigplrt - SWIG perl runtime library
+P CSWswigpyrt swigpyrt - SWIG python runtime library
+P CSWswtlibs swtlibs - Standard Widget Toolkit (SWT) libraries
+P CSWsysconftool sysconftool - Tools to install/upgrade application config files
+P CSWt1lib t1lib - Type1 font renderering library
+P CSWtcl tcl - Tool Command Language
+P CSWtcpwrap tcpwrappers - (ipv6.4 patched) lib and tools for pre-screening tcp connections
+P CSWtetex tetex - A complete TeX distribution
+P CSWtexinfo texinfo - The GNU Documentation System
+P CSWtexmetauml tex_metauml - MetaPost library for typesetting UML diagrams using a human-friendly textual notation
+P CSWtextutils textutils - GNU text file processing utilities
+P CSWtheora libtheora - Theora video codec support library
+P CSWtiff tiff - lib and tools for Tag Image File Format
+P CSWtk tk - GUI toolkit for tcl
+P CSWtla tla - GNU arch - A modern CVS replacement
+P CSWtop top - UNIX system state reporter utility
+P CSWtotem totem - GNOME based front-end for xine
+P CSWtreecc treecc - Tree Compiler-Compiler
+P CSWttcp ttcp - test TCP speed
+P CSWtun tun - Universal TUN/TAP device driver
+P CSWungif libungif - library for manipulation of GIF images
+P CSWunixodbc unixodbc - ODBC access to data sources
+P CSWunzip unzip - Info-Zip UnZip extraction utility for archives compressed in .zip format
+P CSWvim vim - Vi IMproved
+P CSWvimrt vimrt - vim shared runtime and documentation
+P CSWvncs vncserver - TightVNC server is a free remote control package derived from the popular VNC software.
+P CSWvorbis libvorbis - Vorbis audio codec support library
+P CSWvte vte - The GNOME virtual terminal emulator
+P CSWvtools vorbistools - Vorbis audio tools
+P CSWwget wget - A network utility to retrieve files from the Web
+P CSWwmaker windowmaker - OpenStep window manager lookalike
+P CSWwmf wmf - Library and tools for manipulating Windows metafiles
+P CSWwv2 wv2 - a library for accessing Microsoft Word documents
+P CSWwxwidgetscommon wxwidgets_common - common files for wxwidgets (no Unicode)
+P CSWwxwidgetsgtk1 wxwidgets_gtk1 - gtk1 support for wxwidgets (no Unicode)
+P CSWwxwidgetsgtk2 wxwidgets_gtk2 - gtk2 support for wxwidgets (no Unicode)
+P CSWxaw3d xaw3d - Xaw3d, Three-D Athena Toolkit
+P CSWxemacs xemacs - XEmacs editor
+P CSWxforms xforms - xforms X11 library
+P CSWxmms xmms - X MultiMedia System audio player
+P CSWxpdf xpdf - A PDF file viewer for the X Window System.
+P CSWxpm xpm - library for X11 PixMap format (libXpm.so.4.11)
+P CSWxsave xscreensaver - the ultimate screensaver collection
+P CSWxv xv - Interactive image display and manipulation tool
+P CSWxvid xvid - An MPEG-4 video codec.
+P CSWyelp yelp - GNOME default help browser
+P CSWzed zed - Zed is a very simple, fast, powerful, small, low cpu consumer, highly configurable, text editor.
+P CSWzenity zenity - The GNOME port of dialog
+P CSWzip zip - Info-Zip Zip compression and file packaging/archive utility
+P CSWzlib zlib - Zlib Data Compression Library
+P CSWzsh zsh - Powerful UNIX shell
+P NSCPcom Netscape Communicator
+P SUJAexted Japanese branding files for Sun Studio 11 ExtEd
+P SUJAnbcpp Japanese branding files for Sun Studio 11 CPP
+P SUZHexted Chinese branding files for Sun Studio 11 ExtEd
+P SUZHnbcpp Chinese branding files for Sun Studio 11 CPP
+P TSIpgx PGX32 (Raptor GFX) System Software/Device Driver
+P TSIpgxw PGX32 (Raptor GFX) X Window System Support
+P TSIpgxx PGX32 (Raptor GFX) System Software/Device Driver (64-bit)

@@ -1,0 +1,4 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmiostringy pm_iostringy - I/O on in-core objects like strings and arrays
+P CSWpmpodsimple pm_podsimple - framework for parsing Pod

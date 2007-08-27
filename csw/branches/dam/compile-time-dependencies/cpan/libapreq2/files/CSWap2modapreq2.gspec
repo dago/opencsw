@@ -1,0 +1,5 @@
+%var            bitname ap2_modapreq2
+%var            pkgname CSWap2modapreq2
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%var            desc libapreq2 filter module for Apache 2
+%copyright      url file://%{WORKSRC}/LICENSE

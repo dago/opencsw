@@ -1,0 +1,74 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.093
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.093
+Problem:    The matchparen plugin can't handle a 'matchpairs' value where a
+	    colon is matched.
+Solution:   Change the split() that is used to change 'matchpairs' into a
+	    List.
+Files:	    runtime/plugin/matchparen.vim
+
+
+*** ../vim-7.0.092/runtime/plugin/matchparen.vim	Wed Sep  6 22:13:48 2006
+--- runtime/plugin/matchparen.vim	Sat Sep  9 13:35:54 2006
+***************
+*** 1,6 ****
+  " Vim plugin for showing matching parens
+  " Maintainer:  Bram Moolenaar <Bram@vim.org>
+! " Last Change: 2006 Jun 26
+  
+  " Exit quickly when:
+  " - this plugin was already loaded (or disabled)
+--- 1,6 ----
+  " Vim plugin for showing matching parens
+  " Maintainer:  Bram Moolenaar <Bram@vim.org>
+! " Last Change: 2006 Sep 09
+  
+  " Exit quickly when:
+  " - this plugin was already loaded (or disabled)
+***************
+*** 44,50 ****
+    let before = 0
+  
+    let c = getline(c_lnum)[c_col - 1]
+!   let plist = split(&matchpairs, ':\|,')
+    let i = index(plist, c)
+    if i < 0
+      " not found, in Insert mode try character before the cursor
+--- 44,50 ----
+    let before = 0
+  
+    let c = getline(c_lnum)[c_col - 1]
+!   let plist = split(&matchpairs, '.\zs[:,]')
+    let i = index(plist, c)
+    if i < 0
+      " not found, in Insert mode try character before the cursor
+*** ../vim-7.0.092/src/version.c	Sat Sep  9 12:05:39 2006
+--- src/version.c	Sat Sep  9 13:29:58 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     93,
+  /**/
+
+-- 
+BLACK KNIGHT:  I move for no man.
+ARTHUR:        So be it!
+    [hah] [parry thrust]
+    [ARTHUR chops the BLACK KNIGHT's left arm off]
+ARTHUR:        Now stand aside, worthy adversary.
+BLACK KNIGHT:  'Tis but a scratch.
+                                  The Quest for the Holy Grail (Monty Python)
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

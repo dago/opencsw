@@ -1,0 +1,40 @@
+diff --speed-large-files --minimal -Nru svnmailer-1.1.0-dev-r1373.orig/setup.py svnmailer-1.1.0-dev-r1373/setup.py
+--- svnmailer-1.1.0-dev-r1373.orig/setup.py	2005-09-25 14:47:47.000000000 -0400
++++ svnmailer-1.1.0-dev-r1373/setup.py	2006-06-22 13:40:33.034295000 -0400
+@@ -157,7 +157,7 @@
+             moredocs.include_pattern(convre(r"docs/[^/]+"), is_regex = 1)
+             moredocs.exclude_pattern(convre(r"docs/[^/]+.\d"), is_regex = 1)
+             docs.extend(moredocs.files)
+-            base = 'doc/svnmailer'
++            base = 'share/doc/svnmailer'
+             self.data_files.append((base, docs))
+ 
+             rre = re.escape('/') == '\\/'
+@@ -171,15 +171,15 @@
+                 apidocs.include_pattern(
+                     convre('%s/[^/]+' % repath), is_regex = 1
+                 )
+-                base = 'doc/svnmailer/%s'% path
++                base = 'share/doc/svnmailer/%s'% path
+                 self.data_files.append((base, apidocs.files))
+ 
+             samples = fixfiles(SAMPLES)
+-            base = 'doc/svnmailer/sample'
++            base = 'share/doc/svnmailer/sample'
+             self.data_files.append((base, samples))
+ 
+             hooks = HOOKS
+-            base = 'doc/svnmailer/sample/hooks'
++            base = 'share/doc/svnmailer/sample/hooks'
+             if win32:
+                 hooks = ["%s.bat" % hook for hook in hooks]
+                 scriptsdefault = "C:\\path\\to"
+@@ -195,7 +195,7 @@
+             if not win32:
+                 for section, pages in MAN.items():
+                     fixfiles(pages)
+-                    self.data_files.append(("man/man%s" % section, pages))
++                    self.data_files.append(("share/man/man%s" % section, pages))
+ 
+             # so late, because some files need to be touched in the tree
+             # anyway

@@ -1,0 +1,5 @@
+%var            bitname openssl_rt
+%var            pkgname CSWosslrt
+%var            desc Openssl runtime libraries
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

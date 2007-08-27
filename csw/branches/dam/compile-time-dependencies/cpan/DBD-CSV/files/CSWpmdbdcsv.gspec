@@ -1,0 +1,12 @@
+%var            bitname pm_dbdcsv
+%var            pkgname CSWpmdbdcsv
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is Copyright (C) 1998 by and Jochen Wiedmann
+
+All rights reserved.
+
+You may distribute this module under the terms of either the GNU
+General Public License or the Artistic License, as specified in
+the Perl README file.

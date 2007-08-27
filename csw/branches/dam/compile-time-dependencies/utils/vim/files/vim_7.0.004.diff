@@ -1,0 +1,52 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.004
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.004
+Problem:    Compiler warning for debug_saved used before set. (Todd Blumer)
+Solution:   Remove the "else" for calling save_dbg_stuff().
+Files:	    src/ex_docmd.c
+
+
+*** ../vim-7.0.003/src/ex_docmd.c	Wed May 10 15:22:49 2006
+--- src/ex_docmd.c	Mon May  8 16:43:34 2006
+***************
+*** 833,839 ****
+       * If requested, store and reset the global values controlling the
+       * exception handling (used when debugging).
+       */
+!     else if (flags & DOCMD_EXCRESET)
+  	save_dbg_stuff(&debug_saved);
+  
+      initial_trylevel = trylevel;
+--- 833,839 ----
+       * If requested, store and reset the global values controlling the
+       * exception handling (used when debugging).
+       */
+!     if (flags & DOCMD_EXCRESET)
+  	save_dbg_stuff(&debug_saved);
+  
+      initial_trylevel = trylevel;
+*** ../vim-7.0.003/src/version.c	Wed May 10 17:12:51 2006
+--- src/version.c	Wed May 10 17:14:34 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     4,
+  /**/
+
+-- 
+From "know your smileys":
+ :-D	Big smile
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

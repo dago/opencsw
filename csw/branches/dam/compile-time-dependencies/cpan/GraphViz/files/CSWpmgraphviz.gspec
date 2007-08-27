@@ -1,0 +1,9 @@
+%var            bitname pm_graphviz
+%var            pkgname CSWpmgraphviz
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2000-1, Leon Brocard
+
+This module is free software; you can redistribute it or modify it
+under the same terms as Perl itself.

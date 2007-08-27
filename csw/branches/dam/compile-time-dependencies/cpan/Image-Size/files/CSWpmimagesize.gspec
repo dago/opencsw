@@ -1,0 +1,9 @@
+%var            bitname pm_imagesize
+%var            pkgname CSWpmimagesize
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This file copyright (c) 2000 by Randy J. Ray, all rights reserved
+
+Copying and distribution are permitted under the terms of the Artistic
+License as distributed with Perl versions 5.005 and later.

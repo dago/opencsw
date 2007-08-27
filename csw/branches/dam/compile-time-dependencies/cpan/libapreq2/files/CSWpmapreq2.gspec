@@ -1,0 +1,5 @@
+%var            bitname pm_apreq2
+%var            pkgname CSWpmapreq2
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%var            desc libapreq2 Perl language bindings
+%copyright      url file://%{WORKSRC}/LICENSE

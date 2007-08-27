@@ -1,0 +1,50 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.105
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.105
+Problem:    When using incremental search the statusline ruler isn't updated.
+	    (Christoph Koegl)
+Solution:   Update the statusline when it contains the ruler.
+Files:	    src/ex_getln.c
+
+
+*** ../vim-7.0.104/src/ex_getln.c	Thu Sep 14 10:25:34 2006
+--- src/ex_getln.c	Thu Sep 14 10:42:24 2006
+***************
+*** 1756,1761 ****
+--- 1756,1766 ----
+  		end_pos = curwin->w_cursor; /* shutup gcc 4 */
+  
+  	    validate_cursor();
++ # ifdef FEAT_WINDOWS
++ 	    /* May redraw the status line to show the cursor position. */
++ 	    if (p_ru && curwin->w_status_height > 0)
++ 		curwin->w_redr_status = TRUE;
++ # endif
+  
+  	    save_cmdline(&save_ccline);
+  	    update_screen(SOME_VALID);
+*** ../vim-7.0.104/src/version.c	Thu Sep 14 11:07:08 2006
+--- src/version.c	Thu Sep 14 11:25:37 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     105,
+  /**/
+
+-- 
+An indication you must be a manager:
+You feel sorry for Dilbert's boss.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

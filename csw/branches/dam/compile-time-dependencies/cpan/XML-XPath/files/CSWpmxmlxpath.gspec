@@ -1,0 +1,9 @@
+%var            bitname pm_xmlxpath
+%var            pkgname CSWpmxmlxpath
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is copyright 2000 AxKit.com Ltd. This is free
+software, and as such comes with NO WARRANTY. No dates are used in this
+module. You may distribute this module under the terms of either the
+Gnu GPL,  or the Artistic License (the same terms as Perl itself).

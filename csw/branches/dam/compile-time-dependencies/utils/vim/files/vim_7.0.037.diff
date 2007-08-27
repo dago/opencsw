@@ -1,0 +1,63 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.037
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.037
+Problem:    Crash when resizing the GUI window vertically when there is a line
+	    that doesn't fit.
+Solution:   Don't redraw while the screen data is invalid.
+Files:	    src/screen.c
+
+
+*** ../vim-7.0.036/src/screen.c	Tue Jul 11 22:36:19 2006
+--- src/screen.c	Tue Jul 11 21:33:53 2006
+***************
+*** 7129,7134 ****
+--- 7129,7140 ----
+  	return;
+      entered = TRUE;
+  
++     /*
++      * Note that the window sizes are updated before reallocating the arrays,
++      * thus we must not redraw here!
++      */
++     ++RedrawingDisabled;
++ 
+      win_new_shellsize();    /* fit the windows in the new sized shell */
+  
+      comp_col();		/* recompute columns for shown command and ruler */
+***************
+*** 7363,7368 ****
+--- 7369,7375 ----
+  #endif
+  
+      entered = FALSE;
++     --RedrawingDisabled;
+  
+  #ifdef FEAT_AUTOCMD
+      if (starting == 0)
+*** ../vim-7.0.036/src/version.c	Tue Jul 11 22:36:19 2006
+--- src/version.c	Tue Jul 11 22:38:39 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     37,
+  /**/
+
+-- 
+For society, it's probably a good thing that engineers value function over
+appearance.  For example, you wouldn't want engineers to build nuclear power
+plants that only _look_ like they would keep all the radiation inside.
+				(Scott Adams - The Dilbert principle)
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

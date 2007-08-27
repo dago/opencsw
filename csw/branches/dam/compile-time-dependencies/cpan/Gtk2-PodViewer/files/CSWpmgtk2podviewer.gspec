@@ -1,0 +1,8 @@
+%var            bitname pm_gtk2podviewer
+%var            pkgname CSWpmgtk2podviewer
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+Copyright (C) 2004 Gavin Brown.

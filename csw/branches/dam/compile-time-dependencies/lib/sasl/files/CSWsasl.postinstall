@@ -1,0 +1,6 @@
+# Display message
+echo '***'
+echo '*** See README.CSW in /opt/csw/share/doc/sasl **'
+echo '***'
+
+exit 0

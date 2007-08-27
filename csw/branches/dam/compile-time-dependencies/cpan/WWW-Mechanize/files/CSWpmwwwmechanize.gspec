@@ -1,0 +1,9 @@
+%var            bitname pm_wwwmechanize
+%var            pkgname CSWpmwwwmechanize
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2004 Andy Lester <andy@petdance.com>
+
+Released under the Artistic License.  Based on Kirrily Robert's excellent
+L<WWW::Automate> package.

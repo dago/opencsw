@@ -1,0 +1,89 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.101
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.101
+Problem:    When the "~/.vim/spell" directory does not exist "zg" may create
+	    a wrong directory.  "zw" doesn't work.
+Solution:   Use the directory of the file name instead of NameBuff.  For "zw"
+	    not only remove a good word but also add the word with "!".
+Files:	    src/spell.c
+
+
+*** ../vim-7.0.100/src/spell.c	Mon Sep 11 21:37:27 2006
+--- src/spell.c	Tue Sep 12 20:21:01 2006
+***************
+*** 9347,9366 ****
+  	    fclose(fd);
+  	}
+      }
+!     else
+      {
+  	fd = mch_fopen((char *)fname, "a");
+  	if (fd == NULL && new_spf)
+  	{
+  	    /* We just initialized the 'spellfile' option and can't open the
+  	     * file.  We may need to create the "spell" directory first.  We
+  	     * already checked the runtime directory is writable in
+  	     * init_spellfile(). */
+! 	    if (!dir_of_file_exists(fname))
+  	    {
+  		/* The directory doesn't exist.  Try creating it and opening
+  		 * the file again. */
+! 		vim_mkdir(NameBuff, 0755);
+  		fd = mch_fopen((char *)fname, "a");
+  	    }
+  	}
+--- 9347,9373 ----
+  	    fclose(fd);
+  	}
+      }
+! 
+!     if (!undo)
+      {
+  	fd = mch_fopen((char *)fname, "a");
+  	if (fd == NULL && new_spf)
+  	{
++ 	    char_u *p;
++ 
+  	    /* We just initialized the 'spellfile' option and can't open the
+  	     * file.  We may need to create the "spell" directory first.  We
+  	     * already checked the runtime directory is writable in
+  	     * init_spellfile(). */
+! 	    if (!dir_of_file_exists(fname) && (p = gettail_sep(fname)) != fname)
+  	    {
++ 		int c = *p;
++ 
+  		/* The directory doesn't exist.  Try creating it and opening
+  		 * the file again. */
+! 		*p = NUL;
+! 		vim_mkdir(fname, 0755);
+! 		*p = c;
+  		fd = mch_fopen((char *)fname, "a");
+  	    }
+  	}
+*** ../vim-7.0.100/src/version.c	Mon Sep 11 21:37:27 2006
+--- src/version.c	Tue Sep 12 21:47:21 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     101,
+  /**/
+
+-- 
+ARTHUR: Did you say shrubberies?
+ROGER:  Yes.  Shrubberies are my trade.  I am a shrubber.  My name is Roger
+        the Shrubber.  I arrange, design, and sell shrubberies.
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

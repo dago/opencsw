@@ -1,0 +1,101 @@
+diff --speed-large-files --minimal -Nru apr-util-1.2.2.orig/build/apu-iconv.m4 apr-util-1.2.2/build/apu-iconv.m4
+--- apr-util-1.2.2.orig/build/apu-iconv.m4	2005-12-12 00:44:56.159459000 -0500
++++ apr-util-1.2.2/build/apu-iconv.m4	2005-12-12 00:42:15.630786000 -0500
+@@ -23,8 +23,8 @@
+ #include <iconv.h>
+ ],
+ [
+-  iconv_t cd = iconv_open("", "");
+-  iconv(cd, NULL, NULL, NULL, NULL);
++  libiconv_t cd = libiconv_open("", "");
++  libiconv(cd, NULL, NULL, NULL, NULL);
+ ], [$1], [$2])
+ ])
+ 
+diff --speed-large-files --minimal -Nru apr-util-1.2.2.orig/xlate/xlate.c apr-util-1.2.2/xlate/xlate.c
+--- apr-util-1.2.2.orig/xlate/xlate.c	2005-12-12 00:44:57.208323000 -0500
++++ apr-util-1.2.2/xlate/xlate.c	2005-12-12 00:44:17.270321000 -0500
+@@ -59,7 +59,7 @@
+     char *topage;
+     char *sbcs_table;
+ #if APU_HAVE_ICONV
+-    iconv_t ich;
++    libiconv_t ich;
+ #elif APU_HAVE_APR_ICONV
+     apr_iconv_t ich;
+ #endif
+@@ -89,8 +89,8 @@
+     }
+ 
+ #elif APU_HAVE_ICONV
+-    if (old->ich != (iconv_t)-1) {
+-        if (iconv_close(old->ich)) {
++    if (old->ich != (libiconv_t)-1) {
++        if (libiconv_close(old->ich)) {
+             int rv = errno;
+ 
+             /* Sometimes, iconv is not good about setting errno. */
+@@ -117,7 +117,7 @@
+     }
+ 
+     inbytes_left = outbytes_left = sizeof(inbuf);
+-    translated = iconv(convset->ich, (ICONV_INBUF_TYPE)&inbufptr,
++    translated = libiconv(convset->ich, (ICONV_INBUF_TYPE)&inbufptr,
+                        &inbytes_left, &outbufptr, &outbytes_left);
+ 
+     if (translated != (apr_size_t)-1
+@@ -129,16 +129,16 @@
+ 
+         convset->sbcs_table = apr_palloc(convset->pool, sizeof(outbuf));
+         memcpy(convset->sbcs_table, outbuf, sizeof(outbuf));
+-        iconv_close(convset->ich);
+-        convset->ich = (iconv_t)-1;
++        libiconv_close(convset->ich);
++        convset->ich = (libiconv_t)-1;
+ 
+         /* TODO: add the table to the cache */
+     }
+     else {
+         /* reset the iconv descriptor, since it's now in an undefined
+          * state. */
+-        iconv_close(convset->ich);
+-        convset->ich = iconv_open(convset->topage, convset->frompage);
++        libiconv_close(convset->ich);
++        convset->ich = libiconv_open(convset->topage, convset->frompage);
+     }
+ }
+ #elif APU_HAVE_APR_ICONV
+@@ -248,8 +248,8 @@
+ 
+ #elif APU_HAVE_ICONV
+     if (!found) {
+-        new->ich = iconv_open(topage, frompage);
+-        if (new->ich == (iconv_t)-1) {
++        new->ich = libiconv_open(topage, frompage);
++        if (new->ich == (libiconv_t)-1) {
+             int rv = errno;
+             /* Sometimes, iconv is not good about setting errno. */
+             return rv ? rv : APR_EINVAL;
+@@ -257,7 +257,7 @@
+         found = 1;
+         check_sbcs(new);
+     } else
+-        new->ich = (iconv_t)-1;
++        new->ich = (libiconv_t)-1;
+ #endif /* APU_HAVE_ICONV */
+ 
+     if (found) {
+@@ -336,11 +336,11 @@
+     else
+ 
+ #elif APU_HAVE_ICONV
+-    if (convset->ich != (iconv_t)-1) {
++    if (convset->ich != (libiconv_t)-1) {
+         const char *inbufptr = inbuf;
+         char *outbufptr = outbuf;
+         apr_size_t translated;
+-        translated = iconv(convset->ich, (ICONV_INBUF_TYPE)&inbufptr,
++        translated = libiconv(convset->ich, (ICONV_INBUF_TYPE)&inbufptr,
+                            inbytes_left, &outbufptr, outbytes_left);
+ 
+         /* If everything went fine but we ran out of buffer, don't

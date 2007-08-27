@@ -1,0 +1,5 @@
+%var            bitname libxfcesessiondev
+%var            pkgname CSWlibxfcesessiondev
+%var		desc Xfce Session Manager Library Headers
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

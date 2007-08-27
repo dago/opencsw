@@ -1,0 +1,19 @@
+P CSWexpat expat -  XML Parser Toolkit
+P CSWfconfig fontconfig - A library for configuring and customizing font access.
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWiconv libiconv - GNU iconv library
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWlibxfce4util libxfce4util - Xfce Utilities Library
+P CSWlibxfcegui4 libxfcegui4 - Xfce Widget Library
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWpango libpango - Library for laying out and rendering text
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWstartupnotif startup_notif - Library for tracking P startup
+P CSWsunmath libsunmath - Sun maths library
+P CSWzlib zlib - Zlib Data Compression Library
+P CSWdbusglib dbus_glib - DBus GLib Bindings
+P CSWlibdbus libdbus - DBus Message Bus System - dynamic libraries

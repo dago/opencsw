@@ -1,0 +1,6 @@
+%var            bitname xfce_oragedoc
+%var		desc Xfce Orage Calendar Documentation
+%var		arch all
+%var            pkgname CSWxfceoragedoc
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

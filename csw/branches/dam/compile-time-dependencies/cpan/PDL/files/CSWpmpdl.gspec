@@ -1,0 +1,4 @@
+%var            bitname pm_pdl
+%var            pkgname CSWpmpdl
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      url file://%{WORKSRC}/COPYING

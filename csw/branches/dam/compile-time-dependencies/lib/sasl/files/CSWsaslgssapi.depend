@@ -1,0 +1,5 @@
+P SUNWcsr  - Core Solaris, (Root)
+P SUNWcsl  - Core Solaris, (Shared Libs)
+P SUNWlibms - Sun WorkShop Bundled shared libm
+P CSWsasl - sasl, Simple Authentication and Security Layer
+P CSWkrb5lib - MIT Kerberos 5 core libraries

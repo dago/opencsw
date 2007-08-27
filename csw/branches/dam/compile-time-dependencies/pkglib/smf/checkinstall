@@ -1,0 +1,21 @@
+# BEGIN smf/checkinstall
+
+trap `exit 3` 15
+
+# Assign Solaris release class to install release specific files
+if [ -f "$BASEDIR/usr/sbin/svccfg" -a -f "$BASEDIR/usr/sbin/svcadm" ]; then
+    CLASSES="$CLASSES smf"
+    SMF="yes"
+else
+    CLASSES="$CLASSES init"
+    SMF="no"
+fi
+
+# Make env variables available to other packaging scripts
+cat >>$1 <<!
+CLASSES=$CLASSES
+SMF="$SMF"
+!
+
+true
+# END smf/checkinstall

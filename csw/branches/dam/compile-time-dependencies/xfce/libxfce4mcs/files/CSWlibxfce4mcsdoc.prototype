@@ -1,0 +1,18 @@
+d none /opt/csw/share/gtk-doc/html 0755 root bin
+d none /opt/csw/share/gtk-doc/html/libxfce4mcs 0755 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/ch01.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/home.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/index.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/index.sgml 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/left.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs-mcs-client.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs-mcs-common.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs-mcs-manager.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs.devhelp 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/libxfce4mcs.devhelp2 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/right.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/style.css 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfce4mcs/up.png 0644 root bin
+i copyright=CSWlibxfce4mcsdoc.copyright
+i depend=CSWlibxfce4mcsdoc.depend
+i pkginfo=CSWlibxfce4mcsdoc.pkginfo

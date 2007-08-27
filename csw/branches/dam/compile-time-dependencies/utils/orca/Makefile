@@ -1,0 +1,47 @@
+GARNAME = orca
+GARVERSION = snapshot-r529
+SPKG_VERSION = r529
+CATEGORIES = utils
+
+DESCRIPTION = A system performance monitoring tool
+define BLURB
+  Orca is a tool useful for plotting arbitrary data from text files onto
+  a directory on a Web server.  It has the following features:
+
+    * Creates an HTML tree of HTML and image (PNG or GIF) files.
+    * Creates an index of URL links listing all available targets.
+    * Creates an index of URL links listing all different plot types.
+    * No separate CGI set up required.
+    * Can be run under cron or it can sleep itself waiting for file updates
+      based on when the file was last updated.
+    * Configuration file based.
+    * Reads arbitrarily formatted text or binary data files.
+    * Watches data files for updates and sleeps between reads.
+    * Finds new files at specified times.
+    * Remembers the last modification times for files so they do not have to
+      be reread continuously.
+    * Allows arbitrary grouping of data from different files into the same
+      or different plots.
+    * Allows arbitrary math performed on data read from one file.
+
+endef
+
+MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWorca,depend prototype)
+DISTFILES += $(call admfiles,CSWorca-collector,depend prototype)
+DISTFILES += $(call admfiles,CSWorca-web,depend prototype postinstall preremove)
+
+PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
+
+localstatedir = /var/opt/csw
+
+COMMON_EXPORTS += perlcswlib
+
+CONFIGURE_ARGS = $(DIRPATHS) \
+	--with-html-dir=$(prefix)/apache2/share/htdocs/orca \
+	--disable-librrdtool
+
+include ../category.mk
+
+#libdir = $(exec_prefix)/lib/orca

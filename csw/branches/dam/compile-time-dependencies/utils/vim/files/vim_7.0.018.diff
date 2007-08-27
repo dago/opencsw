@@ -1,0 +1,54 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.018
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.018
+Problem:    VMS: plugins are not loaded on startup.
+Solution:   Remove "**" from the path. (Zoltan Arpadffy)
+Files:	    src/main.c
+
+
+*** ../vim-7.0.017/src/main.c	Wed May  3 23:28:15 2006
+--- src/main.c	Mon Jun 19 10:54:40 2006
+***************
+*** 564,570 ****
+--- 564,574 ----
+       */
+      if (p_lpl)
+      {
++ # ifdef VMS	/* Somehow VMS doesn't handle the "**". */
++ 	source_runtime((char_u *)"plugin/*.vim", TRUE);
++ # else
+  	source_runtime((char_u *)"plugin/**/*.vim", TRUE);
++ # endif
+  	TIME_MSG("loading plugins");
+      }
+  #endif
+*** ../vim-7.0.017/src/version.c	Sat May 13 17:26:10 2006
+--- src/version.c	Mon Jun 19 10:55:29 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     18,
+  /**/
+
+-- 
+BLACK KNIGHT:  Come on you pansy!
+    [hah] [parry thrust]
+    [ARTHUR chops the BLACK KNIGHT's right arm off]
+ARTHUR:        Victory is mine!  [kneeling]
+               We thank thee Lord, that in thy merc-
+    [Black Knight kicks Arthur in the head while he is praying]
+                                  The Quest for the Holy Grail (Monty Python)
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

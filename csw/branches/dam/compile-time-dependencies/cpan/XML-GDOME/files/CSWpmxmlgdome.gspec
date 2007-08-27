@@ -1,0 +1,8 @@
+%var            bitname pm_xmlgdome
+%var            pkgname CSWpmxmlgdome
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2001, 2002 T.J. Mather.
+Copyright 2001, AxKit.com Ltd. All rights reserved.
+XML::GDOME is free software;
+you may redistribute it and/or modify it under the same terms as Perl itself.

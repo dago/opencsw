@@ -1,0 +1,52 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.043
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.043
+Problem:    Using "%!" at the start of 'statusline' doesn't work.
+Solution:   Recognize the special item when the option is being set.
+Files:	    src/option.c
+
+
+*** ../vim-7.0.042/src/option.c	Sat May 13 14:41:15 2006
+--- src/option.c	Mon Jul 10 22:41:20 2006
+***************
+*** 6325,6331 ****
+  	    else
+  		errmsg = check_stl_option(p_ruf);
+  	}
+! 	else
+  	    errmsg = check_stl_option(s);
+  	if (varp == &p_ruf && errmsg == NULL)
+  	    comp_col();
+--- 6325,6332 ----
+  	    else
+  		errmsg = check_stl_option(p_ruf);
+  	}
+! 	/* check 'statusline' only if it doesn't start with "%!" */
+! 	else if (varp != &p_stl || s[0] != '%' || s[1] != '!')
+  	    errmsg = check_stl_option(s);
+  	if (varp == &p_ruf && errmsg == NULL)
+  	    comp_col();
+*** ../vim-7.0.042/src/version.c	Sun Jul 23 22:37:29 2006
+--- src/version.c	Tue Aug  8 16:29:24 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     43,
+  /**/
+
+-- 
+There's no place like $(HOME)!
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

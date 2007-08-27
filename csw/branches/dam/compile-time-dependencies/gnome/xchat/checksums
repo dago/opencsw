@@ -1,0 +1,15 @@
+d87a93bcd39d96ff3a3d0f8199efcf12  download/xchat-2.8.2.tar.bz2
+6d8f0db81e3d0f0d1b61752dc99d3ece  download/CSWxchat.gspec
+550c9f97329a7a529366bd7855a6af63  download/CSWxchat.depend
+f0631e064d004e12bdbd3a5c9f467b72  download/CSWxchat.prototype
+854707eedb0cbbc0dec9789c3040a574  download/CSWxchat-pl.gspec
+29433c17584cfd2409231bf0791ed91a  download/CSWxchat-pl.depend
+26bb618ddbb8e255d6a3cd2925e96359  download/CSWxchat-pl.prototype
+0739b670b59b9586b0a1d12092d5511c  download/CSWxchat-py.gspec
+ae3345d19d9ba8a2a46d6bd68a1a2a09  download/CSWxchat-py.depend
+59f8e886eeccaa15adc0ead28ea63cf8  download/CSWxchat-py.prototype
+c82a9961c1dc59e0df7f310300153fce  download/CSWxchat-tcl.gspec
+0bf2d069420b7162cc5bac0fdc78d958  download/CSWxchat-tcl.depend
+1f5dcd86dea352323bbd0816ce0de68b  download/CSWxchat-tcl.prototype
+f5c28b6f2b6209d9555e48643c95bc60  download/pylibs.diff
+15c71c3745ecb54f7d78a4509d14d45d  download/fixes.diff

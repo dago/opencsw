@@ -1,0 +1,6 @@
+%var            bitname pm_mathpari
+%var            pkgname CSWpmmathpari
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+The code is distributed with the same license as Perl (i.e., Artistic or
+or GPL); however, it uses GP/PARI code, which is purely GPL.

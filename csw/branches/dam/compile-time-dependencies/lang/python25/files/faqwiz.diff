@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru Python-2.5c1.orig/Tools/faqwiz/faqconf.py Python-2.5c1/Tools/faqwiz/faqconf.py
+--- Python-2.5c1.orig/Tools/faqwiz/faqconf.py	2005-12-11 21:02:24.000000000 -0500
++++ Python-2.5c1/Tools/faqwiz/faqconf.py	2006-09-04 23:20:00.653252000 -0400
+@@ -21,7 +21,7 @@
+ OWNEREMAIL = "nobody@anywhere.org"      # Email for feedback
+ HOMEURL = "http://www.python.org"       # Related home page
+ HOMENAME = "Python home"                # Name of related home page
+-RCSBINDIR = "/usr/local/bin/"           # Directory containing RCS commands
++RCSBINDIR = "/opt/csw/bin/"             # Directory containing RCS commands
+                                         # (must end in a slash)
+ 
+ # Parameters you can normally leave alone

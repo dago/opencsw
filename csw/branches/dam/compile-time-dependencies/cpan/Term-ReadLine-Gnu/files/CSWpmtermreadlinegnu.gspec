@@ -1,0 +1,8 @@
+%var            bitname pm_termreadlinegnu
+%var            pkgname CSWpmtermreadlinegnu
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2001 Hiroo Hayashi.  All rights reserved.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

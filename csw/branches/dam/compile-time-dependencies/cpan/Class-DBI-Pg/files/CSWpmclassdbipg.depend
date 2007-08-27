@@ -1,0 +1,4 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmclassdbi pm_classdbi - simple database abstraction
+P CSWpmdbdpg pm_dbdpg - PostgreSQL database driver for the DBI module

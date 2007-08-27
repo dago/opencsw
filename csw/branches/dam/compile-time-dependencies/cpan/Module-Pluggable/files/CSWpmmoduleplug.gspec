@@ -1,0 +1,8 @@
+%var            bitname pm_moduleplug
+%var            pkgname CSWpmmoduleplug
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+Copyright, 2003 Simon Wistow
+Distributed under the same terms as Perl itself.
+

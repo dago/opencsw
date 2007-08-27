@@ -1,0 +1,9 @@
+%var            bitname pm_testpod
+%var            pkgname CSWpmtestpod
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2004, Andy Lester, All Rights Reserved.
+
+You may use, modify, and distribute this package under the
+same terms as Perl itself.

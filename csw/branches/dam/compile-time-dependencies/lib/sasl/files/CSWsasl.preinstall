@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
+
+# Next, verify that group sasl exists.
+# First check target machines group file, THEN check
+# NIS/NIS+/whatever
+
+${BASEDIR}/usr/bin/grep '^sasl:' ${BASEDIR}/etc/group >/dev/null
+if [ $? -ne 0 ] ; then
+        ${BASEDIR}/usr/bin/getent group sasl >/dev/null
+        if [ $? -ne 0 ] ; then
+                ADDGROUP=1
+        fi
+fi
+
+if [ "$ADDGROUP" = 1 ] ; then
+        chroot $PKG_INSTALL_ROOT /usr/sbin/groupadd sasl
+	echo "sasl group added"
+else
+        echo "sasl group detected"
+fi
+
+exit 0

@@ -1,0 +1,5 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWmysql4rt mysql4rt - run-time libraries for mysql4
+P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWpython python - The Python language interpreter
+P CSWzlib zlib - Zlib Data Compression Library

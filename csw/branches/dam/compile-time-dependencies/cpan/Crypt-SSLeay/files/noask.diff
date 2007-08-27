@@ -1,0 +1,21 @@
+diff --speed-large-files --minimal -Nru Crypt-SSLeay-0.54.orig/Makefile.PL Crypt-SSLeay-0.54/Makefile.PL
+--- Crypt-SSLeay-0.54.orig/Makefile.PL	2007-03-28 13:45:44.000000000 -0400
++++ Crypt-SSLeay-0.54/Makefile.PL	2007-05-13 23:45:44.637016000 -0400
+@@ -261,11 +261,12 @@
+ these tests may fail (through no fault of the code).
+ 
+ INFO
+-    my $network_tests = prompt
+-        "Do you want to run the live tests (y/N) ?",
+-        'N';
+-    print OUT "network_tests ", ($network_tests =~ /y/i) ? 1 : 0, "\n";
+-    close OUT;
++#    my $network_tests = prompt
++#        "Do you want to run the live tests (y/N) ?",
++#        'N';
++#    print OUT "network_tests ", ($network_tests =~ /y/i) ? 1 : 0, "\n";
++#    close OUT;
++print OUT "network_tests 0\n";
+ }
+ 
+ ## HELPERS

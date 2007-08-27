@@ -1,0 +1,28 @@
+#!/bin/env perl -i.pre-2.2 -w
+
+use strict;
+
+while (<>) {
+
+    # Rename modules
+    s#auth_anon_module\s+(libexec)/mod_auth_anon\.so#authn_anon_module $1/mod_authn_anon.so#;
+    s#auth_dbm_module\s+(libexec)/mod_auth_dbm\.so#authn_dbm_module $1/mod_authn_dbm.so#;
+    s#auth_ldap_module\s+(libexec)/mod_auth_ldap\.so#authnz_ldap_module $1/mod_authnz_ldap.so#;
+
+    s#imap_module\s+(libexec)/mod_imap\.so#imagemap_module $1/mod_imagemap.so#;
+    s#access_module\s+(libexec)/mod_access\.so#authz_host_module $1/mod_authz_host.so#;
+
+    # Split up mod_auth
+    if (m{auth_module\s+libexec/mod_auth.so}) {
+        print "LoadModule auth_basic_module libexec/mod_auth_basic.so\n";
+        print "LoadModule authn_file_module libexec/mod_authn_file.so\n";
+        print "LoadModule authz_user_module libexec/mod_authz_user.so\n";
+        print "LoadModule authz_groupfile_module libexec/mod_authz_groupfile.so\n";
+        next;
+    }
+
+    # Rewrite module names
+    s/IfModule mod_(\w+)\.c/IfModule $1_module/;
+
+    print;
+}

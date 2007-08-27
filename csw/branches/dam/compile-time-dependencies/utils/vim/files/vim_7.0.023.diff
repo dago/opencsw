@@ -1,0 +1,170 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.023
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.023
+Problem:    Crash when doing spell completion in an empty line and pressing
+	    CTRL-E.
+Solution:   Check for a zero pointer. (James Vega)
+	    Also handle a situation without a matching pattern better, report
+	    "No matches" instead of remaining in undefined CTRL-X mode.  And
+	    get out of CTRL-X mode when typing a letter.
+Files:	    src/edit.c
+
+
+*** ../vim-7.0.022/src/edit.c	Sat May 13 15:27:57 2006
+--- src/edit.c	Thu Jun 22 16:44:01 2006
+***************
+*** 719,727 ****
+  #ifdef FEAT_INS_EXPAND
+  	/*
+  	 * Special handling of keys while the popup menu is visible or wanted
+! 	 * and the cursor is still in the completed word.
+  	 */
+! 	if (compl_started && pum_wanted() && curwin->w_cursor.col >= compl_col)
+  	{
+  	    /* BS: Delete one character from "compl_leader". */
+  	    if ((c == K_BS || c == Ctrl_H)
+--- 721,734 ----
+  #ifdef FEAT_INS_EXPAND
+  	/*
+  	 * Special handling of keys while the popup menu is visible or wanted
+! 	 * and the cursor is still in the completed word.  Only when there is
+! 	 * a match, skip this when no matches were found.
+  	 */
+! 	if (compl_started
+! 		&& pum_wanted()
+! 		&& curwin->w_cursor.col >= compl_col
+! 		&& (compl_shown_match == NULL
+! 		    || compl_shown_match != compl_shown_match->cp_next))
+  	{
+  	    /* BS: Delete one character from "compl_leader". */
+  	    if ((c == K_BS || c == Ctrl_H)
+***************
+*** 3393,3408 ****
+  		    ptr = compl_leader;
+  		else
+  		    ptr = compl_orig_text;
+! 		p = compl_orig_text;
+! 		for (temp = 0; p[temp] != NUL && p[temp] == ptr[temp]; ++temp)
+! 		    ;
+  #ifdef FEAT_MBYTE
+! 		if (temp > 0)
+! 		    temp -= (*mb_head_off)(compl_orig_text, p + temp);
+  #endif
+! 		for (p += temp; *p != NUL; mb_ptr_adv(p))
+! 		    AppendCharToRedobuff(K_BS);
+! 		AppendToRedobuffLit(ptr + temp, -1);
+  	    }
+  
+  #ifdef FEAT_CINDENT
+--- 3401,3421 ----
+  		    ptr = compl_leader;
+  		else
+  		    ptr = compl_orig_text;
+! 		if (compl_orig_text != NULL)
+! 		{
+! 		    p = compl_orig_text;
+! 		    for (temp = 0; p[temp] != NUL && p[temp] == ptr[temp];
+! 								       ++temp)
+! 			;
+  #ifdef FEAT_MBYTE
+! 		    if (temp > 0)
+! 			temp -= (*mb_head_off)(compl_orig_text, p + temp);
+  #endif
+! 		    for (p += temp; *p != NUL; mb_ptr_adv(p))
+! 			AppendCharToRedobuff(K_BS);
+! 		}
+! 		if (ptr != NULL)
+! 		    AppendToRedobuffLit(ptr + temp, -1);
+  	    }
+  
+  #ifdef FEAT_CINDENT
+***************
+*** 4650,4659 ****
+  				     (int)STRLEN(compl_pattern), curs_col);
+  	    if (compl_xp.xp_context == EXPAND_UNSUCCESSFUL
+  		    || compl_xp.xp_context == EXPAND_NOTHING)
+! 		return FAIL;
+! 	    startcol = (int)(compl_xp.xp_pattern - compl_pattern);
+! 	    compl_col = startcol;
+! 	    compl_length = curs_col - startcol;
+  	}
+  	else if (ctrl_x_mode == CTRL_X_FUNCTION || ctrl_x_mode == CTRL_X_OMNI)
+  	{
+--- 4663,4680 ----
+  				     (int)STRLEN(compl_pattern), curs_col);
+  	    if (compl_xp.xp_context == EXPAND_UNSUCCESSFUL
+  		    || compl_xp.xp_context == EXPAND_NOTHING)
+! 	    {
+! 		compl_col = curs_col;
+! 		compl_length = 0;
+! 		vim_free(compl_pattern);
+! 		compl_pattern = NULL;
+! 	    }
+! 	    else
+! 	    {
+! 		startcol = (int)(compl_xp.xp_pattern - compl_pattern);
+! 		compl_col = startcol;
+! 		compl_length = curs_col - startcol;
+! 	    }
+  	}
+  	else if (ctrl_x_mode == CTRL_X_FUNCTION || ctrl_x_mode == CTRL_X_OMNI)
+  	{
+***************
+*** 4707,4717 ****
+  	    else
+  		compl_col = spell_word_start(startcol);
+  	    if (compl_col >= (colnr_T)startcol)
+! 		return FAIL;
+! 	    spell_expand_check_cap(compl_col);
+  	    /* Need to obtain "line" again, it may have become invalid. */
+  	    line = ml_get(curwin->w_cursor.lnum);
+- 	    compl_length = (int)curs_col - compl_col;
+  	    compl_pattern = vim_strnsave(line + compl_col, compl_length);
+  	    if (compl_pattern == NULL)
+  #endif
+--- 4728,4744 ----
+  	    else
+  		compl_col = spell_word_start(startcol);
+  	    if (compl_col >= (colnr_T)startcol)
+! 	    {
+! 		compl_length = 0;
+! 		compl_col = curs_col;
+! 	    }
+! 	    else
+! 	    {
+! 		spell_expand_check_cap(compl_col);
+! 		compl_length = (int)curs_col - compl_col;
+! 	    }
+  	    /* Need to obtain "line" again, it may have become invalid. */
+  	    line = ml_get(curwin->w_cursor.lnum);
+  	    compl_pattern = vim_strnsave(line + compl_col, compl_length);
+  	    if (compl_pattern == NULL)
+  #endif
+*** ../vim-7.0.022/src/version.c	Tue Jun 20 21:08:02 2006
+--- src/version.c	Thu Jun 22 16:34:42 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     23,
+  /**/
+
+-- 
+BEDEVERE: Look!  It's the old man from scene 24 - what's he Doing here?
+ARTHUR:   He is the keeper of the Bridge.  He asks each traveler five
+          questions ...
+GALAHAD:  Three questions.
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

@@ -1,0 +1,27 @@
+%var            bitname pm_cryptripemd160
+%var            pkgname CSWpmcryptripemd160
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+The RIPEMD160 extension may be redistributed under the same terms as Perl.
+The RIPEMD160 algorithm is published in "Fast Software Encryption, LNCS 1039,
+D. Gollmann (Ed.), pp.71-82".
+
+The basic C code implementing the algorithm is covered by the
+following copyright:
+
+/********************************************************************\
+ *
+ *      FILE:     rmd160.c
+ *
+ *      CONTENTS: A sample C-implementation of the RIPEMD-160
+ *                hash-function.
+ *      TARGET:   any computer with an ANSI C compiler
+ *
+ *      AUTHOR:   Antoon Bosselaers, ESAT-COSIC
+ *      DATE:     1 March 1996
+ *      VERSION:  1.0
+ *
+ *      Copyright (c) Katholieke Universiteit Leuven
+ *      1996, All Rights Reserved
+ *
+\********************************************************************/

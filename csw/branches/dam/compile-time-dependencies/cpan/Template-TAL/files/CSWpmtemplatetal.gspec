@@ -1,0 +1,9 @@
+%var            bitname pm_templatetal
+%var            pkgname CSWpmtemplatetal
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+Written by Tom Insam, Copyright 2005 Fotango Ltd. All Rights Reserved.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.

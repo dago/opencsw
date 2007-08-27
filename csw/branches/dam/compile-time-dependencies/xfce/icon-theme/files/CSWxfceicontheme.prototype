@@ -1,0 +1,1637 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/xfce4-icon-theme-1.0.pc 0644 root bin
+d none /opt/csw/share/icons 0755 root bin
+d none /opt/csw/share/icons/Rodent 0755 root bin
+d none /opt/csw/share/icons/Rodent/48x48 0755 root bin
+d none /opt/csw/share/icons/Rodent/48x48/apps 0755 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/applets-screenshooter.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/bluefish-icon.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/digikam.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/digikamcameraclient.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/evolution.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/file-manager.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/file-roller.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gftp.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gimp.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-applications.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-audio.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-calculator.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-cdplayer-icon.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-desktop-config.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-devel.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-globe.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-graphics.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-help.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-info.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-joystick.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-library.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-lockscreen.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-logout.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-media-player-icon.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-multimedia.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-other.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-package.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-pdf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-searchtool.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-settings.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-shutdown.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-starthere.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-system.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-terminal.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gnome-util.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/gqview.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/im-aim.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/keyboard.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/ooo_calc.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/ooo_chart.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/ooo_draw.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/ooo_impress.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/ooo_math.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/ooo_setup.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/ooo_writer.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/palm-pilot.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/settings.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/web-browser.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xcdroast.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-edit.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-filemanager.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-games.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-gnome-mailcheck.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-graphics.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-gtk-paste.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-internet.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-mail.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-man.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-multimedia.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-newmail.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-nomail.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-oldmail.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-printer.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-schedule.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-sound.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-system-exit.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-system-info.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-system-lock.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-system-settings.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-terminal.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-trash_empty.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-trash_full.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-unknown.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce-utils.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce4-mixer.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce4-panel.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xfce4-splash.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/apps/xsane.png 0644 root bin
+d none /opt/csw/share/icons/Rodent/48x48/devices 0755 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-cdrom-audio.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-cdrom.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-dvd.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-floppy.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-harddisk.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-jazdisk.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-keyboard.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-mouse-ball.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-mouse-optical.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-network.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-printer.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-removable.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-scanner.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-symlink.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/gnome-dev-zipdisk.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/network_fs.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/devices/printer-class.png 0644 root bin
+d none /opt/csw/share/icons/Rodent/48x48/emblems 0755 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-camera.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-cool.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-danger.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-desktop.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-distinguished.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-documents.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-fun.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-generic.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-important.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-multimedia.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-noread.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-nowrite.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-ohno.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-package.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-pictures.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-relax.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-sound.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-symbolic-link.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-urgent.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/emblems/emblem-web.png 0644 root bin
+d none /opt/csw/share/icons/Rodent/48x48/filesystems 0755 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/blockdevice.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/chardevice.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/core.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/directory.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-blockdev.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-client.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-desktop.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-directory-accept.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-directory-visiting.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-directory.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-executable.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-file-broken.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-ftp.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-home.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-network.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-nfs.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-regular.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-share.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-smb.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-ssh.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-trash-empty.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/gnome-fs-trash-full.png 0644 root bin
+s none /opt/csw/share/icons/Rodent/48x48/filesystems/mime-inode:blockdevice.png=blockdevice.png
+s none /opt/csw/share/icons/Rodent/48x48/filesystems/mime-inode:chardevice.png=chardevice.png
+s none /opt/csw/share/icons/Rodent/48x48/filesystems/mime-inode:core.png=core.png
+s none /opt/csw/share/icons/Rodent/48x48/filesystems/mime-inode:directory.png=directory.png
+s none /opt/csw/share/icons/Rodent/48x48/filesystems/mime-inode:mount-point.png=mount-point.png
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/mount-point.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/network_fs.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/filesystems/open_folder.png 0644 root bin
+s none /opt/csw/share/icons/Rodent/48x48/filesystems/user-home.png=gnome-fs-home.png
+d none /opt/csw/share/icons/Rodent/48x48/mimetypes 0755 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-msword.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-octet-stream.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-ogg.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-pdf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-pgp-encrypted.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-pgp-keys.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-pgp.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-postscript.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-qif.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-rhythmbox-effect.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-rhythmbox-playlist.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-rtf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-smil.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.ms-excel.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.ms-powerpoint.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.ms-word.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.rn-realmedia.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.stardivision.calc.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.stardivision.chart.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.stardivision.impress.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.stardivision.writer.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.sun.xml.calc.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.sun.xml.chart.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.sun.xml.draw.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.sun.xml.impress.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-vnd.sun.xml.writer.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-abiword.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-archive.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-arj.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-blender.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-bzip-compressed-tar.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-bzip.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-cd-image.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-compress.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-compressed-tar.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-cpio-compressed.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-cpio.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-deb.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-desktop.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-dia-diagram.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-dvi.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-executable.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-font-asm.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-font-bdf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-font-linux-psf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-font-pcf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-font-ttf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-gettext-translation.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-glade.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-gnucash.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-gnumeric.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-gtktalog.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-gzip.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-kde-app-info.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-killustrator.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-kpresenter.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-kspread.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-kword.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-lha.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-object.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-perl.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-php.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-python-bytecode.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-python.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-qw.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-rar.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-reject.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-rpm.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-share-library-la.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-sharedlib.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-shellscript.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-shockwave-flash.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-smil.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-tar.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-tex.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-x-trash.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application-zip.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/application.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-ac3.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-basic.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-midi.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-aiff.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-it.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-midi.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-mod.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-mp3.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-mpegurl.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-pn-realaudio.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-s3m.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-stm.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-ulaw.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-voc.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-wav.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-xi.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio-x-xm.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/audio.png 0644 root bin
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-msword.png=application-msword.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-octet-stream.png=application-octet-stream.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-ogg.png=application-ogg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-pdf.png=application-pdf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-pgp-encrypted.png=application-pgp-encrypted.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-pgp-keys.png=application-pgp-keys.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-pgp.png=application-pgp.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-postscript.png=application-postscript.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-qif.png=application-qif.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-rhythmbox-effect.png=application-rhythmbox-effect.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-rhythmbox-playlist.png=application-rhythmbox-playlist.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-rtf.png=application-rtf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-smil.png=application-smil.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.ms-excel.png=application-vnd.ms-excel.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.ms-powerpoint.png=application-vnd.ms-powerpoint.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.ms-word.png=application-vnd.ms-word.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.rn-realmedia.png=application-vnd.rn-realmedia.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.stardivision.calc.png=application-vnd.stardivision.calc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.stardivision.chart.png=application-vnd.stardivision.chart.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.stardivision.impress.png=application-vnd.stardivision.impress.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.stardivision.writer.png=application-vnd.stardivision.writer.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.sun.xml.calc.png=application-vnd.sun.xml.calc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.sun.xml.chart.png=application-vnd.sun.xml.chart.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.sun.xml.draw.png=application-vnd.sun.xml.draw.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.sun.xml.impress.png=application-vnd.sun.xml.impress.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-vnd.sun.xml.writer.png=application-vnd.sun.xml.writer.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-abiword.png=application-x-abiword.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-archive.png=application-x-archive.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-arj.png=application-x-arj.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-blender.png=application-x-blender.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-bzip-compressed-tar.png=application-x-bzip-compressed-tar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-bzip.png=application-x-bzip.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-cd-image.png=application-x-cd-image.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-compress.png=application-x-compress.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-compressed-tar.png=application-x-compressed-tar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-cpio-compressed.png=application-x-cpio-compressed.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-cpio.png=application-x-cpio.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-deb.png=application-x-deb.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-desktop.png=application-x-desktop.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-dia-diagram.png=application-x-dia-diagram.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-dvi.png=application-x-dvi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-executable.png=application-x-executable.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-font-asm.png=application-x-font-asm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-font-bdf.png=application-x-font-bdf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-font-linux-psf.png=application-x-font-linux-psf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-font-pcf.png=application-x-font-pcf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-font-ttf.png=application-x-font-ttf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-gettext-translation.png=application-x-gettext-translation.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-glade.png=application-x-glade.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-gnucash.png=application-x-gnucash.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-gnumeric.png=application-x-gnumeric.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-gtktalog.png=application-x-gtktalog.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-gzip.png=application-x-gzip.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-kde-app-info.png=application-x-kde-app-info.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-killustrator.png=application-x-killustrator.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-kpresenter.png=application-x-kpresenter.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-kspread.png=application-x-kspread.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-kword.png=application-x-kword.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-lha.png=application-x-lha.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-object.png=application-x-object.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-perl.png=application-x-perl.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-php.png=application-x-php.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-python-bytecode.png=application-x-python-bytecode.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-python.png=application-x-python.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-qw.png=application-x-qw.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-rar.png=application-x-rar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-reject.png=application-x-reject.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-rpm.png=application-x-rpm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-share-library-la.png=application-x-share-library-la.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-sharedlib.png=application-x-sharedlib.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-shellscript.png=application-x-shellscript.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-shockwave-flash.png=application-x-shockwave-flash.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-smil.png=application-x-smil.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-tar.png=application-x-tar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-tex.png=application-x-tex.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-x-trash.png=application-x-trash.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application-zip.png=application-zip.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-application.png=application.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-ac3.png=audio-ac3.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-basic.png=audio-basic.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-midi.png=audio-midi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-aiff.png=audio-x-aiff.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-it.png=audio-x-it.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-midi.png=audio-x-midi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-mod.png=audio-x-mod.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-mp3.png=audio-x-mp3.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-mpegurl.png=audio-x-mpegurl.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-pn-realaudio.png=audio-x-pn-realaudio.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-s3m.png=audio-x-s3m.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-stm.png=audio-x-stm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-ulaw.png=audio-x-ulaw.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-voc.png=audio-x-voc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-wav.png=audio-x-wav.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-xi.png=audio-x-xi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio-x-xm.png=audio-x-xm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-audio.png=audio.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-bmp.png=image-bmp.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-gif.png=image-gif.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-ief.png=image-ief.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-jpeg.png=image-jpeg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-png.png=image-png.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-svg+xml.png=image-svg+xml.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-svg.png=image-svg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-tiff.png=image-tiff.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-3ds.png=image-x-3ds.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-applix-graphic.png=image-x-applix-graphic.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-cmu-raster.png=image-x-cmu-raster.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-portable-anymap.png=image-x-portable-anymap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-portable-bitmap.png=image-x-portable-bitmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-portable-greymap.png=image-x-portable-greymap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-portable-pixmap.png=image-x-portable-pixmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-psd.png=image-x-psd.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-rgb.png=image-x-rgb.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-tga.png=image-x-tga.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-xbitmap.png=image-x-xbitmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-xcf.png=image-x-xcf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-xfig.png=image-x-xfig.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-xpixmap.png=image-x-xpixmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image-x-xwindowdum.png=image-x-xwindowdum.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-image.png=image.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-css.png=text-css.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-html.png=text-html.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-sgml.png=text-sgml.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-authors.png=text-x-authors.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-c++.png=text-x-c++.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-c++src.png=text-x-c++src.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-c-header.png=text-x-c-header.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-c.png=text-x-c.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-chdr.png=text-x-chdr.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-copying.png=text-x-copying.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-credits.png=text-x-credits.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-csh.png=text-x-csh.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-csharp.png=text-x-csharp.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-csrc.png=text-x-csrc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-gettext-translation.png=text-x-gettext-translation.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-haskell.png=text-x-haskell.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-install.png=text-x-install.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-java.png=text-x-java.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-literate-haskell.png=text-x-literate-haskell.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-log.png=text-x-log.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-lyx.png=text-x-lyx.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-makefile.png=text-x-makefile.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-patch.png=text-x-patch.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-readme.png=text-x-readme.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-scheme.png=text-x-scheme.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-sh.png=text-x-sh.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-tex.png=text-x-tex.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-troff-man.png=text-x-troff-man.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-vcalendar.png=text-x-vcalendar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-vcard.png=text-x-vcard.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-xslt.png=text-x-xslt.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-x-zsh.png=text-x-zsh.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text-xml.png=text-xml.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-text.png=text.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-video-mpeg.png=video-mpeg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-video-quicktime.png=video-quicktime.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-video-x-ms-asf.png=video-x-ms-asf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-video-x-ms-wmv.png=video-x-ms-wmv.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-video-x-msvideo.png=video-x-msvideo.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-video.png=video.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-x-directory-nfs-server.png=x-directory-nfs-server.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-x-directory-smb-server.png=x-directory-smb-server.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-x-directory-smb-share.png=x-directory-smb-share.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-x-directory-smb-workgroup.png=x-directory-smb-workgroup.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-x-font-afm.png=x-font-afm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/gnome-mime-x-gdesklets-display.png=x-gdesklets-display.png
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-bmp.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-gif.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-ief.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-jpeg.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-png.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-svg+xml.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-svg.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-tiff.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-3ds.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-applix-graphic.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-cmu-raster.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-portable-anymap.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-portable-bitmap.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-portable-greymap.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-portable-pixmap.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-psd.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-rgb.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-tga.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-xbitmap.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-xcf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-xfig.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-xpixmap.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image-x-xwindowdum.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/image.png 0644 root bin
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application.png=application.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:msword.png=application-msword.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:octet-stream.png=application-octet-stream.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:ogg.png=application-ogg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:pdf.png=application-pdf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:pgp-encrypted.png=application-pgp-encrypted.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:pgp-keys.png=application-pgp-keys.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:pgp.png=application-pgp.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:postscript.png=application-postscript.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:qif.png=application-qif.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:rhythmbox-effect.png=application-rhythmbox-effect.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:rhythmbox-playlist.png=application-rhythmbox-playlist.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:rtf.png=application-rtf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:smil.png=application-smil.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.ms-excel.png=application-vnd.ms-excel.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.ms-powerpoint.png=application-vnd.ms-powerpoint.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.ms-word.png=application-vnd.ms-word.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.rn-realmedia.png=application-vnd.rn-realmedia.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.stardivision.calc.png=application-vnd.stardivision.calc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.stardivision.chart.png=application-vnd.stardivision.chart.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.stardivision.impress.png=application-vnd.stardivision.impress.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.stardivision.writer.png=application-vnd.stardivision.writer.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.sun.xml.calc.png=application-vnd.sun.xml.calc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.sun.xml.chart.png=application-vnd.sun.xml.chart.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.sun.xml.draw.png=application-vnd.sun.xml.draw.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.sun.xml.impress.png=application-vnd.sun.xml.impress.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:vnd.sun.xml.writer.png=application-vnd.sun.xml.writer.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-abiword.png=application-x-abiword.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-archive.png=application-x-archive.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-arj.png=application-x-arj.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-blender.png=application-x-blender.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-bzip-compressed-tar.png=application-x-bzip-compressed-tar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-bzip.png=application-x-bzip.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-cd-image.png=application-x-cd-image.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-compress.png=application-x-compress.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-compressed-tar.png=application-x-compressed-tar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-cpio-compressed.png=application-x-cpio-compressed.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-cpio.png=application-x-cpio.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-deb.png=application-x-deb.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-desktop.png=application-x-desktop.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-dia-diagram.png=application-x-dia-diagram.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-dvi.png=application-x-dvi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-executable.png=application-x-executable.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-font-asm.png=application-x-font-asm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-font-bdf.png=application-x-font-bdf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-font-linux-psf.png=application-x-font-linux-psf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-font-pcf.png=application-x-font-pcf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-font-ttf.png=application-x-font-ttf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-gettext-translation.png=application-x-gettext-translation.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-glade.png=application-x-glade.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-gnucash.png=application-x-gnucash.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-gnumeric.png=application-x-gnumeric.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-gtktalog.png=application-x-gtktalog.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-gzip.png=application-x-gzip.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-kde-app-info.png=application-x-kde-app-info.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-killustrator.png=application-x-killustrator.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-kpresenter.png=application-x-kpresenter.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-kspread.png=application-x-kspread.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-kword.png=application-x-kword.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-lha.png=application-x-lha.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-object.png=application-x-object.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-perl.png=application-x-perl.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-php.png=application-x-php.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-python-bytecode.png=application-x-python-bytecode.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-python.png=application-x-python.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-qw.png=application-x-qw.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-rar.png=application-x-rar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-reject.png=application-x-reject.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-rpm.png=application-x-rpm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-share-library-la.png=application-x-share-library-la.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-sharedlib.png=application-x-sharedlib.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-shellscript.png=application-x-shellscript.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-shockwave-flash.png=application-x-shockwave-flash.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-smil.png=application-x-smil.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-tar.png=application-x-tar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-tex.png=application-x-tex.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:x-trash.png=application-x-trash.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-application:zip.png=application-zip.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio.png=audio.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:ac3.png=audio-ac3.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:basic.png=audio-basic.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:midi.png=audio-midi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-aiff.png=audio-x-aiff.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-it.png=audio-x-it.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-midi.png=audio-x-midi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-mod.png=audio-x-mod.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-mp3.png=audio-x-mp3.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-mpegurl.png=audio-x-mpegurl.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-pn-realaudio.png=audio-x-pn-realaudio.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-s3m.png=audio-x-s3m.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-stm.png=audio-x-stm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-ulaw.png=audio-x-ulaw.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-voc.png=audio-x-voc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-wav.png=audio-x-wav.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-xi.png=audio-x-xi.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-audio:x-xm.png=audio-x-xm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image.png=image.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:bmp.png=image-bmp.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:gif.png=image-gif.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:ief.png=image-ief.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:jpeg.png=image-jpeg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:png.png=image-png.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:svg+xml.png=image-svg+xml.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:svg.png=image-svg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:tiff.png=image-tiff.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-3ds.png=image-x-3ds.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-applix-graphic.png=image-x-applix-graphic.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-cmu-raster.png=image-x-cmu-raster.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-portable-anymap.png=image-x-portable-anymap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-portable-bitmap.png=image-x-portable-bitmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-portable-greymap.png=image-x-portable-greymap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-portable-pixmap.png=image-x-portable-pixmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-psd.png=image-x-psd.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-rgb.png=image-x-rgb.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-tga.png=image-x-tga.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-xbitmap.png=image-x-xbitmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-xcf.png=image-x-xcf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-xfig.png=image-x-xfig.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-xpixmap.png=image-x-xpixmap.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-image:x-xwindowdum.png=image-x-xwindowdum.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text.png=text.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:css.png=text-css.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:html.png=text-html.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:sgml.png=text-sgml.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-authors.png=text-x-authors.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-c++.png=text-x-c++.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-c++src.png=text-x-c++src.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-c-header.png=text-x-c-header.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-c.png=text-x-c.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-chdr.png=text-x-chdr.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-copying.png=text-x-copying.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-credits.png=text-x-credits.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-csh.png=text-x-csh.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-csharp.png=text-x-csharp.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-csrc.png=text-x-csrc.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-gettext-translation.png=text-x-gettext-translation.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-haskell.png=text-x-haskell.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-install.png=text-x-install.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-java.png=text-x-java.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-literate-haskell.png=text-x-literate-haskell.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-log.png=text-x-log.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-lyx.png=text-x-lyx.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-makefile.png=text-x-makefile.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-patch.png=text-x-patch.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-readme.png=text-x-readme.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-scheme.png=text-x-scheme.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-sh.png=text-x-sh.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-tex.png=text-x-tex.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-troff-man.png=text-x-troff-man.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-vcalendar.png=text-x-vcalendar.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-vcard.png=text-x-vcard.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-xslt.png=text-x-xslt.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:x-zsh.png=text-x-zsh.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-text:xml.png=text-xml.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-video.png=video.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-video:mpeg.png=video-mpeg.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-video:quicktime.png=video-quicktime.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-video:x-ms-asf.png=video-x-ms-asf.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-video:x-ms-wmv.png=video-x-ms-wmv.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-video:x-msvideo.png=video-x-msvideo.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-x:directory-nfs-server.png=x-directory-nfs-server.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-x:directory-smb-server.png=x-directory-smb-server.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-x:directory-smb-share.png=x-directory-smb-share.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-x:directory-smb-workgroup.png=x-directory-smb-workgroup.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-x:font-afm.png=x-font-afm.png
+s none /opt/csw/share/icons/Rodent/48x48/mimetypes/mime-x:gdesklets-display.png=x-gdesklets-display.png
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-css.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-html.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-sgml.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-authors.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-c++.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-c++src.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-c-header.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-c.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-chdr.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-copying.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-credits.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-csh.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-csharp.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-csrc.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-gettext-translation.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-haskell.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-install.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-java.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-literate-haskell.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-log.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-lyx.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-makefile.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-patch.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-readme.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-scheme.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-sh.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-tex.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-troff-man.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-vcalendar.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-vcard.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-xslt.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-x-zsh.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text-xml.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/text.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/video-mpeg.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/video-quicktime.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/video-x-ms-asf.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/video-x-ms-wmv.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/video-x-msvideo.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/video.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/x-directory-nfs-server.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/x-directory-smb-server.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/x-directory-smb-share.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/x-directory-smb-workgroup.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/x-font-afm.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/mimetypes/x-gdesklets-display.png 0644 root bin
+d none /opt/csw/share/icons/Rodent/48x48/misc 0755 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/arrow.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/calc.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/debian.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/f-memory.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/firewall.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/fs-win.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/icon_view.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/menueditor.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/money.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/news.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/notes.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/root_terminal.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/run.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/settings.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/sm.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/sound.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/tabwin.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/taskbar.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/taskmanager.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/ui.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/usb_key.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/webcam.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/wksp.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/wm.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/misc/xfce4-appfinder.png 0644 root bin
+d none /opt/csw/share/icons/Rodent/48x48/stock 0755 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-backward.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-eject.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-forward.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-next.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-pause.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-play.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-prev.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-record.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-shuffle.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/media-stop.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/rox-select.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/rox-show-details.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/rox-show-hidden.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_about.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_accessories.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_add.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_amusements.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_apply.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_attach.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_balance.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_bold.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_book-open.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_book.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_cancel.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_cdrom.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_clear.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_close.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_color_picker.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_connect.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_convert.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_copy.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_cut.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_delete.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_dialog_authentication.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_dialog_error.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_dialog_info.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_dialog_question.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_dialog_warning.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_disconnect.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_dnd-multiple.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_dnd.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_download.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_edit.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_epiphany-bookmark-page.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_execute.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_export.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_file-properties.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_find-and-replace.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_find.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_floppy.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_folder-copy.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_folder-move.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_folder-properties.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_folder.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_fullscreen.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_go-back.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_go-down.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_go-forward.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_go-up.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_goto-bottom.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_goto-first.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_goto-last.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_goto-top.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_harddisk.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_help.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_history.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_home.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_import.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_indent.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_index.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_insert-image.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_insert-object.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_insert-table.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_internet.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_italic.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_jump-to.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_justify-center.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_justify-fill.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_justify-left.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_justify-right.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_line-in.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_logout.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_mailto.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_mic.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_missing-image.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_multimedia.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_network.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_new-dir.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_new-tab.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_new.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_no.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_ok.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_open.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_paste.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_pastelink.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_preferences.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_print-preview.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_print.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_properties.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_quit.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_redo.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_refresh.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_remove.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_repeat.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_reset.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_revert-to-saved.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_run.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_save-as.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_save.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_screenshot.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_search.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_select-color.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_select-font.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_sort-ascending.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_sort-descending.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_spell-check.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_stop.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_strikethrough.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_undelete.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_underline.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_undo.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_unindent.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_unknown.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_volume.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_yes.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_zoom-100.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_zoom-fit.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_zoom-in.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/stock_zoom-out.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/volume-max.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/volume-medium.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/volume-min.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/volume-mute.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/48x48/stock/volume-zero.png 0644 root bin
+f none /opt/csw/share/icons/Rodent/iconrc 0644 root bin
+f none /opt/csw/share/icons/Rodent/iconrc-png 0644 root bin
+f none /opt/csw/share/icons/Rodent/index.theme 0644 root bin
+d none /opt/csw/share/icons/Rodent/scalable 0755 root bin
+d none /opt/csw/share/icons/Rodent/scalable/apps 0755 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/applets-screenshooter.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/bluefish-icon.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/digikam.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/digikamcameraclient.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/evolution.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/file-manager.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/file-roller.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gftp.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gimp.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-applications.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-audio.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-calculator.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-cdplayer-icon.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-desktop-config.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-devel.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-globe.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-graphics.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-help.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-info.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-joystick.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-library.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-lockscreen.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-logout.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-media-player-icon.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-multimedia.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-other.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-package.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-pdf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-searchtool.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-settings.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-shutdown.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-starthere.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-system.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-terminal.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gnome-util.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/gqview.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/im-aim.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/keyboard.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/ooo_calc.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/ooo_chart.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/ooo_draw.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/ooo_impress.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/ooo_math.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/ooo_setup.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/ooo_writer.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/palm-pilot.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/settings.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/web-browser.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xcdroast.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-edit.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-filemanager.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-games.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-gnome-mailcheck.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-graphics.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-gtk-paste.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-internet.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-mail.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-man.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-multimedia.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-newmail.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-nomail.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-oldmail.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-printer.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-schedule.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-sound.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-system-exit.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-system-info.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-system-lock.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-system-settings.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-terminal.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-trash_empty.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-trash_full.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-unknown.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce-utils.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce4-mixer.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce4-panel.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xfce4-splash.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/apps/xsane.svg 0644 root bin
+d none /opt/csw/share/icons/Rodent/scalable/devices 0755 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-cdrom-audio.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-cdrom.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-dvd.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-floppy.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-harddisk.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-jazdisk.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-keyboard.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-mouse-ball.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-mouse-optical.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-network.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-printer.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-removable.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-scanner.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-symlink.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/gnome-dev-zipdisk.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/network_fs.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/devices/printer-class.svg 0644 root bin
+d none /opt/csw/share/icons/Rodent/scalable/emblems 0755 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-camera.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-cool.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-danger.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-desktop.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-distinguished.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-documents.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-fun.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-generic.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-important.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-multimedia.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-noread.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-nowrite.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-ohno.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-package.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-pictures.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-relax.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-sound.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-symbolic-link.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-urgent.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/emblems/emblem-web.svg 0644 root bin
+d none /opt/csw/share/icons/Rodent/scalable/filesystems 0755 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/blockdevice.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/chardevice.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/core.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/directory.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-blockdev.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-client.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-desktop.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-directory-accept.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-directory-visiting.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-directory.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-executable.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-file-broken.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-ftp.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-home.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-network.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-nfs.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-regular.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-share.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-smb.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-ssh.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-trash-empty.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/gnome-fs-trash-full.svg 0644 root bin
+s none /opt/csw/share/icons/Rodent/scalable/filesystems/mime-inode:blockdevice.svg=blockdevice.svg
+s none /opt/csw/share/icons/Rodent/scalable/filesystems/mime-inode:chardevice.svg=chardevice.svg
+s none /opt/csw/share/icons/Rodent/scalable/filesystems/mime-inode:core.svg=core.svg
+s none /opt/csw/share/icons/Rodent/scalable/filesystems/mime-inode:directory.svg=directory.svg
+s none /opt/csw/share/icons/Rodent/scalable/filesystems/mime-inode:mount-point.svg=mount-point.svg
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/mount-point.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/network_fs.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/filesystems/open_folder.svg 0644 root bin
+s none /opt/csw/share/icons/Rodent/scalable/filesystems/user-home.svg=gnome-fs-home.svg
+d none /opt/csw/share/icons/Rodent/scalable/mimetypes 0755 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-msword.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-octet-stream.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-ogg.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-pdf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-pgp-encrypted.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-pgp-keys.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-pgp.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-postscript.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-qif.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-rhythmbox-effect.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-rhythmbox-playlist.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-rtf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-smil.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.ms-excel.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.ms-powerpoint.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.ms-word.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.rn-realmedia.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.stardivision.calc.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.stardivision.chart.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.stardivision.impress.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.stardivision.writer.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.sun.xml.calc.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.sun.xml.chart.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.sun.xml.draw.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.sun.xml.impress.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-vnd.sun.xml.writer.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-abiword.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-archive.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-arj.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-blender.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-bzip-compressed-tar.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-bzip.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-cd-image.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-compress.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-compressed-tar.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-cpio-compressed.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-cpio.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-deb.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-desktop.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-dia-diagram.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-dvi.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-executable.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-font-asm.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-font-bdf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-font-linux-psf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-font-pcf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-font-ttf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-gettext-translation.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-glade.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-gnucash.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-gnumeric.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-gtktalog.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-gzip.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-kde-app-info.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-killustrator.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-kpresenter.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-kspread.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-kword.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-lha.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-object.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-perl.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-php.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-python-bytecode.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-python.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-qw.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-rar.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-reject.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-rpm.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-share-library-la.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-sharedlib.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-shellscript.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-shockwave-flash.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-smil.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-tar.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-tex.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-x-trash.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application-zip.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/application.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-ac3.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-basic.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-midi.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-aiff.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-it.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-midi.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-mod.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-mp3.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-mpegurl.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-pn-realaudio.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-s3m.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-stm.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-ulaw.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-voc.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-wav.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-xi.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio-x-xm.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/audio.svg 0644 root bin
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-msword.svg=application-msword.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-octet-stream.svg=application-octet-stream.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-ogg.svg=application-ogg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-pdf.svg=application-pdf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-pgp-encrypted.svg=application-pgp-encrypted.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-pgp-keys.svg=application-pgp-keys.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-pgp.svg=application-pgp.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-postscript.svg=application-postscript.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-qif.svg=application-qif.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-rhythmbox-effect.svg=application-rhythmbox-effect.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-rhythmbox-playlist.svg=application-rhythmbox-playlist.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-rtf.svg=application-rtf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-smil.svg=application-smil.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.ms-excel.svg=application-vnd.ms-excel.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.ms-powerpoint.svg=application-vnd.ms-powerpoint.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.ms-word.svg=application-vnd.ms-word.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.rn-realmedia.svg=application-vnd.rn-realmedia.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.stardivision.calc.svg=application-vnd.stardivision.calc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.stardivision.chart.svg=application-vnd.stardivision.chart.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.stardivision.impress.svg=application-vnd.stardivision.impress.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.stardivision.writer.svg=application-vnd.stardivision.writer.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.sun.xml.calc.svg=application-vnd.sun.xml.calc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.sun.xml.chart.svg=application-vnd.sun.xml.chart.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.sun.xml.draw.svg=application-vnd.sun.xml.draw.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.sun.xml.impress.svg=application-vnd.sun.xml.impress.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-vnd.sun.xml.writer.svg=application-vnd.sun.xml.writer.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-abiword.svg=application-x-abiword.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-archive.svg=application-x-archive.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-arj.svg=application-x-arj.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-blender.svg=application-x-blender.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-bzip-compressed-tar.svg=application-x-bzip-compressed-tar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-bzip.svg=application-x-bzip.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-cd-image.svg=application-x-cd-image.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-compress.svg=application-x-compress.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-compressed-tar.svg=application-x-compressed-tar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-cpio-compressed.svg=application-x-cpio-compressed.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-cpio.svg=application-x-cpio.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-deb.svg=application-x-deb.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-desktop.svg=application-x-desktop.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-dia-diagram.svg=application-x-dia-diagram.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-dvi.svg=application-x-dvi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-executable.svg=application-x-executable.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-font-asm.svg=application-x-font-asm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-font-bdf.svg=application-x-font-bdf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-font-linux-psf.svg=application-x-font-linux-psf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-font-pcf.svg=application-x-font-pcf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-font-ttf.svg=application-x-font-ttf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-gettext-translation.svg=application-x-gettext-translation.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-glade.svg=application-x-glade.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-gnucash.svg=application-x-gnucash.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-gnumeric.svg=application-x-gnumeric.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-gtktalog.svg=application-x-gtktalog.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-gzip.svg=application-x-gzip.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-kde-app-info.svg=application-x-kde-app-info.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-killustrator.svg=application-x-killustrator.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-kpresenter.svg=application-x-kpresenter.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-kspread.svg=application-x-kspread.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-kword.svg=application-x-kword.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-lha.svg=application-x-lha.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-object.svg=application-x-object.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-perl.svg=application-x-perl.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-php.svg=application-x-php.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-python-bytecode.svg=application-x-python-bytecode.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-python.svg=application-x-python.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-qw.svg=application-x-qw.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-rar.svg=application-x-rar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-reject.svg=application-x-reject.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-rpm.svg=application-x-rpm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-share-library-la.svg=application-x-share-library-la.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-sharedlib.svg=application-x-sharedlib.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-shellscript.svg=application-x-shellscript.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-shockwave-flash.svg=application-x-shockwave-flash.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-smil.svg=application-x-smil.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-tar.svg=application-x-tar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-tex.svg=application-x-tex.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-x-trash.svg=application-x-trash.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application-zip.svg=application-zip.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-application.svg=application.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-ac3.svg=audio-ac3.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-basic.svg=audio-basic.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-midi.svg=audio-midi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-aiff.svg=audio-x-aiff.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-it.svg=audio-x-it.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-midi.svg=audio-x-midi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-mod.svg=audio-x-mod.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-mp3.svg=audio-x-mp3.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-mpegurl.svg=audio-x-mpegurl.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-pn-realaudio.svg=audio-x-pn-realaudio.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-s3m.svg=audio-x-s3m.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-stm.svg=audio-x-stm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-ulaw.svg=audio-x-ulaw.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-voc.svg=audio-x-voc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-wav.svg=audio-x-wav.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-xi.svg=audio-x-xi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio-x-xm.svg=audio-x-xm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-audio.svg=audio.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-bmp.svg=image-bmp.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-gif.svg=image-gif.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-ief.svg=image-ief.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-jpeg.svg=image-jpeg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-png.svg=image-png.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-svg+xml.svg=image-svg+xml.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-svg.svg=image-svg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-tiff.svg=image-tiff.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-3ds.svg=image-x-3ds.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-applix-graphic.svg=image-x-applix-graphic.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-cmu-raster.svg=image-x-cmu-raster.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-portable-anymap.svg=image-x-portable-anymap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-portable-bitmap.svg=image-x-portable-bitmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-portable-greymap.svg=image-x-portable-greymap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-portable-pixmap.svg=image-x-portable-pixmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-psd.svg=image-x-psd.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-rgb.svg=image-x-rgb.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-tga.svg=image-x-tga.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-xbitmap.svg=image-x-xbitmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-xcf.svg=image-x-xcf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-xfig.svg=image-x-xfig.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-xpixmap.svg=image-x-xpixmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image-x-xwindowdum.svg=image-x-xwindowdum.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-image.svg=image.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-css.svg=text-css.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-html.svg=text-html.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-sgml.svg=text-sgml.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-authors.svg=text-x-authors.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-c++.svg=text-x-c++.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-c++src.svg=text-x-c++src.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-c-header.svg=text-x-c-header.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-c.svg=text-x-c.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-chdr.svg=text-x-chdr.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-copying.svg=text-x-copying.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-credits.svg=text-x-credits.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-csh.svg=text-x-csh.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-csharp.svg=text-x-csharp.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-csrc.svg=text-x-csrc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-gettext-translation.svg=text-x-gettext-translation.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-haskell.svg=text-x-haskell.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-install.svg=text-x-install.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-java.svg=text-x-java.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-literate-haskell.svg=text-x-literate-haskell.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-log.svg=text-x-log.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-lyx.svg=text-x-lyx.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-makefile.svg=text-x-makefile.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-patch.svg=text-x-patch.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-readme.svg=text-x-readme.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-scheme.svg=text-x-scheme.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-sh.svg=text-x-sh.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-tex.svg=text-x-tex.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-troff-man.svg=text-x-troff-man.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-vcalendar.svg=text-x-vcalendar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-vcard.svg=text-x-vcard.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-xslt.svg=text-x-xslt.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-x-zsh.svg=text-x-zsh.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text-xml.svg=text-xml.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-text.svg=text.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-video-mpeg.svg=video-mpeg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-video-quicktime.svg=video-quicktime.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-video-x-ms-asf.svg=video-x-ms-asf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-video-x-ms-wmv.svg=video-x-ms-wmv.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-video-x-msvideo.svg=video-x-msvideo.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-video.svg=video.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-x-directory-nfs-server.svg=x-directory-nfs-server.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-x-directory-smb-server.svg=x-directory-smb-server.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-x-directory-smb-share.svg=x-directory-smb-share.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-x-directory-smb-workgroup.svg=x-directory-smb-workgroup.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-x-font-afm.svg=x-font-afm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/gnome-mime-x-gdesklets-display.svg=x-gdesklets-display.svg
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-bmp.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-gif.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-ief.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-jpeg.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-png.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-svg+xml.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-svg.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-tiff.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-3ds.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-applix-graphic.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-cmu-raster.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-portable-anymap.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-portable-bitmap.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-portable-greymap.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-portable-pixmap.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-psd.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-rgb.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-tga.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-xbitmap.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-xcf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-xfig.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-xpixmap.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image-x-xwindowdum.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/image.svg 0644 root bin
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application.svg=application.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:msword.svg=application-msword.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:octet-stream.svg=application-octet-stream.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:ogg.svg=application-ogg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:pdf.svg=application-pdf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:pgp-encrypted.svg=application-pgp-encrypted.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:pgp-keys.svg=application-pgp-keys.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:pgp.svg=application-pgp.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:postscript.svg=application-postscript.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:qif.svg=application-qif.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:rhythmbox-effect.svg=application-rhythmbox-effect.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:rhythmbox-playlist.svg=application-rhythmbox-playlist.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:rtf.svg=application-rtf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:smil.svg=application-smil.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.ms-excel.svg=application-vnd.ms-excel.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.ms-powerpoint.svg=application-vnd.ms-powerpoint.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.ms-word.svg=application-vnd.ms-word.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.rn-realmedia.svg=application-vnd.rn-realmedia.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.stardivision.calc.svg=application-vnd.stardivision.calc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.stardivision.chart.svg=application-vnd.stardivision.chart.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.stardivision.impress.svg=application-vnd.stardivision.impress.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.stardivision.writer.svg=application-vnd.stardivision.writer.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.sun.xml.calc.svg=application-vnd.sun.xml.calc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.sun.xml.chart.svg=application-vnd.sun.xml.chart.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.sun.xml.draw.svg=application-vnd.sun.xml.draw.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.sun.xml.impress.svg=application-vnd.sun.xml.impress.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:vnd.sun.xml.writer.svg=application-vnd.sun.xml.writer.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-abiword.svg=application-x-abiword.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-archive.svg=application-x-archive.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-arj.svg=application-x-arj.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-blender.svg=application-x-blender.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-bzip-compressed-tar.svg=application-x-bzip-compressed-tar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-bzip.svg=application-x-bzip.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-cd-image.svg=application-x-cd-image.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-compress.svg=application-x-compress.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-compressed-tar.svg=application-x-compressed-tar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-cpio-compressed.svg=application-x-cpio-compressed.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-cpio.svg=application-x-cpio.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-deb.svg=application-x-deb.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-desktop.svg=application-x-desktop.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-dia-diagram.svg=application-x-dia-diagram.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-dvi.svg=application-x-dvi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-executable.svg=application-x-executable.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-font-asm.svg=application-x-font-asm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-font-bdf.svg=application-x-font-bdf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-font-linux-psf.svg=application-x-font-linux-psf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-font-pcf.svg=application-x-font-pcf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-font-ttf.svg=application-x-font-ttf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-gettext-translation.svg=application-x-gettext-translation.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-glade.svg=application-x-glade.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-gnucash.svg=application-x-gnucash.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-gnumeric.svg=application-x-gnumeric.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-gtktalog.svg=application-x-gtktalog.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-gzip.svg=application-x-gzip.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-kde-app-info.svg=application-x-kde-app-info.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-killustrator.svg=application-x-killustrator.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-kpresenter.svg=application-x-kpresenter.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-kspread.svg=application-x-kspread.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-kword.svg=application-x-kword.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-lha.svg=application-x-lha.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-object.svg=application-x-object.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-perl.svg=application-x-perl.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-php.svg=application-x-php.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-python-bytecode.svg=application-x-python-bytecode.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-python.svg=application-x-python.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-qw.svg=application-x-qw.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-rar.svg=application-x-rar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-reject.svg=application-x-reject.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-rpm.svg=application-x-rpm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-share-library-la.svg=application-x-share-library-la.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-sharedlib.svg=application-x-sharedlib.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-shellscript.svg=application-x-shellscript.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-shockwave-flash.svg=application-x-shockwave-flash.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-smil.svg=application-x-smil.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-tar.svg=application-x-tar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-tex.svg=application-x-tex.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:x-trash.svg=application-x-trash.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-application:zip.svg=application-zip.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio.svg=audio.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:ac3.svg=audio-ac3.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:basic.svg=audio-basic.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:midi.svg=audio-midi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-aiff.svg=audio-x-aiff.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-it.svg=audio-x-it.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-midi.svg=audio-x-midi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-mod.svg=audio-x-mod.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-mp3.svg=audio-x-mp3.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-mpegurl.svg=audio-x-mpegurl.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-pn-realaudio.svg=audio-x-pn-realaudio.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-s3m.svg=audio-x-s3m.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-stm.svg=audio-x-stm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-ulaw.svg=audio-x-ulaw.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-voc.svg=audio-x-voc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-wav.svg=audio-x-wav.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-xi.svg=audio-x-xi.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-audio:x-xm.svg=audio-x-xm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image.svg=image.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:bmp.svg=image-bmp.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:gif.svg=image-gif.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:ief.svg=image-ief.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:jpeg.svg=image-jpeg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:png.svg=image-png.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:svg+xml.svg=image-svg+xml.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:svg.svg=image-svg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:tiff.svg=image-tiff.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-3ds.svg=image-x-3ds.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-applix-graphic.svg=image-x-applix-graphic.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-cmu-raster.svg=image-x-cmu-raster.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-portable-anymap.svg=image-x-portable-anymap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-portable-bitmap.svg=image-x-portable-bitmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-portable-greymap.svg=image-x-portable-greymap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-portable-pixmap.svg=image-x-portable-pixmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-psd.svg=image-x-psd.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-rgb.svg=image-x-rgb.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-tga.svg=image-x-tga.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-xbitmap.svg=image-x-xbitmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-xcf.svg=image-x-xcf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-xfig.svg=image-x-xfig.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-xpixmap.svg=image-x-xpixmap.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-image:x-xwindowdum.svg=image-x-xwindowdum.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text.svg=text.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:css.svg=text-css.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:html.svg=text-html.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:sgml.svg=text-sgml.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-authors.svg=text-x-authors.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-c++.svg=text-x-c++.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-c++src.svg=text-x-c++src.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-c-header.svg=text-x-c-header.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-c.svg=text-x-c.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-chdr.svg=text-x-chdr.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-copying.svg=text-x-copying.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-credits.svg=text-x-credits.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-csh.svg=text-x-csh.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-csharp.svg=text-x-csharp.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-csrc.svg=text-x-csrc.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-gettext-translation.svg=text-x-gettext-translation.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-haskell.svg=text-x-haskell.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-install.svg=text-x-install.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-java.svg=text-x-java.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-literate-haskell.svg=text-x-literate-haskell.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-log.svg=text-x-log.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-lyx.svg=text-x-lyx.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-makefile.svg=text-x-makefile.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-patch.svg=text-x-patch.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-readme.svg=text-x-readme.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-scheme.svg=text-x-scheme.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-sh.svg=text-x-sh.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-tex.svg=text-x-tex.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-troff-man.svg=text-x-troff-man.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-vcalendar.svg=text-x-vcalendar.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-vcard.svg=text-x-vcard.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-xslt.svg=text-x-xslt.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:x-zsh.svg=text-x-zsh.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-text:xml.svg=text-xml.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-video.svg=video.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-video:mpeg.svg=video-mpeg.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-video:quicktime.svg=video-quicktime.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-video:x-ms-asf.svg=video-x-ms-asf.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-video:x-ms-wmv.svg=video-x-ms-wmv.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-video:x-msvideo.svg=video-x-msvideo.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-x:directory-nfs-server.svg=x-directory-nfs-server.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-x:directory-smb-server.svg=x-directory-smb-server.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-x:directory-smb-share.svg=x-directory-smb-share.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-x:directory-smb-workgroup.svg=x-directory-smb-workgroup.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-x:font-afm.svg=x-font-afm.svg
+s none /opt/csw/share/icons/Rodent/scalable/mimetypes/mime-x:gdesklets-display.svg=x-gdesklets-display.svg
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-css.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-html.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-sgml.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-authors.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-c++.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-c++src.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-c-header.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-c.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-chdr.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-copying.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-credits.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-csh.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-csharp.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-csrc.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-gettext-translation.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-haskell.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-install.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-java.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-literate-haskell.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-log.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-lyx.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-makefile.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-patch.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-readme.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-scheme.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-sh.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-tex.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-troff-man.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-vcalendar.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-vcard.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-xslt.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-x-zsh.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text-xml.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/text.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/video-mpeg.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/video-quicktime.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/video-x-ms-asf.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/video-x-ms-wmv.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/video-x-msvideo.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/video.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/x-directory-nfs-server.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/x-directory-smb-server.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/x-directory-smb-share.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/x-directory-smb-workgroup.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/x-font-afm.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/mimetypes/x-gdesklets-display.svg 0644 root bin
+d none /opt/csw/share/icons/Rodent/scalable/misc 0755 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/calc.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/debian.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/f-memory.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/firewall.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/fs-win.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/icon_view.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/money.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/news.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/notes.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/root_terminal.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/run.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/settings.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/sm.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/sound.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/tabwin.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/taskbar.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/taskmanager.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/ui.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/usb_key.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/webcam.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/wksp.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/wm.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/misc/xfce4-appfinder.svg 0644 root bin
+d none /opt/csw/share/icons/Rodent/scalable/stock 0755 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/m-font.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/m-lock.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/m-spreadsheet.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-backward.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-eject.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-forward.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-next.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-pause.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-play.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-prev.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-record.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-shuffle.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/media-stop.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/rox-select.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/rox-show-details.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/rox-show-hidden.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_about.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_accessories.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_add.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_amusements.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_apply.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_attach.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_balance.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_bold.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_book-open.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_book.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_cancel.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_cdrom.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_clear.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_close.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_color_picker.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_connect.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_convert.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_copy.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_cut.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_delete.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_dialog_authentication.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_dialog_error.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_dialog_info.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_dialog_question.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_dialog_warning.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_disconnect.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_dnd.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_dnd_multiple.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_download.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_edit.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_epiphany-bookmark-page.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_execute.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_export.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_file-properties.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_find-and-replace.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_find.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_floppy.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_folder-copy.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_folder-move.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_folder-properties.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_folder.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_fullscreen.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_go-back.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_go-down.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_go-forward.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_go-up.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_goto-bottom.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_goto-first.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_goto-last.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_goto-top.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_harddisk.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_help.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_history.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_home.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_import.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_indent.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_index.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_insert-image.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_insert-object.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_insert-table.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_internet.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_italic.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_jump-to.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_justify-center.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_justify-fill.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_justify-left.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_justify-right.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_line-in.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_logout.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_mailto.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_mic.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_missing-image.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_multimedia.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_network.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_new-tab.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_new.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_no.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_ok.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_open.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_paste.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_preferences.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_print-preview.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_print.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_properties.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_quit.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_redo.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_refresh.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_remove.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_repeat.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_reset.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_revert-to-saved.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_run.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_save-as.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_save.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_screenshot.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_search.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_select-color.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_select-font.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_sort-ascending.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_sort-descending.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_spell-check.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_stop.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_strikethrough.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_undelete.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_underline.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_undo.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_unindent.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_unknown.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_volume.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_yes.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_zoom-100.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_zoom-fit.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_zoom-in.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/stock_zoom-out.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/volume-max.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/volume-medium.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/volume-min.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/volume-mute.svg 0644 root bin
+f none /opt/csw/share/icons/Rodent/scalable/stock/volume-zero.svg 0644 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+d none /opt/csw/share/xfce4 0755 root bin
+d none /opt/csw/share/xfce4/mime 0755 root bin
+f none /opt/csw/share/xfce4/mime/Rodent.mime.xml 0644 root bin
+i copyright=CSWxfceicontheme.copyright
+i depend=CSWxfceicontheme.depend
+i pkginfo=CSWxfceicontheme.pkginfo

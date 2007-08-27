@@ -1,0 +1,2 @@
+d none /opt/csw/share/doc/openssl 0755 root bin
+f none /opt/csw/share/doc/openssl/changelog.CSW=changelog.CSW 644 root bin

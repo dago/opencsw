@@ -1,0 +1,8 @@
+%var            bitname pm_unicodemap8
+%var            pkgname CSWpmunimap8
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+© 1998-1999 Gisle Aas. All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

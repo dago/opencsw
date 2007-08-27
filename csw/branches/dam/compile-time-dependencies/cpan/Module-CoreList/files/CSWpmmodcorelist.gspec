@@ -1,0 +1,9 @@
+%var            bitname pm_modcorelist
+%var            pkgname CSWpmmodcorelist
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+Copyright (C) 2002-2006 Richard Clamp.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.

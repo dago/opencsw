@@ -1,0 +1,9 @@
+%var            bitname pm_solinst
+%var            pkgname CSWpmsolinst
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2000 Chris Josephes
+
+This library is free software, and you are free to use it under the same
+terms as Perl itself.

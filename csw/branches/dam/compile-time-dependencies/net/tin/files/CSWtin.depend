@@ -1,0 +1,4 @@
+P	CSWpcre		pcre - Perl-compatible regular expression library
+P	CSWggettext	ggettext - GNU gettext
+P	CSWiconv	libiconv - GNU iconv library
+P	CSWlibicu	libicu - International Components for Unicode

@@ -1,0 +1,39 @@
+#!/bin/env perl -lw
+#
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# isadir - print the appropriate ISA subdirectory given a chosen
+#          compiler isa (E.g. isaname v9b -> sparcv9+vis2)
+#
+
+use strict;
+
+chomp(my $arch = `uname -p`);
+
+my $isadir;
+if ($arch eq 'sparc') {
+    my $isa  = shift or do {
+        print $arch;
+        exit 0;
+    };
+
+    my $visid = substr($isa, length($isa) - 1);
+    my $vis = ($isa =~ /^v9/)
+            ? (($visid eq 'a') ? "+vis" : ($visid eq 'b') ? "+vis2" : "")
+            : (($visid eq 'a' or $visid eq 'b') ? "+vis" : "");
+
+    $isa = substr($isa,0,length($isa) - 1) if $vis;
+    $isadir = "$arch$isa$vis";
+}
+else {
+    $isadir = $arch;
+}
+print $isadir;

@@ -1,0 +1,5 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext
+P CSWpmlogmsgsimple pm_logmsgsimple - Standardized logging facilities using the Log::Message module.
+P CSWpmprmscheck pm_prmscheck - A generic input parsing/checking mechanism.

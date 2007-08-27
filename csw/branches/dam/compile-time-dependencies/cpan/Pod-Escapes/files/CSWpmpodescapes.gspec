@@ -1,0 +1,22 @@
+%var            bitname pm_podescapes
+%var            pkgname CSWpmpodescapes
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2001-2004 Sean M. Burke.  All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+This program is distributed in the hope that it will be useful, but
+without any warranty; without even the implied warranty of
+merchantability or fitness for a particular purpose.
+
+Portions of the data tables in this module are derived from the
+entity declarations in the W3C XHTML specification.
+
+Currently (October 2001), that's these three:
+
+ http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent
+ http://www.w3.org/TR/xhtml1/DTD/xhtml-special.ent
+ http://www.w3.org/TR/xhtml1/DTD/xhtml-symbol.ent

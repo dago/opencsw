@@ -1,0 +1,3 @@
+%var            bitname xemacs
+%var            pkgname CSWxemacs
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec

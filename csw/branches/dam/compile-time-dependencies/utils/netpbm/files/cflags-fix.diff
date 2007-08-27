@@ -1,0 +1,34 @@
+diff --speed-large-files --minimal -Nru netpbm-10.26.20.orig/Makefile.common netpbm-10.26.20/Makefile.common
+--- netpbm-10.26.20.orig/Makefile.common	2005-12-10 07:58:27.640868000 -0500
++++ netpbm-10.26.20/Makefile.common	2005-12-10 07:50:13.881577000 -0500
+@@ -299,7 +299,7 @@
+ # produce a merge.o file, but not every directory has anything to contribute
+ # to the merge.
+ empty.o: %.o: %.c
+-	$(CC) -c $(CFLAGS_PERSONAL) $(CADD) $< -o $@
++	$(CC) -c $(CFLAGS) $(CFLAGS_PERSONAL) $(CADD) $< -o $@
+ empty.c:
+ 	cat /dev/null >empty.c
+
+diff --speed-large-files --minimal -Nru netpbm-10.26.20.orig/buildtools/Makefile netpbm-10.26.20/buildtools/Makefile
+--- netpbm-10.26.20.orig/buildtools/Makefile	2005-12-10 07:58:33.176455000 -0500
++++ netpbm-10.26.20/buildtools/Makefile	2005-12-10 05:43:24.005413000 -0500
+@@ -28,15 +28,15 @@
+ endif
+ 
+ libopt.o: libopt.c
+-	$(CC_FOR_BUILD) -c -DSHLIBPREFIXLIST="\"$(SHLIBPREFIXLIST)\"" \
++	$(CC_FOR_BUILD) -c $(CFLAGS) -DSHLIBPREFIXLIST="\"$(SHLIBPREFIXLIST)\"" \
+ 		$(STRIP_DLL_VERSION) $(EXPLICIT) $(CFLAGS_PERSONAL) $(CADD) \
+ 	        -o $@ $<
+ 
+ typegen.o endiangen.o:%.o:%.c
+-	$(CC_FOR_BUILD) -c -o $@ $<
++	$(CC_FOR_BUILD) -c $(CFLAGS) -D__EXTENSIONS__ -o $@ $<
+ 
+ $(PROGS):%:%.o
+-	$(LD_FOR_BUILD) -o $@ $<
++	$(LD_FOR_BUILD) -o $@ $<
+ 
+ clean: cleanlocal
+ .PHONY: cleanlocal

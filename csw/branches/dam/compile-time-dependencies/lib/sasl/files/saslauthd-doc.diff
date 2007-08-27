@@ -1,0 +1,47 @@
+diff --speed-large-files --minimal -Nru cyrus-sasl-2.1.21.orig/saslauthd/LDAP_SASLAUTHD cyrus-sasl-2.1.21/saslauthd/LDAP_SASLAUTHD
+--- cyrus-sasl-2.1.21.orig/saslauthd/LDAP_SASLAUTHD	2006-02-12 07:13:05.501062000 -0500
++++ cyrus-sasl-2.1.21/saslauthd/LDAP_SASLAUTHD	2006-02-12 07:12:35.567793000 -0500
+@@ -36,7 +36,7 @@
+ 2. START SASLAUTHD WITH LDAP
+ ----------------------------
+ 
+-Create /usr/local/etc/saslauthd.conf and add the following (modify to fit your
++Create /opt/csw/etc/saslauthd.conf and add the following (modify to fit your
+ environment):
+ ldap_servers: ldap://10.1.1.15/ ldap://10.1.1.25/
+ ldap_bind_dn: cn=operator,ou=Profile,o=foo.com
+diff --speed-large-files --minimal -Nru cyrus-sasl-2.1.21.orig/saslauthd/saslauthd.mdoc cyrus-sasl-2.1.21/saslauthd/saslauthd.mdoc
+--- cyrus-sasl-2.1.21.orig/saslauthd/saslauthd.mdoc	2006-02-12 07:13:05.415699000 -0500
++++ cyrus-sasl-2.1.21/saslauthd/saslauthd.mdoc	2006-02-12 07:12:42.640224000 -0500
+@@ -71,7 +71,7 @@
+ as the pathname to the named socket to listen on for
+ connection requests. This must be an absolute pathname, and MUST NOT
+ include the trailing "/mux".  Note that the default for this value
+-is "/var/state/saslauthd" (or what was specified at compile time)
++is "/var/opt/csw/saslauthd" (or what was specified at compile time)
+ and that this directory must exist for saslauthd to function.
+ .It Fl n Ar threads
+ Use
+@@ -216,7 +216,7 @@
+ .Em (All platforms that support OpenLDAP 2.0 or higher)
+ .Pp
+ Authenticate against an ldap server.  The ldap configuration parameters are
+-read from /usr/local/etc/saslauthd.conf.  The location of this file can be
++read from /opt/csw/etc/saslauthd.conf.  The location of this file can be
+ changed with the -O parameter. See the LDAP_SASLAUTHD file included with the
+ distribution for the list of available parameters.
+ .It Li sia
+@@ -246,10 +246,10 @@
+ servers. (Kerberos
+ was never intended to be used in this manner, anyway.)
+ .Sh FILES
+-.Bl -tag -width "/var/run/saslauthd/mux"
+-.It Pa /var/run/saslauthd/mux
++.Bl -tag -width "/var/opt/csw/saslauthd/mux"
++.It Pa /var/opt/csw/saslauthd/mux
+ The default communications socket.
+-.It Pa /usr/local/etc/saslauthd.conf
++.It Pa /opt/csw/etc/saslauthd.conf
+ The default configuration file for ldap support.
+ .El
+ .Sh SEE ALSO
