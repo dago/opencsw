@@ -1,14 +1,50 @@
 apps/bash|CSWbash|bash - A sh-compatible command language interpreter
 apps/bugzilla|CSWbugzilla|bugzilla - Bugzilla defect tracking system.
 apps/daimonin|CSWdaimonin|daimonin - FREE online role playing game (MMORPG)
+apps/easytag|CSWeasytag|easytag - Tag editor for MP3, Ogg Vorbis files and more
+apps/firefox|CSWfirefoxdevel|firefoxdevel - Firefox Community Edition web browser
 apps/firefox|CSWfirefox|firefox - Firefox Community Edition web browser
+apps/firefox|CSWfirefoxrt|firefoxrt - Firefox Community Edition web browser
 apps/flphoto|CSWflphoto|flphoto - basic image management and display program based on the FLTK toolkit
 apps/freeciv|CSWfreeciv|freeciv - a free turn-based multiplayer strategy game (gcc3)
 apps/gtkpod|CSWgtkpod|gtkpod - gtk2 application for Apple iPods
 apps/kdesvn|CSWkdesvn|kdesvn - A Subversion client for KDE
 apps/kile|CSWkile|kile - An integrated LaTeX environment
 apps/lyx|CSWlyx|lyx - WYSIWYM document processor
+apps/mplayer|CSWmplayer|mplayer - A multimedia player
 apps/ogle|CSWogle|ogle - opensource DVD player with DVD menu support
+apps/openoffice|CSWooouizu|ooouizu - An Open Source version of StarOffice.
+apps/openoffice|CSWooouigl|ooouigl - An Open Source version of StarOffice.
+apps/openoffice|CSWooouies|ooouies - An Open Source version of StarOffice.
+apps/openoffice|CSWooouiptbr|ooouiptbr - An Open Source version of StarOffice.
+apps/openoffice|CSWooouienus|ooouienus - An Open Source version of StarOffice.
+apps/openoffice|CSWooouisl|ooouisl - An Open Source version of StarOffice.
+apps/openoffice|CSWoooui|oooui - An Open Source version of StarOffice.
+apps/openoffice|CSWooouida|ooouida - An Open Source version of StarOffice.
+apps/openoffice|CSWooouide|ooouide - An Open Source version of StarOffice.
+apps/openoffice|CSWooouisv|ooouisv - An Open Source version of StarOffice.
+apps/openoffice|CSWooocore|ooocore - An Open Source version of StarOffice.
+apps/openoffice|CSWooouinb|ooouinb - An Open Source version of StarOffice.
+apps/openoffice|CSWooouifr|ooouifr - An Open Source version of StarOffice.
+apps/openoffice|CSWooouinl|ooouinl - An Open Source version of StarOffice.
+apps/openoffice|CSWooouinn|ooouinn - An Open Source version of StarOffice.
+apps/openoffice|CSWooouihu|ooouihu - An Open Source version of StarOffice.
+apps/openoffice|CSWooouica|ooouica - An Open Source version of StarOffice.
+apps/openoffice|CSWooouiaf|ooouiaf - An Open Source version of StarOffice.
+apps/openoffice|CSWooocommon|ooocommon - An Open Source version of StarOffice.
+apps/openoffice|CSWooouiel|ooouiel - An Open Source version of StarOffice.
+apps/openoffice|CSWooouics|ooouics - An Open Source version of StarOffice.
+apps/openoffice|CSWooouiet|ooouiet - An Open Source version of StarOffice.
+apps/openoffice|CSWooouicy|ooouicy - An Open Source version of StarOffice.
+apps/openoffice|CSWooouiit|ooouiit - An Open Source version of StarOffice.
+apps/openoffice|CSWooouisk|ooouisk - An Open Source version of StarOffice.
+apps/openoffice|CSWooouibg|ooouibg - An Open Source version of StarOffice.
+apps/openoffice|CSWooouihr|ooouihr - An Open Source version of StarOffice.
+apps/openoffice|CSWooouiengb|ooouiengb - An Open Source version of StarOffice.
+apps/openoffice|CSWooouipl|ooouipl - An Open Source version of StarOffice.
+apps/openoffice|CSWooouilt|ooouilt - An Open Source version of StarOffice.
+apps/openoffice|CSWooouipt|ooouipt - An Open Source version of StarOffice.
+apps/rl|CSWrl|rl - rl - Randomize Lines
 apps/trac|CSWtrac|trac - Integrated SCM and Project Management
 apps/tsclient|CSWtsclient|tsclient - a frontend for rdesktop and other remote desktop tool
 apps/wesnoth|CSWwesnoth|wesnoth - a free turn-based strategy game with a fanasy theme
@@ -234,6 +270,7 @@ cpan/Mail-Sendmail|CSWpmmailsendmail|pm_mailsendmail - simple platform independe
 cpan/MailTools|CSWpmmailtools|pm_mailtools - various mail manipulation modules
 cpan/Math-Bezier|CSWpmmathbezier|pm_mathbezier - solution of Bezier curves
 cpan/Math-GMP|CSWpmmathgmp|pm_mathgmp - high speed arbitrary size integer math
+cpan/Math-Interpolate|CSWpmmathinterpolate|pm_mathinterpolate - Useful routines for interpolating data sets
 cpan/Math-Pari|CSWpmmathpari|pm_mathpari - interface to PARI numerical analysis library
 cpan/Module-Build|CSWpmmodulebuild|pm_modulebuild - build and install Perl modules
 cpan/Module-CoreList|CSWpmmodcorelist|pm_modcorelist - What modules shipped with versions of Perl
@@ -277,6 +314,7 @@ cpan/Proc-ProcessTable|CSWpmproctbl|pm_procprocesstbl - Perl interface to the un
 cpan/RPC-XML|CSWpmrpcxml|pm_rpcxml - A set of classes for core data, message and XML handling
 cpan/Regexp-Common|CSWpmregexpcom|pm_regexpcom - provide commonly requested regular expressions
 cpan/Regexp-Shellish|CSWpmregexpshellish|pm_regexpshellish - shell-like regular expressions
+cpan/SDF|CSWpmsdf|pm_sdf - Simple Document Format
 cpan/SOAP-Lite|CSWpmsoaplite|pm_soaplite - client and server side SOAP implementation
 cpan/SOAP-WSDL|CSWpmsoapwsdl|pm_soapwsdl - Web Service Descriptor Language support for SOAP::Lite
 cpan/SQL-Statement|CSWpmsqlstatement|pm_sqlstatement - SQL parsing and processing engine
@@ -348,6 +386,7 @@ cpan/VCP-Dest-svk|CSWpmvcpdstsvk|pm_vcpdstsvk - svk destination driver
 cpan/VCP|CSWpmvcp|pm_vcp - svk destination driver
 cpan/WWW-Mechanize|CSWpmwwwmechanize|pm_wwwmechanize - Handy web browsing in a Perl object
 cpan/Want|CSWpmwant|pm_want - a generalisation of wantarray
+cpan/X11-Protocol|CSWpmx11protocol|pm_x11protocol - Perl module for the X Window System Protocol, version 11
 cpan/XML-Atom|CSWpmxmlatom|pm_xmlatom - Atom feed and API implementation
 cpan/XML-AutoWriter|CSWpmxmlautowriter|pm_xmlautowriter - DOCTYPE driven XML output
 cpan/XML-DOM|CSWpmxmldom|pm_xmldom - module for building DOM Level 1 compliant document structures
@@ -382,13 +421,16 @@ cpan/pmtools|CSWpmtools|pmtools - Tools for managing installed Perl modules.
 cpan/psh|CSWpsh|psh - simple interactive Perl shell
 cpan/sol-inst|CSWpmsolinst|pm_solinst - access basic Solaris installation information
 cpan/version|CSWpmversion|pm_version - Perl extension for Version Objects
+devel/autoconf|CSWautoconf|autoconf - GNU auto-configuration tool
 devel/automake-1.4|CSWautomake14|automake14 - GNU automake
 devel/automake-1.6|CSWautomake16|automake16 - GNU automake
 devel/automake-1.7|CSWautomake17|automake17 - automake
 devel/bison|CSWbison|bison - GNU Project parser generator (yacc replacement)
+devel/cmake|CSWcmake|cmake - Cross-platform make
 devel/flex-2.5.4a|CSWflex|flex - older version of the 'flex' parser generator
 devel/flex|CSWflex-new|flex_new - A tool for generating text-scanning programs.
 devel/m4|CSWgm4|gm4 - Standard Unix macro processor with extensions
+devel/opengrok|CSWopengrok|opengrok - A wicked fast source browser
 devel/rake|CSWrake|rake - Simple ruby build program similar to make
 devel/swig|CSWswig|swig - A scripting interface generator for C/C++ code.
 gnome/ogle_gui|CSWoglegui|oglegui - gtk user interface for Ogle DVD player 
@@ -396,6 +438,7 @@ gnome/xchat|CSWxchat|xchat - GTK+ based IRC client, similar to AmIRC (Amiga).
 gnome/xchat|CSWxchat-tcl|xchat_tcl - xchat tcl plugin
 gnome/xchat|CSWxchat-py|xchat_py - xchat python plugin
 gnome/xchat|CSWxchat-pl|xchat_pl - xchat perl plugin
+kde/amarok|CSWamarok|amarok - Amarok is the music player for Linux and Unix with an intuitive interface
 kde/arts|CSWartsgcc|arts_gcc - Analog RealTime Synthesizer for KDE (gcc3)
 kde/kde|CSWkdegccdtlogin|kde_gcc_dtlogin - The K Desktop Environment (KDE) (gcc3)
 kde/kde|CSWkdegcc|kde_gcc - The K Desktop Environment (KDE) (gcc3)
@@ -482,9 +525,11 @@ lib/bdb44|CSWbdb44-doc|berkeleydb44_doc - BerkeleyDB 4.4 documentation
 lib/bdb44|CSWbdb44-devel|berkeleydb44_devel - BerkeleyDB 4.4 development support
 lib/bdb44|CSWbdb44|berkeleydb44 - BerkeleyDB 4.4 development support
 lib/boost|CSWboost|boost - A collection of C++ libraries
+lib/dbus-glib|CSWdbusglibdev|dbus_glibdev - %var desc DBus GLib Bindings Headers
+lib/dbus-glib|CSWdbusglib|dbus_glib - %var desc DBus GLib Bindings Headers
+lib/dbus|CSWlibdbusdev|libdbusdev - DBus Message Bus System - development headers
 lib/dbus|CSWlibdbus|libdbus - DBus Message Bus System - dynamic libraries
-lib/dbus|CSWlibdbusdevel|libdbus_devel - DBus Message Bus System - development headers
-lib/dbus|CSWdbus|dbus - DBus Message Bus System - development headers
+lib/dbus|CSWdbus|dbus - DBus Message Bus System - dynamic libraries
 lib/docbook|CSWdocbook-xsl|docbook_xsl - docbook xsl stylesheets
 lib/expat|CSWexpat-devel|expat_devel - XML Parsing Toolkit - Development Support
 lib/expat|CSWexpat|expat - XML Parsing Toolkit - Development Support
@@ -511,16 +556,27 @@ lib/libogg|CSWlibogg|libogg - Ogg bitstream and framing library.
 lib/libpcap|CSWlibpcap|libpcap - Libraries for network diagnostics
 lib/libsdl|CSWlibsdl|libsdl - Simple DirectMedia Layer library
 lib/libvorbis|CSWlibvorbis|libvorbis - Vorbis codec library.
+lib/libxine|CSWlibxine|libxine - Xine-lib 1.1.8 (HG test build)
 lib/mm|CSWlibmm|libmm - Shared Memory Allocation abstraction library.
 lib/ncurses|CSWncurses|ncurses - ncurses library and utilities
 lib/neon|CSWneon-devel|neon_devel - Neon HTTP and WebDAV development support
 lib/neon|CSWneon|neon - Neon HTTP and WebDAV development support
+lib/nspr|CSWnspr|nspr - NSPR Netscape Portable Runtime
 lib/openexr|CSWopenexr|openexr - high dynamic-range (HDR) image file format developed by Industrial Light & Magic
-lib/openssl|CSWopenssl|openssl - The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
+lib/openssl|CSWossl|%var pkgfile %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-all-CSW.pkg - Openssl meta package
+lib/openssl|CSWosslrt|openssl_rt - Openssl runtime libraries
+lib/openssl|CSWossldevel|openssl_devel - Openssl development support
+lib/openssl|CSWosslutils|openssl_utils - Openssl binaries and related tools 
 lib/pango|CSWpango|pango - A framework for the layout and rendering of international text.
 lib/pari|CSWparigp|parigp - efficient computations in number theory
+lib/pth|CSWpth|pth - GNU Pth - The GNU Portable Threads
 lib/qt-gcc|CSWqtgcc|qt_gcc - TrollTech C++ application framework
-lib/qt|CSWqt|qt - TrollTech C++ application framework
+lib/qt4|CSWqt4-gcc|qt4_gcc - TrollTech C++ application framework
+lib/qt4|CSWqt4-devel|qt4_devel - TrollTech C++ application framework
+lib/qt4|CSWqt|qt - TrollTech C++ application framework
+lib/qt4|CSWqt4|qt4 - TrollTech C++ application framework
+lib/qt4|CSWqt4-demos|qt_demos - TrollTech C++ application framework
+lib/qt4|CSWqt4-docs|qt4_docs - TrollTech C++ application framework
 lib/readline|CSWreadline|readline - GNU readline
 lib/sasl|CSWsasl|sasl - Simple Authentication and Security Layer
 lib/sasl|CSWsaslgssapi|sasl_gssapi - Simple Authentication and Security Layer
@@ -533,6 +589,7 @@ lib/sdlsound|CSWsdlsound|sdlsound - A library that handles the decoding of sever
 lib/sdlttf|CSWsdlttf|sdlttf - TrueType font rendering library for SDL applications
 lib/spidermonkey|CSWspidermonkey|spidermonkey - SpiderMonkey JS library
 lib/sword|CSWsword|sword - SWORD Engine (gcc3)
+lib/swtlibs|CSWswtlibs|swtlibs - DESCRIPTION  = Standard Widget Toolkit (SWT) libraries
 net/balance|CSWbalance|balance - A TCP proxy and load balancer.
 net/cadaver|CSWcadav|cadaver - WebDAV commandline tool
 net/cups|CSWcupsclient|cupsclient - Client portion of the Common UNIX Printing System
@@ -581,6 +638,7 @@ server/mod_ruby|CSWap2modruby|ap2_modruby - an Apache/Ruby integration module
 server/mod_svn_view|CSWap2modtransform|ap2_modtransform - Subversion repository viewer
 server/mod_transform|CSWap2modtransform|ap2_modtransform - XSLT filter for Apache 2.0
 server/mysql4|CSWmysql4|mysql4 - A fast SQL database server.
+server/openssh|CSWossh|openssh - OpenSSH Secure Shell
 server/openvpn|CSWopenvpn|openvpn - secure IP tunnel daemon
 server/proftpd|CSWproftpd|proftpd - Advanced, incredibly configurable and secure FTP daemon
 server/rails|CSWap2modruby|ap2_modruby - Ruby web application framework
@@ -596,11 +654,13 @@ utils/clearsilver|CSWpmcs|pm_clearsilver - Clearsilver Perl language binding
 utils/clearsilver|CSWcs|clearsilver - Clearsilver Perl language binding
 utils/clearsilver|CSWpycs|pyclearsilver - Clearsilver Python language binding
 utils/ctags|CSWctags|ctags -  Exuberant ctags
+utils/daemontools|CSWdaemontools|daemontools - A collection of tools for managing UNIX services
 utils/dcraw|CSWdcraw|dcraw - Raw Digital Photo Decoder
 utils/emacs|CSWemacsrt|emacsrt - emacs shared runtime and documentation
 utils/emacs|CSWemacs|emacs - emacs shared runtime and documentation
 utils/emacs|CSWxemacs|xemacs - emacs shared runtime and documentation
 utils/esvn|CSWesvn|esvn - A GUI frontend to the Subversion revision system
+utils/ganglia|CSWganglia|ganglia - A scalable distributed monitoring system
 utils/gm4|CSWgm4|gm4 - GNU m4 Unix macro processor
 utils/gphoto2|CSWgphoto2|gphoto2 - gphoto2 is a command-line frontend to libgphoto2
 utils/graphviz|CSWgraphviz|graphviz - Graph drawing utilities with web and graphical interfaces.
@@ -615,6 +675,10 @@ utils/mharc|CSWmharc|mharc - Perl scripts for generating web-based mail archives
 utils/mhonarc|CSWmhonarc|mhonarc - mail-to-HTML converter
 utils/mkpackage|CSWmkpackage|mkpackage - Solaris package build tool.
 utils/namazu|CSWnamazu|namazu - full-text search engine
+utils/netpbm|CSWnetpbm|netpbm - Netpbm is a toolkit for manipulation of graphic images
+utils/orca|CSWorca-collector|orca_collector - A system performance monitoring tool
+utils/orca|CSWorca|orca - A system performance monitoring tool
+utils/orca|CSWorca-web|orca_web - A system performance monitoring tool
 utils/pkg_update_watch|CSWpkgupdatewatch|pkg_update_watch - Package updates watcher
 utils/ppkg_get|CSWppkgget|ppkg_get - Perl rewrite of origine pkg-get tools
 utils/pv|CSWpv|pv - pipeviewer, like cat with progress indications
@@ -623,6 +687,7 @@ utils/rapidsvn|CSWrapidsvn|rapidsvn - Subversion GUI
 utils/rapidsvn|CSWsvncpp|svncpp - Subversion C++ language binding
 utils/rlwrap|CSWrlwrap|rlwrap - A readline wrapper
 utils/rrdtool|CSWrrdtool|rrdtool - time-series data logging and graphing.
+utils/setoolkit|CSWsetoolkit|setoolkit - A system performance monitoring tool
 utils/sloccount|CSWslocc|sloccount - A suite of programs for counting physical source lines of code.
 utils/subversion|CSWsvn-devel|subversion_devel - Subversion development support
 utils/subversion|CSWpmsvn|pm_subversion - Subversion Perl language binding
@@ -638,58 +703,59 @@ utils/svnmailer|CSWsvnmailer|svnmailer - A tool to post subversion repository in
 utils/sysbench|CSWsysbench|sysbench - System evaluation benchmark
 utils/vim|CSWvim|vim - Vi IMproved
 utils/vim|CSWvimrt|vimrt - vim shared runtime and documentation
+utils/xmlstarlet|CSWxmlstarlet|xmlstarlet - XML transformation utility
 utils/xrestop|CSWxrestop|xrestop - 'top' like staticstics for X11 server side resource usage
 xfce/appfinder|CSWxfceappfinder|xfce_appfinder - Xfce Application Finder
-xfce/desktop|CSWxfcedesktopdoc|xfce_desktop_doc - Xfce Desktop Manager Documentation
+xfce/desktop|CSWxfcedesktopdoc|xfce_desktopdoc - Xfce Desktop Manager Documentation
 xfce/desktop|CSWxfcedesktop|xfce_desktop - Xfce Desktop Manager Documentation
 xfce/devtools|CSWxfcedevtools|xfce_devtools - Xfce Development Tools
-xfce/exo|CSWxfcelibexodevel|xfce_libexo_devel - Xfce Extensions Library Headers
-xfce/exo|CSWxfceexodevel|xfce_exo_devel - Xfce Extensions Library Headers
-xfce/exo|CSWxfceexodoc|xfce_exo_doc - Xfce Extensions Library Documentation
+xfce/exo|CSWxfcelibexodev|xfce_libexodev - Xfce Extensions Library Headers
+xfce/exo|CSWxfceexodoc|xfce_exodoc - Xfce Extensions Library Documentation
 xfce/exo|CSWxfcelibexo|xfce_libexo - Xfce Extensions Library Documentation
 xfce/exo|CSWxfceexo|xfce_exo - Xfce Extensions Library Documentation
 xfce/gtk-xfce-engine|CSWxfceengine|xfce_engine - Xfce GTK theme engine 
-xfce/icon-theme|CSWxfceicontheme|xfce_icon_theme - Xfce Icon Theme
+xfce/icon-theme|CSWxfceiconthemes|xfce_iconthemes - Xfce Icon Theme
 xfce/libxfce4mcs|CSWlibxfce4mcs|libxfce4mcs - Xfce Settings Manager Library 
-xfce/libxfce4mcs|CSWlibxfce4mcsdevel|libxfce4mcs_devel - Xfce Settings Manager Library Headers
-xfce/libxfce4mcs|CSWlibxfce4mcsdoc|libxfce4mcs_doc - Xfce Settings Manager Library Documentation
+xfce/libxfce4mcs|CSWlibxfce4mcsdev|libxfce4mcsdev - Xfce Settings Manager Library Headers
+xfce/libxfce4mcs|CSWlibxfce4mcsdoc|libxfce4mcsdoc - Xfce Settings Manager Library Documentation
 xfce/libxfce4util|CSWlibxfce4util|libxfce4util - Xfce Utilities Library 
-xfce/libxfce4util|CSWlibxfce4utildoc|libxfce4util_doc - Xfce Utilities Library Documentation
-xfce/libxfce4util|CSWlibxfce4utildevel|libxfce4util_devel - Xfce Utilities Library Headers
+xfce/libxfce4util|CSWlibxfce4utildoc|libxfce4utildoc - Xfce Utilities Library Documentation
+xfce/libxfce4util|CSWlibxfce4utildev|libxfce4utildev - Xfce Utilities Library Headers
 xfce/libxfcegui4|CSWlibxfcegui4|libxfcegui4 - Xfce Widget Library 
-xfce/libxfcegui4|CSWlibxfcegui4devel|libxfcegui4_devel - %var desc Xfce Widget Library Headers
-xfce/libxfcegui4|CSWlibxfcegui4doc|libxfcegui4_doc - Xfce Widget Library Documentation
+xfce/libxfcegui4|CSWlibxfcegui4dev|libxfcegui4dev - %var desc Xfce Widget Library Headers
+xfce/libxfcegui4|CSWlibxfcegui4doc|libxfcegui4doc - Xfce Widget Library Documentation
+xfce/libxfcegui4|CSWlibxfcegui4dep|libxfcegui4dep - Xfce Widget Library Documentation
 xfce/mcs-manager|CSWxfcemcsmanager|xfce_mcs_manager - Xfce Settings Manager 
-xfce/mcs-manager|CSWxfcemcsmanagerdev|xfce_mcs_manager_dev - Xfce Settings Manager Headers
-xfce/mcs-manager|CSWxfcemcsmanagerdoc|xfce_mcs_manager_doc - Xfce Settings Manager Documentation
+xfce/mcs-manager|CSWxfcemcsmanagerdev|xfce_mcs_managerdev - Xfce Settings Manager Headers
+xfce/mcs-manager|CSWxfcemcsmanagerdoc|xfce_mcs_managerdoc - Xfce Settings Manager Documentation
 xfce/mcs-plugins|CSWxfcemcsplugins|xfce_mcs_plugins - Xfce Settings Manager Plugins
-xfce/mcs-plugins|CSWxfcemcspluginsdoc|xfce_mcs_plugins_doc - Xfce Settings Manager Plugins Documentation
+xfce/mcs-plugins|CSWxfcemcspluginsdoc|xfce_mcs_pluginsdoc - Xfce Settings Manager Plugins Documentation
 xfce/mixer|CSWxfcemixer|xfce_mixer - Xfce Volume Control
 xfce/mousepad|CSWxfcemousepad|xfce_mousepad - Xfce Mousepad Text Editor
 xfce/orage|CSWxfceorage|xfce_orage - Xfce Orage Calendar
-xfce/orage|CSWxfceoragedoc|xfce_orage_doc - Xfce Orage Calendar Documentation
+xfce/orage|CSWxfceoragedoc|xfce_oragedoc - Xfce Orage Calendar Documentation
 xfce/panel|CSWxfcepanel|xfce_panel - Xfce Panel
-xfce/panel|CSWxfcepaneldoc|xfce_panel_doc - Xfce Panel Documentation
+xfce/panel|CSWxfcepaneldoc|xfce_paneldoc - Xfce Panel Documentation
 xfce/panel|CSWlibxfcepanel|libxfcepanel - Xfce Panel Library
-xfce/panel|CSWlibxfcepaneldevel|libxfcepaneldevel - Xfce Panel Library Headers
+xfce/panel|CSWlibxfcepaneldev|libxfcepaneldev - Xfce Panel Library Headers
 xfce/print|CSWxfceprint|xfce_print - Xfce Printing Helper
-xfce/print|CSWxfceprintdoc|xfce_print_doc - Xfce Printing Helper Documentation
+xfce/print|CSWxfceprintdoc|xfce_printdoc - Xfce Printing Helper Documentation
 xfce/print|CSWlibxfceprint|libxfceprint - Xfce Printing Helper Library
-xfce/print|CSWlibxfceprintdevel|libxfceprint_devel - Xfce Printing Helper Library Headers
+xfce/print|CSWlibxfceprintdev|libxfceprintdev - Xfce Printing Helper Library Headers
 xfce/session|CSWxfcesession|xfce_session - Xfce Session Manager
 xfce/session|CSWlibxfcesessiondev|libxfcesessiondev - Xfce Session Manager Library Headers
-xfce/session|CSWxfcesessiondoc|xfce_session_doc - Xfce Session Manager Documentation
+xfce/session|CSWxfcesessiondoc|xfce_sessiondoc - Xfce Session Manager Documentation
 xfce/session|CSWlibxfcesession|libxfcesession - Xfce Session Manager Library
 xfce/terminal|CSWxfceterminal|xfce_terminal - Xfce Terminal Emulator
-xfce/terminal|CSWxfceterminaldoc|xfce_terminal_doc - Xfce Terminal Emulator Documentation
+xfce/terminal|CSWxfceterminaldoc|xfce_terminaldoc - Xfce Terminal Emulator Documentation
 xfce/thunar|CSWxfcethunar|xfce_thunar - Xfce Thunar File Manager
 xfce/thunar|CSWlibxfcethunardev|libxfcethunardev - Xfce Thunar File Manager Library Headers
-xfce/thunar|CSWxfcethunardoc|xfce_thunar_doc - Xfce Thunar File Manager Documentation
+xfce/thunar|CSWxfcethunardoc|xfce_thunardoc - Xfce Thunar File Manager Documentation
 xfce/thunar|CSWlibxfcethunar|libxfcethunar - Xfce Thunar File Manager Library
 xfce/utils|CSWxfceutils|xfce_utils - Xfce Utilities
-xfce/utils|CSWxfceutilsdoc|xfce_utils_doc - Xfce Utilities Documentation
-xfce/xfwm4-themes|CSWxfcexfwm4themes|xfce_xfwm4_themes - Xfce Window Manager Themes
-xfce/xfwm4|CSWxfcexfwm4|xfce_xfwm4 - Xfce Window Manager 
-xfce/xfwm4|CSWxfcexfwm4doc|xfce_xfwm4_doc - Xfce Window Manager Documentation
+xfce/utils|CSWxfceutilsdoc|xfce_utilsdoc - Xfce Utilities Documentation
+xfce/xfwm4-themes|CSWxfcexfwmthemes|xfce_xfwmthemes - Xfce Window Manager Themes
+xfce/xfwm4|CSWxfcexfwm|xfce_xfwm - Xfce Window Manager 
+xfce/xfwm4|CSWxfcexfwmdoc|xfce_xfwmdoc - Xfce Window Manager Documentation
 xtra/bash_completion|CSWbashcmplt|bash_completion - Programmable completion for bash
 xtra/gnulinks|CSWgnulinks|gnulinks - Creates native symlinks for GNU tools in /opt/csw/gnu
