@@ -41,8 +41,19 @@ endif
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibart,prototype depend)
-DISTFILES   += $(call admfiles,CSWlibart-rt,prototype)
-DISTFILES   += $(call admfiles,CSWlibart-devel,prototype)
+DISTFILES   += $(call admfiles,CSWlibart-rt,prototype-sparc prototype-i386)
+DISTFILES   += $(call admfiles,CSWlibart-devel,prototype-sparc prototype-i386)
+
+## For x86 ##
+# for x86, we must share cookie work dir between sol10 and sol8
+# so we make them arch-dependant instead of hostname dependant
+DESTIMG = $(LOGNAME)-$(GARCH)
+# we also make the target build directory (which looks like build.$(GAROSREL)-$(GARCH))
+# identical between sol10 and sol8 by forcing the OS name used
+GAROSREL = 5.8
+# we force the OS for pkginfo, pkg filename so the final package step 
+# performed on solaris 10 x86 really produce SunOS5.8 labelled packages.
+SPKG_OSNAME = SunOS5.8
 
 WORKDIR       = $(WORKROOTDIR)/$(DESTIMG).d/$(ISA)
 COOKIEROOTDIR = cookies.$(ISA)
