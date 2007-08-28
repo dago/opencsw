@@ -219,9 +219,6 @@ CPAN_SITES  += http://mirrors.kernel.org/cpan
 CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
 CPAN_FIRST_MIRROR = $(firstword $(CPAN_SITES))/authors/id
 
-# GNOME
-GNOME_MIRROR =
-
 # Compiler version
 ifeq ($(CC),gcc)
 CC_VERSION  = $(shell $(CC_HOME)/bin/gcc -v 2>&1| ggrep version)
