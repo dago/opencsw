@@ -1,0 +1,32 @@
+P CSWexpat       expat -  XML Parser Toolkit
+P CSWfconfig     fontconfig - A library for configuring and customizing font access.
+P CSWftype2      freetype2 - The free and portable high quality font engine
+P CSWgconf2      gconf2 - GNOME configuration database P
+P CSWgcrypt      libgcrypt - GNU libcrypt
+P CSWggettext    ggettext - GNU gettext
+P CSWglib2       glib2 - the low-level core library for GTK+ and GNOME
+P CSWgnutls      gnutls - GNU Transport Layer Security lib and tools
+P CSWgpgerr      libgpg_error - GNU gpg related library
+P CSWgtk2        gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWiconv       libiconv - GNU iconv library
+P CSWjpeg        jpeg - lib and tools for JPEG image format
+P CSWlibatk      libatk - Accessibility toolkit for GNOME
+P CSWlibcairo    libcairo - The Cairo 2D Graphics Library
+P CSWlibcups     libcups - Libraries for the Common UNIX Printing System
+P CSWlibexif     libexif - EXIF Tag Parsing Library
+P CSWlibpopt     libpopt - Command line option parsing library
+P CSWlibxfce4mcs       libxfce4mcs - Xfce Settings Manager Library
+P CSWlibxfce4util      libxfce4util - Xfce Utilities Library
+P CSWlibxfcegui4       libxfcegui4 - Xfce Widget Library
+P CSWlibxft2     libxft2 - FreeType-based font drawing library for X
+P CSWlibxml2     libxml2 - XML Parser Library
+P CSWlibxrender        libxrender - fontconfig.org Xrender library
+P CSWorbit2      orbit2 - ORBit 2.x CORBA tools and libs
+P CSWpango       libpango - library for laying out and rendering international text
+P CSWpng         png - library for Portable Network Graphics format (PNG)
+P CSWstartupnotif      startup_notif - Library for tracking P startup
+P CSWsunmath     libsunmath - Sun maths library
+P CSWvte         vte - The GNOME virtual terminal emulator
+P CSWxfcelibexo        xfce_libexo - Xfce Extensions Library
+P CSWzlib        zlib - Zlib Data Compression Library
+

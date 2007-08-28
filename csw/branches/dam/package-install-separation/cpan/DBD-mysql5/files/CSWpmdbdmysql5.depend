@@ -1,0 +1,4 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWmysql5rt mysql5rt - run-time libraries for mysql5
+P CSWossl openssl - The Open Source toolkit for SSL and TLS.

@@ -1,0 +1,4 @@
+%var            bitname balance
+%var            pkgname CSWbalance
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYRIGHT

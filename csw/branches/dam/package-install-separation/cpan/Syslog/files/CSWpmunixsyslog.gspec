@@ -1,0 +1,4 @@
+%var            bitname pm_unixsyslog
+%var            pkgname CSWpmunixsyslog
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      url file://%{WORKSRC}/Artistic

@@ -1,0 +1,6 @@
+%var            bitname libxfce4utildoc
+%var            desc  Xfce Utilities Library Documentation
+%var            pkgname CSWlibxfce4utildoc
+%var            arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

@@ -1,0 +1,7 @@
+%var            bitname gnulinks
+%var            pkgname CSWgnulinks
+%var            arch all
+%include        url file://%{PKGLIB}/csw_standard.gspec
+%copyright      
+Copyright 2005 Blastwave.org
+This package is in the public domain.

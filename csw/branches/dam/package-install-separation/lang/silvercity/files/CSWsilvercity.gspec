@@ -1,0 +1,4 @@
+%var            bitname silvercity
+%var            pkgname CSWsilvercity
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE.txt

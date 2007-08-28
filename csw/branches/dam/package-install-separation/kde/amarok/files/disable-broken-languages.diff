@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru amarok-1.4.6.orig/doc/Makefile.in amarok-1.4.6/doc/Makefile.in
+--- amarok-1.4.6.orig/doc/Makefile.in	2007-06-18 07:52:36.000000000 +1200
++++ amarok-1.4.6/doc/Makefile.in	2007-06-26 00:56:08.615101538 +1200
+@@ -411,7 +411,7 @@
+ KDE_DOCS = AUTO
+ #>- SUBDIRS = $(AUTODIRS)
+ #>+ 1
+-SUBDIRS =. amarok da de es et fr it nl pl pt pt_BR ru sv
++SUBDIRS =. amarok da es et fr it nl pt pt_BR ru sv
+ #>- all: all-recursive
+ #>+ 1
+ all: docs-am  all-recursive

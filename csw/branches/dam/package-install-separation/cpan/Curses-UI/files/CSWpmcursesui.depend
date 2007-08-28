@@ -1,0 +1,4 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmcurses pm_curses - terminal screen handling and optimization
+P CSWpmtermreadkey pm_termreadkey - module for simple terminal control

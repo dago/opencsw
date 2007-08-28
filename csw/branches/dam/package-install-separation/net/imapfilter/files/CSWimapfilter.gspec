@@ -1,0 +1,4 @@
+%var            bitname imapfilter
+%var            pkgname CSWimapfilter
+%include        url file://%{PKGLIB}/csw_standard.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,20 @@
+Configuration file for saslauthd is in /opt/csw/etc/saslauthd.init
+
+If you experience memory leak with PAM mechanism, then try to disable worker processes with -n 0. It may affect performance, because saslauthd will spawn a new process for each authentication.
+
+
+List of changes in saslauthd-2.1.22,REV=2007.06.10
+- sasl updated to 2.1.22
+- sasl was built with invalid list of search directories for libraries [#2103]
+- man page was in postscript format [#2261] 
+
+
+List of changes in saslauthd-2.1.21,REV=2006.03.09:
+- Communication with SASL is done with unix sockets because ipc doors mechanism is unreliable [#1222] [#1225] [#1227]
+- Authentification mechanism should be configureable without editing init.d script [#1221]
+- postinstall script is using PKG_INSTALL_ROOT variable instead of PKG_ROOT_DIR
+
+
+List of changes in saslauthd-2.1.21,REV=2005.09.07:
+- updated to Cyrus SASL 2.1.21
+- /etc/init.d/CSWsaslauthd renamed to /etc/init.d/cswsaslauthd to be consistent with other blastwave packages

@@ -1,0 +1,135 @@
+--- Curses-1.06.orig/Makefile.PL	2001-07-25 11:15:40.000000000 -0700
++++ Curses-1.06/Makefile.PL	2003-12-30 17:37:26.238593000 -0800
+@@ -16,62 +16,59 @@
+ #    MENUS    -- enable menus support
+ #    FORMS    -- enable forms support
+ #    GEN      -- add generation support to Makefile (developers only!)
++#    INC=     -- ncurses includes and/or defines
++#    LIBS=    -- ncurses libraries
++#    P_INC=   -- ncurses panel includes and/or defines
++#    P_LIBS=  -- ncurses panel libraries
++#    M_INC=   -- ncurses menu includes and/or defines
++#    M_LIBS=  -- ncurses menu libraries
++#    F_INC=   -- ncurses form includes and/or defines
++#    F_LIBS=  -- ncurses form libraries
+ #
+-#  Ex:  "perl Makefile.PL PANELS MENUS GEN"
+-
+-#  Curses needs the following two variables defined here in order to
+-#  compile the library.  They are:
+-#
+-#    $inc    contains any includes or defines (-I or -D) that are
+-#               needed to compile libcurses applications
+-#    $libs   contains any libraries or library paths (-l or -L) that are
+-#               needed to compile libcurses applications
+-
+-my $inc;
+-my $libs;
+-
+-#  If you do not set these explicitly, Makefile.PL will try in a fairly
+-#  stupid fashion to pick them for you, along with a "c-config.h" file.
+-#
+-#  If you want to include the panels functions, set the following two
+-#  variables appropriately, just as above.  You must also give PANELS
+-#  as an argument to this file in order to enable panel support (see
+-#  above).
+-
+-my $p_inc;
+-my $p_libs;
++#  Ex:  perl Makefile.PL PANELS MENUS GEN INC="-I/usr/local/ncurses"
+ 
+-#  If you want to include the menus functions, set the following two
+-#  variables appropriately, just as above.  You must also give MENUS
+-#  as an argument to this file in order to enable menus support (see
+-#  above).
++my ($gen, $panels, $menus, $forms);
++my ($inc, $libs, $p_inc, $p_libs, $m_inc, $m_libs, $f_inc, $f_libs);
+ 
+-my $m_inc;
+-my $m_libs;
++my @argv;
++while (@ARGV) {
++    my $arg = shift;
+ 
+-#  If you want to include the forms functions, set the following two
+-#  variables appropriately, just as above.  You must also give FORMS
+-#  as an argument to this file in order to enable forms support (see
+-#  above).
++    if    ($arg eq 'GEN')           { $gen    = $arg   }
++    elsif ($arg eq 'PANELS')        { $panels = $arg   }
++    elsif ($arg eq 'MENUS')         { $menus  = $arg   }
++    elsif ($arg eq 'FORMS')         { $forms  = $arg   }
++    elsif ($arg =~ /^INC=(.+)$/)    { $inc    = $1     }
++    elsif ($arg =~ /^LIBS=(.+)$/)   { $libs   = $1     }
++    elsif ($arg =~ /^P_INC=(.+)$/)  { $p_inc  = $1     }
++    elsif ($arg =~ /^P_LIBS=(.+)$/) { $p_libs = $1     }
++    elsif ($arg =~ /^M_INC=(.+)$/)  { $m_inc  = $1     }
++    elsif ($arg =~ /^M_LIBS=(.+)$/) { $m_libs = $1     }
++    elsif ($arg =~ /^F_INC=(.+)$/)  { $f_inc  = $1     }
++    elsif ($arg =~ /^F_LIBS=(.+)$/) { $f_libs = $1     }
++    else                            { push @argv, $arg }
++}
++@ARGV = @argv;   # pass non-Curses arguments to MakeMaker
+ 
+-my $f_inc;
+-my $f_libs;
++# Attempt to use $inc for everyone
++if (defined $inc) {
++    $p_inc = $inc if defined $panels and not defined $p_inc;
++    $m_inc = $inc if defined $menus  and not defined $m_inc;
++    $f_inc = $inc if defined $forms  and not defined $f_inc;
++}
+ 
+-#  If you do not set these explicitly, Makefile.PL will try in an
+-#  even more stupid fashion to pick them for you.
+-#
+-#  If you want to see examples of what needs to go in the $inc and
+-#  $libs variables, check out the `guess_cfg' tables of values below.
+-#  In fact, one way to set the variables would be to add or modify an
+-#  entry for your 'osname'.  If you're not sure what the osname is for
+-#  your machine, you can use the following at your command line to
+-#  print it out:
+-#
+-#    perl -MConfig -le 'print $^O'
+-#
+-#  Some lines have multiple versions (such as `freebsd' and `linux'),
+-#  representing different versions of curses that an OS might have.
+-#  You can pick the version you want by setting the `default' entry.
++# Allow X_LIBS to be additive to LIBS
++#if (defined $libs) {
++#    if (defined $panels) {
++#        $p_libs = defined $p_libs ? "$libs $p_libs" : $libs;
++#    }
++#    if (defined $menus) {
++#        $m_libs = defined $m_libs ? "$libs $m_libs" : $libs;
++#    }
++#    if (defined $forms) {
++#        $f_libs = defined $f_libs ? "$libs $f_libs" : $libs;
++#    }
++#}
+ 
+ #  Here are some notes provided by the hint providers for certain of the
+ #  OSes.  You should scan them first to see if they apply to you.
+@@ -155,22 +152,6 @@
+ ###
+ ## You shouldn't need to change anything below
+ #
+-my $gen;
+-my $panels;
+-my $menus;
+-my $forms;
+-
+-my @argv;
+-while (@ARGV) {
+-    my $arg = shift;
+-
+-    if    ($arg eq 'GEN')    { $gen    = $arg   }
+-    elsif ($arg eq 'PANELS') { $panels = $arg   }
+-    elsif ($arg eq 'MENUS')  { $menus  = $arg   }
+-    elsif ($arg eq 'FORMS')  { $forms  = $arg   }
+-    else                     { push @argv, $arg }
+-}
+-@ARGV = @argv;   # pass non-Curses arguments to MakeMaker
+ 
+ my $guess  = $guess_cfg->{$^O};
+ my $source = "hints/c-$^O";

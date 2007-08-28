@@ -1,0 +1,494 @@
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/config.h.in nmap-3.50/config.h.in
+--- nmap-3.50.orig/config.h.in	2003-09-12 21:19:54.000000000 -0700
++++ nmap-3.50/config.h.in	2004-04-16 12:39:38.762507315 -0700
+@@ -128,6 +128,8 @@
+ 
+ #undef HAVE_SYS_SOCKIO_H
+ 
++#undef HAVE_SYS_WAIT_H
++
+ #undef HAVE_PCRE_H
+ 
+ #undef HAVE_PCRE_PCRE_H
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/configure.ac nmap-3.50/configure.ac
+--- nmap-3.50.orig/configure.ac	2003-10-06 12:54:46.000000000 -0700
++++ nmap-3.50/configure.ac	2004-04-16 12:39:38.765146475 -0700
+@@ -150,7 +150,7 @@
+ 
+ dnl Checks for header files.
+ AC_HEADER_STDC
+-AC_CHECK_HEADERS(string.h getopt.h strings.h memory.h sys/param.h sys/sockio.h bstring.h sys/time.h pwd.h unistd.h )
++AC_CHECK_HEADERS(string.h getopt.h strings.h memory.h sys/param.h sys/sockio.h bstring.h sys/time.h pwd.h unistd.h sys/wait.h)
+ AC_CHECK_HEADERS(netinet/in.h)
+ AC_CHECK_HEADERS(sys/socket.h)
+ AC_CHECK_HEADERS([net/if.h],[],[],
+@@ -654,40 +654,8 @@
+         subdirs="$NBASEDIR $libpcapdir $subdirs"
+ fi
+ 
+-
+ if test "${with_nmapfe}" = "yes"; then
+-dnl Check for GTK+
+-AC_PATH_PROG(GTK_CONFIG, gtk-config, no)
+-AC_MSG_CHECKING(If you have GTK+ installed)
+-if test "$GTK_CONFIG" = "no" ; then
+-  AC_MSG_RESULT([no])
+-  AC_MSG_WARN([Gtk+ has not been installed -> nmapfe will not be made])
+-else
+-  GTK_NEEDED_MAJOR=1
+-  GTK_NEEDED_MINOR=2
+-  GTK_NEEDED_MICRO=7
+-  GTK_MINVERSION=$GTK_NEEDED_MAJOR.$GTK_NEEDED_MINOR.$GTK_NEEDED_MICRO
+-  ver=`gtk-config --version`
+-  dnl Extract the information.
+-  major=`echo $ver|sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
+-  minor=`echo $ver|sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
+-  micro=`echo $ver|sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
+-  AC_MSG_RESULT($ver)
+-  if test $major -lt $GTK_NEEDED_MAJOR -o $major -eq $GTK_NEEDED_MAJOR \
+-    -a $minor -lt $GTK_NEEDED_MINOR -o $minor -eq $GTK_NEEDED_MINOR \
+-    -a $micro -lt $GTK_NEEDED_MICRO; then
+-    AC_MSG_WARN([An old version of GTK+ ($major.$minor.$micro) was found.\n \
+-                 You need at least version $GTK_MINVERSION.\n Subdir X-windows \
+-                 will not be made])
+-  else
+     subdirs="$subdirs nmapfe"
+-    dnl Maybe also define the flags to compile and link GTK+
+-    dnl GTK_CXXFLAGS=`gtk-config --cflags`
+-    dnl GTK_LIBS=`gtk-config --libs`
+-    dnl AC_SUBST(GTK_CXXFLAGS)
+-    dnl AC_SUBST(GTK_LIBS)
+-  fi
+-fi
+ fi
+ 
+ AC_CONFIG_SUBDIRS( $subdirs )
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/Makefile.in nmap-3.50/nmapfe/Makefile.in
+--- nmap-3.50.orig/nmapfe/Makefile.in	2003-09-19 17:36:26.000000000 -0700
++++ nmap-3.50/nmapfe/Makefile.in	2004-04-16 12:40:11.065049352 -0700
+@@ -72,7 +72,7 @@
+ CONFIG_CLEAN_FILES = 
+ PROGRAMS =  $(bin_PROGRAMS)
+ 
+-DEFS = @DEFS@ -DVERSION=\"$(VERSION)\" -DHAVE_CONFIG_H=1 -I$(srcdir) 
++DEFS = @DEFS@ -DVERSION=\"$(VERSION)\" -DHAVE_CONFIG_H=1 -I$(srcdir) -I..
+ CPPFLAGS = @CPPFLAGS@
+ STATIC =
+ LDFLAGS = @LDFLAGS@ $(STATIC)
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/aclocal.m4 nmap-3.50/nmapfe/aclocal.m4
+--- nmap-3.50.orig/nmapfe/aclocal.m4	2002-07-20 00:10:48.000000000 -0700
++++ nmap-3.50/nmapfe/aclocal.m4	2004-04-16 12:39:38.768779192 -0700
+@@ -1,208 +1,57 @@
+-# aclocal.m4 generated automatically by aclocal 1.6.2 -*- Autoconf -*-
+-
+-# Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002
+-# Free Software Foundation, Inc.
+-# This file is free software; the Free Software Foundation
+-# gives unlimited permission to copy and/or distribute it,
+-# with or without modifications, as long as this notice is preserved.
+-
+-# This program is distributed in the hope that it will be useful,
+-# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+-# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+-# PARTICULAR PURPOSE.
+-
+-# Configure paths for GTK+
+-# Owen Taylor     97-11-3
+-
+-dnl AM_PATH_GTK([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND [, MODULES]]]])
+-dnl Test for GTK, and define GTK_CFLAGS and GTK_LIBS
+-dnl
+-AC_DEFUN(AM_PATH_GTK,
+-[dnl 
+-dnl Get the cflags and libraries from the gtk-config script
+-dnl
+-AC_ARG_WITH(gtk-prefix,[  --with-gtk-prefix=PFX   Prefix where GTK is installed (optional)],
+-            gtk_config_prefix="$withval", gtk_config_prefix="")
+-AC_ARG_WITH(gtk-exec-prefix,[  --with-gtk-exec-prefix=PFX Exec prefix where GTK is installed (optional)],
+-            gtk_config_exec_prefix="$withval", gtk_config_exec_prefix="")
+-AC_ARG_ENABLE(gtktest, [  --disable-gtktest       Do not try to compile and run a test GTK program],
+-		    , enable_gtktest=yes)
++dnl This is some Glib/Gtk+ checking code pulled from the gftp project
+ 
+-  for module in . $4
+-  do
+-      case "$module" in
+-         gthread) 
+-             gtk_config_args="$gtk_config_args gthread"
+-         ;;
+-      esac
+-  done
++dnl PKG_CHECK_MODULES(GSTUFF, gtk+-2.0 >= 1.3 glib = 1.3.4, action-if, action-not)
++dnl defines GSTUFF_LIBS, GSTUFF_CFLAGS, see pkg-config man page
++dnl also defines GSTUFF_PKG_ERRORS on error
++AC_DEFUN(PKG_CHECK_MODULES, [
++  succeeded=no
+ 
+-  if test x$gtk_config_exec_prefix != x ; then
+-     gtk_config_args="$gtk_config_args --exec-prefix=$gtk_config_exec_prefix"
+-     if test x${GTK_CONFIG+set} != xset ; then
+-        GTK_CONFIG=$gtk_config_exec_prefix/bin/gtk-config
+-     fi
+-  fi
+-  if test x$gtk_config_prefix != x ; then
+-     gtk_config_args="$gtk_config_args --prefix=$gtk_config_prefix"
+-     if test x${GTK_CONFIG+set} != xset ; then
+-        GTK_CONFIG=$gtk_config_prefix/bin/gtk-config
+-     fi
++  if test -z "$PKG_CONFIG"; then
++    AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+   fi
+ 
+-  AC_PATH_PROG(GTK_CONFIG, gtk-config, no)
+-  min_gtk_version=ifelse([$1], ,0.99.7,$1)
+-  AC_MSG_CHECKING(for GTK - version >= $min_gtk_version)
+-  no_gtk=""
+-  if test "$GTK_CONFIG" = "no" ; then
+-    no_gtk=yes
++  if test "$PKG_CONFIG" = "no" ; then
++     echo "*** The pkg-config script could not be found. Make sure it is"
++     echo "*** in your path, or set the PKG_CONFIG environment variable"
++     echo "*** to the full path to pkg-config."
++     echo "*** Or see http://www.freedesktop.org/software/pkgconfig to get pkg-config."
+   else
+-    GTK_CFLAGS=`$GTK_CONFIG $gtk_config_args --cflags`
+-    GTK_LIBS=`$GTK_CONFIG $gtk_config_args --libs`
+-    gtk_config_major_version=`$GTK_CONFIG $gtk_config_args --version | \
+-           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
+-    gtk_config_minor_version=`$GTK_CONFIG $gtk_config_args --version | \
+-           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
+-    gtk_config_micro_version=`$GTK_CONFIG $gtk_config_args --version | \
+-           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
+-    if test "x$enable_gtktest" = "xyes" ; then
+-      ac_save_CFLAGS="$CFLAGS"
+-      ac_save_LIBS="$LIBS"
+-      CFLAGS="$CFLAGS $GTK_CFLAGS"
+-      LIBS="$GTK_LIBS $LIBS"
+-dnl
+-dnl Now check if the installed GTK is sufficiently new. (Also sanity
+-dnl checks the results of gtk-config to some extent
+-dnl
+-      rm -f conf.gtktest
+-      AC_TRY_RUN([
+-#include <gtk/gtk.h>
+-#include <stdio.h>
+-#include <stdlib.h>
++     PKG_CONFIG_MIN_VERSION=0.9.0
++     if $PKG_CONFIG --atleast-pkgconfig-version $PKG_CONFIG_MIN_VERSION; then
++        AC_MSG_CHECKING(for $2)
+ 
+-int 
+-main ()
+-{
+-  int major, minor, micro;
+-  char *tmp_version;
++        if $PKG_CONFIG --exists "$2" ; then
++            AC_MSG_RESULT(yes)
++            succeeded=yes
+ 
+-  system ("touch conf.gtktest");
++            AC_MSG_CHECKING($1_CFLAGS)
++            $1_CFLAGS=`$PKG_CONFIG --cflags "$2"`
++            AC_MSG_RESULT($$1_CFLAGS)
+ 
+-  /* HP/UX 9 (%@#!) writes to sscanf strings */
+-  tmp_version = g_strdup("$min_gtk_version");
+-  if (sscanf(tmp_version, "%d.%d.%d", &major, &minor, &micro) != 3) {
+-     printf("%s, bad version string\n", "$min_gtk_version");
+-     exit(1);
+-   }
++            AC_MSG_CHECKING($1_LIBS)
++            $1_LIBS=`$PKG_CONFIG --libs "$2"`
++            AC_MSG_RESULT($$1_LIBS)
++        else
++            $1_CFLAGS=""
++            $1_LIBS=""
++            ## If we have a custom action on failure, don't print errors, but 
++            ## do set a variable so people can do so.
++            $1_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2"`
++            ifelse([$4], ,echo $$1_PKG_ERRORS,)
++        fi
+ 
+-  if ((gtk_major_version != $gtk_config_major_version) ||
+-      (gtk_minor_version != $gtk_config_minor_version) ||
+-      (gtk_micro_version != $gtk_config_micro_version))
+-    {
+-      printf("\n*** 'gtk-config --version' returned %d.%d.%d, but GTK+ (%d.%d.%d)\n", 
+-             $gtk_config_major_version, $gtk_config_minor_version, $gtk_config_micro_version,
+-             gtk_major_version, gtk_minor_version, gtk_micro_version);
+-      printf ("*** was found! If gtk-config was correct, then it is best\n");
+-      printf ("*** to remove the old version of GTK+. You may also be able to fix the error\n");
+-      printf("*** by modifying your LD_LIBRARY_PATH enviroment variable, or by editing\n");
+-      printf("*** /etc/ld.so.conf. Make sure you have run ldconfig if that is\n");
+-      printf("*** required on your system.\n");
+-      printf("*** If gtk-config was wrong, set the environment variable GTK_CONFIG\n");
+-      printf("*** to point to the correct copy of gtk-config, and remove the file config.cache\n");
+-      printf("*** before re-running configure\n");
+-    } 
+-#if defined (GTK_MAJOR_VERSION) && defined (GTK_MINOR_VERSION) && defined (GTK_MICRO_VERSION)
+-  else if ((gtk_major_version != GTK_MAJOR_VERSION) ||
+-	   (gtk_minor_version != GTK_MINOR_VERSION) ||
+-           (gtk_micro_version != GTK_MICRO_VERSION))
+-    {
+-      printf("*** GTK+ header files (version %d.%d.%d) do not match\n",
+-	     GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION);
+-      printf("*** library (version %d.%d.%d)\n",
+-	     gtk_major_version, gtk_minor_version, gtk_micro_version);
+-    }
+-#endif /* defined (GTK_MAJOR_VERSION) ... */
+-  else
+-    {
+-      if ((gtk_major_version > major) ||
+-        ((gtk_major_version == major) && (gtk_minor_version > minor)) ||
+-        ((gtk_major_version == major) && (gtk_minor_version == minor) && (gtk_micro_version >= micro)))
+-      {
+-        return 0;
+-       }
++        AC_SUBST($1_CFLAGS)
++        AC_SUBST($1_LIBS)
+      else
+-      {
+-        printf("\n*** An old version of GTK+ (%d.%d.%d) was found.\n",
+-               gtk_major_version, gtk_minor_version, gtk_micro_version);
+-        printf("*** You need a version of GTK+ newer than %d.%d.%d. The latest version of\n",
+-	       major, minor, micro);
+-        printf("*** GTK+ is always available from ftp://ftp.gtk.org.\n");
+-        printf("***\n");
+-        printf("*** If you have already installed a sufficiently new version, this error\n");
+-        printf("*** probably means that the wrong copy of the gtk-config shell script is\n");
+-        printf("*** being found. The easiest way to fix this is to remove the old version\n");
+-        printf("*** of GTK+, but you can also set the GTK_CONFIG environment to point to the\n");
+-        printf("*** correct copy of gtk-config. (In this case, you will have to\n");
+-        printf("*** modify your LD_LIBRARY_PATH enviroment variable, or edit /etc/ld.so.conf\n");
+-        printf("*** so that the correct libraries are found at run-time))\n");
+-      }
+-    }
+-  return 1;
+-}
+-],, no_gtk=yes,[echo $ac_n "cross compiling; assumed OK... $ac_c"])
+-       CFLAGS="$ac_save_CFLAGS"
+-       LIBS="$ac_save_LIBS"
++        echo "*** Your version of pkg-config is too old. You need version $PKG_CONFIG_MIN_VERSION or newer."
++        echo "*** See http://www.freedesktop.org/software/pkgconfig"
+      fi
+   fi
+-  if test "x$no_gtk" = x ; then
+-     AC_MSG_RESULT(yes)
+-     ifelse([$2], , :, [$2])     
+-  else
+-     AC_MSG_RESULT(no)
+-     if test "$GTK_CONFIG" = "no" ; then
+-       echo "*** The gtk-config script installed by GTK could not be found"
+-       echo "*** If GTK was installed in PREFIX, make sure PREFIX/bin is in"
+-       echo "*** your path, or set the GTK_CONFIG environment variable to the"
+-       echo "*** full path to gtk-config."
+-     else
+-       if test -f conf.gtktest ; then
+-        :
+-       else
+-          echo "*** Could not run GTK test program, checking why..."
+-          CFLAGS="$CFLAGS $GTK_CFLAGS"
+-          LIBS="$LIBS $GTK_LIBS"
+-          AC_TRY_LINK([
+-#include <gtk/gtk.h>
+-#include <stdio.h>
+-],      [ return ((gtk_major_version) || (gtk_minor_version) || (gtk_micro_version)); ],
+-        [ echo "*** The test program compiled, but did not run. This usually means"
+-          echo "*** that the run-time linker is not finding GTK or finding the wrong"
+-          echo "*** version of GTK. If it is not finding GTK, you'll need to set your"
+-          echo "*** LD_LIBRARY_PATH environment variable, or edit /etc/ld.so.conf to point"
+-          echo "*** to the installed location  Also, make sure you have run ldconfig if that"
+-          echo "*** is required on your system"
+-	  echo "***"
+-          echo "*** If you have an old version installed, it is best to remove it, although"
+-          echo "*** you may also be able to get things to work by modifying LD_LIBRARY_PATH"
+-          echo "***"
+-          echo "*** If you have a RedHat 5.0 system, you should remove the GTK package that"
+-          echo "*** came with the system with the command"
+-          echo "***"
+-          echo "***    rpm --erase --nodeps gtk gtk-devel" ],
+-        [ echo "*** The test program failed to compile or link. See the file config.log for the"
+-          echo "*** exact error that occured. This usually means GTK was incorrectly installed"
+-          echo "*** or that you have moved GTK since it was installed. In the latter case, you"
+-          echo "*** may want to edit the gtk-config script: $GTK_CONFIG" ])
+-          CFLAGS="$ac_save_CFLAGS"
+-          LIBS="$ac_save_LIBS"
+-       fi
+-     fi
+-     GTK_CFLAGS=""
+-     GTK_LIBS=""
++
++  if test $succeeded = yes; then
+      ifelse([$3], , :, [$3])
++  else
++     ifelse([$4], , AC_MSG_ERROR([Library requirements ($2) not met; consider adjusting the PKG_CONFIG_PATH environment variable if your libraries are in a nonstandard prefix so pkg-config can find them.]), [$4])
+   fi
+-  AC_SUBST(GTK_CFLAGS)
+-  AC_SUBST(GTK_LIBS)
+-  rm -f conf.gtktest
+ ])
+ 
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/configure.ac nmap-3.50/nmapfe/configure.ac
+--- nmap-3.50.orig/nmapfe/configure.ac	2002-07-20 00:00:54.000000000 -0700
++++ nmap-3.50/nmapfe/configure.ac	2004-04-16 12:39:38.769811826 -0700
+@@ -6,18 +6,20 @@
+ 
+ AC_PROG_CC
+ 
+-#AM_PATH_GTK(1.0.0,
+-#            [LIBS="$LIBS $GTK_LIBS" CFLAGS="$CFLAGS $GTK_CFLAGS"],
+-#            AC_MSG_ERROR(Cannot find GTK: Is gtk-config in path?))
+-AM_PATH_GTK(1.0.0,
+-            [LIBS="$LIBS $GTK_LIBS" CFLAGS="$CFLAGS $GTK_CFLAGS"],
+-            AC_DEFINE(MISSING_GTK) \
+-	    AC_MSG_WARN(NMAPFE WILL NOT BE BUILT -- BUT NMAP SHOULD STILL WORK ))
++if test x$GTK_LIBS = x ; then
++    PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.0.0, have_gtk20="yes", have_gtk20="no")
++
++    if test $have_gtk20 = "yes" ; then
++        LIBS="$LIBS $GTK_LIBS" CFLAGS="$CFLAGS $GTK_CFLAGS"
++    else
++        AC_DEFINE(MISSING_GTK)
++        AC_MSG_WARN("NMAPFE WILL NOT BE BUILT -- BUT NMAP SHOULD STILL WORK")
++    fi
++fi
+ 
+ dnl Host specific hacks
+ AC_CANONICAL_HOST
+ 
+-
+ linux=no
+ macosx=no
+ needs_cpp_precomp=no
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/nmapfe.c nmap-3.50/nmapfe/nmapfe.c
+--- nmap-3.50.orig/nmapfe/nmapfe.c	2003-09-20 02:03:01.000000000 -0700
++++ nmap-3.50/nmapfe/nmapfe.c	2004-04-16 12:39:38.774924124 -0700
+@@ -95,22 +95,15 @@
+  * Long live Aol and pr: Phreak. <grins>
+  */
+ 
+-#if MISSING_GTK
+-#error "Your system does not appear to have GTK (www.gtk.org) installed.  Thus the Nmap X Front End will not compile.  You should still be able to use Nmap the normal way (via text console).  GUIs are for wimps anyway :)"
+-#else
+-
+-
+-
+-#include <gtk/gtk.h>
+-#include <gdk/gdkkeysyms.h>
++#if HAVE_CONFIG_H
++#include "config.h"
++#endif
+ 
+ #if HAVE_UNISTD_H
+ #include <unistd.h>
+ #endif
+ #include <stdio.h>
+ 
+-#include <nbase.h>
+-
+ #include "nmapfe.h"
+ #include "nmapfe_sig.h"
+ 
+@@ -1291,7 +1284,7 @@
+ GtkWidget *hbox;
+ GtkWidget *button;
+ 
+-  helpDialog = gtk_window_new(GTK_WINDOW_DIALOG);
++  helpDialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+   gtk_widget_set_usize(helpDialog, 400, 300);
+   gtk_window_set_title(GTK_WINDOW(helpDialog), "Help With NmapFE");
+   gtk_window_set_policy(GTK_WINDOW(helpDialog), FALSE, FALSE, FALSE);
+@@ -1377,6 +1370,3 @@
+ 
+   return(helpDialog);
+ }
+-
+-
+-#endif /* MISSING_GTK */
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/nmapfe.h nmap-3.50/nmapfe/nmapfe.h
+--- nmap-3.50.orig/nmapfe/nmapfe.h	2003-09-20 02:03:01.000000000 -0700
++++ nmap-3.50/nmapfe/nmapfe.h	2004-04-16 12:39:38.776375624 -0700
+@@ -101,8 +101,11 @@
+ #error "Your system does not appear to have GTK (www.gtk.org) installed.  Thus the Nmap X Front End will not compile.  You should still be able to use Nmap the normal way (via text console).  GUIs are for wimps anyway :)"
+ #endif
+ 
+-#include <nbase.h>
++#define GTK_ENABLE_BROKEN
+ #include <gtk/gtk.h>
++#include <gdk/gdkkeysyms.h>
++
++#include <nbase.h>
+ 
+ /* #define DEBUG(str) { fprintf(stderr, str); fflush(stderr); } */
+ 
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/nmapfe_error.h nmap-3.50/nmapfe/nmapfe_error.h
+--- nmap-3.50.orig/nmapfe/nmapfe_error.h	2003-09-10 19:12:58.000000000 -0700
++++ nmap-3.50/nmapfe/nmapfe_error.h	2004-04-16 12:39:38.777388391 -0700
+@@ -84,9 +84,13 @@
+ 
+ /* $Id: gtk20.diff,v 1.1.1.1 2004/08/17 17:07:34 comand Exp $ */
+ 
+-
+ #ifndef NMAPFE_ERROR_H
+ #define NMAPFE_ERROR_H
++
++#if HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <nbase.h>
+ 
+ #include <stdarg.h>
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/nmapfe_sig.c nmap-3.50/nmapfe/nmapfe_sig.c
+--- nmap-3.50.orig/nmapfe/nmapfe_sig.c	2003-09-20 02:03:01.000000000 -0700
++++ nmap-3.50/nmapfe/nmapfe_sig.c	2004-04-16 12:39:38.780910880 -0700
+@@ -98,13 +98,10 @@
+ #define MAX_PARSE_ARGS 512
+ #endif
+ 
+-#if MISSING_GTK
+-/* Do nothing, nmapfe.c will spit out an error */
+-#else
+-
+-#include <nbase.h>
++#if HAVE_CONFIG_H
++#include "config.h"
++#endif
+ 
+-#include <gtk/gtk.h>
+ #include <stdio.h>
+ #include <signal.h>
+ #include <stdlib.h>
+@@ -126,7 +123,6 @@
+ #include <errno.h>
+ #include <signal.h>
+ 
+-
+ #ifdef WIN32
+ #include <windows.h>
+ #endif
+@@ -1359,5 +1355,3 @@
+   free(argv);
+ }
+ 
+-
+-#endif /* MISSING_GTK */
+diff --speed-large-files --minimal -Nru nmap-3.50.orig/nmapfe/nmapfe_sig.h nmap-3.50/nmapfe/nmapfe_sig.h
+--- nmap-3.50.orig/nmapfe/nmapfe_sig.h	2003-09-10 19:12:58.000000000 -0700
++++ nmap-3.50/nmapfe/nmapfe_sig.h	2004-04-16 12:39:38.782098632 -0700
+@@ -96,14 +96,7 @@
+ #ifndef NMAPFE_SIG_H
+ #define NMAPFE_SIG_H
+ 
+-#if MISSING_GTK
+-#error "Your system does not appear to have GTK (www.gtk.org) installed.  Thus the Nmap X Front End will not compile.  You should still be able to use Nmap the normal way (via text console).  GUIs are for wimps anyway :)"
+-#endif
+-
+-
+-#include <gtk/gtk.h>
+-#include <nbase.h>
+-
++#include "nmapfe.h"
+ #include "nmapfe_error.h"
+ 
+ gboolean stop_scan();

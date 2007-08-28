@@ -1,0 +1,12 @@
+#!/bin/sh
+
+BINDIR=$BASEDIR/opt/csw/bin
+
+# Set up links
+cd $BINDIR
+rm -f sudo sudoedit
+ln -f sudo.minimal sudo
+ln -f sudo.minimal sudoedit
+
+exit 0
+

@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/libavcodec/avcodec.h MPlayer-1.0rc1/libavcodec/avcodec.h
+--- MPlayer-1.0rc1.orig/libavcodec/avcodec.h	2006-10-22 18:32:34.000000000 -0400
++++ MPlayer-1.0rc1/libavcodec/avcodec.h	2007-07-13 08:10:33.127439000 -0400
+@@ -34,6 +34,10 @@
+ #include "avutil.h"
+ #include <sys/types.h> /* size_t */
+ 
++#if defined(sun)
++#define llrint(d)	(int64_t)rint(d)
++#endif
++
+ #define AV_STRINGIFY(s)         AV_TOSTRING(s)
+ #define AV_TOSTRING(s) #s
+ 

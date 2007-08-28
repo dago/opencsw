@@ -1,0 +1,18 @@
+f none /opt/csw/lib/libthunar-vfs-1.la 0755 root bin
+f none /opt/csw/lib/libthunar-vfs-1.so.2.2.2 0755 root bin
+s none /opt/csw/lib/libthunar-vfs-1.so.2=libthunar-vfs-1.so.2.2.2
+s none /opt/csw/lib/libthunar-vfs-1.so=libthunar-vfs-1.so.2.2.2
+f none /opt/csw/lib/libthunarx-1.la 0755 root bin
+f none /opt/csw/lib/libthunarx-1.so.2.2.2 0755 root bin
+s none /opt/csw/lib/libthunarx-1.so.2=libthunarx-1.so.2.2.2
+s none /opt/csw/lib/libthunarx-1.so=libthunarx-1.so.2.2.2
+d none /opt/csw/lib/thunarx-1 0755 root bin
+f none /opt/csw/lib/thunarx-1/thunar-apr.la 0755 root bin
+f none /opt/csw/lib/thunarx-1/thunar-apr.so 0755 root bin
+f none /opt/csw/lib/thunarx-1/thunar-sbr.la 0755 root bin
+f none /opt/csw/lib/thunarx-1/thunar-sbr.so 0755 root bin
+f none /opt/csw/lib/thunarx-1/thunar-uca.la 0755 root bin
+f none /opt/csw/lib/thunarx-1/thunar-uca.so 0755 root bin
+i copyright=CSWlibxfcethunar.copyright
+i depend=CSWlibxfcethunar.depend
+i pkginfo=CSWlibxfcethunar.pkginfo

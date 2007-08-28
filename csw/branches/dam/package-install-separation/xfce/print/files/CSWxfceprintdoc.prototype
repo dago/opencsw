@@ -1,0 +1,45 @@
+d none /opt/csw/share/gtk-doc 0755 root bin
+d none /opt/csw/share/gtk-doc/html 0755 root bin
+d none /opt/csw/share/gtk-doc/html/libxfprint 0755 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/PrinterListWindow.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/PrinterQueueWindow.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/PrintingSystem.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/ch01.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/home.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/index.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/index.sgml 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/left.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/libxfprint-Job.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/libxfprint-Printer.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/libxfprint.devhelp 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/libxfprint.devhelp2 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/right.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/style.css 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfprint/up.png 0644 root bin
+d none /opt/csw/share/xfce4 0755 root bin
+d none /opt/csw/share/xfce4/doc 0755 root bin
+d none /opt/csw/share/xfce4/doc/C 0755 root bin
+d none /opt/csw/share/xfce4/doc/C/images 0755 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint-manager-queue.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint-manager.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint_headings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint_input.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint_mcs_plugin.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint_prettyprinting.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint_sheets.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/xfprint_virtualpages.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfprint.html 0644 root bin
+d none /opt/csw/share/xfce4/doc/fr 0755 root bin
+d none /opt/csw/share/xfce4/doc/fr/images 0755 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint-manager-queue.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint-manager.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint_headings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint_input.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint_mcs_plugin.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint_prettyprinting.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint_sheets.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/xfprint_virtualpages.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/xfprint.html 0644 root bin
+i copyright=CSWxfceprintdoc.copyright
+i depend=CSWxfceprintdoc.depend
+i pkginfo=CSWxfceprintdoc.pkginfo

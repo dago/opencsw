@@ -1,0 +1,4 @@
+%var            bitname quanta_gcc
+%var            pkgname CSWquantagcc
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

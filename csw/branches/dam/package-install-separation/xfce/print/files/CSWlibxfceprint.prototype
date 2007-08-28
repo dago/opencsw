@@ -1,0 +1,7 @@
+f none /opt/csw/lib/libxfprint.la 0755 root bin
+f none /opt/csw/lib/libxfprint.so.0.0.1 0755 root bin
+s none /opt/csw/lib/libxfprint.so.0=libxfprint.so.0.0.1
+s none /opt/csw/lib/libxfprint.so=libxfprint.so.0.0.1
+i copyright=CSWlibxfceprint.copyright
+i depend=CSWlibxfceprint.depend
+i pkginfo=CSWlibxfceprint.pkginfo

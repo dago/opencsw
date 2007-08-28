@@ -1,0 +1,5 @@
+%var            bitname rubytk
+%var            pkgname CSWrubytk
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc Ruby Tcl/Tk Extension
+%copyright      url file://%{WORKSRC}/COPYING

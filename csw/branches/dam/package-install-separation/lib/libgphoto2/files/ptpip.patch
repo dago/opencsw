@@ -1,0 +1,11 @@
+diff -ru libgphoto2-2.2.1.orig/libgphoto2_port/ptpip/ptpip.c libgphoto2-2.2.1/libgphoto2_port/ptpip/ptpip.c
+--- libgphoto2-2.2.1.orig/libgphoto2_port/ptpip/ptpip.c	2006-04-18 18:54:26.000000000 -0700
++++ libgphoto2-2.2.1/libgphoto2_port/ptpip/ptpip.c	2006-07-25 11:58:22.561786000 -0700
+@@ -63,6 +63,7 @@
+ #define CHECK(result) {int r=(result); if (r<0) return (r);}
+ 
+ struct _GPPortPrivateLibrary {
++	char dummy;
+ };
+ 
+ GPPortType

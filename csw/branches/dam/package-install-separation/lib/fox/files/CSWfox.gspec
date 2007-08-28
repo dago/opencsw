@@ -1,0 +1,4 @@
+%var            bitname fox
+%var            pkgname CSWfox
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,6 @@
+%var            bitname pm_tiemldbm
+%var            pkgname CSWpmtiemldbm
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2002 Rob Casey, robau@cpan.org

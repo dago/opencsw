@@ -1,0 +1,11 @@
+%var            bitname pm_tt2common
+%var            pkgname CSWpmtt2-common
+%var            desc Template Toolkit 2 (common)
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 1996-2004 Andy Wardley.  All Rights Reserved
+Copyright (C) 1998-2002 Canon Research Centre Europe Ltd.
+
+This is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

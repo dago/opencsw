@@ -1,0 +1,9 @@
+%var            bitname apache2c
+%var            pkgname CSWapache2c
+%var            initname cswapache2
+%var            INIT_KILL_PRIO 16
+%var            INIT_START_PRIO 50
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc Apache 2.2 web server (core)
+%copyright      url file://%{WORKSRC}/LICENSE
+%include        url file://%{PKGLIB}/smf_enabled.gspec

@@ -1,0 +1,9 @@
+%var            bitname pm_regexpshellish
+%var            pkgname CSWpmregexpshellish
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 1999, Barrie Slaymaker <barries@slaysys.com>
+
+You may distribute under the terms of either the GNU General Public
+License or the Artistic License, as specified in the README file.

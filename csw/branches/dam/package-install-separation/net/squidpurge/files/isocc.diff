@@ -1,0 +1,11 @@
+--- purge.orig/copyout.cc	2000-09-21 06:05:31.000000000 -0700
++++ purge/copyout.cc	2004-05-24 09:48:31.839045000 -0700
+@@ -132,7 +132,7 @@
+   static const char* index = "index.html";
+   
+   // find hostname part after the scheme (okok, not counting port, etc.)
+-  char* ptr = strstr( url, "://" );
++  const char* ptr = strstr( url, "://" );
+   if ( ptr == 0 || strlen(ptr) < 4 ) return false;
+ 
+   // create filename to store contents into

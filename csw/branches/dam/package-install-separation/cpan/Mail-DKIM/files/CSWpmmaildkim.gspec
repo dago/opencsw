@@ -1,0 +1,12 @@
+%var            bitname pm_maildkim
+%var            pkgname CSWpmmaildkim
+#%var            desc Mail::DKIM
+%var            arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+Copyright (C) 2006-2007 by Messiah College
+
+This is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+

@@ -1,0 +1,6 @@
+P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
+P CSWcommon common - common files and dirs for CSW packages
+P CSWiconv libiconv - GNU iconv library
+P CSWlibxml2 libxml2 - XML Parser Library
+P CSWphp5 php5 - PHP Hypertext Processor 5
+P CSWzlib zlib - Zlib Data Compression Library

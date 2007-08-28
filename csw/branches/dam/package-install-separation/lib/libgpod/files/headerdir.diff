@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru libgpod-0.4.0.orig/src/Makefile.in libgpod-0.4.0/src/Makefile.in
+--- libgpod-0.4.0.orig/src/Makefile.in	2006-09-24 09:56:59.000000000 -0400
++++ libgpod-0.4.0/src/Makefile.in	2006-10-05 14:32:30.963179000 -0400
+@@ -249,7 +249,7 @@
+         -no-undefined
+ 
+ 
+-libgpodincludedir = $(includedir)/gpod-1.0/gpod
++libgpodincludedir = $(includedir)/gpod
+ libgpodinclude_HEADERS = $(libgpod_la_headers)
+ 
+ INCLUDES = $(LIBGPOD_CFLAGS)

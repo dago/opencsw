@@ -1,0 +1,11 @@
+%var            bitname pm_textscraper
+%var            pkgname CSWpmtextscraper
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+Copyright (C) 2005 by Chris McEwan <mcewan@cpan.org>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.3 or,
+at your option, any later version of Perl 5 you may have available.
+

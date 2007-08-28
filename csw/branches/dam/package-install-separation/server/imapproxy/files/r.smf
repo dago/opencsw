@@ -1,0 +1,38 @@
+#
+# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# r.smf - class script which removes smf related files
+#
+# use this class for the following files:
+# /opt/csw/var/svc
+# /opt/csw/var/svc/manifest
+# /opt/csw/var/svc/manifest/network
+# /opt/csw/var/svc/manifest/network/softname.xml=/softname.xml
+# /opt/csw/lib/svc
+# /opt/csw/lib/svc/method
+# /opt/csw/lib/svc/method/svc-softname
+
+if [ -z "$PKG_INSTALL_ROOT" ]; then
+	PKG_INSTALL_ROOT="/"
+fi
+
+while read DEST; do
+	EXT="`/usr/bin/echo $DEST | /usr/bin/awk -F. '{ print $(NF) }'`"
+	if [ "$EXT" = "xml" ]; then
+		for FRMI in `chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$DEST"`; do
+			chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg delete "$FRMI" >/dev/null 2>&1
+		done
+	fi
+        if [ ! -d "$DEST" ]; then
+		"$BASEDIR/usr/bin/rm" "$DEST" || exit 2
+	fi
+done
+
+exit 0
+

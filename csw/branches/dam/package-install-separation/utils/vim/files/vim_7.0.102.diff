@@ -1,0 +1,54 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.102
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.102
+Problem:    Redrawing cmdline is not correct when using SCIM.
+Solution:   Don't call im_get_status(). (Yukihiro Nakadaira)
+Files:	    src/ex_getln.c
+
+
+*** ../vim-7.0.101/src/ex_getln.c	Sun Sep 10 21:05:39 2006
+--- src/ex_getln.c	Tue Sep 12 20:52:51 2006
+***************
+*** 2363,2369 ****
+  {
+      if ((State & CMDLINE)
+  	    && xic != NULL
+! 	    && im_get_status()
+  	    && !p_imdisable
+  	    && im_is_preediting())
+      {
+--- 2363,2369 ----
+  {
+      if ((State & CMDLINE)
+  	    && xic != NULL
+! 	    /* && im_get_status()  doesn't work when using SCIM */
+  	    && !p_imdisable
+  	    && im_is_preediting())
+      {
+*** ../vim-7.0.101/src/version.c	Tue Sep 12 22:24:48 2006
+--- src/version.c	Thu Sep 14 10:23:45 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     102,
+  /**/
+
+-- 
+TIM:   That is not an ordinary rabbit ... 'tis the most foul cruel and
+       bad-tempered thing you ever set eyes on.
+ROBIN: You tit.  I soiled my armour I was so scared!
+                 "Monty Python and the Holy Grail" PYTHON (MONTY) PICTURES LTD
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

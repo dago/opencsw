@@ -1,0 +1,7 @@
+%var            bitname pm_imadbi
+%var            pkgname CSWpmimadbi
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is free software.  You may distribute under the same terms
+as Perl itself.  IT COMES WITHOUT WARRANTY OF ANY KIND.

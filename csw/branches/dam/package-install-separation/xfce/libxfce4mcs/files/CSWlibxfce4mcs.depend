@@ -1,0 +1,5 @@
+I CSWxfcelibs - lightweight desktop environment, core libraries
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWlibxfce4util libxfce4util - Xfce Utilities Library
+P CSWstartupnotif startup_notif - Library for tracking application startup

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+SENDMAIL_ACTION=leave
+
+if [ -r /usr/lib/sendmail ]; then
+  # Check if sendmail is allready replaced
+  if [ -r /usr/lib/sendmail.OFF ]; then
+    echo "Warning: found /usr/lib/sendmail.OFF file."
+    echo " 1. Leave the /usr/lib/sendmail as it is"
+    echo " 2. Overwrite the /usr/lib/sendmail"
+
+    /usr/bin/printf "Enter your choice [1,2] (default 1): "
+    read usrin
+    if [ "$usrin" = "2" ] ; then
+      SENDMAIL_ACTION=overwrite
+    fi
+  else
+    echo "Found an existing sendmail installation."
+    echo "You have following choices with for installing exim:"
+    echo " 1. Send mail only, without changing existing sendmail"
+    echo "    installation."
+    echo " 2. Rename existing sendmail binaries to *.OFF and replace"
+    echo "    them with binaries provided by exim."
+
+    /usr/bin/printf "Enter your choice [1,2] (default 1): "
+    read usrin
+    if [ "$usrin" = "2" ] ; then
+      SENDMAIL_ACTION=replace
+    fi
+  fi
+else
+  SENDMAIL_ACTION=replace
+fi
+
+# Make env variables available
+cat >>$1 << EOF
+SENDMAIL_ACTION=$SENDMAIL_ACTION
+EOF

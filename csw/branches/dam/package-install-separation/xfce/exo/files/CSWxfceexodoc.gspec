@@ -1,0 +1,6 @@
+%var            bitname xfce_exodoc
+%var            pkgname CSWxfceexodoc
+%var		arch all
+%var		desc Xfce Extensions Library Documentation
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

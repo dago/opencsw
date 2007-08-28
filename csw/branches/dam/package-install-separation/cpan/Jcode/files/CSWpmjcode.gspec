@@ -1,0 +1,8 @@
+%var            bitname pm_jcode
+%var            pkgname CSWpmjcode
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 1999 Dan Kogai.
+
+This library is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.

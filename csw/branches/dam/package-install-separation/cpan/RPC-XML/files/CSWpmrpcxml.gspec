@@ -1,0 +1,7 @@
+%var            bitname pm_rpcxml
+%var            pkgname CSWpmrpcxml
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is licensed under the terms of the Artistic
+License that covers Perl.
+See http://www.opensource.org/licenses/artistic-license.php

@@ -1,0 +1,76 @@
+#
+# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+
+_pkgadd_complete_pkginst ()
+{
+	local device filedir
+	device=$1
+
+	for filedir in $(/bin/ls -1 $device); do
+		if [[ -d "$device/$filedir" ]] && [[ -f "$device/$filedir/pkginfo" ]]; then 
+			pkginst_list=( ${pkginst_list[@]:-} "$filedir" )
+		fi
+	done
+}
+
+have pkgadd &&
+_pkgadd ()
+{
+        local cur prev i device pkginst_list
+        COMPREPLY=()
+	pkginst_list=()
+        cur="${COMP_WORDS[COMP_CWORD]}"
+        prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+	# if a device directory was given
+	# we must complete with the package
+	# available in this directory
+	device=/var/spool/pkg;
+	i=${#COMP_WORDS[*]};
+	while [[ $i -gt 0 ]]; do
+		i=$((i-1));
+		case "${COMP_WORDS[$i]}" in
+			-d)
+			device="${COMP_WORDS[$((i+1))]}";
+			break
+			;;
+		esac;
+	done;
+
+	case $prev in 
+	-d)
+		_filedir pkg
+		_filedir -d
+		;;
+	-a|-r|-V)
+		_filedir
+		;;
+	-k|-s|-R)
+		_filedir -d
+		;;
+	-P|-k|-x)
+		;;
+	*)	
+		if [[ ${cur} == -* ]] ; then
+			local opts="-a -A -d -k -n -M -P -r -R -s -v -V -x"
+			COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+		else	
+			if [[ -d $device ]]; then	
+				_pkgadd_complete_pkginst $device
+				pkginst_list="${pkginst_list[@]}"
+			else
+				pkginst_list=$(strings $device | grep "^PKG=" | sort -u | cut -d= -f2)
+			fi
+			COMPREPLY=( $(compgen -W "$pkginst_list" -- ${cur}) )
+		fi
+	esac
+} &&
+complete -F _pkgadd pkgadd
+

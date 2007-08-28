@@ -1,0 +1,8 @@
+%var            bitname pm_cryptosslx509
+%var            pkgname CSWpmcryptosslx509
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2004 Daniel Sully
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

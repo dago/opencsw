@@ -1,0 +1,30 @@
+d none /opt/csw/share/gtk-doc/html 0755 root bin
+d none /opt/csw/share/gtk-doc/html/libxfcegui4 0755 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceAboutDialog.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceAppMenuItem.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceFramebox.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceHeading.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceIconTheme.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/XfceTitledDialog.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/home.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/index.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/index.sgml 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/left.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-Standard-Macros.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-Xfce-Gdk-extensions.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-Xfce-Gtk+-extensions.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-XfceFileChooser.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-core.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-dialogs.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-fundamentals.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-netk.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4-xfce-exec.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4.devhelp 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/libxfcegui4.devhelp2 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/reference.html 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/right.png 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/style.css 0644 root bin
+f none /opt/csw/share/gtk-doc/html/libxfcegui4/up.png 0644 root bin
+i copyright=CSWlibxfcegui4doc.copyright
+i depend=CSWlibxfcegui4doc.depend
+i pkginfo=CSWlibxfcegui4doc.pkginfo

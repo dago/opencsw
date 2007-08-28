@@ -1,0 +1,52 @@
+diff --speed-large-files --minimal -Nru libevent-1.2a.orig/event.h libevent-1.2a/event.h
+--- libevent-1.2a.orig/event.h	2006-11-28 21:15:40.000000000 -0500
++++ libevent-1.2a/event.h	2007-01-31 02:13:50.551419000 -0500
+@@ -31,6 +31,11 @@
+ extern "C" {
+ #endif
+ 
++#define u_int64_t uint64_t
++#define u_int32_t uint32_t
++#define u_int16_t uint16_t
++#define u_int8_t uint8_t
++
+ #include <stdarg.h>
+ 
+ #ifdef WIN32
+diff --speed-large-files --minimal -Nru libevent-1.2a.orig/test/regress.gen.h libevent-1.2a/test/regress.gen.h
+--- libevent-1.2a.orig/test/regress.gen.h	2006-11-28 21:26:36.000000000 -0500
++++ libevent-1.2a/test/regress.gen.h	2007-01-31 02:14:20.947943000 -0500
+@@ -11,6 +11,11 @@
+ #define EVTAG_ADD(msg, member) (*(msg)->member##_add)(msg)
+ #define EVTAG_LEN(msg, member) ((msg)->member##_length)
+ 
++#define u_int64_t uint64_t
++#define u_int32_t uint32_t
++#define u_int16_t uint16_t
++#define u_int8_t uint8_t
++
+ struct msg;
+ struct kill;
+ struct run;
+diff --speed-large-files --minimal -Nru libevent-1.2a.orig/config.h.in libevent-1.2a/config.h.in
+--- libevent-1.2a.orig/config.h.in	2006-11-28 21:16:26.000000000 -0500
++++ libevent-1.2a/config.h.in	2007-01-31 02:19:59.193548000 -0500
+@@ -2,18 +2,6 @@
+ /* Define if kqueue works correctly with pipes */
+ #undef HAVE_WORKING_KQUEUE
+ 
+-/* Define to `unsigned long long' if <sys/types.h> doesn't define.  */
+-#undef u_int64_t
+-
+-/* Define to `unsigned int' if <sys/types.h> doesn't define.  */
+-#undef u_int32_t
+-
+-/* Define to `unsigned short' if <sys/types.h> doesn't define.  */
+-#undef u_int16_t
+-
+-/* Define to `unsigned char' if <sys/types.h> doesn't define.  */
+-#undef u_int8_t
+-
+ /* Define if timeradd is defined in <sys/time.h> */
+ #undef HAVE_TIMERADD
+ #ifndef HAVE_TIMERADD

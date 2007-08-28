@@ -1,0 +1,8 @@
+%var            bitname pm_poe
+%var            pkgname CSWpmpoe
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Except where otherwise noted, POE is Copyright 1998-2004 Rocco Caputo.
+All rights reserved.  POE is free software; you may redistribute it
+and/or modify it under the same terms as Perl itself.

@@ -1,0 +1,10 @@
+PKG=CSWoglegui
+NAME=ogle_gui - Ogle graphical user interface
+ARCH=sparc
+VERSION=0.9.2,REV=2006.06.23
+CATEGORY=application
+VENDOR=http://www.dtek.chalmers.se/groups/dvd/dist/ packaged for CSW by Jake Goerzen
+EMAIL=jgoerzen@blastwave.org
+PSTAMP=jgoerzen@ra-20060623135947
+CLASSES=none
+HOTLINE=http://www.blastwave.org/bugtrack/

@@ -1,0 +1,5 @@
+%var            bitname pm_subversion
+%var            pkgname CSWpmsvn
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%var            desc Subversion Perl language binding
+%copyright      url file://%{WORKSRC}/COPYING

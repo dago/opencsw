@@ -1,0 +1,5 @@
+%var            bitname apr_devel
+%var            pkgname CSWapr-devel
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc Apache Portable Runtime
+%copyright      url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,5 @@
+%var            bitname libxfce4mcsdev
+%var            pkgname CSWlibxfce4mcsdev
+%var		desc  Xfce Settings Manager Library Headers
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

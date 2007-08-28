@@ -1,0 +1,24 @@
+diff -Nru gftp-2.0.16.orig/src/gtk/Makefile.in gftp-2.0.16/src/gtk/Makefile.in
+--- gftp-2.0.16.orig/src/gtk/Makefile.in	2003-11-09 06:07:16.000000000 -0800
++++ gftp-2.0.16/src/gtk/Makefile.in	2004-03-19 16:23:08.575949000 -0800
+@@ -116,7 +116,7 @@
+ gftp_gtk_SOURCES = bookmarks.c chmod_dialog.c delete_dialog.c dnd.c                      gftp-gtk.c menu-items.c misc-gtk.c mkdir_dialog.c                      options_dialog.c rename_dialog.c transfer.c view_dialog.c
+ 
+ INCLUDES = @GTK_CFLAGS@ @PTHREAD_CFLAGS@ -DSHARE_DIR=\"$(datadir)/gftp\" -I../../intl
+-LDADD = ../../lib/libgftp.a @GTK_LIBS@ @PTHREAD_LIBS@ @EXTRA_LIBS@ @GTHREAD_LIBS@ @SSL_LIBS@
++LDADD = ../../lib/libgftp.a @LIBINTL@ @GTK_LIBS@ @PTHREAD_LIBS@ @EXTRA_LIBS@ @GTHREAD_LIBS@ @SSL_LIBS@
+ noinst_HEADERS = gftp-gtk.h
+ localedir = $(datadir)/locale
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+diff -Nru gftp-2.0.16.orig/src/text/Makefile.in gftp-2.0.16/src/text/Makefile.in
+--- gftp-2.0.16.orig/src/text/Makefile.in	2003-11-09 06:07:15.000000000 -0800
++++ gftp-2.0.16/src/text/Makefile.in	2004-03-19 16:22:17.256017000 -0800
+@@ -115,7 +115,7 @@
+ EXTRA_PROGRAMS = gftp-text
+ gftp_text_SOURCES = gftp-text.c 
+ INCLUDES = @GLIB_CFLAGS@ -DSHARE_DIR=\"$(datadir)/gftp\" -I../../intl
+-LDADD = ../../lib/libgftp.a @GLIB_LIBS@ @EXTRA_LIBS@ @READLINE_LIBS@ @SSL_LIBS@
++LDADD = ../../lib/libgftp.a @LIBINTL@ @GLIB_LIBS@ @EXTRA_LIBS@ @READLINE_LIBS@ @SSL_LIBS@
+ noinst_HEADERS = gftp-text.h
+ localedir = $(datadir)/locale
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs

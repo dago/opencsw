@@ -1,0 +1,10 @@
+%var            bitname pm_ioutil
+%var            pkgname CSWpmioutil
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+© 2004-2005 by Domizio Demichelis.
+
+All Rights Reserved. This module is free software. It may be used,
+redistributed and/or modified under the same terms as perl itself.
+

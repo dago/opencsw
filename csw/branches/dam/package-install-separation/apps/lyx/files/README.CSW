@@ -1,0 +1,28 @@
+List of recommended packages with LyX
+-------------------------------------
+
+In order to make the dependency list shorter, some optional but very
+useful programs are no longer listed in LyX's dependencies and, hence,
+won't be installed automatically. This is beneficial, since there are
+alternatives to some of these programs and others are only needed in
+rare situations.
+
+To help the user decide, at the end of the installation, a list of all
+recommended packages, those installed and those missing, is displayed.
+
+These are the packages in question; their function and alternatives are
+listed below:
+
+* CSWmozilla: web-browser (alternatives possible, like konqueror or
+  firefox)
+
+* CSWgv: PostScript viewer (alternatives possible, like ggv or
+  kghostview)
+
+* CSWxpdf: PDF viewer (alternatives possible, like acroread or kpdf)
+
+* CSWpython: to run lyx2lyx which is used to import older LyX documents
+
+-- 
+Markus Mayer
+mmayer@blastwave.org

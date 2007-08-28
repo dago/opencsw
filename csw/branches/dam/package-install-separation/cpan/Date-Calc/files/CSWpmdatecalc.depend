@@ -1,0 +1,4 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWpmbitvec pm_bitvector - Efficient bit vector, set of integers and big int math library.
+P CSWpmcarpclan pm_carpclan - report errors from perspective of caller of a "clan" of modules

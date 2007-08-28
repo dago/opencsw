@@ -1,0 +1,4 @@
+%var            bitname ap2_mod_jk
+%var            pkgname CSWap2modjk
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/../LICENSE

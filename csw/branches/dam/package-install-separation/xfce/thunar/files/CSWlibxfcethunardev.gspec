@@ -1,0 +1,5 @@
+%var            bitname libxfcethunardev
+%var            pkgname CSWlibxfcethunardev
+%var 		desc Xfce Thunar File Manager Library Headers
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

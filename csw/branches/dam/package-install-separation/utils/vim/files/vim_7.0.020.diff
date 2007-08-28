@@ -1,0 +1,52 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.020
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.020
+Problem:    Crash when using 'mousefocus'. (William Fulton)
+Solution:   Make buffer for mouse coordinates 2 bytes longer. (Juergen Weigert)
+Files:	    src/gui.c
+
+
+*** ../vim-7.0.019/src/gui.c	Sat May 13 12:15:09 2006
+--- src/gui.c	Tue Jun 20 16:27:02 2006
+***************
+*** 4515,4521 ****
+      int		y;
+  {
+      win_T	*wp;
+!     char_u	st[6];
+  
+      /* Ignore this while still starting up. */
+      if (!gui.in_use || gui.starting)
+--- 4515,4521 ----
+      int		y;
+  {
+      win_T	*wp;
+!     char_u	st[8];
+  
+      /* Ignore this while still starting up. */
+      if (!gui.in_use || gui.starting)
+*** ../vim-7.0.019/src/version.c	Tue Jun 20 12:56:11 2006
+--- src/version.c	Tue Jun 20 16:32:28 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     20,
+  /**/
+
+-- 
+Michael: There is no such thing as a dump question.
+Bernard: Sure there is.  For example "what is a core dump?"
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///

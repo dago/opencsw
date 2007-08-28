@@ -1,0 +1,5 @@
+%var            bitname pm_solarissysconf
+%var            pkgname CSWpmsolarissysconf
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2003, Alexander Golomshtok (Cronos Systems Inc.)

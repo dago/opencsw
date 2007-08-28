@@ -1,0 +1,8 @@
+%var            bitname pm_tieixhash
+%var            pkgname CSWpmtieixhash
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1995 Gurusamy Sarathy. All rights reserved.
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

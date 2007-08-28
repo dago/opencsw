@@ -1,0 +1,9 @@
+a71677d80f5cfd1aeb03547dfdeb705a  download/httpd-php5.conf.CSW
+47f2f1ccf059cf948e762fa3628a8cf1  download/CSWap2modphp5.gspec
+8c5e4c6ac998619a2a0102a0d0fb841f  download/CSWap2modphp5.depend
+a38dc5d082fd626ec1d1ca17532bdb69  download/CSWap2modphp5.prototype
+632cb357e102e18e04bb5666825a912f  download/CSWap2modphp5.postinstall
+e1381a4ba49e46b2097b76286a1b36fb  download/CSWap2modphp5.preremove
+0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2modphp5.space
+261218e3569a777dbd87c16a15f05c8d  download/php-5.2.1.tar.bz2
+a03ecfbc83c95890b9167f7324e5d7a8  download/config.diff

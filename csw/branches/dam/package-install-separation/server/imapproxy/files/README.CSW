@@ -1,0 +1,29 @@
+
+Note for imapproxy
+------------------
+
+imapproxy can't work out of the box without some configuration, so
+the daemon will not enabled by default even if autoenable is set to yes
+in the /opt/csw/etc/csw.conf or /etc/opt/csw/csw.conf file.
+
+To enable the imapproxy daemon:
+
+* under Solaris <= 9:
+
+	- create the configuration file using the CSW template:
+		cp /opt/csw/etc/imapproxy.conf.CSW /opt/csw/etc/imapproxy.conf
+
+	- set the server_hostname variable in the /opt/csw/etc/imapproxy.conf 
+	file to a valid imap server hostname.
+
+	- launch the daemon:
+		/etc/init.d/cswimapproxy start
+
+* under Solaris >= 10:
+
+	- set the server_hostname variable in the /opt/csw/etc/imapproxy.conf 
+	file to a valid imap server hostname.
+
+	- enable the imapproxy daemon:
+		svcadm enable cswimapproxy
+

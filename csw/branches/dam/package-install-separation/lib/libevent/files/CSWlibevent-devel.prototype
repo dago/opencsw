@@ -1,0 +1,14 @@
+d none /opt/csw/bin ? ? ?
+f none /opt/csw/bin/event_rpcgen.py 0755 root bin
+d none /opt/csw/include ? ? ?
+f none /opt/csw/include/evdns.h 0644 root bin
+f none /opt/csw/include/event.h 0644 root bin
+f none /opt/csw/include/evhttp.h 0644 root bin
+d none /opt/csw/lib ? ? ?
+f none /opt/csw/lib/libevent.a 0644 root bin
+f none /opt/csw/lib/libevent.la 0755 root bin
+d none /opt/csw/share ? ? ?
+d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man/man3 ? ? ?
+f none /opt/csw/share/man/man3/evdns.3 0644 root bin
+f none /opt/csw/share/man/man3/event.3 0644 root bin

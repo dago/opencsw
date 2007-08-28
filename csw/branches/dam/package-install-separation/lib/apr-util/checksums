@@ -1,0 +1,9 @@
+8b3f04dde7048946c3c94f85b4debb94  download/apr-util-1.2.2.tar.gz
+1e0b81300c99eacfda07803e345ac3d7  download/CSWaprutil.gspec
+985b4fb9c04239118d19ca522072171b  download/CSWaprutil.depend
+b02e8b9e9d9fc81896aa3741bec37145  download/CSWaprutil.prototype
+ab86b57383e04f4b4bc0a1a7c1252bbb  download/CSWaprutil-devel.gspec
+9e96a2c06d116f2f530b17f0cabd9aff  download/CSWaprutil-devel.depend
+1b93f3d66d2cc681ecb5905716b79d1e  download/CSWaprutil-devel.prototype
+f25418280a6214bcf0af804fcef4c950  download/config.layout
+2aec82eff00f526a0f2e4c1380a3541e  download/iconv.diff

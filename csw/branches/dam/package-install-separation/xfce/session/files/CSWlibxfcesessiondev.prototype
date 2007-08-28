@@ -1,0 +1,10 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/xfce4/xfce4-session-4.2/libxfsm 0755 root bin
+f none /opt/csw/include/xfce4/xfce4-session-4.2/libxfsm/xfsm-splash-engine.h 0644 root bin
+f none /opt/csw/include/xfce4/xfce4-session-4.2/libxfsm/xfsm-splash-rc.h 0644 root bin
+f none /opt/csw/lib/libxfsm-4.2.a 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/xfce4-session-1.0.pc 0644 root bin
+i copyright=CSWlibxfcesessiondev.copyright
+i depend=CSWlibxfcesessiondev.depend
+i pkginfo=CSWlibxfcesessiondev.pkginfo

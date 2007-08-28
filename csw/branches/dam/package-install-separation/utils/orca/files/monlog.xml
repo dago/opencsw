@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+    Service manifest to start se-toolkit with the monlog.se script.
+-->
+
+<service_bundle type='manifest' name='Monlog Performance Monitor Daemon'>
+
+<service
+    name='application/se-toolkit/monlog'
+    type='service'
+    version='1'>
+
+    <create_default_instance enabled='false' />
+
+    <single_instance />
+
+    <dependency name='fs-local'
+        grouping='require_all'
+        restart_on='none'
+        type='service'>
+        <service_fmri value='svc:/system/filesystem/local' />
+    </dependency>
+
+    <dependency name='symbel-interpreter'
+        grouping='require_all'
+        restart_on='refresh'
+        type='path'>
+        <service_fmri value='file://localhost/opt/RICHPse/bin/se' />
+    </dependency>
+        
+    <dependency name='monlog-se'
+        grouping='require_all'
+        restart_on='refresh'
+        type='path'>
+        <service_fmri value='file://localhost/opt/RICHPse/examples/monlog.se' />
+    </dependency>
+        
+    <exec_method
+        type='method'
+        name='start'
+        exec='/lib/svc/method/se-monlog'
+        timeout_seconds='60' />
+
+    <exec_method
+        type='method'
+        name='stop'
+        exec=':kill'
+        timeout_seconds='60' />
+
+    <property_group name='monlog' type='application'>
+        <propval name='interval' type='integer' value='60' />
+    </property_group>
+
+    <template>
+        <common_name>
+            <loctext xml:lang='C'>monlog performance monitor daemon</loctext>
+        </common_name>
+        <documentation>
+            <doc_link name='sunfreeware.com'
+                uri='http://www.sunfreeware.com/setoolkit.html' />
+        </documentation>
+    </template>
+</service>
+
+</service_bundle>
+

@@ -1,0 +1,4 @@
+d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib/xchat ? ? ?
+d none /opt/csw/lib/xchat/plugins ? ? ?
+f none /opt/csw/lib/xchat/plugins/python.so 0755 root bin

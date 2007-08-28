@@ -1,0 +1,66 @@
+diff --speed-large-files --minimal -Nru netpbm-10.26.42.orig/GNUmakefile netpbm-10.26.42/GNUmakefile
+--- netpbm-10.26.42.orig/GNUmakefile	2004-10-16 16:27:50.000000000 -0400
++++ netpbm-10.26.42/GNUmakefile	2007-06-23 11:49:29.790538000 -0400
+@@ -177,7 +177,7 @@
+ 	  echo "  make package PKGDIR=/tmp/newnetpbm "; \
+ 	  false; \
+ 	  fi
+-	mkdir $(PKGDIR)
++	mkdir -p $(PKGDIR)
+ 	echo "Netpbm install package made by 'make package'" \
+ 	    >$(PKGDIR)/pkginfo
+ 	date >>$(PKGDIR)/pkginfo
+@@ -267,7 +267,7 @@
+ netpbm:%:%.o $(OBJECT_DEP) $(NETPBMLIB) $(URTLIBDEP) $(LIBOPT)
+ # Note that LDFLAGS might contain -L options, so order is important.
+ 	$(LD) -o $@ $< $(OBJECT_LIST) \
+-          $(LDFLAGS) `$(LIBOPT) $(NETPBMLIB) $(MERGELIBS)` \
++          -L $(BUILDDIR)/lib $(LDFLAGS) `$(LIBOPT) $(NETPBMLIB) $(MERGELIBS)` \
+ 	  $(MATHLIB) $(NETWORKLD) $(LADD)
+ 
+ netpbm.o: mergetrylist
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/buildtools/Makefile.manpage netpbm-10.26.18/buildtools/Makefile.manpage
+--- netpbm-10.26.18.orig/buildtools/Makefile.manpage	2005-11-12 20:53:22.000000000 -0500
++++ netpbm-10.26.18/buildtools/Makefile.manpage	2005-11-12 20:52:49.040002000 -0500
+@@ -2,9 +2,9 @@
+ 
+ # Make Unix man pages from Netpbm HTML user manual
+ 
+-MAKEMAN = makeman
++MAKEMAN = /export/home/damjan/csw/utils/netpbm/$(WORKSRC)/buildtools/makeman
+ 
+-MANDIR = /usr/share/man/man1
++MANDIR = $(DESTDIR)/share/man
+ 
+ # These can convert to man pages cleanly
+ MAN1 = \
+@@ -343,13 +343,13 @@
+ # This will install the generated man pages
+ installman: manpages
+ 	for f in $(MAN1); do \
+-	  if [ -f $$f ]; then gzip <$$f >$(MANDIR)/man1/$$f.gz; fi; \
++	  if [ -f $$f ]; then cat <$$f >$(MANDIR)/man1/$$f; fi; \
+ 	  done
+ 	for f in $(MAN3); do \
+-	  if [ -f $$f ]; then gzip <$$f >$(MANDIR)/man3/$$f.gz; fi; \
++	  if [ -f $$f ]; then cat <$$f >$(MANDIR)/man3/$$f; fi; \
+ 	  done
+ 	for f in $(MAN5); do \
+-	  if [ -f $$f ]; then gzip <$$f >$(MANDIR)/man5/$$f.gz; fi; \
++	  if [ -f $$f ]; then cat <$$f >$(MANDIR)/man5/$$f; fi; \
+ 	  done
+ 	# Clean up old locations on Fedora Core 2
+ 	rm -f $(MANDIR)/man1/extendedopacity.1.gz 
+@@ -357,9 +357,9 @@
+ 	rm -f $(MANDIR)/man3/libnetpbm_dir.3.gz
+ 	# remove pointer man pages (that say, "The man page isn't here")
+ 	# which might have been installed previously
+-	for f in $(MAN1); do rm -f $(MANDIR)/man1/$$f; done
+-	for f in $(MAN3); do rm -f $(MANDIR)/man3/$$f; done
+-	for f in $(MAN5); do rm -f $(MANDIR)/man5/$$f; done
++	# for f in $(MAN1); do rm -f $(MANDIR)/man1/$$f; done
++	# for f in $(MAN3); do rm -f $(MANDIR)/man3/$$f; done
++	# for f in $(MAN5); do rm -f $(MANDIR)/man5/$$f; done
+ 
+ clean:
+ 	@rm -f *.[135] $(XML)

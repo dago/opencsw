@@ -1,0 +1,20 @@
+#################################################################
+# Auteur:             Yann Rouillard
+# Date de creation:   15/10/2004
+# Description:        Script de classe de suppresion des services
+#                     ajoutees par un script
+#
+##################################################################
+umask 022
+
+# En fait on ne fait rien car on risque de supprimer un service
+# utilise par un autre paquet
+# Par exemple le paquet uwimap est installe et cree dans /etc/services
+# le service imap2
+# Cyrus est installe, il ne cree pas le service imap2 puisqu'il n'existe pas.
+# uwimap est desinstalle, il supprime le service imap2 qui donne lieu a un
+# dysfonctionnement de cyrus.
+# Pour eviter ce scenario on ne supprime jamais les services installes
+# dans /etc/services
+
+

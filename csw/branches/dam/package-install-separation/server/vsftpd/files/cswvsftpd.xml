@@ -1,0 +1,90 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<!--
+William Pool (Puddle) 02/05
+Service manifest for vsftpd
+E-mail:
+Modified for CSWmysql5 by Alex Moore 01/06
+Modified for CSWvsftpd by Yann Rouillard 05/06
+-->
+
+<service_bundle type='manifest' name='CSWvsftpd:cswvsftpd'>
+
+	<service
+		name='network/cswvsftpd'
+		type='service'
+		version='1'>
+
+		<single_instance />
+
+		<instance name='default' enabled='false'>
+			<dependency name='fs'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/system/filesystem/local' />
+			</dependency>
+
+			<dependency name='net'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/network/loopback' />
+			</dependency>
+
+			<dependency
+				name='config-file-vsftpd'
+				grouping='optional_all'
+				restart_on='refresh'
+				type='path'>
+				<service_fmri
+					value='file://localhost/opt/csw/etc/vsftpd/vsftpd.conf' />
+			</dependency>
+
+			<dependent
+				name='cswvsftpd_multi-user'
+				grouping='optional_all'
+				restart_on='none'>
+				<service_fmri
+					value='svc:/milestone/multi-user' />
+			</dependent>
+
+			<exec_method
+				type='method'
+				name='start'
+				exec='/opt/csw/lib/svc/method/svc-cswvsftpd start'
+				timeout_seconds='-1'>
+			</exec_method>
+
+			<exec_method
+				type='method'
+				name='stop'
+				exec='/opt/csw/lib/svc/method/svc-cswvsftpd stop'
+				timeout_seconds='-1'>
+			</exec_method>
+
+			<exec_method
+				type='method'
+				name='restart'
+				exec='/opt/csw/lib/svc/method/svc-cswvsftpd restart'
+				timeout_seconds='-1'>
+			</exec_method>
+		</instance>
+
+		<template>
+			<common_name>
+				<loctext xml:lang='C'>
+				A very secure and fast GPL'd FTP server	
+				</loctext>
+			</common_name>
+			<documentation>
+				<manpage title='vsftpd.conf' section='5M'
+					manpath='/opt/csw/share/man' />
+				<manpage title='vsftpd' section='8M'
+					manpath='/opt/csw/share/man' />
+			</documentation>
+		</template>
+					
+	</service>
+
+</service_bundle>

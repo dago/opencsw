@@ -1,0 +1,83 @@
+To: vim-dev@vim.org
+Subject: Patch 7.0.072
+Fcc: outbox
+From: Bram Moolenaar <Bram@moolenaar.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+------------
+
+Patch 7.0.072
+Problem:    When starting the GUI fails there is no way to adjust settings or
+	    do something else.
+Solution:   Add the GUIFailed autocommand event.
+Files:	    src/fileio.c, src/gui.c, src/vim.h
+
+
+*** ../vim-7.0.071/src/fileio.c	Wed Aug 16 19:34:59 2006
+--- src/fileio.c	Tue Aug 29 10:11:35 2006
+***************
+*** 6980,6985 ****
+--- 6980,6986 ----
+      {"FocusLost",	EVENT_FOCUSLOST},
+      {"FuncUndefined",	EVENT_FUNCUNDEFINED},
+      {"GUIEnter",	EVENT_GUIENTER},
++     {"GUIFailed",	EVENT_GUIFAILED},
+      {"InsertChange",	EVENT_INSERTCHANGE},
+      {"InsertEnter",	EVENT_INSERTENTER},
+      {"InsertLeave",	EVENT_INSERTLEAVE},
+*** ../vim-7.0.071/src/gui.c	Tue Jun 20 20:39:32 2006
+--- src/gui.c	Tue Aug 29 10:12:32 2006
+***************
+*** 187,195 ****
+  #endif
+  
+  #ifdef FEAT_AUTOCMD
+!     /* If the GUI started successfully, trigger the GUIEnter event */
+!     if (gui.in_use)
+! 	apply_autocmds(EVENT_GUIENTER, NULL, NULL, FALSE, curbuf);
+  #endif
+  
+      --recursive;
+--- 187,196 ----
+  #endif
+  
+  #ifdef FEAT_AUTOCMD
+!     /* If the GUI started successfully, trigger the GUIEnter event, otherwise
+!      * the GUIFailed event. */
+!     apply_autocmds(gui.in_use ? EVENT_GUIENTER : EVENT_GUIFAILED,
+! 						   NULL, NULL, FALSE, curbuf);
+  #endif
+  
+      --recursive;
+*** ../vim-7.0.071/src/vim.h	Fri Jun 23 16:33:41 2006
+--- src/vim.h	Tue Aug 29 10:12:47 2006
+***************
+*** 1120,1125 ****
+--- 1120,1126 ----
+      EVENT_FOCUSGAINED,		/* got the focus */
+      EVENT_FOCUSLOST,		/* lost the focus to another app */
+      EVENT_GUIENTER,		/* after starting the GUI */
++     EVENT_GUIFAILED,		/* after starting the GUI failed */
+      EVENT_INSERTCHANGE,		/* when changing Insert/Replace mode */
+      EVENT_INSERTENTER,		/* when entering Insert mode */
+      EVENT_INSERTLEAVE,		/* when leaving Insert mode */
+*** ../vim-7.0.071/src/version.c	Tue Aug 29 18:01:39 2006
+--- src/version.c	Tue Aug 29 18:15:13 2006
+***************
+*** 668,669 ****
+--- 668,671 ----
+  {   /* Add new patch number below this line */
++ /**/
++     72,
+  /**/
+
+-- 
+hundred-and-one symptoms of being an internet addict:
+269. You receive an e-mail from the wife of a deceased president, offering
+     to send you twenty million dollar, and you are not even surprised.
+
+ /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
+///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
+\\\        download, build and distribute -- http://www.A-A-P.org        ///
+ \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
