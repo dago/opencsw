@@ -1,10 +1,10 @@
 GARNAME = libxine
-GARVERSION = hg
+GARVERSION = 1.1.8
 CATEGORIES = APPS
 
 DESCRIPTION = Xine-lib 1.1.8 (HG test build)
 define BLURB
-This is a work in progress. Curretly only working under solaris 10. Solaris 8 is yet to come
+This is a work in progress. Currently this build only works under solaris 10. Solaris 8 is yet to come.
 endef
 
 MASTER_SITES = www.xine.de
@@ -36,6 +36,6 @@ pre-package:
 	(cp files/CSW$(GARNAME).$(GAROSREL).depend $(WORKSRC)/../CSW$(GARNAME).depend)
 
 configure-custom:
-	@echo "Custom installation here"
+	@echo "running autogen"
 	cd $(WORKSRC); ./autogen.sh $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
