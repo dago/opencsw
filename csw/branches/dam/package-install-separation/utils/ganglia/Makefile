@@ -12,7 +12,7 @@ endef
 SF_PROJ = ganglia
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpackage,)
+DISTFILES += $(call admfiles,CSWganglia,)
 
 # This is attachment #45 from Ganglia bug
 #   http://bugzilla.ganglia.info/cgi-bin/bugzilla/show_bug.cgi?id=77
