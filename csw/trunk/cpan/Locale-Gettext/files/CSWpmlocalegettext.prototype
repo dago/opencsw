@@ -1,6 +1,5 @@
 d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/perl 0755 root bin
-d none /opt/csw/lib/perl/5.8.8 0755 root bin
 d none /opt/csw/lib/perl/csw 0755 root bin
 d none /opt/csw/lib/perl/csw/Locale 0755 root bin
 f none /opt/csw/lib/perl/csw/Locale/gettext.pm 0444 root bin
