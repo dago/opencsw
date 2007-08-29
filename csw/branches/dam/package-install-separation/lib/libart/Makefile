@@ -38,7 +38,7 @@ ISA = $(ARCH64)
 endif
 endif
 
-MASTER_SITES = $(GNOME_MIRROR)
+MASTER_SITES = $(GNOME_MIRRORS)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibart,prototype depend)
 DISTFILES   += $(call admfiles,CSWlibart-rt,prototype-sparc prototype-i386)

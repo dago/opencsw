@@ -188,9 +188,21 @@ DOCBOOK_ROOT = $(DESTDIR)$(datadir)/sgml/docbook
 #
 
 # Gnome
-GNOME_ROOT   = http://ftp.gnome.org/pub/GNOME/sources
-GNOME_SUBV   = $(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')
-GNOME_MIRROR = $(GNOME_ROOT)/$(GARNAME)/$(GNOME_SUBV)/
+GNOME_ROOT    ?= http://ftp.gnome.org/pub/GNOME/sources
+# From http://ftp.gnome.org/pub/GNOME/MIRRORS
+GNOME_SITES   ?= http://ftp.unina.it/pub/linux/GNOME \
+			http://fr2.rpmfind.net/linux/gnome.org \
+			ftp://ftp.dit.upm.es/pub/GNOME \
+			ftp://ftp.no.gnome.org/pub/GNOME \
+			http://ftp.acc.umu.se/pub/GNOME \
+			http://ftp.belnet.be/mirror/ftp.gnome.org \
+			http://linorg.usp.br/gnome \
+			http://mirror.aarnet.edu.au/pub/GNOME \
+			http://mirrors.ibiblio.org/pub/mirrors/gnome \
+			ftp://ftp.cse.buffalo.edu/pub/Gnome \
+			ftp://ftp.nara.wide.ad.jp/pub/X11/GNOME
+GNOME_SUBV     = $(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')
+GNOME_MIRRORS ?= $(foreach S,$(GNOME_ROOT) $(GNOME_SITES),$(S)/$(GARNAME)/$(GNOME_SUBV)/)
 
 # SourceForge
 SF_SITES    ?= umn easynews unc
