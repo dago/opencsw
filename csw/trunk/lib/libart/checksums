@@ -1,8 +1,4 @@
 a2992b830295132dae2bf85d1156e48e  download/libart_lgpl-2.3.19.tar.gz
 beb3fada2ad01f817b32343eb3b99f5f  download/CSWlibart.gspec
-1adfb1cde684d1b671dea70f4f5bc7a6  download/CSWlibart.prototype
-59210a8f585c9e5cff59bd4225479729  download/CSWlibart.depend
-d0113f9606dc277e3923d53899062342  download/CSWlibart-rt.gspec
-e00c5e2ccd3e525536ae7847ec6e7587  download/CSWlibart-rt.prototype
-16c79fda775a3fad6146e823f1d6ab65  download/CSWlibart-devel.gspec
-75b1e5307889b9ec6d8c40425623cd45  download/CSWlibart-devel.prototype
+212c8900685a2ec4ef5f2e0dcb4e0278  download/CSWlibart.prototype-sparc
+644bbe2a0db0bbf2f2b376b5a3b83259  download/CSWlibart.prototype-i386

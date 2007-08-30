@@ -40,9 +40,7 @@ endif
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibart,prototype depend)
-DISTFILES   += $(call admfiles,CSWlibart-rt,prototype)
-DISTFILES   += $(call admfiles,CSWlibart-devel,prototype)
+DISTFILES   += $(call admfiles,CSWlibart,prototype-sparc prototype-i386)
 
 WORKDIR       = $(WORKROOTDIR)/$(DESTIMG).d/$(ISA)
 COOKIEROOTDIR = cookies.$(ISA)
