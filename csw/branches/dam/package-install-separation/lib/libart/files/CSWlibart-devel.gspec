@@ -1,4 +1,0 @@
-%var            bitname libart_devel
-%var            pkgname CSWlibart-devel
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

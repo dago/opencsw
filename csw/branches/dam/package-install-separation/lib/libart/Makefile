@@ -40,9 +40,7 @@ endif
 
 MASTER_SITES = $(GNOME_MIRRORS)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibart,prototype depend)
-DISTFILES   += $(call admfiles,CSWlibart-rt,prototype-sparc prototype-i386)
-DISTFILES   += $(call admfiles,CSWlibart-devel,prototype-sparc prototype-i386)
+DISTFILES   += $(call admfiles,CSWlibart,prototype-sparc prototype-i386)
 
 ## For x86 ##
 # for x86, we must share cookie work dir between sol10 and sol8

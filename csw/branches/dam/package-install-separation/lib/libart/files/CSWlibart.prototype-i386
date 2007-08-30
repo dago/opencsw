@@ -3,6 +3,7 @@ f none /opt/csw/bin/libart2-config 0755 root bin
 d none /opt/csw/bin/amd64 0755 root bin
 f none /opt/csw/bin/amd64/libart2-config 0755 root bin
 d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/libart-2.0 0755 root bin
 d none /opt/csw/include/libart-2.0/libart_lgpl 0755 root bin
 f none /opt/csw/include/libart-2.0/libart_lgpl/art_affine.h 0644 root bin
 f none /opt/csw/include/libart-2.0/libart_lgpl/art_alphagamma.h 0644 root bin
@@ -51,13 +52,19 @@ f none /opt/csw/include/libart-2.0/libart_lgpl/libart.h 0644 root bin
 d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libart_lgpl_2.a 0644 root bin
 f none /opt/csw/lib/libart_lgpl_2.la 0755 root bin
+f none /opt/csw/lib/libart_lgpl_2.so.2.3.19 0755 root bin
+s none /opt/csw/lib/libart_lgpl_2.so.2=libart_lgpl_2.so.2.3.19
+s none /opt/csw/lib/libart_lgpl_2.so=libart_lgpl_2.so.2.3.19
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/libart-2.0.pc 0644 root bin
 d none /opt/csw/lib/amd64 0755 root bin
 f none /opt/csw/lib/amd64/libart_lgpl_2.a 0644 root bin
 f none /opt/csw/lib/amd64/libart_lgpl_2.la 0755 root bin
+f none /opt/csw/lib/amd64/libart_lgpl_2.so.2.3.19 0755 root bin
+s none /opt/csw/lib/amd64/libart_lgpl_2.so.2=libart_lgpl_2.so.2.3.19
+s none /opt/csw/lib/amd64/libart_lgpl_2.so=libart_lgpl_2.so.2.3.19
 d none /opt/csw/lib/amd64/pkgconfig 0755 root bin
 f none /opt/csw/lib/amd64/pkgconfig/libart-2.0.pc 0644 root bin
-i copyright=CSWlibart-devel.copyright
-i depend=CSWlibart-devel.depend
-i pkginfo=CSWlibart-devel.pkginfo
+i copyright=CSWlibart.copyright
+i depend=CSWlibart.depend
+i pkginfo=CSWlibart.pkginfo
