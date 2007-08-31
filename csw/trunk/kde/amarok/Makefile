@@ -1,5 +1,5 @@
 GARNAME = amarok
-GARVERSION = 1.4.6
+GARVERSION = 1.4.7
 CATEGORIES = apps
 
 DESCRIPTION = Amarok is the music player for Linux and Unix with an intuitive interface
@@ -13,7 +13,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWamarok,depend)
 
 PATCHFILES = disable-broken-languages.diff
-#PATCHFILES = fix-libtool-linker-problem.diff
 
 GARCOMPILER = GNU
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
