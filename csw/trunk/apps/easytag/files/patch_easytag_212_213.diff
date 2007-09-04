@@ -1,0 +1,61 @@
+diff -ruN easytag-2.1.2.orig/src/id3v24_tag.c easytag-2.1.2/src/id3v24_tag.c
+--- easytag-2.1.2.orig/src/id3v24_tag.c	2007-07-05 19:44:15.000000000 +0200
++++ easytag-2.1.2/src/id3v24_tag.c	2007-09-02 21:04:12.000000000 +0200
+@@ -359,21 +359,24 @@
+     if ( (frame = id3_tag_findframe(tag, "WXXX", 0)) )
+         update |= libid3tag_Get_Frame_Str(frame, EASYTAG_ID3_FIELD_LATIN1, &FileTag->url);
+ 
+-    /*********************
+-     * Encoded by (TENC) *
+-     *********************/
++    /*******************************
++     * Encoded by (TENC) or (TXXX) *
++     *******************************/
+     if ( (frame = id3_tag_findframe(tag, "TENC", 0)) )
+         update |= libid3tag_Get_Frame_Str(frame, ~0, &FileTag->encoded_by);
++    
+     /* Encoded by in TXXX frames */
+     string1 = NULL;
+     for (i = 0; (frame = id3_tag_findframe(tag, "TXX", i)); i++)
+     {
++        // Do nothing if already read...
+         if (FileTag->encoded_by)
+             break;
++        
+         tmpupdate = libid3tag_Get_Frame_Str(frame, ~0, &string1);
+         if (string1)
+         {
+-            if (strcasestr(string1, EASYTAG_STRING_ENCODEDBY MULTIFIELD_SEPARATOR) == string1)
++            if (strncasecmp(string1, EASYTAG_STRING_ENCODEDBY MULTIFIELD_SEPARATOR, strlen(EASYTAG_STRING_ENCODEDBY MULTIFIELD_SEPARATOR)) == 0)
+             {
+                 FileTag->encoded_by = g_strdup(&string1[sizeof(EASYTAG_STRING_ENCODEDBY) + sizeof(MULTIFIELD_SEPARATOR) - 2]);
+                 g_free(string1);
+@@ -944,6 +947,7 @@
+         id3taglib_set_field(frame, FileTag->encoded_by, ID3_FIELD_TYPE_STRING, 1, 0, 0);
+         strip_tags = FALSE;
+     }else
++    //etag_set_tags(FileTag->encoded_by, "TENC", ID3_FIELD_TYPE_STRINGLIST, NULL, v2tag, &strip_tags);
+     if (v2tag)
+         Id3tag_delete_txxframes(v2tag, EASYTAG_STRING_ENCODEDBY, 0);
+ 
+@@ -1062,7 +1066,7 @@
+         {
+             str = NULL;
+             if ((str = (gchar *)id3_ucs4_latin1duplicate(ucs4string))
+-            && (strcasestr(str, param1) == str) )
++            && (strncasecmp(str, param1, strlen(param1)) == 0) )
+             {
+                 g_free(str);
+                 id3_tag_detachframe(tag, frame);
+@@ -1120,7 +1124,7 @@
+     {
+         str = NULL;
+         if ((str = (gchar *)id3_ucs4_latin1duplicate(ucs4string))
+-        && (strcasestr(str, param1) == str) )
++        && (strncasecmp(str, param1, strlen(param1)) == 0) )
+         {
+             g_free(str);
+             break;
+
+
+!DSPAM:14,46dc3dc411751665516417!
