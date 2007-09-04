@@ -1,3 +1,6 @@
+# Using GCC until I can work out how to exclude id3lib from being used.
+# It's being pulled in and it cause the compile to fail with cc
+
 GARNAME = easytag
 GARVERSION = 2.1.2
 CATEGORIES = applications
@@ -13,6 +16,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWeasytag,depend)
 
 PATCHFILES = patch_easytag_212_213.diff
+
+GARCOMPILER = GNU
 
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
