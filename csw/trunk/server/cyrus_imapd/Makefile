@@ -1,5 +1,5 @@
 GARNAME = cyrus_imapd
-GARVERSION = 2.3.8
+GARVERSION = 2.3.9
 CATEGORIES = server
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
@@ -15,7 +15,7 @@ define BLURB
   multiple SASL mechanisms, and the Sieve mail filtering language.
 endef
 
-MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
+MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/ http://email.uoa.gr/download/cyrus/cyrus-imapd-$(GARVERSION)/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = cyrus-imapd-(\d+(?:\.\d+)*).tar.gz
@@ -41,7 +41,7 @@ SPKG_CLASSES = none services conf
 
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
-PATCHFILES = cyrus-imapd-2.3.8-autocreate-0.10-0.diff cyrus-imapd-2.3.8-autosieve-0.6.0.diff 
+PATCHFILES = cyrus-imapd-$(GARVERSION)-autocreate-0.10-0.diff cyrus-imapd-$(GARVERSION)-autosieve-0.6.0.diff 
  
 # UPDATE: not necessary anymore, integrated upstream
 # This patch adds a new option which allows cyrus to
