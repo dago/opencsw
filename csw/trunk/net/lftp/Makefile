@@ -1,5 +1,5 @@
 GARNAME = lftp
-GARVERSION = 3.5.13
+GARVERSION = 3.5.14
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
