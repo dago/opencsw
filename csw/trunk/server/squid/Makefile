@@ -17,6 +17,7 @@ DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWsquid, depend prototype copyright postinstall preremove)
 
 CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
+CONFIGURE_ARGS += --localstatedir=/var/$(prefix)
 CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --enable-large-cache-files
 CONFIGURE_ARGS += --enable-ssl
