@@ -1,5 +1,5 @@
 GARNAME = firefox
-GARVERSION = 2.0.0.4
+GARVERSION = 2.0.0.6
 CATEGORIES = apps
 DISTNAME = $(GARNAME)
 
@@ -16,6 +16,9 @@ DISTFILES += $(call admfiles,CSWfirefox, depend postinstall postremove )
 # DISTFILES += CSWfirefoxrt.depend CSWfirefoxrt.gspec CSWfirefoxrt.prototype
 # DISTFILES += CSWfirefoxdevel.depend CSWfirefoxdevel.gspec CSWfirefoxdevel.prototype
 # DISTFILES += CSWfirefox.depend CSWfirefox.gspec CSWfirefox.prototype CSWfirefox.postinstall CSWfirefox.postremove
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PERL="/opt/csw/bin/perl"
 CFLAGS=-xlibmil

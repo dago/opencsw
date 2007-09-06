@@ -1,8 +1,6 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWfirefoxrt firefoxrt - Firefox Community Edition web browser runtime
 P CSWbonobo2 libbonobo2 - GNOME component and compound document system
 P CSWfconfig fontconfig - A library for configuring and customizing font access.
-P CSWfirefoxrt firefoxrt - Firefox Community Edition web browser
 P CSWftype2 freetype2 - A Free High-Quality and Portable Font Engine
 P CSWgconf2 gconf2 - GNOME configuration database system
 P CSWglib2 glib2 - the low-level core library for GTK+ and GNOME
