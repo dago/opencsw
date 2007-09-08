@@ -57,10 +57,6 @@ f none /opt/csw/lib/libQtNetwork.so.4.3.1 0755 root bin
 s none /opt/csw/lib/libQtNetwork.so.4.3=libQtNetwork.so.4.3.1
 s none /opt/csw/lib/libQtNetwork.so.4=libQtNetwork.so.4.3.1
 s none /opt/csw/lib/libQtNetwork.so=libQtNetwork.so.4.3.1
-f none /opt/csw/lib/libQtOpenGL.so.4.3.1 0755 root bin
-s none /opt/csw/lib/libQtOpenGL.so.4.3=libQtOpenGL.so.4.3.1
-s none /opt/csw/lib/libQtOpenGL.so.4=libQtOpenGL.so.4.3.1
-s none /opt/csw/lib/libQtOpenGL.so=libQtOpenGL.so.4.3.1
 f none /opt/csw/lib/libQtScript.so.4.3.1 0755 root bin
 s none /opt/csw/lib/libQtScript.so.4.3=libQtScript.so.4.3.1
 s none /opt/csw/lib/libQtScript.so.4=libQtScript.so.4.3.1
@@ -136,10 +132,6 @@ f none /opt/csw/lib/sparcv9/libQtNetwork.so.4.3.1 0755 root bin
 s none /opt/csw/lib/sparcv9/libQtNetwork.so.4.3=libQtNetwork.so.4.3.1
 s none /opt/csw/lib/sparcv9/libQtNetwork.so.4=libQtNetwork.so.4.3.1
 s none /opt/csw/lib/sparcv9/libQtNetwork.so=libQtNetwork.so.4.3.1
-f none /opt/csw/lib/sparcv9/libQtOpenGL.so.4.3.1 0755 root bin
-s none /opt/csw/lib/sparcv9/libQtOpenGL.so.4.3=libQtOpenGL.so.4.3.1
-s none /opt/csw/lib/sparcv9/libQtOpenGL.so.4=libQtOpenGL.so.4.3.1
-s none /opt/csw/lib/sparcv9/libQtOpenGL.so=libQtOpenGL.so.4.3.1
 f none /opt/csw/lib/sparcv9/libQtScript.so.4.3.1 0755 root bin
 s none /opt/csw/lib/sparcv9/libQtScript.so.4.3=libQtScript.so.4.3.1
 s none /opt/csw/lib/sparcv9/libQtScript.so.4=libQtScript.so.4.3.1
@@ -218,6 +210,6 @@ f none /opt/csw/share/qt4/translations/qt_sk.qm 0644 root bin
 f none /opt/csw/share/qt4/translations/qt_sv.qm 0644 root bin
 f none /opt/csw/share/qt4/translations/qt_uk.qm 0644 root bin
 f none /opt/csw/share/qt4/translations/qt_zh_CN.qm 0644 root bin
-i copyright=CSWqt4-demos.copyright
-i depend=CSWqt4-demos.depend
-i pkginfo=CSWqt4-demos.pkginfo
+i copyright=CSWqt4.copyright
+i depend=CSWqt4.depend
+i pkginfo=CSWqt4.pkginfo

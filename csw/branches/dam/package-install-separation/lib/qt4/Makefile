@@ -80,18 +80,13 @@ OPTARCH = $(OPTARCH_$(ISA))
 
 ifdef DO64
 	# Don't use any flags as this is already correctly set
-	CFLAGS =
-	CXXFLAGS =
-	LDFLAGS =
+	#CFLAGS =
+	#CXXFLAGS =
+	#LDFLAGS =
 else
 	# Do NOT include -xO3 as -xO2 is already set in the Makefile
 	SUN_CC_OPT = -xarch=$(OPTARCH) -xspace -xildoff
 	SUN_CXX_OPT = -xarch=$(OPTARCH) -xspace -xildoff
-
-	# Do NOT include the CSW include pathes and '-L...' here
-	CFLAGS = $($(GARCOMPILER)_CC_$(GARFLAVOR))
-	CXXFLAGS = $($(GARCOMPILER)_CXX_$(GARFLAVOR))
-	LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS) $($(GARCOMPILER)_LD_$(GARFLAVOR))
 endif
 
 build64:

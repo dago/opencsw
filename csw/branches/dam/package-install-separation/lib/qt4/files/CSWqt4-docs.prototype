@@ -4095,3 +4095,6 @@ f none /opt/csw/share/doc/qt/doc/html/xml-streambookmarks.html 0644 root bin
 f none /opt/csw/share/doc/qt/doc/html/xml-tools.html 0644 root bin
 f none /opt/csw/share/doc/qt/doc/html/xml-xmlstreamlint-main-cpp.html 0644 root bin
 f none /opt/csw/share/doc/qt/doc/html/xml-xmlstreamlint.html 0644 root bin
+i copyright=CSWqt4-docs.copyright
+i depend=CSWqt4-docs.depend
+i pkginfo=CSWqt4-docs.pkginfo
