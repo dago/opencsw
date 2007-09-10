@@ -8,19 +8,18 @@ GARNAME = MPlayer
 GARVERSION = 1.0rc1
 CATEGORIES = APPS
 
-DESCRIPTION = A multimedia player
+DESCRIPTION = MPlayer is a movie player which runs on many systems
 define BLURB
-JW testing ISAEXEC mplayer build. Very much a work in progress!
+MPlayer is a movie player which runs on many systems (see the documentation). It plays most MPEG/VOB, AVI, Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, RealMedia, Matroska, NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim, and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx, DivX 3/4/5 and even WMV movies..
 endef
 
-
-MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www3.mplayerhq.hu/MPlayer/releases/codecs/ http://www.mplayerhq.hu/MPlayer/skins/
+MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www.mplayerhq.hu/MPlayer/skins/
 
 GARCOMPILER = GNU
 
 DISTFILES  = $(GARNAME)-1.0rc1.tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
-DISTFILES += $(call admfiles,CSWmplayer,depend,prototype)
+DISTFILES += $(call admfiles,CSWmplayer,depend)
 
 PATCHFILES  = fix-configure-variables.diff
 PATCHFILES += fix-solaris8-llrint.diff
@@ -30,12 +29,11 @@ PATCHFILES += fix-ffmpeg-gcc-error.diff
 PATCHFILES += security-asmrules_fix_20061231.diff
 PATCHFILES += security-cddb_fix_20070605.diff
 # Mplayer-specific sparc patches
-# Since Ra is a sun4u (v9 sparc), mplayer tries to build v9 code by default. To bulid for v8, we
-# need to modify the configure script.
+# Since Ra is a sun4u (v9 sparc), mplayer tries to build v9 code by default.
+# To bulid for v8, we need to modify the configure script to force v8
 ifeq ($(ISA),v8)
 PATCHFILES += sparc-v8build.diff
 endif
-
 
 CONFIGURE_ARGS  = --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
@@ -43,18 +41,12 @@ CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
 CONFIGURE_ARGS += --disable-libcdio
 CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
-#CONFIGURE_ARGS += --with-codecsdir=/opt/csw/share/codecs ## win32 stuff
-
 
 ###Framework for an $ISAEXEC optimised build###
 # To allow for the same build to run multiple times without each version
 # clobbering the  non-unique work/cookie folders each time, we append the
 # target $ISA to each foldername.
-# I don't see any value in retaining the hostname in the folder names, as we're
-# merging mulitple builds anyway, and i386 build isas don't clash with sparc isas.
 #
-#
-
 #####################Script Overview and notes############################
 # 1) gmake optbuild: runs the standard gar framework through the optbuild for 
 #	loop. This loop allows for each of the targets in $ISATARGET to be built
@@ -122,7 +114,6 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 # so I have to set this variable after the main include. Will review this...
 
 DESTIMG=$(GARNAME)-$(ISA)
-
 
 ###Optimisation section###
 #
@@ -256,7 +247,7 @@ optbuild:
 
 # This target is copied from gar.pkg.mk, just with $(POST_INSTALL_TARGETS) stripped
 # from the end. This prevents the install target from kicking off the packaging step.
-only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install
+only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) isa-post-install
 
 
 ###Tidy ups and files below
@@ -264,7 +255,11 @@ only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $
 # We need the default font copied into the master install dir
 # Finally, merge in all the optimised binaries
 
-post-install: skins fonts merge-opt-bins
+#Isaexec version
+isa-post-install: skins fonts merge-opt-bins
+
+#Standard package version
+post-install: skins fonts
 
 #### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
 #	the expanded $(DESTDIR) variable which includes their expanded path
@@ -297,7 +292,7 @@ merge-opt-bins:
 #
 
 #Should be able to use the ISA_BINS var here, maybe a foreach loop?
-post-package:
+isa-post-package:
 	@echo " ===> Starting Mplayer post-package phase <==="
 	@if test ! -f  $(COOKIEDIR)/post-package ; then \
 	echo "l none /opt/csw/bin/mplayer=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype; \
@@ -311,7 +306,7 @@ post-package:
 
 #A edited packaging target that doesn't re-run all the install steps.
 only-package:
-	gmake pre-package package-create post-package package-check
+	gmake pre-package package-create isa-post-package package-check
 
 
 #The whole shabang! Start to finish, in one line: gmake all-in-one
