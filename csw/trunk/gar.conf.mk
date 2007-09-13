@@ -253,9 +253,9 @@ INSTALL_ENV   += $(foreach TTT,$(_INSTALL_EXPORTS),$(TTT)="$($(TTT))")
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
 BUILD_SCRIPTS     ?= $(WORKSRC)/Makefile
 ifeq ($(SKIPTEST),1)
-TEST_SCRIPTS      ?= $(WORKSRC)/Makefile
-else
 TEST_SCRIPTS       =
+else
+TEST_SCRIPTS      ?= $(WORKSRC)/Makefile
 endif
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
 
