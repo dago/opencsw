@@ -22,3 +22,6 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk
+
+post-install:
+	@cp $(WORKDIR)/
