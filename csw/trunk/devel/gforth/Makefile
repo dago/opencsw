@@ -1,5 +1,5 @@
 GARNAME = gforth
-GARVERSION = 0.6.2
+GARVERSION = 0.6.9-20070604
 CATEGORIES = devel
 
 DESCRIPTION = gforth - a fast and portable implementation of the ANS Forth language
@@ -11,7 +11,7 @@ define BLURB
   techniques: its inner interpreter is indirect or direct threaded.
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES = http://www.complang.tuwien.ac.at/forth/gforth/Snapshots/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWgforth,prototype)
 PATCHFILES   = gforth-DESTDIR.diff
