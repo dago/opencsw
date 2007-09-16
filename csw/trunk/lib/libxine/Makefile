@@ -2,14 +2,16 @@ GARNAME = libxine
 GARVERSION = 1.1.8
 CATEGORIES = APPS
 
-DESCRIPTION = Xine-lib 1.1.8 (HG test build)
+DESCRIPTION = Xine-lib 1.1.8
 define BLURB
 This is a work in progress. Currently this build only works under solaris 10. Solaris 8 is yet to come.
 endef
 
-MASTER_SITES = www.xine.de
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibxine,$(GAROSREL).depend)
+SF_PROJ = xine
+MASTER_SITES = $(SF_MIRRORS)
+
+DISTFILES  = xine-lib-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWlibxine)#,$(GAROSREL).depend)
 
 
 #Solaris 8 Patches
@@ -20,7 +22,7 @@ endif
 
 GARCOMPILER = GNU
 
-CONFIGURE_SCRIPTS = custom
+#CONFIGURE_SCRIPTS = custom
 
 #Excluding imagemagick and gnomevfs to cut down on dependancies
 CONFIGURE_ARGS  = $(DIRPATHS) docdir=/opt/csw/share/doc/xine
@@ -35,7 +37,7 @@ LD_OPTIONS :=
 pre-package:
 	(cp files/CSW$(GARNAME).$(GAROSREL).depend $(WORKSRC)/../CSW$(GARNAME).depend)
 
-configure-custom:
-	@echo "running autogen"
-	cd $(WORKSRC); ./autogen.sh $(CONFIGURE_ARGS)
-	@$(MAKECOOKIE)
+#Fixing the directory names, this code is actually called xine-lib.
+pre-configure:
+	@echo "==> Renaming directory to libxine <=="
+	if test !  -f $(WORKDIR)/libxine-$(GARVERSION)/*; then cd $(WORKDIR); mv xine-lib-$(GARVERSION)/* libxine-$(GARVERSION); fi
