@@ -1,5 +1,5 @@
 GARNAME = exim
-GARVERSION = 4.67
+GARVERSION = 4.68
 CATEGORIES = server
 
 DESCRIPTION = The Exim Mail Transfer Agent
