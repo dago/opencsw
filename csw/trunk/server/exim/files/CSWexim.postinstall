@@ -30,7 +30,8 @@ case "$PKG_ROOT_DIR" in
       /usr/sbin/svcadm disable -s svc:network/cswexim:default
       /usr/sbin/svccfg delete svc:network/cswexim:default
     else
-      test -x $BASEDIR/etc/init.d/cswexim && $BASEDIR/etc/init.d/cswexim stop
+      test -x $PKG_INSTALL_ROOT/etc/init.d/cswexim && \
+        $PKG_INSTALL_ROOT/etc/init.d/cswexim stop
     fi
     ;;
 
@@ -38,17 +39,19 @@ esac
 
 ### Set up config-file related stuff
 
-echo ""
-echo "Setting up config-files..."
-for file in $CONFFILES; do
-  confpath="$CONFDIR/$file"
-  if [ -r "$confpath" ]; then
-    echo "Not touching existing $confpath"
-  else
-    echo "Copying $confpath.CSW to $confpath"
-    cp -p "$confpath.CSW" "$confpath"
-  fi
-done
+if [ "$autoenable_daemons" != "no" ]; then
+  echo ""
+  echo "Setting up config-files..."
+  for file in $CONFFILES; do
+    confpath="$CONFDIR/$file"
+    if [ -r "$confpath" ]; then
+      echo "Not touching existing $confpath"
+    else
+      echo "Copying $confpath.CSW to $confpath"
+      cp -p "$confpath.CSW" "$confpath"
+    fi
+  done
+fi
 
 echo ""
 
