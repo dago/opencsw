@@ -1,4 +1,4 @@
-###Mplayer and $ISAEXEC makefile example###
+##Mplayer and $ISAEXEC makefile example###
 #
 # This makefile has a lot of notes and extra information in it, as I've been
 # using it as documentation while working away at this project. It will be 
@@ -19,6 +19,7 @@ GARCOMPILER = GNU
 
 DISTFILES  = $(GARNAME)-1.0rc1.tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
+DISTFILES += mplayer.1
 DISTFILES += $(call admfiles,CSWmplayer,depend)
 
 PATCHFILES  = fix-configure-variables.diff
@@ -256,10 +257,10 @@ only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $
 # Finally, merge in all the optimised binaries
 
 #Isaexec version
-isa-post-install: skins fonts merge-opt-bins
+isa-post-install: skins fonts manpage merge-opt-bins
 
 #Standard package version
-post-install: skins fonts
+post-install: skins fonts manpage
 
 #### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
 #	the expanded $(DESTDIR) variable which includes their expanded path
@@ -279,12 +280,15 @@ codecs:
 	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/lib/codecs)
 	(cp -r $(WORKSRC)/../all-20061022/* $(DESTDIR)$(BUILD_PREFIX)/share/codecs) 
 
+manpage:
+	(cp $(WORKSRC)/../mplayer.1 $(DESTDIR)$(BUILD_PREFIX)/share/man/man1/)
+
 merge-opt-bins:
 	@echo "====> Running merge-opt-bins <===="
 	(mkdir -p $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
 	(cd $(DESTDIR); if test ! -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR)/* ; then mv $(ISAEXEC_BINS) $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR); fi )
 
-
+	
 
 # This sets up the protype file correctly, but you'll have to do the depend manually.
 # In Mplayer's case, I have to hard code the filename, as the tarball has it
