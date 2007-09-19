@@ -1,5 +1,4 @@
 P CSWcommon common - common files and dirs for CSW packages
-P CSWisaexec
 P CSWaalib aalib - Ascii art graphics library
 P CSWaudiofile audiofile - Silicon Graphics Audio File Library
 P CSWesound esound - EsounD, The Enlightened Sound Daemon
