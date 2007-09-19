@@ -10,3 +10,4 @@ dc641e5d56466a7733725d2a74b187cd  download/fix-stdint.h-includes.diff
 d3dfbaac2431cbc2949449064a7576b5  download/fix-ffmpeg-gcc-error.diff
 7c094773e8ceabfd921f1db9d975daad  download/security-asmrules_fix_20061231.diff
 f20789cbfff1563067573c9ad401f231  download/security-cddb_fix_20070605.diff
+c3a8972bef2e12ead0466ae0fffc8f9b  download/sparc-v8build.diff
