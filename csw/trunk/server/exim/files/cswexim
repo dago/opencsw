@@ -22,15 +22,6 @@ test -x "$DAEMON" || exit 0
 # Make sure we have exim.conf
 test -r "$CONFFILE" || exit 0
 
-# Check csw.conf to see if we should not auto-start
-test -r /opt/csw/etc/csw.conf && . /opt/csw/etc/csw.conf
-test -r /etc/opt/csw/csw.conf && . /etc/opt/csw/csw.conf
-    
-if [ "$autoenable_daemons" = "no" -o "$autoenable_exim" = "no" ]; then
-  echo "$0: not starting, disabled in csw.conf"
-  exit 0
-fi
-
 # Read customizable environment if it exists
 test -r "$ENVFILE" && . "$ENVFILE"
 
