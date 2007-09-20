@@ -1,7 +1,7 @@
 18c05d88e22c3b815a43ca8d7152ccdc  download/MPlayer-1.0rc1.tar.bz2
 e4e2020d11b681aac898103b3ba723c4  download/Blue-1.7.tar.bz2
 86565c69affc3f8eae19c33434d6c655  download/mplayer.1
-9253ce56ab286c8fc482648e9870bb11  download/CSWmplayer.gspec
+e4700eacda69ac1e12725fcdc74ba556  download/CSWmplayer.gspec
 9e33f379f9285be0d93f920d35e39b8b  download/CSWmplayer.depend
 0ac273f009d67395e17527467e062013  download/fix-configure-variables.diff
 27806fbe1dc1906ba6388a4077df6f88  download/fix-solaris8-llrint.diff

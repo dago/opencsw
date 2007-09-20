@@ -6,6 +6,7 @@
 
 GARNAME = MPlayer
 GARVERSION = 1.0rc1
+SPKG_REVSTAMP = ,REV=$(shell date '+%Y.%m.%d').rc1try3
 CATEGORIES = APPS
 
 DESCRIPTION = MPlayer is a movie player which runs on many systems
