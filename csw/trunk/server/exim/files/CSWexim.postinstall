@@ -1,5 +1,5 @@
 #!/sbin/sh
-CONFDIR=$BASEDIR/opt/csw/etc/exim
+CONFDIR=$PKG_INSTALL_ROOT/opt/csw/etc/exim
 CONFFILES="aliases exim.conf exim-env.sh"
 PATH=/bin:/usr/bin:"$PATH"
 export PATH
@@ -10,7 +10,7 @@ is_usr_readonly()
 }
 
 class=smfno
-test -f $BASEDIR/usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm && class=smfyes
+test -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm && class=smfyes
 
 enable_exim=1
 test -r $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf && \
@@ -63,13 +63,13 @@ else
   ### Now handle the sendmail files
 
   # in Solaris 8 it's in /usr/bin; in Solaris 9 in /usr/sbin 
-  if [ -r "$BASEDIR/usr/bin/newaliases" ]; then
-    NEWALIASES="$BASEDIR/usr/bin/newaliases"
-  elif [ -r "$BASEDIR/usr/sbin/newaliases" ]; then
-    NEWALIASES="$BASEDIR/usr/sbin/newaliases"
+  if [ -r "$PKG_INSTALL_ROOT/usr/bin/newaliases" ]; then
+    NEWALIASES="$PKG_INSTALL_ROOT/usr/bin/newaliases"
+  elif [ -r "$PKG_INSTALL_ROOT/usr/sbin/newaliases" ]; then
+    NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
   else
     # use this as default (the remove script will find it in bin and sbin)
-    NEWALIASES="$BASEDIR/usr/sbin/newaliases"
+    NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
   fi
 
   echo "Checking for newaliases... $NEWALIASES"
@@ -80,31 +80,31 @@ else
       echo "Moving $NEWALIASES to newaliases.OFF"
       mv "$NEWALIASES" "$NEWALIASES.OFF"
     fi
-    if [ ! -f "$BASEDIR/usr/lib/sendmail.OFF" ] && [ -f "$BASEDIR/usr/lib/sendmail" ]; then
-      echo "Moving $BASEDIR/usr/lib/sendmail to sendmail.OFF"
-      mv "$BASEDIR/usr/lib/sendmail" "$BASEDIR/usr/lib/sendmail.OFF"
+    if [ ! -f "$PKG_INSTALL_ROOT/usr/lib/sendmail.OFF" ] && [ -f "$PKG_INSTALL_ROOT/usr/lib/sendmail" ]; then
+      echo "Moving $PKG_INSTALL_ROOT/usr/lib/sendmail to sendmail.OFF"
+      mv "$PKG_INSTALL_ROOT/usr/lib/sendmail" "$PKG_INSTALL_ROOT/usr/lib/sendmail.OFF"
     fi
-    if [ ! -f "$BASEDIR/usr/bin/mailq.OFF" ] && [ -f "$BASEDIR/usr/bin/mailq" ]; then
-      echo "Moving $BASEDIR/usr/bin/mailq to mailq.OFF"
-      mv "$BASEDIR/usr/bin/mailq" "$BASEDIR/usr/bin/mailq.OFF"
+    if [ ! -f "$PKG_INSTALL_ROOT/usr/bin/mailq.OFF" ] && [ -f "$PKG_INSTALL_ROOT/usr/bin/mailq" ]; then
+      echo "Moving $PKG_INSTALL_ROOT/usr/bin/mailq to mailq.OFF"
+      mv "$PKG_INSTALL_ROOT/usr/bin/mailq" "$PKG_INSTALL_ROOT/usr/bin/mailq.OFF"
     fi
   else
     if [ "$SENDMAIL_ACTION" = "overwrite" ]; then
-      echo "Removing $BASEDIR/usr/lib/sendmail"
-      rm -f "$BASEDIR/usr/lib/sendmail"
+      echo "Removing $PKG_INSTALL_ROOT/usr/lib/sendmail"
+      rm -f "$PKG_INSTALL_ROOT/usr/lib/sendmail"
       echo "Removing $NEWALIASES"
       rm -f "$NEWALIASES"
-      echo "Removing $BASEDIR/usr/bin/mailq"
-      rm -f "$BASEDIR/usr/bin/mailq"
+      echo "Removing $PKG_INSTALL_ROOT/usr/bin/mailq"
+      rm -f "$PKG_INSTALL_ROOT/usr/bin/mailq"
     fi
   fi
 
   if [ "$SENDMAIL_ACTION" = "leave" ]; then
-    echo "Not making symbolic links to to $BASEDIR/opt/csw/sbin/exim."
+    echo "Not making symbolic links to to $PKG_INSTALL_ROOT/opt/csw/sbin/exim."
     echo "Read exim documentation for more information."
   else
-    ln -s "$BASEDIR/opt/csw/sbin/exim" "$BASEDIR/usr/lib/sendmail"
-    ln -s "$BASEDIR/opt/csw/sbin/exim" "$BASEDIR/usr/bin/mailq"
+    ln -s "$PKG_INSTALL_ROOT/opt/csw/sbin/exim" "$PKG_INSTALL_ROOT/usr/lib/sendmail"
+    ln -s "$PKG_INSTALL_ROOT/opt/csw/sbin/exim" "$PKG_INSTALL_ROOT/usr/bin/mailq"
     echo "#!/bin/sh" >"$NEWALIASES"
     echo "# This script is part of the Exim MTA" >>"$NEWALIASES"
     echo "/usr/lib/sendmail -bi" >>"$NEWALIASES"
@@ -117,12 +117,12 @@ if [ "$enable_exim" = "1" ]; then
   case "$PKG_ROOT_DIR" in
     ""|"/")
       if [ "$class" = "smfno" ]; then
-        if [ -f $BASEDIR/etc/init.d/cswexim ]; then
-          $BASEDIR/etc/init.d/cswexim start
+        if [ -f $PKG_INSTALL_ROOT/etc/init.d/cswexim ]; then
+          $PKG_INSTALL_ROOT/etc/init.d/cswexim start
         fi
       else
         echo "Registering Exim with SMF..."
-        /usr/sbin/svccfg import $BASEDIR/opt/csw/var/svc/manifest/network/exim.xml
+        /usr/sbin/svccfg import $PKG_INSTALL_ROOT/opt/csw/var/svc/manifest/network/exim.xml
         /usr/sbin/svcadm enable svc:network/cswexim
       fi
     ;;

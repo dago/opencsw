@@ -1,12 +1,12 @@
 #!/sbin/sh
 
-CONFDIR=$BASEDIR/opt/csw/etc/exim
+CONFDIR=$PKG_INSTALL_ROOT/opt/csw/etc/exim
 CONFFILES="aliases exim.conf exim-env.sh"
 PATH=/bin:/usr/bin:"$PATH"
 export PATH
 
 smf=no
-test -f $BASEDIR/usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm && smf=yes
+test -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm && smf=yes
 
 # stop exim, but ONLY if we are doing a "direct"
 # install, rather than a jumpstart install or something.
@@ -18,7 +18,7 @@ case "$PKG_ROOT_DIR" in
       /usr/sbin/svccfg delete svc:network/cswexim:default
     else
       echo "Stopping Exim..."
-      test -x $BASEDIR/etc/init.d/cswexim && $BASEDIR/etc/init.d/cswexim stop
+      test -x $PKG_INSTALL_ROOT/etc/init.d/cswexim && $PKG_INSTALL_ROOT/etc/init.d/cswexim stop
     fi
     ;;
 esac
