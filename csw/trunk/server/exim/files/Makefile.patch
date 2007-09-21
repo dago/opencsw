@@ -62,7 +62,7 @@
  # INCLUDE=-I/example/include
  
 +# Do you want IPv6?
-+HAVE_IPV6 = TRUE
++HAVE_IPV6=yes
 +
  # You need to specify some routers and transports if you want the Exim that you
  # are building to be capable of delivering mail. You almost certainly need at
