@@ -14,9 +14,10 @@ define BLURB
 MPlayer is a movie player which runs on many systems (see the documentation). It plays most MPEG/VOB, AVI, Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, RealMedia, Matroska, NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim, and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx, DivX 3/4/5 and even WMV movies..
 endef
 
-MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www.mplayerhq.hu/MPlayer/skins/
+MASTER_SITES = http://www.mplayerhq.hu/MPlayer/releases/ http://www.mplayerhq.hu/MPlayer/skins/
 
 GARCOMPILER = GNU
+GNU_CC_HOME = /opt/csw/gcc4
 
 DISTFILES  = $(GARNAME)-1.0rc1.tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
@@ -33,8 +34,9 @@ PATCHFILES += security-cddb_fix_20070605.diff
 # Mplayer-specific sparc patches
 # Since Ra is a sun4u (v9 sparc), mplayer tries to build v9 code by default.
 # To bulid for v8, we need to modify the configure script to force v8
-ifeq ($(ISA),v8)
-PATCHFILES += sparc-v8build.diff
+# and no vis extensions
+ifeq ($(shell uname -p),sparc)
+PATCHFILES += sparc-v8-novis.diff
 endif
 
 CONFIGURE_ARGS  = --prefix=/opt/csw
@@ -46,10 +48,9 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 
 ###Framework for an $ISAEXEC optimised build###
 # To allow for the same build to run multiple times without each version
-# clobbering the  non-unique work/cookie folders each time, we append the
+# clobbering the non-unique work/cookie folders each time, we append the
 # target $ISA to each foldername.
 #
-#####################Script Overview and notes############################
 # 1) gmake optbuild: runs the standard gar framework through the optbuild for 
 #	loop. This loop allows for each of the targets in $ISATARGET to be built
 #	using the appropriate compiler flags for optimisation.
@@ -57,71 +58,64 @@ CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 #	When all the building is done, we're going to only want the one package,
 #	(not N versions). All the resultant binaries from each $ISATARGET are 
 #	merged into the $BASEISA $DESTDIR by the merge-opt-bins target.
-#	It's this $BASEISA that will be used for the final resultant ISAEXEC pkg.
+#	It's this $BASEISA that will be used for the final resultant ISAEXEC pkg
 #
-#	Gar in it's current form, merges and overlaps the install & package targets.
-#	We want the install phase to be run in a for loop, but the package phase to
-#	be run once, (on our $BASEISA), so I've had to explictly split the phases.
-#	See the only-install: and only-package: targets for the implementation.
+#	Gar currently merges and overlaps the install & package targets.
+#	We want the install phase to be run in a for loop, but the package
+#	phase to run only once (on our $BASEISA), so I've had to explictly
+#	split the phases.
 #
 # 2) gmake only-package: Runs the standard packing steps on the $BASEISA	
-#	install dir ($DESTDIR), however I've run into a problem with the mkpackage
-#	perl script's handling of the prototype file. We need it to merge both our 
-#	standard directory structure, and also our "shimed" isaexec hardlinks.
-#	The pre-package step can add the appropriate lines to the prototype file,
-#	however mkpackage will then either 1) overwrite it anyway, or 2) in merge
-#	mode, it will take our 2 isaexec lines, and only append the key adm files
-#	(ignoring all the _real_ files in our package).
+#	install dir ($DESTDIR), however I've run into a problem with the
+#	mkpackage perl script's handling of the prototype file; we need it to
+#	merge both our standard directory structure, and also the added isaexec
+#	hardlinks.
+#	The isa-post-package step adds the appropriate lines to the prototype
+#	however mkpackage will then either 1) overwrite it anyway, or 
+#	2) in merge mode, it will take our 2 isaexec lines, and only append 
+#	those 2 lines (ignoring all the standard files in our package).
 #
-#	My sneaky workaround for this is to add the extra lines in the post-package
-#	target, followed by re-running the package-create step. On the second "lap"
-#	through the package-create target the prototype already contains a full 
-#	file/dir layout and our isaexec hardlink(s), so mkpacage simply merges(appends)
-#	the key adm files.
-#	In fact, the admfiles are actually already there (from the first trip through
-#	package-create), but mkpackage is smart enough to remove the duplicate lines :)
-#	It's not the prettiest, and I'm open to better ideas. I really do want to
-#	keep the prototyping step dynamically generated, as it will save maintainer time.
-#
-#	This completes our isaexec build.
+#	My sneaky workaround for this is to add the extra lines in the 
+# 	isa-post-package target, followed by re-running the package-create step.
+#	The package-create target the prototype already contains a full 
+#	file/dir layout and our isaexec hardlink(s), so mkpackage simply
+#	merges(appends)	the key isaexec links.
+#	In fact, the admfiles are actually already there (from the first trip
+#	through package-create), but mkpackage is smart enough to remove the
+#	duplicate lines! :)
 
-### Makefile target order referenc ###
+### Makefile target order ###
 # 1) "gmake optbuild" runs the following gar steps on each of the $ISALIST
 #	build (and all of it's dependanies - extract/patch/etc etc)
 #	pre-install (calls timestamp, skins, fonts, and merge-opt-bins)
-#	 ===> timestamp (creates a timestamp to track all new files for packaging)
+#	 ===> timestamp (creates timestamp to track the new files for packaging)
 #	 ===> skins (copies the Mplayer skins into the install dirs)
 #	 ===> fonts (creates a symlink for the Mplayer OSD font)
-#	 ===> merge-opt-bins (Moves the optimised $ISAEXEC_BINS from each $ISALIST
+#	 ===> merge-opt-bins (Moves the optimised $ISAEXEC_BINS from $ISALIST
 #			into the appropriate $ISAEXEC_DIR within the $BASEISA)
 #	install (standard install target)
 #	post-install (calls strip/fixconfig)
 # The $BASISA $DESTDIR now contain all ISAEXEC'ed bins, in the correct layout,
 # reading for packaging.
 #
-# 2) gmake only-package (which won't run through the optbuild loop) will just act
-#	apon the $BASEISA. It will run the following steps:
+# 2) gmake only-package (which won't run through the optbuild loop) will just
+#	act apon the $BASEISA. It will run the following steps:
 #	pre-package 	(empty)
 #	package-create	(creates the package as per normal)
 #	post-package	(Sneakily adds the isaexec symlinks, and reruns package-create)
 #	package-check	(Standard target)
 
 
-
 # Gar uses the $DESTIMG variable to create these directory names, so we need to
 # change that variable to reflect a unique $ISATARGET name.
 # $DESTDIR is where the package is installed to prior to packaging. We also 
-# need to make this directory name unique to for each $ISA.
+# need to make this directory name unique for each $ISA.
 # $DESTDIR is defined in the core GAR makefile, which hasn't been included yet,
-# so I have to set this variable after the main include. Will review this...
+# so I have to set this variable after the main include.
 
 DESTIMG=$(GARNAME)-$(ISA)
 
 ###Optimisation section###
-#
-# This section needs updating. I don't know that it's still accurate for a 
-# normal build.
-#
 #
 # This gar package builds a plain non-optimised version of Mplayer by default.
 # To build the fully optimised $ISAEXEC version use "gmake optbuild"
@@ -129,19 +123,18 @@ DESTIMG=$(GARNAME)-$(ISA)
 # $ISATARGETS represents the optimised cpu targets.
 # These targets can be used in a couple of ways. We need to feed a desired 
 # optimisation target into our compiler, but we also need to create and copy
-# the binaries into the $ISAEXEC dir structure for the final install layout.
+# the binaries into the `isalist` dir structure for the final install layout.
 #
 # Unfortunately for GCC at least, these names don't match, and 64-bit is even
 # worse.
 #
-#
-# $BASEISA is used for the base build, and for legacy use by plain "gmake".
+# $BASEISA is used for the base build, and for legacy use with plain "gmake".
 # The $BASEISA represents the minimum optimisation level, but it's also used as
 # the base (master) template for creating the package. All other $ISATARGET 
 # builds will have their binaries and libraries copied into the $BASEISA 
 # install dir, prior to final packaging.
 #
-# In theory, I should be able to just use the first string in ISATARGET.
+# In theory, I should be able to just use the first string in $ISATARGET.
 # Need to work out if Makefiles support this function.
 
 ifeq ($(shell uname -p),i386)
@@ -195,26 +188,19 @@ DESTDIR := $(DESTDIR)-$(ISA)
 
 ####Mplayer specific optimisation notes####
 
-# Mplayer uses -mtune, not -march for optimisation so we want to set this to suit
+# Mplayer uses -mtune, not -march
 
 # Compiler options 
 ifeq ($(GARCH),i386)
  CFLAGS = -O2 -pipe -mtune=$(ISA)
 else # I.E sparc
- CFLAGS = -O2 -pipe -mcpu=$(ISA)
+CFLAGS = -O2 -pipe -mcpu=$(ISA)
 endif
 
-ifeq ($(ISA),ultrasparc)
- CFLAGS += # -m64 (didn't work on the first try. Leaving it at (-m32) for now
-endif
-ifeq ($(ISA),ultrasparc3)
- CFLAGS += # -m64 (also not working for 64-bit)
-endif
-
-CPPFLAGS = $(CFLAGS)
-CXXFLAGS = $(CFLAGS)
-ASFLAGS = $(CFLAGS)
-OPTFLAGS = $(CFLAGS)
+#CPPFLAGS = $(CFLAGS)
+#CXXFLAGS = $(CFLAGS)
+#ASFLAGS = $(CFLAGS)
+#OPTFLAGS = $(CFLAGS)
 
 # Makefile debugging/testing
 showvars:
