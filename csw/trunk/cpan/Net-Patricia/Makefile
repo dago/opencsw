@@ -20,6 +20,6 @@ define BLURB
      Reno release.
 endef
 
-DISTFILES += $(call admfiles,CSWpmnetpatricia,)
+DISTFILES += $(call admfiles,CSWpmnetpatricia,prototype)
 
 include ../category.mk
