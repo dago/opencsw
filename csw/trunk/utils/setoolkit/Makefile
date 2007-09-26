@@ -23,14 +23,17 @@ ARCH64=$($(GARCH)_ARCH64)
 ifdef ISA
 ISALIST = $(ISA)
 else
+ifndef DO64
 ISA = $(ARCH)
+else
+ISA = $(ARCH64)
+endif
 endif
 
 #SF_PROJ = setoolkit
 #MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsetoolkit,prototype)
-#DISTFILES += $(call admfiles,CSWsetoolkit,prototype depend)
+DISTFILES += $(call admfiles,CSWsetoolkit,prototype depend)
 
 WORKDIR       = $(WORKROOTDIR)/$(DESTIMG).d/$(ISA)
 COOKIEROOTDIR = cookies.$(ISA)
@@ -41,11 +44,13 @@ CONFIGURE_ARGS = $(DIRPATHS)
 OPTARCH_sparcv9 = v9
 OPTARCH_amd64   = amd64
 
+OPTDIR32 = $(shell $(GARBIN)/isadir $(OPTARCH_$(ARCH)))
+OPTDIR64 = $(shell $(GARBIN)/isadir $(OPTARCH_$(ARCH64)))
+
 # Package doesn't have test
 SKIPTEST = 1
 
 INSTALL_SCRIPTS = custom
-
 CLEAN_SCRIPTS = custom
 
 include ../category.mk
@@ -60,8 +65,9 @@ endif
 # WORKDIR   is the source of most files
 # WORKDIR64 is the source of 64 bit files
 MKPACKAGE_ARGS = \
+	-v garname=$(GARNAME) \
 	-v arch=$(ARCH)		-v arch64=$(ARCH64) \
-	-v se=se.$(ARCH)	-v se64=se.$(ARCH64) \
+	-v optdir32=$(OPTDIR32)	-v optdir64=$(OPTDIR64) \
 	-v WORKDIR=$(GARNAME)-$(GARVERSION) \
 				-v WORKDIR64=../$(ARCH64)/$(GARNAME)-$(GARVERSION)
 
@@ -77,15 +83,22 @@ env:
 #	@(cd $(WORKSRC); autoreconf -if)
 #	$(MAKECOOKIE)
 
-install-custom:
+build64:
+	@echo " ==> Building 64 bit version"
+	gmake DO64=1 build
+	$(MAKECOOKIE)
+
+install-custom: build build64
 	# Nothing gets installed, everything is picked up on packaging
 	$(MAKECOOKIE)
 
-pre-package:
-	@echo " ==> Building 64 bit version"
-	gmake ISA=$(ARCH64) build
-	$(MAKECOOKIE)
+#pre-package:
+#	@echo " ==> Building 64 bit version"
+#	gmake ISA=$(ARCH64) build
+#	$(MAKECOOKIE)
 
-clean-custom: clean-all
-	gmake ISA=$(ARCH64) clean-all
+clean64:
+	gmake DO64=1 clean-all
+
+clean-custom: clean64 clean-all
 

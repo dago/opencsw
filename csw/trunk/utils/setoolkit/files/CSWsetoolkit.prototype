@@ -1,10 +1,12 @@
 d none /opt/csw/bin 0755 root bin
-f none /opt/csw/bin/se=$WORKDIR/bin/se 0555 root bin
+l none /opt/csw/bin/se=isaexec
 #f none /opt/csw/pw_example.sh=$WORKDIR/adrian/bin/pw_example.sh 0755 root bin
 #f none /opt/csw/workollator_example.sh=$WORKDIR/adrian/bin/workollator_example.sh 0755 root bin
-d none /opt/csw/libexec 0755 root bin
-f none /opt/csw/libexec/$se=$WORKDIR/se 0555 root bin
-f none /opt/csw/libexec/$se64=$WORKDIR64/se 0555 root bin
+d none /opt/csw/bin 0755 root bin
+d none /opt/csw/bin/$optdir32 0755 root bin
+f none /opt/csw/bin/$optdir32/se=$WORKDIR/se 0555 root bin
+d none /opt/csw/bin/$optdir64 0755 root bin
+f none /opt/csw/bin/$optdir64/se=$WORKDIR64/se 0555 root bin
 d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/$arch64 0755 root bin
 !default 0644 root bin
