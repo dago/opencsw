@@ -21,7 +21,7 @@ d none /opt/csw 0755 root bin
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/se 0755 root bin
-f none /opt/csw/share/doc/se/USERS.MANUAL=$WORKDIR/doc/USERS.MANUAL
+f none /opt/csw/share/doc/se/USERS.MANUAL.html=$WORKDIR/doc/USERS.MANUAL.html
 f none /opt/csw/share/doc/se/EXAMPLES.DOC=$WORKDIR/doc/EXAMPLES.DOC
 f none /opt/csw/share/doc/se/REPORTING.BUGS=$WORKDIR/doc/REPORTING.BUGS
 f none /opt/csw/share/doc/se/README.INSTALL=$WORKDIR/doc/README.INSTALL
