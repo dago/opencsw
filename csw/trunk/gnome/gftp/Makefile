@@ -12,9 +12,14 @@ endef
 
 MASTER_SITES = http://www.gftp.org/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWgftp, depend )
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
 
 TEST_TARGET = check
 
 include ../category.mk
+
+pre-configure:
+	( cd $(WORKSRC)/lib/fsplib ; gzip -dc $(GARCHIVEDIR)/fsplib-0.9.tar.gz | tar xvf - ; cp /export/home/jgoerzen/csw/gnome/gftp/files/lock.c.fixed lock.c)
+	@$(MAKECOOKIE)
