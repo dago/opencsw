@@ -114,8 +114,8 @@ f none /opt/csw/apache2/sbin/ab 0755 root bin
 f none /opt/csw/apache2/sbin/apachectl 0755 root bin
 f none /opt/csw/apache2/sbin/checkgid 0755 root bin
 f none /opt/csw/apache2/sbin/dbmmanage 0755 root bin
-f none /opt/csw/apache2/sbin/envvars-std 0644 root bin
 f none /opt/csw/apache2/sbin/envvars 0644 root bin
+f none /opt/csw/apache2/sbin/envvars-std 0644 root bin
 f none /opt/csw/apache2/sbin/htcacheclean 0755 root bin
 f none /opt/csw/apache2/sbin/htdbm 0755 root bin
 f none /opt/csw/apache2/sbin/htdigest 0755 root bin
@@ -161,6 +161,7 @@ f none /opt/csw/apache2/share/htdocs/apache_pb22_ani.gif 0644 root bin
 f none /opt/csw/apache2/share/htdocs/index.html.CSW 0644 root bin
 d none /opt/csw/apache2/share/icons 0755 root bin
 f none /opt/csw/apache2/share/icons/README 0644 root bin
+f none /opt/csw/apache2/share/icons/README.html 0644 root bin
 f none /opt/csw/apache2/share/icons/a.gif 0644 root bin
 f none /opt/csw/apache2/share/icons/a.png 0644 root bin
 f none /opt/csw/apache2/share/icons/alert.black.gif 0644 root bin
@@ -289,7 +290,6 @@ f none /opt/csw/apache2/share/icons/screw2.png 0644 root bin
 f none /opt/csw/apache2/share/icons/script.gif 0644 root bin
 f none /opt/csw/apache2/share/icons/script.png 0644 root bin
 d none /opt/csw/apache2/share/icons/small 0755 root bin
-f none /opt/csw/apache2/share/icons/small/README.txt 0644 root bin
 f none /opt/csw/apache2/share/icons/small/back.gif 0644 root bin
 f none /opt/csw/apache2/share/icons/small/back.png 0644 root bin
 f none /opt/csw/apache2/share/icons/small/binary.gif 0644 root bin
@@ -384,3 +384,4 @@ f none /opt/csw/apache2/share/icons/world2.gif 0644 root bin
 f none /opt/csw/apache2/share/icons/world2.png 0644 root bin
 d none /opt/csw/apache2/var 0755 root bin
 d none /opt/csw/apache2/var/log 0755 root bin
+d none /opt/csw/apache2/var/run 0755 root bin

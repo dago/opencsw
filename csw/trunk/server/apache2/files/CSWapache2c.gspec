@@ -1,6 +1,9 @@
 %var            bitname apache2c
 %var            pkgname CSWapache2c
-%var            initname cswapache2
+%var            RC_INIT_SCRIPT cswapache2
+%var            SMF_SCRIPT svc-cswapache2
+%var            SMF_MANIFEST cswapache2.xml
+%var            SERVICE_NAME cswapache2
 %var            INIT_KILL_PRIO 16
 %var            INIT_START_PRIO 50
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec

@@ -33,6 +33,7 @@ DISTFILES += CSWapache2.killproc cswapache2 svc-cswapache2 cswapache2.xml
 
 # Configuration templates
 DISTFILES += httpd.conf.CSW
+DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
@@ -76,6 +77,7 @@ copy-local-files:
 	@ginstall -d $(DESTDIR)/etc/init.d
 	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
 	@ginstall $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
+	@ginstall $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 	@$(MAKECOOKIE)
@@ -87,7 +89,6 @@ template_list += etc/extra/httpd-dav.conf
 template_list += etc/extra/httpd-default.conf
 template_list += etc/extra/httpd-info.conf
 template_list += etc/extra/httpd-languages.conf
-template_list += etc/extra/httpd-mpm.conf
 template_list += etc/extra/httpd-multilang-errordoc.conf
 template_list += etc/extra/httpd-userdir.conf
 template_list += etc/extra/httpd-vhosts.conf

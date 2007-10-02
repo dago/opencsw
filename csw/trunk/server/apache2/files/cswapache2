@@ -29,10 +29,6 @@ graceful)
     ;;
 stop)
     cmd="stop"
-    if [ ! -x ${APACHE_HOME}/httpd ]; then
-        pkill httpd
-        exit 0
-    fi
     ;;
 *)
     echo "Usage: $0 {start|startssl|stop|restart|graceful}"

@@ -440,7 +440,7 @@ DefaultType text/plain
 # necessary.
 
 # Server-pool management (MPM specific)
-#Include etc/extra/httpd-mpm.conf
+Include etc/extra/httpd-mpm.conf
 
 # Multi-language error messages
 #Include etc/extra/httpd-multilang-errordoc.conf
