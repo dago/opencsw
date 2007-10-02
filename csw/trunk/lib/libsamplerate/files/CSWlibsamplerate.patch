@@ -1,0 +1,10 @@
+diff --speed-large-files --minimal -Nru libsamplerate-0.1.2.orig/doc/Makefile.am libsamplerate-0.1.2/doc/Makefile.am
+--- libsamplerate-0.1.2.orig/doc/Makefile.am	2007-09-16 22:52:37.808997797 +0200
++++ libsamplerate-0.1.2/doc/Makefile.am	2004-05-30 03:19:27.000000000 +0200
+@@ -1,5 +1,5 @@
+ EXTRA_DIST = SRC.png SRC.css index.html license.html history.html download.html \
++				lists.html quality.html win32.html faq.html api.html \
+-				lists.html quality.html win32.html faq.html api.html 
+ 				api_simple.html api_callback.html api_full.html api_misc.html 
+   
+ 

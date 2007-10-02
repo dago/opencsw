@@ -1,0 +1,32 @@
+PREFIX=/opt/csw
+CONF=/opt/csw/etc/mpd.conf
+
+start() {
+  $PREFIX/sbin/mpd $CONF
+}
+
+stop() {
+  $PREFIX/sbin/mpd --kill $CONF
+}
+
+case "$1" in
+  start)
+    start
+  ;;
+
+  stop)
+    stop
+  ;;
+
+  refresh)
+    stop
+    start
+  ;;
+
+  *)
+    echo "Usage: $0 {start|stop|refresh}"
+    exit 1
+  ;;
+esac
+
+exit 0

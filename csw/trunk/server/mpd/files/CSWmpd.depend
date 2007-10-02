@@ -1,0 +1,9 @@
+P CSWaudiofile audiofile - Silicon Graphics Audio File Library
+P CSWcommon common - common files and dirs for CSW packages
+P CSWflac libflac - FLAC audio codec support library
+P CSWlibao libao - Cross-platform audio library
+P CSWlibid3tag libid3tag - a library for reading and (eventually) writing ID3 tags
+P CSWlibogg libogg - Ogg bitstream format support library
+P CSWlibsamplerate libsamplerate - Secret Rabbit Code (aka libsamplerate) is a Sample Rate Converter for audio
+P CSWmikmod libmikmod - library and player for MOD audio files and other types
+P CSWzlib zlib - Zlib Data Compression Library
