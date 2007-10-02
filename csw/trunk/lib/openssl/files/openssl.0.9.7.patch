@@ -23,3 +23,46 @@ diff --speed-large-files --minimal -Nru openssl-0.9.7m.orig/Configure openssl-0.
  "solaris64-sparcv9-cc","cc:-xtarget=ultra -xarch=v9 -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR::::asm/md5-sparcv9.o::::::dlfcn:solaris-shared:-KPIC:-xarch=v9 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):/usr/ccs/bin/ar rs",
  ####
  "debug-solaris-sparcv8-cc","cc:-DBN_DEBUG -DREF_CHECK -DCONF_DEBUG -DBN_CTX_DEBUG -DCRYPTO_MDEBUG_ALL -xarch=v8 -g -O -xstrconst -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:asm/sparcv8.o:::::::::dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+diff --speed-large-files --minimal -Nru openssl-0.9.7m.orig/ssl/ssl_lib.c openssl-0.9.7m/ssl/ssl_lib.c
+--- openssl-0.9.7m.orig/ssl/ssl_lib.c      2007-10-02 23:51:03.000000000 +0200
++++ openssl-0.9.7m/ssl/ssl_lib.c      2007-10-02 23:51:33.000000000 +0200
+@@ -1149,7 +1149,6 @@
+ char *SSL_get_shared_ciphers(SSL *s,char *buf,int len)
+        {
+        char *p;
+-       const char *cp;
+        STACK_OF(SSL_CIPHER) *sk;
+        SSL_CIPHER *c;
+        int i;
+@@ -1162,20 +1161,21 @@
+        sk=s->session->ciphers;
+        for (i=0; i<sk_SSL_CIPHER_num(sk); i++)
+                {
+-               /* Decrement for either the ':' or a '\0' */
+-               len--;
++               int n;
++
+                c=sk_SSL_CIPHER_value(sk,i);
+-               for (cp=c->name; *cp; )
++               n=strlen(c->name);
++               if (n+1 > len)
+                        {
+-                       if (len-- <= 0)
+-                               {
+-                               *p='\0';
+-                               return(buf);
+-                               }
+-                       else
+-                               *(p++)= *(cp++);
++                       if (p != buf)
++                               --p;
++                       *p='\0';
++                       return buf;
+                        }
++               strcpy(p,c->name);
++               p+=n;
+                *(p++)=':';
++               len-=n+1;
+                }
+        p[-1]='\0';
+        return(buf);

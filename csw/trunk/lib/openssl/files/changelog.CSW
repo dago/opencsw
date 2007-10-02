@@ -1,3 +1,9 @@
+openssl (0.9.8,REV=2007.10.02_rev=e) unstable
+
+ * Fixed CVE-2007-5135: Fix off by one error in SSL_get_shared_ciphers().
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 02 Oct 2007 23:57:35 +0200
+
 openssl (0.9.8,REV=2007.08.21_rev=e) unstable
 
  * Replaced "? ? ?" with "0755 root bin" in the prototype.
