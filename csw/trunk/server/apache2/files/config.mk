@@ -1,5 +1,10 @@
 # Source location
-MASTER_SITES = http://www.ibiblio.com/pub/mirrors/apache/httpd/
+MASTER_SITES  = http://www.ibiblio.com/pub/mirrors/apache/httpd/
+
+# MySQL support requires apr_dbd_mysql.c, which is not distributed with
+# apr-util due to licensing issues.
+MASTER_SITES += http://apache.webthing.com/svn/apache/apr/
+DISTFILES += apr_dbd_mysql.c
 
 # Visitor information
 SPKG_SOURCEURL = http://httpd.apache.org/
@@ -7,16 +12,14 @@ SPKG_SOURCEURL = http://httpd.apache.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += config.layout
 
-ifdef ENABLE_DEPENDENCY_BUILD
 DEPEND += lib/libiconv
 DEPEND += lib/openssl
 DEPEND += lib/openldap
 DEPEND += lib/berkeleydb44
-#DEPEND += lib/sqlite3
+DEPEND += lib/sqlite3
 DEPEND += lib/expat
-#DEPEND += server/postgres
-#DEPEND += server/mysql5
-endif
+DEPEND += server/postgres
+DEPEND += server/mysql5
 
 # Build Configuration
 CONFIGURE_ARGS += --enable-layout=csw
@@ -59,21 +62,16 @@ else
 #CONFIGURE_ARGS += --enable-other-child
 
 # APR-Util
-CONFIGURE_ARGS += --with-ldap
-#CONFIGURE_ARGS += --with-ldap-lib=$(libdir)
-#CONFIGURE_ARGS += --with-ldap-include=$(includedir)
-CONFIGURE_ARGS += --with-dbm=db44
-CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb44
-#CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
-CONFIGURE_ARGS += --without-pgsql
-CONFIGURE_ARGS += --without-sqlite2
-CONFIGURE_ARGS += --without-sqlite3
 CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --with-iconv=$(prefix)
-
-# This requires apr_dbd_mysql.c to work properly, which is not distributed
-# with apr-util, apparently.
-#CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
+CONFIGURE_ARGS += --with-ldap
+CONFIGURE_ARGS += --with-dbm=db44
+CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb44
+CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
+CONFIGURE_ARGS += --without-sqlite2
+CONFIGURE_ARGS += --with-sqlite3=$(prefix)
+CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
+CONFIGURE_ARGS += --enable-dbd-dso
 
 # Patch APU to absolutely use GNU iconv
 PATCHFILES += apu-iconv.diff
@@ -101,6 +99,9 @@ endif
 EXTRA_LIB += $(prefix)/bdb44/lib
 EXTRA_INC += $(prefix)/bdb44/include
 
-#EXTRA_LIB += $(prefix)/postgresql/lib
-#EXTRA_INC += $(prefix)/postgresql/include
+EXTRA_LIB += $(prefix)/postgresql/lib
+EXTRA_INC += $(prefix)/postgresql/include
+
+EXTRA_LIB += $(prefix)/mysql5/lib
+EXTRA_INC += $(prefix)/mysql5/include
 

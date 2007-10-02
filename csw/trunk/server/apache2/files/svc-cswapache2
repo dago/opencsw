@@ -23,7 +23,7 @@ start)
 	if [ "$ssl" = false ]; then
 		cmd="start"
 	else
-		cmd="startssl"
+		cmd="start -DSSL"
 	fi
 	;;
 refresh)
@@ -38,4 +38,4 @@ stop)
 	;;
 esac
 
-exec $APACHECTL $cmd 2>&1
+exec $APACHECTL -k $cmd 2>&1

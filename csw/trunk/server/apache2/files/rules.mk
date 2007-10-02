@@ -1,8 +1,12 @@
-pre-configure: install-config-layout apu-make-configure
+pre-configure: install-layout install-dbd-drivers apu-make-configure
 
-install-config-layout:
-	@sed -e s,INSTALL_PREFIX,$(prefix)/apache2,g \
+install-layout:
+	@gsed -e s,INSTALL_PREFIX,$(prefix)/apache2,g \
 		$(WORKDIR)/config.layout > $(WORKSRC)/config.layout
+	@$(MAKECOOKIE)
+
+install-dbd-drivers:
+	@gcp -v $(FILEDIR)/apr_dbd_mysql.c $(WORKSRC)/srclib/apr-util/dbd
 	@$(MAKECOOKIE)
 
 apu-make-configure:
