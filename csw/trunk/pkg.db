@@ -11,7 +11,7 @@ apps/gtkpod|CSWgtkpod|gtkpod - gtk2 application for Apple iPods
 apps/kdesvn|CSWkdesvn|kdesvn - A Subversion client for KDE
 apps/kile|CSWkile|kile - An integrated LaTeX environment
 apps/lyx|CSWlyx|lyx - WYSIWYM document processor
-apps/mplayer|CSWmplayer|mplayer - A multimedia player
+apps/mplayer|CSWmplayer|mplayer - MPlayer is a movie player which runs on many systems
 apps/ogle|CSWogle|ogle - opensource DVD player with DVD menu support
 apps/openoffice|CSWooouizu|ooouizu - An Open Source version of StarOffice.
 apps/openoffice|CSWooouigl|ooouigl - An Open Source version of StarOffice.
@@ -249,6 +249,7 @@ cpan/Image-Size|CSWpmimagesize|pm_imagesize - read the dimensions of an image in
 cpan/Inline|CSWpminline|pm_inline - write Perl subroutines in other programming languages.
 cpan/Jcode|CSWpmjcode|pm_jcode - japanese charset handler
 cpan/List-MoreUtils|CSWpmlistmoreut|pm_listmoreut - Provide the stuff missing in List::Util
+cpan/Locale-Gettext|CSWpmlocalegettext|pm_localegettext - Message handling functions
 cpan/Locale-Maketext-Fuzzy|CSWpmlclemktxtfuz|pm_lclemktxtfuz - maketext from already interpolated strings
 cpan/Locale-Maketext-Lexicon|CSWpmlclemktxtlex|pm_lclemktxtlex - use other catalog formats in Maketext
 cpan/Locale-Maketext-Simple|CSWpmlclemktxtsimple|pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
@@ -283,6 +284,7 @@ cpan/Module-Signature|CSWpmmodulesignature|pm_modulesignature - module signature
 cpan/Module-Versions-Report|CSWpmmodversrpt|pm_modversrpt - report versions of all modules in memory
 cpan/Net-CIDR-Lite|CSWpmnetcidrlite|pm_netcidrlite - extension for merging IPv4 or IPv6 CIDR addresses
 cpan/Net-DNS|CSWpmnetdns|pm_netdns - interface to the DNS resolver
+cpan/Net-Patricia|CSWpmnetpatricia|pm_netpatricia - Patricia Trie perl module for fast IP address lookups
 cpan/Net-SSH-Perl|CSWpmnetsshperl|pm_netsshperl - client Interface to SSH
 cpan/Net-SSLeay|CSWpmnetssleay|pm_netssleay - extension for using OpenSSL
 cpan/OOTools|CSWpmootools|pm_ootools - Easily create constructors and lvalue accessors
@@ -429,10 +431,12 @@ devel/bison|CSWbison|bison - GNU Project parser generator (yacc replacement)
 devel/cmake|CSWcmake|cmake - Cross-platform make
 devel/flex-2.5.4a|CSWflex|flex - older version of the 'flex' parser generator
 devel/flex|CSWflex-new|flex_new - A tool for generating text-scanning programs.
+devel/gforth|CSWgforth|gforth - gforth - a fast and portable implementation of the ANS Forth language
 devel/m4|CSWgm4|gm4 - Standard Unix macro processor with extensions
 devel/opengrok|CSWopengrok|opengrok - A wicked fast source browser
 devel/rake|CSWrake|rake - Simple ruby build program similar to make
 devel/swig|CSWswig|swig - A scripting interface generator for C/C++ code.
+gnome/gftp|CSWgftp|gftp - A multithreaded ftp app for X.
 gnome/ogle_gui|CSWoglegui|oglegui - gtk user interface for Ogle DVD player 
 gnome/xchat|CSWxchat|xchat - GTK+ based IRC client, similar to AmIRC (Amiga).
 gnome/xchat|CSWxchat-tcl|xchat_tcl - xchat tcl plugin
@@ -545,6 +549,7 @@ lib/guile|CSWguilelib12|guilelib12 - GNU extensibility library
 lib/imap-c-client|CSWimap-devel|imap_devel - UW IMAP C-Client (devel)
 lib/imap-c-client|CSWimaprt|imaprt - UW IMAP C-Client (runtime)
 lib/libao|CSWlibao|libao - Cross-platform audio library
+lib/libart|CSWlibart|libart - libart - High performance 2D graphics library
 lib/libdvdcss|CSWlibdvdcss|libdvdcss - library for accessing DVDs like a block device without having to bother about decryption
 lib/libdvdread|CSWlibdvdread|libdvdread - provides a simple foundation for reading DVD-Video images
 lib/libevent|CSWlibevent-devel|libevent_devel - libevent development support
@@ -554,14 +559,16 @@ lib/libgphoto2|CSWlibgphoto2|libgphoto2 - library to be used by applications to 
 lib/libgpod|CSWlibgpod|libgpod - Interface to Apple iPods
 lib/libogg|CSWlibogg|libogg - Ogg bitstream and framing library.
 lib/libpcap|CSWlibpcap|libpcap - Libraries for network diagnostics
+lib/libsamplerate|CSWlibsamplerate|libsamplerate - Secret Rabbit Code (aka libsamplerate) is a Sample Rate Converter for audio
 lib/libsdl|CSWlibsdl|libsdl - Simple DirectMedia Layer library
 lib/libvorbis|CSWlibvorbis|libvorbis - Vorbis codec library.
-lib/libxine|CSWlibxine|libxine - Xine-lib 1.1.8 (HG test build)
+lib/libxine|CSWlibxine|libxine - Xine-lib 1.1.8
 lib/mm|CSWlibmm|libmm - Shared Memory Allocation abstraction library.
 lib/ncurses|CSWncurses|ncurses - ncurses library and utilities
 lib/neon|CSWneon-devel|neon_devel - Neon HTTP and WebDAV development support
 lib/neon|CSWneon|neon - Neon HTTP and WebDAV development support
 lib/nspr|CSWnspr|nspr - NSPR Netscape Portable Runtime
+lib/openal|CSWopenal|openal - openal - A 3D positional spatialized sound library (gcc3)
 lib/openexr|CSWopenexr|openexr - high dynamic-range (HDR) image file format developed by Industrial Light & Magic
 lib/openssl|CSWossl|%var pkgfile %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-all-CSW.pkg - Openssl meta package
 lib/openssl|CSWosslrt|openssl_rt - Openssl runtime libraries
@@ -571,11 +578,8 @@ lib/pango|CSWpango|pango - A framework for the layout and rendering of internati
 lib/pari|CSWparigp|parigp - efficient computations in number theory
 lib/pth|CSWpth|pth - GNU Pth - The GNU Portable Threads
 lib/qt-gcc|CSWqtgcc|qt_gcc - TrollTech C++ application framework
-lib/qt4|CSWqt4-gcc|qt4_gcc - TrollTech C++ application framework
 lib/qt4|CSWqt4-devel|qt4_devel - TrollTech C++ application framework
-lib/qt4|CSWqt|qt - TrollTech C++ application framework
 lib/qt4|CSWqt4|qt4 - TrollTech C++ application framework
-lib/qt4|CSWqt4-demos|qt_demos - TrollTech C++ application framework
 lib/qt4|CSWqt4-docs|qt4_docs - TrollTech C++ application framework
 lib/readline|CSWreadline|readline - GNU readline
 lib/sasl|CSWsasl|sasl - Simple Authentication and Security Layer
@@ -637,6 +641,7 @@ server/mod_python|CSWap2modpython|ap2_modpython - an Apache/Python integration m
 server/mod_ruby|CSWap2modruby|ap2_modruby - an Apache/Ruby integration module
 server/mod_svn_view|CSWap2modtransform|ap2_modtransform - Subversion repository viewer
 server/mod_transform|CSWap2modtransform|ap2_modtransform - XSLT filter for Apache 2.0
+server/mpd|CSWmpd|mpd - The Music Player Daemon
 server/mysql4|CSWmysql4|mysql4 - A fast SQL database server.
 server/openssh|CSWossh|openssh - OpenSSH Secure Shell
 server/openvpn|CSWopenvpn|openvpn - secure IP tunnel daemon
@@ -676,7 +681,6 @@ utils/mhonarc|CSWmhonarc|mhonarc - mail-to-HTML converter
 utils/mkpackage|CSWmkpackage|mkpackage - Solaris package build tool.
 utils/namazu|CSWnamazu|namazu - full-text search engine
 utils/netpbm|CSWnetpbm|netpbm - Netpbm is a toolkit for manipulation of graphic images
-utils/orca|CSWorca-collector|orca_collector - A system performance monitoring tool
 utils/orca|CSWorca|orca - A system performance monitoring tool
 utils/orca|CSWorca-web|orca_web - A system performance monitoring tool
 utils/pkg_update_watch|CSWpkgupdatewatch|pkg_update_watch - Package updates watcher
