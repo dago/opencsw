@@ -1,6 +1,6 @@
 GARNAME = Python
-GARVERSION = 2.5
-GARRELEASE = 
+GARVERSION = 2.5.1
+GARRELEASE =
 DISTVERSION = $(GARVERSION)$(GARRELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lang
@@ -20,7 +20,7 @@ endef
 
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWpython,depend prototype postinstall)
+DISTFILES += $(call admfiles,CSWpython,depend prototype)
 
 # Configure
 PATCHFILES += setup.diff

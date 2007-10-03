@@ -4,7 +4,7 @@ P CSWbzip2 bzip2 - a high-quality block-sorting file compressor
 P CSWgdbm gdbm - GNU dbm
 P CSWggettext ggettext - GNU gettext
 P CSWncurses ncurses - ncurses library and utilities
-P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWosslrt openssl_rt - Openssl runtime libraries
 P CSWreadline readline - library to enable interactive line editing
 P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
 P CSWtcl tcl - Tool Command Language

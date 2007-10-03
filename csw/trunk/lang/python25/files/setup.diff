@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru Python-2.5c1.orig/setup.py Python-2.5c1/setup.py
---- Python-2.5c1.orig/setup.py	2006-08-09 19:42:18.000000000 -0400
-+++ Python-2.5c1/setup.py	2006-09-05 01:29:29.211729000 -0400
+diff --speed-large-files --minimal -Nru Python-2.5.1.orig/setup.py Python-2.5.1/setup.py
+--- Python-2.5.1.orig/setup.py	2007-02-14 07:53:41.000000000 -0500
++++ Python-2.5.1/setup.py	2007-04-28 13:12:20.541676000 -0400
 @@ -243,9 +243,9 @@
          return sys.platform
  
@@ -48,7 +48,7 @@ diff --speed-large-files --minimal -Nru Python-2.5c1.orig/setup.py Python-2.5c1/
 -                                     ['/usr/local/ssl/lib',
 -                                      '/usr/contrib/ssl/lib/'
 -                                     ] )
-+                                     ['/opt/csw/lib' ] )
++                                     [ '/opt/csw/lib' ] )
  
          if (ssl_incs is not None and
              ssl_libs is not None):
@@ -67,7 +67,7 @@ diff --speed-large-files --minimal -Nru Python-2.5c1.orig/setup.py Python-2.5c1/
 -            '/sw/include/db3',
 -        ]
 -        # 4.x minor number specific paths
--        for x in (0,1,2,3,4):
+-        for x in (0,1,2,3,4,5):
 -            db_inc_paths.append('/usr/include/db4%d' % x)
 -            db_inc_paths.append('/usr/include/db4.%d' % x)
 -            db_inc_paths.append('/usr/local/BerkeleyDB.4.%d/include' % x)
@@ -75,7 +75,7 @@ diff --speed-large-files --minimal -Nru Python-2.5c1.orig/setup.py Python-2.5c1/
 -            db_inc_paths.append('/pkg/db-4.%d/include' % x)
 -            db_inc_paths.append('/opt/db-4.%d/include' % x)
 -        # 3.x minor number specific paths
--        for x in (2,3):
+-        for x in (3,):
 -            db_inc_paths.append('/usr/include/db3%d' % x)
 -            db_inc_paths.append('/usr/local/BerkeleyDB.3.%d/include' % x)
 -            db_inc_paths.append('/usr/local/include/db3%d' % x)
