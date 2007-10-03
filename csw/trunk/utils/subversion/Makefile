@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.4.3
+DISTVERSION = 1.4.5
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -101,10 +101,11 @@ BINDING_LANGS   = python perl ruby java
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
 PI_DEPENDS  = $(BINDING_TARGETS)
-PI_DEPENDS += contrib
 PI_DEPENDS += rbsvn-prototype
 PI_DEPENDS += copy-templates
 PI_DEPENDS += install-man
+PI_DEPENDS += install-tools
+PI_DEPENDS += install-contrib
 
 post-install: $(PI_DEPENDS)
 	@$(MAKECOOKIE)
@@ -121,8 +122,8 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
 	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py \
-		swig_pydir=$(libdir)/python2.3/libsvn \
-		swig_pydir_extra=$(libdir)/python2.3/svn
+		swig_pydir=$(libdir)/python/site-packages/libsvn \
+		swig_pydir_extra=$(libdir)/python/site-packages/svn
 	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
@@ -163,9 +164,14 @@ svnbook: $(DESTDIR)$(docdir)
 	  ginstall svn-book.pdf $(DESTDIR)$(docdir) )
 	@$(MAKECOOKIE)
 
-contrib: $(DESTDIR)$(docdir)
+install-contrib: $(DESTDIR)$(docdir)
 	@echo " ==> Installing contrib scripts"
 	@gcp -vr $(WORKSRC)/contrib $(DESTDIR)$(docdir)
+	@$(MAKECOOKIE)
+
+install-tools: $(DESTDIR)$(docdir)
+	@echo " ==> Installing tools"
+	@gcp -vr $(WORKSRC)/tools $(DESTDIR)$(docdir)
 	@$(MAKECOOKIE)
 
 copy-templates:

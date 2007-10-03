@@ -11,6 +11,7 @@ P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
 P CSWlibnet libnet - the libnet packet construction library
 P CSWneon neon - Neon HTTP and WebDAV client library
 P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
-P CSWossl openssl - The Open Source toolkit for SSL and TLS.
+P CSWosslrt openssl_rt - Openssl runtime libraries
 P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
 P CSWzlib zlib - Zlib Data Compression Library

@@ -6,5 +6,6 @@ P CSWggettext ggettext - GNU gettext
 P CSWiconv libiconv - GNU iconv library
 P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
 P CSWperl perl - A high-level, general-purpose programming language
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
 P CSWsvn subversion - Version control rethought
 P CSWzlib zlib - Zlib Data Compression Library
