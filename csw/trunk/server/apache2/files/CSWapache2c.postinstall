@@ -17,7 +17,7 @@ UPGRADE_CONFIGS="\
 warn_update=0
 echo "Checking configuration files:"
 for file in $UPGRADE_CONFIGS; do
-    config=$AP2_PREFIX/$file
+    config=$AP2_CONFDIR/$file
     if [ -f $config ]; then 
         if [ -n "`grep mod_auth.so $config`" ]; then
             echo "Updating syntax of $config to Apache 2.2"
