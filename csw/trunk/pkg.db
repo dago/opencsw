@@ -528,6 +528,9 @@ lib/bdb43|CSWbdb43-doc|berkeleydb43_doc - BerkeleyDB 4.3 documentation
 lib/bdb44|CSWbdb44-doc|berkeleydb44_doc - BerkeleyDB 4.4 documentation
 lib/bdb44|CSWbdb44-devel|berkeleydb44_devel - BerkeleyDB 4.4 development support
 lib/bdb44|CSWbdb44|berkeleydb44 - BerkeleyDB 4.4 development support
+lib/bdb46|CSWbdb46|berkeleydb46 - embedded database libraries and utilities
+lib/bdb46|CSWbdb46-devel|berkeleydb46_devel - BerkeleyDB 4.6 development support
+lib/bdb46|CSWbdb46-doc|berkeleydb46_doc - BerkeleyDB 4.6 documentation
 lib/boost|CSWboost|boost - A collection of C++ libraries
 lib/dbus-glib|CSWdbusglibdev|dbus_glibdev - %var desc DBus GLib Bindings Headers
 lib/dbus-glib|CSWdbusglib|dbus_glib - %var desc DBus GLib Bindings Headers
