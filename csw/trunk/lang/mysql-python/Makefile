@@ -1,5 +1,5 @@
 GARNAME = MySQL-python
-GARVERSION = 1.2.0
+GARVERSION = 1.2.2
 CATEGORIES = lang
 
 DESCRIPTION = MySQL support for Python
@@ -21,10 +21,10 @@ INSTALL_ARGS += --prefix=$(prefix)
 
 include ../category.mk
 
-mysql_prefix = $(prefix)/mysql4
+mysql_prefix = $(prefix)/mysql5
 mysql_bindir = $(mysql_prefix)/bin
 
-LD_OPTIONS := -R/opt/csw/mysql4/lib/mysql/\$$ISALIST $(LD_OPTIONS)
+LD_OPTIONS := -R/opt/csw/mysql5/lib/mysql/\$$ISALIST $(LD_OPTIONS)
 PATH       := $(mysql_bindir):$(PATH)
 export LD_OPTIONS PATH
 
