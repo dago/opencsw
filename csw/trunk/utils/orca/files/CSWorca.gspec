@@ -1,4 +1,9 @@
 %var            bitname orca
 %var            pkgname CSWorca
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%include	url file://%{PKGLIB}/smf_enabled.gspec
+%var		RC_INIT_SCRIPT csworcallator
+%var		SMF_SCRIPT svc-csworcallator
+%var		SMF_MANIFEST csworcallator.xml
+%var		SERVICE_NAME csworcallator
 %copyright      url file://%{WORKSRC}/COPYING

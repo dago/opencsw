@@ -29,6 +29,7 @@ endef
 MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWorca,depend prototype)
+DISTFILES += csworcallator.init csworcallator.xml svc-csworcallator
 DISTFILES += $(call admfiles,CSWorca-web,depend prototype postinstall preremove)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
@@ -44,4 +45,3 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 
 include ../category.mk
 
-#libdir = $(exec_prefix)/lib/orca

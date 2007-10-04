@@ -11,8 +11,8 @@
 # initalize variables, existence of files is checked in manifest
 #------------------------------------------------------------------------------
 
-SE=/opt/RICHPse/bin/se
-ORCALLATOR=/opt/RICHPse/orcallator/orcallator.se
+SE=/opt/csw/bin/se
+ORCALLATOR=/opt/csw/lib/orca/orcallator.se
 
 umask 022
 
@@ -22,7 +22,7 @@ umask 022
 
 getprop ()
 {
-    FMRI=svc:/application/se-toolkit/orcallator
+    FMRI=svc:/application/orca/orcallator
     PROP=orcallator/$2
     WORK="`svcprop -p $PROP $FMRI 2>/dev/null`"
 
@@ -45,8 +45,9 @@ getprop ()
 #------------------------------------------------------------------------------
 # retrieve service configuration properties
 #------------------------------------------------------------------------------
+uname=`/usr/bin/uname -n | /usr/bin/cut -d. -f1`
 
-getprop OUTDIR     outdir     /var/orcallator/log
+getprop OUTDIR     outdir     /var/opt/csw/orca/orcallator/$uname
 getprop INTERVAL   interval   60
 getprop OPTIONS    options    -DWATCH_OS
 getprop COMPRESSOR compressor
