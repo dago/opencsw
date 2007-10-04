@@ -39,3 +39,16 @@ diff --speed-large-files --minimal -Nru Python-2.5.orig/Modules/getpath.c Python
  
  static void
  reduce(char *dir)
+diff --speed-large-files --minimal -Nru Python-2.5.1.orig/Lib/distutils/sysconfig.py Python-2.5.1/Lib/distutils/sysconfig.py
+--- Python-2.5.1.orig/Lib/distutils/sysconfig.py	2006-10-08 13:50:26.000000000 -0400
++++ Python-2.5.1/Lib/distutils/sysconfig.py	2007-10-03 19:58:22.766059000 -0400
+@@ -99,8 +99,7 @@
+         prefix = plat_specific and EXEC_PREFIX or PREFIX
+ 
+     if os.name == "posix":
+-        libpython = os.path.join(prefix,
+-                                 "lib", "python" + get_python_version())
++        libpython = os.path.join(prefix, "lib", "python")
+         if standard_lib:
+             return libpython
+         else:

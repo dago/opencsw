@@ -93,6 +93,7 @@ d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/libpython2.5.so.1.0 0555 root bin
 s none /opt/csw/lib/libpython2.5.so=libpython2.5.so.1.0
 d none /opt/csw/lib/python 0755 root bin
+s none /opt/csw/lib/python2.5=python
 f none /opt/csw/lib/python/BaseHTTPServer.py 0644 root bin
 f none /opt/csw/lib/python/BaseHTTPServer.pyc 0644 root bin
 f none /opt/csw/lib/python/BaseHTTPServer.pyo 0644 root bin
