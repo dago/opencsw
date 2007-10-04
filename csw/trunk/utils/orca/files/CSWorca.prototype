@@ -9,6 +9,8 @@ f none /opt/csw/bin/start_orca_services 0755 root bin
 f none /opt/csw/bin/start_orcallator 0755 root bin
 f none /opt/csw/bin/stop_orca_services 0755 root bin
 f none /opt/csw/bin/stop_orcallator 0755 root bin
+d none /opt/csw/etc 0755 root bin
+f none /opt/csw/etc/orca_services.cfg 0644 root bin
 d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/orca 0755 root bin
 f none /opt/csw/lib/orca/orcallator.se 0644 root bin
@@ -17,6 +19,7 @@ f none /opt/csw/libexec/orca_services 0755 root bin
 d none /var/opt/csw 0755 root bin
 d none /var/opt/csw/orca 0755 root bin
 d none /var/opt/csw/orca/orcallator 0755 root bin
+d none /var/opt/csw/orca/orca_services 0755 root bin
 i copyright=CSWorca.copyright
 i depend=CSWorca.depend
 i pkginfo=CSWorca.pkginfo
