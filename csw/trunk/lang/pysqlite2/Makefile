@@ -1,5 +1,5 @@
 GARNAME = pysqlite
-GARVERSION = 2.0.5
+GARVERSION = 2.3.5
 CATEGORIES = lang
 
 DESCRIPTION = SQLite3 support for Python
@@ -7,7 +7,7 @@ define BLURB
   SQLite support for Python
 endef
 
-MASTER_SITES = http://initd.org/pub/software/pysqlite/releases/2.0/2.0.5/
+MASTER_SITES = http://initd.org/pub/software/pysqlite/releases/2.3/2.3.5/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpysqlite2,depend prototype)
 
