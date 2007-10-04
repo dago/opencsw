@@ -1,5 +1,5 @@
 GARNAME = setuptools
-GARVERSION = 0.6c3
+GARVERSION = 0.6c7
 CATEGORIES = lang
 
 SPKG_SOURCEURL = http://peak.telecommunity.com/DevCenter/setuptools
@@ -23,7 +23,7 @@ INSTALL_ARGS += --prefix=$(prefix)
 
 include ../category.mk
 
-PYTHONPATH = $(DESTDIR)$(libdir)/python2.3/site-packages/
+PYTHONPATH = $(DESTDIR)$(libdir)/python/site-packages/
 export PYTHONPATH
 
 pre-install:
