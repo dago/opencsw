@@ -27,7 +27,7 @@ pre-configure:
 	@( cd $(WORKSRC) ; autoconf )
 	@$(MAKECOOKIE)
 
-DESTDOC = $(DESTDIR)$(docdir)/ap2_mod_jk
+DESTDOC = $(DESTDIR)$(docdir)/ap2_modpython
 
 post-install: install-doc
 
