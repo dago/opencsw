@@ -8,15 +8,16 @@ This is a work in progress. Currently this build only works under solaris 10. So
 endef
 
 SF_PROJ = xine
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = http://prdownloads.sourceforge.net/xine/
 
-DISTFILES  = xine-lib-$(GARVERSION).tar.gz
+DISTFILES  = xine-lib-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibxine)#,$(GAROSREL).depend)
 
 
 #Solaris 8 Patches
 ifeq ($(GAROSREL),5.8)
 	PATCHFILES = bswap-for-solaris-8.diff
+	PATCHFILES = int_fast-defs-sol8.diff
 endif
 
 
