@@ -1,4 +1,6 @@
-P	CSWgcc3core
+P	CSWcommon common - common files and dirs for CSW packages
+P	CSWgcc3rt
+P	CSWggettext
 P	CSWglib2
 P	CSWgtk2
-P	CSWggettext
+P	CSWpmxmlparser pm_xmlparser - a module for parsing XML documents

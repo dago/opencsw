@@ -1,5 +1,5 @@
 GARNAME = libgpod
-GARVERSION = 0.4.0
+GARVERSION = 0.4.2
 CATEGORIES = lib
 
 DESCRIPTION = Interface to Apple iPods
@@ -13,14 +13,18 @@ endef
 SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibgpod,depend prototype)
-PATCHFILES += headerdir.diff taglib-notest.diff
+DISTFILES   += $(call admfiles,CSWlibgpod,depend)
 
 GARCOMPILER = GNU
+GNU_CC_HOME = /opt/csw/gcc4
 
-DEPENDS += lang/pyeyed3
+DEPENDS += cpan/XML-Parser
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += TAGLIB_CFLAGS="-I/opt/csw/include/taglib" TAGLIB_LIBS="-ltag"
+CONFIGURE_ARGS += PATH=/opt/csw/bin:$$PATH
+#CONFIGURE_ARGS += TAGLIB_CFLAGS="-I/opt/csw/include/taglib" TAGLIB_LIBS="-ltag"
 
 include ../category.mk
+
+jwtest:
+	echo $(DEPEND_LIST)
