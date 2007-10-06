@@ -15,7 +15,7 @@ endef
 MASTER_SITES = http://musicpd.org/uploads/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmpd,prototype)
-DISTFILES += cswmpd.xml svc-cswmpd cswmpd.init
+DISTFILES += cswmpd.xml svc-cswmpd cswmpd
 
 TEST_TARGET = check
 
@@ -25,11 +25,11 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ao
 CONFIGURE_ARGS += --bindir=/opt/csw/sbin
 
-$(DOWNLOADDIR)/cswmpd.init: files/svc-cswmpd
-	@echo "Copying svc-cswmpd to cswmpd.init"
-	@cp files/svc-cswmpd download/cswmpd.init
+$(DOWNLOADDIR)/cswmpd: files/svc-cswmpd
+	@echo "Copying svc-cswmpd to cswmpd"
+	@cp files/svc-cswmpd download/cswmpd
 
-pre-fetch: $(DOWNLOADDIR)/cswmpd.init
+pre-fetch: $(DOWNLOADDIR)/cswmpd
 
 post-install:
 	ginstall -d $(DESTDIR)/opt/csw/var/mpd

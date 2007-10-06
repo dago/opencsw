@@ -1,6 +1,6 @@
 0b33bdb9d706439949344073e90f812a  download/mpd-0.13.0.tar.gz
 81d6d6898375de9459d57d7c123ae18b  download/CSWmpd.gspec
 7b288d8ac469b0d93e1914dcc1563acf  download/CSWmpd.prototype
-e9cff0bbafcc9e5d3d727a757aad8f51  download/cswmpd.xml
-f62c54998c05150c048260fe3aeb1317  download/svc-cswmpd
-f62c54998c05150c048260fe3aeb1317  download/cswmpd.init
+90aa960c06cd212d963eab90926d6548  download/cswmpd.xml
+56a5c775ff069a3cbb422734dd8b3a64  download/svc-cswmpd
+56a5c775ff069a3cbb422734dd8b3a64  download/cswmpd
