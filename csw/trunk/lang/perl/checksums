@@ -1,11 +1,11 @@
 b8c118d4360846829beb30b02a6b91a7  download/perl-5.8.8.tar.gz
 c89c0ccbc325f496da5c21c581d4a156  download/CSWperl.gspec
-ed818b84c5ea037125be16513abefe0d  download/CSWperl.depend
-704dd10900daa0adc6932a047647fc37  download/CSWperl.prototype
+68fcc17eb0a2e1d6232d1aff863aa20d  download/CSWperl.depend
+5c73ebd09b27a5d3efd5eb56a48f38e9  download/CSWperl.prototype
 a3592ece1e424b77e0ea21153da7d817  download/CSWperldoc.gspec
 a79e722dbbaee8fae1b8e658d4b57f3e  download/CSWperldoc.depend
-735bd4040da811cc6269b04d7fc3de11  download/CSWperldoc.prototype
-e592a5d38382c2c1240bc3189367ec61  download/PathTools-3.24.tar.gz
-866023530c0fcce501555334eef39721  download/CGI.pm-3.27.tar.gz
-8fc54e4c018e7a6fda7b916effd27824  download/Test-Simple-0.70.tar.gz
+7d5cac3037f268bfc638896a9da9b681  download/CSWperldoc.prototype
+242b8a6355927625f57048f6c59577ca  download/PathTools-3.25.tar.gz
+56375d59265df3f2dc500261f7be095d  download/CGI.pm-3.29.tar.gz
+7a2fe85accc87b1b051f71abc2b591c7  download/Test-Simple-0.72.tar.gz
 9ff2306433a0470773b0b51a70e81a91  download/File-Temp-0.18.tar.gz

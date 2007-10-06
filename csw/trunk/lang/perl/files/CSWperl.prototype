@@ -971,6 +971,8 @@ f none /opt/csw/share/perl/5.8.8/open2.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/open3.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/overload.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/perl5db.pl 0444 root bin
+d none /opt/csw/share/perl/5.8.8/pod 0755 root bin
+f none /opt/csw/share/perl/5.8.8/pod/perldiag.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pwd.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/shellwords.pl 0444 root bin
 f none /opt/csw/share/perl/5.8.8/sigtrap.pm 0444 root bin

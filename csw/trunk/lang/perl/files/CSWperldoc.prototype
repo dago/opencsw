@@ -496,8 +496,8 @@ f none /opt/csw/share/man/man3/vmsish.3perl 0644 root bin
 f none /opt/csw/share/man/man3/warnings.3perl 0644 root bin
 f none /opt/csw/share/man/man3/warnings::register.3perl 0644 root bin
 d none /opt/csw/share/perl ? ? ?
-d none /opt/csw/share/perl/5.8.8 0755 root bin
-d none /opt/csw/share/perl/5.8.8/pod 0755 root bin
+d none /opt/csw/share/perl/5.8.8 ? ? ?
+d none /opt/csw/share/perl/5.8.8/pod ? ? ?
 f none /opt/csw/share/perl/5.8.8/pod/a2p.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perl.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perl5004delta.pod 0644 root bin
@@ -542,7 +542,6 @@ f none /opt/csw/share/perl/5.8.8/pod/perldebtut.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perldebug.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perldelta.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perldgux.pod 0644 root bin
-f none /opt/csw/share/perl/5.8.8/pod/perldiag.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perldoc.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perldos.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perldsc.pod 0644 root bin
