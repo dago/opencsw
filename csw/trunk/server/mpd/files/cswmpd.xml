@@ -6,8 +6,6 @@
 
 <service name="application/cswmpd" type="service" version="1">
 
-  <create_default_instance enabled="false" />
-
   <dependency name="loopback" grouping="require_all" restart_on="error" type="service">
     <service_fmri value="svc:/network/loopback:default"/>
   </dependency>
@@ -26,9 +24,22 @@
 
   <exec_method type="method" name="start" exec="/opt/csw/lib/svc/method/svc-cswmpd start" timeout_seconds="10"/>
 
-  <exec_method type="method" name="stop" exec="/opt/csw/lib/svc/method/svc-cswmpd start" timeout_seconds="10"/>
+  <exec_method type="method" name="stop" exec="/opt/csw/lib/svc/method/svc-cswmpd stop" timeout_seconds="10"/>
 
-  <exec_method type="method" name="restart" exec="/opt/csw/lib/svc/method/svc-cswmpd restart" timeout_seconds="10"/>
+  <exec_method type="method" name="refresh" exec="/opt/csw/lib/svc/method/svc-cswmpd refresh" timeout_seconds="10"/>
+
+  <instance name="default" enabled="false">
+    <property_group name='mpd' type='application'>
+      <propval name='config'          type='astring' value='/opt/csw/etc/mpd.conf'/>
+      <propval name='verbose'         type='astring' value='false'/>
+    </property_group>
+  </instance>
+
+  <template>
+    <common_name>
+      <loctext xml:lang="C">Music Player Daemon</loctext>
+    </common_name>
+  </template>
 
 </service>
 </service_bundle>
