@@ -1,2 +1,4 @@
 607386c8f5d5a5a896aa651b4f367561  download/xine-lib-1.1.8.tar.bz2
-cadb4a284d2c5fcba601aceb6bd02ab5  download/CSWlibxine.gspec
+e26d9d3bdce8c359c7844425757e0f6f  download/CSWlibxine.gspec
+635819345e5a4c8b89e2ed7e38e1a001  download/int_fast-defs-sol8.diff
+c6105024966089803d42e96f8ec070a4  download/bswap-for-sol8-i386.diff
