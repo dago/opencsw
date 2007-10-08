@@ -621,6 +621,13 @@ net/snort|CSWsnort|snort - The open source Network Intrusion Detection System
 net/socat|CSWsocat|socat - bidirectional data transfer
 net/squidpurge|CSWsquidpurge|squidpurge - Purge squid cache entries.
 net/tin|CSWtin|tin - terminal-based news reader
+server/apache2-2.2.4|CSWapache2|apache2 - Apache 2.2 web server
+server/apache2-2.2.4|CSWapache2c|apache2c - Apache 2.2 web server (core)
+server/apache2-2.2.4|CSWapache2-manual|apache2_manual - Apache 2.2 manual
+server/apache2-2.2.4|CSWap2suexec|ap2_suexec - Apache 2.2 suEXEC support
+server/apache2-2.2.4|CSWapache2-devel|apache2_devel - Apache 2.2 development support
+server/apache2-2.2.4|CSWapache2rt|apache2rt - Apache 2.2 runtime libraries
+server/apache2-2.2.4|CSWap2prefork|ap2_prefork - Apache 2.2 prefork MPM
 server/apache2-worker|CSWap2worker|ap2_worker - Apache 2.2 worker MPM
 server/apache2|CSWapache2|apache2 - Apache 2.2 web server
 server/apache2|CSWapache2c|apache2c - Apache 2.2 web server (core)
