@@ -545,6 +545,7 @@ lib/fontconfig|CSWfconfig|fontconfig - A library for configuring and customizing
 lib/fox|CSWfoxrt|foxrt - Fox Toolkit runtime
 lib/fox|CSWfox|fox - Fox Toolkit runtime
 lib/gd|CSWgd|gd - A library used to create PNG images
+lib/gd|CSWgd-devel|gd_devel - A library used to create PNG images
 lib/gdbm|CSWgdbm|gdbm - GNU database library for C
 lib/gmp|CSWgmp|gmp - The GNU MP Bignum Library
 lib/guile|CSWguile|guile - GNU extensibility library
