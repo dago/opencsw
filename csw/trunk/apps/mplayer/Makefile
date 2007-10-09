@@ -31,20 +31,23 @@ PATCHFILES += fix-configure-stdint.h-detection.diff
 PATCHFILES += fix-ffmpeg-gcc-error.diff
 PATCHFILES += security-asmrules_fix_20061231.diff
 PATCHFILES += security-cddb_fix_20070605.diff
-# Mplayer-specific sparc patches
-# Since Ra is a sun4u (v9 sparc), mplayer tries to build v9 code by default.
-# To bulid for v8, we need to modify the configure script to force v8
-# and no vis extensions
-ifeq ($(shell uname -p),sparc)
 PATCHFILES += sparc-v8-novis.diff
-endif
 
 CONFIGURE_ARGS  = --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
 CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
 CONFIGURE_ARGS += --disable-libcdio
+CONFIGURE_ARGS += --disable-iconv
 CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
+
+# Mplayer-specific sparc patches
+# Since Ra is a sun4u (v9 sparc), mplayer tries to build v9 code by default.
+# To bulid for v8, we need to modify the configure script to force v8
+# and also to disable all vis extensions.
+ifeq ($(shell uname -p),sparc)
+CONFIGURE_ARGS += --disable-openal #openal for sparc is broken
+endif
 
 ###Framework for an $ISAEXEC optimised build###
 # To allow for the same build to run multiple times without each version
