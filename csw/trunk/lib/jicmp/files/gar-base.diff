@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru jicmp-1.0.4.orig/IcmpSocket.h jicmp-1.0.4/IcmpSocket.h
+--- jicmp-1.0.4.orig/IcmpSocket.h	2007-09-17 09:42:49.000000000 -0400
++++ jicmp-1.0.4/IcmpSocket.h	2007-10-08 17:00:30.038202000 -0400
+@@ -39,7 +39,6 @@
+ #include <sys/types.h>
+ #include <errno.h>
+ #include <stdio.h>
+-#include <stdint.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
