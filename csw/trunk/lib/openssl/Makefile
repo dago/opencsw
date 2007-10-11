@@ -38,7 +38,7 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-MASTER_SITES = http://www.openssl.org/source/
+MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
@@ -78,6 +78,7 @@ SPKG_OSNAME = SunOS5.8
 
 # add the solaris-386-cc, solaris-pentium-cc,... targets
 PATCHFILES = openssl.$(GARVERSION).patch
+PATCHFILES += patch-CVE-2007-3108.txt
 
 # The list of optimized libraries we will compile
 # by arch
