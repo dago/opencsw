@@ -15,9 +15,16 @@ DISTFILES += $(call admfiles,CSWamarok,depend)
 PATCHFILES = disable-broken-languages.diff
 
 GARCOMPILER = GNU
+
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"
-CONFIGURE_ARGS += LDFLAGS="-R/opt/csw/kde-gcc/lib -L/opt/csw/kde-gcc/lib"
-CONFIGURE_ARGS += --prefix=$(prefix)/kde-gcc --with-qt-dir=/opt/csw/kde-gcc --with-qt-libraries=/opt/csw/kde-gcc/lib --disable-debug --disable-rpath
+CONFIGURE_ARGS += LDFLAGS="-R/opt/csw/kde-gcc/lib -R/opt/csw/lib/$$ISALIST -L/opt/csw/kde-gcc/lib -L/opt/csw/lib/$$ISALIST"
+CONFIGURE_ARGS += --prefix=$(prefix)/kde-gcc
+CONFIGURE_ARGS += --with-qt-dir=/opt/csw/kde-gcc
+CONFIGURE_ARGS += --with-qt-libraries=/opt/csw/kde-gcc/lib
+CONFIGURE_ARGS += --includedir=/opt/csw/include
+CONFIGURE_ARGS += --with-extra-inc=/opt/csw/include
+CONFIGURE_ARGS += --disable-debug
+#CONFIGURE_ARGS += --with-libgpod
 
 include ../category.mk
 
