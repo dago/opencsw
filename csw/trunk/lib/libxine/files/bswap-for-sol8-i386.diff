@@ -1,15 +1,16 @@
-diff --speed-large-files --minimal -Nru xine-lib-hg.orig/src/input/libdvdnav/bswap.h xine-lib-hg/
-src/input/libdvdnav/bswap.h
---- xine-lib-hg.orig/src/input/libdvdnav/bswap.h        2007-06-15 05:49:33.000000000 -0400
-+++ xine-lib-hg/src/input/libdvdnav/bswap.h     2007-07-13 07:39:50.704331000 -0400
-@@ -46,6 +46,10 @@
- #define B2N_16(x) x = BSWAP_16(x)
- #define B2N_32(x) x = BSWAP_32(x)
- #define B2N_64(x) x = BSWAP_64(x)
+diff --speed-large-files --minimal -Nru libxine-1.1.8.orig/src/input/libdvdnav/bswap.h libxine-1.1.8/src/input/libdvdnav/bswap.h
+--- libxine-1.1.8.orig/src/input/libdvdnav/bswap.h	2007-08-18 19:36:46.000000000 -0400
++++ libxine-1.1.8/src/input/libdvdnav/bswap.h	2007-10-15 07:42:21.368920000 -0400
+@@ -28,6 +28,12 @@
+ #define B2N_32(x) (void)(x)
+ #define B2N_64(x) (void)(x)
+ 
++/* Adding macros from solaris 10, since solaris 8 doesn't have them. */
 +#define BSWAP_8(x)      ((x) & 0xff)
 +#define BSWAP_16(x)     ((BSWAP_8(x) << 8) | BSWAP_8((x) >> 8))
 +#define BSWAP_32(x)     ((BSWAP_16(x) << 16) | BSWAP_16((x) >> 16))
 +#define BSWAP_64(x)     ((BSWAP_32(x) << 32) | BSWAP_32((x) >> 32))
-
- #elif defined(__APPLE__)
- #include <libkern/OSByteOrder.h>
++
+ #else 
+ 
+ /* For __FreeBSD_version */

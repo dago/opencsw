@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru xine-lib-1.1.8.orig/src/libffmpeg/libavcodec/avcodec.h xine-lib-1.1.8/src/libffmpeg/libavcodec/avcodec.h
---- xine-lib-1.1.8.orig/src/libffmpeg/libavcodec/avcodec.h	2007-08-18 19:36:50.000000000 -0400
-+++ xine-lib-1.1.8/src/libffmpeg/libavcodec/avcodec.h	2007-10-06 06:42:52.786768000 -0400
+diff --speed-large-files --minimal -Nru libxine-1.1.8.orig/src/libffmpeg/libavcodec/avcodec.h xine-lib-1.1.8/src/libffmpeg/libavcodec/avcodec.h
+--- libxine-1.1.8.orig/src/libffmpeg/libavcodec/avcodec.h	2007-08-18 19:36:50.000000000 -0400
++++ libxine-1.1.8/src/libffmpeg/libavcodec/avcodec.h	2007-10-06 06:42:52.786768000 -0400
 @@ -21,6 +21,32 @@
  #ifndef AVCODEC_H
  #define AVCODEC_H
