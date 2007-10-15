@@ -19,7 +19,7 @@ MASTER_SITES = http://www.mplayerhq.hu/MPlayer/releases/ http://www.mplayerhq.hu
 GARCOMPILER = GNU
 GNU_CC_HOME = /opt/csw/gcc4
 
-DISTFILES  = $(GARNAME)-1.0rc1.tar.bz2
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
 DISTFILES += mplayer.1
 DISTFILES += $(call admfiles,CSWmplayer,depend)
@@ -38,15 +38,13 @@ CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
 CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
 CONFIGURE_ARGS += --disable-libcdio
-CONFIGURE_ARGS += --disable-iconv
+CONFIGURE_ARGS += --disable-iconv #Solaris libc has iconv already
 CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 
-# Mplayer-specific sparc patches
-# Since Ra is a sun4u (v9 sparc), mplayer tries to build v9 code by default.
-# To bulid for v8, we need to modify the configure script to force v8
-# and also to disable all vis extensions.
+# Mplayer sparc-specific patches
+# Openal for sparc is broken
 ifeq ($(shell uname -p),sparc)
-CONFIGURE_ARGS += --disable-openal #openal for sparc is broken
+CONFIGURE_ARGS += --disable-openal 
 endif
 
 ###Framework for an $ISAEXEC optimised build###
