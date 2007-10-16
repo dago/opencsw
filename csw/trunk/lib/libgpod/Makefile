@@ -13,18 +13,15 @@ endef
 SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibgpod,depend)
+DISTFILES   += $(call admfiles,CSWlibgpod)
 
 GARCOMPILER = GNU
 GNU_CC_HOME = /opt/csw/gcc4
 
-DEPENDS += cpan/XML-Parser
+PATCHFILES = headerdirs.diff
+#DEPENDS += cpan/XML-Parser
 
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += PATH=/opt/csw/bin:$$PATH
-#CONFIGURE_ARGS += TAGLIB_CFLAGS="-I/opt/csw/include/taglib" TAGLIB_LIBS="-ltag"
+CONFIGURE_ARGS = $(DIRPATHS) --includedir=/opt/csw/include
 
 include ../category.mk
 
-jwtest:
-	echo $(DEPEND_LIST)
