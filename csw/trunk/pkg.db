@@ -504,7 +504,6 @@ lang/php5|CSWphp5|php5 - PHP Hypertext Processor 5
 lang/php5|CSWphp5pdosqlite|php5_pdosqlite - PHP 5 - SQLite PDO Extension
 lang/php5|CSWphp5session|php5_session - PHP 5 - Session Extension
 lang/php5|CSWphp5wddx|php5_wddx - PHP 5 - WDDX Extension
-lang/php5|CSWphp5xmlrpc|php5_xmlrpc - PHP 5 - XMLRPC-EPI Extension
 lang/pydocutils|CSWpydocutils|pydocutils - Documentation Utiltiies for Python
 lang/pysetuptools|CSWpysetuptools|pysetuptools - Distribution Utiltiies for Python
 lang/pysqlite|CSWpysqlite|pysqlite - SQLite support for Python
