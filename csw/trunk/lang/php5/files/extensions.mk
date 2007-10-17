@@ -23,7 +23,6 @@ XLIST += pdosqlite
 XLIST += pgsql
 XLIST += pspell
 XLIST += readline
-XLIST += session
 XLIST += snmp
 XLIST += sqlite
 XLIST += wddx
