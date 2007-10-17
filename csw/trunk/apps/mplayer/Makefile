@@ -25,9 +25,10 @@ DISTFILES += mplayer.1
 DISTFILES += $(call admfiles,CSWmplayer,depend)
 
 PATCHFILES  = fix-configure-variables.diff
+PATCHFILES += fix-configure-stdint.h-detection.diff
+PATCHFILES += fix-configure-fontconfig.diff
 PATCHFILES += fix-solaris8-llrint.diff
 PATCHFILES += fix-stdint.h-includes.diff
-PATCHFILES += fix-configure-stdint.h-detection.diff
 PATCHFILES += fix-ffmpeg-gcc-error.diff
 PATCHFILES += security-asmrules_fix_20061231.diff
 PATCHFILES += security-cddb_fix_20070605.diff
@@ -114,7 +115,8 @@ endif
 # $DESTDIR is defined in the core GAR makefile, which hasn't been included yet,
 # so I have to set this variable after the main include.
 
-DESTIMG=$(GARNAME)-$(ISA)
+# Disabling for non-isaexec build, it breaks the depend generation path
+# DESTIMG=$(GARNAME)-$(ISA)
 
 ###Optimisation section###
 #
