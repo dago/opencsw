@@ -40,14 +40,14 @@ CONFIGURE_ARGS += --with-imap=shared,$(prefix)
 CONFIGURE_ARGS += --with-imap-ssl=$(prefix)/ssl
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --enable-dom
-CONFIGURE_ARGS += --with-openssl
+CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-kerberos=$(prefix)
-CONFIGURE_ARGS += --with-zlib
+CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --enable-bcmath
 CONFIGURE_ARGS += --with-bz2=shared,$(prefix)
 CONFIGURE_ARGS += --enable-calendar
 CONFIGURE_ARGS += --with-curl=shared,$(prefix)
-CONFIGURE_ARGS += --with-iconv
+CONFIGURE_ARGS += --with-iconv=$(prefix)
 CONFIGURE_ARGS += --enable-dba=shared
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-gdbm=$(prefix)

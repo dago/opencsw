@@ -8,7 +8,7 @@ bdc37d649bb4078a6d9c7443ac4493b2  download/CSWphp5.prototype
 61171737bd4bce942fad22c3d4386f87  download/CSWphp5.depend
 8139c9c02a2f62bac64041fdd0e90bf6  download/CSWphp5.postinstall
 883e5ee2553ce6a4d2436146636ff172  download/CSWphp5devel.gspec
-fc33d7400f33b45111865113f3dab2f4  download/CSWphp5devel.prototype
+9cf8bf4ba749d183c8677abac75239f2  download/CSWphp5devel.prototype
 3e8aaa03a833f54403cfa858ace2f22c  download/CSWphp5devel.depend
 0614561dcc8ed10d041ece4a6f135957  download/CSWphp5bz2.gspec
 9cc136f653f409734ff97736ad16bc77  download/CSWphp5bz2.prototype
@@ -40,8 +40,6 @@ e43182e2e12ffcdf029196ab863ac2c2  download/CSWphp5mysqli.gspec
 eea8acc4b02e02f8c62527022268deb5  download/CSWphp5mysqli.prototype
 6a6d6084f86e6f919fb45162d9dcfd3b  download/CSWphp5odbc.gspec
 311f7fe2829f9cc6e48e523c3c492617  download/CSWphp5odbc.prototype
-753bf1b007b93b7ad6d343f0c7ca16e6  download/CSWphp5openssl.gspec
-f71a5b8bb964ae35d046a5d65182a17c  download/CSWphp5openssl.prototype
 f655b06824624c911f2c423a3817edfe  download/CSWphp5pdomysql.gspec
 1bf4c79cc18363b1444ffb20cfa04b6b  download/CSWphp5pdomysql.prototype
 20048422444a43d5bb716d982ce6bdef  download/CSWphp5pdoodbc.gspec

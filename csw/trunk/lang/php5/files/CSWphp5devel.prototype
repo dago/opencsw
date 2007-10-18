@@ -112,10 +112,6 @@ d none /opt/csw/php5/include/php/ext/pcre 0755 root bin
 d none /opt/csw/php5/include/php/ext/pcre/pcrelib 0755 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcre.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcre_internal.h 0644 root bin
-f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcre_scanner.h 0644 root bin
-f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcre_stringpiece.h 0644 root bin
-f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcrecpp.h 0644 root bin
-f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcrecpparg.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/pcreposix.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/ucp.h 0644 root bin
 f none /opt/csw/php5/include/php/ext/pcre/pcrelib/ucpinternal.h 0644 root bin

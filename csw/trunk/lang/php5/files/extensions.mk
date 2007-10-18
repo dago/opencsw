@@ -15,7 +15,6 @@ XLIST += mssql
 XLIST += mysql
 XLIST += mysqli
 XLIST += odbc
-XLIST += openssl
 XLIST += pdomysql
 XLIST += pdoodbc
 XLIST += pdopgsql
