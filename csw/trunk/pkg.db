@@ -12,6 +12,7 @@ apps/kdesvn|CSWkdesvn|kdesvn - A Subversion client for KDE
 apps/kile|CSWkile|kile - An integrated LaTeX environment
 apps/lyx|CSWlyx|lyx - WYSIWYM document processor
 apps/mplayer|CSWmplayer|mplayer - MPlayer is a movie player which runs on many systems
+apps/ncmpc|CSWncmpc|ncmpc - ncurses client for controlling Music Player Daemons (MPD)
 apps/ogle|CSWogle|ogle - opensource DVD player with DVD menu support
 apps/openoffice|CSWooouizu|ooouizu - An Open Source version of StarOffice.
 apps/openoffice|CSWooouigl|ooouigl - An Open Source version of StarOffice.
@@ -44,6 +45,7 @@ apps/openoffice|CSWooouiengb|ooouiengb - An Open Source version of StarOffice.
 apps/openoffice|CSWooouipl|ooouipl - An Open Source version of StarOffice.
 apps/openoffice|CSWooouilt|ooouilt - An Open Source version of StarOffice.
 apps/openoffice|CSWooouipt|ooouipt - An Open Source version of StarOffice.
+apps/phpldapadmin|CSWphpldapadmin|phpldapadmin - Web-based LDAP browser to manage your LDAP server
 apps/rl|CSWrl|rl - rl - Randomize Lines
 apps/trac|CSWtrac|trac - Integrated SCM and Project Management
 apps/tsclient|CSWtsclient|tsclient - a frontend for rdesktop and other remote desktop tool
@@ -549,6 +551,8 @@ lib/guile|CSWguile|guile - GNU extensibility library
 lib/guile|CSWguilelib12|guilelib12 - GNU extensibility library
 lib/imap-c-client|CSWimap-devel|imap_devel - UW IMAP C-Client (devel)
 lib/imap-c-client|CSWimaprt|imaprt - UW IMAP C-Client (runtime)
+lib/jicmp|CSWjicmp|jicmp - JICMP is a Java interface to the ICMP protocol (ping)
+lib/jrrd|CSWjrrd|jrrd - JRRD is a Java interface to RRDTool
 lib/libao|CSWlibao|libao - Cross-platform audio library
 lib/libart|CSWlibart|libart - libart - High performance 2D graphics library
 lib/libdvdcss|CSWlibdvdcss|libdvdcss - library for accessing DVDs like a block device without having to bother about decryption
@@ -618,13 +622,6 @@ net/snort|CSWsnort|snort - The open source Network Intrusion Detection System
 net/socat|CSWsocat|socat - bidirectional data transfer
 net/squidpurge|CSWsquidpurge|squidpurge - Purge squid cache entries.
 net/tin|CSWtin|tin - terminal-based news reader
-server/apache2-2.2.4|CSWapache2|apache2 - Apache 2.2 web server
-server/apache2-2.2.4|CSWapache2c|apache2c - Apache 2.2 web server (core)
-server/apache2-2.2.4|CSWapache2-manual|apache2_manual - Apache 2.2 manual
-server/apache2-2.2.4|CSWap2suexec|ap2_suexec - Apache 2.2 suEXEC support
-server/apache2-2.2.4|CSWapache2-devel|apache2_devel - Apache 2.2 development support
-server/apache2-2.2.4|CSWapache2rt|apache2rt - Apache 2.2 runtime libraries
-server/apache2-2.2.4|CSWap2prefork|ap2_prefork - Apache 2.2 prefork MPM
 server/apache2-worker|CSWap2worker|ap2_worker - Apache 2.2 worker MPM
 server/apache2|CSWapache2|apache2 - Apache 2.2 web server
 server/apache2|CSWapache2c|apache2c - Apache 2.2 web server (core)
@@ -651,6 +648,10 @@ server/mod_svn_view|CSWap2modtransform|ap2_modtransform - Subversion repository 
 server/mod_transform|CSWap2modtransform|ap2_modtransform - XSLT filter for Apache 2.0
 server/mpd|CSWmpd|mpd - The Music Player Daemon
 server/mysql4|CSWmysql4|mysql4 - A fast SQL database server.
+server/openldap|CSWoldaprt|openldap_rt - OpenLDAP runtime libraries (oldaprt)
+server/openldap|CSWoldapclient|openldap_client - OpenLDAP client executables (oldapclient)
+server/openldap|CSWoldap|openldap - OpenLDAP standalone server and update replication daemons (oldap)
+server/openldap|CSWoldapdevel|openldap_devel - OpenLDAP development support (oldapdevel)
 server/openssh|CSWossh|openssh - OpenSSH Secure Shell
 server/openvpn|CSWopenvpn|openvpn - secure IP tunnel daemon
 server/proftpd|CSWproftpd|proftpd - Advanced, incredibly configurable and secure FTP daemon
