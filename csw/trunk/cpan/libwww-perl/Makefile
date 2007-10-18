@@ -13,8 +13,10 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmlibwww,depend prototype)
 
-DEPENDS += cpan/URI cpan/HTML-Parser
-DEPENDS += cpan/Crypt-SSLeay cpan/Data-Dump
+DEPENDS += cpan/URI
+DEPENDS += cpan/HTML-Parser
+DEPENDS += cpan/Crypt-SSLeay
+DEPENDS += cpan/Data-Dump
 
 CONFIGURE_ARGS = -n
 
