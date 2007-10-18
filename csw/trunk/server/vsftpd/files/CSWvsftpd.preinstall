@@ -46,7 +46,7 @@ if [ -z "$PKG_INSTALL_ROOT" ]; then
 fi
 
 echo "Creating privilege separation user..."
-create_group ftpsecure 
-create_user ftpsecure ftpsecure /opt/csw/var/empty/vsftpd /bin/false "vsftpd privsep user"
+create_group vsftpd 
+create_user vsftpd vsftpd /opt/csw/var/empty/vsftpd /bin/false "vsftpd privsep user"
 echo "Creating ftp user for anonymous access..."
 create_user ftp nogroup /opt/csw/var/ftp /bin/false "ftp user for anonymous access"
