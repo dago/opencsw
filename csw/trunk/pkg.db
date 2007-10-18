@@ -1,4 +1,3 @@
-apps/bash|CSWbash|bash - A sh-compatible command language interpreter
 apps/bugzilla|CSWbugzilla|bugzilla - Bugzilla defect tracking system.
 apps/daimonin|CSWdaimonin|daimonin - FREE online role playing game (MMORPG)
 apps/easytag|CSWeasytag|easytag - Tag editor for MP3, Ogg Vorbis files and more
@@ -429,11 +428,12 @@ devel/autoconf|CSWautoconf|autoconf - GNU auto-configuration tool
 devel/automake-1.4|CSWautomake14|automake14 - GNU automake
 devel/automake-1.6|CSWautomake16|automake16 - GNU automake
 devel/automake-1.7|CSWautomake17|automake17 - automake
+devel/bash|CSWbash|bash - A sh-compatible command language interpreter
 devel/bison|CSWbison|bison - GNU Project parser generator (yacc replacement)
 devel/cmake|CSWcmake|cmake - Cross-platform make
 devel/flex-2.5.4a|CSWflex|flex - older version of the 'flex' parser generator
 devel/flex|CSWflex-new|flex_new - A tool for generating text-scanning programs.
-devel/gforth|CSWgforth|gforth - gforth - a fast and portable implementation of the ANS Forth language
+devel/ksh|CSWksh|ksh - The KornShell Command and Programming Language
 devel/m4|CSWgm4|gm4 - Standard Unix macro processor with extensions
 devel/opengrok|CSWopengrok|opengrok - A wicked fast source browser
 devel/rake|CSWrake|rake - Simple ruby build program similar to make
@@ -468,6 +468,7 @@ kde/kdevelop|CSWkdevelopgcc|kdevelop_gcc - KDE Integrated Development Environmen
 kde/koffice|CSWkofficeaddons|koffice_addons - KDE Web Development Environment (gcc3)
 kde/koffice|CSWkofficegcc|koffice_gcc - KDE Web Development Environment (gcc3)
 kde/quanta|CSWquantagcc|quanta_gcc - The KDE Web Development Tool (gcc3)
+lang/gforth|CSWgforth|gforth - gforth - a fast and portable implementation of the ANS Forth language
 lang/lua|CSWlua|lua - light-weight language designed for extending applications
 lang/mono|CSWmono|mono - Mono Runtime
 lang/mysql-python|CSWpymysql|pymysql - MySQL support for Python
