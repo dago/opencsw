@@ -8,7 +8,7 @@ f none /opt/csw/bin/testrb 0755 root bin
 d none /opt/csw/lib ? ? ?
 f none /opt/csw/lib/libruby-static.a 0644 root bin
 f none /opt/csw/lib/libruby.so.1 0755 root bin
-s none /opt/csw/lib/libruby.so.1.8.5=libruby.so.1
+s none /opt/csw/lib/libruby.so.1.8.6=libruby.so.1
 s none /opt/csw/lib/libruby.so=libruby.so.1
 d none /opt/csw/lib/ruby 0755 root bin
 d none /opt/csw/lib/ruby/1.8 0755 root bin
@@ -37,6 +37,9 @@ f none /opt/csw/lib/ruby/1.8/date/format.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/date2.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/debug.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/delegate.rb 0644 root bin
+d none /opt/csw/lib/ruby/1.8/digest 0755 root bin
+f none /opt/csw/lib/ruby/1.8/digest.rb 0644 root bin
+f none /opt/csw/lib/ruby/1.8/digest/sha2.rb 0644 root bin
 d none /opt/csw/lib/ruby/1.8/dl 0755 root bin
 f none /opt/csw/lib/ruby/1.8/dl/import.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/dl/struct.rb 0644 root bin
@@ -260,6 +263,10 @@ f none /opt/csw/lib/ruby/1.8/rexml/encodings/US-ASCII.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/rexml/encodings/UTF-16.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/rexml/encodings/UTF-8.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/rexml/entity.rb 0644 root bin
+d none /opt/csw/lib/ruby/1.8/rexml/formatters 0755 root bin
+f none /opt/csw/lib/ruby/1.8/rexml/formatters/default.rb 0644 root bin
+f none /opt/csw/lib/ruby/1.8/rexml/formatters/pretty.rb 0644 root bin
+f none /opt/csw/lib/ruby/1.8/rexml/formatters/transitive.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/rexml/functions.rb 0644 root bin
 f none /opt/csw/lib/ruby/1.8/rexml/instruction.rb 0644 root bin
 d none /opt/csw/lib/ruby/1.8/rexml/light 0755 root bin
@@ -402,7 +409,9 @@ f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/curses.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/dbm.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/defines.h 0644 root bin
 d none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/digest 0755 root bin
+f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/digest.h 0644 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/digest.so 0755 root bin
+f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/digest/bubblebabble.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/digest/md5.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/digest/rmd160.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/digest/sha1.so 0755 root bin
@@ -441,6 +450,7 @@ f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/stringio.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/strscan.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/syck.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/syslog.so 0755 root bin
+f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/thread.so 0755 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/util.h 0644 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/version.h 0644 root bin
 f none /opt/csw/lib/ruby/1.8/%GARCH%-solaris2.8/zlib.so 0755 root bin
