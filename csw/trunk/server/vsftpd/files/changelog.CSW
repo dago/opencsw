@@ -7,7 +7,7 @@ vsftpd (2.0.5,REV=2007.10.18) unstable
   * Adds missing vsftpd documentation files. (closes: #2630)
   * Uses clast SMF support scripts. (closes: #2631)
 
- -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 18:47:15 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Thu, 18 Oct 2007 15:41:38 +0200
 
 vsftpd (2.0.5,REV=2007.07.28) unstable
 
