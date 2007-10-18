@@ -498,7 +498,6 @@ lang/php5|CSWphp5mhash|php5_mhash - PHP 5 - libmhash Extension
 lang/php5|CSWphp5mssql|php5_mssql - PHP 5 - MSSQL Extension
 lang/php5|CSWphp5odbc|php5_odbc - PHP 5 - unixODBC Extension
 lang/php5|CSWphp5pgsql|php5_pgsql - PHP 5 - PostgreSQL Extension
-lang/php5|CSWphp5openssl|php5_openssl - PHP 5 - OpenSSL Extension
 lang/php5|CSWphp5snmp|php5_snmp - PHP 5 - NetSNMP Extension
 lang/php5|CSWphp5|php5 - PHP Hypertext Processor 5
 lang/php5|CSWphp5pdosqlite|php5_pdosqlite - PHP 5 - SQLite PDO Extension
