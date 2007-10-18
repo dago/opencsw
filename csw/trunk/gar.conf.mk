@@ -119,9 +119,9 @@ SUN_LD_DBG   ?=
 # GNU Compiler Configuration
 #
 
-GNU_CC_HOME   = /opt/csw/gcc3
-GNU_CC        = gcc
-GNU_CXX       = g++
+GNU_CC_HOME  ?= /opt/csw/gcc4
+GNU_CC       ?= gcc
+GNU_CXX      ?= g++
 
 # Optimized
 ifeq ($(OPTARCH),386)
@@ -160,6 +160,11 @@ ifdef NOISALIST
 LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS),-R$(ELIB))
 else
 LD_OPTIONS = $(foreach ELIB,$(LDOPT_LIBS),-R$(ELIB)/\$$ISALIST -R$(ELIB))
+endif
+
+ifeq ($(GARCOMPILER),GNU)
+LDFLAGS := -L$(GNU_CC_HOME)/lib $(LDFLAGS)
+LD_OPTIONS := -R$(GNU_CC_HOME)/lib $(LD_OPTIONS)
 endif
 
 CFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS) 
