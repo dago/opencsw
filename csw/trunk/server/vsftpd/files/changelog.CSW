@@ -1,3 +1,14 @@
+vsftpd (2.0.5,REV=2007.10.18) unstable
+
+  * Uses vsftpd instead of ftpsecure as the privilege seperation username.
+  (closes: #2621)
+  * Displays a warning if the ftp user's home directory is not valid.
+  (closes: #2622)
+  * Adds missing vsftpd documentation files. (closes: #2630)
+  * Uses clast SMF support scripts. (closes: #2631)
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 18:47:15 +0200
+
 vsftpd (2.0.5,REV=2007.07.28) unstable
 
   * Depends on openssl_rt rather than openssl.
