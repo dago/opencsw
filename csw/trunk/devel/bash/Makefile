@@ -1,7 +1,7 @@
 GARNAME = bash
 GARVERSION = 3.2
 PATCHLEVEL = 25
-CATEGORIES = apps
+CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
 define BLURB
