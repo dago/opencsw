@@ -1,5 +1,5 @@
 GARNAME = rubygems
-GARVERSION = 0.8.11
+GARVERSION = 0.9.2
 CATEGORIES = lang
 
 DESCRIPTION = Ruby package manager
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = http://rubyforge.org/projects/rubygems/
-MASTER_SITES   = http://rubyforge.org/frs/download.php/5207/
+MASTER_SITES   = http://rubyforge.org/frs/download.php/17190/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWrubygems,depend copyright)
@@ -17,10 +17,10 @@ DISTFILES += $(call admfiles,CSWrubygems,depend copyright)
 # Redirect Gem installation to $(DESTDIR)
 PATCHFILES += postinstall.diff
 
-CONFIGURE_SCRIPTS = rbsetup
-BUILD_SCRIPTS = rbsetup
+CONFIGURE_SCRIPTS = $(WORKSRC)/setup.rb
+BUILD_SCRIPTS = $(WORKSRC)/setup.rb
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = rbsetup
+INSTALL_SCRIPTS = $(WORKSRC)/setup.rb
 
 include ../category.mk
 
@@ -28,8 +28,8 @@ post-install: copy-contrib
 
 copy-contrib:
 	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp -v  $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp -vr $(WORKSRC)/examples $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp -vr $(WORKSRC)/scripts $(DESTDIR)$(docdir)/$(GARNAME)
+	@gcp -v  $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
+	@gcp -vr $(WORKSRC)/examples $(DESTDIR)$(docdir)/$(GARNAME)
+	@gcp -vr $(WORKSRC)/scripts $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)
 
