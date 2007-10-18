@@ -39,6 +39,9 @@ PATCHFILES += headers.diff
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
+# Test for sunaudiodev fails.
+SKIPTEST = 1
+
 DEPENDS += lib/expat
 DEPENDS += lib/openssl
 DEPENDS += lib/db
@@ -50,3 +53,11 @@ CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --with-fpectl
 
 include ../category.mk
+
+post-install: fix-config-makefile
+
+fix-config-makefile:
+	perl -i -plne 's/^CCSHARED=.*/CCSHARED=/' \
+		$(DESTDIR)$(libdir)/python/config/Makefile
+	$(MAKECOOKIE)
+
