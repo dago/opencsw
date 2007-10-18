@@ -13,6 +13,9 @@ MASTER_SITES = http://cheeseshop.python.org/packages/source/s/setuptools/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpysetuptools,depend prototype)
 
+# Use versionless python lib
+PATCHFILES += pyversion.diff
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS = $(WORKSRC)/setup.py
