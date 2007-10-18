@@ -15,4 +15,5 @@ f6ce22a6959b93e500a4ae800295c2ee  download/vsftpd.conf
 281c51282cabd9475cceef363bbc699b  download/build_options.patch
 12ad4894d304a8381a5c4c3d43438af8  download/csw_paths.patch
 54c1c39c6bfa8747a4457f135fd5bca1  download/csw_build_system.patch
+23e8f60e7a84da5d3459f870c305710b  download/set_priv_sep_user.patch
 73e59f9ada47d3d20199f7c97849fb13  download/destdir.patch

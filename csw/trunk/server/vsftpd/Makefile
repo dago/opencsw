@@ -42,7 +42,7 @@ PATCHFILES += csw_build_system.patch
 
 # Use vsftpd instead of nobody as the
 # privilege separation user
-#PATCHFILES += set_priv_sep_user.patch
+PATCHFILES += set_priv_sep_user.patch
 
 # patch to workaround the fact that 
 # solaris libc doesn t have tm_gmtoff
