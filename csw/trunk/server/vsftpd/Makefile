@@ -20,7 +20,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall depend)
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
-DISTFILES += cswvsftpd.init cswvsftpd.xml svc-cswvsftpd 
+DISTFILES += cswvsftpd cswvsftpd.xml svc-cswvsftpd 
 DISTFILES += i.conf r.conf
 
 # adding configuration handling classes
@@ -39,6 +39,10 @@ PATCHFILES += csw_paths.patch
 # patch to integrate vsftpd Makefile
 # with csw build system
 PATCHFILES += csw_build_system.patch
+
+# Use vsftpd instead of nobody as the
+# privilege separation user
+#PATCHFILES += set_priv_sep_user.patch
 
 # patch to workaround the fact that 
 # solaris libc doesn t have tm_gmtoff
