@@ -1,6 +1,6 @@
 GARNAME = libevent
 GARVERSION = 1.3
-PATCHREV = b
+PATCHREV = e
 DISTVERSION = $(GARVERSION)$(PATCHREV)
 CATEGORIES = lib
 
@@ -17,14 +17,13 @@ DISTFILES    = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibevent,depend prototype)
 DISTFILES   += $(call admfiles,CSWlibevent-devel,depend prototype)
 
+GARCOMPILER = GNU
+
 # Adjust test.sh shell
 PATCHFILES += testsh.diff
 
-# Some functions are marked __inline -- gccism?
-PATCHFILES += inline.diff
-
-# Types are assumed to work, but they don't.
-PATCHFILES += types.diff
+# We have no stdint.h
+PATCHFILES += stdint.diff
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
