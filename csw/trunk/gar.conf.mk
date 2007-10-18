@@ -101,12 +101,12 @@ ifdef MIN_ARCH_SUN4U
 SUN_CC_OPT   ?= -xO4 -xtarget=generic
 SUN_CXX_OPT  ?= -xO4 -xtarget=generic
 SUN_AS_OPT   ?= -xtarget=generic
-SUN_LD_OPT   ?= -xtarget=generic
+#SUN_LD_OPT   ?= -xtarget=generic
 else
 SUN_CC_OPT   ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
 SUN_CXX_OPT  ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
 SUN_AS_OPT   ?= -xarch=$(OPTARCH)
-SUN_LD_OPT   ?= -xarch=$(OPTARCH)
+#SUN_LD_OPT   ?= -xarch=$(OPTARCH)
 endif
 
 # Debug
