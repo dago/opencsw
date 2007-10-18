@@ -13,5 +13,6 @@ Default configuration:
 
 Virtual users setup:
 
-	Read exemples in /opt/csw/share/doc/vsftpd/EXAMPLE	
+	Read exemples in /opt/csw/share/doc/vsftpd/EXAMPLE/VIRTUAL_USERS and 
+	/opt/csw/share/doc/vsftpd/EXAMPLE/VIRTUAL_USERS_2
 
