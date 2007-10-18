@@ -1,6 +1,6 @@
 GARNAME = gforth
 GARVERSION = 0.6.9-20070604
-CATEGORIES = devel
+CATEGORIES = lang
 
 DESCRIPTION = gforth - a fast and portable implementation of the ANS Forth language
 define BLURB
