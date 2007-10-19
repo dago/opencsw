@@ -172,6 +172,14 @@ install-contrib: $(DESTDIR)$(docdir)
 install-tools: $(DESTDIR)$(docdir)
 	@echo " ==> Installing tools"
 	@gcp -vr $(WORKSRC)/tools $(DESTDIR)$(docdir)
+	@gfind $(DESTDIR)$(docdir) -type f -name '*.pl' | \
+	    xargs perl -i -plne \
+	        's{/usr/bin/perl}{/opt/csw/bin/perl}g; \
+	         s{/usr/bin/env\s+perl}{/opt/csw/bin/perl}g'
+	@gfind $(DESTDIR)$(docdir) -type f -name '*.py' | \
+	    xargs perl -i -plne \
+	        's{/usr/bin/python}{/opt/csw/bin/python}g; \
+	         s{/usr/bin/env\s+python}{/opt/csw/bin/python}g'
 	@$(MAKECOOKIE)
 
 copy-templates:
