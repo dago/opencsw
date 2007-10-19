@@ -1,14 +1,7 @@
-18c05d88e22c3b815a43ca8d7152ccdc  download/MPlayer-1.0rc1.tar.bz2
+7e27e535c2d267637df34898f1b91707  download/MPlayer-1.0rc2.tar.bz2
 e4e2020d11b681aac898103b3ba723c4  download/Blue-1.7.tar.bz2
 86565c69affc3f8eae19c33434d6c655  download/mplayer.1
 f84bc9de8d2052da5c520d1a756f81b0  download/CSWmplayer.gspec
 e6d0cd56de0064eddee31368940ec73f  download/CSWmplayer.depend
-0ac273f009d67395e17527467e062013  download/fix-configure-variables.diff
-29afd7668d553b721603eb39668dd7bb  download/fix-configure-stdint.h-detection.diff
-f65778f4effe62e0ed27e5ee713d59fe  download/fix-configure-fontconfig.diff
-27806fbe1dc1906ba6388a4077df6f88  download/fix-solaris8-llrint.diff
-dc641e5d56466a7733725d2a74b187cd  download/fix-stdint.h-includes.diff
-d3dfbaac2431cbc2949449064a7576b5  download/fix-ffmpeg-gcc-error.diff
-7c094773e8ceabfd921f1db9d975daad  download/security-asmrules_fix_20061231.diff
-f20789cbfff1563067573c9ad401f231  download/security-cddb_fix_20070605.diff
-98b94eccd7e6fc8f9db1783b1c993b7e  download/sparc-v8-novis.diff
+8c02cf94c7af48a70c7e96e874379cb8  download/fix-configure.diff
+76866779859be662d9eeac73bf6016d3  download/fix-libavcodec-gcc-bug.diff

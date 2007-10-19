@@ -5,8 +5,8 @@
 # tidied up before I submit it for official review.
 
 GARNAME = MPlayer
-GARVERSION = 1.0rc1
-SPKG_REVSTAMP = ,REV=$(shell date '+%Y.%m.%d').rc1try3
+GARVERSION = 1.0rc2
+SPKG_REVSTAMP = ,REV=$(shell date '+%Y.%m.%d').rc2
 CATEGORIES = APPS
 
 DESCRIPTION = MPlayer is a movie player which runs on many systems
@@ -14,7 +14,7 @@ define BLURB
 MPlayer is a movie player which runs on many systems (see the documentation). It plays most MPEG/VOB, AVI, Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, RealMedia, Matroska, NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim, and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx, DivX 3/4/5 and even WMV movies..
 endef
 
-MASTER_SITES = http://www.mplayerhq.hu/MPlayer/releases/ http://www.mplayerhq.hu/MPlayer/skins/
+MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www3.mplayerhq.hu/MPlayer/skins/
 
 GARCOMPILER = GNU
 GNU_CC_HOME = /opt/csw/gcc4
@@ -24,23 +24,26 @@ DISTFILES += Blue-1.7.tar.bz2
 DISTFILES += mplayer.1
 DISTFILES += $(call admfiles,CSWmplayer,depend)
 
-PATCHFILES  = fix-configure-variables.diff
-PATCHFILES += fix-configure-stdint.h-detection.diff
-PATCHFILES += fix-configure-fontconfig.diff
-PATCHFILES += fix-solaris8-llrint.diff
-PATCHFILES += fix-stdint.h-includes.diff
-PATCHFILES += fix-ffmpeg-gcc-error.diff
-PATCHFILES += security-asmrules_fix_20061231.diff
-PATCHFILES += security-cddb_fix_20070605.diff
-PATCHFILES += sparc-v8-novis.diff
+#PATCHFILES  = fix-configure-variables.diff
+#PATCHFILES += fix-configure-stdint.h-detection.diff
+#PATCHFILES += fix-configure-fontconfig.diff
+#PATCHFILES += fix-solaris8-llrint.diff
+#PATCHFILES += fix-stdint.h-includes.diff
+#PATCHFILES += fix-ffmpeg-gcc-error.diff
+#ATCHFILES += security-asmrules_fix_20061231.diff
+#PATCHFILES += security-cddb_fix_20070605.diff
+#PATCHFILES += sparc-v8-novis.diff
+
+PATCHFILES = fix-configure.diff
+PATCHFILES += fix-libavcodec-gcc-bug.diff
 
 CONFIGURE_ARGS  = --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
 CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
-CONFIGURE_ARGS += --disable-libcdio
-CONFIGURE_ARGS += --disable-iconv #Solaris libc has iconv already
-CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
+#CONFIGURE_ARGS += --disable-libcdio
+#CONFIGURE_ARGS += --disable-iconv #Solaris libc has iconv already
+#CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 
 # Mplayer sparc-specific patches
 # Openal for sparc is broken

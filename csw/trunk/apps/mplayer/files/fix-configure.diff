@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc2.orig/configure MPlayer-1.0rc2/configure
+--- MPlayer-1.0rc2.orig/configure	2007-10-08 08:49:33.000000000 +1300
++++ MPlayer-1.0rc2/configure	2007-10-19 00:41:35.050880040 +1300
+@@ -8475,7 +8475,7 @@
+ EOF
+ 
+ # Do not overwrite an unchanged config.h to avoid superfluous rebuilds.
+-! cmp -s "$TMPH" config.h && mv -f "$TMPH" config.h
++mv -f "$TMPH" config.h
+ 
+ #############################################################################
