@@ -1,4 +1,4 @@
-%var            bitname micq
-%var            pkgname CSWmicq
+%var            bitname climm
+%var            pkgname CSWclimm
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
