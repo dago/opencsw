@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmcachecache pm_cachecache - cache interface
 P CSWpmcgi pm_cgi - simple common gateway interface class
 P CSWpmclscontainer pm_clscontainer - glues object frameworks together transparently

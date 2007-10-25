@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWenscript enscript - convert text files to PostScript
 P CSWpycs pyclearsilver - Clearsilver Python language binding
 P CSWpydocutils pydocutils - Documentation Utiltiies for Python

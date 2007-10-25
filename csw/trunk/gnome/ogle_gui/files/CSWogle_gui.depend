@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWggettext ggettext - GNU gettext
 P CSWlibglade libglade - glade interface lib for GNOME progs
 P CSWglib glib - utility library commonly associated with GNOME programs

@@ -1,5 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmregexpshellish pm_regexpshellish - shell-like regular expressions
 P CSWpmtextdiff pm_textdiff - perform diffs on files and record sets
 P CSWpmxmlautowriter pm_xmlautowriter - DOCTYPE driven XML output

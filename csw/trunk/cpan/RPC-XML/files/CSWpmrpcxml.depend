@@ -1,4 +1,2 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmlibwww pm_libwww - a collection of perlmodules which provide an api to the World Wide Web
 P CSWpmxmllibxml pm_xmllibxml - binding for libxml2

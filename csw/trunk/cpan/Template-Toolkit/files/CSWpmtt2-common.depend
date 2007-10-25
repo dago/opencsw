@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmgd pm_gd - interface to Gd Graphics Library
 P CSWpmgdgraph pm_gdgraph - Graph plotting module for use with GD
 P CSWpmgdgraph3d pm_gdgraph3d - 3d extensions module for GD::Graph

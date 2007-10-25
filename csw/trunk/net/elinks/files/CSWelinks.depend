@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWbzip2 bzip2 - a high-quality block-sorting file compressor
 P CSWexpat expat -  XML Parser Toolkit
 P CSWiconv libiconv - GNU iconv library

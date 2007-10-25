@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWperl perl - A high-level, general-purpose programming language.
 P CSWpmappconfig pm_appconfig - Perl5 module for configuration files and command line arguments.
 P CSWpmtimedate pm_timedate - parse date strings into time values

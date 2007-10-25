@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWsambalib - Tools to access a server's filespace and printers via SMB (lib)
 P CSWaalib aalib - Ascii art graphics library
 P CSWaudiofile audiofile - Silicon Graphics Audio File Library

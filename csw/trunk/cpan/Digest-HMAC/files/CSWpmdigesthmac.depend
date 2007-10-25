@@ -1,3 +1,1 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmdigestsha1 pm_digestsha1 - interface to the SHA-1 Algorithm

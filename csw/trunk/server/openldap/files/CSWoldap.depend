@@ -1,4 +1,3 @@
-P CSWcommon   common - common files and dirs for CSW packages
 P CSWbdb4     berkeleydb4 - Embedded database libraries and utilities
 P CSWiconv    libiconv - GNU iconv library
 P CSWlibnet   libnet - the libnet packet construction library

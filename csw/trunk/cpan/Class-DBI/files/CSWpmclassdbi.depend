@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmclsaccessor pm_clsaccessor - Automated accessor generation
 P CSWpmclasstrigger pm_classtrigger - mixin to add / call inheritable triggers
 P CSWpmdbdsqlite pm_dbdsqlite - self contained RDBMS in a DBI driver

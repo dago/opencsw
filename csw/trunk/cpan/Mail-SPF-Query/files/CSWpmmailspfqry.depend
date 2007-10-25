@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmnetcidrlite pm_netcidrlite - extension for merging IPv4 or IPv6 CIDR addresses
 P CSWpmnetdns pm_netdns - interface to the DNS resolver
 P CSWpmsyshostnamelong pm_syshostnamelong - try every conceivable way to get full hostname

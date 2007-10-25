@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWreadline readline - library to enable interactive line editing
 P CSWlibpopt libpopt - Command line option parsing library
 P CSWlibgphoto2 libgphoto2 - libgphoto2 is a library that can be used by applications to access digital cameras

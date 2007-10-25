@@ -1,3 +1,1 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmhtmltmpl pm_htmltemplate - Perl module to use HTML Templates from CGI scripts

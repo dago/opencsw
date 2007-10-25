@@ -1,3 +1,1 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmgeocountries pm_geocountries - 2-letter, 3-letter, and numerical codes for countries.

@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
 P CSWbzip2 bzip2 - a high-quality block-sorting file compressor
 P CSWgdbm gdbm - GNU dbm

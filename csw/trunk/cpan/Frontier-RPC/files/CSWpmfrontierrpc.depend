@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmhtmlparser pm_htmlparser - HTML parser class
 P CSWpmlibwww pm_libwww - a general-purpose Web API for Perl, based on W3C libwww.
 P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)

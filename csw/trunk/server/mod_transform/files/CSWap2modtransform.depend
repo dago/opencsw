@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWgcrypt libgcrypt - GNU libcrypt
 P CSWggettext ggettext - GNU gettext
 P CSWgpgerr libgpg_error - GNU gpg related library

@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmcryptcast5pp pm_cryptcast5pp - CAST5 block cipher in pure Perl
 P CSWpmcryptdsa pm_cryptdsa - DSA signatures and key generation
 P CSWpmcryptidea pm_cryptidea - Perl interface to IDEA block cipher

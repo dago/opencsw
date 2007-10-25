@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmarraycompare pm_arraycompare - extension for comparing arrays.
 P CSWpmsubuplevel pm_subuplevel - apparently run a function in a higher stack frame
 P CSWpmtestexceptions pm_testexceptions - test functions for exception based code

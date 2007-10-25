@@ -1,3 +1,1 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmglib pm_glib - wrappers for the GLib utility and Object libraries

@@ -1,5 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmarchiveextract pm_archiveextract - A generic archive extracting mechanism
 P CSWpmfilefetch pm_filefetch - A generic file fetching mechanism
 P CSWpmipccmd pm_ipccmd - Finding and running system commands made easy

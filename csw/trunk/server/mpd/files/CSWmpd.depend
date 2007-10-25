@@ -1,5 +1,4 @@
 P CSWaudiofile   audiofile - Silicon Graphics Audio File Library
-P CSWcommon      common - common files and dirs for CSW packages
 P CSWfaad2       faad2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
 P CSWflac        libflac - FLAC audio codec support library
 P CSWiconv       libiconv - GNU iconv library

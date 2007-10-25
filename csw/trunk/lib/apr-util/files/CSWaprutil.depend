@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWapr apr - Apache Portable Runtime
 P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
 P CSWexpat expat -  XML Parser Toolkit

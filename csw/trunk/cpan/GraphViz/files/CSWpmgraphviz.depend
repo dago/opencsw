@@ -1,5 +1,3 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
 P CSWpmgraph pm_graph - graph operations
 P CSWpmheap pm_heap - extensions for keeping data partially sorted
 P CSWpmmathbezier pm_mathbezier - solution of Bezier curves

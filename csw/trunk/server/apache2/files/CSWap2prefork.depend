@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWapache2c apache2c - Apache 2.2 web server (core)
 P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
 P CSWbdb44 berkeleydb44 - BerkeleyDB 4.4 libraries and utilities
