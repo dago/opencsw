@@ -39,9 +39,9 @@ GARDIR=$(CURDIR)
 include gar.mk
 
 pkgclean:
-	@if test -d "$(DESTDIR)" ; then \
-		echo " ==> Removing $(DESTDIR)" ; \
-		rm -rf $(DESTDIR) ; \
+	@if test -d "$(DESTBUILD)" ; then \
+		echo " ==> Removing $(DESTBUILD)" ; \
+		rm -rf $(DESTBUILD) ; \
 	fi
 	@if test -d "$(SPKG_SPOOLDIR)" ; then \
 		echo " ==> Removing $(SPKG_SPOOLDIR)" ; \

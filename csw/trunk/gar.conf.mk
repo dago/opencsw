@@ -70,7 +70,8 @@ perlpackroot ?= $(perlcswlib)/auto
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
 DESTROOT ?= $(HOME)
-DESTDIR  ?= $(DESTROOT)/build.$(GAROSREL)-$(GARCH)
+DESTBUILD ?= $(DESTROOT)/build.$(GAROSREL)-$(GARCH)
+DESTDIR  ?= $(DESTBUILD)
 
 BUILD_PREFIX ?= /opt/csw
 
@@ -234,6 +235,9 @@ CC_VERSION  = $(shell $(CC_HOME)/bin/cc -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
 CXX_VERSION = $(shell $(CC_HOME)/bin/CC -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
 endif
 
+# Package dir
+GARPACKAGE = $(shell basename $(CURDIR))
+
 # Put these variables in the environment during the
 # configure, build, test, and install stages
 COMMON_EXPORTS  = prefix exec_prefix bindir optbindir sbindir libexecdir
@@ -242,7 +246,7 @@ COMMON_EXPORTS += optlibdir infodir lispdir includedir mandir docdir sourcedir
 COMMON_EXPORTS += CPPFLAGS CFLAGS CXXFLAGS LDFLAGS
 COMMON_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
 COMMON_EXPORTS += CC_HOME CC_VERSION CXX_VERSION VENDORNAME VENDORSTAMP
-COMMON_EXPORTS += GARCH GAROSREL
+COMMON_EXPORTS += GARCH GAROSREL GARPACKAGE
 
 _CONFIGURE_EXPORTS = $(COMMON_EXPORTS) PKG_CONFIG_PATH DESTDIR
 _BUILD_EXPORTS = $(COMMON_EXPORTS)
