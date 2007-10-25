@@ -571,7 +571,8 @@ lib/libvorbis|CSWlibvorbis|libvorbis - Vorbis codec library.
 lib/libxine|CSWlibxine|libxine - Xine-lib 1.1.8
 lib/mm|CSWlibmm|libmm - Shared Memory Allocation abstraction library.
 lib/ncurses|CSWncurses|ncurses - ncurses library and utilities
-lib/neon|CSWneon|neon - Neon HTTP and WebDAV client library
+lib/neon|CSWneon-devel|neon_devel - Neon HTTP and WebDAV development support
+lib/neon|CSWneon|neon - Neon HTTP and WebDAV development support
 lib/nspr|CSWnspr|nspr - NSPR Netscape Portable Runtime
 lib/openal|CSWopenal|openal - openal - A 3D positional spatialized sound library (gcc3)
 lib/openexr|CSWopenexr|openexr - high dynamic-range (HDR) image file format developed by Industrial Light & Magic
@@ -601,6 +602,7 @@ lib/sword|CSWsword|sword - SWORD Engine (gcc3)
 lib/swtlibs|CSWswtlibs|swtlibs - DESCRIPTION  = Standard Widget Toolkit (SWT) libraries
 net/balance|CSWbalance|balance - A TCP proxy and load balancer.
 net/cadaver|CSWcadav|cadaver - WebDAV commandline tool
+net/climm|CSWclimm|climm - terminal-based ICQ client
 net/cups|CSWcupsclient|cupsclient - Client portion of the Common UNIX Printing System
 net/cups|CSWcupsdev|cupsdev - Development files for the Common UNIX Printing System
 net/cups|CSWcups|cups - The Common UNIX Printing System
