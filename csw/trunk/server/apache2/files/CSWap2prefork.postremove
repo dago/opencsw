@@ -33,7 +33,7 @@ if [ -z "$PKG_INSTALL_ROOT" ] && [ -x $AP2_HTTPD ]; then
     if [ -x $SVCADM ]; then
         $SVCADM enable cswapache2
     else
-        $AP2_CTRL start
+        $AP2_CTRL -k start
     fi
 fi
 

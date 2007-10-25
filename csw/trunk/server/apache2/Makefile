@@ -69,8 +69,9 @@ FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr/include
 post-install: rename-httpd copy-local-files create-templates
 
 rename-httpd:
-	@( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.prefork )
-	@$(MAKECOOKIE)
+	@if test -f $(APACHE_ROOT)/sbin/httpd ; then \
+	    ( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.prefork ) ; \
+	fi
 
 # Copy in specialized templates
 copy-local-files:
@@ -80,7 +81,6 @@ copy-local-files:
 	@ginstall $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
-	@$(MAKECOOKIE)
 
 # Create stock templates
 template_list  = share/htdocs/index.html

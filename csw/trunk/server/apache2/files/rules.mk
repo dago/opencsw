@@ -6,8 +6,8 @@ install-layout:
 	@$(MAKECOOKIE)
 
 install-dbd-drivers:
-	#@gcp -v $(FILEDIR)/apr_dbd_mysql.c $(WORKSRC)/srclib/apr-util/dbd
 	@$(MAKECOOKIE)
+#	@gcp -v $(FILEDIR)/apr_dbd_mysql.c $(WORKSRC)/srclib/apr-util/dbd
 
 apu-make-configure:
 	@( cd $(WORKSRC)/srclib/apr-util ; autoconf )

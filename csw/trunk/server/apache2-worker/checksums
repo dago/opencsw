@@ -8,3 +8,4 @@ b295feea0e4059f309aa70e91efd1141  download/CSWap2worker.postinstall
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2worker.space
 833e97a47e52ce69ba6b3ab245bbbd13  download/CSWapache2.killproc
 308836569bf0cc1be27ac45e3123e0c2  download/apu-iconv.diff
+6a0166a8f99bb2cd87fbf18c9c5c24aa  download/apr-lfs.diff

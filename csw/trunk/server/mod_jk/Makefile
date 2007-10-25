@@ -44,6 +44,8 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --enable-jni
 CONFIGURE_ARGS += --enable-prefork
 CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --with-java-home=/usr/jdk/latest
+CONFIGURE_ARGS += --with-java-platform=2
 
 # No test suite available
 TEST_SCRIPTS =

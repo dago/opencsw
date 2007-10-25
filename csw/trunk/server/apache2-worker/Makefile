@@ -28,5 +28,7 @@ include ../apache2/files/rules.mk
 post-install: rename-httpd
 
 rename-httpd:
-	@( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.worker )
-	@$(MAKECOOKIE)
+	@if test -f $(APACHE_ROOT)/sbin/httpd ; then \
+	    ( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.worker ) ; \
+	fi
+

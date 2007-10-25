@@ -54,7 +54,6 @@ template_list="\
     etc/extra/httpd-default.conf \
     etc/extra/httpd-info.conf \
     etc/extra/httpd-languages.conf \
-    etc/extra/httpd-mpm.conf \
     etc/extra/httpd-multilang-errordoc.conf \
     etc/extra/httpd-userdir.conf \
     etc/extra/httpd-vhosts.conf \

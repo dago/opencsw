@@ -58,6 +58,7 @@ CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-config
 else
 # APR
+#CONFIGURE_ARGS += --enable-lfs
 #CONFIGURE_ARGS += --enable-threads
 #CONFIGURE_ARGS += --enable-other-child
 
@@ -75,6 +76,9 @@ CONFIGURE_ARGS += --enable-dbd-dso
 
 # Patch APU to absolutely use GNU iconv
 PATCHFILES += apu-iconv.diff
+
+# Patch APR to set _FILE_OFFSET_BITS=64
+#PATCHFILES += apr-lfs.diff
 
 # Patches for global sysvsem from steleman
 ifeq ($(GAROSREL),5.10)
