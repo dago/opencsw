@@ -1,7 +1,7 @@
 GARNAME = openssh
-GARVERSION = 4.6
+GARVERSION = 4.7
 RELEASE = p1
-GSSKEX_VERSION = 20070312
+GSSKEX_VERSION = 20070927
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
@@ -27,7 +27,7 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall postinstall prototype) 
 DISTFILES += changelog.CSW
 DISTFILES += sshd_config
-DISTFILES += cswopenssh.init svc-cswopenssh cswopenssh.xml
+DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
 DISTFILES += i.conf r.conf
 DISTFILES += openssh
 
@@ -40,7 +40,7 @@ PATCHDIRLEVEL = 0
 PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
 # Fix mantis bug 2564 without waiting for 4.7 
 # stolen from https://bugzilla.mindrot.org/show_bug.cgi?id=1306
-PATCHFILES += spurious_log_fix.patch
+#PATCHFILES += spurious_log_fix.patch
 
 SPKG_CLASSES = none conf
 
@@ -50,6 +50,8 @@ CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/ssh
 CONFIGURE_ARGS += --with-solaris-contracts
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
+
+TEST_SCRIPTS	=
 
 include ../category.mk
 

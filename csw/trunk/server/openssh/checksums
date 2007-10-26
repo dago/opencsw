@@ -1,4 +1,4 @@
-6a7fa99f44d9e1b5b04d15256e1405bb  download/openssh-4.6p1.tar.gz
+50a800fd2c6def9e9a53068837e87b91  download/openssh-4.7p1.tar.gz
 d1c2c49bcd3b65a601946e8316b0b018  download/CSWossh.gspec
 a85143ec7bc4aeb7a444f591be5ef439  download/CSWossh.depend
 1d3d6d477c09e59c514e637fa3a2f7a4  download/CSWossh.checkinstall
@@ -7,12 +7,11 @@ e9e93bfda8a883bca632c712d9c359f6  download/CSWossh.postinstall
 87b4704deceacbf29a8a4357e11dac79  download/CSWossh.prototype
 823c3b537d97d98075c019978bebc5ac  download/changelog.CSW
 0c7fca2f4bee3ecd489ebd85fdd8cdee  download/sshd_config
-c4aef2f34e6c249a06e2ef9603047652  download/cswopenssh.init
+c4aef2f34e6c249a06e2ef9603047652  download/cswopenssh
 8e23e1f856f36e8e084a9283d22a7cbf  download/svc-cswopenssh
 547a915f1712c35dc79dc41378001ca9  download/cswopenssh.xml
 9b2ae27f98333b73ff2b16ed98ee896a  download/i.conf
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
 fd50a65230ec1ead7949e8500844b0bf  download/openssh
 bd0f690fbb3abcbffe7924ae3016c8c3  download/openssh_restart_workaround.sh
-9607f2faa8a50078d74f1169b5040599  download/openssh-4.6p1-gsskex-20070312.patch
-cce5300e339b33d44a54f93fcda169d8  download/spurious_log_fix.patch
+ad58a9848dcaa3ad5a2ab14182fb9212  download/openssh-4.7p1-gsskex-20070927.patch
