@@ -77,7 +77,12 @@ ADMSCRIPTS  = $(ADMISCRIPTS) $(ADMUSCRIPTS)
 ADMFULLSTD  = $(ADMSTANDARD) $(ADMSCRIPTS) space
 ADMADDON    = $(ADMSTANDARD) postinstall preremove
 
+#
+# Targets
+#
+
 # timestamp - Create a pre-installation timestamp
+#
 TIMESTAMP = $(COOKIEDIR)/timestamp
 PRE_INSTALL_TARGETS += timestamp
 timestamp:
@@ -89,108 +94,71 @@ remove-timestamp:
 	@-rm -f $(TIMESTAMP)
 
 # package - Use the mkpackage utility to create Solaris packages
-#POST_INSTALL_TARGETS += pre-package package-create post-package 
-#POST_INSTALL_TARGETS += package-restore-la
+#
 
-# check package, unless ENABLE_CHECK = 0
+SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
+_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
+
 ifneq ($(ENABLE_CHECK),0)
-POST_PACKAGE_TARGETS += package-check
+PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC) pkgcheck-$(SPEC))
+else
+PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC))
 endif
 
-package: install pre-package package-create post-package $(POST_PACKAGE_TARGETS)
+SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
+
+package: install $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
+
+package-%:
+	@echo " ==> Processing $*.gspec"
+	@( $(PKG_ENV) mkpackage --spec $(WORKDIR)/$*.gspec \
+						 --spooldir $(SPKG_SPOOLDIR) \
+						 --destdir  $(SPKG_EXPORT) \
+						 --workdir  $(SPKG_WORKDIR) \
+						 --pkgbase  $(SPKG_PKGBASE) \
+						 --pkgroot  $(SPKG_PKGROOT) \
+						 --compress \
+						 $(MKPACKAGE_ARGS) ) || exit 2
 	@$(MAKECOOKIE)
 
-# returns true if package has completed successfully, false otherwise
 package-p:
 	@$(foreach COOKIEFILE,$(PACKAGE_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# Call mkpackage to transmogrify one or more gspecs into packages
-package-create:
-	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
-		ginstall -d $(SPKG_SPOOLDIR) ; \
-		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
-			echo " ==> Processing $$spec" ; \
-			$(PKG_ENV) mkpackage --spec $$spec \
-								 --spooldir $(SPKG_SPOOLDIR) \
-								 --destdir  $(SPKG_EXPORT) \
-								 --workdir  $(SPKG_WORKDIR) \
-								 --pkgbase  $(SPKG_PKGBASE) \
-								 --pkgroot  $(SPKG_PKGROOT) \
-								 --compress \
-								 $(MKPACKAGE_ARGS) || exit 2 ; \
-		done ; \
-	else \
-		echo " ==> No specs defined for $(GARNAME)" ; \
-	fi
+# pkgcheck - check if the package is blastwave compliant
+#
+pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
 	$(DONADA)
 
-# check if the package is blastwave compliant
-package-check:
-	@echo " ==> Checking blastwave compliance"
-ifneq ($(SPKG_SKIP_COMPLIANCE_CHECK), 1)
-	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
-		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
-			checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $$spec -D pkgfile`.gz || exit 2 ; \
-		done ; \
-	fi
-endif
+pkgcheck-%:
+	@echo " ==> Checking blastwave compilance: $*"
+	@( checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
 
-# Verify all packages
-package-verify: package-check
-	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
-		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
-			$(PKG_ENV) mkpackage -qs $$spec -D pkgfile >> /tmp/verify.$$ ; \
-		done ; \
-	fi
-	@for file in `cat /tmp/verify.$$` ; do \
-		mv $(SPKG_EXPORT)/$$file.gz $(PKGGET_DESTDIR) ; \
-		$(MAKE) -C $(PKGGET_DESTDIR)/.. ; \
-	done
-	@rm -f /tmp/verify.$$
+pkgcheck-p:
+	@$(foreach COOKIEFILE,$(PKGCHECK_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# Install all bitnames from this directory
-package-install:
-	@if test "x$(wildcard $(WORKDIR)/*.gspec)" != "x" ; then \
-		for spec in `ls -1 $(WORKDIR)/*.gspec` ; do \
-			$(PKG_ENV) mkpackage -qs $$spec -D bitname >> /tmp/install.$$ ; \
-		done ; \
-	fi
-	echo pkg-get -s $(PKGGET_DESTDIR) -U
-	@for bitname in `cat /tmp/install.$$` ; do \
-		echo pkg-get -s $(PKGGET_DESTDIR) -f -i $$bitname ; \
-	done
-	@rm -f /tmp/install.$$
+# pkgreset - reset working directory for repackaging
+#
+pkgreset: $(addprefix pkgreset-,$(_PKG_SPECS))
+	$(DONADA)
 
-# Reset working directory for repackaging
-package-reset:
-	@echo " ==> Reset packaging state for $(GARNAME) ($(DESTIMG))"
-	@if test -d $(COOKIEDIR) ; then \
-		if test -d $(WORKDIR) ; then rm -f $(WORKDIR)/*CSW* ; fi ; \
-		( cd $(COOKIEDIR) ; \
-			rm -f \
-				*extract*CSW* \
-				*checksum*CSW* \
-				package* \
-				pre-package \
-				post-package \
-				) ; \
-	fi
+pkgreset-%:
+	@echo " ==> Reset packaging state for $* ($(DESTIMG))"
+	@rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
+	@rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
+	@rm -rf $(WORKDIR)/$*.*
 
-# Reset and repackage
-repackage: package-reset package
+repackage: pkgreset package
 
-# Update the dependency database
+# dependb - update the dependency database
+#
 dependb:
 	@dependb --db $(SPKG_DEPEND_DB) \
              --parent $(CATEGORIES)/$(GARNAME) \
              --add $(DEPENDS)
 
-# Replace original .la files
-#package-restore-la:
-#	@echo " ==> Restoring original libtool .la files"
-#	restorer $(DESTDIR)
-
+# pkgenv - dump the packaging environment
+#
 pkgenv:
 	@$(PKG_ENV) env
 
