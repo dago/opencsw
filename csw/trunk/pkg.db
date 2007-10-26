@@ -666,8 +666,6 @@ server/xinetd|CSWxinetd|xinetd - Powerful inetd replacement
 utils/authz-tools|CSWauthztools|authztools - tools to manipulate authz files
 utils/cabextract|CSWcabextract|cabextract - Extract Microsoft cabinet files
 utils/cfengine|CSWcfengine|cfengine - A tool for administering Networks of Diverse Machines
-utils/clearsilver-0.10.5|CSWcs|clearsilver - Language-neutral HTML template system
-utils/clearsilver-0.10.5|CSWpycs|pyclearsilver - Clearsilver Python language binding
 utils/clearsilver|CSWpmcs|pm_clearsilver - Clearsilver Perl language binding
 utils/clearsilver|CSWcs|clearsilver - Clearsilver Perl language binding
 utils/clearsilver|CSWpycs|pyclearsilver - Clearsilver Python language binding
