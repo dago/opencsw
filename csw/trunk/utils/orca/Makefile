@@ -1,6 +1,6 @@
 GARNAME = orca
-GARVERSION = snapshot-r530
-SPKG_VERSION = r530
+GARVERSION = snapshot-r531
+SPKG_VERSION = r531
 CATEGORIES = utils
 
 DESCRIPTION = A system performance monitoring tool
@@ -30,9 +30,13 @@ MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWorca,depend prototype)
 DISTFILES += csworcallator.init csworcallator.xml svc-csworcallator
+DISTFILES += csworca_services
 DISTFILES += $(call admfiles,CSWorca-web,depend prototype postinstall preremove)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
+PATCHFILES += e1000g-ipge-bnx.patch
+PATCHFILES += watch-udp.patch
+PATCHFILES += zfs.patch
 
 #libdir = $(exec_prefix)/lib/$(GARNAME)
 localstatedir = /var/opt/csw
