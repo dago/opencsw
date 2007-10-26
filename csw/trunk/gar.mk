@@ -336,7 +336,14 @@ clean-dirs:
 
 # Clean an image
 imageclean:
-	@-rm -rf $(COOKIEDIR) $(WORKDIR)
+	@echo " ==> Removing $(COOKIEDIR)"
+	@-rm -rf $(COOKIEDIR)
+	@echo " ==> Removing $(WORKDIR)"
+	@-rm -rf $(WORKDIR)
+
+spotless: imageclean
+	@echo " ==> Removing $(DESTDIR)"
+	@-rm -rf $(DESTDIR)
 
 # Print package dependencies
 PKGDEP_LIST = $(filter-out $(BUILDDEPS),$(DEPEND_LIST))
