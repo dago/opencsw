@@ -27,7 +27,7 @@
 #    		
 GARNAME = openssl
 GARVERSION = 0.9.8
-RELEASE = e
+RELEASE = f
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -78,14 +78,6 @@ SPKG_OSNAME = SunOS5.8
 
 # add the solaris-386-cc, solaris-pentium-cc,... targets
 PATCHFILES = openssl.$(GARVERSION).patch
-
-# Security patches
-PATCHFILES += CVE-2007-3108.patch
-
-ifeq ($(GARVERSION), 0.9.8)
-	PATCHFILES += CVE-2007-5135.patch
-	PATCHFILES += CVE-2007-4995.patch
-endif
 
 # The list of optimized libraries we will compile
 # by arch

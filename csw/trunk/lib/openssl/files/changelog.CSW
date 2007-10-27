@@ -1,3 +1,9 @@
+openssl (0.9.8,REV=2007.10.27_rev=f) unstable
+
+ * New upstream version.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Sat, 27 Oct 2007 21:02:17 +0200
+
 openssl (0.9.8,REV=2007.10.27_rev=e) unstable
 
  * Fixed CVE-2007-4995: DTLS Heap Buffer Overflow Vulnerability.
