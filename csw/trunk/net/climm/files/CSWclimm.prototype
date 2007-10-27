@@ -1,8 +1,6 @@
 d none /opt/csw/bin ? ? ?
 f none /opt/csw/bin/climm 0755 root bin
 s none /opt/csw/bin/micq=climm
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/sbin ? ? ?
 d none /opt/csw/share ? ? ?
 d none /opt/csw/share/climm 0755 root bin
 f none /opt/csw/share/climm/C.i18n 0644 root bin
@@ -29,7 +27,6 @@ f none /opt/csw/share/climm/sr.i18n 0644 root bin
 f none /opt/csw/share/climm/uk.i18n 0644 root bin
 f none /opt/csw/share/climm/yu.i18n 0644 root bin
 f none /opt/csw/share/climm/zh_CN.i18n 0644 root bin
-d none /opt/csw/share/doc ? ? ?
 d none /opt/csw/share/man ? ? ?
 d none /opt/csw/share/man/de 0755 root bin
 d none /opt/csw/share/man/de/man1 0755 root bin
@@ -94,7 +91,6 @@ d none /opt/csw/share/man/uk/man1 0755 root bin
 f none /opt/csw/share/man/uk/man1/climm.1 0644 root bin
 d none /opt/csw/share/man/uk/man7 0755 root bin
 f none /opt/csw/share/man/uk/man7/climmcmds.7 0644 root bin
-d none /opt/csw/var ? ? ?
 i copyright=CSWclimm.copyright
 i depend=CSWclimm.depend
 i pkginfo=CSWclimm.pkginfo

@@ -1,5 +1,18 @@
---- micq-0.5.4.2.orig/src/util_otr.c	2007-07-08 14:03:31.000000000 -0700
-+++ micq-0.5.4.2/src/util_otr.c	2007-07-29 01:31:53.079834000 -0700
+diff -ru climm-0.6.1.orig/src/os_unix.c climm-0.6.1/src/os_unix.c
+--- climm-0.6.1.orig/src/os_unix.c	2007-10-14 06:36:06.000000000 -0700
++++ climm-0.6.1/src/os_unix.c	2007-10-23 22:46:16.058567000 -0700
+@@ -61,7 +61,7 @@
+         if (u->ut_type != USER_PROCESS)
+             continue;
+ 
+-        if (strncmp (u->ut_user, pass->pw_name, UT_NAMESIZE))
++        if (strncmp (u->ut_user, pass->pw_name, sizeof(u->ut_user)))
+             continue;
+         
+         tmp = console_idle (now, u);
+diff -ru climm-0.6.1.orig/src/util_otr.c climm-0.6.1/src/util_otr.c
+--- climm-0.6.1.orig/src/util_otr.c	2007-10-14 06:36:06.000000000 -0700
++++ climm-0.6.1/src/util_otr.c	2007-10-23 22:36:57.947651000 -0700
 @@ -87,21 +87,21 @@
  /* Callback structure */
  static OtrlMessageAppOps ops =

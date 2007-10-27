@@ -10,7 +10,7 @@ endef
 
 MASTER_SITES = http://www.climm.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWclimm,depend)
+DISTFILES += $(call admfiles,CSWclimm,prototype depend)
 DISTFILES += climm.patch
 
 PATCHFILES = climm.patch
