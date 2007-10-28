@@ -1,5 +1,5 @@
 GARNAME = micq
-GARVERSION = 0.5.4.2
+GARVERSION = 0.6.1
 CATEGORIES = net
 
 DESCRIPTION = terminal-based ICQ client
@@ -10,22 +10,16 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.micq.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWmicq,prototype depend)
-DISTFILES += micq.patch
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES = $(call admfiles,CSWmicq,prototype depend)
+GARCH=all
 
-PATCHFILES = micq.patch
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-CONFIGURE_ARGS += --enable-tcl --enable-ssl --enable-autopackage
-CONFIGURE_ARGS += --enable-binreloc --enable-binreloc-threads
+# dummy package; nothing to configure, build or install
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+INSTALL_SCRIPTS =
 
 # micq doesn't have a test target
 TEST_TARGET =
 
 include ../category.mk
-
-post-install:
-	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/micq
-	/usr/ccs/bin/mcs -d $(DESTDIR)$(prefix)/bin/micq
