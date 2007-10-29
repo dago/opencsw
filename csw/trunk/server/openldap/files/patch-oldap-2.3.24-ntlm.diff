@@ -58,7 +58,7 @@ This is a patch against OpenLDAP 2.3.20. Apply with -p0
  	getdn.lo getentry.lo getattr.lo getvalues.lo addentry.lo \
  	request.lo os-ip.lo url.lo sortctrl.lo vlvctrl.lo \
 --- /dev/null   2004-06-30 15:04:37.000000000 -0400
-+++ libraries/libldap/ntlm.c    2004-07-14 13:44:18.000000000 -0400
++++ ./libraries/libldap/ntlm.c    2004-07-14 13:44:18.000000000 -0400
 @@ -0,0 +1,137 @@
 +/* $OpenLDAP: pkg/ldap/libraries/libldap/ntlm.c,v 1.1.4.10 2002/01/04 20:38:21 kurt Exp $ */
 +/*

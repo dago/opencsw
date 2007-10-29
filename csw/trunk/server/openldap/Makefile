@@ -14,9 +14,12 @@ endef
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWoldap,depend)
+DISTFILES += cswopenldap openldap.xml svc-openldap
 DISTFILES += $(call admfiles,CSWoldapclient)
 DISTFILES += $(call admfiles,CSWoldapdevel)
 DISTFILES += $(call admfiles,CSWoldaprt)
+
+PATCHFILES = patch-oldap-2.3.24-ntlm.diff
 
 
 EXTRA_LIB = $(prefix)/bdb4/lib 
