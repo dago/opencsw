@@ -510,6 +510,8 @@ lang/pysetuptools|CSWpysetuptools|pysetuptools - Distribution Utiltiies for Pyth
 lang/pysqlite|CSWpysqlite|pysqlite - SQLite support for Python
 lang/pysqlite2|CSWpysqlite2|pysqlite2 - SQLite3 support for Python
 lang/python25|CSWpython|python - A high-level scripting language.
+lang/python25|CSWpython-tk|python_tk - Python Tk Interface (TkInter)
+lang/python25|CSWidle|idle - Python IDE
 lang/ruby|CSWrubydoc|rubydoc - Ruby documentation
 lang/ruby|CSWrubytk|rubytk - Ruby Tcl/Tk Extension
 lang/ruby|CSWruby|ruby - Ruby Tcl/Tk Extension
