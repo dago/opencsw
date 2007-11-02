@@ -1,14 +1,14 @@
-d none /opt/csw/sbin ? ? ?
+d none /opt/csw/sbin 0755 root bin
 f none /opt/csw/sbin/openvpn 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man8 ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man8 0755 root bin
 f none /opt/csw/share/man/man8/openvpn.8 0644 root bin
 i copyright=CSWopenvpn.copyright
 i depend=CSWopenvpn.depend
 i pkginfo=CSWopenvpn.pkginfo
-d none /etc ? ? ?
-d none /etc/init.d ? ? ?
+d none /etc 0755 root bin
+d none /etc/init.d 0755 root bin
 f none /etc/init.d/cswopenvpn 0755 root bin
 s none /etc/rc0.d/K16cswopenvpn=../init.d/cswopenvpn
 s none /etc/rc1.d/K16cswopenvpn=../init.d/cswopenvpn

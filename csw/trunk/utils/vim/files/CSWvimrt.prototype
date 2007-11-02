@@ -1,7 +1,7 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/vimtutor 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/fr 0755 root bin
 d none /opt/csw/share/man/fr.ISO8859-1 0755 root bin
 d none /opt/csw/share/man/fr.ISO8859-1/man1 0755 root bin
@@ -68,7 +68,7 @@ f none /opt/csw/share/man/it/man1/vim.1 0644 root bin
 f none /opt/csw/share/man/it/man1/vimdiff.1 0644 root bin
 f none /opt/csw/share/man/it/man1/vimtutor.1 0644 root bin
 f none /opt/csw/share/man/it/man1/xxd.1 0644 root bin
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/evim.1 0644 root bin
 s none /opt/csw/share/man/man1/ex.1=vim.1 root bin
 s none /opt/csw/share/man/man1/rview.1=vim.1 root bin

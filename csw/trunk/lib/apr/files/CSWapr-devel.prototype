@@ -1,4 +1,4 @@
-d none /opt/csw/include ? ? ?
+d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/apr-1 0755 root bin
 f none /opt/csw/include/apr-1/apr.h 0644 root bin
 f none /opt/csw/include/apr-1/apr_allocator.h 0644 root bin
@@ -36,13 +36,13 @@ f none /opt/csw/include/apr-1/apr_time.h 0644 root bin
 f none /opt/csw/include/apr-1/apr_user.h 0644 root bin
 f none /opt/csw/include/apr-1/apr_version.h 0644 root bin
 f none /opt/csw/include/apr-1/apr_want.h 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/apr.exp 0644 root bin
 f none /opt/csw/lib/libapr-1.a 0644 root bin
 f none /opt/csw/lib/libapr-1.la 0755 root bin
-d none /opt/csw/lib/pkgconfig ? ? ?
+d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/apr-1.pc 0644 root bin
-d none /opt/csw/share ? ? ?
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/apr 0755 root bin
 d none /opt/csw/share/apr/build-1 0755 root bin
 f none /opt/csw/share/apr/build-1/apr_rules.mk 0644 root bin

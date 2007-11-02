@@ -1,4 +1,4 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/acyclic 0755 root bin
 f none /opt/csw/bin/bcomps 0755 root bin
 f none /opt/csw/bin/ccomps 0755 root bin
@@ -112,7 +112,7 @@ f none /opt/csw/include/graphviz/vispath.h 0644 root bin
 f none /opt/csw/include/graphviz/vmstub.h 0644 root bin
 f none /opt/csw/include/graphviz/voronoi.h 0644 root bin
 f none /opt/csw/include/graphviz/xlayout.h 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/graphviz 0755 root bin
 f none /opt/csw/lib/graphviz/libagraph.la 0755 root bin
 f none /opt/csw/lib/graphviz/libagraph.so.0.0.0 0755 root bin
@@ -201,7 +201,7 @@ f none /opt/csw/lib/graphviz/pkgconfig/libneatogen.pc 0644 root bin
 f none /opt/csw/lib/graphviz/pkgconfig/libpack.pc 0644 root bin
 f none /opt/csw/lib/graphviz/pkgconfig/libpathplan.pc 0644 root bin
 f none /opt/csw/lib/graphviz/pkgconfig/libtwopigen.pc 0644 root bin
-d none /opt/csw/share ? ? ?
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/graphviz 0755 root bin
 d none /opt/csw/share/graphviz/demo 0755 root bin
 f none /opt/csw/share/graphviz/demo/doted.README 0644 root bin
@@ -457,7 +457,7 @@ f none /opt/csw/share/graphviz/lefty/fractal2.lefty 0755 root bin
 f none /opt/csw/share/graphviz/lefty/lefty.psp 0755 root bin
 f none /opt/csw/share/graphviz/lefty/slides.lefty 0755 root bin
 f none /opt/csw/share/graphviz/lefty/tree.lefty 0755 root bin
-d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/acyclic.1 0644 root bin
 f none /opt/csw/share/man/man1/bcomps.1 0644 root bin

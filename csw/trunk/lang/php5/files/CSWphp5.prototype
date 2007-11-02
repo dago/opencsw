@@ -1,4 +1,4 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 s none /opt/csw/bin/php5=/opt/csw/php5/bin/php
 d none /opt/csw/php5 0755 root bin
 d none /opt/csw/php5/bin 0755 root bin

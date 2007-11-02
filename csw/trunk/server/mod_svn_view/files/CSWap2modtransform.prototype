@@ -1,9 +1,9 @@
-d none /opt/csw/apache2 ? ? ?
-d none /opt/csw/apache2/libexec ? ? ?
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
 f none /opt/csw/apache2/libexec/mod_python.so 0755 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python2.3 ? ? ?
-d none /opt/csw/lib/python2.3/site-packages ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/python2.3 0755 root bin
+d none /opt/csw/lib/python2.3/site-packages 0755 root bin
 d none /opt/csw/lib/python2.3/site-packages/mod_python 0755 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/Cookie.py 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/mod_python/Cookie.pyc 0644 root bin

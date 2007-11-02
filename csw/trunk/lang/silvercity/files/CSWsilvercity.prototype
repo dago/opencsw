@@ -1,10 +1,10 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/cgi-styler-form.py 0755 root bin
 f none /opt/csw/bin/cgi-styler.py 0755 root bin
 f none /opt/csw/bin/source2html.py 0755 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python ? ? ?
-d none /opt/csw/lib/python/site-packages ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/python 0755 root bin
+d none /opt/csw/lib/python/site-packages 0755 root bin
 d none /opt/csw/lib/python/site-packages/SilverCity 0755 root bin
 f none /opt/csw/lib/python/site-packages/SilverCity-0.9.7-py2.5.egg-info 0644 root bin
 f none /opt/csw/lib/python/site-packages/SilverCity/CPP.py 0644 root bin

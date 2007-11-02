@@ -1,4 +1,4 @@
-d none /opt/csw/bdb43 ? ? ?
+d none /opt/csw/bdb43 0755 root bin
 d none /opt/csw/bdb43/include 0755 root bin
 f none /opt/csw/bdb43/include/db.h 0444 root bin
 f none /opt/csw/bdb43/include/db_185.h 0444 root bin

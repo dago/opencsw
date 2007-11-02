@@ -1,9 +1,9 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/trac-admin 0755 root bin
 f none /opt/csw/bin/tracd 0755 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python ? ? ?
-d none /opt/csw/lib/python/site-packages ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/python 0755 root bin
+d none /opt/csw/lib/python/site-packages 0755 root bin
 d none /opt/csw/lib/python/site-packages/trac 0755 root bin
 f none /opt/csw/lib/python/site-packages/trac-0.10.4-py2.5.egg-info 0644 root bin
 f none /opt/csw/lib/python/site-packages/trac/About.py 0644 root bin
@@ -216,8 +216,8 @@ f none /opt/csw/lib/python/site-packages/trac/wiki/model.py 0644 root bin
 f none /opt/csw/lib/python/site-packages/trac/wiki/model.pyc 0644 root bin
 f none /opt/csw/lib/python/site-packages/trac/wiki/web_ui.py 0644 root bin
 f none /opt/csw/lib/python/site-packages/trac/wiki/web_ui.pyc 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/trac 0755 root bin
 f none /opt/csw/share/doc/trac/COPYING 0644 root bin
 f none /opt/csw/share/doc/trac/ChangeLog 0644 root bin
@@ -235,8 +235,8 @@ f none /opt/csw/share/doc/trac/contrib/sourceforge2trac.py 0644 root bin
 f none /opt/csw/share/doc/trac/contrib/trac-post-commit-hook 0755 root bin
 f none /opt/csw/share/doc/trac/contrib/trac-post-commit-hook.cmd 0644 root bin
 f none /opt/csw/share/doc/trac/contrib/trac-pre-commit-hook 0644 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/trac-admin.1 0644 root bin
 f none /opt/csw/share/man/man1/tracd.1 0644 root bin
 d none /opt/csw/share/trac 0755 root bin

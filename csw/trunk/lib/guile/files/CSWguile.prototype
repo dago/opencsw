@@ -1,4 +1,4 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/guile 0755 root bin
 f none /opt/csw/bin/guile-config 0755 root bin
 f none /opt/csw/bin/guile-snarf 0755 root bin
@@ -105,7 +105,7 @@ f none /opt/csw/include/libguile/vectors.h 0644 root bin
 f none /opt/csw/include/libguile/version.h 0644 root bin
 f none /opt/csw/include/libguile/vports.h 0644 root bin
 f none /opt/csw/include/libguile/weaks.h 0644 root bin
-d none /opt/csw/share ? ? ?
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/aclocal 0755 root bin
 f none /opt/csw/share/aclocal/guile.m4 0644 root bin
 d none /opt/csw/share/guile 0755 root bin
@@ -205,7 +205,7 @@ f none /opt/csw/share/guile/1.6/srfi/srfi-4.scm 0644 root bin
 f none /opt/csw/share/guile/1.6/srfi/srfi-6.scm 0644 root bin
 f none /opt/csw/share/guile/1.6/srfi/srfi-8.scm 0644 root bin
 f none /opt/csw/share/guile/1.6/srfi/srfi-9.scm 0644 root bin
-d none /opt/csw/share/info ? ? ?
+d none /opt/csw/share/info 0755 root bin
 f none /opt/csw/share/info/goops.info 0644 root bin
 f none /opt/csw/share/info/guile-tut.info 0644 root bin
 f none /opt/csw/share/info/guile.info 0644 root bin
@@ -214,12 +214,12 @@ f none /opt/csw/share/info/guile.info-2 0644 root bin
 f none /opt/csw/share/info/guile.info-3 0644 root bin
 f none /opt/csw/share/info/guile.info-4 0644 root bin
 f none /opt/csw/share/info/r5rs.info 0644 root bin
-d none /opt/csw/share/locale ? ? ?
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
-d none /opt/csw/share/man/man3 ? ? ?
-d none /opt/csw/share/man/man5 ? ? ?
-d none /opt/csw/share/man/man7 ? ? ?
+d none /opt/csw/share/locale 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+d none /opt/csw/share/man/man5 0755 root bin
+d none /opt/csw/share/man/man7 0755 root bin
 i copyright=CSWguile.copyright
 i depend=CSWguile.depend
 i pkginfo=CSWguile.pkginfo

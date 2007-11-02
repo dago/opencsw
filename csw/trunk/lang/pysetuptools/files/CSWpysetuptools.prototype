@@ -1,9 +1,9 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/easy_install 0755 root bin
 f none /opt/csw/bin/easy_install-2.5 0755 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python ? ? ?
-d none /opt/csw/lib/python/site-packages ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/python 0755 root bin
+d none /opt/csw/lib/python/site-packages 0755 root bin
 f none /opt/csw/lib/python/site-packages/easy_install.py 0644 root bin
 f none /opt/csw/lib/python/site-packages/easy_install.pyc 0644 root bin
 f none /opt/csw/lib/python/site-packages/pkg_resources.py 0644 root bin

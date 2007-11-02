@@ -1,5 +1,5 @@
-d none /opt/csw/lib/perl/csw ? ? ?
-d none /opt/csw/lib/perl/csw/auto ? ? ?
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
 d none /opt/csw/lib/perl/csw/auto/Cyrus 0755 root bin
 d none /opt/csw/lib/perl/csw/auto/Cyrus/IMAP 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/Cyrus/IMAP/IMAP.so 0555 root bin

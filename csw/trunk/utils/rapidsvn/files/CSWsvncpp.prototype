@@ -19,7 +19,7 @@ f none /opt/csw/include/svncpp/status.hpp 0644 root bin
 f none /opt/csw/include/svncpp/targets.hpp 0644 root bin
 f none /opt/csw/include/svncpp/url.hpp 0644 root bin
 f none /opt/csw/include/svncpp/wc.hpp 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libsvncpp.a 0644 root bin
 f none /opt/csw/lib/libsvncpp.la 0755 root bin
 f none /opt/csw/lib/libsvncpp.so.0.0.0 0755 root bin

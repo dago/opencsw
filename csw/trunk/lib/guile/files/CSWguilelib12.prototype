@@ -1,4 +1,4 @@
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libguile-ltdl.a 0644 root bin
 f none /opt/csw/lib/libguile-ltdl.la 0755 root bin
 f none /opt/csw/lib/libguile-ltdl.so.1.0.1 0755 root bin

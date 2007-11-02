@@ -1,17 +1,17 @@
-d smfno /etc ? ? ?
-d smfno /etc/init.d ? ? ?
+d smfno /etc 0755 root bin
+d smfno /etc/init.d 0755 root bin
 f smfno /etc/init.d/cswcups 0755 root sys
-d smfno /etc/rc0.d ? ? ?
+d smfno /etc/rc0.d 0755 root bin
 s smfno /etc/rc0.d/K00cswcups=../init.d/cswcups
-d smfno /etc/rc2.d ? ? ?
+d smfno /etc/rc2.d 0755 root bin
 s smfno /etc/rc2.d/K00cswcups=../init.d/cswcups
-d smfno /etc/rc3.d ? ? ?
+d smfno /etc/rc3.d 0755 root bin
 s smfno /etc/rc3.d/S99cswcups=../init.d/cswcups
-d smfno /etc/rcS.d ? ? ?
+d smfno /etc/rcS.d 0755 root bin
 s smfno /etc/rcS.d/K00cswcups=../init.d/cswcups
-d smfno /etc/rc1.d ? ? ?
+d smfno /etc/rc1.d 0755 root bin
 s smfno /etc/rc1.d/K00cswcups=../init.d/cswcups
-d none /opt/csw ? ? ?
+d none /opt/csw 0755 root bin
 d none /opt/csw/etc 0755 root bin
 d none /opt/csw/etc/cups 0755 root lp
 f none /opt/csw/etc/cups/cupsd.conf.CSW 0640 root sys
@@ -21,7 +21,7 @@ f none /opt/csw/etc/cups/mime.convs 0644 root sys
 f none /opt/csw/etc/cups/mime.types 0644 root sys
 d none /opt/csw/etc/cups/ppd 0755 root lp
 d none /opt/csw/etc/cups/ssl 0755 root sys
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/cups 0755 root bin
 d none /opt/csw/lib/cups/backend 0755 root bin
 s none /opt/csw/lib/cups/backend/http=ipp
@@ -71,9 +71,9 @@ f none /opt/csw/lib/php/extensions/no-debug-non-zts-20020429/phpcups.so 0755 roo
 d smfyes /opt/csw/lib/svc 0755 root bin
 d smfyes /opt/csw/lib/svc/method 0755 root bin
 f smfyes /opt/csw/lib/svc/method/svc-cups 0755 root bin
-d none /opt/csw/sbin ? ? ?
+d none /opt/csw/sbin 0755 root bin
 f none /opt/csw/sbin/cupsd 0755 root bin
-d none /opt/csw/share ? ? ?
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/applications 0755 root bin
 f none /opt/csw/share/applications/cups.desktop 0644 root bin
 d none /opt/csw/share/cups 0755 root bin
@@ -675,7 +675,7 @@ f none /opt/csw/share/cups/templates/sv/users.tmpl 0644 root bin
 f none /opt/csw/share/cups/templates/test-page.tmpl 0644 root bin
 f none /opt/csw/share/cups/templates/trailer.tmpl 0644 root bin
 f none /opt/csw/share/cups/templates/users.tmpl 0644 root bin
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/cups 0755 root bin
 f none /opt/csw/share/doc/cups/cups-printable.css 0644 root bin
 f none /opt/csw/share/doc/cups/cups.css 0644 root bin
@@ -1151,32 +1151,32 @@ f none /opt/csw/share/icons/hicolor/32x32/apps/cups.png 0644 root bin
 d none /opt/csw/share/icons/hicolor/64x64 0755 root bin
 d none /opt/csw/share/icons/hicolor/64x64/apps 0755 root bin
 f none /opt/csw/share/icons/hicolor/64x64/apps/cups.png 0644 root bin
-d none /opt/csw/share/locale ? ? ?
-d none /opt/csw/share/locale/de ? ? ?
-d none /opt/csw/share/locale/de/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale 0755 root bin
+d none /opt/csw/share/locale/de 0755 root bin
+d none /opt/csw/share/locale/de/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/de/LC_MESSAGES/cups_de.po 0644 root bin
-d none /opt/csw/share/locale/es ? ? ?
-d none /opt/csw/share/locale/es/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/es 0755 root bin
+d none /opt/csw/share/locale/es/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/es/LC_MESSAGES/cups_es.po 0644 root bin
-d none /opt/csw/share/locale/et ? ? ?
-d none /opt/csw/share/locale/et/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/et 0755 root bin
+d none /opt/csw/share/locale/et/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/et/LC_MESSAGES/cups_et.po 0644 root bin
-d none /opt/csw/share/locale/it ? ? ?
-d none /opt/csw/share/locale/it/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/it 0755 root bin
+d none /opt/csw/share/locale/it/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/it/LC_MESSAGES/cups_it.po 0644 root bin
-d none /opt/csw/share/locale/ja ? ? ?
-d none /opt/csw/share/locale/ja/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/ja 0755 root bin
+d none /opt/csw/share/locale/ja/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/ja/LC_MESSAGES/cups_ja.po 0644 root bin
-d none /opt/csw/share/locale/pl ? ? ?
-d none /opt/csw/share/locale/pl/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/pl 0755 root bin
+d none /opt/csw/share/locale/pl/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/pl/LC_MESSAGES/cups_pl.po 0644 root bin
-d none /opt/csw/share/locale/sv ? ? ?
-d none /opt/csw/share/locale/sv/LC_MESSAGES ? ? ?
+d none /opt/csw/share/locale/sv 0755 root bin
+d none /opt/csw/share/locale/sv/LC_MESSAGES 0755 root bin
 f none /opt/csw/share/locale/sv/LC_MESSAGES/cups_sv.po 0644 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1m/cupsd.1m 0644 root bin
-d none /opt/csw/var ? ? ?
+d none /opt/csw/var 0755 root bin
 d none /opt/csw/var/cache 0755 root bin
 d none /opt/csw/var/cache/cups 0775 root lp
 d none /opt/csw/var/log 0755 root bin

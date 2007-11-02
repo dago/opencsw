@@ -1,4 +1,4 @@
-d none /opt/csw/lib/bugzilla ? ? ?
+d none /opt/csw/lib/bugzilla 0755 root bin
 f none /opt/csw/lib/bugzilla/QUICKSTART=bugzilla-2.22/QUICKSTART 0644 root bin
 f none /opt/csw/lib/bugzilla/page.cgi=bugzilla-2.22/page.cgi 0755 root bin
 f none /opt/csw/lib/bugzilla/editproducts.cgi=bugzilla-2.22/editproducts.cgi 0755 root bin

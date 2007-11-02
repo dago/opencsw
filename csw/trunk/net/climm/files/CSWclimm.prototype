@@ -1,7 +1,7 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/climm 0755 root bin
 s none /opt/csw/bin/micq=climm
-d none /opt/csw/share ? ? ?
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/climm 0755 root bin
 f none /opt/csw/share/climm/C.i18n 0644 root bin
 f none /opt/csw/share/climm/bg.i18n 0644 root bin
@@ -27,7 +27,7 @@ f none /opt/csw/share/climm/sr.i18n 0644 root bin
 f none /opt/csw/share/climm/uk.i18n 0644 root bin
 f none /opt/csw/share/climm/yu.i18n 0644 root bin
 f none /opt/csw/share/climm/zh_CN.i18n 0644 root bin
-d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/de 0755 root bin
 d none /opt/csw/share/man/de/man1 0755 root bin
 f none /opt/csw/share/man/de/man1/climm.1 0644 root bin
@@ -52,11 +52,11 @@ f none /opt/csw/share/man/fr/man7/climmcmds.7 0644 root bin
 d none /opt/csw/share/man/it 0755 root bin
 d none /opt/csw/share/man/it/man1 0755 root bin
 f none /opt/csw/share/man/it/man1/climm.1 0644 root bin
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/climm.1 0644 root bin
-d none /opt/csw/share/man/man5 ? ? ?
+d none /opt/csw/share/man/man5 0755 root bin
 f none /opt/csw/share/man/man5/climmrc.5 0644 root bin
-d none /opt/csw/share/man/man7 ? ? ?
+d none /opt/csw/share/man/man7 0755 root bin
 f none /opt/csw/share/man/man7/climmcmds.7 0644 root bin
 d none /opt/csw/share/man/pt_BR 0755 root bin
 d none /opt/csw/share/man/pt_BR/man1 0755 root bin

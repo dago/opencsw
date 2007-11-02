@@ -1,6 +1,6 @@
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/instmodsh.1 0644 root bin
 f none /opt/csw/share/man/man1/libnetcfg.1 0644 root bin
 f none /opt/csw/share/man/man1/perl5004delta.1 0644 root bin
@@ -142,7 +142,7 @@ f none /opt/csw/share/man/man1/perlvos.1 0644 root bin
 f none /opt/csw/share/man/man1/perlwin32.1 0644 root bin
 f none /opt/csw/share/man/man1/perlxs.1 0644 root bin
 f none /opt/csw/share/man/man1/perlxstut.1 0644 root bin
-d none /opt/csw/share/man/man3 ? ? ?
+d none /opt/csw/share/man/man3 0755 root bin
 f none /opt/csw/share/man/man3/AnyDBM_File.3perl 0644 root bin
 f none /opt/csw/share/man/man3/Attribute::Handlers.3perl 0644 root bin
 f none /opt/csw/share/man/man3/AutoLoader.3perl 0644 root bin
@@ -495,9 +495,9 @@ f none /opt/csw/share/man/man3/vars.3perl 0644 root bin
 f none /opt/csw/share/man/man3/vmsish.3perl 0644 root bin
 f none /opt/csw/share/man/man3/warnings.3perl 0644 root bin
 f none /opt/csw/share/man/man3/warnings::register.3perl 0644 root bin
-d none /opt/csw/share/perl ? ? ?
-d none /opt/csw/share/perl/5.8.8 ? ? ?
-d none /opt/csw/share/perl/5.8.8/pod ? ? ?
+d none /opt/csw/share/perl 0755 root bin
+d none /opt/csw/share/perl/5.8.8 0755 root bin
+d none /opt/csw/share/perl/5.8.8/pod 0755 root bin
 f none /opt/csw/share/perl/5.8.8/pod/a2p.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perl.pod 0644 root bin
 f none /opt/csw/share/perl/5.8.8/pod/perl5004delta.pod 0644 root bin

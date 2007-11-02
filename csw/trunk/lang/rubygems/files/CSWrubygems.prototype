@@ -1,12 +1,12 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/gem 0755 root bin
 f none /opt/csw/bin/gem_mirror 0755 root bin
 f none /opt/csw/bin/gem_server 0755 root bin
 f none /opt/csw/bin/gemwhich 0755 root bin
 f none /opt/csw/bin/generate_yaml_index.rb 0755 root bin
 f none /opt/csw/bin/update_rubygems 0755 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/ruby ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/ruby 0755 root bin
 d none /opt/csw/lib/ruby/gems 0755 root bin
 d none /opt/csw/lib/ruby/gems/1.8 0755 root bin
 d none /opt/csw/lib/ruby/gems/1.8/cache 0755 root bin
@@ -18,8 +18,8 @@ d none /opt/csw/lib/ruby/gems/1.8/gems/sources-0.0.1/lib 0755 root bin
 f none /opt/csw/lib/ruby/gems/1.8/gems/sources-0.0.1/lib/sources.rb 0644 root bin
 d none /opt/csw/lib/ruby/gems/1.8/specifications 0755 root bin
 f none /opt/csw/lib/ruby/gems/1.8/specifications/sources-0.0.1.gemspec 0644 root bin
-d none /opt/csw/lib/ruby/site_ruby ? ? ?
-d none /opt/csw/lib/ruby/site_ruby/1.8 ? ? ?
+d none /opt/csw/lib/ruby/site_ruby 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby/1.8 0755 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/gemconfigure.rb 0644 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8/rubygems 0755 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/rubygems.rb 0644 root bin
@@ -50,8 +50,8 @@ f none /opt/csw/lib/ruby/site_ruby/1.8/rubygems/user_interaction.rb 0644 root bi
 f none /opt/csw/lib/ruby/site_ruby/1.8/rubygems/validator.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/rubygems/version.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/ubygems.rb 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/rubygems 0755 root bin
 f none /opt/csw/share/doc/rubygems/README 0644 root bin
 d none /opt/csw/share/doc/rubygems/examples 0755 root bin

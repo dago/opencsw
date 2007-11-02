@@ -1,6 +1,6 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/flphoto 0755 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/locale/de 0755 root bin
 f none /opt/csw/lib/locale/de/flphoto_de 0644 root bin
 d none /opt/csw/lib/locale/en_CA 0755 root bin
@@ -17,8 +17,8 @@ d none /opt/csw/lib/locale/nl 0755 root bin
 f none /opt/csw/lib/locale/nl/flphoto_nl 0644 root bin
 d none /opt/csw/lib/locale/pt 0755 root bin
 f none /opt/csw/lib/locale/pt/flphoto_pt 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/flphoto 0755 root bin
 f none /opt/csw/share/doc/flphoto/COPYING 0644 root bin
 f none /opt/csw/share/doc/flphoto/README 0644 root bin
@@ -51,16 +51,16 @@ f none /opt/csw/share/doc/flphoto/scale.jpg 0644 root bin
 f none /opt/csw/share/doc/flphoto/slideshow.html 0644 root bin
 f none /opt/csw/share/doc/flphoto/slideshow.jpg 0644 root bin
 f none /opt/csw/share/doc/flphoto/view.html 0644 root bin
-d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/cat1 0755 root bin
 f none /opt/csw/share/man/cat1/flphoto.1 0644 root bin
 d none /opt/csw/share/man/cat5 0755 root bin
 f none /opt/csw/share/man/cat5/album.5 0644 root bin
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/flphoto.1 0644 root bin
-d none /opt/csw/share/man/man5 ? ? ?
+d none /opt/csw/share/man/man5 0755 root bin
 f none /opt/csw/share/man/man5/album.5 0644 root bin
-d none /opt/csw/share/man/man8 ? ? ?
+d none /opt/csw/share/man/man8 0755 root bin
 i copyright=CSWflphoto.copyright
 i depend=CSWflphoto.depend
 i pkginfo=CSWflphoto.pkginfo

@@ -1,6 +1,6 @@
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python ? ? ?
-d none /opt/csw/lib/python/site-packages ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/python 0755 root bin
+d none /opt/csw/lib/python/site-packages 0755 root bin
 d none /opt/csw/lib/python/site-packages/MySQL_python-1.2.2-py2.5.egg-info 0755 root bin
 f none /opt/csw/lib/python/site-packages/MySQL_python-1.2.2-py2.5.egg-info/PKG-INFO 0644 root bin
 f none /opt/csw/lib/python/site-packages/MySQL_python-1.2.2-py2.5.egg-info/SOURCES.txt 0644 root bin

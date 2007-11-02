@@ -1,9 +1,9 @@
-d none /opt/csw/apache2 ? ? ?
-d none /opt/csw/apache2/libexec ? ? ?
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
 f none /opt/csw/apache2/libexec/mod_python.so 0755 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python ? ? ?
-d none /opt/csw/lib/python/site-packages ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/python 0755 root bin
+d none /opt/csw/lib/python/site-packages 0755 root bin
 d none /opt/csw/lib/python/site-packages/mod_python 0755 root bin
 f none /opt/csw/lib/python/site-packages/mod_python-3.3.1-py2.5.egg-info 0644 root bin
 f none /opt/csw/lib/python/site-packages/mod_python/Cookie.py 0644 root bin
@@ -43,8 +43,8 @@ f none /opt/csw/lib/python/site-packages/mod_python/testhandler.pyo 0644 root bi
 f none /opt/csw/lib/python/site-packages/mod_python/util.py 0644 root bin
 f none /opt/csw/lib/python/site-packages/mod_python/util.pyc 0644 root bin
 f none /opt/csw/lib/python/site-packages/mod_python/util.pyo 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/ap2_modpython 0755 root bin
 f none /opt/csw/share/doc/ap2_modpython/COPYRIGHT 0644 root bin
 f none /opt/csw/share/doc/ap2_modpython/CREDITS 0644 root bin

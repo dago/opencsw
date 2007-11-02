@@ -157,19 +157,12 @@ SPECLINE:
 
         # Then process any excludes
         foreach my $pattern (@XPATS) { next SPECLINE if $F[2] =~ $pattern   }
+        next if exclude($realpath);
 
-        # And finally, write out the line properly if the path is part
-        # of the common set in DATA.  Also, fix up dir permissions/file
-        # ownership.
-        if (is_common($F[2])) {
-            $F[3] = $F[4] = $F[5] = '?';
-        }
-        else {
-            next if exclude($realpath);
-            $F[3] = $StdDirPerm if $F[0] eq 'd';
-            ($F[4], $F[5]) = ( $StdOwn, $StdGrp )
-                unless $F[0] eq 's' or $F[0] eq 'l';
-        }
+        # Fix up dir permissions/file ownership.
+        $F[3] = $StdDirPerm if $F[0] eq 'd';
+        ($F[4], $F[5]) = ( $StdOwn, $StdGrp )
+            unless $F[0] eq 's' or $F[0] eq 'l';
 
         push @prototype, [ grep { defined $_ } @F ];
     }

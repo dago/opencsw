@@ -1,6 +1,6 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/neon-config 0755 root bin
-d none /opt/csw/include ? ? ?
+d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/neon 0755 root bin
 f none /opt/csw/include/neon/ne_207.h 0644 root bin
 f none /opt/csw/include/neon/ne_acl.h 0644 root bin
@@ -24,13 +24,13 @@ f none /opt/csw/include/neon/ne_uri.h 0644 root bin
 f none /opt/csw/include/neon/ne_utils.h 0644 root bin
 f none /opt/csw/include/neon/ne_xml.h 0644 root bin
 f none /opt/csw/include/neon/ne_xmlreq.h 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libneon.a 0644 root bin
 f none /opt/csw/lib/libneon.la 0755 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/neon.pc 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/neon-0.26.3 0755 root bin
 d none /opt/csw/share/doc/neon-0.26.3/html 0755 root bin
 f none /opt/csw/share/doc/neon-0.26.3/html/api.html 0644 root bin
@@ -77,7 +77,7 @@ f none /opt/csw/share/doc/neon-0.26.3/html/refvers.html 0644 root bin
 f none /opt/csw/share/doc/neon-0.26.3/html/refxml.html 0644 root bin
 f none /opt/csw/share/doc/neon-0.26.3/html/using.html 0644 root bin
 f none /opt/csw/share/doc/neon-0.26.3/html/xml.html 0644 root bin
-d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/neon-config.1 0644 root bin
 d none /opt/csw/share/man/man3 0755 root bin

@@ -1,6 +1,6 @@
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/perl ? ? ?
-d none /opt/csw/lib/perl/csw ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
 d none /opt/csw/lib/perl/csw/APR 0755 root bin
 f none /opt/csw/lib/perl/csw/APR/Request.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request.pod 0444 root bin
@@ -19,11 +19,11 @@ f none /opt/csw/lib/perl/csw/APR/Request/Param.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request/Param.pod 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request/Parser.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/APR/Request/Parser.pod 0444 root bin
-d none /opt/csw/lib/perl/csw/Apache2 ? ? ?
+d none /opt/csw/lib/perl/csw/Apache2 0755 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Cookie.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Request.pm 0444 root bin
 f none /opt/csw/lib/perl/csw/Apache2/Upload.pm 0444 root bin
-d none /opt/csw/lib/perl/csw/auto ? ? ?
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
 d none /opt/csw/lib/perl/csw/auto/APR 0755 root bin
 d none /opt/csw/lib/perl/csw/auto/APR/Request 0755 root bin
 d none /opt/csw/lib/perl/csw/auto/APR/Request/Apache2 0755 root bin
@@ -51,9 +51,9 @@ f none /opt/csw/lib/perl/csw/auto/APR/Request/Request.bs 0444 root bin
 f none /opt/csw/lib/perl/csw/auto/APR/Request/Request.so 0555 root bin
 d none /opt/csw/lib/perl/csw/auto/libapreq2 0755 root bin
 f none /opt/csw/lib/perl/csw/auto/libapreq2/.packlist 0444 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man3 ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
 f none /opt/csw/share/man/man3/APR::Request.3perl 0444 root bin
 f none /opt/csw/share/man/man3/APR::Request::Apache2.3perl 0444 root bin
 f none /opt/csw/share/man/man3/APR::Request::CGI.3perl 0444 root bin

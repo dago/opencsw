@@ -1,4 +1,4 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 s none /opt/csw/bin/newflex=../flex-2.5.33/bin/flex
 d none /opt/csw/flex-2.5.33/bin 0755 root bin
 f none /opt/csw/flex-2.5.33/bin/flex 0755 root bin

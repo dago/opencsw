@@ -1,4 +1,4 @@
-d none /opt/csw/include ? ? ?
+d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/subversion-1 0755 root bin
 f none /opt/csw/include/subversion-1/mod_dav_svn.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn-revision.txt 0644 root bin
@@ -37,8 +37,8 @@ f none /opt/csw/include/subversion-1/svn_utf.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_version.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_wc.h 0644 root bin
 f none /opt/csw/include/subversion-1/svn_xml.h 0644 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/svn ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/svn 0755 root bin
 f none /opt/csw/lib/svn/libsvn_client-1.a 0755 root bin
 f none /opt/csw/lib/svn/libsvn_client-1.la 0755 root bin
 f none /opt/csw/lib/svn/libsvn_delta-1.a 0755 root bin

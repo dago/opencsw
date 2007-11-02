@@ -1,6 +1,6 @@
-d none /opt/csw/mozilla ? ? ?
-d none /opt/csw/mozilla/firefox ? ? ?
-d none /opt/csw/mozilla/firefox/lib ? ? ?
+d none /opt/csw/mozilla 0755 root bin
+d none /opt/csw/mozilla/firefox 0755 root bin
+d none /opt/csw/mozilla/firefox/lib 0755 root bin
 f none /opt/csw/mozilla/firefox/lib/libfreebl3.chk 0644 root bin
 f none /opt/csw/mozilla/firefox/lib/libfreebl3.so 0755 root bin
 f none /opt/csw/mozilla/firefox/lib/libgfxpsshar.so 0755 root bin

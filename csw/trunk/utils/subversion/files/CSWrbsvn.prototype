@@ -1,8 +1,8 @@
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/ruby ? ? ?
-d none /opt/csw/lib/ruby/site_ruby ? ? ?
-d none /opt/csw/lib/ruby/site_ruby/1.8 ? ? ?
-d none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8 ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/ruby 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby/1.8 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8 0755 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8/svn 0755 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8/svn/ext 0755 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8/svn/ext/client.so 0755 root bin
@@ -23,7 +23,7 @@ f none /opt/csw/lib/ruby/site_ruby/1.8/svn/ra.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/svn/repos.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/svn/util.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/svn/wc.rb 0644 root bin
-d none /opt/csw/lib/svn ? ? ?
+d none /opt/csw/lib/svn 0755 root bin
 f none /opt/csw/lib/svn/libsvn_swig_ruby-1.so.0.0.0 0755 root bin
 s none /opt/csw/lib/svn/libsvn_swig_ruby-1.so.0=libsvn_swig_ruby-1.so.0.0.0
 s none /opt/csw/lib/svn/libsvn_swig_ruby-1.so=libsvn_swig_ruby-1.so.0.0.0

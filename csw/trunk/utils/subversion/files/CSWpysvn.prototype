@@ -1,6 +1,6 @@
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/python ? ? ?
-d none /opt/csw/lib/python/site-packages ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/python 0755 root bin
+d none /opt/csw/lib/python/site-packages 0755 root bin
 d none /opt/csw/lib/python/site-packages/libsvn 0755 root bin
 f none /opt/csw/lib/python/site-packages/libsvn/__init__.py 0644 root bin
 f none /opt/csw/lib/python/site-packages/libsvn/__init__.pyc 0644 root bin
@@ -56,7 +56,7 @@ f none /opt/csw/lib/python/site-packages/svn/repos.py 0644 root bin
 f none /opt/csw/lib/python/site-packages/svn/repos.pyc 0644 root bin
 f none /opt/csw/lib/python/site-packages/svn/wc.py 0644 root bin
 f none /opt/csw/lib/python/site-packages/svn/wc.pyc 0644 root bin
-d none /opt/csw/lib/svn ? ? ?
+d none /opt/csw/lib/svn 0755 root bin
 f none /opt/csw/lib/svn/libsvn_swig_py-1.so.0.0.0 0755 root bin
 s none /opt/csw/lib/svn/libsvn_swig_py-1.so.0=libsvn_swig_py-1.so.0.0.0
 s none /opt/csw/lib/svn/libsvn_swig_py-1.so=libsvn_swig_py-1.so.0.0.0

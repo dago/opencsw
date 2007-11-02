@@ -1,9 +1,9 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/rake 0755 root bin
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/ruby ? ? ?
-d none /opt/csw/lib/ruby/site_ruby ? ? ?
-d none /opt/csw/lib/ruby/site_ruby/1.8 ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/ruby 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby 0755 root bin
+d none /opt/csw/lib/ruby/site_ruby/1.8 0755 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8/rake 0755 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/rake.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/rake/classic_namespace.rb 0644 root bin
@@ -25,8 +25,8 @@ f none /opt/csw/lib/ruby/site_ruby/1.8/rake/ruby182_test_unit_fix.rb 0644 root b
 f none /opt/csw/lib/ruby/site_ruby/1.8/rake/runtest.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/rake/tasklib.rb 0644 root bin
 f none /opt/csw/lib/ruby/site_ruby/1.8/rake/testtask.rb 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/rake 0755 root bin
 d none /opt/csw/share/doc/rake/example 0755 root bin
 f none /opt/csw/share/doc/rake/example/Rakefile1 0644 root bin

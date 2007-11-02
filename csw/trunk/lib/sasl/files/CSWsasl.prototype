@@ -7,7 +7,7 @@ f none /opt/csw/include/sasl/prop.h 0644 root bin
 f none /opt/csw/include/sasl/sasl.h 0644 root bin
 f none /opt/csw/include/sasl/saslplug.h 0644 root bin
 f none /opt/csw/include/sasl/saslutil.h 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libsasl2.la 0755 root bin
 f none /opt/csw/lib/libsasl2.so.2.0.22 0755 root bin
 s none /opt/csw/lib/libsasl2.so.2=libsasl2.so.2.0.22 root bin
@@ -41,11 +41,11 @@ f none /opt/csw/lib/sasl2/libsasldb.la 0755 root bin
 f none /opt/csw/lib/sasl2/libsasldb.so.2.0.22 0755 root bin
 s none /opt/csw/lib/sasl2/libsasldb.so.2=libsasldb.so.2.0.22 root bin
 s none /opt/csw/lib/sasl2/libsasldb.so=libsasldb.so.2.0.22 root bin
-d none /opt/csw/sbin ? ? ?
+d none /opt/csw/sbin 0755 root bin
 f none /opt/csw/sbin/sasldblistusers2 0755 root bin
 f none /opt/csw/sbin/saslpasswd2 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/sasl 0755 root bin
 f none /opt/csw/share/doc/sasl/README.CSW 0644 root bin
 f none /opt/csw/share/doc/sasl/ONEWS 0644 root bin
@@ -91,8 +91,8 @@ f none /opt/csw/share/doc/sasl/sysadmin.html 0644 root bin
 f none /opt/csw/share/doc/sasl/testing.txt 0644 root bin
 f none /opt/csw/share/doc/sasl/upgrading.html 0644 root bin
 f none /opt/csw/share/doc/sasl/windows.html 0755 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man3 ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
 f none /opt/csw/share/man/man3/sasl.3 0644 root bin
 f none /opt/csw/share/man/man3/sasl_authorize_t.3 0644 root bin
 f none /opt/csw/share/man/man3/sasl_auxprop.3 0644 root bin
@@ -135,7 +135,7 @@ f none /opt/csw/share/man/man3/sasl_setpass.3 0644 root bin
 f none /opt/csw/share/man/man3/sasl_setprop.3 0644 root bin
 f none /opt/csw/share/man/man3/sasl_user_exists.3 0644 root bin
 f none /opt/csw/share/man/man3/sasl_verifyfile_t.3 0644 root bin
-d none /opt/csw/share/man/man8 ? ? ?
+d none /opt/csw/share/man/man8 0755 root bin
 f none /opt/csw/share/man/man8/sasldblistusers2.8 0644 root bin
 f none /opt/csw/share/man/man8/saslpasswd2.8 0644 root bin
 i copyright=CSWsasl.copyright

@@ -1,5 +1,5 @@
-d none /opt/csw/apache ? ? ?
-d none /opt/csw/apache/lib ? ? ?
+d none /opt/csw/apache 0755 root bin
+d none /opt/csw/apache/lib 0755 root bin
 d none /opt/csw/apache/lib/perl 0755 root bin
 d none /opt/csw/apache/lib/perl/Apache 0755 root bin
 f none /opt/csw/apache/lib/perl/Apache.pm 0444 root bin
@@ -72,9 +72,9 @@ f none /opt/csw/apache/lib/perl/mod_perl_hooks.pm 0444 root bin
 f none /opt/csw/apache/lib/perl/mod_perl_method_handlers.pod 0444 root bin
 f none /opt/csw/apache/lib/perl/mod_perl_traps.pod 0444 root bin
 f none /opt/csw/apache/lib/perl/mod_perl_tuning.pod 0444 root bin
-d none /opt/csw/apache/libexec ? ? ?
+d none /opt/csw/apache/libexec 0755 root bin
 f none /opt/csw/apache/libexec/libperl.so 0755 root bin
-d none /opt/csw/apache/man ? ? ?
+d none /opt/csw/apache/man 0755 root bin
 d none /opt/csw/apache/man/man3 0755 root bin
 f none /opt/csw/apache/man/man3/Apache.3perl 0444 root bin
 f none /opt/csw/apache/man/man3/Apache::Constants.3perl 0444 root bin
@@ -115,7 +115,7 @@ f none /opt/csw/apache/man/man3/mod_perl_traps.3perl 0444 root bin
 f none /opt/csw/apache/man/man3/mod_perl_tuning.3perl 0444 root bin
 d none /opt/csw/apache/perl 0755 root bin
 f none /opt/csw/apache/perl/test.pl 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/mod_perl 0755 root bin
 f none /opt/csw/share/doc/mod_perl/README 0644 root bin

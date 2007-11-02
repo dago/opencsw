@@ -1,4 +1,4 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/a2p 0755 root bin
 f none /opt/csw/bin/c2ph 0755 root bin
 f none /opt/csw/bin/cpan 0755 root bin
@@ -30,7 +30,7 @@ l none /opt/csw/bin/pstruct=c2ph
 f none /opt/csw/bin/s2p 0755 root bin
 f none /opt/csw/bin/splain 0755 root bin
 f none /opt/csw/bin/xsubpp 0755 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libperl.so.5.8.8 0755 root bin
 s none /opt/csw/lib/libperl.so.5.8=libperl.so.5.8.8
 s none /opt/csw/lib/libperl.so=libperl.so.5.8.8
@@ -557,9 +557,9 @@ d none /opt/csw/lib/perl/5.8.8/threads 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/threads.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/threads/shared.pm 0444 root bin
 d none /opt/csw/lib/perl/site_perl 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/a2p.1 0644 root bin
 l none /opt/csw/share/man/man1/c2ph.1=pstruct.1
 f none /opt/csw/share/man/man1/cpan.1 0644 root bin

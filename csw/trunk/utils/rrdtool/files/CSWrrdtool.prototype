@@ -1,10 +1,10 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/rrdcgi 0755 root bin
 f none /opt/csw/bin/rrdtool 0755 root bin
 f none /opt/csw/bin/rrdupdate 0755 root bin
 d none /opt/csw/include 0755 root bin
 f none /opt/csw/include/rrd.h 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/librrd.a 0644 root bin
 f none /opt/csw/lib/librrd.la 0755 root bin
 f none /opt/csw/lib/librrd.so.2.0.8 0755 root bin
@@ -15,11 +15,11 @@ f none /opt/csw/lib/librrd_th.la 0755 root bin
 f none /opt/csw/lib/librrd_th.so.2.0.8 0755 root bin
 s none /opt/csw/lib/librrd_th.so.2=librrd_th.so.2.0.8 root bin
 s none /opt/csw/lib/librrd_th.so=librrd_th.so.2.0.8 root bin
-d none /opt/csw/lib/perl ? ? ?
+d none /opt/csw/lib/perl 0755 root bin
 d none /opt/csw/lib/perl/5.8.8 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/RRDp.pm 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/rrdtool-1.2.15/html 0755 root bin
 f none /opt/csw/share/doc/rrdtool-1.2.15/html/RRDp.html 0644 root bin
 f none /opt/csw/share/doc/rrdtool-1.2.15/html/RRDs.html 0644 root bin
@@ -100,8 +100,8 @@ f none /opt/csw/share/doc/rrdtool-1.2.15/txt/rrdupdate.pod 0644 root bin
 f none /opt/csw/share/doc/rrdtool-1.2.15/txt/rrdupdate.txt 0644 root bin
 f none /opt/csw/share/doc/rrdtool-1.2.15/txt/rrdxport.pod 0644 root bin
 f none /opt/csw/share/doc/rrdtool-1.2.15/txt/rrdxport.txt 0644 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/bin_dec_hex.1 0644 root bin
 f none /opt/csw/share/man/man1/cdeftutorial.1 0644 root bin
 f none /opt/csw/share/man/man1/rpntutorial.1 0644 root bin

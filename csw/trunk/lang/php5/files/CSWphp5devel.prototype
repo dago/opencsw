@@ -1,5 +1,5 @@
-d none /opt/csw/php5 ? ? ?
-d none /opt/csw/php5/bin ? ? ?
+d none /opt/csw/php5 0755 root bin
+d none /opt/csw/php5/bin 0755 root bin
 f none /opt/csw/php5/bin/php-config 0755 root bin
 f none /opt/csw/php5/bin/phpize 0755 root bin
 d none /opt/csw/php5/include 0755 root bin
@@ -252,7 +252,7 @@ f none /opt/csw/php5/lib/php/build/phpize.m4 0644 root bin
 f none /opt/csw/php5/lib/php/build/run-tests.php 0644 root bin
 f none /opt/csw/php5/lib/php/build/scan_makefile_in.awk 0644 root bin
 f none /opt/csw/php5/lib/php/build/shtool 0755 root bin
-d none /opt/csw/php5/man ? ? ?
+d none /opt/csw/php5/man 0755 root bin
 d none /opt/csw/php5/man/man1 0755 root bin
 f none /opt/csw/php5/man/man1/php-config.1 0644 root bin
 f none /opt/csw/php5/man/man1/phpize.1 0644 root bin

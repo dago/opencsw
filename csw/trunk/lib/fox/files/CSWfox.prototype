@@ -1,4 +1,4 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/Adie.stx 0755 root bin
 f none /opt/csw/bin/PathFinder 0755 root bin
 f none /opt/csw/bin/adie 0755 root bin
@@ -236,13 +236,13 @@ f none /opt/csw/include/fox-1.4/fxdefs.h 0644 root bin
 f none /opt/csw/include/fox-1.4/fxkeys.h 0644 root bin
 f none /opt/csw/include/fox-1.4/fxver.h 0644 root bin
 f none /opt/csw/include/fox-1.4/xincs.h 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libCHART-1.4.a 0644 root bin
 f none /opt/csw/lib/libCHART-1.4.la 0755 root bin
 f none /opt/csw/lib/libFOX-1.4.a 0644 root bin
 f none /opt/csw/lib/libFOX-1.4.la 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/fox-1.4 0755 root bin
 d none /opt/csw/share/doc/fox-1.4/html 0755 root bin
 f none /opt/csw/share/doc/fox-1.4/html/adie.html 0644 root bin
@@ -387,8 +387,8 @@ f none /opt/csw/share/doc/fox-1.4/html/widgets.html 0644 root bin
 f none /opt/csw/share/doc/fox-1.4/html/win32.html 0644 root bin
 f none /opt/csw/share/doc/fox-1.4/html/window.html 0644 root bin
 f none /opt/csw/share/doc/fox-1.4/html/xml.html 0644 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/PathFinder.1 0644 root bin
 f none /opt/csw/share/man/man1/adie.1 0644 root bin
 f none /opt/csw/share/man/man1/calculator.1 0644 root bin

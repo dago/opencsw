@@ -1,5 +1,5 @@
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/ruby 0755 root bin
 d none /opt/csw/share/doc/ruby/ri 0755 root bin
 d none /opt/csw/share/doc/ruby/ri/1.8 0755 root bin

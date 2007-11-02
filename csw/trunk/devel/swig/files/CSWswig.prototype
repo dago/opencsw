@@ -1,7 +1,7 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/swig 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/swig 0755 root bin
 d none /opt/csw/share/doc/swig/Doc 0755 root bin
 d none /opt/csw/share/doc/swig/Doc/Devel 0755 root bin

@@ -1,4 +1,4 @@
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/svn 0755 root bin
 f none /opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0 0755 root bin
 s none /opt/csw/lib/svn/libsvnjavahl-1.so.0=libsvnjavahl-1.so.0.0.0

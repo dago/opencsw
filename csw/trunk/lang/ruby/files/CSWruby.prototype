@@ -1,11 +1,11 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/erb 0755 root bin
 f none /opt/csw/bin/irb 0755 root bin
 f none /opt/csw/bin/rdoc 0755 root bin
 f none /opt/csw/bin/ri 0755 root bin
 f none /opt/csw/bin/ruby 0755 root bin
 f none /opt/csw/bin/testrb 0755 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libruby-static.a 0644 root bin
 f none /opt/csw/lib/libruby.so.1 0755 root bin
 s none /opt/csw/lib/libruby.so.1.8.6=libruby.so.1
@@ -663,7 +663,7 @@ f none /opt/csw/lib/ruby/1.8/yaml/ypath.rb 0644 root bin
 d none /opt/csw/lib/ruby/site_ruby 0755 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8 0755 root bin
 d none /opt/csw/lib/ruby/site_ruby/1.8/%GARCH%-solaris2.8 0755 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/ruby.1 0644 root bin

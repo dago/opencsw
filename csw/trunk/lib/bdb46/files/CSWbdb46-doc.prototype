@@ -1,4 +1,4 @@
-d none /opt/csw/bdb46 ? ? ?
+d none /opt/csw/bdb46 0755 root bin
 d none /opt/csw/bdb46/docs 0755 root bin
 d none /opt/csw/bdb46/docs/api_c 0755 root bin
 f none /opt/csw/bdb46/docs/api_c/api_core.html 0444 root bin

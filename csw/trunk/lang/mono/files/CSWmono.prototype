@@ -1,4 +1,4 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/al 0755 root bin
 f none /opt/csw/bin/caspol 0755 root bin
 f none /opt/csw/bin/cert2spc 0755 root bin
@@ -124,7 +124,7 @@ f none /opt/csw/include/mono/utils/mono-math.h 0644 root bin
 f none /opt/csw/include/mono/utils/mono-poll.h 0644 root bin
 f none /opt/csw/include/mono/utils/mono-uri.h 0644 root bin
 f none /opt/csw/include/mono/utils/monobitset.h 0644 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libMonoPosixHelper.a 0644 root bin
 f none /opt/csw/lib/libMonoPosixHelper.la 0755 root bin
 f none /opt/csw/lib/libMonoPosixHelper.so 0755 root bin
@@ -726,7 +726,7 @@ f none /opt/csw/lib/pkgconfig/mono-nunit.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/mono.pc 0644 root bin
 d none /opt/csw/man/man1 0755 root bin
 f none /opt/csw/man/man1/jay.1 0644 root bin
-d none /opt/csw/share ? ? ?
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/jay 0755 root bin
 f none /opt/csw/share/jay/ACKNOWLEDGEMENTS 0644 root bin
 f none /opt/csw/share/jay/NEW_FEATURES 0644 root bin
@@ -768,8 +768,8 @@ f none /opt/csw/share/libgc-mono/leak.html 0644 root bin
 f none /opt/csw/share/libgc-mono/scale.html 0644 root bin
 f none /opt/csw/share/libgc-mono/simple_example.html 0644 root bin
 f none /opt/csw/share/libgc-mono/tree.html 0644 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/al.1 0644 root bin
 f none /opt/csw/share/man/man1/cert2spc.1 0644 root bin

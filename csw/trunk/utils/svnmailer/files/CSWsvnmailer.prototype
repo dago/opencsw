@@ -1,6 +1,6 @@
-d none /opt/csw/bin ? ? ?
+d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/svn-mailer 0755 root bin
-d none /opt/csw/lib ? ? ?
+d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/python2.3 0755 root bin
 d none /opt/csw/lib/python2.3/site-packages 0755 root bin
 d none /opt/csw/lib/python2.3/site-packages/svnmailer 0755 root bin
@@ -77,8 +77,8 @@ f none /opt/csw/lib/python2.3/site-packages/svnmailer/subversion.py 0644 root bi
 f none /opt/csw/lib/python2.3/site-packages/svnmailer/subversion.pyc 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/svnmailer/util.py 0644 root bin
 f none /opt/csw/lib/python2.3/site-packages/svnmailer/util.pyc 0644 root bin
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/doc ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/svnmailer 0755 root bin
 f none /opt/csw/share/doc/svnmailer/CHANGES 0644 root bin
 f none /opt/csw/share/doc/svnmailer/CREDITS 0644 root bin
@@ -758,6 +758,6 @@ f none /opt/csw/share/doc/svnmailer/sample/hooks/post-unlock 0755 root bin
 f none /opt/csw/share/doc/svnmailer/sample/passwords.txt 0644 root bin
 f none /opt/csw/share/doc/svnmailer/sample/simple.conf 0644 root bin
 f none /opt/csw/share/doc/svnmailer/up.gif 0644 root bin
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man1 ? ? ?
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/svn-mailer.1 0644 root bin

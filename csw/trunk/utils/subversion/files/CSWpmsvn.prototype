@@ -1,6 +1,6 @@
-d none /opt/csw/lib ? ? ?
-d none /opt/csw/lib/perl ? ? ?
-d none /opt/csw/lib/perl/site_perl ? ? ?
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/site_perl 0755 root bin
 d none /opt/csw/lib/perl/site_perl/SVN 0755 root bin
 f none /opt/csw/lib/perl/site_perl/SVN/Base.pm 0444 root bin
 f none /opt/csw/lib/perl/site_perl/SVN/Client.pm 0444 root bin
@@ -34,13 +34,13 @@ f none /opt/csw/lib/perl/site_perl/auto/SVN/_Repos/_Repos.so 0555 root bin
 d none /opt/csw/lib/perl/site_perl/auto/SVN/_Wc 0755 root bin
 f none /opt/csw/lib/perl/site_perl/auto/SVN/_Wc/_Wc.bs 0444 root bin
 f none /opt/csw/lib/perl/site_perl/auto/SVN/_Wc/_Wc.so 0555 root bin
-d none /opt/csw/lib/svn ? ? ?
+d none /opt/csw/lib/svn 0755 root bin
 f none /opt/csw/lib/svn/libsvn_swig_perl-1.so.0.0.0 0755 root bin
 s none /opt/csw/lib/svn/libsvn_swig_perl-1.so.0=libsvn_swig_perl-1.so.0.0.0
 s none /opt/csw/lib/svn/libsvn_swig_perl-1.so=libsvn_swig_perl-1.so.0.0.0
-d none /opt/csw/share ? ? ?
-d none /opt/csw/share/man ? ? ?
-d none /opt/csw/share/man/man3 ? ? ?
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
 f none /opt/csw/share/man/man3/SVN::Base.3perl 0444 root bin
 f none /opt/csw/share/man/man3/SVN::Client.3perl 0444 root bin
 f none /opt/csw/share/man/man3/SVN::Core.3perl 0444 root bin

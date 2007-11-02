@@ -24,13 +24,13 @@ d init /etc/rc3.d ? ? ?
 s init /etc/rc3.d/%{INIT_RC3}%{INIT_START_PRIO}%{RC_INIT_SCRIPT}=../init.d/%{RC_INIT_SCRIPT}
 d init /etc/rcS.d ? ? ?
 s init /etc/rcS.d/%{INIT_RCS}%{INIT_KILL_PRIO}%{RC_INIT_SCRIPT}=../init.d/%{RC_INIT_SCRIPT}
-d smf /opt/csw/var/svc ? ? ?
-d smf /opt/csw/var/svc/manifest ? ? ?
-d smf /opt/csw/var/svc/manifest/site ? ? ?
+d smf /opt/csw/var/svc 0755 root bin
+d smf /opt/csw/var/svc/manifest 0755 root bin
+d smf /opt/csw/var/svc/manifest/site 0755 root bin
 v smf /opt/csw/var/svc/manifest/site/%{SMF_MANIFEST}=%{SMF_MANIFEST} 0644 root bin
-d smf /opt/csw/lib ? ? ?
-d smf /opt/csw/lib/svc ? ? ?
-d smf /opt/csw/lib/svc/method ? ? ?
+d smf /opt/csw/lib 0755 root bin
+d smf /opt/csw/lib/svc 0755 root bin
+d smf /opt/csw/lib/svc/method 0755 root bin
 f smf /opt/csw/lib/svc/method/%{SMF_SCRIPT}=%{SMF_SCRIPT} 0755 root bin
 %pkginfo:merge
 MANIFEST_FILES="/opt/csw/var/svc/manifest/site/%{SMF_MANIFEST}"

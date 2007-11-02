@@ -1,7 +1,7 @@
-d none /opt/csw/mozilla ? ? ?
-d none /opt/csw/mozilla/firefox ? ? ?
-d none /opt/csw/mozilla/firefox/lib ? ? ?
-d none /opt/csw/mozilla/firefox/share ? ? ?
+d none /opt/csw/mozilla 0755 root bin
+d none /opt/csw/mozilla/firefox 0755 root bin
+d none /opt/csw/mozilla/firefox/lib 0755 root bin
+d none /opt/csw/mozilla/firefox/share 0755 root bin
 d none /opt/csw/mozilla/firefox/share/idl 0755 root bin
 f none /opt/csw/mozilla/firefox/share/idl/XPCIDispatch.idl 0644 root bin
 f none /opt/csw/mozilla/firefox/share/idl/domstubs.idl 0644 root bin
