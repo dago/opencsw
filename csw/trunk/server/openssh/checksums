@@ -15,3 +15,4 @@ c4aef2f34e6c249a06e2ef9603047652  download/cswopenssh
 fd50a65230ec1ead7949e8500844b0bf  download/openssh
 bd0f690fbb3abcbffe7924ae3016c8c3  download/openssh_restart_workaround.sh
 ad58a9848dcaa3ad5a2ab14182fb9212  download/openssh-4.7p1-gsskex-20070927.patch
+04da9aaea49aa4b026f156a48e577a19  download/don_t_use_TIOCSCTTY.patch

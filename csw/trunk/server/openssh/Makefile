@@ -42,6 +42,10 @@ PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
 # stolen from https://bugzilla.mindrot.org/show_bug.cgi?id=1306
 #PATCHFILES += spurious_log_fix.patch
 
+# Prevent TIOCSCTTY from being used to avoid error:
+# ioctl(TIOCSCTTY): Invalid argument
+PATCHFILES += don_t_use_TIOCSCTTY.patch
+
 SPKG_CLASSES = none conf
 
 CONFIGURE_ARGS = $(DIRPATHS)
