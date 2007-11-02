@@ -27,7 +27,7 @@
 #    		
 GARNAME = openssl
 GARVERSION = 0.9.8
-RELEASE = f
+RELEASE = g
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS

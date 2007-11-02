@@ -1,3 +1,9 @@
+openssl (0.9.8,REV=2007.11.02_rev=g) unstable
+
+ * New upstream version.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Fri, 02 Nov 2007 17:28:41 +0100
+
 openssl (0.9.8,REV=2007.10.27_rev=f) unstable
 
  * New upstream version.
