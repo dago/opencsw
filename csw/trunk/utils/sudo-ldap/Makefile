@@ -1,5 +1,5 @@
 GARNAME = sudo
-GARVERSION = 1.6.9p6
+GARVERSION = 1.6.9p8
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges to specific users
@@ -23,6 +23,7 @@ PATCHFILES = install.diff
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-ldap=$(prefix)
+CONFIGURE_ARGS += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 TEST_TARGET = check
 

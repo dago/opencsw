@@ -1,5 +1,5 @@
 GARNAME = sudo
-GARVERSION = 1.6.9p6
+GARVERSION = 1.6.9p8
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges
