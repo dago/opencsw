@@ -43,6 +43,8 @@ STRIP_DIRS   += $(DESTDIR)$(prefix)/apache2/libexec
 EXTRA_INC = $(prefix)/bdb43/include
 EXTRA_LIB = $(prefix)/bdb43/lib $(prefix)/apache2/lib
 
+SKIPTEST = 1
+
 include ../category.mk
 
 pre-package: test fix-cfgscript
