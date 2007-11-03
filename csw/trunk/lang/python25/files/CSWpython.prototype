@@ -1352,9 +1352,8 @@ f none /opt/csw/lib/python/lib-dynload/_codecs_jp.so 0755 root bin
 f none /opt/csw/lib/python/lib-dynload/_codecs_kr.so 0755 root bin
 f none /opt/csw/lib/python/lib-dynload/_codecs_tw.so 0755 root bin
 f none /opt/csw/lib/python/lib-dynload/_csv.so 0755 root bin
-f none /opt/csw/lib/python/lib-dynload/_ctypes_test.so 0755 root bin
-f none /opt/csw/lib/python/lib-dynload/_curses_failed.so 0755 root bin
-f none /opt/csw/lib/python/lib-dynload/_curses_panel_failed.so 0755 root bin
+f none /opt/csw/lib/python/lib-dynload/_cursesmodule.so 0755 root bin
+f none /opt/csw/lib/python/lib-dynload/_curses_panel.so 0755 root bin
 f none /opt/csw/lib/python/lib-dynload/_elementtree.so 0755 root bin
 f none /opt/csw/lib/python/lib-dynload/_functools.so 0755 root bin
 f none /opt/csw/lib/python/lib-dynload/_hashlib.so 0755 root bin

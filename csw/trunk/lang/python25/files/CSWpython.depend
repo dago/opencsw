@@ -5,7 +5,4 @@ P CSWggettext ggettext - GNU gettext
 P CSWncurses ncurses - ncurses library and utilities
 P CSWosslrt openssl_rt - Openssl runtime libraries
 P CSWreadline readline - library to enable interactive line editing
-P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
-P CSWtcl tcl - Tool Command Language
-P CSWtk tk - GUI toolkit for tcl
 P CSWzlib zlib - Zlib Data Compression Library

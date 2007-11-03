@@ -21,6 +21,8 @@ endef
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWpython,depend prototype)
+DISTFILES += $(call admfiles,CSWpython-tk,depend prototype)
+DISTFILES += $(call admfiles,CSWidle,depend prototype)
 
 # Configure
 PATCHFILES += setup.diff
@@ -36,6 +38,9 @@ PATCHFILES += instdir.diff
 
 # Overrule bad decision about what Solaris headers provide
 PATCHFILES += headers.diff
+
+# Build curses with Solaris provided libs.
+PATCHFILES += modules.diff
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
@@ -53,6 +58,9 @@ CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --with-fpectl
 
 include ../category.mk
+
+OPT = $(OPTFLAGS)
+export OPT
 
 post-install: fix-config-makefile
 
