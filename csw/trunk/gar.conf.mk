@@ -76,13 +76,16 @@ DESTDIR  ?= $(DESTBUILD)
 BUILD_PREFIX ?= /opt/csw
 
 # Optimization Architecture
-ARCHLIST_sparc ?= v8 v9
-OPTARCH_sparc  ?= v8
-ARCHLIST_i386  ?= 386 pentium pentium_pro pentium_pro+mmx
-OPTARCH_i386   ?= 386
+ARCHLIST_sparc  ?= v8 v9
+OPTARCH_sparc   ?= v8
+OPTTARGET_sparc ?= ultra
+ARCHLIST_i386   ?= generic pentium pentium_pro pentium_pro+mmx
+OPTARCH_i386    ?= generic
+OPTTARGET_i386  ?= generic
 
 OPTARCH := $(OPTARCH_$(GARCH))
-OPTDIR   = $(shell $(GARBIN)/isadir $(OPTARCH))
+OPTTARGET := $(OPTTARGET_$(GARCH))
+OPTDIR = $(shell $(GARBIN)/isadir $(OPTARCH))
 ifneq ($(OPTDIR),)
 optbindir := $(bindir)/$(OPTDIR)
 optlibdir := $(libdir)/$(OPTDIR)
@@ -104,10 +107,10 @@ SUN_CXX_OPT  ?= -xO4 -xtarget=generic
 SUN_AS_OPT   ?= -xtarget=generic
 #SUN_LD_OPT   ?= -xtarget=generic
 else
-SUN_CC_OPT   ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
-SUN_CXX_OPT  ?= -xO3 -xarch=$(OPTARCH) -xspace -xildoff
-SUN_AS_OPT   ?= -xarch=$(OPTARCH)
-#SUN_LD_OPT   ?= -xarch=$(OPTARCH)
+SUN_CC_OPT   ?= -xO3 -xtarget=$(OPTTARGET) -xarch=$(OPTARCH)
+SUN_CXX_OPT  ?= -xO3 -xtarget=$(OPTTARGET) -xarch=$(OPTARCH)
+SUN_AS_OPT   ?=
+SUN_LD_OPT   ?=
 endif
 
 # Debug
