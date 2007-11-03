@@ -4,7 +4,7 @@ SPKG_SOURCEURL = http://www.php.net/downloads.php
 DISTFILES     += $(GARNAME)-$(GARVERSION).tar.bz2
 
 # Disable Tests (report submitted to PHP QA)
-ENABLE_TEST = 0
+SKIPTEST = 1
 
 # PostgreSQL
 ifeq ($(shell /bin/uname -p),sparc)
@@ -28,7 +28,7 @@ EXTRA_INC += $(prefix)/bdb44/lib
 
 # SAPI Common Configuration
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
-CONFIGURE_ARGS += --enable-force-cgi-redirect
+
 #CONFIGURE_ARGS += --enable-discard-path
 #CONFIGURE_ARGS += --enable-debug
 CONFIGURE_ARGS += --disable-static
@@ -46,6 +46,7 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --enable-bcmath
 CONFIGURE_ARGS += --with-bz2=shared,$(prefix)
 CONFIGURE_ARGS += --enable-calendar
+CONFIGURE_ARGS += --enable-dbx
 CONFIGURE_ARGS += --with-curl=shared,$(prefix)
 CONFIGURE_ARGS += --with-iconv=$(prefix)
 CONFIGURE_ARGS += --enable-dba=shared
@@ -73,6 +74,8 @@ CONFIGURE_ARGS += --with-ldap=shared,$(prefix)
 CONFIGURE_ARGS += --with-ldap-sasl=$(prefix)
 endif
 CONFIGURE_ARGS += --enable-mbstring
+CONFIGURE_ARGS += --enable-mbstr-enc-trans
+CONFIGURE_ARGS += --enable-mbregex
 CONFIGURE_ARGS += --enable-pdo
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql5
@@ -90,6 +93,7 @@ CONFIGURE_ARGS += --enable-simplexml
 CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-snmp=shared,$(prefix)
 CONFIGURE_ARGS += --enable-soap
+CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --enable-sockets
 CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
@@ -97,6 +101,8 @@ CONFIGURE_ARGS += --enable-sqlite-utf8
 CONFIGURE_ARGS += --enable-sysvmsg
 CONFIGURE_ARGS += --enable-sysvsem
 CONFIGURE_ARGS += --enable-sysvshm
+CONFIGURE_ARGS += --enable-track-vars
+CONFIGURE_ARGS += --enable-trans-sid
 CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --with-expat-dir=$(prefix)
 CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
@@ -104,7 +110,6 @@ CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-wddx=shared
 CONFIGURE_ARGS += --enable-xmlreader
 CONFIGURE_ARGS += --with-xmlrpc
-CONFIGURE_ARGS += --enable-pcntl
 CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 CONFIGURE_ARGS += --with-mime-magic

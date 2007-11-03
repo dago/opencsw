@@ -1,5 +1,6 @@
 I CSWphp5fam
 I CSWphp5session
+I CSWphp5openssl
 P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
 P CSWiconv libiconv - GNU iconv library
 P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries

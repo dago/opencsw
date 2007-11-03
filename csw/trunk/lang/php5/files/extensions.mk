@@ -29,5 +29,3 @@ XLIST += xsl
 
 DISTFILES += $(foreach N,$(XLIST),$(call admfiles,CSWphp5$(N),prototype))
 
-DISTFILES += CSWphp5xsl.postinstall
-

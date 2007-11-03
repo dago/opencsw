@@ -1,15 +1,15 @@
-dd5e8152c26a904379ce88b1604b2781  download/php.ini.CSW
+d7454bf176dc2260e109585d9d1f616e  download/php.ini.CSW
 90ae3cef3692d7e566c47d89fe39c43d  download/phpext
 de56d3571f4484284d106af158bffc38  download/CSWphp5_ext_enable.sh
 89e79becc9d7698c5c561581f2b098bc  download/CSWphp5_ext_disable.sh
 73ffddc92b833f335a87e42501129a01  download/CSWphp5_ext.depend
 d50e24088861d202c3fd55b46a4eff0e  download/CSWphp5.gspec
 bdc37d649bb4078a6d9c7443ac4493b2  download/CSWphp5.prototype
-61171737bd4bce942fad22c3d4386f87  download/CSWphp5.depend
+7f6e765815b28f38341e549adcea03d1  download/CSWphp5.depend
 8139c9c02a2f62bac64041fdd0e90bf6  download/CSWphp5.postinstall
 883e5ee2553ce6a4d2436146636ff172  download/CSWphp5devel.gspec
 9cf8bf4ba749d183c8677abac75239f2  download/CSWphp5devel.prototype
-3e8aaa03a833f54403cfa858ace2f22c  download/CSWphp5devel.depend
+024c896165221f78b0abc9aa21da70b1  download/CSWphp5devel.depend
 0614561dcc8ed10d041ece4a6f135957  download/CSWphp5bz2.gspec
 9cc136f653f409734ff97736ad16bc77  download/CSWphp5bz2.prototype
 4e9af10b686cd342e87c8070978221b4  download/CSWphp5curl.gspec
@@ -62,6 +62,5 @@ c75d314921d14f6ca01770ece24431da  download/CSWphp5sqlite.gspec
 6e26d0ddba093b3f2986701188c36588  download/CSWphp5wddx.prototype
 58ba92a544570ec4b613bcc409a42a23  download/CSWphp5xsl.gspec
 1d09cda20bea89b6a6645e95e940431e  download/CSWphp5xsl.prototype
-6dfad06a8e365a8d42563e8c1a8bd9ac  download/CSWphp5xsl.postinstall
 55c97a671fdabf462cc7a82971a656d2  download/php-5.2.4.tar.bz2
 a03ecfbc83c95890b9167f7324e5d7a8  download/config.diff

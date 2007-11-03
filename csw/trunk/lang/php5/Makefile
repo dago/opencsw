@@ -39,8 +39,9 @@ include files/config.mk
 
 # SAPI Specific Configuration
 CONFIGURE_ARGS += --enable-cli
-CONFIGURE_ARGS += --enable-cgi
 CONFIGURE_ARGS += --enable-fastcgi
+CONFIGURE_ARGS += --enable-force-cgi-redirect
+CONFIGURE_ARGS += --enable-pcntl
 
 # System Rules/Configuration
 include ../category.mk
@@ -52,17 +53,11 @@ include files/rules.mk
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
 
 # Copy over template config files and utility scripts
-post-install: install-templates install-cli
+post-install: install-templates
 
 php5_root = $(DESTDIR)$(prefix)/php5
 php5_bin = $(php5_root)/bin
 php5_lib = $(php5_root)/lib
-
-install-cli:
-	@echo " ==> Installing the PHP5 CLI SAPI"
-	@mv $(php5_bin)/php $(php5_bin)/php-cgi
-	@( cd $(WORKSRC) ; $(INSTALL_ENV) make install-cli )
-	@$(MAKECOOKIE)
 
 install-templates:
 	ginstall -m 0755 \
