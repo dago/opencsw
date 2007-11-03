@@ -1,5 +1,5 @@
 GARNAME = vim
-DISTVERSION = 7.0
+DISTVERSION = 7.1
 CATEGORIES = utils
 
 DESCRIPTION = Vi IMproved
@@ -12,13 +12,15 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
-WORKSRC = $(WORKDIR)/$(GARNAME)70
+WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
+DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
+DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 DISTFILES += $(call admfiles,CSWvim,depend prototype)
 DISTFILES += $(call admfiles,CSWvimrt,prototype)
 
-include files/vim_patches.mk
+include files/patches.mk
 
 #DEPENDS = utils/mktemp lib/ncurses
 
@@ -35,7 +37,7 @@ CONFIGURE_ARGS += --enable-static
 CONFIGURE_ARGS += --disable-shared
 #CONFIGURE_ARGS += --enable-perlinterp
 CONFIGURE_ARGS += --enable-pythoninterp
-CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.3/config/
+CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python/config/
 
 # Test requires controlling terminal
 TEST_SCRIPTS =
