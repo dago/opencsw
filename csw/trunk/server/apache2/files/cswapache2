@@ -8,19 +8,16 @@
 
 APACHE_HOME=/opt/csw/apache2
 CONF_FILE=$APACHE_HOME/etc/httpd.conf
-PIDFILE=$APACHE_HOME/var/run/httpd.pid
 APACHECTL=$APACHE_HOME/sbin/apachectl
 
 [ ! -f ${CONF_FILE} ] && exit 0
 [ ! -x ${APACHECTL} ] && exit 0
 
 case "$1" in
-start|startssl)
-    /bin/rm -f ${PIDFILE}
-    /bin/mkdir -p `dirname $PIDFILE`
+start)
     cmd=$1
-    if [ "$cmd" = "startssl" ]; then
-        cmd="start -DSSL"
+    if [ -f $APACHE_HOME/etc/server.crt ]; then
+        cmd="$cmd -DSSL"
     fi
     ;;
 restart)
@@ -33,7 +30,7 @@ stop)
     cmd="stop"
     ;;
 *)
-    echo "Usage: $0 {start|startssl|stop|restart|graceful}"
+    echo "Usage: $0 {start|stop|restart|graceful}"
     exit 1
     ;;
 esac
