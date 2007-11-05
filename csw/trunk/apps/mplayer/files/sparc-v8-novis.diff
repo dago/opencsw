@@ -1,51 +1,12 @@
-diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/configure MPlayer-1.0rc1/configure
---- MPlayer-1.0rc1.orig/configure	2006-10-22 18:32:31.000000000 -0400
-+++ MPlayer-1.0rc1/configure	2007-09-22 10:04:20.342223000 -0400
-@@ -1178,7 +1178,7 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc2.orig/configure MPlayer-1.0rc2/configure
+--- MPlayer-1.0rc2.orig/configure	2007-10-07 15:49:33.000000000 -0400
++++ MPlayer-1.0rc2/configure	2007-11-05 05:51:15.070425934 -0500
+@@ -1970,7 +1970,7 @@
  	    sun4c) proc=v7 ;; 
  	    sun4d) proc=v8 ;;
  	    sun4m) proc=v8 ;;
--	    sun4u) proc=v9 _vis='yes' _def_vis='#define HAVE_VIS = yes' ;;
-+#building for v8	    sun4u) proc=v9 _vis='yes' _def_vis='#define HAVE_VIS = yes' ;;
+-	    sun4u) proc=ultrasparc _vis='yes' ;;
++	    sun4u) proc=ultrasparc _vis='no' ;;
  	    sun4v) proc=v9 ;;
  	    *) proc=v8 ;;
  	esac
-diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/libavcodec/Makefile MPlayer-1.0rc1/libavcodec/Makefile
---- MPlayer-1.0rc1.orig/libavcodec/Makefile	2006-10-22 18:32:34.000000000 -0400
-+++ MPlayer-1.0rc1/libavcodec/Makefile	2007-09-22 10:03:11.479994000 -0400
-@@ -356,9 +356,9 @@
- ASM_OBJS-$(TARGET_ARMV5TE)             += armv4l/simple_idct_armv5te.o \
- 
- # sun sparc
--OBJS-$(TARGET_ARCH_SPARC)              += sparc/dsputil_vis.o \
-+#building for v8 OBJS-$(TARGET_ARCH_SPARC)              += sparc/dsputil_vis.o \
- 
--sparc/dsputil_vis.o: CFLAGS += -mcpu=ultrasparc -mtune=ultrasparc
-+#building for v8 sparc/dsputil_vis.o: CFLAGS += -mcpu=ultrasparc -mtune=ultrasparc
- 
- # sun mediaLib specific stuff
- OBJS-$(HAVE_MLIB)                      += mlib/dsputil_mlib.o \
-diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/libavcodec/dsputil.c MPlayer-1.0rc1/libavcodec/dsputil.c
---- MPlayer-1.0rc1.orig/libavcodec/dsputil.c	2006-10-22 18:32:34.000000000 -0400
-+++ MPlayer-1.0rc1/libavcodec/dsputil.c	2007-09-22 10:02:24.500794000 -0400
-@@ -4180,7 +4180,7 @@
-     dsputil_init_mlib(c, avctx);
- #endif
- #ifdef ARCH_SPARC
--   dsputil_init_vis(c,avctx);
-+/*   dsputil_init_vis(c,avctx); */
- #endif
- #ifdef ARCH_ALPHA
-     dsputil_init_alpha(c, avctx);
-diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/libavcodec/dsputil.h MPlayer-1.0rc1/libavcodec/dsputil.h
---- MPlayer-1.0rc1.orig/libavcodec/dsputil.h	2006-10-22 18:32:34.000000000 -0400
-+++ MPlayer-1.0rc1/libavcodec/dsputil.h	2007-09-22 10:02:10.500263000 -0400
-@@ -531,7 +531,7 @@
- 
- void dsputil_init_mlib(DSPContext* c, AVCodecContext *avctx);
- 
--#elif defined(ARCH_SPARC)
-+#elif defined(ARCH_SPARC) && defined(HAVE_VIS)
- 
- /* SPARC/VIS IDCT needs 8-byte aligned DCT blocks */
- #define DECLARE_ALIGNED_8(t,v)    t v __attribute__ ((aligned (8)))

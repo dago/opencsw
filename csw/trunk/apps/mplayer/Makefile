@@ -24,23 +24,20 @@ DISTFILES += Blue-1.7.tar.bz2
 DISTFILES += mplayer.1
 DISTFILES += $(call admfiles,CSWmplayer,depend)
 
-#PATCHFILES  = fix-configure-variables.diff
 #PATCHFILES += fix-configure-stdint.h-detection.diff
-#PATCHFILES += fix-configure-fontconfig.diff
 #PATCHFILES += fix-solaris8-llrint.diff
-#PATCHFILES += fix-stdint.h-includes.diff
-#PATCHFILES += fix-ffmpeg-gcc-error.diff
-#ATCHFILES += security-asmrules_fix_20061231.diff
-#PATCHFILES += security-cddb_fix_20070605.diff
-#PATCHFILES += sparc-v8-novis.diff
 
 PATCHFILES = fix-configure.diff
 PATCHFILES += fix-libavcodec-gcc-bug.diff
+PATCHFILES += sparc-v8-novis.diff
+#Sol8 only PATCHFILES += stdint-wrapper.diff
 
 CONFIGURE_ARGS  = --prefix=/opt/csw
 CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
+CONFIGURE_ARGS += --with-extraincdir=/usr/include
 CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
+CONFIGURE_ARGS += --disable-libvorbis #Having trouble compiling it
 #CONFIGURE_ARGS += --disable-libcdio
 #CONFIGURE_ARGS += --disable-iconv #Solaris libc has iconv already
 #CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications

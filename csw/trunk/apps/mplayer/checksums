@@ -2,6 +2,7 @@
 e4e2020d11b681aac898103b3ba723c4  download/Blue-1.7.tar.bz2
 86565c69affc3f8eae19c33434d6c655  download/mplayer.1
 f84bc9de8d2052da5c520d1a756f81b0  download/CSWmplayer.gspec
-e6d0cd56de0064eddee31368940ec73f  download/CSWmplayer.depend
+8ed311be34e23aa24825e016b1f946aa  download/CSWmplayer.depend
 8c02cf94c7af48a70c7e96e874379cb8  download/fix-configure.diff
 76866779859be662d9eeac73bf6016d3  download/fix-libavcodec-gcc-bug.diff
+94579f5ab17c17b8d89455128ae78cef  download/sparc-v8-novis.diff

@@ -1,3 +1,4 @@
+P CSWcommon common - common files and dirs for CSW packages
 P CSWaalib aalib - Ascii art graphics library
 P CSWaudiofile audiofile - Silicon Graphics Audio File Library
 P CSWesound esound - EsounD, The Enlightened Sound Daemon
@@ -8,7 +9,8 @@ P CSWftype2 freetype2 - The free and portable high quality font engine
 P CSWggettext ggettext - GNU gettext
 P CSWglib2 glib2 - the low-level core library for GTK+ and GNOME
 P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
-P CSWjpeg jpeg - lib and tools for JPEG image format
+P CSWiconv libiconv - GNU iconv library
+P CSWjpeg jpeg - JPEG library and tools by the Independent JPEG Group
 P CSWlibatk libatk - Accessibility toolkit for GNOME
 P CSWlibcairo libcairo - The Cairo 2D Graphics Library
 P CSWlibmad libmad - MPEG Audio Decoder
