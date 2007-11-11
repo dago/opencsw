@@ -1,6 +1,6 @@
 #!/bin/ksh -p
 
-# checkpkg 1.40 
+# checkpkg 1.44 
 # This script examines a package that has been put together
 # for submittal to the CSW archive at blastwave.org
 #
@@ -78,9 +78,14 @@ case $f in
 
 	print Looking for bad strings...
 
-	gzgrep /export/medusa $f
+	# XPG4 grep has some kind of magical "ignore ELF header" power.
+	# and so does /bin/grep. but NOT /bin/egrep???
+	#
+	GREP=/usr/xpg4/bin/egrep gzgrep '/export/medusa|/opt/build' $f
 	if [[ $? -eq 0 ]] ; then
+		print ""
 		print ERROR: build-machine paths found in file $f
+		print '(/export/medusa or /opt/build)'
 		exit 1
 	fi
 esac
@@ -188,13 +193,13 @@ if [ "$basedir" != "" ] ; then
 	print basedir="'$basedir'"
 fi
 
-if [[ ${#software} -gt 20 ]] ; then errmsg $f: software name too long ; fi
-if [[ ${#pkgname} -gt 20 ]] ; then errmsg $f: software name too long ; fi
+if [[ ${#software} -gt 20 ]] ; then errmsg $f: software name greater than 20 chars ; fi
+if [[ ${#pkgname} -gt 20 ]] ; then errmsg $f: pkg name greater than 20 chars; fi
 
 if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
 if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
 if [ "$desc" = "" ] ; then errmsg $f: no description in either NAME or DESC field ; fi
-if [ ${#desc} -gt 100 ] ; then errmsg $f: description too long ; fi
+if [ ${#desc} -gt 100 ] ; then errmsg $f: description greater than 100 chars ; fi
 if [ "$version" = "" ] ; then errmsg $f: VERSION field blank ;  fi
 if [ "$maintname" = "" ] ; then errmsg $f: maintainer name not detected. Fill out VENDOR field properly ; fi
 if [ "$email" = "" ] ; then errmsg $f: EMAIL field blank ; fi
@@ -325,6 +330,11 @@ if [[ $pkgname != "CSWcommon" ]] ; then
 	if [[ $? -eq 0 ]] ; then
 	warnmsg Only CSWcommon should have share/locale/locale.alias in it
 	fi
+	fgrep  '? ? ?' $EXTRACTDIR/$pkgname/pkgmap |
+	egrep '[/]opt[/]csw'
+	if [[ $? -eq 0 ]] ; then
+	errmsg "You should only use '? ? ?' for non-csw paths. Use appropriate explicit perms/ownership instead"
+	fi
 	# this is like "installed package info". It is acceptible
 	# to update it in a postinstall script, but not have it
 	# directly in the pkgmap. A "e" entry might be acceptible though.
@@ -335,7 +345,7 @@ if [[ $pkgname != "CSWcommon" ]] ; then
 fi
 # special case. sigh.
 if [[ $pkgname != "CSWtexinfo" ]] ; then
-	egrep '/opt/csw/share/info/dir|none share/info/dir' $EXTRACTDIR/$pkgname/pkgmap
+	egrep '/opt/csw/share/info/dir[ ]|none share/info/dir[ ]' $EXTRACTDIR/$pkgname/pkgmap
 	if [[ $? -eq 0 ]] ; then
 	errmsg /opt/csw/share/info/dir should only be in CSWtexinfo
 	rm -rf $EXTRACTDIR $TMPARCHIVE
@@ -400,7 +410,7 @@ fi
 		sort >$EXTRACTDIR/deppkgs
 	for dep in `cat $EXTRACTDIR/deppkgs`
 	do
-		pkginfo $dep || warnmsg invalid package $dep specified
+		pkginfo $dep || warnmsg  invalid package $dep specified
 	done
 
 	egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
