@@ -1,0 +1,31 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+
+# Copy templates
+template_list="share/tomcat5/webapps/source/WEB-INF/web.xml"
+
+echo Removing unmodified CSW templates:
+for file in $template_list
+do
+    filepath=${CSW_PREFIX}/$file
+    if [ -f "${filepath}" ] && [ -f "${filepath}.CSW" ] && cmp -s "${filepath}" "${filepath}.CSW"; then
+        echo "  removing $filepath"
+        rm -f "${filepath}"
+    else
+        echo "  preserving $filepath"
+    fi
+done
+
+TOMCAT5CONFIG=/etc/opt/csw/tomcat5
+
+cp ${TOMCAT5CONFIG} ${TOMCAT5CONFIG}.CSW-backup
+cat ${TOMCAT5CONFIG}.CSW-backup | awk '
+BEGIN { PRINT = 1 }
+/^# -- Added by CSWopengrok --/ { PRINT = 1 - PRINT; next }
+{ if( PRINT ) print }
+' > ${TOMCAT5CONFIG}
+rm ${TOMCAT5CONFIG}.CSW-backup
+
+
+exit 0

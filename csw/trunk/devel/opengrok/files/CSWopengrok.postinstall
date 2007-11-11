@@ -1,0 +1,53 @@
+#!/bin/sh
+
+
+TOMCAT5CONFIG=/etc/opt/csw/tomcat5
+
+echo
+echo "Adjusting ${TOMCAT5CONFIG} to find java svn libraries"
+
+cat ${TOMCAT5CONFIG} | awk '
+BEGIN { PRINT = 1 }
+/^# -- Added by CSWopengrok --/ { PRINT = 1 - PRINT; next }
+{ if( PRINT ) print }
+' > ${TOMCAT5CONFIG}.CSW-backup
+
+cat >>${TOMCAT5CONFIG}.CSW-backup <<EOF
+
+# -- Added by CSWopengrok --
+# All lines between these comments will be removed on package removal.
+LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/opt/csw/lib/svn
+export LD_LIBRARY_PATH
+# -- Added by CSWopengrok --
+
+EOF
+mv ${TOMCAT5CONFIG}.CSW-backup ${TOMCAT5CONFIG} && rm ${TOMCAT5CONFIG}.CSW-backup
+
+echo
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+
+# Copy templates
+template_list="share/tomcat5/webapps/source/WEB-INF/web.xml"
+
+echo Copying CSW templates:
+for file in $template_list
+do
+    filepath=${CSW_PREFIX}/$file
+    if [ ! -f "$filepath" ] && [ -f "$filepath.CSW" ]; then
+        echo "  creating $filepath"
+        cp $filepath.CSW $filepath
+    else
+        echo "  preserving $filepath"
+    fi
+done
+
+
+/usr/bin/cat <<EOF
+
+NOTE: You need to configure OpenGrok. Edit the file
+  /opt/csw/share/tomcat5/webapps/source/WEB-INF/web.xml
+to do so.
+EOF
+
+exit 0

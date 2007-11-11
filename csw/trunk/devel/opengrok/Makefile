@@ -1,5 +1,5 @@
 GARNAME = opengrok
-GARVERSION = 0.4
+GARVERSION = 0.5
 CATEGORIES = devel
 
 DESCRIPTION = A wicked fast source browser
@@ -15,21 +15,25 @@ endef
 
 MASTER_SITES = http://www.opensolaris.org/os/project/opengrok/files/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWopengrok,depend)
+DISTFILES += $(call admfiles,CSWopengrok,depend postinstall preremove)
 
 CONFIGURE_SCRIPTS =
-
 BUILD_SCRIPTS =
+TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
 install-custom:
 	@echo " ==> Installing files"
 	@ginstall -d $(DESTDIR)$(prefix)/share/tomcat5/webapps/source
-	@SOURCE=`pwd`/$(WORKSRC)/source.war
-	(cat $(WORKSRC)/source.war | \
+	@(cat $(WORKSRC)/source.war | \
 		(cd $(DESTDIR)$(prefix)/share/tomcat5/webapps/source; \
 		jar xf /dev/fd/0) \
 	)
+	@ginstall -d $(DESTDIR)$(prefix)/doc/opengrok
+	@ginstall $(WORKSRC)/*.txt \
+		$(DESTDIR)$(prefix)/doc/opengrok/
+	@mv $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml \
+		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml.CSW
 	# XML-Starlet auf web.xml
 	@$(MAKECOOKIE)
 	
