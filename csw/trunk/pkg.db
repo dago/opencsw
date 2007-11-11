@@ -10,6 +10,7 @@ apps/gtkpod|CSWgtkpod|gtkpod - gtk2 application for Apple iPods
 apps/kdesvn|CSWkdesvn|kdesvn - A Subversion client for KDE
 apps/kile|CSWkile|kile - An integrated LaTeX environment
 apps/lyx|CSWlyx|lyx - WYSIWYM document processor
+apps/mantis|CSWmantis|mantis - Mantis is a free popular web-based bugtracking system
 apps/mplayer|CSWmplayer|mplayer - MPlayer is a movie player which runs on many systems
 apps/ncmpc|CSWncmpc|ncmpc - ncurses client for controlling Music Player Daemons (MPD)
 apps/ogle|CSWogle|ogle - opensource DVD player with DVD menu support
@@ -48,6 +49,7 @@ apps/phpldapadmin|CSWphpldapadmin|phpldapadmin - Web-based LDAP browser to manag
 apps/rl|CSWrl|rl - rl - Randomize Lines
 apps/trac|CSWtrac|trac - Integrated SCM and Project Management
 apps/tsclient|CSWtsclient|tsclient - a frontend for rdesktop and other remote desktop tool
+apps/websvn|CSWwebsvn|websvn - PHP based web interface of Subversion repositories
 apps/wesnoth|CSWwesnoth|wesnoth - a free turn-based strategy game with a fanasy theme
 cpan/Algorithm-Annotate|CSWpmalgannotate|pm_algorithmannotate - represent a series of changes in annotate form
 cpan/Algorithm-Diff|CSWpmalgdiff|pm_algorithmdiff - compute intelligent differences between two files/lists
@@ -168,6 +170,7 @@ cpan/Digest-HMAC|CSWpmdigesthmac|pm_digesthmac - keyed-hashing for message authe
 cpan/Digest-MD2|CSWpmdigestmd2|pm_digestmd2 - interface to the MD2 Algorithm
 cpan/Digest-Nilsimsa|CSWpmdigestnilsimsa|pm_digestnilsimsa - Perl version of Nilsimsa code
 cpan/Digest-SHA1|CSWpmdigestsha1|pm_digestsha1 - interface to the SHA-1 Algorithm
+cpan/Email-Simple|CSWpmemailsimple|pm_emailsimple - simple parsing of RFC2822 message format and headers
 cpan/Email-Valid|CSWpmemailvalid|pm_emailvalid - check validity of Internet email addresses
 cpan/Env-Path|CSWpmenvpath|pm_envpath - advanced operations on path variables
 cpan/Error|CSWpmerror|pm_error - error/exception handling in an OO-ish way
