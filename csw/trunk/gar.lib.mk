@@ -78,7 +78,7 @@ scp//%:
 
 # Fetch a SVN repo via http
 svn-http//%:
-	@svn co $(SVNHTTP_CO_ARGS) http://$(dir $*) $(WORKSRC)
+	@svn co $(SVNHTTP_CO_ARGS) http://$* $(PARTIALDIR)/$(notdir $*)
 
 #################### CHECKSUM RULES ####################
 
@@ -221,7 +221,7 @@ zip-extract-%:
 # unchanged (not archives)
 cp-extract-%:
 	@echo " ==> Copying $(DOWNLOADDIR)/$*"
-	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@cp -rp $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@$(MAKECOOKIE)
 
 #gets the meat of a .deb into $(WORKSRC)
