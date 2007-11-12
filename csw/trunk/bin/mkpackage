@@ -881,6 +881,7 @@ sub make_package {
     push @pkgmk, "-d $config{spooldir}";
     push @pkgmk, "-r $config{pkgroot}" if $config{pkgroot};
     push @pkgmk, "-b $config{pkgbase}" if $config{pkgbase};
+    push @pkgmk, "-o" if $config{overwrite};
     push @pkgmk, "-f $proto";
     push @pkgmk, join(" ", @vars);
 
