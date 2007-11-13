@@ -28,6 +28,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
 
 TEST_TARGET = check
+FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 include ../category.mk
 
