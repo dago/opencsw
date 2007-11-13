@@ -1,5 +1,5 @@
 GARNAME = memcached
-GARVERSION = 1.1.12
+GARVERSION = 1.2.2
 CATEGORIES = net
 
 DESCRIPTION = distributed memory object caching system
@@ -13,23 +13,16 @@ MASTER_SITES = http://www.danga.com/memcached/dist/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWmemcached,depend prototype)
 
-# Pilfered code from OpenSolaris cmd/ssh/libopenbsd-compat
-DISTFILES   += daemon.c daemon.h
-PATCHFILES  += solaris.diff
+GARCOMPILER = GNU
 
 DEPENDS += lib/libevent
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-dependency-tracking
+CONFIGURE_ARGS += --with-libevent=$(prefix)
 
 # No test suite
 TEST_SCRIPTS =
 
 include ../category.mk
-
-post-extract:
-	@for file in daemon.c daemon.h ; do \
-		mv $(WORKDIR)/$$file $(WORKSRC) ; \
-	done
-	$(DONADA)
-	@$(MAKECOOKIE)
 
