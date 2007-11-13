@@ -1,5 +1,5 @@
 GARNAME = vim
-DISTVERSION = 7.0
+DISTVERSION = 7.1
 CATEGORIES = utils
 
 DESCRIPTION = Vi IMproved with GTK+ support
@@ -11,36 +11,22 @@ define BLURB
   Unix, MS Windows, OS/2, Macintosh, VMS, and Amiga.
 endef
 
-MASTER_SITES = ftp://ftp.vim.org/pub/vim/unix/
-DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgvim,prototype depend)
-
-WORKSRC = $(WORKDIR)/$(GARNAME)70
-
-include files/vim_patches.mk
-
 #DEPENDS = utils/mktemp lib/ncurses
 
-INSTALL_SCRIPTS = minimal
+include ../vim/files/config.mk
+DISTFILES += $(call admfiles,CSWgvim,prototype depend)
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --with-vim-name="vim-x11"
-CONFIGURE_ARGS += --with-features=huge 
-CONFIGURE_ARGS += --enable-cscope
-CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-gui=gnome2
-CONFIGURE_ARGS += --enable-perlinterp
-CONFIGURE_ARGS += --enable-pythoninterp
-CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python2.3/config/
+
+include ../vim/files/patches.mk
+
+INSTALL_SCRIPTS = minimal
 
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
 include ../category.mk
-
-# Avlid direct depends for perl/python
-LD_OPTIONS += -zlazyload
 
 # Don't install the runtime
 install-minimal:
