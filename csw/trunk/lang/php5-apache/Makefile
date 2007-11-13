@@ -1,5 +1,5 @@
 GARNAME = php
-GARVERSION = 5.2.1
+GARVERSION = 5.2.4
 CATEGORIES = lang
 
 # This directory is for the build and packaging of the Apache 1.3.x
@@ -36,6 +36,7 @@ include files/config.mk
 
 # Apache SAPI Specific Configuration
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache/bin/apxs
+INSTALL_SCRIPTS = sapi-only
 
 # System Rules/Configuration
 include ../category.mk
@@ -45,4 +46,7 @@ include files/rules.mk
 
 # SAPI Specific Rules
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache/libexec
+
+install-sapi-only:
+	@( cd $(WORKSRC) ; $(INSTALL_ENV) $(MAKE) install-sapi )
 
