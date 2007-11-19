@@ -23,6 +23,7 @@ DEPEND += lib/expat
 
 # Build Configuration
 CONFIGURE_ARGS += --enable-layout=csw
+CONFIGURE_ARGS += --enable-rule=SSL_EXPERIMENTAL
 CONFIGURE_ARGS += --enable-ssl
 CONFIGURE_ARGS += --enable-mods-shared=most
 CONFIGURE_ARGS += --enable-authn-alias
@@ -52,6 +53,15 @@ CONFIGURE_ARGS += --enable-dav-lock
 
 CONFIGURE_ARGS += --with-z=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
+
+CONFIGURE_ARGS += --enable-suexec
+CONFIGURE_ARGS += --with-suexec-caller=nobody
+CONFIGURE_ARGS += --with-suexec-docroot=$(prefix)/apache2/share/htdocs
+CONFIGURE_ARGS += --with-suexec-userdir=public_html
+CONFIGURE_ARGS += --with-suexec-uidmin=100
+CONFIGURE_ARGS += --with-suexec-gidmin=100
+CONFIGURE_ARGS += --with-suexec-logfile=$(prefix)/apache2/var/log/suexec_log
+CONFIGURE_ARGS += --with-suexec-bin=$(prefix)/apache2/sbin/suexec
 
 ifdef USE_EXTERNAL_APR
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-config

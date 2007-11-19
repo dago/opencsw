@@ -39,15 +39,6 @@ DISTFILES += update20to22
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork
-CONFIGURE_ARGS += --enable-suexec
-CONFIGURE_ARGS += --with-suexec-caller=nobody
-CONFIGURE_ARGS += --with-suexec-docroot=$(prefix)/apache2/share/htdocs
-CONFIGURE_ARGS += --with-suexec-userdir=public_html
-CONFIGURE_ARGS += --with-suexec-uidmin=100
-CONFIGURE_ARGS += --with-suexec-gidmin=100
-CONFIGURE_ARGS += --with-suexec-logfile=$(prefix)/apache2/var/log/suexec_log
-CONFIGURE_ARGS += --with-suexec-bin=$(prefix)/apache2/sbin/suexec
-CONFIGURE_ARGS += --enable-rule=SSL_EXPERIMENTAL
 
 # Fixup target variables
 APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
