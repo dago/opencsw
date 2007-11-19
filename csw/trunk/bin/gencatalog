@@ -27,7 +27,17 @@ for pkg in `ls -1 *.pkg *.pkg.gz 2>/dev/null`  ; do
     print "$DESC" >> descriptions.new 
 done
 
-mv catalog.new catalog
-mv descriptions.new descriptions
+if [ -f catalog.new ]; then
+    mv catalog.new catalog
+else
+    cp /dev/null catalog
+fi
+
+if [ -f descriptions.new ]; then
+    mv descriptions.new descriptions
+else
+    cp /dev/null descriptions
+fi
+
 rm -f catalog.old descriptions.old
 
