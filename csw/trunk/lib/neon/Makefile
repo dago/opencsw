@@ -24,7 +24,7 @@ DISTFILES += $(call admfiles,CSWneon-devel,$(ADMSTANDARD))
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --with-ssl=gnutls
+CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-expat
 
 include ../category.mk
