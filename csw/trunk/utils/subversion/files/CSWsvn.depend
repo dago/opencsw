@@ -1,10 +1,7 @@
 P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
-P CSWbdb44 berkeleydb44 - BerkeleyDB 4.4 libraries and utilities
+P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
 P CSWexpat expat -  XML Parser Toolkit
-P CSWgcrypt libgcrypt - GNU libcrypt
 P CSWggettext ggettext - GNU gettext
-P CSWgnutls gnutls - GNU Transport Layer Security lib and tools
-P CSWgpgerr libgpg_error - GNU gpg related library
 P CSWiconv libiconv - GNU iconv library
 P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
 P CSWlibnet libnet - the libnet packet construction library
