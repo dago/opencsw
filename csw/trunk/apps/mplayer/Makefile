@@ -21,14 +21,11 @@ GNU_CC_HOME = /opt/csw/gcc4
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
-DISTFILES += mplayer.1
 DISTFILES += $(call admfiles,CSWmplayer,depend)
-
-#PATCHFILES += fix-configure-stdint.h-detection.diff
-#PATCHFILES += fix-solaris8-llrint.diff
 
 PATCHFILES = fix-configure.diff
 PATCHFILES += fix-libavcodec-gcc-bug.diff
+PATCHFILES += fix-manpage-macros.diff
 PATCHFILES += sparc-v8-novis.diff
 #Sol8 only PATCHFILES += stdint-wrapper.diff
 
@@ -37,15 +34,17 @@ CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
 CONFIGURE_ARGS += --with-extraincdir=/usr/include
 CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
+CONFIGURE_ARGS += --disable-win32dll
 CONFIGURE_ARGS += --disable-libvorbis #Having trouble compiling it
 #CONFIGURE_ARGS += --disable-libcdio
 #CONFIGURE_ARGS += --disable-iconv #Solaris libc has iconv already
-#CONFIGURE_ARGS += --disable-win32 ##Until I work out the legal ramifications
 
 # Mplayer sparc-specific patches
 # Openal for sparc is broken
+# OpenGL isn't working on osiris
 ifeq ($(shell uname -p),sparc)
 CONFIGURE_ARGS += --disable-openal 
+CONFIGURE_ARGS += --disable-gl
 endif
 
 ###Framework for an $ISAEXEC optimised build###
@@ -247,10 +246,10 @@ only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $
 # Finally, merge in all the optimised binaries
 
 #Isaexec version
-isa-post-install: skins fonts manpage merge-opt-bins
+isa-post-install: skins fonts merge-opt-bins
 
 #Standard package version
-post-install: skins fonts manpage
+post-install: skins fonts
 
 #### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
 #	the expanded $(DESTDIR) variable which includes their expanded path
@@ -269,9 +268,6 @@ fonts:
 codecs:
 	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/lib/codecs)
 	(cp -r $(WORKSRC)/../all-20061022/* $(DESTDIR)$(BUILD_PREFIX)/share/codecs) 
-
-manpage:
-	(cp $(WORKSRC)/../mplayer.1 $(DESTDIR)$(BUILD_PREFIX)/share/man/man1/)
 
 merge-opt-bins:
 	@echo "====> Running merge-opt-bins <===="
