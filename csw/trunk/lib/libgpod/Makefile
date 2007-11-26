@@ -18,10 +18,6 @@ DISTFILES   += $(call admfiles,CSWlibgpod,depend)
 GARCOMPILER = GNU
 GNU_CC_HOME = /opt/csw/gcc4
 
-#PATCHFILES = headerdirs.diff
-#DEPENDS += cpan/XML-Parser
-
 CONFIGURE_ARGS = $(DIRPATHS) --includedir=/opt/csw/include
 
 include ../category.mk
-
