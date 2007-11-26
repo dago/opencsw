@@ -1,5 +1,5 @@
 GARNAME = libgpod
-GARVERSION = 0.4.2
+GARVERSION = 0.6.0
 CATEGORIES = lib
 
 DESCRIPTION = Interface to Apple iPods
@@ -11,14 +11,14 @@ define BLURB
 endef
 
 SF_PROJ = gtkpod
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = http://internap.dl.sourceforge.net/sourceforge/gtkpod/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibgpod)
+DISTFILES   += $(call admfiles,CSWlibgpod,depend)
 
 GARCOMPILER = GNU
 GNU_CC_HOME = /opt/csw/gcc4
 
-PATCHFILES = headerdirs.diff
+#PATCHFILES = headerdirs.diff
 #DEPENDS += cpan/XML-Parser
 
 CONFIGURE_ARGS = $(DIRPATHS) --includedir=/opt/csw/include
