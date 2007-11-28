@@ -2,7 +2,8 @@ GARNAME = ncmpc
 GARVERSION = 0.11.1
 CATEGORIES = apps
 
-GARCOMPILER=GNU
+GARCOMPILER = GNU
+OPTARCH_i386 = i686
 
 DESCRIPTION = ncurses client for controlling Music Player Daemons (MPD)
 define BLURB
