@@ -1,0 +1,10 @@
+%var            bitname pm_suboverride
+%var            pkgname CSWpmsuboverride
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2004-2005 by Curtis 'Ovid' Poe
+
+This library is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself, either Perl version 5.8.2 or, at
+your option, any later version of Perl 5 you may have available.

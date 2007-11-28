@@ -1,0 +1,3 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWpmlibwww pm_libwww - Collection of perlmodules that provide an api to the World Wide Web
+P CSWpmtxtreform pm_txtreform - Manual text wrapping and reformatting
