@@ -3,8 +3,6 @@ f none /opt/csw/bin/sndfile-resample 0755 root bin
 d none /opt/csw/include 0755 root bin
 f none /opt/csw/include/samplerate.h 0644 root bin
 d none /opt/csw/lib 0755 root bin
-f none /opt/csw/lib/libsamplerate.a 0644 root bin
-f none /opt/csw/lib/libsamplerate.la 0755 root bin
 f none /opt/csw/lib/libsamplerate.so.0.1.1 0755 root bin
 s none /opt/csw/lib/libsamplerate.so.0=libsamplerate.so.0.1.1
 s none /opt/csw/lib/libsamplerate.so=libsamplerate.so.0.1.1

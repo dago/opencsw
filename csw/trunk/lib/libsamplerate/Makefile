@@ -18,5 +18,6 @@ DISTFILES += $(call admfiles,CSWlibsamplerate,prototype depend)
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/*.patch))
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-static
 
 include ../category.mk
