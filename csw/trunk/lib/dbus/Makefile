@@ -1,5 +1,5 @@
 GARNAME      = dbus
-GARVERSION   = 1.0.2
+GARVERSION   = 1.1.1
 CATEGORIES   = libs
 
 DESCRIPTION  = DBus Message Bus System
@@ -15,6 +15,7 @@ PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES    += CSWdbus.gspec CSWdbus.prototype CSWdbus.depend CSWdbus.postinstall
 DISTFILES    += CSWlibdbus.gspec CSWlibdbus.prototype CSWlibdbus.depend
 DISTFILES    += CSWlibdbusdev.gspec CSWlibdbusdev.prototype CSWlibdbusdev.depend
+# DISTFILES    += $(call admfiles,CSWdbus, depend)
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
