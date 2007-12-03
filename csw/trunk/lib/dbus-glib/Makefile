@@ -15,6 +15,7 @@ PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz
 
 DISTFILES    += CSWdbusglib.gspec CSWdbusglib.prototype CSWdbusglib.depend
 DISTFILES    += CSWdbusglibdev.gspec CSWdbusglibdev.prototype CSWdbusglibdev.depend
+# DISTFILES    += $(call admfiles,CSWdbusglib, depend)
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
