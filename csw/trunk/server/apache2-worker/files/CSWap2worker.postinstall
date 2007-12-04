@@ -35,7 +35,7 @@ if [ -z "$PKG_INSTALL_ROOT" ]; then
     if [ -x "$SVCADM" ]; then
         $SVCADM enable cswapache2
     elif [ -x "$AP2_CTRL" ]; then
-        $AP2_CTRL start
+        $AP2_CTRL -k start
     fi
 fi
 
