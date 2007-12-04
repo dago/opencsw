@@ -13,7 +13,7 @@ CONF_FILE=$APACHE_HOME/etc/httpd.conf
 PIDFILE=$APACHE_HOME/var/run/httpd.pid
 APACHECTL=$APACHE_HOME/sbin/apachectl
 
-[ ! -f ${CONF_FILE} ] &&  exit $SMF_EXIT_ERR_CONFIG
+[ ! -f "$CONF_FILE" ] &&  exit $SMF_EXIT_ERR_CONFIG
 
 case "$1" in
 start)

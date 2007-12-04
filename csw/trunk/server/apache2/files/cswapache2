@@ -10,13 +10,13 @@ APACHE_HOME=/opt/csw/apache2
 CONF_FILE=$APACHE_HOME/etc/httpd.conf
 APACHECTL=$APACHE_HOME/sbin/apachectl
 
-[ ! -f ${CONF_FILE} ] && exit 0
-[ ! -x ${APACHECTL} ] && exit 0
+[ ! -f "$CONF_FILE" ] && exit 0
+[ ! -x "$APACHECTL" ] && exit 0
 
 case "$1" in
 start)
     cmd=$1
-    if [ -f $APACHE_HOME/etc/server.crt ]; then
+    if [ -f "$APACHE_HOME/etc/server.crt" ]; then
         cmd="$cmd -DSSL"
     fi
     ;;

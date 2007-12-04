@@ -18,7 +18,7 @@ warn_update=0
 echo "Checking configuration files:"
 for file in $UPGRADE_CONFIGS; do
     config=$AP2_CONFDIR/$file
-    if [ -f $config ]; then 
+    if [ -f "$config" ]; then 
         if [ -n "`grep mod_auth.so $config`" ]; then
             echo "Updating syntax of $config to Apache 2.2"
             $AP2_BINDIR/update20to22 $config
@@ -26,7 +26,7 @@ for file in $UPGRADE_CONFIGS; do
         fi
         # Ensure that the PidFile is pointed at ServerRoot relative path.
         perl -i -plne 's#PidFile /var#PidFile var#'
-    elif [ -f $config.CSW ]; then
+    elif [ -f "$config.CSW" ]; then
         echo "Creating $config from template"
         hostname=`hostname`
         sed -e s,@HOSTNAME@,$hostname,g   \

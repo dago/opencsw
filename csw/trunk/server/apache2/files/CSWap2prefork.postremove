@@ -9,16 +9,17 @@ AP2_CONF=$AP2_PREFIX/etc/httpd.conf
 SVCADM=/usr/sbin/svcadm
 
 # Fix MPM links
-if [ -f $AP2_HTTPD.prefork-save ]; then
+if [ -f "$AP2_HTTPD.prefork-save" ]; then
     mv $AP2_HTTPD.prefork-save $AP2_HTTPD
 fi
 
-[ ! -f $AP2_CONF ] && exit 0
+[ ! -f "$AP2_CONF" ] && exit 0
+[ ! -x "$AP2_HTTPD" ] && exit 0
 
-if [ -x $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+if [ -x "$PKG_INSTALL_ROOT/opt/csw/etc/csw.conf" ] ; then
     . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
 fi
-if [ -x $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+if [ -x "$PKG_INSTALL_ROOT/etc/opt/csw/csw.conf" ] ; then
     . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
 fi
 
@@ -28,11 +29,11 @@ if [ "$autoenable_daemons" = "no"  -o \
 fi
 
 # Restart apache
-if [ -z "$PKG_INSTALL_ROOT" ] && [ -x $AP2_HTTPD ]; then
+if [ -z "$PKG_INSTALL_ROOT" ]; then
     echo Starting apache...
-    if [ -x $SVCADM ]; then
+    if [ -x "$SVCADM" ]; then
         $SVCADM enable cswapache2
-    else
+    elif [ -x "$AP2_CTRL" ]; then
         $AP2_CTRL -k start
     fi
 fi
