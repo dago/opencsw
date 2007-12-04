@@ -24,6 +24,8 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 export CFLAGS CXXFLAGS LDFLAGS
 
+GREP = ggrep
+
 include ../category.mk
 
 CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --with-xml=libxml

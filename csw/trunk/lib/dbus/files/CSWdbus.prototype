@@ -23,3 +23,4 @@ d none /opt/csw/var/run/dbus 0755 root bin
 i copyright=CSWdbus.copyright
 i depend=CSWdbus.depend
 i pkginfo=CSWdbus.pkginfo
+i postinstall=CSWdbus.postinstall

@@ -1,4 +1,4 @@
 %var            bitname dbus
-%var            pkgname cswdbus
+%var            pkgname CSWdbus
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
