@@ -16,6 +16,7 @@ MASTER_SITES = http://musicpd.org/uploads/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmpd,prototype)
 DISTFILES += cswmpd.xml svc-cswmpd cswmpd
+DISTFILES += CSWmpd.csw_utils_data
 
 TEST_TARGET = check
 
