@@ -22,8 +22,9 @@
 #     environment variables defined in this file are used and the
 #     /opt/csw/etc/tomcat5 file is ignored even if it exist.
 #
-#     If there exist only a /opt/csw/etc/tomcat5 config file, then
-#     the environnement variables defined in this file are used.
+#     If there exist only a /opt/csw/etc/tomcat5/conf/tomcat5 config
+#     file, then the environnement variables defined in this file are
+#     used.
 #
 #     If no configuration file exist, all the variables needed by
 #     tomcat5 are let to their default values (see the values 
@@ -53,7 +54,7 @@
 #
 #     WARNING : By default the directory permissions are set for
 #     the root user (no write access for 'nobody').
-#     The logs are stored in /opt/csw/tomcat5/logs, and do belong
+#     The logs are stored in /opt/csw/share/tomcat5/logs, and do belong
 #     to root user. If you change the TOMCAT_USER, be sure that this
 #     user can write in the log directory.
 #
