@@ -72,7 +72,7 @@
 #
 
 SPECIFIC_CONFIG_FILE=/etc/opt/csw/tomcat5
-GLOBAL_CONFIG_FILE=/opt/csw/etc/tomcat5
+GLOBAL_CONFIG_FILE=/opt/csw/etc/tomcat5/conf/tomcat5
 
 JAVA_HOME=/usr/java
 TOMCAT_USER=tomcat
