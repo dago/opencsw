@@ -21,7 +21,7 @@ DISTFILES += $(call admfiles,CSWflex-new,depend prototype)
 
 DEPENDS = devel/bison
 
-CONFIGURE_ARGS = --prefix=$(prefix)/$(GARNAME)-$(GARVERSION)
+CONFIGURE_ARGS = --prefix=$(libexecdir)/$(GARNAME)-$(GARVERSION)
 
 TEST_TARGET = check
 TEST_SCRIPTS =
