@@ -1,5 +1,5 @@
 GARNAME = flex
-GARVERSION = 2.5.33
+GARVERSION = 2.5.34
 CATEGORIES = devel
 
 DESCRIPTION = A tool for generating text-scanning programs.
@@ -13,7 +13,7 @@ endef
 
 SPKG_SOURCEURL = http://flex.sourceforge.net/
 
-SF_PROJ = lex
+SF_PROJ = flex
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = flex-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
