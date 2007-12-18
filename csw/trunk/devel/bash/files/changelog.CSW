@@ -1,3 +1,9 @@
+bash (3.2,REV=2007.12.18) unstable
+
+  * Added bash patches bash32-026 to bash-033.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 18 Dec 2007 23:44:19 +0100
+
 bash (3.2,REV=2007.08.24) unstable
 
   * Added bash patches bash32-018 to bash-025.
