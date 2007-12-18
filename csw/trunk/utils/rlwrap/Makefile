@@ -1,5 +1,5 @@
 GARNAME = rlwrap
-GARVERSION = 0.28
+GARVERSION = 0.29
 CATEGORIES = utils
 
 DESCRIPTION = A readline wrapper
@@ -15,6 +15,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrlwrap,depend prototype)
 DISTFILES += changelog.CSW
+
+# replace setenv with putenv
+PATCHFILES += putenv.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

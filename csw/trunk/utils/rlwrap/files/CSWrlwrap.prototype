@@ -23,3 +23,6 @@ d none /opt/csw/share/rlwrap 0755 root bin
 f none /opt/csw/share/rlwrap/coqtop 0644 root bin
 f none /opt/csw/share/rlwrap/ftp 0644 root bin
 f none /opt/csw/share/rlwrap/testclient 0644 root bin
+i copyright=CSWrlwrap.copyright
+i depend=CSWrlwrap.depend
+i pkginfo=CSWrlwrap.pkginfo

@@ -1,5 +1,6 @@
-057871cb04d9dec237ac565aff5a93d7  download/rlwrap-0.28.tar.gz
+03787a8dfdd8c0ad9c8f459cde11a2c1  download/rlwrap-0.29.tar.gz
 e699f8a2167f07465cfe891bba7a1bc7  download/CSWrlwrap.gspec
-aaa18af186293200349dd24bdb0bcb85  download/CSWrlwrap.depend
+1c940e58cea90e9fd91c3286d5f2a31e  download/CSWrlwrap.depend
 2a02cfb907c6e962c325a49e87f66966  download/CSWrlwrap.prototype
-eabbf29a09de4a52f89dd563512577fc  download/changelog.CSW
+e11c0858f146db470d2c5c6d1b29740d  download/changelog.CSW
+61434c5c25bb32536a79ef007d4f580f  download/putenv.patch
