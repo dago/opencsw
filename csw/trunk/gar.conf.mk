@@ -76,15 +76,22 @@ DESTDIR  ?= $(DESTBUILD)
 BUILD_PREFIX ?= /opt/csw
 
 # Optimization Architecture
-ARCHLIST_sparc  ?= v8 v9
-OPTARCH_sparc   ?= v8
-OPTTARGET_sparc ?= ultra
-ARCHLIST_i386   ?= generic pentium pentium_pro pentium_pro+mmx
-OPTARCH_i386    ?= generic
-OPTTARGET_i386  ?= generic
+GNU_ARCHLIST_i386   ?= pentium pentium_pro pentium_pro+mmx
+GNU_OPTARCH_i386    ?= pentium
+GNU_OPTTARGET_i386  ?=
+GNU_ARCHLIST_sparc  ?=
+GNU_OPTARCH_sparc   ?= $(SUN_OPTARCH_sparc)
+GNU_OPTTARGET_sparc ?= $(SUN_OPTTARGET_sparc)
 
-OPTARCH := $(OPTARCH_$(GARCH))
-OPTTARGET := $(OPTTARGET_$(GARCH))
+SUN_ARCHLIST_i386   ?= generic $(GNU_ARCHLIST_i386)
+SUN_OPTARCH_i386    ?= generic
+SUN_OPTTARGET_i386  ?= generic
+SUN_ARCHLIST_sparc  ?= v8 v9
+SUN_OPTARCH_sparc   ?= v8
+SUN_OPTTARGET_sparc ?= ultra
+
+OPTARCH := $($(GARCOMPILER)_OPTARCH_$(GARCH))
+OPTTARGET := $($(GARCOMPILER)_OPTTARGET_$(GARCH))
 OPTDIR = $(shell $(GARBIN)/isadir $(OPTARCH))
 ifneq ($(OPTDIR),)
 optbindir := $(bindir)/$(OPTDIR)
