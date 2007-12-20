@@ -112,7 +112,7 @@ ifdef MIN_ARCH_SUN4U
 SUN_CC_OPT   ?= -xO4 -xtarget=generic
 SUN_CXX_OPT  ?= -xO4 -xtarget=generic
 SUN_AS_OPT   ?= -xtarget=generic
-#SUN_LD_OPT   ?= -xtarget=generic
+SUN_LD_OPT   ?=
 else
 SUN_CC_OPT   ?= -xO3 -xtarget=$(OPTTARGET) -xarch=$(OPTARCH)
 SUN_CXX_OPT  ?= -xO3 -xtarget=$(OPTTARGET) -xarch=$(OPTARCH)
@@ -178,20 +178,30 @@ LDFLAGS := -L$(GNU_CC_HOME)/lib $(LDFLAGS)
 LD_OPTIONS := -R$(GNU_CC_HOME)/lib $(LD_OPTIONS)
 endif
 
+ifneq ($(IGNORE_DESTDIR),1)
 CFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS) 
 CPPFLAGS += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS)
 CXXFLAGS += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS)
 LDFLAGS  += -L$(DESTDIR)$(libdir) $(EXT_LDFLAGS)
+endif
+CFLAGS   += $(EXT_CFLAGS) 
+CPPFLAGS += $(EXT_CFLAGS)
+CXXFLAGS += $(EXT_CFLAGS)
+LDFLAGS  += $(EXT_LDFLAGS)
 
 # allow us to use programs we just built
 PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
+ifneq ($(IGNORE_DESTDIR),1)
 PATH := $(DESTDIR)$(bindir):$(DESTDIR)$(sbindir):$(PATH)
+endif
 PATH := $(BUILD_PREFIX)/bin:$(BUILD_PREFIX)/sbin:$(PATH)
 PATH := $(HOME)/bin:$(CC_HOME)/bin:$(GARBIN):$(PATH)
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH := $(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+ifneq ($(IGNORE_DESTDIR),1)
 PKG_CONFIG_PATH := $(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+endif
 
 # Let's see if we can get gtk-doc going 100%
 XML_CATALOG_FILES += $(DESTDIR)$(datadir)/xml/catalog
