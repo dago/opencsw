@@ -1,0 +1,22 @@
+GARNAME = libmp4v2
+GARVERSION = 1.5.0.1
+CATEGORIES = lib
+
+DESCRIPTION = A free library to read and manipulate the mp4 container format
+define BLURB
+The mpeg4ip package, available from http://mpeg4ip.net/ contains a very useful piece of software, the libmp4v2 package. Unfortunately the mpeg4ip package also contains software that are covered by patents in some juridistictions and therefore the policy of several different free software distributions stops it's inclusion.
+
+Therefore the author of this software has prepared this redistribution of the libmp4v2 package. It cotains only code to read and manipulate the mp4 container format, and is free from patent issues to the best of his knowledge.
+endef
+
+MASTER_SITES = http://resare.com/libmp4v2/dist/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWlibmp4v2)
+PATCHFILES  = linux-stdints.diff
+PATCHFILES += mp4util.diff
+
+GARCOMPILER = GNU
+
+CONFIGURE_ARGS  = --prefix=$(prefix)
+
+include ../category.mk
