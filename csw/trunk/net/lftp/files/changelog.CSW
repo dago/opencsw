@@ -1,3 +1,11 @@
+lftp (3.6.1,REV=2007.12.21) unstable
+
+  * New upstream version.
+  * Added files/xstring_char_cast_bugfix.patch:
+  	workaround a cast problem
+
+   -- Yann Rouillard <yann@blastwave.org>  Fri, 21 Dec 2007 23:20:29 +0100
+
 lftp (3.5.13,REV=2007.08.24) unstable
 
   * New upstream version.

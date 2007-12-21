@@ -1,5 +1,5 @@
 GARNAME = lftp
-GARVERSION = 3.5.14
+GARVERSION = 3.6.1
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
@@ -25,10 +25,15 @@ SPKG_CLASSES = none conf
 # (patch only mandatory to compile with gnutls)
 #PATCHFILES = munmap.patch
 
+# the xtring class is incorrectly cast to (char *)
+# several time in the code. Might a solaris problem
+# but this patch workarounds it for now
+PATCHFILES = xstring_char_cast_bugfix.patch
+
 CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
-CONFIGURE_ARGS += --with-gnutls --with-openssl=/opt/csw
+CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 
 TEST_SCRIPTS =
 
