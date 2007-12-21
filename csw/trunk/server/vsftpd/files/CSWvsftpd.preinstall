@@ -1,62 +1,8 @@
 
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
-FTP_HOME="`/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd ftp | /usr/bin/awk -F: '{ print $6 }' 2>/dev/null`"
-if [ -z "$FTP_HOME" ] || [ ! -d "$FTP_HOME" ]; then
-	echo "WARNING: the ftp user doesn't have a valid home directory !" 
+if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd ftp >/dev/null 2>&1; then
+	FTP_HOME="`/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd ftp | /usr/bin/awk -F: '{ print $6 }' 2>/dev/null`"
+	if [ -z "$FTP_HOME" ] || [ ! -d "$FTP_HOME" ]; then
+		echo "WARNING: the ftp user doesn't have a valid home directory !" 
+	fi
 fi
-#!/bin/sh
-# Stolen from the preinstallation script from vsftpd
-
-set -e
-
-###########################################
-# create the given group if it doesn't exist #
-###########################################
-create_group()
-{
-    NAME="$1"
-    if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent group "$NAME" > /dev/null; then 
-        /usr/bin/echo "group $NAME already exists"
-    else 
-	/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/groupadd "$NAME"
-        /usr/bin/echo "group $NAME created"
-    fi
-}
-
-##################################################
-# create the given user if it doesn't exist      #
-# parameters are: userid gid home shell gecos     #
-##################################################
-create_user()
-{
-    NAME="$1"
-    GROUP="$2"
-    COMMENT="$3"
-    HOME="$4"
-    SHELL="$5"
-
-    if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd "$NAME" > /dev/null; then 
-        /usr/bin/echo "user $NAME already exists"
-    else 
-        /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/useradd -g "$GROUP" -c "$COMMENT" -d "$HOME" -s "$SHELL" "$NAME"
-               /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/pwconv
-               /usr/bin/echo "user $NAME created"
-    fi
-}
-
-
-PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
-
-OIFS="$IFS"; 
-IFS=";"
-for GRP in $CSW_GROUPS; do
-	IFS=":"
-	set -- $GRP
-	create_group "$1" 
-done
-
-for USR in $CSW_USERS; do
-	IFS=":"
-	set -- $USR
-	create_user "$1" "$2" "$3" "$4" "$5"
-done
