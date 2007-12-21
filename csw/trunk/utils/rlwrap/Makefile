@@ -23,6 +23,10 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk
 
+# the putenv patch modify configure.ac so we must re-generate configure
+pre-configure:
+		cd $(WORKSRC) && autoconf
+
 post-install:
 	        @ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW
 	        @( for FILE in AUTHORS BUGS INSTALL NEWS README TODO; do \
