@@ -14,9 +14,12 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibmp4v2)
 PATCHFILES  = linux-stdints.diff
 PATCHFILES += mp4util.diff
+PATCHFILES += include-limits.h.diff
+PATCHFILES += stdint-to-inttypes.h.diff
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS  = --prefix=$(prefix)
+CONFIGURE_ARGS = $(DIRPATHS)
+#CONFIGURE_ARGS  = --prefix=$(prefix)
 
 include ../category.mk

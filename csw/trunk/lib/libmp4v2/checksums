@@ -2,3 +2,5 @@
 0cf8210f00723eb29f40edc2d75b96b6  download/CSWlibmp4v2.gspec
 c530a0b923cef47f9b7e662aeb119383  download/linux-stdints.diff
 4109306447d4ccec029ee5aac8f50d4a  download/mp4util.diff
+a9b7b14b47d7e7830368cb51082a925b  download/include-limits.h.diff
+cab745cefe4239d58af6a068125a2830  download/stdint-to-inttypes.h.diff
