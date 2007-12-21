@@ -229,7 +229,7 @@ SF_MIRRORS  += http://$(SF_DLSERVER)/$(GARNAME)/
 SF_MIRROR    = http://easynews.dl.sourceforge.net/sourceforge
 
 # GNU
-GNU_SITE     = http://www.ibiblio.org/pub/mirrors/gnu/ftp
+GNU_SITE     = http://mirrors.kernel.org/
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
 GNU_MIRROR   = $(GNU_GNUROOT)/$(GARNAME)/
