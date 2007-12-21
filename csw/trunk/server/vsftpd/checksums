@@ -1,8 +1,8 @@
 146062e8b2f93af43ff6c2c770feea94  download/vsftpd-2.0.5.tar.gz
 d96a4c048cd16dedbbbd488768daf6e3  download/CSWvsftpd.gspec
 eb9b4f253fa90f3b6187e44375306010  download/CSWvsftpd.prototype
-5e58fb18832d01b022d435a8e11c6716  download/CSWvsftpd.preinstall
-81319e5dd110b08a476c3b31af2fd573  download/CSWvsftpd.depend
+6caa8db6c586caad5b4067135f249204  download/CSWvsftpd.preinstall
+cd89ec4f7cd98fd6a9fabd4213ab14b8  download/CSWvsftpd.depend
 469e0912bebbaa81fb6b8128bff37487  download/changelog.CSW
 eeaf77528b2da0c7730323838f30b7ef  download/README.CSW
 f6ce22a6959b93e500a4ae800295c2ee  download/vsftpd.conf
