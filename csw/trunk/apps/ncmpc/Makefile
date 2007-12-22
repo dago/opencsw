@@ -22,5 +22,5 @@ TEST_TARGET =
 
 include ../category.mk
 CPPFLAGS  += -I/opt/csw/include/ncurses
-LDFLAGS   += -lsocket -lnsl
+LDFLAGS   += -lsocket -lnsl -lintl
 CONFIGURE_ARGS = $(DIRPATHS)
