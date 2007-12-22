@@ -16,7 +16,7 @@ MASTER_SITES = http://musicpd.org/uploads/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmpd,prototype)
 DISTFILES += cswmpd.xml svc-cswmpd cswmpd
-DISTFILES += CSWmpd.csw_utils_data
+DISTFILES += CSWmpd.csw_usrgrp_config
 
 TEST_TARGET = check
 
@@ -44,3 +44,6 @@ post-install:
 proto:
 	../../bin/cswproto -s $(TIMESTAMP) -r $(DESTDIR) $(DESTDIR)/opt/csw/ | \
 		sed "s,\(.*var.mpd.* 0755\).*,\1 mpd other," > files/CSWmpd.prototype
+
+get-packages:
+	@echo Run this: pkg-get -i libao id3lib

@@ -2,7 +2,6 @@
 %var            pkgname CSWmpd
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
-%cvar           CSW_USERS mpd,other,/opt/csw/var/mpd,/bin/sh,
 
 %include        url file://%{PKGLIB}/smf_enabled.gspec
-%include        url file://%{PKGLIB}/csw_utils.gspec
+%include        url file://%{PKGLIB}/csw_usrgrp.gspec
