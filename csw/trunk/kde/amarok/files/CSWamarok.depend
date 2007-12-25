@@ -1,3 +1,4 @@
+P CSWcommon common - common files and dirs for CSW packages
 P CSWftype2 freetype2 - The free and portable high quality font engine
 P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
 P CSWgcc3g++rt gcc3g++rt - GNU C++ Compiler Run Time
