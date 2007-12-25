@@ -16,8 +16,10 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibgpod,depend)
 
 GARCOMPILER = GNU
-GNU_CC_HOME = /opt/csw/gcc4
+#GCC4 won't work. There are too many libtool deps using GCC3
+GNU_CC_HOME = /opt/csw/gcc3
 
 CONFIGURE_ARGS = $(DIRPATHS) --includedir=/opt/csw/include
+TEST_SCRIPTS =
 
 include ../category.mk
