@@ -40,8 +40,8 @@ include ../category.mk
 #Setting LD_OPTIONS here explicitly, as kde-gcc/lib _MUST_ be first for qt to work
 
 LD_OPTIONS := "-R/opt/csw/kde-gcc/lib:/opt/csw/\$$ISALIST:/opt/csw/lib"
-#CFLAGS :=	"-I$(DESTDIR)/opt/csw/include/gpod-1.0 -L$(DESTDIR)/opt/csw/lib/gpod-1.0/gpod" 
-post-install: fix-libtool-badness
 
-fix-libtool-badness:
-	( gfind $(DESTDIR)/opt/csw/ -name \*.la -exec gsed -i -e "s~$(SPKG_WORKDIR)/$(GARNAME)-$(GARVERSION)/amarok/src/mediadevice/daap/mongrel/http11~~" -e "s~/opt/build/michael/xrender-0.8.3-buildroot/opt/csw/lib~~" -e "s~/opt/build/jwheeler/build/opt/csw/lib/gpod-1.0/gpod~~" -e "s~/opt/build/jwheeler/build/opt/csw/lib~~" {} \; )
+post-install: fix-libtool-paths
+
+fix-libtool-paths:
+	( gfind $(DESTDIR)/opt/csw/kde-gcc -name \*.la -exec gsed -i -e "s~$(SPKG_WORKDIR)/$(GARNAME)-$(GARVERSION)/amarok/src/mediadevice/daap/mongrel/http11~~" -e "s~/opt/build/michael/xrender-0.8.3-buildroot/opt/csw/lib~~" -e "s~/opt/build/jwheeler/build/opt/csw/lib/gpod-1.0/gpod~~" -e "s~/opt/build/jwheeler/build/opt/csw/lib~~" {} \; )
