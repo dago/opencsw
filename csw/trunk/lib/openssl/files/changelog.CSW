@@ -1,3 +1,9 @@
+openssl (0.9.8,REV=2007.12.26_rev=g) unstable
+
+ * Fixed inconsistency between headers and libraries.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Wed, 26 Dec 2007 12:30:22 +0100
+
 openssl (0.9.8,REV=2007.11.02_rev=g) unstable
 
  * New upstream version.
