@@ -10,7 +10,7 @@ e9e93bfda8a883bca632c712d9c359f6  download/CSWossh.postinstall
 c4aef2f34e6c249a06e2ef9603047652  download/cswopenssh
 8e23e1f856f36e8e084a9283d22a7cbf  download/svc-cswopenssh
 547a915f1712c35dc79dc41378001ca9  download/cswopenssh.xml
-9b2ae27f98333b73ff2b16ed98ee896a  download/i.conf
+dc212745af1f549ce2a236401bf97c1b  download/i.conf
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
 fd50a65230ec1ead7949e8500844b0bf  download/openssh
 bd0f690fbb3abcbffe7924ae3016c8c3  download/openssh_restart_workaround.sh
