@@ -1,5 +1,5 @@
 GARNAME = rlwrap
-GARVERSION = 0.29
+GARVERSION = 0.30
 CATEGORIES = utils
 
 DESCRIPTION = A readline wrapper
@@ -17,7 +17,7 @@ DISTFILES += $(call admfiles,CSWrlwrap,depend prototype)
 DISTFILES += changelog.CSW
 
 # replace setenv with putenv
-PATCHFILES += putenv.patch
+#PATCHFILES += putenv.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
