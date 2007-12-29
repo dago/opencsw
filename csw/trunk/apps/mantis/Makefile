@@ -1,5 +1,5 @@
 GARNAME = mantis
-GARVERSION = 1.0.8
+GARVERSION = 1.1.0
 SF_PROJ = mantisbt
 CATEGORIES = apps
 
