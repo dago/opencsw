@@ -1,5 +1,5 @@
 GARNAME = CGP-CLI
-GARVERSION = 2.7.2
+GARVERSION = 2.7.2.1
 CATEGORIES = cpan
 AUTHOR = JBUHACOFF
 
@@ -13,9 +13,3 @@ endef
 DISTFILES += $(call admfiles,CSWpmcgpcli,prototype)
 
 include ../category.mk
-
-post-extract:
-	# When CPAN RT #32004 is closed this post-extract can be deleted:
-	#   http://rt.cpan.org//Ticket/Display.html?id=32004
-	@find $(WORKSRC) -name "._*" -exec rm \{\} \;
-	@$(MAKECOOKIE)
