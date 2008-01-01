@@ -17,7 +17,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrecode,)
 
 CONFIGURE_ARGS = $(DIRPATHS) \
-	--without-included-gettext
+	--enable-static=no
 
 #TEST_TARGET = check
 TEST_TARGET =
