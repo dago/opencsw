@@ -1,34 +1,33 @@
-# Beware, this Makefile is really ugly because:
+# Beware, this Makefile is complex because:
 #  - we must also build and include in the package the
 #    libraries of the previous version for comptability reason
-#    (this may be better solved by a different package name for
-#     each soname: openssl0.9.8, openssl0.9.7, ...) 
 #  
 #  - we also build optimized libraries (amd64, pentium_pro, sparcv9, ...)
-#    (support for optimized libraries or binaries should rather be done
-#     in the GAR system but none has worked on this for now)
 #
-#  - under x86, we must build the packages in 2 steps,
-#     * first, on solaris 8, to generate Solaris >= 8 compatible libraries
-#     * then, on solaris 10, to generate amd64 optimized libraries
-#    (ugly as hell and we lose the automatization)
 #
-# So build instructions for x86 are really special:
-#    - put the GAR tree and the target build directory on a NFS shared space
-#      between the Solaris 8 and the solaris 10 build machines.
+# On x86, amd64 libraries/binaries must be build on Solaris 10 whereas the
+# other ones must be built on Solaris 8, so the packaging process must be 
+# split in two steps and must use a nfs shared directory.
 #
-#    - on solaris 8, type:
-#    		gmake i386_ISALIST=pentium_pro post-install	
+#  - first, on Solaris 10, build only the amd64 optimized binaries/libraries:
 #
-#    - then, on solaris 10, type:
-#    		gmake package
+#     gmake COOKIEROOTDIR="$NFS_SHARED_DIR/cookie" DESTROOT="$NFS_SHARED_DIR" DESTIMG=$LOGNAME-$HOST8 ISA=amd64 install-libs install-bin
 #
-#  ANY better solution is welcome
-#    		
+#  - then on solaris 8, finish the build and packaging process:
+#
+#     gmake COOKIEROOTDIR="$NFS_SHARED_DIR/cookie" DESTROOT="$NFS_SHARED_DIR" package
+#
+# NFS_SHARED_DIR is the path of the directory nfs shared between the solaris 10
+# and the solaris 8 host
+# HOST8 is the hostname of the Solaris 8 host
+#
+#
 GARNAME = openssl
-GARVERSION = 0.9.8
-RELEASE = g
+GARVERSION = 0.9.8g
 CATEGORIES = lib
+
+OPENSSL_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
+OPENSSL_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/[^a-z]//g')
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
 define BLURB
@@ -43,8 +42,8 @@ MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
 
-DISTNAME   = $(GARNAME)-$(GARVERSION)$(RELEASE)
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz 
+DISTNAME   = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWossl,depend prototype)
 DISTFILES += $(call admfiles,CSWosslrt,checkinstall depend prototype-i386 prototype-sparc)
 DISTFILES += $(call admfiles,CSWossldevel,depend prototype-i386 prototype-sparc)
@@ -56,31 +55,14 @@ SPKG_CLASSES = none conf
 
 # We will include the following previous versions of libraries 
 # for comptatibility reasons
-OLD_VERSIONS	= 0.9.7m
+OLDLIBS		= 0.9.7m
+DISTFILES 	+= oldlibs.list.0.9.7m-i386
+DISTFILES 	+= oldlibs.list.0.9.7m-sparc
 
-# As we need to compile several versions, we need to have
-# directories (or files) version dependant
-WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).d/$(GARVERSION)/$(ISA)
-COOKIEROOTDIR	= cookies.$(GARVERSION).$(ISA)
-CHECKSUM_FILE	= checksums.$(GARVERSION)
+PATCHFILES = openssl.$(OPENSSL_VERSION).patch
 
-
-## For x86 ##
-# for x86, we must share cookie work dir between sol10 and sol8
-# so we make them arch-dependant instead of hostname dependant
-DESTIMG	= $(LOGNAME)-$(GARCH)
-# we also make the target build directory (which looks like build.$(GAROSREL)-$(GARCH))
-# identical between sol10 and sol8 by forcing the OS name used
-GAROSREL = 5.8
-# we force the OS for pkginfo, pkg filename so the final package step 
-# performed on solaris 10 x86 really produce SunOS5.8 labelled packages.
-SPKG_OSNAME = SunOS5.8
-
-# add the solaris-386-cc, solaris-pentium-cc,... targets
-PATCHFILES = openssl.$(GARVERSION).patch
-
-# The list of optimized libraries we will compile
-# by arch
+# The list of instructions set for which we will 
+# provide optimized libraries and binaries
 i386_ISALIST		= pentium_pro amd64
 sparc_ISALIST		= sparcv8plus+vis sparcv9
 
@@ -102,44 +84,95 @@ ifndef ISA
 OS_COMPILER = $($(GARCH)_OS_COMPILER)
 else
 OS_COMPILER = $($(ISA)_OS_COMPILER)
-NOISALIST   = 1
 endif
 
 CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER) --install_prefix=$(DESTDIR)
-
-include ../category.mk
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
-
-CFLAGS   += -mt -xstrconst
-CXXFLAGS += -noex -mt
-
-# If we are building optimized libraries, we will install
-# the libraries in $(libdir)/$(ISA) and will set the RUNPATH
-# accordingly
-ifdef ISA
-LDOPT_LIBS = $(libdir)/$(ISA) 
-LDFLAGS  += -L$(libdir)/$(ISA)
-ISA_LIBDIR = $(ISA)
-endif
 
 # We want the csw perl to be used
 #CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
 
+EXT_CFLAGS   += -mt -xstrconst
+EXT_CXXFLAGS += -noex -mt
+#
 # By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
 
+POST_INSTALL_TARGETS := striplib
+
+#########################################################################
+# Makefile instructions to handle additional optimized libraries and binaries (part I)
+# 
+# To enable optimized libraries/binaries: 
+#   - define the i386_ISALIST and sparc_ISALIST with the instructions
+#     sets additionnal binaries and librairies should be optimized for
+#   - define the install-libs and install-bin targets which should
+#     install binaries and libraries in $(bindir)/$(ISA) and $(libdir)/$(ISA) 
+#
+# To just build the non-optimized binaries/libraries:
+#   gmake ISALIST="" build
+#
+# To just build specific optimized binaries/libraries:
+#   gmake ISA=instruction_set build
+#
+# This code could be added in the common gar scripts.
+#
+#########################################################################
+
+ifndef ISA
+ISALIST=$($(GARCH)_ISALIST)
+ifdef ISALIST
+CONFIGURE_SCRIPTS	= $(WORKSRC)/configure isa
+BUILD_SCRIPTS 		= $(WORKSRC)/Makefile isa
+INSTALL_SCRIPTS 	= $(WORKSRC)/Makefile isa
+TEST_SCRIPTS 		= $(WORKSRC)/Makefile isa
+CLEAN_SCRIPTS 		= all isa
+endif
+else
+# We want a separate work and cookie directory
+# for each optimized build
+WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).$(ISA).d
+COOKIEDIR       = $(COOKIEROOTDIR)/$(DESTIMG).$(ISA).d
+endif
+
+#########################################################################
+
+#########################################################################
+# Makefile instructions to handle old libraries inclusion (part I)
+# 
+# This should rather be handled by making a distinct package for each
+# incompatible library version.
+#########################################################################
+
+ifdef OLDLIB
+CHECKSUM_FILE	= checksums.$(GARVERSION)
+ifdef ISA
+WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).$(ISA).$(GARVERSION).d
+COOKIEDIR       = $(COOKIEROOTDIR)/$(DESTIMG).$(ISA).$(GARVERSION).d
+else
+WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).$(GARVERSION).d
+COOKIEDIR       = $(COOKIEROOTDIR)/$(DESTIMG).$(GARVERSION).d
+endif
+endif
+
+ifdef OLDLIBS
+ifndef ISA
+INSTALL_SCRIPTS += oldlibs
+endif
+endif
+
+#########################################################################
+
+
+include ../category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 pre-configure: 
-	echo " ==> Creating configure script $(ISA) $(OS_COMPILER)"
+	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
-	$(MAKECOOKIE)
-
-install-certs: build install-$(WORKSRC)/Makefile
-	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
 	$(MAKECOOKIE)
 
 # we remove every debug information except symbol table
@@ -153,61 +186,90 @@ striplib:
 	chmod -R u+w $(DESTDIR)$(libdir)/engines
 	strip -x $(DESTDIR)$(libdir)/engines/*.so*
 
-# before making the package, we also need to install:
-# 	- optimized build of libraries and binaries (pentium, sparcv9, ...)
-# 	- previous build of libraries for compatibility reasons
-#
-# we also add write access to ensure library stripping will work
-# 
-post-install: install-certs 
+post-install: 
 	[ -f $(DESTDIR)$(prefix)/ssl/openssl.cnf ] && \
 		ginstall -D $(DESTDIR)$(prefix)/ssl/openssl.cnf $(DESTDIR)$(sysconfdir)/ssl/openssl.cnf
-	( for ISA in $($(GARCH)_ISALIST); do \
-		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA install-optimized-lib-and-bin; \
-	  done )
-	( for VERSION in $(OLD_VERSIONS); do \
-		GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
-		RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
-		for ISA in "" $($(GARCH)_ISALIST); do \
-			gmake GARVERSION=$$GARVERSION RELEASE=$$RELEASE ISA=$$ISA install-old-libraries; \
-		done; \
-	  done )
-	gmake striplib
+	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
+	$(MAKECOOKIE)
 
-# For optimized flavor build (pentium, sparvc9, ...), we only
-# install binaries and libraries
-install-optimized-lib-and-bin: build 
-	@echo " ==> Installing optimized libraries and binaries from $(WORKSRC)"
+
+# These targets are required to provide optimized binaries/libraries
+
+install-libs: install-static-libs install-dynamic-libs
+
+install-static-libs: build
+	@echo " ==> Installing libraries from $(WORKSRC)" 
 	ginstall -d $(DESTDIR)$(libdir)/$(ISA)
-	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
-	ginstall -d $(DESTDIR)$(bindir)/$(ISA_LIBDIR)
-	cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir)/$(ISA_LIBDIR)
+	cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA)
 	$(MAKECOOKIE)
 
-# For previous versions build, we will only install the so files
-install-old-libraries: build 
-	@echo " ==> Installing old libraries from $(WORKSRC)"
-	ginstall -d $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
-	cd $(WORKSRC) && ginstall libcrypto.so.$(GARVERSION) libssl.so.$(GARVERSION) $(DESTDIR)$(libdir)/$(ISA_LIBDIR)
+install-dynamic-libs: build
+	@echo " ==> Installing libraries from $(WORKSRC)" 
+	ginstall -d $(DESTDIR)$(libdir)/$(ISA)
+	cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(libdir)/$(ISA)
 	$(MAKECOOKIE)
 
-makesum-everything: makesum
-	( for ISA in "" $($(GARCH)_ISALIST); do \
-		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA makesum; \
-		for VERSION in $(OLD_VERSIONS); do \
-			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
-			RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
-			gmake GARVERSION=$$GARVERSION RELEASE=$$RELEASE ISA=$$ISA makesum; \
-		done; \
-	  done )
+install-bin: build
+	@echo " ==> Installing binaries from $(WORKSRC)" 
+	ginstall -d $(DESTDIR)$(bindir)/$(ISA)
+	cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir)/$(ISA)
+	$(MAKECOOKIE)
 
-clean-everything: clean
-	( for ISA in "" $($(GARCH)_ISALIST); do \
-		gmake GARVERSION=$(GARVERSION) RELEASE=$(RELEASE) ISA=$$ISA clean; \
-		for VERSION in $(OLD_VERSIONS); do \
-			GARVERSION=`echo $$VERSION | sed -e 's/[a-z]//g'`; \
-			RELEASE=`echo $$VERSION | sed -e 's/[^a-z]//g'`; \
-			gmake GARVERSION=$$GARVERSION RELEASE=$$RELEASE ISA=$$ISA clean; \
-		done; \
-	  done )
 
+	
+#########################################################################
+# Makefile instructions to handle additional optimized libraries and binaries (part II)
+# 
+#########################################################################
+
+configure-isa: $(addprefix configure-isa-,$(ISALIST))
+configure-isa-%:
+	@$(MAKE) ISA=$* configure
+
+build-isa: $(addprefix build-isa-,$(ISALIST))
+build-isa-%:
+	@$(MAKE) ISA=$* build
+
+test-isa: $(addprefix test-isa-,$(ISALIST))
+test-isa-%:
+	@$(MAKE) ISA=$* test
+
+install-isa: $(addprefix install-isa-,$(ISALIST))
+install-isa-%:
+	@$(MAKE) ISA=$* install-libs install-bin
+
+clean-isa: $(addprefix clean-isa-,$(ISALIST))
+clean-isa-%:
+	@$(MAKE) ISA=$* clean
+
+#########################################################################
+# Makefile instructions to handle old libraries inclusion (part II)
+# 
+# This should rather be handled by making a distinct package for each
+# incompatible library version.
+#########################################################################
+
+update-oldlibs-archive: $(addprefix update-oldlibs-archive-,$(OLDLIBS))
+update-oldlibs-archive-%: clean-oldlibs-archive-% install-oldlibs-%
+	@echo " ==> Creating old libraries archive oldlibs.$*-$(GARCH).tar.gz"
+	@cd $(DESTDIR) && tar cvf - `cat $(CURDIR)/$(DOWNLOADDIR)/oldlibs.list.$*-$(GARCH)` | gzip > $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz
+
+clean-oldlibs-archive: $(addprefix clean-oldlibs-archive,$(OLDLIBS))	
+clean-oldlibs-archive-%:
+	@echo " ==> Removing old libraries archive oldlibs.$*-$(GARCH).tar.gz"
+	@rm -f $(DOWNLOADDIR)/oldlibs.$*-$(GARCH).tar.gz 
+	@rm -f $(COOKIEDIR)/install-oldlibs*
+
+install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
+install-oldlibs-%: 
+	@if [ -f $(DOWNLOADDIR)/oldlibs.$*.tar.gz ]; then \
+		echo " ==> Installing old libraries $* from existing old libraries archive oldlibs.$*-$(GARCH).tar.gz"; \
+		cd $(DESTDIR) && gunzip -c $(CURDIR)/$(DOWNLOADDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -; \
+	else \
+		echo " ==> Build old libraries $*"; \
+		$(MAKE) GARVERSION=$* OLDLIB=1 build; \
+		for ISA in "" $(ISALIST); do \
+			$(MAKE) GARVERSION=$* OLDLIB=1 ISA=$$ISA install-dynamic-libs; \
+		done; \
+	fi
+	$(MAKECOOKIE)
