@@ -58,6 +58,8 @@ SPKG_CLASSES = none conf
 OLDLIBS		= 0.9.7m
 DISTFILES 	+= oldlibs.list.0.9.7m-i386
 DISTFILES 	+= oldlibs.list.0.9.7m-sparc
+0.9.7m_i386_ISALIST		= pentium_pro
+0.9.7m_sparc_ISALIST		= sparcv8plus+vis sparcv9
 
 PATCHFILES = openssl.$(OPENSSL_VERSION).patch
 
@@ -65,6 +67,10 @@ PATCHFILES = openssl.$(OPENSSL_VERSION).patch
 # provide optimized libraries and binaries
 i386_ISALIST		= pentium_pro amd64
 sparc_ISALIST		= sparcv8plus+vis sparcv9
+
+ifdef OLDLIB
+i386_ISALIST	 	= pentium_pro
+endif
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
@@ -274,7 +280,7 @@ install-oldlibs-%:
 	else \
 		echo " ==> Build old libraries $*"; \
 		$(MAKE) GARVERSION=$* OLDLIB=1 build; \
-		for ISA in "" $(ISALIST); do \
+		for ISA in "" $($(*)_$(GARCH)_ISALIST); do \
 			$(MAKE) GARVERSION=$* OLDLIB=1 ISA=$$ISA install-dynamic-libs; \
 		done; \
 	fi
