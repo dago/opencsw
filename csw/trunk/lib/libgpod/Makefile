@@ -11,7 +11,7 @@ define BLURB
 endef
 
 SF_PROJ = gtkpod
-MASTER_SITES = http://internap.dl.sourceforge.net/sourceforge/gtkpod/
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibgpod,depend)
 
