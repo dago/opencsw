@@ -7,7 +7,6 @@ define BLURB
 EasyTAG is a utility for viewing and editing tags for MP3, MP2, MP4/AAC, FLAC, Ogg Vorbis, MusePack, Monkey's Audio and WavPack files. Its simple and nice GTK+ interface makes tagging easier under GNU/Linux or Windows.
 endef
 
-SF_PROJ = easytag
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWeasytag,depend)
