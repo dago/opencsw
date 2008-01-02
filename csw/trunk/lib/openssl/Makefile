@@ -11,7 +11,7 @@
 #
 #  - first, on Solaris 10, build only the amd64 optimized binaries/libraries:
 #
-#     gmake COOKIEROOTDIR="$NFS_SHARED_DIR/cookie" DESTROOT="$NFS_SHARED_DIR" DESTIMG=$LOGNAME-$HOST8 ISA=amd64 install-libs install-bin
+#     gmake COOKIEROOTDIR="$NFS_SHARED_DIR/cookie" DESTROOT="$NFS_SHARED_DIR" DESTIMG=$LOGNAME-$HOST8 GAROSREL=5.8 ISA=amd64 install-libs install-bin
 #
 #  - then on solaris 8, finish the build and packaging process:
 #
@@ -242,7 +242,7 @@ test-isa-%:
 
 install-isa: $(addprefix install-isa-,$(ISALIST))
 install-isa-%:
-	@$(MAKE) ISA=$* install-libs install-bin
+	@$(MAKE) ISA=$* test install-libs install-bin
 
 clean-isa: $(addprefix clean-isa-,$(ISALIST))
 clean-isa-%:
