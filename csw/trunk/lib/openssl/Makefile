@@ -168,7 +168,7 @@ endif
 
 include ../category.mk
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
 
 pre-configure: 
 	echo " ==> Creating configure script"
@@ -198,22 +198,28 @@ post-install:
 install-libs: install-static-libs install-dynamic-libs
 
 install-static-libs: build
-	@echo " ==> Installing libraries from $(WORKSRC)" 
-	ginstall -d $(DESTDIR)$(libdir)/$(ISA)
-	cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA)
-	$(MAKECOOKIE)
+	@if test ! -f "$(COOKIEDIR)/install-static-libs"; then \
+		echo " ==> Installing libraries from $(WORKSRC)"; \
+		ginstall -d $(DESTDIR)$(libdir)/$(ISA); \
+		cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA); \
+		$(MAKECOOKIE); \
+	fi
 
 install-dynamic-libs: build
-	@echo " ==> Installing libraries from $(WORKSRC)" 
-	ginstall -d $(DESTDIR)$(libdir)/$(ISA)
-	cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(libdir)/$(ISA)
-	$(MAKECOOKIE)
+	@if test ! -f $(COOKIEDIR)/install-dynamic-libs; then \
+		echo " ==> Installing libraries from $(WORKSRC)"; \
+		ginstall -d $(DESTDIR)$(libdir)/$(ISA); \
+		cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(libdir)/$(ISA); \
+		$(MAKECOOKIE); \
+	fi
 
 install-bin: build
-	@echo " ==> Installing binaries from $(WORKSRC)" 
-	ginstall -d $(DESTDIR)$(bindir)/$(ISA)
-	cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir)/$(ISA)
-	$(MAKECOOKIE)
+	@if test ! -f $(COOKIEDIR)/install-bin; then \
+		echo " ==> Installing binaries from $(WORKSRC)"; \
+		ginstall -d $(DESTDIR)$(bindir)/$(ISA); \
+		cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir)/$(ISA); \
+		$(MAKECOOKIE); \
+	fi
 
 
 	
@@ -257,14 +263,14 @@ update-oldlibs-archive-%: clean-oldlibs-archive-% install-oldlibs-%
 clean-oldlibs-archive: $(addprefix clean-oldlibs-archive,$(OLDLIBS))	
 clean-oldlibs-archive-%:
 	@echo " ==> Removing old libraries archive oldlibs.$*-$(GARCH).tar.gz"
-	@rm -f $(DOWNLOADDIR)/oldlibs.$*-$(GARCH).tar.gz 
+	@rm -f $(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz 
 	@rm -f $(COOKIEDIR)/install-oldlibs*
 
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%: 
-	@if [ -f $(DOWNLOADDIR)/oldlibs.$*.tar.gz ]; then \
+	@if [ -f $(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz ]; then \
 		echo " ==> Installing old libraries $* from existing old libraries archive oldlibs.$*-$(GARCH).tar.gz"; \
-		cd $(DESTDIR) && gunzip -c $(CURDIR)/$(DOWNLOADDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -; \
+		cd $(DESTDIR) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -; \
 	else \
 		echo " ==> Build old libraries $*"; \
 		$(MAKE) GARVERSION=$* OLDLIB=1 build; \
@@ -272,4 +278,4 @@ install-oldlibs-%:
 			$(MAKE) GARVERSION=$* OLDLIB=1 ISA=$$ISA install-dynamic-libs; \
 		done; \
 	fi
-	$(MAKECOOKIE)
+	@$(MAKECOOKIE)
