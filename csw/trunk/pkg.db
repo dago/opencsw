@@ -682,6 +682,7 @@ utils/clearsilver|CSWpycs|pyclearsilver - Clearsilver Python language binding
 utils/ctags|CSWctags|ctags -  Exuberant ctags
 utils/daemontools|CSWdaemontools|daemontools - A collection of tools for managing UNIX services
 utils/dcraw|CSWdcraw|dcraw - Raw Digital Photo Decoder
+utils/dtracetoolkit|CSWdtracetoolkit|dtracetoolkit - A collection of useful documented scripts developed by the OpenSolaris DTrace community
 utils/emacs|CSWemacs|emacs - Emacs editor
 utils/emacs|CSWemacsrt|emacsrt - emacs shared runtime and documentation
 utils/emacs|CSWxemacs|xemacs - emacs shared runtime and documentation
