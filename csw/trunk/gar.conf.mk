@@ -219,14 +219,10 @@ GNOME_SUBV   = $(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')
 GNOME_MIRROR = $(GNOME_ROOT)/$(GARNAME)/$(GNOME_SUBV)/
 
 # SourceForge
-SF_SITES    ?= umn easynews unc
-SF_DLSERVER  = dl.sourceforge.net/sourceforge
 SF_PROJ     ?= $(GARNAME)
-SF_MIRRORS   = $(foreach S,$(SF_SITES),http://$(S).$(SF_DLSERVER)/$(SF_PROJ)/)
-SF_MIRRORS  += http://$(SF_DLSERVER)/$(GARNAME)/
-
+SF_MIRRORS  ?= http://downloads.sourceforge.net/$(SF_PROJ)/
 # Keep this for compatibility
-SF_MIRROR    = http://easynews.dl.sourceforge.net/sourceforge
+SF_MIRROR    = $(firstword $(SF_MIRRORS))
 
 # GNU
 GNU_SITE     = http://mirrors.kernel.org/
