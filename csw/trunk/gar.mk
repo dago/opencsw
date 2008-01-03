@@ -99,7 +99,7 @@ deep-%: %
 # ========================= MAIN RULES ========================= 
 # The main rules are the ones that the user can specify as a
 # target on the "make" command-line.  Currently, they are:
-#	fetch-list fetch checksum makesum extract checkpatch patch
+#	prereq fetch-list fetch checksum makesum extract checkpatch patch
 #	build install reinstall uninstall package
 # (some may not be complete yet).
 #
@@ -120,6 +120,17 @@ deep-%: %
 announce:
 	@echo "[===== NOW BUILDING:	$(DISTNAME)	=====]"
 
+# prerequisite	- Make sure that the system is in a sane state for building the package
+PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(PREREQUISITE_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
+
+prerequisite: announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-prerequisite $(PREREQUISITE_TARGETS) post-prerequisite
+	$(DONADA)
+
+prerequisitepkg-%:
+	@echo " ==> Verifying for installed package $*: \c"
+	@(pkginfo -q $*; if [ $$? -eq 0 ]; then echo "installed"; else echo "MISSING"; exit 1; fi)
+	@$(MAKECOOKIE)
+
 # fetch-list	- Show list of files that would be retrieved by fetch.
 # NOTE: DOES NOT RUN pre-everything!
 fetch-list:
@@ -132,7 +143,7 @@ fetch-list:
 #				  into $(DOWNLOADDIR) as necessary.
 FETCH_TARGETS =  $(addprefix $(DOWNLOADDIR)/,$(ALLFILES))
 
-fetch: announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-fetch $(FETCH_TARGETS) post-fetch
+fetch: prerequisite pre-fetch $(FETCH_TARGETS) post-fetch
 	$(DONADA)
 
 # returns true if fetch has completed successfully, false
