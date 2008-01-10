@@ -16,11 +16,32 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWrecode,)
 
+# I did some more tests. The faulted tests have something to do
+# with compiler optimization:
+# 
+# The tests 90-96 fail on Solaris 10 Sparc with Sun Studio 11 and -xO2
+# The tests 90-96 fail on Solaris 10 Sparc with Sun Studio 12 and -xO2
+# All tests succeed on Solaris 10 Sparc with Sun Studio 11 and -xO1
+# All tests succeed on Solaris 10 Sparc with Sun Studio 12 and -xO1
+# The tests 59 fails and 90-96 don't terminate on Solaris 10 x86 with Sun Studio 11 and -xO0
+# The tests 59 fails and 90-96 don't terminate on Solaris 10 x86 with Sun Studio 12 and -xO0
+# All tests succeed on Solaris 10 x86 with Sun Studio 11 without optimization
+# All tests succeed on Solaris 10 x86 with Sun Studio 12 without optimization
+# 
+# I just discovered that this is already on the list in the file TODO:
+# 
+# . + Solaris cc 4.2 with option "-O" miscompiles src/libiconv.c, probably
+#     the function module_libiconv. The symptom is that
+#     "src/recode --quiet --force ascii-bs..ebcdic < COPYING > output"
+#     creates an output file smaller than COPYING. The only known workaround
+#     is to not use "-O".
+
+SUN_CC_OPT = -xtarget=$(OPTTARGET) -xarch=$(OPTARCH)
+
 CONFIGURE_ARGS = $(DIRPATHS) \
 	--enable-static=no
 
-#TEST_TARGET = check
-TEST_TARGET =
+TEST_TARGET = check
 
 post-install:
 	@echo " ==> Removing charset.alias"
