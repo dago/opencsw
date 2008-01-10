@@ -1,0 +1,9 @@
+P CSWfconfig    fontconfig - A library for configuring and customizing font access.
+P CSWftype2     freetype2 - The free and portable high quality font engine
+P CSWggettext   ggettext - GNU gettext
+P CSWglib2      glib2 - the low-level core library for GTK+ and GNOME
+P CSWjpeg       jpeg - JPEG library and tools by the Independent JPEG Group
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWpng        png - library for Portable Network Graphics format (PNG)
+P CSWtiff       tiff - lib and tools for Tag Image File Format
+P CSWzlib       zlib - Zlib Data Compression Library

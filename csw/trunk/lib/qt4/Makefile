@@ -1,5 +1,5 @@
 GARNAME = qt4
-GARVERSION = 4.3.1
+GARVERSION = 4.3.3
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework
@@ -35,8 +35,8 @@ endif
 
 MASTER_SITES = ftp://ftp.trolltech.com/qt/source/
 DISTFILES    = qt-x11-opensource-src-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWqt4,prototype-sparc prototype-i386)
-DISTFILES   += $(call admfiles,CSWqt4-devel,prototype-sparc prototype-i386)
+DISTFILES   += $(call admfiles,CSWqt4,depend prototype-sparc prototype-i386)
+DISTFILES   += $(call admfiles,CSWqt4-devel,depend prototype-sparc prototype-i386)
 DISTFILES   += $(call admfiles,CSWqt4-docs,prototype)
 
 WORKDIR = $(WORKROOTDIR)/$(DESTIMG).d/$(PLATFORM)
@@ -57,7 +57,7 @@ endif
 CONFIGURE_ARGS = -prefix $(prefix) \
 			-bindir $(bindir) \
 			-libdir $(libdir) \
-			-docdir $(docdir)/qt/doc \
+			-docdir $(docdir)/qt \
 			-headerdir $(includedir) \
 			-plugindir $(libdir)/qt4/plugins \
 			-datadir $(sharedstatedir)/qt4 \
@@ -70,6 +70,8 @@ CONFIGURE_ARGS = -prefix $(prefix) \
 			-L$(DESTDIR)$(libdir) \
 			-confirm-license 
 
+SKIPTEST = 1
+
 INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
 
 SRC_CLEAN_TARGET = confclean
@@ -78,8 +80,10 @@ CLEAN_TARGETS += custom
 
 include ../category.mk
 
+OPTARCH_sparc   = v8
 OPTARCH_sparcv9 = v9
-OPTARCH_amd64 = amd64
+OPTARCH_i386    = 386
+OPTARCH_amd64   = amd64
 OPTARCH = $(OPTARCH_$(ISA))
 
 ifdef DO64
@@ -91,7 +95,9 @@ ifdef DO64
 	# local QT4 includes and need to be defined during configure.
 	CFLAGS = $($(GARCOMPILER)_CC_$(GARFLAVOR))
 	CPPFLAGS = $($(GARCOMPILER)_CPP_FLAGS)
-	CXXFLAGS = $($(GARCOMPILER)_CXX_$(GARFLAVOR))
+	# -D_POSIX_PTHREAD_SEMANTICS needed, because getpwuid_r is used in the 4-arg-version
+	# (see getpwuid_r(3c) for details)
+	CXXFLAGS = $($(GARCOMPILER)_CXX_$(GARFLAVOR)) -D_POSIX_PTHREAD_SEMANTICS
 	LDFLAGS = $($(GARCOMPILER)_LD_FLAGS) $($(GARCOMPILER)_LD_$(GARFLAVOR))
 else
 	# Do not use -xO3 as -xO2 is already set in the Makefile
@@ -132,3 +138,12 @@ clean64:
 	gmake DO64=1 clean-all
 
 clean-custom: clean64 clean-all
+
+env:
+	@echo "      GARCH = $(GARCH)"
+	@echo " GARVERSION = $(GARVERSION)"
+	@echo "        ISA = $(ISA)"
+	@echo "     CFLAGS = $(CFLAGS)"
+	@echo "    OPTARCH = $(OPTARCH)"
+	@echo " OPTARCH_ISA = $(OPTARCH_$(ISA))"
+

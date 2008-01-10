@@ -1,9 +1,11 @@
-ec255dcc2b30f5efe0ded85ae8a75e13  download/qt-x11-opensource-src-4.3.1.tar.gz
+19678fe35170559cd6a6fa531c57799c  download/qt-x11-opensource-src-4.3.3.tar.gz
 1971c2c7513b65cd7a8d33b9a637a908  download/CSWqt4.gspec
-9cf7be5196be6cc180892f717dae8ce7  download/CSWqt4.prototype-sparc
-08edab88f16da6cfc61c3c61ec3b3ec3  download/CSWqt4.prototype-i386
+abca6ced15fc6cc1f47ca35ebe1af99b  download/CSWqt4.depend
+64ca202611a47b1a1a0a37aacde0fd0b  download/CSWqt4.prototype-sparc
+185da26b9aaa098a2f7c9aaed62a091e  download/CSWqt4.prototype-i386
 c7ea9cb16a10cd68abf79b0e678fd6e1  download/CSWqt4-devel.gspec
-da2270b0b4d3338ea7d7fc84aef6be2e  download/CSWqt4-devel.prototype-sparc
-cbc4561501f7df18afdd78ee9018f7c6  download/CSWqt4-devel.prototype-i386
+11a7ff5c7eed0535b6862f87652543c6  download/CSWqt4-devel.depend
+14e48ae1659598a2d922dae00db93137  download/CSWqt4-devel.prototype-sparc
+5d81b82b25d19be5bb9b955b9d75593e  download/CSWqt4-devel.prototype-i386
 a4448803a657c547f6423d6c54f78540  download/CSWqt4-docs.gspec
-d97bbbf9e6a8c06353fe31b3a6ee55e4  download/CSWqt4-docs.prototype
+1fd59af6c2e4484701323a4b62ea24c4  download/CSWqt4-docs.prototype

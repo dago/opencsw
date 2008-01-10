@@ -1713,6 +1713,7 @@ f none /opt/csw/include/QtNetwork/QIPv6Address 0644 root bin
 f none /opt/csw/include/QtNetwork/QNetworkAddressEntry 0644 root bin
 f none /opt/csw/include/QtNetwork/QNetworkInterface 0644 root bin
 f none /opt/csw/include/QtNetwork/QNetworkProxy 0644 root bin
+f none /opt/csw/include/QtNetwork/QSsl 0644 root bin
 f none /opt/csw/include/QtNetwork/QSslCertificate 0644 root bin
 f none /opt/csw/include/QtNetwork/QSslCipher 0644 root bin
 f none /opt/csw/include/QtNetwork/QSslError 0644 root bin
@@ -3733,8 +3734,6 @@ f none /opt/csw/share/qt4/examples/widgets/movie/movie.pro 0644 root bin
 f none /opt/csw/share/qt4/examples/widgets/movie/movie.qrc 0644 root bin
 f none /opt/csw/share/qt4/examples/widgets/movie/movieplayer.cpp 0644 root bin
 f none /opt/csw/share/qt4/examples/widgets/movie/movieplayer.h 0644 root bin
-d none /opt/csw/share/qt4/examples/widgets/movie/movies 0755 root bin
-f none /opt/csw/share/qt4/examples/widgets/movie/movies/fire.mng 0644 root bin
 d none /opt/csw/share/qt4/examples/widgets/scribble 0755 root bin
 f none /opt/csw/share/qt4/examples/widgets/scribble/main.cpp 0644 root bin
 f none /opt/csw/share/qt4/examples/widgets/scribble/mainwindow.cpp 0644 root bin
@@ -4009,12 +4008,12 @@ f none /opt/csw/share/qt4/mkspecs/hpux-g++-64/qmake.conf 0644 root bin
 f none /opt/csw/share/qt4/mkspecs/hpux-g++-64/qplatformdefs.h 0644 root bin
 f none /opt/csw/share/qt4/mkspecs/hpux-g++/qmake.conf 0644 root bin
 f none /opt/csw/share/qt4/mkspecs/hpux-g++/qplatformdefs.h 0644 root bin
-d none /opt/csw/share/qt4/mkspecs/hpuxi-acc 0755 root bin
+d none /opt/csw/share/qt4/mkspecs/hpuxi-acc-32 0755 root bin
+f none /opt/csw/share/qt4/mkspecs/hpuxi-acc-32/qmake.conf 0644 root bin
+f none /opt/csw/share/qt4/mkspecs/hpuxi-acc-32/qplatformdefs.h 0644 root bin
 d none /opt/csw/share/qt4/mkspecs/hpuxi-acc-64 0755 root bin
 f none /opt/csw/share/qt4/mkspecs/hpuxi-acc-64/qmake.conf 0644 root bin
 f none /opt/csw/share/qt4/mkspecs/hpuxi-acc-64/qplatformdefs.h 0644 root bin
-f none /opt/csw/share/qt4/mkspecs/hpuxi-acc/qmake.conf 0644 root bin
-f none /opt/csw/share/qt4/mkspecs/hpuxi-acc/qplatformdefs.h 0644 root bin
 d none /opt/csw/share/qt4/mkspecs/hurd-g++ 0755 root bin
 f none /opt/csw/share/qt4/mkspecs/hurd-g++/qmake.conf 0644 root bin
 f none /opt/csw/share/qt4/mkspecs/hurd-g++/qplatformdefs.h 0644 root bin
@@ -4166,9 +4165,24 @@ f none /opt/csw/share/qt4/mkspecs/unixware-cc/qplatformdefs.h 0644 root bin
 d none /opt/csw/share/qt4/mkspecs/unixware-g++ 0755 root bin
 f none /opt/csw/share/qt4/mkspecs/unixware-g++/qmake.conf 0644 root bin
 f none /opt/csw/share/qt4/mkspecs/unixware-g++/qplatformdefs.h 0644 root bin
+d none /opt/csw/share/qt4/mkspecs/win32-borland 0755 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-borland/qmake.conf 0644 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-borland/qplatformdefs.h 0644 root bin
 d none /opt/csw/share/qt4/mkspecs/win32-g++ 0755 root bin
 f none /opt/csw/share/qt4/mkspecs/win32-g++/qmake.conf 0644 root bin
 f none /opt/csw/share/qt4/mkspecs/win32-g++/qplatformdefs.h 0644 root bin
+d none /opt/csw/share/qt4/mkspecs/win32-msvc 0755 root bin
+d none /opt/csw/share/qt4/mkspecs/win32-msvc.net 0755 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc.net/qmake.conf 0644 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc.net/qplatformdefs.h 0644 root bin
+d none /opt/csw/share/qt4/mkspecs/win32-msvc/features 0755 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc/features/incremental.prf 0644 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc/features/incremental_off.prf 0644 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc/qmake.conf 0644 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc/qplatformdefs.h 0644 root bin
+d none /opt/csw/share/qt4/mkspecs/win32-msvc2005 0755 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc2005/qmake.conf 0644 root bin
+f none /opt/csw/share/qt4/mkspecs/win32-msvc2005/qplatformdefs.h 0644 root bin
 f none /opt/csw/share/qt4/q3porting.xml 0644 root bin
 i copyright=CSWqt4-devel.copyright
 i depend=CSWqt4-devel.depend

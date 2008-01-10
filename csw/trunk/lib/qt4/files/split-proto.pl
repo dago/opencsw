@@ -1,5 +1,10 @@
 #!/usr/bin/perl
 
+# This tiny perl script opens the file 'prototype' in the current
+# directory and distributes the files to the main-, devel- and doc-
+# package. It should only be run once if the prototypes need to be
+# generated for a new version of Qt.
+
 sub footer {
   my $pkg = shift;
   return "i copyright=${pkg}.copyright\n" .
@@ -24,6 +29,7 @@ while( <P> ) {
     print DOC $_;
   } elsif( $pathname =~ m!^/opt/csw/include! ||
 	$pathname =~ m!\.(la|prl)$! ||
+	$pathname =~ m!^/opt/csw/bin/(sparcv9/)?qtconfig! ||
 	$pathname =~ m!^/opt/csw/lib/(sparcv9/)?pkgconfig! ||
 	$pathname =~ m!^/opt/csw/share/qt4/(demos|examples|mkspecs|q3porting.xml)! ) {
     print DEVEL_SPARC $_;
