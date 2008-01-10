@@ -107,6 +107,9 @@ endif
 
 SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
 
+$(SPKG_DESTDIRS):
+	ginstall -d $@
+
 package: install $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
