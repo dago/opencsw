@@ -1,6 +1,6 @@
 #!/bin/ksh -p
 
-# checkpkg 1.44 
+# checkpkg 1.46a (diff to 1.46: modified errmsg -> warnmsg on two places)
 # This script examines a package that has been put together
 # for submittal to the CSW archive at blastwave.org
 #
@@ -79,15 +79,21 @@ case $f in
 	print Looking for bad strings...
 
 	# XPG4 grep has some kind of magical "ignore ELF header" power.
+	#  but... not on sol8, just sol10?
 	# and so does /bin/grep. but NOT /bin/egrep???
 	#
-	GREP=/usr/xpg4/bin/egrep gzgrep '/export/medusa|/opt/build' $f
-	if [[ $? -eq 0 ]] ; then
-		print ""
-		print ERROR: build-machine paths found in file $f
-		print '(/export/medusa or /opt/build)'
-		exit 1
-	fi
+	# Need to rewrite this whole thing to also
+	# check for badly set RUNPATHs. sigh.
+	#
+	for badpath in /export/medusa /opt/build ; do
+		GREP=/bin/grep gzgrep "$badpath" $f
+		if [[ $? -eq 0 ]] ; then
+			print ""
+			print ERROR: build-machine paths found in file $f
+			print '($badpath)'
+			exit 1
+		fi
+	done
 esac
 
 print Extracting files for more detailed inspection...
@@ -231,18 +237,18 @@ case $f in
 		
 	;;
 	*)
-		print WARNING: pkg must be for arch $LOCAL_ARCH to check dynamic libs and prototype
+		print NOTE: pkg must be for arch $LOCAL_ARCH to check dynamic libs
 		goodarch=no		
 	;;
 esac
 
-# This is separated out, because we cant do a continue, in the case statement
-if [ "$goodarch" = "no" ] ; then
-	# neutral architechture. cant check libraries for it.
-	print ""
-	rm -rf $EXTRACTDIR $TMPARCHIVE
-	continue
-fi
+
+#if [ "$goodarch" = "no" ] ; then
+#	# neutral architechture. cant check libraries for it.
+#	print ""
+#	rm -rf $EXTRACTDIR $TMPARCHIVE
+#	exit 0
+#fi
 
 
 # This function exists, because pkgtrans is BROKEN!!
@@ -366,86 +372,90 @@ listbinaries() {
 
 
 
-# man ld.so.1 for more info on this hack
-export LD_NOAUXFLTR=1
 
-listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/tmplist
-# have to do this for ldd to work. arrg.
-if [ -s "$EXTRACTDIR/tmplist" ] ; then
-	chmod 0755 `cat $EXTRACTDIR/tmplist`
+if [[ "$goodarch" = "yes" ]] ; then
+	# man ld.so.1 for more info on this hack
+	export LD_NOAUXFLTR=1
 
-#cat $EXTRACTDIR/tmplist| xargs ldd  2>/dev/null |fgrep  '.so' |
-#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
+	listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/tmplist
+	# have to do this for ldd to work. arrg.
+	if [ -s "$EXTRACTDIR/tmplist" ] ; then
+		chmod 0755 `cat $EXTRACTDIR/tmplist`
 
-	cat $EXTRACTDIR/tmplist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
-		sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
+	#cat $EXTRACTDIR/tmplist| xargs ldd  2>/dev/null |fgrep  '.so' |
+	#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
 
-	print libraries used are:
-	cat $EXTRACTDIR/liblist
-else
-	print no dynamic libraries in the package
+		cat $EXTRACTDIR/tmplist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
+			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
+
+		print libraries used are:
+		cat $EXTRACTDIR/liblist
+		print "cross-referencing with depend file (May take a while)"
+	else
+		print No dynamic libraries in the package
+	fi
 fi
 
-#Sometimes, these end up non-existant, which is Bad.
+#If these dont exist, it is Bad.
 touch $EXTRACTDIR/liblist $EXTRACTDIR/libpkgs
 
 if [[ -f $EXTRACTDIR/$pkgname/install/depend ]] ; then
 	print 
-	print "Examining dependancies in 'depend' file (May take a while)"
+	print "Examining 'depend' file"
 else
 	# They may have forgotten to create/add in a depend file
-	# remind people what the package depends on
-	print "Analysing dynamic dependancies, if any"
+	# Remind people what the package depends on
+	# print "Analysing dynamic dependancies, if any"
 	touch $EXTRACTDIR/$pkgname/install/depend
 fi
 
-	# sanity check against "depends on self"
-	nawk '$2=="'$pkgname'" {exit 1}' $EXTRACTDIR/$pkgname/install/depend
-	if [[ $? -ne 0 ]] ; then
-		print ERROR: $pkgname references self in depend file
-		exit 1
-	fi
+# sanity check against "depends on self"
+nawk '$2=="'$pkgname'" {exit 1}' $EXTRACTDIR/$pkgname/install/depend
+if [[ $? -ne 0 ]] ; then
+	print ERROR: $pkgname references self in depend file
+	exit 1
+fi
 
-	nawk '$1=="P" {print $2}'  $EXTRACTDIR/$pkgname/install/depend |
-		sort >$EXTRACTDIR/deppkgs
-	for dep in `cat $EXTRACTDIR/deppkgs`
-	do
-		pkginfo $dep || warnmsg  invalid package $dep specified
-	done
+nawk '$1=="P" {print $2}'  $EXTRACTDIR/$pkgname/install/depend |
+	sort >$EXTRACTDIR/deppkgs
+for dep in `cat $EXTRACTDIR/deppkgs`
+do
+	pkginfo $dep || warnmsg  invalid package $dep specified
+done
 
-	egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
+egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
 		fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
 
 
 
-	for lib in `cat $EXTRACTDIR/liblist` ; do
-		grep "[/=]$lib[ =]" $EXTRACTDIR/$pkgname/pkgmap
-		if [[ $? -eq 0 ]] ; then
-			echo $lib provided by package itself
-			continue
-		fi
-
-		libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
-		      sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
-
-		if [[ -z "$libpkg" ]] ; then
-			warnmsg cannot find package for $lib
-		else
-			print $libpkg | fmt -1 >>$EXTRACTDIR/libpkgs
-		fi
-	done
-	sort -u $EXTRACTDIR/libpkgs >$EXTRACTDIR/libpkgs.x
-	mv $EXTRACTDIR/libpkgs.x $EXTRACTDIR/libpkgs
-
-	diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs >/dev/null
-	if [[ $? -ne 0 ]] ; then
-		print SUGGESTION: you may want to add some or all of the following as depends:
-		print '   (Feel free to ignore SUNW or SPRO packages)'
-		diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs | fgrep '>'
+for lib in `cat $EXTRACTDIR/liblist` ; do
+	grep "[/=]$lib[ =]" $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+		echo $lib provided by package itself
+		continue
 	fi
 
+	libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
+	      sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
 
-#listbinaries /tmp/$pkgname
+	if [[ -z "$libpkg" ]] ; then
+		warnmsg cannot find package for $lib
+	else
+		print $libpkg | fmt -1 >>$EXTRACTDIR/libpkgs
+	fi
+done
+
+sort -u $EXTRACTDIR/libpkgs >$EXTRACTDIR/libpkgs.x
+mv $EXTRACTDIR/libpkgs.x $EXTRACTDIR/libpkgs
+
+diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs >/dev/null
+if [[ $? -ne 0 ]] ; then
+	print SUGGESTION: you may want to add some or all of the following as depends:
+	print '   (Feel free to ignore SUNW or SPRO packages)'
+	diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs | fgrep '>'
+fi
+
+
 
 if [[ "$basedir" != "" ]] ; then
 	print 
