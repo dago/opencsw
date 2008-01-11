@@ -1,5 +1,5 @@
 GARNAME = phpldapadmin
-GARVERSION = 1.0.2
+GARVERSION = 1.1.0.4
 CATEGORIES = apps
 
 DESCRIPTION = Web-based LDAP browser to manage your LDAP server
@@ -26,10 +26,11 @@ include ../category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
-	@rm -r $(DESTDIR)$(prefix)
+	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
 	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
 	@cp $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin/config/config.php.example \
 		$(DESTDIR)/$(prefix)/apache2/share/htdocs/phpldapadmin/config/config.php.CSW
 	@find $(DESTDIR)$(prefix) -name .cvsignore -exec rm \{\} \;
+	@$(MAKECOOKIE)
 
