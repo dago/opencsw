@@ -26,7 +26,7 @@ include ../category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
-	@rm -r $(DESTDIR)$(prefix)
+	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
 	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
 	@find $(DESTDIR)$(prefix) -name .cvsignore -exec rm \{\} \;
