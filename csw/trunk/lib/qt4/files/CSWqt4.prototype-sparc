@@ -8,7 +8,6 @@ f none /opt/csw/bin/moc 0755 root bin
 f none /opt/csw/bin/pixeltool 0755 root bin
 f none /opt/csw/bin/qmake 0755 root bin
 f none /opt/csw/bin/qt3to4 0755 root bin
-f none /opt/csw/bin/qtconfig 0755 root bin
 f none /opt/csw/bin/qtdemo 0755 root bin
 f none /opt/csw/bin/rcc 0755 root bin
 d none /opt/csw/bin/sparcv9 0755 root bin
@@ -21,7 +20,6 @@ f none /opt/csw/bin/sparcv9/moc 0755 root bin
 f none /opt/csw/bin/sparcv9/pixeltool 0755 root bin
 f none /opt/csw/bin/sparcv9/qmake 0755 root bin
 f none /opt/csw/bin/sparcv9/qt3to4 0755 root bin
-f none /opt/csw/bin/sparcv9/qtconfig 0755 root bin
 f none /opt/csw/bin/sparcv9/qtdemo 0755 root bin
 f none /opt/csw/bin/sparcv9/rcc 0755 root bin
 f none /opt/csw/bin/sparcv9/uic 0755 root bin

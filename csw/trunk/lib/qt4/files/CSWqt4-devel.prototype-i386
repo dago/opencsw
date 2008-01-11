@@ -1,3 +1,5 @@
+f none /opt/csw/bin/qtconfig 0755 root bin
+f none /opt/csw/bin/amd64/qtconfig 0755 root bin
 d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/Qt 0755 root bin
 f none /opt/csw/include/Qt/Qt3Support 0644 root bin
