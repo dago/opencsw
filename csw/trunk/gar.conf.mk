@@ -182,10 +182,10 @@ LD_OPTIONS := -R$(GNU_CC_HOME)/lib $(LD_OPTIONS)
 endif
 
 ifneq ($(IGNORE_DESTDIR),1)
-CFLAGS   += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS) 
-CPPFLAGS += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS)
-CXXFLAGS += -I$(DESTDIR)$(includedir) $(EXT_CFLAGS)
-LDFLAGS  += -L$(DESTDIR)$(libdir) $(EXT_LDFLAGS)
+CFLAGS   += -I$(DESTDIR)$(includedir)
+CPPFLAGS += -I$(DESTDIR)$(includedir)
+CXXFLAGS += -I$(DESTDIR)$(includedir)
+LDFLAGS  += -L$(DESTDIR)$(libdir)
 endif
 CFLAGS   += $(EXT_CFLAGS) 
 CPPFLAGS += $(EXT_CFLAGS)
