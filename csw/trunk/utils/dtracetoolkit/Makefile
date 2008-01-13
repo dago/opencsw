@@ -20,6 +20,6 @@ include ../category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
-	@rm -r $(DESTDIR)$(prefix)
+	@rm -rf $(DESTDIR)$(prefix)/DTT
 	@ginstall -d $(DESTDIR)$(prefix)
 	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/DTT
