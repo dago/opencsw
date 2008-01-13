@@ -44,6 +44,11 @@ COOKIEROOTDIR = cookies.$(PLATFORM)
 
 WORKSRC = $(WORKDIR)/qt-x11-opensource-src-$(GARVERSION)
 
+# Usually the pathes from already installed stuff at $DESTDIR is
+# used before regular installed stuff. This leads to include errors
+# if we already have a qt4 installed at $DESTDIR.
+IGNORE_DESTDIR = 1
+
 ifdef DO64
 	bindir = $(exec_prefix)/bin/sparcv9
 	libdir = $(exec_prefix)/lib/sparcv9
@@ -76,7 +81,9 @@ INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
 
 SRC_CLEAN_TARGET = confclean
 
-CLEAN_TARGETS += custom
+ifndef DO64
+CLEAN_SCRIPTS = all custom
+endif
 
 include ../category.mk
 
@@ -135,9 +142,9 @@ pre-install:
 	@/usr/bin/env
 
 clean64:
-	gmake DO64=1 clean-all
+	gmake DO64=1 clean
 
-clean-custom: clean64 clean-all
+clean-custom: clean64
 
 env:
 	@echo "      GARCH = $(GARCH)"
@@ -146,4 +153,4 @@ env:
 	@echo "     CFLAGS = $(CFLAGS)"
 	@echo "    OPTARCH = $(OPTARCH)"
 	@echo " OPTARCH_ISA = $(OPTARCH_$(ISA))"
-
+	@echo "CLEAN TARGETS = $(CLEAN_TARGETS)"
