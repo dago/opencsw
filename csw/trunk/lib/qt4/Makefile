@@ -44,6 +44,8 @@ COOKIEROOTDIR = cookies.$(PLATFORM)
 
 WORKSRC = $(WORKDIR)/qt-x11-opensource-src-$(GARVERSION)
 
+PREREQUISITE_PKGS = CSWpkgconfig CSWfconfig CSWlibdbusdev
+
 # Usually the pathes from already installed stuff at $DESTDIR is
 # used before regular installed stuff. This leads to include errors
 # if we already have a qt4 installed at $DESTDIR.
@@ -70,10 +72,11 @@ CONFIGURE_ARGS = -prefix $(prefix) \
 			-sysconfdir $(etcdir)/qt4/settings \
 			-examplesdir $(sharedstatedir)/qt4/examples \
 			-demosdir $(sharedstatedir)/qt4/demos \
+			-I$(includedir) \
+			-L$(libdir) \
 			-platform $(PLATFORM) \
-			-I$(DESTDIR)$(includedir) \
-			-L$(DESTDIR)$(libdir) \
-			-confirm-license 
+			-confirm-license \
+			-verbose
 
 SKIPTEST = 1
 
