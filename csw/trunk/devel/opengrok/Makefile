@@ -24,17 +24,19 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 install-custom:
 	@echo " ==> Installing files"
+	@rm -rf $(DESTDIR)$(prefix)/share/tomcat5/webapps/source
 	@ginstall -d $(DESTDIR)$(prefix)/share/tomcat5/webapps/source
 	@(cat $(WORKSRC)/source.war | \
 		(cd $(DESTDIR)$(prefix)/share/tomcat5/webapps/source; \
 		jar xf /dev/fd/0) \
 	)
-	@ginstall -d $(DESTDIR)$(prefix)/doc/opengrok
-	@ginstall $(WORKSRC)/*.txt \
-		$(DESTDIR)$(prefix)/doc/opengrok/
 	@mv $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml \
 		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml.CSW
-	# XML-Starlet auf web.xml
+	@# XML-Starlet auf web.xml
+	@rm -rf $(DESTDIR)$(prefix)/share/doc/opengrok
+	@ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
+	@ginstall $(WORKSRC)/*.txt \
+		$(DESTDIR)$(prefix)/share/doc/opengrok/
 	@$(MAKECOOKIE)
 	
 
