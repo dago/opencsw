@@ -1,5 +1,5 @@
 GARNAME = libtool
-GARVERSION = 1.5.2
+GARVERSION = 1.5.24
 CATEGORIES = devel
 
 DESCRIPTION = A generic library support tool.
@@ -11,11 +11,16 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-
-DEPENDS = utils/sed utils/sh-utils
+DISTFILES += $(call admfiles,CSWlibtool)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include ../category.mk
+
+post-install:
+	@echo " ==> Fixing install anomalies"
+	@rm -f $(DESTDIR)$(prefix)/share/info/dir
+	@$(MAKECOOKIE)
+
