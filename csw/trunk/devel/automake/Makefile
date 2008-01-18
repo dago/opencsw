@@ -1,5 +1,5 @@
 GARNAME = automake
-GARVERSION = 1.7.6
+GARVERSION = 1.10
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating Makefiles.
@@ -17,12 +17,18 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWautomake,depend)
+
+PREREQUISITE_PKGS = CSWperl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-# Some tests fail
-TEST_SCRIPTS =
-
 include ../category.mk
+
+post-install:
+	@echo " ==> Fixing install anomalies"
+	@rm -f $(DESTDIR)$(prefix)/share/info/dir
+	@$(MAKECOOKIE)
+
