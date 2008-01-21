@@ -80,7 +80,7 @@ CONFIGURE_ARGS += --with-perl=$(prefix)/bin/perl
 CONFIGURE_ARGS += --enable-idled 
 CONFIGURE_ARGS += --enable-murder 
 CONFIGURE_ARGS += --enable-replication
-CONFIGURE_ARGS += --without-snmp
+CONFIGURE_ARGS += --with-snmp=$(prefix)
 
 # we add the args so perl libraries are installed
 # in the correct path

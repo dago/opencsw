@@ -47,7 +47,6 @@ f none /opt/csw/include/cyrus/iptostring.h 0644 root bin
 f none /opt/csw/include/cyrus/rfc822date.h 0644 root bin
 f none /opt/csw/include/cyrus/libcyr_cfg.h 0644 root bin
 f none /opt/csw/include/cyrus/mpool.h 0644 root bin
-f none /opt/csw/include/cyrus/strhash.o 0644 root bin
 f none /opt/csw/include/cyrus/libconfig.h 0644 root bin
 f none /opt/csw/include/cyrus/imapopts.h 0644 root bin
 f none /opt/csw/include/cyrus/md5.h 0644 root bin
