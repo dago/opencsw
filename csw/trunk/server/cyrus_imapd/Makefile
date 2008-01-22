@@ -1,5 +1,5 @@
 GARNAME = cyrus_imapd
-GARVERSION = 2.3.9
+GARVERSION = 2.3.11
 CATEGORIES = server
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
