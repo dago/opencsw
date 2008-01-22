@@ -37,6 +37,9 @@ DISTFILES += pm_cyrus.changelog.CSW
 # taken from the krb5 source.
 DISTFILES += compile_et et_c.awk et_h.awk
 
+# le fichier install-upgrade de cyrus 2.3.11 est incomplet
+DISTFILES += install-upgrade
+
 SPKG_CLASSES = none services conf
 
 # University of Athens patchs to allow autocreation of mailboxes
@@ -92,6 +95,9 @@ include ../category.mk
 
 # compile_et is missing so we want our to be used
 CONFIGURE_ENV += COMPILE_ET="$(CURDIR)/files/compile_et -d $(CURDIR)/files/"
+
+pre-patch:
+	cp $(WORKDIR)/install-upgrade $(WORKSRC)/doc/text
 
 pre-build:
 	# master is a too common name, so we rename it cyrus-master

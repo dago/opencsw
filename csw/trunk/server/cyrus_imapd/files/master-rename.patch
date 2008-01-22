@@ -1,6 +1,6 @@
-diff -ur cyrus-imapd-2.3.1.orig/doc/bugs.html cyrus-imapd-2.3.1/doc/bugs.html
---- cyrus-imapd-2.3.1.orig/doc/bugs.html	mer mars 24 20:52:57 2004
-+++ cyrus-imapd-2.3.1/doc/bugs.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/bugs.html cyrus-imapd-2.3.11/doc/bugs.html
+--- cyrus-imapd-2.3.11.orig/doc/bugs.html	2006-11-30 12:11:16.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/bugs.html	2008-01-22 04:19:22.968333000 -0500
 @@ -33,12 +33,12 @@
  <li> during appendstage(), the message is parsed once per delivery,
  not once at the beginning.
@@ -16,9 +16,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/bugs.html cyrus-imapd-2.3.1/doc/bugs.html
  ("always keep this process running").
  
  </ul>
-diff -ur cyrus-imapd-2.3.1.orig/doc/faq.html cyrus-imapd-2.3.1/doc/faq.html
---- cyrus-imapd-2.3.1.orig/doc/faq.html	mer mars 24 20:52:58 2004
-+++ cyrus-imapd-2.3.1/doc/faq.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/faq.html cyrus-imapd-2.3.11/doc/faq.html
+--- cyrus-imapd-2.3.11.orig/doc/faq.html	2006-11-30 12:11:16.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/faq.html	2008-01-22 04:19:23.008338000 -0500
 @@ -78,7 +78,7 @@
  <h2>Troubleshooting</h2>
  
@@ -37,9 +37,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/faq.html cyrus-imapd-2.3.1/doc/faq.html
  </dd>
  
  <dt><b>Q:</b> How do I use different SSL/TLS certificates for imap
-diff -ur cyrus-imapd-2.3.1.orig/doc/install-configure.html cyrus-imapd-2.3.1/doc/install-configure.html
---- cyrus-imapd-2.3.1.orig/doc/install-configure.html	jeu févr 12 06:32:32 2004
-+++ cyrus-imapd-2.3.1/doc/install-configure.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/install-configure.html cyrus-imapd-2.3.11/doc/install-configure.html
+--- cyrus-imapd-2.3.11.orig/doc/install-configure.html	2006-11-30 12:11:16.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/install-configure.html	2008-01-22 04:19:23.038343000 -0500
 @@ -230,16 +230,16 @@
  enabling certain services, or to tune the number of preforked copies.
  Be sure not to remove the entries that are labeled required.
@@ -61,9 +61,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/install-configure.html cyrus-imapd-2.3.1/doc
  <tt>imapd.log</tt> file.  It should never exit by itself, but you can
  shut down the mail system by sending it a signal with <tt>kill</tt>.
  </ol>
-diff -ur cyrus-imapd-2.3.1.orig/doc/install-perf.html cyrus-imapd-2.3.1/doc/install-perf.html
---- cyrus-imapd-2.3.1.orig/doc/install-perf.html	jeu janv  2 20:23:11 2003
-+++ cyrus-imapd-2.3.1/doc/install-perf.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/install-perf.html cyrus-imapd-2.3.11/doc/install-perf.html
+--- cyrus-imapd-2.3.11.orig/doc/install-perf.html	2003-01-02 14:23:11.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/install-perf.html	2008-01-22 04:19:23.078346000 -0500
 @@ -81,7 +81,7 @@
  don't leave them there.</li>
  
@@ -73,10 +73,10 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/install-perf.html cyrus-imapd-2.3.1/doc/inst
  see the Listen queue drop counter increasing quickly. For example,
  under Solaris, look at the variable tcpListenDrop (from <tt>netstat
  -sP tcp</tt>).</li>
-diff -ur cyrus-imapd-2.3.1.orig/doc/install-upgrade.html cyrus-imapd-2.3.1/doc/install-upgrade.html
---- cyrus-imapd-2.3.1.orig/doc/install-upgrade.html	mer avr  14 18:24:56 2004
-+++ cyrus-imapd-2.3.1/doc/install-upgrade.html	mar déc  20 23:13:51 2005
-@@ -179,7 +179,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/install-upgrade.html cyrus-imapd-2.3.11/doc/install-upgrade.html
+--- cyrus-imapd-2.3.11.orig/doc/install-upgrade.html	2007-12-08 14:24:25.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/install-upgrade.html	2008-01-22 04:19:23.118352000 -0500
+@@ -229,7 +229,7 @@
  <tt>allowusermoves</tt> option, which defaults to off.</li>
  
  <li>If you use <tt>ptloader</tt>, it now runs as a regular cyrus
@@ -85,7 +85,7 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/install-upgrade.html cyrus-imapd-2.3.1/doc/i
  AFS tokens for it.  You will also need to create the ptclient
  directory under your imap configdirectory, to hold the PTS cache (now
  a full-fledged cyrusdb) and UNIX socket.  In <tt>cyrus.conf</tt>,
-@@ -358,7 +358,7 @@
+@@ -409,7 +409,7 @@
  <tt>popd3d</tt> lines need to be removed from <tt>/etc/inetd.conf</tt>
  and inetd needs to be restarted.
  
@@ -94,21 +94,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/install-upgrade.html cyrus-imapd-2.3.1/doc/i
  process Cyrus process and ensure that it starts on boot.  see <a
  href="install-configure.html#master">this section</a> of the
  configuration instructions.
-diff -ur cyrus-imapd-2.3.1.orig/doc/man.html cyrus-imapd-2.3.1/doc/man.html
---- cyrus-imapd-2.3.1.orig/doc/man.html	mer mars 30 23:44:25 2005
-+++ cyrus-imapd-2.3.1/doc/man.html	mar déc  20 23:13:51 2005
-@@ -47,7 +47,7 @@
- <LI><A HREF="man/imapd.8.html"><TT>imapd</TT>(8)</A>
- <LI><A HREF="man/ipurge.8.html"><TT>ipurge</TT>(8)</A>
- <LI><A HREF="man/lmtpd.8.html"><TT>lmtpd</TT>(8)</A>
--<LI><A HREF="man/master.8.html"><TT>master</TT>(8)</A>
-+<LI><A HREF="man/cyrus-master.8.html"><TT>cyrus-master</TT>(8)</A>
- <LI><A HREF="man/mbexamine.8.html"><TT>mbexamine</TT>(8)</A>
- <LI><A HREF="man/mbpath.8.html"><TT>mbpath</TT>(8)</A>
- <LI><A HREF="man/nntpd.8.html"><TT>nntpd</TT>(8)</A>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/chk_cyrus.8.html cyrus-imapd-2.3.1/doc/man/chk_cyrus.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/chk_cyrus.8.html	mar déc  20 16:55:40 2005
-+++ cyrus-imapd-2.3.1/doc/man/chk_cyrus.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/chk_cyrus.8.html cyrus-imapd-2.3.11/doc/man/chk_cyrus.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/chk_cyrus.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/chk_cyrus.8.html	2008-01-22 04:19:23.188360000 -0500
 @@ -120,7 +120,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
@@ -118,9 +106,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/chk_cyrus.8.html cyrus-imapd-2.3.1/doc/m
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/ctl_cyrusdb.8.html cyrus-imapd-2.3.1/doc/man/ctl_cyrusdb.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/ctl_cyrusdb.8.html	mar déc  20 16:55:40 2005
-+++ cyrus-imapd-2.3.1/doc/man/ctl_cyrusdb.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/ctl_cyrusdb.8.html cyrus-imapd-2.3.11/doc/man/ctl_cyrusdb.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/ctl_cyrusdb.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/ctl_cyrusdb.8.html	2008-01-22 04:19:23.218363000 -0500
 @@ -140,7 +140,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
@@ -130,9 +118,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/ctl_cyrusdb.8.html cyrus-imapd-2.3.1/doc
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/ctl_deliver.8.html cyrus-imapd-2.3.1/doc/man/ctl_deliver.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/ctl_deliver.8.html	mar déc  20 16:55:40 2005
-+++ cyrus-imapd-2.3.1/doc/man/ctl_deliver.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/ctl_deliver.8.html cyrus-imapd-2.3.11/doc/man/ctl_deliver.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/ctl_deliver.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/ctl_deliver.8.html	2008-01-22 04:19:23.248368000 -0500
 @@ -129,7 +129,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
@@ -142,10 +130,10 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/ctl_deliver.8.html cyrus-imapd-2.3.1/doc
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/ctl_mboxlist.8.html cyrus-imapd-2.3.1/doc/man/ctl_mboxlist.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/ctl_mboxlist.8.html	mar déc  20 16:55:40 2005
-+++ cyrus-imapd-2.3.1/doc/man/ctl_mboxlist.8.html	mar déc  20 23:13:51 2005
-@@ -223,7 +223,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/ctl_mboxlist.8.html cyrus-imapd-2.3.11/doc/man/ctl_mboxlist.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/ctl_mboxlist.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/ctl_mboxlist.8.html	2008-01-22 04:19:23.268371000 -0500
+@@ -259,7 +259,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
  <td width="89%">
@@ -154,10 +142,10 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/ctl_mboxlist.8.html cyrus-imapd-2.3.1/do
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/cyr_expire.8.html cyrus-imapd-2.3.1/doc/man/cyr_expire.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/cyr_expire.8.html	mar déc  20 16:55:41 2005
-+++ cyrus-imapd-2.3.1/doc/man/cyr_expire.8.html	mar déc  20 23:13:51 2005
-@@ -169,7 +169,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/cyr_expire.8.html cyrus-imapd-2.3.11/doc/man/cyr_expire.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/cyr_expire.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/cyr_expire.8.html	2008-01-22 04:19:23.298374000 -0500
+@@ -220,7 +220,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
  <td width="89%">
@@ -166,10 +154,10 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/cyr_expire.8.html cyrus-imapd-2.3.1/doc/
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/cyrus.conf.5.html cyrus-imapd-2.3.1/doc/man/cyrus.conf.5.html
---- cyrus-imapd-2.3.1.orig/doc/man/cyrus.conf.5.html	mar déc  20 16:55:41 2005
-+++ cyrus-imapd-2.3.1/doc/man/cyrus.conf.5.html	mar déc  20 23:13:51 2005
-@@ -583,7 +583,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/cyrus.conf.5.html cyrus-imapd-2.3.11/doc/man/cyrus.conf.5.html
+--- cyrus-imapd-2.3.11.orig/doc/man/cyrus.conf.5.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/cyrus.conf.5.html	2008-01-22 04:19:23.328380000 -0500
+@@ -563,7 +563,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
  <td width="89%">
@@ -178,9 +166,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/cyrus.conf.5.html cyrus-imapd-2.3.1/doc/
  <b>lmtpd(8)</b>, <b>timsieved(8)</b>, <b>idled(8)</b>,
  <b>notifyd(8)</b>, <b>ctl_cyrusdb(8)</b>,
  <b>ctl_deliver(8)</b>, <b>tls_prune(8)</b>,
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/fud.8.html cyrus-imapd-2.3.1/doc/man/fud.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/fud.8.html	mar déc  20 16:55:41 2005
-+++ cyrus-imapd-2.3.1/doc/man/fud.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/fud.8.html cyrus-imapd-2.3.11/doc/man/fud.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/fud.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/fud.8.html	2008-01-22 04:19:23.368382000 -0500
 @@ -50,7 +50,7 @@
  <td width="10%"></td>
  <td width="89%">
@@ -190,9 +178,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/fud.8.html cyrus-imapd-2.3.1/doc/man/fud
  their mail, when mail last arrived in a user&rsquo;s
  mailbox, and how many messages are recent for that user.</p>
  <!-- INDENTATION -->
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/idled.8.html cyrus-imapd-2.3.1/doc/man/idled.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/idled.8.html	mar déc  20 16:55:41 2005
-+++ cyrus-imapd-2.3.1/doc/man/idled.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/idled.8.html cyrus-imapd-2.3.11/doc/man/idled.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/idled.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/idled.8.html	2008-01-22 04:19:23.398385000 -0500
 @@ -52,7 +52,7 @@
  receives notifications of mailbox changes and signals the
  appropriate <i>imapd</i> to report the changes to the
@@ -211,9 +199,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/idled.8.html cyrus-imapd-2.3.1/doc/man/i
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/imapd.8.html cyrus-imapd-2.3.1/doc/man/imapd.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/imapd.8.html	mar déc  20 16:55:41 2005
-+++ cyrus-imapd-2.3.1/doc/man/imapd.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/imapd.8.html cyrus-imapd-2.3.11/doc/man/imapd.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/imapd.8.html	2007-12-10 10:24:05.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/imapd.8.html	2008-01-22 04:19:23.428390000 -0500
 @@ -52,7 +52,7 @@
  <td width="89%">
  <p><i>Imapd</i> is an IMAP4rev1 server. It accepts commands
@@ -232,10 +220,10 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/imapd.8.html cyrus-imapd-2.3.1/doc/man/i
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/imapd.conf.5.html cyrus-imapd-2.3.1/doc/man/imapd.conf.5.html
---- cyrus-imapd-2.3.1.orig/doc/man/imapd.conf.5.html	mar déc  20 16:55:41 2005
-+++ cyrus-imapd-2.3.1/doc/man/imapd.conf.5.html	mar déc  20 23:13:51 2005
-@@ -3838,7 +3838,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/imapd.conf.5.html cyrus-imapd-2.3.11/doc/man/imapd.conf.5.html
+--- cyrus-imapd-2.3.11.orig/doc/man/imapd.conf.5.html	2007-12-10 10:24:06.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/imapd.conf.5.html	2008-01-22 04:19:23.468400000 -0500
+@@ -4053,7 +4053,7 @@
  <td width="89%">
  <p><b>imapd(8)</b>, <b>pop3d(8)</b>, <b>nntpd(8)</b>,
  <b>lmtpd(8)</b>, <b>timsieved(8)</b>, <b>idled(8)</b>,
@@ -244,9 +232,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/imapd.conf.5.html cyrus-imapd-2.3.1/doc/
  <b>ciphers(1)</b></p>
  <!-- INDENTATION -->
  <p>Allowed values: <i>off</i>, <i>userid</i>, <i>on</i></p>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/lmtpd.8.html cyrus-imapd-2.3.1/doc/man/lmtpd.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/lmtpd.8.html	mar déc  20 16:55:42 2005
-+++ cyrus-imapd-2.3.1/doc/man/lmtpd.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/lmtpd.8.html cyrus-imapd-2.3.11/doc/man/lmtpd.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/lmtpd.8.html	2007-12-10 10:24:06.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/lmtpd.8.html	2008-01-22 04:19:23.508399000 -0500
 @@ -53,7 +53,7 @@
  <p><i>Lmtpd</i> is an LMTP server used to deliver mail to
  the IMAP mailstore. It accepts commands on its standard
@@ -265,9 +253,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/lmtpd.8.html cyrus-imapd-2.3.1/doc/man/l
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/master.8.html cyrus-imapd-2.3.1/doc/man/master.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/master.8.html	mar déc  20 16:55:42 2005
-+++ cyrus-imapd-2.3.1/doc/man/master.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/master.8.html cyrus-imapd-2.3.11/doc/man/master.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/master.8.html	2007-12-10 10:24:06.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/master.8.html	2008-01-22 04:19:23.538404000 -0500
 @@ -4,11 +4,11 @@
  <head>
  <meta name="generator" content="groff -Thtml, see www.gnu.org">
@@ -343,9 +331,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/master.8.html cyrus-imapd-2.3.1/doc/man/
  receives a hangup signal, SIGHUP. Services and events may be
  added, deleted or modified when the configuration file is
  reread. Any active services removed from the configuration
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/nntpd.8.html cyrus-imapd-2.3.1/doc/man/nntpd.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/nntpd.8.html	mar déc  20 16:55:42 2005
-+++ cyrus-imapd-2.3.1/doc/man/nntpd.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/nntpd.8.html cyrus-imapd-2.3.11/doc/man/nntpd.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/nntpd.8.html	2007-12-10 10:24:06.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/nntpd.8.html	2008-01-22 04:19:23.558406000 -0500
 @@ -53,7 +53,7 @@
  <td width="89%">
  <p><i>Nntpd</i> is a NNTP server. It accepts commands on its
@@ -355,7 +343,7 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/nntpd.8.html cyrus-imapd-2.3.1/doc/man/n
  to a remote client connection.</p>
  <!-- INDENTATION -->
  <p><i>Nntpd</i> reads its configuration options out of the
-@@ -206,7 +206,7 @@
+@@ -220,7 +220,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
  <td width="89%">
@@ -364,9 +352,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/nntpd.8.html cyrus-imapd-2.3.1/doc/man/n
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/notifyd.8.html cyrus-imapd-2.3.1/doc/man/notifyd.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/notifyd.8.html	mar déc  20 16:55:42 2005
-+++ cyrus-imapd-2.3.1/doc/man/notifyd.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/notifyd.8.html cyrus-imapd-2.3.11/doc/man/notifyd.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/notifyd.8.html	2007-12-10 10:24:06.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/notifyd.8.html	2008-01-22 04:19:23.588410000 -0500
 @@ -51,7 +51,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
@@ -385,10 +373,10 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/notifyd.8.html cyrus-imapd-2.3.1/doc/man
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/pop3d.8.html cyrus-imapd-2.3.1/doc/man/pop3d.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/pop3d.8.html	mar déc  20 16:55:42 2005
-+++ cyrus-imapd-2.3.1/doc/man/pop3d.8.html	mar déc  20 23:13:51 2005
-@@ -52,7 +52,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/pop3d.8.html cyrus-imapd-2.3.11/doc/man/pop3d.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/pop3d.8.html	2007-12-10 10:24:06.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/pop3d.8.html	2008-01-22 04:19:23.618414000 -0500
+@@ -53,7 +53,7 @@
  <td width="89%">
  <p><i>Pop3d</i> is a POP3 server. It accepts commands on its
  standard input and responds on its standard output. It MUST
@@ -397,7 +385,7 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/pop3d.8.html cyrus-imapd-2.3.1/doc/man/p
  to a remote client connection.</p>
  <!-- INDENTATION -->
  <p><i>Pop3d</i> reads its configuration options out of the
-@@ -183,7 +183,7 @@
+@@ -198,7 +198,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
  <td width="89%">
@@ -406,9 +394,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/pop3d.8.html cyrus-imapd-2.3.1/doc/man/p
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/smmapd.8.html cyrus-imapd-2.3.1/doc/man/smmapd.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/smmapd.8.html	mar déc  20 16:55:43 2005
-+++ cyrus-imapd-2.3.1/doc/man/smmapd.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/smmapd.8.html cyrus-imapd-2.3.11/doc/man/smmapd.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/smmapd.8.html	2007-12-10 10:24:07.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/smmapd.8.html	2008-01-22 04:19:23.648417000 -0500
 @@ -53,7 +53,7 @@
  used to verify that a Cyrus mailbox exists, that it is
  postable and it is under quota. It accepts commands on its
@@ -418,9 +406,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/smmapd.8.html cyrus-imapd-2.3.1/doc/man/
  attached to a remote client connection.</p>
  <!-- INDENTATION -->
  <p><b>SMMAPD</b> reads its configuration options out of the
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/timsieved.8.html cyrus-imapd-2.3.1/doc/man/timsieved.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/timsieved.8.html	mar déc  20 16:55:43 2005
-+++ cyrus-imapd-2.3.1/doc/man/timsieved.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/timsieved.8.html cyrus-imapd-2.3.11/doc/man/timsieved.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/timsieved.8.html	2007-12-10 10:24:07.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/timsieved.8.html	2008-01-22 04:19:23.678421000 -0500
 @@ -52,7 +52,7 @@
  <p><i>timsieved</i> is a server that allows users to
  remotely manage their sieve scripts kept on the server. It
@@ -439,9 +427,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/timsieved.8.html cyrus-imapd-2.3.1/doc/m
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/man/tls_prune.8.html cyrus-imapd-2.3.1/doc/man/tls_prune.8.html
---- cyrus-imapd-2.3.1.orig/doc/man/tls_prune.8.html	mar déc  20 16:55:43 2005
-+++ cyrus-imapd-2.3.1/doc/man/tls_prune.8.html	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man/tls_prune.8.html cyrus-imapd-2.3.11/doc/man/tls_prune.8.html
+--- cyrus-imapd-2.3.11.orig/doc/man/tls_prune.8.html	2007-12-10 10:24:07.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man/tls_prune.8.html	2008-01-22 04:19:23.708425000 -0500
 @@ -96,7 +96,7 @@
  <tr valign="top" align="left">
  <td width="10%"></td>
@@ -451,9 +439,21 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/man/tls_prune.8.html cyrus-imapd-2.3.1/doc/m
  </td>
  </table>
  <hr>
-diff -ur cyrus-imapd-2.3.1.orig/doc/text/bugs cyrus-imapd-2.3.1/doc/text/bugs
---- cyrus-imapd-2.3.1.orig/doc/text/bugs	mar déc  20 16:55:44 2005
-+++ cyrus-imapd-2.3.1/doc/text/bugs	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/man.html cyrus-imapd-2.3.11/doc/man.html
+--- cyrus-imapd-2.3.11.orig/doc/man.html	2007-02-09 08:23:27.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/man.html	2008-01-22 04:19:23.158355000 -0500
+@@ -48,7 +48,7 @@
+ <LI><A HREF="man/imapd.8.html"><TT>imapd</TT>(8)</A>
+ <LI><A HREF="man/ipurge.8.html"><TT>ipurge</TT>(8)</A>
+ <LI><A HREF="man/lmtpd.8.html"><TT>lmtpd</TT>(8)</A>
+-<LI><A HREF="man/master.8.html"><TT>master</TT>(8)</A>
++<LI><A HREF="man/cyrus-master.8.html"><TT>cyrus-master</TT>(8)</A>
+ <LI><A HREF="man/mbexamine.8.html"><TT>mbexamine</TT>(8)</A>
+ <LI><A HREF="man/mbpath.8.html"><TT>mbpath</TT>(8)</A>
+ <LI><A HREF="man/nntpd.8.html"><TT>nntpd</TT>(8)</A>
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/text/bugs cyrus-imapd-2.3.11/doc/text/bugs
+--- cyrus-imapd-2.3.11.orig/doc/text/bugs	2007-12-10 10:24:08.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/text/bugs	2008-01-22 04:19:23.738429000 -0500
 @@ -16,10 +16,10 @@
          threadsafe. 
        * during appendstage(), the message is parsed once per delivery, not
@@ -467,9 +467,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/text/bugs cyrus-imapd-2.3.1/doc/text/bugs
          this process running"). 
  
  proxyd and Cyrus Murder
-diff -ur cyrus-imapd-2.3.1.orig/doc/text/faq cyrus-imapd-2.3.1/doc/text/faq
---- cyrus-imapd-2.3.1.orig/doc/text/faq	mar déc  20 16:55:44 2005
-+++ cyrus-imapd-2.3.1/doc/text/faq	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/text/faq cyrus-imapd-2.3.11/doc/text/faq
+--- cyrus-imapd-2.3.11.orig/doc/text/faq	2007-12-10 10:24:08.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/text/faq	2008-01-22 04:19:23.768433000 -0500
 @@ -52,7 +52,7 @@
  
  Troubleshooting
@@ -488,9 +488,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/text/faq cyrus-imapd-2.3.1/doc/text/faq
      Q: How do I use different SSL/TLS certificates for imap and pop? 
              
  
-diff -ur cyrus-imapd-2.3.1.orig/doc/text/install-configure cyrus-imapd-2.3.1/doc/text/install-configure
---- cyrus-imapd-2.3.1.orig/doc/text/install-configure	mar déc  20 16:55:44 2005
-+++ cyrus-imapd-2.3.1/doc/text/install-configure	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/text/install-configure cyrus-imapd-2.3.11/doc/text/install-configure
+--- cyrus-imapd-2.3.11.orig/doc/text/install-configure	2007-12-10 10:24:08.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/text/install-configure	2008-01-22 04:19:23.798438000 -0500
 @@ -160,7 +160,7 @@
          kpop, lmtp and sieve lines need to be removed from
          /etc/[x]inetd.conf and [x]inetd needs to be restarted. 
@@ -518,9 +518,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/text/install-configure cyrus-imapd-2.3.1/doc
          imapd.log file. It should never exit by itself, but you can shut
          down the mail system by sending it a signal with kill. 
  
-diff -ur cyrus-imapd-2.3.1.orig/doc/text/install-perf cyrus-imapd-2.3.1/doc/text/install-perf
---- cyrus-imapd-2.3.1.orig/doc/text/install-perf	mar déc  20 16:55:44 2005
-+++ cyrus-imapd-2.3.1/doc/text/install-perf	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/text/install-perf cyrus-imapd-2.3.11/doc/text/install-perf
+--- cyrus-imapd-2.3.11.orig/doc/text/install-perf	2007-12-10 10:24:08.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/text/install-perf	2008-01-22 04:19:23.828440000 -0500
 @@ -62,7 +62,7 @@
          /usr/lib/sasl2 and if you don't plan on using those mechanisms,
          don't leave them there. 
@@ -530,9 +530,9 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/text/install-perf cyrus-imapd-2.3.1/doc/text
          the Listen queue drop counter increasing quickly. For example,
          under Solaris, look at the variable tcpListenDrop (from netstat -sP
          tcp). 
-diff -ur cyrus-imapd-2.3.1.orig/doc/text/install-upgrade cyrus-imapd-2.3.1/doc/text/install-upgrade
---- cyrus-imapd-2.3.1.orig/doc/text/install-upgrade	mar déc  20 16:55:44 2005
-+++ cyrus-imapd-2.3.1/doc/text/install-upgrade	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/text/install-upgrade cyrus-imapd-2.3.11/doc/text/install-upgrade
+--- cyrus-imapd-2.3.11.orig/doc/text/install-upgrade	2007-12-10 10:24:08.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/text/install-upgrade	2008-01-22 04:24:50.079616000 -0500
 @@ -134,7 +134,7 @@
        * User moves via RENAME and XFER are now controlled by the
          allowusermoves option, which defaults to off. 
@@ -542,10 +542,10 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/text/install-upgrade cyrus-imapd-2.3.1/doc/t
          for it. You will also need to create the ptclient directory under
          your imap configdirectory, to hold the PTS cache (now a
          full-fledged cyrusdb) and UNIX socket. In cyrus.conf, ptloader
-diff -ur cyrus-imapd-2.3.1.orig/doc/text/man cyrus-imapd-2.3.1/doc/text/man
---- cyrus-imapd-2.3.1.orig/doc/text/man	mar déc  20 16:55:44 2005
-+++ cyrus-imapd-2.3.1/doc/text/man	mar déc  20 23:13:51 2005
-@@ -38,7 +38,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/doc/text/man cyrus-imapd-2.3.11/doc/text/man
+--- cyrus-imapd-2.3.11.orig/doc/text/man	2007-12-10 10:24:08.000000000 -0500
++++ cyrus-imapd-2.3.11/doc/text/man	2008-01-22 04:19:23.908450000 -0500
+@@ -39,7 +39,7 @@
        * imapd(8) 
        * ipurge(8) 
        * lmtpd(8) 
@@ -554,19 +554,19 @@ diff -ur cyrus-imapd-2.3.1.orig/doc/text/man cyrus-imapd-2.3.1/doc/text/man
        * mbexamine(8) 
        * mbpath(8) 
        * nntpd(8) 
-diff -ur cyrus-imapd-2.3.1.orig/lib/imapoptions cyrus-imapd-2.3.1/lib/imapoptions
---- cyrus-imapd-2.3.1.orig/lib/imapoptions	mar déc  20 23:13:25 2005
-+++ cyrus-imapd-2.3.1/lib/imapoptions	mar déc  20 23:13:51 2005
-@@ -999,5 +999,5 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/lib/imapoptions cyrus-imapd-2.3.11/lib/imapoptions
+--- cyrus-imapd-2.3.11.orig/lib/imapoptions	2007-10-18 14:14:48.000000000 -0400
++++ cyrus-imapd-2.3.11/lib/imapoptions	2008-01-22 04:19:23.948460000 -0500
+@@ -1045,5 +1045,5 @@
  .PP
  \fBimapd(8)\fR, \fBpop3d(8)\fR, \fBnntpd(8)\fR, \fBlmtpd(8)\fR,
  \fBtimsieved(8)\fR, \fBidled(8)\fR, \fBnotifyd(8)\fR,
 -\fBdeliver(8)\fR, \fBmaster(8)\fR, \fBciphers(1)\fR
 +\fBdeliver(8)\fR, \fBcyrus-master(8)\fR, \fBciphers(1)\fR
  */
-diff -ur cyrus-imapd-2.3.1.orig/man/Makefile.in cyrus-imapd-2.3.1/man/Makefile.in
---- cyrus-imapd-2.3.1.orig/man/Makefile.in	mar déc  13 16:16:45 2005
-+++ cyrus-imapd-2.3.1/man/Makefile.in	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/Makefile.in cyrus-imapd-2.3.11/man/Makefile.in
+--- cyrus-imapd-2.3.11.orig/man/Makefile.in	2007-10-18 14:14:48.000000000 -0400
++++ cyrus-imapd-2.3.11/man/Makefile.in	2008-01-22 04:19:23.998461000 -0500
 @@ -61,7 +61,7 @@
  MAN8 = $(srcdir)/arbitron.8 $(srcdir)/cyr_expire.8 $(srcdir)/deliver.8 \
  	$(srcdir)/fud.8 $(srcdir)/imapd.8 $(srcdir)/pop3d.8 $(srcdir)/quota.8 \
@@ -576,54 +576,54 @@ diff -ur cyrus-imapd-2.3.1.orig/man/Makefile.in cyrus-imapd-2.3.1/man/Makefile.i
  	$(srcdir)/lmtpd.8 $(srcdir)/idled.8 $(srcdir)/ctl_mboxlist.8 \
  	$(srcdir)/ctl_deliver.8 $(srcdir)/ctl_cyrusdb.8 $(srcdir)/ipurge.8 \
  	$(srcdir)/tls_prune.8 $(srcdir)/squatter.8 $(srcdir)/cvt_cyrusdb.8 \
-diff -ur cyrus-imapd-2.3.1.orig/man/chk_cyrus.8 cyrus-imapd-2.3.1/man/chk_cyrus.8
---- cyrus-imapd-2.3.1.orig/man/chk_cyrus.8	dim août 10 01:43:14 2003
-+++ cyrus-imapd-2.3.1/man/chk_cyrus.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/chk_cyrus.8 cyrus-imapd-2.3.11/man/chk_cyrus.8
+--- cyrus-imapd-2.3.11.orig/man/chk_cyrus.8	2006-06-19 09:05:54.000000000 -0400
++++ cyrus-imapd-2.3.11/man/chk_cyrus.8	2008-01-22 04:19:24.028465000 -0500
 @@ -83,4 +83,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/ctl_cyrusdb.8 cyrus-imapd-2.3.1/man/ctl_cyrusdb.8
---- cyrus-imapd-2.3.1.orig/man/ctl_cyrusdb.8	dim août 10 01:43:14 2003
-+++ cyrus-imapd-2.3.1/man/ctl_cyrusdb.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/ctl_cyrusdb.8 cyrus-imapd-2.3.11/man/ctl_cyrusdb.8
+--- cyrus-imapd-2.3.11.orig/man/ctl_cyrusdb.8	2003-08-09 19:43:14.000000000 -0400
++++ cyrus-imapd-2.3.11/man/ctl_cyrusdb.8	2008-01-22 04:19:24.068470000 -0500
 @@ -94,4 +94,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/ctl_deliver.8 cyrus-imapd-2.3.1/man/ctl_deliver.8
---- cyrus-imapd-2.3.1.orig/man/ctl_deliver.8	mer oct  22 20:50:13 2003
-+++ cyrus-imapd-2.3.1/man/ctl_deliver.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/ctl_deliver.8 cyrus-imapd-2.3.11/man/ctl_deliver.8
+--- cyrus-imapd-2.3.11.orig/man/ctl_deliver.8	2003-10-22 14:50:13.000000000 -0400
++++ cyrus-imapd-2.3.11/man/ctl_deliver.8	2008-01-22 04:19:24.098473000 -0500
 @@ -78,4 +78,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/ctl_mboxlist.8 cyrus-imapd-2.3.1/man/ctl_mboxlist.8
---- cyrus-imapd-2.3.1.orig/man/ctl_mboxlist.8	dim août 10 01:43:14 2003
-+++ cyrus-imapd-2.3.1/man/ctl_mboxlist.8	mar déc  20 23:13:51 2005
-@@ -138,4 +138,4 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/ctl_mboxlist.8 cyrus-imapd-2.3.11/man/ctl_mboxlist.8
+--- cyrus-imapd-2.3.11.orig/man/ctl_mboxlist.8	2007-10-05 14:39:48.000000000 -0400
++++ cyrus-imapd-2.3.11/man/ctl_mboxlist.8	2008-01-22 04:19:24.138477000 -0500
+@@ -166,4 +166,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/cyr_expire.8 cyrus-imapd-2.3.1/man/cyr_expire.8
---- cyrus-imapd-2.3.1.orig/man/cyr_expire.8	sam avr   3 20:44:55 2004
-+++ cyrus-imapd-2.3.1/man/cyr_expire.8	mar déc  20 23:13:51 2005
-@@ -101,4 +101,4 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/cyr_expire.8 cyrus-imapd-2.3.11/man/cyr_expire.8
+--- cyrus-imapd-2.3.11.orig/man/cyr_expire.8	2007-09-04 11:13:27.000000000 -0400
++++ cyrus-imapd-2.3.11/man/cyr_expire.8	2008-01-22 04:19:24.178482000 -0500
+@@ -121,4 +121,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/cyrus.conf.5 cyrus-imapd-2.3.1/man/cyrus.conf.5
---- cyrus-imapd-2.3.1.orig/man/cyrus.conf.5	dim avr  24 22:20:26 2005
-+++ cyrus-imapd-2.3.1/man/cyrus.conf.5	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/cyrus.conf.5 cyrus-imapd-2.3.11/man/cyrus.conf.5
+--- cyrus-imapd-2.3.11.orig/man/cyrus.conf.5	2007-09-24 08:48:32.000000000 -0400
++++ cyrus-imapd-2.3.11/man/cyrus.conf.5	2008-01-22 04:19:24.218489000 -0500
 @@ -44,9 +44,9 @@
  cyrus.conf \- Cyrus configuration file
  .SH DESCRIPTION
@@ -636,7 +636,7 @@ diff -ur cyrus-imapd-2.3.1.orig/man/cyrus.conf.5 cyrus-imapd-2.3.1/man/cyrus.con
  .PP
  The \fB/etc/cyrus.conf\fR file consists of a series of entries divided
  into sections of the form
-@@ -182,6 +182,6 @@
+@@ -177,6 +177,6 @@
  still have separate access control rules.
  .SH SEE ALSO
  .PP
@@ -644,9 +644,9 @@ diff -ur cyrus-imapd-2.3.1.orig/man/cyrus.conf.5 cyrus-imapd-2.3.1/man/cyrus.con
 +\fBcyrus-master(8)\fR, \fBimapd(8)\fR, \fBpop3d(8)\fR, \fBlmtpd(8)\fR,
  \fBtimsieved(8)\fR, \fBidled(8)\fR, \fBnotifyd(8)\fR, \fBctl_cyrusdb(8)\fR,
  \fBctl_deliver(8)\fR, \fBtls_prune(8)\fR, \fBhosts_access(5)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/fud.8 cyrus-imapd-2.3.1/man/fud.8
---- cyrus-imapd-2.3.1.orig/man/fud.8	mer oct  22 20:50:13 2003
-+++ cyrus-imapd-2.3.1/man/fud.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/fud.8 cyrus-imapd-2.3.11/man/fud.8
+--- cyrus-imapd-2.3.11.orig/man/fud.8	2003-10-22 14:50:13.000000000 -0400
++++ cyrus-imapd-2.3.11/man/fud.8	2008-01-22 04:19:24.268494000 -0500
 @@ -61,7 +61,7 @@
  ]
  .SH DESCRIPTION
@@ -656,9 +656,9 @@ diff -ur cyrus-imapd-2.3.1.orig/man/fud.8 cyrus-imapd-2.3.1/man/fud.8
  information about when a user last
  read their mail, when mail last arrived in a user's mailbox, and how
  many messages are recent for that user.
-diff -ur cyrus-imapd-2.3.1.orig/man/idled.8 cyrus-imapd-2.3.1/man/idled.8
---- cyrus-imapd-2.3.1.orig/man/idled.8	dim août 10 01:43:14 2003
-+++ cyrus-imapd-2.3.1/man/idled.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/idled.8 cyrus-imapd-2.3.11/man/idled.8
+--- cyrus-imapd-2.3.11.orig/man/idled.8	2003-08-09 19:43:14.000000000 -0400
++++ cyrus-imapd-2.3.11/man/idled.8	2008-01-22 04:19:24.298497000 -0500
 @@ -56,7 +56,7 @@
  to report the changes to the client.
  .I Idled
@@ -674,9 +674,9 @@ diff -ur cyrus-imapd-2.3.1.orig/man/idled.8 cyrus-imapd-2.3.1/man/idled.8
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/imapd.8 cyrus-imapd-2.3.1/man/imapd.8
---- cyrus-imapd-2.3.1.orig/man/imapd.8	jeu oct   3 21:02:41 2002
-+++ cyrus-imapd-2.3.1/man/imapd.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/imapd.8 cyrus-imapd-2.3.11/man/imapd.8
+--- cyrus-imapd-2.3.11.orig/man/imapd.8	2002-10-03 15:02:41.000000000 -0400
++++ cyrus-imapd-2.3.11/man/imapd.8	2008-01-22 04:19:24.338503000 -0500
 @@ -72,7 +72,7 @@
  is an IMAP4rev1 server.
  It accepts commands on its standard input and responds on its standard output.
@@ -692,10 +692,10 @@ diff -ur cyrus-imapd-2.3.1.orig/man/imapd.8 cyrus-imapd-2.3.1/man/imapd.8
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/imapd.conf.5 cyrus-imapd-2.3.1/man/imapd.conf.5
---- cyrus-imapd-2.3.1.orig/man/imapd.conf.5	mar déc  20 16:55:39 2005
-+++ cyrus-imapd-2.3.1/man/imapd.conf.5	mar déc  20 23:13:51 2005
-@@ -828,7 +828,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/imapd.conf.5 cyrus-imapd-2.3.11/man/imapd.conf.5
+--- cyrus-imapd-2.3.11.orig/man/imapd.conf.5	2007-12-10 10:24:04.000000000 -0500
++++ cyrus-imapd-2.3.11/man/imapd.conf.5	2008-01-22 04:19:24.368513000 -0500
+@@ -872,7 +872,7 @@
  .PP
  \fBimapd(8)\fR, \fBpop3d(8)\fR, \fBnntpd(8)\fR, \fBlmtpd(8)\fR,
  \fBtimsieved(8)\fR, \fBidled(8)\fR, \fBnotifyd(8)\fR,
@@ -704,9 +704,9 @@ diff -ur cyrus-imapd-2.3.1.orig/man/imapd.conf.5 cyrus-imapd-2.3.1/man/imapd.con
  
  
  Allowed values: \fIoff\fR, \fIuserid\fR, \fIon\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/lmtpd.8 cyrus-imapd-2.3.1/man/lmtpd.8
---- cyrus-imapd-2.3.1.orig/man/lmtpd.8	jeu oct   3 21:02:41 2002
-+++ cyrus-imapd-2.3.1/man/lmtpd.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/lmtpd.8 cyrus-imapd-2.3.11/man/lmtpd.8
+--- cyrus-imapd-2.3.11.orig/man/lmtpd.8	2002-10-03 15:02:41.000000000 -0400
++++ cyrus-imapd-2.3.11/man/lmtpd.8	2008-01-22 04:19:24.418512000 -0500
 @@ -68,7 +68,7 @@
  is an LMTP server used to deliver mail to the IMAP mailstore.
  It accepts commands on its standard input and responds on its standard output.
@@ -722,9 +722,9 @@ diff -ur cyrus-imapd-2.3.1.orig/man/lmtpd.8 cyrus-imapd-2.3.1/man/lmtpd.8
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/master.8 cyrus-imapd-2.3.1/man/master.8
---- cyrus-imapd-2.3.1.orig/man/master.8	ven déc  17 19:15:18 2004
-+++ cyrus-imapd-2.3.1/man/master.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/master.8 cyrus-imapd-2.3.11/man/master.8
+--- cyrus-imapd-2.3.11.orig/man/master.8	2006-11-30 12:11:23.000000000 -0500
++++ cyrus-imapd-2.3.11/man/master.8	2008-01-22 04:19:24.448517000 -0500
 @@ -1,5 +1,5 @@
  .\" -*- nroff -*-
 -.TH MASTER 8 "Project Cyrus" CMU
@@ -734,7 +734,7 @@ diff -ur cyrus-imapd-2.3.1.orig/man/master.8 cyrus-imapd-2.3.1/man/master.8
  .\"
 @@ -41,9 +41,9 @@
  .\" 
- .\" $Id: master.8,v 1.10.2.3 2004/12/17 18:15:18 ken3 Exp $
+ .\" $Id: master.8,v 1.14 2006/11/30 17:11:23 murch Exp $
  .SH NAME
 -master \- master Cyrus process
 +cyrus-master \- master Cyrus process
@@ -784,10 +784,10 @@ diff -ur cyrus-imapd-2.3.1.orig/man/master.8 cyrus-imapd-2.3.1/man/master.8
  rereads its configuration file when it receives a hangup signal,
  SIGHUP.  Services and events may be added, deleted or modified when the
  configuration file is reread.  Any active services removed from the
-diff -ur cyrus-imapd-2.3.1.orig/man/nntpd.8 cyrus-imapd-2.3.1/man/nntpd.8
---- cyrus-imapd-2.3.1.orig/man/nntpd.8	mer oct  22 20:03:08 2003
-+++ cyrus-imapd-2.3.1/man/nntpd.8	mar déc  20 23:13:51 2005
-@@ -74,7 +74,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/nntpd.8 cyrus-imapd-2.3.11/man/nntpd.8
+--- cyrus-imapd-2.3.11.orig/man/nntpd.8	2006-11-30 12:11:23.000000000 -0500
++++ cyrus-imapd-2.3.11/man/nntpd.8	2008-01-22 04:19:24.488523000 -0500
+@@ -78,7 +78,7 @@
  is a NNTP server.
  It accepts commands on its standard input and responds on its standard output.
  It MUST invoked by
@@ -796,15 +796,15 @@ diff -ur cyrus-imapd-2.3.1.orig/man/nntpd.8 cyrus-imapd-2.3.1/man/nntpd.8
  with those descriptors attached to a remote client connection.
  .PP
  .I Nntpd
-@@ -142,4 +142,4 @@
+@@ -153,4 +153,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/notifyd.8 cyrus-imapd-2.3.1/man/notifyd.8
---- cyrus-imapd-2.3.1.orig/man/notifyd.8	dim août 10 01:43:14 2003
-+++ cyrus-imapd-2.3.1/man/notifyd.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/notifyd.8 cyrus-imapd-2.3.11/man/notifyd.8
+--- cyrus-imapd-2.3.11.orig/man/notifyd.8	2003-08-09 19:43:14.000000000 -0400
++++ cyrus-imapd-2.3.11/man/notifyd.8	2008-01-22 04:19:24.538528000 -0500
 @@ -62,7 +62,7 @@
  ]
  .SH DESCRIPTION
@@ -820,10 +820,10 @@ diff -ur cyrus-imapd-2.3.1.orig/man/notifyd.8 cyrus-imapd-2.3.1/man/notifyd.8
  .PP
 -\fBimapd.conf(5)\fR, \fBcyrus.conf\fR, \fBmaster(8)\fR, \fBlmtpd(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus.conf\fR, \fBcyrus-master(8)\fR, \fBlmtpd(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/pop3d.8 cyrus-imapd-2.3.1/man/pop3d.8
---- cyrus-imapd-2.3.1.orig/man/pop3d.8	jeu oct   3 21:02:41 2002
-+++ cyrus-imapd-2.3.1/man/pop3d.8	mar déc  20 23:13:51 2005
-@@ -71,7 +71,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/pop3d.8 cyrus-imapd-2.3.11/man/pop3d.8
+--- cyrus-imapd-2.3.11.orig/man/pop3d.8	2006-11-30 12:11:23.000000000 -0500
++++ cyrus-imapd-2.3.11/man/pop3d.8	2008-01-22 04:19:24.568532000 -0500
+@@ -75,7 +75,7 @@
  is a POP3 server.
  It accepts commands on its standard input and responds on its standard output.
  It MUST invoked by
@@ -832,15 +832,15 @@ diff -ur cyrus-imapd-2.3.1.orig/man/pop3d.8 cyrus-imapd-2.3.1/man/pop3d.8
  with those descriptors attached to a remote client connection.
  .PP
  .I Pop3d
-@@ -121,4 +121,4 @@
+@@ -132,4 +132,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/smmapd.8 cyrus-imapd-2.3.1/man/smmapd.8
---- cyrus-imapd-2.3.1.orig/man/smmapd.8	ven déc  19 19:33:46 2003
-+++ cyrus-imapd-2.3.1/man/smmapd.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/smmapd.8 cyrus-imapd-2.3.11/man/smmapd.8
+--- cyrus-imapd-2.3.11.orig/man/smmapd.8	2006-11-30 12:11:23.000000000 -0500
++++ cyrus-imapd-2.3.11/man/smmapd.8	2008-01-22 04:19:24.608537000 -0500
 @@ -67,7 +67,7 @@
  It accepts commands on its standard input and responds on its standard
  output.
@@ -850,9 +850,9 @@ diff -ur cyrus-imapd-2.3.1.orig/man/smmapd.8 cyrus-imapd-2.3.1/man/smmapd.8
  with those descriptors attached to a remote client connection.
  .PP
  .B SMMAPD
-diff -ur cyrus-imapd-2.3.1.orig/man/timsieved.8 cyrus-imapd-2.3.1/man/timsieved.8
---- cyrus-imapd-2.3.1.orig/man/timsieved.8	ven juil 16 16:37:41 2004
-+++ cyrus-imapd-2.3.1/man/timsieved.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/timsieved.8 cyrus-imapd-2.3.11/man/timsieved.8
+--- cyrus-imapd-2.3.11.orig/man/timsieved.8	2006-11-30 12:11:23.000000000 -0500
++++ cyrus-imapd-2.3.11/man/timsieved.8	2008-01-22 04:19:24.638540000 -0500
 @@ -53,7 +53,7 @@
  is a server that allows users to remotely manage their sieve scripts
  kept on the server.  It accepts commands on its standard input and
@@ -868,18 +868,18 @@ diff -ur cyrus-imapd-2.3.1.orig/man/timsieved.8 cyrus-imapd-2.3.1/man/timsieved.
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/man/tls_prune.8 cyrus-imapd-2.3.1/man/tls_prune.8
---- cyrus-imapd-2.3.1.orig/man/tls_prune.8	dim août 10 01:43:15 2003
-+++ cyrus-imapd-2.3.1/man/tls_prune.8	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/man/tls_prune.8 cyrus-imapd-2.3.11/man/tls_prune.8
+--- cyrus-imapd-2.3.11.orig/man/tls_prune.8	2003-08-09 19:43:15.000000000 -0400
++++ cyrus-imapd-2.3.11/man/tls_prune.8	2008-01-22 04:19:24.678545000 -0500
 @@ -67,4 +67,4 @@
  .B /etc/imapd.conf
  .SH SEE ALSO
  .PP
 -\fBimapd.conf(5)\fR, \fBmaster(8)\fR
 +\fBimapd.conf(5)\fR, \fBcyrus-master(8)\fR
-diff -ur cyrus-imapd-2.3.1.orig/master/Makefile.in cyrus-imapd-2.3.1/master/Makefile.in
---- cyrus-imapd-2.3.1.orig/master/Makefile.in	lun févr 21 20:25:56 2005
-+++ cyrus-imapd-2.3.1/master/Makefile.in	mar déc  20 23:14:05 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/master/Makefile.in cyrus-imapd-2.3.11/master/Makefile.in
+--- cyrus-imapd-2.3.11.orig/master/Makefile.in	2007-09-24 08:48:32.000000000 -0400
++++ cyrus-imapd-2.3.11/master/Makefile.in	2008-01-22 04:20:08.954063000 -0500
 @@ -71,7 +71,7 @@
  
  LOBJS=service.o service-thread.o
@@ -893,17 +893,17 @@ diff -ur cyrus-imapd-2.3.1.orig/master/Makefile.in cyrus-imapd-2.3.1/master/Make
  	$(CC) -c $(CPPFLAGS) $(DEFS) $(CFLAGS) \
  	$<
  
--master: master.o masterconf.o message_uuid_master.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o
--	$(CC) $(LDFLAGS) -o master master.o masterconf.o message_uuid_master.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o $(LIBS) $(DEPLIBS)
-+cyrus-master: master.o masterconf.o message_uuid_master.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o
-+	$(CC) $(LDFLAGS) -o cyrus-master master.o masterconf.o message_uuid_master.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o $(LIBS) $(DEPLIBS)
+-master: master.o masterconf.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o
+-	$(CC) $(LDFLAGS) -o master master.o masterconf.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o $(LIBS) $(DEPLIBS)
++cyrus-master: master.o masterconf.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o
++	$(CC) $(LDFLAGS) -o cyrus-master master.o masterconf.o cyrusMasterMIB.o ../lib/lock_@WITH_LOCK@.o $(LIBS) $(DEPLIBS)
  
  clean:
  	rm -f *.o *.a Makefile.bak $(PROGS)
-diff -ur cyrus-imapd-2.3.1.orig/master/master.c cyrus-imapd-2.3.1/master/master.c
---- cyrus-imapd-2.3.1.orig/master/master.c	mer avr   6 22:37:00 2005
-+++ cyrus-imapd-2.3.1/master/master.c	mar déc  20 23:13:51 2005
-@@ -1791,7 +1791,7 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/master/master.c cyrus-imapd-2.3.11/master/master.c
+--- cyrus-imapd-2.3.11.orig/master/master.c	2007-10-10 09:59:48.000000000 -0400
++++ cyrus-imapd-2.3.11/master/master.c	2008-01-22 04:19:24.748554000 -0500
+@@ -1738,7 +1738,7 @@
  	    pid = fork();
  	    	    
  	    if ((pid == -1) && (errno == EAGAIN)) {
@@ -912,7 +912,7 @@ diff -ur cyrus-imapd-2.3.1.orig/master/master.c cyrus-imapd-2.3.1/master/master.
  		sleep(5);
  	    }
  	} while ((pid == -1) && (errno == EAGAIN));
-@@ -1852,7 +1852,7 @@
+@@ -1799,7 +1799,7 @@
  	    /* Tell our parent that we failed. */
  	    write(startup_pipe[1], &exit_result, sizeof(exit_result));
  	    
@@ -921,9 +921,9 @@ diff -ur cyrus-imapd-2.3.1.orig/master/master.c cyrus-imapd-2.3.1/master/master.
  	} else {
  	    int pidfd_flags = fcntl(pidfd, F_GETFD, 0);
  	    if (pidfd_flags != -1)
-diff -ur cyrus-imapd-2.3.1.orig/master/service-thread.c cyrus-imapd-2.3.1/master/service-thread.c
---- cyrus-imapd-2.3.1.orig/master/service-thread.c	jeu déc   1 22:18:11 2005
-+++ cyrus-imapd-2.3.1/master/service-thread.c	mar déc  20 23:13:51 2005
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/master/service-thread.c cyrus-imapd-2.3.11/master/service-thread.c
+--- cyrus-imapd-2.3.11.orig/master/service-thread.c	2006-11-30 12:11:23.000000000 -0500
++++ cyrus-imapd-2.3.11/master/service-thread.c	2008-01-22 04:19:24.778558000 -0500
 @@ -79,11 +79,11 @@
  void notify_master(int fd, int msg)
  {
@@ -938,10 +938,10 @@ diff -ur cyrus-imapd-2.3.1.orig/master/service-thread.c cyrus-imapd-2.3.1/master
      }
  }
  
-diff -ur cyrus-imapd-2.3.1.orig/master/service.c cyrus-imapd-2.3.1/master/service.c
---- cyrus-imapd-2.3.1.orig/master/service.c	jeu déc   1 22:18:11 2005
-+++ cyrus-imapd-2.3.1/master/service.c	mar déc  20 23:13:51 2005
-@@ -84,11 +84,11 @@
+diff --speed-large-files --minimal -Nru cyrus-imapd-2.3.11.orig/master/service.c cyrus-imapd-2.3.11/master/service.c
+--- cyrus-imapd-2.3.11.orig/master/service.c	2007-09-27 16:10:39.000000000 -0400
++++ cyrus-imapd-2.3.11/master/service.c	2008-01-22 04:19:24.808564000 -0500
+@@ -86,11 +86,11 @@
  void notify_master(int fd, int msg)
  {
      struct notify_message notifymsg;

@@ -21,14 +21,15 @@ fdb06983e1a6fdde58ec25834742cf5d  download/CSWpmcyrus.gspec
 f3a0d1d149e3e32c0dd26c32d0c744e8  download/CSWpmcyrus.depend
 d47ff67f45001cdda175616a543d7052  download/CSWcyrusimapdutils.gspec
 7e99e825a1d6b134b91392beec1807f4  download/CSWcyrusimapdutils.prototype
-a247f3576979a3821abf9b3f1efdfe8c  download/CSWcyrusimapdutils.depend
+9e23a484c51f7f4b7be84afc24aa8977  download/CSWcyrusimapdutils.depend
 292a334f016b2a6b7cfbc377234134c5  download/cyrus_imapd_utils.changelog.CSW
 598fc0d014664de114f85d57728605af  download/pm_cyrus.changelog.CSW
 9cbebaeeafa6eb3320eafa594c253bc1  download/compile_et
 5375c25c8bc325a90553d0be87a64a04  download/et_c.awk
 d1d86e61463a1dfefccbadedb11a8604  download/et_h.awk
+14bb6e8c6d6914351f80df293982e88a  download/install-upgrade
 e2f3c6e948cc73e28c5a7a8e3e53854e  download/cyrus-imapd-2.3.11-autocreate-0.10-0.diff
 7177f3abd0736a14e11af4905decb6ff  download/cyrus-imapd-2.3.11-autosieve-0.6.0.diff
 6127a7b62ec4679a54985f6a2d915e52  download/cyrus-imapd-acceptinvalidfrom.patch
 b4c99489eacf0fb7befeef5e3098a5c1  download/cyrus-imapd-2.3.7-nobarenewlinescheck.patch
-a8e2bd958c86cfd1764948976746418f  download/master-rename.patch
+0454ac02701faec98532669854f75724  download/master-rename.patch
