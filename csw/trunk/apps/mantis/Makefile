@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWmantis,depend)
+DISTFILES += $(call admfiles,CSWmantis,depend postinstall preremove)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -28,6 +28,6 @@ install-custom:
 	@echo " ==> Installing $(GARNAME)"
 	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
-	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
-	@find $(DESTDIR)$(prefix) -name .cvsignore -exec rm \{\} \;
+	@cp -rp $(WORKSRC) $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
+	@find $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis -name .cvsignore -exec rm \{\} \;
 
