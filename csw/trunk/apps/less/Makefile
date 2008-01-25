@@ -2,12 +2,13 @@ GARNAME = less
 GARVERSION = 418
 CATEGORIES = apps
 
-DESCRIPTION = less
+DESCRIPTION = Less is a free, open-source file pager
 define BLURB
-  less
+  Less is a free, open-source file pager. It can be found on most
+  versions of Linux, Unix and Mac OS, as well as on many other operating systems.
 endef
 
-#MASTER_SITES = http://pkg-config.freedesktop.org/releases/
+MASTER_SITES = http://www.greenwoodsoftware.com/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWless,depend)
 
