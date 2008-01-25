@@ -31,5 +31,6 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(prefix)
 	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/DTT
 	@rm -f $(DESTDIR)$(prefix)/DTT/install
-	gln -s $(foreach SCRIPT, $(USEFUL_SCRIPTS), ../DTT/$(SCRIPT)) $(DESTDIR)$(prefix)/bin
+	@ginstall -d $(DESTDIR)$(prefix)/bin
+	@gln -s $(foreach SCRIPT, $(USEFUL_SCRIPTS), ../DTT/$(SCRIPT)) $(DESTDIR)$(prefix)/bin
 	@$(MAKECOOKIE)
