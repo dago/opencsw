@@ -1,0 +1,2 @@
+version=1
+user=mpd:other:/opt/csw/var/mpd:/bin/sh:Music Playing Daemon

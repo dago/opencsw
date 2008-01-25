@@ -1,0 +1,4 @@
+P CSWpmnetcidrlite pm_netcidrlite - extension for merging IPv4 or IPv6 CIDR addresses
+P CSWpmnetdns pm_netdns - interface to the DNS resolver
+P CSWpmsyshostnamelong pm_syshostnamelong - try every conceivable way to get full hostname
+P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)

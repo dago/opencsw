@@ -1,0 +1,8 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/mod_suexec.so 0755 root bin
+d none /opt/csw/apache2/man 0755 root bin
+d none /opt/csw/apache2/man/man8 0755 root bin
+f none /opt/csw/apache2/man/man8/suexec.8 0644 root bin
+d none /opt/csw/apache2/sbin 0755 root bin
+f none /opt/csw/apache2/sbin/suexec 4755 root bin

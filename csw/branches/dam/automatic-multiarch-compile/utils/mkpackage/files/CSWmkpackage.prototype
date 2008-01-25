@@ -1,0 +1,2 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/mkpackage=mkpackage 0755 root bin

@@ -1,0 +1,3 @@
+P CSWpmdigestsha1 pm_digestsha1 - interface to the SHA-1 Algorithm
+P CSWpmerror pm_error - error/exception handling in an OO-ish way
+P CSWpmipcsharelite pm_ipcsharelite - light-weight interface to shared memory

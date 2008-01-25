@@ -1,4 +1,0 @@
-%var            bitname daimonin
-%var            pkgname CSWdaimonin
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

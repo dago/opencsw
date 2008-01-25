@@ -1,0 +1,5 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/lib 0755 root bin
+f none /opt/csw/apache2/lib/libapreq2.so.3.6.0 0755 root bin
+s none /opt/csw/apache2/lib/libapreq2.so.3=libapreq2.so.3.6.0 root bin
+s none /opt/csw/apache2/lib/libapreq2.so=libapreq2.so.3.6.0 root bin

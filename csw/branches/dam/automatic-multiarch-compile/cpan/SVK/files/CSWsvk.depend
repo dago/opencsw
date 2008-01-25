@@ -1,0 +1,33 @@
+P CSWpmalgannotate pm_algorithmannotate - represent a series of changes in annotate form
+P CSWpmalgdiff pm_algorithmdiff - compute intelligent differences between two files/lists
+P CSWpmappcli pm_appcli - Dispatcher module for command line interface programs
+P CSWpmclone pm_clone - recursively copy Perl datatypes
+P CSWpmclsaccessor pm_clsaccessor - Automated accessor generation
+P CSWpmclsautouse pm_clsautouse - Run-time class loading on first method call
+P CSWpmclsdtainherit pm_clsdtainherit - inheritable, overridable class data
+P CSWpmcompresszlib pm_compresszlib - Interface to zlib compression library
+P CSWpmdatahier pm_datahier - handle data in a hierarchical structure
+P CSWpmfiletype pm_filetype - determine file type using magic
+P CSWpmfreezethaw pm_freezethaw - converting Perl structures to strings and back.
+P CSWpmiodigest pm_iodigest - calculate digests while reading or writing
+P CSWpmiopager pm_iopager - Select a pager, optionally pipe it output if destination is a TTY
+P CSWpmlclemktxtlex pm_lclemktxtlex - use other catalog formats in Maketext
+P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
+P CSWpmlistmoreut pm_listmoreut - Provide the stuff missing in List::Util
+P CSWpmlog4perl pm_log4perl - Log4j implementation for Perl
+P CSWpmpathclass pm_pathclass - Cross-platform path specification manipulation
+P CSWpmperlioeol pm_perlioeol - PerlIO layer for normalizing line endings
+P CSWpmperlioviadyn pm_perlioviadyn - dynamic PerlIO layers
+P CSWpmperlioviasym pm_perlioviasym - PerlIO layers for creating symlinks
+P CSWpmpodescapes pm_podescapes - for resolving Pod E sequences
+P CSWpmpodsimple pm_podsimple - framework for parsing Pod
+P CSWpmregexpshellish pm_regexpshellish - shell-like regular expressions
+P CSWpmsvn pm_subversion - subversion perl language binding
+P CSWpmsvnmirror pm_svnmirror - mirror remote repository to local Subversion repository
+P CSWpmsvnsimple pm_svnsimple - a simple interface for driving svn delta editors
+P CSWpmtermreadkey pm_termreadkey - module for simple terminal control
+P CSWpmtimedate pm_timedate - parse date strings into time values
+P CSWpmunivrequire pm_univrequire - require modules from a variable
+P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)
+P CSWpmyaml pm_yaml - YAML Aint Markup Language
+P CSWpmyamlsyck pm_yamlsyck - Fast, lightweight YAML loader and dumper

@@ -1,0 +1,8 @@
+P CSWexpat       expat -  XML Parser Toolkit
+P CSWggettext          ggettext - GNU gettext
+P CSWglib2       glib2 - the low-level core library for GTK+ and GNOME
+P CSWiconv       libiconv - GNU iconv library
+P CSWsunmath     libsunmath - Sun maths library
+P CSWlibdbus
+P CSWcommon common - common files and dirs for CSW packages
+P CSWcommon common - common files and dirs for CSW packages

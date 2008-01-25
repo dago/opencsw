@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru libmp4v2-1.5.0.1.orig/mp4.h libmp4v2-1.5.0.1/mp4.h
+--- libmp4v2-1.5.0.1.orig/mp4.h	2006-07-18 23:01:30.000000000 +1200
++++ libmp4v2-1.5.0.1/mp4.h	2007-12-22 00:59:46.771599055 +1300
+@@ -32,7 +32,7 @@
+ #define __MP4_INCLUDED__
+ 
+ #include <sys/types.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <stdio.h>
+ #ifndef __cplusplus
+ typedef int bool;

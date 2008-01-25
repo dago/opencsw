@@ -1,0 +1,99 @@
+d none /opt/csw/bin 0755 root bin
+s none /opt/csw/bin/ldapadd=ldapmodify
+f none /opt/csw/bin/ldapcompare 0755 root bin
+f none /opt/csw/bin/ldapdelete 0755 root bin
+f none /opt/csw/bin/ldapmodify 0755 root bin
+f none /opt/csw/bin/ldapmodrdn 0755 root bin
+f none /opt/csw/bin/ldappasswd 0755 root bin
+f none /opt/csw/bin/ldapsearch 0755 root bin
+f none /opt/csw/bin/ldapwhoami 0755 root bin
+d none /opt/csw/etc/openldap 0755 root bin
+f none /opt/csw/etc/openldap/DB_CONFIG.example 0600 root bin
+f none /opt/csw/etc/openldap/ldap.conf.default 0644 root bin
+d none /opt/csw/etc/openldap/schema 0755 root bin
+d none /opt/csw/etc/openldap/schema.8177 0755 root bin
+f none /opt/csw/etc/openldap/schema/README 0444 root bin
+f none /opt/csw/etc/openldap/schema/corba.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/core.ldif 0444 root bin
+f none /opt/csw/etc/openldap/schema/core.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/cosine.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/dyngroup.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/inetorgperson.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/java.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/misc.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/nis.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/openldap.ldif 0444 root bin
+f none /opt/csw/etc/openldap/schema/openldap.schema 0444 root bin
+f none /opt/csw/etc/openldap/schema/ppolicy.schema 0444 root bin
+f none /opt/csw/etc/openldap/slapd.conf.default 0600 root bin
+d none /opt/csw/libexec 0755 root bin
+f none /opt/csw/libexec/slapd 0755 root bin
+f none /opt/csw/libexec/slurpd 0755 root bin
+d none /opt/csw/sbin 0755 root bin
+s none /opt/csw/sbin/slapacl=../libexec/slapd
+s none /opt/csw/sbin/slapadd=../libexec/slapd
+s none /opt/csw/sbin/slapauth=../libexec/slapd
+s none /opt/csw/sbin/slapcat=../libexec/slapd
+s none /opt/csw/sbin/slapdn=../libexec/slapd
+s none /opt/csw/sbin/slapindex=../libexec/slapd
+s none /opt/csw/sbin/slappasswd=../libexec/slapd
+s none /opt/csw/sbin/slaptest=../libexec/slapd
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/openldap 0755 root bin
+f none /opt/csw/share/doc/openldap/patch-oldap-2.3.24-ntlm.diff 0644 root bin
+f none /opt/csw/share/doc/openldap/openldaprc 0644 root bin
+f none /opt/csw/share/doc/openldap/README.CSW 0644 root bin
+d none /opt/csw/share/man/man5 0755 root bin
+f none /opt/csw/share/man/man5/ldif.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-bdb.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-dnssrv.5 0644 root bin
+s none /opt/csw/share/man/man5/slapd-hdb.5=slapd-bdb.5
+f none /opt/csw/share/man/man5/slapd-ldap.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-ldbm.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-ldif.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-meta.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-monitor.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-null.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-passwd.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-perl.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-relay.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-shell.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-sql.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd-tcl.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd.access.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd.conf.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd.plugin.5 0644 root bin
+f none /opt/csw/share/man/man5/slapd.replog.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-accesslog.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-auditlog.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-chain.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-dynlist.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-lastmod.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-pcache.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-ppolicy.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-refint.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-retcode.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-rwm.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-syncprov.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-translucent.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-unique.5 0644 root bin
+f none /opt/csw/share/man/man5/slapo-valsort.5 0644 root bin
+d none /opt/csw/share/man/man8 0755 root bin
+f none /opt/csw/share/man/man8/slapacl.8 0644 root bin
+f none /opt/csw/share/man/man8/slapadd.8 0644 root bin
+f none /opt/csw/share/man/man8/slapauth.8 0644 root bin
+f none /opt/csw/share/man/man8/slapcat.8 0644 root bin
+f none /opt/csw/share/man/man8/slapd.8 0644 root bin
+f none /opt/csw/share/man/man8/slapdn.8 0644 root bin
+f none /opt/csw/share/man/man8/slapindex.8 0644 root bin
+f none /opt/csw/share/man/man8/slappasswd.8 0644 root bin
+f none /opt/csw/share/man/man8/slaptest.8 0644 root bin
+f none /opt/csw/share/man/man8/slurpd.8 0644 root bin
+d none /opt/csw/var/openldap-data 0755 root bin
+f none /opt/csw/var/openldap-data/DB_CONFIG.example 0600 root bin
+i checkinstall=CSWoldap.checkinstall
+i copyright=CSWoldap.copyright
+i depend=CSWoldap.depend
+i pkginfo=CSWoldap.pkginfo
+i postinstall=CSWoldap.postinstall
+i preremove=CSWoldap.preremove

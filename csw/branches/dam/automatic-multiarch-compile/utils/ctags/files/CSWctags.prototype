@@ -1,0 +1,8 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/ctags 0755 root bin
+s none /opt/csw/bin/etags=ctags
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/ctags.1 0644 root bin
+s none /opt/csw/share/man/man1/etags.1=ctags.1

@@ -1,0 +1,4 @@
+P CSWpmjcode pm_jcode - japanese charset handler
+P CSWpmunimap pm_unicodemap - maps charsets from and to utf16 unicode
+P CSWpmunimap8 pm_unicodemap8 - mapping table between 8-bit chars and Unicode
+P CSWpmunistr pm_unicodestring - String of Unicode characters (UCS2/UTF16)

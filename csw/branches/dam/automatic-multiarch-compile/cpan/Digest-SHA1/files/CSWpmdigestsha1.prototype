@@ -1,0 +1,15 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/Digest 0755 root bin
+f none /opt/csw/lib/perl/csw/Digest/SHA1.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Digest 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Digest/SHA1 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/Digest/SHA1/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/Digest/SHA1/SHA1.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/Digest/SHA1/SHA1.so 0555 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Digest::SHA1.3perl 0444 root bin

@@ -1,0 +1,4 @@
+P CSWap2prefork ap2_prefork - Apache 2.2 prefork MPM
+P CSWmysql5rt mysql5rt - run-time libraries for mysql5
+P CSWosslrt openssl_rt - Openssl runtime libraries
+P CSWzlib zlib - Zlib Data Compression Library

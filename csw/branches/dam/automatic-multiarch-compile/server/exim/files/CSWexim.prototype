@@ -1,0 +1,75 @@
+d smfno /etc 0755 ? ?
+d smfno /etc/init.d 0755 ? ?
+f smfno /etc/init.d/cswexim 0755 root sys
+d smfno /etc/rc0.d 0755 ? ?
+s smfno /etc/rc0.d/K14cswexim=../init.d/cswexim
+d smfno /etc/rc1.d 0755 ? ?
+s smfno /etc/rc1.d/K14cswexim=../init.d/cswexim
+d smfno /etc/rc2.d 0755 ? ?
+s smfno /etc/rc2.d/K14cswexim=../init.d/cswexim
+d smfno /etc/rc3.d 0755 ? ?
+s smfno /etc/rc3.d/S98cswexim=../init.d/cswexim
+d smfno /etc/rcS.d 0755 ? ?
+s smfno /etc/rcS.d/K14cswexim=../init.d/cswexim
+d none /opt/csw/etc 0755 root bin
+d none /opt/csw/etc/exim 0755 root bin
+f none /opt/csw/etc/exim/aliases.CSW 0644 root bin
+f none /opt/csw/etc/exim/exim-env.sh.CSW 0644 root bin
+f none /opt/csw/etc/exim/exim.conf.CSW 0644 root bin
+d smfyes /opt/csw/lib 0755 root bin
+d smfyes /opt/csw/lib/svc 0755 root bin
+d smfyes /opt/csw/lib/svc/method 0755 root bin
+f smfyes /opt/csw/lib/svc/method/svc-exim 0755 root bin
+d none /opt/csw/sbin 0755 root bin
+f none /opt/csw/sbin/exicyclog 0755 root bin
+f none /opt/csw/sbin/exigrep 0755 root bin
+f none /opt/csw/sbin/exim 4711 root bin
+f none /opt/csw/sbin/exim_checkaccess 0755 root bin
+f none /opt/csw/sbin/exim_dbmbuild 0755 root bin
+f none /opt/csw/sbin/exim_dumpdb 0755 root bin
+f none /opt/csw/sbin/exim_fixdb 0755 root bin
+f none /opt/csw/sbin/exim_lock 0755 root bin
+f none /opt/csw/sbin/exim_tidydb 0755 root bin
+f none /opt/csw/sbin/eximon 0755 root bin
+f none /opt/csw/sbin/eximon.bin 0755 root bin
+f none /opt/csw/sbin/eximstats 0755 root bin
+f none /opt/csw/sbin/exinext 0755 root bin
+f none /opt/csw/sbin/exipick 0755 root bin
+f none /opt/csw/sbin/exiqgrep 0755 root bin
+f none /opt/csw/sbin/exiqsumm 0755 root bin
+f none /opt/csw/sbin/exiwhat 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/exim 0755 root bin
+f none /opt/csw/share/doc/exim/ChangeLog.gz 0644 root bin
+f none /opt/csw/share/doc/exim/Exim3.upgrade 0644 root bin
+f none /opt/csw/share/doc/exim/Exim4.upgrade 0644 root bin
+f none /opt/csw/share/doc/exim/NewStuff 0644 root bin
+f none /opt/csw/share/doc/exim/OptionLists.txt 0644 root bin
+f none /opt/csw/share/doc/exim/README 0644 root bin
+f none /opt/csw/share/doc/exim/README.CSW 0644 root bin
+f none /opt/csw/share/doc/exim/README.SIEVE 0644 root bin
+f none /opt/csw/share/doc/exim/dbm.discuss.txt 0644 root bin
+f none /opt/csw/share/doc/exim/filter.txt 0644 root bin
+f none /opt/csw/share/doc/exim/pcrepattern.txt 0644 root bin
+f none /opt/csw/share/doc/exim/pcretest.txt 0644 root bin
+f none /opt/csw/share/doc/exim/spec.txt.gz 0644 root bin
+d none /opt/csw/var 0755 root bin
+d none /opt/csw/var/log 0755 root bin
+d none /opt/csw/var/log/exim 0750 exim exim
+d smfyes /opt/csw/var/svc 0755 root bin
+d smfyes /opt/csw/var/svc/manifest 0755 root bin
+d smfyes /opt/csw/var/svc/manifest/network 0755 root bin
+f smfyes /opt/csw/var/svc/manifest/network/exim.xml 0644 root bin
+i copyright=CSWexim.copyright
+i depend=CSWexim.depend
+i pkginfo=CSWexim.pkginfo
+i preinstall=CSWexim.preinstall
+i postinstall=CSWexim.postinstall
+i preremove=CSWexim.preremove
+i postremove=CSWexim.postremove
+i request=CSWexim.request
+i checkinstall=CSWexim.checkinstall
+i space=CSWexim.space
+i i.smfno
+i i.smfyes

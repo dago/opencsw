@@ -1,0 +1,16 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Class 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Class/Loader 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/Class/Loader/.packlist 0644 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Class::Loader.3perl 0444 root bin
+d none /opt/csw/share/perl 0755 root bin
+d none /opt/csw/share/perl/csw 0755 root bin
+d none /opt/csw/share/perl/csw/Class 0755 root bin
+f none /opt/csw/share/perl/csw/Class/Loader.pm 0444 root bin
+f none /opt/csw/share/perl/csw/Class/LoaderTest.pm 0444 root bin

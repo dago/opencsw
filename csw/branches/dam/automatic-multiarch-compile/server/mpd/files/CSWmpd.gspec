@@ -1,0 +1,7 @@
+%var            bitname mpd
+%var            pkgname CSWmpd
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING
+
+%include        url file://%{PKGLIB}/smf_enabled.gspec
+%include        url file://%{PKGLIB}/csw_usrgrp.gspec

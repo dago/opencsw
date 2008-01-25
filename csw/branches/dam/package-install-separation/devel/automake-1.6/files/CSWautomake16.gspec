@@ -1,4 +1,0 @@
-%var            bitname automake16
-%var            pkgname CSWautomake16
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYRIGHT

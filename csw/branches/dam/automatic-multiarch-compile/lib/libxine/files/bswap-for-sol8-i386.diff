@@ -1,0 +1,16 @@
+diff --speed-large-files --minimal -Nru libxine-1.1.8.orig/src/input/libdvdnav/bswap.h libxine-1.1.8/src/input/libdvdnav/bswap.h
+--- libxine-1.1.8.orig/src/input/libdvdnav/bswap.h	2007-08-18 19:36:46.000000000 -0400
++++ libxine-1.1.8/src/input/libdvdnav/bswap.h	2007-10-15 07:42:21.368920000 -0400
+@@ -28,6 +28,12 @@
+ #define B2N_32(x) (void)(x)
+ #define B2N_64(x) (void)(x)
+ 
++/* Adding macros from solaris 10, since solaris 8 doesn't have them. */
++#define BSWAP_8(x)      ((x) & 0xff)
++#define BSWAP_16(x)     ((BSWAP_8(x) << 8) | BSWAP_8((x) >> 8))
++#define BSWAP_32(x)     ((BSWAP_16(x) << 16) | BSWAP_16((x) >> 16))
++#define BSWAP_64(x)     ((BSWAP_32(x) << 32) | BSWAP_32((x) >> 32))
++
+ #else 
+ 
+ /* For __FreeBSD_version */

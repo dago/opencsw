@@ -1,0 +1,5 @@
+P CSWpmarraycompare pm_arraycompare - extension for comparing arrays.
+P CSWpmsubuplevel pm_subuplevel - apparently run a function in a higher stack frame
+P CSWpmtestexceptions pm_testexceptions - test functions for exception based code
+P CSWpmtreedagnode pm_treedagnode - (super)class for representing nodes in a tree
+P CSWpmtstbldrtester pm_tstbldrtester - test testsuites built with Test::Builder

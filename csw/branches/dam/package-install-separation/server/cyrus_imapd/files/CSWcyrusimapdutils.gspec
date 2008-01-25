@@ -1,6 +1,0 @@
-%var            bitname cyrus_imapd_utils
-%var            pkgname CSWcyrusimapdutils
-%var            desc Various admin utilities for Cyrus Imapd/Popd
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYRIGHT
-

@@ -1,0 +1,3 @@
+P CSWlibnet libnet - the libnet packet construction library
+P CSWosslrt openssl_rt - Openssl runtime libraries
+P CSWsasl   sasl - Simple Authentication and Security Layer

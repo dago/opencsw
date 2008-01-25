@@ -1,0 +1,8 @@
+P CSWbdb3 berkeleydb3 - file based pseudo-database library
+P CSWgdbm gdbm - GNU dbm
+P CSWgfile fileutils - GNU file utilities
+P CSWiconv libiconv - GNU iconv library
+P CSWncurses ncurses - ncurses library and utilities
+P CSWosslrt openssl_rt - Openssl runtime libraries
+P CSWreadline readline - library to enable interactive line editing
+P CSWzlib zlib - Zlib Data Compression Library

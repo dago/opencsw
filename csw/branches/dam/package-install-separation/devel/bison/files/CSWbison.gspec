@@ -1,4 +1,0 @@
-%var            bitname bison
-%var            pkgname CSWbison
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{GARDIR}/net/tin/files/LICENSE

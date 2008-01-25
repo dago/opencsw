@@ -1,0 +1,5 @@
+P CSWpmdigestsha1 pm_digestsha1 - interface to the SHA-1 Algorithm
+P CSWpmfilenfslock pm_filenfslock - Perl module to do NFS (or not) locking
+P CSWpmheap pm_heap - extensions for keeping data partially sorted
+P CSWpmiostring pm_iostring - emulate file interface for in-core strings
+P CSWpmtimedate pm_timedate - parse date strings into time values

@@ -1,2 +1,0 @@
-# enable the dom extension
-/opt/csw/php5/bin/phpext -e dom

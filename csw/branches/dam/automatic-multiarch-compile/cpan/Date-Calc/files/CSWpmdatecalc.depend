@@ -1,0 +1,2 @@
+P CSWpmbitvec pm_bitvector - Efficient bit vector, set of integers and big int math library.
+P CSWpmcarpclan pm_carpclan - report errors from perspective of caller of a "clan" of modules

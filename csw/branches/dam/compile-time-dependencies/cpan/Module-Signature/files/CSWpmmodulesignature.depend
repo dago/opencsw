@@ -1,5 +1,0 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
-P CSWpmcryptopenpgp pm_cryptopenpgp - pure-Perl OpenPGP implementation
-P CSWpmpardist pm_pardist - create and manipulate PAR distributions
-P CSWpmtextdiff pm_textdiff - perform diffs on files and record sets

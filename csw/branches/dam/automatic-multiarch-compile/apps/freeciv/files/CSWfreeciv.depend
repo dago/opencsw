@@ -1,0 +1,13 @@
+P	CSWaudiofile
+P	CSWgtk2
+P	CSWglib2
+P	CSWlibsdl
+P	CSWsdlmixer
+P	CSWlibatk
+P	CSWlibcairo
+P	CSWesound
+P	CSWiconv
+P	CSWggettext
+P	CSWpango
+P	CSWreadline
+P	CSWzlib

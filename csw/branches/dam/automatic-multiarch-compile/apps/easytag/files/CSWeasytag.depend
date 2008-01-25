@@ -1,0 +1,22 @@
+P CSWexpat expat -  XML Parser Toolkit
+P CSWfconfig fontconfig - A library for configuring and customizing font access.
+P CSWflac libflac - FLAC audio codec support library
+P CSWftype2 freetype2 - The free and portable high quality font engine
+P CSWgcc4corert gcc4corert - GNU C Compiler Run Time
+P CSWgcc4g++rt gcc4g++rt - GNU C++ Compiler Run Time
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - the low-level core library for GTK+ and GNOME
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWiconv libiconv - GNU iconv library
+P CSWid3lib id3lib - library for manipulating ID3v1/v1.1 and ID3v2 tags
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWlibid3tag libid3tag - a library for reading and (eventually) writing ID3 tags
+P CSWlibogg libogg - Ogg bitstream format support library
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWpango libpango - library for laying out and rendering international text
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWspeex libspeex - Speex audio codec support library
+P CSWsunmath libsunmath - Sun maths library
+P CSWvorbis libvorbis - Vorbis audio codec support library
+P CSWzlib zlib - Zlib Data Compression Library

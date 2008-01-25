@@ -1,9 +1,0 @@
-#!/bin/sh
-
-echo "Precompiling system modules..."
-
-chroot ${PKG_INSTALL_ROOT:-/} \
-    /opt/csw/bin/python -m compileall /opt/csw/lib/python >/dev/null && \
-    /opt/csw/bin/python -O -m compileall /opt/csw/lib/python >/dev/null
-
-exit 0

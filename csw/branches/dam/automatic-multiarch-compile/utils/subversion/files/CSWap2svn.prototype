@@ -1,0 +1,8 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/etc 0755 root bin
+d none /opt/csw/apache2/etc/extra 0755 root bin
+f none /opt/csw/apache2/etc/extra/httpd-svn.conf.CSW 0644 root bin
+f none /opt/csw/apache2/etc/svn_access.conf.CSW 0644 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/mod_dav_svn.so 0755 root bin
+f none /opt/csw/apache2/libexec/mod_authz_svn.so 0755 root bin

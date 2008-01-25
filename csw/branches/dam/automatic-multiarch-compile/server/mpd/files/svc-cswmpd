@@ -1,0 +1,84 @@
+#!/bin/sh
+
+set -e
+
+##########################################################
+# SMF Support
+##########################################################
+
+. /lib/svc/share/smf_include.sh
+
+getproparg() {
+  val=`svcprop -p $1 $SMF_FMRI`
+  [ -n "$val" ] && echo $val
+}
+
+##########################################################
+# Get configuration values and set defaults
+##########################################################
+
+PREFIX=/opt/csw
+CONF=`getproparg mpd/config`
+VERBOSE=`getproparg mpd/verbose`
+
+if [ -z "$CONF" ]
+then
+  CONF=/opt/csw/etc/mpd.conf
+fi
+
+##########################################################
+# Validate
+##########################################################
+
+if [ -z "$SMF_FMRI" ]
+then
+  echo "SMF framework variables are not initialized."
+  exit $SMF_EXIT_ERR
+fi
+
+if [ ! -r $CONF ]
+then
+  echo "Missing configuration file: $CONF"
+  exit $SMF_EXIT_ERR
+fi
+
+if [ "$VERBOSE" = "true" ]
+then
+  VERBOSE="--verbose"
+else
+  VERBOSE=""
+fi
+
+##########################################################
+# Main
+##########################################################
+
+start() {
+  $PREFIX/sbin/mpd $VERBOSE $CONF
+}
+
+stop() {
+  $PREFIX/sbin/mpd $VERBOSE --kill $CONF
+}
+
+case "$1" in
+  start)
+    start
+  ;;
+
+  stop)
+    stop
+  ;;
+
+  refresh)
+    stop
+    start
+  ;;
+
+  *)
+    echo "Usage: $0 {start|stop|refresh}"
+    exit 1
+  ;;
+esac
+
+exit $SMF_EXIT_OK

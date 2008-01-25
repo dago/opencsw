@@ -1,0 +1,15 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/Crypt 0755 root bin
+f none /opt/csw/lib/perl/csw/Crypt/Rijndael.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Crypt 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Crypt/Rijndael 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/Crypt/Rijndael/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/Crypt/Rijndael/Rijndael.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/Crypt/Rijndael/Rijndael.so 0555 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Crypt::Rijndael.3perl 0444 root bin

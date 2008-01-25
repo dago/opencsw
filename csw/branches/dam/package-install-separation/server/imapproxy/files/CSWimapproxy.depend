@@ -1,3 +1,0 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWosslrt openssl_rt - The Open Source toolkit for SSL and TLS.
-P CSWtcpwrap tcpwrappers

@@ -1,0 +1,6 @@
+P CSWpmcompresszlib pm_compresszlib - Interface to zlib compression library
+P CSWpmlibwww pm_libwww - a general-purpose Web API for Perl, based on W3C libwww.
+P CSWpmmimelite pm_mimelite - low-calorie MIME generator
+P CSWpmmimetools pm_mimetools - modules for parsing and creating MIME entities
+P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)
+P CSWpmxmlparser pm_xmlparser - a module for parsing XML documents

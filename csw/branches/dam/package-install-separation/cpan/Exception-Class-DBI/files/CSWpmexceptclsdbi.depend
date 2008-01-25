@@ -1,4 +1,0 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
-P CSWpmexceptcls pm_exceptcls - declare real exception classes in Perl
-P CSWpmmodulebuild pm_modulebuild - build and install Perl modules

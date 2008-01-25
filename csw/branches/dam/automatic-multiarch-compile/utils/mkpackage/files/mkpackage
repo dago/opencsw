@@ -1,0 +1,1297 @@
+#!/bin/env perl -w
+#
+# $Id: mkpackage 1750 2007-11-12 18:53:58Z dam $
+#
+# mkpackage - produce Solaris packages from a specification.
+#
+
+require 5.008004;
+
+use strict;
+use Cwd qw/cwd/;
+use File::Basename;
+use File::Spec::Functions;
+use Getopt::Long qw/:config no_ignore_case gnu_getopt/;
+use POSIX;
+use Pod::Usage;
+use Term::ANSIColor;
+use vars qw/
+  $TOOLVERSION $REVISION $VERSION
+  $HAS_LWP_SUPPORT $UA $HAS_CURL_SUPPORT
+  %config %exit $SELF %SPEC_TYPE $SPEC_TYPE
+  $DIRECTIVE @SPECDIRS @ADMFILES %FLAGS %HASMERGE
+  $DIRECTIVE_START %VALID_DIRECTIVES %SCRIPTADM $ARCH/;
+
+# Tool Version/Revision Information
+$TOOLVERSION = "1.4";
+($REVISION) = q/$Revision: 1750 $/ =~ /(\d+)/;
+$VERSION = sprintf '%s (r%d)', $TOOLVERSION, $REVISION;
+
+# Discover network support
+( $HAS_LWP_SUPPORT, $HAS_CURL_SUPPORT ) = ( 0, 0 );
+eval {
+    require LWP::UserAgent;
+    import LWP::UserAgent;
+};
+$HAS_LWP_SUPPORT = $@ ? 0 : 1;
+
+unless ($HAS_LWP_SUPPORT) {
+    my $curlbin = `which curl`;
+    chomp $curlbin;
+    $HAS_CURL_SUPPORT = $curlbin if $curlbin !~ /no curl/;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Configuration
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Program Name
+$SELF = basename $0;
+
+# Exit Codes
+%exit = (
+    ok                  => 0,
+    usage               => 1,
+    file_not_found      => 2,
+    file_not_readable   => 3,
+    file_not_writable   => 4,
+    dir_not_found       => 5,
+    dir_create_failed   => 6,
+    prog_not_executable => 7,
+    prog_wrong_version  => 8,
+    prog_exec_error     => 9,
+    spec_error          => 10,
+    dumped_env          => 11,
+    unknown             => 42,
+);
+
+# Architecture
+($ARCH) = `/bin/uname -p`;
+chomp $ARCH;
+
+# Content flags
+%FLAGS = map { $_ => $_ } qw/none merge/;
+
+# Spec Content Types
+%SPEC_TYPE = (
+    CONTENT => '_content',
+    URL     => 'url',
+    EXEC    => 'exec',
+);
+{
+    my $tmp = join "|", grep { !/^_/ } values %SPEC_TYPE;
+    $SPEC_TYPE = qr/^($tmp)$/;
+}
+
+# Valid directives
+@SPECDIRS = qw/
+  include var cvar
+  /;
+
+# NOTE: prototype must be first in this list!
+@ADMFILES = qw/
+  prototype checkinstall compver copyright depend pkginfo
+  preinstall postinstall preremove postremove request space
+  /;
+
+# Admin files that are scripts
+%SCRIPTADM = map { $_ => 1 } qw/
+  checkinstall compver preinstall postinstall preremove
+  postremove request
+  /;
+
+%VALID_DIRECTIVES = map { $_ => 1 } ( @SPECDIRS, @ADMFILES );
+
+$DIRECTIVE_START = '%';
+$DIRECTIVE       = qr/^$DIRECTIVE_START(\w+)(?:\:(\w+))?/;
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# NO USER SERVICABLE PARTS BEYOND HERE
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : _log
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub _log {
+    my $fh = shift;
+    my $color = shift;
+    print $fh colored("mkp: " . join( " ", @_ ), $color) . "\n"
+      unless $config{quiet};
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Important
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Important { _log(\*STDOUT, "blue", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Info
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Info { _log(\*STDOUT, "cyan", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Warn
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Warn { _log(\*STDOUT, "yellow", "WARNING:", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Error
+# Purpose  : Convenience print function
+# Arguments: @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+#
+sub Error { _log(\*STDERR, "red", @_) }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : Die
+# Purpose  : Convenience print and exit function
+# Arguments: $code - exit code (see %exit)
+#            @_ - message portions, which will be joined by space, and
+#                 concluded with a newline character.
+# Effects  : This function causes the calling program to exit.
+#
+sub Die {
+    my $code = $exit{unknown};
+    $code = shift if $_[0] =~ /^\d+$/;
+    Error("ERROR: ", @_);
+    exit($code);
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : usage_error
+# Purpose  : Convenience usage and exit function
+# Arguments: $message - message to print to user before exiting.
+# Effects  : This function causes the calling program to exit.
+#
+sub usage_error {
+    pod2usage(
+        -exitstatus => $exit{usage},
+        -verbose    => 0,
+        -msg        => shift,
+    );
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : _exec
+# Purpose  : Print a message, execute a command, and optionally return the
+#            output to the caller.  This is provided as a low level
+#            replacement for vexec, for use by functions where it is not
+#            feasible to call error instead (e.g. get_content).
+# Arguments: $cmdline - command line to execute.
+#            @_ - message to die with if the command does not exit cleanly.
+# Returns  : If called in scalar context, returns nothing.  If called in list
+#            context, returns the output of $cmdline as an array.
+#
+sub _exec {
+    my $cmdline = shift;
+
+    Important "exec( $cmdline )";
+
+    if (wantarray) {
+        my @content = `$cmdline`;
+        die [ $exit{prog_exec_error}, @_ ]
+            unless WIFEXITED($?) and WEXITSTATUS($?) == 0;
+
+        return @content;
+    }
+    else {
+        system($cmdline) and die [ $exit{prog_exec_error}, @_ ];
+    }
+    return 1;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : vexec
+# Purpose  : Print a message, execute a command, and optionally return the
+#            output to the caller.  If the command does not exit cleanly, the
+#            supplied message will be printed on STDERR, and the calling
+#            program will exit with a non-zero exit status.
+# Arguments: $cmdline - command line to execute.
+#            @_ - message to die with if the command does not exit cleanly.
+# Returns  : If called in scalar context, returns nothing.  If called in list
+#            context, returns the output of $cmdline as an array.
+# Effects  : This function causes the calling program to exit.
+#
+sub vexec {
+    if (wantarray) {
+        my @content;
+        eval { @content = _exec(@_) };
+        Die( @{$@} ) if $@;
+        return @content;
+    }
+    else {
+        eval { _exec(@_) };
+        Die( @{$@} ) if $@;
+    }
+    return 1;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : env_replace
+# Purpose  : Replace %{variable} declarations in the target string with values
+#            from the process environment.
+# Arguments: $string - string to replace variables in.
+# Returns  : A string with all variables of form %{variable} replaced by some
+#            text.  If a %{variable} is found in the string, it will be
+#            replaced by $ENV{variable}, if it exists.  If $ENV{variable} is
+#            not set, %{variable} will be replaced with an empty string, and a
+#            warning will be emitted.  If a variable of form %{exec cmd} is
+#            encountered, the command  (or command pipeline) will be executed,
+#            and the first line of the command output will be used to replace
+#            the variable declaration.
+#
+sub env_replace {
+    local $_ = shift;
+
+    while (/\%\{/) {
+        my ($var) = $_ =~ /\%\{([^\}]+)\}/;
+
+        my $val;
+        if ( index( $var, " " ) != -1 ) {
+
+            # Handle ${exec cmd} var replacement
+            my ( $type, $argv ) = split /\s+/, $var, 2;
+
+            if ( $type eq 'exec' ) {
+                ($val) =
+                  vexec( $argv,
+                    "Failed to execute shell replacement command '$var'" );
+
+                warn "WARNING: '\%{$var}' created no output" if $val eq '';
+                $val =~ s/^\s*|\s*$//g;
+            }
+            else {
+                Die( $exit{spec_error},
+                    "whitespace in variable name '$var'" );
+            }
+        }
+        else {
+            $val = $ENV{$var} || '';
+            Error "WARNING: environment variable '$var' is not set"
+              if $val eq '';
+        }
+
+        Info "replacing \%{$var} with '$val'";
+        s/\%\{[^\}]+?\}/$val/;
+    }
+    return $_;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : process_arguments
+# Purpose  : Process command line arguments to mkpackage, check for required
+#            arguments, set reasonable defaults.  The results of argument
+#            processing are stored in the global %config hash.
+# Effects  : This function may cause the calling program to exit.
+#
+sub process_arguments {
+
+    # Options
+    my %args;
+    GetOptions(
+        'v=s'          => \%{ $config{pkgvars} },
+        'dump|D=s'     => \@{ $config{dumpvars} },
+        'dumpall|A'    => \$config{dumpall},
+        'spec|s=s'     => \$args{spec},
+        'destdir|d=s'  => \$args{destdir},
+        'workdir|w=s'  => \$args{workdir},
+        'spooldir|p=s' => \$args{spooldir},
+        'pkgbase|b=s'  => \$args{pkgbase},
+        'pkgroot|r=s'  => \$args{pkgroot},
+        'tmpdir|t=s'   => \$args{tmpdir},
+        'transfer!'    => \$config{transfer},
+        'overwrite!'   => \$config{overwrite},
+        'compress!'    => \$config{compress},
+        'usebzip'      => \$config{usebzip},
+        'quiet|q'      => \$config{quiet},
+        'help'         => \$args{help},
+        'manual'       => \$args{man},
+        'version|V'    => sub {
+            print "$SELF v$VERSION\n";
+            exit $exit{usage};
+        },
+      )
+      or pod2usage();
+
+    # Help (--help) and/or Manual (--man)
+    pod2usage(1) if $args{help};
+    pod2usage( -verbose => 2 ) if $args{man};
+
+    # Dump (-D) and dump all (-A)
+    usage_error("Dump (-D) and Dump all (-A) are exclusive")
+      if $config{dumpall}
+      and @{ $config{dumpvars} };
+
+    # Spec Filename (--spec)
+    usage_error("Spec (--spec) is a required argument")
+      unless $args{spec};
+
+    Die( $exit{file_not_found}, "Cannot locate '$args{spec}'" )
+      unless -f $args{spec};
+    Die( $exit{file_not_readable}, "Cannot read '$args{spec}'" )
+      unless -r $args{spec};
+
+    $config{spec}      = $args{spec};
+    $config{specname}  = basename $config{spec}, ".gspec";
+    $config{protoname} = $config{specname} . ".prototype";
+
+    $config{spec} = "file://$config{spec}"
+      unless $config{spec} =~ m#^(\w+)://#;
+
+    # Current dir
+    $config{curdir} = cwd();
+
+    # Working dir (--workdir)
+    $config{workdir} = $args{workdir} || $config{curdir};
+    Die( $exit{dir_not_found}, "Cannot access --workdir '$config{workdir}'" )
+      unless -d $config{workdir};
+
+    # Destination directory (--destdir)
+    $config{destdir} = $args{destdir} || $config{workdir};
+    unless ( -d $config{destdir} ) {
+        vexec(
+            "mkdir -p $config{destdir}",
+            $exit{dir_create_failed},
+            "Cannot create destination dir '$config{destdir}'"
+        );
+    }
+
+    # Spool dir (--spooldir)
+    $config{spooldir} = $args{spooldir} || '/var/spool/pkg';
+    Die( $exit{dir_not_found},
+        "Cannot access --spooldir '$config{spooldir}'" )
+      unless -d $config{spooldir};
+
+    # Temporary dir (--tmpdir)
+    $config{tmpdir} = $args{tmpdir} || '/tmp';
+    Die( $exit{dir_not_found}, "Cannot access --tmpdir '$config{tmpdir}'" )
+      unless -d $config{tmpdir};
+
+    # Package base dir (--pkgbase)
+    $config{pkgbase} = $args{pkgbase} || '';
+    Die( $exit{dir_not_found}, "Cannot access --pkgbase '$config{pkgbase}'" )
+      if $config{pkgbase} and not -d $config{pkgbase};
+
+    # Package root dir (--pkgroot)
+    $config{pkgroot} = $args{pkgroot} || '';
+    Die( $exit{dir_not_found}, "Cannot access --pkgroot '$config{pkgroot}'" )
+      if $config{pkgroot} and not -d $config{pkgroot};
+
+    # Supply defaults for --no/x flag arguments
+    $config{compress}  = 0 unless defined $config{compress};
+    $config{transfer}  = 1 unless defined $config{transfer};
+    $config{overwrite} = 0 unless defined $config{overwrite};
+    $config{usebzip}   = 0 unless defined $config{usebzip};
+
+    # Export variables to the spec
+    $ENV{$_} = $config{$_} foreach qw/
+      specname destdir workdir spooldir pkgbase pkgroot tmpdir
+      /;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : dumpenv
+# Purpose  : Dump ENV variables after parsing the spec.
+# Arguments: $dumpvars - Array ref of desired variables.  Empty dumps all.
+#            $spec - Spec structure returned by parse().
+# Returns  : This function causes the calling program to exit.
+#
+sub dumpenv {
+    my $dumpvars = shift;
+    my $spec     = shift;
+
+    my @vars = @$dumpvars ? @$dumpvars : keys %ENV;
+    my $multi = @vars > 1;
+
+    foreach my $var (@vars) {
+        my $val = exists $ENV{$var} ? $ENV{$var} : '';
+        printf "$var=" if $multi;
+        printf "$val\n";
+    }
+
+    exit $exit{dumped_env};
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : parse
+# Purpose  : Parse spec content loaded using get_content.
+# Arguments: $specuri - URI for spec to parse
+#            $uritype - URI Type (uri, exec, etc.) (default: url)
+# Returns  : Hash of array references.  Each hash key is named for one of the
+#            ADMFILES directive names.  The key value is an array ref, which
+#            contains one or more array refs.  Each sub-array represents one
+#            line of in-line spec content, or a method for generating the
+#            admin file content.  The sub array indices are:
+#
+#            [0] - line type (SPEC_TYPE)
+#            [1] - full path to original file/url location
+#            [2] - line number from original file
+#            [3] - content, command line, or url
+#
+sub parse {
+    my $specuri = shift;
+    my $uritype = shift || $SPEC_TYPE{URL};
+
+    Important "processing $specuri";
+
+    # Bootstrap the main spec
+    my $content;
+    eval { $content = get_content( $uritype, $specuri ) };
+    Die(
+          ( $@ and ref($@) eq 'ARRAY' )
+        ? ( @{$@}, "in $specuri" )
+        : ( $exit{unknown}, "$@ in $specuri" )
+      )
+      if $@;
+
+    # Process the main spec.  The array ref returned by get_content
+    # contains array references, one for each line of content in the
+    # specified file.
+
+    my ( $dname, $spec, $line, $flag );
+    for ( my $i = 0 ; $i <= $#{@$content} ; $i++ ) {
+
+        my ( $source, $lineno, $line ) = @{ $content->[$i] };
+
+        # If this line starts with a directive..
+        if ( $line =~ /$DIRECTIVE/ ) {
+            $dname = lc $1;
+            $flag = $2 || $FLAGS{none};
+
+            Die( $exit{spec_error},
+                "invalid directive flag '$flag' at $source line $lineno" )
+              unless exists $FLAGS{$flag};
+
+            # Flag this directive for merge later
+            $HASMERGE{$dname}++ if $flag eq $FLAGS{merge};
+
+            Die( $exit{spec_error},
+                "invalid directive '$dname' at $source line $lineno" )
+              unless exists $VALID_DIRECTIVES{$dname};
+
+            # Split out the sub 'type' and arguments
+            my ( undef, $dtype, $argv ) = split /\s+/, $line, 3;
+
+            # Carry on, because content is in-line
+            next unless $dtype;
+            chomp $argv;
+
+            if ( $dname eq 'include' ) {
+
+                # dir:%include
+                Die( $exit{spec_error},
+                    "\%include requires type and URI at $source line $lineno" )
+                  unless $dtype
+                  and $argv;
+
+                Die( $exit{spec_error},
+                    "invalid include type '$dtype' at $source line $lineno" )
+                  unless $dtype =~ $SPEC_TYPE;
+
+                # Retrieve the %included content
+                Important "include $argv";
+
+                my $inc;
+                eval { $inc = get_content( $dtype, $argv ) };
+                Die(
+                      ( $@ and ref($@) eq 'ARRAY' )
+                    ? ( @{$@}, "at $source line $lineno" )
+                    : ( $exit{unknown}, "$@ at $source line $lineno" )
+                  )
+                  if $@;
+
+                Warn "empty include at $source line $lineno"
+                  unless @$inc;
+
+                # Splice into the array we're looping through
+                splice @$content, $i, 1, @$inc;
+                $i--;
+            }
+            elsif ( $dname eq 'var' or $dname eq 'cvar' ) {
+
+                # dir:%var
+                Die( $exit{spec_error},
+                    "\%$dname needs name and value at $source line $lineno" )
+                  unless $dtype
+                  and defined $argv;
+
+                # cvar means that if the named variable is already set in ENV,
+                # it will not be overwritten by subsequent %vars.
+                if ( $dname ne 'cvar' or not exists $ENV{$dtype} ) {
+                    $config{$dtype} = $ENV{$dtype} = env_replace $argv;
+                    Info "set ENV{$dtype} = '$ENV{$dtype}'";
+                }
+                else {
+                    Info "cvar ENV{$dtype} is already set ($ENV{$dtype})"
+                      if $dname eq 'cvar';
+                }
+            }
+            else {
+
+                # If the content is a script, overwrite the existing spec
+                # reference, otherwise spec lines are additive.
+                my $specline = [ $dtype, $argv, $source, $lineno, $flag ];
+                if ($SCRIPTADM{$dname}) {
+
+                    if ($spec->{$dname}) {
+                        Warn "$dname\@$source line $lineno";
+                        Warn "overrides";
+                        Warn "$dname\@$spec->{$dname}[0][2]" .
+                          " line " . $spec->{$dname}[0][3];
+                    }
+
+                    $spec->{$dname} = [ $specline ];
+                }
+                else {
+                    push @{ $spec->{$dname} }, $specline;
+                }
+            }
+        }
+        else {
+            if ($dname) {
+
+                # Attribute this in-line text to the current directive
+                push @{ $spec->{$dname} },
+                  [ $SPEC_TYPE{CONTENT}, $line, $source, $lineno, $flag ];
+            }
+            elsif ( $dname eq 'include' or $dname eq 'var' ) {
+                Die( $exit{spec_error},
+                    "inline content is not allowed for \%$dname" );
+            }
+            else {
+
+                # In-line content, but no idea where it goes!
+                Warn "ignoring in-line content at $source line $lineno";
+            }
+        }
+    }
+
+    return $spec;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_content
+# Purpose  : Load content from files, network URIs, or from command line
+#            executable output.  Returns tagged output indicating the source
+#            of each line.
+# Arguments: $ctype  - content type, must be in %SPEC_TYPE
+#            $source - source url for 'url' type, command line for 'exec'
+# Returns  : Array reference containing zero or more array references.  Each
+#            sub-array contains the following information:
+#
+#            [0] - path to the source*
+#            [1] - line number within the source file
+#            [2] - text
+#
+#            (*) For 'url' paths with scheme file://, or with no scheme at
+#            all, this will be the absolute path to the source file.  For
+#            'url' paths other than scheme file://, and $ctype 'exec' this
+#            will be $source.
+#
+sub get_content {
+    my $ctype  = shift;
+    my $source = env_replace(shift);
+    my @content;
+
+    # NOTE: Any errors in get_content must be passed back to the caller using
+    # die.  There is not enough info in this routine (e.g. include source, line
+    # number, etc) to accurately tell the user where within nested spec
+    # includes something went wrong.
+
+    if ( $ctype eq $SPEC_TYPE{URL} ) {
+
+        # Fix relative file URIs
+        if ( $source =~ m#file://# ) {
+            $source =~ s#file://(?=[^/])#$config{curdir}/#;
+            $source =~ s#file://##;
+        }
+        elsif ( $source !~ m#^\w+://# ) {
+            $source =~ s#^(?=[^/])#$config{curdir}/#;
+        }
+
+        if ( $source !~ m#^\w+://# ) {
+
+            #
+            # Plain text file
+            #
+
+            die [ $exit{file_not_found}, "cannot access $source ($!)" ]
+              unless -f $source;
+
+            open FILE, $source
+              or die [ $exit{file_not_readable}, "cannot open $source ($!)" ];
+
+            push @content, <FILE>;
+            close FILE;
+        }
+        else {
+
+            #
+            # Network URI
+            #
+
+            if ($HAS_LWP_SUPPORT) {
+                $UA = new LWP::UserAgent unless defined $UA;
+
+                # Retrieve content
+                my $r = $UA->get($source);
+                die [ $exit{file_not_found},
+                        "cannot access $source ("
+                      . $r->code . ": "
+                      . $r->message
+                      . ")" ]
+                  unless $r->is_success;
+
+                @content = map { "$_\n" } split( /\n/, $r->content );
+            }
+            elsif ($HAS_CURL_SUPPORT) {
+
+                # Use curl to grab the content - _exec dies on error
+                @content = _exec(
+                    "$HAS_CURL_SUPPORT -s $source",
+                    "failed to fetch $source with curl"
+                );
+            }
+            else {
+                die "no support detected for non-file URIs";
+            }
+        }
+    }
+    elsif ( $ctype eq $SPEC_TYPE{EXEC} ) {
+
+        # Get content - _exec dies on error
+        @content = _exec( $source, "failed to execute '$source'" );
+    }
+    else {
+        die "unknown content type '$ctype'";
+    }
+
+    # Return source tagged content
+    my $i = 0;
+    return [ map { [ $source, ++$i, $_ ] } @content ];
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : create_files
+# Purpose  : Create package administrative files using spec information.
+#            Depending on the value of config{overwrite}, this method may over
+#            write existing files.
+# Arguments: $spec - spec data structure as returned by parse().
+# Returns  : Full path to the generated (or pre-existing) prototype file.
+#
+sub create_files {
+    my $spec     = shift;
+    my $specname = $config{specname};
+    my $workdir  = $config{workdir};
+    my $protopath;
+
+    # First things first, check for required items
+    foreach my $required qw(pkginfo prototype) {
+        Die( $exit{spec_error},
+            "Required package resource \%$required not specified" )
+          unless exists $spec->{$required};
+    }
+
+    # Next, generate admin file content
+    foreach my $admtype (@ADMFILES) {
+        next unless exists $spec->{$admtype};
+
+        Important "Processing $admtype";
+
+        my $admfile = catfile $workdir, "$specname.$admtype-$ARCH";
+        $admfile = catfile $workdir, "$specname.$admtype" unless -f $admfile;
+        my $admfile_name = basename $admfile;
+
+        # Allow other admin files to read the prototype!
+        $protopath = $ENV{prototype} = $admfile if $admtype eq 'prototype';
+
+        # Handle overwrite permission
+        if ( -f $admfile and not $config{overwrite} ) {
+            Warn "Using existing $admfile_name";
+            next unless $HASMERGE{$admtype};
+        }
+
+        if ($config{overwrite}) {
+            Warn "Overwriting $admtype $admfile_name";
+        }
+        elsif ($HASMERGE{$admtype}) {
+            Warn "Modifying $admtype $admfile_name";
+        } else {
+            Info "Generating $admfile_name";
+        }
+
+        # If we're merging content for this admin type
+
+        my @admcontent;
+        if ($HASMERGE{$admtype} and not $config{overwrite}) {
+            if (-f $admfile) {
+                Info "Merging $admtype content with $admfile_name";
+                open ADM, $admfile
+                    or Die($exit{file_not_readable},
+                        "Cannot open '$admfile' for read: $!");
+
+                local $/ = undef;
+                @admcontent = <ADM>;
+                close ADM;
+            }
+        }
+
+        foreach my $item ( @{ $spec->{$admtype} } ) {
+            my ( $ctype, $line, $source, $lineno, $flag ) = @$item;
+
+            if ( $ctype eq $SPEC_TYPE{CONTENT} ) {
+                push @admcontent, $line;
+            }
+            elsif (! -f $admfile or $config{overwrite} or $flag eq $FLAGS{merge}) {
+                eval {
+                    my @content = @{ get_content @$item };
+                    Warn "empty \%$admtype at $source line $lineno"
+                      unless @content;
+
+                    foreach my $i (@content) { push @admcontent, $i->[2] }
+                };
+
+                Die(
+                      ( $@ and ref($@) eq 'ARRAY' )
+                    ? ( @{$@}, "at $item->[2] line $item->[3]" )
+                    : ( $exit{unknown}, "$@ at $item->[2] line $item->[3]" )
+                  )
+                  if $@;
+            }
+        }
+
+        # Do content replace within 'pkginfo' and 'copyright' includes
+        if ( $admtype eq 'pkginfo' or
+             $admtype eq 'copyright' or
+             $admtype eq 'prototype') {
+            for ( my $i = 0 ; $i <= $#admcontent ; $i++ ) {
+                $admcontent[$i] = env_replace( $admcontent[$i] );
+            }
+        }
+
+        # Write content to file
+        if (@admcontent) {
+
+            if (   $admtype eq 'prototype'
+                or $admtype eq 'depend'
+                or $admtype eq 'pkginfo'
+                or $admtype eq 'space' )
+            {
+                Info "Removing duplicate lines from $admfile_name";
+
+                # Remove duplicate lines, preserve order
+                my @uniqadm;
+                foreach my $adm (@admcontent) {
+                    my $found;
+                    foreach my $uni (@uniqadm) {
+                        if ( $adm eq $uni ) { $found++; last }
+                    }
+                    push @uniqadm, $adm unless $found;
+                }
+                @admcontent = @uniqadm;
+            }
+
+            Info "Writing $admfile_name";
+
+            open OUT, ">$admfile"
+              or
+              Die( $exit{file_not_writable}, "unable to write $admfile: $!" );
+
+            print OUT $_ foreach (@admcontent);
+            close OUT;
+        }
+        else {
+            Error("HAS NO CONTENT!");
+        }
+    }
+
+    # Last of all, write admin file content to the prototype
+    Important "Writing admin entries to " . basename $protopath;
+
+    my %writeadm;
+    foreach my $admtype (@ADMFILES) {
+        next if $admtype eq 'prototype';
+        system(qq{grep "i $admtype" $protopath >/dev/null 2>&1});
+        my $es = $? >> 8;
+
+        $writeadm{$admtype}++ if $es;
+    }
+
+    # Write entries which are not already in the prototype...
+    if ( keys %writeadm ) {
+        open PROTO, ">>$protopath"
+          or Die( $exit{file_not_writable},
+            "Failed to open $protopath for append: $!" );
+
+        foreach my $admtype ( sort keys %writeadm ) {
+            my $admfile = "$specname.$admtype";
+            my $admpath = catfile $workdir, $admfile;
+            print PROTO "i $admtype=$admfile\n" if -f $admpath;
+        }
+        close PROTO;
+    }
+
+    return $protopath;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : clean_spool
+# Purpose  : Remove any existing package spool directory for the package
+#            described by the current spec file.
+#
+sub clean_spool {
+    my $spooldir = $config{spooldir};
+    my $specname = $config{specname};
+
+    my $existing_pkgspool = catfile $spooldir, $specname;
+    vexec( "rm -r $existing_pkgspool", "Failed to remove $existing_pkgspool" )
+      if -d $existing_pkgspool;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : make_package
+# Purpose  : Invoke pkgmk to create a spool package using the specified
+#            prototype file.
+# Arguments: $proto - full path to the package prototype file.
+#
+sub make_package {
+    my $proto = shift;
+
+    clean_spool;
+
+    # Build the variable list
+    my @vars;
+    push @vars, join( "=", $_, $config{pkgvars}{$_} )
+      foreach ( sort keys %{ $config{pkgvars} } );
+
+    my @pkgmk;
+    push @pkgmk, "pkgmk";
+    push @pkgmk, "-d $config{spooldir}";
+    push @pkgmk, "-r $config{pkgroot}" if $config{pkgroot};
+    push @pkgmk, "-b $config{pkgbase}" if $config{pkgbase};
+    push @pkgmk, "-o" if $config{overwrite};
+    push @pkgmk, "-f $proto";
+    push @pkgmk, join(" ", @vars);
+
+    vexec( join(" ", @pkgmk),
+        "Failed to create $config{specname} using $proto" );
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : transfer_package
+# Purpose  : Invoke pkgtrans to create a bitstream package using variables
+#            from the command line and from spec files.
+#
+sub transfer_package {
+    my $pkgname = $config{pkgname} || $config{specname};
+    my $pkgfile = $config{pkgfile} || "$pkgname.pkg";
+    my $tmppkg = catfile $config{tmpdir}, $pkgfile;
+
+    vexec(
+        "pkgtrans -s $config{spooldir} $tmppkg $pkgname",
+        "Failed to transfer package $pkgname to $tmppkg"
+    );
+
+    if ( $config{compress} ) {
+        my $compress =
+          $config{usebzip}
+          ? 'bzip2 -9 -f %s'
+          : 'gzip -9 -f %s';
+
+        vexec( sprintf( $compress, $tmppkg ), "Failed to compress $tmppkg" );
+        $tmppkg .= $config{usebzip} ? ".bz2" : ".gz";
+    }
+
+    vexec("mv $tmppkg $config{destdir}")
+      if $config{tmpdir} ne $config{destdir};
+
+    clean_spool;
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# MAIN EXECUTION
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+process_arguments;
+
+my $spec = parse $config{spec};
+dumpenv( [], $spec )                if $config{dumpall};
+dumpenv( $config{dumpvars}, $spec ) if @{ $config{dumpvars} };
+
+my $protopath = create_files $spec;
+make_package $protopath;
+transfer_package if $config{transfer};
+
+exit $exit{ok};
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# USER GUIDE
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+__END__
+
+=head1 NAME
+
+mkpackage - Create one or more Solaris packages from a 'spec' file.
+
+=head1 SYNOPSIS
+
+ mkpackage --spec <path> [--destdir <path>] [--workdir <path>]
+        [--spooldir <path>] [--pkgroot <path>] [--tmpdir <path>]
+        [--[no]transfer] [--[no]overwrite] [--[no]compress]
+        [--usebzip] [-v var=value...] [--dump <var>|-dumpall] [--quiet]
+        [--help] [--manual] [--version]
+
+=head1 DESCRIPTION
+
+mkpackage is a tool for building one or more Solaris packages from a
+specification file.  This specification file determines the contents of each
+package and the final name for the package.  Command line options to mkpackage
+control whether the package is I<transferred> from the Solaris spool directory
+into a bitstream format, and whether that bitstream is compressed.  The output
+filename and directory for bitstream packages may also be configured.
+
+=head1 OPTIONS
+
+=head2 --spec,-s
+
+Package specification file.  This is the full path to the package specification
+file.  This is a required argument.  See the SPEC FILE FORMAT section of the
+documentation for more details.
+
+=head2 --destdir,-d
+
+Package destination directory.  Full path to place bitstream packages after the
+transfer stage.  This path is ignored when --notransfer is set.  (Default:
+current working directory)
+
+=head2 --workdir,-w
+
+Working directory.  Directory where all administrative and temporary packaging
+files will be created.  (Default: current working directory)
+
+=head2 --spooldir,-p
+
+Package spool directory.  This option allows the default pkgmk spool directory
+to be changed.  (Default: /var/spool/pkg)
+
+=head2 --pkgbase,-b
+
+Package base directory.  This path will be passed to the pkgmk -b option when
+the package is created.  (Default: none).
+
+=head2 --pkgroot,-r
+
+Package root directory.  This path will be passed to the pkgmk -r option when
+the package is created.  (Default: none).
+
+=head2 --tmpdir,-t
+
+Temporary directory.  Where to create temporary files during the package build
+process.  (Default: /tmp).
+
+=head2 --[no]transfer
+
+Enable or disable package transfer.  By default, mkpackage creates bitstream
+format packages from contents using pkgtrans.  Specifying --notransfer will
+cause the package to be left in the spool directory (See --spooldir).
+
+=head2 --[no]overwrite
+
+Enable or disable generated file overwrite.  When generating package
+administrative files, the default behavior is to preserve any files that may
+already exist.  Specifying --overwrite will regenerate files, overrwriting
+those that already exist.
+
+=head2 --[no]compress
+
+Enable or disable compression of bitstream packages.  By default, bitstream
+packages created with mkpackage will not be compressed.  Specifying --compress
+will compress the bitstream with gzip or, if --usebzip is specified, with
+bzip2.  Either command is executed with -9 for minimum archive size.  Note that
+this option is ignored when --notransfer is specified, as in this case no
+bistream package will be created.
+
+=head2 --usebzip
+
+Enable bzip2 compression.  Unless --nocompress and/or --notransfer options are
+specified, mkpackage will compress bitstream packages using gzip.  Specifying
+--usebzip will use bzip2 instead, producing smaller archives in most cases.
+
+=head2 -v var=value
+
+Build time variables.  Specify one or more variable replacements for pkgmk
+during the package build stage.  This option can be specified multiple times.
+
+=head2 --dump,-D
+
+Dump name=value pair of one or more environment variables to STDOUT after the
+spec is parsed.  This option can be specified more than once to dump the
+values of multiple variables.  The output format is suitable for use with
+shell C<eval> (if used with --quiet) so variables can be utilized in makefiles
+and scripts.
+
+=head2 --dumpall,-A
+
+Dump name=value pairs for all environment variables to STDOUT after the spec
+is parsed.  Use --quiet to only print out the variable value (or list of
+variables).
+
+=head2 --quiet,-q
+
+Suppress all informational messages.
+
+=head2 --help
+
+Display brief usage.
+
+=head2 --manual
+
+Display manual page.
+
+=head2 --version
+
+Display version information.
+
+=head1 SPEC FILE FORMAT
+
+=head2 Directives
+
+Directives are used to create the administrative files necessary to package
+software.  Each directive must be prefixed with the C<%> character.  Certain
+types of directives may take differing numbers of arguments.  The most common
+type of directive accepts a content scheme, which determines how the next
+argument will be handled.  These directives are of the following form:
+
+ %directive scheme argument
+
+Where I<scheme> is one of the following:
+
+=over 4
+
+=item url
+
+Insert the result of a URL request.  Argument must be a well formed URI which
+is supported by libwww-perl.  See the documentation for UserAgent for more
+details.  Variable replacement will be done in the URL before the request is
+sent.  Any unexpanded variables in the URL will be replaced with an empty
+string.  Consider the following directive:
+
+ %copyright     url file:///%{PWD}/LICENSE.txt
+
+This directive fetches the specified URL resource, and uses the content as the
+package copyright file.
+
+=item exec
+
+Insert the output of a command.  One or more arguments may be specified, which
+will be executed as a single command.  For instance:
+
+ %prototype     exec cswproto -v basedir=%{DESTDIR} %{DESTDIR}=/
+
+This directive executes the C<cswproto> program, passing in the specified
+arguments, and uses the resulting content as the package prototype.  Multiple
+commands can be chained together using pipelines:
+
+ %depend        exec find %{DESTDIR} -type f | depmaker --noscript
+
+Pipelines work identically in a spec file as they would on the command line,
+including support for redirection of standard streams.
+
+=back
+
+Content will be inserted into the spec as though it was specified in-line at
+that point in the file.  For C<%pkginfo> directives, once the url or exec
+content is retrieved, any C<%{variables}> in the content are replaced.
+Variable replacement is also done on all %include directives and on any
+in-line content.  For non-script type admin directives (e.g. %prototype,
+%depend), duplicate lines are removed from the output, preserving the overall
+%order of the file.
+
+Any directive which takes an url or exec argument can also be specified
+without an argument.  All non-directive lines in the spec file listed after
+the no-argument directive will be added to the specified administrative file,
+up to the next valid directive.  For instance:
+
+ %depend
+ P SUNWlibm
+ %copyright
+ Copyright 2006 Foomatic, Inc.
+ All rights reserved.
+
+The lines after the C<%depend> directive will be made part of the package
+depend file, and the C<%copyright> lines will be made part of the package
+copyright.  Directives with and without scheme arguments can also be used
+multiple times in the same spec file:
+
+ %depend
+ P CSWcommon - base directory structure
+ %depend     exec find %{DESTDIR} -type f | depmaker
+
+This will add the static depend, and also append any dynamic dependencies
+generated by the C<%depend> exec directive.
+
+=head2 Valid Directives
+
+=over 4
+
+=item checkinstall
+
+=item compver
+
+=item copyright
+
+=item depend
+
+=item pkginfo
+
+=item postinstall
+
+=item postremove
+
+=item preinstall
+
+=item preremove
+
+=item prototype
+
+=item request
+
+=item space
+
+These items follow the 'directive scheme' pattern, and create content for the
+package file of the same name.  Items in this group also accept inline content
+directly in the spec file.
+
+=item include
+
+An %include directive inserts additional spec file content at a specific point
+in the calling spec file.  This directive follows the 'directive scheme'
+pattern, but does not accept in-line content.
+
+=item var
+
+Directive C<%var> defines a new variable, which is then available for
+use by any spec line which follows the var declaration.  Variable
+specifications may override other variables set in spec files prior to the var
+declaration.  The format of a var declaration is:
+
+ %var   variable value
+
+Everything to the left of the variable name is assigned to that variable name,
+and may be referenced after the declaration as %{variable}.  Leading and
+trailing whitespace characters are removed from the value.  No quotes are
+necessary for values with embedded whitespace.
+
+=item cvar
+
+A C<%cvar> defines a new variable, but unlike C<%var>, if the variable name is
+already set, the new value will I<not> overwrite the old value.  The syntax of
+the two var directives is identical.
+
+=back
+
+See the Solaris Package Administrator's Guide for more details regarding the
+purpose and content of each of the above admin file types.  If the working
+directory contains the target file for any generated content, by default the
+contents of that file will be used, and the directive will be skipped.  Use
+the --overwrite argument to change this behavior, and overwrite existing files
+with generated content.
+
+=head2 Variable Replacement
+
+There are three ways to get data from the outside world into a spec file.  The
+first is to use the %var directive to explicitly set variables.  The second is
+to set variables in the environment prior to calling mkpackage.  When
+replacing %{variables} found in spec files, the environment is consulted for a
+variable of the same name.  Consider the following spec file snippet:
+
+ %pkginfo url http://%{PACKAGE_SERVER}/admin/pkginfo.standard
+ %pkginfo
+ PSTAMP=%{LOGNAME}@%{HOSTNAME}-%{exec gdate -s '+%s'}
+ %prototype exec find %{SPKG_BASEDIR} -cnewer %{TIMESTAMP}
+
+Standard variables such as C<$LOGNAME> and C<$HOSTNAME> would be replaced into
+the C<%{LOGNAME}> and C<%{HOSTNAME}> placeholders from the environment.
+Other variables could be set explicitly in the spec, or in a spec included by
+this spec, or could be set in the environment by the caller.  Any spec file
+variables that are not replaced at the end of processing will be replaced with
+an empty string.  If the replacement results in an empty string, a warning will
+be emitted.
+
+The final way to insert information into a spec is to use the embedded shell
+command replacement C<%{exec ...}>, as shown above.  Commands included in the
+exec replacement will be executed, and the resultant output will be limited to
+the first line of standard output produced by the command.  Leading and
+trailing whitespace will be removed.  This command may be a pipeline, but may
+not contain any brace characters ({, or }).
+
+=head2 Standard Variables
+
+A standard set of variables are set in the environment by mkpackage itself,
+for use by spec files:
+
+ %{specname}  - File name of this spec, without the .gspec suffix.
+ %{destdir}   - Full package destination path, as specified to --destdir.
+ %{workdir}   - Working directory, as specified to --workdir.
+ %{spooldir}  - Package spool directory, as specified to --spooldir.
+ %{pkgroot}   - Package root directory, as specified to --pkgroot.
+ %{tmpdir}    - Temporary directory, as specified to --tmpdir.
+ %{prototype} - Path to the prototype file without administrative entries
+
+B<NOTE:> %{prototype} cannot be used with %prototype directives.
+
+There are also a couple of options which are not configurable via the command
+line.  These are configurable only through spec files.
+
+=over 4
+
+=item %{pkgname}
+
+This allows spec files to adjust the PKG name.  By default, pkgname will be
+set to the file name of the main C<--spec>, without the .gspec extension.  For
+instance, if your spec file is named CSWpackage.gspec, C<%{pkgname}> will
+initially be C<CSWpackage>.
+
+=item %{pkgfile}
+
+The C<%{pkgfile}> variable controls the name of the bitstream package to
+generate when C<--transfer> is enabled, without the compression extension, if
+any.  By default, pkgfile will be set to C<%{pkgname}.pkg>.
+
+=back
+
+=head1 KNOWN ISSUES
+
+Long lines in spec files cannot be broken with line continuation characters.
+So far, this has not been a problem, because parameterized paths are relatively
+short, and hairy command lines can be put in spec libraries so users don't have
+to deal with them.
+
+This tool does not detect circular includes in spec files, so it is possible to
+create a spec file that will loop until the system runs out of memory.  This is
+easy to avoid.
+
+=head1 AUTHOR & COPYRIGHT
+
+ Copyright 2006 Cory Omand <comand@blastwave.org>
+ All rights reserved.  Use is subject to license terms.
+ 
+ Redistribution and/or use, with or without modification, is
+ permitted.  This software is without warranty of any kind.  The
+ author(s) shall not be liable in the event that use of the
+ software causes damage.
+
+=cut
+

@@ -1,0 +1,3 @@
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libc-client.2004g.so 0755 root bin
+s none /opt/csw/lib/libc-client.so=libc-client.2004g.so

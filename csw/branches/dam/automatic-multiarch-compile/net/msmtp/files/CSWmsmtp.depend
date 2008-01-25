@@ -1,0 +1,10 @@
+P CSWgcrypt   libgcrypt - GNU libcrypt
+P CSWggettext ggettext - GNU gettext
+P CSWgnutls   gnutls - GNU Transport Layer Security lib and tools
+P CSWgpgerr   libgpg_error - GNU gpg related library
+P CSWiconv    libiconv - GNU iconv library
+P CSWkrb5lib  krb5_lib - MIT Kerberos 5 core libraries
+P CSWlibgsasl libgsasl - GNU SASL Library
+P CSWlibidn   libidn - Implementation of the Stringprep, Punycode and IDNA
+P CSWlibntlm  libntlm - libntlm - A library that implement Microsoft's NTLM authentication
+P CSWzlib     zlib - Zlib Data Compression Library

@@ -1,0 +1,224 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/assistant 0755 root bin
+f none /opt/csw/bin/designer 0755 root bin
+f none /opt/csw/bin/linguist 0755 root bin
+f none /opt/csw/bin/lrelease 0755 root bin
+f none /opt/csw/bin/lupdate 0755 root bin
+f none /opt/csw/bin/moc 0755 root bin
+f none /opt/csw/bin/pixeltool 0755 root bin
+f none /opt/csw/bin/qmake 0755 root bin
+f none /opt/csw/bin/qt3to4 0755 root bin
+f none /opt/csw/bin/qtdemo 0755 root bin
+f none /opt/csw/bin/rcc 0755 root bin
+d none /opt/csw/bin/sparcv9 0755 root bin
+f none /opt/csw/bin/sparcv9/assistant 0755 root bin
+f none /opt/csw/bin/sparcv9/designer 0755 root bin
+f none /opt/csw/bin/sparcv9/linguist 0755 root bin
+f none /opt/csw/bin/sparcv9/lrelease 0755 root bin
+f none /opt/csw/bin/sparcv9/lupdate 0755 root bin
+f none /opt/csw/bin/sparcv9/moc 0755 root bin
+f none /opt/csw/bin/sparcv9/pixeltool 0755 root bin
+f none /opt/csw/bin/sparcv9/qmake 0755 root bin
+f none /opt/csw/bin/sparcv9/qt3to4 0755 root bin
+f none /opt/csw/bin/sparcv9/qtdemo 0755 root bin
+f none /opt/csw/bin/sparcv9/rcc 0755 root bin
+f none /opt/csw/bin/sparcv9/uic 0755 root bin
+f none /opt/csw/bin/sparcv9/uic3 0755 root bin
+f none /opt/csw/bin/uic 0755 root bin
+f none /opt/csw/bin/uic3 0755 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libQt3Support.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQt3Support.so.4.3=libQt3Support.so.4.3.3
+s none /opt/csw/lib/libQt3Support.so.4=libQt3Support.so.4.3.3
+s none /opt/csw/lib/libQt3Support.so=libQt3Support.so.4.3.3
+f none /opt/csw/lib/libQtAssistantClient.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtAssistantClient.so.4.3=libQtAssistantClient.so.4.3.3
+s none /opt/csw/lib/libQtAssistantClient.so.4=libQtAssistantClient.so.4.3.3
+s none /opt/csw/lib/libQtAssistantClient.so=libQtAssistantClient.so.4.3.3
+f none /opt/csw/lib/libQtCore.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtCore.so.4.3=libQtCore.so.4.3.3
+s none /opt/csw/lib/libQtCore.so.4=libQtCore.so.4.3.3
+s none /opt/csw/lib/libQtCore.so=libQtCore.so.4.3.3
+f none /opt/csw/lib/libQtDesigner.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtDesigner.so.4.3=libQtDesigner.so.4.3.3
+s none /opt/csw/lib/libQtDesigner.so.4=libQtDesigner.so.4.3.3
+s none /opt/csw/lib/libQtDesigner.so=libQtDesigner.so.4.3.3
+f none /opt/csw/lib/libQtDesignerComponents.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtDesignerComponents.so.4.3=libQtDesignerComponents.so.4.3.3
+s none /opt/csw/lib/libQtDesignerComponents.so.4=libQtDesignerComponents.so.4.3.3
+s none /opt/csw/lib/libQtDesignerComponents.so=libQtDesignerComponents.so.4.3.3
+f none /opt/csw/lib/libQtGui.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtGui.so.4.3=libQtGui.so.4.3.3
+s none /opt/csw/lib/libQtGui.so.4=libQtGui.so.4.3.3
+s none /opt/csw/lib/libQtGui.so=libQtGui.so.4.3.3
+f none /opt/csw/lib/libQtNetwork.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtNetwork.so.4.3=libQtNetwork.so.4.3.3
+s none /opt/csw/lib/libQtNetwork.so.4=libQtNetwork.so.4.3.3
+s none /opt/csw/lib/libQtNetwork.so=libQtNetwork.so.4.3.3
+f none /opt/csw/lib/libQtScript.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtScript.so.4.3=libQtScript.so.4.3.3
+s none /opt/csw/lib/libQtScript.so.4=libQtScript.so.4.3.3
+s none /opt/csw/lib/libQtScript.so=libQtScript.so.4.3.3
+f none /opt/csw/lib/libQtSql.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtSql.so.4.3=libQtSql.so.4.3.3
+s none /opt/csw/lib/libQtSql.so.4=libQtSql.so.4.3.3
+s none /opt/csw/lib/libQtSql.so=libQtSql.so.4.3.3
+f none /opt/csw/lib/libQtSvg.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtSvg.so.4.3=libQtSvg.so.4.3.3
+s none /opt/csw/lib/libQtSvg.so.4=libQtSvg.so.4.3.3
+s none /opt/csw/lib/libQtSvg.so=libQtSvg.so.4.3.3
+f none /opt/csw/lib/libQtTest.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtTest.so.4.3=libQtTest.so.4.3.3
+s none /opt/csw/lib/libQtTest.so.4=libQtTest.so.4.3.3
+s none /opt/csw/lib/libQtTest.so=libQtTest.so.4.3.3
+f none /opt/csw/lib/libQtUiTools.a 0644 root bin
+f none /opt/csw/lib/libQtXml.so.4.3.3 0755 root bin
+s none /opt/csw/lib/libQtXml.so.4.3=libQtXml.so.4.3.3
+s none /opt/csw/lib/libQtXml.so.4=libQtXml.so.4.3.3
+s none /opt/csw/lib/libQtXml.so=libQtXml.so.4.3.3
+d none /opt/csw/lib/qt4 0755 root bin
+d none /opt/csw/lib/qt4/plugins 0755 root bin
+d none /opt/csw/lib/qt4/plugins/accessible 0755 root bin
+f none /opt/csw/lib/qt4/plugins/accessible/libqtaccessiblecompatwidgets.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/accessible/libqtaccessiblewidgets.so 0755 root bin
+d none /opt/csw/lib/qt4/plugins/designer 0755 root bin
+f none /opt/csw/lib/qt4/plugins/designer/libarthurplugin.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/designer/libcontainerextension.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/designer/libcustomwidgetplugin.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/designer/libqt3supportwidgets.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/designer/libtaskmenuextension.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/designer/libworldtimeclockplugin.so 0755 root bin
+d none /opt/csw/lib/qt4/plugins/iconengines 0755 root bin
+f none /opt/csw/lib/qt4/plugins/iconengines/libqsvg.so 0755 root bin
+d none /opt/csw/lib/qt4/plugins/imageformats 0755 root bin
+f none /opt/csw/lib/qt4/plugins/imageformats/libqgif.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/imageformats/libqjpeg.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/imageformats/libqmng.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/imageformats/libqsvg.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/imageformats/libqtiff.so 0755 root bin
+d none /opt/csw/lib/qt4/plugins/inputmethods 0755 root bin
+f none /opt/csw/lib/qt4/plugins/inputmethods/libqimsw-multi.so 0755 root bin
+d none /opt/csw/lib/qt4/plugins/sqldrivers 0755 root bin
+f none /opt/csw/lib/qt4/plugins/sqldrivers/libqsqlite.so 0755 root bin
+f none /opt/csw/lib/qt4/plugins/sqldrivers/libqsqlmysql.so 0755 root bin
+d none /opt/csw/lib/sparcv9 0755 root bin
+f none /opt/csw/lib/sparcv9/libQt3Support.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQt3Support.so.4.3=libQt3Support.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQt3Support.so.4=libQt3Support.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQt3Support.so=libQt3Support.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtAssistantClient.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtAssistantClient.so.4.3=libQtAssistantClient.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtAssistantClient.so.4=libQtAssistantClient.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtAssistantClient.so=libQtAssistantClient.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtCore.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtCore.so.4.3=libQtCore.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtCore.so.4=libQtCore.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtCore.so=libQtCore.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtDesigner.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtDesigner.so.4.3=libQtDesigner.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtDesigner.so.4=libQtDesigner.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtDesigner.so=libQtDesigner.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtDesignerComponents.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtDesignerComponents.so.4.3=libQtDesignerComponents.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtDesignerComponents.so.4=libQtDesignerComponents.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtDesignerComponents.so=libQtDesignerComponents.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtGui.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtGui.so.4.3=libQtGui.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtGui.so.4=libQtGui.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtGui.so=libQtGui.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtNetwork.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtNetwork.so.4.3=libQtNetwork.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtNetwork.so.4=libQtNetwork.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtNetwork.so=libQtNetwork.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtScript.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtScript.so.4.3=libQtScript.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtScript.so.4=libQtScript.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtScript.so=libQtScript.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtSql.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtSql.so.4.3=libQtSql.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtSql.so.4=libQtSql.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtSql.so=libQtSql.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtSvg.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtSvg.so.4.3=libQtSvg.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtSvg.so.4=libQtSvg.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtSvg.so=libQtSvg.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtTest.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtTest.so.4.3=libQtTest.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtTest.so.4=libQtTest.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtTest.so=libQtTest.so.4.3.3
+f none /opt/csw/lib/sparcv9/libQtUiTools.a 0644 root bin
+f none /opt/csw/lib/sparcv9/libQtXml.so.4.3.3 0755 root bin
+s none /opt/csw/lib/sparcv9/libQtXml.so.4.3=libQtXml.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtXml.so.4=libQtXml.so.4.3.3
+s none /opt/csw/lib/sparcv9/libQtXml.so=libQtXml.so.4.3.3
+d none /opt/csw/lib/sparcv9/qt4 0755 root bin
+d none /opt/csw/lib/sparcv9/qt4/plugins 0755 root bin
+d none /opt/csw/lib/sparcv9/qt4/plugins/accessible 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/accessible/libqtaccessiblecompatwidgets.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/accessible/libqtaccessiblewidgets.so 0755 root bin
+d none /opt/csw/lib/sparcv9/qt4/plugins/designer 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/designer/libarthurplugin.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/designer/libcontainerextension.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/designer/libcustomwidgetplugin.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/designer/libqt3supportwidgets.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/designer/libtaskmenuextension.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/designer/libworldtimeclockplugin.so 0755 root bin
+d none /opt/csw/lib/sparcv9/qt4/plugins/iconengines 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/iconengines/libqsvg.so 0755 root bin
+d none /opt/csw/lib/sparcv9/qt4/plugins/imageformats 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/imageformats/libqgif.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/imageformats/libqjpeg.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/imageformats/libqmng.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/imageformats/libqsvg.so 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/imageformats/libqtiff.so 0755 root bin
+d none /opt/csw/lib/sparcv9/qt4/plugins/inputmethods 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/inputmethods/libqimsw-multi.so 0755 root bin
+d none /opt/csw/lib/sparcv9/qt4/plugins/sqldrivers 0755 root bin
+f none /opt/csw/lib/sparcv9/qt4/plugins/sqldrivers/libqsqlite.so 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/qt4 0755 root bin
+d none /opt/csw/share/qt4/phrasebooks 0755 root bin
+f none /opt/csw/share/qt4/phrasebooks/danish.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/dutch.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/finnish.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/french.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/german.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/italian.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/japanese.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/norwegian.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/polish.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/russian.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/spanish.qph 0644 root bin
+f none /opt/csw/share/qt4/phrasebooks/swedish.qph 0644 root bin
+d none /opt/csw/share/qt4/translations 0755 root bin
+f none /opt/csw/share/qt4/translations/assistant_de.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/assistant_ja.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/assistant_pl.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/assistant_zh_CN.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/designer_de.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/designer_ja.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/designer_pl.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/designer_zh_CN.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/linguist_ja.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/linguist_pl.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/linguist_zh_CN.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_ar.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_de.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_es.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_fr.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_iw.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_ja_jp.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_pl.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_pt.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_ru.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_sk.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_sv.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_uk.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qt_zh_CN.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qtconfig_pl.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qtconfig_zh_CN.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qvfb_pl.qm 0644 root bin
+f none /opt/csw/share/qt4/translations/qvfb_zh_CN.qm 0644 root bin
+i copyright=CSWqt4.copyright
+i depend=CSWqt4.depend
+i pkginfo=CSWqt4.pkginfo

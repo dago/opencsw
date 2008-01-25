@@ -1,0 +1,30 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+
+SETENV=${CSW_PREFIX)/share/tomcat5/bin/setenv.sh
+SETENV_BAK=${SETENV}.CSW-backup
+
+# Copy templates
+template_list="share/tomcat5/webapps/source/WEB-INF/web.xml"
+
+echo Removing unmodified CSW templates:
+for file in $template_list
+do
+    filepath=${CSW_PREFIX}/$file
+    if [ -f "${filepath}" ] && [ -f "${filepath}.CSW" ] && cmp -s "${filepath}" "${filepath}.CSW"; then
+        echo "  removing $filepath"
+        rm -f "${filepath}"
+    else
+        echo "  preserving $filepath"
+    fi
+done
+
+cat ${SETENV} | awk '
+BEGIN { PRINT = 1 }
+/^# -- Added by CSWopengrok --/ { PRINT = 1 - PRINT; next }
+{ if( PRINT ) print }
+' > ${SETENV_BAK}
+mv ${SETENV_BAK} ${SETENV}
+
+exit 0

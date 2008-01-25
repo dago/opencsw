@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+    Service manifest to start setoolkit with the orcallator.se script.
+-->
+
+<service_bundle type='manifest' name='Orcallator System Monitoring'>
+
+<service
+    name='application/orca/orcallator'
+    type='service'
+    version='1'>
+
+    <create_default_instance enabled='false' />
+
+    <single_instance />
+
+    <dependency name='fs-local'
+        grouping='require_all'
+        restart_on='none'
+        type='service'>
+        <service_fmri value='svc:/system/filesystem/local' />
+    </dependency>
+
+    <dependency name='symbel-interpreter'
+        grouping='require_all'
+        restart_on='refresh'
+        type='path'>
+        <service_fmri value='file://localhost/opt/csw/bin/se' />
+    </dependency>
+
+    <dependency name='orcallator-se'
+        grouping='require_all'
+        restart_on='refresh'
+        type='path'>
+        <service_fmri value='file://localhost/opt/csw/lib/orca/orcallator.se' />
+    </dependency>
+
+    <exec_method
+        type='method'
+        name='start'
+        exec='/lib/svc/method/orcallator'
+        timeout_seconds='60' />
+
+    <exec_method
+        type='method'
+        name='stop'
+        exec=':kill'
+        timeout_seconds='60' />
+
+    <property_group name='orcallator' type='application'>
+	<!-- property outdir can be defined and default to hostname-specific dir -->
+        <propval name='interval' type='integer' value='60' />
+        <propval name='compressor' type='astring' value='/usr/bin/gzip' />
+        <propval name='options' type='astring' value='-DWATCH_CPU -DWATCH_MUTEX -DWATCH_NET -DWATCH_TCP -DWATCH_MOUNTS -DWATCH_DISK -DWATCH_RAM -DWATCH_PAGES' />
+    </property_group>
+
+    <template>
+        <common_name>
+            <loctext xml:lang='C'>orcallator system monitoring</loctext>
+        </common_name>
+        <documentation>
+            <doc_link name='setoolkit.org'
+                uri='http://www.setoolkit.org' />
+            <doc_link name='orcaware.com'
+                uri='http://www.orcaware.com/orca/docs/orcallator.html' />
+        </documentation>
+    </template>
+</service>
+
+</service_bundle>
+

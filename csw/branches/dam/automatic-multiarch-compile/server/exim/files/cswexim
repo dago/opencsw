@@ -1,0 +1,58 @@
+#! /bin/sh
+# /etc/init.d/exim
+#
+# Written by Miquel van Smoorenburg <miquels@drinkel.ow.org>.
+# Modified for Debian GNU/Linux by Ian Murdock <imurdock@gnu.ai.mit.edu>.
+# Modified for exim by Tim Cutts <timc@chiark.greenend.org.uk>
+# Modified for Blastwave by Markus Mayer <mmayer@blastwave.org>
+
+# Exit if exim (or another MTA) runs from /etc/inetd.conf
+if [ -f /etc/inetd.conf ] && grep "^ *\([0-9.]\+:\)\?smtp" /etc/inetd.conf >/dev/null; then
+    exit 0
+fi
+
+DAEMON=/opt/csw/sbin/exim
+PIDFILE=/var/run/exim.pid
+CONFFILE=/opt/csw/etc/exim/exim.conf
+ENVFILE=/opt/csw/etc/exim/exim-env.sh
+
+# Exit if there's no exim binary
+test -x "$DAEMON" || exit 0
+
+# Make sure we have exim.conf
+test -r "$CONFFILE" || exit 0
+
+# Read customizable environment if it exists
+test -r "$ENVFILE" && . "$ENVFILE"
+
+# Use default parameters if $ENVFILE doesn't set $EXIM_PARAMS
+test -z "$EXIM_PARAMS" && EXIM_PARAMS="-bd -q30m"
+
+case "$1" in
+  start)
+    echo "Starting MTA: \c"
+    $DAEMON $EXIM_PARAMS
+    echo "exim."
+    ;;
+  stop)
+    echo "Stopping MTA: \c"
+    kill `cat "$PIDFILE"`
+    echo "exim."
+      ;;
+  restart)
+    echo "Restarting MTA: \c"
+    kill `cat "$PIDFILE"`
+    $DAEMON $EXIM_PARAMS
+    echo "exim."
+    ;;
+  reload|refresh|force-reload)
+    echo "Reloading exim configuration files"
+    kill -1 `cat "$PIDFILE"`
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|reload}"
+    exit 1
+    ;;
+esac
+
+exit 0

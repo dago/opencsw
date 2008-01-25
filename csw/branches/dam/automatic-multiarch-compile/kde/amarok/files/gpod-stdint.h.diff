@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru amarok-1.4.8.orig/amarok/src/mediadevice/ipod/ipodmediadevice.cpp amarok-1.4.8/amarok/src/mediadevice/ipod/ipodmediadevice.cpp
+--- amarok-1.4.8.orig/amarok/src/mediadevice/ipod/ipodmediadevice.cpp	2007-12-17 10:53:19.000000000 -0500
++++ amarok-1.4.8/amarok/src/mediadevice/ipod/ipodmediadevice.cpp	2007-12-24 08:28:49.690696000 -0500
+@@ -61,7 +61,7 @@
+ #include <qtooltip.h>
+ 
+ #ifdef HAVE_STATVFS
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <sys/statvfs.h>
+ #endif
+ 
