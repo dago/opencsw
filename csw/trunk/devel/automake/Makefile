@@ -1,5 +1,6 @@
+PKGVERSION = 1.10
 GARNAME = automake
-GARVERSION = 1.10
+GARVERSION ?= $(PKGVERSION)
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating Makefiles.
@@ -15,20 +16,51 @@ define BLURB
     as an extensible, maintainable mechanism for augmenting autoconf.
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWautomake,depend)
+OLD_VERSIONS = 1.6.3 1.7.9 1.8.5 1.9.6
+ALL_VERSIONS = $(OLD_VERSIONS) $(PKGVERSION)
 
-PREREQUISITE_PKGS = CSWperl
+MASTER_SITES = $(GNU_MIRROR)
+SOURCEFILES  = $(foreach VERSION, $(ALL_VERSIONS), $(GARNAME)-$(VERSION).tar.gz)
+DISTFILES    = $(SOURCEFILES)
+DISTFILES   += $(call admfiles,CSWautomake,depend)
+DISTFILES   += README.CSW
+NOEXTRACT    = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
+
+COOKIEROOTDIR = cookies-$(GARVERSION)
+
+# Move old documentation away
+ifneq ($(GARVERSION), $(PKGVERSION))
+  infodir = /ignore
+endif
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+CLEAN_SCRIPTS = custom
+
 include ../category.mk
 
+$(DOWNLOADDIR)/README.CSW:
+	@echo " ==> Generating README.CSW"
+	@(exec >$@;								\
+	  echo "This package contains the following automake versions:";	\
+	  for VERSION in $(ALL_VERSIONS); do					\
+	    echo "  automake-$$VERSION";					\
+	  done)
+
 post-install:
-	@echo " ==> Fixing install anomalies"
 	@rm -f $(DESTDIR)$(prefix)/share/info/dir
+	@rm -f $(DESTDIR)$(bindir)/aclocal
+	@gln -s aclocal-1.10 $(DESTDIR)$(bindir)/aclocal
+	@rm -f $(DESTDIR)$(bindir)/automake
+	@gln -s automake-1.10 $(DESTDIR)$(bindir)/automake
+	@ginstall $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/
 	@$(MAKECOOKIE)
 
+pre-package:
+	@(for VERSION in $(OLD_VERSIONS); do gmake GARVERSION=$$VERSION install; done)
+	@$(MAKECOOKIE)
+	
+clean-custom: clean-all
+	@(for VERSION in $(OLD_VERSIONS); do gmake GARVERSION=$$VERSION clean-all; done)
