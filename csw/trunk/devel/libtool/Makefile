@@ -11,9 +11,9 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibtool)
-
-CONFIGURE_ARGS = $(DIRPATHS)
+DISTFILES += $(call admfiles,CSWlibtool,depend prototype)
+DISTFILES += $(call admfiles,CSWlibtool_rt,prototype)
+DISTFILES += $(foreach ARCH,i386 sparc,$(ARCH)-gcc2.conf $(ARCH)-gcc2.tags $(ARCH)-gcc3.conf $(ARCH)-gcc3.tags)
 
 TEST_TARGET = check
 
@@ -21,6 +21,9 @@ include ../category.mk
 
 post-install:
 	@echo " ==> Fixing install anomalies"
-	@rm -f $(DESTDIR)$(prefix)/share/info/dir
+	@rm -f $(DESTDIR)$(infodir)/dir
+	@(for f in gcc2.conf gcc2.tags gcc3.conf gcc3.tags; do				\
+		ginstall $(WORKDIR)/$(GARCH)-$$f $(DESTDIR)$(datadir)/$(GARNAME)/$$f;	\
+	done)
 	@$(MAKECOOKIE)
 
