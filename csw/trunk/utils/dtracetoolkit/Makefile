@@ -22,10 +22,14 @@ INSTALL_SCRIPTS = custom
 
 include ../category.mk
 
+USEFUL_SCRIPTS = dexplorer dtruss dvmstat errinfo execsnoop hotkernel hotuser \
+	iopattern iosnoop iotop opensnoop procsystime rwsnoop rwtop statsnoop
+
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
 	@rm -rf $(DESTDIR)$(prefix)/DTT
 	@ginstall -d $(DESTDIR)$(prefix)
 	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/DTT
 	@rm -f $(DESTDIR)$(prefix)/DTT/install
+	gln -s $(foreach SCRIPT, $(USEFUL_SCRIPTS), ../DTT/$(SCRIPT)) $(DESTDIR)$(prefix)/bin
 	@$(MAKECOOKIE)
