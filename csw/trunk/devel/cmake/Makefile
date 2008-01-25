@@ -1,5 +1,5 @@
 GARNAME = cmake
-GARVERSION = 2.4.7
+GARVERSION = 2.4.8
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
@@ -14,7 +14,7 @@ endef
 
 MASTER_SITES = http://www.cmake.org/files/v2.4/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcmake,prototype)
+DISTFILES += $(call admfiles,CSWcmake)
 
 datadir = /share/$(GARNAME)-$(GARVERSION)
 sharedstatedir = /share
