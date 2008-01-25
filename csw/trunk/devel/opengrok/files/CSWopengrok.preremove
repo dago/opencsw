@@ -2,6 +2,9 @@
 
 CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
 
+SETENV=${CSW_PREFIX)/share/tomcat5/bin/setenv.sh
+SETENV_BAK=${SETENV}.CSW-backup
+
 # Copy templates
 template_list="share/tomcat5/webapps/source/WEB-INF/web.xml"
 
@@ -17,15 +20,11 @@ do
     fi
 done
 
-TOMCAT5CONFIG=/etc/opt/csw/tomcat5
-
-cp ${TOMCAT5CONFIG} ${TOMCAT5CONFIG}.CSW-backup
-cat ${TOMCAT5CONFIG}.CSW-backup | awk '
+cat ${SETENV} | awk '
 BEGIN { PRINT = 1 }
 /^# -- Added by CSWopengrok --/ { PRINT = 1 - PRINT; next }
 { if( PRINT ) print }
-' > ${TOMCAT5CONFIG}
-rm ${TOMCAT5CONFIG}.CSW-backup
-
+' > ${SETENV_BAK}
+mv ${SETENV_BAK} ${SETENV}
 
 exit 0

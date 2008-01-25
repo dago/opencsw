@@ -30,6 +30,15 @@ install-custom:
 		(cd $(DESTDIR)$(prefix)/share/tomcat5/webapps/source; \
 		jar xf /dev/fd/0) \
 	)
+	# For Indexing. Structure of opengrok-0.5 is opengrok in application root
+	# directory and all libs in lib/. We use only WEB-INF whose directory structure \
+	# is slightly different.
+	@gln -s $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/. \
+		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/lib
+
+	@ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
+	@ginstall $(WORKSRC)/*.txt \
+		$(DESTDIR)$(prefix)/share/doc/opengrok/
 	@mv $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml \
 		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml.CSW
 	@# XML-Starlet auf web.xml
@@ -41,3 +50,6 @@ install-custom:
 	
 
 include ../category.mk
+
+# TODO: Add run.sh for cron update
+# TODO: Repository under /var/opt/csw/repos

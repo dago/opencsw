@@ -1,36 +1,41 @@
 #!/bin/sh
 
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
 
-TOMCAT5CONFIG=/etc/opt/csw/tomcat5
+SETENV=${CSW_PREFIX)/share/tomcat5/bin/setenv.sh
+SETENV_BAK=${SETENV}.CSW-backup
 
 echo
-echo "Adjusting ${TOMCAT5CONFIG} to find java svn libraries"
+echo "Adjusting ${SETENV} to find java svn libraries"
 
-cat ${TOMCAT5CONFIG} | awk '
+# Rip out old contents
+touch ${SETENV}
+cat ${SETENV} | awk '
 BEGIN { PRINT = 1 }
 /^# -- Added by CSWopengrok --/ { PRINT = 1 - PRINT; next }
 { if( PRINT ) print }
-' > ${TOMCAT5CONFIG}.CSW-backup
+' > ${SETENV_BAK}
 
-cat >>${TOMCAT5CONFIG}.CSW-backup <<EOF
+cat >>${SETENV_BAK} <<EOF
 
 # -- Added by CSWopengrok --
 # All lines between these comments will be removed on package removal.
-LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/opt/csw/lib/svn
+
+# If your inspected sources are large you may want to increase the heap.
+# Feel free to uncomment and adjust this:
+#JAVA_OPTS=-Xmx512m
+
+LD_LIBRARY_PATH=/opt/csw/lib/svn:${LD_LIBRARY_PATH}
 export LD_LIBRARY_PATH
 # -- Added by CSWopengrok --
-
 EOF
-mv ${TOMCAT5CONFIG}.CSW-backup ${TOMCAT5CONFIG} && rm ${TOMCAT5CONFIG}.CSW-backup
+
+mv ${SETENV_BAK} ${SETENV}
 
 echo
 
-CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
-
-# Copy templates
+echo "Copying CSW templates:"
 template_list="share/tomcat5/webapps/source/WEB-INF/web.xml"
-
-echo Copying CSW templates:
 for file in $template_list
 do
     filepath=${CSW_PREFIX}/$file
@@ -48,6 +53,13 @@ done
 NOTE: You need to configure OpenGrok. Edit the file
   /opt/csw/share/tomcat5/webapps/source/WEB-INF/web.xml
 to do so.
+
+NOTE: You may need to set LANG in tomcat to suit your needs,
+e. g. to use de.UTF-8. To do so, put something like
+  LANG=de.UTF-8
+  export LANG
+in /etc/opt/csw/tomcat5 and restart tomcat.
+
 EOF
 
 exit 0
