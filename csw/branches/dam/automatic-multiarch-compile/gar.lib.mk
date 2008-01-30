@@ -428,9 +428,9 @@ build-%/setup.py:
 	@$(MAKECOOKIE)
 
 # Build for a certain architecture
-build-arch-%:
-	@echo " ==> Building for architecture $*"
-	@$(MAKE) ISA=$* build-arch
+build-isa-%:
+	@echo " ==> Building for ISA $*"
+	@$(MAKE) ISA=$* build-isa
 	@$(MAKECOOKIE)
 
 #################### TEST RULES ####################
@@ -518,9 +518,9 @@ install-%-config:
 	$(MAKECOOKIE)
 
 # Install for a certain architecture
-install-arch-%:
-	@echo " ==> Installing for architecture $*"
-	@$(MAKE) ISA=$* install-arch
+install-isa-%:
+	@echo " ==> Installing for ISA $*"
+	@$(MAKE) ISA=$* install-isa
 	@$(MAKECOOKIE)
 
 
@@ -588,7 +588,7 @@ install-$(MANIFEST_FILE):
 ####################### CLEAN RULES ######################
 
 # Build for a certain architecture
-clean-arch-%:
+clean-isa-%:
 	@$(MAKE) ISA=$* clean-all
 	@$(MAKECOOKIE)
 

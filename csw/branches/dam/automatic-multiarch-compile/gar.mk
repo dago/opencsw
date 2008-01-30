@@ -246,11 +246,11 @@ configure-p:
 # build			- Actually compile the sources.
 BUILD_TARGETS = $(addprefix build-,$(BUILD_SCRIPTS))
 
-build: build-arch $(addprefix build-arch-,$(filter-out $(ISA),$(BUILD_ARCHS)))
+build: build-isa $(addprefix build-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
 	$(DONADA)
 
 # Build for a specific architecture, do not recurse into compiling more archs
-build-arch: configure pre-build $(BUILD_TARGETS) post-build
+build-isa: configure pre-build $(BUILD_TARGETS) post-build
 	$(DONADA)
 
 # returns true if build has completed successfully, false
@@ -288,10 +288,10 @@ fixconfig:
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE)))
 
-install: install-arch $(addprefix install-arch-,$(filter-out $(ISA),$(BUILD_ARCHS)))
+install: install-isa $(addprefix install-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
 	$(DONADA)
 
-install-arch: build $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install $(POST_INSTALL_TARGETS) 
+install-isa: build $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install $(POST_INSTALL_TARGETS) 
 	$(DONADA)
 
 
@@ -313,9 +313,9 @@ reinstall: build
 CLEAN_SCRIPTS ?= all
 CLEAN_TARGETS  = $(addprefix clean-,$(CLEAN_SCRIPTS))
 
-clean: clean-arch $(addprefix clean-arch-,$(filter-out $(ISA),$(BUILD_ARCHS)))
+clean: clean-isa $(addprefix clean-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
 
-clean-arch: $(CLEAN_TARGETS)
+clean-isa: $(CLEAN_TARGETS)
 
 # Backwards compatability
 cookieclean: clean-cookies
@@ -323,7 +323,7 @@ buildclean:  clean-build
 sourceclean: clean-source
 
 clean-all: clean-cookies
-	@echo " ==> Cleaning architecture $(ISA)"
+	@echo " ==> Cleaning ISA $(ISA)"
 	@rm -rf $(DOWNLOADDIR)
 
 clean-cookies: clean-build
