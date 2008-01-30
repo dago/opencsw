@@ -427,6 +427,12 @@ build-%/setup.py:
 	@( cd $* ; $(BUILD_ENV) python ./setup.py $(PYBUILD_CMD) $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
+# Build for a certain architecture
+build-arch-%:
+	@echo " ==> Building for architecture $*"
+	@$(MAKE) ISA=$* build-arch
+	@$(MAKECOOKIE)
+
 #################### TEST RULES ####################
 
 TEST_TARGET ?= test
@@ -511,6 +517,13 @@ install-%-config:
 	cp -f $(DESTDIR)$(bindir)/$*-config $(STAGINGDIR)/$(GARNAME)/
 	$(MAKECOOKIE)
 
+# Install for a certain architecture
+install-arch-%:
+	@echo " ==> Installing for architecture $*"
+	@$(MAKE) ISA=$* install-arch
+	@$(MAKECOOKIE)
+
+
 ######################################
 # Use a manifest file of the format:
 # src:dest[:mode[:owner[:group]]]
@@ -570,6 +583,13 @@ MANIFEST_ENV += WORKSRC=$(WORKSRC)
 install-$(MANIFEST_FILE):
 	@echo " ==> Installing from $(MANIFEST_FILE)"
 	$(MANIFEST_ENV) ; $(foreach ZORCH,$(shell cat $(MANIFEST_FILE)), ginstall -Dc $(join $(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_FLAGS)),$(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_LINE))) $(word 1,$(MANIFEST_LINE)) $(word 2,$(MANIFEST_LINE)) ;)
+	@$(MAKECOOKIE)
+
+####################### CLEAN RULES ######################
+
+# Build for a certain architecture
+clean-arch-%:
+	@$(MAKE) ISA=$* clean-all
 	@$(MAKECOOKIE)
 
 #################### DEPENDENCY RULES ####################
