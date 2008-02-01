@@ -1,6 +1,6 @@
 GARNAME = less
 GARVERSION = 418
-CATEGORIES = apps
+CATEGORIES = utils
 
 DESCRIPTION = Less is a free, open-source file pager
 define BLURB
