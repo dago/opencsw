@@ -22,6 +22,8 @@ INSTALL_SCRIPTS = custom
 
 include ../category.mk
 
+SPKG_VENDOR = http://www.brendangregg.com/dtrace.html packaged for CSW by $(SPKG_PACKAGER)
+
 USEFUL_SCRIPTS = dexplorer dtruss dvmstat errinfo execsnoop hotkernel hotuser \
 	iopattern iosnoop iotop opensnoop procsystime rwsnoop rwtop statsnoop
 
