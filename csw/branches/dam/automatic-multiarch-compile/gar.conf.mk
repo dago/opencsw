@@ -93,11 +93,11 @@ base_perllib          ?= $(base_libdir)/perl
 base_perlcswlib       ?= $(base_perllib)/csw
 base_perlpackroot     ?= $(base_perlcswlib)/auto
 
-CONFIG_DIRS  = prefix exec_prefix bindir_NOISA bindir gnudir sbindir_NOISA sbindir libexecdir_NOISA libexecdir
-CONFIG_DIRS += datadir sysconfdir sharedstatedir localstatedir libdir_NOISA libdir infodir lispdir includedir
-CONFIG_DIRS += mandir docdir sourcedir licensedir sharedperl perllib perlcswlib perlpackroot
+ALL_CONFIG_DIRS  = prefix exec_prefix bindir_NOISA bindir gnudir sbindir_NOISA sbindir libexecdir_NOISA libexecdir
+ALL_CONFIG_DIRS += datadir sysconfdir sharedstatedir localstatedir libdir_NOISA libdir infodir lispdir includedir
+ALL_CONFIG_DIRS += mandir docdir sourcedir licensedir sharedperl perllib perlcswlib perlpackroot
 
-$(foreach CONFIG_DIR,$(CONFIG_DIRS),$(eval $(CONFIG_DIR)=$$(base_$(CONFIG_DIR))))
+$(foreach CONFIG_DIR,$(ALL_CONFIG_DIRS),$(eval $(CONFIG_DIR)=$$(base_$(CONFIG_DIR))))
 
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
@@ -269,6 +269,11 @@ DBG_FLAGS_SOS12_sparc ?= -g
 FLAVOR_FLAGS ?= $($(GARFLAVOR)_ISAFLAGS_$(GARCOMPILER)_$(ISA)) $($(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH))
 FLAVOR_FLAGS += $(EXTRA_$(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH))
 
+# The package will be built for these architectures
+BUILD_ISAS_sparc ?= $(ISA_DEFAULT_sparc) $(EXTRA_BUILD_ISAS_sparc)
+BUILD_ISAS_i386  ?= $(ISA_DEFAULT_i386) $(EXTRA_BUILD_ISAS_i386)
+BUILD_ISAS       ?= $(BUILD_ISAS_$(GARCH)) $(EXTRA_BUILD_ISAS)
+
 # Raise these in your .garrc if needed
 ISA_DEFAULT_sparc ?= sparcv8
 ISA_DEFAULT_i386  ?= i386
@@ -287,18 +292,16 @@ endif
 
 # If we build for a specialized ISA make sure everything but specialized binaries
 # and libraries is moved to an ignored location
-ifneq ($(ISA),$(ISA_DEFAULT))
+IGNORED_ISAS ?= $(filter-out $(ISA_DEFAULT),$(BUILD_ISAS))
+IGNORED_ISAS += $(EXTRA_IGNORED_ISAS)
+
+ifneq (,$(findstring $(ISA),$(IGNORED_ISAS)))
   IGNORE_DIR = /ignore
-#  IGNORED_CONFIG_DIRS ?= $(IGNORED_CONFIG_DIRS_$(ISA))
   IGNORED_CONFIG_DIRS ?= gnudir datadir sysconfdir sharedstatedir localstatedir infodir lispdir \
 	includedir mandir docdir sourcedir licensedir sharedperl perllib perlcswlib perlpackroot
+  IGNORED_CONFIG_DIRS += $(EXTRA_IGNORED_CONFIG_DIRS) $(EXTRA_IGNORE_CONFIG_DIRS_$(ISA))
   $(foreach CONFIG_DIR,$(IGNORED_CONFIG_DIRS),$(eval $(CONFIG_DIR)=$(IGNORE_DIR)$$(base_$(CONFIG_DIR))))
 endif
-
-# The package will be built for these architectures
-BUILD_ISAS_sparc ?= $(ISA_DEFAULT_sparc) $(EXTRA_BUILD_ISAS_sparc)
-BUILD_ISAS_i386  ?= $(ISA_DEFAULT_i386) $(EXTRA_BUILD_ISAS_i386)
-BUILD_ISAS       ?= $(BUILD_ISAS_$(GARCH)) $(EXTRA_BUILD_ISAS)
 
 # If we build for more than one architecture the binaries will be put in subdirectories
 # and wrappers to isaexec are built. Don't reset MAKE_ISAEXEC_WRAPPERS if it was already
@@ -383,12 +386,12 @@ SOS12_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
 CXX      = $($(GARCOMPILER)_CXX)
-CFLAGS   = $($(GARCOMPILER)_CC_FLAGS)
-CXXFLAGS = $($(GARCOMPILER)_CXX_FLAGS)
-CPPFLAGS = $($(GARCOMPILER)_CPP_FLAGS)
-LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS)
-ASFLAGS  = $($(GARCOMPILER)_AS_FLAGS)
-OPTFLAGS = $($(GARCOMPILER)_CC_FLAGS)
+CFLAGS   = $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_CFLAGS)
+CXXFLAGS = $($(GARCOMPILER)_CXX_FLAGS) $(EXTRA_CXXFLAGS)
+CPPFLAGS = $($(GARCOMPILER)_CPP_FLAGS) $(EXTRA_CPPFLAGS)
+LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS) $(EXTRA_LDFLAGS)
+ASFLAGS  = $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS)
+OPTFLAGS = $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS)
 
 # allow us to link to libraries we installed
 EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir),-I$(EINC))
