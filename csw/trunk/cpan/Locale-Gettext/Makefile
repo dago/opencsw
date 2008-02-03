@@ -10,6 +10,10 @@ define BLURB
   to internationalize software.
 endef
 
-DISTFILES += $(call admfiles,CSWpmlocalegettext,prototype)
+DISTFILES += $(call admfiles,CSWpmlocalegettext)
+
+PREREQUISITE_PKGS = CSWggettext
 
 include ../category.mk
+
+BUILD_ARGS += OTHERLDFLAGS=-lintl
