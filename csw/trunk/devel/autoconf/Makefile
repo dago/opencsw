@@ -12,7 +12,11 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWautoconf,depend prototype)
+DISTFILES += $(call admfiles,CSWautoconf,depend)
+
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+PATCHFILES = use-csw-tools.patch
 
 DEPENDS = utils/sed utils/sh-utils
 
