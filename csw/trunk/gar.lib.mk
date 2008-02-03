@@ -314,6 +314,7 @@ normal-patch-%:
 %/gar-base.diff:
 	@echo " ==> Creating patch $@"
 	@EXTRACTDIR=$(SCRATCHDIR) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) extract
+	@PATCHDIR=$(SCRATCHDIR)/$(BASEWORKSRC) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) patch
 	@mv $(SCRATCHDIR)/$(BASEWORKSRC) $(WORKSRC).orig
 	@( cd $(WORKDIR); \
 		if gdiff --speed-large-files --minimal -Nru $(BASEWORKSRC).orig $(BASEWORKSRC) > gar-base.diff; then :; else \
