@@ -33,6 +33,7 @@ dtracedir = $(datadir)/dtracetoolkit
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
+	@ginstall -d $(DESTDIR)$(dtracedir)
 	@rm -rf $(DESTDIR)$(dtracedir)
 	@cp -r $(WORKSRC) $(DESTDIR)$(dtracedir)
 	@rm -f $(DESTDIR)$(dtracedir)/install
