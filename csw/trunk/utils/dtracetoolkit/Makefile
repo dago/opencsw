@@ -15,6 +15,8 @@ MASTER_SITES = http://www.brendangregg.com/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWdtracetoolkit)
 
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
@@ -27,12 +29,15 @@ SPKG_VENDOR = http://www.brendangregg.com/dtrace.html packaged for CSW by $(SPKG
 USEFUL_SCRIPTS = dexplorer dtruss dvmstat errinfo execsnoop hotkernel hotuser \
 	iopattern iosnoop iotop opensnoop procsystime rwsnoop rwtop statsnoop
 
+dtracedir = $(datadir)/dtracetoolkit
+
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
-	@rm -rf $(DESTDIR)$(prefix)/DTT
-	@ginstall -d $(DESTDIR)$(prefix)
-	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/DTT
-	@rm -f $(DESTDIR)$(prefix)/DTT/install
+	@rm -rf $(DESTDIR)$(dtracedir)
+	@cp -r $(WORKSRC) $(DESTDIR)$(dtracedir)
+	@rm -f $(DESTDIR)$(dtracedir)/install
 	@ginstall -d $(DESTDIR)$(prefix)/bin
-	@gln -s $(foreach SCRIPT, $(USEFUL_SCRIPTS), ../DTT/$(SCRIPT)) $(DESTDIR)$(prefix)/bin
+	@rm -f $(foreach SCRIPT, $(USEFUL_SCRIPTS), $(DESTDIR)$(prefix)/bin/$(SCRIPT))
+	@gln -s $(foreach SCRIPT, $(USEFUL_SCRIPTS), ../share/dtracetoolkit/$(SCRIPT)) \
+		$(DESTDIR)$(prefix)/bin
 	@$(MAKECOOKIE)
