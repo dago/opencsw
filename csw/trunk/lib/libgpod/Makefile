@@ -23,3 +23,9 @@ CONFIGURE_ARGS = $(DIRPATHS) --includedir=/opt/csw/include
 TEST_SCRIPTS =
 
 include ../category.mk
+
+post-install: remove-libtool-files
+
+remove-libtool-files:
+	(gfind $(DESTDIR)/opt/csw/lib -name \*.la -exec rm {} \;)
+	(gfind $(DESTDIR)/opt/csw/lib -name \*.a -exec rm {} \;)
