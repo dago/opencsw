@@ -8,11 +8,11 @@ endef
 
 MASTER_SITES = http://rpm5.org/files/$(GARNAME)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibpopt)
+DISTFILES += $(call admfiles,CSWlibpopt,depend)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-ADDITIONAL_BUILD_ARCHS_sparc = sparcv9
+EXTRA_BUILD_ISAS_sparc = sparcv9
 
 TEST_TARGET = check
 
