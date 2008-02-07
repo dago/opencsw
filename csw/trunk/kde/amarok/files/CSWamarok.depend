@@ -10,6 +10,7 @@ P CSWkdebasegcc kdebase_gcc - Base packages for the K Desktop Environment (KDE)
 P CSWkdelibsgcc kdelibs_gcc - Base set of libraries needed by KDE programs (gcc3)
 P CSWlibart libart - High performance 2D graphics library
 P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
+P CSWlibgpod libgpod - Interface to Apple iPods
 P CSWlibxine libxine - Library for audio and video media playback
 P CSWlibxrender libxrender - fontconfig.org Xrender library
 P CSWpcre pcre - Perl-compatible regular expression library
