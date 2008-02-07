@@ -1,5 +1,5 @@
 GARNAME = phpldapadmin
-GARVERSION = 1.1.0.4
+GARVERSION = 1.1.0.5
 CATEGORIES = apps
 
 DESCRIPTION = Web-based LDAP browser to manage your LDAP server
@@ -16,6 +16,8 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWphpldapadmin,depend postinstall preremove)
+
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
