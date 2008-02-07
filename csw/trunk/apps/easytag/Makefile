@@ -1,5 +1,5 @@
 GARNAME = easytag
-GARVERSION = 2.1.3
+GARVERSION = 2.1.5
 CATEGORIES = applications
 
 DESCRIPTION = Tag editor for MP3, Ogg Vorbis files and more
