@@ -6,9 +6,11 @@ DESCRIPTION = Popt is a C library for parsing command line parameters
 define BLURB
 endef
 
-MASTER_SITES = http://rpm5.org/files/$(GARNAME)
+MASTER_SITES = http://rpm5.org/files/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibpopt,depend)
+
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
