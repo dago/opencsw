@@ -1,5 +1,6 @@
 %var            bitname pca
 %var            pkgname CSWpca
+%var            arch all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright
 Usage of pca is free of charge for private, educational and commercial use.
