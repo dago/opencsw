@@ -19,6 +19,8 @@ MASTER_SITES = http://pkg-config.freedesktop.org/releases/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpkgconfig,depend)
 
+PATCHFILES = gsed-check.patch
+
 PREREQUISITE_PKGS = CSWggettext CSWglib2 CSWiconv CSWsunmath
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-installed-glib
