@@ -853,9 +853,9 @@ sub create_files {
 #
 sub clean_spool {
     my $spooldir = $config{spooldir};
-    my $specname = $config{specname};
+    my $pkgname = $config{pkgname};
 
-    my $existing_pkgspool = catfile $spooldir, $specname;
+    my $existing_pkgspool = catfile $spooldir, $pkgname;
     vexec( "rm -r $existing_pkgspool", "Failed to remove $existing_pkgspool" )
       if -d $existing_pkgspool;
 }
