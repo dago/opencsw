@@ -2,7 +2,7 @@ GARNAME = libtool
 GARVERSION = 1.5.24
 CATEGORIES = devel
 
-DESCRIPTION = A generic library support tool.
+DESCRIPTION = Generic library support script
 define BLURB
   GNU libtool is a generic library support script. Libtool hides the complexity
   of using shared and static libraries behind a consistent, portable interface.
