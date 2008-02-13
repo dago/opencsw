@@ -60,7 +60,9 @@ SPKG_OSNAME = SunOS5.8
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Optimizer flags for architecture
+OPTARCH_sparc   = v8
 OPTARCH_sparcv9 = v9
+OPTARCH_i386    = 386
 OPTARCH_amd64   = amd64
 
 CLEAN_SCRIPTS = custom
@@ -71,6 +73,8 @@ ifdef DO64
 endif
 
 include ../category.mk
+
+TEST_TARGET =
 
 OPTARCH = $(OPTARCH_$(ISA))
 
