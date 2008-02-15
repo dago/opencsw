@@ -1,5 +1,5 @@
 GARNAME = libvorbis
-GARVERSION = 1.0.1
+GARVERSION = 1.2.0
 CATEGORIES = lib
 
 DESCRIPTION = Vorbis codec library.
@@ -9,9 +9,9 @@ define BLURB
   on libogg for bitstream and framing support.
 endef
 
-MASTER_SITES = http://www.vorbis.com/files/1.0.1/unix/
+MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibvorbis,)
+DISTFILES += $(call admfiles,CSWlibvorbis,depend)
 
 LIBDEPS += lib/libogg
 
