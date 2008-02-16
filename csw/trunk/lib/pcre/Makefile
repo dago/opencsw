@@ -24,8 +24,6 @@ TEST_TARGET = check
 
 include ../category.mk
 
-# The testcases need 'diff -u' which Solaris 8 diff does not have
-PATH := /opt/csw/gnu:$(PATH)
-
-env:
-	echo "P: $(PATH)"
+# The testcases need 'diff -u' which Solaris 8 diff does not have,
+# but we need Solaris strip, otherwise pcregrep is broken and 200m in size...
+PATH := /usr/ccs/bin:/opt/csw/gnu:$(PATH)
