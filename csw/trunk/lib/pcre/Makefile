@@ -12,10 +12,20 @@ endef
 
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpcre)
+DISTFILES += $(call admfiles,CSWpcre,depend)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-unicode-properties
+CONFIGURE_ARGS += --enable-pcregrep-libz
+CONFIGURE_ARGS += --enable-pcregrep-libbz2
+CONFIGURE_ARGS += --enable-pcretest-libreadline
 
 TEST_TARGET = check
 
 include ../category.mk
+
+# The testcases need 'diff -u' which Solaris 8 diff does not have
+PATH := /opt/csw/gnu:$(PATH)
+
+env:
+	echo "P: $(PATH)"
