@@ -1,5 +1,5 @@
 GARNAME = imapproxy
-GARVERSION = 1.2.5
+GARVERSION = 1.2.6
 CATEGORIES = server
 
 DESCRIPTION = A caching IMAP proxy server
@@ -25,7 +25,7 @@ DISTFILES += cswimapproxy.init cswimapproxy.xml svc-cswimapproxy
 DISTFILES += i.smf r.smf
 
 # imapproxy lacks include of openssl/md5.h
-PATCHFILES += md5_include.patch
+# PATCHFILES += md5_include.patch
 
 # move the default configuration file location
 # under /opt/csw
