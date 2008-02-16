@@ -1,3 +1,9 @@
+vsftpd (2.0.6,REV=2008.02.16) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 16 Feb 2008 11:07:03 +0100
+
 vsftpd (2.0.5,REV=2007.12.22) unstable
 
   * Uses Trygve Laugstol user/group creation scripts.
