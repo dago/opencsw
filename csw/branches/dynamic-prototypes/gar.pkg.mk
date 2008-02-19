@@ -11,6 +11,10 @@
 #
 # gar.pkg.mk - Build Solaris packages
 #
+#
+
+SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
+_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
@@ -93,11 +97,62 @@ remove-timestamp:
 	@echo " ==> Removing timestamp cookie"
 	@-rm -f $(TIMESTAMP)
 
-# package - Use the mkpackage utility to create Solaris packages
+# prototype - Generate prototype for all installed files
+# This can be used to automatically distribute the files to different packages
 #
 
-SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
-_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
+# This should go to gar.conf.mk when automatic-multiarch-compile is in place
+ISALIST_sparc   = sparcv8plus+fmuladd sparcv8plus+vis2 sparcv8plus+vis sparcv8plus sparcv8 sparcv8-fsmuld
+ISALIST_sparcv9 = sparcv9+fmuladd sparcv9+vis2 sparcv9+vis sparcv9 $(ISALIST_sparc)
+ISALIST_i386    = pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386
+ISALIST_amd64   = amd64 $(ISALIST_i386)
+ISALIST = $(ISALIST_sparcv9) $(ISALIST_amd64)
+
+# PKGFILES_RT selects files belonging to a runtime package
+PKGFILES_RT  = $(libdir)/[^/]*\.so(\.\d+)*
+PKGFILES_RT += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.so(\.\d+)*)
+
+# PKGFILES_DEVEL selects files belonging to a developer package
+PKGFILES_DEVEL  = $(bindir)/[^\/]*-config
+PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(bindir)/$(ISA)/[^/]*-config)
+PKGFILES_DEVEL += $(libdir)/[^\/]*\.(a|la)
+PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.(a|la))
+PKGFILES_DEVEL += $(libdir)/pkgconfig(/.*)?
+PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/pkgconfig(/.*)?)
+PKGFILES_DEVEL += $(includedir)/.*
+
+# PKGFILES_DOC selects files beloging to a documentation package
+PKGFILES_DOC  = $(docdir)
+
+# _PKGFILES_EXCLUDE_<spec> contains the files to be excluded from that package
+$(foreach SPEC,$(_PKG_SPECS),$(eval								\
+	_PKGFILES_EXCLUDE_$(SPEC)=								\
+		$(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)),$(PKGFILES_$(S)_EXCLUSIVE))	\
+		$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$(SPEC))			\
+))
+
+# This file contains all installed pathes
+PROTOTYPE = $(WORKDIR)/prototype
+
+# Pulled in from pkglib/csw_prototype.gspec
+$(PROTOTYPE): install
+	@cswproto -s $(TIMESTAMP) -r $(DESTDIR) $(DESTDIR)$(prefix) > $(PROTOTYPE)
+
+.PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
+$(WORKDIR)/%.prototype: $(PROTOTYPE)
+	@if [ -n "$(PKGFILES_$*)" -o -n "$(PKGFILES_$*_EXCLUSIVE)" -o -n "$(_PKGFILES_EXCLUDE_$*)" ]; then	\
+		pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)')		\
+			$(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)')				\
+		<$(PROTOTYPE) >$@;									\
+	else												\
+		cp $(PROTOTYPE) $@;									\
+	fi
+
+$(WORKDIR)/%.prototype-$(GARCH): $(WORKDIR)/%.prototype
+	@cp $(WORKDIR)/$*.prototype $@
+
+# package - Use the mkpackage utility to create Solaris packages
+#
 
 ifneq ($(ENABLE_CHECK),0)
 PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC) pkgcheck-$(SPEC))
@@ -113,7 +168,7 @@ $(SPKG_DESTDIRS):
 package: install $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
-package-%:
+package-%: $(WORKDIR)/%.prototype-$(GARCH)
 	@echo " ==> Processing $*.gspec"
 	@( $(PKG_ENV) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \

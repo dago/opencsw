@@ -1,0 +1,57 @@
+#!/opt/csw/bin/perl -w
+
+# This scripts takes a package prototype and includes or excludes selected pathes
+#   -i <path>   include the path
+#   -x <path>   exclude the path
+# If neither -i nor -x is given stdin is copied to stdout
+# if -i is given only matching pathes are printed and -x is ignored
+# if -x is given only pathes not matching are printed
+# 
+# Empty directories are always excluded.
+
+use strict;
+use Getopt::Long;
+
+my @exclude;
+my @include;
+my $result = GetOptions( 'i|include=s' => \@include, 'x|exclude=s' => \@exclude );
+
+my ($exclude, $include) = ('', '');
+$exclude = '^(' . join( '|', @exclude ) . ')$' if( @exclude );
+$exclude = qr#$exclude# if( $exclude );
+$include = '^(' . join( '|', @include ) . ')$' if( @include );
+$include = qr#$include# if( $include );
+
+my %p;
+my %skipped;
+while( <STDIN> ) {
+  my @line = split /\s+/;
+  my $ftype = $line[0];
+  my $path = $line[2];
+  $path =~ s/=.*//;
+  
+  # First we remove all directories and then put back what is needed
+  if( $ftype eq 'd' ) {
+    $skipped{$path} = \@line;
+    next;
+  }
+
+  if( $include ne '' ) {
+    next if( $path !~ /$include/ );
+  } else {
+    next if( $exclude ne '' && $path =~ /$exclude/ );
+  }
+  $p{$path} = \@line;
+}
+
+# Put back needed directories
+foreach my $path (keys %p) {
+  my @c = split( m!/!, $path );
+  my @pa = map { join( '/', @c[0..$_] ) } 1..$#c;
+
+  foreach (@pa) {
+    if( exists $skipped{$_} ) { $p{$_} = delete $skipped{$_} };
+  }
+}
+
+print join( ' ', @{$p{$_}} ) . "\n" foreach (sort keys %p);
