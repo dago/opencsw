@@ -1,0 +1,8 @@
+P CSWapache2 apache2 - Apache 2.2 web server
+P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
+P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
+P CSWexpat expat -  XML Parser Toolkit
+P CSWiconv libiconv - GNU iconv library
+P CSWlibapreq2 libapreq2 - Apache Request Library
+P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library

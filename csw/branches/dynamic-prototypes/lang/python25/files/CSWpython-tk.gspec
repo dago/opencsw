@@ -1,0 +1,5 @@
+%var            bitname python_tk
+%var            pkgname CSWpython-tk
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc Python Tk Interface (TkInter)
+%copyright      url file://%{WORKSRC}/LICENSE

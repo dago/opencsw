@@ -1,0 +1,18 @@
+
+Compilation option:
+	
+	vsftpd was compiled with tcp wrapper and ssl support.
+	SSL is not enabled in the default configuration file provided, 
+	if you want to enable it, be sure to read README.ssl in /opt/csw/share/doc/vsftpd
+
+Default configuration:
+
+	The default installation enables anonymous access only, and configure vsftpd in
+	standalone mode (not inetd).  
+	Anonymous access requires a ftp user which is automatically created by this package.
+
+Virtual users setup:
+
+	Read exemples in /opt/csw/share/doc/vsftpd/EXAMPLE/VIRTUAL_USERS and 
+	/opt/csw/share/doc/vsftpd/EXAMPLE/VIRTUAL_USERS_2
+

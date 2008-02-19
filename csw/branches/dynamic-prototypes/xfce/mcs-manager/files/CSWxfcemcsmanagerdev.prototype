@@ -1,0 +1,8 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/xfce4/xfce-mcs-manager 0755 root bin
+f none /opt/csw/include/xfce4/xfce-mcs-manager/manager-plugin.h 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/xfce-mcs-manager.pc 0644 root bin
+i copyright=CSWxfcemcsmanagerdev.copyright
+i depend=CSWxfcemcsmanagerdev.depend
+i pkginfo=CSWxfcemcsmanagerdev.pkginfo

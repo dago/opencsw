@@ -1,0 +1,4 @@
+%var            bitname pm_cryptrsa
+%var            pkgname CSWpmcryptrsa
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      url file://%{WORKSRC}/ARTISTIC

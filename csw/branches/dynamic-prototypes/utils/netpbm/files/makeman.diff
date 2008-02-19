@@ -1,0 +1,36 @@
+diff --speed-large-files --minimal -Nru netpbm-10.26.34.orig/buildtools/makeman netpbm-10.26.34/buildtools/makeman
+--- netpbm-10.26.34.orig/buildtools/makeman	2005-11-20 09:22:56.444900000 -0500
++++ netpbm-10.26.34/buildtools/makeman	2005-11-20 09:22:39.570136000 -0500
+@@ -159,22 +159,26 @@
+     indoc = indoc.replace("</BODY>", "").replace("</HTML>", "")
+     indoc = indoc.replace("</body>", "").replace("</html>", "")
+     # Recognize sections with IDs
+-    indoc = re.sub('(?i)<H2><A (?:ID|NAME)="([a-zA-Z]+)">([^><]*)</A></H2>',
++    indoc = re.sub('(?i)<H2><A (?:ID|NAME)="([a-zA-Z_]+)">([^><]*)</A></H2>',
+                    ".UN \\1\n.SH \\2", indoc)
+-    indoc = re.sub('(?i)<H3><A (?:ID|NAME)="([a-zA-Z]+)">([^><]*)</A></H3>',
++    indoc = re.sub('(?i)<H3><A (?:ID|NAME)="([a-z_A-Z_]+)">([^><]*)</A></H3>',
+                    ".UN \\1\n.SS \\2", indoc)
+-    indoc = re.sub('(?i)<H4><A (?:ID|NAME)="([a-zA-Z]+)">([^><]*)</A></H4>',
++    indoc = re.sub('(?i)<H4><A (?:ID|NAME)="([a-z_A-Z_]+)">([^><]*)</A></H4>',
+                    ".UN \\1\n.B \\2", indoc)
+-    indoc = re.sub('(?i)<H2 (?:ID|NAME)="([a-zA-Z]+)">([^><]*)</H2>',
++    indoc = re.sub('(?i)<H2 (?:ID|NAME)="([a-z_A-Z_]+)">([^><]*)</H2>',
+                    ".UN \\1.SH \\2", indoc)
+-    indoc = re.sub('(?i)<H3 (?:ID|NAME)="([a-zA-Z]+)">([^><]*)</H3>',
++    indoc = re.sub('(?i)<H3 (?:ID|NAME)="([a-z_A-Z_]+)">([^><]*)</H3>',
+                    ".UN \\1\n.SS \\2", indoc)
+-    indoc = re.sub('(?i)<H4 (?:ID|NAME)="([a-zA-Z]+)">([^><]*)</H4>',
++    indoc = re.sub('(?i)<H4 (?:ID|NAME)="([a-z_A-Z_]+)">([^><]*)</H4>',
+                    ".UN \\1\n.B \\2", indoc)
++    indoc = re.sub('(?i)<H5 (?:ID|NAME)="([a-z_A-Z_]+)">([^><]*)</H5>',
++                   ".UN \\1\n.I \\2", indoc)
++
+     # Sections without IDs
+     indoc = re.sub('(?i)<H2>([^><]*)</H2>', ".SH \\1", indoc)
+     indoc = re.sub('(?i)<H3>([^><]*)</H3>', ".SS \\1", indoc)
+     indoc = re.sub('(?i)<H4>([^><]*)</H4>', ".B \\1", indoc)
++    indoc = re.sub('(?i)<H5>([^><]*)</H5>', ".I \\1", indoc)
+     # 
+     # Process definition lists -- just turn them into .TPs
+     indoc = re.sub("(?i) *<DL *(COMPACT)?>", "", indoc)

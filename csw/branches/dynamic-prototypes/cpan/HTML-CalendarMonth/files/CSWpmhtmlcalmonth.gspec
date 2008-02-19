@@ -1,0 +1,8 @@
+%var            bitname pm_htmlcalmonth
+%var            pkgname CSWpmhtmlcalmonth
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1998-2002 Matthew P. Sisk. All rights reserved. All
+wrongs revenged. This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.

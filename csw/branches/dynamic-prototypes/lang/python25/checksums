@@ -1,0 +1,16 @@
+70084ffa561660f07de466c2c8c4842d  download/Python-2.5.1.tar.bz2
+1b8abe75212cd34d4a6655846aaf5818  download/CSWpython.gspec
+b1c2b338ce77b8fb5123717292265323  download/CSWpython.depend
+56f6c50695ae7b0144b3ef1276ca539b  download/CSWpython.prototype
+05cb2423df4e8b6303bf8b5eb1a1921d  download/CSWpython-tk.gspec
+4b3dfbd426f5a78cc9db61f3e403b0c7  download/CSWpython-tk.depend
+71ba471c18bcba92e639a2c138961991  download/CSWpython-tk.prototype
+94a45eacb295bdde5504bc724b61634f  download/CSWidle.gspec
+d33f8d02adef5c1a0ba6b327b1ab19c0  download/CSWidle.depend
+9eb8d7f9134c4b01b85be742ac1a1868  download/CSWidle.prototype
+ff3dc6d9fe65fe2a61034a2a26912da2  download/setup.diff
+eaf47d6182857d587284a51be543d232  download/sitepath.diff
+b1d62631751d7fabfa90341dcc1661d0  download/faqwiz.diff
+8cd6742da30c8a4287fa82726876a4bc  download/instdir.diff
+565caea83462cff2d1ecbca9f4fc5856  download/headers.diff
+264021b708040bd3ca202b7c036765b0  download/modules.diff

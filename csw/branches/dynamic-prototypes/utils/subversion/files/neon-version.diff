@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru subversion-1.4.2.orig/configure subversion-1.4.2/configure
+--- subversion-1.4.2.orig/configure	2006-11-02 17:48:21.000000000 -0500
++++ subversion-1.4.2/configure	2006-12-21 00:15:30.045866000 -0500
+@@ -3942,7 +3942,7 @@
+ 
+ # Either a space-separated list of allowable Neon versions, or "any" to
+ # mean allow anything.
+-NEON_ALLOWED_LIST="0.24.7 0.25.0 0.25.1 0.25.2 0.25.3 0.25.4 0.25.5 0.26.0 0.26.1 0.26.2"
++NEON_ALLOWED_LIST="0.24.7 0.25.0 0.25.1 0.25.2 0.25.3 0.25.4 0.25.5 0.26.0 0.26.1 0.26.2 0.26.3"
+ NEON_LATEST_WORKING_VER=0.25.5
+ NEON_URL="http://www.webdav.org/neon/neon-${NEON_LATEST_WORKING_VER}.tar.gz"
+ # Check whether --enable-neon-version-check or --disable-neon-version-check was given.

@@ -1,0 +1,48 @@
+vsftpd (2.0.6,REV=2008.02.16) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 16 Feb 2008 11:07:03 +0100
+
+vsftpd (2.0.5,REV=2007.12.22) unstable
+
+  * Uses Trygve Laugstol user/group creation scripts.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 22 Dec 2007 00:04:26 +0100
+
+vsftpd (2.0.5,REV=2007.10.18) unstable
+
+  * Uses vsftpd instead of ftpsecure as the privilege separation username.
+  (closes: #2621)
+  * Displays a warning if the ftp user's home directory is not valid.
+  (closes: #2622)
+  * Adds missing vsftpd documentation files. (closes: #2630)
+  * Uses SMF support scripts. (closes: #2631)
+
+ -- Yann Rouillard <yann@blastwave.org>  Thu, 18 Oct 2007 15:41:38 +0200
+
+vsftpd (2.0.5,REV=2007.07.28) unstable
+
+  * Depends on openssl_rt rather than openssl.
+  * Updated README.CSW about ftp user creation.
+  * Now uses gar smf integration script.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 18:47:15 +0200
+
+vsftpd (2.0.5,REV=2006.07.23) unstable
+
+  * New upstream version.
+  * Added smf and csw.conf support.
+  * ftp user for anonymous access is now created autoamtically on 
+    postinstall.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sun, 23 Jul 2006 11:16:32 +0200
+
+vsftpd (2.0.3,REV=2005.11.03) unstable
+
+  * Now configuration file is not automatically installed on the first
+    install and vsftpd is automatically restarted after upgrade.
+  * Changed default path to be more blastwave compliant.
+	
+ -- Yann Rouillard <yann@blastwave.org>  Thu,  3 Nov 2005 14:51:29 +0100
+

@@ -1,0 +1,47 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/metamutt 0755 root bin
+f none /opt/csw/bin/opt-case.pl 0755 root bin
+s none /opt/csw/bin/rtin=tin
+f none /opt/csw/bin/tin 0755 root bin
+f none /opt/csw/bin/tinews.pl 0755 root bin
+f none /opt/csw/bin/url_handler.sh 0755 root bin
+f none /opt/csw/bin/w2r.pl 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/locale 0755 root bin
+d none /opt/csw/share/locale/de 0755 root bin
+d none /opt/csw/share/locale/de/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/de/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/locale/en_GB 0755 root bin
+d none /opt/csw/share/locale/en_GB/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/en_GB/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/locale/et 0755 root bin
+d none /opt/csw/share/locale/et/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/et/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/locale/fr 0755 root bin
+d none /opt/csw/share/locale/fr/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/fr/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/locale/ru 0755 root bin
+d none /opt/csw/share/locale/ru/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/ru/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/locale/rw 0755 root bin
+d none /opt/csw/share/locale/rw/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/rw/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/locale/sv 0755 root bin
+d none /opt/csw/share/locale/sv/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/sv/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/locale/tr 0755 root bin
+d none /opt/csw/share/locale/tr/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/tr/LC_MESSAGES/tin.mo 0644 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/opt-case.pl.1 0444 root bin
+s none /opt/csw/share/man/man1/rtin.1=tin.1
+f none /opt/csw/share/man/man1/tin.1 0444 root bin
+f none /opt/csw/share/man/man1/tinews.pl.1 0444 root bin
+f none /opt/csw/share/man/man1/w2r.pl.1 0444 root bin
+d none /opt/csw/share/man/man5 0755 root bin
+f none /opt/csw/share/man/man5/mmdf.5 0444 root bin
+f none /opt/csw/share/man/man5/tin.5 0444 root bin
+i copyright=CSWtin.copyright
+i depend=CSWtin.depend
+i pkginfo=CSWtin.pkginfo

@@ -1,0 +1,48 @@
+diff --speed-large-files --minimal -Nru up-imapproxy-1.2.5.orig/Makefile.in up-imapproxy-1.2.5/Makefile.in
+--- up-imapproxy-1.2.5.orig/Makefile.in	2007-01-30 10:23:46.000000000 -0500
++++ up-imapproxy-1.2.5/Makefile.in	2007-03-09 18:40:04.893549000 -0500
+@@ -23,6 +23,8 @@
+ mandir = $(prefix)/man/man3
+ rpm_prefix = @rpm_prefix@
+ 
++DESTDIR = 
++
+ CC = @CC@
+ CPPFLAGS = @CPPFLAGS@ 
+ LDFLAGS = @LDFLAGS@
+@@ -33,8 +35,8 @@
+ INSTALL = @INSTALL@
+ EBIN = $(sbindir)
+ MAN =  $(mandir)
+-ETC =  /etc
+-# ETC =  @sysconfdir@
++# ETC =  /etc
++ETC =  @sysconfdir@
+ 
+ 
+ ## Nothing to change after this point
+@@ -78,17 +80,17 @@
+ 	rm -f config.cache config.log config.h Makefile
+ 
+ install: $(XYD_BIN) $(TAT_BIN)
+-	mkdir -p $(EBIN)
+-	$(INSTALL) -o bin -g bin -m 0755 $(XYD_BIN) $(EBIN)
+-	$(INSTALL) -o bin -g bin -m 0755 $(TAT_BIN) $(EBIN)
++	mkdir -p $(DESTDIR)/$(EBIN)
++	$(INSTALL) -m 0755 $(XYD_BIN) $(DESTDIR)/$(EBIN)
++	$(INSTALL) -m 0755 $(TAT_BIN) $(DESTDIR)/$(EBIN)
+ 
+ install-init:
+-	$(INSTALL) -o root -g sys -m 0755 ./scripts/imapproxy.init $(ETC)/init.d/imapproxy
+-	ln -s ../init.d/imapproxy /etc/rc2.d/S99imapproxy
+-	ln -s ../init.d/imapproxy /etc/rc0.d/K10imapproxy
++	$(INSTALL) -o root -g sys -m 0755 ./scripts/imapproxy.init $(DESTDIR)/$(ETC)/init.d/imapproxy
++	ln -s ../init.d/imapproxy $(DESTDIR)/etc/rc2.d/S99imapproxy
++	ln -s ../init.d/imapproxy $(DESTDIR)/etc/rc0.d/K10imapproxy
+ 
+ install-conf:
+-	$(INSTALL) -o root -g bin -m 0644 ./scripts/imapproxy.conf $(ETC)
++	$(INSTALL) -o root -g bin -m 0644 ./scripts/imapproxy.conf $(DESTDIR)/$(ETC)
+ 
+ rpm-install: install 
+ 	$(INSTALL) -o root -g sys -m 0644 ./scripts/imapproxy.conf $(rpm_prefix)/etc

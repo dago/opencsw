@@ -1,0 +1,10 @@
+%var            bitname pm_parsesyslog
+%var            pkgname CSWpmparsesyslog
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2001, Swiss Federal Institute of Technology, Zurich.
+All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

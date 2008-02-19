@@ -1,0 +1,12 @@
+CYRUS_USER=cyrus
+
+${BASEDIR}/usr/bin/getent passwd $CYRUS_USER >/dev/null
+if [ $? -ne 0 ] ; then
+        echo "Creating cyrus user..."
+        if [ -n "${BASEDIR}" ]; then
+                chroot ${BASEDIR} /usr/sbin/useradd -d /opt/csw/var/cyrus -g mail -c "Cyrus user" $CYRUS_USER
+        else
+                /usr/sbin/useradd -d /opt/csw/var/cyrus -g mail -c "Cyrus user" $CYRUS_USER
+        fi
+fi
+

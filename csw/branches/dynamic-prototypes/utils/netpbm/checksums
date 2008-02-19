@@ -1,0 +1,11 @@
+3897ec14dbf586bb1d810a7ff9993968  download/netpbm-10.26.43.tgz
+814afbc81ec0f7499d975c3a75c08619  download/netpbm-doc.tgz
+17c27e7115c2a68ef793f6583757d213  download/CSWnetpbm.gspec
+7f03cc710fa49ccef7a2e40d61514ded  download/CSWnetpbm.postinstall
+5285bcded129e88eaf30470016664996  download/netpbm-config.diff
+0b0ee5d2f4a13e601bbfbe69e9cfa0d7  download/netpbm-makefile.diff
+4c4d82da0397562e1a35dee4e62d6a86  download/csw-perl.diff
+78cddb21b97c40126428661d2975f49a  download/makeman.diff
+72c259516a85d817dee99335ba7df169  download/manweb.diff
+cf0f2f24662a948a7ebf2439eccb7fab  download/cflags-fix.diff
+0778496d108623817392daca6e240052  download/netpbm-pm_config.h.diff

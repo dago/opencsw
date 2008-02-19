@@ -1,0 +1,13 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/xfce4 0755 root bin
+d none /opt/csw/include/xfce4/libxfce4mcs 0755 root bin
+f none /opt/csw/include/xfce4/libxfce4mcs/mcs-client-enum-types.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4mcs/mcs-client.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4mcs/mcs-common.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4mcs/mcs-manager.h 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/libxfce4mcs-client-1.0.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/libxfce4mcs-manager-1.0.pc 0644 root bin
+i copyright=CSWlibxfce4mcsdev.copyright
+i depend=CSWlibxfce4mcsdev.depend
+i pkginfo=CSWlibxfce4mcsdev.pkginfo

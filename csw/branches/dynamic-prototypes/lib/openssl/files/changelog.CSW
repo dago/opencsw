@@ -1,0 +1,61 @@
+openssl (0.9.8,REV=2007.12.26_rev=g) unstable
+
+ * Fixed inconsistency between headers and libraries.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Wed, 26 Dec 2007 12:30:22 +0100
+
+openssl (0.9.8,REV=2007.11.02_rev=g) unstable
+
+ * New upstream version.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Fri, 02 Nov 2007 17:28:41 +0100
+
+openssl (0.9.8,REV=2007.10.27_rev=f) unstable
+
+ * New upstream version.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Sat, 27 Oct 2007 21:02:17 +0200
+
+openssl (0.9.8,REV=2007.10.27_rev=e) unstable
+
+ * Fixed CVE-2007-4995: DTLS Heap Buffer Overflow Vulnerability.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Sat, 27 Oct 2007 14:38:55 +0200
+
+openssl (0.9.8,REV=2007.10.11_rev=e) unstable
+
+ * Fixed CVE-2007-5135: Fix off by one error in SSL_get_shared_ciphers().
+ * Fixed CVE-2007-3108: RSA side-channel attack.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 02 Oct 2007 23:57:35 +0200
+
+openssl (0.9.8,REV=2007.08.21_rev=e) unstable
+
+ * Replaced "? ? ?" with "0755 root bin" in the prototype.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 17 Jul 2007 23:26:37 +0200
+
+openssl (0.9.8,REV=2007.07.22_rev=e) unstable
+
+ * Added amd64 libraries symlinks (libssl.so -> libssl.so.0.9.8, ...).
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 17 Jul 2007 23:26:37 +0200
+
+openssl (0.9.8,REV=2007.06.02_rev=e) UNRELEASED
+
+ * manpages are now under /opt/csw/share/man instead of /opt/csw/ssl/man.
+ * package split in openssl_rt (runtime libraries), openssl_devel.
+ (development files) and openssl_utils (binaries and related files).
+
+ -- Yann Rouillard  <yann@blastwave.org>  Sat,  2 Jun 2007 17:29:01 +0200
+
+openssl (0.9.8,REV=2007.05.10_rev=e) unstable
+
+ * New upstream version.
+ * Static libraries removed.
+ * Old 0.9.6 libraries removed.
+ * amd64 optimized libraries added.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Thu, 10 May 2007 14:54:17 +0200
+
+

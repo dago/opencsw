@@ -1,0 +1,6 @@
+%var            bitname pm_cryptossldsa
+%var            pkgname CSWpmcryptossldsa
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2002 T.J. Mather.  Crypt::OpenSSL::DSA is free software;
+you may redistribute it and/or modify it under the same terms as Perl itself. 

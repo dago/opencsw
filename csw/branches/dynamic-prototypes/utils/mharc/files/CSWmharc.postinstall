@@ -1,0 +1,13 @@
+#!/bin/sh
+
+NAMAZU=$PKG_INSTALL_ROOT/opt/csw/libexec/namazu.cgi
+MHARC=$PKG_INSTALL_ROOT/opt/csw/mharc/cgi-bin
+
+if [ -f $NAMAZU ]; then
+    cp $NAMAZU $MHARC
+    installf $PKGINST $MHARC/namazu.cgi
+fi
+
+installf -f $PKGINST
+
+exit 0

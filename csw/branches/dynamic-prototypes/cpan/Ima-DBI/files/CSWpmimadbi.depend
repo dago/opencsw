@@ -1,0 +1,3 @@
+P CSWpmclasswhitehole pm_classwhitehole - base class to treat unhandled method calls as errors
+P CSWpmclsdtainherit pm_clsdtainherit - inheritable, overridable class data
+P CSWpmdbixctxfetch pm_dbixctxfetch - add contextual fetches to DBI

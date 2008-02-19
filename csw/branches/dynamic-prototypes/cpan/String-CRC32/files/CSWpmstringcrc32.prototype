@@ -1,0 +1,16 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/String 0755 root bin
+f none /opt/csw/lib/perl/csw/String/CRC32.pm 0444 root bin
+f none /opt/csw/lib/perl/csw/String/CRC32.pod 0444 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/String 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/String/CRC32 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/String/CRC32/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/String/CRC32/CRC32.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/String/CRC32/CRC32.so 0555 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/String::CRC32.3perl 0444 root bin

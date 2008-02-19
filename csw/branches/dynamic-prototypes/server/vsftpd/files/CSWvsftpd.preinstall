@@ -1,0 +1,8 @@
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd ftp >/dev/null 2>&1; then
+	FTP_HOME="`/usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd ftp | /usr/bin/awk -F: '{ print $6 }' 2>/dev/null`"
+	if [ -z "$FTP_HOME" ] || [ ! -d "$FTP_HOME" ]; then
+		echo "WARNING: the ftp user doesn't have a valid home directory !" 
+	fi
+fi

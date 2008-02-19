@@ -1,0 +1,50 @@
+#################################################################
+# Auteur:             Yann Rouillard
+# Date de creation:   15/10/2004
+# Description:        Script de classe qui ajoute dans /etc/services
+#		      les services specifies dans les fichiers 
+#                     passe au script.
+#
+##################################################################
+umask 0022
+
+while read SRC DEST; do
+    if [ -f $DEST ]; then
+	# Le fichier de destination existe, on le sauve et on ajoute les informations
+	cp $DEST $DEST.$PKG-$VERSION.sav
+
+	FILENAME=`echo $DEST | awk -F/ '{ print $(NF) }'`
+    	while read LINE; do
+
+	    # On recherche si un service est deja enregistre avec
+	    # le meme nom ou le meme port
+	    SERVICE_NAME=`echo $LINE | awk '{ print $1 }'`
+	    SERVICE_PORT=`echo $LINE | awk '{ print $2 }'`
+
+	    awk "\$1 == \"$SERVICE_NAME\" { exit 1 }" $DEST
+	    [ "$?" -eq "1" ] && continue;
+	    
+	    awk "\$2 == \"$SERVICE_PORT\" { exit 1 }" $DEST
+	    [ "$?" -eq "1" ] && continue;
+
+    	    # si on n'en trouve pas on rajoute cette entree
+	    if [ ! -f /tmp/$FILENAME.$PKGINST.$$ ]; then
+		echo >/tmp/$FILENAME.$PKGINST.$$
+		echo "# Begin of services added by $PKGINST: $DESC" >>/tmp/$FILENAME.$PKGINST.$$
+    	    fi
+    	    echo "$LINE" >>/tmp/$FILENAME.$PKGINST.$$
+
+    	done < $SRC
+
+  	if [ -f /tmp/$FILENAME.$PKGINST.$$ ]; then
+  	    echo "# End of services added by $PKGINST: $DESC" >>/tmp/$FILENAME.$PKGINST.$$
+  	    cat /tmp/$FILENAME.$PKGINST.$$ >> $DEST
+  	    rm /tmp/$FILENAME.$PKGINST.$$
+  	fi
+    else
+  	echo "# Begin of services added by $PKGINST: $DESC" > $DEST
+  	cat $SRC >> $DEST
+  	echo "# End of services added by $PKGINST: $DESC" >> $DEST
+    fi	
+done
+exit 0

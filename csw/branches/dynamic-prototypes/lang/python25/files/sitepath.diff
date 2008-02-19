@@ -1,0 +1,29 @@
+diff --speed-large-files --minimal -Nru Python-2.5.1.orig/Lib/site.py Python-2.5.1/Lib/site.py
+--- Python-2.5.1.orig/Lib/site.py	2006-08-16 01:01:42.000000000 -0400
++++ Python-2.5.1/Lib/site.py	2007-10-04 03:03:43.261959000 -0400
+@@ -183,9 +183,11 @@
+             elif os.sep == '/':
+                 sitedirs = [os.path.join(prefix,
+                                          "lib",
+-                                         "python" + sys.version[:3],
++                                         "python",
+                                          "site-packages"),
+                             os.path.join(prefix, "lib", "site-python")]
++
++                sitedirs.append("/opt/csw/lib/python2.3/site-packages")
+             else:
+                 sitedirs = [prefix, os.path.join(prefix, "lib", "site-packages")]
+             if sys.platform == 'darwin':
+--- Python-2.5.1.orig/Lib/distutils/command/install.py	2006-03-27 16:55:21.000000000 -0500
++++ Python-2.5.1/Lib/distutils/command/install.py	2007-10-04 14:01:55.143927000 -0400
+@@ -38,8 +38,8 @@
+ 
+ INSTALL_SCHEMES = {
+     'unix_prefix': {
+-        'purelib': '$base/lib/python$py_version_short/site-packages',
+-        'platlib': '$platbase/lib/python$py_version_short/site-packages',
++        'purelib': '$base/lib/python/site-packages',
++        'platlib': '$platbase/lib/python/site-packages',
+         'headers': '$base/include/python$py_version_short/$dist_name',
+         'scripts': '$base/bin',
+         'data'   : '$base',

@@ -1,0 +1,9 @@
+%var            bitname pm_tstmanif
+%var            pkgname CSWpmtstmanif
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2002, C<brian d foy>, All Rights Reserved
+
+You may use and distribute this module under the same terms
+as Perl itself

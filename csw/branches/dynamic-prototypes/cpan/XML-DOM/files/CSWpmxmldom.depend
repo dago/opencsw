@@ -1,0 +1,4 @@
+P CSWpmlibwww pm_libwww - a general-purpose Web API for Perl, based on W3C libwww.
+P CSWpmlibxmlperl pm_libxmlperl - Perl SAX parser using XML::Parser
+P CSWpmxmlparser pm_xmlparser - a module for parsing XML documents
+P CSWpmxmlregexp pm_xmlregexp - regular expressions for XML tokens

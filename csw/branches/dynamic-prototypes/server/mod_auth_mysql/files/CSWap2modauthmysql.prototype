@@ -1,0 +1,9 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/mod_auth_mysql.so 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/mod_auth_mysql 0755 root bin
+f none /opt/csw/share/doc/mod_auth_mysql/CHANGES 0755 root bin
+f none /opt/csw/share/doc/mod_auth_mysql/CONFIGURE 0755 root bin
+f none /opt/csw/share/doc/mod_auth_mysql/README 0755 root bin

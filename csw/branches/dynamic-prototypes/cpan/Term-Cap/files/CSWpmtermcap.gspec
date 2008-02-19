@@ -1,0 +1,12 @@
+%var            bitname pm_termcap
+%var            pkgname CSWpmtermcap
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 1995-2001 (c) perl5 porters.
+
+This software is free software and can be modified and distributed under
+the same terms as Perl itself.
+
+Please see the file README in the Perl source distribution for details of
+the Perl license.

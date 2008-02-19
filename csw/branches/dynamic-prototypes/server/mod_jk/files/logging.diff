@@ -1,0 +1,13 @@
+--- native/apache-2.0/mod_jk.c.orig	2006-12-03 08:57:46.000000000 -0500
++++ native/apache-2.0/mod_jk.c	2007-02-20 16:09:04.521210000 -0500
+@@ -109,8 +109,8 @@
+ #include "jk_worker.h"
+ #include "jk_shm.h"
+ 
+-#define JK_LOG_DEF_FILE             ("logs/mod_jk.log")
+-#define JK_SHM_DEF_FILE             ("logs/jk-runtime-status")
++#define JK_LOG_DEF_FILE             ("var/log/mod_jk.log")
++#define JK_SHM_DEF_FILE             ("var/log/jk-runtime-status")
+ #define JK_ENV_HTTPS                ("HTTPS")
+ #define JK_ENV_CERTS                ("SSL_CLIENT_CERT")
+ #define JK_ENV_CIPHER               ("SSL_CIPHER")

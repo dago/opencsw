@@ -1,0 +1,142 @@
+#!/sbin/sh
+CONFDIR=$PKG_INSTALL_ROOT/opt/csw/etc/exim
+CONFFILES="aliases exim.conf exim-env.sh"
+PATH=/bin:/usr/bin:"$PATH"
+export PATH
+
+is_usr_readonly()
+{
+  mount | grep '^/usr ' | grep 'read only' >/dev/null
+}
+
+class=smfno
+test -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm && class=smfyes
+
+enable_exim=1
+test -r $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf && \
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+test -r $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf && \
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+    
+if [ "$autoenable_daemons" = "no" -o "$autoenable_exim" = "no" ]; then
+  enable_exim=0
+fi
+        
+# stop exim, but ONLY if we are doing a "direct"
+# install, rather than a jumpstart install or something.
+case "$PKG_ROOT_DIR" in
+  ""|"/")
+    if [ "$smf" = "yes" ]; then
+      /usr/sbin/svcadm disable -s svc:network/cswexim:default
+      /usr/sbin/svccfg delete svc:network/cswexim:default
+    else
+      test -x $PKG_INSTALL_ROOT/etc/init.d/cswexim && \
+        $PKG_INSTALL_ROOT/etc/init.d/cswexim stop
+    fi
+    ;;
+
+esac
+
+### Set up config-file related stuff
+
+if [ "$autoenable_daemons" != "no" ]; then
+  echo ""
+  echo "Setting up config-files..."
+  for file in $CONFFILES; do
+    confpath="$CONFDIR/$file"
+    if [ -r "$confpath" ]; then
+      echo "Not touching existing $confpath"
+    else
+      echo "Copying $confpath.CSW to $confpath"
+      cp -p "$confpath.CSW" "$confpath"
+    fi
+  done
+fi
+
+echo ""
+
+is_usr_readonly
+
+if [ $? -eq 0 -a  "$SENDMAIL_ACTION" != "leave" ]; then
+  echo "Your /usr partition is readonly. Cannot make modifications to it."
+else
+  ### Now handle the sendmail files
+
+  # in Solaris 8 it's in /usr/bin; in Solaris 9 in /usr/sbin 
+  if [ -r "$PKG_INSTALL_ROOT/usr/bin/newaliases" ]; then
+    NEWALIASES="$PKG_INSTALL_ROOT/usr/bin/newaliases"
+  elif [ -r "$PKG_INSTALL_ROOT/usr/sbin/newaliases" ]; then
+    NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
+  else
+    # use this as default (the remove script will find it in bin and sbin)
+    NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
+  fi
+
+  echo "Checking for newaliases... $NEWALIASES"
+
+  if [ "$SENDMAIL_ACTION" = "replace" ]; then
+    # Make backup of sendmail files
+    if [ ! -r "$NEWALIASES.OFF" ]  && [ -r "$NEWALIASES" ]; then
+      echo "Moving $NEWALIASES to newaliases.OFF"
+      mv "$NEWALIASES" "$NEWALIASES.OFF"
+    fi
+    if [ ! -f "$PKG_INSTALL_ROOT/usr/lib/sendmail.OFF" ] && [ -f "$PKG_INSTALL_ROOT/usr/lib/sendmail" ]; then
+      echo "Moving $PKG_INSTALL_ROOT/usr/lib/sendmail to sendmail.OFF"
+      mv "$PKG_INSTALL_ROOT/usr/lib/sendmail" "$PKG_INSTALL_ROOT/usr/lib/sendmail.OFF"
+    fi
+    if [ ! -f "$PKG_INSTALL_ROOT/usr/bin/mailq.OFF" ] && [ -f "$PKG_INSTALL_ROOT/usr/bin/mailq" ]; then
+      echo "Moving $PKG_INSTALL_ROOT/usr/bin/mailq to mailq.OFF"
+      mv "$PKG_INSTALL_ROOT/usr/bin/mailq" "$PKG_INSTALL_ROOT/usr/bin/mailq.OFF"
+    fi
+  else
+    if [ "$SENDMAIL_ACTION" = "overwrite" ]; then
+      echo "Removing $PKG_INSTALL_ROOT/usr/lib/sendmail"
+      rm -f "$PKG_INSTALL_ROOT/usr/lib/sendmail"
+      echo "Removing $NEWALIASES"
+      rm -f "$NEWALIASES"
+      echo "Removing $PKG_INSTALL_ROOT/usr/bin/mailq"
+      rm -f "$PKG_INSTALL_ROOT/usr/bin/mailq"
+    fi
+  fi
+
+  if [ "$SENDMAIL_ACTION" = "leave" ]; then
+    echo "Not making symbolic links to to $PKG_INSTALL_ROOT/opt/csw/sbin/exim."
+    echo "Read exim documentation for more information."
+  else
+    ln -s "$PKG_INSTALL_ROOT/opt/csw/sbin/exim" "$PKG_INSTALL_ROOT/usr/lib/sendmail"
+    ln -s "$PKG_INSTALL_ROOT/opt/csw/sbin/exim" "$PKG_INSTALL_ROOT/usr/bin/mailq"
+    echo "#!/bin/sh" >"$NEWALIASES"
+    echo "# This script is part of the Exim MTA" >>"$NEWALIASES"
+    echo "/usr/lib/sendmail -bi" >>"$NEWALIASES"
+    chgrp bin "$NEWALIASES"
+    chmod 755 "$NEWALIASES"
+  fi
+fi
+
+if [ "$enable_exim" = "1" ]; then
+  case "$PKG_ROOT_DIR" in
+    ""|"/")
+      if [ "$class" = "smfno" ]; then
+        if [ -f $PKG_INSTALL_ROOT/etc/init.d/cswexim ]; then
+          $PKG_INSTALL_ROOT/etc/init.d/cswexim start
+        fi
+      else
+        echo "Registering Exim with SMF..."
+        /usr/sbin/svccfg import $PKG_INSTALL_ROOT/opt/csw/var/svc/manifest/network/exim.xml
+        /usr/sbin/svcadm enable svc:network/cswexim
+      fi
+    ;;
+  esac
+
+  cat <<EOF
+If you do *NOT* want to start eximd during system-boot set
+  autoenable_exim=no
+in /opt/csw/etc/csw.conf or /etc/opt/csw/csw.conf
+EOF
+fi
+
+cat <<EOF
+---------------------------------------------------------------
+Please take the time to read /opt/csw/share/doc/exim/README.CSW
+---------------------------------------------------------------
+EOF

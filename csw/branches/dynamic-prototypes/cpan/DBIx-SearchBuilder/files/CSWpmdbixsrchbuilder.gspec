@@ -1,0 +1,11 @@
+%var            bitname pm_dbixsrchbuilder
+%var            pkgname CSWpmdbixsrchbuilder
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2001 Jesse Vincent, jesse@fsck.com.
+
+All rights reserved.
+
+This library is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.

@@ -1,0 +1,6 @@
+%var            bitname jhead
+%var            pkgname CSWjhead
+%include        url file://%{PKGLIB}/csw_standard.gspec
+%copyright      url file://%{WORKSRC}/COPYING
+%pkginfo
+BASEDIR=/opt/csw 

@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru libmp4v2-1.5.0.1.orig/util/mpeg4ip_getopt.h libmp4v2-1.5.0.1/util/mpeg4ip_getopt.h
+--- libmp4v2-1.5.0.1.orig/util/mpeg4ip_getopt.h	2006-07-18 23:01:30.000000000 +1200
++++ libmp4v2-1.5.0.1/util/mpeg4ip_getopt.h	2007-12-22 00:49:57.599616277 +1300
+@@ -20,6 +20,7 @@
+ 
+ // the home of PATH_MAX. Is this portable?
+ #include <sys/param.h>
++#include <limits.h>
+ 
+ #define OPEN_CREAT O_CREAT
+ #define FOPEN_READ_BINARY "r"

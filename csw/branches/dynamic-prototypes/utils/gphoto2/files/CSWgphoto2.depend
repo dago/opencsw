@@ -1,0 +1,9 @@
+P CSWreadline readline - library to enable interactive line editing
+P CSWlibpopt libpopt - Command line option parsing library
+P CSWlibgphoto2 libgphoto2 - libgphoto2 is a library that can be used by applications to access digital cameras
+P CSWlibexif libexif - EXIF Tag Parsing Library
+P CSWjpeg jpeg - lib and tools for JPEG image format
+P CSWiconv libiconv - GNU iconv library
+P CSWggettext ggettext - GNU gettext
+P CSWaalib aalib - Ascii art graphics library
+P CSWsunmath libsunmath - Sun maths library

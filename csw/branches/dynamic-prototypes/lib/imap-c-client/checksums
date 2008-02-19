@@ -1,0 +1,9 @@
+9a80f58d8d6a0979c13714ae69050020  download/imap-2004g.tar.Z
+8abd6b9bb3cbd2d73492d9525d9e4613  download/CSWimap-devel.gspec
+2c53993b4aad2c1115b9982b5df4d43d  download/CSWimap-devel.depend
+ee76ad6fbdb0d7512236d2326d071db5  download/CSWimap-devel.prototype
+7b819451eac28edda5d44cbda5833d1d  download/CSWimaprt.gspec
+9cce9e28dda7a7aac80070064210969d  download/CSWimaprt.depend
+06762bf26b6f5e7ca9693bda3b9e2f04  download/CSWimaprt.prototype
+013adc7d1e4631f1c5b394b3253d55b7  download/shared.diff
+97b4a2970e89ce7047d1cede76878ac8  download/authmd5.diff

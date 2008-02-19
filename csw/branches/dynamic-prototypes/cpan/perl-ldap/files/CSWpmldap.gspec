@@ -1,0 +1,7 @@
+%var            bitname pm_ldap
+%var            pkgname CSWpmldap
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1997-2004 Graham Barr. All rights reserved.
+This package is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

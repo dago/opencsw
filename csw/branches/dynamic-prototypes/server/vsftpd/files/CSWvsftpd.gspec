@@ -1,0 +1,9 @@
+%var            bitname vsftpd
+%var            pkgname CSWvsftpd
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE
+%var		SERVICE_CONF_FILES /opt/csw/etc/vsftpd/vsftpd.conf
+%include  	url file://%{PKGLIB}/smf_enabled.gspec
+%cvar 		CSW_GROUPS	vsftpd
+%cvar		CSW_USERS	vsftpd:vsftpd:vsftpd privsep user:/opt/csw/var/empty/vsftpd:/bin/false;ftp:nogroup:ftp user for anonymous access:/opt/csw/var/ftp:/bin/false
+%include  	url file://%{PKGLIB}/csw_utils.gspec

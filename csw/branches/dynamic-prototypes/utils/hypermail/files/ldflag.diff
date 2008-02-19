@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru hypermail-2.2.0.orig/configure hypermail-2.2.0/configure
+--- hypermail-2.2.0.orig/configure	2005-06-02 11:29:23.533562000 -0700
++++ hypermail-2.2.0/configure	2005-06-02 11:29:04.860055000 -0700
+@@ -544,7 +544,6 @@
+ 
+ 
+ 
+-LDFLAGS=""
+ LIBS=""
+ EXTRA_LIBS=""
+ INCLUDES=""

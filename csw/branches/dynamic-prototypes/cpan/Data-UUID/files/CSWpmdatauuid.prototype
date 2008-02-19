@@ -1,0 +1,16 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/Data 0755 root bin
+f none /opt/csw/lib/perl/csw/Data/UUID.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Data 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Data/UUID 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/Data/UUID/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/Data/UUID/UUID.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/Data/UUID/UUID.so 0555 root bin
+f none /opt/csw/lib/perl/csw/auto/Data/UUID/autosplit.ix 0444 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Data::UUID.3perl 0444 root bin

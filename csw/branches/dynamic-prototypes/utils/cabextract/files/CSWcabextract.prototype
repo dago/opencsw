@@ -1,0 +1,10 @@
+d none /opt/csw 0755 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/cabextract 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/cabextract.1 0644 root bin
+i copyright=CSWcabextract.copyright
+i depend=CSWcabextract.depend
+i pkginfo=CSWcabextract.pkginfo

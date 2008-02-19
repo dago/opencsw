@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru xfwm4-4.4.1.orig/src/frame.c xfwm4-4.4.1/src/frame.c
+--- xfwm4-4.4.1.orig/src/frame.c	2007-04-02 21:32:01.000000000 +0200
++++ xfwm4-4.4.1/src/frame.c	2007-04-18 23:58:09.646075400 +0200
+@@ -38,7 +38,7 @@
+ #include "compositor.h"
+ 
+ #ifndef ShapeInput
+-#define ShapeInput 2;
++#define ShapeInput 2
+ #endif
+ 
+ int

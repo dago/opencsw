@@ -1,0 +1,323 @@
+#!/usr/bin/perl
+#
+## Copyright 2006 Yann Rouillard <yann@blastwave.org>
+## All rights reserved.  Use is subject to license terms.
+##
+## Redistribution and/or use, with or without modification, is
+## permitted.  This software is without warranty of any kind.  The
+## author(s) shall not be liable in the event that use of the
+## software causes damage.
+##
+## pkg-update-watch - warn the administrator about package updates
+##                    available on a computer.
+#
+
+use Getopt::Long;
+use strict;
+use Env qw(PATH);
+
+my $pkg_get_options;
+my $site;
+
+sub compare_versions
+{
+    my $version1 = shift or die;
+    my $version2 = shift or die;
+    
+    while (my ($number1, $string1, $rem1) = ($version1 =~ /^(?:([0-9]+)|([^0-9\.,_]+))[\.,_]?(.*)?$/)) {
+
+	my ($number2, $string2, $rem2) = ($version2 =~ /^(?:([0-9]+)|([^0-9\.,_]+))[\.,_]?(.*)?$/) or 
+	    return 1;
+
+	if (defined $number1) {
+	    if (defined $number2) {
+		my $ret = ($number1 <=> $number2);
+		return $ret if $ret != 0;
+	    } else { # if defined $string2
+		return 1;
+	    }
+	} else { # defined $string1
+	    if (defined $string2) {
+		my $ret = ($string1 cmp $string2);
+		return $ret if $ret != 0;
+	    } else { # defined $number2
+		return -1;
+	    }
+	}
+	
+	$version1 = $rem1;
+	$version2 = $rem2;
+    }
+
+    if ($version2 ne "") {
+	return -1;
+    } else {
+	return 0;
+    }
+}
+
+
+sub package_ignored
+{
+    my $package_name = shift or die;
+    my $package_version = shift or die;
+    my $ignore_list = shift or die;
+    
+    if (exists ($ignore_list->{$package_name})) {
+
+	if (exists ($ignore_list->{$package_name}{cmp_op})) {
+		
+	    my $cmp_op = $ignore_list->{$package_name}{cmp_op};
+	    my $cmp_version = $ignore_list->{$package_name}{cmp_version};
+	    
+	    ($cmp_op eq ">") and return (compare_versions ($package_version, $cmp_version) > 0);
+	    ($cmp_op eq ">=") and return (compare_versions ($package_version, $cmp_version) >= 0);
+	    ($cmp_op eq "=") and return (compare_versions ($package_version, $cmp_version) == 0);
+	    ($cmp_op eq "<=") and return (compare_versions ($package_version, $cmp_version) <= 0);
+	    ($cmp_op eq "<") and return (compare_versions ($package_version, $cmp_version) < 0);
+	    
+	}
+	
+	return 1;
+    }
+
+    return 0;
+}
+
+
+sub new_email
+{
+    my $email = shift or die;
+    my $hostname = `hostname`;
+    chomp ($hostname);
+    open (MAIL, "| /usr/ucb/mail -s \"[pkg-update-watch] Package updates available on $hostname\" $email");
+    return *MAIL;
+}
+
+
+
+sub print_header
+{
+    my $file_handle = shift or die;
+    my $hostname = `hostname`;
+    chomp ($hostname);
+    my $date = `date`;
+    chomp ($date);
+
+    my $archive_location;
+
+    if (defined $site) {
+	$archive_location = "on site $site ";
+    } else {
+	$archive_location = "";
+    }
+
+    print $file_handle <<"EOF";
+pkg-update-watch Report [$date]
+========================================================================
+
+pkg-update-watch noticed the following available updates on $hostname:
+
+EOF
+}
+
+
+
+sub print_footer
+{
+    my $file_handle = shift or die;
+    my $hostname = `hostname`;
+    chomp ($hostname);
+    print $file_handle <<"EOF";
+
+========================================================================
+
+-- 
+pkg-update-watch
+EOF
+}
+
+sub parse_config_file
+{
+    my $options = { ignore => {} };
+    
+    my $config_file = shift or die;
+
+    if ( -f $config_file) {
+        open FH, "< $config_file" or die "Couldn't open configuration file $config_file";
+    
+        while (my $line = <FH>) {
+            next if $line =~ /^\s*(\#|$)/;
+                                   
+            if (my ($option, $value) = ($line =~ /(\w+)\s*=\s*\"?(\S+(?:\s+\S+)*)?\"?\s*$/)) {
+                                       
+                next if not defined $value;
+
+                if ($option eq "ignore") {
+                    
+                    my @package_list = split (/\s*,\s*/, $value);
+                    
+                    while (my $package = shift @package_list) {
+                    
+                        my ($package_name, $cmp_op, $cmp_version) = ($package =~ /^([^\s\(]+)\s*(?:\(\s*(>=|>|=|<=|<)\s*([^\)]+)\))?/);
+                        
+                        $options->{ignore}{$package_name} = {};
+                        
+                        if (defined $cmp_op) {
+                            $options->{ignore}{$package_name} = { cmp_op => $cmp_op,
+                                                                  cmp_version => $cmp_version };
+                        } else {
+                            $options->{ignore}{$package_name} = {};
+                        }
+                    }
+                } else {
+                    $options->{$option} = $value;
+                }
+                
+            } else {
+                print "Invalid line in configuration file:\n\t\"$line\"";
+                close FH;
+                exit 2
+            }
+        }
+        close FH;
+    }
+
+    return $options;
+}
+
+
+sub print_help
+{
+    print <<"EOF";
+usage: pkg-update-watch [OPTION]
+Display the list of available package updates.
+
+  -h, --help\t\t\tdisplay this help message
+  -c, --config-file FILE\tuse an alternate configuration file
+  -m, --mail [MAIL]\t\tsend the report by mail to root or 
+\t\t\t\tto the given email address if present
+
+EOF
+}
+
+
+# By default we send email to the local root
+my $email;
+my $help;
+my $stdout = 1;
+my $config_file = "/etc/opt/csw/pkg-update-watch.conf";
+
+# Adding standard path for pkg-get
+$PATH .= ":/opt/csw/bin:/usr/sfw/bin:/opt/csw/bin:/usr/local/public/bin";
+
+GetOptions("h|help" => \$help,
+	   "m|mail:s" => \$email,
+	   "s|site=s" => \$site,
+	   "c|config-file=s" => \$config_file);
+
+if ($help) {
+    print_help;
+    exit 0;
+}
+	
+my $options = parse_config_file ($config_file);
+
+$site = $options->{site} if not defined $site and exists $options->{site};
+$pkg_get_options = "-s $site " if $site;
+
+if (defined $email) {
+    $stdout = 0;
+    if ($email eq "") {
+	if (exists $options->{mailtos}) {
+	    $email = $options->{mailtos};
+	} else {
+	    $email = "root";
+        }
+    }	
+}
+	
+
+
+# We update the catalog before we try to find updates
+# (if we are root)
+if (getlogin() eq "root") {
+	`pkg-get ${pkg_get_options} update`;
+	if ($? ne 0) {
+		print STDERR "ERREUR: Impossible de mettre a jour le catalogue !\n";
+		exit 2;
+	}
+}
+my $file_handle;
+
+# we sort the pkg-get compare output to be sure to have versions of the same package on adjacents lines
+my @lines = `pkg-get ${pkg_get_options} compare 2>/dev/null`;
+if ( $? >> 8 ) {
+	print STDERR "ERROR: can't exec \"pkg-get ${pkg_get_options} compare\" !!\n";
+	exit 2;
+}
+	
+# we remove the first 3 lines
+shift @lines; shift @lines; shift @lines;
+# we sort it
+@lines = sort @lines;
+
+# we remove the ending newline and trailing spaces and seperates fields
+my @cmp_lines = map { chomp; 
+		      s/^\s+//; 
+		      my @pcl = split /\s+/; 
+		      $_ = \@pcl 
+		  } @lines;
+
+
+while (@cmp_lines) {
+
+    my $cmp_line = shift @cmp_lines;
+
+    # we are looking for the biggest remote version
+    while (@cmp_lines and $cmp_line->[0] eq $cmp_lines[0]->[0]) {
+	if (compare_versions ($cmp_line->[2], $cmp_lines[0]->[2]) > 0) {
+	    shift @cmp_lines;
+	} else {
+	    $cmp_line = shift @cmp_lines;
+	}
+    }
+
+    # package name is the first field...
+    my $package_name = shift @$cmp_line;
+    # and remote version is the last
+    my $remote_version = pop @$cmp_line;
+
+    # local and remote version are the same, we skip
+    next if ($remote_version eq "SAME");
+
+    # all the remaining fields are the local version 
+    # (we can't rely on the space separator since local_version
+    # can be the special string "[Not installed]" which contains spaces
+    my $local_version = join (" ", @$cmp_line);
+
+    # package not installed so we don't care
+    next if ($local_version eq "[Not installed]");
+
+    if (compare_versions ($remote_version, $local_version) > 0 and not
+	package_ignored ($package_name, $remote_version, $options->{ignore})) {
+		  
+	if (not defined $file_handle) {
+	    if ($stdout) {
+		$file_handle = *STDOUT;
+	    } else {
+		$file_handle = new_email ($email);
+	    }
+	    print_header ($file_handle);
+	}
+
+	printf $file_handle "%15s   %26s   %25s\n", ($package_name, $remote_version, "(current version: " . $local_version . ")");
+    }
+}
+close FH;
+
+
+if (defined $file_handle) {
+    print_footer ($file_handle);
+    close $file_handle;
+}

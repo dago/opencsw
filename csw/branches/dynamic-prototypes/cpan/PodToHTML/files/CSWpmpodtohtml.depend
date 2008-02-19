@@ -1,0 +1,3 @@
+P CSWpmhtmlfmt pm_htmlfmt - format HTML as plaintext
+P CSWpmhtmlparser pm_htmlparser - HTML parser class
+P CSWpmhtmltree pm_htmltree - modules for making parse trees from HTML source.

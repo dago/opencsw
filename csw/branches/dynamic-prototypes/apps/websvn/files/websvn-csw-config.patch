@@ -1,0 +1,43 @@
+diff -Naur 2.0-orig/include/config.php.CSW 2.0-patched/include/config.php.CSW
+--- 2.0-orig/include/config.php.CSW	2007-11-07 10:52:53.790976000 +0100
++++ 2.0-patched/include/config.php.CSW	2007-11-07 10:58:37.414630000 +0100
+@@ -33,17 +33,23 @@
+ // Configure these lines if your commands aren't on your path. 
+ //
+ // $config->setSVNCommandPath('Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin');
++$config->setSVNCommandPath('/opt/csw/bin');
+ // $config->setDiffPath('Path/to/diff/command/');
++$config->setPath($config->diff, '/opt/csw/bin', "gdiff");
+ 
+ // For syntax colouring, if option enabled...
+ // $config->setEnscriptPath('Path/to/enscript/command/');
++$config->setEnscriptPath('/opt/csw/bin');
+ // $config->setSedPath('Path/to/sed/command/');
++$config->setPath($config->sed, '/opt/csw/bin', "gsed");
+ 
+ // For delivered tarballs, if option enabled...
+ // $config->setTarPath('Path/to/tar/command/');
++$config->setPath($config->tar, '/opt/csw/bin', "gtar");
+ 
+ // For delivered GZIP'd files and tarballs, if option enabled...
+ // $config->setGZipPath('Path/to/gzip/command/');
++$config->setGZipPath('/opt/csw/bin');
+ 
+ // }}}
+ 
+@@ -230,6 +236,7 @@
+ // repositories.
+ //
+ // $config->allowDownload();
++$config->allowDownload();
+ //
+ // To change the global option for individual repositories, uncomment and replicate
+ // the required line below (replacing 'myrep' for the name of the repository to be changed).
+@@ -285,6 +292,7 @@
+ // Set the path above.
+ //
+ // $config->useEnscript();
++$config->useEnscript();
+ 
+ // Enscript need to be told what the contents of a file are so that it can be colourised
+ // correctly.  WebSVN includes a predefined list of mappings from file extension to Enscript

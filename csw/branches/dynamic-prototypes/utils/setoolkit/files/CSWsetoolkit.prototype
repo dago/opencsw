@@ -1,0 +1,268 @@
+d none /opt/csw/bin 0755 root bin
+l none /opt/csw/bin/se=isaexec
+#f none /opt/csw/pw_example.sh=$WORKDIR/adrian/bin/pw_example.sh 0755 root bin
+#f none /opt/csw/workollator_example.sh=$WORKDIR/adrian/bin/workollator_example.sh 0755 root bin
+d none /opt/csw/bin 0755 root bin
+d none /opt/csw/bin/$optdir32 0755 root bin
+f none /opt/csw/bin/$optdir32/se=$WORKDIR/se 0555 root bin
+d none /opt/csw/bin/$optdir64 0755 root bin
+f none /opt/csw/bin/$optdir64/se=$WORKDIR64/se 0555 root bin
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/$arch64 0755 root bin
+!default 0644 root bin
+f none /opt/csw/lib/libsenet.so=$WORKDIR/sex/net/lib/.libs/libsenet.so
+f none /opt/csw/lib/libsegui.so=$WORKDIR/sex/gui/lib/.libs/libsegui.so
+f none /opt/csw/lib/$arch64/libsenet.so=$WORKDIR64/sex/net/lib/.libs/libsenet.so
+f none /opt/csw/lib/$arch64/libsegui.so=$WORKDIR64/sex/gui/lib/.libs/libsegui.so
+d none /opt/csw/lib/app-defaults 0755
+f none /opt/csw/lib/app-defaults/Segui=$WORKDIR/sex/gui/lib/Segui
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1m 0755 root bin
+f none /opt/csw/share/man/man1m/se.1m=$WORKDIR/doc/se.1m
+d none /opt/csw 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/se 0755 root bin
+f none /opt/csw/share/doc/se/USERS.MANUAL.html=$WORKDIR/doc/USERS.MANUAL.html
+f none /opt/csw/share/doc/se/EXAMPLES.DOC=$WORKDIR/doc/EXAMPLES.DOC
+f none /opt/csw/share/doc/se/REPORTING.BUGS=$WORKDIR/doc/REPORTING.BUGS
+f none /opt/csw/share/doc/se/README.INSTALL=$WORKDIR/doc/README.INSTALL
+f none /opt/csw/share/doc/se/README.RELEASE=$WORKDIR/doc/README.RELEASE
+f none /opt/csw/share/doc/se/CHANGES=$WORKDIR/doc/CHANGES
+f none /opt/csw/share/doc/se/FAQ=$WORKDIR/doc/FAQ
+f none /opt/csw/share/doc/se/GUI.MANUAL=$WORKDIR/sex/gui/doc/GUI.MANUAL
+d none /opt/csw/share/se 0755 root bin
+d none /opt/csw/share/se/include 0755 root bin
+f none /opt/csw/share/se/include/app_wrap_class.se=$WORKDIR/include/app_wrap_class.se
+f none /opt/csw/share/se/include/condvar.se=$WORKDIR/include/condvar.se
+f none /opt/csw/share/se/include/ctlr_class.se=$WORKDIR/include/ctlr_class.se
+f none /opt/csw/share/se/include/ctype.se=$WORKDIR/include/ctype.se
+f none /opt/csw/share/se/include/devinfo.se=$WORKDIR/include/devinfo.se
+f none /opt/csw/share/se/include/dirent.se=$WORKDIR/include/dirent.se
+f none /opt/csw/share/se/include/diskinfo.se=$WORKDIR/include/diskinfo.se
+f none /opt/csw/share/se/include/dlfcn.se=$WORKDIR/include/dlfcn.se
+f none /opt/csw/share/se/include/errno.se=$WORKDIR/include/errno.se
+f none /opt/csw/share/se/include/fcntl.se=$WORKDIR/include/fcntl.se
+f none /opt/csw/share/se/include/kstat.se=$WORKDIR/include/kstat.se
+f none /opt/csw/share/se/include/math.se=$WORKDIR/include/math.se
+f none /opt/csw/share/se/include/mib.se=$WORKDIR/include/mib.se
+f none /opt/csw/share/se/include/mnt_class.se=$WORKDIR/include/mnt_class.se
+f none /opt/csw/share/se/include/mutex.se=$WORKDIR/include/mutex.se
+f none /opt/csw/share/se/include/ndd.se=$WORKDIR/include/ndd.se
+f none /opt/csw/share/se/include/netdb.se=$WORKDIR/include/netdb.se
+f none /opt/csw/share/se/include/netif.se=$WORKDIR/include/netif.se
+f none /opt/csw/share/se/include/nfs_clnt.se=$WORKDIR/include/nfs_clnt.se
+f none /opt/csw/share/se/include/p_iostat_class.se=$WORKDIR/include/p_iostat_class.se
+f none /opt/csw/share/se/include/p_netstat_class.se=$WORKDIR/include/p_netstat_class.se
+f none /opt/csw/share/se/include/p_vmstat_class.se=$WORKDIR/include/p_vmstat_class.se
+f none /opt/csw/share/se/include/partinfo.se=$WORKDIR/include/partinfo.se
+f none /opt/csw/share/se/include/poll.se=$WORKDIR/include/poll.se
+f none /opt/csw/share/se/include/proc.se=$WORKDIR/include/proc.se
+f none /opt/csw/share/se/include/processor.se=$WORKDIR/include/processor.se
+f none /opt/csw/share/se/include/pwd.se=$WORKDIR/include/pwd.se
+f none /opt/csw/share/se/include/rpc_clnt.se=$WORKDIR/include/rpc_clnt.se
+f none /opt/csw/share/se/include/se.se=$WORKDIR/include/se.se
+f none /opt/csw/share/se/include/se_trees.se=$WORKDIR/include/se_trees.se
+f none /opt/csw/share/se/include/signal.se=$WORKDIR/include/signal.se
+f none /opt/csw/share/se/include/socket.se=$WORKDIR/include/socket.se
+f none /opt/csw/share/se/include/stat.se=$WORKDIR/include/stat.se
+f none /opt/csw/share/se/include/statvfs.se=$WORKDIR/include/statvfs.se
+f none /opt/csw/share/se/include/stdio.se=$WORKDIR/include/stdio.se
+f none /opt/csw/share/se/include/stdlib.se=$WORKDIR/include/stdlib.se
+f none /opt/csw/share/se/include/string.se=$WORKDIR/include/string.se
+f none /opt/csw/share/se/include/sys_kstat.se=$WORKDIR/include/sys_kstat.se
+f none /opt/csw/share/se/include/sys_swap.se=$WORKDIR/include/sys_swap.se
+f none /opt/csw/share/se/include/sysdepend.se=$WORKDIR/include/sysdepend.se
+f none /opt/csw/share/se/include/sysinfo_class.se=$WORKDIR/include/sysinfo_class.se
+f none /opt/csw/share/se/include/syslog.se=$WORKDIR/include/syslog.se
+f none /opt/csw/share/se/include/systeminfo.se=$WORKDIR/include/systeminfo.se
+f none /opt/csw/share/se/include/tapeinfo.se=$WORKDIR/include/tapeinfo.se
+f none /opt/csw/share/se/include/time.se=$WORKDIR/include/time.se
+f none /opt/csw/share/se/include/tiuser.se=$WORKDIR/include/tiuser.se
+f none /opt/csw/share/se/include/types.se=$WORKDIR/include/types.se
+f none /opt/csw/share/se/include/uio.se=$WORKDIR/include/uio.se
+f none /opt/csw/share/se/include/unistd.se=$WORKDIR/include/unistd.se
+f none /opt/csw/share/se/include/uptime_class.se=$WORKDIR/include/uptime_class.se
+f none /opt/csw/share/se/include/utmp.se=$WORKDIR/include/utmp.se
+f none /opt/csw/share/se/include/utsname.se=$WORKDIR/include/utsname.se
+f none /opt/csw/share/se/include/vfs.se=$WORKDIR/include/vfs.se
+f none /opt/csw/share/se/include/vmstat_class.se=$WORKDIR/include/vmstat_class.se
+f none /opt/csw/share/se/include/wait.se=$WORKDIR/include/wait.se
+f none /opt/csw/share/se/include/gui_defines.h=$WORKDIR/sex/gui/include/gui_defines.h
+f none /opt/csw/share/se/include/gui_lib.se=$WORKDIR/sex/gui/include/gui_lib.se
+f none /opt/csw/share/se/include/multi_rstat_class.se=$WORKDIR/sex/net/include/multi_rstat_class.se
+f none /opt/csw/share/se/include/net_lib.se=$WORKDIR/sex/net/include/net_lib.se
+f none /opt/csw/share/se/include/rstat_class.se=$WORKDIR/sex/net/include/rstat_class.se
+f none /opt/csw/share/se/include/live_rules.se=$WORKDIR/adrian/include/live_rules.se
+f none /opt/csw/share/se/include/logfile.se=$WORKDIR/adrian/include/logfile.se
+f none /opt/csw/share/se/include/process_class.se=$WORKDIR/adrian/include/process_class.se
+f none /opt/csw/share/se/include/process_rules.se=$WORKDIR/adrian/include/process_rules.se
+f none /opt/csw/share/se/include/pure_rules.se=$WORKDIR/adrian/include/pure_rules.se
+f none /opt/csw/share/se/include/pure_rules_dutch.se=$WORKDIR/adrian/include/pure_rules_dutch.se
+f none /opt/csw/share/se/include/pure_rules_swedish.se=$WORKDIR/adrian/include/pure_rules_swedish.se
+f none /opt/csw/share/se/include/tcp_class.se=$WORKDIR/adrian/include/tcp_class.se
+f none /opt/csw/share/se/include/tcp_rules.se=$WORKDIR/adrian/include/tcp_rules.se
+f none /opt/csw/share/se/include/tcp_rules_dutch.se=$WORKDIR/adrian/include/tcp_rules_dutch.se
+f none /opt/csw/share/se/include/workload_class.se=$WORKDIR/adrian/include/workload_class.se
+d none /opt/csw/share/se 0755 root bin
+d none /opt/csw/share/se/examples 0755 root other
+f none /opt/csw/share/se/examples/cpg.se=$WORKDIR/examples/cpg.se 0644 root other
+f none /opt/csw/share/se/examples/webtune.se=$WORKDIR/examples/webtune.se 0644 root other
+f none /opt/csw/share/se/examples/cpus.se=$WORKDIR/examples/cpus.se 0644 root other
+f none /opt/csw/share/se/examples/swap.se=$WORKDIR/examples/swap.se 0644 root other
+f none /opt/csw/share/se/examples/mpvmstat.se=$WORKDIR/examples/mpvmstat.se 0644 root other
+f none /opt/csw/share/se/examples/disks.se=$WORKDIR/examples/disks.se 0644 root other
+f none /opt/csw/share/se/examples/swapctl.se=$WORKDIR/examples/swapctl.se 0644 root other
+f none /opt/csw/share/se/examples/util.se=$WORKDIR/examples/util.se 0644 root other
+f none /opt/csw/share/se/examples/iost.se=$WORKDIR/examples/iost.se 0644 root other
+f none /opt/csw/share/se/examples/collisions.se=$WORKDIR/examples/collisions.se 0644 root other
+f none /opt/csw/share/se/examples/vmstat.se=$WORKDIR/examples/vmstat.se 0644 root other
+f none /opt/csw/share/se/examples/ps-p.se=$WORKDIR/examples/ps-p.se 0644 root other
+f none /opt/csw/share/se/examples/syslog.se=$WORKDIR/examples/syslog.se 0644 root other
+f none /opt/csw/share/se/examples/nproc.se=$WORKDIR/examples/nproc.se 0644 root other
+f none /opt/csw/share/se/examples/nfsstat.se=$WORKDIR/examples/nfsstat.se 0644 root other
+f none /opt/csw/share/se/examples/netstat.se=$WORKDIR/examples/netstat.se 0644 root other
+f none /opt/csw/share/se/examples/net.se=$WORKDIR/examples/net.se 0644 root other
+f none /opt/csw/share/se/examples/pwatch.se=$WORKDIR/examples/pwatch.se 0644 root other
+f none /opt/csw/share/se/examples/siostat.se=$WORKDIR/examples/siostat.se 0644 root other
+f none /opt/csw/share/se/examples/ps-ax.se=$WORKDIR/examples/ps-ax.se 0644 root other
+f none /opt/csw/share/se/examples/hostid.se=$WORKDIR/examples/hostid.se 0644 root other
+f none /opt/csw/share/se/examples/xiostat.se=$WORKDIR/examples/xiostat.se 0644 root other
+f none /opt/csw/share/se/examples/kvmname.se=$WORKDIR/examples/kvmname.se 0644 root other
+f none /opt/csw/share/se/examples/dumpkstats.se=$WORKDIR/examples/dumpkstats.se 0644 root other
+f none /opt/csw/share/se/examples/xio.se=$WORKDIR/examples/xio.se 0644 root other
+f none /opt/csw/share/se/examples/limits.se=$WORKDIR/examples/limits.se 0644 root other
+f none /opt/csw/share/se/examples/iostat.se=$WORKDIR/examples/iostat.se 0644 root other
+f none /opt/csw/share/se/examples/uptime.se=$WORKDIR/examples/uptime.se 0644 root other
+f none /opt/csw/share/se/examples/ctlr.se=$WORKDIR/examples/ctlr.se 0644 root other
+f none /opt/csw/share/se/examples/uname.se=$WORKDIR/examples/uname.se 0644 root other
+f none /opt/csw/share/se/examples/aw.se=$WORKDIR/examples/aw.se 0644 root other
+d none /opt/csw/share/se/examples 0755 root other
+d none /opt/csw/share/se/examples/data 0755 root other
+f none /opt/csw/share/se/examples/data/xload_icon=$WORKDIR/sex/gui/examples/data/xload_icon 0644 root other
+f none /opt/csw/share/se/examples/data/cpu_meter_icon=$WORKDIR/sex/gui/examples/data/cpu_meter_icon 0644 root other
+f none /opt/csw/share/se/examples/data/xit_icon=$WORKDIR/sex/gui/examples/data/xit_icon 0644 root other
+f none /opt/csw/share/se/examples/infotool.se=$WORKDIR/sex/gui/examples/infotool.se 0644 root other
+f none /opt/csw/share/se/examples/cpu_meter.se=$WORKDIR/sex/gui/examples/cpu_meter.se 0644 root other
+f none /opt/csw/share/se/examples/mini_cpu.se=$WORKDIR/sex/gui/examples/mini_cpu.se 0644 root other
+f none /opt/csw/share/se/examples/xit.se=$WORKDIR/sex/gui/examples/xit.se 0644 root other
+f none /opt/csw/share/se/examples/multi_meter.se=$WORKDIR/sex/gui/examples/multi_meter.se 0644 root other
+f none /opt/csw/share/se/examples/xload.se=$WORKDIR/sex/gui/examples/xload.se 0644 root other
+d none /opt/csw/share/se/examples 0755 root other
+d none /opt/csw/share/se/examples/net_example 0755 root other
+f none /opt/csw/share/se/examples/net_example/client.se=$WORKDIR/sex/net/examples/net_example/client.se 0644 root other
+f none /opt/csw/share/se/examples/net_example/sample.se=$WORKDIR/sex/net/examples/net_example/sample.se 0644 root other
+f none /opt/csw/share/se/examples/net_example/server.se=$WORKDIR/sex/net/examples/net_example/server.se 0644 root other
+f none /opt/csw/share/se/examples/mrvmstat.se=$WORKDIR/sex/net/examples/mrvmstat.se 0644 root other
+f none /opt/csw/share/se/examples/rvmstat.se=$WORKDIR/sex/net/examples/rvmstat.se 0644 root other
+d none /opt/csw/share/se/examples 0755 root other
+d none /opt/csw/share/se/examples/data 0755 root other
+f none /opt/csw/share/se/examples/data/ram=$WORKDIR/adrian/examples/data/ram 0644 root other
+f none /opt/csw/share/se/examples/data/dnlc=$WORKDIR/adrian/examples/data/dnlc 0644 root other
+f none /opt/csw/share/se/examples/data/callog.root=$WORKDIR/adrian/examples/data/callog.root 0644 root other
+f none /opt/csw/share/se/examples/data/nfs_client=$WORKDIR/adrian/examples/data/nfs_client 0644 root other
+f none /opt/csw/share/se/examples/data/zoom=$WORKDIR/adrian/examples/data/zoom 0644 root other
+f none /opt/csw/share/se/examples/data/cpu=$WORKDIR/adrian/examples/data/cpu 0644 root other
+f none /opt/csw/share/se/examples/data/blank=$WORKDIR/adrian/examples/data/blank 0644 root other
+f none /opt/csw/share/se/examples/data/network=$WORKDIR/adrian/examples/data/network 0644 root other
+f none /opt/csw/share/se/examples/data/kmem=$WORKDIR/adrian/examples/data/kmem 0644 root other
+f none /opt/csw/share/se/examples/data/disk=$WORKDIR/adrian/examples/data/disk 0644 root other
+f none /opt/csw/share/se/examples/data/inode=$WORKDIR/adrian/examples/data/inode 0644 root other
+f none /opt/csw/share/se/examples/data/adrian=$WORKDIR/adrian/examples/data/adrian 0644 root other
+f none /opt/csw/share/se/examples/data/mutex=$WORKDIR/adrian/examples/data/mutex 0644 root other
+f none /opt/csw/share/se/examples/data/drip.au=$WORKDIR/adrian/examples/data/drip.au 0644 root other
+f none /opt/csw/share/se/examples/data/richp=$WORKDIR/adrian/examples/data/richp 0644 root other
+f none /opt/csw/share/se/examples/data/adrian.bio=$WORKDIR/adrian/examples/data/adrian.bio 0644 root other
+f none /opt/csw/share/se/examples/data/swap=$WORKDIR/adrian/examples/data/swap 0644 root other
+f none /opt/csw/share/se/examples/data/tpry.desc=$WORKDIR/adrian/examples/data/tpry.desc 0644 root other
+f none /opt/csw/share/se/examples/data/richp.bio=$WORKDIR/adrian/examples/data/richp.bio 0644 root other
+f none /opt/csw/share/se/examples/pure_test.se=$WORKDIR/adrian/examples/pure_test.se 0644 root other
+f none /opt/csw/share/se/examples/netstatx.se=$WORKDIR/adrian/examples/netstatx.se 0644 root other
+f none /opt/csw/share/se/examples/iomonitor.se=$WORKDIR/adrian/examples/iomonitor.se 0644 root other
+f none /opt/csw/share/se/examples/virtual_adrian_lite.se=$WORKDIR/adrian/examples/virtual_adrian_lite.se 0644 root other
+f none /opt/csw/share/se/examples/nx.se=$WORKDIR/adrian/examples/nx.se 0644 root other
+f none /opt/csw/share/se/examples/bigbrother.se=$WORKDIR/adrian/examples/bigbrother.se 0644 root other
+f none /opt/csw/share/se/examples/perfmeter.se=$WORKDIR/adrian/examples/perfmeter.se 0644 root other
+f none /opt/csw/share/se/examples/tpry.se=$WORKDIR/adrian/examples/tpry.se 0644 root other
+f none /opt/csw/share/se/examples/nfsmonitor.se=$WORKDIR/adrian/examples/nfsmonitor.se 0644 root other
+f none /opt/csw/share/se/examples/msacct_off.se=$WORKDIR/adrian/examples/msacct_off.se 0644 root other
+f none /opt/csw/share/se/examples/pry.se=$WORKDIR/adrian/examples/pry.se 0644 root other
+f none /opt/csw/share/se/examples/msacct.se=$WORKDIR/adrian/examples/msacct.se 0644 root other
+f none /opt/csw/share/se/examples/cpuchk.se=$WORKDIR/adrian/examples/cpuchk.se 0644 root other
+f none /opt/csw/share/se/examples/workollator.se=$WORKDIR/adrian/examples/workollator.se 0644 root other
+f none /opt/csw/share/se/examples/cpustat.se=$WORKDIR/adrian/examples/cpustat.se 0644 root other
+f none /opt/csw/share/se/examples/zoom.se=$WORKDIR/adrian/examples/zoom.se 0644 root other
+f none /opt/csw/share/se/examples/pw.se=$WORKDIR/adrian/examples/pw.se 0644 root other
+f none /opt/csw/share/se/examples/percollator.se=$WORKDIR/adrian/examples/percollator.se 0644 root other
+f none /opt/csw/share/se/examples/pw_log.se=$WORKDIR/adrian/examples/pw_log.se 0644 root other
+f none /opt/csw/share/se/examples/vmmonitor.se=$WORKDIR/adrian/examples/vmmonitor.se 0644 root other
+f none /opt/csw/share/se/examples/peer.se=$WORKDIR/adrian/examples/peer.se 0644 root other
+f none /opt/csw/share/se/examples/monlog.se=$WORKDIR/adrian/examples/monlog.se 0644 root other
+f none /opt/csw/share/se/examples/tcp_monitor.se=$WORKDIR/adrian/examples/tcp_monitor.se 0644 root other
+f none /opt/csw/share/se/examples/live_test.se=$WORKDIR/adrian/examples/live_test.se 0644 root other
+f none /opt/csw/share/se/examples/netmonitor.se=$WORKDIR/adrian/examples/netmonitor.se 0644 root other
+f none /opt/csw/share/se/examples/vader.se=$WORKDIR/adrian/examples/vader.se 0644 root other
+f none /opt/csw/share/se/examples/darth.se=$WORKDIR/adrian/examples/darth.se 0644 root other
+f none /opt/csw/share/se/examples/virtual_adrian.se=$WORKDIR/adrian/examples/virtual_adrian.se 0644 root other
+f none /opt/csw/share/se/examples/pea.se=$WORKDIR/adrian/examples/pea.se 0644 root other
+f none /opt/csw/share/se/examples/peac.se=$WORKDIR/adrian/examples/peac.se 0644 root other
+f none /opt/csw/share/se/examples/mon_cm.se=$WORKDIR/adrian/examples/mon_cm.se 0644 root other
+d none /opt/csw/etc 0755 root bin
+d none /opt/csw/etc/init.d 0755 root other
+f none /opt/csw/etc/init.d/vader=$WORKDIR/etc/init.d/vader 0644 root other
+f none /opt/csw/etc/init.d/percol=$WORKDIR/etc/init.d/percol 0644 root other
+f none /opt/csw/etc/init.d/mon_cm=$WORKDIR/etc/init.d/mon_cm 0644 root other
+f none /opt/csw/etc/init.d/monlog=$WORKDIR/etc/init.d/monlog 0644 root other
+f none /opt/csw/etc/init.d/va_monitor=$WORKDIR/etc/init.d/va_monitor 0644 root other
+d none /opt/csw/etc/rc0.d 0755 root other
+s none /opt/csw/etc/rc0.d/K34vader=/opt/csw/etc/init.d/vader
+s none /opt/csw/etc/rc0.d/K60percol=/opt/csw/etc/init.d/percol
+s none /opt/csw/etc/rc0.d/K60mon_cm=/opt/csw/etc/init.d/mon_cm
+s none /opt/csw/etc/rc0.d/K60monlog=/opt/csw/etc/init.d/monlog
+s none /opt/csw/etc/rc0.d/K60va_monitor=/opt/csw/etc/init.d/va_monitor
+d none /opt/csw/etc/rc2.d 0755 root other
+s none /opt/csw/etc/rc2.d/S90mon_cm=/opt/csw/etc/init.d/mon_cm
+s none /opt/csw/etc/rc2.d/S89vader=/opt/csw/etc/init.d/vader
+s none /opt/csw/etc/rc2.d/S90monlog=/opt/csw/etc/init.d/monlog
+s none /opt/csw/etc/rc2.d/S90va_monitor=/opt/csw/etc/init.d/va_monitor
+d none /opt/csw/etc/rc3.d 0755 root other
+s none /opt/csw/etc/rc3.d/S99percol=/opt/csw/etc/init.d/percol
+f none /opt/csw/etc/se_defines=$WORKDIR/etc/se_defines 0644 root other
+f none /opt/csw/share/se/se-mode.el=$WORKDIR/etc/se-mode.el 0644 root other
+f none /opt/csw/share/se/se-mode.elc=$WORKDIR/etc/se-mode.elc 0644 root other
+d none /opt/csw/share/se/contrib 0755 root other
+d none /opt/csw/share/se/contrib/perfbar 0755 root other
+f none /opt/csw/share/se/contrib/perfbar/author=$WORKDIR/contrib/perfbar/author 0644 root other
+f none /opt/csw/share/se/contrib/perfbar/perfbar.se=$WORKDIR/contrib/perfbar/perfbar.se 0644 root other
+d none /opt/csw/share/se/contrib/kview 0755 root other
+f none /opt/csw/share/se/contrib/kview/author=$WORKDIR/contrib/kview/author 0644 root other
+f none /opt/csw/share/se/contrib/kview/kviewx.se=$WORKDIR/contrib/kview/kviewx.se 0644 root other
+d none /opt/csw/share/se/contrib/watch 0755 root other
+f none /opt/csw/share/se/contrib/watch/author=$WORKDIR/contrib/watch/author 0644 root other
+f none /opt/csw/share/se/contrib/watch/watch.se=$WORKDIR/contrib/watch/watch.se 0644 root other
+d none /opt/csw/share/se/contrib/dfstats 0755 root other
+f none /opt/csw/share/se/contrib/dfstats/author=$WORKDIR/contrib/dfstats/author 0644 root other
+f none /opt/csw/share/se/contrib/dfstats/fs_class.se=$WORKDIR/contrib/dfstats/fs_class.se 0644 root other
+f none /opt/csw/share/se/contrib/dfstats/mdf.se=$WORKDIR/contrib/dfstats/mdf.se 0644 root other
+f none /opt/csw/share/se/contrib/dfstats/df_stats.se=$WORKDIR/contrib/dfstats/df_stats.se 0644 root other
+d none /opt/csw/share/se/contrib/iops 0755 root other
+f none /opt/csw/share/se/contrib/iops/iops.se=$WORKDIR/contrib/iops/iops.se 0644 root other
+f none /opt/csw/share/se/contrib/iops/author=$WORKDIR/contrib/iops/author 0644 root other
+d none /opt/csw/share/se/contrib/psrsetstat 0755 root other
+f none /opt/csw/share/se/contrib/psrsetstat/author=$WORKDIR/contrib/psrsetstat/author 0644 root other
+f none /opt/csw/share/se/contrib/psrsetstat/psrsetstat.se=$WORKDIR/contrib/psrsetstat/psrsetstat.se 0644 root other
+d none /opt/csw/share/se/toptool 0755 root other
+f none /opt/csw/share/se/toptool/toptool=$WORKDIR/toptool/toptool 0644 root other
+f none /opt/csw/share/se/toptool/toptool.se=$WORKDIR/toptool/toptool.se 0644 root other
+d none /opt/csw/share/se/dio 0755 root other
+f none /opt/csw/share/se/dio/dio.se=$WORKDIR/dio/dio.se 0644 root other
+f none /opt/csw/share/se/dio/dio_disk.se=$WORKDIR/dio/dio_disk.se 0644 root other
+d none /opt/csw/share/se/perfmon 0755 root other
+f none /opt/csw/share/se/perfmon/perfmon=$WORKDIR/perfmon/perfmon 0644 root other
+f none /opt/csw/share/se/perfmon/p_vmstat_class.se=$WORKDIR/perfmon/p_vmstat_class.se 0644 root other
+f none /opt/csw/share/se/perfmon/vmstat_class.se=$WORKDIR/perfmon/vmstat_class.se 0644 root other
+f none /opt/csw/share/se/perfmon/perfmon.se=$WORKDIR/perfmon/perfmon.se 0644 root other
+d none /opt/csw/share/se/workollator 0755 root other
+f none /opt/csw/share/se/workollator/pwgrab=$WORKDIR/workollator/pwgrab 0644 root other
+f none /opt/csw/share/se/workollator/explode.csh=$WORKDIR/workollator/explode.csh 0644 root other
+f none /opt/csw/share/se/workollator/README=$WORKDIR/workollator/README 0644 root other

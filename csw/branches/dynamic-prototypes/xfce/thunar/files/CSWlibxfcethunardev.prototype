@@ -1,0 +1,40 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/thunar-vfs-1 0755 root bin
+d none /opt/csw/include/thunar-vfs-1/thunar-vfs 0755 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-config.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-enum-types.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-info.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-interactive-job.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-job.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-mime-action.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-mime-application.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-mime-database.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-mime-handler.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-mime-info.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-monitor.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-path.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-thumb.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-types.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-user.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-util.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs-volume.h 0644 root bin
+f none /opt/csw/include/thunar-vfs-1/thunar-vfs/thunar-vfs.h 0644 root bin
+d none /opt/csw/include/thunarx-1 0755 root bin
+d none /opt/csw/include/thunarx-1/thunarx 0755 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-config.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-file-info.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-menu-provider.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-preferences-provider.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-property-page-provider.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-property-page.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-provider-factory.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-provider-plugin.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-renamer-provider.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx-renamer.h 0644 root bin
+f none /opt/csw/include/thunarx-1/thunarx/thunarx.h 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/thunar-vfs-1.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/thunarx-1.pc 0644 root bin
+i copyright=CSWlibxfcethunardev.copyright
+i depend=CSWlibxfcethunardev.depend
+i pkginfo=CSWlibxfcethunardev.pkginfo

@@ -1,0 +1,5 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/include 0755 root bin
+f none /opt/csw/apache2/include/mod_transform.h 0644 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/mod_transform.so 0775 root bin

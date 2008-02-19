@@ -1,0 +1,4 @@
+P CSWmysql5rt mysql5rt - run-time libraries for mysql5
+P CSWosslrt openssl_rt - Openssl runtime libraries
+P CSWpython python - The Python language interpreter
+P CSWzlib zlib - Zlib Data Compression Library

@@ -1,0 +1,8 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/mod_evasive20.so 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/mod_evasive 0755 root bin
+f none /opt/csw/share/doc/mod_evasive/LICENSE 0644 root bin
+f none /opt/csw/share/doc/mod_evasive/README 0644 root bin

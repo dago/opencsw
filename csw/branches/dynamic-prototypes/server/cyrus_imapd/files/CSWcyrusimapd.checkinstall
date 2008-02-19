@@ -1,0 +1,36 @@
+# begin content of csw_smf_checkinstall
+# (we must manually copy the content as we use
+#  our own checkinstall file, is there a better way ?)
+
+trap `exit 3` 15
+
+# Assign Solaris release class to install release specific files
+if [ -f "$BASEDIR/usr/sbin/svccfg" -a -f "$BASEDIR/usr/sbin/svcadm" ]; then
+        CLASSES="$CLASSES smf"
+	SMF="yes"
+else
+        CLASSES="$CLASSES init"
+	SMF="no"
+fi
+
+# Make env variables available to other packaging scripts
+cat >$1 <<!
+CLASSES=$CLASSES
+SMF="$SMF"
+!
+
+# end content of csw_smf_checkinstall
+
+
+if [ ! -f ${BASEDIR}/usr/bin/getent ]; then
+	cat <<EOF
+Installation of this package requires the file /usr/bin/getent 
+which is currently missing.
+This file is provided by the package SUNWnisu for solaris 7/8/9
+and the package SUNWcsu for solaris >= 10.
+Please install this package before installing cyrus_imapd.
+EOF
+	exit 1
+fi
+exit 0
+

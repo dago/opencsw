@@ -1,0 +1,42 @@
+diff --speed-large-files --minimal -Nru setuptools-0.6c7.orig/setuptools/command/easy_install.py setuptools-0.6c7/setuptools/command/easy_install.py
+--- setuptools-0.6c7.orig/setuptools/command/easy_install.py	2007-09-04 12:18:45.000000000 -0400
++++ setuptools-0.6c7/setuptools/command/easy_install.py	2007-10-06 00:19:59.860256000 -0400
+@@ -1107,7 +1107,7 @@
+ 
+     INSTALL_SCHEMES = dict(
+         posix = dict(
+-            install_dir = '$base/lib/python$py_version_short/site-packages',
++            install_dir = '$base/lib/python/site-packages',
+             script_dir  = '$base/bin',
+         ),
+     )
+diff --speed-large-files --minimal -Nru setuptools-0.6c7.orig/virtual-python.py setuptools-0.6c7/virtual-python.py
+--- setuptools-0.6c7.orig/virtual-python.py	2006-09-20 17:05:04.000000000 -0400
++++ setuptools-0.6c7/virtual-python.py	2007-10-06 00:16:48.138770000 -0400
+@@ -64,7 +64,7 @@
+     global verbose
+ 
+     home_dir = os.path.expanduser(options.prefix)
+-    lib_dir = join(home_dir, 'lib', py_version)
++    lib_dir = join(home_dir, 'lib', 'python')
+     inc_dir = join(home_dir, 'include', py_version)
+     bin_dir = join(home_dir, 'bin')
+ 
+@@ -82,7 +82,7 @@
+ 
+     prefix = sys.prefix
+     mkdir(lib_dir)
+-    stdlib_dir = join(prefix, 'lib', py_version)
++    stdlib_dir = join(prefix, 'lib', 'python')
+     for fn in os.listdir(stdlib_dir):
+         if fn != 'site-packages':
+             symlink(join(stdlib_dir, fn), join(lib_dir, fn))
+@@ -99,7 +99,7 @@
+         symlink(join(stdinc_dir, fn), join(inc_dir, fn))
+ 
+     if sys.exec_prefix != sys.prefix:
+-        exec_dir = join(sys.exec_prefix, 'lib', py_version)
++        exec_dir = join(sys.exec_prefix, 'lib', 'python')
+         for fn in os.listdir(exec_dir):
+             symlink(join(exec_dir, fn), join(lib_dir, fn))
+ 

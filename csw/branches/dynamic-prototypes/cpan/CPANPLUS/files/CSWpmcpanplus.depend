@@ -1,0 +1,14 @@
+P CSWpmarchiveextract pm_archiveextract - A generic archive extracting mechanism
+P CSWpmfilefetch pm_filefetch - A generic file fetching mechanism
+P CSWpmipccmd pm_ipccmd - Finding and running system commands made easy
+P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
+P CSWpmlogmessage pm_logmessage - Generic message storage mechanism.
+P CSWpmmodcorelist pm_modcorelist - What modules shipped with versions of Perl
+P CSWpmmodload pm_modload - Runtime require of both modules and files
+P CSWpmmodloadcond pm_modloadcond - Query module information and load at runtime
+P CSWpmmodloaded pm_modloaded - Mark modules as loaded or unloaded
+P CSWpmmoduleplug pm_moduleplug - automatically give your module the ability to have plugins
+P CSWpmobjaccessor pm_objaccessor - An interface to create per object accessors
+P CSWpmpkgconst pm_pkgconst - List all constants declared in a package
+P CSWpmprmscheck pm_prmscheck - A generic input parsing/checking mechanism.
+P CSWpmtermui pm_termui - Term::ReadLine UI made easy

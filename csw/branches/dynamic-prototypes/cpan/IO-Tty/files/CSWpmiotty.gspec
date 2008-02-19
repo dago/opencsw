@@ -1,0 +1,10 @@
+%var            bitname pm_iotty
+%var            pkgname CSWpmiotty
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Now all code is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+Nevertheless the above AUTHORS retain their copyrights to the various
+parts and want to receive credit if their source code is used.
+See the source for details.

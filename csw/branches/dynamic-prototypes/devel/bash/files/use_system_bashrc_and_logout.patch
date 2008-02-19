@@ -1,0 +1,22 @@
+diff --speed-large-files --minimal -Nru bash-3.2.orig/config-top.h bash-3.2/config-top.h
+--- config-top.h.orig	2005-04-29 16:36:34.000000000 -0400
++++ config-top.h	2007-07-08 06:15:52.345236000 -0400
+@@ -73,10 +73,10 @@
+ #define KSH_COMPATIBLE_SELECT
+ 
+ /* System-wide .bashrc file for interactive shells. */
+-/* #define SYS_BASHRC "/etc/bash.bashrc" */
++#define SYS_BASHRC "/etc/bash.bashrc"
+ 
+ /* System-wide .bash_logout for login shells. */
+-/* #define SYS_BASH_LOGOUT "/etc/bash.bash_logout" */
++#define SYS_BASH_LOGOUT "/etc/bash.bash_logout"
+ 
+ /* Define this to make non-interactive shells begun with argv[0][0] == '-'
+    run the startup files when not in posix mode. */
+@@ -84,4 +84,4 @@
+ 
+ /* Define this if you want bash to try to check whether it's being run by
+    sshd and source the .bashrc if so (like the rshd behavior). */
+-/* #define SSH_SOURCE_BASHRC */
++#define SSH_SOURCE_BASHRC

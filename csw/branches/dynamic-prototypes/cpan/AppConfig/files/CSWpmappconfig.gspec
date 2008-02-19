@@ -1,0 +1,11 @@
+%var            bitname pm_appconfig
+%var            pkgname CSWpmappconfig
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 1997-2004 Andy Wardley.  All Rights Reserved.
+
+Copyright (C) 1997,1998 Canon Research Centre Europe Ltd.
+
+This module is free software; you can redistribute it and/or modify it 
+under the same terms as Perl itself.

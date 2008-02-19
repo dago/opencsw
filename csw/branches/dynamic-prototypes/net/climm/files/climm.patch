@@ -1,0 +1,52 @@
+diff -ru climm-0.6.1.orig/src/os_unix.c climm-0.6.1/src/os_unix.c
+--- climm-0.6.1.orig/src/os_unix.c	2007-10-14 06:36:06.000000000 -0700
++++ climm-0.6.1/src/os_unix.c	2007-10-23 22:46:16.058567000 -0700
+@@ -61,7 +61,7 @@
+         if (u->ut_type != USER_PROCESS)
+             continue;
+ 
+-        if (strncmp (u->ut_user, pass->pw_name, UT_NAMESIZE))
++        if (strncmp (u->ut_user, pass->pw_name, sizeof(u->ut_user)))
+             continue;
+         
+         tmp = console_idle (now, u);
+diff -ru climm-0.6.1.orig/src/util_otr.c climm-0.6.1/src/util_otr.c
+--- climm-0.6.1.orig/src/util_otr.c	2007-10-14 06:36:06.000000000 -0700
++++ climm-0.6.1/src/util_otr.c	2007-10-23 22:36:57.947651000 -0700
+@@ -87,21 +87,21 @@
+ /* Callback structure */
+ static OtrlMessageAppOps ops =
+ {
+-    policy:                 cb_policy,
+-    create_privkey:         cb_create_privkey,
+-    is_logged_in:           cb_is_logged_in,
+-    inject_message:         cb_inject_message,
+-    notify:                 cb_notify,
+-    display_otr_message:    cb_display_otr_message,
+-    update_context_list:    cb_update_context_list,
+-    protocol_name:          cb_protocol_name,
+-    protocol_name_free:     cb_protocol_name_free,
+-    new_fingerprint:        cb_new_fingerprint,
+-    write_fingerprints:     cb_write_fingerprints,
+-    gone_secure:            cb_gone_secure,
+-    gone_insecure:          cb_gone_insecure,
+-    still_secure:           cb_still_secure,
+-    log_message:            cb_log_message
++    .policy               = cb_policy,
++    .create_privkey       = cb_create_privkey,
++    .is_logged_in         = cb_is_logged_in,
++    .inject_message       = cb_inject_message,
++    .notify               = cb_notify,
++    .display_otr_message  = cb_display_otr_message,
++    .update_context_list  = cb_update_context_list,
++    .protocol_name        = cb_protocol_name,
++    .protocol_name_free   = cb_protocol_name_free,
++    .new_fingerprint      = cb_new_fingerprint,
++    .write_fingerprints   = cb_write_fingerprints,
++    .gone_secure          = cb_gone_secure,
++    .gone_insecure        = cb_gone_insecure,
++    .still_secure         = cb_still_secure,
++    .log_message          = cb_log_message
+ };
+ 
+ /* connection type to protocol name mapping */

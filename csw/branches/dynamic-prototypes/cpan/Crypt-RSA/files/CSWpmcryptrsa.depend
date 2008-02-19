@@ -1,0 +1,7 @@
+P CSWpmconvertaarm pm_convertasciiarmour - convert binary octets into ASCII armoured messages.
+P CSWpmcryptprimes pm_cryptprimes - prime number generator suitable for cryptographic applications.
+P CSWpmdatabuffer pm_databuffer - read/write buffer class
+P CSWpmdigestmd2 pm_digestmd2 - interface to the MD2 Algorithm
+P CSWpmdigestsha1 pm_digestsha1 - interface to the SHA-1 Algorithm
+P CSWpmsortver pm_sortversions - a module for sorting of revision-like numbers.
+P CSWpmtiecrypthash pm_tiecrypthash - hashes (and objects based on hashes) with encrypting fields.

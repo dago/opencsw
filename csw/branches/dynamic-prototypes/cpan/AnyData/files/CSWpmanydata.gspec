@@ -1,0 +1,7 @@
+%var            bitname pm_anydata
+%var            pkgname CSWpmanydata
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is copyright (c), 2000 by Jeff Zucker.
+It may be freely distributed under the same terms as Perl itself.

@@ -1,0 +1,7 @@
+%var            bitname pm_syshostnamelong
+%var            pkgname CSWpmsyshostnamelong
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2001 Scott Penrose <scottp@dd.com.au>
+http://linux.dd.com.au/

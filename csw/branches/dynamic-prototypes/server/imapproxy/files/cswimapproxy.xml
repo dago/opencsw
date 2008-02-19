@@ -1,0 +1,84 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<!--
+William Pool (Puddle) 02/05
+Service manifest for vsftpd
+E-mail:
+Modified for CSWmysql5 by Alex Moore 01/06
+Modified for CSWimapproxy by Yann Rouillard 07/06
+-->
+
+<service_bundle type='manifest' name='CSWimapproxy:imapproxy'>
+
+	<service
+		name='network/cswimapproxy'
+		type='service'
+		version='1'>
+
+		<single_instance />
+
+		<instance name='default' enabled='false'>
+			<dependency name='fs'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/system/filesystem/local' />
+			</dependency>
+
+			<dependency name='network-service'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/network/service' />
+			</dependency>
+			    
+			<dependency name='net'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/network/loopback' />
+			</dependency>
+
+			<dependency
+				name='config-file-imapproxy'
+				grouping='optional_all'
+				restart_on='refresh'
+				type='path'>
+				<service_fmri
+					value='file://localhost/opt/csw/etc/imapproxy.conf' />
+			</dependency>
+
+			<dependent
+				name='cswimapproxy_multi-user'
+				grouping='optional_all'
+				restart_on='none'>
+				<service_fmri
+					value='svc:/milestone/multi-user' />
+			</dependent>
+
+			<exec_method
+				type='method'
+				name='start'
+				exec='/opt/csw/sbin/in.imapproxyd'
+				timeout_seconds='60'>
+			</exec_method>
+
+			<exec_method
+				type='method'
+				name='stop'
+				exec=':kill'
+				timeout_seconds='-1'>
+			</exec_method>
+		</instance>
+
+		<template>
+			<common_name>
+				<loctext xml:lang='C'>
+					A caching IMAP proxy server
+				</loctext>
+			</common_name>
+		</template>
+					
+	</service>
+
+</service_bundle>

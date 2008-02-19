@@ -1,0 +1,4 @@
+P	CSWosslrt	openssl_rt - OpenSSL runtime libraries
+P	CSWggettext	ggettext - GNU gettext
+P	CSWiconv	libiconv - GNU iconv library
+P	CSWslang	slang - library primarily to provide an alternative to libcurses

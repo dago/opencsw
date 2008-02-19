@@ -1,0 +1,19 @@
+#!/bin/sh
+PATH=/usr/bin
+export PATH
+
+# Removing bash from /etc/shells
+THE_SHELL="`echo "${BASEDIR}/opt/csw/bin/bash" | /usr/bin/sed -e 's/\/\/*/\//g'`"
+
+if /usr/bin/cat "${BASEDIR}/etc/shells" | /usr/bin/sed -e 's/\/\/*/\//g' | /usr/bin/grep "$THE_SHELL" 2>/dev/null >/dev/null; then
+	/usr/bin/perl -i -pwe '$_ = "" if /\/+opt\/+csw\/+bin\/+bash$/' ${BASEDIR}/etc/shells
+	cat <<EOF
+REMOVED $THE_SHELL from ${BASEDIR}/etc/shells."
+NOTE: Don't worry if you are just upgrading bash, the entry
+      will be RE-ADDED as soon as the upgrade is finished.
+EOF
+else
+	echo "${BASEDIR}/etc/shells is UNCHANGED because entry $THE_SHELL was already wiped."
+fi
+
+exit 0

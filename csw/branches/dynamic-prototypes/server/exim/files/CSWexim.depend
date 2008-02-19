@@ -1,0 +1,8 @@
+P	CSWiconv	libiconv - GNU iconv library
+P	CSWoldaprt	openldap_rt - ldap runtime libraries
+P	CSWosslrt	openssl_rt - OpenSSL runtime libraries
+P	CSWsasl		sasl - Simple Authentication and Security Layer
+P	CSWmysql5rt	mysql5rt - run-time libs for mysql5
+P	CSWlibpq	libpq - libraries needed by PostgreSQL server and clients
+P	CSWlibspf2	libspf2 - Library that implements Sender Policy Framework
+P	CSWggettext	ggettext - GNU gettext

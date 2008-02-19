@@ -1,0 +1,10 @@
+P CSWpmgd pm_gd - interface to Gd Graphics Library
+P CSWpmgdgraph pm_gdgraph - Graph plotting module for use with GD
+P CSWpmgdgraph3d pm_gdgraph3d - 3d extensions module for GD::Graph
+P CSWpmgdtextut pm_gdtextut - Text utilities for use with GD
+P CSWpmpodpom pm_podpom - POD Object Model
+P CSWpmxmldom pm_xmldom - module for building DOM Level 1 compliant document structures
+P CSWpmxmlparser pm_xmlparser - a module for parsing XML documents
+P CSWpmxmlrss pm_xmlrss - creates and updates RSS files
+P CSWpmxmlxpath pm_xmlxpath - a set of modules for parsing and evaluating XPath statements
+P CSWpmappconfig pm_appconfig - Perl5 module for configuration files and command line arguments.

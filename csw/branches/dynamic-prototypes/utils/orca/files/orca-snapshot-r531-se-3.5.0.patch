@@ -1,0 +1,118 @@
+diff --speed-large-files --minimal -Nru orca-snapshot-r530.orig/data_gatherers/orca_services/orca_services.pl.in orca-snapshot-r530/data_gatherers/orca_services/orca_services.pl.in
+--- orca-snapshot-r530.orig/data_gatherers/orca_services/orca_services.pl.in	2005-09-09 05:51:41.000000000 +0200
++++ orca-snapshot-r530/data_gatherers/orca_services/orca_services.pl.in	2007-09-28 10:42:40.278769000 +0200
+@@ -95,9 +95,9 @@
+ #
+ # ATTENTION: you might need to edit this variables
+ #
+-$CAT="/usr/local/bin/cat";
+-$ECHO="/usr/local/bin/echo";
+-$TOUCH="/usr/local/bin/touch";
++$CAT="/usr/bin/cat";
++$ECHO="/usr/bin/echo";
++$TOUCH="/usr/bin/touch";
+ 
+ $UNAME = "/usr/bin/uname";
+ $nodename = `$UNAME -n`;
+diff --speed-large-files --minimal -Nru orca-snapshot-r530.orig/data_gatherers/orcallator/Makefile.in orca-snapshot-r530/data_gatherers/orcallator/Makefile.in
+--- orca-snapshot-r530.orig/data_gatherers/orcallator/Makefile.in	2005-09-14 07:57:23.000000000 +0200
++++ orca-snapshot-r530/data_gatherers/orcallator/Makefile.in	2007-09-28 10:41:49.647901000 +0200
+@@ -47,16 +47,16 @@
+ test: check
+ 
+ install: all
+-	$(MKDIR) $(DESTDIR)$(bindir)
+-	$(MKDIR) $(DESTDIR)$(libdir)
+-	$(MKDIR) $(DESTDIR)$(sysconfdir)
+-	$(MKDIR) $(DESTDIR)$(RAW_ORCALLATOR_DIR)
+-	$(MKDIR) $(DESTDIR)$(RRD_ORCALLATOR_DIR)
++	-$(MKDIR) $(DESTDIR)$(bindir)
++	-$(MKDIR) $(DESTDIR)$(libdir)/orca
++	-$(MKDIR) $(DESTDIR)$(sysconfdir)
++	-$(MKDIR) $(DESTDIR)$(RAW_ORCALLATOR_DIR)
++	-$(MKDIR) $(DESTDIR)$(RRD_ORCALLATOR_DIR)
+ 	@for file in `echo $(BIN_TARGETS)`; do \
+ 	  echo $(INSTALL) $$file $(DESTDIR)$(bindir); \
+ 	  $(INSTALL) $$file $(DESTDIR)$(bindir) || exit 1; \
+ 	done
+-	$(INSTALL) -m 0644 orcallator.se $(DESTDIR)$(libdir)
++	$(INSTALL) -m 0644 orcallator.se $(DESTDIR)$(libdir)/orca
+ 	if test -r $(DESTDIR)$(sysconfdir)/orcallator.cfg; then \
+ 	  date="`date +%Y-%m-%d-%H:%M:%S`"; \
+ 	  echo $(INSTALL) -m 0644 orcallator.cfg $(DESTDIR)$(sysconfdir)/orcallator.cfg.$$date; \
+diff --speed-large-files --minimal -Nru orca-snapshot-r530.orig/data_gatherers/orcallator/orcallator.se orca-snapshot-r530/data_gatherers/orcallator/orcallator.se
+--- orca-snapshot-r530.orig/data_gatherers/orcallator/orcallator.se	2005-09-09 05:51:41.000000000 +0200
++++ orca-snapshot-r530/data_gatherers/orcallator/orcallator.se	2007-09-28 10:41:49.657791000 +0200
+@@ -87,10 +87,8 @@
+ #include <utsname.se>
+ 
+ #include <p_iostat_class.se>
+-//#include <p_netstat_class.se>
+-#include <orca_p_netstat_class.se>
+-//#include <p_vmstat_class.se>
+-#include <orca_p_vmstat_class.se>
++#include <p_netstat_class.se>
++#include <p_vmstat_class.se>
+ #include <pure_rules.se>
+ #include <live_rules.se>
+ #include <mib.se>
+diff --speed-large-files --minimal -Nru orca-snapshot-r530.orig/lib/Makefile.in orca-snapshot-r530/lib/Makefile.in
+--- orca-snapshot-r530.orig/lib/Makefile.in	2006-02-24 07:53:44.000000000 +0100
++++ orca-snapshot-r530/lib/Makefile.in	2007-09-28 10:41:49.663279000 +0200
+@@ -34,17 +34,17 @@
+ install: install-orca install-se
+ 
+ install-orca: all
+-	$(MKDIR) $(DESTDIR)$(libdir)/perl/Orca
++	$(MKDIR) $(DESTDIR)$(libdir)/perl/csw/Orca
+ 	@for f in Orca/*.pm; do \
+-	  echo $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/Orca; \
+-	  $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/Orca || exit 1; \
++	  echo $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/csw/Orca; \
++	  $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/csw/Orca || exit 1; \
+ 	done
+ 	@if test -d Orca/Config; then \
+-	  echo $(MKDIR) $(DESTDIR)$(libdir)/perl/Orca/Config; \
+-	  $(MKDIR) $(DESTDIR)$(libdir)/perl/Orca/Config || exit 1; \
++	  echo $(MKDIR) $(DESTDIR)$(libdir)/perl/csw/Orca/Config; \
++	  $(MKDIR) $(DESTDIR)$(libdir)/perl/csw/Orca/Config || exit 1; \
+ 	  for f in Orca/Config/*.pm; do \
+-	    echo $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/Orca/Config; \
+-	    $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/Orca/Config || exit 1; \
++	    echo $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/csw/Orca/Config; \
++	    $(INSTALL) -m 0644 $$f $(DESTDIR)$(libdir)/perl/csw/Orca/Config || exit 1; \
+ 	  done; \
+ 	fi
+ 	@echo "cd ..; sh -c 'svnversion .'"
+@@ -52,15 +52,15 @@
+ 	echo "Subversion reversion of Orca is: $$current_rev"; \
+ 	if test "$$current_rev" != "" && \
+ 	  test "$$current_rev" != "exported"; then \
+-	  echo Fixing svn revision number in $(DESTDIR)$(libdir)/perl/Orca/Constants.pm; \
++	  echo Fixing svn revision number in $(DESTDIR)$(libdir)/perl/csw/Orca/Constants.pm; \
+ 	  echo $(PERL) -w -p -i \
+ 	    -e 's/^(\$$ORCA_VER_REVISION\s*=\s*).*/$${1}"'$$current_rev'";/' \
+-	    $(DESTDIR)$(libdir)/perl/Orca/Constants.pm; \
++	    $(DESTDIR)$(libdir)/perl/csw/Orca/Constants.pm; \
+ 	  $(PERL) -w -p -i \
+ 	    -e 's/^(\$$ORCA_VER_REVISION\s*=\s*).*/$${1}"'$$current_rev'";/' \
+-	    $(DESTDIR)$(libdir)/perl/Orca/Constants.pm || exit 1; \
++	    $(DESTDIR)$(libdir)/perl/csw/Orca/Constants.pm || exit 1; \
+ 	else \
+-	  echo Not fixing svn revision number in $(DESTDIR)$(libdir)/perl/Orca/Constants.pm; \
++	  echo Not fixing svn revision number in $(DESTDIR)$(libdir)/perl/csw/Orca/Constants.pm; \
+ 	fi
+ 
+ install-se: all
+diff --speed-large-files --minimal -Nru orca-snapshot-r530.orig/orca/orca.pl.in orca-snapshot-r530/orca/orca.pl.in
+--- orca-snapshot-r530.orig/orca/orca.pl.in	2006-02-02 06:25:42.000000000 +0100
++++ orca-snapshot-r530/orca/orca.pl.in	2007-09-28 10:41:49.673668000 +0200
+@@ -35,7 +35,7 @@
+ BEGIN {
+   my $prefix      = "@prefix@";
+   my $exec_prefix = "@exec_prefix@";
+-  my $libdir      = "@libdir@/perl";
++  my $libdir      = "@libdir@/perl/csw";
+   unshift(@INC, $libdir);
+ }
+ 

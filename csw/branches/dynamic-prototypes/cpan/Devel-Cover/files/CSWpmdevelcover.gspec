@@ -1,0 +1,6 @@
+%var            bitname pm_develcover
+%var            pkgname CSWpmdevelcover
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2001-2004, Paul Johnson (pjcj@cpan.org)
+This software is free.  It is licensed under the same terms as Perl itself.

@@ -1,0 +1,4 @@
+P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - the low-level core library for GTK+ and GNOME
+P CSWgtk2 gtk2 - GTK+, The multiplatform X11 toolkit for GUI development

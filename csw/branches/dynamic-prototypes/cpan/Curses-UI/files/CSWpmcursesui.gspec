@@ -1,0 +1,12 @@
+%var            bitname pm_cursesui
+%var            pkgname CSWpmcursesui
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+          Maintained by Marcus Thiesen (marcus@cpan.thiesenweb.de)
+           Copyright (c) 2001-2002 Maurice Makaay
+                   All rights reserved.
+
+   This package is free software and is provided "as is" without express
+    or implied warranty. It may be used, redistributed and/or modified
+                  under the same terms as perl itself.

@@ -1,0 +1,6 @@
+%var            bitname netpbm
+%var            pkgname CSWnetpbm
+%copyright      url file://%{WORKSRC}/doc/GPL_LICENSE.txt
+%depend         url file://%{GARDIR}/utils/netpbm/files/depend
+%include	url file://%{GARDIR}/pkglib/csw_standard.gspec
+

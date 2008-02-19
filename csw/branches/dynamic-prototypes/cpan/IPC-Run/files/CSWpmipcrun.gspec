@@ -1,0 +1,9 @@
+%var            bitname pm_ipcrun
+%var            pkgname CSWpmipcrun
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1999 by Barrie Slaymaker, barries@slaysys.com
+
+You may distribute under the terms of either the GNU General Public
+License or the Artistic License, as specified in the README file.

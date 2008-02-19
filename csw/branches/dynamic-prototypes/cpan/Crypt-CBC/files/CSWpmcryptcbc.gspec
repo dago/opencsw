@@ -1,0 +1,9 @@
+%var            bitname pm_cryptcbc
+%var            pkgname CSWpmcryptcbc
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Lincoln Stein, lstein@cshl.org
+
+This module is distributed under the ARTISTIC LICENSE using the same
+terms as Perl itself.

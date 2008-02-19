@@ -1,0 +1,29 @@
+d none /opt/csw/share/xfce4 0755 root bin
+d none /opt/csw/share/xfce4/doc 0755 root bin
+d none /opt/csw/share/xfce4/doc/C 0755 root bin
+d none /opt/csw/share/xfce4/doc/C/images 0755 root bin
+f none /opt/csw/share/xfce4/doc/C/images/display_preferences.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/font_selection.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/keyboard_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/mouse_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/user_interface_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/user_interface_settings_icons.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce-mcs-plugins.html 0644 root bin
+d none /opt/csw/share/xfce4/doc/fr 0755 root bin
+d none /opt/csw/share/xfce4/doc/fr/images 0755 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/display_preferences.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/font_selection.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/keyboard_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/mouse_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/images/user_interface_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/fr/xfce-mcs-plugins.html 0644 root bin
+d none /opt/csw/share/xfce4/doc/it 0755 root bin
+d none /opt/csw/share/xfce4/doc/it/images 0755 root bin
+f none /opt/csw/share/xfce4/doc/it/images/font_selection.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/it/images/keyboard_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/it/images/mouse_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/it/images/user_interface_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/it/xfce-mcs-plugins.html 0644 root bin
+i copyright=CSWxfcemcspluginsdoc.copyright
+i depend=CSWxfcemcspluginsdoc.depend
+i pkginfo=CSWxfcemcspluginsdoc.pkginfo

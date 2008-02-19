@@ -1,0 +1,39 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/exo-0.3/exo 0755 root bin
+d none /opt/csw/include/exo-0.3/exo-hal 0755 root bin
+f none /opt/csw/include/exo-0.3/exo-hal/exo-hal.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-binding.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-cell-renderer-ellipsized-text.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-cell-renderer-icon.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-config.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-ellipsized-label.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-enum-types.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-execute.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-gdk-pixbuf-extensions.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-gobject-extensions.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-gtk-extensions.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-icon-bar.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-icon-chooser-dialog.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-icon-view.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-md5.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-mount-point.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-pango-extensions.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-string.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-toolbars-editor-dialog.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-toolbars-editor.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-toolbars-model.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-toolbars-view.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-tree-view.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-url.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-utils.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-wrap-table.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo-xsession-client.h 0644 root bin
+f none /opt/csw/include/exo-0.3/exo/exo.h 0644 root bin
+f none /opt/csw/lib/libexo-0.3.a 0755 root bin
+f none /opt/csw/lib/libexo-hal-0.3.a 0755 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/exo-0.3.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/exo-hal-0.3.pc 0644 root bin
+i copyright=CSWxfcelibexodev.copyright
+i depend=CSWxfcelibexodev.depend
+i pkginfo=CSWxfcelibexodev.pkginfo

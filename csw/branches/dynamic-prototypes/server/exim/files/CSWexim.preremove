@@ -1,0 +1,35 @@
+#!/sbin/sh
+
+CONFDIR=$PKG_INSTALL_ROOT/opt/csw/etc/exim
+CONFFILES="aliases exim.conf exim-env.sh"
+PATH=/bin:/usr/bin:"$PATH"
+export PATH
+
+smf=no
+test -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm && smf=yes
+
+# stop exim, but ONLY if we are doing a "direct"
+# install, rather than a jumpstart install or something.
+case "$PKG_ROOT_DIR" in
+  ""|"/")
+    if [ "$smf" = "yes" ]; then
+      echo "Stopping and deregistering Exim..."
+      /usr/sbin/svcadm disable -s svc:network/cswexim:default
+      /usr/sbin/svccfg delete svc:network/cswexim:default
+    else
+      echo "Stopping Exim..."
+      test -x $PKG_INSTALL_ROOT/etc/init.d/cswexim && $PKG_INSTALL_ROOT/etc/init.d/cswexim stop
+    fi
+    ;;
+esac
+
+for file in $CONFFILES; do
+  confpath="$CONFDIR/$file"
+  diff "$confpath" "$confpath.CSW" >/dev/null 2>&1
+  if [ $? != 0 ]; then
+    echo "Not touching modified $confpath"
+  else
+    echo "Removing unmodified $confpath"
+    rm -f "$confpath"
+  fi
+done

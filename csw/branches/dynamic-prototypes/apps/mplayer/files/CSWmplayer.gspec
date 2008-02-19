@@ -1,0 +1,5 @@
+%var            bitname mplayer
+%var            pkgname CSWmplayer
+%var            SPKG_VERSION 1.0.0
+%include        url file://%{PKGLIB}/csw_standard.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

@@ -1,0 +1,107 @@
+diff --speed-large-files --minimal -Nru imap-2004g.orig/src/osdep/unix/Makefile imap-2004g/src/osdep/unix/Makefile
+--- imap-2004g.orig/src/osdep/unix/Makefile	2005-04-30 16:51:13.000000000 -0400
++++ imap-2004g/src/osdep/unix/Makefile	2006-09-01 20:35:47.667329000 -0400
+@@ -26,6 +26,11 @@
+ SSLTYPE=nopwd
+ IP=4
+ 
++SHLIBBASE = c-client
++SHLIBNAME = lib$(SHLIBBASE).${DISTVERSION}.so
++
++.SUFFIXES: .o .so
++SOFILES=${BINARIES:.o=.so}
+ 
+ # The optimization level here for GCC ports is set here for a reason.  It's
+ # to get you to read this text.
+@@ -41,11 +46,12 @@
+ 
+ # Extended flags needed for SSL.  You may need to modify.
+ 
+-SSLDIR=/usr/local/ssl
++PREFIX=/opt/csw
++SSLDIR=$(PREFIX)/ssl
+ SSLCERTS=$(SSLDIR)/certs
+ SSLKEYS=$(SSLCERTS)
+-SSLINCLUDE=$(SSLDIR)/include
+-SSLLIB=$(SSLDIR)/lib
++SSLINCLUDE=$(PREFIX)/include
++SSLLIB=$(PREFIX)/lib
+ 
+ SSLCRYPTO=-lcrypto
+ 
+@@ -129,7 +135,6 @@
+  dummy.o pseudo.o netmsg.o flstring.o fdstring.o \
+  rfc822.o nntp.o smtp.o imap4r1.o pop3.o \
+  unix.o mbx.o mmdf.o tenex.o mtx.o news.o phile.o mh.o mx.o
+-CFLAGS=-g
+ 
+ CAT=cat
+ MAKE=make
+@@ -681,9 +686,9 @@
+ 	 SPOOLDIR=/var/spool MAILSPOOL=/var/mail \
+ 	 ACTIVEFILE=/usr/share/news/active \
+ 	 RSHPATH=/usr/bin/rsh \
+-	 BASECFLAGS="-g -O -w" \
++	 BASECFLAGS="$(CFLAGS)" \
+ 	 BASELDFLAGS="-lsocket -lnsl -lgen" \
+-	 RANLIB=true CC=/opt/SUNWspro/bin/cc
++	 RANLIB=true
+ 
+ 
+ # Note: It is a long and disgusting story about why cc is set to ucbcc.  You
+@@ -801,15 +806,22 @@
+ 
+ # Build it!
+ 
+-build:	clean once $(ARCHIVE)
++build:	clean once $(ARCHIVE) $(SHLIBNAME)
+ 
+-all:	$(ARCHIVE)
++all:	$(ARCHIVE) $(SHLIBNAME)
+ 
+ $(ARCHIVE): $(BINARIES)
+ 	sh -c '$(RM) $(ARCHIVE) || true'
+ 	@$(CAT) ARCHIVE
+ 	@$(SH) ARCHIVE
+ 
++$(SHLIBNAME): $(SOFILES)
++	$(CC) -G -o $(SHLIBNAME) $(SOFILES) `$(CAT) LDFLAGS`
++	$(LN) $(SHLIBNAME) lib$(SHLIBBASE).so
++
++.c.so: osdep.h
++	$(CC) -KPIC -DPIC -D_REENTRANT -c `$(CAT) CFLAGS` ${@:.so=.c} -o $@
++
+ .c.o:
+ 	`$(CAT) CCTYPE` -c `$(CAT) CFLAGS` $*.c
+ 
+@@ -850,7 +862,8 @@
+ 
+ # OS-dependent
+ 
+-osdep.o:mail.h misc.h env.h fs.h ftl.h nl.h tcp.h \
++
++OSDEPS = mail.h misc.h env.h fs.h ftl.h nl.h tcp.h \
+ 	osdep.h env_unix.h tcp_unix.h \
+ 	osdep.c env_unix.c fs_unix.c ftl_unix.c nl_unix.c tcp_unix.c ip_unix.c\
+ 	auths.c crexcl.c flockcyg.c flocklnx.c flocksim.c nfstest.c fsync.c \
+@@ -864,12 +877,20 @@
+ 	write.c sslstdio.c \
+ 	strerror.c strpbrk.c strstr.c strtok.c strtoul.c \
+ 	OSCFLAGS
++
++osdep.o: $(OSDEPS)
++	$(CC) $(CFLAGS) `$(CAT) OSCFLAGS` -c osdep.c
++	@echo ==============================================================
+ 	@echo Building OS-dependent module
+ 	@echo If you get No such file error messages for files x509.h, ssl.h,
+ 	@echo pem.h, buffer.h, bio.h, and crypto.h, that means that OpenSSL
+ 	@echo is not installed on your system.  Either install OpenSSL first
+ 	@echo or build with command: make `$(CAT) OSTYPE` SSLTYPE=none
+ 	`$(CAT) CCTYPE` -c `$(CAT) CFLAGS` `$(CAT) OSCFLAGS` -c osdep.c
++	@echo ==============================================================
++
++osdep.so: $(OSDEPS)
++	$(CC) -KPIC -DPIC -D_REENTRANT -c $(CFLAGS) `$(CAT) OSCFLAGS` osdep.c -o $@
+ 
+ osdep.c: osdepbas.c osdepckp.c osdeplog.c osdepssl.c
+ 	$(CAT) osdepbas.c osdepckp.c osdeplog.c osdepssl.c > osdep.c

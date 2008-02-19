@@ -1,0 +1,29 @@
+d none /opt/csw/bdb44 0755 root bin
+d none /opt/csw/bdb44/bin 0755 root bin
+f none /opt/csw/bdb44/bin/berkeley_db_svc 0555 root bin
+f none /opt/csw/bdb44/bin/db_archive 0555 root bin
+f none /opt/csw/bdb44/bin/db_checkpoint 0555 root bin
+f none /opt/csw/bdb44/bin/db_deadlock 0555 root bin
+f none /opt/csw/bdb44/bin/db_dump 0555 root bin
+f none /opt/csw/bdb44/bin/db_hotbackup 0555 root bin
+f none /opt/csw/bdb44/bin/db_load 0555 root bin
+f none /opt/csw/bdb44/bin/db_printlog 0555 root bin
+f none /opt/csw/bdb44/bin/db_recover 0555 root bin
+f none /opt/csw/bdb44/bin/db_stat 0555 root bin
+f none /opt/csw/bdb44/bin/db_upgrade 0555 root bin
+f none /opt/csw/bdb44/bin/db_verify 0555 root bin
+d none /opt/csw/bdb44/lib 0755 root bin
+f none /opt/csw/bdb44/lib/db.jar 0444 root bin
+f none /opt/csw/bdb44/lib/libdb-4.4.so 0755 root bin
+s none /opt/csw/bdb44/lib/libdb-4.so=libdb-4.4.so root bin
+s none /opt/csw/bdb44/lib/libdb.so=libdb-4.4.so root bin
+f none /opt/csw/bdb44/lib/libdb_cxx-4.4.so 0755 root bin
+s none /opt/csw/bdb44/lib/libdb_cxx-4.so=libdb_cxx-4.4.so root bin
+s none /opt/csw/bdb44/lib/libdb_cxx.so=libdb_cxx-4.4.so root bin
+f none /opt/csw/bdb44/lib/libdb_java-4.4.so 0755 root bin
+s none /opt/csw/bdb44/lib/libdb_java-4.4_g.so=libdb_java-4.4.so root bin
+s none /opt/csw/bdb44/lib/libdb_java-4.so=libdb_java-4.4.so root bin
+s none /opt/csw/bdb44/lib/libdb_java.so=libdb_java-4.4.so root bin
+f none /opt/csw/bdb44/lib/libdb_tcl-4.4.so 0755 root bin
+s none /opt/csw/bdb44/lib/libdb_tcl-4.so=libdb_tcl-4.4.so root bin
+s none /opt/csw/bdb44/lib/libdb_tcl.so=libdb_tcl-4.4.so root bin

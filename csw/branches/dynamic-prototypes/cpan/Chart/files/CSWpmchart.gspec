@@ -1,0 +1,9 @@
+%var            bitname pm_chart
+%var            pkgname CSWpmchart
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright(c) 1997-1998 David Bonner, 1999 Peter Clark, 2001 Chart-Group at BKG.
+All rights reserved.
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.

@@ -1,0 +1,10 @@
+%var            bitname pm_pkgconst
+%var            pkgname CSWpmpkgconst
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is copyright (c) 2004 Jos Boumans <kane@cpan.org>. All
+rights reserved.
+
+This library is free software; you may redistribute and/or modify it
+under the same terms as Perl itself.

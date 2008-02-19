@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc2.orig/libavcodec/Makefile MPlayer-1.0rc2/libavcodec/Makefile
+--- MPlayer-1.0rc2.orig/libavcodec/Makefile	2007-10-08 08:49:37.000000000 +1300
++++ MPlayer-1.0rc2/libavcodec/Makefile	2007-10-19 00:37:55.211344035 +1300
+@@ -4,7 +4,7 @@
+ #
+ include ../config.mak
+ 
+-CFLAGS += -I$(SRC_PATH)/libswscale -I$(SRC_PATH)/libavcodec
++CFLAGS += -I$(SRC_PATH)/libswscale -I$(SRC_PATH)/libavcodec -fomit-frame-pointer
+ 
+ OBJS = allcodecs.o \
+        audioconvert.o \

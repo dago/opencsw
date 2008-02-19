@@ -1,0 +1,81 @@
+#!/sbin/sh
+#
+# Arpwatch startup script for blastwave
+#
+# Yann Rouillard <yann@blastwave.org>
+
+PID_FILE="/var/run/arpwatch.pid"
+COMMAND=/opt/csw/sbin/arpwatch
+
+ARPFILE="/opt/csw/var/arpwatch/arp.dat"
+
+if [ -f /etc/default/arpwatch ]; then
+        . /etc/default/arpwatch
+fi
+
+[ -f /opt/csw/etc/arpwatch.conf ] || exit 0
+
+check_proc ()
+{
+    if [ -f $1 ]; then
+        _PID=`cat $1 | head -1`
+        [ -z "$_PID" ] && return 1
+        _COMMAND=`ps -p $_PID -o comm | tail -1`
+        [ "x$_COMMAND" = "x$2" ]
+    else
+        return 1
+    fi
+}
+
+
+case "$1" in
+    'start')
+        # Start Daemons.
+        if check_proc $PID_FILE $COMMAND; then
+            echo "Arpwatch seems to be already running. If it's not the case, you might want to delete the file $PID_FILE";
+        else
+            /usr/ucb/echo -n "Starting Arpwatch..."
+	    # we create the arp.dat file if it doesn't exist
+	    touch "$ARPFILE"
+            $COMMAND 
+            pgrep -f "$COMMAND" -P 1 > "$PID_FILE"
+
+            if check_proc $PID_FILE $COMMAND; then
+                echo "Ok" 
+            else
+                echo "Failed"
+            fi
+        fi
+        ;;
+    
+    'stop')
+        #stop daemons.
+        if check_proc $PID_FILE $COMMAND; then
+            /usr/ucb/echo -n "Stopping Arpwatch..."
+            kill `cat $PID_FILE`
+            rm $PID_FILE
+            echo "Ok"
+        else
+            echo "Arpwatch is not running";
+        fi
+        ;;
+    
+   'restart')
+        $0 stop
+        $0 start
+        ;;
+
+    'status')
+        if [ -r $PID_FILE ];then
+            echo "Arpwatch is running."
+        else
+            echo "Arpwatch is not running";
+        fi
+        ;;      
+    
+    *)
+        echo "usage: cswarpwatch {start|stop|restart|status}"
+        exit 1
+esac
+
+exit 0

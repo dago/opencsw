@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru pkg-config-0.23.orig/check/common pkg-config-0.23/check/common
+--- pkg-config-0.23.orig/check/common	2008-01-16 21:42:49.000000000 +0100
++++ pkg-config-0.23/check/common	2008-02-04 06:32:58.994364000 +0100
+@@ -16,7 +16,7 @@
+         exit 1
+     fi
+ 
+-    R=$(${pkgconfig} $ARGS | sed -e 's,^[[:space:]]*,,' -e 's,[[:space:]]*$,,')
++    R=$(${pkgconfig} $ARGS | /opt/csw/bin/gsed -e 's,^[[:space:]]*,,' -e 's,[[:space:]]*$,,')
+     if [ "$R" != "$RESULT" ]; then
+ 	echo "${pkgconfig} $ARGS :"
+ 	echo "'$R' != '$RESULT'"

@@ -1,0 +1,55 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_EXTRADIR=$AP2_CONFDIR/extra
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+APXS=$AP2_BINDIR/apxs
+
+# Enable modules
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+for mod in dav dav_fs dav_svn authz_svn
+do
+    perl -i -lne "print unless /^#?LoadModule.*mod_$mod.so/" $AP2_CONFIG
+    chroot $PKG_INSTALL_ROOT \
+        $APXS -S LIBEXECDIR=$AP2_LIBEXEC -e -a -n $mod mod_$mod.so
+done
+
+# Configure mod_dav_svn in httpd.conf
+if [ -n "`egrep 'IfModule (mod_dav_svn|dav_svn_module)' $AP2_CONFIG`" ]
+then
+    echo "Existing mod_dav_svn configuration detected"
+elif [ -n "`egrep '#Include etc/extra/httpd-svn.conf' $AP2_CONFIG`" ]; then
+    echo "Re-enabling existing config"
+    perl -i -plne 's,^#(Include etc/extra/httpd-svn.conf),$1,' $AP2_CONFIG
+else
+    echo "Adding Include for extra/http-svn.conf to httpd.conf"
+    cat << END >> $AP2_CONFIG
+
+Include etc/extra/httpd-svn.conf
+END
+fi
+
+# Copy templates
+for file in $AP2_EXTRADIR/httpd-svn.conf $AP2_CONFDIR/svn_access.conf
+do
+    if [ ! -f $file ]; then
+        echo "Creating $file"
+        cp $file.CSW $file
+    else
+        echo "Preserving existing $file"
+    fi
+done
+
+# Finito
+cat <<END
+
+NOTICE: mod_dav, mod_dav_fs, mod_dav_svn, and mod_authz_svn are enabled in
+httpd.conf, but the server was not restarted.  Please examine your mod_dav_svn configuration and restart apache.
+
+END
+
+exit 0
