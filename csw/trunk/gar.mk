@@ -100,7 +100,7 @@ deep-%: %
 # The main rules are the ones that the user can specify as a
 # target on the "make" command-line.  Currently, they are:
 #	prereq fetch-list fetch checksum makesum extract checkpatch patch
-#	build install reinstall uninstall package
+#	build rebuild install reinstall uninstall package
 # (some may not be complete yet).
 #
 # Each of these rules has dependencies that run in the following
@@ -262,6 +262,12 @@ build: configure pre-build $(BUILD_TARGETS) post-build
 build-p:
 	@$(foreach COOKIEFILE,$(BUILD_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
+buildreset: clean-source
+	@$(foreach COOKIEFILE,$(BUILD_TARGETS), rm -f $(COOKIEDIR)/$(COOKIEFILE) ;)
+
+# rebuild		- compile the sources , ignoring "already build" flag.
+rebuild: buildreset build
+
 TEST_TARGETS = $(addprefix test-,$(TEST_SCRIPTS))
 test: build pre-test $(TEST_TARGETS) post-test
 	$(DONADA)
@@ -393,7 +399,7 @@ love:
 	@echo "not war!"
 
 # these targets do not have actual corresponding files
-.PHONY: all fetch-list beaujolais fetch-p checksum-p extract-p patch-p configure-p build-p install-p package-p love
+.PHONY: all fetch-list beaujolais fetch-p checksum-p extract-p patch-p configure-p build-p buildreset rebuild install-p package-p love
 
 # apparently this makes all previous rules non-parallelizable,
 # but the actual builds of the packages will be, according to
