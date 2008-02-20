@@ -221,7 +221,7 @@ zip-extract-%:
 # unchanged (not archives)
 cp-extract-%:
 	@echo " ==> Copying $(DOWNLOADDIR)/$*"
-	@cp -Hrp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@cp -rp $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@$(MAKECOOKIE)
 
 #gets the meat of a .deb into $(WORKSRC)
