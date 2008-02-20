@@ -2,7 +2,7 @@ GARNAME = pcre
 GARVERSION = 7.6
 CATEGORIES = lib
 
-DESCRIPTION = Perl-compatible regular expression library
+DESCRIPTION = Perl-compatible regular expression tools
 define BLURB
   The PCRE library is a set of functions that implement regular
   expression pattern matching using the same syntax and semantics
@@ -12,7 +12,8 @@ endef
 
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpcre,depend)
+DISTFILES += $(call admfiles,CSWpcrert,depend prototype)
+DISTFILES += $(call admfiles,CSWpcre,depend prototype)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-unicode-properties
