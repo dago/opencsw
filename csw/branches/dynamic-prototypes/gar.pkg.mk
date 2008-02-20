@@ -120,6 +120,7 @@ PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.(a|la))
 PKGFILES_DEVEL += $(libdir)/pkgconfig(/.*)?
 PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/pkgconfig(/.*)?)
 PKGFILES_DEVEL += $(includedir)/.*
+PKGFILES_DEVEL += $(mandir)/man3/.*
 
 # PKGFILES_DOC selects files beloging to a documentation package
 PKGFILES_DOC  = $(docdir)/.*
@@ -144,7 +145,7 @@ $(WORKDIR)/%.prototype: $(PROTOTYPE)
 		(pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)')		\
 			$(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)')					\
 			<$<;											\
-		 echo "$(EXTRA_PKGFILES_$*)"									\
+		 if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi				\
 		) >$@;												\
 	else													\
 		cp $< $@;											\
