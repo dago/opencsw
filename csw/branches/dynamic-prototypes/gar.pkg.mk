@@ -122,7 +122,7 @@ PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/pkgconfig(/.*)?)
 PKGFILES_DEVEL += $(includedir)/.*
 
 # PKGFILES_DOC selects files beloging to a documentation package
-PKGFILES_DOC  = $(docdir)
+PKGFILES_DOC  = $(docdir)/.*
 
 # _PKGFILES_EXCLUDE_<spec> contains the files to be excluded from that package
 $(foreach SPEC,$(_PKG_SPECS),$(eval								\
@@ -136,20 +136,22 @@ PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): install
-	@cswproto -s $(TIMESTAMP) -r $(DESTDIR) $(DESTDIR)$(prefix) > $(PROTOTYPE)
+	@cswproto -s $(TIMESTAMP) -r $(DESTDIR) $(DESTDIR)$(prefix) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: $(PROTOTYPE)
 	@if [ -n "$(PKGFILES_$*)" -o -n "$(PKGFILES_$*_EXCLUSIVE)" -o -n "$(_PKGFILES_EXCLUDE_$*)" ]; then	\
-		pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)')		\
-			$(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)')				\
-		<$(PROTOTYPE) >$@;									\
-	else												\
-		cp $(PROTOTYPE) $@;									\
+		(pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)')		\
+			$(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)')					\
+			<$<;											\
+		 echo "$(EXTRA_PKGFILES_$*)"									\
+		) >$@;												\
+	else													\
+		cp $< $@;											\
 	fi
 
 $(WORKDIR)/%.prototype-$(GARCH): $(WORKDIR)/%.prototype
-	@cp $(WORKDIR)/$*.prototype $@
+	@cp $< $@
 
 # package - Use the mkpackage utility to create Solaris packages
 #
