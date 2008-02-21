@@ -23,6 +23,9 @@ TEST_TARGET = check
 
 include ../category.mk
 
+LTCFLAGS = -O
+COMMON_EXPORTS += LTCFLAGS
+
 post-install:
 	@echo " ==> Fixing install anomalies"
 	@rm -f $(DESTDIR)$(infodir)/dir
