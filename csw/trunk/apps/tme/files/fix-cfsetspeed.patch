@@ -1,0 +1,13 @@
+--- tme-0.6.orig/host/posix/posix-serial.c	2007-08-24 02:57:01.000000000 +0200
++++ tme-0.6/host/posix/posix-serial.c	2008-02-22 10:02:54.620375000 +0100
+@@ -595,7 +595,9 @@
+       /* XXX diagnostic */
+       termios_baud = B38400;
+     }
+-    rc = cfsetspeed(&serial_termios, termios_baud);
++    /* rc = cfsetspeed(&serial_termios, termios_baud); */
++    rc = cfsetispeed(&serial_termios, termios_baud);
++    rc = cfsetospeed(&serial_termios, termios_baud);
+ 
+     /* input mode or output mode: */
+     if (is_input) {
