@@ -47,16 +47,17 @@ GARCHIVEPATH ?= /export/medusa/src
 
 GARCOMPILER ?= SUN
 
-# Legacy conversion
-ifeq ($(GARCOMPILER),GNU)
-  GARCOMPILER=GCC
-  $(warning You are using GARCOMPILER=GNU, please use GARCOMPILER=GCC instead)
-endif
+# We have parameters for the following compilers
+GARCOMPILERS = GCC3 GCC4 SOS11 SOS12
 
 ifeq ($(GARCOMPILER),SUN)
   GARCOMPILER = SOS12
-else ifeq ($(GARCOMPILER),GCC)
+else ifeq ($(GARCOMPILER),GNU)
   GARCOMPILER = GCC4
+endif
+
+ifeq (,$(findstring $(GARCOMPILER),$(GARCOMPILERS)))
+  $(error The compiler '$(GARCOMPILER)' is unknown. Please select one of $(GARCOMPILERS))
 endif
 
 # Build flavor (OPT/DBG)
@@ -227,13 +228,16 @@ ARCHFLAGS_SOS12_pentium          = ERROR
 
 ARCHFLAGS_SOS11_i386             = -xarch=386
 ARCHFLAGS_SOS12_i386             = -m32 -xarch=386
- ARCHFLAGS_GCC3_i386             = -m32 march=i386
+ ARCHFLAGS_GCC3_i386             = -m32 -march=i386
  ARCHFLAGS_GCC4_i386             = -m32 -march=i386
     MEMORYMODEL_i386             = 32
 
-$(if $(eq $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)),ERROR),							\
-  $(error Code for the architecture $(ISA) can not be produced with the compiler $(GARCOMPILER))	\
-)
+# ISALIST_$(GARCOMPILER) contains all ISAs which are compilable with the selected compiler
+$(foreach C,$(GARCOMPILERS),$(eval ISALIST_$(C) ?= $(foreach I,$(ISALIST),$(if $(filter-out ERROR,$(ARCHFLAGS_$C_$I)),$I))))
+
+ifeq (ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$(ISA)))
+  $(error Code for the architecture $(ISA) can not be produced with the compiler $(GARCOMPILER))
+endif
 
 # This is the memory model of the currently compiled architecture
 MEMORYMODEL = $(MEMORYMODEL_$(ISA))
@@ -275,21 +279,13 @@ DBG_FLAGS_SOS12_sparc ?= -g
 
 # This variable contains the opt flags for the current compiler on the current architecture
 FLAVOR_FLAGS ?= $($(GARFLAVOR)_ISAFLAGS_$(GARCOMPILER)_$(ISA)) $($(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH))
-FLAVOR_FLAGS += $(EXTRA_$(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH))
-
-# The package will be built for these architectures
-BUILD_ISAS_sparc ?= $(ISA_DEFAULT_sparc) $(EXTRA_BUILD_ISAS_sparc)
-BUILD_ISAS_i386  ?= $(ISA_DEFAULT_i386) $(EXTRA_BUILD_ISAS_i386)
-BUILD_ISAS       ?= $(BUILD_ISAS_$(GARCH)) $(EXTRA_BUILD_ISAS)
-
-# TODO:
-# Build ISAs according to the running kernel:
-# - Sparc: 32 and 64 bit only on Solaris 8 with 64 bit
-# - X86: 32 bit only on Solaris 8, 64 bit only on Solaris 10, package on Solaris 8
+FLAVOR_FLAGS += $(EXTRA_$(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH)) $(EXTRA_$(GARFLAVOR)_FLAGS_$(GARCOMPILER))
 
 # Raise these in your .garrc if needed
-ISA_DEFAULT_sparc ?= sparcv8
-ISA_DEFAULT_i386  ?= i386
+ISA_DEFAULT_sparc   ?= sparcv8
+ISA_DEFAULT_i386    ?= i386
+ISA_DEFAULT64_sparc ?= sparcv9
+ISA_DEFAULT64_i386  ?= amd64
 
 ISA_DEFAULT = $(ISA_DEFAULT_$(GARCH))
 
@@ -298,99 +294,101 @@ ISA_DEFAULT = $(ISA_DEFAULT_$(GARCH))
 # Name from isalist(5)
 ISA ?= $(ISA_DEFAULT)
 
+# This is a sanity check. Because BUILD_ISAS is carefully computed this error should
+# only occur if BUILD_ISAS is manually overwritten.
 KERNELISA = $(shell isainfo -k)
 ifeq (,$(findstring $(ISA), $(ISALIST_$(KERNELISA))))
   $(error The ISA '$(ISA)' can not be build on this kernel with the arch '$(KERNELISA)')
 endif
 
-# If we build for a specialized ISA make sure everything but specialized binaries
-# and libraries is moved to an ignored location
+# TODO:
+# Build ISAs according to the running kernel:
+# - Sparc: 32 and 64 bit only on Solaris 8 with 64 bit
+# - X86: 32 bit only on Solaris 8, 64 bit only on Solaris 10, package on Solaris 8
+
+# The package will be built for these architectures
+# We check automatically what can be build on this kernel architecture
+BUILD_ISAS ?= $(ISA_DEFAULT_$(GARCH)) $(filter $(ISALIST_$(KERNELISA)),$(EXTRA_BUILD_ISAS))
+ifneq (,$(BUILD64))
+  BUILD_ISAS += $(ISA_DEFAULT64_$(GARCH))
+endif
+
+# If we build for a specialized ISA the binaries and libraries go into subdirectories
+# with the name of the ISA. All other files go into a directory which is ignored by
+# the packaging.
 IGNORED_ISAS ?= $(filter-out $(ISA_DEFAULT),$(BUILD_ISAS))
 IGNORED_ISAS += $(EXTRA_IGNORED_ISAS)
 
 ifneq (,$(findstring $(ISA),$(IGNORED_ISAS)))
-  IGNORE_DIR = /ignore
-  IGNORED_CONFIG_DIRS ?= gnudir datadir sysconfdir sharedstatedir localstatedir infodir lispdir \
+  IGNORE_DIR ?= /ignore
+  IGNORED_CONFIG_DIRS ?= $(IGNORED_CONFIG_DIRS_$(ISA))
+  ifeq (,$(IGNORED_CONFIG_DIRS))
+    IGNORED_CONFIG_DIRS = gnudir datadir sysconfdir sharedstatedir localstatedir infodir lispdir \
 	includedir mandir docdir sourcedir licensedir sharedperl perllib perlcswlib perlpackroot
+  endif
   IGNORED_CONFIG_DIRS += $(EXTRA_IGNORED_CONFIG_DIRS) $(EXTRA_IGNORE_CONFIG_DIRS_$(ISA))
-  $(foreach CONFIG_DIR,$(IGNORED_CONFIG_DIRS),$(eval $(CONFIG_DIR)=$(IGNORE_DIR)$$(base_$(CONFIG_DIR))))
+  $(foreach CONFIG_DIR,$(IGNORED_CONFIG_DIRS),$(eval $(CONFIG_DIR)=$(IGNORE_DIR)/$$(ISA)$(base_$(CONFIG_DIR))))
 endif
-
-# If we build for more than one architecture the binaries will be put in subdirectories
-# and wrappers to isaexec are built. Don't reset MAKE_ISAEXEC_WRAPPERS if it was already
-# set in the Makefile (the packager usually nows better!)
-#ifneq ($(words $(BUILD_ISAS)),1)
-#  MAKE_ISAEXEC_WRAPPERS_$(GARCH) ?= 1
-#endif
-#MAKE_ISAEXEC_WRAPPERS ?= $(MAKE_ISAEXEC_WRAPPERS_$(GARCH))
-
-#ifdef $(MAKE_ISAEXEC_WRAPPERS)
-#  ISAEXEC_BINS = $(foreach ISA,$(ISALIST),$(wildcard $(bindir_NOISA)/$(ISA)/* $(sbindir_NOISA)/$(ISA)/* $(libexecdir_NOISA)/$(ISA)/*))
-#endif
 
 # Subdirectories for specialized binaries and libraries
 # Use defaults for sparcv8 and i386 as those are symlinks
-ISALIBDIR_sparcv9+fmuladd  = sparcv9+fmuladd
-ISALIBDIR_sparcv9+vis2     = sparcv9+vis2
-ISALIBDIR_sparcv9+vis      = sparcv9+vis
-ISALIBDIR_sparcv9          = sparcv9
-ISALIBDIR_sparcv8plus+fmuladd  = sparcv8plus+fmuladd
-ISALIBDIR_sparcv8plus+vis2 = sparcv8plus+vis2
-ISALIBDIR_sparcv8plus+vis  = sparcv8plus+vis
-ISALIBDIR_sparcv8plus      = sparcv8plus
-ISALIBDIR_sparcv8          = .
-ISALIBDIR_sparcv8-fsmuld   = sparcv8-fsmuld
-ISALIBDIR_amd64            = amd64
-ISALIBDIR_pentium_pro+mmx  = pentium_pro+mmx
-ISALIBDIR_pentium_pro      = pentium_pro
-ISALIBDIR_pentium+mmx      = pentium+mmx
-ISALIBDIR_pentium          = pentium
-ISALIBDIR_i386             = .
+ISALIBDIR_sparcv9+fmuladd      ?= sparcv9+fmuladd
+ISALIBDIR_sparcv9+vis2         ?= sparcv9+vis2
+ISALIBDIR_sparcv9+vis          ?= sparcv9+vis
+ISALIBDIR_sparcv9              ?= sparcv9
+ISALIBDIR_sparcv8plus+fmuladd  ?= sparcv8plus+fmuladd
+ISALIBDIR_sparcv8plus+vis2     ?= sparcv8plus+vis2
+ISALIBDIR_sparcv8plus+vis      ?= sparcv8plus+vis
+ISALIBDIR_sparcv8plus          ?= sparcv8plus
+ISALIBDIR_sparcv8              ?= .
+ISALIBDIR_sparcv8-fsmuld       ?= sparcv8-fsmuld
+ISALIBDIR_amd64                ?= amd64
+ISALIBDIR_pentium_pro+mmx      ?= pentium_pro+mmx
+ISALIBDIR_pentium_pro          ?= pentium_pro
+ISALIBDIR_pentium+mmx          ?= pentium+mmx
+ISALIBDIR_pentium              ?= pentium
+ISALIBDIR_i386                 ?= .
 
 # These are the directories where the optimized libraries should go to
 ISALIBDIR ?= $(ISALIBDIR_$(ISA))
 
 # These are the directories where the optimized binaries should go to
-$(foreach ARCH,$(ISALIST), $(eval ISABINDIR_$(ARCH) = $(ISALIBDIR_$(ARCH))))
-#ifdef MAKE_ISAEXEC_WRAPPERS
-#ISABINDIR_sparcv8           = sparcv8
-#ISABINDIR_i386              = i386
-#endif
+$(foreach ARCH,$(ISALIST), $(eval ISABINDIR_$(ARCH) ?= $(ISALIBDIR_$(ARCH))))
 ISABINDIR ?= $(ISABINDIR_$(ISA))
 
 #
 # Forte Compiler Configuration
 #
 
-GCC3_CC_HOME   = /opt/csw/gcc3
-GCC4_CC_HOME   = /opt/csw/gcc4
-SOS11_CC_HOME  = /opt/studio/SOS11/SUNWspro
-SOS12_CC_HOME  = /opt/studio/SOS12/SUNWspro
-GCC3_CC        = gcc
-GCC4_CC        = gcc
-SOS11_CC       = cc
-SOS12_CC       = cc
-GCC3_CXX       = g++
-GCC4_CXX       = g++
-SOS11_CXX      = CC
-SOS12_CXX      = CC
+GCC3_CC_HOME  ?= /opt/csw/gcc3
+GCC4_CC_HOME  ?= /opt/csw/gcc4
+SOS11_CC_HOME ?= /opt/studio/SOS11/SUNWspro
+SOS12_CC_HOME ?= /opt/studio/SOS12/SUNWspro
+GCC3_CC       ?= $(GCC3_CC_HOME)/bin/gcc
+GCC4_CC       ?= $(GCC4_CC_HOME)/bin/gcc
+SOS11_CC      ?= $(SOS11_CC_HOME)/bin/cc
+SOS12_CC      ?= $(SOS12_CC_HOME)/bin/cc
+GCC3_CXX      ?= $(GCC3_CC_HOME)/bin/g++
+GCC4_CXX      ?= $(GCC4_CC_HOME)/bin/g++
+SOS11_CXX     ?= $(SOS11_CC_HOME)/bin/CC
+SOS12_CXX     ?= $(SOS12_CC_HOME)/bin/CC
 
-GCC3_CC_FLAGS   ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_CC_FLAGS) $(EXTRA_CC_FLAGS)
-GCC4_CC_FLAGS   ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_CC_FLAGS)
-SOS11_CC_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_CC_FLAGS) $(EXTRA_CC_FLAGS)
-SOS12_CC_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_CC_FLAGS) $(EXTRA_CC_FLAGS)
-GCC3_CXX_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
-GCC4_CXX_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
-SOS11_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
-SOS12_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
-GCC3_AS_FLAGS   ?= $(EXTRA_GCC3_AS_FLAGS) $(EXTRA_AS_FLAGS)
-GCC4_AS_FLAGS   ?= $(EXTRA_GCC4_AS_FLAGS) $(EXTRA_AS_FLAGS)
-SOS11_AS_FLAGS  ?= $(EXTRA_SOS11_AS_FLAGS) $(EXTRA_AS_FLAGS)
-SOS12_AS_FLAGS  ?= $(EXTRA_SOS12_AS_FLAGS) $(EXTRA_AS_FLAGS)
-GCC3_LD_FLAGS   ?= -L$(GNU_CC_HOME)/lib $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_LD_FLAGS) $(EXTRA_LD_FLAGS)
-GCC4_LD_FLAGS   ?= -L$(GNU_CC_HOME)/lib $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_LD_FLAGS) $(EXTRA_LD_FLAGS)
-SOS11_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_LD_FLAGS) $(EXTRA_LD_FLAGS)
-SOS12_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(EXTRA_LD_FLAGS)
+GCC3_CC_FLAGS   ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
+GCC4_CC_FLAGS   ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
+SOS11_CC_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_CC_FLAGS) $(EXTRA_SOS_CC_FLAGS) $(EXTRA_CC_FLAGS)
+SOS12_CC_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_CC_FLAGS) $(EXTRA_SOS_CC_FLAGS) $(EXTRA_CC_FLAGS)
+GCC3_CXX_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
+GCC4_CXX_FLAGS  ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
+SOS11_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_CXX_FLAGS) $(EXTRA_SOS_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
+SOS12_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_CXX_FLAGS) $(EXTRA_SOS_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
+GCC3_AS_FLAGS   ?= $(EXTRA_GCC3_AS_FLAGS) $(EXTRA_GCC_AS_FLAGS) $(EXTRA_AS_FLAGS)
+GCC4_AS_FLAGS   ?= $(EXTRA_GCC4_AS_FLAGS) $(EXTRA_GCC_AS_FLAGS) $(EXTRA_AS_FLAGS)
+SOS11_AS_FLAGS  ?= $(EXTRA_SOS11_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
+SOS12_AS_FLAGS  ?= $(EXTRA_SOS12_AS_FLAGS) $(EXTRA_SOS_AS_FLAGS) $(EXTRA_AS_FLAGS)
+GCC3_LD_FLAGS   ?= -L$(GNU_CC_HOME)/lib $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
+GCC4_LD_FLAGS   ?= -L$(GNU_CC_HOME)/lib $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_LD_FLAGS) $(EXTRA_GCC_LD_FLAGS) $(EXTRA_LD_FLAGS)
+SOS11_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
+SOS12_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
 
 #
 # Construct compiler options
@@ -410,10 +408,10 @@ OPTFLAGS = $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS)
 EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir),-I$(EINC))
 EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir_NOISA)/$(MEMORYMODEL),-L$(ELIB))
 
-GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
 
 LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
 

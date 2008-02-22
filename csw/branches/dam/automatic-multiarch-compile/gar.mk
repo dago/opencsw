@@ -303,7 +303,7 @@ install-p:
 # reinstall		- Install the results of a build, ignoring
 # 				  "already installed" flag.
 reinstall: build
-	rm -rf $(COOKIEDIR)/*install*
+	rm -rf $(foreach ISA,$(BUILD_ISAS),$(COOKIEDIR)/*install*)
 	$(MAKE) install
 
 # The clean rule.  It must be run if you want to re-download a
@@ -314,6 +314,7 @@ CLEAN_SCRIPTS ?= all
 CLEAN_TARGETS  = $(addprefix clean-,$(CLEAN_SCRIPTS))
 
 clean: clean-isa $(addprefix clean-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
+	@rm -rf $(WORKROOTDIR)
 
 clean-isa: $(CLEAN_TARGETS)
 
@@ -323,14 +324,14 @@ buildclean:  clean-build
 sourceclean: clean-source
 
 clean-all: clean-cookies
-	@echo " ==> Cleaning ISA $(ISA)"
 	@rm -rf $(DOWNLOADDIR)
 
 clean-cookies: clean-build
 	@rm -rf $(COOKIEROOTDIR)
 
 clean-build:
-	@rm -rf $(WORKSRC) $(WORKROOTDIR) $(EXTRACTDIR) \
+	@echo " ==> Cleaning ISA $(ISA)"
+	@rm -rf $(WORKSRC) $(EXTRACTDIR) \
 		   $(SCRATCHDIR) $(SCRATCHDIR)-$(COOKIEDIR) \
 		   $(SCRATCHDIR)-build $(SCRATCHDIR)-$(COOKIEROOTDIR) \
 		   $(LOGDIR) *~
