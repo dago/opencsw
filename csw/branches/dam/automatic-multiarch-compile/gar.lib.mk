@@ -431,6 +431,9 @@ build-%/setup.py:
 # Build for a certain architecture
 build-isa-%:
 	@echo " ==> Building for ISA $*"
+	$(if $(filter ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$*)),						\
+		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))	\
+	)
 	@$(MAKE) ISA=$* build-isa
 	@$(MAKECOOKIE)
 

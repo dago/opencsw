@@ -110,7 +110,7 @@ deep-%: %
 # what just happened when all the dependencies are finished.
 
 announce:
-	@echo "[===== NOW BUILDING:	$(DISTNAME)	=====]"
+	@echo "[===== NOW BUILDING:	$(DISTNAME)   ISA:	$(ISA)	=====]"
 
 # prerequisite	- Make sure that the system is in a sane state for building the package
 PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(PREREQUISITE_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
@@ -288,7 +288,7 @@ fixconfig:
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE)))
 
-install: install-isa $(addprefix install-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
+install: install-isa $(addprefix install-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS)))
 	$(DONADA)
 
 install-isa: build-isa $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install $(POST_INSTALL_TARGETS) 
@@ -313,7 +313,7 @@ reinstall: build
 CLEAN_SCRIPTS ?= all
 CLEAN_TARGETS  = $(addprefix clean-,$(CLEAN_SCRIPTS))
 
-clean: clean-isa $(addprefix clean-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
+clean: clean-isa $(addprefix clean-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS)))
 	@rm -rf $(WORKROOTDIR)
 
 clean-isa: $(CLEAN_TARGETS)

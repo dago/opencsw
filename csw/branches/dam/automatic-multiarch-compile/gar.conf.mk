@@ -226,6 +226,12 @@ ARCHFLAGS_SOS12_pentium          = ERROR
  ARCHFLAGS_GCC4_pentium          = -m32 -march=pentium
     MEMORYMODEL_pentium          = 32
 
+ARCHFLAGS_SOS11_i486             = ERROR
+ARCHFLAGS_SOS12_i486             = ERROR
+ ARCHFLAGS_GCC3_i486             = -m32 -march=i486
+ ARCHFLAGS_GCC4_i486             = -m32 -march=i486
+    MEMORYMODEL_i486             = 32
+
 ARCHFLAGS_SOS11_i386             = -xarch=386
 ARCHFLAGS_SOS12_i386             = -m32 -xarch=386
  ARCHFLAGS_GCC3_i386             = -m32 -march=i386
@@ -234,10 +240,6 @@ ARCHFLAGS_SOS12_i386             = -m32 -xarch=386
 
 # ISALIST_$(GARCOMPILER) contains all ISAs which are compilable with the selected compiler
 $(foreach C,$(GARCOMPILERS),$(eval ISALIST_$(C) ?= $(foreach I,$(ISALIST),$(if $(filter-out ERROR,$(ARCHFLAGS_$C_$I)),$I))))
-
-ifeq (ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$(ISA)))
-  $(error Code for the architecture $(ISA) can not be produced with the compiler $(GARCOMPILER))
-endif
 
 # This is the memory model of the currently compiled architecture
 MEMORYMODEL = $(MEMORYMODEL_$(ISA))
@@ -301,17 +303,13 @@ ifeq (,$(findstring $(ISA), $(ISALIST_$(KERNELISA))))
   $(error The ISA '$(ISA)' can not be build on this kernel with the arch '$(KERNELISA)')
 endif
 
-# TODO:
-# Build ISAs according to the running kernel:
-# - Sparc: 32 and 64 bit only on Solaris 8 with 64 bit
-# - X86: 32 bit only on Solaris 8, 64 bit only on Solaris 10, package on Solaris 8
-
 # The package will be built for these architectures
 # We check automatically what can be build on this kernel architecture
-BUILD_ISAS ?= $(ISA_DEFAULT_$(GARCH)) $(filter $(ISALIST_$(KERNELISA)),$(EXTRA_BUILD_ISAS))
-ifneq (,$(BUILD64))
-  BUILD_ISAS += $(ISA_DEFAULT64_$(GARCH))
-endif
+# REQUESTED_ISAS contains all ISAs that should be built
+# BUILD_ISAS contains all ISAs that can be built on current kernel
+# Set 'BUILD64 = 1' to build 64 bit versions automatically
+REQUESTED_ISAS ?= $(ISA_DEFAULT_$(GARCH)) $(EXTRA_BUILD_ISAS) $(EXTRA_BUILD_ISAS_$(GARCH)) $(if $(BUILD64),$(ISA_DEFAULT64_$(GARCH)))
+BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(REQUESTED_ISAS))
 
 # If we build for a specialized ISA the binaries and libraries go into subdirectories
 # with the name of the ISA. All other files go into a directory which is ignored by
@@ -321,13 +319,13 @@ IGNORED_ISAS += $(EXTRA_IGNORED_ISAS)
 
 ifneq (,$(findstring $(ISA),$(IGNORED_ISAS)))
   IGNORE_DIR ?= /ignore
-  IGNORED_CONFIG_DIRS ?= $(IGNORED_CONFIG_DIRS_$(ISA))
-  ifeq (,$(IGNORED_CONFIG_DIRS))
-    IGNORED_CONFIG_DIRS = gnudir datadir sysconfdir sharedstatedir localstatedir infodir lispdir \
+  IGNORED_DIRS ?= $(IGNORED_DIRS_$(ISA))
+  ifeq (,$(IGNORED_DIRS))
+    IGNORED_DIRS = gnudir datadir sysconfdir sharedstatedir localstatedir infodir lispdir \
 	includedir mandir docdir sourcedir licensedir sharedperl perllib perlcswlib perlpackroot
   endif
-  IGNORED_CONFIG_DIRS += $(EXTRA_IGNORED_CONFIG_DIRS) $(EXTRA_IGNORE_CONFIG_DIRS_$(ISA))
-  $(foreach CONFIG_DIR,$(IGNORED_CONFIG_DIRS),$(eval $(CONFIG_DIR)=$(IGNORE_DIR)/$$(ISA)$(base_$(CONFIG_DIR))))
+  IGNORED_DIRS += $(EXTRA_IGNORED_DIRS) $(EXTRA_IGNORED_DIRS_$(ISA))
+  $(foreach CONFIG_DIR,$(IGNORED_DIRS),$(eval $(CONFIG_DIR)=$(IGNORE_DIR)/$$(ISA)$(base_$(CONFIG_DIR))))
 endif
 
 # Subdirectories for specialized binaries and libraries
@@ -541,4 +539,19 @@ FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
 
 # Extra libraries
 EXTRA_LIBS = gar.pkg.mk gar.common.mk
+
+isaenv:
+	@echo "      Compiler: $(GARCOMPILER)"
+	@echo "          Arch: $(GARCH)   Kernel: $(KERNELISA)"
+	@echo
+	@echo "Compiler ISA generation matrix:"
+	@echo
+	@printf "   %20s  MM $(foreach C,$(GARCOMPILERS),%10s )\n" '' $(foreach C,$(GARCOMPILERS),$C )
+	@$(foreach I,$(ISALIST),printf "$(if $(findstring $I,$(REQUESTED_ISAS)), R,  )$(if $(findstring $I,$(BUILD_ISAS)),B, )%20s  $(MEMORYMODEL_$I) $(foreach C,$(GARCOMPILERS),%10s )\n" $I \
+		$(foreach C,$(GARCOMPILERS),"$(if $(filter ERROR,$(ARCHFLAGS_$C_$I)), No,Yes)" );)
+	@echo
+	@echo " R        = Requested build ISA"
+	@echo "  B       = ISA can be build on this kernel"
+	@echo "      Yes = Compiler can generate code for that ISA"
+	@echo "       No = Compiler cannot generate code for that ISA"
 
