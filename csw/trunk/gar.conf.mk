@@ -192,6 +192,12 @@ CPPFLAGS += $(EXT_CFLAGS)
 CXXFLAGS += $(EXT_CFLAGS)
 LDFLAGS  += $(EXT_LDFLAGS)
 
+# Make sure we use this version of 'cp' instead of the GNU version.
+# GNU 'cp -rp' copies the link instead of the file contents. We rely
+# on copying the contents of the link or otherwise end up with links
+# from $(WORKDIR) to the stuff in files/ which then gets corrupted.
+CP ?= /usr/bin/cp
+
 # allow us to use programs we just built
 PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
 ifneq ($(IGNORE_DESTDIR),1)

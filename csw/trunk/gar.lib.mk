@@ -201,13 +201,13 @@ tar-bz-extract-%:
 # extract compressed single files
 bz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
-	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@$(CP) $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@bzip2 -d $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
 gz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
-	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@$(CP) $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@gzip -d $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
@@ -221,7 +221,7 @@ zip-extract-%:
 # unchanged (not archives)
 cp-extract-%:
 	@echo " ==> Copying $(DOWNLOADDIR)/$*"
-	@cp -rp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@$(CP) -rp $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@$(MAKECOOKIE)
 
 #gets the meat of a .deb into $(WORKSRC)
@@ -509,7 +509,7 @@ install-%/setup.py:
 # pkg-config scripts
 install-%-config:
 	mkdir -p $(STAGINGDIR)/$(GARNAME)
-	cp -f $(DESTDIR)$(bindir)/$*-config $(STAGINGDIR)/$(GARNAME)/
+	$(CP) -f $(DESTDIR)$(bindir)/$*-config $(STAGINGDIR)/$(GARNAME)/
 	$(MAKECOOKIE)
 
 ######################################
