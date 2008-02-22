@@ -53,13 +53,15 @@ sub usage {
 
     my $program = basename $0;
     print <<"_USAGE_";
-Usage: $program [-h] [-s <timestamp>] path1[=path1] ... pathN[=pathN]
+Usage: $program [-h] [-s <timestamp>] [-i <isaexec-bin1:...>] path1[=path1] ... pathN[=pathN]
 
     -s      Timestamp source.
             The path to a file to be used as the base timestamp for prototype
             operations.  If this is specified, all source file creation times
             are compared to the creation time of this file.  Files created
             *before* this time will be excluded from the prototype.
+
+    -i      Colon-separated list of binaries hardlinked to isaexec
 
     -h      Display brief usage.
 
@@ -100,9 +102,11 @@ sub exclude {
 
 # Process command line arguments
 my $test;
+my $isaexec_bins = '';
 GetOptions(
     'root=s'  => \$root,
     'stamp=s' => \$stamp,
+    'i=s'     => \$isaexec_bins,
     'help'    => \&usage,
 ) or usage;
 
@@ -168,6 +172,9 @@ SPECLINE:
     }
 }
 
+# Add isaexec binaries
+push @prototype, map { [ 'l', 'none', "$_=/opt/csw/bin/isaexec" ] } split( /:/, $isaexec_bins );
+
 print join " " => @$_ foreach (sort { $a->[2] cmp $b->[2] } @prototype);
 
 # Common directories (CSWcommon plus a few others)
@@ -177,12 +184,20 @@ __DATA__
 /opt/csw/bin/i386
 /opt/csw/bin/i486
 /opt/csw/bin/pentium
+/opt/csw/bin/pentium\+mmx
 /opt/csw/bin/pentium_pro
 /opt/csw/bin/pentium_pro\+mmx
+/opt/csw/bin/amd64
+/opt/csw/bin/sparcv8-fsmuld
 /opt/csw/bin/sparcv8
 /opt/csw/bin/sparcv8plus
 /opt/csw/bin/sparcv8plus\+vis
+/opt/csw/bin/sparcv8plus\+vis2
+/opt/csw/bin/sparcv8plus\+fmuladd
 /opt/csw/bin/sparcv9
+/opt/csw/bin/sparcv9plus\+vis
+/opt/csw/bin/sparcv9plus\+vis2
+/opt/csw/bin/sparcv9plus\+fmuladd
 /opt/csw/doc
 /opt/csw/include
 /opt/csw/info
@@ -194,8 +209,10 @@ __DATA__
 /opt/csw/lib/i386
 /opt/csw/lib/locale
 /opt/csw/lib/pentium
+/opt/csw/bin/pentium\+mmx
 /opt/csw/lib/pentium_pro
 /opt/csw/lib/pentium_pro\+mmx
+/opt/csw/lib/amd64
 /opt/csw/lib/perl
 /opt/csw/lib/perl/csw
 /opt/csw/lib/perl/csw/auto
@@ -204,8 +221,12 @@ __DATA__
 /opt/csw/lib/sparcv8
 /opt/csw/lib/sparcv8plus
 /opt/csw/lib/sparcv8plus\+vis
+/opt/csw/lib/sparcv8plus\+vis2
+/opt/csw/lib/sparcv8plus\+fmuladd
 /opt/csw/lib/sparcv9
+/opt/csw/lib/sparcv9\+vis
 /opt/csw/lib/sparcv9\+vis2
+/opt/csw/lib/sparcv9\+fmuladd
 /opt/csw/man
 /opt/csw/sbin
 /opt/csw/share

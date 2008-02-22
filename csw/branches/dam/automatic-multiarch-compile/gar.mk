@@ -291,7 +291,7 @@ INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-l
 install: install-isa $(addprefix install-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
 	$(DONADA)
 
-install-isa: build $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install $(POST_INSTALL_TARGETS) 
+install-isa: build-isa $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install $(POST_INSTALL_TARGETS) 
 	$(DONADA)
 
 

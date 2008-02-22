@@ -44,7 +44,15 @@ GARCHIVEPATH ?= /export/medusa/src
 # Select compiler
 # GARCOMPILER can be either GNU/SUN which selects the default
 # Sun or GNU compiler, or the specific verions SOS11/SOS12/GCC3/GCC4
+
 GARCOMPILER ?= SUN
+
+# Legacy conversion
+ifeq ($(GARCOMPILER),GNU)
+  GARCOMPILER=GCC
+  $(warning You are using GARCOMPILER=GNU, please use GARCOMPILER=GCC instead)
+endif
+
 ifeq ($(GARCOMPILER),SUN)
   GARCOMPILER = SOS12
 else ifeq ($(GARCOMPILER),GCC)
@@ -128,7 +136,7 @@ ISALIST = $(ISALIST_sparcv9) $(ISALIST_amd64)
 # The MEMORYMODEL_$ARCH is e.g. used for the directoryname to set
 # libdir/pkgconfdir to /usr/lib/$MEMORYMODEL
 ARCHFLAGS_SOS11_sparcv9+fmuladd  = ERROR
-ARCHFLAGS_SOS12_sparcv9+fmuladd  = -m64 -xarch=sparcfmaf
+ARCHFLAGS_SOS12_sparcv9+fmuladd  = -m64 -xarch=sparcfmaf -fma=fused
  ARCHFLAGS_GCC3_sparcv9+fmuladd  = ERROR
  ARCHFLAGS_GCC4_sparcv9+fmuladd  = ERROR
     MEMORYMODEL_sparcv9+fmuladd  = 64
@@ -152,7 +160,7 @@ ARCHFLAGS_SOS12_sparcv9          = -m64 -xarch=sparc
     MEMORYMODEL_sparcv9          = 64
 
 ARCHFLAGS_SOS11_sparcv8plus+fmuladd  = ERROR
-ARCHFLAGS_SOS12_sparcv8plus+fmuladd  = -m32 -xarch=xparcfmaf
+ARCHFLAGS_SOS12_sparcv8plus+fmuladd  = -m32 -xarch=xparcfmaf -fma=fused
  ARCHFLAGS_GCC3_sparcv8plus+fmuladd  = ERROR
  ARCHFLAGS_GCC4_sparcv8plus+fmuladd  = ERROR
     MEMORYMODEL_sparcv8plus+fmuladd  = 32
@@ -189,38 +197,38 @@ ARCHFLAGS_SOS12_sparcv8-fsmuld   = -m32 -xarch=v8a
 
 ARCHFLAGS_SOS11_amd64            = -xarch=amd64
 ARCHFLAGS_SOS12_amd64            = -m64 -xarch=sse2
- ARCHFLAGS_GCC3_amd64            = -march=opteron
- ARCHFLAGS_GCC4_amd64            = -march=opteron
+ ARCHFLAGS_GCC3_amd64            = -m64 -march=opteron
+ ARCHFLAGS_GCC4_amd64            = -m64 -march=opteron
     MEMORYMODEL_amd64            = 64
 
 ARCHFLAGS_SOS11_pentium_pro+mmx  = -xarch=pentium_proa
 ARCHFLAGS_SOS12_pentium_pro+mmx  = -m32 -xarch=pentium_proa
- ARCHFLAGS_GCC3_pentium_pro+mmx  = -march=pentium2
- ARCHFLAGS_GCC4_pentium_pro+mmx  = -march=pentium2
+ ARCHFLAGS_GCC3_pentium_pro+mmx  = -m32 -march=pentium2
+ ARCHFLAGS_GCC4_pentium_pro+mmx  = -m32 -march=pentium2
     MEMORYMODEL_pentium_pro+mmx  = 32
 
 ARCHFLAGS_SOS11_pentium_pro      = -xarch=pentium_pro
 ARCHFLAGS_SOS12_pentium_pro      = -m32 -xarch=pentium_pro
- ARCHFLAGS_GCC3_pentium_pro      = -march=pentiumpro
- ARCHFLAGS_GCC4_pentium_pro      = -march=pentiumpro
+ ARCHFLAGS_GCC3_pentium_pro      = -m32 -march=pentiumpro
+ ARCHFLAGS_GCC4_pentium_pro      = -m32 -march=pentiumpro
     MEMORYMODEL_pentium_pro      = 32
 
 ARCHFLAGS_SOS11_pentium+mmx      = ERROR
 ARCHFLAGS_SOS12_pentium+mmx      = ERROR
- ARCHFLAGS_GCC3_pentium+mmx      = -march=pentium-mmx
- ARCHFLAGS_GCC4_pentium+mmx      = -march=pentium-mmx
+ ARCHFLAGS_GCC3_pentium+mmx      = -m32 -march=pentium-mmx
+ ARCHFLAGS_GCC4_pentium+mmx      = -m32 -march=pentium-mmx
     MEMORYMODEL_pentium+mmx      = 32
 
 ARCHFLAGS_SOS11_pentium          = ERROR
 ARCHFLAGS_SOS12_pentium          = ERROR
- ARCHFLAGS_GCC3_pentium          = -march=pentium
- ARCHFLAGS_GCC4_pentium          = -march=pentium
+ ARCHFLAGS_GCC3_pentium          = -m32 -march=pentium
+ ARCHFLAGS_GCC4_pentium          = -m32 -march=pentium
     MEMORYMODEL_pentium          = 32
 
 ARCHFLAGS_SOS11_i386             = -xarch=386
 ARCHFLAGS_SOS12_i386             = -m32 -xarch=386
- ARCHFLAGS_GCC3_i386             = -march=i386
- ARCHFLAGS_GCC4_i386             = -march=i386
+ ARCHFLAGS_GCC3_i386             = -m32 march=i386
+ ARCHFLAGS_GCC4_i386             = -m32 -march=i386
     MEMORYMODEL_i386             = 32
 
 $(if $(eq $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)),ERROR),							\
@@ -274,6 +282,11 @@ BUILD_ISAS_sparc ?= $(ISA_DEFAULT_sparc) $(EXTRA_BUILD_ISAS_sparc)
 BUILD_ISAS_i386  ?= $(ISA_DEFAULT_i386) $(EXTRA_BUILD_ISAS_i386)
 BUILD_ISAS       ?= $(BUILD_ISAS_$(GARCH)) $(EXTRA_BUILD_ISAS)
 
+# TODO:
+# Build ISAs according to the running kernel:
+# - Sparc: 32 and 64 bit only on Solaris 8 with 64 bit
+# - X86: 32 bit only on Solaris 8, 64 bit only on Solaris 10, package on Solaris 8
+
 # Raise these in your .garrc if needed
 ISA_DEFAULT_sparc ?= sparcv8
 ISA_DEFAULT_i386  ?= i386
@@ -306,14 +319,14 @@ endif
 # If we build for more than one architecture the binaries will be put in subdirectories
 # and wrappers to isaexec are built. Don't reset MAKE_ISAEXEC_WRAPPERS if it was already
 # set in the Makefile (the packager usually nows better!)
-ifneq ($(words $(BUILD_ISAS)),1)
-  MAKE_ISAEXEC_WRAPPERS_$(GARCH) ?= 1
-endif
-MAKE_ISAEXEC_WRAPPERS ?= $(MAKE_ISAEXEC_WRAPPERS_$(GARCH))
+#ifneq ($(words $(BUILD_ISAS)),1)
+#  MAKE_ISAEXEC_WRAPPERS_$(GARCH) ?= 1
+#endif
+#MAKE_ISAEXEC_WRAPPERS ?= $(MAKE_ISAEXEC_WRAPPERS_$(GARCH))
 
-ifdef $(MAKE_ISAEXEC_WRAPPERS)
-  ISAEXEC_BINS = $(foreach ISA,$(ISALIST),$(wildcard $(bindir_NOISA)/$(ISA)/* $(sbindir_NOISA)/$(ISA)/* $(libexecdir_NOISA)/$(ISA)/*))
-endif
+#ifdef $(MAKE_ISAEXEC_WRAPPERS)
+#  ISAEXEC_BINS = $(foreach ISA,$(ISALIST),$(wildcard $(bindir_NOISA)/$(ISA)/* $(sbindir_NOISA)/$(ISA)/* $(libexecdir_NOISA)/$(ISA)/*))
+#endif
 
 # Subdirectories for specialized binaries and libraries
 # Use defaults for sparcv8 and i386 as those are symlinks
@@ -339,10 +352,10 @@ ISALIBDIR ?= $(ISALIBDIR_$(ISA))
 
 # These are the directories where the optimized binaries should go to
 $(foreach ARCH,$(ISALIST), $(eval ISABINDIR_$(ARCH) = $(ISALIBDIR_$(ARCH))))
-ifdef MAKE_ISAEXEC_WRAPPERS
-ISABINDIR_sparcv8           = sparcv8
-ISABINDIR_i386              = i386
-endif
+#ifdef MAKE_ISAEXEC_WRAPPERS
+#ISABINDIR_sparcv8           = sparcv8
+#ISABINDIR_i386              = i386
+#endif
 ISABINDIR ?= $(ISABINDIR_$(ISA))
 
 #
@@ -429,6 +442,11 @@ PATH := $(DESTDIR)$(bindir_NOISA)/$(MEMORYMODEL):$(DESTDIR)$(bindir):$(DESTDIR)$
 endif
 PATH := $(bindir_NOISA)/$(MEMORYMODEL):$(bindir):$(bindir_NOISA):$(sbindir):$(PATH)
 PATH := $(HOME)/bin:$(CC_HOME)/bin:$(GARBIN):$(PATH)
+
+# Make sure everything works fine for SOS12
+ifeq ($(GARCOMPILER),SOS12)
+  PATH := $(HOME)/bin/sos12-wrappers:$(PATH)
+endif
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH := $(libdir)/pkgconfig:$(libdir_NOISA)/$(MEMORYMODEL)/pkgconfig:$(PKG_CONFIG_PATH)
