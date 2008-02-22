@@ -53,15 +53,13 @@ sub usage {
 
     my $program = basename $0;
     print <<"_USAGE_";
-Usage: $program [-h] [-s <timestamp>] [-i <isaexec-bin1:...>] path1[=path1] ... pathN[=pathN]
+Usage: $program [-h] [-s <timestamp>] path1[=path1] ... pathN[=pathN]
 
     -s      Timestamp source.
             The path to a file to be used as the base timestamp for prototype
             operations.  If this is specified, all source file creation times
             are compared to the creation time of this file.  Files created
             *before* this time will be excluded from the prototype.
-
-    -i      Colon-separated list of binaries hardlinked to isaexec
 
     -h      Display brief usage.
 
@@ -102,11 +100,9 @@ sub exclude {
 
 # Process command line arguments
 my $test;
-my $isaexec_bins = '';
 GetOptions(
     'root=s'  => \$root,
     'stamp=s' => \$stamp,
-    'i=s'     => \$isaexec_bins,
     'help'    => \&usage,
 ) or usage;
 
@@ -171,9 +167,6 @@ SPECLINE:
         push @prototype, [ grep { defined $_ } @F ];
     }
 }
-
-# Add isaexec binaries
-push @prototype, map { [ 'l', 'none', "$_=/opt/csw/bin/isaexec" ] } split( /:/, $isaexec_bins );
 
 print join " " => @$_ foreach (sort { $a->[2] cmp $b->[2] } @prototype);
 
