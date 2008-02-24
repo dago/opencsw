@@ -13,6 +13,8 @@ MASTER_SITES = http://www.methods.co.nz/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWasciidoc,depend)
 
+PATCHFILES = blastwave-locations.patch
+
 # No configure there, just a Python script
 CONFIGURE_SCRIPTS = 
 
@@ -51,7 +53,7 @@ install-custom:
 	@ginstall -m 644 $(WORKSRC)/javascripts/*.js $(CONFDIR)/javascripts
 	@ginstall -m 644 $(WORKSRC)/images/icons/callouts/* $(CONFDIR)/images/icons/callouts
 	@ginstall -m 644 $(WORKSRC)/images/icons/README $(WORKSRC)/images/icons/*.png $(CONFDIR)/images/icons
-
+	
 	@ginstall -d $(VIM_CONFDIR)/syntax
 	@ginstall -m 644 $(WORKSRC)/vim/syntax/asciidoc.vim \
 		$(VIM_CONFDIR)/syntax/asciidoc.vim
