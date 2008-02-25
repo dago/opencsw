@@ -1,5 +1,5 @@
 %var            bitname pm_podcoverage
-%var            pkgname CSWpmpodcov
+%var            pkgname CSWpmpodcoverage
 %var            arch all
 %include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      

@@ -1,5 +1,5 @@
 GARNAME = Pod-Coverage
-GARVERSION = 0.18
+GARVERSION = 0.19
 CATEGORIES = cpan
 AUTHOR = RCLAMP
 
@@ -12,7 +12,7 @@ define BLURB
   comprehensive.
 endef
 
-DISTFILES += CSWpmpodcov.gspec
+DISTFILES += $(call admfiles,CSWpmpodcoverage,depend)
 
 DEPENDS   += cpan/Devel-Symdump
 BUILDDEPS += cpan/Module-Build
