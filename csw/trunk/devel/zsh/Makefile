@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWzsh,)
+DISTFILES += $(call admfiles,CSWzsh,postinstall postremove)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
