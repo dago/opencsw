@@ -17,7 +17,7 @@ MASTER_SITES = $(GNU_MIRROR)
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWscrn,depend prototype)
+DISTFILES += $(call admfiles,CSWscrn)
 
 # this patch increases the maximum number of simultaneously allowed windows per screen session.
 PATCHFILES = screen-maxwin.patch
