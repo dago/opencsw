@@ -13,7 +13,13 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWzsh,postinstall postremove)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-maildir-support
+CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(GARNAME)/functions
+CONFIGURE_ARGS += --enable-pcre
 
 include ../category.mk
 
+# Use term.h from ncurses or we get compile errors
+#   http://www.zsh.org/mla/workers/2007/msg01236.html
+CFLAGS := -I$(includedir)/ncurses $(CFLAGS)
