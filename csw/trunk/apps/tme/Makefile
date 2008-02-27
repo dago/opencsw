@@ -36,13 +36,18 @@ PATCHFILES  = fix-tr.patch
 PATCHFILES += fix-isinff.patch
 PATCHFILES += fix-cfsetspeed.patch
 
-GARCOMPILER = GNU
+# GARCOMPILER = GNU
+GARFLAVOR = DBG
+SUN_CC_DBG = -g -xc99
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-shared
 
 TEST_SCRIPTS =
 
 include ../category.mk
+
+CFLAGS := $(CFLAGS) -m64
 
 # To compile manually:
 #   CC=gcc PATH=/opt/csw/gnu:$PATH CFLAGS="-L/opt/csw/lib -R/opt/csw/lib" LD_FLAGS="-L/opt/csw/lib -R/opt/csw/lib" ./configure --prefix=/opt/csw --with-gtk-prefix=/opt/csw --disable-shared && gmake

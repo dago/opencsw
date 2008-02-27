@@ -18,7 +18,7 @@ diff --speed-large-files --minimal -Nru tme-0.6.orig/ic/ieee754/ieee754-precisio
  # make a capitalized version of the precision name:
  #
 -echo ${prefix}'capprecision=`echo ${precision} | tr a-z A-Z` ; '
-+echo ${prefix}'capprecision=`echo ${precision} | tr [a-z] [A-Z]` ; '
++echo ${prefix}'capprecision=`echo ${precision} | tr "[a-z]" "[A-Z]"` ; '
  
  # done:
  #
