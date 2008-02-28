@@ -78,18 +78,18 @@ GAROSREL ?= $(shell uname -r)
 base_prefix           ?= /opt/csw
 base_exec_prefix      ?= $(base_prefix)
 base_bindir_NOISA     ?= $(base_exec_prefix)/bin
-base_bindir           ?= $(base_bindir_NOISA)/$(ISABINDIR)
+base_bindir           ?= $(realpath $(base_bindir_NOISA)/$(ISABINDIR))
 base_gnudir           ?= $(base_exec_prefix)/gnu
 base_sbindir_NOISA    ?= $(base_exec_prefix)/sbin
-base_sbindir          ?= $(base_sbindir_NOISA)/$(ISABINDIR)
+base_sbindir          ?= $(realpath $(base_sbindir_NOISA)/$(ISABINDIR))
 base_libexecdir_NOISA ?= $(base_exec_prefix)/libexec
-base_libexecdir       ?= $(base_libexecdir_NOISA)/$(ISABINDIR)
+base_libexecdir       ?= $(realpath $(base_libexecdir_NOISA)/$(ISABINDIR))
 base_datadir          ?= $(base_prefix)/share
 base_sysconfdir       ?= $(base_prefix)/etc
 base_sharedstatedir   ?= $(base_prefix)/share
 base_localstatedir    ?= $(base_prefix)/var
 base_libdir_NOISA     ?= $(base_exec_prefix)/lib
-base_libdir           ?= $(base_libdir_NOISA)/$(ISALIBDIR)
+base_libdir           ?= $(realpath $(base_libdir_NOISA)/$(ISALIBDIR))
 base_infodir          ?= $(base_sharedstatedir)/info
 base_lispdir          ?= $(base_sharedstatedir)/emacs/site-lisp
 base_includedir       ?= $(base_prefix)/include
@@ -244,6 +244,18 @@ $(foreach C,$(GARCOMPILERS),$(eval ISALIST_$(C) ?= $(foreach I,$(ISALIST),$(if $
 # This is the memory model of the currently compiled architecture
 MEMORYMODEL = $(MEMORYMODEL_$(ISA))
 
+# The memory model specific stuff is in these subdirectories
+MEMORYMODEL_LIBDIR_32 = .
+MEMORYMODEL_LIBDIR_64 = 64
+
+MEMORYMODEL_BINDIR_32 = $(ISABINDIR_$(ISA_DEFAULT_$(GARCH)))
+MEMORYMODEL_BINDIR_64 = $(ISABINDIR_$(ISA_DEFAULT64_$(GARCH)))
+
+# This is the subdirectory for the current memorymodel.
+# NB: Use $(realpath ...) on pathes contructed with $(MM_LIBDIR) or $(MM_BINDIR) to avoid using /. inbetween
+MM_LIBDIR = $(MEMORYMODEL_LIBDIR_$(MEMORYMODEL))
+MM_BINDIR = $(MEMORYMODEL_BINDIR_$(MEMORYMODEL))
+
 # TODO: Check that we can compile code for the memory model on the current machine
 
 OPT_FLAGS_SOS11_sparc ?= -xO3
@@ -395,27 +407,27 @@ SOS12_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
 CXX      = $($(GARCOMPILER)_CXX)
-CFLAGS   = $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_CFLAGS)
-CXXFLAGS = $($(GARCOMPILER)_CXX_FLAGS) $(EXTRA_CXXFLAGS)
-CPPFLAGS = $($(GARCOMPILER)_CPP_FLAGS) $(EXTRA_CPPFLAGS)
-LDFLAGS  = $($(GARCOMPILER)_LD_FLAGS) $(EXTRA_LDFLAGS)
-ASFLAGS  = $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS)
-OPTFLAGS = $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS)
+CFLAGS   = $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_CFLAGS))
+CXXFLAGS = $(strip $($(GARCOMPILER)_CXX_FLAGS) $(EXTRA_CXXFLAGS))
+CPPFLAGS = $(strip $($(GARCOMPILER)_CPP_FLAGS) $(EXTRA_CPPFLAGS))
+LDFLAGS  = $(strip $($(GARCOMPILER)_LD_FLAGS) $(EXTRA_LDFLAGS))
+ASFLAGS  = $(strip $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS))
+OPTFLAGS = $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 
 # allow us to link to libraries we installed
 EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir),-I$(EINC))
-EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir_NOISA)/$(MEMORYMODEL),-L$(ELIB))
+EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(realpath $(libdir_NOISA)/$(MM_LIBDIR)),-L$(ELIB))
 
 GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
 GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+SOS11_LD_OPTIONS = $(strip $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
+SOS12_LD_OPTIONS = $(strip $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
 
 LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
 
 LDOPT_LIBS ?= $(libdir_NOISA)
 ifdef NOISALIST
-LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MEMORYMODEL),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(ELIB))
+LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(realpath $(ELIB)/$(MM_LIBDIR)))
 else
 LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB))
 endif
@@ -424,30 +436,22 @@ ifneq ($(IGNORE_DESTDIR),1)
 CFLAGS   += -I$(DESTDIR)$(includedir)
 CPPFLAGS += -I$(DESTDIR)$(includedir)
 CXXFLAGS += -I$(DESTDIR)$(includedir)
-LDFLAGS  += -L$(DESTDIR)$(libdir)/$(MEMORY_MODEL)
+LDFLAGS  += -L$(realpath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR))
 endif
 CFLAGS   += $(EXT_CFLAGS) 
 CPPFLAGS += $(EXT_CFLAGS)
 CXXFLAGS += $(EXT_CFLAGS)
 LDFLAGS  += $(EXT_LDFLAGS)
 
-# allow us to use programs we just built
-PATH  = /usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
-ifneq ($(IGNORE_DESTDIR),1)
-PATH := $(DESTDIR)$(bindir_NOISA)/$(MEMORYMODEL):$(DESTDIR)$(bindir):$(DESTDIR)$(bindir_NOISA):$(DESTDIR)$(sbindir):$(PATH)
-endif
-PATH := $(bindir_NOISA)/$(MEMORYMODEL):$(bindir):$(bindir_NOISA):$(sbindir):$(PATH)
-PATH := $(HOME)/bin:$(CC_HOME)/bin:$(GARBIN):$(PATH)
-
-# Make sure everything works fine for SOS12
-ifeq ($(GARCOMPILER),SOS12)
-  PATH := $(HOME)/bin/sos12-wrappers:$(PATH)
-endif
+# 1. Make sure everything works fine for SOS12
+# 2. Allow us to use programs we just built. This is a bit complicated,
+#    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(realpath $(DESTDIR)$(bindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(bindir_NOISA):$(realpath $(DESTDIR)$(sbindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(sbindir_NOISA):)$(realpath $(bindir_NOISA)/$(MM_BINDIR)):$(bindir_NOISA):$(realpath $(sbindir_NOISA)/$(MM_BINDIR)):$(sbindir_NOISA):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_PATH := $(libdir)/pkgconfig:$(libdir_NOISA)/$(MEMORYMODEL)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(realpath $(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 ifneq ($(IGNORE_DESTDIR),1)
-PKG_CONFIG_PATH := $(DESTDIR)$(libdir)/pkgconfig:$(DESTDIR)$(libdir_NOISA)/$(MEMORYMODEL)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(realpath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 endif
 
 # Let's see if we can get gtk-doc going 100%
@@ -544,14 +548,35 @@ isaenv:
 	@echo "      Compiler: $(GARCOMPILER)"
 	@echo "          Arch: $(GARCH)   Kernel: $(KERNELISA)"
 	@echo
+	@echo "Default ISA 32: $(ISA_DEFAULT_$(GARCH))"
+	@echo "Default ISA 64: $(ISA_DEFAULT64_$(GARCH))"
+	@echo
 	@echo "Compiler ISA generation matrix:"
 	@echo
 	@printf "   %20s  MM $(foreach C,$(GARCOMPILERS),%10s )\n" '' $(foreach C,$(GARCOMPILERS),$C )
-	@$(foreach I,$(ISALIST),printf "$(if $(findstring $I,$(REQUESTED_ISAS)), R,  )$(if $(findstring $I,$(BUILD_ISAS)),B, )%20s  $(MEMORYMODEL_$I) $(foreach C,$(GARCOMPILERS),%10s )\n" $I \
+	@$(foreach I,$(ISALIST),printf "$(if $(filter $I,$(REQUESTED_ISAS)), R,  )$(if $(filter $I,$(BUILD_ISAS)),B, )%20s  $(MEMORYMODEL_$I) $(foreach C,$(GARCOMPILERS),%10s )\n" $I \
 		$(foreach C,$(GARCOMPILERS),"$(if $(filter ERROR,$(ARCHFLAGS_$C_$I)), No,Yes)" );)
 	@echo
-	@echo " R        = Requested build ISA"
-	@echo "  B       = ISA can be build on this kernel"
+	@echo " R        = Requested ISAs for this package"
+	@echo "  B       = ISA that can be build on this kernel"
+	@echo
+	@echo "       32 = 32 bit memory model"
+	@echo "       64 = 64 bit memory model"
 	@echo "      Yes = Compiler can generate code for that ISA"
 	@echo "       No = Compiler cannot generate code for that ISA"
-
+	@echo
+	@echo "  C Compiler: $(CC)"
+	@echo "C++ Compiler: $(CXX)"
+	@echo
+	@echo "Requested compiler flags:"
+	@$(foreach ISA,$(BUILD_ISAS),						\
+		echo "* ISA $(ISA)";						\
+		echo "       PATH = $(PATH)";					\
+		echo "     CFLAGS = $(CFLAGS)";					\
+		echo "   CXXFLAGS = $(CXXFLAGS)";				\
+		echo "   CPPFLAGS = $(CPPFLAGS)";				\
+		echo "    LDFLAGS = $(LDFLAGS)";				\
+		echo " LD_OPTIONS = $(LD_OPTIONS)";				\
+		echo "    ASFLAGS = $(ASFLAGS)";				\
+		echo "   OPTFLAGS = $(OPTFLAGS)";				\
+	)

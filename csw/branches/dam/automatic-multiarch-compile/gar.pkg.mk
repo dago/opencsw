@@ -101,13 +101,6 @@ remove-timestamp:
 # This can be used to automatically distribute the files to different packages
 #
 
-# This should go to gar.conf.mk when automatic-multiarch-compile is in place
-ISALIST_sparc   = sparcv8plus+fmuladd sparcv8plus+vis2 sparcv8plus+vis sparcv8plus sparcv8 sparcv8-fsmuld
-ISALIST_sparcv9 = sparcv9+fmuladd sparcv9+vis2 sparcv9+vis sparcv9 $(ISALIST_sparc)
-ISALIST_i386    = pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386
-ISALIST_amd64   = amd64 $(ISALIST_i386)
-ISALIST = $(ISALIST_sparcv9) $(ISALIST_amd64)
-
 # PKGFILES_RT selects files belonging to a runtime package
 PKGFILES_RT  = $(libdir)/[^/]*\.so(\.\d+)*
 PKGFILES_RT += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.so(\.\d+)*)
@@ -136,7 +129,7 @@ $(foreach SPEC,$(_PKG_SPECS),$(eval								\
 PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
-$(PROTOTYPE): install
+$(PROTOTYPE): | install
 	@cswproto -s $(TIMESTAMP) -r $(DESTDIR) $(DESTDIR)$(prefix) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
