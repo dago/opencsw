@@ -16,6 +16,8 @@ PATCHFILES = disable-broken-languages.diff
 PATCHFILES += gpod-stdint.h.diff
 
 GARCOMPILER = GNU
+#GCC4 works, but Phil has requested GCC3 for now
+GNU_CC_HOME = /opt/csw/gcc3
 
 LIBDEPS += lib/libgpod
 
@@ -35,7 +37,6 @@ include ../category.mk
 
 #I'm having all manner of issues with the final RUNPATH linking of amarok
 #Setting LD_OPTIONS here explicitly, as kde-gcc/lib _MUST_ be first for qt to work
-
 LD_OPTIONS := "-R/opt/csw/kde-gcc/lib:/opt/csw/\$$ISALIST:/opt/csw/lib"
 
 post-install: remove-libtool-files
