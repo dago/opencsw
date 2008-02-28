@@ -19,6 +19,7 @@ PREREQUISITE_PKGS = CSWpmlocalegettext
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # We need to disable NLS as we don't have preloadable_libintl.so
+# (only installed on glibc systems)
 CONFIGURE_ARGS += --disable-nls
 
 TEST_SCRIPTS =
