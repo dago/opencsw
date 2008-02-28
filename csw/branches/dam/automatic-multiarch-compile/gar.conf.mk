@@ -56,7 +56,7 @@ else ifeq ($(GARCOMPILER),GNU)
   GARCOMPILER = GCC4
 endif
 
-ifeq (,$(findstring $(GARCOMPILER),$(GARCOMPILERS)))
+ifeq (,$(filter $(GARCOMPILER),$(GARCOMPILERS)))
   $(error The compiler '$(GARCOMPILER)' is unknown. Please select one of $(GARCOMPILERS))
 endif
 
@@ -78,18 +78,18 @@ GAROSREL ?= $(shell uname -r)
 base_prefix           ?= /opt/csw
 base_exec_prefix      ?= $(base_prefix)
 base_bindir_NOISA     ?= $(base_exec_prefix)/bin
-base_bindir           ?= $(realpath $(base_bindir_NOISA)/$(ISABINDIR))
+base_bindir           ?= $(base_bindir_NOISA)/$(ISABINDIR)
 base_gnudir           ?= $(base_exec_prefix)/gnu
 base_sbindir_NOISA    ?= $(base_exec_prefix)/sbin
-base_sbindir          ?= $(realpath $(base_sbindir_NOISA)/$(ISABINDIR))
+base_sbindir          ?= $(base_sbindir_NOISA)/$(ISABINDIR)
 base_libexecdir_NOISA ?= $(base_exec_prefix)/libexec
-base_libexecdir       ?= $(realpath $(base_libexecdir_NOISA)/$(ISABINDIR))
+base_libexecdir       ?= $(base_libexecdir_NOISA)/$(ISABINDIR)
 base_datadir          ?= $(base_prefix)/share
 base_sysconfdir       ?= $(base_prefix)/etc
 base_sharedstatedir   ?= $(base_prefix)/share
 base_localstatedir    ?= $(base_prefix)/var
 base_libdir_NOISA     ?= $(base_exec_prefix)/lib
-base_libdir           ?= $(realpath $(base_libdir_NOISA)/$(ISALIBDIR))
+base_libdir           ?= $(base_libdir_NOISA)/$(ISALIBDIR)
 base_infodir          ?= $(base_sharedstatedir)/info
 base_lispdir          ?= $(base_sharedstatedir)/emacs/site-lisp
 base_includedir       ?= $(base_prefix)/include
@@ -252,7 +252,6 @@ MEMORYMODEL_BINDIR_32 = $(ISABINDIR_$(ISA_DEFAULT_$(GARCH)))
 MEMORYMODEL_BINDIR_64 = $(ISABINDIR_$(ISA_DEFAULT64_$(GARCH)))
 
 # This is the subdirectory for the current memorymodel.
-# NB: Use $(realpath ...) on pathes contructed with $(MM_LIBDIR) or $(MM_BINDIR) to avoid using /. inbetween
 MM_LIBDIR = $(MEMORYMODEL_LIBDIR_$(MEMORYMODEL))
 MM_BINDIR = $(MEMORYMODEL_BINDIR_$(MEMORYMODEL))
 
@@ -310,8 +309,8 @@ ISA ?= $(ISA_DEFAULT)
 
 # This is a sanity check. Because BUILD_ISAS is carefully computed this error should
 # only occur if BUILD_ISAS is manually overwritten.
-KERNELISA = $(shell isainfo -k)
-ifeq (,$(findstring $(ISA), $(ISALIST_$(KERNELISA))))
+KERNELISA := $(shell isainfo -k)
+ifeq (,$(filter $(ISA), $(ISALIST_$(KERNELISA))))
   $(error The ISA '$(ISA)' can not be build on this kernel with the arch '$(KERNELISA)')
 endif
 
@@ -329,7 +328,7 @@ BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(REQUESTED_ISAS))
 IGNORED_ISAS ?= $(filter-out $(ISA_DEFAULT),$(BUILD_ISAS))
 IGNORED_ISAS += $(EXTRA_IGNORED_ISAS)
 
-ifneq (,$(findstring $(ISA),$(IGNORED_ISAS)))
+ifneq (,$(filter $(ISA),$(IGNORED_ISAS)))
   IGNORE_DIR ?= /ignore
   IGNORED_DIRS ?= $(IGNORED_DIRS_$(ISA))
   ifeq (,$(IGNORED_DIRS))
@@ -416,7 +415,7 @@ OPTFLAGS = $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 
 # allow us to link to libraries we installed
 EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir),-I$(EINC))
-EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(realpath $(libdir_NOISA)/$(MM_LIBDIR)),-L$(ELIB))
+EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir_NOISA)/$(MM_LIBDIR),-L$(ELIB))
 
 GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
 GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
@@ -427,7 +426,7 @@ LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
 
 LDOPT_LIBS ?= $(libdir_NOISA)
 ifdef NOISALIST
-LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(realpath $(ELIB)/$(MM_LIBDIR)))
+LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(ELIB)/$(MM_LIBDIR))
 else
 LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB))
 endif
@@ -436,7 +435,7 @@ ifneq ($(IGNORE_DESTDIR),1)
 CFLAGS   += -I$(DESTDIR)$(includedir)
 CPPFLAGS += -I$(DESTDIR)$(includedir)
 CXXFLAGS += -I$(DESTDIR)$(includedir)
-LDFLAGS  += -L$(realpath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR))
+LDFLAGS  += -L$(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)
 endif
 CFLAGS   += $(EXT_CFLAGS) 
 CPPFLAGS += $(EXT_CFLAGS)
@@ -446,12 +445,12 @@ LDFLAGS  += $(EXT_LDFLAGS)
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
 #    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
-PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(realpath $(DESTDIR)$(bindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(bindir_NOISA):$(realpath $(DESTDIR)$(sbindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(sbindir_NOISA):)$(realpath $(bindir_NOISA)/$(MM_BINDIR)):$(bindir_NOISA):$(realpath $(sbindir_NOISA)/$(MM_BINDIR)):$(sbindir_NOISA):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(DESTDIR)$(bindir_NOISA)/$(MM_BINDIR):$(DESTDIR)$(bindir_NOISA):$(DESTDIR)$(sbindir_NOISA)/$(MM_BINDIR):$(DESTDIR)$(sbindir_NOISA):)$(bindir_NOISA)/$(MM_BINDIR):$(bindir_NOISA):$(sbindir_NOISA)/$(MM_BINDIR):$(sbindir_NOISA):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_PATH := $(realpath $(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig:$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 ifneq ($(IGNORE_DESTDIR),1)
-PKG_CONFIG_PATH := $(realpath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig:$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 endif
 
 # Let's see if we can get gtk-doc going 100%
@@ -544,12 +543,11 @@ FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
 # Extra libraries
 EXTRA_LIBS = gar.pkg.mk gar.common.mk
 
-isaenv:
+ccenv:
 	@echo "      Compiler: $(GARCOMPILER)"
-	@echo "          Arch: $(GARCH)   Kernel: $(KERNELISA)"
 	@echo
-	@echo "Default ISA 32: $(ISA_DEFAULT_$(GARCH))"
-	@echo "Default ISA 64: $(ISA_DEFAULT64_$(GARCH))"
+	@echo "    C Compiler: $(CC)"
+	@echo "  C++ Compiler: $(CXX)"
 	@echo
 	@echo "Compiler ISA generation matrix:"
 	@echo
@@ -565,8 +563,13 @@ isaenv:
 	@echo "      Yes = Compiler can generate code for that ISA"
 	@echo "       No = Compiler cannot generate code for that ISA"
 	@echo
-	@echo "  C Compiler: $(CC)"
-	@echo "C++ Compiler: $(CXX)"
+
+isaenv:
+	@echo "          Arch: $(GARCH)"
+	@echo "        Kernel: $(KERNELISA)"
+	@echo
+	@echo "Default ISA 32: $(ISA_DEFAULT_$(GARCH))"
+	@echo "Default ISA 64: $(ISA_DEFAULT64_$(GARCH))"
 	@echo
 	@echo "Requested compiler flags:"
 	@$(foreach ISA,$(BUILD_ISAS),						\
