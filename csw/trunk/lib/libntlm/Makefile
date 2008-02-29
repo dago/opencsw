@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://josefsson.org/libntlm/releases/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibntlm,depend)
+DISTFILES += $(call admfiles,CSWlibntlm,)
 
 # With Sun cc we get several errors, including preprocessor errors on
 #   #if ! (-9223372036854775807LL < 0 && 0 < 9223372036854775807ll)
