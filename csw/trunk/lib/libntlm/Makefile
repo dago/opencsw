@@ -33,6 +33,11 @@ DISTFILES += $(call admfiles,CSWlibntlm,depend)
 
 PATCHFILES = patch-workaround-cc-bug-6655406.diff
 
+# libntlm is somewhat dependend on endianess
+#   https://savannah.nongnu.org/bugs/?21288
+# Patch submitted upstream.
+PATCHFILES += patch-byteorder-bigendian.diff
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

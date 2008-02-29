@@ -1,0 +1,41 @@
+diff --speed-large-files --minimal -Nru libntlm-0.4.1.orig/smbutil.c libntlm-0.4.1/smbutil.c
+--- libntlm-0.4.1.orig/smbutil.c	2007-09-23 10:46:48.000000000 +0200
++++ libntlm-0.4.1/smbutil.c	2008-02-29 16:35:43.994407000 +0100
+@@ -257,6 +257,7 @@
+   /* FIXME this should be workstation, not username */
+   AddBytes (request, user, user, user_len);
+   AddString (request, domain, domain);
++  request->bufIndex = UI32LE( request->bufIndex );		/* XXX */
+ }
+ 
+ void
+@@ -309,6 +310,8 @@
+   AddString (response, sessionKey, NULL);
+ 
+   response->flags = challenge->flags;
++
++  response->bufIndex = UI32LE( response->bufIndex );		/* XXX */
+ }
+ 
+ void
+diff --speed-large-files --minimal -Nru libntlm-0.4.1.orig/test_ntlm.c libntlm-0.4.1/test_ntlm.c
+--- libntlm-0.4.1.orig/test_ntlm.c	2007-10-08 10:56:40.000000000 +0200
++++ libntlm-0.4.1/test_ntlm.c	2008-02-29 16:35:43.997439000 +0100
+@@ -60,6 +60,8 @@
+ {
+   int i;
+ 
++printf( "L: %d\n", len );
++
+   for (i = 0; i < len; ++i)
+     {
+       if (i != 0 && (i & 0xf) == 0)
+@@ -144,6 +146,8 @@
+   /* do some test then dump */
+   buildSmbNtlmAuthRequest (&request, "myuser", "mydomain");
+   dumpSmbNtlmAuthRequest (f, &request);
++  printf( "P: %u %u %u %u\n", (&request)->buffer, (uint8*)(&request), intelEndian32( (&request)->bufIndex ), (&request)->bufIndex);
++
+   DUMP_REQUEST (&request);
+ 
+   buildSmbNtlmAuthRequest (&request, "Test_!@xXxX.&", NULL);
