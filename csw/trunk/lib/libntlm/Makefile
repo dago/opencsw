@@ -25,8 +25,13 @@ DISTFILES += $(call admfiles,CSWlibntlm,depend)
 # which finally yields to
 #   sizeof (intmax_t) != sizeof (uintmax_t)
 # which aborts the compile.
-# That's why we use gcc...
-GARCOMPILER = GNU
+#
+# Reported as Bug 6655406:
+#   <http://sunsolve.sun.com/search/document.do?assetkey=1-1-6655406-1>
+# Broken Preprocessor and Workaround discussed at
+#   <http://www.mail-archive.com/autoconf-patches@gnu.org/msg02949.html>
+
+PATCHFILES = patch-workaround-cc-bug-6655406.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
