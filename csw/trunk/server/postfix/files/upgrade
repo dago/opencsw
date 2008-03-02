@@ -1,0 +1,21 @@
+#!/bin/sh
+
+old=/opt/csw/etc/postfix
+new=/etc/opt/csw/postfix
+
+if [ ! -d $old ]
+then
+  echo "No old configuration exist: $old" > /dev/stderr
+  exit 1
+fi
+
+echo "Copying current configuration files from $old to new location $new"
+  
+( cd $old; find . -type f ) | grep -v CSW$ | while read f; do
+  # Create the parent directory
+  dir=`dirname $f`
+  [ ! -d $new/$dir ] && mkdir -p $new/$dir
+
+  # Copy over the new file
+  cp -p $old/$f $new/$f
+done
