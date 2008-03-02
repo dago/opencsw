@@ -1,5 +1,5 @@
 GARNAME = libart_lgpl
-GARVERSION = 2.3.19
+GARVERSION = 2.3.20
 CATEGORIES = lib
 
 DESCRIPTION = libart - High performance 2D graphics library
@@ -40,7 +40,7 @@ endif
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibart,prototype-sparc prototype-i386)
+DISTFILES   += $(call admfiles,CSWlibart)
 
 WORKDIR       = $(WORKROOTDIR)/$(DESTIMG).d/$(ISA)
 COOKIEROOTDIR = cookies.$(ISA)
