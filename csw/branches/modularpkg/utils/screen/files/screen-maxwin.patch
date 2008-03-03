@@ -1,0 +1,11 @@
+--- screen-4.0.2-orig/config.h.in	2003-12-31 06:39:46.670063000 -0500
++++ screen-4.0.2/config.h.in	2003-12-31 06:40:08.169992000 -0500
+@@ -35,7 +35,7 @@
+  * Maximum of simultaneously allowed windows per screen session.
+  */
+ #ifndef MAXWIN
+-# define MAXWIN 40
++# define MAXWIN 100
+ #endif
+ 
+ /*

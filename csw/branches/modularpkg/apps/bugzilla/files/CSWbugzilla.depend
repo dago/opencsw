@@ -1,0 +1,19 @@
+P CSWperl perl - A high-level, general-purpose programming language.
+P CSWpmappconfig pm_appconfig - Perl5 module for configuration files and command line arguments.
+P CSWpmtimedate pm_timedate - parse date strings into time values
+P CSWpmdbi pm_dbi - database independent interface for Perl
+P CSWpmdatashowtable pm_datashowtable - routines to display tabular data in several formats.
+P CSWpmdbdmysql5 pm_dbdmysql5 - MySQL 5.x DBI Driver.
+P CSWpmtt2 pm_tt2 - Template Toolkit 2
+P CSWpmtt2-common pm_tt2common - Template Toolkit 2 (common)
+P CSWpmtxtabwrap pm_txtabwrap - Text wrapping and tab expansion.
+P CSWpmmailtools pm_mailtools - various mail manipulation modules
+P CSWpmmimetools pm_mimetools - modules for parsing and creating MIME entities
+P CSWpmgd pm_gd - interface to Gd Graphics Library
+P CSWpmchart pm_chart - Charting library based on GD.
+P CSWpmgdgraph pm_gdgraph - graph plotting module
+P CSWpmgdtextut pm_gdtextut - text utilities for use with GD
+P CSWpmxmltwig pm_xmltwig - a module for processing huge XML documents in tree mode.
+P CSWpmpatchreader pm_patchreader - Utilities to read and manipulate patches and CVS
+P CSWimagemagick imagemagick - The ImageMagick Image Manipulation Tool & Libraries
+P CSWgraphvis graphviz - Graph Drawing Programs from AT&T Research and Lucent Bell Labs

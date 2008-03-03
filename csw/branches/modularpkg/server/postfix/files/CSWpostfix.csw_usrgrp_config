@@ -1,0 +1,4 @@
+version=1
+group=postfix
+group=postdrop
+user=postfix:postfix:/opt/csw/var/spool/postfix:/usr/bin/pfsh:Postfix Daemon

@@ -1,0 +1,19 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/xfce4/libxfce4panel 0755 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-arrow-button.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-hvbox.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-itembar.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-convenience.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-enum-types.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-enums.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-external-plugin.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-internal-plugin.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-macros.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-plugin-iface.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-plugin.h 0644 root bin
+f none /opt/csw/include/xfce4/libxfce4panel/xfce-panel-window.h 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/libxfce4panel-1.0.pc 0644 root bin
+i copyright=CSWlibxfcepaneldev.copyright
+i depend=CSWlibxfcepaneldev.depend
+i pkginfo=CSWlibxfcepaneldev.pkginfo

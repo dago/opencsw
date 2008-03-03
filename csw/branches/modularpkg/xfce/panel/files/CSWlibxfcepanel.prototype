@@ -1,0 +1,7 @@
+f none /opt/csw/lib/libxfce4panel.la 0755 root bin
+f none /opt/csw/lib/libxfce4panel.so.1.1.2 0755 root bin
+s none /opt/csw/lib/libxfce4panel.so.1=libxfce4panel.so.1.1.2
+s none /opt/csw/lib/libxfce4panel.so=libxfce4panel.so.1.1.2
+i copyright=CSWlibxfcepanel.copyright
+i depend=CSWlibxfcepanel.depend
+i pkginfo=CSWlibxfcepanel.pkginfo

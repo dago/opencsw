@@ -1,0 +1,12 @@
+diff -Nru --speed-large-files --minimal Class-DBI-mysql-0.22.orig/t/mysql.t Class-DBI-mysql-0.22/t/mysql.t
+--- Class-DBI-mysql-0.22.orig/t/mysql.t	2004-01-21 08:54:35.245658000 -0800
++++ Class-DBI-mysql-0.22/t/mysql.t	2004-01-21 09:08:45.783866000 -0800
+@@ -31,7 +31,7 @@
+ 	id     MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ 	Name   VARCHAR(50)        NOT NULL DEFAULT '',
+ 	val    SMALLINT UNSIGNED  NOT NULL DEFAULT 'A',
+-	mydate TIMESTAMP          NOT NULL DEFAULT '',
++	mydate TIMESTAMP,
+ 	Myvals ENUM('foo', 'bar')
+ });
+ __PACKAGE__->set_up_table;

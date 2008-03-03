@@ -1,0 +1,9 @@
+%var            bitname pm_unicodemaputf8
+%var            pkgname CSWpmumutf8
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright September, 2000 Benjamin Franz. All rights reserved.
+
+This software is free software.  You can redistribute it
+and/or modify it under the same terms as Perl itself.

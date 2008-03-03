@@ -1,0 +1,16 @@
+P CSWsambalib - Tools to access a server's filespace and printers via SMB (lib)
+P CSWaalib aalib - Ascii art graphics library
+P CSWaudiofile audiofile - Silicon Graphics Audio File Library
+P CSWesound esound - EsounD, The Enlightened Sound Daemon
+P CSWgcc4corert gcc4corert - GNU C Compiler Run Time
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - the low-level core library for GTK+ and GNOME
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWiconv libiconv - GNU iconv library
+P CSWlibmng libmng - Library for Multiple-image Network Graphics format (MNG)
+P CSWlibogg libogg - Ogg bitstream format support library
+P CSWmesa mesalibs - Mesa 3D OpenGL graphics library
+P CSWspeex libspeex - Speex audio codec support library
+P CSWtheora libtheora - Theora video codec support library
+P CSWvorbis libvorbis - Vorbis audio codec support library
+P CSWzlib zlib - Zlib Data Compression Library

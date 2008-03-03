@@ -1,0 +1,30 @@
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libneon.so.26.0.3 0755 root bin
+s none /opt/csw/lib/libneon.so.26=libneon.so.26.0.3 root bin
+s none /opt/csw/lib/libneon.so=libneon.so.26.0.3 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/locale 0755 root bin
+d none /opt/csw/share/locale/cs 0755 root bin
+d none /opt/csw/share/locale/cs/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/cs/LC_MESSAGES/neon.mo 0644 root bin
+d none /opt/csw/share/locale/de 0755 root bin
+d none /opt/csw/share/locale/de/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/de/LC_MESSAGES/neon.mo 0644 root bin
+d none /opt/csw/share/locale/fr 0755 root bin
+d none /opt/csw/share/locale/fr/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/fr/LC_MESSAGES/neon.mo 0644 root bin
+d none /opt/csw/share/locale/ja 0755 root bin
+d none /opt/csw/share/locale/ja/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/ja/LC_MESSAGES/neon.mo 0644 root bin
+d none /opt/csw/share/locale/nn 0755 root bin
+d none /opt/csw/share/locale/nn/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/nn/LC_MESSAGES/neon.mo 0644 root bin
+d none /opt/csw/share/locale/ru 0755 root bin
+d none /opt/csw/share/locale/ru/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/ru/LC_MESSAGES/neon.mo 0644 root bin
+d none /opt/csw/share/locale/tr 0755 root bin
+d none /opt/csw/share/locale/tr/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/tr/LC_MESSAGES/neon.mo 0644 root bin
+d none /opt/csw/share/locale/zh 0755 root bin
+d none /opt/csw/share/locale/zh/LC_MESSAGES 0755 root bin
+f none /opt/csw/share/locale/zh/LC_MESSAGES/neon.mo 0644 root bin

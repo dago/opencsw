@@ -1,0 +1,3 @@
+P CSWpmdbi pm_dbi - database independent interface for Perl
+P CSWpmsqlstatement pm_sqlstatement - SQL parsing and processing engine
+P CSWpmtextcsvxs pm_textcsvxs - comma-separated values manipulation routines

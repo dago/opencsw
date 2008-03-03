@@ -1,0 +1,6 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/etc 0755 root bin
+d none /opt/csw/apache2/etc/extra 0755 root bin
+f none /opt/csw/apache2/etc/extra/httpd-php5.conf.CSW 0644 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/libphp5.so 0755 root bin

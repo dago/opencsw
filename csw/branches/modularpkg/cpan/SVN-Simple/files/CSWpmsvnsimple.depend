@@ -1,0 +1,3 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWpmsvn pm_subversion - subversion perl language binding
+P CSWsvn subversion - Version control rethought

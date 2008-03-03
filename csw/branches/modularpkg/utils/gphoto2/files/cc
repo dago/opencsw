@@ -1,0 +1,60 @@
+#!/bin/ksh
+
+CPPFLAGS=""
+CFLAGS=""
+LDFLAGS=""
+LIBS=""
+ARGS=""
+CC=/opt/studio/SOS11/SUNWspro/bin/${0##*/}
+
+while true
+do
+	[[ -z "$1" ]] && break
+
+case $1 in
+	-I*|-D*|-G)
+		CPPFLAGS="$CPPFLAGS $1"
+		;;
+
+	-l*)
+		# libtool is lying about this one, we don't need -lltdl
+		if [ "$1" != "ltdl" ]; then
+			LIBS="$LIBS $1"
+			LDFLAGS="-Wl,-zlazyload -L$LIBGPHOTO_PATH"
+			LDFLAGS="$LDFLAGS -L/opt/csw/lib"
+			LDFLAGS="$LDFLAGS -R/opt/csw/lib/\$ISALIST"
+		fi
+		;;
+
+	-o|-h)
+		CFLAGS="$CFLAGS $1 $2"
+		shift
+		;;
+
+	/opt/csw/lib/lib*)
+		lib=${1##/opt/csw/lib/lib}
+		lib=${lib%.so}
+		# libtool is lying about this one, we don't need -lltdl
+		if [ "$lib" != "ltdl" ]; then
+			LIBS="$LIBS -l$lib"
+		fi
+		;;
+
+	-R|-L|-g)
+		shift
+		;;
+
+	-R*|-L*)
+		;;
+
+	*)
+		ARGS="$ARGS $1"
+		;;
+
+esac
+
+shift
+done
+
+echo $CC $CPPFLAGS $CFLAGS $ARGS $LDFLAGS $LIBS
+$CC $CPPFLAGS $LDFLAGS $CFLAGS $ARGS $LIBS

@@ -1,0 +1,33 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/sndfile-resample 0755 root bin
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/samplerate.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libsamplerate.so.0.1.1 0755 root bin
+s none /opt/csw/lib/libsamplerate.so.0=libsamplerate.so.0.1.1
+s none /opt/csw/lib/libsamplerate.so=libsamplerate.so.0.1.1
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/samplerate.pc 0644 root bin
+d none /opt/csw/sbin 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/info 0755 root bin
+d none /opt/csw/share/locale 0755 root bin
+d none /opt/csw/share/locale/de 0755 root bin
+d none /opt/csw/share/locale/de/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/es 0755 root bin
+d none /opt/csw/share/locale/es/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/fr 0755 root bin
+d none /opt/csw/share/locale/fr/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/ru 0755 root bin
+d none /opt/csw/share/locale/ru/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/sv 0755 root bin
+d none /opt/csw/share/locale/sv/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+d none /opt/csw/share/man/man5 0755 root bin
+d none /opt/csw/share/man/man7 0755 root bin
+i copyright=CSWlibsamplerate.copyright
+i depend=CSWlibsamplerate.depend
+i pkginfo=CSWlibsamplerate.pkginfo

@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/libavcodec/Makefile MPlayer-1.0rc1/libavcodec/Makefile
+--- MPlayer-1.0rc1.orig/libavcodec/Makefile	2006-10-23 11:32:34.000000000 +1300
++++ MPlayer-1.0rc1/libavcodec/Makefile	2007-07-29 01:51:11.587909135 +1200
+@@ -5,6 +5,7 @@
+ include ../config.mak
+ 
+ CFLAGS+=$(AMR_CFLAGS)
++CFLAGS+= -fomit-frame-pointer
+ 
+ OBJS= bitstream.o \
+       utils.o \

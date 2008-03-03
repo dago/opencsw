@@ -1,0 +1,25 @@
+imapproxy (1.2.6,REV=2008.02.15) unstable
+
+  * New upstream version.
+  * Dropped md5_include.patch which as been applied upstream.
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 15 Feb 2008 13:35:01 +0100
+
+imapproxy (1.2.5,REV=2007.07.28) unstable
+
+  * Now depends on openssl_rt rather than openssl.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 17:30:07 +0200 
+
+imapproxy (1.2.5) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 10 Mar 2007 00:18:36 +0100
+
+imapproxy (1.2.5rc1) unstable
+
+  * First version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Thu, 20 Apr 2006 01:28:53 +0200
+

@@ -1,0 +1,2 @@
+P CSWpmclassloader pm_classloader - load modules and create objects on demand.
+P CSWpmmathpari pm_mathpari - interface to PARI numerical analysis library

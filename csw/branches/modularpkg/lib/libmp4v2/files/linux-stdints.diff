@@ -1,0 +1,17 @@
+diff --speed-large-files --minimal -Nru libmp4v2-1.5.0.1.orig/mp4.h libmp4v2-1.5.0.1/mp4.h
+--- libmp4v2-1.5.0.1.orig/mp4.h	2006-07-18 23:01:30.000000000 +1200
++++ libmp4v2-1.5.0.1/mp4.h	2007-12-21 01:25:32.486012429 +1300
+@@ -50,6 +50,13 @@
+ #define DEFAULT(x)
+ #endif
+ 
++#ifdef __sun
++#define u_int8_t uint8_t
++#define u_int16_t uint16_t
++#define u_int32_t uint32_t
++#define u_int64_t uint64_t
++#endif
++
+ /* MP4 API types */
+ typedef void*		MP4FileHandle;
+ typedef u_int32_t	MP4TrackId;

@@ -1,0 +1,5 @@
+P CSWperl               perl - A high-level, general-purpose programming language.
+P CSWpmtimedate         pm_timedate - Parse date strings into time values
+P CSWpmmathinterpolate  pm_mathinterpolate - Useful routines for interpolating data sets
+P CSWrrd                rrdtool - Round Robin Database graphing tool
+P CSWapache2            apache2 - Apache 2.2 web server

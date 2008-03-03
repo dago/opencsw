@@ -1,0 +1,5 @@
+%var            bitname pm_datauuid
+%var            pkgname CSWpmdatauuid
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2001, Alexander Golomshtok

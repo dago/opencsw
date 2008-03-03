@@ -1,0 +1,5 @@
+%var            bitname libapreq2_devel
+%var            pkgname CSWlibapreq2-devel
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%var            desc Apache Request Library development support
+%copyright      url file://%{WORKSRC}/LICENSE

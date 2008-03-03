@@ -1,0 +1,31 @@
+diff --speed-large-files --minimal -Nru mktemp-1.5.orig/Makefile.in mktemp-1.5/Makefile.in
+--- mktemp-1.5.orig/Makefile.in	2003-03-24 02:09:56.000000000 +0100
++++ mktemp-1.5/Makefile.in	2008-02-18 20:30:33.583292000 +0100
+@@ -65,12 +65,12 @@
+ mantype = @MANTYPE@
+ 
+ # Where to install things...
+-prefix = @prefix@
+-exec_prefix = @exec_prefix@
+-bindir = @bindir@
+-sbindir = @sbindir@
+-sysconfdir = @sysconfdir@
+-mandir = @mandir@
++prefix = $(DESTDIR)@prefix@
++exec_prefix = $(DESTDIR)@exec_prefix@
++bindir = $(DESTDIR)@bindir@
++sbindir = $(DESTDIR)@sbindir@
++sysconfdir = $(DESTDIR)@sysconfdir@
++mandir = $(DESTDIR)@mandir@
+ 
+ #### End of system configuration section. ####
+ 
+@@ -98,7 +98,7 @@
+ 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
+ 
+ $(PROG): $(OBJS)
+-	$(CC) -o $@ $(OBJS) $(LIBS)
++	$(CC) -o $@ $(OBJS) $(LDFLAGS) $(LIBS)
+ 
+ $(OBJS): config.h
+ 

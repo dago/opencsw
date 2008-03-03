@@ -1,0 +1,5 @@
+%var            bitname ap2_subversion
+%var            pkgname CSWap2svn
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc Subversion modules for Apache 2.2
+%copyright      url file://%{WORKSRC}/COPYING

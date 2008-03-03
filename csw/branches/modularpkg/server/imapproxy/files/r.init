@@ -1,0 +1,93 @@
+#
+# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# r.init - class script which remove init.d script and runlevels
+#          symlinks and save symlinks modification if any
+#
+umask 0022
+LANG=C
+export LANG
+
+
+read_conf_value () 
+{
+    _VAR="$1"
+    _FILE="$2"
+    eval ${_VAR}=\"`/usr/bin/sed -n -e "/^# *$_VAR:/ s/^.*$_VAR: *\(.*[^ ]\) *$/\1/p" ${_FILE}`\"
+}
+
+
+read_init_info ()
+{
+	_INIT_FILE="$1"
+	# we just search for all files referencing the init scripts
+	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
+	/usr/bin/find /etc/rc[S0-6].d -follow -inum "$_INUM" | while read _RCLINK; do
+		_LEVEL=`echo $_RCLINK | cut -b8`
+		_PRIORITY=`echo $_RCLINK | cut -b12-14` 		
+		printf "$_LEVEL $_PRIORITY "
+	done
+	printf "\n"
+}
+
+# save the state of a service
+save_init_info ()
+{
+	_INIT_FILE="$1"
+	_INIT_INFO_FILE="$2"
+
+	_DEFAULT_INIT_INFO=""
+	_INIT_INFO=""
+
+	# we read chkconfig init info to check if runlevels symlinks
+	# have been changed from the default setup
+	read_conf_value chkconfig "$_INIT_FILE"
+	set -- $chkconfig
+
+	RUNLEVEL="$1"
+	START_PRIORITY_LEVEL="$2"
+	STOP_PRIORITY_LEVEL="$3"
+
+	for _LEVEL in 0 1 2 3 S; do
+		if echo "${RUNLEVEL}" | grep "${_LEVEL}" >/dev/null; then
+			_DEFAULT_INIT_INFO="$_DEFAULT_INIT_INFO $_LEVEL S$START_PRIORITY_LEVEL"	
+		else
+			_DEFAULT_INIT_INFO="$_DEFAULT_INIT_INFO $_LEVEL K$START_PRIORITY_LEVEL"	
+		fi
+	done
+
+	_INIT_INFO="`read_init_info \"$_INIT_FILE\"`"
+
+	if [ " $_INIT_INFO" != "$_DEFAULT_INIT_INFO " ]; then
+		echo "$_INIT_FILE $_INIT_INFO" >> "$_INIT_INFO_FILE"
+	fi
+}
+
+# delete all runlevels symlinks for the given init script
+delete_runlevel_symlinks ()
+{
+	_INIT_FILE="$1"
+
+	_INUM=`ls -i "$_INIT_FILE" | /usr/bin/awk '{ print $1 }'`
+	/usr/bin/find /etc/rc[S0-6].d -follow -inum "$_INUM" -exec rm '{}' ';'
+}
+
+INIT_INFO_FILE="${PKG_INSTALL_ROOT}/tmp/$PKG.initinfo"
+rm -f "$INIT_INFO_FILE"
+
+while read DEST; do
+	if [ -z "$DEST" ]; then
+		continue
+	fi
+
+	save_init_info "$DEST" "$INIT_INFO_FILE"	
+	delete_runlevel_symlinks "$DEST"
+
+	rm "$DEST"
+done

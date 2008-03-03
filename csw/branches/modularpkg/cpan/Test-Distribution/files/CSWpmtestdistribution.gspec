@@ -1,0 +1,13 @@
+%var            bitname pm_testdistribution
+%var            pkgname CSWpmtestdistribution
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+COPYRIGHT & LICENSE
+    Copyright 2002-2003 Marcel Gr�nauer. All rights reserved.
+
+    Copyright 2003-2007, Sagar R. Shah, All rights reserved.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+

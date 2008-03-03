@@ -1,0 +1,4 @@
+P CSWpmipccmd pm_ipccmd - Finding and running system commands made easy
+P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
+P CSWpmmodloadcond pm_modloadcond - Query module information and load at runtime
+P CSWpmprmscheck pm_prmscheck - A generic input parsing/checking mechanism.

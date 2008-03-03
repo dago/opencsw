@@ -1,0 +1,7 @@
+%var            bitname pm_xmlatom
+%var            pkgname CSWpmxmlatom
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Except where otherwise noted, I<XML::Atom> is Copyright 2003 Benjamin
+Trott, cpan@stupidfool.org. All rights reserved.

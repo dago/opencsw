@@ -1,0 +1,37 @@
+diff --speed-large-files --minimal -Nru YAML-0.62.orig/Makefile.PL YAML-0.62/Makefile.PL
+--- YAML-0.62.orig/Makefile.PL	2006-07-01 01:07:33.000000000 -0400
++++ YAML-0.62/Makefile.PL	2006-09-03 00:33:34.848059000 -0400
+@@ -1,19 +1,19 @@
+ use inc::Module::Install;
+ 
+-print << '_';
+-
+-*** WARNING ***
+-
+-This release breaks compatibility with versions earlier than version 0.60 of
+-YAML::Syck and YAML.pm when serializing blessed references.
+-
+-See the COMPATIBILITY file for more information.
+-
+-_
+-
+-if (!is_admin()) {
+-    exit() unless prompt("Continue installing YAML.pm?", 'y') =~ /^y/i;
+-}
++#print << '_';
++#
++#*** WARNING ***
++#
++#This release breaks compatibility with versions earlier than version 0.60 of
++#YAML::Syck and YAML.pm when serializing blessed references.
++#
++#See the COMPATIBILITY file for more information.
++#
++#_
++#
++#if (!is_admin()) {
++#    exit() unless prompt("Continue installing YAML.pm?", 'y') =~ /^y/i;
++#}
+ 
+ name            'YAML';
+ all_from        'lib/YAML.pm';

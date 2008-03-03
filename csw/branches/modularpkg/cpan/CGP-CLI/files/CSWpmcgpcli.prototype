@@ -1,0 +1,10 @@
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/CGP::CLI.3perl 0444 root bin
+d none /opt/csw/share/perl 0755 root bin
+d none /opt/csw/share/perl/csw 0755 root bin
+d none /opt/csw/share/perl/csw/CGP 0755 root bin
+f none /opt/csw/share/perl/csw/CGP/CLI.pm 0555 root bin
+i depend=CSWpmcgpcli.depend
+i pkginfo=CSWpmcgpcli.pkginfo

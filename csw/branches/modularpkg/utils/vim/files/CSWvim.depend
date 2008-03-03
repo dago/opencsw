@@ -1,0 +1,5 @@
+I CSWvim-minimal vim_minimal - Vi Improved - minimal configuration
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWncurses ncurses - ncurses library and utilities
+P CSWvimrt vimrt - vim shared runtime and documentation

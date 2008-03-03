@@ -1,0 +1,22 @@
+d none /opt/csw/share/orage 0755 root bin
+d none /opt/csw/share/orage/doc 0755 root bin
+d none /opt/csw/share/orage/doc/C 0755 root bin
+d none /opt/csw/share/orage/doc/C/images 0755 root bin
+f none /opt/csw/share/orage/doc/C/images/default_calendar.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_appointment.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_appointment_alarm.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_appointment_recurrence.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_calendar_edit_menu.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_calendar_file_menu.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_calendar_help_menu.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_calendar_view_menu.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_desktop_menuitem.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_eventlist.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_preferences_archives.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_preferences_display.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_preferences_sound.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/images/orage_preferences_timezone.png 0644 root bin
+f none /opt/csw/share/orage/doc/C/orage.html 0644 root bin
+i copyright=CSWxfceoragedoc.copyright
+i depend=CSWxfceoragedoc.depend
+i pkginfo=CSWxfceoragedoc.pkginfo

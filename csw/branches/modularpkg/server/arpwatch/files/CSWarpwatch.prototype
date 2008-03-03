@@ -1,0 +1,9 @@
+f none /opt/csw/etc/arpwatch.conf.CSW=arpwatch.conf 0755 root bin
+f none /opt/csw/sbin/arpsnmp 0755 root bin
+f none /opt/csw/sbin/arpwatch 0755 root bin
+d none /opt/csw/share/man/man8
+f none /opt/csw/share/man/man8/arpsnmp.8 0755 root bin
+f none /opt/csw/share/man/man8/arpwatch.8 0755 root bin
+d none /opt/csw/var/arpwatch 0755 root bin
+d none /opt/csw/share/arpwatch 0755 root bin
+f none /opt/csw/share/arpwatch/ethercodes.dat 0644 root bin

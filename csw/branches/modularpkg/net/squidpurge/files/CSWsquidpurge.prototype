@@ -1,0 +1,6 @@
+d none /opt/csw/sbin 0755 root bin
+f none /opt/csw/sbin/squidpurge 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/squidpurge 0755 root bin
+f none /opt/csw/share/doc/squidpurge/README 0644 root bin

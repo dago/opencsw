@@ -1,0 +1,11 @@
+f none /opt/csw/lib/libexo-0.3.la 0755 root bin
+f none /opt/csw/lib/libexo-0.3.so.0.4.0 0755 root bin
+s none /opt/csw/lib/libexo-0.3.so.0=libexo-0.3.so.0.4.0
+s none /opt/csw/lib/libexo-0.3.so=libexo-0.3.so.0.4.0
+f none /opt/csw/lib/libexo-hal-0.3.la 0755 root bin
+f none /opt/csw/lib/libexo-hal-0.3.so.0.4.0 0755 root bin
+s none /opt/csw/lib/libexo-hal-0.3.so.0=libexo-hal-0.3.so.0.4.0
+s none /opt/csw/lib/libexo-hal-0.3.so=libexo-hal-0.3.so.0.4.0
+i copyright=CSWxfcelibexo.copyright
+i depend=CSWxfcelibexo.depend
+i pkginfo=CSWxfcelibexo.pkginfo

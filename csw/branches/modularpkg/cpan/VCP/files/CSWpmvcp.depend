@@ -1,0 +1,4 @@
+P CSWpmregexpshellish pm_regexpshellish - shell-like regular expressions
+P CSWpmtextdiff pm_textdiff - perform diffs on files and record sets
+P CSWpmxmlautowriter pm_xmlautowriter - DOCTYPE driven XML output
+P CSWpmxmlparser pm_xmlparser - a module for parsing XML documents

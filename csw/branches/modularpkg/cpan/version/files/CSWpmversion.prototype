@@ -1,0 +1,17 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/version 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/version/.packlist 0644 root bin
+d none /opt/csw/lib/perl/csw/auto/version/vxs 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/version/vxs/vxs.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/version/vxs/vxs.so 0555 root bin
+d none /opt/csw/lib/perl/csw/version 0755 root bin
+f none /opt/csw/lib/perl/csw/version.pm 0444 root bin
+f none /opt/csw/lib/perl/csw/version.pod 0444 root bin
+f none /opt/csw/lib/perl/csw/version/vxs.pm 0444 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/version.3 0444 root bin

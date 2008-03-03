@@ -1,0 +1,10 @@
+%var            bitname pm_archivetar
+%var            pkgname CSWpmarchivetar
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is copyright (c) 2002 Jos Boumans
+E<lt>kane@cpan.orgE<gt>.  All rights reserved.
+
+This library is free software; you may redistribute and/or
+modify it under the same terms as Perl itself.

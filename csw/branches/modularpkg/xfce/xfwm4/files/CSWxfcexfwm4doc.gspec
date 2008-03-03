@@ -1,0 +1,6 @@
+%var            bitname xfce_xfwmdoc
+%var            pkgname CSWxfcexfwmdoc
+%var		arch all
+%var		desc Xfce Window Manager Documentation
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

@@ -1,0 +1,8 @@
+P CSWpmcryptcast5pp pm_cryptcast5pp - CAST5 block cipher in pure Perl
+P CSWpmcryptdsa pm_cryptdsa - DSA signatures and key generation
+P CSWpmcryptidea pm_cryptidea - Perl interface to IDEA block cipher
+P CSWpmcryptrijndael pm_cryptrijndael - Crypt::CBC compliant Rijndael encryption module
+P CSWpmcryptripemd160 pm_cryptripemd160 - Perl extension for the RIPEMD-160 Hash function
+P CSWpmcryptrsa pm_cryptrsa - RSA public-key cryptosystem.
+P CSWpmcrypttwofish pm_crypttwofish - the Twofish encryption algorithm
+P CSWpmlibwww pm_libwww - a general-purpose Web API for Perl, based on W3C libwww.

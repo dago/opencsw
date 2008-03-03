@@ -1,0 +1,109 @@
+
+Notes for Cyrus Imap
+--------------------
+
+- Cyrus configuration
+
+Rename /opt/csw/etc/cyrus/imapd.conf.CSW to /opt/csw/etc/cyrus/imapd.conf and
+ /opt/csw/etc/cyrus/cyrus.conf.CSW to /opt/csw/etc/cyrus/cyrus.conf
+and customize these files according to your needs.
+
+Warning: daemons which can only be launched from the master process live in
+the /opt/csw/libexec/cyrus directory, other binaries which can be launched 
+from the command line by root or cyrus user, live now in /opt/csw/libexec/cyrus
+and are symlinked in /opt/csw/sbin, but they will be moved definitely in /opt/csw/sbin 
+in the next major version.
+
+The consequence is that you must use the absolute path of theses binaries in cyrus.conf
+(i.e. /opt/csw/sbin/ctl_cyrusdb instead of ctl_cyrusdb) so that everything works after 
+the next major upgrade.
+
+
+- Cyrus Authentication
+
+This package is configured by default to use saslauthd to authenticate users but
+it doesn't depend on it since Cyrus Imap can be used without it.
+
+So to have authentication working:
+	- install saslauthd, pkg-get install saslauthd
+	- configure it
+	- launch the daemon, /etc/init.d/cswsaslauthd start
+	- add the cyrus user to the sasl group, usermod -G sasl cyrus
+	- launch or relaunch cyrus, /etc/init.d/cswcyrus start
+
+Authentication should be working.
+
+You can also directly use Cyrus Imap directly with berkeleydb (or mysql, or postgres) 
+user databases. You must then change the sasl_pwcheck_method parameter to auxprop
+in /opt/csw/etc/cyrus/imapd.conf, but remember that Cyrus runs as the cyrus user, so
+for example, berkeleydb databases files will have to be readable by the cyrus user.
+
+
+- Enable SSL/TLS
+
+To enable ssl and tls for Imap/Pop/..., create the certificate and fill accordingly the 
+paramaters tls_cert_file and tls_key_file in /opt/csw/etc/cyrus/imapd.conf.
+You can use different certificates for each service by using parameters <service>_tls_cert_file 
+and <service>_tls_key_file (imap_tls_cert_file, pop3_tls_key_file, imaps_tls_key_file, ...).
+
+Then for ssl, also uncomment the lines concerning pops and imaps in /opt/csw/etc/cyrus/cyrus.conf
+
+
+- Configure Sendmail to deliver to cyrus mailboxes
+
+You will have to add the following lines in  sendmail.mc:
+
+define(`confLOCAL_MAILER', `cyrusv2')dnl
+define(`CYRUSV2_MAILER_ARGS', `FILE /opt/csw/var/cyrus/config/socket/lmtp')dnl
+MAILER(`cyrusv2')dnl
+
+
+If Sendmail and Cyrus are on different hosts, you must use TCP instead of socket for Sendmail/Cyrus
+communication, change the CYRUSV2_MAILER_ARGS line with this one:
+
+define(`CYRUSV2_MAILER_ARGS', `TCP name_of_the_cyrus_host lmtp')dnl
+
+and enable lmtp tcp listening by uncommenting this line in /opt/csw/etc/cyrus/cyrus.conf:
+
+lmtp         cmd="lmtpd" listen="lmtp" prefork=0
+
+
+By default, sendmail will not read .forward files with the Cyrus mailer, because Cyrus is often used 
+with virtual users who do not have home directory on the host. 
+If you use Cyrus with local users, you must tell it explicitely to sendmail so it reads .forward files.
+To do so, add the following line in sendmail.cf:
+
+define(`CYRUSV2_MAILER_FLAGS', `mA@/:|w')dnl
+
+The w flags tells sendmail users are local, these are generic mailer flags explained here: 
+http://www.sendmail.org/~ca/email/doc8.8/op-sh-5.html#sh-5.4
+
+
+- Performance problems
+
+Its seems acl group checking can cause performance problems in some cases.
+See http://www.spinics.net/lists/info-cyrus/msg02295.html
+
+If it's your case, disable group checking in imapd.conf:
+
+unix_group_enable:0
+
+
+- Differences with upstream version
+
+Several patches have been applied so Cyrus is more useable in production environment
+
+ - cyrus-imapd-2.3.7-autocreate-0.10-1.diff and cyrus-imapd-2.3.3-autosieve-0.6.0.diff, 
+   available at http://email.uoa.gr/projects/cyrus/ 
+   These patches enable automatic inbox creation and automatic folder creation when a 
+   sieve filter requires it
+
+ - cyrus-imapd-acceptinvalidfrom.patch and cyrus-imapd-2.3.7-nobarenewlinescheck.patch, 
+   available in the Fedora Core package and own-made.
+   These patches make Cyrus more tolerant with non-standard emails sent by a lot of bad 
+   mail user agent, they allow respectively to accept 8bits characters in header 
+   (configurable in /opt/csw/etc/cyrus/imapd.conf), to accept email with colon-less From 
+   ("From john@doe") header and to allow email with a bare newline in it.
+ 
+ 
+

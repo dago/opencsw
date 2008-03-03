@@ -1,0 +1,16 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/gdlib-config 0755 root bin
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/entities.h 0644 root bin
+f none /opt/csw/include/gd.h 0644 root bin
+f none /opt/csw/include/gd_io.h 0644 root bin
+f none /opt/csw/include/gdcache.h 0644 root bin
+f none /opt/csw/include/gdfontg.h 0644 root bin
+f none /opt/csw/include/gdfontl.h 0644 root bin
+f none /opt/csw/include/gdfontmb.h 0644 root bin
+f none /opt/csw/include/gdfonts.h 0644 root bin
+f none /opt/csw/include/gdfontt.h 0644 root bin
+f none /opt/csw/include/gdfx.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libgd.a 0644 root bin
+f none /opt/csw/lib/libgd.la 0755 root bin

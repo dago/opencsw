@@ -1,0 +1,2027 @@
+#!/usr/bin/perl
+##
+## Copyright 2006 Yann Rouillard <yann@blastwave.org>
+## All rights reserved.  Use is subject to license terms.
+##
+## Redistribution and/or use, with or without modification, is
+## permitted.  This software is without warranty of any kind.  The
+## author(s) shall not be liable in the event that use of the
+## software causes damage.
+##
+## ppkg-get - perl rewrite of original pkg-get by Phillip Brown
+##            download and install packages from a central repository
+#
+
+use Getopt::Long;
+use File::Copy;
+use File::Path;
+use File::stat;
+use strict;
+use Env qw(PATH);
+
+# directory where pkg-get will store catalog information
+use constant PKG_GET_DIR => '/var/pkg-get';
+# directory where pkg files will be decompressed
+use constant PKG_SPOOL_DIR => '/var/spool/pkg';
+
+
+###############################################################################################
+# Useful functions
+# The following functions are useful functions to perform so basic tasks needed by ppkg-get
+###############################################################################################
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_system_info
+# Purpose  : Return some info about the system running ppkg-get
+# Returns  : A hash containing operating sysem, release number and arch name
+#            of the running system
+#
+sub get_system_info
+{
+    my $system_info = {};
+
+    my ($os, $release, $arch) = split (/\s+/, `/bin/uname -prs`);
+    
+    $system_info->{os} = $os;
+    $system_info->{release} = $release;
+    $system_info->{arch} = $arch;
+
+    return $system_info;
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : ask_confirmation
+# Purpose  : Ask interactively a question to the user, waiting for yes or no answer
+# Arguments: A string containg the question to ask
+# Returns  : True if the user answered yes, false otherwise
+#
+sub ask_confirmation
+{
+    my $message = shift or die;
+    my $answer = "";
+
+    while (not ($answer =~ /y(?:es)?|n(?:o)?/i)) {
+	print $message;
+	$answer = <STDIN>;
+	chop ($answer);
+    }
+    
+    return ($answer =~ /y(?:es)?/i);
+}
+
+
+
+BEGIN {
+
+# we store the path of the md5sum binary so we do not have to look for it
+# each time
+    my $md5sum_bin;
+
+    
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : find_md5sum_bin
+# Purpose  : Find a md5sum binary (either md5sum or gmd5sum)
+# Returns  : true if a md5sum binary was found
+#            false otherwise
+# Effets   : if the binary is found, the $md5sum_bin variable is filled
+#            with the the path of the binary.
+#
+    sub find_md5sum_bin
+    {
+	`( gmd5sum --help ) >/dev/null 2>&1`;
+	if (! ($? >> 8)) {
+	    $md5sum_bin="gmd5sum | cut -d\\  -f1";
+	    return 1;
+	} else {
+	    return 0;
+	}
+    }
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_md5sum
+# Purpose  : Compute the md5 sum of a file
+# Arguments: The path of the filename whose md5 sum should be computed
+# Returns  : 0 if no md5sum binary is found
+#            undef if there was an error computing the md5 sum 
+#            the md5 sum otherwise
+#
+    sub get_md5sum
+    {
+	my $filename = shift or die;
+    
+	if (not defined $md5sum_bin) {
+	    find_md5sum_bin () or return 0;
+	}
+
+	my $md5sum = `cat $filename | $md5sum_bin`;
+	if (! ($? >> 8)) {
+	    chomp ($md5sum);
+	    return $md5sum;
+	} else {
+	    return undef;
+	}
+    }
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : retrieve_file
+# Purpose  : download locally a file over the given protocol
+# Arguments: $url - Url of the file to retrieve
+#            $target_file - The path (including the filename) where to store
+#                           the file retrieved
+#            $quiet - If true, the wget output is not displayed
+# Returns  : True if the file has been successfully downloaded
+#            false otherwise
+#
+sub retrieve_file
+{
+    my $url = shift or die;
+    my $target_file = shift or die;
+    my $quiet = shift;
+    
+    my ($scheme, $path) = ($url =~ /^(?:([^:]+):\/\/)?(.*)/);
+    $scheme = "file" if not defined $scheme;
+
+  switch: {
+
+	($scheme eq "file") and do {
+	    return copy ($path, $target_file);
+	};
+
+	($scheme eq "http" or $scheme eq "ftp") and do {
+	    my $wget_options = "--tries=1";
+	    $wget_options = "--quiet " . $wget_options;
+
+	    system("wget $wget_options -O $target_file $url");
+	    my $ret = ! $?;
+	    if (not $ret) {
+		unlink ($target_file);
+	    }
+	    return ! $?;
+	};
+    }
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : parse_config_file
+# Purpose  : Read configuration variable 
+# Arguments: $config_file - path to the the configuration file to parse
+#            $options - hash of configuration variables which should be
+#                       treated as array.
+# Returns  : a hash containing the configuration variables parsed 
+#            false otherwise
+#
+sub parse_config_file
+{
+    my $config_file = shift or die;
+    my $options = shift or die;
+    
+    open FH, "< $config_file" or die "Couldn't open configuration file $config_file";
+    
+    while (my $line = <FH>) {
+	next if $line =~ /^\s*(\#|$)/;
+
+	if (my ($option, $value) = ($line =~ /(\w+(?:\[\w+\])?)\s*=\s*(\S*)\s*$/)) {
+
+	    # special case of array variable
+	    if (my ($optionA,$index) = ($option =~ /^([^[]+)\[([^]]+)\]$/) or
+		exists ($options->{$option})) { 
+		    $index = "default" if not defined $index;
+		    $option = $optionA if defined $optionA;
+		    $options->{$option}{$index} = $value;
+	    } else {
+		    $options->{$option} = $value if not $value =~ /no|false/i;
+	    }
+	} else {
+	    print "Invalid line in configuration file:\n\t\"$line\"";
+	    close FH;
+	    exit 2
+	    }
+    }
+    
+    close FH;
+    return $options;
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : compare_versions
+# Purpose  : Compare version number of two software
+# Arguments: $version1 - version number of the first software
+#            $version2 - version number of the first software
+# Returns  : 1 if $version1 > $version2
+#            0 if $version1 == $version2
+#            -1 if $version1 < $verson2
+#
+sub compare_versions
+{
+    my $version1 = shift or die;
+    my $version2 = shift or die;
+   
+    # we consider the version to be composed of several elements separated by '.' ',' or '_'
+    # an elements can be a string or a number
+    # at each step we extract the next elements of the two version strings and compare them
+    while (my ($number1, $string1, $rem1) = ($version1 =~ /^(?:([0-9]+)|([^0-9\.,_]+))[\.,_]?(.*)?$/)) {
+
+	my ($number2, $string2, $rem2) = ($version2 =~ /^(?:([0-9]+)|([^0-9\.,_]+))[\.,_]?(.*)?$/) or 
+	    # $versions1 if the same as $versions with additionnal characters so it must be more recent
+	    # (i.e. 1.2foo is usually more recent than 1.2)
+	    return 1;
+
+	if (defined $number1 and defined $number2) {
+	    my $ret = ($number1 <=> $number2);
+	    return $ret if $ret != 0;
+	} elsif (defined $string1 and defined $string2) {
+	    # string comparisons is relevevant for comparing 
+	    # version strings like 2.a and 2.b
+	    my $ret = ($string1 cmp $string2);
+	    return $ret if $ret != 0;
+	} elsif (defined $number1 and defined $string2) {
+	    # we suppose that numbers are always greater that string
+	    return 1;
+	} else {
+	    return -1;
+	}
+	
+	$version1 = $rem1;
+	$version2 = $rem2;
+    }
+
+    if ($version2 ne "") {
+	# $version2 if the same as $version1 with additionnal characters so it must be more recent
+	# (i.e. 1.2foo is usually more recent than 1.2)
+	return -1;
+    } 
+
+    return 0;
+}
+
+
+
+
+
+
+############################################################################################
+# Low level package management functions:
+# Theses functions deals with managing the SRV5 pkg file
+############################################################################################
+
+BEGIN 
+{
+    my %pkg_options = ( global => '',
+			pkgadd => '-a /var/pkg-get/admin',
+			pkgrm => '-a /var/pkg-get/admin' );
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : set_pkg_options
+# Purpose  : Set the options used with pkgadd/pkgrm
+# Arguments: $options - options to use 
+#            $pkg_tool - either pkgadd or pkgrm, the options given
+#	                 will be used with the given pkg tool.
+#			 If no one is given, options will be used
+#			 with both tools.
+#
+    sub set_pkg_options
+    {
+	my $options = shift;
+	my $pkg_tool = shift;
+	$pkg_tool = "global" if not defined $pkg_tool;
+
+	$pkg_options{$pkg_tool} = "$options"
+    }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_pkg_options
+# Purpose  : Return the options used with pkgadd/pkgrm
+# Arguments: $pkg_tool - either pkgadd or pkgrm or nothing
+#                        if nothing is given, the options configured to be
+#                        used with both tools will be returned
+#
+    sub get_pkg_options
+    {
+	my $pkg_tool = shift;
+
+	if (not defined $pkg_tool) {
+	    return $pkg_options{global};
+	}
+
+	return "$pkg_options{global} $pkg_options{$pkg_tool}"
+    }
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : remove_pkg
+# Purpose  : Remove the given Sun package
+# Arguments: $pkginst - package name (Sun format)
+# Returns  : True if the package was correctly removed
+#            False otherwise
+#
+sub remove_pkg
+{
+    my $pkginst = shift or die;
+
+    my $pkg_options = get_pkg_options ('pkgrm');
+    system("/usr/sbin/pkgrm $pkg_options $pkginst");
+
+    return ! $?;
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : install_pkg
+# Purpose  : Install the given Sun package
+# Arguments: $pkginst - package name (Sun format)
+#                       the given package must be present
+#                       in the pkg spool directory.
+# Returns  : True if the package was correctly installed
+#            False otherwise
+#
+sub install_pkg
+{
+    my $pkginst = shift or die;
+
+    my $pkgadd_options = get_pkg_options ('pkgadd');
+    system("/usr/sbin/pkgadd $pkgadd_options $pkginst");
+
+    return ! $?;
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : unpack_pkg
+# Purpose  : Unpack the given Sun package (from datastream to file system format)
+# Arguments: $pkginst - package name (Sun format)
+#            $pkg_file - path of the package in datastream format
+# Returns  : True if the package was correctly unpacked in the pkg spool directory
+#            False otherwise
+#
+sub unpack_pkg
+{
+    my $pkginst = shift or die;
+    my $pkg_file = shift or die;
+
+    my $spool_dir = PKG_SPOOL_DIR;
+
+    rmtree ("$spool_dir/$pkginst") if ( -e "$spool_dir/$pkginst" );
+    mkdir ("$spool_dir", 1777) if ( ! -d "$spool_dir" );
+    system("/usr/bin/pkgtrans -o $pkg_file $spool_dir $pkginst");
+    return ! $?;
+}
+
+
+
+############################################################################################
+# Base package management functions:
+# Theses functions add the pkg-get software name layer on top of the base
+# SRV5 pkg file format
+############################################################################################
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_pkg_get_dir
+# Purpose  : Return the path of the pkg-get directory
+# Returns  : The path of the pkg-get directory
+# Effets   : if the default pkg-get dir (usually /var/pkg-get) could not be used
+#            (if pkg-get is runned by a non-root user for example), a temporary directory
+#            will be created to store pkg-get files: /tmp/pkg-get.username
+#
+sub get_pkg_get_dir 
+{
+    my $dir = PKG_GET_DIR;
+    `touch $dir >/dev/null 2>&1`;
+    if (! $?) {
+	return PKG_GET_DIR;
+    } else {
+	my $userid = `who -m | cut -d" "  -f1`;
+	chomp ($userid);
+	mkdir ("/tmp/pkg-get.$userid", 0775);
+	mkdir ("/tmp/pkg-get.$userid/downloads", 0775);
+	return "/tmp/pkg-get.$userid";
+    }
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_site_file_path
+# Purpose  : Return the location of a pkg-get file for a given site
+# Returns  : The location of a pkg-get file for a given site
+#
+#            For example, get_site_file_path "http://ftp/toto" catalog
+#            would return /var/pkg-get/catalog-ftp-toto
+#
+sub get_site_file_path
+{
+    my $site = shift or die;
+    my $filename = shift or die;
+
+    my $file_suffix = $site;
+    $file_suffix =~ s/[^:]+:\/\///;
+    $file_suffix =~ s/\//-/g;
+
+    return get_pkg_get_dir () . "/${filename}-${file_suffix}";
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : load_local_catalog
+# Purpose  : Load and return catalog of locally installed packages
+# Returns  : The catalog of locally installed packages
+#
+#            A catalog is basically a hash structure of package_info 
+#            where the hash key if the pkginst.
+#
+#            A package_info is basically a hash structure containing at least:
+#             pkginst => pkg name of the package
+#             version => the version number of the package
+#             arch => the arch of the package
+#             desc => a one-line description of the package
+#             site => the site where this package is available
+#            and at most:
+#             software_name => name of the software provided by the package
+#	      filename => filename of the package
+#	      checksum => checksum of the package file
+#	      site_url => url of the site providing this package
+#	      source_package => filename of the source package
+#	      source_url => url of the site providing the source package
+#             
+#
+sub load_local_catalog
+{
+    my $packages_info = {};
+    my $pkg_options = get_pkg_options ();
+
+    # we just use the pkginfo output to know what packages
+    # are locally installed
+    open FH, "pkginfo $pkg_options -x |";
+    while (my $line1 = <FH> and my $line2 = <FH>) {
+	chomp ($line1);
+	chomp ($line2);
+		    
+	my ($pkginst, $desc) = ($line1 =~ /^(\S+)\s+(.*)$/);
+	my ($arch, $version) = ($line2 =~ /^\s+\(([^)]+)\)\s+(\S+)/);
+
+	$packages_info->{$pkginst} = [];
+	push @{$packages_info->{$pkginst}}, { pkginst => $pkginst,
+				              version => $version,
+					      arch => $arch,
+					      desc => $desc,
+					      site => 'local' };
+    }
+    close FH;
+	
+    return $packages_info;
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : load_remote_catalog
+# Purpose  : Load and return catalog of a remote package repository
+# Arguments: $site - url of the remote package repository
+#            $options - hash of options
+# Returns  : The catalog and the list of software names availables
+#
+#            See load_local_catalog for some info on the catalog format
+#
+sub load_remote_catalog{
+    my $site = shift;
+    my $options = shift;
+    
+    my $packages_list = {};    
+    my $software_names_list = {};
+    
+    my $filename = get_site_file_path ($options->{url}{$site}, "catalog");
+
+    return 0 if ( ! -f $filename);
+
+    open FH, "< $filename" or die "Couldn\'t read catalog (file $filename)";
+    while (my $line = <FH>) {
+	next if ($line =~ /^\s*(\#|$)/ or 
+		 $line =~ /^-----BEGIN PGP SIGNED/ or 
+		 $line =~ /Hash: /);
+	last if ($line =~ /^-----BEGIN PGP SIGNATURE/);
+
+	chomp ($line);
+	
+	my ($software_name, $version, $pkginst, $filename, $checksum) = split (/\s+/, $line);
+	
+	if (not exists $packages_list->{$pkginst}) {
+	    $packages_list->{$pkginst} = [];
+	    $software_names_list->{$software_name} = $packages_list->{$pkginst};
+	}
+	
+	push @{$packages_list->{$pkginst}}, { pkginst => $pkginst,
+					      software_name => $software_name,
+					      version => $version,
+					      filename => $filename,
+					      checksum => $checksum,
+					      site => $site,
+					      site_url => $options->{url}{$site},
+					      source_package => "${software_name}-${version}.spkg",
+					      source_url => $options->{src_url}{$site} };
+    }
+    close FH;
+
+    return ( $packages_list, $software_names_list );
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : load_remote_descriptions
+# Purpose  : Load descriptions of software available on a remote package repository
+#            and update accordingly the catalog
+# Arguments: $site - url of the remote package repository
+#            $options - hash of options
+#            $packages_list - the catalog returned by load_remote_catalog
+#            $software_names_list - the software name list returned by load_remote_catalog
+#
+sub load_remote_descriptions
+{
+    my $site = shift or die;
+    my $options = shift or die;
+    my $packages_list = shift or die;
+    my $software_names_list = shift or die;
+
+    my $filename = get_site_file_path ($options->{url}{$site}, "descriptions");
+
+    if ( -f $filename ) {
+	open FH, "< $filename" or die;
+	while (my $line = <FH>) {
+	    chomp ($line);
+
+	    my ($software_name, $desc) = split (/\s*-\s*/, $line);
+      
+	    if (exists ($software_names_list->{$software_name})) {
+		foreach my $package (@{$software_names_list->{$software_name}}) {
+		    $package->{desc} = $desc;
+		}
+	    }
+	}
+	close FH;
+    }
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : load_remote_dependancies_information
+# Purpose  : Load dependancies information of software available on a remote package repository
+#            and update accordingly the catalog
+# Arguments: $site - url of the remote package repository
+#            $options - hash of options
+#            $packages_list - the catalog returned by load_remote_catalog
+#            $software_names_list - the software name list returned by load_remote_catalog
+#
+sub load_remote_dependancies_information
+{
+    my $site = shift or die;
+    my $options = shift or die;
+    my $packages_list = shift or die;
+    my $software_names_list = shift or die;
+
+    my $filename = get_site_file_path ($options->{url}{$site}, "dependancies");
+    if ( -f $filename ) {
+	open FH, "< $filename" or die "Couldn\'t read catalog (file $filename)";
+	while (my $line = <FH>) {
+	    chomp ($line);
+	    my ($package, @pkg_dependancies) = split (/\s+/, $line);
+	    my ($software_name, $version) = split (/-/, $package);
+
+	    if (exists ($software_names_list->{$software_name}) and @pkg_dependancies) {
+
+		my $dependancies = [];
+		foreach my $pkginst (@pkg_dependancies) {
+		    my $package = get_package ($pkginst, undef, $site);
+		    push (@{$dependancies}, defined $package ? $package : { pkginst => $pkginst });
+		}
+                foreach my $package (@{$software_names_list->{$software_name}}) {
+		    $package->{dependancies} = $dependancies if ($package->{version} eq $version);
+		}
+	    }
+	}
+	close FH;
+    }
+    
+
+}
+
+
+
+BEGIN {
+    my $software_names_list_cache = {};
+    my $packages_list_cache = {};
+    my $local_packages_list_last_update;
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : is_cache_uptodate
+# Purpose  : To avoid loading the catalog on each request, we keep the information
+#            in memory. This function allows to know if this information is uptodate
+# Arguments: $site - url of the remote package repository
+# Returns  : True if the package is up to date
+#            False otherwise
+# Effets   : For local site, this function update local package modification time as it
+#            it is expected that the catalog is reloaded if this function returns false
+#
+    sub is_cache_uptodate
+    {
+	my $site = shift;
+	
+	if (not exists $packages_list_cache->{$site}) {
+	    return 0;
+	} elsif ($site ne "local") {
+	    return 1;
+	}
+
+	# for local packages, we will test the modification time
+	# of /var/sadm/pkg directory to know if packages were added/removed
+	# since the last time we loaded the catalog
+	my $pkg_options = get_pkg_options ();
+	my $root_directory = "/";
+
+	if ($pkg_options =~ /-R\s*(\S+)/) {
+	    $root_directory = $1;
+	}
+
+	# 
+	if ( -d "${root_directory}/var/sadm/pkg" ) {
+	    
+	    my $ret = 1;
+	    
+	    my $stat = stat("${root_directory}/var/sadm/pkg");
+	    if (defined $local_packages_list_last_update) {
+		$ret = ($stat->mtime <= $local_packages_list_last_update);
+		$local_packages_list_last_update = $stat->mtime if not $ret;
+	    } else {
+		$ret = 1;
+		$local_packages_list_last_update = $stat->mtime;
+	    }
+	    return $ret;
+	}
+
+	return 0;
+    }
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_software_names_list
+# Purpose  : Returns the list of software available on a given site
+# Arguments: $site - url of the remote package repository
+#            $options - hash of options
+# Returns  : A hash structure mapping software name to package info
+#
+    sub get_software_names_list
+    {
+	my $site = shift or die;
+	my $options = shift or die;
+	
+	if (not exists ($software_names_list_cache->{$site})) {
+	    return undef if (not get_packages_list ($site, $options));
+	}
+	
+	return $software_names_list_cache->{$site};
+    }
+    
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_packages_list
+# Purpose  : Returns the catalog of package available on a given site
+# Arguments: $site - url of the remote package repository
+#            $options - hash of options
+# Returns  : The catalog of package available on a given site
+#
+    sub get_packages_list
+    {
+	my $site = shift or die;
+	my $options = shift;
+	
+	if (not is_cache_uptodate ($site)) {
+
+	    # cache not up to date so we update it
+
+	    if ($site eq "local") {
+		
+		$packages_list_cache->{local} = load_local_catalog ();
+		
+	    } else {
+
+		my @ret = load_remote_catalog ($site, $options);
+		return undef if ($ret[0] == 0);
+		
+		($packages_list_cache->{$site}, $software_names_list_cache->{$site}) = @ret;
+
+		load_remote_descriptions ($site, $options, $packages_list_cache->{$site}, $software_names_list_cache->{$site});
+		load_remote_dependancies_information ($site, $options, $packages_list_cache->{$site}, $software_names_list_cache->{$site});
+	    }
+	}
+
+	return $packages_list_cache->{$site};
+    }
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_package
+# Purpose  : Returns the package information for the given pkginst available 
+#            on the given site, an optional version can also be given
+# Arguments: $pkginst - pkg name of the package
+#            $version - version of the package as multiple version of a package 
+#                       can be available on a site.
+#                       If no version is given, the package information of the most
+#                       recent version of the package is returned
+#            $options - hash of options
+# Returns  : A hash containing information on the package
+#
+sub get_package
+{
+    my $pkginst = shift or die;
+    my $version = shift;
+    my $site = shift or die;
+    my $options = shift;
+    
+    my $packages_list = get_packages_list ($site, $options);
+    my $package_found = undef;
+
+    if (exists $packages_list->{$pkginst}) {
+	foreach my $package (@{$packages_list->{$pkginst}}) {
+	    if (defined $version) {
+		if (compare_versions ($package->{version}, $version) == 0) {
+		    $package_found = $package;
+		    last;
+		}
+	    } else {
+		# if no version is given, we try to find the most recent version
+		if (not defined $package_found or 
+		    compare_versions ($package->{version}, $package_found->{version}) > 0) {
+		    $package_found = $package;
+		}
+	    }
+	} 
+    }
+
+    return $package_found;
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_package_by_software_name
+# Purpose  : Returns the package information for the given software name
+#            on the given site, an optional version can also be given
+# Arguments: $software_name - name of the software provided by the package
+#            $version - version of the package as multiple version of a package 
+#                       can be available on a site.
+#                       If no version is given, the package information of the most
+#                       recent version of the package is returned
+#            $options - hash of options
+# Returns  : A hash containing information on the package
+#
+sub get_package_by_software_name
+{
+    my $software_name = shift or die;
+    my $version = shift;
+    my $site = shift or die;
+    my $options = shift or die;
+
+    my $software_names_list = get_software_names_list ($site, $options);
+
+    if (exists $software_names_list->{$software_name}) {
+	# we simply use get_package using the pkginst of the first package providing the software
+	# If a software is provided by package with different pkginst, this will not perfectly works
+	# but in theory this should not happen
+	return get_package ($software_names_list->{$software_name}->[0]->{pkginst}, $version, $site, $options);
+    }
+    
+    return undef;
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : update_packages_list
+# Purpose  : Update package information of a given package in the catalog
+# Arguments: $site - url of the remote repository package
+#            $options - hash of options
+#            $package - updated package information to put in the catalog
+#
+sub update_packages_list
+{
+    my $site = shift or die;
+    my $options = shift or die;
+    my $package = shift or die;
+
+    my $pkginst = $package->{pkginst};
+    my $packages_list = get_packages_list ($site, $options);
+    $packages_list->{$pkginst} = [] if not exists $packages_list->{$pkginst};
+
+    push (@{$packages_list->{$pkginst}}, $package);
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : is_package_installed
+# Purpose  : Check is a given package is locally installed
+# Arguments: $package - package to check 
+#            $check_version - if false, this function just check is a package
+#                             with the same name is installed regardless of the version
+#                             if true, the exact version must be present
+# Returns  : True if the package is installed
+#            False - otherwise
+#
+sub is_package_installed 
+{
+    my $package = shift or die;
+    my $check_version = shift;
+	
+    # we just search for the pkg name in the catalogs
+    return (defined get_package ($package->{pkginst}, 
+				 $check_version ? $package->{version} : undef, 
+				 'local'));
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : is_package_uptodate
+# Purpose  : Check if a local package is the last version available
+# Arguments: $package - package to check 
+#            $site - if given, $package is expected to be a local one, and 
+#                    the function will check if the a more recent version 
+#                    of the given package exist on the given site;
+#                    if not given, $package is expected to be a remote one, 
+#                    and the function will check if the version
+#                    of the local package is as recent as the given package
+#            $options - hash of options
+# Returns  : True if the package is uptodate
+#            False - otherwise
+#
+sub is_package_uptodate 
+{
+    my $package = shift or die;
+    my $site = shift;
+    my $options = shift;
+    
+    if (defined $site) {
+	
+	# we want to know if package at least as recent as the latest version 
+	# available on site
+	my $remote_package = get_package ($package->{pkginst},
+					  undef,
+					  $site,
+					  $options);
+	return (not defined $remote_package or
+		compare_versions ($package->{version}, $remote_package->{version}) >= 0);
+
+    } else {
+
+	# we want to know if the local package is at least as recent as
+	# this package
+	my $local_package = get_package ($package->{pkginst},
+					 undef,
+					 'local');
+	
+	return (defined $local_package and (not defined $package->{version} or  
+		compare_versions ($local_package->{version}, $package->{version})) >= 0);
+    }
+}
+
+
+
+# the following functions handle dependancies stuff
+BEGIN {
+    my $dependancies_cache = {};
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : get_all_dependancies
+# Purpose  : Compute and return the complete list of dependancies of a given package
+#            This function recursively walk the dependancies tree to be able to find
+#            the complete list of dependancies
+# Arguments: $package - package whose dependancies list must be found
+# Returns  : the list of dependancies of the package
+#            or undef if an error was found (dependancies loop, ...)
+#
+    sub get_all_dependancies 
+    {
+	my $package = shift or die;
+
+	return [] if not exists $package->{site};
+
+	my $site = $package->{site};
+	my $cache_key = "$package->{pkginst}-$package->{version}";
+
+	if (exists $dependancies_cache->{$site} and
+	    exists $dependancies_cache->{$site}{$cache_key}) {
+	    
+	    # We are already searching the dependancies of this package
+	    # This can only means that this package depends on itself
+	    if ($dependancies_cache->{$site}{$cache_key} eq "calculating") {
+		return undef;
+	    }
+	    
+	    # we already computed the dependancies list of this package so
+	    # we just return it 
+	    return $dependancies_cache->{$site}{$cache_key};
+	    
+	} else {
+
+	    my $all_dependancies = [];
+	    my %packages_added;
+
+	    # We mark the package as being calculating to be able
+	    # to detect dependancies loops
+	    $dependancies_cache->{$site}{$cache_key} = "calculating";
+
+	    if (exists $package->{dependancies} and $package->{dependancies}) {
+
+		foreach my $dependancy (@{$package->{dependancies}}) {
+		    
+		    my $dependancies = [];
+		    
+		    $dependancies = get_all_dependancies ($dependancy);
+		    # dependancies loop detected, quitting
+		    return undef if not defined $dependancies;		
+
+		    # Before adding a dependancy, we first check if it has 
+		    # already been added to avoid duplicates.
+		    foreach my $dependancy2 (@{$dependancies}, $dependancy) {
+			if (not exists ($packages_added{$dependancy2->{pkginst}})) {
+			    push (@{$all_dependancies}, $dependancy2);
+			    $packages_added{$dependancy2->{pkginst}} = 1;
+			}
+		    }
+		}
+	    } 
+	
+            # we update the dependancies cache	    
+	    $dependancies_cache->{$site} = {} if not exists $dependancies_cache->{$site};
+	    $dependancies_cache->{$site}{$cache_key} = $all_dependancies;
+
+	    return $all_dependancies;
+	}
+    }
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : update_dependancies_info
+# Purpose  : Update the dependancies information of a given package from its 
+#            extracted depend file
+# Arguments: $package - package whose dependancies must be updated 
+#                       The package must have already been downloaded and unpacked
+# Effets   : the cache of dependancies for the site of the package is deleted
+#
+    sub update_dependancies_info
+    {
+	my $package = shift or die;
+	
+	my $depends_file = PKG_SPOOL_DIR . "/$package->{pkginst}/install/depend";
+	
+	if ( -f $depends_file ) {
+	    my $packages_list = [];
+	    
+	    open FH, "< $depends_file" or die;
+	    my @lines = <FH>;
+	    close FH;
+	    
+	    chomp (@lines);
+	    my @pkg_dependancies = grep { s/^\s*P\s*(\S+).*$/$1/ } @lines;
+	    
+	    foreach my $pkginst (@pkg_dependancies) {
+		my $package = get_package ($pkginst, undef, $package->{site});
+		push (@{$packages_list}, defined $package ? $package : { pkginst => $pkginst });
+	    }
+	    
+	    $package->{dependancies} = $packages_list;
+	    # The cache is now dirty
+	    delete $dependancies_cache->{$package->{site}};
+	}
+    }
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : add_dependancies
+# Purpose  : Given a list of packages, complete the list with all the dependancies 
+#            required to install the packages
+# Arguments: $package_list - list of packages 
+# Returns  : the list of packages completed with depandancies
+#
+sub add_dependancies
+{
+    my $package_list = shift;
+
+    my $all_dependancies = [];
+    my %packages_added;
+
+    foreach my $package (@{$package_list}) {
+
+	my $dependancies = get_all_dependancies ($package);
+	return undef if not defined $dependancies;
+
+	foreach my $dependancy (@{$dependancies}, $package) {
+	    if (not exists ($packages_added{$dependancy->{pkginst}})) {
+		push (@{$all_dependancies}, $dependancy);
+		$packages_added{$dependancy->{pkginst}} = 1;
+	    }
+	}
+    }
+
+    return $all_dependancies;
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : remote_package
+# Purpose  : Remove the given package
+# Arguments: $package - package to remove
+#
+sub remove_package
+{
+    my $package = shift or die;
+
+    remove_pkg ($package->{pkginst});
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : install_package
+# Purpose  : Install the given package
+# Arguments: $package - package to install
+# Returns  : True - if the package was installed
+#
+sub install_package
+{
+    my $package = shift or die;
+
+    if (is_package_installed ($package)) {
+	remove_package ($package) or return 0;
+    }
+
+    return install_pkg ($package->{pkginst});
+}
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Function : download_package
+# Purpose  : Download the given package
+# Arguments: $package - package to install
+#            $check_md5 - if true, the md5 sum of the downloaded package will be checked
+# Returns  : True - if the package was downloaded
+#
+sub download_package
+{
+    my $package = shift or die;
+    my $check_md5 = shift;
+    my $filename = get_pkg_get_dir () . "/downloads/$package->{filename}";
+
+    if ($check_md5 and $package->{checksum}) {
+	if ( ! -f $filename or get_md5sum ($filename) ne $package->{checksum} ) {
+	    retrieve_file ("$package->{site_url}/$package->{filename}", $filename, 0) or return 0;
+	    if (get_md5sum ($filename) ne $package->{checksum}) {
+		return 0;
+	    }
+	}
+    } elsif ( ! -f $filename ) {
+	retrieve_file ("$package->{site_url}/$package->{filename}", $filename, 0) or return 0;
+    }
+
+    $package->{downloaded} = 1;
+    return 1;
+}
+
+
+# - - - - - - - - - - - - - - - -
+# Function : download_source_package
+# Purpose  : Download the source of the given package
+# Arguments: $package - package whose source must be downloaded
+# Returns  : True - if the source package was downloaded
+#
+sub download_source_package
+{
+    my $package = shift or die;
+    my $filename = get_pkg_get_dir () . "/downloads/$package->{source_package}";
+
+    retrieve_file ("$package->{source_url}/$package->{source_package}", $filename, 0) or return 0;
+
+    return 1;
+}
+
+
+
+# - - - - - - - - - - - - - - - -
+# Function : unpack_source_package
+# Purpose  : Unpack the source of the given package
+# Arguments: $package - package whose source must be downloaded
+# Returns  : True - if the source package was unpacked
+#
+sub unpack_source_package
+{
+    my $package = shift or die;
+    my $filename = get_pkg_get_dir () . "/downloads/$package->{source_package}";
+    my $source_dir = "$package->{software_name}-$package->{version}";
+   
+    # We replace "," by "-" as pkgmk or some configure commands don't like it
+    # $source_dir =~ s/,/-/g;
+   
+    # We filter the REV=... part as it can contains some characters which 
+    # disturbs the compilation process (ex: = or ,)
+    $source_dir =~ s/,REV=.*$//g;
+    
+    mkdir ($source_dir, 0775);
+    
+    system("cd $source_dir && gunzip --stdout ${filename} | tar xf - ");
+    my $ret = ! $?;
+    return $ret if not $ret;
+
+    return 1;
+}
+
+
+# - - - - - - - - - - - - - - - -
+# Function : unpack_package
+# Purpose  : Unpack the given package
+# Arguments: $package - package to unpack
+#            $delete - if true, all temporary files
+#                      are deleted after unpacking
+# Returns  : True - if the package was unpacked
+#
+sub unpack_package 
+{
+    my $package = shift or die;
+    my $delete = shift;
+    my $filename = get_pkg_get_dir () . "/downloads/$package->{filename}";
+    $filename =~ s/\.gz$//;
+
+    system("gunzip --stdout ${filename}.gz > $filename");
+    my $ret = ! $?;
+    return $ret if not $ret;
+
+    $ret = unpack_pkg ($package->{pkginst}, $filename);
+    unlink ($filename) if $delete;
+    return $ret;
+}
+
+
+# - - - - - - - - - - - - - - - -
+# Function : clean_package_file_cache
+# Purpose  : Delete all the temporary downloaded file used to
+#            install a given package
+#
+sub clean_package_file_cache 
+{
+    my $package = shift or die;
+    my $filename = get_pkg_get_dir () . "/downloads/$package->{filename}";
+    
+    unlink ($filename) if ( -f $filename );
+    $filename =~ s/\.gz$//;
+    unlink ($filename) if ( -f $filename );
+
+    my $spool_dir = PKG_SPOOL_DIR;
+
+    rmtree ("$spool_dir/$package->{pkginst}") if ( -e "$spool_dir/$package->{pkginst}" );
+}
+
+
+
+############################################################################################
+# Command line functions
+############################################################################################
+
+
+# - - - - - - - - - - - - - - - -
+# Function : validate_packages_installation
+# Purpose  : Check which package must be installed/upgraded and ask confirmation from the user 
+# Arguments: $options - hash of options
+#            $packages_list - list of package whose installation must be validated by the user
+# Returns  : True if the user validated the installation of the packages
+#            False otherwise
+# Effects   : Display a text message on the screen and wait for a yes/no answer from the user
+#
+sub validate_packages_installation
+{
+    my $options = shift;
+    my $packages_list = shift or die;
+
+    my @to_install = ();
+    my @to_upgrade = ();
+    my @not_available = ();
+
+    my $validated_packages_list = [];
+
+    # we loop through the package list to determine
+    # which package must be upgraded/installed
+    # and which package are not available
+    foreach my $package (@{$packages_list}) {
+
+	if ($package->{validated}) {
+	    push (@{$validated_packages_list}, $package);
+	    next;
+	}
+	    
+	if (is_package_installed ($package)) {
+	    
+	    if ($options->{follow_upgrade} and not is_package_uptodate ($package)) {
+		push (@to_upgrade, $package->{software_name});
+		push (@{$validated_packages_list}, $package);
+	    }
+
+	} elsif ($package->{site}) {
+	    push (@to_install, $package->{software_name});
+	    push (@{$validated_packages_list}, $package);
+
+	} else {
+	    push (@not_available, $package->{pkginst});
+	}
+    }
+
+    if (@not_available) {
+	print STDERR "The following dependancies are not installed nor available:\n";
+	print STDERR "   @not_available\n";
+	return 0;
+    } 
+
+    if (@to_install or ($options->{follow_upgrade} and @to_upgrade)) {
+
+	if ($options->{follow_upgrade} and @to_upgrade) {
+	    print "The following packages will be upgraded:\n";
+	    print "   @to_upgrade\n";
+	}	
+
+	if (@to_install) {
+	    print "The following packages will be installed to satisfy dependancies:\n";
+	    print "   @to_install\n";
+	}
+
+	return undef if not ask_confirmation ("Do you want to continue [y/n]? ");
+    }
+
+    # we mark theses packages as validated so confirmation is not asked 
+    # a second time for them
+    foreach my $package (@{$validated_packages_list}) {
+	$package->{validated} = 1;
+    }
+
+    return $validated_packages_list;
+}
+
+
+# - - - - - - - - - - - - - - - -
+# Function : install_packages
+# Purpose  : Install a list of packages
+# Arguments: $packages_list - list of packages to install 
+# Returns  : True if the packages were successfully installed
+#            False otherwise
+#
+sub install_packages 
+{
+    my $packages_list = shift or die;
+
+    foreach my $package (@{$packages_list}) {
+	print "Installing $package->{software_name}...\n";
+	install_package ($package) or return 0;
+    }
+
+    return 1;
+}
+
+
+
+# - - - - - - - - - - - - - - - -
+# Function : download_and_install_packages
+# Purpose  : Download and install a list of packages
+#            This function also downloads the dependancies required
+#            to install the packages in the list
+# Arguments: $options - hash of options
+#            $packages_list - list of packages to download and install 
+# Returns  : True if the packages were successfully downloaded and installed
+#            False otherwise
+#
+sub download_and_install_packages
+{
+    my $options = shift;
+    my $packages_list = shift or die;
+
+    # If archive maintains service side dependancies informations, we can find 
+    # the complete list of dependancies without having to download all packages
+    # Thus we can ask the user confirmation of installation before a single byte 
+    # is downloaded
+
+    my $downloaded_packages_list = [ 1 ];
+
+    # Each time we download packages we re-analyze dependancies to search
+    # if we need to download new packages to satisfy dependancies.
+    # this way we can work with site without or with not up to date
+    # server side dependancies informations
+
+    # we stop when no new package has been downloaded which means that we
+    # have all the dependancies chain.
+    while (@{$downloaded_packages_list}) {
+	print "Analyzing dependancies...\n";
+	$packages_list = add_dependancies ($packages_list);
+	if (not defined $packages_list) {
+	    print STDERR "ERROR: Dependancies loop detected. Aborting...\n";
+	    return 0;
+	}
+	$packages_list = validate_packages_installation ($options, $packages_list) or return 1;
+	$downloaded_packages_list = download_packages ($options, $packages_list) or return 0;
+
+	foreach my $package (@{$downloaded_packages_list}) {
+	    print "Unpacking $package->{filename}...\n";
+	    if (not unpack_package ($package, 1)) {
+		print STDERR "ERROR: Unable to unpack package $package->{filename} !!\n       File may be corrupted, you can try to download it again.\n";
+		my $filename = get_pkg_get_dir () . "/downloads/$package->{filename}";
+		unlink ($filename) if ( -f $filename );
+		return 0;
+	    }
+	    # we update the dependancies information from the depend file included in the package
+	    # so we will never miss a dependancy even if there is a problem in the server-side 
+	    # dependancies information
+	    update_dependancies_info ($package);
+	}
+    }
+
+    # Once everything is downloaded, we begin to install
+    return 1 if $options->{download_only};
+    install_packages ($packages_list) or return 0;
+
+    foreach my $package (@{$packages_list}) {
+	clean_package_file_cache ($package);
+    }
+}
+
+
+
+# - - - - - - - - - - - - - - - -
+# Function : download_packages
+# Purpose  : Downloads a list of packages
+# Arguments: $options - has of options 
+#            $packages_list - list of packages to install 
+# Returns  : True if the packages were successfully downloaded
+#            False otherwise
+#
+sub download_packages 
+{
+    my $options = shift;
+    my $packages_list = shift or die;
+
+    my @packages_list = @{$packages_list};
+    my $downloaded_packages_list = [];
+
+    foreach my $package (@packages_list) {
+	
+	next if $package->{downloaded};
+
+	print "Downloading $package->{site_url}/$package->{filename}...\n";
+	if (! download_package ($package, $options->{use_md5})) {
+	    print STDERR "ERROR: Couldn't download $package->{site_url}/$package->{filename} or incorrect checksum !\n";
+	    return undef;
+	}
+	push (@{$downloaded_packages_list}, $package);
+    }
+    
+    return $downloaded_packages_list;
+}
+
+
+# - - - - - - - - - - - - - - - -
+# Function : download_source_package
+# Purpose  : Downloads a list of source packages
+# Arguments: $options - has of options 
+#            $packages_list - list of source packages to download
+# Returns  : True if the source packages were successfully downloaded
+#            False otherwise
+#
+sub download_source_packages 
+{
+    my $options = shift or die;
+    my $packages_list = shift or die;
+
+    my @packages_list = @{$packages_list};
+    my $downloaded_packages_list = [];
+
+    foreach my $package (@packages_list) {
+	
+	print "Downloading $package->{source_url}/$package->{source_package}...\n";
+	if (! download_source_package ($package, $options->{use_md5})) {
+	    print STDERR "ERROR: Couldn't download $package->{source_url}/$package->{source_package} !\n";
+	    return undef;
+	}
+	push (@{$downloaded_packages_list}, $package);
+    }
+    
+    foreach my $package (@{$downloaded_packages_list}) {
+	print "Unpacking source_package $package->{filename}...\n";
+	unpack_source_package ($package);
+    }
+
+    return $downloaded_packages_list;
+}
+
+
+
+# - - - - - - - - - - - - - - - -
+# Function : cmd_update_packages_list
+# Purpose  : Update the locally retrieved catalog file
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+# Returns  : True if the source packages were successfully downloaded
+#            False otherwise
+#
+sub cmd_update_packages_list
+{
+    my $site = shift or die;
+    my $options = shift or die;
+
+    my @file_list = ( { name => 'catalog', desc => 'catalog', 	error_msg => 'Failed !', required => '1' },
+		      { name => 'descriptions', desc => 'packages descriptions', error_msg => 'Not supported by this archive', 	required => '0' },
+		      { name => 'dependancies', desc => 'package dependancies informations', error_msg => 'Not supported by this archive', required => '0' },
+		    );
+
+    print "Updating catalog...\n";
+
+    foreach my $file (@file_list) {
+	my $filename = get_site_file_path ($options->{url}{$site}, $file->{name});
+	print "Retrieving $file->{desc} ($options->{url}{$site}/$file->{name}): ";
+	if (retrieve_file ("$options->{url}{$site}/$file->{name}", "${filename}.tmp", 1) and move ("${filename}.tmp", "${filename}")) {
+	    print "OK\n";
+	} else {
+	    print $file->{error_msg} . "\n";
+	    return 0 if $file->{required};
+	}
+    }
+    return 1;
+}
+
+
+# - - - - - - - - - - - - - - - -
+# Function : cmd_display_packages_description
+# Purpose  : Display on screen the descriptions of softwares available 
+#            on a given remote repository
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#
+sub cmd_display_packages_description
+{
+    my $site = shift or die;
+    my $options = shift or die;
+
+    if (not defined get_packages_list ($site, $options)) {
+        cmd_update_packages_list ($site, $options) or return 0;
+    }
+
+    my $software_names_list = get_software_names_list ($site, $options);
+
+    print "# (Descriptions from site $site )\n";
+
+    foreach my $software_name (sort keys %{$software_names_list}) {
+	foreach my $package (@{$software_names_list->{$software_name}}) {
+	    print "$software_name - $package->{desc}\n";
+	}
+    }
+}
+
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_display_available_packages
+# Purpose  : Display on screen the list of softwares and version available 
+#            on a given remote repository
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#
+sub cmd_display_available_packages 
+{
+    my $site = shift or die;
+    my $options = shift or die;
+
+    if (not defined get_packages_list ($site, $options)) {
+        cmd_update_packages_list ($site, $options) or return 0;
+    }
+
+    my $software_names_list = get_software_names_list ($site, $options);
+
+    print "# (Descriptions from site $site )\n";
+
+    foreach my $software_name (sort keys %{$software_names_list}) {
+	foreach my $package (@{$software_names_list->{$software_name}}) {
+	    printf "%20s %15s\n", ($package->{software_name}, $package->{version});
+	}
+    }
+}
+
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_display_packages_list
+# Purpose  : Display on screen the list of softwares available 
+#            on a given remote repository
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#
+sub cmd_display_packages_list
+{
+    my $site = shift or die;
+    my $options = shift or die;
+
+    if (not defined get_packages_list ($site, $options)) {
+        cmd_update_packages_list ($site, $options) or return 0;
+    }
+
+    my $software_names_list = get_software_names_list ($site, $options);
+
+    foreach my $software_name (sort keys %{$software_names_list}) {
+	foreach my $package (@{$software_names_list->{$software_name}}) {
+	    printf "$package->{software_name}\n";
+	}
+    }
+}
+
+
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_compare_packages_version
+# Purpose  : Display on screen a comparison between version
+#            of locally installed packages and packages available
+#            on a given remote repository
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#
+sub cmd_compare_packages_version
+{
+    my $site = shift or die;
+    my $options = shift or die;
+
+    if (not defined get_packages_list ($site, $options)) {
+        cmd_update_packages_list ($site, $options) or return 0;
+    }
+
+    my $remote_software_names_list = get_software_names_list ($site, $options);
+
+    print "# (From site $site )\n";
+    printf "%15s   %25s   %25s\n", ("software", "localrev", "remoterev");
+
+    foreach my $software_name (sort keys %{$remote_software_names_list}) {
+
+	foreach my $package (@{$remote_software_names_list->{$software_name}}) {
+
+	    my $local_version;
+	    my $remote_version = $package->{version};
+
+	    if (is_package_installed ($package)) {
+		my $local_package = get_package ($package->{pkginst}, undef, 'local');
+		$local_version = $local_package->{version};
+	    } else {
+		$local_version = "[Not installed]";
+	    }
+
+	    if (compare_versions ($remote_version, $local_version) == 0) {
+		$remote_version = "SAME";
+	    }
+	    
+	    printf ("%15s   %25s   %25s\n", $software_name, $local_version, $remote_version);
+	}
+    }
+}
+
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_upgrade_packages
+# Purpose  : Check if there are more recent version of software available
+#            on the given site and upgrade local packages accordingly
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#            $software_list - optional, a list of software to upgrade, only
+#                             this software will be checked for upgrade.
+#
+sub cmd_upgrade_packages
+{
+    my $site = shift or die;
+    my $options = shift or die;
+    my $software_list = shift;
+
+    if (@{$software_list}) {
+	
+	# with a list of software given, upgrade acts like install
+	return cmd_install_packages ($site, $options, $software_list);
+
+    } else {
+
+	my $packages_list = [];
+
+	# No software name was specified, so we are looking for every packages
+	# not up to date.
+	my $remote_packages_list = get_packages_list ($site, $options);
+	foreach my $pkginst (keys %{$remote_packages_list}) {
+	    my $package = get_package ($pkginst, undef, $site);
+	    if (is_package_installed ($package) and not is_package_uptodate ($package)) {
+		push (@{$packages_list}, $package)
+	    }
+	}
+
+	if (not @{$packages_list}) {
+	    print "All packages are up to date.\n";
+	    return 1;
+	}	
+
+	$options->{follow_upgrade} = 1;
+	return download_and_install_packages ($options, $packages_list);
+    }
+}
+
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_install_packages
+# Purpose  : Install locally the given list of software available on
+#            the given site.
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#            $software_names_list - a list of software to install
+#
+sub cmd_install_packages
+{
+    my $site = shift or die;
+    my $options = shift or die;
+    my $software_names_list = shift or die;
+
+    if (not defined get_packages_list ($site, $options)) {
+	cmd_update_packages_list ($site, $options) or return 0;
+    }
+
+    my $packages_list = [];
+
+    foreach my $software (@{$software_names_list}) {
+	my ($software_name, $version) = ($software =~ /([^-]+)(?:-(.*))?$/);
+
+	my $package = get_package_by_software_name ($software_name, $version, $site, $options);
+
+	# if the software_name is unknown, we assume a pkginst was given 
+	if (not defined $package) {
+		$package = get_package ($software_name, $version, $site, $options);
+	}
+		
+	if (not defined $package) {
+	    print STDERR "Package $software_name doesn\'t seem to be available on $site.\n";
+	    print STDERR "Your catalog may be up to date. You can update it by using\n";
+	    print STDERR "the following command:\n";
+	    print STDERR "    pkg-get upgrade\n";
+	    return;
+	}
+
+	if (is_package_uptodate ($package)) {
+	    print STDERR "$software_name is already installed and up to date.\n";
+	    next;
+	}
+
+	$package->{validated} = 1;
+	push (@{$packages_list}, $package);
+    }
+
+    download_and_install_packages ($options, $packages_list) if @{$packages_list};
+}
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_remove_packages
+# Purpose  : Remove the given list of software which were installed 
+#            from the given site.
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#            $software_names_list - a list of software to remove
+#
+sub cmd_remove_packages
+{
+    my $site = shift or die;
+    my $options = shift or die;
+    my $software_name_list = shift or die;
+    
+    if (not defined get_packages_list ($site, $options)) {
+        cmd_update_packages_list ($site, $options) or return 0;
+    }
+
+    foreach my $software_name (@{$software_name_list}) {
+	my $package = get_package_by_software_name ($software_name, undef, $site, $options);
+
+	# if the software_name is unknown, we assume a pkginst was given 
+	if (not defined $package) {
+		$package = get_package ($software_name, undef, $site, $options);
+	}
+
+	if (not defined $package) {
+	    print STDERR "Package $software_name is unknown on $site.\n";
+	    return;
+	}
+	
+	if (not is_package_installed ($package)) {
+	    print STDERR "Package $software_name is not installed on your system.\n";
+	    next;
+	}
+
+	set_pkg_options ("-a /var/pkg-get/admin_remove", "pkgrm");
+	remove_package ($package);
+    }
+}
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_download_source_packages
+# Purpose  : Download the source packages of the given list of software
+#            which were installed from the given site.
+# Arguments: $site - url of the remote repository
+#            $options - has of options
+#            $software_names_list - a list of software whose source package
+#                                   must be downloaded
+#
+sub cmd_download_source_packages
+{
+    my $site = shift or die;
+    my $options = shift or die;
+    my $software_names_list = shift or die;
+
+    if (not defined get_packages_list ($site, $options)) {
+        cmd_update_packages_list ($site, $options) or return 0;
+    }
+
+    my $packages_list = [];
+
+    foreach my $software (@{$software_names_list}) {
+	my ($software_name, $version) = ($software =~ /([^-]+)(?:-(.*))?$/);
+
+	my $package = get_package_by_software_name ($software_name, $version, $site, $options);
+
+	# if the software_name is unknown, we assume a pkginst was given
+	if (not defined $package) {
+		$package = get_package ($software_name, $version, $site, $options);
+	}
+
+	if (not defined $package) {
+	    if (not defined $version) {
+	    	print STDERR "Package $software_name doesn\'t seem to be available on $site.\n";
+	    	print STDERR "Your catalog may be up to date. You can update it by using\n";
+	    	print STDERR "the following command:\n";
+	    	print STDERR "    pkg-get upgrade\n";
+	    	return;
+	    } else {
+		print STDERR "Package $software_name-$version doesn\'t exist in $site catalog.\n";
+		print STDERR "We will try to directly download the source package anyway.\n";
+
+		$package = { software_name => $software_name,
+			     version => $version,
+                             site => $site,
+                             site_url => $options->{url}{$site},
+                             source_package => "${software_name}-${version}.spkg",
+                             source_url => $options->{src_url}{$site} };
+            }
+        }
+	push (@{$packages_list}, $package);
+    }
+
+    download_source_packages ($options, $packages_list) if @{$packages_list};
+}
+
+
+
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_super_cow_power
+# Purpose  : Compatibility with pkg-get and apt-get
+#
+sub cmd_super_cow_power
+{
+    print <<EOF
+         (__)
+         (oo)
+   /------\/
+  / |    ||
+ *  /\---/\
+    ~~   ~~
+...."Have you mooed today?"...
+EOF
+
+}
+
+
+
+# - - - - - - - - - - - - - - -
+# Function : cmd_display_help
+# Purpose  : Display on screen little help to use ppk-get
+#
+sub display_help
+{
+    print <<"EOF";
+pkg-get 3.4.1.inra40 by Yann Rouillard
+perl rewrite of original pkg-get by Philip Brown
+
+Usage: pkg-get [options] command
+       pkg-get [options] install|remove pkg1 [pkg2 ...]
+
+ppkg-get is a simple command line interface used to download and
+install packages 
+
+Commands:
+   update    - Updates download site inventory
+   upgrade   - Upgrades already installed packages if possible
+   install   - Installs a package
+   remove    - Removes packages
+   available - Lists the available packages in the catalog
+   compare   - Shows installed package versions vs available
+   list      - Shows installed packages by software name only
+   describe  - Describes available packages, or search for one
+
+Options:
+  -h|--help  This help text.
+  -d|--download   Just download the package, do not install
+  -s|--site   temporarily override packages repository site   
+  -g|--follow-upgrade   Upgrades dependancies when upgrading a package
+                        (default behaviour for default site)
+  -c|--config-file    Define an alternative configuration file
+
+EOF
+}
+
+
+
+my $help;
+my $config_file = "/etc/opt/csw/pkg-get.conf";
+my $site = "default";
+my $follow_upgrade;
+my $pkg_options;
+my $command;
+
+# Adding standard path for wget
+$PATH .= ":/opt/csw/bin:/usr/sfw/bin:/opt/csw/bin";
+
+
+Getopt::Long::Configure ("no_ignore_case");  
+GetOptions("h|help" => \$help,
+	   "config-file=s" => \$config_file,
+	   "t|target-release|source=s" => \$site,
+	   "g|follow-upgrade" => \$follow_upgrade,
+	   "o|pkg-options=s" => \$pkg_options,
+	   "U" => sub { $command = "update" },
+	   "D" => sub { $command = "describe" },
+	   "i" => sub { $command = "install" },
+	   "u" => sub { $command = "upgrade" },
+	   "a" => sub { $command = "available" },
+	   "r" => sub { $command = "remove" },
+	   "c" => sub { $command = "compare" },
+	   "l" => sub { $command = "list" },
+	   "d" => sub { $command = "download" });
+
+
+
+
+if ($help or (scalar (@ARGV) == 0 and not defined $command)) {
+    display_help;
+    exit 1;
+}
+
+
+set_pkg_options ($pkg_options) if defined $pkg_options;
+
+foreach my $file ("/etc/opt/csw/ppkg-get.conf", "/opt/csw/etc/ppkg-get.conf", "/etc/opt/csw/pkg-get.conf", "/opt/csw/etc/pkg-get.conf") {
+	if ( -f "$file" ) {
+		$config_file = $file;
+		last;
+	}
+}
+
+my $options = parse_config_file ($config_file, { url => {}, src_url => {}, upload_url => {}, upload_src_url => {} });
+my $system_info = get_system_info ();
+
+# on the default site, we always follows upgrade
+# but we do not do this if an alternate site is picked
+# so it's easy to just pick a software from another site
+# without upgrading the whole dependancies chain
+if (not defined $follow_upgrade) {
+    if ( $site eq "default") {
+	$follow_upgrade = 1;
+    } else {
+	$follow_upgrade = 0;
+    }
+}     
+$options->{follow_upgrade} = $follow_upgrade;
+
+if ($options->{use_md5} and not find_md5sum_bin) {
+    print STDERR "No md5sum binary found, disabling md5 checksum verification.\n";
+    $options->{use_md5} = 0;
+}
+    
+if (not exists $options->{url}{$site}) {
+    $options->{url}{"default"} = $site;
+    $options->{src_url}{"default"} = $site;
+    $site = "default";
+} 
+
+foreach $site (keys %{$options->{url}}) {
+    $options->{url}{$site} = $options->{url}{$site} .  '/' . $system_info->{arch} . '/' . $system_info->{release};
+    if (not defined $options->{src_url}{$site}) {
+	$options->{src_url}{$site} = $options->{src_url}{"default"};
+    }
+}
+
+my @args = @ARGV;
+
+$command = shift @args if not defined $command;
+  
+switch: {
+	
+    ($command eq "update" or $command eq "updatecatalog") and do {
+	exit 2 if not cmd_update_packages_list ($site, $options);
+	last switch;
+    };
+
+    
+    ($command eq "install") and do {
+	if (scalar(@args) == 0) {
+	    display_help ();
+	    exit 1;
+	    }
+	    
+	exit 2 if not cmd_install_packages ($site, $options, \@args);
+	last switch;
+    };
+
+	
+    ($command eq "upgrade") and do {
+	exit 2 if not cmd_upgrade_packages ($site, $options, \@args);
+	last switch;
+    };
+
+	
+    ($command eq "download") and do {
+	if (scalar(@args) == 0) {
+	    display_help ();
+	    exit 1;
+	}
+	
+	$options->{download_only} = 1;
+	exit 2 if not cmd_install_packages ($site, $options, \@args);
+	last switch;
+    };
+
+    ($command eq "remove") and do {
+	if (scalar(@args) == 0) {
+	    display_help ();
+	    exit 1;
+	}
+		
+	exit 2 if not cmd_remove_packages ($site, $options, \@args);
+	last switch;
+    };
+
+    ($command eq "moo") and do {
+	cmd_super_cow_power ();
+	exit 0;
+    };
+
+    ($command eq "available") and do {
+	exit 2 if not cmd_display_available_packages ($site, $options);
+	last switch;
+    };
+
+    ($command eq "list") and do {
+	exit 2 if not cmd_display_packages_list ($site, $options);
+	last switch;
+    };
+    
+    ($command eq "describe") and do {
+	exit 2 if not cmd_display_packages_description ($site, $options);
+	last switch;
+    };
+
+    ($command eq "compare") and do {
+	exit 2 if not cmd_compare_packages_version ($site, $options);
+	last switch;
+    };
+
+    ($command eq "source") and do {
+	if (scalar(@args) == 0) {
+            display_help ();
+            exit 1;
+        }
+
+	exit 2 if not cmd_download_source_packages ($site, $options, \@args);
+	last switch;
+    };
+
+    display_help ();
+    exit 1;
+}    
+
+exit 0;
+

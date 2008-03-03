@@ -1,0 +1,8 @@
+%var             bitname libflac
+%var             pkgname CSWflac
+%include         url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright	 url file://%{WORKSRC}/COPYING.FDL
+%copyright:merge url file://%{WORKSRC}/COPYING.GPL
+%copyright:merge url file://%{WORKSRC}/COPYING.LGPL
+%copyright:merge url file://%{WORKSRC}/COPYING.Xiph
+

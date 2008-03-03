@@ -1,0 +1,129 @@
+diff --speed-large-files --minimal -Nru Python-2.5.1.orig/setup.py Python-2.5.1/setup.py
+--- Python-2.5.1.orig/setup.py	2007-02-14 07:53:41.000000000 -0500
++++ Python-2.5.1/setup.py	2007-04-28 13:12:20.541676000 -0400
+@@ -243,9 +243,9 @@
+         return sys.platform
+ 
+     def detect_modules(self):
+-        # Ensure that /usr/local is always used
+-        add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
+-        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
++        # Ensure that /opt/csw is always used
++        add_dir_to_list(self.compiler.library_dirs, '/opt/csw/lib')
++        add_dir_to_list(self.compiler.include_dirs, '/opt/csw/include')
+ 
+         # Add paths specified in the environment variables LDFLAGS and
+         # CPPFLAGS for header and library files.
+@@ -293,10 +293,7 @@
+         # lib_dirs and inc_dirs are used to search for files;
+         # if a file is found in one of those directories, it can
+         # be assumed that no additional -I,-L directives are needed.
+-        lib_dirs = self.compiler.library_dirs + [
+-            '/lib64', '/usr/lib64',
+-            '/lib', '/usr/lib',
+-            ]
++        lib_dirs = self.compiler.library_dirs + [ '/lib', '/usr/lib' ]
+         inc_dirs = self.compiler.include_dirs + ['/usr/include']
+         exts = []
+ 
+@@ -519,22 +516,17 @@
+         exts.append( Extension('_socket', ['socketmodule.c'],
+                                depends = ['socketmodule.h']) )
+         # Detect SSL support for the socket module (via _ssl)
+-        search_for_ssl_incs_in = [
+-                              '/usr/local/ssl/include',
+-                              '/usr/contrib/ssl/include/'
+-                             ]
++        search_for_ssl_incs_in = [ '/opt/csw/include' ]
+         ssl_incs = find_file('openssl/ssl.h', inc_dirs,
+                              search_for_ssl_incs_in
+                              )
+         if ssl_incs is not None:
+             krb5_h = find_file('krb5.h', inc_dirs,
+-                               ['/usr/kerberos/include'])
++                               ['/opt/csw/include'])
+             if krb5_h:
+                 ssl_incs += krb5_h
+         ssl_libs = find_library_file(self.compiler, 'ssl',lib_dirs,
+-                                     ['/usr/local/ssl/lib',
+-                                      '/usr/contrib/ssl/lib/'
+-                                     ] )
++                                     [ '/opt/csw/lib' ] )
+ 
+         if (ssl_incs is not None and
+             ssl_libs is not None):
+@@ -612,49 +604,7 @@
+ 
+         # construct a list of paths to look for the header file in on
+         # top of the normal inc_dirs.
+-        db_inc_paths = [
+-            '/usr/include/db4',
+-            '/usr/local/include/db4',
+-            '/opt/sfw/include/db4',
+-            '/sw/include/db4',
+-            '/usr/include/db3',
+-            '/usr/local/include/db3',
+-            '/opt/sfw/include/db3',
+-            '/sw/include/db3',
+-        ]
+-        # 4.x minor number specific paths
+-        for x in (0,1,2,3,4,5):
+-            db_inc_paths.append('/usr/include/db4%d' % x)
+-            db_inc_paths.append('/usr/include/db4.%d' % x)
+-            db_inc_paths.append('/usr/local/BerkeleyDB.4.%d/include' % x)
+-            db_inc_paths.append('/usr/local/include/db4%d' % x)
+-            db_inc_paths.append('/pkg/db-4.%d/include' % x)
+-            db_inc_paths.append('/opt/db-4.%d/include' % x)
+-        # 3.x minor number specific paths
+-        for x in (3,):
+-            db_inc_paths.append('/usr/include/db3%d' % x)
+-            db_inc_paths.append('/usr/local/BerkeleyDB.3.%d/include' % x)
+-            db_inc_paths.append('/usr/local/include/db3%d' % x)
+-            db_inc_paths.append('/pkg/db-3.%d/include' % x)
+-            db_inc_paths.append('/opt/db-3.%d/include' % x)
+-
+-        # Add some common subdirectories for Sleepycat DB to the list,
+-        # based on the standard include directories. This way DB3/4 gets
+-        # picked up when it is installed in a non-standard prefix and
+-        # the user has added that prefix into inc_dirs.
+-        std_variants = []
+-        for dn in inc_dirs:
+-            std_variants.append(os.path.join(dn, 'db3'))
+-            std_variants.append(os.path.join(dn, 'db4'))
+-            for x in (0,1,2,3,4):
+-                std_variants.append(os.path.join(dn, "db4%d"%x))
+-                std_variants.append(os.path.join(dn, "db4.%d"%x))
+-            for x in (2,3):
+-                std_variants.append(os.path.join(dn, "db3%d"%x))
+-                std_variants.append(os.path.join(dn, "db3.%d"%x))
+-
+-        db_inc_paths = std_variants + db_inc_paths
+-
++        db_inc_paths = [ '/opt/csw/bdb44/include' ]
+ 
+         db_ver_inc_map = {}
+ 
+@@ -746,13 +696,7 @@
+         # We hunt for #define SQLITE_VERSION "n.n.n"
+         # We need to find >= sqlite version 3.0.8
+         sqlite_incdir = sqlite_libdir = None
+-        sqlite_inc_paths = [ '/usr/include',
+-                             '/usr/include/sqlite',
+-                             '/usr/include/sqlite3',
+-                             '/usr/local/include',
+-                             '/usr/local/include/sqlite',
+-                             '/usr/local/include/sqlite3',
+-                           ]
++        sqlite_inc_paths = [ '/opt/csw/include' ]
+         MIN_SQLITE_VERSION_NUMBER = (3, 0, 8)
+         MIN_SQLITE_VERSION = ".".join([str(x)
+                                     for x in MIN_SQLITE_VERSION_NUMBER])
+@@ -837,7 +781,7 @@
+         # accidentally building this module with a later version of the
+         # underlying db library.  May BSD-ish Unixes incorporate db 1.85
+         # symbols into libc and place the include file in /usr/include.
+-        f = "/usr/include/db.h"
++        f = "/opt/csw/bdb44/include/db_185.h"
+         if os.path.exists(f):
+             data = open(f).read()
+             m = re.search(r"#s*define\s+HASHVERSION\s+2\s*", data)

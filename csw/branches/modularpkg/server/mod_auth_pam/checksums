@@ -1,0 +1,8 @@
+ab873520ddd2fee7d480dfd53e464e0a  download/mod_auth_pam-2.0-1.1.1.tar.gz
+ec0b941b485920d03d9e6c4450569efc  download/CSWap2modauthpam.gspec
+43c992b019672fe3bacdbe4fababb500  download/CSWap2modauthpam.depend
+b3b2430cb806fb3ba0537f3711fe6f4d  download/CSWap2modauthpam.prototype
+c412e5af4578678182ace6b7657c865e  download/CSWap2modauthpam.postinstall
+dd56a17f6bda5f514833b28a2d70c18c  download/CSWap2modauthpam.preremove
+0dd379f20ceb32fc77bb3a9bf045097f  download/CSWap2modauthpam.space
+c655c6bc96addcd1a04557c22a084656  download/install.diff

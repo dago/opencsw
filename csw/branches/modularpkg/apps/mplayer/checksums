@@ -1,0 +1,8 @@
+7e27e535c2d267637df34898f1b91707  download/MPlayer-1.0rc2.tar.bz2
+e4e2020d11b681aac898103b3ba723c4  download/Blue-1.7.tar.bz2
+f84bc9de8d2052da5c520d1a756f81b0  download/CSWmplayer.gspec
+8ed311be34e23aa24825e016b1f946aa  download/CSWmplayer.depend
+8c02cf94c7af48a70c7e96e874379cb8  download/fix-configure.diff
+76866779859be662d9eeac73bf6016d3  download/fix-libavcodec-gcc-bug.diff
+1d801072350301c89f7ff58cad8f93a2  download/fix-manpage-macros.diff
+94579f5ab17c17b8d89455128ae78cef  download/sparc-v8-novis.diff

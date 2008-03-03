@@ -1,0 +1,2 @@
+P CSWpmarchivezip pm_archivezip - provide an interface to ZIP archive files.
+P CSWpmiostringy pm_iostringy - I/O on in-core objects like strings and arrays

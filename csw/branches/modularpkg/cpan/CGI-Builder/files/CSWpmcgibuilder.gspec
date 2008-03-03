@@ -1,0 +1,10 @@
+%var            bitname pm_cgibuilder
+%var            pkgname CSWpmcgibuilder
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+© 2004 by Domizio Demichelis (L<http://perl.4pro.net>)
+
+All Rights Reserved. This module is free software. It may be used,
+redistributed and/or modified under the same terms as perl itself.
+

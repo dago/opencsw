@@ -1,0 +1,22 @@
+diff --speed-large-files --minimal -Nru exo-0.3.2.orig/exo/exo-mount-point.c exo-0.3.2/exo/exo-mount-point.c
+--- exo-0.3.2.orig/exo/exo-mount-point.c	2007-01-20 08:58:22.000000000 -0500
++++ exo-0.3.2/exo/exo-mount-point.c	2007-01-28 16:24:33.580736000 -0500
+@@ -38,6 +38,7 @@
+ #include <sys/mount.h>
+ #endif
+ #ifdef HAVE_SYS_MNTTAB_H
++#include <stdio.h>
+ #include <sys/mnttab.h>
+ #endif
+ 
+@@ -226,8 +227,8 @@
+   struct mnttab mntent;
+   FILE         *fp;
+ 
+-  /* try to open the /etc/mnttab file */
+-  fp = setmntent ("/etc/mnttab", "r");
++  /* try to open the fstab file */
++  fp = fopen ("/etc/mnttab", "r");
+   if (G_UNLIKELY (fp == NULL))
+     {
+       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),

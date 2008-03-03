@@ -1,0 +1,4 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/xchat 0755 root bin
+d none /opt/csw/lib/xchat/plugins 0755 root bin
+f none /opt/csw/lib/xchat/plugins/tcl.so 0755 root bin

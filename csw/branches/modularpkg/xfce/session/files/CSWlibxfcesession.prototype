@@ -1,0 +1,7 @@
+f none /opt/csw/lib/libxfsm-4.2.la 0755 root bin
+f none /opt/csw/lib/libxfsm-4.2.so.0.0.1 0755 root bin
+s none /opt/csw/lib/libxfsm-4.2.so.0=libxfsm-4.2.so.0.0.1
+s none /opt/csw/lib/libxfsm-4.2.so=libxfsm-4.2.so.0.0.1
+i copyright=CSWlibxfcesession.copyright
+i depend=CSWlibxfcesession.depend
+i pkginfo=CSWlibxfcesession.pkginfo

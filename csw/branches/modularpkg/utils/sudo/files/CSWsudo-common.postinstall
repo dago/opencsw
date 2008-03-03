@@ -1,0 +1,15 @@
+#!/bin/sh
+
+CONFDIR=$BASEDIR/opt/csw/etc
+
+# check if the sudoers file exists before overwriting it.
+if [ ! -f $CONFDIR/sudoers ] ; then
+	cp -p $CONFDIR/sudoers.CSW $CONFDIR/sudoers
+    chmod 440 $CONFDIR/sudoers
+    chown root:root $CONFDIR/sudoers
+else
+	echo "sudoers already exists. Not copying sudoers.CSW"
+fi
+
+exit 0
+

@@ -1,0 +1,40 @@
+diff --speed-large-files --minimal -Nru listadmin-2.37.orig/Makefile listadmin-2.37/Makefile
+--- listadmin-2.37.orig/Makefile	2007-01-24 05:40:21.000000000 +0100
++++ listadmin-2.37/Makefile	2007-09-18 22:02:35.087634626 +0200
+@@ -1,11 +1,11 @@
+ SHELL = /bin/sh
+-INSTALL = install -c
++INSTALL = /usr/ucb/install -c
+ 
+ VERSION = 2.37
+ 
+ PREFIX = /usr/local
+-BINDIR = $(PREFIX)/bin
+-MANDIR = $(PREFIX)/share/man
++BINDIR = $(DESTDIR)/opt/csw/bin
++MANDIR = $(DESTDIR)/opt/csw/share/man
+ 
+ SRCFILES = Makefile listadmin.pl listadmin.man
+ 
+@@ -13,8 +13,10 @@
+ 	@echo Nothing needs to be done
+ 
+ install:
+-	$(INSTALL) listadmin.pl $(bindir)/listadmin
+-	$(INSTALL) -m 644 listadmin.man $(mandir)/man1/listadmin.1
++	mkdir -p $(BINDIR)
++	mkdir -p $(MANDIR)/man1
++	$(INSTALL) listadmin.pl $(BINDIR)/listadmin
++	$(INSTALL) -m 644 listadmin.man $(MANDIR)/man1/listadmin.1
+ 
+ listadmin.txt: listadmin.man
+ #	Note the verbatim backspace in the sed command
+diff --speed-large-files --minimal -Nru listadmin-2.37.orig/listadmin.pl listadmin-2.37/listadmin.pl
+--- listadmin-2.37.orig/listadmin.pl	2007-01-24 05:40:21.000000000 +0100
++++ listadmin-2.37/listadmin.pl	2007-09-19 09:34:34.037860846 +0200
+@@ -1,4 +1,4 @@
+-#! /usr/bin/perl -w
++#! /opt/csw/bin/perl -w
+ #
+ # listadmin - process messages held by Mailman for approval
+ # Written 2003 - 2007 by

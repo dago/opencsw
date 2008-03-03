@@ -1,0 +1,19 @@
+%var            bitname pm_htmlmason
+%var            pkgname CSWpmhtmlmason
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Mason was originally developed for the Internet technology group at
+CMP Media, a publisher of technology magazines. CMP
+graciously supported our efforts to release Mason as open source
+software to the Perl community.  However, CMP has NO direct
+involvement with the open source release and bears NO responsibility
+for its support or maintenance.
+
+Mason is provided "as is" and without any express or implied
+warranties, including, without limitation, the implied warranties of
+merchantibility and fitness for a particular purpose.
+
+Mason is released under the same terms as Perl itself.  For more
+information see the "README" or "Artistic" files provided with the
+Perl distribution.

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+CONFDIR=${CSW_PREFIX}/apache2/share/htdocs/websvn/include
+
+# Copy templates
+template_list="config.php"
+
+echo Removing unmodified CSW templates:
+for file in $template_list
+do
+    filepath=${CONFDIR}/$file
+    if [ -f "${filepath}" ] && [ -f "${filepath}.CSW" ] && cmp -s "${filepath}" "${filepath}.CSW"; then
+        echo "  removing $filepath"
+        rm -f "${filepath}"
+    else
+        echo "  preserving $filepath"
+    fi
+done
+
+exit 0

@@ -1,0 +1,7 @@
+P CSWgcrypt libgcrypt - GNU libcrypt
+P CSWggettext ggettext - GNU gettext
+P CSWgpgerr libgpg_error - GNU gpg related library
+P CSWiconv libiconv - GNU iconv library
+P CSWlibxml2 libxml2 - Xml parser library
+P CSWlibxslt libxslt - XSLT engine for the XML Toolkit
+P CSWzlib zlib - Zlib Data Compression Library

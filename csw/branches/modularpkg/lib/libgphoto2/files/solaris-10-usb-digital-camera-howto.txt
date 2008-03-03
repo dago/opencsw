@@ -1,0 +1,125 @@
+                                                    Monday, June 20, 2005
+
+
+   Solaris 10: USB Digital Camera HOWTO
+
+   The following instructions are very "generic", and applicable to all
+   makes/models of digital cameras. Sony DSC-V1 camera was used to show
+   all the examples.
+
+   Since the vendor supplied Windows driver cannot be installed on
+   Solaris, it needs some effort to make the digital camera work on
+   Solaris 10. The steps are as follows:
+
+     * Bind the device (digital camera) to the ugen driver. Then the ugen
+       driver can talk to the digital camera (device).
+
+       ugen is a generic USB driver, which is part of the Solaris USB
+       Driver Development Kit, presents USB devices to applications
+       through a standard read/write UNIX interface.
+
+         1. Remove the ugen driver from the system, if it was already
+            installed. If in doubt, run the following command anyway:
+            % rem_drv ugen
+            Driver (ugen) not installed.
+
+         2. Plug-in the camera to the system; and then run prtconf -v
+            command, to find the device ID for the attached digital
+            camera.
+            % prtconf -v
+                            ....
+            device (driver not attached)
+                Hardware properties:
+                    name='usb-product-name' type=string items=1
+                        value='Sony PTP'
+                    name='usb-vendor-name' type=string items=1
+                        value='Sony'
+                            ....
+                            ....
+                    name='compatible' type=string items=8
+                        value='usb54c,4e.150' + 'usb54c,4e' + 'usbif54c,class6.
+1.1' +
+                              'usbif54c,class6.1' + 'usbif54c,class6' + 'usbif,
+class6.1.1' +
+                              'usbif,class6.1' + 'usbif,class6'  name='reg' typ
+e=int items=1
+                        value=00000001
+                            ....
+
+         3. Add the driver alias (usb54c,4e.150 in this example. 054c is
+            the vendor-id for Sony corporation, and 004e is the
+            product-id for DSC-xxx (PTP)) with add_drv command, if this
+            is the first device to be bound to ugen. Run add_drv command,
+            as root.
+
+            % add_drv -m '* 0666 root sys' -i '"usb54c,4e.150"' ugen
+
+            Refer to the man page of add_drv for information about -m, -i
+            flags and use of double quotes in specifying a driver alias
+            that contains numbers.
+
+            Note:
+
+            If add_drv command throws an error saying ("usb54c,4e.150")
+            already in use as a driver or alias, that means another
+            device is already bound to ugen. So, to bind the new device
+            to ugen, run update_drv command, as root.
+
+            % update_drv -a -m '* 0666 root sys' -i '"usb54c,4e.150"' ugen
+
+            If update_drv still complains about the driver or alias in
+            use, try to remove the driver and add it again, as explained
+            above
+
+         4. Bind this device (digital camera) to ugen by default that
+            have no driver
+
+            % echo "ugen-default-binding=\"usb54c,4e.150\";" >> /kernel/drv/uhci.conf
+            % echo "ugen-default-binding=\"usb54c,4e.150\";" >> /kernel/drv/ehci.conf
+            % echo "ugen-default-binding=\"usb54c,4e.150\";" >> /kernel/drv/ohci.conf
+
+         5. Check /etc/driver_aliases and make sure that the correct
+            compatible name is in /etc/driver_aliases
+
+            % grep ugen /etc/driver_aliases
+            ugen "usb54c,4e.150"
+
+         6. Reboot the machine (only for the very first time)
+
+         7. Plug-in the camera and use prtconf -D to check if ugen has
+            been bound to the device
+
+            % prtconf -D | grep ugen
+            device, instance #1 (driver name: ugen)
+
+     * Use gphoto2, to auto detect the camera. gphoto2 is an application
+       that allows users to operate/download images from digital cameras
+       on Solaris (*nix, in general). On Solaris 10, gphoto2 is available
+       under /usr/sfw/bin directory, by default.
+
+       % gphoto2 --auto-detect
+       Model                          Port
+       ----------------------------------------------------------
+       Sony DSC-F707V (PTP mode)      usb:
+            * Now either use gphoto2 command line tool or gtkam GUI tool, to
+              download all the photos.
+                 + gphoto2 --help, shows all options of gphoto2
+                 + gphoto2 -P, downloads all the pictures from the digital
+                   camera to the current directory
+                 + gtkam is also available under /usr/sfw/bin directory, by
+                   default
+
+   Note that this is a one time only effort, and these steps need not be
+   repeated everytime the digital camera has been plugged in to the
+   system.
+
+   References and suggested reading:
+
+    1. Solaris USB FAQ
+
+    2. Dan Price's blog post - gtkam & USB on Solaris 10
+
+    3. Ben Rockwood's blog post - Canon Rebel XT on OpenSolaris
+
+    4. White Paper: Using the USB Generic Driver (Ugen) to Access USB
+       Peripherals on Solaris Systems

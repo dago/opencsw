@@ -1,0 +1,585 @@
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/attachment.cgi bugzilla-2.22/attachment.cgi
+--- bugzilla-2.22.orig/attachment.cgi	2006-04-09 14:28:49.000000000 -0400
++++ bugzilla-2.22/attachment.cgi	2006-08-30 00:05:56.372381000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/buglist.cgi bugzilla-2.22/buglist.cgi
+--- bugzilla-2.22.orig/buglist.cgi	2006-02-20 19:05:56.000000000 -0500
++++ bugzilla-2.22/buglist.cgi	2006-08-30 00:05:55.801858000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/chart.cgi bugzilla-2.22/chart.cgi
+--- bugzilla-2.22.orig/chart.cgi	2005-10-30 16:31:27.000000000 -0500
++++ bugzilla-2.22/chart.cgi	2006-08-30 00:05:57.818265000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/checksetup.pl bugzilla-2.22/checksetup.pl
+--- bugzilla-2.22.orig/checksetup.pl	2006-01-12 02:03:46.000000000 -0500
++++ bugzilla-2.22/checksetup.pl	2006-08-30 00:05:57.657829000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/colchange.cgi bugzilla-2.22/colchange.cgi
+--- bugzilla-2.22.orig/colchange.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/colchange.cgi	2006-08-30 00:05:56.551938000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/collectstats.pl bugzilla-2.22/collectstats.pl
+--- bugzilla-2.22.orig/collectstats.pl	2005-12-22 21:01:51.000000000 -0500
++++ bugzilla-2.22/collectstats.pl	2006-08-30 00:05:56.943952000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/config.cgi bugzilla-2.22/config.cgi
+--- bugzilla-2.22.orig/config.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/config.cgi	2006-08-30 00:05:55.991968000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/bug_email.pl bugzilla-2.22/contrib/bug_email.pl
+--- bugzilla-2.22.orig/contrib/bug_email.pl	2006-02-21 09:52:37.000000000 -0500
++++ bugzilla-2.22/contrib/bug_email.pl	2006-08-30 00:05:58.346900000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/bugzilla_email_append.pl bugzilla-2.22/contrib/bugzilla_email_append.pl
+--- bugzilla-2.22.orig/contrib/bugzilla_email_append.pl	2005-11-25 16:57:07.000000000 -0500
++++ bugzilla-2.22/contrib/bugzilla_email_append.pl	2006-08-30 00:05:58.164927000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ 
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/bzdbcopy.pl bugzilla-2.22/contrib/bzdbcopy.pl
+--- bugzilla-2.22.orig/contrib/bzdbcopy.pl	2005-07-12 03:56:16.000000000 -0400
++++ bugzilla-2.22/contrib/bzdbcopy.pl	2006-08-30 00:05:58.224985000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ #
+ # bzdbcopy.pl - Copies data from one Bugzilla database to another. 
+ #
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/cvs-update.pl bugzilla-2.22/contrib/cvs-update.pl
+--- bugzilla-2.22.orig/contrib/cvs-update.pl	2003-11-11 00:58:52.000000000 -0500
++++ bugzilla-2.22/contrib/cvs-update.pl	2006-08-30 00:05:58.651182000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/gnats2bz.pl bugzilla-2.22/contrib/gnats2bz.pl
+--- bugzilla-2.22.orig/contrib/gnats2bz.pl	2002-01-31 09:29:21.000000000 -0500
++++ bugzilla-2.22/contrib/gnats2bz.pl	2006-08-30 00:05:58.412238000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/merge-users.pl bugzilla-2.22/contrib/merge-users.pl
+--- bugzilla-2.22.orig/contrib/merge-users.pl	2006-02-26 08:17:48.000000000 -0500
++++ bugzilla-2.22/contrib/merge-users.pl	2006-08-30 00:05:58.598186000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/mysqld-watcher.pl bugzilla-2.22/contrib/mysqld-watcher.pl
+--- bugzilla-2.22.orig/contrib/mysqld-watcher.pl	2003-03-26 19:06:53.000000000 -0500
++++ bugzilla-2.22/contrib/mysqld-watcher.pl	2006-08-30 00:05:58.472687000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ #
+ # The contents of this file are subject to the Mozilla Public
+ # License Version 1.1 (the "License"); you may not use this file
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/sendbugmail.pl bugzilla-2.22/contrib/sendbugmail.pl
+--- bugzilla-2.22.orig/contrib/sendbugmail.pl	2005-02-24 18:42:48.000000000 -0500
++++ bugzilla-2.22/contrib/sendbugmail.pl	2006-08-30 00:05:58.284573000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ #
+ #                    sendbugmail.pl
+ #
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/sendunsentbugmail.pl bugzilla-2.22/contrib/sendunsentbugmail.pl
+--- bugzilla-2.22.orig/contrib/sendunsentbugmail.pl	2005-11-13 12:32:12.000000000 -0500
++++ bugzilla-2.22/contrib/sendunsentbugmail.pl	2006-08-30 00:05:58.530302000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/contrib/syncLDAP.pl bugzilla-2.22/contrib/syncLDAP.pl
+--- bugzilla-2.22.orig/contrib/syncLDAP.pl	2005-08-09 21:30:40.000000000 -0400
++++ bugzilla-2.22/contrib/syncLDAP.pl	2006-08-30 00:05:58.705614000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/createaccount.cgi bugzilla-2.22/createaccount.cgi
+--- bugzilla-2.22.orig/createaccount.cgi	2005-12-20 17:16:07.000000000 -0500
++++ bugzilla-2.22/createaccount.cgi	2006-08-30 00:05:58.764880000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/describecomponents.cgi bugzilla-2.22/describecomponents.cgi
+--- bugzilla-2.22.orig/describecomponents.cgi	2005-10-26 12:15:48.000000000 -0400
++++ bugzilla-2.22/describecomponents.cgi	2006-08-30 00:05:55.498100000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/describekeywords.cgi bugzilla-2.22/describekeywords.cgi
+--- bugzilla-2.22.orig/describekeywords.cgi	2005-10-26 12:15:50.000000000 -0400
++++ bugzilla-2.22/describekeywords.cgi	2006-08-30 00:05:57.445512000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/docs/makedocs.pl bugzilla-2.22/docs/makedocs.pl
+--- bugzilla-2.22.orig/docs/makedocs.pl	2005-08-13 08:27:04.000000000 -0400
++++ bugzilla-2.22/docs/makedocs.pl	2006-08-30 00:05:55.297365000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/duplicates.cgi bugzilla-2.22/duplicates.cgi
+--- bugzilla-2.22.orig/duplicates.cgi	2005-11-13 12:50:47.000000000 -0500
++++ bugzilla-2.22/duplicates.cgi	2006-08-30 00:05:55.673635000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editclassifications.cgi bugzilla-2.22/editclassifications.cgi
+--- bugzilla-2.22.orig/editclassifications.cgi	2005-10-13 19:42:32.000000000 -0400
++++ bugzilla-2.22/editclassifications.cgi	2006-08-30 00:05:55.613385000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil; cperl-indent-level: 4 -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editcomponents.cgi bugzilla-2.22/editcomponents.cgi
+--- bugzilla-2.22.orig/editcomponents.cgi	2006-01-06 09:38:35.000000000 -0500
++++ bugzilla-2.22/editcomponents.cgi	2006-08-30 00:05:55.432890000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editflagtypes.cgi bugzilla-2.22/editflagtypes.cgi
+--- bugzilla-2.22.orig/editflagtypes.cgi	2006-01-11 08:16:39.000000000 -0500
++++ bugzilla-2.22/editflagtypes.cgi	2006-08-30 00:05:57.891684000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editgroups.cgi bugzilla-2.22/editgroups.cgi
+--- bugzilla-2.22.orig/editgroups.cgi	2006-01-22 15:10:08.000000000 -0500
++++ bugzilla-2.22/editgroups.cgi	2006-08-30 00:05:58.094915000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editkeywords.cgi bugzilla-2.22/editkeywords.cgi
+--- bugzilla-2.22.orig/editkeywords.cgi	2005-12-11 21:38:40.000000000 -0500
++++ bugzilla-2.22/editkeywords.cgi	2006-08-30 00:05:55.372411000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editmilestones.cgi bugzilla-2.22/editmilestones.cgi
+--- bugzilla-2.22.orig/editmilestones.cgi	2006-01-06 09:38:35.000000000 -0500
++++ bugzilla-2.22/editmilestones.cgi	2006-08-30 00:05:56.119521000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ 
+ #
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editparams.cgi bugzilla-2.22/editparams.cgi
+--- bugzilla-2.22.orig/editparams.cgi	2006-03-06 17:16:24.000000000 -0500
++++ bugzilla-2.22/editparams.cgi	2006-08-30 00:05:57.709333000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editproducts.cgi bugzilla-2.22/editproducts.cgi
+--- bugzilla-2.22.orig/editproducts.cgi	2006-02-28 17:09:46.000000000 -0500
++++ bugzilla-2.22/editproducts.cgi	2006-08-30 00:05:54.820013000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editsettings.cgi bugzilla-2.22/editsettings.cgi
+--- bugzilla-2.22.orig/editsettings.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/editsettings.cgi	2006-08-30 00:05:57.044399000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editusers.cgi bugzilla-2.22/editusers.cgi
+--- bugzilla-2.22.orig/editusers.cgi	2006-01-03 03:40:45.000000000 -0500
++++ bugzilla-2.22/editusers.cgi	2006-08-30 00:05:59.061280000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editvalues.cgi bugzilla-2.22/editvalues.cgi
+--- bugzilla-2.22.orig/editvalues.cgi	2005-10-23 20:44:10.000000000 -0400
++++ bugzilla-2.22/editvalues.cgi	2006-08-30 00:05:57.554309000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # The contents of this file are subject to the Mozilla Public
+ # License Version 1.1 (the "License"); you may not use this file
+ # except in compliance with the License. You may obtain a copy of
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editversions.cgi bugzilla-2.22/editversions.cgi
+--- bugzilla-2.22.orig/editversions.cgi	2005-12-29 17:55:59.000000000 -0500
++++ bugzilla-2.22/editversions.cgi	2006-08-30 00:05:56.237044000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/editwhines.cgi bugzilla-2.22/editwhines.cgi
+--- bugzilla-2.22.orig/editwhines.cgi	2006-02-02 14:04:03.000000000 -0500
++++ bugzilla-2.22/editwhines.cgi	2006-08-30 00:05:56.298234000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/enter_bug.cgi bugzilla-2.22/enter_bug.cgi
+--- bugzilla-2.22.orig/enter_bug.cgi	2006-01-05 09:54:52.000000000 -0500
++++ bugzilla-2.22/enter_bug.cgi	2006-08-30 00:05:57.495492000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/importxml.pl bugzilla-2.22/importxml.pl
+--- bugzilla-2.22.orig/importxml.pl	2006-04-19 18:27:08.000000000 -0400
++++ bugzilla-2.22/importxml.pl	2006-08-30 00:05:55.160786000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/index.cgi bugzilla-2.22/index.cgi
+--- bugzilla-2.22.orig/index.cgi	2005-10-30 16:31:27.000000000 -0500
++++ bugzilla-2.22/index.cgi	2006-08-30 00:05:59.026049000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/long_list.cgi bugzilla-2.22/long_list.cgi
+--- bugzilla-2.22.orig/long_list.cgi	2005-10-25 15:31:31.000000000 -0400
++++ bugzilla-2.22/long_list.cgi	2006-08-30 00:05:54.963544000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/page.cgi bugzilla-2.22/page.cgi
+--- bugzilla-2.22.orig/page.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/page.cgi	2006-08-30 00:05:54.735608000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/post_bug.cgi bugzilla-2.22/post_bug.cgi
+--- bugzilla-2.22.orig/post_bug.cgi	2006-01-08 14:56:03.000000000 -0500
++++ bugzilla-2.22/post_bug.cgi	2006-08-30 00:05:56.180322000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/process_bug.cgi bugzilla-2.22/process_bug.cgi
+--- bugzilla-2.22.orig/process_bug.cgi	2006-02-07 17:25:23.000000000 -0500
++++ bugzilla-2.22/process_bug.cgi	2006-08-30 00:05:56.614611000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/query.cgi bugzilla-2.22/query.cgi
+--- bugzilla-2.22.orig/query.cgi	2006-03-30 17:23:06.000000000 -0500
++++ bugzilla-2.22/query.cgi	2006-08-30 00:05:56.841820000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/quips.cgi bugzilla-2.22/quips.cgi
+--- bugzilla-2.22.orig/quips.cgi	2005-10-30 16:31:28.000000000 -0500
++++ bugzilla-2.22/quips.cgi	2006-08-30 00:05:56.431571000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/relogin.cgi bugzilla-2.22/relogin.cgi
+--- bugzilla-2.22.orig/relogin.cgi	2006-04-06 18:21:00.000000000 -0400
++++ bugzilla-2.22/relogin.cgi	2006-08-30 00:05:58.035077000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/report.cgi bugzilla-2.22/report.cgi
+--- bugzilla-2.22.orig/report.cgi	2005-12-02 15:48:03.000000000 -0500
++++ bugzilla-2.22/report.cgi	2006-08-30 00:05:55.872176000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/reports.cgi bugzilla-2.22/reports.cgi
+--- bugzilla-2.22.orig/reports.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/reports.cgi	2006-08-30 00:05:57.098892000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/request.cgi bugzilla-2.22/request.cgi
+--- bugzilla-2.22.orig/request.cgi	2006-03-08 16:40:34.000000000 -0500
++++ bugzilla-2.22/request.cgi	2006-08-30 00:05:57.961835000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/runtests.pl bugzilla-2.22/runtests.pl
+--- bugzilla-2.22.orig/runtests.pl	2004-09-03 02:59:08.000000000 -0400
++++ bugzilla-2.22/runtests.pl	2006-08-30 00:05:55.738844000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/sanitycheck.cgi bugzilla-2.22/sanitycheck.cgi
+--- bugzilla-2.22.orig/sanitycheck.cgi	2006-01-16 05:29:18.000000000 -0500
++++ bugzilla-2.22/sanitycheck.cgi	2006-08-30 00:05:56.681618000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/show_activity.cgi bugzilla-2.22/show_activity.cgi
+--- bugzilla-2.22.orig/show_activity.cgi	2006-01-06 09:38:35.000000000 -0500
++++ bugzilla-2.22/show_activity.cgi	2006-08-30 00:05:56.738696000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/show_bug.cgi bugzilla-2.22/show_bug.cgi
+--- bugzilla-2.22.orig/show_bug.cgi	2005-10-30 16:31:28.000000000 -0500
++++ bugzilla-2.22/show_bug.cgi	2006-08-30 00:05:56.996495000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/showattachment.cgi bugzilla-2.22/showattachment.cgi
+--- bugzilla-2.22.orig/showattachment.cgi	2003-05-04 21:15:29.000000000 -0400
++++ bugzilla-2.22/showattachment.cgi	2006-08-30 00:05:56.786584000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/showdependencygraph.cgi bugzilla-2.22/showdependencygraph.cgi
+--- bugzilla-2.22.orig/showdependencygraph.cgi	2006-02-07 04:22:25.000000000 -0500
++++ bugzilla-2.22/showdependencygraph.cgi	2006-08-30 00:05:55.928979000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/showdependencytree.cgi bugzilla-2.22/showdependencytree.cgi
+--- bugzilla-2.22.orig/showdependencytree.cgi	2006-01-06 09:38:35.000000000 -0500
++++ bugzilla-2.22/showdependencytree.cgi	2006-08-30 00:05:57.158455000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/sidebar.cgi bugzilla-2.22/sidebar.cgi
+--- bugzilla-2.22.orig/sidebar.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/sidebar.cgi	2006-08-30 00:05:55.554991000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/summarize_time.cgi bugzilla-2.22/summarize_time.cgi
+--- bugzilla-2.22.orig/summarize_time.cgi	2006-04-12 18:49:11.000000000 -0400
++++ bugzilla-2.22/summarize_time.cgi	2006-08-30 00:05:57.387254000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/testagent.cgi bugzilla-2.22/testagent.cgi
+--- bugzilla-2.22.orig/testagent.cgi	2004-07-22 03:05:05.000000000 -0400
++++ bugzilla-2.22/testagent.cgi	2006-08-30 00:05:56.888326000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/testserver.pl bugzilla-2.22/testserver.pl
+--- bugzilla-2.22.orig/testserver.pl	2006-01-05 06:07:01.000000000 -0500
++++ bugzilla-2.22/testserver.pl	2006-08-30 00:05:55.237937000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/token.cgi bugzilla-2.22/token.cgi
+--- bugzilla-2.22.orig/token.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/token.cgi	2006-08-30 00:05:57.326961000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/userprefs.cgi bugzilla-2.22/userprefs.cgi
+--- bugzilla-2.22.orig/userprefs.cgi	2005-12-20 17:25:57.000000000 -0500
++++ bugzilla-2.22/userprefs.cgi	2006-08-30 00:05:58.826478000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/votes.cgi bugzilla-2.22/votes.cgi
+--- bugzilla-2.22.orig/votes.cgi	2005-10-24 19:11:55.000000000 -0400
++++ bugzilla-2.22/votes.cgi	2006-08-30 00:05:56.492724000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/whine.pl bugzilla-2.22/whine.pl
+--- bugzilla-2.22.orig/whine.pl	2006-02-27 18:12:33.000000000 -0500
++++ bugzilla-2.22/whine.pl	2006-08-30 00:05:54.892257000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/whineatnews.pl bugzilla-2.22/whineatnews.pl
+--- bugzilla-2.22.orig/whineatnews.pl	2005-08-15 13:58:10.000000000 -0400
++++ bugzilla-2.22/whineatnews.pl	2006-08-30 00:05:56.062088000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public
+diff --speed-large-files --minimal -Nru bugzilla-2.22.orig/xml.cgi bugzilla-2.22/xml.cgi
+--- bugzilla-2.22.orig/xml.cgi	2005-08-09 21:30:39.000000000 -0400
++++ bugzilla-2.22/xml.cgi	2006-08-30 00:05:57.271718000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- Mode: perl; indent-tabs-mode: nil -*-
+ #
+ # The contents of this file are subject to the Mozilla Public

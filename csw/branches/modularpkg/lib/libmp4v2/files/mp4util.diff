@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru libmp4v2-1.5.0.1.orig/mp4util.h libmp4v2-1.5.0.1/mp4util.h
+--- libmp4v2-1.5.0.1.orig/mp4util.h	2006-07-18 23:01:30.000000000 +1200
++++ libmp4v2-1.5.0.1/mp4util.h	2007-12-21 01:50:25.148752654 +1300
+@@ -40,8 +40,8 @@
+ #define WARNING(expr) \
+ 	if (expr) { \
+ 		fflush(stdout); \
+-		fprintf(stderr, "Warning (%s) in %s at line %u\n", \
+-			__STRING(expr), __FILE__, __LINE__); \
++                fprintf(stderr, "Warning in %s at line %u\n", \
++                        __FILE__, __LINE__); \
+ 	}
+ #endif
+ 

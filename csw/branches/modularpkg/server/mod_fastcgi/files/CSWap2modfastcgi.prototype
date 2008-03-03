@@ -1,0 +1,10 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/mod_fastcgi.so 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/mod_fastcgi 0755 root bin
+f none /opt/csw/share/doc/mod_fastcgi/CHANGES 0644 root bin
+f none /opt/csw/share/doc/mod_fastcgi/LICENSE.TERMS 0644 root bin
+f none /opt/csw/share/doc/mod_fastcgi/README 0644 root bin
+f none /opt/csw/share/doc/mod_fastcgi/mod_fastcgi.html 0644 root bin

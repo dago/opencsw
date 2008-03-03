@@ -1,0 +1,12 @@
+P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
+P CSWexpat expat - XML Parser Toolkit
+P CSWgdbm gdbm - GNU dbm
+P CSWggettext ggettext - GNU gettext
+P CSWgsed gsed - The GNU non-interactive text Stream-oriented EDitor (sed)
+P CSWiconv libiconv - GNU iconv library
+P CSWoldaprt openldap_rt - ldap runtime libraries
+P CSWosslrt openssl_rt - Openssl runtime libraries
+P CSWperl perl - A high-level, general-purpose programming language.
+P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWzlib zlib - Zlib Data Compression Library
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library

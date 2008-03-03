@@ -1,0 +1,7 @@
+%var            bitname pm_dataflow
+%var            pkgname CSWpmdataflow
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+Ilya Zakharevich, cpan@ilyaz.org, with multiple additions from
+Terrence Monroe Brannon and Radoslav Nedyalkov.

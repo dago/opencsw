@@ -1,0 +1,4 @@
+P CSWpmauthensasl pm_authensasl - SASL Authentication framework
+P CSWpmconvertasn1 pm_convertasn1 - ASN.1 Encode/Decode library
+P CSWpmiosocketssl pm_iosocketssl - nearly transparent SSL encapsulation for IO::Socket::INET.
+P CSWpmxmlsax pm_xmlsax - Simple API for XML

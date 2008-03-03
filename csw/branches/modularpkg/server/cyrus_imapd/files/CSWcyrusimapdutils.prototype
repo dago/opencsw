@@ -1,0 +1,20 @@
+f none /opt/csw/bin/cyradm 0755 root bin
+f none /opt/csw/bin/imtest 0755 root bin
+l none /opt/csw/bin/pop3test=imtest
+l none /opt/csw/bin/nntptest=imtest
+l none /opt/csw/bin/lmtptest=imtest
+l none /opt/csw/bin/smtptest=imtest
+l none /opt/csw/bin/mupdatetest=imtest
+l none /opt/csw/bin/sivtest=imtest
+f none /opt/csw/bin/sieveshell 0755 root bin
+f none /opt/csw/share/man/man1/cyradm.1 0444 root bin
+f none /opt/csw/share/man/man1/imtest.1 0644 root bin
+f none /opt/csw/share/man/man1/pop3test.1 0644 root bin
+f none /opt/csw/share/man/man1/nntptest.1 0644 root bin
+f none /opt/csw/share/man/man1/lmtptest.1 0644 root bin
+f none /opt/csw/share/man/man1/smtptest.1 0644 root bin
+f none /opt/csw/share/man/man1/sivtest.1 0644 root bin
+f none /opt/csw/share/man/man1/mupdatetest.1 0644 root bin
+f none /opt/csw/share/man/man1/sieveshell.1 0644 root bin
+d none /opt/csw/share/doc/cyrus_imapd_utils 0755 root bin
+f none /opt/csw/share/doc/cyrus_imapd_utils/changelog.CSW 0644 root bin

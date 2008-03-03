@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# $HeadURL: file:///var/www/svn/repositories-public/orcaware-public/orca/trunk/data_gatherers/orcallator/S99orcallator.sh.in $
+# $LastChangedRevision: 495 $
+# $LastChangedDate: 2005-09-15 21:11:11 -0700 (Thu, 15 Sep 2005) $
+# $LastChangedBy: blair@orcaware.com $
+
+prefix=/opt/csw
+exec_prefix=/opt/csw
+bindir=/opt/csw/bin
+
+start_orcallator="$bindir/start_orcallator"
+stop_orcallator="$bindir/stop_orcallator"
+
+case "$1" in
+  start)
+    if test -x $start_orcallator; then
+      umask 022
+      $start_orcallator
+    else
+      echo "$0: $start_orcallator does not exist or is not executable."
+    fi
+    ;;
+
+  stop)
+    if test -x $stop_orcallator; then
+      $stop_orcallator
+    else
+      echo "$0: $stop_orcallator does not exist or is not executable."
+    fi
+    ;;
+
+  *)
+    echo "usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

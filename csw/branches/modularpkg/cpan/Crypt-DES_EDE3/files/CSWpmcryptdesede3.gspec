@@ -1,0 +1,7 @@
+%var            bitname pm_cryptdesede3
+%var            pkgname CSWpmcryptdesede3
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Crypt::DES_EDE3 is Copyright 2001 Benjamin Trott, ben@rhumba.pair.com. All
+rights reserved.

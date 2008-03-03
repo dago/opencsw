@@ -1,0 +1,88 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<!--
+William Pool (Puddle) 02/05
+Service manifest for arpwatch
+E-mail:
+Modified for CSWmysql5 by Alex Moore 01/06
+Modified for CSWarpwatch by Yann Rouillard 05/06
+-->
+
+<service_bundle type='manifest' name='CSWarpwatch:arpwatch'>
+
+	<service
+		name='network/cswarpwatch'
+		type='service'
+		version='1'>
+
+		<single_instance />
+
+		<instance name='default' enabled='false'>
+			<dependency name='fs'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/system/filesystem/local' />
+			</dependency>
+
+			<dependency name='net'
+				grouping='require_all'
+				restart_on='none'
+				type='service'>
+				<service_fmri value='svc:/network/loopback' />
+			</dependency>
+
+			<dependency
+				name='config-file-arpwatch'
+				grouping='optional_all'
+				restart_on='refresh'
+				type='path'>
+				<service_fmri
+					value='file://localhost/opt/csw/etc/arpwatch.conf' />
+			</dependency>
+
+			<dependent
+				name='cswarpwatch_multi-user'
+				grouping='optional_all'
+				restart_on='none'>
+				<service_fmri
+					value='svc:/milestone/multi-user' />
+			</dependent>
+
+			<exec_method
+				type='method'
+				name='start'
+				exec='/opt/csw/lib/svc/method/svc-cswarpwatch start'
+				timeout_seconds='-1'>
+			</exec_method>
+
+			<exec_method
+				type='method'
+				name='stop'
+				exec='/opt/csw/lib/svc/method/svc-cswarpwatch stop'
+				timeout_seconds='-1'>
+			</exec_method>
+
+			<exec_method
+				type='method'
+				name='restart'
+				exec='/opt/csw/lib/svc/method/svc-cswarpwatch restart'
+				timeout_seconds='-1'>
+			</exec_method>
+		</instance>
+
+		<template>
+			<common_name>
+				<loctext xml:lang='C'>
+				 A network monitoring tool for tracking IP/MAC addresses on a network.
+				</loctext>
+			</common_name>
+			<documentation>
+				<manpage title='arpwatch' section='8M'
+					manpath='/opt/csw/share/man' />
+			</documentation>
+		</template>
+					
+	</service>
+
+</service_bundle>

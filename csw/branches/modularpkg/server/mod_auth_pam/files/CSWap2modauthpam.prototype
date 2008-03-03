@@ -1,0 +1,15 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/libexec 0755 root bin
+f none /opt/csw/apache2/libexec/mod_auth_pam.so 0755 root bin
+f none /opt/csw/apache2/libexec/mod_auth_sys_group.so 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/ap2modauthpam 0755 root bin
+f none /opt/csw/share/doc/ap2modauthpam/README 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/configure.html 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/faq.html 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/install.html 0644 root bin
+d none /opt/csw/share/doc/ap2modauthpam/samples 0755 root bin
+f none /opt/csw/share/doc/ap2modauthpam/samples/dot-htaccess 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/samples/httpd-rh6+ 0644 root bin
+f none /opt/csw/share/doc/ap2modauthpam/samples/httpd 0644 root bin

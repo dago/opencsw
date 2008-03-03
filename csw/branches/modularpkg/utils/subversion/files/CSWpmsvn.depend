@@ -1,0 +1,10 @@
+P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
+P CSWbdb44 berkeleydb44 - BerkeleyDB 4.4 libraries and utilities
+P CSWexpat expat -  XML Parser Toolkit
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
+P CSWperl perl - A high-level, general-purpose programming language
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library
+P CSWsvn subversion - Version control rethought
+P CSWzlib zlib - Zlib Data Compression Library

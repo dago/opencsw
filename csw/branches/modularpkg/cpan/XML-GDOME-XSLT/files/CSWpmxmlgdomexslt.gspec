@@ -1,0 +1,6 @@
+%var            bitname pm_xmlgdomexslt
+%var            pkgname CSWpmxmlgdomexslt
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This is free software, you may use it and distribute it under the same
+terms as Perl itself. Copyright 2001 AxKit.com Ltd, All rights reserved.

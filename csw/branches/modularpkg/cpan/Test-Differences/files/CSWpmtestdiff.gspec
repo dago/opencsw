@@ -1,0 +1,9 @@
+%var            bitname pm_testdiff
+%var            pkgname CSWpmtestdiff
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2001 Barrie Slaymaker, All Rights Reserved.
+
+You may use this software under the terms of the GNU public license, any
+version, or the Artistic license.

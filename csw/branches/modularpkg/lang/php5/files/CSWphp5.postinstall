@@ -1,0 +1,40 @@
+#!/bin/sh
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/php5/lib
+PHP_INI=$PHP_LIB/php.ini
+
+if [ ! -f $PHP_INI ]; then
+    cp -p $PHP_INI.CSW $PHP_INI
+else
+    echo "php.ini already exists"
+
+    extdir=`ls -d $PHP_LIB/php/extensions/no-debug-non-zts-* | xargs basename`
+    curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' $PHP_INI`
+
+    if [ "$extdir" != "$curextdir" ]; then
+        echo "updating extension_dir..."
+        perl -i.bak -plne "s,no-debug-non-zts-[0-9]+,$extdir," $PHP_INI
+
+        cat << _EOT_
+
+******************************************************************************
+* NOTICE: The existing php.ini file is from an older version of PHP5.  The new
+* php.ini.CSW is based on php.ini-recommended from the PHP 5.2.1 distribution.
+*
+* Please consider merging any local configuration changes into a copy of the
+* most recent CSW configuration file.
+******************************************************************************
+
+******************************************************************************
+* WARNING: Short open tag support in this release of CSWphp5 is DISABLED by
+* default.  If you rely on short open tag (<? vs <?php) behavior, set
+* short_open_tag to On in php.ini right away.
+******************************************************************************
+_EOT_
+    fi
+fi
+
+echo "PHP5 configuration: $PHP_INI"
+
+exit 0

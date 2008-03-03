@@ -1,0 +1,9 @@
+%var            bitname pm_cryptssleay
+%var            pkgname CSWpmcryptssleay
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1999-2003 Joshua Chamas.
+Copyright (c) 1998 Gisle Aas.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.

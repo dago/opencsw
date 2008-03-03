@@ -1,0 +1,9 @@
+%var            bitname pm_unixsyslog
+%var            pkgname CSWpmunixsyslog
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 1999,2000,2001,2002 Marcus Harnisch
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the Artistic License. A copy of the license (see
+file Artistic in this directory) must be included in the package.

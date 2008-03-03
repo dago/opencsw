@@ -1,0 +1,6 @@
+f none /opt/csw/bin/pkg-update-watch=pkg-update-watch 0755 root bin
+e conf /opt/csw/etc/pkg-update-watch.conf=pkg-update-watch.conf 0755 root bin
+d none /opt/csw/share/doc/pkg-update-watch 0755 root bin
+f none /opt/csw/share/doc/pkg-update-watch/pkg-update-watch.conf=pkg-update-watch.conf 0644 root bin
+f none /opt/csw/share/doc/pkg-update-watch/README.CSW=README.CSW 0644 root bin
+

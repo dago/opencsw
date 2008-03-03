@@ -1,0 +1,36 @@
+diff --speed-large-files --minimal -Nru Tk-804.027.orig/encGlue.c Tk-804.027/encGlue.c
+--- Tk-804.027.orig/encGlue.c	2004-03-28 11:50:55.000000000 -0800
++++ Tk-804.027/encGlue.c	2004-04-13 17:50:47.434577477 -0700
+@@ -11,6 +11,7 @@
+ 
+ #ifdef HAS_NL_LANGINFO
+ #include <langinfo.h>
++#include <string.h>
+ #endif
+ 
+ #define U8 U8
+@@ -545,6 +546,8 @@
+ /* This assumes perl's Configure probe stuff is #include-d above */
+ #if defined(HAS_NL_LANGINFO) && defined(CODESET)
+    codeset = nl_langinfo(CODESET);
++   if (!strcmp(codeset, "646"))
++	   codeset = "US-ASCII";
+ #endif
+    if (!codeset)
+     codeset = "iso8859-1";
+diff --speed-large-files --minimal -Nru Tk-804.027.orig/pTk/mTk/tclUnix/tclUnixInit.c Tk-804.027/pTk/mTk/tclUnix/tclUnixInit.c
+--- Tk-804.027.orig/pTk/mTk/tclUnix/tclUnixInit.c	2003-12-19 03:55:00.000000000 -0800
++++ Tk-804.027/pTk/mTk/tclUnix/tclUnixInit.c	2004-04-13 17:50:47.438217347 -0700
+@@ -106,6 +106,12 @@
+ #endif /* __hpux */
+ #endif /* HAVE_LANGINFO */
+ 
++    {"ASCII",		"US-ASCII"},
++    {"ANSI_X3.4-1968",	"US-ASCII"},
++    {"646",			"US-ASCII"},
++    {"ISO646",		"US-ASCII"},
++    {"ISO_646.IRV",	"US-ASCII"},
++
+     {"ja_JP.SJIS",	"shiftjis"},
+     {"ja_JP.EUC",	"euc-jp"},
+     {"ja_JP.eucJP",     "euc-jp"},

@@ -1,0 +1,7 @@
+%var            bitname pm_netpatricia
+%var            pkgname CSWpmnetpatricia
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+This library is free software; you may distribute under the terms
+of either the GNU General Public License or the Artistic License, as
+specified in the Perl README file.

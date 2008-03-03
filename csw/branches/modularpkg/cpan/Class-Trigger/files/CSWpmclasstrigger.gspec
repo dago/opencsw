@@ -1,0 +1,11 @@
+%var            bitname pm_classtrigger
+%var            pkgname CSWpmclasstrigger
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Original idea by Tony Bowden <tony@kasei.com> in Class::DBI.
+
+Code by Tatsuhiko Miyagawa <miyagawa@bulknews.net>.
+
+This library is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.

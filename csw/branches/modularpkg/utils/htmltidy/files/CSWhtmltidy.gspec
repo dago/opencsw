@@ -1,0 +1,8 @@
+%var            bitname htmltidy
+%var            pkgname CSWhtmltidy
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      
+Copyright (c) 2003-2004 World Wide Web Consortium
+(Massachusetts Institute of Technology, European Research
+Consortium for Informatics and Mathematics, Keio University).
+All Rights Reserved.

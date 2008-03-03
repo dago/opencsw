@@ -1,0 +1,17 @@
+pkg-update-watch
+================
+
+pkg-update-watch is a program that will help you keeping your system up to date.
+pkg-update-watch checks if package updates are available and sends a report of 
+available update by mail or on standard output.
+
+To use pkg-update-watch, add the following line in the root crontab file:
+
+0 0 * * * /opt/csw/bin/pkg-update-watch --mail
+
+You can configure mail report recipients and report filters in 
+/opt/csw/etc/pkg-update-watch.conf. 
+
+---
+Yann Rouillard
+

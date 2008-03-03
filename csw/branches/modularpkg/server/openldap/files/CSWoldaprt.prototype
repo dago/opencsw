@@ -1,0 +1,17 @@
+d none /opt/csw/etc/openldap 0755 root bin
+f none /opt/csw/etc/openldap/ldap.conf.default 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/liblber-2.3.so.0.2.27 0755 root bin
+s none /opt/csw/lib/liblber-2.3.so.0=liblber-2.3.so.0.2.27
+s none /opt/csw/lib/liblber.so=liblber-2.3.so.0.2.27
+f none /opt/csw/lib/libldap-2.3.so.0.2.27 0755 root bin
+s none /opt/csw/lib/libldap-2.3.so.0=libldap-2.3.so.0.2.27
+s none /opt/csw/lib/libldap.so=libldap-2.3.so.0.2.27
+f none /opt/csw/lib/libldap_r-2.3.so.0.2.27 0755 root bin
+s none /opt/csw/lib/libldap_r-2.3.so.0=libldap_r-2.3.so.0.2.27
+s none /opt/csw/lib/libldap_r.so=libldap_r-2.3.so.0.2.27
+d none /opt/csw/share/man/man5 0755 root bin
+f none /opt/csw/share/man/man5/ldap.conf.5 0644 root bin
+i copyright=CSWoldaprt.copyright
+i depend=CSWoldaprt.depend
+i pkginfo=CSWoldaprt.pkginfo

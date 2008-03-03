@@ -1,0 +1,32 @@
+diff --speed-large-files --minimal -Nru rlwrap-0.29.orig/configure.ac rlwrap-0.29/configure.ac
+--- rlwrap-0.29.orig/configure.ac	2007-11-11 06:01:45.000000000 -0500
++++ rlwrap-0.29/configure.ac	2007-12-21 16:22:11.014135000 -0500
+@@ -131,6 +131,8 @@
+ 
+ AC_CHECK_FUNCS(select snprintf strlcpy strlcat strnlen sched_yield getopt_long setsid isastream mkstemp system readlink)
+ 
++AC_CHECK_FUNC(setenv, AC_DEFINE(HAVE_SETENV, 1, Define if you have setenv))
++
+ # Try to determine the kind of pty support on this system
+ # This is not so easy and may guess wrong; if this happens:
+ #    - edit config.h by hand (and keep a copy of it somewhere as configure will overwrite it), and 
+diff --speed-large-files --minimal -Nru rlwrap-0.29.orig/src/main.c rlwrap-0.29/src/main.c
+--- rlwrap-0.29.orig/src/main.c	2007-11-11 06:21:04.000000000 -0500
++++ rlwrap-0.29/src/main.c	2007-12-21 16:25:11.995997000 -0500
+@@ -138,8 +138,15 @@
+     DPRINTF1(DEBUG_TERMIO, "preparing to execute %s", arg);
+     close_open_files_without_writing_buffers();
+     
+-    if (client_term_name)
++    if (client_term_name) {
++#ifdef HAVE_SETENV
+       setenv("TERM", client_term_name, TRUE);   
++#else
++      char *env = add2strings ("TERM=", client_term_name);
++      putenv (env);
++      free (env);
++#endif
++    }
+     if (execvp(argv[optind], &argv[optind]) < 0) {
+       if (last_opt > 0 && last_option_didnt_have_optional_argument) { /* e.g. 'rlwrap -a Password: sqlpus' will try to exec 'Password:' */
+ 	for (p=" '; !(){}"; *p; p++) /* does arg need shell quoting? */ 

@@ -1,0 +1,4 @@
+%var            bitname pm_gnome2print
+%var            pkgname CSWpmgnome2print
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      url file://%{WORKSRC}/copyright.pod

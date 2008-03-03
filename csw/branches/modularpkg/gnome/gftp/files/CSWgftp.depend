@@ -1,0 +1,10 @@
+P CSWreadline	readline
+P CSWpango libpango
+P CSWosslrt openssl_rt
+P CSWncurses ncurses
+P CSWlibatk libatk
+P CSWiconv libiconv
+P CSWgtk2 gtk2
+P CSWglib2 glib2
+P CSWggettext ggettext
+P CSWlibcairo libcairo

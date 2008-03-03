@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru httpd-2.2.6.orig/srclib/apr/configure httpd-2.2.6/srclib/apr/configure
+--- httpd-2.2.6.orig/srclib/apr/configure	2007-09-04 16:08:55.000000000 -0400
++++ httpd-2.2.6/srclib/apr/configure	2007-10-19 21:15:14.257260000 -0400
+@@ -25213,7 +25213,7 @@
+     test "x$silent" != "xyes" && echo "  setting CPPFLAGS to \"-D_LARGEFILE64_SOURCE\""
+     CPPFLAGS="-D_LARGEFILE64_SOURCE"
+   else
+-    apr_addto_bugger="-D_LARGEFILE64_SOURCE"
++    apr_addto_bugger="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+     for i in $apr_addto_bugger; do
+       apr_addto_duplicate="0"
+       for j in $CPPFLAGS; do

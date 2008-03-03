@@ -1,0 +1,23 @@
+diff --speed-large-files --minimal -Nru libntlm-0.4.1.orig/configure libntlm-0.4.1/configure
+--- libntlm-0.4.1.orig/configure	2007-10-29 11:41:40.000000000 +0100
++++ libntlm-0.4.1/configure	2008-02-29 12:32:26.334106000 +0100
+@@ -20419,9 +20419,6 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-#if ! (-9223372036854775807LL < 0 && 0 < 9223372036854775807ll)
+-	      error in preprocessor;
+-	    #endif
+ 	    long long int ll = 9223372036854775807ll;
+ 	    long long int nll = -9223372036854775807LL;
+ 	    typedef int a[((-9223372036854775807LL < 0
+@@ -20554,9 +20551,6 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-#if ! (18446744073709551615ULL <= -1ull)
+-	      error in preprocessor;
+-	    #endif
+ 	    unsigned long long int ull = 18446744073709551615ULL;
+ 	    typedef int a[(18446744073709551615ULL <= (unsigned long long int) -1
+ 			   ? 1 : -1)];

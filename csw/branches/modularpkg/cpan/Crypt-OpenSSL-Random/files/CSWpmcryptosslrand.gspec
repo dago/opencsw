@@ -1,0 +1,3 @@
+%var            bitname pm_cryptosslrand
+%var            pkgname CSWpmcryptosslrand
+%include        url file://%{PKGLIB}/csw_cpan.gspec

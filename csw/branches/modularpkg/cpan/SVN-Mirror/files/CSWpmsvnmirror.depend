@@ -1,0 +1,7 @@
+P CSWcommon  common - common files and dirs for CSW packages
+P CSWpmdatauuid pm_datauuid - extension for generating unique identifiers
+P CSWpmsvn pm_subversion - subversion perl language binding
+P CSWpmsvnsimple pm_svnsimple - a simple interface for driving svn delta editors
+P CSWpmtermreadkey pm_termreadkey - module for simple terminal control
+P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)
+P CSWsvn subversion - Version control rethought

@@ -1,0 +1,36 @@
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/include/gettext.h lftp-3.5.2/include/gettext.h
+--- lftp-3.5.2.orig/include/gettext.h	2006-07-24 03:54:53.000000000 -0400
++++ lftp-3.5.2/include/gettext.h	2006-08-01 16:59:32.753902000 -0400
+@@ -142,7 +142,7 @@
+ #include <string.h>
+ 
+ #define _LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS \
+-  (__GNUC__ >= 3 || defined __cplusplus)
++  ((__GNUC__ >= 3 || defined __cplusplus) && !defined __SUNPRO_CC)
+ 
+ #if !_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS
+ #include <stdlib.h>
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/lib/getopt.c lftp-3.5.2/lib/getopt.c
+--- lftp-3.5.2.orig/lib/getopt.c	2000-02-15 13:59:27.000000000 -0500
++++ lftp-3.5.2/lib/getopt.c	2006-08-01 16:58:08.735232000 -0400
+@@ -31,7 +31,7 @@
+ # include <config.h>
+ #endif
+ 
+-#if !defined __STDC__ || !__STDC__
++#if (!defined __STDC__ || !__STDC__) && !defined __SUNPRO_C
+ /* This is a separate conditional since some stdc systems
+    reject `defined (const)'.  */
+ # ifndef const
+diff --speed-large-files --minimal -Nru lftp-3.5.2.orig/lib/getopt1.c lftp-3.5.2/lib/getopt1.c
+--- lftp-3.5.2.orig/lib/getopt1.c	1998-03-08 10:07:44.000000000 -0500
++++ lftp-3.5.2/lib/getopt1.c	2006-08-01 16:58:36.644775000 -0400
+@@ -24,7 +24,7 @@
+ 
+ #include "getopt.h"
+ 
+-#if !defined __STDC__ || !__STDC__
++#if (!defined __STDC__ || !__STDC__) && !defined __SUNPRO_C
+ /* This is a separate conditional since some stdc systems
+    reject `defined (const)'.  */
+ #ifndef const

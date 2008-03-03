@@ -1,0 +1,20 @@
+GARNAME = XML-Encoding
+GARVERSION = 1.01
+CATEGORIES = cpan
+AUTHOR = COOPERCL
+
+DESCRIPTION = module for parsing XML encoding maps.
+define BLURB
+  This module, which is built as a subclass of XML::Parser, provides a parser
+  for encoding map files, which are XML files. The file maps/encmap.dtd in the
+  distribution describes the structure of these files. Calling a parse method
+  returns the name of the encoding map (obtained from the name attribute of
+  the root element). The contents of the map are processed through the
+  callback functions push_prefix, pop_prefix, and range_set.
+endef
+
+DISTFILES += CSWpmxmlencoding.gspec CSWpmxmlencoding.depend
+
+DEPENDS += cpan/XML-Parser
+
+include ../category.mk

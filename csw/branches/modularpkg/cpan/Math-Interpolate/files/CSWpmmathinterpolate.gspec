@@ -1,0 +1,8 @@
+%var            bitname pm_mathinterpolate
+%var            pkgname CSWpmmathinterpolate
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 1999, Blair Zajac
+
+This code is distributed under the same copyright terms as Perl itself.

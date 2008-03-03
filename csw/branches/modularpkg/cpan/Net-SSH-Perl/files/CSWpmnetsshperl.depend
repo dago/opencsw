@@ -1,0 +1,8 @@
+P CSWpmconvertpem pm_convertpem - read/write encrypted ASN.1 PEM files
+P CSWpmcryptblowfish pm_cryptblowfish - Perl Blowfish encryption module
+P CSWpmcryptdh pm_cryptdh - Diffie-Hellman key exchange system
+P CSWpmcryptdsa pm_cryptdsa - DSA signatures and key generation
+P CSWpmcryptrsa pm_cryptrsa - RSA public-key cryptosystem.
+P CSWpmdigestbb pm_digestbb - Create bubble-babble fingerprints
+P CSWpmmathgmp pm_mathgmp - high speed arbitrary size integer math
+P CSWpmstringcrc32 pm_stringcrc32 - interface for cyclic redundency check generation

@@ -1,0 +1,11 @@
+%var            bitname pm_mldbmsync
+%var            pkgname CSWpmmldbmsync
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2001-2002 Joshua Chamas, Chamas Enterprises Inc.  All rights reserved.
+Sponsored by development on NodeWorks http://www.nodeworks.com and Apache::ASP
+http://www.apache-asp.org
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.

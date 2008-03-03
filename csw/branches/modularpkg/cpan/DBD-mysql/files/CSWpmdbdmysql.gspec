@@ -1,0 +1,9 @@
+%var            bitname pm_dbdmysql
+%var            pkgname CSWpmdbdmysql
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is Copyright (c) 2003 Rudolf Lippan; Large Portions 
+Copyright (c) 1997-2003 Jochen Wiedmann, with code portions 
+Copyright (c)1994-1997 their original authors This module is
+released under the same license as Perl itself. See the Perl README
+for details.

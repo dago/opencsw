@@ -1,0 +1,5 @@
+%var            bitname xchat_py
+%var            pkgname CSWxchat-py
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc xchat python plugin
+%copyright      url file://%{WORKSRC}/COPYING

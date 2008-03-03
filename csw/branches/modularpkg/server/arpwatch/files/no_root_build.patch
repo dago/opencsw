@@ -1,0 +1,21 @@
+diff --speed-large-files --minimal -Nru arpwatch-2.1a15.orig/Makefile.in arpwatch-2.1a15/Makefile.in
+--- arpwatch-2.1a15.orig/Makefile.in	2000-06-14 20:39:55.000000000 -0400
++++ arpwatch-2.1a15/Makefile.in	2007-03-13 19:28:24.723431000 -0400
+@@ -110,13 +110,13 @@
+ 	$(CC) $(CFLAGS) -o $@ zap.o intoa.o -lutil
+ 
+ install: force
+-	$(INSTALL) -m 555 -o bin -g bin arpwatch $(DESTDIR)$(BINDEST)
+-	$(INSTALL) -m 555 -o bin -g bin arpsnmp $(DESTDIR)$(BINDEST)
++	$(INSTALL) arpwatch $(DESTDIR)$(BINDEST)
++	$(INSTALL) arpsnmp $(DESTDIR)$(BINDEST)
+ 
+ install-man: force
+-	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/arpwatch.8 \
++	$(INSTALL) $(srcdir)/arpwatch.8 \
+ 	    $(DESTDIR)$(MANDEST)/man8
+-	$(INSTALL) -m 444 -o bin -g bin $(srcdir)/arpsnmp.8 \
++	$(INSTALL) $(srcdir)/arpsnmp.8 \
+ 	    $(DESTDIR)$(MANDEST)/man8
+ 
+ lint:	$(GENSRC) force

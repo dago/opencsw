@@ -1,0 +1,52 @@
+diff --speed-large-files --minimal -Nru lftp-3.5.4.orig/src/FileCopy.cc lftp-3.5.4/src/FileCopy.cc
+--- lftp-3.5.4.orig/src/FileCopy.cc	2006-07-25 04:38:31.000000000 -0400
++++ lftp-3.5.4/src/FileCopy.cc	2006-08-19 09:01:42.438310000 -0400
+@@ -408,8 +408,10 @@
+    max_buf=0x10000;
+    cont=false;
+    error_text=0;
+-   rate        =MakeRef(new Speedometer("xfer:rate-period"));
+-   rate_for_eta=MakeRef(new Speedometer("xfer:eta-period"));
++   rate        =new Speedometer("xfer:rate-period");
++   rate        =MakeRef(rate);
++   rate_for_eta=new Speedometer("xfer:eta-period");
++   rate_for_eta=MakeRef(rate_for_eta);
+    put_buf=0;
+    put_eof_pos=0;
+    bytes_count=0;
+@@ -798,8 +800,10 @@
+ 	    fxp_eof:
+ 	       // FIXME: set date for real.
+ 	       date_set=true;
+-	       if(!verify)
+-		  verify=MakeRef(new FileVerificator(session,file));
++	       if(!verify) {
++		  verify=new FileVerificator(session,file);
++		  verify=MakeRef(verify);
++	       }
+ 	       return MOVED;
+ 	    }
+ 	    else if(res==FA::IN_PROGRESS)
+@@ -1395,8 +1399,10 @@
+ 	    }
+ 	    if(stream && delete_stream && !stream->Done())
+ 	       return m;
+-	    if(!verify)
+-	       verify=MakeRef(new FileVerificator(stream));
++	    if(!verify) {
++	       verify=new FileVerificator(stream);
++	       verify=MakeRef(verify);
++	    }
+ 	    return MOVED;
+ 	 }
+ 	 if(seek_pos==0)
+@@ -1731,7 +1737,8 @@
+    : FileCopyPeer(GET)
+ {
+    session=s;
+-   dl=MakeRef(session->MakeDirList(v));
++   dl=session->MakeDirList(v);
++   dl=MakeRef(dl);
+    if(dl==0)
+       eof=true;
+    can_seek=false;

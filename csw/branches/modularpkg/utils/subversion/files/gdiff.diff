@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru subversion-1.2.0-rc1.orig/subversion/bindings/swig/python/svn/fs.py subversion-1.2.0-rc1/subversion/bindings/swig/python/svn/fs.py
+--- subversion-1.2.0-rc1.orig/subversion/bindings/swig/python/svn/fs.py	2005-04-06 09:19:45.840022000 -0700
++++ subversion-1.2.0-rc1/subversion/bindings/swig/python/svn/fs.py	2005-04-06 09:19:18.580010000 -0700
+@@ -105,7 +105,7 @@
+ 
+     # use an array for the command to avoid the shell and potential
+     # security exposures
+-    cmd = ["diff"] \
++    cmd = ["gdiff"] \
+           + self.diffoptions \
+           + [self.tempfile1, self.tempfile2]
+           

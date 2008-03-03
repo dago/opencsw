@@ -1,0 +1,17 @@
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWgtk2 gtk2 - GTK+, The multi-platform toolkit for GUI development
+P CSWlibatk libatk - Accessibility toolkit for GNOME
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWpango libpango - Library for laying out and rendering text
+P CSWexpat
+P CSWfconfig
+P CSWftype2
+P CSWiconv
+P CSWlibxfce4util
+P CSWlibxrender
+P CSWpng
+P CSWstartupnotif
+P CSWsunmath
+P CSWzlib
+P CSWlibxfce4mcs

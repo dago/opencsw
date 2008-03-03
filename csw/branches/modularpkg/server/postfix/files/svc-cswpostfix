@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -x
+
+if [ ! -f /etc/opt/csw/postfix/aliases.dir ]; then
+  /opt/csw/bin/newaliases
+fi
+
+exec /opt/csw/sbin/postfix "$@"
