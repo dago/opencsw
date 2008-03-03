@@ -27,7 +27,7 @@ CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(docdir)/squidpurge $(DESTDIR)$(sbindir)

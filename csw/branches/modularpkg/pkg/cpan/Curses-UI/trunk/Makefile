@@ -13,4 +13,4 @@ DISTFILES += CSWpmcursesui.gspec CSWpmcursesui.depend
 DEPENDS   += cpan/Curses cpan/TermReadKey
 BUILDDEPS += cpan/Test-Pod
 
-include ../category.mk
+include gar/category.mk

@@ -15,4 +15,4 @@ DISTFILES += CSWpmxmlxpath.gspec CSWpmxmlxpath.depend
 
 DEPENDS += cpan/XML-Parser
 
-include ../category.mk
+include gar/category.mk

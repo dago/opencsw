@@ -22,7 +22,7 @@ BUILD_SCRIPTS = $(WORKSRC)/setup.rb
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = $(WORKSRC)/setup.rb
 
-include ../category.mk
+include gar/category.mk
 
 post-install: copy-contrib
 

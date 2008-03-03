@@ -22,4 +22,4 @@ TEST_TARGET =
 SPKG_SOURCEURL = http://www.sentex.net/~mwandel/jhead/
 SPKG_PKGBASE = $(DESTDIR)$(prefix)
 
-include ../category.mk
+include gar/category.mk

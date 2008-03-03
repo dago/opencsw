@@ -13,5 +13,5 @@ DISTFILES += $(call admfiles,CSWpmchart,depend prototype)
 
 DEPENDS += cpan/GD
 
-include ../category.mk
+include gar/category.mk
 

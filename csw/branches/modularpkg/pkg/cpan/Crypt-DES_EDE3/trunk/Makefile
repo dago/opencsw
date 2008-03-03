@@ -17,4 +17,4 @@ DISTFILES += CSWpmcryptdesede3.gspec CSWpmcryptdesede3.depend
 
 DEPENDS += cpan/Crypt-DES
 
-include ../category.mk
+include gar/category.mk

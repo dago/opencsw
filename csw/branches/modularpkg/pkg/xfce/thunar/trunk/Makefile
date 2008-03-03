@@ -18,7 +18,7 @@ DISTFILES += CSWlibxfcethunardev.depend CSWlibxfcethunardev.gspec CSWlibxfcethun
 PATCHFILES  = thunar-vfs-path-private.h.diff 
 PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
 
-include ../category.mk
+include gar/category.mk
 
 CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
 CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include

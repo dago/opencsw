@@ -18,7 +18,7 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 newproto:
 	@/bin/ls -1 /opt/csw/bin/g* | pkgproto | \

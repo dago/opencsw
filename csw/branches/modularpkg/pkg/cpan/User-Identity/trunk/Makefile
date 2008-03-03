@@ -14,4 +14,4 @@ DEPENDS += cpan/Geography-Countries
 
 DISTFILES += CSWpmuserident.gspec
 
-include ../category.mk
+include gar/category.mk

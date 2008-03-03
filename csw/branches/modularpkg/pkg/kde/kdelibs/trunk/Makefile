@@ -22,4 +22,4 @@ DEPENDS += kde/arts lib/qt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk

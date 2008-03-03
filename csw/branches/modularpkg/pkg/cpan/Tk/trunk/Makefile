@@ -18,4 +18,4 @@ DISTFILES += CSWpmtk.gspec
 # Fix problems with ISO646 mapping to 'US-ASCII'
 PATCHFILES += nl_langinfo.diff
 
-include ../category.mk
+include gar/category.mk

@@ -10,6 +10,6 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmdataflow,)
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/modules

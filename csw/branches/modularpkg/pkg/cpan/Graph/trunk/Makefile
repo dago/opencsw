@@ -12,4 +12,4 @@ DISTFILES += CSWpmgraph.gspec CSWpmgraph.depend
 
 DEPENDS = cpan/Heap
 
-include ../category.mk
+include gar/category.mk

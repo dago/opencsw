@@ -15,4 +15,4 @@ DISTFILES += CSWpmexceptcls.gspec CSWpmexceptcls.depend
 
 DEPENDS += cpan/Class-Data-Inheritable cpan/Devel-StackTrace
 
-include ../category.mk
+include gar/category.mk

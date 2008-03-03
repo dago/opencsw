@@ -17,5 +17,5 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 

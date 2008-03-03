@@ -20,4 +20,4 @@ DEPENDS += cpan/MIME-tools cpan/HTML-Format cpan/Time-HiRes
 
 DISTFILES += CSWpmmailbox.gspec
 
-include ../category.mk
+include gar/category.mk

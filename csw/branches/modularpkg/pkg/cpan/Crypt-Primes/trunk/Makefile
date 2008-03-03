@@ -18,4 +18,4 @@ DISTFILES += CSWpmcryptprimes.gspec CSWpmcryptprimes.depend
 
 DEPENDS += cpan/Crypt-Random
 
-include ../category.mk
+include gar/category.mk

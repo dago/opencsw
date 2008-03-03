@@ -16,4 +16,4 @@ DISTFILES += $(call admfiles,CSWfconfig,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk

@@ -18,7 +18,7 @@ CONFIGURE_ARGS += --with-libmlib=/export/home/jgoerzen/MediaLib
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # Cannot do this yet (libtool problems)
 #pre-configure:

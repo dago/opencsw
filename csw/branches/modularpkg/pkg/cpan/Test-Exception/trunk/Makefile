@@ -14,4 +14,4 @@ DISTFILES += CSWpmtstexcept.gspec CSWpmtstexcept.depend
 
 DEPENDS += cpan/Sub-Uplevel
 
-include ../category.mk
+include gar/category.mk

@@ -14,4 +14,4 @@ DISTFILES += CSWpmxmlgdome.gspec CSWpmxmlgdome.depend
 DEPENDS += lib/gdome2
 DEPENDS += cpan/XML-SAX cpan/XML-LibXML-Common
 
-include ../category.mk
+include gar/category.mk

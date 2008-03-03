@@ -18,4 +18,4 @@ DISTFILES += CSWpmauthenpam.gspec
 # Disable interactive tests
 PATCHFILES = itest.diff
 
-include ../category.mk
+include gar/category.mk

@@ -14,4 +14,4 @@ endef
 
 DISTFILES += CSWpmclassinspector.gspec
 
-include ../category.mk
+include gar/category.mk

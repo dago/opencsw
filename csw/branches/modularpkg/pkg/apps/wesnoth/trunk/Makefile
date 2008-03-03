@@ -29,7 +29,7 @@ CONFIGURE_ARGS += --with-gnome
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 #pre-configure:
 #	( cd $(WORKSRC) ; aclocal ; autoconf ; automake -a )

@@ -22,4 +22,4 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS = $(DIRPATHS)
 GNU_CC_HOME  = /opt/csw/gcc3
 
-include ../category.mk
+include gar/category.mk

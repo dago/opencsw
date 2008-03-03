@@ -25,7 +25,7 @@ BUILDDEPS += cpan/Apache-Test
 # This is acknowledged by the module maintainer -- should be fixed soon.
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-test:
 	@chown -R nobody:nobody $(WORKSRC)

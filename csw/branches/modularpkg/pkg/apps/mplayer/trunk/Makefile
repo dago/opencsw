@@ -182,7 +182,7 @@ ISAEXEC_BINS = opt/csw/bin/mplayer opt/csw/bin/mencoder
 
 
 # Inclue all standard GAR variables and functionality from here onward:
-include ../category.mk
+include gar/category.mk
 
 # See earlier, we needed to set this VAR _after_ the category.mk include
 BASE_DESTDIR :=$(DESTDIR)-$(BASEISA)

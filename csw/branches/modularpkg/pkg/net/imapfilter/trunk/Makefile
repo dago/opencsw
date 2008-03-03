@@ -26,4 +26,4 @@ CONFIGURE_ARGS = -d $(prefix) -m $(mandir)
 # No test suite
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

@@ -16,4 +16,4 @@ DISTFILES += CSWpmipcountry.gspec CSWpmipcountry.depend
 
 DEPENDS += cpan/Geography-Countries
 
-include ../category.mk
+include gar/category.mk

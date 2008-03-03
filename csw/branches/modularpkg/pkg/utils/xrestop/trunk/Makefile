@@ -16,4 +16,4 @@ MASTER_SITES = http://www.freedesktop.org/software/xrestop/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWxrestop,)
 
-include ../category.mk
+include gar/category.mk

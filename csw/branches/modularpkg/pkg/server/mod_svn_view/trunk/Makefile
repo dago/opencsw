@@ -24,4 +24,4 @@ endef
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 
-include ../category.mk
+include gar/category.mk

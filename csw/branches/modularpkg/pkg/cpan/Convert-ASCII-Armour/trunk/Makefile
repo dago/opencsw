@@ -14,4 +14,4 @@ DISTFILES += CSWpmconvertaarm.gspec CSWpmconvertaarm.depend
 
 DEPENDS += cpan/Compress-Zlib
 
-include ../category.mk
+include gar/category.mk

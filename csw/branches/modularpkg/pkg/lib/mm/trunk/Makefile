@@ -23,4 +23,4 @@ CONFIGURE_ARGS += --disable-static
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

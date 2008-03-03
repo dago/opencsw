@@ -37,7 +37,7 @@ PATCHFILES += use_system_bashrc_and_logout.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk
 
 # We touch these file to avoid aclocal/autoconf
 # configure to be run again

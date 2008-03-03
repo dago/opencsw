@@ -12,4 +12,4 @@ endef
 
 DISTFILES += CSWpmclassblackhole.gspec
 
-include ../category.mk
+include gar/category.mk

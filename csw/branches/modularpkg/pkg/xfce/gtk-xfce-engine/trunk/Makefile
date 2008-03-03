@@ -11,7 +11,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWgtkxfceengine.depend CSWgtkxfceengine.gspec CSWgtkxfceengine.prototype
 
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS   += -xlibmil
 CXXFLAGS += -xlibmil -xlibmopt -features=tmplife -norunpath

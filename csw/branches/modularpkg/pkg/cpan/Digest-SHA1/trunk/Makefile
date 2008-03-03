@@ -16,4 +16,4 @@ DISTFILES = $(call admfiles,CSWpmdigestsha1,depend prototype)
 # Missing alias for reset -> new
 PATCHFILES = reset.diff
 
-include ../category.mk
+include gar/category.mk

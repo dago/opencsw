@@ -20,7 +20,7 @@ DEPENDS += cpan/libwww-perl cpan/XML-Parser
 
 PERL_PACKLIST = $(DESTDIR)$(perlpackroot)/Frontier/RPC/.packlist
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)

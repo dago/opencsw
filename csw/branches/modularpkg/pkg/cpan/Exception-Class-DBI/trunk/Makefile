@@ -16,4 +16,4 @@ DISTFILES += CSWpmexceptclsdbi.gspec CSWpmexceptclsdbi.depend
 
 DEPENDS += cpan/Exception-Class cpan/Module-Build
 
-include ../category.mk
+include gar/category.mk

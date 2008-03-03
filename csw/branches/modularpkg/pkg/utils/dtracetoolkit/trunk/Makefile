@@ -22,7 +22,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_SOURCEURL = http://www.brendangregg.com/dtrace.html
 

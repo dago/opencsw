@@ -18,7 +18,7 @@ CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 configure-custom:
 	@echo "==> Configuring daemontools in $(WORKSRC)"

@@ -62,7 +62,7 @@ EXTRA_INC += $(prefix)/bdb$(BDB_VERSION)/include
 # Tests verified: 1.2.2
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # bdb requires -lnsl
 LIBS += -lnsl

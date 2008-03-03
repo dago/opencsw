@@ -22,7 +22,7 @@ CONFIGURE_ARGS += --enable-shared --disable-static
 # Test has to be run *after* install
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@echo " ==> Running tests for $(GARNAME)"

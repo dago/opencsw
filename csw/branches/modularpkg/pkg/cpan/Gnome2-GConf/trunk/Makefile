@@ -19,6 +19,6 @@ DISTFILES += $(call admfiles,CSWpmgnome2gconf,depend)
 
 DEPENDS += cpan/Gtk2
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl

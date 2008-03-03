@@ -14,4 +14,4 @@ endef
 
 DISTFILES += CSWpmi18nlangtags.gspec
 
-include ../category.mk
+include gar/category.mk

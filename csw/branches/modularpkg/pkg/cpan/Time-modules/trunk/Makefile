@@ -9,7 +9,7 @@ endef
 
 DISTFILES += CSWpmtimemods.gspec
 
-include ../category.mk
+include gar/category.mk
 
 # Modify AUTHOR_ID
 AUTHOR_ID := $(AUTHOR_ID)/modules

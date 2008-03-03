@@ -12,4 +12,4 @@ DISTFILES += CSWpmdbixsrchbuilder.gspec CSWpmdbixsrchbuilder.depend
 
 DEPENDS += cpan/Want cpan/Class-ReturnValue
 
-include ../category.mk
+include gar/category.mk

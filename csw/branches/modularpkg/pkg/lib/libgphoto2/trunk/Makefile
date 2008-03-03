@@ -60,7 +60,7 @@ TEST_TARGET =
 
 SPKG_SOURCEURL = http://www.gphoto.org/
 
-include ../category.mk
+include gar/category.mk
 
 # This ensures that make picks up the 'cc' shell script as compiler
 #PATH := $(PWD)/$(WORKDIR):$(PATH)

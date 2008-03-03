@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWpmtestxml,depend prototype)
 DEPENDS += cpan/XML-Parser
 DEPENDS += cpan/XML-SemanticDiff
 
-include ../category.mk
+include gar/category.mk

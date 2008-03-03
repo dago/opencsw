@@ -29,4 +29,4 @@ CONFIGURE_ARGS += --with-xml-prefix=$(prefix)
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

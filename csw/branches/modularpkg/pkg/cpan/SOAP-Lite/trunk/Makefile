@@ -21,5 +21,5 @@ DEPENDS += cpan/Compress-Zlib
 
 CONFIGURE_ARGS = --noprompt
 
-include ../category.mk
+include gar/category.mk
 

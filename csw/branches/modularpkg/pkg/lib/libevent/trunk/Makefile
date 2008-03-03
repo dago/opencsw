@@ -32,7 +32,7 @@ CONFIGURE_ARGS += --with-rtsig
 
 TEST_TARGET = verify
 
-include ../category.mk
+include gar/category.mk
 
 LIBS += -lresolv -lnsl
 export LIBS

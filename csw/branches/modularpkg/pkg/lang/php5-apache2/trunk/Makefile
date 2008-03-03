@@ -37,7 +37,7 @@ include files/config.mk
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 
 # System Rules/Configuration
-include ../category.mk
+include gar/category.mk
 
 # Common Rules
 include files/rules.mk

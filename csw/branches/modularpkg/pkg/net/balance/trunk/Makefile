@@ -19,4 +19,4 @@ PATCHFILES = build.diff
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

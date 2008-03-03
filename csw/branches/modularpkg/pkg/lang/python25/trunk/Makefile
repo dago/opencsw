@@ -57,7 +57,7 @@ CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --with-fpectl
 
-include ../category.mk
+include gar/category.mk
 
 OPT = $(OPTFLAGS)
 export OPT

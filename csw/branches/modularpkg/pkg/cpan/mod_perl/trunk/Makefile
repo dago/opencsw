@@ -29,7 +29,7 @@ PERL_CONFIGURE_ARGS += INSTALLSITEMAN3DIR=$(prefix)/apache/man/man3
 
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	( cd $(WORKSRC) ; $(INSTALL_ENV) make install DESTDIR=$(DESTDIR) )

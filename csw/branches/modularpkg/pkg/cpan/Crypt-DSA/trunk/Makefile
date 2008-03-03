@@ -16,4 +16,4 @@ DISTFILES += CSWpmcryptdsa.gspec CSWpmcryptdsa.depend
 DEPENDS += cpan/Crypt-Random cpan/Digest-SHA1
 DEPENDS += cpan/Convert-PEM cpan/Data-Buffer
 
-include ../category.mk
+include gar/category.mk

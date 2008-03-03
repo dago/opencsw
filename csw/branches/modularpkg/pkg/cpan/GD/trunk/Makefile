@@ -28,4 +28,4 @@ CONFIGURE_ARGS += -lib_jpeg_path $(libdir)
 CONFIGURE_ARGS += -lib_xpm_path $(libdir)
 CONFIGURE_ARGS += -lib_zlib_path $(libdir)
 
-include ../category.mk
+include gar/category.mk

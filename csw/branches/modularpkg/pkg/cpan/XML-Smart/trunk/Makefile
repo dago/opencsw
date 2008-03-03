@@ -19,4 +19,4 @@ DEPENDS += cpan/Object-MultiType
 # Disable the URL test
 PATCHFILES = url_test.diff
 
-include ../category.mk
+include gar/category.mk

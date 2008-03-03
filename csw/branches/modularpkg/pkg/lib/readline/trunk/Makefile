@@ -23,7 +23,7 @@ CONFIGURE_ARGS += --with-curses
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@chmod 555 $(DESTDIR)$(libdir)/libhistory.*

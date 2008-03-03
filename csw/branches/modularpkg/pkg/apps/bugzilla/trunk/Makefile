@@ -42,5 +42,5 @@ DEPENDS += lib/ImageMagick
 # Currently calls out 'graphvis' in depend, but should move to graphviz2
 #DEPENDS += utils/graphviz2
 
-include ../category.mk
+include gar/category.mk
 

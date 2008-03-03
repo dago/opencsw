@@ -20,4 +20,4 @@ PATCHFILES += $(notdir $(wildcard $(FILEDIR)/*.patch))
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
 
-include ../category.mk
+include gar/category.mk

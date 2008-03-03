@@ -13,4 +13,4 @@ DISTFILES += CSWpmapauthpam.gspec CSWpmapauthpam.depend
 
 DEPENDS += cpan/Authen-PAM
 
-include ../category.mk
+include gar/category.mk

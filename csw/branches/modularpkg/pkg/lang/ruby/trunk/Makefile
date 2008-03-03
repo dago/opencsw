@@ -49,7 +49,7 @@ CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
 

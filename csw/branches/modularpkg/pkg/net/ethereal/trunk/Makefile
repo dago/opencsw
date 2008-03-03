@@ -26,7 +26,7 @@ CONFIGURE_ARGS += --with-ssl=$(tool_prefix)
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 LDFLAGS += -lnsl -lsocket
 

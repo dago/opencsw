@@ -12,4 +12,4 @@ endef
 
 DISTFILES += CSWpmdigestnilsimsa.gspec
 
-include ../category.mk
+include gar/category.mk

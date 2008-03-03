@@ -15,4 +15,4 @@ DISTFILES += CSWpmdbixctxfetch.gspec CSWpmdbixctxfetch.depend
 
 DEPENDS += cpan/DBI
 
-include ../category.mk
+include gar/category.mk

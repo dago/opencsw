@@ -14,7 +14,7 @@ DISTFILES += CSWlibxfceprintdev.depend CSWlibxfceprintdev.gspec CSWlibxfceprintd
 
 # DISTFILES += $(call admfiles,CSWxfceprint, depend)
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS += --enable-bsdlpr --enable-cups
 

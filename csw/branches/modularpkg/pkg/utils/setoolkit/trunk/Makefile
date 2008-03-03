@@ -53,7 +53,7 @@ SKIPTEST = 1
 INSTALL_SCRIPTS = custom
 CLEAN_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 # CFLAGS += -g
 

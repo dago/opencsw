@@ -16,4 +16,4 @@ DISTFILES += $(call admfiles,CSWpmarchivetar,depend prototype)
 
 DEPENDS += cpan/IO-Zlib
 
-include ../category.mk
+include gar/category.mk

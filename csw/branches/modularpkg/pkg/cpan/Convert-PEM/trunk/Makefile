@@ -14,4 +14,4 @@ DISTFILES += CSWpmconvertpem.gspec CSWpmconvertpem.depend
 
 DEPENDS += cpan/Convert-ASN1 cpan/Crypt-DES_EDE3
 
-include ../category.mk
+include gar/category.mk

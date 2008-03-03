@@ -33,7 +33,7 @@ PATCHFILES = autoconf.mk.in.diff
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-extract:
 	( mv $(WORKDIR)/mozilla $(WORKDIR)/$(DISTNAME) )

@@ -13,4 +13,4 @@ endef
 
 DISTFILES += CSWpmextutilsf77.gspec
 
-include ../category.mk
+include gar/category.mk

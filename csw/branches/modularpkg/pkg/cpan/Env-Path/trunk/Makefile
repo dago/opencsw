@@ -13,4 +13,4 @@ endef
 
 DISTFILES += CSWpmenvpath.gspec CSWpmenvpath.depend
 
-include ../category.mk
+include gar/category.mk

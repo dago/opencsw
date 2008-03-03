@@ -17,4 +17,4 @@ DISTFILES += CSWpmumutf8.gspec CSWpmumutf8.depend
 
 DEPENDS += cpan/Unicode-String cpan/Unicode-Map cpan/Unicode-Map8 cpan/Jcode
 
-include ../category.mk
+include gar/category.mk

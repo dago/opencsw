@@ -15,7 +15,7 @@ DISTFILES += CSWxfcemcsmanager.depend CSWxfcemcsmanager.gspec CSWxfcemcsmanager.
 
 LIBDEPS = xfce/libxfce4util
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

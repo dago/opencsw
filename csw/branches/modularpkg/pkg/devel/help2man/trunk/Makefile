@@ -24,7 +24,7 @@ CONFIGURE_ARGS += --disable-nls
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@echo " ==> Fixing install anomalies"

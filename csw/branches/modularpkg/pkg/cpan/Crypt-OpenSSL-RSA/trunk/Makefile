@@ -15,4 +15,4 @@ DISTFILES += CSWpmcryptosslrsa.gspec CSWpmcryptosslrsa.depend
 DEPENDS += lib/openssl
 DEPENDS += cpan/Crypt-OpenSSL-Random
 
-include ../category.mk
+include gar/category.mk

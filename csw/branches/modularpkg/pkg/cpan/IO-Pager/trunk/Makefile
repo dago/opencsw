@@ -16,4 +16,4 @@ DISTFILES = $(call admfiles,CSWpmiopager,depend prototype)
 # Tests are mostly visual verification
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

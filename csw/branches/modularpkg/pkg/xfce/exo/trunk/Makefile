@@ -16,7 +16,7 @@ DISTFILES += CSWxfcelibexodev.depend CSWxfcelibexodev.gspec CSWxfcelibexodev.pro
 #  Patch for the exo-mount.c file
 PATCHFILES = exo.diff
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS += --enable-python --enable-hal
 

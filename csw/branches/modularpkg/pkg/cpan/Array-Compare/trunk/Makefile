@@ -20,4 +20,4 @@ BUILD_SCRIPTS = $(BUILD_PL)
 TEST_SCRIPTS = $(BUILD_PL)
 INSTALL_SCRIPTS = $(BUILD_PL)
 
-include ../category.mk
+include gar/category.mk

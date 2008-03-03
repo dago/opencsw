@@ -22,7 +22,7 @@ GNU_CC_HOME = /opt/csw/gcc3
 CONFIGURE_ARGS = $(DIRPATHS) --includedir=/opt/csw/include
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install: remove-libtool-files
 

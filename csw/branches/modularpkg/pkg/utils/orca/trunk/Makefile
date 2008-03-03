@@ -47,5 +47,5 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 	--with-html-dir=$(prefix)/apache2/share/htdocs/orca \
 	--disable-librrdtool
 
-include ../category.mk
+include gar/category.mk
 

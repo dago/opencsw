@@ -48,7 +48,7 @@ CONFIGURE_ARGS += --with-xmlrpc
 CONFIGURE_ARGS += --enable-gd-native-ttf
 CONFIGURE_ARGS += --enable-exif
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@cp -f $(WORKSRC)/php.ini-recommended $(sysconfdir)/php.ini

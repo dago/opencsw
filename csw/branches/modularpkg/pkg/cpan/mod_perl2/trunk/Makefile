@@ -47,7 +47,7 @@ TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 LDFLAGS += -L$(prefix)/bdb44/lib
 LD_OPTIONS += -R$(prefix)/bdb44/lib

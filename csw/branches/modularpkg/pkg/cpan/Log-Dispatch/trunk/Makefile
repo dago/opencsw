@@ -16,4 +16,4 @@ DEPENDS += cpan/Params-Validate
 
 CONFIGURE_ARGS = destdir=$(DESTDIR)
 
-include ../category.mk
+include gar/category.mk

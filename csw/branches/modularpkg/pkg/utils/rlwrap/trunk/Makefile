@@ -21,7 +21,7 @@ DISTFILES += changelog.CSW
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk
 
 # the putenv patch modify configure.ac so we must re-generate configure
 pre-configure:

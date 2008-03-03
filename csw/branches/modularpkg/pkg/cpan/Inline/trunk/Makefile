@@ -18,4 +18,4 @@ PATCHFILES += inline.diff
 
 DEPENDS += cpan/Parse-RecDescent
 
-include ../category.mk
+include gar/category.mk

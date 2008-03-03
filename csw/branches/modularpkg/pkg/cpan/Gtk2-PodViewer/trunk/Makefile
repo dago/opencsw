@@ -13,4 +13,4 @@ DISTFILES += $(call admfiles,CSWpmgtk2podviewer,depend)
 
 DEPENDS += cpan/Gtk2
 
-include ../category.mk
+include gar/category.mk

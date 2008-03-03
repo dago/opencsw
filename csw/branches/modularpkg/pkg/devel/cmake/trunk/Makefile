@@ -24,7 +24,7 @@ CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 
 SKIPTEST = 1
 
-include ../category.mk
+include gar/category.mk
 
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Modules
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Templates

@@ -11,4 +11,4 @@ endef
 
 DISTFILES += CSWpmnetcidrlite.gspec
 
-include ../category.mk
+include gar/category.mk

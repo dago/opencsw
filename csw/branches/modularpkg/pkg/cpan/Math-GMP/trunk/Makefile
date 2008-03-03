@@ -15,4 +15,4 @@ DISTFILES += CSWpmmathgmp.gspec CSWpmmathgmp.depend
 
 DEPENDS += lib/gmp
 
-include ../category.mk
+include gar/category.mk

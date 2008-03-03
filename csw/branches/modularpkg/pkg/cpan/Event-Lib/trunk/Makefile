@@ -19,4 +19,4 @@ PATCHFILES += inline.diff
 CONFIGURE_ARGS += LIBS="-L$(libdir) -levent"
 CONFIGURE_ARGS += INC="-I$(includedir)"
 
-include ../category.mk
+include gar/category.mk

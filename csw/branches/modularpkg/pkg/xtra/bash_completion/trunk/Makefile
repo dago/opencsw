@@ -41,4 +41,4 @@ install-manual:
 	done )
 
 
-include ../category.mk
+include gar/category.mk

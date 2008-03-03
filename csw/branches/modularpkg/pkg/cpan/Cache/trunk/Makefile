@@ -16,4 +16,4 @@ DISTFILES = $(call admfiles,CSWpmcache,depend prototype)
 DEPENDS += cpan/Heap cpan/IO-String cpan/File-NFSLock
 DEPENDS += cpan/Digest-SHA1 cpan/TimeDate
 
-include ../category.mk
+include gar/category.mk

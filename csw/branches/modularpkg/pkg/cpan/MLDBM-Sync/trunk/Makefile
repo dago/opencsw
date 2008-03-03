@@ -15,4 +15,4 @@ DISTFILES += CSWpmmldbmsync.gspec CSWpmmldbmsync.depend
 
 DEPENDS += cpan/MLDBM
 
-include ../category.mk
+include gar/category.mk

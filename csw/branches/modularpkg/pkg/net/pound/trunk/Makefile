@@ -31,4 +31,4 @@ CONFIGURE_ARGS += --with-ssl=$(prefix)
 # No test suite available
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

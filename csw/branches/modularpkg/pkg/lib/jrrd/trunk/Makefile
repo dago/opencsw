@@ -14,4 +14,4 @@ CONFIGURE_ARGS += --disable-rpm-rules
 
 TEST_TARGET = 
 
-include ../category.mk
+include gar/category.mk

@@ -22,4 +22,4 @@ DISTFILES = $(call admfiles,CSWpmsvnnotify,prototype)
 #DEPENDS += utils/subversion
 #DEPENDS += cpan/Module-Build
 
-include ../category.mk
+include gar/category.mk

@@ -15,4 +15,4 @@ DISTFILES += $(call admfiles,CSWpmcgiapp,depend prototype)
 
 DEPENDS += cpan/HTML-Template
 
-include ../category.mk
+include gar/category.mk

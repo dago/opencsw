@@ -23,7 +23,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@( cd $(WORKSRC) ; python ./setup.py install --root=$(DESTDIR) )

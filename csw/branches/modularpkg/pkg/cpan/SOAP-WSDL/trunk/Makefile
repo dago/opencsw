@@ -17,4 +17,4 @@ DEPENDS += cpan/MIME-Lite cpan/MIME-tools cpan/Compress-Zlib
 
 CONFIGURE_ARGS = --noprompt
 
-include ../category.mk
+include gar/category.mk

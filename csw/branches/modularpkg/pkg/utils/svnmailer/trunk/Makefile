@@ -27,6 +27,6 @@ DISTFILES += $(call admfiles,CSWsvnmailer,depend)
 # Fix doc install paths
 PATCHFILES += install-doc.diff
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(GARSVNREV)

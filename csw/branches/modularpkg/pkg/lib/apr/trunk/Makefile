@@ -23,7 +23,7 @@ CONFIGURE_ARGS += --enable-other-child
 # Tests verified: 1.2.2
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	@sed -e s,INSTALL_PREFIX,$(prefix),g \

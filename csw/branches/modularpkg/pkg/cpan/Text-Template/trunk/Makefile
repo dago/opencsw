@@ -14,4 +14,4 @@ endef
 
 DISTFILES += CSWpmtexttemplate.gspec
 
-include ../category.mk
+include gar/category.mk

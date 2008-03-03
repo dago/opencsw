@@ -15,4 +15,4 @@ DISTFILES += CSWpmsuboverride.gspec CSWpmsuboverride.depend
 
 DEPENDS += cpan/Sub-Uplevel cpan/Test-Exception
 
-include ../category.mk
+include gar/category.mk

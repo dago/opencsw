@@ -24,4 +24,4 @@ PATCHFILES += seek.diff
 
 DEPENDS += cpan/Compress-Zlib
 
-include ../category.mk
+include gar/category.mk

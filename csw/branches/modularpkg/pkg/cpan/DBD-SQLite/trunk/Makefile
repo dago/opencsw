@@ -14,4 +14,4 @@ DISTFILES += CSWpmdbdsqlite.gspec
 # Use Perl's Config{optimize} instead of -O6
 PATCHFILES = optimize.diff
 
-include ../category.mk
+include gar/category.mk

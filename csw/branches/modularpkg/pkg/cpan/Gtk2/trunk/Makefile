@@ -19,6 +19,6 @@ DISTFILES += CSWpmgtk2.gspec CSWpmgtk2.depend
 DEPENDS += lib/gtk2
 DEPENDS += cpan/Glib
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl

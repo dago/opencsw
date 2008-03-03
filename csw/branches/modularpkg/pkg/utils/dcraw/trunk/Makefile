@@ -24,7 +24,7 @@ COPY_FILES += download/Makefile
 SPKG_SOURCEURL = http://cybercom.net/~dcoffin/dcraw/
 SPKG_PKGBASE = $(DESTDIR)$(prefix)
 
-include ../category.mk
+include gar/category.mk
 
 pre-build:
 	test -d $(WORKSRC) || mkdir -p $(WORKSRC)

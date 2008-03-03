@@ -45,7 +45,7 @@ CONFIGURE_ARGS += --disable-shared
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS := $(CFLAGS) -m64
 

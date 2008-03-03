@@ -94,7 +94,7 @@ CONFIGURE_SCRIPTS = $(WORKSRC)/config_office/configure
 BUILD_SCRIPTS = icu all-modules langpack
 INSTALL_SCRIPTS = core-and-common langpack
 
-include ../category.mk
+include gar/category.mk
 
 # Extra libraries location to put in the RUNPATH
 EXTRA_LIBS = $(prefix)/OpenOffice.org/program 

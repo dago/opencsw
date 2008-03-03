@@ -17,4 +17,4 @@ DISTFILES += CSWpmimadbi.gspec CSWpmimadbi.depend
 DEPENDS += cpan/Class-WhiteHole cpan/Class-Data-Inheritable
 DEPENDS += cpan/DBIx-ContextualFetch
 
-include ../category.mk
+include gar/category.mk

@@ -28,7 +28,7 @@ BUILD_ARGS = build
 # tin doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/tin

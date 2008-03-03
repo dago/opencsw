@@ -15,4 +15,4 @@ DISTFILES += CSWpmipcshrlite.gspec
 # Don't ask questions...
 PATCHFILES = config.diff
 
-include ../category.mk
+include gar/category.mk

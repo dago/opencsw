@@ -21,7 +21,7 @@ CONFIGURE_ARGS += --enable-debug=yes
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS := -g $(CFLAGS)
 CXXFLAGS := -g $(CXXFLAGS)

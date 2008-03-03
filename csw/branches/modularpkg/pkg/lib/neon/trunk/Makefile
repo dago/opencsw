@@ -27,7 +27,7 @@ CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-expat
 
-include ../category.mk
+include gar/category.mk
 
 #post-install: install-compat-libs
 

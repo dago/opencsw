@@ -18,7 +18,7 @@ CONFIGURE_ARGS = $(DIRPATHS) --enable-release --with-shape=no --with-xshm=no --d
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # change bad binary name
 post-install:

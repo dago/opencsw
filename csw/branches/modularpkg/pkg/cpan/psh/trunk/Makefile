@@ -13,4 +13,4 @@ DISTFILES += $(call admfiles,CSWpsh,depend)
 
 DEPENDS += cpan/Term-ReadLine-Gnu cpan/BSD-Resource
 
-include ../category.mk
+include gar/category.mk

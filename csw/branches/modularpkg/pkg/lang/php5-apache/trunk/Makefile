@@ -39,7 +39,7 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache/bin/apxs
 INSTALL_SCRIPTS = sapi-only
 
 # System Rules/Configuration
-include ../category.mk
+include gar/category.mk
 
 # Common Rules
 include files/rules.mk

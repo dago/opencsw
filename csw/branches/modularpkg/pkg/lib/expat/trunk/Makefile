@@ -26,7 +26,7 @@ TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@for extlib in $(EXTLIBS) ; do \

@@ -16,4 +16,4 @@ DISTFILES += CSWpmdbdcsv.gspec CSWpmdbdcsv.depend
 
 DEPENDS += cpan/DBI cpan/SQL-Statement cpan/Text-CSV_XS
 
-include ../category.mk
+include gar/category.mk

@@ -14,4 +14,4 @@ DISTFILES = $(call admfiles,CSWpmhtmlfmt,depend prototype)
 
 DEPENDS += cpan/Font-AFM
 
-include ../category.mk
+include gar/category.mk

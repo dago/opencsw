@@ -13,4 +13,4 @@ DISTFILES += CSWpmmodulesignature.gspec CSWpmmodulesignature.depend
 
 DEPENDS += cpan/Text-Diff cpan/Crypt-OpenPGP cpan/PAR-Dist
 
-include ../category.mk
+include gar/category.mk

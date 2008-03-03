@@ -16,4 +16,4 @@ DEPENDS += cpan/Module-Load-Conditional
 DEPENDS += cpan/Locale-Maketext-Simple
 DEPENDS += cpan/IPC-Run
 
-include ../category.mk
+include gar/category.mk

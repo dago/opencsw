@@ -12,4 +12,4 @@ DISTFILES += CSWpmcscan.gspec CSWpmcscan.depend
 
 DEPENDS += cpan/Data-Flow
 
-include ../category.mk
+include gar/category.mk

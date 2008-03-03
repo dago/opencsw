@@ -22,4 +22,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmnetpatricia,prototype)
 
-include ../category.mk
+include gar/category.mk

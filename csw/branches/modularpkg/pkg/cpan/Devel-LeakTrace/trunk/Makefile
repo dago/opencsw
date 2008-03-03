@@ -15,4 +15,4 @@ DISTFILES += $(call admfiles,CSWpmdevleaktrace,depend)
 DEPENDS += lib/glib2
 DEPENDS += cpan/Module-Build
 
-include ../category.mk
+include gar/category.mk

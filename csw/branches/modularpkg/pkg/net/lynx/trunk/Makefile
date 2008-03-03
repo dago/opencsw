@@ -40,4 +40,4 @@ SUN_CPP_FLAGS = -I./chrtrans
 #    --enable-gzip-help \
 #    --enable-nls
 
-include ../category.mk
+include gar/category.mk

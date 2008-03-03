@@ -12,7 +12,7 @@ DISTFILES += CSWlibxfce4mcsdoc.depend CSWlibxfce4mcsdoc.gspec CSWlibxfce4mcsdoc.
 DISTFILES += CSWlibxfce4mcsdev.depend CSWlibxfce4mcsdev.gspec CSWlibxfce4mcsdev.prototype
 #DISTFILES += $(call admfiles,CSWlibxfce4mcs, depend)
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

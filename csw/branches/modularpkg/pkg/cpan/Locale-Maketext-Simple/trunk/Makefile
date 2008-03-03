@@ -13,4 +13,4 @@ DISTFILES = $(call admfiles,CSWpmlclemktxtsimple,depend prototype)
 
 DEPENDS += cpan/Locale-Maketext-Lexicon
 
-include ../category.mk
+include gar/category.mk

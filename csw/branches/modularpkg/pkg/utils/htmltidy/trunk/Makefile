@@ -25,7 +25,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # It's useless, but it's there...
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	@( cd $(WORKSRC) ; /bin/sh build/gnuauto/setup.sh )

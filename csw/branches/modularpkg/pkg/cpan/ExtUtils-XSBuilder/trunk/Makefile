@@ -18,4 +18,4 @@ DISTFILES = $(call admfiles,CSWpmextutxsbld,depend prototype)
 
 DEPENDS += cpan/Parse-RecDescent cpan/Tie-IxHash
 
-include ../category.mk
+include gar/category.mk

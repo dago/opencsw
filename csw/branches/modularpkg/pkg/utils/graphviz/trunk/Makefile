@@ -17,7 +17,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 # Prevent grammars and parsers from being regenerated
 pre-build:

@@ -15,4 +15,4 @@ DISTFILES = $(call admfiles,CSWpmsvnsimple,depend prototype)
 
 DEPENDS += utils/subversion
 
-include ../category.mk
+include gar/category.mk

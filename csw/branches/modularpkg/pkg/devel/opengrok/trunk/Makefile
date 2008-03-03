@@ -49,7 +49,7 @@ install-custom:
 	@$(MAKECOOKIE)
 	
 
-include ../category.mk
+include gar/category.mk
 
 # TODO: Add run.sh for cron update
 # TODO: Repository under /var/opt/csw/repos

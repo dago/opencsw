@@ -14,4 +14,4 @@ DISTFILES += CSWpmdigesthmac.gspec CSWpmdigesthmac.depend
 
 DEPENDS += cpan/Digest-SHA1
 
-include ../category.mk
+include gar/category.mk

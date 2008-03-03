@@ -14,4 +14,4 @@ endef
 
 DISTFILES += CSWpmspiffy.gspec
 
-include ../category.mk
+include gar/category.mk

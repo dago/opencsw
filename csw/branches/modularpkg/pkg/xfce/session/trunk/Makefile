@@ -14,7 +14,7 @@ DISTFILES += CSWlibxfcesessiondev.depend CSWlibxfcesessiondev.gspec CSWlibxfcese
 
 # DISTFILES += $(call admfiles,CSWxfcesession, depend)
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS += --enable-dbus
 CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0

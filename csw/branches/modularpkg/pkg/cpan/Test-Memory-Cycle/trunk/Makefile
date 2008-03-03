@@ -15,4 +15,4 @@ DISTFILES += CSWpmtestmemcycle.gspec CSWpmtestmemcycle.depend
 DEPENDS   += cpan/Devel-Cycle
 BUILDDEPS += cpan/Test-Builder-Tester
 
-include ../category.mk
+include gar/category.mk

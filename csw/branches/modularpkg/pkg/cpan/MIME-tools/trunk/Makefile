@@ -12,4 +12,4 @@ DISTFILES += CSWpmmimetools.gspec CSWpmmimetools.depend
 
 DEPENDS += cpan/Unicode-Map cpan/Unicode-String
 
-include ../category.mk
+include gar/category.mk

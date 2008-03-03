@@ -15,5 +15,5 @@ DEPENDS += cpan/Locale-Maketext-Simple
 DEPENDS += cpan/Pod-Simple
 DEPENDS += cpan/ExtUtils-AutoInstall
 
-include ../category.mk
+include gar/category.mk
 

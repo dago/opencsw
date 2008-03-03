@@ -13,7 +13,7 @@ DISTFILES += CSWpmclassdbipg.gspec CSWpmclassdbipg.depend
 
 DEPENDS += cpan/Class-DBI cpan/DBD-Pg
 
-include ../category.mk
+include gar/category.mk
 
 # This test requires Pg to be installed
 pre-test:

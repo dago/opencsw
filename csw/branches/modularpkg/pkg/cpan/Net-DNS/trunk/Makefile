@@ -16,4 +16,4 @@ DEPENDS += cpan/Digest-HMAC
 
 CONFIGURE_ARGS = --no-online-tests
 
-include ../category.mk
+include gar/category.mk

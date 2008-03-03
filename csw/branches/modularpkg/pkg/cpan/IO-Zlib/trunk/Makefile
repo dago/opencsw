@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWpmiozlib,depend prototype)
 
 DEPENDS += cpan/Compress-Zlib
 
-include ../category.mk
+include gar/category.mk

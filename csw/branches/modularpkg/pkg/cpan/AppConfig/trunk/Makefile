@@ -15,4 +15,4 @@ DISTFILES += $(call admfiles,CSWpmappconfig,depend prototype)
 
 DEPENDS += cpan/File-HomeDir
 
-include ../category.mk
+include gar/category.mk

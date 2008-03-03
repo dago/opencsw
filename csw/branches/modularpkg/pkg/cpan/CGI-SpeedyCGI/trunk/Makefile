@@ -14,4 +14,4 @@ DISTFILES += CSWpmspeedycgi.gspec
 # Don't build the apache/apache2 modules
 PATCHFILES += build.diff
 
-include ../category.mk
+include gar/category.mk

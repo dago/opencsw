@@ -14,4 +14,4 @@ DISTFILES += CSWpmregexpcom.gspec
 # Beware -- Regexp::Common::numbers{square} may be flaky...
 #PATCHFILES = disable_squares_t.diff
 
-include ../category.mk
+include gar/category.mk

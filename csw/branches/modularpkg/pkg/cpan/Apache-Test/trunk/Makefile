@@ -14,4 +14,4 @@ DISTFILES = $(call admfiles,CSWpmapachetst,depend prototype)
 APACHE_TEST_HTTPD = $(prefix)/apache2/sbin/httpd
 export APACHE_TEST_HTTPD
 
-include ../category.mk
+include gar/category.mk

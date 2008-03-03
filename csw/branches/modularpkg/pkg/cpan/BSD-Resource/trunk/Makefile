@@ -10,4 +10,4 @@ endef
 
 DISTFILES += CSWpmbsdresource.gspec
 
-include ../category.mk
+include gar/category.mk

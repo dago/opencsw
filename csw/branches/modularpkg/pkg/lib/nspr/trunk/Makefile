@@ -24,7 +24,7 @@ CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/nspr --mandir=/opt/csw/share/man --wi
 
 # PATCHFILES = autoconf.mk.in.diff
 
-include ../category.mk
+include gar/category.mk
 
 post-extract:
 	( mv $(WORKDIR)/$(DISTNAME)-$(GARVERSION)/mozilla/nsprpub $(WORKDIR)/$(DISTNAME) )

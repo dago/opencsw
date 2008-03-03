@@ -27,5 +27,5 @@ CONFIGURE_ARGS += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 

@@ -17,7 +17,7 @@ BUILD_SCRIPTS     =
 CONFIGURE_SCRIPTS =
 INSTALL_SCRIPTS   = ruby
 
-include ../category.mk
+include gar/category.mk
 
 install-ruby:
 	@( cd $(WORKSRC) ; $(INSTALL_ENV) ruby install.rb )

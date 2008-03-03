@@ -137,4 +137,4 @@ install-doc:
 	cp files/README.saslauthd $(INSTDIR)/share/doc/saslauthd/README.CSW
 
 
-include ../category.mk
+include gar/category.mk

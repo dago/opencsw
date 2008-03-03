@@ -17,4 +17,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 #ENABLE_TEST = 0
 
-include ../category.mk
+include gar/category.mk

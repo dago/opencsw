@@ -36,4 +36,4 @@ CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb4
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --with-expat=$(prefix)
 
-include ../category.mk
+include gar/category.mk

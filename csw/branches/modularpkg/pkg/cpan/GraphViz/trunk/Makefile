@@ -17,4 +17,4 @@ DISTFILES += CSWpmgraphviz.gspec CSWpmgraphviz.depend
 DEPENDS += utils/graphviz
 DEPENDS += cpan/Graph cpan/Math-Bezier cpan/Heap
 
-include ../category.mk
+include gar/category.mk

@@ -13,4 +13,4 @@ MASTER_SITES = $(SF_MIRROR)/perltidy/
 
 DISTFILES += $(call admfiles,CSWperltidy,prototype)
 
-include ../category.mk
+include gar/category.mk

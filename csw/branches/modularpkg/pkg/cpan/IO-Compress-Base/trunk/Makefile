@@ -13,4 +13,4 @@ DISTFILES = $(call admfiles,CSWpmiocompbase,depend prototype)
 
 DEPENDS += cpan/Scalar-List-Utils
 
-include ../category.mk
+include gar/category.mk

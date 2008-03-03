@@ -44,7 +44,7 @@ CONFIGURE_ARGS += --enable-force-cgi-redirect
 CONFIGURE_ARGS += --enable-pcntl
 
 # System Rules/Configuration
-include ../category.mk
+include gar/category.mk
 
 # Common Rules
 include files/rules.mk

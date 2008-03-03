@@ -24,5 +24,5 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 
-include ../category.mk
+include gar/category.mk
 

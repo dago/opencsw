@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWpmgdgraph3d,depend)
 
 DEPENDS += cpan/GDGraph
 
-include ../category.mk
+include gar/category.mk

@@ -15,7 +15,7 @@ PATCHFILES = SDL_ttf.c.diff
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	( cd $(WORKSRC) ; ./autogen.sh )

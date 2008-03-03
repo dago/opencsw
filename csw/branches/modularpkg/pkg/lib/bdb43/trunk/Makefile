@@ -39,7 +39,7 @@ STRIP_DIRS     += $(DESTDIR)$(prefix)/bdb43/bin
 # bdb tests are time consuming
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 LIBS += -lnsl
 export LIBS

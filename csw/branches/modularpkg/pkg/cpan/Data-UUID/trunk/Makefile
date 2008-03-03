@@ -15,4 +15,4 @@ DISTFILES = $(call admfiles,CSWpmdatauuid,)
 
 CONFIGURE_ENV += PERL_MM_USE_DEFAULT=1
 
-include ../category.mk
+include gar/category.mk

@@ -1,0 +1,32 @@
+#!/opt/csw/bin/perl -w
+
+use strict;
+use File::Find;
+
+my %maintainers;
+my %pkgs;
+open M, "_list-packages-maintainers" || die "$@";
+while( <M> ) {
+  my ($pkg,$maintainer) = /^\s*(\S+)\s*\|\s*(\S+)/;
+  push @{$maintainers{$maintainer}}, $pkg;
+  $pkgs{$pkg} = $maintainer;
+}
+close M;
+
+my @gspecs;
+find( sub { push @gspecs, $File::Find::name if( /\.gspec$/ ) }, '.' );
+
+foreach my $G (@gspecs) {
+  local $/ = undef;
+  open G, $G || die "$@";
+  my $g = <G>;
+  close G;
+  my $dirname = $G;
+  $dirname =~ s!(/[^/]+){2}$!!;
+  my ($pkgname) = ($g =~ /\%var\s+pkgname\s+(\S+)/);
+#  print "$dirname\t$pkgname\n";
+}
+
+foreach my $m (keys %maintainers) {
+  print "svn mkdir ../by-maintainer/$m\n";
+}

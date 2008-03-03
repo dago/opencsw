@@ -35,5 +35,5 @@ DEPENDS += cpan/Params-Validate
 DEPENDS += cpan/URI
 DEPENDS += cpan/WWW-Mechanize
 
-include ../category.mk
+include gar/category.mk
 

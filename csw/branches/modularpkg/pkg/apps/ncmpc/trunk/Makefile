@@ -20,7 +20,7 @@ DISTFILES += $(call admfiles,CSWncmpc,prototype)
 
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk
 CPPFLAGS  += -I/opt/csw/include/ncurses
 LDFLAGS   += -lsocket -lnsl -lintl
 CONFIGURE_ARGS = $(DIRPATHS)

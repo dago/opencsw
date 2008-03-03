@@ -18,4 +18,4 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # Configuration flags
 CONFIGURE_ARGS += 
 
-include ../category.mk
+include gar/category.mk

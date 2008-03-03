@@ -57,5 +57,5 @@ DEPENDS += cpan/SVN-Mirror
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-v$(GARVERSION)
 
-include ../category.mk
+include gar/category.mk
 

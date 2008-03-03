@@ -25,7 +25,7 @@ TEST_SCRIPTS =
 
 STRIP_DIRS = $(DESTDIR)$(prefix)/apache2/libexec
 
-include ../category.mk
+include gar/category.mk
 
 pre-build:
 	@( cd $(WORKSRC) ; cp Makefile.AP2 Makefile )

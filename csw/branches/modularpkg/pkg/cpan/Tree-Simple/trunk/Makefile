@@ -16,4 +16,4 @@ DISTFILES += CSWpmtreesimple.gspec
 
 BUILDDEPS += cpan/Test-Exception
 
-include ../category.mk
+include gar/category.mk

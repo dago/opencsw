@@ -16,6 +16,6 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmextutilsdepends,)
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl

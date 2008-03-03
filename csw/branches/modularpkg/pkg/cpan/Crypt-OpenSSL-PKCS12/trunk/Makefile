@@ -12,4 +12,4 @@ DISTFILES += CSWpmcryptosslpkcs12.gspec CSWpmcryptosslpkcs12.depend
 
 DEPENDS += lib/openssl
 
-include ../category.mk
+include gar/category.mk

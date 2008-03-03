@@ -15,4 +15,4 @@ DEPENDS += cpan/Scalar-List-Utils
 
 DISTFILES += CSWpmobjrelater.gspec
 
-include ../category.mk
+include gar/category.mk

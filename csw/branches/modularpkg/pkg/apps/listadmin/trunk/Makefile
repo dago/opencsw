@@ -15,4 +15,4 @@ CONFIGURE_SCRIPTS =
 
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk

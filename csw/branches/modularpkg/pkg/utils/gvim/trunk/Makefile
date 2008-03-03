@@ -26,7 +26,7 @@ INSTALL_SCRIPTS = minimal
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # Don't install the runtime
 install-minimal:

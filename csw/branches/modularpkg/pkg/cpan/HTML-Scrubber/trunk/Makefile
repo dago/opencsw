@@ -15,4 +15,4 @@ DISTFILES += CSWpmhtmlscrubber.gspec CSWpmhtmlscrubber.depend
 
 DEPENDS += cpan/HTML-Parser
 
-include ../category.mk
+include gar/category.mk

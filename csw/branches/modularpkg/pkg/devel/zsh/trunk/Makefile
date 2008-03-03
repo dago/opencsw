@@ -18,7 +18,7 @@ CONFIGURE_ARGS += --enable-maildir-support
 CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(GARNAME)/functions
 CONFIGURE_ARGS += --enable-pcre
 
-include ../category.mk
+include gar/category.mk
 
 # Use term.h from ncurses or we get compile errors
 #   http://www.zsh.org/mla/workers/2007/msg01236.html

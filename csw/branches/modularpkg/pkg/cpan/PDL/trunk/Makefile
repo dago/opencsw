@@ -15,4 +15,4 @@ DISTFILES += CSWpmpdl.gspec CSWpmpdl.depend
 
 DEPENDS += cpan/Inline cpan/ExtUtils-F77
 
-include ../category.mk
+include gar/category.mk

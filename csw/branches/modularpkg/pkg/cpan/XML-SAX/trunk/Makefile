@@ -17,4 +17,4 @@ DEPENDS += cpan/XML-NamespaceSupport
 # Enable modification of ParserDetails.ini
 PATCHFILES = parser.diff
 
-include ../category.mk
+include gar/category.mk

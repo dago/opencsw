@@ -19,4 +19,4 @@ DISTFILES += $(call admfiles,CSWpmhtmltmpl,prototype)
 
 CONFIGURE_ARGS = -n
 
-include ../category.mk
+include gar/category.mk

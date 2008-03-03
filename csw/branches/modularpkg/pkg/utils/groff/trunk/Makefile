@@ -22,4 +22,4 @@ INSTALL_OVERRIDE_DIRS = bindir datadir
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

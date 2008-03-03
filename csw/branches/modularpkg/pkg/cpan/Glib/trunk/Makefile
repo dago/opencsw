@@ -21,6 +21,6 @@ DEPENDS += lib/glib2
 DEPENDS += cpan/ExtUtils-Depends
 DEPENDS += cpan/ExtUtils-PkgConfig
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl

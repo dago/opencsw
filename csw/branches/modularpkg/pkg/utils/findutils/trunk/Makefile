@@ -32,5 +32,5 @@ TEST_TARGET = check
 # Test requires DejaGNU to be installed
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 

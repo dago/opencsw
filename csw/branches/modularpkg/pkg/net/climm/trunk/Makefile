@@ -23,7 +23,7 @@ CONFIGURE_ARGS += --enable-binreloc --enable-binreloc-threads
 # climm doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/climm

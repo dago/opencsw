@@ -16,4 +16,4 @@ PATCHFILES += cswzlib.diff
 
 #DEPEND += lib/zlib
 
-include ../category.mk
+include gar/category.mk

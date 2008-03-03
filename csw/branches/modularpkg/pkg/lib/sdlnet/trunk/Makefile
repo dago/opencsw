@@ -14,7 +14,7 @@ DISTFILES += $(call admfiles,CSWsdlnet,)
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	( cd $(WORKSRC) ; ./autogen.sh )

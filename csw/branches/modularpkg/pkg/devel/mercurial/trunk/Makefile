@@ -17,4 +17,4 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 INSTALL_ARGS += --root=$(DESTDIR)
 
-include ../category.mk
+include gar/category.mk

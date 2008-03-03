@@ -30,4 +30,4 @@ CONFIGURE_ARGS += P_LIBS="-L$(libdir) -R$(libdir) -lpanel"
 CONFIGURE_ARGS += M_LIBS="-L$(libdir) -R$(libdir) -lmenu"
 CONFIGURE_ARGS += F_LIBS="-L$(libdir) -R$(libdir) -lform"
 
-include ../category.mk
+include gar/category.mk

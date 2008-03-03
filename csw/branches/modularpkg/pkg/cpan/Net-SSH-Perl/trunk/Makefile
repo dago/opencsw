@@ -29,4 +29,4 @@ DEPENDS += cpan/Digest-BubbleBabble
 # Don't prompt during install
 PATCHFILES = auto_install.diff
 
-include ../category.mk
+include gar/category.mk

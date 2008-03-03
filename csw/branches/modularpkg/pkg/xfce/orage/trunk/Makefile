@@ -11,7 +11,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWxfceorage.depend CSWxfceorage.gspec CSWxfceorage.prototype
 DISTFILES += CSWxfceoragedoc.depend CSWxfceoragedoc.gspec CSWxfceoragedoc.prototype
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS += --enable-reentrant
 

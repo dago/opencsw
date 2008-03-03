@@ -23,7 +23,7 @@ CONFIGURE_SCRIPTS =
 # No test suite
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-extract:
 	@( cd $(WORKSRC) ; mv makefile Makefile )

@@ -22,4 +22,4 @@ DEPENDS += cpan/MIME-Types
 # to tell why the test fails.  Disable for now.
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

@@ -17,4 +17,4 @@ DEPENDS += cpan/Archive-Zip cpan/IO-stringy
 # Archive-Zip bug
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

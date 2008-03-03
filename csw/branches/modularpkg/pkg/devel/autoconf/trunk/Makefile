@@ -27,7 +27,7 @@ TEST_TARGET = check
 # Tests take a loooooonnng time.
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # Package has two bad string which should be ignored:
 #   ;;; from file /export/medusa/dam/build/csw/devel/autoconf/work/dam-ra.d/autoconf-2.61/lib/emacs/elc.15767/autoconf-mode.el

@@ -22,4 +22,4 @@ PATCHFILES = optional.diff
 
 DEPENDS += cpan/Curses cpan/IO-Tty cpan/Term-Cap cpan/Event
 
-include ../category.mk
+include gar/category.mk

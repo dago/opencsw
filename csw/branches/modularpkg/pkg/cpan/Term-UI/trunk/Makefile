@@ -16,4 +16,4 @@ DEPENDS += cpan/Params-Check
 DEPENDS += cpan/Locale-Maketext-Simple
 DEPENDS += cpan/Log-Message-Simple
 
-include ../category.mk
+include gar/category.mk

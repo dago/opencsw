@@ -18,4 +18,4 @@ DISTFILES += CSWpmxmlrss.gspec CSWpmxmlrss.depend
 DEPENDS += cpan/XML-Parser
 BUILDDEPS += cpan/Test-Manifest
 
-include ../category.mk
+include gar/category.mk

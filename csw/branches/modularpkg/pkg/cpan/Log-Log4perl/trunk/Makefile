@@ -12,4 +12,4 @@ endef
 
 DISTFILES += CSWpmlog4perl.gspec
 
-include ../category.mk
+include gar/category.mk

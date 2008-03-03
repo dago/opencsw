@@ -22,4 +22,4 @@ DEPENDS += lib/expat
 CONFIGURE_ARGS  = EXPATINCPATH=$(includedir)
 CONFIGURE_ARGS += EXPATLIBPATH=$(libdir)
 
-include ../category.mk
+include gar/category.mk

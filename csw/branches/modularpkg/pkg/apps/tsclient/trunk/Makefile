@@ -14,4 +14,4 @@ CONFIGURE_ARGS = --prefix=$(prefix) LD_OPTIONS='-lsocket -lnsl'
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

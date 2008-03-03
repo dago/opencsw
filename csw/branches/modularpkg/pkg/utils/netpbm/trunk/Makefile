@@ -66,4 +66,4 @@ install-doc:
 	rm -rf $(INSTDIR)/share/man/man?
 
 
-include ../category.mk
+include gar/category.mk

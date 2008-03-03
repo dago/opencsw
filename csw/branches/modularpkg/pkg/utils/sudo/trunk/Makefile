@@ -30,7 +30,7 @@ CONFIGURE_ARGS += --with-pam
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@( cd $(DESTDIR)$(sysconfdir) ; mv sudoers sudoers.CSW )

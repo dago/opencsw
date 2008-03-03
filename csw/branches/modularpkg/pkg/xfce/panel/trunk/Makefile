@@ -14,7 +14,7 @@ DISTFILES += CSWxfcepanel.depend CSWxfcepanel.gspec CSWxfcepanel.prototype
 
 # DISTFILES += $(call admfiles,CSWxfcepanel, depend)
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

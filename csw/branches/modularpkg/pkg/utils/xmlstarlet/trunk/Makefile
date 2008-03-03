@@ -18,7 +18,7 @@ DISTFILES += $(call admfiles,CSWxmlstarlet,depend prototype)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-cc.patch
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ENV += LIBXML_PREFIX=$(prefix)
 CONFIGURE_ENV += LIBXML_CFLAGS="$(shell $(bindir)/xml2-config --cflags)"

@@ -32,7 +32,7 @@ CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
 # lyx doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk
 
 LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 export LD_OPTIONS

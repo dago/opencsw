@@ -26,4 +26,4 @@ PATCHFILES += novcp.diff
 # Test suite takes >20m, 0.67/SPARC
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

@@ -45,7 +45,7 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb46/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 LIBS += -lnsl
 export LIBS

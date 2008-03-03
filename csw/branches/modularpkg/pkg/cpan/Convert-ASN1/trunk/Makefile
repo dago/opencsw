@@ -10,4 +10,4 @@ endef
 
 DISTFILES += CSWpmconvertasn1.gspec
 
-include ../category.mk
+include gar/category.mk

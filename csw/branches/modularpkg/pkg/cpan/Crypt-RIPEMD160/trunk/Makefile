@@ -11,4 +11,4 @@ endef
 
 DISTFILES = $(call admfiles,CSWpmcryptripemd160,depend prototype)
 
-include ../category.mk
+include gar/category.mk

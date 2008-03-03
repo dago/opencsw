@@ -16,4 +16,4 @@ DISTFILES += $(call admfiles,CSWpmgtk2trayicon,depend)
 
 DEPENDS += cpan/Gtk2
 
-include ../category.mk
+include gar/category.mk

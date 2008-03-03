@@ -17,4 +17,4 @@ DISTFILES += CSWpmiosocketssl.gspec CSWpmiosocketssl.depend
 
 DEPENDS += cpan/Net-SSLeay
 
-include ../category.mk
+include gar/category.mk

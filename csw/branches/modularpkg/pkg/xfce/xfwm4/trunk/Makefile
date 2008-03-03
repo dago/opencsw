@@ -14,7 +14,7 @@ PATCHFILES = frame.c.diff
 
 LIBDEPS = xfce/mcs-mananager
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS +=  --enable-xsync --enable-render --enable-randr --enable-xinerama --enable-compositor
 

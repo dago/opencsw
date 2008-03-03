@@ -13,4 +13,4 @@ DISTFILES = $(call admfiles,CSWpmpodtohtml,depend prototype)
 
 DEPENDS += cpan/HTML-Format cpan/HTML-Parser cpan/HTML-Tree
 
-include ../category.mk
+include gar/category.mk

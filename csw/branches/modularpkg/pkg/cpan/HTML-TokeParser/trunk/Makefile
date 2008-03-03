@@ -15,4 +15,4 @@ DISTFILES += CSWpmhtmltokeparser.gspec CSWpmhtmltokeparser.depend
 
 DEPENDS += cpan/HTML-Parser
 
-include ../category.mk
+include gar/category.mk

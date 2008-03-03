@@ -14,7 +14,7 @@ DISTFILES += $(call admfiles,CSWgm4,prototype)
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-extract:
 	files/post-extract $(DESTIMG) $(GARVERSION) 

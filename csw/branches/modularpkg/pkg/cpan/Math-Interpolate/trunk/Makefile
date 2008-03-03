@@ -12,4 +12,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmmathinterpolate,prototype)
 
-include ../category.mk
+include gar/category.mk

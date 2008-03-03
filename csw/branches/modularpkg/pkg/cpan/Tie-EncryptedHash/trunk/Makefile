@@ -18,4 +18,4 @@ DISTFILES += CSWpmtiecrypthash.gspec CSWpmtiecrypthash.depend
 
 DEPENDS += cpan/Crypt-DES cpan/Crypt-Blowfish
 
-include ../category.mk
+include gar/category.mk

@@ -25,4 +25,4 @@ TEST_TARGET = check
 
 CONFIGURE_ARGS = ABI=32 $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk

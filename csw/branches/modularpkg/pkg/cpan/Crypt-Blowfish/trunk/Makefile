@@ -14,4 +14,4 @@ DISTFILES += CSWpmcryptblowfish.gspec CSWpmcryptblowfish.depend
 
 DEPENDS += cpan/Crypt-CBC
 
-include ../category.mk
+include gar/category.mk

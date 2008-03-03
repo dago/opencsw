@@ -32,7 +32,7 @@ CONFIGURE_ARGS = paridir=../pari-$(PARIGP_VERSION)
 # Avoid oddness - check for updates manually
 MANUAL_UPDATE = 1
 
-include ../category.mk
+include gar/category.mk
 
 # Modify AUTHOR ID
 AUTHOR_ID := $(AUTHOR_ID)/modules

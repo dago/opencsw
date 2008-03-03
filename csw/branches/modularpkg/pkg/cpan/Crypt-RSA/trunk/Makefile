@@ -17,4 +17,4 @@ DEPENDS += cpan/Convert-ASCII-Armour cpan/Sort-Versions
 DEPENDS += cpan/Digest-SHA1 cpan/Digest-MD2
 DEPENDS += cpan/Data-Buffer
 
-include ../category.mk
+include gar/category.mk

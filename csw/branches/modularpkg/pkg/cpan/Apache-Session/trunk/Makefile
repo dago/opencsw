@@ -13,4 +13,4 @@ endef
 
 DISTFILES += CSWpmapachesess.gspec
 
-include ../category.mk
+include gar/category.mk

@@ -17,7 +17,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 BUILD_64BIT = yes
 
-include ../category.mk
+include gar/category.mk
 
 post-extract:
 	@( cd $(WORKDIR) ; gzcat ../../$(FILEDIR)/$(GARNAME)lib12-$(GARCH)-libs-1.6.7.tar.gz | tar xf - )

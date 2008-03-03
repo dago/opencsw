@@ -16,4 +16,4 @@ endef
 
 DISTFILES = $(call admfiles,CSWpmclassloader,depend prototype)
 
-include ../category.mk
+include gar/category.mk

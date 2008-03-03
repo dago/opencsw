@@ -25,7 +25,7 @@ TEST_SCRIPTS =
 GARCOMPILER = GNU
 CONFIGURE_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 QTDIR = $(prefix)/kde-gcc
 export QTDIR

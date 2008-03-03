@@ -17,4 +17,4 @@ DISTFILES = $(call admfiles,CSWpmcryptrijndael,depend prototype)
 # not seeing the expected encrypted text.
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

@@ -14,7 +14,7 @@ DISTFILES += CSWxfceterminaldoc.depend CSWxfceterminaldoc.gspec CSWxfceterminald
 # PATCHFILES += configure.in.diff
 # PATCHFILES += configure.diff
 
-include ../category.mk
+include gar/category.mk
 
 CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
 CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include

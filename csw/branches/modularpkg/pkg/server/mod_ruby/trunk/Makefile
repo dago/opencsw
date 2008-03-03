@@ -25,7 +25,7 @@ CONFIGURE_ARGS += --mandir=$(mandir)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-apr-includes=$(shell apr-config --includedir)
 
-include ../category.mk
+include gar/category.mk
 
 configure-ruby:
 	( cd $(WORKSRC) ; \

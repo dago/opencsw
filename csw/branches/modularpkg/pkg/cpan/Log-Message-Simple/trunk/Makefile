@@ -13,4 +13,4 @@ DISTFILES += $(call admfiles,CSWpmlogmsgsimple,depend prototype)
 
 DEPENDS += cpan/Log-Message
 
-include ../category.mk
+include gar/category.mk

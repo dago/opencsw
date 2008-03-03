@@ -14,4 +14,4 @@ endef
 
 DISTFILES += CSWpmunivmoniker.gspec
 
-include ../category.mk
+include gar/category.mk

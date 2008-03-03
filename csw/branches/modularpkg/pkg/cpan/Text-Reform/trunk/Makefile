@@ -9,4 +9,4 @@ endef
 
 DISTFILES += CSWpmtxtreform.gspec
 
-include ../category.mk
+include gar/category.mk

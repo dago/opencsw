@@ -16,4 +16,4 @@ INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir mandir
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

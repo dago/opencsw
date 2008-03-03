@@ -11,4 +11,4 @@ endef
 
 DISTFILES += CSWpmpdfapi2.gspec
 
-include ../category.mk
+include gar/category.mk

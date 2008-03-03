@@ -26,5 +26,5 @@ CONFIGURE_ARGS += --program-prefix="g"
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 

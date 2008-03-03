@@ -14,7 +14,7 @@ DISTFILES += CSWlibxfcegui4dev.depend CSWlibxfcegui4dev.gspec CSWlibxfcegui4dev.
 
 LIBDEPS = xfce/libxfce4util
 
-include ../category.mk
+include gar/category.mk
 
 # Configure common options
 CONFIGURE_ARGS += --enable-xinerama

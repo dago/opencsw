@@ -26,7 +26,7 @@ CONFIGURE_ARGS += --with-openssl
 CONFIGURE_ARGS += --with-openssl-libs=$(libdir)
 CONFIGURE_ARGS += --with-openssl-includes=$(includedir)
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS   := -mt -xstrconst -D_FORTEC_ $(CFLAGS)
 CXXFLAGS := -noex -D_FORTEC_ $(CXXFLAGS)

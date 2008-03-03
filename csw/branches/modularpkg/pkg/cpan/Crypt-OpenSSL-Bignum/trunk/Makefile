@@ -17,4 +17,4 @@ DISTFILES += $(call admfiles,CSWpmcryptosslbignum,depend prototype)
 
 DEPENDS += lib/openssl
 
-include ../category.mk
+include gar/category.mk

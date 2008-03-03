@@ -17,7 +17,7 @@ DISTFILES += CSWpmclassdbi.gspec CSWpmclassdbi.depend
 DEPENDS += cpan/DBI cpan/Class-Accessor cpan/Class-Trigger cpan/Ima-DBI
 DEPENDS += cpan/Scalar-List-Utils cpan/UNIVERSAL-moniker cpan/DBD-SQLite
 
-include ../category.mk
+include gar/category.mk
 
 # This doesn't quite work yet with Ima-DBI updates
 pre-test:

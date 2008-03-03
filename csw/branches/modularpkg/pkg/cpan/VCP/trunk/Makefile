@@ -24,4 +24,4 @@ DEPENDS += cpan/Text-Diff
 DEPENDS += cpan/XML-AutoWriter
 DEPENDS += cpan/XML-Parser
 
-include ../category.mk
+include gar/category.mk

@@ -24,4 +24,4 @@ CONFIGURE_ARGS += --enable-custom-config=$(sysconfdir)/ctags.conf
 # No test suite
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

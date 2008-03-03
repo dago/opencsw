@@ -25,4 +25,4 @@ LIBDEPS += lib/expat lib/openssl lib/db lib/gdbm
 
 CONFIGURE_ARGS = $(DIRPATHS) 
 
-include ../category.mk
+include gar/category.mk

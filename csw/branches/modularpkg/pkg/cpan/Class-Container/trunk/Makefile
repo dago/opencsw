@@ -17,4 +17,4 @@ DISTFILES += CSWpmclscontainer.gspec CSWpmclscontainer.depend
 
 DEPENDS += cpan/Params-Validate
 
-include ../category.mk
+include gar/category.mk

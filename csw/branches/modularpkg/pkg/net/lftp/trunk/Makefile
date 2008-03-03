@@ -32,7 +32,7 @@ CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	# po are not installed correctly (I should find a better fix)

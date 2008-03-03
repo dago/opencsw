@@ -41,7 +41,7 @@ CONFIGURE_ARGS += --disable-java
 # No test target
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # The perl binding needs to use the Sun compiler, regardless of whether the
 # main extension uses gcc.

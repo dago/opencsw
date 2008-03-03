@@ -16,4 +16,4 @@ DISTFILES = $(call admfiles,CSWpmyaml,prototype)
 # Don't ask questions
 PATCHFILES += build.diff
 
-include ../category.mk
+include gar/category.mk
