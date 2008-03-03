@@ -16,7 +16,7 @@
 #GARDIR := $(CURDIR)/../..
 #endif
 
-GARDIR ?= ../..
+GARDIR ?= gar
 GARBIN  = $(GARDIR)/bin
 FILEDIR ?= files
 DOWNLOADDIR ?= download

@@ -13,4 +13,4 @@ DISTFILES    += $(PKGDIST)
 # Compiler
 GARCOMPILER = GNU
 
-include ../../gar.mk
+include gar/gar.mk

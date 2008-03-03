@@ -28,7 +28,7 @@ SPKG_SOURCEURL  = http://search.cpan.org
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/~$(call TOLOWER,$(AUTHOR))
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 
-include ../../gar.mk
+include gar/gar.mk
 
 # Canned commands for finding packlist files
 find_packlist = $(shell find $(1) -type f -name .packlist | head -1)

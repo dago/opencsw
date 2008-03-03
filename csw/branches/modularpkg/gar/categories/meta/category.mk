@@ -4,5 +4,5 @@ BUILD_SCRIPTS ?=
 TEST_SCRIPTS ?=
 INSTALL_SCRIPTS ?=
 
-include ../../gar.mk
+include gar/gar.mk
 
