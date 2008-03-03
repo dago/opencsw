@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for f in */*; do
+  echo svn propset svn:externals -F _svn_externals_prop $f
+done
