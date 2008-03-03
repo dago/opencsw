@@ -1,5 +1,6 @@
 #!/bin/sh
 
 for f in */*; do
-  echo svn propset svn:externals -F _svn_externals_prop $f
+  echo svn propdel svn:externals $f
+  echo svn propset svn:externals -F _svn_externals_prop $f/trunk
 done
