@@ -58,6 +58,7 @@ GAROSREL = 5.8
 SPKG_OSNAME = SunOS5.8
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-static
 
 # Optimizer flags for architecture
 OPTARCH_sparc   = v8
