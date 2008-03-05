@@ -1,0 +1,3 @@
+%var            bitname swaks
+%var            pkgname CSWswaks
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
