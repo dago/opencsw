@@ -12,5 +12,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrl,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
+# Not gonna do it
+TEST_SCRIPTS =
+
 
 include ../category.mk
