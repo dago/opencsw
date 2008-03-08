@@ -1,4 +1,5 @@
 # vim: ft=make ts=4 sw=4 noet
+
 #
 # $Id$
 #
@@ -532,7 +533,15 @@ TEST_SCRIPTS       =
 else
 TEST_SCRIPTS      ?= $(WORKSRC)/Makefile
 endif
+INSTALL_EXTRA_ISA_SCRIPTS ?= $(WORKSRC)/Makefile
+
+ifeq ($(ISA),$(ISA_DEFAULT))
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
+else
+INSTALL_SCRIPTS = $(INSTALL_EXTRA_ISA_SCRIPTS)
+endif
+
+
 
 # Global environment
 export PATH PKG_CONFIG_PATH XML_CATALOG_FILES
