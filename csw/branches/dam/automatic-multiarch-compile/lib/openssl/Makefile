@@ -55,7 +55,7 @@ SPKG_CLASSES = none conf
 
 # We will include the following previous versions of libraries 
 # for comptatibility reasons
-OLDLIBS		= 0.9.7m
+#OLDLIBS		= 0.9.7m
 DISTFILES 	+= oldlibs.list.0.9.7m-i386
 DISTFILES 	+= oldlibs.list.0.9.7m-sparc
 0.9.7m_i386_ISALIST		= pentium_pro
@@ -63,10 +63,14 @@ DISTFILES 	+= oldlibs.list.0.9.7m-sparc
 
 PATCHFILES = openssl.$(OPENSSL_VERSION).patch
 
+GARCOMPILER = SOS11
+
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
-i386_ISALIST		= pentium_pro amd64
-sparc_ISALIST		= sparcv8plus+vis sparcv9
+EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
+EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
+
+EXTRA_IGNORED_DIRS = bindir sbindir libexecdir
 
 ifdef OLDLIB
 i386_ISALIST	 	= pentium_pro
@@ -84,15 +88,7 @@ sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
 sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
-# Let's determine the appropriate os/compiler couple
-# to pass to the openssl Configure script
-ifndef ISA
-OS_COMPILER = $($(GARCH)_OS_COMPILER)
-else
-OS_COMPILER = $($(ISA)_OS_COMPILER)
-endif
-
-CONFIGURE_ARGS = --prefix=$(prefix) shared $(OS_COMPILER) --install_prefix=$(DESTDIR)
+CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
 
 # We want the csw perl to be used
 #CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
@@ -108,42 +104,8 @@ INSTALL_ARGS += MANDIR=$(mandir)
 
 POST_INSTALL_TARGETS := striplib
 
-#########################################################################
-# Makefile instructions to handle additional optimized libraries and binaries (part I)
-# 
-# To enable optimized libraries/binaries: 
-#   - define the i386_ISALIST and sparc_ISALIST with the instructions
-#     sets additionnal binaries and librairies should be optimized for
-#   - define the install-libs and install-bin targets which should
-#     install binaries and libraries in $(bindir)/$(ISA) and $(libdir)/$(ISA) 
-#
-# To just build the non-optimized binaries/libraries:
-#   gmake ISALIST="" build
-#
-# To just build specific optimized binaries/libraries:
-#   gmake ISA=instruction_set build
-#
-# This code could be added in the common gar scripts.
-#
-#########################################################################
+INSTALL_EXTRA_ISA_SCRIPTS = extra-isa
 
-ifndef ISA
-ISALIST=$($(GARCH)_ISALIST)
-ifdef ISALIST
-CONFIGURE_SCRIPTS	= $(WORKSRC)/configure isa
-BUILD_SCRIPTS 		= $(WORKSRC)/Makefile isa
-INSTALL_SCRIPTS 	= $(WORKSRC)/Makefile isa
-TEST_SCRIPTS 		= $(WORKSRC)/Makefile isa
-CLEAN_SCRIPTS 		= all isa
-endif
-else
-# We want a separate work and cookie directory
-# for each optimized build
-WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).$(ISA).d
-COOKIEDIR       = $(COOKIEROOTDIR)/$(DESTIMG).$(ISA).d
-endif
-
-#########################################################################
 
 #########################################################################
 # Makefile instructions to handle old libraries inclusion (part I)
@@ -171,7 +133,6 @@ endif
 
 #########################################################################
 
-
 include ../category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
@@ -185,12 +146,7 @@ pre-configure:
 # (should rather be done in the gar scripts)
 striplib:
 	chmod -R u+w $(DESTDIR)$(libdir)
-	strip -x $(DESTDIR)$(libdir)/*.so*
-	( for ISA in $($(GARCH)_ISALIST); do \
-		strip -x $(DESTDIR)$(libdir)/$$ISA/*.so*; \
-	  done )
-	chmod -R u+w $(DESTDIR)$(libdir)/engines
-	strip -x $(DESTDIR)$(libdir)/engines/*.so*
+	find $(DESTDIR)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
 
 post-install: 
 	[ -f $(DESTDIR)$(prefix)/ssl/openssl.cnf ] && \
@@ -199,60 +155,32 @@ post-install:
 	$(MAKECOOKIE)
 
 
-# These targets are required to provide optimized binaries/libraries
+install-extra-isa: install-static-libs install-dynamic-libs
 
-install-libs: install-static-libs install-dynamic-libs
-
-install-static-libs: build
+install-static-libs:
 	@if test ! -f "$(COOKIEDIR)/install-static-libs"; then \
-		echo " ==> Installing libraries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(libdir)/$(ISA); \
-		cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(libdir)/$(ISA); \
+		echo " ==> Installing static libraries from $(WORKSRC)"; \
+		ginstall -d $(DESTDIR)$(ISALIBDIR); \
+		cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(ISALIBDIR); \
 		$(MAKECOOKIE); \
 	fi
 
-install-dynamic-libs: build
+install-dynamic-libs:
 	@if test ! -f $(COOKIEDIR)/install-dynamic-libs; then \
-		echo " ==> Installing libraries from $(WORKSRC)"; \
+		echo " ==> Installing dynamic libraries from $(WORKSRC)"; \
 		ginstall -d $(DESTDIR)$(libdir)/$(ISA); \
-		cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(libdir)/$(ISA); \
+		cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(ISALIBDIR); \
 		$(MAKECOOKIE); \
 	fi
 
-install-bin: build
+install-bin: 
 	@if test ! -f $(COOKIEDIR)/install-bin; then \
 		echo " ==> Installing binaries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(bindir)/$(ISA); \
-		cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir)/$(ISA); \
+		ginstall -d $(DESTDIR)$(ISABINDIR); \
+		cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(ISABINDIR); \
 		$(MAKECOOKIE); \
 	fi
 
-
-	
-#########################################################################
-# Makefile instructions to handle additional optimized libraries and binaries (part II)
-# 
-#########################################################################
-
-configure-isa: $(addprefix configure-isa-,$(ISALIST))
-configure-isa-%:
-	@$(MAKE) ISA=$* configure
-
-build-isa: $(addprefix build-isa-,$(ISALIST))
-build-isa-%:
-	@$(MAKE) ISA=$* build
-
-test-isa: $(addprefix test-isa-,$(ISALIST))
-test-isa-%:
-	@$(MAKE) ISA=$* test
-
-install-isa: $(addprefix install-isa-,$(ISALIST))
-install-isa-%:
-	@$(MAKE) ISA=$* test install-libs install-bin
-
-clean-isa: $(addprefix clean-isa-,$(ISALIST))
-clean-isa-%:
-	@$(MAKE) ISA=$* clean
 
 #########################################################################
 # Makefile instructions to handle old libraries inclusion (part II)
