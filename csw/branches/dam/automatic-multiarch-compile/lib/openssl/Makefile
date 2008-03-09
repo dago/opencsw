@@ -53,14 +53,6 @@ DISTFILES += i.conf r.conf
 
 SPKG_CLASSES = none conf
 
-# We will include the following previous versions of libraries 
-# for comptatibility reasons
-#OLDLIBS		= 0.9.7m
-DISTFILES 	+= oldlibs.list.0.9.7m-i386
-DISTFILES 	+= oldlibs.list.0.9.7m-sparc
-0.9.7m_i386_ISALIST		= pentium_pro
-0.9.7m_sparc_ISALIST		= sparcv8plus+vis sparcv9
-
 PATCHFILES = openssl.$(OPENSSL_VERSION).patch
 
 GARCOMPILER = SOS11
@@ -71,10 +63,6 @@ EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
 EXTRA_IGNORED_DIRS = bindir sbindir libexecdir
-
-ifdef OLDLIB
-i386_ISALIST	 	= pentium_pro
-endif
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
@@ -102,9 +90,23 @@ EXT_CXXFLAGS += -noex -mt
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
 
-POST_INSTALL_TARGETS := striplib
-
 INSTALL_EXTRA_ISA_SCRIPTS = extra-isa
+
+
+#########################################################################
+# Variable definition for old libraries inclusion
+# 
+#########################################################################
+
+OLDLIBS		 = 0.9.7m
+DISTFILES 	+= oldlibs.list.0.9.7m-i386
+DISTFILES 	+= oldlibs.list.0.9.7m-sparc
+
+ifneq (,$(filter $(GARVERSION),$(OLDLIBS)))
+EXTRA_BUILD_ISAS_i386 = pentium_pro
+INSTALL_SCRIPTS = dynamic-libs
+INSTALL_EXTRA_ISA_SCRIPTS = dynamic-libs
+endif
 
 
 #########################################################################
@@ -114,21 +116,10 @@ INSTALL_EXTRA_ISA_SCRIPTS = extra-isa
 # incompatible library version.
 #########################################################################
 
-ifdef OLDLIB
+ifneq (,$(filter $(GARVERSION),$(OLDLIBS)))
 CHECKSUM_FILE	= checksums.$(GARVERSION)
-ifdef ISA
-WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).$(ISA).$(GARVERSION).d
-COOKIEDIR       = $(COOKIEROOTDIR)/$(DESTIMG).$(ISA).$(GARVERSION).d
-else
-WORKDIR	    	= $(WORKROOTDIR)/$(DESTIMG).$(GARVERSION).d
-COOKIEDIR       = $(COOKIEROOTDIR)/$(DESTIMG).$(GARVERSION).d
-endif
-endif
-
-ifdef OLDLIBS
-ifndef ISA
-INSTALL_SCRIPTS += oldlibs
-endif
+WORKDIR	    	= $(WORKROOTDIR)/$(ISA).$(GARVERSION)
+COOKIEDIR       = $(COOKIEROOTDIR)/$(ISA).$(GARVERSION)
 endif
 
 #########################################################################
@@ -148,38 +139,40 @@ striplib:
 	chmod -R u+w $(DESTDIR)$(libdir)
 	find $(DESTDIR)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
 
-post-install: 
+install-certs: 
 	[ -f $(DESTDIR)$(prefix)/ssl/openssl.cnf ] && \
 		ginstall -D $(DESTDIR)$(prefix)/ssl/openssl.cnf $(DESTDIR)$(sysconfdir)/ssl/openssl.cnf
 	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
 	$(MAKECOOKIE)
 
 
-install-extra-isa: install-static-libs install-dynamic-libs
+install-extra-isa: install-static-libs install-dynamic-libs install-bin
 
 install-static-libs:
 	@if test ! -f "$(COOKIEDIR)/install-static-libs"; then \
 		echo " ==> Installing static libraries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(ISALIBDIR); \
-		cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(ISALIBDIR); \
+		ginstall -d $(DESTDIR)$(libdir); \
+		cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(libdir); \
 		$(MAKECOOKIE); \
 	fi
 
 install-dynamic-libs:
 	@if test ! -f $(COOKIEDIR)/install-dynamic-libs; then \
 		echo " ==> Installing dynamic libraries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(libdir)/$(ISA); \
-		cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(ISALIBDIR); \
+		ginstall -d $(DESTDIR)$(libdir); \
+		cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(libdir); \
 		$(MAKECOOKIE); \
 	fi
 
 install-bin: 
 	@if test ! -f $(COOKIEDIR)/install-bin; then \
 		echo " ==> Installing binaries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(ISABINDIR); \
-		cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(ISABINDIR); \
+		ginstall -d $(DESTDIR)$(bindir); \
+		cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir); \
 		$(MAKECOOKIE); \
 	fi
+
+pre-package: striplib install-certs install-oldlibs
 
 
 #########################################################################
@@ -194,7 +187,7 @@ update-oldlibs-archive-%: clean-oldlibs-archive-% install-oldlibs-%
 	@echo " ==> Creating old libraries archive oldlibs.$*-$(GARCH).tar.gz"
 	@cd $(DESTDIR) && tar cvf - `cat $(CURDIR)/$(DOWNLOADDIR)/oldlibs.list.$*-$(GARCH)` | gzip > $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz
 
-clean-oldlibs-archive: $(addprefix clean-oldlibs-archive,$(OLDLIBS))	
+clean-oldlibs-archive: $(addprefix clean-oldlibs-archive-,$(OLDLIBS))	
 clean-oldlibs-archive-%:
 	@echo " ==> Removing old libraries archive oldlibs.$*-$(GARCH).tar.gz"
 	@rm -f $(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz 
@@ -207,9 +200,6 @@ install-oldlibs-%:
 		cd $(DESTDIR) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -; \
 	else \
 		echo " ==> Build old libraries $*"; \
-		$(MAKE) GARVERSION=$* OLDLIB=1 build; \
-		for ISA in "" $($(*)_$(GARCH)_ISALIST); do \
-			$(MAKE) GARVERSION=$* OLDLIB=1 ISA=$$ISA install-dynamic-libs; \
-		done; \
+		$(MAKE) GARVERSION=$* install; \
 	fi
 	@$(MAKECOOKIE)
