@@ -71,7 +71,7 @@ pentium_OS_COMPILER	= solaris-pentium-cc
 pentium_pro_OS_COMPILER	= solaris-pentium_pro-cc
 amd64_OS_COMPILER 	= solaris64-x86_64-cc
 
-sparc_OS_COMPILER 		= solaris-sparcv8-cc
+sparcv8_OS_COMPILER 		= solaris-sparcv8-cc
 sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
 sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
