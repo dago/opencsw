@@ -22,5 +22,5 @@ include ../category.mk
 
 pre-install:
 	( if [ ! -d $(DESTDIR)/opt/csw/bin ] ; then mkdir -p $(DESTDIR)/opt/csw/bin ; fi )
-	( cd $(DESTDIR)/opt/csw/bin && for file in ../$(GARNAME)/* ; do ln -s ../$(GARNAME)/$file . ; done && rm run )
+	( cd $(DESTDIR)/opt/csw/bin && for f in barrier catman dsh dtop dvt jsd pcp rvt ; do ln -s ../$(GARNAME)/bin/$$f . ; done )
 
