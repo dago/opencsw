@@ -2,3 +2,12 @@
 %var            pkgname CSWclusterssh
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
+%postinstall
+echo '*************************************************************************'
+echo '*************************************************************************'
+echo 'ClusterSSH may not work correctly with Sun's ssh client'
+echo 'For best results always use the CSW openSSH client'
+echo 'ensure /opt/csw/bin is first in your path, or adjust your .ccshrc'
+echo '*************************************************************************'
+echo '*************************************************************************'
+
