@@ -19,4 +19,4 @@ CONFIGURE_ARGS += --with-getopt=/opt/csw/bin/ggetopt
 include ../category.mk
 
 # We need this for 'tail -n'
-PATH := /usr/xpg4/bin:$(PATH)
+PATH := /usr/xpg4/bin:/opt/csw/bin:$(PATH)
