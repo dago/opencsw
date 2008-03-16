@@ -109,9 +109,11 @@ pre-build:
 	@$(MAKECOOKIE)
 
 post-build:
-	# we change /etc reference to /opt/csw/etc in doc and scripts
+	# we change /etc reference to /opt/csw/etc in doc and scripts,
+	# except the sasldb2 path
 	( cd $(WORKSRC); \
-	find man doc tools -type f -exec perl -pi -e 's/\/etc\//\/opt\/csw\/etc\/cyrus\//g' '{}' ';')
+	find man doc tools -type f -exec perl -pi -e 's/\/etc\//\/opt\/csw\/etc\/cyrus\//g' '{}' ';'; \
+	find doc -type f -exec perl -pi -e 's/\/opt\/csw\/etc\/cyrus\/sasldb2/\/opt\/csw\/etc\/sasldb2/g' '{}' ';')
 	@$(MAKECOOKIE)
 
 pre-install:
