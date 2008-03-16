@@ -64,6 +64,10 @@ PATCHFILES += cyrus-imapd-2.3.7-nobarenewlinescheck.patch
 # this patch does a part of this job
 PATCHFILES += master-rename.patch 
 
+# the default value for allowplaintext changed since 2.3.9
+# we restore the previous default value to avoid upgrade problem
+PATCHFILES += restore_allowplaintext_default.patch
+
 #GARCOMPILER = GNU
 #GNU_CC_OPT = -g
 #GNU_LD_OPT = -g

@@ -22,37 +22,38 @@ f none /opt/csw/include/cyrus/acl.h 0644 root bin
 f none /opt/csw/include/cyrus/assert.h 0644 root bin
 f none /opt/csw/include/cyrus/auth.h 0644 root bin
 f none /opt/csw/include/cyrus/bsearch.h 0644 root bin
+f none /opt/csw/include/cyrus/byteorder64.h 0644 root bin
 f none /opt/csw/include/cyrus/charset.h 0644 root bin
+f none /opt/csw/include/cyrus/cyrusdb.h 0644 root bin
 f none /opt/csw/include/cyrus/glob.h 0644 root bin
 f none /opt/csw/include/cyrus/gmtoff.h 0644 root bin
+f none /opt/csw/include/cyrus/hash.h 0644 root bin
+f none /opt/csw/include/cyrus/hmac-md5.h 0644 root bin
+f none /opt/csw/include/cyrus/imapopts.h 0644 root bin
+f none /opt/csw/include/cyrus/imapurl.h 0644 root bin
 f none /opt/csw/include/cyrus/imclient.h 0644 root bin
 f none /opt/csw/include/cyrus/imparse.h 0644 root bin
+f none /opt/csw/include/cyrus/iptostring.h 0644 root bin
+f none /opt/csw/include/cyrus/libconfig.h 0644 root bin
+f none /opt/csw/include/cyrus/libcyr_cfg.h 0644 root bin
 f none /opt/csw/include/cyrus/lock.h 0644 root bin
+f none /opt/csw/include/cyrus/lsort.h 0644 root bin
 f none /opt/csw/include/cyrus/map.h 0644 root bin
+f none /opt/csw/include/cyrus/md5.h 0644 root bin
 f none /opt/csw/include/cyrus/mkgmtime.h 0644 root bin
+f none /opt/csw/include/cyrus/mpool.h 0644 root bin
 f none /opt/csw/include/cyrus/nonblock.h 0644 root bin
 f none /opt/csw/include/cyrus/parseaddr.h 0644 root bin
 f none /opt/csw/include/cyrus/prot.h 0644 root bin
 f none /opt/csw/include/cyrus/retry.h 0644 root bin
-f none /opt/csw/include/cyrus/sysexits.h 0644 root bin
+f none /opt/csw/include/cyrus/rfc822date.h 0644 root bin
 f none /opt/csw/include/cyrus/strhash.h 0644 root bin
-f none /opt/csw/include/cyrus/lsort.h 0644 root bin
 f none /opt/csw/include/cyrus/stristr.h 0644 root bin
+f none /opt/csw/include/cyrus/sysexits.h 0644 root bin
 f none /opt/csw/include/cyrus/util.h 0644 root bin
 f none /opt/csw/include/cyrus/xmalloc.h 0644 root bin
-f none /opt/csw/include/cyrus/imapurl.h 0644 root bin
-f none /opt/csw/include/cyrus/cyrusdb.h 0644 root bin
-f none /opt/csw/include/cyrus/hash.h 0644 root bin
-f none /opt/csw/include/cyrus/iptostring.h 0644 root bin
-f none /opt/csw/include/cyrus/rfc822date.h 0644 root bin
-f none /opt/csw/include/cyrus/libcyr_cfg.h 0644 root bin
-f none /opt/csw/include/cyrus/mpool.h 0644 root bin
-f none /opt/csw/include/cyrus/libconfig.h 0644 root bin
-f none /opt/csw/include/cyrus/imapopts.h 0644 root bin
-f none /opt/csw/include/cyrus/md5.h 0644 root bin
-f none /opt/csw/include/cyrus/byteorder64.h 0644 root bin
-f none /opt/csw/include/cyrus/message_uuid.h 0644 root bin
-f none /opt/csw/include/cyrus/hmac-md5.h 0644 root bin
+f none /opt/csw/include/cyrus/xstrlcat.h 0644 root bin
+f none /opt/csw/include/cyrus/xstrlcpy.h 0644 root bin
 f none /opt/csw/lib/libcyrus.a 0644 root bin
 f none /opt/csw/lib/libcyrus_min.a 0644 root bin
 f none /opt/csw/share/man/man3/imclient.3 0644 root bin
@@ -92,6 +93,7 @@ f none /opt/csw/share/man/man8/sync_server.8 0644 root bin
 f none /opt/csw/share/man/man8/sync_reset.8 0644 root bin
 f none /opt/csw/share/man/man8/unexpunge.8 0644 root bin
 f none /opt/csw/share/man/man8/make_md5.8 0644 root bin
+f none /opt/csw/share/man/man8/make_sha1.8 0644 root bin
 f none /opt/csw/libexec/cyrus/sievec 0755 root bin
 s none /opt/csw/sbin/sievec=../libexec/cyrus/sievec
 s none /opt/csw/sbin/cyrus-master=../libexec/cyrus/cyrus-master
@@ -111,6 +113,8 @@ f none /opt/csw/libexec/cyrus/sync_server 0755 root bin
 f none /opt/csw/libexec/cyrus/sync_reset 0755 root bin
 f none /opt/csw/libexec/cyrus/make_md5 0755 root bin
 s none /opt/csw/sbin/make_md5=../libexec/cyrus/make_md5
+f none /opt/csw/libexec/cyrus/make_sha1 0755 root bin
+s none /opt/csw/sbin/make_sha1=../libexec/cyrus/make_sha1
 f none /opt/csw/libexec/cyrus/proxyd 0755 root bin
 s none /opt/csw/sbin/reconstruct=../libexec/cyrus/reconstruct
 f none /opt/csw/libexec/cyrus/quota 0755 root bin
@@ -148,6 +152,7 @@ f none /opt/csw/libexec/cyrus/notifyd 0755 root bin
 f none /opt/csw/sbin/arbitronsort 0755 root bin
 f none /opt/csw/sbin/cyrus-dohash 0755 root bin
 f none /opt/csw/sbin/masssievec 0755 root bin
+f none /opt/csw/sbin/migrate-metadata 0755 root bin
 f none /opt/csw/sbin/cyrus-mkdirs 0755 root bin
 f none /opt/csw/sbin/cyrus-mknewsgroups 0755 root bin
 f none /opt/csw/sbin/cyrus-rehash 0755 root bin

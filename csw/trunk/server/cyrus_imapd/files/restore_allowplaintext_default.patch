@@ -1,0 +1,36 @@
+diff -ur cyrus-imapd-2.3.11/doc/man/imapd.conf.5.html cyrus-imapd-2.3.11.new/doc/man/imapd.conf.5.html
+--- cyrus-imapd-2.3.11/doc/man/imapd.conf.5.html	2008-03-16 16:09:10.403587000 -0400
++++ cyrus-imapd-2.3.11.new/doc/man/imapd.conf.5.html	2008-03-16 16:07:08.000000000 -0400
+@@ -272,7 +272,7 @@
+ <tr valign="top" align="left">
+ <td width="10%"></td>
+ <td width="89%">
+-<p><b>allowplaintext:</b> 0</p></td>
++<p><b>allowplaintext:</b> 1</p></td>
+ </table>
+ <!-- INDENTATION -->
+ <table width="100%" border=0 rules="none" frame="void"
+diff -ur cyrus-imapd-2.3.11/lib/imapoptions cyrus-imapd-2.3.11.new/lib/imapoptions
+--- cyrus-imapd-2.3.11/lib/imapoptions	2008-03-16 16:09:10.463576000 -0400
++++ cyrus-imapd-2.3.11.new/lib/imapoptions	2008-03-16 16:06:53.000000000 -0400
+@@ -121,7 +121,7 @@
+   Note that this is a very expensive command and should only be
+   enabled when absolutely necessary. */
+ 
+-{ "allowplaintext", 0, SWITCH }
++{ "allowplaintext", 1, SWITCH }
+ /* Allow the use of cleartext passwords on the wire. */
+    
+ { "allowusermoves", 0, SWITCH }
+diff -ur cyrus-imapd-2.3.11/man/imapd.conf.5 cyrus-imapd-2.3.11.new/man/imapd.conf.5
+--- cyrus-imapd-2.3.11/man/imapd.conf.5	2008-03-16 16:09:10.523572000 -0400
++++ cyrus-imapd-2.3.11.new/man/imapd.conf.5	2008-03-16 16:07:00.000000000 -0400
+@@ -110,7 +110,7 @@
+ .PP
+ Note that this is a very expensive command and should only be
+ enabled when absolutely necessary. 
+-.IP "\fBallowplaintext:\fR 0" 5
++.IP "\fBallowplaintext:\fR 1" 5
+ Allow the use of cleartext passwords on the wire. 
+ .IP "\fBallowusermoves:\fR 0" 5
+ Allow moving user accounts (with associated meta-data) via RENAME

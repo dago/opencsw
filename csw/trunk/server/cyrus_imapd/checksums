@@ -1,10 +1,10 @@
 df632eb2a89e36e6296e4abd687435ed  download/cyrus-imapd-2.3.11.tar.gz
 7423d96cacb8162b7987c9983cc85171  download/CSWcyrusimapd.gspec
-1ee8e41e82377f43f6c566459fa10fa2  download/CSWcyrusimapd.prototype
+a22944187eb6b75e2437aa9a4c754c07  download/CSWcyrusimapd.prototype
 5111a5573aa6d4878b852780aeae8a27  download/CSWcyrusimapd.preinstall
 393e312a43781417567828226b27b2ae  download/CSWcyrusimapd.depend
 a55d22e88ee57fa81da2ea75c6e0e3d8  download/CSWcyrusimapd.checkinstall
-8ca953537fd13bd300f8af4ea0ec35cc  download/cyrus_imapd.changelog.CSW
+d64131f5a87d5e01f624deb92e5d1dec  download/cyrus_imapd.changelog.CSW
 d0b97b33e75ac75f89ee6236a2d53f05  download/README.CSW
 79211aee56db01e15566ced1ba4078da  download/i.services
 149ac6b6d82ef9ef4bb1b314f1a1cac4  download/r.services
@@ -33,3 +33,4 @@ e2f3c6e948cc73e28c5a7a8e3e53854e  download/cyrus-imapd-2.3.11-autocreate-0.10-0.
 6127a7b62ec4679a54985f6a2d915e52  download/cyrus-imapd-acceptinvalidfrom.patch
 b4c99489eacf0fb7befeef5e3098a5c1  download/cyrus-imapd-2.3.7-nobarenewlinescheck.patch
 0454ac02701faec98532669854f75724  download/master-rename.patch
+dce627f9a464ae4efe8a66c8dbd358d5  download/restore_allowplaintext_default.patch
