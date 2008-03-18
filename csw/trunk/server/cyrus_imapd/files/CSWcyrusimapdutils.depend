@@ -4,6 +4,3 @@ P       CSWsasl         - sasl - Simple Authentication and Security Layer
 P       CSWbdb4         - berkeleydb4 - embedded database libraries and utilities
 P	CSWkrb5lib
 P	CSWpcre
-P       SUNWcsl
-P       SUNWcsr
-
