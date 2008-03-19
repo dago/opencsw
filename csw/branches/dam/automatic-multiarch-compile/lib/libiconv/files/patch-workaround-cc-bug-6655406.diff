@@ -1,0 +1,17 @@
+diff --speed-large-files --minimal -Nru libiconv-1.12.orig/configure libiconv-1.12/configure
+--- libiconv-1.12.orig/configure	2007-11-11 17:46:26.000000000 +0100
++++ libiconv-1.12/configure	2008-02-29 12:28:46.258785000 +0100
+@@ -25733,13 +25733,6 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-/* Test preprocessor.  */
+-      #if ! (-9223372036854775807LL < 0 && 0 < 9223372036854775807ll)
+-        error in preprocessor;
+-      #endif
+-      #if ! (18446744073709551615ULL <= -1ull)
+-        error in preprocessor;
+-      #endif
+       /* Test literals.  */
+       long long int ll = 9223372036854775807ll;
+       long long int nll = -9223372036854775807LL;
