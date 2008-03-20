@@ -28,7 +28,7 @@ DISTFILES += SUNW,501-1415.bin
 # SBus bwtwo 501-1561 ROM
 DISTFILES += SUNW,501-1561.bin
 
-DISTFILES += $(call admfiles,CSWtme,)
+DISTFILES += $(call admfiles,CSWtme,depend)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -36,18 +36,20 @@ PATCHFILES  = fix-tr.patch
 PATCHFILES += fix-isinff.patch
 PATCHFILES += fix-cfsetspeed.patch
 
-# GARCOMPILER = GNU
+GARCOMPILER = GNU
 GARFLAVOR = DBG
 SUN_CC_DBG = -g -xc99
+GNU_CC_DBG = -g -std=c99
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-shared
+CONFIGURE_ARGS += --disable-warnings
 
 TEST_SCRIPTS =
 
 include ../category.mk
 
-CFLAGS := $(CFLAGS) -m64
+#CFLAGS := $(CFLAGS) -m64
 
 # To compile manually:
 #   CC=gcc PATH=/opt/csw/gnu:$PATH CFLAGS="-L/opt/csw/lib -R/opt/csw/lib" LD_FLAGS="-L/opt/csw/lib -R/opt/csw/lib" ./configure --prefix=/opt/csw --with-gtk-prefix=/opt/csw --disable-shared && gmake

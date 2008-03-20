@@ -5,8 +5,8 @@ diff --speed-large-files --minimal -Nru tme-0.6.orig/tme/common.h tme-0.6/tme/co
  #ifndef _TME_COMMON_H
  #define _TME_COMMON_H
  
-+extern int isinf( double );
-+extern int isinff( float );
++#include <math.h>
++
  /* includes: */
  #include <assert.h>
  #include <unistd.h>

@@ -1,0 +1,3 @@
+P CSWlibtoolrt libtool_rt - Generic library support runtime libraries
+P CSWglib      glib - utility library commonly associated with GNOME programs
+P CSWgtk       gtk - the Gimp ToolKit library, libgtk
