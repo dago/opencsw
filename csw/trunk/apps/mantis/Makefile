@@ -32,7 +32,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(sharedstatedir)/www/mantis
 	@cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs
 	@find $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs -name .cvsignore -exec rm \{\} \;
-	@rm -f $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
+	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
 	@ln -s $(sharedstatedir)/www/mantis/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
 
