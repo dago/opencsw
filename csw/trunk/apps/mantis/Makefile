@@ -22,6 +22,8 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+SPKG_SOURCEURL = http://www.mantisbt.org/
+
 include ../category.mk
 
 install-custom:
