@@ -1,0 +1,6 @@
+%var            bitname jetty6
+%var            pkgname CSWjetty6
+%copyright      url file://%{WORKSRC}/../jetty-%{GARVERSION}/LICENSES/LICENSE.txt
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%include        url file://%{PKGLIB}/csw_usrgrp.gspec
+%include        url file://%{PKGLIB}/smf_enabled.gspec

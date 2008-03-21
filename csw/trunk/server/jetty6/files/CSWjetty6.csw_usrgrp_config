@@ -1,0 +1,4 @@
+version=1
+group=jetty
+group=jetty
+user=jetty:jetty:/var/opt/csw/jetty6:/usr/bin/pfsh:Jetty

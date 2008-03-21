@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# Start or stop Postfix
+#
+# Origionally written by Valery Kotchiev <valery@blastwave.org>
+# Maintained by Darin Perusich <darin@blastwave.org>
+# based on debians's postfix init.d script
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+DAEMON=/opt/csw/sbin/postfix
+PIDFILE=/opt/csw/var/run/postfix.pid
+NAME=Postfix
+TZ=
+unset TZ
+
+test -x $DAEMON -a -f /etc/opt/csw/postfix/main.cf || exit 0
+
+case "$1" in
+    start)
+        if [ ! -f $pf_config_directory/aliases.dir ]; then
+         /opt/csw/bin/newaliases
+        fi
+
+        /bin/echo "Starting mail transport agent: Postfix"
+        ${DAEMON} start 2>&1 |
+                (grep -v 'starting the Postfix' 1>&2 || /bin/true)
+    ;;
+
+    stop)
+        /bin/echo "Stopping mail transport agent: Postfix"
+        ${DAEMON} stop 2>&1 |
+                (grep -v 'stopping the Postfix' 1>&2 || /bin/true)
+    ;;
+
+    restart)
+        $0 stop
+        $0 start
+    ;;
+    
+    force-reload|reload)
+        /bin/echo "Reloading Postfix configuration..."
+        ${DAEMON} reload 2>&1 |
+                (grep -v 'refreshing the Postfix' 1>&2 || /bin/true)
+        echo "done."
+    ;;
+
+    flush)
+        ${DAEMON} flush
+    ;;
+
+    check)
+        ${DAEMON} check
+    ;;
+
+    *)
+        echo "Usage: /etc/init.d/postfix {start|stop|restart|reload|flush|check|force-reload}"
+        exit 1
+    ;;
+esac
+
+exit 0

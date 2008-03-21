@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+if [ ! -d /etc/opt/csw/jetty6/instances/default ]
+then
+  /opt/csw/share/jetty6/bin/create-instance default
+fi
