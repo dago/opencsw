@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWmantis,depend preinstall postinstall preremove)
+DISTFILES += $(call admfiles,CSWmantis,depend preinstall postinstall)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
