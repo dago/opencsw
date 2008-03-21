@@ -1,0 +1,22 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+if [ -d ${CSW_PREFIX}/apache2/share/htdocs/mantis ]; then
+  /usr/bin/cat <<EOF
+
+ERROR: You seem to have a previous installation of Mantis.
+The install location has changed from
+  /opt/csw/apache2/share/htdocs/mantis
+to
+  /opt/csw/share/www/mantis/htdocs
+
+If you have configuration files please move them away manually
+and remove /opt/csw/apache2/share/htdocs/mantis. After this,
+you can install this package again and move your configuration
+files back to the new location.
+
+EOF
+  exit 1
+fi
+
+exit 0

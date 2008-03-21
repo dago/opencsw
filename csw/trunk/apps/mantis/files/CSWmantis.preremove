@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
-CONFDIR=${CSW_PREFIX}/apache2/share/htdocs/mantis/config
+CONFDIR=${CSW_PREFIX}/share/www/mantis/htdocs/config
 
 # Copy templates
 template_list="config.php"
