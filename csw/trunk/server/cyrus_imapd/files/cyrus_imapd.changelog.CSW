@@ -1,3 +1,9 @@
+cyrus_imapd (2.3.11,REV=2008.03.22) unstable
+
+  * Added missing pcre dependancy (closes: #2830).
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 22 Mar 2008 10:35:48 +0100
+
 cyrus_imapd (2.3.11,REV=2008.03.16) unstable
 
   * New upstream version.
