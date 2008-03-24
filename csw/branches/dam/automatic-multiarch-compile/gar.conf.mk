@@ -79,18 +79,18 @@ GAROSREL ?= $(shell uname -r)
 base_prefix           ?= /opt/csw
 base_exec_prefix      ?= $(base_prefix)
 base_bindir_NOISA     ?= $(base_exec_prefix)/bin
-base_bindir           ?= $(base_bindir_NOISA)/$(ISABINDIR)
+base_bindir           ?= $(abspath $(base_bindir_NOISA)/$(ISABINDIR))
 base_gnudir           ?= $(base_exec_prefix)/gnu
 base_sbindir_NOISA    ?= $(base_exec_prefix)/sbin
-base_sbindir          ?= $(base_sbindir_NOISA)/$(ISABINDIR)
+base_sbindir          ?= $(abspath $(base_sbindir_NOISA)/$(ISABINDIR))
 base_libexecdir_NOISA ?= $(base_exec_prefix)/libexec
-base_libexecdir       ?= $(base_libexecdir_NOISA)/$(ISABINDIR)
+base_libexecdir       ?= $(abspath $(base_libexecdir_NOISA)/$(ISABINDIR))
 base_datadir          ?= $(base_prefix)/share
 base_sysconfdir       ?= $(base_prefix)/etc
 base_sharedstatedir   ?= $(base_prefix)/share
 base_localstatedir    ?= $(base_prefix)/var
 base_libdir_NOISA     ?= $(base_exec_prefix)/lib
-base_libdir           ?= $(base_libdir_NOISA)/$(ISALIBDIR)
+base_libdir           ?= $(abspath $(base_libdir_NOISA)/$(ISALIBDIR))
 base_infodir          ?= $(base_sharedstatedir)/info
 base_lispdir          ?= $(base_sharedstatedir)/emacs/site-lisp
 base_includedir       ?= $(base_prefix)/include
@@ -415,8 +415,8 @@ ASFLAGS  = $(strip $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS))
 OPTFLAGS = $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 
 # allow us to link to libraries we installed
-EXT_CFLAGS = $(foreach EINC,$(EXTRA_INC) $(includedir),-I$(EINC))
-EXT_LDFLAGS = $(foreach ELIB,$(EXTRA_LIB) $(libdir_NOISA)/$(MM_LIBDIR),-L$(ELIB))
+EXT_CFLAGS ?= $(foreach EINC,$(EXTRA_INC) $(realpath $(includedir)),-I$(EINC))
+EXT_LDFLAGS ?= $(foreach ELIB,$(EXTRA_LIB) $(realpath $(libdir_NOISA)/$(MM_LIBDIR)),-L$(ELIB))
 
 GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
 GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
@@ -427,16 +427,16 @@ LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
 
 LDOPT_LIBS ?= $(libdir_NOISA)
 ifdef NOISALIST
-LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(ELIB)/$(MM_LIBDIR))
+LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(abspath $(ELIB)/$(MM_LIBDIR)))
 else
 LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB))
 endif
 
 ifneq ($(IGNORE_DESTDIR),1)
-CFLAGS   += -I$(DESTDIR)$(includedir)
-CPPFLAGS += -I$(DESTDIR)$(includedir)
-CXXFLAGS += -I$(DESTDIR)$(includedir)
-LDFLAGS  += -L$(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)
+CFLAGS   += -I$(realpath $(DESTDIR)$(includedir))
+CPPFLAGS += -I$(realpath $(DESTDIR)$(includedir))
+CXXFLAGS += -I$(realpath $(DESTDIR)$(includedir))
+LDFLAGS  += -L$(realpath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR))
 endif
 CFLAGS   += $(EXT_CFLAGS) 
 CPPFLAGS += $(EXT_CFLAGS)
@@ -446,12 +446,12 @@ LDFLAGS  += $(EXT_LDFLAGS)
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
 #    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
-PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(DESTDIR)$(bindir_NOISA)/$(MM_BINDIR):$(DESTDIR)$(bindir_NOISA):$(DESTDIR)$(sbindir_NOISA)/$(MM_BINDIR):$(DESTDIR)$(sbindir_NOISA):)$(bindir_NOISA)/$(MM_BINDIR):$(bindir_NOISA):$(sbindir_NOISA)/$(MM_BINDIR):$(sbindir_NOISA):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(bindir_NOISA):$(abspath $(DESTDIR)$(sbindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(sbindir_NOISA):)$(abspath $(bindir_NOISA)/$(MM_BINDIR)):$(bindir_NOISA):$(abspath $(sbindir_NOISA)/$(MM_BINDIR)):$(sbindir_NOISA):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_PATH := $(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig:$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(abspath $(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 ifneq ($(IGNORE_DESTDIR),1)
-PKG_CONFIG_PATH := $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig:$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(abspath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 endif
 
 # Let's see if we can get gtk-doc going 100%
@@ -581,7 +581,7 @@ isaenv:
 	@echo "Default ISA 64: $(ISA_DEFAULT64_$(GARCH))"
 	@echo
 	@echo "Requested compiler flags:"
-	@$(foreach ISA,$(BUILD_ISAS),						\
+	@$(foreach ISA,$(ISA) $(BUILD_ISAS),					\
 		echo "* ISA $(ISA)";						\
 		echo "       PATH = $(PATH)";					\
 		echo "     CFLAGS = $(CFLAGS)";					\
