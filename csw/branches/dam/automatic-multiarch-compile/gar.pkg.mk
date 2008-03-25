@@ -129,24 +129,24 @@ $(foreach SPEC,$(_PKG_SPECS),$(eval								\
 PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
-$(PROTOTYPE): | install
+$(PROTOTYPE): install
 	@cswproto -s $(TIMESTAMP) -r $(DESTDIR) $(DESTDIR)$(prefix) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
-$(WORKDIR)/%.prototype: $(PROTOTYPE)
+$(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	if [ -n "$(PKGFILES_$*)" -o -n "$(PKGFILES_$*_EXCLUSIVE)" -o -n "$(_PKGFILES_EXCLUDE_$*)" -o -n "$(ISAEXEC_BINS_$*)" -o -n "$(ISAEXEC_BINS)" ]; then	\
 		(pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)')		\
 			$(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)')					\
 			$(foreach IE,$(abspath $(ISAEXEC_BINS_$*) $(ISAEXEC_BINS)),-e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))')	\
-			<$<;											\
+			<$(PROTOTYPE);											\
 		 if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi				\
 		) >$@;												\
 	else													\
-		cp $< $@;											\
+		cp $(PROTOTYPE) $@;											\
 	fi
 
-$(WORKDIR)/%.prototype-$(GARCH): $(WORKDIR)/%.prototype
-	@cp $< $@
+$(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
+	@cp $(WORKDIR)/$*.prototype $@
 
 # package - Use the mkpackage utility to create Solaris packages
 #
