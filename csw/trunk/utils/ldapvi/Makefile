@@ -13,6 +13,8 @@ MASTER_SITES = http://www.lichteblau.com/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWldapvi,depend)
 
+PATCHFILES = patch-putenv.diff
+
 PREREQUISITE_PKGS = CSWoldapdevel
 
 CONFIGURE_ARGS = $(DIRPATHS)
