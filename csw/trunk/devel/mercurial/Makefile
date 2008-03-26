@@ -1,5 +1,5 @@
 GARNAME = mercurial
-GARVERSION = 0.9.5
+GARVERSION = 1.0
 CATEGORIES = devel
 
 DESCRIPTION = Fast, lightweight Source Control Management system
@@ -8,11 +8,16 @@ DESCRIPTION = Fast, lightweight Source Control Management system
 
 MASTER_SITES = http://www.selenic.com/mercurial/release
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWmercurial,)
+DISTFILES += $(call admfiles,CSWmercurial,prototype changelog.CSW)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
-TEST_SCRIPTS = 
+TEST_TARGET =
+# Can't get the tests to pass properly
+#TEST_TARGET = tests
+# TESTFLAGS is used by ./run-tests.py
+TESTFLAGS = -p 6666
+export TESTFLAGS
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 INSTALL_ARGS += --root=$(DESTDIR) --prefix=/opt/csw
@@ -32,3 +37,13 @@ pre-install:
 		$(DESTDIR)/opt/csw/share/doc/mercurial/contrib/*rpm* \
 		$(DESTDIR)/opt/csw/share/doc/mercurial/contrib/*spec* \
 		$(DESTDIR)/opt/csw/share/doc/mercurial/contrib/win32
+
+post-install:
+	cp $(WORKDIR)/CSWmercurial.changelog.CSW $(DESTDIR)/opt/csw/share/doc/mercurial/changelog.CSW
+	( cd $(DESTDIR) && find . -type f | xargs grep '#!.*python$$' ) | cut -f 1 -d: | while read file; do\
+		sed '1c\
+#!/opt/csw/bin/python' $(DESTDIR)/$$file > $(WORKDIR)/tmp; \
+		mv $(WORKDIR)/tmp $(DESTDIR)/$$file; \
+	 done
+
+PATH := /opt/csw/bin:$(PATH)

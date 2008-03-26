@@ -1,0 +1,6 @@
+mercurial (1.0,REV=2008.03.26) unstable
+
+ * Updated to latest mercurial
+ * Fixing bug #2813: CGI scripts doesn't use #!/opt/csw/bin/python
+
+ -- Trygve Laugstol  <trygvel@blastwave.org>  Wed Mar 26 15:47:58 CET 2008
