@@ -32,8 +32,6 @@ COPY_FILES=LICENSES README.txt VERSION.txt etc lib resources/log4j.properties st
 TO_COPY=$(foreach file,$(COPY_FILES),cp $(WORKDIR)/jetty-$(GARVERSION)/$(COPY_FILES) $(DESTDIR)/opt/csw/share/jetty6/$(COPY_FILES))
 
 install-common:
-	echo $(TO_COPY)
-	true
 	mkdir -p $(DESTDIR)/opt/csw/share
 	mkdir -p $(DESTDIR)/etc/init.d
 	mkdir -p $(DESTDIR)/etc/default
