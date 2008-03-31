@@ -67,7 +67,6 @@ f none /opt/csw/share/jetty6/home/lib/ext/jetty-java5-threadpool-6.1.7.jar 0644 
 f none /opt/csw/share/jetty6/home/lib/ext/jetty-servlet-tester-6.1.7.jar 0644 root bin
 f none /opt/csw/share/jetty6/home/lib/ext/jetty-setuid-6.1.7.jar 0644 root bin
 f none /opt/csw/share/jetty6/home/lib/ext/jetty-sslengine-6.1.7.jar 0644 root bin
-f none /opt/csw/share/jetty6/home/lib/ext/libsetuid.so 0644 root bin
 d none /opt/csw/share/jetty6/home/lib/grizzly 0755 root bin
 f none /opt/csw/share/jetty6/home/lib/grizzly/framework-1.6.1.jar 0644 root bin
 f none /opt/csw/share/jetty6/home/lib/grizzly/jetty-grizzly-6.1.7.jar 0644 root bin

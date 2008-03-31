@@ -56,13 +56,12 @@ TEMP_PATH=$VAR_PATH/temp
 LOGS_PATH=$VAR_PATH/logs
 PID_FILE=$VAR_PATH/jetty.pid
 
-case "$1" in
-start)
+start() {
   echo "Starting Jetty instance '$JETTY_INSTANCE'"
   echo "JAVA_HOME: $JAVA_HOME"
   rm -f /tmp/jetty.log
 
-  # Jetty is configured to redirect its stdout/err to a file so don't send it 
+  # Jetty is configured to redirect its stdout/err to a file so don't send it
   # to /dev/null in case it print interresting information like error messages
   $JAVA_HOME/bin/java \
     -Djetty.home=$JETTY_HOME \
@@ -73,9 +72,9 @@ start)
   PID=$!
   echo $PID > $PID_FILE
   echo "Jetty started, PID=$PID"
-  ;;
+}
 
-stop)
+stop() {
   echo "Stopping Jetty instance '$JETTY_INSTANCE'"
   if [ ! -r $PID_FILE ]
   then
@@ -83,8 +82,30 @@ stop)
   fi
 
   PID=`cat $PID_FILE`
-  echo "Killing PID $PID"
-  kill $PID
+  running=`/usr/bin/ps -p $PID|wc -l`
+  if [ $running -gt 1 ]; then
+    echo "Killing PID $PID"
+    kill $PID
+    sleep 3
+  fi
+}
+
+refresh() {
+  stop
+  start
+}
+
+case "$1" in
+start)
+  start
+  ;;
+
+stop)
+  stop
+  ;;
+
+refresh)
+  refresh
   ;;
 
 *)
