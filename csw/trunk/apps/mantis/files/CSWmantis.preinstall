@@ -22,7 +22,7 @@ EOF
   echo "Copying old files:"
   echo
   mkdir -p /opt/csw/share/www/mantis/htdocs
-  (cd /opt/csw/apache2/share/htdocs/mantis; tar cf - *) | \
+  (cd /opt/csw/apache2/share/htdocs/mantis; tar cf - .) | \
 	(cd /opt/csw/share/www/mantis/htdocs; tar xvf -)
   rm -rf /opt/csw/apache2/share/htdocs/mantis
 fi
