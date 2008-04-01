@@ -10,13 +10,21 @@ The install location has changed from
 to
   /opt/csw/share/www/mantis/htdocs
 
-If you have configuration files please move them away manually
-and remove /opt/csw/apache2/share/htdocs/mantis. After this,
-you can install this package again and move your configuration
-files back to the new location.
+Your files are being moved to the new install location.
 
+!! Please press Ctrl-C in the next 5 seconds if you don't !!
+!! want this to happen automatically but want to move the !!
+!! files manually.                                        !!
 EOF
-  exit 1
+
+  sleep 5
+  echo
+  echo "Copying old files:"
+  echo
+  mkdir -p /opt/csw/share/www/mantis/htdocs
+  (cd /opt/csw/apache2/share/htdocs/mantis; tar cf - *) | \
+	(cd /opt/csw/share/www/mantis/htdocs; tar xvf -)
+  rm -rf /opt/csw/apache2/share/htdocs/mantis
 fi
 
 exit 0
