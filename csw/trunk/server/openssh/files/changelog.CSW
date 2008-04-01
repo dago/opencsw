@@ -1,3 +1,10 @@
+openssh (4.9,REV=2008.04.01_rev=p1) unstable
+
+  * New upstream version.
+  * Added documentation files in the package.
+
+ -- Yann Rouillard <yann@blastwave.org>  Tue, 01 Apr 2008 20:37:51 +0200
+
 openssh (4.7,REV=2007.11.02_rev=p1) unstable
 
   * New upstream version.
