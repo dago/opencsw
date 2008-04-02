@@ -134,10 +134,10 @@ prerequisitepkg-%:
 # fetch-list	- Show list of files that would be retrieved by fetch.
 # NOTE: DOES NOT RUN pre-everything!
 fetch-list:
-	@echo "Distribution files: "
-	@for i in $(DISTFILES); do echo "	$$i"; done
-	@echo "Patch files: "
-	@for i in $(PATCHFILES); do echo "	$$i"; done
+	@echo "Distribution files:"
+	@$(foreach FILE,$(DISTFILES),echo "\t$(FILE)";)
+	@echo "Patch files:"
+	@$(foreach FILE,$(PATCHFILES),echo "\t$(FILE)";)
 
 # fetch			- Retrieves $(DISTFILES) (and $(PATCHFILES) if defined)
 #				  into $(DOWNLOADDIR) as necessary.
