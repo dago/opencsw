@@ -1,5 +1,5 @@
 GARNAME = zsh
-GARVERSION = 4.3.5
+GARVERSION = 4.3.6
 CATEGORIES = devel
 
 DESCRIPTION = Powerful UNIX shell
