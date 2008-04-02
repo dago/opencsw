@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWzsh,postinstall postremove)
+DISTFILES += $(call admfiles,CSWzsh,depend postinstall postremove)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-maildir-support
