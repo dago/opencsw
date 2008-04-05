@@ -1,7 +1,7 @@
 GARNAME = openssh
-GARVERSION = 4.9
+GARVERSION = 4.7
 RELEASE = p1
-GSSKEX_VERSION = 20080401
+GSSKEX_VERSION = 20070927
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
@@ -38,14 +38,16 @@ DISTFILES += openssh_restart_workaround.sh
 PATCHDIRLEVEL = 0
 # The GSSAPI key exchange patch
 PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
+# Fix mantis bug 2564 without waiting for 4.7 
+# stolen from https://bugzilla.mindrot.org/show_bug.cgi?id=1306
+#PATCHFILES += spurious_log_fix.patch
 
 # Prevent TIOCSCTTY from being used to avoid error:
 # ioctl(TIOCSCTTY): Invalid argument
 PATCHFILES += don_t_use_TIOCSCTTY.patch
 
-# documentation files to install (not a gar variable)
-DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
-DOCFILES += README.platform README.privsep README.smartcard README.tun RFC.nroff TODO WARNING.RNG    
+# Security fix for CVE-2008-1483 and CVE-2008-1657
+PATCHFILES += 001_openssh.patch 002_openssh2.patch
 
 SPKG_CLASSES = none conf
 
@@ -65,11 +67,5 @@ include ../category.mk
 pre-configure:
 	cd $(WORKSRC) && autoconf
 	@$(MAKECOOKIE)
-
-# adding documentation files
-post-install:
-	mkdir -p $(DESTDIR)/$(docdir)/openssh/
-	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh/
-
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)

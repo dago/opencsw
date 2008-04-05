@@ -1,9 +1,8 @@
-openssh (4.9,REV=2008.04.01_rev=p1) unstable
+openssh (4.7,REV=2008.04.04_rev=p1) unstable
 
-  * New upstream version.
-  * Added documentation files in the package.
+  * Added security fixes for CVE-2008-1483 and CVE-2008-1657
 
- -- Yann Rouillard <yann@blastwave.org>  Tue, 01 Apr 2008 20:37:51 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 04 Apr 2008 23:44:19 +0200
 
 openssh (4.7,REV=2007.11.02_rev=p1) unstable
 
