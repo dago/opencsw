@@ -19,7 +19,7 @@ fi
 eval getent passwd tomcat > /dev/null
 if test $? -gt 0
 then 	
-	useradd -c "Tomcat service user" -g tomcat -d /opt/csw/share/tomcat5 -s /bin/sh tomcat > /dev/null
+	useradd -c "Tomcat service user" -g tomcat -d /opt/csw/share -s /bin/sh tomcat > /dev/null
 	echo user tomcat has been added
 
 	eval getent passwd tomcat > /dev/null
