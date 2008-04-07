@@ -1,8 +1,8 @@
 GARNAME = socat
-GARVERSION = 1.5.0.0
+GARVERSION = 1.6.0.1
 CATEGORIES = net
 
-DESCRIPTION = bidirectional data transfer
+DESCRIPTION = Multipurpose relay for bidirectional data transfer
 define BLURB
 	socat is a relay for bidirectional data transfer between two independent data
 	channels. Each of these data channels may be a file, pipe, device (serial line
@@ -15,11 +15,19 @@ endef
 
 MASTER_SITES = http://www.dest-unreach.org/socat/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsocat,)
+DISTFILES += $(call admfiles,CSWsocat,depend prototype)
+
+DISTFILES += changelog.CSW
+
+# Disable gcc specific options
+PATCHFILES = cc_compile.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 
 include ../category.mk
 
-GARCOMPILER = GNU
+
+pre-configure:
+	cd $(WORKSRC) && autoconf
+	 @$(MAKECOOKIE)
