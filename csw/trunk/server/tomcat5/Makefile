@@ -1,8 +1,8 @@
 GARNAME      = tomcat5
-GARVERSION   = 5.5.25
+GARVERSION   = 5.5.26
 CATEGORIES   = server
 
-DESCRIPTION  = Tomcat 5
+DESCRIPTION  =  Apache Jakarta Tomcat 5.5 Servlet/JSP Container
 define BLURB
 Apache Tomcat is the servlet container that is used in the official Reference Implementation for the Java Servlet and JavaServer Pages technologies. The Java Servlet and JavaServer Pages specifications are developed by Sun under the Java Community Process.
 endef
@@ -10,7 +10,7 @@ endef
 MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-5/v$(GARVERSION)/bin/
 DISTFILES     = apache-tomcat-$(GARVERSION).tar.gz
 PKGDIST       = apache-tomcat-$(GARVERSION).tar.gz
-DISTFILES    += CSWtomcat5.gspec CSWtomcat5.prototype CSWtomcat5.depend preremove postinstall preinstall 
+DISTFILES    += CSWtomcat5.gspec CSWtomcat5.prototype CSWtomcat5.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-tomcat5 tomcat5.xml tomcat5 cswtomcat5
 # DISTFILES    += $(call admfiles, CSWtomcat5, depend )
 
 CONFIGURE_SCRIPTS = none
