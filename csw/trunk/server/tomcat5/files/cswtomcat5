@@ -18,9 +18,10 @@
 #     /opt/csw/etc
 #         This directory contain global config files
 #
-#     If there exist a /etc/opt/csw/share/tomcat5 config file, then the
+#     If there exist a /etc/opt/csw/tomcat5 config file, then the
 #     environment variables defined in this file are used and the
-#     /opt/csw/etc/tomcat5 file is ignored even if it exist.
+#     /opt/csw/etc/tomcat5/conf/tomcat5 file is ignored even if it 
+#     exist.
 #
 #     If there exist only a /opt/csw/etc/tomcat5/conf/tomcat5 config
 #     file, then the environnement variables defined in this file are
