@@ -48,7 +48,6 @@ install-tomcat:
 	( mkdir -p $(DESTDIR)/var/opt/csw/$(GARNAME) )
 	( mkdir -p $(DESTDIR)/opt/csw/share )
 	( mkdir -p $(DESTDIR)/etc/opt/csw )
-	( rm $(WORKDIR)/$(DISTNAME)/temp/bugzilla37035-safeToDelete.tmp )
 	( cp -fr $(WORKDIR)/$(DISTNAME) $(DESTDIR)/opt/csw/share/$(GARNAME) )
 	( cp -fr $(FILEDIR)/$(GARNAME) $(DESTDIR)/etc/opt/csw/$(GARNAME) )
 	( cp -fr $(FILEDIR)/csw$(GARNAME) $(DESTDIR)/etc/init.d )
