@@ -32,8 +32,8 @@ build-none:
 
 post-extract:
 	( mv $(WORKDIR)/apache-tomcat-$(GARVERSION) $(WORKDIR)/$(DISTNAME) )
-	( OLDDIR=`pwd` && cd $(WORKDIR)/$(DISTNAME)/conf && for i in `find . -type file` ; do mv $$i $$i.CSW ; done && cd $$OLDDIR )
-	( for i in temp work logs conf ; do  find $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; find $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
+	( OLDDIR=`pwd` && cd $(WORKDIR)/$(DISTNAME)/conf && for i in `gfind . -type f` ; do mv $$i $$i.CSW ; done && cd $$OLDDIR )
+	( for i in temp work logs conf ; do  gfind $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; gfind $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
 	@$(MAKECOOKIE)
 
 install-tomcat:
