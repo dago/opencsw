@@ -1034,6 +1034,7 @@ i pkginfo=CSWtomcat5.pkginfo
 i checkinstall
 i preremove
 i postinstall
+i preinstall
 i i.smfno
 i i.smfyes
 i space
