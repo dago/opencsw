@@ -22,12 +22,18 @@ DISTFILES += $(call admfiles,CSWkrb5user,depend)
 
 PATCHFILES = patch-man2html-perl.diff
 
+PREREQUISITE_PKGS = CSWtcl
+
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-tcl=$(prefix)
+# --enable-ipv6 is deprecated and autodetected
+#CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-kdc-replay-cache --enable-dns-for-realm
 CONFIGURE_ARGS += --disable-thread-support
-CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --disable-static --disable-profiled
+CONFIGURE_ARGS += --with-ldap
 
 BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 BUILD_SCRIPTS += $(WORKSRC)/doc/Makefile
