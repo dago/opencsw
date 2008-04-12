@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# test if the jboss group exist, if not create it
+eval getent group jboss > /dev/null
+if test $? -gt 0
+then 
+	groupadd jboss > /dev/null
+	echo group jboss has been added
+	
+	eval getent group jboss > /dev/null
+	if test $? -gt 0
+	then
+		echo ERROR: Failed to add group jboss
+		exit 1
+	fi
+fi
+
+# test if the jboss user exist, if not create it
+eval getent passwd jboss > /dev/null
+if test $? -gt 0
+then 	
+	useradd -c "jboss service user" -g jboss -d /opt/csw/ -s /bin/sh jboss > /dev/null
+	echo user jboss has been added
+
+	eval getent passwd jboss > /dev/null
+	if test $? -gt 0
+	then 	
+		echo ERROR: Failed to add user jboss
+		exit 1
+	fi
+fi

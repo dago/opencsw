@@ -1,0 +1,25 @@
+# jboss4 - preremove script
+#
+
+# If removing from a filesystem that is not running the OS, exit this script.
+if [ ! x"$PKG_INSTALL_ROOT" = x"" ] ; then exit 0 ; fi
+
+# Stop jboss4 if it is running.
+# If removing from a non-global zone, the service may still be 
+# installed/running.  Errors are ignored if nothing is done.
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ;
+then smf=yes ; fi
+
+if [ $smf = yes ]
+  then
+  # Disable service
+     /usr/sbin/svcadm disable -s svc:network/cswjboss4:default >/dev/null 2>&1
+else
+     /etc/init.d/cswjboss4 stop >/dev/null 2>&1
+fi
+
+if [ $smf = yes ] ; then
+   # Unregister with SMF
+   /usr/sbin/svccfg delete svc:network/cswjboss4:default >/dev/null 2>&1
+fi
