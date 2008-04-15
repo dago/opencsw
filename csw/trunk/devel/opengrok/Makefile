@@ -1,5 +1,5 @@
 GARNAME = opengrok
-GARVERSION = 0.5
+GARVERSION = 0.6.1
 CATEGORIES = devel
 
 DESCRIPTION = A wicked fast source browser
@@ -30,9 +30,9 @@ install-custom:
 		(cd $(DESTDIR)$(prefix)/share/tomcat5/webapps/source; \
 		jar xf /dev/fd/0) \
 	)
-	# For Indexing. Structure of opengrok-0.5 is opengrok in application root
-	# directory and all libs in lib/. We use only WEB-INF whose directory structure \
-	# is slightly different.
+	@# For Indexing. Structure of opengrok is opengrok in application root
+	@# directory and all libs in lib/. We use only WEB-INF whose directory structure \
+	@# is slightly different.
 	@gln -s $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/. \
 		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/lib/lib
 
@@ -41,7 +41,7 @@ install-custom:
 		$(DESTDIR)$(prefix)/share/doc/opengrok/
 	@mv $(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml \
 		$(DESTDIR)$(prefix)/share/tomcat5/webapps/source/WEB-INF/web.xml.CSW
-	@# XML-Starlet auf web.xml
+	@# TODO: Apply XML-Starlet to web.xml
 	@rm -rf $(DESTDIR)$(prefix)/share/doc/opengrok
 	@ginstall -d $(DESTDIR)$(prefix)/share/doc/opengrok
 	@ginstall $(WORKSRC)/*.txt \
