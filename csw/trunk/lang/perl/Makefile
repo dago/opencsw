@@ -36,6 +36,10 @@ MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
 CORE_UPDATES  += File-Temp-0.18
 CORE_OBSOLETE += File/Temp.pm
 
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
+CORE_UPDATES  += IO-1.2301
+CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
+
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 # Dependencies
