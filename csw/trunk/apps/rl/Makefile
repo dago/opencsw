@@ -2,7 +2,7 @@ GARNAME = rl
 GARVERSION = 0.2.6
 CATEGORIES = apps
 
-DESCRIPTION = rl - Randomize Lines
+DESCRIPTION = Randomize Lines (rl) is a command-line tool that reads lines from an input file or stdin, randomizes the lines and outputs a specified number of lines.
 define BLURB
   rl is a command-line tool that reads lines from an input file or stdin, randomizes the lines and outputs a specified number of lines. It does this with only a single pass over the input while trying to use as little memory as possible.
 endef
