@@ -2,7 +2,7 @@ GARNAME = libntlm
 GARVERSION = 0.4.2
 CATEGORIES = lib
 
-DESCRIPTION = A library that implement Microsoft's NTLM authentication
+DESCRIPTION = Microsoft WinNT domain authentication library
 define BLURB
   libntlm is a library that implement Microsoft's NTLM authentication.
   However, the packaging of libntlm lacked certain things, such as having
