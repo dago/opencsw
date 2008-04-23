@@ -60,7 +60,7 @@ include $(GARDIR)/gar.lib.mk
 #################### DIRECTORY MAKERS ####################
 
 # This is to make dirs as needed by the base rules
-$(sort $(DOWNLOADDIR) $(PARTIALDIR) $(COOKIEDIR) $(WORKSRC) $(WORKDIR) $(EXTRACTDIR) $(FILEDIR) $(SCRATCHDIR) $(INSTALL_DIRS) $(GARCHIVEDIR) $(GARPKGDIR) $(STAGINGDIR)) $(COOKIEDIR)/%:
+$(sort $(DOWNLOADDIR) $(PARTIALDIR) $(COOKIEDIR) $(WORKSRC) $(WORKDIR) $(EXTRACTDIR) $(FILEDIR) $(SCRATCHDIR) $(DESTBUILD) $(INSTALL_DIRS) $(GARCHIVEDIR) $(GARPKGDIR) $(STAGINGDIR)) $(COOKIEDIR)/%:
 	@if test -d $@; then : ; else \
 		ginstall -d $@; \
 		echo "ginstall -d $@"; \
@@ -305,6 +305,90 @@ install-p:
 reinstall: build
 	rm -rf $(foreach ISA,$(BUILD_ISAS),$(COOKIEDIR)/*install*)
 	$(MAKE) install
+
+# merge in all isas to the package directory after installation
+
+# Merging in general allows the selection of parts from different ISA builds into the package
+# Per default merging is done differently depending on
+# (a) if the sources are build for more than one ISA
+# (b) if the executables should be replaced by isaexec or not
+# 
+# - If there is only one ISA to build for everything is copied verbatim to DESTBUILD.
+# - If there are builds for more than one ISA the destination differs depending on if
+#   the binaries should be executed by isaexec. This is usually bin, sbin and libexec.
+
+ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
+MERGE_SCRIPTS_$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
+else
+ISAEXEC_DIRS ?= $(bindir) $(sbindir) $(libexecdir)
+ISA_RELOCATE_DIRS_$(ISA_DEFAULT) ?= $(ISAEXEC_DIRS)
+ISA_RELOCATE_DIRS_$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+endif
+
+# XXX: This should be done similar to generating the prototype
+#ISAEXEC_BINS ?= $(wildcard $(foreach D,$(ISAEXEC_DIRS),$(DESTBUILD)$(D)/*))
+
+# These directories get relocated into their ISA subdirectories
+ISA_RELOCATE_DIRS ?= $(ISA_RELOCATE_DIRS_$(ISA))
+
+# These merge-rules are actually processed for the current ISA
+MERGE_TARGETS = $(addprefix merge-,$(MERGE_SCRIPTS_$(ISA)))
+
+# Include only this files
+MERGE_INCLUDE_FILES ?= $(MERGE_INCLUDE_FILES_$(ISA)) $(EXTRA_MERGE_INCLUDE_FILES)
+
+# Exclude these files
+MERGE_EXCLUDE_FILES ?= $(MERGE_EXCLUDE_FILES_$(ISA)) $(EXTRA_MERGE_EXCLUDE_FILES)
+
+# This variable contains parameter for pax to honor global file inclusion/exclusion
+# Include first, replace files by itself terminating on first match
+_INC_EXT_RULE = $(foreach F,$(MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
+# Exclude by replacing files with the empty string
+_INC_EXT_RULE += $(foreach F,$(MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
+
+_PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
+
+# The basic merge merges the compiles for all ISAs on the current architecture
+merge: pre-merge merge-isa $(addprefix merge-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS))) post-merge
+	@$(DONADA)
+
+# This merges the 
+merge-isa: install-isa $(MERGE_TARGETS)
+	@$(DONADA)
+
+# Copy the whole tree verbatim
+merge-copy-all: $(DESTBUILD)
+	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) . $(DESTBUILD))
+	@$(MAKECOOKIE)
+
+# Copy the whole tree and relocate the directories where binaries
+merge-copy-relocate: $(DESTBUILD)
+	(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+		$(foreach DIR,$(ISA_RELOCATE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p" ) \
+		. $(DESTBUILD) \
+	)
+	@$(MAKECOOKIE)
+
+# Copy only the relocated directories
+merge-copy-relocated-only: $(DESTBUILD)
+	@echo "E: $(MERGE_EXCLUDE_FILES) I: $(_PAX_ARGS)"
+	(cd $(INSTALLISADIR); $(foreach DIR,$(ISA_RELOCATE_DIRS), \
+		if [ -d .$(DIR) ]; then pax -r -w -v $(_PAX_ARGS) -s ",^\(\.$(DIR)/\),\1$(ISA)/,p" .$(DIR) $(DESTBUILD); fi; \
+		) \
+	)
+	@$(MAKECOOKIE)
+
+mergereset-isa:
+	@echo " ==> Reset merge state for ISA $(ISA)"
+	@rm -f $(COOKIEDIR)/merge $(COOKIEDIR)/merge-*
+
+mergereset:
+	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) mergereset-isa;)
+
+remerge: mergereset merge
+
 
 # The clean rule.  It must be run if you want to re-download a
 # file after a successful checksum (or just remove the checksum

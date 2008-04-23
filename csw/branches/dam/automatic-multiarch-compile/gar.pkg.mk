@@ -31,7 +31,7 @@ SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)
 SPKG_EXPORT    ?= $(WORKDIR)
-SPKG_PKGROOT   ?= $(DESTDIR)
+SPKG_PKGROOT   ?= $(DESTBUILD)
 SPKG_PKGBASE   ?= $(CURDIR)/$(WORKDIR)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
 
@@ -129,8 +129,8 @@ $(foreach SPEC,$(_PKG_SPECS),$(eval								\
 PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
-$(PROTOTYPE): install
-	@cswproto -s $(TIMESTAMP) -r $(DESTDIR) $(DESTDIR)$(prefix) >$@
+$(PROTOTYPE): merge
+	cswproto -s $(TIMESTAMP) -r $(DESTBUILD) $(DESTBUILD)$(prefix) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
@@ -162,7 +162,7 @@ SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
 $(SPKG_DESTDIRS):
 	ginstall -d $@
 
-package: install $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+package: merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
 package-%: $(WORKDIR)/%.prototype-$(GARCH)
@@ -201,7 +201,7 @@ pkgreset-%:
 	@echo " ==> Reset packaging state for $* ($(DESTIMG))"
 	@rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
 	@rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
-	@rm -rf $(WORKDIR)/$*.*
+	@rm -rf $(WORKDIR)/$*.* $(WORKDIR)/prototype
 
 repackage: pkgreset package
 

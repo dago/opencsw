@@ -527,6 +527,12 @@ install-isa-%:
 	@$(MAKE) ISA=$* install-isa
 	@$(MAKECOOKIE)
 
+################# MERGE RULES ###################
+
+merge-isa-%: install-isa-%
+	@echo " ==> Merging ISAs together for packaging"
+	@$(MAKE) ISA=$* merge-isa
+	@$(MAKECOOKIE)
 
 ######################################
 # Use a manifest file of the format:
@@ -593,7 +599,7 @@ install-$(MANIFEST_FILE):
 
 # Build for a certain architecture
 clean-isa-%:
-	@$(MAKE) ISA=$* clean-all
+	@$(MAKE) -s ISA=$* clean-all
 
 #################### DEPENDENCY RULES ####################
 

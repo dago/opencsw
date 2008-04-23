@@ -19,6 +19,7 @@ COOKIEROOTDIR ?= cookies
 COOKIEDIR ?= $(COOKIEROOTDIR)/$(ISA)
 WORKROOTDIR ?= work
 WORKDIR ?= $(WORKROOTDIR)/$(ISA)
+INSTALLISADIR ?= $(WORKROOTDIR)/install-$(ISA)
 WORKSRC ?= $(WORKDIR)/$(DISTNAME)
 EXTRACTDIR ?= $(WORKDIR)
 SCRATCHDIR ?= tmp
@@ -53,7 +54,9 @@ GARCOMPILERS = GCC3 GCC4 SOS11 SOS12
 
 ifeq ($(GARCOMPILER),SUN)
   GARCOMPILER = SOS12
-else ifeq ($(GARCOMPILER),GNU)
+endif
+
+ifeq ($(GARCOMPILER),GNU)
   GARCOMPILER = GCC4
 endif
 
@@ -68,56 +71,49 @@ GARFLAVOR ?= OPT
 GARCH    ?= $(shell uname -p)
 GAROSREL ?= $(shell uname -r)
 
+
 # These are the standard directory name variables from all GNU
 # makefiles.  They're also used by autoconf, and can be adapted
 # for a variety of build systems.
+BUILD_PREFIX     ?= /opt/csw
 
-# Directory config
-# The variables beginning with base_ are defined here as reference. They
-# are assigned to variables without the base_-prefix either directly
-# or with a prefixed ignore/-directory to move them asside at install time.
-base_prefix           ?= /opt/csw
-base_exec_prefix      ?= $(base_prefix)
-base_bindir_NOISA     ?= $(base_exec_prefix)/bin
-base_bindir           ?= $(abspath $(base_bindir_NOISA)/$(ISABINDIR))
-base_gnudir           ?= $(base_exec_prefix)/gnu
-base_sbindir_NOISA    ?= $(base_exec_prefix)/sbin
-base_sbindir          ?= $(abspath $(base_sbindir_NOISA)/$(ISABINDIR))
-base_libexecdir_NOISA ?= $(base_exec_prefix)/libexec
-base_libexecdir       ?= $(abspath $(base_libexecdir_NOISA)/$(ISABINDIR))
-base_datadir          ?= $(base_prefix)/share
-base_sysconfdir       ?= $(base_prefix)/etc
-base_sharedstatedir   ?= $(base_prefix)/share
-base_localstatedir    ?= $(base_prefix)/var
-base_libdir_NOISA     ?= $(base_exec_prefix)/lib
-base_libdir           ?= $(abspath $(base_libdir_NOISA)/$(ISALIBDIR))
-base_infodir          ?= $(base_sharedstatedir)/info
-base_lispdir          ?= $(base_sharedstatedir)/emacs/site-lisp
-base_includedir       ?= $(base_prefix)/include
-base_mandir           ?= $(base_sharedstatedir)/man
-base_docdir           ?= $(base_sharedstatedir)/doc
-base_sourcedir        ?= $(base_prefix)/src
-base_licensedir       ?= $(base_prefix)/licenses
-base_sharedperl       ?= $(base_sharedstatedir)/perl
-base_perllib          ?= $(base_libdir)/perl
-base_perlcswlib       ?= $(base_perllib)/csw
-base_perlpackroot     ?= $(base_perlcswlib)/auto
-
-ALL_CONFIG_DIRS  = prefix exec_prefix bindir_NOISA bindir gnudir sbindir_NOISA sbindir libexecdir_NOISA libexecdir
-ALL_CONFIG_DIRS += datadir sysconfdir sharedstatedir localstatedir libdir_NOISA libdir infodir lispdir includedir
-ALL_CONFIG_DIRS += mandir docdir sourcedir licensedir sharedperl perllib perlcswlib perlpackroot
-
-$(foreach CONFIG_DIR,$(ALL_CONFIG_DIRS),$(eval $(CONFIG_DIR)=$$(base_$(CONFIG_DIR))))
+prefix           ?= $(BUILD_PREFIX)
+exec_prefix      ?= $(prefix)
+bindir           ?= $(exec_prefix)/bin
+gnudir           ?= $(exec_prefix)/gnu
+sbindir          ?= $(exec_prefix)/sbin
+libexecdir       ?= $(exec_prefix)/libexec
+datadir          ?= $(prefix)/share
+sysconfdir       ?= $(prefix)/etc
+sharedstatedir   ?= $(prefix)/share
+localstatedir    ?= $(prefix)/var
+libdir           ?= $(exec_prefix)/lib
+infodir          ?= $(sharedstatedir)/info
+lispdir          ?= $(sharedstatedir)/emacs/site-lisp
+includedir       ?= $(prefix)/include
+mandir           ?= $(sharedstatedir)/man
+docdir           ?= $(sharedstatedir)/doc
+sourcedir        ?= $(prefix)/src
+licensedir       ?= $(prefix)/licenses
+sharedperl       ?= $(sharedstatedir)/perl
+perllib          ?= $(libdir)/perl
+perlcswlib       ?= $(perllib)/csw
+perlpackroot     ?= $(perlcswlib)/auto
 
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
 DESTROOT ?= $(HOME)
+
+# This is the directory from where the package is build from
 DESTBUILD ?= $(DESTROOT)/build-$(GARCH)
-DESTDIR  ?= $(DESTBUILD)
+
+# Each ISA has a separate installation directory inside the
+# working directory for that package. The files are copied
+# over to $(DESTBUILD) during pkgmerge.
+DESTDIR  ?= $(abspath $(INSTALLISADIR))
 
 DESTIMG ?= $(LOGNAME)-$(shell hostname)
 
-BUILD_PREFIX ?= /opt/csw
 
 # These are the core packages which must be installed for GAR to function correctly
 PREREQUISITE_BASE_PKGS ?= CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2
@@ -160,7 +156,6 @@ ARCHFLAGS_SOS12_sparcv9          = -m64 -xarch=sparc
  ARCHFLAGS_GCC3_sparcv9          = -m64 -mcpu=v9
  ARCHFLAGS_GCC4_sparcv9          = -m64 -mcpu=v9
     MEMORYMODEL_sparcv9          = 64
-
 ARCHFLAGS_SOS11_sparcv8plus+fmuladd  = ERROR
 ARCHFLAGS_SOS12_sparcv8plus+fmuladd  = -m32 -xarch=xparcfmaf -fma=fused
  ARCHFLAGS_GCC3_sparcv8plus+fmuladd  = ERROR
@@ -318,27 +313,12 @@ endif
 # The package will be built for these architectures
 # We check automatically what can be build on this kernel architecture
 # REQUESTED_ISAS contains all ISAs that should be built
-# BUILD_ISAS contains all ISAs that can be built on current kernel
+# NEEDED_ISAS contains all ISAs that must be build for this architecture to make the package
+# BUILD_ISAS contains all ISAs that can be built on the current kernel
 # Set 'BUILD64 = 1' to build 64 bit versions automatically
 REQUESTED_ISAS ?= $(ISA_DEFAULT_$(GARCH)) $(EXTRA_BUILD_ISAS) $(EXTRA_BUILD_ISAS_$(GARCH)) $(if $(BUILD64),$(ISA_DEFAULT64_$(GARCH)))
-BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(REQUESTED_ISAS))
-
-# If we build for a specialized ISA the binaries and libraries go into subdirectories
-# with the name of the ISA. All other files go into a directory which is ignored by
-# the packaging.
-IGNORED_ISAS ?= $(filter-out $(ISA_DEFAULT),$(BUILD_ISAS))
-IGNORED_ISAS += $(EXTRA_IGNORED_ISAS)
-
-ifneq (,$(filter $(ISA),$(IGNORED_ISAS)))
-  IGNORE_DIR ?= /ignore
-  IGNORED_DIRS ?= $(IGNORED_DIRS_$(ISA))
-  ifeq (,$(IGNORED_DIRS))
-    IGNORED_DIRS = gnudir datadir sysconfdir sharedstatedir localstatedir infodir lispdir \
-	includedir mandir docdir sourcedir licensedir sharedperl perllib perlcswlib perlpackroot
-  endif
-  IGNORED_DIRS += $(EXTRA_IGNORED_DIRS) $(EXTRA_IGNORED_DIRS_$(ISA))
-  $(foreach CONFIG_DIR,$(IGNORED_DIRS),$(eval $(CONFIG_DIR)=$(IGNORE_DIR)/$$(ISA)$(base_$(CONFIG_DIR))))
-endif
+NEEDED_ISAS ?= $(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))
+BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(NEEDED_ISAS))
 
 # Subdirectories for specialized binaries and libraries
 # Use defaults for sparcv8 and i386 as those are symlinks
@@ -404,19 +384,25 @@ SOS12_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(
 # Construct compiler options
 #
 
+ifeq ($(origin INCLUDE_FLAGS), undefined)
+INCLUDE_FLAGS = $(foreach EINC,$(EXTRA_INC) $(abspath $(includedir)),-I$(EINC))
+INCLUDE_FLAGS += $(if $(IGNORE_DESTDIR),,-I$(abspath $(DESTDIR)$(includedir)))
+endif
+
+ifeq ($(origin LINKER_FLAGS), undefined)
+LINKER_FLAGS = $(foreach ELIB,$(EXTRA_LIB) $(abspath $(libdir)/$(MM_LIBDIR)),-L$(ELIB))
+LINKER_FLAGS += $(if $(IGNORE_DESTDIR),,-L$(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)))
+endif
+
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
 CXX      = $($(GARCOMPILER)_CXX)
-CFLAGS   = $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_CFLAGS))
-CXXFLAGS = $(strip $($(GARCOMPILER)_CXX_FLAGS) $(EXTRA_CXXFLAGS))
-CPPFLAGS = $(strip $($(GARCOMPILER)_CPP_FLAGS) $(EXTRA_CPPFLAGS))
-LDFLAGS  = $(strip $($(GARCOMPILER)_LD_FLAGS) $(EXTRA_LDFLAGS))
-ASFLAGS  = $(strip $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS))
-OPTFLAGS = $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
-
-# allow us to link to libraries we installed
-EXT_CFLAGS ?= $(foreach EINC,$(EXTRA_INC) $(realpath $(includedir)),-I$(EINC))
-EXT_LDFLAGS ?= $(foreach ELIB,$(EXTRA_LIB) $(realpath $(libdir_NOISA)/$(MM_LIBDIR)),-L$(ELIB))
+CFLAGS   ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_CFLAGS) $(INCLUDE_FLAGS))
+CXXFLAGS ?= $(strip $($(GARCOMPILER)_CXX_FLAGS) $(EXTRA_CXXFLAGS) $(INCLUDE_FLAGS))
+CPPFLAGS ?= $(strip $($(GARCOMPILER)_CPP_FLAGS) $(EXTRA_CPPFLAGS) $(INCLUDE_FLAGS))
+LDFLAGS  ?= $(strip $($(GARCOMPILER)_LD_FLAGS) $(EXTRA_LDFLAGS) $(LINKER_FLAGS))
+ASFLAGS  ?= $(strip $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS))
+OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 
 GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
 GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
@@ -425,33 +411,22 @@ SOS12_LD_OPTIONS = $(strip $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(E
 
 LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
 
-LDOPT_LIBS ?= $(libdir_NOISA)
+LDOPT_LIBS ?= $(libdir)
 ifdef NOISALIST
 LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(abspath $(ELIB)/$(MM_LIBDIR)))
 else
 LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB))
 endif
 
-ifneq ($(IGNORE_DESTDIR),1)
-CFLAGS   += -I$(realpath $(DESTDIR)$(includedir))
-CPPFLAGS += -I$(realpath $(DESTDIR)$(includedir))
-CXXFLAGS += -I$(realpath $(DESTDIR)$(includedir))
-LDFLAGS  += -L$(realpath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR))
-endif
-CFLAGS   += $(EXT_CFLAGS) 
-CPPFLAGS += $(EXT_CFLAGS)
-CXXFLAGS += $(EXT_CFLAGS)
-LDFLAGS  += $(EXT_LDFLAGS)
-
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
 #    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
-PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(bindir_NOISA):$(abspath $(DESTDIR)$(sbindir_NOISA)/$(MM_BINDIR)):$(DESTDIR)$(sbindir_NOISA):)$(abspath $(bindir_NOISA)/$(MM_BINDIR)):$(bindir_NOISA):$(abspath $(sbindir_NOISA)/$(MM_BINDIR)):$(sbindir_NOISA):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir)/$(MM_BINDIR)):$(DESTDIR)$(bindir):$(abspath $(DESTDIR)$(sbindir)/$(MM_BINDIR)):$(DESTDIR)$(sbindir):)$(abspath $(bindir)/$(MM_BINDIR)):$(bindir):$(abspath $(sbindir)/$(MM_BINDIR)):$(sbindir):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_PATH := $(abspath $(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(abspath $(libdir)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 ifneq ($(IGNORE_DESTDIR),1)
-PKG_CONFIG_PATH := $(abspath $(DESTDIR)$(libdir_NOISA)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_PATH := $(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
 endif
 
 # Let's see if we can get gtk-doc going 100%
@@ -507,23 +482,34 @@ GARPACKAGE = $(shell basename $(CURDIR))
 
 # Put these variables in the environment during the
 # configure, build, test, and install stages
-COMMON_EXPORTS  = prefix exec_prefix bindir sbindir libexecdir
-COMMON_EXPORTS += datadir sysconfdir sharedstatedir localstatedir libdir
-COMMON_EXPORTS += infodir lispdir includedir mandir docdir sourcedir
-COMMON_EXPORTS += CPPFLAGS CFLAGS CXXFLAGS LDFLAGS
-COMMON_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
-COMMON_EXPORTS += CC_HOME CC_VERSION CXX_VERSION VENDORNAME VENDORSTAMP
-COMMON_EXPORTS += GARCH GAROSREL GARPACKAGE
+ifeq ($(origin DIRECTORY_EXPORTS), undefined)
+DIRECTORY_EXPORTS  = prefix exec_prefix bindir sbindir libexecdir
+DIRECTORY_EXPORTS += datadir sysconfdir sharedstatedir localstatedir libdir
+DIRECTORY_EXPORTS += infodir lispdir includedir mandir docdir sourcedir
+endif
 
-_CONFIGURE_EXPORTS = $(COMMON_EXPORTS) PKG_CONFIG_PATH DESTDIR
-_BUILD_EXPORTS = $(COMMON_EXPORTS)
-_TEST_EXPORTS = $(COMMON_EXPORTS)
-_INSTALL_EXPORTS = $(COMMON_EXPORTS) DESTDIR
+ifeq ($(origin COMPILER_EXPORTS), undefined)
+COMPILER_EXPORTS  = CPPFLAGS CFLAGS CXXFLAGS LDFLAGS
+COMPILER_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
+COMPILER_EXPORTS += CC_HOME CC_VERSION CXX_VERSION
+endif
 
-CONFIGURE_ENV += $(foreach TTT,$(_CONFIGURE_EXPORTS),$(TTT)="$($(TTT))")
-BUILD_ENV     += $(foreach TTT,$(_BUILD_EXPORTS),$(TTT)="$($(TTT))")
-TEST_ENV      += $(foreach TTT,$(_TEST_EXPORTS),$(TTT)="$($(TTT))")
-INSTALL_ENV   += $(foreach TTT,$(_INSTALL_EXPORTS),$(TTT)="$($(TTT))")
+ifeq ($(origin GARPKG_EXPORTS), undefined)
+GARPKG_EXPORTS  = VENDORNAME VENDORSTAMP
+GARPKG_EXPORTS += GARCH GAROSREL GARPACKAGE
+endif
+
+COMMON_EXPORTS ?= $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS)
+
+CONFIGURE_EXPORTS ?= $(COMMON_EXPORTS) PKG_CONFIG_PATH DESTDIR
+BUILD_EXPORTS     ?= $(COMMON_EXPORTS)
+TEST_EXPORTS      ?= $(COMMON_EXPORTS)
+INSTALL_EXPORTS   ?= $(COMMON_EXPORTS) DESTDIR
+
+CONFIGURE_ENV ?= $(foreach TTT,$(CONFIGURE_EXPORTS) $(EXTRA_CONFIGURE_EXPORTS),$(TTT)="$($(TTT))")
+BUILD_ENV     ?= $(foreach TTT,$(BUILD_EXPORTS) $(EXTRA_BUILD_EXPORTS),$(TTT)="$($(TTT))")
+TEST_ENV      ?= $(foreach TTT,$(TEST_EXPORTS) $(EXTRA_TEST_EXPORTS),$(TTT)="$($(TTT))")
+INSTALL_ENV   ?= $(foreach TTT,$(INSTALL_EXPORTS) $(EXTRA_INSTALL_EXPORTS),$(TTT)="$($(TTT))")
 
 # Standard Scripts
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
@@ -581,7 +567,7 @@ isaenv:
 	@echo "Default ISA 64: $(ISA_DEFAULT64_$(GARCH))"
 	@echo
 	@echo "Requested compiler flags:"
-	@$(foreach ISA,$(ISA) $(BUILD_ISAS),					\
+	@$(foreach ISA,$(ISA) $(filter-out $(ISA),$(BUILD_ISAS)),		\
 		echo "* ISA $(ISA)";						\
 		echo "       PATH = $(PATH)";					\
 		echo "     CFLAGS = $(CFLAGS)";					\
@@ -592,3 +578,5 @@ isaenv:
 		echo "    ASFLAGS = $(ASFLAGS)";				\
 		echo "   OPTFLAGS = $(OPTFLAGS)";				\
 	)
+	@echo "GARBIN: $(GARBIN) $(abspath $(GARBIN))  GARDIR: $(GARDIR) $(abspath $(GARDIR))"
+	@echo "ISAEXEC_BINS: $(ISAEXEC_BINS)"
