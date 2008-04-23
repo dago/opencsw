@@ -1,5 +1,5 @@
 GARNAME = screen
-GARVERSION = 4.0.2
+GARVERSION = 4.0.3
 CATEGORIES = utils
 
 DESCRIPTION = A window manager that multiplexes a physical terminal.
@@ -11,13 +11,15 @@ define BLURB
   insert/delete line and support for multiple character sets).
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES = http://ftp.uni-erlangen.de/pub/utilities/screen/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWscrn)
+DISTFILES += $(call admfiles,CSWscrn,prototype)
+
+DISTFILES += changelog.CSW
 
 # this patch increases the maximum number of simultaneously allowed windows per screen session.
 PATCHFILES = screen-maxwin.patch
