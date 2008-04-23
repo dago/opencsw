@@ -1,5 +1,0 @@
-%var            bitname expat_devel
-%var            pkgname CSWexpat-devel
-%var            desc XML Parsing Toolkit - Development Support
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

@@ -1,9 +1,0 @@
-P CSWbdb4     berkeleydb4 - Embedded database libraries and utilities
-P CSWiconv    libiconv - GNU iconv library
-P CSWlibnet   libnet - the libnet packet construction library
-P CSWlibtool  libtool - Generic library support script
-P CSWoldaprt  openldap_rt - OpenLDAP runtime libraries (oldaprt)
-P CSWossl     openssl - Openssl meta package
-P CSWsasl     sasl - Simple Authentication and Security Layer
-P CSWtcpwrap  tcpwrappers - (ipv6.4 patched) lib and tools for pre-screening tcp connections
-P CSWunixodbc unixodbc - ODBC access to data sources

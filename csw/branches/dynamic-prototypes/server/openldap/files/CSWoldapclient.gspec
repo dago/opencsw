@@ -1,5 +1,0 @@
-%var            bitname openldap_client
-%var            pkgname CSWoldapclient
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var		desc OpenLDAP client executables (oldapclient)
-%copyright      url file://%{WORKSRC}/COPYRIGHT

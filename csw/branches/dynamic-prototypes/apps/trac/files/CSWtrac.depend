@@ -1,8 +1,0 @@
-P CSWenscript enscript - convert text files to PostScript
-P CSWpycs pyclearsilver - Clearsilver Python language binding
-P CSWpydocutils pydocutils - Documentation Utiltiies for Python
-P CSWpysetuptools pysetuptools - Distribution Utiltiies for Python
-P CSWpysqlite2 pysqlite2 - SQLite3 support for Python
-P CSWpysvn pysvn - Subversion Python language binding
-P CSWpython python - The Python 2.3 language interpreter
-P CSWsilvercity silvercity - Lexical analysis package for Python

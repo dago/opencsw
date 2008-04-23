@@ -1,4 +1,0 @@
-%var            bitname rubygems
-%var            pkgname CSWrubygems
-%var            arch all
-%include        url file://%{PKGLIB}/csw_standard.gspec

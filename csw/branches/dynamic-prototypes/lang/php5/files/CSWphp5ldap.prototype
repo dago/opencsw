@@ -1,6 +1,0 @@
-d none /opt/csw/php5 0755 root bin
-d none /opt/csw/php5/lib 0755 root bin
-d none /opt/csw/php5/lib/php 0755 root bin
-d none /opt/csw/php5/lib/php/extensions 0755 root bin
-d none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20060613 0755 root bin
-f none /opt/csw/php5/lib/php/extensions/no-debug-non-zts-20060613/ldap.so 0755 root bin

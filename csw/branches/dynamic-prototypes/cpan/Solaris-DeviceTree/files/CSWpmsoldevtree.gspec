@@ -1,4 +1,0 @@
-%var            bitname pm_soldevtree
-%var            pkgname CSWpmsoldevtree
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      url file://%{WORKSRC}/Artistic

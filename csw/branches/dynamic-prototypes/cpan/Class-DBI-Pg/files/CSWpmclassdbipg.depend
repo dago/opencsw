@@ -1,2 +1,0 @@
-P CSWpmclassdbi pm_classdbi - simple database abstraction
-P CSWpmdbdpg pm_dbdpg - PostgreSQL database driver for the DBI module

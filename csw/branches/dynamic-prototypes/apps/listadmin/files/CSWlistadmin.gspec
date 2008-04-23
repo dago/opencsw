@@ -1,3 +1,0 @@
-%var            bitname listadmin
-%var            pkgname CSWlistadmin
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec

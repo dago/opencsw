@@ -1,7 +1,0 @@
-d none /opt/csw/bin 0755 root bin
-f none /opt/csw/bin/vim 0755 root bin
-f none /opt/csw/bin/xxd 0755 root bin
-s none /opt/csw/bin/rview=vim
-s none /opt/csw/bin/rvim=vim
-s none /opt/csw/bin/view=vim
-s none /opt/csw/bin/vimdiff=vim
