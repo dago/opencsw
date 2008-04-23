@@ -171,6 +171,9 @@ f none /opt/csw/lib/perl/5.8.8/IO/Poll.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/IO/Seekable.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/IO/Select.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/IO/Socket.pm 0444 root bin
+d none /opt/csw/lib/perl/5.8.8/IO/Socket 0755 root bin
+f none /opt/csw/lib/perl/5.8.8/IO/Socket/INET.pm 0444 root bin
+f none /opt/csw/lib/perl/5.8.8/IO/Socket/UNIX.pm 0444 root bin
 d none /opt/csw/lib/perl/5.8.8/IPC 0755 root bin
 f none /opt/csw/lib/perl/5.8.8/IPC/Msg.pm 0444 root bin
 f none /opt/csw/lib/perl/5.8.8/IPC/Semaphore.pm 0444 root bin
@@ -744,10 +747,6 @@ d none /opt/csw/share/perl/5.8.8/I18N/LangTags 0755 root bin
 f none /opt/csw/share/perl/5.8.8/I18N/LangTags.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/I18N/LangTags/Detect.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/I18N/LangTags/List.pm 0444 root bin
-d none /opt/csw/share/perl/5.8.8/IO 0755 root bin
-d none /opt/csw/share/perl/5.8.8/IO/Socket 0755 root bin
-f none /opt/csw/share/perl/5.8.8/IO/Socket/INET.pm 0444 root bin
-f none /opt/csw/share/perl/5.8.8/IO/Socket/UNIX.pm 0444 root bin
 d none /opt/csw/share/perl/5.8.8/IPC 0755 root bin
 f none /opt/csw/share/perl/5.8.8/IPC/Open2.pm 0444 root bin
 f none /opt/csw/share/perl/5.8.8/IPC/Open3.pm 0444 root bin
