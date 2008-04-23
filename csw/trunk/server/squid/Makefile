@@ -1,7 +1,7 @@
 GARNAME = squid
 GARVERSION = 2.6
 CATEGORIES = server
-RELEASE = STABLE15
+RELEASE = STABLE18
 DISTVERSION = $(GARVERSION).$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 
@@ -18,6 +18,7 @@ DISTFILES += $(call admfiles,CSWsquid, depend prototype copyright postinstall pr
 
 CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --localstatedir=/var/$(prefix)
+CONFIGURE_ARGS += --datadir=$(datadir)/$(GARNAME)
 CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --enable-large-cache-files
 CONFIGURE_ARGS += --enable-ssl
