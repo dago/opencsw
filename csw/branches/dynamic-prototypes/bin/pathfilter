@@ -13,6 +13,7 @@ my @include;
 my @isaexec;
 my $result = GetOptions(
 	'h|help' => \$help,
+	'e|isaexec=s' => \@isaexec,
 	'i|include=s' => \@include,
 	'x|exclude=s' => \@exclude) or pod2usage( 1 );
 
@@ -54,6 +55,23 @@ foreach my $path (keys %p) {
   foreach (@pa) {
     if( exists $skipped{$_} ) { $p{$_} = delete $skipped{$_} };
   }
+}
+
+# Process isaexec substitutions
+# Usage: -e /opt/csw/bin/mytool=/opt/csw/bin/sparcv8/mytool
+#   f none /opt/csw/bin/mytool 0755 root bin
+# ->
+#   l none /opt/csw/bin/mytool=/opt/csw/bin/isaexec
+#   f none /opt/csw/bin/sparcv8/mytool=/opt/csw/bin/mytool
+foreach my $e (@isaexec) {
+  my ($isaexec_path, $new_path) = split( /=/, $e );
+  if( !exists $p{$isaexec_path} ) {
+    warn "Could not find path '$e' to be replaced by isaexec";
+    next;
+  }
+  $p{$new_path} = [ @{$p{$isaexec_path}} ];
+  $p{$new_path}->[2] = $new_path . '=' . $isaexec_path;
+  $p{$isaexec_path}->[2] .= '=/opt/csw/bin/isaexec';
 }
 
 print join( ' ', @{$p{$_}} ) . "\n" foreach (sort keys %p);
