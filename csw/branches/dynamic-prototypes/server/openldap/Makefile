@@ -13,11 +13,11 @@ endef
 
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWoldap,depend prototype)
+DISTFILES += $(call admfiles,CSWoldap,depend)
 DISTFILES += cswopenldap openldap.xml svc-openldap
-DISTFILES += $(call admfiles,CSWoldapclient,depend prototype)
-DISTFILES += $(call admfiles,CSWoldapdevel,depend prototype)
-DISTFILES += $(call admfiles,CSWoldaprt,depend prototype)
+DISTFILES += $(call admfiles,CSWoldapclient,depend)
+DISTFILES += $(call admfiles,CSWoldapdevel,depend)
+DISTFILES += $(call admfiles,CSWoldaprt,depend)
 DISTFILES += README.CSW openldaprc
 
 PATCHFILES = patch-oldap-2.3.24-ntlm.diff
@@ -27,8 +27,6 @@ EXTRA_LIB = $(prefix)/bdb4/lib
 EXTRA_INC = $(prefix)/bdb4/include
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-INSTALL_SCRIPTS += custom
 
 TEST_SCRIPTS =
 
@@ -71,8 +69,23 @@ SPKG_OSNAME = SunOS5.8
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Optimizer flags for architecture
+OPTARCH_sparc   = v8
 OPTARCH_sparcv9 = v9
+OPTARCH_i386    = i386
 OPTARCH_amd64   = amd64
+
+PKGFILES_CSWoldapclient_EXCLUSIVE  = $(bindir)/.*
+PKGFILES_CSWoldapclient_EXCLUSIVE += $(mandir)/man1/.*
+
+PKGFILES_CSWoldapdevel_EXCLUSIVE  = $(PKGFILES_DEVEL)
+PKGFILES_CSWoldapdevel_EXCLUSIVE += $(mandir)/man3/.*
+
+PKGFILES_CSWoldaprt_EXCLUSIVE  = $(PKGFILES_RT)
+PKGFILES_CSWoldaprt_EXCLUSIVE += $(sysconfdir)/ldap.conf
+PKGFILES_CSWoldaprt_EXCLUSIVE += $(mandir)/man5/ldap.conf.5
+
+env:
+	echo "P: $(PKGFILES_CSWoldapclient_EXCLUSIVE)"
 
 CLEAN_SCRIPTS = custom
 
@@ -82,6 +95,8 @@ ifdef DO64
 endif
 
 include ../category.mk
+
+INSTALL_SCRIPTS += custom
 
 OPTARCH = $(OPTARCH_$(ISA))
 
@@ -101,7 +116,7 @@ install64: build64
 	gmake DO64=1 install-custom
 	$(MAKECOOKIE)
 
-pre-package: install64
+#pre-package: install64
 
 clean64:
 	gmake DO64=1 clean-all
