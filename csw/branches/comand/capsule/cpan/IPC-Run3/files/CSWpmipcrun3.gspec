@@ -1,6 +1,0 @@
-%var            bitname pm_ipcrun3
-%var            pkgname CSWpmipcrun3
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
-Copyright 2003, R. Barrie Slaymaker, Jr., All Rights Reserved

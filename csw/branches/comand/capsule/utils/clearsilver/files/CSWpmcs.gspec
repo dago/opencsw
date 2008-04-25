@@ -1,5 +1,0 @@
-%var            bitname pm_clearsilver
-%var            pkgname CSWpmcs
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Clearsilver Perl language binding
-%copyright      url file://%{WORKSRC}/LICENSE

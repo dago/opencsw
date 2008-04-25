@@ -1,7 +1,0 @@
-i copyright=CSWsaslgssapi.copyright
-i depend=CSWsaslgssapi.depend
-i pkginfo=CSWsaslgssapi.pkginfo
-f none /opt/csw/lib/sasl2/libgssapiv2.la=$basedir/opt/csw/lib/sasl2/libgssapiv2.la 0755 root bin
-f none /opt/csw/lib/sasl2/libgssapiv2.so.2.0.21=$basedir/opt/csw/lib/sasl2/libgssapiv2.so.2.0.21 0755 root bin
-s none /opt/csw/lib/sasl2/libgssapiv2.so.2=libgssapiv2.so.2.0.21 root bin
-s none /opt/csw/lib/sasl2/libgssapiv2.so=libgssapiv2.so.2.0.21 root bin

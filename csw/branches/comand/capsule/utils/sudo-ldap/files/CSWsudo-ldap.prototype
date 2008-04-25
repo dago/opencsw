@@ -1,3 +1,0 @@
-d none /opt/csw/bin ? ? ?
-f none /opt/csw/bin/sudo.ldap 4111 root root
-l none /opt/csw/bin/sudoedit=/opt/csw/bin/sudo.ldap

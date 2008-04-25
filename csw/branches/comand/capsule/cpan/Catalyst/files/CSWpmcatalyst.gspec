@@ -1,4 +1,0 @@
-%var            bitname pm_catalyst
-%var            pkgname CSWpmcatalyst
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      

@@ -1,4 +1,0 @@
-%var            bitname berkeleydb44
-%var            pkgname CSWbdb44
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/../LICENSE

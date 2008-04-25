@@ -1,5 +1,0 @@
-%var            bitname pm_convertbinhex
-%var            pkgname CSWpmconvertbinhex
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      url file://%{WORKSRC}/COPYING

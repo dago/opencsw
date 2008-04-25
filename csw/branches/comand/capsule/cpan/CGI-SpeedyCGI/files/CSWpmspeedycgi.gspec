@@ -1,4 +1,0 @@
-%var            bitname pm_speedycgi
-%var            pkgname CSWpmspeedycgi
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
