@@ -1,7 +1,5 @@
 s none /opt/csw/bin/screen=screen-4.0.3
 f none /opt/csw/bin/screen-4.0.3 0755 root bin
-f none /opt/csw/bin/screen-4.0.3.old 0755 root bin
-s none /opt/csw/bin/screen.old=screen-4.0.3
 f none /opt/csw/share/info/screen.info 0644 root bin
 f none /opt/csw/share/info/screen.info-1 0644 root bin
 f none /opt/csw/share/info/screen.info-2 0644 root bin
