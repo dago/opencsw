@@ -13,7 +13,7 @@ define BLURB
   (MSVC 4, 5 and 6).
 endef
 
-MASTER_SITES = http://downloads.sleepycat.com/
+MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWbdb44,depend prototype)
 DISTFILES += $(call admfiles,CSWbdb44-devel,depend prototype)
@@ -26,6 +26,12 @@ WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*.diff))
+
+BUILD64 = 1
+
+ifeq ($(ISA),amd64)
+EXTRA_LDFLAGS = -Wl,-m64
+endif
 
 CONFIGURE_SCRIPTS = dist
 
