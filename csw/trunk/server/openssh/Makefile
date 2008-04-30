@@ -43,6 +43,10 @@ PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
 # ioctl(TIOCSCTTY): Invalid argument
 PATCHFILES += don_t_use_TIOCSCTTY.patch
 
+# Fix a X11 forwarding bug on machine installed with ipv6 disabled
+# see https://bugzilla.mindrot.org/show_bug.cgi?id=1457
+PATCHFILES += no_x_forwarding_bug.patch
+
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.smartcard README.tun RFC.nroff TODO WARNING.RNG    

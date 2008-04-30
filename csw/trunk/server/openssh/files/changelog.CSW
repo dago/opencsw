@@ -1,3 +1,10 @@
+openssh (5.0,REV=2008.04.30_rev=)1) unstable
+
+  * New upstream version.
+  * Added solaris fix for X11 forwarding bug on ipv4 only machine.
+
+ -- Yann Rouillard <yann@blastwave.org>  Wed, 30 Apr 2008 14:23:40 +0200
+
 openssh (4.9,REV=2008.04.01_rev=p1) unstable
 
   * New upstream version.
