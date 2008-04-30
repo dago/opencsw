@@ -90,7 +90,9 @@ EXT_CXXFLAGS += -noex -mt
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
 
-INSTALL_EXTRA_ISA_SCRIPTS = extra-isa
+# we don't yet use isaexec support so we disable
+# isa relocation for default isa
+ISA_RELOCATE_DIRS_$(ISA_DEFAULT) = 
 
 
 #########################################################################
