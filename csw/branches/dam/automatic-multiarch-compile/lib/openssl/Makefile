@@ -62,7 +62,10 @@ GARCOMPILER = SOS11
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
-EXTRA_IGNORED_DIRS = bindir sbindir libexecdir
+# we don't yet use isaexec support so we disable
+# isa relocation for default isa
+ISA_RELOCATE_DIRS_i386 = 
+ISA_RELOCATE_DIRS_sparcv8 = 
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
@@ -83,52 +86,23 @@ CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefi
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
 
+# Some optimization
 EXT_CFLAGS   += -mt -xstrconst
 EXT_CXXFLAGS += -noex -mt
-#
+
 # By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
 
-# we don't yet use isaexec support so we disable
-# isa relocation for default isa
-ISA_RELOCATE_DIRS_$(ISA_DEFAULT) = 
+# we include previous release of libraries file for comptability purpose
+OLDLIBS                 = 0.9.7m
 
-
-#########################################################################
-# Variable definition for old libraries inclusion
-# 
-#########################################################################
-
-OLDLIBS		 = 0.9.7m
-DISTFILES 	+= oldlibs.list.0.9.7m-i386
-DISTFILES 	+= oldlibs.list.0.9.7m-sparc
-
-ifneq (,$(filter $(GARVERSION),$(OLDLIBS)))
-EXTRA_BUILD_ISAS_i386 = pentium_pro
-INSTALL_SCRIPTS = dynamic-libs
-INSTALL_EXTRA_ISA_SCRIPTS = dynamic-libs
-endif
-
-
-#########################################################################
-# Makefile instructions to handle old libraries inclusion (part I)
-# 
-# This should rather be handled by making a distinct package for each
-# incompatible library version.
-#########################################################################
-
-ifneq (,$(filter $(GARVERSION),$(OLDLIBS)))
-CHECKSUM_FILE	= checksums.$(GARVERSION)
-WORKDIR	    	= $(WORKROOTDIR)/$(ISA).$(GARVERSION)
-COOKIEDIR       = $(COOKIEROOTDIR)/$(ISA).$(GARVERSION)
-endif
-
-#########################################################################
 
 include ../category.mk
 
+# we redefine the timestamp to fulfill blastwave standard
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
+
 
 pre-configure: 
 	echo " ==> Creating configure script"
@@ -138,70 +112,19 @@ pre-configure:
 # we remove every debug information except symbol table
 # (should rather be done in the gar scripts)
 striplib:
-	chmod -R u+w $(DESTDIR)$(libdir)
-	find $(DESTDIR)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
+	chmod -R u+w $(DESTBUILD)$(libdir)
+	find $(DESTBUILD)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
 
 install-certs: 
-	[ -f $(DESTDIR)$(prefix)/ssl/openssl.cnf ] && \
-		ginstall -D $(DESTDIR)$(prefix)/ssl/openssl.cnf $(DESTDIR)$(sysconfdir)/ssl/openssl.cnf
-	cp -r $(WORKSRC)/certs/* $(DESTDIR)$(prefix)/ssl/certs
+	[ -f $(DESTBUILD)$(prefix)/ssl/openssl.cnf ] && \
+		ginstall -D $(DESTBUILD)$(prefix)/ssl/openssl.cnf $(DESTBUILD)$(sysconfdir)/ssl/openssl.cnf
+	cp -r $(WORKSRC)/certs/* $(DESTBUILD)$(prefix)/ssl/certs
 	$(MAKECOOKIE)
 
-
-install-extra-isa: install-static-libs install-dynamic-libs install-bin
-
-install-static-libs:
-	@if test ! -f "$(COOKIEDIR)/install-static-libs"; then \
-		echo " ==> Installing static libraries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(libdir); \
-		cd $(WORKSRC) && ginstall libcrypto.a libssl.a $(DESTDIR)$(libdir); \
-		$(MAKECOOKIE); \
-	fi
-
-install-dynamic-libs:
-	@if test ! -f $(COOKIEDIR)/install-dynamic-libs; then \
-		echo " ==> Installing dynamic libraries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(libdir); \
-		cd $(WORKSRC) && ginstall libcrypto.so.$(OPENSSL_VERSION) libssl.so.$(OPENSSL_VERSION) $(DESTDIR)$(libdir); \
-		$(MAKECOOKIE); \
-	fi
-
-install-bin: 
-	@if test ! -f $(COOKIEDIR)/install-bin; then \
-		echo " ==> Installing binaries from $(WORKSRC)"; \
-		ginstall -d $(DESTDIR)$(bindir); \
-		cd $(WORKSRC) && ginstall apps/openssl $(DESTDIR)$(bindir); \
-		$(MAKECOOKIE); \
-	fi
+install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
+install-oldlibs-%:
+	echo " ==> Installing old libraries $* from archive oldlibs.$*-$(GARCH).tar.gz"; \
+	cd $(DESTBUILD) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf - && \
+	$(MAKECOOKIE)
 
 pre-package: striplib install-certs install-oldlibs
-
-
-#########################################################################
-# Makefile instructions to handle old libraries inclusion (part II)
-# 
-# This should rather be handled by making a distinct package for each
-# incompatible library version.
-#########################################################################
-
-update-oldlibs-archive: $(addprefix update-oldlibs-archive-,$(OLDLIBS))
-update-oldlibs-archive-%: clean-oldlibs-archive-% install-oldlibs-%
-	@echo " ==> Creating old libraries archive oldlibs.$*-$(GARCH).tar.gz"
-	@cd $(DESTDIR) && tar cvf - `cat $(CURDIR)/$(DOWNLOADDIR)/oldlibs.list.$*-$(GARCH)` | gzip > $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz
-
-clean-oldlibs-archive: $(addprefix clean-oldlibs-archive-,$(OLDLIBS))	
-clean-oldlibs-archive-%:
-	@echo " ==> Removing old libraries archive oldlibs.$*-$(GARCH).tar.gz"
-	@rm -f $(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz 
-	@rm -f $(COOKIEDIR)/install-oldlibs*
-
-install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
-install-oldlibs-%: 
-	@if [ -f $(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz ]; then \
-		echo " ==> Installing old libraries $* from existing old libraries archive oldlibs.$*-$(GARCH).tar.gz"; \
-		cd $(DESTDIR) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -; \
-	else \
-		echo " ==> Build old libraries $*"; \
-		$(MAKE) GARVERSION=$* install; \
-	fi
-	@$(MAKECOOKIE)
