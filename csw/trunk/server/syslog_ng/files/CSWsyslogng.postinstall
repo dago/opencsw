@@ -1,0 +1,3 @@
+if [ ! -f $BASEDIR/opt/csw/etc/syslog-ng.conf ] ; then
+        cp $BASEDIR/opt/csw/etc/syslog-ng.conf.CSW $BASEDIR/opt/csw/etc/syslog-ng.conf
+fi
