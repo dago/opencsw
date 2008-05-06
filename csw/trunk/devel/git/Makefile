@@ -1,5 +1,5 @@
 GARNAME = git
-GARVERSION = 1.5.4.2
+GARVERSION = 1.5.5.1
 CATEGORIES = devel
 
 DESCRIPTION = Fast Version Control System
@@ -13,13 +13,14 @@ MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgit,)
 
-#CONFIGURE_SCRIPTS =
-#BUILD_SCRIPTS = $(WORKSRC)/setup.py
-#TEST_SCRIPTS = 
-#INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-
-#INSTALL_ARGS += --root=$(DESTDIR)
+PREREQUISITE_PKGS = CSWasciidoc CSWossldevel
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+BUILD_ARGS = MSGFMT=gmsgfmt all doc
+
+INSTALL_ARGS = install-doc
+
 include ../category.mk
+
+CFLAGS += -L$(libdir)
