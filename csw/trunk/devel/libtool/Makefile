@@ -1,5 +1,5 @@
 GARNAME = libtool
-GARVERSION = 1.5.26
+GARVERSION = 2.2.4
 CATEGORIES = devel
 
 DESCRIPTION = Generic library support script
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibtool,depend prototype)
 DISTFILES += $(call admfiles,CSWlibtoolrt,prototype)
 DISTFILES += $(foreach ARCH,i386 sparc,$(ARCH)-gcc2.conf $(ARCH)-gcc2.tags $(ARCH)-gcc3.conf $(ARCH)-gcc3.tags)
@@ -22,9 +22,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 include ../category.mk
-
-LTCFLAGS = -O
-COMMON_EXPORTS += LTCFLAGS
 
 post-install:
 	@echo " ==> Fixing install anomalies"
