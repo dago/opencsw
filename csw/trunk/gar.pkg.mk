@@ -36,7 +36,9 @@ else
       # Case 3: Not everything was committed properly
       _SVN_UNCOMMITTED = UNCOMMITTED
     endif
-    SVN_REV = $(shell $(SVN) info 2>/dev/null | $(GAWK) '$$1 == "Revision:" { print "r" $$2 }')$(_SVN_UNCOMMITTED)
+    SVN_REV = $(shell $(SVN) info --recursive 2>/dev/null | \
+      $(GAWK) '$$1 == "Revision:" && MAX < $$2 { MAX = $$2 } \
+      END { print "r" MAX }')$(_SVN_UNCOMMITTED)
   endif
 endif
 
