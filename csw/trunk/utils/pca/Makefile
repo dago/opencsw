@@ -29,6 +29,6 @@ include ../category.mk
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall $(WORKSRC)/pca $(DESTDIR)$(bindir)/pca
-	@ginstall -d $(DESTDIR)$(mandir)/man1
-	@pod2man $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man1/pca.1
+	@ginstall -d $(DESTDIR)$(mandir)/man8
+	@pod2man --section=8 $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man8/pca.8
 	@$(MAKECOOKIE)
