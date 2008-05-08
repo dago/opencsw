@@ -31,18 +31,31 @@ include ../category.mk
 configure-custom: $(WORKSRC)/mkrules
 	@cat $(WORKSRC)/mkrules
 
+DIRS="/usr/local /opt/sfw /opt/csw /usr/local /opt/local $HOME /usr"
+OS=`/usr/bin/uname -s`
+PROC=`/usr/bin/uname -m`
+
+        BITS=`/usr/bin/isainfo -b`
+        KERNEL=`/usr/bin/isainfo -k`
+SOLARIS_RELEASE = $(shell /usr/bin/uname -r | /usr/bin/cut -d. -f2)
+SOLARIS_PROC = $(shell /usr/bin/uname -m)
+        modules="\$(CDIR)/sysstat \$(DDIR)/sysstatd"
+        toinstall="install_sysstatd install_sysstat"
+        install=/usr/sbin/install
+
+
 $(WORKSRC)/mkrules:
 	@echo | /usr/bin/tee mkrules << MAKERULES
-OS              = $OS
-INSTALL         = $install
-CC              = $CC
-C_CFLAGS        = $cflags -DSOLARIS=$solaris
-D_CFLAGS        = $cflags $d_cflags -DSOLARIS=$solaris
-CDIR            = $OS-$PROC
-DDIR            = daemon-$KERNEL
+OS              = SunOS
+INSTALL         = /usr/sbin/install
+CC              = ${CC}
+C_CFLAGS        = ${CFLAGS} -DSOLARIS=$(SOLARIS_RELEASE)
+D_CFLAGS        = $cflags $d_cflags -DSOLARIS=$(SOLARIS_RELEASE)
+CDIR            = SunOS-$(SOLARIS_PROC)
+DDIR            = daemon-$(ISA)
 C_LIBS          += $lflags
-PREFIX          = $prefix
-modules: $modules
-install: $toinstall
+PREFIX          = $(prefix)
+modules: $(bindir)/sysstat $(bindir)/sysstatd
+install: install_sysstatd install_sysstat
 MAKERULES
 
