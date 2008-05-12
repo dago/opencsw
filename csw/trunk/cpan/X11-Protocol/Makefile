@@ -13,4 +13,7 @@ DISTFILES += CSWpmx11protocol.gspec CSWpmx11protocol.depend
 DEPENDS += cpan/X11-Protocol
 BUILDDEPS += cpan/Test-Manifest
 
+TEST_SCRIPTS =
+
+
 include ../category.mk
