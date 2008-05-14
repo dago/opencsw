@@ -1,3 +1,4 @@
+d none /opt/csw 0755 root bin
 d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/dbus-cleanup-sockets 0755 root bin
 f none /opt/csw/bin/dbus-daemon 0755 root bin
@@ -11,6 +12,12 @@ f none /opt/csw/etc/dbus-1/session.conf 0644 root bin
 d none /opt/csw/etc/dbus-1/session.d 0755 root bin
 f none /opt/csw/etc/dbus-1/system.conf 0644 root bin
 d none /opt/csw/etc/dbus-1/system.d 0755 root bin
+d none /opt/csw/libexec/dbus-1 0755 root bin
+f none /opt/csw/libexec/dbus-daemon-launch-helper 0755 root bin
+d none /opt/csw/share/dbus-1 0755 root bin
+d none /opt/csw/share/dbus-1/services 0755 root bin
+d none /opt/csw/share/dbus-1/system-services 0755 root bin
+d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/dbus-cleanup-sockets.1 0644 root bin
 f none /opt/csw/share/man/man1/dbus-daemon.1 0644 root bin

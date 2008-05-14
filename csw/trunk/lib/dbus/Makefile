@@ -1,5 +1,5 @@
 GARNAME      = dbus
-GARVERSION   = 1.1.1
+GARVERSION   = 1.1.20
 CATEGORIES   = libs
 
 DESCRIPTION  = DBus Message Bus System
@@ -28,8 +28,8 @@ GREP = ggrep
 
 include ../category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --with-xml=libxml
+CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --with-xml=expat
 
 post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | grep ELF | grep -e 'executable' -e 'dynamic lib' | grep 'not stripped' && strip {}"  \; )
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 
