@@ -4,6 +4,7 @@ f none /opt/csw/include/dbus-1.0/dbus/dbus-address.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-bus.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-connection.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-errors.h 0644 root bin
+f none /opt/csw/include/dbus-1.0/dbus/dbus-gtype-specialized.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-macros.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-memory.h 0644 root bin
 f none /opt/csw/include/dbus-1.0/dbus/dbus-message.h 0644 root bin

@@ -1,11 +1,3 @@
 b57aa1ba0834cbbb1e7502dc2cbfacc2  download/dbus-1.2.1.tar.gz
 0956c2a4c626eaa494d6c95aeed3f335  download/CSWdbus.gspec
-23e3ca2b86b2223e1365fd707ceb5c88  download/CSWdbus.prototype
 2f8aaccc9f4392b052607b4bbc710ebd  download/CSWdbus.depend
-64556a535f59e23bc4bb1d15b84787eb  download/CSWdbus.postinstall
-c1e411b511a659e3b8d0803364226019  download/CSWlibdbus.gspec
-8575354d3ed4f3252913a9af03994386  download/CSWlibdbus.prototype
-d41d8cd98f00b204e9800998ecf8427e  download/CSWlibdbus.depend
-8835a675e247c7fb1e22c1db1c1e76f6  download/CSWlibdbusdev.gspec
-bb58bcb87b69235c94a84576b6059097  download/CSWlibdbusdev.prototype
-4fde42a6c04eeae5dbdad8b0d65bd337  download/CSWlibdbusdev.depend
