@@ -35,7 +35,7 @@ DISTFILES += $(call admfiles,CSWorca-web,depend prototype postinstall preremove)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
 
-PREREQUISITE_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
+PREREQUISITE_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
 
 #libdir = $(exec_prefix)/lib/$(GARNAME)
 localstatedir = /var/opt/csw
@@ -46,5 +46,12 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 	--with-html-dir=$(prefix)/apache2/share/htdocs/orca \
 	--disable-librrdtool
 
+SPKG_CLASSES = none cswinitsmf
+
 include ../category.mk
 
+post-install:
+	@ginstall -d $(DESTDIR)$(sysconfdir)/init.d
+	@ginstall $(WORKDIR)/csworcallator.init $(DESTDIR)$(sysconfdir)/init.d/csworcallator
+	@ginstall $(WORKDIR)/csworca_services $(DESTDIR)$(sysconfdir)/init.d/csworca_services
+	@$(MAKE_COOKIE)
