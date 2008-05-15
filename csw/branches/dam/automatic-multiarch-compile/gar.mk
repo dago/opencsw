@@ -60,7 +60,7 @@ include $(GARDIR)/gar.lib.mk
 #################### DIRECTORY MAKERS ####################
 
 # This is to make dirs as needed by the base rules
-$(sort $(DOWNLOADDIR) $(PARTIALDIR) $(COOKIEDIR) $(WORKSRC) $(WORKDIR) $(EXTRACTDIR) $(FILEDIR) $(SCRATCHDIR) $(DESTBUILD) $(INSTALL_DIRS) $(GARCHIVEDIR) $(GARPKGDIR) $(STAGINGDIR)) $(COOKIEDIR)/%:
+$(sort $(DOWNLOADDIR) $(PARTIALDIR) $(COOKIEDIR) $(WORKSRC) $(WORKDIR) $(EXTRACTDIR) $(FILEDIR) $(SCRATCHDIR) $(PKGROOT) $(INSTALL_DIRS) $(INSTALLISADIR) $(GARCHIVEDIR) $(GARPKGDIR) $(STAGINGDIR)) $(COOKIEDIR)/%:
 	@if test -d $@; then : ; else \
 		ginstall -d $@; \
 		echo "ginstall -d $@"; \
@@ -313,40 +313,63 @@ reinstall: build
 # (a) if the sources are build for more than one ISA
 # (b) if the executables should be replaced by isaexec or not
 # 
-# - If there is only one ISA to build for everything is copied verbatim to DESTBUILD.
+# - If there is only one ISA to build for everything is copied verbatim to PKGROOT.
 # - If there are builds for more than one ISA the destination differs depending on if
 #   the binaries should be executed by isaexec. This is usually bin, sbin and libexec.
+#
+# default:        relocate to ISA subdirs if more than one ISA, use isaexec-wrapper for bin/, etc.
+# NO_ISAEXEC = 1: ISA_DEFAULT gets installed in bin/..., all others in bin/$ISA/
 
 ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
 MERGE_SCRIPTS_$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 else
-ISAEXEC_DIRS ?= $(bindir) $(sbindir) $(libexecdir)
-ISA_RELOCATE_DIRS_$(ISA_DEFAULT) ?= $(ISAEXEC_DIRS)
+ISAEXEC_DIRS ?= $(if $(NO_ISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
+ISA_RELOCATE_DIRS_$(ISA_DEFAULT) ?=
 ISA_RELOCATE_DIRS_$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir)
 MERGE_SCRIPTS_$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_$(ISA)) $(EXTRA_MERGE_SCRIPTS)
 MERGE_SCRIPTS_$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+_EXTRA_GAR_PKGS += CSWisaexec
 endif
-
-# XXX: This should be done similar to generating the prototype
-#ISAEXEC_BINS ?= $(wildcard $(foreach D,$(ISAEXEC_DIRS),$(DESTBUILD)$(D)/*))
 
 # These directories get relocated into their ISA subdirectories
 ISA_RELOCATE_DIRS ?= $(ISA_RELOCATE_DIRS_$(ISA))
 
+# These files get relocated and will be replaced by the isaexec-wrapper
+_ISAEXEC_FILES = $(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* ))
+ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
+	$(shell for F in $(_ISAEXEC_FILES); do		\
+		if test -f "$$F"; then echo $$F; fi;	\
+	done)),)
+
+# These files get relocated.
+# ISA_RELOCATE_DIRS is expanded to individual files here. All further
+# processing is done using these files.
+ISA_RELOCATE_FILES ?= $(patsubst $(PKGROOT)%,%,$(wildcard $(foreach D,$(ISA_RELOCATE_DIRS),$(PKGROOT)$(D)/*))) $(ISAEXEC_FILES) $(EXTRA_ISA_RELOCATE_FILES)
+
 # These merge-rules are actually processed for the current ISA
 MERGE_TARGETS = $(addprefix merge-,$(MERGE_SCRIPTS_$(ISA)))
 
-# Include only this files
-MERGE_INCLUDE_FILES ?= $(MERGE_INCLUDE_FILES_$(ISA)) $(EXTRA_MERGE_INCLUDE_FILES)
+# Include only these files
+ifeq ($(origin MERGE_INCLUDE_FILES_$(ISA)), undefined)
+_MERGE_INCLUDE_FILES = $(MERGE_INCLUDE_FILES)
+else
+_MERGE_INCLUDE_FILES = $(MERGE_INCLUDE_FILES_$(ISA))
+endif
+_MERGE_INCLUDE_FILES += $(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(ISA))
 
 # Exclude these files
-MERGE_EXCLUDE_FILES ?= $(MERGE_EXCLUDE_FILES_$(ISA)) $(EXTRA_MERGE_EXCLUDE_FILES)
+ifeq ($(origin MERGE_EXCLUDE_FILES_$(ISA)), undefined)
+_MERGE_EXCLUDE_FILES = $(MERGE_EXCLUDE_FILES)
+else
+_MERGE_EXCLUDE_FILES = $(MERGE_EXCLUDE_FILES_$(ISA))
+endif
+_MERGE_EXCLUDE_FILES += $(EXTRA_MERGE_EXCLUDE_FILES) $(EXTRA_MERGE_EXCLUDE_FILES_$(ISA))
 
 # This variable contains parameter for pax to honor global file inclusion/exclusion
 # Include first, replace files by itself terminating on first match
-_INC_EXT_RULE = $(foreach F,$(MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
+_INC_EXT_RULE = $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
 # Exclude by replacing files with the empty string
-_INC_EXT_RULE += $(foreach F,$(MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
+_INC_EXT_RULE += $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
 
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
@@ -359,23 +382,23 @@ merge-isa: install-isa $(MERGE_TARGETS)
 	@$(DONADA)
 
 # Copy the whole tree verbatim
-merge-copy-all: $(DESTBUILD)
-	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) . $(DESTBUILD))
+merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
+	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) . $(PKGROOT))
 	@$(MAKECOOKIE)
 
 # Copy the whole tree and relocate the directories where binaries
-merge-copy-relocate: $(DESTBUILD)
+merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 	(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(ISA_RELOCATE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p" ) \
-		. $(DESTBUILD) \
+		. $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
 
 # Copy only the relocated directories
-merge-copy-relocated-only: $(DESTBUILD)
-	@echo "E: $(MERGE_EXCLUDE_FILES) I: $(_PAX_ARGS)"
+merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
+	@echo "E: $(_MERGE_EXCLUDE_FILES) I: $(_PAX_ARGS)"
 	(cd $(INSTALLISADIR); $(foreach DIR,$(ISA_RELOCATE_DIRS), \
-		if [ -d .$(DIR) ]; then pax -r -w -v $(_PAX_ARGS) -s ",^\(\.$(DIR)/\),\1$(ISA)/,p" .$(DIR) $(DESTBUILD); fi; \
+		if [ -d .$(DIR) ]; then pax -r -w -v $(_PAX_ARGS) -s ",^\(\.$(DIR)/\),\1$(ISA)/,p" .$(DIR) $(PKGROOT); fi; \
 		) \
 	)
 	@$(MAKECOOKIE)
@@ -386,8 +409,9 @@ mergereset-isa:
 
 mergereset:
 	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) mergereset-isa;)
+	@rm -rf $(PKGROOT)
 
-remerge: mergereset merge
+remerge: mergereset remove-timestamp merge
 
 
 # The clean rule.  It must be run if you want to re-download a
@@ -397,10 +421,10 @@ remerge: mergereset merge
 CLEAN_SCRIPTS ?= all
 CLEAN_TARGETS  = $(addprefix clean-,$(CLEAN_SCRIPTS))
 
-clean: clean-isa $(addprefix clean-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS)))
+clean: clean-isa $(addprefix clean-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS))) clean-all
 	@rm -rf $(WORKROOTDIR)
 
-clean-isa: $(CLEAN_TARGETS)
+clean-isa: clean-cookies
 
 # Backwards compatability
 cookieclean: clean-cookies

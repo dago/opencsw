@@ -105,11 +105,11 @@ perlpackroot     ?= $(perlcswlib)/auto
 DESTROOT ?= $(HOME)
 
 # This is the directory from where the package is build from
-DESTBUILD ?= $(DESTROOT)/build-$(GARCH)
+PKGROOT ?= $(abspath $(WORKROOTDIR)/pkgroot)
 
 # Each ISA has a separate installation directory inside the
 # working directory for that package. The files are copied
-# over to $(DESTBUILD) during pkgmerge.
+# over to $(PKGROOT) during pkgmerge.
 DESTDIR  ?= $(abspath $(INSTALLISADIR))
 
 DESTIMG ?= $(LOGNAME)-$(shell hostname)
@@ -297,6 +297,7 @@ ISA_DEFAULT64_sparc ?= sparcv9
 ISA_DEFAULT64_i386  ?= amd64
 
 ISA_DEFAULT = $(ISA_DEFAULT_$(GARCH))
+ISA_DEFAULT64 = $(ISA_DEFAULT64_$(GARCH))
 
 # This is the architecture we are compiling for
 # Set this to a value from $(ISALIST_$(GARCH)) to compile for another architecture
@@ -316,7 +317,7 @@ endif
 # NEEDED_ISAS contains all ISAs that must be build for this architecture to make the package
 # BUILD_ISAS contains all ISAs that can be built on the current kernel
 # Set 'BUILD64 = 1' to build 64 bit versions automatically
-REQUESTED_ISAS ?= $(ISA_DEFAULT_$(GARCH)) $(EXTRA_BUILD_ISAS) $(EXTRA_BUILD_ISAS_$(GARCH)) $(if $(BUILD64),$(ISA_DEFAULT64_$(GARCH)))
+REQUESTED_ISAS ?= $(strip $(ISA_DEFAULT_$(GARCH)) $(EXTRA_BUILD_ISAS) $(EXTRA_BUILD_ISAS_$(GARCH)) $(if $(BUILD64),$(ISA_DEFAULT64_$(GARCH))) )
 NEEDED_ISAS ?= $(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))
 BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(NEEDED_ISAS))
 
@@ -415,13 +416,13 @@ LDOPT_LIBS ?= $(libdir)
 ifdef NOISALIST
 LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(abspath $(ELIB)/$(MM_LIBDIR)))
 else
-LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB))
+LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB)/$(MM_LIBDIR))
 endif
 
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
 #    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
-PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir)/$(MM_BINDIR)):$(DESTDIR)$(bindir):$(abspath $(DESTDIR)$(sbindir)/$(MM_BINDIR)):$(DESTDIR)$(sbindir):)$(abspath $(bindir)/$(MM_BINDIR)):$(bindir):$(abspath $(sbindir)/$(MM_BINDIR)):$(sbindir):$(HOME)/bin:$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/sfw/bin
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir)/$(MM_BINDIR)):$(DESTDIR)$(bindir):$(abspath $(DESTDIR)$(sbindir)/$(MM_BINDIR)):$(DESTDIR)$(sbindir):)$(abspath $(bindir)/$(MM_BINDIR)):$(bindir):$(abspath $(sbindir)/$(MM_BINDIR)):$(sbindir):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH := $(abspath $(libdir)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
@@ -519,15 +520,8 @@ TEST_SCRIPTS       =
 else
 TEST_SCRIPTS      ?= $(WORKSRC)/Makefile
 endif
-INSTALL_EXTRA_ISA_SCRIPTS ?= $(WORKSRC)/Makefile
 
-ifeq ($(ISA),$(ISA_DEFAULT))
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
-else
-INSTALL_SCRIPTS = $(INSTALL_EXTRA_ISA_SCRIPTS)
-endif
-
-
 
 # Global environment
 export PATH PKG_CONFIG_PATH XML_CATALOG_FILES
@@ -563,20 +557,33 @@ isaenv:
 	@echo "          Arch: $(GARCH)"
 	@echo "        Kernel: $(KERNELISA)"
 	@echo
-	@echo "Default ISA 32: $(ISA_DEFAULT_$(GARCH))"
-	@echo "Default ISA 64: $(ISA_DEFAULT64_$(GARCH))"
+	@echo "Default ISA 32: $(ISA_DEFAULT)"
+	@echo "Default ISA 64: $(ISA_DEFAULT64)"
+	@echo
+	@echo "Requested ISAs: $(REQUESTED_ISAS)"
+	@echo "   Needed ISAs: $(NEEDED_ISAS)"
+	@echo "    Build ISAs: $(BUILD_ISAS)"
+	@echo
+	@echo "  ISAEXEC dirs: $(ISAEXEC_DIRS)"
+	@echo " ISAEXEC files: $(ISAEXEC_FILES)"
+	@echo " ISA relocated: $(ISA_RELOCATE_FILES)"
+	@echo
+	@echo " Merge include: $(_MERGE_INCLUDE_FILES)"
+	@echo " Merge exclude: $(_MERGE_EXCLUDE_FILES)"
 	@echo
 	@echo "Requested compiler flags:"
 	@$(foreach ISA,$(ISA) $(filter-out $(ISA),$(BUILD_ISAS)),		\
-		echo "* ISA $(ISA)";						\
-		echo "       PATH = $(PATH)";					\
-		echo "     CFLAGS = $(CFLAGS)";					\
-		echo "   CXXFLAGS = $(CXXFLAGS)";				\
-		echo "   CPPFLAGS = $(CPPFLAGS)";				\
-		echo "    LDFLAGS = $(LDFLAGS)";				\
-		echo " LD_OPTIONS = $(LD_OPTIONS)";				\
-		echo "    ASFLAGS = $(ASFLAGS)";				\
-		echo "   OPTFLAGS = $(OPTFLAGS)";				\
+		$(MAKE) -s ISA=$(ISA) _isaenv;					\
 	)
-	@echo "GARBIN: $(GARBIN) $(abspath $(GARBIN))  GARDIR: $(GARDIR) $(abspath $(GARDIR))"
-	@echo "ISAEXEC_BINS: $(ISAEXEC_BINS)"
+
+_isaenv:
+	@echo;								\
+	echo "* ISA $(ISA)";						\
+	echo "       PATH = $(PATH)";					\
+	echo "     CFLAGS = $(CFLAGS)";					\
+	echo "   CXXFLAGS = $(CXXFLAGS)";				\
+	echo "   CPPFLAGS = $(CPPFLAGS)";				\
+	echo "    LDFLAGS = $(LDFLAGS)";				\
+	echo " LD_OPTIONS = $(LD_OPTIONS)";				\
+	echo "    ASFLAGS = $(ASFLAGS)";				\
+	echo "   OPTFLAGS = $(OPTFLAGS)"

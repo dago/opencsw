@@ -13,6 +13,8 @@
 #
 #
 
+PKGINFO ?= /usr/bin/pkginfo
+
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
@@ -31,7 +33,7 @@ SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)
 SPKG_EXPORT    ?= $(WORKDIR)
-SPKG_PKGROOT   ?= $(DESTBUILD)
+SPKG_PKGROOT   ?= $(PKGROOT)
 SPKG_PKGBASE   ?= $(CURDIR)/$(WORKDIR)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
 
@@ -130,14 +132,14 @@ PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): merge
-	cswproto -s $(TIMESTAMP) -r $(DESTBUILD) $(DESTBUILD)$(prefix) >$@
+	cswproto -s $(TIMESTAMP) -r $(PKGROOT) $(PKGROOT)$(prefix) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
-	if [ -n "$(PKGFILES_$*)" -o -n "$(PKGFILES_$*_EXCLUSIVE)" -o -n "$(_PKGFILES_EXCLUDE_$*)" -o -n "$(ISAEXEC_BINS_$*)" -o -n "$(ISAEXEC_BINS)" ]; then	\
+	if [ -n "$(PKGFILES_$*)" -o -n "$(PKGFILES_$*_EXCLUSIVE)" -o -n "$(_PKGFILES_EXCLUDE_$*)" -o -n "$(ISAEXEC_FILES_$*)" -o -n "$(ISAEXEC_FILES)" ]; then	\
 		(pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)')		\
 			$(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)')					\
-			$(foreach IE,$(abspath $(ISAEXEC_BINS_$*) $(ISAEXEC_BINS)),-e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))')	\
+			$(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)),-e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))')	\
 			<$(PROTOTYPE);											\
 		 if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi				\
 		) >$@;												\
@@ -147,6 +149,11 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 	@cp $(WORKDIR)/$*.prototype $@
+
+# $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
+.PRECIOUS: $(WORKDIR)/%.depend
+$(WORKDIR)/%.depend:
+	$(GARDIR)/bin/dependon $(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS) > $@
 
 # package - Use the mkpackage utility to create Solaris packages
 #
@@ -165,7 +172,7 @@ $(SPKG_DESTDIRS):
 package: merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
-package-%: $(WORKDIR)/%.prototype-$(GARCH)
+package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
 	@( $(PKG_ENV) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \

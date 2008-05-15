@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/pkginfo "$@" | awk '{ $1 = "P"; print }'

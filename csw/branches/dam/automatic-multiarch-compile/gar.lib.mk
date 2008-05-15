@@ -599,7 +599,7 @@ install-$(MANIFEST_FILE):
 
 # Build for a certain architecture
 clean-isa-%:
-	@$(MAKE) -s ISA=$* clean-all
+	@$(MAKE) -s ISA=$* clean-isa
 
 #################### DEPENDENCY RULES ####################
 
