@@ -1,2 +1,4 @@
 2adcc7c7712cf34b13afe850950f38b0  download/sysstat-20080501.tgz
-f0d5e88fbbfd04deb2ed361618614049  download/CSWsysstat.gspec
+465eb128e17cb36e0e904fa759972283  download/CSWsysstat.gspec
+bbc1a495e449166339986e1f0aca4b4d  download/patch-sysstat-shareman.diff
+f15f10a92aa58266b5ad2ccd4edb9c9e  download/patch-isaexec-compat.diff

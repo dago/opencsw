@@ -20,42 +20,40 @@ MASTER_SITES = http://www.maier-komor.de/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWsysstat)
 
+# Put manpages in share/man/ instead of man/
+PATCHFILES = patch-sysstat-shareman.diff
+
+# skip extra dir-hierarchie from isaexec
+PATCHFILES += patch-isaexec-compat.diff
+
 CONFIGURE_SCRIPTS = custom
 
+# As kernel data is accessed we need separate builds for 32 and 64 bit
+# choosen by the current kernel with isaexec
 BUILD64 = 1
 
+# The package doesn't have a test script
 TEST_TARGET =
 
 include ../category.mk
 
+# We don't have a autoconf-style configure. The configure script
+# supplied with the package is custom made and is not flexible
+# enough to set all necessary parameters, so we generate the
+# resulting parametrization directly.
 configure-custom: $(WORKSRC)/mkrules
-	@cat $(WORKSRC)/mkrules
-
-DIRS="/usr/local /opt/sfw /opt/csw /usr/local /opt/local $HOME /usr"
-OS=`/usr/bin/uname -s`
-PROC=`/usr/bin/uname -m`
-
-        BITS=`/usr/bin/isainfo -b`
-        KERNEL=`/usr/bin/isainfo -k`
-SOLARIS_RELEASE = $(shell /usr/bin/uname -r | /usr/bin/cut -d. -f2)
-SOLARIS_PROC = $(shell /usr/bin/uname -m)
-        modules="\$(CDIR)/sysstat \$(DDIR)/sysstatd"
-        toinstall="install_sysstatd install_sysstat"
-        install=/usr/sbin/install
-
+	@cat $<
 
 $(WORKSRC)/mkrules:
-	@echo | /usr/bin/tee mkrules << MAKERULES
-OS              = SunOS
-INSTALL         = /usr/sbin/install
-CC              = ${CC}
-C_CFLAGS        = ${CFLAGS} -DSOLARIS=$(SOLARIS_RELEASE)
-D_CFLAGS        = $cflags $d_cflags -DSOLARIS=$(SOLARIS_RELEASE)
-CDIR            = SunOS-$(SOLARIS_PROC)
-DDIR            = daemon-$(ISA)
-C_LIBS          += $lflags
-PREFIX          = $(prefix)
-modules: $(bindir)/sysstat $(bindir)/sysstatd
-install: install_sysstatd install_sysstat
-MAKERULES
-
+	@(	echo "OS              = SunOS"; \
+		echo "INSTALL         = /usr/sbin/install"; \
+		echo "CC              = ${CC}"; \
+		echo "C_CFLAGS        = ${CFLAGS} -DUSECURSES -DSOLARIS=`echo ${GAROSREL} | sed -e 's/5\.//'`"; \
+		echo "D_CFLAGS        = ${CFLAGS} -DUSECURSES -DSOLARIS=`echo ${GAROSREL} | sed -e 's/5\.//'`"; \
+		echo "CDIR            = SunOS-`uname -m`"; \
+		echo "DDIR            = daemon-${ISA}"; \
+		echo "C_LIBS          += ${LDFLAGS} -lcurses -lsocket -lnsl"; \
+		echo "PREFIX          = ${DESTDIR}${prefix}"; \
+		echo "modules:        $$(CDIR)/sysstat $$(DDIR)/sysstatd"; \
+		echo "install:        install_sysstatd install_sysstat" \
+	) > $@
