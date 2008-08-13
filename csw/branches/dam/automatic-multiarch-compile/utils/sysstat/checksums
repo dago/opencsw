@@ -1,4 +1,6 @@
-2adcc7c7712cf34b13afe850950f38b0  download/sysstat-20080501.tgz
+8c0eab17250091860ab9e170c8c96fde  download/sysstat-20080718.tgz
 465eb128e17cb36e0e904fa759972283  download/CSWsysstat.gspec
-bbc1a495e449166339986e1f0aca4b4d  download/patch-sysstat-shareman.diff
-f15f10a92aa58266b5ad2ccd4edb9c9e  download/patch-isaexec-compat.diff
+e51f94d090618f19b854104291b10645  download/CSWsysstat.prototype-sparc
+8c1dbc2e5fc16f16dbdfbe47b81e76f0  download/CSWsysstat.prototype-i386
+2ba417371d006cee9ad62bf67252b05b  download/CSWsysstat.depend
+6c8b6d3c4a5b15157f02216b4ad2b459  download/patch-onlyisaexec-sysstatd.diff

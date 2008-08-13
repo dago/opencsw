@@ -1,4 +1,4 @@
-# vim: ft=make ts=4 sw=4 noet
+
 #
 # $Id$
 #
@@ -16,7 +16,7 @@
 #GARDIR := $(CURDIR)/../..
 #endif
 
-GARDIR ?= ../..
+#GARDIR ?= ../..
 #ifeq ($(origin GARDIR), undefined)
 #GARDIR := $(CURDIR)/../..
 #endif
@@ -45,7 +45,8 @@ endif
 # For rules that do nothing, display what dependencies they
 # successfully completed
 #DONADA = @echo "	[$@] complete.  Finished rules: $+"
-DONADA = @touch $(COOKIEDIR)/$@; echo "	[$@] complete for $(GARNAME)."
+#DONADA = @touch $(COOKIEDIR)/$@; echo "	[$@] complete for $(GARNAME)."
+DONADA = @touch $(COOKIEDIR)/$(patsubst $(COOKIEDIR)/%,%,$@); echo "	[$@] complete for $(GARNAME)."
 
 # TODO: write a stub rule to print out the name of a rule when it
 # *does* do something, and handle indentation intelligently.
@@ -88,6 +89,110 @@ deep-%: %
 	done
 	@$(foreach IMG,$(filter-out $(DESTIMG),$(IMGDEPS)),for dep in "" $($(IMG)_DEPENDS); do test -z "$$dep" && continue ; $(MAKE) -C ../../$$dep DESTIMG=$(IMG) $@; done; )
 
+# ========================= MODULATIONS ======================== 
+
+# The default is to modulate over ISAs
+MODULATORS ?= ISA $(EXTRA_MODULATORS) $(EXTRA_MODULATORS_$(GARCH))
+MODULATIONS_ISA = $(NEEDED_ISAS)
+
+tolower = $(shell echo $(1) | tr '[A-Z]' '[a-z]')
+expand_modulator_1 = $(addprefix $(call tolower,$(1))-,$(MODULATIONS_$(1)))
+# This expands to the list of all modulators with their respective modulations
+modulations = $(if $(word 2,$(1)),\
+	$(foreach P,$(call expand_modulator_1,$(firstword $(1))),\
+		$(addprefix $(P)-,$(call modulations,$(wordlist 2,$(words $(1)),$(1))))\
+	),\
+	$(call expand_modulator_1,$(1)))
+
+MODULATIONS ?= $(strip $(call modulations,$(strip $(MODULATORS))))
+
+# _modulate(ISA STATIC,,,)
+# -> _modulate2(STATIC,isa-i386,ISA,ISA=i386)
+#    -> _modulate2(,,isa-i386-static-yes,ISA STATIC,ISA=i386 STATIC=yes)
+#       -> xxx-isa-i386-static-yes: @gmake xxx ISA=i386 STATIC=yes
+#    -> _modulate2(,,isa-i386-static-no,ISA STATIC,ISA=i386 STATIC=no)
+#       -> xxx-isa-i386-static-no: @gmake xxx ISA=i386 STATIC=no
+# -> _modulate2(STATIC,isa-amd64,ISA,ISA=amd64)
+#    -> _modulate2(,,isa-amd64-static-yes,ISA STATIC,ISA=amd64 STATIC=yes)
+#       -> xxx-isa-amd64-static-yes: @gmake xxx ISA=amd64 STATIC=yes
+#    -> _modulate2(,,isa-amd64-static-no,ISA STATIC,ISA=amd64 STATIC=no)
+#       -> xxx-isa-amd64-static-no: @gmake xxx ISA=amd64 STATIC=no
+
+define _modulate_target
+$(1)-$(2):
+	@gmake -s MODULATION=$(2) $(3) pre-$(1)-$(2) $(1)-modulated post-$(1)-$(2)
+	@# This is MAKECOOKIE expanded to use the name of the rule explicily as the rule has
+	@# not been evaluated yet. XXX: Use function _MAKECOOKIE for both
+	@mkdir -p $(COOKIEDIR)/$(dir $(1)-$(2)) && date >> $(COOKIEDIR)/$(1)-$(2)
+	@# The next line has intentionally been left blank to explicitly terminate this make rule
+
+endef
+
+define _modulate_do
+xtest-$(2):
+	@gmake -s MODULATION=$(2) $(4) _pmod
+	@# The next line has intentionally been left blank
+
+$(call _modulate_target,extract,$(2),$(4))
+$(call _modulate_target,patch,$(2),$(4))
+$(call _modulate_target,configure,$(2),$(4))
+$(call _modulate_target,build,$(2),$(4))
+$(call _modulate_target,test,$(2),$(4))
+$(call _modulate_target,install,$(2),$(4))
+$(call _modulate_target,merge,$(2),$(4))
+endef
+
+# This evaluates to the make rules for all modulations passed as first argument
+# Usage: _modulate( <MODULATORS> )
+define _modulate
+$(foreach M,$(MODULATIONS_$(firstword $(1))),\
+	$(call _modulate2,\
+		$(wordlist 2,$(words $(1)),$(1)),\
+		$(call tolower,$(firstword $(1)))-$(M),\
+		$(firstword $(1)),\
+		$(firstword $(1))=$(M)\
+	)\
+)
+endef
+
+# This is a helper for the recursive _modulate
+define _modulate2
+$(if $(strip $(1)),\
+	$(foreach M,$(MODULATIONS_$(firstword $(1))),\
+		$(call _modulate2,\
+			$(wordlist 2,$(words $(1)),$(1)),\
+			$(addprefix $(2)-,$(call tolower,$(firstword $(1)))-$(M)),\
+			$(3) $(firstword $(1)),\
+			$(4) $(firstword $(1))=$(M)\
+		)\
+	),\
+	$(call _modulate_do,,$(strip $(2)),$(3),$(4))\
+)
+endef
+
+_pmod:
+	@echo "[ Modulation $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) ]"
+
+$(eval $(call _modulate,$(MODULATORS)))
+
+moddebug:
+	@echo $(strip $(strip $(call _modulate,$(MODULATORS))))
+
+allmod: $(foreach M,$(MODULATIONS),xtest-$(M))
+
+
+modenv:
+	@echo " Modulators: $(MODULATORS)"
+	@echo "Modulations: $(MODULATIONS)"
+	@echo "M: $(call expand_modulator_1,ISA)"
+
+#patch-isa-%:
+#	@echo " ==> Patching for ISA $*"
+#	@$(MAKE) ISA=$* pre-patch-isa-$* patch-isa post-patch-isa-$*
+#	@$(DONADA)
+
+
+
 # ========================= MAIN RULES ========================= 
 # The main rules are the ones that the user can specify as a
 # target on the "make" command-line.  Currently, they are:
@@ -110,7 +215,13 @@ deep-%: %
 # what just happened when all the dependencies are finished.
 
 announce:
-	@echo "[===== NOW BUILDING:	$(DISTNAME)   ISA:	$(ISA)	=====]"
+	@echo "[===== NOW BUILDING: $(DISTNAME) =====]"
+
+#announce-isa:
+#	@echo "[===== NOW BUILDING: $(DISTNAME) ISA: $(ISA) =====]"
+
+announce-modulation:
+	@echo "[===== NOW BUILDING: $(DISTNAME) MODULATION $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) =====]"
 
 # prerequisite	- Make sure that the system is in a sane state for building the package
 PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(PREREQUISITE_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
@@ -136,7 +247,7 @@ fetch-list:
 FETCH_TARGETS =  $(addprefix $(DOWNLOADDIR)/,$(ALLFILES))
 
 fetch: prerequisite pre-fetch $(FETCH_TARGETS) post-fetch
-	$(DONADA)
+	@$(DONADA)
 
 # returns true if fetch has completed successfully, false
 # otherwise
@@ -148,7 +259,15 @@ fetch-p:
 CHECKSUM_TARGETS = $(addprefix checksum-,$(filter-out $(NOCHECKSUM),$(ALLFILES)))
 
 checksum: fetch $(COOKIEDIR) pre-checksum $(CHECKSUM_TARGETS) post-checksum
-	$(DONADA)
+	@$(DONADA)
+
+# The next rule handles the dependency from the modulated context to
+# the contextless checksumming. The rule is called when the cookie
+# to the global checksum is requested. If the global checksum has not run,
+# then run it. Otherwise it is silently accepted.
+checksum-modulated: $(COOKIEDIR)
+	@$(MAKE) -s ISA=global checksum
+	@$(DONADA)
 
 # returns true if checksum has completed successfully, false
 # otherwise
@@ -173,10 +292,23 @@ GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(ALLFILES))
 garchive: checksum $(GARCHIVE_TARGETS) ;
 
 # extract		- Unpacks $(DISTFILES) into $(EXTRACTDIR) (patches are "zcatted" into the patch program)
-EXTRACT_TARGETS = $(addprefix extract-,$(filter-out $(NOEXTRACT),$(DISTFILES)))
+EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(DISTFILES)))
 
-extract: checksum $(EXTRACTDIR) $(COOKIEDIR) $(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) pre-extract $(EXTRACT_TARGETS) post-extract
-	$(DONADA)
+# We call an additional extract-modulated without resetting any variables so
+# a complete unpacked set goes to the global dir for packaging (like gspec)
+#extract: checksum $(COOKIEDIR) pre-extract extract-isa $(addprefix extract-isa-,$(BUILD_ISAS)) post-extract
+extract: checksum $(COOKIEDIR) pre-extract extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
+	@$(DONADA)
+
+extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
+		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
+		announce-modulation \
+		pre-extract-modulated $(EXTRACT_TARGETS) post-extract-modulated
+	@$(DONADA)
+
+#extract-isa-%:
+#	@$(MAKE) ISA=$* pre-extract-isa-$* extract-isa post-extract-isa-$*
+#	@$(MAKECOOKIE)
 
 # returns true if extract has completed successfully, false
 # otherwise
@@ -191,10 +323,19 @@ checkpatch: extract
 	@echo "$@ NOT IMPLEMENTED YET"
 
 # patch			- Apply any provided patches to the source.
-PATCH_TARGETS = $(addprefix patch-,$(PATCHFILES))
+PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES))
 
-patch: extract $(WORKSRC) pre-patch $(PATCH_TARGETS) post-patch
-	$(DONADA)
+#patch: pre-patch $(addprefix patch-isa-,$(BUILD_ISAS)) post-patch
+patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
+	@$(DONADA)
+
+#patch-isa: extract-isa $(WORKSRC) pre-patch-isa $(PATCH_TARGETS) post-patch-isa
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated $(PATCH_TARGETS) post-patch-modulated
+
+#patch-isa-%:
+#	@echo " ==> Patching for ISA $*"
+#	@$(MAKE) ISA=$* pre-patch-isa-$* patch-isa post-patch-isa-$*
+#	@$(DONADA)
 
 # returns true if patch has completed successfully, false
 # otherwise
@@ -206,6 +347,9 @@ patch-p:
 # 				  file on "success".  Goofy diff.
 makepatch: $(SCRATCHDIR) $(FILEDIR) $(FILEDIR)/gar-base.diff
 	$(DONADA)
+
+# XXX: Allow patching of pristine sources separate from ISA directories
+# XXX: Use makepatch on global/
 
 # this takes the changes you've made to a working directory,
 # distills them to a patch, updates the checksum file, and tries
@@ -235,8 +379,38 @@ CONFIGURE_IMGDEPS = $(addprefix imgdep-,$(filter-out $(DESTIMG),$(IMGDEPS)))
 #CONFIGURE_BUILDDEPS = $(addprefix $(GARDIR)/,$(addsuffix /$(COOKIEROOTDIR)/build.d/install,$(BUILDDEPS)))
 endif
 
-configure: patch $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) $(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) pre-configure $(CONFIGURE_TARGETS) post-configure
+configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure
 	$(DONADA)
+
+#configure-isa: patch-isa $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
+#		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
+#		pre-configure-isa $(CONFIGURE_TARGETS) post-configure-isa
+configure-modulated: patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
+		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
+		pre-configure-modulated $(CONFIGURE_TARGETS) post-configure-modulated
+
+#configure-isa-%:
+#	@echo " ==> Configuring for ISA $*"
+#	@$(MAKE) ISA=$* pre-configure-isa-$* configure-isa post-configure-isa-$*
+#	@$(DONADA)
+
+.PHONY: reset-configure reset-configure-modulated
+reconfigure: reset-configure configure
+
+reset-configure: 
+
+reconfigure-isa-%:
+
+reset-configure:
+	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) reset-configure-isa;)
+
+reconfigure-isa-%:
+	@$(MAKE) -s ISA=$* reset-configure-isa configure-isa
+
+#reset-configure-isa:
+#	@echo " ==> Reset configure state for ISA $(ISA)"
+#	@rm -rf xxx
+#	@$(MAKE) -s ISA=$* reset-configure-isa
 
 # returns true if configure has completed successfully, false
 # otherwise
@@ -244,14 +418,30 @@ configure-p:
 	@$(foreach COOKIEFILE,$(CONFIGURE_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 # build			- Actually compile the sources.
-BUILD_TARGETS = $(addprefix build-,$(BUILD_SCRIPTS))
+BUILD_TARGETS = $(addprefix build-,$(BUILD_CHECK_SCRIPTS)) $(addprefix build-,$(BUILD_SCRIPTS))
 
-build: build-isa $(addprefix build-isa-,$(filter-out $(ISA),$(BUILD_ISAS)))
+build: pre-build $(addprefix build-,$(MODULATIONS)) post-build
 	$(DONADA)
 
-# Build for a specific architecture, do not recurse into compiling more archs
-build-isa: configure pre-build $(BUILD_TARGETS) post-build
-	$(DONADA)
+# Build for a specific architecture
+#build-isa: configure-isa pre-build-isa $(BUILD_TARGETS) post-build-isa
+#	@$(MAKECOOKIE)
+build-modulated-check:
+	$(if $(filter ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$*)),                                            \
+		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))      \
+	)
+
+build-modulated: configure-modulated pre-build-modulated $(BUILD_TARGETS) post-build-modulated
+	@$(MAKECOOKIE)
+
+# Build for a certain architecture
+#build-isa-%:
+#	@echo " ==> Building for ISA $*"
+#	$(if $(filter ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$*)),                                            \
+#		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))      \
+#	)
+#	@$(MAKE) ISA=$* pre-build-isa-$* build-isa post-build-isa-$*
+#	@$(MAKECOOKIE)
 
 # returns true if build has completed successfully, false
 # otherwise
@@ -259,8 +449,17 @@ build-p:
 	@$(foreach COOKIEFILE,$(BUILD_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 TEST_TARGETS = $(addprefix test-,$(TEST_SCRIPTS))
-test: build pre-test $(TEST_TARGETS) post-test
+
+test: $(addprefix test-,$(MODULATIONS))
 	$(DONADA)
+
+test-modulated: build-modulated pre-test $(TEST_TARGETS) post-test
+	$(DONADA)
+
+#test-isa-%:
+#	@echo " ==> Testing for ISA $*"
+#	@$(MAKE) ISA=$* test-isa
+#	@$(MAKECOOKIE)
 
 # strip - Strip executables
 POST_INSTALL_TARGETS := strip $(POST_INSTALL_TARGETS)
@@ -288,23 +487,39 @@ fixconfig:
 # install		- Test and install the results of a build.
 INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE)))
 
-install: install-isa $(addprefix install-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS)))
+install: pre-install $(addprefix install-,$(MODULATIONS)) post-install
 	$(DONADA)
 
-install-isa: build-isa $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) post-install $(POST_INSTALL_TARGETS) 
-	$(DONADA)
+install-modulated: build-modulated $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test-modulated $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install-modulated $(INSTALL_TARGETS) post-install-modulated $(POST_INSTALL_TARGETS) 
+	@$(MAKECOOKIE)
 
+#install-isa-%:
+#	@echo " ==> Installing for ISA $*"
+#	@$(MAKE) ISA=$* pre-install-isa-$* install-isa post-install-isa-$*
+#	@$(MAKECOOKIE)
 
 # returns true if install has completed successfully, false
 # otherwise
 install-p:
 	@$(foreach COOKIEFILE,$(INSTALL_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
+
+
 # reinstall		- Install the results of a build, ignoring
 # 				  "already installed" flag.
-reinstall: build
-	rm -rf $(foreach ISA,$(BUILD_ISAS),$(COOKIEDIR)/*install*)
-	$(MAKE) install
+.PHONY: reset-install reset-install-isa
+reinstall: reset-install install
+
+reset-install:
+	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) reset-install-isa;)
+
+reinstall-isa-%:
+	@$(MAKE) -s ISA=$* reset-install-isa install-isa
+
+reset-install-isa:
+	@echo " ==> Reset install state for ISA $(ISA)"
+	@rm -rf $(INSTALLISADIR) $(COOKIEDIR)/*install*
+	@$(MAKE) -s ISA=$* reset-merge-isa
 
 # merge in all isas to the package directory after installation
 
@@ -374,21 +589,26 @@ _INC_EXT_RULE += $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: pre-merge merge-isa $(addprefix merge-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS))) post-merge
+merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) post-merge
 	@$(DONADA)
 
 # This merges the 
-merge-isa: install-isa $(MERGE_TARGETS)
-	@$(DONADA)
+merge-modulated: install-modulated pre-merge-modulated $(MERGE_TARGETS) post-merge-modulated
+	@$(MAKECOOKIE)
+
+#merge-isa-%:
+#	@echo " ==> Merging ISAs together for packaging"
+#	@$(MAKE) ISA=$* pre-merge-isa-$* merge-isa post-merge-isa-$*
+#	@$(MAKECOOKIE)
 
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
 	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) . $(PKGROOT))
 	@$(MAKECOOKIE)
 
-# Copy the whole tree and relocate the directories where binaries
+# Copy the whole tree and relocate the directories in $(ISA_RELOCATE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
-	(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(ISA_RELOCATE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p" ) \
 		. $(PKGROOT) \
 	)
@@ -396,23 +616,26 @@ merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
-	@echo "E: $(_MERGE_EXCLUDE_FILES) I: $(_PAX_ARGS)"
-	(cd $(INSTALLISADIR); $(foreach DIR,$(ISA_RELOCATE_DIRS), \
+	@(cd $(INSTALLISADIR); $(foreach DIR,$(ISA_RELOCATE_DIRS), \
 		if [ -d .$(DIR) ]; then pax -r -w -v $(_PAX_ARGS) -s ",^\(\.$(DIR)/\),\1$(ISA)/,p" .$(DIR) $(PKGROOT); fi; \
 		) \
 	)
 	@$(MAKECOOKIE)
 
-mergereset-isa:
-	@echo " ==> Reset merge state for ISA $(ISA)"
-	@rm -f $(COOKIEDIR)/merge $(COOKIEDIR)/merge-*
+remerge: reset-merge remove-timestamp merge
 
-mergereset:
-	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) mergereset-isa;)
+remerge-isa-%:
+	@$(MAKE) -s ISA=$* reset-merge-isa
+
+reset-merge:
+	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) reset-merge-isa;)
 	@rm -rf $(PKGROOT)
 
-remerge: mergereset remove-timestamp merge
-
+reset-merge-isa:
+	@echo " ==> Reset merge state for ISA $(ISA)"
+	@rm -f $(COOKIEDIR)/merge $(COOKIEDIR)/merge-*
+	@rm -f $(COOKIEROOTDIR)/$(ISA_DEFAULT)/merge-isa-$(ISA)
+	@rm -f $(COOKIEROOTDIR)/$(ISA_DEFAULT)/merge-isa
 
 # The clean rule.  It must be run if you want to re-download a
 # file after a successful checksum (or just remove the checksum
@@ -421,15 +644,14 @@ remerge: mergereset remove-timestamp merge
 CLEAN_SCRIPTS ?= all
 CLEAN_TARGETS  = $(addprefix clean-,$(CLEAN_SCRIPTS))
 
-clean: clean-isa $(addprefix clean-isa-,$(filter-out $(ISA),$(REQUESTED_ISAS))) clean-all
+clean: $(addprefix clean-isa-,$(REQUESTED_ISAS)) clean-all
 	@rm -rf $(WORKROOTDIR)
 
-clean-isa: clean-cookies
+clean-isa: clean-build 
+	@rm -rf $(COOKIEDIR)
 
-# Backwards compatability
-cookieclean: clean-cookies
-buildclean:  clean-build
-sourceclean: clean-source
+clean-isa-%:
+	@$(MAKE) -s ISA=$* clean-isa
 
 clean-all: clean-cookies
 	@rm -rf $(DOWNLOADDIR)
@@ -500,6 +722,8 @@ makedepend:
 		  	sort /tmp/$$pkgdep | uniq > $$pkgfiles/$$pkgname.depend ; \
 		  fi ) ; \
 	done
+
+buildstatus:
 
 love:
 	@echo "not war!"

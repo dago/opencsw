@@ -12,16 +12,22 @@
 # Pick up user information
 -include $(HOME)/.garrc
 
+#ISA ?= global
+MODULATION ?= global
 FILEDIR ?= files
 DOWNLOADDIR ?= download
 PARTIALDIR ?= $(DOWNLOADDIR)/partial
-COOKIEROOTDIR ?= cookies
-COOKIEDIR ?= $(COOKIEROOTDIR)/$(ISA)
 WORKROOTDIR ?= work
-WORKDIR ?= $(WORKROOTDIR)/$(ISA)
-INSTALLISADIR ?= $(WORKROOTDIR)/install-$(ISA)
-WORKSRC ?= $(WORKDIR)/$(DISTNAME)
+#WORKDIR ?= $(WORKROOTDIR)/build-$(ISA)
+WORKDIR ?= $(WORKROOTDIR)/build-$(MODULATION)
+COOKIEROOTDIR ?= cookies
+#COOKIEDIR ?= $(COOKIEROOTDIR)/$(ISA)
+COOKIEDIR ?= $(COOKIEROOTDIR)/$(MODULATION)
 EXTRACTDIR ?= $(WORKDIR)
+WORKSRC ?= $(WORKDIR)/$(DISTNAME)
+#INSTALLISADIR ?= $(WORKROOTDIR)/install-$(ISA)
+INSTALLISADIR ?= $(WORKROOTDIR)/install-$(MODULATION)
+PKGDIR ?= $(WORKROOTDIR)/package
 SCRATCHDIR ?= tmp
 CHECKSUM_FILE ?= checksums
 MANIFEST_FILE ?= manifest
@@ -251,8 +257,6 @@ MEMORYMODEL_BINDIR_64 = $(ISABINDIR_$(ISA_DEFAULT64_$(GARCH)))
 MM_LIBDIR = $(MEMORYMODEL_LIBDIR_$(MEMORYMODEL))
 MM_BINDIR = $(MEMORYMODEL_BINDIR_$(MEMORYMODEL))
 
-# TODO: Check that we can compile code for the memory model on the current machine
-
 OPT_FLAGS_SOS11_sparc ?= -xO3
 OPT_FLAGS_SOS12_sparc ?= -xO3
  OPT_FLAGS_GCC3_sparc ?= -O2 -pipe
@@ -296,6 +300,8 @@ ISA_DEFAULT_i386    ?= i386
 ISA_DEFAULT64_sparc ?= sparcv9
 ISA_DEFAULT64_i386  ?= amd64
 
+# These are the ISAs that are always build for 32 bit and 64 bit
+# Do not overwrite these as they are used to control expansion at several other places
 ISA_DEFAULT = $(ISA_DEFAULT_$(GARCH))
 ISA_DEFAULT64 = $(ISA_DEFAULT64_$(GARCH))
 
@@ -307,7 +313,7 @@ ISA ?= $(ISA_DEFAULT)
 # This is a sanity check. Because BUILD_ISAS is carefully computed this error should
 # only occur if BUILD_ISAS is manually overwritten.
 KERNELISA := $(shell isainfo -k)
-ifeq (,$(filter $(ISA), $(ISALIST_$(KERNELISA))))
+ifeq (,$(filter $(ISA),$(ISALIST_$(KERNELISA)) global))
   $(error The ISA '$(ISA)' can not be build on this kernel with the arch '$(KERNELISA)')
 endif
 
@@ -381,18 +387,56 @@ GCC4_LD_FLAGS   ?= -L$(GNU_CC_HOME)/lib $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXT
 SOS11_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
 SOS12_LD_FLAGS  ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS)
 
+# Compiler version
+GCC_CC_VERSION  = $(shell $(CC_HOME)/bin/gcc -v 2>&1| ggrep version)
+GCC_CXX_VERSION = $(CC_VERSION)
+GCC3_CC_VERSION = $(GCC_CC_VERSION)
+GCC3_CXX_VERSION = $(GCC_CXX_VERSION)
+GCC4_CC_VERSION = $(GCC_CC_VERSION)
+GCC4_CXX_VERSION = $(GCC_CXX_VERSION)
+
+SOS_CC_VERSION  = $(shell $(CC_HOME)/bin/cc -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
+SOS_CXX_VERSION = $(shell $(CC_HOME)/bin/CC -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
+SOS11_CC_VERSION = $(SOS_CC_VERSION)
+SOS11_CXX_VERSION = $(SOS_CXX_VERSION)
+SOS12_CC_VERSION = $(SOS_CC_VERSION)
+SOS12_CXX_VERSION = $(SOS_CXX_VERSION)
+
+CC_VERSION = $($(GARCOMPILER)_CC_VERSION)
+CXX_VERSION = $($(GARCOMPILER)_CXX_VERSION)
+
 #
 # Construct compiler options
 #
 
 ifeq ($(origin INCLUDE_FLAGS), undefined)
 INCLUDE_FLAGS = $(foreach EINC,$(EXTRA_INC) $(abspath $(includedir)),-I$(EINC))
-INCLUDE_FLAGS += $(if $(IGNORE_DESTDIR),,-I$(abspath $(DESTDIR)$(includedir)))
+# DESTDIR is an old concept, disable for now
+#INCLUDE_FLAGS += $(if $(IGNORE_DESTDIR),,-I$(abspath $(DESTDIR)$(includedir)))
 endif
 
+# The usual library directory structure looks like this:
+# .../lib/32 -> .
+# .../lib/64 -> (sparcv9 | amd64)
+# .../lib/mylib.so
+# .../lib/sparcv9/mylib.so
+# .../lib/sparcv9+vis/mylib.so
+# For optimized builds a runtime-path of '-R.../lib/$ISALIST' should be used. This is
+# however not expanded during compilation, so linker-pathes must directly be accessible
+# without expansion and needs to be differentiated between 32 and 64 bit, therefore
+# the links 32 and 64.
 ifeq ($(origin LINKER_FLAGS), undefined)
-LINKER_FLAGS = $(foreach ELIB,$(EXTRA_LIB) $(abspath $(libdir)/$(MM_LIBDIR)),-L$(ELIB))
-LINKER_FLAGS += $(if $(IGNORE_DESTDIR),,-L$(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)))
+ifdef NOISALIST
+LINKER_FLAGS = $(foreach ELIB,$(libdir)/$(MM_LIBDIR) $(EXTRA_LIB),-L$(ELIB) -R$(ELIB))
+else
+# If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
+# may not be a subdirectory for the 32-bit standard case (this would normally
+# be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .)
+LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(ELIB)/$(MM_LIBDIR) -R$(ELIB)/\$$ISALIST -R$(ELIB)/$(MM_LIBDIR))
+endif
+#LINKER_FLAGS = $(foreach ELIB,$(EXTRA_LIB) $(abspath $(libdir)/$(MM_LIBDIR)),-L$(ELIB) -R$(ELIB))
+# DESTDIR is an old concept, disable for now
+#LINKER_FLAGS += $(if $(IGNORE_DESTDIR),,-L$(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)))
 endif
 
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
@@ -405,19 +449,20 @@ LDFLAGS  ?= $(strip $($(GARCOMPILER)_LD_FLAGS) $(EXTRA_LDFLAGS) $(LINKER_FLAGS))
 ASFLAGS  ?= $(strip $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS))
 OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 
-GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-SOS11_LD_OPTIONS = $(strip $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
-SOS12_LD_OPTIONS = $(strip $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
+#GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+#GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+#SOS11_LD_OPTIONS = $(strip $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
+#SOS12_LD_OPTIONS = $(strip $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
 
-LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
+#LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
 
-LDOPT_LIBS ?= $(libdir)
-ifdef NOISALIST
-LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(abspath $(ELIB)/$(MM_LIBDIR)))
-else
-LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB)/$(MM_LIBDIR))
-endif
+# LD_OPTIONS considered harmful. Disable for the moment.
+#LDOPT_LIBS ?= $(libdir)
+#ifdef NOISALIST
+#LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(abspath $(ELIB)/$(MM_LIBDIR)))
+#else
+#LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB)/$(MM_LIBDIR))
+#endif
 
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
@@ -426,15 +471,10 @@ PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH := $(abspath $(libdir)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
-ifneq ($(IGNORE_DESTDIR),1)
-PKG_CONFIG_PATH := $(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
-endif
-
-# Let's see if we can get gtk-doc going 100%
-XML_CATALOG_FILES += $(DESTDIR)$(datadir)/xml/catalog
-
-# Docbook Root Location
-DOCBOOK_ROOT = $(DESTDIR)$(datadir)/sgml/docbook
+# DESTDIR is an old concept, disable for now.
+#ifneq ($(IGNORE_DESTDIR),1)
+#PKG_CONFIG_PATH := $(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+#endif
 
 #
 # Mirror Sites
@@ -468,16 +508,6 @@ CPAN_SITES  += http://mirrors.kernel.org/cpan
 CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
 CPAN_FIRST_MIRROR = $(firstword $(CPAN_SITES))/authors/id
 
-# Compiler version
-ifeq ($(CC),gcc)
-CC_VERSION  = $(shell $(CC_HOME)/bin/gcc -v 2>&1| ggrep version)
-CXX_VERSION = $(CC_VERSION)
-endif
-ifeq ($(CC),cc)
-CC_VERSION  = $(shell $(CC_HOME)/bin/cc -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
-CXX_VERSION = $(shell $(CC_HOME)/bin/CC -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
-endif
-
 # Package dir
 GARPACKAGE = $(shell basename $(CURDIR))
 
@@ -491,12 +521,13 @@ endif
 
 ifeq ($(origin COMPILER_EXPORTS), undefined)
 COMPILER_EXPORTS  = CPPFLAGS CFLAGS CXXFLAGS LDFLAGS
-COMPILER_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
+#COMPILER_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
+COMPILER_EXPORTS += ASFLAGS OPTFLAGS CC CXX
 COMPILER_EXPORTS += CC_HOME CC_VERSION CXX_VERSION
 endif
 
 ifeq ($(origin GARPKG_EXPORTS), undefined)
-GARPKG_EXPORTS  = VENDORNAME VENDORSTAMP
+#GARPKG_EXPORTS  = VENDORNAME VENDORSTAMP
 GARPKG_EXPORTS += GARCH GAROSREL GARPACKAGE
 endif
 
@@ -514,6 +545,7 @@ INSTALL_ENV   ?= $(foreach TTT,$(INSTALL_EXPORTS) $(EXTRA_INSTALL_EXPORTS),$(TTT
 
 # Standard Scripts
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
+BUILD_CHECK_SCRIPTS ?= modulated-check
 BUILD_SCRIPTS     ?= $(WORKSRC)/Makefile
 ifeq ($(SKIPTEST),1)
 TEST_SCRIPTS       =
@@ -524,7 +556,7 @@ endif
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
 
 # Global environment
-export PATH PKG_CONFIG_PATH XML_CATALOG_FILES
+export PATH PKG_CONFIG_PATH
 
 # prepend the local file listing
 FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
@@ -584,6 +616,6 @@ _isaenv:
 	echo "   CXXFLAGS = $(CXXFLAGS)";				\
 	echo "   CPPFLAGS = $(CPPFLAGS)";				\
 	echo "    LDFLAGS = $(LDFLAGS)";				\
-	echo " LD_OPTIONS = $(LD_OPTIONS)";				\
+	#echo " LD_OPTIONS = $(LD_OPTIONS)";				\
 	echo "    ASFLAGS = $(ASFLAGS)";				\
 	echo "   OPTFLAGS = $(OPTFLAGS)"

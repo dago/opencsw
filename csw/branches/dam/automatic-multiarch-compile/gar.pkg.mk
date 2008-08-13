@@ -103,18 +103,29 @@ remove-timestamp:
 # This can be used to automatically distribute the files to different packages
 #
 
+# usage: $(call isadirs,<prefix>,<suffix>)
+# expands to <prefix>/<isa1>/suffix <prefix>/<isa2>/<suffix> ...
+
+isadirs = $(foreach ISA,$(ISALIST),$(1)/$(ISA)/$(2))
+
 # PKGFILES_RT selects files belonging to a runtime package
 PKGFILES_RT  = $(libdir)/[^/]*\.so(\.\d+)*
-PKGFILES_RT += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.so(\.\d+)*)
+#PKGFILES_RT += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.so(\.\d+)*)
+PKGFILES_RT += $(call isadirs,$(libdir),[^/]*\.so(\.\d+)*)
 
 # PKGFILES_DEVEL selects files belonging to a developer package
 PKGFILES_DEVEL  = $(bindir)/[^\/]*-config
-PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(bindir)/$(ISA)/[^/]*-config)
+#PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(bindir)/$(ISA)/[^/]*-config)
+PKGFILES_DEVEL += $(call isadirs,$(bindir),[^/]*-config)
 PKGFILES_DEVEL += $(libdir)/[^\/]*\.(a|la)
-PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.(a|la))
+#PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.(a|la))
+PKGFILES_DEVEL += $(call isadirs,$(libdir),[^/]*\.(a|la))
 PKGFILES_DEVEL += $(libdir)/pkgconfig(/.*)?
-PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/pkgconfig(/.*)?)
+#PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/pkgconfig(/.*)?)
+PKGFILES_DEVEL += $(call isadirs,$(libdir),pkgconfig(/.*)?)
 PKGFILES_DEVEL += $(includedir)/.*
+PKGFILES_DEVEL += $(sharedstatedir)/aclocal/.*
+PKGFILES_DEVEL += $(mandir)/man1/.*-config\.1.*
 PKGFILES_DEVEL += $(mandir)/man3/.*
 
 # PKGFILES_DOC selects files beloging to a documentation package
@@ -131,8 +142,9 @@ $(foreach SPEC,$(_PKG_SPECS),$(eval								\
 PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
-$(PROTOTYPE): merge
-	cswproto -s $(TIMESTAMP) -r $(PKGROOT) $(PKGROOT)$(prefix) >$@
+$(PROTOTYPE): $(WORKDIR) merge
+	@#cswproto -s $(TIMESTAMP) -r $(PKGROOT) $(PKGROOT)$(prefix) >$@
+	cswproto -r $(PKGROOT) $(PKGROOT)$(prefix) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
@@ -169,7 +181,10 @@ SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
 $(SPKG_DESTDIRS):
 	ginstall -d $@
 
-package: merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+# We depend on extract as the additional package files (like .gspec) must be
+# unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
+# modulations and does not fill global/.
+package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
 package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
@@ -202,6 +217,8 @@ pkgcheck-p:
 # pkgreset - reset working directory for repackaging
 #
 pkgreset: $(addprefix pkgreset-,$(_PKG_SPECS))
+	@rm -f $(COOKIEDIR)/extract
+	@rm -f $(COOKIEDIR)/extract-archive-*
 	$(DONADA)
 
 pkgreset-%:

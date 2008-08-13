@@ -240,48 +240,48 @@ deb-bin-extract-%:
 # given file extension.  Often support for a given extract type can be handled
 # by simply adding a rule here.
 
-extract-%.tar: tar-extract-%.tar
+extract-archive-%.tar: tar-extract-%.tar
 	@$(MAKECOOKIE)
 
-extract-%.tar.gz: tar-gz-extract-%.tar.gz
+extract-archive-%.tar.gz: tar-gz-extract-%.tar.gz
 	@$(MAKECOOKIE)
 
-extract-%.tar.Z: tar-gz-extract-%.tar.Z
+extract-archive-%.tar.Z: tar-gz-extract-%.tar.Z
 	@$(MAKECOOKIE)
 
-extract-%.tgz: tar-gz-extract-%.tgz
+extract-archive-%.tgz: tar-gz-extract-%.tgz
 	@$(MAKECOOKIE)
 
-extract-%.taz: tar-gz-extract-%.taz
+extract-archive-%.taz: tar-gz-extract-%.taz
 	@$(MAKECOOKIE)
 
-extract-%.tar.bz: tar-bz-extract-%.tar.bz
+extract-archive-%.tar.bz: tar-bz-extract-%.tar.bz
 	@$(MAKECOOKIE)
 
-extract-%.tar.bz2: tar-bz-extract-%.tar.bz2
+extract-archive-%.tar.bz2: tar-bz-extract-%.tar.bz2
 	@$(MAKECOOKIE)
 
-extract-%.tbz: tar-bz-extract-%.tbz
+extract-archive-%.tbz: tar-bz-extract-%.tbz
 	@$(MAKECOOKIE)
 
-extract-%.zip: zip-extract-%.zip
+extract-archive-%.zip: zip-extract-%.zip
 	@$(MAKECOOKIE)
 
-extract-%.ZIP: zip-extract-%.ZIP
+extract-archive-%.ZIP: zip-extract-%.ZIP
 	@$(MAKECOOKIE)
 
-extract-%.deb: deb-bin-extract-%.deb
+extract-archive-%.deb: deb-bin-extract-%.deb
 	@$(MAKECOOKIE)
 
-extract-%.bz2: bz-extract-%.bz2
+extract-archive-%.bz2: bz-extract-%.bz2
 	@$(MAKECOOKIE)
 
-extract-%.gz: gz-extract-%.gz
+extract-archive-%.gz: gz-extract-%.gz
 	@$(MAKECOOKIE)
 
 # anything we don't know about, we just assume is already
 # uncompressed and unarchived in plain format
-extract-%: cp-extract-%
+extract-archive-%: cp-extract-%
 	@$(MAKECOOKIE)
 
 #################### PATCH RULES ####################
@@ -327,25 +327,25 @@ normal-patch-%:
 # file extension.  Often support for a given patch format can be handled by
 # simply adding a rule here.
 
-patch-%.bz: bz-patch-%.bz
+patch-extract-%.bz: bz-patch-%.bz
 	@$(MAKECOOKIE)
 
-patch-%.bz2: bz-patch-%.bz2
+patch-extract-%.bz2: bz-patch-%.bz2
 	@$(MAKECOOKIE)
 
-patch-%.gz: gz-patch-%.gz
+patch-extract-%.gz: gz-patch-%.gz
 	@$(MAKECOOKIE)
 
-patch-%.Z: gz-patch-%.Z
+patch-extract-%.Z: gz-patch-%.Z
 	@$(MAKECOOKIE)
 
-patch-%.diff: normal-patch-%.diff
+patch-extract-%.diff: normal-patch-%.diff
 	@$(MAKECOOKIE)
 
-patch-%.patch: normal-patch-%.patch
+patch-extract-%.patch: normal-patch-%.patch
 	@$(MAKECOOKIE)
 
-patch-%: normal-patch-%
+patch-extract-%: normal-patch-%
 	@$(MAKECOOKIE)
 
 #################### CONFIGURE RULES ####################
@@ -426,15 +426,6 @@ PYBUILD_CMD ?= build
 build-%/setup.py:
 	@echo " ==> Running setup.py $(PYBUILD_TYPE) in $*"
 	@( cd $* ; $(BUILD_ENV) python ./setup.py $(PYBUILD_CMD) $(BUILD_ARGS) )
-	@$(MAKECOOKIE)
-
-# Build for a certain architecture
-build-isa-%:
-	@echo " ==> Building for ISA $*"
-	$(if $(filter ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$*)),						\
-		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))	\
-	)
-	@$(MAKE) ISA=$* build-isa
 	@$(MAKECOOKIE)
 
 #################### TEST RULES ####################
@@ -521,19 +512,6 @@ install-%-config:
 	cp -f $(DESTDIR)$(bindir)/$*-config $(STAGINGDIR)/$(GARNAME)/
 	$(MAKECOOKIE)
 
-# Install for a certain architecture
-install-isa-%:
-	@echo " ==> Installing for ISA $*"
-	@$(MAKE) ISA=$* install-isa
-	@$(MAKECOOKIE)
-
-################# MERGE RULES ###################
-
-merge-isa-%: install-isa-%
-	@echo " ==> Merging ISAs together for packaging"
-	@$(MAKE) ISA=$* merge-isa
-	@$(MAKECOOKIE)
-
 ######################################
 # Use a manifest file of the format:
 # src:dest[:mode[:owner[:group]]]
@@ -594,12 +572,6 @@ install-$(MANIFEST_FILE):
 	@echo " ==> Installing from $(MANIFEST_FILE)"
 	$(MANIFEST_ENV) ; $(foreach ZORCH,$(shell cat $(MANIFEST_FILE)), ginstall -Dc $(join $(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_FLAGS)),$(wordlist 3,$(MANIFEST_SIZE),$(MANIFEST_LINE))) $(word 1,$(MANIFEST_LINE)) $(word 2,$(MANIFEST_LINE)) ;)
 	@$(MAKECOOKIE)
-
-####################### CLEAN RULES ######################
-
-# Build for a certain architecture
-clean-isa-%:
-	@$(MAKE) -s ISA=$* clean-isa
 
 #################### DEPENDENCY RULES ####################
 
