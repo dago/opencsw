@@ -1,5 +1,5 @@
 GARNAME = pca
-GARVERSION = $(shell test -f $(DOWNLOADDIR)/pca && perl $(DOWNLOADDIR)/pca -v | cut -f2 -d' ' | sed -e 's/-/./g')
+GARVERSION = 20080626-01
 CATEGORIES = utils
 
 DESCRIPTION = Patch Check Advanced
@@ -13,8 +13,8 @@ define BLURB
   It works on all versions of Solaris, both SPARC and x86.
 endef
 
-MASTER_SITES = http://www.par.univie.ac.at/solaris/pca/
-DISTFILES  = $(GARNAME)
+MASTER_SITES = http://www.par.univie.ac.at/solaris/pca/download/
+DISTFILES  = $(GARNAME)-$(GARVERSION)
 DISTFILES += $(call admfiles,CSWpca)
 
 WORKSRC = $(WORKDIR)
@@ -24,11 +24,14 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+SPKG_SOURCEURL = http://www.par.univie.ac.at/solaris/pca/
+SPKG_VERSION = $(shell echo $(GARVERSION) | sed -e 's/-/./g')
+
 include ../category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall $(WORKSRC)/pca $(DESTDIR)$(bindir)/pca
+	@ginstall $(WORKSRC)/$(DISTNAME) $(DESTDIR)$(bindir)/pca
 	@ginstall -d $(DESTDIR)$(mandir)/man8
-	@pod2man --section=8 $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man8/pca.8
+	@pod2man --section=8 $(WORKSRC)/$(DISTNAME) > $(DESTDIR)$(mandir)/man8/pca.8
 	@$(MAKECOOKIE)

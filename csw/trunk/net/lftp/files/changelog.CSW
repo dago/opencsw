@@ -1,3 +1,9 @@
+lftp (3.7.3,REV=2008.06.02) unstable
+
+  * New upstream version.
+
+   -- Yann Rouillard <yann@blastwave.org>  Mon, 02 Jun 2008 22:08:32 +0200
+   
 lftp (3.6.3,REV=2008.02.16) unstable
 
   * New upstream version.

@@ -19,7 +19,6 @@ DISTFILES    += CSWlibdbusdev.gspec CSWlibdbusdev.prototype CSWlibdbusdev.depend
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
-# CPPFLAGS   += -I$(DESTDIR)/opt/csw/include/xfce4
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 export CFLAGS CXXFLAGS LDFLAGS

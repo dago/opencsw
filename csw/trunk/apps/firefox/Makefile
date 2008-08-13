@@ -1,5 +1,5 @@
 GARNAME = firefox
-GARVERSION = 2.0.0.12
+GARVERSION = 2.0.0.14
 CATEGORIES = apps
 DISTNAME = $(GARNAME)
 
@@ -40,8 +40,8 @@ post-extract:
 	@$(MAKECOOKIE)
 
 pre-configure:
-	( mv $(HOME)/.mozconfig $(HOME)/.mozconfig.pre-CSWfirefox-build )
-	( cp $(FILEDIR)/.mozconfig $(HOME)/.mozconfig )
+#	( mv $(HOME)/.mozconfig $(HOME)/.mozconfig.pre-CSWfirefox-build )
+	( cp $(FILEDIR)/.mozconfig  $(WORKDIR)/$(DISTNAME)/.mozconfig )
 
 pre-install:
 	( if [ ! -d $(DESTDIR)/opt/csw/bin ] ; then mkdir -p $(DESTDIR)/opt/csw/bin ; fi )

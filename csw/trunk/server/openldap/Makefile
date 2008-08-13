@@ -1,5 +1,5 @@
 GARNAME = openldap
-GARVERSION = 2.3.39
+GARVERSION = 2.3.40
 CATEGORIES = server
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
@@ -21,14 +21,11 @@ DISTFILES += $(call admfiles,CSWoldaprt,depend prototype)
 DISTFILES += README.CSW openldaprc
 
 PATCHFILES = patch-oldap-2.3.24-ntlm.diff
+DISTFILES += $(PATCHFILES)
 EXTRA_DOCS = README.CSW openldaprc $(PATCHFILES)
-
-EXTRA_LIB = $(prefix)/bdb4/lib 
-EXTRA_INC = $(prefix)/bdb4/include
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-INSTALL_SCRIPTS += custom
 
 TEST_SCRIPTS =
 
@@ -40,8 +37,8 @@ i386_ARCH   = i386
 sparc_ARCH64 = sparcv9
 i386_ARCH64  = amd64
 
-ARCH=$($(GARCH)_ARCH)
-ARCH64=$($(GARCH)_ARCH64)
+ARCH = $($(GARCH)_ARCH)
+ARCH64 = $($(GARCH)_ARCH64)
 
 ifdef ISA
 ISALIST = $(ISA)
@@ -71,25 +68,50 @@ SPKG_OSNAME = SunOS5.8
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Optimizer flags for architecture
+OPTARCH_sparc   = v8
 OPTARCH_sparcv9 = v9
+OPTARCH_i386    = i386
 OPTARCH_amd64   = amd64
+
+OPTARCH = $(OPTARCH_$(ISA))
+
+ifdef OPTTARGET
+	SUN_OPTTARGET_i386 = $(OPTTARGET)
+	OPTISA=$(OPTTARGET)
+else
+	OPTISA=$(ISA)
+endif
+
 
 CLEAN_SCRIPTS = custom
 
-ifdef DO64
-	bindir = $(exec_prefix)/bin/$(ISA)
-	libdir = $(exec_prefix)/lib/$(ISA)
+EXTRA_INC = $(prefix)/bdb4/include
+ifndef DO64
+	EXTRA_LIB = $(prefix)/bdb4/lib 
+else
+	bindir = $(exec_prefix)/bin/$(OPTISA)
+	libdir = $(exec_prefix)/lib/$(OPTISA)
+	libexecdir = $(exec_prefix)/libexec/$(OPTISA)
+        docdir = $(prefix)/ignore/doc
+        includedir = $(prefix)/ignore/include
+        datadir = $(prefix)/ignore/data
+        sharedstatedir = $(prefix)/ignore/share
+        etcdir = $(prefix)/ignore/etc
+
+	EXTRA_LIB = $(prefix)/bdb4/lib/$(ISA)
 endif
 
 include ../category.mk
 
-OPTARCH = $(OPTARCH_$(ISA))
-
 build64:
 	@echo " ==> Building 64 bit version"
 	gmake DO64=1 build
-	$(MAKECOOKIE)
 
+build-pentium:
+	@echo " ==> Building pentium optimized version"
+	gmake OPTTARGET=pentium build
+
+INSTALL_SCRIPTS += custom
 install-custom:
 	@for file in $(EXTRA_DOCS); do \
 		ginstall -D $(WORKDIR)/$$file $(DESTDIR)$(docdir)/$(GARNAME)/$$file; \
@@ -98,13 +120,25 @@ install-custom:
 
 install64: build64
 	@echo " ==> Installing 64 bit version"
-	gmake DO64=1 install-custom
-	$(MAKECOOKIE)
+	gmake DO64=1 install
+
+install-pentium: build-pentium
+	@echo " ==> Installing pentium optimized version"
+	gmake OPTTARGET=pentium install
 
 pre-package: install64
 
 clean64:
-	gmake DO64=1 clean-all
+	@gmake DO64=1 clean-all
+	@rm -f $(COOKIEDIR)/build64
 
 clean-custom: clean64 clean-all
 
+env:
+	@echo "      GARCH = $(GARCH)"
+	@echo " GARVERSION = $(GARVERSION)"
+	@echo "        ISA = $(ISA)"
+	@echo "     OPTISA = $(OPTISA)"
+	@echo "     CFLAGS = $(CFLAGS)"
+	@echo "    OPTARCH = $(OPTARCH)"
+	@echo " OPTARCH_ISA = $(OPTARCH_$(ISA))"

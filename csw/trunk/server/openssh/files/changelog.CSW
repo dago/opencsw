@@ -1,4 +1,4 @@
-openssh (5.0,REV=2008.04.30_rev=)1) unstable
+openssh (5.0,REV=2008.06.02_rev=p1) unstable
 
   * New upstream version.
   * Added solaris fix for X11 forwarding bug on ipv4 only machine.

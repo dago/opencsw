@@ -7,11 +7,16 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-#DISTFILES += $(call admfiles,CSWxfceorage, depend)
-DISTFILES += CSWxfceorage.depend CSWxfceorage.gspec CSWxfceorage.prototype
-DISTFILES += CSWxfceoragedoc.depend CSWxfceoragedoc.gspec CSWxfceoragedoc.prototype
+DISTFILES += $(call admfiles,CSWxfceorage, depend)
+# DISTFILES += CSWxfceorage.depend CSWxfceorage.gspec CSWxfceorage.prototype
+# DISTFILES += CSWxfceoragedoc.depend CSWxfceoragedoc.gspec CSWxfceoragedoc.prototype
+
+TEST_SCRIPTS = none
 
 include ../category.mk
+
+test-none :
+	@$(MAKECOOKIE)
 
 CONFIGURE_ARGS += --enable-reentrant
 

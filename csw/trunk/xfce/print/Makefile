@@ -7,14 +7,19 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWxfceprint.depend CSWxfceprint.gspec CSWxfceprint.prototype
-DISTFILES += CSWxfceprintdoc.depend CSWxfceprintdoc.gspec CSWxfceprintdoc.prototype
-DISTFILES += CSWlibxfceprint.depend CSWlibxfceprint.gspec CSWlibxfceprint.prototype
-DISTFILES += CSWlibxfceprintdev.depend CSWlibxfceprintdev.gspec CSWlibxfceprintdev.prototype
+# DISTFILES += CSWxfceprint.depend CSWxfceprint.gspec CSWxfceprint.prototype
+# DISTFILES += CSWxfceprintdoc.depend CSWxfceprintdoc.gspec CSWxfceprintdoc.prototype
+# DISTFILES += CSWlibxfceprint.depend CSWlibxfceprint.gspec CSWlibxfceprint.prototype
+# DISTFILES += CSWlibxfceprintdev.depend CSWlibxfceprintdev.gspec CSWlibxfceprintdev.prototype
 
-# DISTFILES += $(call admfiles,CSWxfceprint, depend)
+DISTFILES += $(call admfiles,CSWxfceprint, depend)
+
+TEST_SCRIPTS = none
 
 include ../category.mk
+
+test-none :
+	@$(MAKECOOKIE)
 
 CONFIGURE_ARGS += --enable-bsdlpr --enable-cups
 

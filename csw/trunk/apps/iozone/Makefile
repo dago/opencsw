@@ -31,10 +31,6 @@ DOCSRC = $(WORKDIR)$(DISTNAME)/docs
 
 # Make sure the VxFS header is in place
 EXTRA_INC = $(WORKSRC)/include/sys/fs
-post-extract:
-	@mkdir -p $(WORKSRC)/include/sys/fs
-	@cp $(WORKDIR)/vx_ioctl.h $(WORKSRC)
-	@$(MAKECOOKIE)
 
 # We don't have this modern autoconfig-doodle-crap
 CONFIGURE_SCRIPTS =
@@ -46,6 +42,11 @@ BUILD_SCRIPTS = $(WORKSRC)/makefile
 INSTALL_SCRIPTS = custom
 
 include ../category.mk
+
+post-extract:
+	@mkdir -p $(WORKSRC)/include/sys/fs
+	@cp $(WORKDIR)/vx_ioctl.h $(WORKSRC)
+	@$(MAKECOOKIE)
 
 # The install part from the Makefile is completely unrelocatable :-(
 install-custom:

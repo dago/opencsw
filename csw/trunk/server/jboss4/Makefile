@@ -10,7 +10,7 @@ endef
 MASTER_SITES  = http://kent.dl.sourceforge.net/sourceforge/jboss/
 DISTFILES     = jboss-$(GARVERSION).zip
 PKGDIST       = jboss-$(GARVERSION).zip
-DISTFILES    += CSWjboss4.gspec CSWjboss4.prototype CSWjboss4.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-jboss4 jboss4.xml jboss4 cswjboss4
+DISTFILES    += CSWjboss4.gspec CSWjboss4.prototype CSWjboss4.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-jboss4 jboss4.xml jboss4.conf cswjboss4
 # DISTFILES    += $(call admfiles, CSWjboss4, depend )
 
 CONFIGURE_SCRIPTS = none
@@ -32,6 +32,10 @@ build-none:
 
 post-extract:
 	( mv $(WORKDIR)/jboss-$(GARVERSION) $(WORKDIR)/$(DISTNAME) )
+	( mv $(WORKDIR)/$(DISTNAME)/bin/run.conf $(WORKDIR)/$(DISTNAME)/bin/run.conf.CSW )
+	( mv $(WORKDIR)/$(DISTNAME)/client/auth.conf $(WORKDIR)/$(DISTNAME)/client/auth.conf.CSW )
+	( mkdir -p $(DESTDIR)/etc/opt/csw/$(GARNAME) )
+	( cp -fr $(FILEDIR)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME)/$(GARNAME).conf.CSW )
 #	( OLDDIR=`pwd` && cd $(WORKDIR)/$(DISTNAME)/conf && for i in `find . -type file` ; do mv $$i $$i.CSW ; done && cd $$OLDDIR )
 #	( for i in temp work logs conf ; do  find $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; find $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
 	@$(MAKECOOKIE)
@@ -48,8 +52,9 @@ install-jboss:
 	( mkdir -p $(DESTDIR)/var/opt/csw/$(GARNAME) )
 	( mkdir -p $(DESTDIR)/opt/csw/share )
 	( mkdir -p $(DESTDIR)/etc/opt/csw )
-	( cp -fr $(WORKDIR)/$(DISTNAME) $(DESTDIR)/opt/csw/$(GARNAME) )
-	( cp -fr $(FILEDIR)/$(GARNAME) $(DESTDIR)/etc/opt/csw/$(GARNAME) )
+	( mkdir -p $(DESTDIR)/etc/opt/csw/$(GARNAME) )
+	( cp -fr  $(WORKDIR)/$(DISTNAME) $(DESTDIR)/opt/csw/$(GARNAME) )
+	( cp -fr $(FILEDIR)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME) )
 	( cp -fr $(FILEDIR)/csw$(GARNAME) $(DESTDIR)/etc/init.d )
 #	( mv     $(DESTDIR)/opt/csw/$(GARNAME)/conf $(DESTDIR)/opt/csw/etc/$(GARNAME)/conf )
 #	( mv     $(DESTDIR)/opt/csw/$(GARNAME)/logs $(DESTDIR)/var/opt/csw/$(GARNAME) )

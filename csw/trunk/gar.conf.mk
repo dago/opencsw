@@ -133,7 +133,7 @@ SUN_LD_DBG   ?=
 # GNU Compiler Configuration
 #
 
-GNU_CC_HOME  ?= /opt/csw/gcc4
+GNU_CC_HOME  ?= /opt/csw/gcc3
 GNU_CC       ?= gcc
 GNU_CXX      ?= g++
 

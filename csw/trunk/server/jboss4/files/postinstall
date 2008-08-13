@@ -10,21 +10,21 @@ fi
 # Test if the confiuration file exists. If it does not, then copy the template
 # provided with this package. If it exists, then the script notify the user
 
-#for i in `find $PKG_ROOT_DIR/opt/csw/jboss4/conf/ -type file -name "*.CSW"` ; 
-#        do newFile=`echo $i | sed -e 's/\.CSW/ /g'` ;
-#        if [ ! -f $newFile ]
-#        then
-#                cp -p $i $newFile ;
-#        else
-#		eval diff $i $newFile > /dev/null
-#		if test $? -eq 1
-#		then
-#                	echo File $newFile already exist and is different from the file included in the package. 
-#			echo The latest file is available in $i
-#			echo
-#		fi
-#        fi
-#done
+for i in `find $PKG_ROOT_DIR/opt/csw/jboss4/bin/ -type file -name "*.CSW"` `find $PKG_ROOT_DIR/opt/csw/jboss4/client/ -type file -name "*.CSW"` `find $PKG_ROOT_DIR/etc/opt/csw/jboss4/ -type file -name "*.CSW"`; 
+        do newFile=`echo $i | sed -e 's/\.CSW/ /g'` ;
+        if [ ! -f $newFile ]
+        then
+                cp -p $i $newFile ;
+        else
+		        eval diff $i $newFile > /dev/null
+        		if test $? -eq 1
+        		then
+                   	echo File $newFile already exist and is different from the file included in the package. 
+        			echo The latest file is available in $i
+        			echo
+        		fi
+        fi
+done
 
 # Source csw.conf, if it exists
 if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then

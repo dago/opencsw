@@ -1,4 +1,4 @@
-e3fec2953c948f6990ccdc3af7bf7f18  download/openldap-2.3.39.tgz
+728e95d806a3d47d9686481d72e62072  download/openldap-2.3.40.tgz
 2f6e6a8c9c3497f1c0c9d52ea2d1dafa  download/CSWoldap.gspec
 059b2c7ae6d2f181e9098a8afc852ce4  download/CSWoldap.depend
 bebf1c2805dfe126938a9631f9d7947f  download/CSWoldap.prototype
@@ -16,4 +16,5 @@ aa020153cf5ecfc19252d45e89708eda  download/CSWoldapdevel.prototype
 755aef96cb0ab523b49e83504d37c107  download/CSWoldaprt.prototype
 892dba5f625755be024c30ea0055fd55  download/README.CSW
 ab2ac7519b092ce8d16124c5270bfec0  download/openldaprc
+2d8b0286819ffcb41761a6fdd735c5ae  download/patch-oldap-2.3.24-ntlm.diff
 2d8b0286819ffcb41761a6fdd735c5ae  download/patch-oldap-2.3.24-ntlm.diff

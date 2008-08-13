@@ -26,7 +26,7 @@ export CFLAGS CXXFLAGS LDFLAGS
 
 include ../category.mk
 
-DEPENDS += lib/dbus
+LIBDEPS += lib/dbus
 
 CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
 CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include

@@ -6,10 +6,12 @@ define BLURB
    Xfce GTK theme engine 
 endef
 
-GARVERSION = 2.4.1
+GARVERSION = 2.4.2
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWgtkxfceengine.depend CSWgtkxfceengine.gspec CSWgtkxfceengine.prototype
+# DISTFILES += CSWgtkxfceengine.depend CSWgtkxfceengine.gspec CSWgtkxfceengine.prototype
+DISTFILES += $(call admfiles,CSWgtkxfceengine, depend)
 
+TEST_SCRIPTS = none
 
 include ../category.mk
 
@@ -21,6 +23,9 @@ LDFLAGS  += -L/opt/csw/lib -R/opt/csw/lib
 # DEPENDS += xfce/libxfce4util
 
 CONFIGURE_ARGS = --prefix=/opt/csw --disable-debug --enable-final 
+
+test-none :
+	@$(MAKECOOKIE)
 
 post-install:
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

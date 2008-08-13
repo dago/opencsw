@@ -18,12 +18,12 @@
 #     /opt/csw/etc
 #         This directory contain global config files
 #
-#     If there exist a /etc/opt/csw/jboss4 config file, then the
-#     environment variables defined in this file are used and the
-#     /opt/csw/etc/jboss4/conf/jboss4 file is ignored even if it 
+#     If there exist a /etc/opt/csw/jboss4/jboss4.conf config file, then 
+#     the environment variables defined in this file are used and the
+#     /opt/csw/etc/jboss4/conf/jboss4.conf file is ignored even if it 
 #     exist.
 #
-#     If there exist only a /opt/csw/etc/jboss4/conf/jboss4 config
+#     If there exist only a /opt/csw/etc/jboss4/conf/jboss4.conf config
 #     file, then the environnement variables defined in this file are
 #     used.
 #
@@ -73,8 +73,8 @@
 # Use the configuration file to supered their value
 #
 
-SPECIFIC_CONFIG_FILE=/etc/opt/csw/jboss4
-GLOBAL_CONFIG_FILE=/opt/csw/etc/jboss4/conf/jboss4
+SPECIFIC_CONFIG_FILE=/etc/opt/csw/jboss4/jboss4.conf
+GLOBAL_CONFIG_FILE=/opt/csw/etc/jboss4/conf/jboss4.conf
 
 JAVA_HOME=/usr/java
 JBOSS_USER=JBOSS

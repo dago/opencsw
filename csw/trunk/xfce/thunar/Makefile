@@ -1,5 +1,5 @@
 GARNAME = Thunar
-GARVERSION = 0.8.0
+GARVERSION = 0.9.0
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Thunar File Manager
@@ -8,17 +8,22 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWxfcethunar.depend CSWxfcethunar.gspec CSWxfcethunar.prototype
-DISTFILES += CSWlibxfcethunar.depend CSWlibxfcethunar.gspec CSWlibxfcethunar.prototype
-DISTFILES += CSWxfcethunardoc.depend CSWxfcethunardoc.gspec CSWxfcethunardoc.prototype
-DISTFILES += CSWlibxfcethunardev.depend CSWlibxfcethunardev.gspec CSWlibxfcethunardev.prototype
+# DISTFILES += CSWxfcethunar.depend CSWxfcethunar.gspec CSWxfcethunar.prototype
+# DISTFILES += CSWlibxfcethunar.depend CSWlibxfcethunar.gspec CSWlibxfcethunar.prototype
+# DISTFILES += CSWxfcethunardoc.depend CSWxfcethunardoc.gspec CSWxfcethunardoc.prototype
+# DISTFILES += CSWlibxfcethunardev.depend CSWlibxfcethunardev.gspec CSWlibxfcethunardev.prototype
 
-# DISTFILES  += $(call admfiles,CSWxfcethunar, depend)
+DISTFILES  += $(call admfiles,CSWxfcethunar, depend)
 
-PATCHFILES  = thunar-vfs-path-private.h.diff 
-PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
+# PATCHFILES  = thunar-vfs-path-private.h.diff 
+# PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
+
+TEST_SCRIPTS = none
 
 include ../category.mk
+
+test-none :
+	@$(MAKECOOKIE)
 
 CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
 CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include

@@ -1,7 +1,8 @@
 # XFCE
-XFCE_ROOT      = http://www.us.xfce.org
-XFCE_VERSION   = 4.4.1
-XFCE_MIRROR    = $(XFCE_ROOT)/archive/xfce-$(XFCE_VERSION)/src/
+# XFCE_ROOT      = http://www.us.xfce.org
+XFCE_VERSION   = 4.4.2
+# XFCE_MIRROR    = $(XFCE_ROOT)/archive/xfce-$(XFCE_VERSION)/src/
+XFCE_MIRROR    = http://mocha.xfce.org/archive/xfce-4.4.2/src/
 
 MASTER_SITES ?= $(XFCE_MIRROR)
 GARVERSION   ?= $(XFCE_VERSION)

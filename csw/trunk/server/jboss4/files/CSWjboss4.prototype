@@ -11,7 +11,6 @@ d smfyes /opt/csw/lib/svc 0755 root bin
 d smfyes /opt/csw/lib/svc/method 0755 root bin
 f smfyes /opt/csw/lib/svc/method/svc-jboss4=svc-jboss4 0755 root bin
 f none /etc/init.d/cswjboss4 0755 root bin
-f none /etc/opt/csw/jboss4 0644 root bin
 s none /etc/rc0.d/K17jboss4=/etc/init.d/cswjboss4
 s none /etc/rc1.d/K17jboss4=/etc/init.d/cswjboss4
 s none /etc/rc2.d/K17jboss4=/etc/init.d/cswjboss4
@@ -21,6 +20,32 @@ d none /opt/csw/etc/jboss4 0755 root bin
 d none /opt/csw/jboss4 0755 root bin
 f none /opt/csw/jboss4/JBossORG-EULA.txt 0644 root bin
 d none /opt/csw/jboss4/bin 0755 root bin
+d none /etc/opt/csw/jboss4 0700 jboss jboss
+f none /etc/opt/csw/jboss4/jboss4.conf.CSW 0644 jboss jboss
+d none /etc/opt/csw/jboss4/server 0700 jboss jboss
+d none /etc/opt/csw/jboss4/server/default 0700 jboss jboss
+d none /etc/opt/csw/jboss4/server/default/conf 0700 jboss jboss
+d none /etc/opt/csw/jboss4/server/all 0700 jboss jboss
+d none /etc/opt/csw/jboss4/server/all/conf 0700 jboss jboss
+d none /etc/opt/csw/jboss4/server/minimal 0700 jboss jboss
+d none /etc/opt/csw/jboss4/server/minimal/conf 0700 jboss jboss
+d none /var/opt/csw/jboss4 0755 root bin
+d none /var/opt/csw/jboss4/server 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/default 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/default/log 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/default/data 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/default/tmp 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/default/work 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/all 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/all/log 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/all/data 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/all/tmp 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/all/work 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/minimal 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/minimal/log 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/minimal/data 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/minimal/tmp 0755 jboss jboss
+d none /var/opt/csw/jboss4/server/minimal/work 0755 jboss jboss
 f none /opt/csw/jboss4/bin/classpath.sh 0755 root bin
 f none /opt/csw/jboss4/bin/jboss_init_hpux.sh 0755 root bin
 f none /opt/csw/jboss4/bin/jboss_init_redhat.sh 0755 root bin
@@ -28,7 +53,7 @@ f none /opt/csw/jboss4/bin/jboss_init_suse.sh 0755 root bin
 f none /opt/csw/jboss4/bin/probe.bat 0644 root bin
 f none /opt/csw/jboss4/bin/probe.sh 0755 root bin
 f none /opt/csw/jboss4/bin/run.bat 0644 root bin
-f none /opt/csw/jboss4/bin/run.conf 0644 root bin
+f none /opt/csw/jboss4/bin/run.conf.CSW 0644 root bin
 f none /opt/csw/jboss4/bin/run.jar 0644 root bin
 f none /opt/csw/jboss4/bin/run.sh 0755 root bin
 f none /opt/csw/jboss4/bin/shutdown.bat 0644 root bin
@@ -48,7 +73,7 @@ f none /opt/csw/jboss4/bin/wstools.sh 0755 root bin
 d none /opt/csw/jboss4/client 0755 root bin
 f none /opt/csw/jboss4/client/activation.jar 0644 root bin
 f none /opt/csw/jboss4/client/antlr.jar 0644 root bin
-f none /opt/csw/jboss4/client/auth.conf 0644 root bin
+f none /opt/csw/jboss4/client/auth.conf.CSW 0644 root bin
 f none /opt/csw/jboss4/client/avalon-framework.jar 0644 root bin
 f none /opt/csw/jboss4/client/commons-codec.jar 0644 root bin
 f none /opt/csw/jboss4/client/commons-httpclient.jar 0644 root bin
@@ -349,11 +374,11 @@ f none /opt/csw/jboss4/lib/log4j-boot.jar 0644 root bin
 f none /opt/csw/jboss4/readme.html 0644 root bin
 d none /opt/csw/jboss4/server 0755 root bin
 d none /opt/csw/jboss4/server/all 0755 root bin
+s none /opt/csw/jboss4/server/all/conf=/etc/opt/csw/jboss4/server/all/conf
 s none /opt/csw/jboss4/server/all/log=/var/opt/csw/jboss4/server/all/log
 s none /opt/csw/jboss4/server/all/tmp=/var/opt/csw/jboss4/server/all/tmp
 s none /opt/csw/jboss4/server/all/work=/var/opt/csw/jboss4/server/all/work
 s none /opt/csw/jboss4/server/all/data=/var/opt/csw/jboss4/server/all/data
-d none /opt/csw/jboss4/server/all/conf 0755 root bin
 f none /opt/csw/jboss4/server/all/conf/jacorb.properties 0644 root bin
 f none /opt/csw/jboss4/server/all/conf/jboss-log4j.xml 0644 root bin
 f none /opt/csw/jboss4/server/all/conf/jboss-minimal.xml 0644 root bin
@@ -817,11 +842,11 @@ f none /opt/csw/jboss4/server/all/lib/scheduler-plugin.jar 0644 root bin
 f none /opt/csw/jboss4/server/all/lib/servlet-api.jar 0644 root bin
 f none /opt/csw/jboss4/server/all/lib/xmlentitymgr.jar 0644 root bin
 d none /opt/csw/jboss4/server/default 0755 root bin
+s none /opt/csw/jboss4/server/default/conf=/etc/opt/csw/jboss4/server/default/conf
 s none /opt/csw/jboss4/server/default/log=/var/opt/csw/jboss4/server/default/log
 s none /opt/csw/jboss4/server/default/tmp=/var/opt/csw/jboss4/server/default/tmp
 s none /opt/csw/jboss4/server/default/work=/var/opt/csw/jboss4/server/default/work
 s none /opt/csw/jboss4/server/default/data=/var/opt/csw/jboss4/server/default/data
-d none /opt/csw/jboss4/server/default/conf 0755 root bin
 f none /opt/csw/jboss4/server/default/conf/jboss-log4j.xml 0644 root bin
 f none /opt/csw/jboss4/server/default/conf/jboss-minimal.xml 0644 root bin
 f none /opt/csw/jboss4/server/default/conf/jboss-service.xml 0644 root bin
@@ -1230,11 +1255,11 @@ f none /opt/csw/jboss4/server/default/lib/scheduler-plugin.jar 0644 root bin
 f none /opt/csw/jboss4/server/default/lib/servlet-api.jar 0644 root bin
 f none /opt/csw/jboss4/server/default/lib/xmlentitymgr.jar 0644 root bin
 d none /opt/csw/jboss4/server/minimal 0755 root bin
+s none /opt/csw/jboss4/server/minimal/conf=/etc/opt/csw/jboss4/server/minimal/conf
 s none /opt/csw/jboss4/server/minimal/log=/var/opt/csw/jboss4/server/minimal/log
 s none /opt/csw/jboss4/server/minimal/tmp=/var/opt/csw/jboss4/server/minimal/tmp
 s none /opt/csw/jboss4/server/minimal/work=/var/opt/csw/jboss4/server/minimal/work
 s none /opt/csw/jboss4/server/minimal/data=/var/opt/csw/jboss4/server/minimal/data
-d none /opt/csw/jboss4/server/minimal/conf 0755 root bin
 f none /opt/csw/jboss4/server/minimal/conf/jboss-log4j.xml 0644 root bin
 f none /opt/csw/jboss4/server/minimal/conf/jboss-service.xml 0644 root bin
 f none /opt/csw/jboss4/server/minimal/conf/jndi.properties 0644 root bin
@@ -1247,23 +1272,6 @@ f none /opt/csw/jboss4/server/minimal/lib/jboss-management.jar 0644 root bin
 f none /opt/csw/jboss4/server/minimal/lib/jboss-minimal.jar 0644 root bin
 f none /opt/csw/jboss4/server/minimal/lib/jnpserver.jar 0644 root bin
 f none /opt/csw/jboss4/server/minimal/lib/log4j.jar 0644 root bin
-d none /var/opt/csw/jboss4 0755 root bin
-d none /var/opt/csw/jboss4/server 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/default 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/default/log 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/default/data 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/default/tmp 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/default/work 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/all 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/all/log 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/all/data 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/all/tmp 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/all/work 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/minimal 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/minimal/log 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/minimal/data 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/minimal/tmp 0755 jboss jboss
-d none /var/opt/csw/jboss4/server/minimal/work 0755 jboss jboss
 i copyright=CSWjboss4.copyright
 i depend=CSWjboss4.depend
 i pkginfo=CSWjboss4.pkginfo
