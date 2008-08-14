@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://www.irssi.org/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWirssi, postinstall)
+DISTFILES += $(call admfiles,CSWirssi, postinstall depend)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6

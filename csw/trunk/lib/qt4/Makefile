@@ -90,9 +90,6 @@ endif
 
 include ../category.mk
 
-CC := ccache $(CC)
-CXX := ccache $(CXX)
-
 OPTARCH_sparc   = v8
 OPTARCH_sparcv9 = v9
 OPTARCH_i386    = 386

@@ -76,7 +76,8 @@ DESTDIR  ?= $(DESTBUILD)
 BUILD_PREFIX ?= /opt/csw
 
 # These are the core packages which must be installed for GAR to function correctly
-PREREQUISITE_BASE_PKGS ?= CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2 CSWlftp
+_PREREQUISITE_BASE_PKGS += CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2 CSWlftp
+PREREQUISITE_BASE_PKGS ?= $(_PREREQUISITE_BASE_PKGS)
 
 # Optimization Architecture
 GNU_ARCHLIST_i386   ?= pentium pentium_pro pentium_pro+mmx
@@ -133,7 +134,7 @@ SUN_LD_DBG   ?=
 # GNU Compiler Configuration
 #
 
-GNU_CC_HOME  ?= /opt/csw/gcc3
+GNU_CC_HOME  ?= /opt/csw/gcc4
 GNU_CC       ?= gcc
 GNU_CXX      ?= g++
 

@@ -1,5 +1,5 @@
 GARNAME = httpd
-GARVERSION = 2.2.6
+GARVERSION = 2.2.9
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
@@ -36,6 +36,10 @@ DISTFILES += httpd.conf.CSW
 DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
+
+pre-configure:
+	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); \
+	./buildconf)
 
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=prefork

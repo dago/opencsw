@@ -1,0 +1,8 @@
+%var            bitname hylafax
+%var            pkgname CSWhylafax
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYRIGHT
+%prototype:merge
+f cswinitsmf    /opt/csw/etc/init.d/cswhylafax 0755 root bin
+%depend:merge
+P CSWcswclassutils cswclassutils - CSW class action utilities

@@ -165,7 +165,7 @@ pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
 
 pkgcheck-%:
 	@echo " ==> Checking blastwave compilance: $*"
-	@( checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
+	@( LC_ALL=C checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
 
 pkgcheck-p:
 	@$(foreach COOKIEFILE,$(PKGCHECK_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)

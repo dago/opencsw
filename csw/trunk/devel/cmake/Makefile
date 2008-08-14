@@ -1,5 +1,5 @@
 GARNAME = cmake
-GARVERSION = 2.6.0
+GARVERSION = 2.4.8
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
@@ -12,7 +12,7 @@ define BLURB
   generation, code generation, and template instantiation. 
 endef
 
-MASTER_SITES = http://www.cmake.org/files/v2.6/
+MASTER_SITES = http://www.cmake.org/files/v2.4/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcmake)
 
@@ -25,12 +25,6 @@ CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 SKIPTEST = 1
 
 include ../category.mk
-
-LD_OPTIONS :=
-CFLAGS :=
-CPPFLAGS :=
-CXXFLAGS :=
-LDFLAGS :=
 
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Modules
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Templates

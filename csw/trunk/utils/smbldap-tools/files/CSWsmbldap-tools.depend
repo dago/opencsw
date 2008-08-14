@@ -1,0 +1,8 @@
+P CSWpmunimap       pm_unicodemap - perl unicodemap
+P CSWpmldap         pm_ldap - perl ldap
+P CSWpmdigestsha1   pm_digestsha1 - perl digest sha1
+P CSWpmjcode        pm_jcode - perl jcode
+P CSWpmunistr       pm_unicodestring - perl unicode string
+P CSWpmunimap8      pm_unicodemap8 - perl unicode map
+P CSWpmumutf8       pm_unicodemaputf8 - perl unicode map utf8
+P CSWpmcryptsmbhash pm_cryptsmbhash - perl smbhash

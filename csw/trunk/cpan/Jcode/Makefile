@@ -3,7 +3,7 @@ GARVERSION = 2.06
 CATEGORIES = cpan
 AUTHOR = DANKOGAI
 
-DESCRIPTION = japanese charset handler
+DESCRIPTION = Japanese charset handler
 define BLURB
 endef
 

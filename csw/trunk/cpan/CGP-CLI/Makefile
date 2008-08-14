@@ -1,5 +1,5 @@
 GARNAME = CGP-CLI
-GARVERSION = 2.7.2.1
+GARVERSION = 2.7.5
 CATEGORIES = cpan
 AUTHOR = JBUHACOFF
 
@@ -10,6 +10,6 @@ define BLURB
   The only changes are the addition of the VERSION variable for MakeMaker and this short POD at the end.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcgpcli,prototype)
+DISTFILES += $(call admfiles,CSWpmcgpcli)
 
 include ../category.mk

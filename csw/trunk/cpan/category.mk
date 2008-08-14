@@ -28,6 +28,8 @@ SPKG_SOURCEURL  = http://search.cpan.org
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/~$(call TOLOWER,$(AUTHOR))
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 
+_PREREQUISITE_BASE_PKGS += CSWperl
+
 include ../../gar.mk
 
 # Canned commands for finding packlist files
@@ -58,7 +60,7 @@ PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
 	@( cd $* ; \
-	    $(CONFIGURE_ENV) perl Makefile.PL \
+	    $(CONFIGURE_ENV) $(bindir)/perl Makefile.PL \
 	        $(CONFIGURE_ARGS) $(PERL_CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
@@ -66,7 +68,7 @@ PERLBUILD_CONFIGURE_ARGS ?= installdirs=vendor
 configure-%/Build.PL:
 	@echo " ==> Running Build.PL in $*"
 	@( cd $* ; \
-	    $(CONFIGURE_ENV) perl Build.PL \
+	    $(CONFIGURE_ENV) $(bindir)/perl Build.PL \
 	        $(PERLBUILD_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 

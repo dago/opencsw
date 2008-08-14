@@ -1,5 +1,5 @@
 GARNAME = rrdtool
-GARVERSION = 1.2.23
+GARVERSION = 1.3.0
 CATEGORIES = utils
 
 DESCRIPTION = time-series data logging and graphing.
@@ -13,9 +13,12 @@ MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWrrdtool,prototype)
 
-CONFIGURE_ARGS  = $(DIRPATHS) \
-	--disable-python --disable-ruby \
-	--enable-perl --with-perl-options=INSTALLDIRS=vendor
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-python
+CONFIGURE_ARGS += --disable-ruby
+CONFIGURE_ARGS += --disable-libintl
+CONFIGURE_ARGS += --enable-perl
+CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
 
 TEST_TARGET = check
 

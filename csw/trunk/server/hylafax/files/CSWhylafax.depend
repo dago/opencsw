@@ -1,0 +1,5 @@
+P CSWzlib    zlib - Zlib Data Compression Library
+P CSWjbigkit jbigkit - JBIG kit, a data compression algorithm for bi-level high-resolution images
+P CSWtiff    tiff - lib and tools for Tag Image File Format
+P CSWgs      ghostscript - Ghostscript, a PostScript and PDF interpreter for previewing, conversion and printing
+P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)

@@ -1,7 +1,7 @@
 GARNAME = squid
-GARVERSION = 2.6
+GARVERSION = 2.7
 CATEGORIES = server
-RELEASE = STABLE18
+RELEASE = STABLE3
 DISTVERSION = $(GARVERSION).$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 
@@ -12,7 +12,7 @@ define BLURB
   bandwith usage. Squid runs on all popular Unix and Windows platforms.
 endef
 
-MASTER_SITES = http://www.squid-cache.org/Versions/v2/2.6/
+MASTER_SITES = http://www.squid-cache.org/Versions/v2/2.7/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWsquid, depend prototype copyright postinstall preremove)
 
