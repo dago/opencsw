@@ -1,0 +1,8 @@
+%var            bitname fax2png
+%var            pkgname CSWfax2png
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright
+Copyright 2004, Boutell.Com, Inc. and Tobacco Documents Online.
+This software is released for free use under the terms of the
+GNU Public License, version 2 or higher.
+NO WARRANTY IS EXPRESSED OR IMPLIED. USE THIS SOFTWARE AT YOUR OWN RISK.
