@@ -1,0 +1,63 @@
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man1/cgi-fcgi.1 0644 root bin
+f none /opt/csw/share/man/man3/FCGI_Accept.3 0644 root bin
+f none /opt/csw/share/man/man3/FCGI_Finish.3 0644 root bin
+f none /opt/csw/share/man/man3/FCGI_SetExitStatus.3 0644 root bin
+f none /opt/csw/share/man/man3/FCGI_StartFilterData.3 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/cgi-fcgi 0755 root bin
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/fastcgi.h 0644 root bin
+f none /opt/csw/include/fcgi_config.h 0644 root bin
+f none /opt/csw/include/fcgi_stdio.h 0644 root bin
+f none /opt/csw/include/fcgiapp.h 0644 root bin
+f none /opt/csw/include/fcgimisc.h 0644 root bin
+f none /opt/csw/include/fcgio.h 0644 root bin
+f none /opt/csw/include/fcgios.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libfcgi++.a 0644 root bin
+f none /opt/csw/lib/libfcgi++.la 0755 root bin
+f none /opt/csw/lib/libfcgi++.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libfcgi++.so.0=libfcgi++.so.0.0.0
+s none /opt/csw/lib/libfcgi++.so=libfcgi++.so.0.0.0
+f none /opt/csw/lib/libfcgi.a 0644 root bin
+f none /opt/csw/lib/libfcgi.la 0755 root bin
+f none /opt/csw/lib/libfcgi.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libfcgi.so.0=libfcgi.so.0.0.0
+s none /opt/csw/lib/libfcgi.so=libfcgi.so.0.0.0
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/fastcgi 0755 root bin
+d none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide 0755 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ap_guida.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/cover.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ch1inta1.gif 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/apaman.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ch1intra.gif 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ch3perl.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ch1intro.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ch2c.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ch4tcl.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/covera.gif 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-prog-guide/ap_guide.htm 0644 root bin
+d none /opt/csw/share/doc/fastcgi/fastcgi-whitepaper 0755 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-whitepaper/img00002.gif 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-whitepaper/img00003.gif 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-whitepaper/fastcgi.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fastcgi-whitepaper/img00001.gif 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fcgi-devel-kit.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fcgi-java.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fcgi-perf.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fcgi-perl.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fcgi-spec.html 0644 root bin
+f none /opt/csw/share/doc/fastcgi/fcgi-tcl.htm 0644 root bin
+f none /opt/csw/share/doc/fastcgi/omi-logo.gif 0644 root bin
+f none /opt/csw/share/doc/fastcgi/overview.html 0644 root bin
+f none /opt/csw/share/doc/fastcgi/www5-api-workshop.html 0644 root bin
+f none /opt/csw/share/doc/fastcgi/LICENSE.TERMS 0644 root bin
+i copyright=CSWfastcgi.copyright
+i depend=CSWfastcgi.depend
+i pkginfo=CSWfastcgi.pkginfo
