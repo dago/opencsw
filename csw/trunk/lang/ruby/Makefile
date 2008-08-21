@@ -1,6 +1,6 @@
 GARNAME = ruby
-DISTVERSION = 1.8.6
-PATCHLEVEL = p110
+DISTVERSION = 1.8.7
+PATCHLEVEL = p22
 GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
@@ -21,10 +21,12 @@ MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
+
 DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
 DISTFILES += CSWrubytk.gspec CSWrubytk.depend CSWrubytk.prototype
+
 ifneq ($(SKIP_RUBYDOC),1)
-DISTFILES += CSWrubydoc.gspec CSWrubydoc.depend CSWrubydoc.prototype
+DISTFILES += CSWrubydoc.gspec CSWrubydoc.depend
 endif
 
 # Force the dbm extension to build
@@ -49,6 +51,13 @@ CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
+#override this as the configure script wants to use the obsolete (broken in
+#some cases) -KPIC
+#ifeq "$(GARCH)" "sparc"
+#CONFIGURE_ARGS += CFLAGS="-xO3 -xtarget=ultra -xarch=v8 -I/export/home/bwalton/build.5.8-sparc/ruby/opt/csw/include -I/opt/csw/include"
+#CFLAGS = -xO3 -xtarget=ultra -xarch=v8 -I/export/home/bwalton/build.5.8-sparc/ruby/opt/csw/include -I/opt/csw/include
+#endif
+
 include ../category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
@@ -59,6 +68,11 @@ pre-package:
 		test -z "$$proto" && continue ; \
 		gsed -i -e s,%GARCH%,$(GARCH),g $$proto ; \
 	done
+#	@for proto in "" $(wildcard $(WORKDIR)/*prototype.$(GARCH)); do \
+#		test -z "$$proto" && continue ; \
+#		mv $$proto $${proto%.$(GARCH)}; \
+#	done
+		
 
 PI_TARGETS  = samples rbconfig rbscripts
 ifneq ($(SKIP_RUBYDOC),1)
@@ -105,4 +119,3 @@ rbscripts:
 	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
 		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby}g" {} \;
 	@$(MAKECOOKIE)
-		
