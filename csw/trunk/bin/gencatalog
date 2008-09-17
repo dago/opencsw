@@ -10,7 +10,7 @@
 # author(s) shall not be liable in the event that use of the
 # software causes damage.
 #
-# gencatalog - generate a blastwave v1 style catalog and description file.
+# gencatalog - generate a v1 style catalog and description file.
 #
 
 cp catalog catalog.old

@@ -7,4 +7,4 @@ VENDOR=%{SPKG_VENDOR}
 EMAIL=%{SPKG_EMAIL}
 PSTAMP=%{SPKG_PSTAMP}
 CLASSES=%{SPKG_CLASSES}
-HOTLINE=http://www.blastwave.org/bugtrack/
+HOTLINE=http://www.opencsw.org/bugtrack/
