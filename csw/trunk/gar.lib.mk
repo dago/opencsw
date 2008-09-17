@@ -136,10 +136,10 @@ check-upstream-and-mail:
 			  echo "is/are available at the following url(s):"; \
 			  echo "    $(MASTER_SITES)"; \
 			  echo ""; \
-			  echo "Please consider updating your blastwave package." ; \
+			  echo "Please consider updating your package." ; \
 			  echo ""; \
 			  echo "---"; \
-			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn.blastwave.org] $(GARNAME) upstream update notification' $(GARNAME); \
+			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 		fi; \
 	fi
 	

@@ -158,13 +158,13 @@ package-%:
 package-p:
 	@$(foreach COOKIEFILE,$(PACKAGE_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# pkgcheck - check if the package is blastwave compliant
+# pkgcheck - check if the package is standards compliant
 #
 pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
 	$(DONADA)
 
 pkgcheck-%:
-	@echo " ==> Checking blastwave compilance: $*"
+	@echo " ==> Checking standards compliance: $*"
 	@( LC_ALL=C checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
 
 pkgcheck-p:
