@@ -1,6 +1,6 @@
 GARNAME = ruby
 DISTVERSION = 1.8.7
-PATCHLEVEL = p22
+PATCHLEVEL = p72
 GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
@@ -68,11 +68,6 @@ pre-package:
 		test -z "$$proto" && continue ; \
 		gsed -i -e s,%GARCH%,$(GARCH),g $$proto ; \
 	done
-#	@for proto in "" $(wildcard $(WORKDIR)/*prototype.$(GARCH)); do \
-#		test -z "$$proto" && continue ; \
-#		mv $$proto $${proto%.$(GARCH)}; \
-#	done
-		
 
 PI_TARGETS  = samples rbconfig rbscripts
 ifneq ($(SKIP_RUBYDOC),1)
