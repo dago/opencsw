@@ -1,5 +1,5 @@
 GARNAME = autoconf
-GARVERSION = 2.61
+GARVERSION = 2.63
 CATEGORIES = devel
 
 DESCRIPTION = GNU auto-configuration tool
@@ -18,7 +18,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = use-csw-tools.patch
 
-DEPENDS = utils/sed utils/sh-utils
+PREREQUISITE_PKGS = CSWhelp2man
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
