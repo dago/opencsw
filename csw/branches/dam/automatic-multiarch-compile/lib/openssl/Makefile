@@ -79,7 +79,7 @@ sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
 sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
+CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(INSTALLISADIR)
 
 # We want the csw perl to be used
 #CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
@@ -104,7 +104,7 @@ include ../category.mk
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
 
 
-pre-configure: 
+pre-configure-modulated: 
 	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
 	$(MAKECOOKIE)
@@ -112,19 +112,20 @@ pre-configure:
 # we remove every debug information except symbol table
 # (should rather be done in the gar scripts)
 striplib:
-	chmod -R u+w $(DESTBUILD)$(libdir)
-	find $(DESTBUILD)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
+	chmod -R u+w $(PKGROOT)$(libdir)
+	find $(PKGROOT)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
 
 install-certs: 
-	[ -f $(DESTBUILD)$(prefix)/ssl/openssl.cnf ] && \
-		ginstall -D $(DESTBUILD)$(prefix)/ssl/openssl.cnf $(DESTBUILD)$(sysconfdir)/ssl/openssl.cnf
-	cp -r $(WORKSRC)/certs/* $(DESTBUILD)$(prefix)/ssl/certs
+	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
+		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf
+	cp -r $(WORKSRC)/certs/* $(PKGROOT)$(prefix)/ssl/certs
+	OPENSSL=$(PKGROOT)/$(bindir)/openssl $(PKGROOT)/$(bindir)/c_rehash $(PKGROOT)/$(prefix)/ssl/certs/
 	$(MAKECOOKIE)
 
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%:
 	echo " ==> Installing old libraries $* from archive oldlibs.$*-$(GARCH).tar.gz"; \
-	cd $(DESTBUILD) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf - && \
+	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf - && \
 	$(MAKECOOKIE)
 
 pre-package: striplib install-certs install-oldlibs
