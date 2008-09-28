@@ -23,7 +23,7 @@
 #
 #
 GARNAME = openssl
-GARVERSION = 0.9.8g
+GARVERSION = 0.9.8i
 CATEGORIES = lib
 
 OPENSSL_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
@@ -79,7 +79,7 @@ sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
 sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(INSTALLISADIR)
+CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
 
 # We want the csw perl to be used
 #CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
