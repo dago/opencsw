@@ -12,8 +12,8 @@
 -include $(HOME)/.garrc
 
 # Outbound proxies
-http_proxy ?= http://svn:8080
-ftp_proxy  ?= http://svn:8080
+http_proxy ?=
+ftp_proxy  ?=
 export http_proxy ftp_proxy
 
 # Don't do full-dependency builds by default
@@ -22,10 +22,10 @@ SKIPDEPEND ?= 1
 # A directory containing cached files. It can be created
 # manually, or with 'make garchive' once you've started
 # downloading required files (say with 'make paranoid-checksum'.
-GARCHIVEDIR ?= /export/medusa/src
+GARCHIVEDIR ?= /home/src
 
 # Space separated list of paths to search for DISTFILES.
-GARCHIVEPATH ?= /export/medusa/src
+GARCHIVEPATH ?= $(GARCHIVEDIR)
 
 # Select compiler (GNU/SUN)
 GARCOMPILER ?= SUN
