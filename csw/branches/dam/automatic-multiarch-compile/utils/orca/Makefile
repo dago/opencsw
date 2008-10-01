@@ -1,6 +1,6 @@
 GARNAME = orca
-GARVERSION = snapshot-r531
-SPKG_VERSION = r531
+GARVERSION = snapshot-r535
+SPKG_VERSION = r535
 CATEGORIES = utils
 
 DESCRIPTION = A system performance monitoring tool
@@ -34,9 +34,6 @@ DISTFILES += csworca_services
 DISTFILES += $(call admfiles,CSWorca-web,depend prototype postinstall preremove)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
-PATCHFILES += e1000g-ipge-bnx.patch
-PATCHFILES += watch-udp.patch
-PATCHFILES += zfs.patch
 
 #libdir = $(exec_prefix)/lib/$(GARNAME)
 localstatedir = /var/opt/csw
