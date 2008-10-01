@@ -10,3 +10,4 @@ c60f034ec718df26523f61b6e5f3f2cb  download/CSWkrb5libdev.depend
 0f7ea63e215a904821e5ad23ecb3b020  download/CSWkrb5user.gspec
 c60f034ec718df26523f61b6e5f3f2cb  download/CSWkrb5user.depend
 6c2c7718f024c85f66fdc26398090c23  download/patch-man2html-perl.diff
+1516a86bd7b8d0ccc4462077105723f4  download/patch-ldap-const.diff

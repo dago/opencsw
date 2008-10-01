@@ -20,20 +20,25 @@ DISTFILES += $(call admfiles,CSWkrb5lib)
 DISTFILES += $(call admfiles,CSWkrb5libdev,depend)
 DISTFILES += $(call admfiles,CSWkrb5user,depend)
 
-PATCHFILES = patch-man2html-perl.diff
+PATCHFILES  = patch-man2html-perl.diff
+PATCHFILES += patch-ldap-const.diff
 
 PREREQUISITE_PKGS = CSWtcl
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+ifeq ($(ISA),i386)
 CONFIGURE_ARGS += --with-tcl=$(prefix)
+endif
 # --enable-ipv6 is deprecated and autodetected
 #CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-kdc-replay-cache --enable-dns-for-realm
 CONFIGURE_ARGS += --disable-thread-support
 CONFIGURE_ARGS += --disable-static --disable-profiled
 CONFIGURE_ARGS += --with-ldap
+
+BUILD64 = 1
 
 BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 BUILD_SCRIPTS += $(WORKSRC)/doc/Makefile
@@ -73,10 +78,10 @@ PKGFILES_CSWkrb5libdev_EXCLUSIVE += $(bindir)/(uuclient|sim_client|sclient|krb5-
 include ../category.mk
 
 # The flags must not contain additional spaces or the build freaks out
-CFLAGS := $(strip $(CFLAGS) -L$(libdir))
-LDFLAGS := $(strip $(LDFLAGS))
+CFLAGS := $(strip $(CFLAGS) -L$(libdir)/$(MM_LIBDIR))
+#LDFLAGS := $(strip $(LDFLAGS))
 
-post-extract:
+post-extract-modulated:
 	@# TODO: Check signature
 	@cd $(WORKDIR) && (gzip -c -d $(GARNAME)-$(GARVERSION).tar.gz | tar xf -)
 	@$(MAKECOOKIE)
