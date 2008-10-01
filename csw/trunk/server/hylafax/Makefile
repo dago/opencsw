@@ -11,6 +11,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWhylafax,prototype depend postinstall preremove postremove)
 DISTFILES += config.site.CSW
+#DISTFILES += cswhylafax.init cswhylafax.xml svc-cswhylafax
 
 PATCHFILES = patch-hylafax.diff
 
@@ -52,12 +53,11 @@ post-install:
 	@echo " ==> Fixing permissions"
 	chown -R uucp:uucp $(addprefix $(DESTDIR)$(localstatedir)/spool/hylafax/,info log recvq status sendq doneq docq tmp pollq archive FIFO)
 	@echo " ==> Adding RC-Scripts"
-	-$(foreach D,init.d rc0.d rc1.d rc2.d rcS.d,mkdir -p $(DESTDIR)/etc/$D;)
 	#-ginstall $(WORKSRC)/etc/hylafax $(DESTDIR)/etc/init.d/cswhylafax
 	#-gln -s ../init.d/cswhylafax $(DESTDIR)/etc/rc2.d/S80cswhylafax
 	#-$(foreach D,rc0.d rc1.d rcS.d,gln -s ../init.d/hylafax $(DESTDIR)/etc/$D/K20cswhylafax;)
-	ginstall $(WORKSRC)/etc/hylafax $(DESTDIR)/opt/csw/etc/init.d/cswhylafax
-	mkdir -p $(DESTDIR)$(sharedstatedir)/hylafax
+	#ginstall $(WORKSRC)/etc/hylafax $(DESTDIR)/opt/csw/etc/init.d/cswhylafax
+	-mkdir -p $(DESTDIR)$(sharedstatedir)/hylafax
 	#@$(MAKECOOKIE)
 
 # 1. rmdir /opt/csw/var/spool/hylafax/dev

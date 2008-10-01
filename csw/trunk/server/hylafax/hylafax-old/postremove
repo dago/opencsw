@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+#
+echo "Remove any /opt/csw/sbin/faxqclean entries from root's crontab"
+echo "Remove any /opt/csw/sbin/faxcron entries from uucp's crontab"
+echo "Remove any /opt/csw/sbin/faxgetty entries /etc/inittab"

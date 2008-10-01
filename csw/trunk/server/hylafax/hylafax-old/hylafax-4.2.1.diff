@@ -1,0 +1,52 @@
+diff -r -u hylafax-4.2.1-orig/util/faxdeluser.c hylafax-4.2.1/util/faxdeluser.c
+--- hylafax-4.2.1-orig/util/faxdeluser.c	2005-01-10 22:28:54.000000000 -0500
++++ hylafax-4.2.1/util/faxdeluser.c	2005-04-05 14:20:53.945543000 -0400
+@@ -37,6 +37,9 @@
+ #include "config.h"
+ #include "port.h"
+ 
++extern int optind;
++extern char* optarg;
++
+ int
+ main(int argc, char** argv)
+ {
+diff -r -u hylafax-4.2.1-orig/util/faxmodem.c hylafax-4.2.1/util/faxmodem.c
+--- hylafax-4.2.1-orig/util/faxmodem.c	2004-03-04 21:29:44.000000000 -0500
++++ hylafax-4.2.1/util/faxmodem.c	2005-04-05 13:35:03.422830000 -0400
+@@ -149,7 +149,7 @@
+ 		    if (v == r)
+ 			mask = v;
+ 		    else {
+-			r = fxmin(r, 64);	// clamp to valid range */
++			r = fxmin(r, 64);	/* clamp to valid range */
+ 			mask = 0;
+ 			for (; v <= r; v++)
+ 			    if (v == 0 || v == 1 || v == 2 || v == 4 || v == 8 || v == 16 || v == 32 || v == 64)
+@@ -158,7 +158,7 @@
+ 		}
+ 
+ 		else {
+-			r = fxmin(r, 31);	// clamp to valid range
++			r = fxmin(r, 31);	/* clamp to valid range */
+ 			for (; v <= r; v++)
+ 			    mask |= 1<<v;
+ 		}
+@@ -181,7 +181,7 @@
+  * Class 2 Fax Modem Definitions.
+  */
+ #define	VR_ALL	(BIT(7)-1)
+-#define	BR_ALL	(BIT(6)-1)	// don't encode > 14.4 Kbps
++#define	BR_ALL	(BIT(6)-1)	/* don't encode > 14.4 Kbps */
+ #define	WD_ALL	(BIT(5)-1)
+ #define	LN_ALL	(BIT(3)-1)
+ #define	DF_ALL	(BIT(4)-1)
+@@ -199,7 +199,7 @@
+ int
+ parseCapabilities(const char* cp, u_int* caps)
+ {
+-    // we are limited to 32 bits, thus BR_ALL is restricted above
++    /* we are limited to 32 bits, thus BR_ALL is restricted above */
+     int vr, br, wd, ln, df, ec, bf, st;
+     
+     /*

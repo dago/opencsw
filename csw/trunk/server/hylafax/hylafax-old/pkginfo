@@ -1,0 +1,8 @@
+PKG=CSWhylafax
+NAME=hylafax - Client/Server Fax software
+DESC=An enterprise-class system for sending and receiving facsimiles and alpha-numeric pages
+VERSION=4.2.1,REV=2005.06.15
+CATEGORY=application
+VENDOR=ftp://ftp.hylafax.org/source/ - Packaged for CSW by Darin Perusich
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=darin@blastwave.org

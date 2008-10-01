@@ -1,0 +1,35 @@
+copy config.site the the hylafax build root and run configure, it's been
+so you don't need to provide any configure args.
+
+the code from hylafax.org needed a little clean up, i.e. non ANSI C comments,
+missing variable declarations, etc. this was all easily fixed, i've submitted
+a diff to the developers list but incase they don't apply it i have it here.
+
+Package Creation - what a freaking mess!!!
+
+hylafax doesn't support any kind of DESTDIR and you can't do make prefix= 
+because it doesn't use the standard configure. while they to supply there own
+package creation it's not going to work for CSW. when i have more time maybe
+i'll take their build scripts and create a CSW port, but for now...
+
+- built hylafax till it was ready for 'make install'
+- tar'd up the built source and scp'd to a system with NO CSW software
+  installed, or moved out of the way (kill any daemons).
+- untar'd source
+- modify port/install.sh for mkdir -p
+- do 'make install'
+- mkdir -p /tmp/cswstage/opt
+- mv /opt/csw /tmp/cswstage/opt
+- cd / && tar -cf - etc/rc?.d/*fax* etc/init.d/hylafax |(cd /tmp/cswstage && tar -xf -) 
+- pkgproto . |sed 's/root other/root bin/' |sed 's/none /none \//' > //tmp/cswstage/prototype
+- tar up /tmp/cswstage
+- scp back into blastwave
+- get the cswstage ready for createpkg
+
+# for i386
+- make clean
+- rm etc/{ondelay,lockname}
+- make
+- ~/pkgs/hylafax/x86bin.sh to copy to bins to the right locations
+- createpkg
+
