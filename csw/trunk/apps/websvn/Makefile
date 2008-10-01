@@ -40,7 +40,7 @@ install-custom:
 	@rm -rf $(DESTDIR)$(sharedstatedir)/www/websvn
 	@ginstall -d $(DESTDIR)$(sharedstatedir)/www/websvn
 	@cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/websvn/htdocs
-	@find $(DESTDIR)$(prefix) -name .svn -exec rm -r \{\} \;
+	@find $(DESTDIR)$(prefix) -name .svn -exec rm -rf \{\} \;
 	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/websvn
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
 	@ln -s $(sharedstatedir)/www/websvn/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/websvn
