@@ -355,6 +355,7 @@ TMP_DIRPATHS = --prefix=$(prefix) --exec_prefix=$(exec_prefix) --bindir=$(bindir
 NODIRPATHS += --lispdir
 
 DIRPATHS = $(filter-out $(addsuffix %,$(NODIRPATHS)), $(TMP_DIRPATHS))
+CONFIGURE_ARGS ?= $(DIRPATHS) $(EXTRA_CONFIGURE_ARGS)
 
 # configure a package that has an autoconf-style configure
 # script.
