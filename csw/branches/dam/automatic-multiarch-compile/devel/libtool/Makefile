@@ -1,5 +1,8 @@
+PKGVERSION ?= 2.2.4
+EXTRA_MODULATORS = PKGVERSION
+MODULATIONS_PKGVERSION = 1.5.26 2.2.4
 GARNAME = libtool
-GARVERSION = 1.5.24
+GARVERSION ?=$(PKGVERSION)
 CATEGORIES = devel
 
 DESCRIPTION = A generic library support tool.
@@ -10,14 +13,36 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibtool)
+SOURCEFILES  = $(foreach VERSION, $(MODULATIONS_PKGVERSION), $(GARNAME)-$(VERSION).tar.gz)
+DISTFILES    = $(SOURCEFILES)
+DISTFILES   += $(call admfiles,CSWlibtool)
+DISTFILES   += $(call admfiles,CSWlibtoolrt)
+#NOEXTRACT    = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+BUILD64 = 1
+
+SKIPTEST = 1
 TEST_TARGET = check
 
+MERGE_SCRIPTS_isa-i386-pkgversion-1.5.26 = copy-only
+MERGE_DIRS_isa-i386-pkgversion-1.5.26 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-pkgversion-1.5.26 = copy-relocated-only
+MERGE_DIRS_isa-amd64-pkgversion-1.5.26 = $(libdir)
+
+MERGE_SCRIPTS_isa-i386-pkgversion-2.2.4 = copy-all
+MERGE_SCRIPTS_isa-amd64-pkgversion-2.2.4 = copy-relocated-only
+MERGE_DIRS_isa-amd64-pkgversion-2.2.4 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+# Move runtime stuff to CSWlibtoolrt and put the rest in CSWlibtool
+PKGFILES_CSWlibtoolrt_EXCLUSIVE = $(PKGFILES_RT)
+
 include ../category.mk
+
+#pre-package:
+#	@(for VERSION in $(OLD_VERSIONS); do gmake GARVERSION=$$VERSION install; done)
+#	@$(MAKECOOKIE)
 
 post-install:
 	@echo " ==> Fixing install anomalies"
