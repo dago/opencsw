@@ -35,6 +35,15 @@ MERGE_SCRIPTS_isa-i386-pkgversion-2.2.4 = copy-all
 MERGE_SCRIPTS_isa-amd64-pkgversion-2.2.4 = copy-relocated-only
 MERGE_DIRS_isa-amd64-pkgversion-2.2.4 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
+MERGE_SCRIPTS_isa-sparcv8-pkgversion-1.5.26 = copy-only
+MERGE_DIRS_isa-sparcv8-pkgversion-1.5.26 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-pkgversion-1.5.26 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-pkgversion-1.5.26 = $(libdir)
+
+MERGE_SCRIPTS_isa-sparcv8-pkgversion-2.2.4 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-pkgversion-2.2.4 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-pkgversion-2.2.4 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
 # Move runtime stuff to CSWlibtoolrt and put the rest in CSWlibtool
 PKGFILES_CSWlibtoolrt_EXCLUSIVE = $(PKGFILES_RT)
 
