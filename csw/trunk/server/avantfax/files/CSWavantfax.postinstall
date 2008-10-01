@@ -1,0 +1,17 @@
+#!/bin/sh
+
+/usr/bin/cat <<EOF
+
+If this is an update please make sure you have read the update notes at
+  http://www.mantisbt.org/manual/manual.installation.upgrading.php
+
+For initial install or an upgrade of a version after 1.0.0:
+
+1. Go to
+     http://yoursite/mantis/admin/install.php
+2. Check the upgrade with
+     http://yoursite/mantis/admin/check.php
+
+EOF
+
+exit 0
