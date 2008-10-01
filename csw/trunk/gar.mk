@@ -129,7 +129,14 @@ prerequisite: announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) 
 prerequisitepkg-%:
 	@echo " ==> Verifying for installed package $*: \c"
 	@(pkginfo -q $*; if [ $$? -eq 0 ]; then echo "installed"; else echo "MISSING"; exit 1; fi)
+
+install-prerequisitepkg-%:
+	@echo " ==> Verifying for installed package $*: \c"
+	@(pkginfo -q $*; if [ $$? -eq 0 ]; then echo "installed"; else echo "MISSING"; $(PKG_GET) -i $*; fi)
 	@$(MAKECOOKIE)
+
+# install-prerequisites - Install all packages which are prerequisites for the package to be build
+install-prerequisites: $(addprefix install-prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(PREREQUISITE_PKGS))
 
 # fetch-list	- Show list of files that would be retrieved by fetch.
 # NOTE: DOES NOT RUN pre-everything!
