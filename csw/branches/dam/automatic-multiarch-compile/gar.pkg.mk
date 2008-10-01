@@ -83,80 +83,80 @@ ADMSCRIPTS  = $(ADMISCRIPTS) $(ADMUSCRIPTS)
 ADMFULLSTD  = $(ADMSTANDARD) $(ADMSCRIPTS) space
 ADMADDON    = $(ADMSTANDARD) postinstall preremove
 
-#
-# Targets
-#
-
-# timestamp - Create a pre-installation timestamp
-#
-TIMESTAMP = $(COOKIEDIR)/timestamp
-PRE_INSTALL_TARGETS += timestamp
-timestamp:
-	@echo " ==> Creating timestamp cookie"
-	@$(MAKECOOKIE)
-
-remove-timestamp:
-	@echo " ==> Removing timestamp cookie"
-	@-rm -f $(TIMESTAMP)
-
-# prototype - Generate prototype for all installed files
-# This can be used to automatically distribute the files to different packages
-#
-
+# This is a helper function which inserts subdirectories for each ISA
+# between the prefix and the suffix.
 # usage: $(call isadirs,<prefix>,<suffix>)
-# expands to <prefix>/<isa1>/suffix <prefix>/<isa2>/<suffix> ...
-
+# expands to <prefix>/<isa1>/<suffix> <prefix>/<isa2>/<suffix> ...
 isadirs = $(foreach ISA,$(ISALIST),$(1)/$(ISA)/$(2))
 
+# This is a helper function just like isadirs, but also contains the
+# prefix and suffix without an ISA subdirectories inserted.
+# usage: $(call isadirs,<prefix>,<suffix>)
+# expands to <prefix>/<suffix> <prefix>/<isa1>/<suffix> <prefix>/<isa2>/<suffix> ...
+baseisadirs = $(1)/$(2) $(call isadirs,$(1),$(2))
+
 # PKGFILES_RT selects files belonging to a runtime package
-PKGFILES_RT  = $(libdir)/[^/]*\.so(\.\d+)*
-#PKGFILES_RT += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.so(\.\d+)*)
-PKGFILES_RT += $(call isadirs,$(libdir),[^/]*\.so(\.\d+)*)
+PKGFILES_RT += $(call baseisadirs,$(libdir),[^/]*\.so(\.\d+)*)
 
 # PKGFILES_DEVEL selects files belonging to a developer package
-PKGFILES_DEVEL  = $(bindir)/[^\/]*-config
-#PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(bindir)/$(ISA)/[^/]*-config)
-PKGFILES_DEVEL += $(call isadirs,$(bindir),[^/]*-config)
-PKGFILES_DEVEL += $(libdir)/[^\/]*\.(a|la)
-#PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/[^/]*\.(a|la))
-PKGFILES_DEVEL += $(call isadirs,$(libdir),[^/]*\.(a|la))
-PKGFILES_DEVEL += $(libdir)/pkgconfig(/.*)?
-#PKGFILES_DEVEL += $(foreach ISA,$(ISALIST),$(libdir)/$(ISA)/pkgconfig(/.*)?)
-PKGFILES_DEVEL += $(call isadirs,$(libdir),pkgconfig(/.*)?)
+PKGFILES_DEVEL += $(call baseisadirs,$(bindir),[^/]*-config)
+PKGFILES_DEVEL += $(call baseisadirs,$(libdir),[^/]*\.(a|la))
+PKGFILES_DEVEL += $(call baseisadirs,$(libdir),pkgconfig(/.*)?)
 PKGFILES_DEVEL += $(includedir)/.*
 PKGFILES_DEVEL += $(sharedstatedir)/aclocal/.*
 PKGFILES_DEVEL += $(mandir)/man1/.*-config\.1.*
 PKGFILES_DEVEL += $(mandir)/man3/.*
 
+
 # PKGFILES_DOC selects files beloging to a documentation package
 PKGFILES_DOC  = $(docdir)/.*
 
 # _PKGFILES_EXCLUDE_<spec> contains the files to be excluded from that package
-$(foreach SPEC,$(_PKG_SPECS),$(eval								\
-	_PKGFILES_EXCLUDE_$(SPEC)=								\
-		$(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)),$(PKGFILES_$(S)_EXCLUSIVE))	\
-		$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$(SPEC))			\
-))
+$(foreach SPEC,$(_PKG_SPECS), \
+  $(eval \
+      _PKGFILES_EXCLUDE_$(SPEC)= \
+      $(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)), \
+        $(PKGFILES_$(S)_EXCLUSIVE)) \
+        $(EXTRA_PKGFILES_EXCLUDED) \
+        $(EXTRA_PKGFILES_EXCLUDED_$(SPEC) \
+        $(_EXTRA_PKGFILES_EXCLUDED) \
+       ) \
+   ) \
+ )
 
-# This file contains all installed pathes
+#
+# Targets
+#
+
+# prototype - Generate prototype for all installed files
+# This can be used to automatically distribute the files to different packages
+#
+
+# This file contains all installed pathes. This can be used as a starting point
+# for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	@#cswproto -s $(TIMESTAMP) -r $(PKGROOT) $(PKGROOT)$(prefix) >$@
-	cswproto -r $(PKGROOT) $(PKGROOT)$(prefix) >$@
+	@cswproto -r $(PKGROOT) $(PKGROOT)$(prefix) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
-	if [ -n "$(PKGFILES_$*)" -o -n "$(PKGFILES_$*_EXCLUSIVE)" -o -n "$(_PKGFILES_EXCLUDE_$*)" -o -n "$(ISAEXEC_FILES_$*)" -o -n "$(ISAEXEC_FILES)" ]; then	\
-		(pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)')		\
-			$(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)')					\
-			$(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)),-e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))')	\
-			<$(PROTOTYPE);											\
-		 if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi				\
-		) >$@;												\
-	else													\
-		cp $(PROTOTYPE) $@;											\
+	@if [ -n "$(PKGFILES_$*)" -o \
+	      -n "$(PKGFILES_$*_EXCLUSIVE)" -o \
+	      -n "$(_PKGFILES_EXCLUDE_$*)" -o \
+	      -n "$(ISAEXEC_FILES_$*)" -o \
+	      -n "$(ISAEXEC_FILES)" ]; then \
+	  (pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)') \
+	              $(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)') \
+	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
+	                  -e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))' \
+	               ) \
+	              <$(PROTOTYPE); \
+	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
+	  ) >$@; \
+	else \
+	  cp $(PROTOTYPE) $@; \
 	fi
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
@@ -202,13 +202,13 @@ package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 package-p:
 	@$(foreach COOKIEFILE,$(PACKAGE_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# pkgcheck - check if the package is blastwave compliant
+# pkgcheck - check if the package is compliant
 #
 pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
 	$(DONADA)
 
 pkgcheck-%:
-	@echo " ==> Checking blastwave compilance: $*"
+	@echo " ==> Checking compliance: $*"
 	@( checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
 
 pkgcheck-p:
@@ -220,6 +220,8 @@ pkgreset: $(addprefix pkgreset-,$(_PKG_SPECS))
 	@rm -f $(COOKIEDIR)/extract
 	@rm -f $(COOKIEDIR)/extract-archive-*
 	$(DONADA)
+
+reset-package: pkgreset
 
 pkgreset-%:
 	@echo " ==> Reset packaging state for $* ($(DESTIMG))"

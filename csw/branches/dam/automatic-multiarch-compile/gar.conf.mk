@@ -12,7 +12,6 @@
 # Pick up user information
 -include $(HOME)/.garrc
 
-#ISA ?= global
 MODULATION ?= global
 FILEDIR ?= files
 DOWNLOADDIR ?= download
@@ -21,11 +20,9 @@ WORKROOTDIR ?= work
 #WORKDIR ?= $(WORKROOTDIR)/build-$(ISA)
 WORKDIR ?= $(WORKROOTDIR)/build-$(MODULATION)
 COOKIEROOTDIR ?= cookies
-#COOKIEDIR ?= $(COOKIEROOTDIR)/$(ISA)
 COOKIEDIR ?= $(COOKIEROOTDIR)/$(MODULATION)
 EXTRACTDIR ?= $(WORKDIR)
 WORKSRC ?= $(WORKDIR)/$(DISTNAME)
-#INSTALLISADIR ?= $(WORKROOTDIR)/install-$(ISA)
 INSTALLISADIR ?= $(WORKROOTDIR)/install-$(MODULATION)
 PKGDIR ?= $(WORKROOTDIR)/package
 SCRATCHDIR ?= tmp
@@ -162,6 +159,7 @@ ARCHFLAGS_SOS12_sparcv9          = -m64 -xarch=sparc
  ARCHFLAGS_GCC3_sparcv9          = -m64 -mcpu=v9
  ARCHFLAGS_GCC4_sparcv9          = -m64 -mcpu=v9
     MEMORYMODEL_sparcv9          = 64
+
 ARCHFLAGS_SOS11_sparcv8plus+fmuladd  = ERROR
 ARCHFLAGS_SOS12_sparcv8plus+fmuladd  = -m32 -xarch=xparcfmaf -fma=fused
  ARCHFLAGS_GCC3_sparcv8plus+fmuladd  = ERROR
@@ -307,15 +305,18 @@ ISA_DEFAULT64 = $(ISA_DEFAULT64_$(GARCH))
 
 # This is the architecture we are compiling for
 # Set this to a value from $(ISALIST_$(GARCH)) to compile for another architecture
+# 
 # Name from isalist(5)
-ISA ?= $(ISA_DEFAULT)
+#ISA ?= $(ISA_DEFAULT)
+KERNELISA := $(shell isainfo -k)
 
 # This is a sanity check. Because BUILD_ISAS is carefully computed this error should
 # only occur if BUILD_ISAS is manually overwritten.
-KERNELISA := $(shell isainfo -k)
-ifeq (,$(filter $(ISA),$(ISALIST_$(KERNELISA)) global))
-  $(error The ISA '$(ISA)' can not be build on this kernel with the arch '$(KERNELISA)')
+verify-isa:
+ifeq (,$(filter $(ISA),$(ISALIST_$(KERNELISA))))
+	$(error The ISA '$(ISA)' can not be build on this kernel with the arch '$(KERNELISA)')
 endif
+	@$(MAKECOOKIE)
 
 # The package will be built for these architectures
 # We check automatically what can be build on this kernel architecture
@@ -432,7 +433,7 @@ else
 # If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
 # may not be a subdirectory for the 32-bit standard case (this would normally
 # be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .)
-LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(ELIB)/$(MM_LIBDIR) -R$(ELIB)/\$$ISALIST -R$(ELIB)/$(MM_LIBDIR))
+LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(ELIB)/$(MM_LIBDIR) -R'$(ELIB)/\$$$$''ISALIST' -R$(ELIB)/$(MM_LIBDIR))
 endif
 #LINKER_FLAGS = $(foreach ELIB,$(EXTRA_LIB) $(abspath $(libdir)/$(MM_LIBDIR)),-L$(ELIB) -R$(ELIB))
 # DESTDIR is an old concept, disable for now

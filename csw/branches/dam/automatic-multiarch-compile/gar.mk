@@ -120,10 +120,17 @@ MODULATIONS ?= $(strip $(call modulations,$(strip $(MODULATORS))))
 
 define _modulate_target
 $(1)-$(2):
-	@gmake -s MODULATION=$(2) $(3) pre-$(1)-$(2) $(1)-modulated post-$(1)-$(2)
+	@gmake MODULATION=$(2) $(3) pre-$(1)-$(2) $(1)-modulated post-$(1)-$(2)
 	@# This is MAKECOOKIE expanded to use the name of the rule explicily as the rule has
 	@# not been evaluated yet. XXX: Use function _MAKECOOKIE for both
 	@mkdir -p $(COOKIEDIR)/$(dir $(1)-$(2)) && date >> $(COOKIEDIR)/$(1)-$(2)
+	@# The next line has intentionally been left blank to explicitly terminate this make rule
+
+endef
+
+define _modulate_target_nocookie
+$(1)-$(2):
+	@gmake -s MODULATION=$(2) $(3) pre-$(1)-$(2) $(1)-modulated post-$(1)-$(2)
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
 
 endef
@@ -136,10 +143,15 @@ xtest-$(2):
 $(call _modulate_target,extract,$(2),$(4))
 $(call _modulate_target,patch,$(2),$(4))
 $(call _modulate_target,configure,$(2),$(4))
+$(call _modulate_target_nocookie,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
+$(call _modulate_target_nocookie,reset-build,$(2),$(4))
 $(call _modulate_target,test,$(2),$(4))
 $(call _modulate_target,install,$(2),$(4))
+$(call _modulate_target_nocookie,reset-install,$(2),$(4))
 $(call _modulate_target,merge,$(2),$(4))
+$(call _modulate_target_nocookie,reset-merge,$(2),$(4))
+$(call _modulate_target_nocookie,clean,$(2),$(4))
 endef
 
 # This evaluates to the make rules for all modulations passed as first argument
@@ -170,8 +182,9 @@ $(if $(strip $(1)),\
 )
 endef
 
-_pmod:
-	@echo "[ Modulation $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) ]"
+define _pmod
+	@echo "[ $1 for modulation $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) ]"
+endef
 
 $(eval $(call _modulate,$(MODULATORS)))
 
@@ -385,7 +398,7 @@ configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure
 #configure-isa: patch-isa $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
 #		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
 #		pre-configure-isa $(CONFIGURE_TARGETS) post-configure-isa
-configure-modulated: patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
+configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
 		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
 		pre-configure-modulated $(CONFIGURE_TARGETS) post-configure-modulated
 
@@ -431,7 +444,7 @@ build-modulated-check:
 		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))      \
 	)
 
-build-modulated: configure-modulated pre-build-modulated $(BUILD_TARGETS) post-build-modulated
+build-modulated: verify-isa configure-modulated pre-build-modulated $(BUILD_TARGETS) post-build-modulated
 	@$(MAKECOOKIE)
 
 # Build for a certain architecture
@@ -493,11 +506,6 @@ install: pre-install $(addprefix install-,$(MODULATIONS)) post-install
 install-modulated: build-modulated $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test-modulated $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install-modulated $(INSTALL_TARGETS) post-install-modulated $(POST_INSTALL_TARGETS) 
 	@$(MAKECOOKIE)
 
-#install-isa-%:
-#	@echo " ==> Installing for ISA $*"
-#	@$(MAKE) ISA=$* pre-install-isa-$* install-isa post-install-isa-$*
-#	@$(MAKECOOKIE)
-
 # returns true if install has completed successfully, false
 # otherwise
 install-p:
@@ -507,19 +515,16 @@ install-p:
 
 # reinstall		- Install the results of a build, ignoring
 # 				  "already installed" flag.
-.PHONY: reset-install reset-install-isa
+.PHONY: reinstall reset-install reset-install-modulated
 reinstall: reset-install install
 
-reset-install:
-	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) reset-install-isa;)
+reset-install: reset-merge $(addprefix reset-install-,$(MODULATIONS))
+	@rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/install-$M) $(COOKIEDIR)/install $(COOKIEDIR)/post-install
 
-reinstall-isa-%:
-	@$(MAKE) -s ISA=$* reset-install-isa install-isa
-
-reset-install-isa:
-	@echo " ==> Reset install state for ISA $(ISA)"
-	@rm -rf $(INSTALLISADIR) $(COOKIEDIR)/*install*
-	@$(MAKE) -s ISA=$* reset-merge-isa
+reset-install-modulated:
+	@$(call _pmod,Reset install state)
+	@rm -rf $(INSTALLISADIR) $(COOKIEDIR)/install-work
+	@rm -f $(COOKIEDIR)/install-modulated
 
 # merge in all isas to the package directory after installation
 
@@ -534,20 +539,24 @@ reset-install-isa:
 #
 # default:        relocate to ISA subdirs if more than one ISA, use isaexec-wrapper for bin/, etc.
 # NO_ISAEXEC = 1: ISA_DEFAULT gets installed in bin/..., all others in bin/$ISA/
+#
+# Automatic merging is only possible if you have the default modulation "ISA"
+# Otherwise you *must* specify merge scripts for all modulations.
 
 ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
-MERGE_SCRIPTS_$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 else
 ISAEXEC_DIRS ?= $(if $(NO_ISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
-ISA_RELOCATE_DIRS_$(ISA_DEFAULT) ?=
-ISA_RELOCATE_DIRS_$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir)
-MERGE_SCRIPTS_$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_$(ISA)) $(EXTRA_MERGE_SCRIPTS)
-MERGE_SCRIPTS_$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_DIRS_isa-$(ISA_DEFAULT) ?=
+MERGE_DIRS_isa-$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
 _EXTRA_GAR_PKGS += CSWisaexec
 endif
 
 # These directories get relocated into their ISA subdirectories
-ISA_RELOCATE_DIRS ?= $(ISA_RELOCATE_DIRS_$(ISA))
+#ISA_RELOCATE_DIRS ?= $(ISA_RELOCATE_DIRS_$(ISA))
+MERGE_DIRS ?= $(MERGE_DIRS_$(MODULATION))
 
 # These files get relocated and will be replaced by the isaexec-wrapper
 _ISAEXEC_FILES = $(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* ))
@@ -557,34 +566,37 @@ ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 	done)),)
 
 # These files get relocated.
-# ISA_RELOCATE_DIRS is expanded to individual files here. All further
+# MERGE_DIRS is expanded to individual files here. All further
 # processing is done using these files.
-ISA_RELOCATE_FILES ?= $(patsubst $(PKGROOT)%,%,$(wildcard $(foreach D,$(ISA_RELOCATE_DIRS),$(PKGROOT)$(D)/*))) $(ISAEXEC_FILES) $(EXTRA_ISA_RELOCATE_FILES)
+ISA_RELOCATE_FILES ?= $(patsubst $(PKGROOT)%,%,$(wildcard $(foreach D,$(MERGE_DIRS),$(PKGROOT)$(D)/*))) $(ISAEXEC_FILES) $(EXTRA_ISA_RELOCATE_FILES)
 
-# These merge-rules are actually processed for the current ISA
-MERGE_TARGETS = $(addprefix merge-,$(MERGE_SCRIPTS_$(ISA)))
+# These merge-rules are actually processed for the current modulation
+MERGE_TARGETS ?= $(addprefix merge-,$(MERGE_SCRIPTS_$(MODULATION))) $(EXTRA_MERGE_TARGETS)
 
 # Include only these files
-ifeq ($(origin MERGE_INCLUDE_FILES_$(ISA)), undefined)
+ifeq ($(origin MERGE_INCLUDE_FILES_$(MODULATION)), undefined)
 _MERGE_INCLUDE_FILES = $(MERGE_INCLUDE_FILES)
 else
-_MERGE_INCLUDE_FILES = $(MERGE_INCLUDE_FILES_$(ISA))
+_MERGE_INCLUDE_FILES = $(MERGE_INCLUDE_FILES_$(MODULATION))
 endif
-_MERGE_INCLUDE_FILES += $(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(ISA))
+_MERGE_INCLUDE_FILES += $(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(MODULATION))
+
+MERGE_EXCLUDE_INFODIR ?= $(sharedstatedir)/info/dir
+MERGE_EXCLUDE_DEFAULT ?= $(MERGE_EXCLUDE_INFODIR) $(libdir)/.*\.a $(libdir)/.*\.la
 
 # Exclude these files
-ifeq ($(origin MERGE_EXCLUDE_FILES_$(ISA)), undefined)
+ifeq ($(origin MERGE_EXCLUDE_FILES_$(MODULATION)), undefined)
 _MERGE_EXCLUDE_FILES = $(MERGE_EXCLUDE_FILES)
 else
-_MERGE_EXCLUDE_FILES = $(MERGE_EXCLUDE_FILES_$(ISA))
+_MERGE_EXCLUDE_FILES = $(MERGE_EXCLUDE_FILES_$(MODULATION))
 endif
-_MERGE_EXCLUDE_FILES += $(EXTRA_MERGE_EXCLUDE_FILES) $(EXTRA_MERGE_EXCLUDE_FILES_$(ISA))
+_MERGE_EXCLUDE_FILES += $(EXTRA_MERGE_EXCLUDE_FILES) $(EXTRA_MERGE_EXCLUDE_FILES_$(MODULATION)) $(MERGE_EXCLUDE_DEFAULT)
 
 # This variable contains parameter for pax to honor global file inclusion/exclusion
-# Include first, replace files by itself terminating on first match
-_INC_EXT_RULE = $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
 # Exclude by replacing files with the empty string
-_INC_EXT_RULE += $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
+_INC_EXT_RULE = $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
+# Replace files by itself terminating on first match
+_INC_EXT_RULE += $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
 
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
@@ -596,75 +608,63 @@ merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) post-merge
 merge-modulated: install-modulated pre-merge-modulated $(MERGE_TARGETS) post-merge-modulated
 	@$(MAKECOOKIE)
 
-#merge-isa-%:
-#	@echo " ==> Merging ISAs together for packaging"
-#	@$(MAKE) ISA=$* pre-merge-isa-$* merge-isa post-merge-isa-$*
-#	@$(MAKECOOKIE)
-
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
 	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) . $(PKGROOT))
 	@$(MAKECOOKIE)
 
-# Copy the whole tree and relocate the directories in $(ISA_RELOCATE_DIRS)
+# Copy only the merge directories
+merge-copy-only: $(PKGROOT)
+	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),\1,p") -s ",.*,," \
+		. $(PKGROOT) \
+	)
+	@$(MAKECOOKIE)
+
+# Copy the whole tree and relocate the directories in $(MERGE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
-		$(foreach DIR,$(ISA_RELOCATE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p" ) \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p") \
 		. $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
 
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
-	@(cd $(INSTALLISADIR); $(foreach DIR,$(ISA_RELOCATE_DIRS), \
-		if [ -d .$(DIR) ]; then pax -r -w -v $(_PAX_ARGS) -s ",^\(\.$(DIR)/\),\1$(ISA)/,p" .$(DIR) $(PKGROOT); fi; \
-		) \
+	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p") -s ",.*,," \
+		 . $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
 
-remerge: reset-merge remove-timestamp merge
+.PHONY: remerge reset-merge reset-merge-modulated
+remerge: reset-merge merge
 
-remerge-isa-%:
-	@$(MAKE) -s ISA=$* reset-merge-isa
-
-reset-merge:
-	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) reset-merge-isa;)
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS))
+	@rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge
 	@rm -rf $(PKGROOT)
 
-reset-merge-isa:
-	@echo " ==> Reset merge state for ISA $(ISA)"
-	@rm -f $(COOKIEDIR)/merge $(COOKIEDIR)/merge-*
-	@rm -f $(COOKIEROOTDIR)/$(ISA_DEFAULT)/merge-isa-$(ISA)
-	@rm -f $(COOKIEROOTDIR)/$(ISA_DEFAULT)/merge-isa
+reset-merge-modulated:
+	@$(call _pmod,Reset merge state)
+	@rm -f $(COOKIEDIR)/merge-*
 
 # The clean rule.  It must be run if you want to re-download a
 # file after a successful checksum (or just remove the checksum
 # cookie, but that would be lame and unportable).
 
-CLEAN_SCRIPTS ?= all
-CLEAN_TARGETS  = $(addprefix clean-,$(CLEAN_SCRIPTS))
-
-clean: $(addprefix clean-isa-,$(REQUESTED_ISAS)) clean-all
+clean: $(addprefix clean-,$(MODULATIONS))
 	@rm -rf $(WORKROOTDIR)
 
-clean-isa: clean-build 
-	@rm -rf $(COOKIEDIR)
-
-clean-isa-%:
-	@$(MAKE) -s ISA=$* clean-isa
-
-clean-all: clean-cookies
-	@rm -rf $(DOWNLOADDIR)
-
-clean-cookies: clean-build
-	@rm -rf $(COOKIEROOTDIR)
-
-clean-build:
-	@echo " ==> Cleaning ISA $(ISA)"
+clean-modulated:
+	$(call _pmod,Cleaning )
 	@rm -rf $(WORKSRC) $(EXTRACTDIR) \
 		   $(SCRATCHDIR) $(SCRATCHDIR)-$(COOKIEDIR) \
 		   $(SCRATCHDIR)-build $(SCRATCHDIR)-$(COOKIEROOTDIR) \
 		   $(LOGDIR) *~
+	@rm -rf $(COOKIEDIR)
+	@rm -rf $(COOKIEROOTDIR)
+	@rm -rf $(DOWNLOADDIR)
+
 
 SRC_CLEAN_TARGET ?= clean
 clean-source:
