@@ -12,6 +12,7 @@ endef
 
 MASTER_SITES = ftp://ftp.mktemp.org/pub/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += $(call admfiles,CSWmktemp)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
