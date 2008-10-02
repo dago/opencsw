@@ -64,8 +64,12 @@ EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
 # we don't yet use isaexec support so we disable
 # isa relocation for default isa
-ISA_RELOCATE_DIRS_i386 = 
-ISA_RELOCATE_DIRS_sparcv8 = 
+NO_ISAEXEC = 1
+#ISA_RELOCATE_DIRS_i386 = 
+#ISA_RELOCATE_DIRS_sparcv8 = 
+
+# we redefine the default merge exclude so *.a files are not excluded
+MERGE_EXCLUDE_DEFAULT = $(MERGE_EXCLUDE_INFODIR)
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
@@ -97,6 +101,7 @@ INSTALL_ARGS += MANDIR=$(mandir)
 # we include previous release of libraries file for comptability purpose
 OLDLIBS                 = 0.9.7m
 
+SKIPTEST = 1
 
 include ../category.mk
 
