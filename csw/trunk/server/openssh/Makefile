@@ -1,7 +1,8 @@
 GARNAME = openssh
-GARVERSION = 5.0
+GARVERSION = 5.1
 RELEASE = p1
-GSSKEX_VERSION = 20080404
+GSSKEX_PATCH_VERSION = $(GARVERSION)$(RELEASE)
+GSSKEX_PATCH_DATE = 20081003
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
@@ -37,7 +38,7 @@ DISTFILES += openssh_restart_workaround.sh
 
 PATCHDIRLEVEL = 0
 # The GSSAPI key exchange patch
-PATCHFILES = openssh-$(GARVERSION)$(RELEASE)-gsskex-$(GSSKEX_VERSION).patch
+PATCHFILES = openssh-$(GSSKEX_PATCH_VERSION)-gsskex-$(GSSKEX_PATCH_DATE).patch
 
 # Prevent TIOCSCTTY from being used to avoid error:
 # ioctl(TIOCSCTTY): Invalid argument
@@ -49,7 +50,7 @@ PATCHFILES += no_x_forwarding_bug.patch
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
-DOCFILES += README.platform README.privsep README.smartcard README.tun RFC.nroff TODO WARNING.RNG    
+DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
 
 SPKG_CLASSES = none conf
 
