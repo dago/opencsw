@@ -1,8 +1,8 @@
-openssh (5.1,REV=2008.10.03_rev=p1) unstable
+openssh (5.1,REV=2008.10.04_rev=p1) unstable
 
   * New upstream version.
 
- -- Yann Rouillard <yann@opencsw.org>  Fri, 03 Oct 2008 21:25:09 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 04 Oct 2008 21:25:09 +0200
 
 openssh (5.0,REV=2008.06.02_rev=p1) unstable
 
