@@ -1,5 +1,5 @@
 GARNAME = elinks
-GARVERSION = 0.11.3
+GARVERSION = 0.11.5
 CATEGORIES = net
 
 DESCRIPTION = An advanced text mode web browser
@@ -21,7 +21,7 @@ DISTFILES += changelog.CSW
 
 # suppress the rdynamic test which doesn't
 # work correctly
-PATCHFILES = configure_no_rdynamic.patch
+# PATCHFILES = configure_no_rdynamic.patch
 
 # Debian security path for CVE-2007-2027
 PATCHFILES += elinks-417789.diff

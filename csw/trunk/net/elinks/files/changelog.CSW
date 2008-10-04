@@ -1,3 +1,11 @@
+elinks (0.11.5,REV=2008.10.04) unstable
+
+  * New upstream version.
+  * Removed configure_no_rdynamic.patch patch which is not useful
+    anymore.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 04 Oct 2008 23:41:47 +0200
+
 elinks (0.11.3,REV=2007.07.28) unstable
 
   * Depends on openssl_rt rather than openssl.
