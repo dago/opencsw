@@ -1,27 +1,3 @@
-# Beware, this Makefile is complex because:
-#  - we must also build and include in the package the
-#    libraries of the previous version for comptability reason
-#  
-#  - we also build optimized libraries (amd64, pentium_pro, sparcv9, ...)
-#
-#
-# On x86, amd64 libraries/binaries must be build on Solaris 10 whereas the
-# other ones must be built on Solaris 8, so the packaging process must be 
-# split in two steps and must use a nfs shared directory.
-#
-#  - first, on Solaris 10, build only the amd64 optimized binaries/libraries:
-#
-#     gmake COOKIEROOTDIR="$NFS_SHARED_DIR/cookie" DESTROOT="$NFS_SHARED_DIR" DESTIMG=$LOGNAME-$HOST8 GAROSREL=5.8 ISA=amd64 install-libs install-bin
-#
-#  - then on solaris 8, finish the build and packaging process:
-#
-#     gmake COOKIEROOTDIR="$NFS_SHARED_DIR/cookie" DESTROOT="$NFS_SHARED_DIR" package
-#
-# NFS_SHARED_DIR is the path of the directory nfs shared between the solaris 10
-# and the solaris 8 host
-# HOST8 is the hostname of the Solaris 8 host
-#
-#
 GARNAME = openssl
 GARVERSION = 0.9.8i
 CATEGORIES = lib
@@ -105,7 +81,8 @@ SKIPTEST = 1
 
 include ../category.mk
 
-# we redefine the timestamp to fulfill blastwave standard
+# we redefine the timestamp to fulfill opencsw standard
+SPKG_VERSION := $(OPENSSL_VERSION)
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
 
 
@@ -123,6 +100,7 @@ striplib:
 install-certs: 
 	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
 		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf
+	gunzip --stdout $(CURDIR)/$(FILEDIR)/certs.tar.gz | (cd $(PKGROOT)$(prefix)/ssl/certs && tar xf -)
 	cp -r $(WORKSRC)/certs/* $(PKGROOT)$(prefix)/ssl/certs
 	OPENSSL=$(PKGROOT)/$(bindir)/openssl $(PKGROOT)/$(bindir)/c_rehash $(PKGROOT)/$(prefix)/ssl/certs/
 	$(MAKECOOKIE)

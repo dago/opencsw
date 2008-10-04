@@ -1,5 +1,6 @@
 %var            bitname openssl
 %var            pkgname CSWossl
+%var            arch all
 %var            desc Openssl meta package
 %var 		pkgfile %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-all-CSW.pkg
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
