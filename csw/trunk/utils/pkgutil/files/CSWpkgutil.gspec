@@ -1,0 +1,11 @@
+%var            bitname pkgutil
+%var            pkgname CSWpkgutil
+%var            arch all
+%prototype exec cswproto -s %{TIMESTAMP} -r %{DESTDIR} %{DESTDIR}
+%include	url file://%{PKGLIB}/csw_vars.gspec
+%pkginfo	url file://%{PKGLIB}/csw/pkginfo
+%include	url file://%{PKGLIB}/std_depend.gspec
+%copyright
+
+Please see /opt/csw/share/doc/pkgutil/copyright for license information.
+
