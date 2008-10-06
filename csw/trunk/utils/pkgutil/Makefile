@@ -27,7 +27,7 @@ INSTALL_SCRIPTS = custom
 include ../category.mk
 
 WORKSRC = $(WORKDIR)
-SPKG_SOURCEURL = http://mirror.csw.baltic-online.de/testing/
+SPKG_SOURCEURL = http://wiki.opencsw.org/pkgutil/
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
