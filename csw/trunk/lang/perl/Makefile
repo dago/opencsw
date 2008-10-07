@@ -19,7 +19,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWperl,depend prototype)
 DISTFILES += $(call admfiles,CSWperldoc,depend prototype)
 
-# Core module updateS
+# Core module updates
 MASTER_SITES  += $(CPAN_FIRST_MIRROR)/K/KW/KWILLIAMS/
 CORE_UPDATES  += PathTools-3.25
 CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
