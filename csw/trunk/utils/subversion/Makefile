@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.4.5
+DISTVERSION = 1.5.2
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -24,26 +24,33 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 # SVN
-DISTFILES += $(call admfiles,CSWsvn,depend prototype checkinstall)
+#DISTFILES += $(call admfiles,CSWsvn,depend prototype checkinstall)
+DISTFILES += $(call admfiles,CSWsvn,depend checkinstall)
 # SVN Apache Module
-CSWap2svn_admfiles = depend prototype postinstall preremove
+#CSWap2svn_admfiles = depend prototype postinstall preremove
+CSWap2svn_admfiles = depend postinstall preremove
 DISTFILES += $(call admfiles,CSWap2svn,$(CSWap2svn_admfiles))
 # SVN Perl Binding
-DISTFILES += $(call admfiles,CSWpmsvn,depend prototype)
+#DISTFILES += $(call admfiles,CSWpmsvn,depend prototype)
+DISTFILES += $(call admfiles,CSWpmsvn,depend)
 # SVN Python Binding
-DISTFILES += $(call admfiles,CSWpysvn,depend prototype)
+#DISTFILES += $(call admfiles,CSWpysvn,depend prototype)
+DISTFILES += $(call admfiles,CSWpysvn,depend)
 # SVN Ruby Binding
-DISTFILES += $(call admfiles,CSWrbsvn,depend prototype)
+#DISTFILES += $(call admfiles,CSWrbsvn,depend prototype)
+DISTFILES += $(call admfiles,CSWrbsvn,depend)
 # SVN Java Binding
-DISTFILES += $(call admfiles,CSWjavasvn,depend prototype)
+#DISTFILES += $(call admfiles,CSWjavasvn,depend prototype)
+DISTFILES += $(call admfiles,CSWjavasvn,depend)
 # SVN Development Support
-DISTFILES += $(call admfiles,CSWsvn-devel,depend prototype)
+#DISTFILES += $(call admfiles,CSWsvn-devel,depend prototype)
+DISTFILES += $(call admfiles,CSWsvn-devel,depend)
 
 # Templates
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 
 # Fix: Allow neon 0.26.2
-PATCHFILES += neon-version.diff
+# PATCHFILES += neon-version.diff
 
 # Fix: Use 'gdiff' instead of 'diff'
 PATCHFILES += gdiff.diff
@@ -53,6 +60,10 @@ PATCHFILES += binding.diff
 
 # Fix: Ensure javahl links against libCrun and libCstd
 PATCHFILES += javahl.diff
+
+# Fix: Add java headers for nested classes
+#   https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
+PATCHFILES += javahl_headers_for_nested_classes.diff
 
 DEPENDS = server/apache2
 DEPENDS = lib/neon
@@ -68,10 +79,11 @@ CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --disable-mod-activation
-CONFIGURE_ARGS += --with-jdk=/usr/jdk/j2sdk1.4.2_02/j2se
+#CONFIGURE_ARGS += --with-jdk=/usr/jdk/j2sdk1.4.2_02/j2se
+CONFIGURE_ARGS += --with-jdk=/usr/j2sdk1.4.2_17
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-neon=$(prefix)
-CONFIGURE_ARGS += --with-zlib
+CONFIGURE_ARGS += --with-zlib=$(prefix)
 #CONFIGURE_ARGS += --with-junit=../junit3.8.1/junit.jar
 
 TEST_TARGET = check
