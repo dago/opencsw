@@ -27,7 +27,7 @@ SPKG_SOURCEURL = http://spamassassin.apache.org/
 configure-custom:
 	@echo " ==> Configuring $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/opt/csw/etc/spamassassin CONTACT_ADDRESS=postmaster )
+	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/opt/csw/etc/spamassassin LOCALSTATEDIR=/opt/csw/var CONTACT_ADDRESS=postmaster )
 	@$(MAKECOOKIE)
 
 build-custom:
@@ -46,6 +46,7 @@ install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)/opt/csw/var/$(GARNAME)
 	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(GARNAME)/README.spamd
 	@cp $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)$(docdir)/$(GARNAME)/cswspamd
