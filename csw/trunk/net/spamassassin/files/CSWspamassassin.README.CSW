@@ -1,5 +1,11 @@
 Notes for the CSW spamassassin distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+update 2008.10.21
+This update includes SpamAssassin 3.2.5 and the package has been moved into
+the GAR build system.
+
+SpamAssassin is now maintained by Peter Bonivart (bonivart@opencsw.org).
+
 update 2008.01.20
 This update adds pm_mimebase64 and pm_maildkim as dependencies.
 The LOCALSTATEDIR is changed to conform to CSW standards.  The old directory
@@ -25,7 +31,7 @@ There have been a few changes.  My installation, which is not very
 Note that some of features have moved to plugins.  If you need a Perl
   module to activate some feature, send me an email request from the
   SpamAssassin package information page:
-  http://www.blastwave.org/packages.php/spamassassin
+  http://www.opencsw.org/packages.php/spamassassin
   and I will see what I can do.
 
 update 2006.02.18
@@ -125,10 +131,10 @@ user.
 You can find a example init script in
 /opt/csw/share/doc/spamassassin/solaris-rc-script.sh .
 
-There is also a razor packet available from blastwave, which could be installed
+There is also a razor packet available from opencsw, which could be installed
 on demand manually. The spamassassin package doesn't depend on it, but will use
 razor, if it is available.
 
 --
-Alex S Moore      <asmoore@blastwave.org>                             2004-02-14
-Thomas Glanzmann  <thomas@blastwave.org>
+Alex S Moore      <asmoore@opencsw.org>                             2004-02-14
+Thomas Glanzmann  <thomas@opencsw.org>

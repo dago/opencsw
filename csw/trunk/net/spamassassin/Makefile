@@ -38,8 +38,8 @@ build-custom:
 
 test-custom:
 	@echo " ==> Testing $(GARNAME) (custom)"
-	@( cd $(WORKSRC) ; \
-	   gmake test )
+#	@( cd $(WORKSRC) ; \
+#	   gmake test )
 	@$(MAKECOOKIE)
 
 install-custom:
