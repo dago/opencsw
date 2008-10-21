@@ -1,0 +1,35 @@
+# checkinstall for CSWspamassassin
+# This script saves the existing configuration directory user and group
+# in variables used by postinstall to reset the configuration directory
+# permissions.
+
+# If installing on a filesystem that is not running the OS, exit this script.
+if [ ! x"$PKG_INSTALL_ROOT" = x"" -a ! x"$PKG_INSTALL_ROOT" = x"/" ] ; then exit 0 ; fi
+
+if [ x"$PKG_INSTALL_ROOT" = x"" ] ; then
+    PKG_INSTALL_ROOT="/"
+fi
+
+# If available, save user and group permissions for /opt/csw/etc/spamassassin
+# directory
+CONFDIR="/etc/opt/csw/spamassassin"
+if [ ! -d "$CONFDIR" ] ; then
+        CONFDIR="/opt/csw/etc/spamassassin"
+        if [ ! -d "$CONFDIR" ] ; then
+                CONFDIR=""
+        fi
+fi
+
+if [ x"$CONFDIR" != x ] ; then
+   SPAMDUSER=`ls -ld "$CONFDIR" |awk '{print $3;}'`
+   SPAMDGROUP=`ls -ld "$CONFDIR" |awk '{print $4;}'`
+# Make env variables available to other packaging scripts
+cat >$1 <<!
+
+CONFDIR='$CONFDIR'
+SPAMDUSER='$SPAMDUSER'
+SPAMDGROUP='$SPAMDGROUP'
+!
+fi
+
+exit 0
