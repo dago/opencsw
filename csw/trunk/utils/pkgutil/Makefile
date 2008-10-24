@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.0
+GARVERSION = 1.1
 CATEGORIES = utils
 
 DESCRIPTION = install Solaris packages the easy way
@@ -15,9 +15,11 @@ MASTER_SITES = http://mirror.csw.baltic-online.de/testing/pkgutil/
 DISTFILES  = $(GARNAME)
 DISTFILES += $(GARNAME).conf
 DISTFILES += admin
+DISTFILES += bldcat
+DISTFILES += chkcat
 DISTFILES += wget-i386
 DISTFILES += wget-sparc
-DISTFILES += $(call admfiles,CSWpkgutil,preremove postinstall)
+DISTFILES += $(call admfiles,CSWpkgutil,preremove postinstall prototype)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -30,7 +32,7 @@ WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://wiki.opencsw.org/pkgutil/
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)/etc/opt/csw
 	@ginstall -d $(DESTDIR)/opt/csw
@@ -45,6 +47,8 @@ install-custom:
 	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
 	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)/opt/csw/bin/
+	@cp -r $(WORKSRC)/bldcat $(DESTDIR)/opt/csw/bin/
+	@cp -r $(WORKSRC)/chkcat $(DESTDIR)/opt/csw/bin/
 	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)/opt/csw/share/doc/pkgutil/copyright
 	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/pkgutil/admin.CSW
 	@cp -r $(WORKSRC)/wget-i386 $(DESTDIR)/var/opt/csw/pkgutil/

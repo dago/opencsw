@@ -1,8 +1,11 @@
 64a16a58346386fa6dbc99276a99d3db  download/pkgutil
 12ff60b02521d4252e9ec292289b7b31  download/pkgutil.conf
 5ab40013298d3dfdf67aae728c0ddb8a  download/admin
+e06a3e2d8026edec197cec5791c00abf  download/bldcat
+c2e5cd5526a8bd38af15ae72bbf1d0bb  download/chkcat
 b9076776ad4f99a5d84cf081f9a202df  download/wget-i386
 e0234bcebb3c01fc0a93b4866fd162d1  download/wget-sparc
-873f515906449e23a78b1e76097afa72  download/CSWpkgutil.gspec
+5a913e66254af85465f14b1c5d07385f  download/CSWpkgutil.gspec
 a3626f018a9abd311b79e2d9f7909f3f  download/CSWpkgutil.preremove
 3ba096a25371877d020d050cbd90eb89  download/CSWpkgutil.postinstall
+34383f2974e0d4999da3a83a4aec1b03  download/CSWpkgutil.prototype
