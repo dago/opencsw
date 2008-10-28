@@ -11,24 +11,10 @@ endef
 
 MASTER_SITES = http://www.graphviz.org/pub/graphviz/ARCHIVE/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWgraphviz.gspec CSWgraphviz.depend CSWgraphviz.prototype
+DISTFILES += $(call admfile,CSWgraphviz,depend)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include ../category.mk
-
-# Prevent grammars and parsers from being regenerated
-pre-build:
-	@( cd $(WORKSRC) ; \
-		touch \
-			dotneato/common/htmlparse.[ch] \
-			graph/parser.[ch]              \
-			lefty/parse.[ch]               \
-			lefty/dot2l/dotparse.[ch]      \
-			tools/expr/exparse.[ch]        \
-			tools/gpr/parse.[ch]           \
-			agraph/grammar.[ch]            \
-	)
-	@$(MAKECOOKIE)
