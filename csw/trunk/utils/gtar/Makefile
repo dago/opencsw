@@ -1,5 +1,5 @@
-GARNAME = gtar
-GARVERSION = 1.15.91
+GARNAME = tar
+GARVERSION = 1.20
 CATEGORIES = utils
 
 DESCRIPTION = GNU tape archiver
@@ -14,14 +14,17 @@ define BLURB
 	derived from John Gilmore's public domain 'tar'.
 endef
 
-MASTER_SITES = ftp://alpha.gnu.org/gnu/tar/
-DISTFILES  = tar-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWgtar,depend prototype)
+MASTER_SITES = $(GNU_MIRROR)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWgtar,depend)
 
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 TEST_SCRIPTS =
 
 include ../category.mk
 
-post-extract:
-	files/post-extract $(DESTIMG) $(GARVERSION) 
+post-install:
+	@rm -f $(DESTDIR)$(libdir)/charset.alias
+	@rm -f $(DESTDIR)$(sharedstatedir)/info/dir
+	@$(MAKECOOKIE)
+
