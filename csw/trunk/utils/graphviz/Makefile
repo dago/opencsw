@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = http://www.graphviz.org/pub/graphviz/ARCHIVE/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfile,CSWgraphviz,depend)
+DISTFILES += $(call admfiles,CSWgraphviz,depend)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
