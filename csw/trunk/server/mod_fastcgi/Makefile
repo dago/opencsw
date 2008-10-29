@@ -1,5 +1,5 @@
 GARNAME = mod_fastcgi
-GARVERSION = 2.4.2
+GARVERSION = 2.4.6
 CATEGORIES = server
 
 DESCRIPTION = Apache 2.x FastCGI module

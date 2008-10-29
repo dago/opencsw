@@ -15,15 +15,6 @@ diff --speed-large-files --minimal -Nru mod_fastcgi-2.4.2.orig/Makefile.AP2 mod_
  
  include ${top_builddir}/build/special.mk
  
-@@ -20,8 +20,6 @@
- 
- all: local-shared-build
- 
--install: install-modules
--
- clean:
- 	-rm -f *.o *.lo *.slo *.la 
- 
 diff --speed-large-files --minimal -Nru mod_fastcgi-2.4.2.orig/fcgi.h mod_fastcgi-2.4.2/fcgi.h
 --- mod_fastcgi-2.4.2.orig/fcgi.h	2003-02-03 18:07:37.000000000 -0500
 +++ mod_fastcgi-2.4.2/fcgi.h	2006-08-30 16:37:31.004290000 -0400
