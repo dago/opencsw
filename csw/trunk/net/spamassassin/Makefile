@@ -57,4 +57,10 @@ install-custom:
 	@( cd $(WORKSRC) ; \
 	   cp -r C* INSTALL LICENSE NOTICE README TRADEMARK U* ldap/ sql/ procmailrc.example sample-* $(DESTDIR)$(docdir)/$(GARNAME)/ ; \
 	   mv $(DESTDIR)$(docdir)/spamassassin/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)/copyright )
+	@( cd $(DESTDIR)/opt/csw/etc/spamassassin ; \
+	   mv local.cf local.cf.CSW ; \
+	   mv init.pre local.pre.CSW ; \
+	   mv v310.pre v310.pre.CSW ; \
+	   mv v312.pre v312.pre.CSW ; \
+	   mv v320.pre v320.pre.CSW )
 	@$(MAKECOOKIE)
