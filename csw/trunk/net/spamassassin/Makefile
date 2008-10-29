@@ -63,4 +63,5 @@ install-custom:
 	   mv v310.pre v310.pre.CSW ; \
 	   mv v312.pre v312.pre.CSW ; \
 	   mv v320.pre v320.pre.CSW )
+	@rm -rf $(DESTDIR)/opt/csw/lib
 	@$(MAKECOOKIE)
