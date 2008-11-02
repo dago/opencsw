@@ -1,5 +1,5 @@
 GARNAME = cups
-GARVERSION = 1.2.7
+GARVERSION = 1.3.9
 CATEGORIES = net
 
 define BLURB
@@ -8,11 +8,6 @@ define BLURB
   promote a standard printing solution and is the standard printing system
   in MacOS(R) X and most Linux(R) distributions.
 endef
-
-# This patch is also required to make the above work. Without it, the include
-# path for SSL (which is /opt/csw/include) gets prepended and the compile ends
-# up (yet again) picking up the installed cups.h over the one in this package.
-PATCHFILES = Makedefs.in.patch
 
 # These are the source mirrors published on the CUPS home-page.
 CUPS_MIRRORS = http://ftp.easysw.com/pub
@@ -35,7 +30,7 @@ DISTFILES += $(call admfiles,CSWcupsdoc,depend prototype)
 DISTFILES += $(call admfiles,CSWcupsdev,depend prototype)
 DISTFILES += $(call admfiles,CSWcups,depend prototype)
 
-DISTFILES += i.smfyes i.smfno space checkinstall Makedefs.in.patch
+DISTFILES += i.smfyes i.smfno space checkinstall
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
