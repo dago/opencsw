@@ -2,7 +2,7 @@ GARNAME = DTraceToolkit
 GARVERSION = 0.99
 CATEGORIES = utils
 
-DESCRIPTION = A collection of useful documented scripts developed by the OpenSolaris DTrace community
+DESCRIPTION = A collection of dtrace scripts developed by the DTrace community
 define BLURB
   The following are miscellaneous open source tools and examples
   that use the DTrace language provided in Solaris 10 and OpenSolaris.
