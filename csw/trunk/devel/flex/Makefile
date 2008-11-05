@@ -25,3 +25,8 @@ TEST_TARGET = check
 TEST_SCRIPTS =
 
 include ../category.mk
+
+post-install:
+	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/newflex
+	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/flex-$(GARVERSION)
+	@$(MAKECOOKIE)
