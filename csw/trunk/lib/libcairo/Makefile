@@ -10,8 +10,10 @@ endef
 MASTER_SITES  = http://www.cairographics.org/releases/
 DISTFILES     = cairo-$(GARVERSION).tar.gz 
 PKGDIST       = cairo-$(GARVERSION).tar.gz 
-# DISTFILES    += CSWlibcairo.gspec CSWlibcairo.prototype CSWlibcairo.depend CSWlibcairo.postinstall
-DISTFILES    += $(call admfiles,CSWlibcairo, depend)
+DISTFILES    += CSWlibcairo.gspec CSWlibcairo.prototype CSWlibcairo.depend 
+DISTFILES    += CSWlibcairodev.gspec CSWlibcairodev.prototype CSWlibcairodev.depend 
+DISTFILES    += CSWlibcairodoc.gspec CSWlibcairodoc.prototype CSWlibcairodoc.depend 
+# DISTFILES    += $(call admfiles,CSWlibcairo, depend)
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
@@ -23,7 +25,7 @@ GREP = ggrep
 
 include ../category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x
+CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --enable-xlib=yes --enable-xlib-xrender=no --enable-ft=yes --with-x
 
 post-extract:
 	( mv $(WORKDIR)/cairo-$(GARVERSION) $(WORKDIR)/$(GARNAME)-$(GARVERSION) )
