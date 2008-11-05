@@ -118,6 +118,11 @@ f none /opt/csw/apache2/lib/libaprutil-1.la 0755 root bin
 d none /opt/csw/apache2/lib/pkgconfig 0755 root bin
 f none /opt/csw/apache2/lib/pkgconfig/apr-1.pc 0644 root bin
 f none /opt/csw/apache2/lib/pkgconfig/apr-util-1.pc 0644 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_ldap.a 0644 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_dbd_odbc.a 0644 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_ldap.la 0755 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_dbd_sqlite3.la 0755 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_dbd_odbc.la 0755 root bin
 d none /opt/csw/apache2/libexec 0755 root bin
 f none /opt/csw/apache2/libexec/httpd.exp 0644 root bin
 d none /opt/csw/apache2/share 0755 root bin
