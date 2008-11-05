@@ -31,8 +31,8 @@ MANIFEST_FILE ?= manifest
 LOGDIR ?= log
 
 # Outbound proxies
-http_proxy ?= http://svn:8080
-ftp_proxy  ?= http://svn:8080
+http_proxy ?=
+ftp_proxy  ?=
 export http_proxy ftp_proxy
 
 # Don't do full-dependency builds by default
