@@ -1,5 +1,5 @@
 GARNAME = flex
-GARVERSION = 2.5.34
+GARVERSION = 2.5.35
 CATEGORIES = devel
 
 DESCRIPTION = A tool for generating text-scanning programs.
@@ -17,9 +17,7 @@ SF_PROJ = flex
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = flex-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWflex-new,depend prototype)
-
-DEPENDS = devel/bison
+DISTFILES += $(call admfiles,CSWflex-new,depend)
 
 CONFIGURE_ARGS = --prefix=$(libexecdir)/$(GARNAME)-$(GARVERSION)
 
