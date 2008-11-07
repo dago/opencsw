@@ -1,22 +1,23 @@
 GARNAME = SDL_ttf
-GARVERSION = 2.0.6
+GARVERSION = 2.0.9
 CATEGORIES = lib
 
 DESCRIPTION = TrueType font rendering library for SDL applications
 define BLURB
-  This is a sample library which allows you to use TrueType fonts in your SDL applications. It comes with an example program "showfont" which displays an example string for a given TrueType font file. 
+  A sample library which allows you to use TrueType fonts in your SDL applications.
 endef
 
-MASTER_SITES = http://www.libsdl.org/projects/SDL_ttf/
+MASTER_SITES = http://www.libsdl.org/projects/SDL_ttf/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlttf,)
 
-PATCHFILES = SDL_ttf.c.diff
+#PATCHFILES = SDL_ttf.c.diff
+
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk
 
-pre-configure:
-	( cd $(WORKSRC) ; ./autogen.sh )
-	@$(MAKECOOKIE)
+#pre-configure:
+#	( cd $(WORKSRC) ; ./autogen.sh )
+#	@$(MAKECOOKIE)
