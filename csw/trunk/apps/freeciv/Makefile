@@ -1,5 +1,5 @@
 GARNAME = freeciv
-GARVERSION = 2.0.9
+GARVERSION = 2.0.10
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based multiplayer strategy game (gcc3)
@@ -16,7 +16,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWfreeciv, depend )
 
 GARCOMPILER = GNU
-
+TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk
