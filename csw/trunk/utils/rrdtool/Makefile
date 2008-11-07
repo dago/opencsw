@@ -1,5 +1,5 @@
 GARNAME = rrdtool
-GARVERSION = 1.3.0
+GARVERSION = 1.3.4
 CATEGORIES = utils
 
 DESCRIPTION = time-series data logging and graphing.
