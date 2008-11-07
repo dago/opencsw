@@ -1,0 +1,10 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/sqlite3 0755 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libsqlite3.la 0755 root bin
+f none /opt/csw/lib/libsqlite3.so.0.8.6 0755 root bin
+s none /opt/csw/lib/libsqlite3.so.0=libsqlite3.so.0.8.6
+s none /opt/csw/lib/libsqlite3.so=libsqlite3.so.0.8.6
+i copyright=CSWsqlite3.copyright
+i depend=CSWsqlite3.depend
+i pkginfo=CSWsqlite3.pkginfo
