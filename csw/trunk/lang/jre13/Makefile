@@ -54,4 +54,5 @@ install-custom:
 	@rm -rf $(DESTDIR)$(prefix)/$(DISTNAME)
 	@ginstall -d $(DESTDIR)$(prefix)
 	@cp -r $(WORKSRC) $(DESTDIR)$(prefix)
+	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/jre-1.3
 	@$(MAKECOOKIE)
