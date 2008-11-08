@@ -51,7 +51,7 @@ include ../category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
-	@rm -rf $(DESTDIR)$(prefix)$(DISTNAME)
+	@rm -rf $(DESTDIR)$(prefix)/$(DISTNAME)
 	@ginstall -d $(DESTDIR)$(prefix)
 	@cp -r $(WORKSRC) $(DESTDIR)$(prefix)
 	@$(MAKECOOKIE)
