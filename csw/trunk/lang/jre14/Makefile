@@ -15,7 +15,7 @@ SUFFIXES_sparc = sparc sparcv9
 SUFFIXES_i386  = i586
 SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 
-DISTNAME = j2re$(GARVERSION)
+DISTNAME = j2re$(SPKG_VERSION)
 DISTFILES  = $(foreach S,$(SUFFIXES),j2re-$(GARVERSION)-solaris-$S.sh)
 NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),j2re-$(GARVERSION)-solaris-$S.sh)
 DISTFILES += $(call admfiles,CSWjre14)
@@ -54,5 +54,6 @@ install-custom:
 	@rm -rf $(DESTDIR)$(prefix)/$(DISTNAME)
 	@ginstall -d $(DESTDIR)$(prefix)
 	@(cd $(WORKDIR); pax -r -w -v $(DISTNAME) $(DESTDIR)$(prefix))
+	@rm -f $(DESTDIR)$(prefix)/jre-1.4
 	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/jre-1.4
 	@$(MAKECOOKIE)

@@ -54,5 +54,6 @@ install-custom:
 	@rm -rf $(DESTDIR)$(prefix)/$(DISTNAME)
 	@ginstall -d $(DESTDIR)$(prefix)
 	@(cd $(WORKDIR); pax -r -w -v $(DISTNAME) $(DESTDIR)$(prefix))
+	@rm -f $(DESTDIR)$(prefix)/jdk-1.3
 	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/jdk-1.3
 	@$(MAKECOOKIE)
