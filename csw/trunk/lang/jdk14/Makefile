@@ -11,7 +11,7 @@ endef
 # manually and put into /home/src before packaging.
 MASTER_SITES = manual://
 
-SUFFIXES_sparc = sparc
+SUFFIXES_sparc = sparc sparcv9
 SUFFIXES_i386  = i586
 SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 
