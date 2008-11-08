@@ -15,7 +15,7 @@ SUFFIXES_sparc = sparc sparcv9
 SUFFIXES_i386  = i586 amd64
 SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 
-DISTNAME = j2sdk$(SPKG_VERSION)
+DISTNAME = jdk$(SPKG_VERSION)
 DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
 NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(GARVERSION)-solaris-$S.sh)
 DISTFILES += $(call admfiles,CSWjdk5)
