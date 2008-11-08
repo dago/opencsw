@@ -4,3 +4,4 @@ P      CSWgnutls      gnutls - GNU Transport Layer Security lib and tools
 P      CSWgpgerr      libgpg_error - GNU gpg related library
 P      CSWzlib        zlib - Zlib Data Compression Library
 P      CSWoldaprt     OpenLDAP runtime libraries (oldaprt)
+P      CSWkrb5lib     MIT Kerberos 5 core libraries

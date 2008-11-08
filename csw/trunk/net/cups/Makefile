@@ -82,8 +82,10 @@ post-install:
 		done \
 	fi)
 	(cd $(DESTDIR); \
-	mv usr/share/* ./$(prefix)/share; \
-	rmdir -p usr/share)
+	if [ -d usr/share ]; then \
+		mv usr/share/* ./$(prefix)/share; \
+		rmdir -p usr/share; \
+	fi)
 	(cd $(DESTDIR)$(prefix)/etc/cups; \
 	for i in cupsd.conf; do \
 		if [ -r "$$i" ]; then \
