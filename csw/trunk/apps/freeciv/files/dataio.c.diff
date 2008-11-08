@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru freeciv-2.0.10.orig/common/dataio.c freeciv-2.0.10/common/dataio.c
+--- freeciv-2.0.10.orig/common/dataio.c	2008-06-30 02:22:26.000000000 +0200
++++ freeciv-2.0.10/common/dataio.c	2008-11-08 02:13:29.654886000 +0100
+@@ -25,7 +25,7 @@
+ 
+ #include <assert.h>
+ #include <limits.h>
+-#include <stdint.h>
++#include <sys/int_types.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>

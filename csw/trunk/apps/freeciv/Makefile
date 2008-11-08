@@ -2,7 +2,7 @@ GARNAME = freeciv
 GARVERSION = 2.0.10
 CATEGORIES = apps
 
-DESCRIPTION = a free turn-based multiplayer strategy game (gcc3)
+DESCRIPTION = a free turn-based multiplayer strategy game
 define BLURB
   Players of the Civilization® series by Microprose® should feel at home, since one aim of Freeciv is to have optional modes (called rulesets) with compatible rules.
 
@@ -16,7 +16,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWfreeciv, depend )
 
 GARCOMPILER = GNU
+
+PATCHFILES = dataio.c.diff
+
 TEST_SCRIPTS =
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk
