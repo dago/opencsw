@@ -1,0 +1,18 @@
+diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/amavisd amavisd-new-2.6.0/amavisd
+--- amavisd-new-2.6.0.orig/amavisd	2008-04-23 20:50:05.000000000 +0200
++++ amavisd-new-2.6.0/amavisd	2008-11-09 22:37:49.558245200 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-new.
+@@ -595,7 +595,7 @@
+ #
+ BEGIN {
+   # serves only as a quick default for other configuration settings
+-  $MYHOME   = '/var/amavis';
++  $MYHOME   = '/opt/csw/var/amavisn';
+   $mydomain = '!change-mydomain-variable!.example.com';#intentionally bad deflt
+ 
+   # Create debugging output - true: log to stderr; false: log to syslog/file

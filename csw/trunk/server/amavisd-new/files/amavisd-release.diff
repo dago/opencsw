@@ -1,0 +1,18 @@
+diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/amavisd-release amavisd-new-2.6.0/amavisd-release
+--- amavisd-new-2.6.0.orig/amavisd-release	2008-03-17 15:43:33.000000000 +0100
++++ amavisd-new-2.6.0/amavisd-release	2008-11-09 22:43:55.624383000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-release, an EXAMPLE quarantine release utility program.
+@@ -79,7 +79,7 @@
+ 
+   $log_level = 1;
+ # $socketname = '127.0.0.1:9998';
+-  $socketname = '/var/amavis/amavisd.sock';
++  $socketname = '/opt/csw/var/amavisn/amavisd.sock';
+ 
+ sub sanitize_str {
+   my($str, $keep_eol) = @_;

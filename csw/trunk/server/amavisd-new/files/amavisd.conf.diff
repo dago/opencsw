@@ -1,0 +1,28 @@
+diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/amavisd.conf amavisd-new-2.6.0/amavisd.conf
+--- amavisd-new-2.6.0.orig/amavisd.conf	2008-04-23 20:49:58.000000000 +0200
++++ amavisd-new-2.6.0/amavisd.conf	2008-11-09 22:45:24.947430600 +0100
+@@ -15,12 +15,12 @@
+ # $bypass_decode_parts = 1;         # controls running of decoders&dearchivers
+ 
+ $max_servers = 2;            # num of pre-forked children (2..30 is common), -m
+-$daemon_user  = 'vscan';     # (no default;  customary: vscan or amavis), -u
+-$daemon_group = 'vscan';     # (no default;  customary: vscan or amavis), -g
++$daemon_user  = 'amavisn';   # (no default;  customary: vscan or amavis), -u
++$daemon_group = 'amavisn';   # (no default;  customary: vscan or amavis), -g
+ 
+ $mydomain = 'example.com';   # a convenient default for other settings
+ 
+-# $MYHOME = '/var/amavis';   # a convenient default for other settings, -H
++$MYHOME = '/opt/csw/var/amavisn';   # a convenient default for other settings, -H
+ $TEMPBASE = "$MYHOME/tmp";   # working directory, needs to exist, -T
+ $ENV{TMPDIR} = $TEMPBASE;    # environment variable TMPDIR, used by SA, etc.
+ $QUARANTINEDIR = '/var/virusmails';  # -Q
+@@ -130,7 +130,7 @@
+ # $recipient_delimiter = '+';  # undef disables address extensions altogether
+ # when enabling addr extensions do also Postfix/main.cf: recipient_delimiter=+
+ 
+-$path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/bin:/bin';
++$path = '/opt/csw/bin:/opt/csw/sbin:/usr/sfw/bin:/usr/sfw/sbin::/sbin:/usr/bin:/bin';
+ # $dspam = 'dspam';
+ 
+ $MAXLEVELS = 14;
