@@ -54,6 +54,6 @@ install-custom:
 	@rm -rf $(DESTDIR)$(prefix)/$(DISTNAME)
 	@ginstall -d $(DESTDIR)$(prefix)
 	@(cd $(WORKDIR); pax -r -w -v $(DISTNAME) $(DESTDIR)$(prefix))
-	@rm -f $(DESTDIR)$(prefix)/jdk-5.0
-	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/jdk-5.0
+	@rm -f $(DESTDIR)$(prefix)/$(GARNAME)
+	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/$(GARNAME)
 	@$(MAKECOOKIE)
