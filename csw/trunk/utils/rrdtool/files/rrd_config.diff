@@ -1,0 +1,13 @@
+diff --speed-large-files --minimal -Nru rrdtool-1.3.4.orig/rrd_config.h.in rrdtool-1.3.4/rrd_config.h.in
+--- rrdtool-1.3.4.orig/rrd_config.h.in	2008-10-04 18:04:14.000000000 +0200
++++ rrdtool-1.3.4/rrd_config.h.in	2008-11-09 20:56:35.088300200 +0100
+@@ -121,9 +121,6 @@
+ /* Define to 1 if you have the <inttypes.h> header file. */
+ #undef HAVE_INTTYPES_H
+ 
+-/* Define to 1 if you have the `isfinite' function. */
+-#undef HAVE_ISFINITE
+-
+ /* Define to 1 if you have the `isinf' function. */
+ #undef HAVE_ISINF
+ 
