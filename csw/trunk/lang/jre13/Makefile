@@ -54,6 +54,6 @@ install-custom:
 	@rm -rf $(DESTDIR)$(prefix)/$(DISTNAME)
 	@ginstall -d $(DESTDIR)$(prefix)
 	@(cd $(WORKDIR); pax -r -w -v $(DISTNAME) $(DESTDIR)$(prefix))
-	@rm -f $(DESTDIR)$(prefix)/jre-1.3
-	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/jre-1.3
+	@rm -f $(DESTDIR)$(prefix)/$(GARNAME)
+	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/$(GARNAME)
 	@$(MAKECOOKIE)
