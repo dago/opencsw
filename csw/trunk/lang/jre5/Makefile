@@ -1,5 +1,5 @@
 GARNAME = jre5
-SPKG_VERSION = 1.5.0_15
+SPKG_VERSION = 1.5.0_16
 GARVERSION = $(shell echo $(SPKG_VERSION) | sed -e 's/\./_/g')
 CATEGORIES = lang
 
