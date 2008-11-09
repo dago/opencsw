@@ -13,6 +13,9 @@ MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWrrdtool,prototype)
 
+# Patch to make it build on x86
+PATCHFILES += rrd_config.diff
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-python
 CONFIGURE_ARGS += --disable-ruby
