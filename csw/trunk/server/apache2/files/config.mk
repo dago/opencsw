@@ -83,6 +83,8 @@ CONFIGURE_ARGS += --without-sqlite2
 CONFIGURE_ARGS += --with-sqlite3=$(prefix)
 #CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
 CONFIGURE_ARGS += --enable-dbd-dso
+CONFIGURE_ARGS += --without-odbc
+CONFIGURE_ARGS += --without-freetds
 
 # Patch APU to absolutely use GNU iconv
 PATCHFILES += apu-iconv.diff
