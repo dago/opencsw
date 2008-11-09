@@ -54,5 +54,6 @@ install-custom:
 	@rm -rf $(DESTDIR)$(prefix)/$(DISTNAME)
 	@ginstall -d $(DESTDIR)$(prefix)
 	@(cd $(WORKDIR); pax -r -w -v $(DISTNAME) $(DESTDIR)$(prefix))
-	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/jre-6
+	@rm -f $(DESTDIR)$(prefix)/$(GARNAME)
+	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/$(GARNAME)
 	@$(MAKECOOKIE)
