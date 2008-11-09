@@ -1,1 +1,7 @@
-b9b2b3f7f3f91f613b6bba541358520e  download/xrender-0.8.3.tar.gz
+1d9cb49e6c9149d5a5eca118c9c2bcf6  download/libXrender-0.9.4.tar.gz
+0bfea31ff1bef69b07d73d7241a682da  download/CSWlibxrender.gspec
+ce5b11131c5efd7b3b53bd6dc20c208e  download/CSWlibxrender.prototype
+d41d8cd98f00b204e9800998ecf8427e  download/CSWlibxrender.depend
+c88357e2cbb342ea66bd82ed73ff16af  download/CSWrenderdev.gspec
+bc81a8feca99dfbbf9f23797bd04f84f  download/CSWrenderdev.prototype
+b48f83e6dd37069d84a409b530283189  download/CSWrenderdev.depend
