@@ -1,5 +1,6 @@
 GARNAME = jdk6
-GARVERSION = 6u7
+SPKG_VERSION = 1.6.0_10
+GARVERSION = 6u10
 CATEGORIES = lang
 
 DESCRIPTION = Java Development Kit 6
@@ -14,7 +15,7 @@ SUFFIXES_sparc = sparc sparcv9
 SUFFIXES_i386  = i586 x64
 SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 
-DISTNAME = jdk1.6.0_07
+DISTNAME = jdk$(SPKG_VERSION)
 DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
 NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(GARVERSION)-solaris-$S.sh)
 DISTFILES += $(call admfiles,CSWjdk6)
