@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.1
+GARVERSION = 1.2
 CATEGORIES = utils
 
 DESCRIPTION = install Solaris packages the easy way
@@ -7,8 +7,7 @@ define BLURB
 	Pkgutil, written in Perl and licensed under GPL, is a tool to make 
 	installation of packages in Solaris easier. It handles package 
 	dependencies so all required packages are installed before the desired 
-	package automatically. This is based on functionality present in 
-	apt-get (Debian Linux) and pkg-get (by Phil Brown for Solaris).
+	package automatically.
 endef
 
 MASTER_SITES = http://mirror.csw.baltic-online.de/testing/pkgutil/
@@ -17,6 +16,7 @@ DISTFILES += $(GARNAME).conf
 DISTFILES += admin
 DISTFILES += bldcat
 DISTFILES += chkcat
+DISTFILES += readme
 DISTFILES += wget-i386
 DISTFILES += wget-sparc
 DISTFILES += $(call admfiles,CSWpkgutil,preremove postinstall prototype)
@@ -49,9 +49,9 @@ install-custom:
 	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)/opt/csw/bin/
 	@cp -r $(WORKSRC)/bldcat $(DESTDIR)/opt/csw/bin/
 	@cp -r $(WORKSRC)/chkcat $(DESTDIR)/opt/csw/bin/
+	@cp -r $(WORKSRC)/readme $(DESTDIR)/opt/csw/share/doc/pkgutil/
 	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)/opt/csw/share/doc/pkgutil/copyright
 	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/pkgutil/admin.CSW
 	@cp -r $(WORKSRC)/wget-i386 $(DESTDIR)/var/opt/csw/pkgutil/
 	@cp -r $(WORKSRC)/wget-sparc $(DESTDIR)/var/opt/csw/pkgutil/
-	@chmod 755 $(DESTDIR)/opt/csw/bin/$(GARNAME) $(DESTDIR)/var/opt/csw/pkgutil/wget-i386 $(DESTDIR)/var/opt/csw/pkgutil/wget-sparc
 	@$(MAKECOOKIE)

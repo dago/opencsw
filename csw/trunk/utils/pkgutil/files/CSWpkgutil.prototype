@@ -13,6 +13,7 @@ d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/pkgutil 0755 root bin
 f none /opt/csw/share/doc/pkgutil/copyright 644 root bin
+f none /opt/csw/share/doc/pkgutil/readme 644 root bin
 d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/pkgutil.1 644 root bin
