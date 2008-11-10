@@ -1,4 +1,0 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWphp5 php5 - PHP Hypertext Preprocessor 5
-P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
-P CSWgdbm gdbm - GNU dbm

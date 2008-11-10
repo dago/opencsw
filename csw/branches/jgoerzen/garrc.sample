@@ -1,6 +1,0 @@
-# vim: ft=make
-# Packaging information
-SPKG_PACKAGER   = Joe Developer
-SPKG_EMAIL      = jdev@blastwave.org
-# Where to put finished packages
-SPKG_EXPORT     = /export/medusa/jdev/staging/build-$(shell date '+%d.%b.%Y')

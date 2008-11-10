@@ -1,3 +1,0 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
-P CSWpmobjmultitype pm_objmultitype - objects as hash, array, scalar, code and glob at same time.
