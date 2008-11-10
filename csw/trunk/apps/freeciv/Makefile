@@ -4,11 +4,7 @@ CATEGORIES = apps
 
 DESCRIPTION = a free turn-based multiplayer strategy game
 define BLURB
-  Players of the Civilization® series by Microprose® should feel at home, since one aim of Freeciv is to have optional modes (called rulesets) with compatible rules.
-
-Freeciv is maintained by an international team of coders and enthusiasts, and is easily one of the most fun and addictive network games out there!
-
-That also means it has very extensive multilanguage support, something rare in games. 
+Freeciv is a Free and Open Source empire-building strategy game inspired by the history of human civilization. The game commences in prehistory and your mission is to lead your tribe from the stone age to the space age...
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
