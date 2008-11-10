@@ -13,7 +13,7 @@ MASTER_SITES = http://www.balabit.com/downloads/files/syslog-ng/sources/stable/s
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsyslogng, postinstall)
 DISTFILES += syslog-ng.conf.CSW
-DISTFILES += cswsyslog_ng.init cswsyslog_ng.xml svc-cswsyslog_ng cswsyslog_ng
+DISTFILES += cswsyslog_ng
 
 PREREQUISITE_PKGS = CSWeventlog
 
@@ -29,5 +29,6 @@ TEST_SCRIPTS =
 post-install:
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -m 444 $(WORKDIR)/syslog-ng.conf.CSW $(DESTDIR)$(sysconfdir)/syslog-ng.conf.CSW
+	ginstall -m 755 files/cswsyslog_ng $(DESTDIR)/opt/csw/init.d/cswsyslog_ng
 
 include ../category.mk

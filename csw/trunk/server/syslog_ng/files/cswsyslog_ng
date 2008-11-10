@@ -6,7 +6,7 @@
 # cleaned up by Bazsi, Oct, 12th 2000
 # minor fix by Bojan Zdrnja, Apr, 11th 2003
 #   added nicer options field
-# changes for Blastwave by Ihsan Dogan, 5. April 2008
+# changes for OpenCSW by Ihsan Dogan, 10. November 2008
 
 DAEMON=/opt/csw/sbin/syslog-ng
 OPTIONS="-f /opt/csw/etc/syslog-ng.conf"
