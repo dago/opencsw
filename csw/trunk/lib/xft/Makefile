@@ -1,22 +1,40 @@
-GARNAME = xft
-GARVERSION = 2.1.2
+GARNAME = libxft2
+GARVERSION = 2.1.13
 CATEGORIES = lib
 
-DESCRIPTION = X FreeType library.
+DESCRIPTION = FreeType-based font drawing library for X
 define BLURB
-  Part of the FreeDesktop.org project.
+Xft provides a client-side font API for X applications, making the FreeType font rasterizer available to X clients. Fontconfig is used for font specification resolution. Where available, the RENDER extension handles glyph drawing; otherwise, the core X protocol is used.
 endef
 
-# XXX: Obsolete
-#MASTER_SITES = http://pdx.freedesktop.org/~xlibs/release/
-#DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
+DISTFILES = libXft-$(GARVERSION).tar.gz
+PKGDIST = libXft-$(GARVERSION).tar.gz
 
-DEPENDS += lib/libxrender
-DEPENDS += lib/freetype
-DEPENDS += lib/fontconfig
+DISTFILES    += CSWlibxft2.gspec CSWlibxft2.prototype CSWlibxft2.depend 
+DISTFILES    += CSWlibxft2dev.gspec CSWlibxft2dev.prototype CSWlibxft2dev.depend 
+# DISTFILES    += $(call admfiles,CSWlibxft2, depend)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
+CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
+LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
-TEST_TARGET = check
+export CFLAGS CXXFLAGS LDFLAGS
+
+TEST_SCRIPTS      = none
+
+GREP = ggrep
 
 include ../category.mk
+
+CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
+
+test-none:
+	@$(MAKECOOKIE)
+
+post-extract:
+	( mv $(WORKDIR)/libXft-$(GARVERSION) $(WORKDIR)/$(GARNAME)-$(GARVERSION) )
+	@$(MAKECOOKIE)
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
