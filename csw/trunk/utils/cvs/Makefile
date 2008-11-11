@@ -30,4 +30,5 @@ include ../category.mk
 
 post-install:
 	@rm -f $(DESTDIR)$(infodir)/dir
+	@gln -sf ../share/cvs/contrib/rcs2log $(DESTDIR)$(bindir)/rcslog
 	@$(MAKECOOKIE)
