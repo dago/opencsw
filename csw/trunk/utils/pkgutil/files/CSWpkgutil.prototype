@@ -9,6 +9,10 @@ d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/pkgutil 755 root bin
 f none /opt/csw/bin/bldcat 755 root bin
 f none /opt/csw/bin/chkcat 755 root bin
+d none /opt/csw/libexec 0755 root bin
+d none /opt/csw/libexec/pkgutil 0755 root bin
+f none /opt/csw/libexec/pkgutil/wget-i386 755 root bin
+f none /opt/csw/libexec/pkgutil/wget-sparc 755 root bin
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/pkgutil 0755 root bin
@@ -20,6 +24,4 @@ f none /opt/csw/share/man/man1/pkgutil.1 644 root bin
 d none /var/opt/csw 0755 root bin
 d none /var/opt/csw/pkgutil 0755 root bin
 f none /var/opt/csw/pkgutil/admin.CSW 644 root bin
-f none /var/opt/csw/pkgutil/wget-i386 755 root bin
-f none /var/opt/csw/pkgutil/wget-sparc 755 root bin
 d none /var/opt/csw/pkgutil/packages 0755 root bin

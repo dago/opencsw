@@ -37,6 +37,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)/etc/opt/csw
 	@ginstall -d $(DESTDIR)/opt/csw
 	@ginstall -d $(DESTDIR)/opt/csw/bin
+	@ginstall -d $(DESTDIR)/opt/csw/libexec/pkgutil
 	@ginstall -d $(DESTDIR)/opt/csw/share
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/pkgutil
@@ -52,6 +53,6 @@ install-custom:
 	@cp -r $(WORKSRC)/readme $(DESTDIR)/opt/csw/share/doc/pkgutil/
 	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)/opt/csw/share/doc/pkgutil/copyright
 	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/pkgutil/admin.CSW
-	@cp -r $(WORKSRC)/wget-i386 $(DESTDIR)/var/opt/csw/pkgutil/
-	@cp -r $(WORKSRC)/wget-sparc $(DESTDIR)/var/opt/csw/pkgutil/
+	@cp -r $(WORKSRC)/wget-i386 $(DESTDIR)/opt/csw/libexec/pkgutil/
+	@cp -r $(WORKSRC)/wget-sparc $(DESTDIR)/opt/csw/libexec/pkgutil/
 	@$(MAKECOOKIE)
