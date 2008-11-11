@@ -24,6 +24,10 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 # Test suite won't run as root!
-#TEST_SCRIPTS =
+TEST_SCRIPTS =
 
 include ../category.mk
+
+post-install:
+	@rm -f $(DESTDIR)$(infodir)/dir
+	@$(MAKECOOKIE)
