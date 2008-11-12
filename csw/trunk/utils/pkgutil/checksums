@@ -7,6 +7,6 @@ ca48f243fd4a13375e4693f624fd36d2  download/readme
 b9076776ad4f99a5d84cf081f9a202df  download/wget-i386
 e0234bcebb3c01fc0a93b4866fd162d1  download/wget-sparc
 08b5df7798ad7903e2f278e0cfcc25e3  download/CSWpkgutil.gspec
-a3626f018a9abd311b79e2d9f7909f3f  download/CSWpkgutil.preremove
-3ba096a25371877d020d050cbd90eb89  download/CSWpkgutil.postinstall
+5b83368c47fc309a69a1a5020d55385b  download/CSWpkgutil.preremove
+bea1e5ef39a8389b9feaa18938993205  download/CSWpkgutil.postinstall
 c0d83d0a12db6bbe50a1b52471d9c80a  download/CSWpkgutil.prototype
