@@ -3,4 +3,3 @@
 %var		SERVICE_CONF_FILES /opt/csw/etc/syslog-ng.conf
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
-%var		spkg_classes none cswinitsmf

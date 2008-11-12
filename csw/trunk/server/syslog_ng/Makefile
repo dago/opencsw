@@ -15,6 +15,8 @@ DISTFILES += $(call admfiles,CSWsyslogng, postinstall depend prototype)
 DISTFILES += syslog-ng.conf.CSW
 DISTFILES += cswsyslog_ng
 
+SPKG_CLASSES = none cswinitsmf
+
 PREREQUISITE_PKGS = CSWeventlog
 PREREQUISITE_PKGS += CSWggettext
 PREREQUISITE_PKGS += CSWglib2
