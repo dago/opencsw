@@ -25,11 +25,11 @@ INSTALL_SCRIPTS = custom
 install-custom:
 	echo " ==> Installing $(GARNAME)"
 	ginstall -d $(DESTDIR)$(prefix)/etc
-	cp -r $(WORKSRC)/etc $(DESTDIR)$(prefix)/etc
+	cp -r $(WORKSRC)/etc/* $(DESTDIR)$(prefix)/etc
 	ginstall -d $(DESTDIR)$(prefix)/lib
-	cp -r $(WORKSRC)/lib $(DESTDIR)$(prefix)/lib
+	cp -r $(WORKSRC)/lib/* $(DESTDIR)$(prefix)/lib
 	ginstall -d $(DESTDIR)$(prefix)/share
-	cp -r $(WORKSRC)/share $(DESTDIR)$(prefix)/share
+	cp -r $(WORKSRC)/share/* $(DESTDIR)$(prefix)/share
 	ginstall -d $(DESTDIR)$(prefix)/bin
 	ginstall -m 755 $(WORKSRC)/opera $(DESTDIR)$(prefix)/bin
 
