@@ -10,12 +10,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.opera.com/
-DISTFILES  = $(GARNAME)-$(GARVERSION).gcc295-static-qt3.tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).gcc3-static-qt3.tar.gz
 DISTFILES += $(call admfiles,CSWopera, depend)
 
 PATCHFILES += bin-opera.diff
 
-WORKSRC = $(WORKDIR)/$(DISTNAME)-2466.gcc295-static-qt3
+WORKSRC = $(WORKDIR)/$(DISTNAME)-2466.gcc3-static-qt3
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
