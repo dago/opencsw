@@ -1,6 +1,5 @@
 %var		bitname pkgutil
 %var		pkgname CSWpkgutil
-%var		arch all
 %include	url file://%{PKGLIB}/csw_vars.gspec
 %pkginfo	url file://%{PKGLIB}/csw/pkginfo
 %include	url file://%{PKGLIB}/std_depend.gspec

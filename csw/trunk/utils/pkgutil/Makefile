@@ -53,6 +53,5 @@ install-custom:
 	@cp -r $(WORKSRC)/readme $(DESTDIR)/opt/csw/share/doc/pkgutil/
 	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)/opt/csw/share/doc/pkgutil/copyright
 	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/pkgutil/admin.CSW
-	@cp -r $(WORKSRC)/wget-i386 $(DESTDIR)/opt/csw/libexec/pkgutil/
-	@cp -r $(WORKSRC)/wget-sparc $(DESTDIR)/opt/csw/libexec/pkgutil/
+	@cp -r $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/pkgutil/wget
 	@$(MAKECOOKIE)

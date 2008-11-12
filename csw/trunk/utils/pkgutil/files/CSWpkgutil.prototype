@@ -11,8 +11,7 @@ f none /opt/csw/bin/bldcat 755 root bin
 f none /opt/csw/bin/chkcat 755 root bin
 d none /opt/csw/libexec 0755 root bin
 d none /opt/csw/libexec/pkgutil 0755 root bin
-f none /opt/csw/libexec/pkgutil/wget-i386 755 root bin
-f none /opt/csw/libexec/pkgutil/wget-sparc 755 root bin
+f none /opt/csw/libexec/pkgutil/wget 755 root bin
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/pkgutil 0755 root bin
