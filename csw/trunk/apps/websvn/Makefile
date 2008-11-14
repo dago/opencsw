@@ -17,6 +17,8 @@ DISTFILES = $(GARVERSION)
 NOCHECKSUM = $(GARVERSION)
 SVNHTTP_CO_ARGS = --no-auth-cache --username guest --password guest
 
+SPKG_SOURCEURL = http://websvn.tigris.org/
+
 DISTFILES += $(call admfiles,CSWwebsvn,depend postinstall preremove)
 PATCHFILES = websvn-csw-config.patch
 
