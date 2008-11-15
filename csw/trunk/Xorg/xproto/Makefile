@@ -11,8 +11,6 @@ MASTER_SITES =http://xorg.freedesktop.org/releases/individual/proto/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 
-# DISTFILES    += CSWxproto.gspec CSWxproto.prototype CSWxproto.depend 
-# DISTFILES    += CSWxprotodev.gspec CSWxprotodev.prototype CSWxprotodev.depend 
 DISTFILES    += $(call admfiles,CSWxproto, depend)
 
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib

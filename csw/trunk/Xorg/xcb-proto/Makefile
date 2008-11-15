@@ -11,8 +11,6 @@ MASTER_SITES =http://xcb.freedesktop.org/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 
-# DISTFILES    += CSWxcb-proto.gspec CSWxcb-proto.prototype CSWxcb-proto.depend 
-# DISTFILES    += CSWxcb-protodev.gspec CSWxcb-protodev.prototype CSWxcb-protodev.depend 
 DISTFILES    += $(call admfiles,CSWxcb-proto, depend)
 
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib

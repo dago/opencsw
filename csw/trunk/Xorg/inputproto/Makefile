@@ -11,8 +11,6 @@ MASTER_SITES =http://xorg.freedesktop.org/releases/individual/proto/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 
-# DISTFILES    += CSWinputproto.gspec CSWinputproto.prototype CSWinputproto.depend 
-# DISTFILES    += CSWinputprotodev.gspec CSWinputprotodev.prototype CSWinputprotodev.depend 
 DISTFILES    += $(call admfiles,CSWinputproto, depend)
 
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
