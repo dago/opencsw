@@ -1,0 +1,34 @@
+GARNAME = inputproto
+GARVERSION = 1.4.4
+CATEGORIES = lib
+
+DESCRIPTION = inputproto
+define BLURB
+inputproto
+endef
+
+MASTER_SITES =http://xorg.freedesktop.org/releases/individual/proto/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
+
+# DISTFILES    += CSWinputproto.gspec CSWinputproto.prototype CSWinputproto.depend 
+# DISTFILES    += CSWinputprotodev.gspec CSWinputprotodev.prototype CSWinputprotodev.depend 
+DISTFILES    += $(call admfiles,CSWinputproto, depend)
+
+LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+
+export LDFLAGS
+
+TEST_SCRIPTS      = none
+
+GREP = ggrep
+
+include ../category.mk
+
+CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
+
+test-none:
+	@$(MAKECOOKIE)
+
+post-install:
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
