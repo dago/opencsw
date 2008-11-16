@@ -8,8 +8,8 @@ define BLURB
   Modules for parsing (and creating!) MIME entities
 endef
 
-DISTFILES += CSWpmmimetools.gspec CSWpmmimetools.depend
+DISTFILES += $(call admfiles,CSWpmmimetools,depend)
 
-DEPENDS += cpan/Unicode-Map cpan/Unicode-String
+DEPENDS += cpan/Mail-Tools cpan/Convert-BinHex cpan/Unix-Syslog
 
 include ../category.mk
