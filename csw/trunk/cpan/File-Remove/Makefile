@@ -1,7 +1,7 @@
 GARNAME = File-Remove
-GARVERSION = 0.31
+GARVERSION = 1.42
 CATEGORIES = cpan
-AUTHOR = RSOD
+AUTHOR = ADAMK
 
 DESCRIPTION = remove files and directories
 define BLURB
@@ -11,6 +11,6 @@ define BLURB
   and ?, as arguments for filenames.
 endef
 
-DISTFILES += CSWpmfilerm.gspec
+DISTFILES += CSWpmfileremove.gspec
 
 include ../category.mk
