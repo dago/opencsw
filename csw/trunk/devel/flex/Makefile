@@ -30,4 +30,5 @@ post-install:
 	@mkdir -p $(DESTDIR)$(bindir)
 	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/newflex
 	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/flex-$(GARVERSION)
+	@rm -f $(DESTDIR)$(libexecdir)/$(GARNAME)-$(GARVERSION)/info/dir
 	@$(MAKECOOKIE)
