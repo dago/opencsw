@@ -27,6 +27,7 @@ TEST_SCRIPTS =
 include ../category.mk
 
 post-install:
+	@mkdir -p $(DESTDIR)$(bindir)
 	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/newflex
 	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/flex-$(GARVERSION)
 	@$(MAKECOOKIE)
