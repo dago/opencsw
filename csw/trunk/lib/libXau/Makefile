@@ -11,9 +11,9 @@ MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 
-# DISTFILES    += CSWlibXau.gspec CSWlibXau.prototype CSWlibXau.depend 
-# DISTFILES    += CSWlibXaudev.gspec CSWlibXaudev.prototype CSWlibXaudev.depend 
-DISTFILES    += $(call admfiles,CSWlibXau, depend)
+DISTFILES    += CSWlibXau.gspec CSWlibXau.prototype CSWlibXau.depend 
+DISTFILES    += CSWlibXaudev.gspec CSWlibXaudev.prototype CSWlibXaudev.depend 
+# DISTFILES    += $(call admfiles,CSWlibXau, depend)
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
