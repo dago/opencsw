@@ -1,0 +1,10 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/X11 0755 root bin
+f none /opt/csw/include/X11/Xdmcp.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libXdmcp.a 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/xdmcp.pc 0644 root bin
+i copyright=CSWlibXdmcpdev.copyright
+i depend=CSWlibXdmcpdev.depend
+i pkginfo=CSWlibXdmcpdev.pkginfo
