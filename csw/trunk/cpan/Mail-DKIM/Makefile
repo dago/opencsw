@@ -1,5 +1,5 @@
 GARNAME = Mail-DKIM
-GARVERSION = 0.24
+GARVERSION = 0.32
 CATEGORIES = cpan
 AUTHOR = JASLONG
 
@@ -12,7 +12,7 @@ define BLURB
    * draft-delany-domainkeys-base
 endef
 
-DISTFILES += $(call admfiles,CSWpmmaildkim,depend,prototype)
+DISTFILES += $(call admfiles,CSWpmmaildkim,depend,)
 
 DEPENDS += cpan/Crypt-OpenSSL-RSA
 DEPENDS += cpan/Digest-SHA1
