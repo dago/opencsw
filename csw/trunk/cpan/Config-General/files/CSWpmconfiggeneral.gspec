@@ -1,5 +1,6 @@
 %var            bitname pm_configgeneral
 %var            pkgname CSWpmconfiggeneral
+%var            arch all
 %include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright      
 Copyright (c) 2000-2007 Thomas Linden
