@@ -1,5 +1,5 @@
 GARNAME = Params-Validate
-GARVERSION = 0.88
+GARVERSION = 0.91
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
@@ -11,6 +11,6 @@ define BLURB
   unspecified additional parameters were passed in.
 endef
 
-DISTFILES += $(call admfiles,CSWpmprmsvldt,prototype)
+DISTFILES += $(call admfiles,CSWpmprmsvldt,)
 
 include ../category.mk
