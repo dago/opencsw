@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWfreeciv, depend )
+DISTFILES += $(call admfiles,CSWfreeciv, depend prototype )
 
 GARCOMPILER = GNU
 
@@ -17,7 +17,7 @@ PATCHFILES = dataio.c.diff
 
 TEST_SCRIPTS =
 
-CONFIGURE_ARGS = LDFLAGS=-lm
+CONFIGURE_ARGS = LDFLAGS='-L/opt/csw/lib -lm'
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-included-gettext
 
