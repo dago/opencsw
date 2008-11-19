@@ -1,10 +1,3 @@
-### BUILD.NOTES
-#
-#   need to patch C99.m4 file to remove check for stdint.h
-#   Need to find all header files that have stdint.h and replace
-#   with inttypes.h 
-
-
 GARNAME = freeciv
 GARVERSION = 2.1.6
 CATEGORIES = apps
@@ -26,6 +19,6 @@ TEST_SCRIPTS =
 
 CONFIGURE_ARGS = LDFLAGS=-lm
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --disable-nls
+CONFIGURE_ARGS += --with-included-gettext
 
 include ../category.mk
