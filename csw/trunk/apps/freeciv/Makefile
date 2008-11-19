@@ -1,5 +1,12 @@
+### BUILD.NOTES
+#
+#   need to patch C99.m4 file to remove check for stdint.h
+#   Need to find all header files that have stdint.h and replace
+#   with inttypes.h 
+
+
 GARNAME = freeciv
-GARVERSION = 2.0.10
+GARVERSION = 2.1.6
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based multiplayer strategy game
@@ -17,6 +24,8 @@ PATCHFILES = dataio.c.diff
 
 TEST_SCRIPTS =
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = LDFLAGS=-lm
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --disable-nls
 
 include ../category.mk
