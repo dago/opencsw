@@ -25,7 +25,7 @@ GREP = ggrep
 
 include ../category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x
+CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
 
 post-extract:
 	( mv $(WORKDIR)/cairo-$(GARVERSION) $(WORKDIR)/$(GARNAME)-$(GARVERSION) )
