@@ -27,7 +27,7 @@ SPKG_SOURCEURL = http://spamassassin.apache.org/
 configure-custom:
 	@echo " ==> Configuring $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/opt/csw/etc/spamassassin LOCALSTATEDIR=/opt/csw/var CONTACT_ADDRESS=postmaster )
+	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/opt/csw/etc/spamassassin LOCALSTATEDIR=/var/opt/csw/spamassassin CONTACT_ADDRESS=postmaster )
 	@$(MAKECOOKIE)
 
 build-custom:
@@ -46,7 +46,7 @@ install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -d $(DESTDIR)/opt/csw/var/$(GARNAME)
+	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)
 	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(GARNAME)/README.spamd
 	@cp $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)$(docdir)/$(GARNAME)/cswspamd
@@ -55,11 +55,10 @@ install-custom:
 	@( cd $(WORKSRC) ; \
 	   gmake install )
 	@( cd $(WORKSRC) ; \
-	   cp -r C* INSTALL LICENSE NOTICE README TRADEMARK U* ldap/ sql/ procmailrc.example sample-* $(DESTDIR)$(docdir)/$(GARNAME)/ ; \
-	   mv $(DESTDIR)$(docdir)/spamassassin/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)/copyright )
+	   cp -r C* INSTALL LICENSE NOTICE README TRADEMARK U* ldap/ sql/ procmailrc.example sample-* $(DESTDIR)$(docdir)/$(GARNAME)/ )
 	@( cd $(DESTDIR)/opt/csw/etc/spamassassin ; \
 	   mv local.cf local.cf.CSW ; \
-	   mv init.pre local.pre.CSW ; \
+	   mv init.pre init.pre.CSW ; \
 	   mv v310.pre v310.pre.CSW ; \
 	   mv v312.pre v312.pre.CSW ; \
 	   mv v320.pre v320.pre.CSW )
