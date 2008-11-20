@@ -12,7 +12,6 @@ f none /opt/csw/share/gtk-doc/html/dbus-glib/ch01.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/ch02.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/ch03.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/dbus-binding-tool.html 0644 root bin
-f none /opt/csw/share/gtk-doc/html/dbus-glib/dbus-glib-DBus-GLib-low-level.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/dbus-glib-DBus-GObject-related-functions.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/dbus-glib-DBusGConnection.html 0644 root bin
 f none /opt/csw/share/gtk-doc/html/dbus-glib/dbus-glib-DBusGError.html 0644 root bin
