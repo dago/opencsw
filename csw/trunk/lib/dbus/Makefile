@@ -1,5 +1,5 @@
 GARNAME      = dbus
-GARVERSION   = 1.2.1
+GARVERSION   = 1.2.4
 CATEGORIES   = libs
 
 DESCRIPTION  = DBus Message Bus System
@@ -12,7 +12,8 @@ endef
 MASTER_SITES  = http://dbus.freedesktop.org/releases/dbus/
 DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz 
 PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES    += CSWdbus.gspec CSWdbus.prototype CSWdbus.depend CSWdbus.postinstall
+DISTFILES    += CSWdbus.gspec CSWdbus.prototype CSWdbus.depend CSWdbus.postinstall CSWdbus.preinstall checkinstall 
+DISTFILES    += space i.smfno i.smfyes svc-dbus dbus.xml cswdbus CSWdbus.preremove
 DISTFILES    += CSWlibdbus.gspec CSWlibdbus.prototype CSWlibdbus.depend
 DISTFILES    += CSWlibdbusdev.gspec CSWlibdbusdev.prototype CSWlibdbusdev.depend
 # DISTFILES    += $(call admfiles,CSWdbus, depend)
@@ -30,5 +31,10 @@ include ../category.mk
 CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --with-xml=expat
 
 post-install:
+	( mkdir -p $(DESTDIR)/etc/init.d )
+	( mkdir -p $(DESTDIR)/etc/rc3.d )
+	( cp -fr $(FILEDIR)/csw$(GARNAME) $(DESTDIR)/etc/init.d )
+	( rm -f $(DESTDIR)/etc/rc3.d/S52$(GARNAME) )
+	( ln -s /etc/init.d/csw$(GARNAME) $(DESTDIR)/etc/rc3.d/S52$(GARNAME) )
 	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 

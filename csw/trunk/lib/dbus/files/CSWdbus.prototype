@@ -26,8 +26,22 @@ f none /opt/csw/share/man/man1/dbus-monitor.1 0644 root bin
 f none /opt/csw/share/man/man1/dbus-send.1 0644 root bin
 f none /opt/csw/share/man/man1/dbus-uuidgen.1 0644 root bin
 d none /opt/csw/var/lib/dbus 0755 root bin
-d none /opt/csw/var/run/dbus 0755 root bin
+d none /opt/csw/var/run/dbus 0777 root bin
+f smfno /etc/init.d/cswdbus 0755 root bin
+l smfno /etc/rc3.d/S52cswdbus=/etc/init.d/cswdbus
+d smfyes /opt/csw/var/svc 0755 root bin
+d smfyes /opt/csw/var/svc/manifest 0755 root bin
+d smfyes /opt/csw/var/svc/manifest/system 0755 root bin
+f smfyes /opt/csw/var/svc/manifest/system/dbus.xml=dbus.xml 0644 root bin
+d smfyes /opt/csw/lib/svc 0755 root bin
+d smfyes /opt/csw/lib/svc/method 0755 root bin
+f smfyes /opt/csw/lib/svc/method/svc-dbus=svc-dbus 0755 root bin
 i copyright=CSWdbus.copyright
 i depend=CSWdbus.depend
 i pkginfo=CSWdbus.pkginfo
 i postinstall=CSWdbus.postinstall
+i preinstall=CSWdbus.preinstall
+i checkinstall
+i i.smfno
+i i.smfyes
+i space
