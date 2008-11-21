@@ -1,0 +1,6 @@
+%var            bitname xfce_paneldoc
+%var            pkgname CSWxfcepaneldoc
+%var 		desc Xfce Panel Documentation
+%var		arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

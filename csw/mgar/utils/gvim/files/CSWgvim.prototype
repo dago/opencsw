@@ -1,0 +1,7 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/vim-x11 0755 root bin
+s none /opt/csw/bin/gview=vim-x11
+s none /opt/csw/bin/gvim=vim-x11
+s none /opt/csw/bin/gvimdiff=vim-x11
+s none /opt/csw/bin/rgview=vim-x11
+s none /opt/csw/bin/rgvim=vim-x11

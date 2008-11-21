@@ -1,0 +1,10 @@
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/sqlite3.h 0644 root bin
+f none /opt/csw/include/sqlite3ext.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libsqlite3.a 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/sqlite3.pc 0644 root bin
+i copyright=CSWsqlite3dev.copyright
+i depend=CSWsqlite3dev.depend
+i pkginfo=CSWsqlite3dev.pkginfo

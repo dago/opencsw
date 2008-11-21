@@ -1,0 +1,9 @@
+%var            bitname orca
+%var            pkgname CSWorca
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING
+%prototype:merge
+f cswinitsmf	/opt/csw/etc/init.d/csworcallator 0755 root bin
+f cswinitsmf	/opt/csw/etc/init.d/csworca_services 0755 root bin
+%depend:merge
+P CSWcswclassutils cswclassutils - CSW class action utilities

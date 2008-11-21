@@ -1,0 +1,26 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/lynx 0755 root bin
+d none /opt/csw/etc 0755 root bin
+f none /opt/csw/etc/lynx.cfg 0644 root bin
+f none /opt/csw/etc/lynx.lss 0644 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/locale 0755 root bin
+d none /opt/csw/share/locale/de 0755 root bin
+d none /opt/csw/share/locale/de/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/et 0755 root bin
+d none /opt/csw/share/locale/et/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/fr 0755 root bin
+d none /opt/csw/share/locale/fr/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/ru 0755 root bin
+d none /opt/csw/share/locale/ru/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/sv 0755 root bin
+d none /opt/csw/share/locale/sv/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/locale/tr 0755 root bin
+d none /opt/csw/share/locale/tr/LC_MESSAGES 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/lynx.1 0644 root bin
+d none /opt/csw/share/man/man5 0755 root bin
+i copyright=CSWlynx.copyright
+i depend=CSWlynx.depend
+i pkginfo=CSWlynx.pkginfo

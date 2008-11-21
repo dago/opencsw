@@ -1,0 +1,5 @@
+P CSWiconv       libiconv - GNU iconv library
+P CSWlibxml2     libxml2 - XML Parser Library
+P CSWzlib        zlib - Zlib Data Compression Library
+P CSWlibdbus     libdbus - DBus Message Bus System - dynamic libraries
+P CSWexpat

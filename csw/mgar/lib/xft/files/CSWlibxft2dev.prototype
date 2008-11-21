@@ -1,0 +1,11 @@
+d none /opt/csw/include/X11 0755 root bin
+d none /opt/csw/include/X11/Xft 0755 root bin
+f none /opt/csw/include/X11/Xft/Xft.h 0644 root bin
+f none /opt/csw/include/X11/Xft/XftCompat.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libXft.a 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/xft.pc 0644 root bin
+i copyright=CSWlibxft2dev.copyright
+i depend=CSWlibxft2dev.depend
+i pkginfo=CSWlibxft2dev.pkginfo

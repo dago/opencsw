@@ -1,0 +1,9 @@
+%var            bitname pm_netserver
+%var            pkgname CSWpmnetserver
+%var		arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Paul Seamons <paul at seamons.com>
+      http://seamons.com/
+
+      Rob Brown <bbb at cpan.org>

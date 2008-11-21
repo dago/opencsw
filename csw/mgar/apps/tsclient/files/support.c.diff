@@ -1,0 +1,13 @@
+diff --speed-large-files --minimal -Nru tsclient-0.140.orig/src/support.c tsclient-0.140/src/support.c
+--- tsclient-0.140.orig/src/support.c	2006-05-17 15:13:17.746375000 -0400
++++ tsclient-0.140/src/support.c	2006-05-17 15:13:11.536305000 -0400
+@@ -3,6 +3,9 @@
+ #endif
+ 
+ #include <sys/types.h>
++#include <sys/socket.h>
++#include <netinet/in.h>
++#include <arpa/inet.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
+ #include <string.h>

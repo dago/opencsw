@@ -1,0 +1,116 @@
+#!/bin/sh
+
+. /lib/svc/share/smf_include.sh
+
+#set -x
+set -e
+
+if [ -z "$JAVA_HOME" ]
+then
+  echo "Missing required enviroment variable: JAVA_HOME" >&2
+  exit $SMF_EXIT_ERR_CONFIG
+fi
+
+if [ ! -x "$JAVA_HOME/bin/java" ]
+then
+  echo "Could not find a proper Java binary: $JAVA_HOME/bin/java" >&2
+  exit $SMF_EXIT_ERR_CONFIG
+fi
+
+if [ ! -x "$JAVA_HOME/bin/java" ]
+then
+  echo "Could not find a proper Java binary: $JAVA_HOME/bin/java"
+  exit $SMF_EXIT_ERR_CONFIG
+fi
+
+JETTY_INSTANCE=`echo $SMF_FMRI | /usr/bin/cut -f3 -d":"`
+if [ "$JETTY_INSTANCE" = "" ]; then
+  echo "Unable to obtain instance name from FMRI" >&2
+  exit $SMF_EXIT_ERR_CONFIG
+fi
+
+if [ ! -r /etc/opt/csw/jetty6/instances/$JETTY_INSTANCE/etc/jetty.xml ]
+then
+  echo "No such instance: /etc/opt/csw/jetty6/instances/$JETTY_INSTANCE." >&2
+  echo "Create a new instance with /opt/csw/share/jetty6/bin/create-instance"
+  exit $SMF_EXIT_ERR_CONFIG
+fi
+
+JETTY_INSTANCE=`echo "${SMF_FMRI}" | /usr/bin/cut -f3 -d":"`
+if [ "${JETTY_INSTANCE}" = "" ]; then
+  echo "Unable to obtain instance name from FMRI" >&2
+  exit $SMF_EXIT_ERR_CONFIG
+fi
+
+if [ ! -d /etc/opt/csw/jetty6/instances/$JETTY_INSTANCE ]
+then
+  echo "No such instance: /etc/opt/csw/jetty6/instances/$JETTY_INSTANCE" >&2
+  echo "Create a new instance with /opt/csw/share/jetty6/bin/create-instance"
+  exit $SMF_EXIT_ERR_CONFIG
+fi
+
+JETTY_HOME=/opt/csw/share/jetty6/home
+INSTANCE_PATH=/etc/opt/csw/jetty6/instances/$JETTY_INSTANCE
+VAR_PATH=/var/opt/csw/jetty6/instances/$JETTY_INSTANCE
+TEMP_PATH=$VAR_PATH/temp
+LOGS_PATH=$VAR_PATH/logs
+PID_FILE=$VAR_PATH/jetty.pid
+
+start() {
+  echo "Starting Jetty instance '$JETTY_INSTANCE'"
+  echo "JAVA_HOME: $JAVA_HOME"
+  rm -f /tmp/jetty.log
+
+  # Jetty is configured to redirect its stdout/err to a file so don't send it
+  # to /dev/null in case it print interresting information like error messages
+  $JAVA_HOME/bin/java \
+    -Djetty.home=$JETTY_HOME \
+    -Djetty.instance=$INSTANCE_PATH \
+    -Djetty.logs=$LOGS_PATH \
+    -Djava.io.temp=$TEMP_PATH \
+    -jar $JETTY_HOME/start.jar $INSTANCE_PATH/etc/jetty.xml &
+  PID=$!
+  echo $PID > $PID_FILE
+  echo "Jetty started, PID=$PID"
+}
+
+stop() {
+  echo "Stopping Jetty instance '$JETTY_INSTANCE'"
+  if [ ! -r $PID_FILE ]
+  then
+    echo "Unable to read PID file: $PID_FILE"
+  fi
+
+  PID=`cat $PID_FILE`
+  running=`/usr/bin/ps -p $PID|wc -l`
+  if [ $running -gt 1 ]; then
+    echo "Killing PID $PID"
+    kill $PID
+    sleep 3
+  fi
+}
+
+refresh() {
+  stop
+  start
+}
+
+case "$1" in
+start)
+  start
+  ;;
+
+stop)
+  stop
+  ;;
+
+refresh)
+  refresh
+  ;;
+
+*)
+  exit 1
+  ;;
+esac
+
+exit $SMF_EXIT_OK

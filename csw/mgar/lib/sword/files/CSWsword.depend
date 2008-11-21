@@ -1,0 +1,7 @@
+P CSWcurlrt curlrt - Library for common Internet protocols Runtime
+P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
+P CSWgcc3g++rt gcc3g++rt - GNU C++ Compiler Run Time
+P CSWiconv libiconv - GNU iconv library
+P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
+P CSWzlib zlib - Zlib Data Compression Library
+P CSWosslrt	openssl_rt - Openssl runtime libraries

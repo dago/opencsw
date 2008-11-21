@@ -1,0 +1,75 @@
+# Change this file for your startup options.
+# For environment variables that are not a '=' assignment, I have
+#   added the word true to allow the use of the variable.  Uncomment
+#   the line with the environment variable to activate.
+# See man slapd for more detail.
+#
+# slurpd options are listed after the slapd options.
+#
+# With the 2.3.x versions, the slapd patch to allow SOLARISROOTDSE
+#   is no longer needed and removed.
+#
+# -4 Listen on IPv4 addresses only.
+#SLAPD_IPV4_ONLY=true
+
+# -6 Listen on IPv6 addresses only.
+#SLAPD_IPV6_ONLY=true
+
+# -d debug-level.  Enter only the number below.
+#SLAPD_DEBUG_LEVEL=0
+
+# -f slapd-config-file. Specifies the slapd configuration file.
+#SLAPD_CONFIG_FILE=/opt/csw/etc/openldap/slapd.conf
+
+# -F slapd-config-directory. Specifies the slapd configuration directory
+#  for use with the cn=config backend.
+#  You must create this directory yourself.
+#SLAPD_CONFIG_DIR=/opt/csw/etc/openldap/slapd.d
+
+# -g group. slapd will run with the specified group name or id.
+#SLAPD_GROUP=daemon
+
+# -h URLlist. Specify LDAP (and other scheme) URLS to serve.
+#SLAPD_URL_LIST=ldap:///
+
+# -l facility.  Selects the syslog(8) facility.
+#SLAPD_SYSLOG_FACILITY=LOCAL4
+
+# -n service-name.  Defaults to "slapd".
+#SLAPD_SERVICE_NAME=slapd
+
+# -r directory. Specifies a chroot "jail" directory.
+#SLAPD_DIRECTORY=directory
+
+# -s syslog-level.  Enter only the number below.
+#SLAPD_SYSLOG_LEVEL=0
+
+# -t. slapd will read the configuration file and check its syntax only.
+#SLAPD_SYNTAX_CHECK=true
+
+# -u user. slapd will run slapd with the specified user name or id.
+#SLAPD_USER=daemon
+
+# Set to true to start slurpd
+#SLURPD_START=true
+
+# -d debug-level.  Enter only the number below.
+#SLURPD_DEBUG_LEVEL=255
+
+# -s syslog-level.  Enter only the number below.
+#SLURPD_SYSLOG_LEVEL=0
+
+# -f slapd-config-file. Specifies the slapd configuration file.
+#SLURPD_CONFIG_FILE=/opt/csw/etc/openldap/slapd.conf
+
+# -r replication-log-file.  Directory must be created.
+#SLURPD_REPL_LOG_FILE=/opt/csw/var/openldap-slurp/log
+
+# -t tmp-dir.  Directory must be created.
+#SLURPD_TMP_DIR=/opt/csw/var/openldap-slurp/tmp
+
+# -o one-shot mode
+#SLURPD_ONE_SHOT=true
+
+# -n service-name.  Defaults to "slurpd".
+#SLURPD_SERVICE_NAME=slurpd

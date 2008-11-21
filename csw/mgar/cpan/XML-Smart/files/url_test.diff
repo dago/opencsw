@@ -1,0 +1,13 @@
+diff --speed-large-files --minimal -Nru XML-Smart-1.6.9.orig/test.pl XML-Smart-1.6.9/test.pl
+--- XML-Smart-1.6.9.orig/test.pl	2004-09-01 11:39:28.000000000 -0700
++++ XML-Smart-1.6.9/test.pl	2005-02-11 11:43:06.180015000 -0800
+@@ -1251,7 +1251,8 @@
+   
+     my $url = 'http://www.perlmonks.org/index.pl?node_id=16046' ;
+ 
+-    my $opt = prompt("\nURL: $url\nDo you want to test XML::Smart with an URL?","n");
++    #my $opt = prompt("\nURL: $url\nDo you want to test XML::Smart with an URL?","n");
++    my $opt = 'n';
+     
+     if ( $opt =~ /^\s*(?:y|s)/si ) {
+       print "\nGetting URL... " ;

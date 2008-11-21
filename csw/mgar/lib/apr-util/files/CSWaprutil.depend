@@ -1,0 +1,7 @@
+P CSWapr apr - Apache Portable Runtime
+P CSWbdb43 berkeleydb43 - BerkeleyDB 4.3 libraries and utilities
+P CSWexpat expat -  XML Parser Toolkit
+P CSWgdbm gdbm - GNU dbm
+P CSWiconv libiconv - GNU iconv library
+P CSWoldaprt openldap_rt - ldap runtime libraries
+P CSWsqlite3 sqlite3 - An embeddable SQL engine in a C library

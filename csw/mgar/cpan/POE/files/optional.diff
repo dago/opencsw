@@ -1,0 +1,47 @@
+diff --speed-large-files --minimal -Nru POE-0.2802.orig/mylib/Makefile-5005.pm POE-0.2802/mylib/Makefile-5005.pm
+--- POE-0.2802.orig/mylib/Makefile-5005.pm	2004-02-02 09:24:51.000000000 -0800
++++ POE-0.2802/mylib/Makefile-5005.pm	2004-02-18 08:41:08.203144000 -0800
+@@ -71,11 +71,11 @@
+         -tests     => [ qw(t/27_poll.t) ],
+         'IO::Poll' => 0.05,
+     ],
+-    "Optional modules for IPv6 support." => [
+-        -default  => 0,
+-        -tests    => [ qw(t/29_sockfact6.t) ],
+-        'Socket6' => 0.11,
+-    ],
++#    "Optional modules for IPv6 support." => [
++#        -default  => 0,
++#        -tests    => [ qw(t/29_sockfact6.t) ],
++#        'Socket6' => 0.11,
++#    ],
+     "Optional modules for controlling full-screen programs (e.g. vi)." => [
+         -default  => 0,
+         'IO::Pty' => '1.02',
+@@ -103,16 +103,16 @@
+         'Term::ReadKey' => '',
+         'Term::Cap'     => '',
+     ],
+-    "Optional modules for Gtk+ graphical interfaces." => [
+-        -default => 0,
+-        -tests   => [ qw(t/21_gtk.t) ],
+-        'Gtk'    => '',
+-    ],
+-    "Optional modules for Tk graphical interfaces." => [
+-        -default => 0,
+-        -tests   => [ qw(t/06_tk.t) ],
+-        'Tk'     => '800.021',
+-    ],
++#    "Optional modules for Gtk+ graphical interfaces." => [
++#        -default => 0,
++#        -tests   => [ qw(t/21_gtk.t) ],
++#        'Gtk'    => '',
++#    ],
++#    "Optional modules for Tk graphical interfaces." => [
++#        -default => 0,
++#        -tests   => [ qw(t/06_tk.t) ],
++#        'Tk'     => '800.021',
++#    ],
+     "Optional modules for Event.pm support." => [
+         -default => 0,
+         -tests   => [ qw(t/07_event.t t/12_signals_ev.t) ],

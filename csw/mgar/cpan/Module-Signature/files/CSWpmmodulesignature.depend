@@ -1,0 +1,3 @@
+P CSWpmcryptopenpgp pm_cryptopenpgp - pure-Perl OpenPGP implementation
+P CSWpmpardist pm_pardist - create and manipulate PAR distributions
+P CSWpmtextdiff pm_textdiff - perform diffs on files and record sets

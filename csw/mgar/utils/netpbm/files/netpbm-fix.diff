@@ -1,0 +1,36 @@
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/converter/other/jpeg2000/Makefile netpbm-10.26.18/converter/other/jpeg2000/Makefile
+--- netpbm-10.26.18.orig/converter/other/jpeg2000/Makefile	2005-11-12 16:50:41.000000000 -0500
++++ netpbm-10.26.18/converter/other/jpeg2000/Makefile	2005-11-12 16:46:54.730001000 -0500
+@@ -18,7 +18,7 @@
+   endif
+ endif
+ 
+-INTERNAL_JASPERLIB = $(BUILDDIR)/$(SUBDIR)/libjasper/libjasper.a
++INTERNAL_JASPERLIB = libjasper/libjasper.a
+ INTERNAL_JASPERHDR_DIR = $(BUILDDIR)/$(SUBDIR)/libjasper/include
+ 
+ ifeq ($(JASPERLIB),$(INTERNAL_JASPERLIB))
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/converter/other/pamtouil.c netpbm-10.26.18/converter/other/pamtouil.c
+--- netpbm-10.26.18.orig/converter/other/pamtouil.c	2005-11-12 16:50:39.000000000 -0500
++++ netpbm-10.26.18/converter/other/pamtouil.c	2005-11-12 16:47:36.140004000 -0500
+@@ -29,7 +29,7 @@
+ #define LOW_CHAR '`'
+ #define HIGH_CHAR '~'
+ 
+-struct cmdlineInfo {
++static struct cmdlineInfo {
+     /* All the information the user supplied in the command line,
+        in a form easy for the program to use.
+     */
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/editor/pnmcrop.c netpbm-10.26.18/editor/pnmcrop.c
+--- netpbm-10.26.18.orig/editor/pnmcrop.c	2005-11-12 16:50:13.000000000 -0500
++++ netpbm-10.26.18/editor/pnmcrop.c	2005-11-12 16:48:02.400004000 -0500
+@@ -28,7 +28,7 @@
+ 
+ enum bg_choice {BG_BLACK, BG_WHITE, BG_DEFAULT, BG_SIDES};
+ 
+-struct cmdline_info {
++static struct cmdline_info {
+     /* All the information the user supplied in the command line,
+        in a form easy for the program to use.
+     */

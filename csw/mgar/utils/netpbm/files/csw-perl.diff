@@ -1,0 +1,63 @@
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/editor/pnmflip netpbm-10.26.18/editor/pnmflip
+--- netpbm-10.26.18.orig/editor/pnmflip	2005-11-13 16:36:50.000000000 -0500
++++ netpbm-10.26.18/editor/pnmflip	2005-11-13 16:36:16.610001000 -0500
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #============================================================================
+ #  This is a compatibility interface to Pamflip.
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/editor/pnmquant netpbm-10.26.18/editor/pnmquant
+--- netpbm-10.26.18.orig/editor/pnmquant	2005-11-13 16:36:51.000000000 -0500
++++ netpbm-10.26.18/editor/pnmquant	2005-11-13 16:35:41.230002000 -0500
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ ##############################################################################
+ #                         pnmquant 
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/editor/ppmfade netpbm-10.26.18/editor/ppmfade
+--- netpbm-10.26.18.orig/editor/ppmfade	2005-11-13 16:36:50.000000000 -0500
++++ netpbm-10.26.18/editor/ppmfade	2005-11-13 16:34:50.460003000 -0500
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ #
+ #  This program creates a fade (a sequence of frames) between two images.
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/editor/ppmquant netpbm-10.26.18/editor/ppmquant
+--- netpbm-10.26.18.orig/editor/ppmquant	2005-11-13 16:36:50.000000000 -0500
++++ netpbm-10.26.18/editor/ppmquant	2005-11-13 16:35:27.770001000 -0500
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ ##############################################################################
+ #  This is nothing but a compatibility interface for Pnmquant.
+ #  An old program coded to call Ppmquant will continue working because
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/editor/ppmshadow netpbm-10.26.18/editor/ppmshadow
+--- netpbm-10.26.18.orig/editor/ppmshadow	2005-11-13 16:36:50.000000000 -0500
++++ netpbm-10.26.18/editor/ppmshadow	2005-11-13 16:36:00.060002000 -0500
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #                         P P M S H A D O W
+ 
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/generator/ppmrainbow netpbm-10.26.18/generator/ppmrainbow
+--- netpbm-10.26.18.orig/generator/ppmrainbow	2005-11-13 16:36:52.000000000 -0500
++++ netpbm-10.26.18/generator/ppmrainbow	2005-11-13 16:36:32.310000000 -0500
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wl
++#!/opt/csw/bin/perl -wl
+ use strict;
+ use Getopt::Long;
+ 
+diff --speed-large-files --minimal -Nru netpbm-10.26.18.orig/manweb netpbm-10.26.18/manweb
+--- netpbm-10.26.18.orig/manweb	2005-11-13 16:36:57.000000000 -0500
++++ netpbm-10.26.18/manweb	2005-11-13 16:36:42.040003000 -0500
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ use strict;
+ use English;

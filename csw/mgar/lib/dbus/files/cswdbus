@@ -1,0 +1,39 @@
+#!/sbin/sh
+
+DBUS_VAR_DIR=/opt/csw/var/lib/dbus
+DBUS_VAR_RUN_DIR=/opt/csw/var/lib/dbus
+DBUS_MACHINE_ID_FILE=machine-id
+
+if [ ! -d $DBUS_VAR_DIR ]; then
+    mkdir -p $DBUS_VAR_DIR
+fi
+
+if [ ! -f $DBUS_VAR_DIR/$DBUS_MACHINE_ID_FILE ]; then
+    /opt/csw/bin/dbus-uuidgen --ensure
+fi
+
+
+case $1 in 
+'start')
+        if [ ! -d $DBUS_VAR_DIR ]; then
+                mkdir -p $DBUS_VAR_DIR
+        fi
+        if [ -f $DBUS_VAR_DIR/pid ]; then
+                rm -f $DBUS_VAR_DIR/pid
+        fi
+
+        /opt/csw/bin/dbus-daemon --system
+        err=$?
+        if [ $err -ne 0 ]; then
+                echo "dbus failed to start: error $err"
+                exit 1
+        fi
+        ;;
+
+*)
+        echo "Usage: $0 { start }"
+        exit 1
+        ;;
+esac    
+
+exit 0

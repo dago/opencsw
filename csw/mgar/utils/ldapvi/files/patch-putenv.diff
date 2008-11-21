@@ -1,0 +1,13 @@
+diff --git a/ldapvi/arguments.c b/ldapvi/arguments.c
+index a6cbb8e..63e6213 100644
+--- ldapvi/arguments.c
++++ ldapvi/arguments.c
+@@ -724,7 +724,7 @@ parse_arguments(int argc, const char **argv, cmdline *result, GPtrArray *ctrls)
+ 	}
+
+ 	if (result->profileonlyp)
+-		if (setenv("LDAPNOINIT", "thanks", 1)) syserr();
++		if (putenv("LDAPNOINIT=thanks")) syserr();
+
+ 	/* don't free! */
+ /* 	poptFreeContext(ctx); */

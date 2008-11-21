@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru lftp-3.4.6.orig/src/lftp_ssl.cc lftp-3.4.6/src/lftp_ssl.cc
+--- lftp-3.4.6.orig/src/lftp_ssl.cc	2006-04-27 18:08:49.188205000 -0400
++++ lftp-3.4.6/src/lftp_ssl.cc	2006-04-27 18:08:41.398203000 -0400
+@@ -107,7 +107,7 @@
+ 
+ static void munmap_file(gnutls_datum_t data)
+ {
+-    munmap(data.data, data.size);
++    munmap((caddr_t)data.data, data.size);
+ }
+ 
+ #if LFTP_LIBGNUTLS_VERSION_CODE < 0x010201

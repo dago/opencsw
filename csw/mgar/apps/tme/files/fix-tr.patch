@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru tme-0.6.orig/generic/fb-xlat-auto.sh tme-0.6/generic/fb-xlat-auto.sh
+--- tme-0.6.orig/generic/fb-xlat-auto.sh	2007-03-29 03:02:43.000000000 +0200
++++ tme-0.6/generic/fb-xlat-auto.sh	2008-02-21 15:39:17.613690000 +0100
+@@ -1032,7 +1032,7 @@
+ 	    fi
+ 
+ 	    for primary in g r b; do
+-		primary_cap=`echo ${primary} | tr a-z A-Z`
++		primary_cap=`echo ${primary} | tr '[a-z]' '[A-Z]'`
+ 		echo ""
+ 		echo "  /* declare src_mask_${primary}, the mask for the ${primary} subfield in a source pixel: */"
+ 		eval "src_mask=\$src_mask_${primary}"
+diff --speed-large-files --minimal -Nru tme-0.6.orig/ic/ieee754/ieee754-precision.sh tme-0.6/ic/ieee754/ieee754-precision.sh
+--- tme-0.6.orig/ic/ieee754/ieee754-precision.sh	2007-08-26 16:02:04.000000000 +0200
++++ tme-0.6/ic/ieee754/ieee754-precision.sh	2008-02-22 09:46:56.144425000 +0100
+@@ -134,7 +134,7 @@
+ 
+ # make a capitalized version of the precision name:
+ #
+-echo ${prefix}'capprecision=`echo ${precision} | tr a-z A-Z` ; '
++echo ${prefix}'capprecision=`echo ${precision} | tr "[a-z]" "[A-Z]"` ; '
+ 
+ # done:
+ #

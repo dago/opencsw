@@ -1,0 +1,146 @@
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-groupadd smbldap-tools-0.9.4/smbldap-groupadd
+--- smbldap-tools-0.9.4.orig/smbldap-groupadd	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-groupadd	2008-03-10 10:53:07.419834000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-groupdel smbldap-tools-0.9.4/smbldap-groupdel
+--- smbldap-tools-0.9.4.orig/smbldap-groupdel	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-groupdel	2008-03-10 10:53:07.424853000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-groupmod smbldap-tools-0.9.4/smbldap-groupmod
+--- smbldap-tools-0.9.4.orig/smbldap-groupmod	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-groupmod	2008-03-10 10:53:07.430136000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-groupshow smbldap-tools-0.9.4/smbldap-groupshow
+--- smbldap-tools-0.9.4.orig/smbldap-groupshow	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-groupshow	2008-03-10 10:53:07.434369000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-passwd smbldap-tools-0.9.4/smbldap-passwd
+--- smbldap-tools-0.9.4.orig/smbldap-passwd	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-passwd	2008-03-10 10:53:07.439378000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-populate smbldap-tools-0.9.4/smbldap-populate
+--- smbldap-tools-0.9.4.orig/smbldap-populate	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-populate	2008-03-10 10:53:07.444429000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-useradd smbldap-tools-0.9.4/smbldap-useradd
+--- smbldap-tools-0.9.4.orig/smbldap-useradd	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-useradd	2008-03-10 10:53:07.449624000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-userdel smbldap-tools-0.9.4/smbldap-userdel
+--- smbldap-tools-0.9.4.orig/smbldap-userdel	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-userdel	2008-03-10 10:53:07.454006000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-userinfo smbldap-tools-0.9.4/smbldap-userinfo
+--- smbldap-tools-0.9.4.orig/smbldap-userinfo	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-userinfo	2008-03-10 10:53:07.458960000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (<jtournier@gmail.com>)
+ #  This was first contributed by IDEALX (http://www.opentrust.com/)
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-userlist smbldap-tools-0.9.4/smbldap-userlist
+--- smbldap-tools-0.9.4.orig/smbldap-userlist	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-userlist	2008-03-10 10:53:07.462979000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-usermod smbldap-tools-0.9.4/smbldap-usermod
+--- smbldap-tools-0.9.4.orig/smbldap-usermod	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-usermod	2008-03-10 10:53:07.468565000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap-usershow smbldap-tools-0.9.4/smbldap-usershow
+--- smbldap-tools-0.9.4.orig/smbldap-usershow	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap-usershow	2008-03-10 10:53:07.472861000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+diff --speed-large-files --minimal -Nru smbldap-tools-0.9.4.orig/smbldap_tools.pm smbldap-tools-0.9.4/smbldap_tools.pm
+--- smbldap-tools-0.9.4.orig/smbldap_tools.pm	2007-09-17 13:05:48.000000000 +0200
++++ smbldap-tools-0.9.4/smbldap_tools.pm	2008-03-10 10:54:09.757937000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #  This code was developped by Jerome Tournier (jtournier@gmail.com) and
+ #  contributors (their names can be found in the CONTRIBUTORS file).
+@@ -27,15 +27,15 @@
+ use Unicode::MapUTF8 qw(to_utf8 from_utf8);
+ 
+ my $smbldap_conf;
+-if (-e "/etc/smbldap-tools/smbldap.conf") {
+-    $smbldap_conf="/etc/smbldap-tools/smbldap.conf";
++if (-e "/opt/csw/etc/smbldap-tools/smbldap.conf") {
++    $smbldap_conf="/opt/csw/etc/smbldap-tools/smbldap.conf";
+ } else {
+     $smbldap_conf="/etc/opt/IDEALX/smbldap-tools/smbldap.conf";
+ }
+ 
+ my $smbldap_bind_conf;
+-if (-e "/etc/smbldap-tools/smbldap_bind.conf") {
+-    $smbldap_bind_conf="/etc/smbldap-tools/smbldap_bind.conf";
++if (-e "/opt/csw/etc/smbldap-tools/smbldap_bind.conf") {
++    $smbldap_bind_conf="/opt/csw/etc/smbldap-tools/smbldap_bind.conf";
+ } else {
+     $smbldap_bind_conf="/etc/opt/IDEALX/smbldap-tools/smbldap_bind.conf";
+ }
+@@ -43,7 +43,7 @@
+ if (-e "/etc/samba/smb.conf") {
+     $samba_conf="/etc/samba/smb.conf";
+ } else {
+-    $samba_conf="/usr/local/samba/lib/smb.conf";
++    $samba_conf="/opt/csw/etc/samba/smb.conf";
+ }
+ 
+ use vars       qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);

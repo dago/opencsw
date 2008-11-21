@@ -1,0 +1,15 @@
+diff --speed-large-files --minimal -Nru vsftpd-2.0.4.orig/builddefs.h vsftpd-2.0.4/builddefs.h
+--- vsftpd-2.0.4.orig/builddefs.h	2006-04-12 17:59:52.456816000 -0400
++++ vsftpd-2.0.4/builddefs.h	2006-04-12 17:59:45.697669000 -0400
+@@ -1,9 +1,9 @@
+ #ifndef VSF_BUILDDEFS_H
+ #define VSF_BUILDDEFS_H
+ 
+-#undef VSF_BUILD_TCPWRAPPERS
++#define VSF_BUILD_TCPWRAPPERS
+ #define VSF_BUILD_PAM
+-#undef VSF_BUILD_SSL
++#define VSF_BUILD_SSL
+ 
+ #endif /* VSF_BUILDDEFS_H */
+ 

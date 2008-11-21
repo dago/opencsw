@@ -1,0 +1,36 @@
+diff --speed-large-files --minimal -Nru apr-util-1.2.2.orig/build/dbd.m4 apr-util-1.2.2/build/dbd.m4
+--- apr-util-1.2.2.orig/build/dbd.m4	2005-12-13 20:23:11.123071000 -0500
++++ apr-util-1.2.2/build/dbd.m4	2005-12-13 20:23:01.813244000 -0500
+@@ -87,14 +87,14 @@
+     elif test "$withval" = "no"; then
+       apu_have_mysql=0
+     else
+-      CPPFLAGS="-I$withval/include"
+-      LIBS="-L$withval/lib "
++      CPPFLAGS="-I$withval/include/mysql"
++      LIBS="-L$withval/lib/mysql "
+ 
+       AC_MSG_NOTICE(checking for mysql in $withval)
+       AC_CHECK_HEADER(mysql.h, AC_CHECK_LIB(mysqlclient_r, mysql_init, [apu_have_mysql=1]))
+       if test "$apu_have_mysql" != "0"; then
+-        APR_ADDTO(APRUTIL_LDFLAGS, [-L$withval/lib])
+-        APR_ADDTO(APRUTIL_INCLUDES, [-I$withval/include])
++        APR_ADDTO(APRUTIL_LDFLAGS, [-L$withval/lib/mysql])
++        APR_ADDTO(APRUTIL_INCLUDES, [-I$withval/include/mysql])
+       fi
+ 
+       if test "$apu_have_mysql" != "1"; then
+diff --speed-large-files --minimal -Nru apr-util-1.2.2.orig/build-outputs.mk apr-util-1.2.2/build-outputs.mk
+--- apr-util-1.2.2.orig/build-outputs.mk	2005-12-13 20:23:09.205901000 -0500
++++ apr-util-1.2.2/build-outputs.mk	2005-12-13 20:22:46.348436000 -0500
+@@ -45,8 +45,9 @@
+ dbd/apr_dbd_sqlite2.lo: dbd/apr_dbd_sqlite2.c .make.dirs 
+ dbd/apr_dbd_sqlite3.lo: dbd/apr_dbd_sqlite3.c .make.dirs 
+ dbd/apr_dbd_pgsql.lo: dbd/apr_dbd_pgsql.c .make.dirs 
++dbd/apr_dbd_mysql.lo: dbd/apr_dbd_mysql.c .make.dirs 
+ 
+-OBJECTS_all = buckets/apr_buckets_pipe.lo buckets/apr_buckets_flush.lo buckets/apr_buckets_alloc.lo buckets/apr_buckets_pool.lo buckets/apr_buckets_socket.lo buckets/apr_buckets_heap.lo buckets/apr_buckets_simple.lo buckets/apr_buckets_file.lo buckets/apr_buckets.lo buckets/apr_buckets_mmap.lo buckets/apr_buckets_eos.lo buckets/apr_brigade.lo buckets/apr_buckets_refcount.lo crypto/apr_sha1.lo crypto/uuid.lo crypto/getuuid.lo crypto/apr_md5.lo crypto/apr_md4.lo dbm/apr_dbm.lo dbm/apr_dbm_berkeleydb.lo dbm/apr_dbm_gdbm.lo dbm/apr_dbm_ndbm.lo dbm/apr_dbm_sdbm.lo dbm/sdbm/sdbm_pair.lo dbm/sdbm/sdbm.lo dbm/sdbm/sdbm_hash.lo dbm/sdbm/sdbm_lock.lo encoding/apr_base64.lo hooks/apr_hooks.lo ldap/apr_ldap_url.lo ldap/apr_ldap_option.lo ldap/apr_ldap_init.lo misc/apr_reslist.lo misc/apu_version.lo misc/apr_date.lo misc/apr_rmm.lo misc/apr_queue.lo uri/apr_uri.lo xml/apr_xml.lo strmatch/apr_strmatch.lo xlate/xlate.lo dbd/apr_dbd.lo dbd/apr_dbd_sqlite2.lo dbd/apr_dbd_sqlite3.lo dbd/apr_dbd_pgsql.lo
++OBJECTS_all = buckets/apr_buckets_pipe.lo buckets/apr_buckets_flush.lo buckets/apr_buckets_alloc.lo buckets/apr_buckets_pool.lo buckets/apr_buckets_socket.lo buckets/apr_buckets_heap.lo buckets/apr_buckets_simple.lo buckets/apr_buckets_file.lo buckets/apr_buckets.lo buckets/apr_buckets_mmap.lo buckets/apr_buckets_eos.lo buckets/apr_brigade.lo buckets/apr_buckets_refcount.lo crypto/apr_sha1.lo crypto/uuid.lo crypto/getuuid.lo crypto/apr_md5.lo crypto/apr_md4.lo dbm/apr_dbm.lo dbm/apr_dbm_berkeleydb.lo dbm/apr_dbm_gdbm.lo dbm/apr_dbm_ndbm.lo dbm/apr_dbm_sdbm.lo dbm/sdbm/sdbm_pair.lo dbm/sdbm/sdbm.lo dbm/sdbm/sdbm_hash.lo dbm/sdbm/sdbm_lock.lo encoding/apr_base64.lo hooks/apr_hooks.lo ldap/apr_ldap_url.lo ldap/apr_ldap_option.lo ldap/apr_ldap_init.lo misc/apr_reslist.lo misc/apu_version.lo misc/apr_date.lo misc/apr_rmm.lo misc/apr_queue.lo uri/apr_uri.lo xml/apr_xml.lo strmatch/apr_strmatch.lo xlate/xlate.lo dbd/apr_dbd.lo dbd/apr_dbd_sqlite2.lo dbd/apr_dbd_sqlite3.lo dbd/apr_dbd_pgsql.lo dbd/apr_dbd_mysql.lo
+ 
+ OBJECTS_unix = $(OBJECTS_all)
+ 

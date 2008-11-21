@@ -1,0 +1,25 @@
+diff --speed-large-files --minimal -Nru mod_auth_pam.orig/Makefile mod_auth_pam/Makefile
+--- mod_auth_pam.orig/Makefile	2006-02-01 03:10:19.256447000 -0500
++++ mod_auth_pam/Makefile	2006-02-01 03:10:14.555296000 -0500
+@@ -1,5 +1,5 @@
+ LIBS=-lpam
+-APXS=apxs
++#APXS=apxs
+ # try this, if you're not root and apxs is in the standard place
+ #APXS=/usr/sbin/apxs
+ 
+@@ -13,9 +13,12 @@
+ %.la: %.c
+ 	$(APXS) -c $< $(LIBS)
+ 
++AP2ROOT=$(DESTDIR)/opt/csw/apache2
++
+ install: $(TARGETS)
+-	$(APXS) -i $(TARGETS)
+-	[ -d /etc/pam.d/ -a ! -f /etc/pam.d/httpd ] && install -m 644 -o root -g root samples/httpd /etc/pam.d/
++	install -d $(AP2ROOT)/libexec
++	$(APXS) -S LIBEXECDIR=$(AP2ROOT)/libexec -i $(TARGETS)
++	#[ -d /etc/pam.d/ -a ! -f /etc/pam.d/httpd ] && install -m 644 -o root -g root samples/httpd /etc/pam.d/
+ 
+ clean:
+ 	-rm -f $(TARGETS) *~ $(SOURCES:.c=.slo) $(SOURCES:.c=.lo) $(SOURCES:.c=.so) $(SOURCES:.c=.o) 

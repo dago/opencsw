@@ -1,0 +1,11 @@
+#!/bin/sh
+
+M2_HOME=/opt/csw/share/maven2
+
+if [ -z "$JAVA_HOME" ]
+then
+  JAVA_HOME=/usr/jdk/latest
+  export JAVA_HOME
+fi
+
+exec $M2_HOME/bin/mvn "$@"

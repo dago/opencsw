@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Blastwave.org Xfce libxfcegui4 preinstall script
+#
+# The purpose of this script is to remove from file installation database the list of files
+# which previoulsy belongued to xfce_panel and have been moved to this package.
+# the removal of these files during preinstallation is needed to prevent conflicts to happen
+# since xfce_panel depends on this package and will be updated after this package
+#
+
+for i in /opt/csw/share/icons/hicolor/48x48/apps/xfce-edit.png        \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-filemanager.png \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-games.png       \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-graphics.png    \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-internet.png    \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-man.png         \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-multimedia.png  \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-printer.png     \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-schedule.png    \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-sound.png       \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-terminal.png    \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-unknown.png     \
+         /opt/csw/share/icons/hicolor/48x48/apps/xfce-utils.png ; 
+
+    do echo Removing file : $i
+    removef CSWxfcepanel $i
+    rm -f $i
+
+done
+
+removef -f CSWxfcepanel || exit 2
+
+exit 0

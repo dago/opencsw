@@ -1,0 +1,11 @@
+f none /opt/csw/lib/libxfce4mcs-client.la 0755 root bin
+f none /opt/csw/lib/libxfce4mcs-client.so.3.0.5 0755 root bin
+s none /opt/csw/lib/libxfce4mcs-client.so.3=libxfce4mcs-client.so.3.0.5
+s none /opt/csw/lib/libxfce4mcs-client.so=libxfce4mcs-client.so.3.0.5
+f none /opt/csw/lib/libxfce4mcs-manager.la 0755 root bin
+f none /opt/csw/lib/libxfce4mcs-manager.so.3.0.5 0755 root bin
+s none /opt/csw/lib/libxfce4mcs-manager.so.3=libxfce4mcs-manager.so.3.0.5
+s none /opt/csw/lib/libxfce4mcs-manager.so=libxfce4mcs-manager.so.3.0.5
+i copyright=CSWlibxfce4mcs.copyright
+i depend=CSWlibxfce4mcs.depend
+i pkginfo=CSWlibxfce4mcs.pkginfo

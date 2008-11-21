@@ -1,0 +1,15 @@
+# dbus - i.smfno script
+#
+# Copy the non-SMF specific files to the base directory.
+# The files to copy are:
+# /etc/init.d/cswdbus=cswdbus
+# /etc/rc3.d/S52cswdbus=/etc/init.d/cswdbus
+#
+echo "Installing class <smfno>."
+while read src dest
+do
+        # Do copy
+        /usr/bin/cp $src $dest || exit 2
+        echo $dest
+done
+exit 0

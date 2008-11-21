@@ -1,0 +1,24 @@
+diff -Naur hylafax-5.2.5-orig/faxd/Makefile.SOLARISdso hylafax-5.2.5-patched/faxd/Makefile.SOLARISdso
+--- hylafax-5.2.5-orig/faxd/Makefile.SOLARISdso	2008-05-24 22:13:28.000000000 +0200
++++ hylafax-5.2.5-patched/faxd/Makefile.SOLARISdso	2008-07-02 02:06:17.281608000 +0200
+@@ -33,7 +33,7 @@
+ 
+ libfaxserver.${DSO}: ${SERVER_OBJS} ${MODEM_OBJS}
+ 	${C++} ${DSOOPTS} -o libfaxserver.${DSO}.${LIBVERSION} \
+-	    ${SERVER_OBJS} ${MODEM_OBJS} ${LLDLIBS}
++	    ${SERVER_OBJS} ${MODEM_OBJS} ${LDFLAGS} ${LLDLIBS}
+ 	ln -sf libfaxserver.${DSO}.${LIBVERSION} libfaxserver.${DSO}
+ 
+ installDSO: libfaxserver.${DSO}
+diff -Naur hylafax-5.2.5-orig/port/getopt.c hylafax-5.2.5-patched/port/getopt.c
+--- hylafax-5.2.5-orig/port/getopt.c	2008-05-24 22:13:28.000000000 +0200
++++ hylafax-5.2.5-patched/port/getopt.c	2008-07-02 01:52:07.789397000 +0200
+@@ -51,7 +51,7 @@
+ #define	EMSG	""
+ 
+ int
+-getopt(int nargc, char** nargv, char* ostr)
++getopt(int nargc, char* const* nargv, const char* ostr)
+ {
+ 	static char *place = EMSG;		/* option letter processing */
+ 	register char *oli;			/* option letter list index */

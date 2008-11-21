@@ -1,0 +1,85 @@
+diff -r -u hylafax-4.2.1-orig/etc/faxsetup.sh.in hylafax-4.2.1/etc/faxsetup.sh.in
+--- hylafax-4.2.1-orig/etc/faxsetup.sh.in	2004-12-27 23:45:04.000000000 -0500
++++ hylafax-4.2.1/etc/faxsetup.sh.in	2005-06-13 08:09:49.463632000 -0400
+@@ -47,6 +47,7 @@
+ test -d /usr/5bin && PATH=/usr/5bin:$PATH:/usr/etc	# Sun and others
+ test -d /usr/sbin && PATH=/usr/sbin:$PATH		# 4.4BSD-derived
+ test -d /usr/local/bin && PATH=$PATH:/usr/local/bin	# for GNU tools
++test -d /opt/csw/bin && PATH=$PATH:/opt/csw/bin		# for blastwave.org
+ 
+ AWK=@AWK@			# awk for use below
+ CAT=@CAT@			# cat command for use below
+diff -r -u hylafax-4.2.1-orig/faxcover/edit-faxcover.sh.in hylafax-4.2.1/faxcover/edit-faxcover.sh.in
+--- hylafax-4.2.1-orig/faxcover/edit-faxcover.sh.in	2003-05-10 12:18:14.000000000 -0400
++++ hylafax-4.2.1/faxcover/edit-faxcover.sh.in	2005-06-13 08:12:52.917541000 -0400
+@@ -42,6 +42,7 @@
+ test -d /usr/5bin && PATH=/usr/5bin:$PATH:/usr/etc	# Sun and others
+ test -d /usr/sbin && PATH=/usr/sbin:$PATH		# 4.4BSD-derived
+ test -d /usr/local/bin && PATH=$PATH:/usr/local/bin	# for GNU tools
++test -d /opt/csw/bin && PATH=$PATH:/opt/csw/bin		# for blastwave.org
+ 
+ CAT=@CAT@			# cat command for use below
+ GREP=@GREP@			# grep command for use below
+diff -r -u hylafax-4.2.1-orig/html/tools/manpage.sh.in hylafax-4.2.1/html/tools/manpage.sh.in
+--- hylafax-4.2.1-orig/html/tools/manpage.sh.in	1998-10-12 16:47:51.000000000 -0400
++++ hylafax-4.2.1/html/tools/manpage.sh.in	2005-06-13 08:13:47.013718000 -0400
+@@ -47,6 +47,7 @@
+ test -d /usr/ucb && PATH=$PATH:/usr/ucb			# Sun and others
+ test -d /usr/5bin && PATH=/usr/5bin:$PATH		# Sun and others
+ test -d /usr/local/bin && PATH=/usr/local/bin:$PATH	# for GNU stuff
++test -d /opt/csw/bin && PATH=$PATH:/opt/csw/bin		# for blastwave.org
+ 
+ ECHO=@ECHO@
+ SED=@SED@
+diff -r -u hylafax-4.2.1-orig/util/faxdeluser.c hylafax-4.2.1/util/faxdeluser.c
+--- hylafax-4.2.1-orig/util/faxdeluser.c	2005-01-10 22:28:54.000000000 -0500
++++ hylafax-4.2.1/util/faxdeluser.c	2005-06-13 08:08:31.315471000 -0400
+@@ -37,6 +37,9 @@
+ #include "config.h"
+ #include "port.h"
+ 
++extern int optind;
++extern char* optarg;
++
+ int
+ main(int argc, char** argv)
+ {
+diff -r -u hylafax-4.2.1-orig/util/faxmodem.c hylafax-4.2.1/util/faxmodem.c
+--- hylafax-4.2.1-orig/util/faxmodem.c	2004-03-04 21:29:44.000000000 -0500
++++ hylafax-4.2.1/util/faxmodem.c	2005-06-13 08:08:31.364315000 -0400
+@@ -149,7 +149,7 @@
+ 		    if (v == r)
+ 			mask = v;
+ 		    else {
+-			r = fxmin(r, 64);	// clamp to valid range */
++			r = fxmin(r, 64);	/* clamp to valid range */
+ 			mask = 0;
+ 			for (; v <= r; v++)
+ 			    if (v == 0 || v == 1 || v == 2 || v == 4 || v == 8 || v == 16 || v == 32 || v == 64)
+@@ -158,7 +158,7 @@
+ 		}
+ 
+ 		else {
+-			r = fxmin(r, 31);	// clamp to valid range
++			r = fxmin(r, 31);	/* clamp to valid range */
+ 			for (; v <= r; v++)
+ 			    mask |= 1<<v;
+ 		}
+@@ -181,7 +181,7 @@
+  * Class 2 Fax Modem Definitions.
+  */
+ #define	VR_ALL	(BIT(7)-1)
+-#define	BR_ALL	(BIT(6)-1)	// don't encode > 14.4 Kbps
++#define	BR_ALL	(BIT(6)-1)	/* don't encode > 14.4 Kbps */
+ #define	WD_ALL	(BIT(5)-1)
+ #define	LN_ALL	(BIT(3)-1)
+ #define	DF_ALL	(BIT(4)-1)
+@@ -199,7 +199,7 @@
+ int
+ parseCapabilities(const char* cp, u_int* caps)
+ {
+-    // we are limited to 32 bits, thus BR_ALL is restricted above
++    /* we are limited to 32 bits, thus BR_ALL is restricted above */
+     int vr, br, wd, ln, df, ec, bf, st;
+     
+     /*

@@ -1,0 +1,3 @@
+P CSWpmfilefindrule    pm_filefindrule - Alternative interface to File::Find
+P CSWpmtestpodcoverage pm_testpodcoverage - Check for pod coverage in your distribution
+P CSWpmmodcorelist     pm_modcorelist - What modules shipped with versions of Perl

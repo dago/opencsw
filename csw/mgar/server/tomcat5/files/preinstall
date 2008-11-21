@@ -1,0 +1,151 @@
+#!/bin/sh
+
+# test if the tomcat group exist, if not create it
+eval getent group tomcat > /dev/null
+if test $? -gt 0
+then 
+	groupadd tomcat > /dev/null
+	echo group tomcat has been added
+	
+	eval getent group tomcat > /dev/null
+	if test $? -gt 0
+	then
+		echo ERROR: Failed to add group tomcat
+		exit 1
+	fi
+fi
+
+# test if the tomcat user exist, if not create it
+eval getent passwd tomcat > /dev/null
+if test $? -gt 0
+then 	
+	useradd -c "Tomcat service user" -g tomcat -d /opt/csw/share -s /bin/sh tomcat > /dev/null
+	echo user tomcat has been added
+
+	eval getent passwd tomcat > /dev/null
+	if test $? -gt 0
+	then 	
+		echo ERROR: Failed to add user tomcat
+		exit 1
+	fi
+fi
+
+# The following code is designed to handle the case where after removing previous
+# CSWtomcat5 package, some files and directories are stillpresent on the file system.
+# Some of the directories content may need to be moved from /opt to /var
+
+# test the package root dir
+if [ "$PKG_ROOT_DIR" = "" ] ; then
+        PKG_ROOT_DIR="$PKG_INSTALL_ROOT"
+fi
+# if $PKG_ROOT_DIR is empty then there is no need to set it to / since the loop add it
+
+# For each f the directories that have been moved from /opt to /var
+for i in logs temp work ;
+
+        # Test if the directory exist. If not it will be created during install.
+        # Thus in this case, there is nothing to move
+        do if [ -d $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i ]
+        then
+                # Test if it is a symlink or not. If the symlink already exist, then
+                # there is nothing to do
+                if [ ! -h $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i ]
+                then
+                        # It is not a symlink, then we have to move data.
+                        # Test if the destination eixst or if we have to create it
+                        if [ ! -d $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i ]
+                        then
+                                echo creating  $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i
+                                mkdir -p $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i
+                        fi
+
+                        # Now destination exist. Need to move data to dest
+                        echo moving files from $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i to $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i
+                        eval mv -f $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i/* $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i
+                        if test $? -gt 0
+                        then
+                                echo ERROR: Failed to move files $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i/* to $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i
+                                echo ERROR:
+                                echo ERROR: Files may have been partially moved. You have to move files back to $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+                                echo ERROR: or finish manually to move content to $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i
+                                echo ERROR:
+                                echo ERROR: Please check that there is not enough space available for $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i. You have to fix the issue before trying again to install this package.
+
+                                exit 1
+                        fi
+
+                        rm -fr $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+                        eval ln -s $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+                        if test $? -gt 0
+                        then
+                                echo ERROR: Failed to mcreate a symlink from $PKG_ROOT_DIR/var/opt/csw/tomcat5/$i to $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+                                echo ERROR:
+                                echo ERROR: Please add the link manually before trying again to install this package.
+
+                                exit 1
+                        fi
+
+			# The following code handles the case where we upgrade from a version previous or equal 
+			# to 5.5.12. User running tomcat was root. In this case we have to change the owner of
+			# the catalina.out file, or tomcat will not start. It is also needed to change the other log
+			# file owner or it may not work in some case (install old version and upgrade on the same day)
+
+			# No need to make more tests. If we are in this case (creation of the /var dir then ln to /opt) 
+			# it means that the file does not belong to tomcat but to root. 
+			if [ "$i" = "logs" ]
+			then
+				chown tomcat:tomcat  $PKG_ROOT_DIR/var/opt/csw/tomcat5/logs/* 
+			fi			 
+                fi
+        fi
+done
+
+# For each f the directories that have been moved from /opt to somewhere else in /opt
+for i in conf ;
+
+        # Test if the directory exist. If not it will be created during install.
+        # Thus in this case, there is nothing to move
+        do if [ -d $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i ]
+        then
+                # Test if it is a symlink or not. If the symlink already exist, then
+                # there is nothing to do
+                if [ ! -h $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i ]
+                then
+                        # It is not a symlink, then we have to move data.
+                        # Test if the destination eixst or if we have to create it
+                        if [ ! -d $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i ]
+                        then
+                                echo creating  $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i
+                                mkdir -p $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i
+                        fi
+
+                        # Now destination exist. Need to move data to dest
+                        echo moving files from $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i to $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i
+                        eval mv -f $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i/* $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i
+                        if test $? -gt 0
+                        then
+                                echo ERROR: Failed to move files $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i/* to $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i
+                                echo ERROR:
+                                echo ERROR: Files may have been partially moved. You have to move files back to $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+                                echo ERROR: or finish manually to move content to $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i
+                                echo ERROR:
+                                echo ERROR: Please check that there is not enough space available for $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i. You have to fix the issue before trying again to install this package.
+
+                                exit 1
+                        fi
+
+                        rm -fr $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+                        eval ln -s $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+
+                        if test $? -gt 0
+                        then
+                                echo ERROR: Failed to mcreate a symlink from $PKG_ROOT_DIR/opt/csw/etc/tomcat5/$i to $PKG_ROOT_DIR/opt/csw/share/tomcat5/$i
+                                echo ERROR:
+                                echo ERROR: Please add the link manually before trying again to install this package.
+
+                                exit 1
+                        fi
+                fi
+        fi
+done
+

@@ -1,0 +1,21 @@
+diff --speed-large-files --minimal -Nru mod_auth_mysql-3.0.0.orig/mod_auth_mysql.c mod_auth_mysql-3.0.0/mod_auth_mysql.c
+--- mod_auth_mysql-3.0.0.orig/mod_auth_mysql.c	2006-04-14 02:44:14.401534000 -0400
++++ mod_auth_mysql-3.0.0/mod_auth_mysql.c	2006-04-14 02:44:08.106380000 -0400
+@@ -206,7 +206,7 @@
+   #define SNPRINTF apr_snprintf
+   #define PSTRDUP apr_pstrdup
+   #define PSTRNDUP apr_pstrndup
+-  #define STRCAT ap_pstrcat
++  #define STRCAT apr_pstrcat
+   #define POOL apr_pool_t
+   #include "http_request.h"   /* for ap_hook_(check_user_id | auth_checker)*/
+   #include "ap_compat.h"
+@@ -586,6 +586,8 @@
+ }
+ 
+ #ifdef APACHE2
++#define APR_XtOffset APR_OFFSET
++#define APR_XtOffsetOf APR_OFFSETOF
+ static
+ command_rec mysql_auth_cmds[] = {
+ 	AP_INIT_TAKE1("AuthMySQLHost", ap_set_string_slot,

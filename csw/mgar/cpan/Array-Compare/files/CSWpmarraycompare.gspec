@@ -1,0 +1,9 @@
+%var            bitname pm_arraycompare
+%var            pkgname CSWpmarraycompare
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 2000, Magnum Solutions Ltd.  All Rights Reserved.
+
+This script is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

@@ -1,0 +1,16 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/xft-config 0755 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libXft.la 0755 root bin
+f none /opt/csw/lib/libXft.so.2.1.13 0755 root bin
+s none /opt/csw/lib/libXft.so.2=libXft.so.2.1.13
+s none /opt/csw/lib/libXft.so=libXft.so.2.1.13
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/xft-config.1 0644 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Xft.3 0644 root bin
+i copyright=CSWlibxft2.copyright
+i depend=CSWlibxft2.depend
+i pkginfo=CSWlibxft2.pkginfo

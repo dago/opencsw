@@ -1,0 +1,4 @@
+P CSWpmcurses pm_curses - terminal screen handling and optimization
+P CSWpmevent pm_event - event loop processing
+P CSWpmiotty pm_iotty - pseudo TTY object class
+P CSWpmtermcap pm_termcap - termcap interface

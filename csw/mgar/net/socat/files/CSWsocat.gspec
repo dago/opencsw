@@ -1,0 +1,4 @@
+%var            bitname socat
+%var            pkgname CSWsocat
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

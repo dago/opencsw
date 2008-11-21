@@ -1,0 +1,153 @@
+diff --speed-large-files --minimal -Nru opera-9.62-2466.gcc295-static-qt3.orig/opera opera-9.62-2466.gcc295-static-qt3/opera
+--- opera-9.62-2466.gcc295-static-qt3.orig/opera	2008-10-28 19:24:26.000000000 +0100
++++ opera-9.62-2466.gcc295-static-qt3/opera	2008-11-12 14:17:40.593446800 +0100
+@@ -1,9 +1,6 @@
+ #!/bin/sh
+-# Use this if you don't want to install Opera to any special location,
+-# but execute it from the extracted package or current location.
+-
+ # Location of the Opera binaries
+-OPERA_BINARYDIR=lib/opera/9.62
++OPERA_BINARYDIR=/opt/csw/lib/opera/9.62
+ 
+ die () {
+     for arg
+@@ -14,7 +11,6 @@
+ 
+ # Parse commandline parameters
+ toset=
+-_PERSONALDIR_FROM_CMDLINE_=NO
+ _QTSTYLE_FROM_CMDLINE_=NO
+ 
+ for arg
+@@ -28,7 +24,6 @@
+       case $arg in
+           --binarydir*|-binarydir*) toset=OPERA_BINARYDIR ;;
+           --personaldir*|-personaldir*|--pd*|-pd*)
+-              _PERSONALDIR_FROM_CMDLINE_=YES
+               toset=OPERA_PERSONALDIR
+               ;;
+           --display|-display) toset=DISPLAY ;;
+@@ -38,14 +33,6 @@
+ done
+ [ -z "$toset" ] || die "Missing parameter for $arg"
+ 
+-
+-[ "$PWD" ] || PWD=`/bin/pwd`
+-if [ "$_PERSONALDIR_FROM_CMDLINE_" = NO ]
+-then
+-  OPERA_PERSONALDIR="$PWD/profile"
+-  export OPERA_PERSONALDIR
+-fi
+-
+ # Required for Session Management
+ case $0 in /*) OPERA_SCRIPT_PATH=$0;; *) OPERA_SCRIPT_PATH=`/bin/pwd`/$0;; esac
+ export OPERA_SCRIPT_PATH
+@@ -63,7 +50,8 @@
+ # Opera enviroment
+ if [ -z "$OPERA_DIR" ]
+ then
+-    OPERA_DIR="$PWD/share/opera"
++    [ -d /opt/csw/share/opera ] || die "OPERA_DIR unset and not in default location (/usr/local/share/opera)"
++    OPERA_DIR=/opt/csw/share/opera
+ fi
+ export OPERA_DIR
+ 
+@@ -259,62 +247,6 @@
+     export LD_PRELOAD OPERA_FORCE_JAVA_ENABLED
+ fi
+ 
+-if [ "$OPERA_JAVA_DIR" -o "$OPERA_FORCE_JAVA_ENABLED" = 1 ] && [ ! -f "$OPERA_DIR/java/opera.policy" ] && [ -w "$OPERA_DIR/java/" ]
+-then cat <<EOF > "$OPERA_DIR/java/opera.policy"
+-// Standard extensions get all permissions by default
+-
+-grant codeBase \"file:\${java.home}/lib/ext/*\" {
+-	permission java.security.AllPermission;
+-};
+-
+-// Opera package classes get all permissions
+-grant codebase \"file://$OPERA_DIR/java/opera.jar\" {
+-	permission java.security.AllPermission;
+-};
+-
+-// default permissions granted to all domains
+-grant {
+-	// Allows any thread to stop itself using the java.lang.Thread.stop()
+-	// method that takes no argument.
+-	// Note that this permission is granted by default only to remain
+-	// backwards compatible.
+-	// It is strongly recommended that you either remove this permission
+-	// from this policy file or further restrict it to code sources
+-	// that you specify, because Thread.stop() is potentially unsafe.
+-	// See \"http://java.sun.com/notes\" for more information.
+-	permission java.lang.RuntimePermission \"stopThread\";
+-
+-	// allows anyone to listen on un-privileged ports
+-	permission java.net.SocketPermission \"localhost:1024-\", \"listen\";
+-
+-	// \"standard\" properies that can be read by anyone
+-
+-	permission java.util.PropertyPermission \"java.version\", \"read\";
+-	permission java.util.PropertyPermission \"java.vendor\", \"read\";
+-	permission java.util.PropertyPermission \"java.vendor.url\", \"read\";
+-	permission java.util.PropertyPermission \"java.class.version\", \"read\";
+-	permission java.util.PropertyPermission \"os.name\", \"read\";
+-	permission java.util.PropertyPermission \"os.version\", \"read\";
+-	permission java.util.PropertyPermission \"os.arch\", \"read\";
+-	permission java.util.PropertyPermission \"file.separator\", \"read\";
+-	permission java.util.PropertyPermission \"path.separator\", \"read\";
+-	permission java.util.PropertyPermission \"line.separator\", \"read\";
+-
+-	permission java.util.PropertyPermission \"java.specification.version\", \"read\";
+-	permission java.util.PropertyPermission \"java.specification.vendor\", \"read\";
+-	permission java.util.PropertyPermission \"java.specification.name\", \"read\";
+-
+-	permission java.util.PropertyPermission \"java.vm.specification.version\", \"read\";
+-	permission java.util.PropertyPermission \"java.vm.specification.vendor\", \"read\";
+-	permission java.util.PropertyPermission \"java.vm.specification.name\", \"read\";
+-	permission java.util.PropertyPermission \"java.vm.version\", \"read\";
+-	permission java.util.PropertyPermission \"java.vm.vendor\", \"read\";
+-	permission java.util.PropertyPermission \"java.vm.name\", \"read\";
+-};
+-EOF
+-     _CLEAN_OPERA_POLICY_=YES
+-fi
+-
+ # Acrobat Reader
+ for ACROBATBINDIR in \
+ 	/usr/local/Adobe/Reader8/bin \
+@@ -357,17 +289,25 @@
+ # Ensure we have enough file descriptors available:
+ ulimit -n 512
+ 
+-# Setting environment relative to current working directory
+-# Bundled Qt will be found here unless preloaded by the stance above
+-LD_LIBRARY_PATH="$PWD/lib/opera/9.62${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH"
++LD_LIBRARY_PATH="$OPERA_BINARYDIR${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH"
+ export LD_LIBRARY_PATH
++
++# Spellchecker needs to find libaspell.so.15
++for LIBASPELL_DIR in \
++    /opt/csw/lib \
++    /usr/local/lib64 \
++    /usr/lib64 \
++    /opkg/lib64 \
++    /usr/local/lib \
++    /usr/lib \
++    /opkg/lib
++do
++    if [ -f "$LIBASPELL_DIR/libaspell.so.15" ]
++    then LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$LIBASPELL_DIR"
++    fi
++done
+ # Make sure libstdc++.so.6 is found on Solaris 10.
+ [ -d /usr/sfw/lib ] && LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/sfw/lib"
+ 
+ # Run Opera:
+-"$OPERA_BINARYDIR/opera" "$@"
+-
+-# Cleanup
+-if [ "$_CLEAN_OPERA_POLICY_" = YES ] && [ -w "$OPERA_DIR/java" ]
+-then rm "$OPERA_DIR/java/opera.policy"
+-fi
++exec "$OPERA_BINARYDIR/opera" "$@"

@@ -1,0 +1,15 @@
+e6542028d538baec180a96a5d1e6ec3a  download/jboss-4.2.2.GA.zip
+33bee9dcd5aa2d2dcdc0d8dd1f23c036  download/CSWjboss4.gspec
+035fab3b53160c24dd612108e5139ecc  download/CSWjboss4.prototype
+d41d8cd98f00b204e9800998ecf8427e  download/CSWjboss4.depend
+b6b5b5fa168f32dad543b535c21847c3  download/preremove
+f634571264f09ec69bb782a99cbac521  download/postinstall
+6152a08c703f4f6010fb7bc4daae9449  download/preinstall
+56645d7ad7cac3e320a31546c66da0d4  download/checkinstall
+f49c3339aa897df97abf1baf54582fb8  download/space
+35b9c07371c1810bf24e587479c7f583  download/i.smfno
+692a71b989907cb9cd5de953d16bfb32  download/i.smfyes
+cbf093c064db75fb83bbadc2aa2d00e7  download/svc-jboss4
+2e0b0fb93879b23ee8e0fe272a51bce2  download/jboss4.xml
+58a2616046332c6b8792a04b8caa911d  download/jboss4.conf
+9d2c2f3b91c3c234ec706edd9f7272d8  download/cswjboss4

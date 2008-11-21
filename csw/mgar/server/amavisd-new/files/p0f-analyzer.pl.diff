@@ -1,0 +1,9 @@
+diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/p0f-analyzer.pl amavisd-new-2.6.0/p0f-analyzer.pl
+--- amavisd-new-2.6.0.orig/p0f-analyzer.pl	2008-02-20 11:29:18.000000000 +0100
++++ amavisd-new-2.6.0/p0f-analyzer.pl	2008-11-09 22:47:50.194273400 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is p0f-analyzer.pl, a program to continuously read log reports from p0f

@@ -1,0 +1,15 @@
+P       CSWperl
+P	CSWcswclassutils
+P       CSWpmunixsyslog
+P       CSWpmiostringy
+P       CSWpmnetserver
+P       CSWpmmailtools
+P       CSWpmmimetools
+P       CSWpmcompresszlib
+P       CSWpmarchivetar
+P       CSWpmarchivezip
+P       CSWspamassassin
+P       CSWpmberkeleydb
+P       CSWpmconverttnef
+P       CSWpmconvertuulib
+P	CSWpmmaildkim

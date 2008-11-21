@@ -1,0 +1,8 @@
+a21a613dd5dacf4c8ad88c8550294fed  download/mod_fastcgi-2.4.6.tar.gz
+be21456843ac71489248d7b53d9c07f1  download/CSWap2modfastcgi.gspec
+1815c09dc59d4a769e20c0f2361c4656  download/CSWap2modfastcgi.depend
+2a1942823fddacfb7011b806f36d0a68  download/CSWap2modfastcgi.prototype
+c68112367456dc942149a7fbbe5210c3  download/CSWap2modfastcgi.postinstall
+42116faf9018db22132800fc90e3d121  download/CSWap2modfastcgi.preremove
+935aa528bdb21023da3c8c5822424dbb  download/CSWap2modfastcgi.copyright
+0e54fef1219231e29a6481a0317f2c90  download/apr_compat.diff

@@ -1,0 +1,8 @@
+%var            bitname pm_filetype
+%var            pkgname CSWpmfiletype
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 2003-2004 Fotango Ltd.
+
+Licensed under the same terms as Perl itself.

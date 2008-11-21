@@ -1,0 +1,3 @@
+%var            bitname ap2_modauthmysql
+%var            pkgname CSWap2modauthmysql
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec

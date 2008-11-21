@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru tme-0.6.orig/tme/common.h tme-0.6/tme/common.h
+--- tme-0.6.orig/tme/common.h	2007-01-18 03:15:49.000000000 +0100
++++ tme-0.6/tme/common.h	2008-02-22 10:16:18.704627000 +0100
+@@ -36,6 +36,8 @@
+ #ifndef _TME_COMMON_H
+ #define _TME_COMMON_H
+ 
++#include <math.h>
++
+ /* includes: */
+ #include <assert.h>
+ #include <unistd.h>

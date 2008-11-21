@@ -1,0 +1,108 @@
+diff --speed-large-files --minimal -Nru synergy-1.3.1.orig/lib/platform/CXWindowsUtil.cpp synergy-1.3.1/lib/platform/CXWindowsUtil.cpp
+--- synergy-1.3.1.orig/lib/platform/CXWindowsUtil.cpp	2006-03-22 00:54:25.000000000 -0500
++++ synergy-1.3.1/lib/platform/CXWindowsUtil.cpp	2008-04-15 09:02:55.714886000 -0400
+@@ -188,32 +188,6 @@
+ { XK_uogonek,                     0x0173 }, /* LATIN SMALL LETTER U WITH OGONEK */
+ { XK_utilde,                      0x0169 }, /* LATIN SMALL LETTER U WITH TILDE */
+ { XK_umacron,                     0x016b }, /* LATIN SMALL LETTER U WITH MACRON */
+-{ XK_Babovedot,                   0x1e02 }, /* LATIN CAPITAL LETTER B WITH DOT ABOVE */
+-{ XK_babovedot,                   0x1e03 }, /* LATIN SMALL LETTER B WITH DOT ABOVE */
+-{ XK_Dabovedot,                   0x1e0a }, /* LATIN CAPITAL LETTER D WITH DOT ABOVE */
+-{ XK_Wgrave,                      0x1e80 }, /* LATIN CAPITAL LETTER W WITH GRAVE */
+-{ XK_Wacute,                      0x1e82 }, /* LATIN CAPITAL LETTER W WITH ACUTE */
+-{ XK_dabovedot,                   0x1e0b }, /* LATIN SMALL LETTER D WITH DOT ABOVE */
+-{ XK_Ygrave,                      0x1ef2 }, /* LATIN CAPITAL LETTER Y WITH GRAVE  */
+-{ XK_Fabovedot,                   0x1e1e }, /* LATIN CAPITAL LETTER F WITH DOT ABOVE */
+-{ XK_fabovedot,                   0x1e1f }, /* LATIN SMALL LETTER F WITH DOT ABOVE */
+-{ XK_Mabovedot,                   0x1e40 }, /* LATIN CAPITAL LETTER M WITH DOT ABOVE */
+-{ XK_mabovedot,                   0x1e41 }, /* LATIN SMALL LETTER M WITH DOT ABOVE */
+-{ XK_Pabovedot,                   0x1e56 }, /* LATIN CAPITAL LETTER P WITH DOT ABOVE */
+-{ XK_wgrave,                      0x1e81 }, /* LATIN SMALL LETTER W WITH GRAVE  */
+-{ XK_pabovedot,                   0x1e57 }, /* LATIN SMALL LETTER P WITH DOT ABOVE */
+-{ XK_wacute,                      0x1e83 }, /* LATIN SMALL LETTER W WITH ACUTE  */
+-{ XK_Sabovedot,                   0x1e60 }, /* LATIN CAPITAL LETTER S WITH DOT ABOVE */
+-{ XK_ygrave,                      0x1ef3 }, /* LATIN SMALL LETTER Y WITH GRAVE  */
+-{ XK_Wdiaeresis,                  0x1e84 }, /* LATIN CAPITAL LETTER W WITH DIAERESIS */
+-{ XK_wdiaeresis,                  0x1e85 }, /* LATIN SMALL LETTER W WITH DIAERESIS */
+-{ XK_sabovedot,                   0x1e61 }, /* LATIN SMALL LETTER S WITH DOT ABOVE */
+-{ XK_Wcircumflex,                 0x0174 }, /* LATIN CAPITAL LETTER W WITH CIRCUMFLEX */
+-{ XK_Tabovedot,                   0x1e6a }, /* LATIN CAPITAL LETTER T WITH DOT ABOVE */
+-{ XK_Ycircumflex,                 0x0176 }, /* LATIN CAPITAL LETTER Y WITH CIRCUMFLEX */
+-{ XK_wcircumflex,                 0x0175 }, /* LATIN SMALL LETTER W WITH CIRCUMFLEX */
+-{ XK_tabovedot,                   0x1e6b }, /* LATIN SMALL LETTER T WITH DOT ABOVE */
+-{ XK_ycircumflex,                 0x0177 }, /* LATIN SMALL LETTER Y WITH CIRCUMFLEX */
+ { XK_overline,                    0x203e }, /* OVERLINE */
+ { XK_kana_fullstop,               0x3002 }, /* IDEOGRAPHIC FULL STOP */
+ { XK_kana_openingbracket,         0x300c }, /* LEFT CORNER BRACKET */
+@@ -278,36 +252,8 @@
+ { XK_kana_N,                      0x30f3 }, /* KATAKANA LETTER N */
+ { XK_voicedsound,                 0x309b }, /* KATAKANA-HIRAGANA VOICED SOUND MARK */
+ { XK_semivoicedsound,             0x309c }, /* KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK */
+-{ XK_Farsi_0,                     0x06f0 }, /* EXTENDED ARABIC-INDIC DIGIT 0 */
+-{ XK_Farsi_1,                     0x06f1 }, /* EXTENDED ARABIC-INDIC DIGIT 1 */
+-{ XK_Farsi_2,                     0x06f2 }, /* EXTENDED ARABIC-INDIC DIGIT 2 */
+-{ XK_Farsi_3,                     0x06f3 }, /* EXTENDED ARABIC-INDIC DIGIT 3 */
+-{ XK_Farsi_4,                     0x06f4 }, /* EXTENDED ARABIC-INDIC DIGIT 4 */
+-{ XK_Farsi_5,                     0x06f5 }, /* EXTENDED ARABIC-INDIC DIGIT 5 */
+-{ XK_Farsi_6,                     0x06f6 }, /* EXTENDED ARABIC-INDIC DIGIT 6 */
+-{ XK_Farsi_7,                     0x06f7 }, /* EXTENDED ARABIC-INDIC DIGIT 7 */
+-{ XK_Farsi_8,                     0x06f8 }, /* EXTENDED ARABIC-INDIC DIGIT 8 */
+-{ XK_Farsi_9,                     0x06f9 }, /* EXTENDED ARABIC-INDIC DIGIT 9 */
+-{ XK_Arabic_percent,              0x066a }, /* ARABIC PERCENT */
+-{ XK_Arabic_superscript_alef,     0x0670 }, /* ARABIC LETTER SUPERSCRIPT ALEF */
+-{ XK_Arabic_tteh,                 0x0679 }, /* ARABIC LETTER TTEH */
+-{ XK_Arabic_peh,                  0x067e }, /* ARABIC LETTER PEH */
+-{ XK_Arabic_tcheh,                0x0686 }, /* ARABIC LETTER TCHEH */
+-{ XK_Arabic_ddal,                 0x0688 }, /* ARABIC LETTER DDAL */
+-{ XK_Arabic_rreh,                 0x0691 }, /* ARABIC LETTER RREH */
+ { XK_Arabic_comma,                0x060c }, /* ARABIC COMMA */
+-{ XK_Arabic_fullstop,             0x06d4 }, /* ARABIC FULLSTOP */
+ { XK_Arabic_semicolon,            0x061b }, /* ARABIC SEMICOLON */
+-{ XK_Arabic_0,                    0x0660 }, /* ARABIC 0 */
+-{ XK_Arabic_1,                    0x0661 }, /* ARABIC 1 */
+-{ XK_Arabic_2,                    0x0662 }, /* ARABIC 2 */
+-{ XK_Arabic_3,                    0x0663 }, /* ARABIC 3 */
+-{ XK_Arabic_4,                    0x0664 }, /* ARABIC 4 */
+-{ XK_Arabic_5,                    0x0665 }, /* ARABIC 5 */
+-{ XK_Arabic_6,                    0x0666 }, /* ARABIC 6 */
+-{ XK_Arabic_7,                    0x0667 }, /* ARABIC 7 */
+-{ XK_Arabic_8,                    0x0668 }, /* ARABIC 8 */
+-{ XK_Arabic_9,                    0x0669 }, /* ARABIC 9 */
+ { XK_Arabic_question_mark,        0x061f }, /* ARABIC QUESTION MARK */
+ { XK_Arabic_hamza,                0x0621 }, /* ARABIC LETTER HAMZA */
+ { XK_Arabic_maddaonalef,          0x0622 }, /* ARABIC LETTER ALEF WITH MADDA ABOVE */
+@@ -354,18 +300,6 @@
+ { XK_Arabic_kasra,                0x0650 }, /* ARABIC KASRA */
+ { XK_Arabic_shadda,               0x0651 }, /* ARABIC SHADDA */
+ { XK_Arabic_sukun,                0x0652 }, /* ARABIC SUKUN */
+-{ XK_Arabic_madda_above,          0x0653 }, /* ARABIC MADDA ABOVE */
+-{ XK_Arabic_hamza_above,          0x0654 }, /* ARABIC HAMZA ABOVE */
+-{ XK_Arabic_hamza_below,          0x0655 }, /* ARABIC HAMZA BELOW */
+-{ XK_Arabic_jeh,                  0x0698 }, /* ARABIC LETTER JEH */
+-{ XK_Arabic_veh,                  0x06a4 }, /* ARABIC LETTER VEH */
+-{ XK_Arabic_keheh,                0x06a9 }, /* ARABIC LETTER KEHEH */
+-{ XK_Arabic_gaf,                  0x06af }, /* ARABIC LETTER GAF */
+-{ XK_Arabic_noon_ghunna,          0x06ba }, /* ARABIC LETTER NOON GHUNNA */
+-{ XK_Arabic_heh_doachashmee,      0x06be }, /* ARABIC LETTER HEH DOACHASHMEE */
+-{ XK_Arabic_farsi_yeh,            0x06cc }, /* ARABIC LETTER FARSI YEH */
+-{ XK_Arabic_yeh_baree,            0x06d2 }, /* ARABIC LETTER YEH BAREE */
+-{ XK_Arabic_heh_goal,             0x06c1 }, /* ARABIC LETTER HEH GOAL */
+ { XK_Serbian_dje,                 0x0452 }, /* CYRILLIC SMALL LETTER DJE */
+ { XK_Macedonia_gje,               0x0453 }, /* CYRILLIC SMALL LETTER GJE */
+ { XK_Cyrillic_io,                 0x0451 }, /* CYRILLIC SMALL LETTER IO */
+@@ -378,7 +312,6 @@
+ { XK_Cyrillic_nje,                0x045a }, /* CYRILLIC SMALL LETTER NJE */
+ { XK_Serbian_tshe,                0x045b }, /* CYRILLIC SMALL LETTER TSHE */
+ { XK_Macedonia_kje,               0x045c }, /* CYRILLIC SMALL LETTER KJE */
+-{ XK_Ukrainian_ghe_with_upturn,   0x0491 }, /* CYRILLIC SMALL LETTER GHE WITH UPTURN */
+ { XK_Byelorussian_shortu,         0x045e }, /* CYRILLIC SMALL LETTER SHORT U */
+ { XK_Cyrillic_dzhe,               0x045f }, /* CYRILLIC SMALL LETTER DZHE */
+ { XK_numerosign,                  0x2116 }, /* NUMERO SIGN */
+@@ -394,7 +327,6 @@
+ { XK_Cyrillic_NJE,                0x040a }, /* CYRILLIC CAPITAL LETTER NJE */
+ { XK_Serbian_TSHE,                0x040b }, /* CYRILLIC CAPITAL LETTER TSHE */
+ { XK_Macedonia_KJE,               0x040c }, /* CYRILLIC CAPITAL LETTER KJE */
+-{ XK_Ukrainian_GHE_WITH_UPTURN,   0x0490 }, /* CYRILLIC CAPITAL LETTER GHE WITH UPTURN */
+ { XK_Byelorussian_SHORTU,         0x040e }, /* CYRILLIC CAPITAL LETTER SHORT U */
+ { XK_Cyrillic_DZHE,               0x040f }, /* CYRILLIC CAPITAL LETTER DZHE */
+ { XK_Cyrillic_yu,                 0x044e }, /* CYRILLIC SMALL LETTER YU */

@@ -1,0 +1,27 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/svncpp 0755 root bin
+f none /opt/csw/include/svncpp/annotate_line.hpp 0644 root bin
+f none /opt/csw/include/svncpp/apr.hpp 0644 root bin
+f none /opt/csw/include/svncpp/check.hpp 0644 root bin
+f none /opt/csw/include/svncpp/client.hpp 0644 root bin
+f none /opt/csw/include/svncpp/context.hpp 0644 root bin
+f none /opt/csw/include/svncpp/context_listener.hpp 0644 root bin
+f none /opt/csw/include/svncpp/datetime.hpp 0644 root bin
+f none /opt/csw/include/svncpp/dirent.hpp 0644 root bin
+f none /opt/csw/include/svncpp/entry.hpp 0644 root bin
+f none /opt/csw/include/svncpp/exception.hpp 0644 root bin
+f none /opt/csw/include/svncpp/log_entry.hpp 0644 root bin
+f none /opt/csw/include/svncpp/path.hpp 0644 root bin
+f none /opt/csw/include/svncpp/pool.hpp 0644 root bin
+f none /opt/csw/include/svncpp/property.hpp 0644 root bin
+f none /opt/csw/include/svncpp/revision.hpp 0644 root bin
+f none /opt/csw/include/svncpp/status.hpp 0644 root bin
+f none /opt/csw/include/svncpp/targets.hpp 0644 root bin
+f none /opt/csw/include/svncpp/url.hpp 0644 root bin
+f none /opt/csw/include/svncpp/wc.hpp 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libsvncpp.a 0644 root bin
+f none /opt/csw/lib/libsvncpp.la 0755 root bin
+f none /opt/csw/lib/libsvncpp.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libsvncpp.so.0=libsvncpp.so.0.0.0 root bin
+s none /opt/csw/lib/libsvncpp.so=libsvncpp.so.0.0.0 root bin

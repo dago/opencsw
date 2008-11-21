@@ -1,0 +1,17 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/5.8.7/List 0755 root bin
+f none /opt/csw/lib/perl/5.8.7/List/Util.pm 0444 root bin
+d none /opt/csw/lib/perl/5.8.7/Scalar 0755 root bin
+f none /opt/csw/lib/perl/5.8.7/Scalar/Util.pm 0444 root bin
+d none /opt/csw/lib/perl/5.8.7/auto 0755 root bin
+d none /opt/csw/lib/perl/5.8.7/auto/List 0755 root bin
+d none /opt/csw/lib/perl/5.8.7/auto/List/Util 0755 root bin
+f none /opt/csw/lib/perl/5.8.7/auto/List/Util/.packlist 0644 root bin
+f none /opt/csw/lib/perl/5.8.7/auto/List/Util/Util.bs 0444 root bin
+f none /opt/csw/lib/perl/5.8.7/auto/List/Util/Util.so 0555 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/List::Util.3perl 0444 root bin
+f none /opt/csw/share/man/man3/Scalar::Util.3perl 0444 root bin

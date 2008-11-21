@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Dirty hack to avoid openssh not being restarted under Solaris 10
+# because of a bug in the previous package (<= 4.6,REV=2007.07.30_rev=p1)
+#
+# we launch a script which will wait for openssh to quit the 'online*' 
+# state and then will clear its service state if it is in maintenance
+#
+# we must use ctrun to run this script so it is started under a new
+# contract id and hence is not killed when the ssh service is disabled
+# even if pkg-get/pkgadd was started from an ssh connection
+#
+if [ -f "$BASEDIR/usr/sbin/svccfg" -a -f "$BASEDIR/usr/sbin/svcadm" ]; then
+	/bin/ctrun /opt/csw/share/openssh/openssh_restart_workaround.sh &
+fi
+
+

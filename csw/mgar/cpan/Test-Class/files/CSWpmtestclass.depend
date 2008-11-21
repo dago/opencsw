@@ -1,0 +1,5 @@
+P CSWpmattrhnd pm_attrhnd - simpler definition of attribute handlers
+P CSWpmclassisa pm_classisa - report the search path for a class ISA tree
+P CSWpmtestdifferences pm_testdifferences - test strings and data structures and show differences
+P CSWpmtestexceptions pm_testexceptions - test functions for exception based code
+P CSWpmtstbldrtester pm_tstbldrtester - test testsuites built with Test::Builder

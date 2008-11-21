@@ -1,0 +1,4 @@
+P CSWpmhtmlparser pm_htmlparser - HTML parser class
+P CSWpmlibwww pm_libwww - a general-purpose Web API for Perl, based on W3C libwww.
+P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)
+P CSWpmxmlparser pm_xmlparser - a module for parsing XML documents

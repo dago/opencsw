@@ -1,0 +1,10 @@
+%var            bitname pm_mailtools
+%var            pkgname CSWpmmailtools
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+All files contained in this installation are Copyright (c) 1995-2003
+Graham Barr unless otherwise specified. All rights reserved.
+
+This library is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.

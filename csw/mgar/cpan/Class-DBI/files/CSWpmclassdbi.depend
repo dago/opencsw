@@ -1,0 +1,7 @@
+P CSWpmclsaccessor pm_clsaccessor - Automated accessor generation
+P CSWpmclasstrigger pm_classtrigger - mixin to add / call inheritable triggers
+P CSWpmdbdsqlite pm_dbdsqlite - self contained RDBMS in a DBI driver
+P CSWpmdbi pm_dbi - database independent interface for Perl
+P CSWpmimadbi pm_imadbi - database connection caching and organization
+P CSWpmscalarlist pm_scalarlistutils - a selection of general-utility list and scalar subroutines.
+P CSWpmunivmoniker.gspec pm_univmoniker - add a moniker method to UNIVERSAL

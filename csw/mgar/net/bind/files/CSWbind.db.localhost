@@ -1,0 +1,11 @@
+$TTL 86400
+localhost.      IN      SOA     ns.yourdomain.com. hostmaster.yourdomain.com. (
+                                        2007100201      ; Serial number
+                                        10800           ; Refresh every 3 H
+                                        3600            ; Retry every 1 H
+                                        604800          ; Expire every 1 W
+                                        86400 )         ; Minimum TTL of 1 D
+
+localhost.      IN      NS      ns.yourdomain.com.
+
+localhost.      IN      A       127.0.0.1

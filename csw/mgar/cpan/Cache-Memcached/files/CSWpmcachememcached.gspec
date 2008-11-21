@@ -1,0 +1,10 @@
+%var            bitname pm_cachememcached
+%var            pkgname CSWpmcachememcached
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+This module is Copyright (c) 2003 Brad Fitzpatrick.
+All rights reserved.
+
+You may distribute under the terms of either the GNU General Public
+License or the Artistic License, as specified in the Perl README file

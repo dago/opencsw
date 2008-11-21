@@ -1,0 +1,8 @@
+%var            bitname spamassassin
+%var            pkgname CSWspamassassin
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%prototype exec cswproto -s %{TIMESTAMP} -r %{DESTDIR} %{DESTDIR}
+%copyright
+
+Please see /opt/csw/share/doc/spamassassin/LICENSE for license information.
+

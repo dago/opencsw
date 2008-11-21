@@ -1,0 +1,17 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/XML 0755 root bin
+d none /opt/csw/lib/perl/csw/XML/LibXML 0755 root bin
+f none /opt/csw/lib/perl/csw/XML/LibXML/Common.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/XML 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/XML/LibXML 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/XML/LibXML/Common 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/XML/LibXML/Common/.packlist 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/XML/LibXML/Common/Common.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/XML/LibXML/Common/Common.so 0555 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/XML::LibXML::Common.3perl 0444 root bin

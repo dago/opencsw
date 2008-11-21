@@ -1,0 +1,15 @@
+92750bc8c9770cc444aba9794d158a7f  download/apache-tomcat-4.1.37.tar.gz
+3236f536b62c1258637d9756d6ce85d8  download/CSWtomcat4.gspec
+7c09f4def5eeeb65aa0dda5ffda49246  download/CSWtomcat4.prototype
+d41d8cd98f00b204e9800998ecf8427e  download/CSWtomcat4.depend
+b23c68c9a9b3a9349f350a44b0d8e56b  download/preremove
+27517cac5b2dc01fd9e7781e3f1e7117  download/postinstall
+8cced220075ee2c687960e0cef8aa4ee  download/preinstall
+9775579c5edafc4d9cf447cfcfeeddb7  download/checkinstall
+f49c3339aa897df97abf1baf54582fb8  download/space
+593d252b0912d193db2dde73f1d1390f  download/i.smfno
+6f11bf35213e0405939cfaac23c4a489  download/i.smfyes
+cf6e5f2659f149af52d6c52dd9416a0c  download/svc-tomcat4
+d2a515ff0dab19abf785e1eb5585c6fe  download/tomcat4.xml
+c9c036db86e9842c3e1374f47beeaf3c  download/tomcat4
+2566010aceaaec9505f554a565916b9f  download/cswtomcat4

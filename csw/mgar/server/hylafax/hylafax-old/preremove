@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+# stop HylaFAX daemons
+
+if [ -f $PKG_ROOT_DIR/opt/csw/var/spool/hylafax/etc/setup.cache ]; then
+   $PKG_ROOT_DIR/etc/init.d/cswhylafax stop
+fi
+

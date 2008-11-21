@@ -1,0 +1,7 @@
+d none bin 0755 root bin
+f none bin/dcraw 0755 root bin
+f none bin/clean_crw 0755 root bin
+d none share 0755 root bin
+d none share/man 0755 root bin
+d none share/man/man1 0755 root bin
+f none share/man/man1/dcraw.1 0755 root bin

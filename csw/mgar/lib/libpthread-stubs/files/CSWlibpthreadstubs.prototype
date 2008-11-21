@@ -1,0 +1,5 @@
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/pthread-stubs.pc 0644 root bin
+i copyright=CSWlibpthreadstubs.copyright
+i depend=CSWlibpthreadstubs.depend
+i pkginfo=CSWlibpthreadstubs.pkginfo

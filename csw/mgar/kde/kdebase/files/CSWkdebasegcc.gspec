@@ -1,0 +1,4 @@
+%var            bitname kdebase_gcc
+%var            pkgname CSWkdebasegcc
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

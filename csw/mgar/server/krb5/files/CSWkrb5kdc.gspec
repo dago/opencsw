@@ -1,0 +1,5 @@
+%var            bitname krb5_kdc
+%var            pkgname CSWkrb5kdc
+%var		desc MIT Kerberos 5 key distribution center
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+#%copyright      url file://%{WORKSRC}/COPYRIGHT

@@ -1,0 +1,98 @@
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libxcb-composite.la 0755 root bin
+f none /opt/csw/lib/libxcb-composite.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-composite.so.0=libxcb-composite.so.0.0.0
+s none /opt/csw/lib/libxcb-composite.so=libxcb-composite.so.0.0.0
+f none /opt/csw/lib/libxcb-damage.la 0755 root bin
+f none /opt/csw/lib/libxcb-damage.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-damage.so.0=libxcb-damage.so.0.0.0
+s none /opt/csw/lib/libxcb-damage.so=libxcb-damage.so.0.0.0
+f none /opt/csw/lib/libxcb-dpms.la 0755 root bin
+f none /opt/csw/lib/libxcb-dpms.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-dpms.so.0=libxcb-dpms.so.0.0.0
+s none /opt/csw/lib/libxcb-dpms.so=libxcb-dpms.so.0.0.0
+f none /opt/csw/lib/libxcb-glx.la 0755 root bin
+f none /opt/csw/lib/libxcb-glx.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-glx.so.0=libxcb-glx.so.0.0.0
+s none /opt/csw/lib/libxcb-glx.so=libxcb-glx.so.0.0.0
+f none /opt/csw/lib/libxcb-randr.la 0755 root bin
+f none /opt/csw/lib/libxcb-randr.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-randr.so.0=libxcb-randr.so.0.0.0
+s none /opt/csw/lib/libxcb-randr.so=libxcb-randr.so.0.0.0
+f none /opt/csw/lib/libxcb-record.la 0755 root bin
+f none /opt/csw/lib/libxcb-record.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-record.so.0=libxcb-record.so.0.0.0
+s none /opt/csw/lib/libxcb-record.so=libxcb-record.so.0.0.0
+f none /opt/csw/lib/libxcb-render.la 0755 root bin
+f none /opt/csw/lib/libxcb-render.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-render.so.0=libxcb-render.so.0.0.0
+s none /opt/csw/lib/libxcb-render.so=libxcb-render.so.0.0.0
+f none /opt/csw/lib/libxcb-res.la 0755 root bin
+f none /opt/csw/lib/libxcb-res.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-res.so.0=libxcb-res.so.0.0.0
+s none /opt/csw/lib/libxcb-res.so=libxcb-res.so.0.0.0
+f none /opt/csw/lib/libxcb-screensaver.la 0755 root bin
+f none /opt/csw/lib/libxcb-screensaver.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-screensaver.so.0=libxcb-screensaver.so.0.0.0
+s none /opt/csw/lib/libxcb-screensaver.so=libxcb-screensaver.so.0.0.0
+f none /opt/csw/lib/libxcb-shape.la 0755 root bin
+f none /opt/csw/lib/libxcb-shape.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-shape.so.0=libxcb-shape.so.0.0.0
+s none /opt/csw/lib/libxcb-shape.so=libxcb-shape.so.0.0.0
+f none /opt/csw/lib/libxcb-shm.la 0755 root bin
+f none /opt/csw/lib/libxcb-shm.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-shm.so.0=libxcb-shm.so.0.0.0
+s none /opt/csw/lib/libxcb-shm.so=libxcb-shm.so.0.0.0
+f none /opt/csw/lib/libxcb-sync.la 0755 root bin
+f none /opt/csw/lib/libxcb-sync.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-sync.so.0=libxcb-sync.so.0.0.0
+s none /opt/csw/lib/libxcb-sync.so=libxcb-sync.so.0.0.0
+f none /opt/csw/lib/libxcb-xevie.la 0755 root bin
+f none /opt/csw/lib/libxcb-xevie.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xevie.so.0=libxcb-xevie.so.0.0.0
+s none /opt/csw/lib/libxcb-xevie.so=libxcb-xevie.so.0.0.0
+f none /opt/csw/lib/libxcb-xf86dri.la 0755 root bin
+f none /opt/csw/lib/libxcb-xf86dri.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xf86dri.so.0=libxcb-xf86dri.so.0.0.0
+s none /opt/csw/lib/libxcb-xf86dri.so=libxcb-xf86dri.so.0.0.0
+f none /opt/csw/lib/libxcb-xfixes.la 0755 root bin
+f none /opt/csw/lib/libxcb-xfixes.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xfixes.so.0=libxcb-xfixes.so.0.0.0
+s none /opt/csw/lib/libxcb-xfixes.so=libxcb-xfixes.so.0.0.0
+f none /opt/csw/lib/libxcb-xinerama.la 0755 root bin
+f none /opt/csw/lib/libxcb-xinerama.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xinerama.so.0=libxcb-xinerama.so.0.0.0
+s none /opt/csw/lib/libxcb-xinerama.so=libxcb-xinerama.so.0.0.0
+f none /opt/csw/lib/libxcb-xlib.la 0755 root bin
+f none /opt/csw/lib/libxcb-xlib.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xlib.so.0=libxcb-xlib.so.0.0.0
+s none /opt/csw/lib/libxcb-xlib.so=libxcb-xlib.so.0.0.0
+f none /opt/csw/lib/libxcb-xprint.la 0755 root bin
+f none /opt/csw/lib/libxcb-xprint.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xprint.so.0=libxcb-xprint.so.0.0.0
+s none /opt/csw/lib/libxcb-xprint.so=libxcb-xprint.so.0.0.0
+f none /opt/csw/lib/libxcb-xtest.la 0755 root bin
+f none /opt/csw/lib/libxcb-xtest.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xtest.so.0=libxcb-xtest.so.0.0.0
+s none /opt/csw/lib/libxcb-xtest.so=libxcb-xtest.so.0.0.0
+f none /opt/csw/lib/libxcb-xv.la 0755 root bin
+f none /opt/csw/lib/libxcb-xv.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xv.so.0=libxcb-xv.so.0.0.0
+s none /opt/csw/lib/libxcb-xv.so=libxcb-xv.so.0.0.0
+f none /opt/csw/lib/libxcb-xvmc.la 0755 root bin
+f none /opt/csw/lib/libxcb-xvmc.so.0.0.0 0755 root bin
+s none /opt/csw/lib/libxcb-xvmc.so.0=libxcb-xvmc.so.0.0.0
+s none /opt/csw/lib/libxcb-xvmc.so=libxcb-xvmc.so.0.0.0
+f none /opt/csw/lib/libxcb.la 0755 root bin
+f none /opt/csw/lib/libxcb.so.1.0.0 0755 root bin
+s none /opt/csw/lib/libxcb.so.1=libxcb.so.1.0.0
+s none /opt/csw/lib/libxcb.so=libxcb.so.1.0.0
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/libxcb 0755 root bin
+d none /opt/csw/share/doc/libxcb/tutorial 0755 root bin
+f none /opt/csw/share/doc/libxcb/tutorial/index.html 0644 root bin
+f none /opt/csw/share/doc/libxcb/tutorial/xcb.css 0644 root bin
+i copyright=CSWlibxcb.copyright
+i depend=CSWlibxcb.depend
+i pkginfo=CSWlibxcb.pkginfo

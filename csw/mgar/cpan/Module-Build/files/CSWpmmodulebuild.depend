@@ -1,0 +1,3 @@
+P CSWpmarchivetar pm_archivetar - module for manipulations of tar archives
+P CSWpmextutparsexs pm_extutparsexs - converts Perl XS code into C code
+P CSWpmyaml pm_yaml - YAML Aint Markup Language

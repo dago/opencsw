@@ -1,0 +1,5 @@
+%var            bitname pm_cgpcli
+%var            pkgname CSWpmcgpcli
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      

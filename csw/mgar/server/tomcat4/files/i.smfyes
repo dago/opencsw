@@ -1,0 +1,20 @@
+# tomcat4 - i.smfyes script
+#
+# Copy the SMF specific files to the base directory.
+# The files specific to SMF are:
+# /opt/csw/var/svc
+# /opt/csw/var/svc/manifest
+# /opt/csw/var/svc/manifest/network
+# /opt/csw/var/svc/manifest/network/tomcat4.xml=/tomcat4.xml
+# /opt/csw/lib/svc
+# /opt/csw/lib/svc/method
+# /opt/csw/lib/svc/method/svc-tomcat4
+#
+echo "Installing class <smfyes>."
+while read src dest
+do
+        # Do copy
+        /usr/bin/cp $src $dest || exit 2
+        echo $dest
+done
+exit 0

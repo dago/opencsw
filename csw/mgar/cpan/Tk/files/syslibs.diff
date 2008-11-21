@@ -1,0 +1,41 @@
+diff --speed-large-files --minimal -Nru Tk-804.025_beta14.orig/JPEG/Makefile.PL Tk-804.025_beta14/JPEG/Makefile.PL
+--- Tk-804.025_beta14.orig/JPEG/Makefile.PL	2003-12-10 14:12:06.000000000 -0800
++++ Tk-804.025_beta14/JPEG/Makefile.PL	2004-02-06 18:24:41.991199000 -0800
+@@ -12,10 +12,10 @@
+ 
+ use Tk::MMtry;
+ 
+-if ($Tk::MMtry::VERSION ge '4.007' && try_run("jpeg/has_jpeg.c",['-I/usr/local/include'],['-ljpeg']))
++if ($Tk::MMtry::VERSION ge '4.007')
+  {
+-  push(@args, LIBS => ['-ljpeg'],
+-              INC  => '-I/usr/local/include',
++  push(@args, LIBS => ['-L/usr/sfw/lib -R/usr/sfw/lib -ljpeg'],
++              INC  => '-I/usr/sfw/include',
+               DEFINE => '-DHAVE_JPEGLIB_H',
+       );
+   warn "Using system's -ljpeg\n";
+diff --speed-large-files --minimal -Nru Tk-804.025_beta14.orig/PNG/Makefile.PL Tk-804.025_beta14/PNG/Makefile.PL
+--- Tk-804.025_beta14.orig/PNG/Makefile.PL	2003-12-30 02:45:03.000000000 -0800
++++ Tk-804.025_beta14/PNG/Makefile.PL	2004-02-06 18:23:57.389778000 -0800
+@@ -14,8 +14,7 @@
+   unlink($file);
+  }
+ 
+-if ($Tk::MMtry::VERSION ge '4.007' &&
+-    try_run("config/has_png.c",['-I/usr/local/include'],['-lpng -lz -lm']))
++if ($Tk::MMtry::VERSION ge '4.007')
+  {
+   Tk::MMutil::TkExtMakefile(
+        NAME         => 'Tk::PNG',
+@@ -23,8 +22,8 @@
+        XS_VERSION   => $Tk::Config::VERSION,
+        dist         => { COMPRESS => 'gzip -f9', SUFFIX => '.gz' },
+        OBJECT       => '$(O_FILES)',
+-       INC          => '-I/usr/local/include',
+-       LIBS         => ['-lpng -lz -lm'],
++       INC          => '-I/usr/sfw/include',
++       LIBS         => ['-L/usr/sfw/lib -R/usr/sfw/lib -lpng -lz -lm'],
+      );
+  }
+ else

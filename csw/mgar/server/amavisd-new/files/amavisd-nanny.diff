@@ -1,0 +1,18 @@
+diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/amavisd-nanny amavisd-new-2.6.0/amavisd-nanny
+--- amavisd-new-2.6.0.orig/amavisd-nanny	2008-03-28 23:55:02.000000000 +0100
++++ amavisd-new-2.6.0/amavisd-nanny	2008-11-09 22:42:52.323269000 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!/opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-nanny, a program to show the status
+@@ -58,7 +58,7 @@
+ 
+ my($dbfile) = 'nanny.db';
+ my($db_home) =  # DB databases directory
+-  defined $ENV{'AMAVISD_DB_HOME'} ? $ENV{'AMAVISD_DB_HOME'} : '/var/amavis/db';
++  defined $ENV{'AMAVISD_DB_HOME'} ? $ENV{'AMAVISD_DB_HOME'} : '/opt/csw/var/amavisn/db';
+ my($wakeuptime) = 2;  # -w, sleep time in seconds, may be fractional
+ my($repeatcount);     # -c, repeat count (when defined)
+ 

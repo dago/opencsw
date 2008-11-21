@@ -1,0 +1,32 @@
+diff --speed-large-files --minimal -Nru vsftpd-2.0.4.orig/Makefile vsftpd-2.0.4/Makefile
+--- vsftpd-2.0.4.orig/Makefile	2006-04-12 19:01:19.697976000 -0400
++++ vsftpd-2.0.4/Makefile	2006-04-12 19:04:01.919349000 -0400
+@@ -24,21 +24,21 @@
+ 	$(CC) -o vsftpd $(OBJS) $(LINK) $(LIBS) $(LDFLAGS)
+ 
+ install:
+-	if [ -x /usr/local/sbin ]; then \
+-		$(INSTALL) -m 755 vsftpd /usr/local/sbin/vsftpd; \
++	if [ -x $(DESTDIR)/$(prefix)/sbin ]; then \
++		$(INSTALL) -m 755 vsftpd $(DESTDIR)/$(prefix)/sbin/vsftpd; \
+ 	else \
+ 		$(INSTALL) -m 755 vsftpd /usr/sbin/vsftpd; fi
+-	if [ -x /usr/local/man ]; then \
+-		$(INSTALL) -m 644 vsftpd.8 /usr/local/man/man8/vsftpd.8; \
+-		$(INSTALL) -m 644 vsftpd.conf.5 /usr/local/man/man5/vsftpd.conf.5; \
++	if [ -x $(DESTDIR)/$(prefix)/man ]; then \
++		$(INSTALL) -m 644 vsftpd.8 $(DESTDIR)/$(prefix)/man/man8/vsftpd.8; \
++		$(INSTALL) -m 644 vsftpd.conf.5 $(DESTDIR)/$(prefix)/man/man5/vsftpd.conf.5; \
+ 	elif [ -x /usr/share/man ]; then \
+ 		$(INSTALL) -m 644 vsftpd.8 /usr/share/man/man8/vsftpd.8; \
+ 		$(INSTALL) -m 644 vsftpd.conf.5 /usr/share/man/man5/vsftpd.conf.5; \
+ 	else \
+ 		$(INSTALL) -m 644 vsftpd.8 /usr/man/man8/vsftpd.8; \
+ 		$(INSTALL) -m 644 vsftpd.conf.5 /usr/man/man5/vsftpd.conf.5; fi
+-	if [ -x /etc/xinetd.d ]; then \
+-		$(INSTALL) -m 644 xinetd.d/vsftpd /etc/xinetd.d/vsftpd; fi
++	if [ -x $(DESTDIR)/$(prefix)/etc/xinetd.d ]; then \
++		$(INSTALL) -m 644 xinetd.d/vsftpd $(DESTDIR)/$(prefix)/etc/xinetd.d/vsftpd; fi
+ 
+ clean:
+ 	rm -f *.o *.swp vsftpd

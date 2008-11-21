@@ -1,0 +1,10 @@
+303327f66c13ff9631734651ee184a88  download/postfix-2.4.6.tar.gz
+4aa7056be9b135a68a4bda6199c0cb8c  download/CSWpostfix.gspec
+ae35f0ad52a10ab36f185b2486e63935  download/CSWpostfix.prototype
+b9a2cb932f32be618c28910613d332a8  download/CSWpostfix.csw_conf_config
+e52799d35088c030851576b62df6695f  download/CSWpostfix.csw_usrgrp_config
+76e992eb49e5d2d8c51305be8891566f  download/CSWpostfix.postinstall
+980c70abf5ea711adec41f3dd4e37141  download/CSWpostfix.postremove
+99db84b11f968a416809e18c0768ac7e  download/cswpostfix.xml
+abda7e4968f750f0fced9c98abd053c8  download/svc-cswpostfix
+7bd7e87829c623a9cdd2653a16eb473e  download/cswpostfix

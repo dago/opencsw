@@ -1,0 +1,42 @@
+openssh (5.1,REV=2008.10.04_rev=p1) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 04 Oct 2008 21:25:09 +0200
+
+openssh (5.0,REV=2008.06.02_rev=p1) unstable
+
+  * New upstream version.
+  * Added solaris fix for X11 forwarding bug on ipv4 only machine.
+
+ -- Yann Rouillard <yann@blastwave.org>  Wed, 30 Apr 2008 14:23:40 +0200
+
+openssh (4.9,REV=2008.04.01_rev=p1) unstable
+
+  * New upstream version.
+  * Added documentation files in the package.
+
+ -- Yann Rouillard <yann@blastwave.org>  Tue, 01 Apr 2008 20:37:51 +0200
+
+openssh (4.7,REV=2008.04.04_rev=p1) unstable
+
+  * Added security fixes for CVE-2008-1483 and CVE-2008-1657
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 04 Apr 2008 23:44:19 +0200
+
+openssh (4.7,REV=2007.11.02_rev=p1) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 02 Nov 2007 22:02:23 +0100
+
+openssh (4.6,REV=2007.08.24_rev=p1) unstable
+
+  * Added GSSAPI key exchange patch.
+  * Added spurious error log patch (see openssh bug 1306).
+  * Enabled Solaris contract support for Solaris 10 to avoid
+  ssh disconnections when ssh daemon is restarted.
+  * Re-enabled tcpwrapper support.
+  * replaced \"? ? ?\" with \"0755 root bin\" in the prototype
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 17 Aug 2007 21:15:51 +0200

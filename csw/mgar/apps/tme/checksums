@@ -1,0 +1,11 @@
+4f156a1caed603d71a667a8cb15f5747  download/tme-0.6.tar.gz
+ff07ea27859ea275e0789edc1cfa057f  download/sun2-multi-rev-R.bin
+aa491c7c4f34be2f7550dd9ed77e001f  download/sun3-carrera-rev-3.0.bin
+c4235abf7ee26046a11892a2329aabf7  download/sun4-75-rev-2.9.bin
+40ed1f26309a4584a19903f2120cdc44  download/SUNW,501-1415.bin
+896799d024a463c084c8b0ed7ddb9c22  download/SUNW,501-1561.bin
+1d85b46e3cfd64a7f2e095340ef2d80b  download/CSWtme.gspec
+55ac2941d826a2f44474e8e21d7f68d0  download/CSWtme.depend
+080f26692e22e7599a4d5d436e268f0f  download/fix-tr.patch
+3977be67e5975ca515ead9a88b72c46d  download/fix-isinff.patch
+6459eb7b0d21146151b4c242be26443e  download/fix-cfsetspeed.patch

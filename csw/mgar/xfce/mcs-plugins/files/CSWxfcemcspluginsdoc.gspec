@@ -1,0 +1,6 @@
+%var            bitname xfce_mcs_pluginsdoc
+%var            pkgname CSWxfcemcspluginsdoc
+%var		desc Xfce Settings Manager Plugins Documentation
+%var		arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING

@@ -1,0 +1,8 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/sb_run.sh 0755 root bin
+f none /opt/csw/bin/sb_test_ps.sh 0755 root bin
+f none /opt/csw/bin/sysbench 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/sysbench 0755 root bin
+f none /opt/csw/share/doc/sysbench/manual.html 0644 root bin

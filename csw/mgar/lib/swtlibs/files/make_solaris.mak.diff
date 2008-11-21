@@ -1,0 +1,67 @@
+--- swtlibs-3.2.2.orig/make_solaris.mak	2005-10-31 16:59:16.000000000 +0100
++++ swtlibs-3.2.2/make_solaris.mak	2007-06-13 22:29:17.214225800 +0200
+@@ -15,6 +15,11 @@
+ 
+ SWT_VERSION=$(maj_ver)$(min_ver)
+ 
++CC=cc
++CXX=CC
++CDE_HOME=/usr/dt
++GECKO_SDK=/opt/csw/mozilla/firefox
++
+ # Define the various shared libraries to be build.
+ WS_PREFIX = gtk
+ SWT_PREFIX = swt
+@@ -63,25 +68,22 @@
+ MOZILLACFLAGS = -O \
+ 	-DXPCOM_GLUE=1 \
+ 	-DMOZILLA_STRICT_API=1 \
+-	-fno-rtti \
+-	-fno-exceptions \
+-	-Wall \
++        -xlibmil -xlibmopt -features=tmplife -norunpath \
+ 	-DSWT_VERSION=$(SWT_VERSION) $(NATIVE_STATS) \
+-	-Wno-non-virtual-dtor \
+-	-fPIC \
+-	-I. \
+-	-I$(GECKO_SDK)	\
+-	-include $(GECKO_SDK)/mozilla-config.h \
+-	-I$(GECKO_SDK)/nspr/include \
+-	-I$(GECKO_SDK)/xpcom/include \
+-	-I$(GECKO_SDK)/string/include \
+-	-I$(GECKO_SDK)/embed_base/include \
+-	-I$(GECKO_SDK)/embedstring/include
+-MOZILLALIBS = -G -s -Wl,--version-script=mozilla_exports -Bsymbolic \
+-	-L$(GECKO_SDK)/embedstring/bin -lembedstring \
+-	-L$(GECKO_SDK)/embed_base/bin -lembed_base_s \
+-	-L$(GECKO_SDK)/xpcom/bin -lxpcomglue_s -lxpcom \
+-	-L$(GECKO_SDK)/nspr/bin -lnspr4 -lplds4 -lplc4
++	-I/opt/csw/include \
++	-I./ \
++	-I$(GECKO_SDK)/include	\
++	-I$(GECKO_SDK)/include/nspr \
++	-I$(GECKO_SDK)/include/xpcom \
++	-I$(GECKO_SDK)/include/string \
++	-I$(GECKO_SDK)/include/embed_base \
++	-I$(GECKO_SDK)/include/embedstring
++MOZILLALIBS = -G -s -Bsymbolic \
++#	-L$(GECKO_SDK)/embedstring/bin -lembedstring \
++#	-L$(GECKO_SDK)/embed_base/bin -lembed_base_s \
++	-L$(GECKO_SDK)/lib -lxpcom lxpcom_core -lnspr4 -lplds4 -lplc4 \
++        -L/opt/csw/lib -R/opt/csw/lib
++
+ 
+ SWT_OBJECTS = swt.o callback.o
+ CDE_OBJECTS = swt.o cde.o cde_structs.o cde_stats.o
+@@ -101,8 +103,10 @@
+ 		-I$(JAVA_HOME)/include/solaris \
+ 		-K PIC \
+ 		${SWT_PTR_CFLAGS} \
++                -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION \
++		-I/opt/csw/include \
+ 		-I$(CDE_HOME)/include
+-LIBS = -G -K PIC -s
++LIBS = -G -K PIC -s -L/opt/csw/lib -R/opt/csw/lib
+ 
+ 
+ all: make_swt make_atk make_awt make_cde

@@ -1,0 +1,10 @@
+%var            bitname pm_iomultiplex
+%var            pkgname CSWpmiomultiplex
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright 1999 Bruce J Keeler <bruce@gridpoint.com>
+
+Copyright 2001-2008 Rob Brown <bbb@cpan.org>
+
+Released under the same terms as Perl itself.

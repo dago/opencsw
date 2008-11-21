@@ -1,0 +1,5 @@
+%var		SPKG_REVSTAMP ,REV=2008.07.17
+%var            bitname fastcgi
+%var            pkgname CSWfastcgi
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE.TERMS

@@ -1,0 +1,47 @@
+diff --speed-large-files --minimal -Nru libxine-1.1.8.orig/src/libffmpeg/libavcodec/avcodec.h xine-lib-1.1.8/src/libffmpeg/libavcodec/avcodec.h
+--- libxine-1.1.8.orig/src/libffmpeg/libavcodec/avcodec.h	2007-08-18 19:36:50.000000000 -0400
++++ libxine-1.1.8/src/libffmpeg/libavcodec/avcodec.h	2007-10-06 06:42:52.786768000 -0400
+@@ -21,6 +21,32 @@
+ #ifndef AVCODEC_H
+ #define AVCODEC_H
+ 
++/* Solaris 8 has no int_fast*_t marcos. We must emulate them, as libavcodec
++ * depends on them. The below is taken from solaris 10
++ */
++
++#if defined(_CHAR_IS_SIGNED)
++typedef char                    int_fast8_t;
++#else
++#if defined(__STDC__)
++typedef signed char             int_fast8_t;
++#endif
++#endif
++typedef int                     int_fast16_t;
++typedef int                     int_fast32_t;
++#ifdef  _LP64
++typedef long                    int_fast64_t;
++#else   /* _ILP32 */
++#if defined(_LONGLONG_TYPE)
++typedef long long               int_fast64_t;
++#endif
++#endif
++
++typedef unsigned char           uint_fast8_t;
++typedef unsigned int            uint_fast16_t;
++typedef unsigned int            uint_fast32_t;
++typedef unsigned long           uint_fast64_t;
++
+ /**
+  * @file avcodec.h
+  * external api header.
+@@ -34,6 +60,10 @@
+ #include "avutil.h"
+ #include <sys/types.h> /* size_t */
+ 
++#if defined(sun)
++#define llrint(d)	(int64_t)rint(d)
++#endif
++
+ #define AV_STRINGIFY(s)         AV_TOSTRING(s)
+ #define AV_TOSTRING(s) #s
+ 

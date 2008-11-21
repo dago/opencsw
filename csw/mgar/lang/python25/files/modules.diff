@@ -1,0 +1,17 @@
+diff --speed-large-files --minimal -Nru Python-2.5.1.orig/Modules/Setup.dist Python-2.5.1/Modules/Setup.dist
+--- Python-2.5.1.orig/Modules/Setup.dist	2006-08-06 03:26:21.000000000 -0400
++++ Python-2.5.1/Modules/Setup.dist	2007-11-03 02:40:40.094106000 -0400
+@@ -354,9 +354,11 @@
+ #
+ # First, look at Setup.config; configure may have set this for you.
+ 
+-#_curses _cursesmodule.c -lcurses -ltermcap
++*shared*
++
++_curses _cursesmodule.c -lcurses -ltermcap
+ # Wrapper for the panel library that's part of ncurses and SYSV curses.
+-#_curses_panel _curses_panel.c -lpanel -lncurses 
++_curses_panel _curses_panel.c -lpanel -lcurses -ltermcap
+ 
+ 
+ # Generic (SunOS / SVR4) dynamic loading module.

@@ -1,0 +1,143 @@
+#!/sbin/sh
+
+##################################################################
+#
+# Configuration file documentation
+#
+# tomcat5
+#
+#     This file let you change the values of a few variables used 
+#     by the init script to control the environment of tomcat5
+#     The list of variables is described below.
+#
+#     The configuration file can be stored in two different path :
+#
+#     /etc/opt/csw
+#         This directory contain machine specific config files
+#
+#     /opt/csw/etc
+#         This directory contain global config files
+#
+#     If there exist a /etc/opt/csw/tomcat5 config file, then the
+#     environment variables defined in this file are used and the
+#     /opt/csw/etc/tomcat5/conf/tomcat5 file is ignored even if it 
+#     exist.
+#
+#     If there exist only a /opt/csw/etc/tomcat5/conf/tomcat5 config
+#     file, then the environnement variables defined in this file are
+#     used.
+#
+#     If no configuration file exist, all the variables needed by
+#     tomcat5 are let to their default values (see the values 
+#     below).
+#
+#     In all cases, the default values are defined, and supereded
+#     by the values stored in the configuration file. This is 
+#     necessary to define an environment usuable by tomcat.
+# 
+# Environment variables documentation
+#
+# JAVA_HOME
+#
+#     JAVA_HOME specify which version of Java should be used
+#     by tomcat. You can supered the default value in the tomcat5
+#     configuration file. The value of this variable must be a path
+#     pointing to the root of a valid JRE or JDK (the root dir not
+#     the bin dir !). The default value is /usr/java.
+#
+# TOMCAT_USER
+#
+#     TOMCAT_USER variable defines the Solaris user running the 
+#     tomcat server. You can supered the default valude in the 
+#     tomcat5 configuration file. The value of this variable must 
+#     be a valid Solaris user (ie: root, nobody). The default value
+#     is root.
+#
+#     WARNING : By default the directory permissions are set for
+#     the root user (no write access for 'nobody').
+#     The logs are stored in /opt/csw/share/tomcat5/logs, and do belong
+#     to root user. If you change the TOMCAT_USER, be sure that this
+#     user can write in the log directory.
+#
+#     The following permissions may also have to be changed :
+#     . give read access to the conf directory and all its subdirs
+#     . give write access to the conf dir to let tomcat create new files
+#     . give write access to the work dir
+#
+
+##################################################################
+# Setting the default values
+#
+# DO NOT EDIT THE FOLLOWING VALUES. 
+#
+# Use the configuration file to supered their value
+#
+
+SPECIFIC_CONFIG_FILE=/etc/opt/csw/tomcat5
+GLOBAL_CONFIG_FILE=/opt/csw/etc/tomcat5/conf/tomcat5
+
+JAVA_HOME=/usr/java
+TOMCAT_USER=tomcat
+
+##################################################################
+# Search for a custom configuration file in the default CSW paths
+#
+
+if [ -f $SPECIFIC_CONFIG_FILE ]
+then
+	echo Using configuration file : $SPECIFIC_CONFIG_FILE
+        . $SPECIFIC_CONFIG_FILE
+else
+        if [ -f $GLOBAL_CONFIG_FILE ]
+        then
+		echo Using configuration file : $GLOBAL_CONFIG_FILE
+                . $GLOBAL_CONFIG_FILE
+	fi
+fi
+
+echo "Using Java from : $JAVA_HOME"
+echo "Running as : $TOMCAT_USER (please see documentation included in $0 to change user)"
+
+##################################################################
+# Test if java is in the path defined by JAVA_HOME, if not try to 
+# guess path by testing standard directories
+#
+
+if [ ! -f $JAVA_HOME/bin/java ]
+then
+        echo "Java not found in $JAVA_HOME/bin. Trying /usr/java/bin"
+        JAVA_HOME=/usr/java
+        if [ ! -f $JAVA_HOME/bin/java ]
+        then
+                echo "Java not found in $JAVA_HOME/bin. Trying /usr/j2se/bin"
+                JAVA_HOME=/usr/j2se
+                if [ ! -f $JAVA_HOME/bin/java ]
+                then
+                        echo "Java not found in $JAVA_HOME/bin"
+                        echo "Java not found !"
+                        exit 1
+                fi
+        fi
+fi
+
+CATALINA_HOME=/opt/csw/share/tomcat5
+export JAVA_HOME
+export CATALINA_HOME
+
+case $1 in 
+'start')
+	/bin/su $TOMCAT_USER -c $CATALINA_HOME/bin/startup.sh
+        ;;
+'stop')
+	/bin/su $TOMCAT_USER -c $CATALINA_HOME/bin/shutdown.sh
+        ;;
+
+'restart')
+	/bin/su $TOMCAT_USER -c $CATALINA_HOME/bin/shutdown.sh
+	/bin/su $TOMCAT_USER -c $CATALINA_HOME/bin/startup.sh
+        ;;
+*)
+        echo "Usage: $0 { start | stop | restart }"
+        exit 1
+        ;;
+esac    

@@ -1,0 +1,17 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/mm-config 0755 root bin
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/mm.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libmm.la 0644 root bin
+f none /opt/csw/lib/libmm.so.14.0.22 0755 root bin
+s none /opt/csw/lib/libmm.so.14=libmm.so.14.0.22 root bin
+s none /opt/csw/lib/libmm.so=libmm.so.14.0.22 root bin
+f none /opt/csw/lib/libmm.so.13.0.20=libmm.so.13.0.20 0755 root bin
+s none /opt/csw/lib/libmm.so.13=libmm.so.13.0.20 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/mm-config.1 0644 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/mm.3 0644 root bin

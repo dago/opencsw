@@ -1,0 +1,11 @@
+%var            bitname imapproxy
+%var            pkgname CSWimapproxy
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYING
+%var            RC_INIT_SCRIPT cswimapproxy.init
+%var            INIT_KILL_PRIO 99
+%var            INIT_START_PRIO 10
+%var            CAN_BE_AUTOENABLED no
+%var            SERVICE_CONF_FILES /opt/csw/etc/imapproxy.conf
+%var            SERVICE_NAME imapproxy
+%include        url file://%{PKGLIB}/smf_enabled.gspec

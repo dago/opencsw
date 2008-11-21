@@ -1,0 +1,18 @@
+diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/amavisd-agent amavisd-new-2.6.0/amavisd-agent
+--- amavisd-new-2.6.0.orig/amavisd-agent	2008-04-10 20:47:12.000000000 +0200
++++ amavisd-new-2.6.0/amavisd-agent	2008-11-09 22:41:09.872612800 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -T
++#!opt/csw/bin/perl -T
+ 
+ #------------------------------------------------------------------------------
+ # This is amavisd-agent, a demo program to display
+@@ -50,7 +50,7 @@
+ 
+ my($dbfile) = 'snmp.db';
+ my($db_home) =  # DB databases directory
+-  defined $ENV{'AMAVISD_DB_HOME'} ? $ENV{'AMAVISD_DB_HOME'} : '/var/amavis/db';
++  defined $ENV{'AMAVISD_DB_HOME'} ? $ENV{'AMAVISD_DB_HOME'} : '/opt/csw/var/amavisn/db';
+ 
+ my($wakeuptime) = 10;  # -w, sleep time in seconds, may be fractional
+ my($repeatcount);      # -c, repeat count (when defined)

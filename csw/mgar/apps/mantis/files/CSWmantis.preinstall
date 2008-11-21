@@ -1,0 +1,30 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+if [ -d ${CSW_PREFIX}/apache2/share/htdocs/mantis ]; then
+  /usr/bin/cat <<EOF
+
+ERROR: You seem to have a previous installation of Mantis.
+The install location has changed from
+  /opt/csw/apache2/share/htdocs/mantis
+to
+  /opt/csw/share/www/mantis/htdocs
+
+Your files are being moved to the new install location.
+
+!! Please press Ctrl-C in the next 5 seconds if you don't !!
+!! want this to happen automatically but want to move the !!
+!! files manually.                                        !!
+EOF
+
+  sleep 5
+  echo
+  echo "Copying old files:"
+  echo
+  mkdir -p ${CSW_PREFIX}/share/www/mantis/htdocs
+  (cd ${CSW_PREFIX}/apache2/share/htdocs/mantis; tar cf - .) | \
+	(cd ${CSW_PREFIX}/share/www/mantis/htdocs; tar xvf -)
+  rm -rf ${CSW_PREFIX}/apache2/share/htdocs/mantis
+fi
+
+exit 0

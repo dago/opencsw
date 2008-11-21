@@ -1,0 +1,58 @@
+bash (3.2,REV=2007.06.02) unstable
+
+  * Added bash patches bash32-034 to bash-039.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Mon, 02 Jun 2008 22:05:49 +0200
+
+bash (3.2,REV=2007.12.18) unstable
+
+  * Added bash patches bash32-026 to bash-033.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 18 Dec 2007 23:44:19 +0100
+
+bash (3.2,REV=2007.08.24) unstable
+
+  * Added bash patches bash32-018 to bash-025.
+  * Replaced "? ? ?" with "0755 root bin" in the prototype. 
+
+ -- Yann Rouillard  <yann@blastwave.org>  Fri, 24 Aug 2007 01:30:56 +0200
+
+bash (3.2,REV=2007.07.17) unreleased
+
+  * Added system-wide rc file support (file /etc/bash.bashrc).
+  * Added system-wide logout file support (file /etc/bash.logout).
+  * Now read bashrc files if launched by ssh. 
+  * Added bash patches bash32-016 and bash-017.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 17 Jul 2007 23:06:10 +0200
+
+bash (3.2,REV=2007.04.10) unstable
+
+  * Added bash patches bash32-011, bash32-012, bash32-013, bash32-014 and
+  bash32-015.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Tue, 10 Apr 2007 21:02:35 +0200
+
+bash (3.2,REV=2007.03.10) unstable
+
+  * Added bash patches bash32-010
+
+ -- Yann Rouillard  <yann@blastwave.org>  Sat, 10 Mar 2007 00:11:30 +0100
+
+bash (3.2,REV=2007.01.15) unstable
+
+  * Added bash patches bash32-006, bash32-007, bash32-008 and bash32-009
+
+ -- Yann Rouillard  <yann@blastwave.org>  Mon, 15 Jan 2007 23:48:35 +0100
+
+bash (3.2) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Mon,  4 Dec 2006 23:13:15 +0100
+
+bash (3.1) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard  <yann@blastwave.org>  Sun, 30 Apr 2006 03:05:44 +0200

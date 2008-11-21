@@ -1,0 +1,8 @@
+%var            bitname pm_timemodules
+%var            pkgname CSWpmtimemodules
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (C) 1996-1999 David Muir Sharnoff.  License hereby
+granted for anyone to use, modify or redistribute this module at
+their own risk.  Please feed useful changes back to muir@idiom.com.

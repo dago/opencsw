@@ -1,0 +1,24 @@
+diff -Naur subversion-1.5.2.orig/Makefile.in subversion-1.5.2/Makefile.in
+--- subversion-1.5.2.orig/Makefile.in	2008-09-15 16:01:31.613500400 +0200
++++ subversion-1.5.2/Makefile.in	2008-09-15 16:00:33.545900000 +0200
+@@ -68,15 +68,15 @@
+ swig_rb_libdir = @libdir@
+ 
+ ### these possibly need further discussion
+-swig_pydir = @libdir@/svn-python/libsvn
+-swig_pydir_extra = @libdir@/svn-python/svn
+-swig_pldir = @libdir@/svn-perl
++swig_pydir = @prefix@/lib/python/site-packages/libsvn
++swig_pydir_extra = @prefix@/lib/python/site-packages/svn
++#swig_pldir = @libdir@/svn-perl
+ swig_rbdir = $(SWIG_RB_SITE_ARCH_DIR)/svn/ext
+ contribdir = @bindir@/svn-contrib
+ toolsdir = @bindir@/svn-tools
+ 
+-javahl_javadir = @libdir@/svn-javahl
+-javahl_javahdir = @libdir@/svn-javahl/include
++javahl_javadir = @libdir@
++javahl_javahdir = @libdir@/include
+ javahl_libdir = @libdir@
+ javahl_test_rootdir=$(abs_builddir)/subversion/bindings/javahl/test-work
+ 

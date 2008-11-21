@@ -1,0 +1,2 @@
+JETTY_HOME=/etc/opt/csw/jetty6/instances/default
+TMP=/var/opt/csw/jetty6/instances/default/temp

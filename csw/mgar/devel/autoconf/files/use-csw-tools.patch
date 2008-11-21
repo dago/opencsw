@@ -1,0 +1,20 @@
+diff -Naur autoconf-2.63.orig/bin/autoreconf.in autoconf-2.63/bin/autoreconf.in
+--- autoconf-2.63.orig/bin/autoreconf.in	2008-08-28 04:08:10.000000000 +0200
++++ autoconf-2.63/bin/autoreconf.in	2008-09-18 18:22:49.127382000 +0200
+@@ -109,11 +109,11 @@
+ # Lib files.
+ my $autoconf   = $ENV{'AUTOCONF'}   || '@bindir@/@autoconf-name@';
+ my $autoheader = $ENV{'AUTOHEADER'} || '@bindir@/@autoheader-name@';
+-my $automake   = $ENV{'AUTOMAKE'}   || 'automake';
+-my $aclocal    = $ENV{'ACLOCAL'}    || 'aclocal';
+-my $libtoolize = $ENV{'LIBTOOLIZE'} || 'libtoolize';
+-my $autopoint  = $ENV{'AUTOPOINT'}  || 'autopoint';
+-my $make       = $ENV{'MAKE'}       || 'make';
++my $automake   = $ENV{'AUTOMAKE'}   || '@bindir@/automake';
++my $aclocal    = $ENV{'ACLOCAL'}    || '@bindir@/aclocal';
++my $libtoolize = $ENV{'LIBTOOLIZE'} || '@bindir@/libtoolize';
++my $autopoint  = $ENV{'AUTOPOINT'}  || '@bindir@/gautopoint';
++my $make       = $ENV{'MAKE'}       || '@bindir@/gmake';
+ 
+ # --install -- as --add-missing in other tools.
+ my $install = 0;

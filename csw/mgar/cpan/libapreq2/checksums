@@ -1,0 +1,16 @@
+765d8e8009a6cc8658de2390179f8637  download/CSWlibapreq2.gspec
+12ef382f0aa9a804df62d4991df938da  download/CSWlibapreq2.depend
+df6a07c72415bdd81ca80d7cab278735  download/CSWlibapreq2.prototype
+036dfe470694cfd6a7e451056f3a3c15  download/CSWlibapreq2-devel.gspec
+40fc500077b55a2637d822e44823f09f  download/CSWlibapreq2-devel.depend
+2cc95f6d091c0fec240c6df0150a47ac  download/CSWlibapreq2-devel.prototype
+03b645121b96110cac1c121e4e5e5026  download/CSWap2modapreq2.gspec
+a63d8b9c7b235f421a84e0204f9a3f41  download/CSWap2modapreq2.depend
+47ccc18b83d43c498bf9e50db79245d8  download/CSWap2modapreq2.prototype
+1b232fb2b8b585eca307327b826455cb  download/CSWap2modapreq2.postinstall
+23cf6d9b0cd407b84bc038e4f7330fc8  download/CSWap2modapreq2.preremove
+83935adaa08c8738b1020b9c5049c5c9  download/CSWpmapreq2.gspec
+57db2339454179f36a5195eb0237ac2f  download/CSWpmapreq2.depend
+b242f7f8d0a47a8569ee9685305451aa  download/CSWpmapreq2.prototype
+9fb3deec448f74c455d4ffc13846ea9f  download/libapreq2-2.08.tar.gz
+500218b67e41bd8ed189b3cb5f031e98  download/requestrec.diff

@@ -1,0 +1,28 @@
+d none /opt/csw/mozilla 0755 root bin
+d none /opt/csw/mozilla/firefox 0755 root bin
+d none /opt/csw/mozilla/firefox/lib 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libfreebl3.chk 0644 root bin
+f none /opt/csw/mozilla/firefox/lib/libfreebl3.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libgfxpsshar.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libgkgfx.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libgtkembedmoz.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libgtkxtbin.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libjsj.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libmozjs.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libmozz.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libnspr4.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libnss3.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libnssckbi.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libplc4.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libplds4.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libsmime3.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libsoftokn3.chk 0644 root bin
+f none /opt/csw/mozilla/firefox/lib/libsoftokn3.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libssl3.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libxpcom.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libxpcom_compat.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libxpcom_core.so 0755 root bin
+f none /opt/csw/mozilla/firefox/lib/libxpistub.so 0755 root bin
+i copyright=CSWfirefoxrt.copyright
+i depend=CSWfirefoxrt.depend
+i pkginfo=CSWfirefoxrt.pkginfo

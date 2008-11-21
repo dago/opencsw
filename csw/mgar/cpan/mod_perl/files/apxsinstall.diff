@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru mod_perl-1.29.orig/apaci/Makefile.tmpl mod_perl-1.29/apaci/Makefile.tmpl
+--- mod_perl-1.29.orig/apaci/Makefile.tmpl	2006-02-14 12:22:21.132759000 -0500
++++ mod_perl-1.29/apaci/Makefile.tmpl	2006-02-14 12:22:09.239018000 -0500
+@@ -93,8 +93,8 @@
+ 	$(MP_RM) $(MP_DISTCLEAN_FILES)
+ 
+ #   FOR STAND-ALONE BUILDING ONLY
+-install:
+-	$(APXS) -i -a -n perl libperl.so
++install:
++#	$(APXS) -i -a -n perl libperl.so
+ 
+ depend:
+ 	cp Makefile.tmpl Makefile.tmpl.bak \

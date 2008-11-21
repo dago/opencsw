@@ -1,0 +1,6 @@
+%var            bitname dcraw
+%var            pkgname CSWdcraw
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/../LICENSE
+%pkginfo
+BASEDIR=/opt/csw 

@@ -1,0 +1,4 @@
+%var            bitname tin
+%var            pkgname CSWtin
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{GARDIR}/net/tin/files/LICENSE

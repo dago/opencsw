@@ -1,0 +1,26 @@
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/cairo 0755 root bin
+f none /opt/csw/include/cairo/cairo-deprecated.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-features.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-ft.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-pdf.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-ps.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-svg.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-version.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-xlib.h 0644 root bin
+f none /opt/csw/include/cairo/cairo-xlib-xrender.h 0644 root bin
+f none /opt/csw/include/cairo/cairo.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libcairo.a 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/cairo-ft.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/cairo-pdf.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/cairo-png.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/cairo-ps.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/cairo-svg.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/cairo-xlib.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/cairo-xlib-xrender.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/cairo.pc 0644 root bin
+i copyright=CSWlibcairodev.copyright
+i depend=CSWlibcairodev.depend
+i pkginfo=CSWlibcairodev.pkginfo

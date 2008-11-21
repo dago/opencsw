@@ -1,0 +1,9 @@
+%var            bitname pm_tiedbi
+%var            pkgname CSWpmtiedbi
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 1998, Lincoln D. Stein
+
+This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.

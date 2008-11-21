@@ -1,0 +1,3 @@
+P CSWpmextutautoinst pm_extutautoinst - Automatic install of dependencies via CPAN
+P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
+P CSWpmpodsimple pm_podsimple - framework for parsing Pod

@@ -1,0 +1,12 @@
+%var            bitname pkg_update_watch
+%var            pkgname CSWpkgupdatewatch
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright
+Copyright 2006 Yann Rouillard <yann@blastwave.org>
+All rights reserved.  Use is subject to license terms.
+
+Redistribution and/or use, with or without modification, is
+permitted.  This software is without warranty of any kind.  The
+author(s) shall not be liable in the event that use of the
+software causes damage.
+

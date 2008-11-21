@@ -1,0 +1,4 @@
+%var            bitname xinetd
+%var            pkgname CSWxinetd
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/COPYRIGHT

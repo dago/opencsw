@@ -1,0 +1,7 @@
+%var            bitname pm_apacheauthpam
+%var            pkgname CSWpmapauthpam
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This apache perl module is Free Software, and can be used under 
+the terms of the GNU General Public License v2.0 or later.

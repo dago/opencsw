@@ -1,0 +1,5 @@
+f none /opt/csw/bin/ppkg-get=ppkg-get 0755 root bin
+e conf /opt/csw/etc/ppkg-get.conf=ppkg-get.conf 0755 root bin
+d none /opt/csw/share/doc/ppkg-get 0755 root bin
+f none /opt/csw/share/doc/ppkg-get/README.CSW=README.CSW 0644 root bin
+

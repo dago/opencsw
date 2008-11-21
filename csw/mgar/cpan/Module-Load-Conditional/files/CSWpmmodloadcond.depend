@@ -1,0 +1,3 @@
+P CSWpmlclemktxtsimple pm_lclemktxtsimple - simple interface to Locale::Maketext::Lexicon
+P CSWpmmodload pm_modload - Runtime require of both modules and files
+P CSWpmprmscheck pm_prmscheck - A generic input parsing/checking mechanism.

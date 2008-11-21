@@ -1,0 +1,4 @@
+%var            bitname pm_gtk2gladexml
+%var            pkgname CSWpmgtk2gladexml
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

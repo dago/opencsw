@@ -1,0 +1,6 @@
+%var            bitname smbldap_tools
+%var            pkgname CSWsmbldaptools
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright
+This software is licensed under the terms of the GNU General Public
+License (GPL) version 2.

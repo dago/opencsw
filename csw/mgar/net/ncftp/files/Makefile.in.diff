@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru ncftp-3.2.0.orig/Makefile.in ncftp-3.2.0/Makefile.in
+--- ncftp-3.2.0.orig/Makefile.in	2006-08-05 17:42:30.000000000 -0400
++++ ncftp-3.2.0/Makefile.in	2006-09-17 09:23:21.647033000 -0400
+@@ -44,7 +44,7 @@
+ 	@( cd ./sh_util ; $(MAKE) "CC=$(CC)" "CFLAGS=$(CFLAGS)" )
+ 	@( cd ./vis ; $(MAKE) "CC=$(CC)" "CFLAGS=$(CFLAGS)" )
+ 	-@test -z "$(DESTDIR)" || mkdir -p "$DESTDIR" 2>/dev/null
+-	-mkdir "$(DESTDIR)$(prefix)" "$(DESTDIR)$(BINDIR)" "$(DESTDIR)$(SYSCONFDIR)" "$(DESTDIR)$(mandir)" "$(DESTDIR)$(mandir)/man1" 2>/dev/null
++	-mkdir -p "$(DESTDIR)$(prefix)" "$(DESTDIR)$(BINDIR)" "$(DESTDIR)$(SYSCONFDIR)" "$(DESTDIR)$(mandir)" "$(DESTDIR)$(mandir)/man1" 2>/dev/null
+ 	-@echo '..... Installing the programs .....'
+ 	$(INSTALL_PROGRAM) bin/ncftp@EXEEXT@ "$(DESTDIR)$(BINDIR)/ncftp@EXEEXT@"
+ 	$(INSTALL_PROGRAM) bin/ncftpget@EXEEXT@ "$(DESTDIR)$(BINDIR)/ncftpget@EXEEXT@"

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+instance=$1
+etc_path=/etc/opt/csw/jetty6/instances/$instance
+var_path=/var/opt/csw/jetty6/instances/$instance
+
+usage() {
+  echo "usage: $0 <instance id>" 2>&1
+}
+
+if [ -z "$instance" ]
+then
+  usage
+  exit 1
+fi
+
+# TODO: validate that the instance doesn't contain any spaces
+
+if [ -d $etc_path -o -d $var_path ]
+then
+  echo "Instance already exist!" 2>&1
+  echo "Configuration: $etc_path" 2>&1
+  echo "Data: $var_path" 2>&1
+  exit 1
+fi
+
+echo "Creating Jetty instance..."
+echo "Configuration: $etc_path"
+echo "Data: $var_path"
+
+mkdir -p $etc_path $var_path
+cp -r /opt/csw/share/jetty6/etc $etc_path/etc
+mkdir -p $etc_path/contexts
+mkdir -p $etc_path/webapps
+mkdir -p $var_path/logs
+mkdir -p $var_path/temp
+
+chown -R jetty:jetty $var_path
+
+#ln -s /opt/csw/share/jetty6/start.jar /etc/opt/csw/jetty6/instances/default/start.jar
+#ln -s /opt/csw/share/jetty6/lib /etc/opt/csw/jetty6/instances/default/lib
+#ln -s $var_path/logs /etc/opt/csw/jetty6/instances/default/logs
+#ln -s $var_path/temp /etc/opt/csw/jetty6/instances/default/temp

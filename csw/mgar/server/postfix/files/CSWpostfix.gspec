@@ -1,0 +1,7 @@
+%var            bitname postfix
+%var            pkgname CSWpostfix
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE
+%include        url file://%{PKGLIB}/csw_class_conf/gspec
+%include        url file://%{PKGLIB}/csw_usrgrp.gspec
+%include        url file://%{PKGLIB}/smf_enabled.gspec

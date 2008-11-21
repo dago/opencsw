@@ -1,0 +1,10 @@
+%var            bitname pm_libwww
+%var            pkgname CSWpmlibwww
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+1995-2008 Gisle Aas. All rights reserved.
+1995 Martijn Koster. All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

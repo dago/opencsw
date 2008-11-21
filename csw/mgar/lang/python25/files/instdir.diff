@@ -1,0 +1,54 @@
+diff --speed-large-files --minimal -Nru Python-2.5.orig/Makefile.pre.in Python-2.5/Makefile.pre.in
+--- Python-2.5.orig/Makefile.pre.in	2006-07-30 12:20:10.000000000 -0400
++++ Python-2.5/Makefile.pre.in	2007-02-21 01:49:00.159357000 -0500
+@@ -91,11 +91,11 @@
+ SCRIPTDIR=	$(prefix)/lib
+ 
+ # Detailed destination directories
+-BINLIBDEST=	$(LIBDIR)/python$(VERSION)
+-LIBDEST=	$(SCRIPTDIR)/python$(VERSION)
++BINLIBDEST=	$(LIBDIR)/python
++LIBDEST=	$(SCRIPTDIR)/python
+ INCLUDEPY=	$(INCLUDEDIR)/python$(VERSION)
+ CONFINCLUDEPY=	$(CONFINCLUDEDIR)/python$(VERSION)
+-LIBP=		$(LIBDIR)/python$(VERSION)
++LIBP=		$(LIBDIR)/python
+ 
+ # Symbols used for using shared libraries
+ SO=		@SO@
+diff --speed-large-files --minimal -Nru Python-2.5.orig/Modules/getpath.c Python-2.5/Modules/getpath.c
+--- Python-2.5.orig/Modules/getpath.c	2006-07-09 21:18:57.000000000 -0400
++++ Python-2.5/Modules/getpath.c	2007-02-21 01:55:46.009239000 -0500
+@@ -117,8 +117,8 @@
+ #endif
+ 
+ #ifndef PYTHONPATH
+-#define PYTHONPATH PREFIX "/lib/python" VERSION ":" \
+-              EXEC_PREFIX "/lib/python" VERSION "/lib-dynload"
++#define PYTHONPATH PREFIX "/lib/python:" \
++              EXEC_PREFIX "/lib/python/lib-dynload"
+ #endif
+ 
+ #ifndef LANDMARK
+@@ -129,7 +129,7 @@
+ static char exec_prefix[MAXPATHLEN+1];
+ static char progpath[MAXPATHLEN+1];
+ static char *module_search_path = NULL;
+-static char lib_python[] = "lib/python" VERSION;
++static char lib_python[] = "lib/python";
+ 
+ static void
+ reduce(char *dir)
+diff --speed-large-files --minimal -Nru Python-2.5.1.orig/Lib/distutils/sysconfig.py Python-2.5.1/Lib/distutils/sysconfig.py
+--- Python-2.5.1.orig/Lib/distutils/sysconfig.py	2006-10-08 13:50:26.000000000 -0400
++++ Python-2.5.1/Lib/distutils/sysconfig.py	2007-10-03 19:58:22.766059000 -0400
+@@ -99,8 +99,7 @@
+         prefix = plat_specific and EXEC_PREFIX or PREFIX
+ 
+     if os.name == "posix":
+-        libpython = os.path.join(prefix,
+-                                 "lib", "python" + get_python_version())
++        libpython = os.path.join(prefix, "lib", "python")
+         if standard_lib:
+             return libpython
+         else:

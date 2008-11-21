@@ -1,0 +1,13 @@
+d none /opt/csw/sbin 0755 root bin
+f none /opt/csw/sbin/visudo 0111 root root
+f none /opt/csw/etc/sudoers.CSW 0440 root root
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1m 0755 root bin
+f none /opt/csw/share/man/man1m/sudo.1m 0644 root root
+l none /opt/csw/share/man/man1m/sudoedit.1m=/opt/csw/share/man/man1m/sudo.1m
+f none /opt/csw/share/man/man1m/visudo.1m 0644 root root
+d none /opt/csw/share/man/man4 0755 root bin
+f none /opt/csw/share/man/man4/sudoers.4 0644 root root
+f none /opt/csw/libexec/sudo_noexec.so 0755 root root
+f none /opt/csw/libexec/sudo_noexec.la 0644 root root

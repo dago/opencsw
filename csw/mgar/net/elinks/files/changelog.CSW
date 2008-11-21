@@ -1,0 +1,32 @@
+elinks (0.11.5,REV=2008.10.04) unstable
+
+  * New upstream version.
+  * Removed configure_no_rdynamic.patch patch which is not useful
+    anymore.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 04 Oct 2008 23:41:47 +0200
+
+elinks (0.11.3,REV=2007.07.28) unstable
+
+  * Depends on openssl_rt rather than openssl.
+
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 17:30:07 +0200
+
+elinks (0.11.3) unstable
+
+  * New upstream version.
+  * Security path for CVE-2007-2027.
+
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 11 May 2007 21:59:53 +0200
+
+elinks (0.11.2) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Mon,  4 Dec 2006 23:04:42 +0100
+
+elinks (0.11.1) unstable
+
+  * First version.
+
+ -- Yann Rouillard <yann@blastwave.org>  Thu, 13 Apr 2006 11:38:30 +0200 

@@ -1,0 +1,17 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/annotate 0755 root bin
+f none /opt/csw/bin/bdftogd 0755 root bin
+f none /opt/csw/bin/gd2copypal 0755 root bin
+f none /opt/csw/bin/gd2togif 0755 root bin
+f none /opt/csw/bin/gd2topng 0755 root bin
+f none /opt/csw/bin/gdcmpgif 0755 root bin
+f none /opt/csw/bin/gdparttopng 0755 root bin
+f none /opt/csw/bin/gdtopng 0755 root bin
+f none /opt/csw/bin/giftogd2 0755 root bin
+f none /opt/csw/bin/pngtogd 0755 root bin
+f none /opt/csw/bin/pngtogd2 0755 root bin
+f none /opt/csw/bin/webpng 0755 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libgd.so.2.0.0 0755 root bin
+s none /opt/csw/lib/libgd.so.2=libgd.so.2.0.0
+s none /opt/csw/lib/libgd.so=libgd.so.2.0.0

@@ -1,0 +1,18 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/perl 0755 root bin
+d none /opt/csw/lib/perl/csw 0755 root bin
+d none /opt/csw/lib/perl/csw/Net 0755 root bin
+f none /opt/csw/lib/perl/csw/Net/Patricia.pm 0444 root bin
+d none /opt/csw/lib/perl/csw/auto 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Net 0755 root bin
+d none /opt/csw/lib/perl/csw/auto/Net/Patricia 0755 root bin
+f none /opt/csw/lib/perl/csw/auto/Net/Patricia/.packlist 0644 root bin
+f none /opt/csw/lib/perl/csw/auto/Net/Patricia/Patricia.bs 0444 root bin
+f none /opt/csw/lib/perl/csw/auto/Net/Patricia/Patricia.so 0555 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Net::Patricia.3perl 0444 root bin
+i copyright=CSWpmnetpatricia.copyright
+i depend=CSWpmnetpatricia.depend
+i pkginfo=CSWpmnetpatricia.pkginfo

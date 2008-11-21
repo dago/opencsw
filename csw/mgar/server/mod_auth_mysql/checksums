@@ -1,0 +1,8 @@
+a9ffde3dabeddf32de50bf75597c809e  download/mod_auth_mysql-3.0.0.tar.gz
+964e11b23d619e4d445765663de6a465  download/CSWap2modauthmysql.gspec
+7f98d696fdc92d7057c952c1e46ad49a  download/CSWap2modauthmysql.depend
+9f09e967b405b6d29b97f36708de456c  download/CSWap2modauthmysql.prototype
+11b867664e62a8426eb0840672b1cf5a  download/CSWap2modauthmysql.postinstall
+3f9d630a2bab978ae38f5d76a0011141  download/CSWap2modauthmysql.preremove
+935aa528bdb21023da3c8c5822424dbb  download/CSWap2modauthmysql.copyright
+57ede0ddd634ec03a694a5cc3863c082  download/apr.diff

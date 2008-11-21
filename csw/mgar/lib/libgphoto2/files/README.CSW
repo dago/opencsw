@@ -1,0 +1,26 @@
+Notes about the Blastwave package of libgphoto2
+-----------------------------------------------
+
+Starting with libgphoto 2.3.1, two packages per architecture are
+provided.
+
+The first package has been built on Solaris 8 and is intended for use
+on Solaris 8 and 9 machines. This package is equivalent to the
+previously available package. Since Solaris 8 and 9 don't have libusb,
+USB support had to be turned off for this package.
+
+The other package has been built on Solaris 10 and is intended for use
+on Solaris 10 and later. This package has been compiled with USB
+support enabled. As long as /usr/sfw/lib/libusb.so is present on the
+system (package SUNWlibusb), this library will provide access to all
+USB camera models supported.
+
+USB support has been tested on a Sun Ultra 60 workstation running
+Solaris 10 using a Canon PowerShot G1 and a Canon PowerShot S50.
+
+Please refer to [1] for more information on how to set up your USB
+camera with Solaris (this is a one-time step per camera model). A text
+version of this file is included as in this package as
+/opt/csw/share/doc/libgphoto2/solaris-10-usb-digital-camera-howto.txt.
+
+[1] http://technopark02.blogspot.com/2005/06/solaris-10-usb-digital-camera-howto.html

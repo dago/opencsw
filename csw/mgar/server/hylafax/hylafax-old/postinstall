@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# setup example crontabs for uucp and root.
+# setup an example inittab entry
+# give the user some messages on how to procede
+#
+CSW=/opt/csw
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+# root and uucp crontab entries
+#
+if [ ! -f $PKG_ROOT_DIR/$CSW/share/hylafax/root.crontab ]; then
+
+echo "
+#
+# faxqclean - HylaFAX (TM) queue cleaner process, modify to fit your needs
+#
+# !!! DON'T OVER WRITE THE EXISTING ROOT CRONTAB !!!
+0   *    *    *    *   /opt/csw/sbin/faxqclean
+" > $PKG_ROOT_DIR/$CSW/share/hylafax/root.crontab
+fi
+
+if [ ! -f $PKG_ROOT_DIR/$CSW/share/hylafax/uucp.crontab ]; then
+echo "
+#
+# faxcron - HylaFAX routine maintenance script, modify to fit your needs
+#
+# !!! DON'T OVER WRITE THE EXISTING UUCP CRONTAB !!!
+#
+25 23 * * 0 sh /opt/csw/sbin/faxcron -rcv 20 | mailx -s "Fax Reports" FaxMaster
+" > $PKG_ROOT_DIR/$CSW/share/hylafax/uucp.crontab
+fi
+
+# inittab entry
+#
+if [ ! -f $PKG_ROOT_DIR/$CSW/share/hylafax/inittab.CSW ]; then
+echo "
+# an example entry for the HylaFAX faxgetty program
+# see inittab(4) and faxgetty(1)
+fax1:2:respawn:/opt/csw/sbin/faxgetty /dev/term/a
+" > $PKG_ROOT_DIR/$CSW/share/hylafax/inittab.CSW
+fi
+
+# give the install a quick message
+echo "
+Example crontab(1) and inittab(4) entries have been created. Review and modify
+these files to fit your needs. They are located at /opt/csw/share/hylafax
+
+If this system is acting as a FAXSERVER execute /opt/csw/sbin/faxsetup,
+otherwite run /opt/csw/sbin/faxsetup -client
+
+You should set FAXSERVER in your environment to the facsimile server and the
+email alias FaxMaster to you facsimile administrator.
+
+See http://www.hylafax.org/howto/index.html for a detailed guide to HylaFAX
+installation, configuration, and troubleshooting.
+"

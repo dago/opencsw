@@ -1,0 +1,15 @@
+d7d1ac1505a295ca304dc4e8b5bafdeb  download/apache-tomcat-5.5.26.tar.gz
+667668ee36cd4ab82088f41a665fb1f8  download/CSWtomcat5.gspec
+88bb45561b7dd6b9453844effc95a4a7  download/CSWtomcat5.prototype
+d41d8cd98f00b204e9800998ecf8427e  download/CSWtomcat5.depend
+4d3609552db45727f5aa154abf557062  download/preremove
+b49a483a4363081fb971ced893bef6f4  download/postinstall
+c051aef03d0b2f6815d743b0a5992619  download/preinstall
+55fa93cd473f0b6870e3ea0be02e86b6  download/checkinstall
+f49c3339aa897df97abf1baf54582fb8  download/space
+ac049cbace6046e38bed18d106110b4f  download/i.smfno
+eb170cecb32d74f8db84a7b2b13862e8  download/i.smfyes
+4d15302b2d9c21036c0905bba39d9c34  download/svc-tomcat5
+62b2ee7bf9927e870d1801696832f312  download/tomcat5.xml
+36aca64104055dc1797c8f0f25350d5c  download/tomcat5
+cf659ddddcd7c12b1e6c759a7fba3282  download/cswtomcat5

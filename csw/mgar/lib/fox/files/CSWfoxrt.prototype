@@ -1,0 +1,10 @@
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libCHART-1.4.so.0.0.33 0755 root bin
+s none /opt/csw/lib/libCHART-1.4.so.0=libCHART-1.4.so.0.0.33 root bin
+s none /opt/csw/lib/libCHART-1.4.so=libCHART-1.4.so.0.0.33 root bin
+f none /opt/csw/lib/libFOX-1.4.so.0.0.33 0755 root bin
+s none /opt/csw/lib/libFOX-1.4.so.0=libFOX-1.4.so.0.0.33 root bin
+s none /opt/csw/lib/libFOX-1.4.so=libFOX-1.4.so.0.0.33 root bin
+i copyright=CSWfoxrt.copyright
+i depend=CSWfoxrt.depend
+i pkginfo=CSWfoxrt.pkginfo

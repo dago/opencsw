@@ -1,0 +1,34 @@
+# Environment variables documentation
+#
+# JAVA_HOME
+#
+#     JAVA_HOME specify which version of Java should be used
+#     by tomcat. You can supered the default value in the tomcat5
+#     configuration file. The value of this variable must be a path
+#     pointing to the root of a valid JRE or JDK (the root dir not
+#     the bin dir !). The default value is /usr/java.
+#
+
+# JAVA_HOME=/usr/java
+
+# TOMCAT_USER
+#
+#     TOMCAT_USER variable defines the Solaris user running the
+#     tomcat server. You can supered the default valude in the
+#     tomcat5 configuration file. The value of this variable must
+#     be a valid Solaris user (ie: root, nobody). The default value
+#     is tomcat.
+#
+#     WARNING : By default the directory permissions are set for
+#     the tomcat user (no write access for 'nobody').
+#     The logs are stored in /opt/csw/tomcat5/logs, and do belong
+#     to root user. If you change the TOMCAT_USER, be sure that this
+#     user can write in the log directory.
+#
+#     The following permissions may also have to be changed :
+#     . give read access to the conf directory and all its subdirs
+#     . give write access to the conf dir to let tomcat create new files
+#     . give write access to the work dir
+#
+
+TOMCAT_USER=tomcat 

@@ -1,0 +1,9 @@
+efa68f52bdb3400a5205c78b40febbf5  download/hylafax-5.2.5.tar.gz
+bb5dfc39a59cd7af4aaba9d7e0edf2d7  download/CSWhylafax.gspec
+a4a8709a4e8e78c37cb639e8029bbc92  download/CSWhylafax.prototype
+5e5c2c1671c343d90eae5fec6dbd380c  download/CSWhylafax.depend
+1bdafc1257ae4ca41d9a5395a245bc17  download/CSWhylafax.postinstall
+ee279bfdf2c80050ce1f345bf3eca351  download/CSWhylafax.preremove
+4f0cf062d03f78aaa244e914915719d8  download/CSWhylafax.postremove
+cab16587d677bfdc27fbc9d1dd81a94c  download/config.site.CSW
+d64caf7a392502ee9cdd4b405432a9fc  download/patch-hylafax.diff

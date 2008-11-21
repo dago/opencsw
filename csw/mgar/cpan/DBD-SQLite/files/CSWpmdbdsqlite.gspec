@@ -1,0 +1,8 @@
+%var            bitname pm_dbdsqlite
+%var            pkgname CSWpmdbdsqlite
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+This module is distributed under the same terms as Perl itself, and
+is copyright Matt Sergeant, 2002.
+
+The underlying SQLite database engine is copyright free.

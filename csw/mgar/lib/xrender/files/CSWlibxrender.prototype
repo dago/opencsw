@@ -1,0 +1,8 @@
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libXrender.la 0755 root bin
+f none /opt/csw/lib/libXrender.so.1.3.0 0755 root bin
+s none /opt/csw/lib/libXrender.so.1=libXrender.so.1.3.0
+s none /opt/csw/lib/libXrender.so=libXrender.so.1.3.0
+i copyright=CSWlibxrender.copyright
+i depend=CSWlibxrender.depend
+i pkginfo=CSWlibxrender.pkginfo

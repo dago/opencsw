@@ -1,0 +1,10 @@
+#!/bin/sh
+PATH=/usr/bin
+export PATH
+
+if /usr/bin/grep "^${BASEDIR}/opt/csw/bin/zsh$" ${BASEDIR}/etc/shells 2> /dev/null > /dev/null; then
+	/usr/bin/perl -i -pwe '$_ = "" if /\/opt\/csw\/bin\/zsh$/' ${BASEDIR}/etc/shells
+	echo "REMOVED ${BASEDIR}/opt/csw/bin/zsh from ${BASEDIR}/etc/shells."
+else
+	echo "${BASEDIR}/etc/shells is UNCHANGED because entry ${BASEDIR}/opt/csw/bin/zsh was already wiped."
+fi

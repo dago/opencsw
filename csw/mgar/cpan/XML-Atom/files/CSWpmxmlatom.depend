@@ -1,0 +1,7 @@
+P CSWpmdigestsha1 pm_digestsha1 - interface to the SHA-1 Algorithm
+P CSWpmhtmlparser pm_htmlparser - HTML parser class
+P CSWpmlibwww pm_libwww - a general-purpose Web API for Perl, based on W3C libwww.
+P CSWpmtimedate pm_timedate - parse date strings into time values
+P CSWpmuri pm_uri -  Uniform Resource Identifiers (absolute and relative)
+P CSWpmxmllibxml pm_xmllibxml - binding for libxml2
+P CSWpmxmllibxslt pm_xmllibxslt - interface to the gnome libxslt library

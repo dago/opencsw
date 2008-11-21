@@ -1,0 +1,10 @@
+ca9fc075c55baa19a49c97e4083f4c0f  download/CSWmodperl.gspec
+c8a2791741f027064eb34d9819eeff24  download/CSWmodperl.prototype
+c74adeeec1d3f5ecbae9418eff99768e  download/CSWmodperl.depend
+50cbcbae4d19c84243acd5073a5f4f64  download/CSWmodperl.postinstall
+40fe2a410077319379155bdd75a8e5d9  download/CSWmodperl.preremove
+0dd379f20ceb32fc77bb3a9bf045097f  download/CSWmodperl.space
+5fe7d67173c18f73424e47f00d9e97eb  download/test.pl
+6541df2fd21f00a2e607e9e48687a0f5  download/README
+1491931790509b9af06fc037d02b0e7a  download/mod_perl-1.29.tar.gz
+25626caea63515487503db7275ab6130  download/apxsinstall.diff

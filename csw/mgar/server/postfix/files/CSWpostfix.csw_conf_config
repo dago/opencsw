@@ -1,0 +1,12 @@
+version=1
+file=/etc/default/cswpostgrey
+file=/etc/opt/csw/postfix/access
+file=/etc/opt/csw/postfix/aliases
+file=/etc/opt/csw/postfix/canonical
+file=/etc/opt/csw/postfix/generic
+file=/etc/opt/csw/postfix/header_checks
+file=/etc/opt/csw/postfix/main.cf
+file=/etc/opt/csw/postfix/master.cf
+file=/etc/opt/csw/postfix/relocated
+file=/etc/opt/csw/postfix/transport
+file=/etc/opt/csw/postfix/virtual

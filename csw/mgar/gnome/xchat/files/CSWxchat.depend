@@ -1,0 +1,18 @@
+P CSWdbusglib dbus_glib - DBus GLib Bindings
+P CSWexpat expat - XML Parser Toolkit
+P CSWfconfig fontconfig - Font configuration and customization library
+P CSWftype2 freetype2 - The free and portable high-quality Font Engine
+P CSWggettext ggettext - GNU gettext
+P CSWglib2 glib2 - Low-level core library that forms the basis of GTK+
+P CSWgtk2 gtk2 - GTK+, The GIMP Toolkit
+P CSWiconv libiconv - GNU iconv library
+P CSWlibatk libatk - Accessibility toolkit
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWlibdbus libdbus - DBus Message Bus System - dynamic libraries
+P CSWlibxft2 libxft2 - FreeType-based font drawing library for X
+P CSWlibxrender libxrender - fontconfig.org Xrender library
+P CSWosslrt openssl_rt - Openssl runtime libraries
+P CSWpango libpango - Library for laying out and rendering text
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWsunmath libsunmath - Sun maths library
+P CSWzlib zlib - Zlib Data Compression Library

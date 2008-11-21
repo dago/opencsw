@@ -1,0 +1,3 @@
+P CSWpmarchivezip pm_archivezip - provide an interface to ZIP archive files.
+P CSWpmmodulescandeps pm_modulescandeps - recursively scan Perl code for dependencies
+P CSWpmmodulesignature pm_modulesignature - module signature file manipulation

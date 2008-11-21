@@ -1,0 +1,2 @@
+P CSWpmclassdbi pm_classdbi - simple database abstraction
+P CSWpmsqlstatement pm_sqlstatement - SQL parsing and processing engine

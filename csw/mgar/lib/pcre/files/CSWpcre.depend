@@ -1,0 +1,4 @@
+P CSWzlib     zlib - Zlib Data Compression Library
+P CSWbzip2    bzip2 - a high-quality block-sorting file compressor
+P CSWreadline readline - library to enable interactive line editing
+P CSWpcrert   pcre_rt - Perl-compatible regular expression runtime libraries

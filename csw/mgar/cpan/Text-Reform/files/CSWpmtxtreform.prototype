@@ -1,0 +1,21 @@
+d none /opt/csw/share/perl/csw/Text 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_badheader.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_cols.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_columns.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_filler.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_footer.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_leader1.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_locale.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_reentrant.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_simple.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_single.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_table.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_warnings.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/demo_ws.pl 0755 root bin
+f none /opt/csw/share/perl/csw/Text/Reform.pm 0444 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Text::Reform.3perl 0644 root bin
+i copyright=CSWpmtxtreform.copyright
+i depend=CSWpmtxtreform.depend
+i pkginfo=CSWpmtxtreform.pkginfo

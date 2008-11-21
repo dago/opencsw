@@ -1,0 +1,7 @@
+f none /opt/csw/lib/libdbus-1.la 0755 root bin
+f none /opt/csw/lib/libdbus-1.so.3.4.0 0755 root bin
+s none /opt/csw/lib/libdbus-1.so.3=libdbus-1.so.3.4.0
+s none /opt/csw/lib/libdbus-1.so=libdbus-1.so.3.4.0
+i copyright=CSWlibdbus.copyright
+i depend=CSWlibdbus.depend
+i pkginfo=CSWlibdbus.pkginfo

@@ -1,0 +1,9 @@
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWneon neon - Neon HTTP and WebDAV client library
+P CSWosslrt openssl - The Open Source toolkit for SSL and TLS.
+P CSWreadline readline - library to enable interactive line editing
+P CSWzlib zlib - Zlib Data Compression Library
+P CSWgcrypt
+P CSWgnutls
+P CSWgpgerr

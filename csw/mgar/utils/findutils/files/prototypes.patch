@@ -1,0 +1,90 @@
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/find/defs.h findutils-4.1/find/defs.h
+--- findutils-4.1.orig/find/defs.h	1994-11-02 12:59:15.000000000 -0800
++++ findutils-4.1/find/defs.h	2003-07-29 07:35:25.256788000 -0700
+@@ -301,7 +301,7 @@
+ boolean mark_stat P_((struct predicate *tree));
+ 
+ /* util.c */
+-char *basename P_((char *fname));
++/* char *basename P_((char *fname)); */
+ struct predicate *get_new_pred P_((void));
+ struct predicate *get_new_pred_chk_op P_((void));
+ struct predicate *insert_primary P_((boolean (*pred_func )()));
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/find/fstype.c findutils-4.1/find/fstype.c
+--- findutils-4.1.orig/find/fstype.c	1994-11-03 08:33:48.000000000 -0800
++++ findutils-4.1/find/fstype.c	2003-07-29 07:34:31.040670000 -0700
+@@ -30,8 +30,9 @@
+ extern int errno;
+ #endif
+ 
+-char *strdup ();
+-char *strstr ();
++/* char *strdup ();
++ * char *strstr ();
++ */
+ 
+ static char *filesystem_type_uncached P_((char *path, char *relpath, struct stat *statp));
+ static int xatoi P_((char *cp));
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/find/parser.c findutils-4.1/find/parser.c
+--- findutils-4.1.orig/find/parser.c	1994-11-02 12:59:19.000000000 -0800
++++ findutils-4.1/find/parser.c	2003-07-29 07:34:49.741746000 -0700
+@@ -52,7 +52,7 @@
+ #define lstat stat
+ #endif
+ 
+-char *strstr ();
++/* char *strstr (); */
+ int lstat ();
+ int stat ();
+ #ifndef atol /* for Linux */
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/find/util.c findutils-4.1/find/util.c
+--- findutils-4.1.orig/find/util.c	1994-10-19 21:49:47.000000000 -0700
++++ findutils-4.1/find/util.c	2003-07-29 07:35:46.432706000 -0700
+@@ -26,7 +26,7 @@
+ 
+ char *
+ basename (fname)
+-     char *fname;
++     const char *fname;
+ {
+   char *p;
+ 
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/lib/nextelem.c findutils-4.1/lib/nextelem.c
+--- findutils-4.1.orig/lib/nextelem.c	1994-09-27 06:02:45.000000000 -0700
++++ findutils-4.1/lib/nextelem.c	2003-07-29 07:33:44.560192000 -0700
+@@ -32,7 +32,7 @@
+ #endif
+ #endif
+ 
+-char *strdup ();
++/* char *strdup (); */
+ void free ();
+ 
+ /* Return the next element of a colon-separated path.
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/lib/savedir.c findutils-4.1/lib/savedir.c
+--- findutils-4.1.orig/lib/savedir.c	1994-10-07 10:21:34.000000000 -0700
++++ findutils-4.1/lib/savedir.c	2003-07-29 07:33:59.848256000 -0700
+@@ -62,7 +62,7 @@
+ #define NULL 0
+ #endif
+ 
+-char *stpcpy ();
++/* char *stpcpy (); */
+ 
+ /* Return a freshly allocated string containing the filenames
+    in directory DIR, separated by '\0' characters;
+diff --speed-large-files --minimal -Nru findutils-4.1.orig/xargs/xargs.c findutils-4.1/xargs/xargs.c
+--- findutils-4.1.orig/xargs/xargs.c	1994-10-07 10:21:39.000000000 -0700
++++ findutils-4.1/xargs/xargs.c	2003-07-29 07:36:06.386407000 -0700
+@@ -60,8 +60,9 @@
+ #define memcpy(dest, source, count) (bcopy((source), (dest), (count)))
+ #endif
+ 
+-char *strstr ();
+-char *strdup ();
++/* char *strstr ();
++ * char *strdup ();
++ */
+ 
+ #ifndef _POSIX_SOURCE
+ #include <sys/param.h>

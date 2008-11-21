@@ -1,0 +1,3 @@
+P CSWpmcomprawzlib pm_comprawzlib - Low-Level Interface to zlib compression library
+P CSWpmiocompbase pm_iocompbase - Base Class for IO::Compress modules
+P CSWpmiocompzlib pm_iocompzlib - Read and write gzip and zip files/buffers.

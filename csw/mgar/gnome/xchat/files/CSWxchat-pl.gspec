@@ -1,0 +1,5 @@
+%var            bitname xchat_pl
+%var            pkgname CSWxchat-pl
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc xchat perl plugin
+%copyright      url file://%{WORKSRC}/COPYING

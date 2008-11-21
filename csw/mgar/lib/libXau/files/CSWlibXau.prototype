@@ -1,0 +1,20 @@
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libXau.la 0755 root bin
+f none /opt/csw/lib/libXau.so.6.0.0 0755 root bin
+s none /opt/csw/lib/libXau.so.6=libXau.so.6.0.0
+s none /opt/csw/lib/libXau.so=libXau.so.6.0.0
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/Xau.3 0644 root bin
+f none /opt/csw/share/man/man3/XauDisposeAuth.3 0644 root bin
+f none /opt/csw/share/man/man3/XauFileName.3 0644 root bin
+f none /opt/csw/share/man/man3/XauGetAuthByAddr.3 0644 root bin
+f none /opt/csw/share/man/man3/XauGetBestAuthByAddr.3 0644 root bin
+f none /opt/csw/share/man/man3/XauLockAuth.3 0644 root bin
+f none /opt/csw/share/man/man3/XauReadAuth.3 0644 root bin
+f none /opt/csw/share/man/man3/XauUnlockAuth.3 0644 root bin
+f none /opt/csw/share/man/man3/XauWriteAuth.3 0644 root bin
+i copyright=CSWlibXau.copyright
+i depend=CSWlibXau.depend
+i pkginfo=CSWlibXau.pkginfo

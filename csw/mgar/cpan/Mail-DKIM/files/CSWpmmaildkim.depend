@@ -1,0 +1,7 @@
+P CSWpmcryptosslrsa pm_osslrsa - Perl Crypt::OpenSSL::RSA module
+P CSWpmdigestsha pm_digestsha - Perl extension for SHA-1/224/256/384/512
+P CSWpmdigestsha1 pm_digestsha1 - interface to the SHA-1 Algorithm
+P CSWpmerror pm_error - Error/exception handling
+P CSWpmmailtools pm_mailtools - various mail manipulation modules
+P CSWpmmimebase64 pm_mimebase64 - Encoding and decoding of base64 strings
+P CSWpmnetdns pm_netdns - interface to the DNS resolver

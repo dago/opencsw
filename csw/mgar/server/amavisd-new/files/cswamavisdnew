@@ -1,0 +1,20 @@
+#!/sbin/sh
+
+AMAVIS=/opt/csw/sbin/amavisd-new
+
+case $1 in 
+'start')
+        $AMAVIS start
+        ;;
+'stop')
+	$AMAVIS stop
+        ;;
+'reload')
+	$AMAVIS reload
+        ;;
+*)
+
+       echo "Usage: $0 { start | stop | reload }"
+       exit 1
+        ;;
+esac    

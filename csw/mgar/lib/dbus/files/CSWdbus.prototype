@@ -1,0 +1,47 @@
+d none /opt/csw 0755 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/dbus-cleanup-sockets 0755 root bin
+f none /opt/csw/bin/dbus-daemon 0755 root bin
+f none /opt/csw/bin/dbus-launch 0755 root bin
+f none /opt/csw/bin/dbus-monitor 0755 root bin
+f none /opt/csw/bin/dbus-send 0755 root bin
+f none /opt/csw/bin/dbus-uuidgen 0755 root bin
+d none /opt/csw/etc 0755 root bin
+d none /opt/csw/etc/dbus-1 0755 root bin
+f none /opt/csw/etc/dbus-1/session.conf 0644 root bin
+d none /opt/csw/etc/dbus-1/session.d 0755 root bin
+f none /opt/csw/etc/dbus-1/system.conf 0644 root bin
+d none /opt/csw/etc/dbus-1/system.d 0755 root bin
+d none /opt/csw/libexec/dbus-1 0755 root bin
+f none /opt/csw/libexec/dbus-daemon-launch-helper 0755 root bin
+d none /opt/csw/share/dbus-1 0755 root bin
+d none /opt/csw/share/dbus-1/services 0755 root bin
+d none /opt/csw/share/dbus-1/system-services 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/dbus-cleanup-sockets.1 0644 root bin
+f none /opt/csw/share/man/man1/dbus-daemon.1 0644 root bin
+f none /opt/csw/share/man/man1/dbus-launch.1 0644 root bin
+f none /opt/csw/share/man/man1/dbus-monitor.1 0644 root bin
+f none /opt/csw/share/man/man1/dbus-send.1 0644 root bin
+f none /opt/csw/share/man/man1/dbus-uuidgen.1 0644 root bin
+d none /opt/csw/var/lib/dbus 0755 root bin
+d none /opt/csw/var/run/dbus 0777 root bin
+f smfno /etc/init.d/cswdbus 0755 root bin
+l smfno /etc/rc3.d/S52cswdbus=/etc/init.d/cswdbus
+d smfyes /opt/csw/var/svc 0755 root bin
+d smfyes /opt/csw/var/svc/manifest 0755 root bin
+d smfyes /opt/csw/var/svc/manifest/system 0755 root bin
+f smfyes /opt/csw/var/svc/manifest/system/dbus.xml=dbus.xml 0644 root bin
+d smfyes /opt/csw/lib/svc 0755 root bin
+d smfyes /opt/csw/lib/svc/method 0755 root bin
+f smfyes /opt/csw/lib/svc/method/svc-dbus=svc-dbus 0755 root bin
+i copyright=CSWdbus.copyright
+i depend=CSWdbus.depend
+i pkginfo=CSWdbus.pkginfo
+i postinstall=CSWdbus.postinstall
+i preinstall=CSWdbus.preinstall
+i checkinstall
+i i.smfno
+i i.smfyes
+i space

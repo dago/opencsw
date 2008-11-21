@@ -1,0 +1,8 @@
+%var            bitname php5_pdoodbc
+%var            pkgname CSWphp5pdoodbc
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%include        url file://%{WORKDIR}/CSWphp5_ext.depend
+%postinstall    url file://%{WORKDIR}/CSWphp5_ext_enable.sh
+%postremove     url file://%{WORKDIR}/CSWphp5_ext_disable.sh
+%var            desc PHP 5 - unixODBC PDO Extension
+%copyright      url file://%{WORKSRC}/LICENSE

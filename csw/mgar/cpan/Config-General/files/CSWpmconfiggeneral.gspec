@@ -1,0 +1,8 @@
+%var            bitname pm_configgeneral
+%var            pkgname CSWpmconfiggeneral
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Copyright (c) 2000-2007 Thomas Linden
+
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.

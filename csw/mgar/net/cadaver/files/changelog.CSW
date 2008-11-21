@@ -1,0 +1,22 @@
+cadaver (0.22.5,REV=2007.08.21) unstable
+
+  * Replaced "? ? ?" with "0755 root bin" in the prototype. 
+  * Added missing dependancies gnutls, libgcrypt and libgpg_error.
+
+cadaver (0.22.5,REV=2007.07.28) unstable
+
+  * Depends on openssl_rt rather than openssl.
+
+   -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 17:30:07 +0200
+
+cadaver (0.22.5,REV=2007.03.10) unstable
+
+   * New upstream version.
+
+  -- Yann Rouillard <yann@blastwave.org>  Sat, 10 Mar 2007 00:15:32 +0100
+
+cadaver (0.22.3) unstable
+
+   * New upstream version.
+
+  -- Yann Rouillard <yann@blastwave.org>  Tue, 11 Jul 2006 12:25:32 +0200

@@ -1,0 +1,140 @@
+Notes for the CSW spamassassin distribution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+update 2008.10.21
+This update includes SpamAssassin 3.2.5 and the package has been moved into
+the GAR build system.
+
+SpamAssassin is now maintained by Peter Bonivart (bonivart@opencsw.org).
+
+update 2008.01.20
+This update adds pm_mimebase64 and pm_maildkim as dependencies.
+The LOCALSTATEDIR is changed to conform to CSW standards.  The old directory
+was /var/opt/spamassassin.  The new directory is /opt/csw/var/spamassassin.
+sa-update downloads rule updates to this directory.
+
+This update attempts to change permissions on the configuration directory
+to the last value used.  There is now a message during package install
+concerning conflicting permissions on a directory.  Answer Y to this message.
+The postinstall script should reset the directory permissions for you.
+You should check the permissions after the package update to verify that
+the permissions are correct.
+
+update 2007.08.19
+This update includes the jumbo patch to fix problems with dns.  It is
+included in the distribution as sa-3.2.3-0.patch.
+
+update 2006.03.12
+This update is a maintenance release.  Read the UpgradeNotes at this
+  url: http://wiki.apache.org/spamassassin/UpgradeNotes
+There have been a few changes.  My installation, which is not very
+  complex, ran without any changes.
+Note that some of features have moved to plugins.  If you need a Perl
+  module to activate some feature, send me an email request from the
+  SpamAssassin package information page:
+  http://www.opencsw.org/packages.php/spamassassin
+  and I will see what I can do.
+
+update 2006.02.18
+spamd.xml is corrected to build application/cswspamd with a default instance.
+SMF setup is still a manual and optional install.
+
+Version 3.1 update 2006.02.10
+The package includes sample files for SMF on Solaris 10 or later.
+Here is a how-to for spamd:
+
+	There are two types of files used by SMF.  The service
+	method file is located in /opt/csw/lib/svc/method.  The
+        service manifest is located in /opt/csw/var/svc/manifest and
+	subdirectory application for spamd.
+
+	Service method and manifest files are provided with the package.
+        Copy these files as described later and customize as desired.
+	Be sure to review svc-spamd and change the line that starts
+	spamd to use the options required by your installation.
+
+	The files should be named:
+	/opt/csw/lib/svc/method/svc-spamd
+	/opt/csw/var/svc/manifest/application/spamd.xml
+
+	To setup the service defintion, do the following.
+	Create /opt/csw/var/svc/manifest/application/spamd.xml from 
+		 spamd.xml.CSW
+	    and  /opt/csw/lib/svc/method/svc-spamd from svc-spamd.CSW
+	Permissions:
+		chown root:bin \
+		  /opt/csw/var/svc/manifest/application/spamd.xml
+		chmod 0644 \
+		  /opt/csw/var/svc/manifest/application/spamd.xml
+		chown root:bin \
+		  /opt/csw/lib/svc/method/svc-spamd
+		chmod 0755 \
+		  /opt/csw/lib/svc/method/svc-spamd
+	Install: svccfg import /opt/csw/var/svc/manifest/application/spamd.xml
+		 svcadm enable cswspamd
+	Removal: svcadm disable cswspamd
+		 svccfg delete cswspamd
+
+	The FMRI for spamd is svc:/application/cswspamd:default
+		(or cswspamd).
+
+------------------------------
+Version 3.1 notes - 2005.06.19
+As with any SpamAssassin (SA) release update, run a test message through
+  SA with the lint and debug options to verify your configuration files.
+  I use the following options.  The score of the message is not important.
+  `spamassassin -D --lint /opt/csw/share/doc/spamassassin/sample-nonspam.txt`
+  Review the output carefully.
+
+If you are using DCC, you probably noticed the license change earlier
+  this year.  By default, SA 3.1 does not use DCC.
+
+Some options to SA have moved to plugins.  This is normally noted in the 
+  'spamassassin -D --lint' output.  For example, Razor2, DCC, Pyzor are
+  now plugins.
+
+For plugins, there is a new .pre file named v310.pre.  Change according
+  to your needs.  v310.pre is copied from the default file if it does
+  not exist.
+
+-----
+Version 3.0 is a major upgrade.  Read all available information on upgrading.
+See /opt/csw/share/doc/spamassassin UPGRADE for most of this information.
+
+If you are using site-wide bayes, be sure to run `sa-learn --rebuild`
+  before starting the package upgrade.  Before starting whatever
+  process you are using to run SpamAssassin after the upgrade, run
+  `sa-learn --sync` to upgrade the database to version 3.0 format.
+
+Before starting spamassassin, run the following and look for warnings and
+errors that need to be fixed.  Some scores are deprecated from version 2.x.
+These will produce only warnings, but you may want to see if similar scores are available and make the appropriate adjustments.  Also, note the change in startup options in the UPGRADE file.
+
+To test your configuration:
+/opt/csw/bin/spamassassin -D --lint </opt/csw/share/doc/spamassassin/sample-spam.txt
+If you are using a recent version of CSWmimedefang, temporarily copy /opt/csw/etc/sa-mimedefang.cf to /opt/csw/etc/spamassassin/ for testing.
+
+After testing is complete and you are using a site-wide bayes database, you may want to convert the data before starting spamassassin.  Otherwise, your first email will run the conversion.  Run the following to do the conversion.
+/opt/csw/bin/sa-learn --sync
+
+When you are ready to activate spamassassin, do not forget to check that directory and file permissions in /opt/csw/etc/spamassassin are correct for your environment.
+
+--
+A /opt/csw/etc/spamassassin/local.cf will be installed if none exists.
+The files in this will not be touched during deinstalltion, down or upgrade.
+
+The /opt/csw/etc/spamassassin directory will be created as user root with
+permissions 755  with it doesn't exist. But if you would like to change the
+permissions later on the directory - they will be preserved again during
+deinstallation, down or upgrade. So you can let spamd/spamc running as non-root
+user.
+
+You can find a example init script in
+/opt/csw/share/doc/spamassassin/solaris-rc-script.sh .
+
+There is also a razor packet available from opencsw, which could be installed
+on demand manually. The spamassassin package doesn't depend on it, but will use
+razor, if it is available.
+
+--
+Alex S Moore      <asmoore@opencsw.org>                             2004-02-14
+Thomas Glanzmann  <thomas@opencsw.org>

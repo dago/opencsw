@@ -1,0 +1,41 @@
+#!/sbin/sh
+#
+# Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
+# Use is subject to license terms.
+#
+# ident	"@(#)http-apache2	1.2	04/11/11 SMI"
+#
+
+. /lib/svc/share/smf_include.sh
+
+APACHE_HOME=/opt/csw/apache2
+CONF_FILE=$APACHE_HOME/etc/httpd.conf
+PIDFILE=$APACHE_HOME/var/run/httpd.pid
+APACHECTL=$APACHE_HOME/sbin/apachectl
+
+[ ! -f "$CONF_FILE" ] &&  exit $SMF_EXIT_ERR_CONFIG
+
+case "$1" in
+start)
+	/bin/rm -f ${PIDFILE}
+	/bin/mkdir -p `dirname $PIDFILE`
+	ssl=`svcprop -p httpd/ssl svc:/network/http:cswapache2`
+	if [ "$ssl" = false ]; then
+		cmd="start"
+	else
+		cmd="start -DSSL"
+	fi
+	;;
+refresh)
+	cmd="graceful"
+	;;
+stop)
+	cmd="stop"
+	;;
+*)
+	echo "Usage: $0 {start|stop|refresh}"
+	exit 1
+	;;
+esac
+
+exec $APACHECTL -k $cmd 2>&1

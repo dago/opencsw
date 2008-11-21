@@ -1,0 +1,8 @@
+8a1ac4a5940108a96458c5307a74c98d  download/firefox-3.0.4-source.tar.bz2
+3cc981390e527e1343f6c450d839eceb  download/CSWfirefox.gspec
+206d69879ba8f02201c74bd78ec33d9f  download/CSWfirefox.depend
+f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
+6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
+1c8ee494a515890096c71b77c6c01dd7  download/autoconf.mk.in.diff
+d0d942fa0c012abcb2a45b1d0fc99051  download/packager.mk.diff
+20622e4e2548b227aba09e1eb04de134  download/jemalloc.c.diff

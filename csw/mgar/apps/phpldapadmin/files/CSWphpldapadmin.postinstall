@@ -1,0 +1,30 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+CONFDIR=${CSW_PREFIX}/apache2/share/htdocs/phpldapadmin/config
+
+# Copy templates
+template_list="config.php"
+
+echo Copying CSW templates:
+for file in $template_list
+do
+    filepath=${CONFDIR}/$file
+    if [ ! -f "$filepath" ] && [ -f "$filepath.CSW" ]; then
+        echo "  creating $filepath"
+        cp $filepath.CSW $filepath
+    else
+        echo "  preserving $filepath"
+    fi
+done
+
+/usr/bin/cat <<EOF
+
+NOTE: You need to configure phpLDAPadmin. Edit the file
+  "/opt/csw/apache2/share/htdocs/phpldapadmin/config/config.php"
+to do so. An example config file is provided in
+  "/opt/csw/apache2/share/htdocs/phpldapadmin/config/config.php.example".
+
+EOF
+
+exit 0

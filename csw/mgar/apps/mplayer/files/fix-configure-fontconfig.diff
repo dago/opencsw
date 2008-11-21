@@ -1,0 +1,19 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc1.orig/configure MPlayer-1.0rc1/configure
+--- MPlayer-1.0rc1.orig/configure	2006-10-22 18:32:31.000000000 -0400
++++ MPlayer-1.0rc1/configure	2007-10-17 07:38:41.785405000 -0400
+@@ -5344,10 +5344,11 @@
+ echocheck "freetype >= 2.0.9"
+ 
+ # freetype depends on iconv
+-if test "$_iconv" = no ; then
+-    _freetype=no
+-    _res_comment="iconv support needed"
+-fi
++# Forcing freetype, even without giconv (solaris doesn't need it)
++#if test "$_iconv" = no ; then
++#    _freetype=no
++#    _res_comment="iconv support needed"
++#fi
+ 
+ if test "$_freetype" = auto ; then
+     if ( $_freetypeconfig --version ) >/dev/null 2>&1 ; then

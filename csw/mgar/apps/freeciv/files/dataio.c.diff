@@ -1,0 +1,15 @@
+diff --speed-large-files --minimal -Nru freeciv-2.1.6.orig/common/dataio.c freeciv-2.1.6/common/dataio.c
+--- freeciv-2.1.6.orig/common/dataio.c	2008-08-10 14:56:11.000000000 +0200
++++ freeciv-2.1.6/common/dataio.c	2008-11-19 04:39:12.655383000 +0100
+@@ -25,7 +25,11 @@
+ 
+ #include <assert.h>
+ #include <limits.h>
++#if defined (__SVR4) && defined (__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>

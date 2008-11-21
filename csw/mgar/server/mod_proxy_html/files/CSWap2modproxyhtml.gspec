@@ -1,0 +1,6 @@
+%var       bitname mod_proxy_html
+%var       pkgname CSWap2modproxyhtml
+%include   url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright 
+source code is licensed under the GNU General Public License (GPL) Version 2
+

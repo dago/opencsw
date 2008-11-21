@@ -1,0 +1,4 @@
+P CSWpmanydata pm_anydata - easy access to data in many formats
+P CSWpmdbdfile pm_dbdfile - base class for writing DBI drivers for plain files
+P CSWpmdbi pm_dbi - database independent interface for Perl
+P CSWpmsqlstatement pm_sqlstatement - SQL parsing and processing engine

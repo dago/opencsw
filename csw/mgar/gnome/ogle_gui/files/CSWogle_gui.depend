@@ -1,0 +1,10 @@
+P CSWggettext ggettext - GNU gettext
+P CSWlibglade libglade - glade interface lib for GNOME progs
+P CSWglib glib - utility library commonly associated with GNOME programs
+P CSWgtk gtk - the Gimp ToolKit library, libgtk
+P CSWiconv libiconv - GNU iconv library
+P CSWlibnet libnet - the libnet packet construction library
+P CSWlibxml libxml - lib for xml use, commonly associated with GNOME
+P CSWlibxml2 libxml2 - XML Parser Library
+P CSWogle ogle - The first opensource DVD player to support DVD menus
+P CSWzlib zlib - Zlib Data Compression Library

@@ -1,0 +1,29 @@
+d none /opt/csw/share/xfce4/doc 0755 root bin
+d none /opt/csw/share/xfce4/doc/C 0755 root bin
+f none /opt/csw/share/xfce4/doc/C/BSD.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/GPL.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/LGPL.html 0644 root bin
+d none /opt/csw/share/xfce4/doc/C/images 0755 root bin
+f none /opt/csw/share/xfce4/doc/C/images/about-dialog.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/default-session.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/link_xfce.jpg 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/run-dialog.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/images/taskbar_settings.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/index.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce-utils.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce4-components.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce4-copyright.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce4-install.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce4-intro.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce4-use.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/C/xfce4-user-guide.html 0644 root bin
+d none /opt/csw/share/xfce4/doc/fr 0755 root bin
+f none /opt/csw/share/xfce4/doc/fr/index.html 0644 root bin
+d none /opt/csw/share/xfce4/doc/it 0755 root bin
+f none /opt/csw/share/xfce4/doc/it/index.html 0644 root bin
+f none /opt/csw/share/xfce4/doc/xfce-chunk.css 0644 root bin
+f none /opt/csw/share/xfce4/doc/xfce-mouse.png 0644 root bin
+f none /opt/csw/share/xfce4/doc/xfce.css 0644 root bin
+i copyright=CSWxfceutilsdoc.copyright
+i depend=CSWxfceutilsdoc.depend
+i pkginfo=CSWxfceutilsdoc.pkginfo

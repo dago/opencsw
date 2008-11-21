@@ -1,0 +1,5 @@
+%var            bitname maven2
+%var            pkgname CSWmaven2
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKDIR}/apache-maven-2.0.8/LICENSE.txt
+#file://%{WORKSRC}/LICENSE.txt

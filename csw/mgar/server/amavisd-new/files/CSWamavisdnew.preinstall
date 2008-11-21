@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# check, if the amavisn group does exist
+grep '^amavisn:' $PKG_ROOT_DIR/etc/group >/dev/null
+if [ $? -ne 0 ] ; then
+        getent passwd amavisn >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDGROUP=1
+        fi
+fi
+
+# check, if the amavisn user does exist
+grep '^amavisn:' $PKG_ROOT_DIR/etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+        getent passwd amavisn >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDUSER=1
+        fi
+fi
+
+# create hte amavisn group, if NEEDGROUP=1
+if [ "$NEEDGROUP" = 1 ] ; then
+        echo Adding required amavisn group
+        /usr/sbin/groupadd amavisn
+fi
+
+# create the amavisn user, if NEEDUSER=1
+if [ "$NEEDUSER" = 1 ] ; then
+        echo Adding required amavisn user
+
+        # create necessary directories
+        mkdir -p /opt/csw/var/amavisn/tmp /opt/csw/var/amavisn/var /opt/csw/var/amavisn/db
+
+        # create the amavis user
+        /usr/sbin/useradd -d /opt/csw/var/amavisn -g amavisn -c 'amavisn pseud user' -s /bin/false amavisn
+
+        # change ownership & permissions
+        chown -R amavisn:amavisn /opt/csw/var/amavisn
+        chmod -R 750 /opt/csw/var/amavisn
+
+        # create a quarantine area for virus mails, set perm & owner
+        mkdir /opt/csw/var/amavisn-quarantine
+        chown amavisn:amavisn /opt/csw/var/amavisn-quarantine
+        chmod 750 /opt/csw/var/amavisn-quarantine
+fi
+
