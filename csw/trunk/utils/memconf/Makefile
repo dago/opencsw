@@ -1,5 +1,5 @@
 GARNAME = memconf
-GARVERSION = 2.8
+GARVERSION = 2.9
 CATEGORIES = utils
 
 DESCRIPTION = perl script that displays memory modules installed
@@ -31,8 +31,8 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)/opt/csw/bin/$(GARNAME)
 	@cp -r $(WORKSRC)/$(GARNAME).man $(DESTDIR)$(mandir)/man1/$(GARNAME).1
-	@cp -r $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/copyright
+	@cp -r $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/LICENSE
 	@chmod 755 $(DESTDIR)/opt/csw/bin/$(GARNAME)
 	@chmod 644 $(DESTDIR)$(mandir)/man1/$(GARNAME).1
-	@chmod 444 $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/copyright
+	@chmod 444 $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/LICENSE
 	@$(MAKECOOKIE)
