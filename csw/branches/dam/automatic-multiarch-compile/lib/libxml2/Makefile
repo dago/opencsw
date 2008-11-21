@@ -1,5 +1,5 @@
 GARNAME = libxml2
-GARVERSION = 2.6.30
+GARVERSION = 2.7.2
 CATEGORIES = lib
 
 DESCRIPTION = XML Parser Library
@@ -7,7 +7,7 @@ define BLURB
   Libxml2 is the XML C parser and toolkit developed for the Gnome project.
 endef
 
-MASTER_SITES = $(GNOME_MIRROR)
+MASTER_SITES = ftp://xmlsoft.org/libxml2/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWpylibxml2,depend)
 DISTFILES   += $(call admfiles,CSWlibxml2,depend)
