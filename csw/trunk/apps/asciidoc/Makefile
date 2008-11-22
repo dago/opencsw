@@ -1,5 +1,5 @@
 GARNAME = asciidoc
-GARVERSION = 8.2.5
+GARVERSION = 8.2.7
 CATEGORIES = apps
 
 DESCRIPTION = Text based document generation
