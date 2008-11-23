@@ -30,7 +30,7 @@ SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 
 _PREREQUISITE_BASE_PKGS += CSWperl
 
-include ../../gar.mk
+include gar/gar.mk
 
 # Canned commands for finding packlist files
 find_packlist = $(shell find $(1) -type f -name .packlist | head -1)

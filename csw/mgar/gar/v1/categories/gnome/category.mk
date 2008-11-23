@@ -1,1 +1,1 @@
-include ../../gar.mk
+include gar/gar.mk

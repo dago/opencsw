@@ -9,7 +9,7 @@ GARVERSION   ?= $(XFCE_VERSION)
 PKGDIST      ?= $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES    += $(PKGDIST)
 
-include ../../gar.mk
+include gar/gar.mk
 
 # Compiler options
 # Compiler options
