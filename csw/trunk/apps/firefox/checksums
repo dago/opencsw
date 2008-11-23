@@ -5,4 +5,5 @@ f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
 1c8ee494a515890096c71b77c6c01dd7  download/autoconf.mk.in.diff
 d0d942fa0c012abcb2a45b1d0fc99051  download/packager.mk.diff
-20622e4e2548b227aba09e1eb04de134  download/jemalloc.c.diff
+dc2ff9299e65ef1acc7a1a684e1ed449  download/jemalloc.c.diff
+ca4162516d8c09deaa9f0b6f3b3ecffb  download/nsMathUtils.h.diff
