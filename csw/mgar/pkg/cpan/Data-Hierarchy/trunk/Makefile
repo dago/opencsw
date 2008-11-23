@@ -13,4 +13,4 @@ DISTFILES = $(call admfiles,CSWpmdatahier,depend prototype)
 
 DEPENDS += cpan/Clone
 
-include ../category.mk
+include gar/category.mk

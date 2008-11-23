@@ -21,7 +21,7 @@ PATCHFILES = interact.diff
 
 DEPENDS += cpan/DBI
 
-include ../category.mk
+include gar/category.mk
 
 # Supply a sample cached entry for the mysql 'test' db
 pre-configure:

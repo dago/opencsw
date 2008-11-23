@@ -15,4 +15,4 @@ DISTFILES += CSWpmschedulecron.gspec CSWpmschedulecron.depend
 
 DEPENDS += cpan/Time-modules
 
-include ../category.mk
+include gar/category.mk

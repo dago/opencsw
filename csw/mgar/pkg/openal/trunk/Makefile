@@ -18,7 +18,7 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-esd
 
-include ../category.mk
+include gar/category.mk
 
 #pre-configure:
 #	( cd $(WORKSRC) ; ./autogen.sh )

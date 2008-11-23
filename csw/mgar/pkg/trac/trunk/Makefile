@@ -23,7 +23,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 INSTALL_ARGS = --root=$(DESTDIR)
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"

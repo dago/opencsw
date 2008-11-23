@@ -13,4 +13,4 @@ DISTFILES += CSWpmclassdbisqlite.gspec CSWpmclassdbisqlite.depend
 
 DEPENDS += cpan/Class-DBI cpan/SQL-Statement
 
-include ../category.mk
+include gar/category.mk

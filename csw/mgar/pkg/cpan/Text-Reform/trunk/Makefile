@@ -11,7 +11,7 @@ endef
 DISTFILES += CSWpmtxtreform.gspec
 DISTFILES += $(call admfiles,CSWpmtxtreform,prototype)
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@echo " ==> Copying demo files"

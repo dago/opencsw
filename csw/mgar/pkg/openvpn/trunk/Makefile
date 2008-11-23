@@ -15,7 +15,7 @@ CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	( cp -r $(WORKSRC)/../../../files/etc $(DESTDIR)/etc )

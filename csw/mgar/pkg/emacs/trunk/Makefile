@@ -26,7 +26,7 @@ CONFIGURE_ARGS += --with-kerberos5
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	@touch $(WORKSRC)/configure

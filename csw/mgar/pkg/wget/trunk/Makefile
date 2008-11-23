@@ -23,4 +23,4 @@ CONFIGURE_ARGS += --with-ssl
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

@@ -15,4 +15,4 @@ DISTFILES += CSWpmunimap8.gspec CSWpmunimap8.depend
 
 DEPENDS += cpan/Unicode-String
 
-include ../category.mk
+include gar/category.mk

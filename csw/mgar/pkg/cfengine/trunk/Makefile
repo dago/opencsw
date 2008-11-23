@@ -27,4 +27,4 @@ CONFIGURE_ARGS += --with-openssl=$(tool_prefix)
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

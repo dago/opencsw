@@ -20,7 +20,7 @@ DISTFILES += CSWmpd.csw_usrgrp_config
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ao

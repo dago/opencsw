@@ -20,4 +20,4 @@ INSTALL_ARGS = -j1
 # No test suite for icons
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

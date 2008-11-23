@@ -31,7 +31,7 @@ INSTALL_OVERRIDE_DIRS = CONFDIR BINDIR MANDIR VIM_CONFDIR
 
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 # The install.sh is so crappy I don't even bother writing a patch
 # Pull in the whole procedure...

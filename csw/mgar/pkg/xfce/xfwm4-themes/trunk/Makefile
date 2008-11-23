@@ -12,7 +12,7 @@ DISTFILES += $(call admfiles,CSWxfcexfwm4themes, depend)
 
 TEST_SCRIPTS = none
 
-include ../category.mk
+include gar/category.mk
 
 test-none :
 	@$(MAKECOOKIE)

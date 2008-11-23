@@ -21,4 +21,4 @@ CONFIGURE_ARGS  = --prefix=$(DESTDIR)$(prefix)
 CONFIGURE_ARGS += --with-ncurses-libraries=$(tool_prefix)
 CONFIGURE_ARGS += --with-readline-libraries=$(tool_prefix)
 
-include ../category.mk
+include gar/category.mk

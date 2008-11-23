@@ -27,6 +27,6 @@ include files/patches.mk
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 include files/rules.mk
 

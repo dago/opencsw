@@ -15,4 +15,4 @@ DISTFILES += CSWpmclassretval.gspec CSWpmclassretval.depend
 DEPENDS   += cpan/Devel-StackTrace
 BUILDDEPS += cpan/Test-Inline
 
-include ../category.mk
+include gar/category.mk

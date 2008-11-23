@@ -12,4 +12,4 @@ DISTFILES += CSWpmcryptosslx509.gspec CSWpmcryptosslx509.depend
 
 DEPENDS += lib/openssl
 
-include ../category.mk
+include gar/category.mk

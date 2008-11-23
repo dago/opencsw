@@ -51,7 +51,7 @@ TEST_TARGET =
 BINS =  exim exim_dbmbuild exim_dumpdb exim_fixdb exim_lock exim_tidydb
 BINS += eximon.bin
 
-include ../category.mk
+include gar/category.mk
 
 pre-patch:
 	(cd $(WORKSRC); \

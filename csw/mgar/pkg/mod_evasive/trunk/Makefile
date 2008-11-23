@@ -22,7 +22,7 @@ TEST_SCRIPTS =
 
 STRIP_DIRS = $(DESTDIR)$(prefix)/apache2/libexec
 
-include ../category.mk
+include gar/category.mk
 include ../apache2/files/extensionbuild.mk
 
 WORKSRC := $(WORKDIR)/$(GARNAME)

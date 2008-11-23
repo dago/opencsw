@@ -12,4 +12,4 @@ endef
 
 DISTFILES += CSWpmwant.gspec
 
-include ../category.mk
+include gar/category.mk

@@ -16,7 +16,7 @@ DISTFILES += $(call admfiles,CSWxfcepanel, depend)
 
 TEST_SCRIPTS = none
 
-include ../category.mk
+include gar/category.mk
 
 test-none :
 	@$(MAKECOOKIE)

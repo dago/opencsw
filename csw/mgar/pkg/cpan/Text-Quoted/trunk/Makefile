@@ -14,4 +14,4 @@ DISTFILES += CSWpmtxtquoted.gspec CSWpmtxtquoted.depend
 
 DEPENDS += cpan/Text-Autoformat
 
-include ../category.mk
+include gar/category.mk

@@ -16,7 +16,7 @@ CONFIGURE_ARGS    = --prefix=$(prefix)
 CONFIGURE_ARGS   += --miscdir=$(docdir)/pari
 BUILD_ARGS        = gp
 
-include ../category.mk
+include gar/category.mk
 
 configure-custom:
 	@echo " ==> Running Configure"

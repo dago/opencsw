@@ -22,4 +22,4 @@ PATCHFILES += install.diff
 
 CONFIGURE_ARGS = --prefix=$(prefix)
 
-include ../category.mk
+include gar/category.mk

@@ -10,4 +10,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmconvertuulib,)
 
-include ../category.mk
+include gar/category.mk

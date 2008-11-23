@@ -18,7 +18,7 @@ CONFIGURE_ARGS = --prefix=$(PREFIX)
 # Not gonna do it
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-install:
 	( if [ ! -d $(DESTDIR)/opt/csw/bin ] ; then mkdir -p $(DESTDIR)/opt/csw/bin ; fi )

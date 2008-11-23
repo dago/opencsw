@@ -17,4 +17,4 @@ DISTFILES += $(call admfiles,CSWpmtstbldrtester,prototype)
 # provided with Perl 5.8.8.
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

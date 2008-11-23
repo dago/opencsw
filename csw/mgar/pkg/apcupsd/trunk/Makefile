@@ -40,4 +40,4 @@ post-install:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 files/cswapcupsd $(DESTDIR)/etc/opt/csw/init.d/cswapcupsd
 
-include ../category.mk
+include gar/category.mk

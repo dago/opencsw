@@ -24,4 +24,4 @@ CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
 # Not gonna do it
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

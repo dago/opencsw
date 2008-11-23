@@ -20,4 +20,4 @@ DEPENDS += cpan/Error
 DEPENDS += cpan/MailTools
 DEPENDS += cpan/Net-DNS
 
-include ../category.mk
+include gar/category.mk

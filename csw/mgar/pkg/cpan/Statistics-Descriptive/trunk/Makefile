@@ -15,4 +15,4 @@ endef
 
 DISTFILES += CSWpmstatsdesc.gspec
 
-include ../category.mk
+include gar/category.mk

@@ -15,4 +15,4 @@ DISTFILES += CSWpmxmlgdomexslt.gspec CSWpmxmlgdomexslt.depend
 DEPENDS += lib/libxslt lib/gdome2
 DEPENDS += cpan/XML-GDOME
 
-include ../category.mk
+include gar/category.mk

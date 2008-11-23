@@ -14,4 +14,4 @@ DISTFILES = $(csw admfiles,CSWpmvcpdstsvk,)
 
 DEPENDS += cpan/VCP cpan/SVK
 
-include ../category.mk
+include gar/category.mk

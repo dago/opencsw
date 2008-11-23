@@ -25,4 +25,4 @@ BUILDDEPS += cpan/Test-Memory-Cycle
 
 CONFIGURE_ARGS = -n
 
-include ../category.mk
+include gar/category.mk

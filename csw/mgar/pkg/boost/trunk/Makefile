@@ -32,7 +32,7 @@ BUILD_ARGS += --with-python-root=$(prefix)
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 PYTHON_ROOT = $(prefix)
 PYTHON_VERSION = 2.3

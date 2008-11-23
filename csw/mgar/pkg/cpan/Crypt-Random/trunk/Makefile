@@ -17,4 +17,4 @@ DISTFILES = $(call admfiles,CSWpmcryptrandom,depend)
 
 DEPENDS += cpan/Math-Pari cpan/Class-Loader
 
-include ../category.mk
+include gar/category.mk

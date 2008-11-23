@@ -24,7 +24,7 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 export CFLAGS CXXFLAGS LDFLAGS
 
-include ../category.mk
+include gar/category.mk
 
 LIBDEPS += lib/dbus
 

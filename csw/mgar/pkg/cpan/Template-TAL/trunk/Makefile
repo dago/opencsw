@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWpmtemplatetal,depend prototype)
 DEPENDS += cpan/Test-XML
 DEPENDS += cpan/XML-LibXML
 
-include ../category.mk
+include gar/category.mk

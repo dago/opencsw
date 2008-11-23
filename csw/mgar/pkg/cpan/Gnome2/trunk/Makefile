@@ -21,6 +21,6 @@ DEPENDS += cpan/Gnome2-Canvas
 # Tests require Gnome session manager
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl

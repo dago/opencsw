@@ -15,7 +15,7 @@ DEPENDS += cpan/Attribute-Handlers cpan/Class-ISA
 DEPENDS += cpan/Test-Differences cpan/Test-Exception
 DEPENDS += cpan/Test-Builder-Tester
 
-include ../category.mk
+include gar/category.mk
 
 # pod.t has errors, but everything else passes! disable for now
 pre-test:

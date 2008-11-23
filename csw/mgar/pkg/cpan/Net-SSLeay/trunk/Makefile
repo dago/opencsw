@@ -26,5 +26,5 @@ PERL_CONFIGURE_ARGS = $(prefix) INSTALLDIRS=vendor
 # Test disabled: Bug 3287
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 

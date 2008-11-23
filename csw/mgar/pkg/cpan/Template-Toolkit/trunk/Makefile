@@ -28,4 +28,4 @@ CONFIGURE_ARGS += TT_ACCEPT=y
 
 FIXCONFIG_DIRS = $(DESTDIR)
 
-include ../category.mk
+include gar/category.mk

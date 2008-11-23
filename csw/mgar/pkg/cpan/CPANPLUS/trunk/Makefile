@@ -26,4 +26,4 @@ DEPENDS += cpan/Package-Constants
 DEPENDS += cpan/Params-Check
 DEPENDS += cpan/Term-UI
 
-include ../category.mk
+include gar/category.mk

@@ -15,4 +15,4 @@ DISTFILES += CSWpmarraywindow.gspec CSWpmarraywindow.depend
 
 DEPENDS += cpan/Class-Inspector
 
-include ../category.mk
+include gar/category.mk

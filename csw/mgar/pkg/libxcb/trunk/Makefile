@@ -15,7 +15,7 @@ DISTFILES    += CSWlibxcb.gspec CSWlibxcb.prototype CSWlibxcb.depend
 DISTFILES    += CSWlibxcbdev.gspec CSWlibxcbdev.prototype CSWlibxcbdev.depend 
 # DISTFILES    += $(call admfiles,CSWlibxcb, depend)
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION -D__solaris__
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath

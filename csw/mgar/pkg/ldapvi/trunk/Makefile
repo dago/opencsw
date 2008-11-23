@@ -23,7 +23,7 @@ INSTALL_SCRIPTS = custom
 
 SPKG_SOURCEURL = http://www.lichteblau.com/ldapvi/
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(sharedstatedir)/doc/$(GARNAME)

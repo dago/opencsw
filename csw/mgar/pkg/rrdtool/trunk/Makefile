@@ -29,7 +29,7 @@ ADDITIONAL_BUILD_ARCHS_sparc = sparcv9
 # Uncomment this if freetype2 is available for amd64
 #ADDITIONAL_BUILD_ARCHS_i386  = amd64
 
-include ../category.mk
+include gar/category.mk
 
 env:
 	@echo "PKG_CONFIG_PATH: $(PKG_CONFIG_PATH)"

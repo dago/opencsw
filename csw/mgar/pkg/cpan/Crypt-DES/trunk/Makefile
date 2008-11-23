@@ -14,4 +14,4 @@ DISTFILES += CSWpmcryptdes.gspec
 # Fix name collision with des_*() functions
 PATCHFILES = des_workaround.s9.diff
 
-include ../category.mk
+include gar/category.mk

@@ -18,5 +18,5 @@ DEPENDS += server/apache2
 #DEPENDS += utils/subversion
 #DEPENDS += cpan/SVK
 
-include ../category.mk
+include gar/category.mk
 

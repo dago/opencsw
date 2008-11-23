@@ -14,6 +14,6 @@ endef
 DISTFILES += $(call admfiles,CSWpmscalarlist,depend prototype)
 
 # Version 1.18 is included in CSWperl
-#include ../category.mk
+#include gar/category.mk
 .DEFAULT:
 	@true

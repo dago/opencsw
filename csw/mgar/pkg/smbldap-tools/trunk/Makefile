@@ -21,7 +21,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@mkdir -p $(DESTDIR)$(sbindir)

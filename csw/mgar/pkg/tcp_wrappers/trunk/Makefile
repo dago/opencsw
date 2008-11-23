@@ -22,7 +22,7 @@ INSTALL_SCRIPTS = custom
 # No test suite
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 build-custom:
 	@$(MAKE) -C $(WORKSRC) $(BUILD_ARGS) sunos5

@@ -18,7 +18,7 @@ TEST_SCRIPTS      = ruby
 
 CONFIGURE_ARGS = --with-mysql-config
 
-include ../category.mk
+include gar/category.mk
 
 configure-ruby:
 	( cd $(WORKSRC) ; $(CONFIGURE_ENV) ruby extconf.rb $(CONFIGURE_ARGS) )

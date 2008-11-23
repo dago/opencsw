@@ -88,7 +88,7 @@ ifndef DO64
 CLEAN_SCRIPTS = all custom
 endif
 
-include ../category.mk
+include gar/category.mk
 
 OPTARCH_sparc   = v8
 OPTARCH_sparcv9 = v9

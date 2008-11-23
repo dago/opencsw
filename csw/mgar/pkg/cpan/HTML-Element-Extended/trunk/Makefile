@@ -15,4 +15,4 @@ DISTFILES += CSWpmhtmlelemext.gspec CSWpmhtmlelemext.depend
 
 DEPENDS += cpan/HTML-Tree
 
-include ../category.mk
+include gar/category.mk

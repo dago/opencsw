@@ -50,6 +50,6 @@ post-install:
 	@rm -f $(DESTDIR)$(infodir)/dir
 	@$(MAKECOOKIE)
 
-include ../category.mk
+include gar/category.mk
 
 LDFLAGS += -lintl

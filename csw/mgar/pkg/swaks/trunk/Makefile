@@ -18,7 +18,7 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@echo "==> Installing $(GARNAME) in $(WORKSRC)"

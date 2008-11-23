@@ -18,5 +18,5 @@ DISTFILES = $(call admfiles,CSWpmrpcxml,depend prototype)
 DEPENDS += cpan/XML-LibXML
 #DEPENDS += cpan/libwww-perl
 
-include ../category.mk
+include gar/category.mk
 

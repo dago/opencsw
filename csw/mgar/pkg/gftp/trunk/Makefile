@@ -18,7 +18,7 @@ CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	( cd $(WORKSRC)/lib/fsplib ; gzip -dc $(GARCHIVEDIR)/fsplib-0.9.tar.gz | tar xvf - ; cp /export/home/jgoerzen/csw/gnome/gftp/files/lock.c.fixed lock.c)

@@ -22,4 +22,4 @@ INSTALL_SCRIPTS =
 # micq doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk

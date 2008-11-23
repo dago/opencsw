@@ -14,4 +14,4 @@ DISTFILES += CSWpmtestpod.gspec CSWpmtestpod.depend
 DEPENDS   += cpan/Pod-Simple cpan/IO-stringy
 BUILDDEPS += cpan/Test-Builder-Tester
 
-include ../category.mk
+include gar/category.mk

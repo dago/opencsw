@@ -22,7 +22,7 @@ INSTALL_ARGS += --prefix=$(prefix)
 
 GARCOMPILER = SUN
 
-include ../category.mk
+include gar/category.mk
 
 # When you pass a C++ source file to gcc, it invokes g++ for you
 # without complaints.  However, passing a C++ source file to cc just

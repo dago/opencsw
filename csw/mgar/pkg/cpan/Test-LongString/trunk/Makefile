@@ -16,4 +16,4 @@ DISTFILES += $(call admfiles,CSWpmtestlongstr,)
 
 BUILDDEPS += cpan/Test-Builder-Tester
 
-include ../category.mk
+include gar/category.mk

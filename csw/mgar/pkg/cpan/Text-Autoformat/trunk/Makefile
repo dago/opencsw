@@ -18,4 +18,4 @@ DISTFILES += CSWpmtxtautofmt.gspec CSWpmtxtautofmt.depend
 
 DEPENDS += cpan/Text-Reform
 
-include ../category.mk
+include gar/category.mk

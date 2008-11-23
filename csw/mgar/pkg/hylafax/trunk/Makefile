@@ -39,7 +39,7 @@ TEST_SCRIPTS =
 
 SPKG_CLASSES = none cswinitsmf
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS := $(CFLAGS) -L$(libdir) -R$(libdir) -lsocket -lnsl
 CXXFLAGS := $(CXXFLAGS) -L$(libdir) -R$(libdir) -lsocket -lnsl

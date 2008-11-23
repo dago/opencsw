@@ -21,4 +21,4 @@ CONFIGURE_ARGS = LDFLAGS='-L/opt/csw/lib -lm'
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-included-gettext
 
-include ../category.mk
+include gar/category.mk

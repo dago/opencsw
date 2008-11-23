@@ -15,7 +15,7 @@ DISTFILES    += CSWlibX11.gspec CSWlibX11.prototype CSWlibX11.depend
 DISTFILES    += CSWlibX11dev.gspec CSWlibX11dev.prototype CSWlibX11dev.depend 
 # DISTFILES    += $(call admfiles,CSWlibX11, depend)
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION -D__solaris__
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath

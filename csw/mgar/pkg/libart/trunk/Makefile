@@ -73,7 +73,7 @@ ifdef DO64
 	libdir = $(exec_prefix)/lib/$(ISA)
 endif
 
-include ../category.mk
+include gar/category.mk
 
 TEST_TARGET =
 

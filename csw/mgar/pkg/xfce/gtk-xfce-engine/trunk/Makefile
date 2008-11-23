@@ -13,7 +13,7 @@ DISTFILES += $(call admfiles,CSWgtkxfceengine, depend)
 
 TEST_SCRIPTS = none
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS   += -xlibmil
 CXXFLAGS += -xlibmil -xlibmopt -features=tmplife -norunpath

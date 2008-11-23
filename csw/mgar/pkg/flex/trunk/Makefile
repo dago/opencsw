@@ -24,7 +24,7 @@ CONFIGURE_ARGS = --prefix=$(libexecdir)/$(GARNAME)-$(GARVERSION)
 TEST_TARGET = check
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@mkdir -p $(DESTDIR)$(bindir)

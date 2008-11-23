@@ -49,7 +49,7 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
-include ../category.mk
+include gar/category.mk
 include files/rules.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)

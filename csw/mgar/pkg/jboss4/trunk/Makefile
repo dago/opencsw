@@ -19,7 +19,7 @@ TEST_SCRIPTS	  = none
 INSTALL_SCRIPTS   = jboss
 prefix            = /
 
-include ../category.mk
+include gar/category.mk
 
 configure-none:
 	@$(MAKECOOKIE)

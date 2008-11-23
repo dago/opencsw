@@ -17,4 +17,4 @@ DEPENDS += cpan/XML-Parser
 # Force installation without prompting
 PATCHFILES = install.diff
 
-include ../category.mk
+include gar/category.mk

@@ -15,7 +15,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 INSTALL_ARGS = $(foreach VAR, bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir infodir mandir includedir,$(VAR)=$($(VAR)))
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	(cd $(DESTDIR)$(bindir); ln -sf gawk awk)

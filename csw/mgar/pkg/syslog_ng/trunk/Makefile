@@ -37,4 +37,4 @@ post-install:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 files/cswsyslog_ng $(DESTDIR)/etc/opt/csw/init.d/cswsyslog_ng
 
-include ../category.mk
+include gar/category.mk

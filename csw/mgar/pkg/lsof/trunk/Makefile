@@ -23,7 +23,7 @@ CONFIGURE_ARGS    = -n solariscc
 TEST_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 post-extract:
 	@echo " ==> Extracting source distribution"

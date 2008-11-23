@@ -21,7 +21,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 INSTALL_OVERRIDE_DIRS = prefix exec_prefix includedir libdir mandir 
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	rm -f $(DESTDIR)$(libdir)/$(GARNAME).a

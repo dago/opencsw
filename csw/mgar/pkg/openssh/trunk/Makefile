@@ -63,7 +63,7 @@ CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 
 TEST_SCRIPTS	=
 
-include ../category.mk
+include gar/category.mk
 
 
 # we re-run autoconf because of the GSSAPI key exchange patch

@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWpmxmlsemdiff,depend prototype)
 
 DEPENDS += cpan/libxml-perl
 
-include ../category.mk
+include gar/category.mk

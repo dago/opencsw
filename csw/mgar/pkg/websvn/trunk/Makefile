@@ -29,7 +29,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 post-extract:
 	@echo " ==> Preparing include/config.php.CSW"

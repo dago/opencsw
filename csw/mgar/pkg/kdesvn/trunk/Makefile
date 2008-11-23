@@ -40,7 +40,7 @@ CONFIGURE_ARGS += --with-apu-config=/opt/csw/apache2/bin/apu-config
 # kdesvn doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	(cd $(WORKSRC); test -r configure || make -f Makefile.cvs)

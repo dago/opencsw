@@ -16,5 +16,5 @@ DEPENDS += cpan/ExtUtils-Manifest
 DEPENDS += cpan/CPANPLUS
 DEPENDS += cpan/Sort-Versions
 
-include ../category.mk
+include gar/category.mk
 

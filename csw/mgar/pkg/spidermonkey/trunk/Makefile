@@ -37,7 +37,7 @@ INSTALL_SCRIPTS = custom
 
 
 
-include ../category.mk
+include gar/category.mk
 
 post-patch:
 	# the makefile use whoami which doesn't exist under solaris

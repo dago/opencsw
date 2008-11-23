@@ -15,4 +15,4 @@ DISTFILES += CSWpmhtmlmason.gspec CSWpmhtmlmason.depend
 DEPENDS += cpan/Params-Validate cpan/Exception-Class cpan/Cache-Cache
 DEPENDS += cpan/Class-Container cpan/CGI cpan/Scalar-List-Utils
 
-include ../category.mk
+include gar/category.mk

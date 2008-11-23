@@ -9,4 +9,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmbitvec,prototype)
 
-include ../category.mk
+include gar/category.mk

@@ -13,4 +13,4 @@ DISTFILES += CSWpmclassdbiloader.gspec CSWpmclassdbiloader.depend
 
 DEPENDS += cpan/Class-DBI
 
-include ../category.mk
+include gar/category.mk

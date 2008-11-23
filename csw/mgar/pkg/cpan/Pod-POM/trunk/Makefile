@@ -23,4 +23,4 @@ DISTFILES += CSWpmpodpom.gspec CSWpmpodpom.depend
 # =for sections are being ignored!
 PATCHFILES = htmlview.diff
 
-include ../category.mk
+include gar/category.mk

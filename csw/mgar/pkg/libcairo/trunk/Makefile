@@ -23,7 +23,7 @@ export CFLAGS CXXFLAGS LDFLAGS
 
 GREP = ggrep
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
 

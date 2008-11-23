@@ -23,7 +23,7 @@ CONFIGURE_ARGS += --without-ada
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 
 LDFLAGS = -L/export/home/aalmroth/csw-build.5.8-i386/opt/csw/lib  -L/opt/csw/lib

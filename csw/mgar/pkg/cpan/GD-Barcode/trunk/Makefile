@@ -14,4 +14,4 @@ DISTFILES += CSWpmgdbarcode.gspec CSWpmgdbarcode.depend
 
 DEPENDS += cpan/GD
 
-include ../category.mk
+include gar/category.mk

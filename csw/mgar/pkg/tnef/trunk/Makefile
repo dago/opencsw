@@ -18,7 +18,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_SOURCEURL = http://sourceforge.net/projects/tnef
 

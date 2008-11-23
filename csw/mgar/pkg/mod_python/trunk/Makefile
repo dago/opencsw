@@ -21,7 +21,7 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-python=$(bindir)/python
 CONFIGURE_ARGS += --with-flex=$(prefix)/flex-2.5.31/bin/flex
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	@( cd $(WORKSRC) ; autoconf )

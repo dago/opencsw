@@ -35,7 +35,7 @@ INSTALL_SCRIPTS = custom
 # No test target
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 LD_OPTIONS += -z muldefs
 export LD_OPTIONS

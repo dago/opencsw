@@ -35,7 +35,7 @@ INSTALL_OVERRIDE_DIRS += nmapdatadir deskdir
 # No test suite for nmap
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	@( cd $(WORKSRC) ; autoconf )

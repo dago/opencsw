@@ -17,4 +17,4 @@ DEPENDS += cpan/XML-RegExp
 #DEPENDS += cpan/libwww-perl
 DEPENDS += cpan/libxml-perl
 
-include ../category.mk
+include gar/category.mk

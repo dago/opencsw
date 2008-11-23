@@ -39,7 +39,7 @@ TEST_TARGET = check
 
 CLEAN_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 $(DOWNLOADDIR)/README.CSW:
 	@echo " ==> Generating README.CSW"

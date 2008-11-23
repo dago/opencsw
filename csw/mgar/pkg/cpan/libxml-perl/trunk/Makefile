@@ -9,4 +9,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmlibxmlperl,depend prototype)
 
-include ../category.mk
+include gar/category.mk

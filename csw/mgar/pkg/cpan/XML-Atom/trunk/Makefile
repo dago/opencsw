@@ -15,4 +15,4 @@ DEPENDS += cpan/XML-LibXML cpan/libwww-perl cpan/HTML-Parser
 DEPENDS += cpan/Digest-SHA1 cpan/TimeDate cpan/XML-LibXSLT
 DEPENDS += cpan/URI
 
-include ../category.mk
+include gar/category.mk

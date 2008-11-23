@@ -27,7 +27,7 @@ TEST_TARGET = check
 # Spencer bre test #16 fails
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-test:
 	@( cd $(WORKSRC)/tests ; chmod 555 *.sh *.awk )

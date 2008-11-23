@@ -14,6 +14,6 @@ DISTFILES += CSWpmgimp.gspec CSWpmgimp.depend
 DEPENDS += utils/gimp
 DEPENDS += cpan/PDL cpan/Gtk2
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/Gimp2

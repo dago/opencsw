@@ -16,4 +16,4 @@ BUILD_SCRIPTS = $(WORKSRC)/Build
 TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
 
-include ../category.mk
+include gar/category.mk

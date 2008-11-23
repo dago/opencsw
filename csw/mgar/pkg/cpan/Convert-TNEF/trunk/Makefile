@@ -14,4 +14,4 @@ DISTFILES += CSWpmconverttnef.gspec
 
 DEPENDS += cpan/MIME-tools
 
-include ../category.mk
+include gar/category.mk

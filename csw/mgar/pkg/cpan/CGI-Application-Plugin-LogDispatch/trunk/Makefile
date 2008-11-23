@@ -16,4 +16,4 @@ DEPENDS += cpan/Log-Dispatch
 DEPENDS += cpan/CGI-Application
 DEPENDS += cpan/UNIVERSAL-require
 
-include ../category.mk
+include gar/category.mk

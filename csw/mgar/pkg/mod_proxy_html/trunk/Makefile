@@ -24,7 +24,7 @@ BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 build-custom:
 	$(prefix)/apache2/sbin/apxs -c -I$(includedir)/libxml2/ $(WORKSRC)/mod_proxy_html-2.5.2.c

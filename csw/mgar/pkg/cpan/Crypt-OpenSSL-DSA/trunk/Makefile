@@ -14,4 +14,4 @@ DISTFILES += CSWpmcryptossldsa.gspec CSWpmcryptossldsa.depend
 
 DEPENDS += lib/openssl
 
-include ../category.mk
+include gar/category.mk

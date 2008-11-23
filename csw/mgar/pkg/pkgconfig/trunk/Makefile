@@ -24,4 +24,4 @@ CONFIGURE_ARGS = $(DIRPATHS) --with-installed-glib
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

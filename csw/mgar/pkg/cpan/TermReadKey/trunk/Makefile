@@ -17,4 +17,4 @@ DISTFILES = $(call admfiles,CSWpmtermreadkey,depend prototype)
 
 DEPENDS += lib/ncurses
 
-include ../category.mk
+include gar/category.mk

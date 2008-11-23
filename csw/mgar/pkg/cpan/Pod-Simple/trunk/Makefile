@@ -15,4 +15,4 @@ DISTFILES = $(call admfiles,CSWpmpodsimple,depend prototype)
 
 DEPENDS += cpan/Pod-Escapes
 
-include ../category.mk
+include gar/category.mk

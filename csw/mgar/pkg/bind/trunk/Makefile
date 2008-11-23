@@ -28,7 +28,7 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 SPKG_SOURCEURL = http://www.isc.org/software/bind

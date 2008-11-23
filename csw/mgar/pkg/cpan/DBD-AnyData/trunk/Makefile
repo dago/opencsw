@@ -21,4 +21,4 @@ DISTFILES += CSWpmdbdanydata.gspec CSWpmdbdanydata.depend
 
 DEPENDS += cpan/SQL-Statement cpan/DBD-File cpan/AnyData cpan/DBI
 
-include ../category.mk
+include gar/category.mk

@@ -13,5 +13,5 @@ DISTFILES += $(call admfiles,CSWsdlimage,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
-include ../category.mk
+include gar/category.mk
 

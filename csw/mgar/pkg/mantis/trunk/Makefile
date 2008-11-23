@@ -24,7 +24,7 @@ INSTALL_SCRIPTS = custom
 
 SPKG_SOURCEURL = http://www.mantisbt.org/
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"

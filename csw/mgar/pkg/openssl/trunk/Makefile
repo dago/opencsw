@@ -172,7 +172,7 @@ endif
 #########################################################################
 
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
 

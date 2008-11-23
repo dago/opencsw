@@ -24,4 +24,4 @@ DEPENDS += cpan/Crypt-DSA
 
 CONFIGURE_ARGS = --defaultdeps
 
-include ../category.mk
+include gar/category.mk

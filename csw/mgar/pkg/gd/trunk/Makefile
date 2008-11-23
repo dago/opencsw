@@ -15,4 +15,4 @@ DISTFILES += $(call admfiles,CSWgd-devel,depend prototype)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk

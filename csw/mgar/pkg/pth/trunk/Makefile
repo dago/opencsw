@@ -15,7 +15,7 @@ DISTFILES += $(call admfiles,CSWpth,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk
 
 # No shared libraries on Solaris 7/8 x86:
 #   http://www.mail-archive.com/pth-users@gnu.org/msg00113.html

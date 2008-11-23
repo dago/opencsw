@@ -15,4 +15,4 @@ PATCHFILES = makeincludes.diff
 
 CONFIGURE_ARGS = $(DIRPATHS) --mandir=/opt/csw/share/man --disable-localpng --disable-localjpeg --disable-localzlib --enable-shared
 
-include ../category.mk
+include gar/category.mk

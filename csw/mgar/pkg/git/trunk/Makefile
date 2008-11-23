@@ -21,6 +21,6 @@ BUILD_ARGS = MSGFMT=gmsgfmt all doc
 
 INSTALL_ARGS = install-doc
 
-include ../category.mk
+include gar/category.mk
 
 CFLAGS += -L$(libdir)

@@ -15,4 +15,4 @@ DEPENDS += cpan/Mail-Box
 
 DISTFILES += CSWpmmailboxpc.gspec
 
-include ../category.mk
+include gar/category.mk

@@ -10,4 +10,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmberkeleydb,)
 
-include ../category.mk
+include gar/category.mk

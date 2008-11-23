@@ -14,7 +14,7 @@ DISTFILES += CSWxfceutilsdoc.depend CSWxfceutilsdoc.gspec CSWxfceutilsdoc.protot
 
 TEST_SCRIPTS = none
 
-include ../category.mk
+include gar/category.mk
 
 test-none :
 	@$(MAKECOOKIE)

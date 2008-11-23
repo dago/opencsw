@@ -21,7 +21,7 @@ TEST_TARGET = check
 # Some tests require a controlling terminal
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 install-%/Makefile-root:
 	@echo " ==> Running make install in $*"

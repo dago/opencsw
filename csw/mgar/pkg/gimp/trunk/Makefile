@@ -44,4 +44,4 @@ export LIBTIFF LIBJPEG LIBPNG
 TEST_SCRIPTS =
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

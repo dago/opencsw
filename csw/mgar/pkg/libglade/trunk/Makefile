@@ -15,4 +15,4 @@ CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

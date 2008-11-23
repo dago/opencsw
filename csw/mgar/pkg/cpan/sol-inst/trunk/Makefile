@@ -13,4 +13,4 @@ WORKSRC = $(WORKDIR)/Solaris
 
 DISTFILES += CSWpmsolinst.gspec
 
-include ../category.mk
+include gar/category.mk

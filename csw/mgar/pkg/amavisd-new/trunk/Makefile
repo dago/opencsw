@@ -47,4 +47,4 @@ install-custom:
 	ginstall -m 755 files/cswamavisdnew $(DESTDIR)/etc/opt/csw/init.d/cswamavisdnew
 	$(MAKECOOKIE)
 
-include ../category.mk
+include gar/category.mk

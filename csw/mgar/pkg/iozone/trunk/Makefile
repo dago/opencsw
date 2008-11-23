@@ -45,7 +45,7 @@ BUILD_SCRIPTS = $(WORKSRC)/makefile
 
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 # The install part from the Makefile is completely unrelocatable :-(
 install-custom:

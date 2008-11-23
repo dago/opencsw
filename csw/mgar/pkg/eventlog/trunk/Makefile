@@ -23,4 +23,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER = GNU
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

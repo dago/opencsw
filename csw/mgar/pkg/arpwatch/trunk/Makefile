@@ -33,7 +33,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # so libpcap is found
 SUN_CC_OPT += -L$(libdir)
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	# we fix a bug in configure which make some test fail

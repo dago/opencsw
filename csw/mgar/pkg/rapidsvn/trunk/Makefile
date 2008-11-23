@@ -36,7 +36,7 @@ EXTRA_INC = $(prefix)/bdb43/include
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 pre-configure:
 	@echo " ==> Regenerating build tools..."

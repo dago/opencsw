@@ -20,4 +20,4 @@ DEPENDS += lib/qt-gcc
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk

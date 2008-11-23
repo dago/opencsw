@@ -16,4 +16,4 @@ DEPENDS += cpan/Module-Load
 DEPENDS += cpan/Locale-Maketext-Simple
 DEPENDS += cpan/version
 
-include ../category.mk
+include gar/category.mk

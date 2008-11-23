@@ -14,4 +14,4 @@ DISTFILES += CSWpmpar.gspec CSWpmpar.depend
 DEPENDS += cpan/Archive-Zip cpan/Module-ScanDeps
 DEPENDS += cpan/Module-Signature
 
-include ../category.mk
+include gar/category.mk

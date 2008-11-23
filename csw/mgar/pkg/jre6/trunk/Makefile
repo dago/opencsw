@@ -47,7 +47,7 @@ shell-extract-%:
 extract-%.sh: shell-extract-%.sh
 	@$(MAKECOOKIE)
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"

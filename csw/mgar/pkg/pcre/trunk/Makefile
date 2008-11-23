@@ -23,7 +23,7 @@ CONFIGURE_ARGS += --enable-pcretest-libreadline
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 # The testcases need 'diff -u' which Solaris 8 diff does not have,
 # but we need Solaris strip, otherwise pcregrep is broken and 200m in size...

@@ -11,4 +11,4 @@ endef
 DISTFILES += $(call admfiles,CSWpmhttpbody,depend prototype)
 DEPENDS   += cpan/YAML
 
-include ../category.mk
+include gar/category.mk

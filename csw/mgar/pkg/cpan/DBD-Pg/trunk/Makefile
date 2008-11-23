@@ -13,4 +13,4 @@ DISTFILES += CSWpmdbdpg.gspec CSWpmdbdpg.depend
 
 DEPENDS += server/postgresql
 
-include ../category.mk
+include gar/category.mk

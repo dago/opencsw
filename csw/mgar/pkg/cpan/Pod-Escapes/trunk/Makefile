@@ -12,4 +12,4 @@ endef
 
 DISTFILES = $(call admfiles,CSWpmpodescapes,depend prototype)
 
-include ../category.mk
+include gar/category.mk

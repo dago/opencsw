@@ -37,4 +37,4 @@ CONFIGURE_ARGS += --enable-java
 CONFIGURE_ARGS += --enable-tcl
 CONFIGURE_ARGS += --with-tcl=$(libdir)
 
-include ../category.mk
+include gar/category.mk

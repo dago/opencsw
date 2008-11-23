@@ -17,4 +17,4 @@ DISTFILES += CSWpmhtmlcalmonth.gspec CSWpmhtmlcalmonth.depend
 
 DEPENDS += cpan/HTML-Element-Extended
 
-include ../category.mk
+include gar/category.mk

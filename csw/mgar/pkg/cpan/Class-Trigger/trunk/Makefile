@@ -13,4 +13,4 @@ DISTFILES += CSWpmclasstrigger.gspec CSWpmclasstrigger.depend
 
 DEPENDS += cpan/Class-Data-Inheritable cpan/IO-stringy
 
-include ../category.mk
+include gar/category.mk

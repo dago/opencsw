@@ -14,4 +14,4 @@ endef
 
 DISTFILES += CSWpmtiedbi.gspec
 
-include ../category.mk
+include gar/category.mk

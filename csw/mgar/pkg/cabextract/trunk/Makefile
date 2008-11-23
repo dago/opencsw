@@ -23,7 +23,7 @@ TEST_TARGET =
 
 SPKG_SOURCEURL = http://www.kyz.uklinux.net/cabextract.php
 
-include ../category.mk
+include gar/category.mk
 
 # cabextract is forgetting to link against libintl, so reminding it
 LDFLAGS += -lintl

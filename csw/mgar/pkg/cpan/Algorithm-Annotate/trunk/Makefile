@@ -13,4 +13,4 @@ DISTFILES = $(call admfiles,CSWpmalgannotate,depend prototype)
 
 DEPENDS += cpan/Algorithm-Diff
 
-include ../category.mk
+include gar/category.mk

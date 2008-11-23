@@ -26,7 +26,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = common
 
-include ../category.mk
+include gar/category.mk
 
 install-common:
 	mkdir -p $(DESTDIR)/opt/csw/bin

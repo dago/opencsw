@@ -25,7 +25,7 @@ CONFIGURE_ARGS += --program-suffix=-static
 
 GARCOMPILER = GNU
 
-include ../category.mk
+include gar/category.mk
 
 LDFLAGS := -static $(CFLAGS)
 export LDFLAGS

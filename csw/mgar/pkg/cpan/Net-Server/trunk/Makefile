@@ -15,4 +15,4 @@ DISTFILES += CSWpmnetserver.gspec
 
 CONFIGURE_ARGS = 
 
-include ../category.mk
+include gar/category.mk

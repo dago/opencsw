@@ -17,4 +17,4 @@ DISTFILES += $(call admfiles,CSWpmdatecalc,depend prototype)
 DEPENDS += cpan/Carp-Clan
 DEPENDS += cpan/Bit-Vector
 
-include ../category.mk
+include gar/category.mk

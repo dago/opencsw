@@ -15,4 +15,4 @@ DISTFILES += CSWpmmailsendmail.gspec
 # Skip sending test email
 PATCHFILES = test.diff
 
-include ../category.mk
+include gar/category.mk

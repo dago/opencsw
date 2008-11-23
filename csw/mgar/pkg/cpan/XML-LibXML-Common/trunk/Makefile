@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWpmxmllibxmlcom,depend prototype)
 
 DEPENDS += lib/libxml2
 
-include ../category.mk
+include gar/category.mk

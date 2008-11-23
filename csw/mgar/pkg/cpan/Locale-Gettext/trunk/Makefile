@@ -14,6 +14,6 @@ DISTFILES += $(call admfiles,CSWpmlocalegettext)
 
 PREREQUISITE_PKGS = CSWggettext
 
-include ../category.mk
+include gar/category.mk
 
 BUILD_ARGS += OTHERLDFLAGS=-lintl

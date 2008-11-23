@@ -27,7 +27,7 @@ CONFIGURE_ARGS += CXX="/opt/csw/gcc4/bin/g++"
 #Excluding gnomevfs to cut down on dependancies
 CONFIGURE_ARGS += --disable-gnomevfs
 
-include ../category.mk
+include gar/category.mk
 
 #Fixing the directory names, (this code is actually called xine-lib.)
 post-extract:

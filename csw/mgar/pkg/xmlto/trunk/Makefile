@@ -16,7 +16,7 @@ CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
 CONFIGURE_ARGS += --with-getopt=/opt/csw/bin/ggetopt
 
-include ../category.mk
+include gar/category.mk
 
 # We need this for 'tail -n'
 PATH := /usr/xpg4/bin:/opt/csw/bin:$(PATH)

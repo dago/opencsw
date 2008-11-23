@@ -20,4 +20,4 @@ PATCHFILES = wscount.diff
 
 DEPENDS += cpan/Gtk2
 
-include ../category.mk
+include gar/category.mk

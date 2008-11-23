@@ -40,7 +40,7 @@ CONFIGURE_ARGS += --disable-sm-scripting
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # We touch these file to avoid aclocal/autoconf
 # configure to be run again

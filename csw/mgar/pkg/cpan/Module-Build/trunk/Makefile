@@ -19,4 +19,4 @@ DEPENDS += cpan/Archive-Tar
 
 CONFIGURE_ARGS = destdir=$(DESTDIR)
 
-include ../category.mk
+include gar/category.mk

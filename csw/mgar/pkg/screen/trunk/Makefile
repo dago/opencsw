@@ -35,4 +35,4 @@ CONFIGURE_ARGS += --enable-colors256
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk

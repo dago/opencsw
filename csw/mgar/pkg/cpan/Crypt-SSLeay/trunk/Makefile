@@ -19,4 +19,4 @@ PATCHFILES += noask.diff
 
 CONFIGURE_ARGS = --lib=$(prefix)
 
-include ../category.mk
+include gar/category.mk

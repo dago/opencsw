@@ -14,5 +14,5 @@ DISTFILES += $(call admfiles,CSWliba52, depend)
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static
 
 
-include ../category.mk
+include gar/category.mk
 

@@ -33,7 +33,7 @@ CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
 

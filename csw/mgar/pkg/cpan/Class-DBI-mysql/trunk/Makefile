@@ -17,5 +17,5 @@ DEPENDS += cpan/DBD-mysql cpan/Class-DBI
 # Tests require MySQL to be running
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 

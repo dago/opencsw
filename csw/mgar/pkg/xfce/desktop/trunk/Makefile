@@ -21,7 +21,7 @@ CONFIGURE_ARGS +=   --enable-menueditor
 CONFIGURE_ARGS +=   --enable-desktop-menu
 CONFIGURE_ARGS +=   --enable-panel-plugin
 
-include ../category.mk
+include gar/category.mk
 
 test-none :
 	@$(MAKECOOKIE)

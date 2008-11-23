@@ -33,4 +33,4 @@ install-custom:
 	ginstall -d $(DESTDIR)$(prefix)/bin
 	ginstall -m 755 $(WORKSRC)/opera $(DESTDIR)$(prefix)/bin
 
-include ../category.mk
+include gar/category.mk

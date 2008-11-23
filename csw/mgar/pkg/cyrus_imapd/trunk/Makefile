@@ -95,7 +95,7 @@ INSTALL_ARGS = INSTALLDIRS=vendor
 
 TEST_SCRIPTS = 
 
-include ../category.mk
+include gar/category.mk
 
 # compile_et is missing so we want our to be used
 CONFIGURE_ENV += COMPILE_ET="$(CURDIR)/files/compile_et -d $(CURDIR)/files/"

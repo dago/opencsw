@@ -17,4 +17,4 @@ DISTFILES += CSWpmtiemldbm.gspec CSWpmtiemldbm.depend
 
 DEPENDS += cpan/Tie-DBI cpan/MLDBM cpan/MLDBM-Sync
 
-include ../category.mk
+include gar/category.mk

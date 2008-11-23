@@ -11,4 +11,4 @@ endef
 
 DISTFILES += CSWpmfilemmagic.gspec
 
-include ../category.mk
+include gar/category.mk

@@ -48,7 +48,7 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 
 SPKG_CLASSES = none cswinitsmf
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@ginstall -d $(DESTDIR)$(sysconfdir)/init.d

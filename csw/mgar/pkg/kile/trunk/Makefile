@@ -46,7 +46,7 @@ CONFIGURE_ARGS += --with-qt-libraries=/opt/csw/kde-gcc/lib
 # kile doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_SOURCEURL = http://kile.sourceforge.net/
 

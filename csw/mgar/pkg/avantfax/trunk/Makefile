@@ -23,7 +23,7 @@ INSTALL_SCRIPTS = custom
 
 SPKG_SOURCEURL = http://www.avantfax.com
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"

@@ -24,4 +24,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 INSTALL_ROOT = $(DESTDIR)
 export INSTALL_ROOT
 
-include ../category.mk
+include gar/category.mk

@@ -26,7 +26,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = common
 
-include ../category.mk
+include gar/category.mk
 
 COPY_FILES=LICENSES README.txt VERSION.txt etc lib resources/log4j.properties start.jar javadoc
 TO_COPY=$(foreach file,$(COPY_FILES),cp $(WORKDIR)/jetty-$(GARVERSION)/$(COPY_FILES) $(DESTDIR)/opt/csw/share/jetty6/$(COPY_FILES))

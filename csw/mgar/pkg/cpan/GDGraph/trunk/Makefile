@@ -12,4 +12,4 @@ DISTFILES += CSWpmgdgraph.gspec CSWpmgdgraph.depend
 
 DEPENDS += cpan/GDTextUtil
 
-include ../category.mk
+include gar/category.mk

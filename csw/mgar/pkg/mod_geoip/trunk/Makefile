@@ -21,7 +21,7 @@ BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 include ../apache2/files/extensionbuild.mk
 
 WORKSRC := $(WORKDIR)/$(SPKG_NAME)2_$(GARVERSION)

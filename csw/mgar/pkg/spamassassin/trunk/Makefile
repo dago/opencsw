@@ -19,7 +19,7 @@ BUILD_SCRIPTS = custom
 TEST_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 WORKSRC = $(WORKDIR)/$(SPKG_NAME)-$(GARVERSION)
 SPKG_SOURCEURL = http://spamassassin.apache.org/

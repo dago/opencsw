@@ -50,7 +50,7 @@ CONFIGURE_ARGS += --with-java-platform=2
 # No test suite available
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-install:
 	install -d $(DESTDIR)$(prefix)/apache2/libexec

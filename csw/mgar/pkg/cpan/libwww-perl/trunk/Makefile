@@ -22,4 +22,4 @@ DEPENDS += cpan/Data-Dump
 #CONFIGURE_ARGS = -n
 CONFIGURE_ARGS =
 
-include ../category.mk
+include gar/category.mk

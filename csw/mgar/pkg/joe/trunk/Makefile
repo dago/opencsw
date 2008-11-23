@@ -27,4 +27,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # joe doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk

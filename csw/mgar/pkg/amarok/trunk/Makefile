@@ -33,7 +33,7 @@ CONFIGURE_ARGS += LDFLAGS="-L/opt/csw/kde-gcc/lib -L/opt/csw/lib/$$ISALIST"
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 #I'm having all manner of issues with the final RUNPATH linking of amarok
 #Setting LD_OPTIONS here explicitly, as kde-gcc/lib _MUST_ be first for qt to work

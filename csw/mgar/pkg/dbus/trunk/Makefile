@@ -26,7 +26,7 @@ export CFLAGS CXXFLAGS LDFLAGS
 
 GREP = ggrep
 
-include ../category.mk
+include gar/category.mk
 
 CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --with-xml=expat
 

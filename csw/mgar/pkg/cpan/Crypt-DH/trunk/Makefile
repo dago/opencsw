@@ -16,4 +16,4 @@ DISTFILES += CSWpmcryptdh.gspec CSWpmcryptdh.depend
 
 DEPENDS += cpan/Math-Pari cpan/Crypt-Random
 
-include ../category.mk
+include gar/category.mk

@@ -20,4 +20,4 @@ CONFIGURE_ARGS = --prefix=$(prefix) --x-libraries=/usr/openwin/lib --x-includes=
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

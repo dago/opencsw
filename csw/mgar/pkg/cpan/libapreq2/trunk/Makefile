@@ -45,7 +45,7 @@ EXTRA_LIB = $(prefix)/bdb43/lib $(prefix)/apache2/lib
 
 SKIPTEST = 1
 
-include ../category.mk
+include gar/category.mk
 
 pre-package: test fix-cfgscript
 

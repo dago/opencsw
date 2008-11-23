@@ -18,4 +18,4 @@ DISTFILES += CSWpmcachecache.gspec CSWpmcachecache.depend
 
 DEPENDS += cpan/Digest-SHA1 cpan/IPC-ShareLite cpan/Error
 
-include ../category.mk
+include gar/category.mk

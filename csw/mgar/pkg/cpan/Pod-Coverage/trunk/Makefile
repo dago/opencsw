@@ -17,4 +17,4 @@ DISTFILES += $(call admfiles,CSWpmpodcoverage,depend)
 DEPENDS   += cpan/Devel-Symdump
 BUILDDEPS += cpan/Module-Build
 
-include ../category.mk
+include gar/category.mk

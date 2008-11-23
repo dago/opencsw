@@ -19,4 +19,4 @@ all: .DEFAULT
 .DEFAULT:
 	@true
 
-#include ../category.mk
+#include gar/category.mk

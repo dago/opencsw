@@ -20,4 +20,4 @@ DEPENDS += cpan/HTML-Parser
 DEPENDS += cpan/HTTP-Body
 DEPENDS += cpan/libwww-perl
 
-include ../category.mk
+include gar/category.mk

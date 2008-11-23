@@ -14,4 +14,4 @@ DISTFILES = $(call admfiles,CSWpmiocompzlib,prototype)
 DEPENDS += cpan/IO-Compress-Base
 DEPENDS += cpan/Compress-Raw-Zlib
 
-include ../category.mk
+include gar/category.mk

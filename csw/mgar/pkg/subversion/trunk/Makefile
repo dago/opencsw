@@ -94,7 +94,7 @@ TEST_SCRIPTS =
 EXTRA_LIB = $(prefix)/bdb44/lib $(SVNLIB)
 EXTRA_INC = $(prefix)/bdb44/include
 
-include ../category.mk
+include gar/category.mk
 
 # Add libintl when linking
 LIBS += -lintl -liconv

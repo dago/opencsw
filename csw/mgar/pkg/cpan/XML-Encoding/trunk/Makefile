@@ -17,4 +17,4 @@ DISTFILES += CSWpmxmlencoding.gspec CSWpmxmlencoding.depend
 
 DEPENDS += cpan/XML-Parser
 
-include ../category.mk
+include gar/category.mk

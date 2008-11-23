@@ -15,4 +15,4 @@ DISTFILES = $(call admfiles,CSWpmcgibuilder,depend prototype)
 DEPENDS += cpan/IO-Util
 DEPENDS += cpan/OOTools
 
-include ../category.mk
+include gar/category.mk

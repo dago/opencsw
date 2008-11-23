@@ -11,4 +11,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmmailtools,prototype)
 
-include ../category.mk
+include gar/category.mk

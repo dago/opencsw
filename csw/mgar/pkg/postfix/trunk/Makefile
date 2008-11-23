@@ -26,7 +26,7 @@ BUILD_SCRIPTS     = custom
 TEST_SCRIPTS      = custom
 INSTALL_SCRIPTS   = custom
 
-include ../category.mk
+include gar/category.mk
 
 DEF_COMMAND_DIR    = /opt/csw/sbin
 DEF_CONFIG_DIR     = /etc/opt/csw/postfix

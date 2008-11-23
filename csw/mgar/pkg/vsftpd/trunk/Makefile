@@ -71,7 +71,7 @@ GARCOMPILER = SUN
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # dummyinc must be the last include directory
 # to search

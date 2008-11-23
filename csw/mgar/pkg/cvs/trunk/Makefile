@@ -26,7 +26,7 @@ TEST_TARGET = check
 # Test suite won't run as root!
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@rm -f $(DESTDIR)$(infodir)/dir

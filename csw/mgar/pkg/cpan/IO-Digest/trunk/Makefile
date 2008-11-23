@@ -14,4 +14,4 @@ DISTFILES = $(call admfiles,CSWpmiodigest,depend prototype)
 
 DEPENDS += cpan/PerlIO-via-dynamic
 
-include ../category.mk
+include gar/category.mk

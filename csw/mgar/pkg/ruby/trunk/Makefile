@@ -58,7 +58,7 @@ CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 #CFLAGS = -xO3 -xtarget=ultra -xarch=v8 -I/export/home/bwalton/build.5.8-sparc/ruby/opt/csw/include -I/opt/csw/include
 #endif
 
-include ../category.mk
+include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
 

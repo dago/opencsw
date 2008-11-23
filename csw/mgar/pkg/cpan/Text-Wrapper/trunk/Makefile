@@ -13,4 +13,4 @@ endef
 # This may some day collide with the real Text::Wrap
 DISTFILES += CSWtextwrap.gspec
 
-include ../category.mk
+include gar/category.mk

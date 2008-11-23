@@ -13,4 +13,4 @@ DISTFILES += CSWpmtermreadlinegnu.gspec CSWpmtermreadlinegnu.depend
 
 DEPENDS += lib/readline
 
-include ../category.mk
+include gar/category.mk

@@ -20,4 +20,4 @@ PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris-cc.patch
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-gmetad
 
-include ../category.mk
+include gar/category.mk

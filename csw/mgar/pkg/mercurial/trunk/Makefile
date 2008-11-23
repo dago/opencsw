@@ -22,7 +22,7 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 INSTALL_ARGS += --root=$(DESTDIR) --prefix=/opt/csw
 
-include ../category.mk
+include gar/category.mk
 
 pre-install:
 	mkdir -p $(DESTDIR)/opt/csw/share/man/man1

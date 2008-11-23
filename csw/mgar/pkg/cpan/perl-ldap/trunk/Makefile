@@ -18,4 +18,4 @@ DEPENDS += cpan/Authen-SASL cpan/XML-SAX
 # Module version numbers defeat Sort::Versions
 MANUAL_UPDATE = 1
 
-include ../category.mk
+include gar/category.mk

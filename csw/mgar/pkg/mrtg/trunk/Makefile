@@ -21,4 +21,4 @@ CONFIGURE_ARGS += --with-gd-inc=/opt/csw/include
 GARCOMPILER = SUN
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk

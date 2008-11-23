@@ -50,5 +50,5 @@ instdocs:
 post-install: $(PI_TARGETS)
 	@$(MAKECOOKIE)
 
-#include ../category.mk
-include ../category.mk
+#include gar/category.mk
+include gar/category.mk

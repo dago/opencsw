@@ -18,7 +18,7 @@ EXTRA_BUILD_ISAS_sparc = sparcv9
 
 TEST_TARGET = check
 
-include ../category.mk
+include gar/category.mk
 
 # We need GNU gettext under the name xgettext (not gxgettext) and
 # prepending /opt/csw/gnu needs _A LOT_ of GNU stuff installed

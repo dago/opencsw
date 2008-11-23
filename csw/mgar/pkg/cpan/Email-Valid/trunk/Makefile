@@ -18,4 +18,4 @@ PATCHFILES = mxcheck.diff
 
 DEPENDS += cpan/MailTools
 
-include ../category.mk
+include gar/category.mk

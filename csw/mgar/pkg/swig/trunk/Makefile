@@ -43,7 +43,7 @@ CONFIGURE_ARGS += --with-javaincl=/usr/j2se/include
 TEST_TARGET = check
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 post-install: install-swig-doc
 

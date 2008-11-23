@@ -13,4 +13,4 @@ DISTFILES = $(call admfiles,CSWpmcachememcached,depend prototype)
 
 DEPENDS += cpan/String-CRC32
 
-include ../category.mk
+include gar/category.mk

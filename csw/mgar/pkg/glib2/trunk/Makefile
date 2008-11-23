@@ -22,7 +22,7 @@ TEST_TARGET = check
 # Bug #136867 (child-watch)
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 # For some reason, autoconf drops the ball on this one...
 post-install:

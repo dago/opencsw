@@ -13,4 +13,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmprmsvldt,)
 
-include ../category.mk
+include gar/category.mk

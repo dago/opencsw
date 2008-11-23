@@ -18,4 +18,4 @@ CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 
 TEST_SCRIPTS =
-include ../category.mk
+include gar/category.mk

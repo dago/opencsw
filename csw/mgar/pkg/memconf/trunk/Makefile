@@ -18,7 +18,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://www.4schmidts.com/memconf.html

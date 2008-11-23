@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWsdlmixer, depend)
 CONFIGURE_ARGS = --prefix=$(prefix) LDFLAGS=-lsunmath
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

@@ -13,4 +13,4 @@ DISTFILES += CSWpmcryptosslrand.gspec CSWpmcryptosslrand.depend
 
 DEPENDS += lib/openssl
 
-include ../category.mk
+include gar/category.mk

@@ -21,7 +21,7 @@ PATCHFILES = autoconf.mk.in.diff
 PATCHFILES += packager.mk.diff
 PATCHFILES += jemalloc.c.diff
 
-include ../category.mk
+include gar/category.mk
 
 PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath

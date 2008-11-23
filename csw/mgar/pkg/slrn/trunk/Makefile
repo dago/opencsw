@@ -33,7 +33,7 @@ TEST_TARGET =
 # The homepage to show in pkginfo shouldn't be SourceForge
 SPKG_SOURCEURL = http://www.slrn.org/
 
-include ../category.mk
+include gar/category.mk
 
 #post-install:
 #	(cd $(WORKSRC); make install-contrib)

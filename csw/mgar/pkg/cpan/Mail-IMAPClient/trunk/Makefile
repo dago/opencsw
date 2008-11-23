@@ -13,4 +13,4 @@ DISTFILES += CSWpmmailimapclient.gspec CSWpmmailimapclient.depend
 
 DEPENDS += cpan/Parse-RecDescent
 
-include ../category.mk
+include gar/category.mk

@@ -16,7 +16,7 @@ CONFIGURE_ARGS += --enable-dynamicplugin
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 pre-install:
 	( mkdir -p $(DESTDIR)/opt/csw/etc )

@@ -23,7 +23,7 @@ DISTFILES += CSWpv.gspec CSWpv.depend CSWpv.prototype
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk
 
 post-install:
 	@gunzip $(DESTDIR)$(infodir)/pv.info.gz $(DESTDIR)$(mandir)/man1/pv.1.gz

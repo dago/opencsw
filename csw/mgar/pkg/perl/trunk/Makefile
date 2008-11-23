@@ -99,7 +99,7 @@ EXTRA_INC += $(prefix)/bdb44/include
 # Tests take a long time
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 ifneq ($(CORE_UPDATES),)
 POST_TARGETS = install-core-updates
 include files/updatecore.mk

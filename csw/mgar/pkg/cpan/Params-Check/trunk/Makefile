@@ -14,4 +14,4 @@ DISTFILES += $(call admfiles,CSWpmprmscheck,depend prototype)
 
 DEPENDS += cpan/Locale-Maketext-Simple
 
-include ../category.mk
+include gar/category.mk

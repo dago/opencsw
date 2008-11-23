@@ -19,4 +19,4 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

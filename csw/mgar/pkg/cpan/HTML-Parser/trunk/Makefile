@@ -17,4 +17,4 @@ DEPENDS += cpan/HTML-Tagset
 
 CONFIGURE_ARGS = -n
 
-include ../category.mk
+include gar/category.mk

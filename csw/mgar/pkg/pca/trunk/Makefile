@@ -27,7 +27,7 @@ INSTALL_SCRIPTS = custom
 SPKG_SOURCEURL = http://www.par.univie.ac.at/solaris/pca/
 SPKG_VERSION = $(shell echo $(GARVERSION) | sed -e 's/-/./g')
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)

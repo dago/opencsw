@@ -39,4 +39,4 @@ TEST_TARGET = check
 EXTRA_INC = $(prefix)/bdb44/include
 EXTRA_LIB = $(prefix)/bdb44/lib
 
-include ../category.mk
+include gar/category.mk

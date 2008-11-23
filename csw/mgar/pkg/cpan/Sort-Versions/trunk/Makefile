@@ -15,4 +15,4 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmsortver,prototype)
 
-include ../category.mk
+include gar/category.mk

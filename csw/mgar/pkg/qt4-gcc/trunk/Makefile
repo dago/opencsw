@@ -29,4 +29,4 @@ CONFIGURE_ARGS = -platform solaris-g++ -confirm-license -prefix $(prefix) #-bind
 # lyx doesn't have a test target
 TEST_TARGET =
 
-include ../category.mk
+include gar/category.mk

@@ -20,5 +20,5 @@ PREREQUISITE_PKGS = CSWapache2-devel
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=/opt/csw/apache2/sbin/apxs
 
-include ../category.mk
+include gar/category.mk
 

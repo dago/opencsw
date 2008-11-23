@@ -37,7 +37,7 @@ TEST_TARGET = check
 
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile custom
 
-include ../category.mk
+include gar/category.mk
 
 # The flags must not contain additional spaces or the build freaks out
 CFLAGS := $(strip $(CFLAGS) -L$(libdir))

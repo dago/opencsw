@@ -22,7 +22,7 @@ APACHE_ROOT = $(DESTDIR)$(prefix)/apache2
 # Build Configuration
 CONFIGURE_ARGS += --with-mpm=worker
 
-include ../category.mk
+include gar/category.mk
 include ../apache2/files/rules.mk
 
 post-install: rename-httpd

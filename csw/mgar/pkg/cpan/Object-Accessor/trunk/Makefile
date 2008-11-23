@@ -13,4 +13,4 @@ DISTFILES = $(call admfiles,CSWpmobjaccessor,depend prototype)
 
 DEPENDS += cpan/Params-Check
 
-include ../category.mk
+include gar/category.mk

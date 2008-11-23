@@ -17,4 +17,4 @@ DEPENDS += cpan/XML-LibXML-Common
 DEPENDS += cpan/XML-NamespaceSupport
 DEPENDS += cpan/XML-SAX
 
-include ../category.mk
+include gar/category.mk

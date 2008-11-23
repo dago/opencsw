@@ -18,5 +18,5 @@ CONFIGURE_ARGS = --prefix=$(PREFIX)
 # Not gonna do it
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 

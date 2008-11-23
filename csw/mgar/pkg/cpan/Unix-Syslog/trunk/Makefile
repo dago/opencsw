@@ -13,4 +13,4 @@ endef
 
 DISTFILES += CSWpmunixsyslog.gspec
 
-include ../category.mk
+include gar/category.mk

@@ -14,4 +14,4 @@ DISTFILES += CSWpmxmllibxslt.gspec CSWpmxmllibxslt.depend
 
 DEPENDS += lib/libxslt cpan/XML-LibXML
 
-include ../category.mk
+include gar/category.mk

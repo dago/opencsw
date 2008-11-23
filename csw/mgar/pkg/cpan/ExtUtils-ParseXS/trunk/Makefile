@@ -16,4 +16,4 @@ DISTFILES += $(call admfiles,CSWpmextutparsexs,prototype)
 
 BUILDDEPS += cpan/ExtUtils-CBuilder
 
-include ../category.mk
+include gar/category.mk

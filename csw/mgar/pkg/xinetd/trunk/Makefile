@@ -23,4 +23,4 @@ CONFIGURE_ARGS += --with-libwrap=$(libdir)
 # No test/check target
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

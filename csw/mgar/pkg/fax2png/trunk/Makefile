@@ -16,7 +16,7 @@ BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 build-custom:
 	@echo "==> Building fax2png in $(WORKSRC)"

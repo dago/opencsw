@@ -15,4 +15,4 @@ DISTFILES += CSWpmappconfig.gspec
 
 DEPENDS += cpan/File-HomeDir
 
-include ../category.mk
+include gar/category.mk

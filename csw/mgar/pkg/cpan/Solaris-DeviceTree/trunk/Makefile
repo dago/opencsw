@@ -17,4 +17,4 @@ DISTFILES += CSWpmsoldevtree.gspec
 # devtree script tests don't operate correctly
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

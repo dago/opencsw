@@ -18,4 +18,4 @@ DISTFILES += CSWpmapachetmpl.gspec CSWpmapachetmpl.depend
 
 DEPENDS += cpan/Template-Toolkit cpan/mod_perl
 
-include ../category.mk
+include gar/category.mk

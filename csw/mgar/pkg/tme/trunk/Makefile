@@ -47,7 +47,7 @@ CONFIGURE_ARGS += --disable-warnings
 
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
 #CFLAGS := $(CFLAGS) -m64
 

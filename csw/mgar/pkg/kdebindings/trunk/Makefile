@@ -19,4 +19,4 @@ all: .DEFAULT
 	@echo " ==> $(GARNAME) build disabled"
 	@true
 
-#include ../category.mk
+#include gar/category.mk

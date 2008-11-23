@@ -14,6 +14,6 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmtxtabwrap,copyright prototype)
 
-include ../category.mk
+include gar/category.mk
 
 AUTHOR_ID := $(AUTHOR_ID)/modules

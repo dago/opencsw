@@ -24,7 +24,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 install-custom:
 	( cd $(WORKSRC) ; ruby ./setup.rb --destdir=$(DESTDIR); )

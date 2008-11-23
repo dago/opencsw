@@ -13,5 +13,5 @@ DISTFILES += $(call admfiles,CSWpmgdtextut,depend)
 
 DEPENDS += cpan/GD
 
-include ../category.mk
+include gar/category.mk
 

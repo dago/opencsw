@@ -22,4 +22,4 @@ PATCHFILES = Makefile.in.diff
 # No test target in the makefile
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk

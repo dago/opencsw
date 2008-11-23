@@ -43,4 +43,4 @@ DEPENDS += net/memcached
 DEPENDS += cpan/Cache-Memcached
 #DEPENDS += net/squid
 
-include ../category.mk
+include gar/category.mk

@@ -12,4 +12,4 @@ DISTFILES += $(call admfiles,CSWpmmimetools,depend)
 
 DEPENDS += cpan/Mail-Tools cpan/Convert-BinHex cpan/Unix-Syslog
 
-include ../category.mk
+include gar/category.mk

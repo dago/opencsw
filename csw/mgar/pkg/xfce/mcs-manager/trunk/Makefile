@@ -17,7 +17,7 @@ LIBDEPS = xfce/libxfce4util
 
 TEST_SCRIPTS = none
 
-include ../category.mk
+include gar/category.mk
 
 test-none :
 	@$(MAKECOOKIE)

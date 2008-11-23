@@ -54,7 +54,7 @@ TEST_TARGET =
 
 SPKG_SOURCEURL = http://www.cups.org/
 
-include ../category.mk
+include gar/category.mk
 
 PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
 

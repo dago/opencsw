@@ -14,4 +14,4 @@ DISTFILES += CSWpmhttpdav.gspec
 
 DEPENDS += lib/neon cpan/libwww-perl cpan/XML-DOM
 
-include ../category.mk
+include gar/category.mk

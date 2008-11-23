@@ -14,4 +14,4 @@ DISTFILES += CSWpmmailspfqry.gspec CSWpmmailspfqry.depend
 
 DEPENDS += cpan/Net-DNS cpan/Net-CIDR-Lite cpan/Sys-Hostname-Long cpan/URI
 
-include ../category.mk
+include gar/category.mk

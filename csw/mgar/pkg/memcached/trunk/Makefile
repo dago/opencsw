@@ -24,5 +24,5 @@ CONFIGURE_ARGS += --with-libevent=$(prefix)
 # No test suite
 TEST_SCRIPTS =
 
-include ../category.mk
+include gar/category.mk
 
