@@ -24,6 +24,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include ../category.mk
 
+# until the autoconf stuff is included upstream, we'll maintain and import our
+# own.
 pre-configure:
 	( cd $(WORKSRC); \
 		for f in $(AUTOFILES); do \

@@ -16,6 +16,8 @@ srcdir = @srcdir@
 
 VPATH = @srcdir@
 
+ASCIIDOCCONF = $(sysconfdir)/asciidoc
+
 prog = asciidoc.py a2x
 progdir = $(bindir)
 
@@ -25,28 +27,28 @@ manp = $(wildcard doc/*.1)
 manpdir = $(mandir)/man1
 
 conf = $(wildcard *.conf)
-confdir = $(sysconfdir)
+confdir = $(ASCIIDOCCONF)
 
 filters = $(wildcard filters/*.py)
-filtersdir = $(sysconfdir)/filters
+filtersdir = $(ASCIIDOCCONF)/filters
 
 docbook = $(wildcard docbook-xsl/*xsl)
-docbookdir = $(sysconfdir)/docbook-xsl
+docbookdir = $(ASCIIDOCCONF)/docbook-xsl
 
 dblatex = $(wildcard dblatex/*.xsl) $(wildcard dblatex/*.sty)
-dblatexdir = $(sysconfdir)/dblatex
+dblatexdir = $(ASCIIDOCCONF)/dblatex
 
 css = $(wildcard stylesheets/*.css)
-cssdir = $(sysconfdir)/stylesheets
+cssdir = $(ASCIIDOCCONF)/stylesheets
 
 js = $(wildcard javascripts/*.js)
-jsdir = $(sysconfdir)/javascripts
+jsdir = $(ASCIIDOCCONF)/javascripts
 
 callouts = $(wildcard images/icons/callouts/*)
-calloutsdir = $(sysconfdir)/images/icons/callouts
+calloutsdir = $(ASCIIDOCCONF)/images/icons/callouts
 
 icons = $(wildcard images/icons/*.png) images/icons/README
-iconsdir = $(sysconfdir)/images/icons
+iconsdir = $(ASCIIDOCCONF)/images/icons
 
 doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*)
 docdir = $(datadir)/doc/asciidoc
@@ -90,7 +92,7 @@ linkpy:
 fixconfpath:
 	@for f in $(prog); do \
 		echo "Fixing CONF_DIR in $$f"; \
-		$(SED) "s#^CONF_DIR = '.*'#CONF_DIR = '$(sysconfdir)'#; s#^CONF_DIR=.*#CONF_DIR=$(sysconfdir)#" $$f > $$f.out; \
+		$(SED) "s#^CONF_DIR = '.*'#CONF_DIR = '$(ASCIIDOCCONF)'#; s#^CONF_DIR=.*#CONF_DIR=$(ASCIIDOCCONF)#" $$f > $$f.out; \
 		mv $$f.out $$f; \
 	done
 
