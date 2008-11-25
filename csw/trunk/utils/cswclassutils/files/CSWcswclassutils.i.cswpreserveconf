@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# This script is similar yet different, to cswcpsampleconf
+# It should probably replace the former in all cases, but... 
+#  not sure yet.
+#
+# See README for package, for documentation
+#
+# Author: Philip Brown 2008
+# May be used/copied freely
+#
+
+
+while read src dest ; do
+	cp $src $dest
+
+	# reminder: $dest will already have $PKG_INSTALL_ROOT prepended for us
+
+	case $dest in
+		*.csw)
+			confdest=`echo $dest |sed 's/.csw$//'`
+			;;
+		*.CSW)
+			confdest=`echo $dest |sed 's/.CSW$//'`
+			;;
+		*)
+			echo ERROR: unrecognized sample conf file .ext $dest
+			exit 1
+			;;
+	esac
+	preservedir=$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG
+	confbasename=`basename $confdest`
+	preservedconf=$preservedir/$confbasename
+
+	if [ -f $preservedconf ] ; then
+		echo Restoring $preservedconf
+		cp $preservedconf $confdest
+	elif [ -f $confdest ] ; then
+		echo $confdest already exists. Not overwriting
+	else
+		echo Copying sample config to $confdest
+		cp $dest $confdest
+	fi
+done
+
+echo ""

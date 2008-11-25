@@ -1,0 +1,20 @@
+i pkginfo=CSWcswclassutils.pkginfo
+i copyright=CSWcswclassutils.copyright
+d none /etc/opt/csw 0755 root bin
+d none /etc/opt/csw/init.d 0755 root bin
+f none /etc/opt/csw/init.d/csw.smf.sample 0755 root bin
+d none /var/opt/csw 0755 root bin
+d none /var/opt/csw/svc 0755 root bin
+d none /var/opt/csw/svc/manifest 0755 root bin
+d none /var/opt/csw/svc/method 0755 root bin
+f none /usr/sadm/install/scripts/i.cswinitsmf 0555 root sys
+f none /usr/sadm/install/scripts/r.cswinitsmf 0555 root sys
+f none /usr/sadm/install/scripts/i.cswcpsampleconf 0555 root sys
+f none /usr/sadm/install/scripts/r.cswcpsampleconf 0555 root sys
+f none /usr/sadm/install/scripts/i.cswpreserveconf 0555 root sys
+f none /usr/sadm/install/scripts/r.cswpreserveconf 0555 root sys
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/cswclassutils 0755 root bin
+f none /opt/csw/share/doc/cswclassutils/README.CSW 0444 root bin
+f none /opt/csw/share/doc/cswclassutils/LICENSE 0444 root bin

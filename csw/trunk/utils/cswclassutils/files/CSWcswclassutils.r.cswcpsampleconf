@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Author: Philip Brown 2008
+# May be used/copied freely
+#
+
+while read dest ; do
+	# reminder: $dest will already have $PKG_INSTALL_ROOT prepended for us
+
+	case $dest in
+		*.csw)
+			confdest=`echo $dest |sed 's/.csw$//'`
+			;;
+		*.CSW)
+			confdest=`echo $dest |sed 's/.CSW$//'`
+			;;
+		*)
+			echo ERROR: unrecognized sample conf file .ext $dest
+			exit 1
+			;;
+	esac
+
+	if cmp $confdest $dest >/dev/null ; then
+		echo $confdest is identical to sample config file $dest
+		echo Removing $confdest
+		rm $confdest
+	fi
+	rm $dest
+done
