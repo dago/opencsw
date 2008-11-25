@@ -1,10 +1,10 @@
 # SA postinstall script to copy configuration files if they do not exist.
 # 2007-09-24 Replace BASEDIR with PKG_INSTALL_ROOT
-#
+# 2008-11-25 Added quotes on CONFDIR/SPAMDUSER in if-block
 
 # Reset permissions on the configuration directory if it existed before
 # package installation
-if [ -n ${CONFDIR} -a -n ${SPAMDUSER} ]; then
+if [ -n "${CONFDIR}" -a -n "${SPAMDUSER}" ]; then
    echo "   Resetting permissions on ${CONFDIR} to ${SPAMDUSER}:${SPAMDGROUP}."
    chown ${SPAMDUSER}:${SPAMDGROUP} ${CONFDIR}
 fi
