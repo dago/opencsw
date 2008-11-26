@@ -1,0 +1,73 @@
+#!/bin/sh
+#
+# Sample init script
+#
+# Original concept by Philip Brown
+# Written by Peter Bonivart
+#
+# 2008-04-22 First release
+#
+# Usage
+# -----
+# 1. Add CSWcswclassutils in depend
+# 2. Add cswinitsmf as the last class in pkginfo, e.g. "CLASSES=none cswinitsmf"
+# 3. Add a line in prototype for the init script, it must belong to the
+#    cswinitsmf class. Also note the path in the example below:
+#    "f cswinitsmf /etc/opt/csw/init.d/cswfoo 0755 root bin"
+#
+#    NOTE that the SMF service name will be the same as the init script file
+#    name, in the example above cswfoo.
+#
+# Requirements
+# ------------
+# 1. Your init script must support start and stop. Restart will be supported
+#    if present.
+#
+# In-Line tweaks
+# --------------
+# In your init script you can have "magic" comments that configure
+# the service creation or symlink creation during pkg installation.
+#
+# These are all OPTIONAL. If you do not set them, then reasonable
+# defaults will be chosen.
+#
+# The line must start with one hash mark to be immediately followed by
+# the variable, then whitespace to the value. Comments like in the examples
+# below are OK but there must be whitespace after the value.
+#
+# The examples below, happen to be the default values if you do not
+# define them yourself.
+#
+# RC_KLEV and RC_SLEV supports comma separated lists.
+#
+# Examples of OPTIONAL tweaks below.
+# To use, change '##' to '#', and set your own preferred value(s).
+#
+##RC_KNUM 20         # Number used for kill script symlink, e.g. K20cswfoo
+##RC_SNUM 80         # Number used for start script symlink, e.g. S80cswfoo
+##RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
+##RC_SLEV 3          # Run levels that should have a start script symlink
+##FMRI network       # FMRI path for service (S10+), the example would give
+#                      an FMRI of "svc:/network/cswfoo:default"
+
+case "$1" in
+  start)
+    echo "Starting cswfoo ..."
+    /opt/csw/bin/cswfoo
+    ;;
+  stop)
+    echo "Stopping cswfoo ..."
+    pkill cswfoo
+    ;;
+  restart)
+    $0 stop
+    sleep 1 # or explicitly check that service has stopped
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | restart }"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,30 @@
+CSWcswclassutils
+================
+
+This package contains class action scripts to simplify doing common tasks in a
+consistent manner. They can also be updated to benefit all packages that make
+use of them.
+
+Currently it has:
+
+- cswinitsmf
+
+  This class takes care of creating/removing init script links for Solaris 8
+  and 9. For Solaris 10+ it supports SMF and can create a simple manifest on
+  the fly at installation time. Read more about how to use it in the sample
+  init script provided in /etc/opt/csw/init.d/csw.smf.sample.
+
+- cswcpsampleconf
+
+  This script handles the sample configuration files. If you provide a file
+  called cswfoo.CSW it will copy it to cswfoo it that file doesn't already
+  exist. Read more in /usr/sadm/install/scripts/i.cswcpsampleconf and
+  r.cswcpsampleconf.
+
+- cswpreserveconf
+
+  This is an enhanced variation of cswcpsampleconf. It moves
+  user-modified versions of the sample config files, to a preserve
+  directory when a package is removed, and restores it on the next pkgadd.
+  Read more in /usr/sadm/install/scripts/i.cswpreserveconf and
+  r.cswpreserveconf.

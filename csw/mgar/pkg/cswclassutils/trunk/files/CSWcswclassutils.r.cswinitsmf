@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# r.cswinitsmf - Class action script for CSW SMF support
+#
+# Original concept by Philip Brown
+# Written by Peter Bonivart
+#
+# 2008-04-21 First release
+# 2008-11-23 Fixed grep bug for FMRI
+
+DEBUG=		# clear to disable debug, set to anything to enable
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# Determine if SMF should be used or not
+smf=no
+
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ]; then
+  smf=yes
+fi
+
+if [ "$use_smf" = "no" ]; then
+  smf=no
+fi
+
+if [ "$DEBUG" ]; then
+  echo PACKAGE: $PKGINST SMF: $smf
+fi
+
+# Stop service
+echo Stopping $PKGINST ...
+if [ "$smf" = "yes" ]; then
+  # Find out FMRI complete with service name
+  FMRI=`grep ${PKGINST}$ /var/sadm/install/contents | grep "^/var/opt/csw/svc/manifest" | egrep '\.xml ' | cut -d'/' -f7- | awk -F'.xml' '{print $1}'`
+  /usr/sbin/svcadm disable svc:/$FMRI > /dev/null 2>&1
+  # Unregister with SMF
+  echo Unregister svc:/${FMRI}:default with SMF ...
+  /usr/sbin/svccfg delete svc:/${FMRI}:default >/dev/null 2>&1
+else
+  /etc/init.d/$service stop > /dev/null 2>&1
+fi
+
+# Remove files in class cswinitsmf
+echo "Removing class <cswinitsmf> ..."
+while read file
+do
+  echo $file
+  if [ -d $file ]; then
+    /usr/bin/rm -rf $file || exit 2
+  else
+    /usr/bin/rm -f $file || exit 2
+  fi
+done
+
+exit 0

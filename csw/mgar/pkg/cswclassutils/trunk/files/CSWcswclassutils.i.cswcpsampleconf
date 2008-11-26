@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# This "class" is meant to be used with a sample configuration file.
+# eg:    f cswcpsampleconf /etc/opt/csw/myprog.conf.csw
+# 
+# It will copy myprog.conf.csw to myprog.conf, IF AND ONLY IF
+#  there is no pre-existing "myprog.conf" file
+#
+# Author: Philip Brown 2008
+# May be used/copied freely
+#
+
+while read src dest ; do
+	# reminder: $dest will already have $PKG_INSTALL_ROOT prepended for us
+	cp $src $dest
+
+	case $dest in
+		*.csw)
+			confdest=`echo $dest |sed 's/.csw$//'`
+			;;
+		*.CSW)
+			confdest=`echo $dest |sed 's/.CSW$//'`
+			;;
+		*)
+			echo ERROR: unrecognized sample conf file .ext $dest
+			exit 1
+			;;
+	esac
+
+	if [ -f $confdest ] ; then
+		echo $confdest already exists. Not overwriting
+	else
+		echo Copying sample config to $confdest
+		cp $dest $confdest
+	fi
+done
+
+echo ""
