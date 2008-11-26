@@ -21,7 +21,7 @@
 #GARDIR := $(CURDIR)/../..
 #endif
 
-GARDIR ?= ../..
+GARDIR ?= gar
 GARBIN  = $(GARDIR)/bin
 
 DIRSTODOTS = $(subst . /,./,$(patsubst %,/..,$(subst /, ,/$(1))))
