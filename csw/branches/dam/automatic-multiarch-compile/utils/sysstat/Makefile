@@ -1,5 +1,5 @@
 GARNAME = sysstat
-GARVERSION = 20080718
+GARVERSION = 20081125
 CATEGORIES = utils
 
 DESCRIPTION = Key system statistics at a glance
