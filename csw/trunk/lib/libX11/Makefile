@@ -15,6 +15,8 @@ DISTFILES    += CSWlibX11.gspec CSWlibX11.prototype CSWlibX11.depend
 DISTFILES    += CSWlibX11dev.gspec CSWlibX11dev.prototype CSWlibX11dev.depend 
 # DISTFILES    += $(call admfiles,CSWlibX11, depend)
 
+TEST_SCRIPTS      = none
+
 include ../category.mk
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION -D__solaris__
@@ -23,7 +25,6 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 export CFLAGS CXXFLAGS LDFLAGS
 
-TEST_SCRIPTS      = none
 
 GREP = ggrep
 

@@ -1,6 +1,6 @@
 GARNAME      = dbus-glib
 GARVERSION   = 0.76
-CATEGORIES   = libs
+CATEGORIES   = lib
 
 DESCRIPTION  = DBus GLib Bindings
 define BLURB

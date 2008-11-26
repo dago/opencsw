@@ -1,6 +1,6 @@
 GARNAME      = sqlite3
 GARVERSION   = 3.6.4
-CATEGORIES   = libs
+CATEGORIES   = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
 define BLURB
@@ -21,8 +21,10 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 export CFLAGS CXXFLAGS LDFLAGS
 
-PATCHFILES = gar-base.diff
+PATCHFILES += gar-base.diff
 TEST_SCRIPTS	  = none
+
+BUILD64 = 1
 
 GREP = ggrep
 

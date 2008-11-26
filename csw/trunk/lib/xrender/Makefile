@@ -25,6 +25,8 @@ TEST_SCRIPTS      = none
 
 GREP = ggrep
 
+BUILD64 = 1
+
 include ../category.mk
 
 CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 

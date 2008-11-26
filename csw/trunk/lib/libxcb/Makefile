@@ -15,6 +15,8 @@ DISTFILES    += CSWlibxcb.gspec CSWlibxcb.prototype CSWlibxcb.depend
 DISTFILES    += CSWlibxcbdev.gspec CSWlibxcbdev.prototype CSWlibxcbdev.depend 
 # DISTFILES    += $(call admfiles,CSWlibxcb, depend)
 
+TEST_SCRIPTS = none
+
 include ../category.mk
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION -D__solaris__
@@ -23,10 +25,7 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 export CFLAGS CXXFLAGS LDFLAGS
 
-TEST_SCRIPTS      = none
-
 GREP = ggrep
-
 CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
 
 test-none:

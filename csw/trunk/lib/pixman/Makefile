@@ -1,6 +1,6 @@
 GARNAME      = pixman
 GARVERSION   = 0.12.0
-CATEGORIES   = libs
+CATEGORIES   = lib
 
 DESCRIPTION  = The pixel-manipulation library for X and cairo
 define BLURB

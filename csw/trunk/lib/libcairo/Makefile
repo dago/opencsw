@@ -1,6 +1,6 @@
 GARNAME      = libcairo
-GARVERSION   = 1.8.2
-CATEGORIES   = libs
+GARVERSION   = 1.8.4
+CATEGORIES   = lib
 
 DESCRIPTION  = The Cairo 2D Graphics Library
 define BLURB
@@ -22,6 +22,7 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 export CFLAGS CXXFLAGS LDFLAGS
 
 GREP = ggrep
+BUILD64 = 1
 
 include ../category.mk
 
