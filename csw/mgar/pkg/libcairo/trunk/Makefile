@@ -1,6 +1,6 @@
 GARNAME      = libcairo
 GARVERSION   = 1.8.2
-CATEGORIES   = libs
+CATEGORIES   = lib
 
 DESCRIPTION  = The Cairo 2D Graphics Library
 define BLURB

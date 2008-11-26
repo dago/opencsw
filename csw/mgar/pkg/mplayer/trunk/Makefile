@@ -7,7 +7,7 @@
 GARNAME = MPlayer
 GARVERSION = 1.0rc2
 SPKG_REVSTAMP = ,REV=$(shell date '+%Y.%m.%d').rc2
-CATEGORIES = APPS
+CATEGORIES = apps
 
 DESCRIPTION = MPlayer is a movie player which runs on many systems
 define BLURB

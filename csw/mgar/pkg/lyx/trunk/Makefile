@@ -1,6 +1,6 @@
 GARNAME = lyx
 GARVERSION = 1.4.4
-CATEGORIES = applications
+CATEGORIES = apps
 
 DESCRIPTION = WYSIWYM document processor
 define BLURB

@@ -1,6 +1,6 @@
 GARNAME = nspr
 GARVERSION = 4.6.6
-CATEGORIES = libs
+CATEGORIES = lib
 DISTNAME = $(GARNAME)
 
 DESCRIPTION = NSPR Netscape Portable Runtime

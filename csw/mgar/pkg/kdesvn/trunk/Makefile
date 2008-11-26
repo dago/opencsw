@@ -1,6 +1,6 @@
 GARNAME = kdesvn
 GARVERSION = 0.9.3
-CATEGORIES = applications
+CATEGORIES = apps
 
 DESCRIPTION = A Subversion client for KDE
 define BLURB

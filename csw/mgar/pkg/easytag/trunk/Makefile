@@ -1,6 +1,6 @@
 GARNAME = easytag
 GARVERSION = 2.1.5
-CATEGORIES = applications
+CATEGORIES = apps
 
 DESCRIPTION = Tag editor for MP3, Ogg Vorbis files and more
 define BLURB

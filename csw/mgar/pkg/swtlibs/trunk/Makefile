@@ -1,6 +1,6 @@
 GARNAME      = swtlibs
 GARVERSION   = 3.2.2
-CATEGORIES   = libs
+CATEGORIES   = lib
 
 DESCRIPTION  = Standard Widget Toolkit (SWT) libraries
 define BLURB

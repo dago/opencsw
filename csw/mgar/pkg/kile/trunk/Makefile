@@ -1,6 +1,6 @@
 GARNAME = kile
 GARVERSION = 1.9.3
-CATEGORIES = applications
+CATEGORIES = apps
 
 DESCRIPTION = An integrated LaTeX environment
 define BLURB

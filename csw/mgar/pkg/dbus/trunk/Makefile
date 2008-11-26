@@ -1,6 +1,6 @@
 GARNAME      = dbus
 GARVERSION   = 1.2.4
-CATEGORIES   = libs
+CATEGORIES   = lib
 
 DESCRIPTION  = DBus Message Bus System
 define BLURB

@@ -1,6 +1,6 @@
 GARNAME = libxine
 GARVERSION = 1.1.8
-CATEGORIES = APPS
+CATEGORIES = apps
 
 DESCRIPTION = Xine-lib 1.1.8
 define BLURB

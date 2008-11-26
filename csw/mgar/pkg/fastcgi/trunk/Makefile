@@ -1,6 +1,6 @@
 GARNAME = fastcgi
 GARVERSION = 2.4.0
-CATEGORIES = libs
+CATEGORIES = lib
 
 DESCRIPTION = A FastCGI Library
 define BLURB
