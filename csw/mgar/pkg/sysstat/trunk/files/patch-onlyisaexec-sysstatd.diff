@@ -1,0 +1,33 @@
+diff --speed-large-files --minimal -Nru sysstat-20080704.orig/client.c sysstat-20080704/client.c
+--- sysstat-20080704.orig/client.c	2008-07-06 23:55:52.000000000 +0200
++++ sysstat-20080704/client.c	2008-07-07 14:31:22.791155000 +0200
+@@ -71,7 +71,7 @@
+ 		dbug("Execname %s\n",Execname);
+ 		strcpy(bin,dirname(Execname));
+ 		dbug("Execdir %s\n",bin);
+-		strcat(bin,"/../../sbin/sysstatd");
++		strcat(bin,"/../sbin/sysstatd");
+ 		if (access(bin,X_OK) != 0) {
+ 			error("cannot find sysstatd at %s",bin);
+ 			return -1;
+diff --speed-large-files --minimal -Nru sysstat-20080704.orig/sysstat.c sysstat-20080704/sysstat.c
+--- sysstat-20080704.orig/sysstat.c	2008-07-06 23:55:52.000000000 +0200
++++ sysstat-20080704/sysstat.c	2008-07-07 14:31:37.539418000 +0200
+@@ -485,7 +485,7 @@
+ 		char cmd[PATH_MAX];
+ 		int ret = 0;
+ 		strcpy(cmd,dirname(Execname));
+-		strcat(cmd,"/../../sbin/sysstatd -k");
++		strcat(cmd,"/../sbin/sysstatd -k");
+ 		if (verbose)
+ 			strcat(cmd," -v");
+ 		ret = system(cmd);
+@@ -517,7 +517,7 @@
+ 			char *args[16];
+ 			int num = 0;
+ 			strcpy(bin,dirname(Execname));
+-			strcat(bin,"/../../sbin/sysstatd");
++			strcat(bin,"/../sbin/sysstatd");
+ 			args[num++] = bin;
+ 			args[num++] = "-v";
+ 			if (port) {
