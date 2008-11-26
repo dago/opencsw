@@ -1,7 +1,23 @@
 diff --speed-large-files --minimal -Nru firefox.orig/memory/jemalloc/jemalloc.c firefox/memory/jemalloc/jemalloc.c
---- firefox.orig/memory/jemalloc/jemalloc.c      2008-07-23 05:47:24.000000000 -0400
-+++ firefox/memory/jemalloc/jemalloc.c  2008-11-19 17:57:57.038274900 -0500
-@@ -312,9 +312,9 @@
+--- firefox.orig/memory/jemalloc/jemalloc.c        2008-07-23 09:47:24.000000000 +0000
++++ firefox/memory/jemalloc/jemalloc.c  2008-11-23 14:42:59.780371100 +0000
+@@ -255,6 +255,15 @@
+ #define        MALLOC_DECOMMIT
+ #endif
+
++#ifdef MOZ_MEMORY_SOLARIS
++#define issetugid() 0
++char *strerror_r(int errnum, char *buf, size_t buflen)
++{
++       strncpy(buf, strerror(errnum), buflen);
++}
++
++#endif
++
+ #ifndef MOZ_MEMORY_WINDOWS
+ #ifndef MOZ_MEMORY_SOLARIS
+ #include <sys/cdefs.h>
+@@ -312,9 +321,9 @@
  #endif
  #include <sched.h>
  #include <stdarg.h>
@@ -13,4 +29,3 @@ diff --speed-large-files --minimal -Nru firefox.orig/memory/jemalloc/jemalloc.c 
  #include <stdlib.h>
  #include <string.h>
  #ifndef MOZ_MEMORY_DARWIN
-

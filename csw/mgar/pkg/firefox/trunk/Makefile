@@ -20,13 +20,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES = autoconf.mk.in.diff
 PATCHFILES += packager.mk.diff
 PATCHFILES += jemalloc.c.diff
-
-include gar/category.mk
+PATCHFILES += nsMathUtils.h.diff
 
 PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
 CFLAGS+=-xlibmil -D__solaris__
 LDFLAGS+=-L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib
+
+include gar/category.mk
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
 
