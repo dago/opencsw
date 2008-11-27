@@ -1,9 +1,14 @@
 8a1ac4a5940108a96458c5307a74c98d  download/firefox-3.0.4-source.tar.bz2
 3cc981390e527e1343f6c450d839eceb  download/CSWfirefox.gspec
-206d69879ba8f02201c74bd78ec33d9f  download/CSWfirefox.depend
+e6a5bb96973bba048d61f64c14a6bbc4  download/CSWfirefox.depend
 f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
-1c8ee494a515890096c71b77c6c01dd7  download/autoconf.mk.in.diff
+45bba282258a321e5e4f73a742bcc31b  download/autoconf.mk.in.diff
 d0d942fa0c012abcb2a45b1d0fc99051  download/packager.mk.diff
 dc2ff9299e65ef1acc7a1a684e1ed449  download/jemalloc.c.diff
 ca4162516d8c09deaa9f0b6f3b3ecffb  download/nsMathUtils.h.diff
+a71a4afaabc4d067f30d8fb184fea520  download/file_id.cc.diff
+18b0cdc902caa4172b7f2d473239c9a9  download/md5.h.diff
+29e0ca858fe3aef24d5be1300dc39735  download/solaris_lwp.h.diff
+d8f7ec0df9f63317ff2d8578d9dbe3ff  download/nsNativeApSuportUnix.cpp.diff
+1a3d61e09378d28d9bc9f3df45a224bc  download/nsExceptionHandler.cpp.diff

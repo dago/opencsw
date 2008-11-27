@@ -23,6 +23,7 @@ P CSWggettext  ggettext - GNU gettext
 P CSWgnomekeyring  gnomekeyring - keep password and other secrets for users
 P CSWlibcairo  libcairo - The Cairo 2D Graphics Library
 P CSWiconv  libiconv - GNU iconv library
-P CSWcommon common - common files and dirs for CSW packages
-P CSWcommon common - common files and dirs for CSW packages
-P CSWcommon common - common files and dirs for CSW packages
+P CSWdbusglib
+P CSWlibdbus
+P CSWlibx11
+P CSWsqlite3

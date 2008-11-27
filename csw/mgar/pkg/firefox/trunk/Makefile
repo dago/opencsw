@@ -21,13 +21,21 @@ PATCHFILES = autoconf.mk.in.diff
 PATCHFILES += packager.mk.diff
 PATCHFILES += jemalloc.c.diff
 PATCHFILES += nsMathUtils.h.diff
+PATCHFILES += file_id.cc.diff
+PATCHFILES += md5.h.diff
+PATCHFILES += solaris_lwp.h.diff
+PATCHFILES += nsNativeApSuportUnix.cpp.diff
+PATCHFILES += nsExceptionHandler.cpp.diff 
 
 PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
-CFLAGS+=-xlibmil -D__solaris__
-LDFLAGS+=-L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib
+CFLAGS+=-xlibmil -D__solaris__ 
 
-include gar/category.mk
+include ../category.mk
+
+CFLAGS+= -DG_HAVE_ISO_VARARGS
+CXXFLAGS+= -DG_HAVE_ISO_VARARGS
+LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
 
@@ -57,9 +65,7 @@ pre-install:
 	( cp $(FILEDIR)/firefox.keys $(DESTDIR)/opt/csw/share/gnome/mime-info/firefox.keys )
 
 post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | grep ELF | grep -e 'executable' -e 'dynamic lib' | grep 'not stripped' && strip {}"  \; )
-	( mv $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp && gsed -e s\_-L$(DESTDIR)/opt/csw/lib\_\_g  $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp > $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config && rm $(DESTDIR)/opt/csw/mozilla/firefox/bin/firefox-config.temp )
-	( mv $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp && gsed -e s\_-L$(DESTDIR)/opt/csw/lib\_\_g  $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp > $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc && rm $(DESTDIR)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp )
+	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 	( gfind $(DESTDIR)/opt/csw -name chromelist.txt -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORKDIR)/$(DISTNAME)/\_\_g {}.temp > {} && rm {}.temp"  \; )
 	( gfind $(DESTDIR)/opt/csw/mozilla/firefox -name "*.js" -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORKDIR)/$(DISTNAME)/\_\_g {}.temp > {} && rm {}.temp"  \; )
 	( gfind $(DESTDIR)/opt/csw/mozilla/firefox -name "*.jar" -exec bash -c "`pwd`/removeBuildPathFromJar.sh {} `pwd` $(WORKDIR) $(DISTNAME)" \; )
