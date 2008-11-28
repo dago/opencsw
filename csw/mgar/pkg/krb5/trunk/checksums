@@ -1,0 +1,13 @@
+2dc1307686eb1c2bf1ab08ea805dad46  download/krb5-1.6.3-signed.tar
+4b4d4cdcfc8e1efe5b09afc99ced8b42  download/CSWkrb5adminserver.gspec
+49280cd0857ae223a08f79d97f51c758  download/CSWkrb5adminserver.depend
+7a114a5ffc41478c1ab44bacf6e58b18  download/CSWkrb5doc.gspec
+8b64f180abcb2fc0f52862f1f0bad155  download/CSWkrb5kdc.gspec
+968dff3e3871662fd18b87697486ada2  download/CSWkrb5kdc.depend
+57fa9780920e48ee33abcde4468fd5aa  download/CSWkrb5lib.gspec
+83d0d5e0e3a583f87f7863c34ac1fc5e  download/CSWkrb5libdev.gspec
+c60f034ec718df26523f61b6e5f3f2cb  download/CSWkrb5libdev.depend
+0f7ea63e215a904821e5ad23ecb3b020  download/CSWkrb5user.gspec
+c60f034ec718df26523f61b6e5f3f2cb  download/CSWkrb5user.depend
+6c2c7718f024c85f66fdc26398090c23  download/patch-man2html-perl.diff
+1516a86bd7b8d0ccc4462077105723f4  download/patch-ldap-const.diff
