@@ -11,13 +11,20 @@ d smfyes /opt/csw/lib/svc 0755 root bin
 d smfyes /opt/csw/lib/svc/method 0755 root bin
 f smfyes /opt/csw/lib/svc/method/svc-tomcat6=svc-tomcat6 0755 root bin
 f none /etc/init.d/cswtomcat6 0755 root bin
+d none /etc/opt/csw 0755 root bin
 f none /etc/opt/csw/tomcat6 0644 root bin
+d none /etc/rc0.d 0755 root bin
 s none /etc/rc0.d/K17tomcat6=/etc/init.d/cswtomcat6
+d none /etc/rc1.d 0755 root bin
 s none /etc/rc1.d/K17tomcat6=/etc/init.d/cswtomcat6
+d none /etc/rc2.d 0755 root bin
 s none /etc/rc2.d/K17tomcat6=/etc/init.d/cswtomcat6
+d none /etc/rc3.d 0755 root bin
 s none /etc/rc3.d/S51tomcat6=/etc/init.d/cswtomcat6
+d none /etc/rcS.d 0755 root bin
 s none /etc/rcS.d/K17tomcat6=/etc/init.d/cswtomcat6
-d none /opt/csw/etc/tomcat6 0755 root tomcat
+d none /opt/csw/etc 0755 root bin
+d none /opt/csw/etc/tomcat6 0755 root bin
 d none /opt/csw/etc/tomcat6/conf 0755 tomcat tomcat
 f none /opt/csw/etc/tomcat6/conf/catalina.policy.CSW 0640 tomcat tomcat
 f none /opt/csw/etc/tomcat6/conf/catalina.properties.CSW 0640 tomcat tomcat
@@ -26,6 +33,7 @@ f none /opt/csw/etc/tomcat6/conf/logging.properties.CSW 0640 tomcat tomcat
 f none /opt/csw/etc/tomcat6/conf/server.xml.CSW 0640 tomcat tomcat
 f none /opt/csw/etc/tomcat6/conf/tomcat-users.xml.CSW 0640 tomcat tomcat
 f none /opt/csw/etc/tomcat6/conf/web.xml.CSW 0640 tomcat tomcat
+d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/tomcat6 0755 root bin
 f none /opt/csw/share/tomcat6/LICENSE 0644 root bin
 f none /opt/csw/share/tomcat6/NOTICE 0644 root bin
@@ -81,8 +89,6 @@ d none /opt/csw/share/tomcat6/webapps/ROOT 0755 root bin
 f none /opt/csw/share/tomcat6/webapps/ROOT/RELEASE-NOTES.txt 0644 root bin
 d none /opt/csw/share/tomcat6/webapps/ROOT/WEB-INF 0755 root bin
 f none /opt/csw/share/tomcat6/webapps/ROOT/WEB-INF/web.xml 0644 root bin
-d none /opt/csw/share/tomcat6/webapps/ROOT/admin 0755 root bin
-f none /opt/csw/share/tomcat6/webapps/ROOT/admin/index.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/ROOT/asf-logo-wide.gif 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/ROOT/build.xml 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/ROOT/favicon.ico 0644 root bin
@@ -133,7 +139,6 @@ d none /opt/csw/share/tomcat6/webapps/docs/appdev/sample/web/WEB-INF 0755 root b
 f none /opt/csw/share/tomcat6/webapps/docs/appdev/sample/web/WEB-INF/web.xml 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/appdev/sample/web/hello.jsp 0644 root bin
 d none /opt/csw/share/tomcat6/webapps/docs/appdev/sample/web/images 0755 root bin
-f none /opt/csw/share/tomcat6/webapps/docs/appdev/sample/web/images/Thumbs.db 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/appdev/sample/web/images/tomcat.gif 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/appdev/sample/web/index.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/appdev/source.html 0644 root bin
@@ -207,11 +212,13 @@ f none /opt/csw/share/tomcat6/webapps/docs/config/printer/realm.html 0644 root b
 f none /opt/csw/share/tomcat6/webapps/docs/config/printer/resources.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/printer/server.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/printer/service.html 0644 root bin
+f none /opt/csw/share/tomcat6/webapps/docs/config/printer/systemprops.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/printer/valve.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/realm.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/resources.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/server.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/service.html 0644 root bin
+f none /opt/csw/share/tomcat6/webapps/docs/config/systemprops.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/config/valve.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/connectors.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/default-servlet.html 0644 root bin
@@ -242,7 +249,6 @@ f none /opt/csw/share/tomcat6/webapps/docs/funcspecs/printer/index.html 0644 roo
 f none /opt/csw/share/tomcat6/webapps/docs/funcspecs/printer/mbean-names.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/html-manager-howto.html 0644 root bin
 d none /opt/csw/share/tomcat6/webapps/docs/images 0755 root bin
-f none /opt/csw/share/tomcat6/webapps/docs/images/Thumbs.db 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/images/add.gif 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/images/asf-logo.gif 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/images/code.gif 0644 root bin
@@ -298,7 +304,6 @@ f none /opt/csw/share/tomcat6/webapps/docs/printer/security-manager-howto.html 0
 f none /opt/csw/share/tomcat6/webapps/docs/printer/setup.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/printer/ssi-howto.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/printer/ssl-howto.html 0644 root bin
-f none /opt/csw/share/tomcat6/webapps/docs/printer/status.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/printer/virtual-hosting-howto.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/printer/windows-service-howto.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/proxy-howto.html 0644 root bin
@@ -307,7 +312,6 @@ f none /opt/csw/share/tomcat6/webapps/docs/security-manager-howto.html 0644 root
 f none /opt/csw/share/tomcat6/webapps/docs/setup.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/ssi-howto.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/ssl-howto.html 0644 root bin
-f none /opt/csw/share/tomcat6/webapps/docs/status.html 0644 root bin
 d none /opt/csw/share/tomcat6/webapps/docs/tribes 0755 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/tribes/faq.html 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/docs/tribes/introduction.html 0644 root bin
@@ -658,7 +662,6 @@ f none /opt/csw/share/tomcat6/webapps/host-manager/META-INF/context.xml 0644 roo
 d none /opt/csw/share/tomcat6/webapps/host-manager/WEB-INF 0755 root bin
 f none /opt/csw/share/tomcat6/webapps/host-manager/WEB-INF/web.xml 0644 root bin
 d none /opt/csw/share/tomcat6/webapps/host-manager/images 0755 root bin
-f none /opt/csw/share/tomcat6/webapps/host-manager/images/Thumbs.db 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/host-manager/images/add.gif 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/host-manager/images/asf-logo.gif 0644 root bin
 f none /opt/csw/share/tomcat6/webapps/host-manager/images/code.gif 0644 root bin
@@ -693,6 +696,7 @@ s none /opt/csw/share/tomcat6/work=/var/opt/csw/tomcat6/work
 d none /var/opt/csw/tomcat6 0755 root bin
 d none /var/opt/csw/tomcat6/logs 0755 tomcat tomcat
 d none /var/opt/csw/tomcat6/temp 0755 tomcat tomcat
+f none /var/opt/csw/tomcat6/temp/safeToDelete.tmp 0640 tomcat tomcat
 d none /var/opt/csw/tomcat6/work 0755 tomcat tomcat
 i copyright=CSWtomcat6.copyright
 i depend=CSWtomcat6.depend

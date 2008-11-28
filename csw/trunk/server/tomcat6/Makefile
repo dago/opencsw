@@ -1,5 +1,5 @@
 GARNAME      = tomcat6
-GARVERSION   = 6.0.16
+GARVERSION   = 6.0.18
 CATEGORIES   = server
 
 DESCRIPTION  =  Apache Jakarta Tomcat 6 Servlet/JSP Container
