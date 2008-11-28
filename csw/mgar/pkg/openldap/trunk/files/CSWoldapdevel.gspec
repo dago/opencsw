@@ -1,0 +1,5 @@
+%var            bitname openldap_devel
+%var            pkgname CSWoldapdevel
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var		desc OpenLDAP development support (oldapdevel)
+%copyright      url file://%{WORKSRC}/COPYRIGHT
