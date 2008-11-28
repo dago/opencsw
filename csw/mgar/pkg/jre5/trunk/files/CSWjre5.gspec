@@ -1,4 +1,0 @@
-%var            bitname jre5
-%var            pkgname CSWjre5
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

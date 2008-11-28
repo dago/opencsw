@@ -1,4 +1,0 @@
-%var            bitname jre14
-%var            pkgname CSWjre14
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
