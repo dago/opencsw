@@ -37,15 +37,15 @@ CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_BUILD_ISAS_sparc = sparcv9
 EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
 
-PKGFILES_CSWoldapclient_EXCLUSIVE  = $(bindir)/.*
-PKGFILES_CSWoldapclient_EXCLUSIVE += $(mandir)/man1/.*
+PKGFILES_CSWoldapclient  = $(bindir)/.*
+PKGFILES_CSWoldapclient += $(mandir)/man1/.*
 
-PKGFILES_CSWoldapdevel_EXCLUSIVE  = $(PKGFILES_DEVEL)
-PKGFILES_CSWoldapdevel_EXCLUSIVE += $(mandir)/man3/.*
+PKGFILES_CSWoldapdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWoldapdevel += $(mandir)/man3/.*
 
-PKGFILES_CSWoldaprt_EXCLUSIVE  = $(PKGFILES_RT)
-PKGFILES_CSWoldaprt_EXCLUSIVE += $(sysconfdir)/ldap.conf
-PKGFILES_CSWoldaprt_EXCLUSIVE += $(mandir)/man5/ldap.conf.5
+PKGFILES_CSWoldaprt  = $(PKGFILES_RT)
+PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
+PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
 include ../category.mk
 
