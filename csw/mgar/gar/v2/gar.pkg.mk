@@ -116,7 +116,7 @@ $(foreach SPEC,$(_PKG_SPECS), \
   $(eval \
       _PKGFILES_EXCLUDE_$(SPEC)= \
       $(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)), \
-        $(PKGFILES_$(S)_EXCLUSIVE)) \
+        $(PKGFILES_$(S))) \
         $(EXTRA_PKGFILES_EXCLUDED) \
         $(EXTRA_PKGFILES_EXCLUDED_$(SPEC) \
         $(_EXTRA_PKGFILES_EXCLUDED) \
@@ -142,12 +142,12 @@ $(PROTOTYPE): $(WORKDIR) merge
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
-	@if [ -n "$(PKGFILES_$*)" -o \
-	      -n "$(PKGFILES_$*_EXCLUSIVE)" -o \
+	@if [ -n "$(PKGFILES_$*_SHARED)" -o \
+	      -n "$(PKGFILES_$*)" -o \
 	      -n "$(_PKGFILES_EXCLUDE_$*)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(foreach FILE,$(PKGFILES_$*) $(PKGFILES_$*_EXCLUSIVE),-i '$(FILE)') \
+	  (pathfilter $(foreach FILE,$(PKGFILES_$*_SHARED) $(PKGFILES_$*),-i '$(FILE)') \
 	              $(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)') \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
 	                  -e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))' \
