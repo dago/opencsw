@@ -1,0 +1,9 @@
+%var            bitname pm_logdispatchconf
+%var            pkgname CSWpmlogdispatchconf
+%var            arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright      
+Tatsuhiko Miyagawa <miyagawa@bulknews.net> with much help from Matt Sergeant <matt@sergeant.org>.
+
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+
