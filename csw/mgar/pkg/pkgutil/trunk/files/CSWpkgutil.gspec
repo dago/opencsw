@@ -6,5 +6,5 @@
 %prototype	url file://%{FILEDIR}/CSWpkgutil.prototype
 %copyright
 
-Please see /opt/csw/share/doc/pkgutil/copyright for license information.
+Please see /opt/csw/share/doc/pkgutil/LICENSE for license information.
 
