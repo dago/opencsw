@@ -49,31 +49,31 @@ TEST_TARGET = check
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile custom
 
 ADMINSERVER_BINS = kprop|kadmind|kadmin\.local
-PKGFILES_CSWkrb5adminserver_EXCLUSIVE  = $(mandir)/man8/($(ADMINSERVER_BINS))\.8
-PKGFILES_CSWkrb5adminserver_EXCLUSIVE += $(sbindir)/($(ADMINSERVER_BINS))
+PKGFILES_CSWkrb5adminserver  = $(mandir)/man8/($(ADMINSERVER_BINS))\.8
+PKGFILES_CSWkrb5adminserver += $(sbindir)/($(ADMINSERVER_BINS))
 
-PKGFILES_CSWkrb5doc_EXCLUSIVE  = $(mandir)/man5/(krb5.conf|kdc.conf)\.5
+PKGFILES_CSWkrb5doc  = $(mandir)/man5/(krb5.conf|kdc.conf)\.5
 
 KDC_BINS = krb5kdc|krb524d|kpropd|kdb5_util
-PKGFILES_CSWkrb5kdc_EXCLUSIVE  = $(mandir)/man8/($(KDC_BINS))\.8
-PKGFILES_CSWkrb5kdc_EXCLUSIVE += $(sharedstatedir)/examples/krb5/.*
-PKGFILES_CSWkrb5kdc_EXCLUSIVE += $(sbindir)/($(KDC_BINS))
+PKGFILES_CSWkrb5kdc  = $(mandir)/man8/($(KDC_BINS))\.8
+PKGFILES_CSWkrb5kdc += $(sharedstatedir)/examples/krb5/.*
+PKGFILES_CSWkrb5kdc += $(sbindir)/($(KDC_BINS))
 
-PKGFILES_CSWkrb5lib_EXCLUSIVE = $(PKGFILES_RT)
+PKGFILES_CSWkrb5lib = $(PKGFILES_RT)
 
-PKGFILES_CSWkrb5libdev_EXCLUSIVE  = $(mandir)/man8/sserver.8
-PKGFILES_CSWkrb5libdev_EXCLUSIVE += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
-PKGFILES_CSWkrb5libdev_EXCLUSIVE += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
-PKGFILES_CSWkrb5libdev_EXCLUSIVE += $(includedir)/.*
-PKGFILES_CSWkrb5libdev_EXCLUSIVE += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss-client|compile_et)
+PKGFILES_CSWkrb5libdev  = $(mandir)/man8/sserver.8
+PKGFILES_CSWkrb5libdev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
+PKGFILES_CSWkrb5libdev += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
+PKGFILES_CSWkrb5libdev += $(includedir)/.*
+PKGFILES_CSWkrb5libdev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss-client|compile_et)
 
 # User gets all the rest
 #USER_BINS = kvno|ksu|krb524init|kpasswd|klist|kinit|kdestroy 
 #USER_SBINS = ktutil|kadmin|k5srvutil 
-#PKGFILES_CSWkrb5user_EXCLUSIVE  = $(mandir)/man8/($(USER_SBINS))\.8
-#PKGFILES_CSWkrb5user_EXCLUSIVE += $(mandir)/man1/($(USER_BINS))\.1
-#PKGFILES_CSWkrb5user_EXCLUSIVE += $(sharedstatedir)/examples/krb5/krb5.conf
-#PKGFILES_CSWkrb5user_EXCLUSIVE += $(bindir)/($(USER_BINS))
+#PKGFILES_CSWkrb5user  = $(mandir)/man8/($(USER_SBINS))\.8
+#PKGFILES_CSWkrb5user += $(mandir)/man1/($(USER_BINS))\.1
+#PKGFILES_CSWkrb5user += $(sharedstatedir)/examples/krb5/krb5.conf
+#PKGFILES_CSWkrb5user += $(bindir)/($(USER_BINS))
 
 include ../category.mk
 
