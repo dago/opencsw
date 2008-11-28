@@ -1,0 +1,10 @@
+--- sgml-common-0.6.3/bin/sgmlwhich.orig	2000-11-17 09:36:10.000000000 +0100
++++ sgml-common-0.6.3/bin/sgmlwhich	2008-11-28 19:59:16.764293172 +0100
+@@ -3,5 +3,6 @@
+ # Send any comments to Eric Bischoff <eric@caldera.de>
+ # This program is under GPL license. See LICENSE file for details.
+ 
+-echo "/etc/sgml/sgml.conf"
++# modified for CSW (this should be handled with autoconf, but i'm lazy)
++echo "/opt/csw/etc/sgml/sgml.conf"
+ # Simple, isn't it? ;-)

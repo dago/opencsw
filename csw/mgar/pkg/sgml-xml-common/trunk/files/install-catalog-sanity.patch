@@ -1,0 +1,92 @@
+--- sgml-common-0.6.3/bin/install-catalog.in.orig	2008-11-28 19:54:27.707251610 +0100
++++ sgml-common-0.6.3/bin/install-catalog.in	2008-11-28 21:43:50.645887927 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ # Script to install a catalog in the centralized SGML catalog
+ # Send any comments to Eric Bischoff <eric@caldera.de>
+ # This program is under GPL license. See LICENSE file for details.
+@@ -29,6 +29,9 @@
+ SGML_CENTRALIZED=""
+ SGML_ORDINARY=""
+ 
++CATALOGDIR="@sysconfdir@/sgml"
++CATALOG="$CATALOGDIR/catalog"
++
+ # Process options
+ case $1 in
+    -d|--delegate) SGML_POINTER="DELEGATE"
+@@ -66,23 +69,23 @@
+ esac
+ 
+ # Check that the super catalog can be created and changed and deleted
+-if [ ! -w /etc/sgml ]
++if [ ! -w "$CATALOGDIR" ]
+ then
+-  echo "`basename $0`: unable to write in /etc/sgml." >&2
++  echo "`basename $0`: unable to write in $CATALOGDIR." >&2
+   exit 2
+ fi
+ case $SGML_ACTION in
+    addition)
+-	if [ -e /etc/sgml/catalog -a ! -w /etc/sgml/catalog ]
++	if [ -e "$CATALOG" -a ! -w "$CATALOG" ]
+ 	then
+-	  echo "`basename $0`: can not modify \"/etc/sgml/catalog\"." >&2
++	  echo "`basename $0`: can not modify \"$CATALOG\"." >&2
+ 	  exit 2
+ 	fi
+ 	;;
+    removal)
+-	if [ ! -w /etc/sgml/catalog ]
++	if [ ! -w "$CATALOG" ]
+ 	then
+-	  echo "`basename $0`: can not modify \"/etc/sgml/catalog\"." >&2
++	  echo "`basename $0`: can not modify \"$CATALOG\"." >&2
+ 	  exit 2
+ 	fi
+ 	;;
+@@ -131,24 +134,24 @@
+ case $SGML_ACTION in
+     addition)
+ 	echo "`basename $0`: addition of $SGML_ORDINARY in $SGML_CENTRALIZED"
+-	if grep -q "$SGML_ORDINARY" "$SGML_CENTRALIZED" 2>/dev/null
++	if ggrep -q "$SGML_ORDINARY" "$SGML_CENTRALIZED" 2>/dev/null
+ 	then
+ 	  echo "Warning: $SGML_ORDINARY is already installed in the centralized catalog $SGML_CENTRALIZED" >&2
+ 	else
+ 	  echo "$SGML_POINTER \"$SGML_ORDINARY\"" >> "$SGML_CENTRALIZED"
+ 	fi
+-	grep -q "$SGML_CENTRALIZED" /etc/sgml/catalog 2>/dev/null
++	ggrep -q "$SGML_CENTRALIZED" "$CATALOG" 2>/dev/null
+ 	if [ $? -ne 0 ]
+ 	then
+-	  echo "`basename $0`: addition of $SGML_CENTRALIZED in /etc/sgml/catalog"
+-	  echo "$SGML_POINTER \"$SGML_CENTRALIZED\"" >> /etc/sgml/catalog
++	  echo "`basename $0`: addition of $SGML_CENTRALIZED in $CATALOG"
++	  echo "$SGML_POINTER \"$SGML_CENTRALIZED\"" >> "$CATALOG"
+ 	fi
+ 	;;
+    removal)
+ 	echo "`basename $0`: removal of $SGML_ORDINARY from $SGML_CENTRALIZED"
+-	if grep -q "$SGML_ORDINARY" "$SGML_CENTRALIZED" 2>/dev/null
++	if ggrep -q "$SGML_ORDINARY" "$SGML_CENTRALIZED" 0>/dev/null
+ 	then
+-          sed -e "\:$SGML_POINTER \"\\?$SGML_ORDINARY\"\\?:d" < "$SGML_CENTRALIZED" > "${SGML_CENTRALIZED}.new"
++          gsed -e "\:$SGML_POINTER \"\\?$SGML_ORDINARY\"\\?:d" < "$SGML_CENTRALIZED" > "${SGML_CENTRALIZED}.new"
+           mv "${SGML_CENTRALIZED}.new" "$SGML_CENTRALIZED"
+ 	else
+ 	  echo "Warning: $SGML_ORDINARY was not found in the centralized catalog $SGML_CENTRALIZED" >&2
+@@ -156,9 +159,9 @@
+ 	if [ ! -s "$SGML_CENTRALIZED" ]
+ 	then
+ 	  rm "$SGML_CENTRALIZED"
+-	  echo "`basename $0`: removal of $SGML_CENTRALIZED from /etc/sgml/catalog"
+-          sed -e "\:$SGML_POINTER \"\\?$SGML_CENTRALIZED\"\\?:d" < /etc/sgml/catalog > /etc/sgml/catalog.new
+-          mv /etc/sgml/catalog.new /etc/sgml/catalog
++	  echo "`basename $0`: removal of $SGML_CENTRALIZED from $CATALOG"
++          gsed -e "\:$SGML_POINTER \"\\?$SGML_CENTRALIZED\"\\?:d" < "$CATALOG" > "$CATALOG".new
++          mv "$CATALOG".new "$CATALOG"
+ 	fi
+ 	;;
+ esac

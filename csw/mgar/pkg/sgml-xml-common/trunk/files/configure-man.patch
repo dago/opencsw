@@ -1,0 +1,8 @@
+--- sgml-common-0.6.3/configure.in.orig	2008-11-28 22:04:44.893533998 +0100
++++ sgml-common-0.6.3/configure.in	2008-11-28 22:04:47.739223899 +0100
+@@ -20,4 +20,5 @@
+           bin/Makefile bin/install-catalog \
+           config/Makefile \
+           doc/Makefile doc/HTML/Makefile doc/man/Makefile doc/refentry/Makefile \
++	  doc/man/install-catalog.8 \
+           sgml-iso-entities/Makefile xml-iso-entities/Makefile)

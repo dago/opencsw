@@ -1,0 +1,16 @@
+103c9828f24820df86e55e7862e28974  download/sgml-common-0.6.3.tgz
+8344f78748603b2870f2d7f401ef49eb  download/CSWsgmlcommon.gspec
+f68c56d0904b311d4d254130a63eeee6  download/CSWxmlcommon.gspec
+9ef2e183281920ecced665a3f644bace  download/xml.dcl
+e0135e28b7f6c566a3e0ee379528091b  download/html.dcl
+8f56c7a27cbe7c8251a385ddb90dd641  download/xml.soc
+cc6d164ed52f3d96f8e520255bf650ff  download/html.soc
+7296f5f2cf78a74f94f5e1ceb48e3555  download/sgml-common-0.6.3-docdir.patch
+dcda4302e1b43256a55a658280651f42  download/sgml-common-automake.patch
+24ff49d6310889d0f423b35893623151  download/sgml-common-quotes.patch
+b51552a733ae70753b6e7ea997a4e482  download/sgml-common-umask.patch
+d36dcc47efa67f41d7e406386754bb67  download/sgml-common-xmldir.patch
+c88f3684fc232953555393fb8e0de9e4  download/install-catalog-sanity.patch
+b35d53333ca6dbc6cd96f0135cd4f85d  download/sgmlwhich-sanity.patch
+99ac766ea29643aa33236a39596d943c  download/configure-man.patch
+12b32f2a5ad0ab2edb70bfb83f3aecd6  download/install-catalog-man.patch
