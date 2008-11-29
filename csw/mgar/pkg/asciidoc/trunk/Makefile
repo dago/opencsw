@@ -22,7 +22,7 @@ DISTFILES += $(AUTOFILES)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+include gar/category.mk
 
 # until the autoconf stuff is included upstream, we'll maintain and import our
 # own.
