@@ -1,5 +1,5 @@
 GARNAME      = tomcat6
-GARVERSION   = 6.0.16
+GARVERSION   = 6.0.18
 CATEGORIES   = server
 
 DESCRIPTION  =  Apache Jakarta Tomcat 6 Servlet/JSP Container
@@ -11,7 +11,7 @@ MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-6/v$(GAR
 DISTFILES     = apache-tomcat-$(GARVERSION).tar.gz
 PKGDIST       = apache-tomcat-$(GARVERSION).tar.gz
 DISTFILES    += CSWtomcat6.gspec CSWtomcat6.prototype CSWtomcat6.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-tomcat6 tomcat6.xml tomcat6 cswtomcat6
-#DISTFILES    += $(call admfiles, CSWtomcat6, depend )
+# DISTFILES    += $(call admfiles, CSWtomcat6, depend )
 
 CONFIGURE_SCRIPTS = none
 BUILD_SCRIPTS     = none

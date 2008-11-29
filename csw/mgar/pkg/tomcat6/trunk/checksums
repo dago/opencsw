@@ -1,6 +1,6 @@
-4985fed02341a9e04ea43e91e6444ace  download/apache-tomcat-6.0.16.tar.gz
+8354e156f097158f8d7b699078fd39c1  download/apache-tomcat-6.0.18.tar.gz
 d47fc99cefd4bbf97b124bc7432f573a  download/CSWtomcat6.gspec
-9753421607534ff7b60a46f1a3afeb0d  download/CSWtomcat6.prototype
+75b68eb098cb3915ed58c13f844e9248  download/CSWtomcat6.prototype
 d41d8cd98f00b204e9800998ecf8427e  download/CSWtomcat6.depend
 b46a7d41733aceecfdcba29e8352517f  download/preremove
 3792b87a62c4548dda0d5d34b48dd528  download/postinstall
