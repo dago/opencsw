@@ -1,0 +1,7 @@
+--- /dev/null	2008-11-29 01:02:29.000000000 +0100
++++ sgml-common-0.6.3/config/sgml.conf.in	2000-11-17 09:36:11.000000000 +0100
+@@ -0,0 +1,4 @@
++# /etc/sgml/sgml.conf conformant with LSB
++# Modified to be autoconf-able so that it can work in CSW too...
++SGML_BASE_DIR=@datadir@/sgml
++SGML_CATALOGS_DIR=@sysconfdir@/sgml

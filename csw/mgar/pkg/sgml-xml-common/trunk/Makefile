@@ -18,15 +18,16 @@ EXTRA_FILES = xml.dcl html.dcl xml.soc html.soc
 
 MASTER_SITES = ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWsgmlcommon,)
-DISTFILES += $(call admfiles,CSWxmlcommon,)
+DISTFILES += CSWsgmlcommon.gspec CSWsgmlcommon.prototype CSWsgmlcommon.depend
+DISTFILES += CSWxmlcommon.gspec CSWxmlcommon.prototype
 DISTFILES += $(EXTRA_FILES)
 
 PATCHFILES = sgml-common-0.6.3-docdir.patch sgml-common-automake.patch
 PATCHFILES += sgml-common-quotes.patch sgml-common-umask.patch
 PATCHFILES += sgml-common-xmldir.patch install-catalog-sanity.patch
 PATCHFILES += sgmlwhich-sanity.patch configure-man.patch
-PATCHFILES += install-catalog-man.patch
+PATCHFILES += install-catalog-man.patch sgml-conf-autoconf.patch
+PATCHFILES += configure-sgml-conf.patch
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-docdir=$(datadir)/doc
 
