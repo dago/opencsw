@@ -1,5 +1,5 @@
 GARNAME = maven2
-GARVERSION = 2.0.8
+GARVERSION = 2.0.9
 CATEGORIES = devel
 GARCH = all
 
