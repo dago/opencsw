@@ -15,9 +15,7 @@ endef
 
 AUTOFILES = configure.ac Makefile.in install-sh
 
-#MASTER_SITES = http://www.methods.co.nz/$(GARNAME)/
-MASTER_SITES = http://superb-east.dl.sourceforge.net/sourceforge/$(GARNAME)/
-MASTER_SITES += http://voxel.dl.sourceforge.net/sourceforge/$(GARNAME)/
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWasciidoc.gspec CSWasciidoc.depend
 DISTFILES += $(AUTOFILES)
