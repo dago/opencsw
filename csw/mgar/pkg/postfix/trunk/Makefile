@@ -1,5 +1,5 @@
 GARNAME = postfix
-GARVERSION = 2.4.6
+GARVERSION = 2.4.7
 CATEGORIES = server
 
 DESCRIPTION = Postfix aims to be an alternative to the widely-used sendmail program
@@ -45,7 +45,8 @@ FLAGS=\
 	-DHAS_PCRE \
 	-DHAS_MYSQL \
 	-DHAS_PGSQL \
-	-DHAS_DB
+	-DHAS_DB \
+	-DUSE_CYRUS_SASL 
 
 DEFAULTS=\
 	-DDEF_MANPAGE_DIR=\"$(DEF_MANPAGE_DIR)\" \
