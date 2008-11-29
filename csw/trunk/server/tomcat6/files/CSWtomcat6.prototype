@@ -11,19 +11,12 @@ d smfyes /opt/csw/lib/svc 0755 root bin
 d smfyes /opt/csw/lib/svc/method 0755 root bin
 f smfyes /opt/csw/lib/svc/method/svc-tomcat6=svc-tomcat6 0755 root bin
 f none /etc/init.d/cswtomcat6 0755 root bin
-d none /etc/opt/csw 0755 root bin
 f none /etc/opt/csw/tomcat6 0644 root bin
-d none /etc/rc0.d 0755 root bin
 s none /etc/rc0.d/K17tomcat6=/etc/init.d/cswtomcat6
-d none /etc/rc1.d 0755 root bin
 s none /etc/rc1.d/K17tomcat6=/etc/init.d/cswtomcat6
-d none /etc/rc2.d 0755 root bin
 s none /etc/rc2.d/K17tomcat6=/etc/init.d/cswtomcat6
-d none /etc/rc3.d 0755 root bin
 s none /etc/rc3.d/S51tomcat6=/etc/init.d/cswtomcat6
-d none /etc/rcS.d 0755 root bin
 s none /etc/rcS.d/K17tomcat6=/etc/init.d/cswtomcat6
-d none /opt/csw/etc 0755 root bin
 d none /opt/csw/etc/tomcat6 0755 root bin
 d none /opt/csw/etc/tomcat6/conf 0755 tomcat tomcat
 f none /opt/csw/etc/tomcat6/conf/catalina.policy.CSW 0640 tomcat tomcat
@@ -696,7 +689,6 @@ s none /opt/csw/share/tomcat6/work=/var/opt/csw/tomcat6/work
 d none /var/opt/csw/tomcat6 0755 root bin
 d none /var/opt/csw/tomcat6/logs 0755 tomcat tomcat
 d none /var/opt/csw/tomcat6/temp 0755 tomcat tomcat
-f none /var/opt/csw/tomcat6/temp/safeToDelete.tmp 0640 tomcat tomcat
 d none /var/opt/csw/tomcat6/work 0755 tomcat tomcat
 i copyright=CSWtomcat6.copyright
 i depend=CSWtomcat6.depend
