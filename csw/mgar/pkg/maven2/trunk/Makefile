@@ -5,9 +5,15 @@ GARCH = all
 
 DESCRIPTION = Java software project management and comprehension tool
 define BLURB
-Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project's build, reporting and documentation from a central piece of information. 
+Maven is a software project management and comprehension tool. Based on
+the concept of a project object model (POM), Maven can manage a
+project's build, reporting and documentation from a central
+piece of information.
 
-Maven's primary goal is to allow a developer to comprehend the complete state of a development effort in the shortest period of time. In order to attain this goal there are several areas of concern that Maven attempts to deal with: 
+Maven's primary goal is to allow a developer to comprehend the complete
+state of a development effort in the shortest period of time. In order
+to attain this goal there are several areas of conce rn that Maven
+attempts to deal with:
 
    * Making the build process easy
    * Providing a uniform build system
@@ -16,7 +22,7 @@ Maven's primary goal is to allow a developer to comprehend the complete state of
    * Allowing transparent migration to new features
 endef
 
-MASTER_SITES = http://www.powertech.no/apache/dist/maven/binaries
+MASTER_SITES = http://www.powertech.no/apache/dist/maven/binaries/
 DISTFILES  = apache-maven-$(GARVERSION)-bin.tar.gz
 DISTFILES += $(call admfiles,CSWmaven2,)
 DISTFILES += bin-mvn
