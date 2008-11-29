@@ -125,6 +125,7 @@ d none /opt/csw/share/tomcat5/server/webapps/manager/WEB-INF 0755 root bin
 d none /opt/csw/share/tomcat5/server/webapps/manager/WEB-INF/lib 0755 root bin
 f none /opt/csw/share/tomcat5/server/webapps/manager/WEB-INF/lib/catalina-manager.jar 0644 root bin
 f none /opt/csw/share/tomcat5/server/webapps/manager/WEB-INF/lib/commons-fileupload-1.2.jar 0644 root bin
+f none /opt/csw/share/tomcat5/server/webapps/manager/WEB-INF/lib/commons-io-1.4.jar 0644 root bin
 f none /opt/csw/share/tomcat5/server/webapps/manager/WEB-INF/web.xml 0644 root bin
 f none /opt/csw/share/tomcat5/server/webapps/manager/html-manager-howto.html 0644 root bin
 d none /opt/csw/share/tomcat5/server/webapps/manager/images 0755 root bin
@@ -705,11 +706,13 @@ f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/printer/realm.html 0644
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/printer/resources.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/printer/server.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/printer/service.html 0644 root bin
+f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/printer/systemprops.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/printer/valve.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/realm.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/resources.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/server.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/service.html 0644 root bin
+f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/systemprops.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/config/valve.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/connectors.html 0644 root bin
 f none /opt/csw/share/tomcat5/webapps/tomcat-docs/default-servlet.html 0644 root bin

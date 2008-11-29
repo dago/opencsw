@@ -1,5 +1,5 @@
 GARNAME      = tomcat5
-GARVERSION   = 5.5.26
+GARVERSION   = 5.5.27
 CATEGORIES   = server
 
 DESCRIPTION  =  Apache Jakarta Tomcat 5.5 Servlet/JSP Container
