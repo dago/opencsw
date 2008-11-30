@@ -1,5 +1,5 @@
 GARNAME = mantis
-GARVERSION = 1.1.4
+GARVERSION = 1.1.5
 SF_PROJ = mantisbt
 CATEGORIES = apps
 
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(SF_PROJ)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmantis,depend preinstall postinstall)
 
 CONFIGURE_SCRIPTS =
