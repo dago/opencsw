@@ -1,5 +1,5 @@
 GARNAME = vsftpd
-GARVERSION = 2.0.6
+GARVERSION = 2.0.7
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.
@@ -17,7 +17,7 @@ MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall depend)
+DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall depend csw_usrgrp_config)
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd cswvsftpd.xml svc-cswvsftpd 
