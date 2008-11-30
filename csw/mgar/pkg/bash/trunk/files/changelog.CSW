@@ -1,3 +1,7 @@
+bash (3.2,REV=2008.11.30) unstable
+
+  * Added bash patches bash32-040 to bash-048.
+
 bash (3.2,REV=2007.06.02) unstable
 
   * Added bash patches bash32-034 to bash-039.
