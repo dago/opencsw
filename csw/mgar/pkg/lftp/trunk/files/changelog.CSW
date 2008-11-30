@@ -1,3 +1,9 @@
+lftp (3.7.6,REV=2008.11.30) unstable
+
+  * New upstream version.
+
+   -- Yann Rouillard <yann@opencsw.org>  Sun, 30 Nov 2008 22:43:16 +0100
+   
 lftp (3.7.4,REV=2008.10.04) unstable
 
   * New upstream version.
