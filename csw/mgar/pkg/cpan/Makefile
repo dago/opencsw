@@ -1,29 +1,52 @@
+# vim: ft=make ts=4 sw=4 noet
+# This makefile is to be included from Makefiles in each category
+# directory.
+
 default:
 	@echo "You are in the pkg/cpan directory."
 
+%:
+	@for i in $(filter-out CVS/,$(wildcard */)) ; do \
+		$(MAKE) -C $$i $* ; \
+	done
+
+paranoid-%:
+	@for i in $(filter-out CVS/,$(wildcard */)) ; do \
+		$(MAKE) -C $$i $* || exit 2; \
+	done
+
+export BUILDLOG ?= $(shell pwd)/buildlog.txt
+
+report-%:
+	@for i in $(filter-out CVS/,$(wildcard */)) ; do \
+		$(MAKE) -C $$i $* || echo "	*** make $* in $$i failed ***" >> $(BUILDLOG); \
+	done
+
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
-	@(echo "GARNAME = My-Perl-Module";			\
-	echo "GARVERSION = 1.234";				\
-	echo "CATEGORIES = cpan";				\
-	echo "AUTHOR = CPAUTH";					\
-	echo "";						\
-	echo "DESCRIPTION = Brief description";			\
-	echo "define BLURB";					\
-  	echo "  Long description";				\
-	echo "endef";						\
-	echo "";						\
-	echo "DISTFILES += $$(call admfiles,CSWpmmyperlmod,)";	\
-	echo "";						\
-	echo "include gar/category.mk";				\
+	@(echo "GARNAME = package";                                     \
+	echo "GARVERSION = 1.0";                                        \
+	echo "CATEGORIES = category";                                   \
+	echo "";                                                        \
+	echo "DESCRIPTION = Brief description";                         \
+	echo "define BLURB";                                            \
+	echo "  Long description";                                      \
+	echo "endef";                                                   \
+	echo "";                                                        \
+	echo "MASTER_SITES = ";                                         \
+	echo "DISTFILES  = $$(GARNAME)-$$(GARVERSION).tar.gz";          \
+	echo "DISTFILES += $$(call admfiles,CSWpackage,)";              \
+	echo "";                                                        \
+	echo "CONFIGURE_ARGS = $$(DIRPATHS)";                           \
+	echo "";                                                        \
+	echo "include gar/category.mk";                                 \
 	) > $*/trunk/Makefile
 	@svn add $*/trunk/Makefile
-	@(echo "%var            bitname pm_myperlmod";		\
-	echo "%var            pkgname CSWpmmyperlmod";		\
-	echo "%var            arch all";			\
-	echo "%include        url file://%{PKGLIB}/csw_cpan.gspec"; \
-	echo "%copyright      url file://%{WORKSRC}/COPYING";	\
-	) > $*/trunk/files/CSWpmmyperlmod.gspec
+	@(echo "%var            bitname package";                       \
+	echo "%var            pkgname CSWpackage";                      \
+	echo "%include        url file://%{PKGLIB}/csw_dyndepend.gspec";\
+	echo "%copyright      url file://%{WORKSRC}/LICENSE";           \
+	) > $*/trunk/files/CSWpackage.gspec
 	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $*/trunk
 	@echo "gar https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v1" | svn propset svn:externals -F /dev/fd/0 $*/trunk
 	@svn co https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v1 $*/trunk/gar
