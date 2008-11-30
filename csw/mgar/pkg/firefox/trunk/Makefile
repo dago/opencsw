@@ -10,13 +10,14 @@ define BLURB
  The award-winning, free Web browser is better than ever. Browse the Web with confidence - Firefox protects you from viruses, spyware and pop-ups. Enjoy improvements to performance, ease of use and privacy. It's easy to import your favorites and settings and get started. Download Firefox now and get the most out of the Web. 
 endef
 
+include gar/category.mk
+
+UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
 DISTFILES += $(call admfiles,CSWfirefox, depend postinstall postremove )
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
+# Defines the list of patches to be applied to the sources
 PATCHFILES = autoconf.mk.in.diff
 PATCHFILES += packager.mk.diff
 PATCHFILES += jemalloc.c.diff
@@ -31,7 +32,8 @@ PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
 CFLAGS+=-xlibmil -D__solaris__ 
 
-include ../category.mk
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CFLAGS+= -DG_HAVE_ISO_VARARGS
 CXXFLAGS+= -DG_HAVE_ISO_VARARGS
