@@ -1,6 +1,5 @@
-GARNAME = mantis
+GARNAME = mantisbt
 GARVERSION = 1.1.5
-SF_PROJ = mantisbt
 CATEGORIES = apps
 
 DESCRIPTION = Mantis is a free popular web-based bugtracking system
@@ -14,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(SF_PROJ)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmantis,depend preinstall postinstall)
 
 CONFIGURE_SCRIPTS =
