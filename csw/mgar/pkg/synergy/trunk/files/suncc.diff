@@ -1,0 +1,178 @@
+diff -u -r synergy-1.3.1-original/lib/arch/CArchConsoleUnix.cpp synergy-1.3.1/lib/arch/CArchConsoleUnix.cpp
+--- synergy-1.3.1-original/lib/arch/CArchConsoleUnix.cpp	Mon Mar 13 05:24:50 2006
++++ synergy-1.3.1/lib/arch/CArchConsoleUnix.cpp	Mon Oct  9 17:57:37 2006
+@@ -13,7 +13,7 @@
+  */
+ 
+ #include "CArchConsoleUnix.h"
+-#include <cstdio>
++#include <stdio.h>
+ 
+ //
+ // CArchConsoleUnix
+diff -u -r synergy-1.3.1-original/lib/platform/CXWindowsClipboard.cpp synergy-1.3.1/lib/platform/CXWindowsClipboard.cpp
+--- synergy-1.3.1-original/lib/platform/CXWindowsClipboard.cpp	Sun Apr  2 03:47:03 2006
++++ synergy-1.3.1/lib/platform/CXWindowsClipboard.cpp	Mon Oct  9 18:29:38 2006
+@@ -750,7 +750,7 @@
+ 		}
+ 
+ 		// save it
+-		motifFormats.insert(std::make_pair(motifFormat->m_type, data));
++		motifFormats.insert(std::pair<unsigned long, std::string>(motifFormat->m_type, data));
+ 	}
+ 	//const UInt32 numMotifFormats = motifFormats.size();
+ 
+diff -u -r synergy-1.3.1-original/lib/platform/CXWindowsKeyState.cpp synergy-1.3.1/lib/platform/CXWindowsKeyState.cpp
+--- synergy-1.3.1-original/lib/platform/CXWindowsKeyState.cpp	Sun Apr  2 21:16:39 2006
++++ synergy-1.3.1/lib/platform/CXWindowsKeyState.cpp	Mon Oct  9 18:36:15 2006
+@@ -468,7 +468,7 @@
+ 
+ 			// add key
+ 			keyMap.addKeyEntry(item);
+-			m_keyCodeFromKey.insert(std::make_pair(item.m_id, keycode));
++			m_keyCodeFromKey.insert(std::pair<const KeyID, KeyCode>(item.m_id, keycode));
+ 
+ 			// add other ways to synthesize the key
+ 			if ((j & 1) != 0) {
+@@ -714,9 +714,9 @@
+ 
+ 						if (group == 0) {
+ 							m_keyCodeFromKey.insert(
+-									std::make_pair(lKeyID, keycode));
++									std::pair<const KeyID, KeyCode>(lKeyID, keycode));
+ 							m_keyCodeFromKey.insert(
+-									std::make_pair(uKeyID, keycode));
++									std::pair<const KeyID, KeyCode>(uKeyID, keycode));
+ 						}
+ 						continue;
+ 					}
+@@ -726,7 +726,7 @@
+ 				item.m_id = CXWindowsUtil::mapKeySymToKeyID(keysym);
+ 				keyMap.addKeyEntry(item);
+ 				if (group == 0) {
+-					m_keyCodeFromKey.insert(std::make_pair(item.m_id, keycode));
++					m_keyCodeFromKey.insert(std::pair<const KeyID, KeyCode>(item.m_id, keycode));
+ 				}
+ 			}
+ 		}
+diff -u -r synergy-1.3.1-original/lib/platform/CXWindowsScreen.cpp synergy-1.3.1/lib/platform/CXWindowsScreen.cpp
+--- synergy-1.3.1-original/lib/platform/CXWindowsScreen.cpp	Sun Apr  2 21:16:39 2006
++++ synergy-1.3.1/lib/platform/CXWindowsScreen.cpp	Mon Oct  9 18:37:47 2006
+@@ -600,7 +600,7 @@
+ 						XGrabKey(m_display, code, modifiers2, m_root,
+ 									False, GrabModeAsync, GrabModeAsync);
+ 						if (!err) {
+-							hotKeys.push_back(std::make_pair(code, modifiers2));
++							hotKeys.push_back(std::make_pair(static_cast<int>(code), modifiers2));
+ 							m_hotKeyToIDMap[CHotKeyItem(code, modifiers2)] = id;
+ 						}
+ 					}
+diff -u -r synergy-1.3.1-original/lib/server/CConfig.cpp synergy-1.3.1/lib/server/CConfig.cpp
+--- synergy-1.3.1-original/lib/server/CConfig.cpp	Wed Mar 22 06:40:27 2006
++++ synergy-1.3.1/lib/server/CConfig.cpp	Mon Oct  9 19:28:35 2006
+@@ -1739,7 +1739,7 @@
+ 								index != config.m_nameToCanonicalName.end();
+ 								++index) {
+ 			if (index->first != index->second) {
+-				aliases.insert(std::make_pair(index->second, index->first));
++				aliases.insert(std::pair<const std::string,std::string>(index->second, index->first));
+ 			}
+ 		}
+ 
+diff -u -r synergy-1.3.1-original/lib/server/CConfig.h synergy-1.3.1/lib/server/CConfig.h
+--- synergy-1.3.1-original/lib/server/CConfig.h	Mon Feb 20 22:00:04 2006
++++ synergy-1.3.1/lib/server/CConfig.h	Mon Oct  9 19:26:46 2006
+@@ -26,6 +26,8 @@
+ #include "IPlatformScreen.h"
+ #include <iosfwd>
+ 
++#include <iterator>
++
+ class CConfig;
+ class CConfigReadContext;
+ 
+@@ -38,8 +40,11 @@
+ 	typedef CString*					pointer;
+ 	typedef CString&					reference;
+ };
++typedef iterator_traits<CConfig> CConfig_iterator_traits;
+ };
+ 
++
++
+ //! Server configuration
+ /*!
+ This class holds server configuration information.  That includes
+@@ -142,7 +147,8 @@
+ 	typedef CCell::const_iterator link_const_iterator;
+ 	typedef CCellMap::const_iterator internal_const_iterator;
+ 	typedef CNameMap::const_iterator all_const_iterator;
+-	class const_iterator : std::iterator_traits<CConfig> {
++	
++	class const_iterator : std::CConfig_iterator_traits {
+ 	public:
+ 		explicit const_iterator() : m_i() { }
+ 		explicit const_iterator(const internal_const_iterator& i) : m_i(i) { }
+@@ -168,6 +174,7 @@
+ 		internal_const_iterator	m_i;
+ 	};
+ 
++
+ 	CConfig();
+ 	virtual ~CConfig();
+ 
+@@ -533,4 +540,7 @@
+ 	CString				m_error;
+ };
+ 
++
++
++
+ #endif
+diff -u -r synergy-1.3.1-original/lib/synergy/CKeyMap.cpp synergy-1.3.1/lib/synergy/CKeyMap.cpp
+--- synergy-1.3.1-original/lib/synergy/CKeyMap.cpp	Wed Mar 22 06:40:27 2006
++++ synergy-1.3.1/lib/synergy/CKeyMap.cpp	Mon Oct  9 18:26:11 2006
+@@ -966,7 +966,7 @@
+ 		if (keyItem.m_generates != 0) {
+ 			if (!keyItem.m_lock || (currentState & keyItem.m_generates) == 0) {
+ 				// add modifier key and activate modifier
+-				activeModifiers.insert(std::make_pair(
++				activeModifiers.insert( std::pair<const KeyModifierMask,KeyItem>(
+ 									keyItem.m_generates, keyItem));
+ 				currentState |= keyItem.m_generates;
+ 			}
+@@ -1039,10 +1039,10 @@
+ 		else {
+ 			// release all the keys that generate the modifier that are
+ 			// currently down
+-			std::pair<ModifierToKeys::const_iterator,
+-						ModifierToKeys::const_iterator> range =
++			std::pair<ModifierToKeys::iterator,
++						ModifierToKeys::iterator> range =
+ 				activeModifiers.equal_range(keyItem.m_generates);
+-			for (ModifierToKeys::const_iterator i = range.first;
++			for (ModifierToKeys::iterator i = range.first;
+ 								i != range.second; ++i) {
+ 				keystrokes.push_back(Keystroke(i->second.m_button,
+ 								false, false, i->second.m_client));
+@@ -1050,7 +1050,7 @@
+ 		}
+ 
+ 		if (type == kKeystrokeModify) {
+-			activeModifiers.insert(std::make_pair(
++			activeModifiers.insert(std::pair<const KeyModifierMask,KeyItem>(
+ 								keyItem.m_generates, keyItem));
+ 			currentState |= keyItem.m_generates;
+ 		}
+diff -u -r synergy-1.3.1-original/lib/synergy/CKeyState.cpp synergy-1.3.1/lib/synergy/CKeyState.cpp
+--- synergy-1.3.1-original/lib/synergy/CKeyState.cpp	Sat Apr  1 22:53:08 2006
++++ synergy-1.3.1/lib/synergy/CKeyState.cpp	Mon Oct  9 18:27:35 2006
+@@ -500,7 +500,7 @@
+ 		reinterpret_cast<CAddActiveModifierContext*>(vcontext);
+ 	if (group == context->m_activeGroup &&
+ 		(keyItem.m_generates & context->m_mask) != 0) {
+-		context->m_activeModifiers.insert(std::make_pair(
++		context->m_activeModifiers.insert(std::pair<const KeyModifierMask,CKeyMap::KeyItem>(
+ 								keyItem.m_generates, keyItem));
+ 	}	
+ }

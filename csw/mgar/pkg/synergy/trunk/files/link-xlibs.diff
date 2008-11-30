@@ -1,0 +1,29 @@
+diff --speed-large-files --minimal -Nru synergy-1.3.1.orig/configure.in synergy-1.3.1/configure.in
+--- synergy-1.3.1.orig/configure.in	2006-04-02 06:27:07.000000000 +0200
++++ synergy-1.3.1/configure.in	2008-11-28 23:37:41.074629177 +0100
+@@ -106,14 +106,16 @@
+ 	AC_PATH_X
+ 	AC_PATH_XTRA
+ 	save_CPPFLAGS="$CPPFLAGS"
++	save_LDFLAGS="$LDFLAGS"
+ 	CPPFLAGS="$X_CFLAGS $CPPFLAGS"
++	LDFLAGS="$X_LIBS $LDFLAGS"
+ 	XEXT_LDADD=
+ 
+ 	AC_CHECK_LIB(Xtst,
+ 		XTestQueryExtension,
+ 		[XEXT_LDADD="$XEXT_LDADD -lXtst"],
+ 		AC_MSG_ERROR(You must have the XTest library to build synergy),
+-		[$X_LIBS -lXext -lX11 $X_EXTRA_LIBS])
++		[-lXext -lX11 $X_EXTRA_LIBS])
+ 	AC_CHECK_HEADERS([X11/extensions/XTest.h],
+ 		,
+ 		AC_MSG_ERROR(You must have the XTest headers to compile synergy))
+@@ -202,6 +204,7 @@
+ 	fi
+ 
+ 	CPPFLAGS="$save_CPPFLAGS"
++	LDFLAGS="$save_LDFLAGS"
+ 	ARCH_LIBS="$X_LIBS $X_PRE_LIBS $XEXT_LDADD -lXext -lX11 $X_EXTRA_LIBS $ARCH_LIBS"
+ 	ARCH_CFLAGS="$ARCH_CFLAGS $X_CFLAGS"
+ fi
