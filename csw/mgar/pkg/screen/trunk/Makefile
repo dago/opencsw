@@ -1,5 +1,5 @@
 GARNAME = screen
-GARVERSION = 4.0.3
+GARVERSION = 4.0.1
 CATEGORIES = utils
 
 DESCRIPTION = A window manager that multiplexes a physical terminal.
