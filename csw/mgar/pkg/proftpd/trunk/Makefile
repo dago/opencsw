@@ -1,5 +1,5 @@
 GARNAME = proftpd
-GARVERSION = 1.3.0
+GARVERSION = 1.3.1
 CATEGORIES = server
 
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
@@ -20,5 +20,36 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 # No test suite
 TEST_SCRIPTS =
+
+INSTALL_SCRIPTS = custom
+
+PROFTPDBIN=ftpcount ftpdctl ftpshut ftptop ftpwho
+PROFTPDDOC=doc sample-configurations
+PROFTPDMAN1=utils/ftpcount.1 utils/ftptop.1 utils/ftpwho.1
+PROFTPDMAN5=src/xferlog.5
+PROFTPDMAN8=src/ftpdctl.8 src/proftpd.8
+
+install-custom:
+	ginstall -d $(DESTDIR)$(prefix)/etc
+	ginstall -d $(DESTDIR)$(prefix)/bin
+	ginstall -d $(DESTDIR)$(prefix)/sbin
+	ginstall -d $(DESTDIR)$(prefix)/var/proftpd
+	ginstall -d $(DESTDIR)$(prefix)/share/doc/proftpd
+	ginstall -d $(DESTDIR)$(prefix)/share/man/man1
+	ginstall -d $(DESTDIR)$(prefix)/share/man/man5
+	ginstall -d $(DESTDIR)$(prefix)/share/man/man8
+	cd $(WORKSRC); \
+	cp sample-configurations/basic.conf proftpd.conf.CSW; \
+	cp proftpd.conf.CSW $(DESTDIR)$(prefix)/etc; \
+	cp $(PROFTPDBIN) $(DESTDIR)$(prefix)/bin; \
+	cp proftpd $(DESTDIR)$(prefix)/sbin; \
+	chmod 755 $(DESTDIR)$(prefix)/sbin/proftpd; \
+	cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd; \
+	cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd; \
+	cp $(PROFTPDMAN1) $(DESTDIR)$(prefix)/share/man/man1; \
+	cp $(PROFTPDMAN1) $(DESTDIR)$(prefix)/share/man/man5; \
+	cp $(PROFTPDMAN1) $(DESTDIR)$(prefix)/share/man/man8 
+	$(MAKECOOKIE)
+
 
 include gar/category.mk
