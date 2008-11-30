@@ -23,7 +23,7 @@
 function get_package_maintainer
 {
 	_PACKAGE="$1"
-	_MAINTAINER="`wget -q http://securebar.secure-tunnel.com/cgi-bin/nph-freebar.cgi/110110/http/www.opencsw.org/packages.php/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
+	_MAINTAINER="`wget -q http://www.opencsw.org/packages.php/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
 	
 	echo "$_MAINTAINER"
 }

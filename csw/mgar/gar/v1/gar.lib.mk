@@ -105,9 +105,9 @@ checksum-%: $(CHECKSUM_FILE)
 
 # check a new upstream files are available
 
-UW_ARGS = $(addprefix -u ,$(MASTER_SITES))
-ifneq ($(UFILES_REGEX),)
-	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX))))
+UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
+ifneq ($(UFILES_REGEX), "")    
+	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
 else
 	FILES2CHECK = ""
 endif
@@ -124,7 +124,7 @@ check-upstream-and-mail:
 			fi; \
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
-		if [ -n "$$NEW_FILES" ]; then \
+		if [ ! "$$NEW_FILES" -eq "" ]; then \
 			{ echo ""; \
 			  echo "Hello dear $(GARNAME) maintainer,"; \
 			  echo ""; \
@@ -134,13 +134,25 @@ check-upstream-and-mail:
 			  echo "    $$NEW_FILES"; \
 			  echo ""; \
 			  echo "is/are available at the following url(s):"; \
-			  echo "    $(MASTER_SITES)"; \
+			  echo "    $(UPSTREAM_MASTER_SITES)"; \
 			  echo ""; \
 			  echo "Please consider updating your package." ; \
 			  echo ""; \
 			  echo "---"; \
 			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
-		fi; \
+	        else \
+    			if [ ! -n "$(UFILES_REGEX)" ]; then \
+				{ echo ""; \
+				  echo "Hello dear $(GARNAME) maintainer,"; \
+				  echo ""; \
+				  echo "The upstream notification job has detected that $(GARNAME) is not configured for automatic upstream file update detection."; \
+				  echo ""; \
+				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
+				  echo ""; \
+				  echo "---"; \
+				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+    			fi; \
+       		fi; \
 	fi
 	
 
@@ -156,11 +168,15 @@ check-upstream:
 			fi; \
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
-		if [ -n "$$NEW_FILES" ]; then \
+		if [ ! "$$NEW_FILES" -eq "" ]; then \
 			echo "$(GARNAME): new upstream files available: $$NEW_FILES"; \
-		fi; \
+        else \
+    		if [ ! -n "$(UFILES_REGEX)" ]; then \
+                echo "$(GARNAME): Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+    		fi; \
+        fi; \
 	fi
-	
+
 checknew-%:
 	@$(MAKECOOKIE)
 
