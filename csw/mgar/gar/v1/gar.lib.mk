@@ -105,6 +105,7 @@ checksum-%: $(CHECKSUM_FILE)
 
 # check a new upstream files are available
 
+UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
 UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
 ifneq ($(UFILES_REGEX), "")    
 	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
@@ -124,7 +125,7 @@ check-upstream-and-mail:
 			fi; \
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
-		if [ ! "$$NEW_FILES" -eq "" ]; then \
+		if test -z "$$NEW_FILES" ; then \
 			{ echo ""; \
 			  echo "Hello dear $(GARNAME) maintainer,"; \
 			  echo ""; \
@@ -141,7 +142,7 @@ check-upstream-and-mail:
 			  echo "---"; \
 			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 	        else \
-    			if [ ! -n "$(UFILES_REGEX)" ]; then \
+    			if [ ! -n '$(UFILES_REGEX)' ]; then \
 				{ echo ""; \
 				  echo "Hello dear $(GARNAME) maintainer,"; \
 				  echo ""; \
@@ -168,13 +169,16 @@ check-upstream:
 			fi; \
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
-		if [ ! "$$NEW_FILES" -eq "" ]; then \
-			echo "$(GARNAME): new upstream files available: $$NEW_FILES"; \
-        else \
-    		if [ ! -n "$(UFILES_REGEX)" ]; then \
+		if test -z "$$NEW_FILES" ; then \
+  			if [ ! -n '$(UFILES_REGEX)' ]; then \
                 echo "$(GARNAME): Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
     		fi; \
+        else \
+			echo "$(GARNAME): new upstream files available: $$NEW_FILES"; \
         fi; \
+else \
+echo "UPSTREAM_MASTER_SITES : $(UPSTREAM_MASTER_SITES)"; \
+echo "MASTER_SITES : $(MASTER_SITES)"; \
 	fi
 
 checknew-%:
