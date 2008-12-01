@@ -176,9 +176,6 @@ check-upstream:
         else \
 			echo "$(GARNAME): new upstream files available: $$NEW_FILES"; \
         fi; \
-else \
-echo "UPSTREAM_MASTER_SITES : $(UPSTREAM_MASTER_SITES)"; \
-echo "MASTER_SITES : $(MASTER_SITES)"; \
 	fi
 
 checknew-%:
