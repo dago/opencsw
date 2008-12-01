@@ -12,6 +12,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWfoxrt, depend prototype )
 DISTFILES += $(call admfiles,CSWfox, depend prototype )
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 LD=CC
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-release --with-shape=no --with-xshm=no --disable-threadsafe

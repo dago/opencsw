@@ -19,6 +19,9 @@ DISTFILES += $(call admfiles,CSWbdb43,depend prototype)
 DISTFILES += $(call admfiles,CSWbdb43-devel,depend prototype)
 DISTFILES += $(call admfiles,CSWbdb43-doc,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 CONFIGURE_SCRIPTS = dist

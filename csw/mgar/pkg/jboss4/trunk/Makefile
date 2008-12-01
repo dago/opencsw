@@ -13,6 +13,9 @@ PKGDIST       = jboss-$(GARVERSION).zip
 DISTFILES    += CSWjboss4.gspec CSWjboss4.prototype CSWjboss4.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-jboss4 jboss4.xml jboss4.conf cswjboss4
 # DISTFILES    += $(call admfiles, CSWjboss4, depend )
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = jboss-(\d+(?:\.\d+)*).zip
+
 CONFIGURE_SCRIPTS = none
 BUILD_SCRIPTS     = none
 TEST_SCRIPTS	  = none

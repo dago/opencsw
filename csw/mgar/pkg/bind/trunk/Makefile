@@ -14,9 +14,13 @@ define BLURB
   high-volume and high-reliability applications.
 endef
 
+UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 DISTFILES += $(call admfiles,CSWbind,preinstall postinstall preremove)
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)-([A-Z][0-9])
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libtool

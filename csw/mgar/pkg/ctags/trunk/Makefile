@@ -15,6 +15,9 @@ MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWctags.gspec CSWctags.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Respect DESTDIR
 PATCHFILES += install.diff
 

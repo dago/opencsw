@@ -16,6 +16,9 @@ DISTFILES += $(call admfiles,CSWcs,depend prototype)
 DISTFILES += $(call admfiles,CSWpmcs,depend prototype)
 DISTFILES += $(call admfiles,CSWpycs,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Remove an unneeded linux-only header
 PATCHFILES += linuxheader.diff
 

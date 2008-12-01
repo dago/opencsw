@@ -21,6 +21,9 @@ DISTFILES += cswjetty6 cswjetty6.xml svc-cswjetty6
 DISTFILES += $(call admfiles,CSW$(GARNAME),prototype csw_usrgrp_config postinstall)
 DISTFILES += $(call admfiles,CSW$(GARNAME)doc,prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = jetty-(\d+(?:\.\d+)*).zip
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =

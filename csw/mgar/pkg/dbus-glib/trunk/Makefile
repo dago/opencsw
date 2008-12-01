@@ -13,6 +13,9 @@ MASTER_SITES  = http://dbus.freedesktop.org/releases/dbus-glib/
 DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz 
 PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz 
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES    += CSWdbusglib.gspec CSWdbusglib.prototype CSWdbusglib.depend
 DISTFILES    += CSWdbusglibdev.gspec CSWdbusglibdev.prototype CSWdbusglibdev.depend
 # DISTFILES    += $(call admfiles,CSWdbusglib, depend)

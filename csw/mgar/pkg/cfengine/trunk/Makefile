@@ -17,6 +17,9 @@ MASTER_SITES = ftp://ftp.iu.hio.no/pub/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWcfengine,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Requires GNU texi
 PATCHFILES = nodoc.diff
 

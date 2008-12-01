@@ -19,6 +19,9 @@ DISTFILES += $(call admfiles,CSWiozone)
 
 DISTNAME = $(GARNAME)$(VERSION)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*).tar
+
 PATCHFILES = patch-vx_ioctl.diff
 
 DOCS = IOzone_msword_98.pdf

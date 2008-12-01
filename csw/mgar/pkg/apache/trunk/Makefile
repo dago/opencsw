@@ -11,6 +11,9 @@ endef
 MASTER_SITES = http://www.ibiblio.org/pub/mirrors/apache/httpd/
 DISTFILES = $(GARNAME)_$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)
 CONFIGURE_ARGS += --with-apr-util=$(prefix)

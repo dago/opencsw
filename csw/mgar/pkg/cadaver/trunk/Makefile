@@ -9,6 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.webdav.org/cadaver/
+UPSTREAM_MASTER_SITES = http://www.webdav.org/cadaver/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -16,6 +17,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcadav,prototype depend)
 DISTFILES += changelog.CSW
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # add destdir support to makefile
 PATCHFILES = destdir.patch

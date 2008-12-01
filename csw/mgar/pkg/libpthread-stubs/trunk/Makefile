@@ -11,6 +11,9 @@ MASTER_SITES =http://xcb.freedesktop.org/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # DISTFILES    += CSWlibpthreadstubs.gspec CSWlibpthreadstubs.prototype CSWlibpthreadstubs.depend 
 # DISTFILES    += CSWlibpthreadstubsdev.gspec CSWlibpthreadstubsdev.prototype CSWlibpthreadstubsdev.depend 
 DISTFILES    += $(call admfiles,CSWlibpthreadstubs, depend)

@@ -11,6 +11,9 @@ MASTER_SITES = http://www.sentex.net/~mwandel/jhead/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWjhead.gspec CSWjhead.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES = makefile.patch
 
 # jhead doesn't use configure

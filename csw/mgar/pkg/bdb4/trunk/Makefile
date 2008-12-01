@@ -17,6 +17,9 @@ MASTER_SITES = ftp://ftp.sleepycat.com/releases/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWbdb4.gspec
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # See http://www.sleepycat.com/update/4.1.25/patch.4.1.25.html
 PATCHFILES += 4.1.25.1.diff 4.1.25.2.diff
 PATCHDIRLEVEL = 0

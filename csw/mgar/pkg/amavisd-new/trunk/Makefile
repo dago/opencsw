@@ -11,6 +11,9 @@ MASTER_SITES = http://www.ijs.si/software/amavisd/#download
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWamavisdnew, depend postinstall preinstall prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES += amavisd-agent.diff
 PATCHFILES += amavisd-nanny.diff
 PATCHFILES += amavisd-release.diff

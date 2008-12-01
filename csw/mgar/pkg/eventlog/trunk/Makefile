@@ -18,6 +18,9 @@ MASTER_SITES = http://www.balabit.com/downloads/files/eventlog/0.2/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWeventlog,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 GARCOMPILER = GNU

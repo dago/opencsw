@@ -16,6 +16,9 @@ MASTER_SITES = http://imapfilter.hellug.gr/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += CSWimapfilter.gspec CSWimapfilter.depend CSWimapfilter.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 # Remove anti-social makeflags
 PATCHFILES += make.diff
 

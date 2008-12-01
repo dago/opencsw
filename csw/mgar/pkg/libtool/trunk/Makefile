@@ -15,7 +15,8 @@ DISTFILES += $(call admfiles,CSWlibtool,depend prototype)
 DISTFILES += $(call admfiles,CSWlibtoolrt,prototype)
 DISTFILES += $(foreach ARCH,i386 sparc,$(ARCH)-gcc2.conf $(ARCH)-gcc2.tags $(ARCH)-gcc3.conf $(ARCH)-gcc3.tags)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -15,6 +15,9 @@ MASTER_SITES = http://www.mega-nerd.com/SRC
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibsamplerate,prototype depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/*.patch))
 
 CONFIGURE_ARGS = $(DIRPATHS)

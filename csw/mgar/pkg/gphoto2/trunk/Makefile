@@ -15,6 +15,9 @@ DISTFILES += $(call admfiles,CSWgphoto2,prototype depend)
 # 'cc' is a shell script to hack around libtool craziness
 DISTFILES += cc
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 DEPENDS += lib/libgphoto2
 
 PWD = $(shell pwd)

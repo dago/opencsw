@@ -19,6 +19,9 @@ MASTER_SITES = http://distcc.samba.org/ftp/distcc/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWdistcc,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

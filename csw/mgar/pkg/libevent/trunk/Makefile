@@ -17,6 +17,9 @@ DISTFILES    = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibevent,depend prototype)
 DISTFILES   += $(call admfiles,CSWlibevent-devel,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 GARCOMPILER = GNU
 
 # Adjust test.sh shell

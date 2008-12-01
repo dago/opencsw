@@ -33,6 +33,9 @@ DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype depend)
 DISTFILES += cyrus_imapd_utils.changelog.CSW
 DISTFILES += pm_cyrus.changelog.CSW
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
+
 # compile_et is not provided by krb5lib_dev so we must provide our own version
 # taken from the krb5 source.
 DISTFILES += compile_et et_c.awk et_h.awk

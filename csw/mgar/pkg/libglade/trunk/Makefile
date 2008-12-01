@@ -11,6 +11,9 @@ MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/libglade/0.17/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibglade,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
 
 TEST_SCRIPTS =

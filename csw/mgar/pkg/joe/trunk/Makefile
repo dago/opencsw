@@ -22,6 +22,9 @@ MASTER_SITES = http://superb-west.dl.sourceforge.net/sourceforge/joe-editor/ htt
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWjoe,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # joe doesn't have a test target

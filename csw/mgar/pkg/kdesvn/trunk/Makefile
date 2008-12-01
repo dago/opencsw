@@ -15,6 +15,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWkdesvn,)
 #DISTFILES += $(call admfiles,CSWkdesvn,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 #CONFIGURE_ARGS = $(DIRPATHS)
 LD_OPTIONS = -R/opt/csw/kde-gcc/lib -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 

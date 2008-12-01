@@ -11,6 +11,9 @@ MASTER_SITES = http://download.videolan.org/pub/libdvdcss/1.2.9/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibdvdcss, depend )
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 GARCOMPILER ?= GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)

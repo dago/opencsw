@@ -19,6 +19,10 @@ DISTFILES  = $(DLNAME).tar.gz
 DISTFILES += CSWfastcgi.gspec CSWfastcgi.depend CSWfastcgi.prototype
 #DISTFILES += CSWfastcgidoc.gspec CSWfastcgidoc.depend CSWfastcgidoc.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = fcgi-(\d+(?:\.\d+)*).tar.gz
+
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

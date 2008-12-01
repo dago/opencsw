@@ -14,6 +14,10 @@ endef
 MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES = $(GARNAME)-xsl-$(GARVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-xsl-(\d+(?:\.\d+)*).tar.bz2
+
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =

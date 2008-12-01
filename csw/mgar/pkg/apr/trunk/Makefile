@@ -15,6 +15,9 @@ DISTFILES += $(call admfiles,CSWapr,depend prototype)
 DISTFILES += $(call admfiles,CSWapr-devel,depend prototype)
 DISTFILES += config.layout
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --enable-layout=csw
 CONFIGURE_ARGS += --enable-threads

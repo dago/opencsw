@@ -17,6 +17,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATCHLEVEL).tar.gz
 #DISTFILES += CSWemacsrt.gspec CSWemacs.gspec CSWxemacs.gspec
 #DISTFILES += CSWemacsrt.prototype CSWemacs.prototype CSWxemacs.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)([a-z]).tar.gz
+
 # Force make to acknowledge DESTDIR
 #PATCHFILES += destdir.diff
 

@@ -14,6 +14,9 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpackage,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # This is attachment #45 from Ganglia bug
 #   http://bugzilla.ganglia.info/cgi-bin/bugzilla/show_bug.cgi?id=77
 PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris-cc.patch

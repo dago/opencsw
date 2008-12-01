@@ -19,6 +19,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWelinks,prototype depend)
 DISTFILES += changelog.CSW
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 # suppress the rdynamic test which doesn't
 # work correctly
 # PATCHFILES = configure_no_rdynamic.patch

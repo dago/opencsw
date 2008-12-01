@@ -18,6 +18,9 @@ endef
 MASTER_SITES = http://members.dslextreme.com/users/billw/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 # Patch up makefile to honor environment variables
 PATCHFILES = suncc.diff
 

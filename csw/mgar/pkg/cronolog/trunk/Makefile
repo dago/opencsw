@@ -14,6 +14,9 @@ endef
 MASTER_SITES = http://www.cronolog.org/download/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk

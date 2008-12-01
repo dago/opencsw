@@ -8,8 +8,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.easysw.com/pub/fltk/1.1.7/
+UPSTREAM_MASTER_SITES = http://ftp.easysw.com/pub/fltk/
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWfltk,)
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PATCHFILES = makeincludes.diff
 

@@ -12,6 +12,9 @@ endef
 MASTER_SITES = http://www.graphviz.org/pub/graphviz/ARCHIVE/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

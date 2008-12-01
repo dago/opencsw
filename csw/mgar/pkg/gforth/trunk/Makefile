@@ -16,6 +16,9 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWgforth,prototype)
 PATCHFILES   = gforth-DESTDIR.diff
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Compile with GCC
 GARCOMPILER = GNU
 

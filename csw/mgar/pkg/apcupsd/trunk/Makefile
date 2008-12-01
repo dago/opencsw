@@ -15,6 +15,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWapcupsd, depend prototype postinstall)
 DISTFILES += cswapcupsd
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 SPKG_CLASSES = none cswinitsmf
 
 CONFIGURE_ARGS = $(DIRPATHS)

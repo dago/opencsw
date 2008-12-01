@@ -20,6 +20,9 @@ DISTFILES += $(call admfiles,CSWkrb5lib)
 DISTFILES += $(call admfiles,CSWkrb5libdev,depend)
 DISTFILES += $(call admfiles,CSWkrb5user,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
+
 PATCHFILES  = patch-man2html-perl.diff
 PATCHFILES += patch-ldap-const.diff
 

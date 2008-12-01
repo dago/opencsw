@@ -20,6 +20,9 @@ DISTVERSION = $(subst .,_,$(GARVERSION))
 DISTFILES  = $(GARNAME)_$(DISTVERSION).tar.bz2
 DISTFILES += CSWboost.gspec
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 WORKSRC = $(WORKDIR)/$(GARNAME)_$(DISTVERSION)
 
 CONFIGURE_SCRIPTS =

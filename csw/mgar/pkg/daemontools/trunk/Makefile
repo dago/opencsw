@@ -14,6 +14,10 @@ WORKSRC = $(WORKDIR)/admin/$(GARNAME)-$(GARVERSION)
 
 #PATCHFILES = daemontools-0.70-man.diff.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom

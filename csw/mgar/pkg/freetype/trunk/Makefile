@@ -17,6 +17,9 @@ endef
 MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

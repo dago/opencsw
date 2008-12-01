@@ -14,6 +14,9 @@ endef
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/atk/1.6/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 LIBDEPS += lib/glib2
 
 CONFIGURE_ARGS  = $(DIRPATHS)

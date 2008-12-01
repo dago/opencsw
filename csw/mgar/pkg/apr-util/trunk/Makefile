@@ -17,6 +17,9 @@ DISTFILES += $(call admfiles,CSWaprutil,depend prototype)
 DISTFILES += $(call admfiles,CSWaprutil-devel,depend prototype)
 DISTFILES += config.layout
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Force use of GNU iconv
 PATCHFILES += iconv.diff
 

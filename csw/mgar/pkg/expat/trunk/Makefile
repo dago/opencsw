@@ -14,6 +14,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWexpat,depend prototype)
 DISTFILES += $(call admfiles,CSWexpat-devel,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Compatibility libraries
 EXTLIBS   += libexpat.so.0.4.0
 EXTLIBS   += libexpat.so.0.5.0

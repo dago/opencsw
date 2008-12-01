@@ -12,9 +12,13 @@ define BLURB
   generation, code generation, and template instantiation. 
 endef
 
+UPSTREAM_MASTER_SITES = http://www.cmake.org/files/
 MASTER_SITES = http://www.cmake.org/files/v2.6/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcmake)
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 datadir = /share/$(GARNAME)-$(GARVERSION)
 sharedstatedir = /share

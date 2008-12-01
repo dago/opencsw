@@ -8,6 +8,9 @@ MASTER_SITES = http://heanet.dl.sourceforge.net/sourceforge/opennms
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWjicmp,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES = gar-base.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)

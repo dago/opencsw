@@ -13,6 +13,9 @@ MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgit,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel
 
 CONFIGURE_ARGS = $(DIRPATHS)

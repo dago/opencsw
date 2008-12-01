@@ -21,6 +21,9 @@ DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
 DISTFILES += Makefile.patch exim_install.patch spf2.patch
 DISTFILES += i.smfyes i.smfno
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PATCHFILES = Makefile.patch exim_install.patch spf2.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib

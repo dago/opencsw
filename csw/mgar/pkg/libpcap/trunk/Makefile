@@ -11,6 +11,9 @@ MASTER_SITES = http://www.tcpdump.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibpcap,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Shared libraries patch
 PATCHFILES = solib.diff
 

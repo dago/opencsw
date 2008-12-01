@@ -14,6 +14,9 @@ MASTER_SITES = http://www.gftp.org/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgftp, depend )
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
 
 TEST_TARGET = check

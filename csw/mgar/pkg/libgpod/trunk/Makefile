@@ -15,6 +15,9 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibgpod,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 GARCOMPILER = GNU
 #GCC4 won't work. There are too many libtool deps using GCC3
 GNU_CC_HOME = /opt/csw/gcc3

@@ -19,6 +19,9 @@ DISTFILES += $(call admfiles,CSWbdb44,depend prototype)
 DISTFILES += $(call admfiles,CSWbdb44-devel,depend prototype)
 DISTFILES += $(call admfiles,CSWbdb44-doc,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix

@@ -20,6 +20,9 @@ DISTFILES += sunstudio.patch
 # 'cc' is a shell script to hack around libtool craziness
 DISTFILES += cc
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
 # We need these directories in EXTRA_INC to make sure they appear before

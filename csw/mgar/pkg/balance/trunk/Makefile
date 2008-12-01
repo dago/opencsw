@@ -13,6 +13,9 @@ MASTER_SITES = http://www.inlab.de/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWbalance,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Configure for build with SunONE
 PATCHFILES = build.diff
 

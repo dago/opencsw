@@ -15,6 +15,9 @@ MASTER_SITES = ftp://ftp.fifi.org/pub/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-$(GARSUBREV).tar.bz2
 DISTFILES += $(call admfiles,CSWimagick,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+).tar.bz2
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --enable-shared --disable-static

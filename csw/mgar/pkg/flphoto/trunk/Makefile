@@ -11,6 +11,10 @@ MASTER_SITES = http://easynews.dl.sourceforge.net/sourceforge/fltk/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.gz
 DISTFILES += $(call admfiles,CSWflphoto, prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+
 PATCHFILES = Fl_Image_Display.cxx.diff
 PATCHFILES = gamma.cxx.diff
 PATCHFILES = export.cxx.diff

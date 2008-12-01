@@ -16,10 +16,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/stable/$(GARVERSION)/
+UPSTREAM_MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/stable/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWcvs,)
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 TEST_TARGET = check
 

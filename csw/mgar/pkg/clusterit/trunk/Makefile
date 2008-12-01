@@ -12,6 +12,9 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWclusterit,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PREFIX = /opt/csw/$(GARNAME)
 CONFIGURE_ARGS = --prefix=$(PREFIX)
 

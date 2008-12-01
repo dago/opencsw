@@ -32,6 +32,9 @@ DISTFILES += $(call admfiles,CSWcups,depend prototype)
 
 DISTFILES += i.smfyes i.smfno space checkinstall
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
+
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
 CONFIGURE_ARGS = $(DIRPATHS)

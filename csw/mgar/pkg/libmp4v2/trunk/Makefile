@@ -17,6 +17,9 @@ PATCHFILES += mp4util.diff
 PATCHFILES += include-limits.h.diff
 PATCHFILES += stdint-to-inttypes.h.diff
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)

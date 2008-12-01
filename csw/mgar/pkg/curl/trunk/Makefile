@@ -17,6 +17,9 @@ MASTER_SITES = http://curl.haxx.se/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWcurl,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 LIBDEPS += lib/openssl
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl

@@ -11,6 +11,9 @@ MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/webtools/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWbugzilla,prototype depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Adjust the shebang path for all scripts
 PATCHFILES += perlpath.diff
 

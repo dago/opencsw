@@ -13,6 +13,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWclimm,prototype depend)
 DISTFILES += climm.patch
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+
 PATCHFILES = climm.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)

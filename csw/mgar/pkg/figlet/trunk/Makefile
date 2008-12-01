@@ -21,6 +21,9 @@ DISTFILES += $(call admfiles,CSWfiglet)
 
 DISTNAME = $(GARNAME)$(RELEASE)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*).tar.gz
+
 # We don't have this modern autoconfig-doodle-crap
 CONFIGURE_SCRIPTS =
 

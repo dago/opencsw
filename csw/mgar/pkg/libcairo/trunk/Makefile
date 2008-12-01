@@ -21,6 +21,9 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 export CFLAGS CXXFLAGS LDFLAGS
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 GREP = ggrep
 
 include gar/category.mk

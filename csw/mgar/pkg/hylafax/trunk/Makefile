@@ -13,6 +13,9 @@ DISTFILES += $(call admfiles,CSWhylafax,prototype depend postinstall preremove p
 DISTFILES += config.site.CSW
 #DISTFILES += cswhylafax.init cswhylafax.xml svc-cswhylafax
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES = patch-hylafax.diff
 
 PREREQUISITE_PKGS = CSWoldapdevel
