@@ -1,16 +1,138 @@
-GARNAME = package
-GARVERSION = 1.0
-CATEGORIES = category
+GARNAME = docbookdtds
+GARVERSION = 1.0.30
+PATCHLEVEL = 1
+CATEGORIES = xtra
 
-DESCRIPTION = Brief description
+PREREQUISITES = CSWunzip
+
+DESCRIPTION = SGML and XML document type definitions for DocBook.
 define BLURB
-  Long description
+The DocBook Document Type Definition (DTD) describes the syntax of
+technical documentation texts (articles, books and manual pages).
+This syntax is XML-compliant and is developed by the OASIS consortium.
+This package contains SGML and XML versions of the DocBook DTD.
 endef
 
-MASTER_SITES = 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpackage,)
+# The following is from the rhel5 1.0.3.1 docbook-dtds spec file.  Given
+# this list, we put together the insane list of master_sites and distfiles
+# below...the initial wget kinda stinks, but it gets the job done.
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# Source0: http://www.oasis-open.org/docbook/sgml/3.0/docbk30.zip
+# Source1: http://www.oasis-open.org/docbook/sgml/3.1/docbk31.zip
+# Source2: http://www.oasis-open.org/docbook/sgml/4.0/docbk40.zip
+# Source3: http://www.oasis-open.org/docbook/sgml/4.1/docbk41.zip
+# Source4: http://www.oasis-open.org/docbook/xml/4.1.2/docbkx412.zip
+# Source5: http://www.oasis-open.org/docbook/sgml/4.2/docbook-4.2.zip
+# Source6: http://www.oasis-open.org/docbook/xml/4.2/docbook-xml-4.2.zip
+# Source7: http://www.docbook.org/sgml/4.3/docbook-4.3.zip
+# Source8: http://www.docbook.org/xml/4.3/docbook-xml-4.3.zip
+# Source9: http://www.docbook.org/sgml/4.4/docbook-4.4.zip
+# Source10: http://www.docbook.org/xml/4.4/docbook-xml-4.4.zip
+
+OASIS = http://www.oasis-open.org/docbook
+DOCBOOK = http://www.docbook.org
+
+# based on the above, we'll need to look for files in the following locations
+# ...basically one file per url.  that blows, eh?
+O_SRC = $(OASIS)/sgml/3.0/ $(OASIS)/sgml/3.1/ $(OASIS)/sgml/4.0/
+O_SRC += $(OASIS)/sgml/4.1/ $(OASIS)/xml/4.1.2/ $(OASIS)/sgml/4.2/
+O_SRC += $(OASIS)/xml/4.2/
+D_SRC = $(DOCBOOK)/sgml/4.3/ $(DOCBOOK)/xml/4.3/ $(DOCBOOK)/sgml/4.4/
+D_SRC += $(DOCBOOK)/xml/4.4/
+
+# the various files we'll need to fetch from the various sources
+DBFILES = docbk30.zip docbk31.zip docbk40.zip docbk41.zip docbkx412.zip
+DBFILES += docbook-4.2.zip docbook-xml-4.2.zip docbook-4.3.zip
+DBFILES += docbook-xml-4.3.zip docbook-4.4.zip docbook-xml-4.4.zip
+
+MASTER_SITES = $(O_SRC) $(D_SRC)
+DISTFILES  = $(DBFILES)
+
+PATCHFILES = docbook-4.2-euro.patch docbook-dtd30-sgml-1.0.catalog.patch
+PATCHFILES += docbook-dtd31-sgml-1.0.catalog.patch
+PATCHFILES += docbook-dtd40-sgml-1.0.catalog.patch
+PATCHFILES += docbook-dtd41-sgml-1.0.catalog.patch
+PATCHFILES += docbook-dtd42-sgml-1.0.catalog.patch
+PATCHFILES += docbook-dtds-ents.patch
+
+#CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
+
+# BuildArch: noarch
+
+# Patch0: docbook-dtd30-sgml-1.0.catalog.patch
+# Patch1: docbook-dtd31-sgml-1.0.catalog.patch
+# Patch2: docbook-dtd40-sgml-1.0.catalog.patch
+# Patch3: docbook-dtd41-sgml-1.0.catalog.patch
+# Patch4: docbook-dtd42-sgml-1.0.catalog.patch
+# Patch5: docbook-4.2-euro.patch
+# Patch6: docbook-dtds-ents.patch
+
+local-zip-%:
+	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
+	@unzip $(DOWNLOADDIR)/$* -d $(EXTRACTDIR)
+	@$(MAKECOOKIE)
+
+SGMLDIRS = 3.0 3.1 4.0 4.1 4.2 4.3 4.4
+XMLDIRS = 4.1.2 4.2 4.3 4.4
+	
+
+# ok, for each source, we make an explicit target that overrides the implicit
+# zip-extract-% targets in GAR.
+zip-extract-docbk30.zip: 
+	unzip $(DOWNLOADDIR)/docbk30.zip -d $(WORKSRC)/3.0-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbk31.zip: 
+	unzip $(DOWNLOADDIR)/docbk31.zip -d $(WORKSRC)/3.1-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbk40.zip:
+	unzip $(DOWNLOADDIR)/docbk40.zip -d $(WORKSRC)/4.0-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbk41.zip:
+	unzip $(DOWNLOADDIR)/docbk41.zip -d $(WORKSRC)/4.1-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-4.2.zip:
+	unzip $(DOWNLOADDIR)/docbook-4.2.zip -d $(WORKSRC)/4.2-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbkx412.zip:	
+	unzip $(DOWNLOADDIR)/docbkx412.zip -d $(WORKSRC)/4.1.2-xml
+	@$(MAKECOOKIE)
+
+
+zip-extract-docbook-4.3.zip:
+	unzip $(DOWNLOADDIR)/docbook-4.3.zip -d $(WORKSRC)/4.3-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-4.4.zip:
+	unzip $(DOWNLOADDIR)/docbook-4.4.zip -d $(WORKSRC)/4.4-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-xml-4.2.zip:
+	unzip $(DOWNLOADDIR)/docbook-xml-4.2.zip -d $(WORKSRC)/4.2-xml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-xml-4.3.zip:
+	unzip $(DOWNLOADDIR)/docbook-xml-4.3.zip -d $(WORKSRC)/4.3-xml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-xml-4.4.zip:
+	unzip $(DOWNLOADDIR)/docbook-xml-4.4.zip -d $(WORKSRC)/4.4-xml
+	@$(MAKECOOKIE)
+
+# we override extract for our needs...man this is horrible! (note the cookie
+# madness)
+pre-extract: $(WORKSRC)
+	( cd $(WORKSRC); \
+	for d in $(SGMLDIRS); do \
+		mkdir $$d-sgml; \
+	done; \
+	for d in $(XMLDIRS); do \
+		mkdir $$d-xml; \
+	done )
+	@$(MAKECOOKIE)
