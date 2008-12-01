@@ -156,25 +156,38 @@ check-upstream-and-mail:
        		fi; \
 	fi
 	
-
 check-upstream: 
 	@if [ -n '$(FILES2CHECK)' ]; then \
 		NEW_FILES=""; \
+		PACKAGE_UP_TO_DATE=0; \
 		for FILE in $(FILES2CHECK) ""; do \
 			[ -n "$$FILE" ] || continue; \
-			if test -f $(COOKIEDIR)/checknew-$$FILE || echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
-				: ; \
+			if test -f $(COOKIEDIR)/checknew-$$FILE ; then \
+				PACKAGE_UP_TO_DATE=1; \
 			else \
-				NEW_FILES="$$FILE $$NEW_FILES"; \
+				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
+					PACKAGE_UP_TO_DATE=1; \
+	                echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
+				else \
+					NEW_FILES="$$FILE $$NEW_FILES"; \
+				fi; \
 			fi; \
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
 		if test -z "$$NEW_FILES" ; then \
   			if [ ! -n '$(UFILES_REGEX)' ]; then \
-                echo "$(GARNAME): Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+                echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+			else \
+	  			if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
+					echo "$(GARNAME) : Warning no files to check ! $(FILES2CHECK)" ; \
+					echo "$(GARNAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
+					echo "$(GARNAME) :     DISTNAME is $(DISTNAME)" ; \
+					echo "$(GARNAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
+					echo "$(GARNAME) : Please check configuration" ; \
+	    		fi; \
     		fi; \
         else \
-			echo "$(GARNAME): new upstream files available: $$NEW_FILES"; \
+			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
         fi; \
 	fi
 
