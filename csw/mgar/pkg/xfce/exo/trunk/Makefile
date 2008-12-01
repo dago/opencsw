@@ -14,6 +14,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # DISTFILES += CSWxfcelibexodev.depend CSWxfcelibexodev.gspec CSWxfcelibexodev.prototype
 DISTFILES += $(call admfiles,CSWxfceexo, depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 #  Patch for the exo-mount.c file
 # PATCHFILES = exo.diff
 

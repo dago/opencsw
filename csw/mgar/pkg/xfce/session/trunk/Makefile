@@ -12,6 +12,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # DISTFILES += CSWxfcesessiondoc.depend CSWxfcesessiondoc.gspec CSWxfcesessiondoc.prototype
 # DISTFILES += CSWlibxfcesessiondev.depend CSWlibxfcesessiondev.gspec CSWlibxfcesessiondev.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 DISTFILES += $(call admfiles,CSWxfcesession, depend)
 
 TEST_SCRIPTS = none

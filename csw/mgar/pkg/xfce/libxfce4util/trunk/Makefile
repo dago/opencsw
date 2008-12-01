@@ -12,6 +12,9 @@ DISTFILES += CSWlibxfce4utildoc.depend CSWlibxfce4utildoc.gspec CSWlibxfce4utild
 DISTFILES += CSWlibxfce4utildev.depend CSWlibxfce4utildev.gspec CSWlibxfce4utildev.prototype
 # DISTFILES += $(call admfiles,CSWlibxfce4util, depend) 
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PATCHFILES += gar-base.diff
 
 TEST_SCRIPTS = none

@@ -13,6 +13,9 @@ DISTFILES += CSWlibxfcegui4doc.depend CSWlibxfcegui4doc.gspec CSWlibxfcegui4doc.
 DISTFILES += CSWlibxfcegui4dev.depend CSWlibxfcegui4dev.gspec CSWlibxfcegui4dev.prototype
 # DISTFILES += $(call admfiles,CSWlibxfcegui4, depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 LIBDEPS = xfce/libxfce4util
 
 TEST_SCRIPTS = none

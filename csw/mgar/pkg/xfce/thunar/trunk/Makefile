@@ -18,6 +18,9 @@ DISTFILES  += $(call admfiles,CSWxfcethunar, depend)
 # PATCHFILES  = thunar-vfs-path-private.h.diff 
 # PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 TEST_SCRIPTS = none
 
 include gar/category.mk

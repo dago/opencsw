@@ -10,6 +10,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # DISTFILES += CSWxfcexfwm4themes.depend CSWxfcexfwm4themes.gspec CSWxfcexfwm4themes.prototype
 DISTFILES += $(call admfiles,CSWxfcexfwm4themes, depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 TEST_SCRIPTS = none
 
 include gar/category.mk

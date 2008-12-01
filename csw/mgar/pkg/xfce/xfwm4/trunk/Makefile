@@ -12,6 +12,9 @@ DISTFILES += CSWxfcexfwm4doc.depend CSWxfcexfwm4doc.gspec CSWxfcexfwm4doc.protot
 
 # PATCHFILES = frame.c.diff
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 LIBDEPS = xfce/mcs-mananager
 
 TEST_SCRIPTS = none

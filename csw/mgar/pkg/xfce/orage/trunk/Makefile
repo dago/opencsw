@@ -11,6 +11,9 @@ DISTFILES += $(call admfiles,CSWxfceorage, depend)
 # DISTFILES += CSWxfceorage.depend CSWxfceorage.gspec CSWxfceorage.prototype
 # DISTFILES += CSWxfceoragedoc.depend CSWxfceoragedoc.gspec CSWxfceoragedoc.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 TEST_SCRIPTS = none
 
 include gar/category.mk
