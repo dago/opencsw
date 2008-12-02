@@ -36,4 +36,4 @@ EXTRA_MERGE_EXCLUDE_FILES_sparcv9 = $(bindir)/se
 
 SKIPTEST = 1
 
-include ../category.mk
+include gar/category.mk
