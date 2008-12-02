@@ -103,11 +103,10 @@ checksum-%: $(CHECKSUM_FILE)
 
 #################### CHECKNEW RULES ####################
 
-# check a new upstream files are available
-
-UW_ARGS = $(addprefix -u ,$(MASTER_SITES))
-ifneq ($(UFILES_REGEX),)
-	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX))))
+UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
+UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
+ifneq ($(UFILES_REGEX), "")    
+	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
 else
 	FILES2CHECK = ""
 endif
@@ -124,7 +123,7 @@ check-upstream-and-mail:
 			fi; \
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
-		if [ -n "$$NEW_FILES" ]; then \
+		if test -z "$$NEW_FILES" ; then \
 			{ echo ""; \
 			  echo "Hello dear $(GARNAME) maintainer,"; \
 			  echo ""; \
@@ -134,31 +133,60 @@ check-upstream-and-mail:
 			  echo "    $$NEW_FILES"; \
 			  echo ""; \
 			  echo "is/are available at the following url(s):"; \
-			  echo "    $(MASTER_SITES)"; \
+			  echo "    $(UPSTREAM_MASTER_SITES)"; \
 			  echo ""; \
 			  echo "Please consider updating your package." ; \
 			  echo ""; \
 			  echo "---"; \
-			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '$(GARNAME) upstream update notification' $(GARNAME); \
-		fi; \
+			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+	        else \
+#    			if [ ! -n '$(UFILES_REGEX)' ]; then \
+#				{ echo ""; \
+#				  echo "Hello dear $(GARNAME) maintainer,"; \
+#				  echo ""; \
+#				  echo "The upstream notification job has detected that $(GARNAME) is not configured for automatic upstream file update detection."; \
+#				  echo ""; \
+#				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
+#				  echo ""; \
+#				  echo "---"; \
+#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+#    			fi; \
+       		fi; \
 	fi
 	
-
 check-upstream: 
 	@if [ -n '$(FILES2CHECK)' ]; then \
 		NEW_FILES=""; \
+		PACKAGE_UP_TO_DATE=0; \
 		for FILE in $(FILES2CHECK) ""; do \
 			[ -n "$$FILE" ] || continue; \
-			if test -f $(COOKIEDIR)/checknew-$$FILE || echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
-				: ; \
+			if test -f $(COOKIEDIR)/checknew-$$FILE ; then \
+				PACKAGE_UP_TO_DATE=1; \
 			else \
-				NEW_FILES="$$FILE $$NEW_FILES"; \
+				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
+					PACKAGE_UP_TO_DATE=1; \
+	                echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
+				else \
+					NEW_FILES="$$FILE $$NEW_FILES"; \
+				fi; \
 			fi; \
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
-		if [ -n "$$NEW_FILES" ]; then \
-			echo "$(GARNAME): new upstream files available: $$NEW_FILES"; \
-		fi; \
+		if test -z "$$NEW_FILES" ; then \
+  			if [ ! -n '$(UFILES_REGEX)' ]; then \
+                echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+			else \
+	  			if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
+					echo "$(GARNAME) : Warning no files to check ! $(FILES2CHECK)" ; \
+					echo "$(GARNAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
+					echo "$(GARNAME) :     DISTNAME is $(DISTNAME)" ; \
+					echo "$(GARNAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
+					echo "$(GARNAME) : Please check configuration" ; \
+	    		fi; \
+    		fi; \
+        else \
+			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
+        fi; \
 	fi
 	
 checknew-%:

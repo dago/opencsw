@@ -23,7 +23,7 @@
 function get_package_maintainer
 {
 	_PACKAGE="$1"
-	_MAINTAINER="`wget -q http://securebar.secure-tunnel.com/cgi-bin/nph-freebar.cgi/110110/http/www.blastwave.org/packages.php/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
+	_MAINTAINER="`wget -q http://www.opencsw.org/packages.php/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
 	
 	echo "$_MAINTAINER"
 }
@@ -38,7 +38,7 @@ function get_package_maintainer
 function maintainer2mail
 {
 	_MAINTAINER="$1"
-	echo "$_MAINTAINER@blastwave.org"
+	echo "$_MAINTAINER@opencsw.org"
 }
 
 PATH=$PATH:/opt/csw/bin:/usr/sfw/bin
@@ -46,7 +46,7 @@ PATH=$PATH:/opt/csw/bin:/usr/sfw/bin
 if [[ -z "$1" ]]; then
 	cat <<EOF
 Usage: mail2maintainer [mail options] package_name
-Given a blastwave package name, send an email to the maintainer.
+Given a package name, send an email to the maintainer.
 EOF
 	exit 1
 fi

@@ -140,7 +140,7 @@ check-upstream-and-mail:
 			  echo "Please consider updating your package." ; \
 			  echo ""; \
 			  echo "---"; \
-			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 	        else \
 #    			if [ ! -n '$(UFILES_REGEX)' ]; then \
 #				{ echo ""; \
@@ -151,7 +151,7 @@ check-upstream-and-mail:
 #				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
 #				  echo ""; \
 #				  echo "---"; \
-#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 #    			fi; \
        		fi; \
 	fi
