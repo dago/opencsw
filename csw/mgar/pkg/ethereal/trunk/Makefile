@@ -14,7 +14,7 @@ MASTER_SITES = http://www.ethereal.com/distribution/
 DISTFILES = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DEPENDS += lib/libpcap
 DEPENDS += lib/gtk2
