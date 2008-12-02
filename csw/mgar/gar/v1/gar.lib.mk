@@ -142,17 +142,17 @@ check-upstream-and-mail:
 			  echo "---"; \
 			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 	        else \
-    			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				{ echo ""; \
-				  echo "Hello dear $(GARNAME) maintainer,"; \
-				  echo ""; \
-				  echo "The upstream notification job has detected that $(GARNAME) is not configured for automatic upstream file update detection."; \
-				  echo ""; \
-				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
-				  echo ""; \
-				  echo "---"; \
-				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
-    			fi; \
+#    			if [ ! -n '$(UFILES_REGEX)' ]; then \
+#				{ echo ""; \
+#				  echo "Hello dear $(GARNAME) maintainer,"; \
+#				  echo ""; \
+#				  echo "The upstream notification job has detected that $(GARNAME) is not configured for automatic upstream file update detection."; \
+#				  echo ""; \
+#				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
+#				  echo ""; \
+#				  echo "---"; \
+#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+#    			fi; \
        		fi; \
 	fi
 	
