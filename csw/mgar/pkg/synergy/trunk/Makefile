@@ -43,14 +43,19 @@ pre-configure:
 
 post-install:
 	@ginstall -d $(DESTDIR)$(sysconfdir)
-	@ginstall -m 644 $(WORKSRC)/examples/synergy.conf \
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/images
+	@ginstall -m 644 \
+		$(WORKSRC)/examples/synergy.conf \
 		$(DESTDIR)$(sysconfdir)/synergy.conf.example
-	@ginstall -d $(DESTDIR)$(docdir)/images
-	@ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(docdir)
-	@ginstall -m 644 $(WORKSRC)/AUTHORS $(DESTDIR)$(docdir)
-	@ginstall -m 644 $(WORKSRC)/NEWS $(DESTDIR)$(docdir)
-	@ginstall -m 644 $(WORKSRC)/doc/*.html $(DESTDIR)$(docdir)
-	@ginstall -m 644 $(WORKSRC)/doc/images/* $(DESTDIR)$(docdir)/images
+	@ginstall -m 644 \
+		$(WORKSRC)/README \
+		$(WORKSRC)/AUTHORS \
+		$(WORKSRC)/NEWS \
+		$(WORKSRC)/doc/*.html \
+		$(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -m 644 \
+		$(WORKSRC)/doc/images/* \
+		$(DESTDIR)$(docdir)/$(GARNAME)/images
 	@$(MAKECOOKIE)
 
 include gar/category.mk
