@@ -22,6 +22,11 @@ report-%:
 		$(MAKE) -C $$i $* || echo "	*** make $* in $$i failed ***" >> $(BUILDLOG); \
 	done
 
+pkglist:
+	@for i in $(filter-out $(FILTER_DIRS),$(wildcard */)) ; do \
+		$(MAKE) -s -C $$i/trunk pkglist ; \
+	done
+
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
 	@(echo "GARNAME = package";                                     \
