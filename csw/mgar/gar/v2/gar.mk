@@ -582,7 +582,8 @@ endif
 _MERGE_INCLUDE_FILES += $(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(MODULATION))
 
 MERGE_EXCLUDE_INFODIR ?= $(sharedstatedir)/info/dir
-MERGE_EXCLUDE_DEFAULT ?= $(MERGE_EXCLUDE_INFODIR) $(libdir)/.*\.a $(libdir)/.*\.la
+#MERGE_EXCLUDE_DEFAULT ?= $(MERGE_EXCLUDE_INFODIR) $(libdir)/.*\.a $(libdir)/.*\.la
+MERGE_EXCLUDE_DEFAULT ?= $(MERGE_EXCLUDE_INFODIR) $(libdir)/.*\.a
 
 # Exclude these files
 ifeq ($(origin MERGE_EXCLUDE_FILES_$(MODULATION)), undefined)

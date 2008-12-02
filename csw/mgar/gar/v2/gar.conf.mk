@@ -330,28 +330,15 @@ BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(NEEDED_ISAS))
 
 # Subdirectories for specialized binaries and libraries
 # Use defaults for sparcv8 and i386 as those are symlinks
-ISALIBDIR_sparcv9+fmuladd      ?= sparcv9+fmuladd
-ISALIBDIR_sparcv9+vis2         ?= sparcv9+vis2
-ISALIBDIR_sparcv9+vis          ?= sparcv9+vis
-ISALIBDIR_sparcv9              ?= sparcv9
-ISALIBDIR_sparcv8plus+fmuladd  ?= sparcv8plus+fmuladd
-ISALIBDIR_sparcv8plus+vis2     ?= sparcv8plus+vis2
-ISALIBDIR_sparcv8plus+vis      ?= sparcv8plus+vis
-ISALIBDIR_sparcv8plus          ?= sparcv8plus
 ISALIBDIR_sparcv8              ?= .
-ISALIBDIR_sparcv8-fsmuld       ?= sparcv8-fsmuld
-ISALIBDIR_amd64                ?= amd64
-ISALIBDIR_pentium_pro+mmx      ?= pentium_pro+mmx
-ISALIBDIR_pentium_pro          ?= pentium_pro
-ISALIBDIR_pentium+mmx          ?= pentium+mmx
-ISALIBDIR_pentium              ?= pentium
 ISALIBDIR_i386                 ?= .
+$(foreach I,$(ISALIST),$(eval ISALIBDIR_$(I) ?= $I))
 
 # These are the directories where the optimized libraries should go to
 ISALIBDIR ?= $(ISALIBDIR_$(ISA))
 
 # These are the directories where the optimized binaries should go to
-$(foreach ARCH,$(ISALIST), $(eval ISABINDIR_$(ARCH) ?= $(ISALIBDIR_$(ARCH))))
+$(foreach I,$(ISALIST), $(eval ISABINDIR_$(I) ?= $(ISALIBDIR_$(I))))
 ISABINDIR ?= $(ISABINDIR_$(ISA))
 
 #
@@ -428,16 +415,15 @@ endif
 # the links 32 and 64.
 ifeq ($(origin LINKER_FLAGS), undefined)
 ifdef NOISALIST
-LINKER_FLAGS = $(foreach ELIB,$(libdir)/$(MM_LIBDIR) $(EXTRA_LIB),-L$(ELIB) -R$(ELIB))
+LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(abspath $(ELIB)/$(MM_LIBDIR))
 else
 # If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
 # may not be a subdirectory for the 32-bit standard case (this would normally
-# be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .)
-LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(ELIB)/$(MM_LIBDIR) -R'$(ELIB)/\$$$$''ISALIST' -R$(ELIB)/$(MM_LIBDIR))
+# be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .). This is most likely
+# the case for libraries in $(EXTRA_LIBS) for which no links generated in CSWcommon.
+LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(ELIB)/\\\\\\\$$\$$ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR)))
+#LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R'$(abspath $(ELIB)/\$$ISALIST)' -R$(abspath $(ELIB)/$(MM_LIBDIR)))
 endif
-#LINKER_FLAGS = $(foreach ELIB,$(EXTRA_LIB) $(abspath $(libdir)/$(MM_LIBDIR)),-L$(ELIB) -R$(ELIB))
-# DESTDIR is an old concept, disable for now
-#LINKER_FLAGS += $(if $(IGNORE_DESTDIR),,-L$(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)))
 endif
 
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
@@ -471,11 +457,9 @@ OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir)/$(MM_BINDIR)):$(DESTDIR)$(bindir):$(abspath $(DESTDIR)$(sbindir)/$(MM_BINDIR)):$(DESTDIR)$(sbindir):)$(abspath $(bindir)/$(MM_BINDIR)):$(bindir):$(abspath $(sbindir)/$(MM_BINDIR)):$(sbindir):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_PATH := $(abspath $(libdir)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
-# DESTDIR is an old concept, disable for now.
-#ifneq ($(IGNORE_DESTDIR),1)
-#PKG_CONFIG_PATH := $(abspath $(DESTDIR)$(libdir)/$(MM_LIBDIR)/pkgconfig):$(DESTDIR)$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
-#endif
+#PKG_CONFIG_PATH := $(abspath $(libdir)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
+PKG_CONFIG_DIRS ?= $(libdir) $(EXTRA_PKG_CONFIG_DIRS)
+PKG_CONFIG_PATH ?= $(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig))
 
 #
 # Mirror Sites
@@ -491,6 +475,10 @@ SF_PROJ     ?= $(GARNAME)
 SF_MIRRORS  ?= http://downloads.sourceforge.net/$(SF_PROJ)/
 # Keep this for compatibility
 SF_MIRROR    = $(firstword $(SF_MIRRORS))
+
+# Google Code
+GOOGLE_PROJECT ?= $(GARNAME)
+GOOGLE_MIRROR  ?= http://$(GOOGLE_PROJECT).googlecode.com/files/
 
 # GNU
 GNU_SITE     = http://mirrors.kernel.org/
@@ -522,7 +510,6 @@ endif
 
 ifeq ($(origin COMPILER_EXPORTS), undefined)
 COMPILER_EXPORTS  = CPPFLAGS CFLAGS CXXFLAGS LDFLAGS
-#COMPILER_EXPORTS += ASFLAGS OPTFLAGS CC CXX LD_OPTIONS
 COMPILER_EXPORTS += ASFLAGS OPTFLAGS CC CXX
 COMPILER_EXPORTS += CC_HOME CC_VERSION CXX_VERSION
 endif
@@ -534,15 +521,15 @@ endif
 
 COMMON_EXPORTS ?= $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS)
 
-CONFIGURE_EXPORTS ?= $(COMMON_EXPORTS) PKG_CONFIG_PATH DESTDIR
-BUILD_EXPORTS     ?= $(COMMON_EXPORTS)
-TEST_EXPORTS      ?= $(COMMON_EXPORTS)
-INSTALL_EXPORTS   ?= $(COMMON_EXPORTS) DESTDIR
+CONFIGURE_EXPORTS ?= $(COMMON_EXPORTS) $(EXTRA_CONFIGURE_EXPORTS) PKG_CONFIG_PATH DESTDIR
+BUILD_EXPORTS     ?= $(COMMON_EXPORTS) $(EXTRA_BUILD_EXPORTS)
+TEST_EXPORTS      ?= $(COMMON_EXPORTS) $(EXTRA_TEST_EXPORTS)
+INSTALL_EXPORTS   ?= $(COMMON_EXPORTS) $(EXTRA_INSTALL_EXPORTS) DESTDIR
 
-CONFIGURE_ENV ?= $(foreach TTT,$(CONFIGURE_EXPORTS) $(EXTRA_CONFIGURE_EXPORTS),$(TTT)="$($(TTT))")
-BUILD_ENV     ?= $(foreach TTT,$(BUILD_EXPORTS) $(EXTRA_BUILD_EXPORTS),$(TTT)="$($(TTT))")
-TEST_ENV      ?= $(foreach TTT,$(TEST_EXPORTS) $(EXTRA_TEST_EXPORTS),$(TTT)="$($(TTT))")
-INSTALL_ENV   ?= $(foreach TTT,$(INSTALL_EXPORTS) $(EXTRA_INSTALL_EXPORTS),$(TTT)="$($(TTT))")
+CONFIGURE_ENV ?= $(foreach TTT,$(CONFIGURE_EXPORTS),$(TTT)="$($(TTT))")
+BUILD_ENV     ?= $(foreach TTT,$(BUILD_EXPORTS),$(TTT)="$($(TTT))")
+TEST_ENV      ?= $(foreach TTT,$(TEST_EXPORTS),$(TTT)="$($(TTT))")
+INSTALL_ENV   ?= $(foreach TTT,$(INSTALL_EXPORTS),$(TTT)="$($(TTT))")
 
 # Standard Scripts
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
