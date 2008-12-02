@@ -26,6 +26,11 @@ AUTHOR_ID ?= $(GEN_AUTHOR_ID)
 TOLOWER = $(shell echo $(1) | tr '[A-Z]' '[a-z]')
 SPKG_SOURCEURL  = http://search.cpan.org
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/~$(call TOLOWER,$(AUTHOR))
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+USTREAM_MASTER_SITE = $(SPKG_SOURCEURL)
+
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 
 _PREREQUISITE_BASE_PKGS += CSWperl
