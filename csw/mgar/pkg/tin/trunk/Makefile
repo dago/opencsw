@@ -13,6 +13,9 @@ MASTER_SITES = ftp://ftp.tin.org/pub/news/clients/tin/stable/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWtin,prototype depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PATCHFILES = configure.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)

@@ -22,6 +22,9 @@ MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
+
 DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
 DISTFILES += CSWrubytk.gspec CSWrubytk.depend CSWrubytk.prototype
 

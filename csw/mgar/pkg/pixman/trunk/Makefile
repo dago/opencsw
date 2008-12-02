@@ -13,6 +13,9 @@ DISTFILES    += CSWpixman.gspec CSWpixman.prototype CSWpixman.depend
 DISTFILES    += CSWpixmandev.gspec CSWpixmandev.prototype CSWpixmandev.depend
 # DISTFILES    += $(call admfiles,CSWpixman, depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib

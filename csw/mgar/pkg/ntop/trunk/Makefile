@@ -16,6 +16,9 @@ MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWntop,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 LIBDEPS += utils/rrdtool
 
 CONFIGURE_ARGS = $(DIRPATHS)

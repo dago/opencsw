@@ -13,6 +13,9 @@ MASTER_SITES = http://www.opera.com/
 DISTFILES  = $(GARNAME)-$(GARVERSION).gcc3-static-qt3.tar.gz
 DISTFILES += $(call admfiles,CSWopera, depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES += bin-opera.diff
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)-2466.gcc3-static-qt3

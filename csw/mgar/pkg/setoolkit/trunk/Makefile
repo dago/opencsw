@@ -35,6 +35,9 @@ endif
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsetoolkit,prototype depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 WORKDIR       = $(WORKROOTDIR)/$(DESTIMG).d/$(ISA)
 COOKIEROOTDIR = cookies.$(ISA)
 

@@ -23,6 +23,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += Blue-1.7.tar.bz2
 DISTFILES += $(call admfiles,CSWmplayer,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PATCHFILES = fix-configure.diff
 PATCHFILES += fix-libavcodec-gcc-bug.diff
 PATCHFILES += fix-manpage-macros.diff

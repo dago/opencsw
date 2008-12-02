@@ -13,6 +13,9 @@ MASTER_SITES = http://rubyforge.org/frs/download.php/5924/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += CSWrake.gspec CSWrake.depend CSWrake.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 BUILD_SCRIPTS     =
 CONFIGURE_SCRIPTS =
 INSTALL_SCRIPTS   = ruby

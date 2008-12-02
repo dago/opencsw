@@ -15,6 +15,9 @@ SF_PROJ = $(GARNAME)2
 DISTFILES  = synergy-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsynergy)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = synergy-(\d+(?:\.\d+)*).tar.gz
+
 # Adjust code so that it compiles with Sun Studio Compiler
 # https://sourceforge.net/tracker/index.php?func=detail&aid=1574331&group_id=59275&atid=490469
 PATCHFILES = suncc.diff

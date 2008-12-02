@@ -14,6 +14,9 @@ MASTER_SITES   = http://rubyforge.org/frs/download.php/38646/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWrubygems,depend copyright)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+
 # Redirect Gem installation to $(DESTDIR)
 #PATCHFILES += postinstall.diff
 

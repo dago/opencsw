@@ -13,6 +13,9 @@ DISTFILES += $(GARNAME)-$(GARVERSION).tar.gz
 ADMFILES   = depend prototype postinstall preremove copyright
 DISTFILES += $(call admfiles,CSWap2modauthmysql,$(ADMFILES))
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Restore deprecated (removed) macros
 PATCHFILES += apr.diff
 

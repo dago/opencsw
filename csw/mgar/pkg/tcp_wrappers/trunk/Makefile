@@ -12,6 +12,9 @@ DISTNAME = $(GARNAME)_$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
+
 #BUILD_ARGS  = REAL_DAEMON_DIR=/foo/bar
 BUILD_ARGS += STYLE=-DPROCESS_OPTIONS
 

@@ -16,6 +16,9 @@ MASTER_SITES = http://pkg-config.freedesktop.org/releases/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpkgconfig,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES = gsed-check.patch
 
 PREREQUISITE_PKGS = CSWggettext CSWglib2 CSWiconv CSWsunmath

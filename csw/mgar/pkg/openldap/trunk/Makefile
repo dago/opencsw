@@ -20,6 +20,9 @@ DISTFILES += $(call admfiles,CSWoldapdevel,depend)
 DISTFILES += $(call admfiles,CSWoldaprt,depend)
 DISTFILES += README.CSW openldaprc
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES = patch-oldap-2.3.24-ntlm.diff
 DISTFILES += $(PATCHFILES)
 

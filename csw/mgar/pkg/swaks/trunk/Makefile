@@ -13,6 +13,9 @@ MASTER_SITES = http://jetmore.net/john/code/swaks
 DISTFILES  = $(GARNAME)-$(GARVERSION)
 DISTFILES += $(call admfiles,CSW$(GARNAME), depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS = custom

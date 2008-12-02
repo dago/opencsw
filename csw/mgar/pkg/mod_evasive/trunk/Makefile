@@ -15,6 +15,9 @@ MASTER_SITES = http://www.zdziarski.com/projects/$(GARNAME)/
 DISTFILES += $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWap2modevasive,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom

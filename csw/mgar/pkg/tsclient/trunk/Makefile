@@ -12,6 +12,9 @@ DISTFILES += $(call admfiles,CSWtsclient,)
 PATCHFILES = support.c.diff
 CONFIGURE_ARGS = --prefix=$(prefix) LD_OPTIONS='-lsocket -lnsl'
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 TEST_SCRIPTS =
 
 include gar/category.mk

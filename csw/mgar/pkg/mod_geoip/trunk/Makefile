@@ -16,6 +16,9 @@ MASTER_SITES = http://www.maxmind.com/download/geoip/api/mod_geoip2/
 DISTFILES  = $(SPKG_NAME)2_$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWap2modgeoip,depend postinstall preremove)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(SPKG_NAME)2-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom

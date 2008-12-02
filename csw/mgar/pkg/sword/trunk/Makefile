@@ -8,8 +8,12 @@ The SWORD Engine is a software framework that allows research manipulation of Bi
 endef
 
 MASTER_SITES = http://crosswire.org/ftpmirror/pub/sword/source/v1.5
+UPSTREAM_MASTER_SITES = http://crosswire.org/ftpmirror/pub/sword/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsword, depend )
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = v(\d+(?:\.\d+)*)
 
 GARCOMPILER ?= GNU
 CPPFLAGS=-D_REENTRANT

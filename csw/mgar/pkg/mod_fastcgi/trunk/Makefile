@@ -13,6 +13,9 @@ DISTFILES += $(GARNAME)-$(GARVERSION).tar.gz
 ADMFILES   = depend prototype postinstall preremove copyright
 DISTFILES += $(call admfiles,CSWap2modfastcgi,$(ADMFILES))
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Allow fcgi to compile against Apache 2.2.  From
 # http://www.fastcgi.com/archives/fastcgi-developers/2005-December/004060.html
 # with blastwave modifications.

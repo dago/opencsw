@@ -17,6 +17,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpostfix,prototype csw_conf_config csw_usrgrp_config postinstall postremove)
 DISTFILES += cswpostfix.xml svc-cswpostfix cswpostfix
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PREREQUISITE_PKGS = CSWbdb4 CSWmysql4devel CSWlibpq CSWossldevel CSWoldapdevel
 
 SPKG_CLASSES = none csw_conf

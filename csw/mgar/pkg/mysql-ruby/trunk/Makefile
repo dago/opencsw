@@ -11,6 +11,9 @@ MASTER_SITES  = http://tmtm.org/downloads/mysql/ruby/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWrbmysql,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 #DEPENDS += lang/ruby server/mysql4
 
 CONFIGURE_SCRIPTS = ruby

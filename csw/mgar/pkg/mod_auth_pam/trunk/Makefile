@@ -17,6 +17,9 @@ DISTFILES  = $(GARNAME)-$(ABIVERSION)-$(GARVERSION).tar.gz
 CSWadmin   = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modauthpam,$(CSWadmin))
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+(?:\.\d+)*).tar.gz
+
 # Fix up installation routine
 PATCHFILES += install.diff
 

@@ -20,6 +20,9 @@ MASTER_SITES = http://www.maier-komor.de/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWsysstat,prototype-sparc prototype-i386 depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 SPKG_SOURCEURL = http://www.maier-komor.de/sysstat.html
 
 PATCHFILES = patch-onlyisaexec-sysstatd.diff

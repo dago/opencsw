@@ -11,6 +11,9 @@ MASTER_SITES = http://ch.tudelft.nl/~arthur/rl/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrl,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 # Not gonna do it
 TEST_SCRIPTS =

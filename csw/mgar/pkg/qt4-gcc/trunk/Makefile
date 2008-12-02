@@ -16,6 +16,9 @@ DISTFILES = $(DISTNAME).tar.gz
 #DISTFILES += $(call admfiles,CSWqt4gcc,depend prototype)
 DISTFILES += $(call admfiles,CSWqt4gcc,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = qt-x11-opensource-src-(\d+(?:\.\d+)*).tar.gz
+
 #TMP_DIRPATHS = --prefix=$(prefix) --exec_prefix=$(exec_prefix) --bindir=$(bindir
 #) --sbindir=$(sbindir) --libexecdir=$(libexecdir) --datadir=$(datadir) --sysconf
 #dir=$(sysconfdir) --sharedstatedir=$(sharedstatedir) --localstatedir=$(localstat

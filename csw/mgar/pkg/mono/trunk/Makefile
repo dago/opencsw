@@ -14,6 +14,9 @@ MASTER_SITES = http://go-mono.com/sources/mono-1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWmono.gspec CSWmono.depend CSWmono.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

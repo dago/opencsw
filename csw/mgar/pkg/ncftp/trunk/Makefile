@@ -13,6 +13,9 @@ MASTER_SITES = ftp://ftp.ncftp.com/ncftp/
 DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.bz2
 DISTFILES += $(call admfiles,CSWncftp,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.bz2
+
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
 
 CONFIGURE_ARGS = $(DIRPATHS) --without-ncurses

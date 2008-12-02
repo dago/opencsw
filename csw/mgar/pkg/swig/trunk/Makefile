@@ -20,6 +20,9 @@ MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWswig,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Prevent automake from attempting to regenerate everything
 PATCHFILES += am.diff
 

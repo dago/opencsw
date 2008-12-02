@@ -16,6 +16,9 @@ MASTER_SITES = $(BASEURL)/sources/
 DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.gz
 WORKSRC = $(WORKDIR)/$(GARNAME)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.gz
+
 DISTFILES += $(call admfiles,CSWsquidpurge,prototype copyright)
 
 # Build with SunONE

@@ -18,6 +18,9 @@ DISTFILES += $(call admfiles,CSWmpd,prototype)
 DISTFILES += cswmpd.xml svc-cswmpd cswmpd
 DISTFILES += CSWmpd.csw_usrgrp_config
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 TEST_TARGET = check
 
 include gar/category.mk

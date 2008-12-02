@@ -11,6 +11,9 @@ MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = libXft-$(GARVERSION).tar.gz
 PKGDIST = libXft-$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES    += CSWlibxft2.gspec CSWlibxft2.prototype CSWlibxft2.depend 
 DISTFILES    += CSWlibxft2dev.gspec CSWlibxft2dev.prototype CSWlibxft2dev.depend 
 # DISTFILES    += $(call admfiles,CSWlibxft2, depend)

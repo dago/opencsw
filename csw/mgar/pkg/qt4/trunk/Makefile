@@ -39,6 +39,9 @@ DISTFILES   += $(call admfiles,CSWqt4,depend prototype-sparc prototype-i386)
 DISTFILES   += $(call admfiles,CSWqt4-devel,depend prototype-sparc prototype-i386)
 DISTFILES   += $(call admfiles,CSWqt4-docs,prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = qt-x11-opensource-src-(\d+(?:\.\d+)*).tar.gz
+
 WORKDIR = $(WORKROOTDIR)/$(DESTIMG).d/$(PLATFORM)
 COOKIEROOTDIR = cookies.$(PLATFORM)
 

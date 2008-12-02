@@ -14,6 +14,9 @@ DISTFILES += $(call admfiles,CSWspidermonkey,)
 # we are using our own
 DISTFILES += SunOS5.8_i86pc.mk
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = js-(\d+(?:\.\d+)*).tar.gz
+
 DISTNAME = js
 
 # we find the os string used by the makefile by using

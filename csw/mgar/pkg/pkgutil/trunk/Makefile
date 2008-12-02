@@ -14,6 +14,9 @@ MASTER_SITES = http://www.bonivart.com/pkgutil/
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).zip
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =

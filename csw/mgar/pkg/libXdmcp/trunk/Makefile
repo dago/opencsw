@@ -11,6 +11,9 @@ MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES    += CSWlibXdmcp.gspec CSWlibXdmcp.prototype CSWlibXdmcp.depend 
 DISTFILES    += CSWlibXdmcpdev.gspec CSWlibXdmcpdev.prototype CSWlibXdmcpdev.depend 
 # DISTFILES    += $(call admfiles,CSWlibXdmcp, depend)

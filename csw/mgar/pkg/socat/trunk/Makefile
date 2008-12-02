@@ -19,6 +19,9 @@ DISTFILES += $(call admfiles,CSWsocat,depend prototype)
 
 DISTFILES += changelog.CSW
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Disable gcc specific options
 PATCHFILES = cc_compile.patch
 

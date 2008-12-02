@@ -15,6 +15,9 @@ MASTER_SITES = http://www.apsis.ch/pound/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWpound,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+
 # Install properly when
 #    (a) destdir does not exist, and
 #    (b) installing as non root.

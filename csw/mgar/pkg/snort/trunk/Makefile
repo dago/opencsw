@@ -11,6 +11,9 @@ MASTER_SITES = http://www.snort.org/dl/current/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsnort, depend )
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS) --libdir=/opt/csw/lib
 CONFIGURE_ARGS += --enable-dynamicplugin
 

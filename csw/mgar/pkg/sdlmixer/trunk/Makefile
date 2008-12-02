@@ -11,6 +11,9 @@ MASTER_SITES = http://www.libsdl.org/projects/SDL_mixer/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlmixer, depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = --prefix=$(prefix) LDFLAGS=-lsunmath
 TEST_SCRIPTS =
 

@@ -26,6 +26,9 @@ ADMINFILES = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modjk,$(ADMINFILES))
 DISTFILES += httpd-jk.conf.CSW
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.gz
+
 AUXCONFIG += workers.properties
 AUXCONFIG += workers.properties.minimal
 AUXCONFIG += uriworkermap.properties

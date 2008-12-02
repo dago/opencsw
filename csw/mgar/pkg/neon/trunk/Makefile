@@ -22,6 +22,9 @@ DISTFILES += $(call admfiles,CSWneon,$(ADMSTANDARD))
 DISTFILES += $(call admfiles,CSWneon-devel,$(ADMSTANDARD))
 #DISTFILES += $(COMPATLIBS)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-ssl=openssl

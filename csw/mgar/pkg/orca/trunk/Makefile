@@ -35,6 +35,9 @@ DISTFILES += $(call admfiles,CSWorca-web,depend prototype postinstall preremove)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PREREQUISITE_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
 
 #libdir = $(exec_prefix)/lib/$(GARNAME)

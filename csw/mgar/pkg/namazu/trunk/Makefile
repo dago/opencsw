@@ -13,6 +13,9 @@ MASTER_SITES = http://www.namazu.org/stable/
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSWnamazu.gspec CSWnamazu.depend CSWnamazu.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS += $(DIRPATHS)
 
 TEST_TARGET = check

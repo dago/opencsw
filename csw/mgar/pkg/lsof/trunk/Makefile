@@ -17,6 +17,9 @@ SRCDIST   = $(TOPDIST)_src
 #DISTFILES = $(TOPDIST).tar.bz2
 WORKSRC   = $(WORKDIR)/$(TOPDIST)/$(SRCDIST)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.bz2
+
 CONFIGURE_SCRIPTS = custom
 CONFIGURE_ARGS    = -n solariscc
 

@@ -15,6 +15,9 @@ MASTER_SITES = http://www.dwheeler.com/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWsloc.gspec
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Listen to the environment...
 PATCHFILES = make.diff
 

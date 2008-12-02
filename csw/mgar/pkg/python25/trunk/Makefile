@@ -19,10 +19,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
+UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWpython,depend prototype)
 DISTFILES += $(call admfiles,CSWpython-tk,depend prototype)
 DISTFILES += $(call admfiles,CSWidle,depend prototype)
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # Configure
 PATCHFILES += setup.diff

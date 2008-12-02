@@ -13,6 +13,9 @@ endef
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES += CSWsudo-ldap.gspec CSWsudo-ldap.postinstall
 DISTFILES += CSWsudo-ldap.prototype CSWsudo-ldap.depend
 DISTFILES += CSWsudo-ldap.space CSWsudo-ldap.postremove

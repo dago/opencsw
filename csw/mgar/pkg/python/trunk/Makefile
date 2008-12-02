@@ -16,6 +16,9 @@ endef
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 DISTFILES = Python-$(GARVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = Python-(\d+(?:\.\d+)*).tar.bz2
+
 # Configure some site specific variables
 PATCHFILES = site-config.diff
 

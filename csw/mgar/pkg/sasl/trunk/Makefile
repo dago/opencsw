@@ -21,6 +21,9 @@ WORKSRC = $(WORKDIR)/cyrus-$(GARNAME)-$(GARVERSION)
 
 DISTFILES = cyrus-$(GARNAME)-$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = cyrus-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 BUILD_ENV = _REENTRANT=1
 
 TEST_TARGET = check

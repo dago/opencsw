@@ -18,6 +18,9 @@ DISTFILES += CSWap2modruby.gspec
 #DISTFILES += CSWap2modruby.preremove
 #DISTFILES += CSWap2modruby.space
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_SCRIPTS = ruby
 
 CONFIGURE_ARGS  = --prefix=$(prefix)

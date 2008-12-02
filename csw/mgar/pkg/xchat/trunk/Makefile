@@ -16,6 +16,9 @@ DISTFILES += CSWxchat-pl.gspec CSWxchat-pl.depend CSWxchat-pl.prototype
 DISTFILES += CSWxchat-py.gspec CSWxchat-py.depend CSWxchat-py.prototype
 DISTFILES += CSWxchat-tcl.gspec CSWxchat-tcl.depend CSWxchat-tcl.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 # Remove hardcoded use of -lutil for the python plugin
 PATCHFILES += pylibs.diff
 

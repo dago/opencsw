@@ -15,6 +15,9 @@ MASTER_SITES = http://www.xinetd.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWxinetd,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 LIBDEPS += lib/tcp_wrappers
 
 CONFIGURE_ARGS  = $(DIRPATHS)

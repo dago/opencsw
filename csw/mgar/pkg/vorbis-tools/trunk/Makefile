@@ -10,8 +10,12 @@ define BLURB
     simple commentor.
 endef
 
+UPSTREAM_MASTER_SITES = http://www.vorbis.com/files/
 MASTER_SITES = http://www.vorbis.com/files/1.0.1/unix/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 DEPENDS = lib/libvorbis
 

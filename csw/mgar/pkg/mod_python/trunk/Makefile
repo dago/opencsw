@@ -14,6 +14,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 pkgfiles   = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modpython,$(pkgfiles))
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+
 #DEPENDS += lang/python
 
 CONFIGURE_ARGS = $(DIRPATHS)

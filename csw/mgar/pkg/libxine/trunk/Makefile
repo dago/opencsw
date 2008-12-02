@@ -13,6 +13,9 @@ MASTER_SITES = http://prdownloads.sourceforge.net/xine/
 DISTFILES  = xine-lib-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibxine,depend)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PATCHFILES  = int_fast-defs-sol8.diff
 PATCHFILES += bswap-for-sol8-i386.diff
 PATCHFILES += configure-v8only.diff

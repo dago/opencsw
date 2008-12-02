@@ -17,6 +17,9 @@ DISTFILES += CSWap2modtransform.gspec
 DISTFILES += CSWap2modtransform.prototype CSWap2modtransform.depend
 DISTFILES += CSWap2modtransform.postinstall CSWap2modtransform.preremove
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Anti-social GCC only behavior
 PATCHFILES += gcc.diff
 # Don't use APXS to install the module

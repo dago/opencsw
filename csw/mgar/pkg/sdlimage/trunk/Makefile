@@ -11,6 +11,9 @@ MASTER_SITES = http://www.libsdl.org/projects/SDL_image/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlimage,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 include gar/category.mk

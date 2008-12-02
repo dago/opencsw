@@ -13,6 +13,9 @@ MASTER_SITES = http://cheeseshop.python.org/packages/source/s/setuptools/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpysetuptools,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Use versionless python lib
 PATCHFILES += pyversion.diff
 

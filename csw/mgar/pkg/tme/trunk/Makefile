@@ -15,6 +15,9 @@ endef
 MASTER_SITES = http://people.csail.mit.edu/fredette/tme/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # -- ROM Images --
 
 # Sun 2 Multibus Rev R ROM:

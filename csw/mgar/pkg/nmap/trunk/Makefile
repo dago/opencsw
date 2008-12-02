@@ -17,6 +17,9 @@ endef
 MASTER_SITES = http://download.insecure.org/nmap/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 # Compile against gtk+-2.0 (2.4.0)
 PATCHFILES = gtk20.diff
 

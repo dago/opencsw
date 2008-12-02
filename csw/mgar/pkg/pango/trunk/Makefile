@@ -14,6 +14,9 @@ MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.4/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWpango,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 LIBDEPS += lib/xft
 
 CONFIGURE_ARGS  = $(DIRPATHS)

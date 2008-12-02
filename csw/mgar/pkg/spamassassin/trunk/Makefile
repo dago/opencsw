@@ -14,6 +14,9 @@ MASTER_SITES = http://apache.jumper.nu/spamassassin/source/
 DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWspamassassin,checkinstall depend postinstall)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(SPKG_NAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS = custom

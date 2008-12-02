@@ -11,6 +11,9 @@ MASTER_SITES = http://www.dtek.chalmers.se/groups/dvd/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWogle_gui, depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 GARCOMPILER ?= GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)

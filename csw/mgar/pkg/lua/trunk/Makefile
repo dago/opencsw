@@ -13,6 +13,9 @@ MASTER_SITES = http://www.lua.org/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 #DISTFILES += CSWlua.gspec CSWlua.prototype CSWlua.depend
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 #LIBDEPS += lib/db lib/gdbm
 
 # Configuration flags

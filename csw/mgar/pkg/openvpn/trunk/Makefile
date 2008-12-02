@@ -11,6 +11,9 @@ MASTER_SITES = http://openvpn.net/release/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWopenvpn, prototype )
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS  = --prefix=$(prefix) --mandir=/opt/csw/share/man
 
 TEST_SCRIPTS =

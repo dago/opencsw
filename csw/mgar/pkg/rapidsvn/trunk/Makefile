@@ -12,6 +12,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrapidsvn,depend prototype)
 DISTFILES += $(call admfiles,CSWsvncpp,depend prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # RapidSVN 0.9.1 omits the manpage from the dist archive
 DISTFILES += rapidsvn.xml
 

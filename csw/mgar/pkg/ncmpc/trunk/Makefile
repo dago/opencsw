@@ -18,6 +18,9 @@ MASTER_SITES = http://hem.bredband.net/kaw/ncmpc/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWncmpc,prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 TEST_TARGET =
 
 include gar/category.mk

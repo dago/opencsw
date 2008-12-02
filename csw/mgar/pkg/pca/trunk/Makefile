@@ -17,6 +17,9 @@ MASTER_SITES = http://www.par.univie.ac.at/solaris/pca/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION)
 DISTFILES += $(call admfiles,CSWpca)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+
 WORKSRC = $(WORKDIR)
 
 CONFIGURE_SCRIPTS =

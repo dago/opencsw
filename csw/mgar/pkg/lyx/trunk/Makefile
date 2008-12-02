@@ -13,6 +13,9 @@ MASTER_SITES = ftp://ftp.lyx.org/pub/lyx/stable/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlyx,depend prototype postinstall)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PATCHFILES = solaris.patch
 
 CONFIGURE_ARGS = PATH="/opt/csw/kde-gcc/bin:$$PATH"

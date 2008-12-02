@@ -15,6 +15,9 @@ DISTFILES += $(call admfiles,CSWsyslogng, postinstall depend prototype)
 DISTFILES += syslog-ng.conf.CSW
 DISTFILES += cswsyslog_ng
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 SPKG_CLASSES = none cswinitsmf
 
 PREREQUISITE_PKGS = CSWeventlog

@@ -13,6 +13,9 @@ MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWrrdtool,prototype)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Patch to make it build on x86
 PATCHFILES += rrd_config.diff
 

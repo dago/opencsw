@@ -16,4 +16,7 @@ MASTER_SITES = http://www.freedesktop.org/software/xrestop/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWxrestop,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 include gar/category.mk

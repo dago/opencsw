@@ -15,6 +15,9 @@ DISTFILES    += CSWsqlite3dev.gspec CSWsqlite3dev.prototype CSWsqlite3dev.depend
 DISTFILES    += COPYING
 # DISTFILES    += $(call admfiles,CSWsqlite3, depend) 
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = sqlite-(\d+(?:\.\d+)*).tar.gz
+
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib

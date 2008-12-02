@@ -22,6 +22,9 @@ DISTFILES += CSWsgmlcommon.gspec CSWsgmlcommon.prototype CSWsgmlcommon.depend
 DISTFILES += CSWxmlcommon.gspec CSWxmlcommon.prototype
 DISTFILES += $(EXTRA_FILES)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PATCHFILES = sgml-common-0.6.3-docdir.patch sgml-common-automake.patch
 PATCHFILES += sgml-common-quotes.patch sgml-common-umask.patch
 PATCHFILES += sgml-common-xmldir.patch install-catalog-sanity.patch

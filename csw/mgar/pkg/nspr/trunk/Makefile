@@ -13,6 +13,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnspr, depend )
 # DISTFILES += CSWnspr.depend CSWnspr.gspec CSWnspr.prototype
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PERL="/opt/csw/bin/perl"
 CFLAGS=-xlibmil
 CXXFLAGS="-xlibmil -xlibmopt -features=tmplife -norunpath"

@@ -17,6 +17,9 @@ DISTFILES += CSWap2modhighlight.gspec
 DISTFILES += CSWap2modhighlight.prototype CSWap2modhighlight.depend
 DISTFILES += CSWap2modhighlight.postinstall CSWap2modhighlight.preremove
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 

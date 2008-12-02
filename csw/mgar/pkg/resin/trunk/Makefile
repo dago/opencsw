@@ -17,6 +17,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 #DEPENDS = server/apache2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 CONFIGURE_ARGS  = --prefix=$(prefix)/resin
 CONFIGURE_ARGS += --enable-jni
 CONFIGURE_ARGS += --enable-ssl

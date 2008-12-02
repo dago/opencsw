@@ -13,6 +13,9 @@ endef
 MASTER_SITES = http://www.xmms.org/files/1.2.x/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 DEPENDS = lib/libvorbis
 
 CONFIGURE_ARGS  = $(DIRPATHS)

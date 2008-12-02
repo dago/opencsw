@@ -11,6 +11,9 @@ MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = libXrender-$(GARVERSION).tar.gz
 PKGDIST = libXrender-$(GARVERSION).tar.gz
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DISTFILES    += CSWlibxrender.gspec CSWlibxrender.prototype CSWlibxrender.depend 
 DISTFILES    += CSWrenderdev.gspec CSWrenderdev.prototype CSWrenderdev.depend 
 # DISTFILES    += $(call admfiles,CSWxrender, depend)

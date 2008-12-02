@@ -15,6 +15,9 @@ MASTER_SITES = http://www.pubcookie.org/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpubcookie)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 PREREQUISITE_PKGS = CSWapache2-devel
 
 CONFIGURE_ARGS = $(DIRPATHS)

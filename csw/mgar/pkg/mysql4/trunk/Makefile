@@ -13,6 +13,9 @@ MASTER_SITES = http://mysql.he.net/Downloads/MySQL-4.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmysql4,)
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 DB_USER = mysqld
 
 CONFIGURE_ARGS  = --prefix=$(prefix)/mysql4

@@ -17,6 +17,9 @@ MASTER_SITES = http://subversion.tigris.org/downloads/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 # JUnit
 #MASTER_SITES += $(SF_MIRROR)/junit/
 #DISTFILES += junit3.8.1.zip
