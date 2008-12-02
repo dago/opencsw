@@ -1,8 +1,0 @@
-P CSWcswclassutils      cswclassutils - CSW class action utilities
-P CSWsetoolkit          setoolkit - A system performance monitoring tool
-P CSWperl               perl - A high-level, general-purpose programming language.
-P CSWpmtimedate         pm_timedate - Parse date strings into time values
-P CSWpmmathinterpolate  pm_mathinterpolate - Useful routines for interpolating data sets
-P CSWrrd                rrdtool - Round Robin Database graphing tool
-P CSWgawk               gawk - GNU AWK
-P CSWbzip2              bzip2 - a high-quality block-sorting file compressor

@@ -1,4 +1,0 @@
-%var            bitname lyx
-%var            pkgname CSWlyx
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC}/COPYING

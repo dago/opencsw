@@ -1,9 +1,0 @@
-P CSWbdb44 berkeleydb44 - embedded database libraries and utilities
-P CSWiconv libiconv - GNU iconv library
-P CSWkrb5lib krb5_lib - MIT Kerberos 5 core libraries
-P CSWlibmm libmm - Shared Memory Allocation abstraction library
-P CSWlibxml2 libxml2 - XML Parser Library
-P CSWosslrt openssl_rt - Openssl runtime libraries
-P CSWphp5 php5 - PHP Hypertext Processor 5
-P CSWzlib zlib - Zlib Data Compression Library
-P CSWapache apache - apache webserver with mod_ssl included

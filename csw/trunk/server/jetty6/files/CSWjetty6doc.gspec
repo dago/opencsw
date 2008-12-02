@@ -1,4 +1,0 @@
-%var            bitname jetty6doc
-%var            pkgname CSWjetty6doc
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/../jetty-%{GARVERSION}/LICENSES/LICENSE.txt

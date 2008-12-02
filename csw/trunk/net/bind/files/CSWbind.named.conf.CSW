@@ -1,4 +1,0 @@
-options {
-        directory "/var/opt/csw/named";
-        pid-file "named.pid";
-};

@@ -1,7 +1,0 @@
-d none /opt/csw/lib 0755 root bin
-f none /opt/csw/lib/libpixman-1.la 0755 root bin
-f none /opt/csw/lib/libpixman-1.so.0.12.0 0755 root bin
-s none /opt/csw/lib/libpixman-1.so.0=libpixman-1.so.0.12.0
-s none /opt/csw/lib/libpixman-1.so=libpixman-1.so.0.12.0
-i depend=CSWpixman.depend
-i pkginfo=CSWpixman.pkginfo

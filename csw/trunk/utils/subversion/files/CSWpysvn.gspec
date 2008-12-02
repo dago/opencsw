@@ -1,5 +1,0 @@
-%var            bitname pysvn
-%var            pkgname CSWpysvn
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Subversion Python language binding
-%copyright      url file://%{WORKSRC}/COPYING

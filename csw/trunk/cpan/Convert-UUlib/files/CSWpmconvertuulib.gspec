@@ -1,4 +1,0 @@
-%var            bitname pm_convertuulib
-%var            pkgname CSWpmconvertuulib
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      url file://%{WORKSRC}/COPYING.GNU

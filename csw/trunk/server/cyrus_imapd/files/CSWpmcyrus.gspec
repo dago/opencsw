@@ -1,6 +1,0 @@
-%var            bitname pm_cyrus
-%var            pkgname CSWpmcyrus
-%var            desc Perl interface to Cyrus Imap functions
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYRIGHT
-

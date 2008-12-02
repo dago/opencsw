@@ -1,4 +1,0 @@
-%var            bitname libgpod
-%var            pkgname CSWlibgpod
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC}/COPYING

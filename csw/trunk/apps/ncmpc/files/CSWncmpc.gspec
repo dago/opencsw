@@ -1,4 +1,0 @@
-%var            bitname ncmpc
-%var            pkgname CSWncmpc
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING

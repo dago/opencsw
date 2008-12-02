@@ -1,3 +1,0 @@
-%var            bitname jrrd
-%var            pkgname CSWjrrd
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec

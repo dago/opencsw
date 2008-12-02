@@ -1,5 +1,0 @@
-%var            bitname rake
-%var            pkgname CSWrake
-%var            arch all
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/MIT-LICENSE

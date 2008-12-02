@@ -1,4 +1,0 @@
-%var            bitname ldapvi
-%var            pkgname CSWldapvi
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
