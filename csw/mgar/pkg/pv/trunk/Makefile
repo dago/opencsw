@@ -1,8 +1,8 @@
 GARNAME = pv
-GARVERSION = 0.9.2
+GARVERSION = 1.1.4
 CATEGORIES = utils
 
-DESCRIPTION = pipeviewer, like cat with progress indications
+DESCRIPTION =  Monitor the progress of data through a pipe
 define BLURB
   Pipe Viewer is a terminal-based tool for monitoring the progress
   of data through a pipeline. It can be inserted into any normal
@@ -16,17 +16,23 @@ endef
 SPKG_SOURCEURL = http://www.ivarch.com/programs/pv.shtml
 
 # Source files
-MASTER_SITES = http://unc.dl.sourceforge.net/sourceforge/pipeviewer/
+MASTER_SITES = http://pipeviewer.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWpv.gspec CSWpv.depend CSWpv.prototype
+DISTFILES += $(call admfiles,CSWpv)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+# Trim extra whitespaces from Solaris wc
+PATCHFILES = fix-test-010.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
 post-install:
-	@gunzip $(DESTDIR)$(infodir)/pv.info.gz $(DESTDIR)$(mandir)/man1/pv.1.gz
-
+	@gunzip $(DESTDIR)$(mandir)/man1/pv.1.gz
+	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -m 644 \
+		$(WORKSRC)/doc/NEWS \
+		$(DESTDIR)$(docdir)/$(GARNAME)

@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru pv-1.1.4.orig/tests/010-dd pv-1.1.4/tests/010-dd
+--- pv-1.1.4.orig/tests/010-dd	2007-02-19 15:00:45.000000000 +0100
++++ pv-1.1.4/tests/010-dd	2008-12-01 15:02:00.375332231 +0100
+@@ -5,7 +5,7 @@
+ #COUNT1=`cat /dev/zero | dd bs=100000 count=1000 2>/dev/null | wc -c`
+ # NB cat gets it wrong sometimes too!
+ COUNT1=100000000
+-COUNT2=`$PROG -B 100000 -q /dev/zero | dd bs=100000 count=1000 2>/dev/null | wc -c`
++COUNT2=`$PROG -B 100000 -q /dev/zero | dd bs=100000 count=1000 2>/dev/null | wc -c | tr -d ' '`
+ 
+ #echo "[$COUNT1] [$COUNT2]"
+ 
