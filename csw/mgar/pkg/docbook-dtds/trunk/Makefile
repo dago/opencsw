@@ -1,6 +1,9 @@
+# Replicate the RHEL5 docbook-dtds-1.0.30.1 rpm for CSW.  Patches are taken
+# from that srpm and modified (so paths work for GAR).
+
 GARNAME = docbookdtds
-GARVERSION = 1.0.30
-PATCHLEVEL = 1
+GARVERSION = 1.0
+PATCHLEVEL = 30.1
 CATEGORIES = xtra
 
 PREREQUISITES = CSWunzip
@@ -46,7 +49,7 @@ DBFILES += docbook-4.2.zip docbook-xml-4.2.zip docbook-4.3.zip
 DBFILES += docbook-xml-4.3.zip docbook-4.4.zip docbook-xml-4.4.zip
 
 MASTER_SITES = $(O_SRC) $(D_SRC)
-DISTFILES  = $(DBFILES)
+DISTFILES  = $(DBFILES) Makefile
 
 PATCHFILES = docbook-4.2-euro.patch docbook-dtd30-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd31-sgml-1.0.catalog.patch
@@ -55,24 +58,17 @@ PATCHFILES += docbook-dtd41-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd42-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtds-ents.patch
 
-#CONFIGURE_ARGS = $(DIRPATHS)
+# we don't need no stinkin' configure! :)
+CONFIGURE_SCRIPTS = 
+# no tests either.
+TEST_SCRIPTS = 
+
+# nothing to build either...
+BUILD_SCRIPTS = 
+
+INSTALL_ARGS = DESTDIR=$(DESTDIR) GARVERSION=$(GARVERSION) PATCHLEVEL=$(PATCHLEVEL)
 
 include gar/category.mk
-
-# BuildArch: noarch
-
-# Patch0: docbook-dtd30-sgml-1.0.catalog.patch
-# Patch1: docbook-dtd31-sgml-1.0.catalog.patch
-# Patch2: docbook-dtd40-sgml-1.0.catalog.patch
-# Patch3: docbook-dtd41-sgml-1.0.catalog.patch
-# Patch4: docbook-dtd42-sgml-1.0.catalog.patch
-# Patch5: docbook-4.2-euro.patch
-# Patch6: docbook-dtds-ents.patch
-
-local-zip-%:
-	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
-	@unzip $(DOWNLOADDIR)/$* -d $(EXTRACTDIR)
-	@$(MAKECOOKIE)
 
 SGMLDIRS = 3.0 3.1 4.0 4.1 4.2 4.3 4.4
 XMLDIRS = 4.1.2 4.2 4.3 4.4
@@ -130,9 +126,17 @@ zip-extract-docbook-xml-4.4.zip:
 pre-extract: $(WORKSRC)
 	( cd $(WORKSRC); \
 	for d in $(SGMLDIRS); do \
-		mkdir $$d-sgml; \
+		[ -d $$d-sgml ] || mkdir $$d-sgml; \
 	done; \
 	for d in $(XMLDIRS); do \
-		mkdir $$d-xml; \
+		[ -d $$d-xml ] || mkdir $$d-xml; \
 	done )
+	@$(MAKECOOKIE)
+
+post-extract:
+	# Increase NAMELEN (bug #36058, bug #159382). [bug references from
+	# rpm .spec file]
+	( cd $(WORKSRC); \
+		gsed -e's,\(NAMELEN\s\+\)44\(\s\*\)\?,\1256,' -i.namelen */docbook.dcl; \
+		cp ../Makefile .)
 	@$(MAKECOOKIE)
