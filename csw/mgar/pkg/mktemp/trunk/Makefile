@@ -1,8 +1,8 @@
 GARNAME = mktemp
-GARVERSION = 1.5
+GARVERSION = 1.6
 CATEGORIES = utils
 
-DESCRIPTION = A small program to allow safe temporary file creation from shell scripts.
+DESCRIPTION = A small program to allow safe temporary file creation from shell scripts
 define BLURB
     The mktemp utility takes the given filename template and overwrites a
     portion of it to create a unique filename.	 The template may be any file-
