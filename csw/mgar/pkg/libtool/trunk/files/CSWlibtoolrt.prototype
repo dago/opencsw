@@ -1,7 +1,0 @@
-d none /opt/csw/lib 0755 root bin
-f none /opt/csw/lib/libltdl.so.7.1.2 0755 root bin
-s none /opt/csw/lib/libltdl.so.7=libltdl.so.7.1.2
-s none /opt/csw/lib/libltdl.so=libltdl.so.7.1.2
-i copyright=CSWlibtoolrt.copyright
-i depend=CSWlibtoolrt.depend
-i pkginfo=CSWlibtoolrt.pkginfo
