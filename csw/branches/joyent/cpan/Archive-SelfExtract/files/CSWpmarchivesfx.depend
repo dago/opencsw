@@ -1,4 +1,0 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
-P CSWpmarchivezip pm_archivezip - provide an interface to ZIP archive files.
-P CSWpmiostringy pm_iostringy - I/O on in-core objects like strings and arrays

@@ -1,4 +1,0 @@
-%var            bitname qt
-%var            pkgname CSWqt
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE

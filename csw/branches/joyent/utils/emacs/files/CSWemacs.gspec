@@ -1,3 +1,0 @@
-%var            bitname emacs
-%var            pkgname CSWemacs
-%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec

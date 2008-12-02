@@ -1,4 +1,0 @@
-P CSWcommon  common - common files and dirs for CSW packages
-P CSWperl perl - A high-level, general-purpose programming language
-P CSWpmunimap pm_unicodemap - maps charsets from and to utf16 unicode
-P CSWpmunistr pm_unicodestring - String of Unicode characters (UCS2/UTF16)
