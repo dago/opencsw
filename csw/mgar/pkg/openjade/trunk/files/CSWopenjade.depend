@@ -1,0 +1,12 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWgcc3core gcc3core - GNU C Compiler
+P CSWgcc3corert gcc3corert - GNU C Compiler Run Time
+P CSWgcc3g++ gcc3g++ - GNU C++ Compiler
+P CSWgcc3g++rt gcc3g++rt - GNU C++ Compiler Run Time
+P CSWgcc4corert gcc4corert - GNU C Compiler Run Time
+P CSWgcc4g++rt gcc4g++rt - GNU C++ Compiler Run Time
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWopensp opensp - a SGML parser called OpenSP
+P CSWsgmlcommon sgmlcommon - A collection of entities and DTDs
+P CSWxmlcommon xmlcommon - A collection of entities and DTDs
