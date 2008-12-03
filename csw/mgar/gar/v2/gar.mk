@@ -199,13 +199,6 @@ modenv:
 	@echo "Modulations: $(MODULATIONS)"
 	@echo "M: $(call expand_modulator_1,ISA)"
 
-#patch-isa-%:
-#	@echo " ==> Patching for ISA $*"
-#	@$(MAKE) ISA=$* pre-patch-isa-$* patch-isa post-patch-isa-$*
-#	@$(DONADA)
-
-
-
 # ========================= MAIN RULES ========================= 
 # The main rules are the ones that the user can specify as a
 # target on the "make" command-line.  Currently, they are:
@@ -229,9 +222,6 @@ modenv:
 
 announce:
 	@echo "[===== NOW BUILDING: $(DISTNAME) =====]"
-
-#announce-isa:
-#	@echo "[===== NOW BUILDING: $(DISTNAME) ISA: $(ISA) =====]"
 
 announce-modulation:
 	@echo "[===== NOW BUILDING: $(DISTNAME) MODULATION $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) =====]"
@@ -309,7 +299,6 @@ EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(DISTF
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
-#extract: checksum $(COOKIEDIR) pre-extract extract-isa $(addprefix extract-isa-,$(BUILD_ISAS)) post-extract
 extract: checksum $(COOKIEDIR) pre-extract extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
 	@$(DONADA)
 
@@ -318,10 +307,6 @@ extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		announce-modulation \
 		pre-extract-modulated $(EXTRACT_TARGETS) post-extract-modulated
 	@$(DONADA)
-
-#extract-isa-%:
-#	@$(MAKE) ISA=$* pre-extract-isa-$* extract-isa post-extract-isa-$*
-#	@$(MAKECOOKIE)
 
 # returns true if extract has completed successfully, false
 # otherwise
@@ -338,17 +323,10 @@ checkpatch: extract
 # patch			- Apply any provided patches to the source.
 PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES))
 
-#patch: pre-patch $(addprefix patch-isa-,$(BUILD_ISAS)) post-patch
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-#patch-isa: extract-isa $(WORKSRC) pre-patch-isa $(PATCH_TARGETS) post-patch-isa
 patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated $(PATCH_TARGETS) post-patch-modulated
-
-#patch-isa-%:
-#	@echo " ==> Patching for ISA $*"
-#	@$(MAKE) ISA=$* pre-patch-isa-$* patch-isa post-patch-isa-$*
-#	@$(DONADA)
 
 # returns true if patch has completed successfully, false
 # otherwise
@@ -395,35 +373,20 @@ endif
 configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure
 	$(DONADA)
 
-#configure-isa: patch-isa $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
-#		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
-#		pre-configure-isa $(CONFIGURE_TARGETS) post-configure-isa
 configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
 		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
 		pre-configure-modulated $(CONFIGURE_TARGETS) post-configure-modulated
 
-#configure-isa-%:
-#	@echo " ==> Configuring for ISA $*"
-#	@$(MAKE) ISA=$* pre-configure-isa-$* configure-isa post-configure-isa-$*
-#	@$(DONADA)
-
 .PHONY: reset-configure reset-configure-modulated
 reconfigure: reset-configure configure
 
-reset-configure: 
-
-reconfigure-isa-%:
+reset-configure-isa:
 
 reset-configure:
 	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) reset-configure-isa;)
 
 reconfigure-isa-%:
 	@$(MAKE) -s ISA=$* reset-configure-isa configure-isa
-
-#reset-configure-isa:
-#	@echo " ==> Reset configure state for ISA $(ISA)"
-#	@rm -rf xxx
-#	@$(MAKE) -s ISA=$* reset-configure-isa
 
 # returns true if configure has completed successfully, false
 # otherwise
@@ -437,8 +400,6 @@ build: pre-build $(addprefix build-,$(MODULATIONS)) post-build
 	$(DONADA)
 
 # Build for a specific architecture
-#build-isa: configure-isa pre-build-isa $(BUILD_TARGETS) post-build-isa
-#	@$(MAKECOOKIE)
 build-modulated-check:
 	$(if $(filter ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$*)),                                            \
 		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))      \
@@ -446,15 +407,6 @@ build-modulated-check:
 
 build-modulated: verify-isa configure-modulated pre-build-modulated $(BUILD_TARGETS) post-build-modulated
 	@$(MAKECOOKIE)
-
-# Build for a certain architecture
-#build-isa-%:
-#	@echo " ==> Building for ISA $*"
-#	$(if $(filter ERROR,$(ARCHFLAGS_$(GARCOMPILER)_$*)),                                            \
-#		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))      \
-#	)
-#	@$(MAKE) ISA=$* pre-build-isa-$* build-isa post-build-isa-$*
-#	@$(MAKECOOKIE)
 
 # returns true if build has completed successfully, false
 # otherwise
@@ -468,11 +420,6 @@ test: $(addprefix test-,$(MODULATIONS))
 
 test-modulated: build-modulated pre-test $(TEST_TARGETS) post-test
 	$(DONADA)
-
-#test-isa-%:
-#	@echo " ==> Testing for ISA $*"
-#	@$(MAKE) ISA=$* test-isa
-#	@$(MAKECOOKIE)
 
 # strip - Strip executables
 POST_INSTALL_TARGETS := strip $(POST_INSTALL_TARGETS)
