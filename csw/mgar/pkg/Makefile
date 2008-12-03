@@ -2,28 +2,47 @@
 # This makefile is to be included from Makefiles in each category
 # directory.
 
+# This contains all directories containing packages
+SUBDIRS = cpan xfce
+
+FILTER_DIRS = CVS/
+
 default:
 	@echo "You are in the pkg/ directory."
 
 %:
-	@for i in $(filter-out CVS/,$(wildcard */)) ; do \
+	@for i in $(filter-out $(FILTER_DIRS),$(wildcard */)) ; do \
 		$(MAKE) -C $$i $* ; \
 	done
 
 paranoid-%:
-	@for i in $(filter-out CVS/,$(wildcard */)) ; do \
+	@for i in $(filter-out $(FILTER_DIRS),$(wildcard */)) ; do \
 		$(MAKE) -C $$i $* || exit 2; \
 	done
 
 export BUILDLOG ?= $(shell pwd)/buildlog.txt
 
 report-%:
-	@for i in $(filter-out CVS/,$(wildcard */)) ; do \
+	@for i in $(filter-out $(FILTER_DIRS),$(wildcard */)) ; do \
 		$(MAKE) -C $$i $* || echo "	*** make $* in $$i failed ***" >> $(BUILDLOG); \
 	done
 
+# When the complete package tree is checked out there would be literally hundreds
+# of instances of GAR as they are referenced as external references. Alternatively
+# you can check out the tree with
+#   svn co --ignore-externals https://.../pkg
+# and then run
+#   gmake garlinks
+# to generate symbolic links instead of externally checked out dirs
+
+# Lines returned by 'svn propget -R' look like this:
+#   cpan/Test-Memory-Cycle/trunk - gar https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v1
+
+garlinks:
+	@(svn propget svn:externals -R | perl -ane 'next if( /^$$/ );($$path,$$sep,$$dir,$$link)=@F;($$upsteps=$$path)=~s![^/]+!..!g;(($$linkdest=$$link))=~ s!https://gar.svn.sf.net/svnroot/gar/csw/mgar!$$upsteps!;print "Linking $$path/$$dir to ../$$linkdest", symlink("../$$linkdest","$$path/$$dir") ? "" : " failed", "\n";')
+
 pkglist:
-	@for i in $(filter-out $(FILTER_DIRS),$(wildcard */)) ; do \
+	@for i in $(filter-out $(FILTER_DIRS),$(foreach D,. $(SUBDIRS),$(wildcard $D/*/))) ; do \
 		$(MAKE) -s -C $$i/trunk pkglist ; \
 	done
 
