@@ -17,30 +17,15 @@ SVN  ?= /opt/csw/bin/svn
 GAWK ?= /opt/csw/bin/gawk
 
 # We have to deal with four cases here:
-# 1. There is no svn binary
-# 2. There is a svn binary, but the directory does not belong to a repository
-# 3. There is a svn binary, but not everything was committed properly
-# 4. There is a svn binary and everything was committed
+# 1. There is no svn binary -> NOSVN
+# 2. There is a svn binary, but the directory does not belong to a repository -> NOTVERSIONED
+# 3. There is a svn binary, but not everything was committed properly -> UNCOMMITTED
+# 4. There is a svn binary and everything was committed -> r<revision>
 
-_HAS_SVN = $(shell if test -x $(SVN); then echo yes; fi)
-ifneq ($(_HAS_SVN),yes)
-  # Case 1: There is no svn binary
-  SVN_REV = NOSVN
-else
-  ifneq ($(shell $(SVN) info >/dev/null 2>&1; echo $$?),0)
-    # Case 2: The directory does not belong to a repository
-    SVN_REV = NOTVERSIONED
-  else
-    # Case 3+4: The directory belongs to a repository
-    ifneq ($(shell $(SVN) status 2>/dev/null),)
-      # Case 3: Not everything was committed properly
-      _SVN_UNCOMMITTED = UNCOMMITTED
-    endif
-    SVN_REV = $(shell $(SVN) info --recursive 2>/dev/null | \
-      $(GAWK) '$$1 == "Revision:" && MAX < $$2 { MAX = $$2 } \
-      END { print "r" MAX }')$(_SVN_UNCOMMITTED)
-  endif
-endif
+# Calculating the revision can be time consuming, so we do this on demand
+define _REVISION
+$(if $(shell if test -x $(SVN); then echo yes; fi),$(if $(shell $(SVN) info >/dev/null 2>&1; if test $$? -eq 0; then echo YES; fi),$(if $(shell $(SVN) status --ignore-externals 2>/dev/null | grep -v '^X'),UNCOMMITTED,$(shell $(SVN) info --recursive 2>/dev/null | $(GAWK) '$$1 == "Revision:" && MAX < $$2 { MAX = $$2 } END {print "r" MAX }')),NOTVERSIONED),NOSVN)
+endef
 
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
@@ -49,7 +34,7 @@ SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
 SPKG_PACKAGER  ?= Unknown
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_EMAIL     ?= Unknown
-SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(SVN_REV)-$(shell date '+%Y%m%d%H%M%S')
+SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
 SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
