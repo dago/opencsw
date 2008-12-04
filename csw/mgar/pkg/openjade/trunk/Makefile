@@ -17,7 +17,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWopenjade,depend)
+DISTFILES += $(call admfiles,CSWopenjade,depend postinstall preremove)
 
 PATCHFILES = openjade-1.3.1-nsl.patch
 
