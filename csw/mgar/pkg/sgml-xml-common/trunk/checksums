@@ -13,7 +13,7 @@ dcda4302e1b43256a55a658280651f42  download/sgml-common-automake.patch
 24ff49d6310889d0f423b35893623151  download/sgml-common-quotes.patch
 b51552a733ae70753b6e7ea997a4e482  download/sgml-common-umask.patch
 d36dcc47efa67f41d7e406386754bb67  download/sgml-common-xmldir.patch
-c88f3684fc232953555393fb8e0de9e4  download/install-catalog-sanity.patch
+78febdc7f5b8535ef5e90e2c94a6e804  download/install-catalog-sanity.patch
 b35d53333ca6dbc6cd96f0135cd4f85d  download/sgmlwhich-sanity.patch
 99ac766ea29643aa33236a39596d943c  download/configure-man.patch
 12b32f2a5ad0ab2edb70bfb83f3aecd6  download/install-catalog-man.patch
