@@ -3,3 +3,9 @@ d1841c956f43bb3a7bf53d7721d82833  download/jdk-6u10-solaris-sparcv9.sh
 e31c6cf8ada23cde243656f7ef435ce3  download/jdk-6u10-solaris-i586.sh
 c837fbdd49b772255a255802552c8da6  download/jdk-6u10-solaris-x64.sh
 d2ea0d736a7cf088ed9d452f3b1ecb1d  download/CSWjdk6.gspec
+a077039adebc66db2f7316e387ba13eb  download/CSWjdk6.depend
+d085818ed2ca9c777c85b3c9553a41f5  download/CSWjre6.gspec
+8b98539f0a2211e965cc9bb2d42024f3  download/CSWjdk.gspec
+e1aeb08d2dbb21e9b61598bc1dde0094  download/CSWjdk.depend
+873b8c1f59485f78eb87ad67fe4c4dc4  download/CSWjre.gspec
+a077039adebc66db2f7316e387ba13eb  download/CSWjre.depend

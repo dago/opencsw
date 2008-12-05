@@ -1,0 +1,4 @@
+%var            bitname jdk
+%var            pkgname CSWjdk
+%include        url file://%{PKGLIB}/csw_standard.gspec
+%copyright      url file://%{WORKSRC}/LICENSE
