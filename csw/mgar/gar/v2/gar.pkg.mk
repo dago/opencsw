@@ -243,3 +243,22 @@ dependb:
 pkgenv:
 	@$(PKG_ENV) env
 
+
+# pkglist - list the packages to be built with GAR pathname, catalog name and package name
+#
+
+define _pkglist_pkgname
+$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
+endef
+
+define _pkglist_catalogname
+$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec)
+endef
+
+define _pkglist_one
+$(shell /usr/bin/echo "$(patsubst $(realpath $(shell pwd)/$(GARDIR))/%,%,$(realpath .))\t$(call _pkglist_catalogname,$(1))\t$(call _pkglist_pkgname,$(1))")
+endef
+
+pkglist:
+	@echo "G: $(GARDIR) - $(shell pwd) - $(realpath $(shell pwd)/$(GARDIR)) - $(realpath .)"
+	@$(foreach SPEC,$(SPKG_SPECS),echo "$(call _pkglist_one,$(SPEC))";)
