@@ -89,7 +89,8 @@ configure-fake:
 
 # we create the csw directory hierarchy 
 pre-install:
-	@( install -d $(DESTDIR)$(sbindir); \
+	@echo "Creating csw directories"
+	( install -d $(DESTDIR)$(sbindir); \
 	 install -d $(DESTDIR)$(mandir)/man5; \
 	 install -d $(DESTDIR)$(mandir)/man8; \
 	 ln -sf $(DESTDIR)$(mandir) $(DESTDIR)$(prefix)/man; \
