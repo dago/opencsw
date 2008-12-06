@@ -1,3 +1,10 @@
+openssh (5.1,REV=2008.12.06_rev=p1) unstable
+
+  * Added test for configuration file existence in sysV init script 
+  (Closes: #2878) 
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 06 Dec 2008 15:36:48 +0100
+
 openssh (5.1,REV=2008.10.04_rev=p1) unstable
 
   * New upstream version.

@@ -20,7 +20,7 @@ case $1 in
                 fi     
         fi
 
-        [ -x /opt/csw/sbin/sshd ] && /opt/csw/sbin/sshd &
+        [ -x /opt/csw/sbin/sshd ] && [ -f /opt/csw/etc/ssh/sshd_config ] && /opt/csw/sbin/sshd &
         ;;
 'stop')
         #
