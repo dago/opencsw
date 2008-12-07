@@ -15,8 +15,11 @@ DISTFILES += $(call admfiles,CSWlibogg,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+BUILD64 = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+SKIPTEST = 1
 
 include gar/category.mk
