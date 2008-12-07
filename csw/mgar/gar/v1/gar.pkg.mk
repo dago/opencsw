@@ -199,3 +199,14 @@ endef
 pkglist:
 	@echo "G: $(GARDIR) - $(shell pwd) - $(realpath $(shell pwd)/$(GARDIR)) - $(realpath .)"
 	@$(foreach SPEC,$(SPKG_SPECS),echo "$(call _pkglist_one,$(SPEC))";)
+
+srcpack:
+	@echo "*** Files"
+	@$(foreach S,$(SPKG_SPECS),echo "Spec $S";$(foreach F,$(filter $S.%,$(DISTFILES)),echo "  $F";))
+	@$(foreach F,$(filter-out $(foreach S,$(SPKG_SPECS),$S.%),$(DISTFILES)),echo "File $F";)
+	@$(foreach P,$(PATCHFILES),echo "Patch $P";)
+
+	@echo
+	@echo "*** Dependencies"
+
+	@$(foreach P,$(PREREQUISITE_PKGS),echo "$P";)
