@@ -14,7 +14,9 @@ endef
 SF_PROJ = xmlstar
 MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWxmlstarlet,depend prototype)
+DISTFILES += $(call admfiles,CSWxmlstarlet,)
+
+REQUIRED_PKGS = CSWgcrypt CSWggettext CSWgpgerr CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
