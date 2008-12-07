@@ -132,6 +132,9 @@ $(foreach SPEC,$(_PKG_SPECS), \
 # This can be used to automatically distribute the files to different packages
 #
 
+$(foreach SPEC,$(_PKG_SPECS),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER_$(SPEC))))
+$(foreach SPEC,$(_PKG_SPECS),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER)))
+
 # This file contains all installed pathes. This can be used as a starting point
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
@@ -154,13 +157,18 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	               ) \
 	              <$(PROTOTYPE); \
 	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
-	  ) >$@; \
+	  ) $(_PROTOTYPE_FILTER_$*) >$@; \
 	else \
-	  cp $(PROTOTYPE) $@; \
+	  cat $(PROTOTYPE) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
-	@cp $(WORKDIR)/$*.prototype $@
+	@cat $(WORKDIR)/$*.prototype $(_PROTOTYPE_FILTER_$*) >$@
+
+# This is a target used to generate all prototypes for debugging purposes.
+# On a normal packaging workflow this is not used.
+prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach S,$(_PKG_SPECS),$(WORKDIR)/$S.prototype-$(GARCH))
+	@$(DONADA)
 
 # $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
 .PRECIOUS: $(WORKDIR)/%.depend

@@ -17,7 +17,6 @@ FILEDIR ?= files
 DOWNLOADDIR ?= download
 PARTIALDIR ?= $(DOWNLOADDIR)/partial
 WORKROOTDIR ?= work
-#WORKDIR ?= $(WORKROOTDIR)/build-$(ISA)
 WORKDIR ?= $(WORKROOTDIR)/build-$(MODULATION)
 COOKIEROOTDIR ?= cookies
 COOKIEDIR ?= $(COOKIEROOTDIR)/$(MODULATION)
@@ -31,8 +30,8 @@ MANIFEST_FILE ?= manifest
 LOGDIR ?= log
 
 # Outbound proxies
-http_proxy ?= http://svn:8080
-ftp_proxy  ?= http://svn:8080
+http_proxy ?= 
+ftp_proxy  ?= 
 export http_proxy ftp_proxy
 
 # Don't do full-dependency builds by default
@@ -41,10 +40,10 @@ SKIPDEPEND ?= 1
 # A directory containing cached files. It can be created
 # manually, or with 'make garchive' once you've started
 # downloading required files (say with 'make paranoid-checksum'.
-GARCHIVEDIR ?= /export/medusa/src
+GARCHIVEDIR ?= /home/src
 
 # Space separated list of paths to search for DISTFILES.
-GARCHIVEPATH ?= /export/medusa/src
+GARCHIVEPATH ?= $(GARCHIVEDIR)
 
 # Select compiler
 # GARCOMPILER can be either GNU/SUN which selects the default
@@ -78,30 +77,34 @@ GAROSREL ?= $(shell uname -r)
 # These are the standard directory name variables from all GNU
 # makefiles.  They're also used by autoconf, and can be adapted
 # for a variety of build systems.
-BUILD_PREFIX     ?= /opt/csw
+BUILD_PREFIX       ?= /opt/csw
 
-prefix           ?= $(BUILD_PREFIX)
-exec_prefix      ?= $(prefix)
-bindir           ?= $(exec_prefix)/bin
-gnudir           ?= $(exec_prefix)/gnu
-sbindir          ?= $(exec_prefix)/sbin
-libexecdir       ?= $(exec_prefix)/libexec
-datadir          ?= $(prefix)/share
-sysconfdir       ?= $(prefix)/etc
-sharedstatedir   ?= $(prefix)/share
-localstatedir    ?= $(prefix)/var
-libdir           ?= $(exec_prefix)/lib
-infodir          ?= $(sharedstatedir)/info
-lispdir          ?= $(sharedstatedir)/emacs/site-lisp
-includedir       ?= $(prefix)/include
-mandir           ?= $(sharedstatedir)/man
-docdir           ?= $(sharedstatedir)/doc
-sourcedir        ?= $(prefix)/src
-licensedir       ?= $(prefix)/licenses
-sharedperl       ?= $(sharedstatedir)/perl
-perllib          ?= $(libdir)/perl
-perlcswlib       ?= $(perllib)/csw
-perlpackroot     ?= $(perlcswlib)/auto
+prefix             ?= $(BUILD_PREFIX)
+exec_prefix        ?= $(prefix)
+bindir_install     ?= $(exec_prefix)/bin
+bindir             ?= $(abspath $(bindir_install)/$(MM_BINDIR))
+gnudir             ?= $(exec_prefix)/gnu
+sbindir_install    ?= $(exec_prefix)/sbin
+sbindir            ?= $(abspath $(sbindir_install)/$(MM_BINDIR))
+libexecdir_install ?= $(exec_prefix)/libexec
+libexecdir         ?= $(abspath $(libexecdir_install)/$(MM_BINDIR))
+datadir            ?= $(prefix)/share
+sysconfdir         ?= $(prefix)/etc
+sharedstatedir     ?= $(prefix)/share
+localstatedir      ?= $(prefix)/var
+libdir_install     ?= $(exec_prefix)/lib
+libdir             ?= $(abspath $(libdir_install)/$(MM_LIBDIR))
+infodir            ?= $(sharedstatedir)/info
+lispdir            ?= $(sharedstatedir)/emacs/site-lisp
+includedir         ?= $(prefix)/include
+mandir             ?= $(sharedstatedir)/man
+docdir             ?= $(sharedstatedir)/doc
+sourcedir          ?= $(prefix)/src
+licensedir         ?= $(prefix)/licenses
+sharedperl         ?= $(sharedstatedir)/perl
+perllib            ?= $(libdir)/perl
+perlcswlib         ?= $(perllib)/csw
+perlpackroot       ?= $(perlcswlib)/auto
 
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
@@ -415,14 +418,16 @@ endif
 # the links 32 and 64.
 ifeq ($(origin LINKER_FLAGS), undefined)
 ifdef NOISALIST
-LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(abspath $(ELIB)/$(MM_LIBDIR))
+LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(abspath $(ELIB)/$(MM_LIBDIR))
 else
 # If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
 # may not be a subdirectory for the 32-bit standard case (this would normally
 # be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .). This is most likely
 # the case for libraries in $(EXTRA_LIBS) for which no links generated in CSWcommon.
-LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(ELIB)/\\\\\\\$$\$$ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR)))
-#LINKER_FLAGS = $(foreach ELIB,$(libdir) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R'$(abspath $(ELIB)/\$$ISALIST)' -R$(abspath $(ELIB)/$(MM_LIBDIR)))
+# The quoting of $ISALIST is unfortunately dependend on how often the linker flags
+# are expanded until execution. The definition here is suitable for autotools.
+# For other buildtools it may be suitable to add definitions with other quotings.
+LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(ELIB)/\\\\\\\$$\$$ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR)))
 endif
 endif
 
@@ -454,12 +459,11 @@ OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
 #    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
-PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir)/$(MM_BINDIR)):$(DESTDIR)$(bindir):$(abspath $(DESTDIR)$(sbindir)/$(MM_BINDIR)):$(DESTDIR)$(sbindir):)$(abspath $(bindir)/$(MM_BINDIR)):$(bindir):$(abspath $(sbindir)/$(MM_BINDIR)):$(sbindir):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir_install)/$(MM_BINDIR)):$(DESTDIR)$(bindir_install):$(abspath $(DESTDIR)$(sbindir_install)/$(MM_BINDIR)):$(DESTDIR)$(sbindir_install):)$(abspath $(bindir_install)/$(MM_BINDIR)):$(bindir_install):$(abspath $(sbindir_install)/$(MM_BINDIR)):$(sbindir_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin
 
 # This is for foo-config chaos
-#PKG_CONFIG_PATH := $(abspath $(libdir)/$(MM_LIBDIR)/pkgconfig):$(libdir)/pkgconfig:$(PKG_CONFIG_PATH)
-PKG_CONFIG_DIRS ?= $(libdir) $(EXTRA_PKG_CONFIG_DIRS)
-PKG_CONFIG_PATH ?= $(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig))
+PKG_CONFIG_DIRS ?= $(libdir_install) $(EXTRA_PKG_CONFIG_DIRS)
+PKG_CONFIG_PATH ?= $(call MAKEPATH,$(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig)) $(EXTRA_PKGCONFIG_PATH))
 
 #
 # Mirror Sites
@@ -521,6 +525,9 @@ endif
 
 COMMON_EXPORTS ?= $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS)
 
+# LD_OPTIONS = $(LINKER_FLAGS)
+# COMMON_EXPORTS += LD_OPTIONS
+
 CONFIGURE_EXPORTS ?= $(COMMON_EXPORTS) $(EXTRA_CONFIGURE_EXPORTS) PKG_CONFIG_PATH DESTDIR
 BUILD_EXPORTS     ?= $(COMMON_EXPORTS) $(EXTRA_BUILD_EXPORTS)
 TEST_EXPORTS      ?= $(COMMON_EXPORTS) $(EXTRA_TEST_EXPORTS)
@@ -530,6 +537,7 @@ CONFIGURE_ENV ?= $(foreach TTT,$(CONFIGURE_EXPORTS),$(TTT)="$($(TTT))")
 BUILD_ENV     ?= $(foreach TTT,$(BUILD_EXPORTS),$(TTT)="$($(TTT))")
 TEST_ENV      ?= $(foreach TTT,$(TEST_EXPORTS),$(TTT)="$($(TTT))")
 INSTALL_ENV   ?= $(foreach TTT,$(INSTALL_EXPORTS),$(TTT)="$($(TTT))")
+
 
 # Standard Scripts
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
@@ -544,7 +552,8 @@ endif
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
 
 # Global environment
-export PATH PKG_CONFIG_PATH
+#export PATH PKG_CONFIG_PATH
+export PATH
 
 # prepend the local file listing
 FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
@@ -599,11 +608,11 @@ isaenv:
 _isaenv:
 	@echo;								\
 	echo "* ISA $(ISA)";						\
-	echo "       PATH = $(PATH)";					\
-	echo "     CFLAGS = $(CFLAGS)";					\
-	echo "   CXXFLAGS = $(CXXFLAGS)";				\
-	echo "   CPPFLAGS = $(CPPFLAGS)";				\
-	echo "    LDFLAGS = $(LDFLAGS)";				\
-	#echo " LD_OPTIONS = $(LD_OPTIONS)";				\
-	echo "    ASFLAGS = $(ASFLAGS)";				\
-	echo "   OPTFLAGS = $(OPTFLAGS)"
+	echo "           PATH = $(PATH)";				\
+	echo "PKG_CONFIG_PATH = $(PKG_CONFIG_PATH)";			\
+	echo "         CFLAGS = $(CFLAGS)";				\
+	echo "       CXXFLAGS = $(CXXFLAGS)";				\
+	echo "       CPPFLAGS = $(CPPFLAGS)";				\
+	echo "        LDFLAGS = $(LDFLAGS)";				\
+	echo "        ASFLAGS = $(ASFLAGS)";				\
+	echo "       OPTFLAGS = $(OPTFLAGS)"

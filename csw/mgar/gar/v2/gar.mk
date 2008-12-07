@@ -546,6 +546,24 @@ _INC_EXT_RULE = $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
 # Replace files by itself terminating on first match
 _INC_EXT_RULE += $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
 
+# These are used during merge phase to determine the base installation directory
+MERGEBASE_$(bindir)     ?= $(bindir_install)
+MERGEBASE_$(sbindir)    ?= $(sbindir_install)
+MERGEBASE_$(libexecdir) ?= $(libexecdir_install)
+MERGEBASE_$(libdir)     ?= $(libdir_install)
+
+define mergebase
+$(if $(MERGEBASE_$(1)),$(MERGEBASE_$(1)),$(1))
+endef
+
+# A package is compiled for the pathes defined in $(bindir), $(libdir), etc.
+# These may not be the standard pathes, because specific ISA compilation
+# could have appended e. g. /64 for .pc-pathes to be correct. Anyway these
+# pathes may need to be rewritten e. g. from lib/64 to lib/amd64. Here,
+# $(libdir) has the memorymodel-directory appended, whereas $(libdir_install)
+# has not, so we use this one for appending.
+
+
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
 # The basic merge merges the compiles for all ISAs on the current architecture
@@ -558,13 +576,15 @@ merge-modulated: install-modulated pre-merge-modulated $(MERGE_TARGETS) post-mer
 
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
-	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) . $(PKGROOT))
+	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") \
+		. $(PKGROOT))
 	@$(MAKECOOKIE)
 
 # Copy only the merge directories
 merge-copy-only: $(PKGROOT)
 	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
-		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),\1,p") -s ",.*,," \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") -s ",.*,," \
 		. $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
@@ -572,7 +592,7 @@ merge-copy-only: $(PKGROOT)
 # Copy the whole tree and relocate the directories in $(MERGE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
-		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p") \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") \
 		. $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
@@ -580,7 +600,7 @@ merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
-		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),\1$(ISA)/,p") -s ",.*,," \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") -s ",.*,," \
 		 . $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
