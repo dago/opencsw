@@ -1,5 +1,6 @@
-# add re for update notification
-# split into multiple packages: clamav, libclamav
+# clamav, Peter Bonivart
+# files outside /opt/csw are not included, need to fix gspec and cswproto
+# split into multiple packages: clamav, libclamav, clamavdb?
 # put libs in lib/32?
 # add depend files
 # add rc/smf support
@@ -8,6 +9,7 @@
 # add etc/clamd?
 # add doc/README.CSW, INSTALL.clamav-milter.CSW
 # check mantis bugs
+# + add re for update notification
 # + add contrib
 # + add html docs and some pdf:s
 # + remove *.a, *.la from libs
@@ -27,8 +29,11 @@ endef
 
 MASTER_SITES = http://freshmeat.net/redir/clamav/29355/url_tgz/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWlibclamav,)
 DISTFILES += $(call admfiles,CSWclamav,)
-#DISTFILES += $(call admfiles,CSWlibclamav,)
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 GNU_CC_HOME = /opt/csw/gcc3
@@ -42,6 +47,9 @@ CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(GARNAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
 
 include gar/category.mk
+
+PKGFILE_CSWlibclamav_EXCLUSIVE  = $(libdir)/.*
+PKGFILE_CSWlibclamav_EXCLUSIVE += $(includedir)/.*
 
 SPKG_SOURCEURL = http://www.clamav.net/
 
