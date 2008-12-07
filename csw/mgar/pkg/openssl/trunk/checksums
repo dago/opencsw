@@ -1,5 +1,5 @@
-acf70a16359bf3658bdfb74bda1c4419  download/openssl-0.9.8g.tar.gz
-3b17df33844577c449027ef309157fe7  download/CSWossl.gspec
+561e00f18821c74b2b86c8c7786f9d8b  download/openssl-0.9.8i.tar.gz
+bc7aa9d2ea44e9ac28b11db12402024e  download/CSWossl.gspec
 05b45e7124833dee48e5f3c45591e95b  download/CSWossl.depend
 7fe01ca4ef9d0e971d57b00f4d0b168b  download/CSWossl.prototype
 cf0fa997cc719009991e67b4264caeed  download/CSWosslrt.gspec
@@ -14,9 +14,7 @@ ceeb4a59f1c31ae4deac9f2b61dadca2  download/CSWosslrt.prototype-sparc
 0d55e4c93c94a1a72fb295d0ee6225d4  download/CSWosslutils.gspec
 37995caa7f4155066b00fb7503e853da  download/CSWosslutils.depend
 6e0c86ddc23d044757810cca6f31f017  download/CSWosslutils.prototype
-f49c762973d9955b310be948900de148  download/changelog.CSW
-9b2ae27f98333b73ff2b16ed98ee896a  download/i.conf
-5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
-1b1b1aa37d3827f03320dc7c6b2d54ae  download/oldlibs.list.0.9.7m-i386
-ba0db139be0aeecdce5668d2de475a4d  download/oldlibs.list.0.9.7m-sparc
-a6475f97d8b1152e06679ba6ec463536  download/openssl.0.9.8.patch
+e3f149dea30df046b9042a69639bcf3b  download/changelog.CSW
+7fdc09cd3c11db459c83c8946f7872f6  download/i.conf
+a454ac09091085813ec8900f5a0c917c  download/r.conf
+64f7c3f3a6cae483209b69c31c82557d  download/openssl.0.9.8.patch

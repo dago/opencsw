@@ -1,3 +1,11 @@
+openssl (0.9.8,REV=2008.10.05_rev=i) unstable
+
+ * New upstream version.
+ * Added CA certs that were removed in 0.9.8h.
+ * Fixed ARCH in openssl meta-package.
+
+ -- Yann Rouillard  <yann@opencsw.org>  Fri, 05 Oct 2008 21:25:09 +0200
+
 openssl (0.9.8,REV=2007.12.26_rev=g) unstable
 
  * Fixed inconsistency between headers and libraries.
