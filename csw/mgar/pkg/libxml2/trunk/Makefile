@@ -27,14 +27,14 @@ BUILD64 = 1
 NO_ISAEXEC = 1
 MERGE_EXCLUDE_FILES = .*\.la
 
-PKGFILES_CSWlibxml2devel_EXCLUSIVE  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibxml2devel_EXCLUSIVE += $(docdir)/libxml2-$(GARVERSION)/.*
-PKGFILES_CSWlibxml2devel_EXCLUSIVE += $(sharedstatedir)/gtk-doc/.*
-PKGFILES_CSWlibxml2devel_EXCLUSIVE += $(libdir)/xml2Conf.sh
-PKGFILES_CSWlibxml2devel_EXCLUSIVE += $(call isadirs,$(libdir),xml2Conf.sh)
+PKGFILES_CSWlibxml2devel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxml2devel += $(docdir)/libxml2-$(GARVERSION)/.*
+PKGFILES_CSWlibxml2devel += $(sharedstatedir)/gtk-doc/.*
+PKGFILES_CSWlibxml2devel += $(libdir)/xml2Conf.sh
+PKGFILES_CSWlibxml2devel += $(call isadirs,$(libdir),xml2Conf.sh)
 
-PKGFILES_CSWpylibxml2_EXCLUSIVE  = $(libdir)/python/.*
-PKGFILES_CSWpylibxml2_EXCLUSIVE += $(docdir)/libxml2-python-$(GARVERSION)/.*
+PKGFILES_CSWpylibxml2  = $(libdir)/python/.*
+PKGFILES_CSWpylibxml2 += $(docdir)/libxml2-python-$(GARVERSION)/.*
 
 include gar/category.mk
 
