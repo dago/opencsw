@@ -1,0 +1,7 @@
+%var            bitname clamav
+%var            pkgname CSWclamav
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright
+
+Please see /opt/csw/share/doc/clamav/copyright for license information.
+
