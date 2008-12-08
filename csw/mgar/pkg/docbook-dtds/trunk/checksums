@@ -9,7 +9,11 @@ e3beb1b0b2923c24fa55a68e88654b01  download/docbook-4.3.zip
 ab200202b9e136a144db1e0864c45074  download/docbook-xml-4.3.zip
 f89e1bd0b2c7a361e3f1f739e16b5d0d  download/docbook-4.4.zip
 cbb04e9a700955d88c50962ef22c1634  download/docbook-xml-4.4.zip
-9f1b87ab4fa6da7b7284a1c7edd1e3da  download/Makefile
+2479ac1e7b4a43d3618ca16237aaa85d  download/Makefile
+536104a1ab1e8eac583cf27f4f8844a4  download/CSWdocbookdtds.gspec
+cb6dbfe9f6184a9de0725c0a61adc57b  download/CSWdocbookdtds.depend
+5cb8ab501683e226c5b34fac2dc66076  download/CSWdocbookdtds.postinstall
+9035c448e6480f6e916084fea388b512  download/CSWdocbookdtds.preremove
 318742d3a6648a6905727f071cbc9847  download/docbook-4.2-euro.patch
 e3067045964536cc7445d5c3f1e99916  download/docbook-dtd30-sgml-1.0.catalog.patch
 856d40f5d1e3fc8fd939b88bf5fedc87  download/docbook-dtd31-sgml-1.0.catalog.patch

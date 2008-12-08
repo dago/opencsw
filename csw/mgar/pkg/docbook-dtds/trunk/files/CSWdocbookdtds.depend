@@ -1,0 +1,6 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWsgmlcommon sgmlcommon - A collection of entities and DTDs
+P CSWxmlcommon xmlcommon - A collection of entities and DTDs
+P CSWopenjade openjade - A DSSSL implementation
+P CSWlibxml2 libxml2 - A  library providing XML and HTML support
+

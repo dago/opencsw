@@ -1,6 +1,12 @@
 # Replicate the RHEL5 docbook-dtds-1.0.30.1 rpm for CSW.  Patches are taken
 # from that srpm and modified (so paths work for GAR).
 
+# NOTE NOTE NOTE
+# If these version numbers change, you'll need to update the postinstall
+# and preremove scripts also.
+# 20081204 -bw
+# NOTE NOTE NOTE
+
 GARNAME = docbookdtds
 GARVERSION = 1.0
 PATCHLEVEL = 30.1
@@ -50,6 +56,7 @@ DBFILES += docbook-xml-4.3.zip docbook-4.4.zip docbook-xml-4.4.zip
 
 MASTER_SITES = $(O_SRC) $(D_SRC)
 DISTFILES  = $(DBFILES) Makefile
+DISTFILES += $(call admfiles,CSWdocbookdtds,depend postinstall preremove)
 
 PATCHFILES = docbook-4.2-euro.patch docbook-dtd30-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd31-sgml-1.0.catalog.patch

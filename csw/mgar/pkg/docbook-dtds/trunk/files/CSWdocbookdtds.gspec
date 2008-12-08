@@ -1,4 +1,4 @@
-%var            bitname package
-%var            pkgname CSWpackage
+%var            bitname docbookdtds
+%var            pkgname CSWdocbookdtds
+%var		arch all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
