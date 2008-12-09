@@ -1,5 +1,5 @@
 GARNAME = gtk2
-GARVERSION = 2.4.3
+GARVERSION = 2.14.4
 CATEGORIES = lib
 
 DESCRIPTION = A library for creating graphical user interfaces.
@@ -16,23 +16,20 @@ endef
 #
 # #if (defined(__STDC__) && !defined(UNIXCPP)) || defined(ANSICPP)
 
-MASTER_SITES = ftp://ftp.gtk.org/pub/gtk/v2.4/
+MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/gtk+/2.14/
 
 DISTFILES = gtk+-$(GARVERSION).tar.bz2
 WORKSRC = $(WORKDIR)/gtk+-$(GARVERSION)
 
-LIBDEPS += lib/atk
-LIBDEPS += lib/pango
-LIBDEPS += lib/xcursor
-LIBDEPS += xtra/hicolor-icon-theme
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-debug=yes
+
+BUILD64 = 1
 
 TEST_TARGET = check
 
 include ../category.mk
 
-CFLAGS := -g $(CFLAGS)
-CXXFLAGS := -g $(CXXFLAGS)
-export CFLAGS CXXFLAGS
+#CFLAGS := -g $(CFLAGS)
+#CXXFLAGS := -g $(CXXFLAGS)
+#export CFLAGS CXXFLAGS
