@@ -61,7 +61,7 @@ SPKG_INCREMENTAL ?= 1
 PKGLIB = $(CURDIR)/$(GARDIR)/pkglib
 
 PKG_EXPORTS  = GARNAME GARVERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
-PKG_EXPORTS += CURDIR WORKDIR WORKSRC
+PKG_EXPORTS += CURDIR WORKDIR WORKSRC WORKSRC_DEFAULT PKGROOT
 PKG_EXPORTS += SPKG_REVSTAMP SPKG_PKGNAME SPKG_DESC SPKG_VERSION SPKG_CATEGORY
 PKG_EXPORTS += SPKG_VENDOR SPKG_EMAIL SPKG_PSTAMP SPKG_BASEDIR SPKG_CLASSES
 PKG_EXPORTS += SPKG_OSNAME SPKG_SOURCEURL SPKG_PACKAGER TIMESTAMP
@@ -107,7 +107,6 @@ PKGFILES_DEVEL += $(sharedstatedir)/aclocal/.*
 PKGFILES_DEVEL += $(mandir)/man1/.*-config\.1.*
 PKGFILES_DEVEL += $(mandir)/man3/.*
 
-
 # PKGFILES_DOC selects files beloging to a documentation package
 PKGFILES_DOC  = $(docdir)/.*
 
@@ -132,8 +131,8 @@ $(foreach SPEC,$(_PKG_SPECS), \
 # This can be used to automatically distribute the files to different packages
 #
 
-$(foreach SPEC,$(_PKG_SPECS),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER_$(SPEC))))
-$(foreach SPEC,$(_PKG_SPECS),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER)))
+$(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER_$(SPEC)),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER_$(SPEC)))))
+$(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER))))
 
 # This file contains all installed pathes. This can be used as a starting point
 # for distributing files to individual packages.
@@ -165,15 +164,17 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 	@cat $(WORKDIR)/$*.prototype $(_PROTOTYPE_FILTER_$*) >$@
 
-# This is a target used to generate all prototypes for debugging purposes.
-# On a normal packaging workflow this is not used.
-prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach S,$(_PKG_SPECS),$(WORKDIR)/$S.prototype-$(GARCH))
-	@$(DONADA)
-
 # $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
 .PRECIOUS: $(WORKDIR)/%.depend
 $(WORKDIR)/%.depend:
-	$(GARDIR)/bin/dependon $(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS) > $@
+	$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS), \
+		($(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
+			$(if $(SPKG_DESC_$(PKG)), \
+				echo "P $(PKG) $(call _pkglist_catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
+				echo "$(shell /usr/bin/pkginfo $(PKG) | awk '{ $$1 = \"P\"; print }')"; \
+			) \
+		)) >$@)
+
 
 # package - Use the mkpackage utility to create Solaris packages
 #
@@ -188,6 +189,10 @@ SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
 
 $(SPKG_DESTDIRS):
 	ginstall -d $@
+
+# This is a target used to generate all prototypes for debugging purposes.
+# On a normal packaging workflow this is not used.
+prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPECS),$(WORKDIR)/$(SPEC).prototype-$(GARCH))
 
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
@@ -224,7 +229,7 @@ pkgcheck-p:
 
 # pkgreset - reset working directory for repackaging
 #
-pkgreset: $(addprefix pkgreset-,$(_PKG_SPECS))
+pkgreset: $(addprefix pkgreset-,$(SPKG_SPECS))
 	@rm -f $(COOKIEDIR)/extract
 	@rm -f $(COOKIEDIR)/extract-archive-*
 	$(DONADA)

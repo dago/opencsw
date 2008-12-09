@@ -295,7 +295,8 @@ GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(ALLFILES))
 garchive: checksum $(GARCHIVE_TARGETS) ;
 
 # extract		- Unpacks $(DISTFILES) into $(EXTRACTDIR) (patches are "zcatted" into the patch program)
-EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(DISTFILES)))
+EXTRACT_TARGETS-global ?= $(foreach SPEC,$(SPKG_SPECS),$(filter $(SPEC).%,$(DISTFILES)))
+EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(if $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-$(MODULATION)),$(DISTFILES))))
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
