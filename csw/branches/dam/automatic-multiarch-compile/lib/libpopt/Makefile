@@ -12,7 +12,17 @@ DISTFILES += $(call admfiles,CSWlibpopt)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-ADDITIONAL_BUILD_ARCHS_sparc = sparcv9
+#EXTRA_BUILD_ISAS_i386 = amd64
+#EXTRA_BUILD_ISAS_sparc = sparcv9
+
+# Just do 64 bit build
+#BUILD64 = 1
+
+# Build all known ISAs (may not work with compiler)
+#EXTRA_BUILD_ISAS = $(ISALIST)
+
+# Build all ISAs known to the chosen compiler
+EXTRA_BUILD_ISAS = $(ISALIST_$(GARCOMPILER))
 
 TEST_TARGET = check
 
@@ -29,3 +39,6 @@ pre-configure:
 # Make sure xgettext we carefully linked just before is found before
 # other versions.
 PATH := .:$(PATH)
+
+env:
+	echo "I: $(ISALIST_$(GARCOMPILER))
