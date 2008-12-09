@@ -1,5 +1,0 @@
-P CSWggettext ggettext - GNU gettext
-P CSWiconv    libiconv - GNU iconv library
-P CSWkrb5lib  krb5_lib - MIT Kerberos 5 core libraries
-P CSWlibidn   libidn - Implementation of the Stringprep, Punycode and IDNA
-P CSWlibntlm  libntlm - A library that implement Microsoft's NTLM authentication
