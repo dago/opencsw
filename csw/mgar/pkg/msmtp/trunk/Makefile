@@ -1,5 +1,5 @@
 GARNAME = msmtp
-GARVERSION = 1.4.13
+GARVERSION = 1.4.16
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -24,10 +24,13 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWmsmtp,depend)
+DISTFILES += $(call admfiles,CSWmsmtp)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+REQUIRED_PKGS  = CSWgcrypt CSWggettext CSWgnutls CSWgpgerr CSWiconv CSWkrb5lib
+REQUIRED_PKGS += CSWlibgsasl CSWlibidn CSWlibntlm CSWzlib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
