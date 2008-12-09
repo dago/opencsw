@@ -1,5 +1,5 @@
 GARNAME = sysstat
-GARVERSION = 20081125
+GARVERSION = 20081207
 CATEGORIES = utils
 
 DESCRIPTION = Key system statistics at a glance
@@ -18,7 +18,9 @@ endef
 
 MASTER_SITES = http://www.maier-komor.de/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWsysstat,prototype-sparc prototype-i386 depend)
+DISTFILES += $(call admfiles,CSWsysstat)
+
+REQUIRED_PKGS = CSWncurses
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -52,6 +54,8 @@ INSTALL_SCRIPTS = custom
 # The main sysstat binary is 32 bit only, kernel access is
 # only done via sysstatd which uses isaexec.
 ISAEXEC_FILES = $(sbindir)/sysstatd
+
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/sysstatd$$$$/ { $$$$4 = "4755" } { print }'
 
 include gar/category.mk
 
