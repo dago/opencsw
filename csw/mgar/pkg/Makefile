@@ -36,10 +36,15 @@ report-%:
 # to generate symbolic links instead of externally checked out dirs
 
 # Lines returned by 'svn propget -R' look like this:
-#   cpan/Test-Memory-Cycle/trunk - gar https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v1
+#
+# gar/trunk - gar https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v1
+# gar-v1 https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v1
+# gar-v2 https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v2
+# 
+# ...
 
 garlinks:
-	@(svn propget svn:externals -R | perl -ane 'next if( /^$$/ );($$path,$$sep,$$dir,$$link)=@F;($$upsteps=$$path)=~s![^/]+!..!g;(($$linkdest=$$link))=~ s!https://gar.svn.sf.net/svnroot/gar/csw/mgar!$$upsteps!;print "Linking $$path/$$dir to ../$$linkdest", symlink("../$$linkdest","$$path/$$dir") ? "" : " failed", "\n";')
+	@(svn propget svn:externals -R | perl -ane 'next if( /^$$/ ); if( $$F[1] eq "-" ) { ($$path,$$sep,$$dir,$$link)=@F; } else { ($$dir,$$link) = @F; } ($$upsteps=$$path)=~s![^/]+!..!g;(($$linkdest=$$link))=~ s!https://gar.svn.sf.net/svnroot/gar/csw/mgar!$$upsteps!;print "Linking $$path/$$dir to ../$$linkdest", symlink("../$$linkdest","$$path/$$dir") ? "" : " failed", "\n";')
 
 pkglist:
 	@for i in $(filter-out $(FILTER_DIRS),$(foreach D,. $(SUBDIRS),$(wildcard $D/*/))) ; do \
