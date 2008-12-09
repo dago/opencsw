@@ -1,6 +1,7 @@
 # clamav, Peter Bonivart
+
 # files outside /opt/csw are not included, need to fix gspec and cswproto
-# split into multiple packages: clamav, libclamav, clamavdb?
+# split into multiple packages: clamav, libclamav
 # put libs in lib/32?
 # add depend files
 # add rc/smf support
@@ -29,13 +30,16 @@ endef
 
 MASTER_SITES = http://freshmeat.net/redir/clamav/29355/url_tgz/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibclamav,)
 DISTFILES += $(call admfiles,CSWclamav,)
+DISTFILES += $(call admfiles,CSWlibclamav,)
+
+PKGFILES_CSWlibclamav  = $(libdir)/.*
+PKGFILES_CSWlibclamav += $(includedir)/.*
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-GARCOMPILER = GNU
+GARCOMPILER = GCC3
 GNU_CC_HOME = /opt/csw/gcc3
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -48,34 +52,34 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
 
 include gar/category.mk
 
-PKGFILE_CSWlibclamav_EXCLUSIVE  = $(libdir)/.*
-PKGFILE_CSWlibclamav_EXCLUSIVE += $(includedir)/.*
-
 SPKG_SOURCEURL = http://www.clamav.net/
 
 pre-package:
 	@echo " ==> Pre-package for $(GARNAME)"
-	@find $(DESTDIR) -type f -name "*~" -exec rm {} \;
-	@find $(DESTDIR)/opt/csw/lib -type f -name "*.a" -exec rm {} \;
-	@find $(DESTDIR)/opt/csw/lib -type f -name "*.la" -exec rm {} \;
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/html
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/contrib
-	@ginstall -m 644 $(WORKSRC)/AUTHORS $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/BUGS $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/docs/clamav-mirror-howto.pdf $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/docs/clamdoc.pdf $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/COPYING $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
-	@ginstall -m 644 $(WORKSRC)/FAQ $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/NEWS $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/docs/phishsigs_howto.pdf $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/docs/signatures.pdf $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/UPGRADE $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 $(WORKSRC)/contrib/clamdwatch/* $(DESTDIR)$(docdir)/$(GARNAME)/contrib
-	@ginstall -m 644 $(WORKSRC)/contrib/init/Solaris10/* $(DESTDIR)$(docdir)/$(GARNAME)/contrib
-	@ginstall -m 644 $(WORKSRC)/contrib/cleanup-partial.pl $(DESTDIR)$(docdir)/$(GARNAME)/contrib
+	@echo "DESTDIR: $(DESTDIR)"
+	@echo "WORKSRC: $(WORKSRC)"
+	@echo "PKGROOT: $(PKGROOT)"
+	@find $(PKGROOT) -type f -name "*~" -exec rm {} \;
+	@find $(PKGROOT)/opt/csw/lib -type f -name "*.a" -exec rm {} \;
+	@find $(PKGROOT)/opt/csw/lib -type f -name "*.la" -exec rm {} \;
+	@ginstall -d $(PKGROOT)$(docdir)/$(GARNAME)/html
+	@ginstall -d $(PKGROOT)$(docdir)/$(GARNAME)/contrib
+	@ginstall -m 644 $(WORKSRC)/AUTHORS $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/BUGS $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/ChangeLog $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/docs/clamav-mirror-howto.pdf $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/docs/clamdoc.pdf $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/COPYING $(PKGROOT)$(docdir)/$(GARNAME)/LICENSE
+	@ginstall -m 644 $(WORKSRC)/FAQ $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/NEWS $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/docs/phishsigs_howto.pdf $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/README $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/docs/signatures.pdf $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/UPGRADE $(PKGROOT)$(docdir)/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/contrib/clamdwatch/* $(PKGROOT)$(docdir)/$(GARNAME)/contrib
+	@ginstall -m 644 $(WORKSRC)/contrib/init/Solaris10/* $(PKGROOT)$(docdir)/$(GARNAME)/contrib
+	@ginstall -m 644 $(WORKSRC)/contrib/cleanup-partial.pl $(PKGROOT)$(docdir)/$(GARNAME)/contrib
 	@for file in $(WORKSRC)/docs/html/*; do \
-	   cp $$file $(DESTDIR)$(docdir)/$(GARNAME)/html ; \
+	   cp $$file $(PKGROOT)$(docdir)/$(GARNAME)/html ; \
 	 done
 	@$(MAKECOOKIE)
