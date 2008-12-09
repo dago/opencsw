@@ -20,7 +20,7 @@ use Getopt::Long qw/:config no_ignore_case/;
 use POSIX;
 
 use vars qw/
-    @XPATS @XFORMS @Common $StdOwn $StdGrp $StdDirPerm $stamp $root
+    @XFORMS @Common $StdOwn $StdGrp $StdDirPerm $stamp $root
     /;
 
 # atime=8,mtime=9,ctime=10
@@ -36,15 +36,6 @@ $StdDirPerm = '0755';
     [ qr{^/opt/csw/man$},  q{/opt/csw/share/man}  ],
     [ qr{^/opt/csw/doc$},  q{/opt/csw/share/doc}  ],
     [ qr{^/opt/csw/info$}, q{/opt/csw/share/info} ],
-);
-
-# Standard exclusions
-@XPATS = (
-    qr{^/$},
-    qr{^/opt$},
-    qr{^/opt/csw$},
-    qr{perllocal\.pod},
-    qr{~$},
 );
 
 # Print usage information and exit
@@ -77,7 +68,7 @@ _USAGE_
 sub is_common {
     my $path = shift;
     foreach my $pat (@Common) {
-        return 1 if $path =~ /$pat$/;
+        return 1 if $path =~ m!^$pat$!;
     }
     return 0;
 }
@@ -156,7 +147,7 @@ SPECLINE:
         next unless $F[2];
 
         # Then process any excludes
-        foreach my $pattern (@XPATS) { next SPECLINE if $F[2] =~ $pattern   }
+	next SPECLINE if( is_common( $F[2] ) );
         next if exclude($realpath);
 
         # Fix up dir permissions/file ownership.
@@ -172,6 +163,10 @@ print join " " => @$_ foreach (sort { $a->[2] cmp $b->[2] } @prototype);
 
 # Common directories (CSWcommon plus a few others)
 __DATA__
+/etc
+/etc/opt
+/etc/opt/csw
+/opt
 /opt/csw
 /opt/csw/bin
 /opt/csw/bin/i386
@@ -348,3 +343,6 @@ __DATA__
 /opt/csw/share/perl/csw/auto
 /opt/csw/share/perl/site_perl
 /opt/csw/var
+/var
+/var/opt
+/var/opt/csw
