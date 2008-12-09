@@ -1,5 +1,5 @@
 GARNAME = libntlm
-GARVERSION = 0.4.2
+GARVERSION = 1.0
 CATEGORIES = lib
 
 DESCRIPTION = Microsoft WinNT domain authentication library
@@ -17,6 +17,8 @@ DISTFILES += $(call admfiles,CSWlibntlm,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
