@@ -2,10 +2,10 @@
 
 # checkpkg 1.46a (diff to 1.46: modified errmsg -> warnmsg on two places)
 # This script examines a package that has been put together
-# for submittal to the CSW archive at blastwave.org
+# for submittal to the CSW archive
 #
 # It examines it for compliance with the packaging standards at
-# http://www.blastwave.org/standards/
+# http://www.opencsw.org/standards/
 # It DOES NOT CATCH EVERYTHING. However, the package will be
 # tested with this script before acceptance, so you may as well
 # save yourself some time, and run the script yourself!

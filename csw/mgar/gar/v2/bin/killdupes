@@ -12,7 +12,7 @@
 #
 # killdupes - Remove duplicate packages from a directory, with or
 #             without user interaction.  Note that this only works
-#             for packages named according to blastwave standards.
+#             for packages named according to package standards.
 #
 
 use strict;
