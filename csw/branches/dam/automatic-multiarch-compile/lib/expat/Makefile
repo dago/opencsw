@@ -1,5 +1,8 @@
 GARNAME = expat
-GARVERSION = 2.0.0
+PKGVERSION ?= 2.0.1
+EXTRA_MODULATORS = PKGVERSION
+MODULATIONS_PKGVERSION = 1.95.8 2.0.1
+GARVERSION ?= $(PKGVERSION)
 CATEGORIES = lib
 
 DESCRIPTION = XML Parser Toolkit
@@ -10,14 +13,16 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWexpat,depend prototype)
-DISTFILES += $(call admfiles,CSWexpat-devel,depend prototype)
+DISTFILES  = $(foreach VERSION,$(MODULATIONS_PKGVERSION),$(GARNAME)-$(VERSION).tar.gz)
+DISTFILES += $(call admfiles,CSWexpat,)
 
-# Compatibility libraries
-EXTLIBS   += libexpat.so.0.4.0
-EXTLIBS   += libexpat.so.0.5.0
-DISTFILES += $(EXTLIBS)
+# From
+#   https://sourceforge.net/tracker/?func=detail&atid=110127&aid=1217217&group_id=10127
+#   http://expat.cvs.sourceforge.net/viewvc/expat/expat/Makefile.in?r1=1.47&r2=1.48
+PATCHFILES-pkgversion-1.95.8 = patch-libexpat-1.95.8-destdir.diff
+PATCHFILES = $(PATCHFILES-pkgversion-$(PKGVERSION))
+
+BUILD64 = 1
 
 # The expat 'check' target tries to compile tests that use GCC
 # constructs -- won't compile under Forte without hackery.
@@ -26,9 +31,13 @@ TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-include ../category.mk
+MERGE_SCRIPTS_isa-i386-pkgversion-1.95.8 = copy-only
+MERGE_DIRS_isa-i386-pkgversion-1.95.8 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-pkgversion-1.95.8 = copy-relocated-only
+MERGE_DIRS_isa-amd64-pkgversion-1.95.8 = $(libdir)
 
-post-install:
-	@for extlib in $(EXTLIBS) ; do \
-	    install -m 0755 $(WORKDIR)/$$extlib $(DESTDIR)$(libdir) ; \
-	done
+MERGE_SCRIPTS_isa-i386-pkgversion-2.0.1 = copy-all
+MERGE_SCRIPTS_isa-amd64-pkgversion-2.0.1 = copy-relocated-only
+MERGE_DIRS_isa-amd64-pkgversion-2.0.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+include ../category.mk

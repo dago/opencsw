@@ -1,9 +1,9 @@
-d945df7f1c0868c5c73cf66ba9596f3f  download/expat-2.0.0.tar.gz
+aff487543845a82fe262e6e2922b4c8e  download/expat-1.95.8.tar.gz
+ee8b492592568805593f81f8cdf2a04c  download/expat-2.0.1.tar.gz
 7145f62799b8019b4636811f22eed0dc  download/CSWexpat.gspec
-8093298b67861e241b0d2499c9f2ff89  download/CSWexpat.depend
-442c9a9124f9700d5156bf24baf8491b  download/CSWexpat.prototype
+d41d8cd98f00b204e9800998ecf8427e  download/CSWexpat.depend
+2ee9a8ce89f28371461302eea3a706ce  download/CSWexpat.prototype
 2fb9c175c9f5d1e21f0531c1cada0994  download/CSWexpat-devel.gspec
-3dfca43e9c14ab646c8aadfc59093ba3  download/CSWexpat-devel.depend
-7638ec36b2ae51da9b300bee9a18d349  download/CSWexpat-devel.prototype
-0d36c0738fa471a0fcae0cd565016295  download/libexpat.so.0.4.0
-b52745e58a5dab5df7a459d25d54d65d  download/libexpat.so.0.5.0
+9c8bed940180401cb0bfcd7761ad5c1a  download/CSWexpat-devel.depend
+d99c92a8836db5f6baedec6912a968fb  download/CSWexpat-devel.prototype
+da9dfd74eb2b44102d137ff1d0993842  download/patch-libexpat-1.95.8-destdir.diff
