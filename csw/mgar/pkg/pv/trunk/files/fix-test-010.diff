@@ -1,12 +1,50 @@
 diff --speed-large-files --minimal -Nru pv-1.1.4.orig/tests/010-dd pv-1.1.4/tests/010-dd
 --- pv-1.1.4.orig/tests/010-dd	2007-02-19 15:00:45.000000000 +0100
-+++ pv-1.1.4/tests/010-dd	2008-12-01 15:02:00.375332231 +0100
-@@ -5,7 +5,7 @@
++++ pv-1.1.4/tests/010-dd	2008-12-09 23:53:24.620543043 +0100
+@@ -1,14 +1,22 @@
+ #!/bin/sh
+ #
+ # Check that dd doesn't cause a SIGPIPE and doesn't drop data.
++#
++# OpenCSW: 
++# * Test with dd is unrealiable because of partial reads on SPARC.
++# * Upstream patch for a rewritten test is pending.
++# * Substituted with 010-opencsw-cksum in the meantime.
++# * See also: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=324308
+ 
  #COUNT1=`cat /dev/zero | dd bs=100000 count=1000 2>/dev/null | wc -c`
  # NB cat gets it wrong sometimes too!
- COUNT1=100000000
+-COUNT1=100000000
 -COUNT2=`$PROG -B 100000 -q /dev/zero | dd bs=100000 count=1000 2>/dev/null | wc -c`
-+COUNT2=`$PROG -B 100000 -q /dev/zero | dd bs=100000 count=1000 2>/dev/null | wc -c | tr -d ' '`
++#COUNT1=100000000
++#COUNT2=`$PROG -B 100000 -q /dev/zero | dd bs=100000 count=1000 2>/dev/null | wc -c`
  
  #echo "[$COUNT1] [$COUNT2]"
  
+-test "x$COUNT1" = "x$COUNT2"
++#test -z """x$COUNT1" = "x$COUNT2"
++
++:
+ 
+ # EOF
+diff --speed-large-files --minimal -Nru pv-1.1.4.orig/tests/010-opencsw-cksum pv-1.1.4/tests/010-opencsw-cksum
+--- pv-1.1.4.orig/tests/010-opencsw-cksum	1970-01-01 01:00:00.000000000 +0100
++++ pv-1.1.4/tests/010-opencsw-cksum	2008-12-09 23:46:26.094207757 +0100
+@@ -0,0 +1,17 @@
++#!/bin/sh
++#
++# Transfer a chunk of data through pv and check data correctness
++# afterwards.
++
++# generate some data (10MB)
++dd if=/dev/urandom of=$TMP1 bs=1024 count=10240 2>/dev/null
++
++# read through pv and test afterwards
++${PROG} -B 100000 -q $TMP1 > $TMP2
++
++CKSUM1=`cksum $TMP1 | awk '{ print $1 }`
++CKSUM2=`cksum $TMP2 | awk '{ print $1 }`
++
++test "x$CKSUM1" = "x$CKSUM2"
++
++# EOF
