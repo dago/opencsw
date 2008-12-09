@@ -43,6 +43,8 @@ EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 NO_ISAEXEC = 1
 #ISA_RELOCATE_DIRS_i386 = 
 #ISA_RELOCATE_DIRS_sparcv8 = 
+ISALIBDIR_sparcv9 = .
+libdir = /opt/csw/lib
 
 # we redefine the default merge exclude so *.a files are not excluded
 MERGE_EXCLUDE_DEFAULT = $(MERGE_EXCLUDE_INFODIR)
