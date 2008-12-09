@@ -225,7 +225,7 @@ then
     /usr/bin/perl -e "@_=<>;@_[$XML,$SGML]=@_[$SGML,$XML];print @_" \
 	${CATALOG} > ${CATALOG}.tmp
 
-    mv ${CATALOG}.tmp ${CATALOG}.new
+    mv ${CATALOG}.tmp ${CATALOG}
 fi
 
 ##
