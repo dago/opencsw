@@ -1,7 +1,0 @@
-a1236dad33e9ac6c36d53faa8da61780  download/memcached-1.1.12.tar.gz
-5e6ec89304f98d632e98fd3d39b2ddea  download/CSWmemcached.gspec
-fb52e1653adbc7d07e97a42dac3bcfee  download/CSWmemcached.depend
-5625832835a8377d55ab5e5c8791d042  download/CSWmemcached.prototype
-c6c43cc3c0da436ba55716d287e0ba44  download/daemon.c
-51969a2161c429524dfe4ae1e8b11f7b  download/daemon.h
-365b8479afe297a36e1491b2500fba3a  download/solaris.diff

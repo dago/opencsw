@@ -1,6 +1,0 @@
-P CSWcommon common - common files and dirs for CSW packages
-P CSWsudo-common - sudo_common - sudo common files
-P CSWlibnet libnet - the libnet packet construction library
-P CSWoldaprt openldap_rt - ldap runtime libraries
-P CSWossl openssl - The Open Source toolkit for SSL and TLS.
-P CSWsasl sasl - Simple Authentication and Security Layer
