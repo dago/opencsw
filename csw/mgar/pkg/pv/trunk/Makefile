@@ -23,7 +23,10 @@ DISTFILES += $(call admfiles,CSWpv)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Trim extra whitespaces from Solaris wc
+# Test with dd (010-dd) is unrealiable because of partial reads on SPARC.
+# Upstream patch for a rewritten test is pending.
+# Substituted with 010-opencsw-cksum in the meantime.
+# See also: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=324308
 PATCHFILES = fix-test-010.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
