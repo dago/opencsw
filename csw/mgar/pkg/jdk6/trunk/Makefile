@@ -18,15 +18,26 @@ SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 DISTNAME = jdk$(SPKG_VERSION)
 DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
 NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(GARVERSION)-solaris-$S.sh)
-DISTFILES += $(call admfiles,CSWjdk6,depend)
+DISTFILES += $(call admfiles,CSWjdk6)
 DISTFILES += $(call admfiles,CSWjre6)
-DISTFILES += $(call admfiles,CSWjdk,depend)
-DISTFILES += $(call admfiles,CSWjre,depend)
+DISTFILES += $(call admfiles,CSWjdk)
+DISTFILES += $(call admfiles,CSWjre)
 
 SPKG_SOURCEURL = http://java.sun.com/javase/downloads/index.jsp
 
+SPKG_DESC_CSWjdk6 = Java Development Kit 6
+SPKG_DESC_CSWjre6 = Java Runtime Environment 6
+SPKG_DESC_CSWjdk = Java Delopment Kit - Latest Version (now CSWjdk6)
+SPKG_DESC_CSWjre = Java Runtime Environment - Latest Version (now CSWjre6)
+
+REQUIRED_PKGS_CSWjdk6 = CSWjre6
+REQUIRED_PKGS_CSWjdk = CSWjdk6
+REQUIRED_PKGS_CSWjre = CSWjre6
+
 MANPAGES_JRE  = java.1 javaws.1 keytool.1 orbd.1 pack200.1 policytool.1 rmid.1 rmiregistry.1
 MANPAGES_JRE += servertool.1 tnameserv.1 unpack200.1
+
+MANPAGE_REGEX = ($(shell echo $(MANPAGES_JRE) | perl -lne 's/\./\\./g;print join("|",split)'))
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -39,7 +50,7 @@ PKGFILES_CSWjre  = $(prefix)/java/jre/latest
 PKGFILES_CSWjre += $(prefix)/java/man
 
 PKGFILES_CSWjre6  = $(prefix)/java/jdk/$(DISTNAME)/jre/.*
-PKGFILES_CSWjre6 += $(prefix)/java/jdk/$(DISTNAME)/man/.*/(java|javaws|keytool|orbd|pack200|policytool|rmid|rmiregistry|servertool|tnameserv|unpack200)\.1
+PKGFILES_CSWjre6 += $(prefix)/java/jdk/$(DISTNAME)/man/.*/$(MANPAGE_REGEX)
 PKGFILES_CSWjre6 += $(prefix)/java/jre/jre$(SPKG_VERSION)
 PKGFILES_CSWjre6 += $(prefix)/java/jre/jre6
 
@@ -57,9 +68,10 @@ manual//%:
 	@echo
 
 # rule to extract files with shell
+# Clear DISPLAY or the installer will bring up advertisement
 shell-extract-archive-%:
 	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
-	@echo "yes" | (D=$(abspath $(DOWNLOADDIR)/$*); cd $(EXTRACTDIR); MORE="-10000" sh $$D)
+	@echo "yes" | (D=$(abspath $(DOWNLOADDIR)/$*); cd $(EXTRACTDIR); DISPLAY= MORE="-10000" sh $$D -noregister)
 	@$(MAKECOOKIE)
 
 extract-archive-%.sh: shell-extract-archive-%.sh
