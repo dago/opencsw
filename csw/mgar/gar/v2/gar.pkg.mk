@@ -171,7 +171,7 @@ $(WORKDIR)/%.depend:
 		($(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call _pkglist_catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
-				echo "$(shell /usr/bin/pkginfo $(PKG) | awk '{ $$1 = \"P\"; print }')"; \
+				echo "$(shell /usr/bin/pkginfo $(PKG) | awk '{ $$1 = "P"; print } ')"; \
 			) \
 		)) >$@)
 
