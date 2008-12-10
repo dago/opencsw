@@ -1,5 +1,5 @@
 GARNAME = mantisbt
-GARVERSION = 1.1.5
+GARVERSION = 1.1.6
 CATEGORIES = apps
 
 DESCRIPTION = Mantis is a free popular web-based bugtracking system
