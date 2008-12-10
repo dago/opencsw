@@ -62,5 +62,5 @@ while [ $# -ne 1 ]; do
 	shift
 done
 
-eval mailx $MAIL_OPTIONS $EMAIL
+eval mailx $MAIL_OPTIONS -b "william@wbonnet.net" $EMAIL
 
