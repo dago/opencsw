@@ -36,6 +36,13 @@ newpkg-%:
 	echo "MASTER_SITES = ";                                         \
 	echo "DISTFILES  = $$(GARNAME)-$$(GARVERSION).tar.gz";          \
 	echo "DISTFILES += $$(call admfiles,CSWpackage,)";              \
+	echo "";                                                        								\
+	echo "# We define upstream file regex so we can be notifed of new upstream software release";  	\
+	echo "UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz";										\
+	echo "";                                                        								\
+	echo "# If the url used to check for software update is different of MASTER_SITES, then ";   	\
+	echo "# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES"; 	\
+	echo "# UPSTREAM_MASTER_SITES = ";                                         						\
 	echo "";                                                        \
 	echo "CONFIGURE_ARGS = $$(DIRPATHS)";                           \
 	echo "";                                                        \
