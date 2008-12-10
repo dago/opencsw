@@ -1,4 +1,0 @@
-%var            bitname libX11_dev
-%var            pkgname CSWlibX11dev
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
