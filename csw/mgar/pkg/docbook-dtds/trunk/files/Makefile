@@ -61,7 +61,7 @@ inst-%-sgml:
 			$(INSTALL_DATA) ent/* $(DD)/ent/; \
 		fi )
 
-inst-%-xml: DD=$(DESTDIR)/$(docbookdir)/xml-dtd-$*$(GARVERSION)-$(PATCHLEVEL)
+inst-%-xml: DD=$(DESTDIR)/$(docbookdir)/xml-dtd-$*-$(GARVERSION)-$(PATCHLEVEL)
 inst-%-xml:
 	@echo Installing $*-xml
 	@( cd $*-xml; \
