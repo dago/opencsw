@@ -1,0 +1,74 @@
+# Postinstall script for clamav
+# 2007-01-07 Add csw.conf support
+#   The specific daemon name is clamav
+#
+
+# If /opt/csw/etc/clamav.conf exists, move it to /opt/csw/etc/clamd.conf
+if [ -f /opt/csw/etc/clamav.conf ]; then
+        /usr/bin/mv /opt/csw/etc/clamav.conf /opt/csw/etc/clamd.conf
+	echo '  Moved /opt/csw/etc/clamav.conf to /opt/csw/etc/clamd.conf'
+fi
+
+# Determine whether or not clamd and clamav-milter is needed
+usingclamd=no
+usingclmilter=no
+if [ -f /opt/csw/etc/clamd ] -o [ -f /etc/opt/csw/clamd ] ; then usingclamd=yes ; fi
+if [ -f /opt/csw/etc/clamav-milter ] -o [ -f /etc/opt/csw/clamav-milter ] ; then usingclmilter=yes ; fi
+
+# Plug PKG_INSTALL_ROOT if not available
+if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
+
+# If available, assign user for /opt/csw/share/clamav directory
+CONF_FILE="/etc/opt/csw/clamd.conf"
+if [ ! -f "$CONF_FILE" ] ; then
+        CONF_FILE="/opt/csw/etc/clamd.conf"
+        if [ ! -f "$CONF_FILE" ] ; then
+                CONF_FILE=""
+        fi
+fi
+if [ x"$CONF_FILE" != x ] ; then
+   clamuser=`grep '^User' "$CONF_FILE" |awk '{print $2;}'`
+   if [ x$clamuser != x ] ; then
+      chown $clamuser /opt/csw/share/clamav
+   fi
+fi
+
+# daemons are started by default
+enable_daemon=yes
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# If defined, autoenable for the specific daemon name takes precedence
+if [ "$autoenable_clamav" = "no" ] ; then
+  enable_daemon=no
+elif [ "$autoenable_daemons" = "no" -a ! -n "$autoenable_clamav" ] ; then
+  enable_daemon=no
+fi
+
+# Start selected daemons
+if [ "$enable_daemon" = "yes" ] ; then
+
+  # clamd is first
+  if [ $usingclamd = yes ] ; then
+    if [ $smf = no ] ; then
+       /etc/init.d/cswclamd start 2>&1
+    else
+       /usr/sbin/svcadm enable svc:application/cswclamd 2>&1
+    fi
+  fi
+
+fi
+
+# Display message
+echo '***'
+echo '*** See README.CSW in /opt/csw/share/doc/clamav for changes.**'
+echo '*** For first time version 0.90 installs - Please see README.CSW.""'
+echo '*** See http://www.blastwave.org/standards/csw.conf.html for'
+echo '    details on using csw.conf to enable/disable daemons.**'
+echo '***'

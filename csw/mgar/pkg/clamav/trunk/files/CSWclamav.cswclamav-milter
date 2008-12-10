@@ -1,0 +1,109 @@
+#!/bin/sh
+#
+# clamav-milter This script starts and stops the clamav-milter daemon
+#
+# description: clamav-milter is a daemon which hooks into sendmail and routes
+#              email messages to clamav
+# processname: clamav-milter
+# modified for CSW usage
+# 2007-02-16   Allow the options file to be located in /etc/opt/csw/
+# 2007-03-04   Wait up to 30 seconds for clamd to start before leaving
+#              this script.
+# 2007-06-02   Do not wait for clamd if etc/clamd does not exist.
+
+. /lib/svc/share/smf_include.sh
+
+CLAMAV_MILTER="/etc/opt/csw/clamav-milter"
+
+if [ ! -f "$CLAMAV_MILTER" ] ; then
+    CLAMAV_MILTER="/opt/csw/etc/clamav-milter"
+fi
+
+# Local clamav-milter options
+if [ -f "$CLAMAV_MILTER" ]; then
+    CLAMAV_FLAGS=`cat "$CLAMAV_MILTER"`
+fi
+
+if [ ! -f /opt/csw/sbin/clamav-milter ]; then
+    exit 0
+fi
+
+usingclamd=no
+if [ -f /opt/csw/etc/clamd ] -o [ -f /etc/opt/csw/clamd ] ; then usingclamd=yes ; fi
+
+PATH=/usr/sbin:/usr/bin:/opt/csw/sbin:/opt/csw/bin
+
+start() {
+    if [ -f /opt/csw/etc/clamav-milter ]; then
+        echo "Starting clamav-milter "
+        if /bin/test -S /opt/csw/share/clamav/clmilter.sock ; then
+            rm -f /opt/csw/share/clamav/clmilter.sock
+        fi
+        if /bin/test -S /opt/csw/var/clamav/clmilter.sock ; then
+             rm -f /opt/csw/var/clamav/clmilter.sock
+        fi
+        if /bin/test -S /var/opt/csw/clamav/clmilter.sock ; then
+             rm -f /var/opt/csw/clamav/clmilter.sock
+        fi
+	# clamd must be available
+	# but only if clamd is in use
+	if [ $usingclamd = yes ] ; then
+	    COUNT=`expr 0`
+	    clsock=`grep '^LocalSocket' /opt/csw/etc/clamd.conf |awk '{print $2;}'`
+	    while [ x = x ]
+	      do
+	      if [ "$COUNT" -eq 30 ] ; then
+		  break
+	      fi
+	      if /bin/test -S "$clsock" ; then
+		  break
+	      fi
+	      sleep 1
+	      COUNT=`expr $COUNT + 1`
+	    done
+	
+	    if [ "$COUNT" -eq 30 ] ; then
+		echo "Unable to start clamav-milter.  clamd process is not available."
+	    else
+		/opt/csw/sbin/clamav-milter ${CLAMAV_FLAGS}
+	    fi
+	else
+	    /opt/csw/sbin/clamav-milter ${CLAMAV_FLAGS}
+	fi
+    fi
+}
+
+stop() {
+        echo "Stopping clamav-milter "
+	/usr/bin/pkill clamav-milter
+        if /bin/test -S /opt/csw/share/clamav/clmilter.sock ; then
+            rm -f /opt/csw/share/clamav/clmilter.sock
+        fi
+        if /bin/test -S /var/opt/csw/clamav/clmilter.sock ; then
+             rm -f /var/opt/csw/clamav/clmilter.sock
+        fi
+        if /bin/test -S /opt/csw/var/clamav/clmilter.sock ; then
+             rm -f /opt/csw/var/clamav/clmilter.sock
+        fi
+}
+
+# See how we were called.
+case "$1" in
+  start)
+        # Start daemon.
+	start
+        ;;
+  stop)
+        # Stop daemon.
+	stop
+        ;;
+  restart|reload)
+	stop
+	start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|reload|restart}"
+        exit 1
+esac
+
+exit $?

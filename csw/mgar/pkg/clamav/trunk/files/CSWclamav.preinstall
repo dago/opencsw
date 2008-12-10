@@ -1,0 +1,23 @@
+# preinstall for clamav
+# Add the user and group clamav if told to by checkinstall script.
+
+# If installing on a filesystem that is not running the OS, exit this script.
+if [ ! x"$PKG_INSTALL_ROOT" = x"" -a ! x"$PKG_INSTALL_ROOT" = x"/" ] ; then exit 0 ; fi
+
+if [ x"$PKG_INSTALL_ROOT" = x"" ] ; then
+    PKG_INSTALL_ROOT="/"
+fi
+
+MYHOME=/var/spool
+
+if [ "$ADDGROUP" = "1" ] ; then
+	chroot $PKG_INSTALL_ROOT /usr/sbin/groupadd clamav
+	echo "Added clamav group."
+fi
+if [ "$ADDUSER" = "1" ] ; then
+	chroot $PKG_INSTALL_ROOT /usr/sbin/useradd -g clamav clamav
+	chroot $PKG_INSTALL_ROOT /usr/sbin/usermod -c "Clamav user" -d $MYHOME -s /bin/false clamav
+	echo "Added clamav user."
+fi
+
+exit 0

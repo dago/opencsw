@@ -1,0 +1,55 @@
+# checkinstall script for Clamav
+# Verify that group and user clamav exists
+#
+ADDUSER=0
+ADDGROUP=0
+# Next, verify that group clamav exists.
+# First check target machines group file, THEN check
+# NIS/NIS+/whatever
+
+/usr/bin/grep '^clamav:' /etc/group >/dev/null
+if [ $? -ne 0 ] ; then
+	/usr/bin/getent group clamav >/dev/null
+	if [ $? -ne 0 ] ; then
+		NEEDGROUP=1
+        fi
+fi
+
+if [ "$NEEDGROUP" = 1 ] ; then
+	echo "***"
+	echo "Group clamav must exist for this package install."
+	echo "clamav group will be added."
+	ADDGROUP=1
+else
+	echo "clamav group detected"
+fi
+# Next, verify that user clamav exists.
+# First check target machines password file, THEN check
+# NIS/NIS+/whatever
+
+/usr/bin/grep '^clamav:' /etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+	/usr/bin/getent passwd clamav >/dev/null
+	if [ $? -ne 0 ] ; then
+		NEEDUSER=1
+        fi
+fi
+
+if [ "$NEEDUSER" = 1 ] ; then
+	echo "***"
+	echo "User clamav must exist for this package install."
+	echo "clamav user will be added."
+	ADDUSER=1
+else
+	echo "clamav user detected"
+fi
+
+# Make env variables available to other packaging scripts
+
+cat >$1 <<!
+
+ADDGROUP='$ADDGROUP'
+ADDUSER='$ADDUSER'
+!
+
+exit 0

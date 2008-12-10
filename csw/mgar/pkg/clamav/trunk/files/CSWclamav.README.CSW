@@ -1,0 +1,177 @@
+# 2008-12-10
+Version 0.94.2 is released. Packages CSWclamav and CSWlibclamav are now
+maintained by Peter Bonivart.
+
+# 02Jun2007
+Version 0.90.3 is released.
+Changes are made to the rc scripts to allow clmilter to not wait for clamd
+when clmilter is configured without --external.  PLEASE note that I have
+not fully tested clmilter without clamd.  If you are running Solaris 10
+or later, you will also need to create a custom version of the clamav-milter 
+service method file and remove the dependency for cswclamd.  See my notes
+below dated 05Feb2006 for instructions on creating a custom service method
+file.
+
+# 16Feb2007
+Version 0.90 is released.
+--enable-experimental is disabled due to a bug introduced after the last
+release candidate.
+
+The rc script is changed to relocate the pid file to /opt/csw/var/clamav.
+If you run clamav without root access, please run the following.
+`chown <clamav user>:<clamav group> /opt/csw/var/clamav
+The rc script is changed to allow the startup options and config file
+to be located in /etc/opt/csw
+
+*** IMPORTANT ***
+You must change clamd.conf to match the new syntax.  Boolean options must
+state yes or no and not be left blank.  I recommend renaming your old
+clamd.conf to old-clamd.conf; `cp clamd.conf.CSW clamd.conf` and making
+your changes again.  Note that the directory for the pid file and log files
+now defaults to /opt/csw/var/clamav.
+*** END OF IMPORTANT ***
+
+# 07Jan2007
+The 'specificdeamonname' for this package is changed to only clamav.
+Please change any entries that you have made in csw.conf
+The scripts determine whether or not a clamd and clamav-milter is needed.
+
+# 14Dec2006
+clamd.conf has a new option - MailMaxRecursion
+Package installation is using csw.conf, if available, to determine whether
+  or not to start the daemons.
+See http://www.blastwave.org/standards/csw.conf.html for details.
+The 'specificdaemonname' for this package is clamd and clamav-milter. 
+
+# 16Oct2006
+freshclam.conf has option OnOutdatedExecute command added.
+
+# 05Feb2006
+# IMPORTANT changes with the Feb 2006 revision to version 0.88
+# For Solaris 8 and 9:
+	If you are using clamd and/or clamav-milter, the daemons
+	are now stopped on subsequent package upgrades and started
+	with this package install.
+
+# For Solaris 10 and later:
+	SMF processing is added for clamd and clamav-milter
+	Configuration file /opt/csw/etc/clamd is used to determine
+	whether or not to run clamd.  This feature has not changed.
+	The same is true for clamav-milter, except that the relevant
+	file is /opt/csw/etc/clamav-milter.
+
+	There are two types of files used by SMF.  The service
+	method file is located in /opt/csw/lib/svc/method.  The
+        service manifest is located in /opt/csw/var/svc/manifest and
+	subdirectory application for clamav.
+
+	Service method and manifest files are provided with the package.
+        If you want to do something different, create custom files with
+        specific names and the package scripts will use them instead. 
+	If you do create custom versions of these files, please test
+	them before running pkg-get.  If there is an error in a custom
+	file, pkgadd will fail.
+
+	The custom files must be named:
+	/opt/csw/lib/svc/method/svc-clamd.custom
+	/opt/csw/lib/svc/method/svc-clamav-milter.custom
+	/opt/csw/var/svc/manifest/application/clamd.custom.xml
+	/opt/csw/var/svc/manifest/application/clamav-milter.custom.xml
+
+	You may supply custom versions of any or all of these files.
+	If there is not a custom file available and a set of files are
+	needed because a service is activated, the package scripts will
+	use the standard files installed with the package and name them
+	accordingly.
+
+	To remove the installed service defintion and replace with your
+	own, do the following (using the clamd manifest as the example).
+	Create:  /opt/csw/var/svc/manifest/application/clamd.custom.xml
+	Permissions should be 0644 root bin:
+		chown root:bin \
+		  /opt/csw/var/svc/manifest/application/clamd.custom.xml
+		chmod 0644 \
+		  /opt/csw/var/svc/manifest/application/clamd.custom.xml
+	Copy:	 cp -p /opt/csw/var/svc/manifest/application/clamd.custom.xml \
+		/opt/csw/var/svc/manifest/application/clamd.xml
+	Removal: svcadm disable cswclamd
+		 svccfg delete cswclamd
+	Install: svccfg import /opt/csw/var/svc/manifest/application/clamd.xml
+		 svcadm enable cswclamd
+
+	The supplied manifests have clamav-milter depending on clamd.
+	If you need clamav-milter, this is the recommended usage and
+	requires /opt/csw/etc/clamav-milter to define the '--external'
+	switch.
+
+	The FMRI for clamd is svc:/application/cswclamd (or cswclamd).
+	The FMRI for clamav-milter is svc/application/cswclamav-milter
+	(or cswclamav-milter).
+
+# TO DO:
+	I want to allow more flexibility with clamd and clamav-milter
+	option definition.  Currently, you are limited to what you put
+	on a single line in clamd and/or clamav-milter in /opt/csw/etc.
+	This works, but it could be more flexible and readable.  Maybe
+	next time:>
+
+
+# 27Jan2005
+# IMPORTANT changes with version 0.81
+# There are a few changes in the configuration files.  So please
+#   compare the /opt/csw/etc/*.CSW files with your working copies.
+# clamav-milter now uses libclamav by default.  This means that you
+#   do not need to have clamd running if you only use clamav-milter.
+#   The sample clamav-milter.CSW file is changed to the old behavior.
+#   You decide what you are comfortable with.  I will be running the
+#   old method until maybe the next release or until I am more familiar
+#   with this new option.
+
+# 21Sep2004
+# IMPORTANT changes with version 0.80
+# /opt/csw/etc/clamav.conf is renamed to /opt/csw/etc/clamd.conf
+#   Postinstall will do the rename, if the file exists.
+#
+# If this is the first migration to 0.80 from a previous version:
+#   YOU MUST review the changes in clamd.conf.CSW.  
+# If you have StreamSaveToDisk enabled, it must be disabled or removed.
+#
+# YOU MUST review the changes in freshclam.conf.CSW.  There are new options.
+
+# 15Jun2004
+# Please compare your configuration files with the *.CSW versions in
+     /opt/csw/etc/.  There are some minor changes to the defaults.
+     The bad symlink for /etc/rc2.d/S77cswclamd is fixed.
+     The cswclamav-milter script now removes the old socket.  Note
+     that clamd socket removal can be done by enabling the FixStaleSocket
+     option in clamav.conf.
+     There are several ways to use this pkg, i.e., with clamd, with
+     clamav-milter.  Some options need to be changed to setup an
+     environment.  Please click the 'View news and info' buttom at
+     http://www.blastwave.org/packages.php/clamav to review the setup
+     that I use to run clamd and clamav-milter with freshclam running
+     from crontab.
+
+# *** IMPORTANT ***
+1) Freshclam is no longer run as a daemon.  Please create a crontab entry
+     to run freshclam when you desire.
+2) You MUST change /opt/csw/etc/freshclam.conf as needed for your installation
+     and run freshclam before proceeding.
+3) There are different ways to run clamav.  To use clamav as a sendmail
+     milter, copy the config files clamav.conf.CSW and clamav-milter.CSW
+     in /opt/csw/etc to the same names without the .CSW.  Add the milter
+     setup to your sendmail configuration file.
+4) Change the configuration files as required for your installation.
+     The configuration files that you create are not touched when a
+     new version of clamav is installed.  Therefore remember to run
+     a diff between your version and the .CSW version, which is the
+     new version.  There could be new features added and the config
+     files are normally the way these new features are activated.
+5) Clamav should be run as a non-root user.  Change the directory 
+     /opt/csw/share/clamav and the *.cvd files in this directory to
+     be owned by this user.  Also change /opt/csw/etc/clamav.conf
+     accordingly.
+6) The startup scripts run clamd if the file /opt/csw/etc/clamd exists.
+     You can change the startup options by changing /opt/csw/etc/clamd.
+     A sample file is provided.  The same is true for clamav-milter.
+# See additional files README, FAQ, INSTALL for more information.

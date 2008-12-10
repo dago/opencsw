@@ -1,0 +1,86 @@
+#!/bin/sh
+#
+# clamd	  Start/Stop the clam antivirus daemon.
+#
+# description: clamd is a standard UNIX program that scans for Viruses.
+# processname: clamd
+# config: /opt/csw/etc/clamd.conf
+# pidfile: /opt/csw/share/clamav/clamd.pid
+# modified for CSW
+# 2007-02-16 Note that the pid file is now in /opt/csw/var/clamav. So, you
+#   may need to fix permissions on that directory.
+#   The clamd file (used to send options to clamd) may now be in
+#   /etc/opt/csw/.  Using this file, you may specify a different location
+#   for the config file.  For example, -c /etc/opt/csw/clamd.conf.  Put
+#   all options on one line.
+# 2007-04-14 PidFile name and User are obtained from clamd.conf.  If
+#   the directory does not exist, it is created by this script.
+# 2007-10-27 Fix restart script
+
+. /lib/svc/share/smf_include.sh
+
+prog="clamd"
+progdir="/opt/csw/sbin"
+
+pidfile=`grep '^PidFile' /opt/csw/etc/clamd.conf |awk '{print $2;}'`
+piddir=`dirname $pidfile`
+if [ ! -d $piddir ]; then
+    clamuser=`grep '^User' /opt/csw/etc/clamd.conf |awk '{print $2;}'`
+    mkdir -p $piddir
+    chown $clamuser $piddir
+fi
+
+OPTIONS_FILE="/etc/opt/csw/clamd"
+if [ ! -f $OPTIONS_FILE ] ; then
+	OPTIONS_FILE="/opt/csw/etc/clamd"
+fi
+if [ ! -f "$OPTIONS_FILE" ]; then
+    exit 0
+fi
+
+# Local clamd config
+if [ -f "$OPTIONS_FILE" ] ; then
+    CLAMD_FLAGS=`cat "$OPTIONS_FILE"`
+fi
+
+PATH=/usr/sbin:/usr/bin:/opt/csw/sbin:/opt/csw/bin
+
+start() {
+	echo "Starting $prog "
+	$progdir/$prog ${CLAMD_FLAGS}
+}
+
+stop() {
+	echo "Stopping $prog "
+	/usr/bin/kill `head -1 $pidfile`
+}
+
+restart() {
+	/usr/bin/kill `head -1 $pidfile`
+	start
+}
+
+reload() {
+	echo "Reloading clam daemon configuration: "
+	pkill -HUP $prog
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	restart
+	;;
+  reload)
+	reload
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|status|reload|restart}"
+	exit 1
+esac
+
+exit $?

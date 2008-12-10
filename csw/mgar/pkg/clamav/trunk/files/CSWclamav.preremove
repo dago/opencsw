@@ -1,0 +1,27 @@
+# clamav - preremove script
+#
+# Stop clamav if it is running.
+
+# Determine whether or not clamd and clamav-milter is running
+haveclamd=no
+haveclmilter=no
+
+if [ -f /opt/csw/etc/clamd ] || [ -f /etc/opt/csw/clamd ] ; then haveclamd=yes ; fi
+if [ -f /opt/csw/etc/clamav-milter ] || [ -f /etc/opt/csw/clamav-milter ] ; then haveclmilter=yes ; fi
+
+# Determine whether or not SMF is available
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
+
+  if [ $haveclamd=yes ] ; then
+    echo "Shutting down clamd"
+    if [ $smf = yes ]
+	then
+    	# Disable service
+	/usr/sbin/svcadm disable -s svc:application/cswclamd:default >/dev/null 2>&1
+    else
+	/etc/init.d/cswclamd stop >/dev/null 2>&1
+    fi
+  fi
+
+exit 0
