@@ -1,0 +1,23 @@
+d none /opt/csw/include/X11 0755 root bin
+f none /opt/csw/include/X11/ImUtil.h 0644 root bin
+f none /opt/csw/include/X11/XKBlib.h 0644 root bin
+f none /opt/csw/include/X11/Xcms.h 0644 root bin
+f none /opt/csw/include/X11/Xlib-xcb.h 0644 root bin
+f none /opt/csw/include/X11/Xlib.h 0644 root bin
+f none /opt/csw/include/X11/XlibConf.h 0644 root bin
+f none /opt/csw/include/X11/Xlibint.h 0644 root bin
+f none /opt/csw/include/X11/Xlocale.h 0644 root bin
+f none /opt/csw/include/X11/Xregion.h 0644 root bin
+f none /opt/csw/include/X11/Xresource.h 0644 root bin
+f none /opt/csw/include/X11/Xutil.h 0644 root bin
+f none /opt/csw/include/X11/cursorfont.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/X11 0755 root bin
+f none /opt/csw/lib/libX11-xcb.a 0644 root bin
+f none /opt/csw/lib/libX11.a 0644 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/x11-xcb.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/x11.pc 0644 root bin
+i copyright=CSWlibX11dev.copyright
+i depend=CSWlibX11dev.depend
+i pkginfo=CSWlibX11dev.pkginfo
