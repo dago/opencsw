@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [ -n "$PKG_INSTALL_ROOT" -a "$PKG_INSTALL_ROOT" != "/" ]; then
+    chroot $PKG_INSTALL_ROOT
+fi
+
+PATH=/opt/csw/bin:$PATH
+
+CATCMD=/opt/csw/bin/xmlcatalog
+
+VERSION=1.69.1
+RELEASE=5.1
+DBHOME=/opt/csw/share/sgml/docbook
+
+CATALOG=/opt/csw/etc/xml/catalog
+$CATCMD --noout --add "rewriteSystem" \
+ "http://docbook.sourceforge.net/release/xsl/$VERSION" \
+ "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+$CATCMD --noout --add "rewriteURI" \
+ "http://docbook.sourceforge.net/release/xsl/$VERSION" \
+ "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+$CATCMD --noout --add "rewriteSystem" \
+ "http://docbook.sourceforge.net/release/xsl/current" \
+ "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+$CATCMD --noout --add "rewriteURI" \
+ "http://docbook.sourceforge.net/release/xsl/current" \
+ "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
