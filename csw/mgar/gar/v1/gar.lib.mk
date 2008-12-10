@@ -141,8 +141,9 @@ check-upstream-and-mail:
 #				  echo ""; \
 #				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
 #				  echo ""; \
-#				  echo "---"; \
-#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+#				  echo "--"; \
+#				  echo "Kindest regards"; \
+#				  echo "The upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 			else \
 	  			if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
 					echo "$(GARNAME) : Warning no files to check ! $(FILES2CHECK)" ; \
@@ -167,8 +168,9 @@ check-upstream-and-mail:
 			  echo ""; \
 			  echo "Please consider updating your package." ; \
 			  echo ""; \
-			  echo "---"; \
-			  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+			  echo "--"; \
+			  echo "Kindest regards"; \
+			  echo "The upstream notification job"; } | $(GARBIN)/mail2maintainer -b uwatch@opencsw.org -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
         fi; \
 	fi
 	
