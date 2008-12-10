@@ -3,5 +3,5 @@
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright
 
-Please see /opt/csw/share/doc/libclamav/copyright for license information.
+Please see /opt/csw/share/doc/libclamav/LICENSE for license information.
 

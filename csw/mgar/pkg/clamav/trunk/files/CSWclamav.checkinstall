@@ -1,6 +1,7 @@
 # checkinstall script for Clamav
 # Verify that group and user clamav exists
-#
+# 2008-12-10 Peter Bonivart
+
 ADDUSER=0
 ADDGROUP=0
 # Next, verify that group clamav exists.

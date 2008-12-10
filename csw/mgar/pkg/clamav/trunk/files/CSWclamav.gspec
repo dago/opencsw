@@ -1,9 +1,7 @@
 %var            bitname clamav
 %var            pkgname CSWclamav
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%prototype:merge
-f cswinitsmf    /etc/opt/csw/init.d/cswclamd 0755 root bin
 %copyright
 
-Please see /opt/csw/share/doc/clamav/copyright for license information.
+Please see /opt/csw/share/doc/clamav/LICENSE for license information.
 

@@ -1,18 +1,7 @@
 # clamav, Peter Bonivart
 
-# files outside /opt/csw are not included, need to fix gspec and cswproto
-# put libs in lib/32?
-# add rc/smf support. cswclassutils?
-# add pre/post scripts
-# add etc/clamav-milter?
-# add etc/clamd?
+# build with "ENABLE_CHECK=0 gmake package"
 # check mantis bugs
-# + add doc/README.CSW, INSTALL.clamav-milter.CSW
-# + split into multiple packages: clamav, libclamav
-# + add re for update notification
-# + add contrib
-# + add html docs and some pdf:s
-# + remove *.a, *.la from libs
 
 GARNAME = clamav
 GARVERSION = 0.94.2
@@ -29,9 +18,8 @@ endef
 
 SF_PROJ = clamav
 MASTER_SITES = $(SF_MIRRORS)
-#MASTER_SITES = http://freshmeat.net/redir/clamav/29355/url_tgz/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWclamav,checkinstall preinstall postinstall preremove)
+DISTFILES += $(call admfiles,CSWclamav,checkinstall preinstall postinstall)
 DISTFILES += $(call admfiles,CSWlibclamav,)
 
 SPKG_DESC_CSWclamav = Clam AntiVirus
@@ -43,13 +31,9 @@ REQUIRED_PKGS_CSWlibclamav = CSWlibgmp CSWzlib CSWbzip2 CSWiconv
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_CLASSES = none cswinitsmf
-
-#GARCOMPILER = GCC3
+SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-#CONFIGURE_ARGS += --with-user=nobody
-#CONFIGURE_ARGS += --with-group=nobody
 CONFIGURE_ARGS += --disable-clamav
 CONFIGURE_ARGS += --enable-milter
 CONFIGURE_ARGS += --with-sendmail=$(libdir)/sendmail
@@ -60,6 +44,8 @@ EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
 PKGFILES_CSWlibclamav  = $(libdir)/.*
 PKGFILES_CSWlibclamav += $(includedir)/.*
+
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 SPKG_SOURCEURL = http://www.clamav.net/
 
@@ -75,9 +61,12 @@ DOCS += docs/signatures.pdf
 DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 
 post-install-modulated:
-	@echo " ==> Post-install for $(GARNAME)"
+	@echo " ==> Post-install for $(GARNAME) (custom)"
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/etc/opt/csw/init.d/cswclamd
+	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/etc/opt/csw/init.d/cswclamav-milter
+	@mv $(DESTDIR)$(sysconfdir)/clamd.conf $(DESTDIR)$(sysconfdir)/clamd.conf.CSW
+	@mv $(DESTDIR)$(sysconfdir)/freshclam.conf $(DESTDIR)$(sysconfdir)/freshclam.conf.CSW
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 644 $(WORKSRC)/COPYING $(DOCDEST)/LICENSE

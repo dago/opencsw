@@ -1,7 +1,6 @@
 1181e6d62341b84708f126cc353f7ebf  download/clamav-0.94.2.tar.gz
-7d36b4328fa73af2b109169b923bc127  download/CSWclamav.gspec
-751ed376aeccb1664694b772c4b9640d  download/CSWclamav.checkinstall
-e355168073277baaf456eea620ff2760  download/CSWclamav.preinstall
-a82b60e7ee99d6a4ac6e80351ce7bf81  download/CSWclamav.postinstall
-526d5979cca3a3ebdf88c6ed33b8ec8d  download/CSWclamav.preremove
-6edc8660bde0b27d3676699eacb51884  download/CSWlibclamav.gspec
+dbb021404195c40d44dd61e9b0206634  download/CSWclamav.gspec
+265f727008d1645114839cdbd9399be6  download/CSWclamav.checkinstall
+03e2a2aaf95b2cd8497ad6742b9fbb46  download/CSWclamav.preinstall
+574e50c4c06f22c928e1a48783490e26  download/CSWclamav.postinstall
+8f6b719b38608d0f08ced7e556461c12  download/CSWlibclamav.gspec
