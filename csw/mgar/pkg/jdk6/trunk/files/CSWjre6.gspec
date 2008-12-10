@@ -1,4 +1,4 @@
 %var            bitname jre6
 %var            pkgname CSWjre6
 %include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC_DEFAULT}/LICENSE
+%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE
