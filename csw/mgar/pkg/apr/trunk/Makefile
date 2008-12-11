@@ -9,7 +9,7 @@ define BLURB
   interface to underlying platform-specific implementations.
 endef
 
-MASTER_SITES = http://apache.mirrored.ca/apr/
+MASTER_SITES = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWapr,depend prototype)
 DISTFILES += $(call admfiles,CSWapr-devel,depend prototype)
