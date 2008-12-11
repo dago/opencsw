@@ -1,5 +1,4 @@
 %var            bitname libtool_rt
 %var            pkgname CSWlibtoolrt
-%var            desc Generic library support runtime libraries
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
