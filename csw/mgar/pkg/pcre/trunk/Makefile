@@ -12,10 +12,15 @@ endef
 
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpcrert,depend prototype)
-DISTFILES += $(call admfiles,CSWpcre,depend prototype)
+DISTFILES += $(call admfiles,CSWpcre)
+DISTFILES += $(call admfiles,CSWpcrert)
 
 PREREQUISITE_PKGS = CSWgnulinks
+REQUIRED_PKGS_CSWpcre = CSWpcrert
+REQUIRED_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline
+
+SPKG_DESC_CSWpcrert = Perl-compatible regular expression tools (runtime)
+SPKG_DESC_CSWpcre = Perl-compatible regular expression tools
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
