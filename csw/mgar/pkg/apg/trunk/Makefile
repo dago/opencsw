@@ -11,7 +11,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWapg)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = download/$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = http://www.adel.nursat.kz/apg/download.shtml
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
