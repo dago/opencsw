@@ -191,6 +191,7 @@ check-upstream:
 			else \
 				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
 					PACKAGE_UP_TO_DATE=1; \
+echo DISTFILES : $(DISTFILES); \
 	                echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
 				else \
 					NEW_FILES="$$FILE $$NEW_FILES"; \
@@ -211,6 +212,8 @@ check-upstream:
 	    		fi; \
     		fi; \
         else \
+echo GNU_MIRROR : $(GNU_MIRROR); \
+echo NEW_FILES : $$NEW_FILES; \
 			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
         fi; \
 	fi
