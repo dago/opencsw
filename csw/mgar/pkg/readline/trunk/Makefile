@@ -1,5 +1,5 @@
 GARNAME = readline
-GARVERSION = 4.3
+GARVERSION = 5.2
 CATEGORIES = lib
 
 DESCRIPTION = GNU readline
@@ -19,7 +19,7 @@ DISTFILES += $(call admfiles,CSWreadline,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-LIBDEPS += lib/ncurses
+BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses
