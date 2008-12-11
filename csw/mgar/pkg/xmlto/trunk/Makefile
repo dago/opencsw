@@ -2,7 +2,7 @@ GARNAME = xmlto
 GARVERSION = 0.0.21
 CATEGORIES = utils
 
-PREREQUISITES = CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt CSWflex
+PREREQUISITE_PKGS = CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt CSWflex
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
@@ -15,10 +15,15 @@ MASTER_SITES = https://fedorahosted.org/$(GARNAME)/export/1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxmlto,depend)
 
-TEST_ARGS = check
+TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+GARCOMPILER = GNU
+
+# this ssl site has a cert we don't recognize
+WGET_OPTS = --no-check-certificate
 
 pre-configure:
 	@(cd $(WORKSRC); \
@@ -35,3 +40,9 @@ include gar/category.mk
 
 # We need this for 'tail -n'
 PATH := /usr/xpg4/bin:/opt/csw/bin:$(PATH)
+
+#reset XML_CATALOG lookup (we rely on having packages that provide stylesheets
+#etc).  Having xsltproc not find them during build makes us blow up!!
+XML_CATALOG_FILES = /opt/csw/etc/xml/catalog
+
+
