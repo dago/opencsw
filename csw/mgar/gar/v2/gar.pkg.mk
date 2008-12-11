@@ -82,8 +82,9 @@ PKG_EXPORTS += SPKG_VENDOR SPKG_EMAIL SPKG_PSTAMP SPKG_BASEDIR SPKG_CLASSES
 PKG_EXPORTS += SPKG_OSNAME SPKG_SOURCEURL SPKG_PACKAGER TIMESTAMP
 PKG_EXPORTS += DEPMAKER_EXTRA_ARGS PKGLIB DESTDIR
 
-PKG_ENV  = $(BUILD_ENV)
-PKG_ENV += $(foreach EXP,$(PKG_EXPORTS),$(EXP)="$($(EXP))")
+define _PKG_ENV
+$(BUILD_ENV) $(foreach EXP,$(PKG_EXPORTS),$(EXP)="$(if $($(EXP)_$1),$($(EXP)_$1),$($(EXP)))")
+endef
 
 # Canned command for generating admin file names
 # Usage: $(call admfiles,SUNWpackage,depend copyright)
@@ -217,7 +218,7 @@ package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-pack
 
 package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
-	@( $(PKG_ENV) mkpackage --spec $(WORKDIR)/$*.gspec \
+	@( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
 						 --destdir  $(SPKG_EXPORT) \
 						 --workdir  $(SPKG_WORKDIR) \
@@ -237,7 +238,7 @@ pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
 
 pkgcheck-%:
 	@echo " ==> Checking compliance: $*"
-	@( checkpkg $(SPKG_EXPORT)/`$(PKG_ENV) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
+	@( checkpkg $(SPKG_EXPORT)/`$(call _PKG_ENV,$1) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
 
 pkgcheck-p:
 	@$(foreach COOKIEFILE,$(PKGCHECK_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
@@ -269,7 +270,7 @@ dependb:
 # pkgenv - dump the packaging environment
 #
 pkgenv:
-	@$(PKG_ENV) env
+	@$(foreach SPEC,$(_PKG_SPECS),echo "$(SPEC)";echo;$(call _PKG_ENV,$(SPEC)) env;)
 
 
 # pkglist - list the packages to be built with GAR pathname, catalog name and package name
