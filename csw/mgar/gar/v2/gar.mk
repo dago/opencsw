@@ -499,7 +499,6 @@ MERGE_DIRS_isa-$(ISA_DEFAULT) ?=
 MERGE_DIRS_isa-$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir)
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
 MERGE_SCRIPTS_isa-$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
-_EXTRA_GAR_PKGS += CSWisaexec
 endif
 
 # These directories get relocated into their ISA subdirectories
@@ -512,6 +511,10 @@ ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 	$(shell for F in $(_ISAEXEC_FILES); do		\
 		if test -f "$$F"; then echo $$F; fi;	\
 	done)),)
+
+ifneq ($(ISAEXEC_FILES),)
+_EXTRA_GAR_PKGS += CSWisaexec
+endif
 
 # These files get relocated.
 # MERGE_DIRS is expanded to individual files here. All further
