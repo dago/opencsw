@@ -18,6 +18,10 @@ PKGINFO ?= /usr/bin/pkginfo
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
+# Set this to your svn binary
+SVN  ?= /opt/csw/bin/svn
+GAWK ?= /opt/csw/bin/gawk
+
 # We have to deal with four cases here:
 # 1. There is no svn binary -> NOSVN
 # 2. There is a svn binary, but the directory does not belong to a repository -> NOTVERSIONED
