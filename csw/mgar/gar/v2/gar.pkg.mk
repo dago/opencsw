@@ -285,9 +285,8 @@ $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bit
 endef
 
 define _pkglist_one
-$(shell /usr/bin/echo "$(patsubst $(realpath $(shell pwd)/$(GARDIR))/%,%,$(realpath .))\t$(call _pkglist_catalogname,$(1))\t$(call _pkglist_pkgname,$(1))")
+$(shell /usr/bin/echo "$(shell pwd)\t$(call _pkglist_catalogname,$(1))\t$(call _pkglist_pkgname,$(1))")
 endef
 
 pkglist:
-	@echo "G: $(GARDIR) - $(shell pwd) - $(realpath $(shell pwd)/$(GARDIR)) - $(realpath .)"
 	@$(foreach SPEC,$(SPKG_SPECS),echo "$(call _pkglist_one,$(SPEC))";)
