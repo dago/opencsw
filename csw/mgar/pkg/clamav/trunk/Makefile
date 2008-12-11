@@ -19,13 +19,13 @@ endef
 SF_PROJ = clamav
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWclamav,checkinstall preinstall postinstall)
+DISTFILES += $(call admfiles,CSWclamav,checkinstall preinstall)
 DISTFILES += $(call admfiles,CSWlibclamav,)
 
 SPKG_DESC_CSWclamav = Clam AntiVirus
 SPKG_DESC_CSWlibclamav = Clam AntiVirus Library
 
-REQUIRED_PKGS_CSWclamav = CSWlibclamav CSWlibgmp CSWzlib CSWbzip2 CSWiconv CSWcswclassutils
+REQUIRED_PKGS_CSWclamav = CSWlibclamav CSWlibgmp CSWzlib CSWbzip2 CSWiconv CSWcswclassutils CSWtcpwrap
 REQUIRED_PKGS_CSWlibclamav = CSWlibgmp CSWzlib CSWbzip2 CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -45,7 +45,7 @@ EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 PKGFILES_CSWlibclamav  = $(libdir)/.*
 PKGFILES_CSWlibclamav += $(includedir)/.*
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/clamav/ { $$$$5 = "clamav" } { print }'
 
 SPKG_SOURCEURL = http://www.clamav.net/
 
