@@ -9,7 +9,7 @@ define BLURB
   interface to underlying platform-specific implementations.
 endef
 
-MASTER_SITES  = http://apache.mirrored.ca/apr/
+MASTER_SITES  = http://apache.crihan.fr/dist/apr/
 MASTER_SITES += http://apache.webthing.com/database/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 #DISTFILES += apr_dbd_mysql.c
