@@ -10,6 +10,9 @@ endef
 
 include files/config.mk
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = files/$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Dummy toplevel package
 DISTFILES += $(call admfiles,CSWapache2,depend prototype)
 # Runtime
