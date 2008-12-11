@@ -2,6 +2,9 @@ GARNAME = readline
 GARVERSION = 5.2
 CATEGORIES = lib
 
+EXTRA_MODULATORS = GARVERSION
+MODULATIONS_GARVERSION = 4.3 5.2
+
 DESCRIPTION = GNU readline
 define BLURB
   The Readline library provides a set of functions for use by applications
@@ -13,7 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(V).tar.gz)
 DISTFILES += $(call admfiles,CSWreadline,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -25,6 +28,24 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses
 
 TEST_TARGET = check
+
+MERGE_SCRIPTS_isa-i386-garversion-4.3 = copy-only
+MERGE_DIRS_isa-i386-garversion-4.3 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-garversion-4.3 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-4.3 = $(libdir)
+
+MERGE_SCRIPTS_isa-i386-garversion-5.2 = copy-all
+MERGE_SCRIPTS_isa-amd64-garversion-5.2 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-5.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+MERGE_SCRIPTS_isa-sparcv8-garversion-4.3 = copy-only
+MERGE_DIRS_isa-sparcv8-garversion-4.3 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-garversion-4.3 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-4.3 = $(libdir)
+
+MERGE_SCRIPTS_isa-sparcv8-garversion-5.2 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-garversion-5.2 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-5.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 include gar/category.mk
 
