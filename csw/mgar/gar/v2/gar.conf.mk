@@ -413,9 +413,13 @@ endif
 # however not expanded during compilation, so linker-pathes must directly be accessible
 # without expansion and needs to be differentiated between 32 and 64 bit, therefore
 # the links 32 and 64.
+ifndef NORUNPATH
+_ADD_RUNPATH = 1
+endif
+
 ifeq ($(origin LINKER_FLAGS), undefined)
 ifdef NOISALIST
-LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(abspath $(ELIB)/$(MM_LIBDIR)))
+LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH), -R$(abspath $(ELIB)/$(MM_LIBDIR))))
 else
 # If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
 # may not be a subdirectory for the 32-bit standard case (this would normally
@@ -424,7 +428,13 @@ else
 # The quoting of $ISALIST is unfortunately dependend on how often the linker flags
 # are expanded until execution. The definition here is suitable for autotools.
 # For other buildtools it may be suitable to add definitions with other quotings.
-LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR)) -R$(ELIB)/\\\\\\\$$\$$ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR)))
+RUNPATHQUOTE ?= 2
+ifeq ($(RUNPATHQUOTE),1)
+  _Q = \\\$$\$$
+else
+  _Q = \\\\\\\$$\$$
+endif
+LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH),  -R$(ELIB)/$(_Q)ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR))))
 endif
 endif
 
