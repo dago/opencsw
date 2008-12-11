@@ -18,6 +18,17 @@ PKGINFO ?= /usr/bin/pkginfo
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
+# We have to deal with four cases here:
+# 1. There is no svn binary -> NOSVN
+# 2. There is a svn binary, but the directory does not belong to a repository -> NOTVERSIONED
+# 3. There is a svn binary, but not everything was committed properly -> UNCOMMITTED
+# 4. There is a svn binary and everything was committed -> r<revision>
+
+# Calculating the revision can be time consuming, so we do this on demand
+define _REVISION
+$(if $(shell if test -x $(SVN); then echo yes; fi),$(if $(shell $(SVN) info >/dev/null 2>&1; if test $$? -eq 0; then echo YES; fi),$(if $(shell $(SVN) status --ignore-externals 2>/dev/null | grep -v '^X'),UNCOMMITTED,$(shell $(SVN) info --recursive 2>/dev/null | $(GAWK) '$$1 == "Revision:" && MAX < $$2 { MAX = $$2 } END {print "r" MAX }')),NOTVERSIONED),NOSVN)
+endef
+
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
@@ -25,7 +36,7 @@ SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
 SPKG_PACKAGER  ?= Unknown
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_EMAIL     ?= Unknown
-SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')
+SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
 SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
