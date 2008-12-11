@@ -386,9 +386,9 @@ GCC4_CC_VERSION = $(shell $(GCC4_CC) -v 2>&1| ggrep version)
 GCC4_CXX_VERSION = $(shell $(GCC4_CXX) -v 2>&1| ggrep version)
 
 SOS11_CC_VERSION = $(shell $(SOS11_CC) -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
-SOS11_CXX_VERSION = $(shell $(SOS11_CXX)/bin/CC -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
+SOS11_CXX_VERSION = $(shell $(SOS11_CXX) -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
 SOS12_CC_VERSION = $(shell $(SOS11_CC) -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
-SOS12_CXX_VERSION = $(shell $(SOS11_CXX)/bin/CC -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
+SOS12_CXX_VERSION = $(shell $(SOS11_CXX) -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
 
 CC_VERSION = $($(GARCOMPILER)_CC_VERSION)
 CXX_VERSION = $($(GARCOMPILER)_CXX_VERSION)
