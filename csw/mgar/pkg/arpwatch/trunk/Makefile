@@ -13,6 +13,9 @@ DISTFILES += $(call admfiles,CSWarpwatch,depend prototype)
 # Smf/init stuffs
 DISTFILES += cswarpwatch.xml svc-cswarpwatch cswarpwatch arpwatch.conf
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # This patch add an system header include 
 # in arpwatch.h so u_int32 is defined
 # TODO: this should be done in configure
