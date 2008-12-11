@@ -10,6 +10,8 @@ define BLURB
  on their desk since each system uses its own monitor(s). 
 endef
 
+SPKG_SOURCEURL = http://synergy2.sourceforge.net/
+
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = $(GARNAME)2
 DISTFILES  = synergy-$(GARVERSION).tar.gz
