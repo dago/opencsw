@@ -33,6 +33,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 
+CFLAGS=-xO2
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-clamav
 CONFIGURE_ARGS += --enable-milter
@@ -44,6 +46,7 @@ EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
 PKGFILES_CSWlibclamav  = $(libdir)/.*
 PKGFILES_CSWlibclamav += $(includedir)/.*
+PKGFILES_CSWlibclamav += $(docdir)/libclamav/.*
 
 PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/clamav/ { $$$$5 = "clamav" } { print }'
 
