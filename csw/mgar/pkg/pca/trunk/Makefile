@@ -18,7 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)
 DISTFILES += $(call admfiles,CSWpca)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(GARNAME)-(\d{8}-\d{2})
 
 WORKSRC = $(WORKDIR)
 
