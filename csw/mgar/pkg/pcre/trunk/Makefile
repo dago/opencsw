@@ -1,5 +1,5 @@
 GARNAME = pcre
-GARVERSION = 7.6
+GARVERSION = 7.8
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
@@ -15,8 +15,12 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpcrert,depend prototype)
 DISTFILES += $(call admfiles,CSWpcre,depend prototype)
 
+PREREQUISITE_PKGS = CSWgnulinks
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-unicode-properties
