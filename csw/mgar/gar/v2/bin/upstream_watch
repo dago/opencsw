@@ -129,8 +129,14 @@ foreach my $file_pattern (@ARGV) {
 	foreach my $url (@urls) {
 		my $file_list = get_file_list ($url);
 		
-		foreach my $file (@{$file_list}) {
+		foreach my $file (@{$file_list}) {			
 			if ($file =~ /^$file_pattern$/) {
+				my $char = '/';
+				my $result = rindex($file, $char);
+				if ($result != -1) {
+					$file = substr $file , $result +1 ;
+				}
+
 				# we only keep the newest file for a given $file_pattern
 				if (compare_versions ($1, $newest_version) > 0) {
 					$newest_version = $1;
