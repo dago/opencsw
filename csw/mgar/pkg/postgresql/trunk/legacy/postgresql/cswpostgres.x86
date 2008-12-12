@@ -1,0 +1,71 @@
+#!/bin/sh
+# PostgreSQL startup script - part of the CSWpostgresql package
+# mark@blastwave.org
+
+# Read in the user configuration file
+[ -s /opt/csw/etc/postgresql.conf ] && . /opt/csw/etc/postgresql.conf
+[ -s /etc/opt/csw/postgresql.conf ] && . /etc/opt/csw/postgresql.conf
+
+# Defaults
+[ -z "$PGDATA" ] && PGDATA=/opt/csw/var/pgdata
+[ -z "$PGCTL" ] && PGCTL=/opt/csw/postgresql/bin/pg_ctl
+[ -z "$PGINIT" ] && PGINIT=/opt/csw/postgresql/bin/initdb
+
+
+# Exit if postgres user hasn't been created.
+grep '^postgres:' /etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+        getent passwd postgres >/dev/null
+        if [ $? -ne 0 ] ; then
+               exit 0 
+        fi
+fi
+
+# Change to a directory that pg_ctl etc. can read - startup fails
+# otherwise
+cd /var/tmp
+
+case "$1" in
+start)
+      if [ -d $PGDATA -a `ls -l $PGDATA 2> /dev/null | wc -l` -gt 1 ]; then
+         # PostgreSQL data directory exists and is populated
+	 echo "Starting PostgreSQL..."
+         su postgres -c "$PGCTL -D $PGDATA -l $PGDATA/postgresql.log start $SERVEROPTS"
+      fi
+      ;;
+
+stop)
+     echo "Stopping PostgreSQL database..."
+     su postgres -c "$PGCTL -D $PGDATA -l $PGDATA/postgresql.log stop"
+     ;;
+
+restart)
+     echo "Restarting PostgreSQL database..."
+     su postgres -c "$PGCTL -D $PGDATA -l $PGDATA/postgresql.log restart $SERVEROPTS"
+     ;;
+     
+reload)
+     echo "Reloading PostgreSQL database..."
+     su postgres -c "$PGCTL -D $PGDATA -l $PGDATA/postgresql.log reload $SERVEROPTS"
+     ;;
+
+status)
+     su postgres -c "$PGCTL -D $PGDATA status"
+     ;;
+
+init)
+     # create and initialise data directory 
+     echo "Creating PostgreSQL data directory at $PGDATA..."
+     # Create it, unless it's already there and empty
+     [ -d $PGDATA -a `ls -l $PGDATA 2> /dev/null | wc -l` -eq 1 ] || mkdir -p $PGDATA
+     chown postgres $PGDATA
+     echo "Initialising PostgreSQL database..."
+     su postgres -c "$PGINIT -D $PGDATA > /dev/null"
+     ;;
+
+*)
+     echo "Usage: $0 (init|start|stop|restart|reload|status)"
+     ;;
+
+esac
+

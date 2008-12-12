@@ -1,0 +1,249 @@
+#!/usr/bin/bash
+
+. ~/pkgs/scripts/env
+
+PACKAGE=postgresql
+VERSION=8.3.3
+HOST=ra
+
+# Override some defaults, as we're installing in /opt/csw/postgresql
+LD_OPTIONS_64="-R/opt/csw/lib/64:/opt/csw/postgresql/lib/sparcv9 -L/opt/csw/lib/64"
+LD_OPTIONS_32="-R/opt/csw/lib:/opt/csw/postgresql/lib -L/opt/csw/lib"
+
+
+TARBALL="postgresql-8.3.3.tar.gz"
+
+## Start
+
+# Delete build dir so we start fresh
+if [ -d $BASE/build-$HOST/$PACKAGE-$VERSION/ ]; then
+        rm -rf $BASE/build-$HOST/$PACKAGE-$VERSION
+fi
+
+# And unpack and change into it
+cd $BASE/build-$HOST
+gtar xzvf $SRC/$TARBALL
+cd $BASE/build-$HOST/$PACKAGE-$VERSION/
+
+
+##
+## 64-bit version
+##
+
+LD_OPTIONS="$LD_OPTIONS_64" CC="$CC_SPARC_64" ./configure --prefix=/opt/csw/postgresql --with-pam --with-openssl --enable-multibyte --with-CXX --with-includes=/opt/csw/include/openssl:/opt/csw/include --bindir=/opt/csw/postgresql/bin/sparcv9 --datadir=/opt/csw/postgresql/share --libexecdir=/opt/csw/postgresql/lib/sparcv9 --libdir=/opt/csw/postgresql/lib/sparcv9
+
+# Bug fix, needed in old versions, maybe not needed now ?
+perl -p -i -e "s/\.seg/\.section/g" src/backend/storage/lmgr/s_lock.c
+
+LD_OPTIONS="$LD_OPTIONS_64" CC="$CC_SPARC_64" gmake
+gmake DESTDIR=$BASE/build-$HOST/postgresql-$VERSION/cswstage install
+
+cd $BASE/build-$HOST/$PACKAGE-$VERSION/
+
+##
+## "Contrib" package
+##
+
+cd contrib
+LD_OPTIONS="$LD_OPTIONS_64" CC="$CC_SPARC_64" gmake
+gmake DESTDIR=$BASE/build-$HOST/postgresql-$VERSION/contribstage install
+
+
+##
+## 32-bit version
+##
+cd $BASE/build-$HOST/$PACKAGE-$VERSION/
+gmake distclean
+
+LD_OPTIONS="$LD_OPTIONS_32" CC="$CC_SPARC_32" ./configure --prefix=/opt/csw/postgresql --with-pam --with-openssl --enable-multibyte --with-CXX --with-includes=/opt/csw/include/openssl:/opt/csw/include --bindir=/opt/csw/postgresql/bin/sparcv8 --datadir=/opt/csw/postgresql/share --libexecdir=/opt/csw/postgresql/lib --libdir=/opt/csw/postgresql/lib
+
+LD_OPTIONS="$LD_OPTIONS_32" CC="$CC_SPARC_32" gmake
+
+gmake DESTDIR=$BASE/build-$HOST/postgresql-$VERSION/cswstage install
+cd $BASE/build-$HOST/$PACKAGE-$VERSION/
+
+##
+## "Contrib" package
+##
+
+cd contrib
+LD_OPTIONS="$LD_OPTIONS_32" CC="$CC_SPARC_32" gmake
+gmake DESTDIR=$BASE/build-$HOST/postgresql-$VERSION/contribstage install
+cd $BASE/build-$HOST/$PACKAGE-$VERSION/
+
+
+##
+## Packaging stuff
+##
+# Clean up according to CSW standards
+cd $BASE/build-$HOST/postgresql-$VERSION/cswstage/opt/csw/postgresql
+[ ! -d share ] && mkdir share
+for dir in man doc info; do
+        [ -d $dir ] && mv $dir share/ && ln -s share/$dir $dir
+done
+
+cd $BASE/build-$HOST/postgresql-$VERSION/contribstage/opt/csw/postgresql
+[ ! -d share ] && mkdir share
+for dir in man doc info; do
+        [ -d $dir ] && mv $dir share/ && ln -s share/$dir $dir
+done
+
+
+##
+## Move libpq to separate staging directory
+## And include compat libraries from older packages
+##
+cd $BASE/build-$HOST/$PACKAGE-$VERSION/
+mkdir -p $BASE/build-$HOST/postgresql-$VERSION/libpqstage/opt/csw/postgresql
+
+# Unpack the compat tarball of old libraries
+gtar -C $BASE/build-$HOST/postgresql-$VERSION/libpqstage -xzvf $BASE/pkgs/libpq/compat.sparc.tgz
+
+cd $BASE/build-$HOST/postgresql-$VERSION/libpqstage/opt/csw/postgresql
+while read file; do
+        [ ! -d "`dirname $file`" ] && mkdir -p "`dirname $file`"
+        mv $BASE/build-$HOST/postgresql-$VERSION/cswstage/opt/csw/postgresql/$file $file
+done < $BASE/pkgs/postgresql/libpqfiles.sparc
+
+cd $BASE/build-$HOST/$PACKAGE-$VERSION/
+
+##
+## Package everything up
+##
+cd $BASE/build-$HOST/postgresql-$VERSION/cswstage
+
+# Make the prototype
+pkgproto . | sed "s/e opt/e \/opt/" | sed "s/$USER $GROUP/root bin/g" > prototype.tmp
+gsed -i "/info\/dir 0644/d" prototype.tmp
+gsed -i "/info=share/d" prototype.tmp
+gsed -i "/man=share/d" prototype.tmp
+gsed -i "/doc=share/d" prototype.tmp
+gsed -i "/opt 0755/d" prototype.tmp
+gsed -i "/prototype.tmp/d" prototype.tmp
+cat $BASE/pkgs/postgresql/prototype.append >> prototype.tmp
+
+# Isaexec wrapper
+cd opt/csw/postgresql/bin 
+for prog in sparcv9/*; do
+	echo "l none /opt/csw/postgresql/bin/`basename $prog`=/opt/csw/bin/isaexec" >> $BASE/build-$HOST/postgresql-$VERSION/cswstage/prototype.tmp
+done
+cd $BASE/build-$HOST/postgresql-$VERSION/cswstage
+
+
+# Copy various files "outside" the package
+
+for file in copyright depend pkginfo preremove postinstall; do
+        cp $BASE/pkgs/postgresql/$file .
+        echo "i $file" >> prototype
+done
+
+cp $BASE/pkgs/postgresql/cswpostgres.sparc cswpostgres
+cp $BASE/pkgs/postgresql/postgresql.conf.sparc postgresql.conf.csw
+cp $BASE/pkgs/postgresql/README-CSW.txt.sparc README-CSW.txt
+
+# Strip binaries
+find . -type f | xargs file | grep ELF | \
+      awk -F: '{print $1}' | xargs strip
+find . -type f | xargs file | grep ELF | \
+      awk -F: '{print $1}' | xargs /usr/ccs/bin/mcs -d
+
+# Make the prototype
+cat prototype.tmp >> prototype
+rm prototype.tmp
+
+# Hack the wonky pgxs file
+/opt/csw/bin/gsed -i -e '/medusa/d' ./opt/csw/postgresql/lib/pgxs/src/Makefile.global
+/opt/csw/bin/gsed -i -e '/medusa/d' ./opt/csw/postgresql/lib/sparcv9/pgxs/src/Makefile.global
+
+# And package!
+createpkg -r .
+gzip *.pkg
+mv *.gz $BASE/pkgs/postgresql/
+
+
+## Package up libpq
+cd $BASE/build-$HOST/postgresql-$VERSION/libpqstage
+
+# Make the prototype
+pkgproto . | sed "s/e opt/e \/opt/" | sed "s/$USER $GROUP/root bin/g" > prototype.tmp
+gsed -i "/info\/dir 0644/d" prototype.tmp
+gsed -i "/info=share/d" prototype.tmp
+gsed -i "/man=share/d" prototype.tmp
+gsed -i "/doc=share/d" prototype.tmp
+gsed -i "/opt 0755/d" prototype.tmp
+gsed -i "/prototype.tmp/d" prototype.tmp
+
+# Isaexec wrapper
+cd opt/csw/postgresql/bin 
+for prog in sparcv9/*; do
+	echo "l none /opt/csw/postgresql/bin/`basename $prog`=/opt/csw/bin/isaexec" >> $BASE/build-$HOST/postgresql-$VERSION/libpqstage/prototype.tmp
+done
+cd $BASE/build-$HOST/postgresql-$VERSION/libpqstage
+
+# Copy various files "outside" the package
+for file in copyright depend pkginfo checkinstall; do
+        cp $BASE/pkgs/libpq/$file .
+        echo "i $file" >> prototype
+done
+
+
+
+# Strip binaries
+find . -type f | xargs file | grep ELF | \
+      awk -F: '{print $1}' | xargs strip
+find . -type f | xargs file | grep ELF | \
+      awk -F: '{print $1}' | xargs /usr/ccs/bin/mcs -d
+
+# Make the prototype
+cat prototype.tmp >> prototype
+rm prototype.tmp
+
+# And build!
+createpkg -r .
+gzip *.pkg
+mv *.gz $BASE/pkgs/libpq/
+
+
+
+## Package up contrib
+
+cd $BASE/build-$HOST/postgresql-$VERSION/contribstage
+
+# Make the prototype
+pkgproto . | sed "s/e opt/e \/opt/" | sed "s/$USER $GROUP/root bin/g" > prototype.tmp
+gsed -i "/info\/dir 0644/d" prototype.tmp
+gsed -i "/info=share/d" prototype.tmp
+gsed -i "/man=share/d" prototype.tmp
+gsed -i "/doc=share/d" prototype.tmp
+gsed -i "/opt 0755/d" prototype.tmp
+gsed -i "/prototype.tmp/d" prototype.tmp
+
+# Isaexec wrapper
+cd opt/csw/postgresql/bin 
+for prog in sparcv9/*; do
+	echo "l none /opt/csw/postgresql/bin/`basename $prog`=/opt/csw/bin/isaexec" >> $BASE/build-$HOST/postgresql-$VERSION/contribstage/prototype.tmp
+done
+cd $BASE/build-$HOST/postgresql-$VERSION/contribstage
+
+
+# Copy various files "outside" the package
+for file in copyright depend pkginfo;  do
+        cp $BASE/pkgs/postgresqlcontrib/$file .
+        echo "i $file" >> prototype
+done
+
+# Strip binaries
+find . -type f | xargs file | grep ELF | \
+      awk -F: '{print $1}' | xargs strip
+find . -type f | xargs file | grep ELF | \
+      awk -F: '{print $1}' | xargs /usr/ccs/bin/mcs -d
+
+# Make the prototype
+cat prototype.tmp >> prototype
+rm prototype.tmp
+
+# And build!
+createpkg -r .
+gzip *.pkg
+mv *.gz $BASE/pkgs/postgresqlcontrib/
+

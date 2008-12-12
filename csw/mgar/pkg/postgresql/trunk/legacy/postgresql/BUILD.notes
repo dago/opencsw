@@ -1,0 +1,5 @@
+All you should need to do is tweak the version numbers in the build scripts,
+and pkginfo files. 
+
+You'll also need to update the compat tarballs if you're bumping a major version,
+otherwise old packages will break if they haven't been re-linked.

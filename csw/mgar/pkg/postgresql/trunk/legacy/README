@@ -1,0 +1,37 @@
+Here are my postgresql scripts.
+
+Horrible and ugly, I know :(
+
+All you should need to do is unpack this in a ~/pkgs/ directory, tweak
+a few things, and run. My standard was to have my home directory set
+up like :
+
+pkgs/<packagename> for all build scripts, copyright, etc.
+build-<hostname> for each build host.
+
+And source under /export/medusa/src.
+
+So, on running these, you'd end up with ~/build-<hostname>/postgresql-8.3.3.
+
+The scripts then move parts of the postgresql install into different
+staging directories (and, in the case of libpq, unpack a
+"compatibility" tarball) and then package them up in to the
+appropriate ~/pkgs/<packagename> directories. The compat tarballs
+could possibly be removed if everyone relinks their packages when
+needed. It's a bit of a pain when a new upstream major version comes
+out and you then have to include the previous libraries in...
+
+So you'll end up with packages under postgresql, postgresqlcontrib, and libpq.
+
+For some reason, the last time I tried this, I had to manually go into
+the staging directory for postgresqlcontrib and run "createpkg -r ." -
+not sure why this didn't work automatically.
+
+Like I say - these are pretty horrible and ugly, particularly the
+sparc build script which produces the combined 32/64-bit package. But
+they worked for years, so I never got round to moving them into GAR. I
+hope these work for you - even though I've left the project, please do
+contact me if you have any questions at all about them.
+
+-Mark
+

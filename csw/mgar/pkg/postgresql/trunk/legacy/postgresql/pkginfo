@@ -1,0 +1,7 @@
+PKG=CSWpostgresql
+NAME=postgresql - advanced open source database system
+VERSION=8.3.3,REV=2008.06.26
+CATEGORY=application
+VENDOR=http://www.postgresql.org/  packaged for CSW by Mark Round
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=mark@blastwave.org

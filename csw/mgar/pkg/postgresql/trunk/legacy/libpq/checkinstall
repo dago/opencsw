@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# Check if the /opt/csw/libpq.so file exists, and if it is  part
+# of the CSWpostgresql package. If so, it's an old version of
+# PostgreSQL and we can't continue...
+
+if [ -f "/opt/csw/lib/libpq.so" ]; then
+  if [ "`/usr/sbin/pkgchk -l -p /opt/csw/lib/libpq.so | grep CSWpostgresql 2> /dev/null`" ]; then
+  echo "*** WARNING ***"
+  echo "  The installation has been aborted."
+  echo " "
+  echo "  From version 7.3.5 onwards, the PostgreSQL package from blastwave.org"
+  echo "  has been split into two parts. This is the 'libpq' package, which "
+  echo "  contains core libraries and headers needed for PostgreSQL development."
+  echo "  It is also needed by the 'postgresql' package, which contains the server"
+  echo "  and clients."
+  echo " "
+  echo "  It appears that you are attempting to upgrade an older release of PostgreSQL."
+  echo "  You will need to manually stop the server and uninstall the CSWpostgresql "
+  echo "  package before trying again  - as the libpq package will otherwise conflict"
+  echo "  with the currently installed postgresql package. "
+  echo " "
+  echo "  You can do this with the following commands (as root) :"
+  echo " "
+  echo "  /etc/init.d/cswpostgres stop"
+  echo "  pkgrm CSWpostgresql"
+  echo " "
+  echo "  Uninstalling the old version in this way will NOT affect your databases."
+  echo "*** WARNING ***"
+
+  exit 1
+
+  fi
+
+fi
+

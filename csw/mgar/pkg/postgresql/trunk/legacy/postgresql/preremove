@@ -1,0 +1,10 @@
+#!/bin/sh
+# Stops the server if running...
+# Thanks to James Lee for his advice on this :)
+if [ -x /etc/init.d/cswpostgres ]; then
+  . /etc/init.d/cswpostgres > /dev/null
+  /etc/init.d/cswpostgres status && /etc/init.d/cswpostgres stop
+  /etc/init.d/cswpostgres status && exit 2
+fi
+exit 0
+

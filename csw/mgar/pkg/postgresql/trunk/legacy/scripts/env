@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+# Sets some common variables
+
+BASE="/export/medusa/mark"
+SRC="/export/medusa/src"
+
+USER="mark"
+GROUP="`groups | awk '{print $1}'`"
+
+PATH="/opt/SUNWspro/bin:/opt/csw/bin:$PATH"
+LD_OPTIONS_64="-R/opt/csw/lib/64 -L/opt/csw/lib/64" 
+LD_OPTIONS_32="-R/opt/csw/lib -L/opt/csw/lib"
+
+CC_SPARC_64="cc  -xtarget=ultra -xarch=v9"
+CC_SPARC_32="cc  -xarch=v8"
+
+#CC_SPARC_64="cc -fast -xtarget=ultra -xarch=v9"
+#CC_SPARC_32="cc -fast -xarch=v8"
+
+CC_INTEL_32="cc -xarch=386"
+CC_INTEL_64="cc -xtarget=opteron -xarch=amd64"

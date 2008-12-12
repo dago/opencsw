@@ -1,0 +1,3 @@
+s none /opt/csw/postgresql/lib/64=sparcv9
+s none /opt/csw/postgresql/lib/32=sparcv8
+s none /opt/csw/postgresql/lib/sparcv8=.

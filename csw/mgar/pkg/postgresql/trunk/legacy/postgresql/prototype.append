@@ -1,0 +1,8 @@
+f none /etc/init.d/cswpostgres=cswpostgres 0744 root sys
+f none /opt/csw/etc/postgresql.conf.csw=postgresql.conf.csw 0755 root sys
+f none /opt/csw/postgresql/share/doc/README-CSW.txt=README-CSW.txt 0644 root sys
+s none /etc/rc3.d/S10cswpostgres=../init.d/cswpostgres
+s none /etc/rc0.d/K90cswpostgres=../init.d/cswpostgres
+s none /etc/rc1.d/K90cswpostgres=../init.d/cswpostgres
+s none /etc/rc2.d/K90cswpostgres=../init.d/cswpostgres
+s none /etc/rcS.d/K90cswpostgres=../init.d/cswpostgres
