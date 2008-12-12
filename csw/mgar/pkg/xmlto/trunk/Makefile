@@ -3,6 +3,8 @@ GARVERSION = 0.0.21
 CATEGORIES = utils
 
 PREREQUISITE_PKGS = CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt CSWflex
+REQUIRES_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
+REQUIRES_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
@@ -13,7 +15,7 @@ endef
 
 MASTER_SITES = https://fedorahosted.org/$(GARNAME)/export/1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxmlto,depend)
+#DISTFILES += $(call admfiles,CSWxmlto,depend)
 
 TEST_TARGET = check
 
