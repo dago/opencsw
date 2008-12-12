@@ -1,5 +1,5 @@
 GARNAME = Module-Load-Conditional
-GARVERSION = 0.16
+GARVERSION = 0.26
 CATEGORIES = cpan
 AUTHOR = KANE
 
