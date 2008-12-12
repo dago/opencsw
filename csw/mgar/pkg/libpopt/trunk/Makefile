@@ -1,5 +1,5 @@
 GARNAME = popt
-GARVERSION = 1.13
+GARVERSION = 1.14
 CATEGORIES = lib
 
 DESCRIPTION = Popt is a C library for parsing command line parameters
@@ -8,13 +8,16 @@ endef
 
 MASTER_SITES = http://rpm5.org/files/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibpopt,depend)
+DISTFILES += $(call admfiles,CSWlibpopt)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+REQUIRED_PKGS = CSWggettext CSWiconv
 
-EXTRA_BUILD_ISAS_sparc = sparcv9
+BUILD64 = 1
+NORUNPATH = 1
+
+CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
