@@ -1,0 +1,24 @@
+Oh, and here's the postgresqljdbc prototype. No build script needed
+for this, all I ever did was repackage the .jar files :
+
+i pkginfo
+i copyright
+d none /opt/csw 0755 root bin
+d none /opt/csw/postgresql 0755 root bin
+d none /opt/csw/postgresql/share 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/java 0755 root bin
+f none /opt/csw/share/java/pg81jdbc2.jar 0644 root bin
+f none /opt/csw/share/java/pg81jdbc2ee.jar 0644 root bin
+f none /opt/csw/share/java/pg81jdbc3.jar 0644 root bin
+f none /opt/csw/share/java/pg82jdbc2.jar 0644 root bin
+f none /opt/csw/share/java/pg82jdbc2ee.jar 0644 root bin
+f none /opt/csw/share/java/pg82jdbc3.jar 0644 root bin
+f none /opt/csw/share/java/pg82jdbc4.jar 0644 root bin
+s none /opt/csw/postgresql/share/pgjdbc4.jar=/opt/csw/share/java/pg82jdbc4.jar
+s none /opt/csw/postgresql/share/pgjdbc3.jar=/opt/csw/share/java/pg82jdbc3.jar
+s none /opt/csw/postgresql/share/pgjdbc2.jar=/opt/csw/share/java/pg82jdbc2.jar
+s none /opt/csw/postgresql/share/pgjdbc2ee.jar=/opt/csw/share/java/pg82jdbc2ee.jar
+s none /opt/csw/share/java/pgjdbc3.jar=pg81jdbc3.jar
+s none /opt/csw/share/java/pgjdbc2.jar=pg81jdbc2.jar
+s none /opt/csw/share/java/pgjdbc2ee.jar=pg81jdbc2ee.jar
