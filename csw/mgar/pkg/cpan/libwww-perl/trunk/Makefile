@@ -1,5 +1,5 @@
 GARNAME = libwww-perl
-GARVERSION = 5.820
+GARVERSION = 5.822
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -11,8 +11,11 @@ define BLURB
   used.
 endef
 
-#DISTFILES += $(call admfiles,CSWpmlibwww,depend prototype)
-DISTFILES += $(call admfiles,CSWpmlibwww,depend)
+DISTFILES += $(call admfiles,CSWpmlibwww,)
+
+REQUIRED_PKGS = CSWpmhtmltagset CSWpmuri CSWpmhtmlparser CSWpmcompresszlib CSWpmhtmlfmt CSWpmmimebase64
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 DEPENDS += cpan/URI
 DEPENDS += cpan/HTML-Parser
