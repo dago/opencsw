@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = https://fedorahosted.org/$(GARNAME)/export/1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-#DISTFILES += $(call admfiles,CSWxmlto,depend)
+DISTFILES += $(call admfiles,CSWxmlto) GPL
 
 TEST_TARGET = check
 
@@ -37,6 +37,8 @@ CONFIGURE_ARGS += --with-mktemp=/opt/csw/bin/mktemp
 CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
 CONFIGURE_ARGS += --with-getopt=/opt/csw/bin/ggetopt
+
+EXTRACT_TARGETS-global = $(call admfiles,CSWxmlto) GPL
 
 include gar/category.mk
 
