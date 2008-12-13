@@ -96,9 +96,10 @@ pre-configure-modulated:
 
 # we remove every debug information except symbol table
 # (should rather be done in the gar scripts)
-striplib:
-	chmod -R u+w $(PKGROOT)$(libdir)
-	find $(PKGROOT)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
+post-install-modulated:
+	echo " ==> Stripping libraries"
+	chmod -R u+w $(DESTDIR)$(libdir)
+	find $(DESTDIR)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
 
 install-changelog:
 	ginstall -D $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/changelog.CSW $(SPKG_PKGBASE)/changelog.CSW
@@ -114,8 +115,8 @@ install-certs:
 
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%:
-	echo " ==> Installing old libraries $* from archive oldlibs.$*-$(GARCH).tar.gz"; \
-	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf - && \
+	@echo " ==> Installing old libraries $* from archive oldlibs.$*-$(GARCH).tar.gz"
+	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -
 	@$(MAKECOOKIE)
 
-post-merge: striplib install-certs install-oldlibs install-changelog
+post-merge: install-certs install-oldlibs install-changelog
