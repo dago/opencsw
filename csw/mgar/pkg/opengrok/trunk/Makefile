@@ -1,5 +1,5 @@
 GARNAME = opengrok
-GARVERSION = 0.6.1
+GARVERSION = 0.7
 CATEGORIES = devel
 
 DESCRIPTION = A wicked fast source browser
@@ -15,7 +15,9 @@ endef
 
 MASTER_SITES = http://www.opensolaris.org/os/project/opengrok/files/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWopengrok,depend postinstall preremove)
+DISTFILES += $(call admfiles,CSWopengrok,postinstall preremove)
+
+REQUIRED_PKGS = CSWectags CSWjavasvn CSWtomcat5 CSWmercurial
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
