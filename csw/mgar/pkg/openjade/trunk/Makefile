@@ -3,7 +3,10 @@ GARVERSION = 1.3.2
 PATCHLEVEL = 27
 CATEGORIES = apps
 
-PREREQUISITES = CSWopensp
+PREREQUISITE_PKGS = CSWopensp
+REQUIRED_PKGS = CSWgcc3core CSWgcc3corert CSWgcc3g++ CSWgcc3g++rt
+REQUIRED_PKGS += CSWggettext CSWiconv CSWopensp CSWsgmlcommon
+REQUIRED_PKGS += CSWxmlcommon
 
 DESCRIPTION = A DSSSL implementation.
 define BLURB
@@ -17,14 +20,15 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWopenjade,depend postinstall preremove)
+DISTFILES += $(call admfiles,CSWopenjade,postinstall preremove)
 
 PATCHFILES = openjade-1.3.1-nsl.patch
 
-# use gnu c/c++ for this one...(matches opensp and the c++ doesn't want to
-# play with sun_cc...)
-GARCOMPILER = GNU
-GNU_CC_HOME = /opt/csw/gcc3
+# Use gcc3 to build this.  a) it matches opensp b) the c++ used has
+# some issues w/sun c++ and c) gcc4 generates object files that get
+# the sun linker upset.  [we could likely force gld or a strip in the
+# middle somewhere, but this works too.]
+GARCOMPILER = GCC3
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(GARNAME)-$(GARVERSION)
@@ -36,13 +40,16 @@ INSTALL_ARGS = install install-man
 
 include gar/category.mk
 
+#squish the pesky post strip la files...
+MERGE_EXCLUDE_DEFAULT += $(libdir)/.*\.la\~
+
 sgmldir = $(DESTDIR)/$(datadir)/sgml/$(GARNAME)-$(GARVERSION)
 sgmldoc = $(DESTDIR)/$(docdir)/$(GARNAME)
 INSTALL = /opt/csw/bin/ginstall -c
 INSTALL_DATA = $(INSTALL) -m 0644
 INSTALL_DIR = $(INSTALL) -m 0755 -d
 
-post-install:
+post-install-modulated:
 	@echo Installing catalog files.
 	@( cd $(WORKSRC); \
 		$(INSTALL_DIR) $(sgmldir)/; \
@@ -55,7 +62,6 @@ post-install:
 		touch $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL).soc; \
 		ln -s $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL).soc $(GARNAME).soc; \
 	)
-	
 	@echo Installing docs.
 	@( cd $(WORKSRC); \
 		$(INSTALL_DIR) $(sgmldoc); \
