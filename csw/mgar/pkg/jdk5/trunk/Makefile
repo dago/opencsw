@@ -60,7 +60,7 @@ shell-extract-%:
 	@echo "yes" | (D=$(abspath $(DOWNLOADDIR)/$*); cd $(EXTRACTDIR); DISPLAY= MORE="-10000" sh $$D -noregister)
 	@$(MAKECOOKIE)
 
-extract-%.sh: shell-extract-%.sh
+extract-archive-%.sh: shell-extract-%.sh
 	@$(MAKECOOKIE)
 
 include gar/category.mk
@@ -68,17 +68,17 @@ include gar/category.mk
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
 
-	rm -rf $(DESTDIR)$(prefix)/java
-	ginstall -d $(DESTDIR)$(prefix)/java/jdk
-	(cd $(WORKDIR); pax -r -w $(DISTNAME) $(DESTDIR)$(prefix)/java/jdk)
-	rm -f $(DESTDIR)$(prefix)/java/jdk/jdk5
-	gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/java/jdk/jdk5
+	@rm -rf $(DESTDIR)$(prefix)/java
+	@ginstall -d $(DESTDIR)$(prefix)/java/jdk
+	@(cd $(WORKDIR); pax -r -w $(DISTNAME) $(DESTDIR)$(prefix)/java/jdk)
+	@rm -f $(DESTDIR)$(prefix)/java/jdk/jdk5
+	@gln -sf $(DISTNAME) $(DESTDIR)$(prefix)/java/jdk/jdk5
 	
-	ginstall -d $(DESTDIR)$(prefix)/java/jre
-	rm -f $(DESTDIR)$(prefix)/java/jre/jre$(SPKG_VERSION)
-	gln -sf ../jdk/$(DISTNAME)/jre $(DESTDIR)$(prefix)/java/jre/jre$(SPKG_VERSION)
-	rm -f $(DESTDIR)$(prefix)/java/jre/jre5
-	gln -sf jre$(SPKG_VERSION) $(DESTDIR)$(prefix)/java/jre/jre5
+	@ginstall -d $(DESTDIR)$(prefix)/java/jre
+	@rm -f $(DESTDIR)$(prefix)/java/jre/jre$(SPKG_VERSION)
+	@gln -sf ../jdk/$(DISTNAME)/jre $(DESTDIR)$(prefix)/java/jre/jre$(SPKG_VERSION)
+	@rm -f $(DESTDIR)$(prefix)/java/jre/jre5
+	@gln -sf jre$(SPKG_VERSION) $(DESTDIR)$(prefix)/java/jre/jre5
 	
-	gln -s ../man $(DESTDIR)$(prefix)/java/jdk/$(DISTNAME)/jre/man
+	@gln -s ../man $(DESTDIR)$(prefix)/java/jdk/$(DISTNAME)/jre/man
 	@$(MAKECOOKIE)
