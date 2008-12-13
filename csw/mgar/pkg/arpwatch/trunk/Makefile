@@ -36,6 +36,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # so libpcap is found
 SUN_CC_OPT += -L$(libdir)
 
+# No test target in arpwatch Makefile
+SKIPTEST = 1
+
 include gar/category.mk
 
 pre-configure:
