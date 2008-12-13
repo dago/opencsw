@@ -41,8 +41,9 @@ EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 # we don't yet use isaexec support so we disable
 # isa relocation for default isa
 NO_ISAEXEC = 1
-#ISA_RELOCATE_DIRS_i386 = 
-#ISA_RELOCATE_DIRS_sparcv8 = 
+# GAR wants and puts sparcv9 in lib/64 but openssl build system
+# isn't the standard autoconf/automake one so we disable this
+# relocation for now
 ISALIBDIR_sparcv9 = .
 libdir = /opt/csw/lib
 
@@ -91,7 +92,7 @@ SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
 pre-configure-modulated: 
 	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
-	$(MAKECOOKIE)
+	@$(MAKECOOKIE)
 
 # we remove every debug information except symbol table
 # (should rather be done in the gar scripts)
@@ -99,18 +100,22 @@ striplib:
 	chmod -R u+w $(PKGROOT)$(libdir)
 	find $(PKGROOT)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
 
+install-changelog:
+	ginstall -D $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/changelog.CSW $(SPKG_PKGBASE)/changelog.CSW
+	@$(MAKECOOKIE)
+
 install-certs: 
 	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
 		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf
 	gunzip --stdout $(CURDIR)/$(FILEDIR)/certs.tar.gz | (cd $(PKGROOT)$(prefix)/ssl/certs && tar xf -)
-	cp -r $(WORKSRC)/certs/* $(PKGROOT)$(prefix)/ssl/certs
+	cp -r $(WORKSRC_FIRSTMOD)/certs/* $(PKGROOT)$(prefix)/ssl/certs
 	OPENSSL=$(PKGROOT)/$(bindir)/openssl $(PKGROOT)/$(bindir)/c_rehash $(PKGROOT)/$(prefix)/ssl/certs/
-	$(MAKECOOKIE)
+	@$(MAKECOOKIE)
 
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%:
 	echo " ==> Installing old libraries $* from archive oldlibs.$*-$(GARCH).tar.gz"; \
 	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf - && \
-	$(MAKECOOKIE)
+	@$(MAKECOOKIE)
 
-pre-package: striplib install-certs install-oldlibs
+post-merge: striplib install-certs install-oldlibs install-changelog

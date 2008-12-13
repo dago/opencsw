@@ -2,4 +2,4 @@
 %var            pkgname CSWosslutils
 %var            desc Openssl binaries and related tools 
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
+%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE
