@@ -1,6 +1,6 @@
 GARNAME = libXau
 GARVERSION = 1.0.4
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = X11 authorisation library
 define BLURB
