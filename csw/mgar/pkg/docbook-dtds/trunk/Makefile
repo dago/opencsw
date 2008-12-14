@@ -9,10 +9,11 @@
 
 GARNAME = docbookdtds
 GARVERSION = 1.0
+
 PATCHLEVEL = 30.1
 CATEGORIES = xtra
 
-PREREQUISITES = CSWunzip
+REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWopenjade CSWlibxml2
 
 DESCRIPTION = SGML and XML document type definitions for DocBook.
 define BLURB
@@ -56,7 +57,7 @@ DBFILES += docbook-xml-4.3.zip docbook-4.4.zip docbook-xml-4.4.zip
 
 MASTER_SITES = $(O_SRC) $(D_SRC)
 DISTFILES  = $(DBFILES) Makefile
-DISTFILES += $(call admfiles,CSWdocbookdtds,depend postinstall preremove)
+DISTFILES += $(call admfiles,CSWdocbookdtds,postinstall preremove)
 
 PATCHFILES = docbook-4.2-euro.patch docbook-dtd30-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd31-sgml-1.0.catalog.patch
@@ -77,73 +78,68 @@ INSTALL_ARGS = DESTDIR=$(DESTDIR) GARVERSION=$(GARVERSION) PATCHLEVEL=$(PATCHLEV
 
 include gar/category.mk
 
-SGMLDIRS = 3.0 3.1 4.0 4.1 4.2 4.3 4.4
-XMLDIRS = 4.1.2 4.2 4.3 4.4
-	
-
 # ok, for each source, we make an explicit target that overrides the implicit
 # zip-extract-% targets in GAR.
-zip-extract-docbk30.zip: 
+zip-extract-docbk30.zip:
+	ginstall -d $(WORKSRC)/3.0-sgml
 	unzip $(DOWNLOADDIR)/docbk30.zip -d $(WORKSRC)/3.0-sgml
 	@$(MAKECOOKIE)
 
 zip-extract-docbk31.zip: 
+	ginstall -d $(WORKSRC)/3.1-sgml
 	unzip $(DOWNLOADDIR)/docbk31.zip -d $(WORKSRC)/3.1-sgml
 	@$(MAKECOOKIE)
 
 zip-extract-docbk40.zip:
+	ginstall -d $(WORKSRC)/4.0-sgml
 	unzip $(DOWNLOADDIR)/docbk40.zip -d $(WORKSRC)/4.0-sgml
 	@$(MAKECOOKIE)
 
 zip-extract-docbk41.zip:
+	ginstall -d $(WORKSRC)/4.1-sgml
 	unzip $(DOWNLOADDIR)/docbk41.zip -d $(WORKSRC)/4.1-sgml
 	@$(MAKECOOKIE)
 
 zip-extract-docbook-4.2.zip:
+	ginstall -d $(WORKSRC)/4.2-sgml
 	unzip $(DOWNLOADDIR)/docbook-4.2.zip -d $(WORKSRC)/4.2-sgml
 	@$(MAKECOOKIE)
 
-zip-extract-docbkx412.zip:	
+zip-extract-docbkx412.zip:
+	ginstall -d $(WORKSRC)/4.1.2-xml
 	unzip $(DOWNLOADDIR)/docbkx412.zip -d $(WORKSRC)/4.1.2-xml
 	@$(MAKECOOKIE)
 
 
 zip-extract-docbook-4.3.zip:
+	ginstall -d $(WORKSRC)/4.3-sgml
 	unzip $(DOWNLOADDIR)/docbook-4.3.zip -d $(WORKSRC)/4.3-sgml
 	@$(MAKECOOKIE)
 
 zip-extract-docbook-4.4.zip:
+	ginstall -d $(WORKSRC)/4.4-sgml
 	unzip $(DOWNLOADDIR)/docbook-4.4.zip -d $(WORKSRC)/4.4-sgml
 	@$(MAKECOOKIE)
 
 zip-extract-docbook-xml-4.2.zip:
+	ginstall -d $(WORKSRC)/4.2-xml
 	unzip $(DOWNLOADDIR)/docbook-xml-4.2.zip -d $(WORKSRC)/4.2-xml
 	@$(MAKECOOKIE)
 
 zip-extract-docbook-xml-4.3.zip:
+	ginstall -d $(WORKSRC)/4.3-xml
 	unzip $(DOWNLOADDIR)/docbook-xml-4.3.zip -d $(WORKSRC)/4.3-xml
 	@$(MAKECOOKIE)
 
 zip-extract-docbook-xml-4.4.zip:
+	ginstall -d $(WORKSRC)/4.4-xml
 	unzip $(DOWNLOADDIR)/docbook-xml-4.4.zip -d $(WORKSRC)/4.4-xml
-	@$(MAKECOOKIE)
-
-# we override extract for our needs...man this is horrible! (note the cookie
-# madness)
-pre-extract: $(WORKSRC)
-	( cd $(WORKSRC); \
-	for d in $(SGMLDIRS); do \
-		[ -d $$d-sgml ] || mkdir $$d-sgml; \
-	done; \
-	for d in $(XMLDIRS); do \
-		[ -d $$d-xml ] || mkdir $$d-xml; \
-	done )
 	@$(MAKECOOKIE)
 
 post-extract:
 	# Increase NAMELEN (bug #36058, bug #159382). [bug references from
 	# rpm .spec file]
-	( cd $(WORKSRC); \
+	( cd $(WORKSRC_FIRSTMOD); \
 		gsed -e's,\(NAMELEN\s\+\)44\(\s\*\)\?,\1256,' -i.namelen */docbook.dcl; \
 		cp ../Makefile .)
 	@$(MAKECOOKIE)

@@ -11,7 +11,6 @@ f89e1bd0b2c7a361e3f1f739e16b5d0d  download/docbook-4.4.zip
 cbb04e9a700955d88c50962ef22c1634  download/docbook-xml-4.4.zip
 e5318114e6c751a9e0835d7711275e13  download/Makefile
 536104a1ab1e8eac583cf27f4f8844a4  download/CSWdocbookdtds.gspec
-cb6dbfe9f6184a9de0725c0a61adc57b  download/CSWdocbookdtds.depend
 95eb4822347e50556398f4a11ee95097  download/CSWdocbookdtds.postinstall
 9035c448e6480f6e916084fea388b512  download/CSWdocbookdtds.preremove
 318742d3a6648a6905727f071cbc9847  download/docbook-4.2-euro.patch
