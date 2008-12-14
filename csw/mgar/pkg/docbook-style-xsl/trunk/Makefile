@@ -4,7 +4,9 @@ PATCHLEVEL = 5.1
 CATEGORIES = xtra
 
 # for our (modified from rhel) copied in Makefile.
-PREREQUISITES = CSWgfile CSWbash
+PREREQUISITE_PKGS = CSWgfile CSWbash
+
+REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWdocbookdtds CSWlibxml2
 
 DESCRIPTION = Norman Walsh's XSL stylesheets for DocBook XML.
 define BLURB
@@ -19,7 +21,7 @@ SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = docbook-xsl-$(GARVERSION).tar.bz2
 DISTFILES += docbook-xsl-doc-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWdocbookxsl,depend postinstall preremove)
+DISTFILES += $(call admfiles,CSWdocbookxsl,postinstall preremove)
 DISTFILES += Makefile
 
 # These are listed in the same order they'd be applied during the rpm build...
