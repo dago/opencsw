@@ -1,6 +1,6 @@
 GARNAME = xcb-proto
 GARVERSION = 1.1
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = xcb-proto
 define BLURB
@@ -14,22 +14,8 @@ PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES    += $(call admfiles,CSWxcb-proto, depend)
-
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
-
-export LDFLAGS
-
-TEST_SCRIPTS      = none
-
-GREP = ggrep
+DISTFILES    += $(call admfiles,CSWxcb-proto)
 
 include gar/category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
 
-test-none:
-	@$(MAKECOOKIE)
-
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
