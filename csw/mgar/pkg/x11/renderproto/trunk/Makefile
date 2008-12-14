@@ -1,35 +1,21 @@
 GARNAME = renderproto
 GARVERSION = 0.9.3
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = renderproto
 define BLURB
 renderproto
 endef
 
-MASTER_SITES =http://xorg.freedesktop.org/releases/individual/proto/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = $(X11_PROTO_MASTER_SITE)
+DISTFILES 	 = $(GARNAME)-$(GARVERSION).tar.gz
+PKGDIST 	 = $(GARNAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES    += $(call admfiles,CSWrenderproto, depend)
-
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
-
-export LDFLAGS
-
-TEST_SCRIPTS      = none
-
-GREP = ggrep
+DISTFILES    += $(call admfiles,CSWrenderproto)
 
 include gar/category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
 
-test-none:
-	@$(MAKECOOKIE)
-
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
