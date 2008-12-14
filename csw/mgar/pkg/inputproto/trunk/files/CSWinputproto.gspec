@@ -1,4 +1,0 @@
-%var            bitname inputproto
-%var            pkgname CSWinputproto
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
