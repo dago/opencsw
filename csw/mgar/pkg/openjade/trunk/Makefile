@@ -4,7 +4,7 @@ PATCHLEVEL = 27
 CATEGORIES = apps
 
 PREREQUISITE_PKGS = CSWopensp
-REQUIRED_PKGS = CSWgcc3core CSWgcc3corert CSWgcc3g++ CSWgcc3g++rt
+REQUIRED_PKGS = CSWgcc3corert CSWgcc3g++rt
 REQUIRED_PKGS += CSWggettext CSWiconv CSWopensp CSWsgmlcommon
 REQUIRED_PKGS += CSWxmlcommon
 
