@@ -7,7 +7,7 @@ define BLURB
 xcb-proto
 endef
 
-MASTER_SITES =http://xcb.freedesktop.org/dist/
+MASTER_SITES = $(XCB_MASTER_SITES)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 
