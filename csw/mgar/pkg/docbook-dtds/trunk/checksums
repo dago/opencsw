@@ -19,4 +19,4 @@ e3067045964536cc7445d5c3f1e99916  download/docbook-dtd30-sgml-1.0.catalog.patch
 e976c302070ec2e14316d4a601c224cb  download/docbook-dtd41-sgml-1.0.catalog.patch
 0ee42c28835cd448b6b47b2345394b28  download/docbook-dtd42-sgml-1.0.catalog.patch
 1dae3f33fe7dda3fd68a4d4a3df2c653  download/docbook-dtds-ents.patch
-9fba7b568d66e824b498706eb1c83a73  download/add_makefile.patch
+e95f2615b1a3f50b9d14efdb4d188f3d  download/add_makefile.patch
