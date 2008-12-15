@@ -9,11 +9,17 @@ define BLURB
   any of the modules you have installed on your system during runtime.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodloadcond,depend prototype)
+DISTFILES += $(call admfiles,CSWpmmodloadcond,)
+
+REQUIRED_PKGS = CSWpmprmscheck CSWpmmodload CSWpmlclemktxtsimple
+
+#SKIPTEST = 1
 
 DEPENDS += cpan/Params-Check
 DEPENDS += cpan/Module-Load
 DEPENDS += cpan/Locale-Maketext-Simple
 DEPENDS += cpan/version
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 include gar/category.mk
