@@ -1,5 +1,5 @@
 GARNAME = Module-Load
-GARVERSION = 0.10
+GARVERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = KANE
 
@@ -9,6 +9,10 @@ define BLURB
   or a module.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodload,depend prototype)
+DISTFILES += $(call admfiles,CSWpmmodload,)
+
+#SKIPTEST = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 include gar/category.mk
