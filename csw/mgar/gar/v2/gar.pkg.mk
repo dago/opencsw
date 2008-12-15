@@ -190,7 +190,10 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 .PRECIOUS: $(WORKDIR)/%.depend
 $(WORKDIR)/%.depend:
 	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS), \
-		($(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
+		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
+			echo "I $(PKG)";\
+		)\
+		$(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call _pkglist_catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell /usr/bin/pkginfo $(PKG) | awk '{ $$1 = "P"; print } ')"; \
