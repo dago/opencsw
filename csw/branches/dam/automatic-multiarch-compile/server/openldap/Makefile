@@ -1,6 +1,6 @@
 GARNAME = openldap
-GARVERSION = 2.3.40
-CATEGORIES = server
+GARVERSION = 2.3.41
+CATEGORIE1 = server
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -25,8 +25,8 @@ DISTFILES += $(PATCHFILES)
 
 EXTRA_DOCS = README.CSW openldaprc $(PATCHFILES)
 
-EXTRA_LIB = $(prefix)/bdb4/lib 
-EXTRA_INC = $(prefix)/bdb4/include
+EXTRA_INC = $(prefix)/bdb44/include
+EXTRA_LIB = $(prefix)/bdb44/lib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -36,6 +36,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_BUILD_ISAS_sparc = sparcv9
 EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
+
+ISA_RELOCATE_DIRS_pentium_pro = $(libdir)
+EXTRA_MERGE_EXCLUDE_FILES_pentium_pro = .*\.a .*\.la
 
 PKGFILES_CSWoldapclient_EXCLUSIVE  = $(bindir)/.*
 PKGFILES_CSWoldapclient_EXCLUSIVE += $(mandir)/man1/.*
