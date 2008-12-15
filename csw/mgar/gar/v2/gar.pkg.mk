@@ -13,6 +13,12 @@
 #
 #
 
+ifeq ($(DEBUG_PACKAGING),)
+_DBG=@
+else
+_DBG=
+endif
+
 PKGINFO ?= /usr/bin/pkginfo
 
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
@@ -156,11 +162,11 @@ PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	@cswproto -r $(PKGROOT) $(PKGROOT) >$@
+	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT) >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
-	@if [ -n "$(PKGFILES_$*_SHARED)" -o \
+	$(_DBG)if [ -n "$(PKGFILES_$*_SHARED)" -o \
 	      -n "$(PKGFILES_$*)" -o \
 	      -n "$(_PKGFILES_EXCLUDE_$*)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
@@ -178,12 +184,12 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	fi
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
-	@cat $(WORKDIR)/$*.prototype $(_PROTOTYPE_FILTER_$*) >$@
+	$(_DBG)cat $(WORKDIR)/$*.prototype $(_PROTOTYPE_FILTER_$*) >$@
 
 # $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
 .PRECIOUS: $(WORKDIR)/%.depend
 $(WORKDIR)/%.depend:
-	$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS), \
+	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS), \
 		($(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call _pkglist_catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
@@ -218,7 +224,7 @@ package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-pack
 
 package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
-	@( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
+	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
 						 --destdir  $(SPKG_EXPORT) \
 						 --workdir  $(SPKG_WORKDIR) \
