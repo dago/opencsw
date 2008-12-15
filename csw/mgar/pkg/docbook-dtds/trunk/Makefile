@@ -56,7 +56,7 @@ DBFILES += docbook-4.2.zip docbook-xml-4.2.zip docbook-4.3.zip
 DBFILES += docbook-xml-4.3.zip docbook-4.4.zip docbook-xml-4.4.zip
 
 MASTER_SITES = $(O_SRC) $(D_SRC)
-DISTFILES  = $(DBFILES) Makefile
+DISTFILES  = $(DBFILES)
 DISTFILES += $(call admfiles,CSWdocbookdtds,postinstall preremove)
 
 PATCHFILES = docbook-4.2-euro.patch docbook-dtd30-sgml-1.0.catalog.patch
@@ -65,6 +65,7 @@ PATCHFILES += docbook-dtd40-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd41-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd42-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtds-ents.patch
+PATCHFILES += add_makefile.patch
 
 # we don't need no stinkin' configure! :)
 CONFIGURE_SCRIPTS = 
@@ -140,6 +141,7 @@ post-extract:
 	# Increase NAMELEN (bug #36058, bug #159382). [bug references from
 	# rpm .spec file]
 	( cd $(WORKSRC_FIRSTMOD); \
-		gsed -e's,\(NAMELEN\s\+\)44\(\s\*\)\?,\1256,' -i.namelen */docbook.dcl; \
-		cp ../Makefile .)
+		gsed -e's,\(NAMELEN\s\+\)44\(\s\*\)\?,\1256,' -i.namelen \
+			*/docbook.dcl )
+
 	@$(MAKECOOKIE)
