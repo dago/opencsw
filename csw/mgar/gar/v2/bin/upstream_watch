@@ -75,7 +75,7 @@ sub compare_versions
 #
 # TODO: find a better way than lftp to do this
 #
-sub get_file_list 
+sub get_file_list_lftp 
 {
 	my $url = shift;
 	my @file_list;
@@ -90,16 +90,20 @@ sub get_file_list
 	$http_proxy_cmd = "set http:proxy $ENV{HTTP_PROXY};" if exists $ENV{HTTP_PROXY};
 	$http_proxy_cmd = "set http:proxy $ENV{http_proxy};" if exists $ENV{http_proxy};
 
-	open (FH, "lftp -q -c \"set net:timeout 30; set net:max-retries 16; $ftp_proxy_cmd $http_proxy_cmd open $url/ && ls\" 2>/dev/null |");
+	open (my $FH, "lftp -q -c \"set net:timeout 30; set net:max-retries 16; $ftp_proxy_cmd $http_proxy_cmd open $url/ && ls\" 2>/dev/null |");
 
-	while (my $line = <FH>) {
+	while (my $line = <$FH>) {
 		my @cols = split (/\s+/, $line);
 		my $filename = $cols[$#cols];
 		chomp ($filename);
+		my $result = rindex($filename, '/');
+		if ($result != -1) {
+			$filename = substr $filename , $result +1 ;
+		}
 		push (@file_list, $filename);
 	}
 
-	close (FH);
+	close ($FH);
 
 	return \@file_list;
 }
@@ -116,9 +120,6 @@ if ($help) {
 Usage: upstream_watch -u URL file_regex...
 Display the latest upstream files.
 EOF
-
-
-
 }
 
 foreach my $file_pattern (@ARGV) {
@@ -127,8 +128,8 @@ foreach my $file_pattern (@ARGV) {
 	my $newest_file = "";
 
 	foreach my $url (@urls) {
-		my $file_list = get_file_list ($url);
-		
+		my $file_list = get_file_list_lftp ($url);
+
 		foreach my $file (@{$file_list}) {			
 			if ($file =~ /^$file_pattern$/) {
 				my $char = '/';
