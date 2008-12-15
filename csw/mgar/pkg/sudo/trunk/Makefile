@@ -14,7 +14,7 @@ MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(p\d+)?.tar.gz
+UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
 DISTFILES += CSWsudo.gspec CSWsudo.postinstall 
 DISTFILES += CSWsudo.prototype CSWsudo.depend
