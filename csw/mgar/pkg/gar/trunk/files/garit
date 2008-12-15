@@ -1,0 +1,32 @@
+#!/bin/sh
+#! -*- perl -*-
+eval 'exec perl -x -w $0 ${1+"$@"}'
+  if 0;
+
+# garit - Script for making tasks with GAR easy
+#
+# Author: Dagobert Michelsen, <dam@opencsw.org>
+
+my $version = 0.01
+
+use strict;
+use Config;
+
+sub man {
+  eval "use Pod::Usage";
+  if ($@) { err ('Required module Pod::Usage not found') }
+
+  # Change uid to something secure as pod2usage does not run as root.
+  # This snippet is taken from perldoc. See the comments there.
+  my $id= eval { getpwnam("nobody") };
+  $id= eval { getpwnam("nouser") } unless defined $id;
+  $id= -2 unless defined $id;
+  eval {
+    $< = $id; # real uid
+    $> = $id; # effective uid
+    $< = $id; # real uid
+    $> = $id; # effective uid
+  };
+  pod2usage( -exitstatus => 0, -verbose => 2 );
+}
+
