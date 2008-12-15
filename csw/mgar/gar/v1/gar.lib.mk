@@ -191,7 +191,6 @@ check-upstream:
 			else \
 				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
 					PACKAGE_UP_TO_DATE=1; \
-echo DISTFILES : $(DISTFILES); \
 	                echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
 				else \
 					NEW_FILES="$$FILE $$NEW_FILES"; \
@@ -215,7 +214,7 @@ echo DISTFILES : $(DISTFILES); \
 			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
         fi; \
 	fi
-
+	
 checknew-%:
 	@$(MAKECOOKIE)
 
