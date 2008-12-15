@@ -12,7 +12,7 @@ DISTFILES = libXft-$(GARVERSION).tar.gz
 PKGDIST = libXft-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = libXft-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES    += CSWlibxft2.gspec CSWlibxft2.prototype CSWlibxft2.depend 
 DISTFILES    += CSWlibxft2dev.gspec CSWlibxft2dev.prototype CSWlibxft2dev.depend 
