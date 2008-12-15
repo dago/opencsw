@@ -1,8 +1,9 @@
 #!/bin/sh
 
-if [ -n "$PKG_INSTALL_ROOT" -a "$PKG_INSTALL_ROOT" != "/" ]; then
-    chroot $PKG_INSTALL_ROOT
-fi
+case "$PKG_INSTALL_ROOT" in
+    ""|"/") PREFIX= ;;
+    *) PREFIX="chroot $PKG_INSTALL_ROOT ";;
+esac
 
 PATH=/opt/csw/bin:$PATH
 
@@ -12,5 +13,5 @@ DBHOME=/opt/csw/share/sgml/docbook
 VERSION=1.69.1
 RELEASE=5.1
 
-$XMLCAT --noout --del \
+$PREFIX $XMLCAT --noout --del \
 	 "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG

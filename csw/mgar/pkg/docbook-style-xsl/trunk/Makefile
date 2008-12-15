@@ -22,12 +22,12 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = docbook-xsl-$(GARVERSION).tar.bz2
 DISTFILES += docbook-xsl-doc-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWdocbookxsl,postinstall preremove)
-DISTFILES += Makefile
 
 # These are listed in the same order they'd be applied during the rpm build...
 # They don't apply cleanly, otherwise.
 PATCHFILES  = docbook-xsl-pagesetup.patch docbook-xsl-marginleft.patch
 PATCHFILES += docbook-xsl-lists.patch docbook-xsl-sp.patch
+PATCHFILES += add_makefile.patch
 
 CONFIGURE_SCRIPTS =
 
@@ -41,11 +41,7 @@ INSTALL_ARGS = DESTDIR=$(DESTDIR) GARVERSION=$(GARVERSION) \
 #to make the package extraction happy...(we don't use the - separator)
 WORKSRC = $(WORKDIR)/docbook-xsl-$(GARVERSION)
 
-post-extract:
-	@( cd $(WORKSRC); cp ../Makefile . )
-	@$(MAKECOOKIE)
-
-post-install:
+post-install-modulated:
 	@(cd $(DESTDIR)/opt/csw/share/sgml/docbook; \
 		ln -s xsl-stylesheets-$(GARVERSION)-$(PATCHLEVEL) \
 			xsl-stylesheets )
