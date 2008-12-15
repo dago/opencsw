@@ -4,9 +4,10 @@
 # rhel5 docbook-dtds rpm spec.
 # 20081204 -bw
 
-if [ -n "$PKG_INSTALL_ROOT" -a "$PKG_INSTALL_ROOT" != "/" ]; then
-    chroot $PKG_INSTALL_ROOT
-fi
+case "$PKG_INSTALL_ROOT" in
+    ""|"/") PREFIX= ;;
+    *) PREFIX="chroot $PKG_INSTALL_ROOT ";;
+esac
 
 XMLCAT=/opt/csw/bin/xmlcatalog
 CSWSGMLCNF=/opt/csw/etc/sgml
@@ -23,65 +24,65 @@ OPENJADEVER=1.3.2
 
 # Update the centralized catalog corresponding to this version of the DTD
 # DocBook V3.0
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/sgml-docbook-3.0-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/sgml-docbook-3.0-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-3.0-$VERSION-$RELEASE.cat
 
 # DocBook V3.1
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/sgml-docbook-3.1-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/sgml-docbook-3.1-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/CSWSGMLCNF/sgml-docbook-3.1-$VERSION-$RELEASE.cat
 
 # DocBook V4.0
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/sgml-docbook-4.0-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/sgml-docbook-4.0-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-4.0-$VERSION-$RELEASE.cat
 
 # DocBook V4.1
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/sgml-docbook-4.1-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/sgml-docbook-4.1-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-4.1-$VERSION-$RELEASE.cat
 
 # DocBook XML V4.1.2
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/xml-docbook-4.1.2-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/xml-docbook-4.1.2-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-4.1.2-$VERSION-$RELEASE.cat
 
 # DocBook V4.2
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/sgml-docbook-4.2-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/sgml-docbook-4.2-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-4.2-$VERSION-$RELEASE.cat
 
 # DocBook XML V4.2
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/xml-docbook-4.2-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/xml-docbook-4.2-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-4.2-$VERSION-$RELEASE.cat
 
 # DocBook V4.3
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/sgml-docbook-4.3-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/sgml-docbook-4.3-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-4.3-$VERSION-$RELEASE.cat
 
 # DocBook XML V4.3
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/xml-docbook-4.3-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/xml-docbook-4.3-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-4.3-$VERSION-$RELEASE.cat
 
 # DocBook V4.4
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/sgml-docbook-4.4-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/sgml-docbook-4.4-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-4.4-$VERSION-$RELEASE.cat
 
 # DocBook XML V4.4
-$XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/xml-docbook-4.4-$VERSION-$RELEASE.cat
-rm -f $CSWSGMLCNF/xml-docbook-4.4-$VERSION-$RELEASE.cat
+rm -f $PKG_INSTALL_ROOT/$PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-4.4-$VERSION-$RELEASE.cat
 
 # Fix up SGML super catalog so that there isn't an XML DTD before an
 # SGML one.  We need to do this (*sigh*) because xmlcatalog messes up
 # the order of the lines, and SGML tools don't like to see XML things
 # they aren't expecting.
-CATALOG=$CSWSGMLCNF/catalog
+CATALOG=$PKG_INSTALL_ROOT/$CSWSGMLCNF/catalog
 SGML=`cat -n ${CATALOG} | grep sgml-docbook | head -1 | awk '{print $1}'`
 XML=`cat -n ${CATALOG} | grep xml-docbook | head -1 | awk '{print $1}'`
 # Do they need switching around?
@@ -91,8 +92,8 @@ then
   XML=`expr $XML - 1`
   SGML=`expr $SGML - 1`
   /usr/bin/perl -e "@_=<>;@_[$XML, $SGML]=@_[$SGML, $XML];print @_" \
-    ${CATALOG} > ${CATALOG}.tmp
-  mv -f ${CATALOG}.tmp ${CATALOG}
+    $CATALOG > $CATALOG.tmp
+  mv -f $CATALOG.tmp $CATALOG
 fi
 
 ##
@@ -101,237 +102,237 @@ fi
 
 CATALOG=$CSWSGML/docbook/xmlcatalog
 
-if [ -w $CATALOG ]
+if [ -w $PKG_INSTALL_ROOT/$CATALOG ]
 then
 	# DocBook XML V4.1.2
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-pub.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-grk1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/dbpoolx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-box.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/docbookx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-grk3.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-amsn.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-num.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/dbcentx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-grk4.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/dbnotnx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-dia.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-grk2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/dbgenent.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/dbhierx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-amsa.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-amso.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-cyrl.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-tech.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-amsc.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/soextblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/calstblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-lat1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-amsb.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-lat2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-amsr.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE/ent/iso-cyr2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.1.2-$VERSION-$RELEASE" $CATALOG
 
 	# DocBook XML V4.2
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-pub.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-grk1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/dbpoolx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-box.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/docbookx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-grk3.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-amsn.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-num.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/dbcentx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-grk4.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/dbnotnx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-dia.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-grk2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/dbgenent.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/dbhierx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-amsa.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-amso.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-cyrl.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-tech.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-amsc.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/soextblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/calstblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-lat1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-amsb.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-lat2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-amsr.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE/ent/iso-cyr2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.2-$VERSION-$RELEASE" $CATALOG
 
 	# DocBook XML V4.3
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-pub.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-grk1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/dbpoolx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-box.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/docbookx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-grk3.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-amsn.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-num.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/dbcentx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-grk4.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/dbnotnx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-dia.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-grk2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/dbgenent.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/dbhierx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-amsa.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-amso.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-cyrl.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-tech.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-amsc.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/soextblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/calstblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-lat1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-amsb.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-lat2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-amsr.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE/ent/iso-cyr2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.3-$VERSION-$RELEASE" $CATALOG
 
 	# DocBook XML V4.4
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-pub.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-grk1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/dbpoolx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-box.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/docbookx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-grk3.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-amsn.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-num.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/dbcentx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-grk4.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/dbnotnx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-dia.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-grk2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/dbgenent.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/dbhierx.mod" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-amsa.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-amso.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-cyrl.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-tech.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-amsc.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/soextblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/calstblx.dtd" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-lat1.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-amsb.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-lat2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-amsr.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE/ent/iso-cyr2.ent" $CATALOG
-	$XMLCAT --noout --del \
+	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4-$VERSION-$RELEASE" $CATALOG
 fi
