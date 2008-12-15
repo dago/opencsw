@@ -13,7 +13,7 @@
 # build_pkgdb - create CSW package name database from makefiles/gspecs
 #
 
-GARROOT=${1:-'/export/medusa/comand/csw'}
+GARROOT=${1:-.}
 
 for makefile in `gfind $GARROOT -mindepth 3 -maxdepth 3 -name Makefile \
     | grep -v meta | sort`
