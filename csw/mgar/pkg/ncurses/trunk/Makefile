@@ -28,16 +28,18 @@ ifeq ($(MEMORYMODEL),64)
 CONFIGURE_ARGS += --with-build-ldflags="-64"
 endif
 
+ifeq ($(GARVERSION),5.7)
+LD_OPTIONS = $(LD_FLAGS)
+endif
+
 TEST_SCRIPTS =
 
 include gar/category.mk
 
-# 32 Bit
-#LDFLAGS := $(filter-out -xarch=386,$(filter-out -m32,$(LDFLAGS)))
+#LDFLAGS := $(filter-out -xarch=%,$(filter-out -m%,$(LDFLAGS)))
+LDFLAGS :=
 
-# 64 Bit
-#LDFLAGS := $(filter-out -xarch=sse2,$(filter-out -m64,$(LDFLAGS)))
-#ifeq ($(MEMORYMODEL),64)
-#LDFLAGS := $(LDFLAGS) -64
-#endif
+ifeq ($(MEMORYMODEL),64)
+LDFLAGS := $(LDFLAGS) $(if $(findstring $(GARVERSION),5.6),-xarch=v9)
+endif
 
