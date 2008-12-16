@@ -12,6 +12,8 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmfrontierrpc,depend prototype)
 
+UFILES_REGEX ?= $(GARNAME)-((\d+(?:\.\d+)*)(b\d+)?).tar.gz
+
 # See http://rt.cpan.org/Public/Bug/Display.html?id=18299
 PATCHFILES += XMLRPC-mp2.diff
 

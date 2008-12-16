@@ -13,6 +13,8 @@ endef
 MODDIST   = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES = $(call admfiles,CSWpmiopager,depend prototype)
 
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+
 # Tests are mostly visual verification
 TEST_SCRIPTS =
 

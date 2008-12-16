@@ -9,6 +9,8 @@ define BLURB
   information on a Solaris system.
 endef
 
+UFILES_REGEX ?= $(GARNAME)-((\d+(?:\.\d+)*)(a)?).tar.gz
+
 WORKSRC = $(WORKDIR)/Solaris
 
 DISTFILES += CSWpmsolinst.gspec

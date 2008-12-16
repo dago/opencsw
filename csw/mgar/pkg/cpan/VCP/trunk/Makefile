@@ -16,6 +16,8 @@ MODDISTP  = $(GARNAME)-autrijus-snapshot-$(DISTVERSION)
 MODDIST   = $(MODDISTP).tar.gz
 WORKSRC   = $(WORKDIR)/$(MODDISTP)
 
+UFILES_REGEX ?= $(GARNAME)-autrijus-snapshot-((\d+(?:\.\d+)*)(-\d+)?).tar.gz
+
 DEPENDS += cpan/HTML-Tree
 DEPENDS += cpan/IPC-Run3
 DEPENDS += cpan/PodToHTML

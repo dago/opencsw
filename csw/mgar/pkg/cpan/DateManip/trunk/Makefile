@@ -1,4 +1,4 @@
-GARNAME = DateManip
+GARNAME = Date-Manip
 GARVERSION = 5.46
 CATEGORIES = cpan
 AUTHOR = SBECK
