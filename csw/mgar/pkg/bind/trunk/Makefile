@@ -1,5 +1,5 @@
 GARNAME = bind
-GARVERSION = 9.4.2
+GARVERSION = 9.5.0
 RELEASE = P2
 DISTVERSION = $(GARVERSION)-$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
@@ -18,6 +18,14 @@ UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 DISTFILES += $(call admfiles,CSWbind,preinstall postinstall preremove)
+DISTFILES += $(call admfiles,CSWbinddevel,)
+DISTFILES += $(call admfiles,CSWlibbind,)
+DISTFILES += $(call admfiles,CSWbindutils,)
+
+REQUIRED_PKGS_CSWbind = CSWlibbind CSWbindutils CSWcswclassutils
+REQUIRED_PKGS_CSWbinddevel = CSWbind
+REQUIRED_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
+REQUIRED_PKGS_CSWbindutils = CSWlibbind
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)-([A-Z][0-9])
@@ -30,21 +38,29 @@ CONFIGURE_ARGS += --enable-largefile
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 
+EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
+
+PKGFILES_CSWbinddevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibbind   = $(libdir)/.*
+PKGFILES_CSWbindutils = $(bindir)/.*
+
 INSTALL_SCRIPTS = custom
 
-include gar/category.mk
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswnamed$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 SPKG_SOURCEURL = http://www.isc.org/software/bind
-#SPKG_CLASSES = none cswinitsmf
+SPKG_CLASSES = none cswinitsmf
+
+include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
-#	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-#	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
-	@ginstall -d $(DESTDIR)/etc/init.d
-	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/init.d/cswnamed
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
+#	@ginstall -d $(DESTDIR)/etc/init.d
+#	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/init.d/cswnamed
 	@ginstall -d $(DESTDIR)/etc/opt/csw
 	@cp $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf.CSW
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
