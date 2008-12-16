@@ -1,7 +1,7 @@
 #!/sbin/sh
 
 # rc-script for CSW Bind
-# Peter Bonivart, 2008-11-18
+# Peter Bonivart, 2008-12-16
 
 USER=named
 #OPTIONS="-d 1" # debug mode
@@ -11,14 +11,14 @@ OPTIONS="-u $USER"
 ZONE= # used for initialization, do not change
 
 case "$1" in
-  'start')
+  start)
     if [ -f /opt/csw/sbin/named -a -f /etc/opt/csw/named.conf ]; then
       echo 'Starting bind.'
       # ulimit -n 1024
       /opt/csw/sbin/named $OPTIONS &
     fi
     ;;
-  'stop')
+  stop)
     echo 'Shutting down bind.'
     if [ -x /usr/bin/zonename ]; then
       if [ "`/usr/bin/zonename`" = "global" ]; then
@@ -28,7 +28,7 @@ case "$1" in
     pkill $ZONE named
     exit 0
     ;;
-  'reload')
+  reload|refresh)
     echo 'Reloading bind.'
     if [ -x /usr/bin/zonename ]; then
       if [ "`/usr/bin/zonename`" = "global" ]; then
@@ -39,7 +39,7 @@ case "$1" in
     exit 0
     ;;
   *)
-    echo "Usage: $0 { start | stop | reload }"
+    echo "Usage: $0 { start | stop | reload | refresh }"
     exit 1
     ;;
 esac

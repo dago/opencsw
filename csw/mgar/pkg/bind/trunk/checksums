@@ -1,8 +1,7 @@
 16c893f73a394c8cc36d7900cb9bb801  download/bind-9.5.0-P2.tar.gz
-9d20fd7cceac478243ac485868b9ef35  download/CSWbind.gspec
+e346b8d43181db864605c76435a0f731  download/CSWbind.gspec
 9338f20547092ec54136ebebd5f663d3  download/CSWbind.preinstall
-78702926bd064e3a1f4ac56ae85866a9  download/CSWbind.postinstall
-104f5539928c029738b0a1808f8af262  download/CSWbind.preremove
-af16ec4f9c20614932f67acd116e52ad  download/CSWbinddevel.gspec
-40e00ac3e92ec835dbf567581930d34e  download/CSWlibbind.gspec
-7f81505db2da9fbc899b9abeac434c58  download/CSWbindutils.gspec
+90026b0ca15e2435ddae730c5bed4a42  download/CSWbind.preremove
+771f4b6098f7bdeb83c5690dfeb6b5eb  download/CSWbinddevel.gspec
+d5c381cd0cf6be25fc3a75fc470eeaf6  download/CSWlibbind.gspec
+a6c7fa764b592aed3b370b9a49e9920e  download/CSWbindutils.gspec

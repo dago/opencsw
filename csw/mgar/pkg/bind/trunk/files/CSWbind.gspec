@@ -1,7 +1,6 @@
 %var            bitname bind
 %var            pkgname CSWbind
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%prototype	exec cswproto -s %{TIMESTAMP} -r %{DESTDIR} %{DESTDIR}
 %copyright
 
 Please see /opt/csw/share/doc/bind/LICENSE for license information

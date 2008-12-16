@@ -17,10 +17,15 @@ endef
 UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
-DISTFILES += $(call admfiles,CSWbind,preinstall postinstall preremove)
+DISTFILES += $(call admfiles,CSWbind,preinstall preremove)
 DISTFILES += $(call admfiles,CSWbinddevel,)
 DISTFILES += $(call admfiles,CSWlibbind,)
 DISTFILES += $(call admfiles,CSWbindutils,)
+
+SPKG_DESC_CSWbind = ISC BIND main package
+SPKG_DESC_CSWbinddevel = ISC BIND development package
+SPKG_DESC_CSWlibbind = ISC BIND library package
+SPKG_DESC_CSWbindutils = ISC BIND utilities package
 
 REQUIRED_PKGS_CSWbind = CSWlibbind CSWbindutils CSWcswclassutils
 REQUIRED_PKGS_CSWbinddevel = CSWbind
@@ -44,24 +49,23 @@ PKGFILES_CSWbinddevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibbind   = $(libdir)/.*
 PKGFILES_CSWbindutils = $(bindir)/.*
 
+ENABLE_CHECK = 0
+
 INSTALL_SCRIPTS = custom
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswnamed$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswnamed$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/named.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/named/ { $$$$5 = "named" } { print }'
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 SPKG_SOURCEURL = http://www.isc.org/software/bind
-SPKG_CLASSES = none cswinitsmf
+SPKG_CLASSES_CSWbind = none cswcpsampleconf cswinitsmf
 
 include gar/category.mk
 
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
-	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
-#	@ginstall -d $(DESTDIR)/etc/init.d
-#	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/init.d/cswnamed
-	@ginstall -d $(DESTDIR)/etc/opt/csw
 	@cp $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf.CSW
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(FILEDIR)/CSWbind.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
@@ -73,4 +77,5 @@ install-custom:
 	@cp $(WORKSRC)/COPYRIGHT $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
+	@touch $(DESTDIR)/var/opt/csw/named/named.pid
 	@$(MAKECOOKIE)

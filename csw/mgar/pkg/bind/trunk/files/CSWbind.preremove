@@ -1,26 +1,12 @@
 #!/bin/sh
 
-# 2008-11-19
-
-ETC=$PKG_INSTALL_ROOT/etc/opt/csw
-
-echo
-
-# stop bind
-/etc/init.d/cswnamed stop
+# 2008-12-16
 
 # remove named user if created by this package
 /usr/bin/grep "^named:" $PKG_INSTALL_ROOT/etc/passwd | /usr/bin/grep ":CSW BIND DNS:" > /dev/null 2>&1
 if [ "$?" = "0" ]; then
   echo Removing user named
   /usr/sbin/userdel named > /dev/null 2>&1
-fi
-
-# remove conf files
-if [ "`cmp "$ETC/named.conf" "$ETC/named.conf.CSW"`" ]; then
-  echo "named.conf modified, will not remove it."
-else
-  /bin/rm $ETC/named.conf
 fi
 
 exit 0
