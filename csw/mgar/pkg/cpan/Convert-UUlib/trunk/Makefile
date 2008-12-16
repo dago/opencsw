@@ -1,7 +1,7 @@
 GARNAME = Convert-UUlib
 GARVERSION = 1.12
 CATEGORIES = cpan
-AUTHOR = Marc Lehmann
+AUTHOR = MLEHMANN
 
 DESCRIPTION = Perl interface to the uulib library
 define BLURB
