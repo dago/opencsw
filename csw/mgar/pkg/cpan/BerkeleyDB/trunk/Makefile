@@ -1,7 +1,7 @@
 GARNAME = BerkeleyDB
 GARVERSION = 0.36
 CATEGORIES = cpan
-AUTHOR = Paul Marquess
+AUTHOR = PMQS
 
 DESCRIPTION = BerkeleyDB module
 define BLURB
