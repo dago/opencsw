@@ -46,7 +46,9 @@ endif
 # successfully completed
 #DONADA = @echo "	[$@] complete.  Finished rules: $+"
 #DONADA = @touch $(COOKIEDIR)/$@; echo "	[$@] complete for $(GARNAME)."
-DONADA = @touch $(COOKIEDIR)/$(patsubst $(COOKIEDIR)/%,%,$@); echo "	[$@] complete for $(GARNAME)."
+COOKIEFILE = $(COOKIEDIR)/$(patsubst $(COOKIEDIR)/%,%,$1)
+DONADA = @touch $(call COOKIEFILE,$@); echo "	[$@] complete for $(GARNAME)."
+
 
 # TODO: write a stub rule to print out the name of a rule when it
 # *does* do something, and handle indentation intelligently.
@@ -136,10 +138,6 @@ $(1)-$(2):
 endef
 
 define _modulate_do
-xtest-$(2):
-	@gmake -s MODULATION=$(2) $(4) _pmod
-	@# The next line has intentionally been left blank
-
 $(call _modulate_target,extract,$(2),$(4))
 $(call _modulate_target,patch,$(2),$(4))
 $(call _modulate_target,configure,$(2),$(4))
@@ -187,12 +185,6 @@ define _pmod
 endef
 
 $(eval $(call _modulate,$(MODULATORS)))
-
-moddebug:
-	@echo $(strip $(strip $(call _modulate,$(MODULATORS))))
-
-allmod: $(foreach M,$(MODULATIONS),xtest-$(M))
-
 
 modenv:
 	@echo " Modulators: $(MODULATORS)"
@@ -381,13 +373,11 @@ configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE
 .PHONY: reset-configure reset-configure-modulated
 reconfigure: reset-configure configure
 
-reset-configure-isa:
+reset-configure: $(addprefix reset-configure-,$(MODULATIONS))
+	rm -f $(COOKIEDIR)/configure
 
-reset-configure:
-	@$(foreach ISA,$(NEEDED_ISAS),$(MAKE) -s ISA=$(ISA) reset-configure-isa;)
-
-reconfigure-isa-%:
-	@$(MAKE) -s ISA=$* reset-configure-isa configure-isa
+reset-configure-modulated:
+	rm -f $(addprefix $(COOKIEDIR)/,$(CONFIGURE_TARGETS))
 
 # returns true if configure has completed successfully, false
 # otherwise
