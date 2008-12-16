@@ -591,7 +591,7 @@ ccenv:
 	@echo "       No = Compiler cannot generate code for that ISA"
 	@echo
 
-isaenv:
+modenv:
 	@echo "          Arch: $(GARCH)"
 	@echo "        Kernel: $(KERNELISA)"
 	@echo
@@ -610,13 +610,11 @@ isaenv:
 	@echo " Merge exclude: $(_MERGE_EXCLUDE_FILES)"
 	@echo
 	@echo "Requested compiler flags:"
-	@$(foreach ISA,$(ISA) $(filter-out $(ISA),$(BUILD_ISAS)),		\
-		$(MAKE) -s ISA=$(ISA) _isaenv;					\
-	)
+	@$(foreach MOD,$(MODULATIONS),$(MAKE) -s _modenv-$(MOD);)
 
-_isaenv:
+_modenv-modulated:
 	@echo;								\
-	echo "* ISA $(ISA)";						\
+	echo "* Modulation $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M))"; \
 	echo "           PATH = $(PATH)";				\
 	echo "PKG_CONFIG_PATH = $(PKG_CONFIG_PATH)";			\
 	echo "         CFLAGS = $(CFLAGS)";				\

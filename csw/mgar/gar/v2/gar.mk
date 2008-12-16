@@ -137,19 +137,27 @@ $(1)-$(2):
 
 endef
 
+define _modulate_target_nocookie_noprepost
+$(1)-$(2):
+	@gmake -s MODULATION=$(2) $(3) $(1)-modulated
+	@# The next line has intentionally been left blank to explicitly terminate this make rule
+
+endef
+
 define _modulate_do
 $(call _modulate_target,extract,$(2),$(4))
 $(call _modulate_target,patch,$(2),$(4))
 $(call _modulate_target,configure,$(2),$(4))
-$(call _modulate_target_nocookie,reset-configure,$(2),$(4))
+$(call _modulate_target_nocookie_noprepost,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
-$(call _modulate_target_nocookie,reset-build,$(2),$(4))
+$(call _modulate_target_nocookie_noprepost,reset-build,$(2),$(4))
 $(call _modulate_target,test,$(2),$(4))
 $(call _modulate_target,install,$(2),$(4))
-$(call _modulate_target_nocookie,reset-install,$(2),$(4))
+$(call _modulate_target_nocookie_noprepost,reset-install,$(2),$(4))
 $(call _modulate_target,merge,$(2),$(4))
-$(call _modulate_target_nocookie,reset-merge,$(2),$(4))
-$(call _modulate_target_nocookie,clean,$(2),$(4))
+$(call _modulate_target_nocookie_noprepost,reset-merge,$(2),$(4))
+$(call _modulate_target_nocookie_noprepost,clean,$(2),$(4))
+$(call _modulate_target_nocookie_noprepost,_modenv,$(2),$(4))
 endef
 
 # This evaluates to the make rules for all modulations passed as first argument
@@ -186,10 +194,6 @@ endef
 
 $(eval $(call _modulate,$(MODULATORS)))
 
-modenv:
-	@echo " Modulators: $(MODULATORS)"
-	@echo "Modulations: $(MODULATIONS)"
-	@echo "M: $(call expand_modulator_1,ISA)"
 
 # ========================= MAIN RULES ========================= 
 # The main rules are the ones that the user can specify as a
