@@ -3,6 +3,7 @@ b3bf09a0b1a368a3490e68ffc695d290  download/docbook-xsl-doc-1.69.1.tar.bz2
 4120f10e50070dd8fc2284d5214bf51d  download/CSWdocbookxsl.gspec
 8911f851d78a1ab1a21c49286f37f6cb  download/CSWdocbookxsl.postinstall
 88f331d079de730ef77a5091e69989e2  download/CSWdocbookxsl.preremove
+2da0402bea01c8235e6fffac147382d5  download/CSWdocbookxsldoc.gspec
 84b37b559cc95c747e39a5a8f79558a3  download/docbook-xsl-pagesetup.patch
 1d1ff63f5ebd3527c925f68e55138b6f  download/docbook-xsl-marginleft.patch
 cec8c281ed1c9be99ad47a74362248d5  download/docbook-xsl-lists.patch
