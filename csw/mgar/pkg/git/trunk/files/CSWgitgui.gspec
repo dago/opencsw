@@ -1,4 +1,5 @@
-%var            bitname git
-%var            pkgname CSWgit
+%var            bitname gitgui
+%var            pkgname CSWgitgui
+%var		desc Git GUI tool
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING

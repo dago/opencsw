@@ -1,4 +1,5 @@
-%var            bitname git
-%var            pkgname CSWgit
+%var            bitname gitk
+%var            pkgname CSWgitk
+%var		desc Git revision tree visualiser
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
