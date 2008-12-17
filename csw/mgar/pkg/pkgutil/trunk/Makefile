@@ -32,7 +32,7 @@ install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$/sysconfdir)
+	@ginstall -d $(DESTDIR)$(sysconfdir)
 	@ginstall -d $(DESTDIR)/opt/csw/libexec/pkgutil
 	@ginstall -d $(DESTDIR)$(docdir)/pkgutil
 	@ginstall -d $(DESTDIR)$(mandir)/man1
