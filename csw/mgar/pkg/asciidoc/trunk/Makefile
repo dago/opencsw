@@ -20,6 +20,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWasciidoc.gspec CSWasciidoc.depend
 DISTFILES += $(AUTOFILES)
 
+PREREQUISITE_PKGS = CSWautoconf
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
