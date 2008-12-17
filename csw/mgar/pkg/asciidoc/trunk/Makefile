@@ -23,7 +23,9 @@ DISTFILES += $(AUTOFILES)
 PREREQUISITE_PKGS = CSWautoconf
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67797
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
