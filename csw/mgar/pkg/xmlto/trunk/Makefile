@@ -15,14 +15,12 @@ endef
 
 MASTER_SITES = https://fedorahosted.org/$(GARNAME)/export/1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxmlto) GPL
+DISTFILES += $(call admfiles,CSWxmlto)
 
 TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-GARCOMPILER = GNU
 
 # this ssl site has a cert we don't recognize
 WGET_OPTS = --no-check-certificate
@@ -38,8 +36,6 @@ CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
 CONFIGURE_ARGS += --with-getopt=/opt/csw/bin/ggetopt
 
-EXTRACT_TARGETS-global = $(call admfiles,CSWxmlto) GPL
-
 include gar/category.mk
 
 # We need this for 'tail -n'
@@ -48,5 +44,3 @@ PATH := /usr/xpg4/bin:/opt/csw/bin:$(PATH)
 #reset XML_CATALOG lookup (we rely on having packages that provide stylesheets
 #etc).  Having xsltproc not find them during build makes us blow up!!
 XML_CATALOG_FILES = /opt/csw/etc/xml/catalog
-
-
