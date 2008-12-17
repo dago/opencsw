@@ -108,11 +108,64 @@ sub get_file_list_lftp
 	return \@file_list;
 }
 
+sub get_file_list_wget_sourceforge
+{
+	my $url = shift;
+	my @file_list;
+
+	my $http_proxy_cmd = "";
+	my $wget_command ="wget";
+	my $filename = "";
+
+	# lftp doesn't seem to obey the _PROXY env variable
+	# we must manually set them
+	$http_proxy_cmd = "set http:proxy $ENV{HTTP_PROXY};" if exists $ENV{HTTP_PROXY};
+	$http_proxy_cmd = "set http:proxy $ENV{http_proxy};" if exists $ENV{http_proxy};
+	$wget_command   = "$http_proxy_cmd ; wget --proxy=on" if exists $ENV{http_proxy_cmd};
+
+	open (my $FH, "$wget_command -qO- $url 2>/dev/null | grep class | grep selected | grep li | grep Download | ");
+
+	if (my $line = <$FH>) {
+		my @cols = split (/"/, $line);
+		$filename = $cols[3];
+		chomp ($filename);
+	}
+	else {
+		close ($FH);
+		return \@file_list;
+	}
+
+	close ($FH);
+
+	$url = "http://downloads.sourceforge.net" . $filename;
+	open ($FH, "$wget_command -qO- $url 2>/dev/null | grep $filename | grep package_id= | grep release_id | ");
+
+	if (my $line = <$FH>) {
+		my @cols = split (/>/, $line);
+		my $filename = $cols[2];
+		chomp ($filename);
+		@cols = split (/</, $filename);
+		$filename = $cols[0];
+		chomp ($filename);
+		push (@file_list, $filename);
+	}
+	else {
+		close ($FH);
+		return \@file_list;
+	}
+
+	close ($FH);
+
+	return \@file_list;
+}
+
 my $help;
 my @urls;
+my $use_sf = 0;
 
 Getopt::Long::Configure ("no_ignore_case");  
 GetOptions("h|help" => \$help,
+	   "s|use_sf=i" => \$use_sf,
 	   "u|url=s@" => \@urls);
 
 if ($help) {
@@ -126,9 +179,14 @@ foreach my $file_pattern (@ARGV) {
 
 	my $newest_version = 0;
 	my $newest_file = "";
+	my $file_list ;
 
 	foreach my $url (@urls) {
-		my $file_list = get_file_list_lftp ($url);
+		if ($use_sf != 0) {
+			$file_list = get_file_list_wget_sourceforge ($url);
+		} else {	
+			$file_list = get_file_list_lftp ($url);
+}
 
 		foreach my $file (@{$file_list}) {			
 			if ($file =~ /^$file_pattern$/) {

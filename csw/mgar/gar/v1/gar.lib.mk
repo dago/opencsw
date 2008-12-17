@@ -113,8 +113,9 @@ checksum-%: $(CHECKSUM_FILE)
 
 UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
 UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
+SF_ARGS = $(addprefix -s ,$(UPSTREAM_USE_SF))
 ifneq ($(UFILES_REGEX), "")    
-	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
+	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(SF_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
 else
 	FILES2CHECK = ""
 endif
@@ -130,7 +131,7 @@ check-upstream-and-mail:
 			else \
 				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
 					PACKAGE_UP_TO_DATE=1; \
-	                echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
+					echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
 				else \
 					NEW_FILES="$$FILE $$NEW_FILES"; \
 				fi; \
@@ -138,8 +139,8 @@ check-upstream-and-mail:
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
 		if test -z "$$NEW_FILES" ; then \
-  			if [ ! -n '$(UFILES_REGEX)' ]; then \
-                echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+			if [ ! -n '$(UFILES_REGEX)' ]; then \
+				echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
 #				{ echo ""; \
 #				  echo "Hello dear $(GARNAME) maintainer,"; \
 #				  echo ""; \
@@ -149,37 +150,37 @@ check-upstream-and-mail:
 #				  echo ""; \
 #				  echo "--"; \
 #				  echo "Kindest regards"; \
-#				  echo "The upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 			else \
-	  			if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
+				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
 					echo "$(GARNAME) : Warning no files to check ! $(FILES2CHECK)" ; \
 					echo "$(GARNAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
 					echo "$(GARNAME) :     DISTNAME is $(DISTNAME)" ; \
 					echo "$(GARNAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
 					echo "$(GARNAME) : Please check configuration" ; \
-	    		fi; \
-    		fi; \
-        else \
+				fi; \
+			fi; \
+		else \
 			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
-			{ echo ""; \
-			  echo "Hello dear $(GARNAME) maintainer,"; \
-			  echo ""; \
-			  echo "The upstream notification job has detected the availability of new files for $(GARNAME)."; \
-			  echo ""; \
-			  echo "The following upstream file(s):"; \
-			  echo "    $$NEW_FILES"; \
-			  echo ""; \
-			  echo "is/are available at the following url(s):"; \
-			  echo "    $(UPSTREAM_MASTER_SITES)"; \
-			  echo ""; \
-			  echo "Please consider updating your package." ; \
-			  echo ""; \
-			  echo "--"; \
-			  echo "Kindest regards"; \
-			  echo "The upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
-        fi; \
+			{	echo ""; \
+				echo "Hello dear $(GARNAME) maintainer,"; \
+				echo ""; \
+				echo "The upstream notification job has detected the availability of new files for $(GARNAME)."; \
+				echo ""; \
+				echo "The following upstream file(s):"; \
+				echo "    $$NEW_FILES"; \
+				echo ""; \
+				echo "is/are available at the following url(s):"; \
+				echo "    $(UPSTREAM_MASTER_SITES)"; \
+				echo ""; \
+				echo "Please consider updating your package." ; \
+				echo ""; \
+				echo "--"; \
+				echo "Kindest regards"; \
+				echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+		fi; \
 	fi
-	
+		
 check-upstream: 
 	@if [ -n '$(FILES2CHECK)' ]; then \
 		NEW_FILES=""; \
@@ -191,7 +192,7 @@ check-upstream:
 			else \
 				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
 					PACKAGE_UP_TO_DATE=1; \
-	                echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
+					echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
 				else \
 					NEW_FILES="$$FILE $$NEW_FILES"; \
 				fi; \
@@ -199,20 +200,20 @@ check-upstream:
 			$(MAKE) checknew-$$FILE >/dev/null; \
 		done; \
 		if test -z "$$NEW_FILES" ; then \
-  			if [ ! -n '$(UFILES_REGEX)' ]; then \
-                echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+			if [ ! -n '$(UFILES_REGEX)' ]; then \
+				echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
 			else \
-	  			if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
+				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
 					echo "$(GARNAME) : Warning no files to check ! $(FILES2CHECK)" ; \
 					echo "$(GARNAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
 					echo "$(GARNAME) :     DISTNAME is $(DISTNAME)" ; \
 					echo "$(GARNAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
 					echo "$(GARNAME) : Please check configuration" ; \
-	    		fi; \
-    		fi; \
-        else \
+				fi; \
+			fi; \
+		else \
 			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
-        fi; \
+		fi; \
 	fi
 	
 checknew-%:
