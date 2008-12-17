@@ -2,7 +2,7 @@ GARNAME = xmlto
 GARVERSION = 0.0.21
 CATEGORIES = utils
 
-PREREQUISITE_PKGS = CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt CSWflex
+PREREQUISITE_PKGS = CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt CSWflex CSWggetopts
 REQUIRES_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
 REQUIRES_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m
 
