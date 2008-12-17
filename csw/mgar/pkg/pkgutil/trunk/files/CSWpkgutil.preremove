@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ETC=$PKG_INSTALL_ROOT/etc/opt/csw
+ETC=$PKG_INSTALL_ROOT/opt/csw/etc
 VAR=$PKG_INSTALL_ROOT/var/opt/csw/pkgutil
 
 echo

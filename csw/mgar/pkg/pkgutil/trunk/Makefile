@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.3
+GARVERSION = 1.3.1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -31,25 +31,24 @@ SPKG_SOURCEURL = http://pkgutil.wikidot.com/
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
-#	@ginstall -d $(DESTDIR)/etc/opt/csw
-	@ginstall -d $(DESTDIR)/opt/csw/bin
-	@ginstall -d $(DESTDIR)/opt/csw/etc
+	@ginstall -d $(DESTDIR)$(bindir)
+	@ginstall -d $(DESTDIR)$/sysconfdir)
 	@ginstall -d $(DESTDIR)/opt/csw/libexec/pkgutil
-	@ginstall -d $(DESTDIR)/opt/csw/share/doc/pkgutil
+	@ginstall -d $(DESTDIR)$(docdir)/pkgutil
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 #	@ginstall -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -d $(DESTDIR)/var/opt/csw/pkgutil/packages
-	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 #	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
-	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/opt/csw/etc/$(GARNAME).conf.CSW
-	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)/opt/csw/bin/
-	@cp -r $(WORKSRC)/bldcat $(DESTDIR)/opt/csw/bin/
-	@cp -r $(WORKSRC)/chkcat $(DESTDIR)/opt/csw/bin/
-	@cp -r $(WORKSRC)/readme $(DESTDIR)/opt/csw/share/doc/pkgutil/
-#	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)/opt/csw/share/doc/pkgutil/LICENSE
+	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
+	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)
+	@cp -r $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
+	@cp -r $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
+	@cp -r $(WORKSRC)/readme $(DESTDIR)$(docdir)/pkgutil/
+#	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)$(docdir)/pkgutil/LICENSE
 	@cp -r $(WORKSRC)/copyright $(DESTDIR)$(docdir)/pkgutil/LICENSE
 #	@cp -r $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
 #	@cp -r $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil
 	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/pkgutil/admin.CSW
 	@cp -r $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/pkgutil/wget
+	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@$(MAKECOOKIE)
