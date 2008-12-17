@@ -17,7 +17,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWavantfax,depend preinstall postinstall)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=160107
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
