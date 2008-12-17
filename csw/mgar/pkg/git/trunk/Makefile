@@ -3,6 +3,7 @@ GARVERSION = 1.6.0.5
 CATEGORIES = devel
 
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurl
+PREREQUISITE_PKGS += CSWgsed CSWgnulinks
 
 DESCRIPTION = Fast Version Control System
 define BLURB
@@ -30,7 +31,6 @@ INSTALL_ARGS = install-doc
 
 include gar/category.mk
 
-CFLAGS += -L$(libdir)
-
-# for tail -n
-PATH := /usr/xpg4/bin:$(PATH)
+# for tail -n and to override things like, etc with the gnu counterparts
+# gnu must come first so xpg4/sed isn't found first.
+PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
