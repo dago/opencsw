@@ -186,7 +186,7 @@ foreach my $file_pattern (@ARGV) {
 			$file_list = get_file_list_wget_sourceforge ($url);
 		} else {	
 			$file_list = get_file_list_lftp ($url);
-}
+	}
 
 		foreach my $file (@{$file_list}) {			
 			if ($file =~ /^$file_pattern$/) {
