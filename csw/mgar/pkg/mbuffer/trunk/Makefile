@@ -16,6 +16,8 @@ MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWpackage,)
 
+REQUIRED_PKGS = CSWosslrt
+
 # We define upstream file regex so we can be notifed of new upstream software 
 # release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -27,6 +29,11 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
+
+DOCS = ChangeLog README AUTHORS
+DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+
+post-install:
+	@ginstall -d $(DOCDEST)
+	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
