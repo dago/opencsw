@@ -140,7 +140,7 @@ sub get_file_list_wget_sourceforge
 	$url = "http://downloads.sourceforge.net" . $filename;
 	open ($FH, "$wget_command -qO- $url 2>/dev/null | grep $filename | grep package_id= | grep release_id | ");
 
-	if (my $line = <$FH>) {
+	while (my $line = <$FH>) {
 		my @cols = split (/>/, $line);
 		my $filename = $cols[2];
 		chomp ($filename);
@@ -148,10 +148,6 @@ sub get_file_list_wget_sourceforge
 		$filename = $cols[0];
 		chomp ($filename);
 		push (@file_list, $filename);
-	}
-	else {
-		close ($FH);
-		return \@file_list;
 	}
 
 	close ($FH);
@@ -186,7 +182,7 @@ foreach my $file_pattern (@ARGV) {
 			$file_list = get_file_list_wget_sourceforge ($url);
 		} else {	
 			$file_list = get_file_list_lftp ($url);
-	}
+		}
 
 		foreach my $file (@{$file_list}) {			
 			if ($file =~ /^$file_pattern$/) {
