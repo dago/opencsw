@@ -3,11 +3,17 @@ GARVERSION = 1.6.0.5
 CATEGORIES = devel
 
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurl
-PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtcl CSWtk
+PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtcl CSWtk CSWexpat
+PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn
 
-REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurl CSWosslrt CSWpmgit
+REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
+REQUIRED_PKGS_CSWgit += CSWossh CSWiconv CSWexpat CSWbash
+
 REQUIRED_PKGS_CSWgitk = CSWgit CSWtk
+
 REQUIRED_PKGS_CSWgitgui = CSWgit CSWtk
+
+REQUIRED_PKGS_CSWgitdoc = CSWgit
 
 DESCRIPTION = Fast Version Control System
 define BLURB
@@ -18,36 +24,39 @@ endef
 
 MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgit,)
-DISTFILES += $(call admfiles,CSWgitdoc,)
-DISTFILES += $(call admfiles,CSWpmgit,)
 DISTFILES += $(call admfiles,CSWgitgui,)
 DISTFILES += $(call admfiles,CSWgitk,)
+DISTFILES += $(call admfiles,CSWgitemacs,)
+DISTFILES += $(call admfiles,CSWgitdoc,)
+DISTFILES += $(call admfiles,CSWgit,)
 
 PATCHFILES = doc-makefile.patch
+
 
 PKGFILES_CSWgitgui = $(bindir)/git-gui $(bindir)/git-citool \
 			$(mandir)/man1/git-gui.* $(mandir)/man1/git-citool.* \
 			$(datadir)/git-gui/.* $(datadir)/doc/git-gui.*
 PKGFILES_CSWgitk = $(bindir)/gitk $(datadir)/doc/gitk.* $(datadir)/gitk.* \
 			$(mandir)/man1/gitk.*
+PKGFILES_CSWgitemacs = $(datadir)/emacs/.*
 PKGFILES_CSWgitdoc = $(datadir)/doc/.*
-
-PKGFILES_CSWpmgit = 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS = $(DIRPATHS) --with-shell=/opt/csw/bin/bash
-CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
-CONFIGURE_ARGS += --with-tcltk=/opt/csw/bin/tclsh
-CONFIGURE_ARGS += --with-zlib=/opt/csw
+CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
+CONFIGURE_ARGS += --with-perl=$(bindir)/perl
+CONFIGURE_ARGS += --with-tcltk=$(bindir)/tclsh
+CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --with-iconv=$(prefix)
 
-BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash all doc
+BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
+		ETC_CONFIG=$(sysconfdir)/gitconfig \
+		all doc
 
-INSTALL_ARGS = install install-doc
+INSTALL_ARGS = ETC_CONFIG=$(sysconfdir)/gitconfig install-doc
 
 include gar/category.mk
 
@@ -55,8 +64,24 @@ include gar/category.mk
 # gnu must come first so xpg4/sed isn't found first.
 PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
 
+# force the elisp extension to be built too.
+post-build-modulated:
+	@echo Builing Emacs Git extension
+	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs )
+
+post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)-$(GARVERSION)
 post-install-modulated:
 	@echo Removing perllocal.pod
-	@rm -f ${DESTDIR}/opt/csw/lib/perl/5.8.8/perllocal.pod*
+	@rm -f ${DESTDIR}/$(perllib)/5.8.8/perllocal.pod*
 	@chmod 644 ${DESTDIR}/${libdir}/perl5/site_perl/*pm
+	@echo Installing Emacs Git extension
+	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs install \
+		emacsdir=$(DESTDIR)/$(datadir)/emacs/site-lisp )
+	@echo Installing Documentation
+	@( cd $(WORKSRC); \
+		ginstall -c -m 0755 -d $(GD); \
+		cp -R Documentation/*.txt $(GD)/; \
+		cp -R contrib/hooks README COPYING $(GD)/; \
+		cp -R Documentation/*.html Documentation/docbook-xsl.css $(GD)/; \
+		cp -R Documentation/howto Documentation/technical $(GD)/; )
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-%var            bitname pm_git
-%var            pkgname CSWpmgit
-%var		desc Perl interface to Git
+%var            bitname gitemacs
+%var            pkgname CSWgitemacs
+%var		desc A Git VCS mode for Emacs
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
