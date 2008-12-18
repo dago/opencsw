@@ -15,7 +15,9 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=3157
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 ifneq ($(BUILD_XDEPS),0)
 LIBDEPS = lib/libao
