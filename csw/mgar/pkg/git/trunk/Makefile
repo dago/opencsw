@@ -42,11 +42,11 @@ PKGFILES_CSWgitsvn = $(libexecdir)/git-core/*svn $(datadir)/doc/.*svn.* \
 			$(mandir)/man1/.*svn.*
 PKGFILES_CSWgitcvs = $(libexecdir)/git-core/.*cvs.* $(datadir)/doc/.*cvs.* \
 			$(mandir)/man1/.*cvs.* $(mandir)/man7/.*cvs.* \
-			($bindir)/.*cvs.*
+			$(bindir)/.*cvs.*
 PKGFILES_CSWgitgui = $(bindir)/git-gui \
-			$(mandir)/man1/git-gui.* $(mandir)/man1/git-citool.* \
+			$(mandir)/.*git-gui.* $(mandir)/.*git-citool.* \
 			$(datadir)/git-gui/.* $(datadir)/doc/.*git-gui.* \
-			$(libexecdir)/git-core/git-gui.*
+			$(libexecdir)/.*git-gui.* $(libexecdir)/.*git-citool
 PKGFILES_CSWgitk = $(bindir)/gitk $(datadir)/doc/.*gitk.* $(datadir)/gitk.* \
 			$(mandir)/man1/gitk.*
 PKGFILES_CSWgitemacs = $(datadir)/emacs/.*
