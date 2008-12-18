@@ -15,7 +15,9 @@ DISTFILES += $(call admfiles,CSWexpat,depend prototype)
 DISTFILES += $(call admfiles,CSWexpat-devel,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10127
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # Compatibility libraries
 EXTLIBS   += libexpat.so.0.4.0
