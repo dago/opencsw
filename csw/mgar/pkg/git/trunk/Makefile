@@ -13,6 +13,10 @@ REQUIRED_PKGS_CSWgitk = CSWgit CSWtk
 
 REQUIRED_PKGS_CSWgitgui = CSWgit CSWtk
 
+REQUIRED_PKGS_CSWgitsvn = CSWgit CSWpmsvn
+
+REQUIRED_PKGS_CSWgitcvs = CSWgit CSWcvs
+
 REQUIRED_PKGS_CSWgitdoc = CSWgit
 
 DESCRIPTION = Fast Version Control System
@@ -28,15 +32,22 @@ DISTFILES += $(call admfiles,CSWgitgui,)
 DISTFILES += $(call admfiles,CSWgitk,)
 DISTFILES += $(call admfiles,CSWgitemacs,)
 DISTFILES += $(call admfiles,CSWgitdoc,)
+DISTFILES += $(call admfiles,CSWgitsvn,)
+DISTFILES += $(call admfiles,CSWgitcvs,)
 DISTFILES += $(call admfiles,CSWgit,)
 
 PATCHFILES = doc-makefile.patch
 
-
-PKGFILES_CSWgitgui = $(bindir)/git-gui $(bindir)/git-citool \
+PKGFILES_CSWgitsvn = $(libexecdir)/git-core/*svn $(datadir)/doc/.*svn.* \
+			$(mandir)/man1/.*svn.*
+PKGFILES_CSWgitcvs = $(libexecdir)/git-core/.*cvs.* $(datadir)/doc/.*cvs.* \
+			$(mandir)/man1/.*cvs.* $(mandir)/man7/.*cvs.* \
+			($bindir)/.*cvs.*
+PKGFILES_CSWgitgui = $(bindir)/git-gui \
 			$(mandir)/man1/git-gui.* $(mandir)/man1/git-citool.* \
-			$(datadir)/git-gui/.* $(datadir)/doc/git-gui.*
-PKGFILES_CSWgitk = $(bindir)/gitk $(datadir)/doc/gitk.* $(datadir)/gitk.* \
+			$(datadir)/git-gui/.* $(datadir)/doc/.*git-gui.* \
+			$(libexecdir)/git-core/git-gui.*
+PKGFILES_CSWgitk = $(bindir)/gitk $(datadir)/doc/.*gitk.* $(datadir)/gitk.* \
 			$(mandir)/man1/gitk.*
 PKGFILES_CSWgitemacs = $(datadir)/emacs/.*
 PKGFILES_CSWgitdoc = $(datadir)/doc/.*
@@ -71,9 +82,10 @@ post-build-modulated:
 
 post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)-$(GARVERSION)
 post-install-modulated:
-	@echo Removing perllocal.pod
-	@rm -f ${DESTDIR}/$(perllib)/5.8.8/perllocal.pod*
-	@chmod 644 ${DESTDIR}/${libdir}/perl5/site_perl/*pm
+	@echo Cleaning up perl stuff
+	@rm -rf $(DESTDIR)/$(libdir)/perl5/site_perl/5*
+	@rm -rf $(DESTDIR)/$(perllib)/
+	@chmod 644 $(DESTDIR)/$(libdir)/perl5/site_perl/*pm
 	@echo Installing Emacs Git extension
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs install \
 		emacsdir=$(DESTDIR)/$(datadir)/emacs/site-lisp )

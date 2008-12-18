@@ -1,4 +1,4 @@
-%var            bitname gitgui
+%var            bitname git_gui
 %var            pkgname CSWgitgui
 %var		desc Git GUI tool
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec

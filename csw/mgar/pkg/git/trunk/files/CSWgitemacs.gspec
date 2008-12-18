@@ -1,4 +1,4 @@
-%var            bitname gitemacs
+%var            bitname git_emacs
 %var            pkgname CSWgitemacs
 %var		desc A Git VCS mode for Emacs
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
