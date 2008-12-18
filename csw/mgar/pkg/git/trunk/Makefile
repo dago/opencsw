@@ -3,8 +3,8 @@ GARVERSION = 1.6.0.5
 CATEGORIES = devel
 
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurl
-PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtcl CSWtk CSWexpat
-PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn
+PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
+PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs
 
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
 REQUIRED_PKGS_CSWgit += CSWossh CSWiconv CSWexpat CSWbash
@@ -59,7 +59,7 @@ GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
-CONFIGURE_ARGS += --with-tcltk=$(bindir)/tclsh
+CONFIGURE_ARGS += --with-tcltk=$(bindir)/wish
 CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-iconv=$(prefix)
 
