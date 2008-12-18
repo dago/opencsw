@@ -52,6 +52,8 @@ PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf"
 
 SPKG_SOURCEURL = http://www.clamav.net/
 
+ENABLE_CHECK=0
+
 include gar/category.mk
 
 DOCS  = AUTHORS BUGS ChangeLog
@@ -68,7 +70,11 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/etc/opt/csw/init.d/cswclamd
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/etc/opt/csw/init.d/cswclamav-milter
+	@( cd $(DESTDIR)$(sysconfdir) ; \
+	   gpatch < ../../../../../$(FILEDIR)/CSWclamav.clamd.conf.p )
 	@mv $(DESTDIR)$(sysconfdir)/clamd.conf $(DESTDIR)$(sysconfdir)/clamd.conf.CSW
+	@( cd $(DESTDIR)$(sysconfdir) ; \
+	   gpatch < ../../../../../$(FILEDIR)/CSWclamav.freshclam.conf.p )
 	@mv $(DESTDIR)$(sysconfdir)/freshclam.conf $(DESTDIR)$(sysconfdir)/freshclam.conf.CSW
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
