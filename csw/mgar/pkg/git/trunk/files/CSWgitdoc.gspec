@@ -1,4 +1,4 @@
-%var            bitname gitdoc
+%var            bitname git_doc
 %var            pkgname CSWgitdoc
 %var		desc Documentation for Git
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
