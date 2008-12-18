@@ -31,7 +31,7 @@ REQUIRED_PKGS_CSWlibclamav = CSWlibgmp CSWzlib CSWbzip2 CSWiconv
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_CLASSES = none cswcpsampleconf cswinitsmf
+SPKG_CLASSES_CSWclamav = none cswcpsampleconf cswinitsmf
 
 CFLAGS=-xO2
 
