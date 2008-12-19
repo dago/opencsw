@@ -1,7 +1,7 @@
 GARNAME = vim
-DISTVERSION = 7.1
+DISTVERSION = 7.2
 CATEGORIES = utils
-
+SPKG_SOURCEURL = http://www.vim.org/download.php
 DESCRIPTION = Vi IMproved
 define BLURB
   Vim is an almost fully-compatible version of the Unix editor Vi. Many new
@@ -29,4 +29,3 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 include files/rules.mk
-

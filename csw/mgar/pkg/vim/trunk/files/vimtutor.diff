@@ -1,12 +1,13 @@
-diff --speed-large-files --minimal -Nru vim71.orig/src/vimtutor vim71/src/vimtutor
---- ../vim71.orig/src/vimtutor	2004-06-07 10:32:27.000000000 -0400
-+++ ../vim71/src/vimtutor	2007-10-20 02:54:10.341396000 -0400
-@@ -1,5 +1,8 @@
- #! /bin/sh
- 
-+PATH=`dirname $0`:$PATH
-+export PATH
-+
- # Start Vim on a copy of the tutor file.
- 
- # Usage: vimtutor [xx], where xx is a language code like "es" or "nl".
+*** src/vimtutor.o      Thu Dec 18 23:27:44 2008
+--- src/vimtutor        Thu Dec 18 23:28:10 2008
+***************
+*** 1,5 ****
+--- 1,8 ----
+  #! /bin/sh
+  
++ PATH=`dirname $0`:$PATH
++ export PATH
++ 
+  # Start Vim on a copy of the tutor file.
+  
+  # Usage: vimtutor [-g] [xx]
