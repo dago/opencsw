@@ -27,29 +27,22 @@ define BLURB
 endef
 
 MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
+DISTFILES += $(call admfiles,CSWgitsvn,)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgitgui,)
 DISTFILES += $(call admfiles,CSWgitk,)
 DISTFILES += $(call admfiles,CSWgitemacs,)
-DISTFILES += $(call admfiles,CSWgitdoc,)
-DISTFILES += $(call admfiles,CSWgitsvn,)
 DISTFILES += $(call admfiles,CSWgitcvs,)
+DISTFILES += $(call admfiles,CSWgitdoc,)
 DISTFILES += $(call admfiles,CSWgit,)
 
 PATCHFILES = doc-makefile.patch
 
-PKGFILES_CSWgitsvn = $(libexecdir)/git-core/*svn $(datadir)/doc/.*svn.* \
-			$(mandir)/man1/.*svn.*
-PKGFILES_CSWgitcvs = $(libexecdir)/git-core/.*cvs.* $(datadir)/doc/.*cvs.* \
-			$(mandir)/man1/.*cvs.* $(mandir)/man7/.*cvs.* \
-			$(bindir)/.*cvs.*
-PKGFILES_CSWgitgui = $(bindir)/git-gui \
-			$(mandir)/.*git-gui.* $(mandir)/.*git-citool.* \
-			$(datadir)/git-gui/.* $(datadir)/doc/.*git-gui.* \
-			$(libexecdir)/.*git-gui.* $(libexecdir)/.*git-citool
-PKGFILES_CSWgitk = $(bindir)/gitk $(datadir)/doc/.*gitk.* $(datadir)/gitk.* \
-			$(mandir)/man1/gitk.*
-PKGFILES_CSWgitemacs = $(datadir)/emacs/.*
+PKGFILES_CSWgitsvn = .*svn.*
+PKGFILES_CSWgitgui = .*git-gui.* .*git-citool.*
+PKGFILES_CSWgitk = .*gitk.*
+PKGFILES_CSWgitemacs = .*emacs.*
+PKGFILES_CSWgitcvs = .*cvs.*
 PKGFILES_CSWgitdoc = $(datadir)/doc/.*
 
 # We define upstream file regex so we can be notifed of new upstream software release
