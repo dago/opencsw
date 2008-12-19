@@ -27,8 +27,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
-DISTFILES += $(call admfiles,CSWgitsvn,)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWgitsvn,)
 DISTFILES += $(call admfiles,CSWgitgui,)
 DISTFILES += $(call admfiles,CSWgitk,)
 DISTFILES += $(call admfiles,CSWgitemacs,)
