@@ -4,7 +4,7 @@ CATEGORIES = devel
 
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurl
 PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
-PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs
+PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
 REQUIRED_PKGS_CSWgit += CSWossh CSWiconv CSWexpat CSWbash
@@ -16,6 +16,8 @@ REQUIRED_PKGS_CSWgitgui = CSWgit CSWtk
 REQUIRED_PKGS_CSWgitsvn = CSWgit CSWpmsvn
 
 REQUIRED_PKGS_CSWgitcvs = CSWgit CSWcvs
+
+REQUIRED_PKGS_CSWgitemacs = CSWgit CSWemacs
 
 REQUIRED_PKGS_CSWgitdoc = CSWgit
 
