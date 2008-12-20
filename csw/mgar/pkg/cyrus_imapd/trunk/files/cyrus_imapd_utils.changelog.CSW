@@ -1,3 +1,15 @@
+cyrus_imapd_utils (2.3.13,REV=2008.12.20) unstable
+
+  * Added mupdate service in /etc/services.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 20 Dec 2008 15:13:33 +0100
+
+cyrus_imapd_utils (2.3.13,REV=2008.11.30) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 30 Nov 2008 20:58:22 +0100
+
 cyrus_imapd_utils (2.3.9,REV=2008.01.21) unstable
 
   * New upstream version.

@@ -16,6 +16,7 @@ pop3s           995/udp
 kpop            1109/tcp                        # Pop with Kerberos
 sieve           2000/tcp                        # Sieve mail filter daemon
 lmtp      	2003/tcp			# Local Mail Transfer Protocol
+mupdate		3905/tcp			
 fud       	4201/udp
 
 
