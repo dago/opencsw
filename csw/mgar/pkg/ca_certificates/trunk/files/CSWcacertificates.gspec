@@ -1,0 +1,7 @@
+%var            bitname ca_certificates
+%var            pkgname CSWcacertificates
+%var            arch all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKDIR}/LICENSE
+%prototype:merge
+e cswpreserveconf /opt/csw/etc/ca-certificates.conf.csw=ca-certificate.conf 0644 root bin

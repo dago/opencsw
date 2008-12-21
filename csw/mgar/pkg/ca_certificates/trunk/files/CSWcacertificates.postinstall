@@ -1,0 +1,7 @@
+
+# Update ca lists
+if [ -n "${BASEDIR}" ]; then
+	chroot ${BASEDIR} /opt/csw/sbin/update-ca-certificates
+else
+	/opt/csw/sbin/update-ca-certificates
+fi

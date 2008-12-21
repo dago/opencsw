@@ -1,0 +1,77 @@
+#!/bin/sh -e
+#
+# update-ca-certificates
+# Debian script adapted for Solaris by Yann Rouillard
+#
+# Copyright (c) 2003 Fumitoshi UKAI <ukai@debian.or.jp>
+# Copyright (c) 2008 Yann Rouillard <yann@pleiades.fr.eu.org>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+verbose=0
+fresh=0
+while [ $# -gt 0 ];
+do
+	case $1 in
+		--verbose|-v)
+			verbose=1;;
+
+		--help|-h|*)
+			echo "$0: [--verbose] [--fresh]"
+			exit;;
+	esac
+	shift
+done
+
+CERTSCONF=/opt/csw/etc/ca-certificates.conf
+CERTSDIR=/opt/csw/share/ca-certificates
+CERTBUNDLE=ca-certificates.crt
+ETCCERTSDIR=/opt/csw/etc/ssl/certs
+
+if [ ! -f "$CERTSCONF" ]; then
+	echo "ERROR: $CERTSCONF doesn't exist !" >&2
+	exit 2
+fi
+
+cd $ETCCERTSDIR
+find . -type l -print | while read SYMLINK; do
+	test -f $SYMLINK || rm -f $SYMLINK
+done
+
+printf "Updating certificates in $ETCCERTSDIR..."
+
+BUNDLETMP=`mktemp "${CERTBUNDLE}.tmp.XXXXXX"`
+sed -e '/^#/g' "$CERTSCONF" | while read CERTFILE; do
+	if [ ! -f "$CERTFILE" ]; then
+		if [ ! -f "$CERTSDIR/$CERTFILE" ]; then
+			continue
+		fi
+		CERTFILE="$CERTSDIR/$CERTFILE"
+	fi
+
+	cd "$ETCCERTSDIR" && ln -sf "$CERTFILE" "`basename $CERTFILE`.pem"
+done
+
+cd "$ETCCERTSDIR" && cat *.pem > "$BUNDLETMP"
+chmod 0644 "$BUNDLETMP"
+mv -f "$BUNDLETMP" "$ETCCERTSDIR/$CERTBUNDLE"
+
+if [ "$verbose" = 0 ]; then
+	OPENSSL=/opt/csw/bin/openssl /opt/csw/bin/c_rehash . >/dev/null 2>&1
+else
+	OPENSSL=/opt/csw/bin/openssl /opt/csw/bin/c_rehash .
+fi
+echo "done."
