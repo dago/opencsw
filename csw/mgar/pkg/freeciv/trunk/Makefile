@@ -1,5 +1,5 @@
 GARNAME = freeciv
-GARVERSION = 2.1.6
+GARVERSION = 2.1.8
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based multiplayer strategy game
