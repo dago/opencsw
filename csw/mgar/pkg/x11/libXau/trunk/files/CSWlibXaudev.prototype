@@ -1,9 +1,0 @@
-d none /opt/csw/include/X11 0755 root bin
-f none /opt/csw/include/X11/Xauth.h 0644 root bin
-d none /opt/csw/lib 0755 root bin
-f none /opt/csw/lib/libXau.a 0644 root bin
-d none /opt/csw/lib/pkgconfig 0755 root bin
-f none /opt/csw/lib/pkgconfig/xau.pc 0644 root bin
-i copyright=CSWlibXaudev.copyright
-i depend=CSWlibXaudev.depend
-i pkginfo=CSWlibXaudev.pkginfo

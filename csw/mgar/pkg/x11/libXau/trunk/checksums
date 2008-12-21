@@ -1,7 +1,3 @@
 77c3de874155456c857b331063ad2fd9  download/libXau-1.0.4.tar.gz
-d987d62443ccb06edc51d6984f9c5e00  download/CSWlibXau.gspec
-d9dfaadc29ebcfddad888bb4d1ac347c  download/CSWlibXau.prototype
-c46676dbe305dd1a76701a52899afbf8  download/CSWlibXau.depend
-6b9f39ea5225419f95cf6fd001505548  download/CSWlibXaudev.gspec
-89680d18777fdcad32e518093adb0066  download/CSWlibXaudev.prototype
-0a284be99d29cdfd141d0df6c13baa8e  download/CSWlibXaudev.depend
+03fd9250999932312a8f773cf5bc036d  download/CSWlibxaudevel.gspec
+4dba507bb4e471f3f15a039958063ee8  download/CSWlibxau.gspec

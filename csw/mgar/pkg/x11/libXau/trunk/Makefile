@@ -14,10 +14,10 @@ PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES    += CSWlibXau.gspec CSWlibXau.prototype CSWlibXau.depend 
-DISTFILES    += CSWlibXaudev.gspec CSWlibXaudev.prototype CSWlibXaudev.depend 
-# DISTFILES    += $(call admfiles,CSWlibXau, depend)
+DISTFILES    += $(call admfiles,CSWlibxaudevel, )
+DISTFILES    += $(call admfiles,CSWlibxau, )
 
+PKGFILES_CSWlibxaudevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 

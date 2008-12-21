@@ -1,4 +1,4 @@
 %var            bitname libxau
 %var            pkgname CSWlibxau
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
