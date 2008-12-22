@@ -1,6 +1,7 @@
 P	CSWftype2
-P	CSWgcc3corert
-P	CSWgcc3g++rt
+P	CSWboostrt
+P	CSWpython
+P	CSWstlport
 P	CSWggettext
 P	CSWlibsdl
 P	CSWpng
@@ -10,3 +11,4 @@ P	CSWsdlnet
 P	CSWsunmath
 P	CSWzlib
 P	CSWfribidi
+P CSWcommon common - common files and dirs for CSW packages

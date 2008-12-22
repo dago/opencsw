@@ -1,5 +1,5 @@
 GARNAME = wesnoth
-GARVERSION = 1.2.5
+GARVERSION = 1.4.7
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based strategy game with a fanasy theme
@@ -14,26 +14,20 @@ DISTFILES += $(call admfiles,CSWwesnoth, depend )
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-GARCOMPILER ?= GNU
+GARCOMPILER ?= SUN
 
 PATCHFILES = language.cpp.diff
 
-CONFIGURE_ARGS = --prefix=$(prefix) --mandir=/opt/csw/share/man LDFLAGS='-lsunmath -lintl'
-CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib
-CONFIGURE_ARGS += --with-server-uid=60001
-CONFIGURE_ARGS += --with-server-gid=60001
+CONFIGURE_ARGS = --prefix=$(prefix)
+CONFIGURE_ARGS += CXXFLAGS='-features=extensions -library=stlport4'
+CONFIGURE_ARGS += LDFLAGS='-L/opt/csw/lib -lstlport -lintl -lsocket -lboost_iostreams -lsunmath'
 CONFIGURE_ARGS += --disable-nls
-CONFIGURE_ARGS += --enable-server
-CONFIGURE_ARGS += --enable-campaign-server
-CONFIGURE_ARGS += --enable-tools
-CONFIGURE_ARGS += --enable-editor
-CONFIGURE_ARGS += --with-kde
-CONFIGURE_ARGS += --with-gnome
+#CONFIGURE_ARGS += --enable-server
+#CONFIGURE_ARGS += --enable-campaign-server
+#CONFIGURE_ARGS += --enable-tools
+#CONFIGURE_ARGS += --enable-editor
+CONFIGURE_ARGS += --with-boost=/opt/csw
 
 TEST_SCRIPTS =
 
 include gar/category.mk
-
-#pre-configure:
-#	( cd $(WORKSRC) ; aclocal ; autoconf ; automake -a )
-#	@$(MAKECOOKIE)
