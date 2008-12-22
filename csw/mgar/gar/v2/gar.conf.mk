@@ -568,8 +568,7 @@ export PATH
 FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
 
 # Extra libraries
-EXTRA_LIBS = gar.pkg.mk gar.common.mk
-
+EXTRA_LIBS = gar.pkg.mk gar.common.mk gar.svn.mk
 ccenv:
 	@echo "      Compiler: $(GARCOMPILER)"
 	@echo
