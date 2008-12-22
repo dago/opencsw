@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = http://ftp.isc.org/isc/dhcp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWdhcp,preremove)
+DISTFILES += $(call admfiles,CSWdhcp,)
 DISTFILES += $(call admfiles,CSWdhcpdevel,)
 
 SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
@@ -38,7 +38,7 @@ ENABLE_CHECK = 0
 
 INSTALL_SCRIPTS = custom
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdhcpd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/dhcpd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/dhclient.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdhcpd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/dhcpd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/dhclient.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/dhcpd.leases.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 SPKG_CLASSES_CSWdhcp = none cswcpsampleconf cswinitsmf
@@ -57,6 +57,6 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(FILEDIR)/CSWdhcp.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)
-	@touch $(DESTDIR)/var/opt/csw/dhcp/dhcpd.pid
+	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/db
+	@touch $(DESTDIR)/var/opt/csw/$(GARNAME)/db/dhcpd.leases.CSW
 	@$(MAKECOOKIE)
