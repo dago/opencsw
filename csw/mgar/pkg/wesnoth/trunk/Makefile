@@ -20,8 +20,8 @@ PATCHFILES = language.cpp.diff
 
 CONFIGURE_ARGS = --prefix=$(prefix)
 CONFIGURE_ARGS += CXXFLAGS='-features=extensions -library=stlport4'
-CONFIGURE_ARGS += LDFLAGS='-L/opt/csw/lib -lstlport -lintl -lsocket -lboost_iostreams -lsunmath'
-CONFIGURE_ARGS += --disable-nls
+CONFIGURE_ARGS += LDFLAGS='-L. -L/opt/csw/lib -lstlport -lintl -lsocket -lboost_iostreams -lsunmath -lSDL_ttf'
+CONFIGURE_ARGS += --with-fifodir=/var/opt/csw/run/wesnothd
 #CONFIGURE_ARGS += --enable-server
 #CONFIGURE_ARGS += --enable-campaign-server
 #CONFIGURE_ARGS += --enable-tools

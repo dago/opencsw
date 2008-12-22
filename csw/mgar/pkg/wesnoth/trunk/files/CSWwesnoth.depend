@@ -2,13 +2,15 @@ P	CSWftype2
 P	CSWboostrt
 P	CSWpython
 P	CSWstlport
+P	CSWiconv
 P	CSWggettext
 P	CSWlibsdl
 P	CSWpng
 P	CSWsdlimage
 P	CSWsdlmixer
 P	CSWsdlnet
+P	CSWsdlttf
 P	CSWsunmath
 P	CSWzlib
 P	CSWfribidi
-P CSWcommon common - common files and dirs for CSW packages
+P 	CSWcommon common - common files and dirs for CSW packages
