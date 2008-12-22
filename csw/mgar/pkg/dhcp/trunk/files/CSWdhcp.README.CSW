@@ -1,0 +1,17 @@
+README.CSW
+==========
+
+Default locations
+-----------------
+Configuration directory: /etc/opt/csw.
+Work directory: /var/opt/csw/dhcp.
+
+Installation
+------------
+1. Modify the dhcpd.conf file in /etc/opt/csw.
+2. Start DHCP with "/etc/init.d/cswdhcp start".
+
+More info here: http://www.isc.org/products/DHCP/.
+
+
+bonivart/071024

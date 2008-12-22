@@ -1,0 +1,33 @@
+#!/sbin/sh
+
+# rc-script for CSW DHCP
+# Peter Bonivart, 2008-12-21
+
+PID=/var/opt/csw/dhcp/dhcpd.pid
+#OPTIONS="-cf /opt/csw/etc/dhcpd.conf"  # use old location of conf file
+
+ZONE= # used for initialization, do not change
+
+case "$1" in
+  'start')
+    if [ -f /opt/csw/sbin/dhcpd -a -f /etc/opt/csw/dhcpd.conf ]; then
+      echo 'Starting dhcp.'
+      /opt/csw/sbin/dhcpd $OPTIONS &
+    fi
+    ;;
+  'stop')
+    echo 'Shutting down dhcp.'
+    if [ -x /usr/bin/zonename ]; then
+      if [ "`/usr/bin/zonename`" = "global" ]; then
+        ZONE="-z global"
+      fi
+    fi
+    pkill $ZONE -x dhcpd
+    [ -f $PID ] && /usr/bin/rm $PID
+    exit 0
+    ;;
+  *)
+    echo "Usage: $0 { start | stop }"
+    exit 1
+    ;;
+esac

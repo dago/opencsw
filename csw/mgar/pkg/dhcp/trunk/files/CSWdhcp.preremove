@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# 2008-12-22
+
+VAR=$PKG_INSTALL_ROOT/var/opt/csw/dhcp
+
+# clean up work dir
+[ -f "$VAR/dhcpd.leases" -a ! -s "$VAR/dhcpd.leases" ] && /bin/rm "$VAR/dhcpd.leases"
+[ -f "$VAR/dhcpd.leases~" -a ! -s "$VAR/dhcpd.leases~" ] && /bin/rm "$VAR/dhcpd.leases~"
+[ -f "$VAR/dhcpd.pid" ] && /bin/rm "$VAR/dhcpd.pid"
+
+exit 0

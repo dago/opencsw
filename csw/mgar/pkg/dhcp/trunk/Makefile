@@ -1,7 +1,3 @@
-# split into devel package
-# use cswclassutils for conf files and smf support (add init file)
-# create doc dir with license
-
 GARNAME = dhcp
 GARVERSION = 4.1.0
 CATEGORIES = net
@@ -16,14 +12,51 @@ endef
 
 MASTER_SITES = http://ftp.isc.org/isc/dhcp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWdhcp,)
+DISTFILES += $(call admfiles,CSWdhcp,preremove)
+DISTFILES += $(call admfiles,CSWdhcpdevel,)
+
+SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
+
+REQUIRED_PKGS_CSWdhcp = CSWcswclassutils CSWosslrt
+REQUIRED_PKGS_CSWdhcpdevel = CSWdhcp
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 GARCOMPILER = GNU
 TEST_TARGET = check
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
+CONFIGURE_ARGS += --localstatedir=/var/opt/csw/dhcp
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
+
+PKGFILES_CSWdhcpdevel = $(PKGFILES_DEVEL)
+
+ENABLE_CHECK = 0
+
+INSTALL_SCRIPTS = custom
+
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdhcpd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/dhcpd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/dhclient.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
+SPKG_CLASSES_CSWdhcp = none cswcpsampleconf cswinitsmf
 
 include gar/category.mk
 
+install-custom:
+	@echo " ==> Installing $(GARNAME) (custom)"
+	@( cd $(WORKSRC) ; \
+	  gmake DESTDIR=$(DESTDIR) install )
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@cp $(FILEDIR)/CSWdhcp.cswdhcpd $(DESTDIR)/etc/opt/csw/init.d/cswdhcpd
+	@( cd $(DESTDIR)/etc/opt/csw ; \
+	   mv dhcpd.conf dhcpd.conf.CSW ; \
+	   mv dhclient.conf dhclient.conf.CSW )
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp $(FILEDIR)/CSWdhcp.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
+	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)
+	@touch $(DESTDIR)/var/opt/csw/dhcp/dhcpd.pid
+	@$(MAKECOOKIE)
