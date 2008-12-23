@@ -1,6 +1,7 @@
 4dabeaecfd46395da152e51d312107e4  download/certdata.txt
-6087aaa070808190680dcd5cb03c0cb9  download/certdata2pem.pl
-f7b1df4e84e70b1cf7023779ba11698b  download/update-ca-certificates
-3bb0b5d545c0bd8f4381cfd2d500586c  download/CSWcacertificates.gspec
-df81c8c6eb55786ebefd47fc6400b8b6  download/CSWcacertificates.depend
-48e4c60f385981c1430313584f527b50  download/CSWcacertificates.postinstall
+77fe4c8feb1b341814a6ed03d4ff764a  download/certdata2pem.pl
+e4b769f7250ea1c929252a13fe09e4ee  download/update-ca-certificates
+b4f6772525da6772d51eb30f90605d60  download/ca-certificates.conf
+787d361f8d8b8ecf89e83bb813fdaec5  download/CSWcacertificates.gspec
+31227010faaad1c2b9893ba91d6b16bb  download/CSWcacertificates.depend
+32e6ea27867c760d2279330fd4c480d3  download/CSWcacertificates.postinstall

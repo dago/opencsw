@@ -35,7 +35,7 @@ while (my $line = <STDIN>) {
 		$val =~ s/"$//;
 		$val =~ s/[\/\s,]/_/g;
 		$val =~ s/[()]//g;
-		$fname = $val . ".crt";
+		$fname = $val . ".pem";
 		next;
 	}
 
