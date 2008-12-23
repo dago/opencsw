@@ -61,7 +61,7 @@ get_certfile_list ()
 		[ -n "$CERTFILE" ] && find_certfile "$CERTFILE"
 	done | sort -u | {
 		while read CERTFILE; do
-			grep -w "$CERTFILE" /tmp/update-ca-certificates.tmp.$$ >/dev/null || echo "$CERTFILE"
+			grep "^$CERTFILE$" /tmp/update-ca-certificates.tmp.$$ >/dev/null || echo "$CERTFILE"
 		done
 	}
 
