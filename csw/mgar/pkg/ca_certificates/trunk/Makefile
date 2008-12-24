@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://hg.mozilla.org/mozilla-central/raw-file/default/security/nss/lib/ckfw/builtins/
 DISTFILES  = certdata.txt certdata2pem.pl update-ca-certificates ca-certificates.conf
-DISTFILES += $(call admfiles,CSWcacertificates,depend postinstall)
+DISTFILES += $(call admfiles,CSWcacertificates,depend postinstall postremove)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 # UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz

@@ -1,0 +1,10 @@
+
+# We remove all dead links in /opt/csw/etc/ssl/certs/, 
+# that should remove all the links to the cerfificates
+# provided in this package
+find /opt/csw/etc/ssl/certs/ -type l | while read FILE; do 
+	[ -f "$FILE" ] || rm -f "$FILE"
+done
+rm -f /opt/csw/etc/ssl/certs/ca-certificates.crt
+
+exit 0
