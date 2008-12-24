@@ -114,11 +114,32 @@ mv -f "$CERTSDIR/$CERTBUNDLE.tmp" "$CERTSDIR/$CERTBUNDLE"
 
 # we create the hash links for certificate, openssl library need 
 # this link to be able to find a CA certificate
-if { openssl version; } >/dev/null 2>&1; then
-	c_rehash "$CERTSDIR" >/dev/null 2>&1
 
-elif { /opt/csw/bin/openssl version; } >/dev/null 2>&1; then
-	OPENSSL="/opt/csw/bin/openssl" /opt/csw/bin/c_rehash "$CERTSDIR" >/dev/null 2>&1
+PATH="$PATH:/opt/csw/bin:"
+OIFS="$IFS"; IFS=":"
+set -- $PATH
+IFS="$OIFS"
+
+OPENSSL=""
+while [ $# -ne 0 ]; do
+	if [ -x "$1/openssl" ] && [ -x "$1/c_rehash" ]; then
+
+		# update-ca-certificates might be called when openssl_rt is removed
+		# that would mean that openssl binary is present but wouldn't work
+		# because of missing libraries so we test that case
+		if LANG=C ldd /opt/csw/bin/openssl | grep "not found" >/dev/null; then
+			shift
+			continue
+		fi
+		OPENSSL="$1/openssl"
+		C_REHASH="$1/c_rehash"
+		break
+	fi
+	shift
+done
+
+if [ -n "$OPENSSL" ]; then
+	OPENSSL="$OPENSSL" "$C_REHASH" "$CERTSDIR" >/dev/null 2>&1
 
 # openssl binary isn't available, so we fall back our own provided file containing
 # hash value for certificates provided by this package
