@@ -13,7 +13,7 @@ GARVERSION = 1.0
 PATCHLEVEL = 30.1
 CATEGORIES = xtra
 
-REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWopenjade CSWlibxml2
+REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2
 
 DESCRIPTION = SGML and XML document type definitions for DocBook.
 define BLURB
