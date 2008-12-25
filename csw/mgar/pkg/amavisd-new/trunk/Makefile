@@ -1,5 +1,5 @@
 GARNAME = amavisd-new
-GARVERSION = 2.6.1
+GARVERSION = 2.6.2
 CATEGORIES = server
 
 DESCRIPTION = Interface between MTA and content checkers

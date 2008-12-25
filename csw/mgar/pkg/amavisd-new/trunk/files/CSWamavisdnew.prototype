@@ -67,7 +67,6 @@ f none /opt/csw/share/doc/amavisd-new/README_FILES/images/toc-minus.png 0644 roo
 f none /opt/csw/share/doc/amavisd-new/README_FILES/images/toc-plus.png 0644 root bin
 f none /opt/csw/share/doc/amavisd-new/README_FILES/images/up.png 0644 root bin
 f none /opt/csw/share/doc/amavisd-new/README_FILES/images/warning.png 0644 root bin
-f none /opt/csw/share/doc/amavisd-new/README_FILES/rfc4871.txt 0644 root bin
 f none /opt/csw/share/doc/amavisd-new/README_FILES/screen.css 0644 root bin
 f none /opt/csw/share/doc/amavisd-new/RELEASE_NOTES 0644 root bin
 f none /opt/csw/share/doc/amavisd-new/amavisd.conf-default 0644 root bin
