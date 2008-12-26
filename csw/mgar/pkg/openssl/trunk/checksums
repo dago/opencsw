@@ -5,7 +5,7 @@ bd9bb4dfb9602fba461b21fa37f97765  download/CSWossl.prototype
 83480e01971e71d037bd44fa5ed4e4e5  download/CSWosslrt.gspec
 44afcc5a68551370907b9da130acc62b  download/CSWosslrt.checkinstall
 c9de908daad1a31fca20329cb043ad3c  download/CSWosslrt.preinstall
-990506284d440001e4f23f7fbffa404a  download/CSWosslrt.postinstall
+1c3f600eaf942a18ecab3637e1fc32bd  download/CSWosslrt.postinstall
 cbf34987267073fb1f60bff86492dd8b  download/CSWosslrt.depend
 e4ae37693f304010a024329151d7620e  download/CSWosslrt.prototype-i386
 b71924fca6e324743e6977f370cce76b  download/CSWosslrt.prototype-sparc
