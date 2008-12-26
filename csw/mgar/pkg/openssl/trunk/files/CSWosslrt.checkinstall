@@ -26,4 +26,23 @@ if [ $VERSION -eq "5.8" ]; then
 	fi
 fi
 
+# Certification Authority have been moved under /opt/csw/etc/ssl/certs
+# under the ca_certificates package control
+# and /opt/csw/ssl/certs is now a symbolic links 
+
+# we test if certificates were manually installed in this directory
+if [ ! -L "/opt/csw/ssl/certs" ] &&  [ -n "`ls -1 /opt/csw/ssl/certs/`" ]; then
+
+	echo "Custom certificates have been installed in /opt/csw/ssl/certs/."
+	echo "They will be moved under /opt/csw/etc/ssl/certs."
+	echo "see /opt/csw/share/doc/openssl_rt/README.CSW for more information"
+        echo "about CA."
+
+	# we define the MOVE_CERTS variable so preinstall and postinstall scripts
+	# will now they have to do something about theses certificates
+	cat >>$1 <<!
+MOVE_CERTS=Yes
+!
+fi
+
 exit 0

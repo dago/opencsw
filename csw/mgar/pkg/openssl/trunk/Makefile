@@ -21,11 +21,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
 DISTNAME   = $(GARNAME)-$(GARVERSION)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWossl,depend prototype)
-DISTFILES += $(call admfiles,CSWosslrt,checkinstall depend prototype-i386 prototype-sparc)
+DISTFILES += $(call admfiles,CSWosslrt,checkinstall preinstall postinstall depend prototype-i386 prototype-sparc)
 DISTFILES += $(call admfiles,CSWossldevel,depend prototype-i386 prototype-sparc)
 DISTFILES += $(call admfiles,CSWosslutils,depend prototype)
-DISTFILES += changelog.CSW
+DISTFILES += changelog.CSW README.CSW
 DISTFILES += i.conf r.conf
+
+DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
 SPKG_CLASSES = none conf
 
@@ -105,13 +107,14 @@ install-changelog:
 	ginstall -D $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/changelog.CSW $(SPKG_PKGBASE)/changelog.CSW
 	@$(MAKECOOKIE)
 
+install-doc:
+	cd $(WORKSRC_FIRSTMOD)/ && ginstall $(DOCFILES) $(SPKG_PKGBASE)/
+	ginstall -D $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/README.CSW $(SPKG_PKGBASE)/README.CSW
+	@$(MAKECOOKIE)
+
 install-certs: 
 	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
 		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf
-	gunzip --stdout $(CURDIR)/$(FILEDIR)/certs.tar.gz | (cd $(PKGROOT)$(prefix)/ssl/certs && tar xf -)
-	cp -r $(WORKSRC_FIRSTMOD)/certs/* $(PKGROOT)$(prefix)/ssl/certs
-	OPENSSL=$(PKGROOT)/$(bindir)/openssl $(PKGROOT)/$(bindir)/c_rehash $(PKGROOT)/$(prefix)/ssl/certs/
-	@$(MAKECOOKIE)
 
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%:
@@ -119,4 +122,4 @@ install-oldlibs-%:
 	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -
 	@$(MAKECOOKIE)
 
-post-merge: install-certs install-oldlibs install-changelog
+post-merge: install-certs install-oldlibs install-changelog install-doc

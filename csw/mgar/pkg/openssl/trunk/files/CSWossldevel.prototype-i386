@@ -1042,3 +1042,14 @@ f none /opt/csw/share/man/man3/threads.3 0644 root bin
 f none /opt/csw/share/man/man3/ui.3 0644 root bin
 f none /opt/csw/share/man/man3/ui_compat.3 0644 root bin
 f none /opt/csw/share/man/man3/x509.3 0644 root bin
+f none /opt/csw/share/doc/openssl_devel/changelog.CSW=changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl_devel/CHANGES=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/CHANGES.SSLeay=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/PROBLEMS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/README=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/FAQ=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/README.ASN1=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/INSTALL=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/NEWS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/README.ENGINE=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_devel/README.CSW=README.CSW 644 root bin

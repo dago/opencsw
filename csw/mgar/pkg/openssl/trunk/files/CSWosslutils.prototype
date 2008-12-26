@@ -1,7 +1,6 @@
 f none /opt/csw/bin/c_rehash 0755 root bin
 f none /opt/csw/bin/openssl 0755 root bin
 d none /opt/csw/share/doc/openssl_utils 0755 root bin
-f none /opt/csw/share/doc/openssl_utils/changelog.CSW=changelog.CSW 644 root bin
 d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/CA.pl.1 0644 root bin
@@ -64,3 +63,14 @@ f none /opt/csw/ssl/misc/c_name 0755 root bin
 s none /opt/csw/ssl/openssl.cnf=/opt/csw/etc/ssl/openssl.cnf 0644 root bin
 d none /opt/csw/etc/ssl 0755 root bin
 e conf /opt/csw/etc/ssl/openssl.cnf 0644 root bin
+f none /opt/csw/share/doc/openssl_utils/changelog.CSW=changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl_utils/CHANGES=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/CHANGES.SSLeay=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/PROBLEMS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/README=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/FAQ=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/README.ASN1=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/INSTALL=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/NEWS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/README.ENGINE=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_utils/README.CSW=README.CSW 644 root bin

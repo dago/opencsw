@@ -1,5 +1,7 @@
-openssl (0.9.8,rev=2008.10.05_rev=i) unstable
+openssl (0.9.8,rev=2008.12.26_rev=i) unstable
 
+  * Removed CA and added dependancy on ca_certificates.
+  * Added openssl documentation files.
   * checkinstall script now accepts that /dev/random and 
   /dev/random are pipes (Closes: #2687)
 

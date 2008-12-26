@@ -1,2 +1,12 @@
 d none /opt/csw/share/doc/openssl 0755 root bin
 f none /opt/csw/share/doc/openssl/changelog.CSW=changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl/CHANGES=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/CHANGES.SSLeay=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/PROBLEMS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/README=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/FAQ=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/README.ASN1=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/INSTALL=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/NEWS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/README.ENGINE=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/README.CSW=README.CSW 644 root bin

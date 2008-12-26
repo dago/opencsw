@@ -14,69 +14,31 @@ f none /opt/csw/lib/libcrypto.so.0.9.8 0555 root bin
 s none /opt/csw/lib/libssl.so=libssl.so.0.9.8
 f none /opt/csw/lib/libssl.so.0.9.7 0555 root bin
 f none /opt/csw/lib/libssl.so.0.9.8 0555 root bin
+d none /opt/csw/lib/sparcv8plus+vis 0755 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8 0755 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.8 0755 root bin
-s none /opt/csw/lib/sparcv9/libcrypto.so=libcrypto.so.0.9.8
-s none /opt/csw/lib/sparcv9/libcrypto.so.0=libcrypto.so.0.9.8
+d none /opt/csw/lib/sparcv9 0755 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.so.0.9.8 0755 root bin
+s none /opt/csw/lib/sparcv9/libcrypto.so=libcrypto.so.0.9.8
+s none /opt/csw/lib/sparcv9/libcrypto.so.0=libcrypto.so.0.9.8
 s none /opt/csw/lib/sparcv9/libssl.so=libssl.so.0.9.8
 s none /opt/csw/lib/sparcv9/libssl.so.0=libssl.so.0.9.8
 f none /opt/csw/lib/sparcv9/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv9/libssl.so.0.9.8 0755 root bin
 d none /opt/csw/share/doc/openssl_rt 0755 root bin
-f none /opt/csw/share/doc/openssl_rt/changelog.CSW=changelog.CSW 644 root bin
 d none /opt/csw/ssl 0755 root bin
-d none /opt/csw/ssl/certs 0755 root bin
-f none /opt/csw/ssl/certs/1e49180d.0 0644 root bin
-f none /opt/csw/ssl/certs/2edf7016.0 0644 root bin
-f none /opt/csw/ssl/certs/56e607f4.0 0644 root bin
-f none /opt/csw/ssl/certs/6adf0799.0 0644 root bin
-f none /opt/csw/ssl/certs/7651b327.0 0644 root bin
-f none /opt/csw/ssl/certs/7a9820c1.0 0644 root bin
-f none /opt/csw/ssl/certs/843b6c51.0 0644 root bin
-f none /opt/csw/ssl/certs/878cf4c6.0 0644 root bin
-f none /opt/csw/ssl/certs/RegTP-5R.pem 0644 root bin
-f none /opt/csw/ssl/certs/RegTP-6R.pem 0644 root bin
-f none /opt/csw/ssl/certs/a3c60019.0 0644 root bin
-f none /opt/csw/ssl/certs/aad3d04d.0 0644 root bin
-f none /opt/csw/ssl/certs/argena.pem 0644 root bin
-f none /opt/csw/ssl/certs/argeng.pem 0644 root bin
-f none /opt/csw/ssl/certs/c33a80d4.0 0644 root bin
-f none /opt/csw/ssl/certs/cdd7aee7.0 0644 root bin
-f none /opt/csw/ssl/certs/d4e39186.0 0644 root bin
-f none /opt/csw/ssl/certs/ddc328ff.0 0644 root bin
-d none /opt/csw/ssl/certs/demo 0755 root bin
-f none /opt/csw/ssl/certs/demo/ca-cert.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/dsa-ca.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/dsa-pca.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/nortelCA.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/pca-cert.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/timCA.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/tjhCA.pem 0644 root bin
-f none /opt/csw/ssl/certs/demo/vsigntca.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng1.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng2.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng3.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng4.pem 0644 root bin
-f none /opt/csw/ssl/certs/eng5.pem 0644 root bin
-d none /opt/csw/ssl/certs/expired 0755 root bin
-f none /opt/csw/ssl/certs/expired/ICE-CA.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/ICE-root.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/ICE-user.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/ICE.crl 0644 root bin
-f none /opt/csw/ssl/certs/expired/RegTP-4R.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/factory.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/rsa-cca.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/rsa-ssca.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/vsign2.pem 0644 root bin
-f none /opt/csw/ssl/certs/expired/vsign3.pem 0644 root bin
-f none /opt/csw/ssl/certs/f73e89fd.0 0644 root bin
-f none /opt/csw/ssl/certs/thawteCb.pem 0644 root bin
-f none /opt/csw/ssl/certs/thawteCp.pem 0644 root bin
-f none /opt/csw/ssl/certs/vsign1.pem 0644 root bin
-f none /opt/csw/ssl/certs/vsign3.pem 0644 root bin
-f none /opt/csw/ssl/certs/vsignss.pem 0644 root bin
-f none /opt/csw/ssl/certs/wellsfgo.pem 0644 root bin
+s none /opt/csw/ssl/certs=../etc/ssl/certs
+f none /opt/csw/share/doc/openssl_rt/changelog.CSW=changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl_rt/CHANGES=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/CHANGES.SSLeay=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/PROBLEMS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/FAQ=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.ASN1=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/INSTALL=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/NEWS=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.ENGINE=CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.CSW=README.CSW 644 root bin
