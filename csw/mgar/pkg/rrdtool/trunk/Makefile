@@ -1,5 +1,5 @@
 GARNAME = rrdtool
-GARVERSION = 1.3.4
+GARVERSION = 1.3.5
 CATEGORIES = utils
 
 DESCRIPTION = time-series data logging and graphing.
@@ -17,9 +17,10 @@ DISTFILES += $(call admfiles,CSWrrdtool,prototype)
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Patch to make it build on x86
-PATCHFILES += rrd_config.diff
+#PATCHFILES += rrd_config.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --docdir=$(prefix)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-python
 CONFIGURE_ARGS += --disable-ruby
 CONFIGURE_ARGS += --disable-libintl
