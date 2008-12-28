@@ -10,4 +10,4 @@ d none /opt/csw/share/man/man5 0755 root bin
 f none /opt/csw/share/man/man5/syslog-ng.conf.5 0644 root bin
 d none /opt/csw/share/man/man8 0755 root bin
 f none /opt/csw/share/man/man8/syslog-ng.8 0644 root bin
-f none /etc/opt/csw/init.d/cswsyslog_ng 0755 root bin
+f cswinitsmf /etc/opt/csw/init.d/cswsyslog_ng 0755 root bin
