@@ -1,0 +1,68 @@
+diff -rud meanwhile-1.0.2.o/doc/Makefile.am meanwhile-1.0.2/doc/Makefile.am
+--- meanwhile-1.0.2.o/doc/Makefile.am	2005-10-28 21:22:38.000000000 -0500
++++ meanwhile-1.0.2/doc/Makefile.am	2008-12-29 13:37:18.400083313 -0600
+@@ -5,10 +5,10 @@
+ if ENABLE_DOXYGEN
+ 
+ htmldoc_DATA = html/*
+-htmldocdir = $(datadir)/doc/@PACKAGE@-doc-@VERSION@/html
++htmldocdir = $(datadir)/doc/@PACKAGE@/html
+ 
+ latexdoc_DATA = latex/*
+-latexdocdir = $(datadir)/doc/@PACKAGE@-doc-@VERSION@/latex
++latexdocdir = $(datadir)/doc/@PACKAGE@@/latex
+ 
+ docdata = $(htmldoc_DATA) $(latexdoc_DATA)
+ 
+diff -rud meanwhile-1.0.2.o/doc/Makefile.in meanwhile-1.0.2/doc/Makefile.in
+--- meanwhile-1.0.2.o/doc/Makefile.in	2005-12-29 19:55:16.000000000 -0600
++++ meanwhile-1.0.2/doc/Makefile.in	2008-12-29 13:37:18.398638856 -0600
+@@ -172,9 +172,9 @@
+ target_alias = @target_alias@
+ noinst_DATA = Doxyfile
+ @ENABLE_DOXYGEN_TRUE@htmldoc_DATA = html/*
+-@ENABLE_DOXYGEN_TRUE@htmldocdir = $(datadir)/doc/@PACKAGE@-doc-@VERSION@/html
++@ENABLE_DOXYGEN_TRUE@htmldocdir = $(datadir)/doc/@PACKAGE@/html
+ @ENABLE_DOXYGEN_TRUE@latexdoc_DATA = latex/*
+-@ENABLE_DOXYGEN_TRUE@latexdocdir = $(datadir)/doc/@PACKAGE@-doc-@VERSION@/latex
++@ENABLE_DOXYGEN_TRUE@latexdocdir = $(datadir)/doc/@PACKAGE@/latex
+ @ENABLE_DOXYGEN_TRUE@docdata = $(htmldoc_DATA) $(latexdoc_DATA)
+ all: all-am
+ 
+diff -rud meanwhile-1.0.2.o/meanwhile.spec.in meanwhile-1.0.2/meanwhile.spec.in
+--- meanwhile-1.0.2.o/meanwhile.spec.in	2005-12-29 20:05:55.000000000 -0600
++++ meanwhile-1.0.2/meanwhile.spec.in	2008-12-29 13:33:36.734731451 -0600
+@@ -89,7 +89,7 @@
+ 
+ %files doc
+ %defattr(-,root,root,-)
+-%{_datadir}/doc/%{name}-doc-%{version}/
++%{_datadir}/doc/%{name}/
+ %endif
+ 
+ 
+diff -rud meanwhile-1.0.2.o/samples/Makefile.am meanwhile-1.0.2/samples/Makefile.am
+--- meanwhile-1.0.2.o/samples/Makefile.am 2008-12-29 13:59:26.003161765 -0600
++++ meanwhile-1.0.2/samples/Makefile.am 2008-12-29 14:00:22.451646848 -0600
+@@ -19,7 +19,7 @@
+	$(SAMPLES_SRC)
+
+
+-sampledir = $(datadir)/doc/@PACKAGE@-doc-@VERSION@/samples
++sampledir = $(datadir)/doc/@PACKAGE@/samples
+
+
+ EXTRA_DIST = $(sample_DATA) $(sample_SCRIPTS)
+
+diff -rud meanwhile-1.0.2.o/samples/Makefile.in meanwhile-1.0.2/samples/Makefile.in
+--- meanwhile-1.0.2.o/samples/Makefile.in 2008-12-29 14:03:42.998631273 -0600
++++ meanwhile-1.0.2/samples/Makefile.in 2008-12-29 14:04:01.256144581 -0600
+@@ -188,7 +188,7 @@
+	README \
+	$(SAMPLES_SRC)
+
+-sampledir = $(datadir)/doc/@PACKAGE@-doc-@VERSION@/samples
++sampledir = $(datadir)/doc/@PACKAGE@/samples
+ EXTRA_DIST = $(sample_DATA) $(sample_SCRIPTS)
+ all: all-am
+

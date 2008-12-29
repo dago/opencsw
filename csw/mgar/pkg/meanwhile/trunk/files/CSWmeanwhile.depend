@@ -1,0 +1,5 @@
+P CSWggettext ggettext - GNU gettext
+P CSWiconv libiconv - GNU iconv library
+P CSWsunmath libsunmath - Sun maths library
+P CSWglib2 glib2 - The low-level core lib for GNOME and GTK+
+P CSWgcc3corert gcc3corert - GNU C Compiler Run Time

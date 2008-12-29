@@ -1,0 +1,8 @@
+bf4ced109a367b4c5d71fe63c043270e  download/meanwhile-1.0.2.tar.gz
+5a1ed24a8d6778dcf79373a6b5d512db  download/CSWmeanwhile.depend
+16c8ea92ec1e7d763ab92aab8f7f6559  download/CSWmeanwhile.gspec
+5d4bb9c3a21bec7f9eefa14db1bc1c03  download/CSWmeanwhile.prototype
+85017081328f7ddd4968f6f6f18a55ec  download/ft_fix.patch
+7637b2f7dfe8ec2516dd6aa5f66d90c6  download/presence_fix_v2.patch
+692c92e2a4e099b27a83667009e430f5  download/status_timestamp_workaround.patch
+c1fdb077407e627ae8ed9b726f5b07ef  download/doc_dir.patch
