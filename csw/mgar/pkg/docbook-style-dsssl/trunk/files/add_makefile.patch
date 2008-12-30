@@ -1,6 +1,6 @@
 --- /dev/null	2008-12-30 05:37:09.000000000 +0100
 +++ docbook-dsssl-1.79/Makefile	2008-12-30 05:40:27.256449575 +0100
-@@ -0,0 +1,52 @@
+@@ -0,0 +1,54 @@
 +BINDIR = $(DESTDIR)/$(bindir)
 +DEST = $(DESTDIR)/$(datadir)/sgml/docbook/dsssl-stylesheets-$(VERSION)
 +DOCS = $(DESTDIR)/$(datadir)/doc/docbookdsssl-$(VERSION)
@@ -15,6 +15,8 @@
 +install-doc:
 +	$(INSTALLDIR) $(DOCS)
 +	$(INSTALLDATA) BUGS ChangeLog README WhatsNew $(DOCS)
++	$(INSTALLDIR) $(DESTDIR)/$(datadir)/man/man1
++	$(INSTALLDATA) bin/collateindex.pl.1 $(DESTDIR)/$(datadir)/man/man1
 +	
 +install-bin:
 +	$(INSTALLDIR) $(BINDIR)

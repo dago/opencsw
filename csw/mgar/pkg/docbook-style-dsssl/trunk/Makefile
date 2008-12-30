@@ -14,9 +14,9 @@ SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = docbook-dsssl-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWdocbookdsssl,)
-PATCHFILES = add_makefile.patch
+PATCHFILES = add_makefile.patch fix_perl_path.patch
 
-REQUIRED_PKGS = CSWdocbookdtds CSWsgmlcommon CSWopenjade
+REQUIRED_PKGS = CSWdocbookdtds CSWsgmlcommon CSWopenjade CSWperl
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -28,7 +28,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 tar-gz-extract-docbook-dsssl-$(GARVERSION).tar.gz:
 	@echo " ==> Extracting $(DOWNLOADDIR)/docbook-dsssl-$(GARVERSION).tar.gz"
 	@mkdir -p $(WORKSRC)
-	gzip -dc $(DOWNLOADDIR)/docbook-dsssl-$(GARVERSION).tar.gz | gtar $(TAR_ARGS) -xf - -C $(WORKSRC) --strip-components 1
+	@gzip -dc $(DOWNLOADDIR)/docbook-dsssl-$(GARVERSION).tar.gz | gtar $(TAR_ARGS) -xf - -C $(WORKSRC) --strip-components 1
 	@$(MAKECOOKIE)
 
 #nothing to configure or test

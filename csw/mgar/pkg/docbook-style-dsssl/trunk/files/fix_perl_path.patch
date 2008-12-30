@@ -1,0 +1,8 @@
+--- docbookdsssl-1.79/bin/collateindex.pl.orig	2008-12-30 19:56:58.997386933 +0100
++++ docbookdsssl-1.79/bin/collateindex.pl	2008-12-30 19:57:22.214915722 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -- # -*- Perl -*-
++#!/opt/csw/bin/perl -- # -*- Perl -*-
+ #
+ # $Id: collateindex.pl,v 1.10 2004/10/24 17:05:41 petere78 Exp $
+ 
