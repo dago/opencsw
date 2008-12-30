@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWintltool,)
+DISTFILES += $(call admfiles,CSWintltool,depend)
 
 #No tests
 TEST_SCRIPTS =
