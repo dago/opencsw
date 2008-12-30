@@ -1,0 +1,16 @@
+diff -rud silc-toolkit-1.1.8.o/lib/silcutil/silclog_i.h silc-toolkit-1.1.8/lib/silcutil/silclog_i.h
+--- silc-toolkit-1.1.8.o/lib/silcutil/silclog_i.h	2008-12-30 12:56:47.527964480 -0600
++++ silc-toolkit-1.1.8/lib/silcutil/silclog_i.h	2008-12-30 13:01:36.261545042 -0600
+@@ -24,9 +24,11 @@
+ #error "Do not include this header directly"
+ #endif
+ 
+-#if defined(SILC_WIN32)
+ #ifndef __FUNCTION__
++#if defined(SILC_WIN32)
+ #define __FUNCTION__ __FILE__
++#elif defined(__SUNPRO_C)
++#define __FUNCTION__ __func__
+ #endif
+ #endif
+ 
