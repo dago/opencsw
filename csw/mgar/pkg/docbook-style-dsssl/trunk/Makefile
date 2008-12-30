@@ -14,6 +14,7 @@ SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = docbook-dsssl-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWdocbookdsssl,)
+PATCHFILES = add_makefile.patch
 
 REQUIRED_PKGS = CSWdocbookdtds CSWsgmlcommon CSWopenjade
 
@@ -24,11 +25,23 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+tar-gz-extract-docbook-dsssl-$(GARVERSION).tar.gz:
+	@echo " ==> Extracting $(DOWNLOADDIR)/docbook-dsssl-$(GARVERSION).tar.gz"
+	@mkdir -p $(WORKSRC)
+	gzip -dc $(DOWNLOADDIR)/docbook-dsssl-$(GARVERSION).tar.gz | gtar $(TAR_ARGS) -xf - -C $(WORKSRC) --strip-components 1
+	@$(MAKECOOKIE)
+
 #nothing to configure or test
 CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
 TEST_SCRIPTS =
 
-BUILD_ARGS = DESTDIR=$(DESTDIR) VERSION=$(GARVERSION)-$(PATCHLEVEL)
-BUILD_ARGS += bindir=$(bindir) datadir=$(datadir)
+INSTALL_ARGS = DESTDIR=$(DESTDIR) VERSION=$(GARVERSION)
+INSTALL_ARGS += bindir=$(bindir) datadir=$(datadir)
+
+post-install-modulated:
+	@echo "Symlinking dsssl-stylesheets"
+	@(cd $(INSTALLISADIR)/$(datadir)/sgml/docbook; \
+		ln -s dsssl-stylesheets-$(GARVERSION) dsssl-stylesheets )
 
 include gar/category.mk

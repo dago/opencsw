@@ -1,0 +1,55 @@
+--- /dev/null	2008-12-30 05:37:09.000000000 +0100
++++ docbook-dsssl-1.79/Makefile	2008-12-30 05:40:27.256449575 +0100
+@@ -0,0 +1,52 @@
++BINDIR = $(DESTDIR)/$(bindir)
++DEST = $(DESTDIR)/$(datadir)/sgml/docbook/dsssl-stylesheets-$(VERSION)
++DOCS = $(DESTDIR)/$(datadir)/doc/docbookdsssl-$(VERSION)
++
++INSTALLDATA = ginstall -c -m 0644
++INSTALLDIR = ginstall -c -m 0755 -d
++
++all: install
++
++install: install-bin install-dtd install-dsl install-img install-misc install-doc
++
++install-doc:
++	$(INSTALLDIR) $(DOCS)
++	$(INSTALLDATA) BUGS ChangeLog README WhatsNew $(DOCS)
++	
++install-bin:
++	$(INSTALLDIR) $(BINDIR)
++	$(INSTALLDATA) bin/collateindex.pl $(BINDIR)
++	chmod 755 $(BINDIR)/*
++
++install-dtd:
++	for d in decls dbdsssl html imagelib olink; do \
++	    $(INSTALLDIR) $(DEST)/dtds/$$d; \
++	done
++	$(INSTALLDATA) dtds/decls/docbook.dcl $(DEST)/dtds/decls
++	$(INSTALLDATA) dtds/decls/xml.dcl $(DEST)/dtds/decls
++	$(INSTALLDATA) dtds/dbdsssl/dbdsssl.dtd $(DEST)/dtds/dbdsssl
++	$(INSTALLDATA) dtds/html/dbhtml.dtd $(DEST)/dtds/html
++	$(INSTALLDATA) dtds/html/ISOlat1.gml $(DEST)/dtds/html
++	$(INSTALLDATA) dtds/imagelib/imagelib.dtd $(DEST)/dtds/imagelib
++	$(INSTALLDATA) dtds/olink/olinksum.dtd $(DEST)/dtds/olink
++
++install-dsl:
++	@for d in lib common html print olink; do \
++		$(INSTALLDIR) $(DEST)/$$d; \
++	done
++	$(INSTALLDATA) lib/dblib.dsl $(DEST)/lib
++	$(INSTALLDATA) common/*.dsl $(DEST)/common
++	$(INSTALLDATA) common/*.ent $(DEST)/common
++	$(INSTALLDATA) html/*.dsl $(DEST)/html
++	$(INSTALLDATA) lib/dblib.dsl $(DEST)/lib
++	$(INSTALLDATA) print/*.dsl $(DEST)/print
++	$(INSTALLDATA) olink/*.dsl $(DEST)/olink
++
++install-img:
++	$(INSTALLDIR) $(DEST)/images/callouts
++	$(INSTALLDATA) images/*.gif $(DEST)/images
++	$(INSTALLDATA) images/callouts/*.gif $(DEST)/images/callouts
++
++install-misc:
++	$(INSTALLDATA) catalog $(DEST)
++	$(INSTALLDATA) VERSION $(DEST)
