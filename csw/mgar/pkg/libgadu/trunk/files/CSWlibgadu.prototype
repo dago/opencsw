@@ -1,0 +1,8 @@
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/libgadu.pc 0644 root bin
+s none /opt/csw/lib/libgadu.so.3=libgadu.so.3.9.0
+f none /opt/csw/lib/libgadu.so.3.9.0 0755 root bin
+s none /opt/csw/lib/libgadu.so=libgadu.so.3.9.0
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/libgadu.h 0644 root bin
