@@ -1,4 +1,3 @@
-P CSWcommon common - common files and dirs for CSW packages
 P CSWiconv libiconv - GNU iconv library
 P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
 P CSWlibnet libnet - the libnet packet construction library
