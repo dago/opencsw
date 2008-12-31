@@ -1,2 +1,7 @@
-d71b2ee8febfde2c7dc30a43638ec0d9  download/curl-7.15.3.tar.bz2
-1436ae206adad60b90563d6e34405693  download/CSWcurl.gspec
+3a461b145a4a31fe7d5a44684e7fbdbc  download/curl-7.19.2.tar.bz2
+6ca086ce31b3036a315f9d29ac648056  download/CSWcurl.depend
+a5a35282d48619f9a94d768b3bb5a525  download/CSWcurl.gspec
+2c5cb969b0409caa925504686cefe0df  download/CSWcurl.prototype
+5b7397f8f7cab315bec471d05c7f5036  download/CSWcurlrt.gspec
+49c05ba155f955632e624f08b076de51  download/CSWcurlrt.prototype
+7298b0ca5c36e82d12cb46cd9fc621dc  download/CSWcurlrt.depend

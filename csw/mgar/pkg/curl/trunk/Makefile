@@ -1,5 +1,5 @@
 GARNAME = curl
-GARVERSION = 7.15.3
+GARVERSION = 7.19.2
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
@@ -15,7 +15,8 @@ endef
 
 MASTER_SITES = http://curl.haxx.se/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWcurl,)
+DISTFILES += $(call admfiles,CSWcurl,prototype depend)
+DISTFILES += $(call admfiles,CSWcurlrt,prototype depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2

@@ -1,0 +1,9 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWiconv libiconv - GNU iconv library
+P CSWlibidn libidn - Implementation of the Stringprep, Punycode and IDNA
+P CSWlibnet libnet - the libnet packet construction library
+P CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
+P CSWosslrt openssl_rt - Openssl runtime libraries
+P CSWsasl sasl - Simple Authentication and Security Layer
+P CSWzlib zlib - Zlib Data Compression Library
+P CSWcurlrt curlrt - Library for common Internet protocols Runtime
