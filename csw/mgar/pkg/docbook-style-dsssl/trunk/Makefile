@@ -13,7 +13,7 @@ endef
 SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = docbook-dsssl-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWdocbookdsssl,)
+DISTFILES += $(call admfiles,CSWdocbookdsssl,postinstall)
 PATCHFILES = add_makefile.patch fix_perl_path.patch
 
 REQUIRED_PKGS = CSWdocbookdtds CSWsgmlcommon CSWopenjade CSWperl

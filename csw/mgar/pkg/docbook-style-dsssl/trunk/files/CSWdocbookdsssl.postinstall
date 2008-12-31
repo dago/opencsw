@@ -1,0 +1,38 @@
+#!/bin/sh
+
+PATH=/opt/csw/bin:$PATH
+export PATH
+
+case "$PKG_INSTALL_ROOT" in
+    ""|"/") PREFIX= ;;
+    *) PREFIX="chroot $PKG_INSTALL_ROOT";;
+esac
+
+# set SGML_BASE_DIR and SGML_CATALOGS_DIR
+. `$PKG_INSTALL_ROOT/opt/csw/bin/sgmlwhich`
+
+dsssldir=$SGML_BASE_DIR/docbook/dsssl-stylesheets
+ojadedir=`$PREFIX echo $SGML_BASE_DIR/openjade-*`
+
+rel=`echo $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/sgml-docbook-3.0-*.cat | sed 's#.*-##; s/\.cat//'`
+
+#clean up _any_ old entries
+for cat in $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/*-docbook-*.cat; do
+    if [ "x$PKG_INSTALL_ROOT" != "x" ]; then
+	cat=`echo $cat | sed "s#$PKG_INSTALL_ROOT##"`
+    fi
+    catalog=`echo $cat | sed 's#//#/#g'`
+
+    echo $PREFIX install-catalog --remove $catalog $dsssldir/catalog
+done
+
+#add new entries for the current release of the docbook dtds.
+for cat in $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/*-docbook-*$rel.cat; do
+    if [ "x$PKG_INSTALL_ROOT" != "x" ]; then
+	cat=`echo $cat | sed "s#$PKG_INSTALL_ROOT##; s#//#/#g"`
+    fi
+    catalog=`echo $cat | sed 's#//#/#g'`
+
+    echo $PREFIX install-catalog --add $catalog $ojadedir/catalog
+    echo $PREFIX install-catalog --add $catalog $dsssldir/catalog
+done
