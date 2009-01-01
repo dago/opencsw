@@ -15,6 +15,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpcre)
 DISTFILES += $(call admfiles,CSWpcrert)
 
+SPKG_SOURCEURL = http://www.pcre.org
+
 PREREQUISITE_PKGS = CSWgnulinks
 REQUIRED_PKGS_CSWpcre = CSWpcrert
 REQUIRED_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline
