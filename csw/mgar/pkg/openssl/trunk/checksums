@@ -11,12 +11,12 @@ e4ae37693f304010a024329151d7620e  download/CSWosslrt.prototype-i386
 b71924fca6e324743e6977f370cce76b  download/CSWosslrt.prototype-sparc
 2ac43ebf4689d236540e22171541be4e  download/CSWossldevel.gspec
 37995caa7f4155066b00fb7503e853da  download/CSWossldevel.depend
-e85eb38fc1a7301fa4951355859ee5e9  download/CSWossldevel.prototype-i386
-427edaecb41b1536013db23a02d69f42  download/CSWossldevel.prototype-sparc
+da3116a1d8dfd2bd3e4f2a11f4fb5f8b  download/CSWossldevel.prototype-i386
+bd40fcb60dfef960da30c718b718149d  download/CSWossldevel.prototype-sparc
 eec77249fb642c525cad67dcd055fb77  download/CSWosslutils.gspec
 37995caa7f4155066b00fb7503e853da  download/CSWosslutils.depend
 a441995e4e3c95497e77aa613d2c673c  download/CSWosslutils.prototype
-1b23306c534a4c0a3920bdf1984b39bd  download/changelog.CSW
+1322076d544d1a7d4d494ae65d324d5a  download/changelog.CSW
 b78faa440d6f6a2a07663de331678648  download/README.CSW
 7fdc09cd3c11db459c83c8946f7872f6  download/i.conf
 a454ac09091085813ec8900f5a0c917c  download/r.conf

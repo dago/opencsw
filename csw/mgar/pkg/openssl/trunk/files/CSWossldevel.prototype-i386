@@ -81,7 +81,6 @@ f none /opt/csw/lib/pkgconfig/libcrypto.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/libssl.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/openssl.pc 0644 root bin
 d none /opt/csw/share/doc/openssl_devel 0755 root bin
-f none /opt/csw/share/doc/openssl_devel/changelog.CSW=changelog.CSW 644 root bin
 d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man3 0755 root bin
 s none /opt/csw/share/man/man3/ASN1_OBJECT_free.3=ASN1_OBJECT_new.3
