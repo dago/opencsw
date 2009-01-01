@@ -20,6 +20,9 @@ documents into other DocBookOutputFormats, such as HTML, PDF,
 Microsoft HTML Help, and man pages.
 endef
 
+SPKG_DESC_CSWdocbookxsl = Norman Walsh's XSL stylesheets for DocBook XML
+SPKG_DESC_CSWdocbookxsldoc = Documentation for the Docbook XSL stylesheets
+
 # docbook-xsl is housed in the docbook master project at SF.
 SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
@@ -40,16 +43,18 @@ BUILD_SCRIPTS =
 
 TEST_SCRIPTS =
 
-INSTALL_ARGS = DESTDIR=$(DESTDIR) GARVERSION=$(GARVERSION) \
-			PATCHLEVEL=$(PATCHLEVEL)
+INSTALL_ARGS = DESTDIR=$(DESTDIR) GARVERSION=$(GARVERSION)
+
 
 #to make the package extraction happy...(we don't use the - separator)
 WORKSRC = $(WORKDIR)/docbook-xsl-$(GARVERSION)
 
 post-install-modulated:
 	@(cd $(DESTDIR)/opt/csw/share/sgml/docbook; \
-		ln -s xsl-stylesheets-$(GARVERSION)-$(PATCHLEVEL) \
-			xsl-stylesheets )
+		ln -s xsl-stylesheets-$(GARVERSION) xsl-stylesheets )
 	@$(MAKECOOKIE)
 
 include gar/category.mk
+
+#override system checkpkg so that docbookxsldoc can depend on docbookxsl
+PATH := /home/bwalton:$(PATH)
