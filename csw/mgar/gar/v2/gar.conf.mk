@@ -419,7 +419,7 @@ endif
 
 ifeq ($(origin LINKER_FLAGS), undefined)
 ifdef NOISALIST
-LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH), -R$(abspath $(ELIB)/$(MM_LIBDIR))))
+LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH), -R$(abspath $(ELIB)/$(MM_LIBDIR)))) $(EXTRA_LINKER_FLAGS)
 else
 # If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
 # may not be a subdirectory for the 32-bit standard case (this would normally
@@ -434,7 +434,7 @@ ifeq ($(RUNPATHQUOTE),1)
 else
   _Q = \\\\\\\$$\$$
 endif
-LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH),  -R$(ELIB)/$(_Q)ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR))))
+LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH),  -R$(ELIB)/$(_Q)ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR)))) $(EXTRA_LINKER_FLAGS)
 endif
 endif
 
