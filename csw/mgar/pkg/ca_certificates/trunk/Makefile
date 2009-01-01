@@ -25,7 +25,7 @@ SPKG_CLASSES = none cswpreserveconf
 
 include gar/category.mk
 
-$(WORKDIR)/hash.db: $(WORKDIR)/certdata.txt
+$(WORKDIR)/hash.db: install-certificates
 	rm -f $(WORKDIR)/hash.db
 	find "$(DESTDIR)/$(sharedstatedir)/ca-certificates" -name *.pem | while read FILE; do \
 		echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -hash -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> $(WORKDIR)/hash.db; \
@@ -35,12 +35,14 @@ $(WORKDIR)/LICENSE: $(WORKDIR)/certdata.txt
 	sed -ne '/BEGIN LICENSE BLOCK/,/END LICENSE BLOCK/p' "$(WORKDIR)/certdata.txt" | grep -v "LICENSE BLOCK" \
 		> "$(WORKDIR)/LICENSE"
 
-install-custom: $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
+install-certificates: $(WORKDIR)/certdata.txt
+	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla"
+	cd "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla" && perl "$(CURDIR)/$(WORKDIR)/certdata2pem.pl" < "$(CURDIR)/$(WORKDIR)/certdata.txt"
+
+install-custom: install-certificates $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl/certs"
 	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates"
 	ginstall -D "$(WORKDIR)/update-ca-certificates" "$(DESTDIR)/$(sbindir)/update-ca-certificates"
 	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/ca-certificates/hash.db"
 	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/ca-certificates/README.CSW"
-	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla"
-	cd "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla" && perl "$(CURDIR)/$(WORKDIR)/certdata2pem.pl" < "$(CURDIR)/$(WORKDIR)/certdata.txt"
 
