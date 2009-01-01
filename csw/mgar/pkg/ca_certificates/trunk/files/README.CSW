@@ -1,0 +1,53 @@
+
+Notes for ca_certificates
+-------------------------
+
+The ca_certificates package provides common Certification Authorities to 
+allow ssl-based software to check the validity of certificates exchanged 
+during a SSL connection.
+It also provides a simple way to configure which CA is considered valid and
+to add new custom certificate to the set of CA.
+
+Currently the CA provided by this package are the ones that are shipped with
+the mozilla firefox browser.
+
+Quick Usage FAQ:
+
+* How to disable a certificate ?
+
+Just edit the /opt/csw/etc/ca-certificates.conf file and add the full path of the
+certificate prefixed by an exclamation mark, then launch:
+
+	/opt/csw/sbin/update-ca-certificates
+
+For exemple, to remove the Equifax Secure CA from the valid CA, add the following 
+line in /opt/csw/etc/ca-certificates.conf:
+
+	!/opt/csw/share/ca-certificates/mozilla/Equifax_Secure_CA.crt
+
+and launch /opt/csw/sbin/update-ca-certificates
+
+For CA provided by ca-certificates, you can just put the filename, as by default 
+update-ca-certificates will look under /opt/csw/share/ca-certificates/.
+
+For Equifax Secure CA you could just add the line:
+
+	!Equifax_Secure_CA.crt
+
+
+* How to add a new certificate ?
+
+To add a CA not provided by the ca-certificates package, you first need to install
+the openssl_utils package so update-ca-certificates will be able to generate the
+hash of the certificate using the openssl binary:
+
+	pkg-get install openssl_utils (or pkg-util -i openssl_utils)
+
+Then either you add the full location of the certificate in /opt/csw/etc/ca-certificates.conf
+or you just copy the certificate in /opt/csw/etc/ssl/certs and make sure it has a 
+pem extension.
+
+Eventually you launch the update-ca-certificate command:
+
+	/opt/csw/sbin/update-ca-certificates
+

@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://hg.mozilla.org/mozilla-central/raw-file/default/security/nss/lib/ckfw/builtins/
-DISTFILES  = certdata.txt certdata2pem.pl update-ca-certificates ca-certificates.conf
+DISTFILES  = certdata.txt certdata2pem.pl update-ca-certificates ca-certificates.conf README.CSW
 DISTFILES += $(call admfiles,CSWcacertificates,depend postinstall postremove)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -28,7 +28,7 @@ include gar/category.mk
 $(WORKDIR)/hash.db: $(WORKDIR)/certdata.txt
 	rm -f $(WORKDIR)/hash.db
 	find "$(DESTDIR)/$(sharedstatedir)/ca-certificates" -name *.pem | while read FILE; do \
-		echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -hash -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> hash.db; \
+		echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -hash -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> $(WORKDIR)/hash.db; \
 	done
 
 $(WORKDIR)/LICENSE: $(WORKDIR)/certdata.txt
@@ -38,8 +38,9 @@ $(WORKDIR)/LICENSE: $(WORKDIR)/certdata.txt
 install-custom: $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl/certs"
 	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates"
-	ginstall -D $(WORKDIR)/update-ca-certificates "$(DESTDIR)/$(sbindir)/update-ca-certificates"
-	ginstall -D hash.db "$(DESTDIR)/$(sharedstatedir)/ca-certificates/hash.db"
+	ginstall -D "$(WORKDIR)/update-ca-certificates" "$(DESTDIR)/$(sbindir)/update-ca-certificates"
+	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/ca-certificates/hash.db"
+	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/ca-certificates/README.CSW"
 	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla"
 	cd "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla" && perl "$(CURDIR)/$(WORKDIR)/certdata2pem.pl" < "$(CURDIR)/$(WORKDIR)/certdata.txt"
 
