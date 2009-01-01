@@ -9,21 +9,22 @@ PATH=/opt/csw/bin:$PATH
 
 CATCMD=/opt/csw/bin/xmlcatalog
 
-VERSION=1.69.1
-RELEASE=5.1
 DBHOME=/opt/csw/share/sgml/docbook
 
 CATALOG=/opt/csw/etc/xml/catalog
 
+#we need a version here, since that will be referenced in URLS being redirected
+VERSION=1.69.1
+
 $PREFIX $CATCMD --noout --add "rewriteSystem" \
  "http://docbook.sourceforge.net/release/xsl/$VERSION" \
- "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+ "file://$DBHOME/xsl-stylesheets" $CATALOG
 $PREFIX $CATCMD --noout --add "rewriteURI" \
  "http://docbook.sourceforge.net/release/xsl/$VERSION" \
- "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+ "file://$DBHOME/xsl-stylesheets" $CATALOG
 $PREFIX $CATCMD --noout --add "rewriteSystem" \
  "http://docbook.sourceforge.net/release/xsl/current" \
- "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+ "file://$DBHOME/xsl-stylesheets" $CATALOG
 $PREFIX $CATCMD --noout --add "rewriteURI" \
  "http://docbook.sourceforge.net/release/xsl/current" \
- "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+ "file://$DBHOME/xsl-stylesheets" $CATALOG

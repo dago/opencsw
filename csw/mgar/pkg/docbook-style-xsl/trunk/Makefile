@@ -43,16 +43,10 @@ BUILD_SCRIPTS =
 
 TEST_SCRIPTS =
 
-INSTALL_ARGS = DESTDIR=$(DESTDIR) GARVERSION=$(GARVERSION)
-
+INSTALL_ARGS = DESTDIR=$(DESTDIR)
 
 #to make the package extraction happy...(we don't use the - separator)
 WORKSRC = $(WORKDIR)/docbook-xsl-$(GARVERSION)
-
-post-install-modulated:
-	@(cd $(DESTDIR)/opt/csw/share/sgml/docbook; \
-		ln -s xsl-stylesheets-$(GARVERSION) xsl-stylesheets )
-	@$(MAKECOOKIE)
 
 include gar/category.mk
 

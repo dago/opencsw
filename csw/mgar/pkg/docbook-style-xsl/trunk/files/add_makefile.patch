@@ -1,9 +1,8 @@
 --- /dev/null	2008-12-14 03:06:26.000000000 +0100
 +++ docbook-xsl-1.69.1/Makefile	2008-12-14 04:12:33.444192066 +0100
-@@ -0,0 +1,50 @@
+@@ -0,0 +1,49 @@
 +
 +DESTDIR ?= ... should be overridden by GAR ...
-+GARVERSION ?= ... should be overridden by GAR ...
 +
 +SHELL = /opt/csw/bin/bash
 +
@@ -11,8 +10,8 @@
 +bindir = $(prefix)/bin
 +datadir = $(prefix)/share
 +
-+instdir = $(datadir)/sgml/docbook/xsl-stylesheets-$(GARVERSION)
-+docdir = $(datadir)/doc/docbookxsl-$(GARVERSION)
++instdir = $(datadir)/sgml/docbook/xsl-stylesheets
++docdir = $(datadir)/doc/docbookxsl
 +
 +all: install
 +

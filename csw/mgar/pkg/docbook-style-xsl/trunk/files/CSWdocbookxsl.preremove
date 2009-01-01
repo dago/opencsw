@@ -10,8 +10,6 @@ PATH=/opt/csw/bin:$PATH
 CATALOG=/opt/csw/etc/xml/catalog
 XMLCAT=/opt/csw/bin/xmlcatalog
 DBHOME=/opt/csw/share/sgml/docbook
-VERSION=1.69.1
-RELEASE=5.1
 
 $PREFIX $XMLCAT --noout --del \
-	 "file://$DBHOME/xsl-stylesheets-$VERSION-$RELEASE" $CATALOG
+	 "file://$DBHOME/xsl-stylesheets" $CATALOG
