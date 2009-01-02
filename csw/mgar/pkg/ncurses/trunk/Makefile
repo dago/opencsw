@@ -2,9 +2,6 @@ GARNAME = ncurses
 GARVERSION = 5.7
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 5.4 5.6 5.7
-
 DESCRIPTION = ncurses library and utilities
 define BLURB
         The ncurses (new curses) library is a free software emulation of curses in System V Release 4.0 and more. It uses terminfo forma
@@ -14,32 +11,23 @@ y can be built to support wide- and multibyte-character applications, e.g., UTF-
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(V).tar.gz)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWncurses)
 
-BUILD64 = 1
+SPKG_SOURCEURL = http://www.gnu.org/software/ncurses/ncurses.html
 
-CONFIGURE_ARGS = --prefix=/opt/csw 
+BUILD64 = 1
+RUNPATHQUOTE = 1
+
+CONFIGURE_ARGS = --prefix=$(prefix)
+CONFIGURE_ARGS += --bindir=$(bindir)
+CONFIGURE_ARGS += --libdir=$(libdir)
+CONFIGURE_ARGS += --mandir=$(mandir)
 CONFIGURE_ARGS += --without-libtool
 CONFIGURE_ARGS += --with-shared 
 CONFIGURE_ARGS += --disable-overwrite
 CONFIGURE_ARGS += --without-ada
-ifeq ($(MEMORYMODEL),64)
-CONFIGURE_ARGS += --with-build-ldflags="-64"
-endif
-
-ifeq ($(GARVERSION),5.7)
-LD_OPTIONS = $(LD_FLAGS)
-endif
-
-TEST_SCRIPTS =
 
 include gar/category.mk
 
-#LDFLAGS := $(filter-out -xarch=%,$(filter-out -m%,$(LDFLAGS)))
-LDFLAGS :=
-
-ifeq ($(MEMORYMODEL),64)
-LDFLAGS := $(LDFLAGS) $(if $(findstring $(GARVERSION),5.6),-xarch=v9)
-endif
-
+LDFLAGS := $(filter-out -L%,$(LDFLAGS))
