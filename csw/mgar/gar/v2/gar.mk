@@ -621,7 +621,7 @@ reset-merge-modulated:
 # cookie, but that would be lame and unportable).
 
 clean: $(addprefix clean-,$(MODULATIONS))
-	@rm -rf $(WORKROOTDIR)
+	@rm -rf $(WORKROOTDIR) $(COOKIEROOTDIR) $(DOWNLOADDIR)
 
 clean-modulated:
 	$(call _pmod,Cleaning )
@@ -630,8 +630,6 @@ clean-modulated:
 		   $(SCRATCHDIR)-build $(SCRATCHDIR)-$(COOKIEROOTDIR) \
 		   $(LOGDIR) *~
 	@rm -rf $(COOKIEDIR)
-	@rm -rf $(COOKIEROOTDIR)
-	@rm -rf $(DOWNLOADDIR)
 
 
 SRC_CLEAN_TARGET ?= clean
