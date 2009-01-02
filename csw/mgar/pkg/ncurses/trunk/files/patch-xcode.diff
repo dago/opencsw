@@ -1,0 +1,12 @@
+diff -Naur ncurses-5.7.orig/configure ncurses-5.7.patched/configure
+--- ncurses-5.7.orig/configure	2008-10-26 02:04:38.000000000 +0200
++++ ncurses-5.7.patched/configure	2009-01-02 16:18:33.593535166 +0100
+@@ -5258,7 +5258,7 @@
+ 	fi
+ 
+ 		if test "$GCC" != yes; then
+-			CC_SHARED_OPTS='-xcode=pic32'
++			CC_SHARED_OPTS='-KPIC'
+ 			MK_SHARED_LIB='${CC} -dy -G -h '$cf_cv_shared_soname' -o $@'
+ 		else
+ 			MK_SHARED_LIB='${CC} -shared -dy -G -h '$cf_cv_shared_soname' -o $@'

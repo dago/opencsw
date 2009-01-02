@@ -14,6 +14,8 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWncurses)
 
+PATCHFILES = patch-xcode.diff
+
 SPKG_SOURCEURL = http://www.gnu.org/software/ncurses/ncurses.html
 
 BUILD64 = 1
