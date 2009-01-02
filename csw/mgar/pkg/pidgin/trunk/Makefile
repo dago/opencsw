@@ -11,6 +11,7 @@ MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += x11.pc
 DISTFILES += $(call admfiles,CSWpidgin,prototype depend)
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += '--with-dbus-services=/opt/csw/etc/dbus-1'
 CONFIGURE_ARGS += '--with-tclconfig=/opt/csw/lib'
@@ -20,7 +21,11 @@ CONFIGURE_ARGS += '--disable-nss'
 CONFIGURE_ARGS += '--disable-avahi'
 CONFIGURE_ARGS += '--disable-nm'
 
-#Need to include out own x11.pc file as solaris 8 doesn't have one
+CONFIGURE_ENV += DOT="/opt/csw/graphviz2/bin/dot"
+
+EXTRA_INC += /opt/csw/include/ncurses
+
+#Need to include our own x11.pc file as solaris 8 doesn't have one
 PKG_CONFIG_PATH += $(CURDIR)/$(WORKDIR)
 
 #No tests
