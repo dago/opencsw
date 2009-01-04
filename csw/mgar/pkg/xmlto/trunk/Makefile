@@ -5,8 +5,8 @@ CATEGORIES = utils
 PREREQUISITE_PKGS = CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt
 PREREQUISITE_PKGS = CSWflex CSWggetopt CSWgnulinks
 
-REQUIRES_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
-REQUIRES_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m
+REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
+REQUIRED_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
