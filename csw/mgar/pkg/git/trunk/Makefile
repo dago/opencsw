@@ -73,6 +73,9 @@ INSTALL_ARGS = ETC_CONFIG=$(sysconfdir)/gitconfig install-doc
 
 include gar/category.mk
 
+# override path so we use the local modifications to checkpkg.
+PATH := /home/bwalton:$(PATH)
+
 # for tail -n and to override things like, etc with the gnu counterparts
 # gnu must come first so xpg4/sed isn't found first.
 PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
