@@ -1,9 +1,9 @@
 899172ebeac65f7a09a8e204d4f87d8c  download/git-1.6.0.5.tar.bz2
-e2124d3e47454df813a2085a7a85597e  download/CSWgitsvn.gspec
-2ad395619c97ef714738778be9132e6e  download/CSWgitgui.gspec
-2dfce68b5746df8dfe8da8941f0d757b  download/CSWgitk.gspec
+52eec3e59489ecca898ef2b3d1bb4323  download/CSWgitsvn.gspec
+e8fb4cb1b06cd7bdfeeb9317ad6aae12  download/CSWgitgui.gspec
+50ab41f1f828ad1401cf9d05d8775499  download/CSWgitk.gspec
 393d10b23a1ecb60f91bdc5f2d12a75d  download/CSWgitemacs.gspec
-01901aa2ffdf51c89d5b7ffc28dc9cfc  download/CSWgitcvs.gspec
-15faf599c27b35aad91a0af518831b29  download/CSWgitdoc.gspec
+20718be97e218e2fc1b21982cf71f32a  download/CSWgitcvs.gspec
+7d668417a6375d27a49212c58f26db60  download/CSWgitdoc.gspec
 57d2c46660773d3a1e87651447e3252a  download/CSWgit.gspec
 369547e8222dcf8be214b5013f28afcc  download/doc-makefile.patch

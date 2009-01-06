@@ -1,6 +1,5 @@
 %var            bitname git_svn
 %var            pkgname CSWgitsvn
-%var		desc Git tools for working with Subversion repositories
 %var		arch all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING

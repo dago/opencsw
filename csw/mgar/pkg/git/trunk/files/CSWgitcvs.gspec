@@ -1,6 +1,5 @@
 %var            bitname git_cvs
 %var            pkgname CSWgitcvs
-%var		desc Git tools for working with CVS repositories
 %var		arch all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING

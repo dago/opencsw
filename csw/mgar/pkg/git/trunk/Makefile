@@ -28,6 +28,13 @@ define BLURB
   mainly for various open source projects, most notably the Linux kernel.
 endef
 
+SPKG_DESC_CSWgit = Fast Version Control System
+SPKG_DESC_CSWgitk = Git revision tree visualiser
+SPKG_DESC_CSWgitgui = Git GUI tool
+SPKG_DESC_CSWgitsvn = Git tools for working with Subversion repositories
+SPKG_DESC_CSWgitcvs = Git tools for working with CVS repositories
+SPKG_DESC_CSWgitdoc = Documentation for Git
+
 MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgitsvn,)
@@ -45,7 +52,7 @@ PKGFILES_CSWgitgui = .*git-gui.* .*git-citool.*
 PKGFILES_CSWgitk = .*gitk.*
 PKGFILES_CSWgitemacs = .*emacs.*
 PKGFILES_CSWgitcvs = .*cvs.*
-PKGFILES_CSWgitdoc = $(datadir)/doc/.*
+PKGFILES_CSWgitdoc = $(PKGFILES_DOC)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2

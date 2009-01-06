@@ -1,6 +1,5 @@
 %var            bitname git_doc
 %var            pkgname CSWgitdoc
-%var		desc Documentation for Git
 %var		arch all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
