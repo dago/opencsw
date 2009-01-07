@@ -77,6 +77,7 @@ sub is_common {
 sub exclude {
     my $path = shift;
 
+    return 0 unless $stamp;
     return 1 unless $path;
 
     die "Path $path is not readable by current user!\n" unless -r $path or -l $path;
@@ -162,6 +163,7 @@ print join " " => @$_ foreach (sort { $a->[2] cmp $b->[2] } @prototype);
 
 # Common directories (CSWcommon plus a few others)
 __DATA__
+/
 /etc
 /etc/opt
 /etc/opt/csw

@@ -162,7 +162,7 @@ PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT)=. >$@
+	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT)=/ >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
