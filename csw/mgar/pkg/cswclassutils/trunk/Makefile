@@ -12,13 +12,13 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include ../category.mk
+include gar/category.mk
 
 WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://www.opencsw.org/
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
