@@ -7,6 +7,7 @@
 #
 # 2008-04-21 First release
 # 2008-11-23 Fixed grep bug for FMRI
+# 2009-01-07 Fixed bug with multiple services per package
 
 DEBUG=		# clear to disable debug, set to anything to enable
 
@@ -35,16 +36,20 @@ fi
 
 # Stop service
 echo Stopping $PKGINST ...
-if [ "$smf" = "yes" ]; then
-  # Find out FMRI complete with service name
-  FMRI=`grep ${PKGINST}$ /var/sadm/install/contents | grep "^/var/opt/csw/svc/manifest" | egrep '\.xml ' | cut -d'/' -f7- | awk -F'.xml' '{print $1}'`
-  /usr/sbin/svcadm disable svc:/$FMRI > /dev/null 2>&1
-  # Unregister with SMF
-  echo Unregister svc:/${FMRI}:default with SMF ...
-  /usr/sbin/svccfg delete svc:/${FMRI}:default >/dev/null 2>&1
-else
-  /etc/init.d/$service stop > /dev/null 2>&1
-fi
+# Find out FMRI complete with service name
+FMRI=`grep ${PKGINST}$ /var/sadm/install/contents | grep "^/var/opt/csw/svc/manifest" | egrep '\.xml ' | cut -d'/' -f7- | awk -F'.xml' '{print $1}'`
+for i in `echo $FMRI | tr '\n' ' '`
+do
+  if [ "$smf" = "yes" ]; then
+    /usr/sbin/svcadm disable svc:/$i
+    sleep 1
+    # Unregister with SMF
+    echo Unregister svc:/${i}:default with SMF ...
+    /usr/sbin/svccfg delete -f svc:/${i}:default
+  else
+    /etc/init.d/`basename $i` stop > /dev/null 2>&1
+  fi
+done
 
 # Remove files in class cswinitsmf
 echo "Removing class <cswinitsmf> ..."

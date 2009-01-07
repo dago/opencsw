@@ -1,5 +1,5 @@
 GARNAME = cswclassutils
-GARVERSION = 1.1
+GARVERSION = 1.2
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
@@ -21,13 +21,13 @@ install-custom:
 	@echo " ==> Installing $(GARNAME)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -d $(DESTDIR)/opt/csw/share/doc/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -d $(DESTDIR)/var/opt/csw/svc/manifest
 	@ginstall -d $(DESTDIR)/var/opt/csw/svc/method
 	@cp $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/etc/opt/csw/init.d/csw.smf.sample
-	@cp $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/README.CSW
-	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/LICENSE
+	@cp $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
+	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
 	@cp $(FILEDIR)/CSW$(GARNAME).i.cswcpsampleconf $(DESTDIR)/usr/sadm/install/scripts/i.cswcpsampleconf
 	@cp $(FILEDIR)/CSW$(GARNAME).r.cswcpsampleconf $(DESTDIR)/usr/sadm/install/scripts/r.cswcpsampleconf
 	@cp $(FILEDIR)/CSW$(GARNAME).i.cswpreserveconf $(DESTDIR)/usr/sadm/install/scripts/i.cswpreserveconf
