@@ -55,7 +55,7 @@ SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)
 SPKG_EXPORT    ?= $(WORKDIR)
 SPKG_PKGROOT   ?= $(PKGROOT)
-SPKG_PKGBASE   ?= $(CURDIR)/$(WORKDIR)
+SPKG_PKGBASE   ?= $(PKGROOT)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
 
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
@@ -162,7 +162,7 @@ PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT) >$@
+	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT)=. >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)

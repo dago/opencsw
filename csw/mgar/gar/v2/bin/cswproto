@@ -132,7 +132,6 @@ SPECLINE:
                 ? catfile($actual, $lhs)
                 : $lhs;
 
-            $F[2] = join "=", $lhs, basename($rhs) if $F[0] eq 'l';
         }
         else {
             $F[2] = $lhs if $lhs and $rhs;
