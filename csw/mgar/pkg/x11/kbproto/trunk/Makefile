@@ -16,5 +16,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES    += $(call admfiles,CSWkbproto)
 
+# PATCHFILES   += gar-base.diff
+
 include gar/category.mk
 
