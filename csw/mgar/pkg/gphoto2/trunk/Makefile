@@ -16,7 +16,9 @@ DISTFILES += $(call admfiles,CSWgphoto2,prototype depend)
 DISTFILES += cc
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 DEPENDS += lib/libgphoto2
 

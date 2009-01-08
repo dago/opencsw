@@ -2,7 +2,7 @@ GARNAME = libXdmcp
 GARVERSION = 1.0.2
 CATEGORIES = lib
 
-DESCRIPTION = X11 authorisation library
+DESCRIPTION = X11 display manager control protocol library
 define BLURB
 This package provides the main interface to the X11 display manager control protocol library, which allows for remote logins to display managers. 
 endef
@@ -14,8 +14,8 @@ PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_DESC_CSWlibxdmcp = X11 authorisation library
-SPKG_DESC_CSWlibxdmcpdevel = X11 authorisation library development package
+SPKG_DESC_CSWlibxdmcp = X11 display manager control protocol library
+SPKG_DESC_CSWlibxdmcpdevel = X11 display manager control protocol library development package
 
 DISTFILES    += $(call admfiles,CSWlibxdmcpdevel, )
 DISTFILES    += $(call admfiles,CSWlibxdmcp, )

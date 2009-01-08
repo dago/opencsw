@@ -1,8 +1,0 @@
-d none /opt/csw/lib 0755 root bin
-f none /opt/csw/lib/libXdmcp.la 0755 root bin
-f none /opt/csw/lib/libXdmcp.so.6.0.0 0755 root bin
-s none /opt/csw/lib/libXdmcp.so.6=libXdmcp.so.6.0.0
-s none /opt/csw/lib/libXdmcp.so=libXdmcp.so.6.0.0
-i copyright=CSWlibXdmcp.copyright
-i depend=CSWlibXdmcp.depend
-i pkginfo=CSWlibXdmcp.pkginfo
