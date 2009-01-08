@@ -23,7 +23,7 @@ for cat in $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/*-docbook-*.cat; do
     fi
     catalog=`echo $cat | sed 's#//#/#g'`
 
-    echo $PREFIX install-catalog --remove $catalog $dsssldir/catalog
+    $PREFIX install-catalog --remove $catalog $dsssldir/catalog
 done
 
 #add new entries for the current release of the docbook dtds.
@@ -33,6 +33,6 @@ for cat in $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/*-docbook-*$rel.cat; do
     fi
     catalog=`echo $cat | sed 's#//#/#g'`
 
-    echo $PREFIX install-catalog --add $catalog $ojadedir/catalog
-    echo $PREFIX install-catalog --add $catalog $dsssldir/catalog
+    $PREFIX install-catalog --add $catalog $ojadedir/catalog
+    $PREFIX install-catalog --add $catalog $dsssldir/catalog
 done
