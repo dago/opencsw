@@ -14,7 +14,7 @@ esac
 dsssldir=$SGML_BASE_DIR/docbook/dsssl-stylesheets
 ojadedir=`$PREFIX echo $SGML_BASE_DIR/openjade-*`
 
-for cat in $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/sgml/*-docbook-*.cat; do
+for cat in $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/*-docbook-*.cat; do
     if [ "x$PKG_INSTALL_ROOT" != "x" ]; then
 	cat=`echo $cat | sed "s#$PKG_INSTALL_ROOT##"`
     fi
