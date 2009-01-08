@@ -1,6 +1,6 @@
 GARNAME = libXdmcp
 GARVERSION = 1.0.2
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = X11 display manager control protocol library
 define BLURB
