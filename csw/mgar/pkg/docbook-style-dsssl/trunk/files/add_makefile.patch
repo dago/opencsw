@@ -2,8 +2,8 @@
 +++ docbook-dsssl-1.79/Makefile	2008-12-30 05:40:27.256449575 +0100
 @@ -0,0 +1,54 @@
 +BINDIR = $(DESTDIR)/$(bindir)
-+DEST = $(DESTDIR)/$(datadir)/sgml/docbook/dsssl-stylesheets-$(VERSION)
-+DOCS = $(DESTDIR)/$(datadir)/doc/docbookdsssl-$(VERSION)
++DEST = $(DESTDIR)/$(datadir)/sgml/docbook/dsssl-stylesheets
++DOCS = $(DESTDIR)/$(datadir)/doc/docbookdsssl
 +
 +INSTALLDATA = ginstall -c -m 0644
 +INSTALLDIR = ginstall -c -m 0755 -d

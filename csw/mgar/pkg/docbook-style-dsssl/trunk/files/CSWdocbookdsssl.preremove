@@ -1,0 +1,25 @@
+#!/bin/sh
+
+PATH=/opt/csw/bin:$PATH
+export PATH
+
+case "$PKG_INSTALL_ROOT" in
+    ""|"/") PREFIX= ;;
+    *) PREFIX="chroot $PKG_INSTALL_ROOT";;
+esac
+
+# set SGML_BASE_DIR and SGML_CATALOGS_DIR
+. `$PKG_INSTALL_ROOT/opt/csw/bin/sgmlwhich`
+
+dsssldir=$SGML_BASE_DIR/docbook/dsssl-stylesheets
+ojadedir=`$PREFIX echo $SGML_BASE_DIR/openjade-*`
+
+for cat in $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/sgml/*-docbook-*.cat; do
+    if [ "x$PKG_INSTALL_ROOT" != "x" ]; then
+	cat=`echo $cat | sed "s#$PKG_INSTALL_ROOT##"`
+    fi
+    catalog=`echo $cat | sed 's#//#/#g'`
+    
+    $PREFIX install-catalog --remove $catalog $ojadedir/catalog
+    $PREFIX install-catalog --remove $catalog $dsssldir/catalog
+done

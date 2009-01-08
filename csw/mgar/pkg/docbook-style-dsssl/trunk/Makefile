@@ -13,7 +13,7 @@ endef
 SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = docbook-dsssl-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWdocbookdsssl,postinstall)
+DISTFILES += $(call admfiles,CSWdocbookdsssl,postinstall preremove)
 PATCHFILES = add_makefile.patch fix_perl_path.patch
 
 REQUIRED_PKGS = CSWdocbookdtds CSWsgmlcommon CSWopenjade CSWperl
@@ -36,7 +36,7 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 
-INSTALL_ARGS = DESTDIR=$(DESTDIR) VERSION=$(GARVERSION)
+INSTALL_ARGS = DESTDIR=$(DESTDIR)
 INSTALL_ARGS += bindir=$(bindir) datadir=$(datadir)
 
 post-install-modulated:
