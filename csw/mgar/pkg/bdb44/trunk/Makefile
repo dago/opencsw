@@ -13,11 +13,11 @@ define BLURB
   (MSVC 4, 5 and 6).
 endef
 
-MASTER_SITES = http://downloads.sleepycat.com/
+MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWbdb44,depend prototype)
-DISTFILES += $(call admfiles,CSWbdb44-devel,depend prototype)
-DISTFILES += $(call admfiles,CSWbdb44-doc,depend prototype)
+DISTFILES += $(call admfiles,CSWbdb44,depend)
+DISTFILES += $(call admfiles,CSWbdb44-devel,depend)
+DISTFILES += $(call admfiles,CSWbdb44-doc,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -29,6 +29,8 @@ WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*.diff))
+
+BUILD64 = 1
 
 CONFIGURE_SCRIPTS = dist
 
@@ -47,6 +49,16 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb44/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
+NO_ISAEXEC = 1
+MERGE_EXCLUDE_FILES = .*~ .*\.la
+ISA_RELOCATE_DIRS_sparcv9 = $(prefix)/bdb44/bin $(prefix)/bdb44/lib $(prefix)/bdb44/include
+ISA_RELOCATE_DIRS_amd64   = $(prefix)/bdb44/bin $(prefix)/bdb44/lib $(prefix)/bdb44/include
+
+PKGFILES_CSWbdb44-doc = $(prefix)/bdb44/docs/.*
+
+PKGFILES_CSWbdb44-devel = $(prefix)/bdb44/include/.*
+PKGFILES_CSWbdb44-devel += $(prefix)/bdb44/lib/.*\.a
+
 include gar/category.mk
 
 LIBS += -lnsl
@@ -59,3 +71,7 @@ configure-dist:
 	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
+post-merge:
+	gln -s . $(PKGROOT)$(prefix)/bdb44/lib/32
+	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(prefix)/bdb44/lib/64
+	@$(MAKECOOKIE)
