@@ -122,7 +122,7 @@ MODULATIONS ?= $(strip $(call modulations,$(strip $(MODULATORS))))
 
 define _modulate_target
 $(1)-$(2):
-	@gmake MODULATION=$(2) $(3) pre-$(1)-$(2) $(1)-modulated post-$(1)-$(2)
+	@gmake MODULATION=$(2) $(3) $(1)-modulated
 	@# This is MAKECOOKIE expanded to use the name of the rule explicily as the rule has
 	@# not been evaluated yet. XXX: Use function _MAKECOOKIE for both
 	@mkdir -p $(COOKIEDIR)/$(dir $(1)-$(2)) && date >> $(COOKIEDIR)/$(1)-$(2)
@@ -131,13 +131,6 @@ $(1)-$(2):
 endef
 
 define _modulate_target_nocookie
-$(1)-$(2):
-	@gmake -s MODULATION=$(2) $(3) pre-$(1)-$(2) $(1)-modulated post-$(1)-$(2)
-	@# The next line has intentionally been left blank to explicitly terminate this make rule
-
-endef
-
-define _modulate_target_nocookie_noprepost
 $(1)-$(2):
 	@gmake -s MODULATION=$(2) $(3) $(1)-modulated
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
@@ -148,16 +141,16 @@ define _modulate_do
 $(call _modulate_target,extract,$(2),$(4))
 $(call _modulate_target,patch,$(2),$(4))
 $(call _modulate_target,configure,$(2),$(4))
-$(call _modulate_target_nocookie_noprepost,reset-configure,$(2),$(4))
+$(call _modulate_target_nocookie,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
-$(call _modulate_target_nocookie_noprepost,reset-build,$(2),$(4))
+$(call _modulate_target_nocookie,reset-build,$(2),$(4))
 $(call _modulate_target,test,$(2),$(4))
 $(call _modulate_target,install,$(2),$(4))
-$(call _modulate_target_nocookie_noprepost,reset-install,$(2),$(4))
+$(call _modulate_target_nocookie,reset-install,$(2),$(4))
 $(call _modulate_target,merge,$(2),$(4))
-$(call _modulate_target_nocookie_noprepost,reset-merge,$(2),$(4))
-$(call _modulate_target_nocookie_noprepost,clean,$(2),$(4))
-$(call _modulate_target_nocookie_noprepost,_modenv,$(2),$(4))
+$(call _modulate_target_nocookie,reset-merge,$(2),$(4))
+$(call _modulate_target_nocookie,clean,$(2),$(4))
+$(call _modulate_target_nocookie,_modenv,$(2),$(4))
 endef
 
 # This evaluates to the make rules for all modulations passed as first argument
@@ -302,7 +295,7 @@ extract: checksum $(COOKIEDIR) pre-extract extract-modulated $(addprefix extract
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated $(EXTRACT_TARGETS) post-extract-modulated
+		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated
 	@$(DONADA)
 
 # returns true if extract has completed successfully, false
@@ -323,7 +316,7 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES))
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated $(PATCH_TARGETS) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated
 
 # returns true if patch has completed successfully, false
 # otherwise
@@ -372,7 +365,7 @@ configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure
 
 configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
 		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
-		pre-configure-modulated $(CONFIGURE_TARGETS) post-configure-modulated
+		pre-configure-modulated pre-configure-$(MODULATION) $(CONFIGURE_TARGETS) post-configure-$(MODULATION) post-configure-modulated
 
 .PHONY: reset-configure reset-configure-modulated
 reconfigure: reset-configure configure
@@ -400,7 +393,7 @@ build-modulated-check:
 		$(error Code for the architecture $* can not be produced with the compiler $(GARCOMPILER))      \
 	)
 
-build-modulated: verify-isa configure-modulated pre-build-modulated $(BUILD_TARGETS) post-build-modulated
+build-modulated: verify-isa configure-modulated pre-build-modulated pre-build-$(MODULATION) $(BUILD_TARGETS) post-build-$(MODULATION) post-build-modulated
 	@$(MAKECOOKIE)
 
 # returns true if build has completed successfully, false
@@ -410,10 +403,10 @@ build-p:
 
 TEST_TARGETS = $(addprefix test-,$(TEST_SCRIPTS))
 
-test: $(addprefix test-,$(MODULATIONS))
+test: pre-test $(addprefix test-,$(MODULATIONS)) post-test
 	$(DONADA)
 
-test-modulated: build-modulated pre-test $(TEST_TARGETS) post-test
+test-modulated: build-modulated pre-test-modulated pre-test-$(MODULATION) $(TEST_TARGETS) post-test-$(MODULATION) post-test-modulated
 	$(DONADA)
 
 # strip - Strip executables
@@ -445,7 +438,7 @@ INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-l
 install: pre-install $(addprefix install-,$(MODULATIONS)) post-install
 	$(DONADA)
 
-install-modulated: build-modulated $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test-modulated $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install-modulated $(INSTALL_TARGETS) post-install-modulated $(POST_INSTALL_TARGETS) 
+install-modulated: build-modulated $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test-modulated $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install-modulated pre-install-$(MODULATION) $(INSTALL_TARGETS) post-install-$(MODULATION) post-install-modulated $(POST_INSTALL_TARGETS) 
 	@$(MAKECOOKIE)
 
 # returns true if install has completed successfully, false
@@ -571,7 +564,7 @@ merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) post-merge
 	@$(DONADA)
 
 # This merges the 
-merge-modulated: install-modulated pre-merge-modulated $(MERGE_TARGETS) post-merge-modulated
+merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated
 	@$(MAKECOOKIE)
 
 # Copy the whole tree verbatim
