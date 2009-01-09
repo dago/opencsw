@@ -30,7 +30,7 @@ SPKG_DESC_CSWbindutils = ISC BIND utilities package
 REQUIRED_PKGS_CSWbind = CSWlibbind CSWbindutils CSWcswclassutils
 REQUIRED_PKGS_CSWbinddevel = CSWbind
 REQUIRED_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-REQUIRED_PKGS_CSWbindutils = CSWlibbind
+REQUIRED_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)-([A-Z][0-9])
