@@ -44,7 +44,8 @@ include gar/category.mk
 
 # Solaris 10 on build10x has libm.so which points to libm.so.2. libm.so.2 
 # is however not available on Solaris 8. So we have to explicitly use 
-# libm.so.1 during linking and get rid of the -lm reference
+# libm.so.1 during linking and get rid of the -lm reference. Otherwise
+# the package check on build8x when running "gmake package" fails.
 post-configure-isa-amd64: M1=$(WORKSRC)/Makefile
 post-configure-isa-amd64: M2=$(WORKSRC)/Makefile.tmp
 post-configure-isa-amd64:
