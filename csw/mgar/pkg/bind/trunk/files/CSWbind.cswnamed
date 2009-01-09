@@ -1,7 +1,7 @@
 #!/sbin/sh
 
 # rc-script for CSW Bind
-# Peter Bonivart, 2008-12-16
+# Peter Bonivart, 2008-12-18
 
 USER=named
 #OPTIONS="-d 1" # debug mode
@@ -25,8 +25,7 @@ case "$1" in
         ZONE="-z global"
       fi
     fi
-    pkill $ZONE named
-    exit 0
+    pkill $ZONE -x named
     ;;
   reload|refresh)
     echo 'Reloading bind.'
@@ -35,11 +34,9 @@ case "$1" in
         ZONE="-z global"
       fi
     fi
-    pkill -HUP $ZONE named
-    exit 0
+    pkill -HUP $ZONE -x named
     ;;
   *)
     echo "Usage: $0 { start | stop | reload | refresh }"
-    exit 1
     ;;
 esac
