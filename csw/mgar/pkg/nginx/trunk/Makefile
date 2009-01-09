@@ -11,22 +11,25 @@ endef
 MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnginx,)
+DISTFILES += cswnginx cswnginx.xml svc-cswnginx
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWpcre CSWosslrt CSWzlib
+REQUIRED_PKGS = CSWosslrt CSWpcre  CSWzlib
 
-CONFIGURE_ARGS += --prefix=$(prefix)
-CONFIGURE_ARGS += --conf-path=etc/nginx/nginx.conf
-CONFIGURE_ARGS += --sbin-path=sbin/nginx
-CONFIGURE_ARGS += --lock-path=var/run/nginx/nginx.lock
-CONFIGURE_ARGS += --pid-path=var/run/nginx/nginx.pid
-CONFIGURE_ARGS += --http-client-body-temp-path=var/spool/nginx/client
-CONFIGURE_ARGS += --http-fastcgi-temp-path=var/spool/nginx/fastcgi
-CONFIGURE_ARGS += --http-proxy-temp-path=var/spool/nginx/proxy
-CONFIGURE_ARGS += --error-log-path=var/log/nginx/error.log
-CONFIGURE_ARGS += --http-log-path=var/log/nginx/access.log
+GARCOMPILER = GNU
+
+CONFIGURE_ARGS += --prefix=$(prefix)/var/nginx
+CONFIGURE_ARGS += --conf-path=$(sysconfdir)/nginx/nginx.conf
+CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
+CONFIGURE_ARGS += --lock-path=$(prefix)/var/run/nginx/nginx.lock
+CONFIGURE_ARGS += --pid-path=$(prefix)/var/run/nginx/nginx.pid
+CONFIGURE_ARGS += --http-client-body-temp-path=$(prefix)/var/spool/nginx/client
+CONFIGURE_ARGS += --http-fastcgi-temp-path=$(prefix)/var/spool/nginx/fastcgi
+CONFIGURE_ARGS += --http-proxy-temp-path=$(prefix)/var/spool/nginx/proxy
+CONFIGURE_ARGS += --error-log-path=$(prefix)/var/log/nginx/error.log
+CONFIGURE_ARGS += --http-log-path=$(prefix)/var/log/nginx/access.log
 CONFIGURE_ARGS += --with-cc-opt="-I/opt/csw/include/openssl"
 CONFIGURE_ARGS += --with-ld-opt="-L/opt/csw/lib"
 CONFIGURE_ARGS += --with-md5=YES
@@ -37,34 +40,25 @@ CONFIGURE_ARGS += --with-http_dav_module
 CONFIGURE_ARGS += --with-http_flv_module
 CONFIGURE_ARGS += --with-http_stub_status_module
 
-include gar/category.mk
-
-# No test suite
 TEST_SCRIPTS =
 
-INSTALL_SCRIPTS = custom
+include gar/category.mk
 
 NGINXDOC=CHANGES CHANGES.ru LICENSE README
 
-install-custom:
-	ginstall -d $(DESTDIR)$(prefix)/etc
+post-install:
+	ginstall -d $(DESTDIR)$(sysconfdir)
+	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
+	ginstall -d $(DESTDIR)$(docdir)/nginx
 	ginstall -d $(DESTDIR)$(prefix)/sbin
 	ginstall -d $(DESTDIR)$(prefix)/var/nginx
-	ginstall -d $(DESTDIR)$(prefix)/var/nginx/html
 	ginstall -d $(DESTDIR)$(prefix)/var/nginx/sites
 	ginstall -d $(DESTDIR)$(prefix)/var/log/nginx
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/client
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/fastcgi
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/proxy
-	ginstall -d $(DESTDIR)$(prefix)/share/doc/nginx
 	cd $(WORKSRC); \
-	cp objs/nginx $(DESTDIR)$(prefix)/sbin; \
-	cp html/* $(DESTDIR)$(prefix)/var/nginx/html; \
-	cp conf/* $(DESTDIR)$(prefix)/etc; \
-	cp conf/fastcgi_params $(DESTDIR)$(prefix)/etc/fastcgi_params.default; \
-	cp conf/mime.types     $(DESTDIR)$(prefix)/etc/mime.types.default; \
-	cp conf/nginx.conf     $(DESTDIR)$(prefix)/etc/nginx.conf.default; \
-	cp $(NGINXDOC) $(DESTDIR)$(prefix)/share/doc/nginx; \
+	cp -r contrib/* $(DESTDIR)$(sharedstatedir)/nginx/contrib; \
+	cp $(NGINXDOC)  $(DESTDIR)$(docdir)/nginx; \
 	$(MAKECOOKIE)
-

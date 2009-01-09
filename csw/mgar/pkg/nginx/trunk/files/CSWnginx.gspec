@@ -1,0 +1,10 @@
+%var            bitname nginx
+%var            pkgname CSWnginx
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE
+%var            SERVICE_CONF_FILES /opt/csw/etc/nginx/nginx.conf       
+%include        url file://%{PKGLIB}/smf_enabled.gspec
+%var            RC_INIT_SCRIPT     cswnginx
+%var            INIT_KILL_PRIO     16
+%var            INIT_START_PRIO    90
+%var            CAN_BE_AUTOENABLED no
