@@ -34,3 +34,17 @@ CONFIGURE_ARGS += --without-ada
 include gar/category.mk
 
 LDFLAGS := $(filter-out -L%,$(LDFLAGS))
+
+# Remove capabilities HPA and VPA as Solaris xterm doesn't understand it.
+# See for details
+#   <http://opencsw.org/bugtrack/view.php?id=2961>
+#   <http://opencsw.org/bugtrack/view.php?id=2942>
+#   <http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6569261>
+
+post-install-modulated:
+	(W=$(abspath $(WORKDIR)); cd $(INSTALLISADIR)$(prefix); \
+		LD_LIBRARY_PATH=lib TERMINFO=share/terminfo \
+		./bin/infocmp -1 xterm >$$W/xterm.src; \
+		cat $$W/xterm.src | fgrep -v hpa= | fgrep -v vpa= > $$W/xterm.src.no-hpa-vpa; \
+		LD_LIBRARY_PATH=lib TERMINFO=share/terminfo \
+		./bin/tic $$W/xterm.src.no-hpa-vpa)
