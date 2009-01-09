@@ -42,9 +42,9 @@ LDFLAGS := $(filter-out -L%,$(LDFLAGS))
 #   <http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6569261>
 
 post-install-modulated:
-	(W=$(abspath $(WORKDIR)); cd $(INSTALLISADIR)$(prefix); \
-		LD_LIBRARY_PATH=lib TERMINFO=share/terminfo \
-		./bin/infocmp -1 xterm >$$W/xterm.src; \
+	(W=$(abspath $(WORKDIR)); cd $(INSTALLISADIR); \
+		LD_LIBRARY_PATH=./$(libdir) TERMINFO=./$(datadir)/terminfo \
+		./$(bindir)/infocmp -1 xterm >$$W/xterm.src; \
 		cat $$W/xterm.src | fgrep -v hpa= | fgrep -v vpa= > $$W/xterm.src.no-hpa-vpa; \
-		LD_LIBRARY_PATH=lib TERMINFO=share/terminfo \
-		./bin/tic $$W/xterm.src.no-hpa-vpa)
+		LD_LIBRARY_PATH=./$(libdir) TERMINFO=./$(datadir)/terminfo \
+		./$(bindir)/tic $$W/xterm.src.no-hpa-vpa)
