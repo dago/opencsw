@@ -43,8 +43,7 @@ CONFIGURE_ARGS += --with-http_stub_status_module
 
 TEST_SCRIPTS =
 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/log$$$$/ { $$$$6 = "sys" } { print }'
-#PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$/ { $$$$4 = "700" } { print }'
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc\/(manifest|manifest\/site)))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
 
 include gar/category.mk
 
