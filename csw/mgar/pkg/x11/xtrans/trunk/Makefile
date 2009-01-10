@@ -1,6 +1,6 @@
 GARNAME = xtrans
 GARVERSION = 1.2.2
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = X transport library
 define BLURB
@@ -14,26 +14,19 @@ PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# DISTFILES    += CSWxtrans.gspec CSWxtrans.prototype CSWxtrans.depend 
-# DISTFILES    += CSWxtransdev.gspec CSWxtransdev.prototype CSWxtransdev.depend 
-DISTFILES    += $(call admfiles,CSWxtrans, depend)
+SPKG_DESC_CSWxtrans = X transport library
 
-CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
-CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+DISTFILES    += $(call admfiles,CSWxtrans, )
 
-export CFLAGS CXXFLAGS LDFLAGS
+#PKGFILES_CSWxtransdevel  = $(PKGFILES_DEVEL)
+#PKGFILES_CSWxtransdevel += $(prefix)/X11/include/.*
+#PKGFILES_CSWxtransdevel += $(prefix)/X11/lib/.*\.a
+#PKGFILES_CSWxtransdevel += $(prefix)/X11/lib/pkgconfig/.*
 
-TEST_SCRIPTS      = none
+#PKGFILES_CSWxtransdoc   += $(prefix)/X11/share/doc/.*
 
-GREP = ggrep
+#REQUIRED_PKGS_CSWxtransdevel = $(PREREQUISITE_BASE_PKGS) CSWxtrans
+#REQUIRED_PKGS_CSWxtrans		 = $(PREREQUISITE_BASE_PKGS) CSWlibxau CSWlibxdmcp
 
 include gar/category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
-
-test-none:
-	@$(MAKECOOKIE)
-
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
