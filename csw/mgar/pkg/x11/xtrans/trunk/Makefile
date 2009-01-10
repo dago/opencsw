@@ -18,15 +18,5 @@ SPKG_DESC_CSWxtrans = X transport library
 
 DISTFILES    += $(call admfiles,CSWxtrans, )
 
-#PKGFILES_CSWxtransdevel  = $(PKGFILES_DEVEL)
-#PKGFILES_CSWxtransdevel += $(prefix)/X11/include/.*
-#PKGFILES_CSWxtransdevel += $(prefix)/X11/lib/.*\.a
-#PKGFILES_CSWxtransdevel += $(prefix)/X11/lib/pkgconfig/.*
-
-#PKGFILES_CSWxtransdoc   += $(prefix)/X11/share/doc/.*
-
-#REQUIRED_PKGS_CSWxtransdevel = $(PREREQUISITE_BASE_PKGS) CSWxtrans
-#REQUIRED_PKGS_CSWxtrans		 = $(PREREQUISITE_BASE_PKGS) CSWlibxau CSWlibxdmcp
-
 include gar/category.mk
 
