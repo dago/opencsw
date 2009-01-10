@@ -18,9 +18,11 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWosslrt CSWpcre  CSWzlib
 
-GARCOMPILER = GNU
+CFLAGS =
 
-#CONFIGURE_ARGS += --with-cpu-opt=pentiumpro
+CONFIGURE_ARGS += --with-cpu-opt=pentium3
+CONFIGURE_ARGS += --with-cc-opt="-I/opt/csw/include -I/opt/csw/include/openssl"
+CONFIGURE_ARGS += --with-ld-opt="-R$(ISALIBDIR) -R/opt/csw/lib -L/opt/csw/lib"
 CONFIGURE_ARGS += --prefix=$(prefix)/var/nginx
 CONFIGURE_ARGS += --conf-path=$(sysconfdir)/nginx/nginx.conf
 CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
@@ -31,8 +33,6 @@ CONFIGURE_ARGS += --http-fastcgi-temp-path=$(prefix)/var/spool/nginx/fastcgi
 CONFIGURE_ARGS += --http-proxy-temp-path=$(prefix)/var/spool/nginx/proxy
 CONFIGURE_ARGS += --error-log-path=$(prefix)/var/log/nginx/error.log
 CONFIGURE_ARGS += --http-log-path=$(prefix)/var/log/nginx/access.log
-CONFIGURE_ARGS += --with-cc-opt="-I/opt/csw/include/openssl"
-CONFIGURE_ARGS += --with-ld-opt="-L/opt/csw/lib"
 CONFIGURE_ARGS += --with-md5=YES
 CONFIGURE_ARGS += --with-sha1=YES
 CONFIGURE_ARGS += --with-http_ssl_module
@@ -47,15 +47,14 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc\/(manifest|manifest\/sit
 
 include gar/category.mk
 
-
 NGINXDOC = CHANGES CHANGES.ru LICENSE README
 
 post-install:
 	cp $(WORKDIR)/svc-cswnginx $(WORKDIR)/cswnginx
+	ginstall -d $(DESTDIR)$(sbindir)
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
 	ginstall -d $(DESTDIR)$(docdir)/nginx
-	ginstall -d $(DESTDIR)$(prefix)/sbin
 	ginstall -d $(DESTDIR)$(prefix)/var/nginx
 	ginstall -d $(DESTDIR)$(prefix)/var/nginx/sites
 	ginstall -d $(DESTDIR)$(prefix)/var/log/nginx

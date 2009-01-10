@@ -1,7 +1,7 @@
 %var            bitname nginx
 %var            pkgname CSWnginx
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
+%copyright      url file://%{DESTDIR}/LICENSE
 %var            SERVICE_CONF_FILES /opt/csw/etc/nginx/nginx.conf       
 %include        url file://%{PKGLIB}/smf_enabled.gspec
 %var            RC_INIT_SCRIPT     cswnginx
