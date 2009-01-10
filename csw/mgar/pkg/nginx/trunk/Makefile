@@ -11,7 +11,7 @@ endef
 MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnginx,)
-DISTFILES += cswnginx cswnginx.xml svc-cswnginx
+DISTFILES += cswnginx.xml svc-cswnginx
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -20,6 +20,7 @@ REQUIRED_PKGS = CSWosslrt CSWpcre  CSWzlib
 
 GARCOMPILER = GNU
 
+#CONFIGURE_ARGS += --with-cpu-opt=pentiumpro
 CONFIGURE_ARGS += --prefix=$(prefix)/var/nginx
 CONFIGURE_ARGS += --conf-path=$(sysconfdir)/nginx/nginx.conf
 CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
@@ -42,11 +43,16 @@ CONFIGURE_ARGS += --with-http_stub_status_module
 
 TEST_SCRIPTS =
 
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/log$$$$/ { $$$$6 = "sys" } { print }'
+#PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$/ { $$$$4 = "700" } { print }'
+
 include gar/category.mk
 
-NGINXDOC=CHANGES CHANGES.ru LICENSE README
+
+NGINXDOC = CHANGES CHANGES.ru LICENSE README
 
 post-install:
+	cp $(WORKDIR)/svc-cswnginx $(WORKDIR)/cswnginx
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
 	ginstall -d $(DESTDIR)$(docdir)/nginx
