@@ -1,7 +1,4 @@
 90e02378256d5dec96ddc6c7d72119b6  download/libxcb-1.1.tar.gz
-ea7d268788deb990bedfee287f9ae322  download/CSWlibxcb.gspec
-055a2b4f25737c1ab38f7d0c8253d69c  download/CSWlibxcb.prototype
-f67ee144d583911e04badd2598cac249  download/CSWlibxcb.depend
-9f5722547dee7891ecf0819a34f19056  download/CSWlibxcbdev.gspec
-ac2778e985dd666f7c366b8ca23174d7  download/CSWlibxcbdev.prototype
-74ffa8b13cb65e9bdd22dca701d7f9d1  download/CSWlibxcbdev.depend
+5ea9d5ef0b88062e38c0987c0ef48806  download/CSWlibxcbdevel.gspec
+78e2027279d9012eb201138cf565d92a  download/CSWlibxcbdoc.gspec
+3a12038cc886e84f7e7a1d93dbe98c3a  download/CSWlibxcb.gspec
