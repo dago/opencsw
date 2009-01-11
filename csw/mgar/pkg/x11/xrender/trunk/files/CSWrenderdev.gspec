@@ -1,4 +1,4 @@
 %var            bitname renderdev
 %var            pkgname CSWrenderdev
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
