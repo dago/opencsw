@@ -1,6 +1,6 @@
 GARNAME = libX11
 GARVERSION = 1.1.5
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = X11 client-side library
 define BLURB
@@ -14,26 +14,16 @@ PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES    += CSWlibX11.gspec CSWlibX11.prototype CSWlibX11.depend 
-DISTFILES    += CSWlibX11dev.gspec CSWlibX11dev.prototype CSWlibX11dev.depend 
-# DISTFILES    += $(call admfiles,CSWlibX11, depend)
+SPKG_DESC_CSWlibx11 = $(DESCRIPTION)
+SPKG_DESC_CSWlibx11devel = $(DESCRIPTION) development package
 
-TEST_SCRIPTS      = none
+DISTFILES    += $(call admfiles,CSWlibx11devel, )
+DISTFILES    += $(call admfiles,CSWlibx11, )
+
+PKGFILES_CSWlibx11devel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibx11devel += $(prefix)/X11/include/.*
+PKGFILES_CSWlibx11devel += $(prefix)/X11/lib/.*\.a
+PKGFILES_CSWlibx11devel += $(prefix)/X11/lib/pkgconfig/.*
 
 include gar/category.mk
 
-CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION -D__solaris__
-CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
-
-export CFLAGS CXXFLAGS LDFLAGS
-
-GREP = ggrep
-
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
-
-test-none:
-	@$(MAKECOOKIE)
-
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
