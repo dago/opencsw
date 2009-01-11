@@ -1,5 +1,5 @@
 GARNAME = Net-SSLeay
-GARVERSION = 1.30
+GARVERSION = 1.35
 CATEGORIES = cpan
 AUTHOR = FLORA
 
@@ -12,19 +12,14 @@ define BLURB
   clients for more complicated applications.
 endef
 
-DISTNAME = $(subst -,_,$(GARNAME)).pm-$(GARVERSION)
 MODDIST  = $(DISTNAME).tar.gz
 WORKSRC  = $(WORKDIR)/$(DISTNAME)
 
-DISTFILES += $(call admfiles,CSWpmnetssleay,depend prototype)
-
-# Convince Makefile.PL to use our OpenSSL
-PATCHFILES += ossl-0.9.8a.diff
+DISTFILES += $(call admfiles,CSWpmnetssleay,depend)
 
 PERL_CONFIGURE_ARGS = $(prefix) INSTALLDIRS=vendor
 
-# Test disabled: Bug 3287
-TEST_SCRIPTS =
+CONFIGURE_ENV = OPENSSL_PREFIX=$(prefix) AUTOMATED_TESTING=1 PERL_MM_USE_DEFAULT=1
 
 include gar/category.mk
 
