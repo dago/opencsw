@@ -29,8 +29,8 @@ PKGFILES_CSWlibxcbdevel += $(prefix)/X11/lib/pkgconfig/.*
 
 PKGFILES_CSWlibxcbdoc   += $(prefix)/X11/share/doc/.*
 
-REQUIRED_PKGS_CSWlibxcbdevel = $(PREREQUISITE_BASE_PKGS) CSWlibxcb
-REQUIRED_PKGS_CSWlibxcb		 = $(PREREQUISITE_BASE_PKGS) CSWlibxau CSWlibxdmcp
+REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
+REQUIRED_PKGS_CSWlibxcb		 = CSWlibxau CSWlibxdmcp
 
 include gar/category.mk
 
