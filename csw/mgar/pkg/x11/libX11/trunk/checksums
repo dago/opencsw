@@ -1,7 +1,3 @@
 2feb39a0de6f05b25c308268691d960c  download/libX11-1.1.5.tar.gz
-10fe39a470a8032b5d6efcaa2b6fe16e  download/CSWlibX11.gspec
-5686e105b71c7ae6806c6878a2a5578d  download/CSWlibX11.prototype
-d41d8cd98f00b204e9800998ecf8427e  download/CSWlibX11.depend
-be8a3eb0865ba10e2a69c157f323bb48  download/CSWlibX11dev.gspec
-170bf9b8d3777c496d3688d5c3886de1  download/CSWlibX11dev.prototype
-d41d8cd98f00b204e9800998ecf8427e  download/CSWlibX11dev.depend
+227f750748ff9b31fbf803f6a3d2110a  download/CSWlibx11devel.gspec
+8b5aa1b7f74313397e420e0c3166aaa4  download/CSWlibx11.gspec
