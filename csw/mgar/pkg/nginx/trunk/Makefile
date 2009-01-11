@@ -10,7 +10,7 @@ endef
 
 MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnginx,)
+DISTFILES += $(call admfiles,CSWnginx,postinstall)
 DISTFILES += cswnginx.xml svc-cswnginx
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -20,9 +20,10 @@ REQUIRED_PKGS = CSWosslrt CSWpcre  CSWzlib
 
 CFLAGS =
 
-CONFIGURE_ARGS += --with-cpu-opt=pentium3
-CONFIGURE_ARGS += --with-cc-opt="-I/opt/csw/include -I/opt/csw/include/openssl"
-CONFIGURE_ARGS += --with-ld-opt="-R$(ISALIBDIR) -R/opt/csw/lib -L/opt/csw/lib"
+#CONFIGURE_ARGS += --with-cpu-opt=pentium3
+CONFIGURE_ARGS += --with-cc-opt="-I$(includedir) -I$(includedir)/openssl"
+#CONFIGURE_ARGS += --with-ld-opt="$(LDFLAGS)"
+CONFIGURE_ARGS += --with-ld-opt="-R$(libdir) -R$(libdir) -L$(libdir)"
 CONFIGURE_ARGS += --prefix=$(prefix)/var/nginx
 CONFIGURE_ARGS += --conf-path=$(sysconfdir)/nginx/nginx.conf
 CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
@@ -43,26 +44,26 @@ CONFIGURE_ARGS += --with-http_stub_status_module
 
 TEST_SCRIPTS =
 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc\/(manifest|manifest\/site)))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest\/site))))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
 
 include gar/category.mk
 
-NGINXDOC = CHANGES CHANGES.ru LICENSE README
+NGINXDOCS = CHANGES CHANGES.ru LICENSE README
 
-post-install:
+post-install-modulated:
 	cp $(WORKDIR)/svc-cswnginx $(WORKDIR)/cswnginx
-	ginstall -d $(DESTDIR)$(sbindir)
-	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
 	ginstall -d $(DESTDIR)$(docdir)/nginx
 	ginstall -d $(DESTDIR)$(prefix)/var/nginx
 	ginstall -d $(DESTDIR)$(prefix)/var/nginx/sites
 	ginstall -d $(DESTDIR)$(prefix)/var/log/nginx
-	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/client
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/fastcgi
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/proxy
+	mv $(DESTDIR)$(sysconfdir)/nginx/fastcgi_params $(DESTDIR)$(sysconfdir)/nginx/fastcgi_params.CSW
+	mv $(DESTDIR)$(sysconfdir)/nginx/mime.types $(DESTDIR)$(sysconfdir)/nginx/mime.types.CSW
+	mv $(DESTDIR)$(sysconfdir)/nginx/nginx.conf $(DESTDIR)$(sysconfdir)/nginx/nginx.conf.CSW
 	cd $(WORKSRC); \
 	cp -r contrib/* $(DESTDIR)$(sharedstatedir)/nginx/contrib; \
-	cp $(NGINXDOC)  $(DESTDIR)$(docdir)/nginx; \
+	cp $(NGINXDOCS) $(DESTDIR)$(docdir)/nginx; \
 	$(MAKECOOKIE)

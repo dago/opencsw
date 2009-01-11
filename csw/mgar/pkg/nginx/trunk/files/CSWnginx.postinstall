@@ -1,0 +1,29 @@
+#!/sbin/sh
+
+CONFDIR=$BASEDIR/opt/csw/etc/nginx
+CONFFILES="fastcgi_params mime.types nginx.conf"
+
+# copy new config files, if it's not existing
+for file in $CONFFILES; do
+	confpath="$CONFDIR/$file"
+	if [ -f "$confpath" ]; then
+		echo "Not touching existing $confpath"
+	else
+		if [ -r "$confpath.CSW" ]; then
+			echo "Copying $confpath.CSW to $confpath"
+			cp -p "$confpath.CSW" "$confpath"
+		else
+			echo "Skipping $confpath.CSW..."
+		fi
+	fi
+done
+
+if [ "$NEEDUPGRADE" = "1" ] ; then
+	if [ -x "$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx" ]; then
+		$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx upgrade
+	else
+		test -x $BASEDIR/etc/init.d/cswnginx && $BASEDIR/etc/init.d/cswnginx upgrade
+	fi
+fi
+
+exit 0
