@@ -2,7 +2,7 @@ GARNAME = nginx
 GARVERSION = 0.7.30
 CATEGORIES = server
 
-DESCRIPTION = HTTP server and mail proxy server
+DESCRIPTION = nginx HTTP server and mail proxy server
 define BLURB
   Nginx (pronounced "engine x") is a free, open-source, high-performance
   HTTP server and reverse proxy, as well as an IMAP/POP3 proxy server.
@@ -22,8 +22,8 @@ CFLAGS =
 
 #CONFIGURE_ARGS += --with-cpu-opt=pentium3
 CONFIGURE_ARGS += --with-cc-opt="-I$(includedir) -I$(includedir)/openssl"
-#CONFIGURE_ARGS += --with-ld-opt="$(LDFLAGS)"
-CONFIGURE_ARGS += --with-ld-opt="-R$(libdir) -R$(libdir) -L$(libdir)"
+CONFIGURE_ARGS += --with-ld-opt="$(LDFLAGS)"
+#CONFIGURE_ARGS += --with-ld-opt="-R$(libdir) -R$(libdir) -L$(libdir)"
 CONFIGURE_ARGS += --prefix=$(prefix)/var/nginx
 CONFIGURE_ARGS += --conf-path=$(sysconfdir)/nginx/nginx.conf
 CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
@@ -44,19 +44,24 @@ CONFIGURE_ARGS += --with-http_stub_status_module
 
 TEST_SCRIPTS =
 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest\/site))))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest\/site))))$$$$/ { $$$$6 = "?" } $$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
 
 include gar/category.mk
 
 NGINXDOCS = CHANGES CHANGES.ru LICENSE README
 
+post-configure-modulated:
+	$(foreach MODULATION,$(MODULATIONS), \
+		gsed -i s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h;)
+	$(MAKECOOKIE)
+
 post-install-modulated:
 	cp $(WORKDIR)/svc-cswnginx $(WORKDIR)/cswnginx
+	ginstall -d $(DESTDIR)$(sysconfdir)/nginx/conf.d
 	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
 	ginstall -d $(DESTDIR)$(docdir)/nginx
-	ginstall -d $(DESTDIR)$(prefix)/var/nginx
-	ginstall -d $(DESTDIR)$(prefix)/var/nginx/sites
 	ginstall -d $(DESTDIR)$(prefix)/var/log/nginx
+	ginstall -d $(DESTDIR)$(prefix)/var/nginx/sites
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/client
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/fastcgi
 	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/proxy
