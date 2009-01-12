@@ -6,7 +6,7 @@ DISTNAME = $(GARNAME)-$(DISTVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
-DESCRIPTION = ISC BIND reference implementation
+DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
   BIND is open-source software that implements the Domain Name System (DNS)
   protocols for the Internet. It is a reference implementation of those
@@ -22,10 +22,10 @@ DISTFILES += $(call admfiles,CSWbinddevel,)
 DISTFILES += $(call admfiles,CSWlibbind,)
 DISTFILES += $(call admfiles,CSWbindutils,)
 
-SPKG_DESC_CSWbind = ISC BIND main package
-SPKG_DESC_CSWbinddevel = ISC BIND development package
-SPKG_DESC_CSWlibbind = ISC BIND library package
-SPKG_DESC_CSWbindutils = ISC BIND utilities package
+SPKG_DESC_CSWbind = ISC BIND DNS main package
+SPKG_DESC_CSWbinddevel = ISC BIND DNS development package
+SPKG_DESC_CSWlibbind = ISC BIND DNS library package
+SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 
 REQUIRED_PKGS_CSWbind = CSWlibbind CSWbindutils CSWcswclassutils
 REQUIRED_PKGS_CSWbinddevel = CSWbind
