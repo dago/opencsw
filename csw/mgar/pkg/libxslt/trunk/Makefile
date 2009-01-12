@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxslt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibxslt,)
+DISTFILES += $(call admfiles,CSWlibxslt,prototype)
 
 PREREQUISITE_PKGS = CSWlibxml2 CSWlibxml2devel
 TEST_TARGET = check
