@@ -10,30 +10,45 @@ endef
 MASTER_SITES  = http://www.cairographics.org/releases/
 DISTFILES     = cairo-$(GARVERSION).tar.gz 
 PKGDIST       = cairo-$(GARVERSION).tar.gz 
-DISTFILES    += CSWlibcairo.gspec CSWlibcairo.prototype CSWlibcairo.depend 
-DISTFILES    += CSWlibcairodev.gspec CSWlibcairodev.prototype CSWlibcairodev.depend 
-DISTFILES    += CSWlibcairodoc.gspec CSWlibcairodoc.prototype CSWlibcairodoc.depend 
-# DISTFILES    += $(call admfiles,CSWlibcairo, depend)
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+SPKG_DESC_CSWlibcairo 		= $(DESCRIPTION)
+SPKG_DESC_CSWlibcairodevel 	= $(DESCRIPTION) development package
+
+DISTFILES    += $(call admfiles,CSWlibcairo, )
+DISTFILES    += $(call admfiles,CSWlibcairodevel, )
+DISTFILES    += $(call admfiles,CSWlibcairodoc, )
+
+PKGFILES_CSWlibcairodevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibcairodevel += $(prefix)/include/.*
+PKGFILES_CSWlibcairodevel += $(prefix)/lib/.*\.a
+PKGFILES_CSWlibcairodevel += $(prefix)/lib/pkgconfig/.*
+
+PKGFILES_CSWlibcairodoc   += $(prefix)/share/gtk-doc.*
+
+REQUIRED_PKGS_CSWlibcairodevel  = CSWlibcairo
+REQUIRED_PKGS_CSWlibcairodoc    = 
+REQUIRED_PKGS_CSWlibcairo 	   += CSWlibx11
+REQUIRED_PKGS_CSWlibcairo 	   += CSWfconfig
+REQUIRED_PKGS_CSWlibcairo 	   += CSWftype2
+REQUIRED_PKGS_CSWlibcairo 	   += CSWlibxrender
+REQUIRED_PKGS_CSWlibcairo 	   += CSWpixman
+REQUIRED_PKGS_CSWlibcairo 	   += CSWpng
+REQUIRED_PKGS_CSWlibcairo 	   += CSWzlib
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
-export CFLAGS CXXFLAGS LDFLAGS
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-GREP = ggrep
-
-include gar/category.mk
-
 CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
 
 post-extract:
-	( mv $(WORKDIR)/cairo-$(GARVERSION) $(WORKDIR)/$(GARNAME)-$(GARVERSION) )
+	( cd  $(WORKROOTDIR)/build-$(firstword $(MODULATIONS)) ; \
+		mv cairo-$(GARVERSION) $(GARNAME)-$(GARVERSION) )
 	@$(MAKECOOKIE)
 
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+include gar/category.mk
+
 
