@@ -14,6 +14,8 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(GETTEXTNAME)-$(GETTEXTVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibiconv,)
 
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 # Work around Sun Studio Preprocessor bug #6655406
 #   http://sunsolve.sun.com/search/document.do?assetkey=1-1-6655406-1
 PATCHFILES = patch-workaround-cc-bug-6655406.diff
