@@ -11,6 +11,8 @@ MASTER_SITES = http://www.packetfactory.net/libnet/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibnet,)
 
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
 SPKG_SOURCEURL = http://www.packetfactory.net/libnet/
 
 BUILD64 = 1
