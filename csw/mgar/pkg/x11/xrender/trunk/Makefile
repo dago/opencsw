@@ -1,6 +1,6 @@
 GARNAME = libxrender
 GARVERSION = 0.9.4
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = X Render extension library
 define BLURB
@@ -25,11 +25,12 @@ PKGFILES_CSWrenderdev += $(prefix)/X11/include/.*
 PKGFILES_CSWrenderdev += $(prefix)/X11/lib/.*\.a
 PKGFILES_CSWrenderdev += $(prefix)/X11/lib/pkgconfig/.*
 
-REQUIRED_PKGS_CSWrenderdev      = CSWlibxrender
-#REQUIRED_PKGS_CSWlibxrender = 
+REQUIRED_PKGS_CSWrenderdev  = CSWlibxrender
+REQUIRED_PKGS_CSWlibxrender = CSWlibx11
 
 post-extract:
-	( mv $(WORKDIR)/libXrender-$(GARVERSION) $(WORKDIR)/$(DISTNAME) )
+	( cd  $(WORKROOTDIR)/build-$(firstword $(MODULATIONS)) ; \
+		mv libXrender-$(GARVERSION) $(DISTNAME) )
 	@$(MAKECOOKIE)
 
 include gar/category.mk
