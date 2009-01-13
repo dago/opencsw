@@ -14,30 +14,24 @@ PKGDIST = libXrender-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = libXrender-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES    += CSWlibxrender.gspec CSWlibxrender.prototype CSWlibxrender.depend 
-DISTFILES    += CSWrenderdev.gspec CSWrenderdev.prototype CSWrenderdev.depend 
-# DISTFILES    += $(call admfiles,CSWxrender, depend)
+SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
+SPKG_DESC_CSWrenderdev  = $(DESCRIPTION) development package
 
-CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
-CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+DISTFILES    += $(call admfiles,CSWlibxrender, )
+DISTFILES    += $(call admfiles,CSWrenderdev, )
 
-export CFLAGS CXXFLAGS LDFLAGS
+PKGFILES_CSWrenderdev  = $(PKGFILES_DEVEL)
+PKGFILES_CSWrenderdev += $(prefix)/X11/include/.*
+PKGFILES_CSWrenderdev += $(prefix)/X11/lib/.*\.a
+PKGFILES_CSWrenderdev += $(prefix)/X11/lib/pkgconfig/.*
 
-TEST_SCRIPTS      = none
+REQUIRED_PKGS_CSWrenderdev      = CSWlibxrender
+#REQUIRED_PKGS_CSWlibxrender = 
 
-GREP = ggrep
+post-extract:
+	( mv $(WORKDIR)/libXrender-$(GARVERSION) $(WORKDIR)/$(DISTNAME) )
+	@$(MAKECOOKIE)
 
 include gar/category.mk
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man 
 
-test-none:
-	@$(MAKECOOKIE)
-
-post-extract:
-	( mv $(WORKDIR)/libXrender-$(GARVERSION) $(WORKDIR)/$(GARNAME)-$(GARVERSION) )
-	@$(MAKECOOKIE)
-
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

@@ -14,8 +14,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWzsh,depend postinstall postremove)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = http://sourceforge.net/project/showfiles.php?group_id=4068
-#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=4068
+UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS  = $(DIRPATHS)

@@ -17,7 +17,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWntop,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=17233
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 LIBDEPS += utils/rrdtool
 

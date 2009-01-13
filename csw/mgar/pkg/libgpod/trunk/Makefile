@@ -16,7 +16,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWlibgpod,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67873
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = $(GARNAME).(\d+(?:\.\d+)*)
 
 GARCOMPILER = GNU
 #GCC4 won't work. There are too many libtool deps using GCC3

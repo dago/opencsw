@@ -17,7 +17,10 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWphpldapadmin,depend postinstall preremove)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# We define upstream file regex so we can be notifed of new upstream software release
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=61828
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

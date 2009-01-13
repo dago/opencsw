@@ -18,7 +18,9 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWhypermail,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=18117
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # configure cancels out env LDFLAGS by default
 PATCHFILES += ldflag.diff

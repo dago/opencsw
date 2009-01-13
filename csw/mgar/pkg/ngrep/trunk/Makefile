@@ -20,7 +20,9 @@ DISTFILES += $(call admfiles,CSWngrep,depend)
 PATCHFILES = gar-base.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10752
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

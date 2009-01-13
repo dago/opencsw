@@ -2,7 +2,7 @@ GARNAME = joe
 GARVERSION = 3.3
 CATEGORIES = utils
 SPKG_PACKAGER   = Markus Mayer
-SPKG_EMAIL      = mmayer@blastwave.org
+SPKG_EMAIL      = mmayer@opencsw.org
 
 
 DESCRIPTION = Joe's Own Editor
@@ -23,7 +23,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWjoe,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=23475
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

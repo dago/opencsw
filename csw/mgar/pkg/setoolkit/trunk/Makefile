@@ -19,7 +19,9 @@ DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += $(call admfiles,CSWsetoolkit,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=189279
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = SE.Toolkit.(\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -21,7 +21,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWswig,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1645
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
 # Prevent automake from attempting to regenerate everything
 PATCHFILES += am.diff

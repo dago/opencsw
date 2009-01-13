@@ -15,8 +15,9 @@ MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES = $(GARNAME)-xsl-$(GARVERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-xsl-(\d+(?:\.\d+)*).tar.bz2
-
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=21935
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

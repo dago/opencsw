@@ -19,7 +19,9 @@ DISTFILES += $(call admfiles,CSWxmlstarlet,)
 REQUIRED_PKGS = CSWgcrypt CSWggettext CSWgpgerr CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=66612
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-cc.patch
 

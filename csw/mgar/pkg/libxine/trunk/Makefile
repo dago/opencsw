@@ -14,7 +14,9 @@ DISTFILES  = xine-lib-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibxine,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=9655
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PATCHFILES  = int_fast-defs-sol8.diff
 PATCHFILES += bswap-for-sol8-i386.diff

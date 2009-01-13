@@ -14,6 +14,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWfltk,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=6429
+UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PATCHFILES = makeincludes.diff

@@ -14,7 +14,9 @@ ADMFILES   = depend prototype postinstall preremove copyright
 DISTFILES += $(call admfiles,CSWap2modauthmysql,$(ADMFILES))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=60218
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # Restore deprecated (removed) macros
 PATCHFILES += apr.diff
