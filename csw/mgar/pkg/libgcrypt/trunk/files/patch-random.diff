@@ -1,0 +1,10 @@
+diff -Naur libgcrypt-1.4.3.orig/random/random.c libgcrypt-1.4.3.patched/random/random.c
+--- libgcrypt-1.4.3.orig/random/random.c	2008-09-16 20:35:22.000000000 +0200
++++ libgcrypt-1.4.3.patched/random/random.c	2009-01-13 09:24:12.598730103 +0100
+@@ -319,5 +319,5 @@
+ _gcry_random_deinit_external_test (void *context)
+ {
+   if (fips_mode ())
+-    return _gcry_rngfips_deinit_external_test (context);
++    _gcry_rngfips_deinit_external_test (context);
+ }
