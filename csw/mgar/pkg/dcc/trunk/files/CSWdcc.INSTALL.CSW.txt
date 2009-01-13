@@ -1,0 +1,29 @@
+2006.01.27 - Package changes
+If you are using Solaris 10 or later, you can setup dcc to use Service Manifest Facility.  You may want to change the dependencies.
+ 
+To setup SMF:
+1) Make the following directories, if needed:
+  `mkdir -p /opt/csw/lib/svc/method`
+  `mkdir -p /opt/csw/var/svc/manifest/network`
+2) Copy the service method file.  Change if needed:
+  `cp -p /opt/csw/share/doc/dcc/svc-dcc /opt/csw/lib/svc/method/`
+3) Copy the manifest file.  Change if needed:
+  `cp -p /opt/csw/share/doc/dcc/dcc.xml /opt/csw/var/svc/manifest/network/`
+4) Register the service:
+  `/usr/sbin/svccfg import /opt/csw/var/svc/manifest/network/dcc.xml`
+5) Enable the service:
+  `/usr/sbin/svcadm enable svc:network/cswdcc'
+
+To restart DCC after upgrades:
+  `svcadm restart cswdcc`
+
+To permanently remove SMF setup:
+1) Disable service:
+   `/usr/sbin/svcadm disable -s svc:network/cswdcc`
+2) Unregister with SMF:
+   `/usr/sbin/svccfg delete svc:network/cswdcc`
+3) Delete unused files:
+   `rm /opt/csw/lib/svc/method/svc-dcc /opt/csw/var/svc/manifest/network/dcc.xml'
+
+** Previous text **
+The package installs all options for dcc.  However, nothing is started automatically because there are several ways to use dcc. Read the FAQ and INSTALL documents and the man pages to decide how you wish to use dcc and complete the installation. If your site participates in the SMTP transactions, consider greylisting.  This is a powerful feature of dcc. The m4 files for sendmail milter are in /opt/csw/share/doc/dcc/misc. For a startup script, I suggest a symlink in /etc/rc2.d, maybe S77DCC, to /opt/csw/dcc/libexec/rcDCC.

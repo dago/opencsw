@@ -2,7 +2,7 @@ GARNAME = dcc
 GARVERSION = 1.3.102
 CATEGORIES = net
 
-DESCRIPTION = email greylisting and a cooperative, distributed system to identify spam
+DESCRIPTION = E-mail greylisting and a cooperative, distributed system to identify spam
 
 MASTER_SITES = http://www.rhyolite.com/dcc/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
@@ -32,6 +32,7 @@ SPKG_SOURCEURL = http://www.rhyolite.com/dcc/
 REQUIRED_PKGS = CSWcswclassutils
 SPKG_CLASSES = none cswcpsampleconf
 CONFFILES =  dcc_conf flod grey_flod grey_whitelist ids map map.txt whiteclnt whitecommon whitelist
+DOCFILES = CHANGES FAQ.txt INSTALL.txt LICENSE RESTRICTIONS misc/README misc/dcc.m4 misc/dccdnsbl.m4 misc/site.config.m4
 
 include gar/category.mk
 
@@ -46,5 +47,10 @@ install-custom:
 	   mv tmp.sed Makefile ; \
 	   cd .. ; \
 	   gmake install )
-	$(foreach FILE, $(CONFFILES), mv $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE) $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE).CSW ;)
+	@$(foreach FILE, $(CONFFILES), mv $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE) $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE).CSW ;)
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/misc
+	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(GARNAME)/$(FILE) ;)
+	@cp $(FILEDIR)/CSWdcc.INSTALL.CSW.txt $(DESTDIR)$(docdir)/$(GARNAME)/INSTALL.CSW.txt
+	@cp $(FILEDIR)/CSWdcc.dcc.xml $(DESTDIR)$(docdir)/$(GARNAME)/dcc.xml
+	@cp $(FILEDIR)/CSWdcc.svc-dcc $(DESTDIR)$(docdir)/$(GARNAME)/svc-dcc
 	@$(MAKECOOKIE)
