@@ -1,7 +1,3 @@
 09357cc74975b01714e00c5899ea1881  download/pixman-0.12.0.tar.gz
-e923b5e9b6908d3d7031bbc79222397d  download/CSWpixman.gspec
-76c6380331452e1f1bc05a4d6d836d33  download/CSWpixman.prototype
-d41d8cd98f00b204e9800998ecf8427e  download/CSWpixman.depend
-6495c1d471aa267024eea2093420d6ef  download/CSWpixmandev.gspec
-60795012df47831a5983e11561b5a929  download/CSWpixmandev.prototype
-155abd6a115f1ed43fe5105ca3e877c7  download/CSWpixmandev.depend
+5b2d839113c3dbe7bea7da0f54a4d3dc  download/CSWpixman.gspec
+e2bea793bd3dc27a28c1a83e36f8e94c  download/CSWpixmandevel.gspec
