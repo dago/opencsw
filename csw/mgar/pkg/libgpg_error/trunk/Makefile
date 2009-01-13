@@ -12,6 +12,8 @@ MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgpg-error/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgpgerr,)
 
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 SPKG_SOURCEURL = http://www.gnupg.org/download/
 
 REQUIRED_PKGS = CSWiconv CSWggettext
