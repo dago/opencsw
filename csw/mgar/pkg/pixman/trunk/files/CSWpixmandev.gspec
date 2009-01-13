@@ -1,4 +1,4 @@
-%var            bitname pixmandev
-%var            pkgname CSWpixmandev
+%var            bitname pixman_devel
+%var            pkgname CSWpixmandevel
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
