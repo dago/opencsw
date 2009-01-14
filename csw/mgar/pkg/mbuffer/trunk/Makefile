@@ -1,5 +1,5 @@
 GARNAME = mbuffer
-GARVERSION = 20081207
+GARVERSION = 20090106
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -14,9 +14,12 @@ endef
 
 MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWpackage,)
+DISTFILES += $(call admfiles,CSWmbuffer,)
 
 REQUIRED_PKGS = CSWosslrt
+
+# Required for the test target
+PREREQUISITE_PKGS = CSWmktemp CSWgcc4core
 
 # We define upstream file regex so we can be notifed of new upstream software 
 # release
@@ -27,33 +30,53 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+# ------------------------------------------------------------------------
+# 64-bit build is broken right now (make check throws assertion errors). 
+# Fix is pending from upstream. 
+
 # To build amd64 you have to do the following
 # 1)  build8x: gmake build-isa-i386
 # 2) build10x: gmake merge
 # 3)  build8x: gmake package
-BUILD64 = 1
-ISAEXEC_BINS = $(bindir)/mbuffer
+# BUILD64 = 1
+# ISAEXEC_BINS = $(bindir)/mbuffer
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# While i am still fighting with the packaging stuff, skip the tests
-# TEST_TARGET = check
-TEST_TARGET =
+TEST_SCRIPTS = custom
 
 include gar/category.mk
+
+# The test scripts do file IO and this is so sloooooow when being run 
+# in a NFS mounted $HOME. The local disk on build8x is no better, so
+# just do the testing from /tmp instead.
+#
+# TODO: 
+# * Clean up $TMPDIR even when the nested make fails.
+# * Somehow assert that the isa-amd64 test is run on build10x
+#
+test-custom: TMPDIR := $(shell mktemp -d -p /tmp)
+test-custom:
+	echo "Running target test-custom, TMPDIR = $(TMPDIR)"
+	@cp $(WORKSRC)/mbuffer $(WORKSRC)/Makefile $(TMPDIR)/
+	@$(MAKE) -C $(TMPDIR) check
+	@rm -rf $(TMPDIR)
+	@$(MAKECOOKIE)
 
 # Solaris 10 on build10x has libm.so which points to libm.so.2. libm.so.2 
 # is however not available on Solaris 8. So we have to explicitly use 
 # libm.so.1 during linking and get rid of the -lm reference. Otherwise
-# the package check on build8x when running "gmake package" fails.
-post-configure-isa-amd64: M1=$(WORKSRC)/Makefile
-post-configure-isa-amd64: M2=$(WORKSRC)/Makefile.tmp
+# the package check on build8x (when running "gmake package") fails.
+post-configure-isa-amd64: M1 = $(WORKSRC)/Makefile
+post-configure-isa-amd64: M2 = $(WORKSRC)/Makefile.tmp
 post-configure-isa-amd64:
 	@echo "Patching Makefile to use /lib/64/libm.so.1 instead of -lm"
 	@sed 's#-lm#/lib/64/libm.so.1#' $(M1) > $(M2) && mv $(M2) $(M1)
+	@$(MAKECOOKIE)
 
 post-install-modulated: DOCS = ChangeLog README AUTHORS
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
+	@$(MAKECOOKIE)
