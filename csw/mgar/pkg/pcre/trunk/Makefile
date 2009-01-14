@@ -19,7 +19,7 @@ SPKG_SOURCEURL = http://www.pcre.org
 
 PREREQUISITE_PKGS = CSWgnulinks
 REQUIRED_PKGS_CSWpcre = CSWpcrert
-REQUIRED_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline
+REQUIRED_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline CSWncurses
 
 SPKG_DESC_CSWpcrert = Perl-compatible regular expression tools (runtime)
 SPKG_DESC_CSWpcre = Perl-compatible regular expression tools
@@ -35,7 +35,13 @@ CONFIGURE_ARGS += --enable-pcregrep-libz
 CONFIGURE_ARGS += --enable-pcregrep-libbz2
 CONFIGURE_ARGS += --enable-pcretest-libreadline
 
+EXTRA_LINKER_FLAGS = -lncurses
+
 TEST_TARGET = check
+
+NO_ISAEXEC = 1
+
+PKGFILES_CSWpcrert = $(PKGFILES_RT)
 
 include gar/category.mk
 
