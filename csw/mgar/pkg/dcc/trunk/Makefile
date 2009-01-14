@@ -8,6 +8,9 @@ MASTER_SITES = http://www.rhyolite.com/dcc/source/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
 DISTFILES += $(call admfiles,CSWdcc,)
 
+# Upstream watch
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.Z
+
 #CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  =
 CONFIGURE_ARGS += --homedir=/var/opt/csw/dcc
