@@ -14,12 +14,14 @@ DISTFILES += $(call admfiles,CSWpmnetdns,)
 
 REQUIRED_PKGS = CSWpmdigesthmac CSWpmnetip
 
-# Update watch
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DEPENDS += cpan/Net-IP
 
 CONFIGURE_ARGS  = --no-online-tests
 CONFIGURE_ARGS += --no-IPv6-tests
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+
+# Weird problem on sparc
+TEST_SCRIPTS =
 
 include gar/category.mk
