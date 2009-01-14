@@ -56,12 +56,6 @@ post-configure-modulated:
 
 post-install-modulated:
 	cp $(WORKDIR)/svc-cswnginx $(WORKDIR)/cswnginx
-	ginstall -d $(DESTDIR)/etc/init.d
-	cp $(WORKDIR)/cswnginx $(DESTDIR)/etc/init.d
-	ginstall -d $(DESTDIR)$(prefix)/var/svc/manifest/site
-	cp $(WORKDIR)/cswnginx.xml $(DESTDIR)$(prefix)/var/svc/manifest/site
-	ginstall -d $(DESTDIR)$(libdir)/svc/method
-	cp $(WORKDIR)/svc-cswnginx $(DESTDIR)$(libdir)/svc/method
 	ginstall -d $(DESTDIR)$(sysconfdir)/nginx/conf.d
 	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
 	ginstall -d $(DESTDIR)$(docdir)/nginx
