@@ -23,7 +23,13 @@ foreach my $file (glob "$bindir/*") {
 
 	if ($filechar =~ /ELF/ && $filechar =~ /not stripped/) {
 		print "Stripping $file ... ";
+
+		# Make sure we can write to the file
+		my $perm = (stat $file)[2] & 07777;
+		print "making file temporarily writable ... " unless( $perm & 0200 );
+                chmod($perm | 0200, $file);
 		system "strip", $file and die "Failed.";
+		chmod($perm, $file);
 		print "Done.\n";
 	}
 }
