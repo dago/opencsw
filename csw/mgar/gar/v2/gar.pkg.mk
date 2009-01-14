@@ -233,6 +233,7 @@ package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 						 --workdir  $(SPKG_WORKDIR) \
 						 --pkgbase  $(SPKG_PKGBASE) \
 						 --pkgroot  $(SPKG_PKGROOT) \
+						-v WORKDIR_FIRSTMOD=../build-$(firstword $(MODULATIONS)) \
 						 --compress \
 						 $(MKPACKAGE_ARGS) ) || exit 2
 	@$(MAKECOOKIE)

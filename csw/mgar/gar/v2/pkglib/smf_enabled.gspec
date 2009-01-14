@@ -13,7 +13,7 @@ i i.smf=%{PKGLIB}/smf/i.smf
 i r.smf=%{PKGLIB}/smf/r.smf
 d init /etc ? ? ?
 d init /etc/init.d ? ? ?
-f init /etc/init.d/%{RC_INIT_SCRIPT}=%{RC_INIT_SCRIPT} 0755 root bin
+f init /etc/init.d/%{RC_INIT_SCRIPT}=$WORKDIR_FIRSTMOD/%{RC_INIT_SCRIPT} 0755 root bin
 d init /etc/rc0.d ? ? ?
 s init /etc/rc0.d/%{INIT_RC0}%{INIT_KILL_PRIO}%{RC_INIT_SCRIPT}=../init.d/%{RC_INIT_SCRIPT}
 d init /etc/rc1.d ? ? ?
@@ -27,11 +27,11 @@ s init /etc/rcS.d/%{INIT_RCS}%{INIT_KILL_PRIO}%{RC_INIT_SCRIPT}=../init.d/%{RC_I
 d smf /opt/csw/var/svc 0755 root bin
 d smf /opt/csw/var/svc/manifest 0755 root bin
 d smf /opt/csw/var/svc/manifest/site 0755 root bin
-v smf /opt/csw/var/svc/manifest/site/%{SMF_MANIFEST}=%{SMF_MANIFEST} 0644 root bin
+v smf /opt/csw/var/svc/manifest/site/%{SMF_MANIFEST}=$WORKDIR_FIRSTMOD/%{SMF_MANIFEST} 0644 root bin
 d smf /opt/csw/lib 0755 root bin
 d smf /opt/csw/lib/svc 0755 root bin
 d smf /opt/csw/lib/svc/method 0755 root bin
-f smf /opt/csw/lib/svc/method/%{SMF_SCRIPT}=%{SMF_SCRIPT} 0755 root bin
+f smf /opt/csw/lib/svc/method/%{SMF_SCRIPT}=$WORKDIR_FIRSTMOD/%{SMF_SCRIPT} 0755 root bin
 %pkginfo:merge
 MANIFEST_FILES="/opt/csw/var/svc/manifest/site/%{SMF_MANIFEST}"
 INIT_FILES="/etc/init.d/%{RC_INIT_SCRIPT}"
