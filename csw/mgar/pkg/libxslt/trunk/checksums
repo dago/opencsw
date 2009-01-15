@@ -1,3 +1,7 @@
-6faa1f60fc8e905aefbe24f6ea730c4a  download/CSWlibxslt.gspec
-c736ebf9711567b6c338f6f216cce7b2  download/CSWlibxslt.prototype
+321a752ab4d8d4c7af816bac60aa609c  download/CSWlibxslt.depend
+01dba7c998bd516e5c6845d5babe3d21  download/CSWlibxslt.gspec
+9b502d9743485d93545c3f1f6049ffac  download/CSWlibxsltdevel.depend
+9d6a28c9ac7dea73ae95423e2f431fcd  download/CSWlibxsltdevel.gspec
+d9a00b510065957c95c3334339b163e0  download/CSWpylibxslt.depend
+1fb5e9ee1b80283247e56231713082e0  download/CSWpylibxslt.gspec
 e83ec5d27fc4c10c6f612879bea9a153  download/libxslt-1.1.24.tar.gz

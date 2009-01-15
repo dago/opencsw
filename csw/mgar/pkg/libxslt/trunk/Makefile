@@ -3,13 +3,16 @@ GARVERSION = 1.1.24
 CATEGORIES = lib
 
 DESCRIPTION = XSLT engine for the XML Toolkit
+
 define BLURB
-  Libxslt is the XSLT C library developed for the GNOME project. XSLT itself is a an XML language to define transformation for XML. Libxslt is based on libxml2 the XML C library developed for the GNOME project. It also implements most of the EXSLT set of processor-portable extensions functions and some of Saxon's evaluate and expressions extensions.
+	Libxslt is the XSLT C library developed for the GNOME project. XSLT itself is a an XML language to define transformation for XML. Libxslt is based on libxml2 the XML C library developed for the GNOME project. It also implements most of the EXSLT set of processor-portable extensions functions and some of Saxon's evaluate and expressions extensions.
 endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxslt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibxslt,prototype)
+DISTFILES += $(call admfiles,CSWlibxslt,depend)
+DISTFILES += $(call admfiles,CSWlibxsltdevel,depend)
+DISTFILES += $(call admfiles,CSWpylibxslt,depend)
 
 PREREQUISITE_PKGS = CSWlibxml2 CSWlibxml2devel
 TEST_TARGET = check
@@ -21,6 +24,19 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_AGGS_32 =
+CONFIGURE_ARGS_64 = --without-python
+CONFIGURE_ARGS = $(DIRPATHS) $(CONFIGURE_ARGS_$(MEMORYMODEL))
+
+BUILD64 = 1
+
+NO_ISAEXEC = 1
+
+PKGFILES_CSWlibxsltdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxsltdevel += $(docdir)/libxslt-$(GARVERSION)/.*
+PKGFILES_CSWlibxsltdevel += $(libdir)/xsltConf.sh
+PKGFILES_CSWlibxsltdevel += $(call isadirs,$(libdir),xsltConf.sh)
+PKGFILES_CSWpylibxslt = $(libdir)/python.*
+PKGFILES_CSWpylibxslt += $(docdir)/libxslt-python-$(GARVERSION)/.*
 
 include gar/category.mk
