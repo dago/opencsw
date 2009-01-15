@@ -1,4 +1,7 @@
 %var            bitname mercurial
 %var            pkgname CSWmercurial
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright
+
+Please see /opt/csw/share/doc/mercurial/LICENSE for license information
+
