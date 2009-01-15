@@ -31,8 +31,9 @@ while read src dest ; do
 		echo $confdest already exists. Not overwriting
 	else
 		echo Copying sample config to $confdest
-		cp $dest $confdest
+		cp -p $dest $confdest
 	fi
 done
 
 echo ""
+

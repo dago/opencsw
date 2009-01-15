@@ -1,5 +1,5 @@
 GARNAME = cswclassutils
-GARVERSION = 1.2
+GARVERSION = 1.3
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
@@ -15,7 +15,7 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 WORKSRC = $(WORKDIR)
-SPKG_SOURCEURL = http://www.opencsw.org/
+SPKG_SOURCEURL = http://www.opencsw.org
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"

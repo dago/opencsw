@@ -34,13 +34,14 @@ while read src dest ; do
 
 	if [ -f $preservedconf ] ; then
 		echo Restoring $preservedconf
-		cp $preservedconf $confdest
+		cp -p $preservedconf $confdest
 	elif [ -f $confdest ] ; then
 		echo $confdest already exists. Not overwriting
 	else
 		echo Copying sample config to $confdest
-		cp $dest $confdest
+		cp -p $dest $confdest
 	fi
 done
 
 echo ""
+
