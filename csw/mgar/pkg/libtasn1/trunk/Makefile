@@ -1,5 +1,5 @@
 GARNAME = libtasn1
-GARVERSION = 1.7
+GARVERSION = 1.8
 CATEGORIES = lib
 
 DESCRIPTION = GNU ASN1 library
@@ -7,10 +7,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnu.org/pub/gnu/gnutls/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-1-20090116.tar.gz
 DISTFILES += $(call admfiles,CSWlibtasn1,)
-
-PATCHFILES = patch-stdint.diff
 
 SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
 
