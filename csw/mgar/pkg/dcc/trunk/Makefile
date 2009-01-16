@@ -19,8 +19,7 @@ CONFIGURE_ARGS += --libexecdir=/opt/csw/libexec/dcc
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --with-installroot=$(DESTDIR)
 CONFIGURE_ARGS += --with-DCC-MD5
-#CONFIGURE_ARGS += --with-uid=bonivart
-CONFIGURE_ARGS += --with-uid=dcc
+CONFIGURE_ARGS += --with-uid=bonivart
 #CONFIGURE_ARGS += --with-cgibin=/var/opt/csw/dcc/cgi-bin
 CONFIGURE_ARGS += --with-cgibin=/opt/csw/dcc/cgi-bin
 CONFIGURE_ARGS += --with-rundir=/var/opt/csw/dcc/run
@@ -51,6 +50,9 @@ install-custom:
 	   mv tmp.sed Makefile ; \
 	   cd .. ; \
 	   gmake install )
+	@( cd $(DESTDIR)/var/opt/csw/$(GARNAME) ; \
+	  sed 's/bonivart/dcc/' dcc_conf > tmp.sed ; \
+	  mv tmp.sed dcc_conf )
 	@$(foreach FILE, $(CONFFILES), mv $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE) $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE).CSW ;)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/misc
 	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(GARNAME)/$(FILE) ;)
