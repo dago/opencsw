@@ -19,7 +19,8 @@ CONFIGURE_ARGS += --libexecdir=/opt/csw/libexec/dcc
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --with-installroot=$(DESTDIR)
 CONFIGURE_ARGS += --with-DCC-MD5
-CONFIGURE_ARGS += --with-uid=bonivart
+#CONFIGURE_ARGS += --with-uid=bonivart
+CONFIGURE_ARGS += --with-uid=dcc
 #CONFIGURE_ARGS += --with-cgibin=/var/opt/csw/dcc/cgi-bin
 CONFIGURE_ARGS += --with-cgibin=/opt/csw/dcc/cgi-bin
 CONFIGURE_ARGS += --with-rundir=/var/opt/csw/dcc/run
@@ -34,7 +35,7 @@ PROTOTYPE_FILTER  = awk '$$$$3 ~ /.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { prin
 SPKG_SOURCEURL = http://www.rhyolite.com/dcc/
 REQUIRED_PKGS = CSWcswclassutils
 SPKG_CLASSES = none cswcpsampleconf
-CONFFILES =  dcc_conf flod grey_flod grey_whitelist ids map map.txt whiteclnt whitecommon whitelist
+CONFFILES =  dcc_conf flod grey_flod grey_whitelist ids map.txt whiteclnt whitecommon whitelist
 DOCFILES = CHANGES FAQ.txt INSTALL.txt LICENSE RESTRICTIONS misc/README misc/dcc.m4 misc/dccdnsbl.m4 misc/site.config.m4
 
 include gar/category.mk
