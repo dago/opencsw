@@ -55,4 +55,4 @@ post-install:
 	@chmod 555 $(DESTDIR)$(libdir)/libhistory.*
 	@chmod 555 $(DESTDIR)$(libdir)/libreadline.*
 
-LDFLAGS := $(filter-out -xarch=%,$(filter-out -m%,$(LDFLAGS)))
+LDFLAGS := $(filter-out -xarch=%,$(filter-out -m%,$(LDFLAGS))) -R$(libdir) -lncurses
