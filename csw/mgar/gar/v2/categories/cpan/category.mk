@@ -33,6 +33,8 @@ USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)
 
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 
+_MERGE_EXCLUDE_CATEGORY = .*/perllocal\.pod .*/\.packlist
+
 include gar/gar.mk
 
 # Canned commands for finding packlist files
