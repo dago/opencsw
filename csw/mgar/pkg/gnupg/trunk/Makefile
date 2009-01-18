@@ -1,5 +1,5 @@
 GARNAME = gnupg
-GARVERSION = 1.4.9
+GARVERSION = 2.0.10
 CATEGORIES = apps
 
 DESCRIPTION = RFC 2440 compliant tool for secure communication and data storage
@@ -7,16 +7,14 @@ define BLURB
   GnuPG is a complete and free replacement for PGP.
 endef
 
-MASTER_SITES = http://www.gnupg.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWgnupg, depend prototype)
+MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gnupg/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWgnupg,)
+
+SPKG_SOURCEURL = http://www.gnupg.org/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-UPSTREAM_MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gnupg/
+UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl
