@@ -16,7 +16,13 @@ DISTFILES += $(call admfiles,CSWpth,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+BUILD64 = 1
+NO_ISAEXEC = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
+
+# Add static libs as under Solaris 7/8 x86 shared libpth doesn't work correctly.
+MERGE_EXCLUDE_STATICLIBS =
 
 include gar/category.mk
 
