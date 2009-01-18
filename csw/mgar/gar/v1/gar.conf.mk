@@ -303,5 +303,4 @@ export PATH PKG_CONFIG_PATH XML_CATALOG_FILES
 FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
 
 # Extra libraries
-EXTRA_LIBS = gar.pkg.mk gar.common.mk
-
+EXTRA_LIBS = gar.pkg.mk gar.common.mk gar.svn.mk
