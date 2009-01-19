@@ -1,0 +1,35 @@
+diff -Naur cvsps-2.1.orig/Makefile cvsps-2.1.patched/Makefile
+--- cvsps-2.1.orig/Makefile	2005-05-26 05:39:40.000000000 +0200
++++ cvsps-2.1.patched/Makefile	2009-01-19 14:40:16.228045093 +0100
+@@ -21,7 +21,7 @@
+ all: cvsps
+ 
+ cvsps: $(OBJS)
+-	$(CC) -o cvsps $(OBJS) -lz
++	$(CC) -o cvsps $(OBJS) -lz $(_EXTRA_LIBS)
+ 
+ install:
+ 	[ -d $(prefix)/bin ] || mkdir -p $(prefix)/bin
+diff -Naur cvsps-2.1.orig/util.c cvsps-2.1.patched/util.c
+--- cvsps-2.1.orig/util.c	2005-05-26 05:39:40.000000000 +0200
++++ cvsps-2.1.patched/util.c	2009-01-19 14:46:43.782069081 +0100
+@@ -154,16 +154,18 @@
+     char * old_tz = getenv("TZ");
+     time_t ret;
+ 
+-    setenv("TZ", "UTC", 1);
++    /* setenv("TZ", "UTC", 1); */
+ 
+     tzset();
+ 	    
+     ret = mktime(tm);
+ 
++    /*
+     if (old_tz)
+ 	setenv("TZ", old_tz, 1);
+     else 
+ 	unsetenv("TZ");
++    */
+ 
+     tzset();
+ 
