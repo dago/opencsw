@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libksba/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibskba,)
+DISTFILES += $(call admfiles,CSWlibksba,)
 
 PATCHFILES = patch-novoidreturn.diff
 
