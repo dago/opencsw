@@ -1,0 +1,23 @@
+GARNAME = leafnode
+GARVERSION = 1.11.6
+CATEGORIES = apps
+
+DESCRIPTION = An NNTP server for small leaf sites
+define BLURB
+endef
+
+MASTER_SITES = $(SF_MIRRORS)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWleafnode,)
+
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=57767
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
+
+REQUIRED_PKGS = CSWpcre
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
+
+include gar/category.mk
