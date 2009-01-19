@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.3.1
+GARVERSION = 1.4
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -33,22 +33,22 @@ install-custom:
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)$(sysconfdir)
-	@ginstall -d $(DESTDIR)/opt/csw/libexec/pkgutil
-	@ginstall -d $(DESTDIR)$(docdir)/pkgutil
+	@ginstall -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 #	@ginstall -d $(DESTDIR)/usr/sadm/install/scripts
-	@ginstall -d $(DESTDIR)/var/opt/csw/pkgutil/packages
+	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
 #	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
 	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
 	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)
 	@cp -r $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
 	@cp -r $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
-	@cp -r $(WORKSRC)/readme $(DESTDIR)$(docdir)/pkgutil/
-#	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)$(docdir)/pkgutil/LICENSE
-	@cp -r $(WORKSRC)/copyright $(DESTDIR)$(docdir)/pkgutil/LICENSE
+	@cp -r $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
+#	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
+	@cp -r $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)/
 #	@cp -r $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
 #	@cp -r $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil
-	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/pkgutil/admin.CSW
-	@cp -r $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/pkgutil/wget
+	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
+	@cp -r $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
 	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@$(MAKECOOKIE)
