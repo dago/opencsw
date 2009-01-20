@@ -43,8 +43,8 @@ install-custom:
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/Botnet.pl $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(sysconfdir)/mail/spamassassin
-	@$(foreach FILE, $(MAINFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(sysconfdir)/mail/spamassassin ;)
+	@ginstall -d $(DESTDIR)$(sysconfdir)/spamassassin
+	@$(foreach FILE, $(MAINFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(sysconfdir)/spamassassin ;)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(GARNAME) ;)
 	@cp -r $(WORKSRC)/COPYING $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
