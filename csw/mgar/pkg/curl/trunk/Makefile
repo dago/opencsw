@@ -24,7 +24,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LIBDEPS += lib/openssl
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
-BUILD64 = 1
+
+#Can't build amd64 until openldap has an amd64 build (Mantis 3028)
+#BUILD64 = 1
+EXTRA_BUILD_ISAS_sparc = sparcv9
+
 TEST_SCRIPTS =
 
 PKGFILES_CSWcurldevel  = $(PKGFILES_DEVEL)
