@@ -13,6 +13,8 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpth,)
 
+SPKG_SOURCEURL = http://www.gnu.org/software/pth/
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -35,12 +37,3 @@ include gar/category.mk
 #      the dynamic linker on Solaris/x86.  The same Solaris versions on SPARC
 #      don't have this problem.
 #      [Ralf S. Engelschall]
-
-post-install:
-	cd $(WORKSRC) && ginstall pth-config.1 $(DESTDIR)$(mandir)/man1
-	cd $(WORKSRC) && ginstall pth.3 $(DESTDIR)$(mandir)/man3
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)-$(GARVERSION)
-	cd $(WORKSRC) && ginstall ANNOUNCE AUTHORS COPYING ChangeLog HACKING HISTORY INSTALL \
-		NEWS PORTING README SUPPORT TESTS THANKS USERS \
-		$(DESTDIR)$(docdir)/$(GARNAME)-$(GARVERSION)
-	
