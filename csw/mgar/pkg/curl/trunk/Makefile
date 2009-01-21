@@ -15,19 +15,19 @@ endef
 
 MASTER_SITES = http://curl.haxx.se/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWcurl,prototype depend)
-DISTFILES += $(call admfiles,CSWcurlrt,prototype depend)
+DISTFILES += $(call admfiles,CSWcurl,depend)
+DISTFILES += $(call admfiles,CSWcurlrt,depend)
+DISTFILES += $(call admfiles,CSWcurldevel,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LIBDEPS += lib/openssl
-
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
-
 BUILD64 = 1
-
-# Not gonna do it
 TEST_SCRIPTS =
+
+PKGFILES_CSWcurldevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWcurlrt  = $(PKGFILES_RT)
 
 include gar/category.mk
