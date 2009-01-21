@@ -1,5 +1,5 @@
 GARNAME = curl
-GARVERSION = 7.19.2
+GARVERSION = 7.19.3
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
@@ -24,6 +24,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 LIBDEPS += lib/openssl
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
+
+BUILD64 = 1
 
 # Not gonna do it
 TEST_SCRIPTS =
