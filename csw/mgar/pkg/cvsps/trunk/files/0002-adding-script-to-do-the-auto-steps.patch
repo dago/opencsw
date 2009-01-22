@@ -1,0 +1,25 @@
+From b92b9590bec3e41238297d9f15d20b9e79c3e65b Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 22 Jan 2009 01:54:49 +0100
+Subject: [PATCH] adding script to do the auto* steps
+
+---
+ autoinit.sh |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+ create mode 100755 autoinit.sh
+
+diff --git a/autoinit.sh b/autoinit.sh
+new file mode 100755
+index 0000000..d5d5881
+--- /dev/null
++++ b/autoinit.sh
+@@ -0,0 +1,6 @@
++#!/bin/sh
++
++aclocal
++autoconf
++autoheader
++automake --add-missing --foreign
+-- 
+1.6.0.5
+

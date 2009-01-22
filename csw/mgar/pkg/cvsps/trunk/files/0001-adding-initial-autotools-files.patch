@@ -1,0 +1,62 @@
+From 00471f248d519bab09d6aedd13bc4cb00df577d8 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 22 Jan 2009 01:48:47 +0100
+Subject: [PATCH] adding initial autotools files
+
+---
+ Makefile.am  |    2 ++
+ configure.ac |   33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 0 deletions(-)
+ create mode 100644 Makefile.am
+ create mode 100644 configure.ac
+
+diff --git a/Makefile.am b/Makefile.am
+new file mode 100644
+index 0000000..efde4db
+--- /dev/null
++++ b/Makefile.am
+@@ -0,0 +1,2 @@
++bin_PROGRAMS = cvssp
++cvssp_SOURCES = cache.c cap.c cvs_direct.c cvsps.c list_sort.c stats.c util.c
+diff --git a/configure.ac b/configure.ac
+new file mode 100644
+index 0000000..2d7e79d
+--- /dev/null
++++ b/configure.ac
+@@ -0,0 +1,33 @@
++AC_PREREQ([2.63])
++AC_INIT([cvsps], [2.1])
++AC_CONFIG_SRCDIR([util.h])
++AC_CONFIG_HEADERS([config.h])
++
++# We're using automake too
++AM_INIT_AUTOMAKE(cvsps,2.1)
++
++# Checks for programs.
++AC_PROG_CC
++AC_PROG_INSTALL
++
++# Checks for libraries.
++# FIXME: Replace `main' with a function in `-lz':
++AC_CHECK_LIB([z], [gzputs])
++
++# Checks for header files.
++AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h netdb.h netinet/in.h stdlib.h string.h strings.h sys/socket.h sys/time.h unistd.h])
++
++# Checks for typedefs, structures, and compiler characteristics.
++AC_TYPE_PID_T
++AC_TYPE_SIZE_T
++AC_TYPE_SSIZE_T
++
++# Checks for library functions.
++AC_FUNC_FORK
++AC_FUNC_MALLOC
++AC_FUNC_MKTIME
++AC_CHECK_FUNCS([gethostbyname gettimeofday memmove memset mkdir regcomp setenv socket strchr strdup strerror strrchr strstr tzset])
++
++AC_CONFIG_FILES([Makefile])
++AC_OUTPUT
++
+-- 
+1.6.0.5
+

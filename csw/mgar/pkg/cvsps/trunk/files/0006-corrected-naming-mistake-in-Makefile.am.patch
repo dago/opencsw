@@ -1,0 +1,23 @@
+From c96aa7e5ec93643a0daf8b5b8149e5fb703f73d0 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 22 Jan 2009 02:41:42 +0100
+Subject: [PATCH] corrected naming mistake in Makefile.am
+
+---
+ Makefile.am |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index efde4db..9871652 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,2 +1,4 @@
+-bin_PROGRAMS = cvssp
+-cvssp_SOURCES = cache.c cap.c cvs_direct.c cvsps.c list_sort.c stats.c util.c
++bin_PROGRAMS = cvsps
++cvsps_SOURCES = cache.c cap.c cvs_direct.c cvsps.c list_sort.c stats.c util.c \
++		cbtcommon/debug.c cbtcommon/hash.c cbtcommon/sio.c \
++		cbtcommon/tcpsocket.c cbtcommon/text_util.c
+-- 
+1.6.0.5
+

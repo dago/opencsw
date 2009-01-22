@@ -1,3 +1,7 @@
 bde2110ed9f5d14de8f8cb04e9d596fe  download/cvsps-2.1.tar.gz
 cb54db01900320e1bf80da166c60c2f8  download/CSWcvsps.gspec
-fdfe30f050b93e6db82c665d830216e3  download/patch-extralibs.diff
+cc014dedc4c04f49f820c083ba903439  download/0001-adding-initial-autotools-files.patch
+bd3516f9223b80e6140247520ed767f8  download/0002-adding-script-to-do-the-auto-steps.patch
+f2039869b307620fe8f1c88cf129d04d  download/0004-make-cvsps.c-aware-of-config.h-from-autoconf.patch
+7d7f7d520ea371bb0e0ed5424831b795  download/0005-add-autoconf-checks-for-lsocket-lnsl.patch
+acbb7ea325559370e1804c88407c5304  download/0006-corrected-naming-mistake-in-Makefile.am.patch

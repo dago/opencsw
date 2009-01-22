@@ -1,0 +1,25 @@
+From 037ecab1f1c4fb5cb066273c235e850e57305f01 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 22 Jan 2009 02:02:14 +0100
+Subject: [PATCH] make cvsps.c aware of config.h from autoconf
+
+---
+ cvsps.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/cvsps.c b/cvsps.c
+index 1e64e3c..d19b7ab 100644
+--- a/cvsps.c
++++ b/cvsps.c
+@@ -3,6 +3,8 @@
+  * See COPYING file for license information 
+  */
+ 
++#include "config.h"
++
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-- 
+1.6.0.5
+

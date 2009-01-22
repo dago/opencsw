@@ -1,0 +1,30 @@
+From 25e9a38e60200cc65f1b0a9eae1328c7dac678f6 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 22 Jan 2009 02:19:42 +0100
+Subject: [PATCH] add autoconf checks for -lsocket, -lnsl
+
+---
+ configure.ac |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 2d7e79d..7a71222 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -11,9 +11,12 @@ AC_PROG_CC
+ AC_PROG_INSTALL
+ 
+ # Checks for libraries.
+-# FIXME: Replace `main' with a function in `-lz':
+ AC_CHECK_LIB([z], [gzputs])
+ 
++# socket stuff
++AC_CHECK_LIB([socket], [bind])
++AC_CHECK_LIB([nsl],[gethostbyname])
++
+ # Checks for header files.
+ AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h netdb.h netinet/in.h stdlib.h string.h strings.h sys/socket.h sys/time.h unistd.h])
+ 
+-- 
+1.6.0.5
+
