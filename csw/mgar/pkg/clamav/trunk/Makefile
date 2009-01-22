@@ -33,7 +33,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_CLASSES_CSWclamav = none cswcpsampleconf cswinitsmf
 
-CFLAGS=-xO2
+OPT_FLAGS_SOS = -xO2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-clamav
@@ -52,7 +52,7 @@ PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf"
 
 SPKG_SOURCEURL = http://www.clamav.net/
 
-ENABLE_CHECK=0
+#ENABLE_CHECK=0
 
 include gar/category.mk
 

@@ -40,7 +40,7 @@ The scripts determine whether or not a clamd and clamav-milter is needed.
 clamd.conf has a new option - MailMaxRecursion
 Package installation is using csw.conf, if available, to determine whether
   or not to start the daemons.
-See http://www.blastwave.org/standards/csw.conf.html for details.
+See http://www.opencsw.org/standards/csw.conf for details.
 The 'specificdaemonname' for this package is clamd and clamav-milter. 
 
 # 16Oct2006
@@ -148,7 +148,7 @@ freshclam.conf has option OnOutdatedExecute command added.
      There are several ways to use this pkg, i.e., with clamd, with
      clamav-milter.  Some options need to be changed to setup an
      environment.  Please click the 'View news and info' buttom at
-     http://www.blastwave.org/packages.php/clamav to review the setup
+     http://www.opencsw.org/packages.php/clamav to review the setup
      that I use to run clamd and clamav-milter with freshclam running
      from crontab.
 
