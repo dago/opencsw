@@ -12,7 +12,7 @@ MASTER_SITES = ftp://xmlsoft.org/libxslt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibxslt,)
 DISTFILES += $(call admfiles,CSWlibxsltdevel,)
-DISTFILES += $(call admfiles,CSWpylibxslt,
+DISTFILES += $(call admfiles,CSWpylibxslt,)
 
 PREREQUISITE_PKGS = CSWlibxml2 CSWlibxml2devel
 
