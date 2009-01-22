@@ -1,17 +1,15 @@
 GARNAME = libgcrypt
-GARVERSION = 1.4.3
+GARVERSION = 1.4.4
 CATEGORIES = lib
 
 DESCRIPTION = GNU libgcrypt
 define BLURB
-  Libgcrypt is GNU's basic cryptographic library.
+  Libgcrypt is GNU's basic cryptographic library
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgcrypt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgcrypt,)
-
-PATCHFILES = patch-random.diff
 
 SPKG_SOURCEURL = http://www.gnupg.org/download/
 
