@@ -11,7 +11,7 @@ MASTER_SITES = $(SF_MIRRORS)
 
 DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
-DISTFILES += $(call admfiles,CSWtcl,)
+DISTFILES += $(call admfiles,CSWtcl85,)
 
 SPKG_SOURCEURL = http://www.tcl.tk/
 
