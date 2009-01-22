@@ -10,11 +10,17 @@ endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxslt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibxslt,depend)
-DISTFILES += $(call admfiles,CSWlibxsltdevel,depend)
-DISTFILES += $(call admfiles,CSWpylibxslt,depend)
+DISTFILES += $(call admfiles,CSWlibxslt,)
+DISTFILES += $(call admfiles,CSWlibxsltdevel,)
+DISTFILES += $(call admfiles,CSWpylibxslt,
 
 PREREQUISITE_PKGS = CSWlibxml2 CSWlibxml2devel
+
+SPKG_DESC_CSWlibxslt =  XSLT engine runtime package
+SPKG_DESC_CSWlibxsltdevel = XSLT engine development package
+SPKG_DESC_CSWpylibxslt = XSLT engine python package
+
+SPKG_SOURCEURL = http://xmlsoft.org/XSLT/
 TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -29,8 +35,11 @@ CONFIGURE_ARGS_64 = --without-python
 CONFIGURE_ARGS = $(DIRPATHS) $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 BUILD64 = 1
-
 NO_ISAEXEC = 1
+
+REQUIRED_PKGS_CSWlibxslt = CSWgcrypt CSWgpgerr CSWiconv CSWlibxml2 CSWzlib
+REQUIRED_PKGS_CSWlibxsltdevel = CSWlibxslt
+REQUIRED_PKGS_CSWpylibxslt = CSWpython CSWlibxslt
 
 PKGFILES_CSWlibxsltdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxsltdevel += $(docdir)/libxslt-$(GARVERSION)/.*

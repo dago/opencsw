@@ -1,5 +1,0 @@
-P CSWgcrypt libgcrypt - GNU libgcrypt
-P CSWgpgerr libgpg_error - GNU gpg related library
-P CSWiconv libiconv - GNU iconv library
-P CSWlibxml2 libxml2 - XML Parser Library
-P CSWzlib zlib - Zlib Data Compression Library
