@@ -1,5 +1,5 @@
 GARNAME = mbuffer
-GARVERSION = 20090106
+GARVERSION = 20090113
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -30,14 +30,17 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-# ------------------------------------------------------------------------
-# 64-bit build is broken right now (make check throws assertion errors). 
-# Fix is pending from upstream. 
-
-# To build amd64 you have to do the following
+# There had been a reason once to build the 64-bit version (all the way down)
+# http://opensolaris.org/jive/thread.jspa?messageID=293647&tstart=0
+#
+# To build the mixed package for x86 you have to do the following
 # 1)  build8x: gmake build-isa-i386
 # 2) build10x: gmake merge
 # 3)  build8x: gmake package
+#
+# As this is a bit of a hassle and mbuffer has frequent release cycles i
+# prefer to leave it out until someone actually needs it.
+#
 # BUILD64 = 1
 # ISAEXEC_BINS = $(bindir)/mbuffer
 
@@ -67,11 +70,9 @@ test-custom:
 # is however not available on Solaris 8. So we have to explicitly use 
 # libm.so.1 during linking and get rid of the -lm reference. Otherwise
 # the package check on build8x (when running "gmake package") fails.
-post-configure-isa-amd64: M1 = $(WORKSRC)/Makefile
-post-configure-isa-amd64: M2 = $(WORKSRC)/Makefile.tmp
 post-configure-isa-amd64:
 	@echo "Patching Makefile to use /lib/64/libm.so.1 instead of -lm"
-	@sed 's#-lm#/lib/64/libm.so.1#' $(M1) > $(M2) && mv $(M2) $(M1)
+	@perl -pi -e 's#-lm#/lib/64/libm.so.1#' $(WORKSRC)/Makefile
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCS = ChangeLog README AUTHORS
