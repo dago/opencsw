@@ -2,6 +2,9 @@ GARNAME = expat
 GARVERSION = 2.0.1
 CATEGORIES = lib
 
+EXTRA_MODULATORS = GARVERSION
+MODULATIONS_GARVERSION = 1.95.8 2.0.1
+
 DESCRIPTION = XML Parser Toolkit
 define BLURB
 	This is James Clark's Expat XML parser library in C. It is a stream oriented
@@ -10,7 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
+DISTFILES    = $(SOURCEFILES)
 DISTFILES += $(call admfiles,CSWexpat,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -28,6 +32,26 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 TEST_SCRIPTS =
 
-PKGFILES_CSWexpat-devel = $(PKGFILES_DEVEL)
+ifeq ($(GARVERSION),1.95.8)
+INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir man1dir
+endif
+
+MERGE_SCRIPTS_isa-i386-garversion-1.95.8 = copy-only
+MERGE_DIRS_isa-i386-garversion-1.95.8 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-garversion-1.95.8 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-1.95.8 = $(libdir)
+
+MERGE_SCRIPTS_isa-i386-garversion-2.0.1 = copy-all
+MERGE_SCRIPTS_isa-amd64-garversion-2.0.1 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-2.0.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+MERGE_SCRIPTS_isa-sparcv8-garversion-1.95.8 = copy-only
+MERGE_DIRS_isa-sparcv8-garversion-1.95.8 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-garversion-1.95.8 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-1.95.8 = $(libdir)
+
+MERGE_SCRIPTS_isa-sparcv8-garversion-2.0.1 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-garversion-2.0.1 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-2.0.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 include gar/category.mk
