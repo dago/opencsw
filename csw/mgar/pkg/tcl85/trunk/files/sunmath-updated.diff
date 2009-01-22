@@ -1,0 +1,117 @@
+Index: unix/tcl.m4
+===================================================================
+RCS file: /cvsroot/tcl/tcl/unix/tcl.m4,v
+retrieving revision 1.193
+diff -w -u -r1.193 tcl.m4
+--- unix/tcl.m4	27 Mar 2008 13:39:58 -0000	1.193
++++ unix/tcl.m4	1 Apr 2008 17:53:51 -0000
+@@ -1931,6 +1931,24 @@
+ 		], [AC_MSG_WARN([64bit mode not supported for $arch])])])
+ 	    ])
+ 	    
++	    #--------------------------------------------------------------------
++	    # On Solaris 5.x i386 with the sunpro compiler we need to link
++    	    # with sunmath to get floating point rounding control
++    	    #--------------------------------------------------------------------
++    	    AS_IF([test "$GCC" = yes],[use_sunmath=no],[
++		arch=`isainfo`
++	    	AC_MSG_CHECKING([whether to use -lsunmath for fp rounding control])
++		AS_IF([test "$arch" = "amd64 i386"], [
++                        AC_MSG_RESULT([yes])
++			MATH_LIBS="-lsunmath $MATH_LIBS"
++                        AC_CHECK_HEADER(sunmath.h)
++			use_sunmath=yes
++        		], [
++			AC_MSG_RESULT([no])
++			use_sunmath=no
++        	])
++    	    ])
++	    
+ 	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
+ 	    # symbols when dynamically loaded into tclsh.
+ 
+@@ -1938,6 +1956,8 @@
+ 	    SHLIB_SUFFIX=".so"
+ 	    DL_OBJS="tclLoadDl.o"
+ 	    DL_LIBS="-ldl"
++
++
+ 	    AS_IF([test "$GCC" = yes], [
+ 		SHLIB_LD='${CC} -shared'
+ 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
+@@ -1952,11 +1972,12 @@
+ 		    #CC_SEARCH_FLAGS="${CC_SEARCH_FLAGS},-R,$v9gcclibdir"
+ 		])
+ 	    ], [
++	        AS_IF([test "$use_sunmath" = yes], [textmode=textoff],[textmode=text])
+ 		case $system in
+ 		    SunOS-5.[[1-9]][[0-9]]*)
+-			SHLIB_LD='${CC} -G -z text ${LDFLAGS}';;
++			SHLIB_LD="${CC} -G -z $textmode \${LDFLAGS}";;
+ 		    *)
+-			SHLIB_LD='/usr/ccs/bin/ld -G -z text';;
++			SHLIB_LD="/usr/ccs/bin/ld -G -z $textmode";;
+ 		esac
+ 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
+ 		LD_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
+Index: generic/tclStrToD.c
+===================================================================
+RCS file: /cvsroot/tcl/tcl/generic/tclStrToD.c,v
+retrieving revision 1.33
+diff -w -u -r1.33 tclStrToD.c
+--- generic/tclStrToD.c	13 Mar 2008 17:14:19 -0000	1.33
++++ generic/tclStrToD.c	1 Apr 2008 17:53:49 -0000
+@@ -61,6 +61,13 @@
+ #   define ADJUST_FPU_CONTROL_WORD
+ #endif
+ 
++/* Sun ProC needs sunmath for rounding control on x86 like gcc above.
++ *
++ *
++ */
++#if defined(__sun) && defined(__i386) && !defined(__GNUC__)
++#include <sunmath.h>
++#endif
+ /*
+  * HP's PA_RISC architecture uses 7ff4000000000000 to represent a quiet NaN.
+  * Everyone else uses 7ff8000000000000. (Why, HP, why?)
+@@ -1309,6 +1316,9 @@
+     _FPU_GETCW(oldRoundingMode);
+     _FPU_SETCW(roundTo53Bits);
+ #endif
++#if defined(__sun) && defined(__i386) && !defined(__GNUC__)
++    ieee_flags("set","precision","double",NULL);
++#endif
+ 
+     /*
+      * Test for the easy cases.
+@@ -1381,6 +1391,9 @@
+ #if defined(__GNUC__) && defined(__i386)
+     _FPU_SETCW(oldRoundingMode);
+ #endif
++#if defined(__sun) && defined(__i386) && !defined(__GNUC__)
++    ieee_flags("clear","precision",NULL,NULL);
++#endif
+ 
+     return retval;
+ }
+@@ -1427,6 +1440,9 @@
+     _FPU_GETCW(oldRoundingMode);
+     _FPU_SETCW(roundTo53Bits);
+ #endif
++#if defined(__sun) && defined(__i386) && !defined(__GNUC__)
++    ieee_flags("set","precision","double",NULL);
++#endif
+ 
+     /*
+      * Quick checks for over/underflow.
+@@ -1485,6 +1501,9 @@
+ #if defined(__GNUC__) && defined(__i386)
+     _FPU_SETCW(oldRoundingMode);
+ #endif
++#if defined(__sun) && defined(__i386) && !defined(__GNUC__)
++    ieee_flags("clear","precision",NULL,NULL);
++#endif
+     return retval;
+ }
+ 

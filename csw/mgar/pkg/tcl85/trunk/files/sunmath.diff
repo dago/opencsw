@@ -1,0 +1,161 @@
+Index: unix/tcl.m4
+===================================================================
+RCS file: /cvsroot/tcl/tcl/unix/tcl.m4,v
+retrieving revision 1.192
+diff -u -5 -r1.192 tcl.m4
+--- unix/tcl.m4	13 Mar 2008 17:44:22 -0000	1.192
++++ unix/tcl.m4	18 Mar 2008 23:55:46 -0000
+@@ -1928,18 +1928,38 @@
+ 			CFLAGS="$CFLAGS -xarch=amd64"
+ 			LDFLAGS="$LDFLAGS -xarch=amd64"
+ 		    ])
+ 		], [AC_MSG_WARN([64bit mode not supported for $arch])])])
+ 	    ])
++
++	    #--------------------------------------------------------------------
++	    # On Solaris 5.x i386 with the sunpro compiler we need to link
++    	    # with sunmath to get floating point rounding control
++    	    #--------------------------------------------------------------------
++    	    AS_IF([test "$GCC" = yes],[use_sunmath=no],[
++		arch=`isainfo`
++	    	AC_MSG_CHECKING([whether to use -lsunmath for fp rounding control])
++		AS_IF([test "$arch" = "amd64 i386"], [
++                        AC_MSG_RESULT([yes])
++			MATH_LIBS="-lsunmath $MATH_LIBS"
++                        AC_CHECK_HEADER(sunmath.h)
++			use_sunmath=yes
++        		], [
++			AC_MSG_RESULT([no])
++			use_sunmath=no
++        	])
++    	    ])
+ 	    
+ 	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
+ 	    # symbols when dynamically loaded into tclsh.
+ 
+ 	    SHLIB_LD_LIBS='${LIBS}'
+ 	    SHLIB_SUFFIX=".so"
+ 	    DL_OBJS="tclLoadDl.o"
+ 	    DL_LIBS="-ldl"
++
++
+ 	    AS_IF([test "$GCC" = yes], [
+ 		SHLIB_LD='${CC} -shared'
+ 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
+ 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
+ 		AS_IF([test "$do64bit_ok" = yes], [
+@@ -1950,16 +1970,17 @@
+ 		    # path, remove so name and append 'sparcv9'
+ 		    #v9gcclibdir="`gcc -print-file-name=libgcc_s.so` | ..."
+ 		    #CC_SEARCH_FLAGS="${CC_SEARCH_FLAGS},-R,$v9gcclibdir"
+ 		])
+ 	    ], [
++                AS_IF([test "$use_sunmath" = yes], [textmode=textoff],[textmode=text])
+ 		case $system in
+ 		    SunOS-5.[[1-9]][[0-9]]*)
+-			SHLIB_LD='${CC} -G -z text';;
++			SHLIB_LD="${CC} -G -z $textmode";;
+ 		    *)
+-			SHLIB_LD='/usr/ccs/bin/ld -G -z text';;
+-		esac
++			SHLIB_LD="/usr/ccs/bin/ld -G -z $textmode";;
++		esac    
+ 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
+ 		LD_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
+ 	    ])
+ 	    ;;
+ 	UNIX_SV* | UnixWare-5*)
+@@ -2594,11 +2615,11 @@
+     # right (and it must appear before "-lm").
+     #--------------------------------------------------------------------
+ 
+     AC_CHECK_FUNC(sin, MATH_LIBS="", MATH_LIBS="-lm")
+     AC_CHECK_LIB(ieee, main, [MATH_LIBS="-lieee $MATH_LIBS"])
+-
++    
+     #--------------------------------------------------------------------
+     # Interactive UNIX requires -linet instead of -lsocket, plus it
+     # needs net/errno.h to define the socket-related error codes.
+     #--------------------------------------------------------------------
+ 
+Index: generic/tclStrToD.c
+===================================================================
+RCS file: /cvsroot/tcl/tcl/generic/tclStrToD.c,v
+retrieving revision 1.33
+diff -u -5 -r1.33 tclStrToD.c
+--- generic/tclStrToD.c	13 Mar 2008 17:14:19 -0000	1.33
++++ generic/tclStrToD.c	18 Mar 2008 23:55:50 -0000
+@@ -59,10 +59,17 @@
+ #define _FPU_SETCW(cw) __asm__ __volatile__ ("fldcw %0" : : "m" (*&cw))
+ #   define FPU_IEEE_ROUNDING	0x027f
+ #   define ADJUST_FPU_CONTROL_WORD
+ #endif
+ 
++/* Sun ProC needs sunmath for rounding control on x86 like gcc above.
++ *
++ *
++ */
++#if defined(__sun) && defined(__i386) && !defined(__GNUC__)
++#include <sunmath.h>
++#endif
+ /*
+  * HP's PA_RISC architecture uses 7ff4000000000000 to represent a quiet NaN.
+  * Everyone else uses 7ff8000000000000. (Why, HP, why?)
+  */
+ 
+@@ -1307,10 +1314,13 @@
+     fpu_control_t roundTo53Bits = 0x027f;
+     fpu_control_t oldRoundingMode;
+     _FPU_GETCW(oldRoundingMode);
+     _FPU_SETCW(roundTo53Bits);
+ #endif
++#if defined(__sun) && defined(__i386) && !defined(__GNUC__)
++    ieee_flags("set","precision","double",NULL);
++#endif
+ 
+     /*
+      * Test for the easy cases.
+      */
+ 
+@@ -1379,10 +1389,13 @@
+      */
+ 
+ #if defined(__GNUC__) && defined(__i386)
+     _FPU_SETCW(oldRoundingMode);
+ #endif
++#if defined(__sun) && defined(__i386) 
++    ieee_flags("clear","precision",NULL,NULL);
++#endif
+ 
+     return retval;
+ }
+ 
+ /*
+@@ -1425,10 +1438,13 @@
+     fpu_control_t roundTo53Bits = 0x027f;
+     fpu_control_t oldRoundingMode;
+     _FPU_GETCW(oldRoundingMode);
+     _FPU_SETCW(roundTo53Bits);
+ #endif
++#if defined(__sun) && defined(__i386) 
++    ieee_flags("set","precision","double",NULL);
++#endif
+ 
+     /*
+      * Quick checks for over/underflow.
+      */
+ 
+@@ -1483,10 +1499,13 @@
+      */
+ 
+ #if defined(__GNUC__) && defined(__i386)
+     _FPU_SETCW(oldRoundingMode);
+ #endif
++#if defined(__sun) && defined(__i386) 
++    ieee_flags("clear","precision",NULL,NULL);
++#endif
+     return retval;
+ }
+ 
+ /*
+  *----------------------------------------------------------------------

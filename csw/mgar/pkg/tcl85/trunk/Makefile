@@ -13,6 +13,12 @@ DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 DISTFILES += $(call admfiles,CSWtcl85,)
 
+# From https://sourceforge.net/tracker/?func=detail&atid=110894&aid=1839067&group_id=10894
+# for Solaris x86:
+#PATCHFILES = sunmath-updated.diff
+#PATCHFILES = sunmath.diff
+# Both patches seem to be for HEAD instead of 8.5.6, to postpone for now
+
 SPKG_SOURCEURL = http://www.tcl.tk/
 
 # We define upstream file regex so we can be notifed of new upstream software release
