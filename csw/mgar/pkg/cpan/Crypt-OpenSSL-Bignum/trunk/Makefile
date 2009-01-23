@@ -1,5 +1,5 @@
 GARNAME = Crypt-OpenSSL-Bignum
-GARVERSION = 0.03
+GARVERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = IROBERTS
 
@@ -13,8 +13,8 @@ define BLURB
   Crypt::OpenSSL::RSA.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcryptosslbignum,depend prototype)
+DISTFILES += $(call admfiles,CSWpmcryptosslbignum,)
 
-DEPENDS += lib/openssl
+REQUIRED_PKGS = CSWosslrt
 
 include gar/category.mk
