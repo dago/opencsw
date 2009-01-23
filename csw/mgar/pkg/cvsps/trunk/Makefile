@@ -17,6 +17,7 @@ PATCHFILES += 0003-add-script-to-do-the-autotools-setup-steps.patch
 PATCHFILES += 0004-add-config.h-awareness-to-all-source-files.patch
 PATCHFILES += 0005-gnulib-import-of-missing-functions.patch
 PATCHFILES += 0006-enabled-imported-gnulib-functions.patch
+PATCHFILES += 0007-enable-installation-of-man-pages.patch
 
 PREREQUISITE_PKGS = CSWzlib CSWautomake CSWautoconf
 
@@ -27,7 +28,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
 
-#INSTALL_SCRIPTS = custom
+CONFIGURE_ARGS = $(DIRPATHS) --with-zlib=/opt/csw
 
 include gar/category.mk
 
@@ -36,9 +37,5 @@ pre-configure-modulated:
 	@(cd $(WORKSRC); chmod +x autoinit.sh; ./autoinit.sh)
 	@$(MAKECOOKIE)
 
-
-# install-custom:
-# 	ginstall -d $(DESTDIR)$(bindir)
-# 	ginstall -d $(DESTDIR)$(mandir)/man1
-# 	ginstall -m 755 $(WORKSRC)/cvsps $(DESTDIR)$(bindir)/
-# 	ginstall -m 644 $(WORKSRC)/cvsps.1 $(DESTDIR)$(mandir)/man1/
+pre-install:
+	@echo DESTDIR is $(DESTDIR)

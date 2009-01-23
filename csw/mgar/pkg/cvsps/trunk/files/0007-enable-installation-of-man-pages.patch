@@ -1,0 +1,21 @@
+From 588cc7cdd0795dd592674ad2c846b58e5ea884c4 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 23 Jan 2009 22:04:10 +0100
+Subject: [PATCH] enable installation of man pages
+
+---
+ Makefile.am |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index a07bbda..84b2eb9 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -9,3 +9,4 @@ cvsps_SOURCES = cache.c cap.c cvs_direct.c cvsps.c list_sort.c stats.c util.c
+ cvsps_SOURCES += cbtcommon/debug.c cbtcommon/sio.c cbtcommon/text_util.c
+ cvsps_SOURCES += cbtcommon/hash.c cbtcommon/tcpsocket.c
+ 
++man1_MANS = cvsps.1
+-- 
+1.6.0.5
+

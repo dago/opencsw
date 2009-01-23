@@ -6,3 +6,4 @@ f5d84b7c7a05a44f64f740006df5c349  download/0003-add-script-to-do-the-autotools-s
 78d2f5dc4b1aa496e4f4ea8d2db4bf17  download/0004-add-config.h-awareness-to-all-source-files.patch
 58cbd19160b6a98f3c5ff2a8786f0848  download/0005-gnulib-import-of-missing-functions.patch
 02c14b029fd57a61fa97cc8209f18d7d  download/0006-enabled-imported-gnulib-functions.patch
+2a729989bcafa6f533bcd6b33c9ceb09  download/0007-enable-installation-of-man-pages.patch
