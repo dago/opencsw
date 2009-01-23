@@ -32,10 +32,15 @@ CONFIGURE_ARGS = $(DIRPATHS) --with-zlib=/opt/csw
 
 include gar/category.mk
 
+DOCDIR = $(datadir)/doc/$(GARNAME)-$(GARVERSION)
+
 pre-configure-modulated:
 	@echo About to initialize the autotools bits.
 	@(cd $(WORKSRC); chmod +x autoinit.sh; ./autoinit.sh)
 	@$(MAKECOOKIE)
 
-pre-install:
-	@echo DESTDIR is $(DESTDIR)
+post-install-modulated:
+	@echo Installing README's, etc.
+	@(cd $(WORKSRC_FIRSTMOD); ginstall -m 0755 -d $(DESTDIR)/$(DOCDIR); \
+		ginstall -m 0644 CHANGELOG README COPYING $(DESTDIR)/$(DOCDIR))
+	@$(MAKECOOKIE)
