@@ -11,7 +11,7 @@
 #              this script.
 # 2007-06-02   Do not wait for clamd if etc/clamd does not exist.
 
-. /lib/svc/share/smf_include.sh
+[ -f /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
 
 CLAMAV_MILTER="/etc/opt/csw/clamav-milter"
 
@@ -97,7 +97,7 @@ case "$1" in
         # Stop daemon.
 	stop
         ;;
-  restart|reload)
+  restart|reload|refresh)
 	stop
 	start
         ;;

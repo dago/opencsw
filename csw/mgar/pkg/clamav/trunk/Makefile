@@ -1,8 +1,3 @@
-# clamav, Peter Bonivart
-
-# build with "ENABLE_CHECK=0 gmake package"
-# check mantis bugs
-
 GARNAME = clamav
 GARVERSION = 0.94.2
 CATEGORIES = apps
