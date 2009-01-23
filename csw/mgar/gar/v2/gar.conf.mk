@@ -500,7 +500,7 @@ GOOGLE_PROJECT ?= $(GARNAME)
 GOOGLE_MIRROR  ?= http://$(GOOGLE_PROJECT).googlecode.com/files/
 
 # GNU
-GNU_SITE     = http://mirrors.kernel.org/
+GNU_SITE     = http://mirrors.kernel.org
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
 GNU_MIRROR   = $(GNU_GNUROOT)/$(GARNAME)/
