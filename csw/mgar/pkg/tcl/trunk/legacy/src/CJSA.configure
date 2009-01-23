@@ -1,0 +1,14 @@
+# Configure command for the TCL package
+# Run from the tcl*[0-9]/unix subdirectory
+#
+# NOTE: * Had to add the CFLAGS argument for 8.5.x so that the test routines
+#	  could find the current tcl.h file in the generic directory rather
+#	  than the previously installed 8.4.x /opt/csw/include/tcl.h which
+#	  was causing all sorts of compile problems due to undefined objects!
+#
+#	* The CFLAGS line below is necessary for the tests to be compiled and
+#	  run.  Must edit out of tclConfig.sh later.
+
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/tcl-man \
+	    --enable-threads \
+	    CFLAGS="-I. -I../generic -I../../generic"

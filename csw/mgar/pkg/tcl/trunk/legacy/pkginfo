@@ -1,0 +1,9 @@
+PKG=CSWtcl
+NAME=tcl - Tool Command Language
+VERSION=8.5.2,REV=2008.04.27
+ARCH=sparc
+CATEGORY=system
+CSW_CATEGORY="prog, user"
+VENDOR=http://www.tcl.tk/  packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org
