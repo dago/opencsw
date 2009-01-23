@@ -1,0 +1,95 @@
+###############################################################################
+#
+# FILE:		BUILD.NOTES
+#
+# DESCRIPTION:	Build notes for the TK package.  These are notes concerning
+#		the compiling and testing of this package.
+#
+#		Use the detailed instructions in the README file for package
+#		creation.
+#
+# PACKAGE:	CSWtk
+#
+# CUR VER:	Tk Version 8.5.1
+#
+# REVISION:	04-27-08
+#
+###############################################################################
+
+-------------------------------------------------------------------------------
+HISTORY:
+-------------------------------------------------------------------------------
+Date:		Version:		Notes:
+-------------------------------------------------------------------------------
+08-27-04	8.4.7			Initial 8.4.7  package creation
+09-11-04	8.4.7,REV=2004.09.11	Fixed email address in pkginfo file
+12-09-04	8.4.9			Initial 8.4.9  package creation
+06-11-05	8.4.10			Initial 8.4.10 package creation
+07-06-07	8.4.15			Initial 8.4.15 package creation
+02-06-08	8.5.1			Initial 8.5.1  package creation
+04-27-08	8.5.2			Initial 8.5.2  package creation
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+EDITING CHANGES:
+-------------------------------------------------------------------------------
+
+	None
+
+
+-------------------------------------------------------------------------------
+SPARC:
+-------------------------------------------------------------------------------
+
+make:
+
+    * There are a stream of the following warnings:
+
+    	"warning: ignoring #pragma ident"
+
+    * /export/home/jeff/pkgs/tk/src/tk8.5.1/unix/../generic/tkWindow.c:3307: \
+    	warning: subscript has type `char'
+
+
+make test:
+
+    * Tests were run on my SunFire V250 system running Solaris 10 & Gnome 2.6
+
+	[...]
+	font.test		Failed	(Expected on UNIX systems)
+	[...]
+	listbox.test		Failed
+	[...]
+	panedwindow.test	Failed
+	[...]
+	scrollbar.test		Failed
+	[...]
+	textDisp.test		Failed
+	[...]
+	textImage.test		Failed
+	[...]
+	unixEmbed.test		Failed
+	[...]
+	unixSelect.test		Failed
+	[...]
+	unixWm.test		Failed (due to gnome toolbar at top of screen?)
+	[...]
+	window.test <hangs ... ^C interrupt>
+
+-------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------
+INTEL:
+-------------------------------------------------------------------------------
+
+make:
+
+    * Same as sparc system
+
+make test:
+
+    * Tests were not run on the intel platform
+
+-------------------------------------------------------------------------------
+

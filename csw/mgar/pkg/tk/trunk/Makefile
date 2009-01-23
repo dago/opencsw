@@ -25,11 +25,11 @@ NO_ISAEXEC = 1
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 
-INCLUDE_FLAGS =
+# INCLUDE_FLAGS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-CFLAGS := $(filter-out -I%,$(CFLAGS))
-DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
+#CFLAGS := $(filter-out -I%,$(CFLAGS))
+#DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
