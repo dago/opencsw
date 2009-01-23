@@ -1,0 +1,204 @@
+From 27703c47440259a4196164fe2016af6a9d2da7ca Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 23 Jan 2009 19:10:58 +0100
+Subject: [PATCH] add config.h awareness to all source files
+
+---
+ cache.c               |    4 ++++
+ cap.c                 |    4 ++++
+ cbtcommon/debug.c     |    4 ++++
+ cbtcommon/hash.c      |    4 ++++
+ cbtcommon/sio.c       |    4 ++++
+ cbtcommon/tcpsocket.c |    4 ++++
+ cbtcommon/text_util.c |    5 +++++
+ cvs_direct.c          |    4 ++++
+ cvsps.c               |    4 ++++
+ list_sort.c           |    4 ++++
+ stats.c               |    4 ++++
+ util.c                |    4 ++++
+ 12 files changed, 49 insertions(+), 0 deletions(-)
+
+diff --git a/cache.c b/cache.c
+index 4c51cf7..2519684 100644
+--- a/cache.c
++++ b/cache.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <search.h>
+ #include <string.h>
+diff --git a/cap.c b/cap.c
+index a6186f6..0197489 100644
+--- a/cap.c
++++ b/cap.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff --git a/cbtcommon/debug.c b/cbtcommon/debug.c
+index 3f5ac52..b0f818d 100644
+--- a/cbtcommon/debug.c
++++ b/cbtcommon/debug.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <stdarg.h>
+ #include <errno.h>
+diff --git a/cbtcommon/hash.c b/cbtcommon/hash.c
+index ddc081b..81a34dc 100644
+--- a/cbtcommon/hash.c
++++ b/cbtcommon/hash.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff --git a/cbtcommon/sio.c b/cbtcommon/sio.c
+index a9faf81..3f70851 100644
+--- a/cbtcommon/sio.c
++++ b/cbtcommon/sio.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ 
+ #ifdef WIN32
+diff --git a/cbtcommon/tcpsocket.c b/cbtcommon/tcpsocket.c
+index 27cc13a..ec64bd1 100644
+--- a/cbtcommon/tcpsocket.c
++++ b/cbtcommon/tcpsocket.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #ifdef SOLARIS
+ #include <strings.h>
+ #else
+diff --git a/cbtcommon/text_util.c b/cbtcommon/text_util.c
+index 052a94b..485f0be 100644
+--- a/cbtcommon/text_util.c
++++ b/cbtcommon/text_util.c
+@@ -9,6 +9,11 @@
+  * @created Fri Nov  6 14:33:29 1998
+  * @version $Revision: 1.9 $$Date: 2001/10/25 18:36:11 $
+  */
++
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <ctype.h>
+ #include <string.h>
+ #include <stdio.h>
+diff --git a/cvs_direct.c b/cvs_direct.c
+index 920487d..4eb268c 100644
+--- a/cvs_direct.c
++++ b/cvs_direct.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <string.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+diff --git a/cvsps.c b/cvsps.c
+index 1e64e3c..4f49f22 100644
+--- a/cvsps.c
++++ b/cvsps.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff --git a/list_sort.c b/list_sort.c
+index 6c6f54c..95ee733 100644
+--- a/list_sort.c
++++ b/list_sort.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include "list_sort.h"
+diff --git a/stats.c b/stats.c
+index 0276a50..3c3085d 100644
+--- a/stats.c
++++ b/stats.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <string.h>
+ #include <search.h>
+diff --git a/util.c b/util.c
+index e4b9d14..216c53e 100644
+--- a/util.c
++++ b/util.c
+@@ -3,6 +3,10 @@
+  * See COPYING file for license information 
+  */
+ 
++#ifdef HAVE_CONFIG_H
++#include "config.h"
++#endif
++
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
+-- 
+1.6.0.5
+

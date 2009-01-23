@@ -11,11 +11,12 @@ MASTER_SITES = http://www.cobite.com/cvsps/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcvsps,)
 
-PATCHFILES = 0001-adding-initial-autotools-files.patch
-PATCHFILES += 0002-adding-script-to-do-the-auto-steps.patch
-PATCHFILES += 0004-make-cvsps.c-aware-of-config.h-from-autoconf.patch
-PATCHFILES += 0005-add-autoconf-checks-for-lsocket-lnsl.patch
-PATCHFILES += 0006-corrected-naming-mistake-in-Makefile.am.patch
+PATCHFILES = 0001-add-basic-autotools-files.patch
+PATCHFILES += 0002-add-modified-autoconf-check_zlib-from-loic-dachary.patch
+PATCHFILES += 0003-add-script-to-do-the-autotools-setup-steps.patch
+PATCHFILES += 0004-add-config.h-awareness-to-all-source-files.patch
+PATCHFILES += 0005-gnulib-import-of-missing-functions.patch
+PATCHFILES += 0006-enabled-imported-gnulib-functions.patch
 
 PREREQUISITE_PKGS = CSWzlib CSWautomake CSWautoconf
 
@@ -26,18 +27,18 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
 
-INSTALL_SCRIPTS = custom
+#INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-pre-configure-isa-i386:
+pre-configure-modulated:
 	@echo About to initialize the autotools bits.
-	@(cd $(WORKSRC_FIRSTMOD); chmod +x autoinit.sh; ./autoinit.sh)
+	@(cd $(WORKSRC); chmod +x autoinit.sh; ./autoinit.sh)
 	@$(MAKECOOKIE)
 
 
-install-custom:
-	ginstall -d $(DESTDIR)$(bindir)
-	ginstall -d $(DESTDIR)$(mandir)/man1
-	ginstall -m 755 $(WORKSRC)/cvsps $(DESTDIR)$(bindir)/
-	ginstall -m 644 $(WORKSRC)/cvsps.1 $(DESTDIR)$(mandir)/man1/
+# install-custom:
+# 	ginstall -d $(DESTDIR)$(bindir)
+# 	ginstall -d $(DESTDIR)$(mandir)/man1
+# 	ginstall -m 755 $(WORKSRC)/cvsps $(DESTDIR)$(bindir)/
+# 	ginstall -m 644 $(WORKSRC)/cvsps.1 $(DESTDIR)$(mandir)/man1/

@@ -1,0 +1,68 @@
+From b79bcebdaf64b496bd0a37eaba6bc2cae978cb21 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 23 Jan 2009 21:37:12 +0100
+Subject: [PATCH] enabled imported gnulib functions
+
+---
+ Makefile.am  |    7 +++++++
+ autoinit.sh  |    4 ++--
+ configure.ac |    6 +++++-
+ 3 files changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 86de070..a07bbda 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,4 +1,11 @@
++# all for gnulib
++ACLOCAL_AMFLAGS = -I gnulib/m4
++AM_CPPFLAGS = -I$(top_builddir)/gnulib -I$(top_srcdir)/gnulib
++LDADD = gnulib/libgnu.a
++SUBDIRS = gnulib
++
+ bin_PROGRAMS = cvsps
+ cvsps_SOURCES = cache.c cap.c cvs_direct.c cvsps.c list_sort.c stats.c util.c
+ cvsps_SOURCES += cbtcommon/debug.c cbtcommon/sio.c cbtcommon/text_util.c
+ cvsps_SOURCES += cbtcommon/hash.c cbtcommon/tcpsocket.c
++
+diff --git a/autoinit.sh b/autoinit.sh
+index d5d5881..a16bd01 100755
+--- a/autoinit.sh
++++ b/autoinit.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-aclocal
+-autoconf
++aclocal -I gnulib/m4
++autoconf -I gnulib/m4
+ autoheader
+ automake --add-missing --foreign
+diff --git a/configure.ac b/configure.ac
+index 414c98b..5e7d1e5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -72,8 +72,12 @@ AM_INIT_AUTOMAKE(cvsps,2.1)
+ 
+ # Checks for programs.
+ AC_PROG_CC
++gl_EARLY
++AC_PROG_RANLIB
+ AC_PROG_INSTALL
+ 
++gl_INIT
++
+ # Checks for libraries.
+ CHECK_ZLIB()
+ AC_SEARCH_LIBS([gethostbyname], [nsl])
+@@ -93,6 +97,6 @@ AC_FUNC_MALLOC
+ AC_FUNC_MKTIME
+ AC_CHECK_FUNCS([gethostbyname gettimeofday memmove memset mkdir regcomp setenv socket strchr strdup strerror strrchr strstr strsep tzset])
+ 
+-AC_CONFIG_FILES([Makefile])
++AC_CONFIG_FILES([Makefile gnulib/Makefile])
+ AC_OUTPUT
+ 
+-- 
+1.6.0.5
+

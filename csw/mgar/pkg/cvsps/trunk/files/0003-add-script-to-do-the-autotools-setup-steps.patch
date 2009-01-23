@@ -1,7 +1,7 @@
-From b92b9590bec3e41238297d9f15d20b9e79c3e65b Mon Sep 17 00:00:00 2001
+From 8c789701ec47444baac8612e1fbf258989b3f1ce Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Thu, 22 Jan 2009 01:54:49 +0100
-Subject: [PATCH] adding script to do the auto* steps
+Subject: [PATCH] add script to do the autotools setup steps
 
 ---
  autoinit.sh |    6 ++++++
