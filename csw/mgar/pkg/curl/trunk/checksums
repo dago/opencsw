@@ -1,7 +1,8 @@
-8413cf2aff529cb995c14a57bd41a10a  download/CSWcurl.depend
 97e7af7f474c7fe28184d753acb539ec  download/CSWcurl.gspec
-177d51b0c241e5754af52b9e9601316e  download/CSWcurldevel.depend
 cb9741fd1adaa81f640632a685424e6a  download/CSWcurldevel.gspec
-fc7041a44c180521017d7a834a1932e0  download/CSWcurlrt.depend
 4596459435b4dc77f99a15e2e3ee76d6  download/CSWcurlrt.gspec
 10eb8c13350c735eff20d7b4530be8cd  download/curl-7.19.3.tar.bz2
+a09fcad6dfcd9636061dfab7598357be  download/libcurl.so.2.0.2.i
+b46b41659b805013740eeb76e759af4b  download/libcurl.so.2.0.2.s
+30e826ef67b6ce799b32154250014dd9  download/libcurl.so.3.0.0.i
+b63de55fb90feba487b1fd21e751d248  download/libcurl.so.3.0.0.s
