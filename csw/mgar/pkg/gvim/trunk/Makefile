@@ -57,8 +57,6 @@ INSTALL_SCRIPTS = minimal
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
-MERGE_EXCLUDE_FILES = /opt/csw/bin/sparcv9/gvim-x11tutor
-
 include gar/category.mk
 
 post-install-isa-sparcv8 post-install-isa-i386:
@@ -75,6 +73,7 @@ post-install-isa-sparcv8 post-install-isa-i386:
 	$(DONADA)
 
 post-install-isa-sparcv9 post-install-isa-amd64:
+	mv $(DESTDIR)/opt/csw/bin/$(ISA)/gvim-x11tutor $(DESTDIR)/opt/csw/bin/$(ISA)/gvimtutor
 	mv $(DESTDIR)/opt/csw/bin/$(ISA)/gvim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/gvim
 	mv $(DESTDIR)/opt/csw/bin/$(ISA)/rgvim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/rgvim
 	mv $(DESTDIR)/opt/csw/bin/$(ISA)/evim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/evim
