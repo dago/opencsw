@@ -1,5 +1,7 @@
 GARNAME = vim
 DISTVERSION = 7.2
+PATCHREV = 088
+GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
 DESCRIPTION = Vi IMproved with GTK+ support
@@ -13,30 +15,76 @@ endef
 
 #DEPENDS = utils/mktemp lib/ncurses
 
-include ../vim/files/config.mk
-DISTFILES += $(call admfiles,CSWgvim,prototype depend)
+MASTER_SITES += ftp://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
+MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
+MASTER_SITES += ftp://ftp.vim.org/pub/vim/unix/
+
+DISTFILES  = $(call admfiles,CSWgvim,)
+DISTFILES += $(GARNAME)-$(DISTVERSION).tar.bz2
+DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
+DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 DISTFILES += gvim.desktop
 
+PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
+PATCHFILES += vimtutor.patch
+
+WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
+CONFIGURE_ARGS += --with-features=huge
+CONFIGURE_ARGS += --with-tlib=ncurses
+CONFIGURE_ARGS += --enable-multibyte
+CONFIGURE_ARGS += --enable-cscope
 CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --enable-gui=gnome2
 
-include ../vim/files/patches.mk
+BUILD_ARGS += "VIMRCLOC=/opt/csw/etc/vim"
+BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
+BUILD64 = 1
+
+PATCHDIRLEVEL = 0
+
+REQUIRED_PKGS_CSWgvim  = CSWvimrt CSWbonobo2 CSWfconfig CSWftype2 CSWgconf2
+REQUIRED_PKGS_CSWgvim += CSWggettext CSWglib2 CSWgnomekeyring CSWgnomevfs2 CSWgtk2
+REQUIRED_PKGS_CSWgvim += CSWiconv CSWlibart CSWlibatk CSWlibbonoboui CSWlibcairo
+REQUIRED_PKGS_CSWgvim += CSWlibgnome CSWlibgnomecanvas CSWlibgnomeui CSWlibnet CSWlibpopt
+REQUIRED_PKGS_CSWgvim += CSWlibxml2 CSWlibxrender CSWncurses CSWorbit2 CSWpango
+REQUIRED_PKGS_CSWgvim += CSWperl CSWpng CSWzlib
 
 INSTALL_SCRIPTS = minimal
 
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
+MERGE_EXCLUDE_FILES = /opt/csw/bin/sparcv9/gvim-x11tutor
+
 include gar/category.mk
 
-# Don't install the runtime
-install-minimal:
-	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src \
-		installvimbin installlinks installtools installgtutorbin
+post-install-isa-sparcv8 post-install-isa-i386:
 	mkdir -p $(DESTDIR)/opt/csw/share/pixmaps
 	cp $(WORKSRC)/runtime/vim48x48.png $(DESTDIR)/opt/csw/share/pixmaps/gvim.png
 	mkdir -p $(DESTDIR)/opt/csw/share/applications
 	cp $(DOWNLOADDIR)/gvim.desktop $(DESTDIR)/opt/csw/share/applications/gvim.desktop
 	mv $(DESTDIR)/opt/csw/bin/gvim-x11tutor $(DESTDIR)/opt/csw/bin/gvimtutor
+	mv $(DESTDIR)/opt/csw/bin/gvim-x11 $(DESTDIR)/opt/csw/bin/gvim
+	mv $(DESTDIR)/opt/csw/bin/rgvim-x11 $(DESTDIR)/opt/csw/bin/rgvim
+	mv $(DESTDIR)/opt/csw/bin/evim-x11 $(DESTDIR)/opt/csw/bin/evim
+	mv $(DESTDIR)/opt/csw/bin/gvim-x11diff $(DESTDIR)/opt/csw/bin/gvimdiff
+	@$(MAKECOOKIE)
+	$(DONADA)
+
+post-install-isa-sparcv9 post-install-isa-amd64:
+	mv $(DESTDIR)/opt/csw/bin/$(ISA)/gvim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/gvim
+	mv $(DESTDIR)/opt/csw/bin/$(ISA)/rgvim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/rgvim
+	mv $(DESTDIR)/opt/csw/bin/$(ISA)/evim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/evim
+	mv $(DESTDIR)/opt/csw/bin/$(ISA)/gvim-x11diff $(DESTDIR)/opt/csw/bin/$(ISA)/gvimdiff
+	@$(MAKECOOKIE)
+	$(DONADA)
+
+# Don't install the runtime
+install-minimal:
+	@$(INSTALL_ENV) $(MAKE) -C $(WORKSRC)/src \
+		installvimbin installglinks installgtutorbin
 	@$(MAKECOOKIE)
 	$(DONADA)

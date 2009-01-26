@@ -1,0 +1,13 @@
+*** src/vimtutor.o      Thu Dec 18 23:27:44 2008
+--- src/vimtutor        Thu Dec 18 23:28:10 2008
+***************
+*** 1,5 ****
+--- 1,8 ----
+  #! /bin/sh
+  
++ PATH=`dirname $0`:$PATH
++ export PATH
++ 
+  # Start Vim on a copy of the tutor file.
+  
+  # Usage: vimtutor [-g] [xx]

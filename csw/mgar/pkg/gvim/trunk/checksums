@@ -81,11 +81,14 @@ ea45aa4d1a74989d361b2a29c1e9ff9b  download/7.2.080
 3bdf4ec7db7976876a827f2dfa269e89  download/7.2.081
 590c9aa51fcb808ece4b6b4bfaaaaf30  download/7.2.082
 2a10abc536f7a69ff3ef353b55b6cb65  download/7.2.083
+78defaaa03e61955f6624b796efb8655  download/7.2.084
+869116b3e92e944d40a3e03f9a99816f  download/7.2.085
+5af26f073ebeba60af90525d68a61725  download/7.2.086
+639d7a80864afe68132725e377f52f19  download/7.2.087
+44b152484534fa23c4ff531316a0e518  download/7.2.088
 35e04482f07c57221c9a751aaa3b8dac  download/vim-7.2-extra.tar.gz
 d8884786979e0e520c112faf2e176f05  download/vim-7.2-lang.tar.gz
 f0901284b338e448bfd79ccca0041254  download/vim-7.2.tar.bz2
-582717146f6bbd5b73db83a2f62e62a5  download/vimtutor.diff
-2f6bf1938bfdc77a305903e70e3d1de2  download/CSWgvim.depend
+582717146f6bbd5b73db83a2f62e62a5  download/vimtutor.patch
 3d2b62d6810417d562ed17aaada29868  download/CSWgvim.gspec
-2b8beca0088c83291df67af00616a197  download/CSWgvim.prototype
 47396843634a6e3c05d4f5d6b4bf8a72  download/gvim.desktop
