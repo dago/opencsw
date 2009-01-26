@@ -48,7 +48,8 @@ PATCHDIRLEVEL = 0
 REQUIRED_PKGS_CSWvim = CSWggettext CSWiconv CSWncurses CSWvimrt
 INCOMPATIBLE_PKGS_CSWvim = CSWvim-minimal
 
-PKGFILES_CSWvimrt = $(PKGFILES_DOC)
+MERGE_EXCLUDE_FILES = /opt/csw/bin/sparcv9/vimtutor
+PKGFILES_CSWvimrt = /opt/csw/share/.*
 
 # Test requires controlling terminal
 TEST_SCRIPTS =
