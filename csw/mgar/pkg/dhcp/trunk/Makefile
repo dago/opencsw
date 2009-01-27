@@ -51,6 +51,7 @@ install-custom:
 	  gmake DESTDIR=$(DESTDIR) install )
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWdhcp.cswdhcpd $(DESTDIR)/etc/opt/csw/init.d/cswdhcpd
+	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswdhcpd
 	@( cd $(DESTDIR)/etc/opt/csw ; \
 	   mv dhcpd.conf dhcpd.conf.CSW ; \
 	   mv dhclient.conf dhclient.conf.CSW )
