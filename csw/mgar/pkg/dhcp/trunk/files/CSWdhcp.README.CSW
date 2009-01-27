@@ -9,9 +9,10 @@ Work directory: /var/opt/csw/dhcp.
 Installation
 ------------
 1. Modify the dhcpd.conf file in /etc/opt/csw.
-2. Start DHCP with "/etc/init.d/cswdhcp start".
+2. Start DHCP with "/etc/init.d/cswdhcpd start" or
+   with "svcadm enable cswdhcpd" if you use SMF.
 
-More info here: http://www.isc.org/products/DHCP/.
+More info here: http://www.isc.org/sw/dhcp/.
 
 
-bonivart/071024
+bonivart/090127

@@ -1,18 +1,20 @@
 #!/sbin/sh
 
 # rc-script for CSW DHCP
-# Peter Bonivart, 2008-12-21
+# Peter Bonivart, 2009-01-27
 
 PID=/var/opt/csw/dhcp/dhcpd.pid
-#OPTIONS="-cf /opt/csw/etc/dhcpd.conf"  # use old location of conf file
+#CONF=/opt/csw/etc/dhcpd.conf  # use old location of conf file
+CONF=/etc/opt/csw/dhcpd.conf
+OPTIONS="-pf /var/opt/csw/dhcp/dhcpd.pid"
 
 ZONE= # used for initialization, do not change
 
 case "$1" in
   'start')
-    if [ -f /opt/csw/sbin/dhcpd -a -f /etc/opt/csw/dhcpd.conf ]; then
+    if [ -f /opt/csw/sbin/dhcpd -a -f $CONF ]; then
       echo 'Starting dhcp.'
-      /opt/csw/sbin/dhcpd $OPTIONS &
+      /opt/csw/sbin/dhcpd -cf $CONF $OPTIONS
     fi
     ;;
   'stop')

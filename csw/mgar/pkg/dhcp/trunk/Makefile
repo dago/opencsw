@@ -34,7 +34,7 @@ EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
 PKGFILES_CSWdhcpdevel = $(PKGFILES_DEVEL)
 
-ENABLE_CHECK = 0
+#ENABLE_CHECK = 0
 
 INSTALL_SCRIPTS = custom
 
