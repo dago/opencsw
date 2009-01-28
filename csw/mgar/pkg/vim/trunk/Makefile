@@ -1,6 +1,6 @@
 GARNAME = vim
 DISTVERSION = 7.2
-PATCHREV = 088
+PATCHREV = 093
 GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -17,7 +17,7 @@ MASTER_SITES += ftp://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/unix/
 
-DISTFILES += $(call admfiles,CSWvim,)
+DISTFILES  = $(call admfiles,CSWvim,)
 DISTFILES += $(call admfiles,CSWvimrt,)
 DISTFILES += $(GARNAME)-$(DISTVERSION).tar.bz2
 DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
@@ -25,6 +25,7 @@ DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 PATCHFILES += vimtutor.patch
+PATCHFILES += fix-alignment64-spell.c.diff
 
 WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
 
