@@ -1,0 +1,5 @@
+%var            bitname commons_beanutl_doc
+%var            pkgname CSWajcbeanutilsdoc
+%var		arch	all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE.txt
