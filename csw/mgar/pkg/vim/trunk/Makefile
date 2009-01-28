@@ -72,7 +72,7 @@ MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/ex
 MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/vimtutor
 
 # Note: Tests require controlling terminal
-TEST_SCRIPTS = test
+TEST_TARGET = test
 
 include gar/category.mk
 
