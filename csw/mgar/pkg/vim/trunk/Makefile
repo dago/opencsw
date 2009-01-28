@@ -50,6 +50,27 @@ INCOMPATIBLE_PKGS_CSWvim = CSWvim-minimal
 
 PKGFILES_CSWvimrt = /opt/csw/share/.*
 
+ISAEXEC_EXCLUDE_FILES  = /opt/csw/bin/view
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rvim
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rview
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/vimdiff
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/ex
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/vimtutor
+
+MERGE_EXCLUDE_FILES_isa-sparcv9  = /opt/csw/bin/sparcv9/view
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rvim
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rview
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/vimdiff
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/ex
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/vimtutor
+
+MERGE_EXCLUDE_FILES_isa-amd64  = /opt/csw/bin/amd64/view
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rvim
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rview
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/vimdiff
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/ex
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/vimtutor
+
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
