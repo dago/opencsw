@@ -57,6 +57,33 @@ INSTALL_SCRIPTS = minimal
 # Test requires controlling terminal
 TEST_SCRIPTS =
 
+ISAEXEC_EXCLUDE_FILES  = /opt/csw/bin/gview
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gvim
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rgvim
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rgview
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gvimdiff
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gvimtutor
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/evim
+ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/eview
+
+MERGE_EXCLUDE_FILES_isa-sparcv9  = /opt/csw/bin/sparcv9/gview
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rgvim-x11
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rgview
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/eview
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/evim-x11
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/gvim-x11diff
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/gvim-x11
+MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/gvim-x11tutor
+
+MERGE_EXCLUDE_FILES_isa-amd64  = /opt/csw/bin/amd64/gview
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rgvim-x11
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rgview
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/eview
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/evim-x11
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/gvim-x11diff
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/gvim-x11
+MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/gvim-x11tutor
+
 include gar/category.mk
 
 post-install-isa-sparcv8 post-install-isa-i386:
@@ -69,15 +96,6 @@ post-install-isa-sparcv8 post-install-isa-i386:
 	mv $(DESTDIR)/opt/csw/bin/rgvim-x11 $(DESTDIR)/opt/csw/bin/rgvim
 	mv $(DESTDIR)/opt/csw/bin/evim-x11 $(DESTDIR)/opt/csw/bin/evim
 	mv $(DESTDIR)/opt/csw/bin/gvim-x11diff $(DESTDIR)/opt/csw/bin/gvimdiff
-	@$(MAKECOOKIE)
-	$(DONADA)
-
-post-install-isa-sparcv9 post-install-isa-amd64:
-	mv $(DESTDIR)/opt/csw/bin/$(ISA)/gvim-x11tutor $(DESTDIR)/opt/csw/bin/$(ISA)/gvimtutor
-	mv $(DESTDIR)/opt/csw/bin/$(ISA)/gvim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/gvim
-	mv $(DESTDIR)/opt/csw/bin/$(ISA)/rgvim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/rgvim
-	mv $(DESTDIR)/opt/csw/bin/$(ISA)/evim-x11 $(DESTDIR)/opt/csw/bin/$(ISA)/evim
-	mv $(DESTDIR)/opt/csw/bin/$(ISA)/gvim-x11diff $(DESTDIR)/opt/csw/bin/$(ISA)/gvimdiff
 	@$(MAKECOOKIE)
 	$(DONADA)
 
