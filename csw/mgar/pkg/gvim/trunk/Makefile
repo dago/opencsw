@@ -54,8 +54,8 @@ REQUIRED_PKGS_CSWgvim += CSWperl CSWpng CSWzlib
 
 INSTALL_SCRIPTS = minimal
 
-# Test requires controlling terminal
-TEST_SCRIPTS =
+# Note: Tests require controlling terminal
+TEST_SCRIPTS = test
 
 ISAEXEC_EXCLUDE_FILES  = /opt/csw/bin/gview
 ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gvim
