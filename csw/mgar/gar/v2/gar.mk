@@ -489,11 +489,12 @@ MERGE_SCRIPTS_isa-$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)
 endif
 
 # These directories get relocated into their ISA subdirectories
-#ISA_RELOCATE_DIRS ?= $(ISA_RELOCATE_DIRS_$(ISA))
 MERGE_DIRS ?= $(MERGE_DIRS_$(MODULATION))
 
 # These files get relocated and will be replaced by the isaexec-wrapper
-_ISAEXEC_FILES = $(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* ))
+_ISAEXEC_FILES = $(filter-out $(foreach F,$(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
+			$(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* )) \
+		)
 ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 	$(shell for F in $(_ISAEXEC_FILES); do		\
 		if test -f "$$F"; then echo $$F; fi;	\
@@ -502,11 +503,6 @@ ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 ifneq ($(ISAEXEC_FILES),)
 _EXTRA_GAR_PKGS += CSWisaexec
 endif
-
-# These files get relocated.
-# MERGE_DIRS is expanded to individual files here. All further
-# processing is done using these files.
-ISA_RELOCATE_FILES ?= $(patsubst $(PKGROOT)%,%,$(wildcard $(foreach D,$(MERGE_DIRS),$(PKGROOT)$(D)/*))) $(ISAEXEC_FILES) $(EXTRA_ISA_RELOCATE_FILES)
 
 # These merge-rules are actually processed for the current modulation
 MERGE_TARGETS ?= $(addprefix merge-,$(MERGE_SCRIPTS_$(MODULATION))) $(EXTRA_MERGE_TARGETS)

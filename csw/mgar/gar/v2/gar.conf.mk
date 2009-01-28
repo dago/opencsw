@@ -611,7 +611,6 @@ modenv:
 	@echo
 	@echo "  ISAEXEC dirs: $(ISAEXEC_DIRS)"
 	@echo " ISAEXEC files: $(ISAEXEC_FILES)"
-	@echo " ISA relocated: $(ISA_RELOCATE_FILES)"
 	@echo
 	@echo " Merge include: $(_MERGE_INCLUDE_FILES)"
 	@echo " Merge exclude: $(_MERGE_EXCLUDE_FILES)"
