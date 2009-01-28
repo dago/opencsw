@@ -1,0 +1,74 @@
+Index: spell.c
+===================================================================
+RCS file: /cvsroot/vim/vim7/src/spell.c,v
+retrieving revision 1.121
+diff -c -r1.121 spell.c
+*** src/spell.c	9 Dec 2008 21:34:19 -0000	1.121
+--- src/spell.c	28 Jan 2009 20:32:04 -0000
+***************
+*** 2335,2348 ****
+  	if (curline)
+  	    break;	/* only check cursor line */
+  
+  	/* Advance to next line. */
+  	if (dir == BACKWARD)
+  	{
+- 	    /* If we are back at the starting line and searched it again there
+- 	     * is no match, give up. */
+- 	    if (lnum == wp->w_cursor.lnum && wrapped)
+- 		break;
+- 
+  	    if (lnum > 1)
+  		--lnum;
+  	    else if (!p_ws)
+--- 2335,2348 ----
+  	if (curline)
+  	    break;	/* only check cursor line */
+  
++ 	/* If we are back at the starting line and searched it again there
++ 	    * is no match, give up. */
++ 	if (lnum == wp->w_cursor.lnum && wrapped)
++ 	    break;
++ 
+  	/* Advance to next line. */
+  	if (dir == BACKWARD)
+  	{
+  	    if (lnum > 1)
+  		--lnum;
+  	    else if (!p_ws)
+***************
+*** 4961,4968 ****
+  typedef struct sblock_S sblock_T;
+  struct sblock_S
+  {
+-     sblock_T	*sb_next;	/* next block in list */
+      int		sb_used;	/* nr of bytes already in use */
+      char_u	sb_data[1];	/* data, actually longer */
+  };
+  
+--- 4961,4968 ----
+  typedef struct sblock_S sblock_T;
+  struct sblock_S
+  {
+      int		sb_used;	/* nr of bytes already in use */
++     sblock_T	*sb_next;	/* next block in list */
+      char_u	sb_data[1];	/* data, actually longer */
+  };
+  
+***************
+*** 15011,15017 ****
+  
+  	case 0:
+  	    /*
+! 	     * Lenghts are equal, thus changes must result in same length: An
+  	     * insert is only possible in combination with a delete.
+  	     * 1: check if for identical strings
+  	     */
+--- 15011,15017 ----
+  
+  	case 0:
+  	    /*
+! 	     * Lengths are equal, thus changes must result in same length: An
+  	     * insert is only possible in combination with a delete.
+  	     * 1: check if for identical strings
+  	     */
