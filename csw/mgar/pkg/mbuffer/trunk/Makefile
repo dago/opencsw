@@ -30,19 +30,16 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-# There had been a reason once to build the 64-bit version (all the way down)
-# http://opensolaris.org/jive/thread.jspa?messageID=293647&tstart=0
-#
 # To build the mixed package for x86 you have to do the following
 # 1)  build8x: gmake build-isa-i386
 # 2) build10x: gmake merge
 # 3)  build8x: gmake package
-#
-# As this is a bit of a hassle and mbuffer has frequent release cycles i
-# prefer to leave it out until someone actually needs it.
-#
-# BUILD64 = 1
+BUILD64 = 1
+
+# 64-bit isn't thorougly tested by upstream, default to 32-bit, but still
+# deliver 64-bit in case someone might want to play around with 2GB+ buffers
 # ISAEXEC_BINS = $(bindir)/mbuffer
+NO_ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
