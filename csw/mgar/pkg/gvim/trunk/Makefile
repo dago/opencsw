@@ -27,7 +27,6 @@ DISTFILES += gvim.desktop
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 PATCHFILES += vimtutor.patch
-PATCHFILES += fix-alignment64-spell.c.diff
 
 WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
 
@@ -42,7 +41,8 @@ CONFIGURE_ARGS += --enable-gui=gnome2
 
 BUILD_ARGS += "VIMRCLOC=/opt/csw/etc/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
-BUILD64 = 1
+#GTK2 needs 64-bit
+#BUILD64 = 1
 
 PATCHDIRLEVEL = 0
 
