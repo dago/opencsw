@@ -1,0 +1,41 @@
+diff --speed-large-files --minimal -Nru  jxplorer-3.2.orig/jxplorer.sh jxplorer-3.2/jxplorer.sh
+--- jxplorer-3.2.orig/jxplorer.sh        2007-02-26 11:08:34.000000000 +0100
++++ jxplorer-3.2/jxplorer.sh 2009-01-29 00:45:02.526025469 +0100
+@@ -1,6 +1,20 @@
+ #!/bin/sh
+ # OpenDirectory  jxstart.sh $Revision: 1.13 $  $Date: 2006/04/18 04:12:12 $
+
++if [ ! -d $HOME/.jxplorer ]; then
++   mkdir $HOME/.jxplorer
++fi
++
++if [ ! -f $HOME/.jxplorer/gssapi.conf ]; then
++   cp /opt/csw/etc/jxplorer/gssapi.conf.template $HOME/.jxplorer/gssapi.conf
++fi
++
++if [ ! -f $HOME/.jxplorer/jxconfig.txt ]; then
++   cp /opt/csw/etc/jxplorer/jxconfig.txt.template $HOME/.jxplorer/jxconfig.txt
++fi
++
++
++
+ if [ -x $JAVA_HOME/bin/java ]; then
+    JAVA_LOC=$JAVA_HOME/bin/java
+ elif [ -x /opt/jre/bin/java ]; then
+@@ -38,14 +52,14 @@
+ echo
+ FAIL=0
+ if [ "$1" = "console" ] ; then
+-    $JAVAV -cp .:jars/jxplorer.jar:jars/help.jar:jars/jhall.jar:jars/junit.jar:jars/ldapsec.jar:jars/log4j.jar:jars/dsml/activation.jar:jars/dsml/commons-logging.jar:jars/dsml/dom4j.jar:jars/dsml/jxext.jar:jars/dsml/mail.jar:jars/dsml/providerutil.jar:jars/dsml/saaj-api.jar:jars/dsml/saaj-ri.jar com.ca.directory.jxplorer.JXplorer
++    $JAVAV -cp /opt/csw/share/jxplorer/:/opt/csw/share/jxplorer/jars/jxplorer.jar:/opt/csw/share/jxplorer/jars/help.jar:/opt/csw/share/jxplorer/jars/jhall.jar:/opt/csw/share/jxplorer/jars/junit.jar:/opt/csw/share/jxplorer/jars/ldapsec.jar:/opt/csw/share/jxplorer/jars/log4j.jar:/opt/csw/share/jxplorer/jars/dsml/activation.jar:/opt/csw/share/jxplorer/jars/dsml/commons-logging.jar:/opt/csw/share/jxplorer/jars/dsml/dom4j.jar:/opt/csw/share/jxplorer/jars/dsml/jxext.jar:/opt/csw/share/jxplorer/jars/dsml/mail.jar:/opt/csw/share/jxplorer/jars/dsml/providerutil.jar:/opt/csw/share/jxplorer/jars/dsml/saaj-api.jar:/opt/csw/share/jxplorer/jars/dsml/saaj-ri.jar com.ca.directory.jxplorer.JXplorer
+
+     if [ "$?" != "0" ]; then
+         FAIL=1
+     fi
+ else
+     echo "Use \"jxstart.sh console\" if you want logging to the console"
+-    $JAVAV -cp .:jars/jxplorer.jar:jars/help.jar:jars/jhall.jar:jars/junit.jar:jars/ldapsec.jar:jars/log4j.jar:jars/dsml/activation.jar:jars/dsml/commons-logging.jar:jars/dsml/dom4j.jar:jars/dsml/jxext.jar:jars/dsml/mail.jar:jars/dsml/providerutil.jar:jars/dsml/saaj-api.jar:jars/dsml/saaj-ri.jar com.ca.directory.jxplorer.JXplorer  >/dev/null 2>&1
++    $JAVAV -cp /opt/csw/share/jxplorer/:/opt/csw/share/jxplorer/jars/jxplorer.jar:/opt/csw/share/jxplorer/jars/help.jar:/opt/csw/share/jxplorer/jars/jhall.jar:/opt/csw/share/jxplorer/jars/junit.jar:/opt/csw/share/jxplorer/jars/ldapsec.jar:/opt/csw/share/jxplorer/jars/log4j.jar:/opt/csw/share/jxplorer/jars/dsml/activation.jar:/opt/csw/share/jxplorer/jars/dsml/commons-logging.jar:/opt/csw/share/jxplorer/jars/dsml/dom4j.jar:/opt/csw/share/jxplorer/jars/dsml/jxext.jar:/opt/csw/share/jxplorer/jars/dsml/mail.jar:/opt/csw/share/jxplorer/jars/dsml/providerutil.jar:/opt/csw/share/jxplorer/jars/dsml/saaj-api.jar:/opt/csw/share/jxplorer/jars/dsml/saaj-ri.jar com.ca.directory.jxplorer.JXplorer  >/dev/null 2>&1
+
+     if [ "$?" != "0" ]; then
+         FAIL=1
