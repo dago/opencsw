@@ -15,13 +15,6 @@ MASTER_SITES = http://garr.dl.sourceforge.net/sourceforge/phpmyadmin/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-all-languages.tar.bz2
 DISTFILES += $(call admfiles,CSWphpmyadmin,)
 
-#SPKG_DESC_CSWap2modphp5  = PHP 5 - Apache 2.2.x Module
-#SPKG_DESC_CSWmysql5      = MySQL 5 database management system - server files
-#SPKG_DESC_CSWphp5gd      = PHP 5 - GD Extension
-#SPKG_DESC_CSWphp5mcrypt  = PHP 5 - libmcrypt Extension
-#SPKG_DESC_CSWphp5mysqli  = PHP 5 - MySQLi Extension
-#SPKG_DESC_CSWphp5session = PHP 5 - Session Extension
-
 REQUIRED_PKGS = CSWapache2 CSWap2modphp5 CSWmysql5 CSWphp5 CSWphp5gd CSWphp5mcrypt CSWphp5mysqli CSWphp5session
 
 # We define upstream file regex so we can be notifed of new upstream software release
