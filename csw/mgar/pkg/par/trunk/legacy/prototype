@@ -1,0 +1,11 @@
+i pkginfo
+i copyright
+i depend
+d none share 0755 root bin
+d none share/man 0755 root bin
+d none share/man/man1 0755 root bin
+f none share/man/man1/par.1 0644 root bin
+d none share/par 0755 root bin
+f none share/par/par.txt 0644 root bin
+d none bin 0755 root bin
+f none bin/par 0755 root bin

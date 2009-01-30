@@ -1,0 +1,9 @@
+PKG=CSWpar
+NAME=par - Paragraph Reformatter
+VERSION=1.52
+ARCH=sparc
+CATEGORY=application
+CSW_CATEGORY="text, user"
+VENDOR=http://www.nicemice.net/par/ - packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org

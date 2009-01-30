@@ -1,0 +1,177 @@
+###############################################################################
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the PAR package.  Refer to the
+#		BUILD.NOTES file for specific information about the actual
+#		build and testing of the current version.
+#
+# PACKAGE:      CSWpar
+#
+# REVISION:     09-09-05
+#
+# NOTES:	* 
+###############################################################################
+
+-------------------------------------------------------------------------------
+01:  Make sure you are on the blastwave machine
+-------------------------------------------------------------------------------
+
+	hostname
+
+-------------------------------------------------------------------------------
+02: Download and extract the par source
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/par/src
+	vi Makefile			[set PVER[S] to current par version]
+	make get
+	make extract
+
+-------------------------------------------------------------------------------
+03: Switch to the correct build machine
+-------------------------------------------------------------------------------
+
+	SPARC:
+	  or
+	INTEL:
+
+-------------------------------------------------------------------------------
+04: Update the pkginfo file		     VERSION=<version>[,REV=YYYY.MM.DD]
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/par
+	vi pkginfo
+	    [edit the version info: must include REV= portion if applicable]
+	    [edit the ARCH line for either a 'sparc' or 'i386' build]
+
+-------------------------------------------------------------------------------
+05: Unpack the source code   [**** ONLY NEEDS TO BE DONE ONCE PER SESSION ****]
+-------------------------------------------------------------------------------
+
+	cd src
+	make unpack			  [unpack unless it was just extracted]
+
+-------------------------------------------------------------------------------
+06: Modify the install target in Makefile, using the contents in the
+    .parMake.mods file:      [**** ONLY NEEDS TO BE DONE ONCE PER RELEASE ****]
+-------------------------------------------------------------------------------
+	
+	cd par*[0-9]
+	cp protoMakefile Makefile
+	vi ../.parMake.mods  Makefile
+
+-------------------------------------------------------------------------------
+07: Update copyright file    [**** ONLY NEEDS TO BE DONE ONCE PER RELEASE ****]
+-------------------------------------------------------------------------------
+
+	vi par.doc ${HOME}/pkgs/par/copyright
+	  [Extract the File List and Rights and Responsibilities sections]
+
+-------------------------------------------------------------------------------
+08: Set the proper build environment
+-------------------------------------------------------------------------------
+
+	SPARC:	    export CC='cc -xarch=v8 -xstrconst -xildoff'
+	  or
+	INTEL:	    export CC='cc -xtarget=pentium -xstrconst -xildoff' 
+
+-------------------------------------------------------------------------------
+09: Compile the software
+-------------------------------------------------------------------------------
+
+	make clean
+	make
+
+-------------------------------------------------------------------------------
+10: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg INSTALL_ROOT=$PWD/cswstage install-csw
+
+-------------------------------------------------------------------------------
+11: Update the prototype file    (2nd build can use existing prototype file)
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check 'f'iles & 'd'irs have owner/group 'root bin']
+	vi prototype
+	    [if necessary ...]
+	    	[change all owners/groups to 'root bin']
+		[change file permissions from 0444 to 0644]
+		[change file permissions from 0555 to 0755]
+	    [add following 'i' line as third line in file]
+	    	i depend
+
+-------------------------------------------------------------------------------
+12: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/par/prototype prototype | less -+e
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/par
+
+-------------------------------------------------------------------------------
+13: Create the package par-*-SunOS5.8-{sparc,386i}-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/par
+	createpkg -b ${HOME}/pkgs/par/src/par*[0-9]/cswstage/opt/csw
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+-------------------------------------------------------------------------------
+14: Examine list of libraries used to see if any new CSW dependencies exist
+-------------------------------------------------------------------------------
+
+    If a new library is found, check package dependency:
+
+	pkgchk -l -p /opt/csw/lib/lib<...>
+   
+    Add entry to the depend file:
+
+        P	CSW<pkg>
+
+    Now repeat from step 13 and recreate the package
+
+-------------------------------------------------------------------------------
+15: Rebuild again on other build platform
+-------------------------------------------------------------------------------
+
+     Go to step 03 and repeat for other architecture
+
+-------------------------------------------------------------------------------
+16: Clean up
+-------------------------------------------------------------------------------
+
+    cd ${HOME}/pkgs/par/src/par*[0-9]
+    make clean ; rm -rf cswstage
+    cd ${HOME}/pkgs/par/src
+    make pack				# if req'd, tar up and gzip source
+    make clean 
+
+-------------------------------------------------------------------------------
+17: Copy the new package to the installation area
+-------------------------------------------------------------------------------
+
+    cd pkgs/par
+    cp par-*.pkg.gz  /export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+18: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+    cd src
+    cp  par-*.gz  /export/medusa/src
+
+-------------------------------------------------------------------------------
+19: Notify package administrator
+-------------------------------------------------------------------------------
+
+    * Email phil@bolthole.com (Philip Brown) describing the update
+
+-----------------------------------------------------------------------------
