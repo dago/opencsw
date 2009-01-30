@@ -1,0 +1,46 @@
+# HG changeset patch
+# User Timo Sirainen <tss@iki.fi>
+# Date 1231433510 18000
+# Node ID fec8412dc1c5487d10974c18104f9ec9cbd009f1
+# Parent 30207243a4f4c3e076bea43d1e92de8e7179c72a
+env_remove(): Implement a fallback method if unsetenv() doesn't exist.
+Fixes compiling at least with Solaris 8.
+
+--- a/configure.in	Thu Jan 08 11:41:30 2009 -0500
++++ b/configure.in	Thu Jan 08 11:51:50 2009 -0500
+@@ -459,7 +459,7 @@ AC_CHECK_FUNCS(fcntl flock lockf inet_at
+ 	       setrlimit setproctitle seteuid setreuid setegid setresgid \
+ 	       strtoull strtoll strtouq strtoq \
+ 	       setpriority quotactl getmntent kqueue kevent backtrace_symbols \
+-	       walkcontext dirfd clearenv malloc_usable_size)
++	       walkcontext dirfd clearenv malloc_usable_size unsetenv)
+ 
+ dnl strtoimax and strtoumax are macros in HP-UX, so inttypes.h must be included
+ AC_MSG_CHECKING([for strtoimax])
+--- a/src/lib/env-util.c	Thu Jan 08 11:41:30 2009 -0500
++++ b/src/lib/env-util.c	Thu Jan 08 11:51:50 2009 -0500
+@@ -19,7 +19,24 @@ void env_put(const char *env)
+ 
+ void env_remove(const char *name)
+ {
++#ifdef HAVE_UNSETENV
+ 	unsetenv(name);
++#else
++	extern char **environ;
++	unsigned int len;
++	char **envp;
++
++	len = strlen(name);
++	for (envp = environ; *envp != NULL; envp++) {
++		if (strncmp(name, *envp, len) == 0 &&
++		    (*envp)[len] == '=') {
++			do {
++				envp[0] = envp[1];
++			} while (*++envp != NULL);
++			break;
++		}
++	}
++#endif
+ }
+ 
+ void env_clean(void)
