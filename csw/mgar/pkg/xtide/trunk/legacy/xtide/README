@@ -1,0 +1,255 @@
+###############################################################################
+#
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the XTIDE package.  Refer to the
+#		BUILD.NOTES file for specific information about the actual
+#		build and testing of the current version.
+#
+# PACKAGE:      CSWxtide
+#
+# REVISION:     02-05-08
+#
+###############################################################################
+
+-------------------------------------------------------------------------------
+01: Switch to the correct build machine
+-------------------------------------------------------------------------------
+
+	SPARC:		ra
+	  or
+	INTEL:		thor
+
+-------------------------------------------------------------------------------
+02: Update the pkginfo file		     VERSION=<version>[,REV=YYYY.MM.DD]
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/xtide
+	vi pkginfo
+	    [edit the VERSION line including the ,REV=YYYY.MM.DD string]
+	    [edit the ARCH    line for either a 'sparc' or 'i386' build]
+
+	    NOTE: No '-' allowed in the VERSION string
+
+-------------------------------------------------------------------------------
+03: Download and/or unpack source code      [**** ONLY ONCE PER SESSION ****]
+-------------------------------------------------------------------------------
+
+	cd src
+
+	For new versions of software:
+	    vi Makefile			[set XVER to current xtide  version]
+	    				[set LVER to current libtcd version]
+	    make get			[download new source code]
+	    make extract		[unpack new source code]
+
+	For software updates:
+	     make unpack		[unpack existing source code]
+
+-------------------------------------------------------------------------------
+04: Build the libtcd static library
+-------------------------------------------------------------------------------
+	
+    For Sun CC compiler:
+	SPARC:   export CC="cc -fast -xarch=v8 -xnolibmopt -xstrconst -xildoff"
+	INTEL:   export CC="cc -fast -xarch=386 -xstrconst -xildoff"
+
+    For GNU gcc compiler:
+	unset CC
+
+    For either compiler:
+
+	cd libtcd*[0-9]
+
+	make clean
+	rm -f Makefile
+	../.libtcdConfig
+	make
+
+-------------------------------------------------------------------------------
+05: Make xtide links to libtcd library and header files
+-------------------------------------------------------------------------------
+
+	cd ..
+
+	make links
+
+	ls -als  xtide*[0-9]/libtcd xtide*[0-9]/tcd.h
+	ls -alsL xtide*[0-9]/libtcd xtide*[0-9]/tcd.h
+
+-------------------------------------------------------------------------------
+06: Modify the install target in Makefile.in, using the contents in the
+    .xtideMake.mods file:		      [**** ONLY ONCE PER RELEASE ****]
+-------------------------------------------------------------------------------
+
+	cd xtide*[0-9]
+	vi ../.xtideMake.mods  Makefile.in
+
+-------------------------------------------------------------------------------
+07: Update copyright file		      [**** ONLY ONCE PER RELEASE ****]
+-------------------------------------------------------------------------------
+
+	vi README ${HOME}/pkgs/xtide/copyright
+	    [copy entire "License and disclaimer" section to copyright file]
+	    [eliminate the word "Icon" from "Icon License and disclaimer]
+
+-------------------------------------------------------------------------------
+08: Set the proper build environment
+-------------------------------------------------------------------------------
+
+    For Sun CC compiler:
+	SPARC:	export CXX="CC -fast -xarch=v8 -library=stlport4"
+	INTEL:	export CXX="CC -fast -xarch=386 -library=stlport4"
+
+    For GNU gcc compiler:
+	* NOTE:	If compiling with GNU gcc/g++ compilers, you must make sure
+		you are compiling with gcc V3* and not 2.95.3.  Check it
+		with:  gcc --version
+
+-------------------------------------------------------------------------------
+09: Compile the software using customized configure script
+-------------------------------------------------------------------------------
+
+    ---------------------------------------------------------------------------
+    For Sun CC compiler:
+    ---------------------------------------------------------------------------
+	make clean
+	rm -f Makefile				# force Makefile recreation
+	../.xtideConfig
+
+	script zzzz				# save output in file zzzz
+	make
+	exit					# terminate script
+
+    ---------------------------------------------------------------------------
+    For GNU gcc compiler:
+    ---------------------------------------------------------------------------
+    
+	make clean
+	rm -f Makefile				# force Makefile recreation
+	../.xtideConfig-gcc
+
+	script zzzz				# save output in file zzzz
+	make
+	exit					# terminate script
+
+-------------------------------------------------------------------------------
+10: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg DESTDIR=$PWD/cswstage install 
+
+-------------------------------------------------------------------------------
+11: Update the prototype file
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check:  'f'iles & 'd'irs have owner/group 'root bin']
+	egrep '0444|0555' prototype
+	    [check:  permissions should all be 0644 & 0755]
+	grep '^i depend$' prototype
+	    [check:  the third line should be:  i depend ]
+
+-------------------------------------------------------------------------------
+12: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/xtide/prototype prototype
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/xtide
+
+-------------------------------------------------------------------------------
+13: Create the package xtide-*-SunOS5.8-{sparc,386i}-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/xtide
+	createpkg -r ${HOME}/pkgs/xtide/src/xtide*[0-9]/cswstage
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+	NOTE: Packaging fails due to the xtideh and xtidew packages not being
+	      installed on the build machines.
+
+		ERROR: information for "CSWxtidew" was not found
+		ERROR: invalid package CSWxtidew specified
+		ERROR: failed check.
+
+	      This should be the last step in the checking process so
+	      everything is actually OK.  To finish the packaging step,
+	      simply gzip up the file with:
+
+	      gzip xtide*pkg
+
+-------------------------------------------------------------------------------
+14: Examine list of libraries used to see if any new CSW dependencies exist
+-------------------------------------------------------------------------------
+
+    *** Current dependencies are listed in the depend file ***
+
+    If a new library is found, check package dependency:
+
+	pkgchk -l -p /opt/csw/lib/lib<...>
+   
+    Add entry to the depend file:
+
+        P	CSW<pkg>
+
+    Now repeat from step 08 and recreate the package
+
+-------------------------------------------------------------------------------
+15: Make package for other platform.
+-------------------------------------------------------------------------------
+
+	Go to step 01 and repeat for other architecture
+	
+-------------------------------------------------------------------------------
+16: Clean up
+-------------------------------------------------------------------------------
+	
+	cd ${HOME}/pkgs/xtide/src/libtcd*[0-9]
+	make clean
+
+	cd ${HOME}/pkgs/xtide/src/xtide*[0-9]
+	make clean ; rm -rf cswstage zzzz
+
+	cd ${HOME}/pkgs/xtide/src
+	make pack			# if req'd, tar up and gzip source
+	make clean			# remove the source code
+
+-------------------------------------------------------------------------------
+18: Copy the newsparc and i386 packages to the testing or installation area
+-------------------------------------------------------------------------------
+
+	cd pkgs/xtide
+
+	cp  xtide-*.pkg.gz  /export/medusa/testing
+	    or
+	cp  xtide-*.pkg.gz  /export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+19: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+	cd src
+	cp  libtcd-*.gz xtide-*.gz  /export/medusa/src
+
+-------------------------------------------------------------------------------
+20: Notify users for testing or package administrator for update
+-------------------------------------------------------------------------------
+
+	Post message to the Blastwave maint list regarding testing
+	    or
+	Email phil@bolthole.com (Philip Brown) describing the update
+
+-------------------------------------------------------------------------------
+21: Build the xtideh and xtidew packages
+-------------------------------------------------------------------------------
+
+	If required, repackage the xtide harmonics & shoreline data files
+
+------------------------------------------------------------------------------

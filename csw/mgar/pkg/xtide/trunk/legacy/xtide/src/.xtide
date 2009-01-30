@@ -1,0 +1,28 @@
+#!/bin/sh
+###############################################################################
+#
+# FILE:		xtide
+#
+# DESCRIPTION:	This script is a front-end to the actual xtide binary which
+#		has been renamed xtide.bin.  This file is used to set the
+#		HFILE_PATH and WVS_DIR environment variables to the proper
+#		values for the CSW installation.
+#
+# PACKAGE:	CSWxtide			[Requires CSWxtideh, CSWxtidew]
+#
+# REVISION:	12-21-07
+#
+###############################################################################
+
+HFILE_PATH="${HFILE_PATH:-/opt/csw/share/xtide/harmonics-free.tcd:/opt/csw/share/xtide/harmonics-nonfree.tcd}"
+WVS_DIR="${WVS_DIR:-/opt/csw/share/xtide/wvs}"
+
+export HFILE_PATH WVS_DIR
+
+if [ -x /opt/csw/bin/xtide.bin ] ; then
+    PROG="/opt/csw/bin/xtide.bin"
+else
+    PROG="xtide.bin"
+fi
+
+exec ${PROG} $*

@@ -1,0 +1,543 @@
+# $Id: harmonics_boilerplate.txt 2899 2007-12-28 23:10:40Z flaterco $
+#
+# Definitions and constants for XTide
+#
+# NOTE:  This file should not be used as-is to provide a constituent
+# set to harmgen because it contains multiple constituents with the
+# same frequency.  A better constituent set is included in the harmgen
+# distribution (see the README).
+#
+#
+# ********* NOT FOR NAVIGATION ********
+#
+# *** DO NOT RELY ON THIS DATA FILE FOR DECISIONS THAT CAN RESULT IN ***
+# ***                   HARM TO ANYONE OR ANYTHING.                  ***
+#
+# Highly trustworthy tide predictions cannot be achieved on a zero
+# budget.  If you need guaranteed results, don't use these data!
+# Contact the tide authority for your region (NOAA in the U.S.).
+#
+# This data file is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without any warranty that its use will NOT
+# INFRINGE ANY RIGHTS, and without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# WHOEVER CHOOSES TO REDISTRIBUTE THESE DATA ASSUMES ALL LIABILITY
+# ASSOCIATED THEREWITH.  NEITHER DAVID FLATER NOR ANYONE ELSE INVOLVED
+# SHALL BE LIABLE PERSONALLY OR OTHERWISE FOR ANY LOSSES THAT THE
+# REDISTRIBUTOR MIGHT SUFFER AS A CONSEQUENCE OF ANY CLAIMS, BOGUS OR
+# OTHERWISE, THAT ARE MADE TO THESE DATA.
+#
+#
+# --- Notes to contributors ---
+#
+# After getting legal threats from the U.K. Hydrographic Office, I am
+# no longer willing to accept any data without an explicit statement
+# from the copyright owner or eminent authority either granting
+# permission for non-commercial use with XTide or explaining that such
+# permission is not required.  The absence of a copyright notice is
+# not sufficient; however, a blanket permission for non-commercial use
+# is sufficient.
+#
+# For more technical reasons, I am not prepared to accept data under
+# conditions that require me to track uses of the data, to limit the
+# uses of the data to a particular time period, or to verify that
+# every user has read the legalese.  XTide has many different
+# interfaces by which users can obtain results, and such requirements
+# are impossible to implement in a reasonable and consistent fashion
+# across all interfaces.  For a reasonable compromise, see what was
+# done for the POL data:  a reference to legalese is included in the
+# location name field.
+#
+#
+# --- Copyright statements ---
+#
+# United States:  Data published by the U.S. government is by law
+# non-proprietary.  Stations in the U.S., territories of the U.S.,
+# commonwealths associated with the U.S., and countries with a Compact
+# of Free Association with the U.S. have been included.  A few other
+# stations available from the NOS web site have been dropped.
+#
+#   Notice available on the NOS web site at
+#   http://tidesandcurrents.noaa.gov/disclaimers.html as of
+#   2007-05-30:
+#
+#   The information on government servers are in the public domain,
+#   unless specifically annotated otherwise, and may be used freely by
+#   the public. Before using information obtained from this server,
+#   special attention should be given to the date and time of the data
+#   and products being displayed. This information shall not be
+#   modified in content and then presented as official government
+#   material.
+#
+#   The user assumes the entire risk related to its use of these
+#   data. NOS is providing these data "as is," and NOS disclaims any
+#   and all warranties, whether express or implied, including (without
+#   limitation) any implied warranties of merchantability or fitness
+#   for a particular purpose. In no event will NOS be liable to you or
+#   to any third party for any direct, indirect, incidental,
+#   consequential, special or exemplary damages or lost profit
+#   resulting from any use or misuse of this data.
+#
+#   NOS requests that attribution be given whenever NOS material is
+#   reproduced and re-disseminated. Pursuant to 17 U.S.C. 403, third
+#   parties producing copyrighted (compilation) works consisting
+#   predominantly of material created by Federal Government employees
+#   are encouraged to provide notice with such work(s) identifying the
+#   U.S. Government material incorporated and stating that such
+#   material is not subject to copyright protection.
+#
+# Canada:  The harmonic constants used to perform tide predictions for
+# locations in Canada are derived from sea level data made available
+# by Marine Environmental Data Services, Fisheries and Oceans Canada,
+# for public, non-commercial use.  The predictions are not the same as
+# those computed by the Canadian Hydrographic Service, which uses its
+# own sets of harmonic constants.
+#
+#   Copyright notice for the sea level data at
+#   http://www.meds-sdmm.dfo-mpo.gc.ca/meds/About_MEDS/copyright_e.htm:
+#
+#   Non-commercial Reproduction
+#
+#   Information on this site has been posted with the intent that it be
+#   readily available for personal and public non-commercial use and may
+#   be reproduced, in part or in whole and by any means, without charge
+#   or further permission from the Department of Fisheries and Oceans
+#   Canada.  We ask only that:
+#
+#     * Users exercise due diligence in ensuring the accuracy of the
+#     materials reproduced;
+#
+#     * The Department of Fisheries and Oceans Canada be identified as
+#     the source department; and,
+#
+#     * The reproduction is not represented as an official version of
+#     the materials reproduced, nor as having been made, in
+#     affiliation with or with the endorsement of the Department of
+#     Fisheries and Oceans Canada.
+#
+# Netherlands:  The Netherlands data was contributed directly by Koos
+# Doekes of the Rijkswaterstaat RIKZ/ZDI, who grants permission by his
+# own authority:
+#
+#         Herewith I grant permission for non-commercial use
+#         of all harmonic constants for the Netherlands by
+#         users of Xtide or Xtide-based products.
+#
+#         This covers the use of the constants for Dutch
+#         ports in the Xtide-database by designers
+#         of web applications, and the use in commercial
+#         tidal prediction software in which the constants 
+#         themselves are not stored - i.e. the user has
+#         to copy them from the Xtide-database himself.
+#
+#         It does NOT cover the use in commercial software
+#         in which the constants are incorporated, which is
+#         considered commercial use of the constants here.
+#         Any request for permission of use of Dutch constants
+#         in software of this kind should be redirected to
+#         RIKZ.
+#
+# Germany:  The Germany data was contributed directly by Wolfgang
+# Lange of the Bundesamt fuer Seeschifffahrt und Hydrographie (BSH),
+# who grants permission by his own authority:
+#
+#         As long as you make your software using these tidal data
+#         freely available, I grant permission for non-commercial use
+#         of the harmonic constants for the 12 reference stations at
+#         the german North Sea coast on the same conditions and rules
+#         layed down in the letter from Koos Doekes, RIKZ/ZDI,
+#         concerning the Netherlands harmonic constituents.
+#
+# UK:  Received 2003-11-15 DWF.  See also http://www.flaterco.com/pol.html.
+#
+#                                         Proudman Oceanographic Laboratory
+#                                         Natural Environment Research Council
+#
+#                                         Bidston Observatory
+#                                         Bidston Hill
+#                                         Prenton
+#                                         Merseyside
+#                                         CH43 7RA
+#                                         United Kingdom
+# David Flater
+# 13320 Country Ridge Drive               Tel +44 (0) 151 653 8633
+# Germantown, MD  20874                   Fax +44 (0) 151 653 6269
+# United States of America                www.pol.ac.uk
+#
+#
+#                                         07 November 2003
+#
+# Dear David,
+#
+# This letter is to confirm that we are happy for you to download the
+# sea level data from the British Oceanographic Data Centre website and
+# use this in the generation of harmonic constants using the HarmGen
+# software.  However there are a couple of things that we would politely
+# ask that you do.
+#
+# 1.  Limit the number of harmonic constants you use in the software to
+# a maximum of 40 for any port.  This should easily be enough to create
+# very accurate tidal predictions as for nearly all locations, any
+# harmonics left out (i.e. the 41st most significant constants onwards)
+# will have amplitudes of the order of a centimetre.
+#
+# 2.  State that the data is derived from sea level data obtained from
+# the British Oceanographic Data Centre based at the Proudman
+# Oceanographic Laboratory, Liverpool.
+#
+# 3.  Make it clear that the predictions however are not the same as
+# those computed by the Proudman Oceanographic Laboratory which uses its
+# own sets of harmonic constants.
+#
+# 4.  Continue to make your software using the data freely available.
+# Please inform us if you intend to produce a software product that you
+# will be making a charge for.
+#
+# I hope these conditions are acceptable to you and it will be good to
+# see the UK back on the map.
+#
+# Yours sincerely,
+# Colin Bell
+# Head of Applications Group
+#
+#
+# Changelog
+# ---------
+#
+# 2007-12-28
+#
+# Imported NOS data from snapshot 2007-12-17.
+#
+# Reapplied the meridian fixes for Albany and Coyote Point Marina.
+# Coordinates of I-526 bridge were fixed upstream.
+#
+# A comparison of all reference stations versus the 2008 tide tables
+# published on the web revealed discrepancies for Anchorage, AK and Port
+# O'Connor, TX.  The Anchorage discrepancies are small enough to be
+# explained by a data update; however, the Port O'Connor discrepancies are
+# major and are not helped by the meridian fix that worked for Albany and
+# Coyote Point Marina.  Local observations are required to determine whether
+# the Port O'Connor predictions are any good at all.  This is complicated by
+# the fact that it is a diurnal station with small tidal range, making
+# eyewitness confirmation that much more unreliable.  Subordinate stations
+# depending on these reference stations will also fail to match the
+# published tables.
+#
+#
+# 2007-11-22
+#
+# To facilitate compliance with Linux distribution packaging policies
+# and to draw more attention to the acceptable use restriction on
+# non-U.S. data, the "free" and "nonfree" data are now being exported
+# to separate TCD files.  At this time, all "free" data are public
+# domain and all "nonfree" data are merely restricted to
+# non-commercial use only.
+#
+# Replaced the data set for Harwich, England with one calculated from
+# a longer time series.  Proudman still does not yet publish
+# predictions for this location.
+#
+#
+# 2007-03-18
+#
+# Updated approximated MLLW datums with improved estimates.
+#
+# Put IGNORE HEIGHTS in the legalese fields of the 14 subordinate
+# stations where NOS zeroed out the heights.
+#
+#
+# 2007-02-22
+#
+# Applied renamings as updated and improved by Walt Bilofsky (thanks
+# Walt).
+#
+#
+# 2007-02-11
+#
+# Interim release, without renamings.
+#
+# Imported NOS data from snapshot 2007-02-07.
+#
+# (9414449) Coyote Point Marina, San Francisco Bay, CA:  corrected meridian.
+#           (Data claimed UTC, was UTC-8)
+# (8518995) Albany, Hudson River, NY:  corrected meridian.
+#           (Data claimed UTC, was UTC-5)
+# I-526 bridge, Ashley River, South Carolina:  fixed longitude.
+# Pascagoula, Mississippi Sound, Mississippi latitude was fixed upstream.
+#
+# In progress:  renamings.
+#
+# Since there were two reference stations with incorrect meridians
+# (one that was reported last time and one that was just discovered),
+# it is reasonable to expect that there will be more.
+#
+#
+# 2006-07-08
+#
+# Coyote Point Marina, San Francisco Bay, California:  corrected meridian.
+# Delaware City, Delaware River, Delweare:  fixed typo in name.
+# Pascagoula, Mississippi Sound, Mississippi:  fixed latitude.
+# I-526 bridge, Ashley River, South Carolina:  fixed longitude.
+#
+#
+# 2006-03-05
+#
+# Installed renamings from AH for the 102 stations that lacked states.
+#
+#
+# 2006-02-05
+#
+# Refreshed U.S. data from NOS web site (snapshot 2006-01-04).  AH has
+# dealt with new and modified station names to maintain the naming
+# convention installed 2005-11-27.  Still to be fixed is a list of
+# stations that do not include their state in their name.  Most or all
+# of those have been that way since November.  They didn't stick out
+# much until an unrelated Harmbase query happened to group them
+# together.
+#
+# An e-mail exchange with Todd Ehret of NOS CO-OPS this time led me to
+# believe that the UTC constants for the Alaskan reference stations
+# with weird time zones should be correct, so I have retained them.  A
+# survey of affected subordinate stations shows that most should be
+# correct if their reference station is correct (they all use the same
+# one).  Most doubtful are the six subordinate stations on
+# St. Lawrence Island.  I do not even have reliable intelligence on
+# what the de facto time zone of St. Lawrence Island is.  It was not
+# mentioned in the statute that defines U.S. time zones.
+#
+#
+# 2005-11-27
+#
+# Installed renamings from August Hahn to achieve something like the
+# naming convention previously followed in legacy data.  These
+# renamings will be maintained through subsequent updates if the churn
+# is not too bad.
+#
+#
+# 2005-09-05
+#
+# Generated and installed harmonic constants for 49 Canadian stations
+# using up to 10 years of hourly data (the maximum permitted download)
+# from Marine Environmental Data Services (MEDS), Fisheries and Oceans
+# Canada.
+#
+# MEDS publishes water level data for 962 stations.  Of those, only 92
+# are currently active.  Of those 92, 43 are non-tidal, being located
+# on or near the great lakes.
+# 
+#
+# 2005-06-05
+#
+# Generated and installed fresh harmonic constants for U.K. stations
+# using all available data for the 19 year epoch from 1986 to 2004.
+# Quality assurance information is available at
+# ftp://ftp.flaterco.com/xtide/harmonics-dwf-2005-06-05-QA.txt
+#
+# Station Harwich, England is new with only 8 months of data.
+# Authoritative predictions for this station are not yet available for
+# comparison.
+#
+#
+# 2005-01-20
+#
+# Deleted the following Alaskan reference stations, which were
+# rendered incorrect by technical difficulties confirmed by Todd Ehret
+# of NOS CO-OPS, and all dependent sub stations.  They may return
+# corrected in future revisions.
+#
+#  - 9460150 Attu, Massacre Bay
+#  - 9465261 Clarks Point, Nushagak Bay              
+#  - 9468132 St. Michael, Norton Sound
+#  - 9497649 Prudhoe Bay #2
+#  - 9497778 Cross Island
+#
+# Also deleted the following station which is listed as superseded.
+#
+#  - 9497652 Prudhoe Bay, Dock #1     
+#
+#
+# 2004-12-10
+#
+# Refreshed all NOS data from NOS web site.
+#
+#
+# 2004-10-18
+#
+# No data changes -- just resyncing and renaming all the different
+# editions of the database.
+#   harmonics-dwf-2004-10-18-v2.tcd   Built with libtcd 2.0
+#   harmonics-dwf-2004-10-18-v1.tcd   Built with libtcd 1.100
+#   harmonics-dwf-2004-10-18.sql      Postgres 7.4.2
+#   harmonics-dwf-2004-10-18-dump     txt/xml restored from -v2.tcd
+#   harmonics-dwf-2004-10-18-compat   txt/xml years 1970-2037 only
+#
+#
+# 2004-10-08 DWF
+#
+# Updated RIKZ/MII references to new name, RIKZ/ZDI.
+#
+#
+# 2004-10-05 DWF
+#
+# Rebuilt using libtcd 1.99, which corrects a problem where
+# constituents with zero phases were being dropped.  The affected
+# reference stations are Delfzijl, Netherlands; The Battery, New York
+# Harbor, NY; and South Pass, LA.
+#
+#
+# 2004-09-14 DWF
+#
+# Imported subordinate stations available from the NOS web site as of
+# 2004-09-09.  Compare against
+# http://co-ops.nos.noaa.gov/tide_pred.html.  Some stations will
+# disagree moderately because the reference stations were updated and
+# don't match the published tables.
+#
+# The smattering of sub stations in non-U.S. territory was suppressed.
+#
+# There are time zone problems in Alaska.  The LST used by the NOS for
+# stations in Alaska does not always match the local statutory time
+# zone (which I have followed).  For reference stations, the problem
+# was detectable and correctable because the constants were available
+# calibrated with UTC as well as LST.  But for the sub stations, it is
+# impossible to tell whether a disagreement with NOS predictions
+# results from a disagreement about time zone, incorrect calibration,
+# or both.
+#
+# A few names suffixed by (A) and (B) reflect sub stations on the NOS
+# web site with the same names and close coordinates, where it is far
+# from obvious why there are two of them.  Other name clashes were
+# resolved by disambiguation.
+#
+# (Nit) Corrected months_on_station for German ref stations from 13 to
+# 12.  (It's a time zone / rounding issue, on list to be fixed.)
+#
+#
+# 2004-09-07c DWF
+#
+# Put the following three stations on Eastern time (they were calibrated
+# to Central time on the NOS web site):
+#   Johns Island, Chassahowitzka Bay, FL
+#   Chassahowitzka River, FL
+#   Crystal River, Kings Bay, FL
+#
+#
+# 2004-09-07b DWF
+#
+# Corrected heuristic for Alaskan time zones.  A few stations in the
+# Aleutians were affected.
+#
+#
+# 2004-09-07 DWF
+#
+# Added notes for stations in Alaska where the LST used by NOS does not
+# match the apparent statutory time zone.  Presently these notes just
+# get attached to the comments field in the TCD file, but the next major
+# revision to the TCD format should enable XTide to display them more
+# prominently.
+#
+#
+# 2004-09-01 DWF
+#
+# Most reference stations available from the NOS web site as of
+# 2004-08-26 have been imported.  Compare against
+# http://co-ops.nos.noaa.gov/tide_pred.html.
+#
+# MLLW benchmarks were not available for all stations.  For stations
+# where a MLLW datum was not available, the datum has been set to LAT.
+#
+# I know there are typos in the location names.
+#
+# Currents are not available at this time.  According to Mr. Ehret, they
+# will become available when the new CO-OPS currents database is
+# complete.
+#
+# The following stations, which are located in jurisdictions that are
+# neither territories of the U.S., nor commonwealths associated with the
+# U.S., nor countries with a Compact of Free Association with the U.S.,
+# have been dropped.  Their data are distributed without legalese from
+# the NOS web site; however, that does not necessarily mean that anyone
+# other than the NOS has permission from the respective governments to
+# use or redistribute the data.  This may seem paranoid, but the
+# situation with the U.K. data that were pulled in 2001 was very
+# similar.
+#
+#   Apia, Samoa
+#   Bermuda Esso Pier, St. Georges Island, Bermuda
+#   Fare Ute Point, Papeete Harbor, French Polynesia
+#   La Unión, El Salvador
+#   Madero, Tampico Harbor, Tamaulipas, Mexico
+#   Puerto Corinto, Nicaragua
+#   Puerto Cortés, Honduras
+#   Puerto Quetzal (San Jose), Guatemala
+#   Settlement Point, Grand Bahama I., Bahamas
+#   Suva Harbor, Suva, Fiji
+#
+#
+# 2004-08-19 DWF
+#
+# This is an interim release as I am starting over from scratch using
+# Harmbase2.  All legacy data have been dumped.
+#
+# All U.S. data are temporarily down; the 2004-08-09 version of this
+# file remains usable for those.  Mr. Ehret has indicated that there
+# would be fees involved in obtaining harmonic constants and offsets
+# in the format previously received, so I am abandoning all that and
+# gearing up to scrape data off of the web.  According to Mr. Ehret,
+# the set of locations on the web site is a superset of those used in
+# published prediction tables.  The discrepancies that occur are
+# because the harmonic constants on the web are updated continuously
+# while the harmonic constants used for the published tables are fixed
+# in advance.  Thus there seems little to be lost by replacing all of
+# the legacy data with a snapshot of the web data.
+#
+# Data presently included:
+#
+# Netherlands reference stations computed from hourly levels 1999
+# through 2002, as received from Koos Doekes on 2004-02-03.  Compare
+# against http://www.getij.nl/engels/.
+#
+# German reference stations computed using Harmgen from year 2001
+# observations sent by Wolfgang Lange on 2004-08-19.  The datums are
+# adjusted to LAT.  Compare against
+# http://www.bsh.de/en/Marine%20data/Forecasts/Tides/index.jsp.  (The
+# web site is still using the MLWS datum, so the heights will disagree
+# strongly until the web site is updated.  However, even adjusting for
+# that, the agreement is not as good as could be hoped.  The BSH
+# predictions are made using a non-harmonic method, so some
+# discrepancies are inevitable.)
+#
+# German subordinate stations as sent by Wolfgang Lange on 2004-08-10.
+#
+# U.K. reference stations computed using Harmgen from at least four
+# years of observations ending 2002-12-31, as downloaded from the BODC
+# web site 2003-11.  Compare against http://www.pol.ac.uk/ntslf/tides/.
+#
+#
+# 2004-08-09 DWF
+#
+# harmonics-dwf is a new database that emphasizes responsiveness to
+# updates and traceability to authoritative sources instead of maximum
+# coverage of locations and historical predictions.  All data known to
+# be old and expired and all data for which no source of updates
+# exists have been purged.  This will orphan many users who have been
+# getting good results from old data.  For these, please continue to
+# use RMK's database.
+#
+# harmonics-dwf now contains:
+#   - U.S. reference stations provided by Todd Ehret of NOAA circa
+#     2004-02-04.
+#   - Netherlands reference stations provided by Koos Doekes of the
+#     Rijkswaterstaat RIKZ/ZDI (then RIKZ/MII) on 2004-02-03.
+#   - U.K. reference stations derived by Harmgen from BODC data,
+#     2003-11.
+#   - The most recent data for other U.S. reference stations that
+#     were in RMK data rev. 2004-04-16 23:30 but not included in
+#     the distribution from Todd Ehret.
+#
+# All sub stations are gone temporarily while I update my software to
+# import the sub station data sent by Todd Ehret in February.  I will
+# also be contacting Mr. Ehret to see if I can obtain a complete dump
+# of all stations in current use so that I can build a legacy-free
+# database.

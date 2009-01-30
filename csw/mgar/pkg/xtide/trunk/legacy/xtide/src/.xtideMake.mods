@@ -1,0 +1,61 @@
+###############################################################################
+#
+# FILE:		.xtideMake.mods
+#
+# DESCRIPTION:  These are the pre-configure modifications for the xtide
+#		Makefile.in file.
+#
+# PACKAGE:	CSWxtide
+#
+# REVISION:	02-05-08
+#
+# NOTES:	* This relies on the CJSA version of install.
+#
+#		* Just pick up everything below and move it into the
+#		  Makefile.in file, replacing the default install target
+#		  located there.
+#
+###############################################################################
+
+#----------------------------------------------------------------------------
+# Start of install target for Blastwave
+#----------------------------------------------------------------------------
+BINDIR	= $(DESTDIR)/opt/csw/bin
+SBINDIR	= $(DESTDIR)/opt/csw/sbin
+LIBDIR	= $(DESTDIR)/opt/csw/share/xtide
+MANDIR	= $(DESTDIR)/opt/csw/man
+
+install: inst-prog inst-lib inst-man
+
+inst-prog: inst-dirs tide xtide xttpd ../.tide ../.xtide ../.xttpd
+	install -s -o root -g bin -m 755 tide      $(BINDIR)/tide.bin
+	install -s -o root -g bin -m 755 xtide     $(BINDIR)/xtide.bin
+	install -s -o root -g bin -m 755 xttpd     $(SBINDIR)/xttpd.bin
+	install -c -o root -g bin -m 755 ../.tide  $(BINDIR)/tide
+	install -c -o root -g bin -m 755 ../.xtide $(BINDIR)/xtide
+	install -c -o root -g bin -m 755 ../.xttpd $(SBINDIR)/xttpd
+
+inst-lib: inst-dirs ../../copyright
+	install -c -o root -g bin -m 644 ../../copyright $(LIBDIR)
+	echo "/opt/csw/share/xtide/harmonics.tcd" >  $(LIBDIR)/xtide.conf.sample
+	echo "/opt/csw/share/xtide/wvs/"          >> $(LIBDIR)/xtide.conf.sample
+
+inst-man: inst-dirs
+	@for i in *.1 ; do \
+	    echo "installing $$i" ; \
+	    install -o root -g bin -m 644 $$i $(MANDIR)/man1 ; \
+	done
+	@for i in *.8 ; do \
+	    echo "installing $$i" ; \
+	    install -o root -g bin -m 644 $$i $(MANDIR)/man8 ; \
+	done
+
+inst-dirs:
+	install -d -o root -g bin -m 755 $(BINDIR)
+	install -d -o root -g bin -m 755 $(SBINDIR)
+	install -d -o root -g bin -m 755 $(LIBDIR)
+	install -d -o root -g bin -m 755 $(MANDIR)/man1
+	install -d -o root -g bin -m 755 $(MANDIR)/man8
+#----------------------------------------------------------------------------
+# End of install target for Blastwave
+#----------------------------------------------------------------------------

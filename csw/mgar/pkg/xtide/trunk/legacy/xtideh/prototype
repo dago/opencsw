@@ -1,0 +1,8 @@
+i pkginfo
+i copyright
+i depend
+d none share 0755 root bin
+d none share/xtide 0755 root bin
+f none share/xtide/boilerplate.txt 0644 root bin
+f none share/xtide/harmonics-free.tcd 0644 root bin
+f none share/xtide/harmonics-nonfree.tcd 0644 root bin

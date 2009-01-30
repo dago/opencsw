@@ -1,0 +1,9 @@
+PKG=CSWxtideh
+NAME=xtideh - harmonics data files for xtide
+VERSION=07.12.28,REV=2008.02.05
+ARCH=all
+CATEGORY=application
+CSW_CATEGORY="eng, fun, lib"
+VENDOR=http://www.flaterco.com/xtide/  packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org

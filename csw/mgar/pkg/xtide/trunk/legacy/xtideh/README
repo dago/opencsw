@@ -1,0 +1,117 @@
+###############################################################################
+#
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the XTIDEH package.
+#
+# PACKAGE:      CSWxtideh
+#
+# REVISION:     12-21-07
+#
+# NOTES:	* This package is architecture independent and will work in
+#		  conjunction with both the sparc and intel XTIDE packages.
+#
+###############################################################################
+
+-------------------------------------------------------------------------------
+01: Login to the sparc build machine (ra)
+-------------------------------------------------------------------------------
+
+	wr
+
+-------------------------------------------------------------------------------
+02: Update the pkginfo file
+-------------------------------------------------------------------------------
+
+	cd pkgs/xtideh
+	vi pkginfo
+	    [edit the version info: Set it to the harmonics data file date]
+
+-------------------------------------------------------------------------------
+03: Download the latest boilerplate and harmonics files
+-------------------------------------------------------------------------------
+
+	cd src
+	vi Makefile		[set HARVER to current version (i.e., date)]
+
+	make get
+
+    		Or, if the source was already downloaded:
+
+	make unpack
+
+-------------------------------------------------------------------------------
+04: Update copyright file    [**** ONLY NEEDS TO BE DONE ONCE PER RELEASE ****]
+-------------------------------------------------------------------------------
+
+	cp boilerplate.txt ${HOME}/pkgs/xtideh/copyright
+
+-------------------------------------------------------------------------------
+05: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg INSTALL_ROOT=$PWD/cswstage install 
+
+-------------------------------------------------------------------------------
+06: Update the prototype file
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check 'f'iles & 'd'irs have owner/group 'root bin']
+	vi prototype (only if necessary)
+	    [change all owners/groups to 'root bin']
+	    [change file permissions from 0444 to 0644]
+	    [change file permissions from 0555 to 0755]
+
+-------------------------------------------------------------------------------
+07: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/xtideh/prototype prototype
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/xtideh
+
+-------------------------------------------------------------------------------
+08: Create the package xtideh-*-SunOS5.8-all-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/xtideh
+	createpkg -b ${HOME}/pkgs/xtideh/src/cswstage/opt/csw
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+-------------------------------------------------------------------------------
+09: Clean up
+-------------------------------------------------------------------------------
+	
+	cd src
+	make clean
+	make pack
+	make realclean
+
+-------------------------------------------------------------------------------
+10: Copy the new package to the installation area
+-------------------------------------------------------------------------------
+
+	cd pkgs/xtideh
+	cp  xtideh-*.pkg.gz  /export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+11: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+	cd src
+	cp  xtideh-*.gz   /export/medusa/src
+
+-------------------------------------------------------------------------------
+12: Notify package administrator
+-------------------------------------------------------------------------------
+
+	* Email phil@bolthole.com (Philip Brown) describing the update
+
+------------------------------------------------------------------------------

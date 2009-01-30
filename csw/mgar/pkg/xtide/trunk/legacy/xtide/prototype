@@ -1,0 +1,21 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/tide.1 0644 root bin
+f none /opt/csw/share/man/man1/xtide.1 0644 root bin
+d none /opt/csw/share/man/man8 0755 root bin
+f none /opt/csw/share/man/man8/xttpd.8 0644 root bin
+d none /opt/csw/share/xtide 0755 root bin
+f none /opt/csw/share/xtide/copyright 0644 root bin
+f none /opt/csw/share/xtide/xtide.conf.sample 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/tide.bin 0755 root bin
+f none /opt/csw/bin/xtide.bin 0755 root bin
+f none /opt/csw/bin/tide 0755 root bin
+f none /opt/csw/bin/xtide 0755 root bin
+d none /opt/csw/sbin 0755 root bin
+f none /opt/csw/sbin/xttpd.bin 0755 root bin
+f none /opt/csw/sbin/xttpd 0755 root bin

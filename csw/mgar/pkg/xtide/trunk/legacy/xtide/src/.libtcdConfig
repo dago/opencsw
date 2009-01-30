@@ -1,0 +1,21 @@
+#! /bin/sh
+###############################################################################
+#
+# FILE:		.libtcdConfig
+#
+# DESCRIPTION:	Configuration file for the libtcd program.  This should be
+#		executed from withing the current libtcd build sub-directory
+#		as:
+#
+#			../.libtcdConfig
+#
+# NOTES:		
+#
+# PACKAGE:	CSWlibtcd
+#
+# REVISION:	12-30-07
+#
+###############################################################################
+
+./configure --prefix=/opt/csw --disable-shared \
+  CPPFLAGS="-I/opt/csw/include -I." LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib"

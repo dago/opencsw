@@ -1,0 +1,23 @@
+#! /bin/sh
+###############################################################################
+#
+# FILE:		.xtideConfig
+#
+# DESCRIPTION:	Configuration file for the xtide program.  This should be
+#		executed from withing the current xtide build sub-directory
+#		as:
+#
+#			../.xtideConfig
+#
+# NOTE:		*** THIS IS ONLY FOR USE WITH SUN'S cc/CC  COMPILERS! ***
+#		*** USE ../.xtideConfig-gcc when using GNU COMPILERS! ***
+#
+# PACKAGE:	CSWxtide
+#
+# REVISION:	12-30-07
+#
+###############################################################################
+
+./configure --prefix=/opt/csw \
+  CPPFLAGS="-I/opt/csw/include -I." \
+  LDFLAGS="-R/opt/csw/lib -L/opt/csw/lib -Llibtcd"

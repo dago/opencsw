@@ -1,0 +1,12 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/xtide 0755 root bin
+d none /opt/csw/share/xtide/wvs 0755 root bin
+f none /opt/csw/share/xtide/wvs/wvs1.dat 0644 root bin
+f none /opt/csw/share/xtide/wvs/wvs12.dat 0644 root bin
+f none /opt/csw/share/xtide/wvs/wvs250k.dat 0644 root bin
+f none /opt/csw/share/xtide/wvs/wvs3.dat 0644 root bin
+f none /opt/csw/share/xtide/wvs/wvs43.dat 0644 root bin
+f none /opt/csw/share/xtide/wvs/wvsfull.dat 0644 root bin

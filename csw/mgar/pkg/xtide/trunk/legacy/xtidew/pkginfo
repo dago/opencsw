@@ -1,0 +1,9 @@
+PKG=CSWxtidew
+NAME=xtidew - world vector shoreline data files for xtide
+VERSION=1.0,REV=2008.02.05
+ARCH=all
+CATEGORY=application
+CSW_CATEGORY="eng, fun, lib"
+VENDOR=http://www.flaterco.com/xtide/  packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org

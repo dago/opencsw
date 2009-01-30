@@ -1,0 +1,9 @@
+PKG=CSWxtide
+NAME=xtide - harmonic tide clock and tide predictor
+VERSION=2.10,REV=2008.02.07
+ARCH=sparc
+CATEGORY=application
+CSW_CATEGORY="eng, fun, user"
+VENDOR=http://www.flaterco.com/xtide/  packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org
