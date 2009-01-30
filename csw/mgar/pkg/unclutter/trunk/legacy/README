@@ -1,0 +1,161 @@
+###############################################################################
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the UNCLUTTER package.  Refer to the
+#		BUILD.NOTES file for specific information about the actual
+#		build and testing of the current version.
+#
+# PACKAGE:      CSWunclutter
+#
+# REVISION:     01-05-07
+#
+# NOTES:	* This source code for version 1.08 was released into the
+#		  public domain in 1992 and is not being maintained.  Thus,
+#		  this is the sole repository for the source code, including
+#		  the revisions I made, bumping it to version 1.09.
+###############################################################################
+
+-------------------------------------------------------------------------------
+01: Switch to the correct build machine
+-------------------------------------------------------------------------------
+
+	SPARC:
+	  or
+	INTEL:
+
+-------------------------------------------------------------------------------
+02: Update the pkginfo file		     VERSION=<version>[,REV=YYYY.MM.DD]
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/unclutter
+	vi pkginfo
+	    [edit the version info: must include REV= portion if applicable]
+	    [edit the ARCH line for either a 'sparc' or 'i386' build]
+
+-------------------------------------------------------------------------------
+03: Unpack the source code   [**** ONLY NEEDS TO BE DONE ONCE PER SESSION ****]
+-------------------------------------------------------------------------------
+
+	cd src
+	vi Makefile			  [edit the UVERS variable]
+	make unpack			  [unpack unless it was just extracted]
+
+-------------------------------------------------------------------------------
+04: Update copyright file    [**** ONLY NEEDS TO BE DONE ONCE PER RELEASE ****]
+-------------------------------------------------------------------------------
+
+	vi unclutter*[0-9]/README  ${HOME}/pkgs/unclutter/copyright
+	  [Include the notice concerning release to the public domain]
+
+-------------------------------------------------------------------------------
+05: Set the proper build environment
+-------------------------------------------------------------------------------
+
+	SPARC:	    export CC='cc -xarch=v8 -xstrconst -xildoff'
+	  or
+	INTEL:	    export CC='cc -xtarget=pentium -xstrconst -xildoff' 
+
+-------------------------------------------------------------------------------
+06: Compile the software
+-------------------------------------------------------------------------------
+
+	cd unclutter*[0-9]
+
+	xmkmf				# generate a current Makefile
+
+	make clean
+	make
+
+-------------------------------------------------------------------------------
+07: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg INSTALL_ROOT=$PWD/cswstage install-csw
+
+-------------------------------------------------------------------------------
+08: Update the prototype file    (2nd build can use existing prototype file)
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check 'f'iles & 'd'irs have owner/group 'root bin']
+	vi prototype
+	    [if necessary ...]
+	    	[change all owners/groups to 'root bin']
+		[change file permissions from 0444 to 0644]
+		[change file permissions from 0555 to 0755]
+	    [add following 'i' line as third line in file]
+	    	i depend
+
+-------------------------------------------------------------------------------
+09: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/unclutter/prototype prototype | less -+e
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/unclutter
+
+-------------------------------------------------------------------------------
+10: Create the package unclutter-*-SunOS5.8-{sparc,386i}-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/unclutter
+	createpkg -b ${HOME}/pkgs/unclutter/src/unclutter*[0-9]/cswstage/opt/csw
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+-------------------------------------------------------------------------------
+11: Examine list of libraries used to see if any new CSW dependencies exist
+-------------------------------------------------------------------------------
+
+    If a new library is found, check package dependency:
+
+	pkgchk -l -p /opt/csw/lib/lib<...>
+   
+    Add entry to the depend file:
+
+        P	CSW<pkg>
+
+    Now repeat from step 07 and recreate the package
+
+-------------------------------------------------------------------------------
+12: Rebuild again on other build platform
+-------------------------------------------------------------------------------
+
+     Go to step 01 and repeat for other architecture
+
+-------------------------------------------------------------------------------
+13: Clean up
+-------------------------------------------------------------------------------
+
+    cd ${HOME}/pkgs/unclutter/src/unclutter*[0-9]
+    make clean ; rm -rf cswstage
+    cd ${HOME}/pkgs/unclutter/src
+    make pack				# if req'd, tar up and gzip source
+    make clean 
+
+-------------------------------------------------------------------------------
+14: Copy the new package to the installation area
+-------------------------------------------------------------------------------
+
+    cd pkgs/unclutter
+    cp unclutter-*.pkg.gz  /export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+15: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+    cd src
+    cp  unclutter*tar.gz  /export/medusa/src
+
+-------------------------------------------------------------------------------
+16: Notify package administrator
+-------------------------------------------------------------------------------
+
+    * Email phil@bolthole.com (Philip Brown) describing the update
+
+-----------------------------------------------------------------------------

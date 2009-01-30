@@ -1,0 +1,51 @@
+###############################################################################
+# FILE:		BUILD.NOTES
+#
+# DESCRIPTION:	Build notes for the UNCLUTTER package.  These are notes
+#		concerning the compiling and testing of this package.
+#
+#		Use the detailed instructions in the README file for package
+#		creation.
+#
+# PACKAGE:      CSWunclutter
+#
+# CUR VER:	Unclutter Version 1.09
+#
+# REVISION:     01-05-07
+###############################################################################
+
+-------------------------------------------------------------------------------
+HISTORY:
+-------------------------------------------------------------------------------
+Date:		Version:		Notes:
+-------------------------------------------------------------------------------
+01-05-07	1.09			Initial package build
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+SPARC & INTEL:
+-------------------------------------------------------------------------------
+
+make:
+	* The following warning messages are generated
+
+	"vroot.h", line 43: warning: no explicit type given for parameter: \
+		screen
+	"unclutter.c", line 43: warning: old-style declaration or incorrect \
+		type for: pexit
+	"unclutter.c", line 45: warning: implicit function declaration: exit
+	"unclutter.c", line 47: warning: old-style declaration or incorrect \
+		type for: usage
+	"unclutter.c", line 91: warning: old-style declaration or incorrect \
+		type for: nameinlist
+	"unclutter.c", line 113: warning: old-style declaration or incorrect \
+		type for: matchinlist
+	"unclutter.c", line 135: warning: old-style declaration or incorrect \
+		type for: createnullcursor
+	"unclutter.c", line 158: warning: old-style declaration or incorrect 
+		type for: main
+	"unclutter.c", line 158: warning: no explicit type given for \
+		parameter: argc
+	"unclutter.c", line 174: warning: implicit function declaration: atoi
+	"unclutter.c", line 209: warning: implicit function declaration: malloc
+	"unclutter.c", line 269: warning: implicit function declaration: abs

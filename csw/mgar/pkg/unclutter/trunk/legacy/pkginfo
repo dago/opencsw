@@ -1,0 +1,9 @@
+PKG=CSWunclutter
+NAME=unclutter - Remove idle cursor image from screen
+VERSION=1.09
+ARCH=i386
+CATEGORY=application
+CSW_CATEGORY="user, x"
+VENDOR=https://sourceforge.net/projects/unclutter/ packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org
