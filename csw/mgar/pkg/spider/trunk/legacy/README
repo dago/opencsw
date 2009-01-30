@@ -1,0 +1,162 @@
+###############################################################################
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the SPIDER package.  Refer to the
+#		BUILD.NOTES file for specific information about the actual
+#		build and testing of the current version.
+#
+# PACKAGE:      CSWspider
+#
+# REVISION:     11-18-06
+#
+# NOTES:	* Primary source code is located at:
+#		    - ftp://ftp.uu.net/usenet/comp.sources.x/volume7/spider
+#		* Patch #2 is located at:
+#		    - ftp://ftp.uu.net/usenet/comp.sources.x/volume10/spider
+###############################################################################
+
+-------------------------------------------------------------------------------
+01: Switch to the correct build machine
+-------------------------------------------------------------------------------
+
+	SPARC:
+	  or
+	INTEL:
+
+-------------------------------------------------------------------------------
+02: Update the pkginfo file
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/spider
+	vi pkginfo
+	    [edit the version info: must include REV= portion if applicable]
+	    [edit the ARCH line for either a 'sparc' or 'i386' build]
+
+-------------------------------------------------------------------------------
+03: Unpack and/or download the software and game files
+-------------------------------------------------------------------------------
+	cd src
+	make unpack
+
+-------------------------------------------------------------------------------
+04: Update the copyright file   (only needs to be done once per release)
+-------------------------------------------------------------------------------
+
+	cd spider*[0-9]
+	cp copyright.h ${HOME}/pkgs/spider/copyright
+
+-------------------------------------------------------------------------------
+05: Set the proper build environment
+-------------------------------------------------------------------------------
+
+	SPARC:	    export CC='cc -xarch=v8 -xstrconst -xildoff'
+	  or
+	INTEL:	    export CC='cc -xtarget=pentium -xstrconst -xildoff' 
+
+-------------------------------------------------------------------------------
+06: Compile the software
+-------------------------------------------------------------------------------
+
+	xmkmf
+	make clean
+	make
+
+-------------------------------------------------------------------------------
+07: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg INSTALL_ROOT=$PWD/cswstage install-csw
+
+-------------------------------------------------------------------------------
+08: Update the prototype file    (2nd build can use existing prototype file)
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check 'f'iles & 'd'irs have owner/group 'root bin']
+	vi prototype
+	    [if necessary ...]
+	    	[change all owners/groups to 'root bin']
+		[change file permissions from 0444 to 0644]
+		[change file permissions from 0555 to 0755]
+	    [add following 'i' line as third line in file]
+	    	i depend
+
+-------------------------------------------------------------------------------
+09: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/spider/prototype prototype | less -+e
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/spider
+
+-------------------------------------------------------------------------------
+10: Create the package spider-*-SunOS5.8-{sparc,386i}-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/spider
+	createpkg -r ${HOME}/pkgs/spider/src/spider*[0-9]/cswstage
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+-------------------------------------------------------------------------------
+11: Examine list of libraries used to see if any new CSW dependencies exist
+-------------------------------------------------------------------------------
+
+    If a new library is found, check package dependency:
+
+	pkgchk -l -p /opt/csw/lib/lib<...>
+   
+    Add entry to the depend file:
+
+        P	CSW<pkg>
+
+    Now repeat from step 09 and recreate the package
+
+-------------------------------------------------------------------------------
+12: Rebuild again on other build platform
+-------------------------------------------------------------------------------
+
+     Start over and rebuild the Solaris-x86 version
+
+-------------------------------------------------------------------------------
+13: Clean up
+-------------------------------------------------------------------------------
+
+    cd ${HOME}/pkgs/spider/src/spider*[0-9]
+    rm -rf cswstage
+    make clean
+
+-------------------------------------------------------------------------------
+14: Archive source code
+-------------------------------------------------------------------------------
+
+    cd ..
+    make pack
+    make clean
+
+-------------------------------------------------------------------------------
+15: Copy the new package to the installation area
+-------------------------------------------------------------------------------
+
+    cd pkgs/spider
+    cp spider-*.pkg.gz  /export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+16: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+    cd src
+    cp  spider-*.gz  /export/medusa/src
+
+-------------------------------------------------------------------------------
+17: Notify package administrator
+-------------------------------------------------------------------------------
+
+    * Email phil@bolthole.com (Philip Brown) describing the update
+
+-----------------------------------------------------------------------------

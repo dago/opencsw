@@ -1,0 +1,166 @@
+#/*
+# *	Spider
+# *
+# *	(c) Copyright 1989, Donald R. Woods and Sun Microsystems, Inc.
+# *	(c) Copyright 1990, David Lemke and Network Computing Devices Inc.
+# *
+# *	See copyright.h for the terms of the copyright.
+# *
+# *	@(#)Makefile	2.1	90/04/27
+# *
+# */
+#
+# SunPro make Makefile for Spider
+#
+CFLAGS = -O 
+# define ROUND_CARDS to make them round.  this slows things down a bit,
+# but does make them prettier.
+CPPFLAGS = -DROUND_CARDS
+# if SMALL_CARDS is defined *don't* define ROUND_CARDS.
+#CPPFLAGS = -DSMALL_CARDS
+
+# round cards require Xmu.
+#LIBS = -lX11
+LIBS = -lXmu -lX11
+
+# set HELPDIR to be the place where the help files will be installed
+#HELPDIR = .
+HELPDIR = /u6/lemke/games/lib/spider
+# set BINDIR to be the place where the executables will be installed
+BINDIR = .
+
+CPPFLAGS +=  -DHELPDIR="\"$(HELPDIR)\""
+
+.KEEP_STATE:
+
+OBJS =	main.o gfx.o spider.o events.o windows.o movelog.o util.o version.o
+
+SRCS = main.c gfx.c spider.c events.c windows.c movelog.c util.c version.c
+
+HEADERS = globals.h defs.h assert.h copyright.h
+
+XVIEW_OBJS =	gfx.o spider.o events.o movelog.o util.o windows.o \
+	xv_ui.o xv_stubs.o version.o
+
+XVIEW_SRCS =	gfx.c spider.c events.c movelog.c util.c windows.c \
+	xv_ui.c xv_stubs.c version.c
+
+XVIEW_HEADERS = ${HEADERS} xv_ui.h
+
+XVIEW_DIST = xv_ui.c xv_stubs.c xv_ui.h
+
+XAW_OBJS = gfx.o spider.o events.o movelog.o util.o windows.o \
+	xaw_ui.o xaw_stubs.o version.o
+
+XAW_SRCS = gfx.c spider.c events.c movelog.c util.c windows.c \
+	xaw_ui.c xaw_stubs.c version.c
+
+XAW_HEADERS = ${HEADERS} xaw_ui.h
+
+XAW_DIST = xaw_ui.c xaw_ui.h xaw_stubs.c
+
+BITMAPS = rank.bm suit.bm face.bm spider.bm cards.bm.aa cards.bm.ab
+
+DOCS =	doc.intro doc.rules doc.controls doc.examples doc.misc spider.man \
+	spider.info doc.summary
+
+KL_BIN = spider
+XAW_BIN = spider
+XVIEW_BIN = spider
+
+# for make all, these need to be moved
+all:= KL_BIN = spider.kl
+all:= XAW_BIN = spider.xaw
+all:= XVIEW_BIN = spider.xview
+
+debug:=	CFLAGS = -g
+debug:= CPPFLAGS += -DDEBUG
+debug:=	LDFLAGS = -Bstatic
+debug:= MALLOC = /usr/lib/debug/malloc.o
+
+kl_spider:= CPPFLAGS += -DKITLESS
+
+xv_spider:= OBJS = $(XVIEW_OBJS)
+xv_spider:= SRCS = $(XVIEW_SRCS)
+#
+# NOTE: XVIEW 1.1 requires libolgx.  1.0.1, R4, and 1.0 don't.
+#
+xv_spider:= LIBS = -L$(OPENWINHOME)/usr/lib -lxview -lolgx -lX11
+xv_spider:= CPPFLAGS += -I$(OPENWINHOME)/include -DXVIEW
+
+xaw_spider:= OBJS = $(XAW_OBJS)
+xaw_spider:= SRCS = $(XAW_SRCS)
+xaw_spider:= LIBS = -lXaw -lXmu -lXt -lXext -lX11
+xaw_spider:= CPPFLAGS += -DXAW
+
+
+all:	xaw_spider
+debug:	xaw_spider
+
+xv_spider:	obj
+	mv obj $(XVIEW_BIN)
+
+xaw_spider:	obj
+	mv obj $(XAW_BIN)
+
+kl_spider:	obj
+	mv obj $(KL_BIN)
+
+
+obj:	$$(OBJS)
+	cc -o $@ $(LDFLAGS) $(OBJS) $(MALLOC) $(LIBS)
+
+.c.o:
+	cc $(CPPFLAGS) $(CFLAGS) -c $<
+
+# SunOS4.0.3 sparc optimizer slimes this file
+util.o:	util.c
+	cc $(CPPFLAGS) -c $<
+#	cc -g $(CPPFLAGS) -c $<
+
+gfx.o:	cards.bm
+	cc $(CPPFLAGS) $(CFLAGS) -c $<
+
+version.o:	FRC
+	cc -c -DDATE="\"`date`\"" $<
+
+cards.bm:	cards.bm.aa cards.bm.ab
+	cat cards.bm.aa cards.bm.ab > $@
+
+install:	all
+	mkdir $(HELPDIR)
+	cp $(DOCS) $(HELPDIR)
+	mkdir $(BINDIR)
+	mv $(BINDIR)/$(KL_BIN) $(BINDIR)/$(KL_BIN)-
+	mv $(BINDIR)/$(XAW_BIN) $(BINDIR)/$(XAW_BIN)-
+	mv $(BINDIR)/$(XVIEW_BIN) $(BINDIR)/$(XVIEW_BIN)-
+	cp $(KL_BIN) $(XAW_BIN) $(XVIEW_BIN) $(BINDIR)
+
+
+lint:
+	lint -abchxz $(SRCS)
+
+clean:
+	rm -f core *.o cards.bm.a? spider *~ ,* Part* spider.shar* spider.a spider.a.a?
+
+tags:	$$(SRCS) $$(HEADERS) $$(XAW_DIST) $$(XVIEW_DIST)
+	ctags $(SRCS) $(HEADERS) $(XAW_DIST) $(XVIEW_DIST)
+
+kit:
+	split -675 cards.bm cards.bm.
+	makekit -m README Makefile.sunpro Imakefile $(DOCS) $(SRCS) \
+		$(HEADERS) $(XVIEW_DIST) $(XAW_DIST) $(BITMAPS)
+
+shar:
+	split -675 cards.bm cards.bm.
+	shar README Makefile.sunpro Imakefile $(DOCS) $(SRCS) $(HEADERS) \
+		$(XVIEW_DIST) $(XAW_DIST) $(BITMAPS) > spider.shar
+
+dist:	shar
+	rm -f spider.shar.Z
+	compress spider.shar
+	cat spider.shar.Z | btoa > spider.a
+	split spider.a spider.a.
+
+FRC::
+

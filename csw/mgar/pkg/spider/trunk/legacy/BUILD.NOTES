@@ -1,0 +1,32 @@
+###############################################################################
+# FILE:		BUILD.NOTES
+#
+# DESCRIPTION:	Build notes for the SPIDER package.  These are notes concerning
+#		the compiling and testing of this package.
+#
+#		Use the detailed instructions in the README file for package
+#		creation.
+#
+# PACKAGE:      CSWspider
+#
+# CUR VER:	Spider Version 1.1.1,REV=2006.11.18
+#
+# REVISION:     11-18-06
+###############################################################################
+
+-------------------------------------------------------------------------------
+HISTORY:
+-------------------------------------------------------------------------------
+Date:		Version:		Notes:
+-------------------------------------------------------------------------------
+10-23-04	1.1.1			Initial package build
+11-18-06	1.1.1,REV=2006.11.18	New release with 150 perfect games
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+SPARC & INTEL:
+-------------------------------------------------------------------------------
+
+make:
+
+    * Numerous non-fatal warning messages are issues  [too many to list]

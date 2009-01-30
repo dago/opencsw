@@ -1,0 +1,9 @@
+PKG=CSWspider
+NAME=spider - Solitaire Card Game
+VERSION=1.1.1,REV=2006.11.18
+ARCH=i386
+CATEGORY=application
+CSW_CATEGORY="fun, user"
+VENDOR=ftp://ftp.uu.net/usenet/comp.sources.x/ - packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org

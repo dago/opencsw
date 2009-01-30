@@ -1,0 +1,6 @@
+set -x
+make install
+make install.man
+make install.doc
+chown -R games.games /usr/local/Games/bin/spider
+chown -R games.games /usr/local/Games/lib/spider
