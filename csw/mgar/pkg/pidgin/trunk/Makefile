@@ -10,9 +10,9 @@ endef
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += x11.pc
-DISTFILES += $(call admfiles,CSWpidgin,prototype depend)
+DISTFILES += $(call admfiles,CSWpidgin,)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += '--with-dbus-services=/opt/csw/etc/dbus-1'
 CONFIGURE_ARGS += '--with-tclconfig=/opt/csw/lib'
 CONFIGURE_ARGS += '--with-tkconfig=/opt/csw/lib'
@@ -21,21 +21,29 @@ CONFIGURE_ARGS += '--disable-nss'
 CONFIGURE_ARGS += '--disable-avahi'
 CONFIGURE_ARGS += '--disable-nm'
 
-CONFIGURE_ENV += DOT="/opt/csw/graphviz2/bin/dot"
-
+DOT=/opt/csw/graphviz2/bin/dot
+XGETTEXT=/opt/csw/bin/gxgettext
+MSGFMT=/opt/csw/bin/gmsgfmt
+MSGMERGE=/opt/csw/bin/gmsgmerge
+SED=/opt/csw/bin/gsed
+EXTRA_CONFIGURE_EXPORTS = DOT XGETTEXT MSGFMT MSGMERGE SED
 EXTRA_INC += /opt/csw/include/ncurses
 
 #Need to include our own x11.pc file as solaris 8 doesn't have one
-PKG_CONFIG_PATH += $(CURDIR)/$(WORKDIR)
+EXTRA_PKGCONFIG_PATH = $(CURDIR)/$(WORKDIR)
 
-#No tests
-TEST_SCRIPTS =
+TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
+
+REQUIRED_PKGS_CSWpidgin  = CSWaspell CSWdbusglib CSWgcrypt CSWggettext CSWglib2
+REQUIRED_PKGS_CSWpidgin += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
+REQUIRED_PKGS_CSWpidgin += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
+REQUIRED_PKGS_CSWpidgin += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
+REQUIRED_PKGS_CSWpidgin += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib
+
 
 include gar/category.mk
