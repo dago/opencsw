@@ -4,7 +4,15 @@ PATCHLEVEL = p72
 GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL)
+PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
+PREREQUISITE_PKGS += CSWreadline CSWzlib
+
+REQUIRED_PKGS_CSWruby = CSWbdb3n CSWgdbm CSWiconv
+REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
+
+REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
+
+REQUIRED_PKGS_CSWrubydoc = CSWruby
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -20,27 +28,24 @@ endef
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
-DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
-
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of new upstream
+# software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
-DISTFILES += CSWruby.gspec CSWruby.depend CSWruby.prototype
-DISTFILES += CSWrubytk.gspec CSWrubytk.depend CSWrubytk.prototype
+DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
+DISTFILES += $(call admfiles,CSWruby,) $(call admfiles,CSWrubytk,)
+
+# See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
+PATCHFILES = rdoc_parse_order_fix.patch
 
 ifneq ($(SKIP_RUBYDOC),1)
-DISTFILES += CSWrubydoc.gspec CSWrubydoc.depend
+DISTFILES += $(call admfiles,CSWrubydoc,)
 endif
-
-# Force the dbm extension to build
-#PATCHFILES += dbm.diff
-
-#LIBDEPS += lib/iconv lib/gdbm lib/ncurses lib/readline
-#LIBDEPS += lib/zlib lib/openssl lib/bdb3
-#LIBDEPS += lang/tcl lang/tk
 
 # Put samples and RI documentation in share/doc/ruby
 datadir = $(docdir)/ruby
+
+GARCOMPILER = GNU
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread
@@ -54,30 +59,18 @@ CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
-#override this as the configure script wants to use the obsolete (broken in
-#some cases) -KPIC
-#ifeq "$(GARCH)" "sparc"
-#CONFIGURE_ARGS += CFLAGS="-xO3 -xtarget=ultra -xarch=v8 -I/export/home/bwalton/build.5.8-sparc/ruby/opt/csw/include -I/opt/csw/include"
-#CFLAGS = -xO3 -xtarget=ultra -xarch=v8 -I/export/home/bwalton/build.5.8-sparc/ruby/opt/csw/include -I/opt/csw/include
-#endif
+WORKSRC = $(WORKDIR)/$(DISTNAME)-$(PATCHLEVEL)
+WORKSRC_FIRSTMOD = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)-$(PATCHLEVEL)
 
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
 
-# Replace current build arch in prototype
-pre-package:
-	@for proto in "" $(wildcard $(WORKDIR)/*.prototype) ; do \
-		test -z "$$proto" && continue ; \
-		gsed -i -e s,%GARCH%,$(GARCH),g $$proto ; \
-	done
+INSTALL_ARGS = install-all
 
 PI_TARGETS  = samples rbconfig rbscripts
-ifneq ($(SKIP_RUBYDOC),1)
-PI_TARGETS += rubydoc
-endif
 
-post-install: $(PI_TARGETS)
+post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
 
 # Fix up rbconfig
@@ -89,26 +82,10 @@ rbconfig:
 # Copy samples
 samples:
 	@mkdir -p $(DESTDIR)$(datadir)
-	@cp -R $(WORKSRC)/sample $(DESTDIR)$(datadir)
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(datadir)
 	@for ext in bigdecimal dl tk ; do \
-		cp -R $(WORKSRC)/ext/$$ext/sample $(DESTDIR)$(datadir)/sample/$$ext ; \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(datadir)/sample/$$ext ; \
 	done
-	@$(MAKECOOKIE)
-
-# Doing a 'make install-doc' in $(WORKSRC) tries to install
-# docs to the real prefix.  This target installs to the packaging
-# prefix instead.
-rubydoc:
-	( cd $(WORKSRC) ; \
-		LD_LIBRARY_PATH=$(DESTDIR)$(libdir) \
-		$(DESTDIR)$(bindir)/ruby \
-			-I $(DESTDIR)$(libdir)/ruby/1.8 \
-			-I $(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.8 \
-			bin/rdoc \
-				--all \
-				--ri-system \
-				--op $(DESTDIR)$(datadir)/ri/1.8/system \
-				$(DESTDIR)$(libdir)/ruby/1.8 )
 	@$(MAKECOOKIE)
 
 # Some scripts come with /usr/local/bin/ruby hard coded.
