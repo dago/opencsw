@@ -25,6 +25,12 @@ define BLURB
   closures.
 endef
 
+SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
+SPKG_DESC_CSWrubydoc = Documentation for Ruby
+
+PKGFILES_CSWrubydoc = $(PKGFILES_DOC)
+PKGFILES_CSWrubytk = .*tcl.* .*tk.*
+
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
@@ -34,13 +40,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 DISTFILES += $(call admfiles,CSWruby,) $(call admfiles,CSWrubytk,)
+DISTFILES += $(call admfiles,CSWrubydoc,)
 
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
-
-ifneq ($(SKIP_RUBYDOC),1)
-DISTFILES += $(call admfiles,CSWrubydoc,)
-endif
 
 # Put samples and RI documentation in share/doc/ruby
 datadir = $(docdir)/ruby
@@ -59,14 +62,15 @@ CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
+INSTALL_ARGS = install-all
+
 WORKSRC = $(WORKDIR)/$(DISTNAME)-$(PATCHLEVEL)
 WORKSRC_FIRSTMOD = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)-$(PATCHLEVEL)
+
 
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
-
-INSTALL_ARGS = install-all
 
 PI_TARGETS  = samples rbconfig rbscripts
 

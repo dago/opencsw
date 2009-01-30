@@ -1,15 +1,5 @@
 %var            bitname rubydoc
 %var            pkgname CSWrubydoc
-# we want to handle the %prototype a little differently for this package, so
-# we override the csw_standard include to exclude the file csw_prototype from
-# being pulled in.
-#%include        url file://%{PKGLIB}/csw_standard.gspec
-%include	url file://%{PKGLIB}/csw_vars.gspec
-%prototype
-d none /opt/csw/share 0755 root bin
-d none /opt/csw/share/doc 0755 root bin
-%prototype	exec cswproto -s %{TIMESTAMP} -r %{DESTDIR} %{DESTDIR}%{prefix}/share/doc
-%pkginfo        url file://%{PKGLIB}/csw/pkginfo
-%depend:merge   url file://%{PKGLIB}/csw/depend
-%var            desc Ruby documentation
-%copyright      url file://%{WORKSRC}/COPYING
+%var		arch all
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
+%include        url file://%{PKGLIB}/csw_standard.gspec

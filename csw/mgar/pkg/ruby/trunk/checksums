@@ -1,5 +1,5 @@
 0b215c46b89b28d7ab8d56d96e72d5b9  download/ruby-1.8.7-p72.tar.bz2
-b2d3f1987e4dd3962f15131dc6ab28a3  download/CSWruby.gspec
-1b4a5fec67986e3f38df7e34c2155ed1  download/CSWrubytk.gspec
-02d0cf5721de6c1f6740b399cbe141f1  download/CSWrubydoc.gspec
+b700c2469b232a57237f87721188b657  download/CSWruby.gspec
+37b936d30a1cb6272d7e5e4582a455df  download/CSWrubytk.gspec
+bef754cfb2108be9c7511a17a9d91ff6  download/CSWrubydoc.gspec
 36460ea6a145017c3ddd1173e903a511  download/rdoc_parse_order_fix.patch
