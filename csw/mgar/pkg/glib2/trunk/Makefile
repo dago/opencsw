@@ -1,5 +1,5 @@
-GARNAME = glib2
-GARVERSION = 2.4.0
+GARNAME = glib
+GARVERSION = 2.18.4
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -9,22 +9,31 @@ define BLURB
   has been split off as of the developers' version 1.1.0.
 endef
 
-MASTER_SITES = ftp://ftp.gtk.org/pub/gtk/v2.4/
+MASTER_SITES = $(GNOME_MIRROR)
 
-DISTFILES = glib-$(GARVERSION).tar.bz2
-WORKSRC = $(WORKDIR)/glib-$(GARVERSION)
+DISTFILES  = $(call admfiles,CSWglib2,)
+DISTFILES += $(call admfiles,CSWglib2devel,)
+DISTFILES += $(GARNAME)-$(GARVERSION).tar.bz2
+
+#See gnome bug 569889
+PATCHFILES = gtkdoc-rebase.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-debug=yes
+CONFIGURE_ARGS += --with-libiconv=gnu
+CONFIGURE_ARGS += --enable-static
+CONFIGURE_ARGS += --disable-gtk-doc
 
-TEST_TARGET = check
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-# Bug #136867 (child-watch)
-TEST_SCRIPTS =
+BUILD64 = 1
+NO_ISAEXEC = 1
+
+REQUIRED_PKGS_CSWglib2 = CSWggettext CSWiconv CSWsunmath
+REQUIRED_PKGS_CSWglib2devel = CSWglib2 CSWggettext CSWiconv
+
+TEST_TARGET =
+
+PKGFILES_CSWglib2  = $(PKGFILES_RT)
+PKGFILES_CSWglib2 += /opt/csw/share/locale/.*
 
 include gar/category.mk
-
-# For some reason, autoconf drops the ball on this one...
-post-install:
-	@( cd $(DESTDIR)$(bindir) ; \
-	$(PERL) -i -plne '$$. == 1 && s{#!\s+}{#!$(PERL) }' glib-mkenums )

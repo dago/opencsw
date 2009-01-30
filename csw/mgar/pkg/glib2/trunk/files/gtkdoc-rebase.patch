@@ -1,0 +1,99 @@
+diff -rud glib-2.18.4.o/docs/reference/gio/Makefile.in glib-2.18.4/docs/reference/gio/Makefile.in
+--- glib-2.18.4.o/docs/reference/gio/Makefile.in	2009-01-09 10:42:52.000000000 -0600
++++ glib-2.18.4/docs/reference/gio/Makefile.in	2009-01-30 13:53:08.907638618 -0600
+@@ -739,8 +739,8 @@
+ 	    mv -f $${installdir}/$(DOC_MODULE).devhelp \
+ 	      $${installdir}/$(DOC_MODULE)-$(DOC_MODULE_VERSION).devhelp; \
+ 	  fi; \
+-	  ! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	    gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
++	  #! which gtkdoc-rebase >/dev/null 2>&1 || \
++	    #gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
+ 	fi
+ 
+ uninstall-local:
+@@ -769,8 +769,8 @@
+ 	-cp $(srcdir)/$(DOC_MODULE).types $(distdir)/
+ 	-cp $(srcdir)/$(DOC_MODULE)-sections.txt $(distdir)/
+ 	cd $(distdir) && rm -f $(DISTCLEANFILES)
+-	! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	  gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
++	#! which gtkdoc-rebase >/dev/null 2>&1 || \
++	  #gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
+ 
+ .PHONY : dist-hook-local docs
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+diff -rud glib-2.18.4.o/docs/reference/glib/Makefile.in glib-2.18.4/docs/reference/glib/Makefile.in
+--- glib-2.18.4.o/docs/reference/glib/Makefile.in	2009-01-09 10:42:52.000000000 -0600
++++ glib-2.18.4/docs/reference/glib/Makefile.in	2009-01-30 13:52:27.443248125 -0600
+@@ -771,8 +771,8 @@
+ 	    mv -f $${installdir}/$(DOC_MODULE).devhelp \
+ 	      $${installdir}/$(DOC_MODULE)-$(DOC_MODULE_VERSION).devhelp; \
+ 	  fi; \
+-	  ! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	    gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
++	  #! which gtkdoc-rebase >/dev/null 2>&1 || \
++	    #gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
+ 	fi
+ 
+ uninstall-local:
+@@ -801,8 +801,8 @@
+ 	-cp $(srcdir)/$(DOC_MODULE).types $(distdir)/
+ 	-cp $(srcdir)/$(DOC_MODULE)-sections.txt $(distdir)/
+ 	cd $(distdir) && rm -f $(DISTCLEANFILES)
+-	! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	  gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
++	#! which gtkdoc-rebase >/dev/null 2>&1 || \
++	  #gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
+ 
+ .PHONY : dist-hook-local docs
+ 
+diff -rud glib-2.18.4.o/docs/reference/gobject/Makefile.in glib-2.18.4/docs/reference/gobject/Makefile.in
+--- glib-2.18.4.o/docs/reference/gobject/Makefile.in	2009-01-09 10:42:52.000000000 -0600
++++ glib-2.18.4/docs/reference/gobject/Makefile.in	2009-01-30 13:53:41.314802722 -0600
+@@ -754,8 +754,8 @@
+ 	    mv -f $${installdir}/$(DOC_MODULE).devhelp \
+ 	      $${installdir}/$(DOC_MODULE)-$(DOC_MODULE_VERSION).devhelp; \
+ 	  fi; \
+-	  ! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	    gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
++	  #! which gtkdoc-rebase >/dev/null 2>&1 || \
++	    #gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
+ 	fi
+ 
+ uninstall-local:
+@@ -784,8 +784,8 @@
+ 	-cp $(srcdir)/$(DOC_MODULE).types $(distdir)/
+ 	-cp $(srcdir)/$(DOC_MODULE)-sections.txt $(distdir)/
+ 	cd $(distdir) && rm -f $(DISTCLEANFILES)
+-	! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	  gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
++	#! which gtkdoc-rebase >/dev/null 2>&1 || \
++	  #gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
+ 
+ .PHONY : dist-hook-local docs
+ 
+diff -rud glib-2.18.4.o/gtk-doc.make glib-2.18.4/gtk-doc.make
+--- glib-2.18.4.o/gtk-doc.make	2009-01-09 11:08:20.000000000 -0600
++++ glib-2.18.4/gtk-doc.make	2009-01-30 13:54:08.204190136 -0600
+@@ -157,8 +157,8 @@
+ 	    mv -f $${installdir}/$(DOC_MODULE).devhelp \
+ 	      $${installdir}/$(DOC_MODULE)-$(DOC_MODULE_VERSION).devhelp; \
+ 	  fi; \
+-	  ! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	    gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
++	  #! which gtkdoc-rebase >/dev/null 2>&1 || \
++	    #gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir} ; \
+ 	fi
+ 
+ uninstall-local:
+@@ -190,7 +190,7 @@
+ 	-cp $(srcdir)/$(DOC_MODULE).types $(distdir)/
+ 	-cp $(srcdir)/$(DOC_MODULE)-sections.txt $(distdir)/
+ 	cd $(distdir) && rm -f $(DISTCLEANFILES)
+-	! which gtkdoc-rebase >/dev/null 2>&1 || \
+-	  gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
++	#! which gtkdoc-rebase >/dev/null 2>&1 || \
++	  #gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
+ 
+ .PHONY : dist-hook-local docs

@@ -1,0 +1,4 @@
+%var            bitname glib2_devel
+%var            pkgname CSWglib2devel
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
