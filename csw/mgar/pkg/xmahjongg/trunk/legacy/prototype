@@ -1,0 +1,47 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man6 0755 root bin
+f none /opt/csw/share/man/man6/xmahjongg.6 0644 root bin
+d none /opt/csw/share/xmahjongg 0755 root bin
+d none /opt/csw/share/xmahjongg/layouts 0755 root bin
+f none /opt/csw/share/xmahjongg/layouts/default 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/bridge 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/wedges 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/ceremonial 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/farandole 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/arena 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/theater 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/deepwell 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/hourglass 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/arrow 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/papillon 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/schoon 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/rat 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/ox 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/tiger 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/hare 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/dragon 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/snake 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/horse 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/ram 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/monkey 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/rooster 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/dog 0644 root bin
+f none /opt/csw/share/xmahjongg/layouts/boar 0644 root bin
+d none /opt/csw/share/xmahjongg/tiles 0755 root bin
+f none /opt/csw/share/xmahjongg/tiles/thin.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/tiles/small.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/tiles/thick.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/tiles/gnome.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/tiles/gnome2.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/tiles/dorothys.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/tiles/dorwhite.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/tiles/real.gif 0644 root bin
+d none /opt/csw/share/xmahjongg/backgrounds 0755 root bin
+f none /opt/csw/share/xmahjongg/backgrounds/default.gif 0644 root bin
+f none /opt/csw/share/xmahjongg/backgrounds/green.gif 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/xmahjongg 0755 root bin

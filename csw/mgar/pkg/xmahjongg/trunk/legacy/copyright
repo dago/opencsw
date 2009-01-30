@@ -1,0 +1,53 @@
+----------------------------------------------------------------------------
+COPYRIGHT/LICENSE
+----------------------------------------------------------------------------
+
+All source code is Copyright (C) 1993-2000 Eddie Kohler.
+
+This package is distributed under the GNU General Public License,
+Version 2, or, at your discretion, any later version. The GNU
+General Public License is available via the Web at
+
+    <http://www.gnu.org/copyleft/gpl.html>
+    
+The GPL is designed to allow you to alter and redistribute the package,
+as long as you do not remove that freedom from others.
+
+----------------------------------------------------------------------------
+AUTHORS
+----------------------------------------------------------------------------
+
+Eddie Kohler <eddietwo@lcs.mit.edu>
+    Source code, default background image, buttons and numbers, coloring
+    of the `default' and `thick' tilesets
+
+Mark A. Holm <markh@aracnet.com>
+    Black-and-white versions of the `default' and `tall' tilesets, (c)
+    1988.  He gave permission to copy and distribute the black-and-white
+    versions for non-profit purposes. The colored tiles are sufficiently
+    different to make them a `derived work' which can be separately
+    copyrighted; they are distributed under the GPL.
+
+Dorothy Robinson <mokuren@teleport.com>
+    `dorothys' tileset (c) 2000, and `dorwhite' tileset, which is the
+    original color xmahjongg tiles (c) 1988.
+
+Berrie Bloem (?)
+    http://www.mahjongg.com/
+    `small' tileset
+
+Jonathan Buzzard and Max Watson
+    `gnome' and `gnome2' tilesets
+
+Mark Sanctuary
+    http://jps.net/sanctuary
+    `real' tileset
+
+Naoki Haga
+    http://www.kyodai.com/
+    `arena', `ceremonial', `deepwell', `farandole', and `theater' layouts
+
+Vincent Krebs
+    `hourglass' and `papillon' layouts
+
+----------------------------------------------------------------------------

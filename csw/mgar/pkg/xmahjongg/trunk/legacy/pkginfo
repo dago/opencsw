@@ -1,0 +1,9 @@
+PKG=CSWxmahjongg
+NAME=xmahjongg - Chinese Tile Game
+VERSION=3.7
+ARCH=sparc
+CATEGORY=application
+CSW_CATEGORY="fun, user"
+VENDOR=http://www.lcdf.org/xmahjongg/ - packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org

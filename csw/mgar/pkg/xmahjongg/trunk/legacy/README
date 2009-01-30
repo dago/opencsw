@@ -1,0 +1,183 @@
+###############################################################################
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the XMAHJONGG package.  Refer to
+#		the BUILD.NOTES file for specific information about the actual
+#		build and testing of the current version.
+#
+# PACKAGE:      CSWxmahjongg
+#
+# REVISION:     04-15-07
+#
+# NOTES:	* Source code: http://www.lcdf.org/xmahjongg/
+#
+###############################################################################
+
+-------------------------------------------------------------------------------
+01: Switch to the correct build machine
+-------------------------------------------------------------------------------
+
+	SPARC:
+	  or
+	INTEL:
+
+-------------------------------------------------------------------------------
+02: Update the pkginfo file
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/xmahjongg
+	vi pkginfo
+	    [edit the VERSION info: must include REV= portion if applicable]
+	    [edit the ARCH line for either a 'sparc' or 'i386' build]
+
+-------------------------------------------------------------------------------
+03: Unpack and/or download the software and game files
+-------------------------------------------------------------------------------
+
+	cd src
+	make unpack
+
+-------------------------------------------------------------------------------
+04: Update the copyright file   (only needs to be done once per release)
+-------------------------------------------------------------------------------
+
+	cd xmahjongg*[0-9]
+	vi README ${HOME}/pkgs/xmahjongg/copyright
+	    [copy the COPYRIGHT and AUTHORS sections to the copyright file]
+
+-------------------------------------------------------------------------------
+05: Fix the source files	(only needs to be done once per release)
+-------------------------------------------------------------------------------
+
+	cd src
+
+	vi game.cc gmjts.cc kmjts.cc main.cc tileset.cc xmj3ts.cc
+	
+	    * Add following line to end of #include section in each file
+	      #include <locale>
+
+	cd ..
+
+-------------------------------------------------------------------------------
+06: Set the proper build environment
+-------------------------------------------------------------------------------
+
+    SPARC:	export CC='cc  -fast -xarch=v8 -xstrconst -xildoff'
+    		export CCC='CC -fast -xarch=v8'
+		export CXX='CC -fast -xarch=v8'
+
+    INTEL:	export CC='cc  -fast -xarch=386 -xstrconst -xildoff'
+    		export CCC='CC -fast -xarch=386'
+    		export CCX='CC -fast -xarch=386'
+
+-------------------------------------------------------------------------------
+07: Configure and build the software
+-------------------------------------------------------------------------------
+
+	make clean
+	./configure --prefix=/opt/csw
+	make
+
+-------------------------------------------------------------------------------
+08: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg DESTDIR=$PWD/cswstage install
+
+-------------------------------------------------------------------------------
+09: Update the prototype file    (2nd build can use existing prototype file)
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check 'f'iles & 'd'irs have owner/group 'root bin']
+	vi prototype
+	    [if necessary ...]
+	    	[change all owners/groups to 'root bin']
+		[change file permissions from 0444 to 0644]
+		[change file permissions from 0555 to 0755]
+	    [add following 'i' line as third line in file]
+	    	i depend
+
+-------------------------------------------------------------------------------
+10: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/xmahjongg/prototype prototype | less -+e
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/xmahjongg
+
+-------------------------------------------------------------------------------
+11: Create the package xmahjongg-*-SunOS5.8-{sparc,386i}-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/xmahjongg
+	createpkg -r ${HOME}/pkgs/xmahjongg/src/xmahjongg*[0-9]/cswstage
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+-------------------------------------------------------------------------------
+12: Examine list of libraries used to see if any new CSW dependencies exist
+-------------------------------------------------------------------------------
+
+    If a new library is found, check package dependency:
+
+	pkgchk -l -p /opt/csw/lib/lib<...>
+   
+    Add entry to the depend file:
+
+        P	CSW<pkg>
+
+    Now repeat from step 09 and recreate the package
+
+-------------------------------------------------------------------------------
+13: Rebuild again on other build platform
+-------------------------------------------------------------------------------
+
+     Start over and rebuild the Solaris-x86 version
+
+-------------------------------------------------------------------------------
+14: Clean up
+-------------------------------------------------------------------------------
+
+    cd ${HOME}/pkgs/xmahjongg/src/xmahjongg*[0-9]
+    rm -rf cswstage
+    make clean
+
+-------------------------------------------------------------------------------
+15: Archive source code
+-------------------------------------------------------------------------------
+
+    cd ..
+    make pack
+    make clean
+
+-------------------------------------------------------------------------------
+16: Copy the new package to the testing or installation area
+-------------------------------------------------------------------------------
+
+    cd pkgs/xmahjongg
+    cp xmahjongg-*.pkg.gz  /export/medusa/testing
+      or
+    cp xmahjongg-*.pkg.gz  /export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+17: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+    cd src
+    cp  xmahjongg-*.gz  /export/medusa/src
+
+-------------------------------------------------------------------------------
+18: Notify package community or administrator
+-------------------------------------------------------------------------------
+
+    * Post testing note to local.blastewave.maint list
+      or
+    * Email phil@bolthole.com (Philip Brown) describing the update
+
+-----------------------------------------------------------------------------

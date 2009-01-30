@@ -1,0 +1,146 @@
+###############################################################################
+# FILE:		BUILD.NOTES
+#
+# DESCRIPTION:	Build notes for the XMAHJONGG package.  These are notes
+#		concerning the compiling and testing of this package.
+#
+#		Use the detailed instructions in the README file for package
+#		creation.
+#
+# PACKAGE:      CSWxmahjongg
+#
+# CUR VER:	Xmahjongg Version 3.7
+#
+# REVISION:     04-15-07
+###############################################################################
+
+-------------------------------------------------------------------------------
+HISTORY:
+-------------------------------------------------------------------------------
+Date:		Version:		Notes:
+-------------------------------------------------------------------------------
+04-15-07	3.7			Initial package build
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+SPARC & INTEL:
+-------------------------------------------------------------------------------
+
+make:
+
+    * board.cc
+    	"panel.hh", line 44: Warning: Identifier expected instead of "}".
+	"panel.hh", line 48: Warning: Identifier expected instead of "}".
+	"board.hh", line 77: Warning: Identifier expected instead of "}".
+	"hint.hh", line 53: Warning: Hint::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	4 Warning(s) detected.
+
+    * button.cc
+    	"panel.hh", line 44: Warning: Identifier expected instead of "}".
+	"panel.hh", line 48: Warning: Identifier expected instead of "}".
+	"button.hh", line 36: Warning: Button::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	3 Warning(s) detected.
+
+    * game.cc
+    	"game.cc", line 399: Warning (Anachronism): Formal argument 4 of \
+		type extern "C" int(*)(const void*,const void*) in call to \
+		std::qsort(void*, unsigned, unsigned, extern "C" \
+		int(*)(const void*,const void*)) is being passed \
+		int(*)(const void*,const void*).
+	1 Warning(s) detected.
+
+    * gmjts.cc
+    	"gmjts.hh", line 13: Warning: Identifier expected instead of "}".
+	1 Warning(s) detected.
+
+    * hint.cc
+    	"hint.hh", line 53: Warning: Hint::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	"panel.hh", line 44: Warning: Identifier expected instead of "}".
+	"panel.hh", line 48: Warning: Identifier expected instead of "}".
+	"board.hh", line 77: Warning: Identifier expected instead of "}".
+	4 Warning(s) detected.
+
+    * kdets.cc
+    	"kdets.hh", line 13: Warning: Identifier expected instead of "}".
+	1 Warning(s) detected.
+
+    * kmjts.cc
+    	"kmjts.hh", line 13: Warning: Identifier expected instead of "}".
+	1 Warning(s) detected.
+
+    * main.cc
+    	"xmj3ts.hh", line 21: Warning: Identifier expected instead of "}".
+	"gmjts.hh", line 13: Warning: Identifier expected instead of "}".
+	"kmjts.hh", line 13: Warning: Identifier expected instead of "}".
+	"kdets.hh", line 13: Warning: Identifier expected instead of "}".
+	"panel.hh", line 44: Warning: Identifier expected instead of "}".
+	"panel.hh", line 48: Warning: Identifier expected instead of "}".
+	"board.hh", line 77: Warning: Identifier expected instead of "}".
+	"hint.hh", line 53: Warning: Hint::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	"button.hh", line 36: Warning: Button::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	"solution.hh", line 35: Warning: SolutionDisplay::alarm hides \
+		the virtual function AlarmHooks::alarm(Alarm*).
+	"main.cc", line 174: Warning (Anachronism): Formal argument 4 of \
+		type extern "C" int(*)(const void*,const void*) in call to\
+		std::qsort(void*, unsigned, unsigned, extern "C" \
+		int(*)(const void*,const void*)) is being passed \
+		int(*)(const void*,const void*).
+	"main.cc", line 253: Warning: String literal converted to char* \
+		in formal argument name in call to new_button(Panel*, char*).
+	"main.cc", line 254: Warning: String literal converted to char* \
+		in formal argument name in call to new_button(Panel*, char*).
+	"main.cc", line 255: Warning: String literal converted to char* \
+		in formal argument name in call to new_button(Panel*, char*).
+	"main.cc", line 256: Warning: String literal converted to char* \
+		in formal argument name in call to new_button(Panel*, char*).
+	"main.cc", line 257: Warning: String literal converted to char* \
+		in formal argument name in call to new_button(Panel*, char*).
+	"main.cc", line 712: Warning: String literal converted to char* \
+		in assignment.
+	17 Warning(s) detected.
+
+    * panel.cc
+    	"panel.hh", line 44: Warning: Identifier expected instead of "}".
+	"panel.hh", line 48: Warning: Identifier expected instead of "}".
+	"button.hh", line 36: Warning: Button::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	"board.hh", line 77: Warning: Identifier expected instead of "}".
+	"hint.hh", line 53: Warning: Hint::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	"solution.hh", line 35: Warning: SolutionDisplay::alarm hides the \
+		virtual function AlarmHooks::alarm(Alarm*).
+	"traverse.hh", line 58: Warning: Traversal::alarm hides the \
+		virtual function AlarmHooks::alarm(Alarm*).
+	7 Warning(s) detected.
+
+    * solution.cc
+    	"solution.hh", line 35: Warning: SolutionDisplay::alarm hides the \
+		virtual function AlarmHooks::alarm(Alarm*).
+	"panel.hh", line 44: Warning: Identifier expected instead of "}".
+	"panel.hh", line 48: Warning: Identifier expected instead of "}".
+	"board.hh", line 77: Warning: Identifier expected instead of "}".
+	4 Warning(s) detected.
+
+    * traverse.cc
+    	"traverse.hh", line 58: Warning: Traversal::alarm hides the \
+		virtual function AlarmHooks::alarm(Alarm*).
+	"panel.hh", line 44: Warning: Identifier expected instead of "}".
+	"panel.hh", line 48: Warning: Identifier expected instead of "}".
+	"board.hh", line 77: Warning: Identifier expected instead of "}".
+	"hint.hh", line 53: Warning: Hint::alarm hides the virtual \
+		function AlarmHooks::alarm(Alarm*).
+	5 Warning(s) detected.
+
+    * xmj3ts.cc
+    	"xmj3ts.hh", line 21: Warning: Identifier expected instead of "}".
+	"xmj3ts.cc", line 81: Warning (Anachronism): Formal argument 4 of \
+		type extern "C" int(*)(const void*,const void*) in call to \
+		std::qsort(void*, unsigned, unsigned, extern "C" \
+		int(*)(const void*,const void*)) is being passed \
+		int(*)(const void*,const void*).
+	2 Warning(s) detected.
