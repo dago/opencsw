@@ -1,0 +1,3 @@
+%var            bitname csup
+%var            pkgname CSWcsup
+%copyright      url file://%{WORKSRC}/LICENSE
