@@ -1,5 +1,7 @@
 GARNAME = texinfo
-GARVERSION = 4.13a
+RELEASE = a
+GARVERSION = 4.13
+DISTVERSION = $(GARVERSION)$(RELEASE)
 CATEGORIES = utils
 
 DESCRIPTION = The GNU Documentation System
@@ -8,9 +10,8 @@ define BLURB
   on-line information (info, HTML, XML, Docbook) and printed output (DVI, PDF).
 endef
 
-DISTNAME = $(GARNAME)-4.13
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWtexinfo,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -25,3 +26,5 @@ TEST_TARGET = check
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 include gar/category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
