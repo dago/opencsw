@@ -1,0 +1,51 @@
+###############################################################################
+#
+# FILE:		copyright
+#
+# DESCRIPTION:	Copyright information for the kshdbx(1) package.
+#
+# AUTHOR:	C. Jeffery Small (jeff@cjsa.com)
+#
+# REVISIONS:	Latest revision:  12-23-04
+#
+###############################################################################
+
+The original kshdb scripts were written by Bill Rosenblatt and published in
+January 1993 by O'Reilly & Associates in the book "Learning the Korn Shell"
+(ISBN: 1-56592-054-6).  These scripts were subsequently republished in the
+May 1993 issue of UnixWorld Magazine.
+
+The source code for these original scripts may be located at:
+
+	http://examples.oreilly.com/korn/ksh.tar.Z
+
+
+The author, Bill Rosenblatt, has indicated his willingness to allow the
+kshdb code to be modified and redistributed, but the actual copyright is
+owned by the publisher O'Reilly & Associates.  The complete text of the
+"O'Reilly Policy on Re-Use of Code Examples from Books" can be seen at:
+
+	http://www.oreilly.com/pub/a/oreilly/ask_tim/2001/codepolicy.html
+
+In part, this policy states:
+
+    "You can use and redistribute example code from our books for any
+    non-commercial purpose (and most commercial purposes) as long as you
+    acknowledge their source and authorship.  The source of the code should
+    be noted in any documentation as well as in the program code itself
+    (as a comment). The attribution should include author, title, publisher,
+    and ISBN."
+
+    "As per the copyright notice in our books, O'Reilly reserves all
+    rights to the material in the book, including the code examples.  This
+    literally means that you can use the example code all you like, but you
+    can't publish or redistribute it without our permission.  In reality, we
+    are comfortable with any reasonable "fair use" of the code, and you can
+    assume permission is granted without contacting us."
+
+
+The accompanying kshdbx scripts are modified versions of the original
+kshdb scripts.  All modifications were written by C. Jeffery Small
+(jeff@cjsa.com) and the right to use and redistribute these modifications
+for any purpose is hereby granted, so long as a copy of this copyright file
+always accompanies the code.

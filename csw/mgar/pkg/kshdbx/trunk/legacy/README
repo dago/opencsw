@@ -1,0 +1,100 @@
+###############################################################################
+#
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the KSHDBX package.
+#
+# PACKAGE:      CSWkshdbx
+#
+# REVISION:     09-09-05
+#
+# NOTES:	* This package is a set of architecture independent ksh(1)
+#		  scripts and will work on both the sparc and intel platforms.
+#
+###############################################################################
+
+-------------------------------------------------------------------------------
+01: Update the pkginfo file
+-------------------------------------------------------------------------------
+
+	cd pkgs/kshdbx
+	vi pkginfo
+	    [edit the version info to match the current revision/release]
+
+-------------------------------------------------------------------------------
+02: Update the copyright file   (only needs to be done once per release)
+-------------------------------------------------------------------------------
+
+	cd src
+	cp copyright ../copyright
+
+-------------------------------------------------------------------------------
+03: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg INSTALL_ROOT=$PWD/cswstage install 
+
+-------------------------------------------------------------------------------
+04: Update the prototype file
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check 'f'iles & 'd'irs have owner/group 'root bin']
+	vi prototype
+	    [change all owners/groups to 'root bin']
+	    [change file permissions from 0444 to 0644]
+	    [change file permissions from 0555 to 0755]
+	    [add following 'i' line as third line in file]
+	    	i depend
+
+-------------------------------------------------------------------------------
+05: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/kshdbx/prototype prototype
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/kshdbx
+
+-------------------------------------------------------------------------------
+06: Create the package kshdbx-*-SunOS5.8-all-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/kshdbx
+	createpkg -r ${HOME}/pkgs/kshdbx/src/cswstage
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+-------------------------------------------------------------------------------
+07: Clean up
+-------------------------------------------------------------------------------
+	
+	cd src
+	make clean
+	make pack
+
+-------------------------------------------------------------------------------
+08: Copy the new package to the installation area
+-------------------------------------------------------------------------------
+
+    cd pkgs/kshdbx
+    cp kshdbx-*.pkg.gz	/export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+09: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+    cd src
+    cp  kshdbx-*.gz  /export/medusa/src
+
+-------------------------------------------------------------------------------
+10: Notify package administrator
+-------------------------------------------------------------------------------
+
+    * Email phil@bolthole.com (Philip Brown) describing the update
+
+-----------------------------------------------------------------------------

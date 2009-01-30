@@ -1,0 +1,13 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/kshdbx.1 0644 root bin
+d none /opt/csw/share/kshdbx 0755 root bin
+f none /opt/csw/share/kshdbx/copyright 0644 root bin
+f none /opt/csw/share/kshdbx/kshdbx.func 0644 root bin
+f none /opt/csw/share/kshdbx/kshdbx.pre 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/kshdbx 0755 root bin

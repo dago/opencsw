@@ -1,0 +1,9 @@
+PKG=CSWkshdbx
+NAME=kshdbx - an interactive ksh(1) Korn shell debugger
+VERSION=1.2
+ARCH=all
+CATEGORY=application
+CSW_CATEGORY="prog, shell, user"
+VENDOR=http://examples.oreilly.com/korn/  packaged for CSW by C. Jeffery Small
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=jeff@blastwave.org
