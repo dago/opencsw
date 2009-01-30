@@ -33,6 +33,9 @@ REQUIRED_PKGS_CSWglib2devel = CSWglib2 CSWggettext CSWiconv
 
 TEST_TARGET =
 
+#provided by iconv
+MERGE_EXCLUDE_FILES = .*/charset.alias
+
 PKGFILES_CSWglib2  = $(PKGFILES_RT)
 PKGFILES_CSWglib2 += /opt/csw/share/locale/.*
 
