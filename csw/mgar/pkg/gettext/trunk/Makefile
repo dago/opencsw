@@ -2,25 +2,54 @@ GARNAME = gettext
 GARVERSION = 0.17
 CATEGORIES = lib
 
-DESCRIPTION = GNU gettext
+DESCRIPTION = GNU locale utilities
 define BLURB
+	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
-MASTER_SITES = $(GNU_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWggettext)
+MASTER_SITES = $(GNU_MIRROR)
 
-# We define upstream file regex so we can be notifed of new upstream software release
+DISTFILES  = $(call admfiles,CSWggettext,)
+DISTFILES += $(call admfiles,CSWggettextdoc,)
+DISTFILES += $(GARNAME)-$(GARVERSION).tar.gz
+#Include earlier library revisions for compatibility with existing packages
+DISTFILES += libgettextlib-0.14.1.so.i
+DISTFILES += libgettextlib-0.14.1.so.s
+DISTFILES += libintl.so.2.i
+DISTFILES += libintl.so.2.s
+DISTFILES += libintl.so.3.i
+DISTFILES += libintl.so.3.s
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --program-prefix=g
+#Dont' depend on packages that depend on me
+CONFIGURE_ARGS += --with-included-glib
+CONFIGURE_ARGS += --with-included-libcroco
+#No glibc
+CONFIGURE_ARGS += --with-included-gettext
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-EXTRA_BUILD_ISAS_sparc = sparcv9
-EXTRA_BUILD_ISAS_i386  = amd64
+BUILD64 = 1
+NO_ISAEXEC = 1
 
-CONFIGURE_ARGS = $(DIRPATHS)
+REQUIRED_PKGS_CSWggettext = CSWiconv CSWexpat CSWncurses
 
-TEST_TARGET = check
+TEST_TARGET =
+
+#provided by iconv
+MERGE_EXCLUDE_FILES = .*/charset.alias
+
+PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
 
 include gar/category.mk
 
-LIBS = -lsec
-export LIBS
+post-install-isa-sparcv8:
+	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
+	@cp $(FILEDIR)/libintl.so.2.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
+	@cp $(FILEDIR)/libintl.so.3.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
+
+post-install-isa-i386:
+	@cp $(FILEDIR)/libgettextlib-0.14.1.so.i $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
+	@cp $(FILEDIR)/libintl.so.2.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
+	@cp $(FILEDIR)/libintl.so.3.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.3

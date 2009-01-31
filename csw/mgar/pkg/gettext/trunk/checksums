@@ -1,2 +1,9 @@
+5f7c1991d31760f0f9977949c8f95629  download/CSWggettext.gspec
+bdbfd869627a7450185e768b5aa1a0af  download/CSWggettextdoc.gspec
 58a2bc6d39c0ba57823034d55d65d606  download/gettext-0.17.tar.gz
-e77ed8e74dcd0abbf699d345acde7e85  download/CSWggettext.gspec
+d44a9a6ec0952bad7ad07026ccb42a10  download/libgettextlib-0.14.1.so.i
+ff0219d47dbc11034b55872172488e01  download/libgettextlib-0.14.1.so.s
+80123ce62a2ef58afb3f6f07a12bd1c1  download/libintl.so.2.i
+3ab768083f6ecc5cada151e49be21aa0  download/libintl.so.2.s
+ceb5de2326a4726d3710fe1512b84592  download/libintl.so.3.i
+88db7322e263a00f24269a7f364fdc2d  download/libintl.so.3.s
