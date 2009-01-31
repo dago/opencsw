@@ -49,8 +49,6 @@ install-custom:
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(datadir)/licences/$(GARNAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/licences/$(GARNAME)
-	@( cd $(DESTDIR)$(datadir)/licences/$(GARNAME) ; \
-	   ln -s LICENSE.txt Apache_License_2.0.txt )
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs $(DESTDIR)$(datadir)/doc/$(GARNAME)/docs
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/licences/$(GARNAME)/Apache_License_2.0.txt
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@$(MAKECOOKIE)
