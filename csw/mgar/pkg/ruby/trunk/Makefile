@@ -7,7 +7,7 @@ CATEGORIES = lang
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
-REQUIRED_PKGS_CSWruby = CSWbdb3n CSWgdbm CSWiconv
+REQUIRED_PKGS_CSWruby = CSWbdb3 CSWgdbm CSWiconv
 REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
