@@ -29,7 +29,7 @@ SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 SPKG_DESC_CSWrubydoc = Documentation for Ruby
 
 PKGFILES_CSWrubydoc = $(PKGFILES_DOC)
-PKGFILES_CSWrubytk = .*tcl.* .*tk.*
+PKGFILES_CSWrubytk = .*/tcl.* .*/tk.* .*-tk.rb
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
