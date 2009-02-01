@@ -33,6 +33,9 @@ CONFIGURE_ARGS += --with-included-libcroco
 #No glibc
 CONFIGURE_ARGS += --with-included-gettext
 
+#Fix acl bug http://savannah.gnu.org/bugs/?21604
+EXTRA_LD_FLAGS = -lsec
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
