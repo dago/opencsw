@@ -7,3 +7,4 @@ ff0219d47dbc11034b55872172488e01  download/libgettextlib-0.14.1.so.s
 3ab768083f6ecc5cada151e49be21aa0  download/libintl.so.2.s
 ceb5de2326a4726d3710fe1512b84592  download/libintl.so.3.i
 88db7322e263a00f24269a7f364fdc2d  download/libintl.so.3.s
+710effbaef82fd7db1d807e5aa46154a  download/test-wcwidth.patch

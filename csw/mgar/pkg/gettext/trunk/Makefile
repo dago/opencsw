@@ -20,6 +20,11 @@ DISTFILES += libintl.so.2.s
 DISTFILES += libintl.so.3.i
 DISTFILES += libintl.so.3.s
 
+#Apply two bug fixes from gnulib, retrieved from:
+#http://git.savannah.gnu.org/cgit/gnulib.git/tree/tests/test-wcwidth.c
+#blob: 582a8aa2e87a8235186aa3b1e402bbf03e6646a7
+PATCHFILES = test-wcwidth.patch
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 #Dont' depend on packages that depend on me
