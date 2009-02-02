@@ -1,5 +1,7 @@
 31d26f66824fd2d3f33ac0b3b9db1532  download/nginx-0.7.30.tar.gz
-9103d1634917ce758fe6bf49706b6229  download/CSWnginx.gspec
-87439f67e79eeb22db439ecbb27761a7  download/CSWnginx.postinstall
+12b5333e18e985b17f8a5465646e9a8a  download/CSWnginx.gspec
+521cd4c0248aebfdb25df48a11a8cc49  download/CSWnginx.checkinstall
+9b563db1078bad23e49f8db06809aac0  download/CSWnginx.postinstall
+e9178dc33f2d38aab8f118a8f0550ac7  download/CSWnginx.preremove
 5c832758a62ee319ea9dfd1829d736eb  download/cswnginx.xml
-64aa7f1749c33228be337119bc3f7b5f  download/svc-cswnginx
+19bb7c5d6246343f54b13afb327f7bcb  download/svc-cswnginx

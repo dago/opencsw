@@ -65,6 +65,26 @@ rotate() {
 	return $RETVAL
 }
 
+state() {
+	if [ -s "$PIDFILE" ]; then
+		FPID=`/bin/cat $PIDFILE`
+	else
+		echo "not running"
+		return 1
+	fi
+	PIDP=`/bin/ps -o pid= -p $FPID`
+	if [ "$PIDP" = "" ]; then
+		echo "not running"
+		return 1
+	fi
+	COMM=`/bin/ps -o comm= -p $FPID`
+	if [ "$NGINX" = "$COMM" ]; then
+		echo "running"
+	else
+		echo "running, but it is not a CSW package"
+	fi
+}
+
 upgrade()
 {
 	killpidf -USR2
@@ -97,13 +117,17 @@ rotate)
 	rotate
 	RETVAL=$?
 	;;
+state)
+	state
+	RETVAL=$?
+	;;
 upgrade)
 	check
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && upgrade ||:
 	;;
 *)
-	echo "Usage: $0 {start|stop|refresh|reload|restart|rotate|upgrade}"
+	echo "Usage: $0 {start|stop|refresh|reload|restart|rotate|state|upgrade}"
 	exit 1
 	;;
 esac

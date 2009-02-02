@@ -1,11 +1,48 @@
 #!/sbin/sh
+#################################################################################
+# CUSTOM SECTION
+#################################################################################
 
-if [ "$NEEDUPGRADE" = "1" ] ; then
+if [ $UPGRADE_NGINX -eq 1 ]; then
+	UPGRADE_NGINX_ERR=0
 	if [ -x "$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx" ]; then
-		$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx upgrade
+		MSG=`$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx upgrade`
+		if [ $? -eq 0 ]; then
+			echo " "
+			echo "nginx was upgraded"
+		else
+			UPGRADE_NGINX_ERR=1
+		fi
 	else
-		test -x $BASEDIR/etc/init.d/cswnginx && $BASEDIR/etc/init.d/cswnginx upgrade
+		if [ -x $BASEDIR/etc/init.d/cswnginx ]; then
+			MSG=`$BASEDIR/etc/init.d/cswnginx upgrade`
+			if [ $? -eq 0 ]; then
+				echo " "
+				echo "nginx was upgraded"
+			else
+				UPGRADE_NGINX_ERR=1
+			fi
+		else
+			echo " "
+			echo "nginx was NOT upgraded"
+		fi
 	fi
+
+	if [ $UPGRADE_NGINX_ERR -eq 1 ]; then
+		echo " "
+		echo "nginx was NOT upgraded"
+		echo "$MSG"
+	fi
+else
+	echo " "
+	echo "This package may use online upgrade feature of nginx which"
+	echo "allows not to interrupt the processing of clients requests"
+	echo "during the nginx version upgrade."
+	echo "To use it you should install the package over the existing"
+	echo "version (without removing)."
 fi
 
-exit 0
+#################################################################################
+# END CUSTOM SECTION
+#################################################################################
+

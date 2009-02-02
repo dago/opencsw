@@ -1,0 +1,47 @@
+#!/sbin/sh
+#################################################################################
+# CUSTOM SECTION
+#################################################################################
+
+UPGRADE_NGINX="0"
+
+SMF="no"
+test -f $BASEDIR/usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm && SMF="yes"
+
+if [ "$SMF" = "yes" ]; then
+	STATE=`$BASEDIR/usr/bin/svcs -Ho STATE nginx 2>/dev/null`
+	if [ $? -eq 0 ]; then
+		echo "nginx service is in '$STATE' state"
+		if [ "$STATE" = "online" ]; then
+			if [ -x "$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx" ]; then
+				NXSTATE=`$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx state`
+				echo "nginx is $NXSTATE"
+				if [ "$NXSTATE" = "running" ]; then
+					echo "nginx online upgrade is requested"
+					UPGRADE_NGINX="1"
+				fi
+			fi
+		fi
+	fi
+else
+	if [ -x $BASEDIR/etc/init.d/cswnginx ]; then
+		NXSTATE=`$BASEDIR/etc/init.d/cswnginx state`
+		echo "nginx is $NXSTATE"
+		if [ "$NXSTATE" = "running" ]; then
+			echo "nginx online upgrade is requested"
+			UPGRADE_NGINX="1"
+		fi
+	fi
+fi
+
+
+# Make env variables available to other packaging scripts
+
+cat >$1 <<!
+UPGRADE_NGINX='$UPGRADE_NGINX'
+!
+
+#################################################################################
+# END CUSTOM SECTION
+#################################################################################
+

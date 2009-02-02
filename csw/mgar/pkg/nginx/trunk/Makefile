@@ -10,13 +10,13 @@ endef
 
 MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnginx,postinstall)
+DISTFILES += $(call admfiles,CSWnginx,checkinstall postinstall preremove)
 DISTFILES += cswnginx.xml svc-cswnginx
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWosslrt CSWpcre  CSWzlib
+REQUIRED_PKGS = CSWosslrt CSWpcrert  CSWzlib
 
 CFLAGS =
 
