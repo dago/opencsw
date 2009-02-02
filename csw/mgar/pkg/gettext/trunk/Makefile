@@ -55,10 +55,17 @@ PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
 
 include gar/category.mk
 
+#Include old libraries for compatibility with existing packages
+#  TODO: Convert to modulated builds
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
+
+post-install-isa-sparcv9:
+	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s9 $(INSTALLISADIR)/opt/csw/lib/sparcv9/libgettextlib-0.14.1.so
+	@cp $(FILEDIR)/libintl.so.2.s9 $(INSTALLISADIR)/opt/csw/lib/sparcv9/libintl.so.2
+	@cp $(FILEDIR)/libintl.so.3.s9 $(INSTALLISADIR)/opt/csw/lib/sparcv9/libintl.so.3
 
 post-install-isa-i386:
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.i $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
