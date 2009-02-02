@@ -48,7 +48,8 @@ REQUIRED_PKGS_CSWggettext = CSWiconv CSWexpat CSWncurses
 TEST_TARGET = check
 
 #provided by iconv
-MERGE_EXCLUDE_FILES = .*/charset.alias
+MERGE_EXCLUDE_FILES  = .*/charset.alias
+MERGE_EXCLUDE_FILES += .*/iconv.m4
 
 PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
 
