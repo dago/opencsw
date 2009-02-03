@@ -4,9 +4,9 @@ GARVERSION = 1.3
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
-DESCRIPTION = Apache Jakarta Commons codec : codec of Responsibility pattern API
+DESCRIPTION = Apache Jakarta Commons Codec
 define BLURB
-Apache Jakarta Commons codec provides "codec of Responsibility" pattern implemention
+Apache Jakarta Commons Codec : implementations of common encoders and decoders such as Base64
 endef
 
 # Use jakarta sources

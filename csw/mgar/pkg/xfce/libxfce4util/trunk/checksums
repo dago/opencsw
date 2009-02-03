@@ -1,12 +1,5 @@
-261e7a5df039493ad746e0c359211092  download/libxfce4util-4.4.2.tar.bz2
-204fa36f229885fdafa03229119bf753  download/CSWlibxfce4util.depend
-69530d614ca88fe56efbd715372f45e2  download/CSWlibxfce4util.gspec
-39d75aafa129790a9878f3beaa2c8c29  download/CSWlibxfce4util.prototype
-55dd8c5ee61882724cf30b0e7c16a3c1  download/CSWlibxfce4utildoc.depend
-93f21bbd4ce48c4e6369c65f64b23138  download/CSWlibxfce4utildoc.gspec
-ebc74b5d0b9b8d4f5b23ae008f3e84ca  download/CSWlibxfce4utildoc.prototype
-dbae24cf4aef6297eddf1854e245662f  download/CSWlibxfce4utildev.depend
-ee6fcd7e10f95c9525dd52ed06243bac  download/CSWlibxfce4utildev.gspec
-49c324cc8383930673f5f6b2a4e0f07f  download/CSWlibxfce4utildev.prototype
-261e7a5df039493ad746e0c359211092  download/libxfce4util-4.4.2.tar.bz2
-382a19e5a0db520caa635215e9990c19  download/gar-base.diff
+c6fe00e3c682b3aab9f7ac47c98a8cd0  download/libxfce4util-4.5.93svn-r29290.tar.bz2
+336c84716e6dc262cc97bb58b96b554f  download/CSWlibxfce4util.gspec
+b9e0f4cdeaf7d55d285d647172e92ef0  download/CSWlibxfce4utildoc.gspec
+c33e3cc6861853fccd55b4ceb5376780  download/CSWlibxfce4utildev.gspec
+c6fe00e3c682b3aab9f7ac47c98a8cd0  download/libxfce4util-4.5.93svn-r29290.tar.bz2

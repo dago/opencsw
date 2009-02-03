@@ -1,7 +1,15 @@
 #!/sbin/sh
 
+#RC_KNUM 52         # Number used for kill script symlink, e.g. K20cswfoo
+#RC_SNUM 52         # Number used for start script symlink, e.g. S80cswfoo
+#RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
+#RC_SLEV 3          # Run levels that should have a start script symlink
+#FMRI system        # FMRI path for service (S10+), default is /network.
+
+. /lib/svc/share/smf_include.sh
+
 DBUS_VAR_DIR=/opt/csw/var/lib/dbus
-DBUS_VAR_RUN_DIR=/opt/csw/var/lib/dbus
+DBUS_VAR_RUN_DIR=/opt/csw/var/run/dbus
 DBUS_MACHINE_ID_FILE=machine-id
 
 if [ ! -d $DBUS_VAR_DIR ]; then
@@ -12,14 +20,20 @@ if [ ! -f $DBUS_VAR_DIR/$DBUS_MACHINE_ID_FILE ]; then
     /opt/csw/bin/dbus-uuidgen --ensure
 fi
 
+if smf_is_nonglobalzone; then
+       /usr/sbin/svcadm disable -t svc:/system/cswdbus
+        echo "dbus-daemon cannot be run in non-global zones"
+       sleep 5 &
+       exit $SMF_EXIT_OK
+fi
 
 case $1 in 
 'start')
-        if [ ! -d $DBUS_VAR_DIR ]; then
-                mkdir -p $DBUS_VAR_DIR
+        if [ ! -d $DBUS_VAR_RUN_DIR ]; then
+                mkdir -p $DBUS_VAR_RUN_DIR
         fi
-        if [ -f $DBUS_VAR_DIR/pid ]; then
-                rm -f $DBUS_VAR_DIR/pid
+        if [ -f $DBUS_VAR_RUN_DIR/pid ]; then
+                rm -f $DBUS_VAR_RUN_DIR/pid
         fi
 
         /opt/csw/bin/dbus-daemon --system
@@ -28,6 +42,10 @@ case $1 in
                 echo "dbus failed to start: error $err"
                 exit 1
         fi
+        ;;
+
+'stop')
+# kill -9 `/opt/csw/bin/dbus-daemon --print-pid`
         ;;
 
 *)

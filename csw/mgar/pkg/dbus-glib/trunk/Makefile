@@ -11,38 +11,29 @@ endef
 
 MASTER_SITES  = http://dbus.freedesktop.org/releases/dbus-glib/
 DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz 
-PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz 
+PKGDIST       = $(DISTFILE)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES    += CSWdbusglib.gspec CSWdbusglib.prototype CSWdbusglib.depend
-DISTFILES    += CSWdbusglibdev.gspec CSWdbusglibdev.prototype CSWdbusglibdev.depend
-# DISTFILES    += $(call admfiles,CSWdbusglib, depend)
+SPKG_DESC_CSWdbusglib = $(DESCRIPTION)
+SPKG_DESC_CSWdbusglibdevel = $(DESCRIPTION) development package
 
-CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
-CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
-# CPPFLAGS   += -I$(DESTDIR)/opt/csw/include/xfce4
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+DISTFILES    += $(call admfiles,CSWdbusglib, )
+DISTFILES    += $(call admfiles,CSWdbusglibdev, )
 
-#P CSWexpat       expat -  XML Parser Toolkit
-#P CSWggettext          ggettext - GNU gettext
-#P CSWglib2       glib2 - the low-level core library for GTK+ and GNOME
-#P CSWiconv       libiconv - GNU iconv library
-#P CSWsunmath     libsunmath - Sun maths library
-#P CSWlibdbus
+REQUIRED_PKGS_CSWdbusglibdev	= CSWdbusglib
+REQUIRED_PKGS_CSWdbusglib      	= CSWexpat CSWggettext CSWglib2 CSWiconv CSWsunmath CSWlibdbus
 
-export CFLAGS CXXFLAGS LDFLAGS
-
-include gar/category.mk
-
-LIBDEPS += lib/dbus
+PKGFILES_CSWdbusglibdev  = $(PKGFILES_DEVEL)
+PKGFILES_CSWdbusglibdev += $(prefix)/include/.*
+PKGFILES_CSWdbusglibdev += $(prefix)/lib/.*\.a
+PKGFILES_CSWdbusglibdev += $(prefix)/lib/pkgconfig/.*
 
 CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
 CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-tests
+CONFIGURE_ARGS += --disable-tests
 
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+include gar/category.mk
 

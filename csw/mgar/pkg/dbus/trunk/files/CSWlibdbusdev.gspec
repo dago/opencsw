@@ -1,5 +1,4 @@
 %var            bitname libdbusdev
 %var            pkgname CSWlibdbusdev
-%var            desc DBus Message Bus System - development headers
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
