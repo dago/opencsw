@@ -1,0 +1,11 @@
+--- libotr-3.2.0/src/message.c.o	2009-02-02 20:51:01.531472266 -0600
++++ libotr-3.2.0/src/message.c	2009-02-02 20:54:53.149261672 -0600
+@@ -1135,7 +1135,7 @@
+ 			    free(buf);
+ 			}
+ 			edata.ignore_message = 1;
+-		    } else if (edata.ignore_message == 0 &&
++		    } else if (edata.ignore_message != 1 &&
+ 			    context->their_keyid > 0) {
+ 			/* If it's *not* a heartbeat, and we haven't
+ 			 * sent anything in a while, also send a
