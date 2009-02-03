@@ -19,7 +19,8 @@ SPKG_DESC_CSWlibdbus      = $(DESCRIPTION) libraries
 SPKG_DESC_CSWlibdbusdev   = $(DESCRIPTION) development package
 
 # SMF support
-SPKG_CLASSES = none cswinitsmf cswcpsampleconf
+SPKG_CLASSES_CSWdbus = none cswinitsmf cswcpsampleconf
+
 PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdbus$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/system.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/session.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 	
 DISTFILES    += $(call admfiles,CSWdbus, preinstall, )
