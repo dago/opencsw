@@ -1,0 +1,13 @@
+--- pidgin-otr-3.2.0/otr-plugin.c.old	2009-01-31 21:50:40.000000000 +0100
++++ pidgin-otr-3.2.0/otr-plugin.c	2009-01-31 21:41:05.000000000 +0100
+@@ -843,8 +843,8 @@
+ 
+     purple_signal_connect(core_handle, "quitting", otrg_plugin_handle,
+ 	    PURPLE_CALLBACK(process_quitting), NULL);
+-    purple_signal_connect(conv_handle, "sending-im-msg", otrg_plugin_handle,
+-            PURPLE_CALLBACK(process_sending_im), NULL);
++    purple_signal_connect_priority(conv_handle, "sending-im-msg", otrg_plugin_handle,
++            PURPLE_CALLBACK(process_sending_im), NULL, PURPLE_SIGNAL_PRIORITY_HIGHEST);
+     purple_signal_connect(conv_handle, "receiving-im-msg", otrg_plugin_handle,
+             PURPLE_CALLBACK(process_receiving_im), NULL);
+     purple_signal_connect(conv_handle, "conversation-updated",
