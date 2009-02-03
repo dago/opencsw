@@ -16,6 +16,12 @@ SPKG_SOURCEURL = http://www.gnupg.org/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
+# This is somehow not correctly detected from autoconf
+EXTRA_LINKER_FLAGS = -lgpg-error
+
+# Needed for nanosleep()
+EXTRA_LINKER_FLAGS += -lrt
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl
 CONFIGURE_ARGS += --with-ldap
