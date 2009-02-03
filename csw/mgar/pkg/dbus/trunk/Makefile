@@ -19,8 +19,8 @@ SPKG_DESC_CSWlibdbus      = $(DESCRIPTION) libraries
 SPKG_DESC_CSWlibdbusdev   = $(DESCRIPTION) development package
 
 # SMF support
-SPKG_CLASSES = none cswinitsmf
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdbus$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+SPKG_CLASSES = none cswinitsmf cswcpsampleconf
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdbus$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/system.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/session.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 	
 DISTFILES    += $(call admfiles,CSWdbus, preinstall, )
 DISTFILES    += cswdbus
@@ -31,12 +31,12 @@ DISTFILES    += $(call admfiles,CSWlibdbus, )
 PKGFILES_CSWlibdbusdev  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibdbusdev += $(includedir)/include/(.*)
 PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/(.*)
-PKGFILES_CSWlibdbusdev += $(libdir)/(.*)\.a
+PKGFILES_CSWlibdbusdev += $(libdir)/libdbus-1.a
 PKGFILES_CSWlibdbusdev += $(libdir)/pkgconfig/(.*)
 
 # Dynamic CSWlibdbus prototype
 PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
-PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.la
+PKGFILES_CSWlibdbus    += $(libdir)/libdbus-1.la
 PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so
 PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so\.(.*)
 
@@ -52,11 +52,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # moving configuration file & installing init script
 post-install:
-	( ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d  ; \
+	( OLDDIR=`pwd` && cd $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/csw/etc/dbus-1 && \
+          for i in *.conf ; do mv $$i $$i.CSW ; done && cd $$OLDDIR ; \
+	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d  ; \
 	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/init.d  ; \
 	  cp -fr $(FILEDIR)/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/init.d  ; \
 	  rm -f $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; \
 	  ln -s ../init.d/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; )
+	@$(MAKECOOKIE)
 
 include gar/category.mk
 
