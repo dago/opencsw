@@ -34,6 +34,9 @@ post-extract:
 	@$(MAKECOOKIE)
 
 install-custom:
+	@ginstall -d $(DESTDIR)$(bindir)
+	@( cd $(DESTDIR)$(bindir) ; \
+	   ln -s ../share/jxplorer/jxplorer.sh jxplorer )
 	@ginstall -d $(DESTDIR)$(datadir)/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(prefix)/etc/$(GARNAME)
 	@gcp -fpr $(WORKSRC)/* $(DESTDIR)$(datadir)/$(GARNAME)

@@ -1,5 +1,5 @@
 GARNAME      = dbus-glib
-GARVERSION   = 0.76
+GARVERSION   = 0.80
 CATEGORIES   = lib
 
 DESCRIPTION  = DBus GLib Bindings
@@ -24,6 +24,13 @@ CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
 # CPPFLAGS   += -I$(DESTDIR)/opt/csw/include/xfce4
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+
+#P CSWexpat       expat -  XML Parser Toolkit
+#P CSWggettext          ggettext - GNU gettext
+#P CSWglib2       glib2 - the low-level core library for GTK+ and GNOME
+#P CSWiconv       libiconv - GNU iconv library
+#P CSWsunmath     libsunmath - Sun maths library
+#P CSWlibdbus
 
 export CFLAGS CXXFLAGS LDFLAGS
 
