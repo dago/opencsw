@@ -20,27 +20,28 @@ SPKG_DESC_CSWlibdbusdev   = $(DESCRIPTION) development package
 
 # SMF support
 SPKG_CLASSES = none cswinitsmf
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswfoo$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdbus$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 	
-DISTFILES    += $(call admfiles,CSWdbus, preinstall, cswdbus)
+DISTFILES    += $(call admfiles,CSWdbus, preinstall, )
 DISTFILES    += cswdbus
 DISTFILES    += $(call admfiles,CSWlibdbusdev, )
 DISTFILES    += $(call admfiles,CSWlibdbus, )
 
 # Dynamic CSWlibdbusdev prototype
 PKGFILES_CSWlibdbusdev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibdbusdev += $(includedir)/include/.*
-PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/.*
-PKGFILES_CSWlibdbusdev += $(libdir)/.*\.a
-PKGFILES_CSWlibdbusdev += $(libdir)/pkgconfig/.*
+PKGFILES_CSWlibdbusdev += $(includedir)/include/(.*)
+PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/(.*)
+PKGFILES_CSWlibdbusdev += $(libdir)/(.*)\.a
+PKGFILES_CSWlibdbusdev += $(libdir)/pkgconfig/(.*)
 
 # Dynamic CSWlibdbus prototype
-PKGFILES_CSWlibdbus     = $(libdir)/.*\.la
-PKGFILES_CSWlibdbus    += $(libdir)/.*\.so
-PKGFILES_CSWlibdbus    += $(libdir)/.*\.so\..*
+PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
+PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.la
+PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so
+PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so\.(.*)
 
 # Dependencies tracking
-REQUIRED_PKGS_CSWdbus	    += CSWexpat CSWlibx11 CSWlibxau CSWlibxcb CSWlibxdmcp CSWlibdbus CSWcswclassutils
+REQUIRED_PKGS_CSWdbus	    += CSWexpat CSWlibdbus CSWcswclassutils
 REQUIRED_PKGS_CSWlibdbusdev  = CSWlibdbus
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -53,9 +54,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 post-install:
 	( ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d  ; \
 	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/init.d  ; \
-	  cp -fr $(FILEDIR)/csw$(GARNAME) $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/init.d  ; \
-	  rm -f $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52$(GARNAME)  ; \
-	  ln -s ../init.d/csw$(GARNAME) $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52$(GARNAME)  ; )
+	  cp -fr $(FILEDIR)/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/init.d  ; \
+	  rm -f $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; \
+	  ln -s ../init.d/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; )
 
 include gar/category.mk
 
