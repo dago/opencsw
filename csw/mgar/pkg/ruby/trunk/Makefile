@@ -7,12 +7,12 @@ CATEGORIES = lang
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
-REQUIRED_PKGS_CSWruby = CSWbdb3 CSWgdbm CSWiconv
+REQUIRED_PKGS_CSWruby = CSWbdb3 CSWgdbm CSWiconv SCWgcc4corert
 REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
-REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
-
 REQUIRED_PKGS_CSWrubydoc = CSWruby
+
+REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -25,11 +25,13 @@ define BLURB
   closures.
 endef
 
-SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 SPKG_DESC_CSWrubydoc = Documentation for Ruby
+
+SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 
 PKGFILES_CSWrubydoc = $(PKGFILES_DOC)
 PKGFILES_CSWrubytk = .*/tcl.* .*/tk.* .*-tk.rb
+PROTOTYPE_FILTER_CSWrubytk = ggrep -v $(docdir)
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
@@ -39,8 +41,9 @@ MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
-DISTFILES += $(call admfiles,CSWruby,) $(call admfiles,CSWrubytk,)
+DISTFILES += $(call admfiles,CSWruby,)
 DISTFILES += $(call admfiles,CSWrubydoc,)
+DISTFILES += $(call admfiles,CSWrubytk,)
 
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
