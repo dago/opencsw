@@ -42,7 +42,8 @@ CONFIGURE_ARGS += --enable-cscope
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/etc/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
-BUILD64 = 1
+#Removed per request
+#BUILD64 = 1
 
 PATCHDIRLEVEL = 0
 
