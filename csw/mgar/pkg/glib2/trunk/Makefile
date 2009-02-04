@@ -17,6 +17,8 @@ DISTFILES += $(GARNAME)-$(GARVERSION).tar.bz2
 
 #See gnome bug 569889
 PATCHFILES = gtkdoc-rebase.patch
+#See http://defect.opensolaris.org/bz/show_bug.cgi?id=3366 for discussion on:
+PATCHFILES += glib-typedetect.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
