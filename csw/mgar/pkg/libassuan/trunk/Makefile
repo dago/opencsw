@@ -13,8 +13,7 @@ DISTFILES += $(call admfiles,CSWlibassuan,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
-PREREQUISITE_PKGS = CSWcommon
-PREREQUISITE_PKGS += CSWpth
+REQUIRED_PKGS = CSWpth
 
 BUILD64 = 1
 NO_ISAEXEC = 1
