@@ -11,7 +11,11 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWzsh,depend postinstall postremove)
+DISTFILES += $(call admfiles,CSWzsh,postinstall postremove)
+
+REQUIRED_PKGS = CSWiconv CSWncurses CSWpcrert CSWgdbm
+
+SPKG_SOURCEURL = http://www.zsh.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=4068
