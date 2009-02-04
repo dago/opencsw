@@ -13,14 +13,26 @@ DISTFILES += $(call admfiles,CSWgnupg,)
 
 SPKG_SOURCEURL = http://www.gnupg.org/
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# fix some missing libraries for Keyserver tools and gpgsm
+PATCHFILES = patch-keyserver_and_sm.diff
+
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
+
+PREREQUISITE_PKGS =  CSWcommon
+PREREQUISITE_PKGS += CSWlibksba CSWgpgerr CSWgcrypt CSWlibassuan
+PREREQUISITE_PKGS += CSWcurlrt CSWoldaprt CSWzlib CSWpth
+PREREQUISITE_PKGS += CSWbzip2 CSWreadline CSWncurses
 
 # This is somehow not correctly detected from autoconf
 EXTRA_LINKER_FLAGS = -lgpg-error
 
 # Needed for nanosleep()
 EXTRA_LINKER_FLAGS += -lrt
+
+BUILD64 = 1
+NO_ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl
