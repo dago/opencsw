@@ -1,5 +1,5 @@
 GARNAME = gperf
-GARVERSION = 3.0.3
+GARVERSION = 3.0.4
 CATEGORIES = devel
 
 DESCRIPTION = A perfect hash function generator
