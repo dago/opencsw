@@ -7,7 +7,7 @@ CATEGORIES = lang
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
-REQUIRED_PKGS_CSWruby = CSWbdb3 CSWgdbm CSWiconv SCWgcc4corert
+REQUIRED_PKGS_CSWruby = CSWbdb3 CSWgdbm CSWiconv CSWgcc4corert
 REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 REQUIRED_PKGS_CSWrubydoc = CSWruby
@@ -30,8 +30,7 @@ SPKG_DESC_CSWrubydoc = Documentation for Ruby
 SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 
 PKGFILES_CSWrubydoc = $(PKGFILES_DOC)
-PKGFILES_CSWrubytk = .*/tcl.* .*/tk.* .*-tk.rb
-PROTOTYPE_FILTER_CSWrubytk = ggrep -v $(docdir)
+PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
