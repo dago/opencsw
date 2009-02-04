@@ -14,16 +14,16 @@ DISTFILES += $(call admfiles,CSWgnupg,)
 SPKG_SOURCEURL = http://www.gnupg.org/
 
 # fix some missing libraries for Keyserver tools and gpgsm
+# Bug ID 996 filed up stream along with patch
 PATCHFILES = patch-keyserver_and_sm.diff
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
-PREREQUISITE_PKGS =  CSWcommon
-PREREQUISITE_PKGS += CSWlibksba CSWgpgerr CSWgcrypt CSWlibassuan
-PREREQUISITE_PKGS += CSWcurlrt CSWoldaprt CSWzlib CSWpth
-PREREQUISITE_PKGS += CSWbzip2 CSWreadline CSWncurses
+REQUIRED_PKGS += CSWlibksba CSWgpgerr CSWgcrypt CSWlibassuan
+REQUIRED_PKGS += CSWcurlrt CSWoldaprt CSWzlib CSWpth
+REQUIRED_PKGS += CSWbzip2 CSWreadline CSWncurses
 
 # This is somehow not correctly detected from autoconf
 EXTRA_LINKER_FLAGS = -lgpg-error
