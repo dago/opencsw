@@ -1,4 +1,5 @@
 fdfb028f9224b8e9926163aae0e97d3f  download/CSWglib2.gspec
 716c7eda9a4edd22c1f648396a60b646  download/CSWglib2devel.gspec
 ec25ed261534d870141000ab73f1a2bf  download/glib-2.18.4.tar.bz2
+8f683820d9ecab1abd9dbe81997ab9eb  download/glib-typedetect.patch
 fb144356d0918eff4ef17a2a285860bc  download/gtkdoc-rebase.patch
