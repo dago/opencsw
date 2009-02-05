@@ -41,7 +41,7 @@ REQUIRED_PKGS_CSWdbus	    += CSWexpat CSWlibdbus CSWcswclassutils
 REQUIRED_PKGS_CSWlibdbusdev  = CSWlibdbus
 
 # SMF support
-SPKG_CLASSES_CSWdbus = none cswinitsmf cswcpsampleconf
+SPKG_CLASSES_CSWdbus = none cswcpsampleconf cswinitsmf 
 PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdbus$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/system.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/session.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 	
 CONFIGURE_ARGS = $(DIRPATHS)
