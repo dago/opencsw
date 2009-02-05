@@ -21,7 +21,12 @@ endif
 
 PKGINFO ?= /usr/bin/pkginfo
 
-SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
+# You can use either PACKAGES with dynamic gspec-files or explicitly add gspec-files to DISTFILES.
+# Do "PACKAGES = " when you build a package whose GARNAME is not the package name.
+# The whole processing is done from SPKG_SPECS, which includes all packages to be build.
+# DO NOT USE $(PACKAGES) IN RULES!
+PACKAGES ?= CSW$(GARNAME)
+SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 # Set this to your svn binary
@@ -201,6 +206,44 @@ $(WORKDIR)/%.depend:
 		)) >$@)
 
 
+$(foreach SPEC,$(_PKG_SPECS),$(eval CATALOGNAME_$(SPEC) ?= $(patsubst CSW%,%,$(SPEC))))
+
+# This rule dynamically generates gspec-files
+.PRECIOUS: $(WORKDIR)/%.gspec
+$(WORKDIR)/%.gspec: ARCHALL_$* ?= $(ARCHALL)
+$(WORKDIR)/%.gspec:
+	$(_DBG)(echo "%var            bitname $(CATALOGNAME_$*)"; \
+	echo "%var            pkgname $*"; \
+	$(if $(ARCHALL_$*),echo "%var            arch all";) \
+	echo "%include        url file://%{PKGLIB}/csw_dyndepend.gspec") >$@
+
+# This rule dynamically generates copyright files
+.PRECIOUS: $(WORKDIR)/copyright $(WORKDIR)/%.copyright
+# LICENSE may be a path starting with $(WORKROOTDIR) or a filename inside $(WORKSRC)
+LICENSE ?= COPYING
+_DEFAULT_LICENSE = $(firstword $(wildcard \
+			$(LICENSE) \
+			$(foreach D,$(foreach M,global $(MODULATIONS),build-$M), \
+				$(WORKROOTDIR)/$D/$(DISTNAME)/$(LICENSE) \
+			) \
+		))
+
+$(foreach SPEC,$(_PKG_SPECS),$(eval LICENSE_$(SPEC) ?= copyright))
+
+$(WORKDIR)/%.copyright: | $(WORKDIR)/copyright
+	$(_DBG)cp $(WORKDIR)/copyright $@
+
+merge-license:
+	$(_DBG)$(foreach SPEC,$(_PKG_SPECS),\
+		if [ -f $(WORKDIR)/$(LICENSE_$(SPEC)) ]; then \
+			LICENSEDIR=$(docdir)/$(CATALOGNAME_$(SPEC)); \
+			mkdir -p $(PKGROOT)$(LICENSEDIR) && \
+			cp $(WORKDIR)/$(LICENSE_$(SPEC)) $(PKGROOT)$(LICENSEDIR)/license; \
+			(echo "This software is copyrighted. Please see the full license at"; \
+			echo "  $(LICENSEDIR)/license") > $(PKGROOT)$(LICENSEDIR)/license; \
+		fi; \
+	)
+
 # package - Use the mkpackage utility to create Solaris packages
 #
 
@@ -225,7 +268,7 @@ prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPE
 package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
-package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.copyright $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
@@ -267,6 +310,7 @@ pkgreset-%:
 	@rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
 	@rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
 	@rm -rf $(WORKDIR)/$*.* $(WORKDIR)/prototype
+	@rm -f $(WORKDIR)/copyright $(WORKDIR)/*.copyright
 
 repackage: pkgreset package
 
@@ -287,11 +331,11 @@ pkgenv:
 #
 
 define _pkglist_pkgname
-$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
+$(if $(filter $(1),$(PACKAGES)),$(filter $(1),$(PACKAGES)),$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec))
 endef
 
 define _pkglist_catalogname
-$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec)
+$(if $(filter $(1),$(PACKAGES)),$(call catalogname,$(1)),$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec))
 endef
 
 define _pkglist_one
