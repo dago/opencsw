@@ -12,13 +12,13 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWautoconf,depend)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = use-csw-tools.patch
 
 PREREQUISITE_PKGS = CSWhelp2man
+REQUIRED_PKGS = CSWgawk CSWgm4 CSWperl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
