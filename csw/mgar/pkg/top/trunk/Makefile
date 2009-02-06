@@ -9,12 +9,13 @@ endef
 SF_PROJ = unixtop
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWtop,)
 
 SPKG_SOURCEURL = http://www.unixtop.org/
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=72892
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+
+LICENSE = LICENSE
 
 BUILD64 = 1
 

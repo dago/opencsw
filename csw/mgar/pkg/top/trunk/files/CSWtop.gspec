@@ -1,4 +1,0 @@
-%var            bitname top
-%var            pkgname CSWtop
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE
