@@ -1,5 +1,0 @@
-%var            bitname pcre_rt
-%var            pkgname CSWpcrert
-%var            desc Perl-compatible regular expression runtime libraries
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
