@@ -15,8 +15,9 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
 DISTFILES    = $(SOURCEFILES)
-DISTFILES   += $(call admfiles,CSWlibtool)
-DISTFILES   += $(call admfiles,CSWlibtoolrt)
+
+PACKAGES = CSWlibtool CSWlibtoolrt
+CATALOGNAME_CSWlibtoolrt = libtool_rt
 
 SPKG_DESC_CSWlibtool   = A generic library support tool
 SPKG_DESC_CSWlibtoolrt = A Generic library support tool runtime libraries
