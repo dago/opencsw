@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = http://www.par.univie.ac.at/solaris/pca/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION)
-DISTFILES += $(call admfiles,CSWpca)
+DISTFILES += COPYING
 DISTFILES += pca.conf
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -30,6 +30,8 @@ INSTALL_SCRIPTS = custom
 
 SPKG_SOURCEURL = http://www.par.univie.ac.at/solaris/pca/
 SPKG_VERSION = $(shell echo $(GARVERSION) | sed -e 's/-/./g')
+
+ARCHALL = 1
 
 include gar/category.mk
 
