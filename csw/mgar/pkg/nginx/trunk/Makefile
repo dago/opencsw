@@ -18,9 +18,11 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWosslrt CSWpcrert  CSWzlib
 
+EXTRA_BUILD_ISAS_i386 = pentium
+
 CFLAGS =
 
-#CONFIGURE_ARGS += --with-cpu-opt=pentium3
+CONFIGURE_ARGS += --with-cpu-opt=$(ISA)
 CONFIGURE_ARGS += --with-cc-opt="-I$(includedir) -I$(includedir)/openssl"
 CONFIGURE_ARGS += --with-ld-opt="$(LDFLAGS)"
 CONFIGURE_ARGS += --prefix=$(prefix)/var/nginx
@@ -50,8 +52,7 @@ include gar/category.mk
 NGINXDOCS = CHANGES CHANGES.ru LICENSE README
 
 post-configure-modulated:
-	$(foreach MODULATION,$(MODULATIONS), \
-		gsed -i s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h;)
+	gsed -i s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
 	$(MAKECOOKIE)
 
 post-install-modulated:
