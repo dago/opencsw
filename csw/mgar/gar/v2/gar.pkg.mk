@@ -21,7 +21,11 @@ endif
 
 PKGINFO ?= /usr/bin/pkginfo
 
-SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES)))
+# You can use either PACKAGES with dynamic gspec-files or explicitly add gspec-files to DISTFILES.
+# Do "PACKAGES = CSWmypkg" when you build a package whose GARNAME is not the package name.
+# The whole processing is done from _SPKG_SPECS, which includes all packages to be build.
+PACKAGES ?= CSW$(GARNAME)
+SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 # Set this to your svn binary
@@ -134,16 +138,19 @@ PKGFILES_DOC  = $(docdir)/.*
 
 # _PKGFILES_EXCLUDE_<spec> contains the files to be excluded from that package
 $(foreach SPEC,$(_PKG_SPECS), \
-  $(eval \
-      _PKGFILES_EXCLUDE_$(SPEC)= \
-      $(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)), \
-        $(PKGFILES_$(S))) \
-        $(EXTRA_PKGFILES_EXCLUDED) \
-        $(EXTRA_PKGFILES_EXCLUDED_$(SPEC) \
-        $(_EXTRA_PKGFILES_EXCLUDED) \
-       ) \
-   ) \
- )
+  $(eval _PKGFILES_EXCLUDE_$(SPEC)=$(strip \
+    $(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)), \
+      $(PKGFILES_$(S)) \
+      $(call licensedir,$(S))/.* \
+      $(EXTRA_PKGFILES_EXCLUDED) \
+      $(EXTRA_PKGFILES_EXCLUDED_$(SPEC)) \
+      $(_EXTRA_PKGFILES_EXCLUDED) \
+    ) \
+  )) \
+  $(eval _PKGFILES_INCLUDE_$(SPEC)=$(strip \
+    $(call licensedir,$(SPEC))/.* \
+  )) \
+)
 
 #
 # Targets
@@ -160,6 +167,9 @@ $(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER),$(eval _PROTOTYPE_FILTER_$
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
 
+# Dynamic prototypes work like this:
+# - A prototype from DISTFILES takes precedence over 
+
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
 	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT)=/ >$@
@@ -171,7 +181,8 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE_$*)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(foreach FILE,$(PKGFILES_$*_SHARED) $(PKGFILES_$*),-i '$(FILE)') \
+	  (pathfilter $(foreach FILE,$(if $(or $(PKGFILES_$*_SHARED),$(PKGFILES_$*)),$(_PKGFILES_INCLUDE_$*)) \
+			$(PKGFILES_$*_SHARED) $(PKGFILES_$*),-i '$(FILE)') \
 	              $(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)') \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
 	                  -e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))' \
@@ -186,20 +197,161 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 	$(_DBG)cat $(WORKDIR)/$*.prototype $(_PROTOTYPE_FILTER_$*) >$@
 
+# Dynamic depends are constructed as follows:
+# - Packages the currently constructed one depends on can be specified with
+#   REQUIRED_PKGS_<pkg> specifically, or REQUIRED_PKGS for all packages build.
+#   These are flagged as 'P' in the depend file.
+# - If multiple packages are build at the same time it is valid to have
+#   dependencies between them. In this case it is necessary to define the package
+#   desciption for each package with SPKG_DESC_<pkg>, setting it in the gspec-file
+#   does not work.
+# - Packages that are imcompatible to the currently constructed one can be specified
+#   with INCOMPATIBLE_PKGS_<pkg> specifically or with INCOMPATIBLE_PKGS for all
+#   packages build.
+# - A depend-file from DISTFILES takes precedence, it is not overwritten or
+#   appended with dynamic depends.
+
 # $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
 .PRECIOUS: $(WORKDIR)/%.depend
 $(WORKDIR)/%.depend:
-	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS), \
+	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
 			echo "I $(PKG)";\
 		)\
 		$(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
-				echo "P $(PKG) $(call _pkglist_catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
+				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell /usr/bin/pkginfo $(PKG) | awk '{ $$1 = "P"; print } ')"; \
 			) \
 		)) >$@)
 
+# Dynamic gspec-files are constructed as follows:
+# - Packages using dynamic gspec-files must be listed in PACKAGES
+# - There is a default of PACKAGES containing one packages named CSW
+#   followed by the GARNAME. It can be changed by setting PACKAGES explicitly.
+# - The name of the generated package is always the same as listed in PACKAGES
+# - The catalog name defaults to the suffix following CSW of the package name,
+#   but can be customized by setting CATALOGNAME_<pkg> = <catalogname-of-pkg>
+# - If only one package is build it is sufficient to set CATALOGNAME = <catalogname-of-pkg>
+#   It is an error to set CATALOGNAME if more than one package is build.
+# - If the package is suitable for all architectures (sparc and x86) this can be
+#   flagged with ARCHALL_<pkg> = 1 for a specific package or with ARCHALL = 1
+#   for all packages.
+
+# This rule dynamically generates gspec-files
+.PRECIOUS: $(WORKDIR)/%.gspec
+$(WORKDIR)/%.gspec:
+	$(_DBG)(echo "%var            bitname $(call catalogname,$*)"; \
+	echo "%var            pkgname $*"; \
+	$(if $(or $(ARCHALL),$(ARCHALL_$*)),echo "%var            arch all";) \
+	echo "%include        url file://%{PKGLIB}/csw_dyndepend.gspec") >$@
+
+
+# Dynamic licenses are selected in the following way:
+# - Dynamic licenses are only activated for packages listed in PACKAGES or
+#   packages which don't have %copyright in their gspec-file. This way the
+#   behaviour on existing gspec-files is preserved.
+# - The default name for the license is COPYING and it will not be fully printed
+# - If no license is explicitly specified in the Makefile and the default can not
+#   be found no license will be included
+# - If a license is specified it must be found or an error is issued
+# - Either LICENSE_<pkg> or LICENSE_FULL_<pkg> may be specified, it is an error
+#   to specify both.
+# - There is an automatic rule to include only the license for each package that
+#   belongs to it.
+# - Package-specific defines have precedence over general defines (CATALOGNAME_<pkg>
+#   before CATALOGNAME etc.)
+
+# pkgname - Get the name of a package from a gspec-name or package-name
+#
+# This is a safety function. In sane settings it should return the name
+# of the package given as argument. However, when gspec-files are in DISTFILES
+# it is possible to name the gspec-file differently from the package. This is
+# a very bad idea, but we can handle it!
+#
+# In: arg1 - name of gspec-file or package
+# Out: name of package
+#
+define pkgname
+$(strip 
+  $(if $(filter $(1),$(PACKAGES)),
+    $(1),
+    $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
+  )
+)
+endef
+
+# catalogname - Get the catalog-name for a package
+#
+# In: arg1 - name of package
+# Out: catalog-name for the package
+#
+define catalogname
+$(strip 
+  $(if $(filter $(1),$(PACKAGES)),
+    $(if $(CATALOGNAME_$(1)),
+      $(CATALOGNAME_$(1)),
+      $(if $(CATALOGNAME),
+        $(CATALOGNAME),
+        $(patsubst CSW%,%,$(1))
+      )
+    ),
+    $(if $(realpath files/$(1).gspec),
+      $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
+      $(error The catalog name for the package '$1' could not be determined, because it was neither in PACKAGES nor was there a gspec-file)
+    )
+  )
+)
+endef
+
+# LICENSE may be a path starting with $(WORKROOTDIR) or a filename inside $(WORKSRC)
+ifeq ($(origin LICENSE_FULL), undefined)
+ifeq ($(origin LICENSE), undefined)
+LICENSE = COPYING
+_LICENSE_IS_DEFAULT = 1
+endif
+endif
+
+# findlicensefile - Find an existing file for a given license name
+#
+define findlicensefile
+$(strip 
+  $(if $(1),$(firstword $(realpath 
+    $(1) $(WORKDIR)/$(1) 
+    $(foreach M,global $(MODULATIONS),$(WORKROOTDIR)/build-$M/$(1) $(WORKROOTDIR)/build-$M/$(DISTNAME)/$(1)) 
+  ))) 
+)
+endef
+
+define licensefile
+$(strip 
+  $(or 
+    $(call findlicensefile,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1))))
+    $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))),
+  )
+)
+endef
+
+define licensedir
+$(docdir)/$(call catalogname,$(1))
+endef
+
+merge-license-%:
+	$(_DBG)$(if $(and $(LICENSE_$*),$(LICENSE_FULL_$*)),$(error Both LICENSE_$* and LICENSE_FULL_$* have been specified where only one is allowed)) \
+		$(if $(and $(filter $*,$(PACKAGES)),$(or $(LICENSE),$(LICENSE_FULL),$(LICENSE_$*),$(LICENSE_FULL_$*))), \
+		LICENSEFILE=$(or $(call licensefile,$*),$(if $(_LICENSE_IS_DEFAULT),,$(error Cannot find license file for package $*))); \
+		LICENSEDIR=$(call licensedir,$*); \
+		if [ -n "$$LICENSEFILE" ]; then \
+		$(if $(or $(LICENSE_FULL),$(LICENSE_FULL_$*)), \
+		    if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
+		    echo "Please see $$LICENSEDIR/license for license information." > $(WORKDIR)/$*.copyright; \
+		) \
+		  mkdir -p $(PKGROOT)$$LICENSEDIR && \
+		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
+		fi \
+	)
+
+merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 
 # package - Use the mkpackage utility to create Solaris packages
 #
@@ -225,7 +377,7 @@ prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPE
 package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
-package-%: $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
@@ -267,6 +419,7 @@ pkgreset-%:
 	@rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
 	@rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
 	@rm -rf $(WORKDIR)/$*.* $(WORKDIR)/prototype
+	@rm -f $(WORKDIR)/copyright $(WORKDIR)/*.copyright
 
 repackage: pkgreset package
 
@@ -286,16 +439,8 @@ pkgenv:
 # pkglist - list the packages to be built with GAR pathname, catalog name and package name
 #
 
-define _pkglist_pkgname
-$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
-endef
-
-define _pkglist_catalogname
-$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec)
-endef
-
 define _pkglist_one
-$(shell /usr/bin/echo "$(shell pwd)\t$(call _pkglist_catalogname,$(1))\t$(call _pkglist_pkgname,$(1))")
+$(shell /usr/bin/echo "$(shell pwd)\t$(call catalogname,$(1))\t$(call pkgname,$(1))")
 endef
 
 pkglist:
