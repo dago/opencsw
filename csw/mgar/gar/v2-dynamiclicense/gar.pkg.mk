@@ -278,7 +278,8 @@ $(WORKDIR)/%.gspec:
 # LICENSE may be a path starting with $(WORKROOTDIR) or a filename inside $(WORKSRC)
 
 merge-license-%:
-	$(_DBG)LICENSEFILE=$(or $(call licensefile,$*),$(error Cannot find license file for package $*)); \
+	$(_DBG)$(if $(or $(LICENSE),$(LICENSE_FULL),$(LICENSE_$*),$(LICENSE_FULL_$*)), \
+		LICENSEFILE=$(or $(call licensefile,$*),$(error Cannot find license file for package $*)); \
 		LICENSEDIR=$(call licensedir,$*); \
 		$(if $(or $(LICENSE_FULL),$(LICENSE_FULL_$*)), \
 		    if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
@@ -286,7 +287,8 @@ merge-license-%:
 		     echo "  $$LICENSEDIR/license") > $(WORKDIR)/$*.copyright; \
 		) \
 		  mkdir -p $(PKGROOT)$$LICENSEDIR && \
-		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license 
+		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license \
+	)
 
 merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 
