@@ -28,6 +28,52 @@ PACKAGES ?= CSW$(GARNAME)
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
+# pkgname - Get the name of a package from a gspec-name or package-name
+#
+# This is a safety function. In sane settings it should return the name
+# of the package given as argument. However, when gspec-files are in DISTFILES
+# it is possible to name the gspec-file differently from the package. This is
+# a very bad idea, but we can handle it!
+#
+# In: arg1 - name of gspec-file or package
+# Out: name of package
+#
+define pkgname
+$(strip 
+  $(if $(filter $(1),$(PACKAGES)),
+    $(1),
+    $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
+  )
+)
+endef
+
+# catalogname - Get the catalog-name for a package
+#
+# In: arg1 - name of package
+# Out: catalog-name for the package
+#
+define catalogname
+$(strip 
+  $(if $(filter $(1),$(PACKAGES)),
+    $(if $(CATALOGNAME_$(1)),
+      $(CATALOGNAME_$(1)),
+      $(if $(CATALOGNAME),
+        $(CATALOGNAME),
+        $(patsubst CSW%,%,$(1))
+      )
+    ),
+    $(if $(realpath files/$(1).gspec),
+      $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
+      $(error The catalog name for the package '$1' could not be determined, because it was neither in PACKAGES nor was there a gspec-file)
+    )
+  )
+)
+endef
+
+define licensedir
+$(docdir)/$(call catalogname,$(1))
+endef
+
 # Set this to your svn binary
 SVN  ?= /opt/csw/bin/svn
 GAWK ?= /opt/csw/bin/gawk
@@ -262,48 +308,6 @@ $(WORKDIR)/%.gspec:
 # - Package-specific defines have precedence over general defines (CATALOGNAME_<pkg>
 #   before CATALOGNAME etc.)
 
-# pkgname - Get the name of a package from a gspec-name or package-name
-#
-# This is a safety function. In sane settings it should return the name
-# of the package given as argument. However, when gspec-files are in DISTFILES
-# it is possible to name the gspec-file differently from the package. This is
-# a very bad idea, but we can handle it!
-#
-# In: arg1 - name of gspec-file or package
-# Out: name of package
-#
-define pkgname
-$(strip 
-  $(if $(filter $(1),$(PACKAGES)),
-    $(1),
-    $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
-  )
-)
-endef
-
-# catalogname - Get the catalog-name for a package
-#
-# In: arg1 - name of package
-# Out: catalog-name for the package
-#
-define catalogname
-$(strip 
-  $(if $(filter $(1),$(PACKAGES)),
-    $(if $(CATALOGNAME_$(1)),
-      $(CATALOGNAME_$(1)),
-      $(if $(CATALOGNAME),
-        $(CATALOGNAME),
-        $(patsubst CSW%,%,$(1))
-      )
-    ),
-    $(if $(realpath files/$(1).gspec),
-      $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
-      $(error The catalog name for the package '$1' could not be determined, because it was neither in PACKAGES nor was there a gspec-file)
-    )
-  )
-)
-endef
-
 # LICENSE may be a path starting with $(WORKROOTDIR) or a filename inside $(WORKSRC)
 ifeq ($(origin LICENSE_FULL), undefined)
 ifeq ($(origin LICENSE), undefined)
@@ -330,10 +334,6 @@ $(strip
     $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))),
   )
 )
-endef
-
-define licensedir
-$(docdir)/$(call catalogname,$(1))
 endef
 
 merge-license-%:
