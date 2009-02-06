@@ -433,7 +433,7 @@ fixconfig:
 	fi
 
 # install		- Test and install the results of a build.
-INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS)) $(addprefix install-license-,$(subst /, ,$(LICENSE)))
+INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS))
 
 install: pre-install $(addprefix install-,$(MODULATIONS)) post-install
 	$(DONADA)
@@ -559,7 +559,7 @@ endef
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) post-merge
+merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) merge-license post-merge
 	@$(DONADA)
 
 # This merges the 

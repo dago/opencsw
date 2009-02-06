@@ -22,12 +22,66 @@ endif
 PKGINFO ?= /usr/bin/pkginfo
 
 # You can use either PACKAGES with dynamic gspec-files or explicitly add gspec-files to DISTFILES.
-# Do "PACKAGES = " when you build a package whose GARNAME is not the package name.
-# The whole processing is done from SPKG_SPECS, which includes all packages to be build.
-# DO NOT USE $(PACKAGES) IN RULES!
+# Do "PACKAGES = CSWmypkg" when you build a package whose GARNAME is not the package name.
+# The whole processing is done from _SPKG_SPECS, which includes all packages to be build.
 PACKAGES ?= CSW$(GARNAME)
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
+
+define pkgname
+$(strip 
+  $(if $(filter $(1),$(PACKAGES)),
+    $(1),
+    $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
+  )
+)
+endef
+
+define catalogname
+$(strip 
+  $(if $(filter $(1),$(PACKAGES)),
+    $(if $(CATALOGNAME_$(1)),
+      $(CATALOGNAME_$(1)),
+      $(patsubst CSW%,%,$(1))
+    ),
+    $(if $(realpath files/$(1).gspec),
+      $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
+      $(error The catalog name for the package '$1' could not be determined, because it was neither in PACKAGES nor was there a gspec-file)
+    )
+  )
+)
+endef
+
+ifeq ($(origin LICENSE_FULL), undefined)
+LICENSE ?= COPYING
+endif
+
+define findlicensefile
+$(strip 
+  $(if $(1),$(firstword $(realpath 
+    $(1) $(WORKDIR)/$(1) 
+    $(foreach D,$(foreach M,global $(MODULATIONS),build-$M),$(WORKROOTDIR)/$D/$(DISTNAME)/$(1)) 
+  ))) 
+)
+endef
+
+define licensefile
+$(strip 
+  $(or 
+    $(call findlicensefile,$(LICENSE_$(1))),
+    $(call findlicensefile,$(LICENSE_FULL_$(1))),
+    $(call findlicensefile,$(LICENSE)),
+    $(call findlicensefile,$(LICENSE_FULL))
+  )
+)
+endef
+
+ps:
+	@echo "L: $(call licensefile,CSWlibtool)"
+
+define licensedir
+$(docdir)/$(call catalogname,$(1))
+endef
 
 # Set this to your svn binary
 SVN  ?= /opt/csw/bin/svn
@@ -139,16 +193,19 @@ PKGFILES_DOC  = $(docdir)/.*
 
 # _PKGFILES_EXCLUDE_<spec> contains the files to be excluded from that package
 $(foreach SPEC,$(_PKG_SPECS), \
-  $(eval \
-      _PKGFILES_EXCLUDE_$(SPEC)= \
-      $(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)), \
-        $(PKGFILES_$(S))) \
-        $(EXTRA_PKGFILES_EXCLUDED) \
-        $(EXTRA_PKGFILES_EXCLUDED_$(SPEC) \
-        $(_EXTRA_PKGFILES_EXCLUDED) \
-       ) \
-   ) \
- )
+  $(eval _PKGFILES_EXCLUDE_$(SPEC)=$(strip \
+    $(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)), \
+      $(PKGFILES_$(S)) \
+      $(call licensedir,$(S))/.* \
+      $(EXTRA_PKGFILES_EXCLUDED) \
+      $(EXTRA_PKGFILES_EXCLUDED_$(SPEC)) \
+      $(_EXTRA_PKGFILES_EXCLUDED) \
+    ) \
+  )) \
+  $(eval _PKGFILES_INCLUDE_$(SPEC)=$(strip \
+    $(call licensedir,$(SPEC))/.* \
+  )) \
+)
 
 #
 # Targets
@@ -176,7 +233,8 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE_$*)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(foreach FILE,$(PKGFILES_$*_SHARED) $(PKGFILES_$*),-i '$(FILE)') \
+	  (pathfilter $(foreach FILE,$(if $(or $(PKGFILES_$*_SHARED),$(PKGFILES_$*)),$(_PKGFILES_INCLUDE_$*)) \
+			$(PKGFILES_$*_SHARED) $(PKGFILES_$*),-i '$(FILE)') \
 	              $(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)') \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
 	                  -e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))' \
@@ -200,19 +258,17 @@ $(WORKDIR)/%.depend:
 		)\
 		$(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
-				echo "P $(PKG) $(call _pkglist_catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
+				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell /usr/bin/pkginfo $(PKG) | awk '{ $$1 = "P"; print } ')"; \
 			) \
 		)) >$@)
 
 
-$(foreach SPEC,$(_PKG_SPECS),$(eval CATALOGNAME_$(SPEC) ?= $(patsubst CSW%,%,$(SPEC))))
-
 # This rule dynamically generates gspec-files
 .PRECIOUS: $(WORKDIR)/%.gspec
 $(WORKDIR)/%.gspec: ARCHALL_$* ?= $(ARCHALL)
 $(WORKDIR)/%.gspec:
-	$(_DBG)(echo "%var            bitname $(CATALOGNAME_$*)"; \
+	$(_DBG)(echo "%var            bitname $(call catalogname,$*)"; \
 	echo "%var            pkgname $*"; \
 	$(if $(ARCHALL_$*),echo "%var            arch all";) \
 	echo "%include        url file://%{PKGLIB}/csw_dyndepend.gspec") >$@
@@ -220,29 +276,19 @@ $(WORKDIR)/%.gspec:
 # This rule dynamically generates copyright files
 .PRECIOUS: $(WORKDIR)/copyright $(WORKDIR)/%.copyright
 # LICENSE may be a path starting with $(WORKROOTDIR) or a filename inside $(WORKSRC)
-LICENSE ?= COPYING
-_DEFAULT_LICENSE = $(firstword $(wildcard \
-			$(LICENSE) \
-			$(foreach D,$(foreach M,global $(MODULATIONS),build-$M), \
-				$(WORKROOTDIR)/$D/$(DISTNAME)/$(LICENSE) \
-			) \
-		))
 
-$(foreach SPEC,$(_PKG_SPECS),$(eval LICENSE_$(SPEC) ?= copyright))
+merge-license-%:
+	$(_DBG)LICENSEFILE=$(or $(call licensefile,$*),$(error Cannot find license file for package $*)); \
+		LICENSEDIR=$(call licensedir,$*); \
+		$(if $(or $(LICENSE_FULL),$(LICENSE_FULL_$*)), \
+		    if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
+		    (echo "This software is copyrighted. Please see the full license at"; \
+		     echo "  $$LICENSEDIR/license") > $(WORKDIR)/$*.copyright; \
+		) \
+		  mkdir -p $(PKGROOT)$$LICENSEDIR && \
+		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license 
 
-$(WORKDIR)/%.copyright: | $(WORKDIR)/copyright
-	$(_DBG)cp $(WORKDIR)/copyright $@
-
-merge-license:
-	$(_DBG)$(foreach SPEC,$(_PKG_SPECS),\
-		if [ -f $(WORKDIR)/$(LICENSE_$(SPEC)) ]; then \
-			LICENSEDIR=$(docdir)/$(CATALOGNAME_$(SPEC)); \
-			mkdir -p $(PKGROOT)$(LICENSEDIR) && \
-			cp $(WORKDIR)/$(LICENSE_$(SPEC)) $(PKGROOT)$(LICENSEDIR)/license; \
-			(echo "This software is copyrighted. Please see the full license at"; \
-			echo "  $(LICENSEDIR)/license") > $(PKGROOT)$(LICENSEDIR)/license; \
-		fi; \
-	)
+merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 
 # package - Use the mkpackage utility to create Solaris packages
 #
@@ -330,16 +376,8 @@ pkgenv:
 # pkglist - list the packages to be built with GAR pathname, catalog name and package name
 #
 
-define _pkglist_pkgname
-$(if $(filter $(1),$(PACKAGES)),$(filter $(1),$(PACKAGES)),$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec))
-endef
-
-define _pkglist_catalogname
-$(if $(filter $(1),$(PACKAGES)),$(call catalogname,$(1)),$(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec))
-endef
-
 define _pkglist_one
-$(shell /usr/bin/echo "$(shell pwd)\t$(call _pkglist_catalogname,$(1))\t$(call _pkglist_pkgname,$(1))")
+$(shell /usr/bin/echo "$(shell pwd)\t$(call catalogname,$(1))\t$(call pkgname,$(1))")
 endef
 
 pkglist:

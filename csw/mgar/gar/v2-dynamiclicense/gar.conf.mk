@@ -101,7 +101,6 @@ includedir         ?= $(prefix)/include
 mandir             ?= $(sharedstatedir)/man
 docdir             ?= $(sharedstatedir)/doc
 sourcedir          ?= $(prefix)/src
-licensedir         ?= $(prefix)/licenses
 sharedperl         ?= $(sharedstatedir)/perl
 perllib            ?= $(libdir)/perl
 perlcswlib         ?= $(perllib)/csw
