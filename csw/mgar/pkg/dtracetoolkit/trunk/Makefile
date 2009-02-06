@@ -13,7 +13,9 @@ endef
 
 MASTER_SITES = http://www.brendangregg.com/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWdtracetoolkit)
+
+PACKAGES = CSWdtracetoolkit
+LICENSE = License
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
