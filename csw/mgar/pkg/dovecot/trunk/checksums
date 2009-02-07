@@ -1,3 +1,4 @@
-bc23a919c7ad2b3c5ba69e19f1b46eb2  download/dovecot-1.1.8.tar.gz
-d707692194795943a4ff18581f61d04d  download/CSWdovecot.gspec
+c973eb41aca79fb16630a16f0d84f765  download/dovecot-1.1.11.tar.gz
+870f79d3f342821e97c3474fa018cde3  download/CSWdovecot.gspec
+59c32477bb7dbf339c2f94f1c643f77b  download/CSWdovecotdevel.gspec
 827bae06acbae39e9c89707d7b198b4e  download/patch-unsetenv.diff

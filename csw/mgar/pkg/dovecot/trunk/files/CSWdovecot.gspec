@@ -1,4 +1,4 @@
 %var            bitname dovecot
 %var            pkgname CSWdovecot
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
+%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
