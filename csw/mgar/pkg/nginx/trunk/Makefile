@@ -19,6 +19,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 REQUIRED_PKGS = CSWosslrt CSWpcrert  CSWzlib
 
 EXTRA_BUILD_ISAS_i386 = pentium
+#EXTRA_BUILD_ISAS_i386 = pentium3 pentium4
 
 CFLAGS =
 
