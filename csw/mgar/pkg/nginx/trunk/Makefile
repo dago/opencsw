@@ -18,8 +18,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWosslrt CSWpcrert  CSWzlib
 
-EXTRA_BUILD_ISAS_i386 = pentium
-#EXTRA_BUILD_ISAS_i386 = pentium3 pentium4
+EXTRA_BUILD_ISAS_i386 = pentium_pro
 
 CFLAGS =
 
@@ -51,6 +50,10 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest
 include gar/category.mk
 
 NGINXDOCS = CHANGES CHANGES.ru LICENSE README
+
+pre-configure-modulated:
+	gsed -i s#pentiumpro#pentium_pro# $(WORKSRC)/auto/cc/sunc
+	$(MAKECOOKIE)
 
 post-configure-modulated:
 	gsed -i s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
