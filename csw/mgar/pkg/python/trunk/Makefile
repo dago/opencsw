@@ -1,6 +1,11 @@
-GARNAME = python
-GARVERSION = 2.3.5
+GARNAME = Python
+GARVERSION = 2.6.1
+GARRELEASE =
+DISTVERSION = $(GARVERSION)$(GARRELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lang
+
+SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -14,18 +19,31 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
-DISTFILES = Python-$(GARVERSION).tar.bz2
+UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
+DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES += $(call admfiles,CSWpython,depend prototype)
+DISTFILES += $(call admfiles,CSWpython-tk,depend prototype)
+DISTFILES += $(call admfiles,CSWidle,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = Python-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
-# Configure some site specific variables
-PATCHFILES = site-config.diff
+# Patches
+PATCHFILES += modules.diff
+PATCHFILES += setup.diff
+PATCHFILES += makesetup.diff
 
-WORKSRC = $(WORKDIR)/Python-$(GARVERSION)
+# Test for sunaudiodev fails.
+SKIPTEST = 1
 
-LIBDEPS += lib/expat lib/openssl lib/db lib/gdbm
+DEPENDS += lib/expat
+DEPENDS += lib/openssl
+DEPENDS += lib/db
+DEPENDS += lib/gdbm
 
-CONFIGURE_ARGS = $(DIRPATHS) 
+CONFIGURE_ARGS  = $(DIRPATHS) 
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --with-fpectl
 
 include gar/category.mk
