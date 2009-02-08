@@ -39,8 +39,8 @@ include gar/category.mk
 
 install-common:
 	mkdir -p $(DESTDIR)/opt/csw/bin
-	mkdir -p $(DESTDIR)/opt/csw/share/maven2
 	rm -rf $(DESTDIR)/opt/csw/share/maven2
+	mkdir -p $(DESTDIR)/opt/csw/share/maven2
 	cp -r $(WORKDIR)/apache-maven-$(GARVERSION)/ $(DESTDIR)/opt/csw/share/maven2/home
 	cp $(WORKDIR)/bin-mvn $(DESTDIR)/opt/csw/bin/mvn
 	chmod +x $(DESTDIR)/opt/csw/bin/mvn
