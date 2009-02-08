@@ -1,6 +1,6 @@
 %var            bitname maven2
 %var            pkgname CSWmaven2
-%var            arch all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKDIR}/apache-maven-%{GARVERSION}/LICENSE.txt
-#file://%{WORKSRC}/LICENSE.txt
+%copyright
+
+See /opt/csw/share/maven2/home/LICENSE.txt
