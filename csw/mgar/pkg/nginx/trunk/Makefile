@@ -18,11 +18,26 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWosslrt CSWpcrert  CSWzlib
 
-EXTRA_BUILD_ISAS_i386 = pentium_pro
+EXTRA_BUILD_ISAS_i386  = pentium_pro
+EXTRA_BUILD_ISAS_sparc = sparcv9
+
+ifeq ($(ISA),pentium_pro)
+	NGINXCPU = pentiumpro
+else
+ifeq ($(ISA),sparcv8)
+	NGINXCPU = sparc32
+else
+ifeq ($(ISA),sparcv9)
+	NGINXCPU = sparc64
+else
+	NGINXCPU = $(ISA)
+endif
+endif
+endif
 
 CFLAGS =
 
-CONFIGURE_ARGS += --with-cpu-opt=$(ISA)
+CONFIGURE_ARGS += --with-cpu-opt=$(NGINXCPU)
 CONFIGURE_ARGS += --with-cc-opt="-I$(includedir) -I$(includedir)/openssl"
 CONFIGURE_ARGS += --with-ld-opt="$(LDFLAGS)"
 CONFIGURE_ARGS += --prefix=$(prefix)/var/nginx
@@ -50,10 +65,6 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest
 include gar/category.mk
 
 NGINXDOCS = CHANGES CHANGES.ru LICENSE README
-
-pre-configure-modulated:
-	gsed -i s#pentiumpro#pentium_pro# $(WORKSRC)/auto/cc/sunc
-	$(MAKECOOKIE)
 
 post-configure-modulated:
 	gsed -i s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
