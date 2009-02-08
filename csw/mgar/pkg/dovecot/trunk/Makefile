@@ -25,10 +25,10 @@ CATALOGNAME_CSWdovecotdevel = dovecot_devel
 SPKG_DESC_CSWdovecot      = Secure IMAP server
 SPKG_DESC_CSWdovecotdevel = Dovecot secure IMAP server header files
 
-REQUIRED_PKGS_CSWdovecot      = CSWosslrt CSWmysql5rt CSWoldaprt
-REQUIRED_PKGS_CSWdovecot      = CSWsasl CSWsqlite3 CSWzlib CSWlibnet
-REQUIRED_PKGS_CSWdovecot      = CSWcswclassutils
-REQUIRED_PKGS_CSWdovecotdevel = CSWdovecot
+REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt
+REQUIRED_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
+REQUIRED_PKGS_CSWdovecot      += CSWcswclassutils
+REQUIRED_PKGS_CSWdovecotdevel  = CSWdovecot
 
 PREREQUISITE_PKGS  = CSWossldevel CSWosslrt
 PREREQUISITE_PKGS += CSWmysql5devel CSWmysql5rt
@@ -39,7 +39,7 @@ PREREQUISITE_PKGS += CSWsqlite3 CSWsqlite3dev
 PKGFILES_CSWdovecotdevel = $(PKGFILES_DEVEL)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # No test suite for Dovecot available
 TEST_SCRIPTS	=
@@ -62,14 +62,29 @@ EXTRA_INC = /opt/csw/mysql5/include/mysql
 include gar/category.mk
 
 # init script / SMF integration
-SPKG_CLASSES_CSWdovecot = none cswinitsmf
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdovecot$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+SPKG_CLASSES_CSWdovecot = none cswcpsampleconf cswinitsmf
+PROTOTYPE_FILTER  = awk '\
+	$$$$3 ~ /\/init.d\/cswdovecot$$$$/ { $$$$2 = "cswinitsmf" } \
+	$$$$3 ~ /dovecot.pem.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+	$$$$3 ~ /dovecot.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+	$$$$3 == "/opt/csw/ssl/certs" { next } \
+	$$$$3 == "/opt/csw/ssl/private" { next } \
+	 { print }'
 
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: SSLDIR = $(DESTDIR)/opt/csw/ssl
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -d $(SSLDIR)/certs
+	@ginstall -d $(SSLDIR)/private
+	@( cd $(WORKSRC)/doc; SSLDIR=$(SSLDIR) /bin/sh ./mkcert.sh )
+	@mv $(SSLDIR)/certs/dovecot.pem $(SSLDIR)/certs/dovecot.pem.CSW
+	@mv $(SSLDIR)/private/dovecot.pem $(SSLDIR)/private/dovecot.pem.CSW
+	@chmod 400 $(SSLDIR)/private/dovecot.pem.CSW
+	@cp $(DESTDIR)/etc/opt/csw/$(GARNAME)/dovecot-example.conf \
+		$(DESTDIR)/etc/opt/csw/$(GARNAME)/dovecot.conf.CSW
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 755 $(FILEDIR)/CSWdovecot.cswdovecot  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdovecot
