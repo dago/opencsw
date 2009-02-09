@@ -13,17 +13,18 @@ define BLURB
   Unix, MS Windows, OS/2, Macintosh, VMS, and Amiga.
 endef
 
-#DEPENDS = utils/mktemp lib/ncurses
+PACKAGES = CSWgvim
+CATALOGNAME_CSWgvim = gvim
 
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/unix/
 
-DISTFILES  = $(call admfiles,CSWgvim,)
-DISTFILES += $(GARNAME)-$(DISTVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
 DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 DISTFILES += gvim.desktop
+DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 PATCHFILES += vimtutor.patch
