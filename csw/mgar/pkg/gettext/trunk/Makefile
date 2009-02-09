@@ -39,6 +39,7 @@ EXTRA_LD_FLAGS = -lsec
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
+NO_ISAEXEC = 1
 
 REQUIRED_PKGS_CSWggettext = CSWiconv CSWexpat CSWncurses
 
@@ -50,6 +51,7 @@ TEST_TARGET = check
 #provided by iconv
 MERGE_EXCLUDE_FILES  = .*/charset.alias
 MERGE_EXCLUDE_FILES += .*/iconv.m4
+MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/.*
 
 PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
 
