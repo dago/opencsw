@@ -100,8 +100,6 @@ dc7b06bb5c5b11a3d487614287d99a6b  download/7.2.098
 15dacd715d6f8c655265bbf77ebaddd4  download/7.2.100
 65e59923311b136306284319521d70d7  download/7.2.101
 42e2274c6a3152279720d8623f7916ad  download/7.2.102
-59c166f15ad9e4db7aeef3ce7f6d89d9  download/CSWvim.gspec
-c1ead6a1fa0f1a38b80689134cac8ca9  download/CSWvimrt.gspec
 6619235ca793edf41831be1b1f9f63db  download/fix-alignment64-spell.c.diff
 279fa7473e3069991b420f327a6440ab  download/gvimrc
 35e04482f07c57221c9a751aaa3b8dac  download/vim-7.2-extra.tar.gz
@@ -110,3 +108,4 @@ f0901284b338e448bfd79ccca0041254  download/vim-7.2.tar.bz2
 06a31324121243e7eaf87b0df6c4941e  download/vimrc
 1965bc951c0a190faaa665996b1b287e  download/vimrc.tiny
 582717146f6bbd5b73db83a2f62e62a5  download/vimtutor.patch
+73612b6658c597ee478abf27a0a89ed5  download/COPYING
