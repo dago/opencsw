@@ -1,0 +1,121 @@
+--- Python-2.6.1/setup.py	2008-11-04 14:43:31.000000000 -0600
++++ ./setup.py	2009-02-08 18:25:38.412651662 -0600
+@@ -129,7 +129,8 @@
+         moddir = os.path.normpath(moddir)
+ 
+         moddirlist = [moddir]
+-        incdirlist = ['./Include']
++        incdirlist = ['/opt/csw/bdb44/include']
++        incdirlist.append('./Include')
+ 
+         # Platform-dependent module source and include directories
+         platform = self.get_platform()
+@@ -309,9 +310,9 @@
+         return sys.platform
+ 
+     def detect_modules(self):
+-        # Ensure that /usr/local is always used
+-        add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
+-        add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
++        # Ensure that /opt/csw is always used
++        add_dir_to_list(self.compiler.library_dirs, '/opt/csw/lib')
++        add_dir_to_list(self.compiler.include_dirs, '/opt/csw/include')
+ 
+         # Add paths specified in the environment variables LDFLAGS and
+         # CPPFLAGS for header and library files.
+@@ -739,52 +740,7 @@
+ 
+         # construct a list of paths to look for the header file in on
+         # top of the normal inc_dirs.
+-        db_inc_paths = [
+-            '/usr/include/db4',
+-            '/usr/local/include/db4',
+-            '/opt/sfw/include/db4',
+-            '/usr/include/db3',
+-            '/usr/local/include/db3',
+-            '/opt/sfw/include/db3',
+-            # Fink defaults (http://fink.sourceforge.net/)
+-            '/sw/include/db4',
+-            '/sw/include/db3',
+-        ]
+-        # 4.x minor number specific paths
+-        for x in gen_db_minor_ver_nums(4):
+-            db_inc_paths.append('/usr/include/db4%d' % x)
+-            db_inc_paths.append('/usr/include/db4.%d' % x)
+-            db_inc_paths.append('/usr/local/BerkeleyDB.4.%d/include' % x)
+-            db_inc_paths.append('/usr/local/include/db4%d' % x)
+-            db_inc_paths.append('/pkg/db-4.%d/include' % x)
+-            db_inc_paths.append('/opt/db-4.%d/include' % x)
+-            # MacPorts default (http://www.macports.org/)
+-            db_inc_paths.append('/opt/local/include/db4%d' % x)
+-        # 3.x minor number specific paths
+-        for x in gen_db_minor_ver_nums(3):
+-            db_inc_paths.append('/usr/include/db3%d' % x)
+-            db_inc_paths.append('/usr/local/BerkeleyDB.3.%d/include' % x)
+-            db_inc_paths.append('/usr/local/include/db3%d' % x)
+-            db_inc_paths.append('/pkg/db-3.%d/include' % x)
+-            db_inc_paths.append('/opt/db-3.%d/include' % x)
+-
+-        # Add some common subdirectories for Sleepycat DB to the list,
+-        # based on the standard include directories. This way DB3/4 gets
+-        # picked up when it is installed in a non-standard prefix and
+-        # the user has added that prefix into inc_dirs.
+-        std_variants = []
+-        for dn in inc_dirs:
+-            std_variants.append(os.path.join(dn, 'db3'))
+-            std_variants.append(os.path.join(dn, 'db4'))
+-            for x in gen_db_minor_ver_nums(4):
+-                std_variants.append(os.path.join(dn, "db4%d"%x))
+-                std_variants.append(os.path.join(dn, "db4.%d"%x))
+-            for x in gen_db_minor_ver_nums(3):
+-                std_variants.append(os.path.join(dn, "db3%d"%x))
+-                std_variants.append(os.path.join(dn, "db3.%d"%x))
+-
+-        db_inc_paths = std_variants + db_inc_paths
+-        db_inc_paths = [p for p in db_inc_paths if os.path.exists(p)]
++        db_inc_paths = [ '/opt/csw/bdb44/include' ]
+ 
+         db_ver_inc_map = {}
+ 
+@@ -988,7 +944,7 @@
+         # we do not build this one.  Otherwise this build will pick up
+         # the more recent berkeleydb's db.h file first in the include path
+         # when attempting to compile and it will fail.
+-        f = "/usr/include/db.h"
++        f = "/opt/csw/bdb44/include/db_185.h"
+         if os.path.exists(f) and not db_incs:
+             data = open(f).read()
+             m = re.search(r"#s*define\s+HASHVERSION\s+2\s*", data)
+@@ -1239,6 +1195,7 @@
+         self.detect_ctypes(inc_dirs, lib_dirs)
+ 
+         # Richard Oudkerk's multiprocessing module
++
+         if platform == 'win32':             # Windows
+             macros = dict()
+             libraries = ['ws2_32']
+@@ -1279,6 +1236,14 @@
+                 )
+             libraries = []
+ 
++        elif platform == 'sunos5':
++            macros = dict(                  # Solaris
++                HAVE_SEM_OPEN=0,            # Not implemented
++                HAVE_SEM_TIMEDWAIT=0,       # Not implemented
++                HAVE_FD_TRANSFER=1,
++                )
++            libraries = ['rt']
++
+         else:                                   # Linux and other unices
+             macros = dict(
+                 HAVE_SEM_OPEN=1,
+@@ -1741,9 +1706,6 @@
+                              sources=['_ctypes/_ctypes_test.c'])
+         self.extensions.extend([ext, ext_test])
+ 
+-        if not '--with-system-ffi' in sysconfig.get_config_var("CONFIG_ARGS"):
+-            return
+-
+         if sys.platform == 'darwin':
+             # OS X 10.5 comes with libffi.dylib; the include files are
+             # in /usr/include/ffi

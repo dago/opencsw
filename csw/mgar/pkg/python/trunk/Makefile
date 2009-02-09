@@ -1,8 +1,5 @@
 GARNAME = Python
 GARVERSION = 2.6.1
-GARRELEASE =
-DISTVERSION = $(GARVERSION)$(GARRELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lang
 
 SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
@@ -20,18 +17,23 @@ endef
 
 MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
+
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWpython,depend prototype)
+DISTFILES += $(call admfiles,CSWPython,depend prototype)
 DISTFILES += $(call admfiles,CSWpython-tk,depend prototype)
 DISTFILES += $(call admfiles,CSWidle,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Patches
-PATCHFILES += modules.diff
-PATCHFILES += setup.diff
+PATCHFILES += faqwiz.diff
 PATCHFILES += makesetup.diff
+PATCHFILES += modules.diff
+PATCHFILES += multiprocess.diff
+PATCHFILES += pyport.diff
+PATCHFILES += setup.diff
+
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
@@ -44,6 +46,7 @@ DEPENDS += lib/gdbm
 CONFIGURE_ARGS  = $(DIRPATHS) 
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --enable-unicode=ucs4
 CONFIGURE_ARGS += --with-fpectl
 
 include gar/category.mk

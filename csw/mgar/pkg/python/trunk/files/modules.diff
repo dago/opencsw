@@ -1,0 +1,15 @@
+--- Python-2.6.1/Modules/Setup.dist	2008-11-27 04:15:12.000000000 -0600
++++ Setup.dist	2009-02-08 18:17:58.937507864 -0600
+@@ -363,9 +363,10 @@
+ #
+ # First, look at Setup.config; configure may have set this for you.
+ 
+-#_curses _cursesmodule.c -lcurses -ltermcap
++*shared*
++_curses _cursesmodule.c -lcurses -ltermcap
+ # Wrapper for the panel library that's part of ncurses and SYSV curses.
+-#_curses_panel _curses_panel.c -lpanel -lncurses 
++_curses_panel _curses_panel.c -lpanel -lcurses -ltermcap 
+ 
+ 
+ # Generic (SunOS / SVR4) dynamic loading module.
