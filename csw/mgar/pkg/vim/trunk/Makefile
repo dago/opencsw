@@ -30,6 +30,7 @@ DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 DISTFILES += vimrc
 DISTFILES += vimrc.tiny
 DISTFILES += gvimrc
+DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 PATCHFILES += vimtutor.patch
