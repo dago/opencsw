@@ -13,13 +13,18 @@ define BLURB
   Unix, MS Windows, OS/2, Macintosh, VMS, and Amiga.
 endef
 
-MASTER_SITES += ftp://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
+PACKAGES = CSWvim CSWvimrt
+CATALOGNAME_CSWvim = vim
+CATALOGNAME_CSWvimrt = vimrt
+SPKG_DESC_CSWvim = Vi IMproved without GUI
+SPKG_DESC_CSWvimrt = Vi IMproved runtime and documentation
+ARCHALL_CSWvimrt = 1
+
+MASTER_SITES  = ftp://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/unix/
 
-DISTFILES  = $(call admfiles,CSWvim,)
-DISTFILES += $(call admfiles,CSWvimrt,)
-DISTFILES += $(GARNAME)-$(DISTVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
 DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 DISTFILES += vimrc
