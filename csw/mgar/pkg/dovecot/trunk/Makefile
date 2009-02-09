@@ -1,6 +1,4 @@
 # TODO
-# * postinstall: Create dovecot user(s) or advise user to do so
-# * Create default config so that service can startup right away?
 # * Build and package Dovecot Sieve plugin http://wiki.dovecot.org/LDA/Sieve
 
 GARNAME = dovecot
@@ -17,17 +15,19 @@ endef
 
 MASTER_SITES = http://dovecot.org/releases/1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-SPKG_SOURCEURL = http://dovecot.org/
+DISTFILES += CSWdovecot.preinstall
 
 PACKAGES = CSWdovecot CSWdovecotdevel
 CATALOGNAME_CSWdovecotdevel = dovecot_devel
 
-SPKG_DESC_CSWdovecot      = Secure IMAP server
+SPKG_SOURCEURL = http://dovecot.org/
+SPKG_DESC_CSWdovecot = Secure IMAP server
 SPKG_DESC_CSWdovecotdevel = Dovecot secure IMAP server header files
+SPKG_CLASSES_CSWdovecot = none cswcpsampleconf cswinitsmf
 
 REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt
 REQUIRED_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
-REQUIRED_PKGS_CSWdovecot      += CSWcswclassutils
+REQUIRED_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
 REQUIRED_PKGS_CSWdovecotdevel  = CSWdovecot
 
 PREREQUISITE_PKGS  = CSWossldevel CSWosslrt
@@ -59,10 +59,8 @@ CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(GARNAME)
 EXTRA_LIB = /opt/csw/mysql5/lib/mysql
 EXTRA_INC = /opt/csw/mysql5/include/mysql
 
-include gar/category.mk
+STRIP_DIRS = $(DESTDIR)$(libexecdir)/dovecot
 
-# init script / SMF integration
-SPKG_CLASSES_CSWdovecot = none cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER  = awk '\
 	$$$$3 ~ /\/init.d\/cswdovecot$$$$/ { $$$$2 = "cswinitsmf" } \
 	$$$$3 ~ /dovecot.pem.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
@@ -70,6 +68,8 @@ PROTOTYPE_FILTER  = awk '\
 	$$$$3 == "/opt/csw/ssl/certs" { next } \
 	$$$$3 == "/opt/csw/ssl/private" { next } \
 	 { print }'
+
+include gar/category.mk
 
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
