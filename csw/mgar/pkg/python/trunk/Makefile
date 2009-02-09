@@ -19,9 +19,6 @@ MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
 UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWPython,depend prototype)
-DISTFILES += $(call admfiles,CSWpython-tk,depend prototype)
-DISTFILES += $(call admfiles,CSWidle,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -48,5 +45,23 @@ CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-unicode=ucs4
 CONFIGURE_ARGS += --with-fpectl
+
+PKGFILES_CSWidle = $(libdir)/python2*/idlelib/.*
+PKGFILES_CSWidle += $(bindir)/idle
+PKGFILES_CSWpython_tk = $(libdir)/python2*/lib-tk/.*
+PKGFILES_CSWpython_tk += $(libdir)/python2*/lib-dynload/*tkinter*
+
+REQUIRED_PKGS_CSWpython = CSWbdb44 CSWbzip2 CSWgdbm CSWggettext
+REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
+REQUIRED_PKGS_CSWpython_tk = CSWpython CSWtcl CSWtk
+REQUIRED_PKGS_CSWidle = CSWpython CSWpython-tk
+
+CATALOGNAME_CSWpython = python
+CATALOGNAME_CSWpython_tk = python_tk
+CATALOGNAME_CSWidle = idle
+
+SPKG_DESC_CSWpython = A high-level scripting language.
+SPKG_DESC_CSWpython_tk = Python Tk Interface (TkInter)
+SPKG_DESC_CSWidle = Python IDE
 
 include gar/category.mk
