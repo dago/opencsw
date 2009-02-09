@@ -21,19 +21,11 @@ REQUIRED_PKGS = CSWosslrt CSWpcrert  CSWzlib
 EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
-ifeq ($(ISA),pentium_pro)
-	NGINXCPU = pentiumpro
-else
-ifeq ($(ISA),sparcv8)
-	NGINXCPU = sparc32
-else
-ifeq ($(ISA),sparcv9)
-	NGINXCPU = sparc64
-else
-	NGINXCPU = $(ISA)
-endif
-endif
-endif
+NGINXCPU_pentium_pro = pentiumpro
+NGINXCPU_sparcv8 = sparc32
+NGINXCPU_sparcv9 = sparc64
+NGINXCPU_$(ISA) ?= $(ISA)
+NGINXCPU = $(NGINXCPU_$(ISA))
 
 CFLAGS =
 
