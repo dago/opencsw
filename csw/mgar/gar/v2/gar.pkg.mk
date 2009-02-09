@@ -84,11 +84,6 @@ GAWK ?= /opt/csw/bin/gawk
 # 3. There is a svn binary, but not everything was committed properly -> UNCOMMITTED
 # 4. There is a svn binary and everything was committed -> r<revision>
 
-# Calculating the revision can be time consuming, so we do this on demand
-define _REVISION
-$(if $(shell if test -x $(SVN); then echo yes; fi),$(if $(shell $(SVN) info >/dev/null 2>&1; if test $$? -eq 0; then echo YES; fi),$(if $(shell $(SVN) status --ignore-externals 2>/dev/null | grep -v '^X'),UNCOMMITTED,$(shell $(SVN) info --recursive 2>/dev/null | $(GAWK) '$$1 == "Revision:" && MAX < $$2 { MAX = $$2 } END {print "r" MAX }')),NOTVERSIONED),NOSVN)
-endef
-
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
@@ -96,7 +91,7 @@ SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
 SPKG_PACKAGER  ?= Unknown
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_EMAIL     ?= Unknown
-SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
+#SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
 SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
@@ -290,7 +285,7 @@ $(WORKDIR)/%.gspec:
 	$(_DBG)(echo "%var            bitname $(call catalogname,$*)"; \
 	echo "%var            pkgname $*"; \
 	$(if $(or $(ARCHALL),$(ARCHALL_$*)),echo "%var            arch all";) \
-	echo "%include        url file://%{PKGLIB}/csw_dyndepend.gspec") >$@
+	echo "%include        url file://%{PKGLIB}/csw_dyngspec.gspec") >$@
 
 
 # Dynamic licenses are selected in the following way:
@@ -315,6 +310,47 @@ LICENSE = COPYING
 _LICENSE_IS_DEFAULT = 1
 endif
 endif
+
+# Dynamic pkginfo 
+
+# Calculating the revision can be time consuming, so we do this on demand
+define _REVISION
+$(if $(shell if test -x $(SVN); then echo yes; fi),$(if $(shell $(SVN) info >/dev/null 2>&1; if test $$? -eq 0; then echo YES; fi),$(if $(shell $(SVN) status --ignore-externals 2>/dev/null | grep -v '^X'),UNCOMMITTED,$(shell $(SVN) info --recursive 2>/dev/null | $(GAWK) '$$1 == "Revision:" && MAX < $$2 { MAX = $$2 } END {print "r" MAX }')),NOTVERSIONED),NOSVN)
+endef
+
+# URL: https://gar.svn.sf.net/svnroot/gar/csw/mgar/pkg/pcre/trunk
+define _URL
+$(if $(shell if test -x $(SVN); then echo yes; fi),$(shell $(SVN) info . 2>/dev/null | $(GAWK) '$$1 == "URL:" { print $$2 }))
+endef
+
+# XXX: It is possible that a package is flagged as /isaexec, even
+# if the isaexec'ed files are in another package created from the Makefile
+define mode64
+$(strip 
+  $(if $(MODE64_$(1)),$(MODE64_$(1)), 
+    $(if $(filter 64,$(foreach I,$(NEEDED_ISAS),$(MEMORYMODEL_$I))),
+      64$(if $(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)),/isaexec) 
+    ) 
+  )
+)
+endef
+
+.PRECIOUS: $(WORKDIR)/%.pkginfo
+$(WORKDIR)/%.pkginfo:
+	$(_DBG)(echo "PKG=$*"; \
+	echo "NAME=$(call catalogname,$*) - $(SPKG_DESC)"; \
+	echo "ARCH=$(GARCH)"; \
+	echo "VERSION=$(SPKG_VERSION)$(SPKG_REVSTAMP)"; \
+	echo "CATEGORY=$(SPKG_CATEGORY)"; \
+	echo "VENDOR=$(SPKG_VENDOR)"; \
+	echo "EMAIL=$(SPKG_EMAIL)"; \
+	echo "PSTAMP=$(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')"; \
+	echo "CLASSES=$(SPKG_CLASSES)"; \
+	echo "HOTLINE=http://www.opencsw.org/bugtrack/"; \
+	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
+	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
+	) >$@
+
 
 # findlicensefile - Find an existing file for a given license name
 #
@@ -377,7 +413,7 @@ prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPE
 package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
-package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.pkginfo $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
