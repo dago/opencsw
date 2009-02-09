@@ -1,0 +1,4 @@
+" Source a global configuration file if available
+if filereadable("/opt/csw/etc/vim/vimrc")
+  source /opt/csw/etc/vim/vimrc.local
+endif
