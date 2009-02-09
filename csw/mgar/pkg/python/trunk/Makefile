@@ -1,6 +1,7 @@
 GARNAME = Python
 GARVERSION = 2.6.1
 CATEGORIES = lang
+PACKAGES = CSWpython CSWpython-tk CSWidle
 
 SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
 
@@ -31,7 +32,6 @@ PATCHFILES += multiprocess.diff
 PATCHFILES += pyport.diff
 PATCHFILES += setup.diff
 
-
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
@@ -48,20 +48,20 @@ CONFIGURE_ARGS += --with-fpectl
 
 PKGFILES_CSWidle = $(libdir)/python2*/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
-PKGFILES_CSWpython_tk = $(libdir)/python2*/lib-tk/.*
-PKGFILES_CSWpython_tk += $(libdir)/python2*/lib-dynload/*tkinter*
+PKGFILES_CSWpython-tk = $(libdir)/python2*/lib-tk/.*
+PKGFILES_CSWpython-tk += $(libdir)/python2*/lib-dynload/*tkinter*
 
 REQUIRED_PKGS_CSWpython = CSWbdb44 CSWbzip2 CSWgdbm CSWggettext
 REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
-REQUIRED_PKGS_CSWpython_tk = CSWpython CSWtcl CSWtk
+REQUIRED_PKGS_CSWpython-tk = CSWpython CSWtcl CSWtk
 REQUIRED_PKGS_CSWidle = CSWpython CSWpython-tk
 
 CATALOGNAME_CSWpython = python
-CATALOGNAME_CSWpython_tk = python_tk
+CATALOGNAME_CSWpython-tk = python_tk
 CATALOGNAME_CSWidle = idle
 
 SPKG_DESC_CSWpython = A high-level scripting language.
-SPKG_DESC_CSWpython_tk = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython-tk = Python Tk Interface (TkInter)
 SPKG_DESC_CSWidle = Python IDE
 
 include gar/category.mk
