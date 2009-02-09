@@ -211,8 +211,8 @@ ARCHFLAGS_SOS12_pentium_pro+mmx  = -m32 -xarch=pentium_proa
  ARCHFLAGS_GCC4_pentium_pro+mmx  = -m32 -march=pentium2
     MEMORYMODEL_pentium_pro+mmx  = 32
 
-ARCHFLAGS_SOS11_pentium_pro      = -xarch=pentium_pro
-ARCHFLAGS_SOS12_pentium_pro      = -m32 -xarch=pentium_pro
+ARCHFLAGS_SOS11_pentium_pro      = -xarch=pentium_pro -xchip=pentium_pro
+ARCHFLAGS_SOS12_pentium_pro      = -m32 -xarch=pentium_pro -xchip=pentium_pro
  ARCHFLAGS_GCC3_pentium_pro      = -m32 -march=pentiumpro
  ARCHFLAGS_GCC4_pentium_pro      = -m32 -march=pentiumpro
     MEMORYMODEL_pentium_pro      = 32
@@ -223,14 +223,14 @@ ARCHFLAGS_SOS12_pentium+mmx      = ERROR
  ARCHFLAGS_GCC4_pentium+mmx      = -m32 -march=pentium-mmx
     MEMORYMODEL_pentium+mmx      = 32
 
-ARCHFLAGS_SOS11_pentium          = ERROR
-ARCHFLAGS_SOS12_pentium          = ERROR
+ARCHFLAGS_SOS11_pentium          = -xchip=pentium
+ARCHFLAGS_SOS12_pentium          = -m32 -xchip=pentium
  ARCHFLAGS_GCC3_pentium          = -m32 -march=pentium
  ARCHFLAGS_GCC4_pentium          = -m32 -march=pentium
     MEMORYMODEL_pentium          = 32
 
-ARCHFLAGS_SOS11_i486             = ERROR
-ARCHFLAGS_SOS12_i486             = ERROR
+ARCHFLAGS_SOS11_i486             = -xarch=386 -xchip=486
+ARCHFLAGS_SOS12_i486             = -m32 -xarch=386 -xchip=486
  ARCHFLAGS_GCC3_i486             = -m32 -march=i486
  ARCHFLAGS_GCC4_i486             = -m32 -march=i486
     MEMORYMODEL_i486             = 32
