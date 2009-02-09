@@ -491,8 +491,9 @@ endif
 # These directories get relocated into their ISA subdirectories
 MERGE_DIRS ?= $(MERGE_DIRS_$(MODULATION))
 
-# These files get relocated and will be replaced by the isaexec-wrapper
-_ISAEXEC_FILES = $(filter-out $(foreach F,$(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
+# The files in ISAEXEC get relocated and will be replaced by the isaexec-wrapper
+_ISAEXEC_EXCLUDE_FILES = $(bindir)/%-config $(bindir)/%/%-config
+_ISAEXEC_FILES = $(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
 			$(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* )) \
 		)
 ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
