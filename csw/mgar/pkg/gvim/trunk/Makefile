@@ -1,6 +1,6 @@
 GARNAME = vim
 DISTVERSION = 7.2
-PATCHREV = 093
+PATCHREV = 102
 GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -39,7 +39,7 @@ CONFIGURE_ARGS += --enable-cscope
 CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --enable-gui=gnome2
 
-BUILD_ARGS += "VIMRCLOC=/opt/csw/etc/vim"
+BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
 #GTK2 needs 64-bit
 #BUILD64 = 1
