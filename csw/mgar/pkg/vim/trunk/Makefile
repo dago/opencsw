@@ -1,6 +1,6 @@
 GARNAME = vim
 DISTVERSION = 7.2
-PATCHREV = 093
+PATCHREV = 102
 GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -22,6 +22,9 @@ DISTFILES += $(call admfiles,CSWvimrt,)
 DISTFILES += $(GARNAME)-$(DISTVERSION).tar.bz2
 DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
 DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
+DISTFILES += vimrc
+DISTFILES += vimrc.tiny
+DISTFILES += gvimrc
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 PATCHFILES += vimtutor.patch
@@ -40,7 +43,7 @@ CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-cscope
 
-BUILD_ARGS  = "VIMRCLOC=/opt/csw/etc/vim"
+BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
 #Removed per request
 #BUILD64 = 1
@@ -84,3 +87,9 @@ make-interps-lazy:
 	@perl -i.bak -plne \
 	    's/(-l(?:perl|python|ruby|tcl)\S*)/-zlazyload $$1 -znolazyload/' \
 	    $(WORKSRC)/src/auto/config.mk
+
+post-install-isa-sparcv8 post-install-isa-i386:
+	@cp $(DOWNLOADDIR)/vimrc $(DOWNLOADDIR)/gvimrc $(DOWNLOADDIR)/vimrc.tiny $(DESTDIR)/opt/csw/share/vim
+	@(cd $(DESTDIR)/opt/csw/share/vim;ln -s vim$(subst .,,$(DISTVERSION)) vimcurrent)
+	@$(MAKECOOKIE)
+	$(DONADA)
