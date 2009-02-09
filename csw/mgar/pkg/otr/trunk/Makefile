@@ -19,6 +19,9 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD64 = 1
+NO_ISAEXEC = 1
+
+MERGE_EXCLUDE_FILES = /opt/csw/bin/$(ISA)/.*
 
 REQUIRED_PKGS_CSWotr = CSWgcrypt CSWgpgerr
 REQUIRED_PKGS_CSWotrdevel = CSWCSWotr
