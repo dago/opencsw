@@ -1,6 +1,14 @@
 #!/bin/env perl -w
 
 # This scripts takes a package prototype(4) and includes or excludes selected pathes
+#
+# Please note:
+# - If no options are given the input is not changed
+# - A path must match include and not exclude to pass the filter
+# - Empty directories are preserved if the incoming prototype doesn't
+#   contained files in them. Directories which contained files which
+#   were excluded and which would be empty after exclusion are
+#   excluded also.
 
 use strict;
 use Getopt::Long;
@@ -25,12 +33,9 @@ $exclude = qr#$exclude# if( $exclude );
 $include = '^(' . join( '|', @include ) . ')$' if( @include );
 $include = qr#$include# if( $include );
 
-#sub normalize_dir {
-#  return map { my ($dir = $_) =~ s!/\./!/!g; $dir =~ s!/+!/!g; $dir } @_
-#}
-
 my %p;
-my %skipped;
+my %skipped;		# key=path, Contains directories which may be skipped
+my %wasntempty;		# Same key, =1 iff there is a file in it or a subdirectory
 while( <STDIN> ) {
   my @line = split /\s+/;
   my $ftype = $line[0];
@@ -43,21 +48,45 @@ while( <STDIN> ) {
     next;
   }
 
-  if( $include ne '' ) {
-    next if( $path !~ /$include/ );
-  } else {
-    next if( $exclude ne '' && $path =~ /$exclude/ );
+  {
+    # Remember that all path components have been used by a file
+    my @c = split( m!/!, $path );
+    my @pa = map { join( '/', @c[0..$_] ) } 1..$#c-1;
+
+    foreach (@pa) {
+      $wasntempty{$_} = 1;
+    }
   }
+
+  next if( $include ne '' && $path !~ /$include/ );
+  next if( $exclude ne '' && $path =~ /$exclude/ );
+
   $p{$path} = \@line;
 }
 
 # Put back needed directories
 foreach my $path (keys %p) {
+  # This funny construct builds all pathes leading to a directory
+  # e. g. /usr/bin/sparcv8/ -> (/usr, /usr/bin, /usr/bin/sparcv8/)
   my @c = split( m!/!, $path );
   my @pa = map { join( '/', @c[0..$_] ) } 1..$#c;
 
   foreach (@pa) {
-    if( exists $skipped{$_} ) { $p{$_} = delete $skipped{$_} };
+    $p{$_} = delete $skipped{$_} if( exists $skipped{$_} )
+  }
+}
+
+# Re-add directories which where empty
+foreach my $path (keys %skipped) {
+  next if( exists $wasntempty{$path} );
+  next if( $include ne '' && $path !~ /$include/ );
+  next if( $exclude ne '' && $path =~ /$exclude/ );
+
+  my @c = split( m!/!, $path );
+  my @pa = map { join( '/', @c[0..$_] ) } 1..$#c;
+
+  foreach (@pa) {
+    $p{$_} = delete $skipped{$_} if( exists $skipped{$_} )
   }
 }
 
@@ -68,12 +97,11 @@ foreach my $path (keys %p) {
 #   l none /opt/csw/bin/mytool=/opt/csw/bin/isaexec
 #   f none /opt/csw/bin/sparcv8/mytool=/opt/csw/bin/mytool
 foreach my $e (@isaexec) {
-#  my ($isaexec_path, $new_path) = normalize_dir split( /=/, $e );
   my ($isaexec_path, $new_path) = split( /=/, $e );
-  if( !exists $p{$isaexec_path} ) {
-    warn "Could not find path '$e' to be replaced by isaexec";
-    next;
-  }
+#  if( !exists $p{$isaexec_path} ) {
+#    warn "Could not find path '$e' to be replaced by isaexec";
+#    next;
+#  }
   $p{$new_path} = [ @{$p{$isaexec_path}} ];
   $p{$new_path}->[2] = $new_path . '=' . $isaexec_path;
   $p{$isaexec_path}->[0] = 'l';
