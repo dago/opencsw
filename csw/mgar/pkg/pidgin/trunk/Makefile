@@ -7,7 +7,7 @@ define BLURB
  Pidgin is a chat program which lets you log in to accounts on multiple chat networks simultaneously. This means that you can be chatting with friends on MSN, talking to a friend on Google Talk, and sitting in a Yahoo chat room all at the same time.
 endef
 
-MASTER_SITES = $(SF_MIRROR)
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += x11.pc
 DISTFILES += $(call admfiles,CSWpidgin,)
@@ -35,7 +35,8 @@ EXTRA_PKGCONFIG_PATH = $(CURDIR)/$(WORKDIR)
 TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
