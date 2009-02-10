@@ -18,7 +18,8 @@ PACKAGES = CSWftype2
 CATALOGNAME_CSWvim = freetype2
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1
@@ -27,8 +28,11 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 CONFIGURE_ARGS = $(DIRPATHS)
 GNUMAKE = gmake
 EXTRA_CONFIGURE_EXPORTS = GNUMAKE
+
 BUILD64 = 1
 NO_ISAEXEC = 1
+
+MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/.*
 
 REQUIRED_PKGS_CSWftype2 = CSWzlib
 
