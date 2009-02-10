@@ -106,6 +106,14 @@ perllib            ?= $(libdir)/perl
 perlcswlib         ?= $(perllib)/csw
 perlpackroot       ?= $(perlcswlib)/auto
 
+# These variables are used to construct pathes. If you temporarily reset the above
+# variables for special install locations (like /opt/csw/bin/bdb44/) the definitions
+# here make sure the binaries for the make process are still found.
+binpath_install    ?= $(BUILD_PREFIX)/bin
+binpath            ?= $(abspath $(binpath_install)/$(MM_BINDIR))
+sbinpath_install   ?= $(BUILD_PREFIX)/sbin
+sbinpath           ?= $(abspath $(sbinpath_install)/$(MM_BINDIR))
+
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
 DESTROOT ?= $(HOME)
@@ -473,7 +481,7 @@ OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
 #    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
-PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(bindir_install)/$(MM_BINDIR)):$(DESTDIR)$(bindir_install):$(abspath $(DESTDIR)$(sbindir_install)/$(MM_BINDIR)):$(DESTDIR)$(sbindir_install):)$(abspath $(bindir_install)/$(MM_BINDIR)):$(bindir_install):$(abspath $(sbindir_install)/$(MM_BINDIR)):$(sbindir_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(binpath_install)/$(MM_BINDIR)):$(DESTDIR)$(binpath_install):$(abspath $(DESTDIR)$(sbinpath_install)/$(MM_BINDIR)):$(DESTDIR)$(sbinpath_install):)$(abspath $(binpath_install)/$(MM_BINDIR)):$(binpath_install):$(abspath $(sbinpath_install)/$(MM_BINDIR)):$(sbinpath_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin
 
 # This is for foo-config chaos
 PKG_CONFIG_DIRS ?= $(libdir_install) $(EXTRA_PKG_CONFIG_DIRS)
