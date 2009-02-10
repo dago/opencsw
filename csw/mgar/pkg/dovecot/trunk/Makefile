@@ -44,6 +44,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # No test suite for Dovecot available
 TEST_SCRIPTS	=
 
+# See http://dovecot.org/list/dovecot/2009-February/037273.html
+PATCHFILES = patch-authcrash.diff
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pop3d
 CONFIGURE_ARGS += --with-lda
