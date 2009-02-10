@@ -34,7 +34,7 @@ export PARALLELMFLAGS
 
 DISTNAME ?= $(GARNAME)-$(GARVERSION)
 
-ALLFILES ?= $(DISTFILES) $(PATCHFILES)
+ALLFILES ?= $(DISTFILES) $(PATCHFILES) $(DYNSCRIPTS)
 
 ifeq ($(MAKE_INSTALL_DIRS),1)
 INSTALL_DIRS = $(addprefix $(DESTDIR),$(prefix) $(exec_prefix) $(bindir) $(sbindir) $(libexecdir) $(datadir) $(sysconfdir) $(sharedstatedir) $(localstatedir) $(libdir) $(infodir) $(lispdir) $(includedir) $(mandir) $(foreach NUM,1 2 3 4 5 6 7 8, $(mandir)/man$(NUM)) $(sourcedir))
@@ -230,9 +230,11 @@ prerequisitepkg-%:
 # NOTE: DOES NOT RUN pre-everything!
 fetch-list:
 	@echo "Distribution files: "
-	@for i in $(DISTFILES); do echo "	$$i"; done
+	@$(foreach F,$(DISTFILES),echo "	$F";)
 	@echo "Patch files: "
-	@for i in $(PATCHFILES); do echo "	$$i"; done
+	@$(foreach P,$(PATCHFILES),echo "	$P";)
+	@echo "Dynamically generated scripts: "
+	@$(foreach D,$(DYNSCRIPTS),echo "	$D";)
 
 # fetch			- Retrieves $(DISTFILES) (and $(PATCHFILES) if defined)
 #				  into $(DOWNLOADDIR) as necessary.
@@ -284,8 +286,8 @@ GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(ALLFILES))
 garchive: checksum $(GARCHIVE_TARGETS) ;
 
 # extract		- Unpacks $(DISTFILES) into $(EXTRACTDIR) (patches are "zcatted" into the patch program)
-EXTRACT_TARGETS-global ?= $(foreach SPEC,$(SPKG_SPECS),$(filter $(SPEC).%,$(DISTFILES)))
-EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(if $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-$(MODULATION)),$(DISTFILES))))
+EXTRACT_TARGETS-global ?= $(foreach SPEC,$(SPKG_SPECS),$(filter $(SPEC).%,$(DISTFILES) $(DYNSCRIPTS)))
+EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(if $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-$(MODULATION)),$(DISTFILES) $(DYNSCRIPTS))))
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
