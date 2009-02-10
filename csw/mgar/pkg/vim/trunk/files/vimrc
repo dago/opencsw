@@ -2,3 +2,6 @@
 if filereadable("/opt/csw/etc/vim/vimrc")
   source /opt/csw/etc/vim/vimrc
 endif
+if filereadable("/etc/opt/csw/vim/vimrc")
+  source /etc/opt/csw/vim/vimrc
+endif
