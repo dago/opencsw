@@ -480,6 +480,12 @@ reset-install-modulated:
 # Automatic merging is only possible if you have the default modulation "ISA"
 # Otherwise you *must* specify merge scripts for all modulations.
 
+ifeq ($(DEBUG_MERGING),)
+_DBG_MERGE=@
+else
+_DBG_MERGE=
+endif
+
 ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 else
@@ -571,14 +577,14 @@ merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $
 
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
-	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") \
 		. $(PKGROOT))
 	@$(MAKECOOKIE)
 
 # Copy only the merge directories
 merge-copy-only: $(PKGROOT)
-	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") -s ",.*,," \
 		. $(PKGROOT) \
 	)
@@ -586,7 +592,7 @@ merge-copy-only: $(PKGROOT)
 
 # Copy the whole tree and relocate the directories in $(MERGE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
-	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") \
 		. $(PKGROOT) \
 	)
@@ -594,7 +600,7 @@ merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
-	@(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") -s ",.*,," \
 		 . $(PKGROOT) \
 	)
