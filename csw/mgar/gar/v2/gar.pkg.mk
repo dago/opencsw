@@ -254,7 +254,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 
 # $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
 .PRECIOUS: $(WORKDIR)/%.depend
-$(WORKDIR)/%.depend:
+$(WORKDIR)/%.depend: $(WORKDIR)
 	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
 			echo "I $(PKG)";\
@@ -281,7 +281,7 @@ $(WORKDIR)/%.depend:
 
 # This rule dynamically generates gspec-files
 .PRECIOUS: $(WORKDIR)/%.gspec
-$(WORKDIR)/%.gspec:
+$(WORKDIR)/%.gspec: $(WORKDIR)
 	$(_DBG)(echo "%var            bitname $(call catalogname,$*)"; \
 	echo "%var            pkgname $*"; \
 	$(if $(or $(ARCHALL),$(ARCHALL_$*)),echo "%var            arch all";) \
@@ -336,7 +336,7 @@ $(strip
 endef
 
 .PRECIOUS: $(WORKDIR)/%.pkginfo
-$(WORKDIR)/%.pkginfo:
+$(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
 	echo "NAME=$(call catalogname,$*) - $(SPKG_DESC)"; \
 	echo "ARCH=$(GARCH)"; \
