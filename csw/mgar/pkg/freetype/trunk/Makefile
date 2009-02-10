@@ -1,5 +1,5 @@
 GARNAME = freetype
-GARVERSION = 2.1.5
+GARVERSION = 2.3.8
 CATEGORIES = lib
 
 DESCRIPTION = A free and portable TrueType font rendering engine
@@ -14,15 +14,23 @@ define BLURB
   Windows FNT/FON.
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
+PACKAGES = CSWftype2
+CATALOGNAME_CSWvim = freetype2
+
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=3157
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
+GNUMAKE = gmake
+EXTRA_CONFIGURE_EXPORTS = GNUMAKE
+BUILD_64 = 1
+NO_ISAEXEC = 1
+
+REQUIRED_PKGS_CSWftype2 = CSWzlib
 
 TEST_TARGET = check
 
