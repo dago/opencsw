@@ -7,11 +7,16 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
+PACKAGES = CSWggettext CSWggettextdoc
+CATALOGNAME_CSWggettext = ggettext
+CATALOGNAME_CSWggettextdoc = ggettextdoc
+SPKG_DESC_CSWggettext = GNU locale utilities
+SPKG_DESC_CSWggettextdoc = GNU locale utilities documentation
+ARCHALL_CSWggettextdoc = 1
+
 MASTER_SITES = $(GNU_MIRROR)
 
-DISTFILES  = $(call admfiles,CSWggettext,)
-DISTFILES += $(call admfiles,CSWggettextdoc,)
-DISTFILES += $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 #Include earlier library revisions for compatibility with existing packages
 DISTFILES += libgettextlib-0.14.1.so.i
 DISTFILES += libgettextlib-0.14.1.so.s
