@@ -1,0 +1,30 @@
+diff -Nru libassuan-1.0.5.orig/configure libassuan-1.0.5/configure
+--- libassuan-1.0.5.orig/configure	2008-05-25 03:00:36.000000000 -0500
++++ libassuan-1.0.5/configure	2009-02-04 13:25:18.940318965 -0600
+@@ -1320,6 +1320,7 @@
+   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+   --with-pth-prefix=PFX   prefix where GNU Pth is installed (optional)
++  --with-pth-config-dir=DIR  Directory containing pth-config (optionl)
+ 
+ Some influential environment variables:
+   CC          C compiler command
+@@ -4264,6 +4265,18 @@
+   if test x$pth_config_prefix != x ; then
+      PTH_CONFIG="$pth_config_prefix/bin/pth-config"
+   fi
++
++  ## Check for --with-pth-prefix and override
++  ## --with-pth-prefix PTH_CONFIG to
++  ## --with-pth-config-dir PTH_CONFIG
++  if test "${with_pth_config_dir+set}" = set; then
++      withval=$with_pth_config_dir
++      PTH_CONFIG="${withval}/pth-config"
++    if test ! -x ${PTH_CONFIG}; then
++        PTH_CONFIG=""
++    fi
++  fi
++
+   # Extract the first word of "pth-config", so it can be a program name with args.
+ set dummy pth-config; ac_word=$2
+ { echo "$as_me:$LINENO: checking for $ac_word" >&5

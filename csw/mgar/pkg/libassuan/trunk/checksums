@@ -1,2 +1,3 @@
 c2db0974fcce4401f48f3fa41c4edc5a  download/libassuan-1.0.5.tar.bz2
 c424181532045b5760d087e58cc1c935  download/CSWlibassuan.gspec
+e5f74688c543ec7d4a4e94a55699d0e1  download/patch-pth_config_dir.diff

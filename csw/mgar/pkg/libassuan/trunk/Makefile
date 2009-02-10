@@ -13,7 +13,7 @@ DISTFILES += $(call admfiles,CSWlibassuan,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWpth
+PREREQUISITE_PKGS = CSWpth
 
 BUILD64 = 1
 NO_ISAEXEC = 1
@@ -21,7 +21,6 @@ NO_ISAEXEC = 1
 EXTRA_LDFLAGS = -lrt -lsocket -lnsl
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-pth-prefix=/opt/csw
 
 # We must include static libs here as libassuan contains *only*
 # static libs
