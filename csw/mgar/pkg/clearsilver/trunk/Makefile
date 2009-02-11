@@ -1,5 +1,5 @@
 GARNAME = clearsilver
-GARVERSION = 0.10.4
+GARVERSION = 0.10.5
 CATEGORIES = utils
 
 DESCRIPTION = Language-neutral HTML template system
@@ -12,26 +12,36 @@ endef
 
 MASTER_SITES = http://www.clearsilver.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcs,depend prototype)
-DISTFILES += $(call admfiles,CSWpmcs,depend prototype)
-DISTFILES += $(call admfiles,CSWpycs,depend prototype)
+
+PACKAGES = CSWcs CSWpmcs CSWpycs
+
+REQUIRED_PKGS_CSWcs   = CSWggettext CSWzlib
+REQUIRED_PKGS_CSWpmcs = CSWperl CSWzlib
+REQUIRED_PKGS_CSWpycs = CSWggettext CSWpython CSWzlib
+
+CATALOGNAME_CSWcs   = clearsilver
+CATALOGNAME_CSWpmcs = pm_clearsilver
+CATALOGNAME_CSWpycs = py_clearsilver
+
+SPKG_DESC_CSWcs   = Language-neutral HTML template system
+SPKG_DESC_CSWpmcs = Clearsilver Perl language binding
+SPKG_DESC_CSWpycs = Clearsilver Python language binding
+
+PKGFILES_CSWpmcs  = $(libdir)/perl/.*
+PKGFILES_CSWpmcs += $(mandir)/*perl*
+PKGFILES_CSWpycs =  $(libdir)/python*/.*
+PKGFILES_CSWpmcs += $(mandir)/*python*
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
-# Remove an unneeded linux-only header
+GNUCOMPILER = 1
+
 PATCHFILES += linuxheader.diff
-
-# Use vendor install for the perl module
-PATCHFILES += perlbuild.diff
-
-GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-python=$(bindir)/python
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
-#CONFIGURE_ARGS += --with-ruby=$(bindir)/ruby
-#CONFIGURE_ARGS += --with-java=/usr/jdk/j2se1.4.2_02/j2se
 CONFIGURE_ARGS += --enable-gettext
 
 # No c-sharp at the moment
@@ -41,18 +51,10 @@ CONFIGURE_ARGS += --disable-apache
 CONFIGURE_ARGS += --disable-ruby
 CONFIGURE_ARGS += --disable-java
 
+EXTRA_LINKER_FLAGS += -lintl
+
 # No test target
 TEST_SCRIPTS =
 
 include gar/category.mk
-
-# The perl binding needs to use the Sun compiler, regardless of whether the
-# main extension uses gcc.
-ifeq ($(GARCOMPILER),GNU)
-PATH := $(PATH):$(SUN_CC_HOME)/bin
-export PATH
-endif
-
-LIBS += -lintl
-export LIBS
 

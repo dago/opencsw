@@ -1,12 +1,2 @@
-9523df7ef17e41a01dbae5032a3e450b  download/clearsilver-0.10.4.tar.gz
-6135b3efabaf9a4b1e911530437e0aa0  download/CSWcs.gspec
-0c687c75a85aadcd72762d6a1d503165  download/CSWcs.depend
-43de53e64a60770d4e572d42e4a1955a  download/CSWcs.prototype
-566c39b08d4e14ab14f7b836d7fac832  download/CSWpmcs.gspec
-9ebd2fa96ac23e41c6d49743c203628c  download/CSWpmcs.depend
-1ade3938da7c2a375121758122ad4ae8  download/CSWpmcs.prototype
-448f995195c2566dcc1468346124da5d  download/CSWpycs.gspec
-e99be883aad6d8aac5038033cccbdebd  download/CSWpycs.depend
-ea1ef76e146970187d96a69f71e73a97  download/CSWpycs.prototype
+b8c0c7fbe0ef5e06e0c935f134304d44  download/clearsilver-0.10.5.tar.gz
 b026a9b055bd0fa798b98f97680fdce9  download/linuxheader.diff
-977b03892d3c1b0d8e445f09a50a3620  download/perlbuild.diff
