@@ -7,13 +7,13 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
-PACKAGES = CSWggettext CSWggettextdevel CSWggettextdoc
+PACKAGES = CSWggettext CSWggettextrt CSWggettextdoc
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettextdoc = ggettextdoc
 CATALOGNAME_CSWggettextrt = ggettextrt
 SPKG_DESC_CSWggettext = GNU locale utilities and development headers
 SPKG_DESC_CSWggettextdoc = GNU locale documentation
-SPKG_DESC_CSWggettextdevel = GNU locale runtime
+SPKG_DESC_CSWggettextrt = GNU locale runtime
 ARCHALL_CSWggettextdoc = 1
 
 MASTER_SITES = $(GNU_MIRROR)
