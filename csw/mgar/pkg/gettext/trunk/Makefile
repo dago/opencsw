@@ -10,10 +10,10 @@ endef
 PACKAGES = CSWggettext CSWggettextdevel CSWggettextdoc
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettextdoc = ggettextdoc
-CATALOGNAME_CSWggettextdevel = ggettextdevel
-SPKG_DESC_CSWggettext = GNU locale utilities
-SPKG_DESC_CSWggettextdoc = GNU locale utilities documentation
-SPKG_DESC_CSWggettextdevel = GNU locale utilities development headers and utilities
+CATALOGNAME_CSWggettextrt = ggettextrt
+SPKG_DESC_CSWggettext = GNU locale utilities and development headers
+SPKG_DESC_CSWggettextdoc = GNU locale documentation
+SPKG_DESC_CSWggettextdevel = GNU locale runtime
 ARCHALL_CSWggettextdoc = 1
 
 MASTER_SITES = $(GNU_MIRROR)
@@ -48,7 +48,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 BUILD64 = 1
 NO_ISAEXEC = 1
 
-REQUIRED_PKGS_CSWggettext = CSWiconv CSWexpat CSWncurses
+REQUIRED_PKGS_CSWggettextrt = CSWiconv
+REQUIRED_PKGS_CSWggettext = CSWgettextrt CSWiconv CSWexpat CSWncurses
+REQUIRED_PKGS_CSWggettextdoc = CSWggettext
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside
@@ -60,24 +62,46 @@ MERGE_EXCLUDE_FILES  = .*/charset.alias
 MERGE_EXCLUDE_FILES += .*/iconv.m4
 MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/.*
 
+PKGFILES_CSWggettextrt  = /opt/csw/lib/libintl.* /opt/csw/lib/$(ISA)/libintl.*
+PKGFILES_CSWggettextrt += /opt/csw/lib/libasprintf.* /opt/csw/lib/$(ISA)/libasprintf.*
+PKGFILES_CSWggettextrt += /opt/csw/lib/libgettextpo.* /opt/csw/lib/$(ISA)/libgettextpo.*
+PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext /opt/csw/bin/gngettext /opt/csw/bin/genvsubst
+PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.jar
+PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
 PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
-PKGFILES_CSWgettextdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
 #Include old libraries for compatibility with existing packages
 #  TODO: Convert to modulated builds
 post-install-isa-sparcv8:
+	@mkdir $(INSTALLISADIR)/opt/csw/share/java
+	@mv $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar $(INSTALLISADIR)/opt/csw/share/java
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
+	@$(MAKECOOKIE)
+	$(DONADA)
 
 post-install-isa-sparcv9:
+	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s9 $(INSTALLISADIR)/opt/csw/lib/64/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.s9 $(INSTALLISADIR)/opt/csw/lib/64/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.s9 $(INSTALLISADIR)/opt/csw/lib/64/libintl.so.3
+	@$(MAKECOOKIE)
+	$(DONADA)
 
 post-install-isa-i386:
+	@mkdir $(INSTALLISADIR)/opt/csw/share/java
+	@mv $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar $(INSTALLISADIR)/opt/csw/share/java
+	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.i $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
+	@$(MAKECOOKIE)
+	$(DONADA)
+
+post-install-isa-amd64:
+	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
+	@$(MAKECOOKIE)
+	$(DONADA)
