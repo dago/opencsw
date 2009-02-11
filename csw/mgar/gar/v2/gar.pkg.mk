@@ -70,8 +70,10 @@ $(strip
 )
 endef
 
+# We do not put this in $(docdir), as the prefix may have been reset to some
+# other location and the license should always be in a fixed location.
 define licensedir
-$(docdir)/$(call catalogname,$(1))
+$(BUILD_PREFIX)/share/doc/$(call catalogname,$(1))
 endef
 
 # Set this to your svn binary
