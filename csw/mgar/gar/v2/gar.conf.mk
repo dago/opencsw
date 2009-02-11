@@ -501,6 +501,8 @@ SF_PROJ     ?= $(GARNAME)
 SF_MIRRORS  ?= http://downloads.sourceforge.net/$(SF_PROJ)/
 # Keep this for compatibility
 SF_MIRROR    = $(firstword $(SF_MIRRORS))
+SF_PROJECT_SHOWFILE ?= http://sourceforge.net/project/showfiles.php?group_id
+UPSTREAM_USE_SF	?= 0
 
 # Google Code
 GOOGLE_PROJECT ?= $(GARNAME)
