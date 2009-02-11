@@ -9,8 +9,8 @@ VARRUNX=/opt/csw/var/run/nginx
 PIDFILE=${VARRUNX}/nginx.pid
 PIDFILO=${VARRUNX}/nginx.pid.oldbin
 
-[ ! -f ${NGINX} ]   && exit $NGINX
-[ ! -f ${CFGFILE} ] && exit $CFGFILE
+#[ ! -f ${NGINX} ]   && exit 255
+#[ ! -f ${CFGFILE} ] && exit 254
 
 
 start() {
@@ -80,8 +80,10 @@ state() {
 	COMM=`/bin/ps -o comm= -p $FPID`
 	if [ "$NGINX" = "$COMM" ]; then
 		echo "running"
+		return 0
 	else
 		echo "running, but it is not a CSW package"
+		return 1
 	fi
 }
 
@@ -89,6 +91,43 @@ upgrade()
 {
 	killpidf -USR2
 	RETVAL=$?
+	[ $RETVAL -ne 0 ] && return $RETVAL
+	OLDBINPID=0
+	for i in 1 2 3 4 5; do
+		if [ -f $PIDFILO ]; then
+			OLDBINPID=1
+			break
+		else
+			sleep 1
+		fi
+	done
+	if [ $OLDBINPID -eq 1 ]; then
+		state >/dev/null
+		RETVAL=$?
+		if [ $RETVAL -eq 0 ]; then
+			killpidf -WINCH $PIDFILO
+			RETVAL=$?
+		fi
+		return $RETVAL
+	fi
+	return 1
+}
+
+upgrade_commit()
+{
+	killpidf -QUIT $PIDFILO
+	RETVAL=$?
+	return $RETVAL
+}
+
+upgrade_rollback()
+{
+	killpidf -HUP $PIDFILO
+	RETVAL=$?
+	if [ $RETVAL -eq 0 ]; then
+		killpidf -QUIT $PIDFILE
+		RETVAL=$?
+	fi
 	return $RETVAL
 }
 
@@ -126,8 +165,16 @@ upgrade)
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && upgrade ||:
 	;;
+upgrade-commit)
+	upgrade_commit
+	RETVAL=$?
+	;;
+upgrade-rollback)
+	upgrade_rollback
+	RETVAL=$?
+	;;
 *)
-	echo "Usage: $0 {start|stop|refresh|reload|restart|rotate|state|upgrade}"
+	echo "Usage:" `basename $0` "{start|stop|refresh|reload|restart|rotate|state|upgrade|upgrade-commit|upgrade-rollback}"
 	exit 1
 	;;
 esac

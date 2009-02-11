@@ -4,42 +4,50 @@
 #################################################################################
 
 if [ $UPGRADE_NGINX -eq 1 ]; then
+	MSG=""
 	UPGRADE_NGINX_ERR=0
-	if [ -x "$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx" ]; then
-		MSG=`$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx upgrade`
-		if [ $? -eq 0 ]; then
-			echo " "
-			echo "nginx was upgraded"
-		else
-			UPGRADE_NGINX_ERR=1
-		fi
+	if [ "$SMF" = "yes" ]; then
+		CSWNGINX="$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx"
 	else
-		if [ -x $BASEDIR/etc/init.d/cswnginx ]; then
-			MSG=`$BASEDIR/etc/init.d/cswnginx upgrade`
-			if [ $? -eq 0 ]; then
-				echo " "
-				echo "nginx was upgraded"
-			else
-				UPGRADE_NGINX_ERR=1
-			fi
-		else
-			echo " "
-			echo "nginx was NOT upgraded"
+		CSWNGINX="$BASEDIR/etc/init.d/cswnginx"
+	fi
+	if [ -x $CSWNGINX ]; then
+		MSG=`$CSWNGINX upgrade`
+		if [ $? -ne 0 ]; then
+			UPGRADE_NGINX_ERR=1
 		fi
 	fi
 
-	if [ $UPGRADE_NGINX_ERR -eq 1 ]; then
+	if [ $UPGRADE_NGINX_ERR -eq 0 ]; then
+		echo " "
+		echo "nginx was upgraded"
+		echo " "
+		echo "If this new version of nginx works properly please run"
+		echo "'$CSWNGINX upgrade-commit'"
+		echo "to finalize the online upgrade process."
+		echo " "
+		echo "If there are problems with new version you can rollback"
+		echo "to the old version (which is still running) by command"
+		echo "'$CSWNGINX upgrade-rollback'"
+		echo "and subsequent reinstallation of the old package."
+		echo " "
+		echo "More details can be found in the nginx documentation:"
+		echo "http://sysoev.ru/nginx/docs/control.html"
+	else
 		echo " "
 		echo "nginx was NOT upgraded"
 		echo "$MSG"
 	fi
 else
 	echo " "
-	echo "This package may use online upgrade feature of nginx which"
-	echo "allows not to interrupt the processing of clients requests"
-	echo "during the nginx version upgrade."
-	echo "To use it you should install the package over the existing"
-	echo "version (without removing)."
+	echo "This package may use online upgrade feature of nginx which allows"
+	echo "not to interrupt the processing of clients requests during the nginx"
+	echo "version upgrade. To use it you should install the package over the"
+	echo "existing version (without preliminary removing)."
+	echo " "
+	echo "NOTE: if you wish to take advantage of nginx online upgrade feature"
+	echo "you should NOT use CSW automatic package update since it sequently"
+	echo "runs pkgrm/pkgadd."
 fi
 
 #################################################################################
