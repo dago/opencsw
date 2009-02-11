@@ -13,8 +13,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWliba52, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=33591
-UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static
