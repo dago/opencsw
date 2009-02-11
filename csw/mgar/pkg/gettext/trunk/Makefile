@@ -7,7 +7,7 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
-PACKAGES = CSWggettext CSWggettextrt CSWggettextdoc
+PACKAGES = CSWggettextrt CSWggettextdoc CSWggettext
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettextdoc = ggettextdoc
 CATALOGNAME_CSWggettextrt = ggettextrt
@@ -49,7 +49,7 @@ BUILD64 = 1
 NO_ISAEXEC = 1
 
 REQUIRED_PKGS_CSWggettextrt = CSWiconv
-REQUIRED_PKGS_CSWggettext = CSWgettextrt CSWiconv CSWexpat CSWncurses
+REQUIRED_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
 REQUIRED_PKGS_CSWggettextdoc = CSWggettext
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
