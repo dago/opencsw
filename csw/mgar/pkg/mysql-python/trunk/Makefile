@@ -9,14 +9,16 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/$(call TOLOWER,$(GARNAME))/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWpymysql,depend prototype)
+
+PACKAGES = CSWpymysql
+REQUIRED_PKGS_CSWpymysql = CSWmysql5rt CSWpython CSWosslrt CSWzlib
+CATALOGNAME_CSWpymysql = py_mysql5
+SPKG_DESC = MySQL Support for Python
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-#UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=22307
-#UPSTREAM_USE_SF = 1
-#UFILES_REGEX = (\d+(?:\.\d+)*)
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=22307
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
