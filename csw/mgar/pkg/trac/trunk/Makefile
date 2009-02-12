@@ -1,5 +1,5 @@
-GARNAME = trac
-GARVERSION = 0.10.4
+GARNAME = Trac
+GARVERSION = 0.11.2.1
 CATEGORIES = apps
 
 DESCRIPTION = Integrated SCM and Project Management
@@ -13,10 +13,17 @@ endef
 
 MASTER_SITES = http://ftp.edgewall.com/pub/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWtrac,depend prototype)
+
+PACKAGES = CSWtrac
+REQUIRED_PKGS_CSWtrac  = CSWenscript CSWpycs CSWpydocutils
+REQUIRED_PKGS_CSWtrac += CSWpysetuptools CSWpysqlite2 CSWpysvn
+REQUIRED_PKGS_CSWtrac += CSWpython CSWsilvercity
+
+CATALOGNAME_CSWtrac = trac
+SPKG_DESC_CSWtrac = Integrated SCM and Project Management
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 SPKG_SOURCEURL = http://trac.edgewall.org/wiki/TracDownload
 
