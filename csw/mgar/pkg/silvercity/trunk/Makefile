@@ -10,7 +10,11 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/silvercity/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsilvercity,depend prototype copyright)
+PACKAGES = CSWsilvercity
+
+REQUIRED_PKGS_CSWsilvercity = CSWpython
+CATALOGNAME_CSWsilvercity = silvercity
+SPKG_DESC_CSWsilvercity = Lexical analysis package for Python
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=45693
