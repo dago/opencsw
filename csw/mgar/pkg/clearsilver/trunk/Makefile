@@ -32,12 +32,13 @@ PKGFILES_CSWpmcs += $(mandir)/*perl*
 PKGFILES_CSWpycs =  $(libdir)/python*/.*
 PKGFILES_CSWpmcs += $(mandir)/*python*
 
+GARCOMPILER = GNU
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
-GNUCOMPILER = 1
-
-PATCHFILES += linuxheader.diff
+PATCHFILES += perlbuild.diff
+PATCHFILES += pybuild.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-python=$(bindir)/python
@@ -58,3 +59,4 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
+PATH := $(PATH):$(SOS11_CC_HOME)/bin

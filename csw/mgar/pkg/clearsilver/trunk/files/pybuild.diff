@@ -1,6 +1,6 @@
 diff --speed-large-files --minimal -Nru clearsilver-0.10.4.orig/python/Makefile clearsilver-0.10.4/python/Makefile
---- clearsilver-0.10.4.orig/python/Makefile	2006-07-13 02:51:49.000000000 -0400
-+++ clearsilver-0.10.4/python/Makefile	2007-10-04 18:11:07.842608000 -0400
+--- clearsilver-0.10.5.orig/python/Makefile	2006-07-13 02:51:49.000000000 -0400
++++ clearsilver-0.10.5/python/Makefile	2007-10-04 18:11:07.842608000 -0400
 @@ -25,7 +25,7 @@
  
  $(NEO_UTIL_SO): setup.py $(NEO_UTIL_SRC) $(DEP_LIBS)

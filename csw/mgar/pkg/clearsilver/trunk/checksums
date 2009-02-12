@@ -1,2 +1,3 @@
 b8c0c7fbe0ef5e06e0c935f134304d44  download/clearsilver-0.10.5.tar.gz
-b026a9b055bd0fa798b98f97680fdce9  download/linuxheader.diff
+1c25fda8bb2666658d8ddcf3ad9b7235  download/perlbuild.diff
+3cf628054d5c839169c1a01d40708f1a  download/pybuild.diff

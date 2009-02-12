@@ -1,12 +1,30 @@
-diff --speed-large-files --minimal -Nru clearsilver-0.10.4.orig/Makefile clearsilver-0.10.4/Makefile
---- clearsilver-0.10.4.orig/Makefile	2006-11-15 01:54:13.000000000 -0500
-+++ clearsilver-0.10.4/Makefile	2007-01-30 13:54:59.322121000 -0500
-@@ -29,7 +29,7 @@
- 	@for mdir in $(SUBDIRS); do \
- 	  if test -d $$mdir; then \
- 	    if test -f $$mdir/Makefile.PL -a ! -f $$mdir/Makefile; then \
--	      cd $$mdir; $(PERL) Makefile.PL PREFIX=$(prefix); cd ..; \
-+	      cd $$mdir; $(PERL) Makefile.PL INSTALLDIRS=vendor PREFIX=$(prefix); cd ..; \
- 	    fi; \
- 	    $(MAKE) -C $$mdir PREFIX=$(prefix); \
- 	  fi; \
+--- clearsilver-0.10.5/util/neo_err.h.orig	2009-02-11 21:47:19.808962558 -0600
++++ clearsilver-0.10.5/util/neo_err.h	2009-02-11 21:47:39.950596225 -0600
+@@ -60,16 +60,7 @@
+   struct _neo_err *next;
+ } NEOERR;
+ 
+-/* Technically, we could do this in configure and detect what their compiler
+- * can handle, but for now... */
+-#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+-#define USE_C99_VARARG_MACROS 1
+-#elif __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 4) || defined (S_SPLINT_S)
+ #define USE_GNUC_VARARG_MACROS 1
+-#else
+-#error The compiler is missing support for variable-argument macros.
+-#endif
+-
+ 
+ /*
+  * function: nerr_raise
+--- clearsilver-0.10.5/perl/Makefile.PL.orig	2009-02-11 22:04:59.952887656 -0600
++++ clearsilver-0.10.5/perl/Makefile.PL	2009-02-11 22:05:16.980898358 -0600
+@@ -9,7 +9,7 @@
+       (ABSTRACT_FROM => 'ClearSilver.pm', # retrieve abstract from module
+        AUTHOR     => 'A. U. Thor <a.u.thor@a.galaxy.far.far.away>') : ()),
+        # TODO: don't include -lz if we aren't depending on it
+-    'LIBS'		=> ['-L../libs -lneo_cgi -lneo_cs -lneo_utl -lz'], 
++    'LIBS'		=> ['-R/opt/csw/lib -L../libs -lneo_cgi -lneo_cs -lneo_utl -lz -lintl'], 
+     'DEFINE'		=> '', # e.g., '-DHAVE_SOMETHING'
+ 	# Insert -I. if you add *.h files later:
+     'INC'		=> '-I../',
