@@ -15,7 +15,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 REQUIRED_PKGS_CSWpysetuptools = CSWpython
 PACKAGES = CSWpysetuptools
 CATALOGNAME_CSWpysetuptools = py_setuptools
-SPKG_DESC = Distribution Utiltiies for Python
+SPKG_DESC_CSWpysetuptools = Distribution Utiltiies for Python
 
 
 # We define upstream file regex so we can be notifed of new upstream software release
