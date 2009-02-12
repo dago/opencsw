@@ -11,13 +11,15 @@ endef
 
 MASTER_SITES = http://cheeseshop.python.org/packages/source/s/setuptools/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpysetuptools,depend prototype)
+
+REQUIRED_PKGS_CSWpysetuptools = CSWpython
+PACKAGES = CSWpysetuptools
+CATALOGNAME_CSWpysetuptools = py_setuptools
+SPKG_DESC = Distribution Utiltiies for Python
+
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# Use versionless python lib
-PATCHFILES += pyversion.diff
+UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
@@ -28,11 +30,4 @@ INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
 
 include gar/category.mk
-
-PYTHONPATH = $(DESTDIR)$(libdir)/python/site-packages/
-export PYTHONPATH
-
-pre-install:
-	install -d $(PYTHONPATH)
-	$(DONADA)
 
