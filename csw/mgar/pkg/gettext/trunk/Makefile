@@ -62,9 +62,9 @@ MERGE_EXCLUDE_FILES  = .*/charset.alias
 MERGE_EXCLUDE_FILES += .*/iconv.m4
 MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/.*
 
-PKGFILES_CSWggettextrt  = /opt/csw/lib/libintl.* /opt/csw/lib/$(ISA)/libintl.*
-PKGFILES_CSWggettextrt += /opt/csw/lib/libasprintf.* /opt/csw/lib/$(ISA)/libasprintf.*
-PKGFILES_CSWggettextrt += /opt/csw/lib/libgettextpo.* /opt/csw/lib/$(ISA)/libgettextpo.*
+PKGFILES_CSWggettextrt  = $(call baseisadirs,$(libdir),libintl\..*)
+PKGFILES_CSWggettextrt += $(call baseisadirs,$(libdir),libasprintf\..*)
+PKGFILES_CSWggettextrt += $(call baseisadirs,$(libdir),libgettextpo\..*) 
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext /opt/csw/bin/gngettext /opt/csw/bin/genvsubst
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.jar
 PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
@@ -80,7 +80,6 @@ post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
-	@$(MAKECOOKIE)
 	$(DONADA)
 
 post-install-isa-sparcv9:
@@ -88,7 +87,6 @@ post-install-isa-sparcv9:
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s9 $(INSTALLISADIR)/opt/csw/lib/64/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.s9 $(INSTALLISADIR)/opt/csw/lib/64/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.s9 $(INSTALLISADIR)/opt/csw/lib/64/libintl.so.3
-	@$(MAKECOOKIE)
 	$(DONADA)
 
 post-install-isa-i386:
@@ -98,10 +96,8 @@ post-install-isa-i386:
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.i $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
-	@$(MAKECOOKIE)
 	$(DONADA)
 
 post-install-isa-amd64:
 	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
-	@$(MAKECOOKIE)
 	$(DONADA)
