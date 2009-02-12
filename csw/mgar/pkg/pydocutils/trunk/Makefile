@@ -1,5 +1,5 @@
 GARNAME = docutils
-GARVERSION = 0.4
+GARVERSION = 0.5
 CATEGORIES = lang
 
 DESCRIPTION = Documentation Utiltiies for Python
@@ -9,7 +9,11 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpydocutils,depend prototype)
+
+PACKAGES = CSWpydocutils
+REQUIRED_PKGS_CSWpydocutils = CSWpython
+CATALOGNAME_CSWpydocutils = py_docutils
+SPKG_DESC = Documentation Utiltiies for Python
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
