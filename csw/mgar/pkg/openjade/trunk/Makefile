@@ -5,7 +5,7 @@ CATEGORIES = apps
 
 PREREQUISITE_PKGS = CSWopensp
 REQUIRED_PKGS = CSWgcc3corert CSWgcc3g++rt
-REQUIRED_PKGS += CSWggettext CSWiconv CSWopensp CSWsgmlcommon
+REQUIRED_PKGS += CSWggettextrt CSWiconv CSWopensp CSWsgmlcommon
 REQUIRED_PKGS += CSWxmlcommon
 
 DESCRIPTION = A DSSSL implementation.
