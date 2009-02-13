@@ -62,9 +62,12 @@ MERGE_EXCLUDE_FILES  = .*/charset.alias
 MERGE_EXCLUDE_FILES += .*/iconv.m4
 MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/.*
 
-PKGFILES_CSWggettextrt  = $(call baseisadirs,$(libdir),libintl\..*)
-PKGFILES_CSWggettextrt += $(call baseisadirs,$(libdir),libasprintf\..*)
-PKGFILES_CSWggettextrt += $(call baseisadirs,$(libdir),libgettextpo\..*) 
+#This syntaxt skips 64-bit for some reason
+#PKGFILES_CSWggettextrt  = $(call baseisadirs,$(libdir),libintl\..*)
+#PKGFILES_CSWggettextrt += $(call baseisadirs,$(libdir),libasprintf\..*)
+#PKGFILES_CSWggettextrt += $(call baseisadirs,$(libdir),libgettextpo\..*) 
+#so use this for now
+PKGFILES_CSWggettextrt  = .*/libintl\.so.* .*/libasprintf\.so.* .*/libgettextpo\.so.*
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext /opt/csw/bin/gngettext /opt/csw/bin/genvsubst
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.jar
 PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
