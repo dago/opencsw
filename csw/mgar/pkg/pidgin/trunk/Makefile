@@ -40,7 +40,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
-REQUIRED_PKGS_CSWpidgin  = CSWaspell CSWdbusglib CSWgcrypt CSWggettext CSWglib2
+REQUIRED_PKGS_CSWpidgin  = CSWaspell CSWdbusglib CSWgcrypt CSWggettextrt CSWglib2
 REQUIRED_PKGS_CSWpidgin += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
 REQUIRED_PKGS_CSWpidgin += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
 REQUIRED_PKGS_CSWpidgin += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
