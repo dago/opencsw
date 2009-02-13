@@ -34,6 +34,9 @@ export PARALLELMFLAGS
 
 DISTNAME ?= $(GARNAME)-$(GARVERSION)
 
+DYNSCRIPTS = $(foreach PKG,$(SPKG_SPECS),$(foreach SCR,$(ADMSCRIPTS),$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
+_NOCHECKSUM += $(DYNSCRIPTS)
+
 ALLFILES ?= $(DISTFILES) $(PATCHFILES) $(DYNSCRIPTS)
 
 ifeq ($(MAKE_INSTALL_DIRS),1)
@@ -250,7 +253,7 @@ fetch-p:
 
 # checksum		- Use $(CHECKSUMFILE) to ensure that your
 # 				  distfiles are valid.
-CHECKSUM_TARGETS = $(addprefix checksum-,$(filter-out $(NOCHECKSUM),$(ALLFILES)))
+CHECKSUM_TARGETS = $(addprefix checksum-,$(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES)))
 
 checksum: fetch $(COOKIEDIR) pre-checksum $(CHECKSUM_TARGETS) post-checksum
 	@$(DONADA)
@@ -269,7 +272,7 @@ checksum-p:
 	@$(foreach COOKIEFILE,$(CHECKSUM_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 # makesum		- Generate distinfo (only do this for your own ports!).
-MAKESUM_TARGETS =  $(addprefix $(DOWNLOADDIR)/,$(filter-out $(NOCHECKSUM),$(ALLFILES))) 
+MAKESUM_TARGETS =  $(addprefix $(DOWNLOADDIR)/,$(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES))) 
 
 makesum: fetch $(MAKESUM_TARGETS)
 	@if test "x$(MAKESUM_TARGETS)" != "x "; then \

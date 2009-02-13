@@ -19,12 +19,6 @@ MAKECOOKIE = mkdir -p $(COOKIEDIR)/$(@D) && date >> $(COOKIEDIR)/$@
 
 #################### FETCH RULES ####################
 
-DYNSCRIPTS = $(foreach PKG,$(SPKG_SPECS),\
-		$(foreach SCR,$(ADMSCRIPTS),\
-			$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
-
-NOCHECKSUM += $(DYNSCRIPTS)
-
 URLS = $(subst ://,//,$(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(PATCHFILES))))
 
 # if the caller has defined _postinstall, etc targets for a package, add
