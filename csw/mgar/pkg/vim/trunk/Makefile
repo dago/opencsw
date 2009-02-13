@@ -56,7 +56,7 @@ BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
 
 PATCHDIRLEVEL = 0
 
-REQUIRED_PKGS_CSWvim = CSWggettext CSWiconv CSWncurses CSWvimrt
+REQUIRED_PKGS_CSWvim = CSWggettextrt CSWiconv CSWncurses CSWvimrt
 INCOMPATIBLE_PKGS_CSWvim = CSWvim-minimal
 
 PKGFILES_CSWvimrt = /opt/csw/share/.*
