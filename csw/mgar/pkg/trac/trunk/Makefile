@@ -49,4 +49,5 @@ copy-docs:
 	@for f in COPYING ChangeLog INSTALL README README.tracd UPGRADE ; do \
 		ginstall -m 0644 $(WORKSRC)/$$f $(DESTDIR)$(docdir)/trac ; \
 	done
+	$(DONADA)
 
