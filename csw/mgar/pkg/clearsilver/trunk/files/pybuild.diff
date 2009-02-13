@@ -1,7 +1,14 @@
-diff --speed-large-files --minimal -Nru clearsilver-0.10.4.orig/python/Makefile clearsilver-0.10.4/python/Makefile
---- clearsilver-0.10.5.orig/python/Makefile	2006-07-13 02:51:49.000000000 -0400
-+++ clearsilver-0.10.5/python/Makefile	2007-10-04 18:11:07.842608000 -0400
-@@ -25,7 +25,7 @@
+--- clearsilver-0.10.5/python/Makefile.orig	2006-07-13 01:51:49.000000000 -0500
++++ clearsilver-0.10.5/python/Makefile	2009-02-13 10:07:56.503478088 -0600
+@@ -11,6 +11,7 @@
+ NEO_UTIL_SRC = neo_cgi.c neo_util.c neo_cs.c
+ NEO_UTIL_OBJ = $(NEO_UTIL_SRC:%.c=%.o)
+ 
++CC = cc
+ CFLAGS += $(PYTHON_INC)
+ DLIBS += -lneo_cgi -lneo_cs -lneo_utl 
+ LIBS += $(DLIBS) $(DB2_LIB)
+@@ -25,7 +26,7 @@
  
  $(NEO_UTIL_SO): setup.py $(NEO_UTIL_SRC) $(DEP_LIBS)
  	rm -f $(NEO_UTIL_SO)
@@ -10,3 +17,16 @@ diff --speed-large-files --minimal -Nru clearsilver-0.10.4.orig/python/Makefile 
  
  OLD_NEO_UTIL_SO:
  	$(LDSHARED) -o $@ $(LDFLAGS) $(NEO_UTIL_OBJ) $(LIBS)
+--- clearsilver-0.10.5/python/setup.py.orig	2009-02-13 10:04:10.707737561 -0600
++++ clearsilver-0.10.5/python/setup.py	2009-02-13 10:04:19.707153679 -0600
+@@ -17,8 +17,8 @@
+ INC_DIRS = ["../"]
+ LIBRARIES = ["neo_cgi", "neo_cs", "neo_utl"]
+ LIB_DIRS = ["../libs"]
+-CC = "gcc"
+-LDSHARED = "gcc -shared"
++CC = "cc"
++LDSHARED = "cc -shared"
+ 
+ ## ARGGH!!  It looks like you can only specify a single item on the
+ ## command-line or in the setup.cfg file for options which take multiple
