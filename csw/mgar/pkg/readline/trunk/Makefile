@@ -17,7 +17,8 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(V).tar.gz)
-DISTFILES += $(call admfiles,CSWreadline,)
+
+REQUIRED_PKGS = CSWncurses
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
