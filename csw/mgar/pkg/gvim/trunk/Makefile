@@ -48,7 +48,7 @@ BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
 PATCHDIRLEVEL = 0
 
 REQUIRED_PKGS_CSWgvim  = CSWvimrt CSWbonobo2 CSWfconfig CSWftype2 CSWgconf2
-REQUIRED_PKGS_CSWgvim += CSWggettext CSWglib2 CSWgnomekeyring CSWgnomevfs2 CSWgtk2
+REQUIRED_PKGS_CSWgvim += CSWggettextrt CSWglib2 CSWgnomekeyring CSWgnomevfs2 CSWgtk2
 REQUIRED_PKGS_CSWgvim += CSWiconv CSWlibart CSWlibatk CSWlibbonoboui CSWlibcairo
 REQUIRED_PKGS_CSWgvim += CSWlibgnome CSWlibgnomecanvas CSWlibgnomeui CSWlibnet CSWlibpopt
 REQUIRED_PKGS_CSWgvim += CSWlibxml2 CSWlibxrender CSWncurses CSWorbit2 CSWpango
