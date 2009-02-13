@@ -283,11 +283,13 @@ $(WORKDIR)/%.depend: $(WORKDIR)
 
 # This rule dynamically generates gspec-files
 .PRECIOUS: $(WORKDIR)/%.gspec
-$(WORKDIR)/%.gspec: $(WORKDIR)
-	$(_DBG)(echo "%var            bitname $(call catalogname,$*)"; \
-	echo "%var            pkgname $*"; \
-	$(if $(or $(ARCHALL),$(ARCHALL_$*)),echo "%var            arch all";) \
-	echo "%include        url file://%{PKGLIB}/csw_dyngspec.gspec") >$@
+$(WORKDIR)/%.gspec:
+	$(_DBG)$(if $(filter $*.gspec,$(DISTFILES)),,
+		(echo "%var            bitname $(call catalogname,$*)"; \
+		echo "%var            pkgname $*"; \
+		$(if $(or $(ARCHALL),$(ARCHALL_$*)),echo "%var            arch all";) \
+		echo "%include        url file://%{PKGLIB}/csw_dyngspec.gspec") >$@ 
+	)
 
 
 # Dynamic licenses are selected in the following way:
