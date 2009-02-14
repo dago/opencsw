@@ -1,5 +1,5 @@
 GARNAME = rrdtool
-GARVERSION = 1.3.5
+GARVERSION = 1.3.6
 CATEGORIES = utils
 
 DESCRIPTION = time-series data logging and graphing.
@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWrrdtool,prototype)
+DISTFILES += $(call admfiles,CSWrrdtool,prototype,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -20,7 +20,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 #PATCHFILES += rrd_config.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --docdir=$(prefix)/doc/$(GARNAME)
+CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-python
 CONFIGURE_ARGS += --disable-ruby
 CONFIGURE_ARGS += --disable-libintl

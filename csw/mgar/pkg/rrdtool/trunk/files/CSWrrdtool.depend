@@ -1,0 +1,10 @@
+P CSWcommon common - common files and dirs for CSW packages
+P CSWggettextrt ggettextrt - GNU locale utilities
+P CSWglib2 glib2 - The low-level core lib for GNOME and GTK+
+P CSWiconv libiconv - GNU iconv library
+P CSWlibcairo libcairo - The Cairo 2D Graphics Library
+P CSWlibxml2 libxml2 - XML Parser Library
+P CSWpango libpango - A framework for the layout and rendering of i18n text
+P CSWpng png - library for Portable Network Graphics format (PNG)
+P CSWsunmath libsunmath - Sun maths library
+P CSWzlib zlib - Zlib Data Compression Library
