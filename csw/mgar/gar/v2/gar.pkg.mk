@@ -339,17 +339,21 @@ $(strip
 )
 endef
 
+define pkgvar
+$(if $($(1)_$(2)),$($(1)_$(2)),$($(1)))
+endef
+
 .PRECIOUS: $(WORKDIR)/%.pkginfo
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
-	echo "NAME=$(call catalogname,$*) - $(SPKG_DESC)"; \
-	echo "ARCH=$(GARCH)"; \
-	echo "VERSION=$(SPKG_VERSION)$(SPKG_REVSTAMP)"; \
-	echo "CATEGORY=$(SPKG_CATEGORY)"; \
-	echo "VENDOR=$(SPKG_VENDOR)"; \
-	echo "EMAIL=$(SPKG_EMAIL)"; \
+	echo "NAME=$(call catalogname,$*) - $(call pkgvar,SPKG_DESC,$*)"; \
+	echo "ARCH=$(call pkgvar,GARCH,$*)"; \
+	echo "VERSION=$(call pkgvar,SPKG_VERSION,$*)$(call pkgvar,SPKG_REVSTAMP,$*)"; \
+	echo "CATEGORY=$(call pkgvar,SPKG_CATEGORY,$*)"; \
+	echo "VENDOR=$(call pkgvar,SPKG_VENDOR,$*)"; \
+	echo "EMAIL=$(call pkgvar,SPKG_EMAIL,$*)"; \
 	echo "PSTAMP=$(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')"; \
-	echo "CLASSES=$(SPKG_CLASSES)"; \
+	echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)"; \
 	echo "HOTLINE=http://www.opencsw.org/bugtrack/"; \
 	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
