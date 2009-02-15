@@ -1,28 +1,30 @@
 GARNAME = rubygems
-GARVERSION = 1.2.0
-CATEGORIES = lang
+GARVERSION = 1.3.1
+CATEGORIES = xtra
 
 DESCRIPTION = Ruby package manager
 define BLURB
-	RubyGems makes it really easy to install Rails and other libraries and to
-	keep them up to date.
+RubyGems makes it really easy to install Rails and other libraries and to
+keep them up to date.
 endef
 
+
 SPKG_SOURCEURL = http://rubyforge.org/projects/rubygems/
-MASTER_SITES   = http://rubyforge.org/frs/download.php/38646/
+MASTER_SITES   = http://rubyforge.org/frs/download.php/45905/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWrubygems,depend copyright)
 
-# We define upstream file regex so we can be notifed of new upstream software release
+ARCHALL = 1
+PREREQUISITE_PKGS = CSWruby
+REQUIRED_PKGS_CSWrubygems = CSWruby
+
+LICENSE_CSWrubygems = LICENSE.txt
+
+# We define upstream file regex so we can be notifed of new upstream
+# software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
-# Redirect Gem installation to $(DESTDIR)
-#PATCHFILES += postinstall.diff
-
-#CONFIGURE_SCRIPTS = $(WORKSRC)/setup.rb
 CONFIGURE_SCRIPTS =
-#BUILD_SCRIPTS = $(WORKSRC)/setup.rb
 BUILD_SCRIPTS = 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
@@ -30,10 +32,11 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 install-custom:
-	( cd $(WORKSRC) ; ruby ./setup.rb --destdir=$(DESTDIR); )
+	( cd $(WORKSRC) ; \
+		ruby ./setup.rb --destdir=$(DESTDIR)/$(prefix); )
 	@$(MAKECOOKIE)
 
-post-install: copy-contrib
+post-install-modulated: copy-contrib
 
 copy-contrib:
 	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
