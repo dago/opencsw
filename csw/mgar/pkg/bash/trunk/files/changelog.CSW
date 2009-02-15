@@ -1,3 +1,10 @@
+bash (3.2,REV=2009.02.15) unstable
+
+  * Changed gettext dependancy to follow gettext package split
+  (Closes: #3147).
+
+   -- Yann Rouillard <yann@opencsw.org>  Sat, 14 Feb 2009 23:53:41 +0100
+
 bash (3.2,REV=2008.11.30) unstable
 
   * Added bash patches bash32-040 to bash-048.
