@@ -1,7 +1,7 @@
 cadaver (0.22.5,REV=2009.02.15) unstable
 
   * Changed gettext dependancy to follow gettext package split
-  (Closes: #3099).
+  (Closes: #3134).
 
    -- Yann Rouillard <yann@opencsw.org>  Sat, 14 Feb 2009 23:53:41 +0100
 
