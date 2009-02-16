@@ -1,0 +1,5 @@
+%var            bitname commons_cli_doc
+%var            pkgname CSWajcclidoc
+%var		arch	all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE.txt
