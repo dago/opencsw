@@ -28,7 +28,6 @@ REQUIRED_PKGS_CSWajccollect  = CSWjunit
 
 # Defines package content
 PKGFILES_CSWajccollectdoc   = $(prefix)/share/doc/.*
-PKGFILES_CSWajccollectdoc  += $(prefix)/share/licenses/$(GARNAME)-doc/Apache_License_2.0.txt
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -48,9 +47,8 @@ install-custom:
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-3.jar ; \
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@ginstall -d $(DESTDIR)$(datadir)/licenses/$(GARNAME)
-	@ginstall -d $(DESTDIR)$(datadir)/licenses/$(GARNAME)-doc
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/licenses/$(GARNAME)/Apache_License_2.0.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/licenses/$(GARNAME)-doc/Apache_License_2.0.txt
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)/
+	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@$(MAKECOOKIE)
