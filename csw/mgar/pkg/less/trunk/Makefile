@@ -10,12 +10,13 @@ endef
 
 MASTER_SITES = http://www.greenwoodsoftware.com/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWless,depend)
+
+LICENSE = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWncurses CSWggettext
+REQUIRED_PKGS = CSWncurses CSWggettextrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
