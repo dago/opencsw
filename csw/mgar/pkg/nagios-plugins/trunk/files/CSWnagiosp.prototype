@@ -1,0 +1,73 @@
+1 d none /opt/csw/lib 0755 root bin
+1 f none /opt/csw/lib/charset.alias 0644 root bin
+1 d none /opt/csw/libexec/nagios-plugins 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_apt 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_breeze 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_by_ssh 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_clamd=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_cluster 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_dhcp 4555 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_disk 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_disk_smb 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_dns 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_dummy 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_file_age 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_flexlm 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_fping 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_ftp=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_hpjd 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_http 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_icmp 4555 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_ifoperstatus 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_ifstatus 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_imap=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_ircd 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_jabber=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_ldap 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_ldaps=check_ldap
+1 f none /opt/csw/libexec/nagios-plugins/check_load 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_log 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_mailq 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_mrtg 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_mrtgtraf 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_mysql 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_mysql_query 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_nagios 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_nntp=check_tcp
+1 s none /opt/csw/libexec/nagios-plugins/check_nntps=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_nt 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_ntp 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_ntp_peer 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_ntp_time 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_nwstat 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_oracle 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_overcr 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_pgsql 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_ping 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_pop=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_procs 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_real 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_rpc 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_sensors 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_simap=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_smtp 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_snmp 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_spop=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_ssh 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_ssmtp=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_swap 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_tcp 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_time 0755 root bin
+1 s none /opt/csw/libexec/nagios-plugins/check_udp=check_tcp
+1 f none /opt/csw/libexec/nagios-plugins/check_ups 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_users 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/check_wave 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/negate 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/pst3 4555 root bin
+1 f none /opt/csw/libexec/nagios-plugins/urlize 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/utils.pm 0755 root bin
+1 f none /opt/csw/libexec/nagios-plugins/utils.sh 0755 root bin
+1 d none /opt/csw/share/locale/de/LC_MESSAGES 0755 root bin
+1 f none /opt/csw/share/locale/de/LC_MESSAGES/nagios-plugins.mo 0644 root bin
+1 d none /opt/csw/share/locale/fr/LC_MESSAGES 0755 root bin
+1 f none /opt/csw/share/locale/fr/LC_MESSAGES/nagios-plugins.mo 0644 root bin

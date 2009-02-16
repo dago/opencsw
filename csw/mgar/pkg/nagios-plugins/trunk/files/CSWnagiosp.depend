@@ -1,0 +1,10 @@
+P	CSWggettext    ggettext - GNU gettext
+P	CSWiconv       libiconv - GNU iconv library
+P	CSWjre6        jre6 - Java Development Kit 6
+P	CSWlibnet      libnet - the libnet packet construction library
+P	CSWlibpq       libpq - libraries needed by postgresql server and clients
+P	CSWmysql5rt    mysql5rt - run-time libraries for mysql5
+P	CSWoldaprt     openldap_rt - OpenLDAP runtime libraries (oldaprt)
+P	CSWosslrt      openssl_rt - Openssl runtime libraries
+P	CSWsasl        sasl - Simple Authentication and Security Layer
+P	CSWzlib        zlib - Zlib Data Compression Library

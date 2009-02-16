@@ -1,0 +1,17 @@
+diff --speed-large-files --minimal -Nru nagios-plugins-1.4.13.orig/Makefile.in nagios-plugins-1.4.13/Makefile.in
+--- nagios-plugins-1.4.13.orig/Makefile.in	2009-02-04 12:38:29.568808276 +0100
++++ nagios-plugins-1.4.13/Makefile.in	2009-02-04 12:38:15.957832674 +0100
+@@ -1042,6 +1042,13 @@
+ 	$(INSTALL) -d $(DESTDIR)$(docdir)
+ 	$(INSTALL) -m 644 contrib.tar $(DESTDIR)$(docdir)
+ 
++INFO_DIST = BUGS ChangeLog FAQ README REQUIREMENTS SUPPORT
++install-legal:
++	$(INSTALL) -d $(DESTDIR)$(docdir)
++	for i in $(INFO_DIST); do \
++		$(INSTALL) -m 644 $$i $(DESTDIR)$(docdir) ; \
++	done
++
+ 
+ tap:
+ 	cd @TAP_DIR@ && $(MAKE)
