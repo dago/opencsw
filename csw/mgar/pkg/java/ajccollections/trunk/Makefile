@@ -20,7 +20,7 @@ DISTFILES += $(call admfiles,CSWajccollect,)
 DISTFILES += $(call admfiles,CSWajccollectdoc,)
 
 # Defines package description
-SPKG_DESC_CSWajccollect    = $(DESCRIPTION)
+SPKG_DESC_CSWajccollect    = $(DESCRIPTION) 
 SPKG_DESC_CSWajccollectdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
