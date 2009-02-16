@@ -1,5 +1,5 @@
 GARNAME = fontconfig
-GARVERSION = 2.2.1
+GARVERSION = 2.6.0
 CATEGORIES = lib
 
 DESCRIPTION = A library for configuring and customizing font access.
@@ -12,11 +12,20 @@ endef
 
 MASTER_SITES = http://www.fontconfig.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWfconfig,)
+DISTFILES += $(call admfiles,CSWfconfig,postinstall)
+
+REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1
+
+CONFIGURE_ARGS = $(DIRPATHS) --with-default-fonts=/usr/openwin/lib/X11/fonts --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts --with-cache-dir=/opt/csw/var/cache-fontconfig --with-confdir=/opt/csw/etc/fontconfig
+
+pre-package:
+	@rm -f $(DESTDIR)$(libdir)/libfontconfig.la*
+	@rm -f $(DESTDIR)/opt/csw/etc/fonts/fonts.conf.bak
+	@$(MAKECOOKIE)
 
 include gar/category.mk

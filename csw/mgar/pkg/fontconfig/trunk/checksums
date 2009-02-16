@@ -1,2 +1,4 @@
-a6a856606809b9ebfcc37a6380dcd6df  download/fontconfig-2.2.1.tar.gz
-0648293f2b2448ce03f4f8413b010ad2  download/CSWfconfig.gspec
+ab54ec1d4ddd836313fdbc0cd5299d6d  download/fontconfig-2.6.0.tar.gz
+4db7301f43d63ad83a48b1cca7a6d4be  download/CSWfconfig.gspec
+eeb4246a85f1ac5215dc66ee0fe3fb8e  download/CSWfconfig.postinstall
+82f9a47f7f3855b2922bbcc79ba0eec4  download/fonts.conf.diff
