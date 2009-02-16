@@ -1,7 +1,0 @@
-%var            bitname tnef
-%var            pkgname CSWtnef
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright
-
-Please see /opt/csw/share/doc/tnef/LICENSE for license information
-
