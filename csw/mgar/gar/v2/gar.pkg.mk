@@ -347,7 +347,7 @@ endef
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
 	echo "NAME=$(call catalogname,$*) - $(call pkgvar,SPKG_DESC,$*)"; \
-	echo "ARCH=$(call pkgvar,GARCH,$*)"; \
+	echo "ARCH=$(if $(or $(ARCHALL),$(ARCHALL_$*)),all,$(call pkgvar,GARCH,$*))"; \
 	echo "VERSION=$(call pkgvar,SPKG_VERSION,$*)$(call pkgvar,SPKG_REVSTAMP,$*)"; \
 	echo "CATEGORY=$(call pkgvar,SPKG_CATEGORY,$*)"; \
 	echo "VENDOR=$(call pkgvar,SPKG_VENDOR,$*)"; \
