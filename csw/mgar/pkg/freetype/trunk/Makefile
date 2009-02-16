@@ -15,7 +15,7 @@ define BLURB
 endef
 
 PACKAGES = CSWftype2
-CATALOGNAME_CSWvim = freetype2
+CATALOGNAME_CSWftype2 = freetype2
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
