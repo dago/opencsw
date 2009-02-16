@@ -21,11 +21,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 #CONFIGURE_ARGS += --with-nsca-grp=nagios
 CONFIGURE_ARGS += --with-nsca-port=5667
 
-sysconfdir ?= $(prefix)/etc
-bindir ?= $(prefix)/bin
-localstatedir ?= $(prefix)/nagios/var
-
-
 BUILD_TARGETS = nsca
 
 SKIPTEST = 1
@@ -35,3 +30,9 @@ INSTALL_ARGS += install-sendnsca
 INSTALL_ARGS += install-nsca
 
 include gar/category.mk
+
+pre-install-modulated:
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(prefix)/nagios/bin
+	ginstall -d $(DESTDIR)$(prefix)/nagios/etc
+	$(MAKECOOKIE)
