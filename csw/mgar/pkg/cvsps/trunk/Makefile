@@ -9,7 +9,6 @@ endef
 
 MASTER_SITES = http://www.cobite.com/cvsps/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcvsps,)
 
 PATCHFILES = 0001-add-basic-autotools-files.patch
 PATCHFILES += 0002-add-modified-autoconf-check_zlib-from-loic-dachary.patch
@@ -23,6 +22,8 @@ PREREQUISITE_PKGS = CSWzlib CSWautomake CSWautoconf
 
 REQUIRED_PKGS = CSWzlib CSWcvs
 
+LICENSE = COPYING
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
@@ -32,7 +33,7 @@ CONFIGURE_ARGS = $(DIRPATHS) --with-zlib=/opt/csw
 
 include gar/category.mk
 
-DOCDIR = $(datadir)/doc/$(GARNAME)-$(GARVERSION)
+DOCDIR = $(datadir)/doc/$(GARNAME)
 
 pre-configure-modulated:
 	@echo About to initialize the autotools bits.
