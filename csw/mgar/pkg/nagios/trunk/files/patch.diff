@@ -1,0 +1,45 @@
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/cgi/cmd.c nagios-3.0.6/cgi/cmd.c
+--- nagios-3.0.6.orig/cgi/cmd.c	2008-11-30 18:22:58.000000000 +0100
++++ nagios-3.0.6/cgi/cmd.c	2008-12-16 14:01:20.459641641 +0100
+@@ -1885,7 +1885,7 @@
+ 	return;
+         }
+ 
+-__attribute__((format(printf, 2, 3)))
++/* __attribute__((format(printf, 2, 3))) */
+ static int cmd_submitf(int id, const char *fmt, ...)
+ {
+ 	char cmd[MAX_EXTERNAL_COMMAND_LENGTH];
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/include/nebmodules.h nagios-3.0.6/include/nebmodules.h
+--- nagios-3.0.6.orig/include/nebmodules.h	2008-11-30 18:22:59.000000000 +0100
++++ nagios-3.0.6/include/nebmodules.h	2008-12-16 14:02:22.859426641 +0100
+@@ -31,7 +31,7 @@
+ 
+ /***** MODULE VERSION INFORMATION *****/
+ 
+-#define NEB_API_VERSION(x) int __neb_api_version = x;
++#define NEB_API_VERSION(x) int __neb_api_version = x
+ #define CURRENT_NEB_API_VERSION    3
+ 
+ 
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/module/Makefile.in nagios-3.0.6/module/Makefile.in
+--- nagios-3.0.6.orig/module/Makefile.in	2007-12-15 00:02:24.000000000 +0100
++++ nagios-3.0.6/module/Makefile.in	2008-12-16 14:01:52.009192953 +0100
+@@ -25,13 +25,13 @@
+ 
+ CP=@CP@
+ 
+-all:	helloworld.o
++all:	helloworld
+ 
+-helloworld.o: helloworld.c
+-	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o helloworld.o helloworld.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS)
++helloworld: helloworld.c
++	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o helloworld helloworld.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS)
+ 
+ clean:
+-	rm -f helloworld.o
++	rm -f helloworld
+ 	rm -f core *.o
+ 	rm -f *~ *.*~
+ 

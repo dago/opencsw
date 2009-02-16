@@ -1,0 +1,34 @@
+# This script exists to make sure the required user
+# accounts nagios and groups nagios, nagioscm exist.
+# 2006-02-27: group nagioscm is required.
+# 2007-09-11 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
+#            relocatable packages.
+
+echo "Executing preinstall"
+
+#If installing package on a filesystem tree not running the OS; then exit.
+if [ ! x"$PKG_INSTALL_ROOT" = x"" ] ; then exit 0 ; fi
+
+NAGIOSHOME=/opt/csw/nagios
+
+if [ "$NEEDNAGGROUP" = 1 ] ; then
+        echo adding nagios group
+        /usr/sbin/groupadd nagios
+fi
+
+if [ "$NEEDNAGUSER" = 1 ] ; then
+        echo adding nagios user
+        /usr/sbin/useradd -g nagios nagios
+        /usr/sbin/usermod -s /bin/false -d $NAGIOSHOME nagios
+else
+	echo not adding user
+fi
+
+if [ "$NEEDCMDGROUP" = 1 ] ; then
+        echo adding nagioscm group
+        /usr/sbin/groupadd nagioscm
+        echo adding nagios user to nagioscm group
+        /usr/sbin/usermod -G nagioscm nagios
+fi
+
+exit 0

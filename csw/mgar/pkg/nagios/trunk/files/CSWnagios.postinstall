@@ -1,0 +1,99 @@
+# postinstall for nagios package
+# 2007-01-19 Add csw.conf support
+# 2007-09-11 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
+#            relocatable packages.
+#
+
+# daemons are started by default
+enable_daemon=yes
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# If defined, autoenable for the specific daemon name takes precedence
+if [ "$autoenable_nagios" = "no" ] ; then
+  enable_daemon=no
+elif [ "$autoenable_daemons" = "no" -a ! -n "$autoenable_nagios" ] ; then
+  enable_daemon=no
+fi
+
+# Set variable for the availability of SMF
+smf=no
+if [ -f /usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm ]
+  then
+  smf=yes
+fi
+
+# Stop nagios if it is running
+if pgrep nagios >/dev/null 2>&1 ; then
+    echo "## Stopping nagios"
+        if [ $smf = yes ]; then
+            /usr/sbin/svcadm disable svc:/application/cswnagios >/dev/null 2>&1
+        else
+            /etc/init.d/cswnagios stop >/dev/null 2>&1
+        fi
+        while pgrep nagios > /dev/null
+          do
+          sleep 1
+        done
+fi
+
+if [ $smf = yes ]; then
+    # Register with SMF
+    echo "Configuring service in SMF"
+    /usr/sbin/svccfg import /opt/csw/var/svc/manifest/application/nagios.xml >/dev/null 2>&1
+    /usr/sbin/svcadm disable svc:application/cswnagios >/dev/null 2>&1
+    echo "nagios is using Service Management Facility.  The FMRI is:"
+    echo "  svc:/application/cswnagios:default"
+fi
+
+# Start nagios
+if [ "$enable_daemon" = "yes" ] ; then
+  if [ -f $BASEDIR/opt/csw/nagios/etc/nagios.cfg ]; then
+    echo "## Starting nagios"
+    if [ $smf = yes ]; then
+        /usr/sbin/svcadm enable svc:/application/cswnagios >/dev/null 2>&1
+    else
+        /etc/init.d/cswnagios start >/dev/null 2>&1
+    fi
+  else
+    echo "## Not starting nagios - configuration file not found"
+    if [ $smf = yes ] ; then
+        /usr/sbin/svcadm disable svc:/application/cswnagios >/dev/null 2>&1
+    fi
+  fi
+fi
+
+#
+PREFIX=/opt/csw/nagios
+NAGHTTPD=httpd-nagios.conf
+
+if [ -d /opt/csw/apache/conf ]; then
+    APACHE_CONF=/opt/csw/apache/conf
+    cp $PREFIX/etc/$NAGHTTPD $APACHE_CONF
+elif [ -d /etc/apache ]; then
+    APACHE_CONF=/etc/apache
+    cp $PREFIX/etc/$NAGHTTPD $APACHE_CONF
+else
+    APACHE_CONF=$PREFIX/etc
+fi
+
+cat <<EOF
+___________________________________________________________________________
+The Nagios system has been installed but you must update the files in
+$PREFIX/etc/ to reflect your monitoring setup.
+
+Additionally you must make Nagios accessible from your Apache webserver.
+
+The file $APACHE_CONF/$NAGHTTPD lists the exact configuration
+directives required.
+
+Add those lines into your httpd.conf and restart your Apache server.
+___________________________________________________________________________
+EOF
+

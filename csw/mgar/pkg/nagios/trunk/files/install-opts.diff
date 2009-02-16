@@ -1,0 +1,90 @@
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/Makefile.in nagios-3.0.6/Makefile.in
+--- nagios-3.0.6.orig/Makefile.in	2008-12-18 21:34:10.373532942 +0100
++++ nagios-3.0.6/Makefile.in	2008-12-18 21:33:53.350125017 +0100
+@@ -29,11 +29,11 @@
+ LIBEXECDIR=@libexecdir@
+ HTMLDIR=@datadir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
+-COMMAND_OPTS=@COMMAND_OPTS@
++INSTALL_OPTS=
++COMMAND_OPTS=
+ HTTPD_CONF=@HTTPD_CONF@
+ INIT_DIR=@init_dir@
+-INIT_OPTS=-o root -g root
++INIT_OPTS=
+ CGICFGDIR=$(CGIDIR)
+ PERLDIR=@PERLDIR@
+ 
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/base/Makefile.in nagios-3.0.6/base/Makefile.in
+--- nagios-3.0.6.orig/base/Makefile.in	2008-02-28 20:25:45.000000000 +0100
++++ nagios-3.0.6/base/Makefile.in	2008-12-18 21:33:44.879394311 +0100
+@@ -39,7 +39,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datadir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ STRIP=@STRIP@
+ 
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/cgi/Makefile.in nagios-3.0.6/cgi/Makefile.in
+--- nagios-3.0.6.orig/cgi/Makefile.in	2008-11-02 18:32:03.000000000 +0100
++++ nagios-3.0.6/cgi/Makefile.in	2008-12-18 21:33:44.881180126 +0100
+@@ -18,7 +18,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datadir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ STRIP=@STRIP@
+ 
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/common/Makefile.in nagios-3.0.6/common/Makefile.in
+--- nagios-3.0.6.orig/common/Makefile.in	2003-04-10 05:46:01.000000000 +0200
++++ nagios-3.0.6/common/Makefile.in	2008-12-18 21:33:44.882663564 +0100
+@@ -20,7 +20,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datadir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ 
+ CP=@CP@
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/contrib/Makefile.in nagios-3.0.6/contrib/Makefile.in
+--- nagios-3.0.6.orig/contrib/Makefile.in	2008-05-19 20:01:58.000000000 +0200
++++ nagios-3.0.6/contrib/Makefile.in	2008-12-18 21:33:44.884211256 +0100
+@@ -15,7 +15,7 @@
+ # Generated automatically from configure script
+ SNPRINTF_O=@SNPRINTF_O@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ 
+ 
+ prefix=@prefix@
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/html/Makefile.in nagios-3.0.6/html/Makefile.in
+--- nagios-3.0.6.orig/html/Makefile.in	2008-11-02 18:32:03.000000000 +0100
++++ nagios-3.0.6/html/Makefile.in	2008-12-18 21:33:44.885749503 +0100
+@@ -10,7 +10,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datadir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ 
+ CP=@CP@
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/module/Makefile.in nagios-3.0.6/module/Makefile.in
+--- nagios-3.0.6.orig/module/Makefile.in	2008-12-18 21:34:09.878424799 +0100
++++ nagios-3.0.6/module/Makefile.in	2008-12-18 21:33:44.887184503 +0100
+@@ -19,7 +19,7 @@
+ exec_prefix=@exec_prefix@
+ BINDIR=@bindir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ STRIP=@STRIP@
+ 

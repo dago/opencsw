@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/Makefile.in nagios-3.0.6/Makefile.in
+--- nagios-3.0.6.orig/Makefile.in	2008-12-25 14:35:24.040581755 +0100
++++ nagios-3.0.6/Makefile.in	2008-12-25 14:31:46.669473752 +0100
+@@ -28,6 +28,7 @@
+ CGIDIR=@sbindir@
+ LIBEXECDIR=@libexecdir@
+ HTMLDIR=@datadir@
++DOCDIR=$(prefix)/../share/doc/nagios
+ INSTALL=@INSTALL@
+ INSTALL_OPTS=
+ COMMAND_OPTS=
+@@ -268,6 +269,12 @@
+ 	@echo "*** External command directory configured ***"
+ 	@echo ""
+ 
++install-docs:
++	$(INSTALL) -m 755 -d $(INSTALL_OPTS) -d $(DESTDIR)$(DOCDIR)
++	$(INSTALL) -m 664 $(INSTALL_OPTS) ./Changelog $(DESTDIR)$(DOCDIR)
++	$(INSTALL) -m 664 $(INSTALL_OPTS) ./INSTALLING $(DESTDIR)$(DOCDIR)
++	$(INSTALL) -m 664 $(INSTALL_OPTS) ./README $(DESTDIR)$(DOCDIR)
++	$(INSTALL) -m 664 $(INSTALL_OPTS) ./UPGRADING $(DESTDIR)$(DOCDIR)
+ 
+ fullinstall: install install-init install-commandmode install-webconf
+ 

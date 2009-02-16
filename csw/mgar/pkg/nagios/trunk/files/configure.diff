@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru nagios-3.0.6.orig/configure nagios-3.0.6/configure
+--- nagios-3.0.6.orig/configure	2008-12-02 04:48:17.000000000 +0100
++++ nagios-3.0.6/configure	2008-12-16 16:48:29.610038929 +0100
+@@ -5848,7 +5848,7 @@
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_save_LIBS="$LIBS"
+-	LIBS="-lgd $ICONV -lpng -ljpeg -lz -lm $LIBS"
++	LIBS="-lgd $ICONV -lpng -ljpeg -lz -lm -lsunmath $LIBS"
+ 	cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF

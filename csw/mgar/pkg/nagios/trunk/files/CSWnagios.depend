@@ -1,0 +1,14 @@
+P	CSWapache      apache - apache webserver with mod_ssl included
+P	CSWgd          gd - libgd, Graphics creation library and utilities
+P	CSWggettext    ggettext - GNU gettext
+P	CSWglib2       glib2 - The low-level core lib for GNOME and GTK+
+P	CSWiconv       libiconv - GNU iconv library
+P	CSWjpeg        jpeg - JPEG library and tools by the Independent JPEG Group
+P	CSWlibtool     libtool - Generic library support script
+P	CSWlibtoolrt   libtool_rt - Generic library support runtime libraries
+P	CSWosslrt      openssl_rt - Openssl runtime libraries
+P	CSWperl        perl - A high-level, general-purpose programming language.
+P	CSWpng         png - library for Portable Network Graphics format (PNG)
+P	CSWzlib        zlib - Zlib Data Compression Library
+P	CSWnagiosp     nagiosp - Plugins for Nagios
+P	CSWnrpeplugin  nrpeplugin - plugin for checking nrpe daemons
