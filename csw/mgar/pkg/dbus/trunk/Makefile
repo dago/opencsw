@@ -54,9 +54,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 post-install:
 	( OLDDIR=`pwd` && cd $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/csw/etc/dbus-1 && \
           for i in *.conf ; do mv $$i $$i.CSW ; done && cd $$OLDDIR ; \
-	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d  ; \
-	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/init.d  ; \
-	  cp -fr $(FILEDIR)/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/init.d  ; \
+	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/opt/csw/init.d  ; \
+	  cp -fr $(FILEDIR)/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/opt/csw/init.d  ; \
 	  rm -f $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; \
 	  ln -s ../init.d/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; )
 	@$(MAKECOOKIE)

@@ -1,5 +1,0 @@
-%var            bitname commons_codec
-%var            pkgname CSWajccodec
-%var		arch	all
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{SRC_FIRSTMOD}/LICENSE

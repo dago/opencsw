@@ -1,5 +1,0 @@
-%var            bitname commons_chain_doc
-%var            pkgname CSWajcchaindoc
-%var		arch	all
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE.txt
