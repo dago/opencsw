@@ -11,7 +11,8 @@ endef
 
 MASTER_SITES = http://downloads.sourceforge.net/tnef/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWtnef,)
+
+REQUIRED_PKGS = CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=57057
@@ -20,18 +21,12 @@ UFILES_REGEX = v(\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_SCRIPTS = custom
+TEST_TARGET = check
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
 SPKG_SOURCEURL = http://sourceforge.net/projects/tnef
-
-test-custom:
-	@echo " ==> Testing $(GARNAME) (custom)"
-	@( cd $(WORKSRC) ; \
-	   gmake check )
-	@$(MAKECOOKIE)
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
@@ -41,6 +36,5 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 	@( cd $(WORKSRC) ; \
 	   cp -r src/$(GARNAME) $(DESTDIR)$(bindir)/$(GARNAME) ; \
-	   cp -r doc/$(GARNAME).1 $(DESTDIR)$(mandir)/man1/$(GARNAME).1 ; \
-	   cp -r COPYING $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE )
+	   cp -r doc/$(GARNAME).1 $(DESTDIR)$(mandir)/man1/$(GARNAME).1 )
 	@$(MAKECOOKIE)
