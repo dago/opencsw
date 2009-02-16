@@ -1,0 +1,28 @@
+diff --speed-large-files --minimal -Nru nrpe-2.12.orig/Makefile.in nrpe-2.12/Makefile.in
+--- nrpe-2.12.orig/Makefile.in	2007-03-14 16:30:05.000000000 +0100
++++ nrpe-2.12/Makefile.in	2008-12-23 21:18:00.782772164 +0100
+@@ -20,8 +20,8 @@
+ SBINDIR=@sbindir@
+ LIBEXECDIR=@libexecdir@
+ INSTALL=@INSTALL@
+-NAGIOS_INSTALL_OPTS=@NAGIOS_INSTALL_OPTS@
+-NRPE_INSTALL_OPTS=@NRPE_INSTALL_OPTS@
++NAGIOS_INSTALL_OPTS=
++NRPE_INSTALL_OPTS=
+ 
+ INIT_DIR=@init_dir@
+ INIT_OPTS=-o root -g root
+diff --speed-large-files --minimal -Nru nrpe-2.12.orig/src/Makefile.in nrpe-2.12/src/Makefile.in
+--- nrpe-2.12.orig/src/Makefile.in	2007-08-13 19:10:07.000000000 +0200
++++ nrpe-2.12/src/Makefile.in	2008-12-23 21:21:13.784808266 +0100
+@@ -24,8 +24,8 @@
+ SBINDIR=@sbindir@
+ LIBEXECDIR=@libexecdir@
+ INSTALL=@INSTALL@
+-NAGIOS_INSTALL_OPTS=@NAGIOS_INSTALL_OPTS@
+-NRPE_INSTALL_OPTS=@NRPE_INSTALL_OPTS@
++NAGIOS_INSTALL_OPTS=
++NRPE_INSTALL_OPTS=
+ 
+ # Generated automatically from configure script
+ SNPRINTF_O=@SNPRINTF_O@

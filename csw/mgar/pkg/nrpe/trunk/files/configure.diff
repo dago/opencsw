@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru nrpe-2.12.orig/configure nrpe-2.12/configure
+--- nrpe-2.12.orig/configure	2008-03-10 22:04:41.000000000 +0100
++++ nrpe-2.12/configure	2008-12-23 13:30:12.640927821 +0100
+@@ -6179,7 +6179,7 @@
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lwrap  $LIBS"
++LIBS="-lsocket -lwrap  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF

@@ -1,0 +1,50 @@
+# See if user group are needed
+NEEDNAGUSER=0
+NEEDNAGGROUP=0
+NEEDCMDGROUP=0
+
+#First check target machines password file, THEN check
+#NIS/NIS+/whatever
+
+grep '^nagios:' /etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+        getent passwd nagios >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDNAGUSER=1
+        fi
+fi
+
+grep '^nagios:' /etc/group >/dev/null
+if [ $? -ne 0 ] ; then
+        getent group nagios >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDNAGGROUP=1
+        fi
+fi
+
+if [ "$NEEDNAGUSER" = 1 ] ; then
+        echo "***"
+        echo "User nagios must exist for this package install."
+        echo "nagios user will be added."
+        ADDNAGUSER=1
+else
+        echo "nagios user detected"
+fi
+
+if [ "$NEEDNAGGROUP" = 1 ] ; then
+        echo "***"
+        echo "Group nagios must exist for this package install."
+        echo "nagios group will be added."
+        ADDNAGGROUP=1
+else
+        echo "nagios group detected"
+fi
+
+# Make env variables available to other packaging scripts
+
+cat >$1 <<!
+CLASSES='$CLASSES'
+NEEDNAGUSER='$NEEDNAGUSER'
+NEEDNAGGROUP='$NEEDNAGGROUP'
+NEEDCMDGROUP='$NEEDCMDGROUP'
+!

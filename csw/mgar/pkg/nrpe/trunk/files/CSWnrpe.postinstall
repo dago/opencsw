@@ -1,0 +1,70 @@
+# postinstall for nrpe package
+# 2007-01-19 Add csw.conf support
+# 2007-09-11 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
+#            relocatable packages.
+#
+
+# daemons are started by default
+enable_daemon=yes
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# If defined, autoenable for the specific daemon name takes precedence
+if [ "$autoenable_nrpe" = "no" ] ; then
+  enable_daemon=no
+elif [ "$autoenable_daemons" = "no" -a ! -n "$autoenable_nrpe" ] ; then
+  enable_daemon=no
+fi
+
+# Set variable for the availability of SMF
+smf=no
+if [ -f /usr/sbin/svccfg -a -f $BASEDIR/usr/sbin/svcadm ]
+  then
+  smf=yes
+fi
+
+# Stop nrpe if it is running
+if pgrep nrpe >/dev/null 2>&1 ; then
+    echo "## Stopping nrpe"
+        if [ $smf = yes ]; then
+            /usr/sbin/svcadm disable svc:/application/cswnrpe >/dev/null 2>&1
+        else
+            /etc/init.d/cswnrpe stop >/dev/null 2>&1
+        fi
+        while pgrep nrpe > /dev/null
+          do
+          sleep 1
+        done
+fi
+
+if [ $smf = yes ]; then
+    # Register with SMF
+    echo "Configuring service in SMF"
+    /usr/sbin/svccfg import /opt/csw/var/svc/manifest/application/nrpe.xml >/dev/null 2>&1
+    /usr/sbin/svcadm disable svc:application/cswnrpe >/dev/null 2>&1
+    echo "nrpe is using Service Management Facility.  The FMRI is:"
+    echo "  svc:/application/cswnrpe:default"
+fi
+
+# Start nrpe
+if [ "$enable_daemon" = "yes" ] ; then
+  if [ -f $BASEDIR/opt/csw/nagios/etc/nrpe.cfg ]; then
+    echo "## Starting nrpe"
+    if [ $smf = yes ]; then
+        /usr/sbin/svcadm enable svc:/application/cswnrpe >/dev/null 2>&1
+    else
+        /etc/init.d/cswnrpe start >/dev/null 2>&1
+    fi
+  else
+    echo "## Not starting nrpe - configuration file not found"
+    if [ $smf = yes ] ; then
+        /usr/sbin/svcadm disable svc:/application/cswnrpe >/dev/null 2>&1
+    fi
+  fi
+fi

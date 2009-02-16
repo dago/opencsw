@@ -1,0 +1,16 @@
+diff --speed-large-files --minimal -Nru nrpe-2.12.orig/src/nrpe.c nrpe-2.12/src/nrpe.c
+--- nrpe-2.12.orig/src/nrpe.c	2008-03-10 22:04:43.000000000 +0100
++++ nrpe-2.12/src/nrpe.c	2008-12-15 14:31:43.737436594 +0100
+@@ -613,10 +613,10 @@
+ 		log_facility=LOG_UUCP;
+ 	else if(!strcmp(varvalue,"cron"))
+ 		log_facility=LOG_CRON;
+-	else if(!strcmp(varvalue,"authpriv"))
++/*	else if(!strcmp(varvalue,"authpriv"))
+ 		log_facility=LOG_AUTHPRIV;
+ 	else if(!strcmp(varvalue,"ftp"))
+-		log_facility=LOG_FTP;
++		log_facility=LOG_FTP; */
+ 	else if(!strcmp(varvalue,"local0"))
+ 		log_facility=LOG_LOCAL0;
+ 	else if(!strcmp(varvalue,"local1"))

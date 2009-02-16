@@ -1,0 +1,4 @@
+d none /opt/csw/libexec/nagios-plugins 0755 root bin
+f none /opt/csw/libexec/nagios-plugins/check_nrpe 0775 root bin
+i depend=CSWnrpeplugin.depend
+i pkginfo=CSWnrpeplugin.pkginfo
