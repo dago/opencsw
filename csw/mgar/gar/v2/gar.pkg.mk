@@ -330,12 +330,12 @@ endef
 # XXX: It is possible that a package is flagged as /isaexec, even
 # if the isaexec'ed files are in another package created from the Makefile
 define mode64
-$(strip 
+$(shell echo 
   $(if $(MODE64_$(1)),$(MODE64_$(1)), 
-    $(if $(filter 64,$(foreach I,$(NEEDED_ISAS),$(MEMORYMODEL_$I))),
-      64$(if $(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)),/isaexec) 
-    ) 
-  )
+    $(if $(filter 32,$(foreach I,$(NEEDED_ISAS),$(MEMORYMODEL_$I))),32) 
+    $(if $(filter 64,$(foreach I,$(NEEDED_ISAS),$(MEMORYMODEL_$I))),64) 
+    $(if $(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)),isaexec) 
+  ) | perl -lne 'print join("/", split)'
 )
 endef
 
