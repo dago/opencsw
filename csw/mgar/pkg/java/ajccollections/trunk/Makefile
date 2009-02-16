@@ -27,7 +27,7 @@ SPKG_DESC_CSWajccollectdoc = $(DESCRIPTION) documentation package
 REQUIRED_PKGS_CSWajccollect  = CSWjunit
 
 # Defines package content
-PKGFILES_CSWajccollectdoc   = $(prefix)/share/doc/.*
+PKGFILES_CSWajccollectdoc   = $(prefix)/share/doc/$(GARNAME)-doc.*
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -50,5 +50,5 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
 	@$(MAKECOOKIE)
