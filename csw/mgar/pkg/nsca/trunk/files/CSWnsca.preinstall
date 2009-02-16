@@ -1,0 +1,18 @@
+# preinstall for nagioscm
+# Add the group nagioscm if told to by request script.
+# 2007-12-02 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
+#            relocatable packages.
+
+if [ "$ADDCMDGROUP" = "1" ] ; then
+        /usr/sbin/groupadd nagioscm
+        echo "Added nagioscm group."
+        /usr/sbin/usermod -G nagioscm nagios
+        echo "Added nagios user to nagioscm group."
+        echo "**"
+        echo "To use external commands, you must add your apache"
+        echo "  user to the nagioscm group."
+        echo "Example: usermod -G nagioscm apache"
+        echo "**"
+fi
+#
+exit 0
