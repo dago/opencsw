@@ -23,9 +23,13 @@ PKGINFO ?= /usr/bin/pkginfo
 
 # You can use either PACKAGES with dynamic gspec-files or explicitly add gspec-files to DISTFILES.
 # Do "PACKAGES = CSWmypkg" when you build a package whose GARNAME is not the package name.
+# If no explicit gspec-files have been defined the default name for the package is CSW$(GARNAME).
 # The whole processing is done from _SPKG_SPECS, which includes all packages to be build.
-PACKAGES ?= CSW$(GARNAME)
+ifeq ($(origin PACKAGES), undefined)
+SPKG_SPECS     ?= $(if $(filter %.gspec,$(DISTFILES)),$(basename $(filter %.gspec,$(DISTFILES))),CSW$(GARNAME))
+else
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
+endif
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 # pkgname - Get the name of a package from a gspec-name or package-name
