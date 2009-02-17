@@ -17,9 +17,7 @@ SPKG_DESC_CSWglib2devel = Low level core compatibility library for GTK+ and GNOM
 
 MASTER_SITES = $(GNOME_MIRROR)
 
-DISTFILES  = $(call admfiles,CSWglib2,)
-DISTFILES += $(call admfiles,CSWglib2devel,)
-DISTFILES += $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 #See gnome bug 569889
 PATCHFILES = gtkdoc-rebase.patch
