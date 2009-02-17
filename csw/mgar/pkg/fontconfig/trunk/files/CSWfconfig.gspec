@@ -1,4 +1,0 @@
-%var            bitname fontconfig
-%var            pkgname CSWfconfig
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING

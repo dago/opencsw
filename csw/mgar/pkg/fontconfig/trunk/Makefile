@@ -12,7 +12,8 @@ endef
 
 MASTER_SITES = http://www.fontconfig.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWfconfig,postinstall)
+#DISTFILES += $(call admfiles,postinstall)
+DISTFILES += CSWfconfig.postinstall
 
 REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
@@ -20,6 +21,8 @@ REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
+PACKAGES = CSWfconfig
+CATALOGNAME_CSWfconfig = fontconfig
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-default-fonts=/usr/openwin/lib/X11/fonts --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts --with-cache-dir=/opt/csw/var/cache-fontconfig --with-confdir=/opt/csw/etc/fontconfig
 
