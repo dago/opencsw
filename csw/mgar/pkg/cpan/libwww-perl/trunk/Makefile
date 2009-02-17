@@ -1,5 +1,5 @@
 GARNAME = libwww-perl
-GARVERSION = 5.823
+GARVERSION = 5.825
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -22,7 +22,6 @@ DEPENDS += cpan/HTML-Parser
 DEPENDS += cpan/Crypt-SSLeay
 DEPENDS += cpan/Data-Dump
 
-#CONFIGURE_ARGS = -n
 CONFIGURE_ARGS =
 
 include gar/category.mk
