@@ -9,6 +9,12 @@ define BLURB
   has been split off as of the developers' version 1.1.0.
 endef
 
+PACKAGES = CSWglib2 CSWglib2devel
+CATALOGNAME_CSWglib2 = glib2
+CATALOGNAME_CSWglib2devel = glib2_devel
+SPKG_DESC_CSWglib2 = Low level core compatibility library for GTK+ and GNOME
+SPKG_DESC_CSWglib2devel = Low level core compatibility library for GTK+ and GNOME development
+
 MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES  = $(call admfiles,CSWglib2,)
@@ -19,6 +25,7 @@ DISTFILES += $(GARNAME)-$(GARVERSION).tar.bz2
 PATCHFILES = gtkdoc-rebase.patch
 #See http://defect.opensolaris.org/bz/show_bug.cgi?id=3366 for discussion on:
 PATCHFILES += glib-typedetect.patch
+PATCHFILES += checksum-test.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
