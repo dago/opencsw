@@ -1,0 +1,11 @@
+--- libiptcdata-1.0.2.orig/libiptcdata/iptc-dataset.c	2005-08-29 04:27:41.000000000 +0200
++++ libiptcdata-1.0.2/libiptcdata/iptc-dataset.c	2009-02-16 14:40:15.166650866 +0100
+@@ -589,7 +589,7 @@
+ 		return;
+ 
+ 	printf ("%sTag: %d:%d ('%s')\n", buf, e->record, e->tag,
+-		iptc_tag_get_name (e->record, e->tag));
++		iptc_tag_get_name (e->record, e->tag) ? iptc_tag_get_name (e->record, e->tag) : "NULL");
+ /*	printf ("%s  Format: %i ('%s')\n", buf, e->format,
+ 		iptc_format_get_name (e->format)); */
+ 	printf ("%s  Size: %i\n", buf, e->size);
