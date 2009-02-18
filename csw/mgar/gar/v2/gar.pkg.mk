@@ -24,7 +24,7 @@ PKGINFO ?= /usr/bin/pkginfo
 # You can use either PACKAGES with dynamic gspec-files or explicitly add gspec-files to DISTFILES.
 # Do "PACKAGES = CSWmypkg" when you build a package whose GARNAME is not the package name.
 # If no explicit gspec-files have been defined the default name for the package is CSW$(GARNAME).
-# The whole processing is done from _SPKG_SPECS, which includes all packages to be build.
+# The whole processing is done from _PKG_SPECS, which includes all packages to be build.
 ifeq ($(origin PACKAGES), undefined)
 SPKG_SPECS     ?= $(if $(filter %.gspec,$(DISTFILES)),$(basename $(filter %.gspec,$(DISTFILES))),CSW$(GARNAME))
 else
@@ -97,7 +97,7 @@ SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
 SPKG_PACKAGER  ?= Unknown
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_EMAIL     ?= Unknown
-#SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
+SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
 SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
@@ -183,21 +183,25 @@ PKGFILES_DEVEL += $(mandir)/man3/.*
 # PKGFILES_DOC selects files beloging to a documentation package
 PKGFILES_DOC  = $(docdir)/.*
 
-# _PKGFILES_EXCLUDE_<spec> contains the files to be excluded from that package
-$(foreach SPEC,$(_PKG_SPECS), \
-  $(eval _PKGFILES_EXCLUDE_$(SPEC)=$(strip \
-    $(foreach S,$(filter-out $(SPEC),$(_PKG_SPECS)), \
-      $(PKGFILES_$(S)) \
-      $(call licensedir,$(S))/.* \
-      $(EXTRA_PKGFILES_EXCLUDED) \
-      $(EXTRA_PKGFILES_EXCLUDED_$(SPEC)) \
-      $(_EXTRA_PKGFILES_EXCLUDED) \
-    ) \
-  )) \
-  $(eval _PKGFILES_INCLUDE_$(SPEC)=$(strip \
-    $(call licensedir,$(SPEC))/.* \
-  )) \
+# This function computes the files to be excluded from the package specified
+# as argument
+define _pkgfiles_exclude
+$(strip 
+  $(foreach S,$(filter-out $(1),$(_PKG_SPECS)), 
+    $(PKGFILES_$(S)) 
+    $(call licensedir,$(S))/.* 
+    $(EXTRA_PKGFILES_EXCLUDED) 
+    $(EXTRA_PKGFILES_EXCLUDED_$(1)) 
+    $(_EXTRA_PKGFILES_EXCLUDED) 
+  ) 
 )
+endef
+
+define _pkgfiles_include
+$(strip 
+  $(call licensedir,$(1))/.* 
+)
+endef
 
 #
 # Targets
@@ -222,15 +226,17 @@ $(PROTOTYPE): $(WORKDIR) merge
 	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT)=/ >$@
 
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
+$(WORKDIR)/%.prototype: _PKGFILES_EXCLUDE=$(call _pkgfiles_exclude,$*)
+$(WORKDIR)/%.prototype: _PKGFILES_INCLUDE=$(call _pkgfiles_include,$*)
 $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	$(_DBG)if [ -n "$(PKGFILES_$*_SHARED)" -o \
 	      -n "$(PKGFILES_$*)" -o \
-	      -n "$(_PKGFILES_EXCLUDE_$*)" -o \
+	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(foreach FILE,$(if $(or $(PKGFILES_$*_SHARED),$(PKGFILES_$*)),$(_PKGFILES_INCLUDE_$*)) \
+	  (pathfilter $(foreach FILE,$(if $(or $(PKGFILES_$*_SHARED),$(PKGFILES_$*)),$(_PKGFILES_INCLUDE)) \
 			$(PKGFILES_$*_SHARED) $(PKGFILES_$*),-i '$(FILE)') \
-	              $(foreach FILE,$(_PKGFILES_EXCLUDE_$*), -x '$(FILE)') \
+	              $(foreach FILE,$(_PKGFILES_EXCLUDE), -x '$(FILE)') \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
 	                  -e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))' \
 	               ) \
@@ -332,7 +338,9 @@ $(if $(shell if test -x $(SVN); then echo yes; fi),$(shell $(SVN) info . 2>/dev/
 endef
 
 # XXX: It is possible that a package is flagged as /isaexec, even
-# if the isaexec'ed files are in another package created from the Makefile
+# if the isaexec'ed files are in another package created from the Makefile.
+# There should be a warning issued if there is more than one package build and
+# it has not explicitly been set.
 define mode64
 $(shell echo 
   $(if $(MODE64_$(1)),$(MODE64_$(1)), 
@@ -425,7 +433,8 @@ prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPE
 package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
-package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.pkginfo $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+# The dynamic pkginfo is only generated for dynamic gspec-files
+package-%: $(WORKDIR)/%.gspec $(if $(filter %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
