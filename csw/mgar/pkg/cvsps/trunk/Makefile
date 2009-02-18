@@ -22,6 +22,8 @@ PREREQUISITE_PKGS = CSWzlib CSWautomake CSWautoconf
 
 REQUIRED_PKGS = CSWzlib CSWcvs
 
+PACKAGES = CSWcvsps
+
 LICENSE = COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
