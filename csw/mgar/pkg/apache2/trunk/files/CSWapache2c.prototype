@@ -153,11 +153,6 @@ f none /opt/csw/apache2/share/error/include/bottom.html 0644 root bin
 f none /opt/csw/apache2/share/error/include/spacer.html 0644 root bin
 f none /opt/csw/apache2/share/error/include/top.html 0644 root bin
 d none /opt/csw/apache2/share/htdocs 0755 root bin
-f none /opt/csw/apache2/share/htdocs/apache_pb.gif 0644 root bin
-f none /opt/csw/apache2/share/htdocs/apache_pb.png 0644 root bin
-f none /opt/csw/apache2/share/htdocs/apache_pb22.gif 0644 root bin
-f none /opt/csw/apache2/share/htdocs/apache_pb22.png 0644 root bin
-f none /opt/csw/apache2/share/htdocs/apache_pb22_ani.gif 0644 root bin
 f none /opt/csw/apache2/share/htdocs/index.html.CSW 0644 root bin
 d none /opt/csw/apache2/share/icons 0755 root bin
 f none /opt/csw/apache2/share/icons/README 0644 root bin
