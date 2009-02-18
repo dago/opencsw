@@ -14,7 +14,7 @@ MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibiptcdata,)
 
-REQUIRED_PKGS = CSWggettext CSWggettextrt CSWiconv
+REQUIRED_PKGS = CSWggettextrt CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
