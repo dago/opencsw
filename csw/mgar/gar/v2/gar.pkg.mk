@@ -26,7 +26,8 @@ PKGINFO ?= /usr/bin/pkginfo
 # If no explicit gspec-files have been defined the default name for the package is CSW$(GARNAME).
 # The whole processing is done from _PKG_SPECS, which includes all packages to be build.
 ifeq ($(origin PACKAGES), undefined)
-SPKG_SPECS     ?= $(if $(filter %.gspec,$(DISTFILES)),$(basename $(filter %.gspec,$(DISTFILES))),CSW$(GARNAME))
+PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
+SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES)
 else
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 endif
