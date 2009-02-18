@@ -1,0 +1,84 @@
+#!/bin/sh
+#
+# r.cswusergroup - Class action script for removing users and groups
+#
+# Written by Peter Bonivart
+#
+# 2009-02-10 First release
+#
+# Documentation: http://wiki.opencsw.org/cswclassutils-package
+
+DEBUG=		# clear to disable debug, set to anything to enable
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+if [ "$DEBUG" ]; then
+  echo PACKAGE: $PKGINST
+fi
+
+# Copy files
+echo "Removing class <cswusergroup> ..."
+
+while read dest; do
+  if [ "$DEBUG" ]; then
+    echo DEST: $dest
+  fi
+
+  if [ "$usergroup_remove" = "yes" ]; then
+    for i in `cat $dest | sed 's/ /_/g'`; do
+      user=`echo $i | awk -F':' '{print $1}'`
+      group=`echo $i | awk -F':' '{print $2}'`
+      remove=`echo $i | awk -F':' '{print $7}'`
+
+      if [ -n "$user" ]; then
+        /bin/getent passwd $user > /dev/null
+        if [ $? -eq 0 ]; then
+          if [ -n "$remove" ]; then
+            remove="-r"
+          fi
+          /usr/sbin/userdel $remove $user > /dev/null
+          if [ $? -eq 0 ]; then
+            echo User $user has been removed
+          else
+            echo ERROR: Failed to remove user $user
+          fi
+        else
+          echo User $user does not exist
+        fi
+      else
+        echo No user to remove
+      fi
+
+      if [ -n "$group" ]; then
+        /bin/getent group $group > /dev/null
+        if [ $? -eq 0 ]; then
+          /usr/sbin/groupdel $group > /dev/null
+          if [ $? -eq 0 ]; then
+            echo Group $group has been removed
+          else
+            echo ERROR: Failed to remove group $group
+          fi
+        else
+          echo Group $group does not exist
+        fi
+      else
+        echo No group to remove
+      fi
+      echo
+    done
+  else
+    echo Not removing users/groups due to usergroup_remove not set to yes in csw.conf
+  fi
+
+  # Remove conf-file
+  /usr/bin/rm -f $dest || exit 2
+
+done
+
+exit 0

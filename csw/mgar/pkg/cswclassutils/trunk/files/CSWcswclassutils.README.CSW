@@ -28,3 +28,11 @@ Currently it has:
   directory when a package is removed, and restores it on the next pkgadd.
   Read more in /usr/sadm/install/scripts/i.cswpreserveconf and
   r.cswpreserveconf.
+
+- cswusergroup
+
+  This class creates users and/or groups needed for packages. It supports
+  users, groups, gcos, home directory and shell. You can also decide if you want
+  the home directories to be created and/or removed during install/remove.
+
+Read more on the wiki: http://wiki.opencsw.org/cswclassutils-package.

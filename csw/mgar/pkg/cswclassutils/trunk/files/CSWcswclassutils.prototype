@@ -7,6 +7,8 @@ d none /var/opt/csw 0755 root bin
 d none /var/opt/csw/svc 0755 root bin
 d none /var/opt/csw/svc/manifest 0755 root bin
 d none /var/opt/csw/svc/method 0755 root bin
+f none /usr/sadm/install/scripts/i.cswusergroup 0555 root sys
+f none /usr/sadm/install/scripts/r.cswusergroup 0555 root sys
 f none /usr/sadm/install/scripts/i.cswinitsmf 0555 root sys
 f none /usr/sadm/install/scripts/r.cswinitsmf 0555 root sys
 f none /usr/sadm/install/scripts/i.cswcpsampleconf 0555 root sys

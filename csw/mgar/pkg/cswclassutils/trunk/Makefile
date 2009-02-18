@@ -1,5 +1,5 @@
 GARNAME = cswclassutils
-GARVERSION = 1.3
+GARVERSION = 1.4
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
@@ -17,6 +17,8 @@ include gar/category.mk
 WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://www.opencsw.org
 
+CASLIST = cswcpsampleconf cswpreserveconf cswinitsmf cswusergroup
+
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
@@ -28,10 +30,5 @@ install-custom:
 	@cp $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/etc/opt/csw/init.d/csw.smf.sample
 	@cp $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
-	@cp $(FILEDIR)/CSW$(GARNAME).i.cswcpsampleconf $(DESTDIR)/usr/sadm/install/scripts/i.cswcpsampleconf
-	@cp $(FILEDIR)/CSW$(GARNAME).r.cswcpsampleconf $(DESTDIR)/usr/sadm/install/scripts/r.cswcpsampleconf
-	@cp $(FILEDIR)/CSW$(GARNAME).i.cswpreserveconf $(DESTDIR)/usr/sadm/install/scripts/i.cswpreserveconf
-	@cp $(FILEDIR)/CSW$(GARNAME).r.cswpreserveconf $(DESTDIR)/usr/sadm/install/scripts/r.cswpreserveconf
-	@cp $(FILEDIR)/CSW$(GARNAME).i.cswinitsmf $(DESTDIR)/usr/sadm/install/scripts/i.cswinitsmf
-	@cp $(FILEDIR)/CSW$(GARNAME).r.cswinitsmf $(DESTDIR)/usr/sadm/install/scripts/r.cswinitsmf
+	@$(foreach CAS,$(CASLIST),cp $(FILEDIR)/CSW$(GARNAME).i.$(CAS) $(DESTDIR)/usr/sadm/install/scripts/i.$(CAS);cp $(FILEDIR)/CSW$(GARNAME).r.$(CAS) $(DESTDIR)/usr/sadm/install/scripts/r.$(CAS);)
 	@$(MAKECOOKIE)

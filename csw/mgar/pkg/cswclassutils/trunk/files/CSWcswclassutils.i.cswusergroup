@@ -1,0 +1,86 @@
+#!/bin/sh
+#
+# i.cswusergroup - Class action script for creating users and groups
+#
+# Written by Peter Bonivart
+#
+# 2009-02-10 First release
+#
+# Documentation: http://wiki.opencsw.org/cswclassutils-package
+
+DEBUG=		# clear to disable debug, set to anything to enable
+
+if [ "$DEBUG" ]; then
+  echo PACKAGE: $PKGINST
+fi
+
+# Copy files
+echo "Installing class <cswusergroup> ..."
+
+while read src dest; do
+  if [ "$DEBUG" ]; then
+    echo SRC: $src DEST: $dest
+  fi
+
+  # Copy the conf-file
+  /usr/bin/cp $src $dest || exit 2
+
+  for i in `cat $dest | sed 's/ /_/g'`; do
+    user=`echo $i | awk -F':' '{print $1}'`
+    group=`echo $i | awk -F':' '{print $2}'`
+    gcos=`echo $i | awk -F':' '{print $3}'`
+    dir=`echo $i | awk -F':' '{print $4}'`
+    shell=`echo $i | awk -F':' '{print $5}'`
+    create=`echo $i | awk -F':' '{print $6}'`
+    if [ -n "$group" ]; then
+      /bin/getent group $group > /dev/null
+      if [ $? -ne 0 ]; then
+        /usr/sbin/groupadd $group > /dev/null
+        if [ $? -eq 0 ]; then
+          echo Group $group has been added
+        else
+          echo ERROR: Failed to add group $group
+        fi
+      else
+        echo Group $group already exists
+      fi
+    else
+      echo No group to create
+    fi
+
+    if [ -n "$user" ]; then
+      /bin/getent passwd $user > /dev/null
+      if [ $? -ne 0 ]; then
+        if [ -n "$group" ]; then
+          group="-g $group"
+        fi
+        if [ -n "$gcos" ]; then
+          gcos="-c $gcos"
+        fi
+        if [ -n "$dir" ]; then
+          dir="-d $dir"
+        fi
+        if [ -n "$shell" ]; then
+          shell="-s $shell"
+        fi
+        if [ -n "$create" ]; then
+          create="-m"
+        fi
+        /usr/sbin/useradd $gcos $group $create $dir $shell $user > /dev/null
+        if [ $? -eq 0 ]; then
+          echo User $user has been added
+        else
+          echo ERROR: Failed to add user $user
+        fi
+      else
+        echo User $user already exists
+      fi
+    else
+      echo No user to create
+    fi
+    echo
+  done
+
+done
+
+exit 0
