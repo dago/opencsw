@@ -1,5 +1,5 @@
 GARNAME = httpd
-GARVERSION = 2.2.10
+GARVERSION = 2.2.11
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
@@ -8,7 +8,7 @@ define BLURB
   best around in terms of functionality, efficiency, security and speed.
 endef
 
-include ../apache2/files/config.mk
+include ../../apache2/trunk/files/config.mk
 
 # Apache worker MPM
 CSWADMIN   = depend prototype postinstall postremove space
@@ -23,7 +23,7 @@ APACHE_ROOT = $(DESTDIR)$(prefix)/apache2
 CONFIGURE_ARGS += --with-mpm=worker
 
 include gar/category.mk
-include ../apache2/files/rules.mk
+include ../../apache2/trunk/files/rules.mk
 
 post-install: rename-httpd
 
