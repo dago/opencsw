@@ -1,7 +1,7 @@
 #!/bin/sh
 
-CONFCAT=/opt/csw/etc/sgml/openjade-1.3.2-27.soc
-CATALOG=/opt/csw/share/sgml/openjade-1.3.2/catalog
+CONFCAT=/opt/csw/etc/sgml/openjade.soc
+CATALOG=/opt/csw/share/sgml/openjade/catalog
 
 insterror()
 {

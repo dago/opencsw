@@ -1,5 +1,4 @@
 7df692e3186109cc00db6825b777201e  download/openjade-1.3.2.tar.gz
-12f647d82faad16570aa84667ca9ed61  download/CSWopenjade.gspec
-a31c09c1e08da2712e87446762d9fcdc  download/CSWopenjade.postinstall
-b35aca62389881efb0c0ebb296d9ae14  download/CSWopenjade.preremove
+6667b082aba6cb3ca4979da01af4f4e7  download/CSWopenjade.postinstall
+6b1a129259142b0a41a39e984e7a4e43  download/CSWopenjade.preremove
 ca3a0ff43d8ed182f432d723927cd2e9  download/openjade-1.3.1-nsl.patch

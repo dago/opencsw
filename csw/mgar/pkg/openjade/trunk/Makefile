@@ -1,6 +1,5 @@
 GARNAME = openjade
 GARVERSION = 1.3.2
-PATCHLEVEL = 27
 CATEGORIES = apps
 
 PREREQUISITE_PKGS = CSWopensp
@@ -8,19 +7,22 @@ REQUIRED_PKGS = CSWgcc3corert CSWgcc3g++rt
 REQUIRED_PKGS += CSWggettextrt CSWiconv CSWopensp CSWsgmlcommon
 REQUIRED_PKGS += CSWxmlcommon
 
+PACKAGES = CSWopenjade
+LICENSE = COPYING
+
 DESCRIPTION = A DSSSL implementation.
 define BLURB
-  OpenJade is an implementation of the ISO/IEC 10179:1996 standard DSSSL
-  (Document Style Semantics and Specification Language). OpenJade is
-  based on James Clark's Jade implementation of DSSSL. OpenJade is a
-  command-line application and a set of components. The DSSSL engine
-  inputs an SGML or XML document and can output a variety of formats:
-  XML, RTF, TeX, MIF (FrameMaker), SGML, or XML.
+OpenJade is an implementation of the ISO/IEC 10179:1996 standard DSSSL
+(Document Style Semantics and Specification Language). OpenJade is
+based on James Clark's Jade implementation of DSSSL. OpenJade is a
+command-line application and a set of components. The DSSSL engine
+inputs an SGML or XML document and can output a variety of formats:
+XML, RTF, TeX, MIF (FrameMaker), SGML, or XML.
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWopenjade,postinstall preremove)
+DISTFILES += CSWopenjade.postinstall CSWopenjade.preremove
 
 PATCHFILES = openjade-1.3.1-nsl.patch
 
@@ -31,7 +33,7 @@ PATCHFILES = openjade-1.3.1-nsl.patch
 GARCOMPILER = GCC3
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
-CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(GARNAME)-$(GARVERSION)
+CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(GARNAME)
 CONFIGURE_ARGS += --enable-splibdir=$(libdir)
 
 TEST_SCRIPTS = 
@@ -43,7 +45,7 @@ include gar/category.mk
 #squish the pesky post strip la files...
 MERGE_EXCLUDE_DEFAULT += $(libdir)/.*\.la\~
 
-sgmldir = $(DESTDIR)/$(datadir)/sgml/$(GARNAME)-$(GARVERSION)
+sgmldir = $(DESTDIR)/$(datadir)/sgml/$(GARNAME)
 sgmldoc = $(DESTDIR)/$(docdir)/$(GARNAME)
 INSTALL = /opt/csw/bin/ginstall -c
 INSTALL_DATA = $(INSTALL) -m 0644
@@ -59,9 +61,7 @@ post-install-modulated:
 		$(INSTALL_DATA) dsssl/style-sheet.dtd $(sgmldir); \
 		$(INSTALL_DIR) $(DESTDIR)/$(sysconfdir)/sgml; \
 		cd $(DESTDIR)/$(sysconfdir)/sgml; \
-		touch $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL).soc; \
-		ln -s $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL).soc $(GARNAME).soc; \
-	)
+		touch $(GARNAME).soc)
 	@echo Installing docs.
 	@( cd $(WORKSRC); \
 		$(INSTALL_DIR) $(sgmldoc); \
