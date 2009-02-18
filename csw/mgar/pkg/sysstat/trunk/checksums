@@ -1,6 +1,2 @@
-7d5d5489a19119121b4bd53b85a91886  download/sysstat-20081207.tgz
-c2be614c9715a73b469173e9888f1826  download/CSWsysstat.gspec
-e51f94d090618f19b854104291b10645  download/CSWsysstat.prototype-sparc
-8c1dbc2e5fc16f16dbdfbe47b81e76f0  download/CSWsysstat.prototype-i386
-2ba417371d006cee9ad62bf67252b05b  download/CSWsysstat.depend
+cb48048e5b6eee430017ce8591a71d65  download/sysstat-20090218.tgz
 7a7f0f67bb68484b56375d4a922fb63f  download/patch-onlyisaexec-sysstatd.diff

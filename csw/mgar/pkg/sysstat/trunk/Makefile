@@ -1,5 +1,5 @@
 GARNAME = sysstat
-GARVERSION = 20081207
+GARVERSION = 20090218
 CATEGORIES = utils
 
 DESCRIPTION = Key system statistics at a glance
@@ -18,7 +18,6 @@ endef
 
 MASTER_SITES = http://www.maier-komor.de/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWsysstat)
 
 REQUIRED_PKGS = CSWncurses
 
