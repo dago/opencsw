@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru librsvg-2.22.3.orig/tests/pdiff/Makefile.in librsvg-2.22.3/tests/pdiff/Makefile.in 
+--- librsvg-2.22.3.orig/tests/pdiff/Makefile.in 2008-09-23 02:54:52.000000000 +0200
++++ librsvg-2.22.3/tests/pdiff/Makefile.in      2009-02-16 03:35:29.779065807 +0100
+@@ -134,7 +134,7 @@
+ LIBRSVG_MAJOR_VERSION = @LIBRSVG_MAJOR_VERSION@
+ LIBRSVG_MICRO_VERSION = @LIBRSVG_MICRO_VERSION@
+ LIBRSVG_MINOR_VERSION = @LIBRSVG_MINOR_VERSION@
+-LIBS = @LIBS@
++LIBS = @LIBS@ -lm
+ LIBTOOL = @LIBTOOL@
+ LIBXML_REQUIRED = @LIBXML_REQUIRED@
+ LN_S = @LN_S@
+diff --speed-large-files --minimal -Nru librsvg-2.22.3.orig/tests/Makefile.in librsvg-2.22.3/tests/Makefile.in 
+--- librsvg-2.22.3.orig/tests/Makefile.in       2008-09-23 02:54:52.000000000 +0200
++++ librsvg-2.22.3/tests/Makefile.in    2009-02-16 03:35:18.338184863 +0100
+@@ -139,7 +139,7 @@
+ LIBRSVG_MAJOR_VERSION = @LIBRSVG_MAJOR_VERSION@
+ LIBRSVG_MICRO_VERSION = @LIBRSVG_MICRO_VERSION@
+ LIBRSVG_MINOR_VERSION = @LIBRSVG_MINOR_VERSION@
+-LIBS = @LIBS@
++LIBS = @LIBS@ -lm
+ LIBTOOL = @LIBTOOL@
+ LIBXML_REQUIRED = @LIBXML_REQUIRED@
+ LN_S = @LN_S@

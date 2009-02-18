@@ -1,0 +1,8 @@
+c4ec4fdb2b1842e221ca39127e85682d  download/librsvg-2.22.3.tar.bz2
+300ffe1b2413261b5ce5e451c8c7d0eb  download/librsvg-2.so.2.15.90.i
+5e90964c1f99f46100f71cdb3d549fcc  download/librsvg-2.so.2.15.90.s
+d2491b9b8f422321a88f0414f5e78196  download/CSWlibrsvg.gspec
+5b0c0387946c3b7ca7feb913de436936  download/pdiff.patch
+8a26f6d0d0cf1cfce1a1e0365c6624ce  download/perceptualdiff.patch
+803a5d10e3e9c9a561b397aade043024  download/test_makefiles.patch
+5eddcc7be3ee182c94ee21691720c6aa  download/doc_makefile.patch

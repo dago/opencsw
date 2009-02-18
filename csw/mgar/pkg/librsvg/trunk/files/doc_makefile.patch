@@ -1,0 +1,13 @@
+--- librsvg-2.22.3.orig/doc/Makefile.in	2008-09-23 02:54:51.000000000 +0200
++++ librsvg-2.22.3/doc/Makefile.in	2009-02-16 14:43:59.506582432 +0100
+@@ -568,8 +568,8 @@
+ @GTK_DOC_INSTALLED_TRUE@	  done; \
+ @GTK_DOC_INSTALLED_TRUE@	  echo '-- Installing $(srcdir)/html/index.sgml' ; \
+ @GTK_DOC_INSTALLED_TRUE@	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR) || :; \
+-@GTK_DOC_INSTALLED_TRUE@	  which gtkdoc-rebase >/dev/null && \
+-@GTK_DOC_INSTALLED_TRUE@	    gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$(DESTDIR)$(TARGET_DIR) ; \
++@GTK_DOC_INSTALLED_TRUE@	  #which gtkdoc-rebase >/dev/null && \
++@GTK_DOC_INSTALLED_TRUE@	    #gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$(DESTDIR)$(TARGET_DIR) ; \
+ @GTK_DOC_INSTALLED_TRUE@	fi
+ 
+ @GTK_DOC_INSTALLED_TRUE@uninstall-local:

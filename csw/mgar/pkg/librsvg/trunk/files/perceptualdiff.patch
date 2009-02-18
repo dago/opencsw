@@ -1,0 +1,18 @@
+diff --speed-large-files --minimal -Nru librsvg-2.22.3.orig/tests/pdiff/perceptualdiff.c librsvg-2.22.3/tests/pdiff/perceptualdiff.c
+--- librsvg-2.22.3.orig/tests/pdiff/perceptualdiff.c    2008-09-23 02:37:57.000000000 +0200
++++ librsvg-2.22.3/tests/pdiff/perceptualdiff.c 2009-02-04 00:45:09.487007307 +0100
+@@ -23,12 +23,14 @@
+ #include <stdint.h>
+ #else
+ #include <glib.h>
++/*
+ typedef gint8 int8_t;
+ typedef guint8 uint8_t;
+ typedef gint16 int16_t;
+ typedef guint16 uint16_t;
+ typedef gint32 int32_t;
+ typedef guint32 uint32_t;
++*/
+ #endif
+ 
+ #include <string.h>
