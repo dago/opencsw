@@ -27,9 +27,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES = $(DISTNAME).tar.bz2
 
-CATALOGNAME_CSWphp5xdebug = php5_zip
-SPKG_DESC_CSWphp5xdebug = zip Extention for PHP5
-REQUIRED_PKGS_CSWphp5xdebug = CSWphp5
+CATALOGNAME_CSWphp5zip = php5_zip
+SPKG_DESC_CSWphp5zip = zip Extention for PHP5
+REQUIRED_PKGS_CSWphp5zip = CSWphp5 CSWzlib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
@@ -38,7 +38,11 @@ post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 
-# There are no test scripts
-TEST_SCRIPTS =
+
+TEST_SCRIPTS = manual
+
+test-manual:
+	@( TEST_PHP_EXECUTABLE=$(PHP_BIN)/php ; export TEST_PHP_EXECUTABLE ; \
+		cd $(WORKSRC); $(PHP_BIN)/php ./run-tests.php -q )
 
 include gar/category.mk
