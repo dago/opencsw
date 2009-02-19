@@ -29,10 +29,13 @@ DISTFILES = $(DISTNAME).tar.bz2
 
 CATALOGNAME_CSWphp5$(PHP5EXT_NAME) = php5_$(PHP5EXT_NAME)
 SPKG_DESC_CSWphp5$(PHP5EXT_NAME) = $(PHP5EXT_NAME) Extention for PHP5
-REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5
+REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5 CSWexpat
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
+CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
+CONFIGURE_ARGS += --with-libexpat-dir=$(prefix)
+
 
 post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
