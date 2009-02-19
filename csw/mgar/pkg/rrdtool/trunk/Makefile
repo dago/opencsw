@@ -16,9 +16,6 @@ DISTFILES += $(call admfiles,CSWrrdtool,prototype,depend)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Patch to make it build on x86
-#PATCHFILES += rrd_config.diff
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-python
