@@ -40,7 +40,7 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
-pre-configure:
+pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); \
 	./buildconf)
 
@@ -59,12 +59,12 @@ CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 
 FIXCONFIG_DIRS     = $(DESTDIR)
 FIXCONFIG_RMPATHS  = $(DESTDIR)
-FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr-util
-FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr-util/include
-FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr
-FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/srclib/apr/include
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr-util
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr-util/include
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr
+FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr/include
 
-post-install: rename-httpd copy-local-files create-templates
+post-install-modulated: rename-httpd copy-local-files create-templates
 
 rename-httpd:
 	@if test -f $(APACHE_ROOT)/sbin/httpd ; then \
