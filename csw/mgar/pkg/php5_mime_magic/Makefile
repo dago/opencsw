@@ -19,7 +19,7 @@ STRIP_DIRS += $(PHP5ROOT)/lib/php/extensions/*/
 STRIP_DIRS += $(PHP5ROOT)/bin
 
 
-PACKAGES = CSWphp5$(PHP5EXT_NAME)
+PACKAGES = CSWphp5mimemagic
 
 MASTER_SITES = http://www.php.net/releases/
 SPKG_SOURCEURL = http://www.php.net/get/
@@ -27,9 +27,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES = $(DISTNAME).tar.bz2
 
-CATALOGNAME_CSWphp5$(PHP5EXT_NAME) = php5_$(PHP5EXT_NAME)
-SPKG_DESC_CSWphp5$(PHP5EXT_NAME) = $(PHP5EXT_NAME) Extention for PHP5
-REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5
+CATALOGNAME_CSWphp5mimemagic = php5_$(PHP5EXT_NAME)
+SPKG_DESC_CSWphp5mimemagic = $(PHP5EXT_NAME) Extention for PHP5
+REQUIRED_PKGS_CSWphp5mimemagic = CSWphp5
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
