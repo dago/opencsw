@@ -1,0 +1,70 @@
+--- ilmbase-1.0.1.orig/Imath/ImathMath.h	2006-12-08 22:59:37.000000000 +0100
++++ ilmbase-1.0.1/Imath/ImathMath.h	2009-02-17 07:35:07.878884110 +0100
+@@ -103,6 +103,9 @@
+    static T	exp   (T x)		{return ::exp (double(x));}
+    static T	log   (T x)		{return ::log (double(x));}
+    static T	log10 (T x)		{return ::log10 (double(x));}
++#if defined(__SunOS_5_8) || defined(__SunOS_5_9) // have floating point funcs !!
++//   static T	modf  (T x, T *y)	{return ::modf (double(x), double(y));}
++#else
+    static T	modf  (T x, T *iptr)
+    {
+         double ival;
+@@ -110,16 +113,49 @@
+ 	*iptr = ival;
+ 	return rval;
+    }
++#endif
+    static T	pow   (T x, T y)	{return ::pow (double(x), double(y));}
+    static T	sqrt  (T x)		{return ::sqrt (double(x));}
+    static T	ceil  (T x)		{return ::ceil (double(x));}
+    static T	fabs  (T x)		{return ::fabs (double(x));}
+    static T	floor (T x)		{return ::floor (double(x));}
++#if defined(__SunOS_5_8) || defined(__SunOS_5_9) // have floating point funcs !!
++//   static T	fmod  (T x, T y)	{return ::fmod (double(x), double(y));}
++#else
+    static T	fmod  (T x, T y)	{return ::fmod (double(x), double(y));}
++#endif
+    static T	hypot (T x, T y)	{return ::hypot (double(x), double(y));}
+ };
+ 
+ 
++// Sun, Apple, and Microsoft don't have floating point funcs
++#if defined ( __SunOS_5_8 ) || defined ( __SunOS_5_9 )
++template <>
++struct Math<float>
++{
++   static float	acos  (float x)			{return ::acos (x);}	
++   static float	asin  (float x)			{return ::asin (x);}
++   static float	atan  (float x)			{return ::atan (x);}
++   static float	atan2 (float x, float y)	{return ::atan2 (x, y);}
++   static float	cos   (float x)			{return ::cos (x);}
++   static float	sin   (float x)			{return ::sin (x);}
++   static float	tan   (float x)			{return ::tan (x);}
++   static float	cosh  (float x)			{return ::cosh (x);}
++   static float	sinh  (float x)			{return ::sinh (x);}
++   static float	tanh  (float x)			{return ::tanh (x);}
++   static float	exp   (float x)			{return ::exp (x);}
++   static float	log   (float x)			{return ::log (x);}
++   static float	log10 (float x)			{return ::log10 (x);}
++   static float	modf  (float x, float *y)	{return ::modf (x, y);}
++   static float	pow   (float x, float y)	{return ::pow (x, y);}
++   static float	sqrt  (float x)			{return ::sqrt (x);}
++   static float	ceil  (float x)			{return ::ceil (x);}
++   static float	fabs  (float x)			{return ::fabs (x);}
++   static float	floor (float x)			{return ::floor (x);}
++   static float	fmod  (float x, float y)	{return ::fmod (x, y);}
++   static float	hypot (float x, float y)	{return ::hypot (x, y);}
++};
++#else
+ template <>
+ struct Math<float>
+ {
+@@ -150,6 +186,7 @@
+ #endif
+ };
+ 
++#endif
+ 
+ //--------------------------------------------------------------------------
+ // Don Hatch's version of sin(x)/x, which is accurate for very small x.
