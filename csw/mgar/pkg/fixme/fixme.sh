@@ -31,13 +31,13 @@ for mk in $(gfind ${BASEPATH} -name Makefile -print); do
                 -e "s/\.so.*$//")
         fixpath=$(gecho $file |gsed 's/\//\\\//g')
         sed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >Makefile.new
-        mv Makefile.new ${mk}
+        gmv Makefile.new ${mk}
     done
 done
 
 ## Fix libtool Script
 for lt in $(gfind ${BASEPATH} -name libtool -print); do
     gsed "/for search_ext in .*\.la/s/\.la//" ${lt} >${lt}.new
-    mv ${lt}.new ${lt}
+    gmv ${lt}.new ${lt}
 done
 
