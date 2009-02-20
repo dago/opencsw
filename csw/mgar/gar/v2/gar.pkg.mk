@@ -241,7 +241,7 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter -i $(call licensedir,$*)/license \
+	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-i $(call licensedir,$*)/license) \
 		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-x $(call licensedir,$S)/license) \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
 		      $(if $(_PKGFILES_INCLUDE),-x '.*',$(foreach FILE,$(_PKGFILES_EXCLUDE),-x '$(FILE)')) \
