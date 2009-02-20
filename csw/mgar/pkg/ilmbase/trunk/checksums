@@ -1,3 +1,8 @@
 f76f094e69a6079b0beb93d97e2a217e  download/ilmbase-1.0.1.tar.gz
-4197e0e6fbbb788bce0276dd0fd3a565  download/CSWilmbase.gspec
-5147c10f8ee7064ed15cb93bd3b63f3f  download/ImathMath.patch
+b7daafc6a6c92a3cf9dfb47e24fa630f  download/libHalf.so.2.0.2.i
+cdce2f2b1c7d00dc76124ecb5418b9a2  download/libHalf.so.2.0.2.s
+1b589f5b747846688c27f55de9b1ec7a  download/libIex.so.2.0.2.i
+ddf913c9000dc4580ad330b9dd938826  download/libIex.so.2.0.2.s
+756523f803ce1be3e125b6ce63e3183c  download/libImath.so.2.0.2.i
+ce47a211381deadfc38722f5abda54d7  download/libImath.so.2.0.2.s
+6873969f50e5d1c43ec93a90a65d85bd  download/ImathMath.patch

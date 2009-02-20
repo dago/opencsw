@@ -4,7 +4,7 @@
     static T	exp   (T x)		{return ::exp (double(x));}
     static T	log   (T x)		{return ::log (double(x));}
     static T	log10 (T x)		{return ::log10 (double(x));}
-+#if defined(__SunOS_5_8) || defined(__SunOS_5_9) // have floating point funcs !!
++#if defined(__SunOS_5_8) || defined(__SunOS_5_9) // no floating point funcs 
 +//   static T	modf  (T x, T *y)	{return ::modf (double(x), double(y));}
 +#else
     static T	modf  (T x, T *iptr)
@@ -20,7 +20,7 @@
     static T	ceil  (T x)		{return ::ceil (double(x));}
     static T	fabs  (T x)		{return ::fabs (double(x));}
     static T	floor (T x)		{return ::floor (double(x));}
-+#if defined(__SunOS_5_8) || defined(__SunOS_5_9) // have floating point funcs !!
++#if defined(__SunOS_5_8) || defined(__SunOS_5_9) // no floating point funcs
 +//   static T	fmod  (T x, T y)	{return ::fmod (double(x), double(y));}
 +#else
     static T	fmod  (T x, T y)	{return ::fmod (double(x), double(y));}
@@ -29,7 +29,7 @@
  };
  
  
-+// Sun, Apple, and Microsoft don't have floating point funcs
++// Solaris 8 and 9 have problem with floating point funcs
 +#if defined ( __SunOS_5_8 ) || defined ( __SunOS_5_9 )
 +template <>
 +struct Math<float>
