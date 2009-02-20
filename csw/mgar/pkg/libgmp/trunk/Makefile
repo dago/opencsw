@@ -1,8 +1,8 @@
 GARNAME = gmp
-GARVERSION = 4.1.2
+GARVERSION = 4.2.4
 CATEGORIES = lib
 
-DESCRIPTION = The GNU MP Bignum Library
+DESCRIPTION = GNU Multiple Precision Arithmetic Library
 define BLURB
   GMP is a free library for arbitrary precision arithmetic, operating on signed
   integers, rational numbers, and floating point numbers. There is no limit to
@@ -19,13 +19,22 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgmp,)
+
+SPKG_SOURCEURL = http://gmplib.org/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+BUILD64 = 1
+
 TEST_TARGET = check
 
-CONFIGURE_ARGS = ABI=32 $(DIRPATHS)
+MPN_sparcv8 = "sparc32/v8 sparc32 generic"
+MPN_sparcv9 = "sparc64/v9 generic"
+
+#CONFIGURE_ARGS = ABI=32 $(DIRPATHS)
+CONFIGURE_ARGS = MPN_PATH=$(MPN_$(ISA)) $(DIRPATHS)
+
+PACKAGES = CSWlibgmp
 
 include gar/category.mk
