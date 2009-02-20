@@ -190,7 +190,6 @@ define _pkgfiles_exclude
 $(strip 
   $(foreach S,$(filter-out $(1),$(_PKG_SPECS)), 
     $(PKGFILES_$(S)) 
-    $(call licensedir,$(S))/.* 
     $(EXTRA_PKGFILES_EXCLUDED) 
     $(EXTRA_PKGFILES_EXCLUDED_$(1)) 
     $(_EXTRA_PKGFILES_EXCLUDED) 
@@ -200,7 +199,8 @@ endef
 
 define _pkgfiles_include
 $(strip 
-  $(call licensedir,$(1))/.* 
+  $(PKGFILES_$(1)_SHARED) 
+  $(PKGFILES_$(1)) 
 )
 endef
 
@@ -226,6 +226,12 @@ PROTOTYPE = $(WORKDIR)/prototype
 $(PROTOTYPE): $(WORKDIR) merge
 	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT)=/ >$@
 
+# The pathfilter rules are as follows:
+# - include license for current package
+# - exclude licenses for all other packages
+# - if other includes are given, only include these files
+# - if no include is given ("catch all packages") include everything except what
+#   is put in other packages
 .PRECIOUS: $(WORKDIR)/%.prototype $(WORKDIR)/%.prototype-$(GARCH)
 $(WORKDIR)/%.prototype: _PKGFILES_EXCLUDE=$(call _pkgfiles_exclude,$*)
 $(WORKDIR)/%.prototype: _PKGFILES_INCLUDE=$(call _pkgfiles_include,$*)
@@ -235,9 +241,10 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(foreach FILE,$(if $(or $(PKGFILES_$*_SHARED),$(PKGFILES_$*)),$(_PKGFILES_INCLUDE)) \
-			$(PKGFILES_$*_SHARED) $(PKGFILES_$*),-i '$(FILE)') \
-	              $(foreach FILE,$(_PKGFILES_EXCLUDE), -x '$(FILE)') \
+	  (pathfilter -i $(call licensedir,$*)/license \
+		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-x $(call licensedir,$S)/license) \
+		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
+		      $(if $(_PKGFILES_INCLUDE),-x '.*',$(foreach FILE,$(_PKGFILES_EXCLUDE),-x '$(FILE)')) \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
 	                  -e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))' \
 	               ) \
