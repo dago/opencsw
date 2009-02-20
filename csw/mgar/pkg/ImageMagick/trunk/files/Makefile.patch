@@ -1,0 +1,11 @@
+--- ImageMagick-6.4.9-4.orig/Makefile.in	2009-02-12 23:04:45.000000000 +0100
++++ ImageMagick-6.4.9-4/Makefile.in	2009-02-18 07:30:25.392728347 +0100
+@@ -2929,7 +2929,7 @@
+ coders_fpx_la_SOURCES = coders/fpx.c
+ coders_fpx_la_CPPFLAGS = $(MODULE_EXTRA_CPPFLAGS)
+ coders_fpx_la_LDFLAGS = $(MODULECOMMONFLAGS)
+-coders_fpx_la_LIBADD = $(MAGICKCORE_LIBS) $(FPX_LIBS) -lstdc++
++coders_fpx_la_LIBADD = $(MAGICKCORE_LIBS) $(FPX_LIBS)
+ 
+ # GIF coder module
+ coders_gif_la_SOURCES = coders/gif.c
