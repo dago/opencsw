@@ -47,7 +47,7 @@ SPKG_DESC_CSWgitdoc = Documentation for Git
 MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-PATCHFILES = doc-makefile.patch
+PATCHFILES = doc-makefile.patch git-svn-strftime.patch
 
 PKGFILES_CSWgitsvn = .*svn.*
 PKGFILES_CSWgitgui = .*git-gui.* .*git-citool.*
