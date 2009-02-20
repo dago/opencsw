@@ -21,9 +21,12 @@ MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/librsvg/$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).$(GARSUBREV).tar.bz2
 DISTFILES += librsvg-2.so.2.15.90.i
 DISTFILES += librsvg-2.so.2.15.90.s
-DISTFILES += $(call admfiles,CSWlibrsvg,)
 
 DISTNAME = $(GARNAME)-$(GARVERSION).$(GARSUBREV)
+
+SPKG_SOURCEURL = http://librsvg.sourceforge.net 
+
+LICENSE = COPYING.LIB
 
 REQUIRED_PKGS += CSWbzip2 CSWfconfig CSWftype2 CSWggettextrt
 REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWiconv CSWlibatk
