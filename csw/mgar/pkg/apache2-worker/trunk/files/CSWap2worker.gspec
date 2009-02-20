@@ -2,6 +2,6 @@
 %var            pkgname CSWap2worker
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %var            desc Apache 2.2 worker MPM
-%copyright      url file://%{WORKSRC}/LICENSE
-%preinstall     url file://%{WORKDIR}/CSWapache2.killproc
+%copyright      url file://%{WORKDIR_FIRSTMOD}/LICENSE
+%preinstall     url file://%{WORKDIR/CSWapache2.killproc
 %preremove      url file://%{WORKDIR}/CSWapache2.killproc

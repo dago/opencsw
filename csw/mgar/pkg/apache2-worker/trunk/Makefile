@@ -19,13 +19,17 @@ DEPENDS   += server/apache2
 
 APACHE_ROOT = $(DESTDIR)$(prefix)/apache2
 
-# Build Configuration
-CONFIGURE_ARGS += --with-mpm=worker
-
 include gar/category.mk
 include ../../apache2/trunk/files/rules.mk
 
-post-install: rename-httpd
+pre-configure-modulated:
+	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); \
+	./buildconf)
+
+# Build Configuration
+CONFIGURE_ARGS += --with-mpm=worker
+
+post-install-modulated: rename-httpd
 
 rename-httpd:
 	@if test -f $(APACHE_ROOT)/sbin/httpd ; then \
