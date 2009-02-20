@@ -464,7 +464,7 @@ reset-install: reset-merge $(addprefix reset-install-,$(MODULATIONS))
 reset-install-modulated:
 	@$(call _pmod,Reset install state)
 	@rm -rf $(INSTALLISADIR) $(COOKIEDIR)/install-work
-	@rm -f $(COOKIEDIR)/install-modulated
+	@rm -f $(foreach C,pre-install-modulated install-modulated post-install-modulated,$(COOKIEDIR)/$C)
 
 # merge in all isas to the package directory after installation
 
