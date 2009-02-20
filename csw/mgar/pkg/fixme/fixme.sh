@@ -41,3 +41,9 @@ for lt in $(gfind ${BASEPATH} -name libtool -print); do
     gmv ${lt}.new ${lt}
 done
 
+LTMAIN=$(gfind ${BASEPATH} -name ltmain.sh -print)
+if [ -f ${LTMAIN} ]; then
+    gsed "/for search_ext in .*\.la/s/\.la//" ${LTMAIN} >${LTMAIN}.new
+    gmv ${LTMAIN}.new ${LTMAIN}
+fi
+
