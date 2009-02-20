@@ -11,7 +11,10 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibexif,)
+
+SPKG_SOURCEURL = http://libexif.sourceforge.net
+
+LICENSE = COPYING
 
 REQUIRED_PKGS += CSWggettextrt
 
