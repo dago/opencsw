@@ -12,7 +12,10 @@ endef
 
 MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibiptcdata,)
+
+SPKG_SOURCEURL = http://libiptcdata.sourceforge.net
+
+LICENSE = COPYING
 
 REQUIRED_PKGS = CSWggettextrt CSWiconv
 
