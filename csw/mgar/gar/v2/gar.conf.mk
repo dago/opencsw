@@ -513,8 +513,9 @@ GOOGLE_MIRROR  ?= http://$(GOOGLE_PROJECT).googlecode.com/files/
 GNU_SITE     = http://mirrors.kernel.org
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
-GNU_MIRROR   = $(GNU_GNUROOT)/$(GARNAME)/
-GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GARNAME)/
+GNU_PROJ    ?= $(GARNAME)
+GNU_MIRROR   = $(GNU_GNUROOT)/$(GNU_PROJ)/
+GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GNU_PROJ)/
 
 # CPAN
 CPAN_SITES  += http://search.cpan.org/CPAN
