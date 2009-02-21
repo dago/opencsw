@@ -1,7 +1,3 @@
 6c6c3dbb7bf079e0bb5fbbfd3bb8a71c  download/gd-2.0.35.tar.bz2
-b398d4a1d63d198efefe8981bc593d25  download/CSWgd.gspec
-a27c2f9d196328f8313c7d8dbf09482a  download/CSWgd.depend
-9e7a372172740b1b6402b6495118e70c  download/CSWgd.prototype
-18ce4fa639cadcc52e1499a9462de12f  download/CSWgd-devel.gspec
-748ddb41e5984e34b92ef1d77f544f71  download/CSWgd-devel.depend
-b195cab77f83d8aea3f6615159614af4  download/CSWgd-devel.prototype
+70771682427d524354d50482371edca5  download/fixme.sh
+88e69d03742a55f979e2822d97c525c1  download/Makefile.diff

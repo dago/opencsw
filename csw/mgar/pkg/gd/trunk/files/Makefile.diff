@@ -1,0 +1,10 @@
+--- gd-2.0.35/Makefile.in.orig	2009-02-20 16:42:35.992955622 -0600
++++ gd-2.0.35/Makefile.in	2009-02-20 16:42:39.401892868 -0600
+@@ -399,6 +399,7 @@
+ 	cd $(top_srcdir) && $(AUTOHEADER)
+ 	rm -f stamp-h1
++	@$(srcdir)../fixme.sh $(srcdir)
+ 	touch $@
+ 
+ distclean-hdr:
+ 	-rm -f config.h stamp-h1
