@@ -31,7 +31,7 @@ LICENSE = COPYING.LIB
 REQUIRED_PKGS += CSWbzip2 CSWfconfig CSWftype2 CSWggettextrt
 REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWiconv CSWlibatk
 REQUIRED_PKGS += CSWlibcairo CSWlibcroco CSWlibgsf
-REQUIRED_PKGS += CSWlibxml2 CSWlibxml2devel CSWpango CSWpng CSWsunmath CSWzlib
+REQUIRED_PKGS += CSWlibxml2 CSWlibxml2devel CSWpango CSWpng CSWzlib
 REQUIRED_PKGS += CSWbonobo2 CSWgconf2 CSWgnomevfs2 CSWlibxrender CSWorbit2
 
 # We define upstream file regex so we can be notifed of new upstream software release
