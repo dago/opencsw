@@ -37,7 +37,7 @@ CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --with-libexpat-dir=$(prefix)
 
 
-post-extract-modulated:
+post-extract-$(MODULATION):
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 
