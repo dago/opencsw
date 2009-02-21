@@ -1,7 +1,7 @@
-diff --speed-large-files --minimal -Nru bash-3.2.orig/config-top.h bash-3.2/config-top.h
---- config-top.h.orig	2005-04-29 16:36:34.000000000 -0400
-+++ config-top.h	2007-07-08 06:15:52.345236000 -0400
-@@ -73,10 +73,10 @@
+diff --speed-large-files --minimal -Nru bash-4.0.orig/config-top.h bash-4.0/config-top.h
+--- config-top.h	2009-01-04 20:32:23.000000000 +0100
++++ config-top.h.new	2009-02-21 17:03:21.765660704 +0100
+@@ -75,10 +75,10 @@
  #define KSH_COMPATIBLE_SELECT
  
  /* System-wide .bashrc file for interactive shells. */
@@ -14,9 +14,12 @@ diff --speed-large-files --minimal -Nru bash-3.2.orig/config-top.h bash-3.2/conf
  
  /* Define this to make non-interactive shells begun with argv[0][0] == '-'
     run the startup files when not in posix mode. */
-@@ -84,4 +84,4 @@
- 
- /* Define this if you want bash to try to check whether it's being run by
-    sshd and source the .bashrc if so (like the rshd behavior). */
+@@ -88,7 +88,7 @@
+    sshd and source the .bashrc if so (like the rshd behavior).  This checks
+    for the presence of SSH_CLIENT or SSH2_CLIENT in the initial environment,
+    which can be fooled under certain not-uncommon circumstances. */
 -/* #define SSH_SOURCE_BASHRC */
 +#define SSH_SOURCE_BASHRC
+ 
+ /* Define if you want the case-capitalizing operators (~[~]) and the
+    `capcase' variable attribute (declare -c). */

@@ -1,6 +1,6 @@
 GARNAME = bash
-GARVERSION = 3.2
-PATCHLEVEL = 48
+GARVERSION = 4.0
+PATCHLEVEL = 0
 CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -33,7 +33,6 @@ PATCHFILES = $(shell LEVEL=1; \
 		done )
 
 PATCHFILES += use_system_bashrc_and_logout.patch
-
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
