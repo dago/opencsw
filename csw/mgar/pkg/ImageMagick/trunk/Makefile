@@ -24,11 +24,11 @@ DISTNAME = ImageMagick-$(GARVERSION)-$(GARSUBREV)
 
 LICENSE = LICENSE
 
-REQUIRED_PKGS += CSWbzip2 CSWfconfig CSWftype2 CSWgcc2g++rt CSWggettextrt
-REQUIRED_PKGS += CSWggettext CSWsunmath
-REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWilmbase CSWjasper CSWjbigkit
-REQUIRED_PKGS += CSWjpeg CSWlcms CSWlibcairo CSWlibfpx CSWlibrsvg 
-REQUIRED_PKGS += CSWlibxml2 CSWopenexr CSWperl CSWpng CSWtiff CSWwmf CSWzlib
+REQUIRED_PKGS += CSWbzip2 CSWdjvulibre CSWfconfig CSWftype2 CSWgcc2g++rt 
+REQUIRED_PKGS += CSWggettext CSWggettextrt CSWglib2 CSWgs CSWgtk2 CSWiconv 
+REQUIRED_PKGS += CSWilmbase CSWjasper CSWjbigkit CSWjpeg CSWlcms CSWlibcairo 
+REQUIRED_PKGS += CSWlibfpx CSWlibrsvg CSWlibxml2 CSWopenexr CSWperl CSWpng 
+REQUIRED_PKGS += CSWsunmath CSWtiff CSWwmf CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+).tar.bz2
@@ -36,6 +36,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+).tar.bz2
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --enable-shared --disable-static
+CONFIGURE_ARGS += --with-gslib=yes
 
 PATCHFILES += Makefile.patch
 
