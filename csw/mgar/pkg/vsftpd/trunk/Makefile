@@ -1,5 +1,5 @@
 GARNAME = vsftpd
-GARVERSION = 2.0.7
+GARVERSION = 2.1.0
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.

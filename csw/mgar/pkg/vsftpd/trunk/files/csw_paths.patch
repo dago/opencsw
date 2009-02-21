@@ -10,41 +10,42 @@ diff --speed-large-files --minimal -Nru vsftpd-2.0.4.orig/defs.h vsftpd-2.0.4/de
  
  #define VSFTP_COMMAND_FD        0
  
-diff --speed-large-files --minimal -Nru vsftpd-2.0.4.orig/tunables.c vsftpd-2.0.4/tunables.c
---- vsftpd-2.0.4.orig/tunables.c	2006-04-12 18:07:06.221062000 -0400
-+++ vsftpd-2.0.4/tunables.c	2006-04-12 18:06:35.899619000 -0400
-@@ -92,7 +92,7 @@
- unsigned int tunable_max_per_ip = 0;
- unsigned int tunable_trans_chunk_size = 0;
+diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.0/tunables.c
+--- vsftpd-2.1.0.orig/tunables.c	2009-02-21 21:24:31.639775254 +0100
++++ vsftpd-2.1.0/tunables.c	2009-02-21 21:24:09.490356200 +0100
+@@ -242,7 +242,7 @@
+   /* -rw------- */
+   tunable_chown_upload_mode = 0600;
  
--const char* tunable_secure_chroot_dir = "/usr/share/empty";
-+const char* tunable_secure_chroot_dir = "/opt/csw/var/empty/vsftpd";
- const char* tunable_ftp_username = "ftp";
- const char* tunable_chown_username = "root";
- const char* tunable_xferlog_file = "/var/log/xferlog";
-@@ -100,11 +100,11 @@
- const char* tunable_message_file = ".message";
- const char* tunable_nopriv_user = "nobody";
- const char* tunable_ftpd_banner = 0;
--const char* tunable_banned_email_file = "/etc/vsftpd.banned_emails";
--const char* tunable_chroot_list_file = "/etc/vsftpd.chroot_list";
-+const char* tunable_banned_email_file = "/opt/csw/etc/vsftpd/vsftpd.banned_emails";
-+const char* tunable_chroot_list_file = "/opt/csw/etc/vsftpd/vsftpd.chroot_list";
- const char* tunable_pam_service_name = "ftp";
- const char* tunable_guest_username = "ftp";
--const char* tunable_userlist_file = "/etc/vsftpd.user_list";
-+const char* tunable_userlist_file = "/opt/csw/etc/vsftpd/vsftpd.user_list";
- const char* tunable_anon_root = 0;
- const char* tunable_local_root = 0;
- const char* tunable_banner_file = 0;
-@@ -116,8 +116,8 @@
- const char* tunable_hide_file = 0;
- const char* tunable_deny_file = 0;
- const char* tunable_user_sub_token = 0;
--const char* tunable_email_password_file = "/etc/vsftpd.email_passwords";
--const char* tunable_rsa_cert_file = "/usr/share/ssl/certs/vsftpd.pem";
-+const char* tunable_email_password_file = "/opt/csw/etc/vsftpd/vsftpd.email_passwords";
-+const char* tunable_rsa_cert_file = "/opt/csw/ssl/certs/vsftpd.pem";
- const char* tunable_dsa_cert_file = 0;
- const char* tunable_ssl_ciphers = "DES-CBC3-SHA";
- const char* tunable_rsa_private_key_file = 0;
+-  install_str_setting("/usr/share/empty", &tunable_secure_chroot_dir);
++  install_str_setting("/opt/csw/var/empty/vsftpd", &tunable_secure_chroot_dir);
+   install_str_setting("ftp", &tunable_ftp_username);
+   install_str_setting("root", &tunable_chown_username);
+   install_str_setting("/var/log/xferlog", &tunable_xferlog_file);
+@@ -250,11 +250,11 @@
+   install_str_setting(".message", &tunable_message_file);
+   install_str_setting("nobody", &tunable_nopriv_user);
+   install_str_setting(0, &tunable_ftpd_banner);
+-  install_str_setting("/etc/vsftpd.banned_emails", &tunable_banned_email_file);
+-  install_str_setting("/etc/vsftpd.chroot_list", &tunable_chroot_list_file);
++  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.banned_emails", &tunable_banned_email_file);
++  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.chroot_list", &tunable_chroot_list_file);
+   install_str_setting("ftp", &tunable_pam_service_name);
+   install_str_setting("ftp", &tunable_guest_username);
+-  install_str_setting("/etc/vsftpd.user_list", &tunable_userlist_file);
++  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.user_list", &tunable_userlist_file);
+   install_str_setting(0, &tunable_anon_root);
+   install_str_setting(0, &tunable_local_root);
+   install_str_setting(0, &tunable_banner_file);
+@@ -267,9 +267,9 @@
+   install_str_setting(0, &tunable_hide_file);
+   install_str_setting(0, &tunable_deny_file);
+   install_str_setting(0, &tunable_user_sub_token);
+-  install_str_setting("/etc/vsftpd.email_passwords",
++  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.email_passwords",
+                       &tunable_email_password_file);
+-  install_str_setting("/usr/share/ssl/certs/vsftpd.pem",
++  install_str_setting("/opt/csw/ssl/certs/vsftpd.pem",
+                       &tunable_rsa_cert_file);
+   install_str_setting(0, &tunable_dsa_cert_file);
+   install_str_setting("DES-CBC3-SHA", &tunable_ssl_ciphers);
