@@ -35,7 +35,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
 CONFIGURE_ARGS += --with-recode=$(prefix)
 
-post-extract-modulated:
+post-extract-$(MODULATION):
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 
