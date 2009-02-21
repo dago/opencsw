@@ -51,7 +51,7 @@ DISTFILES += $(call admfiles,CSWsvn-devel,depend)
 
 # Templates
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
-
+DISTFILES += fixme.sh
 # Fix: Allow neon 0.26.2
 # PATCHFILES += neon-version.diff
 
@@ -95,12 +95,14 @@ TEST_TARGET = check
 TEST_SCRIPTS =
 
 EXTRA_LIB = $(prefix)/bdb44/lib $(SVNLIB)
+EXTRA_LIB += $(prefix)/apache2/lib
 EXTRA_INC = $(prefix)/bdb44/include
+EXTRA_INC += $(prefix)/apache2/include
 
 include gar/category.mk
 
 # Add libintl when linking
-LIBS += -lintl -liconv
+LIBS += -lintl -liconv 
 export LIBS
 
 # Fixconfig variables
@@ -121,6 +123,11 @@ PI_DEPENDS += copy-templates
 PI_DEPENDS += install-man
 PI_DEPENDS += install-tools
 PI_DEPENDS += install-contrib
+
+post-configure-$(MODULATION):
+	@(echo "~~~ Fixing Libtool ~~~")
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	$(DONADA)
 
 post-install: $(PI_DEPENDS)
 	@$(MAKECOOKIE)
