@@ -27,13 +27,25 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 
+EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv8plus+vis 
+EXTRA_BUILD_ISAS_i386  = pentium
+
 TEST_TARGET = check
 
 MPN_sparcv8 = "sparc32/v8 sparc32 generic"
-MPN_sparcv9 = "sparc64/v9 generic"
+MPN_sparcv8plus = "sparc32/v9 sparc32 generic"
+MPN_sparcv8plus+vis = "sparc32/v9 sparc32 generic"
+MPN_sparcv9 = "sparc64 generic"
+
+MPN_i386 = "x86 generic"
+MPN_pentium = "x86/pentium x86 generic"
+MPN_amd64 = "x86_64 generic"
 
 #CONFIGURE_ARGS = ABI=32 $(DIRPATHS)
 CONFIGURE_ARGS = MPN_PATH=$(MPN_$(ISA)) $(DIRPATHS)
+
+EXTRA_MERGE_DIRS_isa-sparcv9 = $(includedir)
+EXTRA_MERGE_DIRS_isa-amd64 = $(includedir)
 
 PACKAGES = CSWlibgmp
 
