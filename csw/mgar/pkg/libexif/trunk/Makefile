@@ -25,6 +25,8 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+PATCHFILES = Makefile.patch
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
