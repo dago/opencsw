@@ -33,12 +33,14 @@ REQUIRED_PKGS += CSWsunmath CSWtiff CSWwmf CSWzlib
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+).tar.bz2
 
-LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib -R/usr/openwin/lib
+CPPFLAGS += -I/usr/openwin/include -I/usr/openwin/include/X11
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --enable-shared --disable-static
-CONFIGURE_ARGS += --with-gslib=yes
+CONFIGURE_ARGS += --with-dps=yes --with-gslib=yes
+CONFIGURE_ARGS += --x-includes=/usr/openwin/include
+CONFIGURE_ARGS += --x-libraries=/usr/openwin/lib 
 
 PATCHFILES += Makefile.patch
 
