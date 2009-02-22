@@ -1,9 +1,9 @@
 GARNAME = readline
-GARVERSION = 5.2
+GARVERSION = 6.0
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 4.3 5.2
+MODULATIONS_GARVERSION = 4.3 5.2 6.0
 
 DESCRIPTION = GNU readline
 define BLURB
@@ -37,18 +37,28 @@ MERGE_DIRS_isa-i386-garversion-4.3 = $(libdir)
 MERGE_SCRIPTS_isa-amd64-garversion-4.3 = copy-relocated-only
 MERGE_DIRS_isa-amd64-garversion-4.3 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-garversion-5.2 = copy-all
+MERGE_SCRIPTS_isa-i386-garversion-5.2 = copy-only
+MERGE_DIRS_isa-i386-garversion-5.2 = $(libdir)
 MERGE_SCRIPTS_isa-amd64-garversion-5.2 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-5.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_DIRS_isa-amd64-garversion-5.2 = $(libdir)
+
+MERGE_SCRIPTS_isa-i386-garversion-6.0 = copy-all
+MERGE_SCRIPTS_isa-amd64-garversion-6.0 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-6.0 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 MERGE_SCRIPTS_isa-sparcv8-garversion-4.3 = copy-only
 MERGE_DIRS_isa-sparcv8-garversion-4.3 = $(libdir)
 MERGE_SCRIPTS_isa-sparcv9-garversion-4.3 = copy-relocated-only
 MERGE_DIRS_isa-sparcv9-garversion-4.3 = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-5.2 = copy-all
+MERGE_SCRIPTS_isa-sparcv8-garversion-5.2 = copy-only
+MERGE_DIRS_isa-sparcv8-garversion-5.2 = $(libdir)
 MERGE_SCRIPTS_isa-sparcv9-garversion-5.2 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-5.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_DIRS_isa-sparcv9-garversion-5.2 = $(libdir)
+
+MERGE_SCRIPTS_isa-sparcv8-garversion-6.0 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-garversion-6.0 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-6.0 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 include gar/category.mk
 
