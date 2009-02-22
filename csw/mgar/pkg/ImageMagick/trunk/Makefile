@@ -33,6 +33,8 @@ REQUIRED_PKGS += CSWsunmath CSWtiff CSWwmf CSWzlib
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+).tar.bz2
 
+LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib -R/usr/openwin/lib
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --enable-shared --disable-static
@@ -43,6 +45,7 @@ PATCHFILES += Makefile.patch
 # Test has to be run *after* install
 TEST_SCRIPTS =
 
+MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
 include gar/category.mk
