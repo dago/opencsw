@@ -69,6 +69,8 @@ INSTALL_ARGS = install-all
 WORKSRC = $(WORKDIR)/$(DISTNAME)-$(PATCHLEVEL)
 WORKSRC_FIRSTMOD = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)-$(PATCHLEVEL)
 
+# We want libruby-static.a to ship.  mkmf tests for various things using it.
+MERGE_EXCLUDE_STATICLIBS = 
 
 include gar/category.mk
 
