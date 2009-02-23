@@ -21,6 +21,9 @@ UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
+# Previous Library for compatability
+DISTFILES += libpython2.5.so.1.0
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -52,8 +55,9 @@ PKGFILES_CSWidle += $(bindir)/idle
 PKGFILES_CSWpython-tk = $(libdir)/python2*/lib-tk/.*
 PKGFILES_CSWpython-tk += $(libdir)/python2*/lib-dynload/*tkinter*
 
-REQUIRED_PKGS_CSWpython = CSWbdb44 CSWbzip2 CSWgdbm CSWggettext
+REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
 REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
+REQUIRED_PKGS_CSWpython += CSWsqlite3 CSWtcl CSWtk
 REQUIRED_PKGS_CSWpython-tk = CSWpython CSWtcl CSWtk
 REQUIRED_PKGS_CSWidle = CSWpython CSWpython-tk
 
@@ -66,3 +70,12 @@ SPKG_DESC_CSWpython-tk = Python Tk Interface (TkInter)
 SPKG_DESC_CSWidle = Python IDE
 
 include gar/category.mk
+
+post-install: add-depricated-libs
+
+add-depricated-libs:
+	@cp $(DOWNLOADDIR)/libpython2.5.so.1.0 $(DESTDIR)$(libdir)
+	@cd $(DESTDIR)$(libdir);ln -s libpython2.5.so.1.0 libpython2.5.so
+	$(DONADA)
+
+
