@@ -1,4 +1,0 @@
-%var            bitname rubytk
-%var            pkgname CSWrubytk
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
-%include        url file://%{PKGLIB}/csw_standard.gspec

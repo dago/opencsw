@@ -1,5 +1,0 @@
-%var            bitname rubydoc
-%var            pkgname CSWrubydoc
-%var		arch all
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
-%include        url file://%{PKGLIB}/csw_standard.gspec
