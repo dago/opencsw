@@ -1,9 +1,8 @@
 %var            bitname nagios
 %var            pkgname CSWnagios
 %var      	SERVICE_CONF_FILES      /opt/csw/nagios/etc/nagios.cfg
-%var    	RC_INIT_SCRIPT          nagios
-%var    	SMF_SCRIPT		svc-nagios
-%var    	SMF_MANIFEST		nagios.xml
+%var            RC_INIT_SCRIPT          nagios
+%var            SMF_SCRIPT              svc-nagios
+%var            SMF_MANIFEST            nagios.xml
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%include  	url file://%{PKGLIB}/smf_enabled.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
+%include        url file://%{PKGLIB}/smf_enabled.gspec

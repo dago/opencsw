@@ -7,10 +7,9 @@ define BLURB
   Nagios is a powerful, enterprise-class host, service, application, and network monitoring program. Designed to be fast, flexible, and rock-solid stable. Nagios runs on *NIX hosts and can monitor Windows, Linux/Unix/BSD, Netware, and network devices.
 endef
 
-MASTER_SITES = http://kent.dl.sourceforge.net/sourceforge/nagios/
+MASTER_SITES =$(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWnagios)
-DISTFILES += $(call admfiles,CSWnagios,prototype checkinstall preinstall preremove postinstall depend)
+DISTFILES += $(call admfiles,CSWnagios,checkinstall preinstall preremove prototype postinstall )
 DISTFILES += nagios nagios.xml svc-nagios
 
 PATCHFILES = patch.diff	# cgi/cmd.c - GNU macro __attribute__ unknown to compiler
@@ -21,9 +20,9 @@ PATCHFILES += configure.diff	# configure.in
 				# -lsunmath is needed in configure for checking of libgd
 PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (empty)
 				# necessary, so ginstall doesn't get -o and -g options
-PATCHFILES += webconf.diff	# global Makefile.in
-				# nagios httpd-config is renamed to httpd-nagios.conf
-PATCHFILES += doc.diff	# Makefile.in - copies READMes ... to /opt/csw/share/doc/nagios/
+
+REQUIRED_PKGS_CSWnagios  = CSWapache CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
+REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWnrpeplugin
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --prefix=/opt/csw/nagios
@@ -33,7 +32,6 @@ CONFIGURE_ARGS += --with-command-group=nagios
 CONFIGURE_ARGS += --with-httpd-conf=/opt/csw/nagios/etc
 CONFIGURE_ARGS += --enable-embedded-perl
 
-#prefix ?= /opt/csw/nagios
 sysconfdir ?= $(prefix)/nagios/etc
 localstatedir ?= $(prefix)/nagios/var
 bindir ?= $(prefix)/nagios/bin
@@ -49,7 +47,19 @@ TEST_TARGET = none
 
 INSTALL_ARGS += install-init
 INSTALL_ARGS += install-config
-INSTALL_ARGS += install-webconf
 INSTALL_ARGS += install-commandmode
-INSTALL_ARGS += install-docs
+
 include gar/category.mk
+
+DOCS = Changelog INSTALLING README UPGRADING
+DOCDEST = $(DESTDIR)$(prefix)/share/doc/nagios
+HTTPD_CONF = $(DESTDIR)$(sysconfdir)
+
+post-install-modulated:
+	@echo $(DOCDEST)
+	@ginstall -m 755 -d  $(DOCDEST)
+	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
+	@ginstall -m 644 $(WORKSRC)/LICENSE $(DOCDEST)
+	@ginstall -m 644 $(WORKSRC)/sample-config/httpd.conf $(HTTPD_CONF)/httpd-nagios.conf
+	@$(MAKECOOKIE)
+
