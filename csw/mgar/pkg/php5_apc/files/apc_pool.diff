@@ -1,0 +1,11 @@
+--- ./apc_pool.c.orig	2009-02-18 15:11:37.456436248 -0600
++++ ./apc_pool.c	2009-02-18 15:07:42.710261378 -0600
+@@ -43,7 +43,7 @@
+     unsigned char       *mark;
+     struct _pool_block  *next;
+     unsigned             :0; /* this should align to word */
+-    unsigned char       data[0]; 
++    unsigned char       data[]; 
+ }pool_block;
+ 
+ /*
