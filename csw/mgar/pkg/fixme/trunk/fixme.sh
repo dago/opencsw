@@ -21,7 +21,7 @@ BASEPATH=$1
 
 ## Fix Makefiles
 for mk in $(gfind ${BASEPATH} -name Makefile -print); do
-    LT_FILES=$(ggrep '/opt/csw.*/lib/.*.la' ${mk} | \
+    LT_FILES=$(ggrep '/opt/csw.*/lib/.*\.la' ${mk} | \
         gsed "s/^.*\(\/opt\/csw.*\/lib\/.*\.la\).*$/\1/")
     
     for file in ${LT_FILES}; do
