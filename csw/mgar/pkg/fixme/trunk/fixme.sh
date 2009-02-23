@@ -30,7 +30,7 @@ for mk in $(gfind ${BASEPATH} -name Makefile -print); do
                 -e "s/^lib//" \
                 -e "s/\.so.*$//")
         fixpath=$(gecho $file |gsed 's/\//\\\//g')
-        sed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >Makefile.new
+        gsed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >Makefile.new
         gmv Makefile.new ${mk}
     done
 done
