@@ -39,7 +39,7 @@ CONFIGURE_ARGS += --with-kerberos=$(prefix)
 CONFIGURE_ARGS += --with-imap-ssl=$(prefix)
 
 
-post-extract-$(MODULATION):
+post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 

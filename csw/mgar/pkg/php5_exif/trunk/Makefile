@@ -35,7 +35,7 @@ PATCHFILES = exif.diff
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
 
-post-extract-$(MODULATION):
+post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 

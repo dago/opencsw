@@ -39,7 +39,7 @@ REQUIRED_PKGS_CSWphp5xdebug = CSWphp5
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
 
-post-extract-$(MODULATION):
+post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 

@@ -34,7 +34,7 @@ REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5 CSWmysql5rt
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
 CONFIGURE_ARGS += --with-mysql=$(prefix)
-post-extract-$(MODULATION):
+post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 

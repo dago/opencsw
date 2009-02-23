@@ -41,7 +41,7 @@ CONFIGURE_ARGS += --with-jpeg=$(prefix)
 CONFIGURE_ARGS += --with-xpm=$(prefix)
 CONFIGURE_ARGS += --disable-fast-install
 
-post-configure-$(MODULATION):
+post-configure-modulated:
 	@(echo "~~~ Fixing Libtool ~~~")
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
 	$(DONADA)

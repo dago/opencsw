@@ -41,7 +41,7 @@ CONFIGURE_ARGS += --with-xpm-dir=$(prefix)
 CONFIGURE_ARGS += --with-ttf=$(prefix)
 CONFIGURE_ARGS += --with-freetype-dir=$(prefix)
 
-post-extract-$(MODULATION):
+post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 

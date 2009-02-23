@@ -38,7 +38,7 @@ CONFIGURE_ARGS += --with-pdo-mysql=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
 
-post-extract-$(MODULATION):
+post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 
