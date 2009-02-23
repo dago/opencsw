@@ -47,7 +47,8 @@ SPKG_DESC_CSWgitdoc = Documentation for Git
 MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-PATCHFILES = doc-makefile.patch git-svn-strftime.patch
+PATCHFILES = doc-makefile.patch
+PATCHFILES += 0001-git-svn-fix-for-systems-without-strftime-z.patch
 
 PKGFILES_CSWgitsvn = .*svn.*
 PKGFILES_CSWgitgui = .*git-gui.* .*git-citool.*
@@ -69,7 +70,7 @@ CONFIGURE_ARGS += --with-iconv=$(prefix)
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ETC_CONFIG=$(sysconfdir)/gitconfig V=1 \
-		all doc
+		all
 
 INSTALL_ARGS = ETC_CONFIG=$(sysconfdir)/gitconfig install-doc
 

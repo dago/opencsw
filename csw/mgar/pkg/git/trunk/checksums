@@ -1,3 +1,3 @@
 e31ea5ce9b076f5745056f01465e9602  download/git-1.6.1.3.tar.bz2
 075441ea2a95cfa5fd7aaebb888a93f3  download/doc-makefile.patch
-e8b5e89c38958bbcd5a5dbc29124ebc2  download/git-svn-strftime.patch
+eb302356ce2cfbf076d3e86aa450f97a  download/0001-git-svn-fix-for-systems-without-strftime-z.patch
