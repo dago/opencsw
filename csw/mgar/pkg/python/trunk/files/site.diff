@@ -1,0 +1,25 @@
+--- Python-2.6.1/Lib/site.py.orig	2009-02-23 15:13:02.813997871 -0600
++++ Python-2.6.1/Lib/site.py	2009-02-23 15:20:00.516392336 -0600
+@@ -268,7 +268,21 @@
+             sitedirs.append(os.path.join(prefix, "lib",
+                                         "python" + sys.version[:3],
+                                         "site-packages"))
+-            sitedirs.append(os.path.join(prefix, "lib", "site-python"))
++            sitedirs.append(os.path.join(prefix, "lib", 
++                                        "python",
++                                        "site-packages"))
++            sitedirs.append(os.path.join(prefix, "lib", 
++                                        "python2.5",
++                                        "site-python"))
++            sitedirs.append(os.path.join(prefix, "lib", 
++                                        "python2.3",
++                                        "site-python"))
++            sitedirs.append(os.path.join(prefix, "lib", 
++                                        "python2.1",
++                                        "site-python"))
++            sitedirs.append(os.path.join(prefix, "lib", 
++                                        "site-python",
++                                        "site-python"))
+         else:
+             sitedirs.append(prefix)
+             sitedirs.append(os.path.join(prefix, "lib", "site-packages"))
