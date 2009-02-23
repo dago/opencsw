@@ -89,7 +89,6 @@ CONFIGURE_ARGS += --with-neon=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS += --with-jikes=$(bindir)/jikes
 
 TEST_TARGET = check
 
@@ -113,10 +112,10 @@ BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 PI_DEPENDS  = $(BINDING_TARGETS)
 PI_DEPENDS += copy-templates
 
-post-install-$(MODULATION): $(PI_DEPENDS)
+post-install-modulated: $(PI_DEPENDS)
 	$(DONADA)
 
-post-configure-$(MODULATION):
+post-configure-modulated:
 	@(echo "~~~ Fixing Libtool ~~~")
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
 	$(DONADA)
@@ -133,9 +132,9 @@ copy-templates:
 
 svn-python:
 	@echo " ==> Building Python bindings"
-	#@touch \
-	#	$(WORKSRC)/subversion/bindings/swig/python/*.c \
-	#	$(WORKSRC)/subversion/bindings/swig/python/*.py
+	@touch \
+		$(WORKSRC)/subversion/bindings/swig/python/*.c \
+		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
 	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py 
 	@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
@@ -143,9 +142,9 @@ svn-python:
 
 svn-perl:
 	@echo " ==> Building Perl bindings"
-	#@touch \
-	#	$(WORKSRC)/subversion/bindings/swig/perl/native/*.c \
-	#	$(WORKSRC)/subversion/bindings/swig/perl/native/*.pm
+	@touch \
+		$(WORKSRC)/subversion/bindings/swig/perl/native/*.c \
+		$(WORKSRC)/subversion/bindings/swig/perl/native/*.pm
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-pl
 	@$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
 	@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-pl
@@ -153,7 +152,7 @@ svn-perl:
 
 svn-ruby:
 	@echo " ==> Building Ruby bindings"
-	#@touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
+	@touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-rb
 	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-rb
 	@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-rb
