@@ -22,6 +22,9 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
 REQUIRED_PKGS = CSWgpgerr CSWpth
 
+BUILD64 = 1
+NO_ISAEXEC = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
