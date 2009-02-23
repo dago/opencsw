@@ -24,12 +24,10 @@ SPKG_DESC_CSWajcbeanutils    = $(DESCRIPTION)
 SPKG_DESC_CSWajcbeanutilsdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcbeanutils  = CSWajcdigester
-REQUIRED_PKGS_CSWajcbeanutils += CSWajclogging
+REQUIRED_PKGS_CSWajcbeanutils  = CSWajcdigester CSWajclogging
 
 # Defines package content
-PKGFILES_CSWajcbeanutilsdoc   = $(prefix)/share/doc/.*
-PKGFILES_CSWajcbeanutilsdoc  += $(prefix)/share/licenses/$(GARNAME)-doc/Apache_License_2.0.txt
+PKGFILES_CSWajcbeanutilsdoc   = $(prefix)/share/doc/$(GARNAME)-doc.*
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -49,9 +47,8 @@ install-custom:
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.jar ; \
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@ginstall -d $(DESTDIR)$(datadir)/licenses/$(GARNAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/licenses/$(GARNAME)/Apache_License_2.0.txt
-	@ginstall -d $(DESTDIR)$(datadir)/licenses/$(GARNAME)-doc
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/licenses/$(GARNAME)-doc/Apache_License_2.0.txt
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)-doc
 	@$(MAKECOOKIE)
