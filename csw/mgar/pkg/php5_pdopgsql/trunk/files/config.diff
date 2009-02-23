@@ -1,0 +1,13 @@
+--- ./config.m4.orig	2009-02-19 15:57:33.757262166 -0600
++++ ./config.m4	2009-02-19 15:58:15.092308743 -0600
+@@ -13,8 +13,8 @@
+ 
+   AC_MSG_CHECKING(for pg_config)
+   for i in $PHP_PDO_PGSQL $PHP_PDO_PGSQL/bin /usr/local/pgsql/bin /usr/local/bin /usr/bin ""; do
+-    if test -x $i/pg_config; then
+-      PG_CONFIG="$i/pg_config"
++    if test -x $i/pg_config32; then
++      PG_CONFIG="$i/pg_config32"
+       break;
+     fi
+   done
