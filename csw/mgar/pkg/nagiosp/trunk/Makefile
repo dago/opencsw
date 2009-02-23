@@ -9,11 +9,11 @@ endef
 
 MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnagiosp,prototype depend)
+DISTFILES += $(call admfiles,CSWnagiosp,prototype )
 
-PATCHFILES  = makefile.diff # add target 'none'
-PATCHFILES += plugins-root.diff # 
-PATCHFILES += legal.diff
+REQUIRED_PKGS_CSWnagiosp  = CSWggettextrt CSWiconv CSWlibnet CSWlibpq 
+REQUIRED_PKGS_CSWnagiosp += CSWmysql5rt CSWoldaprt CSWosslrt CSWsasl
+REQUIRED_PKGS_CSWnagiosp += CSWzlib
 
 CFLAGS += -I /opt/csw/postgresql/include/
 
@@ -31,9 +31,21 @@ EXTRA_LIB += /opt/csw/postgresql/lib
 # Extra includes
 EXTRA_INC = /opt/csw/postgresql/include
 
-INSTALL_ARGS += install-contrib
-INSTALL_ARGS += install-legal
-
-TEST_TARGET = none
+TEST_TARGET = 
 
 include gar/category.mk
+
+DOCS = BUGS ChangeLog FAQ README REQUIREMENTS SUPPORT COPYING
+DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+ROOT_PLUGINS = check_dhcp check_icmp pst3
+PLUGINDEST = $(DESTDIR)$(libexecdir)
+
+post-install-modulated:
+	@ginstall -m 755 -d $(DOCDEST)
+	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
+	@ginstall -m 755 -d $(PLUGINDEST)
+	@$(foreach PLUGIN,$(ROOT_PLUGINS),ginstall -m 744 $(WORKSRC)/plugins-root/$(PLUGIN) $(PLUGINDEST);)
+	@tar cf $(WORKSRC)/contrib.tar $(WORKSRC)/contrib/
+	@ginstall -m 755 -d $(DOCDEST)
+	@ginstall -m 644 $(WORKSRC)/contrib.tar $(DOCDEST)
+	@$(MAKECOOKIE)

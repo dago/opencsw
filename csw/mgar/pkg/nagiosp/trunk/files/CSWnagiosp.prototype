@@ -1,5 +1,5 @@
 1 d none /opt/csw/lib 0755 root bin
-1 f none /opt/csw/lib/charset.alias 0644 root bin
+1 d none /opt/csw/share/doc/nagios-plugins 0755 root bin
 1 d none /opt/csw/libexec/nagios-plugins 0755 root bin
 1 f none /opt/csw/libexec/nagios-plugins/check_apt 0755 root bin
 1 f none /opt/csw/libexec/nagios-plugins/check_breeze 0755 root bin
@@ -67,6 +67,14 @@
 1 f none /opt/csw/libexec/nagios-plugins/urlize 0755 root bin
 1 f none /opt/csw/libexec/nagios-plugins/utils.pm 0755 root bin
 1 f none /opt/csw/libexec/nagios-plugins/utils.sh 0755 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/BUGS 0644 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/ChangeLog 0644 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/FAQ 0644 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/README 0644 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/REQUIREMENTS 0644 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/SUPPORT 0644 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/COPYING 0644 root bin
+1 f none /opt/csw/share/doc/nagios-plugins/contrib.tar 0644 root bin
 1 d none /opt/csw/share/locale/de/LC_MESSAGES 0755 root bin
 1 f none /opt/csw/share/locale/de/LC_MESSAGES/nagios-plugins.mo 0644 root bin
 1 d none /opt/csw/share/locale/fr/LC_MESSAGES 0755 root bin
