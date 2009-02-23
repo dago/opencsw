@@ -70,7 +70,7 @@ CONFIGURE_ARGS += --with-iconv=$(prefix)
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ETC_CONFIG=$(sysconfdir)/gitconfig V=1 \
-		all
+		all doc
 
 INSTALL_ARGS = ETC_CONFIG=$(sysconfdir)/gitconfig install-doc
 
