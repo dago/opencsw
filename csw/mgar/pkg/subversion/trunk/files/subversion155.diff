@@ -1,0 +1,53 @@
+--- subversion-1.5.5/Makefile.in.orig	2008-08-26 12:27:56.000000000 -0500
++++ subversion-1.5.5/Makefile.in	2009-02-21 17:26:25.849467074 -0600
+@@ -46,6 +46,7 @@
+ SVN_ZLIB_LIBS = @SVN_ZLIB_LIBS@
+ 
+ LIBS = @LIBS@
++JAVAHL_LIBS = @LIBS@ -lCrun -lCstd
+ 
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@
+@@ -68,15 +69,15 @@
+ swig_rb_libdir = @libdir@
+ 
+ ### these possibly need further discussion
+-swig_pydir = @libdir@/svn-python/libsvn
+-swig_pydir_extra = @libdir@/svn-python/svn
+-swig_pldir = @libdir@/svn-perl
++swig_pydir = @prefix@/lib/python/site-packages/libsvn
++swig_pydir_extra = @prefix@/lib/python/site-packages/svn
++#swig_pldir = @libdir@/svn-perl
+ swig_rbdir = $(SWIG_RB_SITE_ARCH_DIR)/svn/ext
+ contribdir = @bindir@/svn-contrib
+ toolsdir = @bindir@/svn-tools
+ 
+-javahl_javadir = @libdir@/svn-javahl
+-javahl_javahdir = @libdir@/svn-javahl/include
++javahl_javadir = @libdir@
++javahl_javahdir = @libdir@/include
+ javahl_libdir = @libdir@
+ javahl_test_rootdir=$(abs_builddir)/subversion/bindings/javahl/test-work
+ 
+--- subversion-1.5.5/subversion/bindings/swig/python/svn/fs.py.orig	2009-02-21 17:00:06.832094681 -0600
++++ subversion-1.5.5/subversion/bindings/swig/python/svn/fs.py	2009-02-21 16:59:46.198583440 -0600
+@@ -97,7 +97,7 @@
+ 
+     # use an array for the command to avoid the shell and potential
+     # security exposures
+-    cmd = ["diff"] \
++    cmd = ["gdiff"] \
+           + self.diffoptions \
+           + [self.tempfile1, self.tempfile2]
+ 
+--- subversion-1.5.5/build-outputs.mk.orig	2009-02-21 20:49:58.653938743 -0600
++++ subversion-1.5.5/build-outputs.mk	2009-02-21 20:51:14.193027135 -0600
+@@ -305,7 +305,7 @@
+ libsvnjavahl_DEPS = $(javahl_javah_DEPS) $(javahl_java_DEPS) subversion/bindings/javahl/native/BlameCallback.lo subversion/bindings/javahl/native/ChangelistCallback.lo subversion/bindings/javahl/native/CommitMessage.lo subversion/bindings/javahl/native/ConflictResolverCallback.lo subversion/bindings/javahl/native/CopySources.lo subversion/bindings/javahl/native/DiffSummaryReceiver.lo subversion/bindings/javahl/native/EnumMapper.lo subversion/bindings/javahl/native/InfoCallback.lo subversion/bindings/javahl/native/Inputer.lo subversion/bindings/javahl/native/JNIByteArray.lo subversion/bindings/javahl/native/JNICriticalSection.lo subversion/bindings/javahl/native/JNIMutex.lo subversion/bindings/javahl/native/JNIStackElement.lo subversion/bindings/javahl/native/JNIStringHolder.lo subversion/bindings/javahl/native/JNIThreadData.lo subversion/bindings/javahl/native/JNIUtil.lo subversion/bindings/javahl/native/ListCallback.lo subversion/bindings/javahl/native/LogMessageCallback.lo subversion/bindings/javahl/native/MessageReceiver.lo subversion/bindings/javahl/native/Notify.lo subversion/bindings/javahl/native/Notify2.lo subversion/bindings/javahl/native/Outputer.lo subversion/bindings/javahl/native/Path.lo subversion/bindings/javahl/native/Pool.lo subversion/bindings/javahl/native/ProgressListener.lo subversion/bindings/javahl/native/Prompter.lo subversion/bindings/javahl/native/ProplistCallback.lo subversion/bindings/javahl/native/Revision.lo subversion/bindings/javahl/native/RevisionRange.lo subversion/bindings/javahl/native/RevpropTable.lo subversion/bindings/javahl/native/SVNAdmin.lo subversion/bindings/javahl/native/SVNBase.lo subversion/bindings/javahl/native/SVNClient.lo subversion/bindings/javahl/native/StatusCallback.lo subversion/bindings/javahl/native/StringArray.lo subversion/bindings/javahl/native/Targets.lo subversion/bindings/javahl/native/libsvnjavahl.la.lo subversion/bindings/javahl/native/org_tigris_subversion_javahl_NativeResources.lo subversion/bindings/javahl/native/org_tigris_subversion_javahl_Path.lo subversion/bindings/javahl/native/org_tigris_subversion_javahl_SVNAdmin.lo subversion/bindings/javahl/native/org_tigris_subversion_javahl_SVNClient.lo subversion/bindings/javahl/native/org_tigris_subversion_javahl_Version.lo subversion/libsvn_repos/libsvn_repos-1.la subversion/libsvn_client/libsvn_client-1.la subversion/libsvn_wc/libsvn_wc-1.la subversion/libsvn_ra/libsvn_ra-1.la subversion/libsvn_delta/libsvn_delta-1.la subversion/libsvn_diff/libsvn_diff-1.la subversion/libsvn_subr/libsvn_subr-1.la subversion/libsvn_fs/libsvn_fs-1.la
+ libsvnjavahl_OBJECTS = BlameCallback.lo ChangelistCallback.lo CommitMessage.lo ConflictResolverCallback.lo CopySources.lo DiffSummaryReceiver.lo EnumMapper.lo InfoCallback.lo Inputer.lo JNIByteArray.lo JNICriticalSection.lo JNIMutex.lo JNIStackElement.lo JNIStringHolder.lo JNIThreadData.lo JNIUtil.lo ListCallback.lo LogMessageCallback.lo MessageReceiver.lo Notify.lo Notify2.lo Outputer.lo Path.lo Pool.lo ProgressListener.lo Prompter.lo ProplistCallback.lo Revision.lo RevisionRange.lo RevpropTable.lo SVNAdmin.lo SVNBase.lo SVNClient.lo StatusCallback.lo StringArray.lo Targets.lo libsvnjavahl.la.lo org_tigris_subversion_javahl_NativeResources.lo org_tigris_subversion_javahl_Path.lo org_tigris_subversion_javahl_SVNAdmin.lo org_tigris_subversion_javahl_SVNClient.lo org_tigris_subversion_javahl_Version.lo
+ subversion/bindings/javahl/native/libsvnjavahl-1.la: $(libsvnjavahl_DEPS)
+-	cd subversion/bindings/javahl/native && $(LINK_JAVAHL_CXX) -o libsvnjavahl-1.la $(LT_NO_UNDEFINED) $(libsvnjavahl_OBJECTS) ../../../../subversion/libsvn_repos/libsvn_repos-1.la ../../../../subversion/libsvn_client/libsvn_client-1.la ../../../../subversion/libsvn_wc/libsvn_wc-1.la ../../../../subversion/libsvn_ra/libsvn_ra-1.la ../../../../subversion/libsvn_delta/libsvn_delta-1.la ../../../../subversion/libsvn_diff/libsvn_diff-1.la ../../../../subversion/libsvn_subr/libsvn_subr-1.la ../../../../subversion/libsvn_fs/libsvn_fs-1.la $(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(LIBS)
++	cd subversion/bindings/javahl/native && $(LINK_JAVAHL_CXX) -o libsvnjavahl-1.la $(LT_NO_UNDEFINED) $(libsvnjavahl_OBJECTS) ../../../../subversion/libsvn_repos/libsvn_repos-1.la ../../../../subversion/libsvn_client/libsvn_client-1.la ../../../../subversion/libsvn_wc/libsvn_wc-1.la ../../../../subversion/libsvn_ra/libsvn_ra-1.la ../../../../subversion/libsvn_delta/libsvn_delta-1.la ../../../../subversion/libsvn_diff/libsvn_diff-1.la ../../../../subversion/libsvn_subr/libsvn_subr-1.la ../../../../subversion/libsvn_fs/libsvn_fs-1.la $(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(NEON_LIBS) $(JAVAHL_LIBS)
+ 
+ locale_PATH = subversion/po
+ locale_DEPS =  subversion/po/de.mo subversion/po/es.mo subversion/po/fr.mo subversion/po/it.mo subversion/po/ja.mo subversion/po/ko.mo subversion/po/nb.mo subversion/po/pl.mo subversion/po/pt_BR.mo subversion/po/sv.mo subversion/po/zh_CN.mo subversion/po/zh_TW.mo
