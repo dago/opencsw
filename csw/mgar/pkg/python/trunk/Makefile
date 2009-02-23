@@ -31,6 +31,7 @@ PATCHFILES += modules.diff
 PATCHFILES += multiprocess.diff
 PATCHFILES += pyport.diff
 PATCHFILES += setup.diff
+PATCHFILES += site.diff
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
