@@ -1,5 +1,5 @@
 GARNAME = mbuffer
-GARVERSION = 20090113
+GARVERSION = 20090215
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -14,21 +14,16 @@ endef
 
 MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWmbuffer,)
-
-REQUIRED_PKGS = CSWosslrt
+LICENSE = LICENSE
 
 # Required for the test target
 PREREQUISITE_PKGS = CSWmktemp CSWgcc4core
 
+REQUIRED_PKGS = CSWosslrt
+
 # We define upstream file regex so we can be notifed of new upstream software 
 # release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, 
-# then uncomment the next line. Otherwise it is set by default to the 
-# value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
 
 # To build the mixed package for x86 you have to do the following
 # 1)  build8x: gmake build-isa-i386
