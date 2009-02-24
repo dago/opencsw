@@ -16,17 +16,26 @@ endef
 SF_PROJ = flac
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWflac,depend)
+
+PATCHFILES = no-stdint.patch
+
+CATALOGNAME = libflac
+
+LICENSE = $(foreach lic,FDL GPL LGPL Xiph,COPYING.$(lic))
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=13478
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = flac-(\d+(?:\.\d+)*)-src
 
-LIBDEPS += lib/libogg
+REQUIRED_PKGS = CSWiconv CSWlibogg
+
+BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+PATH := $(PATH):/usr/ccs/bin
