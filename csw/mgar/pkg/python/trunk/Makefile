@@ -22,7 +22,8 @@ UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # Previous Library for compatability
-DISTFILES += libpython2.5.so.1.0
+DISTFILES += libpython2.5.so.1.0-isa-sparcv8
+DISTFILES += libpython2.5.so.1.0-isa-i386
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -71,11 +72,12 @@ SPKG_DESC_CSWidle = Python IDE
 
 include gar/category.mk
 
-post-install: add-depricated-libs
+post-install-modulated: add-depricated-libs
 
 add-depricated-libs:
-	@cp $(DOWNLOADDIR)/libpython2.5.so.1.0 $(DESTDIR)$(libdir)
-	@cd $(DESTDIR)$(libdir);ln -s libpython2.5.so.1.0 libpython2.5.so
+	echo "===> Adding Depricated Libs"
+	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) $(DESTDIR)$(libdir)/libpython2.5.so.1.0
+	cd $(DESTDIR)$(libdir);ln -s libpython2.5.so.1.0 libpython2.5.so
 	$(DONADA)
 
 
