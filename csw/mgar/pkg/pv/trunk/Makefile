@@ -18,6 +18,7 @@ SPKG_SOURCEURL = http://www.ivarch.com/programs/pv.shtml
 # Source files
 MASTER_SITES = http://pipeviewer.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+LICENSE = doc/COPYING
 
 REQUIRED_PKGS = CSWiconv CSWggettextrt
 
