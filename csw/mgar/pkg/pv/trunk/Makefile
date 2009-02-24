@@ -18,7 +18,8 @@ SPKG_SOURCEURL = http://www.ivarch.com/programs/pv.shtml
 # Source files
 MASTER_SITES = http://pipeviewer.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpv)
+
+REQUIRED_PKGS = CSWiconv CSWgettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

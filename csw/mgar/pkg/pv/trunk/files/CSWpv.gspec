@@ -1,4 +1,0 @@
-%var            bitname pv
-%var            pkgname CSWpv
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/doc/COPYING
