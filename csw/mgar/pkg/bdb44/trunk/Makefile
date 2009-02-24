@@ -23,17 +23,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
-CATALOGNAME_CSWbdb44 = berkeleydb44
-CATALOGNAME_CSWbdb44-devel = berkeleydb44_devel
-CATALOGNAME_CSWbdb44-doc = berkeleydb44_doc
-
-SPKG_DESC_CSWbdb44 = BerkeleyDB 4.4 embedded database libraries and utilities
-SPKG_DESC_CSWbdb44-devel = BerkeleyDB 4.4 development support
-SPKG_DESC_CSWbdb44-doc = BerkeleyDB 4.4 documentation
-
-REQUIRED_PKGS_CSWbdb44-devel = CSWbdb44
-INCOMPATIBLE_PKGS_CSWbdb44-doc = CSWbdb44doc
-
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
@@ -44,7 +33,8 @@ BUILD64 = 1
 
 CONFIGURE_SCRIPTS = dist
 
-CONFIGURE_ARGS  = --prefix=$(prefix)/bdb44
+prefix = $(BUILD_PREFIX)/bdb44
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-cryptography
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-o_direct
@@ -64,14 +54,27 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb44/lib
 TEST_SCRIPTS =
 
 NO_ISAEXEC = 1
-MERGE_EXCLUDE_FILES = .*~ .*\.la
-ISA_RELOCATE_DIRS_sparcv9 = $(prefix)/bdb44/bin $(prefix)/bdb44/lib $(prefix)/bdb44/include
-ISA_RELOCATE_DIRS_amd64   = $(prefix)/bdb44/bin $(prefix)/bdb44/lib $(prefix)/bdb44/include
 
-PKGFILES_CSWbdb44-doc = $(prefix)/bdb44/docs/.*
+PACKAGES = CSWbdb44 CSWbdb44-devel CSWbdb44-doc
 
-PKGFILES_CSWbdb44-devel = $(prefix)/bdb44/include/.*
-PKGFILES_CSWbdb44-devel += $(prefix)/bdb44/lib/.*\.a
+CATALOGNAME_CSWbdb44       = berkeleydb44
+CATALOGNAME_CSWbdb44-devel = berkeleydb44_devel
+CATALOGNAME_CSWbdb44-doc   = berkeleydb44_doc
+
+ARCHALL_CSWbdb44-doc = 1
+
+SPKG_DESC_CSWbdb44       = BerkeleyDB 4.4 embedded database libraries and utilities
+SPKG_DESC_CSWbdb44-devel = BerkeleyDB 4.4 development support
+SPKG_DESC_CSWbdb44-doc   = BerkeleyDB 4.4 documentation
+
+REQUIRED_PKGS_CSWbdb44-devel = CSWbdb44
+INCOMPATIBLE_PKGS_CSWbdb44-doc = CSWbdb44doc
+
+LICENSE = LICENSE
+
+PKGFILES_CSWbdb44-doc = $(prefix)/docs/.*
+
+PKGFILES_CSWbdb44-devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
@@ -82,10 +85,10 @@ PATH := /usr/j2se/bin:$(PATH)
 export PATH
 
 configure-dist:
-	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
+	( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 post-merge:
-	gln -s . $(PKGROOT)$(prefix)/bdb44/lib/32
-	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(prefix)/bdb44/lib/64
+	gln -s . $(PKGROOT)$(libdir)/32
+	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
 	@$(MAKECOOKIE)
