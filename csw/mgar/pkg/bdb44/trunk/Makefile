@@ -15,14 +15,24 @@ endef
 
 MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWbdb44,depend)
-DISTFILES += $(call admfiles,CSWbdb44-devel,depend)
-DISTFILES += $(call admfiles,CSWbdb44-doc,depend)
+
+PACKAGES = CSWbdb44 CSWbdb44-devel CSWbdb44-doc
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
+
+CATALOGNAME_CSWbdb44 = berkeleydb44
+CATALOGNAME_CSWbdb44-devel = berkeleydb44_devel
+CATALOGNAME_CSWbdb44-doc = berkeleydb44_doc
+
+SPKG_DESC_CSWbdb44 = BerkeleyDB 4.4 embedded database libraries and utilities
+SPKG_DESC_CSWbdb44-devel = BerkeleyDB 4.4 development support
+SPKG_DESC_CSWbdb44-doc = BerkeleyDB 4.4 documentation
+
+REQUIRED_PKGS_CSWbdb44-devel = CSWbdb44
+INCOMPATIBLE_PKGS_CSWbdb44-doc = CSWbdb44doc
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
@@ -41,8 +51,12 @@ CONFIGURE_ARGS += --enable-o_direct
 CONFIGURE_ARGS += --enable-rpc
 CONFIGURE_ARGS += --enable-cxx
 CONFIGURE_ARGS += --enable-java
+
+# Exclude TCL support for 64 bit until we have a 64 bit TCL
+ifeq ($(MEMORYMODEL),32)
 CONFIGURE_ARGS += --enable-tcl
 CONFIGURE_ARGS += --with-tcl=$(libdir)
+endif
 
 FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb44/lib
 

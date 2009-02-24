@@ -1,13 +1,4 @@
 d84dff288a19186b136b0daf7067ade3  download/db-4.4.20.tar.gz
-931cfb08ad3c593f67f7987a1b0e38d2  download/CSWbdb44.gspec
-d41d8cd98f00b204e9800998ecf8427e  download/CSWbdb44.depend
-9fb1ec203b562118a5efa65466f58cb8  download/CSWbdb44.prototype
-dfe4f07bd627ca8f26dff40b42858c89  download/CSWbdb44-devel.gspec
-5a1c7c6d2c1bdc317e0c11e134342154  download/CSWbdb44-devel.depend
-ac47841e936dc64824fc24c2ec7edfc6  download/CSWbdb44-devel.prototype
-3504f1aaf3736b0e4d7aeaa520e50c61  download/CSWbdb44-doc.gspec
-840f3b7ab7ea6a0b92fa00b11ed03551  download/CSWbdb44-doc.depend
-5d66c098355c7bdcee114b69e1cbc822  download/CSWbdb44-doc.prototype
 66584d621355df055b6e05b4a02e9c3e  download/patch.4.4.20.1.diff
 85df93a0867f6cace3501671cdeb6ed1  download/patch.4.4.20.2.diff
 88ee91889ebf5498b22b2e7bed945d41  download/patch.4.4.20.3.diff
