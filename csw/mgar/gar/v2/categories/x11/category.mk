@@ -31,7 +31,6 @@ CONFIGURE_ARGS += --libdir=/opt/csw/X11
 CONFIGURE_ARGS += --includedir=/opt/csw/X11/include
 CONFIGURE_ARGS += --datadir=/opt/csw/X11/share
 CONFIGURE_ARGS += --mandir=/opt/csw/X11/share/man
-CONFIGURE_ARGS += --docdir=/opt/csw/X11/share/doc
 
 # No tests scripts, thus there is no "gmake test" target
 TEST_SCRIPTS      = 
