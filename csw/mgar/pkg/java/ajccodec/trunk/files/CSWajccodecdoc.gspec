@@ -2,4 +2,6 @@
 %var            pkgname CSWajccodecdoc
 %var		arch	all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{SRC_FIRSTMOD}/LICENSE
+%copyright      
+
+Please see /opt/csw/share/doc/commons-codec/LICENSE-documentation.txt for license information

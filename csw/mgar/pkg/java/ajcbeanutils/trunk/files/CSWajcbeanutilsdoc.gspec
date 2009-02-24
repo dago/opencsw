@@ -2,4 +2,6 @@
 %var            pkgname CSWajcbeanutilsdoc
 %var		arch	all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE.txt
+%copyright      
+
+Please see /opt/csw/share/doc/commons-beanutils/LICENSE-documentation.txt for license information
