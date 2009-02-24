@@ -1,5 +1,5 @@
 GARNAME = libao
-GARVERSION = 0.8.4
+GARVERSION = 0.8.8
 CATEGORIES = lib
 
 DESCRIPTION = Cross-platform audio library
@@ -9,12 +9,17 @@ define BLURB
   ALSA, aRTs, Solaris, and Irix outputs are currently supported.
 endef
 
-MASTER_SITES = http://www.xiph.org/ao/src/
+MASTER_SITES = http://downloads.xiph.org/releases/ao/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibao,)
+
+SPKG_SOURCEURL = http://www.xiph.org/ao/
+
+REQUIRED_PKGS = CSWaudiofile CSWesound
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
