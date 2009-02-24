@@ -30,6 +30,14 @@ REQUIRED_PKGS_CSWgitemacs = CSWgit CSWemacs
 
 REQUIRED_PKGS_CSWgitdoc = CSWgit
 
+LICENSE_CSWgit = COPYING
+LICENSE_CSWgitk = COPYING
+LICENSE_CSWgitgui = COPYING
+LICENSE_CSWgitsvn = COPYING
+LICENSE_CSWgitcvs = COPYING
+LICENSE_CSWgitemacs = COPYING
+LICENSE_CSWgitdoc = COPYING
+
 DESCRIPTION = Fast Version Control System
 define BLURB
   Git is a popular version control system designed to handle
@@ -48,7 +56,7 @@ MASTER_SITES = http://kernel.org/pub/software/scm/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 PATCHFILES = doc-makefile.patch
-PATCHFILES += 0001-git-svn-fix-for-systems-without-strftime-z.patch
+PATCHFILES += 0001-git-svn-fix-to-avoid-using-strftime-z.patch
 
 PKGFILES_CSWgitsvn = .*svn.*
 PKGFILES_CSWgitgui = .*git-gui.* .*git-citool.*
