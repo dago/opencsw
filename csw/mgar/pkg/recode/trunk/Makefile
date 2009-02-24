@@ -14,7 +14,8 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWrecode,)
+
+REQUIRED_PKGS = CSWggettextrt CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -39,19 +40,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 #     creates an output file smaller than COPYING. The only known workaround
 #     is to not use "-O".
 
-SUN_CC_OPT = -xtarget=$(OPTTARGET) -xarch=$(OPTARCH)
+OPT_FLAGS_SOS =
 
 CONFIGURE_ARGS = $(DIRPATHS) \
 	--enable-static=no
 
 TEST_TARGET = check
 
-post-install:
-	@echo " ==> Removing charset.alias"
-	@rm -f $(DESTDIR)$(libdir)/charset.alias
-	@echo " ==> Removing info/dir"
-	@rm -f $(DESTDIR)$(infodir)/dir
-	@$(MAKECOOKIE)
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 include gar/category.mk
 
