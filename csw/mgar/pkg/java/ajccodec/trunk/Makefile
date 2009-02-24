@@ -26,8 +26,8 @@ SPKG_DESC_CSWajccodecdoc = $(DESCRIPTION) documentation package
 # Defines dependencies
 
 # Defines package content
-PKGFILES_CSWajccodecdoc   = $(prefix)/share/doc/.*
-PKGFILES_CSWajccodecdoc  += $(prefix)/share/licenses/$(GARNAME)-doc/Apache_License_2.0.txt
+PKGFILES_CSWajccodec   	 = $(prefix)/share/doc/$(GARNAME)/LICENSE.txt
+PKGFILES_CSWajccodec   	+= $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -49,9 +49,7 @@ install-custom:
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.jar ; \
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@ginstall -d $(DESTDIR)$(datadir)/licenses/$(GARNAME)
-	@ginstall -d $(DESTDIR)$(datadir)/licenses/$(GARNAME)-doc
-	@gcp -fp $(WORKSRC)/LICENSE $(DESTDIR)$(datadir)/licenses/$(GARNAME)/Apache_License_2.0.txt
-	@gcp -fp $(WORKSRC)/LICENSE $(DESTDIR)$(datadir)/licenses/$(GARNAME)-doc/Apache_License_2.0.txt
-	@gcp -frp $(WORKSRC)/docs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)/
+	@gcp -fp $(WORKSRC)/LICENSE $(DESTDIR)$(datadir)/doc/$(GARNAME)/LICENSE.txt
+	@gcp -fp $(WORKSRC)/LICENSE $(DESTDIR)$(datadir)/doc/$(GARNAME)/LICENSE-documentation.txt
+	@gcp -frp $(WORKSRC)/docs/api/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@$(MAKECOOKIE)
