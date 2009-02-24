@@ -19,7 +19,7 @@ SPKG_SOURCEURL = http://www.ivarch.com/programs/pv.shtml
 MASTER_SITES = http://pipeviewer.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWiconv CSWgettextrt
+REQUIRED_PKGS = CSWiconv CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -34,7 +34,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-post-install:
+post-install-modulated:
 	@gunzip $(DESTDIR)$(mandir)/man1/pv.1.gz
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -m 644 \
