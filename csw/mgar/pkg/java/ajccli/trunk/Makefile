@@ -11,6 +11,7 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Set archive filename
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
