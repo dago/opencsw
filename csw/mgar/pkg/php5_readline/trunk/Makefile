@@ -25,20 +25,20 @@ MASTER_SITES = http://www.php.net/releases/
 SPKG_SOURCEURL = http://www.php.net/get/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+PATCHFILES = forcereadline.diff
 DISTFILES = $(DISTNAME).tar.bz2
 
 CATALOGNAME_CSWphp5$(PHP5EXT_NAME) = php5_$(PHP5EXT_NAME)
 SPKG_DESC_CSWphp5$(PHP5EXT_NAME) = $(PHP5EXT_NAME) Extention for PHP5
-REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5 CSWreadline
+REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5 CSWreadline CSWncurses
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
-CONFIGURE_ARGS += --with-readline=shared,$(prefix)
+CONFIGURE_ARGS += --with-readline=$(prefix)
 
-post-extract-modulated:
+post-patch-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
-
 
 TEST_SCRIPTS = manual
 
