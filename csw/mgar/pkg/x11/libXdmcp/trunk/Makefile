@@ -9,7 +9,8 @@ endef
 
 MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-PKGDIST = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    += $(call admfiles,CSWlibxdmcpdevel, )
+DISTFILES    += $(call admfiles,CSWlibxdmcp, )
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -17,12 +18,15 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_DESC_CSWlibxdmcp = X11 display manager control protocol library
 SPKG_DESC_CSWlibxdmcpdevel = X11 display manager control protocol library development package
 
-DISTFILES    += $(call admfiles,CSWlibxdmcpdevel, )
-DISTFILES    += $(call admfiles,CSWlibxdmcp, )
-
 PKGFILES_CSWlibxdmcpdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxdmcpdevel += $(prefix)/X11/include/.*
 PKGFILES_CSWlibxdmcpdevel += $(prefix)/X11/lib/.*\.a
 PKGFILES_CSWlibxdmcpdevel += $(prefix)/X11/lib/pkgconfig/.*
+PKGFILES_CSWlibxdmcpdevel += $(prefix)/share/doc/$(GARNAME)/License-devel.txt
+
+pre-install:
+	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
+	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/License.txt 
+	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/License-devel.txt 
 
 include gar/category.mk
