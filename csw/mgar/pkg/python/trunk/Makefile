@@ -51,10 +51,10 @@ CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-unicode=ucs4
 CONFIGURE_ARGS += --with-fpectl
 
-PKGFILES_CSWidle = $(libdir)/python2*/idlelib/.*
+PKGFILES_CSWidle  = $(libdir)/python(\d+(?:\.\d+)*)/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
-PKGFILES_CSWpython-tk = $(libdir)/python2*/lib-tk/.*
-PKGFILES_CSWpython-tk += $(libdir)/python2*/lib-dynload/*tkinter*
+PKGFILES_CSWpython-tk  = $(libdir)/python(\d+(?:\.\d+)*)/lib-tk/.*
+PKGFILES_CSWpython-tk += $(libdir)/python(\d+(?:\.\d+)*)/lib-dynload/*tkinter*
 
 REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
 REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
@@ -72,12 +72,20 @@ SPKG_DESC_CSWidle = Python IDE
 
 include gar/category.mk
 
-post-install-modulated: add-depricated-libs
+POST_INST_SCR  = add-depricated-libs
+POST_INST_SCR += fix-config-makefile
+post-install-modulated: $(POST_INST_SCR)
 
 add-depricated-libs:
 	echo "===> Adding Depricated Libs"
-	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) $(DESTDIR)$(libdir)/libpython2.5.so.1.0
+	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) \
+		$(DESTDIR)$(libdir)/libpython2.5.so.1.0
 	cd $(DESTDIR)$(libdir);ln -s libpython2.5.so.1.0 libpython2.5.so
 	$(DONADA)
+
+fix-config-makefile:
+	perl -i -plne 's/^CCSHARED=.*/CCSHARED=/' \
+		$(DESTDIR)$(libdir)/python/config/Makefile
+	$(MAKECOOKIE)
 
 
