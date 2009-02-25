@@ -1,7 +1,7 @@
 GARNAME = php
 GARVERSION = 5.2.6
 CATEGORIES = lang
-PHP5EXT_NAME = ctype
+PHP5EXT_NAME = pgsql
 
 DESCRIPTION = $(PHP5EXT_NAME) Extention for PHP
 define BLURB
@@ -29,12 +29,15 @@ DISTFILES = $(DISTNAME).tar.bz2
 
 CATALOGNAME_CSWphp5$(PHP5EXT_NAME) = php5_$(PHP5EXT_NAME)
 SPKG_DESC_CSWphp5$(PHP5EXT_NAME) = $(PHP5EXT_NAME) Extention for PHP5
-REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5
+REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5 CSWlibpq
+
+PATCHFILES = pgconfig.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
+CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
 
-post-extract-modulated:
+post-patch-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
 
