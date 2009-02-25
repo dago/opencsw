@@ -18,7 +18,6 @@ PHP5ROOT    = $(DESTDIR)/$(PHP_PREFIX)
 STRIP_DIRS += $(PHP5ROOT)/lib/php/extensions/*/
 STRIP_DIRS += $(PHP5ROOT)/bin
 
-
 PACKAGES = CSWphp5$(PHP5EXT_NAME)
 
 MASTER_SITES = http://www.php.net/releases/
@@ -27,19 +26,19 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES = $(DISTNAME).tar.bz2
 
-EXTRA_LINKER_FLAGS  = -liconv -lrt -lintl
-
 CATALOGNAME_CSWphp5$(PHP5EXT_NAME) = php5_$(PHP5EXT_NAME)
 SPKG_DESC_CSWphp5$(PHP5EXT_NAME) = $(PHP5EXT_NAME) Extention for PHP5
-REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5
+REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5 CSWiconv
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
+CONFIGURE_ARGS += --with-iconv=$(prefix)
+
+LIBS = -lrt -lintl
 
 post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	$(DONADA)
-
 
 TEST_SCRIPTS = manual
 
