@@ -15,8 +15,6 @@ DISTFILES    += $(call admfiles,CSWkbproto)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# PATCHFILES   += gar-base.diff
-
 pre-install:
 	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
 	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/License.txt 
