@@ -11,6 +11,8 @@ PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev
 
 ARCHALL_CSWrubydoc = 1
 
+LICENSE = COPYING
+
 REQUIRED_PKGS_CSWruby = CSWbdb3 CSWgdbm CSWiconv CSWgcc4corert
 REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
@@ -37,11 +39,12 @@ SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 
 SPKG_DESC_CSWrubydev = Ruby Extension Development Files
 
-PKGFILES_CSWrubydoc = $(PKGFILES_DOC)
+PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/rubydoc/.*
+
 PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 PKGFILES_CSWrubydev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
-PKGFILES_CSWrubydev = $(libdir)/libruby.so
+PKGFILES_CSWrubydev += $(libdir)/libruby.so
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
@@ -54,9 +57,6 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
-
-# Put samples and RI documentation in share/doc/ruby
-datadir = $(docdir)/ruby
 
 GARCOMPILER = GNU
 
@@ -71,11 +71,11 @@ CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
 CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
+CONFIGURE_ARGS += --enable-install-doc
 
-INSTALL_ARGS = install-all
+INSTALL_ARGS = install
 
-WORKSRC = $(WORKDIR)/$(DISTNAME)-$(PATCHLEVEL)
-WORKSRC_FIRSTMOD = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)-$(PATCHLEVEL)
+DISTNAME = $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL)
 
 # We want libruby-static.a to ship.  mkmf tests for various things using it.
 MERGE_EXCLUDE_STATICLIBS = 
@@ -97,10 +97,10 @@ rbconfig:
 
 # Copy samples
 samples:
-	@mkdir -p $(DESTDIR)$(datadir)
-	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(datadir)
+	@mkdir -p $(DESTDIR)$(docdir)/rubydoc/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/rubydoc/
 	@for ext in bigdecimal dl tk ; do \
-		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(datadir)/sample/$$ext ; \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/rubydoc/sample/$$ext ; \
 	done
 	@$(MAKECOOKIE)
 
@@ -110,3 +110,5 @@ rbscripts:
 	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
 		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby}g" {} \;
 	@$(MAKECOOKIE)
+
+
