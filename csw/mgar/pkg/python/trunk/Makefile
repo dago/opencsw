@@ -54,7 +54,7 @@ CONFIGURE_ARGS += --with-fpectl
 PKGFILES_CSWidle  = $(libdir)/python(\d+(?:\.\d+)*)/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
 PKGFILES_CSWpython-tk  = $(libdir)/python(\d+(?:\.\d+)*)/lib-tk/.*
-PKGFILES_CSWpython-tk += $(libdir)/python(\d+(?:\.\d+)*)/lib-dynload/*tkinter*
+PKGFILES_CSWpython-tk += $(libdir)/python(\d+(?:\.\d+)*)/lib-dynload/_tkinter.so.*
 
 REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
 REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
