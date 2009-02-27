@@ -12,9 +12,12 @@ endef
 MASTER_SITES = http://alioth.debian.org/frs/download.php/2717/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = http://alioth.debian.org/frs/?group_id=100070
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+SPKG_SOURCEURL = http://axel.alioth.debian.org/
+SPKG_CLASSES = none cswcpsampleconf
+
+# Doesn't work yet, upstream watch needs to be improved first
+#UPSTREAM_MASTER_SITES = http://alioth.debian.org/frs/?group_id=100070
+#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
