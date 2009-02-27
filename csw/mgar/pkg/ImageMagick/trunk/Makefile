@@ -22,6 +22,8 @@ DISTFILES += libWand.so.10.0.4.s
 
 DISTNAME = ImageMagick-$(GARVERSION)-$(GARSUBREV)
 
+SPKG_SOURCEURL = http://www.imagemagick.org
+
 LICENSE = LICENSE
 
 REQUIRED_PKGS += CSWbzip2 CSWdjvulibre CSWfconfig CSWftype2 CSWgcc2g++rt 
