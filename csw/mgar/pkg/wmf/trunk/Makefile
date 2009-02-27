@@ -2,7 +2,7 @@ GARNAME = wmf
 GARVERSION = 0.2.8.4
 CATEGORIES = lib
 
-DESCRIPTION = library for converting WMF files
+DESCRIPTION = Library and tools for manipulating Windows metafiles
 define BLURB
 	libwmf is a library for reading vector images in Microsoft's native Windows 
 	Metafile Format (WMF) and for either (a) displaying them in, e.g., an X 
