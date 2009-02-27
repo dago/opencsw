@@ -16,6 +16,8 @@ DISTFILES  = libwmf-$(GARVERSION).tar.gz
 
 DISTNAME = libwmf-$(GARVERSION)
 
+SPKG_SOURCEURL = http://wvware.sourceforge.net
+
 LICENSE = COPYING
 
 REQUIRED_PKGS += CSWexpat CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWjpeg
