@@ -1,0 +1,41 @@
+--- xchat-2.8.6/configure.orig	2009-02-26 19:59:34.698949415 -0600
++++ xchat-2.8.6/configure	2009-02-26 20:01:00.058872631 -0600
+@@ -29106,7 +29106,7 @@
+                         PY_PREFIX=`$pythonpath -c 'import sys; print sys.prefix'`
+                         PY_EXEC_PREFIX=`$pythonpath -c 'import sys; print sys.exec_prefix'`
+                         if test -f $PY_INC/Python.h; then
+-                                PY_LIBS="-L$PY_LIB/config -lpython$PY_VER -lpthread -lutil"
++                                PY_LIBS="-L$PY_LIB/config -lpython$PY_VER -lpthread -lrt -lm"
+                                 PY_CFLAGS="-I$PY_INC"
+                                 { echo "$as_me:$LINENO: result: ok" >&5
+ echo "${ECHO_T}ok" >&6; }
+--- xchat-2.8.6/src/common/msproxy.h.orig	2009-02-26 19:57:16.256414289 -0600
++++ xchat-2.8.6/src/common/msproxy.h	2009-02-26 19:57:44.323002461 -0600
+@@ -120,7 +120,7 @@
+ 			char			pad50[6];			/* 211-216						*/
+ 			guint16			magic55;				/* 217-218: 0x30, 0x00					*/
+ 			char			pad55[2];			/* 219-220						*/
+-			char			data[0];			/* Dummy end marker, no real data required		*/
++			char			*data;			/* Dummy end marker, no real data required		*/
+ 		} auth;
+ 
+ 		struct {
+@@ -180,7 +180,7 @@
+ 			guint16			boundport;			/* 77-78: bind request; port used on client behalf.	*/
+ 			guint32			boundaddr;			/* 79-82: addr used on client behalf			*/
+ 			char			pad30[90];			/* 83-172						*/
+-			char			data[0];			/* End marker						*/
++			char			*data;			/* End marker						*/
+ 		} connack;
+ 
+ 	} packet;
+--- xchat-2.8.6/src/common/modes.c.orig	2009-02-26 19:57:58.675799251 -0600
++++ xchat-2.8.6/src/common/modes.c	2009-02-26 19:58:35.063129852 -0600
+@@ -26,6 +26,7 @@
+ #include "server.h"
+ #include "text.h"
+ #include "fe.h"
++#include "inbound.h"
+ #include "util.h"
+ #ifdef HAVE_STRINGS_H
+ #include <strings.h>
