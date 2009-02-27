@@ -32,9 +32,9 @@ include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
-	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/phpmyadmin
-	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
-	@cp -R $(WORKSRC)-all-languages $(DESTDIR)$(prefix)/apache2/share/htdocs/phpmyadmin
+	@rm -rf $(DESTDIR)$(prefix)/share/www/phpmyadmin
+	@ginstall -d $(DESTDIR)$(prefix)/share/www
+	@cp -R $(WORKSRC)-all-languages $(DESTDIR)$(prefix)/share/www/phpmyadmin
 	@ginstall -d $(DESTDIR)$(docdir)/phpmyadmin
 	@cp $(WORKSRC)-all-languages/LICENSE $(DESTDIR)$(docdir)/phpmyadmin
 	@$(MAKECOOKIE)
