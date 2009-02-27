@@ -6,12 +6,13 @@ CXXFLAGS = -I/opt/csw/include
 LDFLAGS  = -L/opt/csw/lib -R/opt/csw/lib/\\\\\\\$\$ISALIST -R/opt/csw/lib
 OPTFLAGS =
 
+## Install everythong /opt/csw/gcc4 instead of /opt/csw
+BUILD_PREFIX = /opt/csw/gcc4
+
 OBJECT_DIR  = $(WORKDIR)/$(DISTNAME)/objdir
 WORKSRC     = $(OBJECT_DIR)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --prefix=$(prefix)/gcc4
-CONFIGURE_ARGS += --exec-prefix=$(prefix)/gcc4
 CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
