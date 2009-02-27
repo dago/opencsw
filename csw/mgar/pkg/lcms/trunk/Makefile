@@ -4,7 +4,13 @@ CATEGORIES = lib
 
 DESCRIPTION = The little color management system and tools
 define BLURB
-  Long description
+	LittleCMS is a CMM, a color management engine; it implements fast transforms
+	between ICC profiles. "Little" stands for its small overhead. With a typical
+	footprint of about 100K including C runtime, you can color-enable your
+	application without the pain of ActiveX, OCX, redistributables or binaries
+	of any kind. We are using little cms in several commercial projects, however,
+	we are offering lcms library free for anybody under an extremely liberal
+	open source license.
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
