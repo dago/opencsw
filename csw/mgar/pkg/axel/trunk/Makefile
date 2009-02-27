@@ -2,7 +2,7 @@ GARNAME = axel
 GARVERSION = 2.3
 CATEGORIES = utils
 
-DESCRIPTION = Download accelerator
+DESCRIPTION = Lightweight command-line download accelerator
 define BLURB
   Axel tries to accelerate downloads by using multiple connections (possibly 
   to multiple servers) for one download. Because of its size, it might be 
