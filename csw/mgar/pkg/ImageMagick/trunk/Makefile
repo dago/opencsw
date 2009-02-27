@@ -53,17 +53,19 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 include gar/category.mk
 
 post-install-isa-sparcv8:
-	@cp $(FILEDIR)/libMagick.so.10.0.4.s $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10
-	@cp $(FILEDIR)/libWand.so.10.0.4.s $(INSTALLISADIR)/opt/csw/lib/libWand.so.10
-	@cp $(FILEDIR)/libMagick++.so.10.0.4.s $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10
-	#@ln -s libMagick.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10
-	#@ln -s libWand.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libWand.so.10
-	#@ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10
+	@cp $(FILEDIR)/libMagick.so.10.0.4.s $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10.0.4
+	@cp $(FILEDIR)/libWand.so.10.0.4.s $(INSTALLISADIR)/opt/csw/lib/libWand.so.10.0.4
+	@cp $(FILEDIR)/libMagick++.so.10.0.4.s $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10.0.4
+	@ln -s libMagick.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10
+	@ln -s libWand.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libWand.so.10
+	@ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10
+	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)/opt/csw/share/doc/ImageMagick
 
 post-install-isa-i386:
-	@cp $(FILEDIR)/libMagick.so.10.0.4.i $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10
-	@cp $(FILEDIR)/libWand.so.10.0.4.i $(INSTALLISADIR)/opt/csw/lib/libWand.so.10
-	@cp $(FILEDIR)/libMagick++.so.10.0.4.i $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10
-	#@ln -s libMagick.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10
-	#@ln -s libWand.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libWand.so.10
-	#@ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10
+	@cp $(FILEDIR)/libMagick.so.10.0.4.i $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10.0.4
+	@cp $(FILEDIR)/libWand.so.10.0.4.i $(INSTALLISADIR)/opt/csw/lib/libWand.so.10.0.4
+	@cp $(FILEDIR)/libMagick++.so.10.0.4.i $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10.0.4
+	@ln -s libMagick.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick.so.10
+	@ln -s libWand.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libWand.so.10
+	@ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)/opt/csw/lib/libMagick++.so.10
+	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)/opt/csw/share/doc/ImageMagick
