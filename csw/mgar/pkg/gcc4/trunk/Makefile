@@ -27,7 +27,7 @@ WORKSRC = $(OBJECT_DIR)
 
 ## After sucessful source extraction
 ## Create $(OBJECT_DIR) to build in
-post-extract-modulated:
+post-extract-$(addprefix post-extract-,$(MODULATIONS)):
 	echo "==> Creating Object Dir for Building"
 	@( mkdir $(OBJECT_DIR) )
 	$(DONADA)
