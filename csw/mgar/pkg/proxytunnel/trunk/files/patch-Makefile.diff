@@ -1,0 +1,38 @@
+--- proxytunnel-1.9.0/Makefile	2009-02-28 19:39:24.601040893 +0100
++++ proxytunnel-1.9.0/Makefile	2009-02-28 19:40:49.405010602 +0100
+@@ -8,13 +8,13 @@
+ OPTFLAGS = -DREV=$(shell ./getrev.sh)
+ 
+ # Comment on non-gnu systems
+-OPTFLAGS += -DHAVE_GETOPT_LONG
++#OPTFLAGS += -DHAVE_GETOPT_LONG
+ 
+ # Comment if you don't have/want ssl
+ OPTFLAGS += -DUSE_SSL
+ 
+ # Most systems
+-OPTFLAGS += -DSETPROCTITLE -DSPT_TYPE=2
++#OPTFLAGS += -DSETPROCTITLE -DSPT_TYPE=2
+ 
+ # Comment if you don't have this flag
+ OPTFLAGS += -DSO_REUSEPORT
+@@ -46,7 +46,7 @@
+ endif
+ LDFLAGS += $(SSL_LIBS)
+ 
+-PREFIX =/usr/local
++PREFIX =/opt/csw
+ BINDIR = $(PREFIX)/bin
+ DATADIR = $(PREFIX)/share
+ MANDIR = $(DATADIR)/man
+@@ -76,8 +76,8 @@
+ 	@rm -f $(PROGNAME) $(OBJ)
+ 
+ install:
+-	install -Dp -m0755 $(PROGNAME) $(DESTDIR)$(BINDIR)/$(PROGNAME)
+-	install -Dp -m0644 $(PROGNAME).1 $(DESTDIR)$(MANDIR)/man1/$(PROGNAME).1
++	ginstall -Dp -m0755 $(PROGNAME) $(DESTDIR)$(BINDIR)/$(PROGNAME)
++	ginstall -Dp -m0644 $(PROGNAME).1 $(DESTDIR)$(MANDIR)/man1/$(PROGNAME).1
+ 
+ .c.o:
+ 	$(CC) $(CFLAGS) $(OPTFLAGS) -c -o $@ $<

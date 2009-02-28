@@ -1,0 +1,32 @@
+GARNAME = proxytunnel
+GARVERSION = 1.9.0
+CATEGORIES = utils
+
+DESCRIPTION = Tunnels network connections through a HTTPS proxy
+define BLURB
+  ProxyTunnel is a program that connects stdin and stdout to a server somewhere
+  on the network, through a standard HTTPS proxy. We mostly use it to tunnel 
+  SSH sessions through HTTP(S) proxies, allowing us to do many things that 
+  wouldn't be possible without ProxyTunnel.
+endef
+
+MASTER_SITES = $(SF_MIRRORS)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+PATCHFILES = patch-Makefile.diff
+
+PREREQUISITE_PKGS = CSWossldevel
+REQUIRED_PKGS = CSWosslrt
+
+# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+# UPSTREAM_MASTER_SITES = 
+
+CONFIGURE_SCRIPTS = 
+TEST_SCRIPTS = 
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+include gar/category.mk
+
+pre-build-modulated:
+	@perl -pi -e 's/-DHAVE_GETOPT_LONG//' $(WORKSRC)/Makefile
+	@perl -pi -e 's/-DSETPROCTITLE -DSPT_TYPE=2//' $(WORKSRC)/Makefile
