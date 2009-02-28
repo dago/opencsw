@@ -33,5 +33,8 @@ pre-build-modulated:
 	@perl -pi -e 's/-Wall//g' $(WORKSRC)/Makefile
 
 post-install-modulated:
+	@perl -pi -e "s#/etc/axelrc#$(sysconfdir)/axelrc#" \
+		$(DESTDIR)$(mandir)/man1/axel.1
+		$(DESTDIR)$(mandir)/zh_CN/man1/axel.1
 	@mv $(DESTDIR)$(sysconfdir)/axelrc \
 		$(DESTDIR)$(sysconfdir)/axelrc.CSW
