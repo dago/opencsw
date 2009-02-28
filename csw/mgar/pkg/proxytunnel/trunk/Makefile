@@ -14,6 +14,8 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 PATCHFILES = patch-Makefile.diff
 
+SPKG_SOURCEURL = http://proxytunnel.sourceforge.net/
+
 PREREQUISITE_PKGS = CSWossldevel
 REQUIRED_PKGS = CSWosslrt
 
