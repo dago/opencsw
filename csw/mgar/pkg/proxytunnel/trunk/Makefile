@@ -26,7 +26,3 @@ TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
-
-pre-build-modulated:
-	@perl -pi -e 's/-DHAVE_GETOPT_LONG//' $(WORKSRC)/Makefile
-	@perl -pi -e 's/-DSETPROCTITLE -DSPT_TYPE=2//' $(WORKSRC)/Makefile
