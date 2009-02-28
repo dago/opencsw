@@ -30,7 +30,7 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-configure-modulated:
+post-configure-$(MODULATION):
 	@(echo "~~~ Fixing Libtool ~~~")
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
 	$(DONADA)
