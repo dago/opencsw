@@ -90,9 +90,9 @@ sub get_file_list_lftp
 	$http_proxy_cmd = "set http:proxy $ENV{HTTP_PROXY};" if exists $ENV{HTTP_PROXY};
 	$http_proxy_cmd = "set http:proxy $ENV{http_proxy};" if exists $ENV{http_proxy};
 
-	open (my $FH, "lftp -q -c \"set net:timeout 30; set net:max-retries 16; $ftp_proxy_cmd $http_proxy_cmd open $url/ && ls\" 2>/dev/null |");
+	open (FH, "lftp -q -c \"set net:timeout 30; set net:max-retries 16; $ftp_proxy_cmd $http_proxy_cmd open $url/ && ls\" 2>/dev/null |");
 
-	while (my $line = <$FH>) {
+	while (my $line = <FH>) {
 		my @cols = split (/\s+/, $line);
 		my $filename = $cols[$#cols];
 		chomp ($filename);
@@ -103,7 +103,7 @@ sub get_file_list_lftp
 		push (@file_list, $filename);
 	}
 
-	close ($FH);
+	close (FH);
 
 	return \@file_list;
 }
@@ -123,24 +123,24 @@ sub get_file_list_wget_sourceforge
 	$http_proxy_cmd = "set http:proxy $ENV{http_proxy};" if exists $ENV{http_proxy};
 	$wget_command   = "$http_proxy_cmd ; wget --proxy=on" if exists $ENV{http_proxy_cmd};
 
-	open (my $FH, "$wget_command -qO- $url 2>/dev/null | grep class | grep selected | grep li | grep Download | ");
+	open (FH, "$wget_command -qO- $url 2>/dev/null | grep class | grep selected | grep li | grep Download | ");
 
-	if (my $line = <$FH>) {
+	if (my $line = <FH>) {
 		my @cols = split (/"/, $line);
 		$filename = $cols[3];
 		chomp ($filename);
 	}
 	else {
-		close ($FH);
+		close (FH);
 		return \@file_list;
 	}
 
-	close ($FH);
+	close (FH);
 
 	$url = "http://downloads.sourceforge.net" . $filename;
-	open ($FH, "$wget_command -qO- $url 2>/dev/null | grep $filename | grep package_id= | grep release_id | ");
+	open (FH, "$wget_command -qO- $url 2>/dev/null | grep $filename | grep package_id= | grep release_id | ");
 
-	while (my $line = <$FH>) {
+	while (my $line = <FH>) {
 		my @cols = split (/>/, $line);
 		my $filename = $cols[2];
 		chomp ($filename);
@@ -150,7 +150,7 @@ sub get_file_list_wget_sourceforge
 		push (@file_list, $filename);
 	}
 
-	close ($FH);
+	close (FH);
 
 	return \@file_list;
 }
