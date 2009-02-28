@@ -126,9 +126,9 @@ UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
 UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
 SF_ARGS = $(addprefix -s ,$(UPSTREAM_USE_SF))
 ifneq ($(UFILES_REGEX), "")    
-	FILES2CHECK = $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(SF_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
+	FILES2CHECK := $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(SF_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
 else
-	FILES2CHECK = ""
+	FILES2CHECK := ""
 endif
 
 check-upstream-and-mail:
