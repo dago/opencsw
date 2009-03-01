@@ -71,6 +71,8 @@ pre-install:
 	( cp $(FILEDIR)/firefox.desktop $(WORK_INSTALL)/opt/csw/share/applications/firefox.desktop )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/gnome/mime-info )
 	( cp $(FILEDIR)/firefox.keys $(WORK_INSTALL)/opt/csw/share/gnome/mime-info/firefox.keys )
+	@ginstall -d $(WORK_INSTALL)$(datadir)/doc/$(GARNAME)
+	@gcp -fp $(WORK_BUILD)/LICENSE $(WORK_INSTALL)$(datadir)/doc/$(GARNAME)/License.txt
 
 post-install:
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
