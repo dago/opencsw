@@ -1,0 +1,6 @@
+f3718fefd01c8edc007ec0b416a8a7b8  download/firefox-2.0.0.20-source.tar.bz2
+35b08b743fae892fc69aed10cdb3a7cf  download/CSWfirefox.gspec
+e6a5bb96973bba048d61f64c14a6bbc4  download/CSWfirefox.depend
+f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
+6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
+ffec5571cbae2a9fae89ba6a3d3f81c5  download/autoconf.mk.in.diff

@@ -1,4 +1,6 @@
 %var            bitname firefox
 %var            pkgname CSWfirefox
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
+%copyright      
+
+Please see /opt/csw/share/doc/%{GARNAME}/License.txt for license information
