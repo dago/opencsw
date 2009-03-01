@@ -1,6 +1,6 @@
 GARNAME = vim
 DISTVERSION = 7.2
-PATCHREV = 102
+PATCHREV = 128
 GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -42,8 +42,6 @@ CONFIGURE_ARGS += --enable-gui=gnome2
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
-#GTK2 needs 64-bit
-#BUILD64 = 1
 
 PATCHDIRLEVEL = 0
 
@@ -58,33 +56,6 @@ INSTALL_SCRIPTS = minimal
 
 # Note: Tests require controlling terminal
 TEST_TARGET = test
-
-ISAEXEC_EXCLUDE_FILES  = /opt/csw/bin/gview
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gvim
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rgvim
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rgview
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gvimdiff
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gvimtutor
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/evim
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/eview
-
-MERGE_EXCLUDE_FILES_isa-sparcv9  = /opt/csw/bin/sparcv9/gview
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rgvim-x11
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rgview
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/eview
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/evim-x11
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/gvim-x11diff
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/gvim-x11
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/gvim-x11tutor
-
-MERGE_EXCLUDE_FILES_isa-amd64  = /opt/csw/bin/amd64/gview
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rgvim-x11
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rgview
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/eview
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/evim-x11
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/gvim-x11diff
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/gvim-x11
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/gvim-x11tutor
 
 include gar/category.mk
 
