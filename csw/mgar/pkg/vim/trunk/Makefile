@@ -1,6 +1,6 @@
 GARNAME = vim
 DISTVERSION = 7.2
-PATCHREV = 102
+PATCHREV = 128
 GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -34,7 +34,6 @@ DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 PATCHFILES += vimtutor.patch
-PATCHFILES += fix-alignment64-spell.c.diff
 
 WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
 
@@ -51,8 +50,6 @@ CONFIGURE_ARGS += --enable-cscope
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
-#Removed per request
-#BUILD64 = 1
 
 PATCHDIRLEVEL = 0
 
@@ -60,27 +57,6 @@ REQUIRED_PKGS_CSWvim = CSWggettextrt CSWiconv CSWncurses CSWvimrt
 INCOMPATIBLE_PKGS_CSWvim = CSWvim-minimal
 
 PKGFILES_CSWvimrt = /opt/csw/share/.*
-
-ISAEXEC_EXCLUDE_FILES  = /opt/csw/bin/view
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rvim
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/rview
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/vimdiff
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/ex
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/vimtutor
-
-MERGE_EXCLUDE_FILES_isa-sparcv9  = /opt/csw/bin/sparcv9/view
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rvim
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/rview
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/vimdiff
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/ex
-MERGE_EXCLUDE_FILES_isa-sparcv9 += /opt/csw/bin/sparcv9/vimtutor
-
-MERGE_EXCLUDE_FILES_isa-amd64  = /opt/csw/bin/amd64/view
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rvim
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/rview
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/vimdiff
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/ex
-MERGE_EXCLUDE_FILES_isa-amd64 += /opt/csw/bin/amd64/vimtutor
 
 # Note: Tests require controlling terminal
 TEST_TARGET = test
