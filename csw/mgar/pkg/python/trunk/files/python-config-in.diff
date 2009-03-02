@@ -1,0 +1,10 @@
+--- Python-2.6.1/Misc/python-config.in.orig	2009-03-02 12:51:22.272566712 -0600
++++ Python-2.6.1/Misc/python-config.in	2009-03-02 12:50:38.306680748 -0600
+@@ -49,5 +49,7 @@
+     # shared library in prefix/lib/.
+     if opt == '--ldflags' and not getvar('Py_ENABLE_SHARED'):
+         libs.insert(0, '-L' + getvar('LIBPL'))
++    if opt == '--ldflags':
++        libs.insert(0, '-L /opt/csw/lib -R /opt/csw/lib')
+     print ' '.join(libs)
+ 
