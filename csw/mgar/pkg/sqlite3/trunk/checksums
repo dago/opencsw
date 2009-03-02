@@ -1,9 +1,5 @@
 a03bdc86df4025b6881d58557e4b5bd3  download/sqlite-3.6.10.tar.gz
-e59647218ad2eceb91311af1f74d5065  download/CSWsqlite3.gspec
-21d83fd65f7e90aa1d6c03931cd10b58  download/CSWsqlite3.prototype
-d41d8cd98f00b204e9800998ecf8427e  download/CSWsqlite3.depend
-23720c906465d83a988ad20f62384a16  download/CSWsqlite3dev.gspec
-6cf146bca1ef7840ec8e723c0d68ab75  download/CSWsqlite3dev.prototype
-68b329da9893e34099c7d8ad5cb9c940  download/CSWsqlite3dev.depend
+cdd419809af113a0b22d489cf24714fe  download/CSWsqlite3.gspec
+6e43cf703ea5eafe991a120abc06fd44  download/CSWsqlite3devel.gspec
 a0e12a72a1f5b972624c712532dc27d7  download/copyright.html
 01747316846392e5ca9455b74af41d95  download/gar-base.diff
