@@ -9,4 +9,4 @@ a87896c48b2f61b32053e6d02b07b022  download/libpython2.5.so.1.0-isa-sparcv8
 296f46fb4a6a392093120cd86675309b  download/setup.diff
 e1cb8bf39625613272c210c71274b1e0  download/site.diff
 9b45df21739387380ba2f5737a443170  download/configure.diff
-fc531b9bea2915c3b12528ab0674f582  download/python-config-in.diff
+fae0bb9b9a5a21d755c971d2fce9b592  download/python-config-in.diff
