@@ -39,7 +39,7 @@ SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 
 SPKG_DESC_CSWrubydev = Ruby Extension Development Files
 
-PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/rubydoc/.*
+PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/samples.*
 
 PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
@@ -97,10 +97,10 @@ rbconfig:
 
 # Copy samples
 samples:
-	@mkdir -p $(DESTDIR)$(docdir)/rubydoc/
-	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/rubydoc/
+	@mkdir -p $(DESTDIR)$(docdir)/ruby/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/ruby/
 	@for ext in bigdecimal dl tk ; do \
-		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/rubydoc/sample/$$ext ; \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/ruby/sample/$$ext ; \
 	done
 	@$(MAKECOOKIE)
 
