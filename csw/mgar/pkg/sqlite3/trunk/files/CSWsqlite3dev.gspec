@@ -1,4 +1,7 @@
-%var            bitname sqlite3dev
-%var            pkgname CSWsqlite3dev
+%var            bitname sqlite3_devel
+%var            pkgname CSWsqlite3devel
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/../COPYING
+%copyright      
+
+Please see /opt/csw/share/doc/%{GARNAME}/License.txt for license information
+
