@@ -36,6 +36,8 @@ PATCHFILES += multiprocess.diff
 PATCHFILES += pyport.diff
 PATCHFILES += setup.diff
 PATCHFILES += site.diff
+PATCHFILES += configure.diff
+PATCHFILES += python-config-in.diff
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
@@ -50,6 +52,7 @@ CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-unicode=ucs4
 CONFIGURE_ARGS += --with-fpectl
+CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib/\$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
 
 PKGFILES_CSWidle  = $(libdir)/python(\d+(?:\.\d+)*)/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
