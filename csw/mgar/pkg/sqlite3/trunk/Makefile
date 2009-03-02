@@ -7,39 +7,51 @@ define BLURB
 SQLite is a in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine.
 endef
 
+# Download informations
 MASTER_SITES  = http://sqlite.org/
 DISTFILES     = sqlite-$(GARVERSION).tar.gz 
-PKGDIST       = sqlite-$(GARVERSION).tar.gz 
-DISTFILES    += CSWsqlite3.gspec CSWsqlite3.prototype CSWsqlite3.depend 
-DISTFILES    += CSWsqlite3dev.gspec CSWsqlite3dev.prototype CSWsqlite3dev.depend 
-DISTFILES    += COPYING
-# DISTFILES    += $(call admfiles,CSWsqlite3, depend) 
+DISTFILES    += $(call admfiles, CSWsqlite3, ) 
+DISTFILES    += $(call admfiles, CSWsqlite3devel, ) 
+DISTFILES    += copyright.html
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = sqlite-(\d+(?:\.\d+)*).tar.gz
 
-CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
-CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+# Package description
+SPKG_DESC_CSWsqlite3 	  = The XCB library
+SPKG_DESC_CSWsqlite3devel = $(SPKG_DESC_CSWsqlite3) development package
 
-export CFLAGS CXXFLAGS LDFLAGS
+# Dynamic prototype
+PKGFILES_CSWsqlite3devel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWsqlite3devel += $(prefix)/include/.*
+PKGFILES_CSWsqlite3devel += $(prefix)/lib/.*\.a
+PKGFILES_CSWsqlite3devel += $(prefix)/lib/pkgconfig/.*
 
-PATCHFILES = gar-base.diff
-TEST_SCRIPTS	  = none
+# Build the 64 bits binaries
+BUILD64 = 1
 
-GREP = ggrep
+# Add some patches to the sources
+PATCHFILES     = gar-base.diff
 
-include gar/category.mk
+# Do not execute make test step
+TEST_SCRIPTS   = none
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info  --enable-threadsafe --disable-debug 
+# Make configure options
+CONFIGURE_ARGS += --prefix=$(prefix)
+CONFIGURE_ARGS += --mandir=$(mandir)
+CONFIGURE_ARGS += --infodir=$(infodir)
+CONFIGURE_ARGS += --enable-threadsafe --disable-debug 
 
 test-none:
 	@$(MAKECOOKIE)
 
 post-extract:
-	( mv $(WORKDIR)/sqlite-$(GARVERSION) $(WORKDIR)/$(GARNAME)-$(GARVERSION) )
+	( cd $(WORKROOTDIR) ; for i in build-isa-* ; do mv $$i/sqlite-$(GARVERSION) $$i/$(GARNAME)-$(GARVERSION) ; done )
 	@$(MAKECOOKIE)
 
-post-install:
-	( gfind $(DESTDIR)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
+pre-install:
+	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
+	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/copyright.html $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
+
+include gar/category.mk
 
