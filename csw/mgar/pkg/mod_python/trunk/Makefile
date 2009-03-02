@@ -19,7 +19,6 @@ REQUIRED_PKGS_CSWap2modpython = CSWap2prefork CSWpython
 CATALOGNAME_CSWap2modpython   = ap2_modpython
 SPKG_DESC_CSWap2modpython     = an Apache/Python integration module
 
-PATCHFILES  = configure.diff
 PATCHFILES += connobject.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -33,19 +32,13 @@ CONFIGURE_ARGS += --with-python-src=../python
 
 include gar/category.mk
 
-#pre-configure:
-	#@( cd $(WORKSRC) ; autoconf )
-	#@$(MAKECOOKIE)
+DESTDOC = $(DESTDIR)$(docdir)/ap2_modpython
 
-#DESTDOC = $(DESTDIR)$(docdir)/ap2_modpython
-
-#post-install: install-doc
-
-#install-doc:
-	#@install -d $(DESTDOC)
-	#@for file in COPYRIGHT CREDITS LICENSE NEWS NOTICE README ; do \
-	  #ginstall -m 0644 $(WORKSRC)/$$file $(DESTDOC) ; \
-	#done
-	#@( cd $(WORKSRC) ; gcp -vR examples doc-html $(DESTDOC) )
-	#@$(MAKECOOKIE)
+post-install-modulated:
+	@install -d $(DESTDOC)
+	@for file in COPYRIGHT CREDITS LICENSE NEWS NOTICE README ; do \
+	  ginstall -m 0644 $(WORKSRC)/$$file $(DESTDOC) ; \
+	done
+	@( cd $(WORKSRC) ; gcp -vR examples doc-html $(DESTDOC) )
+	@$(DONADA)
 

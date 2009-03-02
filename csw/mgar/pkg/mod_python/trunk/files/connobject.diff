@@ -1,0 +1,11 @@
+--- mod_python-3.3.1/src/connobject.c.orig	2009-03-02 16:21:31.870869598 -0600
++++ mod_python-3.3.1/src/connobject.c	2009-03-02 16:22:11.934909344 -0600
+@@ -139,7 +139,7 @@
+     bytes_read = 0;
+ 
+     while ((bytes_read < len || len == 0) &&
+-           !(b == APR_BRIGADE_SENTINEL(b) ||
++           !(b == APR_BRIGADE_SENTINEL(bb) ||
+              APR_BUCKET_IS_EOS(b) || APR_BUCKET_IS_FLUSH(b))) {
+ 
+         const char *data;
