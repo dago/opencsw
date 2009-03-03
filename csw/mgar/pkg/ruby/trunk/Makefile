@@ -39,7 +39,7 @@ SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 
 SPKG_DESC_CSWrubydev = Ruby Extension Development Files
 
-PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/samples.*
+PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
 
 PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
