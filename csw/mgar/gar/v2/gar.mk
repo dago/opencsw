@@ -415,7 +415,10 @@ test-modulated: build-modulated pre-test-modulated pre-test-$(MODULATION) $(TEST
 	$(DONADA)
 
 # strip - Strip executables
-POST_INSTALL_TARGETS := strip $(POST_INSTALL_TARGETS)
+ifneq ($(GARFLAVOR),DBG)
+	POST_INSTALL_TARGETS := strip $(POST_INSTALL_TARGETS)
+endif
+
 strip:
 	@for target in $(STRIP_DIRS) $(DESTDIR)$(bindir) $(DESTDIR)$(sbindir) ; \
 	do \
