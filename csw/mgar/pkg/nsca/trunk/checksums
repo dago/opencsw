@@ -3,12 +3,9 @@ f23029e0be9b0379f46a52101c28f328  download/CSWnsca.gspec
 9fa3302e1adfe6fb72e91b3cb0f5fdc3  download/CSWnsca.prototype
 1886b15eafd2e2a5a4b230918960ea9a  download/CSWnsca.checkinstall
 7fef893e65bb68bc0762434dbeace713  download/CSWnsca.preinstall
-4a31b1f69eb7caee94f3fffa1232e9f4  download/CSWnsca.depend
 b82767ed7ab002fea4b3a4395511c93c  download/CSWsendnsca.gspec
 8bf9882f3115e8514ae6d9a866397c71  download/CSWsendnsca.preinstall
-a590499dfa6f086d05cda4d86c2333cc  download/CSWsendnsca.depend
 58baa05824b28682cef9e678c3d0cefa  download/nsca
 b36f9006d3f725cc8d6cb9c01533a75c  download/nsca.xml
 58baa05824b28682cef9e678c3d0cefa  download/svc-nsca
 cbb38cacd3ca318f00dfa0877b6017df  download/submit_check_results.diff
-9e1686ea93030fb004d8c65f8c0a2e7d  download/makefile.diff
