@@ -60,6 +60,8 @@ PATCHFILES = rdoc_parse_order_fix.patch
 
 GARCOMPILER = GNU
 
+EXTRA_LDFLAGS = -R /opt/csw/gcc4/lib
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread
 CONFIGURE_ARGS += --enable-shared
