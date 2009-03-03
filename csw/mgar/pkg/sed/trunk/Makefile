@@ -1,5 +1,5 @@
 GARNAME = sed
-GARVERSION = 4.0.9
+GARVERSION = 4.1.5
 CATEGORIES = utils
 
 DESCRIPTION = GNU Stream Editor
