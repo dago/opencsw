@@ -1,0 +1,40 @@
+diff -Nru gnupg-2.0.10.orig/keyserver/Makefile.in gnupg-2.0.10/keyserver/Makefile.in
+--- gnupg-2.0.10.orig/keyserver/Makefile.in	2009-01-12 03:29:44.000000000 -0600
++++ gnupg-2.0.10/keyserver/Makefile.in	2009-02-03 21:29:41.031225041 -0600
+@@ -395,7 +395,7 @@
+ libexec_SCRIPTS = $(GPGKEYS_MAILTO)
+ noinst_SCRIPTS = gpg2keys_test
+ common_libs = ../gl/libgnu.a  ../common/libcommon.a ../jnlib/libjnlib.a
+-other_libs = $(LIBICONV) $(LIBINTL) $(CAPLIBS)
++other_libs = $(LIBICONV) $(LIBINTL) $(CAPLIBS) ../jnlib/libjnlib.a
+ gpg2keys_ldap_SOURCES = gpgkeys_ldap.c ksutil.c ksutil.h no-libgcrypt.c
+ gpg2keys_ldap_CPPFLAGS = $(LDAP_CPPFLAGS) $(AM_CPPFLAGS)
+ gpg2keys_ldap_LDADD = ../jnlib/libjnlib.a $(LDAPLIBS) $(GPG_ERROR_LIBS) \
+@@ -417,13 +417,13 @@
+ 	$(am__append_8)
+ @FAKE_CURL_FALSE@gpg2keys_curl_CPPFLAGS = $(LIBCURL_CPPFLAGS) $(AM_CPPFLAGS)
+ @FAKE_CURL_TRUE@gpg2keys_curl_CPPFLAGS = $(AM_CPPFLAGS)
+-@FAKE_CURL_FALSE@gpg2keys_curl_LDADD = $(LIBCURL) $(GETOPT)
++@FAKE_CURL_FALSE@gpg2keys_curl_LDADD = $(LIBCURL) $(GETOPT) $(other_libs)
+ @FAKE_CURL_TRUE@gpg2keys_curl_LDADD = $(common_libs) $(GPG_ERROR_LIBS) $(NETLIBS) $(DNSLIBS) \
+ @FAKE_CURL_TRUE@	              $(other_libs) 
+ 
+ @FAKE_CURL_FALSE@gpg2keys_hkp_CPPFLAGS = $(LIBCURL_CPPFLAGS) $(AM_CPPFLAGS)
+ @FAKE_CURL_TRUE@gpg2keys_hkp_CPPFLAGS = $(AM_CPPFLAGS)
+-@FAKE_CURL_FALSE@gpg2keys_hkp_LDADD = $(LIBCURL) $(GETOPT)
++@FAKE_CURL_FALSE@gpg2keys_hkp_LDADD = $(LIBCURL) $(GETOPT) $(other_libs)
+ @FAKE_CURL_TRUE@gpg2keys_hkp_LDADD = $(common_libs) $(GPG_ERROR_LIBS) $(NETLIBS) $(DNSLIBS) \
+ @FAKE_CURL_TRUE@	             $(other_libs) 
+ 
+diff -Nru gnupg-2.0.10.orig/sm/Makefile.in gnupg-2.0.10/sm/Makefile.in
+--- gnupg-2.0.10.orig/sm/Makefile.in	2009-01-12 03:29:44.000000000 -0600
++++ gnupg-2.0.10/sm/Makefile.in	2009-02-03 21:30:03.836999289 -0600
+@@ -375,7 +375,7 @@
+ common_libs = $(libcommon) ../kbx/libkeybox.a ../jnlib/libjnlib.a \
+               ../gl/libgnu.a
+ 
+-gpgsm_LDADD = $(common_libs) ../common/libgpgrl.a \
++gpgsm_LDADD = $(common_libs) ../common/libgpgrl.a $(NETLIBS) \
+               $(LIBGCRYPT_LIBS) $(KSBA_LIBS) $(LIBASSUAN_LIBS) \
+               $(GPG_ERROR_LIBS) $(LIBREADLINE) $(LIBINTL) $(ZLIBS) $(LIBICONV)
+ 
