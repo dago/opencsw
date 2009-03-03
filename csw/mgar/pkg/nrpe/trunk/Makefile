@@ -7,12 +7,14 @@ define BLURB
   NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as well.
 endef
 
-#MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagios/
-MASTER_SITES = $(SF_MASTERS)
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnrpe, prototype checkinstall preinstall postinstall preremove depend)
+DISTFILES += $(call admfiles,CSWnrpe, prototype checkinstall preinstall postinstall preremove )
 DISTFILES += svc-nrpe nrpe.xml nrpe
-DISTFILES += $(call admfiles,CSWnrpeplugin, prototype depend)
+DISTFILES += $(call admfiles,CSWnrpeplugin, prototype )
+
+REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap
+REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl-lib=/opt/csw/lib
@@ -21,26 +23,37 @@ CONFIGURE_ARGS += --with-ssl-dir=/opt/csw/bin
 CONFIGURE_ARGS += --with-kerberos-inc=/opt/csw/include
 CONFIGURE_ARGS += --prefix=/opt/csw/nagios
 CONFIGURE_ARGS += --exec-prefix=/opt/csw/nagios
-CONFIGURE_ARGS += --with-command-user=nagios
-CONFIGURE_ARGS += --with-command-group=nagios
 
 PATCHFILES = patch.diff	# Removal of LOG_AUTHPRIV and LOG_FTP
 			# Solaris doesn't have these log facilities
 PATCHFILES += configure.diff 
-PATCHFILES += makefile.diff
-PATCHFILES += doc.diff	# changes made to global Makefile.in to copy some docs
 
-sysconfdir ?= $(prefix)/nagios/etc
-bindir ?= $(prefix)/bin
-libexecdir ?= $(prefix)/libexec/nagios-plugins
-datadir ?= $(prefix)/share
-
-
-#EXTRA_LIB = /opt/csw/lib
+sysconfdir = $(prefix)/nagios/etc
+bindir = $(prefix)/bin
+libexecdir = $(prefix)/libexec/nagios-plugins
+datadir = $(prefix)/share
 
 TEST_TARGET = all
-
-INSTALL_ARGS += install-docs
-INSTALL_ARGS += install-daemon-config
+INSTALL_SCRIPTS = custom
 
 include gar/category.mk
+
+DOCDIR=$(datadir)/doc/nrpe
+CFGDIR=$(sysconfdir)
+LIBEXECDIR=$(libexecdir)
+BINDIR=$(bindir)
+
+install-custom:
+	ginstall -m 775 -d $(DESTDIR)$(DOCDIR)
+	ginstall -m 755 -d $(DESTDIR)$(LIBEXECDIR)
+	ginstall -m 755 -d $(DESTDIR)$(BINDIR)
+	ginstall -m 755 $(WORKSRC)/src/check_nrpe $(DESTDIR)$(LIBEXECDIR)
+	ginstall -m 755 $(WORKSRC)/src/nrpe $(DESTDIR)$(BINDIR)
+	ginstall -m 644 $(WORKSRC)/docs/NRPE.pdf $(DESTDIR)$(DOCDIR)
+	ginstall -m 644 $(WORKSRC)/LEGAL $(DESTDIR)$(DOCDIR)
+	ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(DOCDIR)
+	ginstall -m 644 $(WORKSRC)/README.SSL $(DESTDIR)$(DOCDIR)
+	ginstall -m 644 $(WORKSRC)/SECURITY $(DESTDIR)$(DOCDIR)
+	ginstall -m 775 -d $(DESTDIR)$(CFGDIR)
+	ginstall -m 644 $(WORKSRC)/sample-config/nrpe.cfg $(DESTDIR)$(CFGDIR)
+	@$(MAKECOOKIE)
