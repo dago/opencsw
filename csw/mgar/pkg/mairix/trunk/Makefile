@@ -2,7 +2,7 @@ GARNAME = mairix
 GARVERSION = 0.21
 CATEGORIES = utils
 
-DESCRIPTION = An index and search tool for Maildir, MH, or mbox format email folders.
+DESCRIPTION = An index and search tool for Maildir, MH, or mbox
 define BLURB
   mairix is a program for indexing and searching email messages stored in
   Maildir, MH or mbox folders.
@@ -25,19 +25,32 @@ REQUIRED_PKGS = CSWbzip2 CSWzlib
 
 TEST_SCRIPTS =
 
+# Mention option -x in the help message (-h) and provide fine grained
+# timestamps (still needs a patch to rfc822.c, where HMS are dropped)
+PATCHFILES  = patch-excerpt.diff
+
 # configure doesn't understand most of the $(DIRPATHS) arguments
 CONFIGURE_ARGS = --prefix=/opt/csw
 CONFIGURE_ARGS += --bindir=/opt/csw/bin
 CONFIGURE_ARGS += --infodir=/opt/csw/share/info
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 
+#GARFLAVOR = DBG
+
 include gar/category.mk
+
+# configure uses bashisms but doesn't declare bash as its interpreter
+pre-configure-modulated:
+	@perl -pi -e 's|#!/bin/sh|#!/bin/bash|' $(WORKSRC)/configure
+	$(MAKECOOKIE)
 
 pre-build-modulated:
 	@perl -pi -e 's/__inline__/inline/' $(WORKSRC)/memmac.h
+	$(MAKECOOKIE)
 
 post-install-modulated: DOCS = ACKNOWLEDGEMENTS NEWS README dotmairixrc.eg
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
+	$(MAKECOOKIE)

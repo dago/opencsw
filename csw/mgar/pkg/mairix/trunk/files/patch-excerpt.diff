@@ -1,0 +1,23 @@
+diff -ur mairix-0.21.org/mairix.c mairix-0.21/mairix.c
+--- mairix-0.21.org/mairix.c	2007-06-22 21:18:00.000000000 +0100
++++ mairix-0.21/mairix.c	2009-03-03 14:17:23.119599595 +0000
+@@ -410,6 +410,7 @@
+          "-t           : include all messages in same threads as matching messages\n"
+          "-o <mfolder> : override setting of mfolder from mairixrc file\n"
+          "-r           : force raw output regardless of mformat setting in mairixrc file\n"
++         "-x           : show an excerpt of the headers of the matching messages\n"
+          "expr_i       : search expression (all expr's AND'ed together):\n"
+          "    word          : match word in message body and major headers\n"
+          "    t:word        : match word in To: header\n"
+diff -ur mairix-0.21.org/search.c mairix-0.21/search.c
+--- mairix-0.21.org/search.c	2007-06-22 21:18:00.000000000 +0100
++++ mairix-0.21/search.c	2009-03-03 14:19:30.048952226 +0000
+@@ -1208,7 +1208,7 @@
+             if (parsed->hdrs.from)    printf("  From:    %s\n", parsed->hdrs.from);
+             if (parsed->hdrs.subject) printf("  Subject: %s\n", parsed->hdrs.subject);
+             thetm = gmtime(&parsed->hdrs.date);
+-            strftime(datebuf, sizeof(datebuf), "%a, %d %b %Y", thetm);
++            strftime(datebuf, sizeof(datebuf), "%a, %d %b %Y, %H:%M:%S", thetm);
+             printf("  Date:     %s\n", datebuf);
+             free_rfc822(parsed);
+           }
