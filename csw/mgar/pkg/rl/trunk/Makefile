@@ -1,5 +1,5 @@
 GARNAME = rl
-GARVERSION = 0.2.6
+GARVERSION = 0.2.7
 CATEGORIES = apps
 
 DESCRIPTION = A command-line tool that randomizes lines of input.
@@ -17,6 +17,5 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 # Not gonna do it
 TEST_SCRIPTS =
-
 
 include gar/category.mk

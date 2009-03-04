@@ -1,4 +1,5 @@
 %var            bitname rl
 %var            pkgname CSWrl
+%var            hotline http://www.opencsw.org/bugtrack
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      url file://%{WORKSRC}/COPYING
