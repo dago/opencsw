@@ -26,7 +26,7 @@ MSGFMT=/opt/csw/bin/gmsgfmt
 MSGMERGE=/opt/csw/bin/gmsgmerge
 SED=/opt/csw/bin/gsed
 EXTRA_CONFIGURE_EXPORTS = DOT XGETTEXT MSGFMT MSGMERGE SED
-EXTRA_INC += /opt/csw/include/ncurses
+EXTRA_INC = /opt/csw/include/ncurses
 
 #Need to include our own x11.pc file as solaris 8 doesn't have one
 EXTRA_PKGCONFIG_PATH = $(CURDIR)/$(WORKDIR)
