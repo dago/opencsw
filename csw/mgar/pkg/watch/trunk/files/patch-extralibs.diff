@@ -14,7 +14,7 @@ diff -ur procps-3.2.7.orig/watch.c procps-3.2.7/watch.c
  #include <unistd.h>
  #include <termios.h>
  #include <locale.h>
-+#include <stdarg.h>
++#include "snprintf.h"
  #include "proc/procps.h"
  
  #ifdef FORCE_8BIT

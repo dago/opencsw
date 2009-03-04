@@ -1,13 +1,14 @@
-# Todo
-# * asprintf() from portable snprintf.c isn't working yet
-#   Header line on watch output always reads "Every fs: "
-#
+# Todo:
+# * watch called for programs with longer than terminal output 
+#   (for example "find ." or "ls -lR" or "last" on build8x) causes
+#   broken pipe on second program invocation
 GARNAME = watch
 GARVERSION = 3.2.7
 CATEGORIES = utils
 
 DESCRIPTION = Watch a program output change over time
-define BLURB
+define Blurb
+  "watch" from the procps package.
 endef
 
 # Usually we would use $(SF_MIRROR), but the procps folks didn't upload
@@ -35,14 +36,17 @@ include gar/category.mk
 #
 # 1) Remove unnecessary build instructions that would cause errors otherwise
 # 2) Bring in GNU getopt for getopt_long()
-# 3) Bring in asprintf()
+# 3) Bring in snprintf.c for a portable version of asprintf()
 #
-# GNU getopt from http://cherokee-project.com
-# asprintf from http://www.ijs.si/software/snprintf/
+# GNU getopt taken from 
+#   http://svn.cherokee-project.com/browser/cherokee/trunk/cherokee/getopt
+# snprintf.c taken from http://www.jhweiss.de/software/snprintf.html
 #
 
-# Tell snprintf.c that we have snprintf and need asprintf()
-CFLAGS := $(CFLAGS) -DHAVE_SNPRINTF -DNEED_ASPRINTF
+# Don't tell snprintf.c that you have v?snprintf, output will be garbled 
+CFLAGS := $(CFLAGS) -DHAVE_STDARG_H -DHAVE_STDLIB_H -DHAVE_STDDEF
+CFLAGS := $(CFLAGS) -DHAVE_INTTYPES_H -DHAVE_LOCALE_H -DHAVE_LOCALECONV
+CFLAGS := $(CFLAGS) -DHAVE_LOCALECONV -DHAVE_UINTMAX_T -DHAVE_VA_COPY
 
 pre-build-modulated:
 	@rm $(WORKSRC)/ps/module.mk $(WORKSRC)/proc/module.mk
@@ -51,13 +55,14 @@ pre-build-modulated:
 	@cp $(FILEDIR)/gettext.h* $(WORKSRC)
 	$(MAKECOOKIE)
 
+build-custom: BUILD_ARGS:=ALL_CFLAGS="$(CFLAGS)" ALL_LDFLAGS="$(LDFLAGS)"
 build-custom:
-	@(cd $(WORKSRC); \
-	    gmake ALL_CFLAGS="$(CFLAGS)" ALL_LDFLAGS="$(LDFLAGS)" snprintf.o; \
-	    gmake ALL_CFLAGS="$(CFLAGS)" ALL_LDFLAGS="$(LDFLAGS)" getopt.o; \
-	    gmake ALL_CFLAGS="$(CFLAGS)" ALL_LDFLAGS="$(LDFLAGS)" getopt1.o; \
-	    gmake ALL_CFLAGS="$(CFLAGS) snprintf.o getopt.o getopt1.o" \
-	        ALL_LDFLAGS="$(LDFLAGS)" watch)
+	@gmake -C $(WORKSRC) $(BUILD_ARGS) snprintf.o
+	@gmake -C $(WORKSRC) $(BUILD_ARGS) getopt.o
+	@gmake -C $(WORKSRC) $(BUILD_ARGS) getopt1.o
+	@gmake -C $(WORKSRC) \
+		ALL_CFLAGS="$(CFLAGS) snprintf.o getopt.o getopt1.o" \
+	        ALL_LDFLAGS="$(LDFLAGS)" watch
 	$(MAKECOOKIE)
 
 install-custom:
