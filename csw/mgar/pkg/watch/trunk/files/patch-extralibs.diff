@@ -1,0 +1,20 @@
+diff -ur procps-3.2.7.orig/watch.c procps-3.2.7/watch.c
+--- procps-3.2.7.orig/watch.c	2009-03-04 00:47:36.646213261 +0100
++++ procps-3.2.7/watch.c	2009-03-04 00:48:55.985676696 +0100
+@@ -13,7 +13,7 @@
+ #define VERSION "0.2.0"
+ 
+ #include <ctype.h>
+-#include <getopt.h>
++#include "getopt.h"
+ #include <signal.h>
+ #include <ncurses.h>
+ #include <stdio.h>
+@@ -24,6 +24,7 @@
+ #include <unistd.h>
+ #include <termios.h>
+ #include <locale.h>
++#include <stdarg.h>
+ #include "proc/procps.h"
+ 
+ #ifdef FORCE_8BIT
