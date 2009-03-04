@@ -29,15 +29,18 @@ ROOTFROMDEST = $(call DIRSTODOTS,$(DESTDIR))
 MAKEPATH = $(shell echo $(1) | perl -lne 'print join(":", split)')
 TOLOWER = $(shell echo $(1) | tr '[A-Z]' '[a-z]')
 
+#meant to take a git url and return just the $proj.git part
+GITPROJ = $(lastword $(subst /, ,$(1)))
+
 PARALLELMFLAGS ?= $(MFLAGS)
 export PARALLELMFLAGS
 
 DISTNAME ?= $(GARNAME)-$(GARVERSION)
 
 DYNSCRIPTS = $(foreach PKG,$(SPKG_SPECS),$(foreach SCR,$(ADMSCRIPTS),$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
-_NOCHECKSUM += $(DYNSCRIPTS)
+_NOCHECKSUM += $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))
 
-ALLFILES ?= $(DISTFILES) $(PATCHFILES) $(DYNSCRIPTS)
+ALLFILES ?= $(DISTFILES) $(PATCHFILES) $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))
 
 ifeq ($(MAKE_INSTALL_DIRS),1)
 INSTALL_DIRS = $(addprefix $(DESTDIR),$(prefix) $(exec_prefix) $(bindir) $(sbindir) $(libexecdir) $(datadir) $(sysconfdir) $(sharedstatedir) $(localstatedir) $(libdir) $(infodir) $(lispdir) $(includedir) $(mandir) $(foreach NUM,1 2 3 4 5 6 7 8, $(mandir)/man$(NUM)) $(sourcedir))
@@ -238,6 +241,8 @@ fetch-list:
 	@$(foreach P,$(PATCHFILES),echo "	$P";)
 	@echo "Dynamically generated scripts: "
 	@$(foreach D,$(DYNSCRIPTS),echo "	$D";)
+	@echo "Git Repos tracked: "
+	@$(foreach R,$(GIT_REPOS),echo "       $R";)
 
 # fetch			- Retrieves $(DISTFILES) (and $(PATCHFILES) if defined)
 #				  into $(DOWNLOADDIR) as necessary.
@@ -289,8 +294,8 @@ GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(ALLFILES))
 garchive: checksum $(GARCHIVE_TARGETS) ;
 
 # extract		- Unpacks $(DISTFILES) into $(EXTRACTDIR) (patches are "zcatted" into the patch program)
-EXTRACT_TARGETS-global ?= $(foreach SPEC,$(SPKG_SPECS),$(filter $(SPEC).%,$(DISTFILES) $(DYNSCRIPTS)))
-EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(if $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-$(MODULATION)),$(DISTFILES) $(DYNSCRIPTS))))
+EXTRACT_TARGETS-global ?= $(foreach SPEC,$(SPKG_SPECS),$(filter $(SPEC).%,$(DISTFILES) $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))))
+EXTRACT_TARGETS = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(if $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-$(MODULATION)),$(DISTFILES) $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R))))))
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)

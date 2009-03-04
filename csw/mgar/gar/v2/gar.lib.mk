@@ -17,13 +17,25 @@ VPATH += $(COOKIEDIR)
 # convenience variable to make the cookie.
 MAKECOOKIE = mkdir -p $(COOKIEDIR)/$(@D) && date >> $(COOKIEDIR)/$@
 
+URLSTRIP = $(subst ://,//,$(1))
+
+# if you need to proxy git:// connections, set GIT_USE_PROXY.  There is a
+# default proxy script that works with the (squid?) proxy at the BO buildfarm.
+# override GIT_PROXY_SCRIPT to something else if you need to.
+GIT_MAYBEPROXY = $(if $(GIT_USE_PROXY),GIT_PROXY_COMMAND=$(GIT_PROXY_SCRIPT))
+GIT_TREEISH = $(if $(GIT_TREEISH_$(1)),$(GIT_TREEISH_$(1)),HEAD)
+
 #################### FETCH RULES ####################
 
-URLS = $(subst ://,//,$(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(PATCHFILES))))
+URLS = $(call URLSTRIP,$(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(PATCHFILES))))
 
 # if the caller has defined _postinstall, etc targets for a package, add
 # these 'dynamic script' targets to our fetch list
 URLS += $(foreach DYN,$(DYNSCRIPTS),dynscr//$(DYN))
+
+ifdef GIT_REPOS
+URLS += $(foreach R,$(GIT_REPOS),gitrepo//$(call GITPROJ,$(R)) $(subst http,git-http,$(call URLSTRIP,$(R))))
+endif
 
 # Download the file if and only if it doesn't have a preexisting
 # checksum file.  Loop through available URLs and stop when you
@@ -42,6 +54,30 @@ $(DOWNLOADDIR)/%:
 			false; \
 		fi; \
 	fi
+
+gitrepo//%:
+	@( if [ -d $(GARCHIVEDIR)/$(call GITPROJ,$*) ]; then \
+		( cd $(GARCHIVEDIR)/$(call GITPROJ,$*); \
+			$(GIT_MAYBEPROXY) git --bare fetch ) && \
+		gln -s $(GARCHIVEDIR)/$(call GITPROJ,$*)/ $(PARTIALDIR)/$(call GITPROJ,$*); \
+	   else \
+		false; \
+	  fi )
+
+# the git remote add commands are so that we can later do a fetch
+# to update the code.
+# we possibly proxy the git:// references depending on GIT_USE_PROXY
+git-http//%:
+	@$git clone --bare http://$* $(PARTIALDIR)/$(call GITPROJ,$*)
+	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
+		git remote add origin http://$*; \
+		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
+
+git//%:
+	@$(GIT_MAYBEPROXY) git clone --bare git://$* $(PARTIALDIR)/$(call GITPROJ,$*)
+	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
+		git remote add origin git://$*; \
+		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
 
 # create ADMSCRIPTS 'on the fly' from variables defined by the caller
 # This version is private and should only be called from the non-private
@@ -118,7 +154,6 @@ checksum-%: $(CHECKSUM_FILE)
 		echo '(!!!) $* not in $(CHECKSUM_FILE) file!' 1>&2; \
 		false; \
 	fi
-		
 
 #################### CHECKNEW RULES ####################
 
@@ -277,6 +312,13 @@ gz-extract-%:
 	@gzip -d $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
+# extra dependency rule for git repos, that will allow the user
+# to supply an alternate target at their discretion
+git-extract-%:
+	@echo " ===> Extracting Git Repo $(DOWNLOADDIR)/$* (Treeish: $(call GIT_TREEISH,$*))"
+	git --bare archive --prefix=$(GARNAME)-$(GARVERSION)/ --remote=file://$(abspath $(DOWNLOADDIR))/$*/ $(call GIT_TREEISH,$*) | gtar -xf - -C $(EXTRACTDIR)
+	@$(MAKECOOKIE)
+
 # rule to extract files with unzip
 zip-extract-%:
 	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
@@ -343,6 +385,9 @@ extract-archive-%.bz2: bz-extract-%.bz2
 	@$(MAKECOOKIE)
 
 extract-archive-%.gz: gz-extract-%.gz
+	@$(MAKECOOKIE)
+
+extract-archive-%.git: git-extract-%.git
 	@$(MAKECOOKIE)
 
 # anything we don't know about, we just assume is already

@@ -31,6 +31,9 @@ CHECKSUM_FILE ?= checksums
 MANIFEST_FILE ?= manifest
 LOGDIR ?= log
 
+GIT_PROXY_SCRIPT ?= $(abspath $(GARBIN))/gitproxy
+GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
+
 # Outbound proxies
 http_proxy ?= 
 ftp_proxy  ?= 
@@ -131,7 +134,13 @@ DESTIMG ?= $(LOGNAME)-$(shell hostname)
 
 
 # These are the core packages which must be installed for GAR to function correctly
-PREREQUISITE_BASE_PKGS ?= CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2
+DEF_BASE_PKGS = CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2
+ifdef GIT_REPOS
+# netcat and bash are for the gitproxy script.
+DEF_BASE_PKGS += CSWgit CSWnetcat
+endif
+
+PREREQUISITE_BASE_PKGS ?= $(DEF_BASE_PKGS)
 
 # Supported architectures returned from isalist(1)
 # Not all architectures are detected by all Solaris releases, especially
