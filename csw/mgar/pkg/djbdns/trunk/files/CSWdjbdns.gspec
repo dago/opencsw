@@ -1,0 +1,5 @@
+%var            bitname djbdns
+%var            pkgname CSWdjbdns
+%var            hotline http://www.opencsw.org/bugtrack
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      
