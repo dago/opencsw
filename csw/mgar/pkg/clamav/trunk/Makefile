@@ -1,5 +1,11 @@
+# http://www.clamav.net/snapshot/clamav-devel-latest.tar.gz
+# review deps
+# - remove: gmp, tcp wrappers (?)
+# - add:    ncurses, unrar (?)
+
 GARNAME = clamav
-GARVERSION = 0.94.2
+GARVERSION = 0.95rc1
+WORKSRC = $(WORKDIR)/$(GARNAME)-devel-latest
 CATEGORIES = apps
 
 DESCRIPTION = Clam AntiVirus
@@ -11,10 +17,13 @@ define BLURB
   the package is an anti-virus engine available in a form of shared library.
 endef
 
-SF_PROJ = clamav
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWclamav,checkinstall preinstall)
+#SF_PROJ = clamav
+#MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = http://www.clamav.net/snapshot/
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-devel-latest.tar.gz
+#DISTFILES += $(call admfiles,CSWclamav,checkinstall preinstall)
+DISTFILES += $(call admfiles,CSWclamav,)
 DISTFILES += $(call admfiles,CSWlibclamav,)
 
 SPKG_DESC_CSWclamav = Clam AntiVirus
@@ -26,7 +35,8 @@ REQUIRED_PKGS_CSWlibclamav = CSWlibgmp CSWzlib CSWbzip2 CSWiconv
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_CLASSES_CSWclamav = none cswcpsampleconf cswinitsmf
+# add usergroup class
+SPKG_CLASSES_CSWclamav = none cswusergroup cswautouser cswcpsampleconf cswinitsmf
 
 OPT_FLAGS_SOS = -xO2
 
@@ -43,11 +53,21 @@ PKGFILES_CSWlibclamav  = $(libdir)/.*
 PKGFILES_CSWlibclamav += $(includedir)/.*
 PKGFILES_CSWlibclamav += $(docdir)/libclamav/.*
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/clamav/ { $$$$5 = "clamav" } { print }'
+# fix usergroup stuff
+PROTOTYPE_FILTER  = awk ' \
+   $$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } \
+   $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } \
+   $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+   $$$$3 ~ /\/clamav-milter.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+   $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+   $$$$3 ~ /\/var\/opt\/csw\/clamav/ { $$$$5 = "clamav" } \
+   $$$$3 ~ /\/etc\/opt\/csw\/clamav\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } \
+   { print }'
 
 SPKG_SOURCEURL = http://www.clamav.net/
 
-#ENABLE_CHECK=0
+TEST_TARGET = check
+ENABLE_CHECK=0
 
 include gar/category.mk
 
