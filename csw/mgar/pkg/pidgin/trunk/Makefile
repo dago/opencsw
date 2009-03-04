@@ -1,5 +1,5 @@
 GARNAME = pidgin
-GARVERSION = 2.5.4
+GARVERSION = 2.5.5
 CATEGORIES = apps
 
 DESCRIPTION = Multi-protocol IM client
@@ -10,7 +10,6 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += x11.pc
-DISTFILES += $(call admfiles,CSWpidgin,)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += '--with-dbus-services=/opt/csw/etc/dbus-1'
