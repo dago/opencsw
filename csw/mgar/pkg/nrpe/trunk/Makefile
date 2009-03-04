@@ -7,6 +7,7 @@ define BLURB
   NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as well.
 endef
 
+SF_PROJ = nagios
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnrpe, prototype checkinstall preinstall postinstall preremove )
