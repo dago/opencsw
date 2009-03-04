@@ -1,5 +1,5 @@
 GARNAME = curl
-GARVERSION = 7.19.3
+GARVERSION = 7.19.4
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
@@ -19,9 +19,11 @@ DISTFILES += libcurl.so.3.0.0.s
 DISTFILES += libcurl.so.2.0.2.s
 DISTFILES += libcurl.so.3.0.0.i
 DISTFILES += libcurl.so.2.0.2.i
-DISTFILES += $(call admfiles,CSWcurl,)
-DISTFILES += $(call admfiles,CSWcurlrt,)
-DISTFILES += $(call admfiles,CSWcurldevel,)
+
+PACKAGES = CSWcurl CSWcurlrt CSWcurldevel
+CATALOGNAME_CSWcurl = curl
+CATALOGNAME_CSWcurlrt = curlrt
+CATALOGNAME_CSWcurldevel = curldevel
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -38,8 +40,7 @@ REQUIRED_PKGS_CSWcurl += CSWsasl CSWzlib CSWcurlrt
 REQUIRED_PKGS_CSWcurlrt = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl
 REQUIRED_PKGS_CSWcurldevel = CSWcurlrt
 
-ENABLE_CHECK = 0
-TEST_TARGET = 
+SKIPTEST = 1
 
 PKGFILES_CSWcurldevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWcurlrt  = $(PKGFILES_RT)
