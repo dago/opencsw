@@ -23,7 +23,9 @@ SPKG_SOURCEURL = http://www.littlecms.com
 LICENSE = COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=26279
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
