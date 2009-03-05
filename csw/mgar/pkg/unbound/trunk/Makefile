@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = http://unbound.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWunbound,)
+DISTFILES += $(call admfiles,CSWunbound, preinstall)
 
 GARCOMPILER = GCC4
 
@@ -26,5 +26,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --without-pthreads
 CONFIGUTE_ARGS += --with-solaris-threads
 CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 
 include gar/category.mk

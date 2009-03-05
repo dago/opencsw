@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# check, if the unbound user does exist
+grep '^unbound:' $PKG_ROOT_DIR/etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+        getent passwd unbound >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDUSER=1
+        fi
+fi
+
+# create the unbound user, if NEEDUSER=1
+if [ "$NEEDUSER" = 1 ] ; then
+        echo Adding required unbound user
+
+        # create the amavis user
+        /usr/sbin/useradd -d /var/run -g other -c 'unbound pseud user' -s /bin/false unbound
+fi
