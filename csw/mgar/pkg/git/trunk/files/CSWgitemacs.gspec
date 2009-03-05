@@ -1,6 +1,0 @@
-%var            bitname git_emacs
-%var            pkgname CSWgitemacs
-%var		desc A Git VCS mode for Emacs
-%var		arch all
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
