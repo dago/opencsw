@@ -33,7 +33,7 @@ REQUIRED_PKGS += CSWlibfpx CSWlibrsvg CSWlibxml2 CSWopenexr CSWperl CSWpng
 REQUIRED_PKGS += CSWsunmath CSWtiff CSWwmf CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+).tar.bz2
+UFILES_REGEX = ImageMagick-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 
 CPPFLAGS += -I/usr/openwin/include -I/usr/openwin/include/X11
 
