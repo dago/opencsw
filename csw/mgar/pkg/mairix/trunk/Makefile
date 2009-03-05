@@ -25,8 +25,7 @@ REQUIRED_PKGS = CSWbzip2 CSWzlib
 
 TEST_SCRIPTS =
 
-# Mention option -x in the help message (-h) and provide fine grained
-# timestamps (still needs a patch to rfc822.c, where HMS are dropped)
+# Mention option -x in the help message (-h)
 PATCHFILES  = patch-excerpt.diff
 
 # configure doesn't understand most of the $(DIRPATHS) arguments
