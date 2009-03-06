@@ -8,4 +8,4 @@ REQUIRED_PKGS_CSWphp5gettext = CSWphp5 CSWggettextrt
 
 CONFIGURE_ARGS += --with-gettext=shared,$(prefix)
 
-PKGFILES_CSWphp5gettext = .*/lib/php/extensions/gettext.*
+PKGFILES_CSWphp5gettext = .*/lib/php/extensions/.*/gettext.*

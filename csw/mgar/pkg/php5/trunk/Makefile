@@ -61,7 +61,7 @@ PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/Zend/.*
 PKGFILES_CSWphp5devel += $(prefix)/php5/lib/php/build/.*
 PKGFILES_CSWphp5devel += $(prefix)/php5/man/.*
 
-PATCHFILES += config.diff
+PATCHFILES += configure.diff
 
 # PHP Extensions
 EXTDIRLIST = $(shell ls -d extensions/*)

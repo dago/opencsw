@@ -13,3 +13,4 @@ CONFIGURE_ARGS += --with-db4=$(prefix)/bdb44
 
 
 PKGFILES_CSWphp5dba = .*/lib/php/extensions/.*/dba\.so
+PKGFILES_CSWphp5dba += .*/lib/php/extensions/.*/dba\.a

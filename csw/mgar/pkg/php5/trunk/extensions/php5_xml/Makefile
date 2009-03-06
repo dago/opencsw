@@ -10,6 +10,7 @@ CONFIGURE_ARGS += --enable-xml=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --with-libexpat-dir=$(prefix)
 
-PKGFILES_CSWphp5xml = .*/lib/php/extensions/.*/xml.so
-PKGFILES_CSWphp5xml = .*/include/php/ext/xml/.*
-PKGFILES_CSWphp5xml = .*/include/php/ext/libxml/.*
+PKGFILES_CSWphp5xml  = .*/lib/php/extensions/.*/xml.so
+PKGFILES_CSWphp5xml += .*/lib/php/extensions/.*/xml.a
+PKGFILES_CSWphp5xml += .*/include/php/ext/xml/.*
+PKGFILES_CSWphp5xml += .*/include/php/ext/libxml/.*
