@@ -11,9 +11,15 @@ endef
 
 MASTER_SITES = http://unbound.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWunbound, preinstall)
+DISTFILES += $(call admfiles,CSWunbound, depend)
+DISTFILES += cswunbound
+DISTFILES += cswusergroup
 
 GARCOMPILER = GCC4
+
+REQUIRED_PKGS = CSWcswclassutils
+SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/unbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -23,9 +29,16 @@ GARCOMPILER = GCC4
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --without-pthreads
 CONFIGUTE_ARGS += --with-solaris-threads
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
+CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
+
+post-install-modulated:
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/cswunbound $(DESTDIR)/etc/opt/csw/init.d/cswunbound
+	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/unbound/cswusergroup
+	@mv $(DESTDIR)/etc/opt/csw/unbound/unbound.conf $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
+	@chmod 444 $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
 
 include gar/category.mk
