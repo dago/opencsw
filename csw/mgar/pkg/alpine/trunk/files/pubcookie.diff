@@ -1,0 +1,160 @@
+--- alpine-2.00/web/src/pubcookie/wp_uidmapper.c.orig	2009-03-05 22:41:25.411701357 -0600
++++ alpine-2.00/web/src/pubcookie/wp_uidmapper.c	2009-03-05 22:42:00.628611160 -0600
+@@ -16,6 +16,10 @@
+ #include "id_table.h"
+ #include "wp_uidmapper_lib.h"
+ 
++#ifndef LOG_PERROR
++#define LOG_PERROR 0
++#endif
++
+ 
+ /* Makefile should #define:
+  * 
+@@ -51,7 +55,7 @@
+   
+   id_table_range *range;
+   id_table table;
+-  struct sockaddr_un sun,rsun;
++  struct sockaddr_un lsun,rsun;
+   struct sigaction sa;
+   int is_err,i,ssock,uid;
+   unsigned int kbuf[WP_KEY_LEN];
+@@ -61,7 +65,9 @@
+ #ifndef DGRAM_MODE
+   int csock,rsun_len;
+ #endif
+-  struct ucred cred;
++#ifdef SO_PEERCRED
++struct ucred cred;
++#endif
+   
+   /*
+    * process command line arguments
+@@ -129,10 +135,10 @@
+     syslog(LOG_ERR,"%s: socket: %s\n",socketname,strerror(errno));
+     exit(1);
+   }
+-  /* sun.sun_len = strlen(socketname) + 1; */
+-  sun.sun_family = AF_UNIX;
+-  strcpy(sun.sun_path,socketname);  
+-  if(bind(ssock,(struct sockaddr*)&sun,sizeof(sun))) {
++  /* lsun.sun_len = strlen(socketname) + 1; */
++  lsun.sun_family = AF_UNIX;
++  strcpy(lsun.sun_path,socketname);
++  if(bind(ssock,(struct sockaddr*)&lsun,sizeof(lsun))) {
+     syslog(LOG_ERR,"%s: bind: %s\n",socketname,strerror(errno));
+     exit(1);
+   }
+@@ -166,9 +172,14 @@
+   rmh.msg_namelen = sizeof(rsun);
+   rmh.msg_iov = riov;  
+   rmh.msg_iovlen = 3;
++#ifdef VANILLA
+   rmh.msg_control = cbuf;
+   rmh.msg_controllen = riov[0].iov_len + riov[1].iov_len + riov[2].iov_len;
+   rmh.msg_flags = 0;
++#else
++  rmh.msg_accrights = NULL;
++  rmh.msg_accrightslen = 0;
++#endif
+ 
+   /* siov[0].iov_base */
+   /* siov[0].iov_len */
+@@ -176,9 +187,15 @@
+   smh.msg_namelen = 0;
+   smh.msg_iov = siov;
+   /* smh.msg_iovlen */
++#ifdef VANILLA
+   smh.msg_control = NULL;
+   smh.msg_controllen = 0;
+   smh.msg_flags = 0;
++#else
++  smh.msg_accrights = NULL;
++  smh.msg_accrightslen = 0;
++#endif
++
+ 
+ #ifndef DGRAM_MODE
+   csock = -1;
+@@ -196,6 +213,7 @@
+       syslog(LOG_ERR,"accept: %s\n",strerror(errno));
+       break;
+     }
++#ifdef SO_PEERCRED
+     if(debug >= 2) {
+       i = sizeof(cred);
+       if(getsockopt(csock,SOL_SOCKET,SO_PEERCRED,&cred,&i) == -1) {
+@@ -205,6 +223,7 @@
+ 	       cred.pid,cred.uid,cred.gid);
+       }
+     }
++#endif
+     i = recvmsg(csock,&rmh,0);
+ #endif
+ 
+--- alpine-2.00/web/src/pubcookie/wp_uidmapper_lib.c.orig	2009-03-05 22:41:35.393957770 -0600
++++ alpine-2.00/web/src/pubcookie/wp_uidmapper_lib.c	2009-03-05 22:42:00.638013846 -0600
+@@ -23,7 +23,7 @@
+ 			struct iovec *in,int inlen,int *rinbytes) {
+   int sock,i;
+   struct msghdr mh;
+-  struct sockaddr_un sun;
++  struct sockaddr_un lsun;
+   
+ #ifdef DGRAM_MODE
+   sock = socket(AF_UNIX,SOCK_DGRAM,0);
+@@ -32,17 +32,23 @@
+ #endif
+   if(sock < 0) return -1;
+   
+-  sun.sun_family = AF_UNIX;
+-  strcpy(sun.sun_path,sockname);
+-  if(connect(sock,(struct sockaddr*)&sun,sizeof(sun))) return -1;
++  lsun.sun_family = AF_UNIX;
++  strcpy(lsun.sun_path,sockname);
++  if(connect(sock,(struct sockaddr*)&lsun,sizeof(lsun))) return -1;
+   
+   mh.msg_name = NULL;
+   mh.msg_namelen = 0;
+   mh.msg_iov = out;
+   mh.msg_iovlen = outlen;
++#ifdef VANILLA
+   mh.msg_control = NULL;
+   mh.msg_controllen = 0;
+   mh.msg_flags = 0;
++#else
++  mh.msg_accrights = NULL;
++  mh.msg_accrightslen = 0;
++#endif
++
+   
+   if((i = sendmsg(sock,&mh,0)) == -1) {
+     close(sock);
+@@ -53,7 +59,9 @@
+   if(in) {
+     mh.msg_iov = in;
+     mh.msg_iovlen = inlen;
++#ifdef VANILLA
+     mh.msg_flags = 0;
++#endif
+     if((i = recvmsg(sock,&mh,0)) == -1) {
+       close(sock);
+       return -1;
+--- alpine-2.00/web/src/pubcookie/id_table.c.orig	2009-03-05 22:41:42.220578266 -0600
++++ alpine-2.00/web/src/pubcookie/id_table.c	2009-03-05 22:42:00.624274635 -0600
+@@ -10,6 +10,14 @@
+ #include <dirent.h> /* opendir */
+ #include <unistd.h> /* stat */
+ 
++#ifndef VANILLA
++#include <strings.h> /* bzero */
++#include <limits.h> /* NAME_MAX */
++#ifndef NAME_MAX
++#define NAME_MAX 14
++#endif
++#endif
++
+ unsigned long hash_func(char *string,unsigned long num_buckets) {
+   unsigned long i;
+   char *p;
