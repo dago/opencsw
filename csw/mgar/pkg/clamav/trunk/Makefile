@@ -1,7 +1,4 @@
 # http://www.clamav.net/snapshot/clamav-devel-latest.tar.gz
-# review deps
-# - remove: gmp, tcp wrappers (?)
-# - add:    ncurses, unrar (?)
 
 GARNAME = clamav
 GARVERSION = 0.95rc1
@@ -22,15 +19,15 @@ endef
 MASTER_SITES = http://www.clamav.net/snapshot/
 #DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES  = $(GARNAME)-devel-latest.tar.gz
-#DISTFILES += $(call admfiles,CSWclamav,checkinstall preinstall)
-DISTFILES += $(call admfiles,CSWclamav,)
-DISTFILES += $(call admfiles,CSWlibclamav,)
 
-SPKG_DESC_CSWclamav = Clam AntiVirus
-SPKG_DESC_CSWlibclamav = Clam AntiVirus Library
+PACKAGES = CSWclamav CSWlibclamav
+CATALOGNAME_CSWclamav = clamav
+SPKG_DESC_CSWclamav = $(DESCRIPTION)
+CATALOGNAME_CSWlibclamav = libclamav
+SPKG_DESC_CSWlibclamav = $(DESCRIPTION) Library
 
-REQUIRED_PKGS_CSWclamav = CSWlibclamav CSWlibgmp CSWzlib CSWbzip2 CSWiconv CSWcswclassutils CSWtcpwrap
-REQUIRED_PKGS_CSWlibclamav = CSWlibgmp CSWzlib CSWbzip2 CSWiconv
+REQUIRED_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWcswclassutils CSWncurses
+REQUIRED_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -43,7 +40,7 @@ OPT_FLAGS_SOS = -xO2
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-clamav
 CONFIGURE_ARGS += --enable-milter
-CONFIGURE_ARGS += --with-sendmail=$(libdir)/sendmail
+# unrecognized by 0.95rc1? CONFIGURE_ARGS += --with-sendmail=$(libdir)/sendmail
 CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(GARNAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
 
@@ -54,6 +51,8 @@ PKGFILES_CSWlibclamav += $(includedir)/.*
 PKGFILES_CSWlibclamav += $(docdir)/libclamav/.*
 
 # fix usergroup stuff
+## files/dirs owned by clamav user
+## move cswusergroup file /opt/csw/etc/clamav/
 PROTOTYPE_FILTER  = awk ' \
    $$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } \
    $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } \
@@ -67,6 +66,8 @@ PROTOTYPE_FILTER  = awk ' \
 SPKG_SOURCEURL = http://www.clamav.net/
 
 TEST_TARGET = check
+
+# can not run checkpkg due to libs in separate package
 ENABLE_CHECK=0
 
 include gar/category.mk
@@ -93,7 +94,7 @@ post-install-modulated:
 	@mv $(DESTDIR)$(sysconfdir)/freshclam.conf $(DESTDIR)$(sysconfdir)/freshclam.conf.CSW
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
-	@ginstall -m 644 $(WORKSRC)/COPYING $(DOCDEST)/LICENSE
+#	@ginstall -m 644 $(WORKSRC)/COPYING $(DOCDEST)/LICENSE
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.INSTALL.clamav-milter.CSW $(DOCDEST)/INSTALL.clamav-milter.CSW
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.README.CSW $(DOCDEST)/README.CSW
 	@ginstall -d $(DOCDEST)/contrib
@@ -102,6 +103,6 @@ post-install-modulated:
 	@ginstall -m 644 $(WORKSRC)/contrib/cleanup-partial.pl $(DOCDEST)/contrib
 	@ginstall -d $(DOCDEST)/html
 	@ginstall -m 644 $(WORKSRC)/docs/html/* $(DOCDEST)/html
-	@ginstall -d $(DESTDIR)$(docdir)/libclamav
-	@ginstall -m 644 $(WORKSRC)/COPYING $(DESTDIR)$(docdir)/libclamav/LICENSE
+#	@ginstall -d $(DESTDIR)$(docdir)/libclamav
+#	@ginstall -m 644 $(WORKSRC)/COPYING $(DESTDIR)$(docdir)/libclamav/LICENSE
 	@$(MAKECOOKIE)

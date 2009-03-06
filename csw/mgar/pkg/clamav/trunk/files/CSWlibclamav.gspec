@@ -1,7 +1,0 @@
-%var            bitname libclamav
-%var            pkgname CSWlibclamav
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright
-
-Please see /opt/csw/share/doc/libclamav/LICENSE for license information.
-
