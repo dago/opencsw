@@ -1,7 +1,6 @@
-diff --speed-large-files --minimal -Nru php-5.2.1.orig/configure php-5.2.1/configure
---- php-5.2.1.orig/configure	2007-02-06 19:47:37.000000000 -0500
-+++ php-5.2.1/configure	2007-02-19 18:20:16.159788000 -0500
-@@ -4582,7 +4582,7 @@
+--- php-5.2.6/configure.orig	2009-03-02 19:48:06.545907523 -0600
++++ php-5.2.6/configure	2009-03-02 19:44:49.225016959 -0600
+@@ -4714,7 +4714,7 @@
    $APXS -q -S CFLAGS="$APXS_CFLAGS" CFLAGS >/dev/null 2>&1
  
    if test "$?" != "0"; then
@@ -10,7 +9,7 @@ diff --speed-large-files --minimal -Nru php-5.2.1.orig/configure php-5.2.1/confi
    else 
      APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
      if test -z `$APXS -q SYSCONFDIR`; then
-@@ -4595,7 +4595,7 @@
+@@ -4727,7 +4727,7 @@
                        \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                         $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                               -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -19,7 +18,7 @@ diff --speed-large-files --minimal -Nru php-5.2.1.orig/configure php-5.2.1/confi
      fi
    fi
  
-@@ -5699,7 +5699,7 @@
+@@ -5875,7 +5875,7 @@
                  \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                   $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                         -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -28,7 +27,7 @@ diff --speed-large-files --minimal -Nru php-5.2.1.orig/configure php-5.2.1/confi
    fi
  
    case $host_alias in
-@@ -6529,7 +6529,7 @@
+@@ -6723,7 +6723,7 @@
                  \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                   $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                         -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -37,7 +36,7 @@ diff --speed-large-files --minimal -Nru php-5.2.1.orig/configure php-5.2.1/confi
    fi
  
    case $host_alias in
-@@ -7528,7 +7528,7 @@
+@@ -7740,7 +7740,7 @@
    $APXS -q -S CFLAGS="$APXS_CFLAGS" CFLAGS >/dev/null 2>&1
  
    if test "$?" != "0"; then
@@ -46,7 +45,7 @@ diff --speed-large-files --minimal -Nru php-5.2.1.orig/configure php-5.2.1/confi
    else 
      APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`
      if test -z `$APXS -q SYSCONFDIR`; then
-@@ -7541,7 +7541,7 @@
+@@ -7753,7 +7753,7 @@
                        \$(mkinstalldirs) '$APXS_SYSCONFDIR' && \
                         $APXS -S LIBEXECDIR='$APXS_LIBEXECDIR' \
                               -S SYSCONFDIR='$APXS_SYSCONFDIR' \
@@ -55,12 +54,79 @@ diff --speed-large-files --minimal -Nru php-5.2.1.orig/configure php-5.2.1/confi
      fi
    fi
  
-@@ -80008,7 +80008,7 @@
+@@ -19871,7 +19871,7 @@
+   echo $ac_n "(cached) $ac_c" 1>&6
+ else
+   
+-  for i in $PHP_LIBXML_DIR /usr/local /usr; do
++  for i in $PHP_LIBXML_DIR /opt/csw /usr/local /usr; do
+     if test -x "$i/bin/xml2-config"; then
+       ac_cv_php_xml2_config_path="$i/bin/xml2-config"
+       break
+@@ -45789,7 +45789,7 @@
+ 
+         if test "$found_iconv" = "no"; then
+ 
+-    for i in $PHP_ICONV /usr/local /usr; do
++    for i in $PHP_ICONV /opt/csw /usr/local /usr; do
+       if test -r $i/include/giconv.h; then
+         cat >> confdefs.h <<\EOF
+ #define HAVE_GICONV_H 1
+@@ -46270,7 +46270,7 @@
+ 
+   if test "$iconv_avail" != "no"; then
+     if test -z "$ICONV_DIR"; then
+-      for i in /usr/local /usr; do
++      for i in /opt/csw /usr/local /usr; do
+         if test -f "$i/include/iconv.h" || test -f "$i/include/giconv.h"; then
+           PHP_ICONV_PREFIX="$i"
+           break
+@@ -68070,7 +68070,7 @@
+     echo $ac_n "checking for unixODBC support""... $ac_c" 1>&6
+ echo "configure:68072: checking for unixODBC support" >&5
+     if test "$PHP_UNIXODBC" = "yes"; then
+-      PHP_UNIXODBC=/usr/local
++      PHP_UNIXODBC=/opt/csw
+     fi
+     ODBC_INCDIR=$PHP_UNIXODBC/include
+     ODBC_LIBDIR=$PHP_UNIXODBC/$PHP_LIBDIR
+@@ -76646,8 +76646,8 @@
+   echo $ac_n "checking for pg_config""... $ac_c" 1>&6
+ echo "configure:76648: checking for pg_config" >&5
+   for i in $PHP_PDO_PGSQL $PHP_PDO_PGSQL/bin /usr/local/pgsql/bin /usr/local/bin /usr/bin ""; do
+-    if test -x $i/pg_config; then
+-      PG_CONFIG="$i/pg_config"
++    if test -x $i/pg_config32; then
++      PG_CONFIG="$i/pg_config32"
+       break;
+     fi
+   done
+@@ -79427,8 +79427,8 @@
+   echo $ac_n "checking for pg_config""... $ac_c" 1>&6
+ echo "configure:79429: checking for pg_config" >&5
+   for i in $PHP_PGSQL $PHP_PGSQL/bin /usr/local/pgsql/bin /usr/local/bin /usr/bin ""; do
+-	if test -x $i/pg_config; then
+-      PG_CONFIG="$i/pg_config"
++	if test -x $i/pg_config32; then
++      PG_CONFIG="$i/pg_config32"
+       break;
+     fi
+   done
+@@ -82574,7 +82574,7 @@
    echo $ac_n "(cached) $ac_c" 1>&6
  else
    ac_save_LIBS="$LIBS"
 -LIBS="-lreadline  $LIBS"
 +LIBS="-lreadline -lcurses $LIBS"
  cat > conftest.$ac_ext <<EOF
- #line 80014 "configure"
+ #line 82580 "configure"
  #include "confdefs.h"
+@@ -102614,7 +102614,7 @@
+   else
+     echo $ac_n "checking for XMLRPC-EPI in default path""... $ac_c" 1>&6
+ echo "configure:102617: checking for XMLRPC-EPI in default path" >&5
+-    for i in /usr/local /usr; do
++    for i in /opt/csw /usr/local /usr; do
+       if test -r $i/include/xmlrpc.h; then
+         XMLRPC_DIR=$i/include
+         echo "$ac_t""found in $i" 1>&6

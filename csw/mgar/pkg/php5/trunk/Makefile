@@ -1,65 +1,101 @@
-GARNAME = php
+GARNAME    = php
 GARVERSION = 5.2.6
 CATEGORIES = lang
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
-  PHP is a widely-used Open Source general-purpose scripting language that is
-  especially suited for Web development and can be embedded into HTML. Its
-  syntax draws upon C, Java, and Perl, and is easy to learn. PHP runs on many
-  different platforms and can be used as a standalone executable or as a
-  module under a variety of Web servers. It has excellent support for
-  databases, XML, LDAP, IMAP, Java, various Internet protocols, and general
-  data manipulation, and is extensible via its powerful API. It is actively
-  developed and supported by a talented and energetic international team.
-  Numerous Open Source and commercial PHP-based application packages are
-  available.
+	PHP is a widely-used Open Source general-purpose scripting language that is
+	especially suited for Web development and can be embedded into HTML. Its
+	syntax draws upon C, Java, and Perl, and is easy to learn. PHP runs on many
+	different platforms and can be used as a standalone executable or as a
+	module under a variety of Web servers. It has excellent support for
+	databases, XML, LDAP, IMAP, Java, various Internet protocols, and general
+	data manipulation, and is extensible via its powerful API. It is actively
+	developed and supported by a talented and energetic international team.
+	Numerous Open Source and commercial PHP-based application packages are
+	available.
 endef
+
+php5_root = $(DESTDIR)$(prefix)/php5
+php5_bin  = $(php5_root)/bin
+php5_lib  = $(php5_root)/lib
+
+MASTER_SITES = http://us.php.net/distributions/
+SPKG_SOURCEURL = http://www.php.net/downloads.php
+DISTFILES += $(GARNAME)-$(GARVERSION).tar.bz2
+
+INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
+PHP5ROOT     = $(DESTDIR)$(prefix)/php5
+
+STRIP_DIRS  += $(PHP5ROOT)/lib/php/extensions/*/
+STRIP_DIRS  += $(PHP5ROOT)/bin
 
 # Auxilliary files
 DISTFILES += php.ini.CSW phpext
 DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh
-DISTFILES += CSWphp5_ext.depend
 
-# PHP CGI SAPI + Core
-DISTFILES += $(call admfiles,CSWphp5,prototype depend postinstall)
-DISTFILES += $(call admfiles,CSWphp5devel,prototype depend)
+PACKAGES = CSWphp5 CSWphp5devel
+
+CATALOGNAME_CSWphp5        = php5
+SPKG_DESC_CSWphp5          = A High-Level Scripting Languages
+DISTFILES                 += CSWphp5.postinstall
+CATALOGNAME_CSWphp5devel   = php5_devel
+SPKG_DESC_CSWphp5devel     = Development files for php5
+REQUIRED_PKGS_CSWphp5      = CSWexpat CSWggettextrt CSWiconv 
+REQUIRED_PKGS_CSWphp5     += CSWlibxml2 CSWzlib CSWmysql5rt
+REQUIRED_PKGS_CSWphp5devel = CSWphp5
+
+PKGFILES_CSWphp5devel  = $(prefix)/php5/bin/php-config
+PKGFILES_CSWphp5devel += $(prefix)/php5/bin/phpize
+PKGFILES_CSWphp5devel += $(prefix)/php5/bin/peardev
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/date/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/pcre/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/pdo/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/spl/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/main/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/php/include/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/regex/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/.*/standard/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/TSRM/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/Zend/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/lib/php/build/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/man/.*
+
+PATCHFILES += config.diff
 
 # PHP Extensions
-include files/extensions.mk
+EXTDIRLIST = $(shell ls -d extensions/*)
+include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
 
-# Patches
-include files/patches.mk
+# BerkeleyDB
+EXTRA_LIB += $(prefix)/bdb44/lib
+EXTRA_INC += $(prefix)/bdb44/lib
 
-# Dependencies
-include files/depend.mk
+DISTFILES += fixme.sh
 
-# SAPI Common Configuration
-include files/config.mk
-
-# SAPI Specific Configuration
+CONFIGURE_ARGS += --prefix=$(prefix)/php5
+CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --enable-cli
 CONFIGURE_ARGS += --enable-fastcgi
 CONFIGURE_ARGS += --enable-force-cgi-redirect
-CONFIGURE_ARGS += --enable-pcntl
+CONFIGURE_ARGS += --enable-pcntl=shared
+CONFIGURE_ARGS += --enable-pdo=shared
+CONFIGURE_ARGS += --with-mm=$(prefix)
+CONFIGURE_ARGS += --enable-magic-quotes
+CONFIGURE_ARGS += --enable-spl=shared
+CONFIGURE_ARGS += --with-pcre-regex
+CONFIGURE_ARGS += --with-pear
 
-# System Rules/Configuration
-include gar/category.mk
-
-# Common Rules
-include files/rules.mk
+# Disable Tests (report submitted to PHP QA)
+SKIPTEST = 1
 
 # SAPI Specific Rules
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
 
 # Copy over template config files and utility scripts
-post-install: install-templates
 
-php5_root = $(DESTDIR)$(prefix)/php5
-php5_bin = $(php5_root)/bin
-php5_lib = $(php5_root)/lib
-
-install-templates:
+post-install-modulated:
 	ginstall -m 0755 \
 		$(WORKDIR)/phpext \
 		$(DESTDIR)$(prefix)/php5/bin
@@ -69,3 +105,14 @@ install-templates:
 		$(DESTDIR)$(prefix)/php5/lib
 	@$(MAKECOOKIE)
 
+post-configure-modulated:
+	@(echo "~~~ Fixing Libtool ~~~")
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	$(DONADA)
+
+EXTFILES = $(shell find extensions/*/files/* -prune -type f)
+pre-fetch:
+	$(foreach F,$(EXTFILES),$(shell cp $(F) $(DOWNLOADDIR)))
+
+# System Rules/Configuration
+include gar/category.mk

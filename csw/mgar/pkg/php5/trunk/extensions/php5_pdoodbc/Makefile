@@ -1,50 +1,11 @@
-GARNAME = php
-GARVERSION = 5.2.6
-CATEGORIES = lang
 PHP5EXT_NAME = pdoodbc
 
-DESCRIPTION = $(PHP5EXT_NAME) Extention for PHP
-define BLURB
-   $(PHP5EXT_NAME) Extention for PHP
-endef
+PACKAGES += CSWphp5pdoodbc
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/ext/pdo_odbc
+CATALOGNAME_CSWphp5pdoodbc = php5_pdoodbc
+SPKG_DESC_CSWphp5pdoodbc = pdoodbc Extention for PHP5
+REQUIRED_PKGS_CSWphp5pdoodbc = CSWphp5 CSWunixodbc
 
-INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
-PHP_PREFIX = $(prefix)/php5
-PHP_BIN = $(PHP_PREFIX)/bin
+CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 
-PHP5ROOT    = $(DESTDIR)/$(PHP_PREFIX)
-STRIP_DIRS += $(PHP5ROOT)/lib/php/extensions/*/
-STRIP_DIRS += $(PHP5ROOT)/bin
-
-
-PACKAGES = CSWphp5$(PHP5EXT_NAME)
-
-MASTER_SITES = http://www.php.net/releases/
-SPKG_SOURCEURL = http://www.php.net/get/
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-DISTFILES = $(DISTNAME).tar.bz2
-
-CATALOGNAME_CSWphp5$(PHP5EXT_NAME) = php5_$(PHP5EXT_NAME)
-SPKG_DESC_CSWphp5$(PHP5EXT_NAME) = $(PHP5EXT_NAME) Extention for PHP5
-REQUIRED_PKGS_CSWphp5$(PHP5EXT_NAME) = CSWphp5 CSWunixodbc
-
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
-CONFIGURE_ARGS += --with-pdo-odbc=unixODBC,$(prefix)
-
-post-extract-modulated:
-	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
-	$(DONADA)
-
-
-TEST_SCRIPTS = manual
-
-test-manual:
-	@( TEST_PHP_EXECUTABLE=$(PHP_BIN)/php ; export TEST_PHP_EXECUTABLE ; \
-		cd $(WORKSRC); $(PHP_BIN)/php ./run-tests.php -q )
-	$(DONADA)
-
-include gar/category.mk
+PKGFILES_CSWphp5pdoodbc = .*/lib/php/extensions/.*/pdo_odbc.*
