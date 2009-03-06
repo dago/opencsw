@@ -7,20 +7,18 @@ define BLURB
     RFC 2440 compliant tool for secure communication and data storage
 endef
 
-PACKAGES    = CSWgnupgminimal
-CATALOGNAME = gnupg_minimal
-SPKG_DESC   = $(DESCRIPTION)
-
-SPKG_SOURCEURL = http://www.gnupg.org/
-MASTER_SITES   = ftp://ftp.gnupg.org/gcrypt/gnupg/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tar.bz2
-
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
+MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gnupg/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-BUILD64    = 1
-NO_ISAEXEC = 0
+PACKAGES = CSWgnupgminimal
+CATALOGNAME_CSWgnupgminimal = gnupg_minimal
+SPKG_DESC_CSWgnupgminimal = $(DESCRIPTION)
+#PKGFILES_CSWgnupgminimal = .*/bin/.*
+REQUIRED_PKGS_CSWgnupgminimal = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
+REQUIRED_PKGS_CSWgnupgminimal += CSWoldaprt CSWreadline CSWzlib
+
+BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-suffix=-minimal
@@ -59,18 +57,7 @@ CONFIGURE_ARGS += --disable-dns-srv
 CONFIGURE_ARGS += --disable-dns-pka
 CONFIGURE_ARGS += --disable-dns-cert
 
-REQUIRED_PKGS_CSWgnupg  = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
-REQUIRED_PKGS_CSWgnupg += CSWoldaprt CSWreadline CSWzlib
-
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gpg-minimal
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gpgsplit-minimal
-ISAEXEC_EXCLUDE_FILES += /opt/csw/bin/gpgv-minimal
-
-MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/gpg-minimal
-MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/gpgsplit-minimal
-MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/gpgv-minimal
-
-
 TEST_TARGET = check
 
 include gar/category.mk
+
