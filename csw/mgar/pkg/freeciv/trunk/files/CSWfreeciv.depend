@@ -7,7 +7,7 @@ P	CSWlibatk
 P	CSWlibcairo
 P	CSWesound
 P	CSWiconv
-P	CSWggettext
+P	CSWggettextrt
 P	CSWpango
 P	CSWreadline
 P	CSWzlib
