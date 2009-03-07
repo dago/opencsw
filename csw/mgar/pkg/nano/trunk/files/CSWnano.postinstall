@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# postinstall - this script is executed after the CVS PKG install
+#
+# This script updates the info dir file for textinfo
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+if [ ! -x "$PKG_ROOT_DIR/opt/csw/sbin/mkdirentries" ] ; then exit 0; fi
+
+savepath=$PATH
+PATH=/usr/bin:/opt/csw/bin
+
+echo "Updating the info dir file for CSWtexinfo"
+/usr/sbin/chroot $PKG_ROOT_DIR /opt/csw/sbin/mkdirentries
+
+PATH=$savepath
+
+exit 0
