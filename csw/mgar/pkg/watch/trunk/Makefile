@@ -1,5 +1,5 @@
 GARNAME = watch
-GARVERSION = 3.2.7
+GARVERSION = 0.2.0
 CATEGORIES = utils
 
 DESCRIPTION = Watch a program output change over time
@@ -10,9 +10,10 @@ endef
 # Usually we would use $(SF_MIRROR), but the procps folks didn't upload
 # procps the usual way
 SF_PROJ 	= procps
+SF_PROJ_VER	= 3.2.7
 MASTER_SITES 	= http://$(SF_PROJ).sourceforge.net/
-DISTFILES  	= $(SF_PROJ)-$(GARVERSION).tar.gz
-DISTNAME   	= $(SF_PROJ)-$(GARVERSION)
+DISTFILES  	= $(SF_PROJ)-$(SF_PROJ_VER).tar.gz
+DISTNAME   	= $(SF_PROJ)-$(SF_PROJ_VER)
 
 REQUIRED_PKGS = CSWncurses
 
