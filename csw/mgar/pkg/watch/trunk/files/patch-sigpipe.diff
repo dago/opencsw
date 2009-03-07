@@ -1,0 +1,13 @@
+--- procps-3.2.7.orig/watch.c	2009-03-07 01:23:35.904690072 +0100
++++ procps-3.2.7/watch.c	2009-03-07 01:30:41.534474183 +0100
+@@ -313,6 +314,10 @@
+ 			oldeolseen = eolseen;
+ 		}
+ 
++		/* Finish reading from pipe to avoid SIGPIPE for the child */
++		char devnull[8192];
++		while (fgets(devnull, 8192, p) != NULL) {;}
++
+ 		pclose(p);
+ 
+ 		first_screen = 0;

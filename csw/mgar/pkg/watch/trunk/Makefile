@@ -1,13 +1,9 @@
-# Todo:
-# * watch called for programs with longer than terminal output 
-#   (for example "find ." or "ls -lR" or "last" on build8x) causes
-#   broken pipe on second program invocation
 GARNAME = watch
 GARVERSION = 3.2.7
 CATEGORIES = utils
 
 DESCRIPTION = Watch a program output change over time
-define Blurb
+define BLURB
   "watch" from the procps package.
 endef
 
@@ -16,19 +12,24 @@ endef
 SF_PROJ 	= procps
 MASTER_SITES 	= http://$(SF_PROJ).sourceforge.net/
 DISTFILES  	= $(SF_PROJ)-$(GARVERSION).tar.gz
-PATCHFILES	= patch-extralibs.diff
 DISTNAME   	= $(SF_PROJ)-$(GARVERSION)
 
 REQUIRED_PKGS = CSWncurses
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-EXTRA_INC = /opt/csw/include/ncurses
 
 TEST_SCRIPTS =
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
+
+# Include additional libraries (see pre-build-modulated below)
+PATCHFILES = patch-extralibs.diff
+
+# Avoid "Broken pipe" error message on pclose() for cmds with longish output
+PATCHFILES += patch-sigpipe.diff
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+EXTRA_INC = /opt/csw/include/ncurses
 
 include gar/category.mk
 
