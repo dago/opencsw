@@ -24,7 +24,9 @@ REQUIRED_PKGS += CSWexpat CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWjpeg
 REQUIRED_PKGS += CSWpng CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10501
+UPSTREAM_USE_SF = 1
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
