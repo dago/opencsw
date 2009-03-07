@@ -1,0 +1,7 @@
+%var            bitname commons_config
+%var            pkgname CSWajcconfig
+%var		arch	all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      
+
+Please see /opt/csw/share/doc/${GARNAME}/License.txt for license information
