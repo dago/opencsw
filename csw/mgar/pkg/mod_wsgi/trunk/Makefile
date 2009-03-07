@@ -34,5 +34,10 @@ TEST_SCRIPTS = skip
 test-skip:
 	$(DONADA)
 
+## Fix Makefile LDFLAGS to correct broken python-config return values
+post-configure-modulated:
+	@( perl -i -plne 's|^LDFLAGS = .*|LDFLAGS = -L/opt/csw/lib|' \
+		$(WORKSRC)/Makefile )
+
 include gar/category.mk
 
