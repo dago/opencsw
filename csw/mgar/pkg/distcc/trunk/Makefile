@@ -1,5 +1,5 @@
 GARNAME = distcc
-GARVERSION = 2.18.3
+GARVERSION = 3.1
 CATEGORIES = devel
 
 DESCRIPTION = A fast, free distributed C/C++ compiler
@@ -15,15 +15,16 @@ define BLURB
   systems, if cross-compilers are installed. 
 endef
 
-MASTER_SITES = http://distcc.samba.org/ftp/distcc/
+MASTER_SITES = http://distcc.googlecode.com/files/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWdistcc,depend)
+
+SPKG_SOURCEURL = http://distcc.googlecode.com/
+
+REQUIRED_PKGS += CSWlibpopt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
