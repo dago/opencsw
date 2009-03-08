@@ -34,8 +34,8 @@ PKGFILES_CSWajcconfig  	+= $(prefix)/share/java/.*
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
+CONFIGURE_SCRIPTS = 
+BUILD_SCRIPTS = 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
