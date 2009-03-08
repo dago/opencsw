@@ -1,0 +1,7 @@
+%var            bitname junit
+%var            pkgname CSWjunit
+%var		arch	all
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      
+
+Please see /opt/csw/share/doc/%{GARNAME}/License.html for license information

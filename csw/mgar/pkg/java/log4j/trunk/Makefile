@@ -16,19 +16,19 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 DISTFILES = apache-$(GARNAME)-$(GARVERSION).tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajclog4j,)
-DISTFILES += $(call admfiles,CSWajclog4jdoc,)
+DISTFILES += $(call admfiles,CSWlog4j,)
+DISTFILES += $(call admfiles,CSWlog4jdoc,)
 
 # Defines package description
-SPKG_DESC_CSWajclog4j    = $(DESCRIPTION)
-SPKG_DESC_CSWajclog4jdoc = $(DESCRIPTION) documentation package
+SPKG_DESC_CSWlog4j    = $(DESCRIPTION)
+SPKG_DESC_CSWlog4jdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-# REQUIRED_PKGS_CSWajclog4j = No dependency
+# REQUIRED_PKGS_CSWlog4j = No dependency
 
 # Defines package content
-PKGFILES_CSWajclog4j  = $(prefix)/share/doc/$(GARNAME)/License.txt
-PKGFILES_CSWajclog4j += $(prefix)/share/java/.*
+PKGFILES_CSWlog4j  = $(prefix)/share/doc/$(GARNAME)/License.txt
+PKGFILES_CSWlog4j += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
