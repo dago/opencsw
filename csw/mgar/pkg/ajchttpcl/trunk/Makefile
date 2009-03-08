@@ -45,10 +45,10 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(GARNAME)-$(GARVERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-2.jar ; \
+	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-3.jar ; \
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License.txt
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License-documentation.txt
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@$(MAKECOOKIE)
