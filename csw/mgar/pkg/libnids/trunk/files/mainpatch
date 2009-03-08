@@ -1,6 +1,6 @@
 diff --speed-large-files --minimal -ru libnids-1.23.orig/src/Makefile.in libnids-1.23/src/Makefile.in
 --- libnids-1.23.orig/src/Makefile.in	2008-02-21 11:40:19.000000000 +0100
-+++ libnids-1.23/src/Makefile.in	2009-03-08 02:30:29.000000000 +0100
++++ libnids-1.23/src/Makefile.in	2009-03-08 05:26:17.000000000 +0100
 @@ -16,7 +16,7 @@
  LIBSHARED      = libnids.so.1.23
  
@@ -73,9 +73,21 @@ diff --speed-large-files --minimal -ru libnids-1.23.orig/src/Makefile.in libnids
   
  clean:
  	rm -f *.o *~ $(LIBSTATIC) $(LIBSHARED)
+diff --speed-large-files --minimal -ru libnids-1.23.orig/src/checksum.c libnids-1.23/src/checksum.c
+--- libnids-1.23.orig/src/checksum.c	2005-02-08 16:46:11.000000000 +0100
++++ libnids-1.23/src/checksum.c	2009-03-08 11:39:55.103753000 +0100
+@@ -25,7 +25,7 @@
+ 	return 0;
+ }
+  
+-#if ( __i386__ || __i386 )
++#if ( __i386__ || __i386 ) && __GNUC__
+ // all asm procedures are copied from Linux 2.0.36 and 2.2.10 kernels
+ 
+ /*
 diff --speed-large-files --minimal -ru libnids-1.23.orig/src/ip_options.c libnids-1.23/src/ip_options.c
 --- libnids-1.23.orig/src/ip_options.c	2002-08-10 21:07:45.000000000 +0200
-+++ libnids-1.23/src/ip_options.c	2009-03-08 02:18:44.000000000 +0100
++++ libnids-1.23/src/ip_options.c	2009-03-08 05:26:17.000000000 +0100
 @@ -69,7 +69,7 @@
    unsigned char __pad1;
    unsigned char __pad2;
