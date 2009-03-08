@@ -1,0 +1,128 @@
+--- mcabber-0.9.9/src/histolog.c	2008-10-09 22:17:52.000000000 +0200
++++ work/build-isa-sparcv8/mcabber-0.9.9/src/histolog.c	2009-03-08 16:35:25.758629698 +0100
+@@ -398,7 +398,7 @@
+   return UseFileLogging;
+ }
+ 
+-inline void hlog_write_message(const char *bjid, time_t timestamp, int sent,
++void hlog_write_message(const char *bjid, time_t timestamp, int sent,
+         const char *msg)
+ {
+   guchar info;
+@@ -415,7 +415,7 @@
+   write_histo_line(bjid, timestamp, 'M', info, msg);
+ }
+ 
+-inline void hlog_write_status(const char *bjid, time_t timestamp,
++void hlog_write_status(const char *bjid, time_t timestamp,
+         enum imstatus status, const char *status_msg)
+ {
+   // XXX Check status value?
+diff -ur mcabber-0.9.9/src/jabglue.c work/build-isa-sparcv8/mcabber-0.9.9/src/jabglue.c
+--- mcabber-0.9.9/src/jabglue.c	2008-10-09 22:17:52.000000000 +0200
++++ work/build-isa-sparcv8/mcabber-0.9.9/src/jabglue.c	2009-03-08 15:49:11.552806445 +0100
+@@ -171,7 +171,7 @@
+   jc = NULL;
+ }
+ 
+-inline void jb_reset_keepalive()
++void jb_reset_keepalive()
+ {
+   time(&LastPingTime);
+ }
+@@ -344,12 +344,12 @@
+   }
+ }
+ 
+-inline enum imstatus jb_getstatus()
++enum imstatus jb_getstatus()
+ {
+   return mystatus;
+ }
+ 
+-inline const char *jb_getstatusmsg()
++const char *jb_getstatusmsg()
+ {
+   return mystatusmsg;
+ }
+@@ -554,7 +554,7 @@
+ 
+ //  jb_setprevstatus()
+ // Set previous status.  This wrapper function is used after a disconnection.
+-inline void jb_setprevstatus(void)
++void jb_setprevstatus(void)
+ {
+   jb_setstatus(mywantedstatus, NULL, mystatusmsg, FALSE);
+ }
+diff -ur mcabber-0.9.9/src/screen.c work/build-isa-sparcv8/mcabber-0.9.9/src/screen.c
+--- mcabber-0.9.9/src/screen.c	2008-10-09 22:17:52.000000000 +0200
++++ work/build-isa-sparcv8/mcabber-0.9.9/src/screen.c	2009-03-08 16:45:11.929482636 +0100
+@@ -155,8 +156,8 @@
+                        unsigned int prefix_flags, int force_show,
+                        unsigned mucnicklen);
+ 
+-inline void scr_UpdateBuddyWindow(void);
+-inline void scr_set_chatmode(int enable);
++void scr_UpdateBuddyWindow(void);
++void scr_set_chatmode(int enable);
+ 
+ #ifdef HAVE_ASPELL_H
+ #define ASPELLBADCHAR 5
+@@ -1257,7 +1258,7 @@
+ // (Re)Display the current window.
+ // If chatmode is enabled, call scr_ShowBuddyWindow(),
+ // else display the chat window.
+-inline void scr_UpdateBuddyWindow(void)
++void scr_UpdateBuddyWindow(void)
+ {
+   if (chatmode) {
+     scr_ShowBuddyWindow();
+@@ -2153,7 +2154,7 @@
+ }
+ 
+ #if defined JEP0022 || defined JEP0085
+-inline long int scr_GetChatStatesTimeout(time_t now)
++long int scr_GetChatStatesTimeout(time_t now)
+ {
+   // Check if we're currently composing...
+   if (chatstate != 1 || !chatstate_timestamp)
+@@ -2801,7 +2802,7 @@
+ 
+ //  scr_set_chatmode()
+ // Public function to (un)set chatmode...
+-inline void scr_set_chatmode(int enable)
++void scr_set_chatmode(int enable)
+ {
+   chatmode = enable;
+   scr_UpdateChatStatus(TRUE);
+@@ -2809,14 +2810,14 @@
+ 
+ //  scr_get_chatmode()
+ // Public function to get chatmode state.
+-inline int scr_get_chatmode(void)
++int scr_get_chatmode(void)
+ {
+   return chatmode;
+ }
+ 
+ //  scr_get_multimode()
+ // Public function to get multimode status...
+-inline int scr_get_multimode(void)
++int scr_get_multimode(void)
+ {
+   return multimode;
+ }
+diff -ur mcabber-0.9.9/src/screen.h work/build-isa-sparcv8/mcabber-0.9.9/src/screen.h
+--- mcabber-0.9.9/src/screen.h	2008-10-09 22:17:52.000000000 +0200
++++ work/build-isa-sparcv8/mcabber-0.9.9/src/screen.h	2009-03-08 16:31:44.043214331 +0100
+@@ -20,6 +20,10 @@
+ //static void spellcheck(char*, char*);
+ #endif
+ 
++#ifndef HAVE_ISWBLANK
++#define iswblank(wc) iswctype(wc, wctype("blank"))
++#endif
++
+ #include "hbuf.h"
+ #include "logprint.h"
+ 
