@@ -21,10 +21,19 @@ SPKG_SOURCEURL = http://www.lzop.org
 REQUIRED_PKGS = CSWlzo
 
 # We define upstream file regex so we can be notifed of new upstream software release
-#UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_TARGET = check
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
+
+DOCS = AUTHORS NEWS README THANKS doc/magic
+DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+
+post-install-modulated:
+	@echo " ==> Post-install for $(GARNAME) (custom)"
+	@ginstall -d $(DOCDEST)
+	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
+	@$(MAKECOOKIE)
