@@ -19,6 +19,8 @@ BUILD64 = 1
 
 DISTNAME = libnet
 
+PATCHFILES = mainpatch
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
