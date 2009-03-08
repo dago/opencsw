@@ -10,4 +10,3 @@ CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --enable-sqlite-utf8
 
 PKGFILES_CSWphp5sqlite = .*/lib/php/extensions/.*/sqlite.*
-PKGFILES_CSWphp5sqlite += .*/include/php/ext/sqlite/.*

@@ -16,4 +16,3 @@ LIBS = -lrt -lintl
 #PATCHFILES += iconv.diff
 
 PKGFILES_CSWphp5iconv = .*/lib/php/extensions/.*/iconv.*
-PKGFILES_CSWphp5iconv += .*/include/php/ext/iconv/.*

@@ -10,4 +10,3 @@ CONFIGURE_ARGS += --enable-filter=shared
 CONFIGURE_ARGS += --with-pcre-dir=$(prefix)
 
 PKGFILES_CSWphp5filter = .*/lib/php/extensions/.*/filter.*
-PKGFILES_CSWphp5filter += .*/include/php/ext/filter/.*

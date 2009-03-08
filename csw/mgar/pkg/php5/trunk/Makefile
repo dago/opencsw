@@ -31,7 +31,7 @@ STRIP_DIRS  += $(PHP5ROOT)/lib/php/extensions/*/
 STRIP_DIRS  += $(PHP5ROOT)/bin
 
 # Auxilliary files
-DISTFILES += php.ini.CSW phpext
+DISTFILES += php.ini.CSW phpext pear.conf.CSW
 DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh
 
 PACKAGES = CSWphp5 CSWphp5devel
@@ -48,16 +48,7 @@ REQUIRED_PKGS_CSWphp5devel = CSWphp5
 PKGFILES_CSWphp5devel  = $(prefix)/php5/bin/php-config
 PKGFILES_CSWphp5devel += $(prefix)/php5/bin/phpize
 PKGFILES_CSWphp5devel += $(prefix)/php5/bin/peardev
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/date/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/pcre/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/pdo/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/ext/spl/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/main/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/php/include/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/regex/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/.*/standard/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/TSRM/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/include/php/Zend/.*
+PKGFILES_CSWphp5devel += $(prefix)/php5/include.*
 PKGFILES_CSWphp5devel += $(prefix)/php5/lib/php/build/.*
 PKGFILES_CSWphp5devel += $(prefix)/php5/man/.*
 
@@ -85,7 +76,7 @@ CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --enable-spl=shared
 CONFIGURE_ARGS += --with-pcre-regex
-CONFIGURE_ARGS += --with-pear
+CONFIGURE_ARGS += --with-pear=shared
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
@@ -103,6 +94,9 @@ post-install-modulated:
 	ginstall -m 0644 \
 		$(WORKDIR)/php.ini.CSW \
 		$(DESTDIR)$(prefix)/php5/lib
+	ginstall -m 0644 \
+		$(WORKDIR)/pear.conf.CSW \
+		$(DESTDIR)$(prefix)/php5/etc
 	@$(MAKECOOKIE)
 
 post-configure-modulated:

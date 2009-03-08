@@ -10,4 +10,3 @@ CONFIGURE_ARGS += --enable-zip=shared
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 
 PKGFILES_CSWphp5zip = .*/lib/php/extensions/.*/zip.*
-PKGFILES_CSWphp5zip += .*/include/php/ext/zip/.*

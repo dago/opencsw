@@ -10,4 +10,3 @@ CONFIGURE_ARGS += --enable-dom=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 
 PKGFILES_CSWphp5dom = .*/lib/php/extensions/.*/dom.*
-PKGFILES_CSWphp5dom += .*/include/php/ext/dom/.*

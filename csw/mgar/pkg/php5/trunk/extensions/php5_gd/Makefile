@@ -20,4 +20,3 @@ CONFIGURE_ARGS += --enable-gd-native-ttf
 CONFIGURE_ARGS += --enable-gd-jis-conv
 
 PKGFILES_CSWphp5gd  = .*/lib/php/extensions/.*/gd.*
-PKGFILES_CSWphp5gd += .*/include/php/ext/gd/.*
