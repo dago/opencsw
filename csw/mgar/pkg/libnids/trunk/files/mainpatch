@@ -1,0 +1,87 @@
+diff --speed-large-files --minimal -ru libnids-1.23.orig/src/Makefile.in libnids-1.23/src/Makefile.in
+--- libnids-1.23.orig/src/Makefile.in	2008-02-21 11:40:19.000000000 +0100
++++ libnids-1.23/src/Makefile.in	2009-03-08 02:30:29.000000000 +0100
+@@ -16,7 +16,7 @@
+ LIBSHARED      = libnids.so.1.23
+ 
+ CC		= @CC@
+-CFLAGS		= @CFLAGS@ -W -Wall -DLIBNET_VER=@LIBNET_VER@ -DHAVE_ICMPHDR=@ICMPHEADER@ -DHAVE_TCP_STATES=@TCPSTATES@ -DHAVE_BSD_UDPHDR=@HAVE_BSD_UDPHDR@
++CFLAGS		= @CFLAGS@ -DLIBNET_VER=@LIBNET_VER@ -DHAVE_ICMPHDR=@ICMPHEADER@ -DHAVE_TCP_STATES=@TCPSTATES@ -DHAVE_BSD_UDPHDR=@HAVE_BSD_UDPHDR@
+ LDFLAGS		= @LDFLAGS@
+ 
+ PCAP_CFLAGS	= @PCAP_CFLAGS@
+@@ -40,43 +40,43 @@
+ # How to write the following rules compactly and portably ? 
+ # gmake accepts "%_pic.o: %.c", bsd make does not.
+ checksum_pic.o: checksum.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c checksum.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c checksum.c -o $@
+ ip_fragment_pic.o: ip_fragment.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c ip_fragment.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c ip_fragment.c -o $@
+ ip_options_pic.o: ip_options.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c ip_options.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c ip_options.c -o $@
+ killtcp_pic.o: killtcp.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c killtcp.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c killtcp.c -o $@
+ libnids_pic.o: libnids.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c libnids.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c libnids.c -o $@
+ scan_pic.o: scan.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c scan.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c scan.c -o $@
+ tcp_pic.o: tcp.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c tcp.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c tcp.c -o $@
+ util_pic.o: util.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c util.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c util.c -o $@
+ allpromisc_pic.o: allpromisc.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c allpromisc.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c allpromisc.c -o $@
+ hash_pic.o: hash.c
+-	$(CC) -fPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c hash.c -o $@
++	$(CC) -KPIC $(CFLAGS) -I. $(LIBS_CFLAGS) -c hash.c -o $@
+ 
+ 
+ $(LIBSTATIC): $(OBJS)
+ 	ar -cr $@ $(OBJS)
+ 	$(RANLIB) $@
+ $(LIBSHARED): $(OBJS_SHARED)
+-	$(CC) -shared -Wl,-soname,$(LIBSHARED) -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
++	$(LD) -G -h $(LIBSHARED) -o $(LIBSHARED) $(OBJS_SHARED) $(LIBS) $(LNETLIB) $(PCAPLIB)
+ 
+ _install install: $(LIBSTATIC)
+-	../mkinstalldirs $(install_prefix)$(libdir)
+-	../mkinstalldirs $(install_prefix)$(includedir)
+-	../mkinstalldirs $(install_prefix)$(mandir)/man3
+-	$(INSTALL) -c -m 644 libnids.a $(install_prefix)$(libdir)
+-	$(INSTALL) -c -m 644 nids.h $(install_prefix)$(includedir)
+-	$(INSTALL) -c -m 644 libnids.3 $(install_prefix)$(mandir)/man3
++	../mkinstalldirs $(DESTDIR)$(install_prefix)$(libdir)
++	../mkinstalldirs $(DESTDIR)$(install_prefix)$(includedir)
++	../mkinstalldirs $(DESTDIR)$(install_prefix)$(mandir)/man3
++	$(INSTALL) -c -m 644 libnids.a $(DESTDIR)$(install_prefix)$(libdir)
++	$(INSTALL) -c -m 644 nids.h $(DESTDIR)$(install_prefix)$(includedir)
++	$(INSTALL) -c -m 644 libnids.3 $(DESTDIR)$(install_prefix)$(mandir)/man3
+ _installshared installshared: install $(LIBSHARED)
+-	$(INSTALL) -c -m 755 $(LIBSHARED) $(install_prefix)$(libdir)
+-	ln -s -f $(LIBSHARED) $(install_prefix)$(libdir)/libnids.so
++	$(INSTALL) -c -m 755 $(LIBSHARED) $(DESTDIR)$(install_prefix)$(libdir)
++	ln -s -f $(LIBSHARED) $(DESTDIR)$(install_prefix)$(libdir)/libnids.so
+  
+ clean:
+ 	rm -f *.o *~ $(LIBSTATIC) $(LIBSHARED)
+diff --speed-large-files --minimal -ru libnids-1.23.orig/src/ip_options.c libnids-1.23/src/ip_options.c
+--- libnids-1.23.orig/src/ip_options.c	2002-08-10 21:07:45.000000000 +0200
++++ libnids-1.23/src/ip_options.c	2009-03-08 02:18:44.000000000 +0100
+@@ -69,7 +69,7 @@
+   unsigned char __pad1;
+   unsigned char __pad2;
+   unsigned char __pad3;
+-  unsigned char __data[0];
++  unsigned char __data[];
+ };
+ 
+ struct iphdr {
