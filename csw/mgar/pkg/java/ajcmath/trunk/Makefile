@@ -4,9 +4,9 @@ GARVERSION = 1.2
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
-DESCRIPTION = Apache Jakarta Commons math
+DESCRIPTION = Apache Jakarta Commons Math
 define BLURB
-Apache Jakarta Commons math : XML-to-Java-object mapping utility
+Apache Jakarta Commons Math : Components addressing the most common practical problems
 endef
 
 # Use jakarta sources

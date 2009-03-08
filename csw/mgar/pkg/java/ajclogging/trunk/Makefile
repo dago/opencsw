@@ -4,9 +4,9 @@ GARVERSION = 1.1.1
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
-DESCRIPTION = Apache Jakarta Commons logging
+DESCRIPTION = Apache Jakarta Commons Logging
 define BLURB
-Apache Jakarta Commons logging : XML-to-Java-object mapping utility
+Apache Jakarta Commons Logging : bridge between different logging libraries
 endef
 
 # Use jakarta sources

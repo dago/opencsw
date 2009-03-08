@@ -4,9 +4,9 @@ GARVERSION = 1.4
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
-DESCRIPTION = Apache Jakarta Commons io
+DESCRIPTION = Apache Jakarta Commons IO
 define BLURB
-Apache Jakarta Commons io : XML-to-Java-object mapping utility
+Apache Jakarta Commons IO : a collection of I/O utilities
 endef
 
 # Use jakarta sources

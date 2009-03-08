@@ -4,9 +4,9 @@ GARVERSION = 1.4
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
-DESCRIPTION = Apache Jakarta Commons pool
+DESCRIPTION = Apache Jakarta Commons Pool
 define BLURB
-Apache Jakarta Commons pool : XML-to-Java-object mapping utility
+Apache Jakarta Commons Pool : Object-pooling API
 endef
 
 # Use jakarta sources

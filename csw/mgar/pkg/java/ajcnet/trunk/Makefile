@@ -4,9 +4,9 @@ GARVERSION = 2.0
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
-DESCRIPTION = Apache Jakarta Commons net
+DESCRIPTION = Apache Jakarta Commons Net
 define BLURB
-Apache Jakarta Commons net : XML-to-Java-object mapping utility
+Apache Jakarta Commons Net : collection of network utilities, including FTP clients etc.
 endef
 
 # Use jakarta sources

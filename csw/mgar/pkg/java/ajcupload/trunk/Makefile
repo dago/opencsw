@@ -4,7 +4,7 @@ GARVERSION = 1.2.1
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
-DESCRIPTION = Apache Jakarta Commons upload
+DESCRIPTION = Apache Jakarta Commons FileUpload
 define BLURB
 Apache Jakarta Commons FileUpload : robust, high-performance, file upload capability
 endef
