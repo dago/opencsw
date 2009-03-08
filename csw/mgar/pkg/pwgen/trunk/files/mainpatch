@@ -1,0 +1,17 @@
+Only in pwgen-2.06.orig: LICENSE
+diff --speed-large-files --minimal -ru pwgen-2.06.orig/Makefile.in pwgen-2.06/Makefile.in
+--- pwgen-2.06.orig/Makefile.in	2007-07-05 01:42:19.000000000 +0200
++++ pwgen-2.06/Makefile.in	2009-03-08 04:26:31.009559067 +0100
+@@ -11,9 +11,9 @@
+ INSTALL_PROGRAM = @INSTALL_PROGRAM@
+ INSTALL_DATA = @INSTALL_DATA@
+ 
+-WALL_OPTS = -Wall -Wnested-externs -Wstrict-prototypes -Wmissing-prototypes \
+-	-Wshadow -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align \
+-	-pedantic
++#WALL_OPTS = -Wall -Wnested-externs -Wstrict-prototypes -Wmissing-prototypes \
++#	-Wshadow -Wwrite-strings -Wpointer-arith -Wcast-qual -Wcast-align \
++#	-pedantic
+ CC = @CC@
+ DEFS = @DEFS@
+ CFLAGS = @CFLAGS@ $(WALL_OPTS)
