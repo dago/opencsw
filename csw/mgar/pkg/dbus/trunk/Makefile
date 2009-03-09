@@ -19,22 +19,22 @@ SPKG_DESC_CSWlibdbus      = $(DESCRIPTION) libraries
 SPKG_DESC_CSWlibdbusdev   = $(DESCRIPTION) development package
 
 DISTFILES    += $(call admfiles,CSWdbus, preinstall, )
-DISTFILES    += cswdbus
 DISTFILES    += $(call admfiles,CSWlibdbusdev, )
 DISTFILES    += $(call admfiles,CSWlibdbus, )
+DISTFILES    += cswdbus
 
 # Dynamic CSWlibdbusdev prototype
 PKGFILES_CSWlibdbusdev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibdbusdev += $(includedir)/include/(.*)
-PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/(.*)
-PKGFILES_CSWlibdbusdev += $(libdir)/libdbus-1.a
-PKGFILES_CSWlibdbusdev += $(libdir)/pkgconfig/(.*)
+PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/.*
+# PKGFILES_CSWlibdbusdev += $(includedir)/include/(.*)
+# PKGFILES_CSWlibdbusdev += $(libdir)/libdbus-1.a
+# PKGFILES_CSWlibdbusdev += $(libdir)/pkgconfig/(.*)
 
 # Dynamic CSWlibdbus prototype
 PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
-PKGFILES_CSWlibdbus    += $(libdir)/libdbus-1.la
-PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so
-PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so\.(.*)
+#PKGFILES_CSWlibdbus    += $(libdir)/libdbus-1.la
+#PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so
+#PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so\.(.*)
 
 # Dependencies tracking
 REQUIRED_PKGS_CSWdbus	    += CSWexpat CSWlibdbus CSWcswclassutils
@@ -56,8 +56,13 @@ post-install:
           for i in *.conf ; do mv $$i $$i.CSW ; done && cd $$OLDDIR ; \
 	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/opt/csw/init.d  ; \
 	  cp -fr $(FILEDIR)/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/opt/csw/init.d  ; \
-	  rm -f $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; \
+	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/ ; \
 	  ln -s ../init.d/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; )
+	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/dbus 
+	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/libdbus 
+	@cp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/dbus/License.txt
+	@cp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/libdbus/License.txt
+	@cp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/libdbus/License-devel.txt
 	@$(MAKECOOKIE)
 
 include gar/category.mk

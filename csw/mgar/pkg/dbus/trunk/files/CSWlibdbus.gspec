@@ -1,4 +1,6 @@
 %var            bitname libdbus
 %var            pkgname CSWlibdbus
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
+%copyright      
+
+Please see /opt/csw/share/doc/lib%{GARNAME}/license for license information
