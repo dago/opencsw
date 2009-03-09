@@ -394,15 +394,15 @@ endef
 define licensefile
 $(strip 
   $(or 
-    $(call findlicensefile,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1))))
-    $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))),
-  )
+    $(call findlicensefile,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1)))) 
+    $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))), 
+  ) 
 )
 endef
 
 merge-license-%: $(WORKDIR)
 	$(_DBG)$(if $(and $(LICENSE_$*),$(LICENSE_FULL_$*)),$(error Both LICENSE_$* and LICENSE_FULL_$* have been specified where only one is allowed)) \
-		$(if $(and $(filter $*,$(PACKAGES)),$(or $(LICENSE),$(LICENSE_FULL),$(LICENSE_$*),$(LICENSE_FULL_$*))), \
+		$(if $(and $(filter $*,$(_PKG_SPECS)),$(or $(LICENSE),$(LICENSE_FULL),$(LICENSE_$*),$(LICENSE_FULL_$*))), \
 		LICENSEFILE=$(or $(call licensefile,$*),$(if $(_LICENSE_IS_DEFAULT),,$(error Cannot find license file for package $*))); \
 		LICENSEDIR=$(call licensedir,$*); \
 		if [ -n "$$LICENSEFILE" ]; then \
@@ -414,8 +414,10 @@ merge-license-%: $(WORKDIR)
 		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
 		fi \
 	)
+	$(MAKECOOKIE)
 
 merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
+	$(DONADA)
 
 # package - Use the mkpackage utility to create Solaris packages
 #
