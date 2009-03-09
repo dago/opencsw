@@ -58,11 +58,6 @@ post-install:
 	  cp -fr $(FILEDIR)/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/opt/csw/init.d  ; \
 	  ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/ ; \
 	  ln -s ../init.d/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; )
-	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/dbus 
-	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/libdbus 
-	@cp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/dbus/License.txt
-	@cp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/libdbus/License.txt
-	@cp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/share/doc/libdbus/License-devel.txt
 	@$(MAKECOOKIE)
 
 include gar/category.mk
