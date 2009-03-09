@@ -2,7 +2,7 @@ GARNAME = log4j
 GARVERSION = 1.2.15
 CATEGORIES = java
 
-DESCRIPTION = Apache log4jLogging Services
+DESCRIPTION = Apache log4j Logging Services
 define BLURB
 A fast and flexible framework for logging application debugging messages
 endef
