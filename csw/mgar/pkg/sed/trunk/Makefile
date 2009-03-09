@@ -14,8 +14,21 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# Use GNU because of issue with syntax containing ellipsis in lib/regcomp.c. 
+# See http://markmail.org/message/7ki46iiok3ddu3sa
+GARCOMPILER = GNU
+
+PREREQUISITE_PKGS = CSWiconv
+
+CONFIGURE_ARGS = $(DIRPATHS) 
+CONFIGURE_ARGS += --program-prefix=g  
+CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw 
+CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
+CONFIGURE_ARGS += --with-included-gettext
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+# Make sure we are using gnu tools (esp. sed)
+PATH := /opt/csw/gnu:$(PATH)
