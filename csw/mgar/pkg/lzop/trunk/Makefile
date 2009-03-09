@@ -1,5 +1,8 @@
 GARNAME = lzop
-GARVERSION = 1.02rc1
+GARVERSION = 1.02
+RELEASE = rc1
+DISTVERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = utils
 
 DESCRIPTION = LZO file compressor
@@ -11,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.lzop.org/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz
 
 PACKAGES = CSWlzop
 CATALOGNAME = lzop
@@ -28,6 +31,8 @@ TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 DOCS = AUTHORS NEWS README THANKS doc/magic
 DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
