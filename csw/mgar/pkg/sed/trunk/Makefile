@@ -2,11 +2,16 @@ GARNAME = sed
 GARVERSION = 4.1.5
 CATEGORIES = utils
 
+PACKAGES = CSWgsed
+CATALOGNAME_CSWgsed = gsed
+
 DESCRIPTION = GNU Stream Editor
 define BLURB
     Sed, the GNU Stream Editor, copies the named files (standard input default) to
     the standard output, edited according to a script of commands.
 endef
+
+SPKG_DESC_CSWgsed = $(DESCRIPTION)
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
