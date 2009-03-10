@@ -1,0 +1,10 @@
+%var            bitname pm_geoippureperl
+%var            pkgname CSWpmgeoippureperl
+%var		arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+
+Copyright (c) 2007, MaxMind LLC
+
+All rights reserved. This package is free software and is licensed under the GPL.
+For details, see the COPYING file.
