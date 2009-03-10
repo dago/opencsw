@@ -4,8 +4,8 @@
 %include        url file://%{PKGLIB}/csw_cpan.gspec
 %copyright
 
-The OLE::Storage_Lite module is Copyright (c) 2000,2001 Kawai Takanori. Japan. All righ
-ts reserved.
+The OLE::Storage_Lite module is Copyright (c) 2000,2001 Kawai Takanori. Japan. All
+rights reserved.
 
-You may distribute under the terms of either the GNU General Public License or the Arti
-stic License, as specified in the Perl README file.
+You may distribute under the terms of either the GNU General Public License or the
+Artistic License, as specified in the Perl README file.
