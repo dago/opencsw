@@ -24,7 +24,6 @@ include gar/category.mk
 
 post-configure-modulated:
 	@echo " ==> Post-configure for $(GARNAME) (custom)"
-	@echo "$(WORKSRC)"
 	@( cd $(WORKSRC)/lib/Geo/IP ; \
 	   sed 's/\/usr\/local\/share\/GeoIP\/GeoIP.dat/\/opt\/csw\/share\/GeoIP\/GeoIP.dat/' PurePerl.pm > tmp.sed ; \
 	   mv tmp.sed PurePerl.pm )
