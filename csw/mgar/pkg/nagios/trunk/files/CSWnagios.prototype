@@ -385,9 +385,9 @@ f none /opt/csw/share/doc/nagios/INSTALLING 0644 root bin
 f none /opt/csw/share/doc/nagios/README 0644 root bin
 f none /opt/csw/share/doc/nagios/UPGRADING 0644 root bin
 f none /opt/csw/share/doc/nagios/LICENSE 0644 root bin
+f cswinitsmf /etc/opt/csw/init.d/cswnagios 0755 root bin
 i checkinstall=CSWnagios.checkinstall
 i preinstall=CSWnagios.preinstall
 i depend=CSWnagios.depend
 i pkginfo=CSWnagios.pkginfo
-i postinstall=CSWnagios.postinstall
 i preremove=CSWnagios.preremove

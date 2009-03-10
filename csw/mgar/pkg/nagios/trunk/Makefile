@@ -9,8 +9,8 @@ endef
 
 MASTER_SITES =$(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnagios,checkinstall preinstall preremove prototype postinstall )
-DISTFILES += nagios nagios.xml svc-nagios
+DISTFILES += $(call admfiles,CSWnagios,checkinstall preinstall preremove prototype )
+DISTFILES += cswnagios
 
 PATCHFILES = patch.diff	# cgi/cmd.c - GNU macro __attribute__ unknown to compiler
 			# http://article.gmane.org/gmane.network.nagios.devel/4726
@@ -22,7 +22,11 @@ PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (emp
 				# necessary, so ginstall doesn't get -o and -g options
 
 REQUIRED_PKGS_CSWnagios  = CSWapache CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
-REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWnrpeplugin
+REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWnrpeplugin CSWcswclassutils
+
+SPKG_CLASSES = none cswinitsmf
+
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswnagios$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --prefix=/opt/csw/nagios
@@ -61,5 +65,7 @@ post-install-modulated:
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 644 $(WORKSRC)/LICENSE $(DOCDEST)
 	@ginstall -m 644 $(WORKSRC)/sample-config/httpd.conf $(HTTPD_CONF)/httpd-nagios.conf
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/cswnagios $(DESTDIR)/etc/opt/csw/init.d/cswnagios
 	@$(MAKECOOKIE)
 
