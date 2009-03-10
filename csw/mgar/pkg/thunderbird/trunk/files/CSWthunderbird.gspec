@@ -1,0 +1,6 @@
+%var            bitname thunderbird
+%var            pkgname CSWthunderbird
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      
+
+Please see /opt/csw/share/doc/thunderbird/LICENSE.txt for license information
