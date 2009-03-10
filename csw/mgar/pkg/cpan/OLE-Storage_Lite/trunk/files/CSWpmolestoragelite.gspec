@@ -1,0 +1,11 @@
+%var            bitname pm_olestoragelite
+%var            pkgname CSWpmolestoragelite
+%var		arch all
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+
+The OLE::Storage_Lite module is Copyright (c) 2000,2001 Kawai Takanori. Japan. All righ
+ts reserved.
+
+You may distribute under the terms of either the GNU General Public License or the Arti
+stic License, as specified in the Perl README file.
