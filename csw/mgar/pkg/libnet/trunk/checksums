@@ -1,3 +1,6 @@
 be845c41170d72c7db524f3411b50256  download/libnet-1.1.2.1.tar.gz
-f88f915ffd9e70173036d42db0d3642b  download/CSWlibnet.gspec
-ca847f8bf19895372cb392215badc008  download/mainpatch
+8bd8908d73e8b0e81e372f5ef2cf552a  download/buildpatch
+c074b4d206f3041a64afcde1a5b2d5d0  download/libnet_pblock_coalesce_leak.patch
+ca892b6a33f04cafb6def978c97ecb45  download/libnet-cq-end-loop.patch
+b49b610c4726a359bd42c3ad3211f169  download/libnet_build_ntp.patch
+fe5dc7c78f5326f271c75595ff50d376  download/libnet_checksum.c.patch
