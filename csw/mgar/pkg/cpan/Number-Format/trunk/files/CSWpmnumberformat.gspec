@@ -1,0 +1,10 @@
+%var            bitname pm_numberformat
+%var            pkgname CSWpmnumberformat
+%var		arch all
+%include	url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+
+This package is copyright 1997-2008 by William R. Ward et al., and may
+be distributed under the same terms as cover Perl itself (your choice
+of Artistic or GPL).  See http://dev.perl.org/licenses/ for more
+information.
