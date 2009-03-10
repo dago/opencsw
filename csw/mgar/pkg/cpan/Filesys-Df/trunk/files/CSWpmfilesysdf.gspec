@@ -1,0 +1,7 @@
+%var            bitname pm_filesysdf
+%var            pkgname CSWpmfilesysdf
+%include        url file://%{PKGLIB}/csw_cpan.gspec
+%copyright
+
+Copyright (c) 2006 Ian Guthrie. All rights reserved. This program is free software;
+you can redistribute it and/or modify it under the same terms as Perl itself.
