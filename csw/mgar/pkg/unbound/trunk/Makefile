@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = http://unbound.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWunbound, depend)
+DISTFILES += $(call admfiles,CSWunbound)
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
@@ -22,7 +22,7 @@ SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/unbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 # We define upstream file regex so we can be notifed of new upstream software release
-#UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -33,6 +33,8 @@ CONFIGUTE_ARGS += --with-solaris-threads
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
+
+REQUIRED_PKGS = CSWosslrt CSWgcc4corert
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
