@@ -1,8 +1,10 @@
-6f3701a0f2acf3fe53093491ba3d77ee  download/subversion-1.5.5.tar.bz2
+3d1dabbbcacf262e3e0baa3de79220d7  download/subversion-1.5.6.tar.bz2
 395ec6d1bfe07efadc1c0aa8816673fa  download/CSWsvn.checkinstall
 1e19681e6d988d35cfc6d708883ab7aa  download/CSWap2svn.postinstall
 586b9c9924c1547d44451a84d2aca702  download/CSWap2svn.preremove
 f107831ad0c702ff32e51df6a207237b  download/httpd-svn.conf.CSW
 1b532d3055708a97771f5cd959983628  download/svn_access.conf.CSW
-59ff30dc3a9abaa15b2bd4faa116ab3c  download/fixme.sh
-89b68eb851673a9a0ebe29cd0010f0ed  download/subversion155.diff
+41ec540885de7c34625768aa1fb9682b  download/fixme.sh
+a1983ac6084ab919be687906d0892c44  download/gccMake.sh
+f0aa58c145ae99f8e4d72499ab826169  download/javahl_headers_for_nested_classes.diff
+89b68eb851673a9a0ebe29cd0010f0ed  download/subversion156.diff

@@ -1,16 +1,16 @@
 GARNAME = subversion
-DISTVERSION = 1.5.5
+DISTVERSION = 1.5.6
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
 define BLURB
-	The goal of the Subversion project is to build a version control system that
-	is a compelling replacement for CVS in the open source community.
+    The goal of the Subversion project is to build a version control system 
+    that is a compelling replacement for CVS in the open source community.
 endef
 
 # Vendor site
-SPKG_SOURCEURL = http://subversion.tigris.org/
+SPKG_SOURCEURL = http://subversion.tigris.org/downloads/
 
 # Release site
 MASTER_SITES = http://subversion.tigris.org/downloads/
@@ -20,10 +20,15 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+EXTRA_LIB = $(prefix)/bdb44/lib $(SVNLIB)
+EXTRA_LIB += $(prefix)/apache2/lib
+EXTRA_INC = $(prefix)/bdb44/include
+EXTRA_INC += $(prefix)/apache2/include
+
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 PACKAGES  = CSWsvn CSWsvn-devel CSWap2svn CSWpmsvn
-#PACKAGES += CSWpysvn CSWrbsvn CSWjavasvn
+PACKAGES += CSWpysvn CSWrbsvn CSWjavasvn
 PACKAGES += CSWpysvn CSWjavasvn
 
 SPKG_DESC_CSWsvn           = Version control rethought
@@ -46,9 +51,9 @@ REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl
 SPKG_DESC_CSWpysvn         = Subversion Python Language Binding
 CATALOGNAME_CSWpysvn       = pysvn
 REQUIRED_PKGS_CSWpysvn     = CSWsvn CSWpython
-#SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
-#CATALOGNAME_CSWrbsvn       = rbsvn
-#REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby
+SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
+CATALOGNAME_CSWrbsvn       = rbsvn
+REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby
 
 PKGFILES_CSWsvn-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWap2svn    = $(prefix)/apache2*
@@ -58,32 +63,36 @@ PKGFILES_CSWpmsvn    += $(SVNLIB)/*perl*
 PKGFILES_CSWpmsvn    += $(mandir)/*swig_perl*
 PKGFILES_CSWpysvn     = $(libdir)/python*
 PKGFILES_CSWpysvn    += $(SVNLIB)/*swig_py*
-#PKGFILES_CSWrbsvn     = $(libdir)/ruby*
-#PKGFILES_CSWrbsvn    += $(SVNLIB)/*swig_ruby*
+PKGFILES_CSWrbsvn     = $(libdir)/ruby*
+PKGFILES_CSWrbsvn    += $(SVNLIB)/*swig_ruby*
 
 DISTFILES += CSWsvn.checkinstall
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 DISTFILES += fixme.sh
+DISTFILES += gccMake.sh
 
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
-#PATCHFILES += javahl_headers_for_nested_classes.diff
-PATCHFILES += subversion155.diff
+PATCHFILES += javahl_headers_for_nested_classes.diff
+PATCHFILES += subversion156.diff
 
 DEPENDS = server/apache2
 DEPENDS = lib/neon
 
 NODIRPATHS = --libdir --libexecdir
+JDK = /usr/jdk1.5.0_15
+EXTRA_INC += $(JDK)/include
 
 SVNLIB = $(prefix)/lib/svn
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
+CONFIGURE_ARGS += --with-gnu-ld=/opt/csw/bin/gld
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --disable-mod-activation
-CONFIGURE_ARGS += --with-jdk=/usr/jdk1.5.0_15
+CONFIGURE_ARGS += --with-jdk=$(JDK)
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-neon=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
@@ -95,18 +104,12 @@ TEST_TARGET = check
 # Tests take *forever*
 TEST_SCRIPTS =
 
-EXTRA_LIB = $(prefix)/bdb44/lib $(SVNLIB)
-EXTRA_LIB += $(prefix)/apache2/lib
-EXTRA_INC = $(prefix)/bdb44/include
-EXTRA_INC += $(prefix)/apache2/include
-
 # Add libintl when linking
 EXTRA_LINKER_FLAGS += -lintl -liconv 
 
 include gar/category.mk
 
-#BINDING_LANGS   = java perl python ruby 
-BINDING_LANGS   = java perl python
+BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
 PI_DEPENDS  = $(BINDING_TARGETS)
@@ -118,6 +121,7 @@ post-install-modulated: $(PI_DEPENDS)
 post-configure-modulated:
 	@(echo "~~~ Fixing Libtool ~~~")
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	@$(DOWNLOADDIR)/gccMake.sh $(WORKSRC)
 	$(DONADA)
 
 copy-templates:
@@ -137,7 +141,6 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
 	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py 
-	@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	$(DONADA)
 
 svn-perl:
@@ -147,22 +150,20 @@ svn-perl:
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.pm
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-pl
 	@$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
-	@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-pl
 	$(DONADA)
 
 svn-ruby:
 	@echo " ==> Building Ruby bindings"
 	@touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
-	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-rb
-	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-rb
-	@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-rb
+	@$(BUILD_ENV) gmake -f Makefile.gcc -C $(WORKSRC) swig-rb
+	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-swig-rb
 	$(DONADA)
 
 svn-java:
 	@echo " ==> Building Java bindings"
-	@$(BUILD_ENV)   gmake -C $(WORKSRC) javahl
-	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-javahl
-	@$(TEST_ENV)    gmake -C $(WORKSRC) check-javahl
+	@touch $(WORKSRC)/subversion/bindings/javahl/native/*.c
+	@$(BUILD_ENV)   gmake -f Makefile.gcc -C $(WORKSRC) javahl
+	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-javahl
 	$(DONADA)
 
 
