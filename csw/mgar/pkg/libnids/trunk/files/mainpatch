@@ -75,7 +75,16 @@ diff --speed-large-files --minimal -ru libnids-1.23.orig/src/Makefile.in libnids
  	rm -f *.o *~ $(LIBSTATIC) $(LIBSHARED)
 diff --speed-large-files --minimal -ru libnids-1.23.orig/src/checksum.c libnids-1.23/src/checksum.c
 --- libnids-1.23.orig/src/checksum.c	2005-02-08 16:46:11.000000000 +0100
-+++ libnids-1.23/src/checksum.c	2009-03-11 00:49:43.000000000 +0100
++++ libnids-1.23/src/checksum.c	2009-03-11 12:38:07.808047165 +0100
+@@ -25,7 +25,7 @@
+ 	return 0;
+ }
+  
+-#if ( __i386__ || __i386 )
++#if ( __i386__ || __i386 ) && __GNUC__
+ // all asm procedures are copied from Linux 2.0.36 and 2.2.10 kernels
+ 
+ /*
 @@ -120,7 +120,7 @@
    By Jorge Cwik <jorge@laser.satlink.net>, adapted for linux by Arnt
    Gulbrandsen.
