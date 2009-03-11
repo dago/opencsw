@@ -20,7 +20,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 SPKG_SOURCEURL = http://distcc.googlecode.com/
 
-REQUIRED_PKGS += CSWlibpopt
+REQUIRED_PKGS += CSWlibpopt CSWpython
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
