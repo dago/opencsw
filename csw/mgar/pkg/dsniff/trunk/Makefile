@@ -18,7 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 DISTNAME = $(GARNAME)-2.4
 
-REQUIRED_PKGS += > CSWbdb3 CSWlibnet CSWlibnids CSWlibpcap CSWosslrt
+REQUIRED_PKGS += CSWbdb3 CSWlibnet CSWlibnids CSWlibpcap CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
