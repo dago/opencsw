@@ -14,14 +14,10 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-#PACKAGES = CSWgtar
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/gengetopt/
-
-#REQUIRED_PKGS = CSWggettextrt CSWiconv
 
 CONFIGURE_ARGS = $(DIRPATHS) 
 
