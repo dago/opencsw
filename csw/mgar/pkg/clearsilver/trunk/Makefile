@@ -15,9 +15,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWcs CSWpmcs CSWpycs
 
-REQUIRED_PKGS_CSWcs   = CSWggettext CSWzlib
-REQUIRED_PKGS_CSWpmcs = CSWperl CSWzlib
-REQUIRED_PKGS_CSWpycs = CSWggettext CSWpython CSWzlib
+REQUIRED_PKGS_CSWcs   = CSWzlib CSWggettextrt
+REQUIRED_PKGS_CSWpmcs = CSWcs CSWperl
+REQUIRED_PKGS_CSWpycs = CSWcs CSWpython
 
 CATALOGNAME_CSWcs   = clearsilver
 CATALOGNAME_CSWpmcs = pm_clearsilver
@@ -28,9 +28,9 @@ SPKG_DESC_CSWpmcs = Clearsilver Perl language binding
 SPKG_DESC_CSWpycs = Clearsilver Python language binding
 
 PKGFILES_CSWpmcs  = $(libdir)/perl/.*
-PKGFILES_CSWpmcs += $(mandir)/*perl*
+PKGFILES_CSWpmcs += $(mandir)/.*perl.*
 PKGFILES_CSWpycs =  $(libdir)/python*/.*
-PKGFILES_CSWpmcs += $(mandir)/*python*
+PKGFILES_CSWpycs += $(mandir)/.*python.*
 
 GARCOMPILER = GNU
 
@@ -38,7 +38,6 @@ GARCOMPILER = GNU
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
 PATCHFILES += perlbuild.diff
-PATCHFILES += pybuild.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-python=$(bindir)/python
@@ -54,9 +53,17 @@ CONFIGURE_ARGS += --disable-java
 
 EXTRA_LINKER_FLAGS += -lintl
 
+ENABLE_CHECK = 0
+
 # No test target
 TEST_SCRIPTS =
 
 include gar/category.mk
 
 PATH := $(PATH):$(SOS11_CC_HOME)/bin
+
+## Move lone perl manpage to the package man location
+post-install-modulated:
+	@(gmv $(INSTALLISADIR)$(prefix)/man/man3/ClearSilver.3perl \
+		$(INSTALLISADIR)$(prefix)/share/man/man3/ClearSilver.3perl)
+	@(grm -fr $(INSTALLISADIR)$(prefix)/man/man3)
