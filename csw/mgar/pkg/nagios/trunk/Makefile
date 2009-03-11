@@ -26,8 +26,6 @@ REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWnrpepl
 
 SPKG_CLASSES = none cswinitsmf
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswnagios$$$$/ { $$$$2 = "cswinitsmf" } { print }'
-
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --prefix=/opt/csw/nagios
 CONFIGURE_ARGS += --exec-prefix=/opt/csw/nagios
