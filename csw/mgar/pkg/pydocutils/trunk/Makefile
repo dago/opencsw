@@ -12,7 +12,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpydocutils
 REQUIRED_PKGS_CSWpydocutils = CSWpython
-CATALOGNAME_CSWpydocutils = py_docutils
+CATALOGNAME_CSWpydocutils = pydocutils
 SPKG_DESC = Documentation Utiltiies for Python
 
 # We define upstream file regex so we can be notifed of new upstream software release

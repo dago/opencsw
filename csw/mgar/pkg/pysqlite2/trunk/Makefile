@@ -12,7 +12,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpysqlite2
 REQUIRED_PKGS_CSWpysqlite2 = CSWpython CSWsqlite3
-CATALOGNAME_CSWpysqlite2 = py_sqlite2
+CATALOGNAME_CSWpysqlite2 = pysqlite2
 SPKG_DESC_CSWpysqlite2 = SQLite3 support for Python
 
 # We define upstream file regex so we can be notifed of new upstream software release

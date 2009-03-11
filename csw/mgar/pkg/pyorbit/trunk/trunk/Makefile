@@ -15,7 +15,7 @@ PACKAGES = CSWpyorbit
 REQUIRED_PKGS_CSWpyorbit  = CSWpython CSWggettextrt CSWglib2
 REQUIRED_PKGS_CSWpyorbit += CSWlibidl CSWorbit2
 
-CATALOGNAME_CSWpyorbit = py_orbit
+CATALOGNAME_CSWpyorbit = pyorbit
 SPKG_DESC_CSWpyorbit = ORBit2 CORBA support for Python
 
 # We define upstream file regex so we can be notifed of new upstream software release

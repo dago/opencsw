@@ -12,13 +12,16 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpymysql
 REQUIRED_PKGS_CSWpymysql = CSWmysql5rt CSWpython CSWosslrt CSWzlib
-CATALOGNAME_CSWpymysql = py_mysql5
+CATALOGNAME_CSWpymysql = pymysql5
 SPKG_DESC = MySQL Support for Python
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=22307
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
+
+DISTFILES += setuptools-0.6c9-py2.6.egg
+PATCHFILES = setup.diff
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
@@ -32,6 +35,10 @@ include gar/category.mk
 
 mysql_prefix = $(prefix)/mysql5
 mysql_bindir = $(mysql_prefix)/bin
+
+post-extract-modulated:
+	@(gcp $(DOWNLOADDIR)/setuptools-0.6c9-py2.6.egg $(WORKSRC))
+
 
 LD_OPTIONS := -R/opt/csw/mysql5/lib/mysql/\$$ISALIST $(LD_OPTIONS)
 PATH       := $(mysql_bindir):$(PATH)

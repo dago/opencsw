@@ -14,8 +14,7 @@ DISTFILES += fixme.sh
 PACKAGES = CSWpygobject
 REQUIRED_PKGS_CSWpygobject  = CSWpython CSWggettextrt CSWglib2
 
-
-CATALOGNAME_CSWpygobject = py_gobject
+CATALOGNAME_CSWpygobject = pygobject
 SPKG_DESC_CSWpygobject = pygobject support for Python
 
 ## patch to change zero sized struct to zero-sized sub-object
@@ -23,6 +22,8 @@ PATCHFILES = pygobject.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
+
+CONFIGURE_ARGS  = $(DIRPATHS)
 
 ## Tests require gtk, but gtk requries gobject
 #TEST_TARGET = check

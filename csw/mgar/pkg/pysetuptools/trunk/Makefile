@@ -14,7 +14,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 REQUIRED_PKGS_CSWpysetuptools = CSWpython
 PACKAGES = CSWpysetuptools
-CATALOGNAME_CSWpysetuptools = py_setuptools
+CATALOGNAME_CSWpysetuptools = pysetuptools
 SPKG_DESC_CSWpysetuptools = Distribution Utiltiies for Python
 
 
@@ -23,8 +23,11 @@ UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
-TEST_SCRIPTS = $(WORKSRC)/setup.py
+TEST_SCRIPTS = skip
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
+
+test-skip:
+	$(DONADA)
 
 INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
