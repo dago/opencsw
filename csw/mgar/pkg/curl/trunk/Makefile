@@ -25,8 +25,8 @@ CATALOGNAME_CSWcurl = curl
 CATALOGNAME_CSWcurlrt = curlrt
 CATALOGNAME_CSWcurldevel = curldevel
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+# Upstream check seem to interfere with build on 8s?
+#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LIBDEPS += lib/openssl
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
