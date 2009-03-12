@@ -1,8 +1,2 @@
-d65a4cd3cf103d49085a55c90c871854  download/ImageMagick-6.4.9-6.tar.bz2
-26ba45bf8a01f64c01973522657e1e09  download/libMagick++.so.10.0.4.i
-d4d961c6aab8c2fb4067953f80a5213b  download/libMagick++.so.10.0.4.s
-c6254fa21d534ca99be36547ce599709  download/libMagick.so.10.0.4.i
-c3da4ba416306f5c064cfcc109f69091  download/libMagick.so.10.0.4.s
-f46e2f8d0bd8f2c1206534592ebda333  download/libWand.so.10.0.4.i
-0f6e06e2d8e5b446e90be3a8ae328761  download/libWand.so.10.0.4.s
+4efbf9ba504ce228ed67e6db4c8245ff  download/ImageMagick-6.4.9-10.tar.bz2
 6bd361fe352c7d497d60d8d2cbe7cfd4  download/Makefile.patch
