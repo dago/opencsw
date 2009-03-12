@@ -1,7 +1,0 @@
-P CSWggettext ggettext - GNU gettext
-P CSWreadline readline - library to enable interactive line editing
-P CSWglib2    glib2 - the low-level core library for GTK+ and GNOME
-P CSWlibpopt  libpopt - Command line option parsing library
-P CSWosslrt   openssl_rt - Openssl runtime libraries
-P CSWsasl     sasl - Simple Authentication and Security Layer
-P CSWoldaprt  openldap_rt - OpenLDAP runtime libraries (oldaprt)
