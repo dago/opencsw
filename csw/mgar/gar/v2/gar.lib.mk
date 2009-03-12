@@ -546,7 +546,7 @@ TEST_TARGET ?= test
 # Run tests on pre-built sources
 test-%/Makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(BUILD_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/makefile:
