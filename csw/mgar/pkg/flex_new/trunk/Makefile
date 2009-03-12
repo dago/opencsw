@@ -17,14 +17,20 @@ SF_PROJ = flex
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = flex-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWflex-new,depend)
+
+PACKAGES = CSWflex-new
+CATALOGNAME = flex_new
+
+REQUIRED_PKGS = CSWggettextrt CSWiconv
 
 CONFIGURE_ARGS = --prefix=$(libexecdir)/$(GARNAME)-$(GARVERSION)
 
 TEST_TARGET = check
-TEST_SCRIPTS =
 
 include gar/category.mk
+
+# Must use GNU diff for option '-q' or two tests fail due to bailing out Sun diff
+TEST_ENV += PATH=$(prefix)/gnu:$(PATH)
 
 post-install:
 	@mkdir -p $(DESTDIR)$(bindir)
