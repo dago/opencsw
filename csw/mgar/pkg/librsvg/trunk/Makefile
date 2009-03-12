@@ -19,8 +19,6 @@ SPKG_VERSION= $(GARVERSION).$(GARSUBREV)
 
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/librsvg/$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).$(GARSUBREV).tar.bz2
-DISTFILES += librsvg-2.so.2.15.90.i
-DISTFILES += librsvg-2.so.2.15.90.s
 
 DISTNAME = $(GARNAME)-$(GARVERSION).$(GARSUBREV)
 
@@ -37,10 +35,6 @@ REQUIRED_PKGS += CSWbonobo2 CSWgconf2 CSWgnomevfs2 CSWlibxrender CSWorbit2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
 # Upstream develops on gcc only 
 PATCHFILES = pdiff.patch
 PATCHFILES += perceptualdiff.patch
@@ -55,7 +49,6 @@ CONFIGURE_ARGS += --enable-shared=yes --enable-static=no
 TEST_TARGET = check
 
 include gar/category.mk
-
 
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/librsvg-2.so.2.15.90.s $(INSTALLISADIR)/opt/csw/lib/librsvg-2.so.2.15.90
