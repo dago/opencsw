@@ -1,7 +1,7 @@
 GARNAME = XML-Parser
-GARVERSION = 2.31
+GARVERSION = 2.36
 CATEGORIES = cpan
-AUTHOR = COOPERCL
+AUTHOR = MSERGEANT
 
 DESCRIPTION = a module for parsing XML documents
 define BLURB
@@ -15,11 +15,16 @@ define BLURB
   options given at XML::Parser creation time.
 endef
 
-DISTFILES = $(call admfiles,CSWpmxmlparser,depend prototype)
+
+DISTFILES = $(call admfiles,CSWpmxmlparser,)
+
+REQUIRED_PKGS += CSWexpat
 
 DEPENDS += lib/expat
 
 CONFIGURE_ARGS  = EXPATINCPATH=$(includedir)
 CONFIGURE_ARGS += EXPATLIBPATH=$(libdir)
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 include gar/category.mk
