@@ -21,6 +21,10 @@
 #GARDIR := $(CURDIR)/../..
 #endif
 
+ifneq ($(abspath /),/)
+$(error Your version of 'make' is too old: $(MAKE_VERSION). Please make sure you are using at least 3.81)
+endif
+
 GARDIR ?= gar
 GARBIN  = $(GARDIR)/bin
 
