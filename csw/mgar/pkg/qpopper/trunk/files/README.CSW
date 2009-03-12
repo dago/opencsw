@@ -1,0 +1,28 @@
+README.CSW
+==========
+
+Installation
+------------
+1. Add two lines to /etc/inetd.conf:
+
+# qpopper pop3 server
+pop3    stream  tcp     nowait  root    /opt/csw/sbin/popper    popper -s
+
+2. Reload inetd:
+
+# pkill -HUP inetd
+
+3. Test with:
+
+# telnet localhost pop3	(pop3/110 should already be in /etc/services)
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
++OK Qpopper (version 4.0.9) at yourhost starting.
+
+
+Note for Solaris 10: you should run inetconv to convert the above to be
+controlled by SMF.
+
+
+bonivart/071009
