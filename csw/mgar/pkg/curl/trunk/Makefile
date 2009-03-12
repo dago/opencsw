@@ -52,9 +52,11 @@ post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libcurl.so.2.0.2.s $(INSTALLISADIR)/opt/csw/lib/libcurl.so.2.0.2
 	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.3.0.0 libcurl.so.3 )
 	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.2.0.2 libcurl.so.2 )
+	$(DONADA)
 
 post-install-isa-i386:
 	@cp $(FILEDIR)/libcurl.so.3.0.0.i $(INSTALLISADIR)/opt/csw/lib/libcurl.so.3.0.0
 	@cp $(FILEDIR)/libcurl.so.2.0.2.i $(INSTALLISADIR)/opt/csw/lib/libcurl.so.2.0.2
 	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.3.0.0 libcurl.so.3 )
 	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.2.0.2 libcurl.so.2 )
+	$(DONADA)
