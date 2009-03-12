@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += x11.pc
+DISTFILES += fixme.sh
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += '--with-dbus-services=/opt/csw/etc/dbus-1'
@@ -25,11 +25,10 @@ XGETTEXT=/opt/csw/bin/gxgettext
 MSGFMT=/opt/csw/bin/gmsgfmt
 MSGMERGE=/opt/csw/bin/gmsgmerge
 SED=/opt/csw/bin/gsed
-EXTRA_CONFIGURE_EXPORTS = DOT XGETTEXT MSGFMT MSGMERGE SED
+X11_CFLAGS=-D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS -DXTHREADS -DXUSE_MTSAFE_API
+X11_LIBS=-lX11
+EXTRA_CONFIGURE_EXPORTS = DOT XGETTEXT MSGFMT MSGMERGE SED X11_CFLAGS X11_LIBS
 EXTRA_INC = /opt/csw/include/ncurses
-
-#Need to include our own x11.pc file as solaris 8 doesn't have one
-EXTRA_PKGCONFIG_PATH = $(CURDIR)/$(WORKDIR)
 
 TEST_TARGET = check
 
@@ -45,5 +44,9 @@ REQUIRED_PKGS_CSWpidgin += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncu
 REQUIRED_PKGS_CSWpidgin += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
 REQUIRED_PKGS_CSWpidgin += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus
 
-
 include gar/category.mk
+
+post-configure-$(MODULATION):
+	@(echo "~~~ Fixing Libtool ~~~")
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	$(DONADA)
