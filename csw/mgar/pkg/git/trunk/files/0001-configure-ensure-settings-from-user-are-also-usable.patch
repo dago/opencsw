@@ -1,0 +1,56 @@
+From 63b740b85248d3ff5a2a458cc5068f5e2c180f0d Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Date: Thu, 12 Mar 2009 17:30:56 +0100
+Subject: [PATCH] configure: ensure settings from user are also usable in the script
+
+Allow things set by the user (--with-lib, --with-iconv, etc) to set
+variables for use by other parts of the script.  Display values as
+they're set.
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ configure.ac |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 082a03d..0b314d7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -42,6 +42,8 @@ else \
+ 	if test "$withval" = "yes"; then \
+ 		AC_MSG_WARN([You should provide path for --with-$1=PATH]); \
+ 	else \
++		m4_toupper($1)_PATH=$withval; \
++		AC_MSG_NOTICE([Setting m4_toupper($1)_PATH to $withval]); \
+ 		GIT_CONF_APPEND_LINE(${PROGRAM}_PATH=$withval); \
+ 	fi; \
+ fi; \
+@@ -61,6 +63,8 @@ elif test "$withval" = "yes"; then \
+ 	m4_toupper(NO_$1)=; \
+ else \
+ 	m4_toupper(NO_$1)=; \
++	m4_toupper($1)DIR=$withval; \
++	AC_MSG_NOTICE([Setting m4_toupper($1)DIR to $withval]); \
+ 	GIT_CONF_APPEND_LINE(${PACKAGE}DIR=$withval); \
+ fi \
+ ])# GIT_PARSE_WITH
+@@ -86,9 +90,16 @@ AC_ARG_WITH([lib],
+  [if test "$withval" = "no" || test "$withval" = "yes"; then \
+ 	AC_MSG_WARN([You should provide name for --with-lib=ARG]); \
+ else \
++	lib=$withval; \
++	AC_MSG_NOTICE([Setting lib to '$lib']); \
+ 	GIT_CONF_APPEND_LINE(lib=$withval); \
+ fi; \
+ ],[])
++
++if test -z "$lib"; then
++   AC_MSG_NOTICE([Setting lib to 'lib' (the default)])
++   lib=lib
++fi
+ #
+ # Define SHELL_PATH to provide path to shell.
+ GIT_ARG_SET_PATH(shell)
+-- 
+1.6.0.5
+

@@ -1,3 +1,8 @@
 075441ea2a95cfa5fd7aaebb888a93f3  download/doc-makefile.patch
-97290254ce2e9e6c37fdd824140fda85  download/0001-git-svn-fix-to-avoid-using-strftime-z.patch
-1081a8ca474317f1963e0d1ee69832de  download/0002-git-svn-return-original-format_svn_date-semantics.patch
+d88d34fc8e4ce18fe738753a06417eac  download/0001-configure-ensure-settings-from-user-are-also-usable.patch
+9f1f5c3f7759319d647420d330f87c28  download/0002-configure-reorganize-flow-of-argument-checks.patch
+dc54bd8c79b58724eaab77e15f9e2029  download/0003-configure-add-macros-to-stash-FLAG-variables.patch
+b1c0911b53bcccb943b1f7bdc6db5237  download/0004-configure-wrap-some-library-tests-with-GIT_STASH_FL.patch
+50fa0de30bbc019e6c5e43c20cef423a  download/0005-configure-asciidoc-version-test-cleanup.patch
+cde5cd3ceebe13864dd8e3718e104387  download/0006-configure-make-iconv-tests-aware-of-user-arguments.patch
+89dbcc3180bf4e651e9e64d4de3f6df0  download/0007-configure-rework-pthread-handling-to-allow-for-user.patch

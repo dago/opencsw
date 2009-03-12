@@ -57,6 +57,13 @@ GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
 GIT_TREEISH_git.git = v$(GARVERSION)
 
 PATCHFILES = doc-makefile.patch
+PATCHFILES += 0001-configure-ensure-settings-from-user-are-also-usable.patch
+PATCHFILES += 0002-configure-reorganize-flow-of-argument-checks.patch
+PATCHFILES += 0003-configure-add-macros-to-stash-FLAG-variables.patch
+PATCHFILES += 0004-configure-wrap-some-library-tests-with-GIT_STASH_FL.patch
+PATCHFILES += 0005-configure-asciidoc-version-test-cleanup.patch
+PATCHFILES += 0006-configure-make-iconv-tests-aware-of-user-arguments.patch
+PATCHFILES += 0007-configure-rework-pthread-handling-to-allow-for-user.patch
 
 PKGFILES_CSWgitsvn = .*svn.*
 PKGFILES_CSWgitgui = .*git-gui.* .*git-citool.*
@@ -69,13 +76,14 @@ PKGFILES_CSWgitdoc = $(PKGFILES_DOC)
 # software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-GARCOMPILER = GNU
-
 CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --with-tcltk=$(bindir)/wish
 CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-iconv=$(prefix)
+CONFIGURE_ARGS += --with-openssl=$(prefix)
+CONFIGURE_ARGS += --with-expat=$(prefix)
+CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ETC_CONFIG=$(sysconfdir)/gitconfig V=1 \
