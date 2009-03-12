@@ -331,6 +331,7 @@ patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
 patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated
+	@$(DONADA)
 
 # returns true if patch has completed successfully, false
 # otherwise
@@ -375,11 +376,12 @@ CONFIGURE_IMGDEPS = $(addprefix imgdep-,$(filter-out $(DESTIMG),$(IMGDEPS)))
 endif
 
 configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure
-	$(DONADA)
+	@$(DONADA)
 
 configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
 		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
 		pre-configure-modulated pre-configure-$(MODULATION) $(CONFIGURE_TARGETS) post-configure-$(MODULATION) post-configure-modulated
+	@$(DONADA)
 
 .PHONY: reset-configure reset-configure-modulated
 reconfigure: reset-configure configure

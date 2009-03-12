@@ -414,10 +414,10 @@ merge-license-%: $(WORKDIR)
 		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
 		fi \
 	)
-	$(MAKECOOKIE)
+	@$(MAKECOOKIE)
 
 merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
-	$(DONADA)
+	@$(DONADA)
 
 # package - Use the mkpackage utility to create Solaris packages
 #
