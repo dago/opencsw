@@ -130,7 +130,7 @@ post-configure-modulated:
 	$(DONADA)
 
 fix-install:
-	@(grm -fr $(DESTDIR)$(prefix)/lib/perl/5.8)
+	@(grm -fr $(DESTDIR)$(prefix)/lib/perl/5.8.8)
 
 copy-templates:
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
