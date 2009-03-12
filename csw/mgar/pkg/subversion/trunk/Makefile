@@ -29,7 +29,6 @@ WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 PACKAGES  = CSWsvn CSWsvn-devel CSWap2svn CSWpmsvn
 PACKAGES += CSWpysvn CSWrbsvn CSWjavasvn
-PACKAGES += CSWpysvn CSWjavasvn
 
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
@@ -44,7 +43,7 @@ CATALOGNAME_CSWap2svn      = ap2svn
 REQUIRED_PKGS_CSWap2svn    = CSWsvn
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
-REQUIRED_PKGS_CSWjavasvn   = CSWsvn 
+REQUIRED_PKGS_CSWjavasvn   = CSWsvn CSWgcc3g++rt CSWgcc3corert
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pmsvn
 REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl
@@ -53,24 +52,25 @@ CATALOGNAME_CSWpysvn       = pysvn
 REQUIRED_PKGS_CSWpysvn     = CSWsvn CSWpython
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
-REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby
+REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby CSWgcc3g++rt CSWgcc3corert
 
 PKGFILES_CSWsvn-devel = $(PKGFILES_DEVEL)
-PKGFILES_CSWap2svn    = $(prefix)/apache2*
-PKGFILES_CSWjavasvn   = $(SVNLIB)/*java*
-PKGFILES_CSWpmsvn     = $(libdir)/perl*
-PKGFILES_CSWpmsvn    += $(SVNLIB)/*perl*
-PKGFILES_CSWpmsvn    += $(mandir)/*swig_perl*
-PKGFILES_CSWpysvn     = $(libdir)/python*
-PKGFILES_CSWpysvn    += $(SVNLIB)/*swig_py*
-PKGFILES_CSWrbsvn     = $(libdir)/ruby*
-PKGFILES_CSWrbsvn    += $(SVNLIB)/*swig_ruby*
+PKGFILES_CSWap2svn    = $(prefix)/apache2.*
+PKGFILES_CSWjavasvn   = $(SVNLIB)/.*java.*
+PKGFILES_CSWpmsvn     = $(libdir)/perl.*
+PKGFILES_CSWpmsvn    += $(SVNLIB)/.*perl.*
+PKGFILES_CSWpmsvn    += $(mandir)/.*swig_perl.*
+PKGFILES_CSWpysvn     = $(libdir)/python.*
+PKGFILES_CSWpysvn    += $(SVNLIB)/.*swig_py.*
+PKGFILES_CSWrbsvn     = $(libdir)/ruby.*
+PKGFILES_CSWrbsvn    += $(SVNLIB)/.*swig_ruby.*
 
 DISTFILES += CSWsvn.checkinstall
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 DISTFILES += fixme.sh
-DISTFILES += gccMake.sh
+DISTFILES += sparc-gcc.diff
+DISTFILES += i386-gcc.diff
 
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
@@ -83,11 +83,10 @@ DEPENDS = lib/neon
 NODIRPATHS = --libdir --libexecdir
 JDK = /usr/jdk1.5.0_15
 EXTRA_INC += $(JDK)/include
-
 SVNLIB = $(prefix)/lib/svn
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
-CONFIGURE_ARGS += --with-gnu-ld=/opt/csw/bin/gld
+CONFIGURE_ARGS += --with-gnu-ld=yes
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
@@ -98,11 +97,14 @@ CONFIGURE_ARGS += --with-neon=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
+CONFIGURE_ARGS += --disable-static
 
 TEST_TARGET = check
-
 # Tests take *forever*
-TEST_SCRIPTS =
+TEST_SCRIPTS = skip
+
+test-skip:
+	@$(DONADA)
 
 # Add libintl when linking
 EXTRA_LINKER_FLAGS += -lintl -liconv 
@@ -114,6 +116,7 @@ BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
 PI_DEPENDS  = $(BINDING_TARGETS)
 PI_DEPENDS += copy-templates
+PI_DEPENDS += fix-install
 
 post-install-modulated: $(PI_DEPENDS)
 	$(DONADA)
@@ -121,8 +124,13 @@ post-install-modulated: $(PI_DEPENDS)
 post-configure-modulated:
 	@(echo "~~~ Fixing Libtool ~~~")
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	@$(DOWNLOADDIR)/gccMake.sh $(WORKSRC)
+	@(gcp $(WORKSRC)/Makefile $(WORKSRC)/Makefile.gcc)
+	@(gcp $(WORKSRC)/libtool $(WORKSRC)/libtool.gcc)
+	@(gpatch -d $(WORKSRC) -p0 -F2 < $(DOWNLOADDIR)/$(GARCH)-gcc.diff)
 	$(DONADA)
+
+fix-install:
+	@(grm -fr $(DESTDIR)$(prefix)/lib/perl/5.8)
 
 copy-templates:
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
@@ -140,6 +148,7 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
+	#@$(TEST_ENV)   gmake -C $(WORKSRC) check-swig-py
 	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py 
 	$(DONADA)
 
@@ -149,6 +158,7 @@ svn-perl:
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.c \
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.pm
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-pl
+	#@$(TEST_ENV)   gmake -C $(WORKSRC) check-swig-pl
 	@$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
 	$(DONADA)
 
@@ -156,13 +166,16 @@ svn-ruby:
 	@echo " ==> Building Ruby bindings"
 	@touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
 	@$(BUILD_ENV) gmake -f Makefile.gcc -C $(WORKSRC) swig-rb
+	#@$(TEST_ENV) gmake -f Makefile.gcc -C $(WORKSRC) check-swig-rb
 	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-swig-rb
 	$(DONADA)
 
+##  The test can only be run "after" you have it installed.
 svn-java:
 	@echo " ==> Building Java bindings"
 	@touch $(WORKSRC)/subversion/bindings/javahl/native/*.c
 	@$(BUILD_ENV)   gmake -f Makefile.gcc -C $(WORKSRC) javahl
+	#@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) check-javahl
 	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-javahl
 	$(DONADA)
 
