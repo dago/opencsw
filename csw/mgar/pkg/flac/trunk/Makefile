@@ -18,6 +18,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PATCHFILES = no-stdint.patch
+PATCHFILES += libtool-64bit.patch
 
 CATALOGNAME = libflac
 

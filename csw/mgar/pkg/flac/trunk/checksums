@@ -1,2 +1,3 @@
 153c8b15a54da428d1f0fadc756c22c7  download/flac-1.2.1.tar.gz
 e3144fad8810ceaca718adb6f09dc8fa  download/no-stdint.patch
+099621e0dad419188acd42c588242131  download/libtool-64bit.patch
