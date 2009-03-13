@@ -24,13 +24,14 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWmsmtp)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS  = CSWgcrypt CSWggettext CSWgnutls CSWgpgerr CSWiconv CSWkrb5lib
+REQUIRED_PKGS  = CSWgcrypt CSWggettextrt CSWgnutls CSWgpgerr CSWiconv CSWkrb5lib
 REQUIRED_PKGS += CSWlibgsasl CSWlibidn CSWlibntlm CSWzlib
+
+RUNPATHQUOTE = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
