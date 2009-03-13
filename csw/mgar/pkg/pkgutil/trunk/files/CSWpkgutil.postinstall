@@ -1,12 +1,19 @@
 #!/bin/sh
 
-ETC=$PKG_INSTALL_ROOT/opt/csw/etc
+ETC1=$PKG_INSTALL_ROOT/opt/csw/etc
+ETC2=$PKG_INSTALL_ROOT/etc/opt/csw
 VAR=$PKG_INSTALL_ROOT/var/opt/csw/pkgutil
 
 echo
 
-if [ ! -f "$ETC/pkgutil.conf" ]; then
-  cp -p $ETC/pkgutil.conf.CSW $ETC/pkgutil.conf 
+if [ ! -f "$ETC1/pkgutil.conf" ]; then
+  cp -p $ETC1/pkgutil.conf.CSW $ETC1/pkgutil.conf 
+else
+  echo "pkgutil.conf already exists, will not copy pkgutil.conf.CSW to it."
+fi
+
+if [ ! -f "$ETC2/pkgutil.conf" ]; then
+  cp -p $ETC2/pkgutil.conf.CSW $ETC2/pkgutil.conf 
 else
   echo "pkgutil.conf already exists, will not copy pkgutil.conf.CSW to it."
 fi

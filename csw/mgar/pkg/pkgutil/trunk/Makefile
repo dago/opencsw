@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.4
+GARVERSION = 1.5b2
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -10,7 +10,8 @@ define BLURB
 	package automatically.
 endef
 
-MASTER_SITES = http://www.bonivart.com/pkgutil/
+#MASTER_SITES = http://www.bonivart.com/pkgutil/
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
 
@@ -38,13 +39,13 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 #	@ginstall -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
-#	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
+	@ginstall -d $(DESTDIR)/etc/opt/csw
 	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
+	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
 	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)
 	@cp -r $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
 	@cp -r $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
 	@cp -r $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
-#	@cp -r $(FILEDIR)/CSWpkgutil.copyright $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
 	@cp -r $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)/
 #	@cp -r $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
 #	@cp -r $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil

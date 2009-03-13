@@ -2,6 +2,8 @@ i pkginfo=CSWpkgutil.pkginfo
 i copyright=CSWpkgutil.copyright
 i postinstall=CSWpkgutil.postinstall
 i preremove=CSWpkgutil.preremove
+d none /etc/opt/csw 0755 root bin
+f none /etc/opt/csw/pkgutil.conf.CSW 644 root bin
 d none /opt/csw 0755 root bin
 d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/pkgutil 755 root bin
