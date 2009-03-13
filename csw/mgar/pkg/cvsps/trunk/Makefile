@@ -17,6 +17,7 @@ PATCHFILES += 0004-add-config.h-awareness-to-all-source-files.patch
 PATCHFILES += 0005-gnulib-import-of-missing-functions.patch
 PATCHFILES += 0006-enabled-imported-gnulib-functions.patch
 PATCHFILES += 0007-enable-installation-of-man-pages.patch
+PATCHFILES += 0008-Replace-z-use-in-strftime.patch
 
 PREREQUISITE_PKGS = CSWzlib CSWautomake CSWautoconf
 
@@ -27,7 +28,7 @@ PACKAGES = CSWcvsps
 LICENSE = COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+#UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
 

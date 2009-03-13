@@ -1,5 +1,4 @@
 bde2110ed9f5d14de8f8cb04e9d596fe  download/cvsps-2.1.tar.gz
-cb54db01900320e1bf80da166c60c2f8  download/CSWcvsps.gspec
 f1980fbc932203a048a6e5c3cfa1af5b  download/0001-add-basic-autotools-files.patch
 85b73079daeef9d87b637939e3749489  download/0002-add-modified-autoconf-check_zlib-from-loic-dachary.patch
 f5d84b7c7a05a44f64f740006df5c349  download/0003-add-script-to-do-the-autotools-setup-steps.patch
@@ -7,3 +6,4 @@ f5d84b7c7a05a44f64f740006df5c349  download/0003-add-script-to-do-the-autotools-s
 58cbd19160b6a98f3c5ff2a8786f0848  download/0005-gnulib-import-of-missing-functions.patch
 02c14b029fd57a61fa97cc8209f18d7d  download/0006-enabled-imported-gnulib-functions.patch
 2a729989bcafa6f533bcd6b33c9ceb09  download/0007-enable-installation-of-man-pages.patch
+2410e2c909bf1635aad8d84f6e5bdc4f  download/0008-Replace-z-use-in-strftime.patch

@@ -1,0 +1,27 @@
+From 5dd229a8918e73a09a8e7796687d20f5c7324b40 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 13 Mar 2009 20:47:32 +0100
+Subject: [PATCH] Replace %z use in strftime
+
+Since the strftime calls that use %z always work with GMT, simply
+replace %z with +0000.
+---
+ cvsps.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/cvsps.c b/cvsps.c
+index 4f49f22..7291c5a 100644
+--- a/cvsps.c
++++ b/cvsps.c
+@@ -291,7 +291,7 @@ static void load_from_cvs()
+     if (cache_date > 0)
+     {
+ 	struct tm * tm = gmtime(&cache_date);
+-	strftime(date_str, 64, "%d %b %Y %H:%M:%S %z", tm);
++	strftime(date_str, 64, "%d %b %Y %H:%M:%S +0000", tm);
+ 
+ 	/* this command asks for logs using two different date
+ 	 * arguments, separated by ';' (see man rlog).  The first
+-- 
+1.6.0.5
+
