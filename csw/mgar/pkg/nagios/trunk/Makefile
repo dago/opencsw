@@ -21,7 +21,7 @@ PATCHFILES += configure.diff	# configure.in
 PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (empty)
 				# necessary, so ginstall doesn't get -o and -g options
 
-REQUIRED_PKGS_CSWnagios  = CSWapache CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
+REQUIRED_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
 REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWnrpeplugin CSWcswclassutils
 
 SPKG_CLASSES = none cswinitsmf
