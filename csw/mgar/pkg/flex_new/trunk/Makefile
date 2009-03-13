@@ -32,7 +32,7 @@ include gar/category.mk
 # Must use GNU diff for option '-q' or two tests fail due to bailing out Sun diff
 TEST_ENV += PATH=$(prefix)/gnu:$(PATH)
 
-post-install:
+post-install-modulated:
 	@mkdir -p $(DESTDIR)$(bindir)
 	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/newflex
 	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/flex-$(GARVERSION)
