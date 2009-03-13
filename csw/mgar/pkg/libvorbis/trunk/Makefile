@@ -11,12 +11,15 @@ endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibvorbis,depend)
+
+REQUIRED_PKGS = CSWlibogg
+
+SPKG_SOURCEURL = http://www.vorbis.com/
+
+BUILD64 = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-LIBDEPS += lib/libogg
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
