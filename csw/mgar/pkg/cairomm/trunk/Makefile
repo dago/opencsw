@@ -1,34 +1,32 @@
-GARNAME = pycairo
-GARVERSION = 1.8.2
-CATEGORIES = lang
+GARNAME      = cairomm
+GARVERSION   = 1.8.0
+CATEGORIES   = lib
 
-DESCRIPTION = pycairo support for Python
+DESCRIPTION  = C++ bindings for Cairo
 define BLURB
-  This is a Python language binding for cairo.
 endef
 
-MASTER_SITES = http://www.cairographics.org/releases/
-SPKG_SOURCEURL = http://www.cairographics.org
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += fixme.sh
-
-PACKAGES = CSWpycairo
-REQUIRED_PKGS_CSWpycairo  = CSWpython CSWggettextrt CSWglib2
-
-CATALOGNAME_CSWpycairo = pycairo
-SPKG_DESC_CSWpycairo = $(DESCRIPTION)
+MASTER_SITES  = http://www.cairographics.org/releases/
+DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz
+PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+PACKAGES = CSWcairomm CSWcairomm-devel
+SPKG_DESC_CSWcairomm 		= $(DESCRIPTION)
+SPKG_DESC_CSWcairomm-devel 	= $(DESCRIPTION) development package
+
+PKGFILES_CSWcairomm-devel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWcairomm-devel += $(prefix)/include/.*
+PKGFILES_CSWcairomm-devel += $(prefix)/lib/.*\.a
+PKGFILES_CSWcairomm-devel += $(prefix)/lib/pkgconfig/.*
+
+REQUIRED_PKGS_CSWcairomm-devel = CSWcairomm
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-TEST_TARGET = check
-
 include gar/category.mk
 
-post-configure-$(MODULATION):
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	$(DONADA)
+
