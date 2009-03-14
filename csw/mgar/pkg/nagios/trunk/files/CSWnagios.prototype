@@ -1,3 +1,4 @@
+d none /opt/csw/nagios 0755 root bin
 d none /opt/csw/nagios/bin 0755 nagios nagios
 f none /opt/csw/nagios/bin/nagios 0774 nagios nagios
 f none /opt/csw/nagios/bin/nagiostats 0774 nagios nagios
@@ -376,6 +377,7 @@ f none /opt/csw/nagios/share/stylesheets/summary.css 0664 nagios nagios
 f none /opt/csw/nagios/share/stylesheets/tac.css 0664 nagios nagios
 f none /opt/csw/nagios/share/stylesheets/trends.css 0664 nagios nagios
 d none /opt/csw/nagios/var 0755 nagios nagios
+d none /opt/csw/nagios/var/spool 0755 nagios nagios
 d none /opt/csw/nagios/var/archives 0755 nagios nagios
 d none /opt/csw/nagios/var/rw 2770 nagios nagioscm
 d none /opt/csw/nagios/var/spool/checkresults 0755 nagios nagios
