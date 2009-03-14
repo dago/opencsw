@@ -17,8 +17,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-# NOTE: before building replace stdint.h -> sys/types.h in file src/int.c & src/uae-cpu/sysdeps.h   need to make patch.
-
 LICENSE = gpl.txt
 PATCHFILES = stdint.h.diff
 GARCOMPILER = GNU
