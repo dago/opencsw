@@ -2,7 +2,7 @@ GARNAME = nrpe
 GARVERSION = 2.12
 CATEGORIES = apps
 
-DESCRIPTION = NRPE daemon for Nagios
+DESCRIPTION = NRPE for Nagios
 define BLURB
   NRPE allows you to remotely execute Nagios plugins on other Linux/Unix machines. This allows you to monitor remote machine metrics (disk usage, CPU load, etc.). NRPE can also communicate with some of the Windows agent addons, so you can execute scripts and check metrics on remote Windows machines as well.
 endef
@@ -10,12 +10,14 @@ endef
 SF_PROJ = nagios
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnrpe, prototype checkinstall preinstall postinstall preremove )
-DISTFILES += svc-nrpe nrpe.xml nrpe
+DISTFILES += $(call admfiles,CSWnrpe, prototype checkinstall preinstall preremove )
+DISTFILES += cswnrpe
 DISTFILES += $(call admfiles,CSWnrpeplugin, prototype )
 
-REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap
-REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt
+REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap CSWcswclassutils
+REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt 
+
+SPKG_CLASSES = none cswinitsmf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl-lib=/opt/csw/lib
@@ -30,7 +32,7 @@ PATCHFILES = patch.diff	# Removal of LOG_AUTHPRIV and LOG_FTP
 PATCHFILES += configure.diff 
 
 sysconfdir = $(prefix)/nagios/etc
-bindir = $(prefix)/bin
+bindir = $(prefix)/nagios/bin
 libexecdir = $(prefix)/libexec/nagios-plugins
 datadir = $(prefix)/share
 
@@ -57,4 +59,6 @@ install-custom:
 	ginstall -m 644 $(WORKSRC)/SECURITY $(DESTDIR)$(DOCDIR)
 	ginstall -m 775 -d $(DESTDIR)$(CFGDIR)
 	ginstall -m 644 $(WORKSRC)/sample-config/nrpe.cfg $(DESTDIR)$(CFGDIR)
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall -m 755 $(FILEDIR)/cswnrpe $(DESTDIR)/etc/opt/csw/init.d/cswnrpe
 	@$(MAKECOOKIE)

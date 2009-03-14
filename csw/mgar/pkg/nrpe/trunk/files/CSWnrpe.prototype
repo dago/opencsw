@@ -1,11 +1,13 @@
-d none /opt/csw/bin 0755 nagios nagios
-f none /opt/csw/bin/nrpe 0775 nagios nagios
-1 f none /opt/csw/nagios/etc/nrpe.cfg 0644 root bin
+d none /opt/csw/nagios/bin 0755 nagios nagios
+f none /opt/csw/nagios/bin/nrpe 0775 nagios nagios
+d none /opt/csw/nagios/etc 0755 nagios nagios
+f none /opt/csw/nagios/etc/nrpe.cfg 0644 nagios nagios
 d none /opt/csw/share/doc/nrpe 0755 root bin
 f none /opt/csw/share/doc/nrpe/NRPE.pdf 0644 root bin
 f none /opt/csw/share/doc/nrpe/LEGAL 0644 root bin
 f none /opt/csw/share/doc/nrpe/README 0644 root bin
 f none /opt/csw/share/doc/nrpe/README.SSL 0644 root bin
 f none /opt/csw/share/doc/nrpe/SECURITY 0644 root bin
+f cswinitsmf /etc/opt/csw/init.d/cswnrpe 0755 root bin
 i depend=CSWnrpe.depend
 i pkginfo=CSWnrpe.pkginfo

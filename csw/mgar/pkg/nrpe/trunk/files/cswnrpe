@@ -7,12 +7,15 @@
 # Modified for CSW by Alex Moore 2005-12-03
 # 2007-08-18 Add pid file support.
 # 2007-08-19 Fix nagios uid used for pgrep.  Thanks to Will McDonald for this.
+# Modified for OpenCSW by Juergen Arndt 2009-03-14 
+
+#FMRI application       # FMRI path for service
 
 CONFIG_FILE=/etc/opt/csw/nrpe.cfg
 if [ ! -f $CONFIG_FILE ] ; then
     CONFIG_FILE=/opt/csw/nagios/etc/nrpe.cfg
 fi
-BIN_FILE="/opt/csw/bin/nrpe"
+BIN_FILE="/opt/csw/nagios/bin/nrpe"
 pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
 NRPE_USER=`awk -F'=' '/nrpe_user/ { print $NF }' $CONFIG_FILE`
 

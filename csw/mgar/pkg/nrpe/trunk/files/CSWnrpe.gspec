@@ -2,8 +2,3 @@
 %var            pkgname CSWnrpe
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 #%copyright      url file://%{WORKSRC}/LICENSE
-%var      	SERVICE_CONF_FILES      /opt/csw/nagios/etc/nrpe.cfg       
-%var            RC_INIT_SCRIPT          nrpe
-%var            SMF_SCRIPT              svc-nrpe
-%var            SMF_MANIFEST            nrpe.xml
-%include  	url file://%{PKGLIB}/smf_enabled.gspec
