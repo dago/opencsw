@@ -1,5 +1,5 @@
 GARNAME      = pixman
-GARVERSION   = 0.12.0
+GARVERSION   = 0.14.0
 CATEGORIES   = lib
 
 DESCRIPTION  = The pixel-manipulation library for X and cairo
@@ -19,10 +19,9 @@ SPKG_DESC_CSWpixmandevel  	= $(DESCRIPTION) development package
 DISTFILES    += $(call admfiles,CSWpixman, )
 DISTFILES    += $(call admfiles,CSWpixmandevel, )
 
+LICENSE = COPYING
+
 PKGFILES_CSWpixmandevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWpixmandevel += $(prefix)/include/.*
-PKGFILES_CSWpixmandevel += $(prefix)/lib/.*\.a
-PKGFILES_CSWpixmandevel += $(prefix)/lib/pkgconfig/.*
 
 REQUIRED_PKGS_CSWpixmandevel = CSWpixman
 #REQUIRED_PKGS_CSWpixman 	 = CSWlibx11
@@ -31,7 +30,8 @@ CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
-CONFIGURE_ARGS = --prefix=/opt/csw --mandir=/opt/csw/share/man --enable-gtk
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --mandir=/opt/csw/share/man --enable-gtk
 
 include gar/category.mk
 
