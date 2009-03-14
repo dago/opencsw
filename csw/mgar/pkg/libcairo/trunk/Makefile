@@ -1,5 +1,5 @@
 GARNAME      = libcairo
-GARVERSION   = 1.8.2
+GARVERSION   = 1.8.6
 CATEGORIES   = lib
 
 DESCRIPTION  = The Cairo 2D Graphics Library
