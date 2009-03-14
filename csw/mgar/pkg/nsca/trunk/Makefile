@@ -22,6 +22,7 @@ SPKG_CLASSES = none cswinitsmf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-nsca-port=5667
+CONFIGURE_ARGS += --localstatedir=/opt/csw/nagios/var
 
 BUILD_TARGETS = nsca
 
