@@ -37,4 +37,4 @@ diff --speed-large-files --minimal -Nru nsca-2.7.2.orig/src/submit_check_result-
 +# in turn transmits the data to the nsca daemon on the central
 +# monitoring server
 +
-+/usr/bin/echo "$1\t$2\t$return_code\t$4" |  /opt/csw/bin/send_nsca my.central.server -c /opt/csw/etc/send_nsca.cfg
++/usr/bin/echo "$1\t$2\t$return_code\t$4" |  /opt/csw/nagios/bin/send_nsca my.central.server -c /opt/csw/nagios/etc/send_nsca.cfg

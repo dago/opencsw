@@ -1,3 +1,0 @@
-P	CSWlibmcrypt         libmcrypt -  GPL replacement for Unix crypt that supports a wide range of algorithms and modes
-P	CSWlibtoolrt         libtool_rt - Generic library support runtime libraries
-P	CSWnagios      nagios nagios network monitoring base package (no plugins)

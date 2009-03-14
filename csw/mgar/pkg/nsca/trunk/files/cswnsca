@@ -7,6 +7,8 @@
 # Modified for OpenCSW by Juergen Arndt 2009-02-08 
 # (derived from svc-nrpe written by Alex Moore)
 
+#FMRI application    # FMRI path for service
+
 CONFIG_FILE=/opt/csw/nagios/etc/nsca.cfg
 BIN_FILE="/opt/csw/nagios/bin/nsca"
 pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
