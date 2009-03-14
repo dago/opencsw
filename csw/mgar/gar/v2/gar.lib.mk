@@ -426,11 +426,11 @@ normal-patch-%:
 	@echo " ==> Creating patch $@"
 	@EXTRACTDIR=$(SCRATCHDIR) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) extract
 	@PATCHDIR=$(SCRATCHDIR)/$(BASEWORKSRC) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) patch
-	@mv $(SCRATCHDIR)/$(BASEWORKSRC) $(WORKSRC).orig
-	@( cd $(WORKDIR); \
+	@mv $(SCRATCHDIR)/$(BASEWORKSRC) $(WORKSRC_FIRSTMOD).orig
+	@( cd $(WORKDIR_FIRSTMOD); \
 		if gdiff --speed-large-files --minimal -Nru $(BASEWORKSRC).orig $(BASEWORKSRC) > gar-base.diff; then :; else \
 			cd $(CURDIR); \
-			mv -f $(WORKDIR)/gar-base.diff $@; \
+			mv -f $(WORKDIR_FIRSTMOD)/gar-base.diff $@; \
 		fi )
 
 ### PATCH FILE TYPE MAPPINGS ###
