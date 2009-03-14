@@ -1,4 +1,4 @@
-7380ffecebd95c6edb317ef861229ebd  download/php-5.2.6.tar.bz2
+280d6cda7f72a4fc6de42fda21ac2db7  download/php-5.2.9.tar.bz2
 e79baa34abe18575a3d0220c21bd5e37  download/php.ini.CSW
 90ae3cef3692d7e566c47d89fe39c43d  download/phpext
 2386fa2c49eb730b6344f49bb5ee0fb1  download/pear.conf.CSW
@@ -6,7 +6,7 @@ de56d3571f4484284d106af158bffc38  download/CSWphp5_ext_enable.sh
 89e79becc9d7698c5c561581f2b098bc  download/CSWphp5_ext_disable.sh
 8139c9c02a2f62bac64041fdd0e90bf6  download/CSWphp5.postinstall
 41ec540885de7c34625768aa1fb9682b  download/fixme.sh
-2b657c95c6abef5f125f19265060f91d  download/configure.diff
+ab08e2ba62667bf13fa236099e433e84  download/configure.diff
 2206431e47c2075c0b9c4a12de5cf791  download/odbc.diff
 230126f76ee6400ccf225bb6a8243532  download/pdopgsql.diff
 13db46097c9686302bebf160e2d26ed2  download/pgsql.diff
