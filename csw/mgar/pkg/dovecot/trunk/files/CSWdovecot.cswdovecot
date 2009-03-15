@@ -2,11 +2,18 @@
 # License is public domain.
 #
 # Taken from http://wiki.dovecot.org/DovecotInit
+# Modified for CSW by Sebastian Kayser
+#
+#FMRI network
 
 DAEMON=/opt/csw/sbin/dovecot
 
 test -x $DAEMON || exit 1
 set -e
+
+CONF=/opt/csw/etc/dovecot/dovecot.conf
+CONF_LOCAL=/etc/opt/csw/dovecot/dovecot.conf
+[ -f $CONF_LOCAL ] && CONF=$CONF_LOCAL
 
 base_dir=`$DAEMON -a|grep '^base_dir: '|sed 's/^base_dir: //'`
 pidfile=$base_dir/master.pid
@@ -20,7 +27,7 @@ fi
 case "$1" in
   start)
     echo -n "Starting Dovecot"
-    $DAEMON
+    $DAEMON -c $CONF
     echo "."
     ;;
   stop)
@@ -47,7 +54,7 @@ case "$1" in
       kill `cat $pidfile`
       sleep 1
     fi
-    $DAEMON
+    $DAEMON -c $CONF
     echo "."
     ;;
   *)

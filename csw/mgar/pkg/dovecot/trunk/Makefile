@@ -1,6 +1,3 @@
-# TODO
-# * Build and package Dovecot Sieve plugin http://wiki.dovecot.org/LDA/Sieve
-
 GARNAME = dovecot
 GARVERSION = 1.1.11
 CATEGORIES = server
@@ -15,7 +12,6 @@ endef
 
 MASTER_SITES = http://dovecot.org/releases/1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWdovecot.preinstall
 
 PACKAGES = CSWdovecot CSWdovecotdevel
 CATALOGNAME_CSWdovecotdevel = dovecot_devel
@@ -23,9 +19,9 @@ CATALOGNAME_CSWdovecotdevel = dovecot_devel
 SPKG_SOURCEURL = http://dovecot.org/
 SPKG_DESC_CSWdovecot = Secure IMAP server
 SPKG_DESC_CSWdovecotdevel = Dovecot secure IMAP server header files
-SPKG_CLASSES_CSWdovecot = none cswcpsampleconf cswinitsmf
+SPKG_CLASSES_CSWdovecot = none cswusergroup cswcpsampleconf cswinitsmf
 
-REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt
+REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
 REQUIRED_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
 REQUIRED_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
 REQUIRED_PKGS_CSWdovecotdevel  = CSWdovecot
@@ -47,25 +43,30 @@ TEST_SCRIPTS	=
 # See http://dovecot.org/list/dovecot/2009-February/037273.html
 PATCHFILES = patch-authcrash.diff
 
+# Override some paths for configure
+localstatedir=/var/opt/csw
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pop3d
 CONFIGURE_ARGS += --with-lda
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-mysql
+CONFIGURE_ARGS += --with-pgsql
 CONFIGURE_ARGS += --with-sqlite
 CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-ssldir=/opt/csw/ssl
+CONFIGURE_ARGS += --with-zlib
+CONFIGURE_ARGS += --with-bzlib
 CONFIGURE_ARGS += --enable-header-install
-CONFIGURE_ARGS += --localstatedir=/var/opt/csw
-CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(GARNAME)
 
-EXTRA_LIB = /opt/csw/mysql5/lib/mysql
-EXTRA_INC = /opt/csw/mysql5/include/mysql
+EXTRA_LIB = /opt/csw/mysql5/lib/mysql /opt/csw/postgresql/lib
+EXTRA_INC = /opt/csw/mysql5/include/mysql /opt/csw/postgresql/include
 
 STRIP_DIRS = $(DESTDIR)$(libexecdir)/dovecot
 
 PROTOTYPE_FILTER  = awk '\
 	$$$$3 ~ /\/init.d\/cswdovecot$$$$/ { $$$$2 = "cswinitsmf" } \
+	$$$$3 ~ /cswusergroup$$$$/ { $$$$2 = "cswusergroup" } \
 	$$$$3 ~ /dovecot.pem.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
 	$$$$3 ~ /dovecot.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
 	$$$$3 == "/opt/csw/ssl/certs" { next } \
@@ -74,21 +75,42 @@ PROTOTYPE_FILTER  = awk '\
 
 include gar/category.mk
 
+# Maybe there is a nicer way to build this via modulations ...
+build-and-install-sieveplugin:
+	@echo
+	@echo [===== NOW BUILDING extra cmusieve plugin =====]
+	@echo
+	@wget -nc http://www.dovecot.org/releases/sieve/dovecot-sieve-1.1.6.tar.gz
+	@gtar xzf dovecot-sieve-1.1.6.tar.gz
+	@(cd dovecot-sieve-1.1.6; \
+		./configure $(DIRPATHS) --with-dovecot=../$(WORKSRC); \
+		gmake; \
+		gmake DESTDIR=$(DESTDIR) install; )
+	@rm -rf dovecot-sieve-1.1.6*
+
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
+post-install-modulated: CSWDOCS = changelog.CSW README.CSW
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: SSLDIR = $(DESTDIR)/opt/csw/ssl
-post-install-modulated:
+post-install-modulated: build-and-install-sieveplugin
 	@ginstall -d $(DOCDEST)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -d $(DESTDIR)$(sysconfdir)/pkg/CSWdovecot
 	@ginstall -d $(SSLDIR)/certs
 	@ginstall -d $(SSLDIR)/private
 	@( cd $(WORKSRC)/doc; SSLDIR=$(SSLDIR) /bin/sh ./mkcert.sh )
 	@mv $(SSLDIR)/certs/dovecot.pem $(SSLDIR)/certs/dovecot.pem.CSW
 	@mv $(SSLDIR)/private/dovecot.pem $(SSLDIR)/private/dovecot.pem.CSW
 	@chmod 400 $(SSLDIR)/private/dovecot.pem.CSW
-	@cp $(DESTDIR)/etc/opt/csw/$(GARNAME)/dovecot-example.conf \
-		$(DESTDIR)/etc/opt/csw/$(GARNAME)/dovecot.conf.CSW
+	@cp $(DESTDIR)$(sysconfdir)/dovecot-example.conf \
+		$(DESTDIR)$(sysconfdir)/dovecot.conf.CSW
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
+	@$(foreach DOC,$(CSWDOCS),\
+		ginstall -m 644 $(FILEDIR)/CSWdovecot.$(DOC) $(DOCDEST);)
+	@cp $(WORKSRC)/doc/mkcert.sh $(DOCDEST)
+	@cp $(WORKSRC)/doc/dovecot-openssl.cnf $(DOCDEST)
 	@ginstall -m 755 $(FILEDIR)/CSWdovecot.cswdovecot  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdovecot
+	@ginstall -m 644 $(FILEDIR)/CSWdovecot.cswusergroup \
+		$(DESTDIR)$(sysconfdir)/pkg/CSWdovecot/cswusergroup
 	@$(MAKECOOKIE)

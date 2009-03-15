@@ -1,0 +1,7 @@
+dovecot (1.1.11) REV=2009.03.15
+
+  * Package adopted again and updated to 1.1.11.
+  * Tested and validated LDAP interopability with PAM. (Closes: #)
+  * TBD ....
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 15 Mar 2009 18:19:59 +0100

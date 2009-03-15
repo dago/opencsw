@@ -1,0 +1,17 @@
+Service user accounts
+=====================
+The CSWdovecot package will create a service user account (dovecot) for you in
+case no user account by this name exists upon installation. This user account
+is required for the dovecot login service (and nothing else).
+
+If you want to use Dovecot for virtual users, you need to create another
+service user account (!= dovecot). For background information, see
+
+  http://wiki.dovecot.org/UserIds
+
+Upgrading
+=========
+For upgrading information from other IMAP servers or previous Dovecot
+versions, see
+
+  http://wiki.dovecot.org/UpgradingDovecot
