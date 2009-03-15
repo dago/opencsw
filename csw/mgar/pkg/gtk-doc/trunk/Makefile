@@ -2,9 +2,11 @@ GARNAME = gtk-doc
 GARVERSION = 1.11
 CATEGORIES = gnome
 
-DESCRIPTION = Brief description
+DESCRIPTION = GTK-Doc is used to document C code.
 define BLURB
-  Long description
+	GTK-Doc is used to document C code. It is typically used to document the
+	public API of libraries, such as the GTK+ and GNOME libraries. But it can
+	also be used to document application code. 
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
