@@ -2,9 +2,10 @@ GARNAME = libgoffice
 GARVERSION = 0.7.3
 CATEGORIES = gnome
 
-DESCRIPTION = Brief description
+DESCRIPTION = Document centric objects library
 define BLURB
-  Long description
+	GOffice is a library of document centric objects and utilities building on
+	top of GLib and Gtk+.
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
