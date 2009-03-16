@@ -1,0 +1,41 @@
+--- libedit/TEST/test.c.o	2009-03-16 17:27:46.460913213 -0500
++++ libedit/TEST/test.c	2009-03-16 17:27:59.468294283 -0500
+@@ -36,7 +36,6 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#include <sys/cdefs.h>
+ #include "compat.h"
+ #ifndef lint
+ __COPYRIGHT("@(#) Copyright (c) 1992, 1993\n\
+--- libedit/Makefile.in.o	2009-03-16 17:34:53.186197841 -0500
++++ libedit/Makefile.in	2009-03-16 17:38:03.934807464 -0500
+@@ -109,17 +109,17 @@
+ 	common.h emacs.h fcns.h help.h vi.h
+ 
+ install: libedit.a libedit.so
+-	${INSTALL} -d ${LIBDIR}
+-	${INSTALL} libedit.a ${LIBDIR}
+-	${INSTALL} libedit.so ${LIBDIR}
+-	${INSTALL} -d ${INCDIR}
+-	${INSTALL} -m 644 histedit.h ${INCDIR}
+-	${INSTALL} -d ${INCDIR}/readline/
+-	${INSTALL} -m 644 readline/readline.h ${INCDIR}/readline/
+-	${INSTALL} -d ${MANDIR}/man3/
+-	${INSTALL} -m 644 editline.3 ${MANDIR}/man3/
+-	${INSTALL} -d ${MANDIR}/man5/
+-	${INSTALL} -m 644 editrc.5 ${MANDIR}/man5/
++	${INSTALL} -d ${DESTDIR}/${LIBDIR}
++	${INSTALL} libedit.a ${DESTDIR}/${LIBDIR}
++	${INSTALL} libedit.so ${DESTDIR}/${LIBDIR}
++	${INSTALL} -d ${DESTDIR}/${INCDIR}
++	${INSTALL} -m 644 histedit.h ${DESTDIR}/${INCDIR}
++	${INSTALL} -d ${DESTDIR}/${INCDIR}/readline/
++	${INSTALL} -m 644 readline/readline.h ${DESTDIR}/${INCDIR}/readline/
++	${INSTALL} -d ${DESTDIR}/${MANDIR}/man3/
++	${INSTALL} -m 644 editline.3 ${DESTDIR}/${MANDIR}/man3/
++	${INSTALL} -d ${DESTDIR}/${MANDIR}/man5/
++	${INSTALL} -m 644 editrc.5 ${DESTDIR}/${MANDIR}/man5/
+ 
+ clean:
+ 	rm -f *.o
