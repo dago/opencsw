@@ -1,0 +1,43 @@
+diff --speed-large-files --minimal -Nru pnp-0.4.13.orig/src/Makefile.in pnp-0.4.13/src/Makefile.in
+--- pnp-0.4.13.orig/src/Makefile.in	2009-02-19 18:28:41.000000000 +0100
++++ pnp-0.4.13/src/Makefile.in	2009-03-04 20:55:35.296449068 +0100
+@@ -9,7 +9,7 @@
+ SRC_INCLUDE=../include
+ 
+ CC=@CC@
+-CFLAGS=@CFLAGS@ @DEFS@ -DNSCORE
++CFLAGS=@CFLAGS@ @DEFS@ -DNSCORE -L/usr/ucblib -R/usr/ucblib -lucb
+ 
+ # Compiler flags for use with Valgrind
+ #CFLAGS=-O0 -g -DHAVE_CONFIG_H -DNSCORE
+@@ -52,7 +52,7 @@
+ 
+ OBJDEPS=
+ 
+-all: npcd npcdmod.o
++all: npcd npcdmod
+ 
+ # Required Objects
+ 
+@@ -87,8 +87,8 @@
+ #          NPCDMOD
+ #
+ ###############################
+-npcdmod.o: npcdmod.c
+-	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o npcdmod.o npcdmod.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS) -fPIC
++npcdmod: npcdmod.c
++	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o npcdmod npcdmod.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS) -fPIC
+ 
+ ###############################
+ #
+@@ -124,8 +124,8 @@
+ 	$(INSTALL) -m 755 $(INSTALL_OPTS) -d $(DESTDIR)$(BINDIR)
+ 	$(INSTALL) -m 755 $(INSTALL_OPTS) -d $(DESTDIR)$(PERFDATA_SPOOL_DIR)
+ 	$(INSTALL) -m 754 $(INSTALL_OPTS) @npcd_name@ $(DESTDIR)$(BINDIR)
+-	$(INSTALL) -m 754 $(INSTALL_OPTS) npcdmod.o $(DESTDIR)$(BINDIR)
++	$(INSTALL) -m 754 $(INSTALL_OPTS) npcdmod $(DESTDIR)$(BINDIR)
+ 
+ strip-post-install:
+ 	$(STRIP) $(DESTDIR)$(BINDIR)/@npcd_name@
+-	$(STRIP) $(DESTDIR)$(BINDIR)/npcdmod.o
++	$(STRIP) $(DESTDIR)$(BINDIR)/npcdmod

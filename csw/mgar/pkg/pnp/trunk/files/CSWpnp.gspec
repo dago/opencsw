@@ -1,0 +1,3 @@
+%var            bitname pnp
+%var            pkgname CSWpnp
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec

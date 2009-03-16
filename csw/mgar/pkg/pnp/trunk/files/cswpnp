@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# Copyright (c) 1992 - 2001 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+#ident  "@(#)pnp       1.19    01/12/05 SMI"
+# Modified for CSW by Alex Moore 2005-12-03
+# 2007-08-18 Add pid file support.
+# 2007-08-19 Fix nagios uid used for pgrep.  Thanks to Will McDonald for this.
+# 2009-03-08 Fix for "user = nagios" and awk
+
+CONFIG_FILE=/etc/opt/csw/pnp.cfg
+if [ ! -f $CONFIG_FILE ] ; then
+    CONFIG_FILE=/opt/csw/nagios/etc/pnp/npcd.cfg
+fi
+BIN_FILE="/opt/csw/nagios/bin/npcd"
+pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
+PNP_USER=`awk '/^user/ { print $NF }' $CONFIG_FILE`
+
+case "$1" in
+'restart')
+        [ -n "`pgrep -x -u 0,1,$PNP_USER npcd`" ] && /usr/bin/kill `head -1 $pidfile`
+        # remove pid file
+        if [ -f "$pidfile" ]; then
+            rm "$pidfile"
+        fi
+        if [ -f $CONFIG_FILE ]; then
+            wait 1
+            $BIN_FILE -c $CONFIG_FILE -d
+        fi
+        ;;
+
+'start')
+        if [ -f $CONFIG_FILE ]; then
+            $BIN_FILE -c $CONFIG_FILE -d
+        fi
+        ;;
+
+'stop') 
+        [ -n "`pgrep -x -u 0,1,$PNP_USER npcd`" ] && /usr/bin/kill `head -1 $pidfile`
+        # remove pid file
+        if [ -f "$pidfile" ]; then
+            rm "$pidfile"
+        fi
+        ;;
+
+*)
+        echo "Usage: $0 { start | stop | restart }"
+        exit 1
+        ;;
+esac
+exit 0
