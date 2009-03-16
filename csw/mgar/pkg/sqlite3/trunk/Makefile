@@ -30,8 +30,8 @@ PKGFILES_CSWsqlite3devel += $(prefix)/lib/pkgconfig/.*
 # Build the 64 bits binaries
 BUILD64                = 1
 NO_ISAEXEC             = 1
-EXTRA_BUILD_ISAS_sparc = sparcv8 sparcv9
-EXTRA_BUILD_ISAS_i386  = i386 amd64 
+EXTRA_BUILD_ISAS_sparc = sparcv9
+EXTRA_BUILD_ISAS_i386  = amd64
 
 # Add some patches to the sources
 PATCHFILES     = gar-base.diff
@@ -40,9 +40,7 @@ PATCHFILES     = gar-base.diff
 TEST_SCRIPTS   = none
 
 # Make configure options
-CONFIGURE_ARGS += --prefix=$(prefix)
-CONFIGURE_ARGS += --mandir=$(mandir)
-CONFIGURE_ARGS += --infodir=$(infodir)
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-threadsafe --disable-debug 
 
 #REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
