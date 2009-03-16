@@ -1,2 +1,5 @@
-c6d2d1996b87b238ad6f73f92225d9a2  download/gnutls-2.6.3.tar.bz2
-d362175027f696f65f81eca9ee7a5bb1  download/CSWgnutls.gspec
+747111ab0d86e7b06a4bb120ba456ad8  download/gnutls-2.6.4.tar.bz2
+073c509902375c40b885f5adc9f7dba9  download/libgnutls-openssl.so.13.i
+02e4011d400d262b8d4b5c7311d8a5b0  download/libgnutls-openssl.so.13.s
+b0eee0d29e3d260a146e626c6ca75b16  download/libgnutls.so.13.i
+76f0d841ec6c4a3612ca2410c793e104  download/libgnutls.so.13.s
