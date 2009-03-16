@@ -33,7 +33,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 REQUIRED_PKGS_CSWgnutls  = CSWgcc4corert CSWgcc4g++rt CSWgcrypt CSWggettextrt
-REQUIRED_PKGS_CSWgnutls += CSWgpgerr CSWlibtasn1 CSWreadline CSWzlib
+REQUIRED_PKGS_CSWgnutls += CSWgpgerr CSWlibtasn1 CSWreadline CSWzlib CSWiconv
 
 include gar/category.mk
 
