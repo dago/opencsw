@@ -1,15 +1,14 @@
-GARNAME = PACKAGE
+GARNAME = mypkg
 GARVERSION = 1.0
-CATEGORIES = CATEGORY
+CATEGORIES = lib
 
-DESCRIPTION = BRIEF DESCRIPTION
+DESCRIPTION = This is a useful library
 define BLURB
-  LONG DESCRIPTION
+  It does stuff with things
 endef
 
 MASTER_SITES = 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpackage,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
