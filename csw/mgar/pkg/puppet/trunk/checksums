@@ -1,0 +1,12 @@
+36f57de5c2e069d04752f0539034227d  download/puppet-0.24.7.tgz
+a8dc43771843b852f506f1795231d6ee  download/CSWpuppet.gspec
+11c352613cf14412565f26dde2dc7578  download/CSWpuppet.preinstall
+b3a1e3bb293bf607368f3479b288f6eb  download/CSWpuppet.postinstall
+2465374a83d4fbe6e01b6eac410e62a8  download/CSWpuppet.preremove
+2b76d69202476fad006d27d26364e59c  download/CSWpuppet.postremove
+ecf6aae7bb8bd8ad9e064ed40674a7be  download/cswpuppetd
+dd10b02543d22bbe66994ef89409f7fd  download/cswpuppetd.xml
+066f9053e1342b19cf83f3f78ce2259c  download/cswpuppetmasterd
+38e007c1906fca70bc95dc45b5892581  download/cswpuppetmasterd.xml
+ecf6aae7bb8bd8ad9e064ed40674a7be  download/svc-cswpuppetd
+066f9053e1342b19cf83f3f78ce2259c  download/svc-cswpuppetmasterd

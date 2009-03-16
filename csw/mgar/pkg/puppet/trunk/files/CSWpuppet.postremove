@@ -1,0 +1,4 @@
+rm /etc/puppet || /bin/true
+rm /opt/csw/etc/puppet || /bin/true
+rm /var/puppet || /bin/true
+rm /opt/csw/var/puppet || /bin/true
