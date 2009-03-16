@@ -31,7 +31,6 @@ PKGFILES_CSWsqlite3devel += $(prefix)/lib/pkgconfig/.*
 BUILD64                = 1
 NO_ISAEXEC             = 1
 EXTRA_BUILD_ISAS_sparc = sparcv9
-EXTRA_BUILD_ISAS_i386  = amd64
 
 # Add some patches to the sources
 PATCHFILES     = gar-base.diff
