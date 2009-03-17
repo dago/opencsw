@@ -18,17 +18,13 @@ DISTFILES    += copyright.html
 UFILES_REGEX = sqlite-(\d+(?:\.\d+)*).tar.gz
 
 # Package description
-SPKG_DESC_CSWsqlite3 	  = The XCB library
+SPKG_DESC_CSWsqlite3 	  = $(DESCRIPTION)
 SPKG_DESC_CSWsqlite3devel = $(SPKG_DESC_CSWsqlite3) development package
 
 # Dynamic prototype
 PKGFILES_CSWsqlite3devel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWsqlite3devel += $(prefix)/include/.*
-PKGFILES_CSWsqlite3devel += $(prefix)/lib/.*\.a
-PKGFILES_CSWsqlite3devel += $(prefix)/lib/pkgconfig/.*
 
 # Build the 64 bits binaries
-BUILD64                = 1
 NO_ISAEXEC             = 1
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
@@ -41,8 +37,6 @@ TEST_SCRIPTS   = none
 # Make configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-threadsafe --disable-debug 
-
-#REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
 
 test-none:
 	@$(MAKECOOKIE)
