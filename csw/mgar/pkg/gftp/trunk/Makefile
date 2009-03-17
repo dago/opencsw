@@ -1,28 +1,22 @@
 GARNAME = gftp
-GARVERSION = 2.0.18
+GARVERSION = 2.0.19
 CATEGORIES = utils
 
-DESCRIPTION = A multithreaded ftp app for X.
+DESCRIPTION = A file transfer client with text and graphical user interfaces.
 define BLURB
-  gFTP is a multithreaded FTP client. It features simultaneous downloads, resuming of interrupted
-  file transfers, support for the FTP, HTTP, and SSH protocols, file transfer queues, downloading of
-  entire directories, FTP and HTTP proxy support, remote directory caching, passive and non-passive
-  file transfers, drag-n-drop support, a very nice connection manager, and more.
+A multithreaded file transfer client supporting FTP, FTPS (control connection only), HTTP, HTTPS, SSH and FSP protocols.
 endef
 
 MASTER_SITES = http://www.gftp.org/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgftp, depend )
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
+PATCHFILES = lock.c.diff
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += LDFLAGS=-lrt
+CONFIGURE_ARGS += LD_OPTIONS=-L/opt/csw/lib
 
 TEST_TARGET = check
 
 include gar/category.mk
-
-pre-configure:
-	( cd $(WORKSRC)/lib/fsplib ; gzip -dc $(GARCHIVEDIR)/fsplib-0.9.tar.gz | tar xvf - ; cp /export/home/jgoerzen/csw/gnome/gftp/files/lock.c.fixed lock.c)
-	@$(MAKECOOKIE)
