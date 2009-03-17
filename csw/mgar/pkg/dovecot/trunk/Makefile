@@ -13,18 +13,25 @@ endef
 MASTER_SITES = http://dovecot.org/releases/1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGES = CSWdovecot CSWdovecotdevel
+PACKAGES = CSWdovecot CSWdovecotdevel CSWdovecot-sieve
 CATALOGNAME_CSWdovecotdevel = dovecot_devel
+CATALOGNAME_CSWdovecot-sieve = dovecot_sieve
+
+# CSWdovecot is not installed on the build farm and as such its dependent
+# packages throw errors when fed to checkpkg
+ENABLE_CHECK=0
 
 SPKG_SOURCEURL = http://dovecot.org/
 SPKG_DESC_CSWdovecot = Secure IMAP server
 SPKG_DESC_CSWdovecotdevel = Dovecot secure IMAP server header files
+SPKG_DESC_CSWdovecot-sieve = Dovecot secure IMAP server sieve plugin
 SPKG_CLASSES_CSWdovecot = none cswusergroup cswcpsampleconf cswinitsmf
 
 REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
 REQUIRED_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
 REQUIRED_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
 REQUIRED_PKGS_CSWdovecotdevel  = CSWdovecot
+REQUIRED_PKGS_CSWdovecot-sieve = CSWdovecot
 
 PREREQUISITE_PKGS  = CSWossldevel CSWosslrt
 PREREQUISITE_PKGS += CSWmysql5devel CSWmysql5rt
@@ -33,6 +40,7 @@ PREREQUISITE_PKGS += CSWsasl
 PREREQUISITE_PKGS += CSWsqlite3 CSWsqlite3dev
 
 PKGFILES_CSWdovecotdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWdovecot-sieve = .*sieve.*
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -62,7 +70,7 @@ CONFIGURE_ARGS += --enable-header-install
 EXTRA_LIB = /opt/csw/mysql5/lib/mysql /opt/csw/postgresql/lib
 EXTRA_INC = /opt/csw/mysql5/include/mysql /opt/csw/postgresql/include
 
-STRIP_DIRS = $(DESTDIR)$(libexecdir)/dovecot
+STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
 
 PROTOTYPE_FILTER  = awk '\
 	$$$$3 ~ /\/init.d\/cswdovecot$$$$/ { $$$$2 = "cswinitsmf" } \
@@ -76,6 +84,8 @@ PROTOTYPE_FILTER  = awk '\
 include gar/category.mk
 
 # Maybe there is a nicer way to build this via modulations ...
+build-and-install-sieveplugin: CONFIGURE_ARGS = $(DIRPATHS)
+build-and-install-sieveplugin: CONFIGURE_ARGS += --with-dovecot=../$(WORKSRC)
 build-and-install-sieveplugin:
 	@echo
 	@echo [===== NOW BUILDING extra cmusieve plugin =====]
@@ -83,9 +93,9 @@ build-and-install-sieveplugin:
 	@wget -nc http://www.dovecot.org/releases/sieve/dovecot-sieve-1.1.6.tar.gz
 	@gtar xzf dovecot-sieve-1.1.6.tar.gz
 	@(cd dovecot-sieve-1.1.6; \
-		./configure $(DIRPATHS) --with-dovecot=../$(WORKSRC); \
-		gmake; \
-		gmake DESTDIR=$(DESTDIR) install; )
+		$(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS); \
+		$(BUILD_ENV) gmake $(BUILD_ARGS); \
+		$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) $(INSTALL_ARGS) install; )
 	@rm -rf dovecot-sieve-1.1.6*
 
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
