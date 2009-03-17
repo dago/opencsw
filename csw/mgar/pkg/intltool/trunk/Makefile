@@ -18,6 +18,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_TARGET = check
 
+REQUIRED_PKGS_CSWintltool = CSWperl
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
