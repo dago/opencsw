@@ -14,11 +14,11 @@ DISTFILES += $(call admfiles,CSWfreeciv, depend prototype )
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=138322
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 
-PATCHFILES = dataio.c.diff
+PATCHFILES = dataio.c.diff configure.diff
 
 TEST_SCRIPTS =
 

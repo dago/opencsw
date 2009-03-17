@@ -1,0 +1,15 @@
+diff --speed-large-files --minimal -Nru freeciv-2.1.8.orig/configure freeciv-2.1.8/configure
+--- freeciv-2.1.8.orig/configure	2008-11-30 14:18:36.000000000 +0100
++++ freeciv-2.1.8/configure	2009-03-17 17:21:06.908829612 +0100
+@@ -10636,11 +10636,6 @@
+ fi
+ echo "$as_me:$LINENO: result: $ac_cv_c99_stdint_h" >&5
+ echo "${ECHO_T}$ac_cv_c99_stdint_h" >&6
+-  if test "${ac_cv_c99_stdint_h}" != "yes"; then
+-    { { echo "$as_me:$LINENO: error: A compiler supporting C99's stdint.h is required" >&5
+-echo "$as_me: error: A compiler supporting C99's stdint.h is required" >&2;}
+-   { (exit 1); exit 1; }; }
+-  fi
+ 
+ 
+ if test "$AUTO_DEPS" = "maybe"; then
