@@ -40,6 +40,7 @@ TEST_TARGET = check
 
 REQUIRED_PKGS_CSWgnutls  = CSWgcc4corert CSWgcc4g++rt CSWgcrypt CSWggettextrt
 REQUIRED_PKGS_CSWgnutls += CSWgpgerr CSWlibtasn1 CSWreadline CSWzlib CSWiconv
+REQUIRED_PKGS_CSWgnutlsdevel = CSWgnutls
 
 PKGFILES_CSWgnutlsdevel = $(PKGFILES_DEVEL)
 
