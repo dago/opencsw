@@ -50,6 +50,8 @@ TEST_SCRIPTS	=
 
 # See http://dovecot.org/list/dovecot/2009-February/037273.html
 PATCHFILES = patch-authcrash.diff
+# Adjust the comment about file paths in the example conf header
+PATCHFILES = patch-exampleconf.diff
 
 # Override some paths for configure
 localstatedir=/var/opt/csw
@@ -83,6 +85,19 @@ PROTOTYPE_FILTER  = awk '\
 
 include gar/category.mk
 
+# Adjust file paths in various files. Not a prerequisite to the remaining build
+# process, but i found it easiest # to put it here and not clutter post-install
+# even more
+pre-install-modulated:
+	@perl -pi -e 's|/etc/ssl|/opt/csw/ssl|' $(WORKSRC)/doc/mkcert.sh
+	@perl -pi -e '\
+		s| /var/run| /var/opt/csw/run|; \
+		s| /etc/ssl| /opt/csw/ssl|; \
+		s| /usr/libexec| /opt/csw/libexec|; \
+		s| /usr/lib/dovecot| /opt/csw/lib/dovecot|; \
+		' $(WORKSRC)/dovecot-example.conf
+	@$(MAKECOOKIE)
+
 # Maybe there is a nicer way to build this via modulations ...
 build-and-install-sieveplugin: CONFIGURE_ARGS = $(DIRPATHS)
 build-and-install-sieveplugin: CONFIGURE_ARGS += --with-dovecot=../$(WORKSRC)
@@ -97,6 +112,7 @@ build-and-install-sieveplugin:
 		$(BUILD_ENV) gmake $(BUILD_ARGS); \
 		$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) $(INSTALL_ARGS) install; )
 	@rm -rf dovecot-sieve-1.1.6*
+	@$(MAKECOOKIE)
 
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
 post-install-modulated: CSWDOCS = changelog.CSW README.CSW

@@ -11,8 +11,8 @@ DAEMON=/opt/csw/sbin/dovecot
 test -x $DAEMON || exit 1
 set -e
 
-CONF=/opt/csw/etc/dovecot/dovecot.conf
-CONF_LOCAL=/etc/opt/csw/dovecot/dovecot.conf
+CONF=/opt/csw/etc/dovecot.conf
+CONF_LOCAL=/etc/opt/csw/dovecot.conf
 [ -f $CONF_LOCAL ] && CONF=$CONF_LOCAL
 
 base_dir=`$DAEMON -a|grep '^base_dir: '|sed 's/^base_dir: //'`
@@ -26,36 +26,32 @@ fi
 
 case "$1" in
   start)
-    echo -n "Starting Dovecot"
+    echo "Starting Dovecot"
     $DAEMON -c $CONF
-    echo "."
     ;;
   stop)
     if test $running = yes; then
       echo "Stopping Dovecot"
       kill `cat $pidfile`
-      echo "."
     else
       echo "Dovecot is already stopped."
     fi
     ;;
   reload)
     if test $running = yes; then
-      echo -n "Reloading Dovecot configuration"
+      echo "Reloading Dovecot configuration"
       kill -HUP `cat $pidfile`
-      echo "."
     else
       echo "Dovecot isn't running."
     fi
     ;;
   restart|force-reload)
-    echo -n "Restarting Dovecot"
+    echo "Restarting Dovecot"
     if test $running = yes; then
       kill `cat $pidfile`
       sleep 1
     fi
     $DAEMON -c $CONF
-    echo "."
     ;;
   *)
     echo "Usage: /etc/init.d/dovecot {start|stop|reload|restart|force-reload}" >&2
