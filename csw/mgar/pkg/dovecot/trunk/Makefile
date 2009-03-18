@@ -50,8 +50,10 @@ TEST_SCRIPTS	=
 
 # See http://dovecot.org/list/dovecot/2009-February/037273.html
 PATCHFILES = patch-authcrash.diff
+# See http://dovecot.org/list/dovecot/2009-March/038201.html
+PATCHFILES += patch-enosys.diff
 # Adjust the comment about file paths in the example conf header
-PATCHFILES = patch-exampleconf.diff
+PATCHFILES += patch-exampleconf.diff
 
 # Override some paths for configure
 localstatedir=/var/opt/csw

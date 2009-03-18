@@ -1,0 +1,16 @@
+diff --speed-large-files --minimal -Nru dovecot-1.1.11.orig/dovecot-example.conf dovecot-1.1.11/dovecot-example.conf
+--- dovecot-1.1.11.orig/dovecot-example.conf	2009-01-26 02:12:41.000000000 +0100
++++ dovecot-1.1.11/dovecot-example.conf	2009-03-18 00:26:59.345199088 +0100
+@@ -10,10 +10,8 @@
+ # value inside quotes, eg.: key = "# char and trailing whitespace  "
+ 
+ # Default values are shown for each setting, it's not required to uncomment
+-# any of the lines. Exception to this are paths, they're just examples with
+-# the real defaults being based on configure options. The paths listed here
+-# are for configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+-# --with-ssldir=/etc/ssl
++# any of the lines. The paths have been modified to reflect the OpenCSW
++# file system layout.
+ 
+ # Base directory where to store runtime data.
+ #base_dir = /var/run/dovecot/

@@ -1,0 +1,12 @@
+--- a/src/lib/mkdir-parents.c	Wed Mar 18 13:47:58 2009 -0400
++++ b/src/lib/mkdir-parents.c	Wed Mar 18 14:10:08 2009 -0400
+@@ -18,7 +18,7 @@ int mkdir_parents(const char *path, mode
+ 
+ 		   ENOSYS check is for NFS mount points.
+ 		*/
+-		if (errno == EISDIR && errno == ENOSYS)
++		if (errno == EISDIR || errno == ENOSYS)
+ 			errno = EEXIST;
+ 		return -1;
+ 	} else {
+
