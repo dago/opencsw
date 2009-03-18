@@ -11,17 +11,12 @@ MASTER_SITES = http://download.berlios.de/hatari/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWhatari, depend )
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = gpl.txt
 PATCHFILES = stdint.h.diff
 GARCOMPILER = GNU
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS) LIBS='-lm -lsocket'
-BUILD_ARGS = LD_OPTIONS=-L/opt/csw/lib
-
+BUILD_ARGS = LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
 include gar/category.mk
