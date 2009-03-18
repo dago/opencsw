@@ -1,55 +1,38 @@
-GARNAME = gd
-GARVERSION = 2.0.35
+GARNAME = xmlrcp-c
+GARVERSION = 1.06.32
 CATEGORIES = lib
 
-DESCRIPTION = A library used for dynamic image creation
+DESCRIPTION = A lightweight RPC library based on XML and HTTP.
 define BLURB
-	GD is an open source code library for the dynamic creation of 
-	images by programmers. GD creates PNG, JPEG and GIF images, 
-	among other formats. GD is commonly used to generate charts, 
-	graphics, thumbnails, and most anything else, on the fly. 
-	While not restricted to use on the web, the most common 
-	applications of GD involve web site development.
+	It's a spec and a set of implementations that allow software 
+	running on disparate operating systems, running in different 
+	environments to make procedure calls over the Internet.
+	It's remote procedure calling using HTTP as the transport and 
+	XML as the encoding. XML-RPC is designed to be as simple as possible, 
+	while allowing complex data structures to be transmitted, 
+	processed and returned.
 endef
 
-MASTER_SITES = http://www.libgd.org/releases/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += fixme.sh
+MASTER_SITES = $(SF_MIRRORS)
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=16847
+SPKG_SOURCEURL = http://xmlrpc-c.sourceforge.net
+DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
-PACKAGES = CSWgd
-CATALOGNAME_CSWgd = gd
+PACKAGES = CSWxmlrpc-c
+CATALOGNAME_CSWxmlrpc-c = xmlrpc_c
 SPKG_DESC_CSWgd = $(DESCRIPTION)
 
-PATCHFILES = Makefile.diff
+#PATCHFILES = 
 
-REQUIRED_PKGS_CSWgd  = CSWexpat CSWfconfig CSWftype2 CSWiconv 
-REQUIRED_PKGS_CSWgd += CSWjpeg CSWpng CSWxpm CSWzlib
+#REQUIRED_PKGS_CSWxmlrpc-c  = 
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
-BUILD64 = 1
-NO_ISAEXEC = 1
+#BUILD64 = 1
+#NO_ISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
-CONFIGURE_ARGS += --with-png=$(prefix)
-CONFIGURE_ARGS += --with-freetype=$(prefix)
-CONFIGURE_ARGS += --with-fontconfig=$(prefix)
-CONFIGURE_ARGS += --with-jpeg=$(prefix)
-CONFIGURE_ARGS += --with-xpm=$(prefix)
-CONFIGURE_ARGS += --disable-fast-install
-
-post-configure-modulated:
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	$(DONADA)
-
-## There are no tests for this
-TEST_SCRIPTS = skip
-
-test-skip:
-	$(DONADA)
 
 include gar/category.mk
