@@ -32,6 +32,7 @@ for mk in $(gfind ${BASEPATH} -name Makefile -print); do
         fixpath=$(gecho $file |gsed 's/\//\\\//g')
         gsed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >Makefile.new
         gmv Makefile.new ${mk}
+        gchmod +x ${mk}
     done
 done
 
@@ -39,11 +40,13 @@ done
 for lt in $(gfind ${BASEPATH} -name libtool -print); do
     gsed "/for search_ext in .*\.la/s/\.la//" ${lt} >${lt}.new
     gmv ${lt}.new ${lt}
+    gchmod +x ${lt}
 done
 
 LTMAIN=$(gfind ${BASEPATH} -name ltmain.sh -print)
 if [ -f ${LTMAIN} ]; then
     gsed "/for search_ext in .*\.la/s/\.la//" ${LTMAIN} >${LTMAIN}.new
     gmv ${LTMAIN}.new ${LTMAIN}
+    gchmod +x ${LTMAIN}
 fi
 
