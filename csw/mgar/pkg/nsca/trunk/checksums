@@ -1,10 +1,10 @@
 33a98e7975f633a9489d7a8938ed6131  download/nsca-2.7.2.tar.gz
 82f1144c12dc6247524609dbeefc3023  download/CSWnsca.gspec
-22cc4e3984d0627708f954c39fa6a22a  download/CSWnsca.prototype
+8dfc4283d41a0c127a00170ab285c18d  download/CSWnsca.prototype
 1886b15eafd2e2a5a4b230918960ea9a  download/CSWnsca.checkinstall
 7fef893e65bb68bc0762434dbeace713  download/CSWnsca.preinstall
-b82767ed7ab002fea4b3a4395511c93c  download/CSWsendnsca.gspec
-49309205ad3d77c99f9bd469cc3860d2  download/CSWsendnsca.prototype
+0f458cf358b1aab192c02fd0d37b1220  download/CSWsendnsca.gspec
+67d4566b83bad9e981bae7e889217c85  download/CSWsendnsca.prototype
 8bf9882f3115e8514ae6d9a866397c71  download/CSWsendnsca.preinstall
-e2ea854aa2df24d432ba37ae614f9fa4  download/cswnsca
+55a1c5523b2fe1ee66b45a2807e80bd6  download/cswnsca
 08b769c5511342dd03fa01fea44cb260  download/submit_check_results.diff
