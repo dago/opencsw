@@ -1,0 +1,33 @@
+--- xmlrpc-c-1.06.32/src/Makefile.o	2009-03-18 15:28:27.199486556 -0500
++++ xmlrpc-c-1.06.32/src/Makefile	2009-03-18 15:29:11.545130838 -0500
+@@ -145,7 +145,7 @@
+ libxmlrpc_client.la: $(LIBXMLRPC_CLIENT_OBJS) $(TRANSPORT_OBJS)
+ 	$(LIBTOOL) --mode=link $(CCLD) -o $@ $(LIBLDFLAGS) \
+ 	  $(LIBXMLRPC_CLIENT_OBJS) $(TRANSPORT_OBJS) \
+-	  $(LIBXMLRPC_CLIENT_LIBDEP) $(TRANSPORT_LIBDEP) \
++	  $(LIBXMLRPC_CLIENT_LIBDEP) $(TRANSPORT_LIBDEP)
+ 
+ libxmlrpc_server.la: $(LIBXMLRPC_SERVER_OBJS)
+ 	$(LIBTOOL) --mode=link $(CCLD) -o $@ $(LIBLDFLAGS) \
+--- xmlrpc-c-1.06.32/tools/xml-rpc-api2cpp/Makefile.o	2009-03-18 16:33:30.751515171 -0500
++++ xmlrpc-c-1.06.32/tools/xml-rpc-api2cpp/Makefile	2009-03-18 16:33:01.993010353 -0500
+@@ -19,7 +19,7 @@
+ 
+ LDFLAGS = $(LADD)
+ 
+-LDLIBS = -Lblddir/src/cpp -lxmlrpc_cpp -lxmlrpc_server $(CLIENT_LDLIBS)
++LDLIBS = -Lblddir/src/cpp -lxmlrpc_cpp -Lblddir/src/.libs -lxmlrpc_server $(CLIENT_LDLIBS)
+ 
+ PROGS :=
+ 
+--- xmlrpc-c-1.06.32/GNUmakefile.o	2009-03-18 17:17:49.128184463 -0500
++++ xmlrpc-c-1.06.32/GNUmakefile	2009-03-18 17:18:32.527139668 -0500
+@@ -7,7 +7,7 @@
+ 
+ include $(SRCDIR)/Makefile.config
+ 
+-SUBDIRS = include lib src tools examples
++SUBDIRS = include lib src tools 
+ 
+ PROGRAMS_TO_INSTALL = xmlrpc-c-config
+ 

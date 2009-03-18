@@ -1,4 +1,4 @@
-GARNAME = xmlrcp-c
+GARNAME = xmlrpc-c
 GARVERSION = 1.06.32
 CATEGORIES = lib
 
@@ -20,9 +20,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
 PACKAGES = CSWxmlrpc-c
 CATALOGNAME_CSWxmlrpc-c = xmlrpc_c
-SPKG_DESC_CSWgd = $(DESCRIPTION)
+SPKG_DESC_CSWxmlrpc-c = $(DESCRIPTION)
 
-#PATCHFILES = 
+PATCHFILES = makefix.diff
 
 #REQUIRED_PKGS_CSWxmlrpc-c  = 
 
@@ -33,6 +33,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 #BUILD64 = 1
 #NO_ISAEXEC = 1
 
+TEST_TARGET = check
+
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-libxml2-backend
 
 include gar/category.mk
+
+
