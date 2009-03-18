@@ -1,32 +1,16 @@
 diff --speed-large-files --minimal -Nru gftp-2.0.19.orig/lib/fsplib/lock.c gftp-2.0.19/lib/fsplib/lock.c
 --- gftp-2.0.19.orig/lib/fsplib/lock.c	2008-11-29 13:47:18.000000000 +0100
-+++ gftp-2.0.19/lib/fsplib/lock.c	2009-03-17 04:22:26.936537459 +0100
-@@ -52,7 +52,7 @@
-   int val;
-   struct semid_ds *buf;
-   unsigned short int *array;
--  struct seminfo *__buf;
-+//  struct seminfo *__buf;
- };
- #endif
- 
-@@ -91,7 +91,7 @@
++++ gftp-2.0.19/lib/fsplib/lock.c	2009-03-18 04:46:10.916531020 +0100
+@@ -91,7 +91,11 @@
    mode_t omask;
    key_t lock_key;
    int fd;
 -  union semun su;
-+  union semun;
++  union semun {
++	int val;
++	struct semid_ds *buf;
++	ushort *array;
++  } su;
    struct sembuf sem;
  
    make_key_string(lock,server_addr,server_port);
-@@ -123,8 +123,8 @@
- 	  return -1;
-       }
-       /* we need to init this semaphore */
--      su.val=1;
--      if(semctl(lock->lock_sem,0,SETVAL,su) == -1)
-+    //  arg.val=1;
-+      if(semctl(lock->lock_sem,0,SETVAL) == -1)
-       {
- 	  perror("semctl setval");
- 	  return -1;
