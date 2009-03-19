@@ -3,7 +3,7 @@ GARVERSION = 1.5.0
 
 CATEGORIES = x11
 
-DESCRIPTION = Input extension headers
+DESCRIPTION = Input extension headers from X.org project
 define BLURB
 This provides the input extension headers from modular X.org X11 project
 endef

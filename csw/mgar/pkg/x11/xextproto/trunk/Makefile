@@ -5,7 +5,7 @@ CATEGORIES = x11
 
 DESCRIPTION = XExt extension headers from X.org
 define BLURB
-This provides the XExt extension headers from modular Xorg X11
+This provides the XExt extension headers from modular X.org X11
 endef
 
 MASTER_SITES = $(X11_PROTO_MASTER_SITE)
