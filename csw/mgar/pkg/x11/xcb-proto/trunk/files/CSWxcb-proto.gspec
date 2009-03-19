@@ -1,6 +1,5 @@
 %var            bitname xcbproto
 %var            pkgname CSWxcbproto
-%var			arch	all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      
 
