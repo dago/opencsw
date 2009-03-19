@@ -7,7 +7,7 @@ define BLURB
   Nagios is a powerful, enterprise-class host, service, application, and network monitoring program. Designed to be fast, flexible, and rock-solid stable. Nagios runs on *NIX hosts and can monitor Windows, Linux/Unix/BSD, Netware, and network devices.
 endef
 
-MASTER_SITES =$(SF_MIRRORS)
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnagios,checkinstall preinstall preremove prototype )
 DISTFILES += cswnagios
@@ -26,22 +26,18 @@ REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWnrpepl
 
 SPKG_CLASSES = none cswinitsmf
 
+prefix = $(BUILD_PREFIX)/nagios
+libexecdir = $(BUILD_PREFIX)/libexec/nagios-plugins
+
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --prefix=/opt/csw/nagios
-CONFIGURE_ARGS += --exec-prefix=/opt/csw/nagios
+CONFIGURE_ARGS += --prefix=$(prefix)
+CONFIGURE_ARGS += --exec-prefix=$(exec_prefix)
 CONFIGURE_ARGS += --with-command-user=nagios
 CONFIGURE_ARGS += --with-command-group=nagios
-CONFIGURE_ARGS += --with-httpd-conf=/opt/csw/nagios/etc
+CONFIGURE_ARGS += --with-httpd-conf=$(sysconfdir)
 CONFIGURE_ARGS += --enable-embedded-perl
 
-sysconfdir ?= $(prefix)/nagios/etc
-localstatedir ?= $(prefix)/nagios/var
-bindir ?= $(prefix)/nagios/bin
-sbindir ?= $(prefix)/nagios/sbin
-libexecdir ?= $(prefix)/libexec/nagios-plugins
-datadir ?= $(prefix)/nagios/share
-
-EXTRA_LIB = /opt/csw/lib
+EXTRA_LIB = $(BUILD_PREFIX)/lib
 
 BUILD_ARGS = all
 
@@ -51,14 +47,14 @@ INSTALL_ARGS += install-init
 INSTALL_ARGS += install-config
 INSTALL_ARGS += install-commandmode
 
+
 include gar/category.mk
 
 DOCS = Changelog INSTALLING README UPGRADING
-DOCDEST = $(DESTDIR)$(prefix)/share/doc/nagios
+DOCDEST = $(DESTDIR)$(BUILD_PREFIX)/share/doc/nagios
 HTTPD_CONF = $(DESTDIR)$(sysconfdir)
 
 post-install-modulated:
-	@echo $(DOCDEST)
 	@ginstall -m 755 -d  $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 644 $(WORKSRC)/LICENSE $(DOCDEST)
@@ -66,4 +62,3 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswnagios $(DESTDIR)/etc/opt/csw/init.d/cswnagios
 	@$(MAKECOOKIE)
-
