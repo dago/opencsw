@@ -22,9 +22,9 @@ PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (emp
 				# necessary, so ginstall doesn't get -o and -g options
 
 REQUIRED_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
-REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWnrpeplugin CSWcswclassutils
+REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWcswclassutils
 
-SPKG_CLASSES = none cswinitsmf
+SPKG_CLASSES = none cswpreserveconf cswinitsmf
 
 prefix = $(BUILD_PREFIX)/nagios
 libexecdir = $(BUILD_PREFIX)/libexec/nagios-plugins
@@ -41,24 +41,40 @@ EXTRA_LIB = $(BUILD_PREFIX)/lib
 
 BUILD_ARGS = all
 
+ENABLE_CHECK = 0
+
 TEST_TARGET = none
 
 INSTALL_ARGS += install-init
-INSTALL_ARGS += install-config
+#INSTALL_ARGS += install-config
 INSTALL_ARGS += install-commandmode
-
 
 include gar/category.mk
 
 DOCS = Changelog INSTALLING README UPGRADING
 DOCDEST = $(DESTDIR)$(BUILD_PREFIX)/share/doc/nagios
 HTTPD_CONF = $(DESTDIR)$(sysconfdir)
+CFGDIR = $(prefix)/etc
 
 post-install-modulated:
-	@ginstall -m 755 -d  $(DOCDEST)
+	@ginstall -m 755 -d $(DOCDEST)
+	@ginstall -m 755 -d $(HTTPD_CONF)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 644 $(WORKSRC)/LICENSE $(DOCDEST)
 	@ginstall -m 644 $(WORKSRC)/sample-config/httpd.conf $(HTTPD_CONF)/httpd-nagios.conf
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswnagios $(DESTDIR)/etc/opt/csw/init.d/cswnagios
+	@ginstall -m 775 -d $(DESTDIR)$(CFGDIR)
+	@ginstall -m 775 -d $(DESTDIR)$(CFGDIR)/objects
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/nagios.cfg $(DESTDIR)$(CFGDIR)/nagios.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/cgi.cfg $(DESTDIR)$(CFGDIR)/cgi.cfg.CSW
+	@ginstall -b -m 660 $(WORKSRC)/sample-config/resource.cfg $(DESTDIR)$(CFGDIR)/resource.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/templates.cfg $(DESTDIR)$(CFGDIR)/objects/templates.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/commands.cfg $(DESTDIR)$(CFGDIR)/objects/commands.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/contacts.cfg $(DESTDIR)$(CFGDIR)/objects/contacts.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/timeperiods.cfg $(DESTDIR)$(CFGDIR)/objects/timeperiods.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/localhost.cfg $(DESTDIR)$(CFGDIR)/objects/localhost.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/windows.cfg $(DESTDIR)$(CFGDIR)/objects/windows.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/printer.cfg $(DESTDIR)$(CFGDIR)/objects/printer.cfg.CSW
+	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/switch.cfg $(DESTDIR)$(CFGDIR)/objects/switch.cfg.CSW
 	@$(MAKECOOKIE)
