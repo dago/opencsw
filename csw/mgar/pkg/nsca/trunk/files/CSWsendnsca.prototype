@@ -1,7 +1,7 @@
 1 d none /opt/csw/bin 0755 root bin
 1 f none /opt/csw/bin/send_nsca 0755 root bin
 1 d none /opt/csw/etc 0755 root bin
-1 f none /opt/csw/etc/send_nsca.cfg-sample 0644 root bin
+1 f cswpreserveconf /opt/csw/etc/send_nsca.cfg.CSW 0644 root bin
 1 d none /opt/csw/share/doc/send_nsca 0755 root bin
 1 f none /opt/csw/share/doc/send_nsca/Changelog 0644 root bin
 1 f none /opt/csw/share/doc/send_nsca/LEGAL 0644 root bin
