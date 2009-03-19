@@ -17,8 +17,8 @@ SPKG_SOURCEURL = http://www.lilotux.net/~mikael/mcabber/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWncurses CSWosslrt CSWotr
-REQUIRED_PKGS = CSWaspell CSWggettextrt CSWglib2 
-REQUIRED_PKGS = CSWgpgerr CSWgpgme CSWiconv
+REQUIRED_PKGS += CSWaspell CSWggettextrt CSWglib2 
+REQUIRED_PKGS += CSWgpgerr CSWgpgme CSWiconv
 
 TEST_SCRIPTS = 
 
@@ -43,7 +43,7 @@ EXTRA_INC = /opt/csw/lib/ncurses
 PATCHFILES = patch-inline.diff
 
 # Solaris 8 doesn't have iswlbank(), provide replacement macro
-PATCHFILES = patch-iswblank.diff
+PATCHFILES += patch-iswblank.diff
 
 include gar/category.mk
 
@@ -53,3 +53,10 @@ pre-build-modulated:
 		$(WORKSRC)/Makefile \
 		$(WORKSRC)/src/Makefile \
 		$(WORKSRC)/libjabber/Makefile
+
+post-install-modulated:
+	@perl -pi -e '\
+		s|/usr/share/ssl/certs/ca-bundle.crt|/opt/csw/ssl/certs/ca-certificates.crt|;' \
+		$(WORKSRC)/mcabberrc.example
+	@ginstall -d $(DESTDIR)$(docdir)$(GARNAME)
+	@cp $(WORKSRC)/mcabberrc.example $(DESTDIR)$(docdir)$(GARNAME)

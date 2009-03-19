@@ -1,5 +1,5 @@
---- mcabber-0.9.9/src/histolog.c	2008-10-09 22:17:52.000000000 +0200
-+++ work/build-isa-sparcv8/mcabber-0.9.9/src/histolog.c	2009-03-08 16:35:25.758629698 +0100
+--- mcabber-0.9.9.orig/src/histolog.c	2008-10-09 22:17:52.000000000 +0200
++++ mcabber-0.9.9/src/histolog.c	2009-03-08 16:35:25.758629698 +0100
 @@ -398,7 +398,7 @@
    return UseFileLogging;
  }
@@ -18,9 +18,8 @@
          enum imstatus status, const char *status_msg)
  {
    // XXX Check status value?
-diff -ur mcabber-0.9.9/src/jabglue.c work/build-isa-sparcv8/mcabber-0.9.9/src/jabglue.c
---- mcabber-0.9.9/src/jabglue.c	2008-10-09 22:17:52.000000000 +0200
-+++ work/build-isa-sparcv8/mcabber-0.9.9/src/jabglue.c	2009-03-08 15:49:11.552806445 +0100
+--- mcabber-0.9.9.orig/src/jabglue.c	2008-10-09 22:17:52.000000000 +0200
++++ mcabber-0.9.9/src/jabglue.c	2009-03-08 15:49:11.552806445 +0100
 @@ -171,7 +171,7 @@
    jc = NULL;
  }
@@ -54,9 +53,8 @@ diff -ur mcabber-0.9.9/src/jabglue.c work/build-isa-sparcv8/mcabber-0.9.9/src/ja
  {
    jb_setstatus(mywantedstatus, NULL, mystatusmsg, FALSE);
  }
-diff -ur mcabber-0.9.9/src/screen.c work/build-isa-sparcv8/mcabber-0.9.9/src/screen.c
---- mcabber-0.9.9/src/screen.c	2008-10-09 22:17:52.000000000 +0200
-+++ work/build-isa-sparcv8/mcabber-0.9.9/src/screen.c	2009-03-08 16:45:11.929482636 +0100
+--- mcabber-0.9.9.orig/src/screen.c	2008-10-09 22:17:52.000000000 +0200
++++ mcabber-0.9.9/src/screen.c	2009-03-08 16:45:11.929482636 +0100
 @@ -155,8 +156,8 @@
                         unsigned int prefix_flags, int force_show,
                         unsigned mucnicklen);
@@ -112,17 +110,3 @@ diff -ur mcabber-0.9.9/src/screen.c work/build-isa-sparcv8/mcabber-0.9.9/src/scr
  {
    return multimode;
  }
-diff -ur mcabber-0.9.9/src/screen.h work/build-isa-sparcv8/mcabber-0.9.9/src/screen.h
---- mcabber-0.9.9/src/screen.h	2008-10-09 22:17:52.000000000 +0200
-+++ work/build-isa-sparcv8/mcabber-0.9.9/src/screen.h	2009-03-08 16:31:44.043214331 +0100
-@@ -20,6 +20,10 @@
- //static void spellcheck(char*, char*);
- #endif
- 
-+#ifndef HAVE_ISWBLANK
-+#define iswblank(wc) iswctype(wc, wctype("blank"))
-+#endif
-+
- #include "hbuf.h"
- #include "logprint.h"
- 

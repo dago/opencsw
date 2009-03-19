@@ -1,6 +1,5 @@
-diff -ur mcabber-0.9.9/src/screen.h work/build-isa-sparcv8/mcabber-0.9.9/src/screen.h
---- mcabber-0.9.9/src/screen.h	2008-10-09 22:17:52.000000000 +0200
-+++ work/build-isa-sparcv8/mcabber-0.9.9/src/screen.h	2009-03-08 16:31:44.043214331 +0100
+--- mcabber-0.9.9.orig/src/screen.h	2008-10-09 22:17:52.000000000 +0200
++++ mcabber-0.9.9/src/screen.h	2009-03-08 16:31:44.043214331 +0100
 @@ -20,6 +20,10 @@
  //static void spellcheck(char*, char*);
  #endif
