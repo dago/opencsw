@@ -20,6 +20,9 @@ DISTNAME = stable
 NOCHECKSUM = stable
 SVNHTTP_CO_ARGS = -r $(SVN_REVISION) --no-auth-cache --username guest --password guest
 
+LICENSE = doc/COPYING
+DOCFILES += CREDITS DEVELOPING HISTORY INSTALL SECURITY TESTING TODO
+
 SPKG_SOURCEURL = http://xmlrpc-c.sourceforge.net
 
 PACKAGES = CSWxmlrpc-c
