@@ -1,5 +1,5 @@
 GARNAME = git
-GARVERSION = 1.6.2
+GARVERSION = 1.6.2.1
 CATEGORIES = devel
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
@@ -65,12 +65,17 @@ PATCHFILES += 0005-configure-asciidoc-version-test-cleanup.patch
 PATCHFILES += 0006-configure-make-iconv-tests-aware-of-user-arguments.patch
 PATCHFILES += 0007-configure-rework-pthread-handling-to-allow-for-user.patch
 
-PKGFILES_CSWgitsvn = .*svn.*
-PKGFILES_CSWgitgui = .*git-gui.* .*git-citool.*
-PKGFILES_CSWgitk = .*gitk.*
+fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
+define _git_files
+$(foreach d,$(fdirs),$(d)/.*$(1).*) $(sharedstatedir)/$(1).*
+endef
+
+PKGFILES_CSWgitsvn = $(call _git_files,git-svn)
+PKGFILES_CSWgitgui = $(call _git_files,git-gui) $(call _git_files,git-citool)
+PKGFILES_CSWgitk = $(call _git_files,gitk)
+PKGFILES_CSWgitcvs = $(foreach d,$(fdirs),$(d)/.*cvs.*)
 PKGFILES_CSWgitemacs = .*emacs.*
-PKGFILES_CSWgitcvs = .*cvs.*
-PKGFILES_CSWgitdoc = $(PKGFILES_DOC)
+PKGFILES_CSWgitdoc = $(docdir)/.*
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
