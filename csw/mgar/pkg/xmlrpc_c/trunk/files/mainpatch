@@ -1,0 +1,169 @@
+diff -ru ../stable.orig/config.mk.in stable/config.mk.in
+--- ../stable.orig/config.mk.in	2009-03-19 06:00:07.627856581 +0100
++++ stable/config.mk.in	2009-03-19 09:12:13.567567079 +0100
+@@ -187,6 +187,7 @@
+   # Solaris compiler (Sun C 5.5) can't take multiple ld options as
+   # -Wl,-a,-b .  Ld sees -a,-b in that case.
+   LDFLAGS_SHLIB = -Wl,-Bdynamic -Wl,-G -Wl,-h -Wl,$(SONAME)
++  CXXLDFLAGS_SHLIB = -Bdynamic -G -h $(SONAME)
+   CFLAGS_SHLIB = -Kpic
+ endif
+ 
+diff -ru ../stable.orig/lib/libutil/select.c stable/lib/libutil/select.c
+--- ../stable.orig/lib/libutil/select.c	2009-03-19 05:59:43.875873563 +0100
++++ stable/lib/libutil/select.c	2009-03-19 08:50:30.335123806 +0100
+@@ -1,4 +1,6 @@
++#ifndef __sun
+ #define _XOPEN_SOURCE 600  /* Get pselect() in <sys/select.h> */
++#endif
+ 
+ #ifdef WIN32
+ #include <winsock.h>
+diff -ru ../stable.orig/src/cpp/Makefile stable/src/cpp/Makefile
+--- ../stable.orig/src/cpp/Makefile	2009-03-19 05:58:59.910486603 +0100
++++ stable/src/cpp/Makefile	2009-03-19 09:13:04.787229910 +0100
+@@ -8,6 +8,8 @@
+ 
+ include $(BLDDIR)/config.mk
+ 
++LDFLAGS_SHLIB =$(CXXLDFLAGS_SHLIB)
++
+ default: all
+ 
+ # libxmlrpc_cpp is the legacy C++ wrapper library.  The others are the
+@@ -167,6 +169,8 @@
+    -L$(LIBXMLRPC_ABYSS_DIR) -lxmlrpc_abyss \
+    -L$(LIBXMLRPC_UTIL_DIR) -lxmlrpc_util \
+ 
++LIBXMLRPC_SERVER_CGIPP_SH = $(call shlibfn, libxmlrpc_server_cgi++)
++
+ $(LIBXMLRPC_SERVER_CGIPP_SH): $(LIBXMLRPC_SERVER_CGIPP_MODS:%=%.osh) \
+   $(call shliblefn, libxmlrpc_server++) \
+   $(call shliblefn, lib$(LIBXMLRPCPP_NAME)) \
+diff -ru ../stable.orig/src/cpp/client.cpp stable/src/cpp/client.cpp
+--- ../stable.orig/src/cpp/client.cpp	2009-03-19 05:58:59.244697817 +0100
++++ stable/src/cpp/client.cpp	2009-03-19 08:50:30.390788638 +0100
+@@ -456,7 +456,7 @@
+ 
+ 
+ void
+-clientXmlTransport::finishAsync(xmlrpc_c::timeout) {
++clientXmlTransport::finishAsync(xmlrpc_c::timeout const) {
+ 
+     // Since our start() does the whole thing, there's nothing for
+     // us to do.
+@@ -504,7 +504,7 @@
+ 
+ 
+ void
+-clientXmlTransport::setInterrupt(int *) {
++clientXmlTransport::setInterrupt(int * const) {
+ 
+     throwf("The client XML transport is not interruptible");
+ }
+@@ -896,7 +896,7 @@
+ 
+ 
+ void
+-client_xml::setInterrupt(int * const interruptP) {
++client_xml::setInterrupt(int * interruptP) {
+ 
+     this->implP->transportP->setInterrupt(interruptP);
+ }
+diff -ru ../stable.orig/src/cpp/libwww.cpp stable/src/cpp/libwww.cpp
+--- ../stable.orig/src/cpp/libwww.cpp	2009-03-19 05:58:58.921926116 +0100
++++ stable/src/cpp/libwww.cpp	2009-03-19 08:50:30.416995305 +0100
+@@ -141,7 +141,7 @@
+ }
+ 
+ #else  // MUST_BUILD_LIBWWW_CLIENT
+- clientXmlTransport_libwww::clientXmlTransport_libwww(string, string) {
++ clientXmlTransport_libwww::clientXmlTransport_libwww(string const, string const) {
+ 
+     throw(error("There is no Libwww client XML transport "
+                 "in this XML-RPC client library"));
+diff -ru ../stable.orig/src/cpp/packetsocket.cpp stable/src/cpp/packetsocket.cpp
+--- ../stable.orig/src/cpp/packetsocket.cpp	2009-03-19 05:58:59.387947753 +0100
++++ stable/src/cpp/packetsocket.cpp	2009-03-19 08:50:30.441570893 +0100
+@@ -166,7 +166,7 @@
+ 
+ 
+ 
+-packetSocket::packetSocket(int const sockFd) {
++packetSocket::packetSocket(int sockFd) {
+ 
+     int dupRc;
+ 
+diff -ru ../stable.orig/src/cpp/test/server_abyss.cpp stable/src/cpp/test/server_abyss.cpp
+--- ../stable.orig/src/cpp/test/server_abyss.cpp	2009-03-19 05:58:55.789530607 +0100
++++ stable/src/cpp/test/server_abyss.cpp	2009-03-19 08:50:30.466112632 +0100
+@@ -14,7 +14,11 @@
+ #ifdef WIN32
+   #include <winsock.h>
+ #else
+-  #include <sys/unistd.h>
++  #ifdef __sun
++    #include <unistd.h>
++  #else
++    #include <sys/unistd.h>
++  #endif
+   #include <sys/socket.h>
+   #include <arpa/inet.h>
+ #endif
+diff -ru ../stable.orig/src/test/Makefile stable/src/test/Makefile
+--- ../stable.orig/src/test/Makefile	2009-03-19 05:59:05.577343998 +0100
++++ stable/src/test/Makefile	2009-03-19 08:50:30.490742022 +0100
+@@ -25,7 +25,7 @@
+ 
+ all: $(PROGS)
+ 
+-LDFLAGS = $(LADD)
++LDFLAGS = $(LADD) -lm
+ 
+ TEST_OBJS = \
+   test.o \
+diff -ru ../stable.orig/src/test/cgi.c stable/src/test/cgi.c
+--- ../stable.orig/src/test/cgi.c	2009-03-19 05:59:04.026249087 +0100
++++ stable/src/test/cgi.c	2009-03-19 09:41:03.971988485 +0100
+@@ -42,8 +42,9 @@
+                        TESTDATA_DIR DIRSEP "sample_add_call.xml",
+                        "r");
+ 
+-    if (cgiOutputP == NULL)
++    if (cgiOutputP == NULL) {
+         TEST_ERROR("Unable to run 'cgitest' program.");
++		}
+     else {
+         unsigned char cgiResponse[4096];
+         size_t bytesRead;
+diff -ru ../stable.orig/src/test/test.h stable/src/test/test.h
+--- ../stable.orig/src/test/test.h	2009-03-19 05:59:05.023815247 +0100
++++ stable/src/test/test.h	2009-03-19 08:50:30.514813356 +0100
+@@ -76,9 +76,7 @@
+ 
+ 
+ #define TEST_FAULT(envP, code) \
+-    do { test_fault(envP, code, __FILE__, __LINE__); } while(0)
+-
+-;
++    do { test_fault(envP, code, __FILE__, __LINE__); } while(0) ;
+ 
+ 
+ static __inline__ void
+@@ -96,14 +94,10 @@
+ 
+ 
+ #define TEST_NULL_STRING(string) \
+-    do { test_null_string(string, __FILE__, __LINE__); } while(0)
+-
+-;
++    do { test_null_string(string, __FILE__, __LINE__); } while(0) ;
+ 
+ #define TEST_ERROR(reason) \
+ do { \
+     printf("Unable to test at %s/%u.  %s", __FILE__, __LINE__, reason); \
+     abort(); \
+-   } while (0)
+-
+-;
++   } while (0) ;
