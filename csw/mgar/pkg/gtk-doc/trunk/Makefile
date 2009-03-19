@@ -16,13 +16,16 @@ DISTFILES += $(call admfiles,CSWgtkdoc, )
 PREREQUISITE_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl CSWscrollkeeper
 PREREQUISITE_PKGS += CSWopenjade CSWgnomedocutils
 
+REQUIRED_PKGS += CSWperl CSWpython CSWsgmlcommon CSWxmlcommon CSWdocbookxsl
+REQUIRED_PKGS += CSWopenjade CSWgnomedocutils
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-xml-catalog=/opt/csw/etc/xml/catalog
 
-#TEST_TARGET = check
-TEST_TARGET =
+TEST_TARGET = check
+#TEST_TARGET =
 
 include gar/category.mk
