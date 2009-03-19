@@ -19,7 +19,7 @@ DISTFILES += $(call admfiles,CSWnrpeplugin, prototype )
 REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap CSWcswclassutils
 REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt 
 
-SPKG_CLASSES_CSWnrpe = none cswinitsmf
+SPKG_CLASSES_CSWnrpe = none cswpreserveconf cswinitsmf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl-lib=/opt/csw/lib
@@ -60,7 +60,7 @@ install-custom:
 	ginstall -m 644 $(WORKSRC)/README.SSL $(DESTDIR)$(DOCDIR)
 	ginstall -m 644 $(WORKSRC)/SECURITY $(DESTDIR)$(DOCDIR)
 	ginstall -m 775 -d $(DESTDIR)$(CFGDIR)
-	ginstall -m 644 $(WORKSRC)/sample-config/nrpe.cfg $(DESTDIR)$(CFGDIR)/nrpe.cfg-sample
+	ginstall -m 644 $(WORKSRC)/sample-config/nrpe.cfg $(DESTDIR)$(CFGDIR)/nrpe.cfg.CSW
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswnrpe $(DESTDIR)/etc/opt/csw/init.d/cswnrpe
 	@$(MAKECOOKIE)
