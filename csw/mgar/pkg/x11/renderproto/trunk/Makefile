@@ -3,9 +3,9 @@ GARVERSION = 0.9.3
 
 CATEGORIES = x11
 
-DESCRIPTION = renderproto
+DESCRIPTION = Render extension headers from modular X.org
 define BLURB
-renderproto
+This provides the Render extension headers from modular X.org X11 project.
 endef
 
 MASTER_SITES  = $(X11_PROTO_MASTER_SITE)

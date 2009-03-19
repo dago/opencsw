@@ -2,9 +2,9 @@ GARNAME = xproto
 GARVERSION = 7.0.15
 CATEGORIES = x11
 
-DESCRIPTION = xproto
+DESCRIPTION = X protocol and ancillary headers from Xorg X11
 define BLURB
-xproto
+X protocol and ancillary headers from modular Xorg X11
 endef
 
 MASTER_SITES = $(X11_PROTO_MASTER_SITE)

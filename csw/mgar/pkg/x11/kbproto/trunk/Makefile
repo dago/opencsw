@@ -3,9 +3,9 @@ GARVERSION = 1.0.3
 
 CATEGORIES = x11
 
-DESCRIPTION = kbproto
+DESCRIPTION = KB extension headers from X.org
 define BLURB
-kbproto
+This provides the KB extension headers from modular X.org X11 project.
 endef
 
 MASTER_SITES  = $(X11_PROTO_MASTER_SITE)

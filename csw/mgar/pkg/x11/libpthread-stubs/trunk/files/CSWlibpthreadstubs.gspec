@@ -1,5 +1,6 @@
 %var            bitname libpthreadstubs
 %var            pkgname CSWlibpthreadstubs
+%var			arch	all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      
 

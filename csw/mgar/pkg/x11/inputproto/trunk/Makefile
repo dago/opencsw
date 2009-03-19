@@ -3,9 +3,9 @@ GARVERSION = 1.5.0
 
 CATEGORIES = x11
 
-DESCRIPTION = inputproto
+DESCRIPTION = Input extension headers
 define BLURB
-inputproto
+This provides the input extension headers from modular X.org X11 project
 endef
 
 MASTER_SITES = $(X11_PROTO_MASTER_SITE)
