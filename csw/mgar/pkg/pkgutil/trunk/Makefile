@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.5b2
+GARVERSION = 1.5b3
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -10,7 +10,6 @@ define BLURB
 	package automatically.
 endef
 
-#MASTER_SITES = http://www.bonivart.com/pkgutil/
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
@@ -40,16 +39,16 @@ install-custom:
 #	@ginstall -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
 	@ginstall -d $(DESTDIR)/etc/opt/csw
-	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
-	@cp -r $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
-	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)
-	@cp -r $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
-	@cp -r $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
-	@cp -r $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
-	@cp -r $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)/
-#	@cp -r $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
-#	@cp -r $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil
-	@cp -r $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
-	@cp -r $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
+	@cp $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
+	@cp $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
+	@cp $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)
+	@cp $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
+	@cp $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
+	@cp $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
+	@cp $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)/
+#	@cp $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
+#	@cp $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil
+	@cp $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
+	@cp $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
 	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@$(MAKECOOKIE)
