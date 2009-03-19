@@ -3,7 +3,7 @@ GARVERSION = 2.7.2
 CATEGORIES = apps
 
 SPKG_DESC_CSWnsca = Nagios service check acceptor - nagios server files only (the client package is send_nsca)
-SPKG_DESC_CSWsendnsca = Nagios service check acceptor - send passive check results to nagios server (client files only)
+SPKG_DESC_CSWsendnsca = Nagios service check acceptor - client files only (the server package is nsca)
 
 define BLURB
   NSCA allows you to integrate passive alerts and checks from remote machines and applications with Nagios. Useful for processing security alerts, as well as redundant and distributed Nagios setups.
