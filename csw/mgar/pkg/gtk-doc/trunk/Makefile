@@ -14,7 +14,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWgtkdoc, )
 
 PREREQUISITE_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl CSWscrollkeeper
-PREREQUISITE_PKGS += CSWopenjade
+PREREQUISITE_PKGS += CSWopenjade CSWgnomedocutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
