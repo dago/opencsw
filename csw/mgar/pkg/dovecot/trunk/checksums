@@ -1,2 +1,4 @@
 c973eb41aca79fb16630a16f0d84f765  download/dovecot-1.1.11.tar.gz
+1f39cae3a38d10169fe31f246095b67f  download/patch-authcrash.diff
+b6bdbd7b8e6f513a8f19dbc0a7507aa6  download/patch-enosys.diff
 765a31bece26ed3cebee784dc4aa8216  download/patch-exampleconf.diff

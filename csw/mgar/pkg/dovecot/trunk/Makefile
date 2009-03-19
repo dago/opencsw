@@ -87,17 +87,17 @@ PROTOTYPE_FILTER  = awk '\
 
 include gar/category.mk
 
-# Adjust file paths in various files. Not a prerequisite to the remaining build
-# process, but i found it easiest # to put it here and not clutter post-install
-# even more
+# Adjust file paths in various files. Not a prerequisite to the remaining 
+# build process, but i found it easiest to put it here and not clutter 
+# post-install even more
 pre-install-modulated:
 	@perl -pi -e 's|/etc/ssl|/opt/csw/ssl|' $(WORKSRC)/doc/mkcert.sh
 	@perl -pi -e '\
 		s| /var/run| /var/opt/csw/run|; \
 		s| /etc/ssl| /opt/csw/ssl|; \
 		s| /usr/libexec| /opt/csw/libexec|; \
-		s| /usr/lib/dovecot| /opt/csw/lib/dovecot|; \
-		' $(WORKSRC)/dovecot-example.conf
+		s| /usr/lib/dovecot| /opt/csw/lib/dovecot|;' \
+		$(WORKSRC)/dovecot-example.conf
 	@$(MAKECOOKIE)
 
 # Maybe there is a nicer way to build this via modulations ...

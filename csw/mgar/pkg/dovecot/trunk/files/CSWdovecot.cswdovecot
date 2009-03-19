@@ -27,6 +27,7 @@ fi
 case "$1" in
   start)
     echo "Starting Dovecot"
+    ulimit -n 1024
     $DAEMON -c $CONF
     ;;
   stop)
@@ -51,6 +52,7 @@ case "$1" in
       kill `cat $pidfile`
       sleep 1
     fi
+    ulimit -n 1024
     $DAEMON -c $CONF
     ;;
   *)

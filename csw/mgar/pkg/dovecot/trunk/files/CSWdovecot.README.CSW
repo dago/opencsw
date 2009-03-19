@@ -1,17 +1,56 @@
-Service user accounts
-=====================
-The CSWdovecot package will create a service user account (dovecot) for you in
-case no user account by this name exists upon installation. This user account
-is required for the dovecot login service (and nothing else).
+Configuration file
+------------------
+
+The default configuration path is /opt/csw/etc/dovecot.conf. CSWdovecot
+brings with it a sample configuration (suffixed with .CSW) that will be
+installed when dovecot.conf doesn't exist yet. This sample configuration
+provides IMAP/POP3 and IMAPS/POP3S services to system users and uses a
+self-signed certificate that comes with the package.
+
+When you adjust dovecot.conf, package upgrades will preserve your
+configuration and just install the sample configuration as dovecot.conf.CSW.
+
+
+Machine-local configuration in shared /opt setups
+-------------------------------------------------
+
+If you share /opt among several machines (via NFS for example) you can use
+/etc/opt/csw/dovecot.conf as machine-local configuration. The dovecot
+startup script will then use it instead of the default configuration.
+
+
+User accounts
+-------------
+
+On installation CSWdovecot will create a user named dovecot in case no user
+account by this name exists. This user account is required for the Dovecot
+login service (and nothing else).
 
 If you want to use Dovecot for virtual users, you need to create another
-service user account (!= dovecot). For background information, see
+user account (!= dovecot). For background information, see
 
   http://wiki.dovecot.org/UserIds
 
+
 Upgrading
-=========
+---------
+
 For upgrading information from other IMAP servers or previous Dovecot
 versions, see
 
   http://wiki.dovecot.org/UpgradingDovecot
+
+
+Sieve plugin
+------------
+
+Sieve support (via the cmusieve plugin) is contained in the CSWdovecot_sieve
+package. If required install this package and add
+
+  mail_plugins = cmusieve
+
+to the "protocol lda" section in dovecot.conf. This requires that you use
+Dovecot's deliver as LDA of course. See the following URLs for details
+
+  http://wiki.dovecot.org/LDA
+  http://wiki.dovecot.org/LDA/Sieve#CMUSieve_Plugin
