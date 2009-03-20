@@ -2,6 +2,8 @@ GARNAME = sed
 GARVERSION = 4.1.5
 CATEGORIES = utils
 
+DEBUG_PACKAGING = 1
+
 PACKAGES = CSWgsed
 CATALOGNAME_CSWgsed = gsed
 
@@ -23,12 +25,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # See http://markmail.org/message/7ki46iiok3ddu3sa
 GARCOMPILER = GNU
 
-PREREQUISITE_PKGS = CSWiconv
+REQUIRED_PKGS = CSWiconv
+
 
 CONFIGURE_ARGS = $(DIRPATHS) 
 CONFIGURE_ARGS += --program-prefix=g  
-CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw 
-CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
 CONFIGURE_ARGS += --with-included-gettext
 
 TEST_TARGET = check
@@ -37,3 +38,5 @@ include gar/category.mk
 
 # Make sure we are using gnu tools (esp. sed)
 PATH := /opt/csw/gnu:$(PATH)
+
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
