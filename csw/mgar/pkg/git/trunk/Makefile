@@ -14,6 +14,7 @@ ARCHALL_CSWgitdoc = 1
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
 PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
+PREREQUISITE_PKGS += CSWautoconf
 
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
 REQUIRED_PKGS_CSWgit += CSWossh CSWiconv CSWexpat CSWbash CSWpmerror
