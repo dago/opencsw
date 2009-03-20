@@ -2,7 +2,7 @@ GARNAME = nagios-plugins
 GARVERSION = 1.4.13
 CATEGORIES = apps
 
-DESCRIPTION = Plugins for Nagios
+DESCRIPTION = plugins for nagios
 define BLURB
   Long description
 endef
