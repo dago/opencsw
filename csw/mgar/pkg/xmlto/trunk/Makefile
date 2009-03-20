@@ -7,6 +7,7 @@ PREREQUISITE_PKGS += CSWflex CSWggetopt CSWgnulinks
 
 REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
 REQUIRED_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m CSWmktemp
+REQUIRED_PKGS += CSWggetopt
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
@@ -17,17 +18,11 @@ endef
 
 MASTER_SITES = https://fedorahosted.org/$(GARNAME)/export/1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWxmlto)
 
 TEST_TARGET = check
 
-GARCOMPILER = GNU
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-# this ssl site has a cert we don't recognize
-WGET_OPTS = --no-check-certificate
 
 pre-configure:
 	@(cd $(WORKSRC); \
