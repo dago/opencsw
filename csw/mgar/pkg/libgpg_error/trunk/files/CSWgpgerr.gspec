@@ -1,4 +1,0 @@
-%var            bitname libgpg_error
-%var            pkgname CSWgpgerr
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING

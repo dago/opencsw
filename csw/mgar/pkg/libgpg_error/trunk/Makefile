@@ -10,13 +10,15 @@ endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgpg-error/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgpgerr,)
+
+PACKAGES = CSWgpgerr
+CATALOGNAME = libgpg_error
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.gnupg.org/download/
 
-REQUIRED_PKGS = CSWiconv CSWggettext
+REQUIRED_PKGS = CSWiconv CSWggettextrt
 
 BUILD64 = 1
 NO_ISAEXEC = 1
