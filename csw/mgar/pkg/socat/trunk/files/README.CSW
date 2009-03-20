@@ -1,0 +1,8 @@
+Known issues
+------------
+Some of the IP4/IP6 socket options related to ancillary messages don't
+work with this build. This comprises ip-recvopts, ip-recvttl and alike
+and seems to be a known socat portability issue.
+
+See "IP4 and IP6 option groups" in the socat man page. Options marked as
+Linux and/or *BSD won't work.

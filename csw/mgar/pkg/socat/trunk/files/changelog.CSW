@@ -1,5 +1,5 @@
-socat (1.6.0.1,REV=20080407) unstable
+socat (1.7.0.0,REV=20090320)
 
   * Initial package.
 
- -- Yann Rouillard <yann.rouillard@jouy.inra.fr>  Mon, 07 Apr 2008 23:02:18 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Fri, 20 Mar 2009 11:38:48 +0100
