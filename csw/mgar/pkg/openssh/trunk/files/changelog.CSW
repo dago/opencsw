@@ -1,3 +1,9 @@
+openssh (5.1,REV=2008.02.15_rev=p1) unstable
+
+  * Package rebuild to solve incorrect package push in repository tree.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 06 Dec 2008 15:36:48 +0100
+
 openssh (5.1,REV=2008.12.06_rev=p1) unstable
 
   * Added test for configuration file existence in sysV init script 

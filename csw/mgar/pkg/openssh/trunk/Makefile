@@ -1,5 +1,5 @@
 GARNAME = openssh
-GARVERSION = 5.1
+GARVERSION = 5.2
 RELEASE = p1
 GSSKEX_PATCH_VERSION = $(GARVERSION)$(RELEASE)
 GSSKEX_PATCH_DATE = 20081003
@@ -25,19 +25,20 @@ DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall postinstall prototype) 
+DISTFILES += i.conf r.conf
 DISTFILES += changelog.CSW
+DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall postinstall prototype) 
 DISTFILES += sshd_config
 DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
-DISTFILES += i.conf r.conf
 DISTFILES += openssh
+DISTFILES += $(call admfiles,CSWosshclient,depend prototype) 
 
 # Script created to workaround a upgrade bug between 
 # package = 4.6,REV=2007.07.30_rev=p1 and later package
 DISTFILES += openssh_restart_workaround.sh
 
-PATCHDIRLEVEL = 0
 # The GSSAPI key exchange patch
+PATCHDIRLEVEL = 0
 PATCHFILES = openssh-$(GSSKEX_PATCH_VERSION)-gsskex-$(GSSKEX_PATCH_DATE).patch
 
 # Prevent TIOCSCTTY from being used to avoid error:
@@ -73,8 +74,9 @@ pre-configure:
 
 # adding documentation files
 post-install:
-	mkdir -p $(DESTDIR)/$(docdir)/openssh/
+	mkdir -p $(DESTDIR)/$(docdir)/openssh/ $(DESTDIR)/$(docdir)/openssh_client/
 	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh/
+	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh_client/
 
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)

@@ -1,20 +1,10 @@
 i i.conf=i.conf
 i r.conf=r.conf
 f none /etc/init.d/openssh=openssh 0755 root bin
-f none /opt/csw/bin/scp 0755 root bin
-f none /opt/csw/bin/sftp 0755 root bin
-s none /opt/csw/bin/slogin=./ssh
-f none /opt/csw/bin/ssh 0755 root bin
-f none /opt/csw/bin/ssh-add 0755 root bin
-f none /opt/csw/bin/ssh-agent 0755 root bin
-f none /opt/csw/bin/ssh-keygen 0755 root bin
-f none /opt/csw/bin/ssh-keyscan 0755 root bin
-e conf /opt/csw/etc/ssh/moduli 0644 root bin
-e conf /opt/csw/etc/ssh/ssh_config 0644 root bin
 f none /opt/csw/etc/ssh/sshd_config.CSW=sshd_config 0744 root bin
+e conf /opt/csw/etc/ssh/moduli 0644 root bin
 d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/sftp-server 0755 root bin
-f none /opt/csw/libexec/ssh-keysign 4711 root bin
 f none /opt/csw/sbin/sshd 0755 root bin
 f none /opt/csw/share/Ssh.bin 0644 root bin
 d none /opt/csw/share/doc/openssh 0755 root bin
@@ -33,18 +23,8 @@ f none /opt/csw/share/doc/openssh/README.smartcard 0644 root bin
 f none /opt/csw/share/doc/openssh/README.tun 0644 root bin
 f none /opt/csw/share/doc/openssh/TODO 0644 root bin
 f none /opt/csw/share/doc/openssh/WARNING.RNG 0644 root bin
-f none /opt/csw/share/man/man1/scp.1 0644 root bin
-f none /opt/csw/share/man/man1/sftp.1 0644 root bin
-s none /opt/csw/share/man/man1/slogin.1=./ssh.1
-f none /opt/csw/share/man/man1/ssh-add.1 0644 root bin
-f none /opt/csw/share/man/man1/ssh-agent.1 0644 root bin
-f none /opt/csw/share/man/man1/ssh-keygen.1 0644 root bin
-f none /opt/csw/share/man/man1/ssh-keyscan.1 0644 root bin
-f none /opt/csw/share/man/man1/ssh.1 0644 root bin
-f none /opt/csw/share/man/man5/ssh_config.5 0644 root bin
 f none /opt/csw/share/man/man5/sshd_config.5 0644 root bin
 f none /opt/csw/share/man/man8/sftp-server.8 0644 root bin
-f none /opt/csw/share/man/man8/ssh-keysign.8 0644 root bin
 f none /opt/csw/share/man/man8/sshd.8 0644 root bin
 d none /opt/csw/share/openssh 0755 root bin
 f none /opt/csw/share/openssh/openssh_restart_workaround.sh=openssh_restart_workaround.sh 0755 root bin
