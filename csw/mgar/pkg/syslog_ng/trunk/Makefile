@@ -9,8 +9,8 @@ define BLURB
   logs using TCP.
 endef
 
-MASTER_SITES = http://www.balabit.com/downloads/files/syslog-ng/sources/stable/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/$(GARVERSION)/source/
+DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsyslogng, postinstall depend prototype)
 DISTFILES += syslog-ng.conf.CSW
 DISTFILES += cswsyslog_ng
@@ -18,9 +18,10 @@ DISTFILES += cswsyslog_ng
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+SPKG_SOURCEURL = http://www.balabit.com/network-security/syslog-ng/
 SPKG_CLASSES = none cswinitsmf
 
-PREREQUISITE_PKGS = CSWeventlog
+PREREQUISITE_PKGS  = CSWeventlog
 PREREQUISITE_PKGS += CSWggettext
 PREREQUISITE_PKGS += CSWglib2
 PREREQUISITE_PKGS += CSWtcpwrap
