@@ -1,0 +1,8 @@
+#!/bin/sh
+BASE=/opt/csw
+
+FILES=`ls $BASE/share/info | /usr/xpg4/bin/grep -v -e "~" -e "dir"`
+for i in $FILES; do
+        /opt/csw/bin/install-info $BASE/share/info/$i $BASE/share/info/dir 2> /dev/null
+done
+

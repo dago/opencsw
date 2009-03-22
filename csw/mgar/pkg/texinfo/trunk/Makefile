@@ -12,12 +12,12 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(DISTVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWtexinfo,)
+DISTFILES += mkdirentries
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWgsed CSWncurses CSWiconv CSWggettext
+REQUIRED_PKGS = CSWgsed CSWncurses CSWiconv CSWggettextrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -28,3 +28,8 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(sbindir)
+	ginstall -m 755 $(WORKDIR)/mkdirentries $(DESTDIR)$(sbindir)/mkdirentries
+	@$(MAKECOOKIE)
