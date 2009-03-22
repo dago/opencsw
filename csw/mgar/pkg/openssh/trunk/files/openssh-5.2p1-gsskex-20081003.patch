@@ -1,6 +1,6 @@
 diff -urN ChangeLog.gssapi ChangeLog.gssapi
---- ChangeLog.gssapi	1970-01-01 01:00:00.000000000 +0100
-+++ ChangeLog.gssapi	2008-10-03 21:03:11.484172000 +0200
+--- openssh-5.2p1/ChangeLog.gssapi	1970-01-01 01:00:00.000000000 +0100
++++ openssh-5.2p1.new/ChangeLog.gssapi	2008-10-03 21:03:11.484172000 +0200
 @@ -0,0 +1,75 @@
 +20080404
 +  - [ gss-serv.c ]
@@ -78,8 +78,8 @@ diff -urN ChangeLog.gssapi ChangeLog.gssapi
 +    (from jbasney AT ncsa.uiuc.edu)
 +    <gssapi-with-mic support is Bugzilla #1008>
 diff -urN openssh-5.2p1/Makefile.in openssh-5.2p1.new/Makefile.in
---- Makefile.in	2008-11-05 06:20:46.000000000 +0100
-+++ Makefile.in	2009-03-21 15:39:14.000000000 +0100
+--- openssh-5.2p1/Makefile.in	2008-11-05 06:20:46.000000000 +0100
++++ openssh-5.2p1.new/Makefile.in	2009-03-21 15:39:14.000000000 +0100
 @@ -71,7 +71,7 @@
  	atomicio.o key.o dispatch.o kex.o mac.o uidswap.o uuencode.o misc.o \
  	monitor_fdpass.o rijndael.o ssh-dss.o ssh-rsa.o dh.o kexdh.o \
@@ -99,8 +99,8 @@ diff -urN openssh-5.2p1/Makefile.in openssh-5.2p1.new/Makefile.in
  	audit.o audit-bsm.o platform.o sftp-server.o sftp-common.o
  
 diff -urN openssh-5.2p1/auth-krb5.c openssh-5.2p1.new/auth-krb5.c
---- auth-krb5.c	2006-08-05 04:39:39.000000000 +0200
-+++ auth-krb5.c	2009-03-21 15:19:18.000000000 +0100
+--- openssh-5.2p1/auth-krb5.c	2006-08-05 04:39:39.000000000 +0200
++++ openssh-5.2p1.new/auth-krb5.c	2009-03-21 15:19:18.000000000 +0100
 @@ -166,8 +166,13 @@
  
  	len = strlen(authctxt->krb5_ticket_file) + 6;
@@ -149,8 +149,8 @@ diff -urN openssh-5.2p1/auth-krb5.c openssh-5.2p1.new/auth-krb5.c
  	return (krb5_cc_resolve(ctx, ccname, ccache));
  }
 diff -urN openssh-5.2p1/auth.h openssh-5.2p1.new/auth.h
---- auth.h	2008-11-05 06:20:46.000000000 +0100
-+++ auth.h	2009-03-21 15:19:18.000000000 +0100
+--- openssh-5.2p1/auth.h	2008-11-05 06:20:46.000000000 +0100
++++ openssh-5.2p1.new/auth.h	2009-03-21 15:19:18.000000000 +0100
 @@ -53,6 +53,7 @@
  	int		 valid;		/* user exists and is allowed to login */
  	int		 attempt;
@@ -160,8 +160,8 @@ diff -urN openssh-5.2p1/auth.h openssh-5.2p1.new/auth.h
  	char		*user;		/* username sent by the client */
  	char		*service;
 diff -urN openssh-5.2p1/auth2-gss.c openssh-5.2p1.new/auth2-gss.c
---- auth2-gss.c	2007-12-02 12:59:45.000000000 +0100
-+++ auth2-gss.c	2009-03-21 15:19:18.000000000 +0100
+--- openssh-5.2p1/auth2-gss.c	2007-12-02 12:59:45.000000000 +0100
++++ openssh-5.2p1.new/auth2-gss.c	2009-03-21 15:19:18.000000000 +0100
 @@ -52,6 +52,39 @@
  static void input_gssapi_exchange_complete(int type, u_int32_t plen, void *ctxt);
  static void input_gssapi_errtok(int, u_int32_t, void *);
@@ -232,8 +232,8 @@ diff -urN openssh-5.2p1/auth2-gss.c openssh-5.2p1.new/auth2-gss.c
  	"gssapi-with-mic",
  	userauth_gssapi,
 diff -urN openssh-5.2p1/auth2.c openssh-5.2p1.new/auth2.c
---- auth2.c	2008-11-05 06:20:46.000000000 +0100
-+++ auth2.c	2009-03-21 15:19:18.000000000 +0100
+--- openssh-5.2p1/auth2.c	2008-11-05 06:20:46.000000000 +0100
++++ openssh-5.2p1.new/auth2.c	2009-03-21 15:19:18.000000000 +0100
 @@ -69,6 +69,7 @@
  extern Authmethod method_kbdint;
  extern Authmethod method_hostbased;
@@ -270,8 +270,8 @@ diff -urN openssh-5.2p1/auth2.c openssh-5.2p1.new/auth2.c
  			PRIVSEP(audit_event(SSH_LOGIN_EXCEED_MAXTRIES));
  #endif
 diff -urN openssh-5.2p1/configure.ac openssh-5.2p1.new/configure.ac
---- configure.ac	2009-02-16 05:37:03.000000000 +0100
-+++ configure.ac	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/configure.ac	2009-02-16 05:37:03.000000000 +0100
++++ openssh-5.2p1.new/configure.ac	2009-03-21 15:19:19.000000000 +0100
 @@ -473,6 +473,30 @@
  	    [Use tunnel device compatibility to OpenBSD])
  	AC_DEFINE(SSH_TUN_PREPEND_AF, 1,
@@ -304,8 +304,8 @@ diff -urN openssh-5.2p1/configure.ac openssh-5.2p1.new/configure.ac
  	AC_CHECK_DECL(AU_IPv4, [], 
  	    AC_DEFINE(AU_IPv4, 0, [System only supports IPv4 audit records])
 diff -urN openssh-5.2p1/gss-genr.c openssh-5.2p1.new/gss-genr.c
---- gss-genr.c	2007-06-12 15:44:36.000000000 +0200
-+++ gss-genr.c	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/gss-genr.c	2007-06-12 15:44:36.000000000 +0200
++++ openssh-5.2p1.new/gss-genr.c	2009-03-21 15:19:19.000000000 +0100
 @@ -39,12 +39,160 @@
  #include "buffer.h"
  #include "log.h"
@@ -518,8 +518,8 @@ diff -urN openssh-5.2p1/gss-genr.c openssh-5.2p1.new/gss-genr.c
  
  	return (!GSS_ERROR(major));
 diff -urN openssh-5.2p1/gss-serv-krb5.c openssh-5.2p1.new/gss-serv-krb5.c
---- gss-serv-krb5.c	2006-09-01 07:38:36.000000000 +0200
-+++ gss-serv-krb5.c	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/gss-serv-krb5.c	2006-09-01 07:38:36.000000000 +0200
++++ openssh-5.2p1.new/gss-serv-krb5.c	2009-03-21 15:19:19.000000000 +0100
 @@ -120,6 +120,7 @@
  	krb5_principal princ;
  	OM_uint32 maj_status, min_status;
@@ -550,8 +550,8 @@ diff -urN openssh-5.2p1/gss-serv-krb5.c openssh-5.2p1.new/gss-serv-krb5.c
  #ifdef USE_PAM
  	if (options.use_pam)
 diff -urN openssh-5.2p1/gss-serv.c openssh-5.2p1.new/gss-serv.c
---- gss-serv.c	2008-05-19 07:05:07.000000000 +0200
-+++ gss-serv.c	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/gss-serv.c	2008-05-19 07:05:07.000000000 +0200
++++ openssh-5.2p1.new/gss-serv.c	2009-03-21 15:19:19.000000000 +0100
 @@ -1,7 +1,7 @@
  /* $OpenBSD: gss-serv.c,v 1.22 2008/05/08 12:02:23 djm Exp $ */
  
@@ -666,8 +666,8 @@ diff -urN openssh-5.2p1/gss-serv.c openssh-5.2p1.new/gss-serv.c
 -
  #endif
 diff -urN openssh-5.2p1/kex.c openssh-5.2p1.new/kex.c
---- kex.c	2008-11-03 09:19:12.000000000 +0100
-+++ kex.c	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/kex.c	2008-11-03 09:19:12.000000000 +0100
++++ openssh-5.2p1.new/kex.c	2009-03-21 15:19:19.000000000 +0100
 @@ -49,6 +49,10 @@
  #include "dispatch.h"
  #include "monitor.h"
@@ -701,8 +701,8 @@ diff -urN openssh-5.2p1/kex.c openssh-5.2p1.new/kex.c
  		fatal("bad kex alg %s", k->name);
  }
 diff -urN openssh-5.2p1/kex.h openssh-5.2p1.new/kex.h
---- kex.h	2007-06-11 06:01:42.000000000 +0200
-+++ kex.h	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/kex.h	2007-06-11 06:01:42.000000000 +0200
++++ openssh-5.2p1.new/kex.h	2009-03-21 15:19:19.000000000 +0100
 @@ -64,6 +64,9 @@
  	KEX_DH_GRP14_SHA1,
  	KEX_DH_GEX_SHA1,
@@ -738,8 +738,8 @@ diff -urN openssh-5.2p1/kex.h openssh-5.2p1.new/kex.h
  kex_dh_hash(char *, char *, char *, int, char *, int, u_char *, int,
      BIGNUM *, BIGNUM *, BIGNUM *, u_char **, u_int *);
 diff -urN openssh-5.2p1/key.c openssh-5.2p1.new/key.c
---- key.c	2008-11-03 09:24:17.000000000 +0100
-+++ key.c	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/key.c	2008-11-03 09:24:17.000000000 +0100
++++ openssh-5.2p1.new/key.c	2009-03-21 15:19:19.000000000 +0100
 @@ -764,6 +764,8 @@
  		return KEY_RSA;
  	} else if (strcmp(name, "ssh-dss") == 0) {
@@ -750,8 +750,8 @@ diff -urN openssh-5.2p1/key.c openssh-5.2p1.new/key.c
  	debug2("key_type_from_name: unknown key type '%s'", name);
  	return KEY_UNSPEC;
 diff -urN openssh-5.2p1/key.h openssh-5.2p1.new/key.h
---- key.h	2008-06-12 20:40:35.000000000 +0200
-+++ key.h	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/key.h	2008-06-12 20:40:35.000000000 +0200
++++ openssh-5.2p1.new/key.h	2009-03-21 15:19:19.000000000 +0100
 @@ -34,6 +34,7 @@
  	KEY_RSA1,
  	KEY_RSA,
@@ -761,8 +761,8 @@ diff -urN openssh-5.2p1/key.h openssh-5.2p1.new/key.h
  };
  enum fp_type {
 diff -urN openssh-5.2p1/monitor.c openssh-5.2p1.new/monitor.c
---- monitor.c	2009-02-14 06:33:31.000000000 +0100
-+++ monitor.c	2009-03-21 15:38:09.000000000 +0100
+--- openssh-5.2p1/monitor.c	2009-02-14 06:33:31.000000000 +0100
++++ openssh-5.2p1.new/monitor.c	2009-03-21 15:38:09.000000000 +0100
 @@ -170,6 +170,7 @@
  int mm_answer_gss_accept_ctx(int, Buffer *);
  int mm_answer_gss_userok(int, Buffer *);
@@ -879,8 +879,8 @@ diff -urN openssh-5.2p1/monitor.c openssh-5.2p1.new/monitor.c
  
  #ifdef JPAKE
 diff -urN openssh-5.2p1/monitor.h openssh-5.2p1.new/monitor.h
---- monitor.h	2008-11-05 06:20:46.000000000 +0100
-+++ monitor.h	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/monitor.h	2008-11-05 06:20:46.000000000 +0100
++++ openssh-5.2p1.new/monitor.h	2009-03-21 15:19:19.000000000 +0100
 @@ -53,6 +53,7 @@
  	MONITOR_REQ_GSSSTEP, MONITOR_ANS_GSSSTEP,
  	MONITOR_REQ_GSSUSEROK, MONITOR_ANS_GSSUSEROK,
@@ -890,8 +890,8 @@ diff -urN openssh-5.2p1/monitor.h openssh-5.2p1.new/monitor.h
  	MONITOR_REQ_PAM_ACCOUNT, MONITOR_ANS_PAM_ACCOUNT,
  	MONITOR_REQ_PAM_INIT_CTX, MONITOR_ANS_PAM_INIT_CTX,
 diff -urN openssh-5.2p1/monitor_wrap.c openssh-5.2p1.new/monitor_wrap.c
---- monitor_wrap.c	2008-11-05 06:20:47.000000000 +0100
-+++ monitor_wrap.c	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/monitor_wrap.c	2008-11-05 06:20:47.000000000 +0100
++++ openssh-5.2p1.new/monitor_wrap.c	2009-03-21 15:19:19.000000000 +0100
 @@ -1256,6 +1256,29 @@
  	debug3("%s: user %sauthenticated",__func__, authenticated ? "" : "not ");
  	return (authenticated);
@@ -923,8 +923,8 @@ diff -urN openssh-5.2p1/monitor_wrap.c openssh-5.2p1.new/monitor_wrap.c
  
  #ifdef JPAKE
 diff -urN openssh-5.2p1/monitor_wrap.h openssh-5.2p1.new/monitor_wrap.h
---- monitor_wrap.h	2008-11-05 06:20:47.000000000 +0100
-+++ monitor_wrap.h	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/monitor_wrap.h	2008-11-05 06:20:47.000000000 +0100
++++ openssh-5.2p1.new/monitor_wrap.h	2009-03-21 15:19:19.000000000 +0100
 @@ -59,6 +59,7 @@
     gss_buffer_desc *, gss_buffer_desc *, OM_uint32 *);
  int mm_ssh_gssapi_userok(char *user);
@@ -934,8 +934,8 @@ diff -urN openssh-5.2p1/monitor_wrap.h openssh-5.2p1.new/monitor_wrap.h
  
  #ifdef USE_PAM
 diff -urN openssh-5.2p1/readconf.c openssh-5.2p1.new/readconf.c
---- readconf.c	2009-02-14 06:28:21.000000000 +0100
-+++ readconf.c	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/readconf.c	2009-02-14 06:28:21.000000000 +0100
++++ openssh-5.2p1.new/readconf.c	2009-03-21 15:19:19.000000000 +0100
 @@ -127,6 +127,8 @@
  	oClearAllForwardings, oNoHostAuthenticationForLocalhost,
  	oEnableSSHKeysign, oRekeyLimit, oVerifyHostKeyDNS, oConnectTimeout,
@@ -1003,8 +1003,8 @@ diff -urN openssh-5.2p1/readconf.c openssh-5.2p1.new/readconf.c
  		options->password_authentication = 1;
  	if (options->kbd_interactive_authentication == -1)
 diff -urN openssh-5.2p1/readconf.h openssh-5.2p1.new/readconf.h
---- readconf.h	2009-02-14 06:28:21.000000000 +0100
-+++ readconf.h	2009-03-21 15:19:19.000000000 +0100
+--- openssh-5.2p1/readconf.h	2009-02-14 06:28:21.000000000 +0100
++++ openssh-5.2p1.new/readconf.h	2009-03-21 15:19:19.000000000 +0100
 @@ -44,7 +44,9 @@
  	int     challenge_response_authentication;
  					/* Try S/Key or TIS, authentication. */
@@ -1016,8 +1016,8 @@ diff -urN openssh-5.2p1/readconf.h openssh-5.2p1.new/readconf.h
  						 * authentication. */
  	int     kbd_interactive_authentication; /* Try keyboard-interactive auth. */
 diff -urN openssh-5.2p1/servconf.c openssh-5.2p1.new/servconf.c
---- servconf.c	2009-01-28 06:31:23.000000000 +0100
-+++ servconf.c	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/servconf.c	2009-01-28 06:31:23.000000000 +0100
++++ openssh-5.2p1.new/servconf.c	2009-03-21 15:19:20.000000000 +0100
 @@ -92,7 +92,9 @@
  	options->kerberos_ticket_cleanup = -1;
  	options->kerberos_get_afs_token = -1;
@@ -1086,8 +1086,8 @@ diff -urN openssh-5.2p1/servconf.c openssh-5.2p1.new/servconf.c
  		intptr = &options->password_authentication;
  		goto parse_flag;
 diff -urN openssh-5.2p1/servconf.h openssh-5.2p1.new/servconf.h
---- servconf.h	2009-01-28 06:31:23.000000000 +0100
-+++ servconf.h	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/servconf.h	2009-01-28 06:31:23.000000000 +0100
++++ openssh-5.2p1.new/servconf.h	2009-03-21 15:19:20.000000000 +0100
 @@ -91,7 +91,9 @@
  	int     kerberos_get_afs_token;		/* If true, try to get AFS token if
  						 * authenticated with Kerberos. */
@@ -1099,8 +1099,8 @@ diff -urN openssh-5.2p1/servconf.h openssh-5.2p1.new/servconf.h
  						 * authentication. */
  	int     kbd_interactive_authentication;	/* If true, permit */
 diff -urN openssh-5.2p1/ssh-gss.h openssh-5.2p1.new/ssh-gss.h
---- ssh-gss.h	2007-06-12 15:40:39.000000000 +0200
-+++ ssh-gss.h	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/ssh-gss.h	2007-06-12 15:40:39.000000000 +0200
++++ openssh-5.2p1.new/ssh-gss.h	2009-03-21 15:19:20.000000000 +0100
 @@ -60,6 +60,17 @@
  
  #define SSH_GSS_OIDTYPE 0x06
@@ -1149,8 +1149,8 @@ diff -urN openssh-5.2p1/ssh-gss.h openssh-5.2p1.new/ssh-gss.h
  
  #endif /* _SSH_GSS_H */
 diff -urN openssh-5.2p1/ssh_config openssh-5.2p1.new/ssh_config
---- ssh_config	2009-02-21 02:45:02.000000000 +0100
-+++ ssh_config	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/ssh_config	2009-02-21 02:45:02.000000000 +0100
++++ openssh-5.2p1.new/ssh_config	2009-03-21 15:19:20.000000000 +0100
 @@ -26,6 +26,8 @@
  #   HostbasedAuthentication no
  #   GSSAPIAuthentication no
@@ -1161,8 +1161,8 @@ diff -urN openssh-5.2p1/ssh_config openssh-5.2p1.new/ssh_config
  #   CheckHostIP yes
  #   AddressFamily any
 diff -urN openssh-5.2p1/ssh_config.5 openssh-5.2p1.new/ssh_config.5
---- ssh_config.5	2009-02-23 00:53:58.000000000 +0100
-+++ ssh_config.5	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/ssh_config.5	2009-02-23 00:53:58.000000000 +0100
++++ openssh-5.2p1.new/ssh_config.5	2009-03-21 15:19:20.000000000 +0100
 @@ -478,11 +478,28 @@
  The default is
  .Dq no .
@@ -1193,8 +1193,8 @@ diff -urN openssh-5.2p1/ssh_config.5 openssh-5.2p1.new/ssh_config.5
  Indicates that
  .Xr ssh 1
 diff -urN openssh-5.2p1/sshconnect2.c openssh-5.2p1.new/sshconnect2.c
---- sshconnect2.c	2008-11-05 06:20:47.000000000 +0100
-+++ sshconnect2.c	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/sshconnect2.c	2008-11-05 06:20:47.000000000 +0100
++++ openssh-5.2p1.new/sshconnect2.c	2009-03-21 15:19:20.000000000 +0100
 @@ -104,9 +104,34 @@
  {
  	Kex *kex;
@@ -1371,8 +1371,8 @@ diff -urN openssh-5.2p1/sshconnect2.c openssh-5.2p1.new/sshconnect2.c
  
  int
 diff -urN openssh-5.2p1/sshd.c openssh-5.2p1.new/sshd.c
---- sshd.c	2009-01-28 06:31:23.000000000 +0100
-+++ sshd.c	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/sshd.c	2009-01-28 06:31:23.000000000 +0100
++++ openssh-5.2p1.new/sshd.c	2009-03-21 15:19:20.000000000 +0100
 @@ -119,6 +119,10 @@
  #include "monitor_wrap.h"
  #include "version.h"
@@ -1520,8 +1520,8 @@ diff -urN openssh-5.2p1/sshd.c openssh-5.2p1.new/sshd.c
  	kex->client_version_string=client_version_string;
  	kex->server_version_string=server_version_string;
 diff -urN openssh-5.2p1/sshd_config openssh-5.2p1.new/sshd_config
---- sshd_config	2008-07-02 14:35:43.000000000 +0200
-+++ sshd_config	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/sshd_config	2008-07-02 14:35:43.000000000 +0200
++++ openssh-5.2p1.new/sshd_config	2009-03-21 15:19:20.000000000 +0100
 @@ -73,6 +73,8 @@
  # GSSAPI options
  #GSSAPIAuthentication no
@@ -1532,8 +1532,8 @@ diff -urN openssh-5.2p1/sshd_config openssh-5.2p1.new/sshd_config
  # Set this to 'yes' to enable PAM authentication, account processing, 
  # and session processing. If this is enabled, PAM authentication will 
 diff -urN openssh-5.2p1/sshd_config.5 openssh-5.2p1.new/sshd_config.5
---- sshd_config.5	2009-02-23 01:00:24.000000000 +0100
-+++ sshd_config.5	2009-03-21 15:19:20.000000000 +0100
+--- openssh-5.2p1/sshd_config.5	2009-02-23 01:00:24.000000000 +0100
++++ openssh-5.2p1.new/sshd_config.5	2009-03-21 15:19:20.000000000 +0100
 @@ -374,12 +374,35 @@
  The default is
  .Dq no .
@@ -1571,8 +1571,8 @@ diff -urN openssh-5.2p1/sshd_config.5 openssh-5.2p1.new/sshd_config.5
  Specifies whether rhosts or /etc/hosts.equiv authentication together
  with successful public key client host authentication is allowed
 diff -N kexgssc.c
---- /dev/null	1 Jan 1970 00:00:00 -0000
-+++ kexgssc.c	4 Apr 2008 12:52:29 -0000
+--- openssh-5.2p1//dev/null	1 Jan 1970 00:00:00 -0000
++++ openssh-5.2p1.new/kexgssc.c	4 Apr 2008 12:52:29 -0000
 @@ -0,0 +1,319 @@
 +/*
 + * Copyright (c) 2001-2006 Simon Wilkinson. All rights reserved.
@@ -1894,8 +1894,8 @@ diff -N kexgssc.c
 +
 +#endif /* GSSAPI */
 diff -N kexgsss.c
---- /dev/null	1 Jan 1970 00:00:00 -0000
-+++ kexgsss.c	4 Apr 2008 12:52:29 -0000
+--- openssh-5.2p1/kexgsss.c	1 Jan 1970 00:00:00 -0000
++++ openssh-5.2p1.new/kexgsss.c	4 Apr 2008 12:52:29 -0000
 @@ -0,0 +1,271 @@
 +/*
 + * Copyright (c) 2001-2006 Simon Wilkinson. All rights reserved.

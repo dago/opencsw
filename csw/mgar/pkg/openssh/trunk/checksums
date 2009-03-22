@@ -1,7 +1,7 @@
 ada79c7328a8551bdf55c95e631e7dad  download/openssh-5.2p1.tar.gz
 dc212745af1f549ce2a236401bf97c1b  download/i.conf
 5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
-2ace8f24d32978fb8d550a1648483d5f  download/changelog.CSW
+780a273b9c28497e373dbc0ecc8d6fd1  download/changelog.CSW
 d1c2c49bcd3b65a601946e8316b0b018  download/CSWossh.gspec
 6e91d098018d7e1855b626ea463b8a29  download/CSWossh.depend
 1d3d6d477c09e59c514e637fa3a2f7a4  download/CSWossh.checkinstall
@@ -17,6 +17,7 @@ fd50a65230ec1ead7949e8500844b0bf  download/openssh
 1055c346c01d99d09572d978fad10256  download/CSWosshclient.depend
 3446a3185dddc9a63b28c588685c629e  download/CSWosshclient.prototype
 bd0f690fbb3abcbffe7924ae3016c8c3  download/openssh_restart_workaround.sh
-05420ca20fada7ec02bd9474701abc4b  download/openssh-5.2p1-gsskex-20081003.patch
-04da9aaea49aa4b026f156a48e577a19  download/don_t_use_TIOCSCTTY.patch
-38a20d4c63ada0a7a68226cf5e8af9c5  download/no_x_forwarding_bug.patch
+bb77f4010f030d85f143b3d149aa6a69  download/openssh-5.2p1-gsskex-20081003.patch
+4b3e79120b60e8f25be5141eba53cac5  download/don_t_use_TIOCSCTTY.patch
+ca5403c8e1539d5ced0573f289ed7aef  download/no_x_forwarding_bug.patch
+9153031524651a18e7edaed4637aa769  download/contrib-openssh-lpk-5.2p1-0.3.9.patch

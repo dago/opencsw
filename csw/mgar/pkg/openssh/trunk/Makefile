@@ -38,7 +38,6 @@ DISTFILES += $(call admfiles,CSWosshclient,depend prototype)
 DISTFILES += openssh_restart_workaround.sh
 
 # The GSSAPI key exchange patch
-PATCHDIRLEVEL = 0
 PATCHFILES = openssh-$(GSSKEX_PATCH_VERSION)-gsskex-$(GSSKEX_PATCH_DATE).patch
 
 # Prevent TIOCSCTTY from being used to avoid error:
@@ -63,6 +62,12 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 
 TEST_SCRIPTS	=
+
+ifdef LPK
+	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
+	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
+	CONFIGURE_ARGS += --with-ldap
+endif
 
 include gar/category.mk
 
