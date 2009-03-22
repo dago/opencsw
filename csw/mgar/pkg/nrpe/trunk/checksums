@@ -4,7 +4,7 @@ ab50f565dba01e9c891f7fd0fc585fda  download/CSWnrpe.prototype
 bda68135e2b65da40c3d2b68a3b8dc78  download/CSWnrpe.checkinstall
 53eea7ed36535bb6cbe1d6fe0aae3508  download/CSWnrpe.preinstall
 393872a95d2b9ec90363664c31074415  download/CSWnrpe.preremove
-cbfc86ba77e78e2f860f90a303a1abe5  download/cswnrpe
+4aad349d0e04e6cb8af186d87c44c3ba  download/cswnrpe
 2b35d5e0d57bcb3aff096040e0d06b8b  download/CSWnrpeplugin.gspec
 e22a7817c7665e79bcbad7e091375be9  download/CSWnrpeplugin.prototype
 5b02d4385daaea2a8c13903539aa6189  download/patch.diff

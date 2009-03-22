@@ -20,7 +20,7 @@ fi
 
 CONFIG_FILE=/etc/opt/csw/nrpe.cfg
 if [ ! -f $CONFIG_FILE ] ; then
-    CONFIG_FILE=/opt/csw/nagios/etc/nrpe.cfg
+    CONFIG_FILE=/opt/csw/etc/nrpe.cfg
 fi
 
 if [ ! -f $CONFIG_FILE ]
@@ -28,7 +28,7 @@ then
 	exit $SMF_EXIT_ERR_CONFIG
 fi
 
-BIN_FILE="/opt/csw/nagios/bin/nrpe"
+BIN_FILE="/opt/csw/bin/nrpe"
 pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
 NRPE_USER=`awk -F'=' '/nrpe_user/ { print $NF }' $CONFIG_FILE`
 
