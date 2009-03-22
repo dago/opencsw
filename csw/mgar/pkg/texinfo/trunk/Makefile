@@ -14,6 +14,8 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += mkdirentries
 
+SPKG_SOURCEURL = http://www.gnu.org/software/texinfo/
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
