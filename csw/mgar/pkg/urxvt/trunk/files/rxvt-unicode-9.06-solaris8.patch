@@ -1,0 +1,14 @@
+diff -ru rxvt-unicode-9.06.orig/src/rxvttoolkit.C rxvt-unicode-9.06.solaris/src/rxvttoolkit.C
+--- rxvt-unicode-9.06.orig/src/rxvttoolkit.C	2008-11-04 10:32:11.000000000 +0100
++++ rxvt-unicode-9.06.solaris/src/rxvttoolkit.C	2009-03-22 18:47:27.211539180 +0100
+@@ -35,6 +35,10 @@
+ # include <X11/extensions/Xrender.h>
+ #endif
+ 
++#ifdef __sun
++extern "C" char *XSetIMValues(XIM im, ...);
++#endif
++
+ const char *const xa_names[] =
+ {
+   "TEXT",
