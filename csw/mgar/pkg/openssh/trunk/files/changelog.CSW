@@ -1,3 +1,10 @@
+openssh (5.2,REV=2008.03.22_rev=p1) unstable
+
+  * New upstream version.
+  * Split the client in a distinct package.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 22 Mar 2009 10:34:39 +0100
+
 openssh (5.1,REV=2008.02.15_rev=p1) unstable
 
   * Package rebuild to solve incorrect package push in repository tree.
