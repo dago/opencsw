@@ -16,7 +16,7 @@ MASTER_SITES = http://pkg-config.freedesktop.org/releases/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += fixme.sh
 
-PACKAGES = pkgconfig
+PACKAGES = CSWpkgconfig
 
 SPKG_SOURCEURL = http://pkg-config.freedesktop.org
 
