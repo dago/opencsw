@@ -10,11 +10,22 @@ define BLURB
 endef
 
 MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWrrdtool,prototype,depend)
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWrrdtool)
+DISTFILES += fixme.sh
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+REQUIRED_PKGS = CSWggettextrt
+REQUIRED_PKGS += CSWglib2
+REQUIRED_PKGS += CSWiconv
+REQUIRED_PKGS += CSWlibcairo
+REQUIRED_PKGS += CSWlibxml2
+REQUIRED_PKGS += CSWpango
+REQUIRED_PKGS += CSWpng
+REQUIRED_PKGS += CSWsunmath
+REQUIRED_PKGS += CSWzlib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
@@ -24,11 +35,21 @@ CONFIGURE_ARGS += --disable-libintl
 CONFIGURE_ARGS += --enable-perl
 CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
 
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+
 TEST_TARGET = check
 
-ADDITIONAL_BUILD_ARCHS_sparc = sparcv9
-# Uncomment this if freetype2 is available for amd64
-#ADDITIONAL_BUILD_ARCHS_i386  = amd64
+#BUILD64 = 1
+
+post-configure-$(MODULATION):
+	@echo "  ==> Fixing Libtool"
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	$(DONADA)
+
+# ugly fix to fix doc path
+post-install-modulated:
+	@echo "  ==> Fixing doc path"
+	@mv $(DESTDIR)$(prefix)/share/doc/rrdtool-$(GARVERSION) $(DESTDIR)$(prefix)/share/doc/rrdtool
 
 include gar/category.mk
 
