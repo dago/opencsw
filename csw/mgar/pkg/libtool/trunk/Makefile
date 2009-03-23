@@ -19,6 +19,8 @@ DISTFILES    = $(SOURCEFILES)
 PACKAGES = CSWlibtool CSWlibtoolrt
 CATALOGNAME_CSWlibtoolrt = libtool_rt
 
+REQUIRED_PKGS_CSWlibtool = CSWlibtoolrt
+
 SPKG_DESC_CSWlibtool   = A generic library support tool
 SPKG_DESC_CSWlibtoolrt = A Generic library support tool runtime libraries
 
