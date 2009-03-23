@@ -43,10 +43,9 @@ for lt in $(gfind ${BASEPATH} -name libtool -print); do
     gchmod +x ${lt}
 done
 
-LTMAIN=$(gfind ${BASEPATH} -name ltmain.sh -print)
-if [ -f ${LTMAIN} ]; then
+for LTMAIN in $(gfind ${BASEPATH} -name ltmain.sh -print); do
     gsed "/for search_ext in .*\.la/s/\.la//" ${LTMAIN} >${LTMAIN}.new
     gmv ${LTMAIN}.new ${LTMAIN}
     gchmod +x ${LTMAIN}
-fi
+done
 
