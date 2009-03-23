@@ -1,5 +1,5 @@
 GARNAME = memconf
-GARVERSION = 2.9
+GARVERSION = 2.10
 CATEGORIES = utils
 
 DESCRIPTION = perl script that displays memory modules installed
@@ -11,7 +11,10 @@ endef
 MASTER_SITES = http://myweb.cableone.net/4schmidts/unix/
 DISTFILES  = $(GARNAME).gz
 DISTFILES += memconf.man
-DISTFILES += $(call admfiles,CSWmemconf,)
+
+PACKAGES = CSWmemconf
+CATALOGNAME_CSWmemconf = memconf
+SPKG_DESC_CSWmemconf = $(DESCRIPTION)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -24,15 +27,15 @@ WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://www.4schmidts.com/memconf.html
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
-	@ginstall -d $(DESTDIR)/opt/csw/bin
-	@ginstall -d $(DESTDIR)/opt/csw/share/doc/memconf
+	@ginstall -d $(DESTDIR)$(bindir)
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
-	@cp -r $(WORKSRC)/$(GARNAME) $(DESTDIR)/opt/csw/bin/$(GARNAME)
-	@cp -r $(WORKSRC)/$(GARNAME).man $(DESTDIR)$(mandir)/man1/$(GARNAME).1
-	@cp -r $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/LICENSE
-	@chmod 755 $(DESTDIR)/opt/csw/bin/$(GARNAME)
+	@cp $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)/$(GARNAME)
+	@cp $(WORKSRC)/$(GARNAME).man $(DESTDIR)$(mandir)/man1/$(GARNAME).1
+	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)$(docdir)/$(GARNAME)/license
+	@chmod 755 $(DESTDIR)$(bindir)/$(GARNAME)
 	@chmod 644 $(DESTDIR)$(mandir)/man1/$(GARNAME).1
-	@chmod 444 $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/LICENSE
+	@chmod 444 $(DESTDIR)$(docdir)/$(GARNAME)/license
 	@$(MAKECOOKIE)
