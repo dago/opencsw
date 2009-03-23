@@ -12,11 +12,13 @@ endef
 
 MASTER_SITES = http://www.apcupsd.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWapcupsd, depend prototype postinstall)
+DISTFILES += $(call admfiles,CSWapcupsd, prototype postinstall)
 DISTFILES += cswapcupsd
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+REQUIRED_PKGS = CSWcswclassutils
 
 SPKG_CLASSES = none cswinitsmf
 
@@ -32,7 +34,7 @@ GARCOMPILER = GNU
 TEST_SCRIPTS=
 
 # moving configuration file & installing init script
-post-install:
+post-install-modulated:
 	(cd $(DESTDIR)$(prefix)/etc/apcupsd; \
 	for i in apcupsd.conf; do \
 		if [ -r "$$i" ]; then \
