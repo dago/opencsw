@@ -4,6 +4,7 @@ MINOR_VER = 6
 GARVERSION = $(MAJOR_VER).$(MINOR_VER)
 GNOME_SUBV = $(MAJOR_VER)
 CATEGORIES = utils
+ARCHALL_CSWintltool = 1
 
 DESCRIPTION =  A collection of tools for internationalization
 define BLURB
