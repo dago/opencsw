@@ -119,7 +119,7 @@ post-build-modulated:
 	@echo Builing Emacs Git extension
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs )
 
-post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)-$(GARVERSION)
+post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)
 post-install-modulated:
 	@echo Cleaning up perl stuff
 	@rm -rf $(DESTDIR)/$(libdir)/perl5/site_perl/5*
