@@ -1,5 +1,5 @@
 GARNAME = PDF-API2
-GARVERSION = 0.57
+GARVERSION = 0.73
 CATEGORIES = cpan
 AUTHOR = AREIBENS
 
@@ -10,5 +10,9 @@ define BLURB
 endef
 
 DISTFILES += CSWpmpdfapi2.gspec
+
+REQUIRED_PKGS_CSWpmpdfapi2 += CSWpmcompresszlib
+
+LICENSE = COPYING
 
 include gar/category.mk
