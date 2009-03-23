@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = http://www.apcupsd.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWapcupsd, prototype postinstall)
+DISTFILES += $(call admfiles,CSWapcupsd, postinstall)
 DISTFILES += cswapcupsd
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -20,10 +20,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWcswclassutils
 
-SPKG_CLASSES = none cswinitsmf
+SPKG_CLASSES = none cswcpsampleconf cswinitsmf
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswapcupsd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/apcupsd\/apcupsd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }' | grep -v \/etc\/rc
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --sysconfdir=/opt/csw/etc/apcupsd
+CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/apcupsd
 CONFIGURE_ARGS += --with-nologin=/var/run
 CONFIGURE_ARGS += --with-pwrfail-dir=/opt/csw/etc/apcupsd/powerfail
 CONFIGURE_ARGS += --with-log-dir=/opt/csw/var/apcupsd
@@ -35,7 +36,7 @@ TEST_SCRIPTS=
 
 # moving configuration file & installing init script
 post-install-modulated:
-	(cd $(DESTDIR)$(prefix)/etc/apcupsd; \
+	(cd $(DESTDIR)/etc/opt/csw/apcupsd; \
 	for i in apcupsd.conf; do \
 		if [ -r "$$i" ]; then \
 			echo "$$i -> $$i.CSW"; \

@@ -1,6 +1,4 @@
 78811129db1a882b9a2b9afd540470b3  download/apcupsd-3.14.4.tar.gz
 8f6ac052c4f049b79553ba43eda38d30  download/CSWapcupsd.gspec
-e5586868ebec465f4b66d0da3c1eedda  download/CSWapcupsd.depend
-9aba501d897f84e4c9973cdb1e9a2a74  download/CSWapcupsd.prototype
-e501dccc827094e6d536fd51752d065b  download/CSWapcupsd.postinstall
+27409e07fa0133f0ed22e0b76d5a5ada  download/CSWapcupsd.postinstall
 6b63d7b83cb6bc893797d41b751fef70  download/cswapcupsd
