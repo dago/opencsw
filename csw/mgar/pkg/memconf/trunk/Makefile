@@ -8,7 +8,7 @@ define BLURB
 	a system. It also reports the system type and any empty memory sockets.
 endef
 
-MASTER_SITES = http://myweb.cableone.net/4schmidts/unix/
+MASTER_SITES = http://www.4schmidts.com/unix/
 DISTFILES  = $(GARNAME).gz
 DISTFILES += memconf.man
 
