@@ -14,17 +14,26 @@ endef
 
 MASTER_SITES = http://pkg-config.freedesktop.org/releases/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpkgconfig,depend)
+DISTFILES += fixme.sh
+
+PACKAGES = pkgconfig
+
+SPKG_SOURCEURL = http://pkg-config.freedesktop.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = gsed-check.patch
 
-PREREQUISITE_PKGS = CSWggettext CSWglib2 CSWiconv CSWsunmath
+REQUIRED_PKGS = CSWggettextrt CSWglib2 CSWiconv CSWsunmath
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-installed-glib
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-configure-modulated:
+	@echo " ==> Fixing libtool .la-files"
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	@$(MAKECOOKIE)
