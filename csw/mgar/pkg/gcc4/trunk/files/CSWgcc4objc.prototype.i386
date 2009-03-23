@@ -1,0 +1,10 @@
+d none /opt/csw 0755 root bin
+d none /opt/csw/gcc4/libexec 0755 root bin
+d none /opt/csw/gcc4/libexec/gcc 0755 root bin
+d none /opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.8 0755 root bin
+d none /opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.10 0755 root bin
+d none /opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.10/4.3.3 0755 root bin
+d none /opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.8/4.3.3 0755 root bin
+f none /opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.10/4.3.3/cc1obj 0755 root bin
+f none /opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.8/4.3.3/cc1obj 0755 root bin
+

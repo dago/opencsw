@@ -1,0 +1,40 @@
+
+d none /opt/csw 0755 root bin
+d none /opt/csw/gcc4 0755 root bin
+d none /opt/csw/gcc4/lib 0755 root bin
+s none /opt/csw/gcc4/lib=sparcv8
+s none /opt/csw/gcc4/lib=32
+f none /opt/csw/gcc4/lib/libgcc_s.so.1 0644 root bin
+s none /opt/csw/gcc4/lib/libgcc_s.so=libgcc_s.so.1
+f none /opt/csw/gcc4/lib/libgomp.a 0644 root bin
+f none /opt/csw/gcc4/lib/libgomp.la 0755 root bin
+f none /opt/csw/gcc4/lib/libgomp.so.1.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/libgomp.so.1=libgomp.so.1.0.0
+s none /opt/csw/gcc4/lib/libgomp.so=libgomp.so.1.0.0
+f none /opt/csw/gcc4/lib/libgomp.spec 0644 root bin
+f none /opt/csw/gcc4/lib/libiberty.a 0644 root bin
+f none /opt/csw/gcc4/lib/libssp.a 0644 root bin
+f none /opt/csw/gcc4/lib/libssp.la 0755 root bin
+f none /opt/csw/gcc4/lib/libssp.so.0.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/libssp.so.0=libssp.so.0.0.0
+s none /opt/csw/gcc4/lib/libssp.so=libssp.so.0.0.0
+f none /opt/csw/gcc4/lib/libssp_nonshared.a 0644 root bin
+f none /opt/csw/gcc4/lib/libssp_nonshared.la 0755 root bin
+d none /opt/csw/gcc4/lib/sparcv9 0755 root bin
+s none /opt/csw/gcc4/lib/sparcv9=64
+f none /opt/csw/gcc4/lib/sparcv9/libgcc_s.so.1 0644 root bin
+s none /opt/csw/gcc4/lib/sparcv9/libgcc_s.so=libgcc_s.so.1
+f none /opt/csw/gcc4/lib/sparcv9/libgomp.a 0644 root bin
+f none /opt/csw/gcc4/lib/sparcv9/libgomp.la 0755 root bin
+f none /opt/csw/gcc4/lib/sparcv9/libgomp.so.1.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/sparcv9/libgomp.so.1=libgomp.so.1.0.0
+s none /opt/csw/gcc4/lib/sparcv9/libgomp.so=libgomp.so.1.0.0
+f none /opt/csw/gcc4/lib/sparcv9/libgomp.spec 0644 root bin
+f none /opt/csw/gcc4/lib/sparcv9/libiberty.a 0644 root bin
+f none /opt/csw/gcc4/lib/sparcv9/libssp.a 0644 root bin
+f none /opt/csw/gcc4/lib/sparcv9/libssp.la 0755 root bin
+f none /opt/csw/gcc4/lib/sparcv9/libssp.so.0.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/sparcv9/libssp.so.0=libssp.so.0.0.0
+s none /opt/csw/gcc4/lib/sparcv9/libssp.so=libssp.so.0.0.0
+f none /opt/csw/gcc4/lib/sparcv9/libssp_nonshared.a 0644 root bin
+f none /opt/csw/gcc4/lib/sparcv9/libssp_nonshared.la 0755 root bin

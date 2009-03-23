@@ -2,6 +2,15 @@
 
 CONFIGURE_ARGS  = --prefix=/opt/csw/gcc4
 CONFIGURE_ARGS += --exec-prefix=/opt/csw/gcc4
+#ifeq ($(shell uname -p),i386)
+#    ifeq ($(shell uname -r),5.10)
+#        CONFIGURE_ARGS += --target=amd64-*-solaris2.10
+#    else
+#        CONFIGURE_ARGS += --target=i?86-*-solaris2.8
+#    endif
+#else
+#    CONFIGURE_ARGS += *-*-solaris2.8
+#endif
 CONFIGURE_ARGS += --with-gnu-as
 CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
 CONFIGURE_ARGS += --without-gnu-ld

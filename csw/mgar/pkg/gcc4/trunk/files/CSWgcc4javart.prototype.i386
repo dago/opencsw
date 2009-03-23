@@ -1,0 +1,74 @@
+d none /opt/csw 0755 root bin
+d none /opt/csw/gcc4 0755 root bin
+d none /opt/csw/gcc4/lib 0755 root bin
+d none /opt/csw/gcc4/lib/amd64 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/libgij.a 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/libgij.la 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/libgij.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/amd64/libgij.so.9=libgij.so.9.0.0
+s none /opt/csw/gcc4/lib/amd64/libgij.so=libgij.so.9.0.0
+f none /opt/csw/gcc4/lib/libgij.a 0644 root bin
+f none /opt/csw/gcc4/lib/libgij.la 0755 root bin
+f none /opt/csw/gcc4/lib/libgij.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/libgij.so.9=libgij.so.9.0.0
+s none /opt/csw/gcc4/lib/libgij.so=libgij.so.9.0.0
+f none /opt/csw/gcc4/lib/logging.properties 0644 root bin
+d none /opt/csw/gcc4/lib/pkgconfig 0755 root bin
+f none /opt/csw/gcc4/lib/pkgconfig/libgcj-4.3.pc 0644 root bin
+d none /opt/csw/gcc4/lib/security 0755 root bin
+f none /opt/csw/gcc4/lib/security/classpath.security 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/logging.properties 0644 root bin
+d none /opt/csw/gcc4/lib/amd64/security 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/security/classpath.security 0644 root bin
+d none /opt/csw/gcc4/lib/amd64/gcj-4.3.3-9 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/gcj-4.3.3-9/classmap.db 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/gcj-4.3.3-9/libjvm.a 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/gcj-4.3.3-9/libjvm.la 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/gcj-4.3.3-9/libjvm.so 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/lib-gnu-awt-xlib.a 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/lib-gnu-awt-xlib.la 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/lib-gnu-awt-xlib.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/amd64/lib-gnu-awt-xlib.so.9=lib-gnu-awt-xlib.so.9.0.0
+s none /opt/csw/gcc4/lib/amd64/lib-gnu-awt-xlib.so=lib-gnu-awt-xlib.so.9.0.0
+f none /opt/csw/gcc4/lib/amd64/libffi.a 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/libffi.la 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/libffi.so.4.0.1 0755 root bin
+s none /opt/csw/gcc4/lib/amd64/libffi.so.4=libffi.so.4.0.1
+s none /opt/csw/gcc4/lib/amd64/libffi.so=libffi.so.4.0.1
+d none /opt/csw/gcc4/lib/gcj-4.3.3-9 0755 root bin
+f none /opt/csw/gcc4/lib/gcj-4.3.3-9/classmap.db 0644 root bin
+f none /opt/csw/gcc4/lib/gcj-4.3.3-9/libjvm.a 0644 root bin
+f none /opt/csw/gcc4/lib/gcj-4.3.3-9/libjvm.la 0755 root bin
+f none /opt/csw/gcc4/lib/gcj-4.3.3-9/libjvm.so 0755 root bin
+f none /opt/csw/gcc4/lib/lib-gnu-awt-xlib.a 0644 root bin
+f none /opt/csw/gcc4/lib/lib-gnu-awt-xlib.la 0755 root bin
+f none /opt/csw/gcc4/lib/lib-gnu-awt-xlib.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/lib-gnu-awt-xlib.so.9=lib-gnu-awt-xlib.so.9.0.0
+s none /opt/csw/gcc4/lib/lib-gnu-awt-xlib.so=lib-gnu-awt-xlib.so.9.0.0
+f none /opt/csw/gcc4/lib/libffi.a 0644 root bin
+f none /opt/csw/gcc4/lib/libffi.la 0755 root bin
+f none /opt/csw/gcc4/lib/libffi.so.4.0.1 0755 root bin
+s none /opt/csw/gcc4/lib/libffi.so.4=libffi.so.4.0.1
+s none /opt/csw/gcc4/lib/libffi.so=libffi.so.4.0.1
+f none /opt/csw/gcc4/lib/amd64/libgcj-tools.a 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/libgcj-tools.la 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/libgcj-tools.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/amd64/libgcj-tools.so.9=libgcj-tools.so.9.0.0
+s none /opt/csw/gcc4/lib/amd64/libgcj-tools.so=libgcj-tools.so.9.0.0
+f none /opt/csw/gcc4/lib/amd64/libgcj.a 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/libgcj.la 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/libgcj.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/amd64/libgcj.so.9=libgcj.so.9.0.0
+s none /opt/csw/gcc4/lib/amd64/libgcj.so=libgcj.so.9.0.0
+f none /opt/csw/gcc4/lib/libgcj-tools.a 0644 root bin
+f none /opt/csw/gcc4/lib/libgcj-tools.la 0755 root bin
+f none /opt/csw/gcc4/lib/libgcj-tools.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/libgcj-tools.so.9=libgcj-tools.so.9.0.0
+s none /opt/csw/gcc4/lib/libgcj-tools.so=libgcj-tools.so.9.0.0
+f none /opt/csw/gcc4/lib/libgcj.a 0644 root bin
+f none /opt/csw/gcc4/lib/libgcj.la 0755 root bin
+f none /opt/csw/gcc4/lib/libgcj.so.9.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/libgcj.so.9=libgcj.so.9.0.0
+s none /opt/csw/gcc4/lib/libgcj.so=libgcj.so.9.0.0
+f none /opt/csw/gcc4/lib/libgcj.spec 0644 root bin
+

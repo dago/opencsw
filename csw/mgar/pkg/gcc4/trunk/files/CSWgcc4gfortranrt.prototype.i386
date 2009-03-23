@@ -1,0 +1,15 @@
+d none /opt/csw 0755 root bin
+d none /opt/csw/gcc4 0755 root bin
+d none /opt/csw/gcc4/lib 0755 root bin
+d none /opt/csw/gcc4/lib/amd64 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/libgfortran.a 0644 root bin
+f none /opt/csw/gcc4/lib/amd64/libgfortran.la 0755 root bin
+f none /opt/csw/gcc4/lib/amd64/libgfortran.so.3.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/amd64/libgfortran.so.3=libgfortran.so.3.0.0
+s none /opt/csw/gcc4/lib/amd64/libgfortran.so=libgfortran.so.3.0.0
+f none /opt/csw/gcc4/lib/libgfortran.a 0644 root bin
+f none /opt/csw/gcc4/lib/libgfortran.la 0755 root bin
+f none /opt/csw/gcc4/lib/libgfortran.so.3.0.0 0755 root bin
+s none /opt/csw/gcc4/lib/libgfortran.so.3=libgfortran.so.3.0.0
+s none /opt/csw/gcc4/lib/libgfortran.so=libgfortran.so.3.0.0
+

@@ -21,5 +21,6 @@ include files/gar_override.mk
 include files/configure_def.mk  
 include files/pkg_scripts.mk
 include files/package_def.mk
+include files/amd_merge.mk
 
 include gar/category.mk
