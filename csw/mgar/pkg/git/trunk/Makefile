@@ -2,10 +2,13 @@ GARNAME = git
 GARVERSION = 1.6.2.1
 CATEGORIES = devel
 
+# disable tests until next version bump (at the top so it stands out)
+TEST_SCRIPTS = 
+
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 
-ARCHALL_CSWsvn = 1
-ARCHALL_CSWcvs = 1
+ARCHALL_CSWgitsvn = 1
+ARCHALL_CSWgitcvs = 1
 ARCHALL_CSWgitk = 1
 ARCHALL_CSWgitgui = 1
 ARCHALL_CSWgitemacs = 1
@@ -52,6 +55,7 @@ SPKG_DESC_CSWgitgui = Git GUI tool
 SPKG_DESC_CSWgitsvn = Git tools for working with Subversion repositories
 SPKG_DESC_CSWgitcvs = Git tools for working with CVS repositories
 SPKG_DESC_CSWgitdoc = Documentation for Git
+SPKG_DESC_CSWgitemacs = Git VCS support for Emacs
 
 GIT_USE_PROXY = 1
 GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
