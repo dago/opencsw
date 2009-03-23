@@ -25,7 +25,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = gsed-check.patch
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2 CSWiconv CSWsunmath
+REQUIRED_PKGS = CSWggettextrt CSWglib2
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-installed-glib
 
