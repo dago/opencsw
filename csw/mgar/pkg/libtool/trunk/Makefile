@@ -1,9 +1,13 @@
 GARNAME = libtool
-GARVERSION = 2.2.4
+RELEASE = a
+GARVERSION = 2.2.6
 CATEGORIES = devel
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.5.26 2.2.4
+MODULATIONS_GARVERSION = 1.5.26 2.2.6
+
+FILEVERSION_1.5.26 = 1.5.26
+FILEVERSION_2.2.6 = 2.2.6$(RELEASE)
 
 DESCRIPTION = A generic library support tool
 define BLURB
@@ -13,11 +17,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(FILEVERSION_$(VERSION)).tar.gz)
 DISTFILES    = $(SOURCEFILES)
 
 PACKAGES = CSWlibtool CSWlibtoolrt
 CATALOGNAME_CSWlibtoolrt = libtool_rt
+
+SPKG_SOURCEURL = http://www.gnu.org/software/libtool/
 
 REQUIRED_PKGS_CSWlibtool = CSWlibtoolrt
 
@@ -40,20 +46,21 @@ MERGE_DIRS_isa-i386-garversion-1.5.26 = $(libdir)
 MERGE_SCRIPTS_isa-amd64-garversion-1.5.26 = copy-relocated-only
 MERGE_DIRS_isa-amd64-garversion-1.5.26 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-garversion-2.2.4 = copy-all
-MERGE_SCRIPTS_isa-amd64-garversion-2.2.4 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-2.2.4 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-i386-garversion-2.2.6 = copy-all
+MERGE_SCRIPTS_isa-amd64-garversion-2.2.6 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-2.2.6 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 MERGE_SCRIPTS_isa-sparcv8-garversion-1.5.26 = copy-only
 MERGE_DIRS_isa-sparcv8-garversion-1.5.26 = $(libdir)
 MERGE_SCRIPTS_isa-sparcv9-garversion-1.5.26 = copy-relocated-only
 MERGE_DIRS_isa-sparcv9-garversion-1.5.26 = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-2.2.4 = copy-all
-MERGE_SCRIPTS_isa-sparcv9-garversion-2.2.4 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-2.2.4 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-garversion-2.2.6 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-garversion-2.2.6 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-2.2.6 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWlibtoolrt = $(PKGFILES_RT)
 
 include gar/category.mk
 
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
