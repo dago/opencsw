@@ -2,7 +2,7 @@ GARNAME = pnp
 GARVERSION = 0.4.13
 CATEGORIES = apps
 
-DESCRIPTION = Analyzing Nagios performance data with RRD databases.
+DESCRIPTION = analyzing nagios performance data with RRD databases.
 define BLURB
   PNP is an addon to nagios which analyzes performance data provided by plugins and stores them automatically into RRD-databases
 endef
@@ -28,22 +28,22 @@ LDFLAGS += -L/usr/ucblib
 LIBS += -lucb
 
 datadir = /opt/csw/nagios/share/pnp
-sysconfdir = $(prefix)/nagios/etc/pnp
+sysconfdir = $(prefix)/nagios/pnp/etc
 bindir = $(prefix)/nagios/bin
 libexecdir = $(prefix)/libexec/nagios-plugins
 
 REQUIRED_PKGS_sparc = SUNWscpux
 REQUIRED_PKGS_i386 = SUNWscpu
 REQUIRED_PKGS = CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd $(REQUIRED_PKGS_$(GARCH)) CSWcswclassutils
-SPKG_CLASSES = none cswinitsmf
+SPKG_CLASSES = none cswpreserveconf cswinitsmf
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswpnp$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+#PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswpnp$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl_lib_path=/opt/csw/lib/perl/csw
-CONFIGURE_ARGS += --with-perfdata-logfile=/opt/csw/nagios/var/perfdata.log
-CONFIGURE_ARGS += --with-perfdata-dir=/opt/csw/nagios/share/perfdata
-CONFIGURE_ARGS += --with-perfdata-spool-dir=/opt/csw/var/spool/perfdata
+CONFIGURE_ARGS += --with-perfdata-logfile=/opt/csw/nagios/pnp/var/perfdata.log
+CONFIGURE_ARGS += --with-perfdata-dir=/opt/csw/nagios/pnp/share/perfdata
+CONFIGURE_ARGS += --with-perfdata-spool-dir=/opt/csw/nagios/pnp/var/spool/perfdata
 CONFIGURE_ARGS += --htmldir=/opt/csw/nagios/share/pnp
 
 BUILD_ARGS = all
@@ -62,22 +62,22 @@ CONTRIBDIR = $(DATAROOTDIR)/contrib
 SYSCONFDIR = $(sysconfdir)
 LIBEXECDIR = $(libexecdir)
 BINDIR = $(bindir)
-PERFDATA_SPOOL_DIR=/opt/csw/nagios/var/spool/perfdata/
-PERFDATADIR = /opt/csw/nagios/share/perfdata
+PERFDATA_SPOOL_DIR=/opt/csw/nagios/pnp/var/spool/perfdata/
+PERFDATADIR = /opt/csw/nagios/pnp/share/perfdata
 
 install-base-custom:
-	@echo "$(GARCH)"
-	@echo "$(GARCH)"
-	@echo "$(GARCH)"
 	@ginstall -m 755 -d $(DESTDIR)$(BINDIR)
 	@ginstall -m 755 -d $(DESTDIR)$(PERFDATA_SPOOL_DIR)
 	@ginstall -m 754 $(WORKSRC)/src/npcd $(DESTDIR)$(BINDIR)
 	@ginstall -m 754 $(WORKSRC)/src/npcdmod $(DESTDIR)$(BINDIR)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswpnp $(DESTDIR)/etc/opt/csw/init.d/cswpnp
+	@$(MAKECOOKIE)
 
 install-html-custom:
 	@ginstall -m 755  -d $(DESTDIR)$(DATAROOTDIR)
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/nagios/pnp/share
+	@ln -s $(DESTDIR)$(DATAROOTDIR) $(DESTDIR)/opt/csw/nagios/pnp/share/html
 	@ginstall -m 755  -d $(DESTDIR)$(DATAROOTDIR)/images
 	@ginstall -m 755  -d $(DESTDIR)$(DATAROOTDIR)/include
 	@ginstall -m 755  -d $(DESTDIR)$(DATAROOTDIR)/include/font
@@ -105,12 +105,14 @@ install-html-custom:
 	do ginstall -m 644  $$file $(DESTDIR)$(DATAROOTDIR)/include/font; done
 	for file in $(WORKSRC)/share/pnp/include/font/makefont/*; \
 	do ginstall -m 644  $$file $(DESTDIR)$(DATAROOTDIR)/include/font/makefont; done
+	@$(MAKECOOKIE)
 
 install-scripts-custom:
 	@ginstall -m 755  -d $(DESTDIR)$(PERFDATADIR)
 	@ginstall -m 755  -d $(DESTDIR)$(LIBEXECDIR)
 	@ginstall -m 755  $(WORKSRC)/scripts/process_perfdata.pl $(DESTDIR)$(LIBEXECDIR)
 	#@ginstall -m 755  $(WORKSRC)/scripts/pcheck_pnp_rrds.pl $(DESTDIR)$(LIBEXECDIR)
+	@$(MAKECOOKIE)
 
 install-config-custom:
 	-rm -f $(DESTDIR)$(HTMLDIR)/conf/config.php
@@ -125,11 +127,12 @@ install-config-custom:
 	@ginstall -m 755  -d $(DESTDIR)$(SYSCONFDIR)/check_commands
 	@ginstall -m 755  -d $(DESTDIR)$(SYSCONFDIR)/pages
 	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/config.php $(DESTDIR)$(SYSCONFDIR)
-	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/process_perfdata.cfg-sample $(DESTDIR)$(SYSCONFDIR)
-	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/rra.cfg-sample $(DESTDIR)$(SYSCONFDIR)
-	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/check_commands/check_nwstat.cfg-sample $(DESTDIR)$(SYSCONFDIR)/check_commands
-	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/pages/web_traffic.cfg-sample $(DESTDIR)$(SYSCONFDIR)/pages
-	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/npcd.cfg-sample $(DESTDIR)$(SYSCONFDIR)/npcd.cfg
+	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/process_perfdata.cfg-sample $(DESTDIR)$(SYSCONFDIR)/process_perfdata.cfg.CSW
+	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/rra.cfg-sample $(DESTDIR)$(SYSCONFDIR)/rra.cfg.CSW
+	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/check_commands/check_nwstat.cfg-sample $(DESTDIR)$(SYSCONFDIR)/check_commands/check_nwstat.cfg.CSW
+	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/pages/web_traffic.cfg-sample $(DESTDIR)$(SYSCONFDIR)/pages/web_traffic.cfg.CSW
+	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/npcd.cfg-sample $(DESTDIR)$(SYSCONFDIR)/npcd.cfg.CSW
+	@$(MAKECOOKIE)
 
 install-contrib-custom:
 	@ginstall -m 755  -d $(DESTDIR)$(CONTRIBDIR)
@@ -138,3 +141,4 @@ install-contrib-custom:
 	@ginstall -m 644 $(WORKSRC)/contrib/verify_pnp_config $(DESTDIR)$(CONTRIBDIR)
 	@ginstall -m 644 $(WORKSRC)/contrib/verify_pnp_config.txt $(DESTDIR)$(CONTRIBDIR)
 	@ginstall -m 644 $(WORKSRC)/contrib/ssi/status-header.ssi $(DESTDIR)$(CONTRIBDIR)/ssi
+	@$(MAKECOOKIE)

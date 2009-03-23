@@ -7,12 +7,25 @@
 # Modified for CSW by Alex Moore 2005-12-03
 # 2007-08-18 Add pid file support.
 # 2007-08-19 Fix nagios uid used for pgrep.  Thanks to Will McDonald for this.
-# 2009-03-08 Fix for "user = nagios" and awk
+# 2009-03-08 Fix for "user = nagios" and awk by Juergen Arndt
+# 2009-03-23 modifications for cswinitsmf by Juergen Arndt
 
-CONFIG_FILE=/etc/opt/csw/pnp.cfg
-if [ ! -f $CONFIG_FILE ] ; then
-    CONFIG_FILE=/opt/csw/nagios/etc/pnp/npcd.cfg
+#FMRI application       # FMRI path for service, see http://wiki.opencsw.org/cswclassutils-package#toc0
+
+SMF_EXIT_ERR_CONFIG=1
+
+if [ -f /lib/svc/share/smf_include.sh ]
+then
+	. /lib/svc/share/smf_include.sh
 fi
+
+CONFIG_FILE=/opt/csw/nagios/pnp/etc/npcd.cfg
+
+if [ ! -f $CONFIG_FILE ]
+then
+	exit $SMF_EXIT_ERR_CONFIG
+fi
+
 BIN_FILE="/opt/csw/nagios/bin/npcd"
 pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
 PNP_USER=`awk '/^user/ { print $NF }' $CONFIG_FILE`
