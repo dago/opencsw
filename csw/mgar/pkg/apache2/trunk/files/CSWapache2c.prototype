@@ -1,3 +1,7 @@
+d none /etc/opt 0755 root sys
+d none /etc/opt/csw 0755 root bin
+d none /etc/opt/csw/init.d 0755 root bin
+f cswinitsmf /etc/opt/csw/init.d/cswapache2 0755 root bin
 d none /opt/csw/apache2 0755 root bin
 d none /opt/csw/apache2/etc 0755 root bin
 d none /opt/csw/apache2/etc/extra 0755 root bin

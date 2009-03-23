@@ -15,28 +15,4 @@ ln httpd.prefork httpd
 installf $PKGINST $AP2_HTTPD
 installf -f $PKGINST
 
-[ ! -f "$AP2_CONF" ] && exit 0
-
-if [ -x "$PKG_INSTALL_ROOT/opt/csw/etc/csw.conf" ] ; then
-    . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
-fi
-if [ -x "$PKG_INSTALL_ROOT/etc/opt/csw/csw.conf" ] ; then
-    . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
-fi
-
-if [ "$autoenable_daemons" = "no"  -o \
-     "$autoenable_apache2" = "no" ]; then
-    exit 0
-fi
-
-# Start apache
-if [ -z "$PKG_INSTALL_ROOT" ]; then
-    echo Starting apache...
-    if [ -x "$SVCADM" ]; then
-        $SVCADM enable cswapache2
-    elif [ -x "$AP2_CTRL" ]; then
-        $AP2_CTRL -k start
-    fi
-fi
-
 exit 0

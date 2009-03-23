@@ -14,31 +14,47 @@ include files/config.mk
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Dummy toplevel package
-DISTFILES += $(call admfiles,CSWapache2,depend prototype)
+DISTFILES += $(call admfiles,CSWapache2,prototype)
 # Runtime
-DISTFILES += $(call admfiles,CSWapache2rt,depend prototype checkinstall)
+DISTFILES += $(call admfiles,CSWapache2rt,prototype checkinstall)
 # Server (core)
-CSWapache2c_admfiles = depend prototype postinstall space
+CSWapache2c_admfiles = prototype postinstall space
 DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))
 # Prefork MPM (default)
-CSWap2prefork_admfiles  = depend prototype postinstall postremove space
+CSWap2prefork_admfiles  = prototype postinstall postremove space
 DISTFILES += $(call admfiles,CSWap2prefork,$(CSWap2prefork_admfiles))
 # mod_suexec
-CSWap2suexec_admfiles = depend prototype postinstall preremove
+CSWap2suexec_admfiles = prototype postinstall preremove
 DISTFILES += $(call admfiles,CSWap2suexec,$(CSWap2suexec_admfiles))
 # Manual
-DISTFILES += $(call admfiles,CSWapache2-manual,depend prototype)
+DISTFILES += $(call admfiles,CSWapache2-manual,prototype)
 # Development support
-DISTFILES += $(call admfiles,CSWapache2-devel,depend prototype)
+DISTFILES += $(call admfiles,CSWapache2-devel,prototype)
 
 # Standard package bits
-DISTFILES += CSWapache2.killproc cswapache2 svc-cswapache2 cswapache2.xml
+DISTFILES += CSWapache2.killproc cswapache2
 
 # Configuration templates
 DISTFILES += httpd.conf.CSW
 DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
+
+REQUIRED_PKGS_CSWapache2 = CSWapache2c CSWap2prefork
+REQUIRED_PKGS_CSWapache2c = CSWapache2rt CSWbdb44 CSWexpat CSWgdbm CSWiconv
+REQUIRED_PKGS_CSWapache2c += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
+REQUIRED_PKGS_CSWapache2c += CSWsqlite3 CSWcswclassutils
+REQUIRED_PKGS_CSWapache2rt = CSWbdb44 CSWexpat CSWgdbm CSWggettext CSWgsed
+REQUIRED_PKGS_CSWapache2rt += CSWiconv CSWoldaprt CSWosslrt CSWperl CSWsasl
+REQUIRED_PKGS_CSWapache2rt += CSWzlib CSWsqlite3
+REQUIRED_PKGS_CSWap2prefork = CSWapache2c CSWapache2rt CSWbdb44 CSWexpat CSWgdbm
+REQUIRED_PKGS_CSWap2prefork += CSWiconv CSWlibnet CSWoldaprt CSWosslrt CSWsasl
+REQUIRED_PKGS_CSWap2prefork += CSWzlib CSWsqlite3
+REQUIRED_PKGS_CSWap2suexec = CSWapache2
+REQUIRED_PKGS_CSWapache2-devel = CSWapache2rt
+REQUIRED_PKGS_CSWapache2-manual = CSWapache2
+
+SPKG_CLASSES_CSWapache2c = none cswinitsmf
 
 pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); \
@@ -73,8 +89,8 @@ rename-httpd:
 
 # Copy in specialized templates
 copy-local-files:
-	@ginstall -d $(DESTDIR)/etc/init.d
-	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/init.d
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
 	@ginstall $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra

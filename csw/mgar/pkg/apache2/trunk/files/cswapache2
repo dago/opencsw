@@ -6,6 +6,12 @@
 # ident    "@(#)http-apache2    1.2    04/11/11 SMI"
 #
 
+#RC_KNUM 16
+#RC_SNUM 80
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+#FMRI network
+
 APACHE_HOME=/opt/csw/apache2
 CONF_FILE=$APACHE_HOME/etc/httpd.conf
 APACHECTL=$APACHE_HOME/sbin/apachectl
