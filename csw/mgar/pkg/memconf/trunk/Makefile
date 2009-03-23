@@ -11,10 +11,9 @@ endef
 MASTER_SITES = http://www.4schmidts.com/unix/
 DISTFILES  = $(GARNAME).gz
 DISTFILES += memconf.man
+DISTFILES += COPYING
 
-PACKAGES = CSWmemconf
-CATALOGNAME_CSWmemconf = memconf
-SPKG_DESC_CSWmemconf = $(DESCRIPTION)
+SPKG_DESC = $(DESCRIPTION)
 ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
@@ -31,12 +30,9 @@ install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 	@cp $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)/$(GARNAME)
 	@cp $(WORKSRC)/$(GARNAME).man $(DESTDIR)$(mandir)/man1/$(GARNAME).1
-	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)$(docdir)/$(GARNAME)/license
 	@chmod 755 $(DESTDIR)$(bindir)/$(GARNAME)
 	@chmod 644 $(DESTDIR)$(mandir)/man1/$(GARNAME).1
-	@chmod 444 $(DESTDIR)$(docdir)/$(GARNAME)/license
 	@$(MAKECOOKIE)
