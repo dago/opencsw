@@ -12,7 +12,7 @@ endef
 PACKAGES    = CSWpmpdfapi2
 CATALOGNAME = pm_pdfapi2
 
-DISTFILES += CSWpmpdfapi2.gspec
+ARCHALL_CSWpmpdfapi2 = 1
 
 REQUIRED_PKGS_CSWpmpdfapi2 += CSWpmcompresszlib
 
