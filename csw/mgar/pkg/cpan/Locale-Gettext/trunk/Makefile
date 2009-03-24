@@ -13,7 +13,7 @@ endef
 PACKAGES = CSWpmlocalegettext
 CATALOGNAME = pm_localegettext
 
-PREREQUISITE_PKGS = CSWggettextrt
+REQUIRED_PKGS = CSWggettextrt
 
 include gar/category.mk
 
