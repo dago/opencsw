@@ -1,0 +1,14 @@
+--- ./configure.in~	2008-01-29 16:41:18.000000000 -0500
++++ ./configure.in	2008-02-14 18:51:30.386628000 -0500
+@@ -798,7 +798,10 @@
+ # This may get things to compile even if bind-8 is installed
+ AC_CHECK_FUNC(bind, , AC_CHECK_LIB(bind, bind))
+ # Check if crypt() exists in libc or libcrypt, sets LIBS if needed
+-AC_SEARCH_LIBS(crypt, crypt, AC_DEFINE(HAVE_CRYPT, 1, [crypt]))
++#AC_SEARCH_LIBS(crypt, crypt, AC_DEFINE(HAVE_CRYPT, 1, [crypt]))
++# For crypt() on Solaris use libc, not libcrypt
++AC_CHECK_LIB(c, crypt)
++AC_CHECK_FUNC(crypt, AC_DEFINE([HAVE_CRYPT], [1], [crypt])) 
+ 
+ # For the sched_yield() function on Solaris
+ AC_CHECK_FUNC(sched_yield, , AC_CHECK_LIB(posix4, sched_yield))

@@ -1,0 +1,248 @@
+The starting point is the BUILD.NOTES from Phil.  Listed below is the 
+original document.  Changes had to be made, but the basic compile
+process is the same.  Be sure to read Phil's notes first.
+
+Create build directories for sparc and i386.  The scripts for the 
+  build process are in /export/medusa/asmoore/pkgs/mysql5.  The
+  files for mysql5rt are in a subdirectory of mysql5 named mysql5rt.
+
+Build sparcv8, ultra, and sparcv9 in the sparc directory.
+Build i386 and pentium in the i386 directory.
+
+1) Patch source
+  The complete list of steps is in mypatches.  Source this
+  file.  It also contains a touch statement to ensure that needed
+  configuration files are rebuilt.
+
+  When a new release of the source is available, check the patches
+  and add/remove patches as needed for the new release.
+
+  For 5.0.20 and building sparcv9: compile-csw fails.  Apply patch-v9-libtool
+  and run gmake again.
+  NOTE: The problem with 5.0.20 and sparcv9 is fixed with 5.0.21
+
+  *** IMPORTANT *** 
+  There must be a line in ./sql/Makefile.in that begins with the following:
+    mysqld_LDADD = @bdb_libs_with_path@
+  If not run automake from the build root.  automake may fail when run
+  run from compile-csw.
+
+2) Export variables
+  Source the scripts named myflags.<arch>
+  There is a script for myflags.i386, which is for i386 and pentium.
+  There is a script for myflags.sparc, which is for sparcv8 and
+  sparcv8plus+vis.
+  There is a script for myflags.sparc.64, which is for sparcv9.
+
+3) compile-csw
+  Source this script to compile the directory.  Pass the appropriate
+  value for architecture, i.e., v8, ultra, sparcv9, i386, pentium
+
+4) It is best to verify a few things.
+  The compile script should complete normally.  This occurs for all
+  but sparcv9, which crashes at the client directory.  It may not be
+  necessary to fix this.  Verify that the required sparcv9 objects 
+  (from the list below) exist and are the correct  architecture.  If
+  so, there is no need to fix the compile error.  If fixing the compile
+  error is desired, then edit  client/Makefile and replace /opt/csw/lib
+  with /opt/csw/lib/sparcv9.  Then run only gmake to complete the 
+  sparcv9 build.
+
+  The daemon, sql/mysqld should be the proper architecture.
+
+  The shared object libraries in libmysql/.libs and libmysql_r/.libs
+  should be the proper architecture and exist.  Sometimes, the build
+  does not work properly due to some unknown error and builds shared
+  object libraries without .so in the name.  The mypatches script is
+  supposed to have fixed this and it normally does work just fine.
+  If the .so library names do not exist, `touch configure.in aclocal.m4'
+  and run the build again.
+
+5) Run `MAKE=gmake stagepkg` for the first build in a directory, i.e.,
+  for sparcv8 and i386.
+  Note that i386 uses isaexec for mysqld.  Sparc does not and has
+  a default symlink to the ultra object.
+
+  Additional steps for each build after stagepkg:
+
+    i386:
+	mkdir ./cswstage/opt/csw/mysql5/libexec/i386
+	mkdir ./cswstage/opt/csw/mysql5/libexec/pentium
+	mkdir ./cswstage/opt/csw/mysql5/lib/mysql/pentium
+	mv ./cswstage/opt/csw/mysql5/libexec/mysqld ./cswstage/opt/csw/mysql5/libexec/i386/
+
+    pentium:
+	mv ./sql/mysqld ./cswstage/opt/csw/mysql5/libexec/pentium/
+	(cd libmysql_r/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/pentium ; tar xf - )
+	(cd libmysql/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/pentium ; tar xf - )
+
+    v8:
+	mv ./cswstage/opt/csw/mysql5/libexec/mysqld ./cswstage/opt/csw/mysql5/libexec/mysqld32
+	mkdir ./cswstage/opt/csw/mysql5/lib/mysql/sparcv8plus+vis
+	mkdir ./cswstage/opt/csw/mysql5/lib/mysql/sparcv9
+
+    ultra:
+	mv ./sql/mysqld ./cswstage/opt/csw/mysql5/libexec/mysqld32+
+	(cd libmysql_r/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv8plus+vis ; tar xf - )
+	(cd libmysql/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv8plus+vis ; tar xf - )
+
+    sparcv9:
+	mv ./sql/mysqld ./cswstage/opt/csw/mysql5/libexec/mysqld64
+	(cd libmysql_r/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv9 ; tar xf - )
+	(cd libmysql/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv9 ; tar xf - )
+
+6) After the builds are complete for a directory and the staging directory
+   is setup, perform these steps.
+
+    sparc directory:
+
+	/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/libexec/mysqld*
+	/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/lib/mysql/lib*.so.15.0.0
+	/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/lib/mysql/*/lib*.so.15.0.0
+	cp -p /export/medusa/asmoore/pkgs/mysql5/cswmysql5 ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/mysql5rc ./cswstage/opt/csw/mysql5/share/mysql/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/mysql5.xml ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/svc-mysql5 ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/quick_start-csw ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/README.CSW ./cswstage/
+
+    i386 directory:
+	/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/libexec/*/mysqld
+	/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/lib/mysql/lib*.so.15.0.0
+	/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/lib/mysql/*/lib*.so.15.0.0
+	cp -p /export/medusa/asmoore/pkgs/mysql5/cswmysql5 ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/mysql5rc ./cswstage/opt/csw/mysql5/share/mysql/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/mysql5.xml ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/svc-mysql5 ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/quick_start-csw ./cswstage/
+	cp -p /export/medusa/asmoore/pkgs/mysql5/README.CSW ./cswstage/
+
+7)  Finish with `cd /export/medusa/asmoore/pkgs/mysql5`
+    and create the mysql5 packages, the mysql5rt packages
+    in ./mysql5rt and the mysql5client packages in ./mysql5client.
+
+
+
+******* BUILD.NOTES from Phil *******
+
+http://dev.mysql.com/doc/mysql/en/Upgrading-from-4.0.html
+
+REQUEST: have symlink for client lib, in /opt/csw/lib
+
+Build with SunCC, not gcc.
+Even though mysql itself is C++ code, this should still be okay --
+ the client libs seem to be straight C, NOT C++.
+
+
+configure has an option, --with-orbit, but no source seems
+to USE IT at this time!!
+
+Note: MUST use --with-berkeleydb, NOT --with-berkeleydb=/opt/csw
+  That is because mysql comes with a HACKED version of bdb.
+  We have to thus disable the stupid -ldb in sql/Makefile, with our patchfile
+
+
+  export OPENSSL_INCLUDE=-I/opt/csw/include 
+  export OPENSSL_LIB=/opt/csw/lib
+  export CPPFLAGS=-I/opt/csw/include
+
+
+gpatch -p0 </export/home/phil/pkgs/mysql5/patchfile
+
+ ---===COMPILING===-----
+
+****** x86 compiles ******
+
+  ~/pkgs/mysql5/compile-csw i386
+
+  #OLDER versions will die, so then manually do...
+
+  #gnu-as strings/strings-x86.s  -o strings/strings-x86.o
+  #gnu-as strings/longlong2str-x86.s  -o strings/longlong2str-x86.o
+
+
+  gmake -j 2
+
+	stagepkg
+
+mkdir cswstage/opt/csw/mysql5/libexec/pentium
+mkdir cswstage/opt/csw/mysql5/libexec/i386
+mkdir cswstage/opt/csw/mysql5/lib/mysql/pentium
+
+ mv cswstage/opt/csw/mysql5/libexec/mysqld \
+     cswstage/opt/csw/mysql5/libexec/i386
+     
+
+  ~/pkgs/mysql5/compile-csw pentium
+  gnu-as strings/strings-x86.s  -o strings/strings-x86.o
+  gnu-as strings/longlong2str-x86.s  -o strings/longlong2str-x86.o
+  gmake -j 2
+
+   mv sql/mysqld cswstage/opt/csw/mysql5/libexec/pentium
+
+ (cd libmysql_r/.libs ; tar cf - lib*so*) |
+   (cd cswstage/opt/csw/mysql5/lib/mysql/pentium; tar xf - )
+ (cd libmysql/.libs ; tar cf - lib*so*) |
+   (cd cswstage/opt/csw/mysql5/lib/mysql/pentium; tar xf - )
+
+mcs -c cswstage/opt/csw/mysql5/libexec/*/mysqld
+mcs -c cswstage/opt/csw/mysql5/lib/mysql/lib*.so.12.0.0
+mcs -c cswstage/opt/csw/mysql5/lib/mysql/*/lib*.so.12.0.0
+
+	cd  ~/pkgs/mysql5
+	cp cswmysql ~/build/mysql*/cswstage
+	createpkg -r ~/build/mysql*/cswstage
+	cd mysql5rt
+	createpkg -r ~/build/mysql*/cswstage
+
+######################################################################
+#######   FOR  sparc compiles   #########
+
+
+ ~/pkgs/mysql5/compile-csw v8
+
+    stagepkg
+    mkdir cswstage/opt/csw/mysql5/lib/mysql/sparcv8plus+vis
+    mkdir cswstage/opt/csw/mysql5/lib/mysql/sparcv9
+
+    mv cswstage/opt/csw/mysql5/libexec/mysqld \
+       cswstage/opt/csw/mysql5/libexec/mysqld32
+
+  ~/pkgs/mysql5/compile-csw ultra
+
+    mv sql/mysqld cswstage/opt/csw/mysql5/libexec/mysqld32+
+
+
+  (cd libmysql_r/.libs ; tar cf - lib*so* )| 
+    (cd  cswstage/opt/csw/mysql5/lib/mysql/sparcv8plus+vis; tar xf -)
+  (cd libmysql/.libs ; tar cf - lib*so* ) | 
+    (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv8plus+vis; tar xf -)
+
+
+  # [===  sparcv9 64bit version ===]
+
+  ~/pkgs/mysql5/compile-csw sparcv9
+
+  mkdir cswstage/opt/csw/mysql5/lib/mysql/sparcv9
+
+  cp sql/mysqld cswstage/opt/csw/mysql5/libexec/mysqld64
+    #  DO NOT just do isaexec. 64bit is SLOWER, so only use if needed.
+    #  Do not automatically use the server executable that way
+
+  (cd libmysql_r/.libs ; tar cf - lib*so* )| 
+    (cd  cswstage/opt/csw/mysql5/lib/mysql/sparcv9; tar xf -)
+  (cd libmysql/.libs ; tar cf - lib*so* ) | 
+    (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv9; tar xf -)
+
+
+mcs -c cswstage/opt/csw/mysql5/libexec/mysqld*
+mcs -c cswstage/opt/csw/mysql5/lib/mysql/lib*.so.12.0.0
+mcs -c cswstage/opt/csw/mysql5/lib/mysql/*/lib*.so.12.0.0
+
+  
+cd  ~/pkgs/mysql5
+cp cswmysql5 ~/build/mysql*/cswstage
+createpkg -r ~/build/mysql*/cswstage
+
+
+######################################################################

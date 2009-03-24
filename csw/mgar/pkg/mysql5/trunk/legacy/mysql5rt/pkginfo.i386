@@ -1,0 +1,8 @@
+PKG=CSWmysql51rt
+NAME=mysql51rt - run-time libraries for MySQL 5.1
+VERSION=5.1.23,REV=2008.01.15_rev=rc
+ARCH=i386
+CATEGORY=application
+VENDOR=http://www.mysql.com/  packaged for CSW by Alex Moore
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=asmoore@blastwave.org

@@ -1,0 +1,68 @@
+<?xml version='1.0'?>
+ <!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<!--
+
+        William Pool (Puddle) 02/05
+        Service manifest for MySQL
+        E-mail: puddle@flipmotion.com
+	Modified for CSWmysql5 by Alex Moore 01/06
+ -->
+
+ <service_bundle type='manifest' name='mysql:mysql'>
+
+ <service
+         name='network/cswmysql5'
+         type='service'
+         version='1'>
+         <create_default_instance enabled='false' />
+         <single_instance />
+
+
+         <dependency name='fs'
+                 grouping='require_all'
+                 restart_on='none'
+                 type='service'>
+                 <service_fmri value='svc:/system/filesystem/local' />
+         </dependency>
+
+         <dependency name='net'
+                 grouping='require_all'
+                 restart_on='none'
+                 type='service'>
+                 <service_fmri value='svc:/network/loopback' />
+         </dependency>
+
+	 <dependent
+		name='cswmysql5_multi-user'
+		grouping='optional_all'
+		restart_on='none'>
+		<service_fmri
+		    value='svc:/milestone/multi-user' />
+	 </dependent>
+
+         <exec_method
+                 type='method'
+                 name='start'
+                 exec='/opt/csw/lib/svc/method/svc-mysql5 start'
+                 timeout_seconds='-1'>
+         </exec_method>
+
+         <exec_method
+                 type='method'
+                 name='stop'
+                 exec=':kill'
+                 timeout_seconds='-1'>
+         </exec_method>
+
+    	 <exec_method
+                 type='method'
+                 name='restart'
+                 exec='/opt/csw/lib/svc/method/svc-mysql5 restart'
+                 timeout_seconds='-1'>
+         </exec_method>
+
+
+
+ </service>
+
+ </service_bundle>

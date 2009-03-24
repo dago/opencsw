@@ -1,0 +1,8 @@
+PKG=CSWmysql51bench
+NAME=mysql51bench - MySQL 5.1 Benchmark Suite
+VERSION=5.1.23,REV=2008.02.15_rev=rc
+ARCH=all
+CATEGORY=application
+VENDOR=http://www.mysql.com/  packaged for CSW by Alex Moore
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=asmoore@blastwave.org

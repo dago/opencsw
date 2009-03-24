@@ -1,0 +1,13 @@
+--- ./configure.in~	2006-03-04 15:35:12.000000000 -0500
++++ ./configure.in	2006-03-10 19:21:11.593169000 -0500
+@@ -736,7 +736,9 @@
+ # This may get things to compile even if bind-8 is installed
+ AC_CHECK_FUNC(bind, , AC_CHECK_LIB(bind, bind))
+ # For crypt() on Linux
+-AC_CHECK_LIB(crypt, crypt)
++#AC_CHECK_LIB(crypt, crypt)
++# For crypt() on Solaris use libc, not libcrypt
++AC_CHECK_LIB(c, crypt)
+ AC_CHECK_FUNC(crypt, AC_DEFINE([HAVE_CRYPT], [1], [crypt])) 
+ 
+ # For sem_xxx functions on Solaris 2.6

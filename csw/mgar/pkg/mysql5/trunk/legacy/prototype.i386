@@ -1,0 +1,157 @@
+i pkginfo
+i copyright
+i depend
+i checkinstall
+i preinstall
+i preremove
+i postinstall
+i i.smfno
+i i.smfyes
+i space
+f none /opt/csw/mysql5/bin/resolveip 0755 root bin
+f none /opt/csw/mysql5/bin/my_print_defaults 0755 root bin
+f none /opt/csw/mysql5/bin/resolve_stack_dump 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_waitpid 0755 root bin
+f none /opt/csw/mysql5/bin/innochecksum 0755 root bin
+f none /opt/csw/mysql5/bin/myisamchk 0755 root bin
+f none /opt/csw/mysql5/bin/myisam_ftdump 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_tzinfo_to_sql 0755 root bin
+f none /opt/csw/mysql5/bin/mysqltest 0755 root bin
+f none /opt/csw/mysql5/bin/mysqld_safe 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_install_db 0755 root bin
+f none /opt/csw/mysql5/bin/msql2mysql 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_fix_privilege_tables 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_fix_extensions 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_setpermission 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_secure_installation 0755 root bin
+f none /opt/csw/mysql5/bin/mysqlbug 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_convert_table_format 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_find_rows 0755 root bin
+f none /opt/csw/mysql5/bin/mysqldumpslow 0755 root bin
+f none /opt/csw/mysql5/bin/mysqld_multi 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_client_test 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_upgrade 0755 root bin
+d none /opt/csw/mysql5/share 0755 root bin
+d none /opt/csw/mysql5/share/mysql 0755 root bin
+f none /opt/csw/mysql5/share/mysql/mi_test_all 0644 root bin
+f none /opt/csw/mysql5/share/mysql/mi_test_all.res 0644 root bin
+d none /opt/csw/mysql5/share/mysql/czech 0755 root bin
+f none /opt/csw/mysql5/share/mysql/czech/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/danish 0755 root bin
+f none /opt/csw/mysql5/share/mysql/danish/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/dutch 0755 root bin
+f none /opt/csw/mysql5/share/mysql/dutch/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/english 0755 root bin
+f none /opt/csw/mysql5/share/mysql/english/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/estonian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/estonian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/french 0755 root bin
+f none /opt/csw/mysql5/share/mysql/french/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/german 0755 root bin
+f none /opt/csw/mysql5/share/mysql/german/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/greek 0755 root bin
+f none /opt/csw/mysql5/share/mysql/greek/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/hungarian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/hungarian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/italian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/italian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/japanese 0755 root bin
+f none /opt/csw/mysql5/share/mysql/japanese/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/korean 0755 root bin
+f none /opt/csw/mysql5/share/mysql/korean/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/norwegian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/norwegian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/norwegian-ny 0755 root bin
+f none /opt/csw/mysql5/share/mysql/norwegian-ny/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/polish 0755 root bin
+f none /opt/csw/mysql5/share/mysql/polish/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/portuguese 0755 root bin
+f none /opt/csw/mysql5/share/mysql/portuguese/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/romanian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/romanian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/russian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/russian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/serbian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/serbian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/slovak 0755 root bin
+f none /opt/csw/mysql5/share/mysql/slovak/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/spanish 0755 root bin
+f none /opt/csw/mysql5/share/mysql/spanish/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/swedish 0755 root bin
+f none /opt/csw/mysql5/share/mysql/swedish/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/ukrainian 0755 root bin
+f none /opt/csw/mysql5/share/mysql/ukrainian/errmsg.sys 0644 root bin
+d none /opt/csw/mysql5/share/mysql/charsets 0755 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/README 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/Index.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/armscii8.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/ascii.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/cp1250.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/cp1251.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/cp1256.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/cp1257.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/cp850.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/cp852.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/cp866.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/dec8.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/geostd8.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/greek.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/hebrew.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/hp8.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/keybcs2.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/koi8r.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/koi8u.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/latin1.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/latin2.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/latin5.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/latin7.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/macce.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/macroman.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/charsets/swe7.xml 0644 root bin
+f none /opt/csw/mysql5/share/mysql/errmsg.txt 0644 root bin
+f none /opt/csw/mysql5/share/mysql/fill_help_tables.sql 0644 root bin
+f none /opt/csw/mysql5/share/mysql/mysql_fix_privilege_tables.sql 0644 root bin
+f none /opt/csw/mysql5/share/mysql/mysql_system_tables.sql 0644 root bin
+f none /opt/csw/mysql5/share/mysql/mysql_system_tables_data.sql 0644 root bin
+f none /opt/csw/mysql5/share/mysql/mysql_test_data_timezone.sql 0644 root bin
+f none /opt/csw/mysql5/share/mysql/my-small.cnf 0644 root bin
+f none /opt/csw/mysql5/share/mysql/my-medium.cnf 0644 root bin
+f none /opt/csw/mysql5/share/mysql/my-large.cnf 0644 root bin
+f none /opt/csw/mysql5/share/mysql/my-huge.cnf 0644 root bin
+f none /opt/csw/mysql5/share/mysql/my-innodb-heavy-4G.cnf 0644 root bin
+f none /opt/csw/mysql5/share/mysql/mysql-log-rotate 0644 root bin
+f none /opt/csw/mysql5/share/mysql/binary-configure 0644 root bin
+f none /opt/csw/mysql5/share/mysql/ndb-config-2-node.ini 0644 root bin
+f none /opt/csw/mysql5/share/mysql/mysql.server 0755 root bin
+f none /opt/csw/mysql5/share/mysql/mysql5rc 0644 root bin
+f none /opt/csw/mysql5/share/mysql/quick_start-csw=./quick_start-csw 0755 root bin
+d none /opt/csw/mysql5/share/mysql/doc 0755 root bin
+f none /opt/csw/mysql5/share/mysql/doc/README.CSW=./README.CSW 0644 root bin
+d none /opt/csw/mysql5/libexec 0755 root bin
+f none /opt/csw/mysql5/libexec/mysqlmanager 0755 root bin
+d none /opt/csw/mysql5/libexec/i386 0755 root bin
+f none /opt/csw/mysql5/libexec/i386/mysqld 0755 root bin
+d none /opt/csw/mysql5/libexec/pentium 0755 root bin
+f none /opt/csw/mysql5/libexec/pentium/mysqld 0755 root bin
+d none /opt/csw/mysql5/libexec/amd64 0755 root bin
+f none /opt/csw/mysql5/libexec/amd64/mysqld 0755 root bin
+l none /opt/csw/mysql5/libexec/mysqld=/opt/csw/bin/isaexec 0755 root bin
+f none /opt/csw/mysql5/share/man/man1/mysqld_multi.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/mysqld_safe.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/mysql_fix_privilege_tables.1 0644 root bin
+d none /opt/csw/mysql5/share/man/man8 0755 root bin
+f none /opt/csw/mysql5/share/man/man8/mysqld.8 0644 root bin
+d none /opt/csw/mysql5/var 0700 mysql mysql
+f smfno /etc/init.d/cswmysql5=cswmysql5 0755 root bin
+l smfno /etc/rc0.d/K15cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rc1.d/K15cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rc2.d/K15cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rc3.d/S40cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rcS.d/K15cswmysql5=/etc/init.d/cswmysql5
+d smfyes /opt/csw/var/svc 0755 root bin
+d smfyes /opt/csw/var/svc/manifest 0755 root bin
+d smfyes /opt/csw/var/svc/manifest/network 0755 root bin
+f smfyes /opt/csw/var/svc/manifest/network/mysql5.xml=/mysql5.xml 0644 root bin
+d smfyes /opt/csw/lib/svc 0755 root bin
+d smfyes /opt/csw/lib/svc/method 0755 root bin
+f smfyes /opt/csw/lib/svc/method/svc-mysql5=svc-mysql5 0755 root bin

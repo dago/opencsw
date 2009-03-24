@@ -1,0 +1,8 @@
+PKG=CSWmysql51
+NAME=mysql51 - MySQL 5.1 database management system - server files
+VERSION=5.1.23,REV=2008.02.15_rev=rc
+ARCH=sparc
+CATEGORY=application
+VENDOR=http://www.mysql.com/  packaged for CSW by Alex Moore
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=asmoore@blastwave.org

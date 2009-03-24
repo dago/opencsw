@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# This script exists for the sole purpose of making sure
+# the required user accounts exist already.
+# specifically, "user mysql, group mysql"
+
+# If installing on a filesystem that is not running the OS, exit this script.
+if [ ! x"$PKG_INSTALL_ROOT" = x"" -a ! x"$PKG_INSTALL_ROOT" = x"/" ] ; then exit 0 ; fi
+
+if [ x"$PKG_INSTALL_ROOT" = x"" ] ; then
+    PKG_INSTALL_ROOT="/"
+fi
+
+MYSQLHOME=/opt/csw/mysql5
+
+#First check target machines password file, THEN check
+#NIS/NIS+/whatever
+
+grep '^mysql:' /etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+	getent passwd mysql >/dev/null
+	if [ $? -ne 0 ] ; then
+		NEEDUSER=1
+	fi
+fi
+
+grep '^mysql:' /etc/group >/dev/null
+if [ $? -ne 0 ] ; then
+	getent group mysql >/dev/null
+	if [ $? -ne 0 ] ; then
+		NEEDGROUP=1
+	fi
+fi
+
+if [ "$NEEDGROUP" = 1 ] ; then
+	echo adding mysql group
+	chroot $PKG_INSTALL_ROOT /usr/sbin/groupadd mysql
+else
+	echo mysql group detected
+fi
+
+if [ "$NEEDUSER" = 1 ] ; then
+	echo adding mysql user
+	chroot $PKG_INSTALL_ROOT /usr/sbin/useradd -g mysql mysql
+	chroot $PKG_INSTALL_ROOT /usr/sbin/usermod -s /bin/false -d $MYSQLHOME mysql
+else
+	echo mysql user detected
+fi

@@ -1,0 +1,14 @@
+--- ./sql/Makefile.am~	2006-04-26 14:30:47.000000000 -0400
++++ ./sql/Makefile.am	2006-05-27 10:19:38.737496000 -0400
+@@ -39,9 +39,9 @@
+ 			$(top_builddir)/regex/libregex.a \
+ 			$(top_builddir)/strings/libmystrings.a @ZLIB_LIBS@ @NDB_SCI_LIBS@
+ 
+-mysqld_LDADD =		@MYSQLD_EXTRA_LDFLAGS@ \
+-			@bdb_libs@ @innodb_libs@ @pstack_libs@ \
++mysqld_LDADD =		@bdb_libs_with_path@ @innodb_libs@ @pstack_libs@ \
+                         @innodb_system_libs@ \
++			@MYSQLD_EXTRA_LDFLAGS@ \
+ 			@ndbcluster_libs@ @ndbcluster_system_libs@ \
+ 			$(LDADD)  $(CXXLDFLAGS) $(WRAPLIBS) @LIBDL@ \
+                         @yassl_libs@ @openssl_libs@

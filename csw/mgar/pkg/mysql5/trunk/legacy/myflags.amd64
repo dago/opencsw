@@ -1,0 +1,12 @@
+#!/bin/sh
+OPENSSL_INCLUDE=-I/opt/csw/include
+OPENSSL_LIB=/opt/csw/lib/amd64
+CPPFLAGS=-I/opt/csw/include
+LD_OPTIONS='-64 -R/opt/csw/lib/amd64:/opt/csw/mysql5/lib/mysql/amd64'
+PERL=/opt/csw/bin/perl
+export OPENSSL_INCLUDE OPENSSL_LIB CPPFLAGS LD_OPTIONS PERL
+CFLAGS='-xarch=amd64 -Xa -xstrconst -mt -D_FORTEC_ -xnolibmopt'
+LDFLAGS='-xarch=amd64'
+CXXFLAGS='-xarch=amd64 -noex -mt -D_FORTEC_ -xnolibmopt'
+PATH=/opt/studio/SOS11/SUNWspro/bin:/opt/csw/bin:/usr/xpg4/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/dt/bin:/usr/openwin/bin:/usr/ccs/bin
+export CFLAGS LDFLAGS CXXFLAGS PATH

@@ -1,0 +1,4 @@
+#!/bin/sh
+mv ./cswstage/opt/csw/mysql5/libexec/mysqld ./cswstage/opt/csw/mysql5/libexec/mysqld32
+mkdir ./cswstage/opt/csw/mysql5/lib/mysql/sparcv8plus+vis
+mkdir ./cswstage/opt/csw/mysql5/lib/mysql/sparcv9

@@ -1,0 +1,8 @@
+PKG=CSWmysql5
+NAME=mysql5 - MySQL database management system - server files
+VERSION=5.0.18,REV=2006.01.23
+ARCH=i386
+CATEGORY=application
+VENDOR=http://www.mysql.com/  packaged for CSW by Alex Moore
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=asmoore@blastwave.org

@@ -1,0 +1,92 @@
+#! /bin/sh
+
+# adjusted from BUILD/compile-solaris-sparc-forte
+
+[ -f Makefile ]  &&  gmake -k clean || true
+
+
+
+#/bin/rm -f */.deps/*.P config.cache
+ 
+#aclocal && autoheader && aclocal && automake && autoconf
+#(cd bdb/dist && sh s_all)
+#(cd innobase && aclocal && autoheader && aclocal && automake && autoconf)
+#if [ -d gemini ]
+#then
+#   (cd gemini && aclocal && autoheader && aclocal && automake && autoconf)
+#fi
+
+
+# Assume Forte is installed in /opt/SUNWSpro
+
+#PATH=/opt/SUNWspro/bin/:$PATH
+
+
+LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R/opt/csw/mysql5/lib/mysql/$ISALIST'
+
+case "$1" in
+	amd64)
+		EXTRA="-xO3 -xarch=amd64"
+		MYLDFLAGS='-L/opt/csw/lib/amd64'
+		LD_OPTIONS='-R/opt/csw/lib/amd64:/opt/csw/mysql5/lib/mysql/amd64'
+	;;
+	sparcv9)
+		EXTRA="-fast -xtarget=ultra"
+		EXTRA_64_BIT="-xarch=v9"
+		MYLDFLAGS='-L/opt/csw/lib/64'
+	LD_OPTIONS='-R/opt/csw/lib/sparcv9 -R/opt/csw/mysql5/lib/mysql/sparcv9'
+
+	;;
+	v8|sparc)
+		EXTRA="-xO3 -xarch=v8"
+		MYLDFLAGS='-L/opt/csw/lib/32'
+	;;
+	ultra)
+		EXTRA="-xO3 -xtarget=ultra"
+		MYLDFLAGS='-L/opt/csw/lib/32'
+	;;
+	i386|386)
+		EXTRA="-xO3 -xtarget=386"
+		MYLDFLAGS='-L/opt/csw/lib/32'
+	;;
+	pentium)
+		EXTRA="-xO3 -xtarget=pentium"
+		MYLDFLAGS='-L/opt/csw/lib/32'
+	;;
+	*)
+		echo ERROR: you need to specify an arch to build for
+		exit 1
+	;;
+esac
+
+#
+# The following should not need to be touched
+#
+
+STD="-mt -D_FORTEC_ $EXTRA $EXTRA_64_BIT"
+ASFLAGS="$EXTRA_64_BIT" \
+LDFLAGS="$MYLDFLAGS $EXTRA_64_BIT" \
+CC=cc CFLAGS="-Xa -xstrconst $STD" \
+CXX=CC CXXFLAGS="-noex $STD" \
+./configure --prefix=/opt/csw/mysql5 --disable-assembler \
+  --without-libedit \
+  --without-docs \
+  --enable-thread-safe-client --with-named-z-libs=no \
+  --with-berkeley-db --with-ssl \
+  --with-innodb --enable-local-infile --with-extra-charsets=all \
+  --with-low-memory --with-plugins=max-no-ndb
+
+## --with-extra-charsets=complex 
+
+#./configure --prefix=/opt/csw/mysql5 --disable-assembler \
+#  --with-extra-charsets=complex --enable-thread-safe-client \
+#  --with-innodb --with-berkeley-db --with-openssl --with-vio \
+#  --enable-local-infile
+
+#gmake -j 2
+gmake
+
+#if [ $? = 0 ] ; 
+#then
+#  make test
+#fi

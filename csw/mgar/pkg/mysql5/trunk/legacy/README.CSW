@@ -1,0 +1,62 @@
+2007-06-17
+MySQL 5.1 is still in beta.  This package is released for your testing
+only.
+
+2007-06-03
+This update fixes a startup script problem that caused the script to not
+work when --datadir is not the default.
+
+This update also adds amd64 mysqld and client libraries.
+
+2006-12-29
+This update adds support for csw.conf.  See the following url for details.
+http://www.blastwave.org/standards/csw.conf.html
+The daemon specific name for this package is mysql5.
+
+*** IMPORTANT ***
+If you are using mysql5rc; please move your options to my.cnf and eliminate
+  mysql5rc.  A future release will remove mysql5rc.
+my.cnf is more flexible and any new or missing options will not be added to
+  mysql5rc.
+quick_start-csw is changed with this release to Not write mysql5rc.  Options
+  for --basedir and --datadir are included in the default my.cnf files.
+*** END OF IMPORTANT ***
+
+2006-04-16
+This update fixes some problems with quick_start-csw and svc-mysql5.
+I have also corrected some issues when using a database directory that
+  is not /opt/csw/mysql5/var
+
+If you are not using the default location for --datadir, package installation
+  will NOT start CSWmysql5.  More code is needed for that.  I welcome patches.
+
+If you are not using the default location for --datadir, you will find
+  that CSWmysql5 works much better when you create /etc/my.cnf with at
+  least the entries that follow.  You may also want some entries in this
+  global options file for client programs that you use.
+  For example: --datadir is /db/mysql5/var
+  Create /etc/my.cnf with the following entries:
+    # Global MySQL options file.
+    [mysqld]
+    datadir         = /db/mysql5/var
+    basedir         = /opt/csw/mysql5
+
+I also changed the option for --defaults-file to --defaults-extra-file
+  in the startup script.
+  This allows your options file to be read after the global options file
+  /etc/my.cnf.
+
+Note that if you are using the default location for --datadir, you do not
+  really need /etc/opt/csw/mysql5rc.  In this case, you should put any options
+  in the appropriate group in my.cnf.  See the MySQL documentation for 
+  details.
+If you are not using the default location for --datadir, you only need
+  /etc/opt/csw/mysql5rc for the startup script options for
+  --defaults-extra-file and possibly --pid-file.  All other options may be
+  put in the appropriate group in my.cnf
+
+Click 'Views and info' on the package page at
+  http://www.blastwave.org/packages.php/mysql5
+for the latest information.
+
+Alex Moore

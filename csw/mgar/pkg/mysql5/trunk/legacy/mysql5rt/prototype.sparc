@@ -1,0 +1,33 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/mysql5 0755 root bin
+d none /opt/csw/mysql5/lib 0755 root bin
+d none /opt/csw/mysql5/lib/mysql 0755 root bin
+f none /opt/csw/mysql5/lib/mysql/libmysqlclient_r.so.16.0.0 0755 root bin
+s none /opt/csw/mysql5/lib/mysql/libmysqlclient_r.so.16.0=libmysqlclient_r.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/libmysqlclient_r.so.16=libmysqlclient_r.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/libmysqlclient_r.so=libmysqlclient_r.so.16.0.0
+f none /opt/csw/mysql5/lib/mysql/libmysqlclient.so.16.0.0 0755 root bin
+s none /opt/csw/mysql5/lib/mysql/libmysqlclient.so.16.0=libmysqlclient.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/libmysqlclient.so.16=libmysqlclient.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/libmysqlclient.so=libmysqlclient.so.16.0.0
+d none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis 0755 root bin
+f none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient_r.so.16.0.0 0755 root bin
+s none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient_r.so.16.0=libmysqlclient_r.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient_r.so.16=libmysqlclient_r.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient_r.so=libmysqlclient_r.so.16.0.0
+f none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient.so.16.0.0 0755 root bin
+s none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient.so.16.0=libmysqlclient.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient.so.16=libmysqlclient.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv8plus+vis/libmysqlclient.so=libmysqlclient.so.16.0.0
+d none /opt/csw/mysql5/lib/mysql/sparcv9 0755 root bin
+f none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient_r.so.16.0.0 0755 root bin
+s none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient_r.so.16.0=libmysqlclient_r.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient_r.so.16=libmysqlclient_r.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient_r.so=libmysqlclient_r.so.16.0.0
+f none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient.so.16.0.0 0755 root bin
+s none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient.so.16.0=libmysqlclient.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient.so.16=libmysqlclient.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv9/libmysqlclient.so=libmysqlclient.so.16.0.0
+s none /opt/csw/mysql5/lib/mysql/sparcv8=.

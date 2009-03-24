@@ -1,0 +1,11 @@
+#!/bin/sh
+/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/libexec/*/mysqld
+/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/lib/mysql/lib*.so.16.0.0
+/usr/ccs/bin/mcs -c ./cswstage/opt/csw/mysql5/lib/mysql/*/lib*.so.16.0.0
+cp -p /export/medusa/asmoore/pkgs/mysql5/cswmysql5 ./cswstage/
+cp -p /export/medusa/asmoore/pkgs/mysql5/mysql5rc ./cswstage/opt/csw/mysql5/share/mysql/
+cp -p /export/medusa/asmoore/pkgs/mysql5/mysql5.xml ./cswstage/
+cp -p /export/medusa/asmoore/pkgs/mysql5/svc-mysql5 ./cswstage/
+cp -p /export/medusa/asmoore/pkgs/mysql5/quick_start-csw ./cswstage/
+cp -p /export/medusa/asmoore/pkgs/mysql5/README.CSW ./cswstage/
+gpatch -p0 </export/medusa/asmoore/pkgs/mysql5/patch-my-x.cnf

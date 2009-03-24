@@ -1,0 +1,29 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/mysql5/share 0755 root bin
+d none /opt/csw/mysql5/share/man/man1 0755 root bin
+f none /opt/csw/mysql5/share/man/man1/mysql.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/mysqlaccess.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/mysqladmin.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/mysqldump.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/mysqlshow.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/perror.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/replace.1 0644 root bin
+f none /opt/csw/mysql5/share/man/man1/mysql_zap.1 0644 root bin
+d none /opt/csw/mysql5/bin 0755 root bin
+f none /opt/csw/mysql5/bin/myisampack 0755 root bin
+f none /opt/csw/mysql5/bin/mysql 0755 root bin
+f none /opt/csw/mysql5/bin/mysqlaccess 0755 root bin
+f none /opt/csw/mysql5/bin/mysqladmin 0755 root bin
+f none /opt/csw/mysql5/bin/mysqlbinlog 0755 root bin
+f none /opt/csw/mysql5/bin/mysqlcheck 0755 root bin
+f none /opt/csw/mysql5/bin/mysqldump 0755 root bin
+f none /opt/csw/mysql5/bin/mysqlhotcopy 0755 root bin
+f none /opt/csw/mysql5/bin/mysqlimport 0755 root bin
+f none /opt/csw/mysql5/bin/mysqlshow 0755 root bin
+f none /opt/csw/mysql5/bin/myisamlog 0755 root bin
+f none /opt/csw/mysql5/bin/perror 0755 root bin
+f none /opt/csw/mysql5/bin/replace 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_zap 0755 root bin
+f none /opt/csw/mysql5/bin/mysql_client_test 0755 root bin

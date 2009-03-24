@@ -1,0 +1,151 @@
+# Change this file for your startup options.
+# For environment variables that are not a '=' assignment, I have
+#   added the word true to allow the use of the variable.  Uncomment
+#   the line to activate.
+#
+# With the exception of --defaults-file; these options may be
+#   entered into the appropriate group section of my.cnf
+#
+# --defaults-file
+# If my.cnf is not in /var/opt/csw/mysql5/ or /opt/csw/mysql5/var
+#    or /opt/csw/mysql5; enter the full pathname here.
+#CONFFILE=<pathname>
+#
+# --defaults-extra-file
+# This options file is added to existing options 
+#MYSQLD_DEFAULTS_EXTRA_FILE=<pathname>
+
+# mysqld program name
+#MYSQLD_PROG=mysqld
+
+# Use ANSI SQL syntax instead of MySQL syntax.
+#MYSQLD_ANSI=true
+
+#Path to installation directory.
+#MYSQLD_BASEDIR=path
+
+#Allow big result sets by saving all temporary sets  on file.
+#MYSQLD_BIG_TABLES=true
+
+#IP address to bind to.
+#MYSQLD_BIND_ADDRESS=IP
+
+#Directory where character sets are.
+#MYSQLD_CHARACTER_SETS=path
+
+#Chroot mysqld	daemon during startup.
+#MYSQLD_CHROOT=path
+
+#Path to the database root.
+#MYSQLD_DATADIR=path
+
+#Set the default character set.
+#MYSQLD_DEFAULT_CHARSET=charset
+
+#Set the default table	type for tables.
+#MYSQLD_DEFAULT_TABLE_TYPE=type
+
+#Don't	flush key buffers between writes for  any  MyISAM table.
+#MYSQLD_DELAY_KEY_WRITE_TABLES=true
+
+#Enable system	locking.
+#MYSQLD_ENABLE_LOCKING=true
+
+#Print	some debug info	at exit.
+#MYSQLD_EXIT_INFO=true
+
+#Flush	all changes to disk after each SQL command.
+#MYSQLD_FLUSH=true
+
+#Read SQL commands from this file at startup.
+#MYSQLD_INIT_FILE=file
+
+#Client error messages	in given language.
+#MYSQLD_LANGUAGE=...
+
+#Log connections and queries to file.
+#MYSQLD_LOG[=file]
+
+#Log all ISAM/MyISAM changes to file (only  used  when debugging ISAM/MyISAM).
+#MYSQLD_LOG_ISAM[=file]
+
+#Log all queries that have taken more than long_query_time seconds to execute.
+#MYSQLD_LOG_SLOW_QUERIES[=file]
+
+#Log updates to file.# where # is a unique number if not given.
+#MYSQLD_LOG_UPDATE[=file]
+
+#Log some extra information to	update log.
+#MYSQLD_LOG_LONG_FORMAT=true
+
+#Table-modifying operations (INSERT/DELETE/UPDATE) will
+# have lower priority than selects.
+#MYSQLD_LOW_PRIORITY_UPDATES=true
+
+#Lock the mysqld process in memory.
+#MYSQLD_MEMLOCK=true
+
+#MyISAM recover options
+#MYSQLD_MYISAM_RECOVER[=option[,option...]]
+
+#Path to pid file used	by mysqld_safe.
+#MYSQLD_PID_FILE=path
+
+#Port number to listen	for TCP/IP connections.
+#MYSQLD_PORT=...
+
+#Use the 3.20 protocol	for compatibility with some  very clients.
+#MYSQLD_OLD_PROTOCOL=true
+
+#Only use one thread (for debugging  under  Linux).
+#MYSQLD_ONE_THREAD=true
+
+#Give a variable a value. --help  lists  variables.
+#MYSQLD_SET_VARIABLE var=option
+
+#This option causes the server not to use the privilege system at all.
+#MYSQLD_SKIP_GRANT_TABLES=true
+
+#Skip some optimize stages.
+#MYSQLD_SAFE_MODE=true
+
+#IP numbers returned by the gethostbyname() system call
+# are checked to make sure they resolve back to the original hostname.
+#MYSQLD_SECURE=true
+
+#Turn off the ability to select and insert at the same time on MyISAM tables.
+#MYSQLD_SKIP_CONCURRENT_INSERT=true
+
+#Ignore the delay_key_write option for all tables.
+#MYSQLD_SKIP_DELAY_KEY_WRITE=true
+
+#Don't	use system locking.
+#MYSQLD_SKIP_LOCKING=true
+
+#Hostnames are	not resolved.
+#MYSQLD_SKIP_NAME_RESOLVE=true
+
+#Don't listen for TCP/IP connections at all.
+#MYSQLD_SKIP_NETWORKING=true
+
+#Don't use new, possible wrong routines. Implies --skip-delay-key-write
+#MYSQLD_SKIP_NEW=true
+
+#Never use host name cache for faster name-ip resolution,
+# but query DNS server on every connect instead.
+#MYSQLD_SKIP_HOST_CACHE=true
+
+#Don't allow 'SHOW DATABASE' commands, unless the user has process privilege.
+#MYSQLD_SKIP_SHOW_DATABASE=true
+
+#Disable using thread priorities for faster response time.
+#MYSQLD_SKIP_THREAD_PRIORITY=true
+
+#Socket file to use for local connections instead of default /tmp/mysql.sock.
+#MYSQLD_SOCKET=path
+
+#Path for temporary files.
+#MYSQLD_TMPDIR=path
+
+#Run mysqld daemon as user user_name.
+#MYSQLD_USER=uid

@@ -1,0 +1,815 @@
+checking build system type... i386-pc-solaris2.10
+checking host system type... i386-pc-solaris2.10
+checking target system type... i386-pc-solaris2.10
+checking for a BSD-compatible install... /opt/csw/bin/ginstall -c
+checking whether build environment is sane... yes
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking "character sets"... default: latin1, collation: latin1_swedish_ci; compiled in: latin1 latin1 utf8 binary armscii8 ascii big5 cp1250 cp1251 cp1256 cp1257 cp850 cp852 cp866 cp932 dec8 eucjpms euckr gb2312 gbk geostd8 greek hebrew hp8 keybcs2 koi8r koi8u latin1 latin2 latin5 latin7 macce macroman sjis swe7 tis620 ucs2 ujis utf8
+checking whether to compile national Unicode collations... yes
+checking for doxygen... /opt/csw/bin/doxygen
+checking for pdflatex... /opt/csw/bin/pdflatex
+checking for makeindex... /opt/csw/bin/makeindex
+checking whether build environment is sane... yes
+checking whether make sets $(MAKE)... (cached) yes
+checking for gawk... (cached) gawk
+checking for gcc... no
+checking for cc... cc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... no
+checking whether cc accepts -g... yes
+checking for cc option to accept ISO C89... none needed
+checking for style of include used by make... GNU
+checking dependency style of cc... none
+checking for g++... no
+checking for c++... no
+checking for gpp... no
+checking for aCC... no
+checking for CC... CC
+checking whether we are using the GNU C++ compiler... no
+checking whether CC accepts -g... yes
+checking dependency style of CC... none
+checking how to run the C preprocessor... cc -E
+cc: Warning: option -- passed to ld
+usage: cc [ options] files.  Use 'cc -flags' for details
+checking "C Compiler version"... "cc "
+CC: Warning: Option --version passed to ld, if ld is invoked, ignored otherwise
+/usr/ccs/bin/ld: illegal option -- version
+usage: ld [-6:abc:d:e:f:h:il:mo:p:rstu:z:B:CD:F:GI:L:M:N:P:Q:R:S:VY:?] file(s)
+	[-64]		enforce a 64-bit link-edit
+	[-a]		create an absolute file
+	[-b]		do not do special PIC relocations in a.out
+	[-B direct | nodirect]
+			establish direct bindings, or inhibit direct binding
+			to, the object being created
+	[-B dynamic | static]
+			search for shared libraries|archives
+	[-B eliminate]	eliminate unqualified global symbols from the
+			symbol table
+	[-B group]	relocate object from within group
+	[-B local]	reduce unqualified global symbols to local
+	[-B reduce]	process symbol reductions
+	[-B symbolic]	bind external references to definitions when creating
+			shared objects
+	[-c name]	record configuration file `name'
+	[-C]		demangle C++ symbol name diagnostics
+	[-d y | n]	operate in dynamic|static mode
+	[-D token,...]	print diagnostic messages
+	[-e epsym]	use `epsym' as entry point address
+	[-f name]	specify library for which this file is an auxiliary
+			filter
+	[-F name]	specify library for which this file is a filter
+	[-G]		create a shared object
+	[-h name]	use `name' as internal shared object identifier
+	[-i]		ignore LD_LIBRARY_PATH setting
+	[-I name]	use `name' as path of interpreter
+	[-l x]		search for libx.so or libx.a
+	[-L path]	search for libraries in directory `path'
+	[-m]		print memory map
+	[-M mapfile]	use processing directives contained in `mapfile'
+	[-N string]	create a dynamic dependency for `string'
+	[-o outfile]	name the output file `outfile'
+	[-p auditlib]	identify audit library to accompany this object
+	[-P auditlib]	identify audit library for processing the dependencies
+			of this object
+	[-Q y | n]	do|do not place version information in output file
+	[-r]		create a relocatable object
+	[-R path]	specify a library search path to be used at run time
+	[-s]		strip any symbol and debugging information
+	[-S supportlib]
+			specify a link-edit support library
+	[-t]		do not warn of multiply-defined symbols that have
+			different sizes or alignments
+	[-u symname]	create an undefined symbol `symname'
+	[-V]		print version information
+	[-Y P,dirlist]	use `dirlist' as a default path when searching for
+			libraries
+	[-z absexec]	when building an executable absolute symbols
+ 			referenced in dynamic objects are promoted to
+ 			the executable
+	[-z allextract | defaultextract | weakextract]
+			extract all member files, only members that resolve
+			undefined tor tentative symbols, or allow extraction of
+			archive members to resolvetweak references from 
+			archive files
+	[-z altexec64]	execute the 64-bit link-editor
+	[-z combreloc]	combine multiple relocation sections
+	[-z defs]	disallow undefined symbol references
+	[-z direct | nodirect]
+			enable|disable direct binding to shared object
+			dependencies
+	[-z endfiltee]	marks a filtee such that it will terminate a filters
+			search
+	[-z finiarray=function]
+			name of function to be appended to the .finiarray
+	[-z groupperm | nogroupperm]
+			enable|disable setting of group permissions
+			on dynamic dependencies
+	[-z help ]	print this usage message
+	[-z ignore | record]
+			ignore|record unused dynamic dependencies
+	[-z initarray=function]
+			name of function to be appended to the .initarray
+	[-z initfirst]	mark object to indicate that its .init section should
+			be executed before the .init section of any other
+			objects
+	[-z interpose]	dynamic object is to be an `interposer' on direct
+			bindings
+	[-z lazyload | nolazyload]
+			enable|disable delayed loading of shared object
+			dependencies
+	[-z ld32=arg1,arg2,...]
+			define arguments applicable to the 32-bit class of ld(1)
+	[-z ld64=arg1,arg2,...]
+			define arguments applicable to the 64-bit class of ld(1)
+	[-z loadfltr]	mark filter as requiring immediate loading of its
+			filtees at runtime
+	[-z muldefs]	allow multiply-defined symbols
+	[-z nocompstrtab]
+			disable compression of string tables
+	[-z nodefs]	allow undefined symbol references
+	[-z nodefaultlib]
+			mark object to ignore any default library search path
+	[-z nodelete]	mark object as non-deletable
+	[-z nodlopen]	mark object as non-dlopen()'able
+	[-z nodump]	mark object as non-dldump()'able
+	[-z now]	mark object as requiring non-lazy binding
+	[-z nopartial]	expand any partially initialized symbols
+	[-z noversion]	don't record any version sections
+	[-z origin]	mark object as requiring $ORIGIN processing
+	[-z preinitarray=function]
+			name of function to be appended to the .preinitarray
+	[-z redlocsym]	reduce local syms in .symtab to a minimum
+	[-z rescan]	rescan archive list until no further member
+			extraction occurs
+	[-z text]	disallow output relocations against text
+	[-z textoff]	allow output relocations against text
+	[-z textwarn]	warn if there are relocations against text
+	[-z verbose]	generate warnings for suspicious processings
+checking "C++ compiler version"... "CC CC: Sun C++ 5.8 Patch 121018-05 2006/08/30"
+checking for as... /usr/ccs/bin/as
+checking for ranlib... ranlib
+checking for a sed that does not truncate output... /opt/csw/bin/gsed
+checking for grep that handles long lines and -e... /opt/csw/bin/ggrep
+checking for egrep... /opt/csw/bin/ggrep -E
+checking for non-GNU ld... /usr/ccs/bin/ld
+checking if the linker (/usr/ccs/bin/ld) is GNU ld... no
+checking for /usr/ccs/bin/ld option to reload object files... -r
+checking for BSD-compatible nm... /usr/xpg4/bin/nm -p
+checking whether ln -s works... yes
+checking how to recognise dependent libraries... pass_all
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking dlfcn.h usability... yes
+checking dlfcn.h presence... yes
+checking for dlfcn.h... yes
+checking how to run the C++ preprocessor... CC -E
+checking for g77... no
+checking for xlf... no
+checking for f77... f77
+checking whether we are using the GNU Fortran 77 compiler... no
+checking whether f77 accepts -g... yes
+checking the maximum length of command line arguments... 262144
+checking command to parse /usr/xpg4/bin/nm -p output from cc object... ok
+checking for objdir... .libs
+checking for ar... ar
+checking for ranlib... (cached) ranlib
+checking for strip... strip
+checking for cc option to produce PIC... -KPIC
+checking if cc PIC flag -KPIC works... yes
+checking if cc static flag -Bstatic works... no
+checking if cc supports -c -o file.o... yes
+checking whether the cc linker (/usr/ccs/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... solaris2.10 ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... no
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+configure: creating libtool
+appending configuration tag "CXX" to libtool
+checking whether the CC linker (/usr/ccs/bin/ld) supports shared libraries... yes
+checking for CC option to produce PIC... -KPIC
+checking if CC PIC flag -KPIC works... yes
+checking if CC static flag -Bstatic works... no
+checking if CC supports -c -o file.o... yes
+checking whether the CC linker (/usr/ccs/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... solaris2.10 ld.so
+checking how to hardcode library paths into programs... immediate
+appending configuration tag "F77" to libtool
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking for f77 option to produce PIC... -KPIC
+checking if f77 PIC flag -KPIC works... yes
+checking if f77 static flag -Bstatic works... yes
+checking if f77 supports -c -o file.o... yes
+checking whether the f77 linker (/usr/ccs/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... solaris2.10 ld.so
+checking how to hardcode library paths into programs... immediate
+checking for a BSD-compatible install... /opt/csw/bin/ginstall -c
+checking for bison... bison -y -p MYSQL
+checking for pdftex... manual.pdf
+checking for tex... manual.dvi
+checking "return type of sprintf"... "int"
+checking for uname... /sbin/uname
+checking operating system... SunOS
+checking for ar... ar
+checking if we should use 'skip-external-locking' as default for solaris2.10... no
+checking for ln... /usr/xpg4/bin/ln
+checking for ln... /usr/xpg4/bin/ln
+checking for mv... /usr/xpg4/bin/mv
+checking for rm... /usr/xpg4/bin/rm
+checking for cp... /usr/xpg4/bin/cp
+checking for sed... /opt/csw/bin/gsed
+checking for cmp... /bin/cmp
+checking for chmod... /bin/chmod
+checking for hostname... /bin/hostname
+checking for gnutar... gnutar
+checking for perl... /opt/csw/bin/perl
+checking for icheck... no
+checking for ps... /bin/ps
+checking "how to check if pid exists"... "/bin/ps -p $$PID | grep -v grep | grep $$MYSQLD > /dev/null"
+checking for kill... /usr/xpg4/bin/kill
+checking "for kill switches"... "/usr/xpg4/bin/kill -0 $$PID > /dev/null 2> /dev/null"
+checking for cc option to accept ANSI C... 
+checking whether --noexecstack is desirable for .S files... no
+checking if we should use assembler functions... no
+checking If we should should enable LOAD DATA LOCAL by default... yes
+checking If we should should enable init-file... yes
+checking for getconf... getconf
+checking for CFLAGS value to request large file support... -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+checking for LDFLAGS value to request large file support... 
+checking for LIBS value to request large file support... 
+checking for _FILE_OFFSET_BITS... 64
+checking for _LARGEFILE_SOURCE... 1
+checking for _LARGE_FILES... no
+checking for size_t... yes
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking for ANSI C header files... (cached) yes
+checking for sys/wait.h that is POSIX.1 compatible... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking float.h usability... yes
+checking float.h presence... yes
+checking for float.h... yes
+checking floatingpoint.h usability... yes
+checking floatingpoint.h presence... yes
+checking for floatingpoint.h... yes
+checking ieeefp.h usability... yes
+checking ieeefp.h presence... yes
+checking for ieeefp.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking for memory.h... (cached) yes
+checking pwd.h usability... yes
+checking pwd.h presence... yes
+checking for pwd.h... yes
+checking select.h usability... no
+checking select.h presence... no
+checking for select.h... no
+checking for stdlib.h... (cached) yes
+checking stddef.h usability... yes
+checking stddef.h presence... yes
+checking for stddef.h... yes
+checking for strings.h... (cached) yes
+checking for string.h... (cached) yes
+checking synch.h usability... yes
+checking synch.h presence... yes
+checking for synch.h... yes
+checking sys/mman.h usability... yes
+checking sys/mman.h presence... yes
+checking for sys/mman.h... yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking arpa/inet.h usability... yes
+checking arpa/inet.h presence... yes
+checking for arpa/inet.h... yes
+checking sys/timeb.h usability... yes
+checking sys/timeb.h presence... yes
+checking for sys/timeb.h... yes
+checking for sys/types.h... (cached) yes
+checking sys/un.h usability... yes
+checking sys/un.h presence... yes
+checking for sys/un.h... yes
+checking sys/vadvise.h usability... no
+checking sys/vadvise.h presence... no
+checking for sys/vadvise.h... no
+checking for sys/wait.h... (cached) yes
+checking term.h usability... no
+checking term.h presence... yes
+configure: WARNING: term.h: present but cannot be compiled
+configure: WARNING: term.h:     check for missing prerequisite headers?
+configure: WARNING: term.h: see the Autoconf documentation
+configure: WARNING: term.h:     section "Present But Cannot Be Compiled"
+configure: WARNING: term.h: proceeding with the preprocessor's result
+configure: WARNING: term.h: in the future, the compiler will take precedence
+checking for term.h... yes
+checking for unistd.h... (cached) yes
+checking utime.h usability... yes
+checking utime.h presence... yes
+checking for utime.h... yes
+checking sys/utime.h usability... yes
+checking sys/utime.h presence... yes
+checking for sys/utime.h... yes
+checking termio.h usability... yes
+checking termio.h presence... yes
+checking for termio.h... yes
+checking termios.h usability... yes
+checking termios.h presence... yes
+checking for termios.h... yes
+checking sched.h usability... yes
+checking sched.h presence... yes
+checking for sched.h... yes
+checking crypt.h usability... yes
+checking crypt.h presence... yes
+checking for crypt.h... yes
+checking alloca.h usability... yes
+checking alloca.h presence... yes
+checking for alloca.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking sys/malloc.h usability... no
+checking sys/malloc.h presence... no
+checking for sys/malloc.h... no
+checking sys/ipc.h usability... yes
+checking sys/ipc.h presence... yes
+checking for sys/ipc.h... yes
+checking sys/shm.h usability... yes
+checking sys/shm.h presence... yes
+checking for sys/shm.h... yes
+checking linux/config.h usability... no
+checking linux/config.h presence... no
+checking for linux/config.h... no
+checking sys/prctl.h usability... no
+checking sys/prctl.h presence... no
+checking for sys/prctl.h... no
+checking sys/resource.h usability... yes
+checking sys/resource.h presence... yes
+checking for sys/resource.h... yes
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking port.h usability... yes
+checking port.h presence... yes
+checking for port.h... yes
+checking for ieeefp.h... (cached) yes
+checking xfs/xfs.h usability... no
+checking xfs/xfs.h presence... no
+checking for xfs/xfs.h... no
+checking for floor in -lm... yes
+checking for gethostbyname_r in -lnsl_r... no
+checking for gethostbyname_r in -lnsl... yes
+checking for gethostbyname_r... yes
+checking for setsockopt... no
+checking for setsockopt in -lsocket... yes
+checking for yp_get_default_domain... yes
+checking for p2open... no
+checking for p2open in -lgen... yes
+checking for bind... yes
+checking for crypt in -lc... yes
+checking for crypt... yes
+checking for sched_yield... no
+checking for sched_yield in -lposix4... yes
+checking for zlib compression library... ok
+checking if we should use pstack... 
+checking for int8... no
+checking for uint8... no
+checking for int16... no
+checking for uint16... no
+checking for int32... no
+checking for uint32... no
+checking for int64... no
+checking for uint64... no
+checking for uchar... no
+checking for uint... yes
+checking for ulong... yes
+checking for in_addr_t... yes
+checking for fp_except... yes
+checking "Linux threads"... "no"
+checking "SCO threads"... "no"
+checking SCO OpenServer 6, UnixWare 7 or OpenUNIX 8 native threads... no
+checking "Siemens threads"... "no"
+checking "Solaris threads"... "yes"
+checking "named thread libs:"... "-lpthread -lthread"
+checking for strtok_r in -lpthread... yes
+checking for strtok_r... yes
+checking for dlopen in -ldl... yes
+checking for dlopen... yes
+checking for dlerror... yes
+checking for restartable system calls... no
+checking "need of special linking flags"... "none"
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for off_t... yes
+checking for struct stat.st_rdev... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+checking needs mysys_new helpers... no
+checking for char... yes
+checking size of char... 1
+checking for char*... yes
+checking size of char*... 8
+checking for short... yes
+checking size of short... 2
+checking for int... yes
+checking size of int... 4
+checking for long... yes
+checking size of long... 8
+checking for long long... yes
+checking size of long long... 8
+checking for off_t... (cached) yes
+checking size of off_t... 8
+checking if time_t is unsigned... no
+checking the need for #pragma interface/implementation... no
+checking whether byte ordering is bigendian... no
+checking base type of last arg to accept... socklen_t
+checking struct type to use with setrlimit... struct rlimit
+checking stack direction for C alloca... -1
+checking for working alloca.h... (cached) yes
+checking for alloca... yes
+checking if struct timespec has a ts_sec member... no
+checking if we have tzname variable... yes
+checking if CC supports bool types... yes
+checking if conversion of longlong to float works... yes
+checking for sigset_t... yes
+checking for off_t... (cached) yes
+checking for size_t... (cached) yes
+checking for u_int32_t... no
+checking if pthread_yield takes zero arguments... yeso
+checking if pthread_yield takes 1 argument... no
+checking for malloc.h... (cached) yes
+checking sys/cdefs.h usability... no
+checking sys/cdefs.h presence... no
+checking for sys/cdefs.h... no
+checking for working alloca.h... yes
+checking for alloca... (cached) yes
+checking return type of signal handlers... void
+checking for re_comp... yes
+checking for regcomp... yes
+checking for strdup... yes
+checking vis.h usability... no
+checking vis.h presence... no
+checking for vis.h... no
+checking for strlcat... yes
+checking for strlcpy... yes
+checking for issetugid... yes
+checking for fgetln... no
+checking for getline... no
+checking for flockfile... yes
+checking varargs.h usability... yes
+checking varargs.h presence... yes
+checking for varargs.h... yes
+checking stdarg.h usability... yes
+checking stdarg.h presence... yes
+checking for stdarg.h... yes
+checking dirent.h usability... yes
+checking dirent.h presence... yes
+checking for dirent.h... yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking ndir.h usability... no
+checking ndir.h presence... no
+checking for ndir.h... no
+checking sys/dir.h usability... no
+checking sys/dir.h presence... no
+checking for sys/dir.h... no
+checking sys/file.h usability... yes
+checking sys/file.h presence... yes
+checking for sys/file.h... yes
+checking sys/ndir.h usability... no
+checking sys/ndir.h presence... no
+checking for sys/ndir.h... no
+checking sys/ptem.h usability... no
+checking sys/ptem.h presence... yes
+configure: WARNING: sys/ptem.h: present but cannot be compiled
+configure: WARNING: sys/ptem.h:     check for missing prerequisite headers?
+configure: WARNING: sys/ptem.h: see the Autoconf documentation
+configure: WARNING: sys/ptem.h:     section "Present But Cannot Be Compiled"
+configure: WARNING: sys/ptem.h: proceeding with the preprocessor's result
+configure: WARNING: sys/ptem.h: in the future, the compiler will take precedence
+checking for sys/ptem.h... yes
+checking sys/pte.h usability... yes
+checking sys/pte.h presence... yes
+checking for sys/pte.h... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking sys/stream.h usability... yes
+checking sys/stream.h presence... yes
+checking for sys/stream.h... yes
+checking for sys/mman.h... (cached) yes
+checking curses.h usability... yes
+checking curses.h presence... yes
+checking for curses.h... yes
+checking termcap.h usability... no
+checking termcap.h presence... no
+checking for termcap.h... no
+checking for termio.h... (cached) yes
+checking termbits.h usability... no
+checking termbits.h presence... no
+checking for termbits.h... no
+checking asm/termbits.h usability... no
+checking asm/termbits.h presence... no
+checking for asm/termbits.h... no
+checking grp.h usability... yes
+checking grp.h presence... yes
+checking for grp.h... yes
+checking paths.h usability... no
+checking paths.h presence... no
+checking for paths.h... no
+checking semaphore.h usability... yes
+checking semaphore.h presence... yes
+checking for semaphore.h... yes
+checking for lstat... yes
+checking for putenv... yes
+checking for select... yes
+checking for setenv... yes
+checking for setlocale... yes
+checking for strcoll... yes
+checking for tcgetattr... yes
+checking whether stat file-mode macros are broken... no
+checking for type of signal functions... posix
+checking whether programs are able to redeclare getpw functions... yes
+checking for TIOCGWINSZ in sys/ioctl.h... no
+checking for FIONREAD in sys/ioctl.h... no
+checking for TIOCSTAT in sys/ioctl.h... no
+checking if struct dirent has a d_ino member... yes
+checking if struct dirent has a d_namlen member... no
+checking whether signal handlers are of type void... yes
+checking wctype.h usability... yes
+checking wctype.h presence... yes
+checking for wctype.h... yes
+checking wchar.h usability... yes
+checking wchar.h presence... yes
+checking for wchar.h... yes
+checking langinfo.h usability... yes
+checking langinfo.h presence... yes
+checking for langinfo.h... yes
+checking for mbsrtowcs... yes
+checking for mbrtowc... yes
+checking for mbrlen... yes
+checking for wctomb... yes
+checking for wcwidth... yes
+checking for wcsdup... no
+checking for mbstate_t... yes
+checking for nl_langinfo and CODESET... yes
+checking for tgetent in -lncurses... no
+checking for tgetent in -lcurses... yes
+checking for termcap functions library... -lcurses
+checking whether tgoto is declared... no
+checking for strunvis... no
+checking for strvis... no
+checking for strlcpy... (cached) yes
+checking for strlcat... (cached) yes
+checking for fgetln... (cached) no
+checking -nolib_inline... no
+checking return type of signal handlers... (cached) void
+checking return type of qsort... void
+checking for utime.h... (cached) yes
+checking whether utime accepts a null argument... yes
+checking for vprintf... yes
+checking for _doprnt... yes
+checking for alarm... yes
+checking for bcmp... yes
+checking for bfill... no
+checking for bmove... no
+checking for bsearch... yes
+checking for bzero... yes
+checking for chsize... no
+checking for cuserid... yes
+checking for fchmod... yes
+checking for fcntl... yes
+checking for fconvert... yes
+checking for fdatasync... yes
+checking for finite... yes
+checking for fpresetsticky... no
+checking for fpsetmask... yes
+checking for fsync... yes
+checking for ftruncate... yes
+checking for getcwd... yes
+checking for gethostbyaddr_r... yes
+checking for gethostbyname_r... (cached) yes
+checking for getpass... yes
+checking for getpassphrase... yes
+checking for getpwnam... yes
+checking for getpwuid... yes
+checking for getrlimit... yes
+checking for getrusage... yes
+checking for getwd... yes
+checking for index... yes
+checking for initgroups... yes
+checking for isnan... yes
+checking for localtime_r... yes
+checking for gethrtime... yes
+checking for gmtime_r... yes
+checking for locking... no
+checking for longjmp... yes
+checking for lrand48... yes
+checking for madvise... yes
+checking for mallinfo... no
+checking for memcpy... yes
+checking for memmove... yes
+checking for mkstemp... yes
+checking for mlockall... yes
+checking for perror... yes
+checking for poll... yes
+checking for pread... yes
+checking for pthread_attr_create... no
+checking for mmap... yes
+checking for mmap64... no
+checking for getpagesize... yes
+checking for pthread_attr_getstacksize... yes
+checking for pthread_attr_setprio... no
+checking for pthread_attr_setschedparam... yes
+checking for pthread_attr_setstacksize... yes
+checking for pthread_condattr_create... no
+checking for pthread_getsequence_np... no
+checking for pthread_key_delete... yes
+checking for pthread_rwlock_rdlock... yes
+checking for pthread_setprio... no
+checking for pthread_setprio_np... no
+checking for pthread_setschedparam... yes
+checking for pthread_sigmask... yes
+checking for readlink... yes
+checking for realpath... yes
+checking for rename... yes
+checking for rint... yes
+checking for rwlock_init... yes
+checking for setupterm... no
+checking for shmget... yes
+checking for shmat... yes
+checking for shmdt... yes
+checking for shmctl... yes
+checking for sigaction... yes
+checking for sigemptyset... yes
+checking for sigaddset... yes
+checking for sighold... yes
+checking for sigset... yes
+checking for sigthreadmask... no
+checking for port_create... yes
+checking for sleep... yes
+checking for snprintf... yes
+checking for socket... yes
+checking for stpcpy... no
+checking for strcasecmp... yes
+checking for strerror... yes
+checking for strsignal... yes
+checking for strnlen... no
+checking for strpbrk... yes
+checking for strstr... yes
+checking for strtol... yes
+checking for strtoll... yes
+checking for strtoul... yes
+checking for strtoull... yes
+checking for tell... yes
+checking for tempnam... yes
+checking for thr_setconcurrency... yes
+checking for vidattr... no
+checking for posix_fallocate... no
+checking for clock_gettime... yes
+checking for isinf in <math.h>... yes
+checking whether isinf() can be used in C++ code... no
+checking for fseeko... yes
+checking style of gethost* routines... checking whether madvise is declared... yes
+solaris
+checking style of gethostbyname_r routines... other
+checking 3 argument to gethostbyname_r routines... char
+checking "args to pthread_getspecific"... POSIX
+checking "args to pthread_mutex_init"... POSIX
+checking "args to readdir_r"... POSIX
+checking "style of sigwait"... POSIX
+checking "for pthread_attr_setscope"... yes
+checking "can netinet files be included"... "yes"
+checking for big tables support... no
+checking max indexes per table... 64
+checking for SSL... disabled
+checking whether to use Partition Support... no
+checking whether to use Archive Storage Engine... plugin
+checking whether to use Blackhole Storage Engine... plugin
+checking whether to use CSV Storage Engine... yes
+checking whether to use Example Storage Engine... plugin
+checking whether to use Federated Storage Engine... plugin
+checking whether to use Memory Storage Engine... yes
+checking whether to use InnoDB Storage Engine... yes
+checking whether to use MyISAM Storage Engine... yes
+checking whether to use MyISAM MERGE Engine... yes
+checking whether to use Cluster Storage Engine... no
+checking for aio_read in -lrt... yes
+checking aio.h usability... yes
+checking aio.h presence... yes
+checking for aio.h... yes
+checking for sched.h... (cached) yes
+checking for int... (cached) yes
+checking size of int... (cached) 4
+checking for long... (cached) yes
+checking size of long... (cached) 8
+checking for void*... yes
+checking size of void*... 8
+checking for sched_yield... (cached) no
+checking for fdatasync... (cached) yes
+checking for localtime_r... (cached) yes
+checking whether byte ordering is bigendian... (cached) no
+checking "for man pages to remove"... dropping ndbcluster embedded
+configure: creating ./config.status
+config.status: creating zlib/Makefile
+config.status: creating extra/yassl/Makefile
+config.status: creating extra/yassl/taocrypt/Makefile
+config.status: creating extra/yassl/taocrypt/benchmark/Makefile
+config.status: creating extra/yassl/taocrypt/src/Makefile
+config.status: creating extra/yassl/taocrypt/test/Makefile
+config.status: creating extra/yassl/src/Makefile
+config.status: creating extra/yassl/testsuite/Makefile
+config.status: creating storage/archive/Makefile
+config.status: creating storage/blackhole/Makefile
+config.status: creating storage/csv/Makefile
+config.status: creating storage/example/Makefile
+config.status: creating storage/federated/Makefile
+config.status: creating storage/heap/Makefile
+config.status: creating storage/innobase/Makefile
+config.status: creating storage/myisam/Makefile
+config.status: creating storage/myisammrg/Makefile
+config.status: creating pstack/Makefile
+config.status: creating pstack/aout/Makefile
+config.status: creating cmd-line-utils/readline/Makefile
+config.status: creating Makefile
+config.status: creating extra/Makefile
+config.status: creating mysys/Makefile
+config.status: creating unittest/Makefile
+config.status: creating unittest/mytap/Makefile
+config.status: creating unittest/mytap/t/Makefile
+config.status: creating unittest/mysys/Makefile
+config.status: creating unittest/examples/Makefile
+config.status: creating strings/Makefile
+config.status: creating regex/Makefile
+config.status: creating storage/Makefile
+config.status: creating man/Makefile
+config.status: creating BUILD/Makefile
+config.status: creating vio/Makefile
+config.status: creating libmysql/Makefile
+config.status: creating libmysql_r/Makefile
+config.status: creating client/Makefile
+config.status: creating sql/Makefile
+config.status: creating sql/share/Makefile
+config.status: creating sql/sql_builtin.cc
+config.status: creating sql-common/Makefile
+config.status: creating dbug/Makefile
+config.status: creating scripts/Makefile
+config.status: creating include/Makefile
+config.status: creating tests/Makefile
+config.status: creating Docs/Makefile
+config.status: creating support-files/Makefile
+config.status: creating support-files/MacOSX/Makefile
+config.status: creating support-files/RHEL4-SElinux/Makefile
+config.status: creating server-tools/Makefile
+config.status: creating server-tools/instance-manager/Makefile
+config.status: creating cmd-line-utils/Makefile
+config.status: creating cmd-line-utils/libedit/Makefile
+config.status: creating libmysqld/Makefile
+config.status: creating libmysqld/examples/Makefile
+config.status: creating mysql-test/Makefile
+config.status: creating mysql-test/ndb/Makefile
+config.status: creating netware/Makefile
+config.status: creating sql-bench/Makefile
+config.status: creating include/mysql_version.h
+config.status: creating plugin/Makefile
+config.status: creating win/Makefile
+config.status: creating include/config.h
+config.status: executing depfiles commands
+config.status: executing default commands
+
+MySQL has a Web site at http://www.mysql.com/ which carries details on the
+latest release, upcoming features, and other information to make your
+work or play with MySQL more productive. There you can also find
+information about mailing lists for MySQL discussion.
+
+Remember to check the platform specific part of the reference manual for
+hints about installing MySQL on your platform. Also have a look at the
+files in the Docs directory.
+
+Thank you for choosing MySQL!
+

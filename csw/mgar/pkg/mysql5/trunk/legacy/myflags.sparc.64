@@ -1,0 +1,7 @@
+#!/usr/bin/sh
+OPENSSL_INCLUDE=-I/opt/csw/include
+OPENSSL_LIB=/opt/csw/lib/sparcv9
+CPPFLAGS=-I/opt/csw/include
+LD_OPTIONS='-64 -R/opt/csw/lib/$ISALIST'
+PERL=/opt/csw/bin/perl
+export OPENSSL_INCLUDE OPENSSL_LIB CPPFLAGS LD_OPTIONS PERL

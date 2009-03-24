@@ -1,0 +1,7 @@
+#!/bin/sh
+mkdir ./cswstage/opt/csw/mysql5/libexec/i386
+mkdir ./cswstage/opt/csw/mysql5/libexec/pentium
+mkdir ./cswstage/opt/csw/mysql5/libexec/amd64
+mkdir ./cswstage/opt/csw/mysql5/lib/mysql/pentium
+mkdir ./cswstage/opt/csw/mysql5/lib/mysql/amd64
+mv ./cswstage/opt/csw/mysql5/libexec/mysqld ./cswstage/opt/csw/mysql5/libexec/i386/

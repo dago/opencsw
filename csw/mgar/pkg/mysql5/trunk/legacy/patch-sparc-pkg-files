@@ -1,0 +1,24 @@
+--- ./cswstage-sparc/opt/csw/mysql5/bin/orig-mysql_config	2007-01-14 09:04:19.746328000 -0500
++++ ./cswstage-sparc/opt/csw/mysql5/bin/mysql_config	2007-01-14 11:04:25.547297000 -0500
+@@ -103,7 +103,7 @@
+ libs_r=" $ldflags -L$pkglibdir -lmysqlclient_r -lz -lpthread -lthread -lposix4 -lc -lgen -lsocket -lnsl -lm  -lpthread -lthread  -L/opt/csw/lib -lssl -lcrypto "
+ embedded_libs=" $ldflags -L$pkglibdir -lmysqld -lz -lpthread -lthread -lposix4 -lc -lgen -lsocket -lnsl -lm  -lpthread -lthread   -lrt -L/opt/csw/lib -lssl -lcrypto "
+ 
+-cflags="-I$pkgincludedir  -DDBUG_OFF -Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -I/export/medusa/asmoore/build/mysql-5.1.23-rc/include -DHAVE_RWLOCK_T " #note: end space!
++cflags="-I$pkgincludedir  -DDBUG_OFF -Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -DHAVE_RWLOCK_T " #note: end space!
+ include="-I$pkgincludedir"
+ 
+ # Remove some options that a client doesn't have to care about
+--- ./cswstage-sparc/opt/csw/mysql5/bin/orig-mysqlbug	2007-01-14 09:04:20.102568000 -0500
++++ ./cswstage-sparc/opt/csw/mysql5/bin/mysqlbug	2007-01-14 11:05:17.334379000 -0500
+@@ -8,8 +8,8 @@
+ COMPILATION_COMMENT="Source distribution"
+ BUGmysql="mysql@lists.mysql.com"
+ # This is set by configure
+-COMP_ENV_INFO="CC='cc'  CFLAGS=' -DDBUG_OFF -Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -I/export/medusa/asmoore/build/mysql-5.1.23-rc/include -DHAVE_RWLOCK_T'  CXX='CC'  CXXFLAGS=' -DDBUG_OFF -noex -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -I/export/medusa/asmoore/build/mysql-5.1.23-rc/include -DHAVE_RWLOCK_T'  LDFLAGS='-L/opt/csw/lib/32 '  ASFLAGS=''"
+-CONFIGURE_LINE="./configure '--prefix=/opt/csw/mysql5' '--disable-assembler' '--without-libedit' '--without-docs' '--enable-thread-safe-client' '--with-named-z-libs=no' '--with-berkeley-db' '--with-openssl' '--with-innodb' '--enable-local-infile' '--with-extra-charsets=all' '--with-low-memory' 'CC=cc' 'CFLAGS=-Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8 ' 'CPPFLAGS=-I/opt/csw/include' 'CXXFLAGS=-noex -mt -D_FORTEC_ -xO3 -xarch=v8 ' 'CXX=CC' 'LDFLAGS=-L/opt/csw/lib/32 ' 'CFLAGS= -DDBUG_OFF -Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -I/export/medusa/asmoore/build/mysql-5.1.23-rc/include -DHAVE_RWLOCK_T' 'CXXFLAGS= -DDBUG_OFF -noex -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -I/export/medusa/asmoore/build/mysql-5.1.23-rc/include -DHAVE_RWLOCK_T'"
++COMP_ENV_INFO="CC='cc'  CFLAGS=' -DDBUG_OFF -Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -DHAVE_RWLOCK_T'  CXX='CC'  CXXFLAGS=' -DDBUG_OFF -noex -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -DHAVE_RWLOCK_T'  LDFLAGS='-L/opt/csw/lib/32 '  ASFLAGS=''"
++CONFIGURE_LINE="./configure '--prefix=/opt/csw/mysql5' '--disable-assembler' '--without-libedit' '--without-docs' '--enable-thread-safe-client' '--with-named-z-libs=no' '--with-berkeley-db' '--with-openssl' '--with-innodb' '--enable-local-infile' '--with-extra-charsets=all' '--with-low-memory' 'CC=cc' 'CFLAGS=-Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8 ' 'CPPFLAGS=-I/opt/csw/include' 'CXXFLAGS=-noex -mt -D_FORTEC_ -xO3 -xarch=v8 ' 'CXX=CC' 'LDFLAGS=-L/opt/csw/lib/32 ' 'CFLAGS= -DDBUG_OFF -Xa -xstrconst -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -DHAVE_RWLOCK_T' 'CXXFLAGS= -DDBUG_OFF -noex -mt -D_FORTEC_ -xO3 -xarch=v8    -D_FILE_OFFSET_BITS=64 -DHAVE_CURSES_H -DHAVE_RWLOCK_T'"
+ 
+ LIBC_INFO=""
+ for pat in /lib/libc.* /lib/libc-* /usr/lib/libc.* /usr/lib/libc-*

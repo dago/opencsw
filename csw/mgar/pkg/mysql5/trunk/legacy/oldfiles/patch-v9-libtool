@@ -1,0 +1,38 @@
+--- ./libtool~	2006-04-14 19:06:27.239849000 -0400
++++ ./libtool	2006-04-15 08:52:58.806991000 -0400
+@@ -202,9 +202,9 @@
+ old_archive_from_expsyms_cmds=""
+ 
+ # Commands used to build and install a shared archive.
+-archive_cmds="\$LD -G\${allow_undefined_flag} -h \$soname -o \$lib \$libobjs \$deplibs \$linker_flags"
++archive_cmds="\$LD -G\${allow_undefined_flag} -h \$soname -o \$lib -64 \$libobjs \$deplibs \$linker_flags"
+ archive_expsym_cmds="\$echo \\\"{ global:\\\" > \$lib.exp~cat \$export_symbols | \$SED -e \\\"s/\\\\(.*\\\\)/\\\\1;/\\\" >> \$lib.exp~\$echo \\\"local: *; };\\\" >> \$lib.exp~
+-  	\$LD -G\${allow_undefined_flag} -M \$lib.exp -h \$soname -o \$lib \$libobjs \$deplibs \$linker_flags~\$rm \$lib.exp"
++  	\$LD -G\${allow_undefined_flag} -M \$lib.exp -h \$soname -o \$lib -64 \$libobjs \$deplibs \$linker_flags~\$rm \$lib.exp"
+ postinstall_cmds="chmod +x \$lib"
+ postuninstall_cmds=""
+ 
+@@ -6924,9 +6924,9 @@
+ old_archive_from_expsyms_cmds=""
+ 
+ # Commands used to build and install a shared archive.
+-archive_cmds="\$CC -G\${allow_undefined_flag} -nolib -h\$soname -o \$lib \$predep_objects \$libobjs \$deplibs \$postdep_objects \$compiler_flags"
++archive_cmds="\$CC -G\${allow_undefined_flag} -nolib -h\$soname -o \$lib -xtarget=ultra -xarch=v9 \$predep_objects \$libobjs \$deplibs \$postdep_objects \$compiler_flags"
+ archive_expsym_cmds="\$echo \\\"{ global:\\\" > \$lib.exp~cat \$export_symbols | \$SED -e \\\"s/\\\\(.*\\\\)/\\\\1;/\\\" >> \$lib.exp~\$echo \\\"local: *; };\\\" >> \$lib.exp~
+-	\$CC -G\${allow_undefined_flag} -nolib \${wl}-M \${wl}\$lib.exp -h\$soname -o \$lib \$predep_objects \$libobjs \$deplibs \$postdep_objects \$compiler_flags~\$rm \$lib.exp"
++	\$CC -G\${allow_undefined_flag} -nolib \${wl}-M \${wl}\$lib.exp -h\$soname -o \$lib -xtarget=ultra -xarch=v9 \$predep_objects \$libobjs \$deplibs \$postdep_objects \$compiler_flags~\$rm \$lib.exp"
+ postinstall_cmds="chmod +x \$lib"
+ postuninstall_cmds=""
+ 
+@@ -7221,9 +7221,9 @@
+ old_archive_from_expsyms_cmds=""
+ 
+ # Commands used to build and install a shared archive.
+-archive_cmds="\$LD -G\${allow_undefined_flag} -h \$soname -o \$lib \$libobjs \$deplibs \$linker_flags"
++archive_cmds="\$LD -G\${allow_undefined_flag} -h \$soname -o \$lib -64 \$libobjs \$deplibs \$linker_flags"
+ archive_expsym_cmds="\$echo \\\"{ global:\\\" > \$lib.exp~cat \$export_symbols | \$SED -e \\\"s/\\\\(.*\\\\)/\\\\1;/\\\" >> \$lib.exp~\$echo \\\"local: *; };\\\" >> \$lib.exp~
+-  	\$LD -G\${allow_undefined_flag} -M \$lib.exp -h \$soname -o \$lib \$libobjs \$deplibs \$linker_flags~\$rm \$lib.exp"
++  	\$LD -G\${allow_undefined_flag} -M \$lib.exp -h \$soname -o \$lib -64 \$libobjs \$deplibs \$linker_flags~\$rm \$lib.exp"
+ postinstall_cmds="chmod +x \$lib"
+ postuninstall_cmds=""
+ 

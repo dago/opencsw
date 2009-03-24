@@ -1,0 +1,4 @@
+%var            bitname mysql5
+%var            pkgname CSWmysql5
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright      url file://%{WORKSRC}/LICENSE

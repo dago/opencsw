@@ -1,0 +1,11 @@
+#!/bin/sh
+OPENSSL_LIB='/opt/csw/lib/amd64'
+export OPENSSL_LIB
+OPENSSL_INCLUDE='/opt/csw/include/openssl'
+export OPENSSL_INCLUDE
+./configure --prefix=/opt/csw/mysql5 --disable-assembler \
+  --without-docs \
+  --enable-thread-safe-client --with-named-z-libs=yes \
+  --with-berkeley-db \
+  --with-innodb --enable-local-infile --with-extra-charsets=all \
+  --with-low-memory

@@ -1,0 +1,4 @@
+#!/bin/sh
+mv ./sql/mysqld ./cswstage/opt/csw/mysql5/libexec/mysqld64
+(cd libmysql_r/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv9 ; tar xf - )
+(cd libmysql/.libs ; tar cf - lib*so* ) | (cd cswstage/opt/csw/mysql5/lib/mysql/sparcv9 ; tar xf - )

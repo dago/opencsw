@@ -1,0 +1,24 @@
+--- ./cswstage/opt/csw/mysql5/mysql-test/mtr~	2007-03-13 18:18:46.455147000 -0400
++++ ./cswstage/opt/csw/mysql5/mysql-test/mtr	2007-03-14 18:50:07.667776000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ # -*- cperl -*-
+ 
+ #
+--- ./cswstage/opt/csw/mysql5/mysql-test/mysql-test-run~	2007-03-13 18:18:46.308106000 -0400
++++ ./cswstage/opt/csw/mysql5/mysql-test/mysql-test-run	2007-03-14 18:50:22.199522000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ # -*- cperl -*-
+ 
+ #
+--- ./cswstage/opt/csw/mysql5/mysql-test/mysql-test-run.pl~	2007-03-13 18:18:46.536952000 -0400
++++ ./cswstage/opt/csw/mysql5/mysql-test/mysql-test-run.pl	2007-03-14 18:50:30.819391000 -0400
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ # -*- cperl -*-
+ 
+ #

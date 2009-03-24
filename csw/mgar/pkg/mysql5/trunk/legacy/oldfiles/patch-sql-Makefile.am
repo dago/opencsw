@@ -1,0 +1,11 @@
+--- ./sql/Makefile.am~	2007-05-02 10:40:42.000000000 -0400
++++ ./sql/Makefile.am	2007-05-11 19:17:28.455929000 -0400
+@@ -39,7 +39,7 @@
+ 			$(top_builddir)/strings/libmystrings.a @ZLIB_LIBS@ @NDB_SCI_LIBS@
+ 
+ mysqld_LDADD =		@MYSQLD_EXTRA_LDFLAGS@ \
+-			@bdb_libs@ @innodb_libs@ @pstack_libs@ \
++			@bdb_libs_with_path@ @innodb_libs@ @pstack_libs@ \
+                         @innodb_system_libs@ \
+ 			@ndbcluster_libs@ @ndbcluster_system_libs@ \
+ 			$(LDADD)  $(CXXLDFLAGS) $(WRAPLIBS) @LIBDL@ \

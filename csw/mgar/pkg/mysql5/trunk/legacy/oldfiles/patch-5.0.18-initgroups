@@ -1,0 +1,13 @@
+--- ./sql/mysqld.cc~	2005-12-21 14:39:30.000000000 -0500
++++ ./sql/mysqld.cc	2005-12-30 17:39:41.722343000 -0500
+@@ -1301,7 +1301,9 @@
+     output a specific message to help the user resolve this problem.
+   */
+   calling_initgroups= TRUE;
+-  initgroups((char*) user, user_info->pw_gid);
++/* Solaris patch */
++/*  initgroups((char*) user, user_info->pw_gid); */
++  initgroups((char*) user,(gid_t) user_info->pw_gid);
+   calling_initgroups= FALSE;
+ #endif
+   if (setgid(user_info->pw_gid) == -1)

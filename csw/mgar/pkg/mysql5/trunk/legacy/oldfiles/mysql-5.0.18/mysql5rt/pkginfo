@@ -1,0 +1,8 @@
+PKG=CSWmysql5rt
+NAME=mysql5rt - run-time libraries for mysql5
+VERSION=5.0.18
+ARCH=sparc
+CATEGORY=system
+VENDOR=http://www.mysql.com/  packaged for CSW by Alex Moore
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=asmoore@blastwave.org

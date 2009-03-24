@@ -1,0 +1,8 @@
+PKG=CSWmysql5client
+NAME=mysql5client - MySQL database client executables and development tools
+VERSION=5.0.18
+ARCH=sparc
+CATEGORY=application
+VENDOR=http://www.mysql.com/  packaged for CSW by Alex Moore
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=asmoore@blastwave.org

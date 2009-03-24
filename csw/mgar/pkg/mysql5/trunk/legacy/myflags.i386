@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+OPENSSL_INCLUDE=-I/opt/csw/include
+OPENSSL_LIB=/opt/csw/lib
+CPPFLAGS=-I/opt/csw/include
+PATH=/opt/forte8/SUNWspro/bin:$PATH
+LD_OPTIONS='-R/opt/csw/lib/$ISALIST'
+PERL=/opt/csw/bin/perl
+export OPENSSL_INCLUDE OPENSSL_LIB CPPFLAGS PATH LD_OPTIONS PERL

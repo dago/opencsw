@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+# Patches for MySQL 5.1.23-rc and later
+# Run this from the top build directory
+gpatch -p0 </export/medusa/asmoore/pkgs/mysql-5.1/patch-configure.in-crypt
+gpatch -p0 </export/medusa/asmoore/pkgs/mysql-5.1/patch-initgroups
+touch aclocal.m4 configure.in
+aclocal
+automake
