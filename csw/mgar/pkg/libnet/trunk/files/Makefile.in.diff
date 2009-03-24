@@ -1,0 +1,41 @@
+--- ../build-global/Libnet-1.0.2a/Makefile.in	2001-02-05 18:51:41.000000000 +0100
++++ Libnet-1.0.2a/Makefile.in	2009-03-24 09:03:42.454643521 +0100
+@@ -20,7 +20,7 @@
+ 
+ LIBNET      =   libnet
+ LIBPWRITE   =   libpwrite
+-LIB         =   lib/$(LIBNET).a
++LIB         =   lib/$(LIBNET).so.1.0.2
+ MAN         =   doc/$(LIBNET).3
+ INCLUDE     =   include/$(LIBNET).h
+ INCLUDE-H   =   include/$(LIBNET)/$(LIBNET)-headers.h
+@@ -37,7 +37,7 @@
+ CC          =   @CC@
+ ENSUREDIR   =   $(srcdir)/ensure-dir.sh
+ INSTALL_DATA=   $(srcdir)/install-sh
+-CFLAGS      =   @CFLAGS@
++CFLAGS      =   -KPIC @CFLAGS@
+ CPPFLAGS    =   @CPPFLAGS@
+ OBJECTS     =   src/libnet_resolve.o\
+ 		src/libnet_socket.o\
+@@ -74,8 +74,7 @@
+ supp: test example
+ 
+ libnet: version.h $(OBJECTS)
+-	$(AR) -cr $(LIB) $(OBJECTS)
+-	$(RANLIB) $(LIB)
++	$(LD) -G -o $(LIB) $(OBJECTS)
+ 
+ version.o: version.h
+ version.h: ./VERSION
+@@ -99,8 +98,8 @@
+ 	$(ENSUREDIR) $(DESTDIR)$(MAN_PREFIX) 755
+ 	$(ENSUREDIR) $(DESTDIR)$(BIN_PREFIX) 755
+ 	$(INSTALL_DATA) $(LIB) $(DESTDIR)$(LIB_PREFIX)
+-	rm -f $(DESTDIR)$(LIB_PREFIX)$(LIBPWRITE).a
+-	cd $(DESTDIR)$(LIB_PREFIX); $(LN) -f -s $(LIBNET).a $(LIBPWRITE).a
++	$(LN) -f -s $(LIBNET).$(SOEXT).1.0.2 $(DESTDIR)$(LIB_PREFIX)$(LIBNET).$(SOEXT)
++	$(LN) -f -s $(LIBNET).$(SOEXT).1.0.2 $(DESTDIR)$(LIB_PREFIX)$(LIBPWRITE).$(SOEXT)
+ 	$(INSTALL_DATA) $(INCLUDE) $(DESTDIR)$(INC_PREFIX)
+ 	$(INSTALL_DATA) $(INCLUDE-H) $(DESTDIR)$(INC_PREFIX)$(LIBNET)
+ 	$(INSTALL_DATA) $(INCLUDE-F) $(DESTDIR)$(INC_PREFIX)$(LIBNET)
