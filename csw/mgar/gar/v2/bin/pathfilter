@@ -14,7 +14,7 @@
 #   excluded also.
 
 use strict;
-use Getopt::Long;
+use Getopt::Long qw(:config no_ignore_case);
 use Pod::Usage;
 
 my $help = 0;
@@ -26,7 +26,9 @@ my $result = GetOptions(
 	'h|help' => \$help,
 	'e|isaexec=s' => \@isaexec,
 	'i|include=s' => sub { push @selection, [ 'i', $_[1] ]; $hasinclude = 1 },
+	'I=s' => sub { push @selection, [ 'i', quotemeta( $_[1] ) ]; $hasinclude = 1 },
 	'x|exclude=s' => sub { push @selection, [ 'x', $_[1] ]; $hasexclude = 1 },
+	'X=s' => sub { push @selection, [ 'x', quotemeta( $_[1] ) ]; $hasexclude = 1 },
 ) or pod2usage( 1 );
 
 # Exclude everything by default if there are only include rules
@@ -153,9 +155,18 @@ Print a brief help message and exits.
 
 Excludes the path from the resulting prototype.
 
+=item B<-X <path>>
+
+Excludes the path from the resulting prototype where all meta characters are quoted.
+
 =item B<-i | --include <path>>
 
 Includes the path in the resulting prototype.
+All pathes are implicitly excluded by default if B<-i> is used.
+
+=item B<-I <path>>
+
+Includes the path in the resulting prototype where all meta characters are quoted.
 All pathes are implicitly excluded by default if B<-i> is used.
 
 =back
