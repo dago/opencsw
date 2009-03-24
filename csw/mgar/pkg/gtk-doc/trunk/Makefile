@@ -13,7 +13,7 @@ MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 CATALOGNAME_CSWgtk-doc = gtk_doc
 
-PREREQUISITE_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl CSWscrollkeeper
+PREREQUISITE_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl
 PREREQUISITE_PKGS += CSWopenjade CSWgnomedocutils
 
 REQUIRED_PKGS += CSWperl CSWpython CSWsgmlcommon CSWxmlcommon
@@ -26,6 +26,7 @@ ARCHALL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-xml-catalog=/opt/csw/etc/xml/catalog
+CONFIGURE_ARGS += --disable-scrollkeeper
 
 # xmllint test fail on buildfarm due to proxy requirement
 # some other tests fail due to gtk-doc not installed (doh!)
