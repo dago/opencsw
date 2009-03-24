@@ -1,5 +1,5 @@
 GARNAME = Parse-Syslog
-GARVERSION = 1.09
+GARVERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = DSCHWEI
 
@@ -13,6 +13,15 @@ define BLURB
   program, pid and text returned in a hash-reference.
 endef
 
-DISTFILES += CSWpmparsesyslog.gspec
+CATALOGNAME     = pm_parsesyslog
+PACKAGES	= CSWpmparsesyslog
+
+ARCHALL_CSWpmparsesyslog = 1
+
+LICENSE = COPYING
 
 include gar/category.mk
+
+post-extract:
+	@chmod o+r $(WORKSRC)/COPYING
+	@$(MAKECOOKIE)
