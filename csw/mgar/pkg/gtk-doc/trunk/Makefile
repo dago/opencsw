@@ -11,13 +11,13 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWgtkdoc, )
+CATALOGNAME_CSWgtk-doc = gtk_doc
 
 PREREQUISITE_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl CSWscrollkeeper
 PREREQUISITE_PKGS += CSWopenjade CSWgnomedocutils
 
-REQUIRED_PKGS += CSWperl CSWpython CSWsgmlcommon CSWxmlcommon CSWdocbookxsl
-REQUIRED_PKGS += CSWopenjade CSWgnomedocutils
+REQUIRED_PKGS += CSWperl CSWpython CSWsgmlcommon CSWxmlcommon
+REQUIRED_PKGS += CSWdocbookxsl CSWopenjade CSWgnomedocutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
