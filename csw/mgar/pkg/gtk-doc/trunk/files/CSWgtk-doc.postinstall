@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ -x /opt/csw/bin/scrollkeeper-update ]; then
+	/opt/csw/bin/scrollkeeper-update -o /opt/csw/share/omf/gtk-doc-manual
+fi

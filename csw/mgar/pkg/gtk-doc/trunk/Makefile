@@ -11,6 +11,7 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWgtk-doc.postinstall
 CATALOGNAME_CSWgtk-doc = gtk_doc
 
 PREREQUISITE_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl
