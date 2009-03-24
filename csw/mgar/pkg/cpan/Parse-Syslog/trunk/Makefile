@@ -18,10 +18,10 @@ PACKAGES	= CSWpmparsesyslog
 
 ARCHALL_CSWpmparsesyslog = 1
 
-LICENSE = COPYING
+LICENSE = README
 
 include gar/category.mk
 
 post-extract:
-	@chmod o+r $(WORKSRC)/COPYING
+	@chmod o+r $(WORKSRC)/README
 	@$(MAKECOOKIE)
