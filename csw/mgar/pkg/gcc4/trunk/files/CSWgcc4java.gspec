@@ -1,4 +1,0 @@
-%var       bitname gcc4java
-%var       pkgname CSWgcc4java
-%include   url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright url file://%{DOWNLOADDIR}/COPYING

@@ -1,4 +1,0 @@
-%var       bitname gcc4gfortranrt
-%var       pkgname CSWgcc4gfortranrt
-%include   url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright url file://%{DOWNLOADDIR}/COPYING

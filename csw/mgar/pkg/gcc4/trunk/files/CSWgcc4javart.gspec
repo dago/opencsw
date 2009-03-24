@@ -1,4 +1,0 @@
-%var       bitname gcc4javart
-%var       pkgname CSWgcc4javart
-%include   url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright url file://%{DOWNLOADDIR}/COPYING

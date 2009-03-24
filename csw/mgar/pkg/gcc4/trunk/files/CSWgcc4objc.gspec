@@ -1,4 +1,0 @@
-%var       bitname gcc4objc
-%var       pkgname CSWgcc4objc
-%include   url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright url file://%{DOWNLOADDIR}/COPYING
