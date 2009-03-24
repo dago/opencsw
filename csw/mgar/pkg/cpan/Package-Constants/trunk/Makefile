@@ -1,5 +1,5 @@
 GARNAME = Package-Constants
-GARVERSION = 0.01
+GARVERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = KANE
 
@@ -10,6 +10,16 @@ define BLURB
   @EXPORT/@EXPORT_OK for a Constants.pm file.
 endef
 
-DISTFILES = $(call admfiles,CSWpmpkgconst,depend prototype)
+CATALOGNAME = pm_pkgconst
+PACKAGES    = CSWpmpkgconst
+
+ARCHALL_CSWpmpkgconst = 1
+
+LICENSE = README
 
 include gar/category.mk
+
+post-extract:
+	@chmod o+r $(WORKSRC)/README
+	@$(MAKECOOKIE)
+
