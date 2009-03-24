@@ -9,6 +9,9 @@ define BLURB
   High-Quality "Portable Document Format (aka. PDF)" Files.
 endef
 
+PACKAGES    = CSWpmpdfapi2
+CATALOGNAME = pm_pdfapi2
+
 DISTFILES += CSWpmpdfapi2.gspec
 
 REQUIRED_PKGS_CSWpmpdfapi2 += CSWpmcompresszlib
