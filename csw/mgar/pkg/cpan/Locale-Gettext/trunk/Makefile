@@ -10,10 +10,11 @@ define BLURB
   to internationalize software.
 endef
 
-DISTFILES += $(call admfiles,CSWpmlocalegettext)
+PACKAGES = CSWpmlocalegettext
+CATALOGNAME = pm_localegettext
 
-PREREQUISITE_PKGS = CSWggettext
+PREREQUISITE_PKGS = CSWggettextrt
 
 include gar/category.mk
 
-BUILD_ARGS += OTHERLDFLAGS=-lintl
+BUILD_ARGS += OTHERLDFLAGS="-lintl -R$(libdir)"
