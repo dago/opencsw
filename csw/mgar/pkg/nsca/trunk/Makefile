@@ -18,9 +18,10 @@ DISTFILES += cswnsca
 PATCHFILES += submit_check_results.diff
 
 REQUIRED_PKGS_CSWnsca     = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
-REQUIRED_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt 
+REQUIRED_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
 
 SPKG_CLASSES_CSWnsca = none cswpreserveconf cswinitsmf
+SPKG_CLASSES_CSWsendnsca = none cswpreserveconf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-nsca-port=5667

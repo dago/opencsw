@@ -1,12 +1,12 @@
-1 d none /opt/csw/bin 0755 root bin
-1 f none /opt/csw/bin/send_nsca 0755 root bin
-1 d none /opt/csw/etc 0755 root bin
-1 f cswpreserveconf /opt/csw/etc/send_nsca.cfg.CSW 0644 root bin
-1 d none /opt/csw/share/doc/send_nsca 0755 root bin
-1 f none /opt/csw/share/doc/send_nsca/Changelog 0644 root bin
-1 f none /opt/csw/share/doc/send_nsca/LEGAL 0644 root bin
-1 f none /opt/csw/share/doc/send_nsca/README 0644 root bin
-1 f none /opt/csw/share/doc/send_nsca/SECURITY 0644 root bin
-1 f none /opt/csw/share/doc/send_nsca/submit_check_result-sample 0755 root bin
-1 i pkginfo=CSWsendnsca.pkginfo
-1 i preinstall=CSWsendnsca.preinstall
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/send_nsca 0755 root bin
+d none /opt/csw/etc 0755 root bin
+f cswpreserveconf /opt/csw/etc/send_nsca.cfg.CSW 0644 root bin
+d none /opt/csw/share/doc/send_nsca 0755 root bin
+f none /opt/csw/share/doc/send_nsca/Changelog 0644 root bin
+f none /opt/csw/share/doc/send_nsca/LEGAL 0644 root bin
+f none /opt/csw/share/doc/send_nsca/README 0644 root bin
+f none /opt/csw/share/doc/send_nsca/SECURITY 0644 root bin
+f none /opt/csw/share/doc/send_nsca/submit_check_result-sample 0755 root bin
+i pkginfo=CSWsendnsca.pkginfo
+i preinstall=CSWsendnsca.preinstall
