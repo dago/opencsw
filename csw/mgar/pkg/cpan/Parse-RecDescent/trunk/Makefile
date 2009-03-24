@@ -1,5 +1,5 @@
 GARNAME = Parse-RecDescent
-GARVERSION = 1.94
+GARVERSION = 1.96.0
 CATEGORIES = cpan
 AUTHOR = DCONWAY
 
@@ -9,6 +9,15 @@ define BLURB
   parsers from simple yacc-like grammar specifications.
 endef
 
-DISTFILES = $(call admfiles,CSWpmparserecdescent,depend prototype)
+CATALOGNAME = pm_parserecdescent
+PACKAGES    = CSWpmparserecdescent
+
+ARCHALL_CSWpmparserecdescent = 1
+
+LICENSE = COPYING
 
 include gar/category.mk
+
+post-extract:
+	@chmod o+r $(WORKSRC)/COPYING
+	@$(MAKECOOKIE)
