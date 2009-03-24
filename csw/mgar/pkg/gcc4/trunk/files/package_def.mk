@@ -10,4 +10,5 @@ DISTFILES += $(call admfiles,CSWgcc4objc,prototype depend)
 DISTFILES += $(call admfiles,CSWgcc4objcrt,prototype depend)
 DISTFILES += $(call admfiles,CSWgcc4g++,prototype depend)
 DISTFILES += $(call admfiles,CSWgcc4g++rt,prototype depend)
+DISTFILES += COPYING
 

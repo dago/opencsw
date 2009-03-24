@@ -1,8 +1,24 @@
 
 
+pre-fetch:
+	@(echo "==> Creating Prototype Files from prototype-$(GARCH) files")
+	@(cd $(FILEDIR) && for file in `ls *-$(GARCH)`; do \
+            nfile=`echo $$file | gsed 's/-$(GARCH)//'`; \
+            gcp $$file $$nfile; \
+        done)
+	$(DONADA)
+
+post-checksum:
+	@(cd $(FILEDIR) && grm *.prototype)
+	$(DONADA)
+
+post-merge:
+	@(gcp $(DOWNLOADDIR)/COPYING $(WORKDIR))
+	$(DONADA)
+
 ## Create $(OBJECT_DIR) to build in
 post-extract-$(addprefix post-extract-,$(MODULATIONS)):
-	echo "==> Creating Object Dir for Building"
+	@(echo "==> Creating Object Dir for Building")
 	@( mkdir $(OBJECT_DIR) )
 	$(DONADA)
 
