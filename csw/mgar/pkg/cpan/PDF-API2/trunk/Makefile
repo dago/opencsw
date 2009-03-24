@@ -21,7 +21,6 @@ LICENSE = COPYING
 include gar/category.mk
 
 post-extract:
-#	@chmod o+r $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/*/COPYING 
-	( chmod o+r $(WORKSRC)/COPYING )
+	@chmod o+r $(WORKSRC)/COPYING 
 	@$(MAKECOOKIE)
 
