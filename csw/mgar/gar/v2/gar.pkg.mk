@@ -299,6 +299,8 @@ $(WORKDIR)/%.depend: $(WORKDIR)
 #   flagged with ARCHALL_<pkg> = 1 for a specific package or with ARCHALL = 1
 #   for all packages.
 
+_CATEGORY_GSPEC_INCLUDE ?= csw_dyngspec.gspec
+
 # This rule dynamically generates gspec-files
 .PRECIOUS: $(WORKDIR)/%.gspec
 $(WORKDIR)/%.gspec:
@@ -306,7 +308,7 @@ $(WORKDIR)/%.gspec:
 		(echo "%var            bitname $(call catalogname,$*)"; \
 		echo "%var            pkgname $*"; \
 		$(if $(or $(ARCHALL),$(ARCHALL_$*)),echo "%var            arch all";) \
-		echo "%include        url file://%{PKGLIB}/csw_dyngspec.gspec") >$@\
+		$(if $(_CATEGORY_GSPEC_INCLUDE),echo "%include        url file://%{PKGLIB}/$(_CATEGORY_GSPEC_INCLUDE)")) >$@\
 	)
 
 
