@@ -11,6 +11,8 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+REQUIRED_PKGS = CSWncurses
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=628063
 UPSTREAM_USE_SF = 1
@@ -21,7 +23,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 BUILD64 = 1
-EXTRA_BUILD_ISAS = sparcv8plus+vis
+EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
