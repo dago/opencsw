@@ -1,5 +1,5 @@
 GARNAME = Object-Accessor
-GARVERSION = 0.32
+GARVERSION = 0.34
 CATEGORIES = cpan
 AUTHOR = KANE
 
@@ -9,8 +9,17 @@ define BLURB
   opposed to per Class accessors, as, for example, Class::Accessor provides).
 endef
 
-DISTFILES = $(call admfiles,CSWpmobjaccessor,depend prototype)
+CATALOGNAME = pm_objaccessor
+PACKAGES    = CSWpmobjaccessor
 
-DEPENDS += cpan/Params-Check
+ARCHALL_CSWpmobjaccessor = 1
+
+REQUIRED_PKGS_CSWpmobjaccessor += CSWpmprmscheck
+
+LICENSE = README
 
 include gar/category.mk
+
+post-extract:
+	@chmod o+r $(WORKSRC)/README
+	@$(MAKECOOKIE)
