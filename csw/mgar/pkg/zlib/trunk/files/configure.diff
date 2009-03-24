@@ -1,0 +1,11 @@
+--- ../build-global/zlib-1.2.3/configure	2005-07-11 22:11:57.000000000 +0200
++++ zlib-1.2.3/configure	2009-03-23 08:21:07.639754073 +0100
+@@ -29,7 +29,7 @@
+ exec_prefix=${exec_prefix-'${prefix}'}
+ libdir=${libdir-'${exec_prefix}/lib'}
+ includedir=${includedir-'${prefix}/include'}
+-mandir=${mandir-'${prefix}/share/man'}
++#mandir=${mandir-'${prefix}/share/man'}
+ shared_ext='.so'
+ shared=0
+ gcc=0
