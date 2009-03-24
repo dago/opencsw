@@ -22,6 +22,8 @@ REQUIRED_PKGS += CSWdocbookxsl CSWopenjade CSWgnomedocutils
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+ARCHALL = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-xml-catalog=/opt/csw/etc/xml/catalog
 
