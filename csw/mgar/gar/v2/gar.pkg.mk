@@ -421,6 +421,9 @@ merge-license-%: $(WORKDIR)
 merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 	@$(DONADA)
 
+reset-merge-license:
+	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
+
 # package - Use the mkpackage utility to create Solaris packages
 #
 

@@ -626,7 +626,7 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
-reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS))
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license
 	@rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge
 	@rm -rf $(PKGROOT)
 
