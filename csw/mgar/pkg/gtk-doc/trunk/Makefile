@@ -25,7 +25,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-xml-catalog=/opt/csw/etc/xml/catalog
 
-TEST_TARGET = check
-#TEST_TARGET =
+# xmllint test fail on buildfarm due to proxy requirement
+# some other tests fail due to gtk-doc not installed (doh!)
+#TEST_TARGET = check
+TEST_TARGET =
 
 include gar/category.mk
