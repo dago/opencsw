@@ -19,3 +19,8 @@ REQUIRED_PKGS_CSWpmpdfapi2 += CSWpmcompresszlib
 LICENSE = COPYING
 
 include gar/category.mk
+
+post-extract:
+        @chmod o+r $(WORKSRC)/COPYING
+        @$(MAKECOOKIE)
+
