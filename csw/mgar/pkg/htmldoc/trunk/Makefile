@@ -16,7 +16,7 @@ SPKG_SOURCEURL = http://www.htmldoc.org
 
 LICENSE = COPYING.txt
 
-REQUIRED_PKGS = CSWjpeg CSWosslrt CSWpng CSWzlib
+REQUIRED_PKGS = CSWfltk CSWjpeg CSWosslrt CSWpng CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-source.tar.bz2
