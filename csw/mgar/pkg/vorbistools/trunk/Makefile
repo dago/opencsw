@@ -1,8 +1,8 @@
-GARNAME = vorbis-tools
-GARVERSION = 1.0.1
+GARNAME = vorbistools
+GARVERSION = 1.2.0
 CATEGORIES = utils
 
-DESCRIPTION = Play, encode and manage Ogg Vorbis files.
+DESCRIPTION = Vorbis audio tools
 define BLURB
     Ogg Vorbis is a high-quality lossy audio codec which is free of intellectual
     property restrictions (like those surrounding MP3). These are the tools that
@@ -10,15 +10,23 @@ define BLURB
     simple commentor.
 endef
 
-UPSTREAM_MASTER_SITES = http://www.vorbis.com/files/
-MASTER_SITES = http://www.vorbis.com/files/1.0.1/unix/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTNAME = vorbis-tools-$(GARVERSION)
+MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
+DISTFILES = $(DISTNAME).tar.gz
+
+PACKAGES = CSWvtools
+CATALOGNAME = vorbistools
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-DEPENDS = lib/libvorbis
+BUILD64 = 1
+EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro
+
+EXTRA_LINKER_FLAGS += -lrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
 
 include gar/category.mk
