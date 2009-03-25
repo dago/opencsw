@@ -15,7 +15,7 @@ DISTFILES = COPYING
 
 PACKAGES = CSWpmpodsimple
 CATALOGNAME = pm_podsimple
-ALLARCH = 1
+ARCHALL = 1
 
 REQUIRED_PKGS = CSWpmpodescapes
 
