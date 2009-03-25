@@ -10,7 +10,7 @@ define BLURB
 endef
 
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
-MASTER_SITES = http://gcc.gnu.org/
+MASTER_SITES = $(GNU_MIRROR)/$(GARNAME)-$(GARVERSION)/
 
 # We define upstream file regex so we can be notifed 
 # of new upstream software release
@@ -22,5 +22,5 @@ include files/configure_def.mk
 include files/pkg_scripts.mk
 include files/package_def.mk
 include files/amd_merge.mk
-
+## include mGar definitions
 include gar/category.mk

@@ -15,6 +15,18 @@ CATALOGNAME_CSWgcc4javart     = gcc4javart
 CATALOGNAME_CSWgcc4objc       = gcc4objc
 CATALOGNAME_CSWgcc4objcrt     = gcc4obcrt
 
+## Source URLs
+SPKG_SOURCEURL_CSWgcc4core       = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4corert     = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4g++        = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4g++rt      = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4gfortran   = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4gfortranrt = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4java       = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4javart     = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4objc       = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4objcrt     = http://gcc.gnu.org
+
 ## Copyright File
 LICENSE_CSWgcc4core       = COPYING3
 LICENSE_CSWgcc4corert     = COPYING3

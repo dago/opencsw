@@ -1,4 +1,4 @@
-
+## build options 
 CONFIGURE_ARGS  = --prefix=/opt/csw/gcc4
 CONFIGURE_ARGS += --exec-prefix=/opt/csw/gcc4
 CONFIGURE_ARGS += --with-gnu-as
@@ -18,4 +18,3 @@ CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix
 CONFIGURE_ARGS += --enable-stage1-languages=c
 CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
-
