@@ -1,3 +1,18 @@
+openssl (0.9.8,rev=2009.01.28_rev=j) unstable
+
+  * Fixed checkinstall bug, -h should be used instead of -L to 
+  test symlink because old sh doesn't know -L.
+
+   -- Yann Rouillard <yann@opencsw.org>  Wed, 28 Jan 2009 10:37:43 +0100
+
+openssl (0.9.8,rev=2009.01.07_rev=j) unstable
+
+  * New upstream version.
+  * Made the private directory local by symlinking it to
+  /etc/opt/csw/ssl/private
+
+   -- Yann Rouillard <yann@opencsw.org>  Wed, 07 Jan 2009 19:07:01 +0100
+
 openssl (0.9.8,rev=2009.01.01_rev=i) unstable
 
   * Removed CA and added dependancy on ca_certificates.

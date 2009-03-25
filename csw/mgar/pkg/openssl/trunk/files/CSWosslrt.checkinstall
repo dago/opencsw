@@ -31,7 +31,7 @@ fi
 # and /opt/csw/ssl/certs is now a symbolic links 
 
 # we test if certificates were manually installed in this directory
-if [ ! -L "/opt/csw/ssl/certs" ] &&  [ -n "`ls -1 /opt/csw/ssl/certs/`" ]; then
+if [ ! -h "/opt/csw/ssl/certs" ] &&  [ -d "/opt/csw/ssl/certs" ] && [ -n "`ls -1 /opt/csw/ssl/certs/`" ]; then
 
 	echo "Custom certificates have been installed in /opt/csw/ssl/certs/."
 	echo "They will be moved under /opt/csw/etc/ssl/certs."

@@ -1,5 +1,5 @@
 GARNAME = openssl
-GARVERSION = 0.9.8i
+GARVERSION = 0.9.8j
 CATEGORIES = lib
 
 OPENSSL_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
@@ -83,6 +83,25 @@ INSTALL_ARGS += MANDIR=$(mandir)
 OLDLIBS                 = 0.9.7m
 
 SKIPTEST = 1
+
+
+# support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
+ifdef PKCS11
+	PATCHFILES += pkcs11_engine-0.9.8h.patch.2008-07-29
+	ifeq ($(GARCH),sparc)
+		ifeq ($(ISA),sparcv9)
+			CONFIGURE_ARGS += --pk11-libname=/usr/lib/sparcv9/libpkcs11.so
+		else
+			CONFIGURE_ARGS += --pk11-libname=/usr/lib/libpkcs11.so
+		endif
+	else
+		ifeq ($(ISA),amd64)
+			CONFIGURE_ARGS += --pk11-libname=/usr/lib/sparcv9/libpkcs11.so
+		else
+			CONFIGURE_ARGS += --pk11-libname=/usr/lib/libpkcs11.so
+		endif
+	endif
+endif 
 
 include gar/category.mk
 
