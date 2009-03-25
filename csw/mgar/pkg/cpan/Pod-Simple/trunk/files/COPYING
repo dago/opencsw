@@ -1,8 +1,3 @@
-%var            bitname pm_podsimple
-%var            pkgname CSWpmpodsimple
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
 Copyright (c) 2002 Sean M. Burke.  All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it
