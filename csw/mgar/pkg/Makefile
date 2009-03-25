@@ -37,14 +37,14 @@ report-%:
 
 # Lines returned by 'svn propget -R' look like this:
 #
-# gar/trunk - gar https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v2
-# gar-v1 https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v1
-# gar-v2 https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v2
+# gar/trunk - gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2
+# gar-v1 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v1
+# gar-v2 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2
 # 
 # ...
 
 garlinks:
-	@(svn propget svn:externals -R | perl -ane 'next if( /^$$/ ); if( $$F[1] eq "-" ) { ($$path,$$sep,$$dir,$$link)=@F; } else { ($$dir,$$link) = @F; } ($$upsteps=$$path)=~s![^/]+!..!g;(($$linkdest=$$link))=~ s!https://gar.svn.sf.net/svnroot/gar/csw/mgar!$$upsteps!;print "Linking $$path/$$dir to ../$$linkdest", symlink("../$$linkdest","$$path/$$dir") ? "" : " failed", "\n";')
+	@(svn propget svn:externals -R | perl -ane 'next if( /^$$/ ); if( $$F[1] eq "-" ) { ($$path,$$sep,$$dir,$$link)=@F; } else { ($$dir,$$link) = @F; } ($$upsteps=$$path)=~s![^/]+!..!g;(($$linkdest=$$link))=~ s!https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar!$$upsteps!;print "Linking $$path/$$dir to ../$$linkdest", symlink("../$$linkdest","$$path/$$dir") ? "" : " failed", "\n";')
 
 pkglist:
 	@for i in $(filter-out $(FILTER_DIRS),$(foreach D,. $(SUBDIRS),$(wildcard $D/*/))) ; do \
@@ -84,8 +84,8 @@ newpkg-%:
 	echo "%copyright      url file://%{WORKSRC}/LICENSE";           								\
 	) > $*/trunk/files/CSWpackage.gspec
 	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $*/trunk
-	@echo "gar https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $*/trunk
-	@svn co https://gar.svn.sf.net/svnroot/gar/csw/mgar/gar/v2 $*/trunk/gar
+	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $*/trunk
+	@svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $*/trunk/gar
 	@echo
 	@echo "Your package is set up for editing at $*/trunk"
 	@echo "Please don't forget to add the gspec-file!"
