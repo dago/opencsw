@@ -11,11 +11,10 @@ define BLURB
   the perlpod man page; the most common formatter is called "perldoc".
 endef
 
-#DISTFILES = $(call admfiles,CSWpmpodsimple,depend prototype)
+DISTFILES = COPYING
 
 PACKAGES = CSWpmpodsimple
 CATALOGNAME = pm_podsimple
-#SPKG_DESC = $(DESCRIPTION)
 ALLARCH = 1
 
 REQUIRED_PKGS = CSWpmpodescapes
