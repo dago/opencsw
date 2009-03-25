@@ -1,5 +1,5 @@
 GARNAME = openssl
-GARVERSION = 0.9.8j
+GARVERSION = 0.9.8k
 CATEGORIES = lib
 
 OPENSSL_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')

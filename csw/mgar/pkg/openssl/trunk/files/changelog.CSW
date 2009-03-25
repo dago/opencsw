@@ -1,3 +1,9 @@
+openssl (0.9.8,rev=2009.03.25_rev=k) unstable
+
+  * New upstream version.
+
+   -- Yann Rouillard <yann@opencsw.org>  Wed, 25 Mar 2009 22:57:40 +0100
+
 openssl (0.9.8,rev=2009.01.28_rev=j) unstable
 
   * Fixed checkinstall bug, -h should be used instead of -L to 
