@@ -26,18 +26,12 @@ DISTFILES    += cswdbus
 # Dynamic CSWlibdbusdev prototype
 PKGFILES_CSWlibdbusdev  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/.*
-# PKGFILES_CSWlibdbusdev += $(includedir)/include/(.*)
-# PKGFILES_CSWlibdbusdev += $(libdir)/libdbus-1.a
-# PKGFILES_CSWlibdbusdev += $(libdir)/pkgconfig/(.*)
 
 # Dynamic CSWlibdbus prototype
 PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
-#PKGFILES_CSWlibdbus    += $(libdir)/libdbus-1.la
-#PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so
-#PKGFILES_CSWlibdbus    += $(libdir)/(.*)\.so\.(.*)
 
 # Dependencies tracking
-REQUIRED_PKGS_CSWdbus	    += CSWexpat CSWlibdbus CSWcswclassutils
+REQUIRED_PKGS_CSWdbus	     = CSWexpat CSWlibdbus CSWcswclassutils
 REQUIRED_PKGS_CSWlibdbusdev  = CSWlibdbus
 
 # SMF support
