@@ -1,9 +1,9 @@
 GARNAME = Archive-Zip
-GARVERSION = 1.14
+GARVERSION = 1.26
 CATEGORIES = cpan
-AUTHOR = NEDKONZ
+AUTHOR = ADAMK
 
-DESCRIPTION = provide an interface to ZIP archive files.
+DESCRIPTION = Provides an interface to ZIP archive files
 define BLURB
   The Archive::Zip module allows a Perl program to create, manipulate, read,
   and write Zip archive files. Zip archives can be created, or you can read
@@ -17,11 +17,18 @@ define BLURB
   streams inside the files.
 endef
 
-DISTFILES = $(call admfiles,CSWpmarchivezip,depend prototype)
+DISTFILES = COPYING
+
+PACKAGES = CSWpmarchivezip
+CATALOGNAME = pm_archivezip
+ARCHALL = 1
 
 # Fix bug affecting Archive::SelfExtract
-PATCHFILES += seek.diff
+#PATCHFILES += seek.diff
 
-DEPENDS += cpan/Compress-Zlib
+REQUIRED_PKGS = CSWpmcompresszlib
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 include gar/category.mk
