@@ -622,32 +622,61 @@ default_socket_timeout = 60
 ; extension_dir directive above.
 
 ; CSW Extensions
+;extension=bcmath.so
 ;extension=bz2.so
+;extension=calendar.so
+;extension=ctype.so
 ;extension=curl.so
 ;extension=dba.so
+;extension=dbase.so
+;extension=dom.so
+;extension=exif.so
 ;extension=ftp.so
 ;extension=gd.so
 ;extension=gettext.so
 ;extension=gmp.so
+;extension=hash.so
+;extension=iconv.so
 ;extension=imap.so
+;extension=json.a
+;extension=json.so
 ;extension=ldap.so
+;extension=mbstring.so
 ;extension=mcrypt.so
 ;extension=mhash.so
+;extension=mime_magic.so
 ;extension=mssql.so
 ;extension=mysql.so
 ;extension=mysqli.so
+;extension=ncurses.so
 ;extension=odbc.so
+;extension=openssl.so
+;extension=pcntl.so
+;extension=pdo.so
 ;extension=pdo_mysql.so
 ;extension=pdo_odbc.so
 ;extension=pdo_pgsql.so
 ;extension=pdo_sqlite.so
 ;extension=pgsql.so
+;extension=posix.so
 ;extension=pspell.so
 ;extension=readline.so
+;extension=session.so
+;extension=shmop.so
 ;extension=snmp.so
+;extension=soap.so
+;extension=sockets.so
 ;extension=sqlite.so
+;extension=sysvsem.so
+;extension=sysvshm.so
+;extension=tidy.so
+;extension=tokenizer.so
 ;extension=wddx.so
+;extension=xmlreader.so
+;extension=xmlrpc.so
+;extension=xmlwriter.so
 ;extension=xsl.so
+;extension=zip.so
 
 ; Windows Extensions
 ; Note that ODBC support is built in, so no dll is needed for it.
