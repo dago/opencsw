@@ -1,8 +1,6 @@
-# http://www.clamav.net/snapshot/clamav-devel-latest.tar.gz
-
 GARNAME = clamav
-GARVERSION = 0.95rc1
-WORKSRC = $(WORKDIR)/$(GARNAME)-devel-latest
+GARVERSION = 0.95
+#DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
 DESCRIPTION = Clam AntiVirus
@@ -14,11 +12,11 @@ define BLURB
   the package is an anti-virus engine available in a form of shared library.
 endef
 
-#SF_PROJ = clamav
-#MASTER_SITES = $(SF_MIRRORS)
-MASTER_SITES = http://www.clamav.net/snapshot/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES  = $(GARNAME)-devel-latest.tar.gz
+SF_PROJ = clamav
+MASTER_SITES = $(SF_MIRRORS)
+#MASTER_SITES = http://www.clamav.net/snapshot/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#DISTFILES  = $(GARNAME)-devel-latest.tar.gz
 
 PACKAGES = CSWclamav CSWlibclamav
 CATALOGNAME_CSWclamav = clamav
@@ -33,7 +31,7 @@ REQUIRED_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # add usergroup class
-SPKG_CLASSES_CSWclamav = none cswusergroup cswautouser cswcpsampleconf cswinitsmf
+SPKG_CLASSES_CSWclamav = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 
 OPT_FLAGS_SOS = -xO2
 
@@ -50,17 +48,14 @@ PKGFILES_CSWlibclamav  = $(libdir)/.*
 PKGFILES_CSWlibclamav += $(includedir)/.*
 PKGFILES_CSWlibclamav += $(docdir)/libclamav/.*
 
-# fix usergroup stuff
-## files/dirs owned by clamav user
-## move cswusergroup file /opt/csw/etc/clamav/
 PROTOTYPE_FILTER  = awk ' \
    $$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } \
    $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } \
    $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
    $$$$3 ~ /\/clamav-milter.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
    $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-   $$$$3 ~ /\/var\/opt\/csw\/clamav/ { $$$$5 = "clamav" } \
-   $$$$3 ~ /\/etc\/opt\/csw\/clamav\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } \
+   $$$$3 ~ /\/var\/opt\/csw\/clamav/ { $$$$5 = "clamav" ; $$$$2 = "ugfiles" } \
+   $$$$3 ~ /\/opt\/csw\/etc\/CSWclamav\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } \
    { print }'
 
 SPKG_SOURCEURL = http://www.clamav.net/
@@ -92,17 +87,16 @@ post-install-modulated:
 	@( cd $(DESTDIR)$(sysconfdir) ; \
 	   gpatch < ../../../../../$(FILEDIR)/CSWclamav.freshclam.conf.p )
 	@mv $(DESTDIR)$(sysconfdir)/freshclam.conf $(DESTDIR)$(sysconfdir)/freshclam.conf.CSW
+	@mv $(DESTDIR)$(sysconfdir)/clamav-milter.conf $(DESTDIR)$(sysconfdir)/clamav-milter.conf.CSW
+	@ginstall -d $(DESTDIR)$(sysconfdir)/CSWclamav
+	@ginstall -m 644 $(FILEDIR)/CSWclamav.cswusergroup $(DESTDIR)$(sysconfdir)/CSWclamav/cswusergroup
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
-#	@ginstall -m 644 $(WORKSRC)/COPYING $(DOCDEST)/LICENSE
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.INSTALL.clamav-milter.CSW $(DOCDEST)/INSTALL.clamav-milter.CSW
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.README.CSW $(DOCDEST)/README.CSW
 	@ginstall -d $(DOCDEST)/contrib
 	@ginstall -m 644 $(WORKSRC)/contrib/clamdwatch/* $(DOCDEST)/contrib
-	@ginstall -m 644 $(WORKSRC)/contrib/init/Solaris10/* $(DOCDEST)/contrib
 	@ginstall -m 644 $(WORKSRC)/contrib/cleanup-partial.pl $(DOCDEST)/contrib
 	@ginstall -d $(DOCDEST)/html
 	@ginstall -m 644 $(WORKSRC)/docs/html/* $(DOCDEST)/html
-#	@ginstall -d $(DESTDIR)$(docdir)/libclamav
-#	@ginstall -m 644 $(WORKSRC)/COPYING $(DESTDIR)$(docdir)/libclamav/LICENSE
 	@$(MAKECOOKIE)

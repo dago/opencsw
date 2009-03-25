@@ -1,0 +1,1 @@
+clamav:clamav:ClamAV user:/var/spool:/bin/false::
