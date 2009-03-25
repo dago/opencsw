@@ -82,6 +82,9 @@ GAROSREL ?= $(shell uname -r)
 # These are the standard directory name variables from all GNU
 # makefiles.  They're also used by autoconf, and can be adapted
 # for a variety of build systems.
+
+# This is the general prefix for "world". Don't change it in a package and
+# if you change it in .garrc keep in mind to rebuild the world from scratch.
 BUILD_PREFIX       ?= /opt/csw
 
 prefix             ?= $(BUILD_PREFIX)
