@@ -1,5 +1,5 @@
 GARNAME = HTML-Parser
-GARVERSION = 3.56
+GARVERSION = 3.60
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -11,9 +11,15 @@ define BLURB
   invoked.
 endef
 
-DISTFILES = $(call admfiles,CSWpmhtmlparser,depend prototype)
+DISTFILES = COPYING
 
-DEPENDS += cpan/HTML-Tagset
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+PACKAGES = CSWpmhtmlparser
+CATALOGNAME = pm_htmlparser
+
+REQUIRED_PKGS = CSWpmhtmltagset
 
 CONFIGURE_ARGS = -n
 
