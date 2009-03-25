@@ -1,7 +1,7 @@
 
-COOKIEDIR = $(COOKIEROOTDIR)/$(MODULATION)-$(GAROSREL)
-WORKDIR = $(WORKROOTDIR)/build-$(MODULATION)-$(GAROSREL)
-INSTALLISADIR = $(WORKROOTDIR)/install-$(MODULATION)-$(GAROSREL)
+COOKIEDIR = $(COOKIEROOTDIR)/$(MODULATION)-$(GAROSREL)-$(GARCH)
+WORKDIR = $(WORKROOTDIR)/build-$(MODULATION)-$(GAROSREL)-$(GARCH)
+INSTALLISADIR = $(WORKROOTDIR)/install-$(MODULATION)-$(GAROSREL)-$(GARCH)
 PKGROOT = $(abspath $(WORKROOTDIR)/pkgroot-$(GARCH))
 OBJECT_DIR = $(WORKDIR)/objdir
 WORKSRC = $(OBJECT_DIR)
@@ -30,6 +30,34 @@ else
     BOOT_CFLAGS = -I/opt/csw/include -m32 -march=i386 -g -O2 -pipe
     BOOT_LDFLAGS  = -L/opt/csw/lib -R/opt/csw/lib
 endif
+    ISAEXEC_FILES += $(bindir)/addr2name.awk
+    ISAEXEC_FILES += $(bindir)/gc-analyze
+    ISAEXEC_FILES += $(bindir)/gcjh
+    ISAEXEC_FILES += $(bindir)/gjarsigner
+    ISAEXEC_FILES += $(bindir)/grmic
+    ISAEXEC_FILES += $(bindir)/c++
+    ISAEXEC_FILES += $(bindir)/gcc
+    ISAEXEC_FILES += $(bindir)/gcov
+    ISAEXEC_FILES += $(bindir)/gjavah
+    ISAEXEC_FILES += $(bindir)/grmid
+    ISAEXEC_FILES += $(bindir)/jcf-dump
+    ISAEXEC_FILES += $(bindir)/cpp
+    ISAEXEC_FILES += $(bindir)/gccbug
+    ISAEXEC_FILES += $(bindir)/gfortran
+    ISAEXEC_FILES += $(bindir)/gkeytool
+    ISAEXEC_FILES += $(bindir)/grmiregistry
+    ISAEXEC_FILES += $(bindir)/jv-convert
+    ISAEXEC_FILES += $(bindir)/g++
+    ISAEXEC_FILES += $(bindir)/gcj
+    ISAEXEC_FILES += $(bindir)/gij
+    ISAEXEC_FILES += $(bindir)/gnative2ascii
+    ISAEXEC_FILES += $(bindir)/gserialver
+    ISAEXEC_FILES += $(bindir)/gappletviewer
+    ISAEXEC_FILES += $(bindir)/gcj-dbtool
+    ISAEXEC_FILES += $(bindir)/gjar
+    ISAEXEC_FILES += $(bindir)/gorbd
+    ISAEXEC_FILES += $(bindir)/gtnameserv    
+	    
 endif
 
 export CONFIG_SHELL CFLAGS CPPFLAGS CXXFLAGS

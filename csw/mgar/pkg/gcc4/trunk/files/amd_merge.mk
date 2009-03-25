@@ -25,6 +25,7 @@ x86-merge-amd:
 		pax -rw $$dir $(PKGROOT); done )
 	@(cd $(AMD_BASE); pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
 	@(cd $(APREFIX)/bin; pax -rw * $(PPREFIX)/bin/amd64)
+	@(cd $(APREFIX)/bin/amd64; gln *-solaris2.* ../)
 
 x86-merge-i386:
 	@(echo "===> Merging I386")
@@ -35,6 +36,7 @@ x86-merge-i386:
 	@(cd $(I386_BASE); pax -rw $(MPREFIX)/lib $(PKGROOT))
 	@(cd $(I386_BASE); pax -rw $(MPREFIX)/libexec $(PKGROOT))
 	@(cd $(IPREFIX)/bin; pax -rw * $(PPREFIX)/bin/i386)
+	@(cd $(APREFIX)/bin/i386; gln *-solaris2.* ../)
 
 x86-merge-strip:
 	@(echo "===> Stripping Merged Binaries")
