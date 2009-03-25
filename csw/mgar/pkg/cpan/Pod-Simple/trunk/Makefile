@@ -13,6 +13,9 @@ endef
 
 DISTFILES = COPYING
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+
 PACKAGES = CSWpmpodsimple
 CATALOGNAME = pm_podsimple
 ARCHALL = 1
