@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# For OpenCSW by Juergen Arndt 2009-03-24
+
+#FMRI application       # FMRI path for service
+
+SMF_EXIT_OK=0
+SMF_EXIT_ERR_CONFIG=1
+
+if [ -f /lib/svc/share/smf_include.sh ]
+then
+	. /lib/svc/share/smf_include.sh
+fi
+
+CONFIG_FILE=/opt/csw/nagios/ndoutils/etc/ndo2db.cfg
+
+if [ ! -f $CONFIG_FILE ]
+then
+	exit $SMF_EXIT_ERR_CONFIG
+fi
+
+NAGIOS_MAJOR_RELEASE=`/opt/csw/nagios/bin/nagios -v | head -2 | tail -1 | awk '{print $2}' | awk -F. '{print $1}'`
+
+BIN_DIR="/opt/csw/nagios/ndoutils/bin"
+if [ $NAGIOS_MAJOR_RELEASE -eq 2 ]
+then
+	BIN_FILE="ndo2db-2x"
+fi
+
+if [ $NAGIOS_MAJOR_RELEASE -eq 3 ]
+then
+	BIN_FILE="ndo2db-3x"
+fi
+
+NDO_USER=nagios
+
+case "$1" in
+'start')
+	su - $NDO_USER -c "$BIN_DIR/$BIN_FILE -c $CONFIG_FILE"
+	;;
+'stop') 
+	su - $NDO_USER -c "pkill $BIN_FILE"
+	sleep 1
+	su - $NDO_USER -c "pkill -9 $BIN_FILE"
+	;;
+'restart')
+	su - $NDO_USER -c "pkill $BIN_FILE"
+	sleep 1
+	su - $NDO_USER -c "pkill -9 $BIN_FILE"
+	sleep 1
+	su - $NDO_USER -c "$BIN_DIR/$BIN_FILE -c $CONFIG_FILE"
+	;;
+*)
+        echo "Usage: $0 { start | stop | restart }"
+        exit 1
+        ;;
+esac
+exit $SMF_EXIT_OK

@@ -1,0 +1,3 @@
+%var            bitname ndoutils3x
+%var            pkgname CSWndoutils3x
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec

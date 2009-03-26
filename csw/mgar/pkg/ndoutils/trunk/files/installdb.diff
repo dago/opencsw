@@ -1,0 +1,9 @@
+diff --speed-large-files --minimal -Nru ndoutils-1.4b7.orig/db/installdb ndoutils-1.4b7/db/installdb
+--- ndoutils-1.4b7.orig/db/installdb	2007-10-31 19:17:04.000000000 +0100
++++ ndoutils-1.4b7/db/installdb	2009-03-25 21:31:34.967626155 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ #
+ # SYNTAX:
+ my $usage = "installdb -u user -p password -h hostname -d database";

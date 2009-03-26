@@ -1,0 +1,93 @@
+diff --speed-large-files --minimal -Nru ndoutils-1.4b7.orig/config/misccommands.cfg ndoutils-1.4b7/config/misccommands.cfg
+--- ndoutils-1.4b7.orig/config/misccommands.cfg	2007-01-08 01:35:58.000000000 +0100
++++ ndoutils-1.4b7/config/misccommands.cfg	2009-03-25 19:26:16.530574647 +0100
+@@ -7,5 +7,5 @@
+ 
+ define command{
+ 	command_name	rotate_ndo_log
+-	command_line	/bin/mv /usr/local/nagios/var/ndo.dat /usr/local/nagios/var/ndo.`date +%s`
++	command_line	/bin/mv /opt/csw/nagios/ndoutils/var/ndo.dat /opt/csw/nagios/ndoutils/var/ndo.`date +%s`
+         }
+diff --speed-large-files --minimal -Nru ndoutils-1.4b7.orig/config/nagios2.cfg ndoutils-1.4b7/config/nagios2.cfg
+--- ndoutils-1.4b7.orig/config/nagios2.cfg	1970-01-01 01:00:00.000000000 +0100
++++ ndoutils-1.4b7/config/nagios2.cfg	2009-03-25 19:28:01.481126866 +0100
+@@ -0,0 +1,11 @@
++# SAMPLE NAGIOS CONFIG SNIPPET FOR NDOMOD
++#
++# In order to have Nagios run the NDOMOD event broker module, you'll need
++# to place a statement like the one found below in your main Nagios
++# configuration file (nagios.cfg).  Adjust the paths, etc. to suit your needs.
++
++# Uncomment the line below if you're running Nagios 2.x
++broker_module=/opt/csw/nagios/ndoutils/bin/ndomod-2x.o config_file=/opt/csw/nagios/ndoutils/etc/ndomod.cfg
++
++# Uncomment the line below if you're running Nagios 3.x
++#broker_module=/usr/local/nagios/bin/ndomod-3x.o config_file=/usr/local/nagios/etc/ndomod.cfg
+diff --speed-large-files --minimal -Nru ndoutils-1.4b7.orig/config/nagios3.cfg ndoutils-1.4b7/config/nagios3.cfg
+--- ndoutils-1.4b7.orig/config/nagios3.cfg	1970-01-01 01:00:00.000000000 +0100
++++ ndoutils-1.4b7/config/nagios3.cfg	2009-03-25 19:28:33.346051027 +0100
+@@ -0,0 +1,11 @@
++# SAMPLE NAGIOS CONFIG SNIPPET FOR NDOMOD
++#
++# In order to have Nagios run the NDOMOD event broker module, you'll need
++# to place a statement like the one found below in your main Nagios
++# configuration file (nagios.cfg).  Adjust the paths, etc. to suit your needs.
++
++# Uncomment the line below if you're running Nagios 2.x
++#broker_module=/usr/local/nagios/bin/ndomod-2x.o config_file=/usr/local/nagios/etc/ndomod.cfg
++
++# Uncomment the line below if you're running Nagios 3.x
++broker_module=/opt/csw/nagios/ndoutils/bin/ndomod-3x.o config_file=/opt/csw/nagios/ndoutils/etc/ndomod.cfg
+diff --speed-large-files --minimal -Nru ndoutils-1.4b7.orig/config/ndomod.cfg ndoutils-1.4b7/config/ndomod.cfg
+--- ndoutils-1.4b7.orig/config/ndomod.cfg	2007-09-27 18:47:44.000000000 +0200
++++ ndoutils-1.4b7/config/ndomod.cfg	2009-03-25 19:33:19.422465176 +0100
+@@ -37,7 +37,7 @@
+ 
+ #output=/usr/local/nagios/var/ndo.dat
+ #output=127.0.0.1
+-output=/usr/local/nagios/var/ndo.sock
++output=/opt/csw/nagios/ndoutils/var/ndo.sock
+ 
+ 
+ 
+@@ -68,7 +68,7 @@
+ # Nagios (re)starts, the NDO NEB module will read the contents of this
+ # file and send it to the NDO2DB daemon for processing.
+ 
+-buffer_file=/usr/local/nagios/var/ndomod.tmp
++buffer_file=/opt/csw/nagios/ndoutils/var/ndomod.tmp
+ 
+ 
+
+diff --speed-large-files --minimal -Nru ndoutils-1.4b7.orig/config/ndo2db.cfg ndoutils-1.4b7/config/ndo2db.cfg
+--- ndoutils-1.4b7.orig/config/ndo2db.cfg	2007-10-31 19:17:04.000000000 +0100
++++ ndoutils-1.4b7/config/ndo2db.cfg	2009-03-25 22:57:22.528212535 +0100
+@@ -32,7 +32,7 @@
+ # This option is only valid if the socket type specified above
+ # is "unix".
+ 
+-socket_name=/usr/local/nagios/var/ndo.sock
++socket_name=/opt/csw/nagios/ndoutils/var/ndo.sock
+ 
+ 
+ 
+@@ -94,8 +94,8 @@
+ # The user needs at least SELECT, INSERT, UPDATE, and DELETE privileges on
+ # the database.
+ 
+-db_user=ndouser
+-db_pass=ndopassword
++db_user=nagios
++db_pass=nagios
+ 
+ 
+ 
+@@ -152,7 +152,7 @@
+ # DEBUG FILE
+ # This option determines where the daemon should write debugging information.
+ 
+-debug_file=@localstatedir@/ndo2db.debug
++debug_file=/opt/csw/nagios/ndoutils/var/ndo2db.debug
+ 
+ 
+ 

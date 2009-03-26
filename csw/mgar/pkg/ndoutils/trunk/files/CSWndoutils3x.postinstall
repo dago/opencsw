@@ -1,0 +1,29 @@
+#!/bin/sh
+
+cat << EOF
+
+ To initialize the database follow these steps:
+
+ - Setup a database in your MySQL-Server:
+
+   CREATE DATABASE nagios;
+   GRANT CREATE, SELECT, INSERT, UPDATE, DELETE ON nagios.* TO 'nagios' \\
+   IDENTIFIED BY 'nagios';
+
+   (user / password are the defaults - if you change them keep in mind,
+   that you have to change the configuration of apps depending on
+   ndoutils too, i.e., NagVis)
+
+ - Run the perl script installdb to fill the database with the
+   necessary tables:
+
+   cd /opt/csw/nagios/ndoutils/contrib/db/
+   ./installdb
+
+ !!! Before starting NDOutils make sure, that the user running NDOutils
+ (default: "nagios") has a valid login shell. The default for "nagios" is
+ /bin/false which won't work.
+
+ - (Re)start the NDO-Service
+
+EOF
