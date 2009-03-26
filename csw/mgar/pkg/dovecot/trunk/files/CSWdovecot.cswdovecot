@@ -13,7 +13,9 @@ set -e
 
 CONF=/opt/csw/etc/dovecot.conf
 CONF_LOCAL=/etc/opt/csw/dovecot.conf
-[ -f $CONF_LOCAL ] && CONF=$CONF_LOCAL
+[ -r $CONF_LOCAL ] && CONF=$CONF_LOCAL
+
+[ "`ulimit -n`" -lt 1024 ] && ulimit -n 1024
 
 base_dir=`$DAEMON -a|grep '^base_dir: '|sed 's/^base_dir: //'`
 pidfile=$base_dir/master.pid
@@ -27,7 +29,6 @@ fi
 case "$1" in
   start)
     echo "Starting Dovecot"
-    ulimit -n 1024
     $DAEMON -c $CONF
     ;;
   stop)
@@ -52,11 +53,10 @@ case "$1" in
       kill `cat $pidfile`
       sleep 1
     fi
-    ulimit -n 1024
     $DAEMON -c $CONF
     ;;
   *)
-    echo "Usage: /etc/init.d/dovecot {start|stop|reload|restart|force-reload}" >&2
+    echo "Usage: /etc/init.d/cswdovecot {start|stop|reload|restart|force-reload}" >&2
     exit 1
     ;;
 esac
