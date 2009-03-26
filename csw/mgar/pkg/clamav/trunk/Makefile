@@ -58,7 +58,7 @@ PROTOTYPE_FILTER  = awk ' \
    $$$$3 ~ /\/opt\/csw\/etc\/CSWclamav\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } \
    { print }'
 
-SPKG_SOURCEURL = http://www.clamav.net/
+SPKG_SOURCEURL = http://www.clamav.net
 
 TEST_TARGET = check
 

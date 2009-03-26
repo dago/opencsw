@@ -62,7 +62,7 @@ case "$1" in
 	;;
   refresh|reload)
         echo "Reloading clam daemon configuration: "
-        /usr/bin/pkill -x -HUP $prog
+        /usr/bin/pkill -HUP -x $prog
 	;;
   *)
 	echo $"Usage: $0 { start|stop|refresh|reload|restart }"
