@@ -1,12 +1,12 @@
 # XFCE
-XFCE_ROOT      = http://www.us.xfce.org
-XFCE_VERSION   = 4.4.1
-XFCE_MIRROR    = $(XFCE_ROOT)/archive/xfce-$(XFCE_VERSION)/src/
+XFCE_ROOT       = http://www.us.xfce.org
+XFCE_VERSION   ?= 4.4.1
+XFCE_MIRROR     = $(XFCE_ROOT)/archive/xfce-$(XFCE_VERSION)/src/
 
-MASTER_SITES ?= $(XFCE_MIRROR)
-GARVERSION   ?= $(XFCE_VERSION)
-PKGDIST      ?= $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES    += $(PKGDIST)
+MASTER_SITES   ?= $(XFCE_MIRROR)
+GARVERSION     ?= $(XFCE_VERSION)
+PKGDIST        ?= $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES      += $(PKGDIST)
 
 include gar/gar.mk
 
