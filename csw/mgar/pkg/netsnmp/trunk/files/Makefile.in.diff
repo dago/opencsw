@@ -1,0 +1,11 @@
+--- ../build-global/net-snmp-5.4.2.1/Makefile.in	2007-06-08 22:32:56.000000000 +0200
++++ net-snmp-5.4.2.1/Makefile.in	2009-03-26 10:14:41.623488796 +0100
+@@ -207,7 +207,7 @@
+         fi
+ 
+ pythoninstall:
+-	@(dir=`pwd`; cd python; $(PYMAKE) install --basedir=$$dir) ; \
++	@(dir=`pwd`; cd python; $(PYMAKE) install --root=$(DESTDIR) --basedir=$$dir) ; \
+         if test $$? != 0 ; then \
+            exit 1 ; \
+         fi
