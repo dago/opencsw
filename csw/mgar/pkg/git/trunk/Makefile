@@ -7,6 +7,14 @@ TEST_SCRIPTS =
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 
+CATALOGNAME_CSWgit = git
+CATALOGNAME_CSWgitcvs = git_cvs
+CATALOGNAME_CSWgitsvn = git_svn
+CATALOGNAME_CSWgitemacs = git_emacs
+CATALOGNAME_CSWgitgui = git_gui
+CATALOGNAME_CSWgitdoc = git_doc
+CATALOGNAME_CSWgitk = gitk
+
 ARCHALL_CSWgitsvn = 1
 ARCHALL_CSWgitcvs = 1
 ARCHALL_CSWgitk = 1
