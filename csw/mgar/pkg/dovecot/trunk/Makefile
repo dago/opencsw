@@ -136,7 +136,7 @@ post-install-modulated: build-and-install-sieveplugin
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@$(foreach DOC,$(CSWDOCS),\
 		ginstall -m 644 $(FILEDIR)/CSWdovecot.$(DOC) $(DOCDEST);)
-	@cp $(WORKSRC)/doc/mkcert.sh $(DOCDEST)
+	@ginstall -m 755 $(WORKSRC)/doc/mkcert.sh $(DOCDEST)
 	@cp $(WORKSRC)/doc/dovecot-openssl.cnf $(DOCDEST)
 	@ginstall -m 755 $(FILEDIR)/CSWdovecot.cswdovecot  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdovecot
