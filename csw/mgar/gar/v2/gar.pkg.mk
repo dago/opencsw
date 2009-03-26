@@ -457,6 +457,7 @@ package-%: $(WORKDIR)/%.gspec $(if $(filter %.gspec,$(DISTFILES)),,$(WORKDIR)/%.
 						 --workdir  $(SPKG_WORKDIR) \
 						 --pkgbase  $(SPKG_PKGBASE) \
 						 --pkgroot  $(SPKG_PKGROOT) \
+						-v WORKDIR_FIRSTMOD=../build-$(firstword $(MODULATIONS)) \
 						 --compress \
 						 $(MKPACKAGE_ARGS) ) || exit 2
 	@$(MAKECOOKIE)
