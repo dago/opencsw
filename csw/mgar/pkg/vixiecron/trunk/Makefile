@@ -15,6 +15,10 @@ define BLURB
   supports a slash notation: */5 denotes "Every five minutes".
 endef
 
+# TODO:
+#  - Improve man page locations. The original manpage install script looks retarded.
+#  - SMF support for non-global zones.
+
 MASTER_SITES  = http://ftp.de.debian.org/debian/pool/main/c/cron/
 DISTFILES  = cron_$(GARVERSION).orig.tar.gz
 DISTFILES += cron_$(GARVERSION)-105.diff.gz
@@ -29,7 +33,6 @@ SPKG_CLASSES = none cswinitsmf
 PATCHFILES = cron_$(GARVERSION)-105.diff.gz \
              gar-$(GARNAME)_$(GARVERSION).patch
 
-GARCOMPILER = SOS12
 TEST_SCRIPTS =
 CONFIGURE_SCRIPTS =
 EXTRA_CFLAGS = -DDEBUGGING=0 -DPOSIX -DDEBIAN
@@ -60,13 +63,4 @@ post-install-isa-i386: post-install
 post-install-isa-amd64: post-install
 
 
-# This build is disabled for the time being, as SMF configuration isn't yet
-# complete.
-
-# Remove the following rules and uncomment the
-# include before building.
-all: .DEFAULT
-.DEFAULT:
-	@true
-
-# include gar/category.mk
+include gar/category.mk
