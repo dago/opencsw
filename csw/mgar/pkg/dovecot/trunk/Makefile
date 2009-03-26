@@ -37,7 +37,8 @@ PREREQUISITE_PKGS  = CSWossldevel CSWosslrt
 PREREQUISITE_PKGS += CSWmysql5devel CSWmysql5rt
 PREREQUISITE_PKGS += CSWoldaprt CSWoldapdevel
 PREREQUISITE_PKGS += CSWsasl 
-PREREQUISITE_PKGS += CSWsqlite3 CSWsqlite3dev
+PREREQUISITE_PKGS += CSWsqlite3 CSWsqlite3devel
+PREREQUISITE_PKGS += CSWlibpq
 
 PKGFILES_CSWdovecotdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWdovecot-sieve = .*sieve.*
