@@ -36,6 +36,7 @@ CONFIGURE_ARGS += '--with-mib-modules=ucd-snmp/diskio agentx mibII/mta_sendmail'
 CONFIGURE_ARGS += '--with-libwrap=/opt/csw/lib' 
 CONFIGURE_ARGS += '--enable-ipv6' 
 CONFIGURE_ARGS += '--with-transports=UDP TCP Unix' 
+CONFIGURE_ARGS += '--disable-embedded-perl'
 CONFIGURE_ARGS += '--with-perl-modules=no' 
 CONFIGURE_ARGS += '--with-python-modules=no'
 
