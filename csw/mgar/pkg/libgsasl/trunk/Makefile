@@ -22,6 +22,9 @@ REQUIRED_PKGS = CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm
 
 SPKG_SOURCEURL = http://www.gnu.org/software/$(GNU_PROJ)
 
+# We have to wait with 64 bit until Kerberos is updated to 64 bit
+#BUILD64 = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
