@@ -1,3 +1,9 @@
+lftp (3.7.11,REV=2009.03.27) unstable
+
+  * Fixed double CSWcommon dependancy.
+
+   -- Yann Rouillard <yann@opencsw.org>  Wed, 25 Mar 2009 23:08:42 +0100
+
 lftp (3.7.11,REV=2009.03.21) unstable
 
   * New upstream version.
