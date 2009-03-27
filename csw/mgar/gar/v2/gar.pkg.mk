@@ -224,7 +224,7 @@ PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -r $(PKGROOT) $(PKGROOT)=/ >$@
+	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=/ >$@
 
 # The pathfilter rules are as follows:
 # - include license for current package
