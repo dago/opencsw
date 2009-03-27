@@ -1,5 +1,5 @@
 GARNAME = clusterssh
-GARVERSION = 3.22
+GARVERSION = 3.25
 CATEGORIES = net
 
 DESCRIPTION = ClusterSSH controls a number of xterm windows via a single graphical console window
