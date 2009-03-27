@@ -18,7 +18,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWlibgss
 
 PREREQUISITE_PKGS = 
-REQUIRED_PKGS = CSWgettextrt
+REQUIRED_PKGS = CSWggettextrt
 
 SPKG_SOURCEURL = http://www.gnu.org/software/$(GNU_PROJ)
 
