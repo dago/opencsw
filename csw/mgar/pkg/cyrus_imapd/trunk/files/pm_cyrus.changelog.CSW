@@ -1,3 +1,9 @@
+pm_cyrus (2.3.14,REV=2009.03.27) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 27 Mar 2009 17:05:21 +0100
+
 pm_cyrus (2.3.13,REV=2008.12.20) unstable
 
   * Added mupdate service in /etc/services.

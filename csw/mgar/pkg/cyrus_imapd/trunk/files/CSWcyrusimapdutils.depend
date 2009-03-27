@@ -3,4 +3,4 @@ P       CSWosslrt         - openssl - OpenSSL Secure Sockets Layer lib and utili
 P       CSWsasl         - sasl - Simple Authentication and Security Layer
 P       CSWbdb4         - berkeleydb4 - embedded database libraries and utilities
 P	CSWkrb5lib
-P	CSWpcre
+P	CSWpcrert
