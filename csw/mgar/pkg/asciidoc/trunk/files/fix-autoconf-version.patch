@@ -1,0 +1,9 @@
+diff --speed-large-files --minimal -Nru asciidoc-8.4.2.orig/configure.ac asciidoc-8.4.2/configure.ac
+--- asciidoc-8.4.2.orig/configure.ac	2008-12-12 01:14:11.000000000 +0100
++++ asciidoc-8.4.2/configure.ac	2009-03-26 21:27:55.367966061 +0100
+@@ -1,4 +1,4 @@
+-AC_INIT(asciidoc, 8.3.1) 
++AC_INIT(asciidoc, 8.4.2) 
+ 
+ AC_CONFIG_FILES(Makefile)
+ 

@@ -1,5 +1,5 @@
 GARNAME = asciidoc
-GARVERSION = 8.2.7
+GARVERSION = 8.4.2
 CATEGORIES = utils
 
 DESCRIPTION = An Documentation Generator
@@ -13,12 +13,19 @@ define BLURB
 	SGML/XML markup) can be customized and extended by the user.
 endef
 
-AUTOFILES = configure.ac Makefile.in install-sh
+PACKAGES = CSWasciidoc
+CATALOGNAME_CSWasciidoc = asciidoc
+
+ARCHALL_CSWasciidoc = 1
+
+REQUIRED_PKGS_CSWasciidoc = CSWpython
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWasciidoc.gspec CSWasciidoc.depend
 DISTFILES += $(AUTOFILES)
+
+#it would really seem this author "doesn't get" auto* stuff.
+PATCHFILES = fix-autoconf-version.patch fix-Makefile-am.patch
 
 PREREQUISITE_PKGS = CSWautoconf
 
@@ -33,11 +40,6 @@ include gar/category.mk
 
 # until the autoconf stuff is included upstream, we'll maintain and import our
 # own.
-pre-configure:
-	( cd $(WORKSRC); \
-		for f in $(AUTOFILES); do \
-			 cp ../$$f .; \
-		done; \
-	chmod 755 install-sh; \
-	autoconf )
+pre-configure-modulated:
+	( cd $(WORKSRC); autoconf )
 	@$(MAKECOOKIE)
