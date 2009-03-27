@@ -15,6 +15,8 @@ DISTNAME = $(SF_PROJ)-$(GARVERSION)
 
 SPKG_SOURCEURL = http://www.net-snmp.org/
 
+PREREQUISITE_PKGS = CSWpysetuptools
+
 REQUIRED_PKGS += CSWosslrt CSWtcpwrap
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -45,8 +47,7 @@ PATCHFILES = perl_makefiles.diff
 # Patch for python module
 PATCHFILES += Makefile.in.diff
 
-LD_OPTIONS =
-export LD_OPTIONS
+EXTRA_COMMON_EXPORTS = LD_OPTIONS
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
