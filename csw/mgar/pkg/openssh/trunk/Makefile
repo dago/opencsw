@@ -6,6 +6,7 @@ GSSKEX_PATCH_DATE = 20081003
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
+
 define BLURB
   OpenSSH is a FREE version of the SSH connectivity tools that technical users 
   of the Internet rely on. Users of telnet, rlogin, and ftp may not realize that 
@@ -27,11 +28,16 @@ DISTNAME = $(GARNAME)-$(DISTVERSION)
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += i.conf r.conf
 DISTFILES += changelog.CSW
-DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall postinstall prototype) 
+
 DISTFILES += sshd_config
 DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
 DISTFILES += openssh
+
+ifndef LPK
+DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall postinstall prototype) 
 DISTFILES += $(call admfiles,CSWosshclient,depend prototype) 
+endif
+
 
 # Script created to workaround a upgrade bug between 
 # package = 4.6,REV=2007.07.30_rev=p1 and later package
@@ -64,9 +70,12 @@ CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 TEST_SCRIPTS	=
 
 ifdef LPK
+	DISTFILES += $(call admfiles,CSWosshlpk,depend checkinstall preinstall postinstall prototype) 
+	DESCRIPTION = OpenSSH Secure Shell with Ldap Public Key support
 	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
+	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
 endif
 
 include gar/category.mk
@@ -78,10 +87,21 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 # adding documentation files
-post-install:
-	mkdir -p $(DESTDIR)/$(docdir)/openssh/ $(DESTDIR)/$(docdir)/openssh_client/
+post-install: customize_ssh_config
+ifdef LPK
+	mkdir -p $(DESTDIR)/$(docdir)/openssh_lpk/ 
+	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh_lpk/
+else
+	mkdir -p $(DESTDIR)/$(docdir)/openssh/ 
 	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh/
+	mkdir -p $(DESTDIR)/$(docdir)/openssh_client/
 	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh_client/
+endif
+
+customize_ssh_config:
+	# Correction des chemins
+	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(DESTDIR)/$(sysconfdir)/ssh/sshd_config"
+	sed -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(DESTDIR)/$(sysconfdir)/ssh/sshd_config"
 
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)

@@ -1,4 +1,4 @@
-openssh (5.2,REV=2008.03.22_rev=p1) unstable
+openssh (5.2,REV=2008.03.28_rev=p1) unstable
 
   * New upstream version.
   * Split the client in a distinct package.
