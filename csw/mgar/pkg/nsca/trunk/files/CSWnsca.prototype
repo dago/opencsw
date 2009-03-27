@@ -1,7 +1,5 @@
-1 d none /opt/csw/nagios/bin 0755 nagios nagios
-1 f none /opt/csw/nagios/bin/nsca 0755 nagios nagios
-1 d none /opt/csw/nagios/etc 0755 nagios nagios
-1 f cswpreserveconf /opt/csw/nagios/etc/nsca.cfg.CSW 0600 nagios nagios
+1 f none /opt/csw/bin/nsca 0755 root bin
+1 f cswpreserveconf /opt/csw/etc/nsca.cfg.CSW 0644 root bin
 1 d none /opt/csw/share/doc/nsca 0755 root bin
 1 f none /opt/csw/share/doc/nsca/Changelog 0644 root bin
 1 f none /opt/csw/share/doc/nsca/LEGAL 0644 root bin

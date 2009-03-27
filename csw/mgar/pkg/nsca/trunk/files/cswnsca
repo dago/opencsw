@@ -9,7 +9,7 @@
 
 #FMRI application    # FMRI path for service
 
-CONFIG_FILE=/opt/csw/nagios/etc/nsca.cfg
+CONFIG_FILE=/opt/csw/etc/nsca.cfg
 
 SMF_EXIT_ERR_CONFIG=1
 
@@ -23,7 +23,7 @@ then
         exit $SMF_EXIT_ERR_CONFIG
 fi
 
-BIN_FILE="/opt/csw/nagios/bin/nsca"
+BIN_FILE="/opt/csw/bin/nsca"
 pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
 nsca_USER=`awk -F'=' '/nsca_user/ { print $NF }' $CONFIG_FILE`
 
