@@ -1,0 +1,44 @@
+#!/bin/sh
+
+
+#checks for /dev/random are done in checkinstall
+
+grep '^sshd:' $PKG_ROOT_DIR/etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+	getent passwd sshd >/dev/null
+	if [ $? -ne 0 ] ; then
+		NEEDUSER=1
+	fi
+fi
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then
+	PKG_ROOT_DIR=/
+fi
+
+if [ "$NEEDUSER" = 1 ] ; then
+	echo Adding required sshd user
+	chroot $PKG_ROOT_DIR /usr/sbin/useradd -d /var/run -c 'sshd nonpriv userid' -s /bin/false sshd
+fi
+
+# Configuration file are now under /opt/csw/etc/ssh 
+# instead of /opt/csw/etc
+MOVE_CONF_FILE=0
+for FILE in ssh_config sshd_config moduli ssh_host_dsa_key ssh_host_dsa_key.pub ssh_host_rsa_key ssh_host_rsa_key.pub; do
+	if [ -f "$PKG_ROOT_DIR/opt/csw/etc/$FILE" ]; then
+		if [ "$MOVE_CONF_FILE" -eq 0 ]; then
+			echo "WARNING: Openssh configuration files location has been changed !"
+			echo "         sshd_config and ssh_config files are now under /opt/csw/etc/ssh."
+			mkdir -p "$PKG_ROOT_DIR/opt/csw/etc/ssh"
+			chown root:bin "$PKG_ROOT_DIR/opt/csw/etc/ssh"
+			MOVE_CONF_FILE=1
+		fi
+		echo "Moving file /opt/csw/etc/$FILE -> /opt/csw/etc/ssh/$FILE ..."
+		mv "$PKG_ROOT_DIR/opt/csw/etc/$FILE" "$PKG_ROOT_DIR/opt/csw/etc/ssh/$FILE"
+	fi
+done
+
+# previous openssh package (< 4.6p1) doesn't stop openssh so we do it ourself
+pkill -15 -P 1 -f "^/opt/csw/sbin/sshd$"
+
+true
+
