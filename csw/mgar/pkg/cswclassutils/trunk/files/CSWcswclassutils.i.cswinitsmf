@@ -6,6 +6,7 @@
 # Written by Peter Bonivart
 #
 # 2008-04-21 First release
+# 2009-03-28 Added support for refresh
 
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
@@ -131,6 +132,19 @@ EOF
     type='method'
     name='restart'
     exec='$SVCDIR/method/svc-$service restart'
+    timeout_seconds='-1'>
+  </exec_method>
+
+EOF
+    fi
+
+    # Add refresh option to manifest if service script supports it
+    if [ "`/usr/bin/egrep 'refresh.?\)' $SVCDIR/method/svc-$service`" ]; then
+      cat >> $SVCDIR/manifest/$FMRI/$service.xml << EOF
+  <exec_method
+    type='method'
+    name='refresh'
+    exec='$SVCDIR/method/svc-$service refresh'
     timeout_seconds='-1'>
   </exec_method>
 
