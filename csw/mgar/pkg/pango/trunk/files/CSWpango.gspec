@@ -1,5 +1,5 @@
 %var            bitname libpango
-%var            pkgname CSWlibpango
+%var            pkgname CSWpango
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      
 
