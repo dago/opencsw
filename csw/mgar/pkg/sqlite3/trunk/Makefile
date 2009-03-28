@@ -24,8 +24,11 @@ SPKG_DESC_CSWsqlite3devel = $(SPKG_DESC_CSWsqlite3) development package
 SPKG_DESC_CSWsqlite3rt    = $(SPKG_DESC_CSWsqlite3) runtime
 
 # Dynamic prototype
-PKGFILES_CSWsqlite3devel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWsqlite3rt     = $(PKGFILES_RT)
+PKGFILES_CSWsqlite3devel   = $(PKGFILES_DEVEL)
+PKGFILES_CSWsqlite3devel  += /opt/csw/share/doc/sqlite3devel/copyright.html
+PKGFILES_CSWsqlite3rt      = $(PKGFILES_RT)
+PKGFILES_CSWsqlite3rt     += /opt/csw/share/doc/sqlite3rt/copyright.html
+PKGFILES_CSWsqlite3rt     += /opt/csw/lib/.*
 
 # Dependencies
 SPKG_DESC_CSWsqlite3      = CSWsqlite3rt
@@ -54,6 +57,8 @@ post-extract:
 
 pre-install:
 	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
+	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)devel 
+	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)rt 
 	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/copyright.html $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
 	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/copyright.html $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)devel 
 	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/copyright.html $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)rt 

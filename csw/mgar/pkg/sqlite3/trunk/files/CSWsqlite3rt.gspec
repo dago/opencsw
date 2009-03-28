@@ -1,4 +1,4 @@
-%var            bitname sqlite3rt
+%var            bitname sqlite3_rt
 %var            pkgname CSWsqlite3rt
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      
