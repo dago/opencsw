@@ -1,0 +1,9 @@
+d none /opt/csw/include/SDL 0755 root bin
+f none /opt/csw/include/SDL/SDL_net.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libSDL_net-1.2.so.0.0.7 0755 root bin
+s none /opt/csw/lib/libSDL_net-1.2.so.0=libSDL_net-1.2.so.0.0.7
+s none /opt/csw/lib/libSDL_net.so=libSDL_net-1.2.so.0.0.7
+i copyright=CSWsdlnet.copyright
+i depend=CSWsdlnet.depend
+i pkginfo=CSWsdlnet.pkginfo
