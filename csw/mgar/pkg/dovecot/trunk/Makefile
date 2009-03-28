@@ -129,7 +129,6 @@ package-sieveplugin:
 	@gmake -o post-package \
 		NOPACKAGE="CSWdovecot CSWdovecotdevel" SPKG_VERSION=1.1.6 \
 		repackage
-	@$(MAKECOOKIE)
 
 
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
