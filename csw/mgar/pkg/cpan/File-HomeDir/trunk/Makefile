@@ -1,5 +1,5 @@
 GARNAME = File-HomeDir
-GARVERSION = 0.64
+GARVERSION = 0.86
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
@@ -10,6 +10,11 @@ define BLURB
   these problems consistently across a wide variety of platforms.
 endef
 
-DISTFILES += $(call admfiles,CSWpmfilehomedir,depend prototype)
+CATALOGNAME = pm_filehomedir
+PACKAGES	= CSWpmfilehomedir
+
+ARCHALL_CSWpmfilehomedir = 1
+
+LICENSE = LICENSE
 
 include gar/category.mk
