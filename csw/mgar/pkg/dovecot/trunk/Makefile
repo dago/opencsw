@@ -14,8 +14,12 @@ MASTER_SITES = http://dovecot.org/releases/1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWdovecot CSWdovecotdevel CSWdovecot-sieve
+CATALOGNAME_CSWdovecot = dovecot
 CATALOGNAME_CSWdovecotdevel = dovecot_devel
 CATALOGNAME_CSWdovecot-sieve = dovecot_sieve
+
+# Sieve plugin is packaged individually (see package-sieveplugin:)
+NOPACKAGE = CSWdovecot-sieve
 
 # CSWdovecot is not installed on the build farm and as such its dependent
 # packages throw errors when fed to checkpkg
@@ -30,6 +34,7 @@ SPKG_CLASSES_CSWdovecot = none cswusergroup cswcpsampleconf cswinitsmf
 REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
 REQUIRED_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
 REQUIRED_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
+REQUIRED_PKGS_CSWdovecot      += CSWkrb5lib
 REQUIRED_PKGS_CSWdovecotdevel  = CSWdovecot
 REQUIRED_PKGS_CSWdovecot-sieve = CSWdovecot
 
@@ -39,6 +44,7 @@ PREREQUISITE_PKGS += CSWoldaprt CSWoldapdevel
 PREREQUISITE_PKGS += CSWsasl 
 PREREQUISITE_PKGS += CSWsqlite3
 PREREQUISITE_PKGS += CSWlibpq
+PREREQUISITE_PKGS += CSWkrb5lib CSWkrb5libdev
 
 PKGFILES_CSWdovecotdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWdovecot-sieve = .*sieve.*
@@ -61,6 +67,7 @@ localstatedir=/var/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pop3d
+CONFIGURE_ARGS += --with-gssapi
 CONFIGURE_ARGS += --with-lda
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-mysql
@@ -117,6 +124,13 @@ build-and-install-sieveplugin:
 	@rm -rf dovecot-sieve-1.1.6*
 	@$(MAKECOOKIE)
 
+# Sieve plugin needs to be packaged with version != $(GARVERSION)
+package-sieveplugin:
+	@gmake -o post-package \
+		NOPACKAGE="CSWdovecot CSWdovecotdevel" SPKG_VERSION=1.1.6 \
+		repackage
+	@$(MAKECOOKIE)
+
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
 post-install-modulated: CSWDOCS = changelog.CSW README.CSW
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
@@ -142,4 +156,7 @@ post-install-modulated: build-and-install-sieveplugin
 		$(DESTDIR)/etc/opt/csw/init.d/cswdovecot
 	@ginstall -m 644 $(FILEDIR)/CSWdovecot.cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/CSWdovecot/cswusergroup
+	@$(MAKECOOKIE)
+
+post-package: package-sieveplugin
 	@$(MAKECOOKIE)
