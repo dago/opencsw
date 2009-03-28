@@ -88,20 +88,29 @@ pre-configure:
 
 # adding documentation files
 post-install: customize_ssh_config
+	ginstall $(WORKDIR_FIRSTMOD)/*.conf $(WORKDIR)/
+	ginstall -D $(WORKDIR_FIRSTMOD)/openssh $(PKGROOT)/etc/init.d/openssh
+	ginstall -D $(WORKDIR_FIRSTMOD)/sshd_config $(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
+	ginstall -D $(WORKDIR_FIRSTMOD)/openssh_restart_workaround.sh $(PKGROOT)/$(sharedstatedir)/openssh/openssh_restart_workaround.sh
+
 ifdef LPK
-	mkdir -p $(DESTDIR)/$(docdir)/openssh_lpk/ 
-	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh_lpk/
+	mkdir -p $(PKGROOT)/$(docdir)/openssh_lpk/ 
+	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh_lpk/
+	ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/openssh_lpk/
 else
-	mkdir -p $(DESTDIR)/$(docdir)/openssh/ 
-	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh/
-	mkdir -p $(DESTDIR)/$(docdir)/openssh_client/
-	cd $(WORKSRC) && ginstall $(DOCFILES) $(DESTDIR)/$(docdir)/openssh_client/
+	mkdir -p $(PKGROOT)/$(docdir)/openssh/ 
+	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh/
+	ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/openssh/
+	mkdir -p $(PKGROOT)/$(docdir)/openssh_client/
+	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh_client/
+	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh_client/
+	ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/openssh_client/
 endif
 
 customize_ssh_config:
 	# Correction des chemins
-	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(DESTDIR)/$(sysconfdir)/ssh/sshd_config"
-	sed -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(DESTDIR)/$(sysconfdir)/ssh/sshd_config"
+	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
+	sed -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
 
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)

@@ -12,7 +12,7 @@ e conf /opt/csw/etc/ssh/ssh_config 0644 root bin
 d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/ssh-keysign 4711 root bin
 d none /opt/csw/share/doc/openssh_client 0755 root bin
-f none /opt/csw/share/doc/openssh_client/changelog.CSW=changelog.CSW 0644 root bin
+f none /opt/csw/share/doc/openssh_client/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/openssh_client/CREDITS 0644 root bin
 f none /opt/csw/share/doc/openssh_client/ChangeLog 0644 root bin
 f none /opt/csw/share/doc/openssh_client/ChangeLog.gssapi 0644 root bin

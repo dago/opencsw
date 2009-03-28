@@ -1,13 +1,13 @@
 i i.conf=i.conf
 i r.conf=r.conf
-f none /opt/csw/etc/ssh/sshd_config.CSW=sshd_config 0744 root bin
+f none /opt/csw/etc/ssh/sshd_config.CSW 0744 root bin
 e conf /opt/csw/etc/ssh/moduli 0644 root bin
 d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/sftp-server 0755 root bin
 f none /opt/csw/sbin/sshd 0755 root bin
 f none /opt/csw/share/Ssh.bin 0644 root bin
 d none /opt/csw/share/doc/openssh_lpk 0755 root bin
-f none /opt/csw/share/doc/openssh_lpk/changelog.CSW=changelog.CSW 0644 root bin
+f none /opt/csw/share/doc/openssh_lpk/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/CREDITS 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/ChangeLog 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/ChangeLog.gssapi 0644 root bin
@@ -30,5 +30,5 @@ f none /opt/csw/share/man/man5/sshd_config.5 0644 root bin
 f none /opt/csw/share/man/man8/sftp-server.8 0644 root bin
 f none /opt/csw/share/man/man8/sshd.8 0644 root bin
 d none /opt/csw/share/openssh 0755 root bin
-f none /opt/csw/share/openssh/openssh_restart_workaround.sh=openssh_restart_workaround.sh 0755 root bin
+f none /opt/csw/share/openssh/openssh_restart_workaround.sh 0755 root bin
 d none /var/empty

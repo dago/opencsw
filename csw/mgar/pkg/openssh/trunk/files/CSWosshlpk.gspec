@@ -1,7 +1,7 @@
 %var            bitname openssh_lpk
 %var            pkgname CSWosshlpk
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENCE
+%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENCE
 %var            SERVICE_CONF_FILES /opt/csw/etc/ssh/sshd_config
 %var		RC_INIT_SCRIPT cswopenssh
 %var		SMF_MANIFEST cswopenssh.xml
