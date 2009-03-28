@@ -131,8 +131,8 @@ package-sieveplugin:
 		repackage
 	@$(MAKECOOKIE)
 
+
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
-post-install-modulated: CSWDOCS = changelog.CSW README.CSW
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: SSLDIR = $(DESTDIR)/opt/csw/ssl
 post-install-modulated: build-and-install-sieveplugin
@@ -141,17 +141,24 @@ post-install-modulated: build-and-install-sieveplugin
 	@ginstall -d $(DESTDIR)$(sysconfdir)/pkg/CSWdovecot
 	@ginstall -d $(SSLDIR)/certs
 	@ginstall -d $(SSLDIR)/private
+
+	@cp $(DESTDIR)$(sysconfdir)/dovecot-example.conf \
+		$(DESTDIR)$(sysconfdir)/dovecot.conf.CSW
+
+	# Create self-signed sample cert
 	@( cd $(WORKSRC)/doc; SSLDIR=$(SSLDIR) /bin/sh ./mkcert.sh )
 	@mv $(SSLDIR)/certs/dovecot.pem $(SSLDIR)/certs/dovecot.pem.CSW
 	@mv $(SSLDIR)/private/dovecot.pem $(SSLDIR)/private/dovecot.pem.CSW
 	@chmod 400 $(SSLDIR)/private/dovecot.pem.CSW
-	@cp $(DESTDIR)$(sysconfdir)/dovecot-example.conf \
-		$(DESTDIR)$(sysconfdir)/dovecot.conf.CSW
+
+	# Copy documentation (upstream + CSW) and mkcert.sh
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
-	@$(foreach DOC,$(CSWDOCS),\
-		ginstall -m 644 $(FILEDIR)/CSWdovecot.$(DOC) $(DOCDEST);)
+	@cp $(FILEDIR)/CSWdovecot.changelog.CSW $(DOCDEST)/changelog.CSW
+	@cp $(FILEDIR)/CSWdovecot.README.CSW $(DOCDEST)/README.CSW
 	@ginstall -m 755 $(WORKSRC)/doc/mkcert.sh $(DOCDEST)
 	@cp $(WORKSRC)/doc/dovecot-openssl.cnf $(DOCDEST)
+
+	# Files for cswinitsmf and cswusergroup
 	@ginstall -m 755 $(FILEDIR)/CSWdovecot.cswdovecot  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdovecot
 	@ginstall -m 644 $(FILEDIR)/CSWdovecot.cswusergroup \

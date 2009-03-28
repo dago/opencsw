@@ -1,4 +1,4 @@
-dovecot (1.1.11,REV=2009.03.26)
+dovecot (1.1.11,REV=2009.03.28)
 
   * Package adopted and updated to 1.1.11.
   * Tested and validated LDAP interopability with PAM. (Closes: #2760)
@@ -6,4 +6,4 @@ dovecot (1.1.11,REV=2009.03.26)
   * Compiled with --localstatedir=/var/opt/csw. Changes base_dir from
     /opt/csw/var/run/dovecot to /var/opt/csw/run/dovecot.
 
- -- Sebastian Kayser <skayser@opencsw.org>  Thu, 26 Mar 2009 13:35:07 +0100
+ -- Sebastian Kayser <skayser@opencsw.org>  Sat, 28 Mar 2009 18:18:35 +0100
