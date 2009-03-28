@@ -1,2 +1,4 @@
-9b5d9a5dcce5b3899d401f9c2cd6873f  download/pango-1.4.0.tar.bz2
-7b1dfa74d31ef7150dbf9703dfdd1f0e  download/CSWpango.gspec
+d209f41079833cd2ef2c5e580ab9c5ee  download/pango-1.24.0.tar.bz2
+b1fc53cbeb7059ebd68b774394c9539d  download/CSWlibpango.gspec
+a560e043e55561d10a89fc75d49e3360  download/CSWlibpangodoc.gspec
+987f13b57b71985c4cd0d13570eb8f9e  download/CSWlibpangodevel.gspec

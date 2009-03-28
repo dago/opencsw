@@ -1,4 +1,4 @@
-GARNAME = pango
+GARNAME = libpango
 GARVERSION = 1.24.0
 CATEGORIES = lib
 
@@ -11,24 +11,30 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.24/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWpango,)
+DISTFILES  = pango-$(GARVERSION).tar.bz2
+DISTFILES += $(call admfiles,CSWlibpango,)
+DISTFILES += $(call admfiles,CSWlibpangodoc,)
+DISTFILES += $(call admfiles,CSWlibpangodevel,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-# Dynamic gspec
-PACKAGES                     = CSWlibpango CSWlibpangodevel
-CATALOGNAME_CSWlibpango      = libpango
-CATALOGNAME_CSWlibpangodevel = libpango_devel
-SPKG_DESC_CSWlibpango   	 = $(DESCRIPTION)
-SPKG_DESC_CSWlibpangodevel   = $(DESCRIPTION) development package
+CONFIGURE_ARGS   = $(DIRPATHS)
+CONFIGURE_ARGS  += --enable-gtk-doc
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+PREREQUISITE_PKGS += CSWgtk-doc
+
+REQUIRED_PKGS_CSWlibpango = CSWggettextrt CSWglib2
+
+# Dynamic prototype
+PKGFILES_CSWlibpangodevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibpangodevel += /opt/csw/share/doc/libpango_devel/license
+PKGFILES_CSWlibpangodoc    = /opt/csw/share/gtk-doc/.*
+PKGFILES_CSWlibpangodoc   += /opt/csw/share/doc/libpango_doc/license
 
 # Do not execute make test step
-TEST_SCRIPTS   = none
+TEST_SCRIPTS   = 
 
 include gar/category.mk
 
@@ -40,3 +46,15 @@ include gar/category.mk
 # pre-configure:
 #	@( cd $(WORKSRC)/pango/opentype ; \
 #		$(PERL) -i.bak -plne 's/^(\@BUILD_OT_TESTS_TRUE\@noinst_PROGRAMS = ottest)/#$$1/' Makefile.in )
+
+post-extract:
+	( cd $(WORKROOTDIR) ; for i in build-isa-* ; do mv $$i/pango-$(GARVERSION) $$i/$(GARNAME)-$(GARVERSION) ; done )
+	@$(MAKECOOKIE)
+
+# pre-install:
+#	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
+#	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)devel
+#	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)doc
+#	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/license 
+#	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)doc/license 
+#	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)devel/license 
