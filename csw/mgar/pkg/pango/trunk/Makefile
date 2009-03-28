@@ -12,9 +12,9 @@ endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.24/
 DISTFILES  = pango-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibpango,)
-DISTFILES += $(call admfiles,CSWlibpangodoc,)
-DISTFILES += $(call admfiles,CSWlibpangodevel,)
+DISTFILES += $(call admfiles,CSWpango,)
+DISTFILES += $(call admfiles,CSWpangodoc,)
+DISTFILES += $(call admfiles,CSWpangodevel,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/
@@ -25,13 +25,13 @@ CONFIGURE_ARGS  += --enable-gtk-doc
 
 PREREQUISITE_PKGS += CSWgtk-doc
 
-REQUIRED_PKGS_CSWlibpango = CSWggettextrt CSWglib2
+REQUIRED_PKGS_CSWpango = CSWggettextrt CSWglib2
 
 # Dynamic prototype
-PKGFILES_CSWlibpangodevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibpangodevel += /opt/csw/share/doc/libpango_devel/license
-PKGFILES_CSWlibpangodoc    = /opt/csw/share/gtk-doc/.*
-PKGFILES_CSWlibpangodoc   += /opt/csw/share/doc/libpango_doc/license
+PKGFILES_CSWpangodevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWpangodevel += /opt/csw/share/doc/libpango_devel/license
+PKGFILES_CSWpangodoc    = /opt/csw/share/gtk-doc/.*
+PKGFILES_CSWpangodoc   += /opt/csw/share/doc/libpango_doc/license
 
 # Do not execute make test step
 TEST_SCRIPTS   = 
