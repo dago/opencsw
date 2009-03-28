@@ -1,5 +1,5 @@
 GARNAME = SDL_mixer
-GARVERSION = 1.2.6
+GARVERSION = 1.2.8
 CATEGORIES = lib
 
 DESCRIPTION = multi-channel audio mixer library
@@ -9,12 +9,12 @@ endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_mixer/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsdlmixer, depend)
+DISTFILES += $(call admfiles,CSWsdlmixer, depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = --prefix=$(prefix) LDFLAGS=-lsunmath
+CONFIGURE_ARGS = --prefix=$(prefix) --disable-static
 TEST_SCRIPTS =
 
 include gar/category.mk
