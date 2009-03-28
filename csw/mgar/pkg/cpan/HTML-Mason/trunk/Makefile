@@ -10,7 +10,7 @@ define BLURB
   content, such as online newspapers or database driven e-commerce sites.
 endef
 
-REQUIRED_PKGS_CSWpmhtmlmason = CSWpmcachecache CSWpmcgi pm_cgi CSWpmclscontainer CSWpmexceptcls CSWpmprmsvldt CSWpmscalarlist
+REQUIRED_PKGS_CSWpmhtmlmason = CSWpmcachecache CSWpmfcgi CSWpmclscontainer CSWpmexceptcls CSWpmprmsvldt CSWpmscalarlist
 
 CATALOGNAME = pm_htmlmason
 PACKAGES	= CSWpmhtmlmason
