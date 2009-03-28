@@ -87,11 +87,11 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 # adding documentation files
-post-install: customize_ssh_config
-	ginstall $(WORKDIR_FIRSTMOD)/*.conf $(WORKDIR)/
-	ginstall -D $(WORKDIR_FIRSTMOD)/openssh $(PKGROOT)/etc/init.d/openssh
-	ginstall -D $(WORKDIR_FIRSTMOD)/sshd_config $(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
-	ginstall -D $(WORKDIR_FIRSTMOD)/openssh_restart_workaround.sh $(PKGROOT)/$(sharedstatedir)/openssh/openssh_restart_workaround.sh
+post-install-modulated: customize_ssh_config
+	ginstall $(WORKDIR_FIRSTMOD)/*.conf $(WORKROOTDIR)/build-global/
+	ginstall -D $(DOWNLOADDIR)/openssh $(PKGROOT)/etc/init.d/openssh
+	ginstall -D $(DOWNLOADDIR)/sshd_config $(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
+	ginstall -D $(DOWNLOADDIR)/openssh_restart_workaround.sh $(PKGROOT)/$(sharedstatedir)/openssh/openssh_restart_workaround.sh
 
 ifdef LPK
 	mkdir -p $(PKGROOT)/$(docdir)/openssh_lpk/ 
@@ -109,8 +109,8 @@ endif
 
 customize_ssh_config:
 	# Correction des chemins
-	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
-	sed -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
+	gsed -i -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
+	gsed -i -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
 
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
