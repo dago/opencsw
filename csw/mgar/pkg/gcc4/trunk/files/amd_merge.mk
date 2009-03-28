@@ -1,6 +1,6 @@
 
-AMD_BASE  = $(WORKROOTDIR)/install-isa-i386-5.10/
-I386_BASE = $(WORKROOTDIR)/install-isa-i386-5.8/
+AMD_BASE  = $(WORKROOTDIR)/install-isa-i386-5.10-i386/
+I386_BASE = $(WORKROOTDIR)/install-isa-i386-5.8-i386/
 MPREFIX   = opt/csw/gcc4
 APREFIX   = $(AMD_BASE)/$(MPREFIX)
 IPREFIX   = $(I386_BASE)/$(MPREFIX)
@@ -23,22 +23,20 @@ x86-merge-dirs:
 x86-merge-amd:
 	@(echo "===> Merging AMD64")
 	@(cd $(AMD_BASE); for dir in `gfind . -name "*solaris2\.10*" -type d` ; do \
-		pax -rw $$dir $(PKGROOT); done )
-	@(cd $(AMD_BASE); pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
-	@(cd $(APREFIX)/bin; pax -rw * $(PPREFIX)/bin/amd64)
-	@(cd $(APREFIX)/bin/amd64; gln *-solaris2.* ../)
+		/usr/bin/pax -rw $$dir $(PKGROOT); done )
+	@(cd $(AMD_BASE); /usr/bin/pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
+	@(cd $(APREFIX)/bin; /usr/bin/pax -rw * $(PPREFIX)/bin/amd64)
 	@$(MAKECOOKIE)
 
 x86-merge-i386:
 	@(echo "===> Merging I386")
-	@(cd $(I386_BASE); pax -rw $(MPREFIX)/include $(PKGROOT))
-	@(cd $(I386_BASE); pax -rw $(MPREFIX)/info $(PKGROOT))
-	@(cd $(I386_BASE); pax -rw $(MPREFIX)/man $(PKGROOT))
-	@(cd $(I386_BASE); pax -rw $(MPREFIX)/share $(PKGROOT))
-	@(cd $(I386_BASE); pax -rw $(MPREFIX)/lib $(PKGROOT))
-	@(cd $(I386_BASE); pax -rw $(MPREFIX)/libexec $(PKGROOT))
-	@(cd $(IPREFIX)/bin; pax -rw * $(PPREFIX)/bin/i386)
-	@(cd $(APREFIX)/bin/i386; gln *-solaris2.* ../)
+	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/include $(PKGROOT))
+	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/info $(PKGROOT))
+	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/man $(PKGROOT))
+	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/share $(PKGROOT))
+	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/lib $(PKGROOT))
+	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/libexec $(PKGROOT))
+	@(cd $(IPREFIX)/bin; /usr/bin/pax -rw * $(PPREFIX)/bin/i386)
 	@$(MAKECOOKIE)
 
 x86-merge-strip:

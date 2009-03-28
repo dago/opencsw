@@ -13,7 +13,7 @@ CATALOGNAME_CSWgcc4gfortranrt = gcc4gfortranrt
 CATALOGNAME_CSWgcc4java       = gcc4java
 CATALOGNAME_CSWgcc4javart     = gcc4javart
 CATALOGNAME_CSWgcc4objc       = gcc4objc
-CATALOGNAME_CSWgcc4objcrt     = gcc4obcrt
+CATALOGNAME_CSWgcc4objcrt     = gcc4objcrt
 
 ## Source URLs
 SPKG_SOURCEURL_CSWgcc4core       = http://gcc.gnu.org
@@ -105,18 +105,10 @@ PKGFILES_CSWgcc4gfortran += .*/info/gfortran.*
 ## gcc4g++ Definitions
 PKGFILES_CSWgcc4g++  = .*/bin/.*g\+\+
 PKGFILES_CSWgcc4g++ += .*/bin/.*c\+\+
-PKGFILES_CSWgcc4g++ += .*/bin/.*cpp
 PKGFILES_CSWgcc4g++ += .*/libexec/.*cc1plus
-PKGFILES_CSWgcc4g++ += .*/include/c\+\+/.*
 PKGFILES_CSWgcc4g++ += .*/man1/g\+\+.1
-PKGFILES_CSWgcc4g++ += .*/man1/cpp.1
-PKGFILES_CSWgcc4g++ += .*/info/cpp.*
-EXTRA_PKGFILES_EXCLUDED_CSWgcc4g++  = .*/include/.*org/.*
-EXTRA_PKGFILES_EXCLUDED_CSWgcc4g++ += .*/include/.*java.*/.*
-EXTRA_PKGFILES_EXCLUDED_CSWgcc4g++ += .*/include/.*gcj/.*
-EXTRA_PKGFILES_EXCLUDED_CSWgcc4g++ += .*/include/.*classpath/.*
-EXTRA_PKGFILES_EXCLUDED_CSWgcc4g++ += .*/include/.*awt/.*
-EXTRA_PKGFILES_EXCLUDED_CSWgcc4g++ += .*/include/.*gnu/.*
+PKGFILES_CSWgcc4g++ += .*/include/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
+PKGFILES_CSWgcc4g++ += .*/include/c\+\+/(\d+(?:\.\d+)*)/ostream.*
 
 ## gcc4java Definitions
 PKGFILES_CSWgcc4java  = .*/bin/.*gcj.*
@@ -166,6 +158,7 @@ PKGFILES_CSWgcc4java += .*/include/.*org/.*
 
 ## gcc4objc Definitions
 PKGFILES_CSWgcc4objc  = .*/libexec/.*cc1obj
+PKGFILES_CSWgcc4objc += .*/include/.*objc/.*
 
 #######  RunTime Packages
 

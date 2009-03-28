@@ -16,6 +16,12 @@ MASTER_SITES = $(GNU_MIRROR)/$(GARNAME)-$(GARVERSION)/
 # of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+## The following patches address bug 29442
+## http://gcc.gnu.org/bugzilla/show_bug.cgi?id=29442
+## Patch to Reenable alloca() on non-GCC compilers
+PATCHFILES  = re-enable-alloc.diff
+PATCHFILES += split-insn-attrtab.diff
+
 ## For cleanliness I split the Configuration into separate files
 include files/gar_override.mk
 include files/configure_def.mk  

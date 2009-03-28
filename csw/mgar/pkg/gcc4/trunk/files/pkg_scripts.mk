@@ -1,15 +1,8 @@
 
-## Create lib links to conform to multi-arch standards
-post-merge-isa-sparcv8:
-	@(cd $(PKGROOT)/opt/csw/gcc4/lib && ln -s sparcv9 64)
-	@(cd $(PKGROOT)/opt/csw/gcc4/lib && ln -s . 32)
-	@(cd $(PKGROOT)/opt/csw/gcc4/lib && ln -s . sparcv8)
-	@$(MAKECOOKIE)
-
-post-merge-isa-i386:
-	@(cd $(PKGROOT)/opt/csw/gcc4/lib && ln -s amd64 64)
-	@(cd $(PKGROOT)/opt/csw/gcc4/lib && ln -s . 32)
-	@(cd $(PKGROOT)/opt/csw/gcc4/lib && ln -s . i386)
+post-patch-modulated:
+	@(echo "==> Running autoheader and autoconf")
+	@(cd $(PATCHDIR)/gcc && autoheader)
+	@(cd $(PATCHDIR)/gcc && autoconf)
 	@$(MAKECOOKIE)
 
 ## Create $(OBJECT_DIR) to build in
