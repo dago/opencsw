@@ -1,0 +1,224 @@
+--- gcc-4.3.3/gcc/Makefile.in.o	2009-03-26 10:54:05.816690285 -0500
++++ gcc-4.3.3/gcc/Makefile.in	2009-03-26 10:53:26.456066920 -0500
+@@ -1010,6 +1010,8 @@
+ # last objects to finish building.
+ OBJS-common = \
+ 	insn-attrtab.o \
++	insn-dfatab.o \
++	insn-latencytab.o \
+ 	insn-automata.o \
+ 	insn-emit.o \
+ 	insn-extract.o \
+@@ -1270,12 +1272,13 @@
+ 
+ OBJS-onestep = libbackend.o $(OBJS-archive)
+ 
+-BACKEND = main.o @TREEBROWSER@ libbackend.a $(CPPLIB) $(LIBDECNUMBER)
++BACKEND = libbackend.a main.o @TREEBROWSER@ $(CPPLIB) $(LIBDECNUMBER)
++
+ 
+ MOSTLYCLEANFILES = insn-flags.h insn-config.h insn-codes.h \
+  insn-output.c insn-recog.c insn-emit.c insn-extract.c insn-peep.c \
+- insn-attr.h insn-attrtab.c insn-opinit.c insn-preds.c insn-constants.h \
+- tm-preds.h tm-constrs.h \
++ insn-attr.h insn-attrtab.c insn-dfatab.c insn-latencytab.c insn-opinit.c \
++ insn-preds.c insn-constants.h tm-preds.h tm-constrs.h \
+  tree-check.h min-insn-modes.c insn-modes.c insn-modes.h \
+  genrtl.c genrtl.h gt-*.h gtype-*.h gtype-desc.c gtyp-input.list \
+  xgcc$(exeext) cpp$(exeext) cc1$(exeext) cc1*-dummy$(exeext) $(EXTRA_PASSES) \
+@@ -2937,8 +2940,9 @@
+ # and compile them.
+ 
+ .PRECIOUS: insn-config.h insn-flags.h insn-codes.h insn-constants.h \
+-  insn-emit.c insn-recog.c insn-extract.c insn-output.c insn-peep.c \
+-  insn-attr.h insn-attrtab.c insn-preds.c
++	insn-emit.c insn-recog.c insn-extract.c insn-output.c insn-peep.c \
++	insn-attr.h insn-attrtab.c insn-dfatab.c insn-latencytab.c insn-preds.c
++
+ 
+ # Dependencies for the md file.  The first time through, we just assume
+ # the md file itself and the generated dependency file (in order to get
+@@ -2957,6 +2961,12 @@
+ insn-attrtab.o : insn-attrtab.c $(CONFIG_H) $(SYSTEM_H) coretypes.h	\
+   $(TM_H) $(RTL_H) $(REGS_H) $(REAL_H) output.h $(INSN_ATTR_H)		\
+   insn-config.h toplev.h $(RECOG_H) $(TM_P_H) $(FLAGS_H)
++insn-dfatab.o : insn-dfatab.c $(CONFIG_H) $(SYSTEM_H) coretypes.h  \
++  $(TM_H) $(RTL_H) $(REGS_H) $(REAL_H) output.h $(INSN_ATTR_H)     \
++  insn-config.h toplev.h $(RECOG_H) $(TM_P_H) $(FLAGS_H)
++insn-latencytab.o : insn-latencytab.c $(CONFIG_H) $(SYSTEM_H)      \
++  coretypes.h $(TM_H) $(RTL_H) $(REGS_H) $(REAL_H) output.h        \
++  $(INSN_ATTR_H) insn-config.h toplev.h $(RECOG_H) $(TM_P_H) $(FLAGS_H)
+ insn-automata.o : insn-automata.c $(CONFIG_H) $(SYSTEM_H) coretypes.h	\
+   $(TM_H) $(RTL_H) $(REGS_H) $(REAL_H) output.h $(INSN_ATTR_H)		\
+   insn-config.h toplev.h $(RECOG_H) $(TM_P_H) $(FLAGS_H)
+@@ -2997,9 +3007,9 @@
+ 
+ simple_generated_h = insn-attr.h insn-codes.h insn-config.h insn-flags.h
+ 
+-simple_generated_c = insn-attrtab.c insn-automata.c insn-emit.c \
+-		     insn-extract.c insn-opinit.c insn-output.c \
+-		     insn-peep.c insn-recog.c
++simple_generated_c = insn-automata.c insn-emit.c \
++					insn-extract.c insn-opinit.c insn-output.c \
++					insn-peep.c insn-recog.c
+ 
+ $(simple_generated_h): insn-%.h: s-%; @true
+ 
+@@ -3018,6 +3028,20 @@
+ 	$(SHELL) $(srcdir)/../move-if-change tmp-$*.c insn-$*.c
+ 	$(STAMP) s-$*
+ 
++# genattrtab produces three files.
++insn-attrtab.c insn-dfatab.c insn-latencytab.c: insn-%.c: s-%; @true
++
++s-attrtab s-dfatab s-latencytab: build/genattrtab$(build_exeext) \
++	$(MD_DEPS) insn-conditions.md
++		$(RUN_GEN) build/genattrtab$(build_exeext) $(md_file) \
++   		  insn-conditions.md -atmp-attrtab.c -dtmp-dfatab.c > tmp-latencytab.c
++		$(SHELL) $(srcdir)/../move-if-change tmp-attrtab.c    insn-attrtab.c
++		$(SHELL) $(srcdir)/../move-if-change tmp-dfatab.c     insn-dfatab.c
++		$(SHELL) $(srcdir)/../move-if-change tmp-latencytab.c insn-latencytab.c
++		$(STAMP) s-attrtab
++		$(STAMP) s-dfatab
++		$(STAMP) s-latencytab
++
+ # genconstants needs to run before insn-conditions.md is available
+ # (because the constants may be used in the conditions).
+ insn-constants.h: s-constants; @true
+
+--- gcc-4.3.3/gcc/genattrtab.c.o	2009-03-25 20:32:28.189775642 -0500
++++ gcc-4.3.3/gcc/genattrtab.c	2009-03-25 20:39:51.459202637 -0500
+@@ -4433,6 +4433,61 @@
+   make_internal_attr ("*bypass_p",               byps_exp, ATTR_NONE);
+ }
+ 
++static void
++write_header (void)
++{
++  printf ("/* Generated automatically by the program `genattrtab'\n\
++from the machine description file `md'.  */\n\n");
++
++  printf ("#include \"config.h\"\n");
++  printf ("#include \"system.h\"\n");
++  printf ("#include \"coretypes.h\"\n");
++  printf ("#include \"tm.h\"\n");
++  printf ("#include \"rtl.h\"\n");
++  printf ("#include \"insn-attr.h\"\n");
++  printf ("#include \"tm_p.h\"\n");
++  printf ("#include \"insn-config.h\"\n");
++  printf ("#include \"recog.h\"\n");
++  printf ("#include \"regs.h\"\n");
++  printf ("#include \"real.h\"\n");
++  printf ("#include \"output.h\"\n");
++  printf ("#include \"toplev.h\"\n");
++  printf ("#include \"flags.h\"\n");
++  printf ("#include \"function.h\"\n");
++  printf ("\n");
++  printf ("#define operands recog_data.operand\n\n");
++}
++
++static void
++switch_stdout (const char *file_name)
++{
++  if (fflush (stdout) || ferror (stdout))
++    exit (FATAL_EXIT_CODE);
++  if (!freopen (file_name, "w", stdout))
++    fatal ("cannot open file %s: %s", file_name, strerror (errno));
++  write_header ();
++}
++
++static const char *dfa_file_name = 0;
++static const char *attr_file_name = 0;
++
++static bool
++handle_arg (const char *arg)
++{
++  switch (arg[1])
++    {
++    case 'a':
++      attr_file_name = &arg[2];
++      return true;
++    case 'd':
++      dfa_file_name = &arg[2];
++      return true;
++    default:
++      return false;
++    }
++}
++
++
+ int
+ main (int argc, char **argv)
+ {
+@@ -4444,7 +4499,7 @@
+ 
+   progname = "genattrtab";
+ 
+-  if (init_md_reader_args (argc, argv) != SUCCESS_EXIT_CODE)
++  if (init_md_reader_args_cb (argc, argv, handle_arg) != SUCCESS_EXIT_CODE)
+     return (FATAL_EXIT_CODE);
+ 
+   obstack_init (hash_obstack);
+@@ -4464,9 +4519,6 @@
+   delay_1_0_str = DEF_ATTR_STRING ("*delay_1_0");
+   num_delay_slots_str = DEF_ATTR_STRING ("*num_delay_slots");
+ 
+-  printf ("/* Generated automatically by the program `genattrtab'\n\
+-from the machine description file `md'.  */\n\n");
+-
+   /* Read the machine description.  */
+ 
+   while (1)
+@@ -4525,24 +4577,6 @@
+   if (num_delays)
+     expand_delays ();
+ 
+-  printf ("#include \"config.h\"\n");
+-  printf ("#include \"system.h\"\n");
+-  printf ("#include \"coretypes.h\"\n");
+-  printf ("#include \"tm.h\"\n");
+-  printf ("#include \"rtl.h\"\n");
+-  printf ("#include \"insn-attr.h\"\n");
+-  printf ("#include \"tm_p.h\"\n");
+-  printf ("#include \"insn-config.h\"\n");
+-  printf ("#include \"recog.h\"\n");
+-  printf ("#include \"regs.h\"\n");
+-  printf ("#include \"real.h\"\n");
+-  printf ("#include \"output.h\"\n");
+-  printf ("#include \"toplev.h\"\n");
+-  printf ("#include \"flags.h\"\n");
+-  printf ("#include \"function.h\"\n");
+-  printf ("\n");
+-  printf ("#define operands recog_data.operand\n\n");
+-
+   /* Make `insn_alternatives'.  */
+   insn_alternatives = oballoc (insn_code_number * sizeof (int));
+   for (id = defs; id; id = id->next)
+@@ -4582,13 +4616,26 @@
+   optimize_attrs ();
+ 
+   /* Now write out all the `gen_attr_...' routines.  Do these before the
+-     special routines so that they get defined before they are used.  */
++     special routines so that they get defined before they are used.
++     Because GCC has problems compiling two large functions in the same file
++     (PR other/29442), "*insn_default_latency" and "*internal_dfa_insn_code"
++     can be output to separate files, stdout and DFA_FILE_NAME respectively.
++     The remaining attributes can be output to ATTR_FILE_NAME. */
+ 
++  write_header ();
+   for (i = 0; i < MAX_ATTRS_INDEX; i++)
+     for (attr = attrs[i]; attr; attr = attr->next)
+       {
++   if (dfa_file_name
++       && !strcmp ("*internal_dfa_insn_code", attr->name))
++     switch_stdout (dfa_file_name);
++
+ 	if (! attr->is_special && ! attr->is_const)
+ 	  write_attr_get (attr);
++
++   if (attr_file_name
++       && !strcmp ("*internal_dfa_insn_code", attr->name))
++     switch_stdout (attr_file_name);
+       }
+ 
+   /* Write out delay eligibility information, if DEFINE_DELAY present.
