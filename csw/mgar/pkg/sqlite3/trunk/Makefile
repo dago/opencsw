@@ -31,8 +31,8 @@ PKGFILES_CSWsqlite3rt     += /opt/csw/share/doc/sqlite3rt/copyright.html
 PKGFILES_CSWsqlite3rt     += /opt/csw/lib/.*
 
 # Dependencies
-SPKG_DESC_CSWsqlite3      = CSWsqlite3rt
-SPKG_DESC_CSWsqlite3devel = CSWsqlite3
+REQUIRED_PKGS_CSWsqlite3      = CSWsqlite3rt
+REQUIRED_PKGS_CSWsqlite3devel = CSWsqlite3
 
 # Build the 64 bits binaries
 NO_ISAEXEC             = 1
