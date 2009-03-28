@@ -1,5 +1,5 @@
 GARNAME = HTML-Mason
-GARVERSION = 1.35
+GARVERSION = 1.40
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
@@ -10,9 +10,13 @@ define BLURB
   content, such as online newspapers or database driven e-commerce sites.
 endef
 
-DISTFILES += CSWpmhtmlmason.gspec CSWpmhtmlmason.depend
+REQUIRED_PKGS_CSWpmhtmlmason = CSWpmcachecache CSWpmcgi pm_cgi CSWpmclscontainer CSWpmexceptcls CSWpmprmsvldt CSWpmscalarlist
 
-DEPENDS += cpan/Params-Validate cpan/Exception-Class cpan/Cache-Cache
-DEPENDS += cpan/Class-Container cpan/CGI cpan/Scalar-List-Utils
+CATALOGNAME = pm_htmlmason
+PACKAGES	= CSWpmhtmlmason
+
+ARCHALL_CSWpmfilehomedir = 1
+
+LICENSE = LICENSE
 
 include gar/category.mk

@@ -1,6 +1,0 @@
-P CSWpmcachecache pm_cachecache - cache interface
-P CSWpmcgi pm_cgi - simple common gateway interface class
-P CSWpmclscontainer pm_clscontainer - glues object frameworks together transparently
-P CSWpmexceptcls pm_exceptcls - declare real exception classes in Perl
-P CSWpmprmsvldt pm_prmsvldt - validate method/function parameters
-P CSWpmscalarlist pm_scalarlistutils - a selection of general-utility list and scalar subroutines.
