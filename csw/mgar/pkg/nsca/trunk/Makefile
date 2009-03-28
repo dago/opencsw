@@ -46,8 +46,8 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(NAGIOSBINDIR)
 	ginstall -d $(DESTDIR)$(NAGIOSCFGDIR)
 	ginstall -m 755 -d $(DESTDIR)$(NSCADOCDIR)
-	ginstall -m 755 $(WORKSRC)/src/nsca $(DESTDIR)$(BINDIR)
-	ginstall -m 600 $(WORKSRC)/sample-config/nsca.cfg $(DESTDIR)$(CFGDIR)/nsca.cfg.CSW
+	ginstall -m 755 $(WORKSRC)/src/nsca $(DESTDIR)$(NAGIOSBINDIR)
+	ginstall -m 600 $(WORKSRC)/sample-config/nsca.cfg $(DESTDIR)$(NAGIOSCFGDIR)/nsca.cfg.CSW
 	ginstall -m 644 $(WORKSRC)/Changelog $(DESTDIR)$(NSCADOCDIR)
 	ginstall -m 644 $(WORKSRC)/LEGAL $(DESTDIR)$(NSCADOCDIR)
 	ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(NSCADOCDIR)
