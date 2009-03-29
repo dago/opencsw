@@ -22,6 +22,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS   = $(DIRPATHS)
 CONFIGURE_ARGS  += --enable-gtk-doc
+CONFIGURE_ARGS  += --with-x
 
 PREREQUISITE_PKGS += CSWgtk-doc
 
