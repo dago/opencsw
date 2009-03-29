@@ -1,3 +1,17 @@
+#####################################################################
+# OpenCSW build recipe for lftp
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+###### Package information #######
+
 GARNAME = lftp
 GARVERSION = 3.7.11
 CATEGORIES = net
@@ -7,18 +21,29 @@ define BLURB
    lftp is a sophisticated command line based file transfer program. Supported protocols include FTP, HTTP, SFTP, and FISH. It has a multithreaded design allowing you to issue and execute multiple commands simultaneously or in the background. It also features mirroring capabilities and will reconnect and continue transfers in the event of a disconnection. Also, if you quit the program while transfers are still in progress, it will switch to nohup mode and finish the transfers in the background. Additional protocols supported: FTP over HTTP proxy, HTTPS and FTP over SSL. There are lots of tunable parameters, including rate limitation, number of connections limitation and more.
 endef
 
+PACKAGES = CSWlftp
+CATALOGNAME_CSWlftp = lftp
+
+REQUIRED_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline 
+
+# adding the conf classe for handling configuration files
+SPKG_CLASSES = none conf
+
+
+###### Upstream and opencsw files information #######
+
 MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlftp,prototype depend)
+DISTFILES += CSWlftp.prototype
 DISTFILES += changelog.CSW
 DISTFILES += i.conf r.conf
 
-# adding the conf classe for handling configuration files
-SPKG_CLASSES = none conf
+
+##### Build and installation information #####
 
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
@@ -34,7 +59,8 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-install:
-	# po are not installed correctly (I should find a better fix)
-	cd $(WORKSRC)/po && $(MAKE) DESTDIR=$(DESTDIR) install_sh=$(CURDIR)/$(WORKSRC)/install-sh install
+post-install-modulated:
+	ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
+	ginstall $(DOWNLOADDIR)/*.conf $(WORKROOTDIR)/build-global/
+	@$(MAKECOOKIE)
 

@@ -1,5 +1,0 @@
-P CSWexpat expat -  XML Parser Toolkit
-P CSWggettextrt ggettextrt - GNU gettext
-P CSWiconv libiconv - GNU iconv library
-P CSWosslrt openssl - The Open Source toolkit for SSL and TLS.
-P CSWreadline readline - library to enable interactive line editing
