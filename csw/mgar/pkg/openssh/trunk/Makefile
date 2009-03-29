@@ -59,7 +59,6 @@ DISTFILES += changelog.CSW
 
 DISTFILES += sshd_config
 DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
-DISTFILES += openssh
 
 LICENSE = LICENCE
 
@@ -128,7 +127,6 @@ pre-configure:
 # adding documentation files
 post-merge: customize_ssh_config
 	ginstall $(WORKDIR_FIRSTMOD)/*.conf $(WORKROOTDIR)/build-global/
-	ginstall -D $(DOWNLOADDIR)/openssh $(PKGROOT)/etc/init.d/openssh
 	ginstall -D $(DOWNLOADDIR)/sshd_config $(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
 	
 	for DOCDIR in $(DOCDIRS); do \

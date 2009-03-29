@@ -1,6 +1,5 @@
 i i.conf=i.conf
 i r.conf=r.conf
-f none /etc/init.d/openssh 0755 root bin
 f none /opt/csw/etc/ssh/sshd_config.CSW 0744 root bin
 e conf /opt/csw/etc/ssh/moduli 0644 root bin
 d none /opt/csw/libexec 0755 root bin
