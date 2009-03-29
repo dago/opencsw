@@ -1,3 +1,17 @@
+#####################################################################
+# OpenCSW build recipe for openssh
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+###### Package information #######
+
 GARNAME = openssh
 GARVERSION = 5.2
 RELEASE = p1
@@ -17,6 +31,20 @@ define BLURB
   and supports all SSH protocol versions.
 endef
 
+
+PACKAGES = CSWossh CSWosshclient
+
+CATALOGNAME_CSWossh = openssh
+SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
+REQUIRED_PKGS_CSWossh = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWosshclient
+
+CATALOGNAME_CSWosshclient = openssh_client
+SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
+REQUIRED_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
+
+
+###### Upstream and opencsw files information #######
+
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -33,11 +61,7 @@ DISTFILES += sshd_config
 DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
 DISTFILES += openssh
 
-ifndef LPK
-DISTFILES += $(call admfiles,CSWossh,depend checkinstall preinstall postinstall prototype) 
-DISTFILES += $(call admfiles,CSWosshclient,depend prototype) 
-endif
-
+LICENSE = LICENCE
 
 # Script created to workaround a upgrade bug between 
 # package = 4.6,REV=2007.07.30_rev=p1 and later package
@@ -57,8 +81,18 @@ PATCHFILES += no_x_forwarding_bug.patch
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
+DOCDIRS = openssh openssh_client
 
 SPKG_CLASSES = none conf
+
+
+# little hack to be able to still use old smf support with gar v2
+# until openssh is migrated to cswclassutils init system
+DISTFILES += openssh_dyngspec.fakespec
+_CATEGORY_GSPEC_INCLUDE = $(if $(findstring CSWosshclient,$*),csw_dyndepend.gspec,../../$(DOWNLOADDIR)/openssh_dyngspec.fakespec)
+
+
+##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-kerberos5=$(prefix)
@@ -69,14 +103,23 @@ CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 
 TEST_SCRIPTS	=
 
+
+## Optional addition to add Ldap Public Key support 
+## see http://code.google.com/p/openssh-lpk/
+
 ifdef LPK
-	DISTFILES += $(call admfiles,CSWosshlpk,depend checkinstall preinstall postinstall prototype) 
+	PACKAGES = CSWosshlpk
+	CATALOGNAME_CSWosshlpk = openssh_lpk
+	SPKG_DESC_CSWosshlpk = OpenSSH Secure Shell server with ldap public key support
+	REQUIRED_PKGS_CSWosshlpk = $(REQUIRED_PKGS_CSWossh) CSWoldaprt
 	DESCRIPTION = OpenSSH Secure Shell with Ldap Public Key support
 	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
 	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
+	DOCDIRS = openssh_lpk
 endif
+
 
 include gar/category.mk
 
@@ -87,30 +130,24 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 # adding documentation files
-post-install-modulated: customize_ssh_config
+post-merge: customize_ssh_config
 	ginstall $(WORKDIR_FIRSTMOD)/*.conf $(WORKROOTDIR)/build-global/
 	ginstall -D $(DOWNLOADDIR)/openssh $(PKGROOT)/etc/init.d/openssh
 	ginstall -D $(DOWNLOADDIR)/sshd_config $(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
 	ginstall -D $(DOWNLOADDIR)/openssh_restart_workaround.sh $(PKGROOT)/$(sharedstatedir)/openssh/openssh_restart_workaround.sh
-
-ifdef LPK
-	mkdir -p $(PKGROOT)/$(docdir)/openssh_lpk/ 
-	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh_lpk/
-	ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/openssh_lpk/
-else
-	mkdir -p $(PKGROOT)/$(docdir)/openssh/ 
-	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh/
-	ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/openssh/
-	mkdir -p $(PKGROOT)/$(docdir)/openssh_client/
-	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh_client/
-	cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh_client/
-	ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/openssh_client/
-endif
+	
+	for DOCDIR in $(DOCDIRS); do \
+		ginstall -d $(PKGROOT)/$(docdir)/$(DOCDIR); \
+		(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$(DOCDIR)/); \
+		ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(DOCDIR)/; \
+	done
+	@$(MAKECOOKIE)
 
 customize_ssh_config:
 	# Correction des chemins
-	gsed -i -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(INSTALLISADIR)/$(sysconfdir)/ssh/sshd_config"
-	gsed -i -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(INSTALLISADIR)/$(sysconfdir)/ssh/sshd_config"
+	gsed -i -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
+	gsed -i -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
+	@$(MAKECOOKIE)
 
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)

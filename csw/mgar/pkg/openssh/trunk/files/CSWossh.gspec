@@ -1,6 +1,0 @@
-%var            bitname openssh
-%var            pkgname CSWossh
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENCE
-%var            SERVICE_CONF_FILES /opt/csw/etc/ssh/sshd_config
-%include        url file://%{PKGLIB}/smf_enabled.gspec
