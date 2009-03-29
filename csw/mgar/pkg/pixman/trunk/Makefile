@@ -17,9 +17,8 @@ SPKG_DESC_CSWpixman 		= $(DESCRIPTION)
 SPKG_DESC_CSWpixmandevel  	= $(DESCRIPTION) development package
 
 DISTFILES    += $(call admfiles,CSWpixman, )
+DISTFILES    += license.txt
 DISTFILES    += $(call admfiles,CSWpixmandevel, )
-
-LICENSE = COPYING
 
 PKGFILES_CSWpixmandevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWpixmandevel += /opt/csw/share/doc/pixman_devel/license
@@ -39,6 +38,6 @@ include gar/category.mk
  pre-install:
 	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
 	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)_devel
-	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/license 
-	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)_devel/license 
+	@gcp -fp $(FILEDIR)/license.txt $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/license 
+	@gcp -fp $(FILEDIR)/license.txt $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)_devel/license 
 
