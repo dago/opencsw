@@ -23,7 +23,7 @@ DISTFILES    += $(call admfiles,CSWpixmandevel, )
 PKGFILES_CSWpixmandevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWpixmandevel += /opt/csw/share/doc/pixman_devel/license
 
-#REQUIRED_PKGS_CSWpixmandevel = CSWpixman
+REQUIRED_PKGS_CSWpixmandevel = CSWpixman
 #REQUIRED_PKGS_CSWpixman 	 = CSWlibx11
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
@@ -33,11 +33,6 @@ LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-gtk
 
+LICENSE = license.txt
+
 include gar/category.mk
-
-pre-install:
-	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
-	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)_devel
-	@gcp -fp $(FILEDIR)/license.txt $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/license 
-	@gcp -fp $(FILEDIR)/license.txt $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)_devel/license 
-
