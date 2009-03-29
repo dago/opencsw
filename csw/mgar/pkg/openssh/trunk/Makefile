@@ -43,7 +43,7 @@ SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client
 REQUIRED_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
 
 
-###### Upstream and opencsw files information #######
+###### Upstream and OpenCSW files information #######
 
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
 
@@ -62,10 +62,6 @@ DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
 DISTFILES += openssh
 
 LICENSE = LICENCE
-
-# Script created to workaround a upgrade bug between 
-# package = 4.6,REV=2007.07.30_rev=p1 and later package
-DISTFILES += openssh_restart_workaround.sh
 
 # The GSSAPI key exchange patch
 PATCHFILES = openssh-$(GSSKEX_PATCH_VERSION)-gsskex-$(GSSKEX_PATCH_DATE).patch
@@ -134,7 +130,6 @@ post-merge: customize_ssh_config
 	ginstall $(WORKDIR_FIRSTMOD)/*.conf $(WORKROOTDIR)/build-global/
 	ginstall -D $(DOWNLOADDIR)/openssh $(PKGROOT)/etc/init.d/openssh
 	ginstall -D $(DOWNLOADDIR)/sshd_config $(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
-	ginstall -D $(DOWNLOADDIR)/openssh_restart_workaround.sh $(PKGROOT)/$(sharedstatedir)/openssh/openssh_restart_workaround.sh
 	
 	for DOCDIR in $(DOCDIRS); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$(DOCDIR); \

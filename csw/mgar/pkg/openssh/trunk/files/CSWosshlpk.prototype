@@ -30,5 +30,4 @@ f none /opt/csw/share/man/man5/sshd_config.5 0644 root bin
 f none /opt/csw/share/man/man8/sftp-server.8 0644 root bin
 f none /opt/csw/share/man/man8/sshd.8 0644 root bin
 d none /opt/csw/share/openssh 0755 root bin
-f none /opt/csw/share/openssh/openssh_restart_workaround.sh 0755 root bin
 d none /var/empty

@@ -7,7 +7,6 @@ c9f2e90545738c1408a52647ae45be70  download/changelog.CSW
 8e23e1f856f36e8e084a9283d22a7cbf  download/svc-cswopenssh
 547a915f1712c35dc79dc41378001ca9  download/cswopenssh.xml
 fd50a65230ec1ead7949e8500844b0bf  download/openssh
-bd0f690fbb3abcbffe7924ae3016c8c3  download/openssh_restart_workaround.sh
 2768c47277b19c556403ea652cf8ceb3  download/openssh_dyngspec.fakespec
 bb77f4010f030d85f143b3d149aa6a69  download/openssh-5.2p1-gsskex-20081003.patch
 4b3e79120b60e8f25be5141eba53cac5  download/don_t_use_TIOCSCTTY.patch
