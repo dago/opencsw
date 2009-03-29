@@ -13,7 +13,7 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS += CSWgnulinks CSWgtkdoc
+PREREQUISITE_PKGS += CSWgnulinks CSWgtk-doc
 
 REQUIRED_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
 REQUIRED_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib
