@@ -34,3 +34,20 @@ TEST_TARGET = check
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+post-configure-$(MODULATION):
+	@(echo "~~~ Fixing Libtool ~~~")
+	@$(FILEDIR)/fixme.sh $(WORKSRC)
+	$(DONADA)
+
+post-install-isa-sparcv8:
+	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
+	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
+	@ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
+	@ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
+
+post-install-isa-i386:
+	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
+	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
+	@ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
+	@ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
