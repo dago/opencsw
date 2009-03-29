@@ -54,7 +54,6 @@ DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
-DISTFILES += i.conf r.conf
 DISTFILES += changelog.CSW
 
 DISTFILES += sshd_config
@@ -138,11 +137,10 @@ merge-doc-files:
 merge-config-files:
 	ginstall $(PKGROOT)/$(sysconfdir)/ssh/ssh_config $(PKGROOT)/$(sysconfdir)/ssh/ssh_config.CSW 
 	ginstall $(PKGROOT)/$(sysconfdir)/ssh/moduli $(PKGROOT)/$(sysconfdir)/ssh/moduli.CSW 
-	# Correction des chemins
 	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' \
 		-e 's,/usr/libexec/,/opt/csw/libexec/,g' \
-		-e 's,^ *# *UsePAM *.*,UsePAM yes,g' \ 
-		-e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config" > "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
+		-e 's,^ *# *UsePAM *.*,UsePAM yes,g' \
+	       	-e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config" > "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
 	@$(MAKECOOKIE)
 
 
