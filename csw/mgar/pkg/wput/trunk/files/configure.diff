@@ -1,0 +1,12 @@
+diff -ru ../build-global/wput-0.6.2/configure wput-0.6.2/configure
+--- ../build-global/wput-0.6.2/configure	2008-09-27 12:31:23.000000000 +0200
++++ wput-0.6.2/configure	2009-03-29 18:17:59.596861076 +0200
+@@ -1736,7 +1736,7 @@
+ 
+ 
+ 
+-CFLAGS="${CFLAGS} -Wall"
++CFLAGS="${CFLAGS}"
+ PACKAGE="wput"
+ VERSION="0.6.2"
+ 

@@ -1,0 +1,30 @@
+diff -ru ../build-global/wput-0.6.2/Makefile.in wput-0.6.2/Makefile.in
+--- ../build-global/wput-0.6.2/Makefile.in	2008-09-27 12:31:23.000000000 +0200
++++ wput-0.6.2/Makefile.in	2009-03-29 18:25:34.366444523 +0200
+@@ -16,12 +16,12 @@
+ 
+ install: all
+ 	cd po && $(MAKE) $(MAKEDEFS) $@
+-	mkdir -p $(bindir) 
+-	mkdir -p $(mandir) 
+-	install -m0755 wput $(bindir)
+-	install -m0644 doc/wput.1.gz $(mandir)
+-	ln -s $(bindir)/wput $(bindir)/wdel
+-	install -m0644 doc/wdel.1.gz $(mandir)
++	mkdir -p $(DESTDIR)$(bindir) 
++	mkdir -p $(DESTDIR)$(mandir) 
++	install -m0755 wput $(DESTDIR)$(bindir)
++	install -m0644 doc/wput.1.gz $(DESTDIR)$(mandir)
++	ln -s $(bindir)/wput $(DESTDIR)$(bindir)/wdel
++	install -m0644 doc/wdel.1.gz $(DESTDIR)$(mandir)
+ 	@echo "----------------"
+ 	@echo "Wput and Wdel installed. See 'wput/wdel -h' or 'man wput/wdel' for"
+ 	@echo "usage information."
+@@ -30,6 +30,7 @@
+ 	@echo "Wput is not perfect, so please report any bugs you notice (see BUGS-section"
+ 	@echo "in the manpage)."
+ 	@echo "----------------"
++
+ uninstall:
+ 	rm -f $(bindir)/wput
+ 	rm -f $(bindir)/wdel
