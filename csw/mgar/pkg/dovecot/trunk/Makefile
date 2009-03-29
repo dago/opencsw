@@ -1,3 +1,6 @@
+# TODO:
+# * Bump to 1.1.13, http://hg.dovecot.org/dovecot-1.1/rev/a2013dedbad0
+
 GARNAME = dovecot
 GARVERSION = 1.1.11
 CATEGORIES = server
@@ -13,7 +16,7 @@ endef
 MASTER_SITES = http://dovecot.org/releases/1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGES = CSWdovecot CSWdovecotdevel CSWdovecot-sieve
+PACKAGES = CSWdovecot CSWdovecot-devel CSWdovecot-sieve
 CATALOGNAME_CSWdovecot = dovecot
 CATALOGNAME_CSWdovecotdevel = dovecot_devel
 CATALOGNAME_CSWdovecot-sieve = dovecot_sieve
