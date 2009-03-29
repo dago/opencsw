@@ -24,7 +24,7 @@ CONFIGURE_ARGS   = $(DIRPATHS)
 CONFIGURE_ARGS  += --enable-gtk-doc
 CONFIGURE_ARGS  += --with-x
 
-PREREQUISITE_PKGS += CSWgtk-doc
+PREREQUISITE_PKGS += CSWgtk-doc CSWlibxslt
 
 REQUIRED_PKGS_CSWpango = CSWggettextrt CSWglib2
 
