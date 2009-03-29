@@ -56,7 +56,6 @@ DISTNAME = $(GARNAME)-$(DISTVERSION)
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += changelog.CSW
 
-DISTFILES += sshd_config
 DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
 
 LICENSE = LICENCE
@@ -75,7 +74,6 @@ PATCHFILES += no_x_forwarding_bug.patch
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
-DOCDIRS = openssh openssh_client
 
 # we're using conf handling class from the cswclassutils package
 REQUIRED_PKGS += CSWcswclassutils
@@ -102,6 +100,10 @@ TEST_SCRIPTS	=
 ## Optional addition to add Ldap Public Key support 
 ## see http://code.google.com/p/openssh-lpk/
 
+# we always register the lpk related files so checksum 
+# is the same with LPK enabled or not
+DISTFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
+DISTFILES += openssh_lpk_dyngspec.fakespec
 ifdef LPK
 	PACKAGES = CSWosshlpk
 	CATALOGNAME_CSWosshlpk = openssh_lpk
@@ -111,7 +113,11 @@ ifdef LPK
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
 	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
-	DOCDIRS = openssh_lpk
+
+	_CATEGORY_GSPEC_INCLUDE = $(if $(findstring CSWosshclient,$*),csw_dyndepend.gspec,../../$(DOWNLOADDIR)/openssh_lpk_dyngspec.fakespec)
+	
+	# we must reset the CSWosshclient description to avoid a bug in the automatic dependancy generation
+	SPKG_DESC_CSWosshclient = 
 endif
 
 
@@ -127,16 +133,17 @@ pre-configure:
 post-merge: merge-config-files merge-doc-files
 
 merge-doc-files:
-	for DOCDIR in $(DOCDIRS); do \
-		ginstall -d $(PKGROOT)/$(docdir)/$(DOCDIR); \
-		(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$(DOCDIR)/); \
-		ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(DOCDIR)/; \
+	for DOCDIR in $(foreach _PKG,$(PACKAGES),$(call catalogname,$(_PKG))); do \
+		ginstall -d $(PKGROOT)/$(docdir)/$$DOCDIR; \
+		(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$DOCDIR/); \
+		ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$$DOCDIR/; \
 	done
 	@$(MAKECOOKIE)
 
 merge-config-files:
 	ginstall $(PKGROOT)/$(sysconfdir)/ssh/ssh_config $(PKGROOT)/$(sysconfdir)/ssh/ssh_config.CSW 
 	ginstall $(PKGROOT)/$(sysconfdir)/ssh/moduli $(PKGROOT)/$(sysconfdir)/ssh/moduli.CSW 
+	# we change some default value in the server config file
 	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' \
 		-e 's,/usr/libexec/,/opt/csw/libexec/,g' \
 		-e 's,^ *# *UsePAM *.*,UsePAM yes,g' \
