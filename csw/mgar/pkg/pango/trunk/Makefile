@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.24/
 DISTFILES  = pango-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWpango,)
+DISTFILES += $(call admfiles,CSWpango, postinstall)
 DISTFILES += $(call admfiles,CSWpangodoc,)
 DISTFILES += $(call admfiles,CSWpangodevel,)
 
@@ -21,8 +21,8 @@ UPSTREAM_MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS   = $(DIRPATHS)
-CONFIGURE_ARGS  += --enable-gtk-doc
-CONFIGURE_ARGS  += --with-x
+CONFIGURE_ARGS  += --with-x --enable-gtk-doc
+# CONFIGURE_ARGS  += --with-included-modules 
 
 PREREQUISITE_PKGS += CSWgtk-doc CSWlibxslt
 
@@ -39,23 +39,6 @@ TEST_SCRIPTS   =
 
 include gar/category.mk
 
-# CFLAGS := -g $(CFLAGS)
-# CXXFLAGS := -g $(CXXFLAGS)
-# export CFLAGS CXXFLAGS
-
-# Disable -- it works, but ild gives symbol errors
-# pre-configure:
-#	@( cd $(WORKSRC)/pango/opentype ; \
-#		$(PERL) -i.bak -plne 's/^(\@BUILD_OT_TESTS_TRUE\@noinst_PROGRAMS = ottest)/#$$1/' Makefile.in )
-
 post-extract:
 	( cd $(WORKROOTDIR) ; for i in build-isa-* ; do mv $$i/pango-$(GARVERSION) $$i/$(GARNAME)-$(GARVERSION) ; done )
 	@$(MAKECOOKIE)
-
-# pre-install:
-#	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
-#	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)devel
-#	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)doc
-#	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/license 
-#	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)doc/license 
-#	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)-$(GARVERSION)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)devel/license 
