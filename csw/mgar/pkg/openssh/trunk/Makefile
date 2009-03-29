@@ -78,8 +78,9 @@ DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README RE
 DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
 DOCDIRS = openssh openssh_client
 
-SPKG_CLASSES = none conf
-
+# we're using conf handling class from the cswclassutils package
+REQUIRED_PKGS += CSWcswclassutils
+SPKG_CLASSES = none cswpreserveconf
 
 # little hack to be able to still use old smf support with gar v2
 # until openssh is migrated to cswclassutils init system
@@ -105,9 +106,8 @@ TEST_SCRIPTS	=
 ifdef LPK
 	PACKAGES = CSWosshlpk
 	CATALOGNAME_CSWosshlpk = openssh_lpk
-	SPKG_DESC_CSWosshlpk = OpenSSH Secure Shell server with ldap public key support
+	SPKG_DESC_CSWosshlpk = $(SPKG_DESC_CSWossh) with ldap public key support
 	REQUIRED_PKGS_CSWosshlpk = $(REQUIRED_PKGS_CSWossh) CSWoldaprt
-	DESCRIPTION = OpenSSH Secure Shell with Ldap Public Key support
 	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
@@ -125,10 +125,9 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 # adding documentation files
-post-merge: customize_ssh_config
-	ginstall $(WORKDIR_FIRSTMOD)/*.conf $(WORKROOTDIR)/build-global/
-	ginstall -D $(DOWNLOADDIR)/sshd_config $(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
-	
+post-merge: merge-config-files merge-doc-files
+
+merge-doc-files:
 	for DOCDIR in $(DOCDIRS); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$(DOCDIR); \
 		(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$(DOCDIR)/); \
@@ -136,10 +135,14 @@ post-merge: customize_ssh_config
 	done
 	@$(MAKECOOKIE)
 
-customize_ssh_config:
+merge-config-files:
+	ginstall $(PKGROOT)/$(sysconfdir)/ssh/ssh_config $(PKGROOT)/$(sysconfdir)/ssh/ssh_config.CSW 
+	ginstall $(PKGROOT)/$(sysconfdir)/ssh/moduli $(PKGROOT)/$(sysconfdir)/ssh/moduli.CSW 
 	# Correction des chemins
-	gsed -i -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' -e 's,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
-	gsed -i -e 's,^ *# *UsePAM *.*,UsePAM yes,g' -e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config"
+	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' \
+		-e 's,/usr/libexec/,/opt/csw/libexec/,g' \
+		-e 's,^ *# *UsePAM *.*,UsePAM yes,g' \ 
+		-e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config" > "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
 	@$(MAKECOOKIE)
 
 
