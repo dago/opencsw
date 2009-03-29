@@ -35,7 +35,7 @@ CONFIGURE_ARGS += --enable-gtk
 
 include gar/category.mk
 
- pre-install:
+pre-install:
 	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
 	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)_devel
 	@gcp -fp $(FILEDIR)/license.txt $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/license 
