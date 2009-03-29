@@ -1,3 +1,10 @@
+lftp (3.7.11,REV=2009.03.29) unstable
+
+  * Now uses cswpreserveconf class from cswclassutils to handle lftp.conf
+  configuration file.
+
+   -- Yann Rouillard <yann@opencsw.org>  Sun, 29 Mar 2009 16:16:22 +0200
+
 lftp (3.7.11,REV=2009.03.27) unstable
 
   * Fixed double CSWcommon dependancy.
