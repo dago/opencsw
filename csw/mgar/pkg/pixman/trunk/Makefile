@@ -23,7 +23,7 @@ DISTFILES    += $(call admfiles,CSWpixmandevel, )
 PKGFILES_CSWpixmandevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWpixmandevel += /opt/csw/share/doc/pixman_devel/license
 
-#REQUIRED_PKGS_CSWpixmandevel = CSWpixman
+REQUIRED_PKGS_CSWpixmandevel = CSWpixman
 #REQUIRED_PKGS_CSWpixman 	 = CSWlibx11
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
