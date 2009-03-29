@@ -1,8 +1,6 @@
-i i.conf=i.conf
-i r.conf=r.conf
 f none /opt/csw/bin/lftp 0755 root bin
 f none /opt/csw/bin/lftpget 0755 root bin
-e conf /opt/csw/etc/lftp.conf 0644 root bin
+f cswpreserveconf /opt/csw/etc/lftp.conf.CSW 0644 root bin
 d none /opt/csw/lib/lftp 0755 root bin
 d none /opt/csw/share/doc/lftp 0755 root bin
 f none /opt/csw/share/doc/lftp/changelog.CSW 0644 root bin

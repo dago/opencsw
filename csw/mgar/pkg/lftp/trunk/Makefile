@@ -26,8 +26,9 @@ CATALOGNAME_CSWlftp = lftp
 
 REQUIRED_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline 
 
-# adding the conf classe for handling configuration files
-SPKG_CLASSES = none conf
+# we're using conf handling class from the cswclassutils package
+REQUIRED_PKGS += CSWcswclassutils
+SPKG_CLASSES = none cswpreserveconf
 
 
 ###### Upstream and opencsw files information #######
@@ -40,7 +41,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWlftp.prototype
 DISTFILES += changelog.CSW
-DISTFILES += i.conf r.conf
 
 
 ##### Build and installation information #####
@@ -59,8 +59,8 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-install-modulated:
-	ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
-	ginstall $(DOWNLOADDIR)/*.conf $(WORKROOTDIR)/build-global/
+post-merge:
+	@ginstall -D $(PKGROOT)/$(sysconfdir)/lftp.conf $(PKGROOT)/$(sysconfdir)/lftp.conf.CSW
+	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
 	@$(MAKECOOKIE)
 
