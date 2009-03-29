@@ -13,10 +13,10 @@ diff -ru ../build-global/wput-0.6.2/Makefile.in wput-0.6.2/Makefile.in
 -	install -m0644 doc/wdel.1.gz $(mandir)
 +	mkdir -p $(DESTDIR)$(bindir) 
 +	mkdir -p $(DESTDIR)$(mandir) 
-+	install -m0755 wput $(DESTDIR)$(bindir)
-+	install -m0644 doc/wput.1.gz $(DESTDIR)$(mandir)
++	ginstall -m0755 wput $(DESTDIR)$(bindir)
++	ginstall -m0644 doc/wput.1.gz $(DESTDIR)$(mandir)
 +	ln -s $(bindir)/wput $(DESTDIR)$(bindir)/wdel
-+	install -m0644 doc/wdel.1.gz $(DESTDIR)$(mandir)
++	ginstall -m0644 doc/wdel.1.gz $(DESTDIR)$(mandir)
  	@echo "----------------"
  	@echo "Wput and Wdel installed. See 'wput/wdel -h' or 'man wput/wdel' for"
  	@echo "usage information."
