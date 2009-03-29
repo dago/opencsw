@@ -13,10 +13,10 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS += CSWgnulinks CSWgtk-doc
+PREREQUISITE_PKGS += CSWgnulinks CSWgtk-doc CSWglib2devel CSWlibxml2devel
 
 REQUIRED_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
-REQUIRED_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib
+REQUIRED_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -42,12 +42,12 @@ post-configure-$(MODULATION):
 
 post-install-isa-sparcv8:
 	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
-	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
+	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1.9.1
 	@ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
 	@ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
 
 post-install-isa-i386:
 	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
-	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
+	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1.9.1
 	@ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
 	@ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
