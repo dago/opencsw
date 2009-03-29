@@ -31,7 +31,7 @@ CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
 LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --mandir=/opt/csw/share/man --enable-gtk
+CONFIGURE_ARGS += --enable-gtk
 
 include gar/category.mk
 
