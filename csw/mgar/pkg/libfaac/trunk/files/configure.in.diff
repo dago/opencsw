@@ -1,0 +1,55 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/configure.in faac-1.28/configure.in
+--- ../build-global/faac-1.28/configure.in	2009-02-05 01:55:38.000000000 +0100
++++ faac-1.28/configure.in	2009-03-20 06:00:25.906642505 +0100
+@@ -10,7 +10,9 @@
+ 
+ AC_DEFUN([MY_DEFINE], [ AC_DEFINE($1, 1, [define if needed]) ])
+ 
+-CFLAGS=${CFLAGS:-"-O2 -Wall"}
++CFLAGS=${CFLAGS}
++CPPFLAGS=${CPPFLAGS}
++LDFLAGS=${LDFLAGS}
+ 
+ AC_PROG_CC
+ AC_PROG_CXX
+@@ -20,10 +22,13 @@
+ 
+ AC_CHECK_TYPES(u_int32_t)
+ AC_CHECK_TYPES(u_int16_t)
++AC_CHECK_TYPES(uint64_t)
++AC_CHECK_TYPES(uint32_t)
++AC_CHECK_TYPES(uint16_t)
+ AC_CHECK_TYPES(int32_t)
+ AC_CHECK_TYPES(int16_t)
+ 
+-AC_CHECK_DECL(strcasecmp, MY_DEFINE(HAVE_STRCASECMP))
++AC_CHECK_DECL(strcasecmp, AC_DEFINE(HAVE_STRCASECMP, 1, [define if needed]) )
+ 
+ AC_CHECK_LIB(gnugetopt, getopt_long)
+ 
+@@ -41,7 +46,7 @@
+      AC_MSG_NOTICE([*** Building with internal mp4v2 ***])
+      AM_CONDITIONAL(WITH_MP4V2, true)
+      AC_CONFIG_LINKS(common/mp4v2/mpeg4ip_config.h:config.h)
+-     MY_DEFINE(HAVE_LIBMP4V2)
++     MY_DEFINE(HAVE_LIBMP4V2, 1, [define if needed])
+   else
+      AC_MSG_NOTICE([*** Building WITHOUT mp4v2 ***])
+   fi
+@@ -61,12 +66,12 @@
+ dnl Checks for header files required for mp4.h
+ AC_HEADER_STDC
+ AC_SYS_LARGEFILE
+-AC_CHECK_HEADERS(stdint.h inttypes.h)
++AC_CHECK_HEADERS(sys/types.h stdint.h inttypes.h inttypes_gnucompat.h)
+ AC_CHECK_HEADERS(mathf.h)
+ AC_CHECK_HEADERS(float.h)
+-AC_CHECK_DECL(strchr, MY_DEFINE(HAVE_STRCHR))
+-AC_CHECK_DECL(memcpy, MY_DEFINE(HAVE_MEMCPY))
+-AC_CHECK_DECL(strsep, MY_DEFINE(HAVE_STRSEP))
++AC_CHECK_DECL(strchr, AC_DEFINE(HAVE_STRCHR, 1, [define if needed]) )
++AC_CHECK_DECL(memcpy, AC_DEFINE(HAVE_MEMCPY, 1, [define if needed]) )
++AC_CHECK_DECL(strsep, AC_DEFINE(HAVE_STRSEP, 1, [define if needed]) )
+ AC_CHECK_HEADERS(sys/time.h)
+ AC_HEADER_TIME
+ AC_TYPE_OFF_T

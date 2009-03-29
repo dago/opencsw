@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/common/mp4v2/mp4property.h faac-1.28/common/mp4v2/mp4property.h
+--- ../build-global/faac-1.28/common/mp4v2/mp4property.h	2009-01-25 02:14:34.000000000 +0100
++++ faac-1.28/common/mp4v2/mp4property.h	2009-03-20 06:08:45.678172744 +0100
+@@ -38,7 +38,7 @@
+ 	StringProperty,
+ 	BytesProperty,
+ 	TableProperty,
+-	DescriptorProperty,
++	DescriptorProperty
+ };
+ 
+ class MP4Property {

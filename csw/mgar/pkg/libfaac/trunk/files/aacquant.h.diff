@@ -1,0 +1,26 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/aacquant.h faac-1.28/libfaac/aacquant.h
+--- ../build-global/faac-1.28/libfaac/aacquant.h	2003-10-12 18:43:39.000000000 +0200
++++ faac-1.28/libfaac/aacquant.h	2009-03-20 05:53:52.210350072 +0100
+@@ -37,14 +37,22 @@
+ #define POW20(x)  pow(2.0,((double)x)*.25)
+ #define IPOW20(x)  pow(2.0,-((double)x)*.1875)
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ typedef struct
+   {
+     double *pow43;
+     double *adj43;
+     double quality;
+   } AACQuantCfg;
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ void AACQuantizeInit(CoderInfo *coderInfo, unsigned int numChannels,
+ 		     AACQuantCfg *aacquantCfg);

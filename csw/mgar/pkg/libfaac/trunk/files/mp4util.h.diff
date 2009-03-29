@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/common/mp4v2/mp4util.h faac-1.28/common/mp4v2/mp4util.h
+--- ../build-global/faac-1.28/common/mp4v2/mp4util.h	2009-01-25 02:14:34.000000000 +0100
++++ faac-1.28/common/mp4v2/mp4util.h	2009-03-20 00:14:32.128482807 +0100
+@@ -83,7 +83,7 @@
+ }
+ 
+ static inline void MP4Printf(const char* fmt, ...) 
+-#ifndef _WIN32
++#if defined(__GNUC__)
+  __attribute__((format(__printf__, 1, 2)))
+ #endif
+ ;

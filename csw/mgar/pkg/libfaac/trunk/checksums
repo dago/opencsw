@@ -1,0 +1,17 @@
+c5dde68840cefe46532089c9392d1df0  download/faac-1.28.tar.bz2
+dcfdb7a011ce03ea536ddb92cc7ee8e4  download/Makefile.am.diff
+62ba5e8b03a5c551ad17b149aa86e0c2  download/Makefile.in.diff
+eb7e2cee261c71ac4a8d718b5498777e  download/Makefile.in.frontend.diff
+19f2eebe3df5300ab4a1a16e43593663  download/aacquant.c.diff
+2af64ce38f023774fb0c8f691b98c564  download/aacquant.h.diff
+86598bb0fb18acdf27557f65baf05f66  download/config.h.in.diff
+ffb37b75a68dd524aa3d87dc38b4b971  download/configure.in.diff
+56f2c5e28e1177e3b6956aaf83a10e13  download/faac.h.diff
+268d60a6a1304fa1758a962a20731c1c  download/faaccfg.h.diff
+29fe6485d9ebe7fd0892c18ed450bac5  download/frame.h.diff
+a4e382e8b7123a144c1cf1c10a7e1725  download/input.c.diff
+bf65a158a69527826c5e9fff74d10e83  download/ltp.c.diff
+dee39c5250880eb427a11269ececa205  download/mp4property.h.diff
+e97db55385453a0482ab2673056d4022  download/mp4util.h.diff
+ff5300984a0b097a08d66cb39d8a3ef0  download/mpeg4ip.h.diff
+46b44023ce14bce4f0ed981ee5514c5c  download/psych.h.diff

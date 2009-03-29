@@ -1,0 +1,29 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/frontend/input.c faac-1.28/frontend/input.c
+--- ../build-global/faac-1.28/frontend/input.c	2009-01-25 19:50:32.000000000 +0100
++++ faac-1.28/frontend/input.c	2009-03-20 06:06:22.286495928 +0100
+@@ -27,6 +27,10 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#include <sys/byteorder.h> /* for BSWAP_8|BSWAP_16|BSWAP_32|BSWAP_64 */
++#endif
++
+ #ifdef _WIN32
+ #include <io.h>
+ #include <fcntl.h>
+@@ -34,9 +38,14 @@
+ 
+ #include "input.h"
+ 
++#if (defined(__SUNPRO_C) || defined(__SUNPRO_CC)) && defined(__SunOS_5_10)
++#define SWAP32(x) BSWAP_32(x)
++#define SWAP16(x) BSWAP_16(x)
++#else
+ #define SWAP32(x) (((x & 0xff) << 24) | ((x & 0xff00) << 8) \
+ 	| ((x & 0xff0000) >> 8) | ((x & 0xff000000) >> 24))
+ #define SWAP16(x) (((x & 0xff) << 8) | ((x & 0xff00) >> 8))
++#endif
+ 
+ #ifdef WORDS_BIGENDIAN
+ # define UINT32(x) SWAP32(x)

@@ -1,0 +1,51 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/frontend/Makefile.in faac-1.28/frontend/Makefile.in
+--- ../build-global/faac-1.28/frontend/Makefile.in	2009-02-10 09:37:00.000000000 +0100
++++ faac-1.28/frontend/Makefile.in	2009-03-20 05:42:58.667425673 +0100
+@@ -68,6 +68,9 @@
+ CCLD = $(CC)
+ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+ 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
++CXXLD = $(CXX)
++CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
++	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+ SOURCES = $(faac_SOURCES)
+ DIST_SOURCES = $(faac_SOURCES)
+ man1dir = $(mandir)/man1
+@@ -132,6 +135,7 @@
+ USE_DRM_FALSE = @USE_DRM_FALSE@
+ USE_DRM_TRUE = @USE_DRM_TRUE@
+ VERSION = @VERSION@
++AM_CFLAGS = $(CFLAGS)
+ WITH_MP4V2_FALSE = @WITH_MP4V2_FALSE@
+ WITH_MP4V2_TRUE = @WITH_MP4V2_TRUE@
+ ac_ct_CC = @ac_ct_CC@
+@@ -186,7 +190,7 @@
+ @WITH_MP4V2_FALSE@INCLUDES = -I$(top_srcdir)/include 
+ @WITH_MP4V2_TRUE@INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/common/mp4v2
+ @WITH_MP4V2_FALSE@LDADD = $(top_builddir)/libfaac/libfaac.la -lm
+-@WITH_MP4V2_TRUE@LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lstdc++
++@WITH_MP4V2_TRUE@LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lCrun -lCstd
+ all: all-am
+ 
+ .SUFFIXES:
+@@ -200,9 +204,9 @@
+ 	      exit 1;; \
+ 	  esac; \
+ 	done; \
+-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  frontend/Makefile'; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  frontend/Makefile'; \
+ 	cd $(top_srcdir) && \
+-	  $(AUTOMAKE) --gnu  frontend/Makefile
++	  $(AUTOMAKE) --foreign  frontend/Makefile
+ .PRECIOUS: Makefile
+ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+ 	@case '$?' in \
+@@ -250,7 +254,7 @@
+ 	done
+ faac$(EXEEXT): $(faac_OBJECTS) $(faac_DEPENDENCIES) 
+ 	@rm -f faac$(EXEEXT)
+-	$(LINK) $(faac_LDFLAGS) $(faac_OBJECTS) $(faac_LDADD) $(LIBS)
++	$(CXXLINK) $(faac_LDFLAGS) $(faac_OBJECTS) $(faac_LDADD) $(LIBS)
+ 
+ mostlyclean-compile:
+ 	-rm -f *.$(OBJEXT)

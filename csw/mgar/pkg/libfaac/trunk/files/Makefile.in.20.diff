@@ -1,0 +1,398 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/common/mp4v2/mp4property.h faac-1.28/common/mp4v2/mp4property.h
+--- ../build-global/faac-1.28/common/mp4v2/mp4property.h	2009-01-25 02:14:34.000000000 +0100
++++ faac-1.28/common/mp4v2/mp4property.h	2009-03-20 06:08:45.678172744 +0100
+@@ -38,7 +38,7 @@
+ 	StringProperty,
+ 	BytesProperty,
+ 	TableProperty,
+-	DescriptorProperty,
++	DescriptorProperty
+ };
+ 
+ class MP4Property {
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/common/mp4v2/mp4util.h faac-1.28/common/mp4v2/mp4util.h
+--- ../build-global/faac-1.28/common/mp4v2/mp4util.h	2009-01-25 02:14:34.000000000 +0100
++++ faac-1.28/common/mp4v2/mp4util.h	2009-03-20 00:14:32.128482807 +0100
+@@ -83,7 +83,7 @@
+ }
+ 
+ static inline void MP4Printf(const char* fmt, ...) 
+-#ifndef _WIN32
++#if defined(__GNUC__)
+  __attribute__((format(__printf__, 1, 2)))
+ #endif
+ ;
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/common/mp4v2/mpeg4ip.h faac-1.28/common/mp4v2/mpeg4ip.h
+--- ../build-global/faac-1.28/common/mp4v2/mpeg4ip.h	2009-01-26 23:42:35.000000000 +0100
++++ faac-1.28/common/mp4v2/mpeg4ip.h	2009-03-20 06:14:07.133127520 +0100
+@@ -65,7 +65,9 @@
+ /*****************************************************************************
+  *   UNIX LIKE DEFINES BELOW THIS POINT
+  *****************************************************************************/
+-#ifdef sun
++#if defined(sun) || defined(__sun) || defined(__sun__)
++#include <limits.h>
++#include <sys/types.h>
+ #include <sys/feature_tests.h>
+ #endif
+ 
+@@ -194,12 +196,7 @@
+ typedef unsigned int socklen_t;
+ #endif
+ 
+-#ifdef sun
+-#include <limits.h>
+-#define u_int8_t uint8_t
+-#define u_int16_t uint16_t
+-#define u_int32_t uint32_t
+-#define u_int64_t uint64_t
++#if defined(sun) || defined(__sun) || defined(__sun__)
+ #define __STRING(expr) #expr
+ #endif
+ 
+@@ -328,7 +325,7 @@
+   AUDIO_FMT_U16,
+   AUDIO_FMT_S16,
+   AUDIO_FMT_FLOAT,
+-  AUDIO_FMT_HW_AC3,
++  AUDIO_FMT_HW_AC3
+ } audio_format_t;
+ 
+ #endif /* __MPEG4IP_INCLUDED__ */
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/config.h.in faac-1.28/config.h.in
+--- ../build-global/faac-1.28/config.h.in	2009-02-10 09:36:59.000000000 +0100
++++ faac-1.28/config.h.in	2009-03-20 05:55:21.041828651 +0100
+@@ -1,5 +1,26 @@
+ /* config.h.in.  Generated from configure.in by autoheader.  */
+ 
++#ifndef __FAAC_CONFIG_H
++#define __FAAC_CONFIG_H
++
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#include <sys/types.h>
++#include <stdint.h>
++
++typedef uint8_t         u_int8_t;
++typedef uint16_t        u_int16_t;
++typedef uint32_t        u_int32_t;
++typedef uint64_t        u_int64_t;
++
++#define HAVE_INT16_T 1
++#define HAVE_INT32_T 1
++#define HAVE_U_INT32_T 1
++#define HAVE_U_INT16_T 1
++
++#define HAVE_STRUCT_IOVEC 1
++#endif
++
++
+ /* Define if you want to encode for DRM */
+ #undef DRM
+ 
+@@ -131,3 +152,5 @@
+ 
+ /* Define to `long int' if <sys/types.h> does not define. */
+ #undef off_t
++
++#endif /* __FAAC_CONFIG_H */
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/configure.in faac-1.28/configure.in
+--- ../build-global/faac-1.28/configure.in	2009-02-05 01:55:38.000000000 +0100
++++ faac-1.28/configure.in	2009-03-20 06:00:25.906642505 +0100
+@@ -10,7 +10,9 @@
+ 
+ AC_DEFUN([MY_DEFINE], [ AC_DEFINE($1, 1, [define if needed]) ])
+ 
+-CFLAGS=${CFLAGS:-"-O2 -Wall"}
++CFLAGS=${CFLAGS}
++CPPFLAGS=${CPPFLAGS}
++LDFLAGS=${LDFLAGS}
+ 
+ AC_PROG_CC
+ AC_PROG_CXX
+@@ -20,10 +22,13 @@
+ 
+ AC_CHECK_TYPES(u_int32_t)
+ AC_CHECK_TYPES(u_int16_t)
++AC_CHECK_TYPES(uint64_t)
++AC_CHECK_TYPES(uint32_t)
++AC_CHECK_TYPES(uint16_t)
+ AC_CHECK_TYPES(int32_t)
+ AC_CHECK_TYPES(int16_t)
+ 
+-AC_CHECK_DECL(strcasecmp, MY_DEFINE(HAVE_STRCASECMP))
++AC_CHECK_DECL(strcasecmp, AC_DEFINE(HAVE_STRCASECMP, 1, [define if needed]) )
+ 
+ AC_CHECK_LIB(gnugetopt, getopt_long)
+ 
+@@ -41,7 +46,7 @@
+      AC_MSG_NOTICE([*** Building with internal mp4v2 ***])
+      AM_CONDITIONAL(WITH_MP4V2, true)
+      AC_CONFIG_LINKS(common/mp4v2/mpeg4ip_config.h:config.h)
+-     MY_DEFINE(HAVE_LIBMP4V2)
++     MY_DEFINE(HAVE_LIBMP4V2, 1, [define if needed])
+   else
+      AC_MSG_NOTICE([*** Building WITHOUT mp4v2 ***])
+   fi
+@@ -61,12 +66,12 @@
+ dnl Checks for header files required for mp4.h
+ AC_HEADER_STDC
+ AC_SYS_LARGEFILE
+-AC_CHECK_HEADERS(stdint.h inttypes.h)
++AC_CHECK_HEADERS(sys/types.h stdint.h inttypes.h inttypes_gnucompat.h)
+ AC_CHECK_HEADERS(mathf.h)
+ AC_CHECK_HEADERS(float.h)
+-AC_CHECK_DECL(strchr, MY_DEFINE(HAVE_STRCHR))
+-AC_CHECK_DECL(memcpy, MY_DEFINE(HAVE_MEMCPY))
+-AC_CHECK_DECL(strsep, MY_DEFINE(HAVE_STRSEP))
++AC_CHECK_DECL(strchr, AC_DEFINE(HAVE_STRCHR, 1, [define if needed]) )
++AC_CHECK_DECL(memcpy, AC_DEFINE(HAVE_MEMCPY, 1, [define if needed]) )
++AC_CHECK_DECL(strsep, AC_DEFINE(HAVE_STRSEP, 1, [define if needed]) )
+ AC_CHECK_HEADERS(sys/time.h)
+ AC_HEADER_TIME
+ AC_TYPE_OFF_T
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/frontend/Makefile.am faac-1.28/frontend/Makefile.am
+--- ../build-global/faac-1.28/frontend/Makefile.am	2008-12-16 01:56:00.000000000 +0100
++++ faac-1.28/frontend/Makefile.am	2009-03-20 05:38:13.063991192 +0100
+@@ -5,7 +5,7 @@
+ 
+ if WITH_MP4V2
+ INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/common/mp4v2
+-LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lstdc++
++LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lCrun -lCstd
+ else
+ INCLUDES = -I$(top_srcdir)/include 
+ LDADD = $(top_builddir)/libfaac/libfaac.la -lm
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/frontend/Makefile.in faac-1.28/frontend/Makefile.in
+--- ../build-global/faac-1.28/frontend/Makefile.in	2009-02-10 09:37:00.000000000 +0100
++++ faac-1.28/frontend/Makefile.in	2009-03-20 05:42:58.667425673 +0100
+@@ -68,6 +68,9 @@
+ CCLD = $(CC)
+ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+ 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
++CXXLD = $(CXX)
++CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
++	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+ SOURCES = $(faac_SOURCES)
+ DIST_SOURCES = $(faac_SOURCES)
+ man1dir = $(mandir)/man1
+@@ -132,6 +135,7 @@
+ USE_DRM_FALSE = @USE_DRM_FALSE@
+ USE_DRM_TRUE = @USE_DRM_TRUE@
+ VERSION = @VERSION@
++AM_CFLAGS = $(CFLAGS)
+ WITH_MP4V2_FALSE = @WITH_MP4V2_FALSE@
+ WITH_MP4V2_TRUE = @WITH_MP4V2_TRUE@
+ ac_ct_CC = @ac_ct_CC@
+@@ -186,7 +190,7 @@
+ @WITH_MP4V2_FALSE@INCLUDES = -I$(top_srcdir)/include 
+ @WITH_MP4V2_TRUE@INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/common/mp4v2
+ @WITH_MP4V2_FALSE@LDADD = $(top_builddir)/libfaac/libfaac.la -lm
+-@WITH_MP4V2_TRUE@LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lstdc++
++@WITH_MP4V2_TRUE@LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lCrun -lCstd
+ all: all-am
+ 
+ .SUFFIXES:
+@@ -200,9 +204,9 @@
+ 	      exit 1;; \
+ 	  esac; \
+ 	done; \
+-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  frontend/Makefile'; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  frontend/Makefile'; \
+ 	cd $(top_srcdir) && \
+-	  $(AUTOMAKE) --gnu  frontend/Makefile
++	  $(AUTOMAKE) --foreign  frontend/Makefile
+ .PRECIOUS: Makefile
+ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+ 	@case '$?' in \
+@@ -250,7 +254,7 @@
+ 	done
+ faac$(EXEEXT): $(faac_OBJECTS) $(faac_DEPENDENCIES) 
+ 	@rm -f faac$(EXEEXT)
+-	$(LINK) $(faac_LDFLAGS) $(faac_OBJECTS) $(faac_LDADD) $(LIBS)
++	$(CXXLINK) $(faac_LDFLAGS) $(faac_OBJECTS) $(faac_LDADD) $(LIBS)
+ 
+ mostlyclean-compile:
+ 	-rm -f *.$(OBJEXT)
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/frontend/input.c faac-1.28/frontend/input.c
+--- ../build-global/faac-1.28/frontend/input.c	2009-01-25 19:50:32.000000000 +0100
++++ faac-1.28/frontend/input.c	2009-03-20 06:06:22.286495928 +0100
+@@ -27,6 +27,10 @@
+ #include <stdlib.h>
+ #include <string.h>
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#include <sys/byteorder.h> /* for BSWAP_8|BSWAP_16|BSWAP_32|BSWAP_64 */
++#endif
++
+ #ifdef _WIN32
+ #include <io.h>
+ #include <fcntl.h>
+@@ -34,9 +38,14 @@
+ 
+ #include "input.h"
+ 
++#if (defined(__SUNPRO_C) || defined(__SUNPRO_CC)) && defined(__SunOS_5_10)
++#define SWAP32(x) BSWAP_32(x)
++#define SWAP16(x) BSWAP_16(x)
++#else
+ #define SWAP32(x) (((x & 0xff) << 24) | ((x & 0xff00) << 8) \
+ 	| ((x & 0xff0000) >> 8) | ((x & 0xff000000) >> 24))
+ #define SWAP16(x) (((x & 0xff) << 8) | ((x & 0xff00) >> 8))
++#endif
+ 
+ #ifdef WORDS_BIGENDIAN
+ # define UINT32(x) SWAP32(x)
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/include/faac.h faac-1.28/include/faac.h
+--- ../build-global/faac-1.28/include/faac.h	2009-01-25 19:50:32.000000000 +0100
++++ faac-1.28/include/faac.h	2009-03-20 06:01:42.801998112 +0100
+@@ -36,7 +36,11 @@
+ # endif
+ #endif
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ 
+ typedef struct {
+   void *ptr;
+@@ -90,7 +94,11 @@
+ 
+ 
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ #ifdef __cplusplus
+ }
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/include/faaccfg.h faac-1.28/include/faaccfg.h
+--- ../build-global/faac-1.28/include/faaccfg.h	2004-07-04 14:12:05.000000000 +0200
++++ faac-1.28/include/faaccfg.h	2009-03-20 06:03:00.833899895 +0100
+@@ -45,7 +45,11 @@
+ #define SHORTCTL_NOSHORT   1
+ #define SHORTCTL_NOLONG    2
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ typedef struct faacEncConfiguration
+ {
+     /* config version */
+@@ -117,6 +121,10 @@
+ 
+ } faacEncConfiguration, *faacEncConfigurationPtr;
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ #endif /* _FAACCFG_H_ */
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/aacquant.c faac-1.28/libfaac/aacquant.c
+--- ../build-global/faac-1.28/libfaac/aacquant.c	2008-03-24 00:00:25.000000000 +0100
++++ faac-1.28/libfaac/aacquant.c	2009-03-20 05:53:00.225604748 +0100
+@@ -281,11 +281,16 @@
+ 
+ 
+ #if TAKEHIRO_IEEE754_HACK
+-
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack(8) 
++#endif
+ typedef union {
+     float f;
+     int i;
+ } fi_union;
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#endif
+ 
+ #define MAGIC_FLOAT (65536*(128))
+ #define MAGIC_INT 0x4b000000
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/aacquant.h faac-1.28/libfaac/aacquant.h
+--- ../build-global/faac-1.28/libfaac/aacquant.h	2003-10-12 18:43:39.000000000 +0200
++++ faac-1.28/libfaac/aacquant.h	2009-03-20 05:53:52.210350072 +0100
+@@ -37,14 +37,22 @@
+ #define POW20(x)  pow(2.0,((double)x)*.25)
+ #define IPOW20(x)  pow(2.0,-((double)x)*.1875)
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ typedef struct
+   {
+     double *pow43;
+     double *adj43;
+     double quality;
+   } AACQuantCfg;
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ void AACQuantizeInit(CoderInfo *coderInfo, unsigned int numChannels,
+ 		     AACQuantCfg *aacquantCfg);
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/frame.h faac-1.28/libfaac/frame.h
+--- ../build-global/faac-1.28/libfaac/frame.h	2009-01-25 19:50:32.000000000 +0100
++++ faac-1.28/libfaac/frame.h	2009-03-20 06:03:57.455266251 +0100
+@@ -60,7 +60,11 @@
+   #endif
+ #endif
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ 
+ typedef struct {
+   psymodel_t *model;
+@@ -151,7 +155,11 @@
+ int FAACAPI faacEncClose(faacEncHandle hEncoder);
+ 
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ #ifdef __cplusplus
+ }
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/ltp.c faac-1.28/libfaac/ltp.c
+--- ../build-global/faac-1.28/libfaac/ltp.c	2003-06-26 21:20:31.000000000 +0200
++++ faac-1.28/libfaac/ltp.c	2009-03-20 06:07:27.247999333 +0100
+@@ -38,10 +38,13 @@
+ #include "util.h"
+ 
+ 
++#if !defined(__SUNPRO_C) && !defined(__SUNPRO_CC)
++/* why is this define here anyway, it is not used anywhere */
+ /* short double_to_int(double sig_in); */
+ #define double_to_int(sig_in) \
+    ((sig_in) > 32767 ? 32767 : ( \
+        (sig_in) < -32768 ? -32768 : (sig_in)))
++#endif
+ 
+ #define _MDCT_SCALE		512
+ 
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/psych.h faac-1.28/libfaac/psych.h
+--- ../build-global/faac-1.28/libfaac/psych.h	2005-04-24 21:16:14.000000000 +0200
++++ faac-1.28/libfaac/psych.h	2009-03-20 06:14:31.902939182 +0100
+@@ -82,4 +82,4 @@
+ }
+ #endif /* __cplusplus */
+ 
+-#endif /* PSYCH_H */
+\ No newline at end of file
++#endif /* PSYCH_H */

@@ -1,0 +1,21 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/aacquant.c faac-1.28/libfaac/aacquant.c
+--- ../build-global/faac-1.28/libfaac/aacquant.c	2008-03-24 00:00:25.000000000 +0100
++++ faac-1.28/libfaac/aacquant.c	2009-03-20 05:53:00.225604748 +0100
+@@ -281,11 +281,16 @@
+ 
+ 
+ #if TAKEHIRO_IEEE754_HACK
+-
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack(8) 
++#endif
+ typedef union {
+     float f;
+     int i;
+ } fi_union;
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#endif
+ 
+ #define MAGIC_FLOAT (65536*(128))
+ #define MAGIC_INT 0x4b000000

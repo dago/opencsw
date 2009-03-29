@@ -1,0 +1,36 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/config.h.in faac-1.28/config.h.in
+--- ../build-global/faac-1.28/config.h.in	2009-02-10 09:36:59.000000000 +0100
++++ faac-1.28/config.h.in	2009-03-20 05:55:21.041828651 +0100
+@@ -1,5 +1,26 @@
+ /* config.h.in.  Generated from configure.in by autoheader.  */
+ 
++#ifndef __FAAC_CONFIG_H
++#define __FAAC_CONFIG_H
++
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#include <sys/types.h>
++#include <stdint.h>
++
++typedef uint8_t         u_int8_t;
++typedef uint16_t        u_int16_t;
++typedef uint32_t        u_int32_t;
++typedef uint64_t        u_int64_t;
++
++#define HAVE_INT16_T 1
++#define HAVE_INT32_T 1
++#define HAVE_U_INT32_T 1
++#define HAVE_U_INT16_T 1
++
++#define HAVE_STRUCT_IOVEC 1
++#endif
++
++
+ /* Define if you want to encode for DRM */
+ #undef DRM
+ 
+@@ -131,3 +152,5 @@
+ 
+ /* Define to `long int' if <sys/types.h> does not define. */
+ #undef off_t
++
++#endif /* __FAAC_CONFIG_H */

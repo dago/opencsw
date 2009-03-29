@@ -1,0 +1,17 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/ltp.c faac-1.28/libfaac/ltp.c
+--- ../build-global/faac-1.28/libfaac/ltp.c	2003-06-26 21:20:31.000000000 +0200
++++ faac-1.28/libfaac/ltp.c	2009-03-20 06:07:27.247999333 +0100
+@@ -38,10 +38,13 @@
+ #include "util.h"
+ 
+ 
++#if !defined(__SUNPRO_C) && !defined(__SUNPRO_CC)
++/* why is this define here anyway, it is not used anywhere */
+ /* short double_to_int(double sig_in); */
+ #define double_to_int(sig_in) \
+    ((sig_in) > 32767 ? 32767 : ( \
+        (sig_in) < -32768 ? -32768 : (sig_in)))
++#endif
+ 
+ #define _MDCT_SCALE		512
+ 

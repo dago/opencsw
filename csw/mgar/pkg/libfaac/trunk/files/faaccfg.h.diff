@@ -1,0 +1,26 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/include/faaccfg.h faac-1.28/include/faaccfg.h
+--- ../build-global/faac-1.28/include/faaccfg.h	2004-07-04 14:12:05.000000000 +0200
++++ faac-1.28/include/faaccfg.h	2009-03-20 06:03:00.833899895 +0100
+@@ -45,7 +45,11 @@
+ #define SHORTCTL_NOSHORT   1
+ #define SHORTCTL_NOLONG    2
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ typedef struct faacEncConfiguration
+ {
+     /* config version */
+@@ -117,6 +121,10 @@
+ 
+ } faacEncConfiguration, *faacEncConfigurationPtr;
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ #endif /* _FAACCFG_H_ */

@@ -1,0 +1,27 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/frame.h faac-1.28/libfaac/frame.h
+--- ../build-global/faac-1.28/libfaac/frame.h	2009-01-25 19:50:32.000000000 +0100
++++ faac-1.28/libfaac/frame.h	2009-03-20 06:03:57.455266251 +0100
+@@ -60,7 +60,11 @@
+   #endif
+ #endif
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ 
+ typedef struct {
+   psymodel_t *model;
+@@ -151,7 +155,11 @@
+ int FAACAPI faacEncClose(faacEncHandle hEncoder);
+ 
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ #ifdef __cplusplus
+ }

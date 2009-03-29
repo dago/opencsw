@@ -1,0 +1,27 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/include/faac.h faac-1.28/include/faac.h
+--- ../build-global/faac-1.28/include/faac.h	2009-01-25 19:50:32.000000000 +0100
++++ faac-1.28/include/faac.h	2009-03-20 06:01:42.801998112 +0100
+@@ -36,7 +36,11 @@
+ # endif
+ #endif
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(push, 1)
++#endif
+ 
+ typedef struct {
+   void *ptr;
+@@ -90,7 +94,11 @@
+ 
+ 
+ 
++#if defined(__SUNPRO_C) || defined(__SUNPRO_CC)
++#pragma pack()
++#else
+ #pragma pack(pop)
++#endif
+ 
+ #ifdef __cplusplus
+ }

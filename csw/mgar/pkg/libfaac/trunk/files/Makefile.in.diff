@@ -1,0 +1,35 @@
+--- ../build-global/faac-1.28/Makefile.in	2009-02-10 09:37:01.000000000 +0100
++++ faac-1.28/Makefile.in	2009-03-20 07:46:47.715986781 +0100
+@@ -183,20 +183,7 @@
+ 
+ .SUFFIXES:
+ am--refresh:
+-	@:
+-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+-	@for dep in $?; do \
+-	  case '$(am__configure_deps)' in \
+-	    *$$dep*) \
+-	      echo ' cd $(srcdir) && $(AUTOMAKE) --gnu '; \
+-	      cd $(srcdir) && $(AUTOMAKE) --gnu  \
+-		&& exit 0; \
+-	      exit 1;; \
+-	  esac; \
+-	done; \
+-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  Makefile'; \
+-	cd $(top_srcdir) && \
+-	  $(AUTOMAKE) --gnu  Makefile
++
+ .PRECIOUS: Makefile
+ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+ 	@case '$?' in \
+@@ -225,10 +212,6 @@
+ stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
+ 	@rm -f stamp-h1
+ 	cd $(top_builddir) && $(SHELL) ./config.status config.h
+-$(srcdir)/config.h.in:  $(am__configure_deps) 
+-	cd $(top_srcdir) && $(AUTOHEADER)
+-	rm -f stamp-h1
+-	touch $@
+ 
+ distclean-hdr:
+ 	-rm -f config.h stamp-h1

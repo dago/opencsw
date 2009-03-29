@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/frontend/Makefile.am faac-1.28/frontend/Makefile.am
+--- ../build-global/faac-1.28/frontend/Makefile.am	2008-12-16 01:56:00.000000000 +0100
++++ faac-1.28/frontend/Makefile.am	2009-03-20 05:38:13.063991192 +0100
+@@ -5,7 +5,7 @@
+ 
+ if WITH_MP4V2
+ INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/common/mp4v2
+-LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lstdc++
++LDADD = $(top_builddir)/libfaac/libfaac.la $(top_srcdir)/common/mp4v2/libmp4v2.a -lm -lCrun -lCstd
+ else
+ INCLUDES = -I$(top_srcdir)/include 
+ LDADD = $(top_builddir)/libfaac/libfaac.la -lm

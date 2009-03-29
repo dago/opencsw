@@ -1,0 +1,10 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/libfaac/psych.h faac-1.28/libfaac/psych.h
+--- ../build-global/faac-1.28/libfaac/psych.h	2005-04-24 21:16:14.000000000 +0200
++++ faac-1.28/libfaac/psych.h	2009-03-20 06:14:31.902939182 +0100
+@@ -82,4 +82,4 @@
+ }
+ #endif /* __cplusplus */
+ 
+-#endif /* PSYCH_H */
+\ No newline at end of file
++#endif /* PSYCH_H */

@@ -1,0 +1,37 @@
+diff --speed-large-files --minimal -ru ../build-global/faac-1.28/common/mp4v2/mpeg4ip.h faac-1.28/common/mp4v2/mpeg4ip.h
+--- ../build-global/faac-1.28/common/mp4v2/mpeg4ip.h	2009-01-26 23:42:35.000000000 +0100
++++ faac-1.28/common/mp4v2/mpeg4ip.h	2009-03-20 06:14:07.133127520 +0100
+@@ -65,7 +65,9 @@
+ /*****************************************************************************
+  *   UNIX LIKE DEFINES BELOW THIS POINT
+  *****************************************************************************/
+-#ifdef sun
++#if defined(sun) || defined(__sun) || defined(__sun__)
++#include <limits.h>
++#include <sys/types.h>
+ #include <sys/feature_tests.h>
+ #endif
+ 
+@@ -194,12 +196,7 @@
+ typedef unsigned int socklen_t;
+ #endif
+ 
+-#ifdef sun
+-#include <limits.h>
+-#define u_int8_t uint8_t
+-#define u_int16_t uint16_t
+-#define u_int32_t uint32_t
+-#define u_int64_t uint64_t
++#if defined(sun) || defined(__sun) || defined(__sun__)
+ #define __STRING(expr) #expr
+ #endif
+ 
+@@ -328,7 +325,7 @@
+   AUDIO_FMT_U16,
+   AUDIO_FMT_S16,
+   AUDIO_FMT_FLOAT,
+-  AUDIO_FMT_HW_AC3,
++  AUDIO_FMT_HW_AC3
+ } audio_format_t;
+ 
+ #endif /* __MPEG4IP_INCLUDED__ */
