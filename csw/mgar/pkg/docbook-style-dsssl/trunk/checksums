@@ -1,6 +1,5 @@
 8459913bbd8a5724a6fe4b9ed5bab5af  download/docbook-dsssl-1.79.tar.gz
-02510cf81c864e00a76bcda6c479341b  download/CSWdocbookdsssl.gspec
-ff8e7d8bbb0f1f696f063e312da67545  download/CSWdocbookdsssl.postinstall
-0cf25b8d3ca259f7776526e4450797f2  download/CSWdocbookdsssl.preremove
+95e00a89bd8d1217f4ecb4c4d39f4695  download/CSWdocbookdsssl.postinstall
+87a025d01ed7cb3486223ee51c75178f  download/CSWdocbookdsssl.preremove
 6cb0e57eb959e159fb4677fc6c945d63  download/add_makefile.patch
 bcd9c3faeba3e034152c26b489f2abcc  download/fix_perl_path.patch

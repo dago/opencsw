@@ -9,10 +9,10 @@ case "$PKG_INSTALL_ROOT" in
 esac
 
 # set SGML_BASE_DIR and SGML_CATALOGS_DIR
-. `$PKG_INSTALL_ROOT/opt/csw/bin/sgmlwhich`
+. $PKG_INSTALL_ROOT/`$PKG_INSTALL_ROOT/opt/csw/bin/sgmlwhich`
 
 dsssldir=$SGML_BASE_DIR/docbook/dsssl-stylesheets
-ojadedir=`$PREFIX echo $SGML_BASE_DIR/openjade-*`
+ojadedir=$SGML_BASE_DIR/openjade
 
 rel=`echo $PKG_INSTALL_ROOT/$SGML_CATALOGS_DIR/sgml-docbook-3.0-*.cat | sed 's#.*-##; s/\.cat//'`
 
