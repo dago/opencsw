@@ -27,7 +27,7 @@ GIT_TREEISH = $(if $(GIT_TREEISH_$(1)),$(GIT_TREEISH_$(1)),HEAD)
 
 #################### FETCH RULES ####################
 
-URLS = $(call URLSTRIP,$(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(PATCHFILES))))
+URLS = $(call URLSTRIP,$(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(PATCHFILES) $(foreach M,$(MODULATIONS),$(PATCHFILES_$M)))))
 
 # if the caller has defined _postinstall, etc targets for a package, add
 # these 'dynamic script' targets to our fetch list
