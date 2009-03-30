@@ -1,0 +1,41 @@
+Configuration
+-------------
+
+The default configuration path is /opt/csw/etc/privoxy/config. CSWprivoxy
+brings with it a sample configuration (suffixed with .CSW) that will be
+installed when config doesn't exist yet.
+
+When you adjust config, package upgrades will preserve your configuration and
+just install the sample configuration as config.CSW. The same goes for
+the user.action and user.filters files.
+
+Logfiles are located here: /var/opt/csw/privoxy.
+
+
+Hints
+-----
+
+If you want to change listening address and/or port:
+-> listen-address 192.168.220.10:8080 
+
+If anything has to go to your example ISP's caching proxy:
+-> forward   /    caching-proxy.example-isp.net:8000
+
+To disallow editing of rules via "http://config.privoxy.org/show-status":
+-> enable-edit-actions 1
+
+If you want to using Privoxy before a Squid proxy server:
+(browser -> squid -> privoxy -> internet)
+-> add the following lines to squid.conf:
+
+  # Define Privoxy as parent proxy (without ICP) 
+  cache_peer 127.0.0.1 parent 8118 7 no-query 
+
+  # Define ACL for protocol FTP 
+  acl ftp proto FTP 
+
+  # Do not forward FTP requests to Privoxy
+  always_direct allow ftp 
+
+  # Forward all the rest to Privoxy
+  never_direct allow all
