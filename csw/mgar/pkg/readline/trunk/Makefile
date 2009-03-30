@@ -18,6 +18,11 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(V).tar.gz)
 
+PATCHFILES_isa-sparcv8-garversion-6.0 = patch-history.3.diff
+PATCHFILES_isa-sparcv9-garversion-6.0 = patch-history.3.diff
+PATCHFILES_isa-i386-garversion-6.0 = patch-history.3.diff
+PATCHFILES_isa-amd64-garversion-6.0 = patch-history.3.diff
+
 REQUIRED_PKGS = CSWncurses
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -59,6 +64,8 @@ MERGE_DIRS_isa-sparcv9-garversion-5.2 = $(libdir)
 MERGE_SCRIPTS_isa-sparcv8-garversion-6.0 = copy-all
 MERGE_SCRIPTS_isa-sparcv9-garversion-6.0 = copy-relocated-only
 MERGE_DIRS_isa-sparcv9-garversion-6.0 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/readline/rltop.html
 
 include gar/category.mk
 
