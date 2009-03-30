@@ -24,7 +24,7 @@ NO_ISAEXEC = 1
 MERGE_EXCLUDE_FILES = /opt/csw/bin/$(ISA)/.*
 
 REQUIRED_PKGS_CSWotr = CSWgcrypt CSWgpgerr
-REQUIRED_PKGS_CSWotrdevel = CSWCSWotr
+REQUIRED_PKGS_CSWotrdevel = CSWotr
 
 TEST_TARGET = check
 
