@@ -75,6 +75,7 @@ endif
 GARFLAVOR ?= OPT
 
 # Architecture
+GARCHLIST ?= sparc i386
 GARCH    ?= $(shell uname -p)
 GAROSREL ?= $(shell uname -r)
 
@@ -356,7 +357,7 @@ endif
 # NEEDED_ISAS contains all ISAs that must be build for this architecture to make the package
 # BUILD_ISAS contains all ISAs that can be built on the current kernel
 # Set 'BUILD64 = 1' to build 64 bit versions automatically
-REQUESTED_ISAS ?= $(strip $(ISA_DEFAULT_$(GARCH)) $(EXTRA_BUILD_ISAS) $(EXTRA_BUILD_ISAS_$(GARCH)) $(if $(BUILD64),$(ISA_DEFAULT64_$(GARCH))) )
+REQUESTED_ISAS ?= $(strip $(foreach A,$(GARCHLIST),$(ISA_DEFAULT_$A) $(if $(BUILD64),$(ISA_DEFAULT64_$A)) $(EXTRA_BUILD_ISAS_$A)) $(EXTRA_BUILD_ISAS))
 NEEDED_ISAS ?= $(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))
 BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(NEEDED_ISAS))
 
@@ -637,6 +638,9 @@ modenv:
 	@echo
 	@echo " Merge include: $(_MERGE_INCLUDE_FILES)"
 	@echo " Merge exclude: $(_MERGE_EXCLUDE_FILES)"
+	@echo
+	@echo "    Modulators: $(MODULATORS)"
+	@echo "   Modulations: $(MODULATIONS)"
 	@echo
 	@echo "Requested compiler flags:"
 	@$(foreach MOD,$(MODULATIONS),$(MAKE) -s _modenv-$(MOD);)
