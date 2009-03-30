@@ -9,9 +9,13 @@ echo
 
 ${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/fc-cache -f -s
 
+${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/fc-list 2>&1 >/dev/null &
+
 # removing ancient fonts.cache-csw-1 files from fontconfig-2.3.2
-find /usr/openwin/lib/X11/fonts -user root -name fonts.cache-csw-1 -exec rm -f {} \;
-find /usr/openwin/lib/locale -user root -name fonts.cache-csw-1 -exec rm -f {} \;
-find /opt/csw -user root -name fonts.cache-csw-1 -exec rm -f {} \;
- 
+find ${BASEDIR}/usr/openwin/lib/X11/fonts -user root -name fonts.cache-csw-1 -exec rm -f {} \;
+find ${BASEDIR}/usr/openwin/lib/locale -user root -name fonts.cache-csw-1 -exec rm -f {} \;
+find ${BASEDIR}/opt/csw -user root -name fonts.cache-csw-1 -exec rm -f {} \;
+# remove obsolete cache dir
+[ -d "${BASEDIR}/opt/csw/var/cache-fontconfig" ] && rm -r "${BASEDIR}/opt/csw/var/cache-fontconfig" 2>/dev/null
+
 exit 0
