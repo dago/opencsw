@@ -38,7 +38,7 @@ REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
 REQUIRED_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
 REQUIRED_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
 REQUIRED_PKGS_CSWdovecot      += CSWkrb5lib
-REQUIRED_PKGS_CSWdovecotdevel  = CSWdovecot
+REQUIRED_PKGS_CSWdovecot-devel  = CSWdovecot
 REQUIRED_PKGS_CSWdovecot-sieve = CSWdovecot
 
 PREREQUISITE_PKGS  = CSWossldevel CSWosslrt
@@ -130,7 +130,7 @@ build-and-install-sieveplugin:
 # Sieve plugin needs to be packaged with version != $(GARVERSION)
 package-sieveplugin:
 	@gmake -o post-package \
-		NOPACKAGE="CSWdovecot CSWdovecotdevel" SPKG_VERSION=1.1.6 \
+		NOPACKAGE="CSWdovecot CSWdovecot-devel" SPKG_VERSION=1.1.6 \
 		repackage
 
 
