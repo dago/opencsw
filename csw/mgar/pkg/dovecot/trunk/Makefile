@@ -18,7 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWdovecot CSWdovecot-devel CSWdovecot-sieve
 CATALOGNAME_CSWdovecot = dovecot
-CATALOGNAME_CSWdovecotdevel = dovecot_devel
+CATALOGNAME_CSWdovecot-devel = dovecot_devel
 CATALOGNAME_CSWdovecot-sieve = dovecot_sieve
 
 # Sieve plugin is packaged individually (see package-sieveplugin:)
@@ -30,7 +30,7 @@ ENABLE_CHECK=0
 
 SPKG_SOURCEURL = http://dovecot.org/
 SPKG_DESC_CSWdovecot = Secure IMAP server
-SPKG_DESC_CSWdovecotdevel = Dovecot secure IMAP server header files
+SPKG_DESC_CSWdovecot-devel = Dovecot secure IMAP server header files
 SPKG_DESC_CSWdovecot-sieve = Dovecot secure IMAP server sieve plugin
 SPKG_CLASSES_CSWdovecot = none cswusergroup cswcpsampleconf cswinitsmf
 
@@ -49,7 +49,7 @@ PREREQUISITE_PKGS += CSWsqlite3
 PREREQUISITE_PKGS += CSWlibpq
 PREREQUISITE_PKGS += CSWkrb5lib CSWkrb5libdev
 
-PKGFILES_CSWdovecotdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWdovecot-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWdovecot-sieve = .*sieve.*
 
 # We define upstream file regex so we can be notifed of new upstream software release
