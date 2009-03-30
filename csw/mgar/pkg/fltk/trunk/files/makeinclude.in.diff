@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru fltk-1.1.9.orig/makeinclude.in fltk-1.1.9/makeinclude.in
+--- fltk-1.1.9.orig/makeinclude.in	2008-02-26 16:26:08.000000000 +0100
++++ fltk-1.1.9/makeinclude.in	2009-03-29 18:19:13.217084442 +0200
+@@ -83,7 +83,7 @@
+ LINKFLTKFORMS	= @LINKFLTKFORMS@ @LINKFLTK@
+ LINKFLTKIMG	= @LINKFLTKIMG@ @LINKFLTK@ $(IMAGELIBS)
+ LINKSHARED	= @DSOLINK@ @LINKSHARED@ $(IMAGELIBS)
+-IMAGELIBS	= -L../lib @IMAGELIBS@
++IMAGELIBS	= -L../lib -L/opt/csw/lib @IMAGELIBS@
+ 
+ # image libraries to build...
+ IMAGEDIRS	= @JPEG@ @ZLIB@ @PNG@

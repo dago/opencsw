@@ -1,0 +1,581 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/fltk-config 0755 root bin
+f none /opt/csw/bin/fluid 0755 root bin
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/FL 0755 root bin
+f none /opt/csw/include/FL/Enumerations.H 0644 root bin
+s none /opt/csw/include/FL/Enumerations.h=Enumerations.H
+f none /opt/csw/include/FL/Fl.H 0644 root bin
+s none /opt/csw/include/FL/Fl.h=Fl.H
+f none /opt/csw/include/FL/Fl_Adjuster.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Adjuster.h=Fl_Adjuster.H
+f none /opt/csw/include/FL/Fl_BMP_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_BMP_Image.h=Fl_BMP_Image.H
+f none /opt/csw/include/FL/Fl_Bitmap.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Bitmap.h=Fl_Bitmap.H
+f none /opt/csw/include/FL/Fl_Box.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Box.h=Fl_Box.H
+f none /opt/csw/include/FL/Fl_Browser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Browser.h=Fl_Browser.H
+f none /opt/csw/include/FL/Fl_Browser_.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Browser_.h=Fl_Browser_.H
+f none /opt/csw/include/FL/Fl_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Button.h=Fl_Button.H
+f none /opt/csw/include/FL/Fl_Chart.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Chart.h=Fl_Chart.H
+f none /opt/csw/include/FL/Fl_Check_Browser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Check_Browser.h=Fl_Check_Browser.H
+f none /opt/csw/include/FL/Fl_Check_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Check_Button.h=Fl_Check_Button.H
+f none /opt/csw/include/FL/Fl_Choice.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Choice.h=Fl_Choice.H
+f none /opt/csw/include/FL/Fl_Clock.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Clock.h=Fl_Clock.H
+f none /opt/csw/include/FL/Fl_Color_Chooser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Color_Chooser.h=Fl_Color_Chooser.H
+f none /opt/csw/include/FL/Fl_Counter.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Counter.h=Fl_Counter.H
+f none /opt/csw/include/FL/Fl_Dial.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Dial.h=Fl_Dial.H
+f none /opt/csw/include/FL/Fl_Double_Window.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Double_Window.h=Fl_Double_Window.H
+f none /opt/csw/include/FL/Fl_Export.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Export.h=Fl_Export.H
+f none /opt/csw/include/FL/Fl_File_Browser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_File_Browser.h=Fl_File_Browser.H
+f none /opt/csw/include/FL/Fl_File_Chooser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_File_Chooser.h=Fl_File_Chooser.H
+f none /opt/csw/include/FL/Fl_File_Icon.H 0644 root bin
+s none /opt/csw/include/FL/Fl_File_Icon.h=Fl_File_Icon.H
+f none /opt/csw/include/FL/Fl_File_Input.H 0644 root bin
+s none /opt/csw/include/FL/Fl_File_Input.h=Fl_File_Input.H
+f none /opt/csw/include/FL/Fl_Fill_Dial.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Fill_Dial.h=Fl_Fill_Dial.H
+f none /opt/csw/include/FL/Fl_Fill_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Fill_Slider.h=Fl_Fill_Slider.H
+f none /opt/csw/include/FL/Fl_Float_Input.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Float_Input.h=Fl_Float_Input.H
+f none /opt/csw/include/FL/Fl_FormsBitmap.H 0644 root bin
+s none /opt/csw/include/FL/Fl_FormsBitmap.h=Fl_FormsBitmap.H
+f none /opt/csw/include/FL/Fl_FormsPixmap.H 0644 root bin
+s none /opt/csw/include/FL/Fl_FormsPixmap.h=Fl_FormsPixmap.H
+f none /opt/csw/include/FL/Fl_Free.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Free.h=Fl_Free.H
+f none /opt/csw/include/FL/Fl_GIF_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_GIF_Image.h=Fl_GIF_Image.H
+f none /opt/csw/include/FL/Fl_Gl_Window.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Gl_Window.h=Fl_Gl_Window.H
+f none /opt/csw/include/FL/Fl_Group.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Group.h=Fl_Group.H
+f none /opt/csw/include/FL/Fl_Help_Dialog.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Help_Dialog.h=Fl_Help_Dialog.H
+f none /opt/csw/include/FL/Fl_Help_View.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Help_View.h=Fl_Help_View.H
+f none /opt/csw/include/FL/Fl_Hold_Browser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Hold_Browser.h=Fl_Hold_Browser.H
+f none /opt/csw/include/FL/Fl_Hor_Fill_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Hor_Fill_Slider.h=Fl_Hor_Fill_Slider.H
+f none /opt/csw/include/FL/Fl_Hor_Nice_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Hor_Nice_Slider.h=Fl_Hor_Nice_Slider.H
+f none /opt/csw/include/FL/Fl_Hor_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Hor_Slider.h=Fl_Hor_Slider.H
+f none /opt/csw/include/FL/Fl_Hor_Value_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Hor_Value_Slider.h=Fl_Hor_Value_Slider.H
+f none /opt/csw/include/FL/Fl_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Image.h=Fl_Image.H
+f none /opt/csw/include/FL/Fl_Input.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Input.h=Fl_Input.H
+f none /opt/csw/include/FL/Fl_Input_.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Input_.h=Fl_Input_.H
+f none /opt/csw/include/FL/Fl_Input_Choice.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Input_Choice.h=Fl_Input_Choice.H
+f none /opt/csw/include/FL/Fl_Int_Input.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Int_Input.h=Fl_Int_Input.H
+f none /opt/csw/include/FL/Fl_JPEG_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_JPEG_Image.h=Fl_JPEG_Image.H
+f none /opt/csw/include/FL/Fl_Light_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Light_Button.h=Fl_Light_Button.H
+f none /opt/csw/include/FL/Fl_Line_Dial.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Line_Dial.h=Fl_Line_Dial.H
+f none /opt/csw/include/FL/Fl_Menu.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Menu.h=Fl_Menu.H
+f none /opt/csw/include/FL/Fl_Menu_.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Menu_.h=Fl_Menu_.H
+f none /opt/csw/include/FL/Fl_Menu_Bar.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Menu_Bar.h=Fl_Menu_Bar.H
+f none /opt/csw/include/FL/Fl_Menu_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Menu_Button.h=Fl_Menu_Button.H
+f none /opt/csw/include/FL/Fl_Menu_Item.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Menu_Item.h=Fl_Menu_Item.H
+f none /opt/csw/include/FL/Fl_Menu_Window.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Menu_Window.h=Fl_Menu_Window.H
+f none /opt/csw/include/FL/Fl_Multi_Browser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Multi_Browser.h=Fl_Multi_Browser.H
+f none /opt/csw/include/FL/Fl_Multi_Label.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Multi_Label.h=Fl_Multi_Label.H
+f none /opt/csw/include/FL/Fl_Multiline_Input.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Multiline_Input.h=Fl_Multiline_Input.H
+f none /opt/csw/include/FL/Fl_Multiline_Output.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Multiline_Output.h=Fl_Multiline_Output.H
+f none /opt/csw/include/FL/Fl_Nice_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Nice_Slider.h=Fl_Nice_Slider.H
+f none /opt/csw/include/FL/Fl_Object.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Object.h=Fl_Object.H
+f none /opt/csw/include/FL/Fl_Output.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Output.h=Fl_Output.H
+f none /opt/csw/include/FL/Fl_Overlay_Window.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Overlay_Window.h=Fl_Overlay_Window.H
+f none /opt/csw/include/FL/Fl_PNG_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_PNG_Image.h=Fl_PNG_Image.H
+f none /opt/csw/include/FL/Fl_PNM_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_PNM_Image.h=Fl_PNM_Image.H
+f none /opt/csw/include/FL/Fl_Pack.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Pack.h=Fl_Pack.H
+f none /opt/csw/include/FL/Fl_Pixmap.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Pixmap.h=Fl_Pixmap.H
+f none /opt/csw/include/FL/Fl_Positioner.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Positioner.h=Fl_Positioner.H
+f none /opt/csw/include/FL/Fl_Preferences.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Preferences.h=Fl_Preferences.H
+f none /opt/csw/include/FL/Fl_Progress.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Progress.h=Fl_Progress.H
+f none /opt/csw/include/FL/Fl_RGB_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_RGB_Image.h=Fl_RGB_Image.H
+f none /opt/csw/include/FL/Fl_Radio_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Radio_Button.h=Fl_Radio_Button.H
+f none /opt/csw/include/FL/Fl_Radio_Light_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Radio_Light_Button.h=Fl_Radio_Light_Button.H
+f none /opt/csw/include/FL/Fl_Radio_Round_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Radio_Round_Button.h=Fl_Radio_Round_Button.H
+f none /opt/csw/include/FL/Fl_Repeat_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Repeat_Button.h=Fl_Repeat_Button.H
+f none /opt/csw/include/FL/Fl_Return_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Return_Button.h=Fl_Return_Button.H
+f none /opt/csw/include/FL/Fl_Roller.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Roller.h=Fl_Roller.H
+f none /opt/csw/include/FL/Fl_Round_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Round_Button.h=Fl_Round_Button.H
+f none /opt/csw/include/FL/Fl_Round_Clock.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Round_Clock.h=Fl_Round_Clock.H
+f none /opt/csw/include/FL/Fl_Scroll.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Scroll.h=Fl_Scroll.H
+f none /opt/csw/include/FL/Fl_Scrollbar.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Scrollbar.h=Fl_Scrollbar.H
+f none /opt/csw/include/FL/Fl_Secret_Input.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Secret_Input.h=Fl_Secret_Input.H
+f none /opt/csw/include/FL/Fl_Select_Browser.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Select_Browser.h=Fl_Select_Browser.H
+f none /opt/csw/include/FL/Fl_Shared_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Shared_Image.h=Fl_Shared_Image.H
+f none /opt/csw/include/FL/Fl_Simple_Counter.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Simple_Counter.h=Fl_Simple_Counter.H
+f none /opt/csw/include/FL/Fl_Single_Window.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Single_Window.h=Fl_Single_Window.H
+f none /opt/csw/include/FL/Fl_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Slider.h=Fl_Slider.H
+f none /opt/csw/include/FL/Fl_Spinner.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Spinner.h=Fl_Spinner.H
+f none /opt/csw/include/FL/Fl_Sys_Menu_Bar.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Sys_Menu_Bar.h=Fl_Sys_Menu_Bar.H
+f none /opt/csw/include/FL/Fl_Tabs.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Tabs.h=Fl_Tabs.H
+f none /opt/csw/include/FL/Fl_Text_Buffer.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Text_Buffer.h=Fl_Text_Buffer.H
+f none /opt/csw/include/FL/Fl_Text_Display.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Text_Display.h=Fl_Text_Display.H
+f none /opt/csw/include/FL/Fl_Text_Editor.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Text_Editor.h=Fl_Text_Editor.H
+f none /opt/csw/include/FL/Fl_Tile.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Tile.h=Fl_Tile.H
+f none /opt/csw/include/FL/Fl_Tiled_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Tiled_Image.h=Fl_Tiled_Image.H
+f none /opt/csw/include/FL/Fl_Timer.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Timer.h=Fl_Timer.H
+f none /opt/csw/include/FL/Fl_Toggle_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Toggle_Button.h=Fl_Toggle_Button.H
+f none /opt/csw/include/FL/Fl_Toggle_Light_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Toggle_Light_Button.h=Fl_Toggle_Light_Button.H
+f none /opt/csw/include/FL/Fl_Toggle_Round_Button.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Toggle_Round_Button.h=Fl_Toggle_Round_Button.H
+f none /opt/csw/include/FL/Fl_Tooltip.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Tooltip.h=Fl_Tooltip.H
+f none /opt/csw/include/FL/Fl_Valuator.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Valuator.h=Fl_Valuator.H
+f none /opt/csw/include/FL/Fl_Value_Input.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Value_Input.h=Fl_Value_Input.H
+f none /opt/csw/include/FL/Fl_Value_Output.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Value_Output.h=Fl_Value_Output.H
+f none /opt/csw/include/FL/Fl_Value_Slider.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Value_Slider.h=Fl_Value_Slider.H
+f none /opt/csw/include/FL/Fl_Widget.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Widget.h=Fl_Widget.H
+f none /opt/csw/include/FL/Fl_Window.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Window.h=Fl_Window.H
+f none /opt/csw/include/FL/Fl_Wizard.H 0644 root bin
+s none /opt/csw/include/FL/Fl_Wizard.h=Fl_Wizard.H
+f none /opt/csw/include/FL/Fl_XBM_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_XBM_Image.h=Fl_XBM_Image.H
+f none /opt/csw/include/FL/Fl_XPM_Image.H 0644 root bin
+s none /opt/csw/include/FL/Fl_XPM_Image.h=Fl_XPM_Image.H
+f none /opt/csw/include/FL/dirent.h 0644 root bin
+f none /opt/csw/include/FL/filename.H 0644 root bin
+s none /opt/csw/include/FL/filename.h=filename.H
+f none /opt/csw/include/FL/fl_ask.H 0644 root bin
+s none /opt/csw/include/FL/fl_ask.h=fl_ask.H
+f none /opt/csw/include/FL/fl_draw.H 0644 root bin
+s none /opt/csw/include/FL/fl_draw.h=fl_draw.H
+s none /opt/csw/include/FL/fl_file_chooser.H=Fl_File_Chooser.H
+s none /opt/csw/include/FL/fl_file_chooser.h=Fl_File_Chooser.H
+f none /opt/csw/include/FL/fl_message.H 0644 root bin
+s none /opt/csw/include/FL/fl_message.h=fl_message.H
+f none /opt/csw/include/FL/fl_show_colormap.H 0644 root bin
+s none /opt/csw/include/FL/fl_show_colormap.h=fl_show_colormap.H
+f none /opt/csw/include/FL/fl_show_input.H 0644 root bin
+s none /opt/csw/include/FL/fl_show_input.h=fl_show_input.H
+f none /opt/csw/include/FL/forms.H 0644 root bin
+s none /opt/csw/include/FL/forms.h=forms.H
+f none /opt/csw/include/FL/gl.h 0644 root bin
+f none /opt/csw/include/FL/gl2opengl.h 0644 root bin
+f none /opt/csw/include/FL/gl_draw.H 0644 root bin
+s none /opt/csw/include/FL/gl_draw.h=gl_draw.H
+f none /opt/csw/include/FL/glu.h 0644 root bin
+f none /opt/csw/include/FL/glut.H 0644 root bin
+s none /opt/csw/include/FL/glut.h=glut.H
+f none /opt/csw/include/FL/mac.H 0644 root bin
+s none /opt/csw/include/FL/mac.h=mac.H
+f none /opt/csw/include/FL/mac.r 0644 root bin
+f none /opt/csw/include/FL/math.h 0644 root bin
+f none /opt/csw/include/FL/names.h 0644 root bin
+f none /opt/csw/include/FL/win32.H 0644 root bin
+s none /opt/csw/include/FL/win32.h=win32.H
+f none /opt/csw/include/FL/x.H 0644 root bin
+s none /opt/csw/include/FL/x.h=x.H
+s none /opt/csw/include/Fl=FL
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libfltk.so.1.1 0755 root bin
+s none /opt/csw/lib/libfltk.so=libfltk.so.1.1
+f none /opt/csw/lib/libfltk_forms.so.1.1 0755 root bin
+s none /opt/csw/lib/libfltk_forms.so=libfltk_forms.so.1.1
+f none /opt/csw/lib/libfltk_gl.so.1.1 0755 root bin
+s none /opt/csw/lib/libfltk_gl.so=libfltk_gl.so.1.1
+f none /opt/csw/lib/libfltk_images.so.1.1 0755 root bin
+s none /opt/csw/lib/libfltk_images.so=libfltk_images.so.1.1
+d none /opt/csw/share/doc/fltk 0755 root bin
+f none /opt/csw/share/doc/fltk/FL.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Adjuster.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_BMP_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Bitmap.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Box.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Browser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Browser_.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Chart.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Check_Browser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Check_Button.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Check_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Choice.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Clock.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Clock_Output.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Color_Chooser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Counter.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Dial.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Double_Window.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_End.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_File_Browser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_File_Chooser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_File_Chooser.jpg 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_File_Icon.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_File_Input.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_File_Input.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Float_Input.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Free.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_GIF_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Gl_Window.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Group.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Help_Dialog.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Help_Dialog.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Help_View.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Hold_Browser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Input.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Input_.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Input_Choice.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Int_Input.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_JPEG_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Light_Button.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Light_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Menu_.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Menu_Bar.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Menu_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Menu_Item.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Menu_Window.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Multi_Browser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Multiline_Input.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Multiline_Output.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Output.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Overlay_Window.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_PNG_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_PNM_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Pack.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Pixmap.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Positioner.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Preferences.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Progress.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_RGB_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Repeat_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Return_Button.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Return_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Roller.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Roller.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Round_Button.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Round_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Scroll.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Scroll.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Scrollbar.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Secret_Input.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Select_Browser.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Shared_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Single_Window.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Slider.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Spinner.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Tabs.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Text_Buffer.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Text_Display.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Text_Editor.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Tile.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Tile.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Tiled_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Timer.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Toggle_Button.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Tooltip.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Valuator.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Value_Input.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Value_Input.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Value_Output.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Value_Output.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Value_Slider.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Widget.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Window.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_Wizard.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_XBM_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/Fl_XPM_Image.html 0644 root bin
+f none /opt/csw/share/doc/fltk/adjuster1.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/advanced.html 0644 root bin
+f none /opt/csw/share/doc/fltk/basics.html 0644 root bin
+f none /opt/csw/share/doc/fltk/boxtypes.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/buttons.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/charts.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/choice.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/clock.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/common.html 0644 root bin
+f none /opt/csw/share/doc/fltk/counter.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/cubeview.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/dial.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/drawing.html 0644 root bin
+f none /opt/csw/share/doc/fltk/editor-replace.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/editor.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/editor.html 0644 root bin
+f none /opt/csw/share/doc/fltk/enumerations.html 0644 root bin
+f none /opt/csw/share/doc/fltk/events.html 0644 root bin
+d none /opt/csw/share/doc/fltk/examples 0755 root bin
+f none /opt/csw/share/doc/fltk/examples.html 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/CubeMain.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/CubeView.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/CubeView.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/CubeViewUI.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/CubeViewUI.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/CubeViewUI.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/adjuster.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/arc.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/ask.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/bitmap.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/blocks.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/boxtype.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/browser.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/button.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/buttons.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/checkers.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/clock.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/colbrowser.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/color_chooser.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/connect.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/cube.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/cursor.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/curve.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/demo.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/demo.menu 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/doublebuffer.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/editor.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fast_slow.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fast_slow.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fast_slow.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/file_chooser.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fl_jpeg_image.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fonts.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/forms.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fractals.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fracviewer.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fracviewer.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/fullscreen.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/gl_overlay.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/glpuzzle.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/hello.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/help.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/iconize.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/image.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/inactive.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/inactive.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/inactive.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/input.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/input_choice.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/keyboard.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/keyboard.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/keyboard_ui.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/keyboard_ui.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/keyboard_ui.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/label.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/line_style.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/list_visuals.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/mandelbrot.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/mandelbrot.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/mandelbrot_ui.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/mandelbrot_ui.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/mandelbrot_ui.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/menubar.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/message.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/minimum.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/navigation.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/output.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/overlay.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pack.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmap.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmap_browser.cxx 0644 root bin
+d none /opt/csw/share/doc/fltk/examples/pixmaps 0755 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/black_1.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/black_2.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/black_3.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/black_4.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/blackking_1.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/blackking_2.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/blackking_3.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/blackking_4.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/blast.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/blue.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/blue_bomb.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/cyan.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/cyan_bomb.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/gray.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/gray_bomb.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/green.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/green_bomb.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/magenta.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/magenta_bomb.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/porsche.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/porsche1.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/red.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/red_bomb.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/srs.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/sudoku.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/tile.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/white_1.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/white_2.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/white_3.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/white_4.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/whiteking_1.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/whiteking_2.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/whiteking_3.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/whiteking_4.xbm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/yellow.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/pixmaps/yellow_bomb.xpm 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/preferences.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/preferences.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/preferences.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/radio.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/radio.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/radio.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/resize.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/resize.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/resize.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/resizebox.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/scroll.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/shape.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/subwindow.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/sudoku.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/sudokurc.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/symbols.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/tabs.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/tabs.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/tabs.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/threads.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/threads.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/tile.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/tiled_image.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/trackball.h 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/unittests.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/valuators.cxx 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/valuators.fl 0644 root bin
+f none /opt/csw/share/doc/fltk/examples/valuators.h 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_alert.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_ask.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_choice.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_color_chooser.jpg 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_input.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_message.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_password.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fl_show_colormap.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid-catgets.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid-gettext.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid-org.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid.html 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid1.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid2.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid3-cxx.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid3-gui.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid3-style.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid4.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid_prefs.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid_widget_cxx.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid_widget_gui.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/fluid_widget_style.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/forms.html 0644 root bin
+f none /opt/csw/share/doc/fltk/functions.html 0644 root bin
+f none /opt/csw/share/doc/fltk/glut.html 0644 root bin
+f none /opt/csw/share/doc/fltk/hello.C.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/index.html 0644 root bin
+f none /opt/csw/share/doc/fltk/input_choice.jpg 0644 root bin
+f none /opt/csw/share/doc/fltk/intro.html 0644 root bin
+f none /opt/csw/share/doc/fltk/license.html 0644 root bin
+f none /opt/csw/share/doc/fltk/menu.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/menu_button.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/menubar.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/migration.html 0644 root bin
+f none /opt/csw/share/doc/fltk/opengl.html 0644 root bin
+f none /opt/csw/share/doc/fltk/osissues.html 0644 root bin
+f none /opt/csw/share/doc/fltk/positioner.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/preface.html 0644 root bin
+f none /opt/csw/share/doc/fltk/resizebox1.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/resizebox2.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/round_clock.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/scrollbar.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/slider.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/subclassing.html 0644 root bin
+f none /opt/csw/share/doc/fltk/symbols.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/tabs.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/text.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/valuators.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/value_slider.gif 0644 root bin
+f none /opt/csw/share/doc/fltk/widgets.html 0644 root bin
+d none /opt/csw/share/man/cat1 0755 root bin
+f none /opt/csw/share/man/cat1/fltk-config.1 0644 root bin
+f none /opt/csw/share/man/cat1/fluid.1 0644 root bin
+d none /opt/csw/share/man/cat3 0755 root bin
+f none /opt/csw/share/man/cat3/fltk.3 0644 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/fltk-config.1 0644 root bin
+f none /opt/csw/share/man/man1/fluid.1 0644 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+f none /opt/csw/share/man/man3/fltk.3 0644 root bin
+i copyright=CSWfltk.copyright
+i depend=CSWfltk.depend
+i pkginfo=CSWfltk.pkginfo

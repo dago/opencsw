@@ -1,3 +1,4 @@
-ec48c96fae058956e6e5c9c1cda6157d  download/fltk-1.1.7.tar.gz
+d3c76db1b6cebce7a009429bbd125470  download/fltk-1.1.9-source.tar.gz
 5b35d77bcd4cb9dbb8a68eab89b358c8  download/CSWfltk.gspec
-32d95d762c6f82f8864adc910ac89f5b  download/makeincludes.diff
+72ba3eb7711deeaad9d44004da12cc63  download/CSWfltk.prototype
+1c51238fcb309cc77681874450d1bb28  download/makeinclude.in.diff
