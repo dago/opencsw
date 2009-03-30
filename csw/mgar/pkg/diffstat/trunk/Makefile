@@ -9,6 +9,7 @@ endef
 
 MASTER_SITES = ftp://invisible-island.net/diffstat/
 DISTFILES  = $(GARNAME).tar.gz
+PATCHFILES = diffstat-47a.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -17,5 +18,7 @@ SPKG_SOURCEURL = http://invisible-island.net/diffstat/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-install-prefix=$(DESTDIR)
+
+TEST_TARGET = check
 
 include gar/category.mk
