@@ -34,8 +34,6 @@ PKGFILES_CSWsqlite3rt     += /opt/csw/lib/.*
 #REQUIRED_PKGS_CSWsqlite3      = CSWsqlite3rt
 REQUIRED_PKGS_CSWsqlite3devel = CSWsqlite3
 
-ARCHALL_CSWsqlite3devel = 1
-
 # Build the 64 bits binaries
 NO_ISAEXEC             = 1
 EXTRA_BUILD_ISAS_sparc = sparcv9
