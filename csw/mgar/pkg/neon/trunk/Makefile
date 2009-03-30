@@ -19,7 +19,7 @@ DISTFILES  = $(SOURCEFILES)
 DISTFILES += $(call admfiles,CSWneon,)
 DISTFILES += $(call admfiles,CSWneon-devel,)
 
-REQUIRED_PKGS_CSWneon = CSWexpat CSWkrb5lib CSWosslrt CSWzlib CSWgettextrt
+REQUIRED_PKGS_CSWneon = CSWexpat CSWkrb5lib CSWosslrt CSWzlib CSWggettextrt
 REQUIRED_PKGS_CSWneon-devel = CSWneon
 
 SPKG_DESC_CSWneon       = Neon HTTP and WebDAV client library
