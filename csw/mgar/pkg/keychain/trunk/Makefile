@@ -6,8 +6,9 @@ GARNAME = keychain
 GARVERSION = 2.6.8
 CATEGORIES = apps
 
-DESCRIPTION = This is a useful library
+DESCRIPTION = Convenient ssh-agent and gpg-agent manager
 define BLURB
+  http://www.gentoo.org/proj/en/keychain/
   http://www.gentoo.org/doc/en/keychain-guide.xml
 
   If your ssh key is, say, id_dsa, add this to your ~/.bashrc and make sure it's
