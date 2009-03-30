@@ -7,10 +7,10 @@ define BLURB
   Off-the-Record (OTR) Messaging allows you to have private conversations over instant messaging.
 endef
 
+PACKAGES = CSWotr CSWotrdevel
+
 MASTER_SITES = http://www.cypherpunks.ca/otr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWotr,)
-DISTFILES += $(call admfiles,CSWotrdevel,)
 PATCHFILES = heartbeat.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release

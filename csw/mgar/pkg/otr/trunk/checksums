@@ -1,4 +1,2 @@
-db7375c65f54ca414f7faab60f3e849c  download/CSWotr.gspec
-90bcbdc595c6a4ce2e84d5e19d825105  download/CSWotrdevel.gspec
-95c0d14324aa89b6fcd2e5331f7c80bf  download/heartbeat.patch
 faba02e60f64e492838929be2272f839  download/libotr-3.2.0.tar.gz
+95c0d14324aa89b6fcd2e5331f7c80bf  download/heartbeat.patch
