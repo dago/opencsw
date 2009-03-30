@@ -331,7 +331,7 @@ checkpatch: extract
 	@echo "$@ NOT IMPLEMENTED YET"
 
 # patch			- Apply any provided patches to the source.
-PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES))
+PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATION)))
 
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
