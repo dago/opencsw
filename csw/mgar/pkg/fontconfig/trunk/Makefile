@@ -14,6 +14,7 @@ MASTER_SITES = http://www.fontconfig.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 #DISTFILES += $(call admfiles,postinstall)
 DISTFILES += CSWfconfig.postinstall
+DISTFILES += CSWfconfig.checkinstall
 
 REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
