@@ -1,5 +1,5 @@
 GARNAME = gss
-GARVERSION = 20090327
+GARVERSION = 0.1.0
 CATEGORIES = lib
 
 DESCRIPTION = GNU Generic Security Service
@@ -7,8 +7,8 @@ define BLURB
 endef
 
 # Strangely enough, gss is not on $(GNU_MIRROR)
-#MASTER_SITES = ftp://alpha.gnu.org/gnu/gss/
-MASTER_SITES = http://daily.josefsson.org/gss/
+MASTER_SITES = ftp://alpha.gnu.org/gnu/gss/
+#MASTER_SITES = http://daily.josefsson.org/gss/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTNAME = $(GARNAME)-0.1.0
 
