@@ -24,7 +24,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # Configuration flags
 CONFIGURE_SCRIPTS=
 
-BUILD_ARGS += solaris CC=$(CC) CFLAGS="-O -DLUA_USE_POSIX -DLUA_USE_DLOPEN" MYLIBS="-ldl"
+BUILD_ARGS += solaris CC=$(CC) CFLAGS="${CFLAGS} -DLUA_USE_POSIX -DLUA_USE_DLOPEN -KPIC" MYLIBS="-ldl"
 
 INSTALL_ARGS += INSTALL=ginstall INSTALL_TOP=$(DESTDIR)$(prefix) INSTALL_MAN=$(DESTDIR)$(mandir)/man1
 
