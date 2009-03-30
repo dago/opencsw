@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ ! -f ${BASEDIR}/opt/csw/lib/libexpat.so.1 ]; then
+  echo Expat XML parser version 2.0 or higher required. Please upgrade CSWexpat first.
+  exit 1
+fi
+
+exit 0
