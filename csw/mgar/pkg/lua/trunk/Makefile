@@ -12,6 +12,7 @@ endef
 MASTER_SITES = http://www.lua.org/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWlua.gspec 
+PATCHFILES = dynamic.patch
 
 #CSWlua.prototype CSWlua.depend
 

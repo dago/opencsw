@@ -1,0 +1,76 @@
+--- lua-5.1.3/src/Makefile.orig	2008-04-13 19:21:29.000000000 +0200
++++ lua-5.1.3/src/Makefile	2008-04-13 20:06:30.000000000 +0200
+@@ -23,6 +23,7 @@
+ PLATS= aix ansi bsd freebsd generic linux macosx mingw posix solaris
+ 
+ LUA_A=	liblua.a
++LUA_SO=	liblua.so
+ CORE_O=	lapi.o lcode.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o lmem.o \
+ 	lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o  \
+ 	lundump.o lvm.o lzio.o
+@@ -33,8 +34,9 @@
+ LUAC_O=	luac.o print.o
+ 
+ ALL_O= $(CORE_O) $(LIB_O) $(LUA_O) $(LUAC_O)
+-ALL_T= $(LUA_A) $(LUA_T) $(LUAC_T)
++ALL_T= $(LUA_A) $(LUA_SO) $(LUA_T) $(LUAC_T)
+ ALL_A= $(LUA_A)
++ALL_SO= $(LUA_SO)
+ 
+ default: $(PLAT)
+ 
+@@ -47,10 +49,17 @@
+ 
+ a:	$(ALL_A)
+ 
++so:	$(ALL_SO)
++
+ $(LUA_A): $(CORE_O) $(LIB_O)
+ 	$(AR) $@ $?
+ 	$(RANLIB) $@
+ 
++$(LUA_SO): $(LUA_A)
++	-rm -f $(LUA_SO)
++	$(CC) -h $(LUA_SO).$(V) -G -o $(LUA_SO).$(R) $(CORE_O)
++	ln -s $(LUA_SO).$(R) $(LUA_SO)
++
+ $(LUA_T): $(LUA_O) $(LUA_A)
+ 	$(CC) -o $@ $(MYLDFLAGS) $(LUA_O) $(LUA_A) $(LIBS)
+ 
+--- lua-5.1.3/Makefile.orig	2008-04-13 19:29:27.000000000 +0200
++++ lua-5.1.3/Makefile	2008-04-13 19:52:12.000000000 +0200
+@@ -39,6 +39,8 @@
+ TO_BIN= lua luac
+ TO_INC= lua.h luaconf.h lualib.h lauxlib.h ../etc/lua.hpp
+ TO_LIB= liblua.a
++TO_SOLIB= liblua.so
++TO_SOLIBV= liblua.so.$(R)
+ TO_MAN= lua.1 luac.1
+ 
+ # Lua version and release.
+@@ -48,7 +49,7 @@
+ all:	$(PLAT)
+ 
+ $(PLATS) clean:
+-	cd src && $(MAKE) $@
++	cd src && $(MAKE) V=$(V) R=$(R) $@
+ 
+ test:	dummy
+ 	src/lua test/hello.lua
+@@ -58,6 +59,8 @@
+ 	cd src && $(INSTALL_EXEC) $(TO_BIN) $(INSTALL_BIN)
+ 	cd src && $(INSTALL_DATA) $(TO_INC) $(INSTALL_INC)
+ 	cd src && $(INSTALL_DATA) $(TO_LIB) $(INSTALL_LIB)
++	cd src && $(INSTALL_EXEC) $(TO_SOLIBV) $(INSTALL_LIB)
++	cd src && ln -s           $(TO_SOLIBV) $(INSTALL_LIB)/$(TO_SOLIB)
+ 	cd doc && $(INSTALL_DATA) $(TO_MAN) $(INSTALL_MAN)
+ 
+ local:
+@@ -103,6 +105,7 @@
+ 	@echo "TO_BIN = $(TO_BIN)"
+ 	@echo "TO_INC = $(TO_INC)"
+ 	@echo "TO_LIB = $(TO_LIB)"
++	@echo "TO_SOLIB = $(TO_SOLIB)"
+ 	@echo "TO_MAN = $(TO_MAN)"
+ 
+ # echo config parameters as Lua code
