@@ -1,4 +1,3 @@
-
 AMD_DEBUG = 1
 
 ifeq ($(AMD_DEBUG),)
@@ -29,8 +28,7 @@ merge-dirs-amd:
 	$(_DBG)$(MAKECOOKIE)
 
 merge-amd64-files:
-	$(call _pmod,Merging isa-amd64)
-	@(echo "[===== Merging isa-amd64: ISA=$(ISA) =====]")
+	@echo "[===== Merging isa-amd64: $(foreach M,$(MODULATORS),$M=$($M)) =====]"
 	$(_DBG)(cd $(AMD_BASE); for dir in `gfind . -name "*solaris2\.10*" -type d` ; do \
 		/usr/bin/pax -rw $$dir $(PKGROOT); done )
 	$(_DBG)(cd $(AMD_BASE); /usr/bin/pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
@@ -38,7 +36,7 @@ merge-amd64-files:
 	$(_DBG)$(MAKECOOKIE)
 
 merge-i386-files:
-	@(echo "[===== Merging ISA-I386 =====]")
+	@echo "[===== Merging isa-i386: $(foreach M,$(MODULATORS),$M=$($M)) =====]"
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/bin $(PKGROOT))
 	$(_DBG)(gmv -f $(PPREFIX)/bin/i386-pc* $(PPREFIX)/bin/i386/)
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/include $(PKGROOT))
@@ -56,3 +54,31 @@ merge-strip-amd:
 	$(_DBG)(stripbin $(PPREFIX)/bin)
 	$(_DBG)$(MAKECOOKIE)
 
+ISAEXEC_DIRS = /opt/csw/gcc4/bin
+ISAEXEC_FILES_i386  = /opt/csw/gcc4/bin/gcc
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gcov
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gccbug
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gfortran
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/c++
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/g++
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/cpp
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/addr2name.awk
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gc-analyze
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gcjh
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gjarsigner
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/grmic
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gjavah
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/grmid
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/jcf-dump
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gkeytool
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/grmiregistry
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/jv-convert
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gcj
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gij
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gnative2ascii
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gserialver
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gappletviewer
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gcj-dbtool
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gjar
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gorbd
+ISAEXEC_FILES_i386 += /opt/csw/gcc4/bin/gtnameserv
