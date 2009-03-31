@@ -1,7 +1,7 @@
 GARNAME = Mail-IMAPClient
-GARVERSION = 2.2.9
+GARVERSION = 3.15
 CATEGORIES = cpan
-AUTHOR = DJKERNEN
+AUTHOR = MARKOV
 
 DESCRIPTION = IMAP Client API
 define BLURB
@@ -9,8 +9,14 @@ define BLURB
   scripts to interact with IMAP message stores.
 endef
 
-DISTFILES += CSWpmmailimapclient.gspec CSWpmmailimapclient.depend
+PACKAGES = CSWpmmailimapclient
+CATALOGNAME = pm_mailimapclient
+ARCHALL = 1
 
-DEPENDS += cpan/Parse-RecDescent
+LICENSE = COPYRIGHT
+
+# Don't know about those yet
+#DEPENDS += cpan/Parse-RecDescent
+#DEPENDS += cpan/Digest-HMAC
 
 include gar/category.mk
