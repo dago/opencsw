@@ -15,6 +15,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 SPKG_SOURCEURL = http://axel.alioth.debian.org/
 SPKG_CLASSES = none cswcpsampleconf
 
+REQUIRED_PKGS = CSWcswclassutils
+
 # Doesn't work yet, upstream watch needs to be improved first
 #UPSTREAM_MASTER_SITES = http://alioth.debian.org/frs/?group_id=100070
 #UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
