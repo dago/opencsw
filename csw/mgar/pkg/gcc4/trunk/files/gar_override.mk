@@ -36,6 +36,8 @@ endif
 export CONFIG_SHELL CFLAGS CPPFLAGS CXXFLAGS
 export LDFLAGS BOOT_CFLAGS BOOT_LDFLAGS
 
+FIXCONFIG_DIRS = $(DESTDIR)$(BUILD_PREFIX)/gcc4/lib
+
 CONFIGURE_SCRIPTS = objdir
 TEST_SCRIPTS = skip
 post-configure-modulated: fix-bootflags

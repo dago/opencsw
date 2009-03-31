@@ -21,7 +21,7 @@ x86-merge-dirs:
 	@$(MAKECOOKIE)
 
 x86-merge-amd:
-	@(echo "[===== Merging AMD64 =====]")
+	@(echo "[===== Merging ISA-AMD64 =====]")
 	@(cd $(AMD_BASE); for dir in `gfind . -name "*solaris2\.10*" -type d` ; do \
 		/usr/bin/pax -rw $$dir $(PKGROOT); done )
 	@(cd $(AMD_BASE); /usr/bin/pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
@@ -29,7 +29,7 @@ x86-merge-amd:
 	@$(MAKECOOKIE)
 
 x86-merge-i386:
-	@(echo "[===== Merging I386 =====]")
+	@(echo "[===== Merging ISA-I386 =====]")
 	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/include $(PKGROOT))
 	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/info $(PKGROOT))
 	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/man $(PKGROOT))
@@ -37,11 +37,13 @@ x86-merge-i386:
 	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/lib $(PKGROOT))
 	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/libexec $(PKGROOT))
 	@(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/bin $(PKGROOT))
+	@(gmv $(PPREFIX)/bin/i386-pc* $(PPREFIX)/bin/i386/)
 	@$(MAKECOOKIE)
 
 x86-merge-strip:
 	@(echo "[===== Stripping Merged Binaries =====]")
 	@(stripbin $(PPREFIX)/bin)
+	@(stripbin $(PPREFIX)/bin/i386)
 	@(stripbin $(PPREFIX)/bin/amd64)
 	@$(MAKECOOKIE)
 
