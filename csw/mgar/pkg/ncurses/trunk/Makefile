@@ -2,19 +2,23 @@ GARNAME = ncurses
 GARVERSION = 5.7
 CATEGORIES = lib
 
-DESCRIPTION = ncurses library and utilities
+DESCRIPTION = A free software emulation of curses
 define BLURB
-        The ncurses (new curses) library is a free software emulation of curses in System V Release 4.0 and more. It uses terminfo forma
-t, supports pads and color and multiple highlights and forms charcters and function-key mapping, and has all the other SYSV-curses enhan
-cements over BSD curses. It should port easily to any ANSI/POSIX-conforming UNIX-like system. On systems supporting libiconv, the librar
-y can be built to support wide- and multibyte-character applications, e.g., UTF-8. 
+ The ncurses (new curses) library is a free software emulation of curses
+  in System V Release 4.0 and more. It uses terminfo format, supports pads
+  and color and multiple highlights and forms charcters and function-key
+  mapping, and has all the other SYSV-curses enhancements over BSD curses.
+  It should port easily to any ANSI/POSIX-conforming UNIX-like system.
+  On systems supporting libiconv, the library can be built to support
+  wide- and multibyte-character applications, e.g., UTF-8. 
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWncurses)
 
 PATCHFILES = patch-xcode.diff
+
+LICENSE = README
 
 SPKG_SOURCEURL = http://www.gnu.org/software/ncurses/ncurses.html
 
