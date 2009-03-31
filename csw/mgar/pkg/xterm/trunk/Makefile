@@ -1,6 +1,6 @@
 GARNAME = xterm
-GARVERSION = 242
-CATEGORIES = x11
+GARVERSION = 243
+CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
 define BLURB
@@ -14,15 +14,36 @@ endef
 MASTER_SITES = ftp://invisible-island.net/xterm/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
+REQUIRED_PKGS = CSWfconfig CSWlibxft2
+
+
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+
+TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-setuid
+CONFIGURE_ARGS += --disable-setgid
+CONFIGURE_ARGS += --enable-broken-osc
+CONFIGURE_ARGS += --enable-broken-st
+CONFIGURE_ARGS += --enable-dabbrev
+CONFIGURE_ARGS += --enable-exec-term
+CONFIGURE_ARGS += --enable-load-vt-fonts
+CONFIGURE_ARGS += --enable-logfile-exec
 CONFIGURE_ARGS += --enable-logging
-CONFIGURE_ARGS += --enable-luit
 CONFIGURE_ARGS += --enable-sun-fkeys
+CONFIGURE_ARGS += --enable-warnings
 CONFIGURE_ARGS += --enable-wide-chars
-CONFIGURE_ARGS += --with-utempter
+
+# luit comes with snv_85 
+#   http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6662431
+#CONFIGURE_ARGS += --enable-luit
+
+#GARFLAVOR = DBG
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
+
+EXTRA_INC = $(includedir)/freetype2
 
 include gar/category.mk
