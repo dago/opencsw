@@ -1,6 +1,4 @@
 
-DEBUG_PACKAGING = 1
-
 post-patch-modulated:
 	@(echo "==> Running autoheader and autoconf")
 	@(cd $(PATCHDIR)/gcc && autoheader)
