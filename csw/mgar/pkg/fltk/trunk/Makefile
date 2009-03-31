@@ -7,7 +7,7 @@ define BLURB
   FLTK (pronounced "fulltick") is a cross-platform C++ GUI toolkit for UNIX®/Linux® (X11), Microsoft® Windows®, and MacOS® X. FLTK provides modern GUI functionality without the bloat and supports 3D graphics via OpenGL® and its built-in GLUT emulation.
 endef
 
-MASTER_SITES = http://www.fltk.org/$(GARVERSION)/
+MASTER_SITES = http://ftp.easysw.com/pub/fltk/$(GARVERSION)/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.gz
 DISTFILES += $(call admfiles,CSWfltk, prototype)
