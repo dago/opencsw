@@ -413,6 +413,7 @@ merge-license-%: $(WORKDIR)
 		    echo "Please see $$LICENSEDIR/license for license information." > $(WORKDIR)/$*.copyright; \
 		) \
 		  mkdir -p $(PKGROOT)$$LICENSEDIR && \
+		  rm -f $(PKGROOT)$$LICENSEDIR/license && \
 		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
 		fi \
 	)
