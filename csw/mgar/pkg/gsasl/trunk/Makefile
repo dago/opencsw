@@ -31,6 +31,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 #TEST_TARGET = check
 TEST_TARGET = 
 
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
+
 PKGFILES_CSWlibgsasl  = $(includedir)/.*
 PKGFILES_CSWlibgsasl += $(libdir)/.*
 PKGFILES_CSWlibgsasl += $(mandir)/man3/.*
