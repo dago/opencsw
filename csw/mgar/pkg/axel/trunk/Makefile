@@ -29,8 +29,15 @@ PROTOTYPE_FILTER = awk '\
 
 include gar/category.mk
 
+# ./configure is not your usual kind of configure ...
+post-configure-modulated:
+	@perl -pi -e 's|-g -Os||' $(WORKSRC)/Makefile.settings
+	@echo CFLAGS+=$(CFLAGS) >> $(WORKSRC)/Makefile.settings
+	@$(MAKECOOKIE)
+
 pre-build-modulated:
 	@perl -pi -e 's/-Wall//g' $(WORKSRC)/Makefile
+	@$(MAKECOOKIE)
 
 post-install-modulated:
 	@perl -pi -e "s#/etc/axelrc#$(sysconfdir)/axelrc#" \
@@ -38,3 +45,4 @@ post-install-modulated:
 		$(DESTDIR)$(mandir)/zh_CN/man1/axel.1
 	@mv $(DESTDIR)$(sysconfdir)/axelrc \
 		$(DESTDIR)$(sysconfdir)/axelrc.CSW
+	@$(MAKECOOKIE)
