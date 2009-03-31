@@ -32,6 +32,9 @@ LICENSE = COPYING
 
 TEST_SCRIPTS =
 
+# to fix mantis bug #3528
+RUNPATHQUOTE = 1
+
 CONFIGURE_ARGS = $(DIRPATHS) --with-zlib=/opt/csw
 
 include gar/category.mk
