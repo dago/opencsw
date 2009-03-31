@@ -107,7 +107,9 @@ BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ETC_CONFIG=$(sysconfdir)/gitconfig V=1 \
 		all doc
 
-INSTALL_ARGS = ETC_CONFIG=$(sysconfdir)/gitconfig install-doc
+INSTALL_ARGS = ETC_CONFIG=$(sysconfdir)/gitconfig \
+		INSTALLDIRS=vendor \
+		install-doc
 
 include gar/category.mk
 
@@ -132,7 +134,7 @@ post-install-modulated:
 	@echo Cleaning up perl stuff
 	@rm -rf $(DESTDIR)/$(libdir)/perl5/site_perl/5*
 	@rm -rf $(DESTDIR)/$(perllib)/
-	@chmod 644 $(DESTDIR)/$(libdir)/perl5/site_perl/*pm
+	@chmod 644 $(DESTDIR)/$(datadir)/perl/csw/*pm
 	@echo Installing Emacs Git extension
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs install \
 		emacsdir=$(DESTDIR)/$(datadir)/emacs/site-lisp )
