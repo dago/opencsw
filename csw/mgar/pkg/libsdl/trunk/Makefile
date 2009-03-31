@@ -11,11 +11,11 @@ endef
 
 MASTER_SITES = http://www.libsdl.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibsdl)
+DISTFILES += $(call admfiles,CSWlibsdl, prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 
 include gar/category.mk
