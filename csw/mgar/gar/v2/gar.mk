@@ -629,6 +629,15 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 	)
 	@$(MAKECOOKIE)
 
+# Copy 
+merge-copy-config-only:
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -v $(_PAX_ARGS) \
+		-s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
+		-s ",.*,," \
+		. $(PKGROOT) \
+	)
+	@$(MAKECOOKIE)
+
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
