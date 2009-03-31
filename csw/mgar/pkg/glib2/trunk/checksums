@@ -1,4 +1,4 @@
-ec25ed261534d870141000ab73f1a2bf  download/glib-2.18.4.tar.bz2
+05188e560dbd8bddd568e24ce10dd003  download/glib-2.20.0.tar.bz2
 8f683820d9ecab1abd9dbe81997ab9eb  download/glib-typedetect.patch
-fb144356d0918eff4ef17a2a285860bc  download/gtkdoc-rebase.patch
 f1f3c182f64be06ab57d8b01016af074  download/checksum-test.patch
+bb2fb8eef43c995fea6c08563487ace6  download/gsize.patch

@@ -1,5 +1,5 @@
 GARNAME = glib
-GARVERSION = 2.18.4
+GARVERSION = 2.20.0
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -19,16 +19,13 @@ MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
-#See gnome bug 569889
-PATCHFILES = gtkdoc-rebase.patch
-#See http://defect.opensolaris.org/bz/show_bug.cgi?id=3366 for discussion on:
-PATCHFILES += glib-typedetect.patch
+PATCHFILES  = glib-typedetect.patch
 PATCHFILES += checksum-test.patch
+PATCHFILES += gsize.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
 CONFIGURE_ARGS += --enable-static
-CONFIGURE_ARGS += --disable-gtk-doc
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -38,7 +35,7 @@ NO_ISAEXEC = 1
 REQUIRED_PKGS_CSWglib2 = CSWggettextrt CSWiconv CSWsunmath
 REQUIRED_PKGS_CSWglib2devel = CSWglib2 CSWggettextrt CSWiconv
 
-TEST_TARGET =
+TEST_TARGET = check
 
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias
