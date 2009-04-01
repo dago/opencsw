@@ -30,6 +30,7 @@ CONFIGURE_ARGS += --with-python=$(bindir)/python
 CONFIGURE_ARGS += --with-flex=$(bindir)/flex-2.5.35
 CONFIGURE_ARGS += --with-python-src=../python
 
+NOISALIST = 1
 include gar/category.mk
 
 DESTDOC = $(DESTDIR)$(docdir)/ap2_modpython
