@@ -3,7 +3,8 @@ GARVERSION = 0.6c7
 CATEGORIES = lang
 
 SPKG_SOURCEURL = http://peak.telecommunity.com/DevCenter/setuptools
-
+PYSETUPTOOLS_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z].*//')
+PYSETUPTOOLS_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/^[0-9].[0-9]*//')
 DESCRIPTION = Distribution Utiltiies for Python
 define BLURB
   Distribution Utilities for Python
@@ -33,4 +34,7 @@ INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
 
 include gar/category.mk
+
+SPKG_VERSION := $(PYSETUPTOOLS_VERSION)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PYSETUPTOOLS_RELEASE)
 
