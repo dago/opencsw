@@ -94,6 +94,9 @@ PKGFILES_CSWgitdoc = $(docdir)/.*
 # software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+# properly quote RPATH to address mantis bug #3539
+RUNPATHQUOTE = 1
+
 CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --with-tcltk=$(bindir)/wish
