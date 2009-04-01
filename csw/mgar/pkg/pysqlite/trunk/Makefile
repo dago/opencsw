@@ -2,6 +2,9 @@ GARNAME = pysqlite
 GARVERSION = 1.1.8a
 CATEGORIES = lang
 
+PYSQLITE_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
+PYSQLITE_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/[^a-z]//g')
+
 DESCRIPTION = SQLite 1.x support for Python
 define BLURB
   SQLite support for Python
@@ -21,6 +24,7 @@ UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=54058
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+NOISALIST = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS =
@@ -30,4 +34,7 @@ INSTALL_ARGS  = --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
 
 include gar/category.mk
+
+SPKG_VERSION := $(PYSQLITE_VERSION)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PYSQLITE_RELEASE)
 
