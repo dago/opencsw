@@ -6,10 +6,10 @@
  
 -#_curses _cursesmodule.c -lcurses -ltermcap
 +*shared*
-+_curses _cursesmodule.c -lcurses -ltermcap
++_curses _cursesmodule.c -R/opt/csw/lib -L/opt/csw/lib -lncurses -lxtermcap
  # Wrapper for the panel library that's part of ncurses and SYSV curses.
 -#_curses_panel _curses_panel.c -lpanel -lncurses 
-+_curses_panel _curses_panel.c -lpanel -lcurses -ltermcap 
++_curses_panel _curses_panel.c -R/opt/csw/lib -L/opt/csw/lib -lpanel -lncurses -lxtermcap 
  
  
  # Generic (SunOS / SVR4) dynamic loading module.

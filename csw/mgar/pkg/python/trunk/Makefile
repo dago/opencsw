@@ -47,12 +47,15 @@ DEPENDS += lib/openssl
 DEPENDS += lib/db
 DEPENDS += lib/gdbm
 
+NOISALIST = 1
+LD_OPTIONS = -R/opt/csw/lib
+export LD_OPTIONS
 CONFIGURE_ARGS  = $(DIRPATHS) 
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-unicode=ucs4
 CONFIGURE_ARGS += --with-fpectl
-CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib/\$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
+CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
 
 PKGFILES_CSWidle  = $(libdir)/python(\d+(?:\.\d+)*)/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
