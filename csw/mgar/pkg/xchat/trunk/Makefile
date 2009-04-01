@@ -25,9 +25,12 @@ REQUIRED_PKGS_CSWxchat  = CSWdbusglib CSWexpat CSWfconfig CSWftype2 CSWlibntlm
 REQUIRED_PKGS_CSWxchat += CSWggettextrt CSWglib2 CSWgtk2 CSWiconv CSWlibatk 
 REQUIRED_PKGS_CSWxchat += CSWlibcairo CSWlibdbus CSWlibxft2 CSWlibxrender 
 REQUIRED_PKGS_CSWxchat += CSWosslrt CSWpango CSWpng CSWsunmath CSWzlib
-REQUIRED_PKGS_CSWxchat-pl  = CSWxchat CSWperl
-REQUIRED_PKGS_CSWxchat-py  = CSWxchat CSWpython
-REQUIRED_PKGS_CSWxchat-tcl = CSWxchat CSWtcl
+REQUIRED_PKGS_CSWxchat-pl   = CSWxchat CSWperl CSWosslrt CSWglib2
+REQUIRED_PKGS_CSWxchat-pl  += CSWggettextrt CSWlibntlm
+REQUIRED_PKGS_CSWxchat-py   = CSWxchat CSWpython CSWosslrt CSWglib2
+REQUIRED_PKGS_CSWxchat-py  += CSWggettextrt CSWlibntlm
+REQUIRED_PKGS_CSWxchat-tcl  = CSWxchat CSWtcl CSWosslrt CSWglib2
+REQUIRED_PKGS_CSWxchat-tcl += CSWggettextrt CSWlibntlm
 PKGFILES_CSWxchat-pl  = $(libdir)/.*/perl.so
 PKGFILES_CSWxchat-py  = $(libdir)/.*/python.so
 PKGFILES_CSWxchat-tcl = $(libdir)/.*/tcl.so
@@ -40,6 +43,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 PATCHFILES  = xc286-smallfixes.diff
 PATCHFILES += xchat26-compiletime.diff
 
+LDFLAGS =
+NOISALIST = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-openssl=$(prefix)
 CONFIGURE_ARGS += --enable-threads=solaris
