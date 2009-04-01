@@ -14,8 +14,6 @@ PACKAGES = CSWack
 CATALOGNAME = ack
 ARCHALL = 1
 
-LICENSE = 
-
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
@@ -23,6 +21,12 @@ include gar/category.mk
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(WORKSRC)/ack $(DESTDIR)$(bindir)
 	@pod2man --section=1 $(WORKSRC)/ack > $(DESTDIR)$(mandir)/man1/ack.1
+	@cp $(WORKSRC)/Changes $(DESTDIR)$(docdir)/$(GARNAME)/changelog
+	@$(MAKECOOKIE)
+
+pre-merge-modulated:
+	@$(WORKSRC)/ack --version | sed -n '/^Copyright/,$$p' > $(WORKSRC)/COPYING
 	@$(MAKECOOKIE)
