@@ -25,11 +25,12 @@ PATCHFILES = Makefile.diff
 REQUIRED_PKGS_CSWgd  = CSWexpat CSWfconfig CSWftype2 CSWiconv 
 REQUIRED_PKGS_CSWgd += CSWjpeg CSWpng CSWxpm CSWzlib
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NO_ISAEXEC = 0
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
