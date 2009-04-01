@@ -33,7 +33,9 @@ include gar/category.mk
 mysql_prefix = $(prefix)/mysql5
 mysql_bindir = $(mysql_prefix)/bin
 
-LD_OPTIONS := -R/opt/csw/mysql5/lib/mysql/\$$ISALIST $(LD_OPTIONS)
+NOISALIST = 1
+LD_OPTIONS := -R/opt/csw/mysql5/lib/mysql/\$$ISALIST:/opt/csw/lib/\$$ISALIST
 PATH       := $(mysql_bindir):$(PATH)
-export LD_OPTIONS PATH
+LDFLAGS =
+export LD_OPTIONS PATH LDFLAGS
 
