@@ -25,6 +25,7 @@ PATCHFILES = patch-keyserver_and_sm.diff
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+RUNPATHQUOTE = 1
 BUILD64    = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -40,7 +41,7 @@ EXTRA_LINKER_FLAGS  = -lgpg-error
 # Needed for nanosleep()
 EXTRA_LINKER_FLAGS += -lrt
 
-REQUIRED_PKGS  = CSWlibksba CSWgpgerr CSWgcrypt CSWlibassuan
+REQUIRED_PKGS  = CSWlibksba CSWgpgerr CSWgcrypt 
 REQUIRED_PKGS += CSWcurlrt CSWoldaprt CSWzlib CSWpth CSWlibidn 
 REQUIRED_PKGS += CSWbzip2 CSWreadline CSWggettextrt CSWiconv CSWosslrt
 
