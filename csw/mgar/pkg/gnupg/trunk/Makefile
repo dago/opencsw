@@ -19,6 +19,7 @@ DISTFILES      = $(GARNAME)-$(GARVERSION).tar.bz2
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+RUNPATHQUOTE = 1
 BUILD64    = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
