@@ -1,5 +1,5 @@
 GARNAME = cmake
-GARVERSION = 2.6.2
+GARVERSION = 2.6.3
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
@@ -15,18 +15,24 @@ endef
 UPSTREAM_MASTER_SITES = http://www.cmake.org/files/
 MASTER_SITES = http://www.cmake.org/files/v2.6/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcmake)
 
-# We define upstream file regex so we can be notifed of new upstream software release
+PACKAGES = CSWcmake
+CATALOGNAME_CSWcmake = cmake
+SPKG_DESC_CSWcmake = $(DESCRIPTION)
+
+REQUIRED_PKGS_CSWcmake  = CSWcurlrt CSWexpat CSWlibidn CSWoldaprt
+REQUIRED_PKGS_CSWcmake += CSWosslrt CSWxmlrpc-c CSWzlib 
+
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 datadir = /share/$(GARNAME)-$(GARVERSION)
 sharedstatedir = /share
 docdir = /share/doc/$(GARNAME)-$(GARVERSION)
 
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
-
-SKIPTEST = 1
 
 include gar/category.mk
 
@@ -40,12 +46,29 @@ pre-configure:
 	@echo "Docdir: $(docdir)"
 	# Do NOT include the CSW include pathes here
 	(cd $(WORKSRC); /usr/bin/env \
-		CFLAGS="$($(GARCOMPILER)_CC_$(GARFLAVOR))" \
-		CXXFLAGS="$($(GARCOMPILER)_CXX_$(GARFLAVOR))" \
+		CFLAGS="$($(GARCOMPILER)_CC_$(GARFLAVOR)) -I/opt/csw/include" \
+		CXXFLAGS="$($(GARCOMPILER)_CXX_$(GARFLAVOR)) -I/opt/csw/include" \
+		LDFLAGS="-L/opt/csw/lib -R/opt/csw/lib/$$ISALIST -R/opt/csw/lib" \
 		./bootstrap \
 		--prefix=$(prefix)	\
 		--datadir=$(datadir)	\
 		--docdir=$(docdir)	\
 		--mandir=/man		\
+		--system-libs \
 	)
 	@$(MAKECOOKIE)
+
+post-configure-modulated:
+	@(echo "==> Forcing use of system libraries")
+	@(echo "=====> curl, expat, xmlrpc, and zlib")
+	@(perl -i -plne 's/USE_SYSTEM_CURL:BOOL=OFF/USE_SYSTEM_CURL:BOOL=ON/' \
+		$(WORKSRC)/CMakeCache.txt)
+	@(perl -i -plne 's/USE_SYSTEM_EXPAT:BOOL=OFF/USE_SYSTEM_EXPAT:BOOL=ON/' \
+		$(WORKSRC)/CMakeCache.txt)
+	@(perl -i -plne 's/USE_SYSTEM_XMLRPC:BOOL=OFF/USE_SYSTEM_XMLRPC:BOOL=ON/' \
+		$(WORKSRC)/CMakeCache.txt)
+	@(perl -i -plne 's/USE_SYSTEM_ZLIB:BOOL=OFF/USE_SYSTEM_ZLIB:BOOL=ON/' \
+		$(WORKSRC)/CMakeCache.txt)
+	@$(MAKECOOKIE)
+
+
