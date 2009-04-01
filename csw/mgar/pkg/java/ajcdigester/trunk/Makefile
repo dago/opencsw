@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcdigester    = $(DESCRIPTION)
 SPKG_DESC_CSWajcdigesterdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcdigester = CSWajclogging CSWajccollect CSWajcbeanutils 	
+REQUIRED_PKGS_CSWajcdigester = CSWajclogging CSWajcbeanutils 	
 
 # Defines package content
 PKGFILES_CSWajcdigester  = $(prefix)/share/doc/$(GARNAME)/License.txt
