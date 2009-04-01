@@ -1,6 +1,7 @@
-cadaver (0.23.2,REV=2009.03.30) unstable
+cadaver (0.23.2,REV=2009.04.01) unstable
 
   * New upstream version.
+  * Dropped destdir.patch as DESTDIR support has been added upstream.
 
    -- Yann Rouillard <yann@opencsw.org>  Sat, 14 Feb 2009 23:53:41 +0100
 
