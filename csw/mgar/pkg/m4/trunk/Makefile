@@ -13,7 +13,7 @@ endef
 MASTER_SITES = ftp://ftp.gnu.org/gnu/m4/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGE = CSWgm4
+PACKAGES = CSWgm4
 
 SPKG_SOURCEURL = http://www.gnu.org/software/m4/
 
