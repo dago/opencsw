@@ -14,7 +14,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 PACKAGES = CSWgnupgminimal
 CATALOGNAME_CSWgnupgminimal = gnupg_minimal
 SPKG_DESC_CSWgnupgminimal = $(DESCRIPTION)
-#PKGFILES_CSWgnupgminimal = .*/bin/.*
+PKGFILES_CSWgnupgminimal = .*/bin/.*
 REQUIRED_PKGS_CSWgnupgminimal = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
 REQUIRED_PKGS_CSWgnupgminimal += CSWoldaprt CSWreadline CSWzlib
 
@@ -57,6 +57,7 @@ CONFIGURE_ARGS += --disable-dns-srv
 CONFIGURE_ARGS += --disable-dns-pka
 CONFIGURE_ARGS += --disable-dns-cert
 
+RUNPATHQUOTE = 1
 TEST_TARGET = check
 
 include gar/category.mk
