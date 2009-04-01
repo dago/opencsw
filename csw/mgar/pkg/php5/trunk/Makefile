@@ -20,15 +20,15 @@ php5_root = $(DESTDIR)$(prefix)/php5
 php5_bin  = $(php5_root)/bin
 php5_lib  = $(php5_root)/lib
 
-MASTER_SITES = http://us.php.net/distributions/
+MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
-DISTFILES += $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES     += $(GARNAME)-$(GARVERSION).tar.bz2
 
-INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
-PHP5ROOT     = $(DESTDIR)$(prefix)/php5
+INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
+PHP5ROOT       = $(DESTDIR)$(prefix)/php5
 
-STRIP_DIRS  += $(PHP5ROOT)/lib/php/extensions/*/
-STRIP_DIRS  += $(PHP5ROOT)/bin
+STRIP_DIRS    += $(PHP5ROOT)/lib/php/extensions/*/
+STRIP_DIRS    += $(PHP5ROOT)/bin
 
 # Auxilliary files
 DISTFILES += php.ini.CSW phpext pear.conf.CSW
@@ -53,6 +53,7 @@ PKGFILES_CSWphp5devel += $(prefix)/php5/lib/php/build/.*
 PKGFILES_CSWphp5devel += $(prefix)/php5/man/.*
 
 PATCHFILES += configure.diff
+#PATCHFILES += php-bug-45557-fix.diff
 
 # PHP Extensions
 EXTDIRLIST = $(shell ls -d extensions/*)
@@ -62,6 +63,7 @@ include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
 EXTRA_LIB += $(prefix)/bdb44/lib
 EXTRA_INC += $(prefix)/bdb44/lib
 
+NOISALIST = 1
 DISTFILES += fixme.sh
 
 CONFIGURE_ARGS += --prefix=$(prefix)/php5

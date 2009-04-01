@@ -6,7 +6,8 @@ de56d3571f4484284d106af158bffc38  download/CSWphp5_ext_enable.sh
 89e79becc9d7698c5c561581f2b098bc  download/CSWphp5_ext_disable.sh
 8139c9c02a2f62bac64041fdd0e90bf6  download/CSWphp5.postinstall
 41ec540885de7c34625768aa1fb9682b  download/fixme.sh
-ab08e2ba62667bf13fa236099e433e84  download/configure.diff
+55567f364408f345f387a749fd73c09e  download/configure.diff
+a450a46ce0ea9fd0c0abe432e750a873  download/php-bug-45557-fix.diff
 2206431e47c2075c0b9c4a12de5cf791  download/odbc.diff
 230126f76ee6400ccf225bb6a8243532  download/pdopgsql.diff
 13db46097c9686302bebf160e2d26ed2  download/pgsql.diff
