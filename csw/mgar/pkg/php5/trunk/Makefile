@@ -53,7 +53,7 @@ PKGFILES_CSWphp5devel += $(prefix)/php5/lib/php/build/.*
 PKGFILES_CSWphp5devel += $(prefix)/php5/man/.*
 
 PATCHFILES += configure.diff
-#PATCHFILES += php-bug-45557-fix.diff
+PATCHFILES += php-bug-45557-fix.diff
 
 # PHP Extensions
 EXTDIRLIST = $(shell ls -d extensions/*)
