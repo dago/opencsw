@@ -40,6 +40,8 @@ TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
 
+NORUNPATH = 1
+
 include gar/category.mk
 
 # The install part from the Makefile is completely unrelocatable :-(
