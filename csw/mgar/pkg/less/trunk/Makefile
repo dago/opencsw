@@ -18,6 +18,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWncurses CSWggettextrt
 
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET =
