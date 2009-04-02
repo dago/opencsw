@@ -85,6 +85,8 @@ JDK = /usr/jdk1.5.0_15
 EXTRA_INC += $(JDK)/include
 SVNLIB = $(prefix)/lib/svn
 
+NOISALIST = 1
+LDFLAGS =
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --with-gnu-ld=yes
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
