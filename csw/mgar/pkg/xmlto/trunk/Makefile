@@ -7,7 +7,7 @@ PREREQUISITE_PKGS += CSWflex CSWggetopt CSWgnulinks
 
 REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
 REQUIRED_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m CSWmktemp
-REQUIRED_PKGS += CSWggetopt
+REQUIRED_PKGS += CSWggetopt CSWbash
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
@@ -23,6 +23,9 @@ TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+# we don't link to anything besides libc and libm.
+NORUNPATH = 1
 
 pre-configure:
 	@(cd $(WORKSRC); \
