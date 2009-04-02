@@ -23,6 +23,7 @@ CATALOGNAME = flex_new
 
 REQUIRED_PKGS = CSWggettextrt CSWiconv
 
+NOISALIST = 1
 CONFIGURE_ARGS = --prefix=$(libexecdir)/$(GARNAME)-$(GARVERSION)
 
 TEST_TARGET = check
