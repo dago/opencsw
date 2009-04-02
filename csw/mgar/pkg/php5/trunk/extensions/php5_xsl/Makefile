@@ -10,3 +10,30 @@ REQUIRED_PKGS_CSWphp5xsl += CSWlibxslt CSWzlib
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 
 PKGFILES_CSWphp5xsl = .*/lib/php/extensions/.*/xsl.*
+
+define CSWphp5xsl_postinstall
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Post Install <===]"
+echo "   ===> Enabling xsl extension"
+
+perl -i -plne 's|;extension=xsl.so|extension=xsl.so|' ${PHP_INI}
+
+exit 0
+endef
+
+define CSWphp5xsl_preremove
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Pre Remove <===]"
+echo "   ===> Disabling xsl extension"
+
+perl -i -plne 's|extension=xsl.so|;extension=xsl.so|' ${PHP_INI}
+
+exit 0
+endef
+

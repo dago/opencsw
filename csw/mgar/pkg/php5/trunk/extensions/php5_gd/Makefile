@@ -20,3 +20,30 @@ CONFIGURE_ARGS += --enable-gd-native-ttf
 CONFIGURE_ARGS += --enable-gd-jis-conv
 
 PKGFILES_CSWphp5gd  = .*/lib/php/extensions/.*/gd.*
+
+define CSWphp5gd_postinstall
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Post Install <===]"
+echo "   ===> Enabling gd extension"
+
+perl -i -plne 's|;extension=gd.so|extension=gd.so|' ${PHP_INI}
+
+exit 0
+endef
+
+define CSWphp5gd_preremove
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Pre Remove <===]"
+echo "   ===> Disabling gd extension"
+
+perl -i -plne 's|extension=gd.so|;extension=gd.so|' ${PHP_INI}
+
+exit 0
+endef
+

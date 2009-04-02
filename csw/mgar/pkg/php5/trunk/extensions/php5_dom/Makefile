@@ -10,3 +10,30 @@ CONFIGURE_ARGS += --enable-dom=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 
 PKGFILES_CSWphp5dom = .*/lib/php/extensions/.*/dom.*
+
+define CSWphp5dom_postinstall
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Post Install <===]"
+echo "   ===> Enabling dom extension"
+
+perl -i -plne 's|;extension=dom.so|extension=dom.so|' ${PHP_INI}
+
+exit 0
+endef
+
+define CSWphp5dom_preremove
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Pre Remove <===]"
+echo "   ===> Disabling dom extension"
+
+perl -i -plne 's|extension=dom.so|;extension=dom.so|' ${PHP_INI}
+
+exit 0
+endef
+

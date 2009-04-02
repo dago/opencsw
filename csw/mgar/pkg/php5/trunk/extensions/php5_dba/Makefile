@@ -14,3 +14,30 @@ CONFIGURE_ARGS += --with-db4=$(prefix)/bdb44
 
 PKGFILES_CSWphp5dba = .*/lib/php/extensions/.*/dba\.so
 PKGFILES_CSWphp5dba += .*/lib/php/extensions/.*/dba\.a
+
+define CSWphp5dba_postinstall
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Post Install <===]"
+echo "   ===> Enabling dba extension"
+
+perl -i -plne 's|;extension=dba.so|extension=dba.so|' ${PHP_INI}
+
+exit 0
+endef
+
+define CSWphp5dba_preremove
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Pre Remove <===]"
+echo "   ===> Disabling dba extension"
+
+perl -i -plne 's|extension=dba.so|;extension=dba.so|' ${PHP_INI}
+
+exit 0
+endef
+

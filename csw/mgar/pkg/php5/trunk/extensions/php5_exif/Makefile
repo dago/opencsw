@@ -12,3 +12,30 @@ CPPFLAGS="-I../ext/mbstring"
 export CPPFLAGS
 
 PKGFILES_CSWphp5exif = .*/lib/php/extensions/.*/exif.*
+
+define CSWphp5exif_postinstall
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Post Install <===]"
+echo "   ===> Enabling exif extension"
+
+perl -i -plne 's|;extension=exif.so|extension=exif.so|' ${PHP_INI}
+
+exit 0
+endef
+
+define CSWphp5exif_preremove
+#!/bin/sh
+
+PHP_INI=/opt/csw/php5/lib/php.ini
+
+echo "[===> Running Pre Remove <===]"
+echo "   ===> Disabling exif extension"
+
+perl -i -plne 's|extension=exif.so|;extension=exif.so|' ${PHP_INI}
+
+exit 0
+endef
+
