@@ -17,7 +17,10 @@ DISTFILES  = $(GARNAME)$(RELEASE).tar.gz
 MASTER_SITES += ftp://ftp.figlet.org/pub/figlet/fonts/
 # ours.tar.gz is already in the figlet distribution
 DISTFILES += contributed.tar.gz international.tar.gz ms-dos.tar.gz
-DISTFILES += $(call admfiles,CSWfiglet)
+
+SPKG_SOURCEURL = http://www.figlet.org
+
+LICENSE = LICENSE
 
 DISTNAME = $(GARNAME)$(RELEASE)
 
@@ -30,7 +33,7 @@ CONFIGURE_SCRIPTS =
 APPDIR = $(sharedstatedir)/$(GARNAME)
 DEFAULTFONTDIR = $(APPDIR)/fonts
 
-BUILD_OVERRIDE_DIRS = CC DEFAULTFONTDIR
+BUILD_OVERRIDE_DIRS = CC CFLAGS DEFAULTFONTDIR
 
 # FIGlet doesn't have tests
 TEST_SCRIPTS =

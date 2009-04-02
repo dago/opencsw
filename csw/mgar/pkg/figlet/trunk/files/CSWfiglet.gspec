@@ -1,4 +1,0 @@
-%var            bitname figlet
-%var            pkgname CSWfiglet
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/LICENSE
