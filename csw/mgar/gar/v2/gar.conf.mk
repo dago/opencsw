@@ -448,15 +448,15 @@ ifndef NORUNPATH
 # may not be a subdirectory for the 32-bit standard case (this would normally
 # be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .). This is most likely
 # the case for libraries in $(EXTRA_LIBS) for which no links generated in CSWcommon.
-RUNPATH_DIRS ?= $(foreach D,$(libdir_install) $(EXTRA_LIB),$(abspath $D/$(MM_LIBDIR))) $(EXTRA_RUNPATH_DIRS)
+RUNPATH_DIRS ?= $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_DIRS)
 
 ifndef NOISALIST
-RUNPATH_ISALIST ?= $(foreach D,$(libdir_install) $(EXTRA_LIB),$(abspath $D/$(MM_LIBDIR))) $(EXTRA_RUNPATH_ISALIST)
+RUNPATH_ISALIST ?= $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_ISALIST)
 endif
 
 # Iterate over all directories in RUNPATH_DIRS, prefix each directory with one
 # with $ISALIST if it exists in RUNPATH_ISALIST, then append remaining dirs from RUNPATH_ISALIST
-RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $D)) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
+RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $(abspath $D/$(MM_LIBDIR)))) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
 endif
 
 LINKER_FLAGS ?= $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
