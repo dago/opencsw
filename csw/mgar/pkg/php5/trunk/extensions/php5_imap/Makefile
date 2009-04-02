@@ -25,7 +25,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"imap\"
+* WARNING: Could not enable Extension "imap"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -44,7 +44,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"imap\"
+* NOTICE: Successfully Enabled Extension "imap"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -67,7 +67,7 @@ perl -i -plne 's|extension=imap.so|;extension=imap.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"imap\"
+* NOTICE: Successfully Disabled Extension "imap"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

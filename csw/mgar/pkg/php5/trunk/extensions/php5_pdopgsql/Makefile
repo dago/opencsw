@@ -4,7 +4,7 @@ PACKAGES += CSWphp5pdopgsql
 
 CATALOGNAME_CSWphp5pdopgsql = php5_pdopgsql
 SPKG_DESC_CSWphp5pdopgsql = pdopgsql Extention for PHP5
-REQUIRED_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq 
+REQUIRED_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq CSWphp5pdo
 
 PATCHFILES += pdopgsql.diff
 
@@ -25,7 +25,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"pdopgsql\"
+* WARNING: Could not enable Extension "pdopgsql"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -44,7 +44,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"pdopgsql\"
+* NOTICE: Successfully Enabled Extension "pdopgsql"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -67,7 +67,7 @@ perl -i -plne 's|extension=pdopgsql.so|;extension=pdopgsql.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"pdopgsql\"
+* NOTICE: Successfully Disabled Extension "pdopgsql"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

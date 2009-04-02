@@ -111,5 +111,8 @@ EXTFILES = $(shell find extensions/*/files/* -prune -type f)
 pre-fetch:
 	$(foreach F,$(EXTFILES),$(shell cp $(F) $(DOWNLOADDIR)))
 
+post-merge-modulated:
+	@(grm -fr $(DESTDIR)/.[a-z]*)
+	
 # System Rules/Configuration
 include gar/category.mk

@@ -23,7 +23,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"pcntl\"
+* WARNING: Could not enable Extension "pcntl"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -42,7 +42,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"pcntl\"
+* NOTICE: Successfully Enabled Extension "pcntl"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -65,7 +65,7 @@ perl -i -plne 's|extension=pcntl.so|;extension=pcntl.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"pcntl\"
+* NOTICE: Successfully Disabled Extension "pcntl"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

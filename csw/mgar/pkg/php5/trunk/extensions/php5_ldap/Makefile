@@ -25,7 +25,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"ldap\"
+* WARNING: Could not enable Extension "ldap"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -44,7 +44,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"ldap\"
+* NOTICE: Successfully Enabled Extension "ldap"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -67,7 +67,7 @@ perl -i -plne 's|extension=ldap.so|;extension=ldap.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"ldap\"
+* NOTICE: Successfully Disabled Extension "ldap"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

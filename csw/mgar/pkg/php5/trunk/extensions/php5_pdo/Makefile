@@ -1,48 +1,47 @@
-PHP5EXT_NAME = mhash
+PHP5EXT_NAME = pdo
 
-PACKAGES += CSWphp5mhash
+PACKAGES += CSWphp5pdo
 
-CATALOGNAME_CSWphp5mhash = php5_mhash
-SPKG_DESC_CSWphp5mhash = mhash Extention for PHP5
-REQUIRED_PKGS_CSWphp5mhash = CSWphp5 CSWlibmhash
+CATALOGNAME_CSWphp5pdo = php5_pdo
+SPKG_DESC_CSWphp5pdo = pdo Extention for PHP5
+REQUIRED_PKGS_CSWphp5pdo = CSWphp5 
 
-CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
+PKGFILES_CSWphp5pdo  = .*/lib/php/extensions/.*/pdo\.so*
+PKGFILES_CSWphp5pdo += .*/lib/php/extensions/.*/pdo\.a*
 
-PKGFILES_CSWphp5mhash = .*/lib/php/extensions/.*/mhash.*
-
-define CSWphp5mhash_postinstall
+define CSWphp5pdo_postinstall
 #!/bin/sh
 
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Post Install <===]"
-echo "   ===> Enabling mhash extension"
+echo "   ===> Enabling pdo extension"
 
 if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
     /bin/true
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension "mhash"
+* WARNING: Could not enable Extension "pdo"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
 * Add the following line to the file, save, and restart your web server
-* extension=mhash.so
+* extension=pdo.so
 ******************************************************************************
 _EOF_
 exit 0
 fi
 
-if grep 'extension=mhash.so' $${PHP_INI} >/dev/null 2>&1; then
-    perl -i -plne 's|;extension=mhash.so|extension=mhash.so|' $${PHP_INI}
+if grep 'extension=pdo.so' $${PHP_INI} >/dev/null 2>&1; then
+    perl -i -plne 's|;extension=pdo.so|extension=pdo.so|' $${PHP_INI}
 else
-        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=mhash.so|' $${PHP_INI}
+        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=pdo.so|' $${PHP_INI}
         fi
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension "mhash"
+* NOTICE: Successfully Enabled Extension "pdo"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -53,19 +52,19 @@ _EOF_
 exit 0
 endef
 
-define CSWphp5mhash_preremove
+define CSWphp5pdo_preremove
 #!/bin/sh
 
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
-echo "   ===> Disabling mhash extension"
+echo "   ===> Disabling pdo extension"
 
-perl -i -plne 's|extension=mhash.so|;extension=mhash.so|' $${PHP_INI}
+perl -i -plne 's|extension=pdo.so|;extension=pdo.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension "mhash"
+* NOTICE: Successfully Disabled Extension "pdo"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

@@ -24,7 +24,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"sqlite\"
+* WARNING: Could not enable Extension "sqlite"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -43,7 +43,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"sqlite\"
+* NOTICE: Successfully Enabled Extension "sqlite"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -66,7 +66,7 @@ perl -i -plne 's|extension=sqlite.so|;extension=sqlite.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"sqlite\"
+* NOTICE: Successfully Disabled Extension "sqlite"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

@@ -23,7 +23,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"mime_magic\"
+* WARNING: Could not enable Extension "mime_magic"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -42,7 +42,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"mime_magic\"
+* NOTICE: Successfully Enabled Extension "mime_magic"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -65,7 +65,7 @@ perl -i -plne 's|extension=mime_magic.so|;extension=mime_magic.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"mime_magic\"
+* NOTICE: Successfully Disabled Extension "mime_magic"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

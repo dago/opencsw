@@ -23,7 +23,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"mssql\"
+* WARNING: Could not enable Extension "mssql"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -42,7 +42,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"mssql\"
+* NOTICE: Successfully Enabled Extension "mssql"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -65,7 +65,7 @@ perl -i -plne 's|extension=mssql.so|;extension=mssql.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"mssql\"
+* NOTICE: Successfully Disabled Extension "mssql"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

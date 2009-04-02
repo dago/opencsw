@@ -24,7 +24,7 @@ if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension \"readline\"
+* WARNING: Could not enable Extension "readline"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
@@ -43,7 +43,7 @@ else
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension \"readline\"
+* NOTICE: Successfully Enabled Extension "readline"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -66,7 +66,7 @@ perl -i -plne 's|extension=readline.so|;extension=readline.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension \"readline\"
+* NOTICE: Successfully Disabled Extension "readline"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal
