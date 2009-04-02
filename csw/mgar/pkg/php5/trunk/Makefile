@@ -62,7 +62,7 @@ include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
 # BerkeleyDB
 EXTRA_LIB += $(prefix)/bdb44/lib
 EXTRA_INC += $(prefix)/bdb44/include
-EXTRA_CFLAGS = $(prefix)/include/ncursesw
+EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
 NOISALIST = 1
 DISTFILES += fixme.sh
