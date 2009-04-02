@@ -26,6 +26,7 @@ SPKG_SOURCEURL = http://www.gnu.org/software/tar/
 
 REQUIRED_PKGS = CSWggettextrt CSWiconv
 
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 TEST_SCRIPTS =
 
