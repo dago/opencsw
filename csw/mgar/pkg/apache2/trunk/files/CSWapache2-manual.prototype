@@ -658,7 +658,7 @@ f none /opt/csw/apache2/share/manual/rewrite/rewrite_intro.html 0644 root bin
 f none /opt/csw/apache2/share/manual/rewrite/index.html 0644 root bin
 f none /opt/csw/apache2/share/manual/rewrite/rewrite_tech.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/rewrite/index.html.en 0644 root bin
-f none opt/csw/apache2/share/manual/rewrite/rewrite_flags.html 0644 root bin
+f none /opt/csw/apache2/share/manual/rewrite/rewrite_flags.html 0644 root bin
 f none /opt/csw/apache2/share/manual/rewrite/rewrite_guide_advanced.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/rewrite/rewrite_guide.html.en 0644 root bin
 f none /opt/csw/apache2/share/manual/rewrite/rewrite_flags.html.en 0644 root bin
