@@ -442,30 +442,24 @@ endif
 # however not expanded during compilation, so linker-pathes must directly be accessible
 # without expansion and needs to be differentiated between 32 and 64 bit, therefore
 # the links 32 and 64.
-ifndef NORUNPATH
-_ADD_RUNPATH = 1
-endif
 
-ifeq ($(origin LINKER_FLAGS), undefined)
-ifdef NOISALIST
-LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH), -R$(abspath $(ELIB)/$(MM_LIBDIR)))) $(EXTRA_LINKER_FLAGS)
-else
+ifndef NORUNPATH
 # If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
 # may not be a subdirectory for the 32-bit standard case (this would normally
 # be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .). This is most likely
 # the case for libraries in $(EXTRA_LIBS) for which no links generated in CSWcommon.
-# The quoting of $ISALIST is unfortunately dependend on how often the linker flags
-# are expanded until execution. The definition here is suitable for autotools.
-# For other buildtools it may be suitable to add definitions with other quotings.
-RUNPATHQUOTE ?= 2
-ifeq ($(RUNPATHQUOTE),1)
-  _Q = \\\$$\$$
-else
-  _Q = \\\\\\\$$\$$
+RUNPATH_DIRS ?= $(foreach D,$(libdir_install) $(EXTRA_LIB),$(abspath $D/$(MM_LIBDIR))) $(EXTRA_RUNPATH_DIRS)
+
+ifndef NOISALIST
+RUNPATH_ISALIST ?= $(foreach D,$(libdir_install) $(EXTRA_LIB),$(abspath $D/$(MM_LIBDIR))) $(EXTRA_RUNPATH_ISALIST)
 endif
-LINKER_FLAGS = $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))$(if $(_ADD_RUNPATH),  -R$(ELIB)/$(_Q)ISALIST -R$(abspath $(ELIB)/$(MM_LIBDIR)))) $(EXTRA_LINKER_FLAGS)
+
+# Iterate over all directories in RUNPATH_DIRS, prefix each directory with one
+# with $ISALIST if it exists in RUNPATH_ISALIST, then append remaining dirs from RUNPATH_ISALIST
+RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $D)) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
 endif
-endif
+
+LINKER_FLAGS ?= $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
 
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
@@ -477,12 +471,12 @@ LDFLAGS  ?= $(strip $($(GARCOMPILER)_LD_FLAGS) $(EXTRA_LDFLAGS) $(LINKER_FLAGS))
 ASFLAGS  ?= $(strip $($(GARCOMPILER)_AS_FLAGS) $(EXTRA_ASFLAGS))
 OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(EXTRA_OPTFLAGS))
 
-#GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-#GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-#SOS11_LD_OPTIONS = $(strip $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
-#SOS12_LD_OPTIONS = $(strip $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
+GCC3_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+GCC4_LD_OPTIONS = -R$(GNU_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
+SOS11_LD_OPTIONS = $(strip $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
+SOS12_LD_OPTIONS = $(strip $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
 
-#LD_OPTIONS = $($(GARCOMPILER)_LD_OPTIONS)
+LD_OPTIONS ?= $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS)
 
 # LD_OPTIONS considered harmful. Disable for the moment.
 #LDOPT_LIBS ?= $(libdir)
