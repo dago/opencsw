@@ -83,6 +83,7 @@ CONFIGURE_ARGS += --with-pear=shared
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
+ENABLE_CHECK = 0
 
 # SAPI Specific Rules
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
@@ -100,6 +101,8 @@ post-install-modulated:
 	ginstall -m 0644 \
 		$(WORKDIR)/pear.conf.CSW \
 		$(DESTDIR)$(prefix)/php5/etc
+	@(grm -fr $(DESTDIR)/.[a-z]*)
+	@(grm -fr $(DESTDIR)/$(php5_lib)/.[a-z]*)
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
@@ -111,8 +114,5 @@ EXTFILES = $(shell find extensions/*/files/* -prune -type f)
 pre-fetch:
 	$(foreach F,$(EXTFILES),$(shell cp $(F) $(DOWNLOADDIR)))
 
-post-merge-modulated:
-	@(grm -fr $(DESTDIR)/.[a-z]*)
-	
 # System Rules/Configuration
 include gar/category.mk
