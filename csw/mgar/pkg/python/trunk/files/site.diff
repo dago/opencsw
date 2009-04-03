@@ -10,16 +10,16 @@
 +                                        "site-packages"))
 +            sitedirs.append(os.path.join(prefix, "lib", 
 +                                        "python2.5",
-+                                        "site-python"))
++                                        "site-packages"))
 +            sitedirs.append(os.path.join(prefix, "lib", 
 +                                        "python2.3",
-+                                        "site-python"))
++                                        "site-packages"))
 +            sitedirs.append(os.path.join(prefix, "lib", 
 +                                        "python2.1",
-+                                        "site-python"))
++                                        "site-packages"))
 +            sitedirs.append(os.path.join(prefix, "lib", 
-+                                        "site-python",
-+                                        "site-python"))
++                                        "python",
++                                        "site-packages"))
          else:
              sitedirs.append(prefix)
              sitedirs.append(os.path.join(prefix, "lib", "site-packages"))
