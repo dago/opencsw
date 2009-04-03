@@ -24,16 +24,25 @@ PATCHFILES += connobject.diff
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+LD_OPTIONS =
+LDFLAGS = -L/opt/csw/lib
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-python=$(bindir)/python
 CONFIGURE_ARGS += --with-flex=$(bindir)/flex-2.5.35
 CONFIGURE_ARGS += --with-python-src=../python
 
-NOISALIST = 1
 include gar/category.mk
 
 DESTDOC = $(DESTDIR)$(docdir)/ap2_modpython
+DISTFILES += fixme.sh
+
+post-configure-modulated:
+	@echo " ==> Fixing libtool files"
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	@$(MAKECOOKIE)
+
 
 post-install-modulated:
 	@install -d $(DESTDOC)
