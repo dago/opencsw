@@ -16,33 +16,33 @@ define CSWphp5pdosqlite_postinstall
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Post Install <===]"
-echo "   ===> Enabling pdosqlite extension"
+echo "   ===> Enabling pdo_sqlite extension"
 
 if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
     /bin/true
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension "pdosqlite"
+* WARNING: Could not enable Extension "pdo_sqlite"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
 * Add the following line to the file, save, and restart your web server
-* extension=pdosqlite.so
+* extension=pdo_sqlite.so
 ******************************************************************************
 _EOF_
 exit 0
 fi
 
-if grep 'extension=pdosqlite.so' $${PHP_INI} >/dev/null 2>&1; then
-    perl -i -plne 's|;extension=pdosqlite.so|extension=pdosqlite.so|' $${PHP_INI}
+if grep 'extension=pdo_sqlite.so' $${PHP_INI} >/dev/null 2>&1; then
+    perl -i -plne 's|;extension=pdo_sqlite.so|extension=pdo_sqlite.so|' $${PHP_INI}
 else
-        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=pdosqlite.so|' $${PHP_INI}
+        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=pdo_sqlite.so|' $${PHP_INI}
         fi
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension "pdosqlite"
+* NOTICE: Successfully Enabled Extension "pdo_sqlite"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -59,13 +59,13 @@ define CSWphp5pdosqlite_preremove
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
-echo "   ===> Disabling pdosqlite extension"
+echo "   ===> Disabling pdo_sqlite extension"
 
-perl -i -plne 's|extension=pdosqlite.so|;extension=pdosqlite.so|' $${PHP_INI}
+perl -i -plne 's|extension=pdo_sqlite.so|;extension=pdo_sqlite.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension "pdosqlite"
+* NOTICE: Successfully Disabled Extension "pdo_sqlite"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

@@ -18,33 +18,33 @@ define CSWphp5pdopgsql_postinstall
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Post Install <===]"
-echo "   ===> Enabling pdopgsql extension"
+echo "   ===> Enabling pdo_pgsql extension"
 
 if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
     /bin/true
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension "pdopgsql"
+* WARNING: Could not enable Extension "pdo_pgsql"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
 * Add the following line to the file, save, and restart your web server
-* extension=pdopgsql.so
+* extension=pdo_pgsql.so
 ******************************************************************************
 _EOF_
 exit 0
 fi
 
-if grep 'extension=pdopgsql.so' $${PHP_INI} >/dev/null 2>&1; then
-    perl -i -plne 's|;extension=pdopgsql.so|extension=pdopgsql.so|' $${PHP_INI}
+if grep 'extension=pdo_pgsql.so' $${PHP_INI} >/dev/null 2>&1; then
+    perl -i -plne 's|;extension=pdo_pgsql.so|extension=pdo_pgsql.so|' $${PHP_INI}
 else
-        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=pdopgsql.so|' $${PHP_INI}
+        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=pdo_pgsql.so|' $${PHP_INI}
         fi
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension "pdopgsql"
+* NOTICE: Successfully Enabled Extension "pdo_pgsql"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -61,13 +61,13 @@ define CSWphp5pdopgsql_preremove
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
-echo "   ===> Disabling pdopgsql extension"
+echo "   ===> Disabling pdo_pgsql extension"
 
-perl -i -plne 's|extension=pdopgsql.so|;extension=pdopgsql.so|' $${PHP_INI}
+perl -i -plne 's|extension=pdo_pgsql.so|;extension=pdo_pgsql.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension "pdopgsql"
+* NOTICE: Successfully Disabled Extension "pdo_pgsql"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

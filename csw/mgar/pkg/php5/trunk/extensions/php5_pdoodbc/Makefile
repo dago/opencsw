@@ -16,33 +16,33 @@ define CSWphp5pdoodbc_postinstall
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Post Install <===]"
-echo "   ===> Enabling pdoodbc extension"
+echo "   ===> Enabling pdo_odbc extension"
 
 if grep 'CSW Extensions' $${PHP_INI} >/dev/null 2>&1; then
     /bin/true
 else
     cat << _EOF_
 ******************************************************************************
-* WARNING: Could not enable Extension "pdoodbc"
+* WARNING: Could not enable Extension "pdo_odbc"
 * You will need to enable it by hand as follows:
 *
 * open $${PHP_INI} in your favorite text editor
 * Add the following line to the file, save, and restart your web server
-* extension=pdoodbc.so
+* extension=pdo_odbc.so
 ******************************************************************************
 _EOF_
 exit 0
 fi
 
-if grep 'extension=pdoodbc.so' $${PHP_INI} >/dev/null 2>&1; then
-    perl -i -plne 's|;extension=pdoodbc.so|extension=pdoodbc.so|' $${PHP_INI}
+if grep 'extension=pdo_odbc.so' $${PHP_INI} >/dev/null 2>&1; then
+    perl -i -plne 's|;extension=pdo_odbc.so|extension=pdo_odbc.so|' $${PHP_INI}
 else
-        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=pdoodbc.so|' $${PHP_INI}
+        perl -i -pe 's|.*CSW Extensions|; CSW Extensions\nextension=pdo_odbc.so|' $${PHP_INI}
         fi
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Enabled Extension "pdoodbc"
+* NOTICE: Successfully Enabled Extension "pdo_odbc"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the install
@@ -59,13 +59,13 @@ define CSWphp5pdoodbc_preremove
 PHP_INI=/opt/csw/php5/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
-echo "   ===> Disabling pdoodbc extension"
+echo "   ===> Disabling pdo_odbc extension"
 
-perl -i -plne 's|extension=pdoodbc.so|;extension=pdoodbc.so|' $${PHP_INI}
+perl -i -plne 's|extension=pdo_odbc.so|;extension=pdo_odbc.so|' $${PHP_INI}
 
 cat << _EOF_
 ******************************************************************************
-* NOTICE: Successfully Disabled Extension "pdoodbc"
+* NOTICE: Successfully Disabled Extension "pdo_odbc"
 * in $${PHP_INI}
 *
 * You will need to restart your web server to finish the removal

@@ -10,7 +10,7 @@ CONFIGURE_ARGS += --with-mime-magic=shared
 
 PKGFILES_CSWphp5mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
-define CSWphp5mime_magic_postinstall
+define CSWphp5mimemagic_postinstall
 #!/bin/sh
 
 PHP_INI=/opt/csw/php5/lib/php.ini
@@ -53,7 +53,7 @@ _EOF_
 exit 0
 endef
 
-define CSWphp5mime_magic_preremove
+define CSWphp5mimemagic_preremove
 #!/bin/sh
 
 PHP_INI=/opt/csw/php5/lib/php.ini
