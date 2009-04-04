@@ -1,5 +1,14 @@
 --- ../build-global/zlib-1.2.3/configure	2005-07-11 22:11:57.000000000 +0200
-+++ zlib-1.2.3/configure	2009-03-23 08:21:07.639754073 +0100
++++ zlib-1.2.3/configure	2009-04-01 00:31:48.271327549 +0200
+@@ -19,7 +19,7 @@
+ # an error.
+ 
+ LIBS=libz.a
+-LDFLAGS="-L. ${LIBS}"
++#LDFLAGS="-L. ${LIBS}"
+ VER=`sed -n -e '/VERSION "/s/.*"\(.*\)".*/\1/p' < zlib.h`
+ VER2=`sed -n -e '/VERSION "/s/.*"\([0-9]*\\.[0-9]*\)\\..*/\1/p' < zlib.h`
+ VER1=`sed -n -e '/VERSION "/s/.*"\([0-9]*\)\\..*/\1/p' < zlib.h`
 @@ -29,7 +29,7 @@
  exec_prefix=${exec_prefix-'${prefix}'}
  libdir=${libdir-'${exec_prefix}/lib'}
@@ -9,3 +18,23 @@
  shared_ext='.so'
  shared=0
  gcc=0
+@@ -132,9 +132,9 @@
+   SCO_SV\ 3.2*) SFLAGS=${CFLAGS-"-O3 -dy -KPIC "}
+              CFLAGS=${CFLAGS-"-O3"}
+              LDSHARED=${LDSHARED-"cc -dy -KPIC -G"};;
+-  SunOS\ 5*) SFLAGS=${CFLAGS-"-fast -xcg89 -KPIC -R."}
++  SunOS\ 5*) SFLAGS="-KPIC $CFLAGS"
+              CFLAGS=${CFLAGS-"-fast -xcg89"}
+-             LDSHARED=${LDSHARED-"cc -G"};;
++             LDSHARED=${LDSHARED-"cc -G $LDFLAGS"};;
+   SunOS\ 4*) SFLAGS=${CFLAGS-"-O2 -PIC"}
+              CFLAGS=${CFLAGS-"-O2"}
+              LDSHARED=${LDSHARED-"ld"};;
+@@ -187,6 +187,7 @@
+ if test $shared -eq 0; then
+   LDSHARED="$CC"
+   echo Building static library $LIBS version $VER with $CC.
++  LDFLAGS="-L. ${LIBS}"
+ else
+   LDFLAGS="-L. ${SHAREDLIBV}"
+ fi
