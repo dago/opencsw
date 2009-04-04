@@ -1,0 +1,19 @@
+diff --speed-large-files --minimal -ru libnids-1.23.orig/src/util.c libnids-1.23/src/util.c
+--- libnids-1.23.orig/src/util.c	2006-05-01 18:58:48.000000000 +0200
++++ libnids-1.23/src/util.c	2009-03-11 00:48:59.000000000 +0100
+@@ -29,13 +29,13 @@
+   return ret;
+ }
+ 
+-inline int
++int
+ before(u_int seq1, u_int seq2)
+ {
+   return ((int)(seq1 - seq2) < 0);
+ }
+ 
+-inline int
++int
+ after(u_int seq1, u_int seq2)
+ {
+   return ((int)(seq2 - seq1) < 0);

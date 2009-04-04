@@ -1,2 +1,6 @@
 af35e8ef403a0ca95df2da94db856428  download/libnids-1.23.tar.gz
-eded3e75e8a25acf7922ba0e7593ecb1  download/mainpatch
+5c4890d30fb6d8666f8aa8987d6b4b24  download/Makfile.in.diff
+1eb0e1c82b9855f7526d63323741aec6  download/checksum.c.diff
+875c511f86f39a0b13131f4d3246a35a  download/configure.diff
+d98069814fe6b17ea8c07aecc76e4386  download/ip_options.c.diff
+276ccbd2caeab913432fe749d6a0c020  download/utils.c.diff

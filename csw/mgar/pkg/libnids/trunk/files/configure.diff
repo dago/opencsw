@@ -1,0 +1,20 @@
+--- ../build-global/libnids-1.23/configure	2006-05-01 19:14:51.000000000 +0200
++++ libnids-1.23/configure	2009-04-04 19:03:29.185337901 +0200
+@@ -4288,7 +4288,7 @@
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lgthread-2.0 $GTHREAD_LIBS $LIBS"
++LIBS="$LIBS $GTHREAD_LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -4350,7 +4350,7 @@
+ #define HAVE_LIBGTHREAD_2_0 1
+ _ACEOF
+ 
+-  LIBS="-lgthread-2.0 $LIBS"
++  LIBS="$LIBS $GTHREAD_LIBS"
+ 
+ fi
+ 
