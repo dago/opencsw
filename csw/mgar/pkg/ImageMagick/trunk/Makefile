@@ -24,6 +24,7 @@ REQUIRED_PKGS += CSWbzip2 CSWdjvulibre CSWfconfig CSWftype2 CSWggettextrt
 REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWilmbase CSWjasper CSWjbigkit
 REQUIRED_PKGS += CSWjpeg CSWlcms CSWlibcairo CSWlibfpx CSWlibrsvg CSWlibxml2
 REQUIRED_PKGS += CSWopenexr CSWperl CSWpng CSWsunmath CSWtiff CSWwmf CSWzlib
+REQUIRED_PKGS += CSWlibtoolrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = ImageMagick-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
@@ -47,6 +48,11 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
 include gar/category.mk
 
+post-configure-$(MODULATION):
+	@(echo "~~~ Fixing Libtool ~~~")
+	@$(FILEDIR)/fixme.sh $(WORKSRC)
+	@$(MAKECOOKIE)
+
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libMagick.so.10.0.4.s $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4
 	@cp $(FILEDIR)/libWand.so.10.0.4.s $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4
@@ -57,6 +63,8 @@ post-install-isa-sparcv8:
 	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	echo $(DESTDIR)
 	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/lib_6.2.9_s.tar.gz |tar xf -)
+	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
+	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
 	@$(MAKECOOKIE)
 
 post-install-isa-i386:
@@ -69,4 +77,6 @@ post-install-isa-i386:
 	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	echo $(DESTDIR)
 	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/lib_6.2.9_i.tar.gz |tar xf -)
+	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
+	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
 	@$(MAKECOOKIE)
