@@ -1,0 +1,39 @@
+--- pth-2.0.7/configure.o	2009-04-03 21:48:07.888815157 -0500
++++ pth-2.0.7/configure	2009-04-03 21:50:45.969836100 -0500
+@@ -19603,7 +19603,7 @@
+ echo $ECHO_N "checking for default value of FD_SETSIZE... $ECHO_C" >&6
+ cross_compiling=no
+ if test "$cross_compiling" = yes; then
+-  ac_fdsetsize=1024
++  ac_fdsetsize=65536
+ 
+ else
+   cat >conftest.$ac_ext <<_ACEOF
+@@ -19652,7 +19652,7 @@
+ sed 's/^/| /' conftest.$ac_ext >&5
+ 
+ ( exit $ac_status )
+-ac_fdsetsize=1024
++ac_fdsetsize=65536
+ fi
+ rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+ fi
+@@ -19666,12 +19666,13 @@
+ if test "${with_fdsetsize+set}" = set; then
+   withval="$with_fdsetsize"
+ 
+-case $withval in
+-    [1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]) PTH_FDSETSIZE=$withval ;;
+-    * ) { { echo "$as_me:$LINENO: error: invalid FD_SETSIZE specified -- allowed: 10-9999" >&5
++  if test $withval -ge 10 -a test $withval -le 65536; then
++      PTH_FDSETSIZE=$withval
++  else
++      { { echo "$as_me:$LINENO: error: invalid FD_SETSIZE specified -- allowed: 10-9999" >&5
+ echo "$as_me: error: invalid FD_SETSIZE specified -- allowed: 10-9999" >&2;}
+-   { (exit 1); exit 1; }; } ;;
+-esac
++   { (exit 1); exit 1; }; } 
++fi
+ CPPFLAGS="$CPPFLAGS -DFD_SETSIZE=$PTH_FDSETSIZE"
+ echo "$as_me:$LINENO: checking for overridden FD_SETSIZE value" >&5
+ echo $ECHO_N "checking for overridden FD_SETSIZE value... $ECHO_C" >&6
