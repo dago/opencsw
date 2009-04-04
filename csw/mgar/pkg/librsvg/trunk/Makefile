@@ -19,6 +19,7 @@ SPKG_VERSION= $(GARVERSION).$(GARSUBREV)
 
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/librsvg/$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).$(GARSUBREV).tar.bz2
+DISTFILES += fixme.sh
 
 DISTNAME = $(GARNAME)-$(GARVERSION).$(GARSUBREV)
 
@@ -49,6 +50,11 @@ CONFIGURE_ARGS += --enable-shared=yes --enable-static=no
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-configure-modulated:
+	@(echo "~~~ Fixing Libtool ~~~")
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	$(DONADA)
 
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/librsvg-2.so.2.15.90.s $(INSTALLISADIR)/opt/csw/lib/librsvg-2.so.2.15.90
