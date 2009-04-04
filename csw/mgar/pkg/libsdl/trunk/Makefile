@@ -10,8 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.libsdl.org/release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibsdl, prototype)
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWlibsdl)
+
+REQUIRED_PKGS = CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
