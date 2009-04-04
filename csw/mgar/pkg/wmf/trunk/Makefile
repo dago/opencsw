@@ -28,11 +28,13 @@ UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10501
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
 include gar/category.mk
+
+post-configure-modulated:
+	@(echo "~~~ Fixing Libtool ~~~")
+	@$(FILEDIR)/fixme.sh $(WORKSRC)
+	$(DONADA)
