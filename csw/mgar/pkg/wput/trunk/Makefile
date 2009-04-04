@@ -15,7 +15,9 @@ SPKG_SOURCEURL = http://wput.sourceforge.net
 
 LICENSE = COPYING
 
-REQUIRED_PKGS = CSWggettextrt
+PREREQUISITE_PKGS = CSWgnutlsdevel
+
+REQUIRED_PKGS = CSWggettextrt CSWgnutls
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=141519
