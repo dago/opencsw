@@ -17,18 +17,19 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PACKAGES = CSWpysqlite
 CATALOGNAME_CSWpysqlite = pysqlite
 SPKG_DESC_CSWpysqlite = SQLite 1.x support for Python
-REQUIRED_PKGS_CSWpysqlite = CSWpython CSWsqlite3
+REQUIRED_PKGS_CSWpysqlite = CSWpython CSWsqlite3rt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=54058
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-NOISALIST = 1
+EXTRA_CPPFLAGS = -I/opt/csw/include
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
+
 
 INSTALL_ARGS  = --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
