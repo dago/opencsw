@@ -23,6 +23,8 @@ REQUIRED_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
 SPKG_CLASSES_CSWnsca = none cswpreserveconf cswinitsmf
 SPKG_CLASSES_CSWsendnsca = none cswpreserveconf
 
+NOISALIST = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-nsca-port=5667
 CONFIGURE_ARGS += --localstatedir=/opt/csw/nagios/var
