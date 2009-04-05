@@ -1,7 +1,7 @@
 ###  Package Section  ###
-PACKAGES  = CSWgcc4core CSWgcc4corert CSWgcc4gfortran 
-PACKAGES += CSWgcc4gfortranrt CSWgcc4java CSWgcc4javart 
-PACKAGES += CSWgcc4objc CSWgcc4objcrt CSWgcc4g++ CSWgcc4g++rt
+PACKAGES  = CSWgcc4ada CSWgcc4adart CSWgcc4core CSWgcc4corert CSWgcc4gfortran 
+PACKAGES += CSWgcc4gfortranrt CSWgcc4java CSWgcc4javart CSWgcc4objc
+PACKAGES += CSWgcc4objcrt CSWgcc4g++ CSWgcc4g++rt
  
 ## Define Package Catalog Names
 CATALOGNAME_CSWgcc4ada        = gcc4ada
