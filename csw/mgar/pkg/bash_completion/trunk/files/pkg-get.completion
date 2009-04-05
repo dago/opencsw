@@ -1,5 +1,5 @@
 #
-# Copyright 2006 Yann Rouillard <yann@blastwave.org>
+# Copyright 2006 Yann Rouillard <yann@opencsw.org>
 # All rights reserved.  Use is subject to license terms.
 #
 # Redistribution and/or use, with or without modification, is
@@ -7,7 +7,7 @@
 # author(s) shall not be liable in the event that use of the
 # software causes damage.
 #
-# pkg-get.completion - bash completion for blastwave pkg-get
+# pkg-get.completion - bash completion for opencsw pkg-get
 #
 
 have pkg-get && 
