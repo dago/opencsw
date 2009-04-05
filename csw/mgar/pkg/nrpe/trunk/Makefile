@@ -21,6 +21,8 @@ REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt
 
 SPKG_CLASSES_CSWnrpe = none cswpreserveconf cswinitsmf
 
+NOISALIST = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-ssl-inc=/opt/csw/include
