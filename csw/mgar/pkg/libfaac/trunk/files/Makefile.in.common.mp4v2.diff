@@ -1,0 +1,13 @@
+--- ../build-global/faac-1.28/common/mp4v2/Makefile.in	2009-02-10 09:37:00.000000000 +0100
++++ faac-1.28/common/mp4v2/Makefile.in	2009-04-05 20:42:49.571593147 +0200
+@@ -205,8 +205,8 @@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-INCLUDES = -I$(top_srcdir)/include
+-AM_CXXFLAGS = -Wall
++INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/common/mp4v2
++AM_CXXFLAGS = $(CXXFLAGS)
+ noinst_LIBRARIES = libmp4v2.a 
+ noinst_HEADERS = mp4.h mpeg4ip.h mpeg4ip_version.h mpeg4ip_config.h
+ libmp4v2_a_SOURCES = \

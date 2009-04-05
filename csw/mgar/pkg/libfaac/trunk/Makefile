@@ -19,9 +19,11 @@ SPKG_DESC_CSWfaac = $(DESCRIPTION)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.bz2
 
-PATCHFILES += Makefile.am.diff Makefile.in.diff Makefile.in.frontend.diff 
+#PATCHFILES += Makefile.am.diff Makefile.in.diff Makefile.in.frontend.diff 
+PATCHFILES += Makefile.in.frontend.diff Makefile.in.common.mp4v2.diff
 PATCHFILES += aacquant.c.diff aacquant.h.diff config.h.in.diff
-PATCHFILES += configure.in.diff faac.h.diff faaccfg.h.diff frame.h.diff
+#PATCHFILES += configure.in.diff faac.h.diff faaccfg.h.diff frame.h.diff
+PATCHFILES += configure.diff faac.h.diff faaccfg.h.diff frame.h.diff
 PATCHFILES += input.c.diff ltp.c.diff mp4property.h.diff mp4util.h.diff
 PATCHFILES += mpeg4ip.h.diff psych.h.diff
 
