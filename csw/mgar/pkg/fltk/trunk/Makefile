@@ -10,19 +10,20 @@ endef
 MASTER_SITES = http://ftp.easysw.com/pub/fltk/$(GARVERSION)/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.gz
-DISTFILES += $(call admfiles,CSWfltk, prototype)
+DISTFILES += $(call admfiles,CSWfltk)
 
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = makeinclude.in.diff
+PATCHFILES = makeinclude.in.diff Makefile.diff
 
-CONFIGURE_ARGS = $(DIRPATHS) LDFLAGS='-L/opt/csw/lib -L../lib'
+CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --disable-localpng
 CONFIGURE_ARGS += --disable-localjpeg
 CONFIGURE_ARGS += --disable-localzlib
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-largefile
+CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-shared 
 
 include gar/category.mk

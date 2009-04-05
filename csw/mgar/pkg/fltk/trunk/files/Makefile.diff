@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru fltk-1.1.9.orig/fluid/Makefile fltk-1.1.9/fluid/Makefile
+--- fltk-1.1.9.orig/fluid/Makefile	2008-02-26 16:26:08.000000000 +0100
++++ fltk-1.1.9/fluid/Makefile	2009-04-05 06:25:12.680119819 +0200
+@@ -64,7 +64,7 @@
+ fluid-shared$(EXEEXT):	$(OBJECTS) ../src/$(DSONAME) ../src/$(FLDSONAME) \
+ 			../src/$(IMGDSONAME)
+ 	echo Linking $@...
+-	$(CXX) $(ARCHFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(LINKSHARED) $(LDLIBS)
++	$(CXX) $(ARCHFLAGS) -L../src $(LDFLAGS) -o $@ $(OBJECTS) $(LINKSHARED) $(LDLIBS)
+ 	$(POSTBUILD) $@ ../FL/mac.r
+ 
+ clean:
