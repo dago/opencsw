@@ -24,14 +24,6 @@ merge-dirs-amd:
 	$(_DBG)(ginstall -d $(PPREFIX)/bin/i386)
 	$(_DBG)$(MAKECOOKIE)
 
-merge-amd64-files:
-	@echo "[===== Merging isa-amd64 =====]"
-	$(_DBG)(cd $(AMD_BASE); for dir in `gfind . -name "*solaris2\.10*" -type d` ; do \
-		/usr/bin/pax -rw $$dir $(PKGROOT); done )
-	$(_DBG)(cd $(AMD_BASE); /usr/bin/pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
-	$(_DBG)(cd $(APREFIX)/bin; /usr/bin/pax -rw * $(PPREFIX)/bin/amd64)
-	$(_DBG)$(MAKECOOKIE)
-
 merge-i386-files:
 	@echo "[===== Merging isa-i386 =====]"
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/bin $(PKGROOT))
@@ -42,6 +34,15 @@ merge-i386-files:
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/share $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/lib $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/libexec $(PKGROOT))
+	$(_DBG)$(MAKECOOKIE)
+
+merge-amd64-files:
+	@echo "[===== Merging isa-amd64 =====]"
+	$(_DBG)(cd $(AMD_BASE); \
+		for dir in `gfind . -name "*solaris2\.10*" -type d` ; do \
+		/usr/bin/pax -rw $$dir $(PKGROOT); done )
+	$(_DBG)(cd $(AMD_BASE); /usr/bin/pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
+	$(_DBG)(cd $(APREFIX)/bin; /usr/bin/pax -rw * $(PPREFIX)/bin/amd64)
 	$(_DBG)$(MAKECOOKIE)
 
 ifeq ($(shell uname -p), i386)
@@ -73,4 +74,18 @@ ISAEXEC_FILES += /opt/csw/gcc4/bin/gcj-dbtool
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gjar
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gorbd
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gtnameserv
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnat
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatbind
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatbl
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatchop
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatclean
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatfind
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnative2ascii
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatkr
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatlink
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatls
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatmake
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatname
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatprep
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatxref
 endif

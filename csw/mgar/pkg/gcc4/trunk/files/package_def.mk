@@ -151,8 +151,8 @@ PKGFILES_CSWgcc4objc += .*/include/.*objc/.*
 #######  RunTime Packages
 
 ## gcc4adart
-PKGFILES_CSWgcc4adart = .*/lib/.*libgnat.*
-PKGFILES_CSWgcc4adart = .*/lib/.*libgnarl.*
+PKGFILES_CSWgcc4adart  = .*/lib/.*libgnat.*
+PKGFILES_CSWgcc4adart += .*/lib/.*libgnarl.*
 
 ## gcc4corert
 PKGFILES_CSWgcc4corert  = .*/lib/.*libgcc_s.*

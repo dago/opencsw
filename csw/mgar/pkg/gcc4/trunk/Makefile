@@ -16,12 +16,6 @@ MASTER_SITES = $(GNU_MIRROR)/$(GARNAME)-$(GARVERSION)/
 # of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-## The following patches address bug 29442
-## http://gcc.gnu.org/bugzilla/show_bug.cgi?id=29442
-## Patch to Reenable alloca() on non-GCC compilers
-#PATCHFILES  = re-enable-alloc.diff
-#PATCHFILES += split-insn-attrtab.diff
-
 ## build options
 CONFIGURE_ARGS  = --prefix=$(BUILD_PREFIX)/gcc4
 CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/gcc4

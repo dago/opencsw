@@ -1,0 +1,512 @@
+$ make check
+Making a new config file...
+echo "set tmpdir /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/testsuite" >> ./tmp0
+gmake[1]: Entering directory `/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc'
+test -d testsuite || mkdir testsuite
+test -d testsuite/gcc || mkdir testsuite/gcc
+(rootme=`${PWDCMD-pwd}`; export rootme; \
+        srcdir=`cd ../../gcc-4.3.3/gcc; ${PWDCMD-pwd}` ; export srcdir ; \
+        cd testsuite/gcc; \
+        rm -f tmp-site.exp; \
+        sed '/set tmpdir/ s|testsuite|testsuite/gcc|' \
+                < ../../site.exp > tmp-site.exp; \
+        /bin/bash ${srcdir}/../move-if-change tmp-site.exp site.exp; \
+        EXPECT=`if [ -f ${rootme}/../expect/expect ] ; then echo ${rootme}/../expect/expect ; else echo expect ; fi` ; export EXPECT ; \
+        if [ -f ${rootme}/../expect/expect ] ; then  \
+           TCL_LIBRARY=`cd .. ; cd ${srcdir}/../tcl/library ; ${PWDCMD-pwd}` ; \
+            export TCL_LIBRARY ; fi ; \
+        GCC_EXEC_PREFIX="/opt/csw/gcc4/lib/gcc/" ; export GCC_EXEC_PREFIX ; \
+        runtestflags= ; \
+        if [ -n "" ] ; then \
+          runtestflags=""; \
+        elif [ -n "" ] ; then \
+          parts="`echo '  ' \
+                  | sed 's/=[^ ]* / /g'`"; \
+          for part in `find $srcdir/testsuite/gcc* -name \*.exp` ; do \
+            part=`basename $part` ; \
+            case " $parts $runtestflags " in \
+              *" $part "*) ;; \
+              *) runtestflags="$runtestflags $part" ;; \
+            esac ; \
+          done ; \
+        fi ; \
+        `if [ -f ${srcdir}/../dejagnu/runtest ] ; then echo ${srcdir}/../dejagnu/runtest ; else echo runtest; fi` --tool gcc  $runtestflags)
+WARNING: Couldn't find the global config file.
+Test Run By mwatters on Sun Apr  5 10:07:08 2009
+Native configuration is i386-pc-solaris2.8
+
+                === gcc tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Using /opt/csw/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /opt/csw/share/dejagnu/config/unix.exp as generic interface file for target.
+Using /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/config/default.exp as tool-and-target-specific interface file.
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.c-torture/compile/compile.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.c-torture/execute/builtins/builtins.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.c-torture/execute/execute.exp ...
+FAIL: gcc.c-torture/execute/990127-2.c execution,  -O2 
+FAIL: gcc.c-torture/execute/990127-2.c execution,  -Os 
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.c-torture/execute/ieee/ieee.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.c-torture/unsorted/unsorted.exp ...
+
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/autopar/autopar.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/charset/charset.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/compat/compat.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/compat/struct-layout-1.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/cpp/cpp.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/cpp/trad/trad.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/debug/debug.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/debug/dwarf2/dwarf2.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/dfp/dfp.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/dg.exp ...
+FAIL: gcc.dg/builtins-8.c execution test
+FAIL: gcc.dg/pr36584.c execution test
+FAIL: gcc.dg/pthread-init-1.c (test for excess errors)
+FAIL: gcc.dg/pthread-init-2.c (test for excess errors)
+XPASS: gcc.dg/ucnid-2.c (test for excess errors)
+XPASS: gcc.dg/ucnid-3.c (test for excess errors)
+XPASS: gcc.dg/ucnid-4.c (test for excess errors)
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/fixed-point/fixed-point.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/format/format.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/gomp/gomp.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/ipa/ipa.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/matrix/matrix.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/noncompile/noncompile.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/pch/pch.exp ...
+FAIL: largefile.c -O0 -g (test for excess errors)
+FAIL: gcc.dg/pch/largefile.c -O0 -g assembly comparison
+FAIL: largefile.c  -O0  (test for excess errors)
+FAIL: gcc.dg/pch/largefile.c  -O0  assembly comparison
+FAIL: largefile.c  -O1  (test for excess errors)
+FAIL: gcc.dg/pch/largefile.c  -O1  assembly comparison
+FAIL: largefile.c  -O2  (test for excess errors)
+FAIL: gcc.dg/pch/largefile.c  -O2  assembly comparison
+FAIL: largefile.c  -O3 -fomit-frame-pointer  (test for excess errors)
+FAIL: gcc.dg/pch/largefile.c  -O3 -fomit-frame-pointer  assembly comparison
+FAIL: largefile.c  -O3 -g  (test for excess errors)
+FAIL: gcc.dg/pch/largefile.c  -O3 -g  assembly comparison
+FAIL: largefile.c  -Os  (test for excess errors)
+FAIL: gcc.dg/pch/largefile.c  -Os  assembly comparison
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/special/mips-abi.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/special/special.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/struct/struct-reorg.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/tls/tls.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/torture/dg-torture.exp ...
+FAIL: gcc.dg/torture/complex-alias-1.c  -O0  execution test
+FAIL: gcc.dg/torture/complex-alias-1.c  -O1  execution test
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/tree-prof/tree-prof.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/tree-ssa/tree-ssa.exp ...
+XPASS: gcc.dg/tree-ssa/20040204-1.c scan-tree-dump-times optimized "link_error" 0
+FAIL: gcc.dg/tree-ssa/ltrans-1.c scan-tree-dump-times ltrans "converted loop nest to perfect loop nest" 1
+FAIL: gcc.dg/tree-ssa/ltrans-1.c scan-tree-dump-times ltrans "transformed loop" 1
+FAIL: gcc.dg/tree-ssa/ltrans-4.c scan-tree-dump-times ltrans "transformed loop" 1
+FAIL: gcc.dg/tree-ssa/ltrans-5.c scan-tree-dump-times ltrans "transformed loop" 1
+FAIL: gcc.dg/tree-ssa/ltrans-6.c scan-tree-dump-times ltrans "transformed loop" 1
+FAIL: gcc.dg/tree-ssa/ltrans-8.c scan-tree-dump-times ltrans "transformed loop" 1
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/vect/costmodel/i386/i386-costmodel-vect.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/vect/costmodel/ppc/ppc-costmodel-vect.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/vect/costmodel/spu/spu-costmodel-vect.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/vect/costmodel/x86_64/x86_64-costmodel-vect.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/vect/vect.exp ...
+FAIL: gcc.dg/vect/pr36493.c execution test
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/vmx/vmx.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/vxworks/vxworks.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.dg/weak/weak.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/acker1.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/arm-isr.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/bprob.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/dectest.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/dhry.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/gcov.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/i386-prefetch.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/linkage.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/matrix1.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/mg-2.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/mg.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/options.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/sieve.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.misc-tests/sort2.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/alpha/alpha.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/arm/arm.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/arm/neon/neon.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/bfin/bfin.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/cris/cris.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/cris/torture/cris-torture.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/frv/frv.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/i386/i386.exp ...
+FAIL: gcc.target/i386/20060512-1.c execution test
+FAIL: gcc.target/i386/20060512-3.c execution test
+FAIL: gcc.target/i386/abi-1.c scan-assembler xmm0
+FAIL: gcc.target/i386/asm-2.c (internal compiler error)
+FAIL: gcc.target/i386/asm-2.c (test for excess errors)
+FAIL: gcc.target/i386/fastcall-sseregparm.c execution test
+FAIL: gcc.target/i386/fpprec-1.c execution test
+FAIL: gcc.target/i386/pr13685.c execution test
+FAIL: gcc.target/i386/pr37191.c (test for excess errors)
+FAIL: gcc.target/i386/reload-1.c (test for excess errors)
+ERROR: gcc.target/i386/reload-1.c: error executing dg-final: no files matched glob pattern "reload-1.c.[0-9][0-9][0-9]r.csa"
+FAIL: gcc.target/i386/sse-10.c execution test
+FAIL: gcc.target/i386/sse-11.c execution test
+FAIL: gcc.target/i386/sse-13.c (test for excess errors)
+FAIL: gcc.target/i386/sse-14.c (test for excess errors)
+FAIL: gcc.target/i386/sse-17.c execution test
+FAIL: gcc.target/i386/sse-18.c execution test
+FAIL: gcc.target/i386/sse-3.c execution test
+FAIL: gcc.target/i386/sse-6.c execution test
+FAIL: gcc.target/i386/sse-recip-vec.c execution test
+FAIL: gcc.target/i386/sse-recip.c execution test
+FAIL: gcc.target/i386/sse2-lrint-vec.c execution test
+FAIL: gcc.target/i386/sse2-lrintf-vec.c execution test
+FAIL: gcc.target/i386/sse2-vec-1.c execution test
+FAIL: gcc.target/i386/sse2-vec-2.c execution test
+FAIL: gcc.target/i386/sse2-vec-3.c execution test
+FAIL: gcc.target/i386/sse2-vec-4.c execution test
+FAIL: gcc.target/i386/sse2-vec-5.c execution test
+FAIL: gcc.target/i386/sse2-vec-6.c execution test
+FAIL: gcc.target/i386/sse5-haddX.c (test for excess errors)
+WARNING: gcc.target/i386/sse5-haddX.c compilation failed to produce executable
+FAIL: gcc.target/i386/sse5-hsubX.c (test for excess errors)
+WARNING: gcc.target/i386/sse5-hsubX.c compilation failed to produce executable
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/i386/math-torture/math-torture.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/ia64/ia64.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/m68k/m68k.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/mips/inter/mips16-inter.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/mips/mips.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/powerpc/powerpc.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/s390/s390.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/sh/sh.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/sparc/sparc.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/spu/spu.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/x86_64/abi/abi-x86_64.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.target/xstormy16/xstormy16.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gcc.test-framework/test-framework.exp ...
+skipping test framework tests, CHECK_TEST_FRAMEWORK is not defined
+
+                === gcc Summary ===
+
+# of expected passes            48710
+# of unexpected failures        59
+# of unexpected successes       4
+# of expected failures          168
+# of unresolved testcases       1
+# of untested testcases         35
+# of unsupported tests          340
+/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/xgcc  version 4.3.3 (GCC) 
+
+gmake[1]: [check-parallel-gcc] Error 1 (ignored)
+gmake[1]: Leaving directory `/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc'
+                === acats configuration ===
+target gcc is /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/xgcc -B/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/
+Reading specs from /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/specs Target: i386-pc-solaris2.8 Configured with: ../gcc-4.3.3/configure --prefix=/opt/csw/gcc4 --exec-prefix=/opt/csw/gcc4 --with-gnu-as --with-as=/opt/csw/bin/gas --without-gnu-ld --with-ld=/usr/ccs/bin/ld --enable-nls --with-included-gettext --with-libiconv-prefix=/opt/csw --with-x --with-mpfr=/opt/csw --with-gmp=/opt/csw --enable-java-awt=xlib --enable-libada --enable-libssp --enable-objc-gc --enable-threads=posix --enable-stage1-languages=c --enable-languages=ada,c,c++,fortran,java,objc Thread model: posix gcc version 4.3.3 (GCC)
+host=i386-pc-solaris2.8
+target=i386-pc-solaris2.8
+gnatmake is /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/gnatmake
+
+                === acats support ===
+Generating support files... done.
+Compiling support files... done.
+
+                === acats tests ===
+Running chapter a ...
+Running chapter c2 ...
+Running chapter c3 ...
+Running chapter c4 ...
+Running chapter c5 ...
+Running chapter c6 ...
+Running chapter c7 ...
+Running chapter c8 ...
+Running chapter c9 ...
+Running chapter ca ...
+Running chapter cb ...
+Running chapter cc ...
+Running chapter cd ...
+Running chapter ce ...
+Running chapter cxa ...
+Running chapter cxb ...
+Running chapter cxf ...
+Running chapter cxg ...
+Running chapter cxh ...
+Running chapter cz ...
+Running chapter d ...
+Running chapter e ...
+Running chapter gcc ...
+Running chapter l ...
+                === acats Summary ===
+# of expected passes            2315
+# of unexpected failures        0
+test -d testsuite || mkdir testsuite
+test -d testsuite/gnat || mkdir testsuite/gnat
+(rootme=`${PWDCMD-pwd}`; export rootme; \
+        srcdir=`cd ../../gcc-4.3.3/gcc; ${PWDCMD-pwd}` ; export srcdir ; \
+        cd testsuite/gnat; \
+        rm -f tmp-site.exp; \
+        sed '/set tmpdir/ s|testsuite|testsuite/gnat|' \
+                < ../../site.exp > tmp-site.exp; \
+        /bin/bash ${srcdir}/../move-if-change tmp-site.exp site.exp; \
+        EXPECT=`if [ -f ${rootme}/../expect/expect ] ; then echo ${rootme}/../expect/expect ; else echo expect ; fi` ; export EXPECT ; \
+        if [ -f ${rootme}/../expect/expect ] ; then  \
+           TCL_LIBRARY=`cd .. ; cd ${srcdir}/../tcl/library ; ${PWDCMD-pwd}` ; \
+            export TCL_LIBRARY ; fi ; \
+        GCC_EXEC_PREFIX="/opt/csw/gcc4/lib/gcc/" ; export GCC_EXEC_PREFIX ; \
+        `if [ -f ${srcdir}/../dejagnu/runtest ] ; then echo ${srcdir}/../dejagnu/runtest ; else echo runtest; fi` --tool gnat )
+WARNING: Couldn't find the global config file.
+Test Run By mwatters on Sun Apr  5 14:20:14 2009
+Native configuration is i386-pc-solaris2.8
+
+                === gnat tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Using /opt/csw/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /opt/csw/share/dejagnu/config/unix.exp as generic interface file for target.
+Using /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/config/default.exp as tool-and-target-specific interface file.
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gnat.dg/dg.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gnat.dg/specs/specs.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gnat.dg/style/style.exp ...
+
+                === gnat Summary ===
+
+# of expected passes            374
+# of expected failures          1
+gmake[1]: Entering directory `/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc'
+test -d testsuite || mkdir testsuite
+test -d testsuite/g++ || mkdir testsuite/g++
+(rootme=`${PWDCMD-pwd}`; export rootme; \
+        srcdir=`cd ../../gcc-4.3.3/gcc; ${PWDCMD-pwd}` ; export srcdir ; \
+        cd testsuite/g++; \
+        rm -f tmp-site.exp; \
+        sed '/set tmpdir/ s|testsuite|testsuite/g++|' \
+                < ../../site.exp > tmp-site.exp; \
+        /bin/bash ${srcdir}/../move-if-change tmp-site.exp site.exp; \
+        EXPECT=`if [ -f ${rootme}/../expect/expect ] ; then echo ${rootme}/../expect/expect ; else echo expect ; fi` ; export EXPECT ; \
+        if [ -f ${rootme}/../expect/expect ] ; then  \
+           TCL_LIBRARY=`cd .. ; cd ${srcdir}/../tcl/library ; ${PWDCMD-pwd}` ; \
+            export TCL_LIBRARY ; fi ; \
+        GCC_EXEC_PREFIX="/opt/csw/gcc4/lib/gcc/" ; export GCC_EXEC_PREFIX ; \
+        runtestflags= ; \
+        if [ -n "" ] ; then \
+          runtestflags=""; \
+        elif [ -n "" ] ; then \
+          parts="`echo '  ' \
+                  | sed 's/=[^ ]* / /g'`"; \
+          for part in `find $srcdir/testsuite/g++* -name \*.exp` ; do \
+            part=`basename $part` ; \
+            case " $parts $runtestflags " in \
+              *" $part "*) ;; \
+              *) runtestflags="$runtestflags $part" ;; \
+            esac ; \
+          done ; \
+        fi ; \
+        `if [ -f ${srcdir}/../dejagnu/runtest ] ; then echo ${srcdir}/../dejagnu/runtest ; else echo runtest; fi` --tool g++  $runtestflags)
+WARNING: Couldn't find the global config file.
+Test Run By mwatters on Sun Apr  5 14:24:10 2009
+Native configuration is i386-pc-solaris2.8
+
+                === g++ tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Using /opt/csw/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /opt/csw/share/dejagnu/config/unix.exp as generic interface file for target.
+Using /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/config/default.exp as tool-and-target-specific interface file.
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/bprob/bprob.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/charset/charset.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/compat/compat.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/compat/struct-layout-1.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/debug/debug.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/debug/dwarf2/dwarf2.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/dg.exp ...
+FAIL: g++.dg/other/i386-1.C execution test
+XPASS: g++.dg/other/ucnid-1.C (test for excess errors)
+FAIL: g++.dg/warn/miss-format-1.C printf attribute warning (test for warnings, line 15)
+FAIL: g++.dg/warn/miss-format-1.C printf attribute warning 2 (test for warnings, line 40)
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/gcov/gcov.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/gomp/gomp.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/pch/pch.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/special/ecos.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/tls/tls.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/torture/dg-torture.exp ...
+FAIL: g++.dg/torture/pr34099.C  -O0  execution test
+FAIL: g++.dg/torture/pr34099.C  -O1  execution test
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/tree-prof/tree-prof.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.dg/vect/vect.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/g++.old-deja/old-deja.exp ...
+FAIL: g++.old-deja/g++.brendan/complex1.C execution test
+XPASS: g++.old-deja/g++.oliva/dwarf2.C (test for excess errors)
+XPASS: g++.old-deja/g++.oliva/dwarf3.C (test for excess errors)
+FAIL: g++.old-deja/g++.other/headers1.C (test for excess errors)
+WARNING: g++.old-deja/g++.other/headers1.C compilation failed to produce executable
+XPASS: g++.old-deja/g++.other/init19.C execution test
+
+                === g++ Summary ===
+
+# of expected passes            17488
+# of unexpected failures        7
+# of unexpected successes       4
+# of expected failures          84
+# of unsupported tests          172
+/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/testsuite/g++/../../g++  version 4.3.3 (GCC) 
+
+gmake[1]: [check-parallel-g++] Error 1 (ignored)
+gmake[1]: Leaving directory `/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc'
+gmake[1]: Entering directory `/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc'
+test -d testsuite || mkdir testsuite
+test -d testsuite/gfortran || mkdir testsuite/gfortran
+(rootme=`${PWDCMD-pwd}`; export rootme; \
+        srcdir=`cd ../../gcc-4.3.3/gcc; ${PWDCMD-pwd}` ; export srcdir ; \
+        cd testsuite/gfortran; \
+        rm -f tmp-site.exp; \
+        sed '/set tmpdir/ s|testsuite|testsuite/gfortran|' \
+                < ../../site.exp > tmp-site.exp; \
+        /bin/bash ${srcdir}/../move-if-change tmp-site.exp site.exp; \
+        EXPECT=`if [ -f ${rootme}/../expect/expect ] ; then echo ${rootme}/../expect/expect ; else echo expect ; fi` ; export EXPECT ; \
+        if [ -f ${rootme}/../expect/expect ] ; then  \
+           TCL_LIBRARY=`cd .. ; cd ${srcdir}/../tcl/library ; ${PWDCMD-pwd}` ; \
+            export TCL_LIBRARY ; fi ; \
+        GCC_EXEC_PREFIX="/opt/csw/gcc4/lib/gcc/" ; export GCC_EXEC_PREFIX ; \
+        runtestflags= ; \
+        if [ -n "" ] ; then \
+          runtestflags=""; \
+        elif [ -n "" ] ; then \
+          parts="`echo '  ' \
+                  | sed 's/=[^ ]* / /g'`"; \
+          for part in `find $srcdir/testsuite/gfortran* -name \*.exp` ; do \
+            part=`basename $part` ; \
+            case " $parts $runtestflags " in \
+              *" $part "*) ;; \
+              *) runtestflags="$runtestflags $part" ;; \
+            esac ; \
+          done ; \
+        fi ; \
+        `if [ -f ${srcdir}/../dejagnu/runtest ] ; then echo ${srcdir}/../dejagnu/runtest ; else echo runtest; fi` --tool gfortran  $runtestflags)
+WARNING: Couldn't find the global config file.
+Test Run By mwatters on Sun Apr  5 15:18:21 2009
+Native configuration is i386-pc-solaris2.8
+
+                === gfortran tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Using /opt/csw/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /opt/csw/share/dejagnu/config/unix.exp as generic interface file for target.
+Using /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/config/default.exp as tool-and-target-specific interface file.
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gfortran.dg/dg.exp ...
+FAIL: gfortran.dg/c_by_val_1.f  -O0  execution test
+FAIL: gfortran.dg/c_by_val_1.f  -O1  execution test
+FAIL: gfortran.dg/c_by_val_1.f  -O2  execution test
+FAIL: gfortran.dg/c_by_val_1.f  -O3 -fomit-frame-pointer  execution test
+FAIL: gfortran.dg/c_by_val_1.f  -O3 -fomit-frame-pointer -funroll-loops  execution test
+FAIL: gfortran.dg/c_by_val_1.f  -O3 -fomit-frame-pointer -funroll-all-loops -finline-functions  execution test
+FAIL: gfortran.dg/c_by_val_1.f  -O3 -g  execution test
+FAIL: gfortran.dg/c_by_val_1.f  -Os  execution test
+FAIL: gfortran.dg/f2c_2.f90  -O0  execution test
+FAIL: gfortran.dg/f2c_2.f90  -O1  execution test
+FAIL: gfortran.dg/f2c_2.f90  -O2  execution test
+FAIL: gfortran.dg/f2c_2.f90  -O3 -fomit-frame-pointer  execution test
+FAIL: gfortran.dg/f2c_2.f90  -O3 -fomit-frame-pointer -funroll-loops  execution test
+FAIL: gfortran.dg/f2c_2.f90  -O3 -fomit-frame-pointer -funroll-all-loops -finline-functions  execution test
+FAIL: gfortran.dg/f2c_2.f90  -O3 -g  execution test
+FAIL: gfortran.dg/f2c_2.f90  -Os  execution test
+FAIL: gfortran.dg/ltrans-7.f90  -O  scan-tree-dump-times ltrans "transformed loop" 1
+FAIL: gfortran.dg/specifics_1.f90  -O0  execution test
+FAIL: gfortran.dg/specifics_1.f90  -O1  execution test
+FAIL: gfortran.dg/specifics_1.f90  -O2  execution test
+FAIL: gfortran.dg/specifics_1.f90  -O3 -fomit-frame-pointer  execution test
+FAIL: gfortran.dg/specifics_1.f90  -O3 -fomit-frame-pointer -funroll-loops  execution test
+FAIL: gfortran.dg/specifics_1.f90  -O3 -fomit-frame-pointer -funroll-all-loops -finline-functions  execution test
+FAIL: gfortran.dg/specifics_1.f90  -O3 -g  execution test
+FAIL: gfortran.dg/specifics_1.f90  -Os  execution test
+FAIL: gfortran.dg/value_4.f90  -O0  execution test
+FAIL: gfortran.dg/value_4.f90  -O1  execution test
+FAIL: gfortran.dg/value_4.f90  -O2  execution test
+FAIL: gfortran.dg/value_4.f90  -O3 -fomit-frame-pointer  execution test
+FAIL: gfortran.dg/value_4.f90  -O3 -fomit-frame-pointer -funroll-loops  execution test
+FAIL: gfortran.dg/value_4.f90  -O3 -fomit-frame-pointer -funroll-all-loops -finline-functions  execution test
+FAIL: gfortran.dg/value_4.f90  -O3 -g  execution test
+FAIL: gfortran.dg/value_4.f90  -Os  execution test
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gfortran.dg/gomp/gomp.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gfortran.dg/vect/vect.exp ...
+FAIL: gfortran.dg/vect/vect-5.f90  -O  execution test
+FAIL: gfortran.dg/vect/fast-math-pr33299.f90 execution test
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gfortran.fortran-torture/compile/compile.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/gfortran.fortran-torture/execute/execute.exp ...
+FAIL: gfortran.fortran-torture/execute/common.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/common_size.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/forall_4.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/forall_5.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/intrinsic_integer.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/seq_io.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -O0 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -O1 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -O2 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -O2 -fomit-frame-pointer -finline-functions 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -O2 -fomit-frame-pointer -finline-functions -funroll-loops 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -O2 -fbounds-check 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -O3 -g 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution,  -Os 
+FAIL: gfortran.fortran-torture/execute/specifics.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/stack_varsize.f90 execution, -O2 -ftree-vectorize -msse2 
+FAIL: gfortran.fortran-torture/execute/where_2.f90 execution, -O2 -ftree-vectorize -msse2 
+
+                === gfortran Summary ===
+
+# of expected passes            24969
+# of unexpected failures        52
+# of expected failures          3
+# of unsupported tests          136
+/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/testsuite/gfortran/../../gfortran  version 4.3.3 (GCC) 
+
+gmake[1]: [check-parallel-gfortran] Error 1 (ignored)
+gmake[1]: Leaving directory `/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc'
+test -d testsuite || mkdir testsuite
+test -d testsuite/objc || mkdir testsuite/objc
+(rootme=`${PWDCMD-pwd}`; export rootme; \
+        srcdir=`cd ../../gcc-4.3.3/gcc; ${PWDCMD-pwd}` ; export srcdir ; \
+        cd testsuite/objc; \
+        rm -f tmp-site.exp; \
+        sed '/set tmpdir/ s|testsuite|testsuite/objc|' \
+                < ../../site.exp > tmp-site.exp; \
+        /bin/bash ${srcdir}/../move-if-change tmp-site.exp site.exp; \
+        EXPECT=`if [ -f ${rootme}/../expect/expect ] ; then echo ${rootme}/../expect/expect ; else echo expect ; fi` ; export EXPECT ; \
+        if [ -f ${rootme}/../expect/expect ] ; then  \
+           TCL_LIBRARY=`cd .. ; cd ${srcdir}/../tcl/library ; ${PWDCMD-pwd}` ; \
+            export TCL_LIBRARY ; fi ; \
+        GCC_EXEC_PREFIX="/opt/csw/gcc4/lib/gcc/" ; export GCC_EXEC_PREFIX ; \
+        `if [ -f ${srcdir}/../dejagnu/runtest ] ; then echo ${srcdir}/../dejagnu/runtest ; else echo runtest; fi` --tool objc )
+WARNING: Couldn't find the global config file.
+Test Run By mwatters on Sun Apr  5 17:01:58 2009
+Native configuration is i386-pc-solaris2.8
+
+                === objc tests ===
+
+Schedule of variations:
+    unix
+
+Running target unix
+Using /opt/csw/share/dejagnu/baseboards/unix.exp as board description file for target.
+Using /opt/csw/share/dejagnu/config/unix.exp as generic interface file for target.
+Using /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/config/default.exp as tool-and-target-specific interface file.
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/objc/compile/compile.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/objc/execute/exceptions/exceptions.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/objc/execute/execute.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/objc.dg/dg.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/objc.dg/gnu-encoding/gnu-encoding.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/objc.dg/pch/pch.exp ...
+Running /home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/gcc-4.3.3/gcc/testsuite/objc.dg/special/special.exp ...
+
+                === objc Summary ===
+
+# of expected passes            1812
+# of expected failures          7
+# of unsupported tests          24
+/home/mwatters/mgar/pkg/gcc4/trunk/work/build-isa-i386-5.8-i386/objdir/gcc/xgcc  version 4.3.3 (GCC) 
+
