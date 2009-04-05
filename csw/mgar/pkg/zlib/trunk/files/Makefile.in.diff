@@ -1,25 +1,5 @@
 --- ../build-global/zlib-1.2.3/Makefile.in	2005-07-18 04:25:21.000000000 +0200
-+++ zlib-1.2.3/Makefile.in	2009-04-05 11:06:51.418782054 +0200
-@@ -24,15 +24,15 @@
- #CFLAGS=-O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion \
- #           -Wstrict-prototypes -Wmissing-prototypes
- 
--LDFLAGS=libz.a
--LDSHARED=$(CC)
--CPP=$(CC) -E
--
- LIBS=libz.a
- SHAREDLIB=libz.so
- SHAREDLIBV=libz.so.1.2.3
- SHAREDLIBM=libz.so.1
- 
-+LDFLAGS=libz.a
-+LDSHARED=$(CC) -h $(SHAREDLIBM)
-+CPP=$(CC) -E
-+
- AR=ar rc
- RANLIB=ranlib
- TAR=tar
++++ zlib-1.2.3/Makefile.in	2009-04-05 11:24:56.336506142 +0200
 @@ -43,7 +43,7 @@
  exec_prefix = ${prefix}
  libdir = ${exec_prefix}/lib
@@ -29,6 +9,15 @@
  man3dir = ${mandir}/man3
  
  OBJS = adler32.o compress.o crc32.o gzio.o uncompr.o deflate.o trees.o \
+@@ -78,7 +78,7 @@
+ 	rm -f _match.s
+ 
+ $(SHAREDLIBV): $(OBJS)
+-	$(LDSHARED) -o $@ $(OBJS)
++	$(LDSHARED) -h $(SHAREDLIBM) -o $@ $(OBJS)
+ 	rm -f $(SHAREDLIB) $(SHAREDLIBM)
+ 	ln -s $@ $(SHAREDLIB)
+ 	ln -s $@ $(SHAREDLIBM)
 @@ -90,23 +90,23 @@
  	$(CC) $(CFLAGS) -o $@ minigzip.o $(LDFLAGS)
  
