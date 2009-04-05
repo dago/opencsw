@@ -1,5 +1,25 @@
 --- ../build-global/zlib-1.2.3/Makefile.in	2005-07-18 04:25:21.000000000 +0200
-+++ zlib-1.2.3/Makefile.in	2009-03-23 08:05:49.549504439 +0100
++++ zlib-1.2.3/Makefile.in	2009-04-05 11:06:51.418782054 +0200
+@@ -24,15 +24,15 @@
+ #CFLAGS=-O3 -Wall -Wwrite-strings -Wpointer-arith -Wconversion \
+ #           -Wstrict-prototypes -Wmissing-prototypes
+ 
+-LDFLAGS=libz.a
+-LDSHARED=$(CC)
+-CPP=$(CC) -E
+-
+ LIBS=libz.a
+ SHAREDLIB=libz.so
+ SHAREDLIBV=libz.so.1.2.3
+ SHAREDLIBM=libz.so.1
+ 
++LDFLAGS=libz.a
++LDSHARED=$(CC) -h $(SHAREDLIBM)
++CPP=$(CC) -E
++
+ AR=ar rc
+ RANLIB=ranlib
+ TAR=tar
 @@ -43,7 +43,7 @@
  exec_prefix = ${prefix}
  libdir = ${exec_prefix}/lib
