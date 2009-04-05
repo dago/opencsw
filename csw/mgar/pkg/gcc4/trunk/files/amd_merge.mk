@@ -14,7 +14,6 @@ PPREFIX   = $(PKGROOT)/$(MPREFIX)
 AMD_MERGE_TARGETS  = merge-dirs-amd
 AMD_MERGE_TARGETS += merge-i386-files
 AMD_MERGE_TARGETS += merge-amd64-files
-AMD_MERGE_TARGETS += merge-strip-amd
 
 merge-amd: $(AMD_MERGE_TARGETS)
 	$(_DBG)$(MAKECOOKIE)
@@ -43,13 +42,6 @@ merge-i386-files:
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/share $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/lib $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/libexec $(PKGROOT))
-	$(_DBG)$(MAKECOOKIE)
-
-merge-strip-amd:
-	@(echo "[===== Stripping Merged Binaries =====]")
-	$(_DBG)(stripbin $(PPREFIX)/bin/i386)
-	$(_DBG)(stripbin $(PPREFIX)/bin/amd64)
-	$(_DBG)(stripbin $(PPREFIX)/bin)
 	$(_DBG)$(MAKECOOKIE)
 
 ifeq ($(shell uname -p), i386)

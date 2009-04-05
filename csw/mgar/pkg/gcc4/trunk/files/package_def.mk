@@ -4,6 +4,8 @@ PACKAGES += CSWgcc4gfortranrt CSWgcc4java CSWgcc4javart
 PACKAGES += CSWgcc4objc CSWgcc4objcrt CSWgcc4g++ CSWgcc4g++rt
  
 ## Define Package Catalog Names
+CATALOGNAME_CSWgcc4ada        = gcc4ada
+CATALOGNAME_CSWgcc4adart      = gcc4adart
 CATALOGNAME_CSWgcc4core       = gcc4core
 CATALOGNAME_CSWgcc4corert     = gcc4corert
 CATALOGNAME_CSWgcc4g++        = gcc4g++
@@ -16,6 +18,8 @@ CATALOGNAME_CSWgcc4objc       = gcc4objc
 CATALOGNAME_CSWgcc4objcrt     = gcc4objcrt
 
 ## Source URLs
+SPKG_SOURCEURL_CSWgcc4ada        = http://gcc.gnu.org
+SPKG_SOURCEURL_CSWgcc4adart      = http://gcc.gnu.org
 SPKG_SOURCEURL_CSWgcc4core       = http://gcc.gnu.org
 SPKG_SOURCEURL_CSWgcc4corert     = http://gcc.gnu.org
 SPKG_SOURCEURL_CSWgcc4g++        = http://gcc.gnu.org
@@ -28,6 +32,8 @@ SPKG_SOURCEURL_CSWgcc4objc       = http://gcc.gnu.org
 SPKG_SOURCEURL_CSWgcc4objcrt     = http://gcc.gnu.org
 
 ## Copyright File
+LICENSE_CSWgcc4ada        = COPYING3
+LICENSE_CSWgcc4adart      = COPYING3
 LICENSE_CSWgcc4core       = COPYING3
 LICENSE_CSWgcc4corert     = COPYING3
 LICENSE_CSWgcc4g++        = COPYING3
@@ -40,6 +46,8 @@ LICENSE_CSWgcc4objc       = COPYING3
 LICENSE_CSWgcc4objcrt     = COPYING3
 
 ## Define Package Descriptions
+SPKG_DESC_CSWgcc4ada        = GNU C ADA Compiler
+SPKG_DESC_CSWgcc4adart      = GNU C ADA Compiler Run Time
 SPKG_DESC_CSWgcc4core       = GNU C Compiler
 SPKG_DESC_CSWgcc4corert     = GNU C Compiler Run Time
 SPKG_DESC_CSWgcc4g++        = GNU C++ Compiler
@@ -53,6 +61,8 @@ SPKG_DESC_CSWgcc4objcrt     = GNU Objective C Compiler Run Time
 
 ## Define Dependencies 
 COMMON_REQUIRE                   = CSWiconv CSWlibgmp CSWlibmpfr
+REQUIRED_PKGS_CSWgcc4adart       = CSWggettextrt $(COMMON_REQUIRE)
+REQUIRED_PKGS_CSWgcc4ada         = CSWgcc4adart $(COMMON_REQUIRE)
 REQUIRED_PKGS_CSWgcc4corert      = CSWggettextrt $(COMMON_REQUIRE)
 REQUIRED_PKGS_CSWgcc4core        = CSWgcc4corert $(COMMON_REQUIRE)
 REQUIRED_PKGS_CSWgcc4g++rt       = CSWgcc4corert CSWiconv
@@ -66,6 +76,13 @@ REQUIRED_PKGS_CSWgcc4objcrt      = CSWgcc4corert CSWiconv
 REQUIRED_PKGS_CSWgcc4objc        = CSWgcc4objcrt $(COMMON_REQUIRE)
 
 ## Define the Contents of the Packages
+
+## gcc4ada Definitions
+PKGFILES_CSWgcc4ada  = .*/libexec/.*gnat1
+PKGFILES_CSWgcc4ada += .*/adalib/.*
+PKGFILES_CSWgcc4ada += .*/adainclude/.*
+PKGFILES_CSWgcc4ada += .*/info/.*gnat.*
+PKGFILES_CSWgcc4ada += .*/bin/gnat.*
 
 ## gcc4gfortran Definitions
 PKGFILES_CSWgcc4gfortran  = .*/bin/.*gfortran
@@ -132,6 +149,10 @@ PKGFILES_CSWgcc4objc  = .*/libexec/.*cc1obj
 PKGFILES_CSWgcc4objc += .*/include/.*objc/.*
 
 #######  RunTime Packages
+
+## gcc4adart
+PKGFILES_CSWgcc4adart = .*/lib/.*libgnat.*
+PKGFILES_CSWgcc4adart = .*/lib/.*libgnarl.*
 
 ## gcc4corert
 PKGFILES_CSWgcc4corert  = .*/lib/.*libgcc_s.*
