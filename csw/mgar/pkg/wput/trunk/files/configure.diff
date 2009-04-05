@@ -1,6 +1,5 @@
-diff -ru ../build-global/wput-0.6.2/configure wput-0.6.2/configure
 --- ../build-global/wput-0.6.2/configure	2008-09-27 12:31:23.000000000 +0200
-+++ wput-0.6.2/configure	2009-03-29 18:17:59.596861076 +0200
++++ wput-0.6.2/configure	2009-04-05 02:02:56.976236308 +0200
 @@ -1736,7 +1736,7 @@
  
  
@@ -10,3 +9,21 @@ diff -ru ../build-global/wput-0.6.2/configure wput-0.6.2/configure
  PACKAGE="wput"
  VERSION="0.6.2"
  
+@@ -6632,7 +6632,7 @@
+ 		CPPFLAGS="$CPPFLAGS -I$with_gnutls_includes"
+ 
+ 
+-for ac_header in gnutls/gnutls.h, gnutls/openssl.h
++for ac_header in gnutls/gnutls.h gnutls/openssl.h
+ do
+ as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+@@ -6879,7 +6879,7 @@
+ _ACEOF
+ 
+ 			msg_gnutls="GNUTLS"
+-			GNUTLS_LIBS="$with_gnutls_libs -lgnutls-openssl"
++			GNUTLS_LIBS="$with_gnutls_libs -lgnutls -lgcrypt -lgnutls-openssl"
+ 
+ 			with_ssl="yes"
+ 		else
