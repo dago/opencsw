@@ -24,10 +24,6 @@ UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=12694
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-snmp-version=1
 CONFIGURE_ARGS += --with-sys-contact=unknown
@@ -47,8 +43,8 @@ PATCHFILES = perl_makefiles.diff
 # Patch for python module
 PATCHFILES += Makefile.in.diff
 
-LD_OPTIONS =
-EXTRA_COMMON_EXPORTS = LD_OPTIONS
+#LD_OPTIONS =
+#EXTRA_COMMON_EXPORTS = LD_OPTIONS
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
