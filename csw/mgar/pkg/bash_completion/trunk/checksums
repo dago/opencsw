@@ -1,7 +1,7 @@
-9bca1cf97e8f8c73e3ef560cc9dead21  download/bash-completion-20060301.tar.gz
-2de14c97d596cf5ac0da21ea34ea93aa  download/CSWbash_completion.gspec
+cd1c5648272917fbe0eef4ba30bb93f4  download/bash-completion-1.0.tar.gz
 2acb33dad8ee4ea46b02f2cd86ced5e1  download/pkg-get.completion
 0fcc270cda377374a9637d24c8b689b3  download/pkgadd.completion
 7d304567cc880dd42e8ea277c991017f  download/pkgrm.completion
 cc213a6d8dd2d484f2bce4f7905437f8  download/smf.completion
-152cc17cbfe6875b15d9216f63bed3f9  download/blastwave.patch
+1745e51815578a18384ff36a449e0002  download/changelog.CSW
+d0c0d867babf351bca9ee97e03be550d  download/opencsw_paths.patch
