@@ -10,7 +10,7 @@ endef
 MASTER_SITES = http://ftp.easysw.com/pub/fltk/$(GARVERSION)/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.gz
-DISTFILES += $(call admfiles,CSWfltk)
+DISTFILES += $(call admfiles,CSWfltk, depend)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
