@@ -1,5 +1,5 @@
 GARNAME = libgoffice
-GARVERSION = 0.6.6
+GARVERSION = 0.7.4
 CATEGORIES = gnome
 
 DESCRIPTION = Document centric objects library
