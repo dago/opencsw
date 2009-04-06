@@ -1,10 +1,10 @@
 GARNAME = gnumeric
-GARVERSION = 1.8.3
+GARVERSION = 1.9.5
 CATEGORIES = gnome
 
-DESCRIPTION = Brief description
+DESCRIPTION = GNOME spreadsheet program
 define BLURB
-  Long description
+ The project aims to become a drop in replacement for proprietary spreadsheets.
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
@@ -19,8 +19,10 @@ REQUIRED_PKGS += CSWorbit2 CSWpango CSWperl CSWzlib
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = mainpatch 
+#PATCHFILES = mainpatch 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)
