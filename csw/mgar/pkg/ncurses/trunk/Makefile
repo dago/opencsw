@@ -50,7 +50,7 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_WIDEC-$(WIDEC))
 CONFIGURE_ARGS += --without-xterm-new
 
 MERGE_SCRIPTS_isa-sparcv8-widec-disable = copy-only copy-config-only
-   MERGE_DIRS_isa-sparcv8-widec-disable = $(libdir)
+   MERGE_DIRS_isa-sparcv8-widec-disable = $(libdir) $(includedir)
 MERGE_SCRIPTS_isa-sparcv9-widec-disable = copy-relocated-only copy-config-only
    MERGE_DIRS_isa-sparcv9-widec-disable = $(libdir)
 
@@ -59,7 +59,7 @@ MERGE_SCRIPTS_isa-sparcv9-widec-disable = copy-relocated-only copy-config-only
     MERGE_DIRS_isa-sparcv9-widec-enable = $(libdir)
 
    MERGE_SCRIPTS_isa-i386-widec-disable = copy-only copy-config-only
-      MERGE_DIRS_isa-i386-widec-disable = $(libdir)
+      MERGE_DIRS_isa-i386-widec-disable = $(libdir) $(includedir)
   MERGE_SCRIPTS_isa-amd64-widec-disable = copy-relocated-only copy-config-only
      MERGE_DIRS_isa-amd64-widec-disable = $(libdir)
 
