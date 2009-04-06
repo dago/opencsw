@@ -5,7 +5,7 @@ CATEGORIES = utils
 PACKAGES = CSWgsed
 CATALOGNAME_CSWgsed = gsed
 
-DESCRIPTION = GNU Stream Editor
+DESCRIPTION = The GNU non-interactive text Stream-oriented EDitor (sed)
 define BLURB
     Sed, the GNU Stream Editor, copies the named files (standard input default) to
     the standard output, edited according to a script of commands.
@@ -25,6 +25,8 @@ GARCOMPILER = GNU
 
 REQUIRED_PKGS = CSWiconv
 
+# No special platform optimization 
+NOISALIST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS) 
 CONFIGURE_ARGS += --program-prefix=g  
@@ -37,4 +39,6 @@ include gar/category.mk
 # Make sure we are using gnu tools (esp. sed)
 PATH := /opt/csw/gnu:$(PATH)
 
-EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES = $(sharedstatedir)/.*locale.alias
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset.alias
+
