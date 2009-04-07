@@ -23,6 +23,7 @@ define BLURB
 endef
 
 PACKAGES = CSWcadav
+CATALOGNAME_CSWcadav = cadaver
 
 REQUIRED_PKGS = CSWggettextrt CSWiconv CSWneon CSWosslrt CSWreadline CSWzlib CSWgcrypt CSWgnutls CSWgpgerr
 
