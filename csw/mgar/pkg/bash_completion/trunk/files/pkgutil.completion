@@ -1,0 +1,62 @@
+#
+# Copyright 2006 Yann Rouillard <yann@opencsw.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# pkgutil.completion - bash completion for pkgutil
+#
+
+have pkgutil && 
+_pkgutil()
+{
+	local cur prev file catalog_file url command
+	local catalog_file="/var/opt/csw/pkgutil/catalog.`uname -p`.`uname -r`"
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+	i=${#COMP_WORDS[*]} 
+	while [[ $i -gt 1 ]]; do
+		i=$((i-1))
+		if [[ "${COMP_WORDS[$i]}" = @(-t|--temp) ]]; then
+			url="${COMP_WORDS[$((i+1))]}"
+		fi
+		if [[ "${COMP_WORDS[$i]}" == @(-i|--install|-u|--upgrade|-r|--remove|-d|--download|-a|--available|-c|--compare|-U|--catalog|-S|--stream) ]]; then
+			command="${COMP_WORDS[$i]}"	
+		fi
+	done
+	
+	if [[ -n "$command" ]]; then
+		if [[ -f $catalog_file ]]; then
+			if [[ "$command" == @(--download|-d|--install|-i|--upgrade|-u|s|--stream) ]]; then
+				local packages_list=$(awk ' $0 ~ /BEGIN PGP SIGNATURE/ { exit } $1 ~ /^Hash:/ || $1 ~ /^ *(-|#|$)/ { next } { print $1 }' $catalog_file)
+				COMPREPLY=( $(compgen -W "${packages_list}" -- ${cur}) )
+			elif [[ "$command" == @(-r|--remove) ]]; then
+				local packages_list=$(pkginfo | awk ' $2 ~ /^CSW/ { printf ("%s|",$2) }')
+				packages_list=${packages_list%|}
+				packages_list=$(nawk " \$3 ~ /^$packages_list\$/ { print \$1 }" $catalog_file)
+				COMPREPLY=( $(compgen -W "${packages_list}" -- ${cur}) )
+			fi
+		fi
+		return 0
+	fi
+
+	if [[ "$prev" = @(-W|--workdir) ]]; then
+		COMPREPLY=( $(compgen -d -- ${cur}) )
+		return 0
+	fi
+
+	if [[ "$prev" = @(-o|--output) ]]; then
+		COMPREPLY=( $(compgen -f -- ${cur}) )
+		return 0
+	fi
+
+	local commands="-i --install -u --upgrade -r --remove -d --download -a --available -c --compare -U --catalog -e --email -t --temp=site -s --stream -T --target -o --output -x --exclude -W --workdir -y --yes -n --nomod -D --debug -h --help -v --version -V --syscheck"
+	COMPREPLY=( $(compgen -W "${commands}" -- ${cur}) )
+	return 0
+} &&
+complete -F _pkgutil pkgutil

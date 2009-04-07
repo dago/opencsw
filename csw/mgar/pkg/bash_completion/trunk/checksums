@@ -1,7 +1,8 @@
 cd1c5648272917fbe0eef4ba30bb93f4  download/bash-completion-1.0.tar.gz
-2acb33dad8ee4ea46b02f2cd86ced5e1  download/pkg-get.completion
-0fcc270cda377374a9637d24c8b689b3  download/pkgadd.completion
-7d304567cc880dd42e8ea277c991017f  download/pkgrm.completion
-cc213a6d8dd2d484f2bce4f7905437f8  download/smf.completion
-1745e51815578a18384ff36a449e0002  download/changelog.CSW
+5bc234f6060561c564a20d2a9cc552c1  download/pkg-get.completion
+af7a63477c6e81ed5b08f195e153091e  download/pkgadd.completion
+1389a7771e34fc54fe993d442cce1524  download/pkgrm.completion
+f922762210a6f208695c328c040ac90d  download/pkgutil.completion
+52bd6948f5cc1548c3791a969da0e5e2  download/smf.completion
+a413f5d9346c32ef22093b55956bd268  download/changelog.CSW
 d0c0d867babf351bca9ee97e03be550d  download/opencsw_paths.patch
