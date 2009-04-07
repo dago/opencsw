@@ -1,5 +1,5 @@
 GARNAME = perl-ldap
-GARVERSION = 0.34
+GARVERSION = 0.39
 CATEGORIES = cpan
 AUTHOR = GBARR
 
@@ -10,12 +10,21 @@ define BLURB
   maintenance functions such as adding, deleting or modifying entries.
 endef
 
-DISTFILES += CSWpmldap.gspec CSWpmldap.depend
+DISTFILES = COPYING
+
+PACKAGES = CSWpmldap
+CATALOGNAME = pm_ldap
+ARCHALL = 1
+
+REQUIRED_PKGS = CSWpmxmlsax CSWpmauthensasl CSWpmiosocketssl CSWpmuri CSWpmconvertasn1 CSWpmmimebase64
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEPENDS += cpan/Convert-ASN1 cpan/IO-Socket-SSL
 DEPENDS += cpan/Authen-SASL cpan/XML-SAX
 
 # Module version numbers defeat Sort::Versions
-MANUAL_UPDATE = 1
+#MANUAL_UPDATE = 1
 
 include gar/category.mk
