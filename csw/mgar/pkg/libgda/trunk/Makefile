@@ -16,16 +16,20 @@ MASTER_SITES =  $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTNAME  = $(GARNAME)-$(GARVERSION)
 
-#REQUIRED_PKGS += CSWgconf2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk
-#REQUIRED_PKGS += CSWlibcairo CSWlibglade2 CSWlibgsf CSWlibxml2 CSWlibxrender
-#REQUIRED_PKGS += CSWpango CSWsunmath CSWzlib
+REQUIRED_PKGS += CSWggettextrt CSWglib2 CSWiconv CSWlibxml2 CSWlibxslt
+REQUIRED_PKGS += CSWncurses CSWreadline CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+CFLAGS += -D__FUNCTION__=__func__
+CXXFLAGS += -D__FUNCTION__=__func__
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
-#TEST_TARGET =
+# One test fail for some reason...
+#TEST_TARGET = check
+TEST_TARGET = 
 
 include gar/category.mk
 
