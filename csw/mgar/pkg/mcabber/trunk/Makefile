@@ -16,6 +16,10 @@ SPKG_SOURCEURL = http://www.lilotux.net/~mikael/mcabber/
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PREREQUISITE_PKGS = CSWncurses CSWossldevel CSWotrdevel
+PREREQUISITE_PKGS += CSWaspell CSWggettext CSWglib2devel CSWpkgconfig
+PREREQUISITE_PKGS += CSWgpgerr CSWgpgme CSWiconv
+
 REQUIRED_PKGS = CSWncurses CSWosslrt CSWotr
 REQUIRED_PKGS += CSWaspell CSWggettextrt CSWglib2 
 REQUIRED_PKGS += CSWgpgerr CSWgpgme CSWiconv
@@ -26,6 +30,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=/opt/csw/lib
 CONFIGURE_ARGS += --enable-otr
 CONFIGURE_ARGS += --enable-aspell
+CONFIGURE_ARGS += --enable-sigwinch
 
 # mcabber is geared towards gcc and heavily uses inline functions without
 # static/extern storage qualifiers. Sun Studio needs to emulate gcc 
@@ -35,8 +40,8 @@ CONFIGURE_ARGS += --enable-aspell
 #
 EXTRA_CFLAGS = -features=no%extinl
 
-EXTRA_LDFLAGS = -lsocket
-EXTRA_INC = /opt/csw/lib/ncurses
+EXTRA_LDFLAGS = -lsocket -lnsl
+EXTRA_INC = /opt/csw/lib/ncursesw
 
 # Get rid of inline functions which are referenced externally (no%extinl
 # makes inline functions static and would break linking otherwise)
@@ -53,10 +58,13 @@ pre-build-modulated:
 		$(WORKSRC)/Makefile \
 		$(WORKSRC)/src/Makefile \
 		$(WORKSRC)/libjabber/Makefile
+	@$(MAKECOOKIE)
 
 post-install-modulated:
 	@perl -pi -e '\
 		s|/usr/share/ssl/certs/ca-bundle.crt|/opt/csw/ssl/certs/ca-certificates.crt|;' \
 		$(WORKSRC)/mcabberrc.example
-	@ginstall -d $(DESTDIR)$(docdir)$(GARNAME)
-	@cp $(WORKSRC)/mcabberrc.example $(DESTDIR)$(docdir)$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp $(WORKSRC)/mcabberrc.example $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(GARNAME)/changelog
+	@$(MAKECOOKIE)
