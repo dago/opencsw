@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru xterm-243.orig/charproc.c xterm-243/charproc.c
+--- xterm-243.orig/charproc.c	2009-03-29 01:23:12.000000000 +0100
++++ xterm-243/charproc.c	2009-04-08 14:09:42.224460743 +0200
+@@ -662,7 +662,7 @@
+ 
+ #if OPT_WIDE_CHARS
+     Bres(XtNcjkWidth, XtCCjkWidth, misc.cjk_width, False),
+-    Bres(XtNmkWidth, XtCMkWidth, misc.mk_width, False),
++    Bres(XtNmkWidth, XtCMkWidth, misc.mk_width, True),
+     Bres(XtNutf8Latin1, XtCUtf8Latin1, screen.utf8_latin1, False),
+     Bres(XtNutf8Title, XtCUtf8Title, screen.utf8_title, False),
+     Bres(XtNvt100Graphics, XtCVT100Graphics, screen.vt100_graphics, True),

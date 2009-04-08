@@ -1,0 +1,22 @@
+Note: app-defaults in /opt/csw/lib/X11/app-defaults
+---------------------------------------------------
+
+Although this package delivers some x resource files in
+/opt/csw/lib/X11/app-defaults/ this folder is not evaluated by the
+Solaris libXt per default. 
+
+Either treat them as example files and copy and paste what you need into
+your system / personal x resource files or set XFILESEARCHPATH /
+XUSERFILESEARCHPATH to honor this directory.
+
+  http://www.faqs.org/faqs/x-faq/part2/section-22.html
+
+
+Note: mkWidth/-mk_width activated per default
+---------------------------------------------
+
+This xterm has been adjusted to set the mkWidth resource to true per
+default (xterm command line argument -mk_width), which works around some
+bugs with box drawing characters and Solaris locales. In case you want
+to restore the default behaviour, either start xterm with +mk_width or
+set the mkWidth resource to false.
