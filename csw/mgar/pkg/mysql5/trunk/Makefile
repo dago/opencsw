@@ -2,6 +2,8 @@ GARNAME = mysql5
 GARVERSION = 5.1.32
 CATEGORIES = server
 
+GARCOMPILER = GCC4
+
 DESCRIPTION = Multithreaded SQL database
 define BLURB
   MySQL is a very fast, multi-threaded, multi-user and robust SQL
@@ -18,23 +20,25 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # Change prefix to /opt/csw/mysql5
 prefix = /opt/csw/mysql5
 
+WORKSRC = $(WORKDIR)/mysql-$(GARVERSION)
+
+EXTRA_LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST
+
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-assembler
-CONFIGURE_ARGS += --without-docs 
-CONFIGURE_ARGS += --enable-thread-safe-client 
-CONFIGURE_ARGS += --with-named-z-libs=yes 
-CONFIGURE_ARGS += --with-berkeley-db 
-CONFIGURE_ARGS += --with-innodb 
-CONFIGURE_ARGS += --enable-local-infile 
-CONFIGURE_ARGS += --with-extra-charsets=all 
+CONFIGURE_ARGS += --without-docs
+CONFIGURE_ARGS += --enable-local-infile
+CONFIGURE_ARGS += --with-extra-charsets=all
 CONFIGURE_ARGS += --with-low-memory
+CONFIGURE_ARGS += --with-pthread
+CONFIGURE_ARGS += --with-readline
+CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
+CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-plugins=max-no-ndb
 
 # Enable 64 bits build
 # BUILD64 = 1
 
 include gar/category.mk
 
-post-extract:
-	@for i in $(WORKROOTDIR)/build-isa* ; do mv $$i/mysql-$(GARVERSION) $$i/$(GARNAME)-$(GARVERSION) ; done 
-	@$(MAKECOOKIE)
