@@ -32,7 +32,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 BUILD64 = 1
 NO_ISAEXEC = 1
 
-REQUIRED_PKGS_CSWglib2 = CSWggettextrt CSWiconv CSWsunmath
+REQUIRED_PKGS_CSWglib2 = CSWggettextrt CSWiconv
 REQUIRED_PKGS_CSWglib2devel = CSWglib2 CSWggettextrt CSWiconv
 
 TEST_TARGET = check
