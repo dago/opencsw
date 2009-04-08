@@ -52,6 +52,12 @@ EXTRA_INC = $(includedir)/freetype2
 
 include gar/category.mk
 
+# Hack for now to address the double /opt/csw/lib in $R*PATH. One comes
+# from LD_OPTIONS and this one from pkg-config i suppose.
+pre-build-modulated:
+	@perl -pi -e 's|-R/opt/csw/lib ||' $(WORKSRC)/Makefile
+	@$(MAKECOOKIE)
+
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
