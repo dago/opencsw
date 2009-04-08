@@ -1,3 +1,16 @@
+$TERM, ncurses and how to make xterm display colors
+---------------------------------------------------
+
+The xterm distributed with Solaris is a basic xterm (xterm-r6), whereas this
+is a current xterm and supports a wider range of terminal capabilites.
+To keep CSWncurses compatible with the Solaris xterm, TERM=xterm refers
+to the basic xterm-r6 capabilities, which unfortunately also defeats
+color support in some ncurses-based applications.
+
+To make full use of the capabilities of this xterm (including color-support)
+set TERM=xterm-new.
+
+
 Note: app-defaults in /opt/csw/lib/X11/app-defaults
 ---------------------------------------------------
 
