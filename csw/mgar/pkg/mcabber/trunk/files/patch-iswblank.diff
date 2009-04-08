@@ -1,13 +1,22 @@
---- mcabber-0.9.9.orig/src/screen.h	2008-10-09 22:17:52.000000000 +0200
-+++ mcabber-0.9.9/src/screen.h	2009-03-08 16:31:44.043214331 +0100
-@@ -20,6 +20,10 @@
- //static void spellcheck(char*, char*);
- #endif
+diff --speed-large-files --minimal -Nru mcabber-0.9.9.orig/src/utf8.h mcabber-0.9.9/src/utf8.h
+--- mcabber-0.9.9.orig/src/utf8.h	2008-10-09 22:17:52.000000000 +0200
++++ mcabber-0.9.9/src/utf8.h	2009-04-03 17:57:44.524993893 +0200
+@@ -17,6 +17,18 @@
  
-+#ifndef HAVE_ISWBLANK
-+#define iswblank(wc) iswctype(wc, wctype("blank"))
-+#endif
+ #ifdef HAVE_WCTYPE_H
+ # include <wctype.h>
 +
- #include "hbuf.h"
- #include "logprint.h"
- 
++/* The following bit is a hack for Solaris 8&9 systems that don't have
++ * iswblank(). HAVE_ISWBLANK is not set by the mcabber build system so
++ * this always gets included, even on Solaris 10 systems where iswblank()
++ * is present.
++ * For now i made sure it comes after wctype.h so it doesn't create
++ * problems (wctype.h has calls to iswblank() before wctype() is declared).
++ */
++# ifndef HAVE_ISWBLANK
++# define iswblank(wc) iswctype(wc, wctype("blank"))
++# endif
++
+ #else
+ # define iswblank(c) (c == ' ')
+ # define iswalnum(c) isalnum(c)
