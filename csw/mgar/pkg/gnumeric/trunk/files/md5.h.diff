@@ -1,0 +1,15 @@
+diff -ru ../build-global/gnumeric-1.9.5/plugins/excel/md5.h gnumeric-1.9.5/plugins/excel/md5.h
+--- ../build-global/gnumeric-1.9.5/plugins/excel/md5.h	2007-09-21 02:11:31.000000000 +0200
++++ gnumeric-1.9.5/plugins/excel/md5.h	2009-04-07 08:29:55.235754017 +0200
+@@ -22,7 +22,11 @@
+ #define _MD5_H 1
+ 
+ #include <stdio.h>
++#ifdef __sun
++#include <sys/int_types.h>
++#else
+ #include <stdint.h>
++#endif
+ 
+ #define MD5_DIGEST_SIZE 16
+ #define MD5_BLOCK_SIZE 64

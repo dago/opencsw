@@ -19,7 +19,8 @@ REQUIRED_PKGS += CSWorbit2 CSWpango CSWperl CSWzlib
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-#PATCHFILES = mainpatch 
+PATCHFILES  = md5.h.diff
+PATCHFILES += numtheory.c.diff 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

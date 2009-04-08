@@ -1,0 +1,18 @@
+diff -ru ../build-global/gnumeric-1.9.5/plugins/numtheory/numtheory.c gnumeric-1.9.5/plugins/numtheory/numtheory.c
+--- ../build-global/gnumeric-1.9.5/plugins/numtheory/numtheory.c	2009-03-02 03:05:42.000000000 +0100
++++ gnumeric-1.9.5/plugins/numtheory/numtheory.c	2009-04-08 00:59:37.712247116 +0200
+@@ -38,7 +38,14 @@
+  * represented in a gnm_float _and_ in a guint64.  (For regular "double",
+  * the latter part is irrelevant.)
+  */
++#ifdef __sun
++static inline double bit_max_fn(void) {
++       return MIN (1 / GNM_EPSILON, (gnm_float)G_MAXUINT64);
++}
++#define bit_max (bit_max_fn())
++#else
+ static const double bit_max = MIN (1 / GNM_EPSILON, (gnm_float)G_MAXUINT64);
++#endif
+ 
+ /* ------------------------------------------------------------------------- */
+ 
