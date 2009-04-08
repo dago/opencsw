@@ -12,6 +12,8 @@ endef
 MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+PACKAGES = CSWvorbis
+CATALOGNAME = libvorbis
 REQUIRED_PKGS = CSWlibogg
 
 SPKG_SOURCEURL = http://www.vorbis.com/
