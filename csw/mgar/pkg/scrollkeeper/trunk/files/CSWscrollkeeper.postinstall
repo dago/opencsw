@@ -1,0 +1,5 @@
+#!/bin/sh
+PATH=/opt/csw/bin:$PATH;export PATH
+if [ -x /opt/csw/bin/scrollkeeper-rebuilddb ]; then
+	/opt/csw/bin/scrollkeeper-rebuilddb -q -p /var/opt/csw/lib/scrollkeeper
+fi

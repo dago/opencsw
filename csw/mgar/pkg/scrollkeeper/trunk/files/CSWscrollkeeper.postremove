@@ -1,0 +1,6 @@
+#!/bin/sh
+PATH=/opt/csw/bin:$PATH;export PATH
+if [ -d /var/opt/csw/lib/scrollkeeper ]; then
+  rm -rf /var/opt/csw/lib/scrollkeeper
+  rm -f /var/opt/csw/log/scrollkeeper.log*
+fi
