@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z "$JAVA" ]
+then
+  if [ -z "$JAVA_HOME" ]
+  then
+    JAVA=/usr/jdk/latest/bin/java
+  fi
+fi
+
+exec /opt/csw/bin/rlwrap "$JAVA" -classpath /opt/csw/share/java/kawa.jar kawa.repl "$@"
