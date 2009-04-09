@@ -5,8 +5,8 @@ GARCH = all
 
 DESCRIPTION = Java implementation of Scheme and a framework for implementing high-level and dynamic languages
 
-MASTER_SITES = ftp://ftp.gnu.org/pub/gnu/kawa
-DISTFILES  = apache-maven-$(GARVERSION)-bin.tar.gz
+MASTER_SITES = ftp://ftp.gnu.org/pub/gnu/kawa/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWkawa,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
