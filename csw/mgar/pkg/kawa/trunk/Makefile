@@ -1,7 +1,7 @@
 GARNAME = kawa
 GARVERSION = 1.9.1
 CATEGORIES = utils
-GARCH = all
+ARCHALL = 1
 
 DESCRIPTION = Java implementation of Scheme and a framework for implementing high-level and dynamic languages
 
