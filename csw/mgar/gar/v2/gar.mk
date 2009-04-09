@@ -121,7 +121,7 @@ modulations = $(if $(word 2,$(1)),\
 	),\
 	$(call expand_modulator_1,$(1)))
 
-MODULATIONS ?= $(strip $(call modulations,$(strip $(MODULATORS))))
+MODULATIONS ?= $(filter-out $(SKIP_MODULATIONS),$(strip $(call modulations,$(strip $(MODULATORS)))))
 
 # _modulate(ISA STATIC,,,)
 # -> _modulate2(STATIC,isa-i386,ISA,ISA=i386)
