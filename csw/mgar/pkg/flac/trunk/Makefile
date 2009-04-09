@@ -97,6 +97,10 @@ CC := $(abspath ./bin/cc)
 CXX := $(abspath ./bin/CC)
 PATH := ./bin:$(PATH):/usr/ccs/bin
 
+post-patch-isa-i386-garversion-1.1.2:
+	perl -pi -e "s/-O2 //g" $(WORKSRC)/configure
+	$(MAKECOOKIE)
+
 post-patch-isa-sparcv8-garversion-1.1.2:
 	perl -pi -e "s/-O2 //g" $(WORKSRC)/configure
 	$(MAKECOOKIE)
