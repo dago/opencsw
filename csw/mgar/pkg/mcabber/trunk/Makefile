@@ -2,7 +2,7 @@ GARNAME = mcabber
 GARVERSION = 0.9.9
 CATEGORIES = utils
 
-DESCRIPTION = A small Jabber console client
+DESCRIPTION = A small terminal-based Jabber client
 define BLURB
 mcabber is a small Jabber console client.  mcabber includes features such as
 SSL support, MUC (Multi-User Chat) support, history logging, command
