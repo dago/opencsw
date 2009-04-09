@@ -1,7 +1,7 @@
-diff -Naur db-4.4.20.orig/dist/ltmain.sh db-4.4.20/dist/ltmain.sh
---- dist/ltmain.sh	2005-10-17 16:35:53.000000000 +0200
-+++ dist/ltmain.sh	2008-05-14 08:30:26.766534000 +0200
-@@ -1552,9 +1552,7 @@
+diff -Naur flac-1.1.4.orig/ltmain.sh flac-1.1.4.patched/ltmain.sh
+--- flac-1.1.4.orig/ltmain.sh	2005-04-26 20:23:39.000000000 +0200
++++ flac-1.1.4.patched/ltmain.sh	2009-04-09 13:59:57.521039544 +0200
+@@ -1545,9 +1545,7 @@
  	esac
          compile_command="$compile_command $arg"
          finalize_command="$finalize_command $arg"
