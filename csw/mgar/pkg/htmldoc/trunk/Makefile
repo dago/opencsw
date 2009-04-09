@@ -46,5 +46,5 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 
 # Disable check until package is released
-ENABLE_CHECK = 0
+#ENABLE_CHECK = 0
 include gar/category.mk
