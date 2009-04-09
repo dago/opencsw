@@ -18,7 +18,3 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 PATH := /usr/jdk1.5.0_15/bin:$(PATH)
-
-# checkpkg complains unless this file is removed.
-post-install:
-	rm $(DESTDIR)/opt/csw/share/info/dir
