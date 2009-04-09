@@ -8,18 +8,21 @@ to the basic xterm-r6 capabilities, which unfortunately also defeats
 color support in some ncurses-based applications.
 
 To make full use of the capabilities of this xterm (including color-support)
-set TERM=xterm-new.
+set TERM=xterm-new. You might then however experience problems when 
+SSH'ing to machines where xterm-new isn't known to terminfo ("terminal not
+fully functional" messages). That's the main reason TERM=xterm-new hasn't
+been compiled in as a default by the way.
 
 
-Note: app-defaults in /opt/csw/lib/X11/app-defaults
----------------------------------------------------
+Note: X resource files in /opt/csw/lib/X11/app-defaults
+-------------------------------------------------------
 
-Although this package delivers some x resource files in
+Although this package delivers some X resource files in
 /opt/csw/lib/X11/app-defaults/ this folder is not evaluated by the
 Solaris libXt per default. 
 
 Either treat them as example files and copy and paste what you need into
-your system / personal x resource files or set XFILESEARCHPATH /
+your system / personal X resource files or set XFILESEARCHPATH /
 XUSERFILESEARCHPATH to honor this directory.
 
   http://www.faqs.org/faqs/x-faq/part2/section-22.html

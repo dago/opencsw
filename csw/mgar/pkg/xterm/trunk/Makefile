@@ -39,6 +39,8 @@ CONFIGURE_ARGS += --enable-logging
 CONFIGURE_ARGS += --enable-sun-fkeys
 CONFIGURE_ARGS += --enable-warnings
 CONFIGURE_ARGS += --enable-wide-chars
+CONFIGURE_ARGS += --program-suffix=86 --with-xterm-symlink
+CONFIGURE_ARGS += --with-freetype-cflags="-I$(includedir)/freetype2"
 
 # luit comes with snv_85 
 #   http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6662431
@@ -47,8 +49,6 @@ CONFIGURE_ARGS += --enable-wide-chars
 #GARFLAVOR = DBG
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
-
-EXTRA_INC = $(includedir)/freetype2
 
 include gar/category.mk
 
