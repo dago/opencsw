@@ -3,12 +3,13 @@ GARVERSION = 1.2.1
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.1.4 1.2.1
+# Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on
+MODULATIONS_GARVERSION = 1.1.2 1.2.1
 
-MODULATIONS = isa-sparcv8-garversion-1.1.4
+MODULATIONS = isa-sparcv8-garversion-1.1.2
 # There was no 64 bit legacy version. Do not provide it as new binaries should
 # link against the new version.
-#MODULATIONS += isa-sparcv9-garversion-1.1.4
+#MODULATIONS += isa-sparcv9-garversion-1.1.2
 MODULATIONS += isa-sparcv8-garversion-1.2.1
 MODULATIONS += isa-sparcv9-garversion-1.2.1
 
@@ -28,8 +29,8 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(SF_PROJ)-$(GARVERSION)
 DISTFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(SF_PROJ)-$(VERSION).tar.gz)
 
-PATCHFILES_isa-sparcv8-garversion-1.1.4 = libtool-64bit.patch
-PATCHFILES_isa-sparcv9-garversion-1.1.4 = libtool-64bit.patch
+PATCHFILES_isa-sparcv8-garversion-1.1.2 = libtool-64bit.patch
+PATCHFILES_isa-sparcv9-garversion-1.1.2 = libtool-64bit.patch
 PATCHFILES_isa-sparcv8-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 PATCHFILES_isa-sparcv9-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 
@@ -42,6 +43,8 @@ REQUIRED_PKGS_CSWxmmsflac = CSWglib CSWgtk CSWxmms CSWflac
 
 SPKG_DESC_CSWflac = Free lossless audio codec
 SPKG_DESC_CSWxmmsflac = FLAC plugin for XMMS
+
+SPKG_SOURCEURL = http://flac.sourceforge.net/
 
 LICENSE = $(foreach lic,FDL GPL LGPL Xiph,COPYING.$(lic))
 
@@ -65,19 +68,19 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 TEST_TARGET = check
 
-MERGE_SCRIPTS_isa-i386-garversion-1.1.4 = copy-only
-MERGE_DIRS_isa-i386-garversion-1.1.4 = $(libdir)
-MERGE_SCRIPTS_isa-amd64-garversion-1.1.4 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-1.1.4 = $(libdir)
+MERGE_SCRIPTS_isa-i386-garversion-1.1.2 = copy-only
+MERGE_DIRS_isa-i386-garversion-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-garversion-1.1.2 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-1.1.2 = $(libdir)
 
 MERGE_SCRIPTS_isa-i386-garversion-1.2.1 = copy-all
 MERGE_SCRIPTS_isa-amd64-garversion-1.2.1 = copy-relocated-only
 MERGE_DIRS_isa-amd64-garversion-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.1.4 = copy-only
-MERGE_DIRS_isa-sparcv8-garversion-1.1.4 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-garversion-1.1.4 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-1.1.4 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-garversion-1.1.2 = copy-only
+MERGE_DIRS_isa-sparcv8-garversion-1.1.2 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-garversion-1.1.2 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-1.1.2 = $(libdir)
 
 MERGE_SCRIPTS_isa-sparcv8-garversion-1.2.1 = copy-all
 MERGE_SCRIPTS_isa-sparcv9-garversion-1.2.1 = copy-relocated-only
@@ -90,3 +93,7 @@ include gar/category.mk
 CC := $(abspath ./bin/cc)
 CXX := $(abspath ./bin/CC)
 PATH := ./bin:$(PATH):/usr/ccs/bin
+
+post-patch-isa-sparcv8-garversion-1.1.2:
+	perl -pi -e "s/-O2 //g" $(WORKSRC)/configure
+	$(MAKECOOKIE)
