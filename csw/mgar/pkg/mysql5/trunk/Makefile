@@ -22,7 +22,7 @@ prefix = /opt/csw/mysql5
 
 WORKSRC = $(WORKDIR)/mysql-$(GARVERSION)
 
-EXTRA_LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST
+EXTRA_LIB = /opt/csw/lib
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
