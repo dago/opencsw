@@ -19,6 +19,9 @@ LICENSE = LICENSE
 
 BUILD64 = 1
 
+# No runtime linker path as we don't reference any libs from /opt/csw
+RUNPATH_LINKER_FLAGS =
+
 # autoconf tries to compile for the current kernel. Get rid of
 # these extra flags as we set them ourselves with BUILD64 = 1
 BUILD_OVERRIDE_DIRS = ARCHFLAG
