@@ -1,5 +1,5 @@
 GARNAME = sudo
-GARVERSION = 1.6.9p8
+GARVERSION = 1.7.0
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges
@@ -12,30 +12,45 @@ endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+PATCHFILES = install.diff
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of new 
+# upstream software release
 UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
-DISTFILES += CSWsudo.gspec CSWsudo.postinstall 
-DISTFILES += CSWsudo.prototype CSWsudo.depend
-DISTFILES += CSWsudo.space CSWsudo.postremove
+PACKAGES = CSWsudo CSWsudo-common
 
-DISTFILES += CSWsudo-common.gspec CSWsudo-common.postinstall 
-DISTFILES += CSWsudo-common.prototype CSWsudo-common.depend
-DISTFILES += CSWsudo-common.space
+CATALOGNAME_CSWsudo = sudo
+SPKG_DESC_CSWsudo = $(DESCRIPTION)
+SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws
+INCOMPATIBLE_PKGS_CSWsudo = CSWsudo-ldap
+REQUIRED_PKGS_CSWsudo = CSWsudo-common CSWggettextrt
 
-# Original maintainer's patch to disable strip on install
-PATCHFILES = install.diff
+CATALOGNAME_CSWsudo-common = sudo_common
+SPKG_DESC_CSWsudo-common = Common files for sudo
+SPKG_SOURCEURL_CSWsudo-common = http://www.sudo.ws
+REQUIRED_PKGS_CSWsudo-common = CSWggettextrt
+
+DISTFILES += CSWsudo-common.postinstall 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
+CONFIGURE_ARGS += --with-logging=both
+CONFIGURE_ARGS += --with-ignore-dot
+CONFIGURE_ARGS += --with-env-editor
 
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 include gar/category.mk
 
-post-install:
+PKGFILES_CSWsudo = .*/bin/.*
+
+post-install-modulated:
 	@( cd $(DESTDIR)$(sysconfdir) ; mv sudoers sudoers.CSW )
+	@( cd $(DESTDIR)$(bindir) ; rm -f sudoedit )
+	@( cd $(DESTDIR)$(bindir) ; mv sudo sudo.minimal )
+	@( cd $(DESTDIR)$(bindir) ; ln -f sudo.minimal sudo )
+	@( cd $(DESTDIR)$(bindir) ; ln -f sudo.minimal sudoedit )
 	@$(MAKECOOKIE)
 	$(DONADA)
