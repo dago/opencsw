@@ -45,7 +45,7 @@ install-custom:
 	@cp $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
-	@cp $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)/
+	@cp $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
 #	@cp $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
 #	@cp $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil
 	@cp $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
