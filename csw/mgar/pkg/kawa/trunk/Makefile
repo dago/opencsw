@@ -7,15 +7,16 @@ DESCRIPTION = Java implementation of Scheme and a framework for implementing hig
 
 MASTER_SITES = ftp://ftp.gnu.org/pub/gnu/kawa/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += bin-kawa
 
-REQUIRED_PKG = CSWncurses CSWreadline
+REQUIRED_PKG = CSWrlwrap
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = kawa-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-kawa-frontend
-TEST_SCRIPTS =
+
+TEST_SCRIPTS    =
 
 include gar/category.mk
 
@@ -27,3 +28,7 @@ export kawa_LDFLAGS
 
 LIBS = -lsocket
 export LIBS
+
+post-install-modulated:
+	# Overwrite the default kawa junk
+	cp $(WORKDIR)/bin-kawa $(DESTDIR)/opt/csw/bin/kawa
