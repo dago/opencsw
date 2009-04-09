@@ -489,7 +489,8 @@ LD_OPTIONS ?= $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS)
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
 #    but we want PATH to be a recursive variable, or 'gmake isaenv' won't work
-PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(binpath_install)/$(MM_BINDIR)):$(DESTDIR)$(binpath_install):$(abspath $(DESTDIR)$(sbinpath_install)/$(MM_BINDIR)):$(DESTDIR)$(sbinpath_install):)$(abspath $(binpath_install)/$(MM_BINDIR)):$(binpath_install):$(abspath $(sbinpath_install)/$(MM_BINDIR)):$(sbinpath_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin
+# /usr/openwin/bin is needed for xmkmf used in gar.lib.mk
+PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(binpath_install)/$(MM_BINDIR)):$(DESTDIR)$(binpath_install):$(abspath $(DESTDIR)$(sbinpath_install)/$(MM_BINDIR)):$(DESTDIR)$(sbinpath_install):)$(abspath $(binpath_install)/$(MM_BINDIR)):$(binpath_install):$(abspath $(sbinpath_install)/$(MM_BINDIR)):$(sbinpath_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/openwin/bin
 
 # This is for foo-config chaos
 PKG_CONFIG_DIRS ?= $(libdir_install) $(EXTRA_PKG_CONFIG_DIRS)
