@@ -127,9 +127,6 @@ else
 SPKG_REVSTAMP  ?= ,REV=$(shell date '+%Y.%m.%d')
 endif
 
-# Is this a full or incremental build?
-SPKG_INCREMENTAL ?= 1
-
 # Where we find our mkpackage global templates
 PKGLIB = $(CURDIR)/$(GARDIR)/pkglib
 
