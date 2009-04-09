@@ -38,8 +38,8 @@ PATCHFILES_isa-i386-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 PATCHFILES_isa-amd64-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 
 PACKAGES = CSWflac CSWxmmsflac
-CATALOGNAME = libflac
-CATALOGNAME = xmms_flac
+CATALOGNAME_CSWflac = libflac
+CATALOGNAME_CSWxmmsflac = xmms_flac
 
 REQUIRED_PKGS_CSWflac = CSWiconv CSWlibogg
 REQUIRED_PKGS_CSWxmmsflac = CSWglib CSWgtk CSWxmms CSWflac
