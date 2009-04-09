@@ -12,18 +12,13 @@ DISTFILES += $(call admfiles,CSWkawa,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = kawa-(\d+(?:\.\d+)*).tar.gz
 
-#CONFIGURE_SCRIPTS =
-#BUILD_SCRIPTS =
-#TEST_SCRIPTS =
-#INSTALL_SCRIPTS = common
+CONFIGURE_ARGS = $(DIRPATHS)
+TEST_SCRIPTS =
 
 include gar/category.mk
 
-#install-common:
-#	mkdir -p $(DESTDIR)/opt/csw/bin
-#	rm -rf $(DESTDIR)/opt/csw/share/maven2
-#	mkdir -p $(DESTDIR)/opt/csw/share/maven2
-#	cp -r $(WORKDIR)/apache-maven-$(GARVERSION)/ $(DESTDIR)/opt/csw/share/maven2/home
-#	cp $(WORKDIR)/bin-mvn $(DESTDIR)/opt/csw/bin/mvn
-#	chmod +x $(DESTDIR)/opt/csw/bin/mvn
-#	$(MAKECOOKIE)
+PATH := /usr/jdk1.5.0_15/bin:$(PATH)
+
+# checkpkg complains unless this file is removed.
+post-install:
+	rm $(DESTDIR)/opt/csw/share/info/dir
