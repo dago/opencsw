@@ -1,0 +1,6 @@
+%var            bitname kawa
+%var            pkgname CSWkawa
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%copyright
+
+See /opt/csw/share/kawa/LICENSE.txt
