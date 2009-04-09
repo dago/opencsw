@@ -6,12 +6,10 @@ EXTRA_MODULATORS = GARVERSION
 # Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on
 MODULATIONS_GARVERSION = 1.1.2 1.2.1
 
-MODULATIONS = isa-sparcv8-garversion-1.1.2
 # There was no 64 bit legacy version. Do not provide it as new binaries should
 # link against the new version.
-#MODULATIONS += isa-sparcv9-garversion-1.1.2
-MODULATIONS += isa-sparcv8-garversion-1.2.1
-MODULATIONS += isa-sparcv9-garversion-1.2.1
+SKIP_MODULATIONS = isa-sparcv9-garversion-1.1.2
+SKIP_MODULATIONS += isa-amd64-garversion-1.1.2
 
 DESCRIPTION = Free lossless audio codec
 define BLURB
@@ -33,6 +31,11 @@ PATCHFILES_isa-sparcv8-garversion-1.1.2 = libtool-64bit.patch
 PATCHFILES_isa-sparcv9-garversion-1.1.2 = libtool-64bit.patch
 PATCHFILES_isa-sparcv8-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 PATCHFILES_isa-sparcv9-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
+
+PATCHFILES_isa-i386-garversion-1.1.2 = libtool-64bit.patch
+PATCHFILES_isa-amd64-garversion-1.1.2 = libtool-64bit.patch
+PATCHFILES_isa-i386-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
+PATCHFILES_isa-amd64-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 
 PACKAGES = CSWflac CSWxmmsflac
 CATALOGNAME = libflac
