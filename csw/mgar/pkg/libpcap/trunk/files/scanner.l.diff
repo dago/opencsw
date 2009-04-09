@@ -1,0 +1,11 @@
+--- ../build-global/libpcap-0.9.8/scanner.l	2007-06-11 21:34:28.000000000 +0200
++++ libpcap-0.9.8/scanner.l	2009-04-09 04:41:33.481612776 +0200
+@@ -32,6 +32,8 @@
+ #include <ctype.h>
+ #include <string.h>
+ 
++#include <stdlib.h> 
++
+ #include "pcap-int.h"
+ 
+ #include "gencode.h"

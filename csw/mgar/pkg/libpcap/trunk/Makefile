@@ -1,5 +1,5 @@
 GARNAME = libpcap
-GARVERSION = 0.8.3
+GARVERSION = 0.9.8
 CATEGORIES = lib
 
 DESCRIPTION = Libraries for network diagnostics
@@ -9,22 +9,29 @@ endef
 
 MASTER_SITES = http://www.tcpdump.org/release/ 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibpcap,)
+
+LICENSE = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Shared libraries patch
-PATCHFILES = solib.diff
+PATCHFILES  = Makefile.in.diff
+PATCHFILES += scanner.l.diff
 
 # No test target for libpcap
 TEST_SCRIPTS =
 
-CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1
 
-INSTALL_OVERRIDE_DIRS = prefix exec_prefix includedir libdir mandir 
+EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv8plus+vis 
+EXTRA_BUILD_ISAS_i386  = pentium pentium_pro+mmx
+
+TEST_TARGET = check
+
+EXTRA_CFLAGS = -I.
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-ipv6
 
 include gar/category.mk
-
-post-install:
-	rm -f $(DESTDIR)$(libdir)/$(GARNAME).a
