@@ -49,7 +49,7 @@ ALLFILES_DISTFILES ?= $(DISTFILES)
 ALLFILES_PATCHFILES ?= $(PATCHFILES) $(foreach M,$(MODULATIONS),$(PATCHFILES_$M))
 ALLFILES_DYNSCRIPTS ?= $(DYNSCRIPTS)
 ALLFILES_GIT_REPOS ?= $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))
-ALLFILES ?= $(ALLFILES_DISTFILES) $(ALLFILES_PATCHFILES) $(ALLFILES_DYNSCRIPTS) $(ALLFILES_GIT_REPOS)
+ALLFILES ?= $(sort $(ALLFILES_DISTFILES) $(ALLFILES_PATCHFILES) $(ALLFILES_DYNSCRIPTS) $(ALLFILES_GIT_REPOS) $(EXTRA_ALLFILES))
 
 ifeq ($(MAKE_INSTALL_DIRS),1)
 INSTALL_DIRS = $(addprefix $(DESTDIR),$(prefix) $(exec_prefix) $(bindir) $(sbindir) $(libexecdir) $(datadir) $(sysconfdir) $(sharedstatedir) $(localstatedir) $(libdir) $(infodir) $(lispdir) $(includedir) $(mandir) $(foreach NUM,1 2 3 4 5 6 7 8, $(mandir)/man$(NUM)) $(sourcedir))
