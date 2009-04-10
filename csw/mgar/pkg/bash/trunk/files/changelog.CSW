@@ -1,3 +1,9 @@
+bash (4.0,REV=2009.04.10) unstable
+
+  * Added bash patches bash40-011 to bash40-017.
+
+   -- Yann Rouillard <yann@opencsw.org>  Fri, 10 Apr 2009 12:06:33 +0200
+
 bash (4.0,REV=2009.03.21) unstable
 
   * Added bash patches bash40-001 to bash40-010.

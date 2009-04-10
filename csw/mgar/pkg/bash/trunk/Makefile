@@ -1,6 +1,6 @@
 GARNAME = bash
 GARVERSION = 4.0
-PATCHLEVEL = 10
+PATCHLEVEL = 17
 CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
