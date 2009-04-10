@@ -1,6 +1,0 @@
-%var            bitname docbookxsldoc
-%var            pkgname CSWdocbookxsldoc
-%var		arch all
-%var		desc Documentation for the Docbook XSL Stylesheets
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-

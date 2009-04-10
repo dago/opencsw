@@ -1,7 +1,6 @@
---- /dev/null	2008-12-14 03:06:26.000000000 +0100
-+++ docbook-xsl-1.69.1/Makefile	2008-12-14 04:12:33.444192066 +0100
-@@ -0,0 +1,49 @@
-+
+--- /dev/null	2009-04-10 02:03:32.000000000 +0200
++++ docbook-xsl-1.74.3/Makefile.csw	2009-04-10 04:25:32.872750482 +0200
+@@ -0,0 +1,46 @@
 +DESTDIR ?= ... should be overridden by GAR ...
 +
 +SHELL = /opt/csw/bin/bash
@@ -29,11 +28,9 @@
 +	cp htmlhelp/*.xsl $(instdir)/htmlhelp
 +	cp javahelp/*.xsl $(instdir)/javahelp
 +	cp lib/lib.xsl $(instdir)/lib
-+	cp template/README $(instdir)/template
 +	cp template/*.xml $(instdir)/template
 +	cp template/*.xsl $(instdir)/template
 +	cp xhtml/*.xsl $(instdir)/xhtml
-+	cp manpages/README $(instdir)/manpages
 +	cp manpages/*.xsl $(instdir)/manpages
 +	cp profiling/*.xsl $(instdir)/profiling
 +
@@ -48,6 +45,5 @@
 +
 +install-docs:
 +	gmkdir -p $(docdir)
-+	cp BUGS ChangeLog README TODO $(docdir)/
++	cp AUTHORS BUGS README TODO RELEASE-NOTES* NEWS* $(docdir)/
 +	cp -R doc $(docdir)/
-

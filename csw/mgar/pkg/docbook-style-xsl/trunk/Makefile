@@ -1,10 +1,15 @@
 GARNAME = docbookxsl
-GARVERSION = 1.69.1
-PATCHLEVEL = 5.1
+GARVERSION = 1.74.3
 CATEGORIES = xtra
 
 # for our (modified from rhel) copied in Makefile.
 PREREQUISITE_PKGS = CSWgfile CSWbash
+
+PACKAGES = CSWdocbookxsl CSWdocbookxsldoc
+ARCHALL = 1
+
+CATALOGNAME_CSWdocbookxsl = $(GARNAME)
+CATALOGNAME_CSWdocbookxsldoc = $(GARNAME)doc
 
 REQUIRED_PKGS_CSWdocbookxsl = CSWsgmlcommon CSWxmlcommon CSWdocbookdtds
 REQUIRED_PKGS_CSWdocbookxsl += CSWlibxml2
@@ -28,20 +33,17 @@ SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = docbook-xsl-$(GARVERSION).tar.bz2
 DISTFILES += docbook-xsl-doc-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWdocbookxsl,postinstall preremove)
-DISTFILES += $(call admfiles,CSWdocbookxsldoc,)
+DISTFILES += CSWdocbookxsl.postinstall CSWdocbookxsl.preremove
 
-# These are listed in the same order they'd be applied during the rpm build...
-# They don't apply cleanly, otherwise.
-PATCHFILES  = docbook-xsl-pagesetup.patch docbook-xsl-marginleft.patch
-PATCHFILES += docbook-xsl-lists.patch docbook-xsl-sp.patch
 PATCHFILES += add_makefile.patch
 
 CONFIGURE_SCRIPTS =
 
-BUILD_SCRIPTS =
+BUILD_SCRIPTS = 
 
 TEST_SCRIPTS =
+
+INSTALL_SCRIPTS = $(WORKSRC)/Makefile.csw
 
 INSTALL_ARGS = DESTDIR=$(DESTDIR)
 
@@ -50,5 +52,7 @@ WORKSRC = $(WORKDIR)/docbook-xsl-$(GARVERSION)
 
 include gar/category.mk
 
-#override system checkpkg so that docbookxsldoc can depend on docbookxsl
-PATH := /home/bwalton:$(PATH)
+install-%/Makefile.csw:
+	@echo " ==> Running make install in $*"
+	@$(INSTALL_ENV) $(MAKE) -f Makefile.csw DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@$(MAKECOOKIE)

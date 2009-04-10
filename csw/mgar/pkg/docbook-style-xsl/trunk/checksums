@@ -1,11 +1,5 @@
-6ebd29a67f2dcc3f2220f475ee6f6552  download/docbook-xsl-1.69.1.tar.bz2
-b3bf09a0b1a368a3490e68ffc695d290  download/docbook-xsl-doc-1.69.1.tar.bz2
-4120f10e50070dd8fc2284d5214bf51d  download/CSWdocbookxsl.gspec
-e96ac786b8d7b1bd6bc76787c965017a  download/CSWdocbookxsl.postinstall
+c022eb8e15bf110605a4695235f20075  download/CSWdocbookxsl.postinstall
 1b98827c1a02fcec57ec0f7376bb8815  download/CSWdocbookxsl.preremove
-a0c6ee83fdef595158d9eed95d508d8f  download/CSWdocbookxsldoc.gspec
-84b37b559cc95c747e39a5a8f79558a3  download/docbook-xsl-pagesetup.patch
-1d1ff63f5ebd3527c925f68e55138b6f  download/docbook-xsl-marginleft.patch
-cec8c281ed1c9be99ad47a74362248d5  download/docbook-xsl-lists.patch
-e7bbf777eadbb70aaed073006de0347e  download/docbook-xsl-sp.patch
-8b8a8d4307fa3f3dcb992ebd16c4fb09  download/add_makefile.patch
+9ba4d6409de31404b8022f10630016e0  download/add_makefile.patch
+c77c0c317040b2f2e366842bd9df2218  download/docbook-xsl-1.74.3.tar.bz2
+2a032a95fbf24367d13acc8210f9cd72  download/docbook-xsl-doc-1.74.3.tar.bz2

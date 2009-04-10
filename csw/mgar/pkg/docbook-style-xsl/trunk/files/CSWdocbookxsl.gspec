@@ -1,5 +1,0 @@
-%var            bitname docbookxsl
-%var            pkgname CSWdocbookxsl
-%var		arch all
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-
