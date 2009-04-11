@@ -1,5 +1,19 @@
+#####################################################################
+# OpenCSW build recipe for elinks
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+###### Package information #######
+
 GARNAME = elinks
-GARVERSION = 0.11.5
+GARVERSION = 0.11.6
 CATEGORIES = net
 
 DESCRIPTION = An advanced text mode web browser
@@ -10,24 +24,35 @@ define BLURB
   scripts. It has limited support for CSS and Javascript.
 endef
 
+PACKAGES = CSWelinks
+
+REQUIRED_PKGS  = CSWbzip2
+REQUIRED_PKGS += CSWexpat 
+REQUIRED_PKGS += CSWiconv 
+REQUIRED_PKGS += CSWlibidn 
+REQUIRED_PKGS += CSWosslrt 
+REQUIRED_PKGS += CSWzlib 
+
+
+###### Upstream and opencsw files information #######
+
 MASTER_SITES = http://elinks.cz/download/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWelinks,prototype depend)
+DISTFILES  = CSWelinks.prototype
 DISTFILES += changelog.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-# suppress the rdynamic test which doesn't
-# work correctly
-# PATCHFILES = configure_no_rdynamic.patch
-
 # Debian security path for CVE-2007-2027
 PATCHFILES += elinks-417789.diff
+
+
+##### Build and installation information #####
 
 # we use bash instead of sh as the Makefiles
 # use "test -e" unsupported with sun sh
@@ -52,6 +77,6 @@ pre-configure:
 	touch $(WORKSRC)/configure
 	touch $(WORKSRC)/config.status
 
-post-install:
-	@ginstall -D $(WORKDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)/changelog.CSW 
+post-merge:
+	@ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW 
 
