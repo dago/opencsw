@@ -13,6 +13,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 REQUIRED_PKGS = CSWncurses
 
+SPKG_SOURCEURL = http://lame.sourceforge.net/
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=628063
 UPSTREAM_USE_SF = 1
