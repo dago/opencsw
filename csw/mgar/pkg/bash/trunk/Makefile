@@ -24,6 +24,11 @@ endef
 BASH_VERSION = $(shell echo $(GARVERSION)c | cut -d. -f1-2)
 BASH_PATCHLEVEL = $(shell echo -n $(GARVERSION) | cut -d. -f3)
 
+PACKAGES = CSWbash
+
+REQUIRED_PKGS = CSWggettextrt
+REQUIRED_PKGS += CSWiconv
+
 
 ###### Upstream and opencsw files information #######
 
@@ -34,8 +39,9 @@ UFILES_REGEX = bash-(\d+\.\d+).tar.gz $(PATCHFILE_PREFIX)-(\d+)
 MASTER_SITES = $(GNU_MIRROR)/bash-$(BASH_VERSION)-patches/
 # Main archive location
 MASTER_SITES += $(GNU_MIRROR)
+DISTNAME = $(GARNAME)-$(BASH_VERSION)
 DISTFILES  = $(GARNAME)-$(BASH_VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWbash,prototype postinstall postremove depend)
+DISTFILES += CSWbash.prototype CSWbash.postinstall CSWbash.postremove
 DISTFILES += changelog.CSW
 
 PATCHFILE_PREFIX = bash$(subst .,,$(BASH_VERSION))
@@ -68,8 +74,9 @@ pre-configure:
 	touch $(WORKSRC)/config.status
 
 
-post-install:
+post-merge:
 	@( for FILE in README RBASH NEWS NOTES POSIX AUTHORS doc/FAQ doc/INTRO; do \
-		 ginstall -D $(WORKSRC)/$$FILE $(DESTDIR)$(docdir)/$(GARNAME)/`basename $$FILE`; \
+		 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(GARNAME)/`basename $$FILE`; \
 	done )
+	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW
 
