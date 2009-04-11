@@ -1,3 +1,4 @@
+e build /etc/shells ? ? ?
 f none /opt/csw/bin/bash 0755 root bin
 f none /opt/csw/bin/bashbug 0555 root bin
 d none /opt/csw/share/doc/bash 0755 root bin

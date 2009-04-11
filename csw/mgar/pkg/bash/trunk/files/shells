@@ -1,0 +1,40 @@
+if [ install = "$1" ]; then 
+	if [ -f "$PKG_INSTALL_ROOT/etc/shells" ]; then 
+		cat "$PKG_INSTALL_ROOT/etc/shells"
+	else
+		cat <<-__EOT__
+# default entries
+/usr/bin/sh
+/usr/bin/csh
+/usr/bin/ksh
+/usr/bin/jsh
+/bin/sh
+/bin/csh
+/bin/ksh
+/bin/jsh
+/sbin/sh
+/sbin/jsh
+/usr/bin/pfsh
+/usr/bin/pfcsh
+/usr/bin/pfksh
+/usr/bin/bash
+/usr/bin/tcsh
+/usr/bin/zsh
+/bin/pfsh
+/bin/pfcsh
+/bin/pfksh
+/bin/bash
+/bin/tcsh
+/bin/zsh
+/usr/xpg4/bin/sh
+
+# added entries
+__EOT__
+	fi &&
+	cat <<-__EOT__
+/opt/csw/bin/bash    # added by $PKGINST
+__EOT__
+
+elif [ remove = "$1" ] && [ -f "$PKG_INSTALL_ROOT/etc/shells" ]; then 
+	egrep -v "^/opt/csw/bin/bash(#| |  |\$)" <$PKG_INSTALL_ROOT/etc/shells || echo "#"
+fi

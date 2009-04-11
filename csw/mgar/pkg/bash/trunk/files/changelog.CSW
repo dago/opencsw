@@ -2,6 +2,7 @@ bash (4.0.17,REV=2009.04.11) unstable
 
   * Added bash patches bash40-011 to bash40-017.
   * Added patch level in package version.
+  * Now uses build class action scripts to modify /etc/shells.
 
  -- Yann Rouillard <yann@opencsw.org>  Fri, 11 Apr 2009 12:06:33 +0200
 

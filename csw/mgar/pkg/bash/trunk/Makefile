@@ -29,6 +29,7 @@ PACKAGES = CSWbash
 REQUIRED_PKGS = CSWggettextrt
 REQUIRED_PKGS += CSWiconv
 
+SPKG_CLASSES = none build
 
 ###### Upstream and opencsw files information #######
 
@@ -41,8 +42,11 @@ MASTER_SITES = $(GNU_MIRROR)/bash-$(BASH_VERSION)-patches/
 MASTER_SITES += $(GNU_MIRROR)
 DISTNAME = $(GARNAME)-$(BASH_VERSION)
 DISTFILES  = $(GARNAME)-$(BASH_VERSION).tar.gz
-DISTFILES += CSWbash.prototype CSWbash.postinstall CSWbash.postremove
+DISTFILES += CSWbash.prototype
 DISTFILES += changelog.CSW
+
+# build action script to modify /etc/shells at package installation and removal time
+DISTFILES += shells
 
 PATCHFILE_PREFIX = bash$(subst .,,$(BASH_VERSION))
 PATCHDIRLEVEL = 0
@@ -57,6 +61,8 @@ PATCHFILES = $(shell LEVEL=1; \
 			fi; \
 		done )
 
+#
+# opencsw bash use /etc/bash.bashrc and /etc/bash.bash_logout files
 PATCHFILES += use_system_bashrc_and_logout.patch
 
 
@@ -79,4 +85,4 @@ post-merge:
 		 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(GARNAME)/`basename $$FILE`; \
 	done )
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW
-
+	ginstall -D $(WORKDIR_FIRSTMOD)/shells $(PKGROOT)/etc/shells

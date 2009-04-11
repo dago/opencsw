@@ -1,6 +1,4 @@
-bcc9760316385d49ff31c2ed72f4be4a  download/CSWbash.postinstall
-589297e4f9a43d0c82632e99423db7ef  download/CSWbash.postremove
-949396065ba932e8af683eae510586e9  download/CSWbash.prototype
+f93b41b44ce6b023df65b72f00386ac5  download/CSWbash.prototype
 a90a1b5a6db4838483f05438e05e8eb9  download/bash-4.0.tar.gz
 bc7f4762443939bd7dccb42370f0d932  download/bash40-001
 c2a4a4786a83ed4ec366c6a8924369a2  download/bash40-002
@@ -19,5 +17,6 @@ a266b42df5e9ed7e8818a8b00d50e00b  download/bash40-013
 bb41963d030bc61a20e8185367b337c5  download/bash40-015
 f75455048a086528971252fd979b8755  download/bash40-016
 34b2cd57271a452f4a26b39d77ff908f  download/bash40-017
-4e4a9d374ce4291b6ba4974adc086767  download/changelog.CSW
+e3a631b0798de159e48cdb8701dad334  download/changelog.CSW
+60956e6be20f69dafbb06fcc83bab88e  download/shells
 29607316cff22f7427322d8f190cbadf  download/use_system_bashrc_and_logout.patch
