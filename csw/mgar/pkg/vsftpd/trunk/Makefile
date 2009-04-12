@@ -27,14 +27,15 @@ endef
 
 MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 
-
-# adding configuration handling classes
-# (init/smf classes are dynamically added in checkinstall)
-SPKG_CLASSES = none cswpreserveconf
+PACKAGES = CSWvsftpd
 
 REQUIRED_PKGS  = CSWtcpwrap 
 REQUIRED_PKGS += CSWosslrt 
 REQUIRED_PKGS += CSWcswclassutils
+
+# adding configuration handling classes
+# (init/smf classes are dynamically added in checkinstall)
+SPKG_CLASSES = none cswpreserveconf
 
 
 ###### Upstream and opencsw files information #######
@@ -43,7 +44,7 @@ REQUIRED_PKGS += CSWcswclassutils
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall csw_usrgrp_config)
+DISTFILES += CSWvsftpd.prototype CSWvsftpd.preinstall CSWvsftpd.csw_usrgrp_config
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd cswvsftpd.xml svc-cswvsftpd 
@@ -79,6 +80,11 @@ DOCFILES += EXAMPLE/VIRTUAL_USERS/vsftpd.conf EXAMPLE/INTERNET_SITE/vsftpd.xinet
 DOCFILES += EXAMPLE/INTERNET_SITE/README EXAMPLE/INTERNET_SITE/vsftpd.conf
 DOCFILES += EXAMPLE/INTERNET_SITE_NOINETD/README EXAMPLE/INTERNET_SITE_NOINETD/vsftpd.conf
 
+
+# little hack to be able to still use old smf support with gar v2
+# until openssh is migrated to cswclassutils init system
+DISTFILES += vsftpd_dyngspec.fakespec
+_CATEGORY_GSPEC_INCLUDE = ../../$(DOWNLOADDIR)/vsftpd_dyngspec.fakespec
 
 
 ##### Build and installation information #####

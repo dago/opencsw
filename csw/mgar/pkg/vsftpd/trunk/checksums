@@ -1,5 +1,4 @@
 314e73654490c2abe742b7ed7be798b1  download/CSWvsftpd.csw_usrgrp_config
-598e429baa86555a44a3da6581a78704  download/CSWvsftpd.gspec
 a2f5b70fe49839b0463c9d90af0f11dd  download/CSWvsftpd.preinstall
 3445fbf0fc7e28cc7f2db827dfbaddb0  download/CSWvsftpd.prototype
 eeaf77528b2da0c7730323838f30b7ef  download/README.CSW
@@ -15,3 +14,4 @@ a9a65f55cbfd01f9d72d1de25e67148d  download/set_priv_sep_user.patch
 7890b54e7ffa6106ffbdfda53f47fa41  download/vsftpd-2.1.0.tar.gz
 f6ce22a6959b93e500a4ae800295c2ee  download/vsftpd.conf
 60c736802e2ce00c531953b01e4a26f6  download/vsftpd.userlist
+0b0357e8470ccea567eabe6103daa769  download/vsftpd_dyngspec.fakespec
