@@ -80,11 +80,11 @@ DOCFILES += EXAMPLE/INTERNET_SITE_NOINETD/README EXAMPLE/INTERNET_SITE_NOINETD/v
 
 ##### Build and installation information #####
 
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_SCRIPTS = fake
-
 GARCOMPILER = SUN
 
+CONFIGURE_ARGS = $(DIRPATHS)
+
+CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
 include gar/category.mk
@@ -99,24 +99,29 @@ endif
 
 INSTALL_ENV += INSTALL="ginstall"
 
-# no configure step with vsftpd
-configure-fake:
-	$(MAKECOOKIE)
 
 # we create the csw directory hierarchy 
-pre-install:
+pre-install-modulated:
 	@echo "Creating csw directories"
-	( install -d $(DESTDIR)$(sbindir); \
-	 install -d $(DESTDIR)$(mandir)/man5; \
-	 install -d $(DESTDIR)$(mandir)/man8; \
+	( ginstall -d $(DESTDIR)$(sbindir); \
+	 ginstall -d $(DESTDIR)$(mandir)/man5; \
+	 ginstall -d $(DESTDIR)$(mandir)/man8; \
 	 ln -sf $(DESTDIR)$(mandir) $(DESTDIR)$(prefix)/man; \
-	 install -d $(DESTDIR)$(docdir)/vsftpd )
+	 ginstall -d $(DESTDIR)$(docdir)/vsftpd )
 
 
+post-merge: merge-doc-files merge-config-files merge-class-files
 
-post-install:
-	cd $(WORKSRC) && \
+merge-config-files:
+	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.conf" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.conf.CSW"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.userlist" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.userlist"
+
+merge-doc-files:
 	for FILE in $(DOCFILES); do \
-		ginstall -D $$FILE $(DESTDIR)$(docdir)/vsftpd/$$FILE; \
+		ginstall -D "$(WORKSRC_FIRSTMOD)/$$FILE" "$(PKGROOT)$(docdir)/vsftpd/$$FILE"; \
 	done
+	ginstall -D "$(WORKDIR_FIRSTMOD)/changelog.CSW" "$(PKGROOT)$(docdir)/vsftpd/changelog.CSW"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/README.CSW" "$(PKGROOT)$(docdir)/vsftpd/README.CSW"
 
+merge-class-files:
+	ginstall "$(DOWNLOADDIR)/"*.conf $(WORKDIR)/

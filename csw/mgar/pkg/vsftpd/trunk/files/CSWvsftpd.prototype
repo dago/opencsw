@@ -1,8 +1,8 @@
 i i.conf
 i r.conf
 d none /opt/csw/etc/vsftpd 0755 root bin
-f none /opt/csw/etc/vsftpd/vsftpd.conf.CSW=vsftpd.conf 0755 root bin
-e conf /opt/csw/etc/vsftpd/vsftpd.userlist=vsftpd.userlist 0755 root bin
+f none /opt/csw/etc/vsftpd/vsftpd.conf.CSW 0755 root bin
+e conf /opt/csw/etc/vsftpd/vsftpd.userlist 0755 root bin
 f none /opt/csw/sbin/vsftpd 0755 root bin
 d none /opt/csw/share/doc/vsftpd 0755 root bin
 d none /opt/csw/share/doc/vsftpd/EXAMPLE 0755 root bin
@@ -24,8 +24,8 @@ d none /opt/csw/share/doc/vsftpd/EXAMPLE/INTERNET_SITE 0755 root bin
 f none /opt/csw/share/doc/vsftpd/EXAMPLE/INTERNET_SITE/vsftpd.xinetd 0644 root bin
 f none /opt/csw/share/doc/vsftpd/EXAMPLE/INTERNET_SITE/README 0644 root bin
 f none /opt/csw/share/doc/vsftpd/EXAMPLE/INTERNET_SITE/vsftpd.conf 0644 root bin
-f none /opt/csw/share/doc/vsftpd/README.CSW=README.CSW 0755 root bin
-f none /opt/csw/share/doc/vsftpd/changelog.CSW=changelog.CSW 0644 root bin
+f none /opt/csw/share/doc/vsftpd/README.CSW 0755 root bin
+f none /opt/csw/share/doc/vsftpd/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/vsftpd/AUDIT 0644 root bin
 f none /opt/csw/share/doc/vsftpd/BENCHMARKS 0644 root bin
 f none /opt/csw/share/doc/vsftpd/BUGS 0644 root bin

@@ -4,4 +4,4 @@
 %copyright      url file://%{WORKSRC}/LICENSE
 %var		SERVICE_CONF_FILES /opt/csw/etc/vsftpd/vsftpd.conf
 %include  	url file://%{PKGLIB}/smf_enabled.gspec
-%include  	url file://%{PKGLIB}/csw_usrgrp.gspec
+%include  	url file://files/csw_usrgrp.gspec
