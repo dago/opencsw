@@ -1,3 +1,17 @@
+#####################################################################
+# OpenCSW build recipe for vsftpd
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+###### Package information #######
+
 GARNAME = vsftpd
 GARVERSION = 2.1.0
 CATEGORIES = server
@@ -13,6 +27,14 @@ endef
 
 MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 
+
+# adding configuration handling classes
+# (init/smf classes are dynamically added in checkinstall)
+SPKG_CLASSES = none conf
+
+
+###### Upstream and opencsw files information #######
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -22,10 +44,6 @@ DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd cswvsftpd.xml svc-cswvsftpd 
 DISTFILES += i.conf r.conf
-
-# adding configuration handling classes
-# (init/smf classes are dynamically added in checkinstall)
-SPKG_CLASSES = none conf
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -44,16 +62,11 @@ PATCHFILES += csw_build_system.patch
 # privilege separation user
 PATCHFILES += set_priv_sep_user.patch
 
-# patch to workaround the fact that 
-# solaris libc doesn t have tm_gmtoff
-# update: not useful anymore since 2.0.5
-# PATCHFILES += tm_gmtoff.patch
-
 # patch to add DESTDIR support to 
 # vsftpd makfile
 PATCHFILES += destdir.patch
 
-# Documents
+# Documentation files
 DOCFILES  = AUDIT BENCHMARKS BUGS COPYING COPYRIGHT Changelog FAQ INSTALL LICENSE REFS
 DOCFILES += REWARD SIZE SPEED TODO TUNING README README.ssl README.security
 DOCFILES += SECURITY/DESIGN SECURITY/IMPLEMENTATION SECURITY/OVERVIEW SECURITY/TRUST
@@ -63,6 +76,9 @@ DOCFILES += EXAMPLE/VIRTUAL_USERS/vsftpd.conf EXAMPLE/INTERNET_SITE/vsftpd.xinet
 DOCFILES += EXAMPLE/INTERNET_SITE/README EXAMPLE/INTERNET_SITE/vsftpd.conf
 DOCFILES += EXAMPLE/INTERNET_SITE_NOINETD/README EXAMPLE/INTERNET_SITE_NOINETD/vsftpd.conf
 
+
+
+##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS = fake
