@@ -1,3 +1,0 @@
-%prototype:merge
-i csw_usrgrp_config=CSW%{bitname}.csw_usrgrp_config
-%preinstall:merge       url file://files/csw_usrgrp.preinstall

@@ -1,0 +1,2 @@
+vsftpd:vsftpd:vsftpd privsep user:/opt/csw/var/empty/vsftpd:/bin/false::
+ftp:nogroup:ftp user for anonymous access:/opt/csw/var/ftp:/bin/false::

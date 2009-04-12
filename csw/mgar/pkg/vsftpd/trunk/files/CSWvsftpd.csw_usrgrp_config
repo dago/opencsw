@@ -1,4 +1,0 @@
-version=1
-group=vsftpd
-user=vsftpd:vsftpd:/opt/csw/var/empty/vsftpd:/bin/false:vsftpd privsep user
-user=ftp:nogroup:/opt/csw/var/ftp:/bin/false:ftp user for anonymous access
