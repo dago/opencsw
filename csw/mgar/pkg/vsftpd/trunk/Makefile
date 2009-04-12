@@ -32,6 +32,10 @@ MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 # (init/smf classes are dynamically added in checkinstall)
 SPKG_CLASSES = none cswpreserveconf
 
+REQUIRED_PKGS  = CSWtcpwrap 
+REQUIRED_PKGS += CSWosslrt 
+REQUIRED_PKGS += CSWcswclassutils
+
 
 ###### Upstream and opencsw files information #######
 
@@ -39,7 +43,7 @@ SPKG_CLASSES = none cswpreserveconf
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall depend csw_usrgrp_config)
+DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall csw_usrgrp_config)
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd cswvsftpd.xml svc-cswvsftpd 
