@@ -1,5 +1,5 @@
 GARNAME = pcre
-GARVERSION = 7.8
+GARVERSION = 7.9
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
