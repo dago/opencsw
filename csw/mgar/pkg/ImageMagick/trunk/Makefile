@@ -1,6 +1,6 @@
 GARNAME = imagemagick
-GARVERSION = 6.4.9
-GARSUBREV = 10
+GARVERSION = 6.5.1
+GARSUBREV = 1
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -39,6 +39,8 @@ CONFIGURE_ARGS += --x-includes=/usr/openwin/include
 CONFIGURE_ARGS += --x-libraries=/usr/openwin/lib 
 
 PATCHFILES += Makefile.patch
+# Temporary patch until upstream make a more permenent fix
+PATCHFILES += djvu.c.diff
 
 # Test has to be run *after* install
 TEST_SCRIPTS =
