@@ -41,8 +41,6 @@ EXTRA_LINKER_FLAGS = -lncurses
 
 TEST_TARGET = check
 
-NO_ISAEXEC = 1
-
 PKGFILES_CSWpcrert = $(PKGFILES_RT)
 
 include gar/category.mk
