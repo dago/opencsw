@@ -42,7 +42,7 @@ MASTER_SITES = http://elinks.cz/download/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES  = CSWelinks.prototype
+DISTFILES += CSWelinks.prototype
 DISTFILES += changelog.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
