@@ -45,6 +45,7 @@ PATCHFILES += djvu.c.diff
 # Test has to be run *after* install
 TEST_SCRIPTS =
 
+EXTRA_LD_OPTIONS = -L./magick/.libs 
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
