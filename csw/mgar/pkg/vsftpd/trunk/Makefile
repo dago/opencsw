@@ -30,7 +30,7 @@ MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 
 # adding configuration handling classes
 # (init/smf classes are dynamically added in checkinstall)
-SPKG_CLASSES = none conf
+SPKG_CLASSES = none cswpreserveconf
 
 
 ###### Upstream and opencsw files information #######
@@ -43,7 +43,6 @@ DISTFILES += $(call admfiles,CSWvsftpd,prototype preinstall depend csw_usrgrp_co
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd cswvsftpd.xml svc-cswvsftpd 
-DISTFILES += i.conf r.conf
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -114,7 +113,7 @@ post-merge: merge-doc-files merge-config-files merge-class-files
 
 merge-config-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.conf" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.conf.CSW"
-	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.userlist" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.userlist"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.userlist" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.userlist.CSW"
 
 merge-doc-files:
 	for FILE in $(DOCFILES); do \

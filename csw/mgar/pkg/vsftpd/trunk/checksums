@@ -1,8 +1,8 @@
 314e73654490c2abe742b7ed7be798b1  download/CSWvsftpd.csw_usrgrp_config
-81319e5dd110b08a476c3b31af2fd573  download/CSWvsftpd.depend
+6193a623b66f1132fa0d3e64904ecf15  download/CSWvsftpd.depend
 598e429baa86555a44a3da6581a78704  download/CSWvsftpd.gspec
 a2f5b70fe49839b0463c9d90af0f11dd  download/CSWvsftpd.preinstall
-c3916a9a49d6167fc67c07754d8aa980  download/CSWvsftpd.prototype
+3445fbf0fc7e28cc7f2db827dfbaddb0  download/CSWvsftpd.prototype
 eeaf77528b2da0c7730323838f30b7ef  download/README.CSW
 281c51282cabd9475cceef363bbc699b  download/build_options.patch
 68178673c7d33baead2d7b97e878ed79  download/changelog.CSW
@@ -11,8 +11,6 @@ a9e994d2b57999b76a0e03503745c01a  download/csw_paths.patch
 8a11892757760e07534a4a455f051e84  download/cswvsftpd
 5d093652c802b21dd00a52b2d012d977  download/cswvsftpd.xml
 73e59f9ada47d3d20199f7c97849fb13  download/destdir.patch
-9b2ae27f98333b73ff2b16ed98ee896a  download/i.conf
-5d9e9fb1a5b6af82ce915f72ebc5e3b7  download/r.conf
 a9a65f55cbfd01f9d72d1de25e67148d  download/set_priv_sep_user.patch
 32905b27a67ac3d4c93a52e10a3a80fd  download/svc-cswvsftpd
 7890b54e7ffa6106ffbdfda53f47fa41  download/vsftpd-2.1.0.tar.gz
