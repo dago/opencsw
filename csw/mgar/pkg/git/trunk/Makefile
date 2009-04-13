@@ -66,7 +66,8 @@ SPKG_DESC_CSWgitcvs = Git tools for working with CVS repositories
 SPKG_DESC_CSWgitdoc = Documentation for Git
 SPKG_DESC_CSWgitemacs = Git VCS support for Emacs
 
-GIT_USE_PROXY = 1
+#NOTE: If you need to proxy git:// connections, set GIT_USE_PROXY in
+#	your .garrc file.  (That leaves this recipe in a more generic form.)
 GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
 GIT_TREEISH_git.git = v$(GARVERSION)
 
