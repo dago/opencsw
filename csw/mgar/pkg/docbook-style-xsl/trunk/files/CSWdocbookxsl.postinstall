@@ -1,11 +1,12 @@
+define CSWdocbookxsl_postinstall
 #!/bin/sh
 
-case "$PKG_INSTALL_ROOT" in
+case "$$PKG_INSTALL_ROOT" in
     ""|"/") PREFIX= ;;
-    *) PREFIX="chroot $PKG_INSTALL_ROOT ";;
+    *) PREFIX="chroot $$PKG_INSTALL_ROOT ";;
 esac
 
-PATH=/opt/csw/bin:$PATH
+PATH=/opt/csw/bin:$$PATH
 
 CATCMD=/opt/csw/bin/xmlcatalog
 
@@ -14,17 +15,18 @@ DBHOME=/opt/csw/share/sgml/docbook
 CATALOG=/opt/csw/etc/xml/catalog
 
 #we need a version here, since that will be referenced in URLS being redirected
-VERSION=1.74.3
+VERSION=$(GARVERSION)
 
-$PREFIX $CATCMD --noout --add "rewriteSystem" \
- "http://docbook.sourceforge.net/release/xsl/$VERSION" \
- "file://$DBHOME/xsl-stylesheets" $CATALOG
-$PREFIX $CATCMD --noout --add "rewriteURI" \
- "http://docbook.sourceforge.net/release/xsl/$VERSION" \
- "file://$DBHOME/xsl-stylesheets" $CATALOG
-$PREFIX $CATCMD --noout --add "rewriteSystem" \
+$$PREFIX $$CATCMD --noout --add "rewriteSystem" \
+ "http://docbook.sourceforge.net/release/xsl/$$VERSION" \
+ "file://$DBHOME/xsl-stylesheets" $$CATALOG
+$$PREFIX $$CATCMD --noout --add "rewriteURI" \
+ "http://docbook.sourceforge.net/release/xsl/$$VERSION" \
+ "file://$DBHOME/xsl-stylesheets" $$CATALOG
+$$PREFIX $$CATCMD --noout --add "rewriteSystem" \
  "http://docbook.sourceforge.net/release/xsl/current" \
- "file://$DBHOME/xsl-stylesheets" $CATALOG
-$PREFIX $CATCMD --noout --add "rewriteURI" \
+ "file://$DBHOME/xsl-stylesheets" $$CATALOG
+$$PREFIX $$CATCMD --noout --add "rewriteURI" \
  "http://docbook.sourceforge.net/release/xsl/current" \
- "file://$DBHOME/xsl-stylesheets" $CATALOG
+ "file://$DBHOME/xsl-stylesheets" $$CATALOG
+endef

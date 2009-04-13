@@ -33,7 +33,11 @@ SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = docbook-xsl-$(GARVERSION).tar.bz2
 DISTFILES += docbook-xsl-doc-$(GARVERSION).tar.bz2
-DISTFILES += CSWdocbookxsl.postinstall CSWdocbookxsl.preremove
+DISTFILES += CSWdocbookxsl.preremove
+
+#use the dynamic adm script feature so we don't need to edit file at
+#version change
+include files/CSWdocbookxsl.postinstall
 
 PATCHFILES += add_makefile.patch
 
