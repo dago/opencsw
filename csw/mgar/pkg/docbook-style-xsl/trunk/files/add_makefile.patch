@@ -1,9 +1,16 @@
---- /dev/null	2009-04-10 02:03:32.000000000 +0200
-+++ docbook-xsl-1.74.3/Makefile.csw	2009-04-10 04:25:32.872750482 +0200
-@@ -0,0 +1,46 @@
+--- /dev/null	2009-04-13 19:20:44.000000000 +0200
++++ docbook-xsl-1.74.3/Makefile.csw	2009-04-13 19:24:36.996214871 +0200
+@@ -0,0 +1,43 @@
 +DESTDIR ?= ... should be overridden by GAR ...
 +
 +SHELL = /opt/csw/bin/bash
++
++# directories that don't get installed by the generic install-xsl target
++# note the . (to work around find output)
++SS_EX_DIRS = doc docsrc tools tests .
++# directories that do get installed by install-xsl
++DIRS = $(subst ./,,$(shell gfind . -maxdepth 1 -type d))
++SS_DIRS  = $(foreach D,$(filter-out $(SS_EX_DIRS),$(DIRS)),dir-$(D))
 +
 +prefix = $(DESTDIR)/opt/csw
 +bindir = $(prefix)/bin
@@ -14,33 +21,23 @@
 +
 +all: install
 +
-+install: install-xsl install-img install-misc install-docs
++install: install-xsl install-misc install-docs
 +
-+install-xsl:
-+	gmkdir -p $(instdir)/{common,fo,html,htmlhelp/doc,javahelp,lib,template,xhtml,manpages,profiling}
-+	cp common/*.dtd $(instdir)/common
-+	cp common/*.xml $(instdir)/common
-+	cp common/*.xsl $(instdir)/common
-+	cp fo/*.xml $(instdir)/fo
-+	cp fo/*.xsl $(instdir)/fo
-+	cp html/*.xml $(instdir)/html
-+	cp html/*.xsl $(instdir)/html
-+	cp htmlhelp/*.xsl $(instdir)/htmlhelp
-+	cp javahelp/*.xsl $(instdir)/javahelp
-+	cp lib/lib.xsl $(instdir)/lib
-+	cp template/*.xml $(instdir)/template
-+	cp template/*.xsl $(instdir)/template
-+	cp xhtml/*.xsl $(instdir)/xhtml
-+	cp manpages/*.xsl $(instdir)/manpages
-+	cp profiling/*.xsl $(instdir)/profiling
++$(instdir):
++	gmkdir -p $(instdir)
 +
-+install-img:
-+	gmkdir -p $(instdir)/images/callouts
-+	cp images/*.gif $(instdir)/images
-+	cp images/*.png $(instdir)/images
-+	cp images/callouts/*.png $(instdir)/images/callouts
++#so we don't get the example bin files, etc.  we can always install them
++# 'properly' to csw/bin/ if there is demand.
++dir-epub: $(instdir)
++	gmkdir -p $(instdir)/epub
++	cp epub/*xsl $(instdir)/epub
 +
-+install-misc:
++dir-%:
++	cp -R $*/ $(instdir)/
++
++install-xsl: $(instdir) $(SS_DIRS)
++
++install-misc: $(instdir)
 +	cp VERSION $(instdir)
 +
 +install-docs:
