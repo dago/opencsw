@@ -19,14 +19,14 @@ VERSION=$(GARVERSION)
 
 $$PREFIX $$CATCMD --noout --add "rewriteSystem" \
  "http://docbook.sourceforge.net/release/xsl/$$VERSION" \
- "file://$DBHOME/xsl-stylesheets" $$CATALOG
+ "file://$$DBHOME/xsl-stylesheets" $$CATALOG
 $$PREFIX $$CATCMD --noout --add "rewriteURI" \
  "http://docbook.sourceforge.net/release/xsl/$$VERSION" \
- "file://$DBHOME/xsl-stylesheets" $$CATALOG
+ "file://$$DBHOME/xsl-stylesheets" $$CATALOG
 $$PREFIX $$CATCMD --noout --add "rewriteSystem" \
  "http://docbook.sourceforge.net/release/xsl/current" \
- "file://$DBHOME/xsl-stylesheets" $$CATALOG
+ "file://$$DBHOME/xsl-stylesheets" $$CATALOG
 $$PREFIX $$CATCMD --noout --add "rewriteURI" \
  "http://docbook.sourceforge.net/release/xsl/current" \
- "file://$DBHOME/xsl-stylesheets" $$CATALOG
+ "file://$$DBHOME/xsl-stylesheets" $$CATALOG
 endef
