@@ -38,7 +38,7 @@ CONFIGURE_ARGS += --enable-stage1-languages=c
 CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
 
 ## For cleanliness I split the Configuration into separate files
-include files/amd_merge.mk
+#include files/amd_merge.mk
 include files/gar_override.mk
 include files/package_def.mk
 include files/pkg_scripts.mk
