@@ -1,0 +1,15 @@
+diff -Naur libspectre-0.2.2.orig/libspectre/spectre-device.c libspectre-0.2.2.patched/libspectre/spectre-device.c
+--- libspectre-0.2.2.orig/libspectre/spectre-device.c	2008-11-25 16:15:50.000000000 +0100
++++ libspectre-0.2.2.patched/libspectre/spectre-device.c	2009-04-14 13:38:53.249669809 +0200
+@@ -21,7 +21,11 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++#ifdef __sun
++#include <sys/int_types.h>
++#else
+ #include <stdint.h>
++#endif
+ 
+ #include "spectre-device.h"
+ #include "spectre-gs.h"
