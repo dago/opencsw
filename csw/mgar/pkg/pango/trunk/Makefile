@@ -1,5 +1,5 @@
 GARNAME = libpango
-GARVERSION = 1.24.0
+GARVERSION = 1.24.1
 CATEGORIES = lib
 
 DESCRIPTION = A framework for the layout and rendering of international text
@@ -11,10 +11,15 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.24/
-DISTFILES  = pango-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWpango, postinstall)
-DISTFILES += $(call admfiles,CSWpangodoc,)
-DISTFILES += $(call admfiles,CSWpangodevel,)
+DISTNAME = pango-$(GARVERSION)
+DISTFILES  = $(DISTNAME).tar.bz2
+
+PACKAGES = CSWpango CSWpangodevel CSWpangodoc
+CATALOGNAME_CSWpango      = libpango
+CATALOGNAME_CSWpangodevel = libpango_devel
+CATALOGNAME_CSWpangodoc   = libpango_doc
+
+SPKG_SOURCEURL = http://www.pango.org/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/
@@ -24,21 +29,15 @@ CONFIGURE_ARGS   = $(DIRPATHS)
 CONFIGURE_ARGS  += --with-x --enable-gtk-doc
 # CONFIGURE_ARGS  += --with-included-modules 
 
-PREREQUISITE_PKGS += CSWgtk-doc CSWlibxslt
-
+PREREQUISITE_PKGS = CSWgtk-doc CSWlibxslt
 REQUIRED_PKGS_CSWpango = CSWggettextrt CSWglib2
+REQUIRED_PKGS_CSWpangodevel = CSWpango
 
 # Dynamic prototype
 PKGFILES_CSWpangodevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWpangodevel += /opt/csw/share/doc/libpango_devel/license
-PKGFILES_CSWpangodoc    = /opt/csw/share/gtk-doc/.*
-PKGFILES_CSWpangodoc   += /opt/csw/share/doc/libpango_doc/license
+PKGFILES_CSWpangodoc    = $(sharedstatedir)/gtk-doc/.*
 
 # Do not execute make test step
 TEST_SCRIPTS   = 
 
 include gar/category.mk
-
-post-extract:
-	( cd $(WORKROOTDIR) ; for i in build-isa-* ; do mv $$i/pango-$(GARVERSION) $$i/$(GARNAME)-$(GARVERSION) ; done )
-	@$(MAKECOOKIE)
