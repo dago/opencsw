@@ -8,6 +8,7 @@ endef
 
 MASTER_SITES = http://libspectre.freedesktop.org/releases/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += fixme.sh
 PATCHFILES = patch-stdint.diff
 
 SPKG_SOURCEURL = http://libspectre.freedesktop.org
@@ -22,3 +23,8 @@ REQUIRED_PKGS = CSWgs
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
+
+post-configure-modulated:
+	@echo " ==> Fixing libtool files"
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	@$(MAKECOOKIE)
