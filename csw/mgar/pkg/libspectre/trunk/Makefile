@@ -10,6 +10,8 @@ MASTER_SITES = http://libspectre.freedesktop.org/releases/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = patch-stdint.diff
 
+SPKG_SOURCEURL = http://libspectre.freedesktop.org
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
