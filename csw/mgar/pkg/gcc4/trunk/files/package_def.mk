@@ -78,6 +78,8 @@ REQUIRED_PKGS_CSWgcc4objc        = CSWgcc4core $(COMMON_REQUIRE)
 
 ## gcc4ada Definitions
 PKGFILES_CSWgcc4ada  = .*/gcc4/libexec/.*gnat1
+PKGFILES_CSWgcc4ada += .*/gcc4/lib/.*libgnat.*
+PKGFILES_CSWgcc4ada += .*/gcc4/lib/.*libgnarl.*
 PKGFILES_CSWgcc4ada += .*/gcc4/.*/adalib/.*
 PKGFILES_CSWgcc4ada += .*/gcc4/.*/adainclude/.*
 PKGFILES_CSWgcc4ada += .*/gcc4/info/.*gnat.*
@@ -85,6 +87,7 @@ PKGFILES_CSWgcc4ada += .*/gcc4/bin/gnat.*
 
 ## gcc4gfortran Definitions
 PKGFILES_CSWgcc4gfortran  = .*/gcc4/bin/.*gfortran
+PKGFILES_CSWgcc4gfortran += .*/gcc4/lib/.*libgfortran.*
 PKGFILES_CSWgcc4gfortran += .*/gcc4/libexec/.*f951
 PKGFILES_CSWgcc4gfortran += .*/gcc4/man1/gfortran.1
 PKGFILES_CSWgcc4gfortran += .*/gcc4/info/gfortran.*
@@ -93,7 +96,11 @@ PKGFILES_CSWgcc4gfortran += .*/gcc4/info/gfortran.*
 PKGFILES_CSWgcc4g++  = .*/gcc4/bin/.*g\+\+
 PKGFILES_CSWgcc4g++ += .*/gcc4/bin/.*c\+\+
 PKGFILES_CSWgcc4g++ += .*/gcc4/libexec/.*cc1plus
-PKGFILES_CSWgcc4g++ += .*/gcc4/man1/g\+\+.1
+PKGFILES_CSWgcc4g++ += .*/gcc4/lib/.*libstdc.*
+PKGFILES_CSWgcc4g++ += .*/gcc4/lib/.*libsupc\+\+.*
+PKGFILES_CSWgcc4g++ += .*/gcc4/man/.*g\+\+.1
+PKGFILES_CSWgcc4g++ += .*/gcc4/man/.*libstdc\+\+.1
+PKGFILES_CSWgcc4g++ += .*/gcc4/man/.*libsupc\+\+.1
 PKGFILES_CSWgcc4g++ += .*/gcc4/include/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
 PKGFILES_CSWgcc4g++ += .*/gcc4/include/c\+\+/(\d+(?:\.\d+)*)/ostream.*
 
@@ -117,21 +124,30 @@ PKGFILES_CSWgcc4java += .*/gcc4/bin/.*gserialver
 PKGFILES_CSWgcc4java += .*/gcc4/bin/.*gtnameserv
 PKGFILES_CSWgcc4java += .*/gcc4/bin/.*gnative2ascii
 PKGFILES_CSWgcc4java += .*/gcc4/bin/.*gc-analyze
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gcj.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gij.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/jv.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/jcf.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/grmi.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/.*jar.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/.*jni.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/.*java.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gorbd.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gapplet.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gkeytool.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gserialver.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gtnameserv.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gnative2ascii.*
-PKGFILES_CSWgcc4java += .*/gcc4/man1/gc-analyze.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gcj.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gij.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/jv.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/jcf.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/grmi.*
+PKGFILES_CSWgcc4java += .*/gcc4/man/.*jar.*
+PKGFILES_CSWgcc4java += .*/gcc4/man/.*jni.*
+PKGFILES_CSWgcc4java += .*/gcc4/man/.*java.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gorbd.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gapplet.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gkeytool.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gserialver.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gtnameserv.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gnative2ascii.*
+PKGFILES_CSWgcc4java += .*/gcc4/man.*/gc-analyze.*
+PKGFILES_CSWgcc4java += .*/gcc4/share/java/.*
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*libgij.*
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*libffi.*
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*lib-gnu-awt.*
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*security/classpath.*
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*logging.properties
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*pkgconfig.*
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*gcj.*
+PKGFILES_CSWgcc4java += .*/gcc4/lib/.*libgcj.*
 PKGFILES_CSWgcc4java += .*/gcc4/libexec/.*collect.*
 PKGFILES_CSWgcc4java += .*/gcc4/libexec/.*jvgenmain
 PKGFILES_CSWgcc4java += .*/gcc4/libexec/.*jc1.*
@@ -145,6 +161,7 @@ PKGFILES_CSWgcc4java += .*/gcc4/include/.*org/.*
 
 ## gcc4objc Definitions
 PKGFILES_CSWgcc4objc  = .*/gcc4/libexec/.*cc1obj
+PKGFILES_CSWgcc4objc += .*/gcc4/lib/.*libobjc.*
 PKGFILES_CSWgcc4objc += .*/gcc4/include/.*objc/.*
 
 #######  RunTime Packages
