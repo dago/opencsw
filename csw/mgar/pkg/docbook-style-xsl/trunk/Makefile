@@ -51,10 +51,15 @@ INSTALL_SCRIPTS = $(WORKSRC)/Makefile.csw
 
 INSTALL_ARGS = DESTDIR=$(DESTDIR)
 
-#to make the package extraction happy...(we don't use the - separator)
-WORKSRC = $(WORKDIR)/docbook-xsl-$(GARVERSION)
-
 include gar/category.mk
+
+post-extract-modulated: WRONGDIR=docbook-xsl-$(GARVERSION)
+post-extract-modulated:
+	@( cd $(WORKDIR); \
+		if test -d $(WRONGDIR); then \
+			mv $(WRONGDIR) $(DISTNAME); \
+		fi; )
+	@$(MAKECOOKIE)
 
 install-%/Makefile.csw:
 	@echo " ==> Running make install in $*"
