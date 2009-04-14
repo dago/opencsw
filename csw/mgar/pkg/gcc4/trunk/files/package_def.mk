@@ -89,7 +89,7 @@ PKGFILES_CSWgcc4ada += .*/gcc4/bin/gnat.*
 PKGFILES_CSWgcc4gfortran  = .*/gcc4/bin/.*gfortran
 PKGFILES_CSWgcc4gfortran += .*/gcc4/lib/.*libgfortran.*
 PKGFILES_CSWgcc4gfortran += .*/gcc4/libexec/.*f951
-PKGFILES_CSWgcc4gfortran += .*/gcc4/man1/gfortran.1
+PKGFILES_CSWgcc4gfortran += .*/gcc4/man/.*gfortran.1
 PKGFILES_CSWgcc4gfortran += .*/gcc4/info/gfortran.*
 
 ## gcc4g++ Definitions
@@ -163,6 +163,7 @@ PKGFILES_CSWgcc4java += .*/gcc4/include/.*org/.*
 PKGFILES_CSWgcc4objc  = .*/gcc4/libexec/.*cc1obj
 PKGFILES_CSWgcc4objc += .*/gcc4/lib/.*libobjc.*
 PKGFILES_CSWgcc4objc += .*/gcc4/include/.*objc/.*
+PKGFILES_CSWgcc4objc += .*/gcc4/lib/.*/include/objc/.*
 
 #######  RunTime Packages
 
