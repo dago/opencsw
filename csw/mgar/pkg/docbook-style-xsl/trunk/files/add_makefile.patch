@@ -10,7 +10,7 @@
 +SS_EX_DIRS = doc docsrc tools tests .
 +# directories that do get installed by install-xsl
 +DIRS = $(subst ./,,$(shell gfind . -maxdepth 1 -type d))
-+SS_DIRS  = $(foreach D,$(filter-out $(SS_EX_DIRS),$(DIRS)),dir-$(D))
++SS_DIRS  = $(addprefix dir-,$(filter-out $(SS_EX_DIRS),$(DIRS)))
 +
 +prefix = $(DESTDIR)/opt/csw
 +bindir = $(prefix)/bin
@@ -42,5 +42,5 @@
 +
 +install-docs:
 +	gmkdir -p $(docdir)
-+	cp AUTHORS BUGS README TODO RELEASE-NOTES* NEWS* $(docdir)/
++	cp COPYING AUTHORS BUGS README TODO RELEASE-NOTES* NEWS* $(docdir)/
 +	cp -R doc $(docdir)/
