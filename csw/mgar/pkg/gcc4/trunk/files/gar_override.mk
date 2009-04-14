@@ -3,7 +3,7 @@ COOKIEDIR     = $(COOKIEROOTDIR)/$(MODULATION)-$(GAROSREL)-$(GARCH)
 WORKDIR       = $(WORKROOTDIR)/build-$(MODULATION)-$(GAROSREL)-$(GARCH)
 PATCHDIR      = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
 INSTALLISADIR = $(WORKROOTDIR)/install-$(MODULATION)-$(GAROSREL)-$(GARCH)
-PKGROOT       = $(abspath $(WORKROOTDIR)/pkgroot-$(GARCH))
+PKGROOT       = $(abspath $(WORKROOTDIR)/pkgroot-$(GAROSREL)-$(GARCH))
 OBJECT_DIR    = $(WORKDIR)/objdir
 WORKSRC       = $(OBJECT_DIR)
 DIRPATHS      = 
@@ -38,7 +38,7 @@ STRIP_DIRS             += $(DESTDIR)$(BUILD_PREFIX)/gcc4/bin
 CONFIGURE_SCRIPTS       = objdir
 TEST_SCRIPTS            = skip
 post-configure-modulated: fix-bootflags
-MERGE_SCRIPTS_isa-i386  = amd
+#MERGE_SCRIPTS_isa-i386  = amd
 
 ## Run checkpkg Manually
 ENABLE_CHECK            = 0

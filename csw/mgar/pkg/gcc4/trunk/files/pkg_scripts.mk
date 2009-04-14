@@ -27,6 +27,29 @@ fix-bootflags:
 		$(WORKSRC)/Makefile)
 	@$(MAKECOOKIE)
 
+post-merge-modulated:
+	@( gecho "[===> Creating Runtime Package files <===]" )
+	@( ginstall -d $(PKGROOT)/opt/csw/lib )
+	@( gcp -d $(PKGROOT)/opt/csw/gcc4/lib/*.so* $(PKGROOT)/opt/csw/lib/ )
+	@( gchmod 0755 $(PKGROOT)/opt/csw/lib/*.so* )
+	@( gcp -d $(PKGROOT)/opt/csw/gcc4/lib/gcc/*/*/adalib/*.so* \
+		$(PKGROOT)/opt/csw/lib/ )
+	@( if [ "`uname -p`" = 'i386' ]; then \
+	    if [ "`uname -r`" = '5.10' ]; then \
+			ginstall -d $(PKGROOT)/opt/csw/lib/amd64; \
+			gcp -d $(PKGROOT)/opt/csw/gcc4/lib/amd64/*.so* \
+					$(PKGROOT)/opt/csw/lib/amd64/; \
+			gchmod 0755 $(PKGROOT)/opt/csw/lib/amd64/*.so*; \
+		fi; \
+	fi ) 
+	@( if [ "`uname -p`" = 'sparc' ]; then \
+		ginstall -d $(PKGROOT)/opt/csw/lib/sparcv9; \
+		gcp -d $(PKGROOT)/opt/csw/gcc4/lib/sparcv9/*.so* \
+				$(PKGROOT)/opt/csw/lib/sparcv9/; \
+		gchmod 0755 $(PKGROOT)/opt/csw/lib/sparcv9/*.so*; \
+	fi )
+	@$(MAKECOOKIE)
+
 test-skip:
 	@$(MAKECOOKIE)
 
