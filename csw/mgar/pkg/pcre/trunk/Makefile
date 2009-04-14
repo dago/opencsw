@@ -16,8 +16,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 SPKG_SOURCEURL = http://www.pcre.org
 
 PREREQUISITE_PKGS = CSWgnulinks
-REQUIRED_PKGS_CSWpcre = CSWpcrert
 REQUIRED_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline CSWncurses
+REQUIRED_PKGS_CSWpcre = CSWpcrert $(REQUIRED_PKGS_CSWpcrert)
 
 PACKAGES = CSWpcre CSWpcrert
 CATALOGNAME_CSWpcrert = pcre_rt
