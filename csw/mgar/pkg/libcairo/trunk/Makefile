@@ -8,42 +8,42 @@ Cairo is a 2D graphics library with support for multiple output devices. Current
 endef
 
 MASTER_SITES  = http://www.cairographics.org/releases/
-DISTFILES     = cairo-$(GARVERSION).tar.gz 
+DISTNAME      = cairo-$(GARVERSION)
+DISTFILES     = $(DISTNAME).tar.gz 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+PACKAGES = CSWlibcairo CSWlibcairodevel CSWlibcairodoc
+CATALOGNAME_CSWlibcairo      = libcairo
+CATALOGNAME_CSWlibcairodevel = libcairo_devel
+CATALOGNAME_CSWlibcairodoc   = libcairo_doc
 
 SPKG_DESC_CSWlibcairo 		= $(DESCRIPTION)
 SPKG_DESC_CSWlibcairodevel 	= $(DESCRIPTION) development package
 SPKG_DESC_CSWlibcairodoc 	= $(DESCRIPTION) documentaiton
 
-DISTFILES    += $(call admfiles,CSWlibcairo, )
-DISTFILES    += $(call admfiles,CSWlibcairodevel, )
-DISTFILES    += $(call admfiles,CSWlibcairodoc, )
-
 PKGFILES_CSWlibcairodevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibcairodevel += /opt/csw/share/doc/libcairo_devel/.*
-PKGFILES_CSWlibcairodoc    = $(prefix)/share/gtk-doc.*
-PKGFILES_CSWlibcairodoc   += /opt/csw/share/doc/libcairo_doc/.*
+PKGFILES_CSWlibcairodevel += $(docdir)/libcairo_devel/.*
+PKGFILES_CSWlibcairodoc    = $(sharedstatedir)/gtk-doc.*
+PKGFILES_CSWlibcairodoc   += $(docdir)/libcairo_doc/.*
 
-REQUIRED_PKGS_CSWlibcairodevel  = CSWlibcairo
-REQUIRED_PKGS_CSWlibcairodoc    = 
-REQUIRED_PKGS_CSWlibcairo 	   += CSWfconfig
-REQUIRED_PKGS_CSWlibcairo 	   += CSWftype2
-REQUIRED_PKGS_CSWlibcairo 	   += CSWlibxrender
-REQUIRED_PKGS_CSWlibcairo 	   += CSWpixman
-REQUIRED_PKGS_CSWlibcairo 	   += CSWpng
-REQUIRED_PKGS_CSWlibcairo 	   += CSWzlib
+REQUIRED_PKGS_CSWlibcairo      = CSWfconfig
+REQUIRED_PKGS_CSWlibcairo     += CSWftype2
+REQUIRED_PKGS_CSWlibcairo     += CSWlibxrender
+REQUIRED_PKGS_CSWlibcairo     += CSWpixman
+REQUIRED_PKGS_CSWlibcairo     += CSWpng
+REQUIRED_PKGS_CSWlibcairo     += CSWzlib
+REQUIRED_PKGS_CSWlibcairodevel = CSWlibcairo
+REQUIRED_PKGS_CSWlibcairodoc   = 
+
+# Wait for libpixman, libfontconfig and libXrender to be 64 bit
+#BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
 CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=yes
 CONFIGURE_ARGS += --enable-gtk-doc --enable-test-surfaces=yes 
-
-post-extract:
-	( cd  $(WORKROOTDIR)/build-$(firstword $(MODULATIONS)) ; \
-		mv cairo-$(GARVERSION) $(GARNAME)-$(GARVERSION) )
-	@$(MAKECOOKIE)
 
 include gar/category.mk
 

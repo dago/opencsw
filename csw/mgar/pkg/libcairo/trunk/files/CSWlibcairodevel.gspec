@@ -1,9 +1,0 @@
-%var            bitname libcairo_devel
-%var            pkgname CSWlibcairodevel
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      
-
-
-Please see /opt/csw/share/doc/%{GARNAME} for license information
-
-
