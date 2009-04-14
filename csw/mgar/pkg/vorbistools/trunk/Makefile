@@ -13,9 +13,15 @@ endef
 DISTNAME = vorbis-tools-$(GARVERSION)
 MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
 DISTFILES = $(DISTNAME).tar.gz
+DISTFILES += fixme.sh
+
+SPKG_SOURCEURL = http://www.vorbis.com
 
 PACKAGES = CSWvtools
 CATALOGNAME = vorbistools
+
+REQUIRED_PKGS = CSWcurlrt CSWflac CSWggettextrt CSWiconv CSWlibao
+REQUIRED_PKGS += CSWlibogg CSWspeex CSWsunmath CSWvorbis
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
@@ -30,3 +36,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-configure-modulated:
+	@echo " ==> Fixing libtool files"
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	@$(MAKECOOKIE)
+
