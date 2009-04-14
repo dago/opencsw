@@ -25,6 +25,7 @@ BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-examples
+CONFIGURE_ARGS += --disable-asm
 
 TEST_TARGET = check
 
