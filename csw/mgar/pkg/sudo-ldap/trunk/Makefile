@@ -12,33 +12,35 @@ endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES += CSWsudoldap.postinstall
+DISTFILES += CSWsudoldap.postremove
 PATCHFILES = install.diff
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
 UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
-PACKAGES = CSWsudo-ldap 
+PACKAGES = CSWsudoldap 
 
-CATALOGNAME_CSWsudo-ldap = sudo_ldap
-SPKG_DESC_CSWsudo-ldap = $(DESCRIPTION)
-SPKG_SOURCEURL_CSWsudo-ldap = http://www.sudo.ws
-INCOMPATIBLE_PKGS_CSWsudo-ldap = CSWsudo
-REQUIRED_PKGS_CSWsudo-ldap = CSWsudo-common CSWggettextrt CSWoldaprt
+CATALOGNAME_CSWsudoldap = sudo_ldap
+SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
+SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
+INCOMPATIBLE_PKGS_CSWsudoldap = CSWsudo
+REQUIRED_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-logging=both
 CONFIGURE_ARGS += --with-ignore-dot
 CONFIGURE_ARGS += --with-env-editor
-CONFIGURE_ARGS += --with-ldap=$(prefix)
-CONFIGURE_ARGS += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
+CONFIGURE_ARGS += --withldap=$(prefix)
+CONFIGURE_ARGS += --withldap-conf-file=$(sysconfdir)/ldap.conf
 
 TEST_TARGET = check
 
 include gar/category.mk
 
-PKGFILES_CSWsudo-ldap = .*/bin/.*
+PKGFILES_CSWsudoldap = .*/bin/.*
 
 post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; rm -f sudoedit )
@@ -46,4 +48,7 @@ post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; ln -f sudo.ldap sudo )
 	@( cd $(DESTDIR)$(bindir) ; ln -f sudo.ldap sudoedit )
 	@$(MAKECOOKIE)
-	$(DONADA)
+
+post-merge-modulated:
+	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo* )
+	@$(MAKECOOKIE)
