@@ -1,5 +1,5 @@
 GARNAME = gnutls
-GARVERSION = 2.6.4
+GARVERSION = 2.6.5
 CATEGORIES = lib
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
