@@ -40,15 +40,9 @@ TEST_TARGET = check
 
 include gar/category.mk
 
-PKGFILES_CSWsudoldap = .*/bin/.*
-
-post-install-modulated:
-	@( cd $(DESTDIR)$(bindir) ; rm -f sudoedit )
-	@( cd $(DESTDIR)$(bindir) ; mv sudo sudo.ldap )
-	@( cd $(DESTDIR)$(bindir) ; ln -f sudo.ldap sudo )
-	@( cd $(DESTDIR)$(bindir) ; ln -f sudo.ldap sudoedit )
-	@$(MAKECOOKIE)
+PKGFILES_CSWsudoldap = .*/bin/sudo.ldap
 
 post-merge-modulated:
-	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo* )
+	@( cd $(PKGROOT)$(bindir) ; mv sudo sudo.ldap )
+	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo.ldap )
 	@$(MAKECOOKIE)
