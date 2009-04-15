@@ -10,9 +10,18 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
+PACKAGES  = CSWmysql5 CSWmysql5bench CSWmysql5client CSWmysql5devel
+PACKAGES += CSWmysql5rt CSWmysql5test
+
+CATALOGNAME_CSWmysql5 = $(GARNAME)
+CATALOGNAME_CSWmysql5bench = $(GARNAME)bench
+CATALOGNAME_CSWmysql5clien = $(GARNAME)client
+CATALOGNAME_CSWmysql5devel = $(GARNAME)devel
+CATALOGNAME_CSWmysql5rt = $(GARNAME)rt
+CATALOGNAME_CSWmysql5test = $(GARNAME)test
+
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.1/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWmysql5,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -20,8 +29,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # Change prefix to /opt/csw/mysql5
 prefix = /opt/csw/mysql5
 
-WORKSRC = $(WORKDIR)/mysql-$(GARVERSION)
-
+# because we alter the prefix.  this gets us proper linking as well as
+# LD_OPTIONS (RPATH)
 EXTRA_LIB = /opt/csw/lib
 
 # Set ./configure options
@@ -42,3 +51,9 @@ CONFIGURE_ARGS += --with-plugins=max-no-ndb
 
 include gar/category.mk
 
+post-extract-modulated:
+	@( cd $(WORKDIR); \
+		if test -d mysql-$(GARVERSION); then \
+			mv mysql-$(GARVERSION) $(DISTNAME); \
+		fi; )
+	@$(MAKECOOKIE)
