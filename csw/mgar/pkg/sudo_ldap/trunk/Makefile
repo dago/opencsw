@@ -33,8 +33,8 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-logging=both
 CONFIGURE_ARGS += --with-ignore-dot
 CONFIGURE_ARGS += --with-env-editor
-CONFIGURE_ARGS += --withldap=$(prefix)
-CONFIGURE_ARGS += --withldap-conf-file=$(sysconfdir)/ldap.conf
+CONFIGURE_ARGS += --with-ldap=$(prefix)
+CONFIGURE_ARGS += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 
 TEST_TARGET = check
 
