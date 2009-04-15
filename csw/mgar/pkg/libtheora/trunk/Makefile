@@ -18,6 +18,9 @@ SPKG_SOURCEURL = http://www.theora.org
 PREREQUISITE_PKGS = CSWtransfig
 REQUIRED_PKGS = CSWlibogg
 
+PACKAGES = CSWtheora
+CATALOGNAME = libtheora
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 
