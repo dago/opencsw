@@ -1,0 +1,14 @@
+#!/bin/sh
+
+BINDIR=$BASEDIR/opt/csw/bin
+
+if [ -f ${BINDIR}/sudo.ldap ]; then
+    chmod 4755 ${BINDIR}/sudo.ldap
+    rm -f ${BINDIR}/sudo 
+    rm -f ${BINDIR}/sudoedit
+    ln -f ${BINDIR}/sudo.ldap ${BINDIR}/sudo
+    ln -f ${BINDIR}/sudo.ldap ${BINDIR}/sudoedit
+fi
+
+exit 0
+

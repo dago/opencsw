@@ -1,0 +1,24 @@
+#!/bin/sh
+
+BINDIR=$BASEDIR/opt/csw/bin
+
+## First check to see if sudo.ldap is installed
+## If it is make sure the liks are in place
+## and permissions are set accordingly
+if [ -f ${BINDIR}/sudo.ldap ]; then
+    chmod 4755 ${BINDIR}/sudo.ldap
+    if [ ! -f ${BINDIR}/sudo ]; then
+        ln -f ${BINDIR}/sudo.ldap ${BINDIR}/sudo
+    fi
+    if [ ! -f ${BINDIR}/sudoedit ]; then
+        ln -f ${BINDIR}/sudo.ldap ${BINDIR}/sudoedit
+    fi
+else
+    rm -f ${BINDIR}/sudo
+    rm -f ${BINDIR}/sudoedit
+    ln -f ${BINDIR}/sudo.minimal ${BINDIR}/sudo
+    ln -f ${BINDIR}/sudo.minimal ${BINDIR}/sudoedit
+fi
+
+exit 0
+

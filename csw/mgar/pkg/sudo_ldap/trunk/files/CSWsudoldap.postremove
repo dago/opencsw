@@ -1,12 +1,12 @@
 #!/bin/sh
 
 BINDIR=$BASEDIR/opt/csw/bin
-SUDO_MINIMAL=${BINDIR}/sudo.minimal
 
-if [ -f ${SUDO_MINIMAL} ]; then
-    rm -f sudo sudoedit
-    ln -f $SUDO_MINIMAL ${BINDIR}/sudo
-    ln -f $SUDO_MINIMAL ${BINDIR}/sudoedit
+if [ -f ${BINDIR}/sudo.minimal ]; then
+    rm -f ${BINDIR}/sudo 
+    rm -f ${BINDIR}/sudoedit
+    ln -f ${BINDIR}/sudo.minimal ${BINDIR}/sudo
+    ln -f ${BINDIR}/sudo.minimal ${BINDIR}/sudoedit
 fi
 
 exit 0
