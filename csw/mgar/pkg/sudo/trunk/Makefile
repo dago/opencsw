@@ -50,5 +50,6 @@ PKGFILES_CSWsudo = .*/bin/sudo.minimal
 
 post-merge-modulated:
 	@( cd $(PKGROOT)$(bindir) ; mv sudo sudo.minimal )
+	@( cd $(PKGROOT)$(sysconfdir) ; mv sudoers sudoers.CSW )
 	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo* )
 	@$(MAKECOOKIE)
