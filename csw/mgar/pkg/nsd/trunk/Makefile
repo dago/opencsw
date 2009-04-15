@@ -27,6 +27,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-pidfile=/var/run/nsd.pid
+CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/nsd
