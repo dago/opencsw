@@ -19,6 +19,7 @@ DISTFILES += libcurl.so.3.0.0.s
 DISTFILES += libcurl.so.2.0.2.s
 DISTFILES += libcurl.so.3.0.0.i
 DISTFILES += libcurl.so.2.0.2.i
+DISTFILES += curlbuild.h
 
 PACKAGES = CSWcurl CSWcurlrt CSWcurldevel
 CATALOGNAME_CSWcurl = curl
@@ -52,6 +53,16 @@ post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libcurl.so.2.0.2.s $(INSTALLISADIR)/opt/csw/lib/libcurl.so.2.0.2
 	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.3.0.0 libcurl.so.3 )
 	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.2.0.2 libcurl.so.2 )
+	@mv $(INSTALLISADIR)/opt/csw/include/curl/curlbuild.h $(INSTALLISADIR)/opt/csw/include/curl/curlbuild-32.h
+	@cp $(FILEDIR)/curlbuild.h $(INSTALLISADIR)/opt/csw/include/curl/curlbuild.h
+	$(DONADA)
+
+post-install-isa-sparcv9:
+	@mv $(INSTALLISADIR)/opt/csw/include/curl/curlbuild.h $(INSTALLISADIR)/opt/csw/include/curl/curlbuild-64.h
+	$(DONADA)
+
+post-merge-isa-sparcv9:
+	@cp $(INSTALLISADIR)/opt/csw/include/curl/curlbuild-64.h $(PKGROOT)/opt/csw/include/curl/curlbuild-64.h
 	$(DONADA)
 
 post-install-isa-i386:
