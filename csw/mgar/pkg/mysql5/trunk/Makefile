@@ -4,6 +4,8 @@ CATEGORIES = server
 
 GARCOMPILER = GCC4
 
+DISTNAME = mysql-$(GARVERSION)
+
 DESCRIPTION = Multithreaded SQL database
 define BLURB
   MySQL is a very fast, multi-threaded, multi-user and robust SQL
@@ -50,10 +52,3 @@ CONFIGURE_ARGS += --with-plugins=max-no-ndb
 # BUILD64 = 1
 
 include gar/category.mk
-
-post-extract-modulated:
-	@( cd $(WORKDIR); \
-		if test -d mysql-$(GARVERSION); then \
-			mv mysql-$(GARVERSION) $(DISTNAME); \
-		fi; )
-	@$(MAKECOOKIE)
