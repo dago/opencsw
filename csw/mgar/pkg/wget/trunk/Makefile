@@ -40,9 +40,12 @@ SPKG_CLASSES = none cswcpsampleconf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/wgetrc.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }' 
 
 MERGE_SCRIPTS_isa-sparcv8-static-disable = copy-all
+ MERGE_SCRIPTS_isa-sparcv8-static-enable = rename-wget copy-only
+    MERGE_DIRS_isa-sparcv8-static-enable = $(bindir)
 
-MERGE_SCRIPTS_isa-sparcv8-static-enable = rename-wget copy-only
-MERGE_DIRS_isa-sparcv8-static-enable = $(bindir)
+    MERGE_SCRIPTS_isa-i386-static-disable = copy-all
+     MERGE_SCRIPTS_isa-i386-static-enable = rename-wget copy-only
+        MERGE_DIRS_isa-i386-static-enable = $(bindir)
 
 merge-rename-wget:
 	@mv $(DESTDIR)$(bindir)/wget $(DESTDIR)$(bindir)/wget.static
