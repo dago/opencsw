@@ -11,6 +11,12 @@ endef
 MASTER_SITES = http://ww$(GARNAME)w.nlnetlabs.nl/downloads/nsd/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnsd,)
+DISTFILES += cswusergroup
+
+SPKG_CLASSES = none cswusergroup
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/nsd\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } { print }'
+
+REQUIRED_PKGS = CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -21,5 +27,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
+
+post-install-modulated:
+	@ginstall -d $(DESTDIR)/etc/opt/csw/nsd
+	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/nsd/cswusergroup
 
 include gar/category.mk
