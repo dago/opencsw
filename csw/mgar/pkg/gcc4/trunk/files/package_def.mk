@@ -99,8 +99,6 @@ PKGFILES_CSWgcc4g++ += .*/gcc4/libexec/.*cc1plus
 PKGFILES_CSWgcc4g++ += .*/gcc4/lib/.*libstdc.*
 PKGFILES_CSWgcc4g++ += .*/gcc4/lib/.*libsupc\+\+.*
 PKGFILES_CSWgcc4g++ += .*/gcc4/man/.*g\+\+.1
-PKGFILES_CSWgcc4g++ += .*/gcc4/man/.*libstdc\+\+.1
-PKGFILES_CSWgcc4g++ += .*/gcc4/man/.*libsupc\+\+.1
 PKGFILES_CSWgcc4g++ += .*/gcc4/include/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
 PKGFILES_CSWgcc4g++ += .*/gcc4/include/c\+\+/(\d+(?:\.\d+)*)/ostream.*
 
@@ -174,7 +172,6 @@ PKGFILES_CSWgcc4adart += .*/opt/csw/lib/.*libgnarl.*
 ## gcc4corert
 PKGFILES_CSWgcc4corert  = .*/opt/csw/lib/.*libgcc_s.*
 PKGFILES_CSWgcc4corert += .*/opt/csw/lib/.*libgomp.*
-PKGFILES_CSWgcc4corert += .*/opt/csw/lib/.*libiberty.*
 PKGFILES_CSWgcc4corert += .*/opt/csw/lib/.*libssp.*
 
 ## gcc4gfortranrt 
