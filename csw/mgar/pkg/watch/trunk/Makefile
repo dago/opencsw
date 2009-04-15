@@ -59,10 +59,10 @@ pre-build-modulated:
 
 build-custom: BUILD_ARGS:=ALL_CFLAGS="$(CFLAGS)" ALL_LDFLAGS="$(LDFLAGS)"
 build-custom:
-	@gmake -C $(WORKSRC) $(BUILD_ARGS) snprintf.o
-	@gmake -C $(WORKSRC) $(BUILD_ARGS) getopt.o
-	@gmake -C $(WORKSRC) $(BUILD_ARGS) getopt1.o
-	@gmake -C $(WORKSRC) \
+	@$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) snprintf.o
+	@$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt.o
+	@$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt1.o
+	@$(BUILD_ENV) gmake -C $(WORKSRC) \
 		ALL_CFLAGS="$(CFLAGS) snprintf.o getopt.o getopt1.o" \
 	        ALL_LDFLAGS="$(LDFLAGS)" watch
 	$(MAKECOOKIE)
