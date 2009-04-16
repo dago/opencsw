@@ -8,9 +8,8 @@
 # NOTE NOTE NOTE
 
 GARNAME = docbookdtds
-GARVERSION = 1.0
+GARVERSION = 5.0
 
-PATCHLEVEL = 30.1
 CATEGORIES = xtra
 
 REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2
@@ -48,12 +47,14 @@ O_SRC = $(OASIS)/sgml/3.0/ $(OASIS)/sgml/3.1/ $(OASIS)/sgml/4.0/
 O_SRC += $(OASIS)/sgml/4.1/ $(OASIS)/xml/4.1.2/ $(OASIS)/sgml/4.2/
 O_SRC += $(OASIS)/xml/4.2/
 D_SRC = $(DOCBOOK)/sgml/4.3/ $(DOCBOOK)/xml/4.3/ $(DOCBOOK)/sgml/4.4/
-D_SRC += $(DOCBOOK)/xml/4.4/
+D_SRC += $(DOCBOOK)/xml/4.4/ $(DOCBOOK)/sgml/4.5/ $(DOCBOOK)/xml/4.5/
+D_SRC += $(DOCBOOK)/xml/5.0/
 
 # the various files we'll need to fetch from the various sources
 DBFILES = docbk30.zip docbk31.zip docbk40.zip docbk41.zip docbkx412.zip
 DBFILES += docbook-4.2.zip docbook-xml-4.2.zip docbook-4.3.zip
 DBFILES += docbook-xml-4.3.zip docbook-4.4.zip docbook-xml-4.4.zip
+DBFILES += docbook-4.5.zip docbook-xml-4.5.zip docbook-5.0.zip
 
 MASTER_SITES = $(O_SRC) $(D_SRC)
 DISTFILES  = $(DBFILES)
@@ -75,7 +76,7 @@ TEST_SCRIPTS =
 # nothing to build either...
 BUILD_SCRIPTS = 
 
-INSTALL_ARGS = DESTDIR=$(DESTDIR) GARVERSION=$(GARVERSION) PATCHLEVEL=$(PATCHLEVEL)
+INSTALL_ARGS = DESTDIR=$(DESTDIR)
 
 include gar/category.mk
 
@@ -111,7 +112,6 @@ zip-extract-docbkx412.zip:
 	unzip $(DOWNLOADDIR)/docbkx412.zip -d $(WORKSRC)/4.1.2-xml
 	@$(MAKECOOKIE)
 
-
 zip-extract-docbook-4.3.zip:
 	ginstall -d $(WORKSRC)/4.3-sgml
 	unzip $(DOWNLOADDIR)/docbook-4.3.zip -d $(WORKSRC)/4.3-sgml
@@ -120,6 +120,11 @@ zip-extract-docbook-4.3.zip:
 zip-extract-docbook-4.4.zip:
 	ginstall -d $(WORKSRC)/4.4-sgml
 	unzip $(DOWNLOADDIR)/docbook-4.4.zip -d $(WORKSRC)/4.4-sgml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-4.5.zip:
+	ginstall -d $(WORKSRC)/4.5-sgml
+	unzip $(DOWNLOADDIR)/docbook-4.5.zip -d $(WORKSRC)/4.5-sgml
 	@$(MAKECOOKIE)
 
 zip-extract-docbook-xml-4.2.zip:
@@ -135,6 +140,18 @@ zip-extract-docbook-xml-4.3.zip:
 zip-extract-docbook-xml-4.4.zip:
 	ginstall -d $(WORKSRC)/4.4-xml
 	unzip $(DOWNLOADDIR)/docbook-xml-4.4.zip -d $(WORKSRC)/4.4-xml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-xml-4.5.zip:
+	ginstall -d $(WORKSRC)/4.5-xml
+	unzip $(DOWNLOADDIR)/docbook-4.5.zip -d $(WORKSRC)/4.5-xml
+	@$(MAKECOOKIE)
+
+zip-extract-docbook-5.0.zip:
+	ginstall -d $(WORKSRC)/5.0-xml
+	unzip $(DOWNLOADDIR)/docbook-5.0.zip -d $(WORKSRC)/5.0-xml
+	mv $(WORKSRC)/5.0-xml/docbook-5.0/* $(WORKSRC)/5.0-xml/
+	rmdir $(WORKSRC)/5.0-xml/docbook-5.0
 	@$(MAKECOOKIE)
 
 post-extract:

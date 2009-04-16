@@ -1,6 +1,6 @@
 --- /dev/null	2008-12-15 18:41:04.000000000 +0100
-+++ docbookdtds-1.0/Makefile	2008-12-15 18:55:18.651895350 +0100
-@@ -0,0 +1,81 @@
++++ docbookdtds-5.0/Makefile	2008-12-15 18:55:18.651895350 +0100
+@@ -0,0 +1,96 @@
 +prefix = /opt/csw
 +sysconfdir = $(prefix)/etc
 +datadir = $(prefix)/share
@@ -19,6 +19,9 @@
 +SGMLTARG = $(patsubst %,inst-%,$(SGML))
 +XMLTARG = $(patsubst %,inst-%,$(XML))
 +
++CUR_SGML = $(lastword $(sort $(subst -sgml,,$(SGMLTARG))))
++CUR_XML = $(lastword $(sort $(subst -xml,,$(XMLTARG))))
++
 +.PHONY: $(SGML) $(XMLT)
 +
 +all: build
@@ -30,10 +33,10 @@
 +	@( $(INSTALL_DIR) $(DESTDIR)/$(sysconfdir)/sgml; \
 +		cd $(DESTDIR)/$(sysconfdir)/sgml; \
 +		[ -h $(DESTDIR)/$(sysconfdir)/sgml/sgml-docbook.cat ] || \
-+		ln -s sgml-docbook-4.4-$(GARVERSION)-$(PATCHLEVEL).cat \
++		ln -s sgml-docbook-$(CUR_SGML).cat \
 +			$(DESTDIR)/$(sysconfdir)/sgml/sgml-docbook.cat; \
 +		[ -h $(DESTDIR)/$(sysconfdir)/sgml/xml-docbook.cat ] || \
-+		ln -s xml-docbook-4.4-$(GARVERSION)-$(PATCHLEVEL).cat \
++		ln -s xml-docbook-$(CUR_XML).cat \
 +			$(DESTDIR)/$(sysconfdir)/sgml/xml-docbook.cat )
 +
 +docs:
@@ -50,8 +53,10 @@
 +		[ -d $$dir ] || $(INSTALL_DIR) $$dir; \
 +		$(INSTALL_DATA) $$x.1-sgml/ChangeLog $$dir/; \
 +	done
++	$(INSTALL_DIR) $(DESTDIR)/$(docdir)/5.0
++	cp -R 5.0-xml/docs/ $(DESTDIR)/$(docdir)/5.0/
 +
-+inst-%-sgml: DD=$(DESTDIR)/$(docbookdir)/sgml-dtd-$*-$(GARVERSION)-$(PATCHLEVEL)
++inst-%-sgml: DD=$(DESTDIR)/$(docbookdir)/sgml-dtd-$*
 +inst-%-sgml:
 +	@echo Installing $*-sgml
 +	@( cd $*-sgml; \
@@ -64,7 +69,7 @@
 +			$(INSTALL_DATA) ent/* $(DD)/ent/; \
 +		fi )
 +
-+inst-%-xml: DD=$(DESTDIR)/$(docbookdir)/xml-dtd-$*-$(GARVERSION)-$(PATCHLEVEL)
++inst-%-xml: DD=$(DESTDIR)/$(docbookdir)/xml-dtd-$*
 +inst-%-xml:
 +	@echo Installing $*-xml
 +	@( cd $*-xml; \
@@ -76,6 +81,16 @@
 +			$(INSTALL_DIR) $(DD)/ent; \
 +			$(INSTALL_DATA) ent/* $(DD)/ent/; \
 +		fi )
++
++inst-5.0-xml: DD=$(DESTDIR)/$(docbookdir)/xml-schemas-5.0
++inst-5.0-xml:
++	@echo Installing 5.0-xml
++	@( cd 5.0-xml/; \
++	      gmkdir -p $(DD); \
++	      for d in dtd rng sch xsd; do \
++	      	  cp -R $$d $(DD); \
++	      done; \
++	      $(INSTALL_DATA) catalog.xml $(DD)/catalog; )
 +
 +build:
 +	@echo Nothing to build...dummy statement in action.
