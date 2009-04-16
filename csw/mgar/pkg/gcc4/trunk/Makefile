@@ -42,5 +42,7 @@ CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
 include files/gar_override.mk
 include files/package_def.mk
 include files/pkg_scripts.mk
+include files/package_files.mk
+include files/amd_merge.mk
 ## include mGar definitions
 include gar/category.mk

@@ -38,7 +38,7 @@ STRIP_DIRS             += $(DESTDIR)$(BUILD_PREFIX)/gcc4/bin
 CONFIGURE_SCRIPTS       = objdir
 TEST_SCRIPTS            = skip
 post-configure-modulated: fix-bootflags
-#MERGE_SCRIPTS_isa-i386  = amd
+MERGE_SCRIPTS_isa-i386  = amd
 
 ## Run checkpkg Manually
 ENABLE_CHECK            = 0
