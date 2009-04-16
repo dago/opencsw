@@ -515,6 +515,89 @@ then
 	$PREFIX $XMLCAT --noout --add "rewriteURI" \
 		"http://www.oasis-open.org/docbook/xml/4.4" \
 		"xml-dtd-4.4" $CATALOG
+
+	# DocBook XML V4.5
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Math Symbols: Arrow Relations//EN//XML" \
+	        "xml-dtd-4.5/ent/isoamsa.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Math Symbols: Binary Operators//EN//XML" \
+	        "xml-dtd-4.5/ent/isoamsb.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Math Symbols: Delimiters//EN//XML" \
+	        "xml-dtd-4.5/ent/isoamsc.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Math Symbols: Negated Relations//EN//XML" \
+	        "xml-dtd-4.5/ent/isoamsn.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Math Symbols: Ordinary//EN//XML" \
+	        "xml-dtd-4.5/ent/isoamso.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Math Symbols: Relations//EN//XML" \
+	        "xml-dtd-4.5/ent/isoamsr.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Box and Line Drawing//EN//XML" \
+	        "xml-dtd-4.5/ent/isobox.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Russian Cyrillic//EN//XML" \
+	        "xml-dtd-4.5/ent/isocyr1.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Non-Russian Cyrillic//EN//XML" \
+	        "xml-dtd-4.5/ent/isocyr2.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Diacritical Marks//EN//XML" \
+	        "xml-dtd-4.5/ent/isodia.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Greek Letters//EN//XML" \
+	        "xml-dtd-4.5/ent/isogrk1.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Monotoniko Greek//EN//XML" \
+	        "xml-dtd-4.5/ent/isogrk2.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Greek Symbols//EN//XML" \
+	        "xml-dtd-4.5/ent/isogrk3.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Alternative Greek Symbols//EN//XML" \
+	        "xml-dtd-4.5/ent/isogrk4.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Latin 1//EN//XML" \
+	        "xml-dtd-4.5/ent/isolat1.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Added Latin 2//EN//XML" \
+	        "xml-dtd-4.5/ent/isolat2.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Numeric and Special Graphic//EN//XML" \
+	        "xml-dtd-4.5/ent/isonum.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES Publishing//EN//XML" \
+	        "xml-dtd-4.5/ent/isopub.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "ISO 8879:1986//ENTITIES General Technical//EN//XML" \
+	        "xml-dtd-4.5/ent/isotech.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//ENTITIES DocBook Character Entities V4.5//EN" \
+	        "xml-dtd-4.5/dbcentx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//ENTITIES DocBook Additional General Entities V4.5//EN" \
+	        "xml-dtd-4.5/dbgenent.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//ELEMENTS DocBook Document Hierarchy V4.5//EN" \
+	        "xml-dtd-4.5/dbhierx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//ENTITIES DocBook Notations V4.5//EN" \
+	        "xml-dtd-4.5/dbnotnx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//ELEMENTS DocBook XML Information Pool V4.5//EN" \
+	        "xml-dtd-4.5/dbpoolx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//ELEMENTS DocBook XML HTML Tables V4.5//EN" \
+	        "xml-dtd-4.5/htmltblx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//DTD DocBook XML V4.5//EN" \
+	        "xml-dtd-4.5/docbookx.dtd" $CATALOG
+	$PREFIX $XMLCAT --noout --add "public" \
+	        "-//OASIS//DTD XML Exchange Table Model 19990315//EN" \
+	        "xml-dtd-4.5/soextblx.dtd" $CATALOG
 fi
 
 # Finally, make sure everything in $CSWSGMLCNF is readable!
