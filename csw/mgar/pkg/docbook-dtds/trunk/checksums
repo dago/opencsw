@@ -1,5 +1,5 @@
-d1da7c5cc43dbc23ea0b149d597a48a3  download/CSWdocbookdtds.postinstall
-81e9ec3839d7fc7585515aaf6d412135  download/CSWdocbookdtds.preremove
+6be301db3001ff1ff49ce22187502c29  download/CSWdocbookdtds.postinstall
+ebff690d6182d2009222cf5c1c685eeb  download/CSWdocbookdtds.preremove
 d22f42e2f4d073461f202a12fabb5b8a  download/add_makefile.patch
 9a7f5b1b7dd52d0ca4fb080619f0459c  download/docbk30.zip
 432749c0c806dbae81c8bcb70da3b5d3  download/docbk31.zip
