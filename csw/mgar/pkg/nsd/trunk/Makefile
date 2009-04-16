@@ -13,8 +13,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnsd,)
 DISTFILES += cswusergroup
 
-SPKG_CLASSES = none cswusergroup
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/nsd\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } { print }'
+SPKG_CLASSES = none cswusergroup cswcpsampleconf
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/nsd\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/nsd\/nsd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 REQUIRED_PKGS = CSWcswclassutils
 
@@ -31,7 +31,7 @@ CONFIGURE_ARGS += --with-pidfile=/var/run/nsd.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
 post-install-modulated:
-	@ginstall -d $(DESTDIR)/etc/opt/csw/nsd
+	@mv $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.sample $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.CSW
 	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/nsd/cswusergroup
 
 include gar/category.mk
