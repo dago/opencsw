@@ -31,7 +31,8 @@ CONFIGURE_ARGS  += --with-x --enable-gtk-doc
 # CONFIGURE_ARGS  += --with-included-modules 
 
 PREREQUISITE_PKGS = CSWgtk-doc CSWlibxslt
-REQUIRED_PKGS_CSWpango = CSWggettextrt CSWglib2
+REQUIRED_PKGS_CSWpango  = CSWggettextrt CSWglib2 CSWfconfig CSWftype2
+REQUIRED_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib
 REQUIRED_PKGS_CSWpangodevel = CSWpango
 
 # Dynamic prototype
