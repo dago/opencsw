@@ -4,16 +4,22 @@ CATEGORIES = lib
 
 DESCRIPTION = Thai language support routines
 define BLURB
+  LibThai is a set of Thai language support routines aimed to ease
+  developers tasks to incorporate Thai language support in their applications.
+  It includes important Thai-specific functions e.g. word breaking, input
+  and output methods as well as basic character and string supports.
+  LibThai is an Open Source and collaborative effort initiated by
+  Thai Linux Working Group and opened for all contributors.
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=34448
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+SPKG_SOURCEURL = http://linux.thai.net/projects/libthai/
 
 BUILD64 = 1
 NORUNPATH = 1
