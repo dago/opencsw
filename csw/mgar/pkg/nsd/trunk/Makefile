@@ -8,22 +8,24 @@ define BLURB
   authoritative DNS nameserver.
 endef
 
-MASTER_SITES = http://ww$(GARNAME)w.nlnetlabs.nl/downloads/nsd/
+MASTER_SITES = http://www.nlnetlabs.nl/projects/nsd/
+
+# If the url used to check for software update is different of MASTER_SITES, then 
+# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
+UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnsd,)
 DISTFILES += cswusergroup
+DISTFILES += cswnsd
 
-SPKG_CLASSES = none cswusergroup cswcpsampleconf
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/nsd\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/nsd\/nsd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$5 = "nsd" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$6 = "nsd" } { print }'
+SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswnsd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/nsd\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/nsd\/nsd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$5 = "nsd" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$6 = "nsd" } { print }'
 
 REQUIRED_PKGS = CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
@@ -35,6 +37,8 @@ CONFIGURE_ARGS += --with-xfrdfile=/var/opt/csw/nsd/xfrd.state
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/var/opt/csw/nsd
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/cswnsd $(DESTDIR)/etc/opt/csw/init.d/cswnsd
 	@mv $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.sample $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.CSW
 	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/nsd/cswusergroup
 

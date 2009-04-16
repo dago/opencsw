@@ -1,0 +1,30 @@
+#!/sbin/sh
+
+case "$1" in
+  start)
+    echo "Starting nsd."
+    if [ ! -f /var/opt/csw/nsd/nsd.db ]; then
+      /opt/csw/sbin/nsdc rebuild >/dev/null 2>/dev/null
+    fi
+    /opt/csw/sbin/nsdc start
+    ;;
+  stop)
+    echo "Stopping nsd."
+    /opt/csw/sbin/nsdc stop
+    ;;
+  restart)
+    $0 stop
+    sleep 1
+    $0 start
+    ;;
+    refresh)
+    echo "Refreshing nsd."
+    /opt/csw/sbin/nsdc reload
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | restart | refresh }"
+    exit 1
+    ;;
+esac
+
+exit 0
