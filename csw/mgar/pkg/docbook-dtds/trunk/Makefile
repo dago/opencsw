@@ -1,18 +1,17 @@
 # Replicate the RHEL5 docbook-dtds-1.0.30.1 rpm for CSW.  Patches are taken
 # from that srpm and modified (so paths work for GAR).
-
-# NOTE NOTE NOTE
-# If these version numbers change, you'll need to update the postinstall
-# and preremove scripts also.
-# 20081204 -bw
-# NOTE NOTE NOTE
+# As of 20090416, we're no longer tracking the rhel5 package.  We'll add
+# 4.5 and 5.0 support and have our version number track the highest docbook
+# version supplied in the package.
 
 GARNAME = docbookdtds
 GARVERSION = 5.0
 
 CATEGORIES = xtra
 
+PACKAGES = CSWdocbookdtds
 REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2
+ARCHALL = 1
 
 DESCRIPTION = SGML and XML document type definitions for DocBook.
 define BLURB
@@ -58,7 +57,7 @@ DBFILES += docbook-4.5.zip docbook-xml-4.5.zip docbook-5.0.zip
 
 MASTER_SITES = $(O_SRC) $(D_SRC)
 DISTFILES  = $(DBFILES)
-DISTFILES += $(call admfiles,CSWdocbookdtds,postinstall preremove)
+DISTFILES += CSWdocbookdtds.postinstall CSWdocbookdtds.preremove
 
 PATCHFILES = docbook-4.2-euro.patch docbook-dtd30-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd31-sgml-1.0.catalog.patch
@@ -144,7 +143,7 @@ zip-extract-docbook-xml-4.4.zip:
 
 zip-extract-docbook-xml-4.5.zip:
 	ginstall -d $(WORKSRC)/4.5-xml
-	unzip $(DOWNLOADDIR)/docbook-4.5.zip -d $(WORKSRC)/4.5-xml
+	unzip $(DOWNLOADDIR)/docbook-xml-4.5.zip -d $(WORKSRC)/4.5-xml
 	@$(MAKECOOKIE)
 
 zip-extract-docbook-5.0.zip:
