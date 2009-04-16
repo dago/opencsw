@@ -13,6 +13,7 @@ endef
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.24/
 DISTNAME = pango-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES += fixme.sh
 
 PACKAGES = CSWpango CSWpangodevel CSWpangodoc
 CATALOGNAME_CSWpango      = libpango
@@ -41,3 +42,10 @@ PKGFILES_CSWpangodoc    = $(sharedstatedir)/gtk-doc/.*
 TEST_SCRIPTS   = 
 
 include gar/category.mk
+
+post-configure-modulated:
+	@echo " ==> Fixing libtool files"
+	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	@$(MAKECOOKIE)
+
+
