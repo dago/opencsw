@@ -11,11 +11,12 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=34448&package_id=26558
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=34448
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
+NORUNPATH = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
