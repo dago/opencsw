@@ -13,9 +13,11 @@ define BLURB
   whole file has been retrieved.
 endef
 
-MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES = http://www.gnu.org/software/wget/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWwget)
+
+UPSTREAM_MASTER_SITES = $(GNU_MIRROR)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
