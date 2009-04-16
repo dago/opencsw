@@ -29,8 +29,12 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/nsd.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
+CONFIGURE_ARGS += --with-dbfile=/var/opt/csw/nsd/nsd.db
+CONFIGURE_ARGS += --with-difffile=/var/opt/csw/nsd/ixfr.db
+CONFIGURE_ARGS += --with-xfrdfile=/var/opt/csw/nsd/xfrd.state
 
 post-install-modulated:
+	@ginstall -d $(DESTDIR)/var/opt/csw/nsd
 	@mv $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.sample $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.CSW
 	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/nsd/cswusergroup
 
