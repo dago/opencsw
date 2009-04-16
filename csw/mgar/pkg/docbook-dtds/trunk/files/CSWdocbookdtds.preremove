@@ -71,7 +71,22 @@ rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-4.4.cat
 # DocBook XML V4.4
 $PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
 	$CSWSGMLCNF/xml-docbook-4.4.cat
-rm -f $PKG_INSTALL_ROOT/$PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-4.4.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-4.4.cat
+
+# DocBook V4.5
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+	$CSWSGMLCNF/sgml-docbook-4.5.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/sgml-docbook-4.5.cat
+
+# DocBook XML V4.5
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+	$CSWSGMLCNF/xml-docbook-4.5.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-4.5.cat
+
+# DocBook XML V5.0
+$PREFIX $XMLCAT --sgml --noout --del $CSWSGMLCNF/catalog \
+        $CSWSGMLCNF/xml-docbook-5.0.cat
+rm -f $PKG_INSTALL_ROOT/$CSWSGMLCNF/xml-docbook-5.0.cat
 
 # Fix up SGML super catalog so that there isn't an XML DTD before an
 # SGML one.  We need to do this (*sigh*) because xmlcatalog messes up
@@ -330,4 +345,60 @@ then
 		"xml-dtd-4.4/ent/iso-cyr2.ent" $CATALOG
 	$PREFIX $XMLCAT --noout --del \
 		"xml-dtd-4.4" $CATALOG
+
+	# DocBook XML V4.4
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isoamsa.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isoamsb.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isoamsc.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isoamsn.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isoamsr.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isobox.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isocyr1.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isocyr2.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isodia.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isogrk1.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isogrk2.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isogrk3.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isogrk4.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isolat1.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isolat2.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isonum.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isopub.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/ent/isotech.ent" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/dbcentx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/dbgenent.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/dbhierx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/dbnotnx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/dbpoolx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/htmltblx.mod" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/docbookx.dtd" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5/soextblx.dtd" $CATALOG
+	$PREFIX $XMLCAT --noout --del \
+	        "xml-dtd-4.5" $CATALOG
 fi
