@@ -6,7 +6,8 @@ DESCRIPTION = A program to fix/change runpaths
 define BLURB
 endef
 
-MASTER_SITES = http://directory.fsf.org/project/chrpath/
+SPKG_SOURCEURL = http://directory.fsf.org/project/chrpath/
+MASTER_SITES = http://ftp.tux.org/pub/X-Windows/ftp.hungry.com/chrpath/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWchrpath
@@ -19,7 +20,7 @@ PATCHDIR = $(WORKSRC)
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 NOISALIST = 1
