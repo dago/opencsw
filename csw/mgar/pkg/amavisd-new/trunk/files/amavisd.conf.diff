@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/amavisd.conf amavisd-new-2.6.0/amavisd.conf
---- amavisd-new-2.6.0.orig/amavisd.conf	2008-04-23 20:49:58.000000000 +0200
-+++ amavisd-new-2.6.0/amavisd.conf	2008-11-09 22:45:24.947430600 +0100
+diff --speed-large-files --minimal -Nru amavisd-new-2.6.2.orig/amavisd.conf amavisd-new-2.6.2/amavisd.conf
+--- amavisd-new-2.6.2.orig/amavisd.conf	2008-12-15 01:50:03.000000000 +0100
++++ amavisd-new-2.6.2/amavisd.conf	2009-04-17 22:51:46.060535660 +0200
 @@ -15,12 +15,12 @@
  # $bypass_decode_parts = 1;         # controls running of decoders&dearchivers
  
@@ -22,7 +22,7 @@ diff --speed-large-files --minimal -Nru amavisd-new-2.6.0.orig/amavisd.conf amav
  # when enabling addr extensions do also Postfix/main.cf: recipient_delimiter=+
  
 -$path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/usr/bin:/bin';
-+$path = '/opt/csw/bin:/opt/csw/sbin:/usr/sfw/bin:/usr/sfw/sbin::/sbin:/usr/bin:/bin';
++$path = '/opt/csw/bin:/opt/csw/sbin:/usr/sfw/bin:/usr/sfw/sbin:/sbin:/usr/bin:/bin';
  # $dspam = 'dspam';
  
  $MAXLEVELS = 14;
