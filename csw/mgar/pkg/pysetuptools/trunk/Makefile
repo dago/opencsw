@@ -1,5 +1,5 @@
 GARNAME = setuptools
-GARVERSION = 0.6c7
+GARVERSION = 0.6c9
 CATEGORIES = lang
 
 SPKG_SOURCEURL = http://peak.telecommunity.com/DevCenter/setuptools
