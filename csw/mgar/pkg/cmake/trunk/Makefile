@@ -12,8 +12,9 @@ define BLURB
   generation, code generation, and template instantiation. 
 endef
 
-UPSTREAM_MASTER_SITES = http://www.cmake.org/files/
-MASTER_SITES = http://www.cmake.org/files/v2.6/
+RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
+SPKG_SOURCEURL = http://www.cmake.org/
+MASTER_SITES = http://www.cmake.org/files/v$(RELVER)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWcmake
