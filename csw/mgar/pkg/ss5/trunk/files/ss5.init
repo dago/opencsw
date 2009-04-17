@@ -1,0 +1,27 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        # Start daemon
+        echo -n "Starting ss5... "
+        /opt/csw/sbin/ss5 -t
+        ;;
+    stop)
+        # Stop daemon
+        /usr/sbin/killall ss5
+        ;;
+    reload)
+        # Reload configuration
+        /usr/bin/pkill -HUP ss5
+        ;;
+    restart)
+        # restart daemon
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: ss5 {start|stop|restart|reload}"
+        exit 1
+    ;;
+esac
+exit 0
