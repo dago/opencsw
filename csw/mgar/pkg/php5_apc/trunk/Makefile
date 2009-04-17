@@ -20,9 +20,9 @@ STRIP_DIRS += $(PHP5ROOT)/bin
 PATCHFILES = apc_pool.diff
 PACKAGES = CSWphp5apc
 
-MASTER_SITES = http://us.php.net/apc
-SPKG_SOURCEURL = http://pecl.php.net/package/apc
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+SPKG_SOURCEURL = http://us.php.net/apc/
+MASTER_SITES = http://pecl.php.net/package/apc/
+UFILES_REGEX = (\d+(?:\.\d+)*).tgz
 
 DISTFILES = $(DISTNAME).tgz
 
