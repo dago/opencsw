@@ -8,7 +8,8 @@ define BLURB
 	analysis for over 20 programming and markup langauges.
 endef
 
-MASTER_SITES = $(SF_MIRROR)/silvercity/
+SF_PROJ = $(call TOLOWER,$(GARNAME))
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PACKAGES = CSWsilvercity
 
@@ -16,11 +17,11 @@ REQUIRED_PKGS_CSWsilvercity = CSWpython
 CATALOGNAME_CSWsilvercity = silvercity
 SPKG_DESC_CSWsilvercity = Lexical analysis package for Python
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=45693
-UPSTREAM_USE_SF = 1
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+NOISALIST = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS = 
