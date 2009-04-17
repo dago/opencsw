@@ -10,7 +10,8 @@ define BLURB
   SQLite support for Python
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(call TOLOWER,$(GARNAME))/
+MASTER_SITES = $(SF_MIRRORS)
+
 WORKSRC = $(WORKDIR)/$(GARNAME)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
@@ -19,9 +20,8 @@ CATALOGNAME_CSWpysqlite = pysqlite
 SPKG_DESC_CSWpysqlite = SQLite 1.x support for Python
 REQUIRED_PKGS_CSWpysqlite = CSWpython CSWsqlite3rt
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=54058
-UPSTREAM_USE_SF = 1
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 EXTRA_CPPFLAGS = -I/opt/csw/include
