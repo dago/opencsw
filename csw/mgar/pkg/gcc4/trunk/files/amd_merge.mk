@@ -79,7 +79,6 @@ ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatbl
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatchop
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatclean
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatfind
-ISAEXEC_FILES += /opt/csw/gcc4/bin/gnative2ascii
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatkr
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatlink
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatls
