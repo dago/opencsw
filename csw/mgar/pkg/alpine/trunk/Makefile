@@ -12,13 +12,13 @@ define BLURB
 	is highly customizable through the use of the Alpine Setup command. 
 endef
 
-MASTER_SITES = http://www.washington.edu/alpine/
-UPSTREAM_MASTER_SITES = ftp://ftp.cac.washington.edu/alpine/
+MASTER_SITES = ftp://ftp.cac.washington.edu/alpine/
+SPKG_SOURCEURL = http://www.washington.edu/alpine/
 DISTFILES  = $(GARNAME).tar.bz2
 
 PACKAGES = CSWalpine
-CATALOGNAME_CSWgd = alpine
-SPKG_DESC_CSWgd = $(DESCRIPTION)
+CATALOGNAME_CSWalpine = alpine
+SPKG_DESC_CSWalpine = $(DESCRIPTION)
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
@@ -29,26 +29,28 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 ##  GCC4 thows the following errors:
 ##  warning: pointer targets in passing argument 2 of 'compare_cstring' 
 ##           differ in signedness
-GARCOMPILER = GCC3
+GARCOMPILER = GCC4
 
 # Patch for solaris explained in the following thread
 # http://mailman2.u.washington.edu/pipermail/alpine-info/2007-December/000047.html
 PATCHFILES = pubcookie.diff
 
+NOISALIST = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-quotas
 CONFIGURE_ARGS += --enable-from-encoding
-CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
-CONFIGURE_ARGS += --with-libintl-prefix=$(prefix)
-CONFIGURE_ARGS += --with-pubcookie
-CONFIGURE_ARGS += --with-system-pinerc=$(libdir)/pine.conf
-CONFIGURE_ARGS += --with-system-fixed-pinercc=$(libdir)/pine.conf.fixed
-CONFIGURE_ARGS += --with-ssl-dir=$(prefix)
-CONFIGURE_ARGS += --with-krb5-dir=$(prefix)
-CONFIGURE_ARGS += --with-ldap-dir=$(prefix)
-CONFIGURE_ARGS += --with-tcl-lib=$(libdir)/tcl8.4
+CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw
+CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
+CONFIGURE_ARGS += --with-system-pinerc=$(prefix)/etc/pine.conf
+CONFIGURE_ARGS += --with-system-fixed-pinercc=$(prefix)/etc/pine.conf.fixed
+CONFIGURE_ARGS += --with-ssl-dir=/opt/csw
+CONFIGURE_ARGS += --with-krb5-dir=/opt/csw
+CONFIGURE_ARGS += --with-ldap-dir=/opt/csw
+CONFIGURE_ARGS += --with-tcl-lib=/opt/csw/lib/tcl8.4
 CONFIGURE_ARGS += --with-c-client-target=gso
+CONFIGURE_ARGS += --with-pubcookie
 CONFIGURE_ARGS += --with-web-bin=$(libexecdir)/alpine/bin
+CONFIGURE_ARGS += --with-spellcheck-prog=$(bindir)/aspell
 
 ## Libs that are not get set correctly in Makefiles
 LIBS += -lm -lgssapi_krb5 -lkrb5 -lintl -liconv
@@ -56,4 +58,9 @@ export LIBS
 
 TEST_TARGET = check
 
+REQUIRED_PKGS  = CSWgcc3corert CSWggettextrt CSWiconv
+REQUIRED_PKGS += CSWkrb5lib CSWlibnet CSWncurses CSWaspell
+REQUIRED_PKGS += CSWoldaprt CSWosslrt CSWsasl CSWtcl
+
+include files/install_scripts.mk
 include gar/category.mk
