@@ -1,5 +1,5 @@
 955d99eda1432c7b7e00d98b91e35a79  download/CSWsudo-common.postinstall
 ca867ca77bda965a44bcd665bae7dc6c  download/CSWsudo.postinstall
-2324b0bb3e9cf71398aaab1751aa63c5  download/CSWsudo.postremove
+880c6c8b92f9c3ef3b5014a0b29c0b02  download/CSWsudo.postremove
 157b2e5e38ca54eb36e0364706bd0292  download/install.diff
 5fd96bba35fe29b464f7aa6ad255f0a6  download/sudo-1.7.0.tar.gz
