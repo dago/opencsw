@@ -25,7 +25,7 @@ PATCHFILES = patch-keyserver_and_sm.diff
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-RUNPATHQUOTE = 1
+NOISALIST  = 1
 BUILD64    = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
