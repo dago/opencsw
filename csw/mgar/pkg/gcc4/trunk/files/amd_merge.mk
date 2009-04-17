@@ -26,23 +26,22 @@ merge-dirs-amd:
 
 merge-i386-files:
 	@echo "[===== Merging isa-i386 =====]"
-	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/bin $(PKGROOT))
-	$(_DBG)(gmv -f $(PPREFIX)/bin/i386-pc* $(PPREFIX)/bin/i386/)
-	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/include $(PKGROOT))
-	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/info $(PKGROOT))
-	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/man $(PKGROOT))
-	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/share $(PKGROOT))
-	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/lib $(PKGROOT))
-	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw $(MPREFIX)/libexec $(PKGROOT))
+	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/bin $(PKGROOT))
+	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/include $(PKGROOT))
+	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/info $(PKGROOT))
+	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/man $(PKGROOT))
+	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/share $(PKGROOT))
+	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/lib $(PKGROOT))
+	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/libexec $(PKGROOT))
 	$(_DBG)$(MAKECOOKIE)
 
 merge-amd64-files:
 	@echo "[===== Merging isa-amd64 =====]"
 	$(_DBG)(cd $(AMD_BASE); \
 		for dir in `gfind . -name "*solaris2\.10*" -type d` ; do \
-		/usr/bin/pax -rw $$dir $(PKGROOT); done )
-	$(_DBG)(cd $(AMD_BASE); /usr/bin/pax -rw $(MPREFIX)/lib/amd64 $(PKGROOT))
-	$(_DBG)(cd $(APREFIX)/bin; /usr/bin/pax -rw * $(PPREFIX)/bin/amd64)
+		/usr/bin/pax -rw -v $$dir $(PKGROOT); done )
+	$(_DBG)(cd $(AMD_BASE); /usr/bin/pax -rw -v $(MPREFIX)/lib/amd64 $(PKGROOT))
+	$(_DBG)(cd $(APREFIX)/bin; /usr/bin/pax -rw -v * $(PPREFIX)/bin/amd64)
 	$(_DBG)$(MAKECOOKIE)
 
 ifeq ($(shell uname -p), i386)
