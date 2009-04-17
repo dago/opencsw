@@ -45,10 +45,11 @@ FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 include gar/category.mk
 
-PKGFILES_CSWsudo = .*/bin/sudo.minimal
+PKGFILES_CSWsudo = .*$(bindir)/sudo.minimal
 
 post-merge-modulated:
-	@( cd $(PKGROOT)$(bindir) ; mv sudo sudo.minimal )
-	@( cd $(PKGROOT)$(sysconfdir) ; mv sudoers sudoers.CSW )
+	@( cd $(PKGROOT)$(bindir) ; gmv sudo sudo.minimal )
+	@( cd $(PKGROOT)$(bindir) ; grm sudoedit )
+	@( cd $(PKGROOT)$(sysconfdir) ; gmv sudoers sudoers.CSW )
 	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo* )
 	@$(MAKECOOKIE)
