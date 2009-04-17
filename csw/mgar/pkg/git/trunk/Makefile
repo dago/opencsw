@@ -28,7 +28,7 @@ PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 PREREQUISITE_PKGS += CSWautoconf
 
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
-REQUIRED_PKGS_CSWgit += CSWossh CSWiconv CSWexpat CSWbash CSWpmerror
+REQUIRED_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
 REQUIRED_PKGS_CSWgit += CSWpmtermreadkey
 
 REQUIRED_PKGS_CSWgitk = CSWgit CSWtk
