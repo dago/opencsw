@@ -7,7 +7,7 @@ define BLURB
   Documentation Utilities for Python
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpydocutils
@@ -15,7 +15,8 @@ REQUIRED_PKGS_CSWpydocutils = CSWpython
 CATALOGNAME_CSWpydocutils = pydocutils
 SPKG_DESC = Documentation Utiltiies for Python
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
