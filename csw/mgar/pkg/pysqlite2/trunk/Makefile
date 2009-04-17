@@ -1,13 +1,15 @@
 GARNAME = pysqlite
-GARVERSION = 2.3.5
+GARVERSION = 2.4.0
 CATEGORIES = lang
+
+RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 
 DESCRIPTION = SQLite3 support for Python
 define BLURB
   SQLite support for Python
 endef
 
-MASTER_SITES = http://initd.org/pub/software/pysqlite/releases/2.3/2.3.5/
+MASTER_SITES = http://initd.org/pub/software/pysqlite/releases/$(RELVER)/$(GARVERSION)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpysqlite2
@@ -28,7 +30,7 @@ INSTALL_ARGS += --prefix=$(prefix)
 
 include gar/category.mk
 
-post-install:
+post-install-modulated:
 	install -d $(DESTDIR)$(docdir)
 	mv $(DESTDIR)$(prefix)/pysqlite2-doc $(DESTDIR)$(docdir)/pysqlite2
 	$(DONADA)
