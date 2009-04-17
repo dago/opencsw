@@ -26,8 +26,7 @@ STRIP_DIRS += $(PHP5ROOT)/bin
 
 PACKAGES = CSWphp5xdebug
 
-MASTER_SITES = http://www.xdebug.org/
-SPKG_SOURCEURL = http://www.xdebug.org/files/
+MASTER_SITES = http://www.xdebug.org/files/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
 DISTFILES = $(DISTNAME).tgz
