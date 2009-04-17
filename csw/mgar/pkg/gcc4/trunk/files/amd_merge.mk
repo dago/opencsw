@@ -87,4 +87,16 @@ ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatmake
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatname
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatprep
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnatxref
+ISAEXEC_FILES += i386-pc-solaris2.8-c++
+ISAEXEC_FILES += i386-pc-solaris2.8-g++
+ISAEXEC_FILES += i386-pc-solaris2.8-gcc
+ISAEXEC_FILES += i386-pc-solaris2.8-gcc-4.3.3
+ISAEXEC_FILES += i386-pc-solaris2.8-gcj
+ISAEXEC_FILES += i386-pc-solaris2.8-gfortran
+ISAEXEC_FILES += i386-pc-solaris2.10-c++
+ISAEXEC_FILES += i386-pc-solaris2.10-g++
+ISAEXEC_FILES += i386-pc-solaris2.10-gcc
+ISAEXEC_FILES += i386-pc-solaris2.10-gcc-4.3.3
+ISAEXEC_FILES += i386-pc-solaris2.10-gcj
+ISAEXEC_FILES += i386-pc-solaris2.10-gfortran
 endif
