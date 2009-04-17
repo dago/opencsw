@@ -23,7 +23,6 @@ PACKAGES = CSWsudo CSWsudo-common
 CATALOGNAME_CSWsudo = sudo
 SPKG_DESC_CSWsudo = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws
-INCOMPATIBLE_PKGS_CSWsudo = CSWsudo-ldap
 REQUIRED_PKGS_CSWsudo = CSWsudo-common CSWggettextrt
 
 CATALOGNAME_CSWsudo-common = sudo_common
