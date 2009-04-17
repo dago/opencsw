@@ -25,7 +25,6 @@ PACKAGES = CSWsudoldap
 CATALOGNAME_CSWsudoldap = sudo_ldap
 SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
-INCOMPATIBLE_PKGS_CSWsudoldap = CSWsudo
 REQUIRED_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -40,9 +39,10 @@ TEST_TARGET = check
 
 include gar/category.mk
 
-PKGFILES_CSWsudoldap = .*/bin/sudo.ldap
+PKGFILES_CSWsudoldap = .*$(bindir)/sudo.ldap
 
 post-merge-modulated:
-	@( cd $(PKGROOT)$(bindir) ; mv sudo sudo.ldap )
+	@( cd $(PKGROOT)$(bindir) ; gmv sudo sudo.ldap )
+	@( cd $(PKGROOT)$(bindir) ; grm sudoedit )
 	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo.ldap )
 	@$(MAKECOOKIE)
