@@ -21,7 +21,7 @@ REQUIRED_PKGS_CSWpycs = CSWcs CSWpython
 
 CATALOGNAME_CSWcs   = clearsilver
 CATALOGNAME_CSWpmcs = pm_clearsilver
-CATALOGNAME_CSWpycs = py_clearsilver
+CATALOGNAME_CSWpycs = pyclearsilver
 
 SPKG_DESC_CSWcs   = Language-neutral HTML template system
 SPKG_DESC_CSWpmcs = Clearsilver Perl language binding
@@ -29,12 +29,13 @@ SPKG_DESC_CSWpycs = Clearsilver Python language binding
 
 PKGFILES_CSWpmcs  = $(libdir)/perl/.*
 PKGFILES_CSWpmcs += $(mandir)/.*perl.*
-PKGFILES_CSWpycs =  $(libdir)/python*/.*
+PKGFILES_CSWpycs  = $(libdir)/python.*/.*
 PKGFILES_CSWpycs += $(mandir)/.*python.*
 
-GARCOMPILER = GNU
+#GARCOMPILER = GNU
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
 PATCHFILES += perlbuild.diff
