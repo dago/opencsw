@@ -1,5 +1,5 @@
 GARNAME      = pixman
-GARVERSION   = 0.14.0
+GARVERSION   = 0.15.2
 CATEGORIES   = lib
 
 DESCRIPTION  = The pixel-manipulation library for X and cairo
@@ -19,6 +19,8 @@ DISTFILES    += $(call admfiles,CSWpixman, )
 DISTFILES    += license.txt
 
 #REQUIRED_PKGS_CSWpixman 	 = CSWlibx11
+
+BUILD64 = 1
 
 CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
