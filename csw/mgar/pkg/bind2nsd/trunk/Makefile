@@ -30,6 +30,8 @@ REQUIRED_PKGS = CSWpython
 CATALOGNAME = bind2nsd
 SPKG_DESC = scripts to translate DNS information in BIND format to NSD format
 
+ARCHALL = 1
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS =
