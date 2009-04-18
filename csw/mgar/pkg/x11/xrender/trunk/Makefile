@@ -28,6 +28,8 @@ PKGFILES_CSWrenderdev += $(prefix)/X11/lib/pkgconfig/.*
 REQUIRED_PKGS_CSWrenderdev  = CSWlibxrender
 REQUIRED_PKGS_CSWlibxrender = CSWlibx11
 
+BUILD64 = 1 
+
 post-extract:
 	( cd  $(WORKROOTDIR)/build-$(firstword $(MODULATIONS)) ; \
 		mv libXrender-$(GARVERSION) $(DISTNAME) )
