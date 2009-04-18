@@ -40,4 +40,10 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
 
+post-configure-modulated:
+	@echo " ==> Fixing Shebang"
+	@cd $(WORKSRC)
+	@perl -pi -e 's/\/usr\/bin\/env\ python/\/opt\/csw\/bin\/python/g' `find . -name '*.py'`
+	@$(MAKECOOKIE)
+
 include gar/category.mk
