@@ -1,0 +1,100 @@
+diff --speed-large-files --minimal -Nru bind2nsd-0.7.2.orig/bind2nsd/Config.py bind2nsd-0.7.2/bind2nsd/Config.py
+--- bind2nsd-0.7.2.orig/bind2nsd/Config.py	2009-04-18 19:25:48.872147165 +0200
++++ bind2nsd-0.7.2/bind2nsd/Config.py	2008-06-27 02:22:28.000000000 +0200
+@@ -53,7 +53,7 @@
+       self.fname = ''
+       self.config = \
+          { 'acl_list'            : 'acl_list',
+-	   'bind2nsd'            : '/opt/csw/bin/bind2nsd',
++	   'bind2nsd'            : '/usr/bin/bind2nsd',
+ 	   'database'            : '"nsd.db"',
+ 	   'DEBUG'               : False,
+ 	   'DEMO-MODE'           : False,
+@@ -70,28 +70,28 @@
+ 	   'masters_for_slaves'	 : '127.0.0.1',
+ 	   'named-checkconf'     : '/usr/sbin/named-checkconf',
+ 	   'named-checkzone'     : '/usr/sbin/named-checkzone',
+-	   'named_root'          : '/etc',
++	   'named_root'          : '/etc/bind9',
+            'named_conf'          : 'named.conf',
+ 	   'named_watchlist'     : '/etc/named.conf',
+-	   'nsd-checkconf'       : '/opt/csw/sbin/nsd-checkconf',
++	   'nsd-checkconf'       : '/usr/sbin/nsd-checkconf',
+ 	   'nsd_conf'            : 'nsd.conf',
+-           'nsd_conf_dir'        : '/etc/opt/csw/nsd/',
++           'nsd_conf_dir'        : '/etc/nsd/',
+ 	   'nsd_preamble'        : 'nsd.conf-preamble',
+-	   'password_file'       : '/etc/opt/csw/bind2nsd/passwd',
+-           'pidfile'             : '"/var/run/nsd.pid"',
++	   'password_file'       : '/etc/bind2nsd/passwd',
++           'pidfile'             : '"nsd.pid"',
+ 	   'port'                : '53',
+-	   'rebuild_cmd'         : '/opt/csw/sbin/nsdc rebuild',
+-	   'restart_cmd'         : '/opt/csw/sbin/nsdc restart',
++	   'rebuild_cmd'         : '/etc/init.d/nsdc rebuild',
++	   'restart_cmd'         : '/etc/init.d/nsdc restart',
+ 	   'sleep_time'          : '5',
+-	   'start_cmd'           : '/opt/csw/sbin/nsdc start',
++	   'start_cmd'           : '/etc/init.d/nsdc start',
+ 	   'statistics'          : '3600',
+-	   'stop_cmd'            : '/opt/csw/sbin/nsdc stop',
++	   'stop_cmd'            : '/etc/init.d/nsdc stop',
+ 	   'syspw'               : 'iforgot',
+ 	   'tmpdir'              : '/tmp/secure64/',   # must have trailing '/'
+ 	   'username'            : 'nsd',
+            'version'             : '0.7.2',
+ 	   'xfrd-reload-timeout' : '10',
+-	   'zonec_cmd'           : '/opt/csw/sbin/zonec',
++	   'zonec_cmd'           : '/etc/init.d/zonec',
+          }
+  
+       self.init()
+@@ -110,8 +110,8 @@
+ 	 if os.path.exists(fname):
+ 	    self.fname = fname
+ 	 else:
+-	    if os.path.exists('/etc/opt/csw/bind2nsd/bind2nsd.conf'):
+-	       self.fname = '/etc/opt/csw/bind2nsd/bind2nsd.conf'
++	    if os.path.exists('/etc/bind2nsd/bind2nsd.conf'):
++	       self.fname = '/etc/bind2nsd/bind2nsd.conf'
+ 	    else:
+ 	       print '? hrm.  no config file found -- did you _mean_ that?'
+ 
+diff --speed-large-files --minimal -Nru bind2nsd-0.7.2.orig/bind2nsd/Utils.py bind2nsd-0.7.2/bind2nsd/Utils.py
+--- bind2nsd-0.7.2.orig/bind2nsd/Utils.py	2009-04-18 19:25:49.078055018 +0200
++++ bind2nsd-0.7.2/bind2nsd/Utils.py	2008-06-27 02:22:28.000000000 +0200
+@@ -25,7 +25,7 @@
+ #
+ #
+ 
+-import subprocess
++import popen2
+ import sys
+ 
+ VERBOSE = False
+diff --speed-large-files --minimal -Nru bind2nsd-0.7.2.orig/scripts/nsd-sync bind2nsd-0.7.2/scripts/nsd-sync
+--- bind2nsd-0.7.2.orig/scripts/nsd-sync	2008-06-27 02:22:28.000000000 +0200
++++ bind2nsd-0.7.2/scripts/nsd-sync	2009-04-18 19:25:22.718953474 +0200
+@@ -29,7 +29,7 @@
+ import getopt
+ import os
+ import os.path
+-import popen2
++import subprocess
+ import re
+ import sys
+ import time
+diff --speed-large-files --minimal -Nru bind2nsd-0.7.2.orig/setup.py bind2nsd-0.7.2/setup.py
+--- bind2nsd-0.7.2.orig/setup.py	2009-04-18 19:25:48.666639442 +0200
++++ bind2nsd-0.7.2/setup.py	2008-06-27 02:22:28.000000000 +0200
+@@ -37,8 +37,8 @@
+       packages = [ 'bind2nsd' ],
+       scripts = [ 'scripts/bind2nsd', 'scripts/s64-sync', 'scripts/nsd-sync',
+                   'scripts/s64-mkpw', 'scripts/bind2nsd-slave', ],
+-      data_files = [ ('/opt/csw/share/doc/bind2nsd', ['./README', './TODO']),
+-                     ('/etc/opt/csw/bind2nsd', ['etc/bind2nsd.conf']),
++      data_files = [ ('/usr/share/doc/bind2nsd', ['./README', './TODO']),
++                     ('/etc/bind2nsd', ['etc/bind2nsd.conf']),
+ 		   ]
+      )
+ 

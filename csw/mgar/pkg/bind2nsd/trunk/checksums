@@ -1,3 +1,6 @@
 e10f1d313e9e8c3e7cc54eb9419813a8  download/Config.py.diff
+a7a1f92612ca18cd6b6fefca830e88fa  download/Utils.py.diff
 dc9af6382fa609b5d5d3a8ee666f0c4c  download/bind2nsd-0.7.2.tar.gz
+c6f85a06db20f215325568745af56fd1  download/nsd-sync.diff
+6f98e9122403d06ecfb1ca07681b3bea  download/s64-sync.diff
 5fb22ed4998cab39a9d5fc99891f1a5d  download/setup.py.diff

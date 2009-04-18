@@ -12,11 +12,12 @@ endef
 
 MASTER_SITES = http://bind2nsd.sourceforge.net/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES  += setup.py.diff
-DISTFILES  += Config.py.diff
 
 PATCHFILES = setup.py.diff
 PATCHFILES += Config.py.diff
+PATCHFILES += Utils.py.diff
+PATCHFILES += nsd-sync.diff
+PATCHFILES += s64-sync.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

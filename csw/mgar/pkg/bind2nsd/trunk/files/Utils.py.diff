@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru bind2nsd-0.7.2.orig/bind2nsd/Utils.py bind2nsd-0.7.2/bind2nsd/Utils.py
+--- bind2nsd-0.7.2.orig/bind2nsd/Utils.py	2008-06-27 02:22:28.000000000 +0200
++++ bind2nsd-0.7.2/bind2nsd/Utils.py	2009-04-18 18:54:31.424687047 +0200
+@@ -25,7 +25,7 @@
+ #
+ #
+ 
+-import popen2
++import subprocess
+ import sys
+ 
+ VERBOSE = False

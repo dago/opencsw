@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru bind2nsd-0.7.2.orig/scripts/nsd-sync bind2nsd-0.7.2/scripts/nsd-sync
+--- bind2nsd-0.7.2.orig/scripts/nsd-sync	2009-04-18 19:30:56.806373967 +0200
++++ bind2nsd-0.7.2/scripts/nsd-sync	2008-06-27 02:22:28.000000000 +0200
+@@ -29,7 +29,7 @@
+ import getopt
+ import os
+ import os.path
+-import subprocess
++import popen2
+ import re
+ import sys
+ import time
+diff --speed-large-files --minimal -Nru bind2nsd-0.7.2.orig/scripts/s64-sync bind2nsd-0.7.2/scripts/s64-sync
+--- bind2nsd-0.7.2.orig/scripts/s64-sync	2008-06-27 02:22:28.000000000 +0200
++++ bind2nsd-0.7.2/scripts/s64-sync	2009-04-18 19:30:30.873594761 +0200
+@@ -29,7 +29,7 @@
+ import getopt
+ import os
+ import os.path
+-import popen2
++import subprocess
+ import re
+ import sys
+ import time
