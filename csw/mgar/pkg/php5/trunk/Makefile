@@ -102,6 +102,7 @@ post-install-modulated:
 		$(WORKDIR)/pear.conf.CSW \
 		$(DESTDIR)$(prefix)/php5/etc
 	@(grm -fr $(DESTDIR)/.[a-z]*)
+	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
 	@$(MAKECOOKIE)
 
 post-configure-modulated:

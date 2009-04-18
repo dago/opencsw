@@ -9,7 +9,6 @@ REQUIRED_PKGS_CSWphp5mysql = CSWphp5 CSWmysql5rt
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
 
 PKGFILES_CSWphp5mysql = .*/lib/php/extensions/.*/mysql\.so
-PKGFILES_CSWphp5mysql += .*/lib/php/extensions/.*/mysql\.a
 
 define CSWphp5mysql_postinstall
 #!/bin/sh

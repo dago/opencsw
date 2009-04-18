@@ -7,7 +7,6 @@ SPKG_DESC_CSWphp5pdo = pdo Extention for PHP5
 REQUIRED_PKGS_CSWphp5pdo = CSWphp5 
 
 PKGFILES_CSWphp5pdo  = .*/lib/php/extensions/.*/pdo\.so*
-PKGFILES_CSWphp5pdo += .*/lib/php/extensions/.*/pdo\.a*
 
 define CSWphp5pdo_postinstall
 #!/bin/sh
