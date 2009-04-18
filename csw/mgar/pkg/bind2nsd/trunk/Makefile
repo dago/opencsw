@@ -26,7 +26,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 PACKAGES = CSWbind2nsd
-REQUIRED_PKGS = CSWpython
+REQUIRED_PKGS = CSWpython CSWpydes
 CATALOGNAME = bind2nsd
 SPKG_DESC = scripts to translate DNS information in BIND format to NSD format
 
