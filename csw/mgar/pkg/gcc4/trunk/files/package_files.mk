@@ -86,7 +86,7 @@ PKGFILES_CSWgcc4objc  = .*/gcc4/libexec/.*cc1obj
 PKGFILES_CSWgcc4objc += .*/gcc4/lib/.*libobjc.*a
 PKGFILES_CSWgcc4objc += .*/gcc4/include/.*objc/.*
 PKGFILES_CSWgcc4objc += .*/gcc4/lib/.*/include/objc/.*
-
+EXTRA_PKGFILES_EXCLUDED_CSWgcc4objc = /opt/csw/gcc4/lib/gcc/.*/(\d+(?:\.\d+)*)/include
 #######  RunTime Packages
 
 ## gcc4adart
