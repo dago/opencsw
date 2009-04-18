@@ -30,7 +30,6 @@ fix-bootflags:
 post-merge-modulated:
 	$(_DBG)( gmv $(PKGROOT)/opt/csw/gcc4/lib/gcc/*/*/adalib/*.so* \
 			$(PKGROOT)/opt/csw/gcc4/lib/ )
-	$(_DBG)( gfind $(PKGROOT) -type f -name "*.*~" -exec grm -f {} \; )
 	$(_DBG)$(MAKECOOKIE)
 
 test-skip:
