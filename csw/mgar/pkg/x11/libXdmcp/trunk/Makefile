@@ -31,7 +31,7 @@ pre-install:
 	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/License.txt 
 	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/License-devel.txt 
 
-EXTRA_PKG_CONFIG_DIRS += /opt/csw/X11/pkgconfig
-PKG_CONFIG_PATH += /opt/csw/X11/pkgconfig
+PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 include gar/category.mk
+
