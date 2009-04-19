@@ -588,8 +588,7 @@ endif
 INSTALL_SCRIPTS   ?= $(WORKSRC)/Makefile
 
 # Global environment
-#export PATH PKG_CONFIG_PATH
-export PATH
+export PATH PKG_CONFIG_PATH
 
 # prepend the local file listing
 FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
