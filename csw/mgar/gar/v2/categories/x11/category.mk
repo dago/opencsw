@@ -23,9 +23,9 @@ GREP = ggrep
 export LDFLAGS CXXFLAGS CFLAGS CPPFLAGS GREP
 
 # pkg-config options
-EXTRA_PKGCONFIG_PATH  = /opt/csw/X11/lib/pkgconfig
-EXTRA_PKGCONFIG_PATH += $(DESTDIR)/opt/csw/lib/pkgconfig
-EXTRA_PKGCONFIG_PATH += $(DESTDIR)/opt/csw/X11/lib/pkgconfig
+PKG_CONFIG_PATH  = /opt/csw/X11/lib/pkgconfig
+PKG_CONFIG_PATH += $(DESTDIR)/opt/csw/lib/pkgconfig
+PKG_CONFIG_PATH += $(DESTDIR)/opt/csw/X11/lib/pkgconfig
 
 export PKG_CONFIG_PATH
 
