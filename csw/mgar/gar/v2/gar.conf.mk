@@ -494,7 +494,7 @@ PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)
 
 # This is for foo-config chaos
 PKG_CONFIG_DIRS ?= $(libdir_install) $(EXTRA_PKG_CONFIG_DIRS)
-PKG_CONFIG_PATH ?= $(call MAKEPATH,$(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig)) $(EXTRA_PKGCONFIG_PATH))
+PKG_CONFIG_PATH ?= $(call MAKEPATH,$(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig)) $(_CATEGORY_PKG_CONFIG_PATH) $(EXTRA_PKG_CONFIG_PATH))
 
 #
 # Mirror Sites
