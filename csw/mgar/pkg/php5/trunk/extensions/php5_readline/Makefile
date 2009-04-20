@@ -4,7 +4,7 @@ PACKAGES += CSWphp5readline
 
 CATALOGNAME_CSWphp5readline = php5_readline
 SPKG_DESC_CSWphp5readline = readline Extention for PHP5
-REQUIRED_PKGS_CSWphp5readline = CSWphp5
+REQUIRED_PKGS_CSWphp5readline = CSWphp5 CSWreadline
 
 CONFIGURE_ARGS += --with-libedit=no
 CONFIGURE_ARGS += --with-readline=shared,/opt/csw

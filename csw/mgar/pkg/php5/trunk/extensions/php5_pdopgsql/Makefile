@@ -3,7 +3,7 @@ PHP5EXT_NAME = pdopgsql
 PACKAGES += CSWphp5pdopgsql
 
 CATALOGNAME_CSWphp5pdopgsql = php5_pdopgsql
-SPKG_DESC_CSWphp5pdopgsql = pdopgsql Extention for PHP5
+SPKG_DESC_CSWphp5pdopgsql = PgSQL PHP Data Object Abstraction Extention for PHP5
 REQUIRED_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq CSWphp5pdo
 
 PATCHFILES += pdopgsql.diff
