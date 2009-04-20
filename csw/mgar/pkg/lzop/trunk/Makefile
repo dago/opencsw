@@ -30,6 +30,8 @@ TEST_TARGET = check
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+NOISALIST = 1
+
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
