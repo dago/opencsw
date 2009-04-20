@@ -114,6 +114,15 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
+# Handle cswclassutils
+# - prepend cswpreserveconf if it is not already in SPKG_CLASSES
+SPKG_CLASSES := $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf)) $(SPKG_CLASSES)
+# - set class for all config files
+ifneq ($(PRESERVECONF),)
+_CSWCLASS_FILTER = | perl -ane '$(foreach CONF,$(PRESERVECONF),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(CONF)$$) );)print join(" ",@F),"\n";'
+_EXTRA_GAR_PKGS += CSWcswclassutils
+endif
+
 PKGGET_DESTDIR ?=
 
 DEPMAKER_EXTRA_ARGS = --noscript --nodep SUNW
@@ -249,9 +258,9 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	               ) \
 	              <$(PROTOTYPE); \
 	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
-	  ) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  ) $(_CSWCLASS_FILTER) $(_PROTOTYPE_FILTER_$*) >$@; \
 	else \
-	  cat $(PROTOTYPE) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  cat $(PROTOTYPE) $(_CSWCLASS_FILTER) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
@@ -278,7 +287,7 @@ $(WORKDIR)/%.depend: $(WORKDIR)
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
 			echo "I $(PKG)";\
 		)\
-		$(foreach PKG,$(_EXTRA_GAR_PKGS) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
+		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | awk '{ $$1 = "P"; print } ')"; \
