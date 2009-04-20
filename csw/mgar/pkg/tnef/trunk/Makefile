@@ -21,6 +21,8 @@ UFILES_REGEX = v(\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+NOISALIST = 1
+
 TEST_TARGET = check
 INSTALL_SCRIPTS = custom
 
