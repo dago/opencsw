@@ -49,7 +49,6 @@ configure-custom:
 pre-build-modulated:
 	@echo " ==> Pre-build $(GARNAME) (custom)"
 	@( cd $(WORKSRC)/spamc ; \
-	   pwd ; \
 	   sed 's/CFLAGS = /CFLAGS = -xarch=v8 /' Makefile.in > Makefile.tmp ; \
 	   cp Makefile.tmp Makefile.in )
 	@$(MAKECOOKIE)
