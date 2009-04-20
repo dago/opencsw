@@ -46,6 +46,14 @@ configure-custom:
 	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/opt/csw/etc/spamassassin LOCALSTATEDIR=/var/opt/csw/spamassassin CONTACT_ADDRESS=postmaster )
 	@$(MAKECOOKIE)
 
+pre-build-modulated:
+	@echo " ==> Pre-build $(GARNAME) (custom)"
+	@( cd $(WORKSRC)/spamc ; \
+	   pwd ; \
+	   sed 's/CFLAGS = /CFLAGS = -xarch=v8 /' Makefile.in > Makefile.tmp ; \
+	   cp Makefile.tmp Makefile.in )
+	@$(MAKECOOKIE)
+
 build-custom:
 	@echo " ==> Building $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
