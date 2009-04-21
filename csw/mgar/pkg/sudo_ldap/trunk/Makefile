@@ -12,8 +12,6 @@ endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += CSWsudoldap.postinstall
-DISTFILES += CSWsudoldap.postremove
 PATCHFILES = install.diff
 
 # We define upstream file regex so we can be notifed of new 
