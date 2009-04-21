@@ -3,7 +3,7 @@ PHP5EXT_NAME = pdosqlite
 PACKAGES += CSWphp5pdosqlite
 
 CATALOGNAME_CSWphp5pdosqlite = php5_pdosqlite
-SPKG_DESC_CSWphp5pdoSqlite = Sqlite PHP Data Object Abstraction Extention for PHP5
+SPKG_DESC_CSWphp5pdoSqlite = A Sqlite specific database access abstraction module for PHP applications
 REQUIRED_PKGS_CSWphp5pdosqlite = CSWphp5 CSWphp5pdo
 
 CONFIGURE_ARGS += --with-pdo-sqlite=shared
