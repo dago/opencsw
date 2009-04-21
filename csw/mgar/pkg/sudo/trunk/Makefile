@@ -31,8 +31,6 @@ SPKG_SOURCEURL_CSWsudo-common = http://www.sudo.ws
 REQUIRED_PKGS_CSWsudo-common = CSWggettextrt
 
 DISTFILES += CSWsudo-common.postinstall 
-DISTFILES += CSWsudo.postinstall
-DISTFILES += CSWsudo.postremove
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
@@ -45,11 +43,10 @@ FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 include gar/category.mk
 
-PKGFILES_CSWsudo = .*$(bindir)/sudo.minimal
+PKGFILES_CSWsudo  = .*$(bindir)/sudo.*
 
 post-merge-modulated:
-	@( cd $(PKGROOT)$(bindir) ; gmv sudo sudo.minimal )
-	@( cd $(PKGROOT)$(bindir) ; grm sudoedit )
+	@( cd $(PKGROOT)$(bindir) ; gln -f sudo sudo.minimal )
 	@( cd $(PKGROOT)$(sysconfdir) ; gmv sudoers sudoers.CSW )
 	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo* )
 	@$(MAKECOOKIE)
