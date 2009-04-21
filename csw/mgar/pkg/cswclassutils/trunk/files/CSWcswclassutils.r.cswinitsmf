@@ -8,8 +8,34 @@
 # 2008-04-21 First release
 # 2008-11-23 Fixed grep bug for FMRI
 # 2009-01-07 Fixed bug with multiple services per package
+# 2009-04-21 Added -s to svcadm disable, removed sleep (Bug ID 0003632),
+             Persistent state across upgrades (Bug ID 0003634)
 
 DEBUG=		# clear to disable debug, set to anything to enable
+
+# The following file is used to save the state of smf service upon
+# package removal
+# This allows to restore the service state across package upgrades.
+SMF_STATE_DIR="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG"
+SMF_STATE_FILE="$SMF_STATE_DIR/smf.state"
+
+# The smf state file shouldn't be there at this time but we
+# delete it to be sure
+rm -f "$SMF_STATE_FILE"
+
+# save the current service state for the given frmi
+save_smf_state ()
+{
+    SMF_STATE=`/usr/sbin/svccfg -s "$1:default" listprop general/enabled | /usr/bin/awk '{ print $3 }'`
+    if [ "$SMF_STATE" != "true" ]; then
+        SMF_STATE="disabled"
+    else
+        SMF_STATE="enabled"
+    fi
+    [ -d "$SMF_STATE_DIR" ] || mkdir -p "$SMF_STATE_DIR"
+    echo "$1 $SMF_STATE" >> "$SMF_STATE_FILE"
+}
+
 
 # Source csw.conf, if it exists
 if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
@@ -41,8 +67,8 @@ FMRI=`grep ${PKGINST}$ /var/sadm/install/contents | grep "^/var/opt/csw/svc/mani
 for i in `echo $FMRI | tr '\n' ' '`
 do
   if [ "$smf" = "yes" ]; then
-    /usr/sbin/svcadm disable svc:/$i
-    sleep 1
+    save_smf_state
+    /usr/sbin/svcadm -s disable svc:/$i
     # Unregister with SMF
     echo Unregister svc:/${i}:default with SMF ...
     /usr/sbin/svccfg delete -f svc:/${i}:default

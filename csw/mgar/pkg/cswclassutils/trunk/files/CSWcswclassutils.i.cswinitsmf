@@ -7,9 +7,27 @@
 #
 # 2008-04-21 First release
 # 2009-03-28 Added support for refresh
+# 2009-04-21 Do not create rc links unless enabled (Bug ID 0003633),
+             Persistent state across upgrades (Bug ID 0003634)
 
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
+
+SMF_STATE_DIR="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG"
+SMF_STATE_FILE="$SMF_STATE_DIR/smf.state"
+
+# retrieve the previous state of a service identified by the given FRMI
+load_smf_service_state ()
+{
+    SMF_STATE="disabled"
+
+    if [ -f "$SMF_STATE_FILE" ]; then
+        set -- `/usr/bin/awk " \\\$1 == \"$1\" { print \\\$2 } " "$SMF_STATE_FILE"`
+        if [ "$1" = "enabled" ]; then
+            SMF_STATE="enabled"
+        fi
+    fi
+}
 
 # Source csw.conf, if it exists
 if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
@@ -32,6 +50,19 @@ fi
 
 if [ "$DEBUG" ]; then
   echo PACKAGE: $PKGINST SMF: $smf
+fi
+
+# Determine if service should be started or not
+daemon=yes
+
+if [ "$autoenable_daemons" = "no" ]; then
+  daemon=no
+fi
+
+if [ "$autoenable_$service" = "no" ]; then
+  daemon=no
+elif [ "$autoenable_$service" = "yes" ]; then
+  daemon=yes
 fi
 
 # Copy files, set up SMF
@@ -176,74 +207,66 @@ EOF
     /usr/bin/ln -s $dest /etc/init.d/$service
     /usr/sbin/installf -c cswinitsmf $PKGINST /etc/init.d/$service=$dest s
 
-    # Create rc-symlinks
-    RC_KNUM=
-    if [ "`grep '^#RC_KNUM' $dest`" ]; then
-      RC_KNUM=`grep '^#RC_KNUM' $dest | awk '{print $2}'`
+    # Create rc-symlinks if enabled
+    if [ "$daemon" = "yes" ]; then
+      RC_KNUM=
+      if [ "`grep '^#RC_KNUM' $dest`" ]; then
+        RC_KNUM=`grep '^#RC_KNUM' $dest | awk '{print $2}'`
+      fi
+      RC_SNUM=
+      if [ "`grep '^#RC_SNUM' $dest`" ]; then
+        RC_SNUM=`grep '^#RC_SNUM' $dest | awk '{print $2}'`
+      fi
+      RC_KLEV=
+      if [ "`grep '^#RC_KLEV' $dest`" ]; then
+        RC_KLEV=`grep '^#RC_KLEV' $dest | awk '{print $2}'`
+        RC_KLEV=`echo $RC_KLEV | sed 's/,/ /g'`
+      fi
+      RC_SLEV=
+      if [ "`grep '^#RC_SLEV' $dest`" ]; then
+        RC_SLEV=`grep '^#RC_SLEV' $dest | awk '{print $2}'`
+        RC_SLEV=`echo $RC_SLEV | sed 's/,/ /g'`
+      fi
+      if [ ! "$RC_KNUM" ]; then
+        RC_KNUM=20
+      fi
+      if [ ! "$RC_SNUM" ]; then
+        RC_SNUM=80
+      fi
+      if [ ! "$RC_KLEV" ]; then
+        RC_KLEV="0 1 2 S"
+      fi
+      if [ ! "$RC_SLEV" ]; then
+        RC_SLEV=3
+      fi
+      if [ "$DEBUG" ]; then
+        echo RC_KNUM: $RC_KNUM
+        echo RC_SNUM: $RC_SNUM
+        echo RC_KLEV: $RC_KLEV
+        echo RC_SLEV: $RC_SLEV
+      fi
+      for i in $RC_KLEV; do
+        echo /etc/rc$i.d/K$RC_KNUM$service
+        /usr/sbin/installf -c cswinitsmf $PKGINST /etc/rc$i.d/K$RC_KNUM$service=/etc/init.d/$service s
+        /bin/ln -s /etc/init.d/$service /etc/rc$i.d/K$RC_KNUM$service
+      done
+      for i in $RC_SLEV; do
+        echo /etc/rc$i.d/S$RC_SNUM$service
+        /usr/sbin/installf -c cswinitsmf $PKGINST /etc/rc$i.d/S$RC_SNUM$service=/etc/init.d/$service s
+        /bin/ln -s /etc/init.d/$service /etc/rc$i.d/S$RC_SNUM$service
+      done
     fi
-    RC_SNUM=
-    if [ "`grep '^#RC_SNUM' $dest`" ]; then
-      RC_SNUM=`grep '^#RC_SNUM' $dest | awk '{print $2}'`
-    fi
-    RC_KLEV=
-    if [ "`grep '^#RC_KLEV' $dest`" ]; then
-      RC_KLEV=`grep '^#RC_KLEV' $dest | awk '{print $2}'`
-      RC_KLEV=`echo $RC_KLEV | sed 's/,/ /g'`
-    fi
-    RC_SLEV=
-    if [ "`grep '^#RC_SLEV' $dest`" ]; then
-      RC_SLEV=`grep '^#RC_SLEV' $dest | awk '{print $2}'`
-      RC_SLEV=`echo $RC_SLEV | sed 's/,/ /g'`
-    fi
-    if [ ! "$RC_KNUM" ]; then
-      RC_KNUM=20
-    fi
-    if [ ! "$RC_SNUM" ]; then
-      RC_SNUM=80
-    fi
-    if [ ! "$RC_KLEV" ]; then
-      RC_KLEV="0 1 2 S"
-    fi
-    if [ ! "$RC_SLEV" ]; then
-      RC_SLEV=3
-    fi
-    if [ "$DEBUG" ]; then
-      echo RC_KNUM: $RC_KNUM
-      echo RC_SNUM: $RC_SNUM
-      echo RC_KLEV: $RC_KLEV
-      echo RC_SLEV: $RC_SLEV
-    fi
-    for i in $RC_KLEV; do
-      echo /etc/rc$i.d/K$RC_KNUM$service
-      /usr/sbin/installf -c cswinitsmf $PKGINST /etc/rc$i.d/K$RC_KNUM$service=/etc/init.d/$service s
-      /bin/ln -s /etc/init.d/$service /etc/rc$i.d/K$RC_KNUM$service
-    done
-    for i in $RC_SLEV; do
-      echo /etc/rc$i.d/S$RC_SNUM$service
-      /usr/sbin/installf -c cswinitsmf $PKGINST /etc/rc$i.d/S$RC_SNUM$service=/etc/init.d/$service s
-      /bin/ln -s /etc/init.d/$service /etc/rc$i.d/S$RC_SNUM$service
-    done
   fi
 done
-
-# Determine if service should be started or not
-daemon=yes
-
-if [ "$autoenable_daemons" = "no" ]; then
-  daemon=no
-fi
-
-if [ "$autoenable_$service" = "no" ]; then
-  daemon=no
-elif [ "$autoenable_$service" = "yes" ]; then
-  daemon=yes
-fi
 
 # Start service
 if [ "$daemon" = "yes" ]; then
   echo Starting $PKGINST ...
   if [ "$smf" = "yes" ]; then
-    /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
+    load_smf_service_state "$FMRI/$service"
+    if [ "$SMF_STATE" = "enabled" ]; then
+        /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
+    fi
   else
     # fix permissions temporarily since 644 is used until verification
     /usr/bin/chmod 744 /etc/init.d/$service
@@ -251,6 +274,9 @@ if [ "$daemon" = "yes" ]; then
   fi
 fi
  
+# we delete the smf state file as we don't need it anymore
+rm -f "$SMF_STATE_FILE"
+
 /usr/sbin/installf -f $PKGINST
 
 exit 0
