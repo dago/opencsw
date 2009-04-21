@@ -24,7 +24,7 @@ SPKG_DESC_CSWclamav = $(DESCRIPTION)
 CATALOGNAME_CSWlibclamav = libclamav
 SPKG_DESC_CSWlibclamav = $(DESCRIPTION) Library
 
-REQUIRED_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWcswclassutils CSWncurses
+REQUIRED_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWcswclassutils CSWncurses CSWlibtoolrt
 REQUIRED_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
