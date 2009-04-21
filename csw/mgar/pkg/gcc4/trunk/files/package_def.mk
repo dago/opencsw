@@ -61,10 +61,10 @@ SPKG_DESC_CSWgcc4objcrt     = GNU Objective C Compiler Run Time
 
 ## Define Dependencies 
 COMMON_REQUIRE                   = CSWiconv CSWlibgmp CSWlibmpfr CSWggettextrt
-REQUIRED_PKGS_CSWgcc4adart       = CSWgcc4corert CSWggettextrt $(COMMON_REQUIRE)
+REQUIRED_PKGS_CSWgcc4adart       = CSWgcc4corert $(COMMON_REQUIRE)
 REQUIRED_PKGS_CSWgcc4ada         = CSWgcc4core CSWgcc4corert 
 REQUIRED_PKGS_CSWgcc4ada        += CSWgcc4adart $(COMMON_REQUIRE)
-REQUIRED_PKGS_CSWgcc4corert      = CSWggettextrt $(COMMON_REQUIRE)
+REQUIRED_PKGS_CSWgcc4corert      = $(COMMON_REQUIRE)
 REQUIRED_PKGS_CSWgcc4core        = CSWgcc4corert CSWbinutils $(COMMON_REQUIRE) 
 REQUIRED_PKGS_CSWgcc4g++rt       = CSWgcc4corert $(COMMON_REQUIRE)
 REQUIRED_PKGS_CSWgcc4g++         = CSWgcc4core CSWgcc4corert 
