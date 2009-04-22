@@ -8,7 +8,7 @@
 # 2008-04-21 First release
 # 2009-03-28 Added support for refresh
 # 2009-04-21 Do not create rc links unless enabled (Bug ID 0003633),
-             Persistent state across upgrades (Bug ID 0003634)
+#            Persistent state across upgrades (Bug ID 0003634)
 
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc

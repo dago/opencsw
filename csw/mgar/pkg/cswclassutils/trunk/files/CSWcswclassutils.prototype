@@ -19,4 +19,4 @@ d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/cswclassutils 0755 root bin
 f none /opt/csw/share/doc/cswclassutils/README.CSW 0444 root bin
-f none /opt/csw/share/doc/cswclassutils/LICENSE 0444 root bin
+f none /opt/csw/share/doc/cswclassutils/license 0444 root bin

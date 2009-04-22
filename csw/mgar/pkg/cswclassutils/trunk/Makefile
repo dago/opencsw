@@ -29,6 +29,6 @@ install-custom:
 	@ginstall -d $(DESTDIR)/var/opt/csw/svc/method
 	@cp $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/etc/opt/csw/init.d/csw.smf.sample
 	@cp $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
+	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(DESTDIR)$(docdir)/$(GARNAME)/license
 	@$(foreach CAS,$(CASLIST),cp $(FILEDIR)/CSW$(GARNAME).i.$(CAS) $(DESTDIR)/usr/sadm/install/scripts/i.$(CAS);cp $(FILEDIR)/CSW$(GARNAME).r.$(CAS) $(DESTDIR)/usr/sadm/install/scripts/r.$(CAS);)
 	@$(MAKECOOKIE)

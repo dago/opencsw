@@ -9,7 +9,7 @@
 # 2008-11-23 Fixed grep bug for FMRI
 # 2009-01-07 Fixed bug with multiple services per package
 # 2009-04-21 Added -s to svcadm disable, removed sleep (Bug ID 0003632),
-             Persistent state across upgrades (Bug ID 0003634)
+#            Persistent state across upgrades (Bug ID 0003634)
 
 DEBUG=		# clear to disable debug, set to anything to enable
 
