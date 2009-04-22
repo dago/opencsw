@@ -14,18 +14,20 @@ MASTER_SITES = http://www.nlnetlabs.nl/projects/nsd/
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
 
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+PACKAGES = CSWnsd
+REQUIRED_PKGS = CSWcswclassutils CSWosslrt
+CATALOGNAME = nsd
+SPKG_DESC = An authoritative only non-recursive name server
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnsd,)
 DISTFILES += cswusergroup
 DISTFILES += cswnsd
 
 SPKG_CLASSES = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswnsd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWnsd\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/nsd\/nsd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$2 = "ugfiles" }  $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$5 = "nsd" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$6 = "nsd" } { print }'
-
-REQUIRED_PKGS = CSWcswclassutils
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
