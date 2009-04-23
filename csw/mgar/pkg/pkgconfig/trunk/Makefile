@@ -23,7 +23,8 @@ SPKG_SOURCEURL = http://pkg-config.freedesktop.org
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = gsed-check.patch
+PATCHFILES  = gsed-check.patch
+PATCHFILES += manpage-macro.patch
 
 REQUIRED_PKGS = CSWggettextrt CSWglib2
 
