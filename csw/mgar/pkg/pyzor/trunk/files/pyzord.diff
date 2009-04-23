@@ -1,0 +1,9 @@
+diff --speed-large-files --minimal -Nru pyzor-0.4.0.orig/scripts/pyzord pyzor-0.4.0/scripts/pyzord
+--- pyzor-0.4.0.orig/scripts/pyzord	2002-09-08 05:33:44.000000000 +0200
++++ pyzor-0.4.0/scripts/pyzord	2009-04-23 17:30:57.922301138 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python2
++#!/usr/bin/python2 -Wignore::DeprecationWarning
+ 
+ import os
+ import os.path

@@ -11,6 +11,10 @@ endef
 MASTER_SITES = http://www.pyzor.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+PATCHFILES = client.py.diff
+PATCHFILES += pyzor.diff
+PATCHFILES += pyzord.diff
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
