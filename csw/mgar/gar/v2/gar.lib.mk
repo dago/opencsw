@@ -86,7 +86,7 @@ _dynscr//%:
 	$($(subst .,_,$*))
 
 dynscr//%:
-	$(MAKE) -n _$@ > $(PARTIALDIR)/$*
+	$(MAKE) --no-print-directory -n _$@ > $(PARTIALDIR)/$*
 
 # download an http URL (colons omitted)
 http//%: 
