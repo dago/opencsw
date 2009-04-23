@@ -12,6 +12,13 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+man1dir = $(mandir)/man1
+man5dir = $(mandir)/man5
+
 CONFIGURE_ARGS = --prefix=$(prefix)
+
+TEST_TARGET = 
+
+INSTALL_OVERRIDE_DIRS = prefix man1dir man5dir
 
 include gar/category.mk
