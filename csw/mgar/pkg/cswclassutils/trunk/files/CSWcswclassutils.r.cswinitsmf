@@ -2,6 +2,8 @@
 #
 # r.cswinitsmf - Class action script for CSW SMF support
 #
+# $Id$
+#
 # Original concept by Philip Brown
 # Written by Peter Bonivart
 #
@@ -10,7 +12,7 @@
 # 2009-01-07 Fixed bug with multiple services per package
 # 2009-04-21 Added -s to svcadm disable, removed sleep (Bug ID 0003632),
 #            Persistent state across upgrades (Bug ID 0003634)
-# 2009-04-22 Fixed bug when stopping non-SMF services
+# 2009-04-23 Fixed bug when stopping non-SMF services
 
 DEBUG=		# clear to disable debug, set to anything to enable
 
@@ -74,7 +76,7 @@ if [ "$smf" = "yes" ]; then
     /usr/sbin/svccfg delete -f svc:/${i}:default
   done
 else
-  RC=`cat /var/sadm/install/contents | grep "s cswinitsmf" | grep ${PKGINST}$ | awk -F'=' '{print $1}'`
+  RC=`cat /var/sadm/install/contents | grep "^/etc/init.d" | grep "s cswinitsmf" | grep ${PKGINST}$ | awk -F'=' '{print $1}'`
   for i in `echo $RC | tr '\n' ' '`
   do
     echo Stopping $i ...

@@ -1,5 +1,5 @@
 GARNAME = cswclassutils
-GARVERSION = 1.7
+GARVERSION = 1.8
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
