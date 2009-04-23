@@ -9,6 +9,7 @@
 # 2009-03-28 Added support for refresh
 # 2009-04-21 Do not create rc links unless enabled (Bug ID 0003633),
 #            Persistent state across upgrades (Bug ID 0003634)
+# 2009-04-22 Fix bug when starting packages with multiple services (Ihsan Dogan)
 
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
@@ -52,19 +53,6 @@ if [ "$DEBUG" ]; then
   echo PACKAGE: $PKGINST SMF: $smf
 fi
 
-# Determine if service should be started or not
-daemon=yes
-
-if [ "$autoenable_daemons" = "no" ]; then
-  daemon=no
-fi
-
-if [ "$autoenable_$service" = "no" ]; then
-  daemon=no
-elif [ "$autoenable_$service" = "yes" ]; then
-  daemon=yes
-fi
-
 # Copy files, set up SMF
 echo "Installing class <cswinitsmf> ..."
 
@@ -74,6 +62,18 @@ do
     echo SRC: $src DEST: $dest
   fi
   service="`basename $dest`"
+
+  # Determine if service should be started or not
+  daemon=yes
+  if [ "$autoenable_daemons" = "no" ]; then
+    daemon=no
+  fi
+  if [ "$autoenable_$service" = "no" ]; then
+    daemon=no
+  elif [ "$autoenable_$service" = "yes" ]; then
+    daemon=yes
+  fi
+
   if [ "$smf" = "yes" ]; then
     # Copy the service script
     /usr/bin/cp $src $dest || exit 2
@@ -197,6 +197,15 @@ EOF
     /usr/sbin/svccfg import $SVCDIR/manifest/$FMRI/$service.xml > /dev/null 2>&1
     /usr/sbin/svcadm disable svc:/$FMRI/$service > /dev/null 2>&1
     echo $PKGINST is using Service Management Facility. The FMRI is svc:/$FMRI/$service:default
+
+    # Start service
+    if [ "$daemon" = "yes" ]; then
+      load_smf_service_state "$FMRI/$service"
+      if [ "$SMF_STATE" = "enabled" ]; then
+        echo Enabling svc:/$FMRI/$service ...
+        /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
+      fi
+    fi
   else
     # Copy the service script
     echo $dest
@@ -255,25 +264,16 @@ EOF
         /usr/sbin/installf -c cswinitsmf $PKGINST /etc/rc$i.d/S$RC_SNUM$service=/etc/init.d/$service s
         /bin/ln -s /etc/init.d/$service /etc/rc$i.d/S$RC_SNUM$service
       done
+
+      # Start service
+      echo Starting $service ...
+      # fix permissions temporarily since 644 is used until verification
+      /usr/bin/chmod 744 /etc/init.d/$service
+      /etc/init.d/$service start > /dev/null 2>&1
     fi
   fi
 done
 
-# Start service
-if [ "$daemon" = "yes" ]; then
-  echo Starting $PKGINST ...
-  if [ "$smf" = "yes" ]; then
-    load_smf_service_state "$FMRI/$service"
-    if [ "$SMF_STATE" = "enabled" ]; then
-        /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
-    fi
-  else
-    # fix permissions temporarily since 644 is used until verification
-    /usr/bin/chmod 744 /etc/init.d/$service
-    /etc/init.d/$service start > /dev/null 2>&1
-  fi
-fi
- 
 # we delete the smf state file as we don't need it anymore
 rm -f "$SMF_STATE_FILE"
 
