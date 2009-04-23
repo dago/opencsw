@@ -18,7 +18,7 @@ man5dir = $(mandir)/man5
 NORUNPATH = 1
 CONFIGURE_ARGS = --prefix=$(prefix)
 
-TEST_TARGET = check
+TEST_TARGET =
 
 INSTALL_OVERRIDE_DIRS = prefix man1dir man5dir
 
