@@ -31,4 +31,4 @@ include gar/category.mk
 
 # Use term.h from ncurses or we get compile errors
 #   http://www.zsh.org/mla/workers/2007/msg01236.html
-CFLAGS := -I$(includedir)/ncurses $(CFLAGS)
+CPPFLAGS := -I$(includedir)/ncursesw $(CPPFLAGS)
