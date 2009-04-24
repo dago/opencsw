@@ -8,7 +8,7 @@ REQUIRED_PKGS_CSWap2modphp5  = CSWap2prefork CSWbdb44 CSWiconv
 REQUIRED_PKGS_CSWap2modphp5 += CSWkrb5lib CSWexpat CSWlibmm
 REQUIRED_PKGS_CSWap2modphp5 += CSWlibxml2 CSWosslrt CSWphp5 CSWzlib
 
-DISTFILES += CSWap2modphp5.depend CSWap2modphp5.preremove httpd-php5.conf.CSW
+DISTFILES += CSWap2modphp5.preremove httpd-php5.conf.CSW
 DISTFILES += CSWap2modphp5.postinstall CSWap2modphp5.space
 
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
