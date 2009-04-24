@@ -88,6 +88,10 @@ ENABLE_CHECK = 0
 # SAPI Specific Rules
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
 
+# Rebuild Configure Args to build mod_php5
+NEW_CONFIGURE_ARGS = $(shell echo $(CONFIGURE_ARGS) |sed -e 's/apxs2/apxs/' \
+		-e 's/apache2\/sbin\/apxs/apache\/bin\/apxs/')
+
 # Copy over template config files and utility scripts
 
 post-install-modulated:
@@ -103,6 +107,12 @@ post-install-modulated:
 		$(DESTDIR)$(prefix)/php5/etc
 	@(grm -fr $(DESTDIR)/.[a-z]*)
 	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
+	@( echo "  ==> Now Building mod_php5 <==" )
+	@( if [ -f $(WORKSRC)/Makefile ]; then \
+		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi)
+	cd $(WORKSRC) && $(BUILD_ENV) ./configure $(NEW_CONFIGURE_ARGS)
+	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
+	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
