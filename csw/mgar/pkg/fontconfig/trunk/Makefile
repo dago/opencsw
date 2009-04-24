@@ -12,7 +12,6 @@ endef
 
 MASTER_SITES = http://www.fontconfig.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-#DISTFILES += $(call admfiles,postinstall)
 DISTFILES += CSWfconfig.postinstall
 DISTFILES += CSWfconfig.checkinstall
 
@@ -27,10 +26,11 @@ CATALOGNAME_CSWfconfig = fontconfig
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-fonts=/usr/openwin/lib/X11/fonts
-CONFIGURE_ARGS += --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts
+CONFIGURE_ARGS += --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts,/opt/csw/share/fonts
 CONFIGURE_ARGS += --with-cache-dir=/var/opt/csw/cache/fontconfig
 CONFIGURE_ARGS += --with-confdir=/opt/csw/etc/fontconfig
 
+PATCHFILES = fontconfig.h.diff
 pre-package:
 	@rm -f $(DESTDIR)$(libdir)/libfontconfig.la*
 	@rm -f $(DESTDIR)/opt/csw/etc/fonts/fonts.conf.bak
