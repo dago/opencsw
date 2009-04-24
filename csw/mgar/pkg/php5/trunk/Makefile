@@ -113,6 +113,8 @@ post-install-modulated:
 	cd $(WORKSRC) && $(BUILD_ENV) ./configure $(NEW_CONFIGURE_ARGS)
 	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
 	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
+	@( gfind $(DESTDIR)$(prefix)/apache* 
+			-mindepth 1 -type d | grep -v libexec | xargs grm -fr )
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
