@@ -59,7 +59,7 @@ SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
 REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby CSWgcc3g++rt CSWgcc3corert 
 REQUIRED_PKGS_CSWrbsvn    += CSWapache2rt CSWbdb44 CSWexpat CSWggettextrt 
-REQUIRED_PKGS_CSWrbsvn    += CSWiconv
+REQUIRED_PKGS_CSWrbsvn    += CSWiconv CSWoldaprt
 
 PKGFILES_CSWsvn-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWap2svn    = $(prefix)/apache2.*
