@@ -11,9 +11,13 @@ MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnagiosp,prototype )
 
+PATCHFILES += check_procs.c.diff
+
 REQUIRED_PKGS_CSWnagiosp  = CSWggettextrt CSWiconv CSWlibnet CSWlibpq 
 REQUIRED_PKGS_CSWnagiosp += CSWmysql5rt CSWoldaprt CSWosslrt CSWsasl
 REQUIRED_PKGS_CSWnagiosp += CSWzlib CSWperl
+
+NOISALIST = 1
 
 CFLAGS += -I /opt/csw/postgresql/include/
 

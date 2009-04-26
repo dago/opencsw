@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru nagios-plugins-1.4.13.orig/plugins/check_procs.c nagios-plugins-1.4.13/plugins/check_procs.c
+--- nagios-plugins-1.4.13.orig/plugins/check_procs.c	2008-07-08 11:31:04.000000000 +0200
++++ nagios-plugins-1.4.13/plugins/check_procs.c	2009-03-26 20:30:33.322034506 +0100
+@@ -194,7 +194,7 @@
+ 			strip (procargs);
+ 
+ 			/* Some ps return full pathname for command. This removes path */
+-			strcpy(procprog, base_name(procprog));
++			/* strcpy(procprog, base_name(procprog)); */
+ 
+ 			/* we need to convert the elapsed time to seconds */
+ 			procseconds = convert_to_seconds(procetime);
