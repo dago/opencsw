@@ -17,7 +17,8 @@ MASTER_SITES = http://subversion.tigris.org/downloads/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 EXTRA_LIB = $(prefix)/bdb44/lib $(SVNLIB)
@@ -112,8 +113,7 @@ test-skip:
 
 include gar/category.mk
 
-#BINDING_LANGS   = java perl python ruby
-BINDING_LANGS   = ruby perl python java
+BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
 PI_DEPENDS  = $(BINDING_TARGETS)
@@ -126,6 +126,7 @@ post-install-modulated: $(PI_DEPENDS)
 post-configure-modulated:
 	@echo "~~~ Fixing Libtool ~~~"
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+	@echo "~~~ Creating GCC Makefile and libtool for javahl and ruby ~~~"
 	@gcp $(WORKSRC)/Makefile $(WORKSRC)/Makefile.gcc
 	@gcp $(WORKSRC)/libtool $(WORKSRC)/libtool.gcc
 	@perl -i -pe 's/-mt\|*//' $(WORKSRC)/*.gcc
@@ -137,7 +138,6 @@ post-configure-modulated:
 	@perl -i -pe 's|libtool|libtool.gcc|' $(WORKSRC)/Makefile.gcc
 	@perl -i -pe 's|KPIC|fPIC|' $(WORKSRC)/libtool.gcc
 	@perl -i -pe 's|postdeps=.*|postdeps=""|' $(WORKSRC)/libtool.gcc
-
 	@( if [ "`uname -p`" = "sparc" ]; then \
     	perl -i -pe 's|-xarch=v8|-mcpu=v8|' $(WORKSRC)/*.gcc; \
 	else \
