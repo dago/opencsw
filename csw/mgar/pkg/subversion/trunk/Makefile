@@ -1,5 +1,4 @@
-GARNAME = subversion
-DISTVERSION = 1.6.1
+GARNAME = subversion DISTVERSION = 1.6.1
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -35,25 +34,31 @@ SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
 REQUIRED_PKGS_CSWsvn       = CSWapache2rt CSWbdb44 CSWexpat CSWggettextrt
 REQUIRED_PKGS_CSWsvn      += CSWiconv CSWkrb5lib CSWlibnet CSWneon CSWoldaprt
-REQUIRED_PKGS_CSWsvn      += CSWosslrt CSWsasl CSWsqlite3 CSWzlib
+REQUIRED_PKGS_CSWsvn      += CSWosslrt CSWsasl CSWzlib CSWsqlite3rt
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
 REQUIRED_PKGS_CSWsvn-devel = CSWsvn
 SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2
 CATALOGNAME_CSWap2svn      = ap2svn
-REQUIRED_PKGS_CSWap2svn    = CSWsvn
+REQUIRED_PKGS_CSWap2svn    = CSWsvn CSWgettextrt
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
-REQUIRED_PKGS_CSWjavasvn   = CSWsvn CSWgcc3g++rt CSWgcc3corert
+REQUIRED_PKGS_CSWjavasvn   = CSWsvn CSWgcc3g++rt CSWgcc3corert CSWapache2rt 
+REQUIRED_PKGS_CSWjavasvn  += CSWbdb44 CSWexpat CSWggettextrt CSWiconv 
+REQUIRED_PKGS_CSWjavasvn  += CSWneon CSWoldaprt
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pmsvn
-REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl
+REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl CSWapache2rt CSWbdb44 CSWexpat 
+REQUIRED_PKGS_CSWpmsvn    += CSWggettextrt CSWiconv CSWoldaprt
 SPKG_DESC_CSWpysvn         = Subversion Python Language Binding
 CATALOGNAME_CSWpysvn       = pysvn
-REQUIRED_PKGS_CSWpysvn     = CSWsvn CSWpython
+REQUIRED_PKGS_CSWpysvn     = CSWsvn CSWpython CSWapache2rt CSWbdb44 CSWexpat 
+REQUIRED_PKGS_CSWpysvn    += CSWggettextrt CSWiconv CSWoldaprt
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
-REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby CSWgcc3g++rt CSWgcc3corert
+REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby CSWgcc3g++rt CSWgcc3corert 
+REQUIRED_PKGS_CSWrbsvn    += CSWapache2rt CSWbdb44 CSWexpat CSWggettextrt 
+REQUIRED_PKGS_CSWrbsvn    += CSWiconv
 
 PKGFILES_CSWsvn-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWap2svn    = $(prefix)/apache2.*
