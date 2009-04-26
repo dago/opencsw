@@ -1,0 +1,43 @@
+--- subversion-1.6.1/Makefile.in.o	2009-04-19 14:13:16.639723533 -0500
++++ subversion-1.6.1/Makefile.in	2009-04-19 14:14:27.736377714 -0500
+@@ -38,8 +38,8 @@
+ SCHEMA_DIR = subversion/svn/schema
+ 
+ NEON_LIBS = @NEON_LIBS@
+-SVN_APR_LIBS = @SVN_APR_LIBS@
+-SVN_APRUTIL_LIBS = @SVN_APRUTIL_LIBS@
++SVN_APR_LIBS = -L/opt/csw/lib -L/opt/csw/apache2/lib -lintl -liconv @SVN_APR_LIBS@
++SVN_APRUTIL_LIBS = -L/opt/csw/lib -L/opt/csw/apache2/lib @SVN_APRUTIL_LIBS@
+ SVN_APR_MEMCACHE_LIBS = @SVN_APR_MEMCACHE_LIBS@
+ SVN_DB_LIBS = @SVN_DB_LIBS@
+ SVN_GNOME_KEYRING_LIBS = @SVN_GNOME_KEYRING_LIBS@
+@@ -49,7 +49,7 @@
+ SVN_SQLITE_LIBS = @SVN_SQLITE_LIBS@
+ SVN_ZLIB_LIBS = @SVN_ZLIB_LIBS@
+ 
+-LIBS = @LIBS@
++LIBS = -L/opt/csw/lib -L/opt/csw/apache2/lib -lintl -liconv -lsocket -lz @LIBS@
+ 
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@
+@@ -76,15 +76,15 @@
+ swig_rb_libdir = @libdir@
+ 
+ ### these possibly need further discussion
+-swig_pydir = @libdir@/svn-python/libsvn
+-swig_pydir_extra = @libdir@/svn-python/svn
+-swig_pldir = @libdir@/svn-perl
++swig_pydir = @prefix@/lib/python/site-packages/libsvn
++swig_pydir_extra = @prefix@/lib/python/site-packages/svn
++#swig_pldir = @libdir@/svn-perl
+ swig_rbdir = $(SWIG_RB_SITE_ARCH_DIR)/svn/ext
+ contribdir = @bindir@/svn-contrib
+ toolsdir = @bindir@/svn-tools
+ 
+-javahl_javadir = @libdir@/svn-javahl
+-javahl_javahdir = @libdir@/svn-javahl/include
++javahl_javadir = @libdir@
++javahl_javahdir = @libdir@/include
+ javahl_libdir = @libdir@
+ javahl_test_rootdir=$(abs_builddir)/subversion/bindings/javahl/test-work
+ 

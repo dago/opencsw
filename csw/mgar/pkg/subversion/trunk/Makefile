@@ -86,20 +86,22 @@ EXTRA_INC += $(JDK)/include
 SVNLIB = $(prefix)/lib/svn
 
 NOISALIST = 1
-LDFLAGS =
+LDFLAGS  = -R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/apache2/lib 
+LDFLAGS += -L/opt/csw/apache2/lib -L$(SVNLIB) -lintl -liconv
+export LDFLAGS
+
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
-CONFIGURE_ARGS += --with-gnu-ld=yes
+CONFIGURE_ARGS += --disable-mod-activation
+CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
-CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --with-jdk=$(JDK)
-CONFIGURE_ARGS += --enable-javahl
-CONFIGURE_ARGS += --with-neon=$(prefix)
-CONFIGURE_ARGS += --with-zlib=$(prefix)
+#CONFIGURE_ARGS += --with-neon=$(prefix)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --with-zlib=$(prefix)
 
 TEST_TARGET = check
 # Tests take *forever*
@@ -108,12 +110,10 @@ TEST_SCRIPTS = skip
 test-skip:
 	@$(DONADA)
 
-# Add libintl when linking
-EXTRA_LINKER_FLAGS += -lintl -liconv 
-
 include gar/category.mk
 
-BINDING_LANGS   = java perl python ruby
+#BINDING_LANGS   = java perl python ruby
+BINDING_LANGS   = ruby perl python java
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
 PI_DEPENDS  = $(BINDING_TARGETS)
@@ -124,11 +124,25 @@ post-install-modulated: $(PI_DEPENDS)
 	$(DONADA)
 
 post-configure-modulated:
-	@(echo "~~~ Fixing Libtool ~~~")
+	@echo "~~~ Fixing Libtool ~~~"
 	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	@(gcp $(WORKSRC)/Makefile $(WORKSRC)/Makefile.gcc)
-	@(gcp $(WORKSRC)/libtool $(WORKSRC)/libtool.gcc)
-	@(gpatch -d $(WORKSRC) -p0 -F2 < $(DOWNLOADDIR)/$(GARCH)-gcc.diff)
+	@gcp $(WORKSRC)/Makefile $(WORKSRC)/Makefile.gcc
+	@gcp $(WORKSRC)/libtool $(WORKSRC)/libtool.gcc
+	@perl -i -pe 's/-mt\|*//' $(WORKSRC)/*.gcc
+	@perl -i -pe 's|-xO3|-pipe -O2|' $(WORKSRC)/*.gcc
+	@perl -i -pe 's|/opt/studio/SOS11/SUNWspro/bin/cc|/opt/csw/gcc4/bin/gcc|' \
+		             $(WORKSRC)/*.gcc
+	@perl -i -pe 's|/opt/studio/SOS11/SUNWspro/bin/CC|/opt/csw/gcc4/bin/g++|' \
+		             $(WORKSRC)/*.gcc
+	@perl -i -pe 's|libtool|libtool.gcc|' $(WORKSRC)/Makefile.gcc
+	@perl -i -pe 's|KPIC|fPIC|' $(WORKSRC)/libtool.gcc
+	@perl -i -pe 's|postdeps=.*|postdeps=""|' $(WORKSRC)/libtool.gcc
+
+	@( if [ "`uname -p`" = "sparc" ]; then \
+    	perl -i -pe 's|-xarch=v8|-mcpu=v8|' $(WORKSRC)/*.gcc; \
+	else \
+	    perl -i -pe 's|-xarch=i386|-mcpu=i386|' $(WORKSRC)/*.gcc; \
+	fi )
 	$(DONADA)
 
 fix-install:
@@ -167,7 +181,7 @@ svn-perl:
 svn-ruby:
 	@echo " ==> Building Ruby bindings"
 	@touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
-	@$(BUILD_ENV) gmake -f Makefile.gcc -C $(WORKSRC) swig-rb
+	$(BUILD_ENV) gmake -f Makefile.gcc -C $(WORKSRC) swig-rb
 	#@$(TEST_ENV) gmake -f Makefile.gcc -C $(WORKSRC) check-swig-rb
 	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-swig-rb
 	$(DONADA)
