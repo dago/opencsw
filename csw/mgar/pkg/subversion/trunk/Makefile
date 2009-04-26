@@ -145,7 +145,7 @@ post-configure-modulated:
 	@( if [ "`uname -p`" = "sparc" ]; then \
     	perl -i -pe 's|-xarch=v8|-mcpu=v8|' $(WORKSRC)/*.gcc; \
 	else \
-	    perl -i -pe 's|-xarch=i386|-mcpu=i386|' $(WORKSRC)/*.gcc; \
+	    perl -i -pe 's|-xarch=386|-m32 -march=i386|' $(WORKSRC)/*.gcc; \
 	fi )
 	$(DONADA)
 
