@@ -70,8 +70,6 @@ DISTFILES += CSWsvn.checkinstall
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 DISTFILES += fixme.sh
-DISTFILES += sparc-gcc.diff
-DISTFILES += i386-gcc.diff
 
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
