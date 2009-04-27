@@ -1,0 +1,9 @@
+#!/bin/sh
+#$Id: mgetty.postinstall,v 1.1 2004/03/20 17:57:01 simigern Exp $
+
+test -f "${BASEDIR}/opt/csw/etc/mgetty+sendfax/dialin.config" || cp ${BASEDIR}/opt/csw/etc/mgetty+sendfax/dialin.config.CSW ${BASEDIR}/opt/csw/etc/mgetty+sendfax/dialin.config
+test -f "${BASEDIR}/opt/csw/etc/mgetty+sendfax/faxheader" || cp ${BASEDIR}/opt/csw/etc/mgetty+sendfax/faxheader.CSW ${BASEDIR}/opt/csw/etc/mgetty+sendfax/faxheader
+test -f "${BASEDIR}/opt/csw/etc/mgetty+sendfax/faxrunq.config" || cp ${BASEDIR}/opt/csw/etc/mgetty+sendfax/faxrunq.config.CSW ${BASEDIR}/opt/csw/etc/mgetty+sendfax/faxrunq.config
+test -f "${BASEDIR}/opt/csw/etc/mgetty+sendfax/login.config" || cp ${BASEDIR}/opt/csw/etc/mgetty+sendfax/login.config.CSW ${BASEDIR}/opt/csw/etc/mgetty+sendfax/login.config
+test -f "${BASEDIR}/opt/csw/etc/mgetty+sendfax/mgetty.config" || cp ${BASEDIR}/opt/csw/etc/mgetty+sendfax/mgetty.config.CSW ${BASEDIR}/opt/csw/etc/mgetty+sendfax/mgetty.config
+test -f "${BASEDIR}/opt/csw/etc/mgetty+sendfax/sendfax.config" || cp ${BASEDIR}/opt/csw/etc/mgetty+sendfax/sendfax.config.CSW ${BASEDIR}/opt/csw/etc/mgetty+sendfax/sendfax.config

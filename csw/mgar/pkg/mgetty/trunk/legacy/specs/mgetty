@@ -1,0 +1,70 @@
+# vim: ft=perl
+# $Id: mgetty,v 1.6 2005/06/30 12:11:50 simigern Exp $
+
+$progname  = 'mgetty';
+$version   = '1.1.31';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://alpha.greenie.net/mgetty/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}${version}-Jul24.tar.gz");
+
+@patches   = (['mgetty-policy.h.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - An intelligent getty with fax and voice modem support",
+		dependencies => ['CSWcommon'],
+		postinstall  => "mgetty.postinstall",
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/frontends/X11/viewfax-2.5/COPYING";
+
+$attributes{'/opt/csw/var/spool/fax'} = ({user => 'uucp'});
+$attributes{'/opt/csw/var/spool/fax/outgoing'} = ({user => 'uucp'});
+$attributes{'/opt/csw/lib/mgetty+sendfax/faxq-helper'} = ({user => 'uucp'});
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+mkdir dummybins
+export PATH="${builddir}/${progname}-${version}/dummybins:\${PATH}"
+ln -s /bin/true dummybins/chown
+gmake CFLAGS='-Dsolaris2' LIBS='-lsocket -lnsl' prefix=/opt/csw spool=/opt/csw/var/spool CC=cc FAX_OUT_USER=uucp MAN1DIR=/opt/csw/share/man/man1 MAN4DIR=/opt/csw/share/man/man4 MAN5DIR=/opt/csw/share/man/man5 MAN8DIR=/opt/csw/share/man/man8 INFODIR=/opt/csw/share/info
+mkdir -p ${buildroot}/opt/csw/var/spool
+mkdir -p ${buildroot}/opt/csw/share
+gmake DESTDIR=${buildroot} prefix=${buildroot}/opt/csw spool=${buildroot}/opt/csw/var/spool INSTALL='/usr/ucb/install -c -o bin -g bin' FAX_OUT_USER=uucp MAN1DIR=${buildroot}/opt/csw/share/man/man1 MAN4DIR=${buildroot}/opt/csw/share/man/man4 MAN5DIR=${buildroot}/opt/csw/share/man/man5 MAN8DIR=${buildroot}/opt/csw/share/man/man8 INFODIR=${buildroot}/opt/csw/share/info install
+rm ${buildroot}/opt/csw/bin/g3topbm
+mv ${buildroot}/opt/csw/etc/mgetty+sendfax/dialin.config ${buildroot}/opt/csw/etc/mgetty+sendfax/dialin.config.CSW
+mv ${buildroot}/opt/csw/etc/mgetty+sendfax/faxheader ${buildroot}/opt/csw/etc/mgetty+sendfax/faxheader.CSW
+mv ${buildroot}/opt/csw/etc/mgetty+sendfax/faxrunq.config ${buildroot}/opt/csw/etc/mgetty+sendfax/faxrunq.config.CSW
+mv ${buildroot}/opt/csw/etc/mgetty+sendfax/login.config ${buildroot}/opt/csw/etc/mgetty+sendfax/login.config.CSW
+mv ${buildroot}/opt/csw/etc/mgetty+sendfax/mgetty.config ${buildroot}/opt/csw/etc/mgetty+sendfax/mgetty.config.CSW
+mv ${buildroot}/opt/csw/etc/mgetty+sendfax/sendfax.config ${buildroot}/opt/csw/etc/mgetty+sendfax/sendfax.config.CSW
+
+mv ${buildroot}/opt/csw/bin/faxq ${buildroot}/opt/csw/bin/faxq-mgetty
+mv ${buildroot}/opt/csw/bin/faxrm ${buildroot}/opt/csw/bin/faxrm-mgetty
+mv ${buildroot}/opt/csw/share/man/man1/faxq.1 ${buildroot}/opt/csw/share/man/man1/faxq-mgetty.1
+mv ${buildroot}/opt/csw/share/man/man1/faxrm.1 ${buildroot}/opt/csw/share/man/man1/faxrm-mgetty.1
+
+
+##vgetty stuff starts here...
+#cd voice
+#gmake CFLAGS='-Dsolaris2' LIBS='-lsocket -lnsl' prefix=/opt/csw spool=/opt/csw/var/spool CC=cc FAX_OUT_USER=uucp MAN1DIR=/opt/csw/share/man/man1 MAN4DIR=/opt/csw/share/man/man4 MAN5DIR=/opt/csw/share/man/man5 MAN8DIR=/opt/csw/share/man/man8 INFODIR=/opt/csw/share/info
+#gmake DESTDIR=${buildroot} CFLAGS='-Dsolaris2' LIBS='-lsocket -lnsl' prefix=${buildroot}/opt/csw spool=${buildroot}/opt/csw/var/spool INSTALL='/usr/ucb/install -c -o bin -g bin' FAX_OUT_USER=uucp MAN1DIR=${buildroot}/opt/csw/share/man/man1 MAN4DIR=${buildroot}/opt/csw/share/man/man4 MAN5DIR=${buildroot}/opt/csw/share/man/man5 MAN8DIR=${buildroot}/opt/csw/share/man/man8 INFODIR=${buildroot}/opt/csw/share/info install
+
+EOF
