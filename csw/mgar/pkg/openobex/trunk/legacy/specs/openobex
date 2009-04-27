@@ -1,0 +1,42 @@
+# vim: ft=perl
+# $Id: openobex,v 1.3 2004/03/24 18:47:35 simigern Exp $
+
+$progname  = 'openobex';
+$version   = '1.0.1';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://openobex.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - An Object Exchange (OBEX) protocol implementation",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=gcc
+export CXX=g++
+export PATH="/opt/csw/gcc3/bin:${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+export CFLAGS="\$CFLAGS -I/opt/csw/gcc3/include -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/gcc3/include -I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/gcc3/lib -L/opt/csw/gcc3/lib -R/opt/csw/lib -L/opt/csw/lib -lsocket -lnsl'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+echo "#include <sys/types.h>" >src/stdint.h
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+sed -e 's|#include <stdint.h>||' ${buildroot}/opt/csw/include/openobex/obex.h >${buildroot}/opt/csw/include/openobex/obex.hnew
+mv ${buildroot}/opt/csw/include/openobex/obex.hnew ${buildroot}/opt/csw/include/openobex/obex.h
+sed -e 's|#include <stdint.h>||' ${buildroot}/opt/csw/include/openobex/obex_const.h >${buildroot}/opt/csw/include/openobex/obex_const.hnew
+mv ${buildroot}/opt/csw/include/openobex/obex_const.hnew ${buildroot}/opt/csw/include/openobex/obex_const.h
+EOF
