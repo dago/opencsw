@@ -1,0 +1,11 @@
+--- pango/opentype/Makefile.in.orig	2004-09-13 17:40:17.000000000 -0400
++++ pango/opentype/Makefile.in	2004-12-07 04:39:20.167073000 -0500
+@@ -278,7 +278,7 @@
+ 
+ ottest_LDADD = \
+ 	libpango-ot.la	\
+-	$(FREETYPE_LIBS)
++	$(FREETYPE_LIBS) -lglib
+ 
+ 
+ EXTRA_DIST = \

@@ -1,0 +1,59 @@
+# vim: ft=perl
+# $Id: libpango,v 1.10 2005/12/15 15:13:49 simigern Exp $
+
+$progname  = 'pango';
+$version   = '1.10.1';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/pango packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['pango.glib.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "pango",
+		filename     => "libpango",
+		name         => "libpango - Library for laying out and rendering text",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt'],
+		postinstall  => "libpango.postinstall"
+		});
+
+#$suffix='.01';
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib -lsunmath'
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+/opt/csw/bin/gsed -i -e 's|have_cairo=true|have_cairo=false|g' configure
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info || exit 1
+gmake || exit 1
+gmake DESTDIR=${buildroot} GCONF_SCHEMA_CONFIG_SOURCE=xml::${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults install || exit 1
+
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+#remove mess from libtool-archives
+for i in ${buildroot}/opt/csw/lib/{*.la,pango/1.*/modules/*.la}; do
+	if [ -f "\${i}" ]; then
+		sed -e "s|[^ ]*${buildroot}[^ ]* *||g" "\${i}" >"\${i}.newbuild" && mv "\${i}.newbuild" "\${i}"
+	fi
+done
+
+EOF
