@@ -1,0 +1,46 @@
+# vim: ft=perl
+# $Id: intltool,v 1.2 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'intltool';
+$version   = '0.30';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/gnome/sources/intltool/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - A collection of tools for internationalization",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+export PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig
+
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+gmake
+gmake DESTDIR=${buildroot} install
+EOF
