@@ -1,0 +1,68 @@
+# vim: ft=perl
+# $Id: ximian_connector,v 1.18 2005/04/13 15:17:12 simigern Exp $
+
+$progname  = 'ximian-connector';
+$version   = '2.2.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.novell.com/products/connector/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2","openldap-2.2.23.tgz");
+
+@patches   = (['ximian-connector-nongcc-fixes.patch',   "${progname}-${version}", '-p0'],
+              ['openldap-ntlm.diff' ,"openldap-2.2.23", "-p0"]);
+
+@packages  = ({
+		pkgname      => "ximian-connector",
+		filename     => "ximian_connector",
+		name         => "ximian_connector - Novell/Ximian connector for Evolution & MS Exchange",
+		dependencies => ['CSWcommon','CSWgnomespell'],
+		filelist     => [qw(opt)],
+		postinstall  => 'gconf-schema-update.postinstall',
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+        export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+
+#openldap
+cd ${builddir}/openldap-2.2.23
+./configure --prefix=${builddir}/evo-ldap --disable-shared --disable-slapd --without-cyrus-sasl
+gmake || exit 1
+gmake install || exit 1
+
+#ximian
+export CFLAGS="\$CFLAGS -I${builddir}/evo-ldap/include -I/opt/csw/include"
+export CPPFLAGS='-I${builddir}/evo-ldap/include -I/opt/csw/include'
+export LD_OPTIONS='-L${builddir}/evo-ldap/lib -R/opt/csw/lib -L/opt/csw/lib -L/opt/csw/lib/evolution/nss/lib -R/opt/csw/lib/evolution/nss/lib'
+export LDFLAGS="\$LD_OPTIONS"
+
+cd ${builddir}/${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-openldap=${builddir}/evo-ldap || exit 1
+gmake || exit 1
+gmake DESTDIR=${buildroot} install_sh=ginstall install || exit 1
+
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+#remove mess from libtool-archives
+for i in ${buildroot}/opt/csw/lib/evolution/*/camel-providers/*.la; do
+        if [ -f "\${i}" ]; then
+                sed -e "s|[^ ]*${buildroot}[^ ]* *||g" "\${i}" >"\${i}.newbuild" && mv "\${i}.newbuild" "\${i}"
+        fi
+done
+
+
+EOF

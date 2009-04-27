@@ -1,0 +1,11 @@
+--- lib/e2k-autoconfig.c.orig	2004-05-11 13:54:31.739024000 -0400
++++ lib/e2k-autoconfig.c	2004-05-11 13:55:27.249000000 -0400
+@@ -23,6 +23,8 @@
+ #include <config.h>
+ #endif
+ 
++#include <sys/types.h>
++#include <sys/socket.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <resolv.h>

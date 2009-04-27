@@ -1,0 +1,27 @@
+===================================================================
+RCS file: /cvs/gnome/evolution-exchange/storage/main.c,v
+retrieving revision 1.10
+retrieving revision 1.11
+diff -u -r1.10 -r1.11
+--- storage/main.c	2004/11/26 12:07:10	1.10
++++ storage/main.c	2004/12/09 05:54:08	1.11
+@@ -201,6 +201,7 @@
+ main (int argc, char **argv)
+ {
+ 	char *path;
++	char *config_directory;
+ 
+ 	bindtextdomain (PACKAGE, CONNECTOR_LOCALEDIR);
+ 	bind_textdomain_codeset (PACKAGE, "UTF-8");
+@@ -211,7 +212,10 @@
+ 			    GNOME_PARAM_HUMAN_READABLE_NAME, _("Ximian Connector for Microsoft Exchange"),
+ 			    NULL);
+ 	e_icon_factory_init ();
+-	camel_init (NULL, FALSE);
++
++	config_directory = g_build_filename (g_get_home_dir(), ".evolution", NULL);
++	camel_init (config_directory, FALSE);
++	g_free(config_directory);
+ 
+ 	path = g_strdup_printf ("/tmp/.exchange-%s", g_get_user_name ());
+ 	if (mkdir (path, 0700) == -1) {

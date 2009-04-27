@@ -1,0 +1,20 @@
+--- calendar/e-cal-backend-exchange-tasks.c.orig	2004-09-27 18:41:48.290940000 -0400
++++ calendar/e-cal-backend-exchange-tasks.c	2004-09-27 18:42:22.160879000 -0400
+@@ -644,7 +644,7 @@
+ 		if ((str = e2k_properties_get_prop (result->props, E2K_PR_MAPI_COMMON_END))) {
+ 			itt = icaltime_from_timet (e2k_parse_timestamp (str), 0);
+ 			if (!icaltime_is_null_time (itt)) {
+-				itzone = icaltime_get_timezone ((const struct icaltimetype)itt);
++				itzone = icaltime_get_timezone (itt);
+ 				tzid = icaltimezone_get_tzid ((icaltimezone *)itzone);
+ 				ecdatetime.value = &itt;
+ 				ecdatetime.tzid = tzid;
+@@ -657,7 +657,7 @@
+ 				E2K_PR_MAPI_COMMON_START))) {
+ 			itt = icaltime_from_timet (e2k_parse_timestamp (str), 0);
+ 			if (!icaltime_is_null_time (itt)) {
+-				itzone = icaltime_get_timezone ((const struct icaltimetype) itt);
++				itzone = icaltime_get_timezone (itt);
+ 				tzid = icaltimezone_get_tzid ((icaltimezone *)itzone);
+ 				ecdatetime.value = &itt;
+ 				ecdatetime.tzid = tzid;
