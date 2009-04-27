@@ -1,0 +1,19 @@
+--- src/cr-num.c.orig	2004-03-30 04:27:22.687100000 -0500
++++ src/cr-num.c	2004-03-30 04:29:38.087105000 -0500
+@@ -268,7 +268,15 @@
+         g_return_val_if_fail (a_this, FALSE);
+ 
+         switch (a_this->type) {
+-        case NUM_LENGTH_EM...NUM_LENGTH_PC:
++
++	case NUM_LENGTH_EM:
++	case NUM_LENGTH_EX:
++	case NUM_LENGTH_PX:
++	case NUM_LENGTH_IN:
++	case NUM_LENGTH_CM:
++	case NUM_LENGTH_MM:
++	case NUM_LENGTH_PT:
++	case NUM_LENGTH_PC:
+                 result = TRUE;
+                 break;
+         default:
