@@ -1,0 +1,53 @@
+# vim: ft=perl
+# $Id: wmmail,v 1.1 2004/03/09 10:21:24 simigern Exp $
+
+$progname  = 'wmmail';
+$version   = '0.64';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.linux.org/apps/AppId_5192.html packaged for CSW by Michael Gernoth';
+
+@sources   = ("WMMail.app-${version}.tar.gz");
+
+@patches   = (['wmmail-proplist.patch',   "WMMail.app-${version}", '-p0'],
+              ['__eprintf.patch', "WMMail.app-${version}/src", '-p0'],
+              ['wmmail-debian.patch', "WMMail.app-${version}", '-p1']);
+	      #['wmmail-wmutil.patch', "WMMail.app-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - A WindowMaker mailchecker dockapplet",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "WMMail.app-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=gcc
+export CXX=g++
+export PATH="/opt/csw/gcc3/bin:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+export CFLAGS='-O2 -I/opt/csw/include'
+export CPPFLAGS='-I/opt/csw/include'
+export LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
+#export LDADD='eprintf.o -lWINGs'
+cd WMMail.app-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man
+(cd src && gmake eprintf.o)
+gmake
+gmake DESTDIR=${buildroot} install
+mkdir -p ${buildroot}/opt/csw/share/man/man1
+cp debian/WMMail.1 ${buildroot}/opt/csw/share/man/man1/
+mkdir -p ${buildroot}/opt/csw/share/doc/wmmail
+cp doc/Help.txt ${buildroot}/opt/csw/share/doc/wmmail/
+mv ${buildroot}/opt/csw/GNUstep/Apps/WMMail.app/Defaults/WMMail ${buildroot}/opt/csw/share/doc/wmmail/WMMail.sample
+rmdir ${buildroot}/opt/csw/GNUstep/Apps/WMMail.app/Defaults
+mkdir -p ${buildroot}/opt/csw/GNUstep/Defaults
+sed -e 's|/usr/lib|/opt/csw|' debian/system.WMMail >${buildroot}/opt/csw/GNUstep/Defaults/WMMail
+cp debian/upgrade-wmmailrc ${buildroot}/opt/csw/share/doc/wmmail/
+mkdir -p ${buildroot}/opt/csw/bin
+ln -s ../GNUstep/Apps/WMMail.app/WMMail ${buildroot}/opt/csw/bin/WMMail
+EOF
