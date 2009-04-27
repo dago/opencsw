@@ -1,0 +1,10 @@
+--- bin/bbackupquery/bbackupquery.cpp.orig	Fri Apr 11 16:43:34 2008
++++ bin/bbackupquery/bbackupquery.cpp	Fri Apr 11 16:43:53 2008
+@@ -54,6 +54,7 @@
+ 
+ #include <errno.h>
+ #include <stdio.h>
++#include <locale.h>
+ 
+ #ifdef HAVE_SYS_TYPES_H
+ 	#include <sys/types.h>

@@ -1,0 +1,51 @@
+# vim: ft=perl
+# $Id: boxbackup,v 1.3 2008-04-11 14:58:08 simigern Exp $
+
+$progname  = 'boxbackup';
+$version   = '0.11rc2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.boxbackup.org/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tgz");
+
+@patches   = (['boxbackup-locale.diff',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - An open source, completely automatic on-line backup system for UNIX",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/LICENSE.txt";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/bdb43/include -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/bdb43/include -I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/bdb43/lib -L/opt/csw/bdb43/lib -R/opt/csw/lib -L/opt/csw/lib'
+export CXXFLAGS="\$CFLAGS \$LD_OPTIONS"
+export LIBS='-ldb -lnsl -lsocket'
+export LD_RUN_PATH='/opt/csw/bdb43/lib:/opt/csw/lib'
+export LC_ALL=C
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-bdb-headers=/opt/csw/bdb43/include --with-bdb-lib=/opt/csw/bdb43/lib --enable-gnu-readline
+gmake || exit 1
+export PATH="`pwd`:\${PATH}"
+ln -s /opt/csw/bin/ginstall install
+mkdir -p ${buildroot}/opt/csw/bin ${buildroot}/opt/csw/lib/svc/{manifest,method}
+gmake DESTDIR=${buildroot} install-backup-client
+gmake DESTDIR=${buildroot} install-backup-server
+gmake DESTDIR=${buildroot} install
+EOF
