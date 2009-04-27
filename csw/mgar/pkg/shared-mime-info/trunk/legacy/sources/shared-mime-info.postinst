@@ -1,0 +1,10 @@
+#!/bin/sh
+#$Id: shared-mime-info.postinst,v 1.1 2004/06/25 16:35:27 simigern Exp $
+
+umask 0022
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+XDG_DATA_DIRS=/opt/csw/share/:/usr/local/share/:/usr/share/
+export XDG_DATA_DIRS
+chroot "${PKG_ROOT_DIR}" /opt/csw/bin/update-mime-database /opt/csw/share/mime
