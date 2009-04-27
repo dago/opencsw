@@ -1,0 +1,78 @@
+# vim: ft=perl
+# $Id: evolution-ds,v 1.12 2005/04/13 15:12:50 simigern Exp $
+
+$progname  = 'evolution-data-server';
+$version   = '1.2.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2","nss-3.9.2.tar.gz");
+
+@patches   = (['evolution-ds-nongcc-fixes.patch',   "${progname}-${version}", '-p1'],
+              ['nss-makefile.patch','nss-3.9.2','-p1']);
+
+@packages  = ({
+		pkgname      => "evolution-ds",
+		filename     => "evolution_ds",
+		name         => "evolution_ds - evolution database backend server",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include -I${buildroot}/opt/csw/include"
+export CPPFLAGS="-I/opt/csw/include -I${buildroot}/opt/csw/include"
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/lib/evolution/nss/lib -L/opt/csw/lib/evolution/nss/lib'
+export LDFLAGS="\$LD_OPTIONS"
+export LD_RUN_PATH="/opt/csw/lib/evolution/nss/lib"
+
+export BUILD_OPT=1
+cd ${builddir}/nss-3.9.2/mozilla/security/nss
+gmake nss_build_all
+export NSS_OBJ_DIR="`ls -d ${builddir}/nss-3.9.2/mozilla/dist/*OPT.OBJ`"
+mkdir -p ${buildroot}/opt/csw/lib/evolution/nss/lib
+mkdir -p ${buildroot}/opt/csw/lib/evolution/nss/include
+cd \$NSS_OBJ_DIR/lib
+cp *.so ${buildroot}/opt/csw/lib/evolution/nss/lib/
+cd \$NSS_OBJ_DIR/include
+cp -r * ${buildroot}/opt/csw/lib/evolution/nss/include/
+cd ${builddir}/nss-3.9.2/mozilla/dist/public/nss
+cp -r * ${buildroot}/opt/csw/lib/evolution/nss/include/
+unset LD_RUN_PATH
+
+cd ${builddir}
+#Now evo-ds
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+
+cd ${builddir}
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-krb5=/opt/csw --enable-nss=yes --with-openldap=/opt/csw --enable-ipv6=yes --without-broken-spool --enable-nntp=yes --with-nspr-includes=${buildroot}/opt/csw/lib/evolution/nss/include --with-nspr-libs=${buildroot}/opt/csw/lib/evolution/nss/lib --with-nss-includes=${builddir}/opt/csw/lib/evolution/nss/include --with-nss-libs=${buildroot}/opt/csw/lib/evolution/nss/lib
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+#remove mess from libtool-archives
+for i in ${buildroot}/opt/csw/lib/*.la; do
+        if [ -f "\${i}" ]; then
+                sed -e "s|[^ ]*${buildroot}[^ ]* *||g" "\${i}" >"\${i}.newbuild" && mv "\${i}.newbuild" "\${i}"
+        fi
+done
+
+EOF
