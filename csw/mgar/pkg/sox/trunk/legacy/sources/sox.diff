@@ -1,0 +1,11 @@
+--- sox-13.0.0/src/st.h.orig	2007-03-04 11:15:32.159095000 -0500
++++ sox-13.0.0/src/st.h	2007-03-04 11:15:40.478940000 -0500
+@@ -27,6 +27,8 @@
+ /* Avoid warnings about unused parameters. */
+ #ifdef __GNUC__
+ #define UNUSED __attribute__ ((unused))
++#else
++#define UNUSED
+ #endif
+ 
+ /* C language enhancements: */

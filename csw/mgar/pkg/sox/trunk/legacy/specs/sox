@@ -1,0 +1,48 @@
+# vim: ft=perl
+# $Id: sox,v 1.7 2007-03-04 16:25:37 simigern Exp $
+
+$progname  = 'sox';
+$version   = '13.0.0';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://sox.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+@patches   = (['sox.diff',   "${progname}-${version}", '-p1']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - Sound Processing Tool",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake prefix=${buildroot}/opt/csw mandir=${buildroot}/opt/csw/share/man install
+rm ${buildroot}/opt/csw/bin/rec
+ln -s play ${buildroot}/opt/csw/bin/rec
+rm ${buildroot}/opt/csw/share/man/man1/rec.1
+ln -s play.1 ${buildroot}/opt/csw/share/man/man1/rec.1
+rm ${buildroot}/opt/csw/share/man/man1/soxmix.1
+ln -s sox.1 ${buildroot}/opt/csw/share/man/man1/soxmix.1
+EOF
