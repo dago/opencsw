@@ -1,0 +1,216 @@
+diff -ru orignethack-343/include/config.h nethack-3.4.3/include/config.h
+--- orignethack-343/include/config.h	2003-12-08 00:39:13.000000000 +0100
++++ nethack-3.4.3/include/config.h	2004-03-22 01:19:54.606853000 +0100
+@@ -43,7 +43,7 @@
+  * Some combinations make no sense.  See the installation document.
+  */
+ #define TTY_GRAPHICS	/* good old tty based graphics */
+-/* #define X11_GRAPHICS */	/* X11 interface */
++#define X11_GRAPHICS 	/* X11 interface */
+ /* #define QT_GRAPHICS */	/* Qt interface */
+ /* #define GNOME_GRAPHICS */	/* Gnome interface */
+ /* #define MSWIN_GRAPHICS */	/* Windows NT, CE, Graphics */
+@@ -126,7 +126,7 @@
+  * would allow:
+  *  xpmtoppm <x11tiles.xpm | pnmscale 1.25 | ppmquant 90 >x11tiles_big.xpm
+  */
+-/* # define USE_XPM */		/* Disable if you do not have the XPM library */
++# define USE_XPM 		/* Disable if you do not have the XPM library */
+ # ifdef USE_XPM
+ #  define GRAPHIC_TOMBSTONE	/* Use graphical tombstone (rip.xpm) */
+ # endif
+@@ -172,7 +172,7 @@
+ #define COMPRESS "/usr/bin/compress"	/* Lempel-Ziv compression */
+ #define COMPRESS_EXTENSION ".Z"		/* compress's extension */
+ /* An example of one alternative you might want to use: */
+-/* #define COMPRESS "/usr/local/bin/gzip" */	/* FSF gzip compression */
++/* #define COMPRESS "/opt/csw/bin/gzip" */	/* FSF gzip compression */
+ /* #define COMPRESS_EXTENSION ".gz" */		/* normal gzip extension */
+ #endif
+ 
+@@ -185,7 +185,7 @@
+  *	a tar-like file, thus making a neater installation.  See *conf.h
+  *	for detailed configuration.
+  */
+-/* #define DLB */	/* not supported on all platforms */
++#define DLB 	/* not supported on all platforms */
+ 
+ /*
+  *	Defining INSURANCE slows down level changes, but allows games that
+@@ -204,7 +204,7 @@
+  * otherwise it will be the current directory.
+  */
+ # ifndef HACKDIR
+-#  define HACKDIR "/usr/games/lib/nethackdir"
++#  define HACKDIR "/opt/csw/share/nethack"
+ # endif
+ 
+ /*
+@@ -214,7 +214,7 @@
+  * since the user might create files in a directory of his choice.
+  * Of course SECURE is meaningful only if HACKDIR is defined.
+  */
+-/* #define SECURE */	/* do setuid(getuid()) after chdir() */
++#define SECURE 	/* do setuid(getuid()) after chdir() */
+ 
+ /*
+  * If it is desirable to limit the number of people that can play Hack
+@@ -338,7 +338,7 @@
+ #endif
+ 
+ #define EXP_ON_BOTL	/* Show experience on bottom line */
+-/* #define SCORE_ON_BOTL */	/* added by Gary Erickson (erickson@ucivax) */
++#define SCORE_ON_BOTL 	/* added by Gary Erickson (erickson@ucivax) */
+ 
+ /*
+  * Section 5:  EXPERIMENTAL STUFF
+@@ -349,7 +349,7 @@
+  */
+ 
+ /*#define GOLDOBJ */	/* Gold is kept on obj chains - Helge Hafting */
+-/*#define AUTOPICKUP_EXCEPTIONS */ /* exceptions to autopickup */
++#define AUTOPICKUP_EXCEPTIONS  /* exceptions to autopickup */
+ 
+ /* End of Section 5 */
+ 
+diff -ru orignethack-343/include/unixconf.h nethack-3.4.3/include/unixconf.h
+--- orignethack-343/include/unixconf.h	2003-12-08 00:39:13.000000000 +0100
++++ nethack-3.4.3/include/unixconf.h	2004-03-22 01:17:44.956458000 +0100
+@@ -96,7 +96,7 @@
+  */
+ 
+ /* #define NO_FILE_LINKS */	/* if no hard links */
+-/* #define LOCKDIR "/usr/games/lib/nethackdir" */	/* where to put locks */
++#define LOCKDIR "/opt/csw/share/nethack" /* where to put locks */
+ 
+ /*
+  * If you want the static parts of your playground on a read-only file
+@@ -132,7 +132,7 @@
+  * "extra output" method is used, but not all systems provide access to
+  * a fine-grained timer.
+  */
+-/* #define TIMED_DELAY */	/* usleep() */
++#define TIMED_DELAY	/* usleep() */
+ #endif
+ 
+ /*
+diff -ru orignethack-343/sys/unix/Makefile.src nethack-3.4.3/sys/unix/Makefile.src
+--- orignethack-343/sys/unix/Makefile.src	2003-12-08 00:39:13.000000000 +0100
++++ nethack-3.4.3/sys/unix/Makefile.src	2004-03-22 01:17:44.975790000 +0100
+@@ -146,13 +146,13 @@
+ # directories.  The ones given below is the usual spot for linux systems.
+ # The paths are for glibconfig.h and gnomesupport.h respectively.
+ #
+-GNOMEINC=-I/usr/lib/glib/include -I/usr/lib/gnome-libs/include -I../win/gnome
++GNOMEINC=-I/opt/csw/include -I../win/gnome
+ 
+ # flags for debugging:
+ # CFLAGS = -g -I../include
+ 
+-CFLAGS = -O -I../include
+-LFLAGS = 
++CFLAGS = -O -I/opt/csw/include -I../include
++LFLAGS = -L/opt/csw/lib -R/opt/csw/lib
+ 
+ # The Qt and Be window systems are written in C++, while the rest of
+ # NetHack is standard C.  If using Qt, uncomment the LINK line here to get
+@@ -214,8 +214,8 @@
+ 
+ #
+ #
+-WINSRC = $(WINTTYSRC)
+-WINOBJ = $(WINTTYOBJ)
++WINSRC = $(WINTTYSRC) $(WINX11SRC)
++WINOBJ = $(WINTTYOBJ) $(WINX11OBJ)
+ 
+ # on some systems the termcap library is in -ltermcap or -lcurses
+ # on 386 Xenix, the -ltermlib tputs() seems not to work; use -lcurses instead
+@@ -235,7 +235,7 @@
+ #
+ # libraries for X11
+ # If USE_XPM is defined in config.h, you will also need -lXpm here.
+-WINX11LIB = -lXaw -lXmu -lXext -lXt -lX11
++WINX11LIB = -lXaw -lXmu -lXext -lXt -lX11 -lXpm
+ # WINX11LIB = -lXaw -lXmu -lXt -lX11
+ # WINX11LIB = -lXaw -lXmu -lXext -lXt -lXpm -lX11 -lm
+ # WINX11LIB = -lXaw -lXmu -lXpm -lXext -lXt -lX11 -lSM -lICE -lm # BSD/OS 2.0
+@@ -255,7 +255,7 @@
+ # libraries for BeOS 
+ WINBELIB = -lbe
+ 
+-WINLIB = $(WINTTYLIB)
++WINLIB = $(WINTTYLIB) $(WINX11LIB)
+ 
+ # any other strange libraries your system needs (for Sysunix only -- the more
+ # specialized targets should already be right)
+diff -ru orignethack-343/sys/unix/Makefile.top nethack-3.4.3/sys/unix/Makefile.top
+--- orignethack-343/sys/unix/Makefile.top	2003-12-08 00:39:13.000000000 +0100
++++ nethack-3.4.3/sys/unix/Makefile.top	2004-03-22 01:17:44.978021000 +0100
+@@ -14,18 +14,18 @@
+ # MAKE = make
+ 
+ # make NetHack
+-PREFIX	 = /usr
++PREFIX	 = /opt/csw
+ GAME     = nethack
+ # GAME     = nethack.prg
+-GAMEUID  = games
+-GAMEGRP  = bin
++GAMEUID  = nobody
++GAMEGRP  = nogroup
+ 
+ # Permissions - some places use setgid instead of setuid, for instance
+ # See also the option "SECURE" in include/config.h
+-GAMEPERM = 04755
+-FILEPERM = 0644
++GAMEPERM = 02755
++FILEPERM = 0664
+ EXEPERM  = 0755
+-DIRPERM  = 0755
++DIRPERM  = 0775
+ 
+ # GAMEDIR also appears in config.h as "HACKDIR".
+ # VARDIR may also appear in unixconf.h as "VAR_PLAYGROUND" else GAMEDIR
+@@ -35,12 +35,12 @@
+ # therefore there should not be anything in GAMEDIR that you want to keep
+ # (if there is, you'll have to do the installation by hand or modify the
+ # instructions)
+-GAMEDIR  = $(PREFIX)/games/lib/$(GAME)dir
++GAMEDIR  = $(PREFIX)/share/$(GAME)
+ VARDIR  = $(GAMEDIR)
+-SHELLDIR = $(PREFIX)/games
++SHELLDIR = $(PREFIX)/bin
+ 
+ # per discussion in Install.X11 and Install.Qt
+-VARDATND = 
++VARDATND = x11tiles NetHack.ad pet_mark.xbm rip.xpm mapbg.xpm
+ # VARDATND = x11tiles NetHack.ad pet_mark.xbm
+ # VARDATND = x11tiles NetHack.ad pet_mark.xbm rip.xpm
+ # for Atari/Gem
+@@ -193,11 +193,11 @@
+ # set up their permissions
+ 	-( cd $(GAMEDIR) ; $(CHOWN) $(GAMEUID) $(GAME) recover ; \
+ 			$(CHGRP) $(GAMEGRP) $(GAME) recover )
+-	chmod $(GAMEPERM) $(GAMEDIR)/$(GAME)
+-	chmod $(EXEPERM) $(GAMEDIR)/recover
++	-chmod $(GAMEPERM) $(GAMEDIR)/$(GAME)
++	-chmod $(EXEPERM) $(GAMEDIR)/recover
+ 	-$(CHOWN) $(GAMEUID) $(SHELLDIR)/$(GAME)
+-	$(CHGRP) $(GAMEGRP) $(SHELLDIR)/$(GAME)
+-	chmod $(EXEPERM) $(SHELLDIR)/$(GAME)
++	-$(CHGRP) $(GAMEGRP) $(SHELLDIR)/$(GAME)
++	-chmod $(EXEPERM) $(SHELLDIR)/$(GAME)
+ 
+ dofiles-dlb: check-dlb
+ 	( cd dat ; cp nhdat $(DATNODLB) $(GAMEDIR) )
+@@ -238,8 +238,8 @@
+ 	-mkdir -p $(GAMEDIR) $(VARDIR) $(VARDIR)/save
+ 	-rmdir ./-p
+ 	-$(CHOWN) $(GAMEUID) $(GAMEDIR) $(VARDIR) $(VARDIR)/save
+-	$(CHGRP) $(GAMEGRP) $(GAMEDIR) $(VARDIR) $(VARDIR)/save
+-	chmod $(DIRPERM) $(GAMEDIR) $(VARDIR) $(VARDIR)/save
++	-$(CHGRP) $(GAMEGRP) $(GAMEDIR) $(VARDIR) $(VARDIR)/save
++	-chmod $(DIRPERM) $(GAMEDIR) $(VARDIR) $(VARDIR)/save
+ # set up the game files
+ 	( $(MAKE) dofiles )
+ # set up some additional files

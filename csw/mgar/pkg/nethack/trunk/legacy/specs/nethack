@@ -1,0 +1,69 @@
+# vim: ft=perl
+# $Id: nethack,v 1.6 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'nethack';
+$version   = '3.4.3';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.nethack.org/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-343-src.tgz");
+
+@patches   = (['nethack.patch',   "${progname}-${version}", '-p1']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - A single player dungeon exploration game",
+		dependencies => ['CSWcommon'],
+		postinstall  => "nethack.postinstall",
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/dat/license";
+
+$attributes{'/opt/csw/share/nethack/nethack'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/share/nethack'} = ({user => 'root', group => 'nogroup', perm => '1775'});
+$attributes{'/opt/csw/share/nethack/save'} = ({user => 'root', group => 'nogroup', perm => '1775'});
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+export LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}/
+
+(cd sys/unix/ && sh -x ./setup.sh)
+#./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake PREFIX=${buildroot}/opt/csw install
+cd doc
+mkdir -p ${buildroot}/opt/csw/share/man/man6
+gmake PREFIX=${buildroot}/opt/csw MANDIR=${buildroot}/opt/csw/share/man/man6
+gmake PREFIX=${buildroot}/opt/csw MANDIR=${buildroot}/opt/csw/share/man/man6 Guidebook.ps
+gmake PREFIX=${buildroot}/opt/csw MANDIR=${buildroot}/opt/csw/share/man/man6 Guidebook.dvi
+gmake PREFIX=${buildroot}/opt/csw MANDIR=${buildroot}/opt/csw/share/man/man6 distrib
+gmake PREFIX=${buildroot}/opt/csw MANDIR=${buildroot}/opt/csw/share/man/man6 manpages
+mkdir -p ${buildroot}/opt/csw/share/doc/nethack
+cp Guidebook ${buildroot}/opt/csw/share/doc/nethack/
+cp Guidebook.ps ${buildroot}/opt/csw/share/doc/nethack/
+cp Guidebook.dvi ${buildroot}/opt/csw/share/doc/nethack/
+cp *.txt ${buildroot}/opt/csw/share/doc/nethack/
+chmod g-w ${buildroot}/opt/csw/share/nethack/*
+rm ${buildroot}/opt/csw/share/nethack/{logfile,perm,record}
+sed -e 's|${buildroot}||' ${buildroot}/opt/csw/bin/nethack >${buildroot}/opt/csw/bin/nethack.new
+mv ${buildroot}/opt/csw/bin/nethack.new ${buildroot}/opt/csw/bin/nethack
+chmod 755 ${buildroot}/opt/csw/bin/nethack
+#mkdir -p ${buildroot}/opt/csw/lib/X11/app-defaults
+#mv ${buildroot}/opt/csw/share/nethack/NetHack.ad ${buildroot}/opt/csw/lib/X11/app-defaults/NetHack
+EOF

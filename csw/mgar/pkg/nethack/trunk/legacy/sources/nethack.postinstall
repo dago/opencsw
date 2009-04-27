@@ -1,0 +1,11 @@
+#!/bin/sh
+#$Id: nethack.postinstall,v 1.3 2004/03/22 00:33:49 simigern Exp $
+
+for statefile in logfile perm record; do
+	if [ ! -f "${BASEDIR}/opt/csw/share/nethack/${statefile}" ]; then
+		echo "Creating ${statefile}"
+		touch "${BASEDIR}/opt/csw/share/nethack/${statefile}"
+		chgrp nogroup "${BASEDIR}/opt/csw/share/nethack/${statefile}"
+		chmod 664 "${BASEDIR}/opt/csw/share/nethack/${statefile}"
+	fi
+done
