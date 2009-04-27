@@ -1,0 +1,120 @@
+# vim: ft=perl
+# $Id: synce,v 1.7 2004/03/25 01:01:22 simigern Exp $
+
+$progname  = 'synce';
+$version   = '0.8.9';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://synce.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("synce-dccm-${version}.tar.gz",
+              "synce-librapi2-${version}.tar.gz",
+              "synce-libsynce-${version}.tar.gz",
+              "synce-serial-${version}.tar.gz",
+              "libmimedir-0.3.tar.gz",
+              "unshield-0.2.tar.gz",
+              "synce-rra-${version}.tar.gz",
+              "synce-multisync_plugin-${version}.tar.gz",
+	      "multisync-0.81.tar.bz2");
+
+#@patches   = (['synce-rra-0.8.9',   "${progname}-rra-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - Windows CE and Pocket PC connectivity for Unix",
+		dependencies => ['CSWcommon','CSWmultisync'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-dccm-${version}/LICENSE";
+
+$build     = <<"EOF";
+export CC=gcc
+export CXX=g++
+unset CFLAGS
+export PATH="/opt/csw/gcc3/bin:${sunwspropath}:/opt/csw/bin:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+export CFLAGS="\$CFLAGS -I/opt/csw/gcc3/include -I/opt/csw/include -I${buildroot}/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/gcc3/include -I/opt/csw/include -I${buildroot}/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/gcc3/lib -L/opt/csw/gcc3/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib -lsocket -lnsl'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/gcc3/lib -L/opt/csw/gcc3/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib -lsocket -lnsl'
+
+#libsynce
+cd ${builddir}/synce-libsynce-${version}
+sed -e 's|-Werror||' lib/Makefile.in >lib/Makefile.innew
+mv lib/Makefile.innew lib/Makefile.in
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#librapi2
+cd ${builddir}/synce-librapi2-${version}
+for i in src src/support tests tools; do
+	sed -e 's|-Werror||' \${i}/Makefile.in >\${i}/Makefile.innew
+	mv \${i}/Makefile.innew \${i}/Makefile.in
+done
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#dccm
+cd ${builddir}/synce-dccm-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+sed -e 's|LOG_PERROR|LOG_CONS|' src/dccm.c >src/dccm.cnew
+mv src/dccm.cnew src/dccm.c
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#serial
+cd ${builddir}/synce-serial-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#libmimedir
+cd ${builddir}/libmimedir-0.3
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake prefix=${buildroot}/opt/csw install || exit 1
+
+export CFLAGS="\$CFLAGS -D__EXTENSIONS__"
+#unshield
+cd ${builddir}/unshield-0.2
+for i in src lib; do
+	sed -e 's|-Werror||' \${i}/Makefile.in >\${i}/Makefile.innew
+	mv \${i}/Makefile.innew \${i}/Makefile.in
+done
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+echo '#define MIN(x,y)           (((x) < (y)) ? (x) : (y))' >>lib/internal.h
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#rra
+cd ${builddir}/synce-rra-${version}
+for i in src lib; do
+	sed -e 's|-Werror||' \${i}/Makefile.in >\${i}/Makefile.innew
+	mv \${i}/Makefile.innew \${i}/Makefile.in
+done
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+echo '#include <sys/types.h>' >stdint.h
+echo '#define MIN(x,y)           (((x) < (y)) ? (x) : (y))' >>stdint.h
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+export CFLAGS="\$CFLAGS -I${buildroot}/opt/csw/include/rra"
+export CPPFLAGS="\$CPPFLAGS -I${buildroot}/opt/csw/include/rra"
+
+#multisync_plugin
+cd ${builddir}/synce-multisync_plugin-${version}
+for i in src; do
+	sed -e 's|-Werror||' \${i}/Makefile.in >\${i}/Makefile.innew
+	mv \${i}/Makefile.innew \${i}/Makefile.in
+done
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-multisync-source=${builddir}/multisync-0.81 --with-multisync-include=${builddir}/multisync-0.81/include
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+
+EOF
