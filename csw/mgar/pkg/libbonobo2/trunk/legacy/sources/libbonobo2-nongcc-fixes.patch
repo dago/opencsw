@@ -1,0 +1,11 @@
+--- bonobo/bonobo-app-client.c.orig	2004-12-05 17:12:36.268428000 -0500
++++ bonobo/bonobo-app-client.c	2004-12-05 17:13:39.028375000 -0500
+@@ -266,7 +266,7 @@
+ }
+ 
+ 
+-static __inline__ GType
++static GType
+ _typecode_to_gtype (CORBA_TypeCode tc)
+ {
+ 	static GHashTable *hash = NULL;
