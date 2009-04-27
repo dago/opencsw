@@ -1,0 +1,269 @@
+--- src/word97_helper.cpp.orig	2004-12-11 06:59:50.444882000 -0500
++++ src/word97_helper.cpp	2004-12-11 07:07:11.099394000 -0500
+@@ -358,8 +358,187 @@
+ // Apply a <T> grpprl of a given size ("count" bytes long)
+ // This template function might be a bit sick, but it helps to
+ // avoid duplicated code, so what ;)
+-template<class T, S16 ( T::* applySPRM ) ( const U8*, const Style*, OLEStreamReader*, WordVersion )>
+-void apply( T* const t, const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
++//"word97_helper.cpp", line 571: Error: Could not find a match for wvWare::Word97::SPRM::apply<wvWare::Word97::SPRM::T, wvWare::Word97::SPRM::applySPRM>(wvWare::Word97::PAP*, const unsigned char*, unsigned short, const wvWare::Style*, wvWare::OLEStreamReader*, wvWare::WordVersion).
++
++//template<class T, S16 ( T::* applySPRM ) ( const U8*, const Style*, OLEStreamReader*, WordVersion )>
++//void apply( T* const t, const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
++void apply( wvWare::Word97::PAP* const t, const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
++{
++    if ( !grpprl )
++        return;
++
++    // We are using an integer here, that we can detect situations where
++    // we read beyond the limit due to a buggy spec/impl.
++    // The plain U16 would overflow and we'd be trapped in a loop.
++    int safeCount = count;
++
++    // walk through the grpprl, applying one sprm after the other
++    while ( safeCount > 1 ) {
++        //S16 result = ( t->*applySPRM )( grpprl, style, dataStream, version );
++        S16 result = ( t->applyPAPSPRM )( grpprl, style, dataStream, version );
++        if ( result == -1 ) {
++            U16 sprm;
++            if ( version == Word8 ) {
++                sprm = readU16( grpprl );
++                grpprl += 2;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (0x" << std::hex << sprm << std::dec << ")... skipping" << std::endl;
++#endif
++            }
++            else {
++                sprm = *grpprl++;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (" << sprm << ")... skipping" << std::endl;
++#endif
++            }
++
++            U16 len = determineParameterLength( sprm, grpprl, version );
++            grpprl += len;
++            safeCount -= len + ( version == Word8 ? 2 : 1 );
++        }
++        else {
++            grpprl += result;
++            safeCount -= result;
++        }
++    }
++    if ( safeCount < 0 )
++        wvlog << "Warning: We read past the end of the grpprl, buggy spec?" << std::endl;
++}
++
++//    SPRM::apply<CHP, &CHP::applyCHPSPRM>( this, grpprl, count, paragraphStyle, dataStream, version );
++void apply( wvWare::Word97::CHP* const t, const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
++{
++    if ( !grpprl )
++        return;
++
++    // We are using an integer here, that we can detect situations where
++    // we read beyond the limit due to a buggy spec/impl.
++    // The plain U16 would overflow and we'd be trapped in a loop.
++    int safeCount = count;
++
++    // walk through the grpprl, applying one sprm after the other
++    while ( safeCount > 1 ) {
++        //S16 result = ( t->*applySPRM )( grpprl, style, dataStream, version );
++        S16 result = ( t->applyCHPSPRM)( grpprl, style, dataStream, version );
++        if ( result == -1 ) {
++            U16 sprm;
++            if ( version == Word8 ) {
++                sprm = readU16( grpprl );
++                grpprl += 2;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (0x" << std::hex << sprm << std::dec << ")... skipping" << std::endl;
++#endif
++            }
++            else {
++                sprm = *grpprl++;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (" << sprm << ")... skipping" << std::endl;
++#endif
++            }
++
++            U16 len = determineParameterLength( sprm, grpprl, version );
++            grpprl += len;
++            safeCount -= len + ( version == Word8 ? 2 : 1 );
++        }
++        else {
++            grpprl += result;
++            safeCount -= result;
++        }
++    }
++    if ( safeCount < 0 )
++        wvlog << "Warning: We read past the end of the grpprl, buggy spec?" << std::endl;
++}
++
++//    SPRM::apply<PICF, &PICF::applyPICFSPRM>( this, grpprl, count, style, dataStream, version );
++void apply( wvWare::Word97::PICF* const t, const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
++{
++    if ( !grpprl )
++        return;
++
++    // We are using an integer here, that we can detect situations where
++    // we read beyond the limit due to a buggy spec/impl.
++    // The plain U16 would overflow and we'd be trapped in a loop.
++    int safeCount = count;
++
++    // walk through the grpprl, applying one sprm after the other
++    while ( safeCount > 1 ) {
++        //S16 result = ( t->*applySPRM )( grpprl, style, dataStream, version );
++        S16 result = ( t->applyPICFSPRM)( grpprl, style, dataStream, version );
++        if ( result == -1 ) {
++            U16 sprm;
++            if ( version == Word8 ) {
++                sprm = readU16( grpprl );
++                grpprl += 2;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (0x" << std::hex << sprm << std::dec << ")... skipping" << std::endl;
++#endif
++            }
++            else {
++                sprm = *grpprl++;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (" << sprm << ")... skipping" << std::endl;
++#endif
++            }
++
++            U16 len = determineParameterLength( sprm, grpprl, version );
++            grpprl += len;
++            safeCount -= len + ( version == Word8 ? 2 : 1 );
++        }
++        else {
++            grpprl += result;
++            safeCount -= result;
++        }
++    }
++    if ( safeCount < 0 )
++        wvlog << "Warning: We read past the end of the grpprl, buggy spec?" << std::endl;
++}
++
++//    SPRM::apply<SEP, &SEP::applySEPSPRM>( this, grpprl, count, style, dataStream, version );
++void apply( wvWare::Word97::SEP* const t, const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
++{
++    if ( !grpprl )
++        return;
++
++    // We are using an integer here, that we can detect situations where
++    // we read beyond the limit due to a buggy spec/impl.
++    // The plain U16 would overflow and we'd be trapped in a loop.
++    int safeCount = count;
++
++    // walk through the grpprl, applying one sprm after the other
++    while ( safeCount > 1 ) {
++        //S16 result = ( t->*applySPRM )( grpprl, style, dataStream, version );
++        S16 result = ( t->applySEPSPRM)( grpprl, style, dataStream, version );
++        if ( result == -1 ) {
++            U16 sprm;
++            if ( version == Word8 ) {
++                sprm = readU16( grpprl );
++                grpprl += 2;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (0x" << std::hex << sprm << std::dec << ")... skipping" << std::endl;
++#endif
++            }
++            else {
++                sprm = *grpprl++;
++#ifdef WV2_DEBUG_SPRMS
++                wvlog << "Seems like that's a different SPRM (" << sprm << ")... skipping" << std::endl;
++#endif
++            }
++
++            U16 len = determineParameterLength( sprm, grpprl, version );
++            grpprl += len;
++            safeCount -= len + ( version == Word8 ? 2 : 1 );
++        }
++        else {
++            grpprl += result;
++            safeCount -= result;
++        }
++    }
++    if ( safeCount < 0 )
++        wvlog << "Warning: We read past the end of the grpprl, buggy spec?" << std::endl;
++}
++
++//    SPRM::apply<TAP, &TAP::applyTAPSPRM>( this, grpprl, count, style, dataStream, version );
++void apply( wvWare::Word97::TAP* const t, const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
+ {
+     if ( !grpprl )
+         return;
+@@ -371,7 +550,8 @@
+ 
+     // walk through the grpprl, applying one sprm after the other
+     while ( safeCount > 1 ) {
+-        S16 result = ( t->*applySPRM )( grpprl, style, dataStream, version );
++        //S16 result = ( t->*applySPRM )( grpprl, style, dataStream, version );
++        S16 result = ( t->applyTAPSPRM)( grpprl, style, dataStream, version );
+         if ( result == -1 ) {
+             U16 sprm;
+             if ( version == Word8 ) {
+@@ -568,7 +748,7 @@
+ void PAP::apply( const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
+ {
+     // A PAP grpprl might contain TAP sprms, we just skip them
+-    SPRM::apply<PAP, &PAP::applyPAPSPRM>( this, grpprl, count, style, dataStream, version );
++    SPRM::apply( this, grpprl, count, style, dataStream, version );
+ }
+ 
+ // Helper methods for the more complex sprms
+@@ -999,7 +1179,7 @@
+ void CHP::apply( const U8* grpprl, U16 count, const Style* paragraphStyle, OLEStreamReader* dataStream, WordVersion version )
+ {
+     // There should be only CHP sprms in the grpprl we get
+-    SPRM::apply<CHP, &CHP::applyCHPSPRM>( this, grpprl, count, paragraphStyle, dataStream, version );
++    SPRM::apply( this, grpprl, count, paragraphStyle, dataStream, version );
+ }
+ 
+ void CHP::applyExceptions( const U8* exceptions, const Style* paragraphStyle, OLEStreamReader* dataStream, WordVersion version )
+@@ -1457,7 +1637,7 @@
+ void PICF::apply( const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
+ {
+     // There should be only PICF sprms in the grpprl we get
+-    SPRM::apply<PICF, &PICF::applyPICFSPRM>( this, grpprl, count, style, dataStream, version );
++    SPRM::apply( this, grpprl, count, style, dataStream, version );
+ }
+ 
+ void PICF::applyExceptions(const U8* /*exceptions*/, const StyleSheet* /*stylesheet*/, OLEStreamReader* /*dataStream*/, WordVersion /*version*/ )
+@@ -1520,7 +1700,7 @@
+ void SEP::apply( const U8* grpprl, U16 count, const Style* style, OLEStreamReader* dataStream, WordVersion version )
+ {
+     // There should be only SEP sprms in the grpprl we get
+-    SPRM::apply<SEP, &SEP::applySEPSPRM>( this, grpprl, count, style, dataStream, version );
++    SPRM::apply( this, grpprl, count, style, dataStream, version );
+ }
+ 
+ void SEP::applyExceptions( const U8* exceptions, const StyleSheet* /*stylesheet*/, OLEStreamReader* dataStream, WordVersion version )
+@@ -1733,7 +1913,7 @@
+ {
+     // There should be mostly TAP sprms in the grpprl we get, and we
+     // have to ignore the remaining PAP sprms, just what the template does
+-    SPRM::apply<TAP, &TAP::applyTAPSPRM>( this, grpprl, count, style, dataStream, version );
++    SPRM::apply( this, grpprl, count, style, dataStream, version );
+ }
+ 
+ void TAP::applyExceptions( const U8* /*exceptions*/, const StyleSheet* /*stylesheet*/, OLEStreamReader* /*dataStream*/, WordVersion /*version*/ )
+--- src/parser9x.h.orig	2004-12-11 07:08:37.949425000 -0500
++++ src/parser9x.h	2004-12-11 07:10:50.309395000 -0500
+@@ -158,7 +158,7 @@
+         // on the parsed content. These variables have to be saved and restored
+         // to make the parsing code reentrant.
+ 
+-    private:
++    public:
+         // Don't copy or assign us
+         Parser9x( const Parser9x& rhs );
+         Parser9x& operator=( const Parser9x& rhs );
+--- src/headers95.cpp.orig	2004-12-11 07:11:55.089459000 -0500
++++ src/headers95.cpp	2004-12-11 07:12:06.869394000 -0500
+@@ -31,7 +31,7 @@
+ {
+     if ( m_grpfIhdt.size() <= static_cast<std::vector<U32>::size_type>( sectionNumber ) ) {
+         wvlog << "Warning: You are trying to access a section that has not been registered yet!" << std::endl;
+-        return std::make_pair( 0, 0 );
++        return std::make_pair( (unsigned)0, (unsigned)0 );
+     }
+ 
+     // The offset to the begin of the section + offset due to mask/grpfIhdt

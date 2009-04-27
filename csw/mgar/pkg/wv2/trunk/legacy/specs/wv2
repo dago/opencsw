@@ -1,0 +1,42 @@
+# vim: ft=perl
+# $Id: wv2,v 1.5 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'wv2';
+$version   = '0.2.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://wvware.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['wv2-nongcc-fixes.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - a library for accessing Microsoft Word documents",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING.LIB";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-libiconv=/opt/csw
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+EOF
