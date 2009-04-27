@@ -1,0 +1,44 @@
+# vim: ft=perl
+# $Id: desktop-file-utils,v 1.6 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'desktop-file-utils';
+$version   = '0.10';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://freedesktop.org/wiki/Software_2fdesktop_2dfile_2dutils packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "dtopfutils",
+		filename     => "desktopfileutils",
+		name         => "desktopfileutils - utilities for working with desktop entries and .menu files",
+		dependencies => ['CSWcommon'],
+		postinstall  => 'desktop-file-utils.postinstall',
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+mkdir -p ${buildroot}/opt/csw/share/applications
+EOF

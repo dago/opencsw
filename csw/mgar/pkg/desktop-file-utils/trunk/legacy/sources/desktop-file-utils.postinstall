@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo 'CSW update-desktop-database running...'
+
+umask 0022
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+chroot "${PKG_ROOT_DIR}" /opt/csw/bin/update-desktop-database /opt/csw/share/applications
+
+/bin/true
