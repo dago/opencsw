@@ -1,0 +1,52 @@
+--- libsoup/soup-dns.c.orig	Sun Oct 17 14:46:06 2004
++++ libsoup/soup-dns.c	Sun Oct 17 14:57:30 2004
+@@ -199,7 +199,8 @@
+ #elif defined(HAVE_GETHOSTBYNAME_R_SOLARIS)
+ 	{
+ 		size_t len;
+-		int herr, res;
++		int herr;
++		struct hostent *res;
+ 
+ 		len = 1024;
+ 		buf = g_new (char, len);
+@@ -208,12 +209,12 @@
+ 					       &result_buf,
+ 					       buf,
+ 					       len,
+-					       &herr)) == ERANGE) {
++					       &herr)) == NULL && herr == ERANGE) {
+ 			len *= 2;
+ 			buf = g_renew (char, buf, len);
+ 		}
+ 
+-		if (res)
++		if (res == NULL )
+ 			result = NULL;
+ 	}
+ #elif defined(HAVE_GETHOSTBYNAME_R_HPUX)
+@@ -286,7 +287,8 @@
+ #elif defined(HAVE_GETHOSTBYNAME_R_SOLARIS)
+ 	{
+ 		size_t len;
+-		int herr, res;
++		int herr;
++		struct hostent *res;
+ 
+ 		len = 1024;
+ 		buf = g_new (char, len);
+@@ -297,12 +299,12 @@
+ 					       &result_buf,
+ 					       buf,
+ 					       len,
+-					       &herr)) == ERANGE) {
++					       &herr)) == NULL && herr == ERANGE) {
+ 			len *= 2;
+ 			buf = g_renew (char, buf, len);
+ 		}
+ 
+-		if (res)
++		if (res == NULL)
+ 			result = NULL;
+ 	}
+ #elif defined(HAVE_GETHOSTBYNAME_R_HPUX)
