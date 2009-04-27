@@ -1,0 +1,66 @@
+# vim: ft=perl
+# $Id: control-center,v 1.12 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'control-center';
+$version   = '2.8.1';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['control-center.quiet.patch',   "${progname}-${version}", '-p0'],
+              ['xkbrules.h.patch', "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "controlcenter",
+		filename     => "control_center",
+		name         => "control_center - The GNOME Control Center for GNOME 2",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		postinstall  => 'gconf-schema-update.postinstall',
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib/gstreamer-0.8 -L/opt/csw/lib/gstreamer-0.8 -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-lfontconfig -L${buildroot}/opt/csw/lib -R/opt/csw/lib/gstreamer-0.8 -L/opt/csw/lib/gstreamer-0.8 -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+
+sed -e 's|-Wall -Werror||' libkbdraw/Makefile.in >libkbdraw/Makefile.innew
+mv libkbdraw/Makefile.innew libkbdraw/Makefile.in
+
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info || exit 1
+
+#tmp remove fuckup
+rm intltool-{extract,merge,update}
+ln -s /opt/csw/bin/intltool-{extract,merge,update} .
+
+gmake || exit 1
+gmake DESTDIR=${buildroot} GCONF_SCHEMA_CONFIG_SOURCE=xml::${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults install || exit 1
+
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+#remove mess from libtool-archives
+for i in ${buildroot}/opt/csw/lib/{*.la,window-manager-settings/*.la,gnome-vfs-2.0/modules/*.la,bonobo/*.la}; do
+        if [ -f "\${i}" ]; then
+                sed -e "s|[^ ]*${buildroot}[^ ]* *||g" "\${i}" >"\${i}.newbuild" && mv "\${i}.newbuild" "\${i}"
+        fi
+done
+
+EOF

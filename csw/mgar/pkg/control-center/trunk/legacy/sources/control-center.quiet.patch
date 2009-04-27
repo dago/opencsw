@@ -1,0 +1,10 @@
+--- gnome-settings-daemon/gnome-settings-keyboard-xkb.c.orig	2004-04-10 11:16:52.339997000 -0400
++++ gnome-settings-daemon/gnome-settings-keyboard-xkb.c	2004-04-10 11:17:04.819995000 -0400
+@@ -51,6 +51,7 @@
+ static void
+ activation_error (void)
+ {
++	return;
+ 	char *vendor = ServerVendor (GDK_DISPLAY ());
+ 	int release = VendorRelease (GDK_DISPLAY ());
+ 	gboolean badXFree430Release = (!strcmp (vendor,
