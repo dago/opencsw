@@ -1,0 +1,61 @@
+# vim: ft=perl
+# $Id: libgnomeui,v 1.16 2005/11/19 11:42:55 simigern Exp $
+
+$progname  = 'libgnomeui';
+$version   = '2.12.0';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/libgnomeui/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - The main GNOME 2 UI library",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+
+		});
+
+$copyright = "${progname}-${version}/COPYING.LIB";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+gmake || exit 1
+touch doc/reference/html/index.sgml
+gmake DESTDIR=${buildroot} install
+
+#remove mess from libtool-archives
+for i in ${buildroot}/opt/csw/lib/{*.la,lib/libglade/2.0/*.la}; do
+	if [ -f "\${i}" ]; then
+		sed -e "s|[^ ]*${buildroot}[^ ]* *||g" "\${i}" >"\${i}.newbuild" && mv "\${i}.newbuild" "\${i}"
+	fi
+done
+
+#We don't want static libs says Phil
+rm -f ${buildroot}/opt/csw/lib/libgnomeui-2.a
+rm -f ${buildroot}/opt/csw/lib/gtk-2.0/2.4.0/filesystems/libgnome-vfs.a
+rm -f ${buildroot}/opt/csw/lib/libglade/2.0/libgnome.a
+
+EOF
