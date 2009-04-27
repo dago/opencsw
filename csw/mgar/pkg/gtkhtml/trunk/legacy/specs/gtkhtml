@@ -1,0 +1,55 @@
+# vim: ft=perl
+# $Id: gtkhtml,v 1.5 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'gtkhtml';
+$version   = '3.0.10';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/gtkhtml/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['orbit-idl-2.fix.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - An HTML rendering/editing library",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export CPP='/usr/lib/cpp'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig
+
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+
+#Irks, fix broken idl
+#chmod 755 ${builddir}/${progname}-${version}/ugly-fix/orbit-idl-2
+#gsed -e 's|^ORBIT_IDL=".*\$|ORBIT_IDL="${builddir}/${progname}-${version}/ugly-fix/orbit-idl-2"|' configure >configure.tmp.\$\$
+#mv configure.tmp.\$\$ configure
+#chmod 755 configure
+
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+#export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+EOF

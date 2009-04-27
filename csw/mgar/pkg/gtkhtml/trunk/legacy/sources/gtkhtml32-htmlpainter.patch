@@ -1,0 +1,11 @@
+--- src/htmlpainter.c.orig	2004-09-27 06:44:48.732978000 -0400
++++ src/htmlpainter.c	2004-09-27 06:45:14.132915000 -0400
+@@ -663,7 +663,7 @@
+ void
+ html_painter_set_widget (HTMLPainter *painter, GtkWidget *widget)
+ {
+-	return 	(* HP_CLASS (painter)->set_widget) (painter, widget);
++	(* HP_CLASS (painter)->set_widget) (painter, widget);
+ }
+ 
+ HTMLTextPangoInfo *

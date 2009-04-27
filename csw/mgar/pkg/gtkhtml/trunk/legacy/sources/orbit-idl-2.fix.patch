@@ -1,0 +1,18 @@
+--- /dev/null	2004-03-09 03:38:48.000000000 -0500
++++ ugly-fix/orbit-idl-2	2004-03-09 03:22:57.804823000 -0500
+@@ -0,0 +1,15 @@
++#!/bin/sh
++#This is an ugly hack!
++
++cat >cc <<__EOCC__
++#!/bin/sh
++
++shift
++/usr/ccs/lib/cpp "\$@"
++__EOCC__
++
++chmod 755 cc
++ln -s /opt/forte8/SUNWspro/bin/indent .
++PATH=".:/opt/forte8/bin/SUNWspro:${PATH}"
++export PATH
++/opt/csw/bin/orbit-idl-2 "$@"
