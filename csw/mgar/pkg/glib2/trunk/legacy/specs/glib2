@@ -1,0 +1,46 @@
+# vim: ft=perl
+# $Id: glib2,v 1.9 2005/12/15 15:13:49 simigern Exp $
+
+$progname  = 'glib';
+$version   = '2.8.3';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.gtk.org/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['glib-xdg-data-dirs.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "glib2",
+		filename     => "glib2",
+		name         => "glib2 - Low-level core library that forms the basis of GTK+",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		postinstall  => "gtk2.postinstall"
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include -DANSICPP"
+export CPPFLAGS='-I/opt/csw/include -DANSICPP'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-libiconv=gnu
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+/opt/csw/bin/gsed -i -e 's|/opt/csw/bin/perl|/usr/bin/perl|' ${buildroot}/opt/csw/bin/glib-mkenums
+/opt/csw/bin/gsed -i -e 's|^\\(Cflags.*\\)-mt|\\1-D_REENTRANT|' -e 's|^\\(Libs.*\\)-mt|\\1-lthread|' ${buildroot}/opt/csw/lib/pkgconfig/gthread-2.0.pc 
+rm -f ${buildroot}/opt/csw/lib/charset.alias
+EOF
