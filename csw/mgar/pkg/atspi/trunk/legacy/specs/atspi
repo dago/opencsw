@@ -1,0 +1,42 @@
+# vim: ft=perl
+# $Id: atspi,v 1.3 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'at-spi';
+$version   = '1.6.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/at-spi packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "atspi",
+		filename     => "atspi",
+		name         => "atspi - An Assistive Technology Service Provider Interface",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include -I/usr/openwin/include"
+export CPPFLAGS='-I/opt/csw/include -I/usr/openwin/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib -L/usr/openwin/lib -R/usr/openwin/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+EOF
