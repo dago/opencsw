@@ -1,0 +1,44 @@
+# vim: ft=perl
+# $Id: tla-tools,v 1.2 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'tla-tools';
+$version   = '0.31';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://wiki.gnuarch.org/moin.cgi/tla_2dtools packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['gpl-copying.patch',   "${progname}-${version}", '-p0'],
+              ['tla-tools-shell.patch',"${progname}-${version}",'-p1']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => 'tla_tools',
+		name         => "tla_tools - Helpful utilities for use with tla",
+		dependencies => ['CSWcommon','CSWgsed'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw
+gmake
+mkdir -p ${buildroot}/opt/csw/bin
+gmake prefix=${buildroot}/opt/csw install
+EOF
