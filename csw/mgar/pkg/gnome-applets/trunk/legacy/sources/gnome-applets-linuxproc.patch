@@ -1,0 +1,13 @@
+--- multiload/linux-proc.c.orig	2004-04-10 15:06:07.657644000 -0400
++++ multiload/linux-proc.c	2004-04-10 15:07:34.027579000 -0400
+@@ -93,8 +93,8 @@
+ GetPage (int Maximum, int data [3], LoadGraph *g)
+ {
+     static int max = 100; /* guess at maximum page rate (= in + out) */
+-    static u_int64_t lastin = 0;
+-    static u_int64_t lastout = 0;
++    static uint64_t lastin = 0;
++    static uint64_t lastout = 0;
+     int in, out, idle;
+ 
+     glibtop_swap swap;

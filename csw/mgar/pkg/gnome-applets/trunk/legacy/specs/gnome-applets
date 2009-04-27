@@ -1,0 +1,71 @@
+# vim: ft=perl
+# $Id: gnome-applets,v 1.10 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'gnome-applets';
+$version   = '2.8.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/gnome-applets/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['gnome-applets-linuxproc.patch',   "${progname}-${version}", '-p0'],
+              ['gnome-applets-mixer.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "gnomeapplets",
+		filename     => "gnome_applets",
+		name         => "gnome_applets - Various applets for GNOME 2 panel",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		postinstall  => 'gconf-schema-update.postinstall',
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+#export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib/gstreamer-0.8 -L/opt/csw/lib/gstreamer-0.8 -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+#export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib/gstreamer-0.8 -L/opt/csw/lib/gstreamer-0.8 -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+
+mkdir ${builddir}/mypath
+ln -s /opt/csw/bin/gsed ${builddir}/mypath/sed
+
+cd ${progname}-${version}
+export PATH="${builddir}/mypath:${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+
+#Defuck up
+sed -e 's|-Wall\$||' multiload/Makefile.in >multiload/Makefile.innew
+mv multiload/Makefile.innew multiload/Makefile.in
+
+mv configure configure.preCSW
+gsed -e 's|sys/soundcard\.h|sys/soundcard.hdonotest|g' configure.preCSW >configure
+chmod 755 configure
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --disable-gstreamer || exit 1
+
+#tmp remove fuckup
+rm intltool-{extract,merge,update}
+ln -s /opt/csw/bin/intltool-{extract,merge,update} .
+
+gmake || exit 1
+gmake DESTDIR=${buildroot} GCONF_SCHEMA_CONFIG_SOURCE=xml::${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults install
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+#sed -e 's|<<|<' ${buildroot}/opt/csw/share/gweather/Locations.xml >${buildroot}/opt/csw/share/gweather/Locations.xml.cswtmp
+#mv ${buildroot}/opt/csw/share/gweather/Locations.xml.cswtmp ${buildroot}/opt/csw/share/gweather/Locations.xml
+
+EOF
