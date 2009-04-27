@@ -1,0 +1,19 @@
+? aclocal.m4
+? link.hpux
+? rdpsnd_libao.c.sic
+Index: keymaps/common
+===================================================================
+RCS file: /cvsroot/rdesktop/rdesktop/keymaps/common,v
+retrieving revision 1.15
+diff -u -r1.15 common
+--- keymaps/common	8 Dec 2003 12:01:25 -0000	1.15
++++ keymaps/common	25 Mar 2005 11:12:47 -0000
+@@ -79,6 +79,8 @@
+ F10 0x44 localstate
+ F11 0x57 localstate
+ F12 0x58 localstate
++SunF36 0x57 localstate
++SunF37 0x58 localstate
+ 
+ # Printscreen, Scrollock and Pause
+ # Printscreen really requires four scancodes (0xe0, 0x2a, 0xe0, 0x37),

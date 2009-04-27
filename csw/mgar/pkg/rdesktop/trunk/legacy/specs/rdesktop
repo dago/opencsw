@@ -1,0 +1,44 @@
+# vim: ft=perl
+# $Id: rdesktop,v 1.6 2006/09/13 17:20:00 simigern Exp $
+
+$progname  = 'rdesktop';
+$version   = '1.5.0';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.rdesktop.org/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+@patches   = (['rdesktop-morekeys.diff',"${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - RDP client for Windows NT/2000/2003/XP Terminal Server",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-sound=sun --with-ipv6 --with-openssl=/opt/csw
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+mkdir -p ${buildroot}/opt/csw/share/doc/rdesktop
+cp doc/* ${buildroot}/opt/csw/share/doc/rdesktop/
+EOF

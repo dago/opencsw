@@ -1,0 +1,15 @@
+Index: xkeymap.c
+===================================================================
+RCS file: /cvsroot/rdesktop/rdesktop/xkeymap.c,v
+retrieving revision 1.67
+diff -u -r1.67 xkeymap.c
+--- xkeymap.c	6 Mar 2005 21:11:17 -0000	1.67
++++ xkeymap.c	25 Mar 2005 15:00:59 -0000
+@@ -326,6 +326,7 @@
+ 			break;
+ 
+ 		case XK_Pause:
++		case XK_F21:	/* Pause on SUN Keyboard */
+ 			/* According to MS Keyboard Scan Code
+ 			   Specification, pressing Pause should result
+ 			   in E1 1D 45 E1 9D C5. I'm not exactly sure
