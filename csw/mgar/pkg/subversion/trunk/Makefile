@@ -145,7 +145,7 @@ post-configure-modulated:
 	@( if [ "`uname -p`" = "sparc" ]; then \
     	perl -i -pe 's|-xarch=v8|-mcpu=v8|' $(WORKSRC)/*.gcc; \
 	else \
-	    perl -i -pe 's|-xarch=386|-m32 -march=i386|' $(WORKSRC)/*.gcc; \
+	    perl -i -pe 's|-xarch=386|-march=i386|' $(WORKSRC)/*.gcc; \
 	fi )
 	$(DONADA)
 
@@ -190,13 +190,11 @@ svn-ruby:
 	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-swig-rb
 	$(DONADA)
 
-##  The test can only be run "after" you have it installed.
 svn-java:
 	@echo " ==> Building Java bindings"
 	@touch $(WORKSRC)/subversion/bindings/javahl/native/*.c
-	@$(BUILD_ENV)   gmake -f Makefile.gcc -C $(WORKSRC) javahl
-	#@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) check-javahl
-	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-javahl
+	$(BUILD_ENV)   gmake -C $(WORKSRC) javahl;
+	$(INSTALL_ENV) gmake -C $(WORKSRC) install-javahl;
 	$(DONADA)
 
 
