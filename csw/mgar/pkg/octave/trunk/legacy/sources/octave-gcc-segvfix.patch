@@ -1,0 +1,19 @@
+--- octave-3.0.0/src/oct-hist.cc.orig	2007-12-23 13:50:54.494837000 -0500
++++ octave-3.0.0/src/oct-hist.cc	2007-12-23 13:51:35.309798000 -0500
+@@ -76,6 +76,16 @@
+ // TRUE means input is coming from temporary history file.
+ bool input_from_tmp_history_file = false;
+ 
++char file_ops::dir_sep_char = '/'; 
++std::string file_ops::dir_sep_str ("/"); 
++std::string file_ops::dir_sep_chars (file_ops::dir_sep_str); 
++
++bool 
++file_ops::is_dir_sep (char c) 
++{ 
++	return dir_sep_chars.find (c) != NPOS; 
++} 
++
+ static std::string
+ default_history_file (void)
+ {

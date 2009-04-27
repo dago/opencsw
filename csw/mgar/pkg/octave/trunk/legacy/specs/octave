@@ -1,0 +1,63 @@
+# vim: ft=perl
+# $Id: octave,v 1.11 2007-12-30 00:06:41 simigern Exp $
+
+$progname  = 'octave';
+$version   = '3.0.0';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.octave.org packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['octave-gcc-segvfix.patch',   "${progname}-${version}", '-p1']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - The GNU Octave language for numerical computations",
+		dependencies => ['CSWcommon','CSWgnuplot','CSWgcc3g++rt','CSWgcc3g77rt'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+#This works, but links against sunmath and sunperf...
+#export CC=cc
+#export CXX=CC
+#export F77=f77
+#export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+#if [ "${arch}" = "sparc" ]; then
+#	export CFLAGS='-fast -xarch=v8'
+#else
+#	export CFLAGS='-xO3 -xspace -xarch=386'
+#fi
+#export CFLAGS="\$CFLAGS -I/opt/csw/include"
+#export CPPFLAGS='-I/opt/csw/include'
+#export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+
+export PATH="/opt/csw/gcc3/bin:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+export CFLAGS="-I/opt/csw/include"
+export CPPFLAGS="-I/opt/csw/include"
+export LD_OPTIONS="-R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/lib/octave-${version} -L/opt/csw/lib/octave-${version}"
+export CC=gcc
+export CXX=g++
+export F77=g77
+
+
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-hdf5
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+rm -f ${buildroot}/opt/csw/share/info/dir
+find ${buildroot} -perm -u+x -type f -exec strip {} \\;
+
+for i in faq interpreter liboctave refcard; do
+	mkdir -p ${buildroot}/opt/csw/share/doc/octave/\$i
+	cp doc/\$i/*.pdf doc/\$i/*.html ${buildroot}/opt/csw/share/doc/octave/\$i/ || true
+	test -d doc/\$i/HTML && cp -r doc/\$i/HTML ${buildroot}/opt/csw/share/doc/octave/\$i/HTML
+done
+
+EOF
