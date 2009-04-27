@@ -1,0 +1,12 @@
+#!/bin/sh
+
+umask 0022
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+echo 'Updating gdk-pixbuf.loaders...'
+test -x ${PKG_ROOT_DIR}/opt/csw/bin/gdk-pixbuf-query-loaders && chroot "${PKG_ROOT_DIR}" /opt/csw/bin/gdk-pixbuf-query-loaders >/opt/csw/etc/gtk-2.0/gdk-pixbuf.loaders
+echo 'Updating gtk.immodules...'
+test -x ${PKG_ROOT_DIR}/opt/csw/bin/gtk-query-immodules-2.0 && chroot "${PKG_ROOT_DIR}" /opt/csw/bin/gtk-query-immodules-2.0 >/opt/csw/etc/gtk-2.0/gtk.immodules
+
+/bin/true
