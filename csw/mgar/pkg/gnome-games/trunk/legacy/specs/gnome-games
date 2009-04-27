@@ -1,0 +1,82 @@
+# vim: ft=perl
+# $Id: gnome-games,v 1.11 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'gnome-games';
+$version   = '2.8.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/gnome-games/ packaged for CSW by Michael Gernoth';
+
+#$suffix='.01';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+#@patches   = (['gnome-games-sol.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "gnomegames",
+		filename     => "gnome_games",
+		name         => "gnome_games - Games for GNOME 2",
+		dependencies => ['CSWcommon','CSWguile'],
+		filelist     => [qw(opt)],
+		preinstall  => 'gnome-games.preinstall',
+		postinstall  => 'gconf-schema-update.postinstall',
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$attributes{'/opt/csw/bin/glines'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gnibbles'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gnobots2'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gnome-stones'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gnometris'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gnomine'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gnotravex'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gnotski'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/gtali'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/mahjongg'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+$attributes{'/opt/csw/bin/same-gnome'} = ({user => 'root', group => 'nogroup', perm => '2755'});
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib -L/usr/ucblib -R/usr/ucblib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib -L/usr/ucblib -R/usr/ucblib'
+cd ${progname}-${version}
+export PATH="${builddir}/mypath:${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+mkdir -p ${builddir}/mypath
+ln -s /opt/csw/bin/ggrep ${builddir}/mypath/grep
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-scores-group=nogroup || exit 1
+
+#tmp remove fuckup
+rm intltool-{extract,merge,update}
+ln -s /opt/csw/bin/intltool-{extract,merge,update} .
+
+gmake || exit 1
+
+mkdir -p ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+gmake DESTDIR=${buildroot} GCONF_SCHEMA_CONFIG_SOURCE=xml::${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults install || exit 1
+
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+rm ${buildroot}/opt/csw/var/games/*
+
+#remove mess from libtool-archives
+for i in ${buildroot}/opt/csw/lib/{*.la,gnome-stones/objects/*.la}; do
+        if [ -f "\${i}" ]; then
+                sed -e "s|[^ ]*${buildroot}[^ ]* *||g" "\${i}" >"\${i}.newbuild" && mv "\${i}.newbuild" "\${i}"
+        fi
+done
+
+EOF
