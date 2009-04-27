@@ -1,0 +1,47 @@
+# vim: ft=perl
+# $Id: anjuta,v 1.4 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'anjuta';
+$version   = '1.2.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://anjuta.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+@patches   = (['anjuta.patch',   "${progname}-${version}", '-p1'],
+              ['anjuta.about.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - An Integrated Development Environment for GNOME",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+sed -e 's|-Wall||g' global-tags/Makefile.in >global-tags/Makefile.innew
+mv global-tags/Makefile.innew global-tags/Makefile.in
+sed -e 's| -lutil||g' src/Makefile.in >src/Makefile.innew
+mv src/Makefile.innew src/Makefile.in
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+EOF

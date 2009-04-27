@@ -1,0 +1,12 @@
+--- src/about.c.orig	2004-06-01 17:43:18.083417542 +0200
++++ src/about.c	2004-06-01 17:43:34.231305154 +0200
+@@ -115,7 +115,8 @@
+ 		list = NULL;
+ 		while (!feof(infile) && !ferror (infile))
+ 		{
+-			line = NULL;
++			line = malloc(80);
++			count = 80;
+ 			getline (&line, &count, infile);
+ 			if (feof(infile) || ferror (infile))
+ 				break;
