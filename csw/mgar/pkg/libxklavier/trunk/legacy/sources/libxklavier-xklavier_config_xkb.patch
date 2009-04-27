@@ -1,0 +1,11 @@
+--- libxklavier/xklavier_config_xkb.c.old	2004-06-12 08:07:43.210000000 -0400
++++ libxklavier/xklavier_config_xkb.c	2004-06-12 08:07:53.659999000 -0400
+@@ -32,6 +32,8 @@
+ static XkbComponentNamesRec componentNames;
+ #endif
+ 
++#define XKB_RF_NAMES_PROP_ATOM 4
++
+ static char *locale;
+ 
+ static char* _XklGetRulesSet( void )
