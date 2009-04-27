@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo 'Updating gdk-pixbuf.loaders...'
+
+umask 0022
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+test -x ${PKG_ROOT_DIR}/opt/csw/bin/gdk-pixbuf-query-loaders && chroot "${PKG_ROOT_DIR}" /opt/csw/bin/gdk-pixbuf-query-loaders >/opt/csw/etc/gtk-2.0/gdk-pixbuf.loaders
+
+/bin/true
