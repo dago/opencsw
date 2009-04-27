@@ -1,0 +1,88 @@
+# vim: ft=perl
+# $Id: subversion,v 1.24 2004/08/29 19:52:11 simigern Exp $
+
+$progname  = 'subversion';
+$version   = '1.0.6';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://subversion.tigris.org/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("subversion-${version}.tar.bz2");
+#@patches   = (['rdesktop-sound-configure.patch',   "rdesktop-${version}", '-p0'],
+#              ['rdesktop-1.3.1-backingstore.diff', "rdesktop-${version}", '-p1']);
+
+@patches = (['subversion-utf.patch',"subversion-${version}",'-p0']);
+@packages  = ({
+		pkgname      => 'svn',
+		filename     => $progname,
+		name         => "${progname} - Version Control rethought",
+		dependencies => ['CSWcommon','CSWswig'],
+		filelist     => [qw(
+		opt/csw/bin
+		opt/csw/include
+		opt/csw/lib
+		opt/csw/share
+		)],
+		exclude_dependencies => ['SUNWbash']
+		},
+		{
+		pkgname      => "ap2-svn",
+		filename     => "ap2_${progname}",
+		name         => "ap2_${progname} - Version Control rethought (Apache 2 Module)",
+		dependencies => ['CSWcommon','CSWapache2','CSWsvn'],
+		postinstall  => "ap2_subversion.postinstall",
+		filelist     => [qw(
+		opt/csw/apache2
+		)]
+		#exclude_dependencies => ['CSWexpat']
+		},
+		);
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+set -x
+export CC=cc
+export PATH="${sunwspropath}:/opt/csw/bin:/usr/ccs/bin:/usr/bin:/usr/openwin/bin"
+export LDFLAGS='-R/opt/csw/bdb4/lib -L/opt/csw/bdb4/lib -R/opt/csw/lib/svn -L/opt/csw/lib/svn -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib/svn'
+export LD_OPTIONS='-R/opt/csw/bdb4/lib -L/opt/csw/bdb4/lib -R/opt/csw/lib/svn -L/opt/csw/lib/svn -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib/svn'
+export LD_RUN_PATH='/opt/csw/bdb4/lib:/opt/csw/lib/svn:/opt/csw/lib'
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8 -I${builddir}/svninc -I/opt/csw/bdb4/include -I/opt/csw/include'
+else
+	export CFLAGS='-fast -xarch=386 -I${builddir}/svninc -I/opt/csw/bdb4/include -I/opt/csw/include'
+fi
+export CPPFLAGS="\${CFLAGS}"
+export PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig
+mkdir svninc
+cp /usr/include/iconv.h svninc/
+cd subversion-${version}
+./configure --prefix=/opt/csw --infodir=/opt/csw/share/info --mandir=/opt/csw/share/man --with-zlib --with-berkeley-db=/opt/csw/bdb4 --libdir=/opt/csw/lib/svn --includedir=/opt/csw/include/svn --with-apxs=/opt/csw/apache2/sbin/apxs --with-ssl --with-zlib --enable-swig-bindings=all #--with-apr=/opt/csw/bin/apr-config --with-apr-util=/opt/csw
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#swig-python
+#gmake swig-py || exit 1
+#gmake DESTDIR=${buildroot} install-swig-py || exit 1
+
+#swig-perl
+gmake swig-pl-lib || exit 1
+gmake DESTDIR=${buildroot} install-swig-pl-lib || exit 1
+cd subversion/bindings/swig/perl
+env APR_CONFIG=/opt/csw/bin/apr-config perl Makefile.PL || exit 1
+gmake all || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+cd ${builddir}/${progname}-${version}
+
+mkdir -p ${buildroot}/opt/csw/share/doc/subversion
+cp -r ${builddir}/subversion-${version}/doc/book/book/images ${buildroot}/opt/csw/share/doc/subversion
+cp ${builddir}/subversion-${version}/doc/book/book/book.{html,pdf} ${buildroot}/opt/csw/share/doc/subversion
+#mv ${buildroot}/opt/csw/build ${buildroot}/opt/csw/share/doc/subversion/
+#mv ${buildroot}/opt/csw/bin/apr-config ${buildroot}/opt/csw/share/doc/subversion/
+#mv ${buildroot}/opt/csw/bin/apu-config ${buildroot}/opt/csw/share/doc/subversion/
+rm -rf ${buildroot}/opt/csw/build ${buildroot}/opt/csw/bin/apr-config ${buildroot}/opt/csw/bin/apu-config
+rm -f ${buildroot}/opt/csw/lib/perl/5*/perllocal.pod
+rmdir ${buildroot}/opt/csw/lib/perl/5*
+EOF

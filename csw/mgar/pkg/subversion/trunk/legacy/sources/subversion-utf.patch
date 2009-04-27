@@ -1,0 +1,20 @@
+--- subversion/libsvn_subr/utf.c.orig	2004-03-26 21:34:00.815411000 +0100
++++ subversion/libsvn_subr/utf.c	2004-03-26 21:45:05.375692000 +0100
+@@ -92,7 +92,7 @@
+ static svn_error_t *
+ get_ntou_xlate_handle (apr_xlate_t **ret, apr_pool_t *pool)
+ {
+-  return get_xlate_handle(ret, "UTF-8", APR_LOCALE_CHARSET,
++  return get_xlate_handle(ret, "UTF-8", "ASCII",
+                           SVN_UTF_NTOU_XLATE_HANDLE, pool);
+ }
+ 
+@@ -105,7 +105,7 @@
+ static svn_error_t *
+ get_uton_xlate_handle (apr_xlate_t **ret, apr_pool_t *pool)
+ {
+-  return get_xlate_handle(ret, APR_LOCALE_CHARSET, "UTF-8",
++  return get_xlate_handle(ret, "ASCII", "UTF-8",
+                           SVN_UTF_UTON_XLATE_HANDLE, pool);
+ }
+ 
