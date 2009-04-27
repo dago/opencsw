@@ -1,0 +1,54 @@
+# vim: ft=perl
+# $Id: enigma,v 1.1 2004/08/06 22:43:40 simigern Exp $
+
+$progname  = 'enigma';
+$version   = '0.81';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.nongnu.org/enigma/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - a puzzle game inspired by Oxyd",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+#export CC=cc
+#export CXX=CC
+#export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+#if [ "${arch}" = "sparc" ]; then
+#	export CFLAGS='-fast -xarch=v8'
+#else
+#	#I got bad code with tla...
+#	#export CFLAGS='-fast -xarch=386'
+#	export CFLAGS=''
+#fi
+#export CFLAGS="\$CFLAGS -I/opt/csw/include"
+#export CPPFLAGS='-I/opt/csw/include'
+#export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+export CC=gcc
+export CXX=g++
+export CC=gcc
+export CXX=g++
+unset CFLAGS
+export PATH="/opt/csw/gcc3/bin:${sunwspropath}:/opt/csw/bin:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+export CFLAGS="\$CFLAGS -I/opt/csw/gcc3/include -I/opt/csw/include -I${buildroot}/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/gcc3/include -I/opt/csw/include -I${buildroot}/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/gcc3/lib -L/opt/csw/gcc3/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/gcc3/lib -L/opt/csw/gcc3/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake prefix=/opt/build/michael/${progname}-${version}-buildroot/opt/csw mandir=/opt/build/michael/${progname}-${version}-buildroot/opt/csw/share/man install
+EOF
