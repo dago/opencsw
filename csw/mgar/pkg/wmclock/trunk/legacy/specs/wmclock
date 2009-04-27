@@ -1,0 +1,49 @@
+# vim: ft=perl
+# $Id: wmclock,v 1.2 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'wmclock';
+$version   = '1.0.12';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.jmknoble.net/WindowMaker/wmclock/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - A Window Maker clock applet",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man
+gmake
+mkdir -p ${buildroot}/opt/csw/bin
+cp wmclock ${buildroot}/opt/csw/bin/
+mkdir -p ${buildroot}/opt/csw/share/man/man1
+cp wmclock.man ${buildroot}/opt/csw/share/man/man1/wmclock.1
+mkdir -p ${buildroot}/opt/csw/share/wmclock
+cp -r lang.* ${buildroot}/opt/csw/share/wmclock/
+mkdir -p ${buildroot}/opt/csw/share/doc/wmclock
+cp README ${buildroot}/opt/csw/share/doc/wmclock/
+EOF
