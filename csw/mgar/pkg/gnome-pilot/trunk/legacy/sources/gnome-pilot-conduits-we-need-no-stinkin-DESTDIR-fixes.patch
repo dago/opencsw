@@ -1,0 +1,33 @@
+--- ./email/Makefile.in.orig	2004-12-06 07:14:04.395795000 -0500
++++ ./email/Makefile.in	2004-12-06 07:14:15.395708000 -0500
+@@ -397,7 +397,7 @@
+ 	&& mv sendmail.conduit.tmp sendmail.conduit
+ 
+ install-data-local:
+-	$(mkinstalldirs) $(Conduitdir)
++	$(mkinstalldirs) $(DESTDIR)$(Conduitdir)
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+--- ./memo_file/Makefile.in.orig	2004-12-06 07:14:58.105705000 -0500
++++ ./memo_file/Makefile.in	2004-12-06 07:15:07.845718000 -0500
+@@ -394,7 +394,7 @@
+ 	&& mv memofile.conduit.tmp memofile.conduit
+ 
+ install-data-local:
+-	$(mkinstalldirs) $(Conduitdir)
++	$(mkinstalldirs) $(DESTDIR)$(Conduitdir)
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+--- ./time/Makefile.in.orig	2004-12-06 07:15:51.175705000 -0500
++++ ./time/Makefile.in	2004-12-06 07:15:59.685718000 -0500
+@@ -387,7 +387,7 @@
+ 	&& mv time.conduit.tmp time.conduit
+ 
+ install-data-local:
+-	$(mkinstalldirs) $(Conduitdir)
++	$(mkinstalldirs) $(DESTDIR)$(Conduitdir)
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
