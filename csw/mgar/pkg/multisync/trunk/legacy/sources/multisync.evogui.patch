@@ -1,0 +1,53 @@
+--- plugins/evolution_sync/src/gui.c.orig	2004-03-24 19:20:55.749911000 +0100
++++ plugins/evolution_sync/src/gui.c	2004-03-24 21:35:11.427197000 +0100
+@@ -35,6 +35,7 @@
+ #include "gui.h"
+ #include "interface.h"
+ #include "support.h"
++#include <sys/stat.h>
+ 
+ GtkWidget* evowindow = NULL;
+ evolution_connection *evoconn = NULL;
+@@ -43,12 +44,24 @@
+ GList* read_filelist(GList *list, char *dirname, char *textname, 
+ 		     char *filename, int depth) {
+   DIR *dir;
++  struct stat statbuf;
++  char *tostat;
++  
+   if (depth < 0)
+     return(list);
+   if ((dir = opendir(dirname))) {
+     struct dirent *de;
+     while ((de = readdir(dir))) {
+-      if (de->d_type != DT_DIR) {
++      /* dirname/de->d_name\0 */
++      tostat=malloc(strlen(dirname)+1+strlen(de->d_name)+1);
++      strcpy(tostat,dirname);
++      tostat[strlen(dirname)]='/';
++      strcpy(&tostat[strlen(dirname)+1],de->d_name);
++      tostat[strlen(dirname)+1+strlen(de->d_name)+1]=0x00;
++      /* printf("CSW-solaris: stating %s\n",tostat); */
++      stat(tostat,&statbuf);
++
++      if (!S_ISDIR(statbuf.st_mode)) {
+ 	if (!strcmp(de->d_name, filename)) {
+ 	  evo_sync_file *ef = g_malloc0(sizeof(evo_sync_file));
+ 	  ef->name = g_strdup(textname);
+@@ -56,7 +69,7 @@
+ 	  list = g_list_append(list, ef);
+ 	}
+       } 
+-      if (de->d_type != DT_REG) {
++      if (!S_ISREG(statbuf.st_mode)) {
+ 	char *newdir;
+ 	if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
+ 	  newdir = g_strdup_printf("%s/%s", dirname, de->d_name);
+@@ -64,6 +77,7 @@
+ 	  g_free(newdir);
+ 	}
+       }
++      free(tostat);
+     }
+     closedir(dir);
+   }

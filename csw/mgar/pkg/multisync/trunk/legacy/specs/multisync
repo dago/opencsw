@@ -1,0 +1,112 @@
+# vim: ft=perl
+# $Id: multisync,v 1.6 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'multisync';
+$version   = '0.81';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://multisync.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = (['multisync.vtype.patch',   "${progname}-${version}", '-p0'],
+              ['multisync.evogui.patch',   "${progname}-${version}", '-p0'],
+	      ['multisync.opieqcop.patch', "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname -  A calendar synchronization program",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include -D_POSIX_PTHREAD_SEMANTICS"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig
+
+cd ${progname}-${version}
+for i in config.guess config.sub depcomp install-sh missing mkinstalldirs; do
+	rm "\${i}"
+	ln -s /opt/csw/share/automake*/"\${i}" "\${i}"
+done
+sed -e 's|-rdynamic||' src/Makefile.in >src/Makefile.innew
+mv src/Makefile.innew src/Makefile.in
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#Backup-Plugin
+cd ${builddir}/${progname}-${version}/plugins/backup_plugin
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#Evolution-Plugin
+cd ${builddir}/${progname}-${version}/plugins/evolution_sync
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#LDAP-Plugin
+cd ${builddir}/${progname}-${version}/plugins/ldap_plugin
+sed -e 's|-Werror||' src/Makefile.in >src/Makefile.innew
+mv src/Makefile.innew src/Makefile.in
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#OPIE-Plugin
+cd ${builddir}/${progname}-${version}/plugins/opie_sync
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#PALM-Plugin
+cd ${builddir}/${progname}-${version}/plugins/palm_sync
+sed -e 's|-Werror||' src/Makefile.in >src/Makefile.innew
+mv src/Makefile.innew src/Makefile.in
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#SyncML-Plugin
+cd ${builddir}/${progname}-${version}/plugins/syncml_plugin
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+#GCC :-(
+export CC=gcc
+export CXX=g++
+unset CFLAGS
+export PATH="/opt/csw/gcc3/bin:${sunwspropath}:/opt/csw/bin:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+export CFLAGS="\$CFLAGS -I/opt/csw/gcc3/include -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/gcc3/include -I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/gcc3/lib -L/opt/csw/gcc3/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib -lsocket -lnsl'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/gcc3/lib -L/opt/csw/gcc3/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib -lsocket -lnsl'
+
+#IrMC-Plugin
+cd ${builddir}/${progname}-${version}/plugins/irmc_sync
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+echo "#include <sys/types.h>" >src/stdint.h
+echo "#define TCSBRKP TCSBRK" >>src/stdint.h
+cp src/stdint.h stdint.h
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+EOF

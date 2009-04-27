@@ -1,0 +1,11 @@
+--- src/sync_vtype.c.orig	2004-03-24 18:51:37.684638000 +0100
++++ src/sync_vtype.c	2004-03-24 18:53:09.459728000 +0100
+@@ -993,7 +993,7 @@
+     if (z == 'Z') {
+       struct tm *local;
+       local = localtime(&dt);
+-      dt += local->tm_gmtoff; 
++      dt += (mktime(gmtime(&dt)) - mktime(localtime(&dt))) / 60; 
+     }
+   }
+   return(dt);

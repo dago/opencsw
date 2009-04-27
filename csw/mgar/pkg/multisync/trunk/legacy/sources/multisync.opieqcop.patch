@@ -1,0 +1,11 @@
+--- plugins/opie_sync/src/opie_qcop.c.orig	2004-03-24 19:56:46.781075000 +0100
++++ plugins/opie_sync/src/opie_qcop.c	2004-03-24 22:07:07.397348000 +0100
+@@ -339,7 +339,7 @@
+   if (start=strstr(strstr(pc,"/")+1,"/")) /* We need the second slash */
+   { 
+     /* caller responsible for free()ing temp */
+-    temp = g_strndup(start,strstr(start," ")-start); /* from slash to blank is our path */
++    temp = g_strndup(start,(char*)strstr(start," ")-start); /* from slash to blank is our path */
+   }
+ 
+   g_free(pc);  
