@@ -1,0 +1,45 @@
+# vim: ft=perl
+# $Id: x11-ssh-askpass,v 1.2 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'x11-ssh-askpass';
+$version   = '1.2.4.1';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.jmknoble.net/software/x11-ssh-askpass/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "x11sshaskp",
+		filename     => "x11_ssh_askpass",
+		name         => "x11_ssh_askpass - a lightweight passphrase dialog for OpenSSH",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-app-defaults-dir=/opt/csw/lib/X11/app-defaults
+xmkmf
+gmake includes
+gmake
+gmake DESTDIR=${buildroot} install
+tail -36 README | head -34 >COPYING
+EOF
