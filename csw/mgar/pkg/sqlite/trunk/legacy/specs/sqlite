@@ -1,0 +1,73 @@
+# vim: ft=perl
+# $Id: sqlite,v 1.8 2005/04/09 12:18:18 simigern Exp $
+
+$progname  = 'sqlite';
+$version   = '2.8.16';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.sqlite.org/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("sqlite-${version}.tar.gz");
+@patches   = (['sqlite-COPYING.patch',   "sqlite-${version}", '-p0']);
+@packages  = ({
+		pkgname      => ${progname},
+		filename     => ${progname},
+		name         => "${progname} - An embeddable SQL engine in a C library",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+$copyright = "${progname}-${version}/COPYING";
+
+if ("$arch" eq "sparc") {
+        @isaexecs  = ('/opt/csw/bin/sqlite');
+}
+
+#$suffix='.01';
+
+$build     = <<"EOF";
+set -x
+export CC=cc
+export PATH="${sunwspropath}:/opt/csw/bin:/usr/ccs/bin:/usr/bin:/usr/openwin/bin"
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+export LD_RUN_PATH='/opt/csw/lib'
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-fast -xarch=386'
+	#export CFLAGS=''
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include -I/opt/csw/include/readline"
+export CPPFLAGS="-I/opt/csw/include -I/opt/csw/include/readline"
+cd sqlite-${version}
+mkdir bld
+cd bld
+../configure --prefix=/opt/csw --infodir=/opt/csw/share/info --mandir=/opt/csw/share/man --enable-threadsafe
+gmake
+gmake prefix=${buildroot}/opt/csw install
+mkdir -p ${buildroot}/opt/csw/share/man/man1
+cp ../sqlite.1 ${buildroot}/opt/csw/share/man/man1/
+
+#We need 64-bit libreadline (really?)
+if [ "${arch}" = "sparc" ]; then
+	mkdir -p ${buildroot}/opt/csw/bin/sparcv8
+	mv ${buildroot}/opt/csw/bin/sqlite ${buildroot}/opt/csw/bin/sparcv8/
+	gmake distclean
+	export CFLAGS='-fast -xtarget=ultra -xarch=v9 -I/opt/csw/include -I/opt/csw/include/readline'
+	export LD_OPTIONS='-R/opt/csw/lib/sparcv9 -L/opt/csw/lib/sparcv9'
+	export LD_RUN_PATH='/opt/csw/lib/sparcv9'
+	../configure --prefix=/opt/csw --infodir=/opt/csw/share/info --libdir=/opt/csw/lib/sparcv9 --bindir=/opt/csw/bin/sparcv9 --mandir=/opt/csw/share/man --enable-threadsafe
+	gmake
+	#This is ugly :-(
+	/opt/csw/bin/ginstall -c -d ${buildroot}/opt/csw/lib/sparcv9
+	./libtool /opt/csw/bin/ginstall -c libsqlite.la ${buildroot}/opt/csw/lib/sparcv9
+	/opt/csw/bin/ginstall -c -d ${buildroot}/opt/csw/bin/sparcv9
+	./libtool /opt/csw/bin/ginstall -c sqlite ${buildroot}/opt/csw/bin/sparcv9
+	ln -s sparcv8/sqlite ${buildroot}/opt/csw/bin/sqlite32
+	ln -s sparcv9/sqlite ${buildroot}/opt/csw/bin/sqlite64
+else
+	ln -s sqlite ${buildroot}/opt/csw/bin/sqlite32
+fi
+
+EOF
