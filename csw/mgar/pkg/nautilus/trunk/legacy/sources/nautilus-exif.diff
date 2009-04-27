@@ -1,0 +1,18 @@
+--- components/image_properties/nautilus-image-properties-view.c.orig	2005-12-23 14:54:48.001747000 -0500
++++ components/image_properties/nautilus-image-properties-view.c	2005-12-23 14:57:53.441687000 -0500
+@@ -124,13 +124,14 @@
+ exif_content_callback (ExifContent *content, gpointer data)
+ {
+ 	struct ExifAttribute *attribute;
++	char val[4096];
+ 
+ 	attribute = (struct ExifAttribute *)data;
+ 	if (attribute->found) {
+ 		return;
+ 	}
+ 
+-        attribute->value = g_strdup (exif_content_get_value (content, attribute->tag));
++        attribute->value = g_strdup (exif_content_get_value (content, attribute->tag, val, 4096));
+ 	if (attribute->value != NULL) {
+ 		attribute->found = TRUE;
+ 	}
