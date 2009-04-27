@@ -1,0 +1,36 @@
+# vim: ft=perl
+# $Id: npadmin,v 1.2 2004/11/27 11:52:42 simigern Exp $
+
+$progname  = 'npadmin';
+$version   = '0.13';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://lpr.sourceforge.net packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - Command line SNMP based network adminstration tool for printers",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib -lgcc_s'
+export LD_RUN_PATH='/opt/csw/lib'
+cd ${progname}-${version}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+EOF
