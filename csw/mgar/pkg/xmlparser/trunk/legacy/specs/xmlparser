@@ -1,0 +1,35 @@
+# vim: ft=perl
+
+$progname  = 'xmlparser';
+$version   = '2.34';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://search.cpan.org/~msergeant/XML-Parser-2.34/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("XML-Parser-${version}.tar.gz");
+@packages  = ({
+		pkgname      => "pm${progname}",
+		filename     => "pm_${progname}",
+		name         => "pm_${progname} - A perl module for parsing XML documents",
+		dependencies => ['CSWcommon', 'CSWperl'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "XML-Parser-${version}/COPYRIGHT";
+
+$build     = <<"EOF";
+export CC=${sunwspropath}/cc
+export PATH="/opt/csw/bin:${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin"
+cd XML-Parser-${version}
+/opt/csw/bin/perl Makefile.PL INSTALLDIRS=vendor
+make
+gmake DESTDIR=${buildroot} install
+echo > ${builddir}/XML-Parser-${version}/COPYRIGHT <<EOC
+Copyright (c) 1998-2000 Larry Wall and Clark Cooper.
+All rights reserved.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+EOC
+EOF
