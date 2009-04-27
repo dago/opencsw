@@ -1,0 +1,47 @@
+# vim: ft=perl
+# $Id: render_dev,v 1.2 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'render';
+$version   = '0.8';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://freedesktop.org/Software/fontconfig/releases/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "renderdev",
+		filename     => "render_dev",
+		name         => "render_dev - fontconfig.org render development files",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$arch='all';
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info || exit 1
+gmake || exit 1
+gmake DESTDIR=${buildroot} install
+EOF
