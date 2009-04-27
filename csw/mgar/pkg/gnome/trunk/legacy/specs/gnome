@@ -1,0 +1,309 @@
+# vim: ft=perl
+# $Id: gnome,v 1.30 2006-09-28 18:21:45 simigern Exp $
+
+$progname  = 'gnome';
+$version   = '2.14.0';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.gnome.org packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-dtlogin-${version}.tar.gz");
+
+#@patches   = (['gpl-copying.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = (	{
+		pkgname      => "gnomedtlogin",
+		filename     => "gnome_dtlogin",
+		name         => "gnome_dtlogin - GNOME 2 dtlogin integration",
+		filelist     => [qw('etc/dt/appconfig'
+		                    'etc/dt/config/Xinitrc.CSWgnome'
+		                    'etc/dt/config/Xsession.CSWgnome'
+		                    'etc/dt/config/Xsession2.CSWgnome'
+				    'etc/dt/config/C/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ar/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ar_EG.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/cs_CZ.ISO8859-2/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/de/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/de.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/de.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/de_AT.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/en_GB.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/en_IE.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/en_US.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/en_US.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/es/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/es.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/es.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/fr/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/fr.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/fr.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/fr_BE.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/he/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/he_IL.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/hu_HU.ISO8859-2/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/it/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/it.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/it.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ja/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ja_JP.PCK/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ja_JP.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ja_JP.eucJP/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ko/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ko.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/pl_PL.ISO8859-2/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/pl_PL.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/pt_BR/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/pt_BR.ISO8859-1/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/pt_BR.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ru_RU.ISO8859-5/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/ru_RU.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/sv/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/sv.ISO8859-15/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/sv.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/th_TH/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/th_TH.ISO8859-11/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/th_TH.TIS620/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/th_TH.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/zh/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/zh.GBK/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/zh.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/zh_HK.BIG5HK/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/zh_TW/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/zh_TW.BIG5/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/zh_TW.UTF-8/Xresources.d/Xresources.CSWgnome'
+				    'etc/dt/config/sk_SK.ISO8859-2/Xresources.d/Xresources.CSWgnome')]
+
+		},
+		{
+		pkgname      => "gnomemin",
+		filename     => "gnome_minimal",
+		name         => "gnome_minimal - The GNOME 2 Desktop, minimal packages",
+		dependencies => ['CSWcommon',
+		                 'CSWgnomedtlogin',
+		                 'CSWgnomedesktop',
+				 'CSWgnomepanel',
+				 'CSWgnomesession',
+				 'CSWcontrolcenter',
+				 'CSWgnomethemes',
+				 'CSWnautilus',
+				 'CSWmetacity',
+				 'CSWgedit',
+				 'CSWscrollkeeper',
+				 'CSWgnometerminal',
+				 'CSWgnomeapplets',
+				 'CSWgnomeutils',
+				 'CSWsharedmimeinfo',
+				 'CSWgtkengines',
+				 'CSWatspi',
+				 'CSWgnomemedia',
+				 'CSWyelp',
+				 'CSWfam'],
+				 filelist     => [qw('opt')],
+		postinstall  => 'gconf-schema-update.postinstall'
+		},
+		{
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - The GNOME 2 Desktop",
+		dependencies => ['CSWcommon',
+		                 'CSWgnomemin',
+				 'CSWggv',
+				 'CSWgnomegames',
+				 'CSWeog',
+				 'CSWxsave',
+				 'CSWgpdf',
+				 'CSWgnome2userdocs',
+				 'CSWnautiluscdburner',
+				 'CSWgok',
+				 'CSWgnomespeech',
+				 'CSWgnomesysmon',
+				 'CSWgnopernicus',
+				 'CSWnautilusview',
+				 'CSWgimp',
+				 'CSWgcalctool',
+				 'CSWgucharmap',
+				 'CSWgnomemag',
+				 'CSWgconfeditor',
+#				 'CSWtotem',
+				 'CSWrhythmbox',
+				 'CSWxmms',
+				 'CSWgnomepilot',
+				 'CSWepiphany',
+				 'CSWbugbuddy'],
+				 filelist     => [qw('none')],
+		postinstall  => 'gconf-schema-update.postinstall'
+		});
+
+push @csw_ignore, 'etc/dt';
+push @csw_ignore, 'etc/dt/appconfig';
+push @csw_ignore, 'etc/dt/appconfig/icons';
+push @csw_ignore, 'etc/dt/appconfig/icons/C';
+push @csw_ignore, 'etc/dt/config';
+
+push @csw_dirs, 'etc/dt/config/C';
+push @csw_dirs, 'etc/dt/config/ar';
+push @csw_dirs, 'etc/dt/config/ar_EG.UTF-8';
+push @csw_dirs, 'etc/dt/config/cs_CZ.ISO8859-2';
+push @csw_dirs, 'etc/dt/config/de';
+push @csw_dirs, 'etc/dt/config/de.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/de.UTF-8';
+push @csw_dirs, 'etc/dt/config/de_AT.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/en_GB.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/en_IE.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/en_US.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/en_US.UTF-8';
+push @csw_dirs, 'etc/dt/config/es';
+push @csw_dirs, 'etc/dt/config/es.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/es.UTF-8';
+push @csw_dirs, 'etc/dt/config/fr';
+push @csw_dirs, 'etc/dt/config/fr.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/fr.UTF-8';
+push @csw_dirs, 'etc/dt/config/fr_BE.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/he';
+push @csw_dirs, 'etc/dt/config/he_IL.UTF-8';
+push @csw_dirs, 'etc/dt/config/hu_HU.ISO8859-2';
+push @csw_dirs, 'etc/dt/config/it';
+push @csw_dirs, 'etc/dt/config/it.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/it.UTF-8';
+push @csw_dirs, 'etc/dt/config/ja';
+push @csw_dirs, 'etc/dt/config/ja_JP.PCK';
+push @csw_dirs, 'etc/dt/config/ja_JP.UTF-8';
+push @csw_dirs, 'etc/dt/config/ja_JP.eucJP';
+push @csw_dirs, 'etc/dt/config/ko';
+push @csw_dirs, 'etc/dt/config/ko.UTF-8';
+push @csw_dirs, 'etc/dt/config/pl_PL.ISO8859-2';
+push @csw_dirs, 'etc/dt/config/pl_PL.UTF-8';
+push @csw_dirs, 'etc/dt/config/pt_BR';
+push @csw_dirs, 'etc/dt/config/pt_BR.ISO8859-1';
+push @csw_dirs, 'etc/dt/config/pt_BR.UTF-8';
+push @csw_dirs, 'etc/dt/config/ru_RU.ISO8859-5';
+push @csw_dirs, 'etc/dt/config/ru_RU.UTF-8';
+push @csw_dirs, 'etc/dt/config/sv';
+push @csw_dirs, 'etc/dt/config/sv.ISO8859-15';
+push @csw_dirs, 'etc/dt/config/sv.UTF-8';
+push @csw_dirs, 'etc/dt/config/th_TH';
+push @csw_dirs, 'etc/dt/config/th_TH.ISO8859-11';
+push @csw_dirs, 'etc/dt/config/th_TH.TIS620';
+push @csw_dirs, 'etc/dt/config/th_TH.UTF-8';
+push @csw_dirs, 'etc/dt/config/zh';
+push @csw_dirs, 'etc/dt/config/zh.GBK';
+push @csw_dirs, 'etc/dt/config/zh.UTF-8';
+push @csw_dirs, 'etc/dt/config/zh_HK.BIG5HK';
+push @csw_dirs, 'etc/dt/config/zh_TW';
+push @csw_dirs, 'etc/dt/config/zh_TW.BIG5';
+push @csw_dirs, 'etc/dt/config/zh_TW.UTF-8';
+push @csw_dirs, 'etc/dt/config/sk_SK.ISO8859-2';
+
+push @csw_dirs, 'etc/dt/config/C/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ar/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ar_EG.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/cs_CZ.ISO8859-2/Xresources.d';
+push @csw_dirs, 'etc/dt/config/de/Xresources.d';
+push @csw_dirs, 'etc/dt/config/de.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/de.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/de_AT.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/en_GB.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/en_IE.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/en_US.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/en_US.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/es/Xresources.d';
+push @csw_dirs, 'etc/dt/config/es.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/es.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/fr/Xresources.d';
+push @csw_dirs, 'etc/dt/config/fr.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/fr.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/fr_BE.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/he/Xresources.d';
+push @csw_dirs, 'etc/dt/config/he_IL.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/hu_HU.ISO8859-2/Xresources.d';
+push @csw_dirs, 'etc/dt/config/it/Xresources.d';
+push @csw_dirs, 'etc/dt/config/it.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/it.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ja/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ja_JP.PCK/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ja_JP.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ja_JP.eucJP/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ko/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ko.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/pl_PL.ISO8859-2/Xresources.d';
+push @csw_dirs, 'etc/dt/config/pl_PL.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/pt_BR/Xresources.d';
+push @csw_dirs, 'etc/dt/config/pt_BR.ISO8859-1/Xresources.d';
+push @csw_dirs, 'etc/dt/config/pt_BR.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ru_RU.ISO8859-5/Xresources.d';
+push @csw_dirs, 'etc/dt/config/ru_RU.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/sv/Xresources.d';
+push @csw_dirs, 'etc/dt/config/sv.ISO8859-15/Xresources.d';
+push @csw_dirs, 'etc/dt/config/sv.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/th_TH/Xresources.d';
+push @csw_dirs, 'etc/dt/config/th_TH.ISO8859-11/Xresources.d';
+push @csw_dirs, 'etc/dt/config/th_TH.TIS620/Xresources.d';
+push @csw_dirs, 'etc/dt/config/th_TH.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/zh/Xresources.d';
+push @csw_dirs, 'etc/dt/config/zh.GBK/Xresources.d';
+push @csw_dirs, 'etc/dt/config/zh.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/zh_HK.BIG5HK/Xresources.d';
+push @csw_dirs, 'etc/dt/config/zh_TW/Xresources.d';
+push @csw_dirs, 'etc/dt/config/zh_TW.BIG5/Xresources.d';
+push @csw_dirs, 'etc/dt/config/zh_TW.UTF-8/Xresources.d';
+push @csw_dirs, 'etc/dt/config/sk_SK.ISO8859-2/Xresources.d';
+
+#'CSWgnomemedia',
+
+$copyright = "${progname}-dtlogin-${version}/COPYING";
+
+$arch="all";
+
+$build     = <<"EOF";
+cd ${progname}-dtlogin-${version}
+mkdir -p ${buildroot}
+gcp -vax * ${buildroot}/
+cat >COPYING <<__EOF__
+See dependancies for license-informations
+__EOF__
+mkdir -p ${buildroot}/opt/csw/etc/gconf/schemas
+cat >${buildroot}/opt/csw/etc/gconf/schemas/csw.entries <<__EOF__
+<gconfentryfile>
+  <entrylist base="/">
+    <entry>
+      <key>/apps/metacity/general/theme</key>
+      <value>
+        <string>Crux</string>
+      </value>
+    </entry>
+    <entry>
+      <key>/desktop/gnome/interface/gtk_theme</key>
+      <value>
+        <string>Crux</string>
+      </value>
+    </entry>
+    <entry>
+      <key>/desktop/gnome/interface/icon_theme</key>
+      <value>
+        <string>Crux</string>
+      </value>
+    </entry>
+    <entry>
+      <key>/schemas/desktop/gnome/file-views/icon_theme</key>
+      <value>
+        <schema>
+          <owner>gnome</owner>
+          <type>string</type>
+          <locale name="C">
+            <default_value>
+              <value>
+                <string>crux_teal</string>
+              </value>
+            </default_value>
+            <short>File Icon Theme</short>
+            <long>Theme used for displaying file icons</long>
+          </locale>
+        </schema>
+      </value>
+    </entry>
+  </entrylist>
+</gconfentryfile>
+__EOF__
+EOF

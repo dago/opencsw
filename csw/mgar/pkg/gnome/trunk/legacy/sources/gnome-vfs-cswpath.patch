@@ -1,0 +1,33 @@
+--- libgnomevfs/eggdirfuncs.c.orig	2004-12-07 05:20:30.149044000 -0500
++++ libgnomevfs/eggdirfuncs.c	2004-12-07 05:21:01.238980000 -0500
+@@ -106,7 +106,7 @@
+   data_dirs = (gchar *) g_getenv ("XDG_DATA_DIRS");
+ 
+   if (!data_dirs || !data_dirs[0])
+-    data_dirs = "/usr/local/share/:/usr/share/";
++    data_dirs = "/opt/csw/share:/usr/local/share/:/usr/share/";
+ 
+   data_dir_vector = g_strsplit (data_dirs, ":", 0);
+ 
+--- libgnomevfs/gnome-vfs-mime-info.c.orig	2004-12-07 05:20:35.798970000 -0500
++++ libgnomevfs/gnome-vfs-mime-info.c	2004-12-07 05:21:23.718971000 -0500
+@@ -149,7 +149,7 @@
+ 
+ 	xdg_data_dirs = g_getenv ("XDG_DATA_DIRS");
+ 	if (!xdg_data_dirs) {
+-		xdg_data_dirs = "/usr/local/share/:/usr/share/";
++		xdg_data_dirs = "/opt/csw/share:/usr/local/share/:/usr/share/";
+ 	}
+ 	
+ 	split_data_dirs = g_strsplit (xdg_data_dirs, ":", 0);
+--- libgnomevfs/xdgmime.c.orig	2004-12-07 05:20:41.159002000 -0500
++++ libgnomevfs/xdgmime.c	2004-12-07 05:21:43.358971000 -0500
+@@ -189,7 +189,7 @@
+ 
+   xdg_data_dirs = getenv ("XDG_DATA_DIRS");
+   if (xdg_data_dirs == NULL)
+-    xdg_data_dirs = "/usr/local/share/:/usr/share/";
++    xdg_data_dirs = "/opt/csw/share:/usr/local/share/:/usr/share/";
+ 
+   ptr = xdg_data_dirs;
+ 

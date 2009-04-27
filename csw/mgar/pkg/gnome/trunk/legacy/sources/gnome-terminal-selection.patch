@@ -1,0 +1,52 @@
+--- terminal-screen.c.ORG	Fri Sep 19 17:12:52 2003
++++ terminal-screen.c	Fri Sep 19 19:36:40 2003
+@@ -1459,10 +1459,7 @@ terminal_screen_button_press_event (GtkW
+   terminal_widget_get_cell_size (term, &char_width, &char_height);
+   
+   g_free (screen->priv->matched_string);
+-  screen->priv->matched_string =
+-    terminal_widget_check_match (term,
+-                                 event->x / char_width,
+-                                 event->y / char_height);
++
+   dingus_button = ((event->button == 1) || (event->button == 2));
+ 
+   if (dingus_button &&
+@@ -1484,20 +1481,31 @@ terminal_screen_button_press_event (GtkW
+     }
+ 
+   if (dingus_button &&
+-      (event->state & GDK_CONTROL_MASK) &&
+-      (screen->priv->matched_string != NULL))
++      (event->state & GDK_CONTROL_MASK))
+     {
+       gtk_widget_grab_focus (widget);
+       
+-      open_url (screen, screen->priv->matched_string);
+-      g_free (screen->priv->matched_string);
+-      screen->priv->matched_string = NULL;
+-      return TRUE; /* don't do anything else such as select with the click */
++      screen->priv->matched_string =
++        terminal_widget_check_match (term,
++                                     event->x / char_width,
++                                     event->y / char_height);
++
++      if (screen->priv->matched_string != NULL)
++      {
++        open_url (screen, screen->priv->matched_string);
++        g_free (screen->priv->matched_string);
++        screen->priv->matched_string = NULL;
++        return TRUE; /* don't do anything else such as select with the click */
++      }
+     }
+       
+   if ((event->button == 3) &&
+       !(event->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+     {
++      screen->priv->matched_string = 
++        terminal_widget_check_match (term,
++                                     event->x / char_width,
++                                     event->y / char_height);
+       terminal_screen_do_popup (screen, event);
+       return TRUE;
+     }

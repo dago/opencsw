@@ -1,0 +1,23 @@
+--- mixer/mixer.c.orig	2004-04-19 16:10:03.693350000 -0400
++++ mixer/mixer.c	2004-04-19 16:10:59.093290000 -0400
+@@ -53,19 +53,7 @@
+ #include <egg-screen-exec.h>
+ #include <egg-screen-help.h>
+ 
+-#ifdef HAVE_LINUX_SOUNDCARD_H
+-#include <linux/soundcard.h>
+-#define OSS_API
+-#elif HAVE_MACHINE_SOUNDCARD_H
+-#include <machine/soundcard.h>
+-#define OSS_API
+-#elif HAVE_SYS_SOUNDCARD_H
+-#include <sys/soundcard.h>
+-#define OSS_API
+-#elif HAVE_SOUNDCARD_H
+-#include <soundcard.h>
+-#define OSS_API
+-#elif HAVE_SYS_AUDIOIO_H
++#ifdef HAVE_SYS_AUDIOIO_H
+ #include <sys/audioio.h>
+ #define SUN_API
+ #elif HAVE_SYS_AUDIO_IO_H
