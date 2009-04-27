@@ -1,0 +1,21 @@
+--- src/document.c.orig	2005-01-16 15:10:55.279769000 -0500
++++ src/document.c	2005-01-16 15:12:02.019827000 -0500
+@@ -23,7 +23,6 @@
+ /* this is needed for Solaris to comply with the latest POSIX standard 
+  * regarding the ctime_r() function
+  * the problem is that it generates a compiler warning on Linux, lstat() undefined.. */
+-#define _POSIX_C_SOURCE 200312L
+ 
+ #include <gtk/gtk.h>
+ #include <gdk/gdkkeysyms.h> /* for the keyboard event codes */
+--- src/highlight.c.orig	2005-01-16 15:23:01.659817000 -0500
++++ src/highlight.c	2005-01-16 15:25:16.529749000 -0500
+@@ -154,7 +154,7 @@
+ /*********************************/
+ /* debugging                     */
+ /*********************************/
+-#ifdef DEBUG
++#if 1
+ 
+ static void print_meta_for_pattern(Tpattern *pat) {
+ 	GList *tmplist = g_list_first(highlight.all_highlight_patterns);

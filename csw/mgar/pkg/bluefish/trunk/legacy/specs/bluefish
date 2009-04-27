@@ -1,0 +1,42 @@
+# vim: ft=perl
+# $Id: bluefish,v 1.4 2005/01/16 20:40:33 simigern Exp $
+
+$progname  = 'bluefish';
+$version   = '1.0';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://bluefish.openoffice.nl/ packaged for CSW by Michael Gernoth';
+
+@patches   = (['bluefish.solaris.patch',   "${progname}-${version}", '-p0']);
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - A GTK-based Web development editor",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		postinstall  => 'gconf-schema-update.postinstall'
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin:${builddir}/${progname}-${version}"
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+if [ "${arch}" = "sparc" ]; then
+        export CFLAGS='-fast -xarch=v8 -D_POSIX_PTHREAD_SEMANTICS'
+else
+        export CFLAGS='-fast -xarch=386 -D_POSIX_PTHREAD_SEMANTICS'
+fi
+cd ${progname}-${version}
+ln -s /opt/csw/bin/gmsgfmt msgfmt
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --disable-update-databases
+gmake || exit 1
+gmake prefix=${buildroot}/opt/csw pixmapsdir=${buildroot}/opt/csw/share/pixmaps iconpath=${buildroot}/opt/csw/share/pixmaps FDMENU=${buildroot}/opt/csw/share/applications FDMIME=${buildroot}/opt/csw/share/mime GMIMEINFO=${buildroot}/opt/csw/share/mime-info GAPPREG=${buildroot}/opt/csw/share/application-registry ICONPATH=${buildroot}/opt/csw/share/pixmaps install
+EOF
