@@ -1,0 +1,117 @@
+diff -ruN tla-tools-0.31.orig/tla-changelogs-to-log.shpp tla-tools-0.31/tla-changelogs-to-log.shpp
+--- tla-tools-0.31.orig/tla-changelogs-to-log.shpp	2004-03-02 14:19:54.000000000 +0100
++++ tla-tools-0.31/tla-changelogs-to-log.shpp	2004-03-02 14:35:36.532827000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-changelogs-to-log -- Construct an arch patch-log from ChangeLog changes
+ # Usage: tla-changelogs-to-log SUMMARY
+ #
+diff -ruN tla-tools-0.31.orig/tla-copy-changes.shpp tla-tools-0.31/tla-copy-changes.shpp
+--- tla-tools-0.31.orig/tla-copy-changes.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-copy-changes.shpp	2004-03-02 14:35:47.046364000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-copy-changes -- Copy and commit arch changesets from another branch
+ # Usage: tla-copy-changes [OPTION...] SOURCE_VERSION_OR_REVISION...
+ #
+diff -ruN tla-tools-0.31.orig/tla-cvs-sync.shpp tla-tools-0.31/tla-cvs-sync.shpp
+--- tla-tools-0.31.orig/tla-cvs-sync.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-cvs-sync.shpp	2004-03-02 14:35:55.618048000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-cvs-sync -- Propagate changes between arch and CVS
+ #
+ #  Copyright (C) 2003, 2004  Miles Bader <miles@gnu.org>
+diff -ruN tla-tools-0.31.orig/tla-emacs-xids-to-db.shpp tla-tools-0.31/tla-emacs-xids-to-db.shpp
+--- tla-tools-0.31.orig/tla-emacs-xids-to-db.shpp	2004-03-02 14:19:37.000000000 +0100
++++ tla-tools-0.31/tla-emacs-xids-to-db.shpp	2004-03-02 14:36:06.251350000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-emacs-xids-to-db -- Produce a id rename database for emacs
+ #
+ #  Copyright (C) 2003  Miles Bader <miles@gnu.org>
+diff -ruN tla-tools-0.31.orig/tla-file-log.shpp tla-tools-0.31/tla-file-log.shpp
+--- tla-tools-0.31.orig/tla-file-log.shpp	2004-03-02 14:19:37.000000000 +0100
++++ tla-tools-0.31/tla-file-log.shpp	2004-03-02 14:36:16.966566000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-file-log -- Output a historical log for a file in an arch project tree
+ # Usage: tla-file-log FILE [VERSION]
+ #
+diff -ruN tla-tools-0.31.orig/tla-fix-changelog-conflicts.shpp tla-tools-0.31/tla-fix-changelog-conflicts.shpp
+--- tla-tools-0.31.orig/tla-fix-changelog-conflicts.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-fix-changelog-conflicts.shpp	2004-03-02 14:36:27.636640000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-fix-changelog-conflicts -- Automatically resolve merge conflicts
+ #	in ChangeLog files
+ # Usage: tla-fix-changelog-conflicts [CHANGELOG...]
+diff -ruN tla-tools-0.31.orig/tla-fork-archive.shpp tla-tools-0.31/tla-fork-archive.shpp
+--- tla-tools-0.31.orig/tla-fork-archive.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-fork-archive.shpp	2004-03-02 14:36:42.268565000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-fork-archive -- Make a new arch archive continuing from an old one
+ # Usage: tla-fork-archive OLD_ARCHIVE NEW_ARCHIVE
+ #
+diff -ruN tla-tools-0.31.orig/tla-fork.shpp tla-tools-0.31/tla-fork.shpp
+--- tla-tools-0.31.orig/tla-fork.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-fork.shpp	2004-03-02 14:36:51.641449000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-fork -- Create an arch branch forking off an existing branch
+ # Usage: tla-fork [OPTION...] NEW_BRANCH
+ #
+diff -ruN tla-tools-0.31.orig/tla-munge-archive-names.shpp tla-tools-0.31/tla-munge-archive-names.shpp
+--- tla-tools-0.31.orig/tla-munge-archive-names.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-munge-archive-names.shpp	2004-03-02 14:37:01.087381000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-munge-archive-names -- Destructively modify an arch archive to change
+ #	the names of arch categories/branches/versions
+ # Usage: tla-munge-archive-names [OPTION...] CHANGE_RULE ARCHIVE_DIR...
+diff -ruN tla-tools-0.31.orig/tla-munge-archive-xids.shpp tla-tools-0.31/tla-munge-archive-xids.shpp
+--- tla-tools-0.31.orig/tla-munge-archive-xids.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-munge-archive-xids.shpp	2004-03-02 14:37:09.088401000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-munge-archive-xids -- Destructively modify an arch archive to use
+ #	taglines instead of explicit ids
+ # Usage: tla-munge-archive-xids TAG_RENAME_DB DIR...
+diff -ruN tla-tools-0.31.orig/tla-scan-for-xids.shpp tla-tools-0.31/tla-scan-for-xids.shpp
+--- tla-tools-0.31.orig/tla-scan-for-xids.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-scan-for-xids.shpp	2004-03-02 14:37:18.985842000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-scan-for-xids -- Print a list of explicit ids used in an arch archive
+ # Usage: tla-scan-for-xids ARCHIVE_DIR...
+ #
+diff -ruN tla-tools-0.31.orig/tla-switch.shpp tla-tools-0.31/tla-switch.shpp
+--- tla-tools-0.31.orig/tla-switch.shpp	2004-03-02 14:19:47.000000000 +0100
++++ tla-tools-0.31/tla-switch.shpp	2004-03-02 14:37:27.335854000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-switch -- Switch an arch project tree to a new branch/version/revision
+ # Usage: tla-switch [OPTION...] NEW
+ #
+diff -ruN tla-tools-0.31.orig/tla-update-ids.shpp tla-tools-0.31/tla-update-ids.shpp
+--- tla-tools-0.31.orig/tla-update-ids.shpp	2004-03-02 14:19:51.000000000 +0100
++++ tla-tools-0.31/tla-update-ids.shpp	2004-03-02 14:37:36.773607000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # tla-update-ids -- Handle adding arch id-tags to new files, removing
+ #	deleted explicit ids, and some renames
+ #

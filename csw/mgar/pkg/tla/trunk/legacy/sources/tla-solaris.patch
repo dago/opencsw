@@ -1,0 +1,69 @@
+diff -ru -x{arch} tla-ref/src/PLUGIN/auto tla/src/PLUGIN/auto
+--- tla-ref/src/PLUGIN/auto	2004-01-22 10:35:33.000000000 +0900
++++ tla/src/PLUGIN/auto	2004-01-06 13:57:02.000000000 +0900
+@@ -6,6 +6,10 @@
+ 
+ library-test socket-library -lsocket
+ 
++library-test net-library -lnsl
++
++library-test resolv-library -lresolv
++
+ gcc-test gcc-version
+ 
+ exec-suffix-test
+diff -ru -x{arch} tla-ref/src/build-tools/scripts/configure-top tla/src/build-tools/scripts/configure-top
+--- tla-ref/src/build-tools/scripts/configure-top	2004-01-22 10:35:33.000000000 +0900
++++ tla/src/build-tools/scripts/configure-top	2004-01-06 13:57:02.000000000 +0900
+@@ -2,7 +2,7 @@
+ # configure - The hackerlab configure script
+ #
+ ################################################################
+-# Copyright (C) 2001, 2002 Tom Lord
++# Copyright (C) 2001, 2002, 2004 Tom Lord
+ # 
+ # See the file "COPYING" for further information about
+ # the copyright and warranty status of this work.
+@@ -845,7 +845,7 @@
+ # make is in the works:
+ # 
+ 
+-cc_setting="`cat \"$optfile\" \"$tmpoptfile\" | grep -E -e '^string cc=' | tail -n 1 | sed -e 's/string cc=//'`"
++cc_setting="`cat \"$optfile\" \"$tmpoptfile\" | grep -E -e '^string cc=' | sed -n '$p' | sed -e 's/string cc=//'`"
+ if test -z "$cc_setting" ; then
+   CC=cc
+ else
+diff -ru -x{arch} tla-ref/src/tla/tests/changeset-tests/edit-tree-randomly tla/src/tla/tests/changeset-tests/edit-tree-randomly
+--- tla-ref/src/tla/tests/changeset-tests/edit-tree-randomly	2004-01-22 10:36:45.000000000 +0900
++++ tla/src/tla/tests/changeset-tests/edit-tree-randomly	2004-01-06 13:56:32.000000000 +0900
+@@ -1,7 +1,7 @@
+ # edit-tree-randomly:
+ #
+ ################################################################
+-# Copyright (C) 2003 Robert Anderson and Tom Lord
++# Copyright (C) 2003, 2004 Robert Anderson and Tom Lord
+ #
+ # See the file "COPYING" for further information about
+ # the copyright and warranty status of this work.
+@@ -409,7 +409,7 @@
+ 
+   num=`random_upto $n`
+ 
+-  name=`head -n $num ,,list | tail -n 1`
++  name=`sed -n "${num}p" ,,list`
+ 
+   echo -n "$name"
+ }
+diff -ru -x{arch} tla-ref/src/tla/tla/Makefile.in tla/src/tla/tla/Makefile.in
+--- tla-ref/src/tla/tla/Makefile.in	2004-01-22 10:36:56.000000000 +0900
++++ tla/src/tla/tla/Makefile.in	2004-01-06 13:56:35.000000000 +0900
+@@ -4,6 +4,9 @@
+ 				../libdate/libdate.a \
+ 				$(objroot)/hackerlab/libhackerlab/libhackerlab.a \
+ 				../libneon/libneon.a \
++				$(cfg__socket_library) \
++				$(cfg__resolv_library) \
++				$(cfg__net_library) \
+ 				-lm
+ 
+ mains			:=	tla.c
