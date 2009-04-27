@@ -1,0 +1,47 @@
+# vim: ft=perl
+# $Id: libmad,v 1.4 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'libmad';
+$version   = '0.15.1';
+my $addver    = 'b';
+$suffix    = "_rev=${addver}";
+
+$buildroot = "${builddir}/${progname}-${version}${addver}-buildroot";
+
+$category  = 'system';
+$vendor    = 'http://www.underbit.com/products/mad/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}${addver}.tar.gz");
+
+@patches   = (['libmad-pkgconfig.patch',   "${progname}-${version}${addver}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - MPEG Audio Decoder",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}${addver}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}${addver}
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+mkdir -p ${buildroot}/opt/csw/lib/pkgconfig
+cp mad.pc ${buildroot}/opt/csw/lib/pkgconfig/
+chmod 644 ${buildroot}/opt/csw/lib/pkgconfig/mad.pc
+EOF
