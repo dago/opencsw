@@ -1,0 +1,52 @@
+--- smime/lib/e-cert-db.c.orig	2004-09-27 10:58:59.686195000 -0400
++++ smime/lib/e-cert-db.c	2004-09-27 10:59:15.146208000 -0400
+@@ -102,6 +102,7 @@
+ static guint e_cert_db_signals[LAST_SIGNAL];
+ 
+ struct _ECertDBPrivate {
++	unsigned char very_secret;
+ };
+ 
+ #define PARENT_TYPE G_TYPE_OBJECT
+--- calendar/gui/e-cal-model-calendar.c.orig	2004-09-27 11:09:01.060427000 -0400
++++ calendar/gui/e-cal-model-calendar.c	2004-09-27 11:09:14.030440000 -0400
+@@ -28,6 +28,7 @@
+ #include "misc.h"
+ 
+ struct _ECalModelCalendarPrivate {
++	unsigned char very_secret;
+ };
+ 
+ static void ecmc_class_init (ECalModelCalendarClass *klass);
+--- calendar/gui/e-cal-model-tasks.c.orig	2004-09-27 11:10:06.350500000 -0400
++++ calendar/gui/e-cal-model-tasks.c	2004-09-27 11:10:20.470442000 -0400
+@@ -31,6 +31,7 @@
+ #include "misc.h"
+ 
+ struct _ECalModelTasksPrivate {
++	unsigned char very_secret;
+ };
+ 
+ static void ecmt_class_init (ECalModelTasksClass *klass);
+--- composer/e-msg-composer-select-file.h.orig	2005-03-26 19:49:35.143777000 -0500
++++ composer/e-msg-composer-select-file.h	2005-03-26 19:50:07.083699000 -0500
+@@ -28,7 +28,7 @@
+ struct _EMsgComposer;
+ 
+ typedef void (*EMsgComposerSelectFileFunc)(struct _EMsgComposer *composer, const char *filename);
+-typedef void (*EMsgComposerSelectAttachFunc)(struct _EMsgComposer *composer, GSList *names, int inline);
++typedef void (*EMsgComposerSelectAttachFunc)(struct _EMsgComposer *composer, GSList *names, int iinline);
+ 
+ void e_msg_composer_select_file(struct _EMsgComposer *composer, GtkWidget **w, EMsgComposerSelectFileFunc func, const char *title, int save);
+ void e_msg_composer_select_file_attachments(struct _EMsgComposer *composer, GtkWidget **, EMsgComposerSelectAttachFunc func);
+--- plugins/calendar-weather/calendar-weather.c.orig	2005-03-26 20:01:03.561198000 -0500
++++ plugins/calendar-weather/calendar-weather.c	2005-03-26 20:01:37.321123000 -0500
+@@ -107,7 +107,7 @@
+ 		g_object_unref (weather);
+ 
+ 	e_source_list_sync (source_list, NULL);
+-	return 0;
++	return;
+ }
+ 
+ static void

@@ -1,0 +1,11 @@
+--- mail/em-junk-filter.c.orig	2004-10-09 19:31:04.369997000 -0400
++++ mail/em-junk-filter.c	2004-10-09 19:31:52.620013000 -0400
+@@ -295,7 +295,7 @@
+ 		   i = 0;
+ 		   argv [i++] = "/bin/sh";
+ 		   argv [i++] = "-c";
+-		   argv [i++] = "ps ax|grep -v grep|grep -E 'spamd.*(\\-L|\\-\\-local)'|grep -E -v '\\ \\-p\\ |\\ \\-\\-port\\ '";
++		   argv [i++] = "/usr/bin/ps -ef|/usr/xpg4/bin/grep -v grep|/usr/xpg4/bin/grep -E 'spamd.*(\\-L|\\-\\-local)'|/usr/xpg4/bin/grep -E -v '\\ \\-p\\ |\\ \\-\\-port\\ '";
+ 		   argv[i] = NULL;
+ 
+ 		   if (pipe_to_sa (NULL, NULL, argv) != 0) {

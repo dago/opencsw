@@ -1,0 +1,77 @@
+# vim: ft=perl
+# $Id: evolution,v 1.38 2005/04/13 16:48:28 simigern Exp $
+
+$progname  = 'evolution';
+$version   = '2.2.2';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.gnome.org/projects/evolution/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+@patches   = ( ['evolution-nongcc-fixes.patch',   "${progname}-${version}", '-p0'],
+               ['evolution-psfix.patch', "${progname}-${version}", '-p0'],
+	       ['evolution-plugin-list.patch', "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - GNOME mail client and PIM",
+		dependencies => ['CSWcommon','CSWgnomespell','CSWgnomeicontheme'],
+		filelist     => [qw(opt)],
+		postinstall  => 'gconf-schema-update.postinstall',
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include -I${buildroot}/opt/csw/include"
+export CPPFLAGS="-I/opt/csw/include -I${buildroot}/opt/csw/include"
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/lib/evolution/nss/lib -L/opt/csw/lib/evolution/nss/lib'
+export LDFLAGS="\$LD_OPTIONS"
+cd ${builddir}
+export PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig:${buildroot}/opt/csw/lib/pkgconfig
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+
+sed -e 's| audio-inline | |g' configure | sed -e 's| new-mail-notify||g' >configure.new
+mv configure.new configure
+chmod 755 configure
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-krb5=/opt/csw --enable-nss=yes --with-openldap=/opt/csw --enable-ipv6=yes --without-broken-spool --enable-nntp=yes --with-nspr-includes=/opt/csw/lib/evolution/nss/include --with-nspr-libs=/opt/csw/lib/evolution/nss/lib --with-nss-includes=/opt/csw/lib/evolution/nss/lib/include --with-nss-libs=/opt/csw/lib/evolution/nss/lib --enable-pilot-conduits=yes
+
+touch help/C/evolution-2.0.xml
+touch help/C/evolution-2.0-C.omf
+touch help/C/evolution-2.0-C.omf.out
+
+gmake || exit 1
+gmake DESTDIR=${buildroot} install || exit 1
+
+
+
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+rm ${buildroot}/opt/csw/bin/evolution-2.2
+ln -s ../libexec/evolution-2.2 ${buildroot}/opt/csw/bin/evolution-2.2
+ln -s ../libexec/evolution-2.2 ${buildroot}/opt/csw/bin/evolution-nognome
+ln -s evolution-2.2 ${buildroot}/opt/csw/bin/evolution
+
+#remove mess from libtool-archives
+for i in ${buildroot}/opt/csw/lib/evolution/*/*.la; do
+        if [ -f "\${i}" ]; then
+                sed -e "s|[^ ]*${buildroot}[^ ]* *||g" "\${i}" >"\${i}.newbuild" && mv "\${i}.newbuild" "\${i}"
+        fi
+done
+
+EOF

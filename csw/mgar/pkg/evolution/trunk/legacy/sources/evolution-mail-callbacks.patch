@@ -1,0 +1,11 @@
+--- mail/mail-callbacks.h.orig	2004-03-07 18:27:27.905455000 +0100
++++ mail/mail-callbacks.h	2004-03-07 18:28:55.986146000 +0100
+@@ -129,7 +129,7 @@
+ void composer_send_cb      (EMsgComposer *composer, gpointer data);
+ void composer_save_draft_cb (EMsgComposer *composer, int quit, gpointer data);
+ 
+-void forward_messages	   (CamelFolder *folder, GPtrArray *uids, gboolean inline);
++void forward_messages	   (CamelFolder *folder, GPtrArray *uids, gboolean);
+ 
+ /* CamelStore callbacks */
+ void folder_created (CamelStore *store, const char *prefix, CamelFolderInfo *fi);

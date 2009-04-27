@@ -1,0 +1,20 @@
+--- configure.orig	2004-03-14 03:52:15.406174060 +0100
++++ configure	2004-03-14 03:52:36.489888010 +0100
+@@ -11734,7 +11734,7 @@
+ 	ac_cv_db3_ldadd=""
+ 
+ 	for name in db db3 db-3.1; do
+-		LIBS="$LIBS_save $with_db3_libs/lib${name}.a -pthread"
++		LIBS="$LIBS_save $with_db3_libs/lib${name}.a"
+ 		cat >conftest.$ac_ext <<_ACEOF
+ #line $LINENO "configure"
+ /* confdefs.h.  */
+@@ -11803,7 +11803,7 @@
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+ 
+-	LIBS="$DB3_LDADD $LIBS -pthread"
++	LIBS="$DB3_LDADD $LIBS"
+ 	if test "$cross_compiling" = yes; then
+   ac_cv_db3_lib_version_match=yes
+ else

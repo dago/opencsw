@@ -1,0 +1,121 @@
+--- evolution-data-server-1.0.0/addressbook/libebook/e-book.c.orig	2004-09-27 05:56:55.328187000 -0400
++++ evolution-data-server-1.0.0/addressbook/libebook/e-book.c	2004-09-27 05:57:35.848160000 -0400
+@@ -32,16 +32,14 @@
+        {								\
+ 	 g_log (G_LOG_DOMAIN,						\
+ 		G_LOG_LEVEL_CRITICAL,					\
+-		"file %s: line %d (%s): assertion `%s' failed",		\
++		"file %s: line %d: assertion `%s' failed",		\
+ 		__FILE__,						\
+ 		__LINE__,						\
+-		__PRETTY_FUNCTION__,					\
+ 		#expr);							\
+ 	 g_set_error (error, E_BOOK_ERROR, (error_code),                \
+-		"file %s: line %d (%s): assertion `%s' failed",		\
++		"file %s: line %d: assertion `%s' failed",		\
+ 		__FILE__,						\
+ 		__LINE__,						\
+-		__PRETTY_FUNCTION__,					\
+ 		#expr);							\
+ 	 return FALSE;							\
+        };				}G_STMT_END
+--- evolution-data-server-1.0.0/calendar/libecal/e-cal.c.orig	2004-09-27 06:02:06.222945000 -0400
++++ evolution-data-server-1.0.0/calendar/libecal/e-cal.c	2004-09-27 06:02:24.362926000 -0400
+@@ -126,16 +126,14 @@
+        {								\
+ 	 g_log (G_LOG_DOMAIN,						\
+ 		G_LOG_LEVEL_CRITICAL,					\
+-		"file %s: line %d (%s): assertion `%s' failed",		\
++		"file %s: line %d: assertion `%s' failed",		\
+ 		__FILE__,						\
+ 		__LINE__,						\
+-		__PRETTY_FUNCTION__,					\
+ 		#expr);							\
+ 	 g_set_error (error, E_CALENDAR_ERROR, (error_code),                \
+-		"file %s: line %d (%s): assertion `%s' failed",		\
++		"file %s: line %d: assertion `%s' failed",		\
+ 		__FILE__,						\
+ 		__LINE__,						\
+-		__PRETTY_FUNCTION__,					\
+ 		#expr);							\
+ 	 return FALSE;							\
+        };				}G_STMT_END
+--- evolution-data-server-1.0.0/calendar/libedata-cal/e-cal-backend.c.orig	2004-09-27 06:04:14.912978000 -0400
++++ evolution-data-server-1.0.0/calendar/libedata-cal/e-cal-backend.c	2004-09-27 06:04:43.372917000 -0400
+@@ -732,7 +732,7 @@
+ 	g_return_if_fail (E_IS_CAL_BACKEND (backend));
+ 
+ 	g_assert (CLASS (backend)->get_object_list != NULL);
+-	return (* CLASS (backend)->get_object_list) (backend, cal, sexp);
++	(* CLASS (backend)->get_object_list) (backend, cal, sexp);
+ }
+ 
+ /**
+--- evolution-data-server-1.0.0/calendar/backends/file/e-cal-backend-file-events.c.orig	2004-09-27 06:06:28.492978000 -0400
++++ evolution-data-server-1.0.0/calendar/backends/file/e-cal-backend-file-events.c	2004-09-27 06:08:50.382913000 -0400
+@@ -30,6 +30,7 @@
+ 
+ /* Private part of the CalBackendFileEvents structure */
+ struct _ECalBackendFileEventsPrivate {
++	unsigned char very_secret;
+ };
+ 
+ 
+--- evolution-data-server-1.0.0/calendar/backends/file/e-cal-backend-file-todos.c.orig	2004-09-27 06:09:35.912969000 -0400
++++ evolution-data-server-1.0.0/calendar/backends/file/e-cal-backend-file-todos.c	2004-09-27 06:10:30.842913000 -0400
+@@ -26,6 +26,7 @@
+ 
+ /* Private part of the ECalBackendFileTodos structure */
+ struct _ECalBackendFileTodosPrivate {
++	unsigned char very_secret;
+ };
+ 
+ 
+--- evolution-data-server-1.0.0/calendar/backends/groupwise/e-cal-backend-groupwise-utils.c.orig	2004-09-27 06:13:25.892943000 -0400
++++ evolution-data-server-1.0.0/calendar/backends/groupwise/e-cal-backend-groupwise-utils.c	2004-09-27 06:16:19.392917000 -0400
+@@ -599,7 +599,7 @@
+ 			alarm = e_cal_component_alarm_new ();
+ 			e_cal_component_alarm_set_action (alarm, E_CAL_COMPONENT_ALARM_DISPLAY);
+ 			trigger.type = E_CAL_COMPONENT_ALARM_TRIGGER_RELATIVE_START;
+-			trigger.u.rel_duration = (struct icaldurationtype) icaldurationtype_from_int (alarm_duration);
++			trigger.u.rel_duration = icaldurationtype_from_int (alarm_duration);
+ 			e_cal_component_alarm_set_trigger (alarm, trigger);
+ 			e_cal_component_add_alarm (comp, alarm);
+ 		}
+--- evolution-data-server-1.2.1/camel/camel-store.c.orig	2005-03-26 10:49:03.576595000 -0500
++++ evolution-data-server-1.2.1/camel/camel-store.c	2005-03-26 10:51:01.386522000 -0500
+@@ -1257,7 +1257,10 @@
+ 	CamelISubscribe *iface = camel_object_get_interface(store, camel_isubscribe_get_type());
+ 
+ 	if (iface && iface->subscribe)
+-		return iface->subscribe(store, folder_name, ex);
++	{
++		iface->subscribe(store, folder_name, ex);
++		return;
++	}
+ 
+ 	g_warning("Trying to invoke unimplemented subscribe method on a store");
+ }
+@@ -1267,7 +1270,10 @@
+ 	CamelISubscribe *iface = camel_object_get_interface(store, camel_isubscribe_get_type());
+ 
+ 	if (iface && iface->unsubscribe)
+-		return iface->unsubscribe(store, folder_name, ex);
++	{
++		iface->unsubscribe(store, folder_name, ex);
++		return;
++	}
+ 
+ 	g_warning("Trying to invoke unimplemented unsubscribe method on a store");
+ }
+--- evolution-data-server-1.2.1/calendar/backends/weather/e-weather-source.c.orig	2005-03-26 10:58:48.536596000 -0500
++++ evolution-data-server-1.2.1/calendar/backends/weather/e-weather-source.c	2005-03-26 10:59:39.186518000 -0500
+@@ -27,7 +27,7 @@
+ 	EWeatherSourceClass *class;
+ 	g_return_if_fail (source != NULL);
+ 	class = (EWeatherSourceClass*) G_OBJECT_GET_CLASS (source);
+-	return class->parse (source, done, data);
++	class->parse (source, done, data);
+ }
+ 
+ static void

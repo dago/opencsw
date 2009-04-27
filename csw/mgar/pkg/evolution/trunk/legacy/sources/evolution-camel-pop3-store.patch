@@ -1,0 +1,11 @@
+--- camel/providers/pop3/camel-pop3-store.c.orig	2004-03-07 13:34:04.219075000 +0100
++++ camel/providers/pop3/camel-pop3-store.c	2004-03-07 13:34:53.471146000 +0100
+@@ -530,7 +530,7 @@
+ 				      _("Unable to connect to POP server %s.\n"
+ 					"Error sending password: %s"),
+ 				      CAMEL_SERVICE (store)->url->host,
+-				      store->engine->line ? store->engine->line : _("Unknown error"));
++				      store->engine->line ? (char*)store->engine->line : _("Unknown error"));
+ 	
+ 	camel_pop3_engine_command_free(store->engine, pcp);
+ 	

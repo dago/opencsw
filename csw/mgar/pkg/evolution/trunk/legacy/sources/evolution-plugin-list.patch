@@ -1,0 +1,27 @@
+--- plugins/subject-thread/org-gnome-subject-thread.eplug.in.orig	2005-04-13 12:44:34.065699000 -0400
++++ plugins/subject-thread/org-gnome-subject-thread.eplug.in	2005-04-13 12:44:39.635639000 -0400
+@@ -11,4 +11,4 @@
+ 			</group>
+ 		</hook>
+ 	</e-plugin>
+-</e-plugin-list>
+\ No newline at end of file
++</e-plugin-list>
+--- plugins/save-calendar/org-gnome-save-calendar.eplug.in.orig	2005-04-13 12:42:26.555716000 -0400
++++ plugins/save-calendar/org-gnome-save-calendar.eplug.in	2005-04-13 12:42:38.335820000 -0400
+@@ -15,4 +15,4 @@
+ 			</menu>
+ 		</hook>
+ 	</e-plugin>
+-</e-plugin-list>
+\ No newline at end of file
++</e-plugin-list>
+--- plugins/select-one-source/org-gnome-select-one-source.eplug.in.orig	2005-04-13 12:43:42.515715000 -0400
++++ plugins/select-one-source/org-gnome-select-one-source.eplug.in	2005-04-13 12:43:50.255638000 -0400
+@@ -15,4 +15,4 @@
+ 			</menu>
+ 		</hook>
+ 	</e-plugin>
+-</e-plugin-list>
+\ No newline at end of file
++</e-plugin-list>

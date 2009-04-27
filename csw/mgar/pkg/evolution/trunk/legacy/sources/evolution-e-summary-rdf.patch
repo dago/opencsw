@@ -1,0 +1,11 @@
+--- my-evolution/e-summary-rdf.c.orig	2004-03-07 18:20:05.055034000 +0100
++++ my-evolution/e-summary-rdf.c	2004-03-07 18:20:26.230345000 +0100
+@@ -194,7 +194,7 @@
+ 		charset = NULL;
+ 	} else {
+ 		/* bad/missing encoding, fallback to latin1 (locale?) */
+-		charset = r->cache->encoding ? r->cache->encoding : "iso-8859-1";
++		charset = r->cache->encoding ? (char*)r->cache->encoding : "iso-8859-1";
+ 	}
+ 
+ 	/* FIXME: Need arrows */
