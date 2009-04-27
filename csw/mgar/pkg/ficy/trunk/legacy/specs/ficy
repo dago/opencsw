@@ -1,0 +1,45 @@
+# vim: ft=perl
+# $Id: ficy,v 1.2 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'fIcy';
+$version   = '1.0.4';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ficy.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-1_0_4.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "ficy",
+		filename     => "ficy",
+		name         => "ficy - an icecast/shoutcast stream grabber",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-1_0_4/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib -lnsl -lsocket -lresolv'
+cd ${progname}-1_0_4
+gmake || exit 1
+mkdir -p ${buildroot}/opt/csw/bin
+cp fIcy ${buildroot}/opt/csw/bin/
+mkdir -p ${buildroot}/opt/csw/share/doc/ficy
+cp AUTHORS NEWS README TODO ${buildroot}/opt/csw/share/doc/ficy/
+./ohg <README >${buildroot}/opt/csw/share/doc/ficy/README.html
+EOF
