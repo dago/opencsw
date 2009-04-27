@@ -1,0 +1,55 @@
+# vim: ft=perl
+# $Id: gnome-session,v 1.8 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'gnome-session';
+$version   = '2.8.1';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://ftp.gnome.org/pub/GNOME/sources/gnome-session/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.bz2");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => "gnomesession",
+		filename     => "gnome_session",
+		name         => "gnome_session - The GNOME 2 Session Manager",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		postinstall  => 'gconf-schema-update.postinstall',
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-L${buildroot}/opt/csw/lib -R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+cd ${progname}-${version}
+
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info || exit 1
+
+#tmp remove fuckup
+rm intltool-{extract,merge,update}
+ln -s /opt/csw/bin/intltool-{extract,merge,update} .
+
+gmake || exit 1
+gmake DESTDIR=${buildroot} GCONF_SCHEMA_CONFIG_SOURCE=xml::${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults install || exit 1
+
+rm -rf ${buildroot}/opt/csw/etc/gconf/gconf.xml.defaults
+
+EOF
