@@ -1,0 +1,22 @@
+--- libsn/sn-launcher.c.orig	2002-11-30 12:58:17.000000000 -0500
++++ libsn/sn-launcher.c	2004-03-29 15:41:49.000000000 -0500
+@@ -175,8 +175,7 @@
+   
+   if (context->startup_id != NULL)
+     {
+-      fprintf (stderr, "%s called twice for the same SnLaunchContext\n",
+-               __FUNCTION__);
++      fprintf (stderr, "sn_launcher_context_initiate called twice for the same SnLaunchContext\n");
+       return;
+     }
+ 
+@@ -361,8 +360,7 @@
+ 
+ /* FIXME use something pluggable, not fprintf */
+ #define WARN_ALREADY_INITIATED(context) do { if ((context)->startup_id != NULL) {               \
+-      fprintf (stderr, "%s called for an SnLauncherContext that has already been initiated\n", \
+-               __FUNCTION__);                                                                  \
++      fprintf (stderr, "sn_launcher_context_setup_child_process called for an SnLauncherContext that has already been initiated\n");                                                                  \
+       return;                                                                                  \
+ } } while (0)
+ 
