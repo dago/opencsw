@@ -1,0 +1,45 @@
+# vim: ft=perl
+# $Id: wmcliphist,v 1.4 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'wmcliphist';
+$version   = '0.6';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://linux.nawebu.cz/wmcliphist/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-latest.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - Clipboard history dockapp for Window Maker",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include -DPATH_MAX=1024 -DS_IRUSR=00400 -DS_IWUSR=00200'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib'
+cd ${progname}-${version}
+gmake || exit 1
+mkdir -p ${buildroot}/opt/csw/bin
+gmake DESTDIR=${buildroot}/opt/csw/bin install
+mkdir -p ${buildroot}/opt/csw/share/doc/wmcliphist
+cp AUTHORS INSTALL NEWS ChangeLog README ${buildroot}/opt/csw/share/doc/wmcliphist
+cp .wmcliphistrc ${buildroot}/opt/csw/share/doc/wmcliphist/wmcliphistrc.sample
+EOF
