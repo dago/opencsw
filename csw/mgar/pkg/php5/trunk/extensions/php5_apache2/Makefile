@@ -4,9 +4,8 @@ PACKAGES += CSWap2modphp5
 
 CATALOGNAME_CSWap2modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2modphp5 = PHP 5 - Apache 2.2.x Module
-REQUIRED_PKGS_CSWap2modphp5  = CSWap2prefork CSWbdb44 CSWiconv 
-REQUIRED_PKGS_CSWap2modphp5 += CSWkrb5lib CSWexpat CSWlibmm
-REQUIRED_PKGS_CSWap2modphp5 += CSWlibxml2 CSWosslrt CSWphp5 CSWzlib
+REQUIRED_PKGS_CSWap2modphp5  = CSWphp5 CSWap2prefork CSWiconv 
+REQUIRED_PKGS_CSWap2modphp5 += CSWexpat CSWlibxml2 CSWzlib
 
 DISTFILES += CSWap2modphp5.preremove httpd-php5.conf.CSW
 DISTFILES += CSWap2modphp5.postinstall CSWap2modphp5.space
