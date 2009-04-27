@@ -1,0 +1,57 @@
+# vim: ft=perl
+# $Id: scrollkeeper,v 1.7 2005/03/26 12:38:11 simigern Exp $
+
+$progname  = 'scrollkeeper';
+$version   = '0.3.14';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://scrollkeeper.sourceforge.net/ packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}.tar.gz");
+
+#@patches   = (['filename.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - a cataloging system for documentation on open systems",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)],
+		#postinstall  => "scrollkeeper.postinstall",
+		exclude_dependencies => ['SUNWfreetype2','SUNWgnome-base-libs','SUNWgnome-libs','SUNWgnome-audio','SUNWgnome-component','SUNWgnome-config','SUNWgnome-vfs','SUNWlibpopt']
+		});
+
+$copyright = "${progname}-${version}/COPYING";
+
+$suffix='.02';
+
+$build     = <<"EOF";
+export CC=cc
+export CXX=CC
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+if [ "${arch}" = "sparc" ]; then
+	export CFLAGS='-fast -xarch=v8'
+else
+	export CFLAGS='-xO3 -xspace -xarch=386'
+fi
+export CFLAGS="\$CFLAGS -I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LD_OPTIONS='-R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+export LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib -L${buildroot}/opt/csw/lib'
+cd ${progname}-${version}
+export PATH="${sunwspropath}:/usr/ccs/bin:/opt/csw/bin:/usr/bin:/usr/openwin/bin"
+./configure --prefix=/opt/csw --mandir=/opt/csw/share/man --infodir=/opt/csw/share/info --with-omfdirs=/opt/csw/share/omf --with-xml-catalog=/opt/csw/etc/xml/catalog
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin"
+sed -e 's|echo "`date|#echo "`date|' Makefile | sed -e 's|\$(DESTDIR)\$(bindir)/scrollkeeper-rebuilddb -q|#\$(DESTDIR)\$(bindir)/scrollkeeper-rebuilddb -q|' >Makefile.new
+mv Makefile.new Makefile
+gmake
+gmake DESTDIR=${buildroot} install
+mv ${buildroot}/opt/csw/etc/scrollkeeper.conf ${buildroot}/opt/csw/etc/scrollkeeper.conf.CSW
+
+sed -e 's|scrollkeeper-config|/opt/csw/bin/scrollkeeper-config|g' ${buildroot}/opt/csw/bin/scrollkeeper-rebuilddb | sed -e 's|scrollkeeper-update|/opt/csw/bin/scrollkeeper-update|g' >${buildroot}/opt/csw/bin/scrollkeeper-rebuilddb.new
+mv ${buildroot}/opt/csw/bin/scrollkeeper-rebuilddb.new ${buildroot}/opt/csw/bin/scrollkeeper-rebuilddb
+chmod 755 ${buildroot}/opt/csw/bin/scrollkeeper-rebuilddb
+
+EOF

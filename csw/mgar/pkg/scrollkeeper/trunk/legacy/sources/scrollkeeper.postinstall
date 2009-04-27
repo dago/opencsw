@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+PATH="/opt/csw/bin:${PATH}"
+export PATH
+
+test -f "${PKG_ROOT_DIR}/opt/csw/etc/scrollkeeper.conf" || cp "${PKG_ROOT_DIR}/opt/csw/etc/scrollkeeper.conf.CSW" "${PKG_ROOT_DIR}/opt/csw/etc/scrollkeeper.conf"
+chroot "${PKG_ROOT_DIR}" /opt/csw/bin/scrollkeeper-rebuilddb -q -p /opt/csw/var/lib/scrollkeeper
+
