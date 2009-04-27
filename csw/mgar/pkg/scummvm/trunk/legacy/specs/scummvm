@@ -1,0 +1,45 @@
+# vim: ft=perl
+# $Id: scummvm,v 1.7 2004/12/24 14:51:40 simigern Exp $
+
+$progname  = 'scummvm';
+$version   = '0.7.0';
+#my $addver    = "b";
+#$suffix    = "_rev=${addver}";
+my $addver="";
+
+$buildroot = "${builddir}/${progname}-${version}${addver}-buildroot";
+
+$category  = 'application';
+$vendor    = 'http://www.scummvm.org packaged for CSW by Michael Gernoth';
+
+@sources   = ("${progname}-${version}${addver}.tar.bz2");
+
+@patches   = (['scummvm-solaris.fixes.patch',   "${progname}-${version}", '-p0']);
+
+@packages  = ({
+		pkgname      => $progname,
+		filename     => $progname,
+		name         => "$progname - virtual machine for several classic graphical point-and-click adventure games",
+		dependencies => ['CSWcommon'],
+		filelist     => [qw(opt)]
+		});
+
+$copyright = "${progname}-${version}${addver}/COPYING";
+
+$build     = <<"EOF";
+export PATH="${sunwspropath}:/usr/ccs/bin:/usr/bin:/usr/openwin/bin:/opt/csw/bin:${builddir}/${progname}-${version}${addver}"
+export CFLAGS="-I/opt/csw/include"
+export CPPFLAGS='-I/opt/csw/include'
+export LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib' # -lgcc_s'
+export LD_RUN_PATH='/opt/csw/lib'
+cd ${progname}-${version}${addver}
+ln -s /opt/csw/bin/ginstall install
+./configure --with-vorbis-prefix=/opt/csw --prefix=/opt/csw --mandir=/opt/csw/share/man
+gmake || exit 1
+gmake PREFIX=${buildroot}/opt/csw MANDIR=${buildroot}/opt/csw/share/man BINDIR=${buildroot}/opt/csw/bin install
+gmkdir -p ${buildroot}/opt/csw/share/applications
+cp scummvm.desktop ${buildroot}/opt/csw/share/applications
+#gmkdir -p ${buildroot}/opt/csw/bin ${buildroot}/opt/csw/share/doc/${progname}
+#cp scummvm ${buildroot}/opt/csw/bin
+#cp NEWS README ${buildroot}/opt/csw/share/doc/${progname}
+EOF

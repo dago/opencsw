@@ -1,0 +1,23 @@
+--- base/gameDetector.cpp.orig	2004-12-24 09:10:42.958207000 -0500
++++ base/gameDetector.cpp	2004-12-24 09:13:03.298223000 -0500
+@@ -37,6 +37,7 @@
+ #endif
+ 
+ #ifdef UNIX
++#include <errno.h>
+ #include <sys/errno.h>
+ #include <sys/stat.h>
+ #ifdef MACOSX
+--- backends/midi/mt32/mt32emu.h.orig	2004-12-24 09:29:26.658230000 -0500
++++ backends/midi/mt32/mt32emu.h	2004-12-24 09:34:35.428219000 -0500
+@@ -56,6 +56,10 @@
+ #define MT32EMU_USE_MMX 0
+ #endif
+ 
++#define powf pow
++#define logf log
++#define expf exp
++
+ #include "freeverb.h"
+ 
+ #include "structures.h"
