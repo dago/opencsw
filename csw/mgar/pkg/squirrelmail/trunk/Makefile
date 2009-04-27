@@ -13,6 +13,7 @@ define BLURB
 	MIME support, address books, and folder manipulation. 
 endef
 
+ARCHALL = 1
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
@@ -20,13 +21,18 @@ PACKAGES = CSWsquirrelmail
 CATALOGNAME_CSWsquirrelmail = squirrelmail
 SPKG_DESC_CSWsquirrelmail = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWsquirrelmail  = CSWimaprt
+REQUIRED_PKGS_CSWsquirrelmail  = CSWimap CSWapache2c
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_SCRIPTS = cswize
 
+configure-cswize:
+	@(perl -i -pe 's|/var/local|/opt/csw|' $(WORKSRC)/config/config_default.php)
+	@(perl -i -pe 's|/usr/sbin/sendmail|/usr/lib/sendmail|' \
+		        $(WORKSRC)/config/config_default.php)
+	@$(MAKECOOKIE)
 
 include gar/category.mk
