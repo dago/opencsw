@@ -1,0 +1,56 @@
+--- git-1.6.1.3/Documentation/Makefile.orig	2009-02-07 20:46:30.000000000 +0100
++++ git-1.6.1.3/Documentation/Makefile	2009-02-18 20:53:41.159467914 +0100
+@@ -57,6 +57,8 @@
+ -include ../config.mak.autogen
+ -include ../config.mak
+ 
++SHELL = $(SHELL_PATH)
++
+ ifdef ASCIIDOC8
+ ASCIIDOC_EXTRA += -a asciidoc7compatible
+ endif
+@@ -108,7 +110,7 @@
+ 	fi
+ 
+ install-html: html
+-	sh ./install-webdoc.sh $(DESTDIR)$(htmldir)
++	$(SHELL) ./install-webdoc.sh $(DESTDIR)$(htmldir)
+ 
+ ../GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	$(MAKE) -C ../ GIT-VERSION-FILE
+@@ -170,7 +172,7 @@
+ 
+ technical/api-index.txt: technical/api-index-skel.txt \
+ 	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
+-	cd technical && sh ./api-index.sh
++	cd technical && $(SHELL) ./api-index.sh
+ 
+ $(patsubst %,%.html,$(API_DOCS) technical/api-index): %.html : %.txt
+ 	$(ASCIIDOC) -b xhtml11 -f asciidoc.conf \
+@@ -206,7 +208,7 @@
+ 
+ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	$(RM) $@+ $@
+-	sh ./howto-index.sh $(wildcard howto/*.txt) >$@+
++	$(SHELL) ./howto-index.sh $(wildcard howto/*.txt) >$@+
+ 	mv $@+ $@
+ 
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+@@ -220,14 +222,14 @@
+ 	mv $@+ $@
+ 
+ install-webdoc : html
+-	sh ./install-webdoc.sh $(WEBDOC_DEST)
++	$(SHELL) ./install-webdoc.sh $(WEBDOC_DEST)
+ 
+ quick-install: quick-install-man
+ 
+ quick-install-man:
+-	sh ./install-doc-quick.sh $(DOC_REF) $(DESTDIR)$(mandir)
++	$(SHELL) ./install-doc-quick.sh $(DOC_REF) $(DESTDIR)$(mandir)
+ 
+ quick-install-html:
+-	sh ./install-doc-quick.sh $(HTML_REF) $(DESTDIR)$(htmldir)
++	$(SHELL) ./install-doc-quick.sh $(HTML_REF) $(DESTDIR)$(htmldir)
+ 
+ .PHONY: .FORCE-GIT-VERSION-FILE
