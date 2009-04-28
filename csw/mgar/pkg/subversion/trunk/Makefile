@@ -80,7 +80,7 @@ DISTFILES += fixme.sh
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
 PATCHFILES += javahl_headers_for_nested_classes.diff
-PATCHFILES += subversion156.diff
+PATCHFILES += subversion161.diff
 
 DEPENDS = server/apache2
 DEPENDS = lib/neon
@@ -113,19 +113,20 @@ TEST_TARGET = check
 TEST_SCRIPTS = skip
 
 test-skip:
-	@$(DONADA)
+	@$(MAKECOOKIE)
 
 include gar/category.mk
 
 BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
-PI_DEPENDS  = $(BINDING_TARGETS)
+PI_DEPENDS  = install-extras
+PI_DEPENDS += $(BINDING_TARGETS)
 PI_DEPENDS += copy-templates
 PI_DEPENDS += fix-install
 
 post-install-modulated: $(PI_DEPENDS)
-	$(DONADA)
+	$(MAKECOOKIE)
 
 post-configure-modulated:
 	@echo "~~~ Fixing Libtool ~~~"
@@ -147,7 +148,7 @@ post-configure-modulated:
 	else \
 	    perl -i -pe 's|-xarch=386|-march=i386|' $(WORKSRC)/*.gcc; \
 	fi )
-	$(DONADA)
+	$(MAKECOOKIE)
 
 fix-install:
 	@(grm -fr $(DESTDIR)$(prefix)/lib/perl/5.8.8)
@@ -160,7 +161,16 @@ copy-templates:
 	ginstall -m 0644 \
 		$(WORKDIR)/svn_access.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc
-	$(DONADA)
+	$(MAKECOOKIE)
+
+install-extras:
+	@(ginstall -d $(DESTDIR)$(docdir)/tools)
+	@(ginstall -d $(DESTDIR)$(docdir)/contrib)
+	@(gcp -R $(WORKSRC)/tools/* $(DESTDIR)$(docdir)/tools/)
+	@(gcp -R $(WORKSRC)/contrib/* $(DESTDIR)$(docdir)/contrib/)
+	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-tools
+	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-contrib
+	@$(MAKECOOKIE)
 
 svn-python:
 	@echo " ==> Building Python bindings"
@@ -170,7 +180,7 @@ svn-python:
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
 	#@$(TEST_ENV)   gmake -C $(WORKSRC) check-swig-py
 	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py 
-	$(DONADA)
+	$(MAKECOOKIE)
 
 svn-perl:
 	@echo " ==> Building Perl bindings"
@@ -180,7 +190,7 @@ svn-perl:
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-pl
 	#@$(TEST_ENV)   gmake -C $(WORKSRC) check-swig-pl
 	@$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
-	$(DONADA)
+	$(MAKECOOKIE)
 
 svn-ruby:
 	@echo " ==> Building Ruby bindings"
@@ -188,13 +198,13 @@ svn-ruby:
 	$(BUILD_ENV) gmake -f Makefile.gcc -C $(WORKSRC) swig-rb
 	#@$(TEST_ENV) gmake -f Makefile.gcc -C $(WORKSRC) check-swig-rb
 	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-swig-rb
-	$(DONADA)
+	$(MAKECOOKIE)
 
 svn-java:
 	@echo " ==> Building Java bindings"
 	@touch $(WORKSRC)/subversion/bindings/javahl/native/*.c
 	$(BUILD_ENV)   gmake -C $(WORKSRC) javahl;
 	$(INSTALL_ENV) gmake -C $(WORKSRC) install-javahl;
-	$(DONADA)
+	$(MAKECOOKIE)
 
 
