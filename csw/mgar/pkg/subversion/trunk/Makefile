@@ -164,10 +164,10 @@ copy-templates:
 	$(MAKECOOKIE)
 
 install-extras:
-	@(ginstall -d $(DESTDIR)$(docdir)/tools)
-	@(ginstall -d $(DESTDIR)$(docdir)/contrib)
-	@(gcp -R $(WORKSRC)/tools/* $(DESTDIR)$(docdir)/tools/)
-	@(gcp -R $(WORKSRC)/contrib/* $(DESTDIR)$(docdir)/contrib/)
+	@(ginstall -d $(DESTDIR)$(docdir)/subversion/tools)
+	@(ginstall -d $(DESTDIR)$(docdir)/subversion/contrib)
+	@(gcp -R $(WORKSRC)/tools/* $(DESTDIR)$(docdir)/subversion/tools/)
+	@(gcp -R $(WORKSRC)/contrib/* $(DESTDIR)$(docdir)/subversion/contrib/)
 	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-tools
 	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-contrib
 	@$(MAKECOOKIE)
