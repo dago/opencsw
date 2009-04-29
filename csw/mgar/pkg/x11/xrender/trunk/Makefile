@@ -4,36 +4,32 @@ CATEGORIES = x11
 
 DESCRIPTION = X Render extension library
 define BLURB
-The X Rendering Extension (Render) introduces digital image composition as the foundation of a new rendering model within the X Window System. Rendering geometric figures is accomplished by client-side tesselation into either triangles or trapezoids.
+  The X Rendering Extension (Render) introduces digital image composition as
+  the foundation of a new rendering model within the X Window System.
+  Rendering geometric figures is accomplished by client-side tesselation
+  into either triangles or trapezoids.
 endef
 
-MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
-DISTFILES = libXrender-$(GARVERSION).tar.gz
-PKGDIST = libXrender-$(GARVERSION).tar.gz
+MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
+DISTNAME = libXrender-$(GARVERSION)
+DISTFILES = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = libXrender-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
-SPKG_DESC_CSWrenderdev  = $(DESCRIPTION) development package
-
-DISTFILES    += $(call admfiles,CSWlibxrender, )
-DISTFILES    += $(call admfiles,CSWrenderdev, )
-
-PKGFILES_CSWrenderdev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWrenderdev += $(prefix)/X11/include/.*
-PKGFILES_CSWrenderdev += $(prefix)/X11/lib/.*\.a
-PKGFILES_CSWrenderdev += $(prefix)/X11/lib/pkgconfig/.*
+PACKAGES = CSWlibxrender CSWrenderdev
 
 REQUIRED_PKGS_CSWrenderdev  = CSWlibxrender
 REQUIRED_PKGS_CSWlibxrender = CSWlibx11
 
-BUILD64 = 1 
+SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
+SPKG_DESC_CSWrenderdev  = $(DESCRIPTION) development package
 
-post-extract:
-	( cd  $(WORKROOTDIR)/build-$(firstword $(MODULATIONS)) ; \
-		mv libXrender-$(GARVERSION) $(DISTNAME) )
-	@$(MAKECOOKIE)
+PKGFILES_CSWrenderdev  = $(PKGFILES_DEVEL)
+
+BUILD64 = 1 
+NOARCHLIST = 1
+CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
