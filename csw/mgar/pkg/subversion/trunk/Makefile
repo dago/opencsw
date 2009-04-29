@@ -30,6 +30,7 @@ WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 PACKAGES  = CSWsvn CSWsvn-devel CSWap2svn CSWpmsvn
 PACKAGES += CSWpysvn CSWrbsvn CSWjavasvn
+ARCHALL_CSWsvn-devel = 1
 
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
@@ -40,14 +41,14 @@ SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
 REQUIRED_PKGS_CSWsvn-devel = CSWsvn
 SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2
-CATALOGNAME_CSWap2svn      = ap2svn
+CATALOGNAME_CSWap2svn      = ap2_subversion
 REQUIRED_PKGS_CSWap2svn    = CSWsvn CSWggettextrt CSWiconv
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
 REQUIRED_PKGS_CSWjavasvn   = CSWsvn CSWapache2rt CSWneon CSWoldaprt
 REQUIRED_PKGS_CSWjavasvn  += CSWbdb44 CSWexpat CSWggettextrt CSWiconv 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
-CATALOGNAME_CSWpmsvn       = pmsvn
+CATALOGNAME_CSWpmsvn       = pm_subversion
 REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl CSWapache2rt CSWbdb44 CSWexpat 
 REQUIRED_PKGS_CSWpmsvn    += CSWggettextrt CSWiconv CSWoldaprt
 SPKG_DESC_CSWpysvn         = Subversion Python Language Binding
