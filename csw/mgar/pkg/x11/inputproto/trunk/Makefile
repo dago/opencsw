@@ -15,7 +15,6 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL = 1
-BUILD64 = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 include gar/category.mk
