@@ -37,6 +37,8 @@ REQUIRED_PKGS_CSWlibcairo     += CSWzlib
 REQUIRED_PKGS_CSWlibcairodevel = CSWlibcairo
 REQUIRED_PKGS_CSWlibcairodoc   = 
 
+ARCHALL_CSWlibcairodoc = 1
+
 # Wait for libpixman, libfontconfig and libXrender to be 64 bit
 #BUILD64 = 1
 
