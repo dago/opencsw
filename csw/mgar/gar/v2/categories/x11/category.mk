@@ -14,24 +14,27 @@ endif
 # Preprocessor flags
 
 # Linker flags
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+#LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
 
 # Defines some tools used by autostuff
 GREP = ggrep
+_CATEGORY_COMMON_EXPORTS = GREP
 
 # export the variables
-export LDFLAGS CXXFLAGS CFLAGS CPPFLAGS GREP
+#export LDFLAGS CXXFLAGS CFLAGS CPPFLAGS GREP
 
 # pkg-config options
-_CATEGORY_PKG_CONFIG_PATH = $(abspath $(prefix)/X11/lib/$(MM_LIBDIR)/pkgconfig)
+#_CATEGORY_PKG_CONFIG_PATH = $(abspath $(prefix)/X11/lib/$(MM_LIBDIR)/pkgconfig)
+
+prefix = $(BUILD_PREFIX)/X11
 
 # Configure common options
-CONFIGURE_ARGS  = --prefix=/opt/csw/X11 
-CONFIGURE_ARGS += --exec-prefix=/opt/csw/X11 
-CONFIGURE_ARGS += --libdir=/opt/csw/X11/lib
-CONFIGURE_ARGS += --includedir=/opt/csw/X11/include
-CONFIGURE_ARGS += --datadir=/opt/csw/X11/share
-CONFIGURE_ARGS += --mandir=/opt/csw/X11/share/man
+#CONFIGURE_ARGS  = --prefix=/opt/csw/X11 
+#CONFIGURE_ARGS += --exec-prefix=/opt/csw/X11 
+#CONFIGURE_ARGS += --libdir=/opt/csw/X11/lib
+#CONFIGURE_ARGS += --includedir=/opt/csw/X11/include
+#CONFIGURE_ARGS += --datadir=/opt/csw/X11/share
+#CONFIGURE_ARGS += --mandir=/opt/csw/X11/share/man
 
 # No tests scripts, thus there is no "gmake test" target
 TEST_SCRIPTS      = 

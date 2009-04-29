@@ -121,6 +121,8 @@ binpath_install    ?= $(BUILD_PREFIX)/bin
 binpath            ?= $(abspath $(binpath_install)/$(MM_BINDIR))
 sbinpath_install   ?= $(BUILD_PREFIX)/sbin
 sbinpath           ?= $(abspath $(sbinpath_install)/$(MM_BINDIR))
+libpath_install    ?= $(BUILD_PREFIX)/lib
+libpath            ?= $(abspath $(libpath_install)/$(MM_LIBDIR))
 
 # DESTDIR is used at INSTALL TIME ONLY to determine what the
 # filesystem root should be.
@@ -448,10 +450,10 @@ ifndef NORUNPATH
 # may not be a subdirectory for the 32-bit standard case (this would normally
 # be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .). This is most likely
 # the case for libraries in $(EXTRA_LIBS) for which no links generated in CSWcommon.
-RUNPATH_DIRS ?= $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_DIRS)
+RUNPATH_DIRS ?= $(libpath_install) $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_DIRS)
 
 ifndef NOISALIST
-RUNPATH_ISALIST ?= $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_ISALIST)
+RUNPATH_ISALIST ?= $(libpath_install) $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_ISALIST)
 endif
 
 # Iterate over all directories in RUNPATH_DIRS, prefix each directory with one
@@ -493,7 +495,7 @@ LD_OPTIONS ?= $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS)
 PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(binpath_install)/$(MM_BINDIR)):$(DESTDIR)$(binpath_install):$(abspath $(DESTDIR)$(sbinpath_install)/$(MM_BINDIR)):$(DESTDIR)$(sbinpath_install):)$(abspath $(binpath_install)/$(MM_BINDIR)):$(binpath_install):$(abspath $(sbinpath_install)/$(MM_BINDIR)):$(sbinpath_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/openwin/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_DIRS ?= $(libdir_install) $(EXTRA_PKG_CONFIG_DIRS)
+PKG_CONFIG_DIRS ?= $(libpath_install) $(libdir_install) $(EXTRA_PKG_CONFIG_DIRS)
 PKG_CONFIG_PATH ?= $(call MAKEPATH,$(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig)) $(_CATEGORY_PKG_CONFIG_PATH) $(EXTRA_PKG_CONFIG_PATH))
 
 #
@@ -557,7 +559,7 @@ ifeq ($(origin GARPKG_EXPORTS), undefined)
 GARPKG_EXPORTS += GARCH GAROSREL GARPACKAGE
 endif
 
-COMMON_EXPORTS ?= $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS)
+COMMON_EXPORTS ?= $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS) $(_CATEGORY_COMMON_EXPORTS)
 
 # LD_OPTIONS = $(LINKER_FLAGS)
 ifneq ($(LD_OPTIONS),)
