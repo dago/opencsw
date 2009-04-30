@@ -12,6 +12,7 @@ IPREFIX   = $(I386_BASE)/$(MPREFIX)
 PPREFIX   = $(PKGROOT)/$(MPREFIX)
 
 AMD_MERGE_TARGETS  = merge-dirs-amd
+AMD_MERGE_TARGETS += merge-fix-links
 AMD_MERGE_TARGETS += merge-i386-files
 AMD_MERGE_TARGETS += merge-amd64-files
 
@@ -24,10 +25,36 @@ merge-dirs-amd:
 	$(_DBG)(ginstall -d $(PPREFIX)/bin/i386)
 	$(_DBG)$(MAKECOOKIE)
 
+## Remove the Hard Links and re-create as files
+merge-fix-links:
+	@echo "[===== Merging Fixing Hard Links =====]"
+	$(_DBG)(cd $(IPREFIX)/bin; grm -f *gcc *c++ g++ gcj gfortran)
+	$(_DBG)(cd $(IPREFIX)/bin; \
+		gcp sparc-sun-solaris2.8-gcc-4.3.3 sparc-sun-solaris2.8-gcc)
+	$(_DBG)(cd $(IPREFIX)/bin; gcp sparc-sun-solaris2.8-gcc-4.3.3 gcc)
+	$(_DBG)(cd $(IPREFIX)/bin; \
+		gcp sparc-sun-solaris2.8-g++ sparc-sun-solaris2.8-c++)
+	$(_DBG)(cd $(IPREFIX)/bin; gcp sparc-sun-solaris2.8-g++ g++)
+	$(_DBG)(cd $(IPREFIX)/bin; gcp sparc-sun-solaris2.8-g++ c++)
+	$(_DBG)(cd $(IPREFIX)/bin; gcp sparc-sun-solaris2.8-gcj gcj)
+	$(_DBG)(cd $(IPREFIX)/bin; gcp sparc-sun-solaris2.8-gfortran gfortran)
+	$(_DBG)(cd $(APREFIX)/bin; grm -f *gcc *c++ g++ gcj gfortran)
+	$(_DBG)(cd $(APREFIX)/bin; \
+		gcp sparc-sun-solaris2.8-gcc-4.3.3 sparc-sun-solaris2.8-gcc)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-gcc-4.3.3 gcc)
+	$(_DBG)(cd $(APREFIX)/bin; \
+		gcp sparc-sun-solaris2.8-g++ sparc-sun-solaris2.8-c++)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-g++ g++)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-g++ c++)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-gcj gcj)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-gfortran gfortran)
+	$(_DBG)$(MAKECOOKIE)
+
 merge-i386-files:
 	@echo "[===== Merging isa-i386 =====]"
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/bin $(PKGROOT))
-	$(_DBG)(cd $(IPREFIX)/bin; /usr/bin/pax -rw -v *solaris2* $(PPREFIX)/bin/amd64)
+	$(_DBG)(cd $(IPREFIX)/bin; \
+			/usr/bin/pax -rw -v *solaris2* $(PPREFIX)/bin/i386)
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/include $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/info $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/man $(PKGROOT))
