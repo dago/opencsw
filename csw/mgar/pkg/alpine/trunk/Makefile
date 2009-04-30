@@ -58,7 +58,7 @@ export LIBS
 
 TEST_TARGET = check
 
-REQUIRED_PKGS  = CSWgcc3corert CSWggettextrt CSWiconv
+REQUIRED_PKGS  = CSWgcc4corert CSWggettextrt CSWiconv
 REQUIRED_PKGS += CSWkrb5lib CSWlibnet CSWncurses CSWaspell
 REQUIRED_PKGS += CSWoldaprt CSWosslrt CSWsasl CSWtcl
 
