@@ -91,31 +91,35 @@ NEW_CONFIGURE_ARGS = $(shell echo $(CONFIGURE_ARGS) |sed -e 's/apxs2/apxs/' \
 
 # Copy over template config files and utility scripts
 
-post-install-modulated:
-	ginstall -m 0755 \
-		$(WORKDIR)/phpext \
-		$(DESTDIR)$(prefix)/php5/bin
-	gsed -i -e s,PHPEXTDIR,$(shell $(DESTDIR)$(prefix)/php5/bin/php-config --extension-dir), $(WORKDIR)/php.ini.CSW
-	ginstall -m 0644 \
-		$(WORKDIR)/php.ini.CSW \
-		$(DESTDIR)$(prefix)/php5/lib
-	ginstall -m 0644 \
-		$(WORKDIR)/pear.conf.CSW \
-		$(DESTDIR)$(prefix)/php5/etc
+PI_SCRIPTS  = install-extras
+PI_SCRIPTS += install-modphp5
+
+post-install-modulated: $(PI_SCRIPTS)
+	@$(MAKECOOKIE)
+
+install-extras:
+	ginstall -m 0755 $(WORKDIR)/phpext $(DESTDIR)$(prefix)/php5/bin
+	gsed -i -e s,PHPEXTDIR,$(shell $(PHP5ROOT)/bin/php-config --extension-dir),\
+		$(WORKDIR)/php.ini.CSW
+	ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php5/lib
+	ginstall -m 0644 $(WORKDIR)/pear.conf.CSW $(DESTDIR)$(prefix)/php5/etc
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0644 \
-		$(WORKDIR)/httpd-php5.conf.CSW \
+	ginstall -m 0644 $(WORKDIR)/httpd-php5.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
 	@(grm -fr $(DESTDIR)/.[a-z]*)
 	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
+	@$(MAKECOOKIE)
+
+install-modphp5:
 	@( echo "  ==> Now Building mod_php5 <==" )
 	@( if [ -f $(WORKSRC)/Makefile ]; then \
-		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi)
-	cd $(WORKSRC) && $(BUILD_ENV) ./configure $(NEW_CONFIGURE_ARGS)
+		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi )
+	@( cd $(WORKSRC) && $(BUILD_ENV) ./configure $(NEW_CONFIGURE_ARGS) )
+	@( $(DOWNLOADDIR)/fixme.sh $(WORKSRC) )
 	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
 	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
 	@( gfind $(DESTDIR)$(prefix)/apache*  \
-			-mindepth 1 -type d | grep -v libexec | xargs grm -fr )
+		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr )
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
