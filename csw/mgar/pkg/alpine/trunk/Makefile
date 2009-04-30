@@ -58,9 +58,8 @@ export LIBS
 
 TEST_TARGET = check
 
-REQUIRED_PKGS  = CSWgcc4corert CSWggettextrt CSWiconv
-REQUIRED_PKGS += CSWkrb5lib CSWlibnet CSWncurses CSWaspell
-REQUIRED_PKGS += CSWoldaprt CSWosslrt CSWsasl CSWtcl
+REQUIRED_PKGS  = CSWggettextrt CSWiconv CSWtcl CSWsasl CSWosslrt
+REQUIRED_PKGS += CSWkrb5lib CSWlibnet CSWncurses CSWoldaprt
 
 include files/install_scripts.mk
 include gar/category.mk
