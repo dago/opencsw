@@ -8,15 +8,16 @@ This library provides weak aliases for pthread functions not provided in libc or
 endef
 
 MASTER_SITES = $(XCB_MASTER_SITES)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibpthreadstubs)
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+
+PACKAGES = CSWlibpthreadstubs
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-pre-install:
-	@ginstall -d $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME) 
-	@gcp -fp $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(DISTNAME)/COPYING $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))$(datadir)/doc/$(GARNAME)/License.txt 
+BUILD64 = 1
+ARCHALL = 1
+CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
