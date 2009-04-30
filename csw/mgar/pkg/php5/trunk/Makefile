@@ -102,6 +102,10 @@ post-install-modulated:
 	ginstall -m 0644 \
 		$(WORKDIR)/pear.conf.CSW \
 		$(DESTDIR)$(prefix)/php5/etc
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0644 \
+		$(WORKDIR)/httpd-php5.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra
 	@(grm -fr $(DESTDIR)/.[a-z]*)
 	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
 	@( echo "  ==> Now Building mod_php5 <==" )
@@ -112,14 +116,6 @@ post-install-modulated:
 	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
 	@( gfind $(DESTDIR)$(prefix)/apache*  \
 			-mindepth 1 -type d | grep -v libexec | xargs grm -fr )
-	@(ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra)
-	@(ginstall -m 0644 \
-		$(WORKDIR)/http-php5.conf.CSW \
-		$(DESTDIR)$(prefix)/apache2/etc/extra)
-	@(ginstall -d $(DESTDIR)$(prefix)/apache/etc/extra)
-	@(ginstall -m 0644 \
-		$(WORKDIR)/http-php5.conf.CSW \
-		$(DESTDIR)$(prefix)/apache/etc/extra)
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
