@@ -40,14 +40,14 @@ merge-fix-links:
 	$(_DBG)(cd $(IPREFIX)/bin; gcp sparc-sun-solaris2.8-gfortran gfortran)
 	$(_DBG)(cd $(APREFIX)/bin; grm -f *gcc *c++ g++ gcj gfortran)
 	$(_DBG)(cd $(APREFIX)/bin; \
-		gcp sparc-sun-solaris2.8-gcc-4.3.3 sparc-sun-solaris2.8-gcc)
-	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-gcc-4.3.3 gcc)
+		gcp sparc-sun-solaris2.10-gcc-4.3.3 sparc-sun-solaris2.10-gcc)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.10-gcc-4.3.3 gcc)
 	$(_DBG)(cd $(APREFIX)/bin; \
-		gcp sparc-sun-solaris2.8-g++ sparc-sun-solaris2.8-c++)
-	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-g++ g++)
-	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-g++ c++)
-	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-gcj gcj)
-	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.8-gfortran gfortran)
+		gcp sparc-sun-solaris2.10-g++ sparc-sun-solaris2.10-c++)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.10-g++ g++)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.10-g++ c++)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.10-gcj gcj)
+	$(_DBG)(cd $(APREFIX)/bin; gcp sparc-sun-solaris2.10-gfortran gfortran)
 	$(_DBG)$(MAKECOOKIE)
 
 merge-i386-files:
