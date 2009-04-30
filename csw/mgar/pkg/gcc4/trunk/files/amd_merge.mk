@@ -27,6 +27,7 @@ merge-dirs-amd:
 merge-i386-files:
 	@echo "[===== Merging isa-i386 =====]"
 	$(_DBG)(cd $(IPREFIX)/bin; /usr/bin/pax -rw -v * $(PPREFIX)/bin/i386)
+	$(_DBG)(cd $(IPREFIX)/bin; /usr/bin/pax -rw -v *solaris2* $(PPREFIX)/bin/amd64)
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/include $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/info $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/man $(PKGROOT))
