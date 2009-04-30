@@ -10,6 +10,8 @@ REQUIRED_PKGS_CSWap2modphp5 += CSWexpat CSWlibxml2 CSWzlib
 DISTFILES += CSWap2modphp5.preremove httpd-php5.conf.CSW
 DISTFILES += CSWap2modphp5.postinstall CSWap2modphp5.space
 
+STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
+
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 
 PKGFILES_CSWap2modphp5 = .*/csw/apache2/.*

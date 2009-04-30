@@ -85,9 +85,6 @@ CONFIGURE_ARGS += --with-pear=shared
 SKIPTEST = 1
 ENABLE_CHECK = 0
 
-# SAPI Specific Rules
-STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
-
 # Rebuild Configure Args to build mod_php5
 NEW_CONFIGURE_ARGS = $(shell echo $(CONFIGURE_ARGS) |sed -e 's/apxs2/apxs/' \
 		-e 's/apache2\/sbin\/apxs/apache\/bin\/apxs/')
@@ -115,6 +112,14 @@ post-install-modulated:
 	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
 	@( gfind $(DESTDIR)$(prefix)/apache*  \
 			-mindepth 1 -type d | grep -v libexec | xargs grm -fr )
+	@(ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra)
+	@(ginstall -m 0644 \
+		$(WORKDIR)/http-php5.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra)
+	@(ginstall -d $(DESTDIR)$(prefix)/apache/etc/extra)
+	@(ginstall -m 0644 \
+		$(WORKDIR)/http-php5.conf.CSW \
+		$(DESTDIR)$(prefix)/apache/etc/extra)
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
