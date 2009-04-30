@@ -12,7 +12,7 @@ MASTER_SITES = http://xcb.freedesktop.org/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PREREQUISITE_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen
-REQUIRED_PKGS = CSWxcbproto CSWlibxau
+REQUIRED_PKGS_CSWlibxcb = CSWxcbproto CSWlibxau
 PACKAGES = CSWlibxcb CSWlibxcbdevel CSWlibxcbdoc
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -30,7 +30,7 @@ PKGFILES_CSWlibxcbdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxcbdoc   = $(PKGFILES_DOC)
 
 REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
-REQUIRED_PKGS_CSWlibxcb	     = CSWlibxau CSWlibxdmcp
+REQUIRED_PKGS_CSWlibxcb	     = CSWlibxau
 
 BUILD64 = 1
 NOISALIST = 1
