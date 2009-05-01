@@ -12,6 +12,10 @@ endef
 
 MASTER_SITES = http://download.wikimedia.org/mediawiki/$(RELVER)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWmediawiki-math.postinstall
+DISTFILES += CSWmediawiki.postinstall
+DISTFILES += CSWmediawiki.preremove
+
 
 PACKAGES = CSWmediawiki CSWmediawiki-math
 CATALOGNAME_CSWmediawiki = mediawiki
