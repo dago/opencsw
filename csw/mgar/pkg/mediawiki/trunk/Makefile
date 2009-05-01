@@ -20,7 +20,7 @@ CATALOGNAME_CSWmediawiki-math = mediawiki_math
 SPKG_DESC_CSWmediawiki-math = LaTeX compatable Math plugin for MediaWiki
 
 REQUIRED_PKGS_CSWmediawiki  = CSWphp5
-REQUIRED_PKGS_CSWmediawiki-math  = CSWphp5 CSWmediawiki
+REQUIRED_PKGS_CSWmediawiki-math  = CSWphp5 CSWmediawiki CSWtetex
 
 PKGFILES_CSWmediawiki-math = .*/mediawiki/math.*
 

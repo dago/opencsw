@@ -8,17 +8,8 @@ AP2_CONFDIR=$AP2_PREFIX/etc
 AP2_EXTRADIR=$AP2_CONFDIR/extra
 AP2_CONFIG=$AP2_CONFDIR/httpd.conf
 
-# Disable MediaWiki in httpd.conf
-perl -i -pe 's|^(Include etc/extra/httpd-mediawiki.conf)|#$1|' ${AP2_CONFIG}
-
-cat << _EOF_
-******************************************************************************
-* NOTICE: Successfully Disabled MediaWiki
-* in ${AP2_CONFIG}
-*
-* You will need to restart your web server to finish the removal
-******************************************************************************
-_EOF_
+AP2_DOCROOT=`/bin/sed -ne 's/^[\s]*DocumentRoot "\(.*\)"/\1/p' ${AP2_CONFIG}`
+/bin/rm -f ${AP2_DOCROOT}/wiki
 
 exit 0
 
