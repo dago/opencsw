@@ -1,4 +1,3 @@
-AMD_DEBUG = 1
 ifeq ($(AMD_DEBUG),)
 	_DBG=@
 else
@@ -101,18 +100,18 @@ ISAEXEC_FILES += /opt/csw/gcc4/bin/gjar
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gorbd
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gtnameserv
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gnative2ascii
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/gnat
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatls
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatname
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatmake
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatclean
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatkr
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatbind
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnat
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatbl
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatchop
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatfind
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatxref
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatprep
-EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/gcc4/bin/i386/gnatlink
+ISAEXEC_FILES += /opt/csw/gcc4/bin/gnat
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatls
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatname
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatmake
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatclean
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatkr
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatbind
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnat
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatbl
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatchop
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatfind
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatxref
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatprep
+ISAEXEC_FILES += /opt/csw/gcc4/bin/i386/gnatlink
 endif
