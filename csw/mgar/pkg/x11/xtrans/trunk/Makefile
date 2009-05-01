@@ -1,5 +1,5 @@
 GARNAME = xtrans
-GARVERSION = 1.2.2
+GARVERSION = 1.2.3
 CATEGORIES = x11
 
 DESCRIPTION = X transport library
@@ -8,7 +8,7 @@ define BLURB
   at time of writing, it includes support for UNIX sockets, IPv4, IPv6, and DECnet.
 endef
 
-MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
+MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
