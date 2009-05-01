@@ -1,5 +1,5 @@
 GARNAME = libxcb
-GARVERSION = 1.1
+GARVERSION = 1.2
 CATEGORIES = x11
 
 DESCRIPTION = The XCB library
@@ -11,7 +11,7 @@ endef
 MASTER_SITES = http://xcb.freedesktop.org/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen
+PREREQUISITE_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen CSWpython
 REQUIRED_PKGS_CSWlibxcb = CSWxcbproto CSWlibxau
 PACKAGES = CSWlibxcb CSWlibxcbdevel CSWlibxcbdoc
 
