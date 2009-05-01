@@ -160,12 +160,12 @@ checksum-%: $(CHECKSUM_FILE)
 UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
 UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
 SF_ARGS = $(addprefix -s ,$(UPSTREAM_USE_SF))
-ifneq ($(UFILES_REGEX), "")    
-	FILES2CHECK := $(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(SF_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))) 
-else
-	FILES2CHECK := ""
-endif
 
+define files2check
+$(if $(UFILES_REGEX),$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(SF_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))))
+endef
+
+check-upstream-and-mail: FILES2CHECK = $(call files2check)
 check-upstream-and-mail:
 	@if [ -n '$(FILES2CHECK)' ]; then \
 		NEW_FILES=""; \
@@ -227,6 +227,7 @@ check-upstream-and-mail:
 		fi; \
 	fi
 		
+check-upstream: FILES2CHECK = $(call files2check)
 check-upstream: 
 	@if [ -n '$(FILES2CHECK)' ]; then \
 		NEW_FILES=""; \
