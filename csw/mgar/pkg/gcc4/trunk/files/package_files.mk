@@ -7,7 +7,7 @@ PKGFILES_CSWgcc4ada += .*/gcc4/lib/.*libgnarl.*a
 PKGFILES_CSWgcc4ada += .*/gcc4/.*/adalib/.*
 PKGFILES_CSWgcc4ada += .*/gcc4/.*/adainclude/.*
 PKGFILES_CSWgcc4ada += .*/gcc4/info/.*gnat.*
-PKGFILES_CSWgcc4ada += .*/gcc4/bin/gnat.*
+PKGFILES_CSWgcc4ada += .*/gcc4/bin/gnat(?!ive).*
 
 ## gcc4gfortran Definitions
 PKGFILES_CSWgcc4gfortran  = .*/gcc4/bin/.*gfortran

@@ -94,7 +94,6 @@ ISAEXEC_FILES += /opt/csw/gcc4/bin/grmiregistry
 ISAEXEC_FILES += /opt/csw/gcc4/bin/jv-convert
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gcj
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gij
-ISAEXEC_FILES += /opt/csw/gcc4/bin/gnative2ascii
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gserialver
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gappletviewer
 ISAEXEC_FILES += /opt/csw/gcc4/bin/gcj-dbtool
