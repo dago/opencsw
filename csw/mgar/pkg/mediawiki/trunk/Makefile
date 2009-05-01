@@ -22,10 +22,12 @@ SPKG_DESC_CSWmediawiki-math = LaTeX compatable Math plugin for MediaWiki
 REQUIRED_PKGS_CSWmediawiki  = CSWphp5
 REQUIRED_PKGS_CSWmediawiki-math  = CSWphp5 CSWmediawiki
 
+PKGFILES_CSWmediawiki-math =
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+GARCOMPILER = GNU
 ARCHALL_CSWmediawiki = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = math
@@ -33,7 +35,7 @@ INSTALL_SCRIPTS = custom
 TEST_SCRIPTS = skip
 
 build-math:
-	gmake $(WORKSRC)/math 
+	cd $(WORKSRC)/math; $(BUILD_ENV) gmake
 	@$(MAKECOOKIE)
 
 install-custom:
