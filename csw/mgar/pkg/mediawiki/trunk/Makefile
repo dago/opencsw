@@ -22,7 +22,8 @@ SPKG_DESC_CSWmediawiki-math = LaTeX compatable Math plugin for MediaWiki
 REQUIRED_PKGS_CSWmediawiki  = CSWphp5
 REQUIRED_PKGS_CSWmediawiki-math  = CSWphp5 CSWmediawiki
 
-PKGFILES_CSWmediawiki-math =
+PKGFILES_CSWmediawiki-math = .*/mediawiki/math.*
+
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
