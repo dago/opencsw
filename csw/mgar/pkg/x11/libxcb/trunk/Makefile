@@ -36,5 +36,7 @@ BUILD64 = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+EXTRA_CFLAGS = -D__solaris__
+
 include gar/category.mk
 
