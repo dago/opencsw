@@ -1,0 +1,44 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_EXTRADIR=$AP2_CONFDIR/extra
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+
+# Enable MediaWiki in httpd.conf
+FOUND=`grep "^Include etc/extra/httpd-mediawiki.conf" ${AP2_CONFIG}`
+
+if [ -n "`grep "^Include etc/extra/httpd-mediawiki.conf" ${AP2_CONFIG}`" ]; then
+    echo "MediaWiki Already Enabled"
+elif [ -n "`grep "^#Include etc/extra/httpd-mediawiki.conf" ${AP2_CONFIG}`" ]; then
+    echo "Re-enabling existing config"
+    perl -i -pe 's|^#(Include etc/extra/httpd-mediawiki.conf)|$1|' ${AP2_CONFIG}
+else
+    echo "Adding Include for httpd-mediawiki.conf"
+    cat << _END_ >>${AP2_CONFIG}
+Include etc/extra/httpd-mediawiki.conf
+_END_
+fi
+
+file = ${AP2_EXTRADIR}/httpd-mediawiki.conf
+if [ ! -f ${file} ]; then
+    echo "Creating ${file} from ${file}.CSW"
+    cp ${file}.CSW ${file}
+else
+    echo "Preserving Existing ${file}"
+fi
+
+cat << _EOF_
+******************************************************************************
+* NOTICE: Successfully Enabled MediaWiki
+* in ${AP2_CONFIG}
+*
+* You will need to restart your web server to finish the install
+******************************************************************************
+_EOF_
+
+exit 0
+
