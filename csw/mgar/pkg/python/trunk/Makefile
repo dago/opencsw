@@ -1,5 +1,5 @@
 GARNAME = Python
-GARVERSION = 2.6.1
+GARVERSION = 2.6.2
 CATEGORIES = lang
 PACKAGES = CSWpython CSWpython-tk CSWidle
 
