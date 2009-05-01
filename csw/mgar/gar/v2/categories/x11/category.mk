@@ -3,41 +3,22 @@ X11_PROTO_MASTER_SITE = http://xorg.freedesktop.org/releases/individual/proto/
 XCB_MASTER_SITES = http://xcb.freedesktop.org/dist/
 
 # C and C++ compiler flags
-ifeq ($(GARCOMPILER),GNU)
-  CFLAGS +=
-  CXXFLAGS +=
-else
-  CFLAGS += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
-  CXXFLAGS += -xlibmil -xlibmopt -features=tmplife -norunpath
-endif
+_CATEGORY_CFLAGS_SOS11 = -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
+_CATEGORY_CFLAGS_SOS12 = -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
+_CATEGORY_CXXFLAGS_SOS11 = -xlibmil -xlibmopt -features=tmplife -norunpath
+_CATEGORY_CXXFLAGS_SOS12 = -xlibmil -xlibmopt -features=tmplife -norunpath
 
-# Preprocessor flags
-
-# Linker flags
-#LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+_CATEGORY_CFLAGS = $(_CATEGORY_CFLAGS_$(GARCOMPILER))
+_CATEGORY_CXXFLAGS = $(_CATEGORY_CFLAGS_$(GARCOMPILER))
 
 # Defines some tools used by autostuff
 GREP = ggrep
 _CATEGORY_COMMON_EXPORTS = GREP
 
-# export the variables
-#export LDFLAGS CXXFLAGS CFLAGS CPPFLAGS GREP
-
-# pkg-config options
-#_CATEGORY_PKG_CONFIG_PATH = $(abspath $(prefix)/X11/lib/$(MM_LIBDIR)/pkgconfig)
-
 prefix = $(BUILD_PREFIX)/X11
 
-# Configure common options
-#CONFIGURE_ARGS  = --prefix=/opt/csw/X11 
-#CONFIGURE_ARGS += --exec-prefix=/opt/csw/X11 
-#CONFIGURE_ARGS += --libdir=/opt/csw/X11/lib
-#CONFIGURE_ARGS += --includedir=/opt/csw/X11/include
-#CONFIGURE_ARGS += --datadir=/opt/csw/X11/share
-#CONFIGURE_ARGS += --mandir=/opt/csw/X11/share/man
-
 # No tests scripts, thus there is no "gmake test" target
-TEST_SCRIPTS      = 
+TEST_SCRIPTS = 
 
 # Includes the rest of gar
 include gar/gar.mk
