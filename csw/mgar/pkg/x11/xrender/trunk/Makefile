@@ -19,7 +19,8 @@ UFILES_REGEX = libXrender-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxrender CSWrenderdev
 
-REQUIRED_PKGS_CSWrenderdev  = CSWlibxrender
+PREREQUISITE_PKGS = CSWrenderproto
+REQUIRED_PKGS_CSWrenderdev = CSWlibxrender
 REQUIRED_PKGS_CSWlibxrender = CSWlibx11
 
 SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
