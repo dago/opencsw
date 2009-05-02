@@ -1,5 +1,5 @@
 GARNAME = libX11
-GARVERSION = 1.2
+GARVERSION = 1.2.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 client-side library
@@ -11,11 +11,12 @@ endef
 
 MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = patch-stdint.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUSITE_PKGS = CSWxextproto CSWxtrans CSWkbproto CSWinputproto
+PREREQUISITE_PKGS = CSWxextproto CSWxtrans CSWkbproto CSWinputproto
 
 PACKAGES = CSWlibx11 CSWlibx11devel
 
@@ -33,6 +34,8 @@ REQUIRED_PKGS_CSWlibx11devel = CSWlibx11
 BUILD64 = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+
+EXTRA_CFLAGS = -D__solaris__
 
 include gar/category.mk
 

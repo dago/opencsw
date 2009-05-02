@@ -1,0 +1,30 @@
+diff -Naur libX11-1.2.1.orig/src/Xxcbint.h libX11-1.2.1.patched/src/Xxcbint.h
+--- libX11-1.2.1.orig/src/Xxcbint.h	2008-11-19 07:42:01.000000000 +0100
++++ libX11-1.2.1.patched/src/Xxcbint.h	2009-05-02 08:10:56.519976514 +0200
+@@ -5,7 +5,11 @@
+ #define XXCBINT_H
+ 
+ #include <assert.h>
++#if defined(__solaris__)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ #include <X11/Xlibint.h>
+ #include <X11/Xlib-xcb.h>
+ #include "locking.h"
+diff -Naur libX11-1.2.1.orig/src/xcb_io.c libX11-1.2.1.patched/src/xcb_io.c
+--- libX11-1.2.1.orig/src/xcb_io.c	2009-02-24 04:29:22.000000000 +0100
++++ libX11-1.2.1.patched/src/xcb_io.c	2009-05-02 08:27:43.445731862 +0200
+@@ -9,7 +9,11 @@
+ 
+ #include <assert.h>
+ #include <inttypes.h>
++#if defined(__solaris__)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ #include <stdlib.h>
+ #include <string.h>
+ 
