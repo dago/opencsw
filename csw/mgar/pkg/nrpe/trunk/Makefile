@@ -28,6 +28,7 @@ CONFIGURE_ARGS += --with-ssl-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-ssl-inc=/opt/csw/include
 CONFIGURE_ARGS += --with-ssl-dir=/opt/csw/bin
 CONFIGURE_ARGS += --with-kerberos-inc=/opt/csw/include
+CONFIGURE_ARGS += --enable-command-args
 CONFIGURE_ARGS += --prefix=/opt/csw
 CONFIGURE_ARGS += --exec-prefix=/opt/csw
 
