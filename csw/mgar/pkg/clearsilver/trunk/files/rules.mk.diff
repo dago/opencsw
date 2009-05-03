@@ -1,0 +1,20 @@
+--- clearsilver-0.10.5/rules.mk.in.orig	2009-02-27 22:01:06.050961776 -0600
++++ clearsilver-0.10.5/rules.mk.in	2009-02-27 22:02:35.509950994 -0600
+@@ -74,7 +74,7 @@
+ CC	   = @CC@
+ MKDIR      = mkdir -p
+ RM         = rm -f
+-CPP        = g++
++CPP        = CC
+ JAVAC      = $(JAVA_PATH)/bin/javac
+ JAVAH      = $(JAVA_PATH)/bin/javah
+ JAR        = $(JAVA_PATH)/bin/jar
+@@ -84,7 +84,7 @@
+ RUBY       = @RUBY@
+ 
+ CPPFLAGS   = -I$(NEOTONIC_ROOT) @CPPFLAGS@
+-CFLAGS     = @CFLAGS@ -Wall $(CPPFLAGS) $(PICFLG)
++CFLAGS     = @CFLAGS@ $(CPPFLAGS) $(PICFLG)
+ OUTPUT_OPTION = -o $@
+ LD         = $(CC) -o
+ LDFLAGS    = -L$(LIB_DIR) @LDFLAGS@
