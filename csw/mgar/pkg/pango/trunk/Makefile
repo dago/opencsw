@@ -27,6 +27,7 @@ UPSTREAM_MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS   = $(DIRPATHS)
 CONFIGURE_ARGS  += --with-x --enable-gtk-doc
 # CONFIGURE_ARGS  += --with-included-modules 
