@@ -16,6 +16,9 @@ endef
 PACKAGES = CSWsquid
 CATALOGNAME_CSWsquid = squid
 SPKG_DESC_CSWsquid = $(DESCRIPTION)
+SPKG_CLASSES_CSWsquid = none cswinitsmf
+
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" }'
 
 LD = /opt/csw/bin/gld
 export LD
@@ -43,10 +46,15 @@ TEST_TARGET = check
 
 include gar/category.mk
 
-
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
 
 pre-configure-modulated:
 	cd $(WORKSRC) && $(BUILD_ENV) ./bootstrap.sh
 	@$(MAKECOOKIE)
 
+post-install-modulated:
+	ginstall -d $(DESTDIR)/etc/init.d
+	gcp $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/init.d
+	chmod 0755 $(DESTDIR)/etc/init.d/cswsquid
+	gmv $(DESTDIR)$(sysconfdir)/squid.conf \
+		$(DESTDIR)$(sysconfdir)/squid.conf.CSW

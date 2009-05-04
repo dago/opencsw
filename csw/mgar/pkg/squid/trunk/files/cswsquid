@@ -1,0 +1,60 @@
+#!/sbin/sh
+
+PATH=/usr/bin
+CSWPREFIX=/opt/csw
+CSWETC=${CSWPREFIX}/etc
+CSWSBIN=${CSWPREFIX}/sbin
+SQUID_DAEMON=${CSWSBIN}/squid
+SQUID_CONF=${CSWETC}/squid.conf
+
+case "$1" in
+    'start')
+        if [ -x ${SQUID_DAEMON} -a -f ${SQUID_CONF} ]; then
+            if [ -n "`pgrep squid`" ]; then
+                echo 'squid server is already running'
+	            exit 0
+            else
+                echo 'starting squid server.'
+                ${SQUID_DAEMON} -D &
+	            exit 0
+            fi
+        else
+            echo '****  NOTICE  ****'
+            echo 'Problem starting squid server,'
+            echo 'Please make sure it is properly installed'
+            echo 'and properly configured.'
+            exit 1
+        fi
+        ;;
+    'stop')
+        if [ -x ${SQUID_DAEMON} -a -f ${SQUID_CONF} ]; then
+            if [ -n "`pgrep squid`" ]; then
+                ## stop gracefully
+	            echo 'stopping squid server... please wait for cleanup...'
+                ${SQUID_DAEMON} -k shutdown && sleep 30
+                if [ -n "`pgrep squid`" ]; then
+                    echo 'squid server still running, killing...'
+                    pkill -9 squid
+                fi
+	            exit 0
+            else
+                ## Not running
+                echo 'squid server is already down'
+	            exit 0
+            fi
+        else
+            echo '****  NOTICE  ****'
+            echo 'Squid server not properly installed'
+            echo 'Forcing Down!'
+            pkill -9 squid
+            exit 1
+	    fi
+        ;;
+
+    *)
+        echo "Usage: $0 { start | stop }"
+        exit 1
+        ;;
+esac
+
+exit 0

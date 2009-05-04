@@ -1,12 +1,17 @@
 #!/bin/sh
 #
-# Squid-cache postinstall script
+# Squid-cache preremove script
 
 PATH=/usr/bin:/usr/sbin
 export PATH
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+SQUID_CONFDIR=${CSW_PREFIX}/etc
 
-if [ -f /opt/csw/etc/squid.conf ]; then
-	/etc/init.d/cswsquid start
+if [ -f ${SQUID_CONFDIR}/squid.conf ]; then
+    echo 'squid.conf found, Preserving Existing Config!'
+else
+    cp ${SQUID_CONFDIR}/squid.conf.CSW ${SQUID_CONFDIR}/squid.conf
+    chmod 0644 ${SQUID_CONFDIR}/squid.conf
 fi
 
 exit 0
