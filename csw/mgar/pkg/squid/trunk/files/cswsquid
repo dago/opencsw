@@ -10,7 +10,7 @@ SQUID_CONF=${CSWETC}/squid.conf
 case "$1" in
     'start')
         if [ -x ${SQUID_DAEMON} -a -f ${SQUID_CONF} ]; then
-            if [ -n "`pgrep squid`" ]; then
+            if [ -n "`pgrep /squid`" ]; then
                 echo 'squid server is already running'
 	            exit 0
             else
@@ -28,11 +28,11 @@ case "$1" in
         ;;
     'stop')
         if [ -x ${SQUID_DAEMON} -a -f ${SQUID_CONF} ]; then
-            if [ -n "`pgrep squid`" ]; then
+            if [ -n "`pgrep /squid`" ]; then
                 ## stop gracefully
 	            echo 'stopping squid server... please wait for cleanup...'
                 ${SQUID_DAEMON} -k shutdown && sleep 30
-                if [ -n "`pgrep squid`" ]; then
+                if [ -n "`pgrep /squid`" ]; then
                     echo 'squid server still running, killing...'
                     pkill -9 squid
                 fi
