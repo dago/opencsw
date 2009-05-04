@@ -59,3 +59,5 @@ post-install-modulated:
 	chmod 0755 $(DESTDIR)/etc/init.d/cswsquid
 	gmv $(DESTDIR)$(sysconfdir)/squid.conf \
 		$(DESTDIR)$(sysconfdir)/squid.conf.CSW
+	@$(MAKECOOKIE)
+
