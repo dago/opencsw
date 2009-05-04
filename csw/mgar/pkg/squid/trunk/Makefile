@@ -17,8 +17,8 @@ PACKAGES = CSWsquid
 CATALOGNAME_CSWsquid = squid
 SPKG_DESC_CSWsquid = $(DESCRIPTION)
 SPKG_CLASSES_CSWsquid = none cswinitsmf
-
-PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" }'
+REQUIRED_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl CSWcswclassutils
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 LD = /opt/csw/bin/gld
 export LD
@@ -54,8 +54,8 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 post-install-modulated:
-	ginstall -d $(DESTDIR)/etc/init.d
-	gcp $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/init.d
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	gcp $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/
 	chmod 0755 $(DESTDIR)/etc/init.d/cswsquid
 	gmv $(DESTDIR)$(sysconfdir)/squid.conf \
 		$(DESTDIR)$(sysconfdir)/squid.conf.CSW
