@@ -6,6 +6,9 @@ PATH=/usr/bin:/usr/sbin
 export PATH
 CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
 SQUID_CONFDIR=${CSW_PREFIX}/etc
+SQUID_VARDIR=${CSW_PREFIX}/var
+SQUID_SBINDIR=${CSW_PREFIX}/sbin
+
 
 if [ -f ${SQUID_CONFDIR}/squid.conf ]; then
     echo 'squid.conf found, Preserving Existing Config!'
@@ -13,5 +16,11 @@ else
     cp ${SQUID_CONFDIR}/squid.conf.CSW ${SQUID_CONFDIR}/squid.conf
     chmod 0644 ${SQUID_CONFDIR}/squid.conf
 fi
+
+if [ -d ${SQUID_VARDIR}/cache ]; then
+    chown nobody:nobody ${SQUID_VARDIR}/cache
+fi
+
+${SQUID_SBINDIR}/squid -z
 
 exit 0
