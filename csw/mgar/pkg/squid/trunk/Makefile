@@ -24,7 +24,7 @@ LD = /opt/csw/bin/gld
 export LD
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
-DISTFILES = cswsquid
+DISTFILES = CSWsquid.postinstall CSWsquid.preremove cswsquid
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --datadir=$(datadir)/$(GARNAME)
@@ -56,7 +56,7 @@ pre-configure-modulated:
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	gcp $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/
-	chmod 0755 $(DESTDIR)/etc/init.d/cswsquid
+	chmod 0755 $(DESTDIR)/etc/opt/csw/init.d/cswsquid
 	gmv $(DESTDIR)$(sysconfdir)/squid.conf \
 		$(DESTDIR)$(sysconfdir)/squid.conf.CSW
 	@$(MAKECOOKIE)
