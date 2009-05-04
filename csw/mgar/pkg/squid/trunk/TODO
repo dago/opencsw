@@ -1,8 +1,0 @@
-TODO Squid
-----------
-
-- Don't always start squid, honor blastwave.conf
-- move
-    share/icons   -> share/squid/icons
-    share/errors  -> share/squid/errors
-- Use GAR-mechanism for rc* instead of harcoding it in .prototype
