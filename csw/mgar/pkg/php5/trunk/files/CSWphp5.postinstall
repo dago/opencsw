@@ -88,6 +88,7 @@ if [ -n "${non_pkgs}" ]; then
 * 
 * Your existing config contains the following extensions
 * that are not part of CSW build: 
+*
 _EOT_
 cnt=1
 for name in `echo ${non_pkgs}`; do
