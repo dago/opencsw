@@ -40,7 +40,11 @@ REQUIRED_PKGS_CSWlibcairodoc   =
 ARCHALL_CSWlibcairodoc = 1
 
 # Wait for libpixman, libfontconfig and libXrender to be 64 bit
-#BUILD64 = 1
+BUILD64 = 1
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
