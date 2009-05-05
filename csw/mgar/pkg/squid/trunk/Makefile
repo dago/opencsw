@@ -32,7 +32,6 @@ CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
 CONFIGURE_ARGS += --enable-cache-digests
 CONFIGURE_ARGS += --enable-carp
 CONFIGURE_ARGS += --enable-delay-pools
-CONFIGURE_ARGS += --enable-devpoll
 CONFIGURE_ARGS += --enable-forw-via-db
 CONFIGURE_ARGS += --enable-htcp
 CONFIGURE_ARGS += --enable-icmp
