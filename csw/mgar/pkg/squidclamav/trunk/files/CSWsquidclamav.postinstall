@@ -1,0 +1,60 @@
+#!/bin/sh
+
+PATH=/usr/bin:/usr/sbin
+umask 0022
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+SQUID_CONFDIR=${CSW_PREFIX}/etc
+SQUID_DOCDIR=${CSW_PREFIX}/share/doc
+SQUID_VARDIR=${CSW_PREFIX}/var
+SQUID_SBINDIR=${CSW_PREFIX}/sbin
+USER=''
+GRP=''
+SQUID_PORT=''
+
+if [ -f ${SQUID_CONFDIR}/squid.conf ]; then
+    USER="`awk '$1  ~ /cache_effective_user/ {print $2}' \
+            ${SQUID_CONFDIR}/squid.conf`"
+    GRP="`awk '$1 ~ /cache_effective_group/ {print $2}' \
+            ${SQUID_CONFDIR}/squid.conf`"
+    SQUID_PORT="`awk '$1 ~ /http_port/ {print $2}' \
+            ${SQUID_CONFDIR}/squid.conf`"
+fi
+
+if [ "_x${USER}x_" = "_xx_" ]; then
+    USER=nobody
+fi
+if [ "_x${GRP}x_" = "_xx_" ]; then
+    GRP=nobody
+fi
+if [ "_x${SQUID_PORT}x_" = "_xx_" ]; then
+    SQUID_PORT=3128
+fi
+
+perl -i -pe "s|_SQUIDPORT_|${SQUID_PORT}|" ${SQUID_CONFDIR}/squidclamav.conf.CSW
+
+if [ -f ${SQUID_CONFDIR}/squidclamav.conf ]; then
+    echo 'Found:squidclamav.conf, Preserving Existing Config'
+else
+    echo 'Creating squidclamav.conf'
+    cp ${SQUID_CONFDIR}/squidclamav.conf.CSW ${SQUID_CONFDIR}/squidclamav.conf
+    chmod 0644 ${SQUID_CONFDIR}/squidclamav.conf
+fi
+
+touch ${SQUID_VARDIR}/logs/squidclamav.log
+chown ${USER}:${GRP} ${SQUID_VARDIR}/logs/squidclamav.log
+
+cat << _EOF_
+******************************************************************************
+*   NOTICE:
+*       Please be sure to configure squidclamav
+*   Configuration File Location:
+*       ${SQUID_CONFDIR}/squidclamav.conf
+*
+*   Details on Configuration can be found in
+*       ${SQUID_DOCDIR}/squidclamav/README
+*
+******************************************************************************
+_EOF_
+
+exit 0

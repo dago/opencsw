@@ -12,11 +12,12 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += squidclamav.conf.CSW
+DISTFILES += CSWsquidclamav.postinstall
 
 PACKAGES = CSWsquidclamav
 CATALOGNAME_CSWsquidclamav = squidclamav
 SPKG_DESC_CSWsquidclamav = $(DESCRIPTION)
-
 
 REQUIRED_PKGS_CSWsquidclamav = CSWcurlrt
 
@@ -29,5 +30,18 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 EXTRA_LINKER_FLAGS += -lrt -lnsl -lsocket
 
 TEST_TARGET = check
+
+EXTRA_DOCFILES = AUTHORS ChangeLog INSTALL NEWS README
+
+post-install-modulated:
+	@ginstall -d $(DESTDIR)$(sysconfdir)
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(libexecdir)/cgi-bin
+	@cp $(DOWNLOADDIR)/squidclamav.conf.CSW $(DESTDIR)$(sysconfdir)
+	@( for file in $(EXTRA_DOCFILES); do \
+		cp $(abspath $(WORKSRC)/$$file) $(DESTDIR)$(docdir)/$(GARNAME); \
+	done )
+	@cp $(WORKSRC)/clwarn.cgi* $(DESTDIR)$(libexecdir)/cgi-bin
+	@$(MAKECOOKIE)
 
 include gar/category.mk

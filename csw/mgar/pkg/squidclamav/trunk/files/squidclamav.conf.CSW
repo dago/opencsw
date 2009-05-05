@@ -1,0 +1,100 @@
+# squidclamav.conf.dist
+#
+# Lines have the form:
+#
+# 	regex|regexi pattern
+#
+# 	abort|aborti pattern
+#
+#	content|contenti pattern
+#
+#	abortcontent|abortcontenti pattern
+#
+#	redirect cgi_redirect_url
+# 
+#       logfile /path/to/log_file
+# 
+#       proxy none
+# 
+#       squid_ip 127.0.0.1
+#
+#       squid_port 3128
+#
+#       debug 0|1
+# 
+#	force 0|1
+#
+#       timeout secondes
+#
+#       clamd_ip 127.0.0.1
+#
+#       clamd_port 3310
+#
+#       clamd_local /tmp/clamd
+#
+#	stat 0|1
+#
+#	maxredir 10
+#
+#	squidguard /usr/local/squidGuard/bin/squidGuard
+#
+#	whitelist this.trustdomain.com
+#	whitelist .*\.domain\.*
+#
+#	useragent String_to_modify_curl_user_agent
+#
+#	trust_cache 0|1
+#
+# Note that the ordering of regex|abort|content|abortcontent|whitelist lines
+# in this file is critical. Some pattern can not be reached if a previous
+# pattern match.
+#
+#
+# Examples of valid lines:
+#
+#squid_ip 127.0.0.1
+#squid_port 3128
+#logfile /var/log/squidclamav.log
+#redirect http://proxy.domain.com/cgi-bin/clwarn.cgi
+#squidguard /usr/local/squidGuard/bin/squidGuard
+#debug 0
+#force 1
+#stat 1
+#maxredir 10
+#clamd_local /tmp/clamd
+#clamd_ip 192.168.1.5
+#clamd_port 3310
+#timeout 60
+#useragent Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)
+#trust_cache 0
+#
+#abort ^.*\.pdf$
+#abort ^.*\.js$
+#abort ^.*\.html$
+#abort ^.*\.css$
+#abort ^.*\.xml$
+#abort ^.*\.xsl$
+#abort ^.*\.js$
+#abort ^.*\.html$
+#abort ^.*\.css$
+#abort ^.*\.xml$
+#abort ^.*\.xsl$
+#abort ^.*\.js$
+#abort ^.*\.jsp$
+#abort ^.*\.jsp\?.*$
+#aborti ^.*servlet.*$
+#abort ^.*\.ico$
+#aborti ^.*\.gif$
+#aborti ^.*\.png$
+#aborti ^.*\.jpg$
+#aborti ^.*\.swf$
+#abortcontenti ^.*application\/x-mms-framed.*$
+#abortcontenti ^.*application\/x-javascript.*$
+#content ^.*application\/.*$
+#whitelist www.eicar.org
+
+squid_port _SQUIDPORT_
+logfile /var/log/squidclamav.log
+
+# Scan all files
+content ^.*\/.*$
