@@ -11,6 +11,8 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWlibxft2
 
+REQUIRED_PKGS = CSWfconfig CSWftype2 CSWlibx11 CSWlibxrender
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
