@@ -24,7 +24,7 @@ LD = /opt/csw/bin/gld
 export LD
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
-DISTFILES = CSWsquid.postinstall CSWsquid.preremove cswsquid
+DISTFILES += CSWsquid.postinstall CSWsquid.preremove cswsquid
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --datadir=$(datadir)/$(GARNAME)
