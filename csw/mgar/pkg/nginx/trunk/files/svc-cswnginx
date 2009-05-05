@@ -9,9 +9,10 @@ VARRUNX=/opt/csw/var/run/nginx
 PIDFILE=${VARRUNX}/nginx.pid
 PIDFILO=${VARRUNX}/nginx.pid.oldbin
 
-#[ ! -f ${NGINX} ]   && exit 255
-#[ ! -f ${CFGFILE} ] && exit 254
+[ ! -f ${NGINX} ]   && exit 255
+[ ! -f ${CFGFILE} ] && exit 254
 
+RETVAL=0
 
 start() {
 	$NGINX
@@ -48,49 +49,49 @@ killpidf() {
 
 reload() {
 	killpidf -HUP
-	RETVAL=$?
 	return $RETVAL
 }
 
 restart() {
 	stop
 	start
-	RETVAL=$?
 	return $RETVAL
 }
 
 rotate() {
 	killpidf -USR1
-	RETVAL=$?
 	return $RETVAL
 }
 
-state() {
+status() {
 	if [ -s "$PIDFILE" ]; then
 		FPID=`/bin/cat $PIDFILE`
 	else
 		echo "not running"
-		return 1
+		RETVAL=1
+		return $RETVAL
 	fi
 	PIDP=`/bin/ps -o pid= -p $FPID`
 	if [ "$PIDP" = "" ]; then
 		echo "not running"
-		return 1
+		RETVAL=1
+		return $RETVAL
 	fi
 	COMM=`/bin/ps -o comm= -p $FPID`
 	if [ "$NGINX" = "$COMM" ]; then
 		echo "running"
-		return 0
+		RETVAL=0
+		return $RETVAL
 	else
 		echo "running, but it is not a CSW package"
-		return 1
+		RETVAL=1
+		return $RETVAL
 	fi
 }
 
 upgrade()
 {
 	killpidf -USR2
-	RETVAL=$?
 	[ $RETVAL -ne 0 ] && return $RETVAL
 	OLDBINPID=0
 	for i in 1 2 3 4 5; do
@@ -102,31 +103,27 @@ upgrade()
 		fi
 	done
 	if [ $OLDBINPID -eq 1 ]; then
-		state >/dev/null
-		RETVAL=$?
+		status >/dev/null
 		if [ $RETVAL -eq 0 ]; then
 			killpidf -WINCH $PIDFILO
-			RETVAL=$?
 		fi
-		return $RETVAL
+	else
+		RETVAL=1
 	fi
-	return 1
+	return $RETVAL
 }
 
 upgrade_commit()
 {
 	killpidf -QUIT $PIDFILO
-	RETVAL=$?
 	return $RETVAL
 }
 
 upgrade_rollback()
 {
 	killpidf -HUP $PIDFILO
-	RETVAL=$?
 	if [ $RETVAL -eq 0 ]; then
 		killpidf -QUIT $PIDFILE
-		RETVAL=$?
 	fi
 	return $RETVAL
 }
@@ -134,50 +131,41 @@ upgrade_rollback()
 
 case "$1" in
 start)
-	[ ! -d $VARRUNX ] && /bin/mkdir -p $VARRUNX
+	[ ! -d $VARRUNX ] && /bin/mkdir -p $VARRUNX ||:
 	check
-	start
-	RETVAL=$?
+	[ $RETVAL -eq 0 ] && start ||:
 	;;
 stop)
 	stop
 	;;
 refresh|reload)
 	check
-	RETVAL=$?
 	[ $RETVAL -eq 0 ] && reload ||:
 	;;
 restart)
 	check
-	RETVAL=$?
 	[ $RETVAL -eq 0 ] && restart ||:
 	;;
 rotate)
 	rotate
-	RETVAL=$?
 	;;
-state)
-	state
-	RETVAL=$?
+status)
+	status
 	;;
 upgrade)
 	check
-	RETVAL=$?
 	[ $RETVAL -eq 0 ] && upgrade ||:
 	;;
 upgrade-commit)
 	upgrade_commit
-	RETVAL=$?
 	;;
 upgrade-rollback)
 	upgrade_rollback
-	RETVAL=$?
 	;;
 *)
-	echo "Usage:" `basename $0` "{start|stop|refresh|reload|restart|rotate|state|upgrade|upgrade-commit|upgrade-rollback}"
+	echo "Usage:" `basename $0` "{start|stop|refresh|reload|restart|rotate|status|upgrade|upgrade-commit|upgrade-rollback}"
 	exit 1
 	;;
 esac
 
-RETVAL=$?
 exit $RETVAL

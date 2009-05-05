@@ -7,11 +7,11 @@ if [ $UPGRADE_NGINX -eq 1 ]; then
 	MSG=""
 	UPGRADE_NGINX_ERR=0
 	if [ "$SMF" = "yes" ]; then
-		CSWNGINX="$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx"
+		CSWNGINX="/opt/csw/lib/svc/method/svc-cswnginx"
 	else
-		CSWNGINX="$BASEDIR/etc/init.d/cswnginx"
+		CSWNGINX="/etc/init.d/cswnginx"
 	fi
-	if [ -x $CSWNGINX ]; then
+	if [ -x "${BASEDIR}${CSWNGINX}" ]; then
 		MSG=`$CSWNGINX upgrade`
 		if [ $? -ne 0 ]; then
 			UPGRADE_NGINX_ERR=1

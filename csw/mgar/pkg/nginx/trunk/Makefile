@@ -1,8 +1,8 @@
 GARNAME = nginx
-GARVERSION = 0.7.30
+GARVERSION = $(NGINX_VERSION)
 CATEGORIES = server
 
-DESCRIPTION = nginx HTTP server and mail proxy server
+DESCRIPTION = HTTP server and mail proxy server
 define BLURB
   Nginx (pronounced "engine x") is a free, open-source, high-performance
   HTTP server and reverse proxy, as well as an IMAP/POP3 proxy server.
