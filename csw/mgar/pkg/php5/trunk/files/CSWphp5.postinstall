@@ -16,14 +16,66 @@ else
         echo "updating extension_dir..."
         perl -i.bak -plne "s,no-debug-non-zts-[0-9]+,$extdir," $PHP_INI
 
+        old_list="`sed -ne 's/^extension=\(.*\)\.so/\1/p' $PHP_INI`"
+        new_pkgs=''
+        non_pkgs=''
+        for ext in `echo ${old_list}`; do
+            if grep "extension=$ext" $PHP_INI.CSW; then
+                new_pkgs="${new_pkgs} php5_${ext}"
+            else
+                non_pkgs="${non_pkgs} ${ext}"
+            fi
+        done
+
         cat << _EOT_
 
 ******************************************************************************
-* NOTICE: The existing php.ini file is from an older version of PHP5.  The new
-* php.ini.CSW is based on php.ini-recommended from the PHP 5.2.1 distribution.
+* NOTICE: The existing php.ini file is from an older version of PHP5.  
 *
-* Please consider merging any local configuration changes into a copy of the
-* most recent CSW configuration file.
+* *************  PLEASE READ  *************
+*
+* Starting with php5-5.2.9,REV=2009.04.29 the CSW php5 suite has been 
+* broken out into seperate packages for the modules.
+*
+_EOT_
+if [ -n ${new_pkgs} ]; then
+    cat << _EOT_
+* *************  PLEASE READ  *************
+*
+* Your existing config contains the following extensions
+* that now have become external packages:
+* ${new_pkgs}
+* to keep the same functionality as the original install 
+* install ${new_pkgs} using pkg-get 
+*
+* If you have issues with missing extensions, Please check
+* the catalog for the missing extension before filing a bug report
+*
+_EOT_
+else
+    cat << _EOT_
+* *************  PLEASE READ  *************
+*
+* Your existing config does not contain any shared extensions
+* that are now packages.  If you have issues with missing extensions, 
+* Please Check the catalog for the missing extension before
+* filing a bug report.
+*
+_EOT_
+fi
+if [ -n ${non_pkgs} ]; then
+    cat << _EOT_
+* *************  PLEASE READ  *************
+* 
+* Your existing config contains the following extensions
+* that are not part of CSW build: 
+* ${non_pkgs}
+* 
+* Please verify they are still working after this upgrade.
+*
+_EOT_
+fi
+cat << _EOT_
 ******************************************************************************
 
 ******************************************************************************
