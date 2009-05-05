@@ -38,7 +38,7 @@ else
 * broken out into seperate packages for the modules.
 *
 _EOT_
-if [ -n ${new_pkgs} ]; then
+if [ -n "${new_pkgs}" ]; then
     cat << _EOT_
 * *************  PLEASE READ  *************
 *
@@ -63,7 +63,7 @@ else
 *
 _EOT_
 fi
-if [ -n ${non_pkgs} ]; then
+if [ -n "${non_pkgs}" ]; then
     cat << _EOT_
 * *************  PLEASE READ  *************
 * 
