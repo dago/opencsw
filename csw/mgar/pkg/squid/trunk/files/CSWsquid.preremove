@@ -13,8 +13,8 @@ if [ -x /usr/sbin/svccfg -a -x /usr/sbin/svcadm ]; then
     svccfg delete svc:application/server/cswsquid:default
 else
     echo 'Stopping squid server'
-    if [ -x ${PKG_INSTALL_ROOT}/etc/init.d/cswsquid ]; then
-        ${PKG_INSTALL_ROOT}/etc/init.d/cswsquid stop
+    if [ -x ${PKG_INSTALL_ROOT}/etc/opt/csw/init.d/cswsquid ]; then
+        ${PKG_INSTALL_ROOT}/etc/opt/csw/init.d/cswsquid stop
     else
         pkill -9 squid
     fi

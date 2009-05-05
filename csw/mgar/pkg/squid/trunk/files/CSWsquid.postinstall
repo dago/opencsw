@@ -3,23 +3,41 @@
 # Squid-cache preremove script
 
 PATH=/usr/bin:/usr/sbin
-export PATH
+umask 0022
+
 CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
 SQUID_CONFDIR=${CSW_PREFIX}/etc
 SQUID_VARDIR=${CSW_PREFIX}/var
 SQUID_SBINDIR=${CSW_PREFIX}/sbin
-
+USER=''
+GRP=''
 
 if [ -f ${SQUID_CONFDIR}/squid.conf ]; then
     echo 'squid.conf found, Preserving Existing Config!'
+    USER="`awk '$1  ~ /cache_effective_user/ {print $2}' \
+           ${SQUID_CONFDIR}/squid.conf`"
+    GRP="`awk '$1 ~ /cache_effective_group/ {print $2}' \
+           ${SQUID_CONFDIR}/squid.conf`"
 else
     cp ${SQUID_CONFDIR}/squid.conf.CSW ${SQUID_CONFDIR}/squid.conf
     chmod 0644 ${SQUID_CONFDIR}/squid.conf
 fi
 
-if [ -d ${SQUID_VARDIR}/cache ]; then
-    chown nobody:nobody ${SQUID_VARDIR}/cache
+touch ${SQUID_VARDIR}/logs/access.log
+touch ${SQUID_VARDIR}/logs/cache.log
+touch ${SQUID_VARDIR}/logs/store.log
+
+if [ "_x${USER}x_" = "_xx_" ]; then
+    USER=nobody
 fi
+if [ "_x${GRP}x_" = "_xx_" ]; then
+    GRP=nobody
+fi
+
+chown ${USER}:${GRP} ${SQUID_VARDIR}/logs/access.log
+chown ${USER}:${GRP} ${SQUID_VARDIR}/logs/cache.log
+chown ${USER}:${GRP} ${SQUID_VARDIR}/logs/store.log
+chown ${USER}:${GRP} ${SQUID_VARDIR}/cache
 
 ${SQUID_SBINDIR}/squid -z
 
