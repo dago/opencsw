@@ -12,6 +12,8 @@ endef
 MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = patch-stdint.diff
+# Add workaround for http://bugs.sourcemage.org/show_bug.cgi?id=13476
+PATCHFILES += patch-xlib-sentinel.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

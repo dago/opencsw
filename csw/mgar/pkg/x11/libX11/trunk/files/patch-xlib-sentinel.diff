@@ -1,0 +1,18 @@
+diff -Naur libX11-1.2.1.orig/include/X11/Xlib.h libX11-1.2.1.patched/include/X11/Xlib.h
+--- libX11-1.2.1.orig/include/X11/Xlib.h	2008-10-07 19:18:17.000000000 +0200
++++ libX11-1.2.1.patched/include/X11/Xlib.h	2009-05-05 13:49:27.444486000 +0200
+@@ -38,6 +38,14 @@
+ 
+ #define XlibSpecificationRelease 6
+ 
++#if defined(__GNUC__) && (__GNUC__ >= 4)
++# define _X_SENTINEL(x) __attribute__ ((__sentinel__(x)))
++# define _X_ATTRIBUTE_PRINTF(x,y) __attribute__((__format__(__printf__,x,y)))
++#else
++# define _X_SENTINEL(x)
++# define _X_ATTRIBUTE_PRINTF(x,y)
++#endif /* GNUC >= 4 */
++
+ #ifdef USG
+ #ifndef __TYPES__
+ #include <sys/types.h>			/* forgot to protect it... */
