@@ -44,9 +44,19 @@ if [ -n "${new_pkgs}" ]; then
 *
 * Your existing config contains the following extensions
 * that now have become external packages:
-* ${new_pkgs}
+_EOT_
+cnt=1
+for name in `echo ${non_pkgs}`; do
+    if [ `expr ${cnt} % 4` -ne 0 ]; then
+        echo "${name} \c"
+    else
+        echo "${name}"
+    fi
+    cnt=`expr ${cnt} + 1`
+done
+cat << _EOT_
 * to keep the same functionality as the original install 
-* install ${new_pkgs} using pkg-get 
+* install them using pkg-get 
 *
 * If you have issues with missing extensions, Please check
 * the catalog for the missing extension before filing a bug report
@@ -69,7 +79,17 @@ if [ -n "${non_pkgs}" ]; then
 * 
 * Your existing config contains the following extensions
 * that are not part of CSW build: 
-* ${non_pkgs}
+_EOT_
+cnt=1
+for name in `echo ${non_pkgs}`; do
+    if [ `expr ${cnt} % 4` -ne 0 ]; then
+        echo "${name} \c"
+    else
+        echo "${name}"
+    fi
+    cnt=`expr ${cnt} + 1`
+done
+cat << _EOT_
 * 
 * Please verify they are still working after this upgrade.
 *
