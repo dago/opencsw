@@ -55,6 +55,9 @@ for name in `echo ${new_pkgs}`; do
     fi
     cnt=`expr ${cnt} + 1`
 done
+if [ `expr ${cnt} - 1` -ne 4 ]; then
+    echo
+fi
 cat << _EOT_
 *
 * to keep the same functionality as the original install 
@@ -91,6 +94,9 @@ for name in `echo ${non_pkgs}`; do
     fi
     cnt=`expr ${cnt} + 1`
 done
+if [ `expr ${cnt} - 1` -ne 4 ]; then
+    echo
+fi
 cat << _EOT_
 * 
 * Please verify they are still working after this upgrade.
