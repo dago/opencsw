@@ -48,14 +48,18 @@ if [ -n "${new_pkgs}" ]; then
 _EOT_
 cnt=1
 for name in `echo ${new_pkgs}`; do
+    if [ ${cnt} -eq 1 ]; then
+        echo "* \c"
+    fi
     if [ `expr ${cnt} % 4` -ne 0 ]; then
         echo "${name} \c"
+        cnt=`expr ${cnt} + 1`
     else
         echo "${name}"
+        cnt=1
     fi
-    cnt=`expr ${cnt} + 1`
 done
-if [ `expr ${cnt} - 1` -ne 4 ]; then
+if [ ${cnt} -ne 1 ]; then
     echo
 fi
 cat << _EOT_
@@ -87,14 +91,18 @@ if [ -n "${non_pkgs}" ]; then
 _EOT_
 cnt=1
 for name in `echo ${non_pkgs}`; do
+    if [ ${cnt} -eq 1 ]; then
+        echo "* \c"
+    fi
     if [ `expr ${cnt} % 4` -ne 0 ]; then
         echo "${name} \c"
+        cnt=`expr ${cnt} + 1`
     else
         echo "${name}"
+        cnt=1
     fi
-    cnt=`expr ${cnt} + 1`
 done
-if [ `expr ${cnt} - 1` -ne 4 ]; then
+if [ ${cnt} -ne 1 ]; then
     echo
 fi
 cat << _EOT_
