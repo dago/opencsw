@@ -1,12 +1,23 @@
 #!/bin/bash
 ####################################################
 #
-#  fixlibtool
+#  $URL$
+#  $Author$
+#  $Date$
+#  $Revision$
+#  $LastChangedRevision$
+#
 #  Intended to remove the use of libtool's 
 #  pseudo-libraries for opencsw builds.
 #
-#  Author: Mike Watters  mwatters_at_opencsw.org
-#  Initial Version: 0.1
+#  Usage: fixlibtool $(WORKSRC)
+#
+#  Intened usage:
+#  DISTFILES += fixlibtool
+#  post-configure-modulated:
+#       @(echo "~~~ Fixing Libtool ~~~")
+#       @$(DOWNLOADDIR)/fixlibtool $(WORKSRC)
+#       @$(MAKECOOKIE)
 #
 ####################################################
 
@@ -49,3 +60,4 @@ for LTMAIN in $(gfind ${BASEPATH} -name ltmain.sh -print); do
     gchmod +x ${LTMAIN}
 done
 
+exit 0
