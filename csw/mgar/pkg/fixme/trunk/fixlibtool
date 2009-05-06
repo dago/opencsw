@@ -1,7 +1,7 @@
 #!/bin/bash
 ####################################################
 #
-#  fixme.sh
+#  fixlibtool
 #  Intended to remove the use of libtool's 
 #  pseudo-libraries for opencsw builds.
 #
