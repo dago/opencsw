@@ -14,7 +14,7 @@ if [ "$SMF" = "yes" ]; then
 		echo "nginx service is in '$STATE' state"
 		if [ "$STATE" = "online" ]; then
 			if [ -x "$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx" ]; then
-				NXSTATE=`$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx state`
+				NXSTATE=`$BASEDIR/opt/csw/lib/svc/method/svc-cswnginx status`
 				echo "nginx is $NXSTATE"
 				if [ "$NXSTATE" = "running" ]; then
 					echo "nginx online upgrade is requested"
@@ -25,7 +25,7 @@ if [ "$SMF" = "yes" ]; then
 	fi
 else
 	if [ -x $BASEDIR/etc/init.d/cswnginx ]; then
-		NXSTATE=`$BASEDIR/etc/init.d/cswnginx state`
+		NXSTATE=`$BASEDIR/etc/init.d/cswnginx status`
 		echo "nginx is $NXSTATE"
 		if [ "$NXSTATE" = "running" ]; then
 			echo "nginx online upgrade is requested"
