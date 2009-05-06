@@ -2,33 +2,24 @@ GARNAME      = pixman
 GARVERSION   = 0.15.2
 CATEGORIES   = lib
 
-DESCRIPTION  = The pixel-manipulation library for X and cairo
+DESCRIPTION = The pixel-manipulation library for X and cairo
 define BLURB
 endef
 
-MASTER_SITES  = http://www.cairographics.org/releases/
-DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz
-# PKGDIST       = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://www.cairographics.org/releases/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_DESC_CSWpixman 		= $(DESCRIPTION)
-
-DISTFILES    += $(call admfiles,CSWpixman, )
-DISTFILES    += license.txt
-
-#REQUIRED_PKGS_CSWpixman 	 = CSWlibx11
+# Same as from gar/x11/categories/x11/category.mk
+EXTRA_CFLAGS = -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
+EXTRA_CXXFLAGS = -xlibmil -xlibmopt -features=tmplife -norunpath
 
 BUILD64 = 1
-
-CFLAGS       += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
-CXXFLAGS     += -xlibmil -xlibmopt -features=tmplife -norunpath
-LDFLAGS      += -L/opt/csw/lib -R/opt/csw/lib
+NOISALIST = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-gtk
-
-LICENSE = license.txt
+CONFIGURE_ARGS += --disable-gtk
 
 include gar/category.mk
