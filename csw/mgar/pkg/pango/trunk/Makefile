@@ -1,5 +1,5 @@
 GARNAME = libpango
-GARVERSION = 1.24.1
+GARVERSION = 1.24.2
 CATEGORIES = lib
 
 DESCRIPTION = A framework for the layout and rendering of international text
@@ -26,6 +26,10 @@ SPKG_SOURCEURL = http://www.pango.org/
 UPSTREAM_MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+
 BUILD64 = 1
 NO_ISAEXEC = 1
 CONFIGURE_ARGS   = $(DIRPATHS)
@@ -34,7 +38,7 @@ CONFIGURE_ARGS  += --with-x --enable-gtk-doc
 
 PREREQUISITE_PKGS = CSWgtk-doc CSWlibxslt
 REQUIRED_PKGS_CSWpango  = CSWggettextrt CSWglib2 CSWfconfig CSWftype2
-REQUIRED_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib
+REQUIRED_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib CSWlibx11
 REQUIRED_PKGS_CSWpangodevel = CSWpango
 
 # Dynamic prototype
