@@ -2,12 +2,11 @@
 ####################################################
 #
 #  $URL$
-#  $Author$
 #  $Date$
 #  $Revision$
 #  $LastChangedRevision$
 #
-#  Author: Mike Watters mwatters_at_opencsw_dot_org
+#  Author: Mike Watters (mwatters~~@~~opencsw.org)
 #  Intended to remove the use of libtool's 
 #  pseudo-libraries for opencsw builds.
 #
@@ -33,6 +32,7 @@ BASEPATH=$1
 
 ## Fix Makefiles
 for mk in $(gfind ${BASEPATH} -name Makefile -print); do
+    gcp ${mk} ${mk}.orig
     LT_FILES=$(ggrep '/opt/csw.*/lib/.*\.la' ${mk} | \
         gsed "s/^.*\(\/opt\/csw.*\/lib\/.*\.la\).*$/\1/")
     
@@ -42,20 +42,22 @@ for mk in $(gfind ${BASEPATH} -name Makefile -print); do
                 -e "s/^lib//" \
                 -e "s/\.so.*$//")
         fixpath=$(gecho $file |gsed 's/\//\\\//g')
-        gsed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >Makefile.new
-        gmv Makefile.new ${mk}
+        gsed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >${mk}.new
+        gmv ${mk}.new ${mk}
         gchmod +x ${mk}
     done
 done
 
 ## Fix libtool Script
 for lt in $(gfind ${BASEPATH} -name libtool -print); do
+    gcp ${lt} ${lt}.orig
     gsed "/for search_ext in .*\.la/s/\.la//" ${lt} >${lt}.new
     gmv ${lt}.new ${lt}
     gchmod +x ${lt}
 done
 
 for LTMAIN in $(gfind ${BASEPATH} -name ltmain.sh -print); do
+    gcp ${LTMAIN} ${LTMAIN}.orig
     gsed "/for search_ext in .*\.la/s/\.la//" ${LTMAIN} >${LTMAIN}.new
     gmv ${LTMAIN}.new ${LTMAIN}
     gchmod +x ${LTMAIN}
