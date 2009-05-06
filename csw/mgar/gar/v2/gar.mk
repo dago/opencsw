@@ -381,12 +381,27 @@ CONFIGURE_IMGDEPS = $(addprefix imgdep-,$(filter-out $(DESTIMG),$(IMGDEPS)))
 #CONFIGURE_BUILDDEPS = $(addprefix $(GARDIR)/,$(addsuffix /$(COOKIEROOTDIR)/build.d/install,$(BUILDDEPS)))
 endif
 
+ifneq ($(STRIP_LIBTOOL),1)
 configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure
 	@$(DONADA)
 
 configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
 		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
 		pre-configure-modulated pre-configure-$(MODULATION) $(CONFIGURE_TARGETS) post-configure-$(MODULATION) post-configure-modulated
+	@$(DONADA)
+else
+configure: pre-configure $(addprefix configure-,$(MODULATIONS)) post-configure strip-libtool
+	@$(DONADA)
+
+configure-modulated: verify-isa patch-modulated $(CONFIGURE_IMGDEPS) $(CONFIGURE_BUILDDEPS) $(CONFIGURE_DEPS) \
+		$(addprefix srcdep-$(GARDIR)/,$(SOURCEDEPS)) \
+		pre-configure-modulated pre-configure-$(MODULATION) $(CONFIGURE_TARGETS) post-configure-$(MODULATION) post-configure-modulated strip-libtool
+	@$(DONADA)
+endif
+
+strip-libtool:
+	@echo '[===== Stripping Libtool =====]'
+	fixlibtool $(WORKSRC)
 	@$(DONADA)
 
 .PHONY: reset-configure reset-configure-modulated
