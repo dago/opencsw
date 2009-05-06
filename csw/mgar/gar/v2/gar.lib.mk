@@ -547,17 +547,17 @@ TEST_TARGET ?= test
 # Run tests on pre-built sources
 test-%/Makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/GNUmakefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 # Ruby makefiles
