@@ -15,6 +15,8 @@ PACKAGES = CSWlibpthreadstubs
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+REQUIRED_PKGS = CSWx11common
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
