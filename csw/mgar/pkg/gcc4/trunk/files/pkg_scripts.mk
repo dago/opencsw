@@ -31,6 +31,12 @@ post-merge-modulated:
 	$(_DBG)( gmv $(PKGROOT)/opt/csw/gcc4/lib/gcc/*/*/adalib/*.so* \
 			$(PKGROOT)/opt/csw/gcc4/lib/ )
 	$(_DBG)( gfind $(PKGROOT) -name \*~ -exec grm -f {} \; )
+	$(_DBG)( cd $(PKGROOT)/opt/csw/gcc4/lib; gln -s . 32 )
+	$(_DBG)(if [ "`uname -p`" = "sparc" ]; then \
+				cd $(PKGROOT)/opt/csw/gcc4/lib; gln -s sparcv9 64; \
+			else \
+				cd $(PKGROOT)/opt/csw/gcc4/lib; gln -s amd64 64; \
+			fi )
 	$(_DBG)$(MAKECOOKIE)
 
 test-skip:
