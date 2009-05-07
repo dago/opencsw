@@ -1,5 +1,5 @@
 GARNAME = Compress-Raw-Zlib
-GARVERSION = 2.004
+GARVERSION = 2.019
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -9,11 +9,23 @@ define BLURB
   compression library.
 endef
 
-DISTFILES = $(call admfiles,CSWpmcomprawzlib,depend prototype)
+DISTFILES += COPYING
+
+CATALOGNAME = pm_compressrawzlib
+PACKAGES = CSWpmcompressrawzlib
+ARCHALL = 1
+
+REQUIRED_PKGS = CSWzlib
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+
+CONFIGURE_ARGS =
+
+#SKIPTEST = 1
 
 # Use CSWzlib instead of the dist version
-PATCHFILES += cswzlib.diff
+#PATCHFILES += cswzlib.diff
 
-#DEPEND += lib/zlib
+DEPEND += lib/zlib
 
 include gar/category.mk
