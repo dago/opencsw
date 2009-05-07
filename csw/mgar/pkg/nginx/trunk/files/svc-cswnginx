@@ -95,8 +95,9 @@ upgrade()
 	[ $RETVAL -ne 0 ] && return $RETVAL
 	OLDBINPID=0
 	for i in 1 2 3 4 5; do
-		if [ -f $PIDFILO ]; then
+		if [ -s $PIDFILO ]; then
 			OLDBINPID=1
+			sleep 2
 			break
 		else
 			sleep 1
