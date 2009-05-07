@@ -29,12 +29,14 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWxcbproto
 
+PREREQUISITE_PKGS = CSWpython
 REQUIRED_PKGS = CSWpython
+REQUIRED_PKGS += CSWx11common
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-ARCHALL = 1
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
