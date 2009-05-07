@@ -13,7 +13,6 @@ DISTFILES += COPYING
 
 CATALOGNAME = pm_compressrawzlib
 PACKAGES = CSWpmcompressrawzlib
-ARCHALL = 1
 
 REQUIRED_PKGS = CSWzlib
 
@@ -25,7 +24,5 @@ CONFIGURE_ARGS =
 
 # Use CSWzlib instead of the dist version
 #PATCHFILES += cswzlib.diff
-
-DEPEND += lib/zlib
 
 include gar/category.mk
