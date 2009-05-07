@@ -60,6 +60,7 @@ merge-i386-files:
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/share $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/lib $(PKGROOT))
 	$(_DBG)(cd $(I386_BASE); /usr/bin/pax -rw -v $(MPREFIX)/libexec $(PKGROOT))
+	$(_DBG)(cd $(PPREFIX)/lib; gln . 32)
 	$(_DBG)$(MAKECOOKIE)
 
 merge-amd64-files:
@@ -69,6 +70,7 @@ merge-amd64-files:
 		/usr/bin/pax -rw -v $$dir $(PKGROOT); done )
 	$(_DBG)(cd $(AMD_BASE); /usr/bin/pax -rw -v $(MPREFIX)/lib/amd64 $(PKGROOT))
 	$(_DBG)(cd $(APREFIX)/bin; /usr/bin/pax -rw -v * $(PPREFIX)/bin/amd64)
+	$(_DBG)(cd $(PPREFIX)/lib; gln amd64 64)
 	$(_DBG)$(MAKECOOKIE)
 
 ifeq ($(shell uname -p), i386)
