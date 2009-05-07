@@ -10,9 +10,7 @@ define BLURB
   functionality provided by zlib is available in Compress::Zlib.
 endef
 
-#DISTFILES += $(call admfiles,CSWpmlibwww,)
 DISTFILES += COPYING
-#DISTFILES = $(call admfiles,CSWpmcompresszlib,depend prototype)
 
 CATALOGNAME = pm_compresszlib
 PACKAGES = CSWpmcompresszlib
