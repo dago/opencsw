@@ -21,4 +21,6 @@ EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 CONFIGURE_ARGS =
 
+SKIPTEST = 1
+
 include gar/category.mk
