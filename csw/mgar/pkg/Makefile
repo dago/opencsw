@@ -64,10 +64,9 @@ newpkg-%:
 	echo "";                                                        								\
 	echo "MASTER_SITES = ";                                         								\
 	echo "DISTFILES  = $$(GARNAME)-$$(GARVERSION).tar.gz";          								\
-	echo "DISTFILES += $$(call admfiles,CSWpackage,)";              								\
 	echo "";                                                        								\
 	echo "# We define upstream file regex so we can be notifed of new upstream software release";  	\
-	echo "UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz";										\
+	echo "UFILES_REGEX = $$(GARNAME)-(\d+(?:\.\d+)*).tar.gz";										\
 	echo "";                                                        								\
 	echo "# If the url used to check for software update is different of MASTER_SITES, then ";   	\
 	echo "# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES"; 	\
@@ -77,15 +76,15 @@ newpkg-%:
 	echo "";                                                        								\
 	echo "include gar/category.mk";                                 								\
 	) > $*/trunk/Makefile
-	@svn add $*/trunk/Makefile
-	@(echo "%var            bitname package";                       								\
-	echo "%var            pkgname CSWpackage";                      								\
-	echo "%include        url file://%{PKGLIB}/csw_dyndepend.gspec";								\
-	echo "%copyright      url file://%{WORKSRC}/LICENSE";           								\
-	) > $*/trunk/files/CSWpackage.gspec
+	@touch $*/trunk/checksums
+	@svn add $*/trunk/Makefile $*/trunk/checksums
 	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $*/trunk
 	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $*/trunk
-	@svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $*/trunk/gar
+	@if [ -d ../gar/v2 ]; then \
+	  ln -s ../../../gar/v2 $*/trunk/gar; \
+	else \
+	  svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $*/trunk/gar; \
+	fi
 	@echo
 	@echo "Your package is set up for editing at $*/trunk"
 	@echo "Please don't forget to add the gspec-file!"
