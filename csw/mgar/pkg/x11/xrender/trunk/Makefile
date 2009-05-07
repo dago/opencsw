@@ -29,7 +29,7 @@ SPKG_DESC_CSWrenderdev  = $(DESCRIPTION) development package
 PKGFILES_CSWrenderdev  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1 
-NOARCHLIST = 1
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
