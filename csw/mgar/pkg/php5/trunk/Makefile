@@ -110,6 +110,7 @@ install-extras:
 		$(DESTDIR)$(prefix)/apache2/etc/extra
 	@(grm -fr $(DESTDIR)/.[a-z]*)
 	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
+	@(grm -f $(DESTDIR)$(prefix)/php5/etc/pear.conf)
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
