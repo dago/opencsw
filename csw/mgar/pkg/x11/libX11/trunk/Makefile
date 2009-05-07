@@ -30,7 +30,7 @@ CATALOGNAME_CSWlibx11devel = libx11_devel
 
 PKGFILES_CSWlibx11devel  = $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWlibx11      = CSWlibxcb
+REQUIRED_PKGS_CSWlibx11      = CSWx11common CSWlibxcb
 REQUIRED_PKGS_CSWlibx11devel = CSWlibx11
 
 BUILD64 = 1
