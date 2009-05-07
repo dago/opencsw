@@ -1,5 +1,5 @@
 GARNAME = IO-Compress-Zlib
-GARVERSION = 2.004
+GARVERSION = 2.015
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -9,9 +9,16 @@ define BLURB
   1950, 1951, 1952 (i.e. gzip) and zip files/buffers.
 endef
 
-DISTFILES = $(call admfiles,CSWpmiocompzlib,prototype)
+DISTFILES += COPYING
 
-DEPENDS += cpan/IO-Compress-Base
-DEPENDS += cpan/Compress-Raw-Zlib
+CATALOGNAME = pm_iocompresszlib
+PACKAGES = CSWpmiocompresszlib
+ARCHALL = 1
+
+REQUIRED_PKGS = CSWpmiocompressbase CSWpmcompressrawzlib
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+
+CONFIGURE_ARGS =
 
 include gar/category.mk
