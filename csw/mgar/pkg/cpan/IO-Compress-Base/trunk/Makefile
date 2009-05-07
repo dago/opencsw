@@ -1,5 +1,5 @@
 GARNAME = IO-Compress-Base
-GARVERSION = 2.004
+GARVERSION = 2.015
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -9,8 +9,14 @@ define BLURB
   purpose if to to be sub-classed by IO::Compress modules.
 endef
 
-DISTFILES = $(call admfiles,CSWpmiocompbase,depend prototype)
+DISTFILES += COPYING
 
-DEPENDS += cpan/Scalar-List-Utils
+CATALOGNAME = pm_iocompressbase
+PACKAGES = CSWpmiocompressbase
+ARCHALL = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+
+CONFIGURE_ARGS =
 
 include gar/category.mk
