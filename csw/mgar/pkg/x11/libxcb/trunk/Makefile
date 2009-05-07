@@ -30,7 +30,7 @@ PKGFILES_CSWlibxcbdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxcbdoc   = $(PKGFILES_DOC)
 
 REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
-REQUIRED_PKGS_CSWlibxcb	     = CSWlibxau
+REQUIRED_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau
 
 BUILD64 = 1
 NOISALIST = 1
