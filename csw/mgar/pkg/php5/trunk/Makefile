@@ -65,7 +65,8 @@ EXTRA_INC += $(prefix)/bdb44/include
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
 NOISALIST = 1
-DISTFILES += fixme.sh
+
+STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --disable-static
@@ -92,6 +93,7 @@ NEW_CONFIGURE_ARGS = $(shell echo $(CONFIGURE_ARGS) |sed -e 's/apxs2/apxs/' \
 # Copy over template config files and utility scripts
 
 PI_SCRIPTS  = install-extras
+PI_SCRIPTS += install-ap2modphp5
 PI_SCRIPTS += install-modphp5
 
 post-install-modulated: $(PI_SCRIPTS)
@@ -110,22 +112,31 @@ install-extras:
 	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
 	@$(MAKECOOKIE)
 
+install-ap2modphp5:
+	@( echo "  ==> Now Building ap2_modphp5 <==" )
+	@( if [ -f $(WORKSRC)/Makefile ]; then \
+		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi )
+	@( cd $(WORKSRC) && $(BUILD_ENV) \
+		./configure $(CONFIGURE_ARGS) --with-apxs2=$(prefix)/apache2/sbin/apxs)
+	@( $(GARBIN)/fixlibtool $(WORKSRC) )
+	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
+	@( strip $(DESTDIR)$(prefix)/apache2/libexec/libphp5.so )
+	@( gfind $(DESTDIR)$(prefix)/apache*  \
+		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr )
+	@$(MAKECOOKIE)
+
 install-modphp5:
 	@( echo "  ==> Now Building mod_php5 <==" )
 	@( if [ -f $(WORKSRC)/Makefile ]; then \
 		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi )
-	@( cd $(WORKSRC) && $(BUILD_ENV) ./configure $(NEW_CONFIGURE_ARGS) )
-	@( $(DOWNLOADDIR)/fixme.sh $(WORKSRC) )
+	@( cd $(WORKSRC) && $(BUILD_ENV) \
+		./configure $(CONFIGURE_ARGS) --with-apxs=$(prefix)/apache/bin/apxs)
+	@( $(GARBIN)/fixlibtool $(WORKSRC) )
 	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
 	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
 	@( gfind $(DESTDIR)$(prefix)/apache*  \
 		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr )
 	@$(MAKECOOKIE)
-
-post-configure-modulated:
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	$(DONADA)
 
 EXTFILES = $(shell find extensions/*/files/* -prune -type f)
 pre-fetch:

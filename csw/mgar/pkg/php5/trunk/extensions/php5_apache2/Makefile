@@ -12,7 +12,6 @@ DISTFILES += CSWap2modphp5.postinstall CSWap2modphp5.space
 
 STRIP_DIRS += $(DESTDIR)$(prefix)/apache2/libexec
 
-CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
-
 PKGFILES_CSWap2modphp5 = .*/csw/apache2/.*
 
+## This is configured in a post-install from the main Makefile
