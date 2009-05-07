@@ -21,7 +21,7 @@ PACKAGES = CSWlibxrender CSWrenderdev
 
 PREREQUISITE_PKGS = CSWrenderproto
 REQUIRED_PKGS_CSWrenderdev = CSWlibxrender
-REQUIRED_PKGS_CSWlibxrender = CSWlibx11
+REQUIRED_PKGS_CSWlibxrender = CSWx11common CSWlibx11
 
 SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
 SPKG_DESC_CSWrenderdev  = $(DESCRIPTION) development package
