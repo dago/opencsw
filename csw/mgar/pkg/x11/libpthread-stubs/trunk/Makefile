@@ -16,7 +16,6 @@ PACKAGES = CSWlibpthreadstubs
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
-ARCHALL = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
