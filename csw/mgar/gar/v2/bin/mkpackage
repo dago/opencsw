@@ -856,7 +856,7 @@ sub clean_spool {
     my $specname = $config{specname};
 
     my $existing_pkgspool = catfile $spooldir, $specname;
-    vexec( "rm -r $existing_pkgspool", "Failed to remove $existing_pkgspool" )
+    vexec( "rm -rf $existing_pkgspool", "Failed to remove $existing_pkgspool" )
       if -d $existing_pkgspool;
 }
 
