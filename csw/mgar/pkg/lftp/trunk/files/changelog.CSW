@@ -1,3 +1,9 @@
+lftp (3.7.13,REV=2009.05.08) unstable
+
+  * New upstream release.
+
+   -- Yann Rouillard <yann@opencsw.org>  Fri, 08 May 2009 17:17:30 +0200
+
 lftp (3.7.11,REV=2009.03.29) unstable
 
   * Now uses cswpreserveconf class from cswclassutils to handle lftp.conf
