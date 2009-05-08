@@ -1,4 +1,0 @@
-%var            bitname libxft2dev
-%var            pkgname CSWlibxft2dev
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
