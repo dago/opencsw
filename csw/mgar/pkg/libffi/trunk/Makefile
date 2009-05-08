@@ -22,14 +22,16 @@ CATALOGNAME_CSWlibffi = libffi
 SPKG_DESC_CSWlibffi = $(DESCRIPTION)
 
 
-#REQUIRED_PKGS_CSWlibffi += 
+REQUIRED_PKGS_CSWlibffi = CSWgcc4corert
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-GARCOMPILER = GNU
+GARCOMPILER = GCC4
+BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+TEST_SCRIPTS =
 TEST_TARGET = check
 include gar/category.mk
