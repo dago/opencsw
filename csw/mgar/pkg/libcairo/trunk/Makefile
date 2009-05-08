@@ -37,12 +37,16 @@ REQUIRED_PKGS_CSWlibcairo     += CSWpixman
 REQUIRED_PKGS_CSWlibcairo     += CSWpng
 REQUIRED_PKGS_CSWlibcairo     += CSWzlib
 REQUIRED_PKGS_CSWlibcairo     += CSWlibrsvg
+REQUIRED_PKGS_CSWlibcairo     += CSWexpat
+REQUIRED_PKGS_CSWlibcairo     += CSWiconv
+REQUIRED_PKGS_CSWlibcairo     += CSWlibxcb
+REQUIRED_PKGS_CSWlibcairo     += CSWxcbutil
+
 REQUIRED_PKGS_CSWlibcairodevel = CSWlibcairo
 REQUIRED_PKGS_CSWlibcairodoc   = 
 
 ARCHALL_CSWlibcairodoc = 1
 
-# Wait for libpixman, libfontconfig and libXrender to be 64 bit
 BUILD64 = 1
 
 EXTRA_INC = $(prefix)/X11/include
@@ -51,9 +55,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
-CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=yes
+CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=yes --enable-xcb=yes
 CONFIGURE_ARGS += --enable-gtk-doc --enable-test-surfaces=yes 
 
 include gar/category.mk
-
-
