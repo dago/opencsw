@@ -448,15 +448,18 @@ endif
 # without expansion and needs to be differentiated between 32 and 64 bit, therefore
 # the links 32 and 64.
 
+# NORUNPATH=1 means do not add any runpath
+# NOISALIST=1 means add only direct pathes, no $ISALIST expansions
+
 ifndef NORUNPATH
 # If we use $ISALIST it is a good idea to also add $MM_LIBDIR as there
 # may not be a subdirectory for the 32-bit standard case (this would normally
 # be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .). This is most likely
-# the case for libraries in $(EXTRA_LIBS) for which no links generated in CSWcommon.
-RUNPATH_DIRS ?= $(libpath_install) $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_DIRS)
+# the case for libraries in $(EXTRA_LIB) for which no links generated in CSWcommon.
+RUNPATH_DIRS ?= $(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_LIB) $(EXTRA_RUNPATH_DIRS)
 
 ifndef NOISALIST
-RUNPATH_ISALIST ?= $(libpath_install) $(libdir_install) $(EXTRA_LIB) $(EXTRA_RUNPATH_ISALIST)
+RUNPATH_ISALIST ?= $(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_LIB) $(EXTRA_RUNPATH_ISALIST)
 endif
 
 # Iterate over all directories in RUNPATH_DIRS, prefix each directory with one
@@ -476,20 +479,12 @@ LDFLAGS  ?= $(strip $($(GARCOMPILER)_LD_FLAGS) $(_CATEGORY_LDFLAGS) $(EXTRA_LDFL
 ASFLAGS  ?= $(strip $($(GARCOMPILER)_AS_FLAGS) $(_CATEGORY_ASFLAGS) $(EXTRA_ASFLAGS))
 OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(_CATEGORY_OPTFLAGS) $(EXTRA_OPTFLAGS))
 
-GCC3_LD_OPTIONS = -R$(GCC3_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-GCC4_LD_OPTIONS = -R$(GCC4_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS) $(EXTRA_LD_OPTIONS)
-SOS11_LD_OPTIONS = $(strip $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
-SOS12_LD_OPTIONS = $(strip $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS) $(EXTRA_LD_OPTIONS))
+GCC3_LD_OPTIONS = -R$(GCC3_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
+GCC4_LD_OPTIONS = -R$(GCC4_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
+SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
+SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 
-LD_OPTIONS ?= $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS)
-
-# LD_OPTIONS considered harmful. Disable for the moment.
-#LDOPT_LIBS ?= $(libdir)
-#ifdef NOISALIST
-#LD_OPTIONS += $(foreach ELIB,$(addsuffix /$(MM_LIBDIR),$(LDOPT_LIBS)) $(EXTRA_LIB),-R$(abspath $(ELIB)/$(MM_LIBDIR)))
-#else
-#LD_OPTIONS += $(foreach ELIB,$(LDOPT_LIBS) $(EXTRA_LIB),-R$(ELIB)/\$$ISALIST -R$(ELIB)/$(MM_LIBDIR))
-#endif
+LD_OPTIONS ?= $(strip $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS) $(EXTRA_LD_OPTIONS))
 
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
@@ -498,7 +493,7 @@ LD_OPTIONS ?= $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS)
 PATH = $(if $(filter SOS12,$(GARCOMPILER)),$(abspath $(GARBIN)/sos12-wrappers):)$(if $(IGNORE_DESTDIR),,$(abspath $(DESTDIR)$(binpath_install)/$(MM_BINDIR)):$(DESTDIR)$(binpath_install):$(abspath $(DESTDIR)$(sbinpath_install)/$(MM_BINDIR)):$(DESTDIR)$(sbinpath_install):)$(abspath $(binpath_install)/$(MM_BINDIR)):$(binpath_install):$(abspath $(sbinpath_install)/$(MM_BINDIR)):$(sbinpath_install):$(CC_HOME)/bin:$(abspath $(GARBIN)):/usr/bin:/usr/sbin:/usr/java/bin:/usr/ccs/bin:/usr/openwin/bin
 
 # This is for foo-config chaos
-PKG_CONFIG_DIRS ?= $(libpath_install) $(libdir_install) $(EXTRA_PKG_CONFIG_DIRS)
+PKG_CONFIG_DIRS ?= $(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_PKG_CONFIG_DIRS)
 ifneq (,$(findstring $(origin PKG_CONFIG_PATH),undefined environment))
 PKG_CONFIG_PATH = $(call MAKEPATH,$(foreach D,$(PKG_CONFIG_DIRS),$(abspath $D/$(MM_LIBDIR)/pkgconfig)) $(_CATEGORY_PKG_CONFIG_PATH) $(EXTRA_PKG_CONFIG_PATH))
 endif
@@ -566,7 +561,6 @@ endif
 
 COMMON_EXPORTS ?= $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS) $(_CATEGORY_COMMON_EXPORTS)
 
-# LD_OPTIONS = $(LINKER_FLAGS)
 ifneq ($(LD_OPTIONS),)
 COMMON_EXPORTS += LD_OPTIONS
 endif
@@ -655,5 +649,6 @@ _modenv-modulated:
 	echo "       CXXFLAGS = $(CXXFLAGS)";				\
 	echo "       CPPFLAGS = $(CPPFLAGS)";				\
 	echo "        LDFLAGS = $(LDFLAGS)";				\
+	echo "     LD_OPTIONS = $(LD_OPTIONS)";				\
 	echo "        ASFLAGS = $(ASFLAGS)";				\
 	echo "       OPTFLAGS = $(OPTFLAGS)"
