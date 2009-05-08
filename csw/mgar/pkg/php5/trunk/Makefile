@@ -73,7 +73,6 @@ CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --enable-cli
 CONFIGURE_ARGS += --enable-fastcgi
-CONFIGURE_ARGS += --enable-force-cgi-redirect
 CONFIGURE_ARGS += --enable-pcntl=shared
 CONFIGURE_ARGS += --enable-pdo=shared
 CONFIGURE_ARGS += --with-mm=$(prefix)
@@ -93,6 +92,7 @@ NEW_CONFIGURE_ARGS = $(shell echo $(CONFIGURE_ARGS) |sed -e 's/apxs2/apxs/' \
 # Copy over template config files and utility scripts
 
 PI_SCRIPTS  = install-extras
+PI_SCRIPTS += install-sapi-cgi
 PI_SCRIPTS += install-ap2modphp5
 PI_SCRIPTS += install-modphp5
 
@@ -137,6 +137,17 @@ install-modphp5:
 	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
 	@( gfind $(DESTDIR)$(prefix)/apache*  \
 		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr )
+	@$(MAKECOOKIE)
+
+install-sapi-cgi:
+	@( echo "  ==> Now Building php-cgi <==" )
+	@( if [ -f $(WORKSRC)/Makefile ]; then \
+		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi )
+	@( cd $(WORKSRC) && $(BUILD_ENV) \
+		./configure $(CONFIGURE_ARGS) --enable-force-cgi-redirect)
+	@( $(GARBIN)/fixlibtool $(WORKSRC) )
+	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
+	@( strip $(DESTDIR)$(prefix)/php5/bin/php-cgi )
 	@$(MAKECOOKIE)
 
 EXTFILES = $(shell find extensions/*/files/* -prune -type f)

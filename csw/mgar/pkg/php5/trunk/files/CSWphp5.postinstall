@@ -1,7 +1,9 @@
 #!/bin/sh
 
+PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/php5/lib
+PHP_BIN=$PKG_INSTALL_ROOT/opt/csw/php5/bin
 PHP_INI=$PHP_LIB/php.ini
 
 if [ ! -f $PHP_INI ]; then
@@ -9,7 +11,8 @@ if [ ! -f $PHP_INI ]; then
 else
     echo "php.ini already exists"
 
-    extdir=`ls -d $PHP_LIB/php/extensions/no-debug-non-zts-* | xargs basename`
+    extdir_ext=`${PHP_BIN}/php -i |grep 'PHP Extension' |awk '{print $NF}'`
+    extdir="${PHP_LIB}/php/extensions/no-debug-non-zts-${extdir_ext}"
     curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' $PHP_INI`
 
     if [ "$extdir" != "$curextdir" ]; then
@@ -122,6 +125,16 @@ cat << _EOT_
 ******************************************************************************
 _EOT_
     fi
+fi
+if [ ! -d ${extdir} ]; then
+    mkdir -p ${extdir}
+    for dir in `${PHP_BIN}/php -i |grep extension_dir |\
+                 awk -F'/' '{print $(NF-1), $NF}'`; do
+        chown -R root:bin ${dir}
+        chmod -R 0755 ${dir}
+        installf ${PKGINST} ${dir}
+    done
+    installf -f ${PKGINST}
 fi
 
 echo "PHP5 configuration: $PHP_INI"
