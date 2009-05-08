@@ -39,6 +39,7 @@ REQUIRED_PKGS_CSWlibcairo     += CSWzlib
 REQUIRED_PKGS_CSWlibcairo     += CSWlibrsvg
 REQUIRED_PKGS_CSWlibcairo     += CSWexpat
 REQUIRED_PKGS_CSWlibcairo     += CSWiconv
+REQUIRED_PKGS_CSWlibcairo     += CSWlibx11
 REQUIRED_PKGS_CSWlibcairo     += CSWlibxcb
 REQUIRED_PKGS_CSWlibcairo     += CSWxcbutil
 
