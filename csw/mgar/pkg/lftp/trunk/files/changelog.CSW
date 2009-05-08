@@ -1,8 +1,8 @@
-lftp (3.7.13,REV=2009.05.08) unstable
+lftp (3.7.13,REV=2009.05.09) unstable
 
   * New upstream release.
 
-   -- Yann Rouillard <yann@opencsw.org>  Fri, 08 May 2009 17:17:30 +0200
+   -- Yann Rouillard <yann@opencsw.org>  Fri, 09 May 2009 17:17:30 +0200
 
 lftp (3.7.11,REV=2009.03.29) unstable
 
