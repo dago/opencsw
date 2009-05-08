@@ -28,12 +28,15 @@ PKGFILES_CSWlibcairodevel += $(docdir)/libcairo_devel/.*
 PKGFILES_CSWlibcairodoc    = $(sharedstatedir)/gtk-doc.*
 PKGFILES_CSWlibcairodoc   += $(docdir)/libcairo_doc/.*
 
+PREREQUISITE_PKGS = CSWrenderdev
+
 REQUIRED_PKGS_CSWlibcairo      = CSWfconfig
 REQUIRED_PKGS_CSWlibcairo     += CSWftype2
 REQUIRED_PKGS_CSWlibcairo     += CSWlibxrender
 REQUIRED_PKGS_CSWlibcairo     += CSWpixman
 REQUIRED_PKGS_CSWlibcairo     += CSWpng
 REQUIRED_PKGS_CSWlibcairo     += CSWzlib
+REQUIRED_PKGS_CSWlibcairo     += CSWlibrsvg
 REQUIRED_PKGS_CSWlibcairodevel = CSWlibcairo
 REQUIRED_PKGS_CSWlibcairodoc   = 
 
