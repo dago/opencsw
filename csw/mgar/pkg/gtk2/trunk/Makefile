@@ -24,7 +24,8 @@ DISTFILES += fixme.sh
 WORKSRC = $(WORKDIR)/gtk+-$(GARVERSION)
 
 PREREQUISITE_PKGS = CSWbash
-REQUIRED_PKGS = CSWjasper
+REQUIRED_PKGS = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
+REQUIRED_PKGS += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
