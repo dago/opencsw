@@ -24,6 +24,7 @@ DISTFILES += fixme.sh
 WORKSRC = $(WORKDIR)/gtk+-$(GARVERSION)
 
 PREREQUISITE_PKGS = CSWbash
+REQUIRED_PKGS = CSWjasper
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
@@ -34,7 +35,8 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-debug=yes
+CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 #TEST_TARGET = check
 # There is a test failing on Xvfb which may or may not be harmful. Disable for now.
