@@ -352,7 +352,7 @@ endef
 
 # URL: https://gar.svn.sf.net/svnroot/gar/csw/mgar/pkg/pcre/trunk
 define _URL
-$(if $(shell if test -x $(SVN); then echo yes; fi),$(shell $(SVN) info . 2>/dev/null | $(GAWK) '$$1 == "URL:" { print $$2 }))
+$(if $(shell if test -x $(SVN); then echo yes; fi),$(shell $(SVN) info . 2>/dev/null | $(GAWK) '$$1 == "URL:" { print $$2 }'))
 endef
 
 # XXX: It is possible that a package is flagged as /isaexec, even
