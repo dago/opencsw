@@ -23,9 +23,16 @@ DISTFILES += fixme.sh
 
 WORKSRC = $(WORKDIR)/gtk+-$(GARVERSION)
 
+PACKAGES = CSWgtk2 CSWgtk2devel CSWgtk2doc
+
+CATALOGNAME_CSWgtk2 = gtk2
+CATALOGNAME_CSWgtk2devel = gtk2_devel
+CATALOGNAME_CSWgtk2doc = gtk2_doc
+
 PREREQUISITE_PKGS = CSWbash
-REQUIRED_PKGS = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
-REQUIRED_PKGS += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
+REQUIRED_PKGS_CSWgtk2 = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
+REQUIRED_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
+REQUIRED_PKGS_CSWgtk2devel = CSWgtk2
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
@@ -33,6 +40,8 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
+NO_ISAEXEC = 1
+NOISALIST = 1
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -45,6 +54,10 @@ TEST_TARGET =
 
 TEST_OVERRIDE_DIRS = SHELL
 SHELL = /opt/csw/bin/bash
+
+PKGFILES_CSWgtk2devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWgtk2devel +=  $(sharedstatedir)/gtk-2.0/demo/.*
+PKGFILES_CSWgtk2doc = $(sharedstatedir)/gtk-doc/.*
 
 include gar/category.mk
 
