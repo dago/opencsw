@@ -1,0 +1,5 @@
+mbuffer (20090215,REV=2009.05.10)
+
+  * Recompiled with updated GAR build system (Closes: #3561).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 10 May 2009 21:07:00 +0200

@@ -71,5 +71,6 @@ post-install-modulated: DOCS = ChangeLog README AUTHORS
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
-	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
+	@$(foreach DOC,$(DOCS),cp $(WORKSRC)/$(DOC) $(DOCDEST);)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)
