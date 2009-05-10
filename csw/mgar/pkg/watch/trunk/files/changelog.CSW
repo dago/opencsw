@@ -1,0 +1,5 @@
+watch (0.2.0,REV=2009.05.10)
+
+  * Recompiled with adjusted GAR build system (Closes: #3603).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 10 May 2009 18:04:57 +0200
