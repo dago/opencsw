@@ -4,13 +4,13 @@ CATEGORIES = net
 
 DESCRIPTION = Multipurpose relay for bidirectional data transfer
 define BLURB
-	socat is a relay for bidirectional data transfer between two independent
-	data channels. Each of these data channels may be a file, pipe, device
-	(serial line etc. or a pseudo terminal), a socket (UNIX, IP4, IP6 - raw,
-	UDP, TCP), an SSL socket, proxy CONNECT connection, a file descriptor
-	(stdin etc.), the GNU line editor (readline), a program, or a
-	combination of two of these.  These modes include generation of
-	"listening" sockets, named pipes, and pseudo terminals.
+  socat is a relay for bidirectional data transfer between two independent
+  data channels. Each of these data channels may be a file, pipe, device
+  (serial line etc. or a pseudo terminal), a socket (UNIX, IP4, IP6 - raw,
+  UDP, TCP), an SSL socket, proxy CONNECT connection, a file descriptor
+  (stdin etc.), the GNU line editor (readline), a program, or a
+  combination of two of these.  These modes include generation of
+  "listening" sockets, named pipes, and pseudo terminals.
 endef
 
 MASTER_SITES = http://www.dest-unreach.org/socat/download/
@@ -28,51 +28,44 @@ PATCHFILES = cc_compile.patch
 PATCHFILES += patch-configure-netinetip.diff
 # Fix some broken tests (pending to push some of it upstream)
 PATCHFILES += patch-test.diff
+# Include utils.h in sycls.c so that setenv() is declared
+PATCHFILES += patch-sycls-utils.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# 250+ tests take a while. Run them manually when packaging a new version
+# 250+ tests take a while. Run them manually when packaging a new version.
+# To do so, change to $(WORKSRC) after building and execute ./test.sh
 TEST_SCRIPTS =
 
 # When you run the tests on a non IPV6 system you can set HAVENOT_IP6
 # to shortcut some tests
 #TEST_ENV="HAVENOT_IP6=1"
 
+# socat 1.7.1.1: 
+# --------------
 # Running test.sh on a non IPV6 system as root i get:
 #
-#   summary: 276 tests; 149 ok, 19 failed, 107 could not be performed
+#   summary: 282 tests; 145 ok, 8 failed, 129 could not be performed
 #
-# The 19 FAILED ones are
+# The 8 FAILED ones are
 #
-# test 123 PTMXWAITSLAVE: test if master pty (ptmx) waits for slave connection
-# test 208 UDP4SCM_IP_OPTIONS: UDP4 log ancillary message IP_OPTIONS options
-# test 210 UDP4SCM_IP_TTL: UDP4 log ancillary message IP_TTL ttl
-# test 215 UDP4SCM_IP_RECVIF: UDP4 log ancillary message IP_RECVIF if
-# test 216 UDP4SCM_IP_RECVDSTADDR: UDP4 log ancillary message IP_RECVDSTADDR dstaddr
-# test 217 IP4SCM_IP_OPTIONS: IP4 log ancillary message IP_OPTIONS options
-# test 219 IP4SCM_IP_TTL: IP4 log ancillary message IP_TTL ttl
-# test 224 IP4SCM_IP_RECVIF: IP4 log ancillary message IP_RECVIF if
-# test 225 IP4SCM_IP_RECVDSTADDR: IP4 log ancillary message IP_RECVDSTADDR dstaddr
+# 126 PTMXWAITSLAVE: test if master pty (ptmx) waits for slave connection
+# 214 UDP4SCM_IP_OPTIONS: UDP4 log ancillary message IP_OPTIONS options
+# 221 UDP4SCM_IP_RECVIF: UDP4 log ancillary message IP_RECVIF if
+# 222 UDP4SCM_IP_RECVDSTADDR: UDP4 log ancillary message IP_RECVDSTADDR dstaddr
+# 246 UDP4ENV_IP_OPTIONS: UDP4 ancillary message brings IP_OPTIONS into env
+# 248 UDP4ENV_IP_TTL: UDP4 ancillary message brings IP_TTL into environment
+# 253 UDP4ENV_IP_IF: UDP4 ancillary message brings IP_IF into environment
+# 254 UDP4ENV_IP_DSTADDR: UDP4 ancillary message brings IP_DSTADDR into env
 #
-# test 234 TCP4LISTENENV: TCP4-LISTEN fills environment variables with socket addresses
-# test 239 UNIXLISTENENV: UNIX-LISTEN fills environment variables with socket addresses
-#
-# test 240 UDP4ENV_IP_OPTIONS: UDP4 ancillary message brings IP_OPTIONS into environment
-# test 242 UDP4ENV_IP_TTL: UDP4 ancillary message brings IP_TTL into environment
-# test 247 UDP4ENV_IP_IF: UDP4 ancillary message brings IP_IF into environment
-# test 248 UDP4ENV_IP_DSTADDR: UDP4 ancillary message brings IP_DSTADDR into environment
-# test 249 IP4ENV_IP_OPTIONS: IP4 ancillary message brings IP_OPTIONS into environment
-# test 251 IP4ENV_IP_TTL: IP4 ancillary message brings IP_TTL into environment
-# test 256 IP4ENV_IP_IF: IP4 ancillary message brings IP_IF into environment
-# test 257 IP4ENV_IP_DSTADDR: IP4 ancillary message brings IP_DSTADDR into environment
-#
-# Most of them (all of them?) relate to ancillary data. Seems as if there are two
-# competing socket libraries on Solaris: 3SOCKET and 3XNET, where only the latter
-# handles ancillary data.
+# Most of them (all of them?) relate to ancillary data. Seems as if there are
+# two competing socket libraries on Solaris: 3SOCKET and 3XNET, where only the
+# latter handles ancillary data.
 #
 # http://www.mail-archive.com/networking-discuss@opensolaris.org/msg01146.html
 #
-# 3XNET is only defined when using SUS/XPG4v2 feature macros. socat README suggests
+# 3XNET is only defined when using SUS/XPG4v2 feature macros. socat README 
+# suggests
 #
 #   EXTRA_CFLAGS = -D_XPG4_2 -D__EXTENSIONS__
 #
@@ -92,8 +85,8 @@ TEST_SCRIPTS =
 #
 #   ./test.sh <TESTNAME>
 #
-# where TESTNAME is one of the uppercase testnames from above (for example PTMXWAITSLAVE).
-#
+# where TESTNAME is one of the uppercase testnames from above 
+# (for example PTMXWAITSLAVE).
 
 include gar/category.mk
 

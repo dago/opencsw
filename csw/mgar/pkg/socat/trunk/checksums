@@ -1,4 +1,5 @@
 a3a68cabdfd9145aa6570fc4777be45c  download/cc_compile.patch
 76ce5e07c1b8925b33e664accefa1923  download/patch-configure-netinetip.diff
-0f34e654b9a652278fa2fd1b36d51469  download/patch-test.diff
+b6863876e1e8deac45015662f04cb683  download/patch-sycls-utils.diff
+f8d2e302f66b98b5e2236dee155d32be  download/patch-test.diff
 52b0216607e35bdfba247560fb85dd82  download/socat-1.7.1.1.tar.gz
