@@ -1,4 +1,10 @@
-socat (1.7.0.0,REV=20090320)
+socat (1.7.1.1,REV=2009.05.10)
+
+  * Updated to 1.7.1.1 (Closes: #3594).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 10 May 2009 17:47:39 +0200
+
+socat (1.7.0.0,REV=2009.03.20)
 
   * Initial package.
 
