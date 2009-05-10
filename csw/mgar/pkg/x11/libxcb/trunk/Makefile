@@ -42,3 +42,6 @@ include gar/category.mk
 
 PATH := $(PATH):/opt/csw/graphviz2/bin
 
+post-install-modulated:
+	perl -pi -e 's/^(Cflags:.*)/\1 $(EXTRA_CFLAGS)/' $(DESTDIR)$(libdir)/pkgconfig/xcb.pc
+	@$(MAKECOOKIE)
