@@ -35,9 +35,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
 	@gunzip $(DESTDIR)$(mandir)/man1/pv.1.gz
-	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 644 \
-		$(WORKSRC)/doc/NEWS \
-		$(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d -m 755 $(DOCDEST)
+	@cp $(WORKSRC)/doc/NEWS $(FILEDIR)/changelog.CSW $(DOCDEST)

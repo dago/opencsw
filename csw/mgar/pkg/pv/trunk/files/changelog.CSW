@@ -1,0 +1,5 @@
+pv (1.1.4,REV=2009.05.10)
+
+  * Recompiled with adjusted GAR build system (Closes: #3573).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 10 May 2009 18:18:49 +0200
