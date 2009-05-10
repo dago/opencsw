@@ -1,0 +1,43 @@
+diff --speed-large-files --minimal -Nru ncdu-1.5.orig/src/delete.c ncdu-1.5/src/delete.c
+--- ncdu-1.5.orig/src/delete.c	2009-05-02 10:42:17.000000000 +0200
++++ ncdu-1.5/src/delete.c	2009-05-10 18:57:49.873038400 +0200
+@@ -213,8 +213,10 @@
+   /* confirm */
+   seloption = 1;
+   while(state == DS_CONFIRM && !noconfirm)
+-    if(input_handle(0))
+-      return browse_init(root);
++    if(input_handle(0)) {
++      browse_init(root);
++      return;
++    }
+ 
+   /* chdir */
+   if(path_chdir(getpath(root->parent)) < 0) {
+diff -ur ncdu-1.5.orig/configure.in ncdu-1.5/configure.in
+--- ncdu-1.5.orig/configure.in	2009-05-10 19:38:59.182413272 +0200
++++ ncdu-1.5/configure.in	2009-05-02 13:09:18.000000000 +0200
+@@ -27,6 +27,9 @@
+   [getcwd gettimeofday memset fnmatch chdir rmdir unlink lstat getcwd],[],
+   AC_MSG_ERROR([required function missing]))
+ 
++# dirfd is a glibc extension and available on Solaris
++AC_CHECK_FUNCS([dirfd])
++
+ AC_OUTPUT([Makefile src/Makefile doc/Makefile])
+ 
+ echo ""
+diff -ur ncdu-1.5.orig/src/path.h ncdu-1.5/src/path.h
+--- ncdu-1.5.orig/src/path.h	2009-05-10 19:38:59.209594590 +0200
++++ ncdu-1.5/src/path.h	2009-05-02 10:42:17.000000000 +0200
+@@ -44,4 +44,10 @@
+ /* works exactly the same as chdir() */
+ extern int   path_chdir(const char *);
+ 
++#ifndef HAVE_DIRFD 
++#if defined(__sun__) || defined(__sun)
++#define dirfd(a) ((a)->dd_fd)
++#endif
++#endif
++
+ #endif
