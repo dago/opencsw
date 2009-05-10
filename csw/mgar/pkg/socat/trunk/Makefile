@@ -1,5 +1,5 @@
 GARNAME = socat
-GARVERSION = 1.7.0.0
+GARVERSION = 1.7.1.1
 CATEGORIES = net
 
 DESCRIPTION = Multipurpose relay for bidirectional data transfer
@@ -22,9 +22,10 @@ REQUIRED_PKGS = CSWosslrt CSWreadline CSWtcpwrap
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Disable gcc specific options
+# Delete or substitute gcc specific options (-Wall, -Werror, -O0)
 PATCHFILES = cc_compile.patch
-
+# Amend AC_CHECK_HEADERS check on netinet/ip.h with req. system headers
+PATCHFILES += patch-configure-netinetip.diff
 # Fix some broken tests (pending to push some of it upstream)
 PATCHFILES += patch-test.diff
 
