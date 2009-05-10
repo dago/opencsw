@@ -47,6 +47,7 @@ BUILD64 = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --disable-cups
 
 #TEST_TARGET = check
 # There is a test failing on Xvfb which may or may not be harmful. Disable for now.
