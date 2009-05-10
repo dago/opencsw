@@ -67,9 +67,12 @@ build-custom:
 	        ALL_LDFLAGS="$(LDFLAGS)" watch
 	$(MAKECOOKIE)
 
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
+	@ginstall -d $(DOCDEST)
 	@ginstall -m 755 $(WORKSRC)/watch $(DESTDIR)$(bindir)
-	@ginstall -m 644 $(WORKSRC)/watch.1 $(DESTDIR)$(mandir)/man1
+	@cp $(WORKSRC)/watch.1 $(DESTDIR)$(mandir)/man1
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	$(MAKECOOKIE)
