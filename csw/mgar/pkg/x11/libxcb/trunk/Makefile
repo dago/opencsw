@@ -11,7 +11,7 @@ endef
 MASTER_SITES = http://xcb.freedesktop.org/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen CSWpython CSWxcbproto
+PREREQUISITE_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen CSWpython CSWxcbproto CSWgraphviz2
 REQUIRED_PKGS_CSWlibxcb = CSWlibxau
 PACKAGES = CSWlibxcb CSWlibxcbdevel CSWlibxcbdoc
 
@@ -39,4 +39,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_CFLAGS = -D__solaris__
 
 include gar/category.mk
+
+PATH := $(PATH):/opt/csw/graphviz2/bin
 
