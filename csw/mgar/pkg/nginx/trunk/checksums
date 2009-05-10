@@ -3,5 +3,5 @@ bb85ec05a172562e6de38a1e8a64198c  download/CSWnginx.checkinstall
 bb404771e330fe98f93cb2d12a808121  download/CSWnginx.postinstall
 e9178dc33f2d38aab8f118a8f0550ac7  download/CSWnginx.preremove
 5c832758a62ee319ea9dfd1829d736eb  download/cswnginx.xml
-15cce6102a2efcf4d4acde9bb71ea6d3  download/nginx-0.6.36.tar.gz
+2064dc7a1ef082eb584e3a75857853f1  download/nginx-0.7.55.tar.gz
 c5b3babbd1261bcb3f3e17494822bb9f  download/svc-cswnginx

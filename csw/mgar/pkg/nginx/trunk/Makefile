@@ -1,5 +1,5 @@
 GARNAME = nginx
-GARVERSION = $(NGINX_VERSION)
+GARVERSION = 0.7.55
 CATEGORIES = server
 
 DESCRIPTION = HTTP server and mail proxy server
@@ -16,7 +16,7 @@ DISTFILES += cswnginx.xml svc-cswnginx
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWosslrt CSWpcrert  CSWzlib
+REQUIRED_PKGS = CSWosslrt CSWpcrert CSWzlib
 
 EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv9
