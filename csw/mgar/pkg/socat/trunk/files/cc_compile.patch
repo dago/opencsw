@@ -22,3 +22,32 @@ diff --speed-large-files --minimal -Nru socat-1.6.0.1.orig/configure.in socat-1.
  fi
  export CFLAGS
  
+--- socat-1.7.1.1.orig/configure.in	2009-05-10 11:44:36.045547843 +0200
++++ socat-1.7.1.1/configure.in	2009-05-10 11:38:07.477274940 +0200
+@@ -84,7 +84,7 @@
+ dnl Check for hstrerror prototype
+ AC_MSG_CHECKING(for hstrerror prototype)
+ AC_CACHE_VAL(sc_cv_have_prototype_hstrerror,
+-[CFLAGS1="$CFLAGS"; CFLAGS="-Werror -O0 $CFLAGS1";
++[CFLAGS1="$CFLAGS"; CFLAGS="-errwarn $CFLAGS1";
+  AC_TRY_COMPILE([#include <netdb.h>],[hstrerror();],
+  [sc_cv_have_prototype_hstrerror=no],
+  [sc_cv_have_prototype_hstrerror=yes]);
+@@ -1296,7 +1296,7 @@
+ dnl                  5..long, 6..u-long; others not yet supported
+ define(AC_BASIC_TYPE,[
+ AC_CACHE_CHECK(for equivalent simple type of $2, $4,
+-[CFLAGS1="$CFLAGS"; CFLAGS="-Werror -O0 $CFLAGS1"
++[CFLAGS1="$CFLAGS"; CFLAGS="-errwarn $CFLAGS1"
+  AC_TRY_COMPILE([$1],[$2 u; short v; &u==&v;],
+  [$4="1 /* short */"],
+  [AC_TRY_COMPILE([$1],[$2 u; unsigned short v; &u==&v;],
+@@ -1328,7 +1328,7 @@
+ dnl arg5: cache variable (might be constructed automatically)
+ define(AC_TYPEOF_COMPONENT,[
+ AC_CACHE_CHECK(for basic type of $2.$3, $5,
+-[CFLAGS1="$CFLAGS"; CFLAGS="-Werror -O0 $CFLAGS1"
++[CFLAGS1="$CFLAGS"; CFLAGS="-errwarn $CFLAGS1"
+ AC_TRY_COMPILE([$1],[$2 u;short v; &u.$3==&v;],
+ [$5="1 /* short */"],
+ [AC_TRY_COMPILE([$1],[$2 u; unsigned short v; &u.$3==&v;],
