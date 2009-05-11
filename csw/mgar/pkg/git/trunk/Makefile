@@ -1,6 +1,6 @@
 GARNAME = git
 GARVERSION = 1.6.3
-PATCHLEVEL = rc3
+#xPATCHLEVEL = rc3
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
