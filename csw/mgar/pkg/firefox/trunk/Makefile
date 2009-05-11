@@ -12,8 +12,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
 DISTFILES += $(call admfiles,CSWfirefox, postinstall postremove )
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = (\d+(?:\.\d+)*)
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
+UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 
 PERL="/opt/csw/bin/perl"
 CFLAGS=-xlibmil
