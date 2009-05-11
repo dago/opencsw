@@ -27,6 +27,14 @@ REQUIRED_PKGS += CSWpng
 REQUIRED_PKGS += CSWsunmath
 REQUIRED_PKGS += CSWzlib
 
+EXTRA_INC = $(prefix)/include/cairo
+EXTRA_INC += $(prefix)/include/libxml2/libxml
+EXTRA_INC += $(prefix)/X11/include
+
+EXTRA_LIB = $(prefix)/X11/lib
+
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-python
