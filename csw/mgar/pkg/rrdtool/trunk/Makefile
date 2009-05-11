@@ -26,6 +26,7 @@ REQUIRED_PKGS += CSWpango
 REQUIRED_PKGS += CSWpng
 REQUIRED_PKGS += CSWsunmath
 REQUIRED_PKGS += CSWzlib
+REQUIRED_PKGS += CSWperl
 
 EXTRA_INC = $(prefix)/include/cairo
 EXTRA_INC += $(prefix)/include/libxml2/libxml
