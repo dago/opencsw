@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+
+/opt/csw/bin/pango-querymodules > /opt/csw/etc/pango/pango.modules
+
+exit 0
