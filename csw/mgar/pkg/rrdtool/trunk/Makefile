@@ -12,7 +12,6 @@ endef
 MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrrdtool)
-DISTFILES += fixme.sh
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -50,10 +49,7 @@ TEST_TARGET = check
 
 #BUILD64 = 1
 
-post-configure-$(MODULATION):
-	@echo "  ==> Fixing Libtool"
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	$(DONADA)
+STRIP_LIBTOOL = 1
 
 # ugly fix to fix doc path
 post-install-modulated:
