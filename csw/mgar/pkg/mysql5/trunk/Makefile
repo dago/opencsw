@@ -2,8 +2,6 @@ GARNAME = mysql5
 GARVERSION = 5.1.33
 CATEGORIES = server
 
-GARCOMPILER = GCC4
-
 DISTNAME = mysql-$(GARVERSION)
 
 DESCRIPTION = Multithreaded SQL database
@@ -34,6 +32,9 @@ prefix = /opt/csw/mysql5
 # because we alter the prefix.  this gets us proper linking as well as
 # LD_OPTIONS (RPATH)
 EXTRA_LIB = /opt/csw/lib
+EXTRA_INC = /opt/csw/include
+EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__ 
+EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -48,7 +49,9 @@ CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
 
+#TEST_ARGS = test-force
+
 # Enable 64 bits build
-# BUILD64 = 1
+BUILD64 = 1
 
 include gar/category.mk
