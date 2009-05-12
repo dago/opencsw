@@ -1,6 +1,6 @@
 GARNAME = librsvg
-GARVERSION = 2.22
-GARSUBREV = 3
+GARVERSION = 2.26
+GARSUBREV = 0
 CATEGORIES = lib
 
 DESCRIPTION = Scalable Vector Graphics library
@@ -43,17 +43,16 @@ PATCHFILES += test_makefiles.patch
 # gtkdoc-rebase doesn't exist
 PATCHFILES += doc_makefile.patch
 
+LIBS=-lm
+EXTRA_COMMON_EXPORTS = LIBS
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared=yes --enable-static=no
+
+STRIP_LIBTOOL=1
 
 TEST_TARGET = check
 
 include gar/category.mk
-
-post-configure-modulated:
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(FILEDIR)/fixme.sh $(WORKSRC)
-	$(DONADA)
 
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/librsvg-2.so.2.15.90.s $(INSTALLISADIR)/opt/csw/lib/librsvg-2.so.2.15.90
