@@ -1,5 +1,5 @@
 GARNAME = transmission
-GARVERSION = 1.42
+GARVERSION = 1.60
 CATEGORIES = net
 
 DESCRIPTION = Fast, easy, and free multi-platform BitTorrent client
@@ -14,8 +14,11 @@ DISTFILES += $(call admfiles,CSWtransmission,)
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
 GARCOMPILER = GNU
+EXTRA_CFLAGS = -DNO_SYS_QUEUE_H
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
 
 include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
