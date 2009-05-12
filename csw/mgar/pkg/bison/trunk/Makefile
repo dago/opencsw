@@ -11,6 +11,7 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+PREREQUISITE_PKGS = CSWgnulinks
 REQUIRED_PKGS = CSWggettextrt CSWiconv CSWgm4
 
 SPKG_SOURCEURL = http://www.gnu.org/software/bison/
@@ -24,6 +25,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset\.alias
+
 include gar/category.mk
 
 # Must use GNU grep during test
@@ -34,3 +37,4 @@ post-install-modulated:
 	/usr/ccs/bin/strip bison; \
 	/usr/ccs/bin/mcs -d bison; \
 	mv yacc gyacc)
+	@$(MAKECOOKIE)
