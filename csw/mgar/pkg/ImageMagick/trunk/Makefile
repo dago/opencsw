@@ -1,6 +1,6 @@
 GARNAME = imagemagick
-GARVERSION = 6.5.1
-GARSUBREV = 1
+GARVERSION = 6.5.2
+GARSUBREV = 4
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -37,10 +37,11 @@ CONFIGURE_ARGS += --enable-shared --disable-static
 CONFIGURE_ARGS += --with-dps=yes --with-gslib=yes
 CONFIGURE_ARGS += --x-includes=/usr/openwin/include
 CONFIGURE_ARGS += --x-libraries=/usr/openwin/lib 
+CONFIGURE_ARGS += --disable-openmp
 
 PATCHFILES += Makefile.patch
 # Temporary patch until upstream make a more permenent fix
-PATCHFILES += djvu.c.diff
+#PATCHFILES += djvu.c.diff
 
 # Test has to be run *after* install
 TEST_SCRIPTS =
@@ -49,12 +50,9 @@ EXTRA_LD_OPTIONS = -L./magick/.libs
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
-include gar/category.mk
+STRIP_LIBTOOL=1
 
-post-configure-$(MODULATION):
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(FILEDIR)/fixme.sh $(WORKSRC)
-	@$(MAKECOOKIE)
+include gar/category.mk
 
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libMagick.so.10.0.4.s $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4
