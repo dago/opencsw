@@ -51,7 +51,7 @@ REQUIRED_PKGS_CSWthunderbird += CSWorbit2
 REQUIRED_PKGS_CSWthunderbird += CSWpango 
 REQUIRED_PKGS_CSWthunderbird += CSWzlib
 
-#PATCHFILES = autoconf.mk.in.diff
+PATCHFILES = autoconf.mk.in.diff
 
 TEST_SCRIPTS = 
 
