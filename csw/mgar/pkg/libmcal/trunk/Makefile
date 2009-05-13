@@ -55,11 +55,9 @@ post-extract-modulated:
 	cd $(WORKDIR)/mcal-drivers; cp -R * $(abspath $(WORKSRC))
 	perl -i -pe 's|CC=gcc|CC=$(CC)|' $(WORKSRC)/mstore/Makefile
 	perl -i -pe 's|CFLAGS=.*|CFLAGS=$$\\$$(INCLUDE) $(CFLAGS) -xcode=pic32 |' $(WORKSRC)/mstore/Makefile
-	perl -i -pe 's|ld -r|$$\\$$(CC) $$\\$$(CFLAGS) -G -xcode=pic32 |' $(WORKSRC)/mstore/Makefile
 	gmake -C $(WORKSRC)/mstore
 	perl -i -pe 's|CC=gcc|CC=$(CC)|' $(WORKSRC)/icap/Makefile
 	perl -i -pe 's|CFLAGS=.*|CFLAGS=$$\\$$(INCLUDE) $(CFLAGS) -xcode=pic32 |' $(WORKSRC)/icap/Makefile
-	perl -i -pe 's|ld -r|$$\\$$(CC) $$\\$$(CFLAGS) -G -xcode=pic32 |' $(WORKSRC)/icap/Makefile
 	gmake -C $(WORKSRC)/icap
 	@$(MAKECOOKIE)
 
