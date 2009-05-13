@@ -1,5 +1,7 @@
 GARNAME = glib
-GARVERSION = 1.3.15
+# Most applications bind to libglib-1.2.so.0, so stick to 1.2.x for the moment
+GARVERSION = 1.2.10
+#GARVERSION = 1.3.15
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines
@@ -8,38 +10,30 @@ define BLURB
   hashes, and lists.
 endef
 
-PACKAGES = CSWglib CSWglibdevel
-CATALOGNAME_CSWglib2 = glib
-CATALOGNAME_CSWglib2devel = glib2devel
-SPKG_DESC_CSWglib2 = Low level core compatibility library for GTK+ and GNOME
-SPKG_DESC_CSWglib2devel = Low level core compatibility library for GTK+ and GNOME development
+SPKG_DESC_CSWglib2 = Utility library commonly associated with GNOME programs
+
+REQUIRED_PKGS = CSWggettextrt CSWiconv
 
 MASTER_SITES = $(GNOME_MIRROR)
 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-#PATCHFILES  = glib-typedetect.patch
-#PATCHFILES += checksum-test.patch
-#PATCHFILES += gsize.patch
+# glib 1.x doesn't seem to be 64 bit clean
+#BUILD64 = 1
+#NO_ISAEXEC = 1
+
+# Only needed for 1.3.x
+#EXTRA_BUILD_EXPORTS = SGML_CATALOG_FILES
+#SGML_CATALOG_FILES = $(sysconfdir)/sgml/catalog
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv
-#CONFIGURE_ARGS += --enable-static
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-BUILD64 = 1
-NO_ISAEXEC = 1
-
-#REQUIRED_PKGS_CSWglib2 = CSWggettextrt CSWiconv
-#REQUIRED_PKGS_CSWglib2devel = CSWglib2 CSWggettextrt CSWiconv
 
 TEST_TARGET = check
 
 #provided by iconv
-#MERGE_EXCLUDE_FILES = .*/charset.alias
-
-#PKGFILES_CSWglib2  = $(PKGFILES_RT)
-#PKGFILES_CSWglib2 += /opt/csw/share/locale/.*
+MERGE_EXCLUDE_FILES = .*/charset.alias
 
 include gar/category.mk
