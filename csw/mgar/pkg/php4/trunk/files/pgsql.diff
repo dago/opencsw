@@ -1,0 +1,13 @@
+--- php-4.4.9/ext/pgsql/config.m4.o	2009-05-13 09:53:54.771364120 -0500
++++ php-4.4.9/ext/pgsql/config.m4	2009-05-13 09:55:39.328266975 -0500
+@@ -14,8 +14,8 @@
+ 
+   AC_MSG_CHECKING(for pg_config)
+   for i in $PHP_PGSQL $PHP_PGSQL/bin /usr/local/pgsql/bin /usr/local/bin /usr/bin ""; do
+-	if test -x $i/pg_config; then
+-      PG_CONFIG="$i/pg_config"
++	if test -x $i/pg_config32; then
++      PG_CONFIG="$i/pg_config32"
+       break;
+     fi
+   done

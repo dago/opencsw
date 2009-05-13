@@ -1,0 +1,142 @@
+#!/bin/sh
+
+PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/php4/lib
+PHP_BIN=$PKG_INSTALL_ROOT/opt/csw/php4/bin
+PHP_INI=$PHP_LIB/php.ini
+
+if [ ! -f $PHP_INI ]; then
+    cp -p $PHP_INI.CSW $PHP_INI
+else
+    echo "php.ini already exists"
+
+    extdir_ext=`${PHP_BIN}/php -i |grep 'PHP Extension' |awk '{print $NF}'`
+    extdir="${PHP_LIB}/php/extensions/no-debug-non-zts-${extdir_ext}"
+    curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' $PHP_INI`
+
+    if [ "$extdir" != "$curextdir" ]; then
+        echo "updating extension_dir..."
+        perl -i.bak -plne "s,no-debug-non-zts-[0-9]+,$extdir," $PHP_INI
+
+        old_list="`sed -ne 's/^extension=\(.*\)\.so/\1/p' $PHP_INI`"
+        new_pkgs=''
+        non_pkgs=''
+        for ext in `echo ${old_list}`; do
+            if grep "extension=$ext" $PHP_INI.CSW; then
+                new_pkgs="${new_pkgs} php4_${ext}"
+            else
+                non_pkgs="${non_pkgs} ${ext}"
+            fi
+        done
+
+        cat << _EOT_
+
+******************************************************************************
+* NOTICE: The existing php.ini file is from an older version of PHP4.  
+*
+* *************  PLEASE READ  *************
+*
+* Starting with php4-5.2.9,REV=2009.04.29 the CSW php5 suite has been 
+* broken out into seperate packages for the modules.
+*
+_EOT_
+if [ -n "${new_pkgs}" ]; then
+    cat << _EOT_
+* *************  PLEASE READ  *************
+*
+* Your existing config contains the following extensions
+* that now have become external packages:
+*
+_EOT_
+cnt=1
+for name in `echo ${new_pkgs}`; do
+    if [ ${cnt} -eq 1 ]; then
+        echo "* \c"
+    fi
+    if [ `expr ${cnt} % 4` -ne 0 ]; then
+        echo "${name} \c"
+        cnt=`expr ${cnt} + 1`
+    else
+        echo "${name}"
+        cnt=1
+    fi
+done
+if [ ${cnt} -ne 1 ]; then
+    echo
+fi
+cat << _EOT_
+*
+* to keep the same functionality as the original install 
+* you will need to install them using pkg-get 
+*
+* If you have issues with missing extensions, Please check
+* the catalog for the missing extension before filing a bug report
+*
+_EOT_
+else
+    cat << _EOT_
+* *************  PLEASE READ  *************
+*
+* Your existing config does not contain any shared extensions
+* that are now packages.  If you have issues with missing extensions, 
+* Please Check the catalog for the missing extension before
+* filing a bug report.
+*
+_EOT_
+fi
+if [ -n "${non_pkgs}" ]; then
+    cat << _EOT_
+* *************  PLEASE READ  *************
+* 
+* Your existing config contains the following extensions
+* that are not part of CSW build: 
+*
+_EOT_
+cnt=1
+for name in `echo ${non_pkgs}`; do
+    if [ ${cnt} -eq 1 ]; then
+        echo "* \c"
+    fi
+    if [ `expr ${cnt} % 4` -ne 0 ]; then
+        echo "${name} \c"
+        cnt=`expr ${cnt} + 1`
+    else
+        echo "${name}"
+        cnt=1
+    fi
+done
+if [ ${cnt} -ne 1 ]; then
+    echo
+fi
+cat << _EOT_
+* 
+* Please verify they are still working after this upgrade.
+*
+_EOT_
+fi
+cat << _EOT_
+******************************************************************************
+
+******************************************************************************
+* WARNING: Short open tag support in this release of CSWphp4 is DISABLED by
+* default.  If you rely on short open tag (<? vs <?php) behavior, set
+* short_open_tag to On in php.ini right away.
+******************************************************************************
+_EOT_
+    fi
+fi
+if [ ! -d ${extdir} ]; then
+    mkdir -p ${extdir}
+    for dir in `${PHP_BIN}/php -i |grep extension_dir |\
+                 awk -F'/' '{print $(NF-1), $NF}'`; do
+        chown -R root:bin ${dir}
+        chmod -R 0755 ${dir}
+        installf ${PKGINST} ${dir}
+    done
+    installf -f ${PKGINST}
+fi
+
+echo "PHP4 configuration: $PHP_INI"
+
+exit 0
