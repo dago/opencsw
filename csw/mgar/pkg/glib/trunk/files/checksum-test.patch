@@ -1,0 +1,11 @@
+--- glib-2.18.4/tests/checksum-test.c.o	2009-02-04 19:53:27.782844898 -0600
++++ glib-2.18.4/tests/checksum-test.c	2009-02-04 21:22:05.475677071 -0600
+@@ -18,7 +18,7 @@
+  * string is intentionally more than twice that length.
+  */
+ 
+-#define FIXED_STR               "The quick brown fox jumps over the lazy dog. Jackdaws love my big sphinx of quartz. Pack my box with five dozen liquor jugs. How razorback-jumping frogs can level six piqued gymnasts!"
++const char FIXED_STR[] = {"The quick brown fox jumps over the lazy dog. Jackdaws love my big sphinx of quartz. Pack my box with five dozen liquor jugs. How razorback-jumping frogs can level six piqued gymnasts!"};
+ #define FIXED_LEN               (strlen (FIXED_STR))
+ 
+ const char *MD5_sums[] = {
