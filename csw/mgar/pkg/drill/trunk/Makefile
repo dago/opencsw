@@ -29,4 +29,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-ldns=/opt/csw
 
+TEST_TARGET =
+
 include gar/category.mk
