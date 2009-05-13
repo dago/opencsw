@@ -11,3 +11,16 @@
        break;
      fi
    done
+--- php-4.4.9/configure.o	2009-05-13 10:19:30.843906388 -0500
++++ php-4.4.9/configure	2009-05-13 10:19:57.853444779 -0500
+@@ -76431,8 +76431,8 @@
+   echo $ac_n "checking for pg_config""... $ac_c" 1>&6
+ echo "configure:76433: checking for pg_config" >&5
+   for i in $PHP_PGSQL $PHP_PGSQL/bin /usr/local/pgsql/bin /usr/local/bin /usr/bin ""; do
+-	if test -x $i/pg_config; then
+-      PG_CONFIG="$i/pg_config"
++	if test -x $i/pg_config32; then
++      PG_CONFIG="$i/pg_config32"
+       break;
+     fi
+   done
