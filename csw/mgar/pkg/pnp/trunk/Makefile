@@ -1,8 +1,8 @@
 GARNAME = pnp
-GARVERSION = 0.4.13
+GARVERSION = 0.4.14
 CATEGORIES = apps
 
-DESCRIPTION = analyzing nagios performance data with RRD databases.
+DESCRIPTION = visualization of  nagios performance data using RRD databases
 define BLURB
   PNP is an addon to nagios which analyzes performance data provided by plugins and stores them automatically into RRD-databases
 endef
@@ -12,10 +12,12 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpnp, prototype )
 DISTFILES += cswpnp
-#DISTFILES += cswpnp cswpnp.xml svc-cswpnp
 
 PATCHFILES += makefile.diff
-PATCHFILES += npcd.diff
+PATCHFILES += npcd.c.diff
+PATCHFILES += npcdmod.h.diff
+PATCHFILES += npcdmod.c.diff
+PATCHFILES += npcd.cfg-sample.in.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -24,17 +26,15 @@ PATCHFILES += npcd.diff
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-LDFLAGS += -L/usr/ucblib
-LIBS += -lucb
+NOISALIST = 1
 
 datadir = /opt/csw/nagios/share/pnp
 sysconfdir = $(prefix)/nagios/pnp/etc
-bindir = $(prefix)/nagios/bin
+bindir = $(prefix)/nagios/pnp/bin
 libexecdir = $(prefix)/libexec/nagios-plugins
+localstatedir =$(prefix)/nagios/pnp/var
 
-REQUIRED_PKGS_sparc = SUNWscpux
-REQUIRED_PKGS_i386 = SUNWscpu
-REQUIRED_PKGS = CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd $(REQUIRED_PKGS_$(GARCH)) CSWcswclassutils
+REQUIRED_PKGS += CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd  CSWcswclassutils
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
 
 #PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswpnp$$$$/ { $$$$2 = "cswinitsmf" } { print }'

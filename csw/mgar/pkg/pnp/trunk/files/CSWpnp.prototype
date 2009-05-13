@@ -4,9 +4,9 @@ d none /opt/csw/libexec 0755 root bin
 d none /opt/csw/libexec/nagios-plugins 0755 root bin
 f none /opt/csw/libexec/nagios-plugins/process_perfdata.pl 0755 root bin
 d none /opt/csw/nagios 0755 root bin
-d none /opt/csw/nagios/bin 0755 nagios nagios
-f none /opt/csw/nagios/bin/npcd 0754 nagios nagios
-f none /opt/csw/nagios/bin/npcdmod 0754 nagios nagios
+d none /opt/csw/nagios/pnp/bin 0755 nagios nagios
+f none /opt/csw/nagios/pnp/bin/npcd 0754 nagios nagios
+f none /opt/csw/nagios/pnp/bin/npcdmod 0754 nagios nagios
 d none /opt/csw/nagios/pnp 0755 nagios nagios
 d none /opt/csw/nagios/pnp/etc 0755 nagios nagios
 f none /opt/csw/nagios/pnp/etc/background.pdf 0644 nagios nagios

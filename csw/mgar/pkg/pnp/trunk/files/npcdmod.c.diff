@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru pnp-0.4.14.orig/src/npcdmod.c pnp-0.4.14/src/npcdmod.c
+--- pnp-0.4.14.orig/src/npcdmod.c	2009-05-02 11:25:23.000000000 +0200
++++ pnp-0.4.14/src/npcdmod.c	2009-05-11 08:08:15.406159492 +0200
+@@ -53,6 +53,8 @@
+ 
+ void npcdmod_file_roller();
+ int npcdmod_handle_data(int, void *);
++int npcdmod_process_module_args(char *);
++int npcdmod_process_config_var(char *);
+ 
+ /* this function gets called when the module is loaded by the event broker */
+ int nebmodule_init(int flags, char *args, nebmodule *handle) {

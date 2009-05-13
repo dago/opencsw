@@ -1,6 +1,9 @@
-20a96f81edba29dcd21215bde4af8b57  download/pnp-0.4.13.tar.gz
+9dbbf08191a258f6798c9516b3821ff0  download/pnp-0.4.14.tar.gz
 216b8ed50919642c3fae2a6520724dd3  download/CSWpnp.gspec
-c3cee9b1ce8286d553735d2bbde151e0  download/CSWpnp.prototype
-40b1d1489a41475ff6cddf441b18316a  download/cswpnp
-30e8699531bb0249542b3012a00a73b1  download/makefile.diff
-b1229d599c2ce12c3aacf0a44e1588d6  download/npcd.diff
+fc763dd71049d4c06f10b8898fa3c1bb  download/CSWpnp.prototype
+fec420cb27af9cbd0daba28f04500f8c  download/cswpnp
+80c06e6426497ed3fa96c0e77aff613d  download/makefile.diff
+db6af87968e9b29272d387033f09acba  download/npcd.c.diff
+65d971cd9983aef7f069c7976424eb99  download/npcdmod.h.diff
+8380996936f96669d8abe25dd8faf392  download/npcdmod.c.diff
+01c0965ea1bdd26e4f0fdbc51640dfce  download/npcd.cfg-sample.in.diff

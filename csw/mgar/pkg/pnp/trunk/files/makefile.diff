@@ -1,15 +1,6 @@
 diff --speed-large-files --minimal -Nru pnp-0.4.13.orig/src/Makefile.in pnp-0.4.13/src/Makefile.in
 --- pnp-0.4.13.orig/src/Makefile.in	2009-02-19 18:28:41.000000000 +0100
 +++ pnp-0.4.13/src/Makefile.in	2009-03-04 20:55:35.296449068 +0100
-@@ -9,7 +9,7 @@
- SRC_INCLUDE=../include
- 
- CC=@CC@
--CFLAGS=@CFLAGS@ @DEFS@ -DNSCORE
-+CFLAGS=@CFLAGS@ @DEFS@ -DNSCORE -L/usr/ucblib -R/usr/ucblib -lucb
- 
- # Compiler flags for use with Valgrind
- #CFLAGS=-O0 -g -DHAVE_CONFIG_H -DNSCORE
 @@ -52,7 +52,7 @@
  
  OBJDEPS=
@@ -26,7 +17,7 @@ diff --speed-large-files --minimal -Nru pnp-0.4.13.orig/src/Makefile.in pnp-0.4.
 -npcdmod.o: npcdmod.c
 -	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o npcdmod.o npcdmod.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS) -fPIC
 +npcdmod: npcdmod.c
-+	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o npcdmod npcdmod.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS) -fPIC
++	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o npcdmod npcdmod.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS)
  
  ###############################
  #

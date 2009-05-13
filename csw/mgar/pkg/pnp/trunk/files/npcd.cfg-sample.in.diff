@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru pnp-0.4.14.orig/sample-config/pnp/npcd.cfg-sample.in pnp-0.4.14/sample-config/pnp/npcd.cfg-sample.in
+--- pnp-0.4.14.orig/sample-config/pnp/npcd.cfg-sample.in	2009-05-02 11:25:23.000000000 +0200
++++ pnp-0.4.14/sample-config/pnp/npcd.cfg-sample.in	2009-05-12 18:38:17.625341221 +0200
+@@ -32,8 +32,8 @@
+ # log_type = <value>
+ #
+ 
+-#log_type = file
+-log_type = syslog
++log_type = file
++#log_type = syslog
+ 
+ 
+ # log_file - define a path to your logfile

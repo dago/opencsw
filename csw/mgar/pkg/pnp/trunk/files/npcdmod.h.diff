@@ -1,0 +1,9 @@
+diff --speed-large-files --minimal -Nru pnp-0.4.14.orig/include/npcdmod.h pnp-0.4.14/include/npcdmod.h
+--- pnp-0.4.14.orig/include/npcdmod.h	2009-05-02 11:25:23.000000000 +0200
++++ pnp-0.4.14/include/npcdmod.h	2009-05-10 19:54:45.629418467 +0200
+@@ -38,4 +38,4 @@
+ char *pnp_mmap_fgets(pnp_mmapfile *);
+ char *pnp_mmap_fgets_multiline(pnp_mmapfile *);
+ 
+-extern pnp_strip(char *);
++extern void pnp_strip(char *);

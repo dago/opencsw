@@ -1,0 +1,103 @@
+diff --speed-large-files --minimal -Nru pnp-0.4.14.orig/src/npcd.c pnp-0.4.14/src/npcd.c
+--- pnp-0.4.14.orig/src/npcd.c	2009-05-02 11:25:23.000000000 +0200
++++ pnp-0.4.14/src/npcd.c	2009-05-10 20:57:26.766575641 +0200
+@@ -56,6 +56,99 @@
+ const char *directory = NULL;
+ const char progname[5] = "npcd";
+ 
++int
++scandir(const char *dirname, struct dirent *(*namelist[]),
++    int (*select)(const struct dirent *),
++    int (*dcomp)(const struct dirent **, const struct dirent **))
++{
++	struct dirent	*d, *p, **names = NULL;
++	size_t	nitems = 0;
++	size_t	arraysz, entlen;
++	struct stat64	stb;
++	DIR	*dirp;
++	u_longlong_t	tmp_arraysz;
++
++	if ((dirp = opendir(dirname)) == NULL)
++		return (-1);
++	if (fstat64(dirp->dd_fd, &stb) < 0)
++		goto fail;
++
++	/*
++ * 	 * estimate the array size by taking the size of the directory file
++ * 	 	 * and dividing it by a multiple of the minimum size entry.
++ * 	 	 	 */
++	tmp_arraysz = stb.st_size / 24;	/* 24 bytes on a 64-bit system */
++	if (tmp_arraysz > INT_MAX)
++		arraysz = INT_MAX;
++	else
++		arraysz = (size_t)tmp_arraysz;
++	names = malloc(arraysz * sizeof (struct dirent *));
++	if (names == NULL)
++		goto fail;
++
++	while ((d = readdir(dirp)) != NULL) {
++		if (select != NULL && !(*select)(d))
++			continue;	/* just selected names */
++
++		entlen = d->d_reclen;
++		/*
++ * 		 * Make a minimum size copy of the data
++ * 		 		 */
++		p = malloc(entlen);
++		if (p == NULL)
++			goto fail;
++		(void) memcpy(p, d, entlen);
++		/*
++ * 		 * Check to make sure the array has space left and
++ * 		 		 * realloc the maximum size.
++ * 		 		 		 */
++		if (nitems >= arraysz) {
++			struct dirent **tmp;
++			if (nitems == INT_MAX) {
++				/* overflow */
++				free(p);
++				errno = EOVERFLOW;
++				goto fail;
++			}
++			arraysz += 512;		/* no science here */
++			tmp = realloc(names,
++			    arraysz * sizeof (struct dirent *));
++			if (tmp == NULL) {
++				free(p);
++				goto fail;
++			}
++			names = tmp;
++		}
++		names[nitems++] = p;
++	}
++	(void) closedir(dirp);
++	if (nitems && dcomp != NULL)
++		qsort(names, nitems, sizeof (struct dirent *),
++		    (int(*)(const void *, const void *))dcomp);
++	*namelist = names;
++
++	return ((int)nitems);
++
++fail:
++	while (nitems != 0) {
++		free(names[--nitems]);
++	}
++	if (names)
++		free(names);
++	(void) closedir(dirp);
++	return (-1);
++}
++
++/*
++ *  * Alphabetic order comparison routine for those who want it.
++ *   */
++int
++alphasort(const struct dirent **d1, const struct dirent **d2)
++{
++	return (strcoll((*d1)->d_name,
++	    (*d2)->d_name));
++}
++
+ static void start_daemon(const char *log_name, int facility) {
+ 	int i;
+ 	pid_t pid;

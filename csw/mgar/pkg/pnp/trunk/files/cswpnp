@@ -26,7 +26,7 @@ then
 	exit $SMF_EXIT_ERR_CONFIG
 fi
 
-BIN_FILE="/opt/csw/nagios/bin/npcd"
+BIN_FILE="/opt/csw/nagios/pnp/bin/npcd"
 pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
 PNP_USER=`awk '/^user/ { print $NF }' $CONFIG_FILE`
 
@@ -45,7 +45,7 @@ case "$1" in
 
 'start')
         if [ -f $CONFIG_FILE ]; then
-            $BIN_FILE -c $CONFIG_FILE -d
+            $BIN_FILE -d -f $CONFIG_FILE
         fi
         ;;
 
