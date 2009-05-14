@@ -13,7 +13,7 @@ PKGFILES_CSWphp5pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.*
 define CSWphp5pdosqlite_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling pdo_sqlite extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5pdosqlite_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling pdo_sqlite extension"

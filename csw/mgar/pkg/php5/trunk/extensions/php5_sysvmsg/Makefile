@@ -13,7 +13,7 @@ PKGFILES_CSWphp5sysvmsg = .*/lib/php/extensions/.*/sysvmsg.*
 define CSWphp5sysvmsg_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling sysvmsg extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5sysvmsg_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling sysvmsg extension"

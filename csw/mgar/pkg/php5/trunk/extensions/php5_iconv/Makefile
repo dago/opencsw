@@ -20,7 +20,7 @@ PKGFILES_CSWphp5iconv = .*/lib/php/extensions/.*/iconv.*
 define CSWphp5iconv_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling iconv extension"
@@ -63,7 +63,7 @@ endef
 define CSWphp5iconv_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling iconv extension"

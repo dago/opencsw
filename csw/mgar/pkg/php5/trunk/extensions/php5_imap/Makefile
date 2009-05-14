@@ -15,7 +15,7 @@ PKGFILES_CSWphp5imap = .*/lib/php/extensions/.*/imap.*
 define CSWphp5imap_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling imap extension"
@@ -58,7 +58,7 @@ endef
 define CSWphp5imap_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling imap extension"

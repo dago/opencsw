@@ -13,7 +13,7 @@ PKGFILES_CSWphp5tokenizer = .*/lib/php/extensions/.*/tokenizer.*
 define CSWphp5tokenizer_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling tokenizer extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5tokenizer_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling tokenizer extension"

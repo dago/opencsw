@@ -16,7 +16,7 @@ PKGFILES_CSWphp5xmlrpc = .*/lib/php/extensions/.*/xmlrpc.*
 define CSWphp5xmlrpc_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling xmlrpc extension"
@@ -59,7 +59,7 @@ endef
 define CSWphp5xmlrpc_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling xmlrpc extension"

@@ -13,7 +13,7 @@ PKGFILES_CSWphp5pspell = .*/lib/php/extensions/.*/pspell.*
 define CSWphp5pspell_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling pspell extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5pspell_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling pspell extension"

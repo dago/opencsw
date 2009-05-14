@@ -13,7 +13,7 @@ PKGFILES_CSWphp5snmp = .*/lib/php/extensions/.*/snmp.*
 define CSWphp5snmp_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling snmp extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5snmp_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling snmp extension"

@@ -13,7 +13,7 @@ PKGFILES_CSWphp5gmp = .*/lib/php/extensions/.*/gmp.*
 define CSWphp5gmp_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling gmp extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5gmp_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling gmp extension"

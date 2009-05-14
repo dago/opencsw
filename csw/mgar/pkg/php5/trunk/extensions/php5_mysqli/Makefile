@@ -13,7 +13,7 @@ PKGFILES_CSWphp5mysqli = .*/lib/php/extensions/.*/mysqli.*
 define CSWphp5mysqli_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling mysqli extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5mysqli_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling mysqli extension"

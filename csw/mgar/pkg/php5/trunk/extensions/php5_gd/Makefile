@@ -24,7 +24,7 @@ PKGFILES_CSWphp5gd  = .*/lib/php/extensions/.*/gd.*
 define CSWphp5gd_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling gd extension"
@@ -67,7 +67,7 @@ endef
 define CSWphp5gd_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling gd extension"

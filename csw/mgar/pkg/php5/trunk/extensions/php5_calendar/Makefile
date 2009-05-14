@@ -13,7 +13,7 @@ PKGFILES_CSWphp5calendar = .*/lib/php/extensions/.*/calendar.*
 define CSWphp5calendar_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling calendar extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5calendar_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling calendar extension"

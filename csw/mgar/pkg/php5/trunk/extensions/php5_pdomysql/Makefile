@@ -14,7 +14,7 @@ PKGFILES_CSWphp5pdomysql = .*/lib/php/extensions/.*/pdo_mysql.*
 define CSWphp5pdomysql_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling pdo_mysql extension"
@@ -57,7 +57,7 @@ endef
 define CSWphp5pdomysql_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling pdo_mysql extension"

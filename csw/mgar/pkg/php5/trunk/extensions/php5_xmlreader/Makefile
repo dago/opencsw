@@ -14,7 +14,7 @@ PKGFILES_CSWphp5xmlreader = .*/lib/php/extensions/.*/xmlreader.*
 define CSWphp5xmlreader_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling xmlreader extension"
@@ -57,7 +57,7 @@ endef
 define CSWphp5xmlreader_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling xmlreader extension"

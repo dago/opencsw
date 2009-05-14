@@ -9,7 +9,7 @@ CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 define CSWphp5simplexml_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling simplexml extension"
@@ -52,7 +52,7 @@ endef
 define CSWphp5simplexml_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling simplexml extension"

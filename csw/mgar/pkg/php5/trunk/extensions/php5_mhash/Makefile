@@ -13,7 +13,7 @@ PKGFILES_CSWphp5mhash = .*/lib/php/extensions/.*/mhash.*
 define CSWphp5mhash_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling mhash extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5mhash_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling mhash extension"

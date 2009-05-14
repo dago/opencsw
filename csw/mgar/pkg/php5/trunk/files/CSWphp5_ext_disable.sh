@@ -5,8 +5,8 @@ if [ -n "$PKG_INSTALL_ROOT" ]; then
     CSW_PREFIX=${PKG_INSTALL_ROOT}${CSW_PREFIX}
 fi
 
-PHP_INI=$CSW_PREFIX/php5/lib/php.ini
-PHP_BIN=$CSW_PREFIX/php5/bin
+PHP_INI=$CSW_PREFIX/lib/php.ini
+PHP_BIN=$CSW_PREFIX/bin
 PHP_EXTMGR=$PHP_BIN/phpext
 
 if [ -z "$PHPEXT" ]; then

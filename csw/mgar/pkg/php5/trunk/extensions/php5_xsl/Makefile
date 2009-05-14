@@ -14,7 +14,7 @@ PKGFILES_CSWphp5xsl = .*/lib/php/extensions/.*/xsl.*
 define CSWphp5xsl_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling xsl extension"
@@ -57,7 +57,7 @@ endef
 define CSWphp5xsl_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling xsl extension"

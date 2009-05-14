@@ -17,7 +17,7 @@ PKGFILES_CSWphp5dba = .*/lib/php/extensions/.*/dba\.so
 define CSWphp5dba_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling dba extension"
@@ -60,7 +60,7 @@ endef
 define CSWphp5dba_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling dba extension"

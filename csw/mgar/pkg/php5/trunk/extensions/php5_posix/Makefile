@@ -13,7 +13,7 @@ PKGFILES_CSWphp5posix = .*/lib/php/extensions/.*/posix.*
 define CSWphp5posix_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling posix extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5posix_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/php5/lib/php.ini
+PHP_INI=/opt/csw/lib/php.ini
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling posix extension"

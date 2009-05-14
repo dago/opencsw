@@ -2,8 +2,8 @@
 
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
-PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/php5/lib
-PHP_BIN=$PKG_INSTALL_ROOT/opt/csw/php5/bin
+PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/lib
+PHP_BIN=$PKG_INSTALL_ROOT/opt/csw/bin
 PHP_INI=$PHP_LIB/php.ini
 
 if [ ! -f $PHP_INI ]; then

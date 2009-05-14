@@ -2,6 +2,7 @@ GARNAME    = php5
 GARVERSION = 5.2.9
 CATEGORIES = lang
 SF_PROJ = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
+DISTNAME = $(SF_PROJ)-$(GARVERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -17,19 +18,13 @@ define BLURB
 	available.
 endef
 
-php5_root = $(DESTDIR)$(prefix)/php5
-php5_bin  = $(php5_root)/bin
-php5_lib  = $(php5_root)/lib
-
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
 DISTFILES     += $(SF_PROJ)-$(GARVERSION).tar.bz2
 
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
-PHP5ROOT       = $(DESTDIR)$(prefix)/php5
 
-STRIP_DIRS    += $(PHP5ROOT)/lib/php/extensions/*/
-STRIP_DIRS    += $(PHP5ROOT)/bin
+STRIP_DIRS    += $(prefix)/lib/php/extensions/*/
 
 # Auxilliary files
 DISTFILES += php.ini.CSW phpext pear.conf.CSW
@@ -46,12 +41,12 @@ REQUIRED_PKGS_CSWphp5      = CSWexpat CSWggettextrt CSWiconv
 REQUIRED_PKGS_CSWphp5     += CSWlibxml2 CSWzlib CSWmysql5rt
 REQUIRED_PKGS_CSWphp5devel = CSWphp5
 
-PKGFILES_CSWphp5devel  = $(prefix)/php5/bin/php-config
-PKGFILES_CSWphp5devel += $(prefix)/php5/bin/phpize
-PKGFILES_CSWphp5devel += $(prefix)/php5/bin/peardev
-PKGFILES_CSWphp5devel += $(prefix)/php5/include.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/lib/php/build/.*
-PKGFILES_CSWphp5devel += $(prefix)/php5/man/.*
+PKGFILES_CSWphp5devel  = $(bindir)/php-config
+PKGFILES_CSWphp5devel += $(bindir)/phpize
+PKGFILES_CSWphp5devel += $(bindir)/peardev
+PKGFILES_CSWphp5devel += $(includedir)/.*
+PKGFILES_CSWphp5devel += $(libdir)/php/build/.*
+PKGFILES_CSWphp5devel += $(mandir)/.*
 
 PATCHFILES += configure.diff
 PATCHFILES += php-bug-45557-fix.diff
@@ -69,9 +64,8 @@ NOISALIST = 1
 
 STRIP_LIBTOOL = 1
 
-CONFIGURE_ARGS += --prefix=$(prefix)/php5
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
-CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --enable-cli
 CONFIGURE_ARGS += --enable-fastcgi
 CONFIGURE_ARGS += --enable-force-cgi-redirect
@@ -101,17 +95,17 @@ post-install-modulated: $(PI_SCRIPTS)
 	@$(MAKECOOKIE)
 
 install-extras:
-	ginstall -m 0755 $(WORKDIR)/phpext $(DESTDIR)$(prefix)/php5/bin
-	gsed -i -e s,PHPEXTDIR,$(shell $(PHP5ROOT)/bin/php-config --extension-dir),\
+	ginstall -m 0755 $(WORKDIR)/phpext $(DESTDIR)$(bindir)
+	gsed -i -e s,PHPEXTDIR,$(shell $(bindir)/php-config --extension-dir),\
 		$(WORKDIR)/php.ini.CSW
-	ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php5/lib
-	ginstall -m 0644 $(WORKDIR)/pear.conf.CSW $(DESTDIR)$(prefix)/php5/etc
+	ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(libdir)
+	ginstall -m 0644 $(WORKDIR)/pear.conf.CSW $(DESTDIR)$(sysconfdir)
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
 	ginstall -m 0644 $(WORKDIR)/httpd-php5.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
 	@(grm -fr $(DESTDIR)/.[a-z]*)
-	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
-	@(grm -f $(DESTDIR)$(prefix)/php5/etc/pear.conf)
+	@(gfind $(libdir) -name "*.a" -exec grm {} \;)
+	@(grm -f $(DESTDIR)$(sysconfdir)/pear.conf)
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
