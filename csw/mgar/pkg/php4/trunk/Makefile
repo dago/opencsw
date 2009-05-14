@@ -53,7 +53,6 @@ CONFIGURE_ARGS += --enable-force-cgi-redirect
 CONFIGURE_ARGS += --enable-gd-native-ttf
 CONFIGURE_ARGS += --enable-mbregex=shared
 CONFIGURE_ARGS += --enable-mbstring=shared
-CONFIGURE_ARGS += --enable-mcal=shared,$(prefix)
 CONFIGURE_ARGS += --enable-sockets
 CONFIGURE_ARGS += --with-bz2=shared,$(prefix)
 CONFIGURE_ARGS += --with-db4=$(prefix)/bdb44
@@ -72,6 +71,7 @@ CONFIGURE_ARGS += --with-jpeg-dir=$(prefix)
 CONFIGURE_ARGS += --with-kerberos=$(prefix)
 CONFIGURE_ARGS += --with-ldap=shared,$(prefix)
 CONFIGURE_ARGS += --with-ldap-sasl=$(prefix)
+CONFIGURE_ARGS += --with-mcal=shared,$(prefix)
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
 CONFIGURE_ARGS += --with-ncurses=shared,$(prefix)
