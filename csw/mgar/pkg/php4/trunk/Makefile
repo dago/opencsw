@@ -19,6 +19,9 @@ endef
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
 DISTFILES     += $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES     += dummy-httpd.conf
+DISTFILES     += httpd-php4.conf.CSW
+DISTFILES     += php.ini.CSW
 
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 PHP4ROOT       = $(DESTDIR)$(prefix)/php4
@@ -82,10 +85,63 @@ CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
 CONFIGURE_ARGS += --with-xmlrpc=shared,$(prefix)
 CONFIGURE_ARGS += --with-zlib=shared
 
-
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
 ENABLE_CHECK = 0
 
-# System Rules/Configuration
+PI_SCRIPTS  = install-extra
+PI_SCRIPTS += install-ap2modphp4
+PI_SCRIPTS += install-modphp4
+PI_SCRIPTS += install-cleanup
+
+post-install-modulated: $(PI_SCRIPTS)
+	@$(MAKECOOKIE)
+
+install-ap2modphp4:
+	@echo "  ==> Now Building ap2_modphp4 <=="
+	@if [ -f $(WORKSRC)/Makefile ]; then \
+		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
+	@cd $(WORKSRC) && $(BUILD_ENV) \
+		./configure $(CONFIGURE_ARGS) --with-apxs2=$(prefix)/apache2/sbin/apxs
+	@$(GARBIN)/fixlibtool $(WORKSRC)
+	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
+	@strip $(DESTDIR)$(prefix)/apache2/libexec/libphp4.so
+	@$(MAKECOOKIE)
+
+install-modphp4:
+	@echo "  ==> Now Building modphp4 <=="
+	@if [ -f $(WORKSRC)/Makefile ]; then \
+		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
+	@cd $(WORKSRC) && $(BUILD_ENV) \
+		./configure $(CONFIGURE_ARGS) --with-apxs=$(prefix)/apache/bin/apxs
+	@$(GARBIN)/fixlibtool $(WORKSRC)
+	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
+	@strip $(DESTDIR)$(prefix)/apache/libexec/libphp4.so
+	@$(MAKECOOKIE)
+
+install-extra:
+	@gmv $(DESTDIR)$(prefix)/php4/etc/pear.conf \
+		$(DESTDIR)$(prefix)/php4/etc/pear.conf.CSW
+	@gsed -i -e s,PHPEXTDIR,$(shell $(PHP4ROOT)/bin/php-config --extension-dir),\
+			$(WORKDIR)/php.ini.CSW
+	@ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	@ginstall -d $(DESTDIR)$(prefix)/apache/conf
+	@ginstall -d $(DESTDIR)$(prefix)/php4/lib
+	@ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php4/lib
+	@ginstall -m 0644 $(WORKDIR)/httpd-php4.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra
+	@gcp $(DOWNLOADDIR)/dummy-httpd.conf $(DESTDIR)$(prefix)/apache2/etc/httpd.conf
+	@gcp $(DOWNLOADDIR)/dummy-httpd.conf $(DESTDIR)$(prefix)/apache/conf/httpd.conf
+	@$(MAKECOOKIE)
+
+install-cleanup:
+	@grm -fr $(DESTDIR)/.[a-z]*
+	@gfind $(DESTDIR) -name \*.a -exec grm -f {} \;
+	@gfind $(DESTDIR)$(prefix)/apache*  \
+		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
+	@grm $(DESTDIR)$(prefix)/apache2/etc/httpd.conf*
+	@$(MAKECOOKIE)
+
+
+include files/pkgdef.mk
 include gar/category.mk
