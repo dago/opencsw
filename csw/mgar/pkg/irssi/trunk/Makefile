@@ -13,8 +13,7 @@ endef
 
 MASTER_SITES = http://www.irssi.org/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWirssi)
-#DISTFILES += $(call admfiles,CSWirssi, postinstall depend)
+#DISTFILES += $(call admfiles,CSWirssi)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -30,13 +29,20 @@ CONFIGURE_ARGS += --with-proxy
 CONFIGURE_ARGS += --with-perl=module
 CONFIGURE_ARGS += --with-perl-lib=vendor
 
-REQUIRED_PKGS = CSWglib2 CSWiconv CSWosslrt CSWperl CSWsunmath CSWggettextrt
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
-GARCOMPILER = GCC4
+REQUIRED_PKGS = CSWglib2
+REQUIRED_PKGS += CSWiconv
+REQUIRED_PKGS += CSWosslrt
+REQUIRED_PKGS += CSWperl
+REQUIRED_PKGS += CSWsunmath
+REQUIRED_PKGS += CSWggettextrt
+REQUIRED_PKGS += CSWcswclassutils
+
 TEST_TARGET = check
 
 # moving configuration file
-post-install:
+post-install-modulated:
 	(cd $(DESTDIR)$(prefix)/etc; \
 	for i in irssi.conf; do \
 		if [ -r "$$i" ]; then \
@@ -44,7 +50,6 @@ post-install:
 			mv "$$i" "$$i.CSW";     \
 		fi \
 	done)
-
 
 include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
