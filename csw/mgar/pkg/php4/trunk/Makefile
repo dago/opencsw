@@ -2,6 +2,7 @@ GARNAME    = php4
 GARVERSION = 4.4.9
 CATEGORIES = lang
 SF_PROJ = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
+DISTNAME = $(SF_PROJ)-$(GARVERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
