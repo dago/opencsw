@@ -29,11 +29,6 @@ PHP4ROOT       = $(DESTDIR)$(prefix)/php4
 STRIP_DIRS    += $(PHP4ROOT)/lib/php/extensions/*/
 STRIP_DIRS    += $(PHP4ROOT)/bin
 
-PACKAGES = CSWphp4 
-CATALOGNAME_CSWphp4   = php4
-SPKG_DESC_CSWphp4     = A High-Level Scripting Languages
-REQUIRED_PKGS_CSWphp4 = 
-
 PATCHFILES  = pgsql.diff
 
 EXTRA_LIB += $(prefix)/bdb44/lib
@@ -127,6 +122,8 @@ install-extra:
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
 	@ginstall -d $(DESTDIR)$(prefix)/apache/conf
 	@ginstall -d $(DESTDIR)$(prefix)/php4/lib
+	@ginstall -m 0644 $(WORKDIR)/README-mod_php4_core $(DESTDIR)$(prefix)/php4
+	@ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php4/lib
 	@ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php4/lib
 	@ginstall -m 0644 $(WORKDIR)/httpd-php4.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
@@ -144,4 +141,5 @@ install-cleanup:
 
 
 include files/pkgdef.mk
+include files/pkgfiles.mk
 include gar/category.mk
