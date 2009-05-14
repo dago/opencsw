@@ -140,4 +140,5 @@ install-cleanup:
 include files/pkgdef.mk
 include files/pkgfiles.mk
 include files/admfiles.mk
+include files/depend.mk
 include gar/category.mk
