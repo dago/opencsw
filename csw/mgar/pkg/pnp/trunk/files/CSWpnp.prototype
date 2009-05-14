@@ -17,6 +17,7 @@ f cswpreserveconf /opt/csw/nagios/pnp/etc/npcd.cfg.CSW 0644 nagios nagios
 d none /opt/csw/nagios/pnp/etc/pages 0755 nagios nagios
 f cswpreserveconf /opt/csw/nagios/pnp/etc/pages/web_traffic.cfg.CSW 0644 nagios nagios
 f none /opt/csw/nagios/pnp/etc/pnp4nagios_release 0644 nagios nagios
+f none /opt/csw/nagios/pnp/etc/nagios_commands.cfg-sample 0644 nagios nagios
 f cswpreserveconf /opt/csw/nagios/pnp/etc/process_perfdata.cfg.CSW 0644 nagios nagios
 f cswpreserveconf /opt/csw/nagios/pnp/etc/rra.cfg.CSW 0644 nagios nagios
 d none /opt/csw/nagios/pnp/share 0755 nagios nagios
@@ -28,12 +29,12 @@ d none /opt/csw/nagios/share 0755 nagios nagios
 d none /opt/csw/nagios/share/pnp 0755 nagios nagios
 s none /opt/csw/nagios/pnp/share/html=/opt/csw/nagios/share/pnp
 f none /opt/csw/nagios/share/pnp/ajax.php 0644 nagios nagios
-d none /opt/csw/nagios/share/pnp/contrib 0755 nagios nagios
-f none /opt/csw/nagios/share/pnp/contrib/makeserviceextinfo.pl 0644 nagios nagios
-d none /opt/csw/nagios/share/pnp/contrib/ssi 0755 nagios nagios
-f none /opt/csw/nagios/share/pnp/contrib/ssi/status-header.ssi 0644 nagios nagios
-f none /opt/csw/nagios/share/pnp/contrib/verify_pnp_config 0644 nagios nagios
-f none /opt/csw/nagios/share/pnp/contrib/verify_pnp_config.txt 0644 nagios nagios
+d none /opt/csw/nagios/pnp/contrib 0755 nagios nagios
+f none /opt/csw/nagios/pnp/contrib/makeserviceextinfo.pl 0644 nagios nagios
+d none /opt/csw/nagios/pnp/contrib/ssi 0755 nagios nagios
+f none /opt/csw/nagios/pnp/contrib/ssi/status-header.ssi 0644 nagios nagios
+f none /opt/csw/nagios/pnp/contrib/verify_pnp_config 0644 nagios nagios
+f none /opt/csw/nagios/pnp/contrib/verify_pnp_config.txt 0644 nagios nagios
 d none /opt/csw/nagios/share/pnp/images 0755 nagios nagios
 f none /opt/csw/nagios/share/pnp/images/ack.png 0644 nagios nagios
 f none /opt/csw/nagios/share/pnp/images/action.gif 0644 nagios nagios

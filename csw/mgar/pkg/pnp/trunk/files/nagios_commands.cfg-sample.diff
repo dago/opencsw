@@ -1,0 +1,53 @@
+diff --speed-large-files --minimal -Nru pnp-0.4.14.orig/sample-config/pnp/nagios_commands.cfg-sample pnp-0.4.14/sample-config/pnp/nagios_commands.cfg-sample
+--- pnp-0.4.14.orig/sample-config/pnp/nagios_commands.cfg-sample	1970-01-01 01:00:00.000000000 +0100
++++ pnp-0.4.14/sample-config/pnp/nagios_commands.cfg-sample	2009-05-13 20:15:50.819746793 +0200
+@@ -0,0 +1,49 @@
++#
++# You can append these commands to your commands.cfg and 
++# uncomment the lines for the mode, which fits your environment.
++#
++# Please note, that you need to edit your nagios.cfg too,
++# see http://www.pnp4nagios.org/ for more information.
++#
++
++#
++# default mode
++#
++
++#define command {
++#        command_name    process-service-perfdata
++#        command_line    /opt/csw/bin/perl /opt/csw/libexec/nagios-plugins/process_perfdata.pl
++#}
++
++#define command {
++#        command_name    process-host-perfdata
++#        command_line    /opt/csw/bin/perl /opt/csw/libexec/nagios-plugins/process_perfdata.pl -d HOSTPERFDATA
++#}
++
++#
++# bulk mode
++#
++
++#define command{
++#        command_name    process-service-perfdata-file
++#        command_line    /opt/csw/libexec/nagios-plugins/process_perfdata.pl --bulk=/opt/csw/nagios/pnp/var/service-perfdata
++#}
++
++#define command{
++#        command_name    process-host-perfdata-file
++#        command_line    /opt/csw/libexec/nagios-plugins/process_perfdata.pl --bulk=/opt/csw/nagios/pnp/var/host-perfdata
++# }
++
++#
++# bulk mode with npcd
++#
++
++#define command{
++#        command_name    process-service-perfdata-file
++#        command_line    /bin/mv /opt/csw/nagios/pnp/var/service-perfdata /opt/csw/nagios/pnp/var/spool/perfdata/service-perfdata.$TIMET$
++# }
++
++#define command{
++#        command_name    process-host-perfdata-file
++#        command_line    /bin/mv /opt/csw/nagios/pnp/var/host-perfdata /opt/csw/nagios/pnp/var/spool/perfdata/host-perfdata.$TIMET$
++# }

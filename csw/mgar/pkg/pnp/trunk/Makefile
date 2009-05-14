@@ -18,6 +18,7 @@ PATCHFILES += npcd.c.diff
 PATCHFILES += npcdmod.h.diff
 PATCHFILES += npcdmod.c.diff
 PATCHFILES += npcd.cfg-sample.in.diff
+PATCHFILES += nagios_commands.cfg-sample.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -58,7 +59,7 @@ INSTALL_SCRIPTS += contrib-custom
 include gar/category.mk
 
 DATAROOTDIR = $(datadir)
-CONTRIBDIR = $(DATAROOTDIR)/contrib
+CONTRIBDIR = /opt/csw/nagios/pnp/contrib
 SYSCONFDIR = $(sysconfdir)
 LIBEXECDIR = $(libexecdir)
 BINDIR = $(bindir)
@@ -132,6 +133,7 @@ install-config-custom:
 	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/check_commands/check_nwstat.cfg-sample $(DESTDIR)$(SYSCONFDIR)/check_commands/check_nwstat.cfg.CSW
 	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/pages/web_traffic.cfg-sample $(DESTDIR)$(SYSCONFDIR)/pages/web_traffic.cfg.CSW
 	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/npcd.cfg-sample $(DESTDIR)$(SYSCONFDIR)/npcd.cfg.CSW
+	@ginstall -m 644 $(WORKSRC)/sample-config/pnp/nagios_commands.cfg-sample $(DESTDIR)$(SYSCONFDIR)/nagios_commands.cfg-sample
 	@$(MAKECOOKIE)
 
 install-contrib-custom:
