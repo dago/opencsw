@@ -29,4 +29,5 @@ PKGFILES_CSWphp4zlib = .*/extensions/.*/zlib.*
 PKGFILES_CSWap2modphp4 = .*/apache2/.*
 PKGFILES_CSWmodphp4 = .*/apache/.*
 PKGFILES_CSWmodphp4core = /opt/csw/php4/README-mod_php4_core
+PKGFILES_CSWphp4 = /opt/csw/php4/README-mod_php
 #PKGFILES_CSWphp4cgi catchall
