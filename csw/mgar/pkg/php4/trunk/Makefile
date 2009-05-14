@@ -1,6 +1,7 @@
-GARNAME    = php
+GARNAME    = php4
 GARVERSION = 4.4.9
 CATEGORIES = lang
+SF_PROJ = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -18,7 +19,7 @@ endef
 
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
-DISTFILES     += $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES     += $(SF_PROJ)-$(GARVERSION).tar.bz2
 DISTFILES     += dummy-httpd.conf
 DISTFILES     += httpd-php4.conf.CSW
 DISTFILES     += php.ini.CSW
@@ -123,6 +124,7 @@ install-extra:
 	@ginstall -d $(DESTDIR)$(prefix)/apache/conf
 	@ginstall -d $(DESTDIR)$(prefix)/php4/lib
 	@ginstall -m 0644 $(WORKDIR)/README-mod_php4_core $(DESTDIR)$(prefix)/php4
+	@ginstall -m 0644 $(WORKDIR)/README-mod_php $(DESTDIR)$(prefix)/php4
 	@ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php4/lib
 	@ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php4/lib
 	@ginstall -m 0644 $(WORKDIR)/httpd-php4.conf.CSW \
