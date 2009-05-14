@@ -1,5 +1,5 @@
 GARNAME = irssi
-GARVERSION = 0.8.12
+GARVERSION = 0.8.13
 CATEGORIES = apps
 
 DESCRIPTION = IRC client with IPv6, proxy, bot, socks and Perl support
@@ -13,10 +13,14 @@ endef
 
 MASTER_SITES = http://www.irssi.org/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWirssi, postinstall depend)
+DISTFILES += $(call admfiles,CSWirssi)
+#DISTFILES += $(call admfiles,CSWirssi, postinstall depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+SPKG_CLASSES = none cswcpsampleconf
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/irssi.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6
@@ -26,7 +30,9 @@ CONFIGURE_ARGS += --with-proxy
 CONFIGURE_ARGS += --with-perl=module
 CONFIGURE_ARGS += --with-perl-lib=vendor
 
-GARCOMPILER = SUN
+REQUIRED_PKGS = CSWglib2 CSWiconv CSWosslrt CSWperl CSWsunmath CSWggettextrt
+
+GARCOMPILER = GCC4
 TEST_TARGET = check
 
 # moving configuration file
@@ -41,3 +47,4 @@ post-install:
 
 
 include gar/category.mk
+PATH := /opt/csw/gnu:$(PATH)

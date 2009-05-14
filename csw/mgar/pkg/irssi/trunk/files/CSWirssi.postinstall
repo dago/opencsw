@@ -1,3 +1,0 @@
-if [ ! -f $BASEDIR/opt/csw/etc/irssi.conf ] ; then
-        cp $BASEDIR/opt/csw/etc/irssi.conf.CSW $BASEDIR/opt/csw/etc/irssi.conf
-fi
