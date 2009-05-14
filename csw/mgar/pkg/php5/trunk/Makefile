@@ -1,6 +1,7 @@
-GARNAME    = php
+GARNAME    = php5
 GARVERSION = 5.2.9
 CATEGORIES = lang
+SF_PROJ = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -22,7 +23,7 @@ php5_lib  = $(php5_root)/lib
 
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
-DISTFILES     += $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES     += $(SF_PROJ)-$(GARVERSION).tar.bz2
 
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 PHP5ROOT       = $(DESTDIR)$(prefix)/php5
