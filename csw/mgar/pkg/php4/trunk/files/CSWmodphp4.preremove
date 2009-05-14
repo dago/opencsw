@@ -1,0 +1,22 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP_PREFIX=$CSW_PREFIX/apache
+AP_BINDIR=$AP_PREFIX/bin
+AP_LIBEXEC=$AP_PREFIX/libexec
+AP_CONFDIR=$AP_PREFIX/conf
+AP_CONFIG=$AP_CONFDIR/httpd.conf
+
+# Disable the PHP module
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+chroot $PKG_INSTALL_ROOT \
+    $AP_BINDIR/apxs -S LIBEXECDIR=$AP_LIBEXEC -e -A -n php4 libphp4.so
+
+cat <<END
+
+NOTICE: mod_php4 is disabled in httpd.conf but the server was not restarted.
+Please check your configuration and restart apache.
+
+END
+
+exit 0

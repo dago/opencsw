@@ -1,0 +1,16 @@
+#!/bin/sh
+MODULE_NAME=gd
+#PHP_INI=/opt/csw/php4/lib/php.ini
+PHP_INI=php.ini
+echo "[===> Running Pre Remove <===]"
+echo "   ===> Disabling ${MODULE_NAME} extension"
+perl -i -plne "s|extension=${MODULE_NAME}.so|;extension=${MODULE_NAME}.so|" ${PHP_INI}
+cat << _EOF_
+******************************************************************************
+* NOTICE: Successfully Disabled Extension "${MODULE_NAME}"
+* in ${PHP_INI}
+*
+* You will need to restart your web server to finish the removal
+******************************************************************************
+_EOF_
+exit 0
