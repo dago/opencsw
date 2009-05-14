@@ -19,26 +19,21 @@ endef
 
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
-DISTFILES     += $(SF_PROJ)-$(GARVERSION).tar.bz2
-DISTFILES     += dummy-httpd.conf
-DISTFILES     += httpd-php4.conf.CSW
-DISTFILES     += php.ini.CSW
+DISTFILES      = $(SF_PROJ)-$(GARVERSION).tar.bz2
 
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 PHP4ROOT       = $(DESTDIR)$(prefix)/php4
-
 STRIP_DIRS    += $(PHP4ROOT)/lib/php/extensions/*/
 STRIP_DIRS    += $(PHP4ROOT)/bin
 
 PATCHFILES  = pgsql.diff
-
 EXTRA_LIB += $(prefix)/bdb44/lib
 EXTRA_INC += $(prefix)/bdb44/include
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
+
 CONFIGURE_ARGS += --prefix=$(prefix)/php4
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php4/bin
-
 CONFIGURE_ARGS += --enable-bcmath=shared
 CONFIGURE_ARGS += --enable-calendar=shared
 CONFIGURE_ARGS += --enable-cgi
@@ -141,7 +136,7 @@ install-cleanup:
 	@grm $(DESTDIR)$(prefix)/apache2/etc/httpd.conf*
 	@$(MAKECOOKIE)
 
-
 include files/pkgdef.mk
 include files/pkgfiles.mk
+include files/admfiles.mk
 include gar/category.mk
