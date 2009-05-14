@@ -1,0 +1,191 @@
+#!/bin/ksh -p
+
+# stagepkg 1.13
+
+# This script is for CSW maintainers to be able to more easily
+# do builds of a package, on the build machines, without
+# having root privileges.
+# It does some very generic package prototype generation.
+# For more custom jobs, you are encouraged to either copy this
+# script to your own location, with tweaks,
+# or ask a sysadmin to chown the target directories to you,
+# for purposes of doing a tweak/build/install/test cycle more easily.
+#
+
+MAKE=${MAKE:-make}
+# Note: This MUST BE AN ABSOLUTE PATH!!!
+DESTTOP=$PWD/cswstage
+
+
+
+
+PATH=$PATH:/usr/ccs/bin   # paranoia is always good
+
+
+setupstage(){
+	# We make a bunch of softlinks, so that programs that
+	# normally install to top-level directories, instead
+	# install to where WE want them to install, 
+	# without having to modify their makefiles.
+	mkdir -p $DESTTOP/opt/csw/share $DESTTOP/opt/csw/lib
+	mkdir -p $DESTTOP/opt/csw/bin $DESTTOP/opt/csw/sbin
+	mkdir $DESTTOP/opt/csw/share/doc
+	mkdir $DESTTOP/opt/csw/share/info
+	mkdir $DESTTOP/opt/csw/share/locale
+	mkdir $DESTTOP/opt/csw/share/man
+	ln -s share/man $DESTTOP/opt/csw/man
+	ln -s share/doc $DESTTOP/opt/csw/doc
+	ln -s share/info $DESTTOP/opt/csw/info
+	ln -s ../share/locale $DESTTOP/opt/csw/lib/locale
+}
+
+
+# Assume we are in top-level of source tree.
+# Create virtual csw tree
+# Do the "make install" to tree
+# Clean up unneeded directories after install
+# Generate prototype file
+install_and_proto(){
+
+	SHELL=ksh
+
+	echo $MAKE
+	echo $S_MAKEARGS
+	echo $DESTTOP
+	echo $FAKEROOT
+
+	# look up primary group name
+	PGROUP=`/usr/xpg4/bin/id -n -g`
+
+
+	cat >build_script.$$<<EOF
+	MAKE="$MAKE"
+	S_MAKEARGS="$S_MAKEARGS"
+	DESTTOP=$DESTTOP
+
+	if [[ "$nofakeroot" -ne 1 ]] ; then
+		chown -Rh root:bin $DESTTOP
+	fi
+
+	$MAKE $S_MAKEARGS
+
+	cd $DESTTOP/opt/csw
+
+	# Remove unneeded links. package should NOT include these
+	rm man info doc lib/locale
+	# Remove unneeded directories.
+	# If they ARE needed, rmdir will fail
+	rmdir share/man share/doc share/info share/locale 2>/dev/null
+	rmdir share bin sbin lib  2>/dev/null
+
+	(print 'i pkginfo'; print 'i copyright' ;print 'i depend' ; pkgproto . )>/tmp/proto.$$
+	cd ../..
+	# this sed works around bug in fakeroot on x86
+	# It forces root.bin owner/group for files that default to normal user
+	sed "s/${LOGNAME} ${PGROUP}$/root bin/" /tmp/proto.$$ >prototype
+	rm /tmp/proto.$$
+	cd ..
+EOF
+	$FAKEROOT ksh ./build_script.$$
+	#echo take a look at ./build_script.$$
+	rm build_script.$$
+
+}
+
+if [[ "$1" = "-a" ]] ; then
+	print Option -a detected
+	print Will create absolute-path package
+	absolute=1
+	shift
+fi
+
+if [[ "$1" = "-m" ]] ; then
+	print Option -m detected
+	print Will run as '"me"', $(/usr/xpg4/bin/id -n -u)
+	nofakeroot=1
+	shift
+fi
+
+if [[ -d $DESTTOP ]] ; then
+	print removing old staging area
+	rm -fr $DESTTOP
+fi
+
+print creating staging area $DESTTOP
+setupstage
+
+if [[ $# -gt 0 ]] ; then
+	S_MAKEARGS="$@"
+else
+	S_MAKEARGS="DESTDIR=$DESTTOP install"
+fi
+print using make arguments of "$S_MAKEARGS"
+
+export S_MAKEARGS
+
+
+if [[ $USER != "root" ]] && [[ $nofakeroot -ne 1 ]] ; then
+	FAKEROOT=fakeroot
+	print will use fakeroot to do install
+fi
+
+install_and_proto
+
+### Now need to figure out if package is REAALLY relocatable.
+# If there is anything with a hardcoded 'csw' in it, then it
+# cannot be relocatable
+
+print ""
+print Checking for relocatable capability...
+
+if [[ $absolute -eq 0 ]] ; then
+	find $DESTTOP -type f | xargs strings | grep csw
+	if [[ $? -eq 0 ]] ; then
+		print WARNING: MUST make an absolute package
+		absolute=1
+	fi
+fi
+
+if [[ $absolute -ne 0 ]] ; then
+	cd $DESTTOP
+	sed 's: none : none /opt/csw/:' prototype >prototype.new
+	mv prototype.new prototype
+	print Updated prototype file to use absolute paths
+	cd ..
+fi
+
+print ""
+print Stripping executables...
+
+
+find $DESTTOP | xargs file | grep 'not stripped' |
+   awk -F: '{print $1}' |xargs /usr/ccs/bin/strip
+
+
+
+print prototype file is now in $DESTTOP/prototype
+
+if [[ $absolute -eq 0 ]] ; then
+  print If you dont already have a prototype file, you should copy
+  print $DESTTOP/prototype
+  print to where you keep your pkginfo file, and edit it as appropriate. Next,
+  print '  cd ~/pkgs/[software] '
+  print You should then do EITHER
+  print "  createpkg -b $DESTTOP/opt/csw"
+  print OR if you want to do things the hard way
+  print "  pkgmk -b $DESTTOP/opt/csw \ "
+  print "        -f $DESTTOP/prototype \ "
+  print "         BASEDIR=/opt/csw"
+  print "  [and then all the other cleanup type stuff by hand]"
+else
+  print If you dont already have a prototype file, you should copy
+  print $DESTTOP/prototype
+  print to where you keep your pkginfo file, and edit it as appropriate. Next,
+  print '  cd  ~/pkgs/[software] '
+  print You should then do EITHER
+  print "  createpkg -r $DESTTOP"
+  print OR if you want to do things the hard way
+  print "  pkgmk -r $DESTTOP \ "
+  print "        -f $DESTTOP/prototype "
+  print "  [and then all the other cleanup type stuff by hand]"
+fi

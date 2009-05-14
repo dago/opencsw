@@ -1,0 +1,586 @@
+#!/bin/ksh -p
+
+# checkpkg 2.6
+# This script examines a package that has been put together
+# for submittal to the CSW archive at opencsw.org
+#
+# It examines it for compliance with the packaging standards at
+# http://www.opencsw.org/standards/
+# It DOES NOT CATCH EVERYTHING. However, the package will be
+# tested with this script before acceptance, so you may as well
+# save yourself some time, and run the script yourself!
+#
+# Be sure to occasionally do a "pkg-get update cswutils" so that
+# you know you are tracking the most current version.
+# 
+
+
+PATH=$PATH:/usr/sbin
+
+LOCAL_ARCH=`uname -p`
+
+
+# always print out a warning message. (to stderr)
+# exit script, if quit_on_warn set
+
+
+cleanup(){
+	if [[ -d "$EXTRACTDIR" ]] ; then
+		rm -rf $EXTRACTDIR
+	fi
+	if [[ "$TMPARCHIVE" != "" ]] ; then
+		rm $TMPARCHIVE
+	fi
+}
+
+warnmsg(){
+	print WARNING: $* >/dev/fd/2
+	if [[ "$quit_on_warn" != "" ]] ; then
+		cleanup
+		exit 1
+	fi
+}
+
+# Print error message, and quit program.
+errmsg(){
+	print ERROR: $* >/dev/fd/2
+	cleanup
+	exit 1
+}
+
+if [[ "$1" == "-e" ]] ; then
+	quit_on_warn=1;
+	shift
+fi
+if [[ "$1" == "-h" ]] ; then
+	print 'Usage: checkpkg [-e] pkg1 [pkg2 ....]'
+	print '   -e = "exit on warnings"'
+	shift
+fi
+
+for f in "$@"
+do
+
+
+
+if [[ ! -f $f ]] ; then
+	print ERROR: $f does not exist
+	exit 1
+fi
+
+
+case $f in
+	cswutils-*)
+		:
+	;;
+	*)
+	print Examining $f
+
+	print Looking for bad strings...
+
+	# XPG4 grep has some kind of magical "ignore ELF header" power.
+	#  but... not on sol8, just sol10?
+	# and so does /bin/grep. but NOT /bin/egrep???
+	#
+	# Need to rewrite this whole thing to also
+	# check for badly set RUNPATHs. sigh.
+	#
+	for badpath in /export/medusa /opt/build ; do
+		GREP=/bin/grep gzgrep "$badpath" $f
+		if [[ $? -eq 0 ]] ; then
+			print ""
+			print ERROR: build-machine paths found in file $f
+			print '($badpath)'
+			exit 1
+		fi
+	done
+esac
+
+print Extracting files for more detailed inspection...
+
+file $f |sed 's/^.*://' |grep gzip >/dev/null
+if [ $? -eq 0 ] ; then
+	TMPARCHIVE=/tmp/`basename $f`
+	if [[ -f $TMPARCHIVE ]] ; then
+		print ERROR: $TMPARCHIVE already exists
+		
+	fi
+	gzcat $f >$TMPARCHIVE || exit 1
+	f=$TMPARCHIVE
+fi
+
+pkgname=`nawk 'NR == 2 {print $1; exit;}' $f`
+
+EXTRACTDIR=/tmp/checkpkg.$$
+
+if [ -d $EXTRACTDIR ] ; then
+	print ERROR: $EXTRACTDIR already exists
+	exit 1
+fi
+
+mkdir $EXTRACTDIR
+
+TMPFILE=$EXTRACTDIR/pkginfo
+
+
+
+dd if=$f skip=1 | (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo)
+if [[ $? -ne 0 ]] ; then
+	print ERROR: could not extract $f
+	rm -rf $EXTRACTDIR $TMPARCHIVE
+	exit 1
+fi
+
+mv $EXTRACTDIR/$pkgname/pkginfo $EXTRACTDIR ; rmdir $EXTRACTDIR/$pkgname
+
+software=`sed -n 's/^NAME=\([^ -]*\) -.*$/\1/p' $TMPFILE`
+version=`sed -n 's/^VERSION=//p' $TMPFILE`
+desc=`sed -n 's/^DESC=//p' $TMPFILE`
+email=`sed -n 's/^EMAIL=//p' $TMPFILE`
+maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
+hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
+basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
+pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
+
+case $software in
+     *[A-Z]*)
+	echo ERROR: $software must be all lowercase
+	exit 1
+	;;
+esac
+
+case `basename $f` in
+	${software}-${version}-*)
+		# file name looks okay
+	;;
+	${software}-*)
+		print ERROR: filename missing full version field $version
+		rm -rf $EXTRACTDIR $TMPARCHIVE
+		 exit 1
+	;;
+	*)
+		print ERROR: filename  should start with $software-$version-
+		rm -rf $EXTRACTDIR $TMPARCHIVE
+		exit  1
+esac
+
+
+
+if [ "$maintname" = "" ] ; then
+	# the old format, in the DESC field
+	maintname=`sed -n 's/^DESC=.*for CSW by //p' $TMPFILE`
+
+	# Since the DESC field has been coopted, take
+	# description from second half of NAME field now.
+	desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
+else
+	if [ "$desc" = "" ] ; then
+		desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
+	fi
+fi
+
+rm $TMPFILE
+
+# strip out '' chars, because it interferes with mysql
+desc=`print $desc | sed "s/'//g"`
+
+
+print Info for pkg $pkgname
+
+print software= "'$software'"
+print arch= "'$pkgarch'"
+print desc="'$desc'"
+print pkgname="'$pkgname'"
+print version="'$version'"
+print maintainer name="'$maintname'"
+print maint email="'$email'"
+print hotline="'$hotline'"
+if [ "$basedir" != "" ] ; then
+	print basedir="'$basedir'"
+fi
+
+if [[ ${#software} -gt 20 ]] ; then errmsg $f: software name greater than 20 chars ; fi
+if [[ ${#pkgname} -gt 20 ]] ; then errmsg $f: pkg name greater than 20 chars; fi
+
+if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
+if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
+if [ "$desc" = "" ] ; then errmsg $f: no description in either NAME or DESC field ; fi
+if [ ${#desc} -gt 100 ] ; then errmsg $f: description greater than 100 chars ; fi
+if [ "$version" = "" ] ; then errmsg $f: VERSION field blank ;  fi
+if [ "$maintname" = "" ] ; then errmsg $f: maintainer name not detected. Fill out VENDOR field properly ; fi
+if [ "$email" = "" ] ; then errmsg $f: EMAIL field blank ; fi
+if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
+
+
+case $version in
+	*-*)
+		print ERROR: VERSION field not allowed to have '"-"' in it
+		exit 1
+	;;
+	*,REV=20[01][0-9].[0-9][0-9].[0-9][0-9]*)
+		:
+	;;
+	*)
+		print ERROR: no REV=YYYY.MM.DD field in VERSION
+		exit 1
+	;;
+esac
+
+case $pkgarch in
+	sparc|i386|all)
+	;;
+	sparc.*|i386.*)
+	;;
+
+	*)
+	print ERROR: non-standard ARCH def in package: $pkgarch
+	rm -rf $EXTRACTDIR $TMPARCHIVE
+	exit 1
+esac
+
+goodarch=yes
+case $f in
+	*${LOCAL_ARCH}*)
+		
+	;;
+	*)
+		print NOTE: pkg must be for arch $LOCAL_ARCH to check dynamic libs
+		goodarch=no		
+	;;
+esac
+
+
+#if [ "$goodarch" = "no" ] ; then
+#	# neutral architechture. cant check libraries for it.
+#	print ""
+#	rm -rf $EXTRACTDIR $TMPARCHIVE
+#	exit 0
+#fi
+
+
+# This function exists, because pkgtrans is BROKEN!!
+# It leaves a directory in /var/tmp/aaXXXXXXX, even after clean quit
+# SO, emulate pkgtrans behaviour, for "pkgtrans src destdir pkgname"
+#   Except that we ignore pkgname arg, and just do first one we find.
+#  and we are a bit hacky about how we do things.
+pkgtrans(){
+	if [[ ! -d $2 ]] ; then
+		print ERROR: $2 is not a directory >/dev/fd/2
+		return 1
+	fi
+	hdrblks=`(dd if=$1 skip=1 2>/dev/null| cpio -i -t  >/dev/null) 2>&1 |
+		nawk '{print $1; exit;}'`
+
+	## print initial hdrblks=$hdrblks
+
+	hdrblks=$(($hdrblks + 1))
+	mkdir $2/$3 || return 1
+
+	dd if=$1 skip=$hdrblks 2>/dev/null | (cd $2/$3 ; cpio -ivdm)
+	# on fail, SOMETIMES cpio returns 1, but sometimes it returns 0!!
+	if [[ ! -d $2/$3/install ]] ; then
+		print retrying extract with different archive offset...
+		# no, I cant tell in advance why/when the prev fails
+		hdrblks=$(($hdrblks + 1))
+		dd if=$1 skip=$hdrblks 2>/dev/null| (cd $2/$3 ; cpio -ivdm)
+	fi
+}
+
+print ""
+print Extracing pkg for examination of files...
+pkgtrans $f $EXTRACTDIR $pkgname
+
+
+#############################################################
+# We now have the package expanded, in "directory" form, in
+# $EXTRACTDIR/$pkgname
+# Now do some extended error checking on it.
+# This is similar to Debians "Lintian" phase for packages.
+
+/usr/sbin/pkgchk -d $EXTRACTDIR $pkgname || errmsg "Package failed integrity check"
+
+print "/usr/sbin/pkgchk passed."
+
+
+########################################
+# Check for some common errors
+if [[ $pkgname != "CSWcommon" ]] ; then
+
+	if [[ $LOGNAME != "root" ]] ; then
+		nawk '$6 == "'$LOGNAME'" {print; exit 1}' $EXTRACTDIR/$pkgname/pkgmap
+		if [[ $? -eq 1 ]] ; then
+			print ERROR: files owned by $LOGNAME in prototype file
+			rm -rf $EXTRACTDIR $TMPARCHIVE
+			exit 1
+		fi
+	fi
+
+	egrep 'd none /opt ' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	errmsg You should not have an entry for /opt in your prototype file
+	fi
+	egrep 'd none [^ ]* 06' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	errmsg You must have execute permission set on directories
+	fi
+	egrep '/opt/csw/man|d none man' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	errmsg /opt/csw/man should not have a directory entry in prototype
+	fi
+	egrep '/opt/csw/doc|d none doc' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	errmsg /opt/csw/doc should not have a directory entry in prototype
+	fi
+	egrep '/opt/csw/info|d none info' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	errmsg /opt/csw/info should not have a directory entry in prototype
+	fi
+	egrep 'lib/charset.alias' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	warnmsg Only CSWiconv should have lib/charset.alias in it
+	fi
+	egrep 'share/locale/locale.alias' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	warnmsg Only CSWcommon should have share/locale/locale.alias in it
+	fi
+	fgrep  '? ? ?' $EXTRACTDIR/$pkgname/pkgmap |
+	egrep '[/]opt[/]csw'
+	if [[ $? -eq 0 ]] ; then
+	errmsg "You should only use '? ? ?' for non-csw paths. Use appropriate explicit perms/ownership instead"
+	fi
+	# this is like "installed package info". It is acceptible
+	# to update it in a postinstall script, but not have it
+	# directly in the pkgmap. A "e" entry might be acceptible though.
+	egrep ' f .*/perllocal.pod' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	errmsg perllocal.pod should be removed from prototype file
+	fi
+fi
+# special case. sigh.
+if [[ $pkgname != "CSWtexinfo" ]] ; then
+	egrep '/opt/csw/share/info/dir[ ]|none share/info/dir[ ]' $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+	errmsg /opt/csw/share/info/dir should only be in CSWtexinfo
+	rm -rf $EXTRACTDIR $TMPARCHIVE
+	exit 1
+	fi
+fi
+#########################################
+# find all executables and dynamic libs,and list their filenames.
+listbinaries() {
+	if [ ! -d $1 ] ; then
+		print errmsg $1 not a directory
+		rm -rf $EXTRACTDIR
+		exit 1
+	fi
+
+	find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
+}
+
+# Kinda a hardcode for one special package that cant be
+# detected by normal lib dependancies.
+checkforclasses () {
+	typeset local=no
+	classlist=`sed -n 's/CLASSES=//p' $EXTRACTDIR/$pkgname/pkginfo`
+	for c in $classlist ; do
+		case $c in
+			csw*)
+				local=yes
+			;;
+		esac
+	done
+	if [[ "$local" != "yes" ]] ; then
+		return 0;
+	fi
+	if grep CSWcswclassutils $EXTRACTDIR/$pkgname/install/depend >/dev/null
+	then
+		return 0;
+	fi
+	echo ERROR: package uses a csw CLASS but missing dependancy on CSWcswclassutils
+	return 1
+}
+
+
+# pass in name of dynamic object, and specific catalog file.
+# Will attempt "best match" heuristics appropriate for CSW dependancy file
+# and print out result.
+# We will always print out either ONE package, or NOTHING
+findlibincat() {
+	# important to use same grep as we did looking through pkgmap
+	 grep "[/=]$1[ =]" $2 |
+	      nawk '
+	      	$2 == "f" || $2 == "l" {pkg=$NF;next}
+		# Give 'real' files priority over symlinks
+		{if(pkg==""){pkg=$NF};
+		 next }
+		END {print pkg}
+	      	'
+
+	#old simple (inadequate) way:
+	# grep /$1 $2 |
+	#	      nawk '{print $NF}' |sort -u
+}
+
+####################################################################
+# Auto-dependancy checking section....
+# strategy currently: identify all ELF object files to elflist.
+# Then identify all dependancies to "liblist"
+# THEEEN go searching through SVR4 pkg "contents" file for PKG matches
+#   to those libraries.
+#   (but give priority to lib dependancies satisfied by current PKG itself)
+# Final output is saved to file "libpkgs"
+######################################################################
+sparccheck=""; sparcwarning=""
+if [[ "$pkgarch" = "sparc" ]] ; then
+	if [[ -d $EXTRACTDIR/$pkgname/root/opt/csw/bin ]] ; then
+		sparccheck=$EXTRACTDIR/$pkgname/root/opt/csw/bin
+	elif [[ -d $EXTRACTDIR/$pkgname/reloc/bin ]] ; then
+		sparccheck=$EXTRACTDIR/$pkgname/reloc/bin
+	fi
+	if [[ "$sparccheck" != "" ]] ; then
+		(cd $sparccheck && file *) | grep 'ELF.*V8+'
+		if [[ $? = 0 ]] ; then
+			sparcwarning="WARNING: found binaries in normal bin dir that are V8+"
+		fi
+	fi
+fi
+if [[ "$goodarch" = "yes" ]] ; then
+	# man ld.so.1 for more info on this hack
+	export LD_NOAUXFLTR=1
+
+	listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/elflist
+	# have to do this for ldd to work. arrg.
+	if [ -s "$EXTRACTDIR/elflist" ] ; then
+		chmod 0755 `cat $EXTRACTDIR/elflist`
+
+	#cat $EXTRACTDIR/elflist| xargs ldd  2>/dev/null |fgrep  '.so' |
+	#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
+
+		cat $EXTRACTDIR/elflist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
+			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
+
+		print libraries used are:
+		cat $EXTRACTDIR/liblist
+	else
+		print No dynamic libraries in the package
+	fi
+fi
+
+#If these dont exist, it is Bad.
+touch $EXTRACTDIR/liblist $EXTRACTDIR/libpkgs
+
+if [[ -f $EXTRACTDIR/$pkgname/install/depend ]] ; then
+	print 
+	print "Examining 'depend' file"
+	cat $EXTRACTDIR/$pkgname/install/depend
+	print ""
+else
+	# They may have forgotten to create/add in a depend file
+	# Remind people what the package depends on
+	# print "Analysing dynamic dependancies, if any"
+	touch $EXTRACTDIR/$pkgname/install/depend
+fi
+
+# sanity check against "depends on self"
+nawk '$2=="'$pkgname'" {exit 1}' $EXTRACTDIR/$pkgname/install/depend
+if [[ $? -ne 0 ]] ; then
+	print ERROR: $pkgname references self in depend file
+	exit 1
+fi
+
+nawk '$1=="P" {print $2}'  $EXTRACTDIR/$pkgname/install/depend |
+	sort >$EXTRACTDIR/deppkgs
+for dep in `cat $EXTRACTDIR/deppkgs`
+do
+	pkginfo $dep || errmsg  Invalid package $dep specified. Check of $f fails
+done
+
+   #strategy update: poorly grep for all possible matches against our liblist,
+   # and save in "shortcswcatalog". and now "shortsuncatalog" too.
+   # in theory, slower for small pkgs, but should be faster for pkgs
+   # with lots of shared libs.
+   #
+
+
+if test -s $EXTRACTDIR/liblist ; then
+	print Building index from SVR4 installed packages database...
+	print '(May take a while)'
+	#It's noticably faster (30%) this way, than the second way, at least on a
+	# multiproc box.
+	grep CSW /var/sadm/install/contents |nawk '$2 ~ /^[fsl]$/ {print}' |
+		fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcswcatalog
+	grep SUNW /var/sadm/install/contents |nawk '$2 ~ /^[fsl]$/ {print}' |
+		egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' |
+		fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortsuncatalog
+
+	#nawk '$2 ~ /^[fsl]$/  && $NF ~ /^CSW/ {print}' /var/sadm/install/contents |
+	#		fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcswcatalog
+	#nawk '$2 ~ /^[fsl]$/  && $NF ~ /^SUNW/ {print}' /var/sadm/install/contents |
+	#		egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' |
+	#		fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortsuncatalog
+
+
+	print Cross-referencing indexes...
+fi
+
+
+# DEBUG: should we weed out libs already covered by pkg dependancy list?
+# that would be to handle things like libgcc_s.so.1 that are in both
+#  CSWgcc3rt and CSWgcc4rt but in different dirs
+
+for lib in `cat $EXTRACTDIR/liblist` ; do
+	grep "[/=]$lib[ =]" $EXTRACTDIR/$pkgname/pkgmap
+	if [[ $? -eq 0 ]] ; then
+		echo $lib provided by package itself
+		continue
+	fi
+
+	# We want to give priority to CSW packages.
+	# This is one way; force ONLY parsing CSW pkgs first.
+	# Then search SUNW pkgs only if nothing else
+	libpkg=`findlibincat $lib $EXTRACTDIR/shortcswcatalog`
+
+	if [[ -z "$libpkg" ]] ; then
+	libpkg=`findlibincat $lib $EXTRACTDIR/shortsuncatalog`
+	fi
+	if [[ -z "$libpkg" ]] ; then
+		errmsg cannot find package for $lib
+	else
+		print $libpkg >>$EXTRACTDIR/libpkgs
+		print "  found $libpkg for $lib"
+	fi
+done
+
+sort -u $EXTRACTDIR/libpkgs >$EXTRACTDIR/libpkgs.x
+mv $EXTRACTDIR/libpkgs.x $EXTRACTDIR/libpkgs
+
+diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs >/dev/null
+if [[ $? -ne 0 ]] ; then
+	print SUGGESTION: you may want to add some or all of the following as depends:
+	print '   (Feel free to ignore SUNW or SPRO packages)'
+	diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs | fgrep '>'
+fi
+
+checkforclasses
+
+if [[ "$basedir" != "" ]] ; then
+	print
+	if [[ -f $EXTRACTDIR/elflist ]] ; then
+		print "Checking relocation ability..."
+		xargs strings < $EXTRACTDIR/elflist| grep /opt/csw
+		if [[ $? -eq 0 ]] ; then
+			errmsg package build as relocatable, but binaries have hardcoded /opt/csw paths in them
+		else
+			print trivial check passed
+		fi
+	else
+		echo No relocation check done for non-binary relocatable package.
+	fi
+fi
+
+cleanup
+
+
+print "$sparcwarning"
+
+done

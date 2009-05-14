@@ -1,0 +1,50 @@
+.TH createpkg 8 "Jan 9, 2002" "CSW maintainers"
+.SH NAME
+\fBcreatepkg\fP
+\- CSW utility to put together a pkg file
+.SH SYNOPSIS
+.br
+\fBcreatepkg [-r rootdir] [-b basedir]\fP
+
+.SH DESCRIPTION
+\fBcreatepkg\fP
+is a convenience tool to automate the final steps needed to create
+a pkg file. It assumes you have done all compiling, and "staging", for the
+contents of the package already.
+It will convert the binaries into a single .pkg.gz file, and
+run checkpkg on it to check for common errors in packaging.
+
+You must have already created a prototype file, a copyright file,
+and a pkginfo file. If you need one, you must also have created a depend file,
+and added an entry into pkginfo for it.
+
+It is assumed that you will follow a proceedure similar to the
+following:
+
+ [untar software.tar.gz for building]
+ [configure and build the software]
+ stagepkg
+ mkdir $HOME/pkg/software
+ cp COPYING $HOME/pkg/software/copyright
+ cp cswstage/prototype $HOME/pkg/software/prototype
+ cd $HOME/pkg/software
+ [create pkginfo file]
+ [create depend file, if neccessary, and adjust prototype]
+ createpkg -b {/full/path/to/builddir}/cswstage/opt/csw
+
+If you need to make an absolute-path package, you would instead use
+
+ createpkg -r {/full/path/to/builddir}/cswstage
+
+.SH ADVANCED TECHNIQUES
+
+createpkg (and pkgmk) normally assume you have a 'prototype' file 
+in the current directory. However, if you need to have slightly different
+contents for sparc vs x86, createpkg will check for a prototype.{sparc|i386}
+file, and use the ARCH specific version, if present.
+
+.SH SEE ALSO
+\fBcheckpkg\fP(8)
+\fBstagepkg\fP(8)
+.SH AUTHORS
+Philip Brown

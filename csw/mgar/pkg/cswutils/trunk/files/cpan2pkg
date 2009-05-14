@@ -1,0 +1,780 @@
+#!/opt/csw/bin/perl
+# Version 1.11 10/14/07
+#
+# Depends on gmake, csutils, pm_yaml, pm_htmltree, and pm_libwww
+#
+# This script will take a CPAN module as an argument and convert it into a
+# SysV package sutable for opencsw.org. It will do this by downloading the
+# module from CPAN, examining the modules's listed dependancies, and
+# recursivelly build them.  If a dependacy is a perl core module, or already
+# has a package on opencsw of the same or higer version, it will not be
+# rebuilt.  If a package file (e.g. <modname>-<ver>,REV=*.tar.gz) exists
+# in the directory wher you run this script, it is assumed that the package
+# is already built and it will not be re-built.
+#
+
+use strict;
+use warnings;
+
+use CPAN;
+use File::Copy;
+use File::Spec;
+use YAML qw(LoadFile);
+use Cwd;
+use LWP::UserAgent;
+use HTTP::Request::Common;
+use HTML::TreeBuilder;
+use File::Path;
+use File::Temp qw(:POSIX);
+use Getopt::Long;
+
+#
+# Global constants.
+#
+our $pgm = $0;
+our $cswdir = '/opt/csw';
+our $makecmd = "$cswdir/bin/gmake";
+our $maxsoftnmlen = 20;
+our $bwurl = 'http://www.opencsw.org';
+our $bwfsearch = '/filesearch.php';
+our @msearchpath = (  # Perl module search path
+	"/opt/csw/lib/perl/csw", 
+	"/opt/csw/share/perl/csw", 
+	"/opt/csw/lib/perl/site_perl", 
+	"/opt/csw/share/perl/site_perl"
+);
+our $cwd = getcwd();
+our $verbose;
+our $email;
+our $owner;
+our $logfile;
+
+our $http_proxy;
+our $ftp_proxy;
+
+our $version = "1.11";
+
+sub usage {
+
+ print STDERR "$pgm: Error, @_\n" if( @_ );
+ print STDERR <<_UEND;
+	Usage: $pgm <options> <modulename[,ver]> ...
+	    Required options:
+		-o|--owner <name> - Package maintainer name
+		-e|--email <address> - Package maintainer E-mail address
+	    Optional options:
+		-h|--help - Prints this message.
+		-v|--verbose - do not redirect output from commands
+		-V|--version - Prints the version number ($version)
+		-H|--http_proxy - HTTP Proxy to use (e.g. http://proxy:8080)
+		-F|--ftp_proxy - FTP Proxy to use (e.g. http://proxy:8080)
+		-n|--nooverwrite [<module>]
+			Do not overwrite the build directory, but do
+			everything else.  If no module is specified, do not
+			overwrite any build directories.  Can be specified as
+			many times as necessary.  Allows you to modify the
+			build directory and re-build.
+		-F|--nooverwritefile <file>
+			Same as --nooverwrite, but reads the module names from
+			a file.  Can only be specified once.
+
+	    Where <modulename[,ver]> is a standard CPAN module name with an
+	    optional comma seperated version number.  For example:
+
+		Email::Send
+
+	   and
+
+		Email::Send,2.185
+
+	   are both valid command line arguments.
+_UEND
+ exit 1;
+}
+
+
+#
+# These three routines are used to capture the output of sub processes and
+# perl routines (such as CPAN::Module::get) into a log file.  If the command
+# completes successfuly, the log file is thrown away.  If the command fails,
+# the log file is printed along with an error message by calling fail.
+#
+sub logoutput {
+
+	if( ! $verbose ) {
+
+		$logfile = tmpnam();
+		open( OLDOUT, '>&STDOUT' );
+		open( OLDERR, '>&STDERR' );
+		open( STDOUT, "> $logfile" );
+		open( STDERR, "> $logfile" );
+
+	}
+
+
+}
+
+sub endlog {
+
+	if( ! $verbose ) {
+
+		# Reference fh to silence warning
+		select( OLDERR ); select( OLDOUT );
+
+		# Restore output.
+		select( STDOUT);
+		close( STDOUT );
+		open( STDOUT, ">&OLDOUT" );
+		close( STDERR );
+		open( STDERR, ">&OLDERR" );
+
+		rmtree( $logfile );
+
+	}
+
+}
+
+sub fail {
+
+	if( ! $verbose ) {
+
+		close( STDOUT );
+		open( STDOUT, ">&OLDOUT" );
+		close( STDERR );
+		open( STDERR, ">&OLDERR" );
+		open( LOG, "< $logfile" ) or
+			die "$pgm: Error, @_ - can't open log\n";
+		print foreach <LOG>;
+		close( LOG );
+		rmtree( $logfile );
+
+	}
+
+	die "\n$pgm: Error, @_\n";
+	
+}
+
+
+#
+# See if a given perl module is contained in a package.  If the
+# module is on opencsw and it's version is as good or better than requested,
+# return the opencsw package name.
+#
+# We have to be carefull because some of the data is corrupt.  Some package
+# links reutned when searching by file point to no-existant packages.  Make
+# sure the package is valid before returning.
+#
+# Takes three strings as argument:
+#	modname - the perl module name as in "Package::Module".
+#	ver - the required module version number.
+#	bver - the version number found at the CPAN site. This may be the
+#	       version of a CPAN bundle which may not match the module version.
+#
+sub findBWpkg ( $$$ ) {
+
+	my ($modname, $ver, $bver) = @_;
+
+	my $ua = LWP::UserAgent->new;
+	$ua->proxy( 'http' => $http_proxy ) if $http_proxy;
+	$ua->proxy( 'ftp' => $ftp_proxy ) if $ftp_proxy;
+
+	#
+	# Query for the module in each of the locations in which it might be
+	# installed.
+	#
+	my $tbl;
+	foreach my $path (@msearchpath) {
+
+		#
+		# Find all packages containing our module by querying the BW
+		# site.
+		#
+		my $file = $modname;
+		$file =~ s'::'/'g;
+		$file = $path . "/" . $file . '.pm'; # Anchor query string.
+		my $res = $ua->request( POST $bwurl . $bwfsearch,
+			[
+				filename => $file,
+				matchtype => 'exact',
+				searchfiles => 'Search Files'
+			]
+		);
+		die "can not query opencsw.org" unless $res->is_success;
+
+		#
+		# Now parse the returned HTML page.
+		#
+		my $tree = HTML::TreeBuilder->new;
+		$tree->parse( $res->as_string );
+		$tree->eof();
+
+		#
+		# Get the first table and extract the links to package info
+		# pages.  We must make sure these are links to vaild packages.
+		#
+		my $tbltree = $tree->find( 'table' ) or next;
+		foreach my $link (@{$tbltree->extract_links()}) {
+
+			#
+			# Follow the link and make sure it conatains a table.
+			#
+			$res = $ua->request( GET $bwurl . $link->[0] );
+			die "can not query opencsw.org"
+				unless $res->is_success;
+			$tree->delete;
+			
+			$tree = HTML::TreeBuilder->new;
+			$tree->parse( $res->as_string );
+			$tree->eof();
+
+			$tbl = ($tree->look_down('_tag','table'))[0] and last;
+
+		} 
+
+		last if( defined($tbl) ); # Found a good package table!
+
+	}
+	return unless $tbl; # No table with package info found.
+
+	#
+	# The pakage name and version are in the first table.  Extract
+	# them by position.
+	#
+	my @rows  = $tbl->look_down( '_tag', 'tr' );
+
+	# package name is in fifth row
+	my $name = (($rows[4]->look_down('_tag', 'td'))[1]->content_list)[0];
+	$name =~ s/\s//g; # Strip white space
+
+	# version is in second row
+	my $bwver = (($rows[1]->look_down('_tag', 'td'))[1]->content_list)[0];
+	$bwver =~ s/,REV=.*$//;
+	$bwver =~ s/\s//g; # Strip white space
+
+	#
+	# If the BW version is less than the module version and CPAN version
+	# (bundle version), return failure.
+	#
+	if( ($bwver lt $ver) and ($bwver lt $bver) ) {
+		print "WARNNING: opencsw package $name is out of date\n";
+		return;
+	}
+
+	print "Found existing opencsw package $name for $modname module\n";
+	return $name; # Success!
+
+}
+
+#
+# See if a module is a perl core module by looking where it is installed.
+# Takes a CPAN::Module reference as argument.
+#
+sub is_perl_core( $ ) {
+	my( $mod ) = @_;
+
+	my $instfile = $mod->inst_file() or return;
+	return unless( $instfile =~ m'^/opt/csw/(lib|share)/perl/[0-9\.]+/' );
+	return 1;
+
+}
+
+#
+# See if a given BW package name is uniq.  This routine will try to query for
+# the package name on the BW web site.
+#
+# Takes a single string as argument.  This can be either the software name
+# (e.g. pm_expect) or the package name (e.g. CSWpmexpect).
+#
+sub is_uniq ( $ ) {
+
+	my ($pkgname) = @_;
+
+
+	my $ua = LWP::UserAgent->new;
+	$ua->proxy( 'http' => $http_proxy ) if $http_proxy;
+	$ua->proxy( 'ftp' => $ftp_proxy ) if $ftp_proxy;
+
+	#
+	# See if the "show all files" query returns anything for our package.
+	#
+	my $res = $ua->request( POST $bwurl . $bwfsearch,
+		[
+			pkgname => $pkgname,
+			showfiles => 'Show Files'
+		]
+	);
+	die "could not query opencsw packages" unless $res->is_success;
+
+	#
+	# Now parse the returned HTML page.
+	#
+	my $tree = HTML::TreeBuilder->new;
+	$tree->parse( $res->as_string );
+	$tree->eof();
+	$tree->objectify_text();
+
+	#
+	# If we do not find a match, return success, otherwise failure.
+	#
+	$tree->look_down( 'text', qr/NO MATCH/ ) and return 1;
+	return;
+
+}
+
+#
+# This routine will build a SysV pakage including a dependancy file.  It will
+# take care that the package name meets the restrictions imposed by checkpkg.
+# If the output file that would have been generated for this package already
+# exists in the working directory, the package is assumed to be already built
+# and nothing is done.  This routine assumes that the source has already been
+# downloaded and unpacked into the working directory (the directory where the
+# script was launched).
+#
+# This routine takes five arguments:
+#	modname - the perl module name as in "Package::Module".
+#	moddir - the directory where the source code was unpacked.
+#	uid - the authors uid as returned by CPAN::Module->userid()
+#	bwdeps - an array reference to a list of BW package names on which
+#		 the given module depends.
+#	pkgver - a string with the version number of the package.
+#
+sub bldpkg ( $$$\@$ ) {
+	my ($modname, $moddir, $uid, $bwdeps, $pkgver) = @_;
+
+	# Construct software and package names.
+	my $pkgname = "pm_" . lc( $modname ); $pkgname =~ s/:://g;
+	my $pkgfile = "CSWpm" . lc( $modname ); $pkgfile =~ s/:://g;
+	
+	#
+	# If the package/software names are too long, truncate them and make
+	# sure they are still uniq.
+	#
+	if( length($pkgname) > $maxsoftnmlen ) {
+
+		$pkgname = substr( $pkgname, 0, $maxsoftnmlen );
+		die "can not make uniq name for $modname"
+			unless is_uniq( $pkgname );
+	}
+	if( length($pkgfile) > $maxsoftnmlen ) {
+
+		$pkgfile = substr( $pkgfile, 0, $maxsoftnmlen );
+		die "can not make uniq name for $modname"
+			unless is_uniq( $pkgfile );
+	}
+
+
+	#
+	# Do not rebuild the package if one already exists.
+	#
+	my @found = <$cwd/$pkgname-$pkgver,REV=*.pkg.gz>;
+	if( @found ge 1 ) {
+		print "Package for $modname already built, skipping\n";
+		return $pkgfile;
+	}
+
+	#
+	# Create the make file.
+	#
+	chdir( $moddir ) or die "Can not find module directory $moddir\n";
+	if( -f "Makefile.PL" ) {
+		logoutput();
+		system( "perl Makefile.PL INSTALLDIRS=vendor" ) == 0
+			or fail "Can not create Makefile for $modname";
+		endlog();
+	} else {
+		logoutput();
+		system( "perl Build.PL installdirs=vendor" ) == 0
+			or fail "Can not create Makefile for $modname";
+		endlog();
+	}
+
+	#
+	# Build everything but do not install yet.
+	#
+	logoutput();
+	system( "$makecmd" ) == 0 or fail "Can not build $modname";
+
+	#
+	# Stage the products.
+	#
+	my $stage = $moddir . "/cswstage";
+	my $stagecmd = "MAKE=$makecmd $cswdir/bin/stagepkg -a" .
+		" DESTDIR=$stage" .
+		" install"
+	;
+	system( $stagecmd ) == 0 or fail "Could not stage $modname";
+	endlog();
+
+	#
+	# Fix up the .packlist file (strip out the stageing directory).
+	#
+	my $pkfile = $stage . "$cswdir/lib/perl/csw/auto/" . $modname
+		. "/.packlist";
+	$pkfile =~ s'::'/'g;
+	open( PKFILE, "< $pkfile" ) or die "can not find $pkfile";
+	my @pklist = map {s/$stage//; $_} <PKFILE>;
+	close( PKFILE );
+	open( PKFILE, "> $pkfile" ) or die "can not update $pkfile";
+	print PKFILE @pklist;
+	close( PKFILE );
+
+	#
+	# Copy in the license if one is present.
+	#
+	if( -f 'LICENSE' ) {
+		copy( 'LICENSE', $stage . '/copyright' );
+	} else {
+		open( COPY, "> $stage/copyright" ) and close COPY;
+	}
+
+	chdir( $stage );
+
+	#
+	# Generate a prototype file.
+	#
+	my $filter = qr/( opt| var|perllocal.pod| copyright| prototype) /;
+	my @proto = map {s'none 'none /'; s' [^ ]+ [^ ]+$' root bin'; $_ . "\n"}
+			grep {!/$filter/}
+			`find . | /usr/bin/pkgproto`
+	;
+	die "Can not run pkgproto" if( $? != 0 );
+	open( PROTO, '> prototype' );
+	print PROTO "i copyright\n";
+	print PROTO "i depend\n";
+	print PROTO "i pkginfo\n";
+	print PROTO  @proto;
+	close PROTO;
+
+	#
+	# Generate dependancy file.
+	#
+	open( DEPFILE, '> depend' );
+	print DEPFILE "P\t" . $_ . "\n" foreach( @$bwdeps );
+	print DEPFILE "P\tCSWperl\n"; # Perl modules depend on perl!
+	close DEPFILE;
+
+	#
+	# Generate pkginfo file.
+	#
+	my $url = "http://search.cpan.org/~$uid/$modname-$pkgver";
+	$url =~ s/::/-/g;
+	my ($sec,$min,$hour,$mday,$mon,$year) = localtime;
+	my $verstr = $pkgver .  ",REV=" . (1900 + $year) . "." . $mon . "."
+		. $mday;
+	open( INFO, '> pkginfo' );
+	print INFO "PKG=$pkgfile\n";
+	print INFO "NAME=$pkgname - perl $modname module\n";
+	print INFO "VERSION=" . $verstr . "\n";
+	print INFO "CATEGORY=application\n";
+	print INFO "VENDOR=$url packaged for CSW by $owner\n";
+	print INFO "HOTLINE=http://www.opencsw.org/bugtrack/\n";
+	print INFO "EMAIL=$email\n";
+	close INFO;
+
+	#
+	# Create package and copy it to the working directory.
+	#
+	my $arch = `uname -p`; chomp( $arch );
+	my $osver = `uname -r`; chomp( $osver );
+	my $outfile = $pkgname . "-" . $verstr . "-SunOS" . $osver .
+		"-" . $arch . "-CSW.pkg";
+
+	#
+	# Build the package file.  We can not use createpkg because it calls
+	# checkpkg which requires the depenencies to already be installed.
+	#
+	my $spooldir = "$cwd" . "/" . $pkgfile;
+	rmtree( $spooldir ) if( -f $spooldir );
+	logoutput();
+	system( "pkgmk -o -r . -a $arch -f prototype -d $cwd" ) == 0
+		or fail "could not create package for $modname";
+	system( "pkgtrans $cwd $cwd/$outfile $pkgfile" ) == 0
+		or fail "could not convert $modname package to stream format";
+	system( "gzip -f $cwd/$outfile" ) == 0
+		or fail "could not gzip $modname package";
+	endlog();
+	rmtree( $spooldir );
+
+	return $pkgfile; #Sucess!
+}
+
+#
+# This routine queries the CPAN site fore a given perl module, downloads
+# it's source code, builds it, and creates a package.  This routine will also
+# recursively build packages for all the module's listed dependancies.  All
+# this is accomplished by calling the previous routines.
+#
+# If a module is a core perl module and it is not out of date, the module is
+# skipped.  If a moulde is already packaged and listed on the BW site and is
+# up to date, it will not be rebuilt (though it will be used for dependancies).
+# The source code and build directory for the module will be placed in the
+# working directory (the directory where this script was invoked) as will the
+# final package file.
+#
+# This routine takes five paramates:
+#	ndldall - a flag to indicate no CPAN source files are to be downloaded
+#		  and more importantly, the previous build directory is not to
+#		  be overwritten.
+#	ndld - a hash containing the names of modules that should not be
+#	       downloaded as above.
+#	modname - the perl module name as in "Package::Module".
+#	ver - a string with the minimum acceptable version number for the
+#	      given module.
+#	deptree - a hash in which the module disposition and dependacy hash
+#		  will be written.  This can be used to print a summary of
+#		  what happend.
+#
+sub pmtopkg ( $\%$$\% ); # Avoid warning because of recursive call.
+sub pmtopkg ( $\%$$\% ) {
+
+	my ($ndldall, $nodnld, $modname, $ver, $deptree) = @_;
+
+	$ver = "" if( !defined $ver );
+
+	#
+	# If the module is perl, check the running perl version.
+	#
+	if( $modname eq "perl" ) {
+		die "$modname requires perl version $ver" if( $^V < $ver );
+		$deptree->{$modname}{$ver} = ["perl OK",{}];
+		return;
+	}
+
+	#
+	# Look up the CPAN module.
+	#
+	my $mod = (CPAN::Shell->expand("Module", ($modname)))[0];
+	die "can not locate CPAN module $modname" unless( $mod );
+	logoutput();
+	my $instver = $mod->inst_version();
+	my $fname = $mod->cpan_file();
+	endlog();
+
+	#
+	# If CPAN substituted a bundle for our module, we need to use the
+	# bundle version number  when searching for the module on BW.
+	# Extract the (possibly new) version number from the CPAN file name.
+	#
+	$fname =~ m'.*/[^/]+-([0-9\.]+)\.tar\.gz';
+	my $bver = $1;
+
+	#
+	# If this is a perl core module and it is not out of date, skip it.
+	#
+	if( is_perl_core($mod) && defined($ver) && defined($instver) &&
+	    ($ver le $instver)
+	) {
+		print "Skiping core module $modname\n";
+		$deptree->{$modname}{$ver} = ["core module OK",{}];
+		return;
+	}
+
+	#
+	# If a BW package is found and it is not a core package, return it.
+	#
+	my $bwpkg = findBWpkg( $modname, $ver, $bver );
+	if( $bwpkg ) {
+		$deptree->{$modname}{$ver} = ["Existing BW package $bwpkg OK",{}];
+		return $bwpkg;
+	}
+
+	#
+	# Download the source from CPAN and unpack it in the CPAN build dir.
+	#
+	logoutput();
+	if( $ndldall || $nodnld->{$modname} ) {
+		print OLDOUT "Skipping download of $modname\n";
+	} else {
+		$mod->get();
+	}
+	my $cfile = $CPAN::Config->{keep_source_where} .
+		"/authors/id/" .
+		$fname;
+	;
+	fail( "can not download $modname from CPAN" ) if( ! -f $cfile );
+	if( !($ndldall || $nodnld->{$modname}) ) {
+		system( "cd $cwd; gunzip -c $cfile | tar -xvf -" ) == 0
+			or fail "can not unpack $cfile";
+	}
+	endlog();
+
+	#
+	# If we picked up a bundle, change to the bundle name.  Extract the
+	# (possibly new) module name from the CPAN file name.
+	#
+	$fname =~ m'.*/([^/]+)-[0-9\.]+\.tar\.gz';
+	my $nmodname = $1;
+	$nmodname =~ s/-/::/g;
+	
+	#
+	# Get the directory name where the source was unpacked.
+	#
+	my $chome = $CPAN::Config->{cpan_home};
+	$fname =~ m'.*/([^/]+-[0-9\.]+)\.tar\.gz';
+	my $moddir = $cwd . "/" . $1;
+
+	#
+	# Get the modules $nmodname requires from the YAML meta data.  Get it
+	# as a reference to a hash of module => "version".
+	#
+	my $metafile = $moddir . "/META.yml";
+	my $meta_data;
+	$meta_data = LoadFile( $metafile )
+		or die "Can not load dependancies for $nmodname";
+	my $req = $meta_data->{requires};
+
+	#
+	# Recursively make (or look up) pakages for each dependancy and save
+	# them for when we build the package.
+	#
+	my ($bwdep, @deps);
+	foreach( keys %$req ) {
+		$bwdep = pmtopkg($ndldall, %$nodnld, $_, $req->{$_}, %$deptree)
+			and push @deps, $bwdep;
+	}
+
+	#
+	# Build the package.
+	#
+	my $depname = bldpkg( $nmodname, $moddir, $mod->userid(), @deps, $meta_data->{version} )
+		or die "can not build package for $nmodname\n";
+
+	#
+	# Copy the original source file to our orginal working directory.
+	#
+	my ($vol, $dir, $file);
+	($vol, $dir, $file) = File::Spec->splitpath( $cfile );
+	$file = $cwd . '/' . $file;
+	copy( $cfile , $file ) or die "Could not copy $cfile to $file: $!";
+
+	chdir( $cwd ); # Go back to where we were.
+
+	$deptree->{$modname}{$ver} = ["New BW package for $nmodname!",$req];
+
+	# Return our new package name
+	return $depname
+}
+
+#
+# A little routine to print out a summary of what was done.  This routine will
+# recursively traverse the deptree structure built up in pmtopkg.  At each node
+# it will print out the disposition message, and recursively decend each listed
+# dependacy tree.
+#
+# This routien takes four parameters:
+#	modname - the perl module name as in "Package::Module".
+#	ver - a string with the minimum version number for the given module.
+#	indent - a string of spaces used to do indentation at each level.
+#	deptree - a referecne to the hash built up in pmtopkg.  Each entry
+#		  in the hash is an array containing a disposition string, and
+#	          a reference to a hash of dependancies (mod::name => version).
+#	
+sub disposition ( $$$\% );
+sub disposition ( $$$\% ) {
+	my ($modname, $ver, $indent, $deptree) = @_;
+
+	$ver = "" if( !defined $ver );
+
+	my $dispo = $deptree->{$modname}{$ver}[0];
+	print "$indent$modname $ver  -  $dispo\n" if( $dispo );
+	my $deps = $deptree->{$modname}{$ver}[1];
+
+	$indent = sprintf( "%s    ", $indent );
+	foreach( keys %$deps ) {
+		disposition( $_, $deps->{$_}, $indent, %$deptree );
+	}
+}
+
+my $ndldfile;
+my @ndld;
+my $ndldall;
+my $help;
+my $vflag;
+my %deptree;
+
+#
+# Parse the command line options.
+#
+Getopt::Long::Configure( 'prefix_pattern=(--|-)' );
+Getopt::Long::Configure( 'no_auto_abbrev' );
+Getopt::Long::Configure( 'no_ignore_case_always' );
+GetOptions(
+	"verbose|v" => \$verbose,
+	"version|V" => \$vflag,
+	"help|h" => \$help,
+	"owner|o=s" => \$owner,
+	"email|e=s" => \$email,
+	"http_proxy|H=s" => \$http_proxy,
+	"ftp_proxy|F=s" => \$ftp_proxy,
+	"nooverwritefile|f=s" => \$ndldfile,
+	"nooverwrite|n:s" => sub { if($_[1]){push @ndld, $_[1]} else {$ndldall = 1} }
+);
+
+usage if( $help );
+if( $vflag ) {
+	print "Version: $version\n";
+	exit 0;
+}
+
+#
+# Verify sanity of options.
+#
+usage "must specify module names " unless( @ARGV );
+usage "maintainer E-mail address required" unless( $email );
+usage "maintainer name required" unless( $owner );
+
+if( $ndldfile ) {
+
+	usage "bad no download file name $ndldfile" unless( -f $ndldfile );
+	open( NDLD, "< $ndldfile" );
+	push @ndld, map {chomp($_); $_} <NDLD>;
+	close( NDLD );
+
+}
+
+my %ndldmods;
+$ndldmods{$_} = 1 foreach( @ndld );
+
+#
+# Pick up proxies from /etc/opt/csw/pkg-get.conf if it exists.
+#
+my $cfgfile = "$cswdir/etc/pkg-get.conf";
+if( -f $cfgfile ) {
+
+	open( CFG, "< $cfgfile" );
+	my %vars =
+		map { m/([^=]+)=(.*)/; ($1, $2) }
+		grep { /=/ } map { s/#.*//; $_ } <CFG>
+	;
+
+	#
+	# Only pick up proxies if they were not already specified.
+	#
+	if( !defined($http_proxy) && defined($vars{http_proxy}) ) {
+		$http_proxy = $vars{http_proxy};
+	}
+	if( !defined($ftp_proxy) && defined($vars{ftp_proxy}) ) {
+		$ftp_proxy = $vars{ftp_proxy};
+	}
+
+}
+
+#
+# Build the packages for each module.
+#
+my @modlist = @ARGV;
+foreach( @modlist ) {
+
+	$_ =~ /^([^,]+),?(.*)/; #Extract mod name and version number
+	pmtopkg( $ndldall, %ndldmods, $1, $2, %deptree );
+
+}
+print "\nModule Disposition Summary:\n\n";
+foreach( @modlist ) {
+
+	$_ =~ /^([^,]+),?(.*)/; #Extract mod name and version number
+	disposition( $1, $2, "", %deptree );
+
+}
+
+exit 0;

@@ -1,0 +1,85 @@
+.TH stagepkg 8 "Feb 8, 2003" "CSW maintainers"
+.SH NAME
+\fBstagepkg\fP
+\- CSW utility program to 'make install' to a staging area
+.SH SYNOPSIS
+.br
+\fBstagepkg [-a] [-m] [make flags] \fP
+
+.SH OPTIONS
+-a  Absolute package
+
+-m  Run as "me". Do not try to use fakeroot or chown
+
+.SH DESCRIPTION
+\fBstagepkg\fP
+is used to create a virtual layout of /opt/csw, under 
+$PWD/cswstage, 
+for purposes of installing software, before making a package out of it.
+\fBstagepkg\fP will automatically create certain links like man -> share/man
+to ensure that software gets installed to the proper place.
+
+After installing the binaries to the staging tree, \fBstagepkg\fP will
+then attempt to determine if a package can be a relocatable one, or whether
+it needs to be an absolute-path one. You can force an absolute-path package
+with the -a option.
+
+It is then up to you to look over the generated prototype file, fix it up 
+as neccessary, and then call pkgmk with the appropriate options. 
+(Or use \fBcreatepkg\fP(8) instead of pkgmk)
+
+\fBstagepkg\fP will transparently use \fBfakeroot\fP to do the install,
+unless you already are root, or use the -m option.
+
+Note that this script \fBis not suitable\fP for multiarchitecture packages.
+That is to say, if you wish to provide binaries for sparcv8, sparcv8+, 
+and sparcv9, you will have to script something yourself.
+However, it may still be useful to run the script once for the "base" package,
+and then manually tweak the staging area and prototype file to match.
+
+By default, \fBstagepkg\fP will use standard Solaris make. If you wish
+to use gnu make, set your MAKE environment variable. For example,
+
+.LP
+MAKE=gmake stagepkg
+
+
+By default, \fBstagepkg\fP assumes that the target software Makefiles respect
+DESTDIR=/some/path to alter the virtual root destination. If you need to
+specify some other make varible, call stagepkg as if it were the make command
+directly. EG:
+
+.LP
+stagepkg BUILD_TOP=$PWD/cswstage install
+
+
+Since it is common to need to remake the package due to minor pkginfo changes,
+or dependancy changes, without any changes to the actual binaries,
+you are encouraged to keep your cswstage directory around, until you
+put together the next update for the software you maintain.
+
+.SH DUMMY RUN
+
+Even if you can't, or don't want to, use stagepkg to do the "make install"
+stage, it is still advisable for you to use it in a dummy run, so that it 
+makes the normal directory tree with special symbolic links for you,
+under cswstage. You will then have to create and fix up your own prototype file.
+
+To do a dummy run, you can call it with any variable that would be passed to
+"make". For example:
+
+.LP
+stagepkg FAKEVAR=dummy
+
+
+.SH SEE ALSO
+\fBcheckpkg\fP(8),
+\fBcreatepkg\fP(8),
+\fBfakeroot\fP(1)
+.br
+http://www.opencsw.org/standards/
+
+.SH AUTHORS
+Philip Brown
+.SH BUGS
+Cannot cover every possible package configuration issue automatically

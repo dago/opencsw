@@ -1,0 +1,134 @@
+#!/bin/ksh -p
+
+# createpkg 1.6 
+# This script actually builds the package.. once you have already
+# put together the pkginfo and prototype file.
+# See the makeproto script for a way to make a prototype file.
+
+
+if [[ "$FAKEROOTKEY" != "" ]] ; then
+	print ERROR: do not run createpkg under a fakeroot shell
+	# This is mainly because we unset LD_LIBRARY_PATH lower down,
+	# which would break fakeroot anyway
+	exit 1
+fi
+
+#This is only relevant for an absolute-path package
+ROOTDIR=/
+if [[ "$1" = "-r" ]] ; then
+	ROOTDIR="$2"
+	mode=absolute
+	shift
+	shift
+fi
+
+#This is only relevant for a relative-path package
+INSTALLBASEDIR=/opt/csw
+if [[ "$1" = "-b" ]] ; then
+	INSTALLBASEDIR="$2"
+	mode=relative
+	shift
+	shift
+fi
+
+if [[ $# -ne 0 ]] ; then
+	case $1 in
+	 *=*)
+	 	print Taking "'extra'" args, as variable assignments for pkgmk
+	 	;;
+	 *)
+		print ERROR: unrecognized args: $*
+		print read the manpage
+		exit 1
+		;;
+	esac
+
+fi
+
+ARCH=`sed -n 's/^ARCH=//p' pkginfo`
+if [[ "$ARCH" != "all" ]] ; then
+	ARCH=`uname -p`
+fi
+
+die()
+{
+	print ERROR: $*
+	exit 1
+}
+
+# check if we have multiple prototype files, vs a single unified prototype file
+if [[ -f prototype.$ARCH ]] ; then
+	PROTO=prototype.$ARCH
+else
+	PROTO=prototype
+fi
+
+grep 'i copyright' $PROTO || die need copyright in $PROTO
+grep 'root other' $PROTO && die fix $PROTO file
+grep 'csw/man' $PROTO && die fix csw/man entry in $PROTO file
+grep 'none man' $PROTO && die fix csw/man entry in $PROTO file
+grep 'csw/info' $PROTO && die fix csw/info entry in $PROTO file
+grep 'none info' $PROTO && die fix csw/info entry in $PROTO file
+grep 'csw/doc' $PROTO && die fix csw/doc entry in $PROTO file
+grep 'none doc' $PROTO && die fix csw/doc entry in $PROTO file
+
+grep 'Replace this file' copyright && die fix copyright file
+
+if [[ "$mode" = "" ]] ; then
+	grep /opt/csw $PROTO >/dev/null
+	if [[ $? -eq 0 ]] ; then
+		mode=absolute
+	else
+		mode=relative
+	fi
+fi
+
+PKG=`sed -n 's/^PKG=//p' pkginfo`
+PKGREV=`sed -n 's/^VERSION=//p' pkginfo`
+SOFTNAME=`sed -n 's/^NAME=//p' pkginfo|awk '{print $1}'`
+
+case $SOFTNAME in
+     *[A-Z]*)
+	echo ERROR: $SOFTNAME must be all lowercase
+	exit 1
+	;;
+esac
+
+PKGFILE=$SOFTNAME-$PKGREV-SunOS`uname -r`-$ARCH-CSW.pkg
+
+if [ "$PKGREV" = "" -o "$SOFTNAME" = "" ] ; then
+	echo ERROR: need VERSION and NAME defined properly in pkginfo
+	exit 1
+fi
+
+if [[ "$mode" = "absolute" ]] ; then
+	pkgmk -r $ROOTDIR -a $ARCH -f $PROTO "$@"
+else
+	pkgmk -b $INSTALLBASEDIR -a $ARCH -f $PROTO BASEDIR=/opt/csw "$@"
+fi
+
+if [[ $? -ne 0 ]] ; then die package creation failed ; fi
+
+pkgtrans -s /var/spool/pkg `pwd`/$PKGFILE $PKG
+
+print Conversion complete. Cleaning up in  /var/spool/pkg
+
+rm -r /var/spool/pkg/$PKG
+
+print ""
+print Running checkpkg on pkgfile
+LD_LIBRARY_PATH='' checkpkg $PKGFILE
+if [[ $? -ne 0 ]] ; then
+	print ERROR: failed check.
+	exit 1
+fi
+
+if [[ "$mode" = "absolute" ]] ; then
+	print packaging of files under $ROOTDIR complete
+else
+	print packaging of files under $INSTALLBASEDIR complete
+fi
+
+echo gzipping pkgfile
+gzip $PKGFILE
+
