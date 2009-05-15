@@ -12,6 +12,7 @@ endef
 
 PACKAGES = CSWpmdatetimelocale
 CATALOGNAME = pm_datetimelocale
+ARCHALL = 1
 
 REQUIRED_PKGS = CSWpmlistmoreutils
 
