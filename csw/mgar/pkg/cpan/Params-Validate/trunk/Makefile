@@ -11,6 +11,9 @@ define BLURB
   unspecified additional parameters were passed in.
 endef
 
-DISTFILES += $(call admfiles,CSWpmprmsvldt,)
+PACKAGES = CSWpmparamsvalidate
+CATALOGNAME = pm_paramsvalidate
 
 include gar/category.mk
+
+LICENSE = LICENSE
