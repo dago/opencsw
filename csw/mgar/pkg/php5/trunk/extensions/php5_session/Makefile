@@ -9,6 +9,7 @@ REQUIRED_PKGS_CSWphp5session = CSWphp5 CSWlibmm
 CONFIGURE_ARGS += --enable-session=shared
 
 PKGFILES_CSWphp5session = .*/lib/php/extensions/.*/session.*
+PKGFILES_CSWphp5session = .*/include/php/ext/session.*
 
 define CSWphp5session_postinstall
 #!/bin/sh

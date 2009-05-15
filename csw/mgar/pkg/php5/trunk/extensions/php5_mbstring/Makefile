@@ -11,6 +11,7 @@ CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-mbregex=shared
 
 PKGFILES_CSWphp5mbstring = .*/lib/php/extensions/.*/mbstring.*
+PKGFILES_CSWphp5mbstring = .*/include/php/ext/mbstring.*
 
 define CSWphp5mbstring_postinstall
 #!/bin/sh

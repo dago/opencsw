@@ -9,6 +9,7 @@ REQUIRED_PKGS_CSWphp5hash = CSWphp5
 CONFIGURE_ARGS += --enable-hash=shared
 
 PKGFILES_CSWphp5hash = .*/lib/php/extensions/.*/hash.*
+PKGFILES_CSWphp5hash = .*/include/php/ext/hash.*
 
 define CSWphp5hash_postinstall
 #!/bin/sh

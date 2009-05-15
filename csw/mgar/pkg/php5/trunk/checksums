@@ -5,8 +5,8 @@ e1381a4ba49e46b2097b76286a1b36fb  download/CSWap2modphp5.preremove
 2e5dbed2c9dd5e24c331753984946822  download/CSWmodphp5.preremove
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWmodphp5.space
 0914febc951a55cd2bc587a2f9c30652  download/CSWphp5.postinstall
-d79cb3f8be515265504865f65bfa60a3  download/CSWphp5_ext_disable.sh
-594f0f37900e44cebcad55072893f880  download/CSWphp5_ext_enable.sh
+55b520081d24e992e04265b3d8de8bf5  download/CSWphp5_ext_disable.sh
+f4f08ba7e83cc4ae6e1c485b42cfb965  download/CSWphp5_ext_enable.sh
 ab08e2ba62667bf13fa236099e433e84  download/configure.diff
 a71677d80f5cfd1aeb03547dfdeb705a  download/httpd-php5.conf.CSW
 2206431e47c2075c0b9c4a12de5cf791  download/odbc.diff

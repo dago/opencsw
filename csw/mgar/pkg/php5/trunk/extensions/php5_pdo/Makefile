@@ -9,6 +9,7 @@ REQUIRED_PKGS_CSWphp5pdo = CSWphp5
 CONFIGURE_ARGS += --enable-pdo=shared
 
 PKGFILES_CSWphp5pdo  = .*/lib/php/extensions/.*/pdo\.so*
+PKGFILES_CSWphp5pdo  = .*/include/php/ext/pdo.*
 
 define CSWphp5pdo_postinstall
 #!/bin/sh

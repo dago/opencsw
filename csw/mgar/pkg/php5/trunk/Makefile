@@ -40,9 +40,21 @@ REQUIRED_PKGS_CSWphp5devel = CSWphp5
 PKGFILES_CSWphp5devel  = $(bindir)/php-config
 PKGFILES_CSWphp5devel += $(bindir)/phpize
 PKGFILES_CSWphp5devel += $(bindir)/peardev
-PKGFILES_CSWphp5devel += $(includedir)/.*
 PKGFILES_CSWphp5devel += $(libdir)/php/build/.*
-PKGFILES_CSWphp5devel += $(mandir)/.*
+PKGFILES_CSWphp5devel += $(includedir)/php/TSRM.*
+PKGFILES_CSWphp5devel += $(includedir)/php/Zend.*
+PKGFILES_CSWphp5devel += $(includedir)/php/include.*
+PKGFILES_CSWphp5devel += $(includedir)/php/main.*
+PKGFILES_CSWphp5devel += $(includedir)/php/regex.*
+PKGFILES_CSWphp5devel += $(includedir)/php/ext/date.*
+PKGFILES_CSWphp5devel += $(includedir)/php/ext/filter.*
+PKGFILES_CSWphp5devel += $(includedir)/php/ext/libxml.*
+PKGFILES_CSWphp5devel += $(includedir)/php/ext/pcre.*
+PKGFILES_CSWphp5devel += $(includedir)/php/ext/spl.*
+PKGFILES_CSWphp5devel += $(includedir)/php/ext/standard.*
+PKGFILES_CSWphp5devel += $(includedir)/php/ext/xml.*
+PKGFILES_CSWphp5devel += $(mandir)/man1/php-config.1
+PKGFILES_CSWphp5devel += $(mandir)/man1/phpize.1
 
 PATCHFILES += configure.diff
 PATCHFILES += php-bug-45557-fix.diff
@@ -94,7 +106,7 @@ install-extras:
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
-	@echo "  ==> Now Building ap2_modphp5 <=="
+	@echo "[====> Now Building ap2_modphp5 <====]"
 	@if [ -f $(WORKSRC)/Makefile ]; then \
 		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
 	cd $(WORKSRC) && $(BUILD_ENV) \
@@ -105,7 +117,7 @@ install-ap2modphp5:
 	@$(MAKECOOKIE)
 
 install-modphp5:
-	@echo "  ==> Now Building mod_php5 <=="
+	@echo "[====> Now Building mod_php5 <====]"
 	@if [ -f $(WORKSRC)/Makefile ]; then \
 		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
 	cd $(WORKSRC) && $(BUILD_ENV) \
@@ -116,8 +128,7 @@ install-modphp5:
 	@$(MAKECOOKIE)
 
 install-cleanup:
-	@gfind $(DESTDIR) -name \.[a-z]\* -exec grm -fr {} \;
-	@gfind $(DESTDIR)/$(libdir) -name "*.a" -exec grm -f {} \;
+	@gfind $(DESTDIR) -name \.[a-z]\* -print |xargs grm -fr
 	@grm -f $(DESTDIR)$(sysconfdir)/pear.conf
 	@gfind $(DESTDIR)$(prefix)/apache*  \
 		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
@@ -133,7 +144,7 @@ post-merge-modulated:
 	perl -i -pne "s|_PHPINIFILE_|$${PHP_INI_FILE}/php.ini|" `gfind $(DOWNLOADDIR) -type f -print`
 	perl -i -pne "s|_PHPLIBDIR_|$(libdir)|" `gfind $(DOWNLOADDIR) -type f -print`
 	perl -i -pne "s|_PHPBINDIR_|$(bindir)|" `gfind $(DOWNLOADDIR) -type f -print`
-	#@$(MAKECOOKIE)
+	@$(MAKECOOKIE)
 	
 # System Rules/Configuration
 include gar/category.mk
