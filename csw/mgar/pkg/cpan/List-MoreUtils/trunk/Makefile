@@ -9,7 +9,11 @@ define BLURB
   lists which is not going to go into List::Util.
 endef
 
-DISTFILES += $(call admfiles,CSWpmlistmoreut,prototype)
+PACKAGES = CSWpmlistmoreutils
+CATALOGNAME = pm_listmoreutils
 
 include gar/category.mk
 
+pre-merge-modulated:
+	@cd $(WORKSRC) && sed -n '/^Copyright/,$$p' README > COPYING
+	@$(MAKECOOKIE)
