@@ -13,4 +13,9 @@ endef
 
 PACKAGES = CSWpmtimeformat
 CATALOGNAME = pm_timeformat
+
 include gar/category.mk
+
+pre-merge-modulated:
+	@cd $(WORKSRC) && sed -n '/^Copyright/,/^$$/p' README > COPYING
+	@$(MAKECOOKIE)
