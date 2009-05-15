@@ -5,7 +5,7 @@ PACKAGES += CSWphp4dba CSWphp4domxml CSWphp4gd CSWphp4gettext CSWphp4gmp
 PACKAGES += CSWphp4iconv CSWphp4imap CSWphp4ldap CSWphp4mbstring
 PACKAGES += CSWphp4mcal CSWphp4mssql CSWphp4mysql CSWphp4ncurses CSWphp4odbc
 PACKAGES += CSWphp4openssl CSWphp4pgsql CSWphp4zlib CSWap2modphp4
-PACKAGES += CSWmodphp4 CSWphp4
+PACKAGES += CSWmodphp4 CSWmodphp4core CSWphp4
 
 CATALOGNAME_CSWphp4bcmath = php4_bcmath
 SPKG_DESC_CSWphp4bcmath = bcmath extension for php4
@@ -59,3 +59,5 @@ CATALOGNAME_CSWmodphp4core = mod_php4_core
 SPKG_DESC_CSWmodphp4core = Deprecated use mod_php4 or ap2_modphp4
 CATALOGNAME_CSWphp4 = mod_php
 SPKG_DESC_CSWphp4 = Both an apache module and command line interpreter for the PHP language
+ARCHALL_CSWphp4 =  1
+ARCHALL_CSWmodphp4core = 1
