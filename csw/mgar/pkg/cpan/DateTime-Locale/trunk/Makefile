@@ -13,6 +13,8 @@ endef
 PACKAGES = CSWpmdatetimelocale
 CATALOGNAME = pm_datetimelocale
 
+REQUIRED_PKGS = CSWpmlistmoreutils
+
 include gar/category.mk
 
 LICENSE = LICENSE
