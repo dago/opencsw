@@ -7,14 +7,22 @@ define BLURB
 endef
 
 # No master sites, we already have GAR in the repository
-MASTER_SITES = 
-DISTFILES = garit
+MASTER_SITES = svn-http://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/
+SVNHTTP_CO_ARGS = --no-auth-cache
+DISTFILES = v1 v2
+NOCHECKSUM = v1 v2
+
+DISTFILES += garit
 
 WORKSRC = $(WORKDIR)
 
-SPKG_SOURCEURL = http://gar.sourceforge.net
+SPKG_SOURCEURL = http://gar.opencsw.org
 
 PACKAGES = CSWgar CSWgar-v1 CSWgar-v2
+
+CATALOGNAME_CSWgar = gar
+CATALOGNAME_CSWgar-v1 = gar_v1
+CATALOGNAME_CSWgar-v2 = gar_v2
 
 SPKG_DESC_CSWgar = The mGAR package build system
 SPKG_DESC_CSWgar-v1 = The mGAR v1 system files
@@ -25,8 +33,8 @@ REQUIRED_PKGS_CSWgar-v1 = CSWgar
 REQUIRED_PKGS_CSWgar-v2 = CSWgar
 
 SPKG_VERSION_CSWgar = $(shell svnversion)
-SPKG_VERSION_CSWgar-v1 = $(shell svnversion $(CURDIR)/gar-base/v1)
-SPKG_VERSION_CSWgar-v2 = $(shell svnversion $(CURDIR)/gar-base/v2)
+SPKG_VERSION_CSWgar-v1 = $(shell svnversion $(WORKSRC)/v1)
+SPKG_VERSION_CSWgar-v2 = $(shell svnversion $(WORKSRC)/v2)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -48,4 +56,4 @@ install-gar:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/garit $(DESTDIR)$(bindir)/garit
 	ginstall -d $(DESTDIR)$(prefix)/src/gar
-	cd $(CURDIR)/gar-base && pax -r -w -v -s ,.*/\.svn.*,, . $(DESTDIR)$(prefix)/src/gar
+	cd $(WORKSRC) && pax -r -w -v -s ,.*/\.svn.*,, v1 v2 $(DESTDIR)$(prefix)/src/gar
