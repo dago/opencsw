@@ -24,17 +24,17 @@ CATALOGNAME_CSWgar = gar
 CATALOGNAME_CSWgar-v1 = gar_v1
 CATALOGNAME_CSWgar-v2 = gar_v2
 
-SPKG_DESC_CSWgar = The mGAR package build system
-SPKG_DESC_CSWgar-v1 = The mGAR v1 system files
-SPKG_DESC_CSWgar-v2 = The mGAR v2 system files
-
 REQUIRED_PKGS_CSWgar = $(PREREQUISITE_BASE_PKGS) CSWsvn
 REQUIRED_PKGS_CSWgar-v1 = CSWgar
 REQUIRED_PKGS_CSWgar-v2 = CSWgar
 
-SPKG_VERSION_CSWgar = $(shell svnversion)
-SPKG_VERSION_CSWgar-v1 = $(shell svnversion $(WORKSRC)/v1)
-SPKG_VERSION_CSWgar-v2 = $(shell svnversion $(WORKSRC)/v2)
+SPKG_DESC_CSWgar = The mGAR package build system
+SPKG_DESC_CSWgar-v1 = The mGAR v1 system files
+SPKG_DESC_CSWgar-v2 = The mGAR v2 system files
+
+SPKG_VERSION_CSWgar = $(call _REVISION)
+SPKG_VERSION_CSWgar-v1 = $(shell svnversion $(DOWNLOADDIR)/v1)
+SPKG_VERSION_CSWgar-v2 = $(shell svnversion $(DOWNLOADDIR)/v2)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
