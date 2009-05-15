@@ -20,7 +20,7 @@ endef
 
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
-DISTFILES     += $(SF_PROJ)-$(GARVERSION).tar.bz2
+DISTFILES     += $(DISTNAME).tar.bz2
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 STRIP_DIRS    += $(prefix)/lib/php/extensions/*/
 
