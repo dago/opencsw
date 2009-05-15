@@ -6,7 +6,7 @@
 program=${0##*/}
 
 # Default path to php.ini
-php_ini=/opt/csw/php5/lib/php.ini
+php_ini=_PHPINIFILE_
 
 # Usage printer
 function do_usage {

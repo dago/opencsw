@@ -1,15 +1,14 @@
 #!/bin/sh
 
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
-PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
-PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/lib
-PHP_BIN=$PKG_INSTALL_ROOT/opt/csw/bin
-PHP_INI=$PHP_LIB/php.ini
+PHP_LIB=${PKG_INSTALL_ROOT}_PHPLIBDIR_
+PHP_BIN=${PKG_INSTALL_ROOT}_PHPBINDIR_
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 if [ ! -f $PHP_INI ]; then
     cp -p $PHP_INI.CSW $PHP_INI
 else
-    echo "php.ini already exists"
+    echo "$PHP_INI already exists"
 
     extdir_ext=`${PHP_BIN}/php -i |grep 'PHP Extension' |awk '{print $NF}'`
     extdir="${PHP_LIB}/php/extensions/no-debug-non-zts-${extdir_ext}"
@@ -33,7 +32,7 @@ else
         cat << _EOT_
 
 ******************************************************************************
-* NOTICE: The existing php.ini file is from an older version of PHP5.  
+* NOTICE: The existing $PHP_INI file is from an older version of PHP5.  
 *
 * *************  PLEASE READ  *************
 *
@@ -121,7 +120,7 @@ cat << _EOT_
 ******************************************************************************
 * WARNING: Short open tag support in this release of CSWphp5 is DISABLED by
 * default.  If you rely on short open tag (<? vs <?php) behavior, set
-* short_open_tag to On in php.ini right away.
+* short_open_tag to On in $PHP_INI right away.
 ******************************************************************************
 _EOT_
     fi

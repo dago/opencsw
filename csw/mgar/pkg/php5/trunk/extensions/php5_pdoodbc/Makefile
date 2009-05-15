@@ -13,7 +13,7 @@ PKGFILES_CSWphp5pdoodbc = .*/lib/php/extensions/.*/pdo_odbc.*
 define CSWphp5pdoodbc_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling pdo_odbc extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5pdoodbc_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling pdo_odbc extension"

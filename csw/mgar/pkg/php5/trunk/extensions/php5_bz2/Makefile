@@ -13,7 +13,7 @@ PKGFILES_CSWphp5bz2 = .*/lib/php/extensions/.*/bz2.*
 define CSWphp5bz2_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling bz2 extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5bz2_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling bz2 extension"

@@ -15,7 +15,7 @@ PKGFILES_CSWphp5pgsql = .*/lib/php/extensions/.*/pgsql.*
 define CSWphp5pgsql_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling pgsql extension"
@@ -58,7 +58,7 @@ endef
 define CSWphp5pgsql_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling pgsql extension"

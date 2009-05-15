@@ -24,7 +24,6 @@ php5_lib  = $(php5_root)/lib
 
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
-DISTFILES     += $(DISTNAME).tar.bz2
 
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 PHP5ROOT       = $(DESTDIR)$(prefix)/php5
@@ -32,15 +31,15 @@ PHP5ROOT       = $(DESTDIR)$(prefix)/php5
 STRIP_DIRS    += $(PHP5ROOT)/lib/php/extensions/*/
 STRIP_DIRS    += $(PHP5ROOT)/bin
 
-# Auxilliary files
+DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW
 DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh
+DISTFILES += CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
 
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Languages
-DISTFILES                 += CSWphp5.postinstall
 CATALOGNAME_CSWphp5devel   = php5_devel
 SPKG_DESC_CSWphp5devel     = Development files for php5
 REQUIRED_PKGS_CSWphp5      = CSWexpat CSWggettextrt CSWiconv 
@@ -61,13 +60,11 @@ PATCHFILES += php-bug-45557-fix.diff
 EXTDIRLIST = $(shell ls -d extensions/*)
 include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
 
-# BerkeleyDB
 EXTRA_LIB += $(prefix)/bdb44/lib
 EXTRA_INC += $(prefix)/bdb44/include
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
-NOISALIST = 1
-
+NOISALIST     = 1
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
@@ -85,18 +82,13 @@ CONFIGURE_ARGS += --with-pcre-regex
 CONFIGURE_ARGS += --with-pear=shared
 
 # Disable Tests (report submitted to PHP QA)
-SKIPTEST = 1
+SKIPTEST     = 1
 ENABLE_CHECK = 0
-
-# Rebuild Configure Args to build mod_php5
-NEW_CONFIGURE_ARGS = $(shell echo $(CONFIGURE_ARGS) |sed -e 's/apxs2/apxs/' \
-		-e 's/apache2\/sbin\/apxs/apache\/bin\/apxs/')
-
-# Copy over template config files and utility scripts
 
 PI_SCRIPTS  = install-extras
 PI_SCRIPTS += install-ap2modphp5
 PI_SCRIPTS += install-modphp5
+PI_SCRIPTS += install-cleanup
 
 post-install-modulated: $(PI_SCRIPTS)
 	@$(MAKECOOKIE)
@@ -110,9 +102,6 @@ install-extras:
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
 	ginstall -m 0644 $(WORKDIR)/httpd-php5.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
-	@(grm -fr $(DESTDIR)/.[a-z]*)
-	@(gfind $(PHP5ROOT)/lib -name "*.a" -exec grm {} \;)
-	@(grm -f $(DESTDIR)$(prefix)/php5/etc/pear.conf)
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
@@ -124,8 +113,6 @@ install-ap2modphp5:
 	@( $(GARBIN)/fixlibtool $(WORKSRC) )
 	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
 	@( strip $(DESTDIR)$(prefix)/apache2/libexec/libphp5.so )
-	@( gfind $(DESTDIR)$(prefix)/apache*  \
-		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr )
 	@$(MAKECOOKIE)
 
 install-modphp5:
@@ -137,8 +124,14 @@ install-modphp5:
 	@( $(GARBIN)/fixlibtool $(WORKSRC) )
 	@( $(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi )
 	@( strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so )
-	@( gfind $(DESTDIR)$(prefix)/apache*  \
-		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr )
+	@$(MAKECOOKIE)
+
+install-cleanup:
+	@gfind $(DESTDIR) -name \.[a-z]\* -exec grm -fr {} \;
+	@gfind $(DESTDIR)/$(libdir) -name "*.a" -exec grm -f {} \;
+	@grm -f $(DESTDIR)$(sysconfdir)/pear.conf
+	@gfind $(DESTDIR)$(prefix)/apache*  \
+		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
 	@$(MAKECOOKIE)
 
 EXTFILES = $(shell find extensions/*/files/* -prune -type f)

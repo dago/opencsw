@@ -13,7 +13,7 @@ PKGFILES_CSWphp5bcmath = .*/lib/php/extensions/.*/bcmath.*
 define CSWphp5bcmath_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling bcmath extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5bcmath_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling bcmath extension"

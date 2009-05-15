@@ -13,7 +13,7 @@ PKGFILES_CSWphp5mssql = .*/lib/php/extensions/.*/mssql.*
 define CSWphp5mssql_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling mssql extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5mssql_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling mssql extension"

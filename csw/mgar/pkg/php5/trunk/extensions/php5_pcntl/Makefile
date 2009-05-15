@@ -13,7 +13,7 @@ PKGFILES_CSWphp5pcntl = .*/lib/php/extensions/.*/pcntl.*
 define CSWphp5pcntl_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling pcntl extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5pcntl_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling pcntl extension"

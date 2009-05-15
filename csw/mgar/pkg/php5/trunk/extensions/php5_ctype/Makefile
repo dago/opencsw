@@ -13,7 +13,7 @@ PKGFILES_CSWphp5ctype = .*/lib/php/extensions/.*/ctype.*
 define CSWphp5ctype_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling ctype extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5ctype_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling ctype extension"

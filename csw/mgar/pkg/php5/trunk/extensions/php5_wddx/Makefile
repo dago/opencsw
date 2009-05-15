@@ -15,7 +15,7 @@ PKGFILES_CSWphp5wddx = .*/lib/php/extensions/.*/wddx.*
 define CSWphp5wddx_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling wddx extension"
@@ -58,7 +58,7 @@ endef
 define CSWphp5wddx_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling wddx extension"

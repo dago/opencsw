@@ -15,7 +15,7 @@ PKGFILES_CSWphp5mbstring = .*/lib/php/extensions/.*/mbstring.*
 define CSWphp5mbstring_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling mbstring extension"
@@ -58,7 +58,7 @@ endef
 define CSWphp5mbstring_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling mbstring extension"

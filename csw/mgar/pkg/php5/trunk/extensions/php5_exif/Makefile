@@ -16,7 +16,7 @@ PKGFILES_CSWphp5exif = .*/lib/php/extensions/.*/exif.*
 define CSWphp5exif_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling exif extension"
@@ -59,7 +59,7 @@ endef
 define CSWphp5exif_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling exif extension"

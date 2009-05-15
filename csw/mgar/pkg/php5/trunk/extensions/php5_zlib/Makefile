@@ -6,7 +6,7 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 define CSWphp5zlib_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling zlib extension"
@@ -49,7 +49,7 @@ endef
 define CSWphp5zlib_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling zlib extension"

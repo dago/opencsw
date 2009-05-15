@@ -13,7 +13,7 @@ PKGFILES_CSWphp5tidy = .*/lib/php/extensions/.*/tidy.*
 define CSWphp5tidy_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling tidy extension"
@@ -56,7 +56,7 @@ endef
 define CSWphp5tidy_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling tidy extension"

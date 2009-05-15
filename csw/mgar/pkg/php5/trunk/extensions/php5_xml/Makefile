@@ -7,7 +7,7 @@ CONFIGURE_ARGS += --with-libexpat-dir=$(prefix)
 define CSWphp5xml_postinstall
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Post Install <===]"
 echo "   ===> Enabling xml extension"
@@ -50,7 +50,7 @@ endef
 define CSWphp5xml_preremove
 #!/bin/sh
 
-PHP_INI=/opt/csw/lib/php.ini
+PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling xml extension"
