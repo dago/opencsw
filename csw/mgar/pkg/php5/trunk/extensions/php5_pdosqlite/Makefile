@@ -6,7 +6,7 @@ CATALOGNAME_CSWphp5pdosqlite = php5_pdosqlite
 SPKG_DESC_CSWphp5pdosqlite = A Sqlite specific database access abstraction module for PHP applications
 REQUIRED_PKGS_CSWphp5pdosqlite = CSWphp5 CSWphp5pdo
 
-CONFIGURE_ARGS += --with-pdo-sqlite=shared
+CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
 
 PKGFILES_CSWphp5pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.*
 
