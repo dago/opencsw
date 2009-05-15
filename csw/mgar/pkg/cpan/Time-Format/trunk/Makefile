@@ -13,6 +13,7 @@ endef
 
 PACKAGES = CSWpmtimeformat
 CATALOGNAME = pm_timeformat
+ARCHALL = 1
 
 include gar/category.mk
 
