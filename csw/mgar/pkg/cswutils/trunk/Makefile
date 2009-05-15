@@ -14,6 +14,7 @@ DISTFILES += createpkg createpkg.8
 DISTFILES += stagepkg stagepkg.8
 
 REQUIRED_PKGS = CSWtextutils CSWfakeroot CSWperl
+REQUIRED_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
 
 WORKSRC = $(WORKDIR)
 
