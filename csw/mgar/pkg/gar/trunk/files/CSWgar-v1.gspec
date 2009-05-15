@@ -1,5 +1,0 @@
-%var            bitname gar_v1
-%var            pkgname CSWgar-v1
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright
-This software is released under GPL.
