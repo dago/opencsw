@@ -1,27 +1,41 @@
 #!/bin/sh
 
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
-PHP_LIB=${PKG_INSTALL_ROOT}_PHPLIBDIR_
-PHP_BIN=${PKG_INSTALL_ROOT}_PHPBINDIR_
-PHP_INI=${PKG_INSTALL_ROOT}_PHPINIFILE_
 
-if [ ! -f $PHP_INI ]; then
-    cp -p $PHP_INI.CSW $PHP_INI
+if [ ! -f _PHPETCDIR_/pear.conf ]; then
+    cp -p _PHPETCDIR_/pear.conf.CSW _PHPETCDIR_/pear.conf
+    _PHPBINDIR_/pear config-set php_ini _PHPINIFILE_
 else
-    echo "$PHP_INI already exists"
+    echo "_PHPETCDIR_/pear.conf already exists."
+    echo "Updateing _PHPETCDIR_/pear.conf with current directories"
+    _PHPBINDIR_/pear config-set php_ini _PHPINIFILE_
+    _PHPBINDIR_/pear config-set php_bin _PHPBINDIR_
+    _PHPBINDIR_/pear config-set php_doc _PHPLIBDIR_/doc
+    _PHPBINDIR_/pear config-set cfg_dir _PHPLIBDIR_/cfg
+    _PHPBINDIR_/pear config-set data_dir _PHPLIBDIR_/data
+    _PHPBINDIR_/pear config-set test_dir _PHPLIBDIR_/test
+    _PHPBINDIR_/pear config-set www_dir _PHPLIBDIR_/htdocs
+    _PHPBINDIR_/pear config-set sig_keydir _PHPETCDIR_/htdocs
+    _PHPBINDIR_/pear config-set php_dir _PHPLIBDIR_
+    _PHPBINDIR_/pear config-set php_ext _PHPEXTDIR_
+fi
+if [ ! -f _PHPINIFILE_ ]; then
+    cp -p _PHPINIFILE_.CSW _PHPINIFILE_
+else
+    echo "_PHPINIFILE_ already exists"
 
     extdir="_PHPEXTDIR_"
-    curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' $PHP_INI`
+    curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' _PHPINIFILE_`
 
-    if [ "$extdir" != "$curextdir" ]; then
+    if [ "_PHPEXTDIR_" != "$curextdir" ]; then
         echo "updating extension_dir..."
-        perl -i.bak -plne "s,no-debug-non-zts-[0-9]+,$extdir," $PHP_INI
+        perl -i.bak -plne "s,no-debug-non-zts-[0-9]+,_PHPEXTDIR_," _PHPINIFILE_
 
-        old_list="`sed -ne 's/^extension=\(.*\)\.so/\1/p' $PHP_INI`"
+        old_list="`sed -ne 's/^extension=\(.*\)\.so/\1/p' _PHPINIFILE_`"
         new_pkgs=''
         non_pkgs=''
         for ext in `echo ${old_list}`; do
-            if grep "extension=$ext" $PHP_INI.CSW; then
+            if grep "extension=$ext" _PHPINIFILE_.CSW; then
                 new_pkgs="${new_pkgs} php5_${ext}"
             else
                 non_pkgs="${non_pkgs} ${ext}"
@@ -31,7 +45,7 @@ else
         cat << _EOT_
 
 ******************************************************************************
-* NOTICE: The existing $PHP_INI file is from an older version of PHP5.  
+* NOTICE: The existing _PHPINIFILE_ file is from an older version of PHP5.  
 *
 * *************  PLEASE READ  *************
 *
@@ -119,14 +133,14 @@ cat << _EOT_
 ******************************************************************************
 * WARNING: Short open tag support in this release of CSWphp5 is DISABLED by
 * default.  If you rely on short open tag (<? vs <?php) behavior, set
-* short_open_tag to On in $PHP_INI right away.
+* short_open_tag to On in _PHPINIFILE_ right away.
 ******************************************************************************
 _EOT_
     fi
 fi
-if [ ! -d ${extdir} ]; then
-    mkdir -p ${extdir}
-    for dir in `${PHP_BIN}/php -i |grep extension_dir |\
+if [ ! -d _PHPEXTDIR_ ]; then
+    mkdir -p _PHPEXTDIR_
+    for dir in `_PHPBINDIR_/php -i |grep extension_dir |\
                  awk -F'/' '{print $(NF-1), $NF}'`; do
         chown -R root:bin ${dir}
         chmod -R 0755 ${dir}
@@ -135,6 +149,6 @@ if [ ! -d ${extdir} ]; then
     installf -f ${PKGINST}
 fi
 
-echo "PHP5 configuration: $PHP_INI"
+echo "PHP5 configuration: _PHPINIFILE_"
 
 exit 0

@@ -27,6 +27,7 @@ install-extras:
 	perl -i -pne "s|_PHPINIFILE_|$(call _get_php_ini_path,$(DESTDIR))/php.ini|" `gfind $(DOWNLOADDIR) -type f -print`
 	perl -i -pne "s|_PHPLIBDIR_|$(call _get_php_ini_path,$(DESTDIR))|" `gfind $(DOWNLOADDIR) -type f -print`
 	perl -i -pne "s|_PHPBINDIR_|$(call _get_php_prefix,$(DESTDIR))/bin|" `gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPETCDIR_|$(call _get_php_prefix,$(DESTDIR))/etc|" `gfind $(DOWNLOADDIR) -type f -print`
 	@echo "[====> Installing Extra Files <====]"
 	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
 	gcp $(DOWNLOADDIR)/php.ini.CSW $(DOWNLOADDIR)/php.ini.CSW.fixed

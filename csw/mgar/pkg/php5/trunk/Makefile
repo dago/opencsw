@@ -21,10 +21,10 @@ endef
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
-STRIP_DIRS    += $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
+STRIP_DIRS    += $(DESTDIR)$(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
 DISTFILES += $(DISTNAME).tar.bz2
-DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
+DISTFILES += php.ini.CSW phpext CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
 
