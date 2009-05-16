@@ -65,6 +65,7 @@ install-cleanup:
 	@echo "[====> Cleaning Up Extra Install Files <====]"
 	gfind $(DESTDIR) -name \.[a-z]\* -print |xargs grm -fr
 	gfind $(DESTDIR)$(prefix)/apache* -mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
+	$(GARBIN)/stripbin $(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)
 	$(MAKECOOKIE)
 
 EXTFILES = $(shell find extensions/*/files/* -prune -type f)
