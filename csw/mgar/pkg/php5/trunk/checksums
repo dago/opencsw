@@ -4,7 +4,7 @@ e1381a4ba49e46b2097b76286a1b36fb  download/CSWap2modphp5.preremove
 5f0046fe1b3f8e2228fdb165bdbbe73a  download/CSWmodphp5.postinstall
 2e5dbed2c9dd5e24c331753984946822  download/CSWmodphp5.preremove
 0dd379f20ceb32fc77bb3a9bf045097f  download/CSWmodphp5.space
-0914febc951a55cd2bc587a2f9c30652  download/CSWphp5.postinstall
+61b5c51492268af9e9afc22759c63a6b  download/CSWphp5.postinstall
 ab08e2ba62667bf13fa236099e433e84  download/configure.diff
 a71677d80f5cfd1aeb03547dfdeb705a  download/httpd-php5.conf.CSW
 2206431e47c2075c0b9c4a12de5cf791  download/odbc.diff
@@ -13,5 +13,5 @@ a71677d80f5cfd1aeb03547dfdeb705a  download/httpd-php5.conf.CSW
 13db46097c9686302bebf160e2d26ed2  download/pgsql.diff
 280d6cda7f72a4fc6de42fda21ac2db7  download/php-5.2.9.tar.bz2
 a450a46ce0ea9fd0c0abe432e750a873  download/php-bug-45557-fix.diff
-550ae718308582e8eec40452190cae50  download/php.ini.CSW
-6251f3adcefc6ffa61d6339ac6b2d1eb  download/phpext
+dfd4f19799c8f1e827402f40eda74fad  download/php.ini.CSW
+90ae3cef3692d7e566c47d89fe39c43d  download/phpext

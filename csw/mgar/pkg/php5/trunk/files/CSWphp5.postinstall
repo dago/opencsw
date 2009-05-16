@@ -10,8 +10,7 @@ if [ ! -f $PHP_INI ]; then
 else
     echo "$PHP_INI already exists"
 
-    extdir_ext=`${PHP_BIN}/php -i |grep 'PHP Extension' |awk '{print $NF}'`
-    extdir="${PHP_LIB}/php/extensions/no-debug-non-zts-${extdir_ext}"
+    extdir="_PHPEXTDIR_"
     curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' $PHP_INI`
 
     if [ "$extdir" != "$curextdir" ]; then

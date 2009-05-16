@@ -21,12 +21,13 @@ endef
 MASTER_SITES   = http://us.php.net/distributions/
 SPKG_SOURCEURL = http://www.php.net/downloads.php
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
-STRIP_DIRS    += $(DESTDIR)$(prefix)/lib/php/extensions/*/
+STRIP_DIRS    += $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
 DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
+
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Languages
 CATALOGNAME_CSWphp5devel   = php5_devel
@@ -68,9 +69,9 @@ EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 NOISALIST = 1
 STRIP_LIBTOOL = 1
 
-CONFIGURE_ARGS += --prefix=$(prefix)
+CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --disable-static
-CONFIGURE_ARGS += --with-exec-dir=$(prefix)/bin
+CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --enable-cli
 CONFIGURE_ARGS += --enable-fastcgi
 CONFIGURE_ARGS += --enable-force-cgi-redirect
@@ -84,6 +85,18 @@ CONFIGURE_ARGS += --with-pear=shared
 SKIPTEST = 1
 ENABLE_CHECK = 0
 
+define _get_php_config
+$(abspath $(shell gfind $(1) -name php-config -print))
+endef
+
+define _get_php_prefix
+$(shell $(call _get_php_config,$(1)) --prefix)
+endef
+
+define _get_php_ini_path
+$(shell $(call _get_php_prefix,$(1))/bin/php -i | grep "Configuration File .* Path" | gawk '{print $$NF}')
+endef
+
 PI_SCRIPTS  = install-extras
 PI_SCRIPTS += install-ap2modphp5
 PI_SCRIPTS += install-modphp5
@@ -94,53 +107,44 @@ post-install-modulated: $(PI_SCRIPTS)
 
 install-extras:
 	@echo "[====> Fixing Admin Scripts <====]"
-	PHP_INI_FILE=`$(DESTDIR)$(bindir)/php -i | \
-		grep "Configuration File .* Path" | awk '{print $$NF}'`; \
-			perl -i -pne "s|_PHPINIFILE_|$${PHP_INI_FILE}/php.ini|" \
-				`gfind $(DOWNLOADDIR) -type f -print`
-	perl -i -pne "s|_PHPLIBDIR_|$(libdir)|" \
-		`gfind $(DOWNLOADDIR) -type f -print`
-	perl -i -pne "s|_PHPBINDIR_|$(bindir)|" \
-		`gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPINIFILE_|$(call _get_php_ini_path,$(DESTDIR))/php.ini|" `gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPLIBDIR_|$(call _get_php_ini_path,$(DESTDIR))|" `gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPBINDIR_|$(call _get_php_prefix,$(DESTDIR))/bin|" `gfind $(DOWNLOADDIR) -type f -print`
 	@echo "[====> Installing Extra Files <====]"
-	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(bindir)
-	gsed -i -e s,PHPEXTDIR,`$(DESTDIR)$(bindir)/php-config --extension-dir`,\
-		$(DOWNLOADDIR)/php.ini.CSW
-	ginstall -m 0644 $(DOWNLOADDIR)/php.ini.CSW $(DESTDIR)$(libdir)
-	ginstall -m 0644 $(DOWNLOADDIR)/pear.conf.CSW $(DESTDIR)$(sysconfdir)
-	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0644 $(DOWNLOADDIR)/httpd-php5.conf.CSW \
-		$(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
+	perl -i -pne 's|_PHPEXTDIR_|$(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)|' $(DOWNLOADDIR)/php.ini.CSW
+	ginstall -m 0644 $(DOWNLOADDIR)/php.ini.CSW $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))
+	ginstall -m 0644 $(DOWNLOADDIR)/pear.conf.CSW $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
 	@echo "[====> Now Building ap2_modphp5 <====]"
-	@if [ -f $(WORKSRC)/Makefile ]; then \
+	if [ -f $(WORKSRC)/Makefile ]; then \
 		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
 	cd $(WORKSRC) && $(BUILD_ENV) \
 		./configure $(CONFIGURE_ARGS) --with-apxs2=$(prefix)/apache2/sbin/apxs
-	@$(GARBIN)/fixlibtool $(WORKSRC)
-	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
-	@strip $(DESTDIR)$(prefix)/apache2/libexec/libphp5.so
+	$(GARBIN)/fixlibtool $(WORKSRC)
+	$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
+	strip $(DESTDIR)$(prefix)/apache2/libexec/libphp5.so
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0644 $(DOWNLOADDIR)/httpd-php5.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
 	@$(MAKECOOKIE)
 
 install-modphp5:
 	@echo "[====> Now Building mod_php5 <====]"
-	@if [ -f $(WORKSRC)/Makefile ]; then \
-		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
-	cd $(WORKSRC) && $(BUILD_ENV) \
-		./configure $(CONFIGURE_ARGS) --with-apxs=$(prefix)/apache/bin/apxs
-	@$(GARBIN)/fixlibtool $(WORKSRC)
-	@$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
-	@strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so
+	if [ -f $(WORKSRC)/Makefile ]; then $(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
+	cd $(WORKSRC) && $(BUILD_ENV) ./configure $(CONFIGURE_ARGS) --with-apxs=$(prefix)/apache/bin/apxs
+	$(GARBIN)/fixlibtool $(WORKSRC)
+	$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
+	strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so
 	@$(MAKECOOKIE)
 
 install-cleanup:
-	@gfind $(DESTDIR) -name \.[a-z]\* -print |xargs grm -fr
-	@grm -f $(DESTDIR)$(sysconfdir)/pear.conf
-	@gfind $(DESTDIR)$(prefix)/apache*  \
-		-mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
-	@$(MAKECOOKIE)
+	@echo "[====> Cleaning Up Extra Install Files <====]"
+	gfind $(DESTDIR) -name \.[a-z]\* -print |xargs grm -fr
+	grm -f $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf
+	gfind $(DESTDIR)$(prefix)/apache* -mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
+	$(MAKECOOKIE)
 
 EXTFILES = $(shell find extensions/*/files/* -prune -type f)
 pre-fetch:
