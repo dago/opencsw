@@ -26,6 +26,7 @@ REQUIRED_PKGS += CSWpng
 REQUIRED_PKGS += CSWsunmath
 REQUIRED_PKGS += CSWzlib
 REQUIRED_PKGS += CSWperl
+REQUIRED_PKGS += CSWruby
 
 EXTRA_INC = $(prefix)/include/cairo
 EXTRA_INC += $(prefix)/include/libxml2/libxml
@@ -38,7 +39,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-python
-CONFIGURE_ARGS += --disable-ruby
+CONFIGURE_ARGS += --enable-ruby
 CONFIGURE_ARGS += --disable-libintl
 CONFIGURE_ARGS += --enable-perl
 CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
