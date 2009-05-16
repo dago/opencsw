@@ -32,9 +32,7 @@ STRIP_DIRS    += $(PHP5ROOT)/lib/php/extensions/*/
 STRIP_DIRS    += $(PHP5ROOT)/bin
 
 DISTFILES += $(DISTNAME).tar.bz2
-DISTFILES += php.ini.CSW phpext pear.conf.CSW
-DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh
-DISTFILES += CSWphp5.postinstall
+DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
 

@@ -24,9 +24,7 @@ INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 STRIP_DIRS    += $(DESTDIR)$(prefix)/lib/php/extensions/*/
 
 DISTFILES += $(DISTNAME).tar.bz2
-DISTFILES += php.ini.CSW phpext pear.conf.CSW
-DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh
-DISTFILES += CSWphp5.postinstall
+DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
 CATALOGNAME_CSWphp5        = php5

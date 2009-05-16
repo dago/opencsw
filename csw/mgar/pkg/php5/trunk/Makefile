@@ -24,9 +24,7 @@ INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 STRIP_DIRS    += $(DESTDIR)$(prefix)/lib/php/extensions/*/
 
 DISTFILES += $(DISTNAME).tar.bz2
-DISTFILES += php.ini.CSW phpext pear.conf.CSW
-DISTFILES += CSWphp5_ext_enable.sh CSWphp5_ext_disable.sh
-DISTFILES += CSWphp5.postinstall
+DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
 CATALOGNAME_CSWphp5        = php5
@@ -95,13 +93,22 @@ post-install-modulated: $(PI_SCRIPTS)
 	@$(MAKECOOKIE)
 
 install-extras:
-	ginstall -m 0755 $(WORKDIR)/phpext $(DESTDIR)$(bindir)
-	gsed -i -e s,PHPEXTDIR,$(shell $(DESTDIR)$(bindir)/php-config --extension-dir),\
-		$(WORKDIR)/php.ini.CSW
-	ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(libdir)
-	ginstall -m 0644 $(WORKDIR)/pear.conf.CSW $(DESTDIR)$(sysconfdir)
+	@echo "[====> Fixing Admin Scripts <====]"
+	PHP_INI_FILE=`$(PKGROOT)$(bindir)/php -i | 
+		grep "Configuration File .* Path" | awk '{print $$NF}'`; \
+			perl -i -pne "s|_PHPINIFILE_|$${PHP_INI_FILE}/php.ini|" \
+				`gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPLIBDIR_|$(libdir)|" \
+		`gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPBINDIR_|$(bindir)|" \
+		`gfind $(DOWNLOADDIR) -type f -print`
+	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(bindir)
+	gsed -i -e s,PHPEXTDIR,`$(DESTDIR)$(bindir)/php-config --extension-dir`,\
+		$(DOWNLOADDIR)/php.ini.CSW
+	ginstall -m 0644 $(DOWNLOADDIR)/php.ini.CSW $(DESTDIR)$(libdir)
+	ginstall -m 0644 $(DOWNLOADDIR)/pear.conf.CSW $(DESTDIR)$(sysconfdir)
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0644 $(WORKDIR)/httpd-php5.conf.CSW \
+	ginstall -m 0644 $(DOWNLOADDIR)/httpd-php5.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc/extra
 	@$(MAKECOOKIE)
 
@@ -138,13 +145,5 @@ EXTFILES = $(shell find extensions/*/files/* -prune -type f)
 pre-fetch:
 	$(foreach F,$(EXTFILES),$(shell cp $(F) $(DOWNLOADDIR)))
 
-post-merge-modulated:
-	@echo "[====> Fixing Admin Scripts <====]"
-	PHP_INI_FILE=`$(PKGROOT)$(bindir)/php -i | grep "Configuration File .* Path" | awk '{print $$NF}'`; \
-	perl -i -pne "s|_PHPINIFILE_|$${PHP_INI_FILE}/php.ini|" `gfind $(DOWNLOADDIR) -type f -print`
-	perl -i -pne "s|_PHPLIBDIR_|$(libdir)|" `gfind $(DOWNLOADDIR) -type f -print`
-	perl -i -pne "s|_PHPBINDIR_|$(bindir)|" `gfind $(DOWNLOADDIR) -type f -print`
-	@$(MAKECOOKIE)
-	
 # System Rules/Configuration
 include gar/category.mk
