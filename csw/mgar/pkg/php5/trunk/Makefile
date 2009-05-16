@@ -94,7 +94,7 @@ post-install-modulated: $(PI_SCRIPTS)
 
 install-extras:
 	@echo "[====> Fixing Admin Scripts <====]"
-	PHP_INI_FILE=`$(PKGROOT)$(bindir)/php -i | 
+	PHP_INI_FILE=`$(DESTDIR)$(bindir)/php -i | \
 		grep "Configuration File .* Path" | awk '{print $$NF}'`; \
 			perl -i -pne "s|_PHPINIFILE_|$${PHP_INI_FILE}/php.ini|" \
 				`gfind $(DOWNLOADDIR) -type f -print`
@@ -102,6 +102,7 @@ install-extras:
 		`gfind $(DOWNLOADDIR) -type f -print`
 	perl -i -pne "s|_PHPBINDIR_|$(bindir)|" \
 		`gfind $(DOWNLOADDIR) -type f -print`
+	@echo "[====> Installing Extra Files <====]"
 	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(bindir)
 	gsed -i -e s,PHPEXTDIR,`$(DESTDIR)$(bindir)/php-config --extension-dir`,\
 		$(DOWNLOADDIR)/php.ini.CSW
