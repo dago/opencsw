@@ -36,7 +36,6 @@ install-extras:
 	gcp $(DOWNLOADDIR)/php.ini.CSW.fixed $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
 	gmv $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf.CSW
 	gchmod 0644 $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
-	$(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
@@ -65,8 +64,8 @@ install-cleanup:
 	@echo "[====> Cleaning Up Extra Install Files <====]"
 	gfind $(DESTDIR) -name \.[a-z]\* -print |xargs grm -fr
 	gfind $(DESTDIR)$(prefix)/apache* -mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
-	$(GARBIN)/stripbin $(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)
-	$(GARBIN)/stripbin $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/
+	$(GARBIN)/stripbin $(DESTDIR)$(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)
+	$(GARBIN)/stripbin $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
 	$(MAKECOOKIE)
 
 EXTFILES = $(shell find extensions/*/files/* -prune -type f)
