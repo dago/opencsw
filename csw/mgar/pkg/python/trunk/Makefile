@@ -55,6 +55,7 @@ CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-unicode=ucs4
 CONFIGURE_ARGS += --with-fpectl
+CONFIGURE_ARGS += --with-system-ffi
 CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
 
 PKGFILES_CSWidle  = $(libdir)/python(\d+(?:\.\d+)*)/idlelib/.*

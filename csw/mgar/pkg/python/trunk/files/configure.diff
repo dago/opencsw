@@ -6,7 +6,7 @@
  		elif test `uname -p` = sparc;
 -		then CCSHARED="-xcode=pic32";
 -		else CCSHARED="-Kpic";
-+            then CCSHARED="-xO3 -xarch=v8";
++            then CCSHARED="-xO3";
  		fi;;
  	hp*|HP*) if test "$GCC" = yes;
  		 then CCSHARED="-fPIC";

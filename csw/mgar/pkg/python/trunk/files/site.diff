@@ -1,25 +1,77 @@
---- Python-2.6.1/Lib/site.py.orig	2009-02-23 15:13:02.813997871 -0600
-+++ Python-2.6.1/Lib/site.py	2009-02-23 15:20:00.516392336 -0600
-@@ -268,7 +268,21 @@
+--- Python-2.6.2/Lib/site.py.o	2009-05-16 10:26:13.235499624 -0500
++++ Python-2.6.2/Lib/site.py	2009-05-16 10:29:16.772710013 -0500
+@@ -266,9 +266,10 @@
+             sitedirs.append(os.path.join(prefix, "Lib", "site-packages"))
+         elif os.sep == '/':
              sitedirs.append(os.path.join(prefix, "lib",
-                                         "python" + sys.version[:3],
+-                                        "python" + sys.version[:3],
++                                        "python",
                                          "site-packages"))
--            sitedirs.append(os.path.join(prefix, "lib", "site-python"))
-+            sitedirs.append(os.path.join(prefix, "lib", 
-+                                        "python",
-+                                        "site-packages"))
-+            sitedirs.append(os.path.join(prefix, "lib", 
-+                                        "python2.5",
-+                                        "site-packages"))
-+            sitedirs.append(os.path.join(prefix, "lib", 
-+                                        "python2.3",
-+                                        "site-packages"))
-+            sitedirs.append(os.path.join(prefix, "lib", 
-+                                        "python2.1",
-+                                        "site-packages"))
-+            sitedirs.append(os.path.join(prefix, "lib", 
-+                                        "python",
-+                                        "site-packages"))
+             sitedirs.append(os.path.join(prefix, "lib", "site-python"))
++            sitedirs.append("/opt/csw/lib/python2.3/site-packages")
          else:
              sitedirs.append(prefix)
              sitedirs.append(os.path.join(prefix, "lib", "site-packages"))
+--- Python-2.6.2/Lib/distutils/command/install.py.o	2009-05-16 10:29:46.625564211 -0500
++++ Python-2.6.2/Lib/distutils/command/install.py	2009-05-16 10:31:26.296866583 -0500
+@@ -41,8 +41,8 @@
+ 
+ INSTALL_SCHEMES = {
+     'unix_prefix': {
+-        'purelib': '$base/lib/python$py_version_short/site-packages',
+-        'platlib': '$platbase/lib/python$py_version_short/site-packages',
++        'purelib': '$base/lib/python/site-packages',
++        'platlib': '$platbase/lib/python/site-packages',
+         'headers': '$base/include/python$py_version_short/$dist_name',
+         'scripts': '$base/bin',
+         'data'   : '$base',
+--- Python-2.6.2/Makefile.pre.in.o	2009-05-16 10:35:14.566752156 -0500
++++ Python-2.6.2/Makefile.pre.in	2009-05-16 10:35:55.162080324 -0500
+@@ -94,11 +94,11 @@
+ SCRIPTDIR=	$(prefix)/lib
+ 
+ # Detailed destination directories
+-BINLIBDEST=	$(LIBDIR)/python$(VERSION)
+-LIBDEST=	$(SCRIPTDIR)/python$(VERSION)
++BINLIBDEST=	$(LIBDIR)/python
++LIBDEST=	$(SCRIPTDIR)/python
+ INCLUDEPY=	$(INCLUDEDIR)/python$(VERSION)
+ CONFINCLUDEPY=	$(CONFINCLUDEDIR)/python$(VERSION)
+-LIBP=		$(LIBDIR)/python$(VERSION)
++LIBP=		$(LIBDIR)/python
+ 
+ # Symbols used for using shared libraries
+ SO=		@SO@
+--- Python-2.6.2/Modules/getpath.c.o	2009-05-16 10:44:29.756720713 -0500
++++ Python-2.6.2/Modules/getpath.c	2009-05-16 10:45:33.735370122 -0500
+@@ -117,8 +117,8 @@
+ #endif
+ 
+ #ifndef PYTHONPATH
+-#define PYTHONPATH PREFIX "/lib/python" VERSION ":" \
+-              EXEC_PREFIX "/lib/python" VERSION "/lib-dynload"
++#define PYTHONPATH PREFIX "/lib/python:" \
++              EXEC_PREFIX "/lib/python/lib-dynload"
+ #endif
+ 
+ #ifndef LANDMARK
+@@ -129,7 +129,7 @@
+ static char exec_prefix[MAXPATHLEN+1];
+ static char progpath[MAXPATHLEN+1];
+ static char *module_search_path = NULL;
+-static char lib_python[] = "lib/python" VERSION;
++static char lib_python[] = "lib/python";
+ 
+ static void
+ reduce(char *dir)
+--- Python-2.6.2/Lib/distutils/sysconfig.py.o	2009-05-16 10:48:24.271739485 -0500
++++ Python-2.6.2/Lib/distutils/sysconfig.py	2009-05-16 10:49:21.413202445 -0500
+@@ -116,7 +116,7 @@
+ 
+     if os.name == "posix":
+         libpython = os.path.join(prefix,
+-                                 "lib", "python" + get_python_version())
++                                 "lib", "python")
+         if standard_lib:
+             return libpython
+         else:

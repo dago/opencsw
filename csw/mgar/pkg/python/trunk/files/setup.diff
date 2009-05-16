@@ -109,13 +109,3 @@
          else:                                   # Linux and other unices
              macros = dict(
                  HAVE_SEM_OPEN=1,
-@@ -1741,9 +1706,6 @@
-                              sources=['_ctypes/_ctypes_test.c'])
-         self.extensions.extend([ext, ext_test])
- 
--        if not '--with-system-ffi' in sysconfig.get_config_var("CONFIG_ARGS"):
--            return
--
-         if sys.platform == 'darwin':
-             # OS X 10.5 comes with libffi.dylib; the include files are
-             # in /usr/include/ffi
