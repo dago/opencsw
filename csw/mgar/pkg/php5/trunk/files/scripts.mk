@@ -29,9 +29,12 @@ install-extras:
 	perl -i -pne "s|_PHPBINDIR_|$(call _get_php_prefix,$(DESTDIR))/bin|" `gfind $(DOWNLOADDIR) -type f -print`
 	@echo "[====> Installing Extra Files <====]"
 	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
-	perl -i -pne 's|_PHPEXTDIR_|$(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)|' $(DOWNLOADDIR)/php.ini.CSW
-	ginstall -m 0644 $(DOWNLOADDIR)/php.ini.CSW $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))
-	ginstall -m 0644 $(DOWNLOADDIR)/pear.conf.CSW $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc
+	gcp $(DOWNLOADDIR)/php.ini.CSW $(DOWNLOADDIR)/php.ini.CSW.fixed
+	perl -i -pne 's|_PHPEXTDIR_|$(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)|' $(DOWNLOADDIR)/php.ini.CSW.fixed
+	gcp $(DOWNLOADDIR)/php.ini.CSW.fixed $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
+	gmv $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf.CSW
+	gchmod 0644 $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
+	$(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
@@ -59,7 +62,6 @@ install-modphp5:
 install-cleanup:
 	@echo "[====> Cleaning Up Extra Install Files <====]"
 	gfind $(DESTDIR) -name \.[a-z]\* -print |xargs grm -fr
-	grm -f $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf
 	gfind $(DESTDIR)$(prefix)/apache* -mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
 	$(MAKECOOKIE)
 
