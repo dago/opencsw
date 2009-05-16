@@ -1,12 +1,12 @@
 GARNAME = mercurial
-GARVERSION = 1.1.2
+GARVERSION = 1.2.1
 CATEGORIES = devel
 
 DESCRIPTION = Fast, lightweight Source Control Management system
 #define BLURB
 #endef
 
-MASTER_SITES = http://www.selenic.com/mercurial/release/
+MASTER_SITES = http://selenic.com/mercurial/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmercurial,changelog.CSW)
 DISTFILES += $(call admfiles,CSWmercurial-common,)
