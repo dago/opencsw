@@ -39,9 +39,6 @@ http_proxy ?=
 ftp_proxy  ?= 
 export http_proxy ftp_proxy
 
-# Don't strip libtool by default
-STRIP_LIBTOOL ?= 0
-
 # Don't do full-dependency builds by default
 SKIPDEPEND ?= 1
 
