@@ -1,3 +1,6 @@
+# Todo:
+# * postinstall mknod not possible within zone (mknod fails with "not owner")
+#   Work around this or provide README.CSW with instructions for chroot
 GARNAME = stunnel
 GARVERSION = 4.27
 CATEGORIES = net
