@@ -11,7 +11,7 @@ APXS=$AP2_BINDIR/apxs
 
 # Enable modules
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
-for mod in dav dav_fs dav_svn authz_svn
+for mod in dav dav_fs dav_svn dav_lock authz_svn
 do
     perl -i -lne "print unless /^#?LoadModule.*mod_$mod.so/" $AP2_CONFIG
     chroot $PKG_INSTALL_ROOT \
