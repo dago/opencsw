@@ -21,6 +21,7 @@ BASEPATH=$1
 
 ## Fix Makefiles
 for mk in $(gfind ${BASEPATH} -name Makefile -print); do
+    gcp ${mk} ${mk}.orig
     LT_FILES=$(ggrep '/opt/csw.*/lib/.*\.la' ${mk} | \
         gsed "s/^.*\(\/opt\/csw.*\/lib\/.*\.la\).*$/\1/")
     
@@ -37,11 +38,13 @@ done
 
 ## Fix libtool Script
 for lt in $(gfind ${BASEPATH} -name libtool -print); do
+    gcp ${lt} ${lt}.orig
     gsed "/for search_ext in .*\.la/s/\.la//" ${lt} >${lt}.new
     gmv ${lt}.new ${lt}
 done
 
 LTMAIN=$(gfind ${BASEPATH} -name ltmain.sh -print)
+gcp ${LTMAIN} ${LTMAIN}.orig
 if [ -f ${LTMAIN} ]; then
     gsed "/for search_ext in .*\.la/s/\.la//" ${LTMAIN} >${LTMAIN}.new
     gmv ${LTMAIN}.new ${LTMAIN}
