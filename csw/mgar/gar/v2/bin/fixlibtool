@@ -1,4 +1,5 @@
 #!/bin/bash
+#set -x
 ####################################################
 #
 #  $URL$
@@ -33,9 +34,8 @@ BASEPATH=$1
 ## Fix Makefiles
 for mk in $(gfind ${BASEPATH} -name Makefile -print); do
     gcp ${mk} ${mk}.orig
-    LT_FILES=$(ggrep '/opt/csw.*/lib/.*\.la' ${mk} | \
-        gsed "s/^.*\(\/opt\/csw.*\/lib\/.*\.la\).*$/\1/")
-    
+    LT_FILES=$(for lib in $(ggrep '/opt/csw.*/lib/.*\.la' ${mk}); do \
+                   echo $lib |gsed -ne '/\/opt.*\.la/p'; done)
     for file in ${LT_FILES}; do
         LIB_NAME=$(ggrep 'dlname=' ${file} | \
             gsed -e "s/.*'\(.*\)'/\1/" \
@@ -43,7 +43,8 @@ for mk in $(gfind ${BASEPATH} -name Makefile -print); do
                 -e "s/\.so.*$//")
         fixpath=$(gecho $file |gsed 's/\//\\\//g')
         gsed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >${mk}.new
-        gmv ${mk}.new ${mk}
+        LIB_DIR=$(ggrep 'libdir=' ${file} | gsed -e "s/.*'\(.*\)'/\1/")
+        gsed "s,\(LDFLAGS =.*\),\1 -R${LIB_DIR} -L${LIB_DIR}," ${mk}.new >${mk}
         gchmod +x ${mk}
     done
 done
