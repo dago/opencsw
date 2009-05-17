@@ -2,7 +2,7 @@ GARNAME = pnp
 GARVERSION = 0.4.14
 CATEGORIES = apps
 
-DESCRIPTION = visualization of  nagios performance data using RRD databases
+DESCRIPTION = visualization of nagios performance data using RRD databases
 define BLURB
   PNP is an addon to nagios which analyzes performance data provided by plugins and stores them automatically into RRD-databases
 endef
@@ -35,8 +35,10 @@ bindir = $(prefix)/nagios/pnp/bin
 libexecdir = $(prefix)/libexec/nagios-plugins
 localstatedir =$(prefix)/nagios/pnp/var
 
-REQUIRED_PKGS += CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd  CSWcswclassutils
+REQUIRED_PKGS += CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd CSWnagios CSWcswclassutils
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
+
+ENABLE_CHECK=0
 
 #PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswpnp$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
