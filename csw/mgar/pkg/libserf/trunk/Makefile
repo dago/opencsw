@@ -1,5 +1,6 @@
-GARNAME = serf
+GARNAME = libserf
 GARVERSION = 0.3.0
+DISTNAME = serf-$(GARVERSION)
 CATEGORIES = lib
 
 DESCRIPTION = HTTP client library built on APR, multiplexes connections.
@@ -12,10 +13,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://serf.googlecode.com/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
