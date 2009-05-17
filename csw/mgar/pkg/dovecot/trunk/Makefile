@@ -144,6 +144,10 @@ post-install-modulated: build-and-install-sieveplugin
 	@ginstall -d $(SSLDIR)/certs
 	@ginstall -d $(SSLDIR)/private
 
+	# Include these in the pkg. dovecot will create them otherwise
+	# with root:root ownership, which conflicts with other pkg's
+	@ginstall -d $(localstatedir)/run $(localstatedir)/lib
+
 	@cp $(DESTDIR)$(sysconfdir)/dovecot-example.conf \
 		$(DESTDIR)$(sysconfdir)/dovecot.conf.CSW
 
