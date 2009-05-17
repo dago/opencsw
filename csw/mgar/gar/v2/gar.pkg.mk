@@ -218,6 +218,27 @@ $(strip
 )
 endef
 
+# This function takes a full path to a filename and returns the package it belongs to.
+# The package may be generated during this build or already installed on the system.
+# /etc/crypto/certs/SUNWObjectCA=../../../etc/certs/SUNWObjectCA l none SUNWcsr
+#perl -ane '$$f=quotemeta("$1");if($$F[0]=~/^$$f(=.*)?$$/){print join(" ",$$F[3..$$#F]),"\n";exit}'</var/sadm/install/contents
+#$(shell /usr/sbin/pkgchk -l -p $1 2>/dev/null | awk '/^Current/ {p=0} p==1 {print} /^Referenced/ {p=1}' | perl -ane 'print join("\n",@F)')
+# 'pkchk -l -p' doesn't work as it concatenates package names with more than 14 characters,
+# e. g. SUNWgnome-base-libs-develSUNWgnome-calculatorSUNWgnome-freedb-libsSUNWgnome-cd-burnerSUNWgnome-character-map
+define file2pkg
+$(shell perl -ane '@l{"s","l","d","b","c","f","x","v","e"}=(3,3,6,8,8,9,6,9,9);$$f=quotemeta("$1");if($$F[0]=~/^$$f(=.*)?$$/){s/^\*// foreach @F;print join(" ",@F[$$l{$$F[1]}..$$#F]),"\n";exit}'</var/sadm/install/contents)
+endef
+
+define linktargets
+$(shell perl -ane 'if($$F[0] eq "l" && $$F[2]=~/=(.*)$$/){print $$1,"\n"}'<$1)
+endef
+
+_test-file2pkg:
+	@echo $(call file2pkg,/etc)
+
+_test-linktargets:
+	@echo $(call linktargets,work/build-global/CSWlinkbase.prototype)
+
 #
 # Targets
 #
