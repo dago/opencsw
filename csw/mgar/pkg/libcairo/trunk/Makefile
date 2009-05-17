@@ -21,7 +21,7 @@ CATALOGNAME_CSWlibcairodoc   = libcairo_doc
 
 SPKG_DESC_CSWlibcairo 		= $(DESCRIPTION)
 SPKG_DESC_CSWlibcairodevel 	= $(DESCRIPTION) development package
-SPKG_DESC_CSWlibcairodoc 	= $(DESCRIPTION) documentaiton
+SPKG_DESC_CSWlibcairodoc 	= $(DESCRIPTION) documentation
 
 PKGFILES_CSWlibcairodevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibcairodevel += $(docdir)/libcairo_devel/.*
