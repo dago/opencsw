@@ -1,5 +1,8 @@
 GARNAME = gitosis
 GARVERSION = 0.2
+# This represents the tip of master as of 20090516.  It is ahead of
+# release/0.2
+PATCHLEVEL = 73a03
 CATEGORIES = utils
 
 DESCRIPTION = Software for hosting git repositories
@@ -19,7 +22,10 @@ REQUIRED_PKGS_CSWgitosis = CSWgit CSWpython
 
 GIT_REPOS = git://eagain.net/gitosis.git
 GIT_USE_PROXY = 1
-GIT_TREEISH_gitosis.git = release/$(GARVERSION)
+# We don't use a specific release tag as we want to get some fixes to
+# support git 1.6+.  We'll simply package the tip of the public branch
+# (as of 2009-05-16: 73a032520493f6b4186185d4826d12edb5614135)
+GIT_TREEISH_gitosis.git = $(PATCHLEVEL)
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
@@ -34,9 +40,12 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-#INSTALL_ARGS = --root $(DESTDIR) --single-version-externally-managed
-INSTALL_ARGS = --root $(DESTDIR)
+INSTALL_ARGS = --root $(DESTDIR) --single-version-externally-managed
 
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+# Set a slightly altered revstamp to indicate that we're not using a
+# pressed release.
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
