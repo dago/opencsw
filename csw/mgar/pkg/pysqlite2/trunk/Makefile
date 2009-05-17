@@ -1,5 +1,5 @@
 GARNAME = pysqlite
-GARVERSION = 2.4.0
+GARVERSION = 2.5.5
 CATEGORIES = lang
 
 RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
@@ -9,7 +9,7 @@ define BLURB
   SQLite support for Python
 endef
 
-MASTER_SITES = http://initd.org/pub/software/pysqlite/releases/$(RELVER)/$(GARVERSION)/
+MASTER_SITES = http://oss.itsystementwicklung.de/download/pysqlite/$(RELVER)/$(GARVERSION)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpysqlite2
