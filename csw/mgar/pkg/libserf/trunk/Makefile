@@ -21,7 +21,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-DEPENDS = server/apache2
+DEPENDS = server/apache2rt
+STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2
@@ -29,5 +30,5 @@ CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2
 #CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 #CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 
-
+TEST_TARGET = check
 include gar/category.mk
