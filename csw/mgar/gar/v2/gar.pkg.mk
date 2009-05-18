@@ -25,12 +25,33 @@ PKGINFO ?= /usr/bin/pkginfo
 # Do "PACKAGES = CSWmypkg" when you build a package whose GARNAME is not the package name.
 # If no explicit gspec-files have been defined the default name for the package is CSW$(GARNAME).
 # The whole processing is done from _PKG_SPECS, which includes all packages to be build.
+
+# SRCPACKAGE_BASE is the name of the package containing the sourcefiles for all packages
+# generated from this GAR recipe. It defaults to the first defined package name or gspec.
+# SRCPACKAGE is the name of the package containing the sources
+
 ifeq ($(origin PACKAGES), undefined)
 PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
-SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES)
+SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
+SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
+SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(SRCPACKAGE)
 else
-SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
+SRCPACKAGE_BASE = $(firstword $(PACKAGES))
+SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
+SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(SRCPACKAGE))
 endif
+
+# Automatic definitions for source package
+CATALOGNAME_$(SRCPACKAGE)   ?= $(patsubst CSW%,%,$(SRCPACKAGE_BASE))_src
+SPKG_DESC_$(SRCPACKAGE)     ?= $(SPKG_DESC_$(SRCPACKAGE_BASE)) Source Package
+ARCHALL_$(SRCPACKAGE)       ?= 1
+# XXX: Use Repository Root instead of fixed URL as base
+GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane 'if($$F[0] eq "gar") { print ($$F[1]=~m(https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/(.*))),"\n";}')
+GARPKG_v1 = CSWgar-v1
+GARPKG_v2 = CSWgar-v2
+REQUIRED_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
+
+_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 # The is the name of the package containing the sourcefiles for all packages generated from this GAR recipe.
 # It defaults to the first defined package name or gspec. SRCPACKAGE_BASE is guaranteed
@@ -484,13 +505,16 @@ reset-merge-license:
 
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
-	@$(_DBG)mkdir -p $(_SRCDIR)
-	$(_DBG)(cd $(DOWNLOADDIR); pax -r -w -v $(foreach F,$(DISTFILES) $(PATCHFILES),$F) $(_SRCDIR))
+	$(_DBG)mkdir -p $(_SRCDIR)/files
+	$(_DBG)(cd $(DOWNLOADDIR); pax -rH -w -v $(foreach F,$(DISTFILES) $(PATCHFILES),$F) $(_SRCDIR)/files)
+	$(_DBG)(cd $(CURDIR); pax -rH -w -v Makefile checksums $(_SRCDIR))
+	$(_DBG)ln -s ../gar/$(GARSYSTEMVERSION) $(_SRCDIR)/gar
 	@$(MAKECOOKIE)
 
 reset-merge-src:
 	@rm -f $(COOKIEDIR)/merge-src
 	@$(DONADA)
+
 
 # package - Use the mkpackage utility to create Solaris packages
 #
