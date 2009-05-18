@@ -21,7 +21,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 3788
+# 1343 is the group_id for the gts project on sourceforge
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 1343
 UPSTREAM_USE_SF = 1
 
 REQUIRED_PKGS = CSWggettextrt CSWglib2
