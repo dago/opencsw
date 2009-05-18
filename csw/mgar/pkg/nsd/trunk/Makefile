@@ -1,5 +1,5 @@
 GARNAME = nsd
-GARVERSION = 3.2.1
+GARVERSION = 3.2.2
 CATEGORIES = server
 
 DESCRIPTION = An authoritative only non-recursive name server
