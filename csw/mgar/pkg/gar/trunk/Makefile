@@ -19,6 +19,7 @@ WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://gar.opencsw.org
 
 PACKAGES = CSWgar CSWgar-v1 CSWgar-v2
+NOSOURCEPACKAGE = 1
 
 CATALOGNAME_CSWgar = gar
 CATALOGNAME_CSWgar-v1 = gar_v1
@@ -40,6 +41,8 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = gar
+
+EXTRA_MERGE_EXCLUDE_FILES = .*/\.svn/.*
 
 PKGFILES_CSWgar-v1 = $(prefix)/src/gar/v1/.*
 PKGFILES_CSWgar-v2 = $(prefix)/src/gar/v2/.*
