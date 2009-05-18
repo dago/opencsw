@@ -13,27 +13,21 @@ define BLURB
   rendering.
 endef
 
-MASTER_SITES = http://downloads.sourceforge.net/gts/
+MASTER_SITES = $(SF_MIRRORS) 
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWgts,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-UPSTREAM_MASTER_SITES =  http://gts.sourceforge.net/
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 3788
+UPSTREAM_USE_SF = 1
 
 REQUIRED_PKGS = CSWggettextrt CSWglib2
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-glibtest
 
 PATCHFILES = gts-fabsf.diff
-
-#BUILD64 = 1
-
-NO_ISAEXEC = 1
-MERGE_EXCLUDE_FILES = .*\.la
-
 
 include gar/category.mk
