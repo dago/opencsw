@@ -31,7 +31,7 @@ cat << _EOT_
 
 _EOT_
 
-if [ ! -d ${extdir} ]; then
+if [ ! -d "${extdir}" ]; then
     mkdir -p ${extdir}
     for dir in `${PHP_BIN}/php -i |grep extension_dir |\
                  awk -F'/' '{print $(NF-1), $NF}'`; do
