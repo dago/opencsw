@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru gts-0.7.6.orig/src/tribox3.c gts-0.7.6/src/tribox3.c
+--- gts-0.7.6.orig/src/tribox3.c	2005-01-19 05:48:22.000000000 +0100
++++ gts-0.7.6/src/tribox3.c	2009-05-18 17:42:33.086787517 +0200
+@@ -19,6 +19,8 @@
+ #include <math.h>
+ #include <stdio.h>
+ 
++#define fabsf(fv) (float)fabs((double)(fv))
++
+ #define X 0
+ #define Y 1
+ #define Z 2
