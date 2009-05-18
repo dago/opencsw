@@ -44,6 +44,7 @@ INSTALL_SCRIPTS = gar
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/\.svn/.*
 
+ARCHALL = 1
 PKGFILES_CSWgar-v1 = $(prefix)/src/gar/v1/.*
 PKGFILES_CSWgar-v2 = $(prefix)/src/gar/v2/.*
 
