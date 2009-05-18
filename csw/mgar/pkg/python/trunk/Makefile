@@ -36,7 +36,7 @@ PATCHFILES += multiprocess.diff
 PATCHFILES += pyport.diff
 PATCHFILES += setup.diff
 PATCHFILES += site.diff
-PATCHFILES += configure.diff
+#PATCHFILES += configure.diff
 PATCHFILES += python-config-in.diff
 
 # Test for sunaudiodev fails.
@@ -46,6 +46,22 @@ DEPENDS += lib/expat
 DEPENDS += lib/openssl
 DEPENDS += lib/db
 DEPENDS += lib/gdbm
+
+ifeq ($(shell uname -p), i386)
+    ifeq ($(shell uname -r),5.10)
+        BASECFLAGS = -xO3 -xarch=amd64
+    else
+        BASECFLAGS = -xO3 -xarch=386
+    endif
+else
+    ifeq ($(shell uname -r),5.10)
+        BASECFLAGS = -xO3 -xarch=v9
+    else
+        BASECFLAGS = -xO3 -xarch=v8
+    endif
+endif
+
+COMPILER_EXPORTS += BASECFLAGS
 
 NOISALIST = 1
 LD_OPTIONS = -R/opt/csw/lib
