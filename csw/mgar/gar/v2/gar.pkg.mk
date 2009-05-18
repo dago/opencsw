@@ -34,11 +34,11 @@ ifeq ($(origin PACKAGES), undefined)
 PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
-SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(SRCPACKAGE)
+SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE))
 else
 SRCPACKAGE_BASE = $(firstword $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
-SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(SRCPACKAGE))
+SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
 endif
 
 # Automatic definitions for source package
@@ -67,7 +67,7 @@ GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
 REQUIRED_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
 
-_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
+_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 # pkgname - Get the name of a package from a gspec-name or package-name
 #
@@ -509,11 +509,10 @@ merge-src: fetch
 	$(_DBG)(cd $(DOWNLOADDIR); pax -rH -w -v $(foreach F,$(DISTFILES) $(PATCHFILES),$F) $(_SRCDIR)/files)
 	$(_DBG)(cd $(CURDIR); pax -rH -w -v Makefile checksums $(_SRCDIR))
 	$(_DBG)ln -s ../gar/$(GARSYSTEMVERSION) $(_SRCDIR)/gar
-	@$(MAKECOOKIE)
+	$(MAKECOOKIE)
 
 reset-merge-src:
 	@rm -f $(COOKIEDIR)/merge-src
-	@$(DONADA)
 
 
 # package - Use the mkpackage utility to create Solaris packages
@@ -574,7 +573,6 @@ pkgcheck-p:
 pkgreset: $(addprefix pkgreset-,$(SPKG_SPECS))
 	@rm -f $(COOKIEDIR)/extract
 	@rm -f $(COOKIEDIR)/extract-archive-*
-	$(DONADA)
 
 reset-package: pkgreset
 
