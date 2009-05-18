@@ -31,7 +31,22 @@ SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES)
 else
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 endif
-_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
+
+# The is the name of the package containing the sourcefiles for all packages generated from this GAR recipe.
+# It defaults to the first defined package name or gspec. SRCPACKAGE_BASE is guaranteed
+# to be one of the real packages built.
+SRCPACKAGE_BASE = $(if $(PACKAGES),$(firstword $(PACKAGES)),$(firstword $(SPKG_SPECS)))
+
+SRCPACKAGE                  ?= $(SRCPACKAGE_BASE)-src
+CATALOGNAME_$(SRCPACKAGE)   ?= $(patsubst CSW%,%,$(SRCPACKAGE_BASE))_src
+SPKG_DESC_$(SRCPACKAGE)     ?= $(SPKG_DESC_$(SRCPACKAGE_BASE)) Source Package
+ARCHALL_$(SRCPACKAGE)       ?= 1
+GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane 'if($$F[0] eq "gar") { print ($$F[1]=~m(https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/(.*))),"\n";}')
+GARPKG_v1 = CSWgar-v1
+GARPKG_v2 = CSWgar-v2
+REQUIRED_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
+
+_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
 
 # pkgname - Get the name of a package from a gspec-name or package-name
 #
@@ -59,17 +74,17 @@ endef
 #
 define catalogname
 $(strip 
-  $(if $(filter $(1),$(PACKAGES)),
-    $(if $(CATALOGNAME_$(1)),
-      $(CATALOGNAME_$(1)),
-      $(if $(CATALOGNAME),
-        $(CATALOGNAME),
-        $(patsubst CSW%,%,$(1))
+  $(if $(CATALOGNAME_$(1)),
+    $(CATALOGNAME_$(1)),
+    $(if $(CATALOGNAME),
+      $(CATALOGNAME),
+      $(if $(filter $(1),$(PACKAGES)),
+        $(patsubst CSW%,%,$(1)),
+        $(if $(realpath files/$(1).gspec),
+          $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
+          $(error The catalog name for the package '$1' could not be determined, because it was neither in PACKAGES nor was there a gspec-file)
+        )
       )
-    ),
-    $(if $(realpath files/$(1).gspec),
-      $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
-      $(error The catalog name for the package '$1' could not be determined, because it was neither in PACKAGES nor was there a gspec-file)
     )
   )
 )
@@ -197,6 +212,11 @@ PKGFILES_DEVEL += $(mandir)/man3/.*
 
 # PKGFILES_DOC selects files beloging to a documentation package
 PKGFILES_DOC  = $(docdir)/.*
+
+# PKGFILES_SRC selects the source archives for building the package
+PKGFILES_SRC = $(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))/.*
+
+PKGFILES_$(SRCPACKAGE) ?= $(PKGFILES_SRC)
 
 # This function computes the files to be excluded from the package specified
 # as argument
@@ -459,6 +479,18 @@ merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 
 reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
+	@$(DONADA)
+
+
+merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
+merge-src: fetch
+	@$(_DBG)mkdir -p $(_SRCDIR)
+	$(_DBG)(cd $(DOWNLOADDIR); pax -r -w -v $(foreach F,$(DISTFILES) $(PATCHFILES),$F) $(_SRCDIR))
+	@$(MAKECOOKIE)
+
+reset-merge-src:
+	@rm -f $(COOKIEDIR)/merge-src
+	@$(DONADA)
 
 # package - Use the mkpackage utility to create Solaris packages
 #

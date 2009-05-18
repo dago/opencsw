@@ -598,7 +598,7 @@ endef
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) merge-license post-merge
+merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) merge-license $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
 	@$(DONADA)
 
 # This merges the 
@@ -648,9 +648,10 @@ merge-copy-config-only:
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
-reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-src
 	@rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge
 	@rm -rf $(PKGROOT)
+	@$(DONADA)
 
 reset-merge-modulated:
 	@$(call _pmod,Reset merge state)

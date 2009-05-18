@@ -108,7 +108,7 @@ lispdir            ?= $(sharedstatedir)/emacs/site-lisp
 includedir         ?= $(prefix)/include
 mandir             ?= $(sharedstatedir)/man
 docdir             ?= $(sharedstatedir)/doc
-sourcedir          ?= $(prefix)/src
+sourcedir          ?= $(BUILD_PREFIX)/src
 sharedperl         ?= $(sharedstatedir)/perl
 perllib            ?= $(libdir)/perl
 perlcswlib         ?= $(perllib)/csw
@@ -572,6 +572,8 @@ BUILD_ENV     ?= $(foreach TTT,$(BUILD_EXPORTS),$(TTT)="$($(TTT))")
 TEST_ENV      ?= $(foreach TTT,$(TEST_EXPORTS),$(TTT)="$($(TTT))")
 INSTALL_ENV   ?= $(foreach TTT,$(INSTALL_EXPORTS),$(TTT)="$($(TTT))")
 
+# For now don't build source packages until there is some more testing
+NOSOURCEPACKAGE ?= 1
 
 # Standard Scripts
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/configure
