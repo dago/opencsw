@@ -67,7 +67,7 @@ PKGFILES_CSWpython-tk += $(libdir)/python(\d+(?:\.\d+)*)/lib-dynload/_tkinter.so
 
 REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
 REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
-REQUIRED_PKGS_CSWpython += CSWsqlite3 CSWtcl CSWtk
+REQUIRED_PKGS_CSWpython += CSWsqlite3rt CSWtcl CSWtk
 REQUIRED_PKGS_CSWpython-tk = CSWpython CSWtcl CSWtk
 REQUIRED_PKGS_CSWidle = CSWpython CSWpython-tk
 
