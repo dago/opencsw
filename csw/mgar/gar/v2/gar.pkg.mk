@@ -152,9 +152,9 @@ SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch
 
 # Handle cswclassutils
 # - prepend cswpreserveconf if it is not already in SPKG_CLASSES
-SPKG_CLASSES += $(if $(SAMPLECONF),$(if $(filter cswsampleconf,$(SPKG_CLASSES)),,cswsampleconf))
-SPKG_CLASSES += $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf))
-SPKG_CLASSES += $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(SAMPLECONF),$(if $(filter cswsampleconf,$(SPKG_CLASSES)),,cswsampleconf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF),)
 _CSWCLASS_FILTER = | perl -ane '\
