@@ -11,8 +11,7 @@ if [ ! -f $PHP_INI ]; then
 else
     echo "php.ini already exists"
 
-    extdir_ext=`${PHP_BIN}/php -i |grep 'PHP Extension' |awk '{print $NF}'`
-    extdir="${PHP_LIB}/php/extensions/no-debug-non-zts-${extdir_ext}"
+    extdir=`${PHP_BIN}/php-config --extension-dir`
     curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' $PHP_INI`
 
     if [ "$extdir" != "$curextdir" ]; then
@@ -33,7 +32,7 @@ _EOT_
 
 if [ ! -d "${extdir}" ]; then
     mkdir -p ${extdir}
-    for dir in `${PHP_BIN}/php -i |grep extension_dir |\
+    for dir in `${PHP_BIN}/php-config --extension_dir |\
                  awk -F'/' '{print $(NF-1), $NF}'`; do
         chown -R root:bin ${dir}
         chmod -R 0755 ${dir}
