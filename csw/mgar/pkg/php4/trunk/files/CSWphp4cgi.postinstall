@@ -32,11 +32,12 @@ _EOT_
 
 if [ ! -d "${extdir}" ]; then
     mkdir -p ${extdir}
-    for dir in `${PHP_BIN}/php-config --extension_dir |\
+    for dir in `${PHP_BIN}/php-config --extension-dir |\
                  awk -F'/' '{print $(NF-1), $NF}'`; do
-        chown -R root:bin ${dir}
-        chmod -R 0755 ${dir}
-        installf ${PKGINST} ${dir}
+        idir=`echo ${extdir} |sed "s,\(.*/$dir\).*,\1,"`
+        chown -R root:bin ${idir}
+        chmod -R 0755 ${idir}
+        installf ${PKGINST} ${idir}
     done
     installf -f ${PKGINST}
 fi
