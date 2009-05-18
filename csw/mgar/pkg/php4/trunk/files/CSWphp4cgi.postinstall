@@ -19,6 +19,7 @@ else
         echo "updating extension_dir..."
         perl -i.bak -plne "s,no-debug-non-zts-[0-9]+,$extdir," $PHP_INI
     fi
+fi
 
 cat << _EOT_
 
