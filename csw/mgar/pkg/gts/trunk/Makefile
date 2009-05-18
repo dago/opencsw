@@ -24,11 +24,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 UPSTREAM_MASTER_SITES =  http://gts.sourceforge.net/
 
+REQUIRED_PKGS = CSWggettextrt CSWglib2
+
 CONFIGURE_ARGS = $(DIRPATHS) --disable-glibtest
 
 PATCHFILES = gts-fabsf.diff
 
-BUILD64 = 1
+#BUILD64 = 1
 
 NO_ISAEXEC = 1
 MERGE_EXCLUDE_FILES = .*\.la
