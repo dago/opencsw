@@ -1,7 +1,6 @@
 GARNAME = Python
 GARVERSION = 2.6.2
 CATEGORIES = lang
-PACKAGES = CSWpython CSWpython-tk CSWidle
 
 SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
 
@@ -76,10 +75,16 @@ CONFIGURE_ARGS += --with-fpectl
 CONFIGURE_ARGS += --with-system-ffi
 CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
 
-PKGFILES_CSWidle  = $(libdir)/python(\d+(?:\.\d+)*)/idlelib/.*
+PACKAGES  = CSWpython CSWpython-tk CSWidle CSWpython-rt CSWpython-devel
+
+PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
-PKGFILES_CSWpython-tk  = $(libdir)/python(\d+(?:\.\d+)*)/lib-tk/.*
-PKGFILES_CSWpython-tk += $(libdir)/python(\d+(?:\.\d+)*)/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython-devel  = $(includedir)/.*
+PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
+PKGFILES_CSWpython-rt += $(libdir)/.*libpython.*
+
 
 REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
 REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
@@ -98,15 +103,23 @@ SPKG_DESC_CSWidle = Python IDE
 include gar/category.mk
 
 POST_INST_SCR  = add-depricated-libs
-POST_INST_SCR += fix-config-makefile
+#POST_INST_SCR += fix-config-makefile
+POST_INST_SCR += remove-compiled-py
+
 post-install-modulated: $(POST_INST_SCR)
+	@$(MAKECOOKIE)
 
 add-depricated-libs:
 	echo "===> Adding Depricated Libs"
 	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) \
 		$(DESTDIR)$(libdir)/libpython2.5.so.1.0
 	cd $(DESTDIR)$(libdir);ln -s libpython2.5.so.1.0 libpython2.5.so
-	$(DONADA)
+	@$(MAKECOOKIE)
+
+remove-compiled-py:
+	@echo "Cleaning up pyc and pyo files"
+	@gfind $(DESTDIR)$(libdir) -name "*.py[co]" -exec grm -f {} \;
+	@$(MAKECOOKIE)
 
 fix-config-makefile:
 	perl -i -plne 's/^CCSHARED=.*/CCSHARED=/' \
