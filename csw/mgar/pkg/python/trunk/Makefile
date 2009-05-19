@@ -23,7 +23,8 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # Previous Library for compatability
 DISTFILES += libpython2.5.so.1.0-isa-sparcv8
 DISTFILES += libpython2.5.so.1.0-isa-i386
-DISTFILES += CSWpython.postinstall
+DISTFILES += CSWpython.postinstall CSWpython-tk.postinstall CSWidle.postinstall
+DISTFILES += CSWpython.space CSWpython-tk.space CSWidle.space
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -76,35 +77,39 @@ CONFIGURE_ARGS += --with-fpectl
 CONFIGURE_ARGS += --with-system-ffi
 CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
 
-PACKAGES  = CSWpython CSWpython-tk CSWidle CSWpython-rt CSWpython-devel
+PACKAGES  = CSWidle CSWpython CSWpython-devel CSWpython-rt CSWpython-tk
 
 PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
-PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
-PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
 PKGFILES_CSWpython-devel  = $(includedir)/.*
 PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
 PKGFILES_CSWpython-rt += $(libdir)/.*libpython.*
+PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
 
+ENABLE_CHECK = 0
 
-REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
-REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWreadline CSWzlib
-REQUIRED_PKGS_CSWpython += CSWsqlite3rt CSWtcl CSWtk
-REQUIRED_PKGS_CSWpython-tk = CSWpython CSWtcl CSWtk
 REQUIRED_PKGS_CSWidle = CSWpython CSWpython-tk
+REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
+REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWpython-rt CSWreadline 
+REQUIRED_PKGS_CSWpython += CSWsqlite3rt CSWzlib
+REQUIRED_PKGS_CSWpython-tk = CSWpython CSWtcl CSWtk CSWpython-rt
 
-CATALOGNAME_CSWpython = python
-CATALOGNAME_CSWpython-tk = python_tk
 CATALOGNAME_CSWidle = idle
+CATALOGNAME_CSWpython = python
+CATALOGNAME_CSWpython-devel = python_devel
+CATALOGNAME_CSWpython-rt = python_rt
+CATALOGNAME_CSWpython-tk = python_tk
 
-SPKG_DESC_CSWpython = A high-level scripting language.
-SPKG_DESC_CSWpython-tk = Python Tk Interface (TkInter)
 SPKG_DESC_CSWidle = Python IDE
+SPKG_DESC_CSWpython = A high-level scripting language.
+SPKG_DESC_CSWpython-devel = Development Files for Python
+SPKG_DESC_CSWpython-rt = Python Runtime Libraries
+SPKG_DESC_CSWpython-tk = Python Tk Interface (TkInter)
 
 include gar/category.mk
 
 POST_INST_SCR  = add-depricated-libs
-#POST_INST_SCR += fix-config-makefile
 POST_INST_SCR += remove-compiled-py
 
 post-install-modulated: $(POST_INST_SCR)
@@ -121,10 +126,4 @@ remove-compiled-py:
 	@echo "Cleaning up pyc and pyo files"
 	@gfind $(DESTDIR)$(libdir) -name "*.py[co]" -exec grm -f {} \;
 	@$(MAKECOOKIE)
-
-fix-config-makefile:
-	perl -i -plne 's/^CCSHARED=.*/CCSHARED=/' \
-		$(DESTDIR)$(libdir)/python/config/Makefile
-	$(MAKECOOKIE)
-
 
