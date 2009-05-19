@@ -1,7 +1,6 @@
 #!/bin/sh
-
+PKGINST=CSWphp4cgi
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
-PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
 PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/php4/lib
 PHP_BIN=$PKG_INSTALL_ROOT/opt/csw/php4/bin
 PHP_INI=$PHP_LIB/php.ini
