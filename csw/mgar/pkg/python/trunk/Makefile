@@ -23,6 +23,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # Previous Library for compatability
 DISTFILES += libpython2.5.so.1.0-isa-sparcv8
 DISTFILES += libpython2.5.so.1.0-isa-i386
+DISTFILES += CSWpython.postinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2

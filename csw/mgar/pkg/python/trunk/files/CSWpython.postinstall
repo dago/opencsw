@@ -1,0 +1,22 @@
+#!/bin/sh
+
+PATH=/usr/bin:/usr/sbin
+PY_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+PY_BINDIR=${PKG_INSTALL_ROOT}${PY_PREFIX}/bin
+PY_LIBDIR=${PKG_INSTALL_ROOT}${PY_PREFIX}/lib/python
+
+find ${PY_LIBDIR} -name "*.py[co]" -exec rm -f {} \;
+# Compile .py libraries to .pyc files
+${PY_BINDIR}/python -Wi -tt ${PY_LIBDIR}/compileall.py \
+    -d ${PY_LIBDIR} -f -x 'bad_coding|badsyntax' ${PY_LIBDIR}
+# Compile .py libraries to .pyo files
+${PY_BINDIR}/python -Wi -tt -O ${PY_LIBDIR}/compileall.py \
+    -d ${PY_LIBDIR} -f -x 'bad_coding|badsyntax' ${PY_LIBDIR}
+
+for file in `find ${PY_LIBDIR} -name "*.py[co]" -print`
+do
+    installf ${PKGINST} ${file}
+done
+installf -f ${PKGINST}
+
+exit 0
