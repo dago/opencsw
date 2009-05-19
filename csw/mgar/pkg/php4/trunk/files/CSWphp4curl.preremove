@@ -1,7 +1,7 @@
 #!/bin/sh
 MODULE_NAME=curl
-#PHP_INI=/opt/csw/php4/lib/php.ini
-PHP_INI=php.ini
+PHP_INI=/opt/csw/php4/lib/php.ini
+
 echo "[===> Running Pre Remove <===]"
 echo "   ===> Disabling ${MODULE_NAME} extension"
 perl -i -plne "s|extension=${MODULE_NAME}.so|;extension=${MODULE_NAME}.so|" ${PHP_INI}
