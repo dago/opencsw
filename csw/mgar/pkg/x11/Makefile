@@ -58,5 +58,4 @@ newpkg-%:
 	fi
 	@echo
 	@echo "Your package is set up for editing at $*/trunk"
-	@echo "Please don't forget to add the gspec-file!"
 
