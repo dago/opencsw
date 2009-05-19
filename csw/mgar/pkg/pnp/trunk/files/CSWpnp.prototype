@@ -17,14 +17,15 @@ f cswpreserveconf /opt/csw/nagios/pnp/etc/npcd.cfg.CSW 0644 nagios nagios
 d none /opt/csw/nagios/pnp/etc/pages 0755 nagios nagios
 f cswpreserveconf /opt/csw/nagios/pnp/etc/pages/web_traffic.cfg.CSW 0644 nagios nagios
 f none /opt/csw/nagios/pnp/etc/pnp4nagios_release 0644 nagios nagios
-f none /opt/csw/nagios/pnp/etc/nagios_commands.cfg-sample 0644 nagios nagios
+f none /opt/csw/nagios/pnp/etc/commands.cfg-sample 0644 nagios nagios
+f none /opt/csw/nagios/pnp/etc/nagios.cfg-sample 0644 nagios nagios
 f cswpreserveconf /opt/csw/nagios/pnp/etc/process_perfdata.cfg.CSW 0644 nagios nagios
 f cswpreserveconf /opt/csw/nagios/pnp/etc/rra.cfg.CSW 0644 nagios nagios
 d none /opt/csw/nagios/pnp/share 0755 nagios nagios
 d none /opt/csw/nagios/pnp/share/perfdata 0755 nagios nagios
-d none /opt/csw/nagios/pnp/var 0755 nagios nagios
-d none /opt/csw/nagios/pnp/var/spool 0755 nagios nagios
-d none /opt/csw/nagios/pnp/var/spool/perfdata 0755 nagios nagios
+d none /var/opt/csw/pnp 0755 nagios nagios
+d none /var/opt/csw/pnp/spool 0755 nagios nagios
+d none /var/opt/csw/pnp/spool/perfdata 0755 nagios nagios
 d none /opt/csw/nagios/share 0755 nagios nagios
 d none /opt/csw/nagios/share/pnp 0755 nagios nagios
 s none /opt/csw/nagios/pnp/share/html=/opt/csw/nagios/share/pnp

@@ -18,7 +18,8 @@ PATCHFILES += npcd.c.diff
 PATCHFILES += npcdmod.h.diff
 PATCHFILES += npcdmod.c.diff
 PATCHFILES += npcd.cfg-sample.in.diff
-PATCHFILES += nagios_commands.cfg-sample.diff
+PATCHFILES += commands.cfg-sample.diff
+PATCHFILES += nagios.cfg-sample.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -33,7 +34,8 @@ datadir = /opt/csw/nagios/share/pnp
 sysconfdir = $(prefix)/nagios/pnp/etc
 bindir = $(prefix)/nagios/pnp/bin
 libexecdir = $(prefix)/libexec/nagios-plugins
-localstatedir =$(prefix)/nagios/pnp/var
+localstatedir = /var/opt/csw/pnp
+#localstatedir =$(prefix)/nagios/pnp/var
 
 REQUIRED_PKGS += CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd CSWnagios CSWcswclassutils
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
@@ -44,9 +46,11 @@ ENABLE_CHECK=0
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl_lib_path=/opt/csw/lib/perl/csw
-CONFIGURE_ARGS += --with-perfdata-logfile=/opt/csw/nagios/pnp/var/perfdata.log
+#CONFIGURE_ARGS += --with-perfdata-logfile=/opt/csw/nagios/pnp/var/perfdata.log
+CONFIGURE_ARGS += --with-perfdata-logfile=/var/opt/csw/pnp/perfdata.log
 CONFIGURE_ARGS += --with-perfdata-dir=/opt/csw/nagios/pnp/share/perfdata
-CONFIGURE_ARGS += --with-perfdata-spool-dir=/opt/csw/nagios/pnp/var/spool/perfdata
+#CONFIGURE_ARGS += --with-perfdata-spool-dir=/opt/csw/nagios/pnp/var/spool/perfdata
+CONFIGURE_ARGS += --with-perfdata-spool-dir=/var/opt/csw/pnp/spool/perfdata
 CONFIGURE_ARGS += --htmldir=/opt/csw/nagios/share/pnp
 
 BUILD_ARGS = all
@@ -65,7 +69,8 @@ CONTRIBDIR = /opt/csw/nagios/pnp/contrib
 SYSCONFDIR = $(sysconfdir)
 LIBEXECDIR = $(libexecdir)
 BINDIR = $(bindir)
-PERFDATA_SPOOL_DIR=/opt/csw/nagios/pnp/var/spool/perfdata/
+#PERFDATA_SPOOL_DIR=/opt/csw/nagios/pnp/var/spool/perfdata/
+PERFDATA_SPOOL_DIR=/var/opt/csw/pnp/spool/perfdata/
 PERFDATADIR = /opt/csw/nagios/pnp/share/perfdata
 
 install-base-custom:
@@ -135,7 +140,8 @@ install-config-custom:
 	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/check_commands/check_nwstat.cfg-sample $(DESTDIR)$(SYSCONFDIR)/check_commands/check_nwstat.cfg.CSW
 	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/pages/web_traffic.cfg-sample $(DESTDIR)$(SYSCONFDIR)/pages/web_traffic.cfg.CSW
 	@ginstall -m 644   $(WORKSRC)/sample-config/pnp/npcd.cfg-sample $(DESTDIR)$(SYSCONFDIR)/npcd.cfg.CSW
-	@ginstall -m 644 $(WORKSRC)/sample-config/pnp/nagios_commands.cfg-sample $(DESTDIR)$(SYSCONFDIR)/nagios_commands.cfg-sample
+	@ginstall -m 644 $(WORKSRC)/sample-config/pnp/commands.cfg-sample $(DESTDIR)$(SYSCONFDIR)/commands.cfg-sample
+	@ginstall -m 644 $(WORKSRC)/sample-config/pnp/nagios.cfg-sample $(DESTDIR)$(SYSCONFDIR)/nagios.cfg-sample
 	@$(MAKECOOKIE)
 
 install-contrib-custom:
