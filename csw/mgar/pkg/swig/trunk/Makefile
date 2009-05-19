@@ -1,5 +1,5 @@
 GARNAME = swig
-GARVERSION = 1.3.29
+GARVERSION = 1.3.39
 CATEGORIES = devel
 
 DESCRIPTION = A scripting interface generator for C/C++ code.
@@ -16,17 +16,22 @@ define BLURB
   s-expressions.
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWswig,depend prototype)
+#DISTFILES += $(call admfiles,CSWswig,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
+# 1645 is the group_id for the swig project on sourceforge
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1645
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
 # Prevent automake from attempting to regenerate everything
-PATCHFILES += am.diff
+#PATCHFILES += am.diff
+
+REQUIRED_PKGS = CSWzlib
 
 # Languages we *do* have
 #DEPEND += lang/tcl lang/python lang/perl lang/guile
@@ -50,12 +55,12 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-install: install-swig-doc
-
-install-swig-doc:
-	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(MAKECOOKIE)
-	$(DONADA)
+#post-install: install-swig-doc
+#
+#install-swig-doc:
+#	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
+#	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(GARNAME)
+#	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(GARNAME)
+#	@$(MAKECOOKIE)
+#	$(DONADA)
 
