@@ -1,21 +1,20 @@
 #!/bin/sh
-PKGINST=CSWphp4cgi
+
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
 PHP_LIB=$PKG_INSTALL_ROOT/opt/csw/php4/lib
 PHP_BIN=$PKG_INSTALL_ROOT/opt/csw/php4/bin
 PHP_INI=$PHP_LIB/php.ini
 
+extdir=`${PHP_BIN}/php-config --extension-dir`
 if [ ! -f $PHP_INI ]; then
     cp -p $PHP_INI.CSW $PHP_INI
 else
     echo "php.ini already exists"
-
-    extdir=`${PHP_BIN}/php-config --extension-dir`
-    curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' $PHP_INI`
+    curextdir=`perl -ne 's|extension_dir = "(.*no-debug-non-zts-[0-9]+)"|$1| && print'  $PHP_INI`
 
     if [ "$extdir" != "$curextdir" ]; then
         echo "updating extension_dir..."
-        perl -i.bak -plne "s,no-debug-non-zts-[0-9]+,$extdir," $PHP_INI
+        perl -i.bak -plne "s|extension_dir = .*|extension_dir = $extdir|" $PHP_INI
     fi
 fi
 
@@ -29,7 +28,7 @@ cat << _EOT_
 
 _EOT_
 
-if [ ! -d "${extdir}" ]; then
+if [ ! -d ${extdir} ]; then
     mkdir -p ${extdir}
     for dir in `${PHP_BIN}/php-config --extension-dir |\
                  awk -F'/' '{print $(NF-1), $NF}'`; do
