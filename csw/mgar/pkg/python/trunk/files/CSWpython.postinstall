@@ -15,6 +15,7 @@ ${PY_BINDIR}/python -Wi -tt -O ${PY_LIBDIR}/compileall.py \
 
 for file in `find ${PY_LIBDIR} -name idlelib -prune -o -name lib-tk -prune -o -name site-packages -prune -o -name "*.py[co]" -print`
 do
+    echo "Updating Package DB with ${file} ..."
     installf ${PKGINST} ${file}
 done
 installf -f ${PKGINST}

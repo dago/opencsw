@@ -14,6 +14,7 @@ ${PY_BINDIR}/python -Wi -tt -O ${PY_LIBDIR}/compileall.py \
 
 for file in `find ${PY_LIBDIR}/lib-tk -name "*.py[co]" -print`
 do
+    echo "Updating Package DB with ${file} ..."
     installf ${PKGINST} ${file}
 done
 installf -f ${PKGINST}
