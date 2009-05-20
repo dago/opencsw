@@ -35,6 +35,8 @@ GARCOMPILER = GCC3
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(GARNAME)
 CONFIGURE_ARGS += --enable-splibdir=$(libdir)
+CONFIGURE_ARGS += --enable-default-catalog=/opt/csw/etc/sgml/catalog
+CONFIGURE_ARGS += --disable-static
 
 TEST_SCRIPTS = 
 
@@ -42,14 +44,21 @@ INSTALL_ARGS = install install-man
 
 include gar/category.mk
 
-#squish the pesky post strip la files...
-MERGE_EXCLUDE_DEFAULT += $(libdir)/.*\.la\~
-
 sgmldir = $(DESTDIR)/$(datadir)/sgml/$(GARNAME)
 sgmldoc = $(DESTDIR)/$(docdir)/$(GARNAME)
 INSTALL = /opt/csw/bin/ginstall -c
 INSTALL_DATA = $(INSTALL) -m 0644
 INSTALL_DIR = $(INSTALL) -m 0755 -d
+
+post-configure-modulated:
+	@(cd $(WORKSRC); \
+		mv libtool libtool.orig; \
+		echo 'ARGS=`echo "$$@" | gsed "s#/opt/csw/lib/libosp.la#/opt/csw/lib/libosp.so#g"`' >> libtool; \
+		echo $$PWD/$(WORKSRC)'/libtool.orig $$ARGS' >> libtool; \
+		chmod 755 libtool; \
+	 	echo '/opt/csw/lib/libosp.la:' > jade/Makefile.dep; \
+		echo '	/bin/true' >> jade/Makefile.dep )
+	@$(MAKECOOKIE)
 
 post-install-modulated:
 	@echo Installing catalog files.
