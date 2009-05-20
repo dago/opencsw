@@ -49,7 +49,6 @@ c552f04399c41b8092c2e2874eed5997  download/CSWphp4odbc.postinstall
 7340bac8a1bb91821f664f32e6cc4920  download/CSWphp4zlib.postinstall
 326a1dad1aff6399a5e3c9031b6085da  download/CSWphp4zlib.preremove
 86e8561c50e7272b06336dcdb03f7bea  download/README-mod_php
-76492b303e12d8d0d8d6c6e1e91d7850  download/README-mod_php4_core
 93db60a388952ec3b40bb3bb005ff06b  download/dummy-httpd.conf
 ec1d86518d8b6d5a320ce058f03d9eef  download/httpd-php4.conf.CSW
 3870a95f52c9637798294243694fdd47  download/pgsql.diff

@@ -119,7 +119,6 @@ install-extra:
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
 	@ginstall -d $(DESTDIR)$(prefix)/apache/conf
 	@ginstall -d $(DESTDIR)$(prefix)/php4/lib
-	@ginstall -m 0644 $(WORKDIR)/README-mod_php4_core $(DESTDIR)$(prefix)/php4
 	@ginstall -m 0644 $(WORKDIR)/README-mod_php $(DESTDIR)$(prefix)/php4
 	@ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php4/lib
 	@ginstall -m 0644 $(WORKDIR)/php.ini.CSW $(DESTDIR)$(prefix)/php4/lib
