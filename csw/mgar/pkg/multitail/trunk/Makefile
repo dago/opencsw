@@ -53,3 +53,5 @@ install-custom:
 	@ginstall -d $(DATADEST) $(DOCDEST)
 	@(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DATA) $(DATADEST))
 	@(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DOCS) $(DOCDEST))
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
