@@ -53,7 +53,6 @@ DISTFILES += CSWphp4pgsql.preremove
 DISTFILES += CSWphp4zlib.postinstall
 DISTFILES += CSWphp4zlib.preremove
 DISTFILES += README-mod_php
-DISTFILES += README-mod_php4_core
 DISTFILES += dummy-httpd.conf
 DISTFILES += httpd-php4.conf.CSW
 DISTFILES += php.ini.CSW
