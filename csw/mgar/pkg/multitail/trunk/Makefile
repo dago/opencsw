@@ -19,7 +19,9 @@ MASTER_SITES = http://www.vanheusden.com/multitail/
 DISTFILES = $(GARNAME)-$(GARVERSION).tgz
 LICENSE = license.txt
 
-REQUIRED_PKGS = CSWncurses
+SPKG_CLASSES = none cswcpsampleconf
+
+REQUIRED_PKGS = CSWncurses CSWcswclassutils
 
 CONFIGURE_SCRIPTS = 
 TEST_SCRIPTS =
