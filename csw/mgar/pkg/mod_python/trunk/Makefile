@@ -18,7 +18,8 @@ PACKAGES = CSWap2modpython
 REQUIRED_PKGS_CSWap2modpython = CSWap2prefork CSWpython
 CATALOGNAME_CSWap2modpython   = ap2_modpython
 SPKG_DESC_CSWap2modpython     = an Apache/Python integration module
-DISTFILES += fixme.sh
+#DISTFILES += fixme.sh
+#STRIP_LIBTOOL = 1
 
 PATCHFILES += connobject.diff
 
@@ -36,10 +37,10 @@ include gar/category.mk
 DESTDOC = $(DESTDIR)$(docdir)/ap2_modpython
 
 
-post-configure-modulated:
-	@echo " ==> Fixing libtool files"
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	@$(MAKECOOKIE)
+#post-configure-modulated:
+#	@echo " ==> Fixing libtool files"
+#	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
+#	@$(MAKECOOKIE)
 
 
 post-install-modulated:
