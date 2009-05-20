@@ -18,7 +18,6 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWswig,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -28,17 +27,15 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1645
 UPSTREAM_USE_SF = 1
 
-# Prevent automake from attempting to regenerate everything
-#PATCHFILES += am.diff
-
 REQUIRED_PKGS = CSWzlib
 
-# Languages we *do* have
+#SWIG doesn't DEPEND on the languages it supports being instaalled
+# but, for the record, languages we *do* have:
 #DEPEND += lang/tcl lang/python lang/perl lang/guile
 #DEPEND += lang/ruby lang/php4 lang/ocaml
 #DEPEND += lang/lua
 
-# Languages we don't have yet
+# and languages we don't have, yet:
 #DEPEND += lang/pike lang/chicken lang/mono lang/mzscheme 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
