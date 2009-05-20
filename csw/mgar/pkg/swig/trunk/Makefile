@@ -46,18 +46,17 @@ CONFIGURE_ARGS += --with-java=/usr/j2se/bin/java
 CONFIGURE_ARGS += --with-javac=/usr/j2se/bin/javac
 CONFIGURE_ARGS += --with-javaincl=/usr/j2se/include
 
+MAKE_ARGS += docs
+
 # Not sure if this was meant to run by non-developers
 TEST_TARGET = check
 TEST_SCRIPTS =
 
 include gar/category.mk
 
-#post-install: install-swig-doc
-#
-#install-swig-doc:
-#	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
-#	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(GARNAME)
-#	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(GARNAME)
-#	@$(MAKECOOKIE)
-#	$(DONADA)
+post-install-modulated: install-swig-doc
 
+install-swig-doc:
+	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(GARNAME)
