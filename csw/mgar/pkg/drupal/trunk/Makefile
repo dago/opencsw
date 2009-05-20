@@ -12,11 +12,12 @@ define BLURB
 	applications of GD involve web site development.
 endef
 
-MASTER_SITES = http://drupal.org/project/drupal/
+MASTER_SITES = http://ftp.drupal.org/files/projects/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWdrupal
 CATALOGNAME_CSWdrupal = drupal
+SPKG_SOURCEURL = http://drupal.org/
 SPKG_DESC_CSWdrupal = $(DESCRIPTION)
 
 
@@ -39,8 +40,8 @@ test-skip:
 	@$(MAKECOOKIE)
 
 install-custom:
-	ginstall -d $(DESTDIR)/$(GARNAME)/$(GARVERSION)
-	cd $(WORKSRC); /usr/bin/pax -rw -v $(WORKSRC)/ $(DESTDIR)/$(GARNAME)/$(GARVERSION)
+	ginstall -d $(DESTDIR)$(prefix)/$(GARNAME)/$(GARVERSION)
+	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(prefix)/$(GARNAME)/$(GARVERSION)
 	@$(MAKECOOKIE)
 
 include gar/category.mk
