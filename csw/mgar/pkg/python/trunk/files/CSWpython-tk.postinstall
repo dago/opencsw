@@ -12,11 +12,4 @@ ${PY_BINDIR}/python -Wi -tt ${PY_LIBDIR}/compileall.py \
 ${PY_BINDIR}/python -Wi -tt -O ${PY_LIBDIR}/compileall.py \
     -d ${PY_LIBDIR}/lib-tk -f -x 'bad_coding|badsyntax' ${PY_LIBDIR}/lib-tk
 
-for file in `find ${PY_LIBDIR}/lib-tk -name "*.py[co]" -print`
-do
-    echo "Updating Package DB with ${file} ..."
-    installf ${PKGINST} ${file}
-done
-installf -f ${PKGINST}
-
 exit 0

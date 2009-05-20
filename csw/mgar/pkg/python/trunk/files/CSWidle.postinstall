@@ -12,11 +12,4 @@ ${PY_BINDIR}/python -Wi -tt ${PY_LIBDIR}/compileall.py \
 ${PY_BINDIR}/python -Wi -tt -O ${PY_LIBDIR}/compileall.py \
     -d ${PY_LIBDIR}/idlelib -f -x 'bad_coding|badsyntax' ${PY_LIBDIR}/idlelib
 
-for file in `find ${PY_LIBDIR}/idlelib -name "*.py[co]" -print`
-do
-    echo "Updating Package DB with ${file} ..."
-    installf ${PKGINST} ${file}
-done
-installf -f ${PKGINST}
-
 exit 0

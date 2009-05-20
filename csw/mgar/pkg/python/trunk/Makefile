@@ -83,6 +83,7 @@ PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
 PKGFILES_CSWpython-devel  = $(includedir)/.*
 PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
+PKGFILES_CSWpython-devel += $(libdir)/.*/distutils/.*
 PKGFILES_CSWpython-rt += $(libdir)/.*libpython.*
 PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
 PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*

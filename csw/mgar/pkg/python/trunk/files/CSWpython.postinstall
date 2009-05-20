@@ -13,11 +13,4 @@ ${PY_BINDIR}/python -Wi -tt ${PY_LIBDIR}/compileall.py \
 ${PY_BINDIR}/python -Wi -tt -O ${PY_LIBDIR}/compileall.py \
     -d ${PY_LIBDIR} -f -x 'bad_coding|badsyntax' ${PY_LIBDIR}
 
-for file in `find ${PY_LIBDIR} -name idlelib -prune -o -name lib-tk -prune -o -name site-packages -prune -o -name "*.py[co]" -print`
-do
-    echo "Updating Package DB with ${file} ..."
-    installf ${PKGINST} ${file}
-done
-installf -f ${PKGINST}
-
 exit 0
