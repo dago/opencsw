@@ -53,7 +53,7 @@ install-custom:
 	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(DRUPAL_INST_DIR)
 	gmv $(DESTDIR)$(SETTINGS_DIR)/default.settings.php $(DESTDIR)$(SETTINGS_DIR)/settings.php.CSW
 	gcp $(DOWNLOADDIR)/httpd-drupal.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
-	gcp $(DOWNLOADDIR)/README.CSW $(DESTDIR)$(docdir)/drupal/license
+	gcp $(DOWNLOADDIR)/README.CSW $(DESTDIR)$(docdir)/drupal/
 	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/LICENSE.txt $(DESTDIR)$(docdir)/drupal/license
 	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/COPYRIGHT.txt $(DESTDIR)$(docdir)/drupal/
 	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/CHANGELOG.txt $(DESTDIR)$(docdir)/drupal/
