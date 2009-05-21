@@ -1,0 +1,45 @@
+README.CSW
+==========
+
+Configuration
+=============
+1) Setup the Drupal Database
+2) Point Your Web browser to
+   http://mydomain/drupal/install.php
+and follow the instructions
+
+
+
+Setup the Drupal Database
+=========================
+Drupal Requires either:
+     * MySQL (http://www.mysql.com)
+     * PostgreSQL (http://www.postgresql.org/)
+
+Using MySQL
+===========
+1) if you have not done so, install mysql
+# pkg-get -i mysql5rt mysql5client mysql5
+2) configure and start mysql
+3) Add /opt/csw/mysql5/bin to your PATH
+4) Create the Database
+# mysqladmin -u drupal -p password create drupal
+  ** replace password above with one of your choosing
+5) Set Permissions on the new DB
+# mysql -u drupal -p   
+  ** this will prompt for the password you used in 4)
+At the mysql prompt enter the following command:
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER
+ON drupal.* TO drupal@localhost IDENTIFIED BY password;
+  ** where password is the password from 4)
+
+Using PostgreSQL
+================
+1) if you have not done so, install postgresql
+# pkg-get -i postgresql
+2) Create DB User
+# createuser --pwprompt --encrypted --no-adduser --no-createdb drupal
+  ** this will prompt you for a password for the new drupal user
+3) createdb --encoding=UNICODE --owner=drupal drupal
+
+
