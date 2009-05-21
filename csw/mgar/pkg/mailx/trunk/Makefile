@@ -48,7 +48,7 @@ BUILD_ARGS = $(MAKE_ARGS)
 INSTALL_ARGS = $(MAKE_ARGS)
 
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
-post-install-modulated: DOCS = README TODO AUTHORS ChangeLog
+post-install-modulated: DOCS = README TODO AUTHORS ChangeLog mailx.1.html
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),cp $(WORKSRC)/$(DOC) $(DOCDEST);)
