@@ -14,6 +14,7 @@ endef
 
 MASTER_SITES = http://ftp.drupal.org/files/projects/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += httpd-drupal.conf.CSW
 
 PACKAGES = CSWdrupal
 CATALOGNAME_CSWdrupal = drupal
@@ -39,9 +40,94 @@ TEST_SCRIPTS = skip
 test-skip:
 	@$(MAKECOOKIE)
 
+DRUPAL_BASE_INSTDIR = $(prefix)
+DRUPAL_INST_DIR = $(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)
+SETTINGS_DIR=$(DRUPAL_INST_DIR)/sites/default
+
 install-custom:
-	ginstall -d $(DESTDIR)$(prefix)/$(GARNAME)/$(GARVERSION)
-	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(prefix)/$(GARNAME)/$(GARVERSION)
+	ginstall -d $(DESTDIR)$(DRUPAL_INST_DIR)
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(DRUPAL_INST_DIR)
+	gmv $(DESTDIR)$(SETTINGS_DIR)/default.settings.php $(DESTDIR)$(SETTINGS_DIR)/settings.php.CSW
+	gcp $(DOWNLOADDIR)/httpd-drupal.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
 	@$(MAKECOOKIE)
+
+
+define CSWdrupal_postinstall
+#!/bin/sh
+
+PATH=/usr/bin:/usr/sbin
+
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+AP2EXTRADIR=/opt/csw/apache2/etc/extra
+AP2USR="`sed -ne 's/^User \(.*\)/\1/p' $${AP2CONF}`"
+AP2GRP="`sed -ne 's/^Group \(.*\)/\1/p' $${AP2CONF}`"
+
+if [ -z $${AP2USR} ]; then
+	AP2USR=nobody
+fi
+if [ -z $${AP2GRP} ]; then
+	AP2GRP=nobody
+fi
+chown -R $${AP2USR}:$${AP2GRP} $(DRUPAL_BASE_INSTDIR)/$(GARNAME)
+
+if [ -f $(SETTINGS_DIR)/settings.php ]; then
+    echo "***** $(SETTINGS_DIR)/settings.php Found ***** "
+	echo "***** Preserving Existing Config ***** "
+else
+	cp $(SETTINGS_DIR)/settings.php.CSW $(SETTINGS_DIR)/settings.php
+	chmod o+w $(SETTINGS_DIR)/settings.php
+	chmod o+w $(SETTINGS_DIR)
+fi
+
+perl -i -pne 's|_DRUPALDIR_|$(DRUPAL_INST_DIR)|' $${AP2EXTRADIR}/httpd-drupal.conf.CSW
+
+if [ -f $${AP2EXTRADIR}/httpd-drupal.conf ]; then
+	echo "***** $${AP2EXTRADIR}/httpd-drupal.conf Found *****"
+	echo "***** Preserving Existing Config *****"
+else
+	cp $${AP2EXTRADIR}/httpd-drupal.conf.CSW $${AP2EXTRADIR}/httpd-drupal.conf
+fi
+
+if [ -n "`grep 'Include etc/extra/httpd-drupal.conf' $${AP2CONF}`" ]; then
+	perl -i -pne 's|#(Include etc/extra/httpd-drupal.conf)|$$1|' $${AP2CONF}
+else
+	cat << END >>$${AP2CONF}
+	
+Include etc/extra/httpd-drupal.conf
+END
+fi
+cat << _EOM_
+
+*********************************************************************
+*    NOTICE:
+*          drupal has been enabled in $${AP2CONF}
+*          You will need to restart your web server
+*          To finish the install.
+*********************************************************************
+
+_EOM_
+endef
+
+define CSWdrupal_preremove
+#!/bin/sh
+
+PATH=/usr/bin:/usr/sbin
+
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+
+perl -i -pne 's|(?<!#)(Include etc/extra/httpd-drupal.conf)|#$$1|' $${AP2CONF}
+
+cat << _EOM_
+
+*********************************************************************
+*    NOTICE:
+*          drupal has been disabled in $${AP2CONF}
+*          You will need to restart your web server
+*          To finish the removal.
+*********************************************************************
+
+_EOM_
+endef
 
 include gar/category.mk

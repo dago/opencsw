@@ -1,0 +1,15 @@
+
+Alias /drupal "_DRUPALDIR_"
+
+<Directory "_DRUPALDIR_">
+    AllowOverride None
+    <Limit GET POST OPTIONS>
+        Order allow,deny
+        Allow from all
+    </Limit>
+    <LimitExcept GET POST OPTIONS>
+        Order deny,allow
+        Deny from all
+    </LimitExcept>
+</Directory>
+
