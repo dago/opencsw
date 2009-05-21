@@ -32,7 +32,7 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     = 
 INSTALL_SCRIPTS   = custom
 
-REQUIRED_PKGS_CSWdrupal = CSWapache2c CSWphp5 CSWphp5gd 
+REQUIRED_PKGS_CSWdrupal = CSWapache2c CSWphp5 CSWphp5gd CSWap2modphp5
 
 ## There are no tests for this
 TEST_SCRIPTS = skip
