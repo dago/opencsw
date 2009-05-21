@@ -32,3 +32,4 @@ include gar/category.mk
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)
+	@$(MAKECOOKIE)
