@@ -51,7 +51,7 @@ install-custom:
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
 	ginstall -d $(DESTDIR)$(docdir)/drupal
 	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(DRUPAL_INST_DIR)
-	gmv $(DESTDIR)$(SETTINGS_DIR)/default.settings.php $(DESTDIR)$(SETTINGS_DIR)/settings.php.CSW
+	gcp $(DESTDIR)$(SETTINGS_DIR)/default.settings.php $(DESTDIR)$(SETTINGS_DIR)/settings.php.CSW
 	gcp $(DOWNLOADDIR)/httpd-drupal.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
 	gcp $(DOWNLOADDIR)/README.CSW $(DESTDIR)$(docdir)/drupal/
 	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/LICENSE.txt $(DESTDIR)$(docdir)/drupal/license
@@ -81,7 +81,6 @@ fi
 if [ -z $${AP2GRP} ]; then
 	AP2GRP=nobody
 fi
-chown -R $${AP2USR}:$${AP2GRP} $(DRUPAL_BASE_INSTDIR)/$(GARNAME)
 
 if [ -f $(SETTINGS_DIR)/settings.php ]; then
     echo "***** $(SETTINGS_DIR)/settings.php Found ***** "
@@ -109,6 +108,7 @@ else
 Include etc/extra/httpd-drupal.conf
 END
 fi
+chown -R $${AP2USR}:$${AP2GRP} $(DRUPAL_BASE_INSTDIR)/$(GARNAME)
 cat << _EOM_
 
 *********************************************************************
