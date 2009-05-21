@@ -1,0 +1,33 @@
+diff --speed-large-files --minimal -Nru httping-1.3.0.orig/Makefile httping-1.3.0/Makefile
+--- httping-1.3.0.orig/Makefile	2009-02-18 16:32:43.000000000 +0100
++++ httping-1.3.0/Makefile	2009-05-21 12:43:55.083896462 +0200
+@@ -14,22 +14,23 @@
+ 
+ include version
+ 
+-DEBUG=-g # -D_DEBUG
+-LDFLAGS+=-lssl -lcrypto $(DEBUG)
+-CFLAGS+=-O2 -Wall -DVERSION=\"$(VERSION)\" $(DEBUG)
++LDFLAGS+=-lssl -lcrypto -lsocket -lnsl -lresolv
++CFLAGS+=-DVERSION=\"$(VERSION)\"
+ 
+ OBJS=mem.o http.o io.o str.o error.o utils.o main.o tcp.o mssl.o res.o
+ 
+ all: httping
+ 
+ httping: $(OBJS)
+-	$(CC) -Wall -W $(OBJS) $(LDFLAGS) -o httping
++	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o httping
+ 	#
+ 	# Oh, blatant plug: http://keetweej.vanheusden.com/wishlist.html
+ 
+ install: httping
+-	cp httping $(DESTDIR)/usr/bin
+-	cp httping.1 $(DESTDIR)/usr/share/man/man1/
++	ginstall -d $(DESTDIR)$(bindir)
++	ginstall -d $(DESTDIR)$(mandir)/man1
++	cp httping $(DESTDIR)$(bindir)
++	cp httping.1 $(DESTDIR)$(mandir)/man1
+ 
+ clean:
+ 	rm -f $(OBJS) core httping
