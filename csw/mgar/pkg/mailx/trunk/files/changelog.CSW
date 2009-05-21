@@ -1,0 +1,6 @@
+mailx (12.4,REV=2009.05.21)
+
+  * Package name change, was formerly known as nail.
+  * Adopted and updated to 12.4 (Closes #2633, #2462, #2324).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Thu, 21 May 2009 18:05:39 +0200
