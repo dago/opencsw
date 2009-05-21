@@ -15,6 +15,7 @@ endef
 MASTER_SITES = http://ftp.drupal.org/files/projects/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += httpd-drupal.conf.CSW
+DISTFILES += README.CSW
 
 PACKAGES = CSWdrupal
 CATALOGNAME_CSWdrupal = drupal
@@ -32,7 +33,8 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     = 
 INSTALL_SCRIPTS   = custom
 
-REQUIRED_PKGS_CSWdrupal = CSWapache2c CSWphp5 CSWphp5gd CSWap2modphp5
+REQUIRED_PKGS_CSWdrupal  = CSWapache2c CSWphp5 CSWphp5gd CSWphp5mbstring
+REQUIRED_PKGS_CSWdrupal += CSWphp5session CSWap2modphp5
 
 ## There are no tests for this
 TEST_SCRIPTS = skip
@@ -47,9 +49,19 @@ SETTINGS_DIR=$(DRUPAL_INST_DIR)/sites/default
 install-custom:
 	ginstall -d $(DESTDIR)$(DRUPAL_INST_DIR)
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -d $(DESTDIR)$(docdir)/drupal
 	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(DRUPAL_INST_DIR)
 	gmv $(DESTDIR)$(SETTINGS_DIR)/default.settings.php $(DESTDIR)$(SETTINGS_DIR)/settings.php.CSW
 	gcp $(DOWNLOADDIR)/httpd-drupal.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
+	gcp $(DOWNLOADDIR)/README.CSW $(DESTDIR)$(docdir)/drupal/license
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/LICENSE.txt $(DESTDIR)$(docdir)/drupal/license
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/COPYRIGHT.txt $(DESTDIR)$(docdir)/drupal/
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/CHANGELOG.txt $(DESTDIR)$(docdir)/drupal/
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/INSTALL.mysql.txt $(DESTDIR)$(docdir)/drupal/
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/INSTALL.pgsql.txt $(DESTDIR)$(docdir)/drupal/
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/INSTALL.txt $(DESTDIR)$(docdir)/drupal/
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/MAINTAINERS.txt $(DESTDIR)$(docdir)/drupal/
+	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/UPGRADE.txt $(DESTDIR)$(docdir)/drupal/
 	@$(MAKECOOKIE)
 
 
@@ -104,6 +116,16 @@ cat << _EOM_
 *          drupal has been enabled in $${AP2CONF}
 *          You will need to restart your web server
 *          To finish the install.
+*********************************************************************
+
+*********************************************************************
+*	You need to install and or configure either
+*   PostgreSQL: pkg-get -i postgresql
+*   MySQL: pkg-get -i mysql5rt mysql5client mysql5
+*	
+*	For instructions on configuring Please Read
+*   $$PKG_INST_ROOT/opt/csw/share/doc/drupal/README.CSW
+*
 *********************************************************************
 
 _EOM_
