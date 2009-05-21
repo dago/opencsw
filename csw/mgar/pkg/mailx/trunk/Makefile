@@ -21,6 +21,9 @@ SPKG_CLASSES = none cswcpsampleconf
 
 REQUIRED_PKGS = CSWcswclassutils CSWosslrt CSWiconv
 
+# nail _is_ mailx now
+INCOMPATIBLE_PKGS = CSWnail
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=106236
 UPSTREAM_USE_SF = 1
@@ -55,4 +58,5 @@ post-install-modulated:
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@mv $(DESTDIR)$(sysconfdir)/$(GARNAME)/nail.rc \
 		$(DESTDIR)$(sysconfdir)/$(GARNAME)/nail.rc.CSW
+	@cd $(DESTDIR)$(bindir) && ln -s mailx nail
 	@$(MAKECOOKIE)
