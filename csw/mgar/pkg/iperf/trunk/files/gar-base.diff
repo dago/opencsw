@@ -1,0 +1,48 @@
+diff --speed-large-files --minimal -Nru iperf-2.0.4.orig/include/PerfSocket.hpp iperf-2.0.4/include/PerfSocket.hpp
+--- iperf-2.0.4.orig/include/PerfSocket.hpp	2007-08-30 00:06:19.000000000 +0200
++++ iperf-2.0.4/include/PerfSocket.hpp	2009-05-21 16:04:35.263120435 +0200
+@@ -61,12 +61,11 @@
+ 
+     void SetSocketOptions( thread_Settings *inSettings );
+ 
+-    // handle interupts
+-    void Sig_Interupt( int inSigno );
+-
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
++    // handle interupts
++    void Sig_Interupt( int inSigno );
+     extern int sInterupted;
+     extern int groupID;
+     extern Mutex groupCond;
+diff --speed-large-files --minimal -Nru iperf-2.0.4.orig/src/main.cpp iperf-2.0.4/src/main.cpp
+--- iperf-2.0.4.orig/src/main.cpp	2008-04-08 04:37:54.000000000 +0200
++++ iperf-2.0.4/src/main.cpp	2009-05-21 16:04:03.840031595 +0200
+@@ -79,7 +79,7 @@
+  * prototypes
+  * ------------------------------------------------------------------- */
+ // Function called at exit to clean up as much as possible
+-void cleanup( void );
++extern "C" void cleanup( void );
+ 
+ /* -------------------------------------------------------------------
+  * global variables
+@@ -247,7 +247,7 @@
+  * respond appropriately.. [static]
+  * ------------------------------------------------------------------- */
+ 
+-void Sig_Interupt( int inSigno ) {
++extern "C" void Sig_Interupt( int inSigno ) {
+ #ifdef HAVE_THREAD
+     // We try to not allow a single interrupt handled by multiple threads
+     // to completely kill the app so we save off the first thread ID
+@@ -276,7 +276,7 @@
+  * either by exit() or terminating main().
+  * ------------------------------------------------------------------- */
+ 
+-void cleanup( void ) {
++extern "C" void cleanup( void ) {
+ #ifdef WIN32
+     // Shutdown Winsock
+     WSACleanup();
