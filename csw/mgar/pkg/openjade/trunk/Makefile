@@ -2,9 +2,9 @@ GARNAME = openjade
 GARVERSION = 1.3.2
 CATEGORIES = apps
 
-PREREQUISITE_PKGS = CSWopensp
+PREREQUISITE_PKGS = CSWopenspdevel
 REQUIRED_PKGS = CSWgcc3corert CSWgcc3g++rt
-REQUIRED_PKGS += CSWggettextrt CSWiconv CSWopensp CSWsgmlcommon
+REQUIRED_PKGS += CSWggettextrt CSWiconv CSWopensprt CSWsgmlcommon
 REQUIRED_PKGS += CSWxmlcommon
 
 PACKAGES = CSWopenjade
