@@ -1,7 +1,17 @@
-
 Alias /drupal "_DRUPALDIR_"
 
 <Directory "_DRUPALDIR_">
+<IfModule rewrite_module>
+  # Rewrite current-style URLs of the form 'index.php?q=x'.
+  RewriteEngine on
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ /drupal/index.php?q=$1 [L,QSA]
+  RewriteCond  %{REQUEST_FILENAME} !^/$
+  RewriteCond  %{REQUEST_FILENAME} !^/(files|misc|uploads)(/.*)?
+  RewriteCond  %{REQUEST_FILENAME} !\.(php|ico|png|jpg|gif|css|js|html?)(\W.*)?
+  RewriteRule ^(.*)$ /drupal/index.php?q=$1 [L,QSA]
+</IfModule>
     AllowOverride None
     <Limit GET POST OPTIONS>
         Order allow,deny
