@@ -3,7 +3,7 @@ GARVERSION = 1.3.2
 CATEGORIES = apps
 
 PREREQUISITE_PKGS = CSWopenspdevel
-REQUIRED_PKGS = CSWgcc3corert CSWgcc3g++rt
+REQUIRED_PKGS = CSWgcc3g++rt
 REQUIRED_PKGS += CSWggettextrt CSWiconv CSWopensprt CSWsgmlcommon
 REQUIRED_PKGS += CSWxmlcommon
 
