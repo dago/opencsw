@@ -24,6 +24,7 @@ SPKG_SOURCEURL = http://drupal.org/
 SPKG_DESC_CSWdrupal = $(DESCRIPTION)
 
 ALLOW_RELOCATE = 1
+RELOCATE_PREFIX = /opt/csw/share
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
@@ -39,7 +40,7 @@ TEST_SCRIPTS =
 REQUIRED_PKGS_CSWdrupal  = CSWapache2c CSWphp5 CSWphp5gd CSWphp5mbstring
 REQUIRED_PKGS_CSWdrupal += CSWphp5session CSWap2modphp5
 
-DRUPAL_INST_DIR = $(DESTDIR)$(datadir)/$(GARNAME)/$(GARVERSION)
+DRUPAL_INST_DIR = $(DESTDIR)$(prefix)/$(GARNAME)/$(GARVERSION)
 DRUPAL_DOCFILES  = CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt
 DRUPAL_DOCFILES += INSTALL.pgsql.txt INSTALL.txt LICENSE.txt
 DRUPAL_DOCFILES += MAINTAINERS.txt UPGRADE.txt
@@ -70,7 +71,7 @@ cat << _EOM_
 *	Before you can use druppal you need to configure it.
 *	
 *	For instructions on configuring Please Read
-*   $$PKG_INST_ROOT/drupal/documentation/README.CSW
+*   $${PKG_INST_ROOT}$${BASEDIR}/$(GARNAME)/$(GARVERSION)/documentation/README.CSW
 *
 *********************************************************************
 
