@@ -1,0 +1,33 @@
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/include/nebmodules.h icinga-0.8/include/nebmodules.h
+--- icinga-0.8.orig/include/nebmodules.h	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/include/nebmodules.h	2009-05-22 12:13:24.195253042 +0200
+@@ -31,7 +31,7 @@
+ 
+ /***** MODULE VERSION INFORMATION *****/
+ 
+-#define NEB_API_VERSION(x) int __neb_api_version = x;
++#define NEB_API_VERSION(x) int __neb_api_version = x
+ #define CURRENT_NEB_API_VERSION    3
+ 
+ 
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/module/Makefile.in icinga-0.8/module/Makefile.in
+--- icinga-0.8.orig/module/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/module/Makefile.in	2009-05-22 12:16:03.078812414 +0200
+@@ -25,13 +25,13 @@
+ 
+ CP=@CP@
+ 
+-all:	helloworld.o
++all:	helloworld
+ 
+-helloworld.o: helloworld.c
+-	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o helloworld.o helloworld.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS)
++helloworld: helloworld.c
++	$(CC) $(MOD_CFLAGS) $(CFLAGS) -o helloworld helloworld.c $(MOD_LDFLAGS) $(LDFLAGS) $(LIBS)
+ 
+ clean:
+-	rm -f helloworld.o
++	rm -f helloworld
+ 	rm -f core *.o
+ 	rm -f *~ *.*~
+ 

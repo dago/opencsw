@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/cgi/cmd.c icinga-0.8/cgi/cmd.c
+--- icinga-0.8.orig/cgi/cmd.c	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/cgi/cmd.c	2009-05-22 11:58:30.329840462 +0200
+@@ -1886,7 +1886,7 @@
+ 	return;
+         }
+ 
+-__attribute__((format(printf, 2, 3)))
++/* __attribute__((format(printf, 2, 3))) */
+ static int cmd_submitf(int id, const char *fmt, ...)
+ {
+ 	char cmd[MAX_EXTERNAL_COMMAND_LENGTH];

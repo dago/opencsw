@@ -1,0 +1,90 @@
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/Makefile.in icinga-0.8/Makefile.in
+--- icinga-0.8.orig/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/Makefile.in	2009-05-22 12:57:00.973528770 +0200
+@@ -30,11 +30,11 @@
+ LIBEXECDIR=@libexecdir@
+ HTMLDIR=@datarootdir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
+-COMMAND_OPTS=@COMMAND_OPTS@
++INSTALL_OPTS=
++COMMAND_OPTS=
+ HTTPD_CONF=@HTTPD_CONF@
+ INIT_DIR=@init_dir@
+-INIT_OPTS=-o root -g root
++INIT_OPTS=
+ CGICFGDIR=$(CGIDIR)
+ PERLDIR=@PERLDIR@
+ 
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/base/Makefile.in icinga-0.8/base/Makefile.in
+--- icinga-0.8.orig/base/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/base/Makefile.in	2009-05-22 12:54:39.811066523 +0200
+@@ -39,7 +39,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datarootdir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ STRIP=@STRIP@
+ 
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/cgi/Makefile.in icinga-0.8/cgi/Makefile.in
+--- icinga-0.8.orig/cgi/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/cgi/Makefile.in	2009-05-22 12:55:03.790961065 +0200
+@@ -18,7 +18,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datarootdir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ STRIP=@STRIP@
+ 
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/common/Makefile.in icinga-0.8/common/Makefile.in
+--- icinga-0.8.orig/common/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/common/Makefile.in	2009-05-22 12:55:23.192592201 +0200
+@@ -20,7 +20,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datarootdir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ 
+ CP=@CP@
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/contrib/Makefile.in icinga-0.8/contrib/Makefile.in
+--- icinga-0.8.orig/contrib/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/contrib/Makefile.in	2009-05-22 12:55:40.861094735 +0200
+@@ -15,7 +15,7 @@
+ # Generated automatically from configure script
+ SNPRINTF_O=@SNPRINTF_O@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ 
+ 
+ prefix=@prefix@
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/html/Makefile.in icinga-0.8/html/Makefile.in
+--- icinga-0.8.orig/html/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/html/Makefile.in	2009-05-22 12:56:26.447629708 +0200
+@@ -10,7 +10,7 @@
+ CGIDIR=@sbindir@
+ HTMLDIR=@datarootdir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ 
+ CP=@CP@
+diff --speed-large-files --minimal -Nru icinga-0.8.orig/module/Makefile.in icinga-0.8/module/Makefile.in
+--- icinga-0.8.orig/module/Makefile.in	2009-05-19 23:01:43.000000000 +0200
++++ icinga-0.8/module/Makefile.in	2009-05-22 12:57:18.719328688 +0200
+@@ -19,7 +19,7 @@
+ exec_prefix=@exec_prefix@
+ BINDIR=@bindir@
+ INSTALL=@INSTALL@
+-INSTALL_OPTS=@INSTALL_OPTS@
++INSTALL_OPTS=
+ COMMAND_OPTS=@COMMAND_OPTS@
+ STRIP=@STRIP@
+ 
