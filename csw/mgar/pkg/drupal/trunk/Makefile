@@ -61,18 +61,88 @@ define CSWdrupal_postinstall
 
 PATH=/usr/bin:/usr/sbin
 
+DRUPAL_DIR=$${PKG_INST_ROOT}$${BASEDIR}/$(GARNAME)/$(GARVERSION)
+SETTINGS_DIR=$${DRUPAL_DIR}/sites/default
+CONTRIB_DIR=$${DRUPAL_DIR}/contrib
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+AP2EXTRADIR=/opt/csw/apache2/etc/extra
+AP2USR="`sed -ne 's/^User \(.*\)/\1/p' $${AP2CONF}`"
+AP2GRP="`sed -ne 's/^Group \(.*\)/\1/p' $${AP2CONF}`"
+if [ -z $${AP2USR} ]; then
+	AP2USR=nobody
+fi
+if [ -z $${AP2GRP} ]; then
+	AP2GRP=nobody
+fi
+
+if [ -f $${SETTINGS_DIR}/settings.php ]; then
+	echo "***** $${SETTINGS_DIR}/settings.php Found ***** "
+	echo "***** Preserving Existing Config ***** "
+else
+	cp $${SETTINGS_DIR}/default.settings.php $${SETTINGS_DIR}/settings.php
+	chmod o+w $${SETTINGS_DIR}/settings.php
+	chmod o+w $${SETTINGS_DIR}
+fi
+perl -i -pne "s|_DRUPALDIR_|$${DRUPAL_DIR}|" $${CONTRIB_DIR}/httpd-drupal.conf.CSW
+cp $${CONTRIB_DIR}/httpd-drupal.conf.CSW $${AP2EXTRADIR}/httpd-drupal.conf.CSW
+
+if [ -f $${AP2EXTRADIR}/httpd-drupal.conf ]; then
+	echo "***** $${AP2EXTRADIR}/httpd-drupal.conf Found *****"
+	echo "***** Preserving Existing Config *****"
+else
+	cp $${AP2EXTRADIR}/httpd-drupal.conf.CSW $${AP2EXTRADIR}/httpd-drupal.conf
+fi
+
+if [ -n "`grep 'Include etc/extra/httpd-drupal.conf' $${AP2CONF}`" ]; then
+      perl -i -pne 's|#(Include etc/extra/httpd-drupal.conf)|$$1|' $${AP2CONF}
+else
+      cat << END >>$${AP2CONF}
+
+Include etc/extra/httpd-drupal.conf
+
+END
+fi
 mkdir -p /var/opt/csw/drupal/upload
 chmod o+w /var/opt/csw/drupal/upload
+chown -R $${AP2USR}:$${AP2GRP} /var/opt/csw/drupal/upload
+chown -R $${AP2USR}:$${AP2GRP} $${DRUPAL_DIR}
+
+cat << _EOM_
+*********************************************************************
+*    NOTICE:
+*          drupal has been enabled in $${AP2CONF}
+*          You will need to restart your web server
+*          To finish the install.
+*********************************************************************
+
+*********************************************************************
+*   NOTICE:
+*         Before you can use druppal you need to configure it.
+*
+*         For instructions on configuring Please Read
+*         $${PKG_INST_ROOT}$${BASEDIR}/$(GARNAME)/$(GARVERSION)/documentation/README.CSW
+*
+*********************************************************************
+
+_EOM_
+endef
+
+define CSWdrupal_preremove
+#!/bin/sh
+
+PATH=/usr/bin:/usr/sbin
+
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+
+perl -i -pne 's|(?<!#)(Include etc/extra/httpd-drupal.conf)|#$$1|' $${AP2CONF}
 
 cat << _EOM_
 
 *********************************************************************
 *    NOTICE:
-*	Before you can use druppal you need to configure it.
-*	
-*	For instructions on configuring Please Read
-*   $${PKG_INST_ROOT}$${BASEDIR}/$(GARNAME)/$(GARVERSION)/documentation/README.CSW
-*
+*          drupal has been disabled in $${AP2CONF}
+*          You will need to restart your web server
+*          To finish the removal.
 *********************************************************************
 
 _EOM_
