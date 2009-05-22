@@ -13,10 +13,19 @@ Configuration
     e) chown -R nobody:nobody /var/opt/csw/drupal
 
 2) Setup the Drupal Database
+    See Below
 
-3) Point Your Web browser to
+3) Setup your webserver
+    a) cp drupal/6.12/contrib/httpd-drupal.conf.CSW \
+            /opt/csw/apache2/etc/extra/httpd-drupal.conf
+    b) echo 'Include etc/extra/httpd-drupal.conf' \
+            >>/opt/csw/apache2/etc/httpd.conf
+    c) restart your webserver
+
+4) Point Your Web browser to
    http://mydomain/drupal/index.php
-and follow the instructions
+
+and follow the onscreen instructions
 
 Setup the Drupal Database
 =========================
@@ -27,13 +36,13 @@ Drupal Requires either:
 Using MySQL
 ===========
 1) if you have not done so, install mysql
-# pkg-get -i mysql5rt mysql5client mysql5 php5_mysqli
+    a) pkg-get -i mysql5rt mysql5client mysql5 php5_mysqli
 2) configure and start mysql
 3) Add /opt/csw/mysql5/bin to your PATH
 4) Set Permissions on the new DB
-# mysql -u root -p   
-  ** root can be any user that has superuser priv for MySQL
-At the mysql prompt enter the following commands:
+    a) mysql -u root -p   
+        ** root can be any user that has superuser priv for MySQL
+    b) At the mysql prompt enter the following commands:
 CREATE DATABASE drupal ;
 USE drupal;
 GRANT ALL ON drupal.* TO drupal@localhost IDENTIFIED BY 'PASSWORD_CHANGE_ME';
@@ -42,10 +51,10 @@ GRANT ALL ON drupal.* TO drupal@localhost IDENTIFIED BY 'PASSWORD_CHANGE_ME';
 Using PostgreSQL
 ================
 1) if you have not done so, install postgresql
-# pkg-get -i postgresql php5_pgsql
+    a) pkg-get -i postgresql php5_pgsql
 2) Create DB User
-# createuser --pwprompt --encrypted --no-adduser --no-createdb drupal
-  ** this will prompt you for a password for the new drupal user
+    a) createuser --pwprompt --encrypted --no-adduser --no-createdb drupal
+        ** this will prompt you for a password for the new drupal user
 3) createdb --encoding=UNICODE --owner=drupal drupal
 
 

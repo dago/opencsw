@@ -23,6 +23,7 @@ CATALOGNAME_CSWdrupal = drupal
 SPKG_SOURCEURL = http://drupal.org/
 SPKG_DESC_CSWdrupal = $(DESCRIPTION)
 
+ALLOW_RELOCATE = 1
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
