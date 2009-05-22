@@ -3,12 +3,20 @@ README.CSW
 
 Configuration
 =============
-1) Setup the Drupal Database
-2) Point Your Web browser to
-   http://mydomain/drupal/install.php
+1) Create the configuration file and set permissions
+    a) cp drupal/6.12/sites/default/default.settings.php \
+            drupal/6.12/sites/default/settings.php
+    b) chmod o+w drupal/6.12/sites/default/settings.php
+    c) chmod o+w drupal/6.12/sites/default
+    d) chown -R nobody:nobody drupal 
+        # Replace nobody:nobody with Apache's User:Group
+    e) chown -R nobody:nobody /var/opt/csw/drupal
+
+2) Setup the Drupal Database
+
+3) Point Your Web browser to
+   http://mydomain/drupal/index.php
 and follow the instructions
-
-
 
 Setup the Drupal Database
 =========================

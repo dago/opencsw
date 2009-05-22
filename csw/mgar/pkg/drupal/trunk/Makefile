@@ -16,6 +16,7 @@ MASTER_SITES = http://ftp.drupal.org/files/projects/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += httpd-drupal.conf.CSW
 DISTFILES += README.CSW
+PATCHFILES = uploaddir.diff
 
 PACKAGES = CSWdrupal
 CATALOGNAME_CSWdrupal = drupal
@@ -32,36 +33,24 @@ ARCHALL_CSWdrupal = 1
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS     = 
 INSTALL_SCRIPTS   = custom
+TEST_SCRIPTS = 
 
 REQUIRED_PKGS_CSWdrupal  = CSWapache2c CSWphp5 CSWphp5gd CSWphp5mbstring
 REQUIRED_PKGS_CSWdrupal += CSWphp5session CSWap2modphp5
 
-## There are no tests for this
-TEST_SCRIPTS = skip
-
-test-skip:
-	@$(MAKECOOKIE)
-
-DRUPAL_BASE_INSTDIR = $(prefix)
-DRUPAL_INST_DIR = $(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)
-SETTINGS_DIR=$(DRUPAL_INST_DIR)/sites/default
+DRUPAL_INST_DIR = $(DESTDIR)$(datadir)/$(GARNAME)/$(GARVERSION)
+DRUPAL_DOCFILES  = CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt
+DRUPAL_DOCFILES += INSTALL.pgsql.txt INSTALL.txt LICENSE.txt
+DRUPAL_DOCFILES += MAINTAINERS.txt UPGRADE.txt
 
 install-custom:
-	ginstall -d $(DESTDIR)$(DRUPAL_INST_DIR)
-	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -d $(DESTDIR)$(docdir)/drupal
-	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(DRUPAL_INST_DIR)
-	gcp $(DESTDIR)$(SETTINGS_DIR)/default.settings.php $(DESTDIR)$(SETTINGS_DIR)/settings.php.CSW
-	gcp $(DOWNLOADDIR)/httpd-drupal.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
-	gcp $(DOWNLOADDIR)/README.CSW $(DESTDIR)$(docdir)/drupal/
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/LICENSE.txt $(DESTDIR)$(docdir)/drupal/license
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/COPYRIGHT.txt $(DESTDIR)$(docdir)/drupal/
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/CHANGELOG.txt $(DESTDIR)$(docdir)/drupal/
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/INSTALL.mysql.txt $(DESTDIR)$(docdir)/drupal/
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/INSTALL.pgsql.txt $(DESTDIR)$(docdir)/drupal/
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/INSTALL.txt $(DESTDIR)$(docdir)/drupal/
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/MAINTAINERS.txt $(DESTDIR)$(docdir)/drupal/
-	gmv $(DESTDIR)$(DRUPAL_BASE_INSTDIR)/$(GARNAME)/$(GARVERSION)/UPGRADE.txt $(DESTDIR)$(docdir)/drupal/
+	ginstall -d $(DRUPAL_INST_DIR)/documentation
+	ginstall -d $(DRUPAL_INST_DIR)/contrib
+	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DRUPAL_INST_DIR)
+	gcp $(DOWNLOADDIR)/httpd-drupal.conf.CSW $(DRUPAL_INST_DIR)/contrib
+	gcp $(DOWNLOADDIR)/README.CSW $(DRUPAL_INST_DIR)/documentation
+	for file in $(DRUPAL_DOCFILES); do \
+		gmv $(DRUPAL_INST_DIR)/$${file} $(DRUPAL_INST_DIR)/documentation/; done
 	@$(MAKECOOKIE)
 
 
@@ -70,83 +59,18 @@ define CSWdrupal_postinstall
 
 PATH=/usr/bin:/usr/sbin
 
-AP2CONF=/opt/csw/apache2/etc/httpd.conf
-AP2EXTRADIR=/opt/csw/apache2/etc/extra
-AP2USR="`sed -ne 's/^User \(.*\)/\1/p' $${AP2CONF}`"
-AP2GRP="`sed -ne 's/^Group \(.*\)/\1/p' $${AP2CONF}`"
+mkdir -p /var/opt/csw/drupal/upload
+chmod o+w /var/opt/csw/drupal/upload
 
-if [ -z $${AP2USR} ]; then
-	AP2USR=nobody
-fi
-if [ -z $${AP2GRP} ]; then
-	AP2GRP=nobody
-fi
-
-if [ -f $(SETTINGS_DIR)/settings.php ]; then
-    echo "***** $(SETTINGS_DIR)/settings.php Found ***** "
-	echo "***** Preserving Existing Config ***** "
-else
-	cp $(SETTINGS_DIR)/settings.php.CSW $(SETTINGS_DIR)/settings.php
-	chmod o+w $(SETTINGS_DIR)/settings.php
-	chmod o+w $(SETTINGS_DIR)
-fi
-
-perl -i -pne 's|_DRUPALDIR_|$(DRUPAL_INST_DIR)|' $${AP2EXTRADIR}/httpd-drupal.conf.CSW
-
-if [ -f $${AP2EXTRADIR}/httpd-drupal.conf ]; then
-	echo "***** $${AP2EXTRADIR}/httpd-drupal.conf Found *****"
-	echo "***** Preserving Existing Config *****"
-else
-	cp $${AP2EXTRADIR}/httpd-drupal.conf.CSW $${AP2EXTRADIR}/httpd-drupal.conf
-fi
-
-if [ -n "`grep 'Include etc/extra/httpd-drupal.conf' $${AP2CONF}`" ]; then
-	perl -i -pne 's|#(Include etc/extra/httpd-drupal.conf)|$$1|' $${AP2CONF}
-else
-	cat << END >>$${AP2CONF}
-	
-Include etc/extra/httpd-drupal.conf
-END
-fi
-chown -R $${AP2USR}:$${AP2GRP} $(DRUPAL_BASE_INSTDIR)/$(GARNAME)
 cat << _EOM_
 
 *********************************************************************
 *    NOTICE:
-*          drupal has been enabled in $${AP2CONF}
-*          You will need to restart your web server
-*          To finish the install.
-*********************************************************************
-
-*********************************************************************
-*	You need to install and or configure either
-*   PostgreSQL: pkg-get -i postgresql
-*   MySQL: pkg-get -i mysql5rt mysql5client mysql5
+*	Before you can use druppal you need to configure it.
 *	
 *	For instructions on configuring Please Read
-*   $$PKG_INST_ROOT/opt/csw/share/doc/drupal/README.CSW
+*   $$PKG_INST_ROOT/drupal/documentation/README.CSW
 *
-*********************************************************************
-
-_EOM_
-endef
-
-define CSWdrupal_preremove
-#!/bin/sh
-
-PATH=/usr/bin:/usr/sbin
-
-AP2CONF=/opt/csw/apache2/etc/httpd.conf
-
-perl -i -pne 's|(?<!#)(Include etc/extra/httpd-drupal.conf)|#$$1|' $${AP2CONF}
-
-cat << _EOM_
-
-*********************************************************************
-*    NOTICE:
-*          drupal has been disabled in $${AP2CONF}
-*          You will need to restart your web server
-*          To finish the removal.
 *********************************************************************
 
 _EOM_
