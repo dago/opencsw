@@ -1,6 +1,8 @@
-GARNAME = libLASi
+GARNAME = liblasi
 GARVERSION = 1.1.0
 CATEGORIES = lib
+
+SOURCENAME = libLASi
 
 DESCRIPTION = C++ Unicode support for PostScript
 define BLURB
@@ -21,16 +23,47 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(SOURCENAME)-$(GARVERSION).tar.gz
+
+REQUIRED_PKGS = CSWftype2 CSWgcc3corert CSWgcc3g++ CSWggettextrt CSWglib2 CSWpango CSWzlib
+
+CONFIGURE_SCRIPTS = custom
+BUILD_SCRIPTS = custom
+TEST_SCRIPTS = custom
+INSTALL_SCRIPTS = custom
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(SOURCENAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # 187113 is the group_id for the liblasi project on sourceforge
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 187113
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
 include gar/category.mk
+
+WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(GARVERSION)
+
+configure-custom:
+	@echo " ==> Configuring $(GARNAME) (custom)"
+	@( cd $(WORKSRC) ; \
+		CXX=/opt/csw/gcc4/bin/g++ \
+		cmake	-DCMAKE_INSTALL_PREFIX=/opt/csw \
+			-DCMAKE_VERBOSE_MAKEFILE=ON \
+			. )
+	@$(MAKECOOKIE)
+
+build-custom:
+	@echo " ==> Building $(GARNAME) (custom)"
+	@( cd $(WORKSRC) ; gmake )
+	@$(MAKECOOKIE)
+
+test-custom:
+	@echo " ==> Testing $(GARNAME) (custom)"
+	@( cd $(WORKSRC) ; gmake  test)
+	@$(MAKECOOKIE)
+
+install-custom:
+	@echo " ==> Installing $(GARNAME) (custom)"
+	@( cd $(WORKSRC) ; gmake install DESTDIR=$(DESTDIR) )
+	@$(MAKECOOKIE)
