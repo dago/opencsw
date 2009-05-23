@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Certification Authority have been moved under /opt/csw/etc/ssl/certs
+# under the ca_certificates package control
+# /opt/csw/ssl/certs should now be a symbolic links 
+if [ "$MOVE_CERTS" = "Yes" ]; then
+	mv -f /opt/csw/ssl/certs/* /opt/csw/etc/ssl/certs
+        rmdir "/opt/csw/ssl/certs" 
+fi
+
+true

@@ -1,0 +1,23 @@
+
+Notes for OpenSSL
+-----------------
+
+- Certification Authorities
+
+Since OpenSSL 0.9.8h, Certification Authorities have been removed from 
+OpenSSL source distribution. Quoting OpenSSL changelog:
+
+	The OpenSSL project does not recommend any specific CA and does not
+	have any policy with respect to including or excluding any CA.
+	Therefore it does not make any sense to ship an arbitrary selection
+	of root CA certificates with the OpenSSL software.
+
+To make the life of opencsw users easier, common CA are still provided by 
+opencsw in the separate package called ca_certificates.
+With this package, you can configure which CA are considered valid and add 
+new certificates.
+See /opt/csw/share/doc/ca_certificates/README.CSW for more details.
+
+For comptability purpose, the openssl_rt package depends on the ca_certificates 
+packages
+
