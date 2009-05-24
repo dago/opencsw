@@ -11,7 +11,7 @@ define BLURB
 	established development process and policies.
 endef
 
-MASTER_SITES = http://ftp.edgewall.com/pub/$(GARNAME)/
+MASTER_SITES = http://ftp.edgewall.com/pub/trac/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWtrac
