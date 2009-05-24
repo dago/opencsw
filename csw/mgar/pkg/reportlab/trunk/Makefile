@@ -19,7 +19,7 @@ endef
 MASTER_SITES = http://www.reportlab.org/ftp/
 DISTFILES  = $(DISTNAME).tar.gz
 
-REQUIRED_PKGS_CSWreportlab = CSWpython
+REQUIRED_PKGS_CSWreportlab = CSWpil
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)_(\d+(?:\_\d+)*).tar.gz
