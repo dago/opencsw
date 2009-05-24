@@ -23,11 +23,14 @@ PATCHFILES += patch.diff	# http://article.gmane.org/gmane.network.nagios.devel/4
 PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (empty)
 				# necessary, so ginstall doesn't get -o and -g options
 
-REQUIRED_PKGS = CSWgd CSWggettextrt CSWglib2 CSWiconv CSWjpeg CSWperl CSWpng CSWzlib CSWcswclassutils
+REQUIRED_PKGS  = CSWgd CSWggettextrt CSWglib2 CSWiconv CSWjpeg CSWperl CSWpng CSWzlib
+REQUIRED_PKGS += CSWnagiosp CSWcswclassutils
 
 SPKG_CLASSES = none cswusergroup ugfiles cswpreserveconf cswinitsmf
 
 NOISALIST = 1
+
+ENABLE_CHECK = 0
 
 prefix = $(BUILD_PREFIX)/icinga
 libexecdir = $(BUILD_PREFIX)/libexec/nagios-plugins
