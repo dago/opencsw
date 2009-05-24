@@ -300,7 +300,7 @@ PROTOTYPE = $(WORKDIR)/prototype
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=/ >$@
+	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=$(if $(ALLOW_RELOCATE),,'/') >$@ 
 
 # The pathfilter rules are as follows:
 # - include license for current package
@@ -456,6 +456,7 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
 	) >$@
+	$(if $(ALLOW_RELOCATE),echo "BASEDIR=$(RELOCATE_PREFIX)" >>$@)
 
 
 # findlicensefile - Find an existing file for a given license name
