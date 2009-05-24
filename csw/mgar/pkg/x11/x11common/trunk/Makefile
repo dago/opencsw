@@ -15,5 +15,6 @@ include gar/category.mk
 install-custom:
 	ginstall -d $(DESTDIR)$(libdir)
 	gln -s . $(DESTDIR)$(libdir)/32
+	mkdir -p $(DESTDIR)$(libdir)/$(ISA_DEFAULT64)
 	gln -s $(ISA_DEFAULT64) $(DESTDIR)$(libdir)/64
 	@$(MAKECOOKIE)
