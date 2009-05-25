@@ -1,6 +1,6 @@
 #!/bin/ksh -p
 
-# checkpkg 2.6
+# checkpkg 2.7
 # This script examines a package that has been put together
 # for submittal to the CSW archive at opencsw.org
 #
@@ -16,6 +16,9 @@
 
 
 PATH=$PATH:/usr/sbin
+
+# this is actually a base for tmpfiles, not the full name
+TMPDIR=${TMPDIR:-/tmp}
 
 LOCAL_ARCH=`uname -p`
 
@@ -100,7 +103,7 @@ print Extracting files for more detailed inspection...
 
 file $f |sed 's/^.*://' |grep gzip >/dev/null
 if [ $? -eq 0 ] ; then
-	TMPARCHIVE=/tmp/`basename $f`
+	TMPARCHIVE=$TMPDIR/`basename $f`
 	if [[ -f $TMPARCHIVE ]] ; then
 		print ERROR: $TMPARCHIVE already exists
 		
@@ -111,7 +114,7 @@ fi
 
 pkgname=`nawk 'NR == 2 {print $1; exit;}' $f`
 
-EXTRACTDIR=/tmp/checkpkg.$$
+EXTRACTDIR=$TMPDIR/checkpkg.$$
 
 if [ -d $EXTRACTDIR ] ; then
 	print ERROR: $EXTRACTDIR already exists
