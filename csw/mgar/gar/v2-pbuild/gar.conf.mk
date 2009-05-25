@@ -35,6 +35,11 @@ LOGDIR ?= log
 GIT_PROXY_SCRIPT ?= $(abspath $(GARBIN))/gitproxy
 GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
 
+# For parallel builds
+PARALLELMODULATIONS ?= 
+MULTITAIL ?= /opt/csw/bin/multitail
+TTY ?= /usr/bin/tty
+
 # Outbound proxies
 http_proxy ?= 
 ftp_proxy  ?= 

@@ -598,17 +598,25 @@ endef
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge $(if $(shell tty >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo TERMINAL; fi),merge-parallel,merge-sequential) merge-license $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
+merge: checksum pre-merge merge-do merge-license $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
 	@$(DONADA)
+
+merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
 
 merge-sequential: $(foreach M,$(MODULATIONS),merge-$M)
 
+merge-parallel: _PIDFILE=$(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid
 merge-parallel: merge-watch
-	@$(foreach M,$(MODULATIONS),$(MAKE) merge-$M >$(WORKROOTDIR)/build-$M/build.log 2>&1 &) wait
-	@kill `cat $(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid` && stty sane
+	$(_DBG_MERGE)$(foreach M,$(MODULATIONS),$(MAKE) merge-$M >$(WORKROOTDIR)/build-$M/build.log 2>&1 &) wait
+	$(_DBG_MERGE)if [ -f $(_PIDFILE) ]; then kill `cat $(_PIDFILE)` && stty sane; fi
 
+merge-watch: _USEMULTITAIL=$(shell test -x $(MULTITAIL) && test -x $(TTY) && $(TTY) >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo yes; fi)
 merge-watch:
-	@multitail --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -j & echo $$! > $(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid
+	$(_DBG_MERGE)$(if $(_USEMULTITAIL),\
+		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -J & echo $$! > $(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid,\
+		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\
+	)
+
 
 # This merges the 
 merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated
