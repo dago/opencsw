@@ -23,7 +23,7 @@ EOF
   echo
   mkdir -p ${CSW_PREFIX}/share/www/phpldapadmin/htdocs
   (cd ${CSW_PREFIX}/apache2/share/htdocs/phpldapadmin; tar cf - .) | \
-	(cd ${CSW_PREFIX}/share/www/phpldapadmin/htdocs; tar xvf -)
+	(cd ${CSW_PREFIX}/share/www/phpldapadmin; tar xvf -)
   rm -rf ${CSW_PREFIX}/apache2/share/htdocs/phpldapadmin
 fi
 
