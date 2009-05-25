@@ -1,5 +1,5 @@
 GARNAME = phpldapadmin
-GARVERSION = 1.1.0.6
+GARVERSION = 1.1.0.7
 CATEGORIES = apps
 
 DESCRIPTION = Web-based LDAP browser to manage your LDAP server
@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWphpldapadmin,depend postinstall preremove)
+DISTFILES += CSWphpldapadmin.preinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=61828
@@ -27,15 +27,23 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+PRESERVECONF = $(sharedstatedir)/www/phpldapadmin/config/config.php.CSW
+
+LICENSE = LICENSE
+ARCHALL = 1
+
 include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
+	@rm -rf $(DESTDIR)$(sharedstatedir)/www/phpldapadmin
+	@ginstall -d $(DESTDIR)$(sharedstatedir)/www
+	@cp -R $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/phpldapadmin
+	@(cd $(DESTDIR)$(sharedstatedir)/www/phpldapadmin/config; \
+		mv config.php.example config.php.CSW)
+	@find $(DESTDIR)$(sharedstatedir) -name .cvsignore -exec rm \{\} \;
 	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
-	@cp -R $(WORKSRC) $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
-	@cp $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin/config/config.php.example \
-		$(DESTDIR)/$(prefix)/apache2/share/htdocs/phpldapadmin/config/config.php.CSW
-	@find $(DESTDIR)$(prefix) -name .cvsignore -exec rm \{\} \;
+	@ln -s $(sharedstatedir)/www/phpldapadmin/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
 	@$(MAKECOOKIE)
 
