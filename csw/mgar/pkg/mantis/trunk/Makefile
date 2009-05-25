@@ -1,5 +1,5 @@
 GARNAME = mantisbt
-GARVERSION = 1.1.6
+GARVERSION = 1.1.7
 CATEGORIES = apps
 
 DESCRIPTION = Mantis is a free popular web-based bugtracking system
@@ -14,10 +14,16 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWmantis,depend preinstall postinstall)
+DISTFILES += CSWmantis.preinstall CSWmantis.postinstall
+
+PACKAGES = mantis
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+LICENSE = doc/LICENSE
+REQUIRED_PKGS = CSWapache2 CSWap2modphp5 CSWphp5mysql
+ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
