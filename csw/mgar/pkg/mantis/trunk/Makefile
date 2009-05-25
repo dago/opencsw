@@ -16,7 +16,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWmantis.preinstall CSWmantis.postinstall
 
-PACKAGES = mantis
+PACKAGES = CSWmantis
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
