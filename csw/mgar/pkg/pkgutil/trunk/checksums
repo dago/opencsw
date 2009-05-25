@@ -1,5 +1,5 @@
-f9fdd7e5a2bf82ebabe1db387ef163a1  download/pkgutil-1.5.zip
 a16c6f81bc537d6172fd65d8da1aeecc  download/CSWpkgutil.gspec
-bbfa438bcc97cd709f8d1b6716485925  download/CSWpkgutil.prototype
 e1407c24d47306dbc4cea22dcb291f1d  download/CSWpkgutil.postinstall
 2fb6c94a2d212f08b71d462082a2d31a  download/CSWpkgutil.preremove
+bbfa438bcc97cd709f8d1b6716485925  download/CSWpkgutil.prototype
+8a70e1a7be17df436d4480814e2da5a6  download/pkgutil-1.6b1.zip
