@@ -18,24 +18,13 @@ WORKSRC = $(WORKDIR)
 
 SPKG_SOURCEURL = http://gar.opencsw.org
 
-PACKAGES = CSWgar CSWgar-v1 CSWgar-v2
 NOSOURCEPACKAGE = 1
 
-CATALOGNAME_CSWgar = gar
-CATALOGNAME_CSWgar-v1 = gar_v1
-CATALOGNAME_CSWgar-v2 = gar_v2
+REQUIRED_PKGS_CSWgar = $(PREREQUISITE_BASE_PKGS)
 
-REQUIRED_PKGS_CSWgar = $(PREREQUISITE_BASE_PKGS) CSWsvn
-REQUIRED_PKGS_CSWgar-v1 = CSWgar
-REQUIRED_PKGS_CSWgar-v2 = CSWgar
-
-SPKG_DESC_CSWgar = The mGAR package build system
-SPKG_DESC_CSWgar-v1 = The mGAR v1 system files
-SPKG_DESC_CSWgar-v2 = The mGAR v2 system files
+SPKG_DESC_CSWgar = The GAR package build system
 
 SPKG_VERSION_CSWgar = $(call _REVISION)
-SPKG_VERSION_CSWgar-v1 = $(shell svnversion $(DOWNLOADDIR)/v1)
-SPKG_VERSION_CSWgar-v2 = $(shell svnversion $(DOWNLOADDIR)/v2)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -45,8 +34,6 @@ INSTALL_SCRIPTS = gar
 EXTRA_MERGE_EXCLUDE_FILES = .*/\.svn/.*
 
 ARCHALL = 1
-PKGFILES_CSWgar-v1 = $(prefix)/src/gar/v1/.*
-PKGFILES_CSWgar-v2 = $(prefix)/src/gar/v2/.*
 
 # Because the bad pathes are in the bad pathes check we cannot check ourselves
 ENABLE_CHECK = 0
@@ -56,7 +43,7 @@ include gar/category.mk
 install-gar:
 	@echo " ==> Installing $(GARNAME)"
 
-	rm -f $(DESTIR)$(bindir)/garit
+	rm -f $(DESTDIR)$(bindir)/garit
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/garit $(DESTDIR)$(bindir)/garit
 	ginstall -d $(DESTDIR)$(prefix)/src/gar
