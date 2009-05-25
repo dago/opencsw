@@ -1,5 +1,5 @@
 GARNAME = sudo
-GARVERSION = 1.7.0
+GARVERSION = 1.7.1
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges
@@ -20,6 +20,7 @@ UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
 PACKAGES = CSWsudo CSWsudo-common
 
+BUILD64 = 1
 CATALOGNAME_CSWsudo = sudo
 SPKG_DESC_CSWsudo = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws
