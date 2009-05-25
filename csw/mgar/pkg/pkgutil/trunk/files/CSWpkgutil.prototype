@@ -22,6 +22,8 @@ f none /opt/csw/share/doc/pkgutil/readme 644 root bin
 d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/pkgutil.1 644 root bin
+f none /opt/csw/share/man/man1/bldcat.1 644 root bin
+f none /opt/csw/share/man/man1/chkcat.1 644 root bin
 d none /var/opt/csw 0755 root bin
 d none /var/opt/csw/pkgutil 0755 root bin
 f none /var/opt/csw/pkgutil/admin.CSW 644 root bin
