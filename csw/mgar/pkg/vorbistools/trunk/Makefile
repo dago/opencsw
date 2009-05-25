@@ -20,6 +20,8 @@ SPKG_SOURCEURL = http://www.vorbis.com
 PACKAGES = CSWvtools
 CATALOGNAME = vorbistools
 
+PREREQUISITE_PKGS = CSWcurldevel
+
 REQUIRED_PKGS = CSWcurlrt CSWflac CSWggettextrt CSWiconv CSWlibao
 REQUIRED_PKGS += CSWlibogg CSWspeex CSWsunmath CSWvorbis
 
