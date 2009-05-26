@@ -1,5 +1,5 @@
 GARNAME = XML-Atom-SimpleFeed
-GARVERSION = 0.82
+GARVERSION = 0.83
 CATEGORIES = cpan
 AUTHOR = ARISTOTLE
 
@@ -10,6 +10,8 @@ define BLURB
   but has no provisions for generating feeds with extension elements.
 endef
 
-DISTFILES += $(call admfiles,CSWpmxmlatomsimplefd,)
+PACKAGES = CSWpmxmlatomsimplefd
+CATALOGNAME = pm_xmlatomsimplefeed
+ARCHALL = 1
 
 include gar/category.mk
