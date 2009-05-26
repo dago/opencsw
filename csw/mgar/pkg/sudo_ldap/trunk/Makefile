@@ -1,5 +1,5 @@
 GARNAME = sudo
-GARVERSION = 1.7.0
+GARVERSION = 1.7.1
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges (LDAP Enabled)
@@ -25,6 +25,7 @@ SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
 REQUIRED_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt
 
+BUILD64 = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-logging=both
@@ -39,8 +40,8 @@ include gar/category.mk
 
 PKGFILES_CSWsudoldap = .*$(bindir)/sudo.ldap
 
-post-merge-modulated:
-	@( cd $(PKGROOT)$(bindir) ; gmv sudo sudo.ldap )
-	@( cd $(PKGROOT)$(bindir) ; grm sudoedit )
-	@( cd $(PKGROOT)$(bindir) ; gchmod 4755 sudo.ldap )
+post-install-modulated:
+	@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.ldap )
+	@( cd $(DESTDIR)$(bindir) ; grm sudoedit )
+	@( cd $(DESTDIR)$(bindir) ; gchmod 4755 sudo.ldap )
 	@$(MAKECOOKIE)
