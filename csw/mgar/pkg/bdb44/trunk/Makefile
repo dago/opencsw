@@ -34,6 +34,8 @@ BUILD64 = 1
 CONFIGURE_SCRIPTS = dist
 
 prefix = $(BUILD_PREFIX)/bdb44
+docdir = $(BUILD_PREFIX)/share/doc
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-cryptography
 CONFIGURE_ARGS += --enable-compat185
@@ -72,6 +74,11 @@ INCOMPATIBLE_PKGS_CSWbdb44-doc = CSWbdb44doc
 
 LICENSE = LICENSE
 
+# Leave the docs where they are for now
+#EXTRA_PAX_ARGS_isa-sparcv8 = -s ",^\.$(prefix)/docs/,$(docdir)/bdb44/,p"
+#EXTRA_PAX_ARGS_isa-i386    = -s ",^\.$(prefix)/docs/,$(docdir)/bdb44/,p"
+
+#PKGFILES_CSWbdb44-doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb44-doc = $(prefix)/docs/.*
 
 PKGFILES_CSWbdb44-devel = $(PKGFILES_DEVEL)
