@@ -52,5 +52,8 @@ post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; grm -f sudoedit )
 	@( cd $(DESTDIR)$(bindir) ; gcp sudo sudoedit )
 	@( cd $(DESTDIR)$(sysconfdir) ; gmv sudoers sudoers.CSW )
-	@( cd $(DESTDIR)$(bindir) ; gchmod 4755 sudo* )
+	@$(MAKECOOKIE)
+
+post-merge-modulated:
+	@( cd $(DESTDIR)$(bindir);gfind . -name sudo\* -exec gchmod 4755 {} \; )
 	@$(MAKECOOKIE)
