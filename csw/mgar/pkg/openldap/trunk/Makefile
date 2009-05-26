@@ -1,5 +1,5 @@
 GARNAME = openldap
-GARVERSION = 2.3.40
+GARVERSION = 2.4.16
 CATEGORIES = server
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
@@ -13,23 +13,40 @@ endef
 
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWoldap,depend)
+DISTFILES += $(call admfiles,CSWoldap)
 DISTFILES += cswopenldap openldap.xml svc-openldap
-DISTFILES += $(call admfiles,CSWoldapclient,depend)
-DISTFILES += $(call admfiles,CSWoldapdevel,depend)
-DISTFILES += $(call admfiles,CSWoldaprt,depend)
 DISTFILES += README.CSW openldaprc
+
+LICENSE = COPYRIGHT
+
+PACKAGES = CSWoldap CSWoldapclient CSWoldapdevel CSWoldaprt
+
+CATALOGNAME_CSWoldapclient = openldap_client
+CATALOGNAME_CSWoldapdevel  = openldap_devel
+CATALOGNAME_CSWoldaprt     = openldap_rt
+
+SPKG_DESC_CSWoldapclient = OpenLDAP client executables
+SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
+SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
+
+REQUIRED_PKGS_CSWoldap       = CSWbdb4 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
+REQUIRED_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
+REQUIRED_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl
+REQUIRED_PKGS_CSWoldapdevel  = CSWoldaprt
+REQUIRED_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl
+
+SPKG_SOURCEURL = http://www.openldap.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = patch-oldap-2.3.24-ntlm.diff
+PATCHFILES = patch-oldap-2.4.16-ntlm.diff
 DISTFILES += $(PATCHFILES)
 
 EXTRA_DOCS = README.CSW openldaprc $(PATCHFILES)
 
-EXTRA_LIB = $(prefix)/bdb4/lib 
-EXTRA_INC = $(prefix)/bdb4/include
+EXTRA_LIB = $(prefix)/bdb44/lib 
+EXTRA_INC = $(prefix)/bdb44/include
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -50,7 +67,10 @@ PKGFILES_CSWoldaprt  = $(PKGFILES_RT)
 PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
-include ../category.mk
+include gar/category.mk
+
+CFLAGS := $(filter-out -I%,$(CFLAGS))
+DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 INSTALL_SCRIPTS += custom
 
