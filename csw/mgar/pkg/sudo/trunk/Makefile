@@ -55,5 +55,5 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 post-merge-modulated:
-	@( cd $(DESTDIR)$(bindir);gfind . -name sudo\* -exec gchmod 4755 {} \; )
+	@( cd $(PKGROOT)$(bindir);gfind . -name sudo\* -exec gchmod 4755 {} \; )
 	@$(MAKECOOKIE)
