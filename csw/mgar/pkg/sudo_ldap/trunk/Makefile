@@ -38,7 +38,7 @@ TEST_TARGET = check
 
 include gar/category.mk
 
-PKGFILES_CSWsudoldap = .*$(bindir)/sudo.ldap
+PKGFILES_CSWsudoldap = .*$(bindir).*/sudo.ldap
 
 post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.ldap )
