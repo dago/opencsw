@@ -44,8 +44,8 @@ FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 include gar/category.mk
 
-PKGFILES_CSWsudo  = .*$(bindir)/sudo
-PKGFILES_CSWsudo  = .*$(bindir)/sudo.minimal
+PKGFILES_CSWsudo  = .*$(bindir).*/sudo
+PKGFILES_CSWsudo  = .*$(bindir).*/sudo.minimal
 
 post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; gcp sudo sudo.minimal )
