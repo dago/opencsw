@@ -14,7 +14,6 @@ endef
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWoldap)
-DISTFILES += cswopenldap openldap.xml svc-openldap
 DISTFILES += README.CSW openldaprc
 
 LICENSE = COPYRIGHT
@@ -54,9 +53,6 @@ TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_BUILD_ISAS_sparc = sparcv9
-EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
-
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*
 
@@ -67,6 +63,8 @@ PKGFILES_CSWoldaprt  = $(PKGFILES_RT)
 PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswopenldap$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
@@ -75,6 +73,8 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 INSTALL_SCRIPTS += custom
 
 install-custom:
+	ginstall -D $(DOWNLOADDIR)/cswopenldap \
+		$(DESTDIR)/etc/opt/csw/init.d/cswopenldap
 	@for file in $(EXTRA_DOCS); do \
 		ginstall -D $(WORKDIR)/$$file $(DESTDIR)$(docdir)/$(GARNAME)/$$file; \
 	done

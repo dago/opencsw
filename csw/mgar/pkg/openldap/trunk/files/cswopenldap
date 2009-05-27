@@ -34,6 +34,7 @@ SLAPD=/opt/csw/libexec/slapd
 SLURPD=/opt/csw/libexec/slurpd
 
 # Source startup options
+[ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
 [ -r /opt/csw/etc/openldaprc ] && . /opt/csw/etc/openldaprc
 [ -r /etc/opt/csw/openldaprc ] && . /etc/opt/csw/openldaprc
 
