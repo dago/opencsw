@@ -91,11 +91,13 @@ PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
 
 ENABLE_CHECK = 0
 
-REQUIRED_PKGS_CSWidle = CSWpython CSWpython-tk
-REQUIRED_PKGS_CSWpython  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
-REQUIRED_PKGS_CSWpython += CSWncurses CSWosslrt CSWpython-rt CSWreadline 
-REQUIRED_PKGS_CSWpython += CSWsqlite3rt CSWzlib
-REQUIRED_PKGS_CSWpython-tk = CSWpython CSWtcl CSWtk CSWpython-rt
+REQUIRED_PKGS_CSWidle         = CSWpython CSWpython-tk CSWcswclassutils
+REQUIRED_PKGS_CSWpython       = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
+REQUIRED_PKGS_CSWpython      += CSWncurses CSWosslrt CSWpython-rt CSWreadline 
+REQUIRED_PKGS_CSWpython      += CSWsqlite3rt CSWzlib CSWcswclassutils
+REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 
+REQUIRED_PKGS_CSWpython-tk   += CSWpython-rt CSWcswclassutils
+REQUIRED_PKGS_CSWpython-devel = CSWcswclassutils
 
 CATALOGNAME_CSWidle = idle
 CATALOGNAME_CSWpython = python
