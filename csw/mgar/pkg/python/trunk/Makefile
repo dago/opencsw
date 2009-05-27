@@ -3,6 +3,7 @@ GARVERSION = 2.6.2
 CATEGORIES = lang
 
 SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
+SPKG_CLASSES = none pycompile
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -23,8 +24,6 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # Previous Library for compatability
 DISTFILES += libpython2.5.so.1.0-isa-sparcv8
 DISTFILES += libpython2.5.so.1.0-isa-i386
-DISTFILES += CSWpython.postinstall CSWpython-tk.postinstall CSWidle.postinstall
-DISTFILES += CSWpython.space CSWpython-tk.space CSWidle.space
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -37,7 +36,6 @@ PATCHFILES += multiprocess.diff
 PATCHFILES += pyport.diff
 PATCHFILES += setup.diff
 PATCHFILES += site.diff
-#PATCHFILES += configure.diff
 PATCHFILES += python-config-in.diff
 
 # Test for sunaudiodev fails.
@@ -76,6 +74,9 @@ CONFIGURE_ARGS += --with-signal-module
 CONFIGURE_ARGS += --with-fpectl
 CONFIGURE_ARGS += --with-system-ffi
 CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
+
+# use prototype filters to set the class 
+PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } { print }'
 
 PACKAGES  = CSWidle CSWpython CSWpython-devel CSWpython-rt CSWpython-tk
 
@@ -128,3 +129,9 @@ remove-compiled-py:
 	@gfind $(DESTDIR)$(libdir) -name "*.py[co]" -exec grm -f {} \;
 	@$(MAKECOOKIE)
 
+define CSWpython_postinstall
+#!/bin/sh
+echo "Cleaning up bytecode files..."
+find $(libdir)/python -name "*.py[co]" -exec grm -f {} \;
+exit 0
+endef

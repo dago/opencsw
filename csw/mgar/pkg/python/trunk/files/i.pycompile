@@ -11,21 +11,23 @@
 
 # Force Path for the script to use
 PATH=/usr/bin:/usr/sbin:/opt/csw/bin
-PY_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
-PY_BINDIR=${PKG_INSTALL_ROOT}${PY_PREFIX}/bin
-PY_LIBDIR=${PKG_INSTALL_ROOT}${PY_PREFIX}/lib/python
 
+PY_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+PY_BINDIR=${PY_PREFIX}/bin
+PY_LIBDIR=${PY_PREFIX}/lib/python
+
+#DEBUG = 1  # Uncomment to enable debug
 if [ "${DEBUG}" ]; then
     echo PACKAGE: $PKGINST
 fi
 
-if [ -f ${PY_BINDIR}/python -a -x ${PY_BINDIR}/python ]; then
+if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
     echo "Could not find or execute ${PY_BINDIR}/python"
     echo "Check your Python installation."
     exit 2
 fi
     
-if [ -f ${PY_LIBDIR}/compileall.py ]; then
+if [ ! -f ${PY_LIBDIR}/compileall.py ]; then
     echo "Could not find ${PY_LIBDIR}/compileall.py"
     echo "Check your Python installation."
     exit 2
