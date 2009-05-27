@@ -65,5 +65,8 @@ test-custom:
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
-	@( cd $(WORKSRC) ; gmake install DESTDIR=$(DESTDIR) )
+	@( cd $(WORKSRC) ; \
+		gmake install DESTDIR=$(DESTDIR) ; \
+		mv $(DESTDIR)/opt/csw/share/doc/$(SOURCENAME)-$(GARVERSION) $(DESTDIR)/opt/csw/share/doc/$(GARNAME) ; \
+		mv $(DESTDIR)/opt/csw/share/lasi$(GARVERSION) $(DESTDIR)/opt/csw/share/$(GARNAME))
 	@$(MAKECOOKIE)
