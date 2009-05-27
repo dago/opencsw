@@ -109,8 +109,6 @@ SPKG_DESC_CSWpython-devel = Development Files for Python
 SPKG_DESC_CSWpython-rt = Python Runtime Libraries
 SPKG_DESC_CSWpython-tk = Python Tk Interface (TkInter)
 
-include gar/category.mk
-
 POST_INST_SCR  = add-depricated-libs
 POST_INST_SCR += remove-compiled-py
 
@@ -129,9 +127,12 @@ remove-compiled-py:
 	@gfind $(DESTDIR)$(libdir) -name "*.py[co]" -exec grm -f {} \;
 	@$(MAKECOOKIE)
 
-define CSWpython_postinstall
+define CSWpython_preremove
 #!/bin/sh
 echo "Cleaning up bytecode files..."
 find $(libdir)/python -name "*.py[co]" -exec grm -f {} \;
 exit 0
 endef
+
+include gar/category.mk
+
