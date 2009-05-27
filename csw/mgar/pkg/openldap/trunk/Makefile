@@ -29,7 +29,7 @@ SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
 REQUIRED_PKGS_CSWoldap       = CSWbdb4 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
-REQUIRED_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
+REQUIRED_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc CSWcswclassutils
 REQUIRED_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl
 REQUIRED_PKGS_CSWoldapdevel  = CSWoldaprt
 REQUIRED_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl
