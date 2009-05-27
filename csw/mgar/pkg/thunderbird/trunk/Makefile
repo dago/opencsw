@@ -51,7 +51,10 @@ REQUIRED_PKGS_CSWthunderbird += CSWorbit2
 REQUIRED_PKGS_CSWthunderbird += CSWpango 
 REQUIRED_PKGS_CSWthunderbird += CSWzlib
 
-PATCHFILES = autoconf.mk.in.diff
+PATCHFILES  = autoconf.mk.in.diff 
+PATCHFILES += lber-int.h.diff 
+PATCHFILES += ldappr-int.h.diff
+PATCHFILES += ldap-int.h.diff
 
 TEST_SCRIPTS = 
 
@@ -70,7 +73,7 @@ pre-configure:
 
 pre-install:
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
-	( cd $(WORK_INSTALL)/opt/csw/bin && if [ -L $(GARNAME) ] ; then rm $(GARNAME) ; fi  && ln -s ../mozilla/$(GARNAME)/bin/$(GARNAME) . )
+	( cd $(WORK_INSTALL)/opt/csw/bin ; rm $(GARNAME) ; ln -s ../mozilla/$(GARNAME)/bin/$(GARNAME) . )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )
 	( cp $(WORK_BUILD)/other-licenses/branding/thunderbird/content/icon64.png $(WORK_INSTALL)/opt/csw/share/pixmaps/thunderbird.png )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/applications )
