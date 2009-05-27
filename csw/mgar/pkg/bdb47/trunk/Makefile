@@ -23,10 +23,9 @@ SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
-# No patches for the 4.7 series... yet.
-#PATCHDIR = $(WORKSRC)/..
-#PATCHDIRLEVEL = 0
-#PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*.diff))
+PATCHDIR = $(WORKSRC)/..
+PATCHDIRLEVEL = 0
+PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 
 BUILD64 = 1
 CONFIGURE_SCRIPTS = dist
