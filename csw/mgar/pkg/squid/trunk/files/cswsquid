@@ -7,6 +7,10 @@ CSWSBIN=${CSWPREFIX}/sbin
 SQUID_DAEMON=${CSWSBIN}/squid
 SQUID_CONF=${CSWETC}/squid.conf
 
+if [ -f /lib/svc/share/smf_include.sh ]; then
+    . /lib/svc/share/smf_include.sh
+fi
+
 case "$1" in
     'start')
         if [ -x ${SQUID_DAEMON} -a -f ${SQUID_CONF} ]; then
