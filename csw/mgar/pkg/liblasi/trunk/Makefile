@@ -68,6 +68,6 @@ install-custom:
 	@( cd $(WORKSRC) ; \
 		gmake install DESTDIR=$(DESTDIR) ; \
 		mv $(DESTDIR)/opt/csw/share/doc/$(SOURCENAME)-$(GARVERSION) $(DESTDIR)/opt/csw/share/doc/$(GARNAME) ; \
-		mv $(DESTDIR)/opt/csw/share/lasi$(GARVERSION)/examples $(DESTDIR)/opt/csw/share/$(GARNAME)/ ; \
+		mv $(DESTDIR)/opt/csw/share/lasi$(GARVERSION)/* $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/ ; \
 		rmdir $(DESTDIR)/opt/csw/share/lasi$(GARVERSION) )
 	@$(MAKECOOKIE)
