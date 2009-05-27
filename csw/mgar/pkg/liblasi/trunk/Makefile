@@ -2,6 +2,7 @@ GARNAME = liblasi
 GARVERSION = 1.1.0
 CATEGORIES = lib
 
+SF_PROJ      = lasi
 SOURCENAME = libLASi
 
 DESCRIPTION = C++ Unicode support for PostScript
@@ -44,10 +45,12 @@ include gar/category.mk
 
 WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(GARVERSION)
 
+#		CXX=/opt/csw/gcc4/bin/g++ \
+#
+
 configure-custom:
 	@echo " ==> Configuring $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-		CXX=/opt/csw/gcc4/bin/g++ \
 		cmake	-DCMAKE_INSTALL_PREFIX=/opt/csw \
 			-DCMAKE_VERBOSE_MAKEFILE=ON \
 			. )
