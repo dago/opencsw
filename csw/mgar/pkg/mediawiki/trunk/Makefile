@@ -12,40 +12,38 @@ endef
 
 MASTER_SITES = http://download.wikimedia.org/mediawiki/$(RELVER)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWmediawiki-math.postinstall
-DISTFILES += CSWmediawiki.postinstall
-DISTFILES += CSWmediawiki.preremove
+DISTFILES += CSWmediawiki.postinstall CSWmediawiki.preremove 
+DISTFILES += httpd-mediawiki.conf.CSW README.CSW
 
+ALLOW_RELOCATE = 1
+RELOCATE_PREFIX = /opt/csw/share
 
-PACKAGES = CSWmediawiki CSWmediawiki-math
 CATALOGNAME_CSWmediawiki = mediawiki
 SPKG_DESC_CSWmediawiki = $(DESCRIPTION)
-CATALOGNAME_CSWmediawiki-math = mediawiki_math
-SPKG_DESC_CSWmediawiki-math = LaTeX compatable Math plugin for MediaWiki
 
-REQUIRED_PKGS_CSWmediawiki  = CSWphp5
-REQUIRED_PKGS_CSWmediawiki-math  = CSWphp5 CSWmediawiki CSWtetex
-
-PKGFILES_CSWmediawiki-math = .*/mediawiki/math.*
+REQUIRED_PKGS_CSWmediawiki  = CSWphp5 CSWapache2c
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-GARCOMPILER = GNU
 ARCHALL_CSWmediawiki = 1
+
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = math
+BUILD_SCRIPTS = 
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS = skip
 
-build-math:
-	cd $(WORKSRC)/math; $(BUILD_ENV) gmake
-	@$(MAKECOOKIE)
-
+PATH = /opt/csw/php5/bin:$(PATH)
 install-custom:
-	@ginstall -d $(INSTALLISADIR)$(prefix)/mediawiki
-	@(cd $(WORKSRC); /usr/bin/pax -rw -v ./ $(abspath $(INSTALLISADIR)$(prefix)/mediawiki))
+	@ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki
+	@cd $(WORKSRC); \
+		/usr/bin/pax -rw -v ./ $(abspath $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki)
+	@ginstall -D $(DOWNLOADDIR)/README.CSW \
+		$(DESTDIR)$(RELOCATE_PREFIX)/mediawiki/documentation/README.CSW
+	@ginstall -D $(DOWNLOADDIR)/httpd-mediawiki.conf.CSW \
+		$(DESTDIR)$(RELOCATE_PREFIX)/mediawiki/contrib/httpd-mediawiki.conf.CSW
+	@$(MAKECOOKIE)
 
 test-skip:
 	@$(MAKECOOKIE)

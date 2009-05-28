@@ -1,27 +1,59 @@
 #!/bin/sh
 
-CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
-AP2_PREFIX=$CSW_PREFIX/apache2
-AP2_BINDIR=$AP2_PREFIX/sbin
-AP2_LIBEXEC=$AP2_PREFIX/libexec
-AP2_CONFDIR=$AP2_PREFIX/etc
-AP2_EXTRADIR=$AP2_CONFDIR/extra
-AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+WIKIDIR=${PKG_INST_ROOT}${BASEDIR}/mediawiki
+DOCDIR=${WIKIDIR}/documentation
+CONTRIBDIR=${WIKIDIR}/contrib
+AP2EXTRADIR=/opt/csw/apache2/etc/extra
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+AP2USR="`sed -ne 's/^User \(.*\)/\1/p' ${AP2CONF}`"
+AP2GRP="`sed -ne 's/^Group \(.*\)/\1/p' ${AP2CONF}`"
 
-AP2_SERVERNAME=`/bin/sed -ne 's/^[\s]*ServerName \(.*\)/\1/p' ${AP2_CONFIG}`
-AP2_DOCROOT=`/bin/sed -ne 's/^[\s]*DocumentRoot "\(.*\)"/\1/p' ${AP2_CONFIG}`
-/bin/ln -s /opt/csw/mediawiki ${AP2_DOCROOT}/wiki
+if [ -z "${AP2USR}" ]; then
+    AP2USR=nobody
+fi
+if [ -z "${AP2GRP}" ]; then
+    AP2GRP=nobody
+fi
 
-cat << _EOF_
-******************************************************************************
-* NOTICE: Successfully Enabled MediaWiki
-* in ${AP2_CONFIG}
+perl -i -pne "s|_MEDIAWIKIDIR_|${WIKIDIR}|" ${CONTRIBDIR}/httpd-mediawiki.conf.CSW
+cp ${CONTRIBDIR}/httpd-mediawiki.conf.CSW ${AP2EXTRADIR}/httpd-mediawiki.conf.CSW
+
+if [ -f "${AP2EXTRADIR}/httpd-mediawiki.conf" ]; then
+    echo "***** ${AP2EXTRADIR}/httpd-mediawiki.conf Found *****"
+    echo "***** Preserving Existing Config *****"
+else
+    cp ${AP2EXTRADIR}/httpd-mediawiki.conf.CSW ${AP2EXTRADIR}/httpd-mediawiki.conf
+fi
+
+if [ -n "`grep 'Include etc/extra/httpd-mediawiki.conf' ${AP2CONF}`" ]; then
+      perl -i -pne 's|#(Include etc/extra/httpd-mediawiki.conf)|$1|' ${AP2CONF}
+else
+      cat << END >>${AP2CONF}
+
+Include etc/extra/httpd-mediawiki.conf
+
+END
+fi
+
+cat << _EOM_
+*********************************************************************
+*    NOTICE:
+*          MediaWiki has been enabled in ${AP2CONF}
+*          You will need to restart your web server
+*          To finish the install.
+*********************************************************************
+
+*********************************************************************
+*   NOTICE:
+*         Before you can use MediaWiki you need to configure it.
 *
-* You will need to point your web browser to
-* http://${AP2_SERVERNAME}/wiki/config
-* To configure your Wiki
-******************************************************************************
-_EOF_
+*         For instructions on configuring Please Read
+*         ${DOCDIR}/README.CSW
+*
+*********************************************************************
 
+_EOM_
+
+chown -R ${AP2USR}:${AP2GRP} ${WIKIDIR}
 exit 0
 

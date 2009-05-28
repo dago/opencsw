@@ -1,15 +1,20 @@
 #!/bin/sh
 
-CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
-AP2_PREFIX=$CSW_PREFIX/apache2
-AP2_BINDIR=$AP2_PREFIX/sbin
-AP2_LIBEXEC=$AP2_PREFIX/libexec
-AP2_CONFDIR=$AP2_PREFIX/etc
-AP2_EXTRADIR=$AP2_CONFDIR/extra
-AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+PATH=/usr/bin:/usr/sbin
 
-AP2_DOCROOT=`/bin/sed -ne 's/^[\s]*DocumentRoot "\(.*\)"/\1/p' ${AP2_CONFIG}`
-/bin/rm -f ${AP2_DOCROOT}/wiki
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+
+perl -i -pne 's|(?<!#)(Include etc/extra/httpd-mediawiki.conf)|#$1|' ${AP2CONF}
+
+cat << _EOM_
+
+*********************************************************************
+*    NOTICE:
+*          MediaWiki has been disabled in ${AP2CONF}
+*          You will need to restart your web server
+*          To finish the removal.
+*********************************************************************
+
+_EOM_
 
 exit 0
-

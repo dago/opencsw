@@ -1,0 +1,27 @@
+README.CSW
+==========
+
+Configuration
+=============
+1) Setup the MediaWiki Database
+    MediaWiki Requires Either:
+        * MySQL (http://www.mysql.com)
+        * PostgreSQL (http://www.postgresql.org)
+
+    Using MySQL
+    ===========
+    # pkg-get -i mysql5rt mysql5client mysql5 php5_mysqli
+    **** NOTE ****
+    You will need an account with superuser privileges
+    to create the database.
+    **************
+
+    Using PostgreSQL
+    ================
+    # pkg-get -i postgresql php5_pgsql
+
+2) Point your web browser to
+   http://mydomain/mediawiki/index.php
+
+and follow the onscreen instructions
+
