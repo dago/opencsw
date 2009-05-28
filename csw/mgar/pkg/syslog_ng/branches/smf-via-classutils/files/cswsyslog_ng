@@ -9,11 +9,11 @@
 # changes for OpenCSW by Ihsan Dogan, 10. November 2008
 
 DAEMON=/opt/csw/sbin/syslog-ng
-OPTIONS="-f /opt/csw/etc/syslog-ng.conf"
+OPTIONS="-f /etc/opt/csw/syslog-ng.conf"
 
 case "$1" in
 	start)
-	        if [ -f /opt/csw/etc/syslog-ng.conf -a -f /opt/csw/sbin/syslog-ng ]; then
+	        if [ -f /etc/opt/csw/syslog-ng.conf -a -f /opt/csw/sbin/syslog-ng ]; then
 	                echo 'syslog-ng service starting.'
 	                #
 	                # Before syslog-ng starts, save any messages from previous

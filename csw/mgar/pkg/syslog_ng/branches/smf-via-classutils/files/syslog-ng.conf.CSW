@@ -29,7 +29,7 @@ destination d_mlal { usertty("*"); };
 
 filter f_filter1   { level(err) or
 		     (level(notice) and facility (auth, kern)); };
-filter f_filter2   { level(err) or
+filter f_filter2   { level(info) or
                      (facility(kern) and level(notice)) or
                      (facility(daemon) and level(notice)) or
                      (facility(mail) and level(crit)); };
