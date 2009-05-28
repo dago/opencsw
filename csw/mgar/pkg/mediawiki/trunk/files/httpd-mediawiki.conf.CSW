@@ -1,0 +1,14 @@
+Alias /mediawiki "_MEDIAWIKIDIR_"
+
+<Directory "_MEDIAWIKIDIR_">
+    AllowOverride None
+    <Limit GET POST OPTIONS>
+        Order allow,deny
+        Allow from all
+    </Limit>
+    <LimitExcept GET POST OPTIONS>
+        Order deny,allow
+        Deny from all
+    </LimitExcept>
+</Directory>
+
