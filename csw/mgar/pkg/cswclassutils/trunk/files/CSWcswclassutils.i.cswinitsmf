@@ -14,6 +14,9 @@
 # 2009-04-22 Fix bug when starting packages with multiple services (Ihsan Dogan)
 # 2009-04-24 Temporarily disabled the "persistent state" code until it can be used
 #            per service, not just per package
+# 2009-05-28 Enabled persistent state code again after receiving patch from Yann.
+#            Support AUTOENABLE to force no start regardless of
+#            local csw.conf (Bug ID 0003635)
 
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
@@ -203,7 +206,11 @@ EOF
     echo $PKGINST is using Service Management Facility. The FMRI is svc:/$FMRI/$service:default
 
     # Start service
-    if [ "$daemon" = "yes" ]; then
+    AUTOENABLE="yes"
+    if [ "`grep '^#AUTOENABLE' $dest`" ]; then
+      AUTOENABLE=`grep '^#AUTOENABLE' $dest | awk '{print $2}' | tr -s '[:upper:]' '[:lower:]'`
+    fi
+    if [ "$daemon" = "yes" -a "$AUTOENABLE" != "no" -a "$AUTOENABLE" != "false"]; then
       load_smf_service_state "$FMRI/$service"
       if [ "$SMF_STATE" = "enabled" ]; then
         echo Enabling svc:/$FMRI/$service ...
