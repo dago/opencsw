@@ -13,6 +13,7 @@ define BLURB
 	MIME support, address books, and folder manipulation. 
 endef
 
+LICENSE = COPYING
 ARCHALL = 1
 
 MASTER_SITES = $(SF_MIRRORS)
