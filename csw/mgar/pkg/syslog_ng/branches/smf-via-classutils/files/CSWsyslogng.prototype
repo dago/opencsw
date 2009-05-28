@@ -1,0 +1,13 @@
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/loggen 0755 root bin
+d none /opt/csw/etc 0755 root bin
+f none /opt/csw/etc/syslog-ng.conf.CSW 0444 root bin
+d none /opt/csw/sbin 0755 root bin
+f none /opt/csw/sbin/syslog-ng 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man5 0755 root bin
+f none /opt/csw/share/man/man5/syslog-ng.conf.5 0644 root bin
+d none /opt/csw/share/man/man8 0755 root bin
+f none /opt/csw/share/man/man8/syslog-ng.8 0644 root bin
+f cswinitsmf /etc/opt/csw/init.d/cswsyslog_ng 0755 root bin
