@@ -56,5 +56,5 @@ SPKG_DESC_CSWap2modphp4     = PHP 4 - Apache 2.2.x Module
 CATALOGNAME_CSWmodphp4      = mod_php4_core
 SPKG_DESC_CSWmodphp4        = PHP 4 - Apache 1.3.x Module
 CATALOGNAME_CSWphp          = mod_php
-SPKG_DESC_CSWphp            = Both an apache module and command line interpreter for the PHP language
+SPKG_DESC_CSWphp            = A Meta Package that will install the apache1.x module plus all php4 modules
 ARCHALL_CSWphp =  1
