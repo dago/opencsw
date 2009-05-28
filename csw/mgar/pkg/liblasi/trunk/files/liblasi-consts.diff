@@ -1,0 +1,19 @@
+--- libLASi-1.1.0.orig/src/psDoc.cpp	2008-02-09 02:27:56.000000000 +0100
++++ libLASi-1.1.0/src/psDoc.cpp	2009-05-28 16:30:44.992797292 +0200
+@@ -82,11 +82,11 @@
+ }
+ 
+ void PostscriptDocument::setFont(
+-    const char* const       family,
+-    const LASi::FontStyle   style,
+-    const LASi::FontWeight  weight,
+-    const LASi::FontVariant variant,
+-    const LASi::FontStretch stretch)
++    const char* const family,
++    LASi::FontStyle   style,
++    LASi::FontWeight  weight,
++    LASi::FontVariant variant,
++    LASi::FontStretch stretch)
+ {
+     
+     //

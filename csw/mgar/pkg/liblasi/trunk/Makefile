@@ -26,7 +26,9 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(SOURCENAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWftype2 CSWgcc3corert CSWgcc3g++ CSWggettextrt CSWglib2 CSWpango CSWzlib
+PATCHFILES = liblasi-consts.diff
+
+REQUIRED_PKGS = CSWftype2 CSWggettextrt CSWglib2 CSWpango CSWzlib
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
@@ -49,7 +51,6 @@ WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(GARVERSION)
 configure-custom:
 	@echo " ==> Configuring $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-		CXX=/opt/csw/gcc4/bin/g++ \
 		cmake	-DCMAKE_INSTALL_PREFIX=/opt/csw \
 			-DCMAKE_VERBOSE_MAKEFILE=ON \
 			. )
