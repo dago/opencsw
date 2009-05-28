@@ -15,6 +15,8 @@ f none /usr/sadm/install/scripts/i.cswcpsampleconf 0555 root sys
 f none /usr/sadm/install/scripts/r.cswcpsampleconf 0555 root sys
 f none /usr/sadm/install/scripts/i.cswpreserveconf 0555 root sys
 f none /usr/sadm/install/scripts/r.cswpreserveconf 0555 root sys
+f none /usr/sadm/install/scripts/i.cswpycompile 0555 root sys
+f none /usr/sadm/install/scripts/r.cswpycompile 0555 root sys
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/cswclassutils 0755 root bin

@@ -35,6 +35,14 @@ Currently it has:
   users, groups, gcos, home directory and shell. You can also decide if you want
   the home directories to be created and/or removed during install/remove.
 
+- cswpycompile
+
+  This class takes care of creating/removing python's normal and optimized
+  bytecode files.  Set all *.py files' class = pycompile to activate.
+  Example:
+  # use prototype filters to set the class
+  PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } { print }'
+
 Read more on the wiki: http://wiki.opencsw.org/cswclassutils-package.
 
 -- 
