@@ -3,7 +3,7 @@ GARVERSION = 2.6.2
 CATEGORIES = lang
 
 SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
-SPKG_CLASSES = none pycompile
+SPKG_CLASSES = none cswpycompile
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -76,7 +76,7 @@ CONFIGURE_ARGS += --with-system-ffi
 CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
 
 # use prototype filters to set the class 
-PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } { print }'
+PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
 PACKAGES  = CSWidle CSWpython CSWpython-devel CSWpython-rt CSWpython-tk
 
