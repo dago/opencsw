@@ -14,14 +14,17 @@ define BLURB
 endef
 
 ARCHALL = 1
+
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += CSWsquirrelmail.postinstall CSWsquirrelmail.preremove
+DISTFILES += httpd-squirrelmail.conf.CSW
 
 PACKAGES = CSWsquirrelmail
 CATALOGNAME_CSWsquirrelmail = squirrelmail
 SPKG_DESC_CSWsquirrelmail = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWsquirrelmail  = CSWimap CSWapache2c
+REQUIRED_PKGS_CSWsquirrelmail  = CSWphp5 CSWapache2c
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
@@ -42,8 +45,10 @@ configure-cswize:
 	@$(MAKECOOKIE)
 
 install-custom:
-	ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)/contrib
 	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)
+	gcp $(DOWNLOADDIR)/httpd-squirrelmail.conf.CSW \
+		$(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)/contrib
 	@$(MAKECOOKIE)
 	
 include gar/category.mk
