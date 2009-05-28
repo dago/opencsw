@@ -28,11 +28,22 @@ REQUIRED_PKGS_CSWsquirrelmail  = CSWimap CSWapache2c
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_SCRIPTS = cswize
+BUILD_SCRIPTS = 
+INSTALL_SCRIPTS = custom
+TEST_SCRIPTS =
 
+ALLOW_RELOCATE = 1
+RELOCATE_PREFIX = /opt/csw/share
 configure-cswize:
-	@(perl -i -pe 's|/var/local|/opt/csw|' $(WORKSRC)/config/config_default.php)
+	@(perl -i -pe 's|/var/local|/var/opt/csw|' \
+		$(WORKSRC)/config/config_default.php)
 	@(perl -i -pe 's|/usr/sbin/sendmail|/usr/lib/sendmail|' \
 		        $(WORKSRC)/config/config_default.php)
 	@$(MAKECOOKIE)
 
+install-custom:
+	ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)
+	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)
+	@$(MAKECOOKIE)
+	
 include gar/category.mk

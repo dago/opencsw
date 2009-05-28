@@ -1,0 +1,63 @@
+#!/bin/sh
+
+SQUIRRELMAILDIR=${PKG_INST_ROOT}${BASEDIR}/squirrelmail
+CONTRIBDIR=${SQUIRRELMAILDIR}/contrib
+AP2EXTRADIR=/opt/csw/apache2/etc/extra
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+AP2USR="`sed -ne 's/^User \(.*\)/\1/p' ${AP2CONF}`"
+AP2GRP="`sed -ne 's/^Group \(.*\)/\1/p' ${AP2CONF}`"
+
+if [ -z "${AP2USR}" ]; then
+    AP2USR=nobody
+fi
+if [ -z "${AP2GRP}" ]; then
+    AP2GRP=nobody
+fi
+
+perl -i -pne "s|_SQUIRRELMAILDIR_|${SQUIRRELMAILDIR}|" ${CONTRIBDIR}/httpd-squirrelmail.conf.CSW
+cp ${CONTRIBDIR}/httpd-squirrelmail.conf.CSW ${AP2EXTRADIR}/httpd-squirrelmail.conf.CSW
+
+if [ -f "${AP2EXTRADIR}/httpd-squirrelmail.conf" ]; then
+    echo "***** ${AP2EXTRADIR}/httpd-squirrelmail.conf Found *****"
+    echo "***** Preserving Existing Config *****"
+else
+    cp ${AP2EXTRADIR}/httpd-squirrelmail.conf.CSW ${AP2EXTRADIR}/httpd-squirrelmail.conf
+fi
+
+if [ -n "`grep 'Include etc/extra/httpd-squirrelmail.conf' ${AP2CONF}`" ]; then
+      perl -i -pne 's|#(Include etc/extra/httpd-squirrelmail.conf)|$1|' ${AP2CONF}
+else
+      cat << END >>${AP2CONF}
+
+Include etc/extra/httpd-squirrelmail.conf
+
+END
+fi
+
+cat << _EOM_
+*********************************************************************
+*    NOTICE:
+*          SquirrelMail has been enabled in ${AP2CONF}
+*          You will need to restart your web server
+*          To finish the install.
+*********************************************************************
+
+*********************************************************************
+*   NOTICE:
+*         Before you can use SquirrelMail you need to configure it.
+*
+*         Run ${SQUIRRELMAILDIR}/config/conf.pl
+*
+*********************************************************************
+
+_EOM_
+
+mkdir -p /var/opt/csw/squirrelmail/data
+mkdir -p /var/opt/csw/squirrelmail/attach
+chmod 0730 /var/opt/csw/squirrelmail/attach
+chown -R ${AP2USR}:${AP2GRP} ${SQUIRRELMAILDIR}
+chown -R ${AP2USR}:${AP2GRP} /var/opt/csw/squirrelmail/data
+chown -R root:${AP2GRP} /var/opt/csw/squirrelmail/attach
+
+exit 0
+
