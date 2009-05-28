@@ -8,7 +8,7 @@
 # Written by Peter Bonivart
 #
 # 2008-04-22 First release
-# 2009-05-28 Add AUTOENABLE
+# 2009-05-28 Add AUTOENABLE, MANIFEST
 #
 # Usage
 # -----
@@ -52,9 +52,12 @@
 ##RC_SLEV 3          # Run levels that should have a start script symlink
 ##FMRI network       # FMRI path for service (S10+), the example would give
 #                      an FMRI of "svc:/network/cswfoo:default"
-##AUTOENABLE no	     # Will not enable SMF service regardless of local csw.conf,
-#                      use when a package needs setup before being useful,
-#                      would otherwise leave service in maintainance mode
+##AUTOENABLE yes     # If set to no will not enable SMF service regardless of
+#                      local csw.conf, use when a package needs setup before
+#                      being useful, would otherwise leave service in
+#                      maintenance mode
+##MANIFEST /absolute/path/to/manifest   # If set, use this manifest instead
+#                      of autogenerating one (default)
 
 case "$1" in
   start)
