@@ -1,0 +1,12 @@
+#!/bin/bash
+
+case $1 in
+  start)
+    /opt/csw/bin/sleeping-beauty &
+    ;;
+  stop)
+    pkill sleeping-beauty
+    ;;
+  *)
+    ;;
+esac
