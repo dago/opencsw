@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Starting Sun cron:
+svcadm enable svc:/system/cron:default

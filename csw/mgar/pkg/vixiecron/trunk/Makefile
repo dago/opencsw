@@ -16,19 +16,29 @@ define BLURB
 endef
 
 # TODO:
-#  - Improve man page locations. The original manpage install script looks retarded.
-#  - SMF support for non-global zones.
+#  - Improve man page locations. The original manpage install script
+#    looks retarded.
 
 MASTER_SITES  = http://ftp.de.debian.org/debian/pool/main/c/cron/
 DISTFILES  = cron_$(GARVERSION).orig.tar.gz
 DISTFILES += cron_$(GARVERSION)-105.diff.gz
-DISTFILES += $(call admfiles,CSWvixiecron,postinstall)
-DISTFILES += csw$(GARNAME) csw$(GARNAME).xml svc-csw$(GARNAME)
-DISTFILES += crontab.CSW run-crons-0.3.2
+DISTFILES += CSWvixiecron.preinstall
+DISTFILES += CSWvixiecron.postinstall
+DISTFILES += CSWvixiecron.postremove
+DISTFILES += csw$(GARNAME)
+DISTFILES += crontab.CSW
+DISTFILES += run-crons-0.3.2
 
 WORKSRC = $(WORKDIR)/cron-$(GARVERSION).orig
 
-SPKG_CLASSES = none cswinitsmf
+SPKG_CLASSES = none cswcpsampleconf cswinitsmf
+REQUIRED_PKGS = CSWcswclassutils
+
+PROTOTYPE_FILTER  = awk ' \
+    $$$$3 ~ /\/init.d\/cswvixiecron$$$$/ { $$$$2 = "cswinitsmf" } \
+    $$$$3 ~ /\/crontab\.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+    $$$$3 ~ /\/opt\/csw\/bin\/crontab$$$$/ { $$$$4 = "1755" } \
+    { print }'
 
 PATCHFILES = cron_$(GARVERSION)-105.diff.gz \
              gar-$(GARNAME)_$(GARVERSION).patch
@@ -43,6 +53,7 @@ pre-install:
 	ginstall -d $(DESTDIR)/opt/csw/sbin
 	ginstall -d $(DESTDIR)/opt/csw/share/man/cat5
 	ginstall -d $(DESTDIR)/opt/csw/share/man/cat8
+	@$(MAKECOOKIE)
 
 pre-install-isa-sparcv9: pre-install
 pre-install-isa-sparcv8: pre-install
@@ -50,17 +61,24 @@ pre-install-isa-i386: pre-install
 pre-install-isa-amd64: pre-install
 
 post-install:
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall $(FILEDIR)/csw$(GARNAME) \
+		$(DESTDIR)/etc/opt/csw/init.d/csw$(GARNAME)
 	ginstall -d $(DESTDIR)/etc
-	ginstall -m 750 files/crontab.CSW $(DESTDIR)/etc/crontab.CSW
-	ginstall -m 755 files/run-crons-0.3.2 $(DESTDIR)/opt/csw/sbin/run-crons
+	ginstall -m 750 $(FILEDIR)/crontab.CSW \
+		$(DESTDIR)/etc/crontab.CSW
+	ginstall -m 755 $(FILEDIR)/run-crons-0.3.2 \
+		$(DESTDIR)/opt/csw/sbin/run-crons
 	for base in hourly daily weekly monthly; do \
 		ginstall -d $(DESTDIR)/etc/cron.$$base; \
 	done
+	@$(MAKECOOKIE)
+
+REQUIRED_PKGS = CSWcswclassutils
 
 post-install-isa-sparcv8: post-install
 post-install-isa-sparcv9: post-install
 post-install-isa-i386: post-install
 post-install-isa-amd64: post-install
-
 
 include gar/category.mk

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "Stopping svc:/system/cron:default"
+svcadm disable svc:/system/cron:default
+
