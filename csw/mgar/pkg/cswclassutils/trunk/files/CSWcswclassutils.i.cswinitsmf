@@ -18,21 +18,21 @@
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
 
-#SMF_STATE_DIR="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG"
-#SMF_STATE_FILE="$SMF_STATE_DIR/smf.state"
+SMF_STATE_DIR="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG"
+SMF_STATE_FILE="$SMF_STATE_DIR/smf.state"
 
 # retrieve the previous state of a service identified by the given FRMI
-#load_smf_service_state ()
-#{
-#    SMF_STATE="disabled"
-#
-#    if [ -f "$SMF_STATE_FILE" ]; then
-#        set -- `/usr/bin/awk " \\\$1 == \"$1\" { print \\\$2 } " "$SMF_STATE_FILE"`
-#        if [ "$1" = "enabled" ]; then
-#            SMF_STATE="enabled"
-#        fi
-#    fi
-#}
+load_smf_service_state ()
+{
+    SMF_STATE="enabled"
+
+    if [ -f "$SMF_STATE_FILE" ]; then
+        set -- `/usr/bin/awk " \\\$1 == \"$1\" { print \\\$2 } " "$SMF_STATE_FILE"`
+        if [ "$1" = "disabled" ]; then
+            SMF_STATE="disabled"
+        fi
+    fi
+}
 
 # Source csw.conf, if it exists
 if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
@@ -204,11 +204,11 @@ EOF
 
     # Start service
     if [ "$daemon" = "yes" ]; then
-#      load_smf_service_state "$FMRI/$service"
-#      if [ "$SMF_STATE" = "enabled" ]; then
+      load_smf_service_state "$FMRI/$service"
+      if [ "$SMF_STATE" = "enabled" ]; then
         echo Enabling svc:/$FMRI/$service ...
         /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
-#      fi
+      fi
     fi
   else
     # Copy the service script
@@ -279,7 +279,7 @@ EOF
 done
 
 # we delete the smf state file as we don't need it anymore
-#rm -f "$SMF_STATE_FILE"
+rm -f "$SMF_STATE_FILE"
 
 /usr/sbin/installf -f $PKGINST
 
