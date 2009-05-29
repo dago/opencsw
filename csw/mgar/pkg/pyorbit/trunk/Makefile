@@ -1,15 +1,31 @@
-# vim: ft=make ts=4 sw=4 noet
+GARNAME = pyorbit
+GARVERSION = 2.24.0
+CATEGORIES = lang
+RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 
-default:
-	@echo "You are in the pkg/ directory."
+DESCRIPTION = ORBit2 CORBA support for Python
+define BLURB
+  This is a Python language binding for the ORBit2 CORBA implementation.
+endef
 
-%:
-	$(MAKE) -C trunk $* 
+MASTER_SITES = http://ftp.acc.umu.se/pub/GNOME/sources/pyorbit/$(RELVER)/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+STRIP_LIBTOOL = 1
 
-paranoid-%:
-	$(MAKE) -C trunk $* || exit 2 
+PACKAGES = CSWpyorbit
+REQUIRED_PKGS_CSWpyorbit  = CSWpython CSWggettextrt CSWglib2
+REQUIRED_PKGS_CSWpyorbit += CSWlibidl CSWorbit2
 
-export BUILDLOG ?= $(shell pwd)/buildlog.txt
+CATALOGNAME_CSWpyorbit = pyorbit
+SPKG_SOURCEURL_CSWpyorbit = http://freshmeat.net/projects/pyorbit/
+SPKG_DESC_CSWpyorbit = ORBit2 CORBA support for Python
 
-report-%:
-	$(MAKE) -C trunk $* || echo "	*** make $* in $$i failed ***" >> $(BUILDLOG) 
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
+UFILES_REGEX = (\d+(?:\.\d+)*).tar.bz2
+
+## No tests
+TEST_SCRIPTS = 
+
+include gar/category.mk
+
