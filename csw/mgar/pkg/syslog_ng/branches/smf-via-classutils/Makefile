@@ -13,6 +13,8 @@ MASTER_SITES = http://www.balabit.com/downloads/files/$(GARNAME)/open-source-edi
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += $(GARNAME).conf.CSW
 DISTFILES += cswsyslog_ng
+DISTFILES += CSWsyslog-ng.preinstall
+DISTFILES += CSWsyslog-ng.postremove
 
 CATALOGNAME = syslog_ng
 
