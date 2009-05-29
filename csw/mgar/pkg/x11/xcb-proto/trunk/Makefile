@@ -1,5 +1,5 @@
 GARNAME = xcb-proto
-GARVERSION = 1.4
+GARVERSION = 1.5
 
 CATEGORIES = x11
 
