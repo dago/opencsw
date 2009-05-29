@@ -51,13 +51,7 @@ REQUIRED_PKGS += CSWtcpwrap
 GARCOMPILER = GNU
 TEST_SCRIPTS =
 
-# adding configuration file
-post-install-isa-sparcv8: post-install
-post-install-isa-sparcv9: post-install
-post-install-isa-i386: post-install
-post-install-isa-amd64: post-install
-
-post-install:
+post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw
 	ginstall -m 444 $(WORKDIR)/$(GARNAME).conf.CSW \
 		$(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
