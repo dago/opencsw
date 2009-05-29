@@ -20,4 +20,12 @@ fi
 echo "Removing pyo and pyc files for package <$PKGINST> ..."
 pkgchk -v $PKGINST 2>&1 |grep \.py$ | xargs -i rm -f {}c {}o
 
+while read dest; do
+    if [ "$DEBUG" ]; then
+        echo DEST: $dest
+    fi
+    /usr/bin/rm -f $dest || exit 2
+done
+
+
 exit 0

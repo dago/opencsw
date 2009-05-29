@@ -15,6 +15,7 @@
 # 2009-04-23 Fixed bug when stopping non-SMF services
 # 2009-04-24 Temporarily disabled the "persistent state" code until it can be used
 #            per service, not just per package
+# 2009-05-28 Enabled persistent state code again after receiving patch from Yann.
 
 DEBUG=		# clear to disable debug, set to anything to enable
 

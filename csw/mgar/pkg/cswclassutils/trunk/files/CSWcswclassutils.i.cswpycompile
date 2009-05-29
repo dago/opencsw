@@ -20,6 +20,13 @@ PY_LIBDIR=${PY_PREFIX}/lib/python
 if [ "${DEBUG}" ]; then
     echo PACKAGE: $PKGINST
 fi
+while read src dest; do
+    if [ "$DEBUG" ]; then
+        echo SRC: $src DEST: $dest
+    fi
+
+    /usr/bin/cp -p $src $dest || exit 2
+done
 
 if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
     echo "Could not find or execute ${PY_BINDIR}/python"
