@@ -21,6 +21,8 @@ CATALOGNAME = syslog_ng
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES = CSWsyslogng
+
 SPKG_SOURCEURL = http://www.balabit.com/network-security/$(GARNAME)/
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
