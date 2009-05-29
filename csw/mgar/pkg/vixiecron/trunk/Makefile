@@ -47,7 +47,7 @@ TEST_SCRIPTS =
 CONFIGURE_SCRIPTS =
 EXTRA_CFLAGS = -DDEBUGGING=0 -DPOSIX -DDEBIAN
 
-pre-install:
+pre-install-modulated:
 	ginstall -d $(DESTDIR)/opt/csw
 	ginstall -d $(DESTDIR)/opt/csw/bin
 	ginstall -d $(DESTDIR)/opt/csw/sbin
@@ -55,12 +55,7 @@ pre-install:
 	ginstall -d $(DESTDIR)/opt/csw/share/man/cat8
 	@$(MAKECOOKIE)
 
-pre-install-isa-sparcv9: pre-install
-pre-install-isa-sparcv8: pre-install
-pre-install-isa-i386: pre-install
-pre-install-isa-amd64: pre-install
-
-post-install:
+post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall $(FILEDIR)/csw$(GARNAME) \
 		$(DESTDIR)/etc/opt/csw/init.d/csw$(GARNAME)
@@ -73,12 +68,5 @@ post-install:
 		ginstall -d $(DESTDIR)/etc/cron.$$base; \
 	done
 	@$(MAKECOOKIE)
-
-REQUIRED_PKGS = CSWcswclassutils
-
-post-install-isa-sparcv8: post-install
-post-install-isa-sparcv9: post-install
-post-install-isa-i386: post-install
-post-install-isa-amd64: post-install
 
 include gar/category.mk
