@@ -1,6 +1,6 @@
 GARNAME = imagemagick
 GARVERSION = 6.5.2
-GARSUBREV = 6
+GARSUBREV = 10
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
