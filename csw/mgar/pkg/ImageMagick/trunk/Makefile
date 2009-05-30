@@ -17,7 +17,6 @@ DISTFILES  = ImageMagick-$(GARVERSION)-$(GARSUBREV).tar.bz2
 DISTNAME = ImageMagick-$(GARVERSION)-$(GARSUBREV)
 
 SPKG_SOURCEURL = http://www.imagemagick.org
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
 
 LICENSE = LICENSE
 
@@ -54,6 +53,8 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 STRIP_LIBTOOL=1
 
 include gar/category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
 
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libMagick.so.10.0.4.s $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4
