@@ -36,7 +36,7 @@ include gar/category.mk
 
 post-extract-modulated:
 	@perl -pi -e 's|/usr/bin/perl|/opt/csw/bin/perl|' $(WORKSRC)/convmv
-	@perl -pi -e 's|\tinstall|ginstall|' $(WORKSRC)/Makefile
+	@perl -pi -e 's|\tinstall|\tginstall|' $(WORKSRC)/Makefile
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
