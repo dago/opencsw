@@ -1,5 +1,5 @@
-httping (1.3.0,REV=2009.05.21)
+httping (1.3.0,REV=2009.05.31)
 
   * Adopted and updated to 1.3.0 (Closes: #3458, #2391).
 
- -- Sebastian Kayser <skayser@opencsw.org>  Thu, 21 May 2009 13:04:48 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 31 May 2009 18:35:11 +0200
