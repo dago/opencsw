@@ -5,7 +5,7 @@
 # Modified for CSW by Sebastian Kayser
 #
 # Don't enable SMF service right away
-#AUTOENABLE=no
+#AUTOENABLE no
 
 PATH=/opt/csw/sbin:/opt/csw/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/opt/csw/bin/stunnel
