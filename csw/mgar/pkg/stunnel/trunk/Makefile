@@ -43,7 +43,7 @@ TEST_SCRIPTS =
 
 PROTOTYPE_FILTER  = awk '\
 	$$$$3 ~ /cswstunnel$$$$/ { $$$$2 = "cswinitsmf" } \
-	$$$$3 ~ /stunnel.pem$$$$/ { $$$$2 = "cswcpsampleconf" } \
+	$$$$3 ~ /stunnel.pem.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
 	$$$$3 ~ /\/var\/opt\/csw\/lib\/stunnel/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
 	{ print }'
 
@@ -65,6 +65,8 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWstunnel.cswstunnel \
 		$(DESTDIR)/etc/opt/csw/init.d/cswstunnel
+	@mv $(DESTDIR)$(sysconfdir)/stunnel/stunnel.pem \
+		$(DESTDIR)$(sysconfdir)/stunnel/stunnel.pem.CSW
 
 	# create pidfile directory
 	@ginstall -d $(DESTDIR)/var/opt/csw/run/stunnel
