@@ -1,0 +1,54 @@
+#!/bin/sh
+# Based on Sample stunnel SysV startup file
+# Copyright by Michal Trojnara 2002,2007,2008
+#
+# Modified for CSW by Sebastian Kayser
+#
+# Don't enable SMF service right away
+#AUTOENABLE=no
+
+PATH=/opt/csw/sbin:/opt/csw/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/opt/csw/bin/stunnel
+DEFAULTPIDFILE=/var/opt/csw/run/stunnel/stunnel.pid
+
+CONFIG=/opt/csw/etc/stunnel/stunnel.conf
+CONFIG_LOCAL=/etc/opt/csw/stunnel/stunnel.conf
+test -r $CONFIG_LOCAL && CONFIG=$CONFIG_LOCAL
+
+test -f $DAEMON || exit 0
+test -f $CONFIG || exit 0
+
+CHROOT=`grep ^chroot $CONFIG | sed 's/.*= *//'`
+PIDFILE=`grep ^pid $CONFIG | sed 's/.*= *//'`
+
+test -z "$DEFAULTPIDFILE" && PIDFILE = $DEFAULTPIDFILE
+
+case "$1" in
+    start)
+        printf "Starting universal SSL tunnel: stunnel"
+        $DAEMON $CONFIG || printf " failed"
+        echo "."
+        ;;
+    stop)
+        printf "Stopping universal SSL tunnel: stunnel"
+        if test -r $CHROOT/$PIDFILE; then
+            kill `cat $CHROOT/$PIDFILE` 2> /dev/null || printf " failed"
+        else
+            printf " no PID file"
+        fi
+        echo "."
+        ;;
+     restart|force-reload)
+        echo "Restarting universal SSL tunnel"
+        $0 stop
+        sleep 1
+        $0 start
+        echo "done."
+        ;;
+    *)
+        echo "Usage: /etc/opt/csw/init.d/cswstunnel {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

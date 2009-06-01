@@ -24,7 +24,7 @@ diff --speed-large-files --minimal -Nru stunnel-4.27.orig/tools/stunnel.conf-sam
  ;CApath = /certs
  ; It's often easier to use CAfile
 -;CAfile = @prefix@/etc/stunnel/certs.pem
-+;CAfile = @sysconfdir/stunnel/certs.pem
++;CAfile = @sysconfdir@/stunnel/certs.pem
  ; Don't forget to c_rehash CRLpath
  ; CRLpath is located inside chroot jail
  ;CRLpath = /crls
@@ -34,19 +34,3 @@ diff --speed-large-files --minimal -Nru stunnel-4.27.orig/tools/stunnel.conf-sam
  
  ; Some debugging stuff useful for troubleshooting
  ;debug = 7
-diff --speed-large-files --minimal -Nru stunnel-4.27.orig/tools/stunnel.init.in stunnel-4.27/tools/stunnel.init.in
---- stunnel-4.27.orig/tools/stunnel.init.in	2008-09-17 20:53:46.000000000 +0200
-+++ stunnel-4.27/tools/stunnel.init.in	2009-05-17 12:21:18.360927513 +0200
-@@ -2,9 +2,9 @@
- # Sample stunnel SysV startup file
- # Copyright by Michal Trojnara 2002,2007,2008
- 
--PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
--DAEMON=@prefix@/bin/stunnel
--PIDFILE=@prefix@/var/run/stunnel/stunnel.pid
-+PATH=@sbindir@:@bindir@:/sbin:/bin:/usr/sbin:/usr/bin
-+DAEMON=@bindir@/stunnel
-+PIDFILE=@localstatedir@/run/stunnel/stunnel.pid
- 
- test -f $DAEMON || exit 0
- 
