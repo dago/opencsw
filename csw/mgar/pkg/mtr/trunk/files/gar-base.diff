@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru mtr-0.75.orig/configure mtr-0.75/configure
+--- mtr-0.75.orig/configure	2008-09-19 11:38:58.000000000 +0200
++++ mtr-0.75/configure	2009-06-01 14:04:15.934912770 +0200
+@@ -7834,7 +7834,7 @@
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ 
+-#include <netinet/in.h>
++#include <sys/socket.h>
+ 
+ 
+ typedef socklen_t ac__type_new_;
+diff --speed-large-files --minimal -Nru mtr-0.75.orig/net.c mtr-0.75/net.c
+--- mtr-0.75.orig/net.c	2008-09-19 11:37:57.000000000 +0200
++++ mtr-0.75/net.c	2009-06-01 14:06:05.858053169 +0200
+@@ -1205,7 +1205,7 @@
+   switch ( saddr->sa_family ) {
+   case AF_INET:
+     sa4 = (struct sockaddr_in *) saddr;
+-    strncpy( strptr, inet_ntoa( (struct in_addr) sa4->sin_addr ), len - 1 );
++    strncpy( strptr, inet_ntoa( sa4->sin_addr ), len - 1 );
+     strptr[ len - 1 ] = '\0';
+     return;
+ #ifdef ENABLE_IPV6
