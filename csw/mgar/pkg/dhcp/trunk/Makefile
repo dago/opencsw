@@ -1,5 +1,5 @@
 GARNAME = dhcp
-GARVERSION = 4.1.0
+GARVERSION = 4.1.1b1
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
@@ -12,9 +12,9 @@ endef
 
 MASTER_SITES = http://ftp.isc.org/isc/dhcp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWdhcp,)
-DISTFILES += $(call admfiles,CSWdhcpdevel,)
 
+PACKAGES = CSWdhcp CSWdhcpdevel
+CATALOGNAME_CSWdhcpdevel = dhcp_devel
 SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
 
 REQUIRED_PKGS_CSWdhcp = CSWcswclassutils CSWosslrt
@@ -38,7 +38,12 @@ PKGFILES_CSWdhcpdevel = $(PKGFILES_DEVEL)
 
 INSTALL_SCRIPTS = custom
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdhcpd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/dhcpd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/dhclient.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/dhcpd.leases.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
+PROTOTYPE_FILTER  = awk ' \
+  $$$$3 ~ /\/init.d\/cswdhcpd$$$$/ { $$$$2 = "cswinitsmf" } \
+  $$$$3 ~ /\/dhcpd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+  $$$$3 ~ /\/dhclient.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+  $$$$3 ~ /\/dhcpd.leases.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+  { print }'
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 SPKG_CLASSES_CSWdhcp = none cswcpsampleconf cswinitsmf
