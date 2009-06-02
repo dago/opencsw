@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Make sure we use at least cswclassutils 1.15 (this is where AUTOENABLE
+# support was introduced). pkgutil should take care of this sometime, but
+# as we don't know whether the system has a recent pkgutil, we do it here
+# for now.
+
+# Use the REV stamp as it is guaranteed to go up and is easier to compare
+# than the version field
+R=`/bin/pkgparam CSWcswclassutils VERSION | cut -d= -f2 | tr -d .`
+
+[ "0$R" -ge 20090602 ] && exit 0
+
+echo "Please install cswclassutils >= REV=2009-06-02 first." >&2
+echo "Aborting installation." >&2
+
+exit 1
