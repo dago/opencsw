@@ -223,9 +223,9 @@ EOF
     # Start service
     AUTOENABLE="yes"
     if [ "`grep '^#AUTOENABLE' $dest`" ]; then
-      AUTOENABLE=`grep '^#AUTOENABLE' $dest | awk '{print $2}' | tr -s '[:upper:]' '[:lower:]'`
+      AUTOENABLE=`grep '^#AUTOENABLE' $dest | awk '{print $2}' | /usr/xpg4/bin/tr -s '[:upper:]' '[:lower:]'`
     fi
-    if [ "$daemon" = "yes" -a "$AUTOENABLE" != "no" -a "$AUTOENABLE" != "false"]; then
+    if [ "$daemon" = "yes" -a "$AUTOENABLE" != "no" -a "$AUTOENABLE" != "false" ]; then
       load_smf_service_state "$FMRI/$service"
       if [ "$SMF_STATE" = "enabled" ]; then
         echo Enabling svc:/$FMRI/$service ...
