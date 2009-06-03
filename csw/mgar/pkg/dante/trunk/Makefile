@@ -71,6 +71,17 @@ PROTOTYPE_FILTER  = awk '\
 
 include gar/category.mk
 
+# Fix missing issetugid on Solaris 8, it is not nice, but the best i can
+# come up with for now, ref. 
+#   http://bugs.gentoo.org/attachment.cgi?id=180390
+#	issetugid(2) on a Solaris 10 box (WRT to concerns)
+# This should be revamped into a patch for libscompat/issetugid.c
+post-extract-modulated:
+	@perl -pi -e '\
+		s/int issetugid __P\(\(void\)\)/#define issetugid() (getuid() != geteuid()) || (getgid() != getegid())/' \
+			$(WORKSRC)/include/common.h
+	@$(MAKECOOKIE)
+
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: DOCS = CREDITS NEWS SUPPORT
 post-install-modulated:
@@ -82,5 +93,5 @@ post-install-modulated:
 	@cp $(FILEDIR)/CSWdante.cswdante $(DESTDIR)/etc/opt/csw/init.d/cswdante
 
 	# /var/opt/csw/run is not in CSWcommon
-	@ginstall -d /var/opt/csw/run
+	@ginstall -d $(DESTDIR)/var/opt/csw/run
 	@$(MAKECOOKIE)
