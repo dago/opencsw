@@ -37,7 +37,14 @@ REQUIRED_PKGS += CSWx11common
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
+
+
+PYTHON_PREFIX=$(BUILD_PREFIX)/lib/python/site-packages
+
+EXTRA_PAX_ARGS = -s ',^.*/\(xcbgen/.*\.py\),.$(BUILD_PREFIX)/lib/python/site-packages/\1,'
+EXTRA_PAX_ARGS += -s ',^\.$(libdir)/python.*,,'
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
