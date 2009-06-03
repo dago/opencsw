@@ -1,6 +1,7 @@
 # Todo
 # * Add changelog.CSW
 # * Compare with current catalog package WRT to config file etc.
+# * Client libraries ignore SOCKS_CONF, fix possible culprit issetguid()
 GARNAME = dante
 GARVERSION = 1.1.19
 CATEGORIES = net
