@@ -32,8 +32,8 @@ SPKG_CLASSES_CSWdante = none cswinitsmf
 EXTRA_MERGE_EXCLUDE_FILES = $(includedir)/socks.h
 
 PKGFILES_CSWlibsocks = $(PKGFILES_RT) .*socks.*
-PKGFILES_CSWlibsocks += $(addprefix $(docdir)/,NEWS SUPPORT CREDITS )
-PKGFILES_CSWlibsocks += $(docdir)/*.CSW
+PKGFILES_CSWlibsocks += $(addprefix $(docdir)/$(GARNAME)/,NEWS SUPPORT CREDITS )
+PKGFILES_CSWlibsocks += $(docdir)/$(GARNAME)/.*CSW
 PKGFILES_CSWdante = .*sockd.* /etc/opt/csw/init.d/cswdante
 
 REQUIRED_PKGS_CSWdante = CSWlibsocks CSWcswclassutils CSWtcpwrap
