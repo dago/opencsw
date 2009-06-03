@@ -1,7 +1,6 @@
 # Todo
-# * Add changelog.CSW
 # * Compare with current catalog package WRT to config file etc.
-# * Client libraries ignore SOCKS_CONF, fix possible culprit issetguid()
+# * Ponder about the SOCKS_CONF / issetguid() issue
 GARNAME = dante
 GARVERSION = 1.1.19
 CATEGORIES = net
@@ -23,31 +22,21 @@ MASTER_SITES += ftp://ftp.inet.no/pub/socks/old/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 SPKG_SOURCEURL = http://www.inet.no/dante/
 
-PACKAGES = CSWlibsocks CSWdante CSWdanteclient
+PACKAGES = CSWlibsocks CSWdante
 
-SPKG_DESC_CSWlibsocks = Dante SOCKS runtime libraries
+SPKG_DESC_CSWlibsocks = Dante SOCKS runtime libraries (and socksify wrapper)
 SPKG_DESC_CSWdante = Dante SOCKS (v4 and v5) proxy daemon
-SPKG_DESC_CSWdanteclient = Dante SOCKS wrapper to SOCKsify applications
 SPKG_CLASSES_CSWdante = none cswinitsmf
 
-CATALOGNAME_CSWdanteclient = dante-client
-
-# There is no pkg compiling against dante right now, just drop the
-# header file
+# There is no pkg compiling against dante right now, just drop the .h file
 EXTRA_MERGE_EXCLUDE_FILES = $(includedir)/socks.h
 
-# Would have liked to keep it simple and just put *.sockd.* and
-# *.socks.* in the server/client package, but then some _RT end up in
-# the client package also. Seems as if files can be matched by multiple
-# packages.
-PKGFILES_CSWlibsocks = $(PKGFILES_RT)
+PKGFILES_CSWlibsocks = $(PKGFILES_RT) .*socks.*
+PKGFILES_CSWlibsocks += $(addprefix $(docdir)/,NEWS SUPPORT CREDITS )
+PKGFILES_CSWlibsocks += $(docdir)/*.CSW
 PKGFILES_CSWdante = .*sockd.* /etc/opt/csw/init.d/cswdante
-PKGFILES_CSWdanteclient = $(mandir)/.*socks.*
-PKGFILES_CSWdanteclient += $(docdir)/.*socks.*
-PKGFILES_CSWdanteclient += $(bindir)/.*socks.*
 
 REQUIRED_PKGS_CSWdante = CSWlibsocks CSWcswclassutils CSWtcpwrap
-REQUIRED_PKGS_CSWdanteclient = CSWlibsocks
 
 # CSWlibsocks not yet installed on the build farm
 ENABLE_CHECK = 0
@@ -71,23 +60,29 @@ PROTOTYPE_FILTER  = awk '\
 
 include gar/category.mk
 
+# The SOCKS_CONF and issetugid() issue needs some thought. Are there any
+# secure alternative to the simple get{ug}id below? Could ask upstream.
+#
 # Fix missing issetugid on Solaris 8, it is not nice, but the best i can
 # come up with for now, ref. 
 #   http://bugs.gentoo.org/attachment.cgi?id=180390
-#	issetugid(2) on a Solaris 10 box (WRT to concerns)
-# This should be revamped into a patch for libscompat/issetugid.c
-post-extract-modulated:
-	@perl -pi -e '\
-		s/int issetugid __P\(\(void\)\)/#define issetugid() (getuid() != geteuid()) || (getgid() != getegid())/' \
-			$(WORKSRC)/include/common.h
-	@$(MAKECOOKIE)
+#   issetugid(2) on a Solaris 10 box (WRT to concerns)
+#
+# If at all this needs to be revamped into a patch for libscompat/issetugid.c
+#post-extract-modulated:
+#	@perl -pi -e '\
+#		s/int issetugid __P\(\(void\)\)/#define issetugid() (getuid() != geteuid()) || (getgid() != getegid())/' \
+#			$(WORKSRC)/include/common.h
+#	@$(MAKECOOKIE)
 
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: DOCS = CREDITS NEWS SUPPORT
+post-install-modulated: CSWDOCS = README.CSW changelog.CSW
 post-install-modulated:
 	@ginstall -d $(DOCDEST)/examples
 	@cp $(WORKSRC)/example/*.conf $(DOCDEST)/examples
-	@$(foreach D,$(DOCS),cp $(WORKSRC)/$(D) $(DOCDEST);)
+	@$(foreach D,$(DOCS),    cp $(WORKSRC)/$(D) $(DOCDEST);)
+	@$(foreach D,$(CSWDOCS), cp $(FILEDIR)/$(D) $(DOCDEST);)
 
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWdante.cswdante $(DESTDIR)/etc/opt/csw/init.d/cswdante

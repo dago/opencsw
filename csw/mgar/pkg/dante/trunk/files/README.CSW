@@ -1,0 +1,13 @@
+Known client issue: $SOCKS_CONF not used
+----------------------------------------
+
+The Dante socks client libraries are supposed to evaluate the environment
+variable $SOCKS_CONF that can be used to specify an alternative config
+location. This is _not working_ with this version. 
+
+Dante employs SETUID/SETGID safety checks before evaluating $SOCKS_CONF 
+and Solaris 8 (our base build platform) does not offer the required system
+calls that are used for these checks. Dante hence deactivates looking
+for $SOCK_CONF completely.
+
+This might change in a future version of this package or Dante.
