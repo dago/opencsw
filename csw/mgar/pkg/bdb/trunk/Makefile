@@ -30,7 +30,7 @@ PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 BUILD64 = 1
 CONFIGURE_SCRIPTS = dist
 
-prefix = $(BUILD_PREFIX)/bdb47
+#prefix = $(BUILD_PREFIX)/bdb47
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-o_direct
@@ -44,32 +44,32 @@ CONFIGURE_ARGS += --enable-tcl
 CONFIGURE_ARGS += --with-tcl=$(libdir)
 endif
 
-FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb47/lib
+#FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb47/lib
 
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
 NO_ISAEXEC = 1
 
-PACKAGES = CSWbdb47 CSWbdb47-devel CSWbdb47-doc
+PACKAGES = CSWbdb CSWbdb-devel CSWbdb-doc
 
-CATALOGNAME_CSWbdb47       = berkeleydb47
-CATALOGNAME_CSWbdb47-devel = berkeleydb47_devel
-CATALOGNAME_CSWbdb47-doc   = berkeleydb47_doc
+CATALOGNAME_CSWbdb       = berkeleydb
+CATALOGNAME_CSWbdb-devel = berkeleydb_devel
+CATALOGNAME_CSWbdb-doc   = berkeleydb_doc
 
-ARCHALL_CSWbdb47-doc = 1
+ARCHALL_CSWbdb-doc = 1
 
-SPKG_DESC_CSWbdb47       = BerkeleyDB 4.7 embedded database libraries and utilities
-SPKG_DESC_CSWbdb47-devel = BerkeleyDB 4.7 development support
-SPKG_DESC_CSWbdb47-doc   = BerkeleyDB 4.7 documentation
+SPKG_DESC_CSWbdb       = BerkeleyDB 4.7 embedded database libraries and utilities
+SPKG_DESC_CSWbdb-devel = BerkeleyDB 4.7 development support
+SPKG_DESC_CSWbdb-doc   = BerkeleyDB 4.7 documentation
 
-REQUIRED_PKGS_CSWbdb47-devel = CSWbdb47
+REQUIRED_PKGS_CSWbdb-devel = CSWbdb
 
 LICENSE = LICENSE
 
-PKGFILES_CSWbdb47-doc = $(prefix)/docs/.*
+PKGFILES_CSWbdb-doc = $(prefix)/docs/.*
 
-PKGFILES_CSWbdb47-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb-devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
