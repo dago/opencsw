@@ -292,10 +292,16 @@ EOF
       done
 
       # Start service
-      echo Starting $service ...
-      # fix permissions temporarily since 644 is used until verification
-      /usr/bin/chmod 744 /etc/init.d/$service
-      /etc/init.d/$service start > /dev/null 2>&1
+      AUTOENABLE="yes"
+      if [ "`grep '^#AUTOENABLE' $dest`" ]; then
+        AUTOENABLE=`grep '^#AUTOENABLE' $dest | awk '{print $2}' | /usr/xpg4/bin/tr -s '[:upper:]' '[:lower:]'`
+      fi
+      if [ "$AUTOENABLE" != "no" -a "$AUTOENABLE" != "false" ]; then
+        echo Starting $service ...
+        # fix permissions temporarily since 644 is used until verification
+        /usr/bin/chmod 744 /etc/init.d/$service
+        /etc/init.d/$service start > /dev/null 2>&1
+      fi
     fi
   fi
 done
