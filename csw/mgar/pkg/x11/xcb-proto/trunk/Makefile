@@ -27,11 +27,14 @@ endef
 MASTER_SITES = $(XCB_MASTER_SITES)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGES = CSWxcbproto
+PACKAGES = CSWxcbproto CSWpyxcbproto
 
 PREREQUISITE_PKGS = CSWpython
-REQUIRED_PKGS = CSWpython
-REQUIRED_PKGS += CSWx11common
+REQUIRED_PKGS_CSWxcbproto = CSWx11common
+REQUIRED_PKGS_CSWpyxcbproto = CSWxcbproto CSWpython
+
+SPKG_DESC_CSWxcbproto = XCB protocol descriptions (in XML)
+SPKG_DESC_CSWpyxcbproto = XCB protocol descriptions (in XML) Python Bindings
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -39,7 +42,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
 
 PYTHON_PREFIX=$(BUILD_PREFIX)/lib/python/site-packages
 
@@ -50,5 +52,7 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
 REQUIRED_PKGS += CSWcswclassutils
+
+PKGFILES_CSWpyxcbproto = .*\.py
 
 include gar/category.mk
