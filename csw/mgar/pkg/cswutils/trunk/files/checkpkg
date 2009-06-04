@@ -1,6 +1,6 @@
 #!/bin/ksh -p
 
-# checkpkg 2.7
+# checkpkg 2.8
 # This script examines a package that has been put together
 # for submittal to the CSW archive at opencsw.org
 #
@@ -326,15 +326,15 @@ if [[ $pkgname != "CSWcommon" ]] ; then
 	if [[ $? -eq 0 ]] ; then
 	errmsg You must have execute permission set on directories
 	fi
-	egrep '/opt/csw/man|d none man' $EXTRACTDIR/$pkgname/pkgmap
+	egrep '/opt/csw/man/|d none man' $EXTRACTDIR/$pkgname/pkgmap
 	if [[ $? -eq 0 ]] ; then
 	errmsg /opt/csw/man should not have a directory entry in prototype
 	fi
-	egrep '/opt/csw/doc|d none doc' $EXTRACTDIR/$pkgname/pkgmap
+	egrep '/opt/csw/doc/|d none doc' $EXTRACTDIR/$pkgname/pkgmap
 	if [[ $? -eq 0 ]] ; then
 	errmsg /opt/csw/doc should not have a directory entry in prototype
 	fi
-	egrep '/opt/csw/info|d none info' $EXTRACTDIR/$pkgname/pkgmap
+	egrep '/opt/csw/info/|d none info' $EXTRACTDIR/$pkgname/pkgmap
 	if [[ $? -eq 0 ]] ; then
 	errmsg /opt/csw/info should not have a directory entry in prototype
 	fi

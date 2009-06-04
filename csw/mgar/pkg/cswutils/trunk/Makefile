@@ -1,5 +1,5 @@
 GARNAME = cswutils
-GARVERSION = 1.14.1
+GARVERSION = 1.14.2
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers

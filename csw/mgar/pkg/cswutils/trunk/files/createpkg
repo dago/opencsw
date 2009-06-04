@@ -1,6 +1,6 @@
 #!/bin/ksh -p
 
-# createpkg 1.6 
+# createpkg 
 # This script actually builds the package.. once you have already
 # put together the pkginfo and prototype file.
 # See the makeproto script for a way to make a prototype file.
@@ -64,13 +64,13 @@ else
 fi
 
 grep 'i copyright' $PROTO || die need copyright in $PROTO
-grep 'root other' $PROTO && die fix $PROTO file
-grep 'csw/man' $PROTO && die fix csw/man entry in $PROTO file
-grep 'none man' $PROTO && die fix csw/man entry in $PROTO file
-grep 'csw/info' $PROTO && die fix csw/info entry in $PROTO file
-grep 'none info' $PROTO && die fix csw/info entry in $PROTO file
-grep 'csw/doc' $PROTO && die fix csw/doc entry in $PROTO file
-grep 'none doc' $PROTO && die fix csw/doc entry in $PROTO file
+grep 'root other' $PROTO && die fix $PROTO file: root other ownership
+grep 'csw/man/' $PROTO && die fix csw/man entry in $PROTO file
+grep 'none man/' $PROTO && die fix csw/man entry in $PROTO file
+grep 'csw/info/' $PROTO && die fix csw/info entry in $PROTO file
+grep 'none info/' $PROTO && die fix csw/info entry in $PROTO file
+grep 'csw/doc/' $PROTO && die fix csw/doc entry in $PROTO file
+grep 'none doc/' $PROTO && die fix csw/doc entry in $PROTO file
 
 grep 'Replace this file' copyright && die fix copyright file
 
