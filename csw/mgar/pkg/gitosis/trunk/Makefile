@@ -18,7 +18,7 @@ ARCHALL_CSWgitosis = 1
 
 PREREQUISITE_PKGS_CSWgitosis = CSWpython
 
-REQUIRED_PKGS_CSWgitosis = CSWgit CSWpython CSWcswclassutils
+REQUIRED_PKGS_CSWgitosis = CSWgit CSWpython CSWcswclassutils CSWpysetuptools
 
 GIT_REPOS = git://eagain.net/gitosis.git
 GIT_USE_PROXY = 1
@@ -42,14 +42,15 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS = --root $(DESTDIR) --single-version-externally-managed
 
-CSWUG = gitosis:gitosis:Gitosis Host:/var/opt/csw/gitosis:/bin/bash:m:
+GITOSISHOME = /var/opt/csw/gitosis
+CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/bin/bash::
 CSWUGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/CSWgitosis\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/CSWgitosis\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" }; $$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" } { print }'
 
-SPKG_CLASSES = none cswusergroup
+SPKG_CLASSES = none cswusergroup ugfiles
 
 include gar/category.mk
 
@@ -61,5 +62,8 @@ SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
 
 post-install-modulated:
 	@( gmkdir -p $(CSWUGD); \
-		echo "$(CSWUG)" > $(CSWUGD)/cswusergroup )
+		echo "$(CSWUG)" > $(CSWUGD)/cswusergroup; \
+	   gmkdir -p $(INSTALLISADIR)$(GITOSISHOME); \
+	   echo 'PATH=/opt/csw/bin:$$PATH' > $(INSTALLISADIR)$(GITOSISHOME)/.bashrc; \
+	   echo 'PATH=/opt/csw/bin:$$PATH' > $(INSTALLISADIR)$(GITOSISHOME)/.bash_profile; )
 	$(MAKECOOKIE)
