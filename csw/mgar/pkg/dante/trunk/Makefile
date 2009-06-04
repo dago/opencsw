@@ -1,5 +1,4 @@
 # Todo
-# * Compare with current catalog package WRT to config file etc.
 # * Ponder about the SOCKS_CONF / issetguid() issue
 GARNAME = dante
 GARVERSION = 1.1.19
@@ -21,6 +20,7 @@ MASTER_SITES = ftp://ftp.inet.no/pub/socks/
 MASTER_SITES += ftp://ftp.inet.no/pub/socks/old/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 SPKG_SOURCEURL = http://www.inet.no/dante/
+LICENSE = LICENSE
 
 PACKAGES = CSWlibsocks CSWdante
 
@@ -32,9 +32,9 @@ SPKG_CLASSES_CSWdante = none cswinitsmf
 EXTRA_MERGE_EXCLUDE_FILES = $(includedir)/socks.h
 
 PKGFILES_CSWlibsocks = $(PKGFILES_RT) .*socks.*
-PKGFILES_CSWlibsocks += $(addprefix $(docdir)/$(GARNAME)/,NEWS SUPPORT CREDITS )
-PKGFILES_CSWlibsocks += $(docdir)/$(GARNAME)/.*CSW
+PKGFILES_CSWlibsocks += $(docdir)/libsocks/.*
 PKGFILES_CSWdante = .*sockd.* /etc/opt/csw/init.d/cswdante
+PKGFILES_CSWdante += $(docdir)/dante/.*
 
 REQUIRED_PKGS_CSWdante = CSWlibsocks CSWcswclassutils CSWtcpwrap
 
@@ -75,12 +75,23 @@ include gar/category.mk
 #			$(WORKSRC)/include/common.h
 #	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
-post-install-modulated: DOCS = CREDITS NEWS SUPPORT
-post-install-modulated: CSWDOCS = README.CSW changelog.CSW
-post-install-modulated:
+post-install-libsocks: DOCDEST = $(DESTDIR)$(docdir)/libsocks
+post-install-libsocks: DOCS = CREDITS NEWS SUPPORT
+post-install-libsocks: CSWDOCS = README.CSW changelog.CSW
+post-install-libsocks:
 	@ginstall -d $(DOCDEST)/examples
-	@cp $(WORKSRC)/example/*.conf $(DOCDEST)/examples
+	@cp $(WORKSRC)/example/socks*.conf $(DOCDEST)/examples
+	@$(foreach D,$(DOCS),    cp $(WORKSRC)/$(D) $(DOCDEST);)
+	@$(foreach D,$(CSWDOCS), cp $(FILEDIR)/$(D) $(DOCDEST);)
+	@$(MAKECOOKIE)
+
+
+post-install-dante: DOCDEST = $(DESTDIR)$(docdir)/dante
+post-install-dante: DOCS = CREDITS NEWS SUPPORT
+post-install-dante: CSWDOCS = changelog.CSW
+post-install-dante:
+	@ginstall -d $(DOCDEST)/examples
+	@cp $(WORKSRC)/example/sockd*.conf $(DOCDEST)/examples
 	@$(foreach D,$(DOCS),    cp $(WORKSRC)/$(D) $(DOCDEST);)
 	@$(foreach D,$(CSWDOCS), cp $(FILEDIR)/$(D) $(DOCDEST);)
 
@@ -89,4 +100,8 @@ post-install-modulated:
 
 	# /var/opt/csw/run is not in CSWcommon
 	@ginstall -d $(DESTDIR)/var/opt/csw/run
+	@$(MAKECOOKIE)
+
+
+post-install-modulated: post-install-libsocks post-install-dante
 	@$(MAKECOOKIE)
