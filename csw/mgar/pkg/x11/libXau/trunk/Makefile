@@ -11,6 +11,9 @@ endef
 MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
+PREREQUISITE_PKGS = CSWinputproto CSWkbproto CSWrenderproto CSWxcbproto
+PREREQUISITE_PKGS += CSWxextproto CSWxproto CSWxtrans CSWlibpthreadstubs
+
 PACKAGES = CSWlibxau CSWlibxaudevel
 
 # We define upstream file regex so we can be notifed of new upstream software release
