@@ -22,7 +22,7 @@ PACKAGES = CSWgitosis
 CATALOGNAME_CSWgitosis = $(GARNAME)
 ARCHALL_CSWgitosis = 1
 
-PREREQUISITE_PKGS_CSWgitosis = CSWpython
+PREREQUISITE_PKGS_CSWgitosis = CSWpython CSWpysetuptools
 
 REQUIRED_PKGS_CSWgitosis = CSWgit CSWpython CSWcswclassutils CSWpysetuptools
 
