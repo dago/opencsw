@@ -12,6 +12,12 @@ Manage git repositories, provide access to them over SSH, with tight access cont
 gitosis aims to make hosting git repos easier and safer. It manages multiple repositories under one user account, using SSH keys to identify users. End users do not need shell accounts on the server, they will talk to one shared account that will not let them run arbitrary commands.
 endef
 
+define CSWgitosis_postinstall
+#!/bin/sh
+
+/usr/bin/passwd -N gitosis
+endef
+
 PACKAGES = CSWgitosis
 CATALOGNAME_CSWgitosis = $(GARNAME)
 ARCHALL_CSWgitosis = 1
