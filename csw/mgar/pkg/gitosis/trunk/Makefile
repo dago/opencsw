@@ -71,5 +71,8 @@ post-install-modulated:
 		echo "$(CSWUG)" > $(CSWUGD)/cswusergroup; \
 	   gmkdir -p $(INSTALLISADIR)$(GITOSISHOME); \
 	   echo 'PATH=/opt/csw/bin:$$PATH' > $(INSTALLISADIR)$(GITOSISHOME)/.bashrc; \
-	   echo 'PATH=/opt/csw/bin:$$PATH' > $(INSTALLISADIR)$(GITOSISHOME)/.bash_profile; )
+	   echo 'PATH=/opt/csw/bin:$$PATH' > $(INSTALLISADIR)$(GITOSISHOME)/.bash_profile; \
+	   gmkdir -p $(INSTALLISADIR)/opt/csw/share/doc/gitosis; \
+	   gcp files/README.csw $(INSTALLISADIR)/opt/csw/share/doc/gitosis/; \
+	   gcp $(WORKSRC)/*rst $(WORKSRC)/*conf $(WORKSRC)/etc* $(INSTALLISADIR)/opt/csw/share/doc/gitosis/; )
 	$(MAKECOOKIE)

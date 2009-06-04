@@ -1,0 +1,50 @@
+After installing gitosis, there are a few things that need to be done
+before you can get started.  It's pretty simple, but not something I
+could automate for you.
+
+First, copy the ssh public key of the first gitosis admin user to
+/tmp.  From here out, I'll assume that key is /tmp/id_dsa.pub.  I'm
+also going to use the name 'code' as the hostname for the server
+running gitosis and that it is available by ssh from any hosts you'll
+be connecting from, including the host where you do the initial
+checkout of the gitosis-admin repo.
+
+Perform the following steps on the gitosis server:
+
+1. su - gitosis
+2. gitosis-init < /tmp/id_dsa.pub
+
+The server should now be ready to go.  Now, in the account holding the
+private half of the ssh key you used, run:
+
+1. cd /path/where/you/wnat/gitosis/checked/out/
+2. git clone gitosis@code:gitosis-admin.git
+
+If this all worked, you should have
+/path/where/you/wnat/gitosis/checked/out/gitosis-admin with the
+following as the content:
+
+/gitosis.conf
+/keydir/
+/.git/
+
+You can now add users (by placing ssh public keys in keydir/) and
+grant access to projects, etc by manipulating gitosis.conf.  When
+you've made the required changes, check them in and push them up.
+
+1. git add keydir/*; #add any new keys
+2. git add gitosis.conf; # add any changes to the config
+3. git commit -m 'added a new user with 2 projects'
+4. git push origin master
+
+If this all worked, code:~gitosis/.gitosis.conf should reflect the
+changes you just made.
+
+For more help, I found this page helpful:
+http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way
+
+There are also lots of hits on Google.  Also, feel free to ping me on
+the CSW user list (users@lists.opencsw.org) or at bwalton@opencsw.org.
+
+Enjoy!
+-Ben Walton
