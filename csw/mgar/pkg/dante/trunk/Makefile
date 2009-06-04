@@ -96,7 +96,8 @@ post-install-dante:
 	@$(foreach D,$(CSWDOCS), cp $(FILEDIR)/$(D) $(DOCDEST);)
 
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@cp $(FILEDIR)/CSWdante.cswdante $(DESTDIR)/etc/opt/csw/init.d/cswdante
+	@ginstall -m 0755 $(FILEDIR)/CSWdante.cswdante \
+		$(DESTDIR)/etc/opt/csw/init.d/cswdante
 
 	# /var/opt/csw/run is not in CSWcommon
 	@ginstall -d $(DESTDIR)/var/opt/csw/run

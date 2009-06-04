@@ -16,7 +16,7 @@ case $1 in
                 if [ -f "$CONFIG" ]; then
                         /opt/csw/sbin/sockd -D -f $CONFIG
                 else
-                        echo "No config file $CONFFILE. Not starting cswdante."
+                        echo "No config file ($CONFIG). Not starting cswdante."
                 fi
                 ;;
         'stop')
