@@ -1,0 +1,71 @@
+#!/bin/sh
+
+##############################################################################
+# Copyright 2002-2009, LAMP/EPFL
+#
+# This is free software; see the distribution for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+##############################################################################
+
+# Finding the root folder for this Scala distribution
+SOURCE=$0;
+SCRIPT=`basename "$SOURCE"`;
+while [ -h "$SOURCE" ]; do
+    SCRIPT=`basename "$SOURCE"`;
+    LOOKUP=`ls -ld "$SOURCE"`;
+    TARGET=`expr "$LOOKUP" : '.*-> \(.*\)$'`;
+    if expr "${TARGET:-.}/" : '/.*/$' > /dev/null; then
+        SOURCE=${TARGET:-.};
+    else
+        SOURCE=`dirname "$SOURCE"`/${TARGET:-.};
+    fi;
+done;
+SCALA_HOME=`dirname "$SOURCE"`/..;
+SCALA_HOME=`cd "$SCALA_HOME"; pwd`;
+
+# Constructing the extension classpath
+TOOL_CLASSPATH=""
+if [ -z "$TOOL_CLASSPATH" ] ; then
+    for ext in `ls -d "$SCALA_HOME"/lib/*` ; do
+        if [ -z "$TOOL_CLASSPATH" ] ; then
+            TOOL_CLASSPATH="$ext"
+        else
+            TOOL_CLASSPATH="$TOOL_CLASSPATH:$ext"
+        fi
+    done
+fi
+
+if [ -z "$JAVACMD" -a -n "$JAVA_HOME" -a -x "$JAVA_HOME/bin/java" ]; then
+    JAVACMD="$JAVA_HOME/bin/java"
+fi
+
+# Sol10 ships with Java 5 but we want to default to latest Java version
+if [ -z "$JAVA_HOME" -a -z "$JAVACMD" -a -x "/usr/jdk/latest/bin/java" ]; then
+    JAVACMD="/usr/jdk/latest/bin/java"
+fi
+
+# Sol8/9 does not came with Java 5, so either JAVA_HOME or JAVACMD have to be used
+SOLARISVERSION=`uname -r | cut -f2 -d.`
+if [ "$SOLARISVERSION" -le 10 -a -z "$JAVA_HOME" -a -z "$JAVACMD" ]; then
+    echo "Scala requires Java 5 or later. Please download and install the latest"
+    echo "Java Runtime Environment(JRE) from http://java.sun.com/jre and let"
+    echo "JAVA_HOME point to the installation directory, e.g."
+    echo "JAVA_HOME=/opt/jre1.6.0_12; export JAVA_HOME"
+    exit 1
+fi
+
+# Reminder: substitution ${JAVA_OPTS:=-Xmx256M -Xms16M} DO NOT work on Solaris
+[ -n "$JAVA_OPTS" ] || JAVA_OPTS="-Xmx256M -Xms32M"
+
+FILENAME=`basename "$0"`
+
+case "$FILENAME" in
+    scala)     MAIN=scala.tools.nsc.MainGenericRunner ;;
+    scalac)    MAIN=scala.tools.nsc.Main ;;
+    scaladoc)  MAIN=scala.tools.nsc.ScalaDoc ;;
+    fsc)       MAIN=scala.tools.nsc.CompileClient ;;
+    sbaz)      MAIN=sbaz.clui.CommandLine ;;
+esac
+
+exec "${JAVACMD:=java}" $JAVA_OPTS -cp "$TOOL_CLASSPATH" -Dscala.home="$SCALA_HOME" -Denv.classpath="$CLASSPATH" -Denv.emacs="$EMACS" $MAIN "$@"
