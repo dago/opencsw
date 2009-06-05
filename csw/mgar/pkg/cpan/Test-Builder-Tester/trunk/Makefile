@@ -11,7 +11,12 @@ define BLURB
   output with Test::Builder to stdout and stderr
 endef
 
-DISTFILES += $(call admfiles,CSWpmtstbldrtester,prototype)
+DISTFILES += COPYING
+
+PACKAGES = CSWpmtstbldrtester
+CATALOGNAME = pm_tstbldrtester
+
+ARCHALL = 1
 
 # Seems that tests might assume a newer version of Test-Simple than is
 # provided with Perl 5.8.8.
