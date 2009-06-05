@@ -12,7 +12,12 @@ endef
 MASTER_SITES = http://ftp.edgewall.com/pub/genshi/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+ARCHALL_CSWgenshi = 1
 PACKAGES = CSWgenshi
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+SPKG_CLASSES = none cswpycompile
+REQUIRED_PKGS += CSWcswclassutils
 
 REQUIRED_PKGS_CSWgenshi = CSWpython-rt
 CATALOGNAME_CSWgenshi = genshi
@@ -24,7 +29,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS   = $(WORKSRC)/setup.py
-TEST_SCRIPTS    = $(WORKSRC)/setup.py
+TEST_SCRIPTS    = 
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 INSTALL_ARGS += --root=$(DESTDIR)
