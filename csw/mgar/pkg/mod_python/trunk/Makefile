@@ -15,7 +15,7 @@ DISTFILES += postinstall preremove space
 
 PACKAGES = CSWap2modpython
 
-REQUIRED_PKGS_CSWap2modpython = CSWap2prefork CSWpython
+REQUIRED_PKGS_CSWap2modpython = CSWap2prefork CSWpython-rt
 CATALOGNAME_CSWap2modpython   = ap2_modpython
 SPKG_DESC_CSWap2modpython     = an Apache/Python integration module
 
