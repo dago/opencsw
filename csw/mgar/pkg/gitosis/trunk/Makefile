@@ -54,9 +54,9 @@ CSWUGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/CSWgitosis\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" }; $$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" } { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/CSWgitosis\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" }; $$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" }; $$$$3 ~ /\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
-SPKG_CLASSES = none cswusergroup ugfiles
+SPKG_CLASSES = none cswpycompile cswusergroup ugfiles
 
 include gar/category.mk
 
