@@ -20,6 +20,11 @@ SPKG_DESC = MySQL Support for Python
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
+PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+SPKG_CLASSES = none cswpycompile
+REQUIRED_PKGS += CSWcswclassutils
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS =
