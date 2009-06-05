@@ -20,6 +20,7 @@ PACKAGES = CSWlibxau CSWlibxaudevel
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS_CSWlibxau = CSWx11common
+REQUIRED_PKGS_CSWlibxaudevel = CSWlibxau
 
 CATALOGNAME_CSWlibxau = libxau
 CATALOGNAME_CSWlibxaudevel = libxau_devel
