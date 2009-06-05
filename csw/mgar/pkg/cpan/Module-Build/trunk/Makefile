@@ -1,7 +1,7 @@
 GARNAME = Module-Build
-GARVERSION = 0.2806
+GARVERSION = 0.33
 CATEGORIES = cpan
-AUTHOR = KWILLIAMS
+AUTHOR = EWILHELM
 
 DESCRIPTION = build and install Perl modules
 define BLURB
@@ -11,12 +11,20 @@ define BLURB
   much more straightforward way than with MakeMaker.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodulebuild,depend prototype)
+#DISTFILES += $(call admfiles,CSWpmmodulebuild,depend prototype)
+
+PACKAGES = CSWpmmodulebuild
+CATALOGNAME = pm_modulebuild
+REQUIRED_PKGS = CSWpmarchivetar CSWpmextutparsexs CSWpmyaml
+
+LICENSE = LICENSE
 
 DEPENDS += cpan/YAML
 DEPENDS += cpan/ExtUtils-ParseXS
 DEPENDS += cpan/Archive-Tar
 
 CONFIGURE_ARGS = destdir=$(DESTDIR)
+
+ARCHALL = 1
 
 include gar/category.mk
