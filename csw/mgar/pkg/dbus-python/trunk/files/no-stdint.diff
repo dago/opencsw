@@ -1,0 +1,72 @@
+diff --speed-large-files --minimal -Nru dbus-python-0.83.0.orig/_dbus_bindings/abstract.c dbus-python-0.83.0/_dbus_bindings/abstract.c
+--- dbus-python-0.83.0.orig/_dbus_bindings/abstract.c	2008-07-23 10:35:58.000000000 -0500
++++ dbus-python-0.83.0/_dbus_bindings/abstract.c	2009-06-05 13:25:05.519497264 -0500
+@@ -26,7 +26,7 @@
+ #include <Python.h>
+ #include <structmember.h>
+ 
+-#include <stdint.h>
++#include <sys/int_types.h>
+ 
+ #include "dbus_bindings-internal.h"
+ #include "types-internal.h"
+diff --speed-large-files --minimal -Nru dbus-python-0.83.0.orig/_dbus_bindings/bytes.c dbus-python-0.83.0/_dbus_bindings/bytes.c
+--- dbus-python-0.83.0.orig/_dbus_bindings/bytes.c	2008-07-23 10:35:58.000000000 -0500
++++ dbus-python-0.83.0/_dbus_bindings/bytes.c	2009-06-05 13:25:32.683434850 -0500
+@@ -26,7 +26,7 @@
+ #include <Python.h>
+ #include <structmember.h>
+ 
+-#include <stdint.h>
++#include <sys/int_types.h>
+ 
+ #include "dbus_bindings-internal.h"
+ #include "types-internal.h"
+diff --speed-large-files --minimal -Nru dbus-python-0.83.0.orig/_dbus_bindings/containers.c dbus-python-0.83.0/_dbus_bindings/containers.c
+--- dbus-python-0.83.0.orig/_dbus_bindings/containers.c	2008-07-23 10:35:58.000000000 -0500
++++ dbus-python-0.83.0/_dbus_bindings/containers.c	2009-06-05 13:25:51.428790510 -0500
+@@ -26,7 +26,7 @@
+ #include <Python.h>
+ #include <structmember.h>
+ 
+-#include <stdint.h>
++#include <sys/int_types.h>
+ 
+ #include "dbus_bindings-internal.h"
+ #include "types-internal.h"
+diff --speed-large-files --minimal -Nru dbus-python-0.83.0.orig/_dbus_bindings/float.c dbus-python-0.83.0/_dbus_bindings/float.c
+--- dbus-python-0.83.0.orig/_dbus_bindings/float.c	2008-07-23 10:35:59.000000000 -0500
++++ dbus-python-0.83.0/_dbus_bindings/float.c	2009-06-05 13:26:00.721774780 -0500
+@@ -26,7 +26,7 @@
+ #include <Python.h>
+ #include <structmember.h>
+ 
+-#include <stdint.h>
++#include <sys/int_types.h>
+ 
+ #include "dbus_bindings-internal.h"
+ #include "types-internal.h"
+diff --speed-large-files --minimal -Nru dbus-python-0.83.0.orig/_dbus_bindings/signature.c dbus-python-0.83.0/_dbus_bindings/signature.c
+--- dbus-python-0.83.0.orig/_dbus_bindings/signature.c	2008-07-23 10:35:59.000000000 -0500
++++ dbus-python-0.83.0/_dbus_bindings/signature.c	2009-06-05 13:26:10.893919772 -0500
+@@ -26,7 +26,7 @@
+ #include <Python.h>
+ #include <structmember.h>
+ 
+-#include <stdint.h>
++#include <sys/int_types.h>
+ 
+ #include "dbus_bindings-internal.h"
+ #include "types-internal.h"
+diff --speed-large-files --minimal -Nru dbus-python-0.83.0.orig/_dbus_bindings/types-internal.h dbus-python-0.83.0/_dbus_bindings/types-internal.h
+--- dbus-python-0.83.0.orig/_dbus_bindings/types-internal.h	2008-07-23 10:35:59.000000000 -0500
++++ dbus-python-0.83.0/_dbus_bindings/types-internal.h	2009-06-05 13:26:23.934533899 -0500
+@@ -24,7 +24,7 @@
+  */
+ 
+ #include <Python.h>
+-#include <stdint.h>
++#include <sys/int_types.h>
+ 
+ #include "dbus_bindings-internal.h"
+ 
