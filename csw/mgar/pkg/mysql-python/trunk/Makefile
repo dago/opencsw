@@ -12,7 +12,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpymysql
-REQUIRED_PKGS_CSWpymysql = CSWmysql5rt CSWpython CSWosslrt CSWzlib
+REQUIRED_PKGS_CSWpymysql = CSWmysql5rt CSWpython-rt CSWosslrt CSWzlib
 CATALOGNAME_CSWpymysql = pymysql
 SPKG_DESC = MySQL Support for Python
 
