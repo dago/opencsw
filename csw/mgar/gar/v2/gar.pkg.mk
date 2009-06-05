@@ -160,7 +160,7 @@ ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF),)
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(SAMPLECONF),$$F[1] = "cswsampleconf" if ( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(PRESERVECONF),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
-		$(foreach FILE,$(INITMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
 _EXTRA_GAR_PKGS += CSWcswclassutils
 endif
