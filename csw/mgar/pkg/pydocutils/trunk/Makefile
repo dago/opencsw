@@ -10,6 +10,7 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
+ARCHALL_CSWpydocutils = 1
 PACKAGES = CSWpydocutils
 REQUIRED_PKGS_CSWpydocutils = CSWpython
 CATALOGNAME_CSWpydocutils = pydocutils
