@@ -23,7 +23,7 @@ SPKG_DESC_CSWlibxcbdevel = The XCB library development package
 SPKG_DESC_CSWlibxcbdoc   = The XCB library documentation
 
 CATALOGNAME_CSWlibxcb      = libxcb
-CATALOGNAME_CSWlibxcbdevel = libxcb_dev
+CATALOGNAME_CSWlibxcbdevel = libxcb_devel
 CATALOGNAME_CSWlibxcbdoc   = libxcb_doc
 
 PKGFILES_CSWlibxcbdevel = $(PKGFILES_DEVEL)
