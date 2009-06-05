@@ -13,13 +13,19 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PACKAGES = CSWsilvercity
 
-REQUIRED_PKGS_CSWsilvercity = CSWpython
+REQUIRED_PKGS_CSWsilvercity = CSWpython-rt
 CATALOGNAME_CSWsilvercity = silvercity
 SPKG_DESC_CSWsilvercity = Lexical analysis package for Python
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+SPKG_CLASSES = none cswpycompile
+REQUIRED_PKGS += CSWcswclassutils
+
 
 NOISALIST = 1
 CONFIGURE_SCRIPTS =
