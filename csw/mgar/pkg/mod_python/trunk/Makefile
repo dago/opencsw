@@ -18,12 +18,17 @@ PACKAGES = CSWap2modpython
 REQUIRED_PKGS_CSWap2modpython = CSWap2prefork CSWpython
 CATALOGNAME_CSWap2modpython   = ap2_modpython
 SPKG_DESC_CSWap2modpython     = an Apache/Python integration module
-#DISTFILES += fixme.sh
-#STRIP_LIBTOOL = 1
 
+STRIP_LIBTOOL = 1
 PATCHFILES += connobject.diff
 
-# We define upstream file regex so we can be notifed of new upstream software release
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+SPKG_CLASSES = none cswpycompile
+REQUIRED_PKGS += CSWcswclassutils
+
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -35,13 +40,6 @@ CONFIGURE_ARGS += --with-python-src=../python
 include gar/category.mk
 
 DESTDOC = $(DESTDIR)$(docdir)/ap2_modpython
-
-
-#post-configure-modulated:
-#	@echo " ==> Fixing libtool files"
-#	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-#	@$(MAKECOOKIE)
-
 
 post-install-modulated:
 	@install -d $(DESTDOC)
