@@ -1,5 +1,5 @@
 GARNAME = Authen-SASL
-GARVERSION = 2.10
+GARVERSION = 2.12
 CATEGORIES = cpan
 AUTHOR = GBARR
 
@@ -10,6 +10,13 @@ define BLURB
   protocols should be able to share.
 endef
 
-DISTFILES += CSWpmauthensasl.gspec
+DISTFILES += COPYING
+
+PACKAGES = CSWpmauthensasl
+CATALOGNAME = pm_authensasl
+
+ARCHALL = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 include gar/category.mk
