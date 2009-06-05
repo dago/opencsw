@@ -32,6 +32,8 @@ PKGFILES_CSWlibxcbdoc   = $(PKGFILES_DOC)
 REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
 REQUIRED_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau
 
+ARCHALL_CSWlibxcbdoc = 1
+
 BUILD64 = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
