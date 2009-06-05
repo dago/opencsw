@@ -32,7 +32,10 @@ PKGFILES_CSWpmcs += $(mandir)/.*perl.*
 PKGFILES_CSWpycs  = $(libdir)/python.*/.*
 PKGFILES_CSWpycs += $(mandir)/.*python.*
 
-#GARCOMPILER = GNU
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+SPKG_CLASSES = none cswpycompile
+REQUIRED_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
