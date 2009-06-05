@@ -37,9 +37,7 @@ REQUIRED_PKGS_CSWdbus-python  =
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-STRIP_LIBTOOL = 1
-
+CFLAGS = -xc99
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 include gar/category.mk
