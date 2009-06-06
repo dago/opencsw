@@ -1,5 +1,5 @@
 GARNAME = Trac
-GARVERSION = 0.11.2.1
+GARVERSION = 0.11.4
 CATEGORIES = apps
 
 DESCRIPTION = Integrated SCM and Project Management
@@ -23,24 +23,24 @@ CATALOGNAME_CSWtrac = trac
 SPKG_DESC_CSWtrac = Integrated SCM and Project Management
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://trac.edgewall.org/wiki/TracDownload
 
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+SPKG_CLASSES = none cswpycompile
+REQUIRED_PKGS += CSWcswclassutils
+
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
+BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS = --root=$(DESTDIR)
 
 include gar/category.mk
 
-install-custom:
-	@echo " ==> Installing $(GARNAME)"
-	@( cd $(WORKSRC) ; $(INSTALL_ENV) python ./setup.py install $(INSTALL_ARGS) )
-	$(DONADA)
-
-post-install: copy-docs
+post-install-modulated: copy-docs
 	$(DONADA)
 
 copy-docs:
