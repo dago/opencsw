@@ -22,7 +22,6 @@ ARCHALL = 1
 # provided with Perl 5.8.8.
 TEST_SCRIPTS =
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\.3perl$$$$/ { next } \
-                         { print }'
+EXTRA_MERGE_EXCLUDE_FILES = .*\.3perl
 
 include gar/category.mk
