@@ -15,6 +15,9 @@ DISTFILES += COPYING
 PACKAGES = CSWpmauthensasl
 CATALOGNAME = pm_authensasl
 
+REQUIRED_PKGS = CSWpmgssapi CSWpmdigesthmac
+PREREQUISITE_PKGS = CSWperl
+
 ARCHALL = 1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
