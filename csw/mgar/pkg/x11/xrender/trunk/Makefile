@@ -34,4 +34,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-
+post-merge:
+	ginstall -d $(PKGROOT)$(BUILD_PREFIX)/lib
+	gln -s ../X11/lib/libXrender.so.1 $(PKGROOT)$(BUILD_PREFIX)/lib/libXrender.so.1
+	@$(MAKECOOKIE)
