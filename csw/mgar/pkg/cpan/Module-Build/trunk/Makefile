@@ -11,19 +11,13 @@ define BLURB
   much more straightforward way than with MakeMaker.
 endef
 
-#DISTFILES += $(call admfiles,CSWpmmodulebuild,depend prototype)
+LICENSE = LICENSE
 
 PACKAGES = CSWpmmodulebuild
 CATALOGNAME = pm_modulebuild
-REQUIRED_PKGS = CSWpmarchivetar CSWpmextutparsexs CSWpmyaml
 
-LICENSE = LICENSE
-
-DEPENDS += cpan/YAML
-DEPENDS += cpan/ExtUtils-ParseXS
-DEPENDS += cpan/Archive-Tar
-
-CONFIGURE_ARGS = destdir=$(DESTDIR)
+REQUIRED_PKGS = CSWpmarchivetar CSWpmextutparsexs CSWpmextutcbuilder CSWpmmodulesign
+PREREQUISITE_PKGS = CSWperl
 
 ARCHALL = 1
 
