@@ -500,9 +500,10 @@ endif
 #
 
 # Gnome
+GNOME_PROJ  ?= $(GARNAME)
 GNOME_ROOT   = http://ftp.gnome.org/pub/GNOME/sources
 GNOME_SUBV   = $(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')
-GNOME_MIRROR = $(GNOME_ROOT)/$(GARNAME)/$(GNOME_SUBV)/
+GNOME_MIRROR = $(GNOME_ROOT)/$(GNOME_PROJ)/$(GNOME_SUBV)/
 
 # SourceForge
 SF_PROJ     ?= $(GARNAME)
