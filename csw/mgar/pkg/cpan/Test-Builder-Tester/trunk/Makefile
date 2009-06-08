@@ -22,4 +22,7 @@ ARCHALL = 1
 # provided with Perl 5.8.8.
 TEST_SCRIPTS =
 
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\.3perl$$$$/ { next } \
+                         { print }'
+
 include gar/category.mk
