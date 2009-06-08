@@ -595,7 +595,7 @@ endef
 # has not, so we use this one for appending.
 
 
-_PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
+_PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS_$(MODULATION)) $(EXTRA_PAX_ARGS)
 
 # The basic merge merges the compiles for all ISAs on the current architecture
 merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) merge-license $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
@@ -649,7 +649,7 @@ merge-copy-config-only:
 remerge: reset-merge merge
 
 reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-src
-	@rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge
+	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
 	@$(DONADA)
 
