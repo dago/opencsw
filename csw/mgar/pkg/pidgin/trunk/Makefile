@@ -1,5 +1,5 @@
 GARNAME = pidgin
-GARVERSION = 2.5.5
+GARVERSION = 2.5.6
 CATEGORIES = apps
 
 DESCRIPTION = Multi-protocol IM client
