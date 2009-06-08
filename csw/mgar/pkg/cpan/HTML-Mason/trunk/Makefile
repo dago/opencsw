@@ -12,10 +12,10 @@ endef
 
 LICENSE = LICENSE
 
-REQUIRED_PKGS = CSWpmcachecache CSWpmfcgi CSWpmclscontainer CSWpmexceptcls CSWpmprmsvldt CSWpmscalarlist
-
 PACKAGES = CSWpmhtmlmason
 CATALOGNAME = pm_htmlmason
+
+REQUIRED_PKGS  = CSWpmexceptcls CSWpmclscontainer CSWpmprmsvldt CSWpmcachecache
 
 ARCHALL = 1
 
