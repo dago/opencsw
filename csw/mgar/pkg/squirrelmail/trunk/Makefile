@@ -37,7 +37,7 @@ INSTALL_SCRIPTS = custom
 TEST_SCRIPTS =
 
 ALLOW_RELOCATE = 1
-RELOCATE_PREFIX = /opt/csw/share
+RELOCATE_PREFIX = /opt/csw/share/www
 configure-cswize:
 	@(perl -i -pe 's|/var/local|/var/opt/csw|' \
 		$(WORKSRC)/config/config_default.php)
