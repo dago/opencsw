@@ -61,7 +61,7 @@ CATALOGNAME_CSWbdbdoc   = berkeleydb_doc
 # because GAR expects license to be a file instead of a directory
 EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
 
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs/,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb)/,'
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb),'
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
@@ -75,9 +75,9 @@ REQUIRED_PKGS_CSWbdb-devel = CSWbdb
 
 LICENSE = LICENSE
 
-PKGFILES_CSWbdb-doc = $(prefix)/docs/.*
+PKGFILES_CSWbdbdoc = $(PKGFILES_DOC)
 
-PKGFILES_CSWbdb-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdbdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
