@@ -51,17 +51,25 @@ TEST_SCRIPTS =
 
 NO_ISAEXEC = 1
 
-PACKAGES = CSWbdb CSWbdb-devel CSWbdb-doc
+PACKAGES = CSWbdb CSWbdbdevel CSWbdbdoc
 
-CATALOGNAME_CSWbdb       = berkeleydb
-CATALOGNAME_CSWbdb-devel = berkeleydb_devel
-CATALOGNAME_CSWbdb-doc   = berkeleydb_doc
+CATALOGNAME_CSWbdb      = berkeleydb
+CATALOGNAME_CSWbdbdevel = berkeleydb_devel
+CATALOGNAME_CSWbdbdoc   = berkeleydb_doc
 
-ARCHALL_CSWbdb-doc = 1
+# Remove the license from share/doc/berkeleydb/license/.*
+# because GAR expects license to be a file instead of a directory
+EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
 
-SPKG_DESC_CSWbdb       = BerkeleyDB 4.7 embedded database libraries and utilities
-SPKG_DESC_CSWbdb-devel = BerkeleyDB 4.7 development support
-SPKG_DESC_CSWbdb-doc   = BerkeleyDB 4.7 documentation
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs/,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb)/,'
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
+
+ARCHALL_CSWbdbdoc = 1
+
+SPKG_DESC_CSWbdb      = BerkeleyDB 4.7 embedded database libraries and utilities
+SPKG_DESC_CSWbdbdevel = BerkeleyDB 4.7 development support
+SPKG_DESC_CSWbdbdoc   = BerkeleyDB 4.7 documentation
 
 REQUIRED_PKGS_CSWbdb-devel = CSWbdb
 
@@ -83,8 +91,8 @@ configure-dist:
 	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
-post-merge:
-	gln -s . $(PKGROOT)$(libdir)/32
-	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
-	@$(MAKECOOKIE)
+#post-merge:
+#	gln -s . $(PKGROOT)$(libdir)/32
+#	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
+#	@$(MAKECOOKIE)
 
