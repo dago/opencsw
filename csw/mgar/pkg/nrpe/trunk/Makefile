@@ -35,6 +35,7 @@ CONFIGURE_ARGS += --exec-prefix=/opt/csw
 PATCHFILES = patch.diff	# Removal of LOG_AUTHPRIV and LOG_FTP
 			# Solaris doesn't have these log facilities
 PATCHFILES += configure.diff 
+PATCHFILES += common.h.diff # Enable packet size of 8192 bytes
 
 sysconfdir = $(prefix)/etc
 bindir = $(prefix)/bin
