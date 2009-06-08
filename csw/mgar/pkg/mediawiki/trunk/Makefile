@@ -16,7 +16,7 @@ DISTFILES += CSWmediawiki.postinstall CSWmediawiki.preremove
 DISTFILES += httpd-mediawiki.conf.CSW README.CSW
 
 ALLOW_RELOCATE = 1
-RELOCATE_PREFIX = /opt/csw/share
+RELOCATE_PREFIX = /opt/csw/share/www
 
 CATALOGNAME_CSWmediawiki = mediawiki
 SPKG_DESC_CSWmediawiki = $(DESCRIPTION)
