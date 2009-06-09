@@ -52,23 +52,17 @@ Modified for CSWvsftpd by Yann Rouillard 05/06
 			<exec_method
 				type='method'
 				name='start'
-				exec='/opt/csw/lib/svc/method/svc-cswvsftpd start'
+				exec='/opt/csw/sbin/vsftpd'
 				timeout_seconds='-1'>
 			</exec_method>
 
 			<exec_method
 				type='method'
 				name='stop'
-				exec='/opt/csw/lib/svc/method/svc-cswvsftpd stop'
+				exec=':kill'
 				timeout_seconds='-1'>
 			</exec_method>
 
-			<exec_method
-				type='method'
-				name='restart'
-				exec='/opt/csw/lib/svc/method/svc-cswvsftpd restart'
-				timeout_seconds='-1'>
-			</exec_method>
 		</instance>
 
 		<template>

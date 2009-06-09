@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = vsftpd
-GARVERSION = 2.1.0
+GARVERSION = 2.1.1
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.
@@ -35,7 +35,7 @@ REQUIRED_PKGS += CSWcswclassutils
 
 # adding configuration handling classes
 # (init/smf classes are dynamically added in checkinstall)
-SPKG_CLASSES = none cswpreserveconf cswusergroup
+SPKG_CLASSES = none cswpreserveconf cswusergroup cswinitsmf
 
 
 ###### Upstream and opencsw files information #######
@@ -47,7 +47,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWvsftpd.prototype CSWvsftpd.preinstall
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
-DISTFILES += cswvsftpd cswvsftpd.xml svc-cswvsftpd 
+DISTFILES += cswvsftpd 
 DISTFILES += cswusergroup
 
 # build options are set by modifying 
@@ -82,12 +82,6 @@ DOCFILES += EXAMPLE/INTERNET_SITE/README EXAMPLE/INTERNET_SITE/vsftpd.conf
 DOCFILES += EXAMPLE/INTERNET_SITE_NOINETD/README EXAMPLE/INTERNET_SITE_NOINETD/vsftpd.conf
 
 
-# little hack to be able to still use old smf support with gar v2
-# until openssh is migrated to cswclassutils init system
-DISTFILES += vsftpd_dyngspec.fakespec
-_CATEGORY_GSPEC_INCLUDE = ../../$(DOWNLOADDIR)/vsftpd_dyngspec.fakespec
-
-
 ##### Build and installation information #####
 
 GARCOMPILER = SUN
@@ -120,7 +114,10 @@ pre-install-modulated:
 	 ginstall -d $(DESTDIR)$(docdir)/vsftpd )
 
 
-post-merge: merge-doc-files merge-config-files 
+post-merge: merge-doc-files merge-config-files merge-init-file
+
+merge-init-file:
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd" "$(PKGROOT)/etc/init.d/cswvsftpd"
 
 merge-config-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.conf" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.conf.CSW"
