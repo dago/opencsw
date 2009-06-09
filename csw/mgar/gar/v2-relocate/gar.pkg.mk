@@ -295,6 +295,10 @@ $(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER),$(eval _PROTOTYPE_FILTER_$
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
 
+define dontrelocate
+	$(shell gsed -i -e 's,\(.\) .* \($(1)[\s/]*\),\1 norelocate /\2,g' $(2))
+endef
+
 # Dynamic prototypes work like this:
 # - A prototype from DISTFILES takes precedence over 
 
@@ -330,6 +334,7 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	else \
 	  cat $(PROTOTYPE) $(_CSWCLASS_FILTER) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
+	$(if $(ALLOW_RELOCATE),$(call dontrelocate,opt,$(PROTOTYPE)))
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 	$(_DBG)cat $(WORKDIR)/$*.prototype $(_PROTOTYPE_FILTER_$*) >$@
@@ -451,7 +456,8 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "VENDOR=$(call pkgvar,SPKG_VENDOR,$*)"; \
 	echo "EMAIL=$(call pkgvar,SPKG_EMAIL,$*)"; \
 	echo "PSTAMP=$(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')"; \
-	echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)"; \
+	$(if $(ALLOW_RELOCATE),echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*) norelocate"; \
+	,echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)";) \
 	echo "HOTLINE=http://www.opencsw.org/bugtrack/"; \
 	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
