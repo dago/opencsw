@@ -47,7 +47,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWvsftpd.prototype CSWvsftpd.preinstall
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
-DISTFILES += cswvsftpd 
+DISTFILES += cswvsftpd cswvsftpd.xml
 DISTFILES += cswusergroup 
 
 # build options are set by modifying 
@@ -70,6 +70,9 @@ PATCHFILES += set_priv_sep_user.patch
 # patch to add DESTDIR support to 
 # vsftpd makfile
 PATCHFILES += destdir.patch
+
+# solaris doesn't have RLIMIT_NPROC
+PATCHFILES += no_rlimit_nproc.patch
 
 # Documentation files
 DOCFILES  = AUDIT BENCHMARKS BUGS COPYING COPYRIGHT Changelog FAQ INSTALL LICENSE REFS
