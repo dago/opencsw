@@ -17,16 +17,19 @@ DISTFILES = $(DISTNAME).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = libXrender-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWlibxrender CSWrenderdev
+PACKAGES = CSWlibxrender CSWlibxrenderdevel
+
+CATALOGNAME_CSWlibxrender      = libxrender
+CATALOGNAME_CSWlibxrenderdevel = libxrender_devel
 
 PREREQUISITE_PKGS = CSWrenderproto
-REQUIRED_PKGS_CSWrenderdev = CSWlibxrender
+REQUIRED_PKGS_CSWlibxrenderdevel = CSWlibxrender
 REQUIRED_PKGS_CSWlibxrender = CSWx11common CSWlibx11
 
 SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
-SPKG_DESC_CSWrenderdev  = $(DESCRIPTION) development package
+SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) development package
 
-PKGFILES_CSWrenderdev  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxrenderdevel  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1 
 NOISALIST = 1
