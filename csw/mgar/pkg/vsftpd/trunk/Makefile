@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = vsftpd
-GARVERSION = 2.1.1
+GARVERSION = 2.1.2
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.
@@ -48,7 +48,7 @@ DISTFILES += CSWvsftpd.prototype CSWvsftpd.preinstall
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd 
-DISTFILES += cswusergroup
+DISTFILES += cswusergroup 
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -118,6 +118,7 @@ post-merge: merge-doc-files merge-config-files merge-init-file
 
 merge-init-file:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd" "$(PKGROOT)/etc/init.d/cswvsftpd"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswvsftpd.xml"
 
 merge-config-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.conf" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.conf.CSW"

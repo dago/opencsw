@@ -5,9 +5,12 @@
 # Adapted by Yann Rouillard <yann@blastwave.org>
 #
 
-# chkconfig stuff
-# chkconfig: 3 85 15
-# description: a very secure and fast GPL'd FTP server
+# RC_KNUM 15  
+# RC_SNUM 85   
+# RC_KLEV 0,1,2,S   
+# RC_SLEV 3         
+# MANIFEST /var/opt/csw/svc/manifest/network/cswvsftpd.xml
+
  
 ################################
 # Variable intialization #

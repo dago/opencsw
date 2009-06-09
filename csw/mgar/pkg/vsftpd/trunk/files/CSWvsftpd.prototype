@@ -58,3 +58,4 @@ d none /opt/csw/share/man/man8 0755 root bin
 f none /opt/csw/share/man/man8/vsftpd.8 0644 root bin
 d none /opt/csw/var/empty/vsftpd 0700 root sys
 d none /opt/csw/var/ftp 0755 root sys
+f none /var/opt/csw/svc/manifest/network/cswvsftpd.xml 0644 root sys
