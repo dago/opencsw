@@ -1,0 +1,40 @@
+diff --speed-large-files --minimal -Nru dante-1.1.19.orig/doc/sockd.8 dante-1.1.19/doc/sockd.8
+--- dante-1.1.19.orig/doc/sockd.8	2005-01-24 11:24:20.000000000 +0100
++++ dante-1.1.19/doc/sockd.8	2009-06-10 13:28:07.589216602 +0200
+@@ -112,7 +112,8 @@
+ be set to a (local) filesystem with low latency.
+ .SH FILES
+ .TP
+-/etc/sockd.conf
++/opt/csw/etc/sockd.conf or /etc/opt/csw/sockd.conf
++.br
+ .B Dante
+ server configuration file.
+ .SH AUTHORS
+diff --speed-large-files --minimal -Nru dante-1.1.19.orig/doc/sockd.conf.5 dante-1.1.19/doc/sockd.conf.5
+--- dante-1.1.19.orig/doc/sockd.conf.5	2006-01-20 14:13:55.000000000 +0100
++++ dante-1.1.19/doc/sockd.conf.5	2009-06-10 13:27:47.748142347 +0200
+@@ -315,8 +315,9 @@
+ See the example directory in the distribution.
+ .SH FILES
+ .nf
+-.ta \w 1
+-/etc/sockd.conf	\fBDante\fP server configuration file.
++/opt/csw/etc/sockd.conf or /etc/opt/csw/sockd.conf
++.br
++               \fBDante\fP server configuration file.
+ /etc/passwd	file used when checking username/passwords.
+ .fi
+ .SH AUTHORS
+diff --speed-large-files --minimal -Nru dante-1.1.19.orig/doc/socks.conf.5 dante-1.1.19/doc/socks.conf.5
+--- dante-1.1.19.orig/doc/socks.conf.5	2005-12-19 20:13:37.000000000 +0100
++++ dante-1.1.19/doc/socks.conf.5	2009-06-10 13:23:37.252560424 +0200
+@@ -119,7 +119,7 @@
+ authentication.  Not recommended as other users on the system 
+ might be able to see your password.
+ .SH FILES
+-.I /etc/socks.conf
++.I /opt/csw/etc/socks.conf
+ .SH AUTHORS
+ For Inferno Nettverk A/S, Norway:
+  Michael Shuldman <michaels@inet.no>: Design and implementation.

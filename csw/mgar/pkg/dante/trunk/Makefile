@@ -44,6 +44,9 @@ ENABLE_CHECK = 0
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+# Make the man pages reference our CSW locations instead of /etc/*.conf
+PATCHFILES = man-conflocations.diff
+
 TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
