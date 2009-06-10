@@ -13,31 +13,46 @@ CONFIG_LOCAL=/etc/opt/csw/etc/sockd.conf
 
 case $1 in
         'start')
-                if [ -f "$CONFIG" ]; then
-                        /opt/csw/sbin/sockd -D -f $CONFIG
-                else
-                        echo "No config file ($CONFIG). Not starting cswdante."
+		printf "Starting SOCKS proxy: cswdante ... "
+                if [ ! -f "$CONFIG" ]; then
+                        echo "no configuration, not starting"
+			exit 96
                 fi
+		/opt/csw/sbin/sockd -D -f $CONFIG; RC=$?
+		if [ $RC -ne 0 ]; then
+			echo "failed"
+			exit $RC
+		else
+			echo "ok"
+		fi
                 ;;
         'stop')
+		printf "Stopping SOCKS proxy: cswdante ... "
                 if [ -f "$PIDFILE" ]; then
                         /usr/bin/kill `/usr/bin/cat $PIDFILE`
-                fi
+			echo "ok"
+                else
+			echo " no pid file, not running?"
+		fi
                 ;;
         'restart')
-                # Kill everything
                 $0 stop
                 $0 start
                 ;;
         'reload')
                 # Make the parent process reload the config file, but leave
                 # child processes untouched.
+		printf "Reloading SOCKS proxy: cswdante ... "
                 if [ -f "$PIDFILE" ]; then
                         /usr/bin/kill -HUP `/usr/bin/cat $PIDFILE`
-                fi
+                else
+			echo " no pid file, not running?"
+		fi
                 ;;
         *)
                 echo "Usage: $0 { start | stop | restart | reload }"
                 exit 1
                 ;;
 esac
+
+exit 0
