@@ -1,5 +1,5 @@
 GARNAME = libksba
-GARVERSION = 1.0.5
+GARVERSION = 1.0.6
 CATEGORIES = lib
 
 DESCRIPTION = Libksba is a CMS and X.509 access library
@@ -12,12 +12,9 @@ endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libksba/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibksba,)
-
-PATCHFILES = patch-novoidreturn.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(GARVERSION)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.gnupg.org/related_software/libksba/
 
