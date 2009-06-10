@@ -24,6 +24,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 GARCOMPILER = GNU
 
 REQUIRED_PKGS = CSWiconv
+REQUIRED_PKGS += CSWggettextrt
 
 # No special platform optimization 
 NOISALIST = 1
