@@ -78,6 +78,17 @@ include gar/category.mk
 #			$(WORKSRC)/include/common.h
 #	@$(MAKECOOKIE)
 
+
+post-configure-modulated:
+	# Get rid of -misalign which is meant for /usr/ucb/cc
+	@perl -pi -e 's|-misalign || if /^CFLAGS =/' $(WORKSRC)/*/Makefile
+ifneq ($(GARFLAVOR),DBG)
+	# Get rid of -g. 
+	# configure wants to use -g even if --disable-debugging (default)
+	@perl -pi -e 's#-(g|xs|xO0) ##g if /^CFLAGS =/' $(WORKSRC)/*/Makefile
+endif
+	@$(MAKECOOKIE)
+
 post-install-libsocks: DOCDEST = $(DESTDIR)$(docdir)/libsocks
 post-install-libsocks: DOCS = CREDITS NEWS SUPPORT
 post-install-libsocks: CSWDOCS = README.CSW changelog.CSW
