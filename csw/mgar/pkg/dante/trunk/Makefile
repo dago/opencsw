@@ -52,7 +52,7 @@ TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-socks-conf=$(sysconfdir)/socks.conf
 CONFIGURE_ARGS += --with-sockd-conf=$(sysconfdir)/sockd.conf
-CONFIGURE_ARGS += --with-pidfile=/var/opt/csw/run/sockd.pid
+CONFIGURE_ARGS += --with-pidfile=/var/opt/csw/dante/sockd.pid
 
 # Don't bother about the "not found" modules after the ./configure run,
 # they are commercial add-ons (http://www.inet.no/dante/module.html).
@@ -104,6 +104,7 @@ post-install-dante: DOCDEST = $(DESTDIR)$(docdir)/dante
 post-install-dante: DOCS = CREDITS NEWS SUPPORT
 post-install-dante: CSWDOCS = changelog.CSW
 post-install-dante:
+	@ginstall -d $(DESTDIR)/var/opt/csw/dante
 	@ginstall -d $(DOCDEST)/examples
 	@cp $(WORKSRC)/example/sockd*.conf $(DOCDEST)/examples
 	@$(foreach D,$(DOCS),    cp $(WORKSRC)/$(D) $(DOCDEST);)
@@ -112,9 +113,6 @@ post-install-dante:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 0755 $(FILEDIR)/CSWdante.cswdante \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdante
-
-	# /var/opt/csw/run is not in CSWcommon
-	@ginstall -d $(DESTDIR)/var/opt/csw/run
 	@$(MAKECOOKIE)
 
 
