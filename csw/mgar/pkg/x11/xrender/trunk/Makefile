@@ -2,7 +2,7 @@ GARNAME = libxrender
 GARVERSION = 0.9.4
 CATEGORIES = x11
 
-DESCRIPTION = X Render extension library
+DESCRIPTION = X Render Extension Library
 define BLURB
   The X Rendering Extension (Render) introduces digital image composition as
   the foundation of a new rendering model within the X Window System.
@@ -13,6 +13,15 @@ endef
 MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
 DISTNAME = libXrender-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
+
+# Legacy libraries
+# The idea is to have the legacy libs in /opt/csw/lib to guarantee the existing
+# apps will continue to work. The new lib in /opt/csw/X11/lib relies on the
+# OpenCSW-specific X11 libs, whereas the existing one in /opt/csw/lib links
+# against the Sun X11.
+LEGACYLIB = libXrender.so.1.2.2
+DISTFILES += $(LEGACYLIB)-i386
+DISTFILES += $(LEGACYLIB)-sparc
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = libXrender-(\d+(?:\.\d+)*).tar.gz
@@ -27,7 +36,7 @@ REQUIRED_PKGS_CSWlibxrenderdevel = CSWlibxrender
 REQUIRED_PKGS_CSWlibxrender = CSWx11common CSWlibx11
 
 SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
-SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) development package
+SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) Development Package
 
 PKGFILES_CSWlibxrenderdevel  = $(PKGFILES_DEVEL)
 
@@ -39,5 +48,7 @@ include gar/category.mk
 
 post-merge:
 	ginstall -d $(PKGROOT)$(BUILD_PREFIX)/lib
-	gln -s ../X11/lib/libXrender.so.1 $(PKGROOT)$(BUILD_PREFIX)/lib/libXrender.so.1
+	cp $(DOWNLOADDIR)/$(LEGACYLIB)-$(GARCH)  $(PKGROOT)$(BUILD_PREFIX)/lib/$(LEGACYLIB)
+	gln -s $(LEGACYLIB) $(PKGROOT)$(BUILD_PREFIX)/lib/libXrender.so.1
+	gln -s $(LEGACYLIB) $(PKGROOT)$(BUILD_PREFIX)/lib/libXrender.so
 	@$(MAKECOOKIE)
