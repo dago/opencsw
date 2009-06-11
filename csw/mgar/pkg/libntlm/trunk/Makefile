@@ -1,5 +1,5 @@
 GARNAME = libntlm
-GARVERSION = 1.0
+GARVERSION = 1.1
 CATEGORIES = lib
 
 DESCRIPTION = Microsoft WinNT domain authentication library
@@ -13,7 +13,6 @@ endef
 
 MASTER_SITES = http://josefsson.org/libntlm/releases/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibntlm,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -23,5 +22,7 @@ BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+SPKG_SOURCEURL = http://josefsson.org/libntlm/
 
 include gar/category.mk
