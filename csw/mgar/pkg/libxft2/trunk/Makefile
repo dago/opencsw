@@ -19,6 +19,9 @@ UFILES_REGEX = libXft-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxft2 CSWlibxft2devel
 
+CATALOGNAME_CSWlibxft2 = libxft2
+CATALOGNAME_CSWlibxft2devel = libxft2_devel
+
 REQUIRED_PKGS_CSWlibxft2 = CSWfconfig CSWftype2 CSWlibxrender CSWzlib CSWlibx11
 REQUIRED_PKGS_CSWlibxft2devel = CSWlibxft2
 
