@@ -17,10 +17,10 @@ DISTFILES = $(DISTNAME).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = libXft-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWlibxft2 CSWlibxft2dev
+PACKAGES = CSWlibxft2 CSWlibxft2devel
 
 REQUIRED_PKGS_CSWlibxft2 = CSWfconfig CSWftype2 CSWlibxrender CSWzlib CSWlibx11
-REQUIRED_PKGS_CSWlibxft2dev = CSWlibxft2
+REQUIRED_PKGS_CSWlibxft2devel = CSWlibxft2
 
 EXTRA_CFLAGS   = -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 EXTRA_CXXFLAGS = -xlibmil -xlibmopt -features=tmplife -norunpath
@@ -36,6 +36,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
 
-PKGFILES_CSWlibxft2dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxft2devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
