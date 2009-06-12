@@ -1,5 +1,5 @@
 GARNAME = xcb-util
-GARVERSION = 0.3.4
+GARVERSION = 0.3.5
 CATEGORIES = x11
 
 DESCRIPTION = The XCB utility library
