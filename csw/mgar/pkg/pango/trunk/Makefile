@@ -19,7 +19,7 @@ CATALOGNAME_CSWpango      = libpango
 CATALOGNAME_CSWpangodevel = libpango_devel
 CATALOGNAME_CSWpangodoc   = libpango_doc
 
-PREREQUISITE_PKGS = CSWgtk-doc CSWlibxslt CSWglib2devel
+PREREQUISITE_PKGS = CSWgtk-doc CSWlibxslt CSWglib2devel CSWlibxft2devel
 REQUIRED_PKGS_CSWpango  = CSWggettextrt CSWglib2 CSWfconfig CSWftype2
 REQUIRED_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib CSWlibx11
 REQUIRED_PKGS_CSWpangodevel = CSWpango
