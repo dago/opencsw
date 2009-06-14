@@ -96,9 +96,8 @@ export LDFLAGS
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
+SPKG_CLASSES_CSWpysvn = none cswpycompile
 REQUIRED_PKGS_CSWpysvn += CSWcswclassutils
-REQUIRED_PKGS_CSWsvn += CSWcswclassutils
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
