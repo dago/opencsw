@@ -48,7 +48,7 @@ REQUIRED_PKGS += CSWldns
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswunbound $(DESTDIR)/etc/opt/csw/init.d/cswunbound
-	@ginstall -d 755 $(DESTDIR)/etc/opt/csw/pkg/CSWunbound
+	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWunbound
 	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWunbound/cswusergroup
 	@mv $(DESTDIR)/etc/opt/csw/unbound/unbound.conf $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
 	@chmod 444 $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
