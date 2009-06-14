@@ -1,5 +1,5 @@
 GARNAME = unbound
-GARVERSION = 1.2.1
+GARVERSION = 1.3.0
 CATEGORIES = server
 
 DESCRIPTION = A validating, recursive, and caching DNS resolver
@@ -15,8 +15,6 @@ DISTFILES += $(call admfiles,CSWunbound)
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
-GARCOMPILER = GCC4
-
 SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWunbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
@@ -27,13 +25,25 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+ifeq ($(shell uname -r),5.8)
+	GARCOMPILER = GCC4
+	REQUIRED_PKGS += CSWgcc4corert
+endif
+ifeq ($(shell uname -r),5.10)
+	GARCOMPILER = SOS12
+endif
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGUTE_ARGS += --with-solaris-threads
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
-REQUIRED_PKGS = CSWosslrt CSWgcc4corert CSWcswclassutils
+STRIP_LIBTOOL = 0
+
+REQUIRED_PKGS += CSWosslrt
+REQUIRED_PKGS += CSWcswclassutils
+REQUIRED_PKGS += CSWldns
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
