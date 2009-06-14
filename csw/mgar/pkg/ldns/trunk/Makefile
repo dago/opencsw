@@ -22,13 +22,25 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns\
 
-REQUIRED_PKGS = CSWosslrt
-REQUIRED_PKGS += CSWgcc4corert
+ifeq ($(shell uname -r),5.8)
+	GARCOMPILER = GCC4
+	REQUIRED_PKGS += CSWgcc4corert
+	ifeq ($(shell uname -p),sparc)
+		BUILD64 = 1
+	endif
+endif
+
+ifeq ($(shell uname -r),5.10)
+	GARCOMPILER = SOS12
+endif
+
+EXTRA_BUILD_ISAS_i386 = pentium_pro
+EXTRA_BUILD_ISAS_sparc = sparcv8plus
+
+REQUIRED_PKGS += CSWosslrt
 
 PATCHFILES = doxyparse.diff
 
-GARCOMPILER = GCC4
-BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --enable-sha2
