@@ -40,7 +40,7 @@ REQUIRED_PKGS_CSWsvn      += CSWosslrt CSWsasl CSWzlib CSWsqlite3rt
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
 REQUIRED_PKGS_CSWsvn-devel = CSWsvn
-SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2
+SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn      = ap2_subversion
 REQUIRED_PKGS_CSWap2svn    = CSWsvn CSWggettextrt CSWiconv
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
@@ -96,8 +96,9 @@ export LDFLAGS
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES_CSWpysvn = none cswpycompile
+SPKG_CLASSES = none cswpycompile
 REQUIRED_PKGS_CSWpysvn += CSWcswclassutils
+REQUIRED_PKGS_CSWsvn += CSWcswclassutils
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
@@ -107,7 +108,6 @@ CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-jdk=$(JDK)
-#CONFIGURE_ARGS += --with-neon=$(prefix)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
@@ -182,7 +182,6 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
-	#@$(TEST_ENV)   gmake -C $(WORKSRC) check-swig-py
 	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py 
 	$(MAKECOOKIE)
 
@@ -192,7 +191,6 @@ svn-perl:
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.c \
 		$(WORKSRC)/subversion/bindings/swig/perl/native/*.pm
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-pl
-	#@$(TEST_ENV)   gmake -C $(WORKSRC) check-swig-pl
 	@$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) -C $(WORKSRC) install-swig-pl
 	$(MAKECOOKIE)
 
@@ -200,7 +198,6 @@ svn-ruby:
 	@echo " ==> Building Ruby bindings"
 	@touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
 	$(BUILD_ENV) gmake -f Makefile.gcc -C $(WORKSRC) swig-rb
-	#@$(TEST_ENV) gmake -f Makefile.gcc -C $(WORKSRC) check-swig-rb
 	@$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-swig-rb
 	$(MAKECOOKIE)
 
