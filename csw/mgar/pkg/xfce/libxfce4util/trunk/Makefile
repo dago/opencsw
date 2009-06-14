@@ -30,8 +30,8 @@ PKGFILES_CSWlibxfce4utildoc  = /opt/csw/share/gtk-doc/.*
 
 # Defines dependencies
 REQUIRED_PKGS_CSWlibxfce4util    = CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWlibxfce4utildev = CSWlibxfce4util
-REQUIRED_PKGS_CSWlibxfce4utildoc = CSWlibxfce4util
+REQUIRED_PKGS_CSWlibxfce4utildev = 
+REQUIRED_PKGS_CSWlibxfce4utildoc = 
 
 # BUILD64 = 1
 # NOISALIST = 1
