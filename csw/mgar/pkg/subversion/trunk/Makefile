@@ -94,6 +94,11 @@ LDFLAGS  = -R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/apache2/lib
 LDFLAGS += -L/opt/csw/apache2/lib -L$(SVNLIB) -lintl -liconv
 export LDFLAGS
 
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+SPKG_CLASSES_CSWpysvn = none cswpycompile
+REQUIRED_PKGS_CSWpysvn += CSWcswclassutils
+
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --disable-static
