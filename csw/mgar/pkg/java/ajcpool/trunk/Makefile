@@ -1,5 +1,5 @@
 SHORTNAME = pool
-GARVERSION = 1.4
+GARVERSION = 1.5
 
 GARNAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -14,7 +14,7 @@ MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(GARNAME)-$(GARVERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
 DISTFILES += $(call admfiles,CSWajcpool,)
