@@ -17,19 +17,22 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 DISTFILES = $(GARNAME)-$(GARVERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcpool,)
-DISTFILES += $(call admfiles,CSWajcpooldoc,)
+PACKAGES = CSWajcpool CSWajcpooldoc 
 
 # Defines package description
 SPKG_DESC_CSWajcpool    = $(DESCRIPTION)
 SPKG_DESC_CSWajcpooldoc = $(DESCRIPTION) documentation package
 
+CATALOGNAME_CSWajcpool = commons_pool
+CATALOGNAME_CSWajcpooldoc = commons_pool_doc
+
 # Defines dependencies
 REQUIRED_PKGS_CSWajcpool = CSWajclogging CSWajcdigester
 
 # Defines package content
-PKGFILES_CSWajcpool  = $(prefix)/share/doc/$(GARNAME)/License.txt
-PKGFILES_CSWajcpool += $(prefix)/share/java/.*
+PKGFILES_CSWajcpool = $(prefix)/share/java/.*
+
+LICENSE = LICENSE.txt
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -48,7 +51,5 @@ install-custom:
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.jar ; \
 	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License-documentation.txt
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
 	@$(MAKECOOKIE)
