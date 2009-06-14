@@ -1,6 +1,6 @@
 # XFCE
 XFCE_ROOT       = http://www.us.xfce.org
-XFCE_VERSION   ?= 4.4.1
+XFCE_VERSION   ?= 4.6.1
 XFCE_MIRROR     = $(XFCE_ROOT)/archive/xfce-$(XFCE_VERSION)/src/
 
 MASTER_SITES   ?= $(XFCE_MIRROR)
@@ -22,9 +22,7 @@ PKG_CONFIG_PATH += $(DESTDIR)/opt/csw/lib/pkgconfig
 
 # Configure common options
 CONFIGURE_ARGS  = $(DIRPATHS)
-# CONFIGURE_ARGS += --prefix=/opt/csw
 CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --enable-final
 CONFIGURE_ARGS += --enable-xinerama
 CONFIGURE_ARGS += --enable-dbus
-# CONFIGURE_ARGS += --mandir=/opt/csw/share/man
