@@ -1,4 +1,0 @@
-%var            bitname libxfce4utildoc
-%var            pkgname CSWlibxfce4utildoc
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING
