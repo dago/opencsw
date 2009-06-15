@@ -20,18 +20,11 @@ endef
 MASTER_SITES = http://www.littlecms.com/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGES = CSWlcms CSWlcmsdevel
+PACKAGES = CSWlcms 
 CATALOGNAME_CSWlcms = liblcms
 SPKG_DESC_CSWlcms = $(DESCRIPTION)
-CATALOGNAME_CSWlcmsdevel = liblcms_devel
-SPKG_DESC_CSWlcmsdevel = $(DESCRIPTION) Development Files
-SPKG_VERSION := $(LCMS_VERSION)
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(LCMS_RELEASE)
 
-PKGFILES_CSWlcmsdevel = $(PKGFILES_DEVEL)
-
-REQUIRED_PKGS_CSWlcms   = 
-REQUIRED_PKGS_CSWlcmsdevel = CSWlcms 
+REQUIRED_PKGS_CSWlcms   = CSWjpeg CSWtiff CSWzlib
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
@@ -45,3 +38,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 TEST_TARGET = check
 
 include gar/category.mk
+SPKG_VERSION  := $(LCMS_VERSION)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(LCMS_RELEASE)
+
