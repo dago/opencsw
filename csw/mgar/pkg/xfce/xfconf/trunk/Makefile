@@ -30,26 +30,20 @@ PKGFILES_CSWxfconfdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWxfconfdevel += /opt/csw/include/xfce4/xfconf/.*
 PKGFILES_CSWxfconfdoc    = /opt/csw/share/gtk-doc/.*
 
+# Required packages for compilation
+PREREQUISITE_PKGS_CSWxfconf    = CSWpmglib
+
 # Defines dependencies
-REQUIRED_PKGS_CSWxfconf      = 
+REQUIRED_PKGS_CSWxfconf      = CSWpmglib
 REQUIRED_PKGS_CSWxfconfdevel = 
 REQUIRED_PKGS_CSWxfconfdoc   = 
+
+PATCHFILES = xf-conf-locking-utils.h.diff xfconf-gvaluefuncs.h.diff
 
 # BUILD64 = 1
 # NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-xinerama
 
 TEST_SCRIPTS = 
 
-MSGFMT= /opt/csw/bin/gmsgfmt
-MSGMERGE= /opt/csw/bin/gmsgmerge
-XGETTEXT = /opt/csw/bin/gxgettext
-GETTEXT = /opt/csw/bin/ggettext
-export MSGMERGE
-export MSGFMT
-export XGETTEXT
-export GETTEXT
-
 include gar/category.mk
-

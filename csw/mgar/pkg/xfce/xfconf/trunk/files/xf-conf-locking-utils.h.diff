@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru xfconf-4.6.1.orig/xfconfd/xfconf-locking-utils.h xfconf-4.6.1/xfconfd/xfconf-locking-utils.h
+--- xfconf-4.6.1.orig/xfconfd/xfconf-locking-utils.h 2009-06-16 00:35:04.485540690 +0200
++++ xfconf-4.6.1/xfconfd/xfconf-locking-utils.h      2009-06-16 00:35:22.046862635 +0200
+@@ -26,7 +26,7 @@
+
+ #define  XFCONF_DBUS_TYPE_G_DOUBLE_ARRAY  (dbus_g_type_get_collection("GArray", G_TYPE_DOUBLE))
+
+-gboolean xfconf_user_is_in_list(const gchar *list) G_GNUC_INTERNAL;
++G_GNUC_INTERNAL gboolean xfconf_user_is_in_list(const gchar *list);
+
+ G_END_DECLS
+
