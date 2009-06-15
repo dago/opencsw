@@ -30,7 +30,6 @@ REQUIRED_PKGS_CSWlcms   = CSWjpeg CSWtiff CSWzlib
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-ENABLE_CHECK = 0
 BUILD64 = 1
 STRIP_LIBTOOL = 1
 
