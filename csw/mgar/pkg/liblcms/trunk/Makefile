@@ -1,6 +1,6 @@
 GARNAME = lcms
 GARVERSION = 1.18a
-CATEGORIES = lib
+CATEGORIES = apps
 LCMS_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
 LCMS_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/[^a-z]//g')
 
@@ -21,7 +21,7 @@ MASTER_SITES = http://www.littlecms.com/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWlcms 
-CATALOGNAME_CSWlcms = liblcms
+CATALOGNAME_CSWlcms = lcms
 SPKG_DESC_CSWlcms = $(DESCRIPTION)
 
 REQUIRED_PKGS_CSWlcms   = CSWjpeg CSWtiff CSWzlib
