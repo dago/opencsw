@@ -18,7 +18,7 @@ CPPFLAGS += -I$(DESTDIR)/opt/csw/include/xfce4
 LDFLAGS  += -L/opt/csw/lib -R/opt/csw/lib
 
 # pkg-config options
-PKG_CONFIG_PATH += $(DESTDIR)/opt/csw/lib/pkgconfig
+EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 # Configure common options
 CONFIGURE_ARGS  = $(DIRPATHS)
