@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Blastwave.org Xfce libxfcegui4 preinstall script
+# OpenCSW.org Xfce libxfcegui4 preinstall script
 #
 # The purpose of this script is to remove from file installation database the list of files
 # which previoulsy belongued to xfce_panel and have been moved to this package.

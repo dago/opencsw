@@ -1,6 +1,7 @@
 %var            bitname libxfce4mcsdoc
 %var            pkgname CSWlibxfce4mcsdoc
 %var            arch all
-%var		desc  Xfce Settings Manager Library Documentation
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright      
+
+Please see /opt/csw/share/doc/%{GARNAME}doc/license for license information

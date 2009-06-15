@@ -9,7 +9,7 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PKGDIST    = $(GARNAME)-$(GARVERSION).tar.gz
+PKGDIST    = $(GARNAME)-$(GARVERSION).tar.gz	
 
 #DISTFILES += $(call admfiles,CSWdbh, )
 

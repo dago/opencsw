@@ -1,4 +1,6 @@
 %var            bitname libxfce4mcs
 %var            pkgname CSWlibxfce4mcs
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYING
+%copyright      
+
+Please see /opt/csw/share/doc/%{GARNAME}/license for license information
