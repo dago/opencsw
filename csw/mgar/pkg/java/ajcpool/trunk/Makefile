@@ -19,6 +19,9 @@ DISTFILES = $(GARNAME)-$(GARVERSION)-bin.tar.gz
 # Defines two packages, lib and doc
 PACKAGES = CSWajcpool CSWajcpooldoc 
 
+ARCHALL_CSWajcpool    = 1
+ARCHALL_CSWajcpooldoc = 1
+
 # Defines package description
 SPKG_DESC_CSWajcpool    = $(DESCRIPTION)
 SPKG_DESC_CSWajcpooldoc = $(DESCRIPTION) documentation package
