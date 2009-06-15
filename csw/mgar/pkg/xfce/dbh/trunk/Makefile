@@ -3,7 +3,7 @@ GARVERSION   = 1.0.24
 CATEGORIES   = xfce
 XFCE_VERSION = 4.2.3.2
 
-DESCRIPTION = Disk based hash tables
+DESCRIPTION = Disk based hash tables, dbh
 define BLURB
   Disk based hash tables
 endef
