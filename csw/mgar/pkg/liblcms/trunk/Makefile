@@ -5,7 +5,7 @@ LCMS_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
 LCMS_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/[^a-z]//g')
 
 DISTNAME = $(GARNAME)-$(LCMS_VERSION)
-DESCRIPTION = A free color management engine in 100K.
+DESCRIPTION = The little color management system and tools
 define BLURB
 	Little cms intends to be a small-footprint, speed optimized 
 	color management engine in open source form. Since the initial release, 
