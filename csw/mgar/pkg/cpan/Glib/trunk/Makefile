@@ -1,7 +1,7 @@
 GARNAME = Glib
-GARVERSION = 1.043
+GARVERSION = 1.221
 CATEGORIES = cpan
-AUTHOR = RMCFARLA
+AUTHOR = TSCH
 
 DESCRIPTION = wrappers for the GLib utility and Object libraries
 define BLURB
@@ -12,9 +12,6 @@ define BLURB
   environment, and are used in many unrelated projects.
 endef
 
-# Unstable branch
-#MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
-
 DISTFILES += $(call admfiles,CSWpmglib,)
 
 DEPENDS += lib/glib2
@@ -22,5 +19,3 @@ DEPENDS += cpan/ExtUtils-Depends
 DEPENDS += cpan/ExtUtils-PkgConfig
 
 include gar/category.mk
-
-AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl
