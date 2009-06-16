@@ -19,9 +19,12 @@ CATALOGNAME_CSWlibxfce4utildevel = libxfce4util_devel
 CATALOGNAME_CSWlibxfce4utildoc = libxfce4util_doc
 
 # Package description
-SPKG_DESC_CSWlibxfce4util    = $(DESCRIPTION)
+SPKG_DESC_CSWlibxfce4util      = $(DESCRIPTION)
 SPKG_DESC_CSWlibxfce4utildevel = $(DESCRIPTION) development package
-SPKG_DESC_CSWlibxfce4utildoc = $(DESCRIPTION) documentation package
+SPKG_DESC_CSWlibxfce4utildoc   = $(DESCRIPTION) documentation package
+
+ARCHALL_CSWlibxfce4utildoc   = 1
+ARCHALL_CSWlibxfce4utildevel = 1
 
 # Dynamic prototype
 PKGFILES_CSWlibxfce4utildevel  = $(PKGFILES_DEVEL)
