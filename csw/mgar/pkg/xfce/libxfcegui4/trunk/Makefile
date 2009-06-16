@@ -14,28 +14,28 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Catalog description
-PACKAGES = CSWlibxfcegui4 CSWlibxfcegui4dev CSWlibxfcegui4doc
+PACKAGES = CSWlibxfcegui4 CSWlibxfcegui4devel CSWlibxfcegui4doc
 
-CATALOGNAME_CSWlibxfcegui4 = libxfcegui4
-CATALOGNAME_CSWlibxfcegui4dev = libxfcegui4dev
-CATALOGNAME_CSWlibxfcegui4doc = libxfcegui4doc
+CATALOGNAME_CSWlibxfcegui4      = libxfcegui4
+CATALOGNAME_CSWlibxfcegui4devel = libxfcegui4_devel
+CATALOGNAME_CSWlibxfcegui4doc   = libxfcegui4_doc
 
 # Package description
-SPKG_DESC_CSWlibxfcegui4    = $(DESCRIPTION)
-SPKG_DESC_CSWlibxfcegui4dev = $(DESCRIPTION) development package
-SPKG_DESC_CSWlibxfcegui4doc = $(DESCRIPTION) documentation package
+SPKG_DESC_CSWlibxfcegui4      = $(DESCRIPTION)
+SPKG_DESC_CSWlibxfcegui4devel = $(DESCRIPTION) development package
+SPKG_DESC_CSWlibxfcegui4doc   = $(DESCRIPTION) documentation package
 
 # Dynamic prototype
-PKGFILES_CSWlibxfcegui4dev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibxfcegui4dev += /opt/csw/include/xfce4/libxfcegui4/.*
-PKGFILES_CSWlibxfcegui4doc  = /opt/csw/share/gtk-doc/.*
+PKGFILES_CSWlibxfcegui4devel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxfcegui4devel += /opt/csw/include/xfce4/libxfcegui4/.*
+PKGFILES_CSWlibxfcegui4doc    = /opt/csw/share/gtk-doc/.*
 
 # Defines dependencies
-REQUIRED_PKGS_CSWlibxfcegui4    = CSWdbusglib CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
-REQUIRED_PKGS_CSWlibxfcegui4   += CSWlibdbus CSWlibglade2 CSWlibxfce4util CSWlibxml2 CSWpango
-REQUIRED_PKGS_CSWlibxfcegui4   += CSWstartupnotif CSWxfconf
-REQUIRED_PKGS_CSWlibxfcegui4dev = 
-REQUIRED_PKGS_CSWlibxfcegui4doc = 
+REQUIRED_PKGS_CSWlibxfcegui4      = CSWdbusglib CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
+REQUIRED_PKGS_CSWlibxfcegui4     += CSWlibdbus CSWlibglade2 CSWlibxfce4util CSWlibxml2 CSWpango
+REQUIRED_PKGS_CSWlibxfcegui4     += CSWstartupnotif CSWxfconf
+REQUIRED_PKGS_CSWlibxfcegui4devel = 
+REQUIRED_PKGS_CSWlibxfcegui4doc   = 
 
 # BUILD64 = 1
 # NOISALIST = 1
@@ -45,15 +45,6 @@ CONFIGURE_ARGS += --enable-xinerama
 LDFLAGS  += -lm
 
 TEST_SCRIPTS = 
-
-MSGFMT= /opt/csw/bin/gmsgfmt
-MSGMERGE= /opt/csw/bin/gmsgmerge
-XGETTEXT = /opt/csw/bin/gxgettext
-GETTEXT = /opt/csw/bin/ggettext
-export MSGMERGE
-export MSGFMT
-export XGETTEXT
-export GETTEXT
 
 include gar/category.mk
 
