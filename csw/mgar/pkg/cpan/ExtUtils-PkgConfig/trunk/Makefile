@@ -13,6 +13,11 @@ define BLURB
   written yourself.
 endef
 
-DISTFILES += $(call admfiles,CSWpmextutpkgconf,)
+CATALOGNAME = pm_extutpkgconf
+PACKAGES	= CSWpmextutpkgconf
+
+ARCHALL_CSWpmextutpkgconf = 1
+
+LICENSE = README
 
 include gar/category.mk
