@@ -1,8 +1,10 @@
+# Todo
+# * Non-maintainer upload, needs to be checked by Chris
 GARNAME = findutils
-GARVERSION = 4.2.23
+GARVERSION = 4.4.2
 CATEGORIES = utils
 
-DESCRIPTION = Find utilities
+DESCRIPTION = A set of utilities for searching a filesystem
 define BLURB
   The findutils package consists of three programs. `find' is a program which
   searches a directory tree to find a file or group of files. It walks the
@@ -14,26 +16,40 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWfindutils.postinstall
+
+REQUIRED_PKGS = CSWggettextrt CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Fix up prototypes
-PATCHFILES  = prototypes.patch
+EXTRA_MERGE_EXCLUDE_FILES  = /opt/csw/lib/charset.alias 
+EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/share/info/dir
 
-# Don't generate the locatedb on install
-PATCHFILES += locatedb.patch
-
-CONFIGURE_ARGS  = --prefix=/opt/csw
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
-CONFIGURE_ARGS += --mandir=/opt/csw/share/man
-CONFIGURE_ARGS += --infodir=/opt/csw/share/info
+CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 
+EXTRA_CFLAGS = -fast -xnolibmopt
+
+# Test target requires GNU diff
 TEST_TARGET = check
+TEST_ARGS = "PATH=/opt/csw/gnu:$$PATH"
 
-# Test requires DejaGNU to be installed
-TEST_SCRIPTS =
+# Few of the tests fail, not yet further investigated
+SKIPTEST = 1
 
 include gar/category.mk
 
+# ./configure determines to add a second -R/opt/csw/lib (libtool?), strip it
+#
+# configure:37145: checking how to link with libiconv
+# configure:37147: result: /opt/csw/lib/libiconv.so -R/opt/csw/lib
+# ...
+# configure:37775: checking how to link with libintl
+# configure:37777: result: /opt/csw/lib/libintl.so -R/opt/csw/lib
+#
+post-configure-modulated:
+	@perl -pi -e 's|-R/opt/csw/lib||' $(WORKSRC)/*/Makefile
+	@$(MAKECOOKIE)

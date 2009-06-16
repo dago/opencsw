@@ -1,0 +1,59 @@
+#!/bin/sh
+PATH=/usr/bin
+export PATH
+
+GUPDATEDB=/opt/csw/bin/gupdatedb
+CRONTAB=/var/spool/cron/crontabs/root
+OLDGLOCATEDIR=/opt/csw/var
+NEWGLOCATEDIR=/var/opt/csw
+OLDGLOCATEDB=${OLDGLOCATEDIR}/locatedb
+NEWGLOCATEDB=${NEWGLOCATEDIR}/locatedb
+
+if [ -z "${PKG_INSTALL_ROOT}" -o "${PKG_INSTALL_ROOT}" = "/" ]
+then
+        RCRONTAB=${CRONTAB}
+	RNEWGLOCATEDIR=${NEWGLOCATEDIR}
+	ROLDGLOCATEDB=${OLDGLOCATEDB}
+	RNEWGLOCATEDB=${NEWGLOCATEDB}
+else
+        RCRONTAB=${PKG_INSTALL_ROOT}${CRONTAB}
+	RNEWGLOCATEDIR=${PKG_INSTALL_ROOT}${NEWGLOCATEDIR}
+	ROLDGLOCATEDB=${PKG_INSTALL_ROOT}${OLDGLOCATEDB}
+	RNEWGLOCATEDB=${PKG_INSTALL_ROOT}${NEWGLOCATEDB}
+fi
+
+if /usr/bin/grep "${GUPDATEDB}" ${RCRONTAB} > /dev/null 2>&1; then
+        echo "${RCRONTAB} UNCHANGED because a job for ${GUPDATEDB} already exists"
+else
+        echo '43 3 * * * [ -x '${GUPDATEDB}' ] && '${GUPDATEDB}' --prunepaths="/dev /devices /proc /tmp /var/tmp" 1>/dev/null 2>&1 # Added by CSWfindutils' >> ${RCRONTAB}
+        echo "ADDED ${GUPDATEDB} to ${RCRONTAB}"
+fi
+
+if [ -f ${ROLDGLOCATEDB} ]
+then
+	if [ -f ${RNEWGLOCATEDB} ]
+	then
+		cat <<_EOF
+
+******************************************************************************
+                                   WARNING!
+
+Found TWO locatedb files during postinstall.  We don't know what to do for the
+best.  Please inspect:
+
+  ${OLDGLOCATEDB}
+  ${NEWGLOCATEDB}
+
+and ensure that the desired database is installed as:
+
+  ${NEWGLOCATEDB}
+
+******************************************************************************
+
+_EOF
+	else
+		mkdir -p ${RNEWGLOCATEDIR} && mv ${ROLDGLOCATEDB} ${RNEWGLOCATEDB}
+		echo "MOVED existing database to ${NEWGLOCATEDB}"
+	fi
+fi
+
