@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-item-cache.h libxfce4menu-4.6.1/libxfce4menu/xfce-menu-item-cache.h
+--- libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-item-cache.h 2009-06-17 00:16:43.025894181 +0200
++++ libxfce4menu-4.6.1/libxfce4menu/xfce-menu-item-cache.h      2009-06-17 00:18:00.048575791 +0200
+@@ -54,8 +54,8 @@
+ void               xfce_menu_item_cache_invalidate  (XfceMenuItemCache *cache);
+
+ #if defined(LIBXFCE4MENU_COMPILATION)
+-void               _xfce_menu_item_cache_init       (void) G_GNUC_INTERNAL;
+-void               _xfce_menu_item_cache_shutdown   (void) G_GNUC_INTERNAL;
++G_GNUC_INTERNAL void _xfce_menu_item_cache_init       (void);
++G_GNUC_INTERNAL void _xfce_menu_item_cache_shutdown   (void);
+ #endif
+
+ G_END_DECLS;

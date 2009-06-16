@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-directory.h libxfce4menu-4.6.1/libxfce4menu/xfce-menu-directory.h
+--- libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-directory.h  2009-06-17 00:16:31.753842933 +0200
++++ libxfce4menu-4.6.1/libxfce4menu/xfce-menu-directory.h       2009-06-17 00:18:15.008863534 +0200
+@@ -62,8 +62,8 @@
+ gboolean                 xfce_menu_directory_show_in_environment (XfceMenuDirectory *directory);
+
+ #if defined(LIBXFCE4MENU_COMPILATION)
+-void _xfce_menu_directory_init     (void) G_GNUC_INTERNAL;
+-void _xfce_menu_directory_shutdown (void) G_GNUC_INTERNAL;
++G_GNUC_INTERNAL void _xfce_menu_directory_init     (void);
++G_GNUC_INTERNAL void _xfce_menu_directory_shutdown (void);
+ #endif
+
+ G_END_DECLS;

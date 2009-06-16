@@ -1,1 +1,5 @@
 5dc9343885c2c6f931318b2a1cdcc9db  download/libxfce4menu-4.6.1.tar.bz2
+e95fa8e426f44d7f85f28b08a40dfa52  download/xfce-menu-directory.h.diff
+dc072dded1f8d86cb1bf72450cdbb147  download/xfce-menu-item-cache.h.diff
+e68aec0094e140cae4f9e06b7491569f  download/xfce-menu-monitor.h.diff
+22a9086a5bc2af8517f65628a558bf3e  download/xfce-menu-separator.h.diff

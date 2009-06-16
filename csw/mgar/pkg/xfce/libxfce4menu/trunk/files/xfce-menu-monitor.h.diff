@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-monitor.h libxfce4menu-4.6.1/libxfce4menu/xfce-menu-monitor.h
+--- libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-monitor.h    2009-06-17 00:19:12.212822068 +0200
++++ libxfce4menu-4.6.1/libxfce4menu/xfce-menu-monitor.h         2009-06-17 00:19:30.610506368 +0200
+@@ -88,8 +88,8 @@
+ };
+
+ #if defined(LIBXFCE4MENU_COMPILATION)
+-void _xfce_menu_monitor_init     (void) G_GNUC_INTERNAL;
+-void _xfce_menu_monitor_shutdown (void) G_GNUC_INTERNAL;
++G_GNUC_INTERNAL void _xfce_menu_monitor_init     (void);
++G_GNUC_INTERNAL void _xfce_menu_monitor_shutdown (void);
+ #endif
+
+ G_END_DECLS;

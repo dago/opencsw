@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-separator.h libxfce4menu-4.6.1/libxfce4menu/xfce-menu-separator.h
+--- libxfce4menu-4.6.1.orig/libxfce4menu/xfce-menu-separator.h  2009-06-17 00:16:54.122144261 +0200
++++ libxfce4menu-4.6.1/libxfce4menuxfce-menu-separator.h        2009-06-17 00:17:34.016105926 +0200
+@@ -46,8 +46,8 @@
+ XfceMenuSeparator *xfce_menu_separator_get_default (void);
+
+ #if defined(LIBXFCE4MENU_COMPILATION)
+-void               _xfce_menu_separator_init       (void) G_GNUC_INTERNAL;
+-void               _xfce_menu_separator_shutdown   (void) G_GNUC_INTERNAL;
++G_GNUC_INTERNAL void    _xfce_menu_separator_init       (void);
++G_GNUC_INTERNAL void    _xfce_menu_separator_shutdown   (void);
+ #endif
+
+ G_END_DECLS;

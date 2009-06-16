@@ -37,16 +37,14 @@ REQUIRED_PKGS_CSWlibxfce4menudoc = CSWlibxfce4menu
 # NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+PATCHFILES  = xfce-menu-directory.h.diff
+PATCHFILES += xfce-menu-item-cache.h.diff
+PATCHFILES += xfce-menu-monitor.h.diff
+PATCHFILES += xfce-menu-separator.h.diff
+
 TEST_SCRIPTS = 
 
-MSGFMT = /opt/csw/bin/gmsgfmt
-MSGMERGE = /opt/csw/bin/gmsgmerge
-XGETTEXT = /opt/csw/bin/gxgettext
-GETTEXT = /opt/csw/bin/ggettext
-export MSGMERGE
-export MSGFMT
-export XGETTEXT
-export GETTEXT
+LDFLAGS += -lgobject
 
 include gar/category.mk
 
