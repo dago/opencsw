@@ -12,10 +12,14 @@ define BLURB
   environment, and are used in many unrelated projects.
 endef
 
-DISTFILES += $(call admfiles,CSWpmglib,)
+PREREQUISITE_PKGS 		= CSWpmextutilsdepends CSWpmextutpkgconf
+PKGS_REQUIRED_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf
 
-DEPENDS += lib/glib2
-DEPENDS += cpan/ExtUtils-Depends
-DEPENDS += cpan/ExtUtils-PkgConfig
+CATALOGNAME = pm_glib
+PACKAGES	= CSWpmglib
+
+ARCHALL_CSWpmglib = 1
+
+LICENSE = README
 
 include gar/category.mk
