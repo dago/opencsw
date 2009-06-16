@@ -8,8 +8,6 @@ GARVERSION     ?= $(XFCE_VERSION)
 PKGDIST        ?= $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES      += $(PKGDIST)
 
-include gar/gar.mk
-
 # Compiler options
 # Compiler options
 CFLAGS   += -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
@@ -26,3 +24,14 @@ CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --enable-final
 CONFIGURE_ARGS += --enable-xinerama
 CONFIGURE_ARGS += --enable-dbus
+
+MSGFMT= /opt/csw/bin/gmsgfmt
+MSGMERGE= /opt/csw/bin/gmsgmerge
+XGETTEXT = /opt/csw/bin/gxgettext
+GETTEXT = /opt/csw/bin/ggettext
+export MSGMERGE
+export MSGFMT
+export XGETTEXT
+export GETTEXT
+
+include gar/gar.mk
