@@ -31,10 +31,10 @@ PKGFILES_CSWxfconfdevel += /opt/csw/include/xfce4/xfconf/.*
 PKGFILES_CSWxfconfdoc    = /opt/csw/share/gtk-doc/.*
 
 # Required packages for compilation
-PREREQUISITE_PKGS_CSWxfconf    = CSWpmglib
+PREREQUISITE_PKGS        = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf
 
 # Defines dependencies
-REQUIRED_PKGS_CSWxfconf      = CSWpmglib
+REQUIRED_PKGS_CSWxfconf      = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf
 REQUIRED_PKGS_CSWxfconfdevel = 
 REQUIRED_PKGS_CSWxfconfdoc   = 
 
