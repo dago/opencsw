@@ -1,0 +1,13 @@
+diff --speed-large-files --minimal -Nru xfconf-4.6.1.orig/xfconf-perl/Makefile.PL.in xfconf-4.6.1/xfconf-perl/Makefile.PL.in 
+--- xfconf-4.6.1.orig/xfconf-perl/Makefile.PL.in 2009-06-16 23:29:22.692239106 +0200
++++ xfconf-4.6.1/xfconf-perl/Makefile.PL.in      2009-06-16 23:29:24.616859616 +0200
+@@ -95,6 +95,9 @@
+     ABSTRACT_FROM  => 'Xfconf.pm',
+     PREREQ_PM      => \%pre_reqs,
+     XSPROTOARG     => '-noprototypes',
++       INSTALLSITEMAN1DIR => '/opt/csw/share/man1',
++       INSTALLSITEMAN2DIR => '/opt/csw/share/man2',
++       INSTALLSITEMAN3DIR => '/opt/csw/share/man3',
+     $xfconf->get_makefile_vars,
+ );
+

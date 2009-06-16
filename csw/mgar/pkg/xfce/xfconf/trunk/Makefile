@@ -34,16 +34,23 @@ PKGFILES_CSWxfconfdoc    = /opt/csw/share/gtk-doc/.*
 PREREQUISITE_PKGS        = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf
 
 # Defines dependencies
-REQUIRED_PKGS_CSWxfconf      = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf
+REQUIRED_PKGS_CSWxfconf      = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf CSWdbusglib
+REQUIRED_PKGS_CSWxfconf     += CSWggettextrt CSWglib2 CSWiconv CSWlibdbus CSWlibxfce4util
 REQUIRED_PKGS_CSWxfconfdevel = 
 REQUIRED_PKGS_CSWxfconfdoc   = 
 
-PATCHFILES = xf-conf-locking-utils.h.diff xfconf-gvaluefuncs.h.diff
+PATCHFILES = xf-conf-locking-utils.h.diff xfconf-gvaluefuncs.h.diff Makefile.PL.in.diff
+
+SITEPREFIX = /opt/csw/share
+export SITEPREFIX
 
 # BUILD64 = 1
 # NOISALIST = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS = 
 
 include gar/category.mk
+
+post-install:
+	( rm -fr $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/opt/csw/lib/perl )
+
