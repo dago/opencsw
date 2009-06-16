@@ -1,7 +1,7 @@
 GARNAME = ExtUtils-Depends
-GARVERSION = 0.205
+GARVERSION = 0.301
 CATEGORIES = cpan
-AUTHOR = RMCFARLA
+AUTHOR = TSCH
 
 DESCRIPTION = easily build XS extensions that depend on XS extensions
 define BLURB
@@ -18,4 +18,4 @@ DISTFILES += $(call admfiles,CSWpmextutilsdepends,)
 
 include gar/category.mk
 
-AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl
+# AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl
