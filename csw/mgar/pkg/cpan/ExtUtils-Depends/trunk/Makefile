@@ -11,11 +11,11 @@ define BLURB
   an XS interface besides the perl one.
 endef
 
-# Unstable branch
-#MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
+CATALOGNAME = pm_extutilsdepends
+PACKAGES	= CSWpmextutilsdepends
 
-DISTFILES += $(call admfiles,CSWpmextutilsdepends,)
+ARCHALL_CSWpmextutilsdepends = 1
+
+LICENSE = README
 
 include gar/category.mk
-
-# AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl
