@@ -1,7 +1,7 @@
 GARNAME = ExtUtils-PkgConfig
-GARVERSION = 1.07
+GARVERSION = 1.12
 CATEGORIES = cpan
-AUTHOR = RMCFARLA
+AUTHOR = TSCH
 
 DESCRIPTION = simplistic interface to pkg-config
 define BLURB
@@ -13,11 +13,6 @@ define BLURB
   written yourself.
 endef
 
-# Unstable branch
-#MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
-
 DISTFILES += $(call admfiles,CSWpmextutpkgconf,)
 
 include gar/category.mk
-
-AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl
