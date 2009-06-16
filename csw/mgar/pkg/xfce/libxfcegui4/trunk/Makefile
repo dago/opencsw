@@ -31,7 +31,9 @@ PKGFILES_CSWlibxfcegui4dev += /opt/csw/include/xfce4/libxfcegui4/.*
 PKGFILES_CSWlibxfcegui4doc  = /opt/csw/share/gtk-doc/.*
 
 # Defines dependencies
-REQUIRED_PKGS_CSWlibxfcegui4    = 
+REQUIRED_PKGS_CSWlibxfcegui4    = CSWdbusglib CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
+REQUIRED_PKGS_CSWlibxfcegui4   += CSWlibdbus CSWlibglade2 CSWlibxfce4util CSWlibxml2 CSWpango
+REQUIRED_PKGS_CSWlibxfcegui4   += CSWstartupnotif CSWxfconf
 REQUIRED_PKGS_CSWlibxfcegui4dev = 
 REQUIRED_PKGS_CSWlibxfcegui4doc = 
 
@@ -39,6 +41,8 @@ REQUIRED_PKGS_CSWlibxfcegui4doc =
 # NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-xinerama
+
+LDFLAGS  += -lm
 
 TEST_SCRIPTS = 
 
