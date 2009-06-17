@@ -16,6 +16,8 @@ d88b6bb3fbd0b7596806d1efbcda35ed  download/CSWphp4cgi.postinstall
 7dfaad65432c031aa0dd1e3426c40a6c  download/CSWphp4curl.preremove
 beb44563abab6725128a796e2507883b  download/CSWphp4dba.postinstall
 c2691ced2aacb5c956ffa3c9295bac6c  download/CSWphp4dba.preremove
+bf314c43ea13d5f27e135c9d31e3a18a  download/CSWphp4dbase.postinstall
+b40ab09e3ea0cf7e79804d95b6006ea7  download/CSWphp4dbase.preremove
 391a9204a7b99911207762c29b094a22  download/CSWphp4domxml.postinstall
 111ac9f616d42e03a2fcbf199805b23e  download/CSWphp4domxml.preremove
 7517719ac38440cb7584b582652fa1fa  download/CSWphp4gd.postinstall
@@ -53,4 +55,4 @@ c552f04399c41b8092c2e2874eed5997  download/CSWphp4odbc.postinstall
 ec1d86518d8b6d5a320ce058f03d9eef  download/httpd-php4.conf.CSW
 3870a95f52c9637798294243694fdd47  download/pgsql.diff
 2e3b2a0e27f10cb84fd00e5ecd7a1880  download/php-4.4.9.tar.bz2
-dfbb642e8600052261b85775d86f82c7  download/php.ini.CSW
+ec6decfa35a79c4ce5ff5088164ad9d3  download/php.ini.CSW

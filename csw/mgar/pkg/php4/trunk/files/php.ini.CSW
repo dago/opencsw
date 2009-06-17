@@ -556,6 +556,7 @@ default_socket_timeout = 60
 ;extension=calendar.so
 ;extension=curl.so
 ;extension=dba.so
+;extension=dbase.so
 ;extension=domxml.so
 ;extension=gd.so
 ;extension=gettext.so
