@@ -16,6 +16,10 @@ endef
 MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
+LEGACYLIB = libdb-3.3.so
+DISTFILES += $(LEGACYLIB)-i386
+DISTFILES += $(LEGACYLIB)-sparc
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -91,8 +95,7 @@ configure-dist:
 	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
-#post-merge:
-#	gln -s . $(PKGROOT)$(libdir)/32
-#	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
-#	@$(MAKECOOKIE)
-
+post-merge:
+	ginstall -d $(PKGROOT)$(BUILD_PREFIX)/lib
+	cp $(DOWNLOADDIR)/$(LEGACYLIB)-$(GARCH)  $(PKGROOT)$(BUILD_PREFIX)/lib/$(LEGACYLIB)
+	@$(MAKECOOKIE)
