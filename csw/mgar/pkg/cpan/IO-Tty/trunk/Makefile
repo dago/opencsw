@@ -8,6 +8,7 @@ define BLURB
   IO::Pty provides an interface to allow the creation of a pseudo tty.
 endef
 
-DISTFILES += CSWpmiotty.gspec
+PACKAGES = CSWpmiotty
+CATALOGNAME = pm_iotty
 
 include gar/category.mk
