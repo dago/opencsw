@@ -76,6 +76,7 @@ SPKG_DESC_CSWbdbdevel = BerkeleyDB 4.7 development support
 SPKG_DESC_CSWbdbdoc   = BerkeleyDB 4.7 documentation
 
 REQUIRED_PKGS_CSWbdb-devel = CSWbdb
+INCOMPATIBLE_PKGS_CSWbdb = CSWbdb3
 
 LICENSE = LICENSE
 
