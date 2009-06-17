@@ -1,7 +1,7 @@
 GARNAME = Gtk2
-GARVERSION = 1.043
+GARVERSION = 1.220
 CATEGORIES = cpan
-AUTHOR = RMCFARLA
+AUTHOR = TSCH
 
 DESCRIPTION =  interface to the 2.x series of the Gimp Toolkit library
 define BLURB
@@ -11,14 +11,15 @@ define BLURB
   close in spirit to original API.
 endef
 
-# Unstable branch
-#MASTER_SITES = $(SF_MIRROR)/gtk2-perl/
+PREREQUISITE_PKGS       = CSWpmglib
+PKGS_REQUIRED_CSWpmglib = CSWpmglib CSWgtk2
 
-DISTFILES += CSWpmgtk2.gspec CSWpmgtk2.depend
+CATALOGNAME = pm_gtk2
+PACKAGES    = CSWpmgtk2
 
-DEPENDS += lib/gtk2
-DEPENDS += cpan/Glib
+ARCHALL_CSWpmgtk2 = 1
+
+LICENSE = README
 
 include gar/category.mk
 
-AUTHOR_ID := $(AUTHOR_ID)/Gtk2-Perl
