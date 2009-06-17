@@ -5,7 +5,7 @@ PACKAGES += CSWphp4dba CSWphp4domxml CSWphp4gd CSWphp4gettext CSWphp4gmp
 PACKAGES += CSWphp4iconv CSWphp4imap CSWphp4ldap CSWphp4mbstring
 PACKAGES += CSWphp4mcal CSWphp4mssql CSWphp4mysql CSWphp4ncurses CSWphp4odbc
 PACKAGES += CSWphp4openssl CSWphp4pgsql CSWphp4zlib CSWap2modphp4
-PACKAGES += CSWmodphp4 CSWphp
+PACKAGES += CSWmodphp4 CSWphp CSWphp4dbase
 
 CATALOGNAME_CSWphp4bcmath   = php4_bcmath
 SPKG_DESC_CSWphp4bcmath     = bcmath extension for php4
@@ -19,6 +19,8 @@ CATALOGNAME_CSWphp4curl     = php4_curl
 SPKG_DESC_CSWphp4curl       = curl extension for php4
 CATALOGNAME_CSWphp4dba      = php4_dba
 SPKG_DESC_CSWphp4dba        = dba extension for php4
+CATALOGNAME_CSWphp4dbase    = php4_dbase
+SPKG_DESC_CSWphp4dbase      = dbase extension for php4
 CATALOGNAME_CSWphp4domxml   = php4_domxml
 SPKG_DESC_CSWphp4domxml     = domxml extension for php4
 CATALOGNAME_CSWphp4gd       = php4_gd

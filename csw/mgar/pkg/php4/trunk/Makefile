@@ -42,6 +42,7 @@ CONFIGURE_ARGS += --enable-cli
 CONFIGURE_ARGS += --with-curl=shared,$(prefix)
 CONFIGURE_ARGS += --with-curlwrappers
 CONFIGURE_ARGS += --enable-dba=shared
+CONFIGURE_ARGS += --enable-dbase=shared
 CONFIGURE_ARGS += --enable-exif
 CONFIGURE_ARGS += --enable-fastcgi
 CONFIGURE_ARGS += --enable-force-cgi-redirect
