@@ -14,6 +14,16 @@ DISTFILES += CSWpmgimp.gspec CSWpmgimp.depend
 DEPENDS += utils/gimp
 DEPENDS += cpan/PDL cpan/Gtk2
 
+
+PREREQUISITE_PKGS       = CSWpmpdl CSWpmgtk2 
+PKGS_REQUIRED_CSWpmglib = CSWpmpdl CSWpmgtk2 CSWgimplibs
+
+CATALOGNAME = pm_gimp
+PACKAGES    = CSWpmgimp
+
+ARCHALL_CSWpmgimp = 1
+
+LICENSE = README
+
 include gar/category.mk
 
-AUTHOR_ID := $(AUTHOR_ID)/Gimp2
