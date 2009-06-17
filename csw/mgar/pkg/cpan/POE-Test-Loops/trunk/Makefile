@@ -10,5 +10,6 @@ endef
 
 PACKAGES = CSWpoetestloops
 CATALOGNAME = pm_poetestloops
+ARCHALL = 1
 
 include gar/category.mk
