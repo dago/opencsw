@@ -15,6 +15,7 @@ MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWoldap)
 DISTFILES += README.CSW openldaprc
+DISTFILES += cswopenldap openldap.xml svc-openldap
 
 LICENSE = COPYRIGHT
 
@@ -42,15 +43,16 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES = patch-oldap-2.4.16-ntlm.diff
 DISTFILES += $(PATCHFILES)
 
-EXTRA_DOCS = README.CSW openldaprc $(PATCHFILES)
+EXTRA_DOCS = README.CSW $(PATCHFILES)
 
-EXTRA_LIB = $(prefix)/bdb44/lib 
-EXTRA_INC = $(prefix)/bdb44/include
+#EXTRA_LIB = $(prefix)/bdb44/lib 
+#EXTRA_INC = $(prefix)/bdb44/include
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
 
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWoldapclient  = $(bindir)/.*
@@ -70,12 +72,8 @@ include gar/category.mk
 CFLAGS := $(filter-out -I%,$(CFLAGS))
 DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
-INSTALL_SCRIPTS += custom
-
-install-custom:
+post-merge:
 	ginstall -D $(DOWNLOADDIR)/cswopenldap \
-		$(DESTDIR)/etc/opt/csw/init.d/cswopenldap
-	@for file in $(EXTRA_DOCS); do \
-		ginstall -D $(WORKDIR)/$$file $(DESTDIR)$(docdir)/$(GARNAME)/$$file; \
-	done
-	@$(MAKECOOKIE)
+		$(PKGROOT)/etc/opt/csw/init.d/cswopenldap
+	$(foreach F,$(EXTRA_DOCS),ginstall -D $(DOWNLOADDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
+	#@$(MAKECOOKIE)
