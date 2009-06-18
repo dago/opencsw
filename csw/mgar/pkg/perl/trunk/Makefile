@@ -1,8 +1,8 @@
 GARNAME = perl
-GARVERSION = 5.8.8
+GARVERSION = 5.10.0
 CATEGORIES = lang
 
-DESCRIPTION = A high-level, general-purpose programming language.
+DESCRIPTION = A high-level, general-purpose programming language
 define BLURB
   Perl is a high-level, general-purpose programming language that makes easy
   things easy and hard things possible. It is optimized for scanning arbitrary
@@ -12,35 +12,44 @@ define BLURB
   libraries.
 endef
 
-MASTER_SITES   = http://search.cpan.org/CPAN/authors/id/N/NW/NWCLARK/
-SPKG_SOURCEURL = http://search.cpan.org/~nwclark/perl/
+#MASTER_SITES   = http://search.cpan.org/CPAN/authors/id/N/NW/NWCLARK/
+#SPKG_SOURCEURL = http://search.cpan.org/~nwclark/perl/
+MASTER_SITES   = http://www.cpan.org/src/
+SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWperl,depend prototype)
-DISTFILES += $(call admfiles,CSWperldoc,depend prototype)
+#DISTFILES += $(call admfiles,CSWperl,depend prototype)
+#DISTFILES += $(call admfiles,CSWperldoc,depend prototype)
+
+PACKAGES = CSWperl CSWperldoc
+ARCHALL_CSWperldoc = 1
+REQUIRED_PKGS_CSWperl = CSWbdb44 CSWgdbm
+REQUIRED_PKGS_CSWperldoc = CSWperl
+
+PKGFILES_CSWperldoc = $(PKGFILES_DOC)
 
 # Core module updates
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/K/KW/KWILLIAMS/
-CORE_UPDATES  += PathTools-3.25
-CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/K/KW/KWILLIAMS/
+#CORE_UPDATES  += PathTools-3.25
+#CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
-CORE_UPDATES  += CGI.pm-3.29
-CORE_OBSOLETE += CGI*
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
+#CORE_UPDATES  += CGI.pm-3.29
+#CORE_OBSOLETE += CGI*
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
-CORE_UPDATES  += Test-Simple-0.72
-CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
+#CORE_UPDATES  += Test-Simple-0.72
+#CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
-CORE_UPDATES  += File-Temp-0.18
-CORE_OBSOLETE += File/Temp.pm
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
+#CORE_UPDATES  += File-Temp-0.18
+#CORE_OBSOLETE += File/Temp.pm
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
-CORE_UPDATES  += IO-1.2301
-CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
+#CORE_UPDATES  += IO-1.2301
+#CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
 
-DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
+#DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 # Dependencies
 LIBDEPS += lib/bdb44
@@ -50,8 +59,8 @@ LIBDEPS += lib/gdbm
 CONFIGURE_SCRIPTS = perl
 
 # Compatable with all prior patch revs
-PL_MAJOR   = 5.8
-PL_PATCH   = 0 2 4 6 7
+PL_MAJOR   = 5.10
+PL_PATCH   = 0
 INC_COMPAT = $(foreach REV,$(PL_PATCH),$(PL_MAJOR).$(REV))
 
 # Force use of db-4.4
@@ -149,4 +158,3 @@ perlconf:
 # Invoke post-install targets
 post-install: $(POST_TARGETS)
 	@$(MAKECOOKIE)
-
