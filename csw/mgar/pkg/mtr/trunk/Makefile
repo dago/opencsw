@@ -1,8 +1,16 @@
 # Todo
-# * Provide additional non-X11 package to reduce dependencies (mtr-tiny)
+# ----
+# * Build-machines pkg-config for GTK+-2.0 stuff is broken right now, 
+#   wait for it to become usable again to compile the regular CSWmtr pkg
+#   ...
+#   checking for GTK+ - version >= 2.4.0... sh: gnome-config: not found
+#   see: http://lists.opencsw.org/pipermail/maintainers/2009-June/002893.html
+#     http://lists.freebsd.org/pipermail/freebsd-gnome/2003-April/000453.html
+#
 # * Revisit curses autoconf detection. Maybe have a chat with upstream
 #   as the README says that there are known, yet unsolved Solaris autoconf
 #   recipe problems
+#
 GARNAME = mtr
 GARVERSION = 0.75
 CATEGORIES = net
@@ -50,6 +58,7 @@ endif
 
 # ... default is with X11
 ifneq ($(TINY), 1)
+CONFIGURE_ARGS += --disable-gtktest
 REQUIRED_PKGS += CSWgtk2 CSWlibatk CSWpango CSWlibcairo
 REQUIRED_PKGS += CSWggettextrt CSWglib2
 INCOMPATIBLE_PKGS = CSWmtrtiny
