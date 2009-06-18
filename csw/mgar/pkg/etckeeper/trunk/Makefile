@@ -15,7 +15,7 @@ revision control.
 endef
 
 PACKAGES = CSWetckeeper
-CATALOGNAME = CSWetckeeper
+CATALOGNAME = etckeeper
 ARCHALL_CSWetckeeper = 1
 
 PREREQUISITE_PKGS = CSWgnulinks
