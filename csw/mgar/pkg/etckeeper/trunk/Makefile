@@ -18,13 +18,16 @@ PACKAGES = CSWetckeeper
 CATALOGNAME = CSWetckeeper
 ARCHALL_CSWetckeeper = 1
 
+PREREQUISITE_PKGS = CSWgnulinks
+
 REQUIRED_PKGS_CSWetckeeper = CSWgit CSWbash
 
 SPKG_DESC_CSWetckeeper = Versioning for /etc
 
-GIT_REPOS = git://git.kitenet.net/etckeeper
-GIT_TREEISH_etckeeper.git = HEAD
+GIT_REPOS = git://git.kitenet.net/etckeeper.git
+GIT_TREEISH_etckeeper.git = 0.37
 GIT_USE_PROXY = 1
+PATCHFILES = autoconf.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
@@ -35,6 +38,27 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
+BUILD_SCRIPTS =
+
+TEST_SCRIPTS =
+
 include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)
+
+pre-configure-modulated:
+	@(cd $(WORKSRC); autoreconf )
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	( for d in apt cruft; do \
+		dir=$(DESTDIR)$(sysconfdir)/$$d; \
+		[ -d $$dir ] && rm -rf $$dir; \
+	    done )
+	@$(MAKECOOKIE)
