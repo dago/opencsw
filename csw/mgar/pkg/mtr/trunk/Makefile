@@ -66,6 +66,6 @@ post-configure-modulated:
 	@$(MAKECOOKIE)
 
 post-install-modulated:
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
+	@cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	@$(MAKECOOKIE)
