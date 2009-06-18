@@ -18,19 +18,19 @@ test -r $CONFIG_LOCAL && CONFIG=$CONFIG_LOCAL
 test -f $DAEMON || exit 0
 test -f $CONFIG || exit 0
 
-CHROOT=`grep ^chroot $CONFIG | sed 's/.*= *//'`
-PIDFILE=`grep ^pid $CONFIG | sed 's/.*= *//'`
+CHROOT=`grep '^chroot' $CONFIG | sed 's/.*= *//'`
+PIDFILE=`grep '^pid' $CONFIG | sed 's/.*= *//'`
 
 test -z "$DEFAULTPIDFILE" && PIDFILE = $DEFAULTPIDFILE
 
 case "$1" in
     start)
-        printf "Starting universal SSL tunnel: stunnel"
+        printf "Starting universal SSL tunnel: cswstunnel"
         $DAEMON $CONFIG || printf " failed"
         echo "."
         ;;
     stop)
-        printf "Stopping universal SSL tunnel: stunnel"
+        printf "Stopping universal SSL tunnel: cswstunnel"
         if test -r $CHROOT/$PIDFILE; then
             kill `cat $CHROOT/$PIDFILE` 2> /dev/null || printf " failed"
         else
@@ -39,7 +39,7 @@ case "$1" in
         echo "."
         ;;
      restart|force-reload)
-        echo "Restarting universal SSL tunnel"
+        echo "Restarting universal SSL tunnel: cswstunnel"
         $0 stop
         sleep 1
         $0 start
