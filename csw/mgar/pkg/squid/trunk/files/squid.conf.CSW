@@ -4467,7 +4467,7 @@ error_directory /opt/csw/share/squid/errors/English
 #	Specify the location of the executable for dnslookup process.
 #
 #Default:
-cache_dns_program /opt/csw/libexec/dnsserver
+#cache_dns_program /opt/csw/libexec/dnsserver
 
 #  TAG: dns_children
 # Note: This option is only available if Squid is rebuilt with the
