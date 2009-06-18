@@ -1,5 +1,5 @@
-mtr (0.75,REV=2009.06.01)
+mtr (0.75,REV=2009.06.19)
 
   * Adopted and updated to 0.75. (Closes #2557, #3278)
 
- -- Sebastian Kayser <skayser@opencsw.org>  Mon,  1 Jun 2009 15:37:02 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Fri, 19 Jun 2009 00:26:08 +0200
