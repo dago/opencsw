@@ -25,8 +25,7 @@ MASTER_SITES = ftp://ftp.bitwizard.nl/mtr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS  = CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
-REQUIRED_PKGS += CSWncurses CSWpango
+REQUIRED_PKGS  = CSWncurses
 
 # 1) Check for socklen_t via sys/socket.h (not netinet/in.h)
 # 2) Don't cast sin_addr to (struct in_addr), cc bails out with invalid cast
@@ -40,6 +39,21 @@ CONFIGURE_ARGS = $(DIRPATHS)
 PROTOTYPE_FILTER = awk ' \
 	$$$$3 ~ /sbin\/mtr$$$$/ { $$$$4 = "4755" } \
 	{ print }'
+
+# Call with gmake TINY=1 to build and packaage the non-X11 version ...
+ifeq ($(TINY), 1)
+CONFIGURE_ARGS += --without-gtk
+PACKAGES = CSWmtrtiny
+CATALOGNAME = mtr_tiny
+INCOMPATIBLE_PKGS = CSWmtr
+endif
+
+# ... default is with X11
+ifneq ($(TINY), 1)
+REQUIRED_PKGS += CSWgtk2 CSWlibatk CSWpango CSWlibcairo
+REQUIRED_PKGS += CSWggettextrt CSWglib2
+INCOMPATIBLE_PKGS = CSWmtrtiny
+endif
 
 include gar/category.mk
 
