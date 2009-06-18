@@ -19,8 +19,6 @@ endef
 
 MASTER_SITES = http://www.stunnel.org/download/stunnel/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += CSWstunnel.postinstall
-DISTFILES += CSWstunnel.checkinstall
 
 SPKG_SOURCEURL = http://www.stunnel.org
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf

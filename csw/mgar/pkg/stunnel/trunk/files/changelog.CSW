@@ -1,6 +1,6 @@
-stunnel (4,27,REV=2009.05.10)
+stunnel (4,27,REV=2009.06.18)
 
   * Package adopted and updated to 4.27.
   * Built with --localstatedir=/var/opt/csw. (Closes: #3029)
 
- -- Sebastian Kayser <skayser@opencsw.org>  Sun, 10 May 2009 22:33:14 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Thu, 18 Jun 2009 22:48:30 +0200
