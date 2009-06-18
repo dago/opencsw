@@ -19,7 +19,10 @@ EXTRA_CXXFLAGS = -xlibmil -xlibmopt -features=tmplife -norunpath
 BUILD64 = 1
 NOISALIST = 1
 
+PATCHFILES = pixman-bits-image.c.diff pixman-private.h.diff
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-gtk
+CONFIGURE_ARGS += --disable-timers
 
 include gar/category.mk

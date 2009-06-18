@@ -1,1 +1,3 @@
-8813e13aa3817df03039bd66a4863670  download/pixman-0.15.10.tar.gz
+b0270704035fbac78507c91ffd15fcb6  download/pixman-0.15.12.tar.gz
+bf8e86f3342aefc87ddbd6d99d6f80fc  download/pixman-bits-image.c.diff
+f78d71433a7d574ff66b7d2bf3ea2a49  download/pixman-private.h.diff
