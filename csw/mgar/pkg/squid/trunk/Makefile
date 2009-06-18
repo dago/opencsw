@@ -22,7 +22,7 @@ PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" }
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
-DISTFILES += CSWsquid.postinstall CSWsquid.preremove cswsquid
+DISTFILES += CSWsquid.postinstall CSWsquid.preremove cswsquid squid.conf.CSW
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --datadir=$(datadir)/$(GARNAME)
