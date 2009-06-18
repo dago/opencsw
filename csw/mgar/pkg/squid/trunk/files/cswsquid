@@ -35,7 +35,8 @@ case "$1" in
             if [ -n "`pgrep squid`" ]; then
                 ## stop gracefully
 	            echo 'stopping squid server... please wait for cleanup...'
-                ${SQUID_DAEMON} -k shutdown && sleep 30
+                ${SQUID_DAEMON} -k shutdown 
+                sleep 30
                 if [ -n "`pgrep squid`" ]; then
                     echo 'squid server still running, killing...'
                     pkill -9 squid
