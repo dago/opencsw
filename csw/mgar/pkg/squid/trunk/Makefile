@@ -63,7 +63,6 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/cache
 	gcp $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/
 	chmod 0755 $(DESTDIR)/etc/opt/csw/init.d/cswsquid
-	gmv $(DESTDIR)$(sysconfdir)/squid.conf \
-		$(DESTDIR)$(sysconfdir)/squid.conf.CSW
+	gcp $(DOWNLOADDIR)/squid.conf.CSW $(DESTDIR)$(sysconfdir)/
 	@$(MAKECOOKIE)
 
