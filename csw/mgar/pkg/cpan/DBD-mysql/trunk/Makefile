@@ -1,5 +1,5 @@
 GARNAME = DBD-mysql
-GARVERSION = 4.003
+GARVERSION = 4.012
 CATEGORIES = cpan
 AUTHOR = CAPTTOFU
 
@@ -13,16 +13,16 @@ define BLURB
   ever requested them.
 endef
 
-DISTFILES += CSWpmdbdmysql.gspec CSWpmdbdmysql.depend
 
-DEPENDS += server/mysql4
+CATALOGNAME = pm_dbdmysql
+PACKAGES	= CSWpmdbdmysql
 
-# Module version numbers defeat Sort::Versions
-MANUAL_UPDATE = 1
+ARCHALL_CSWpmdbdmysql = 1
 
-CONFIGURE_ARGS = --ssl
+LICENSE = README
 
-# Tests require MySQL to be running
-TEST_SCRIPTS =
+PKGS_REQUIRED_CSWpmdbdmysql = CSWmysql4
+
+CONFIGURE_ARGS += --ssl
 
 include gar/category.mk
