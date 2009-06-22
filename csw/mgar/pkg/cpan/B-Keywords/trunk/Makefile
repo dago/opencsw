@@ -1,0 +1,14 @@
+GARNAME = B-Keywords
+GARVERSION = 1.09
+CATEGORIES = cpan
+AUTHOR = JJORE
+
+DESCRIPTION = Lists of reserved barewords and symbol names
+define BLURB
+  Long description
+endef
+
+PACKAGES = CSWpmbkeywords
+CATALOGNAME = pm_bkeywords
+
+include gar/category.mk
