@@ -23,7 +23,7 @@ ARCHALL = 1
 
 SPKG_SOURCEURL = http://www.sukria.net/perlconsole.html
 
-REQUIRED_PKGS = CSWpmmodrefresh CSWpmtermreadlinegnu
+REQUIRED_PKGS = CSWpmmodrefresh CSWpmtermreadlinegnu CSWpmlexicalpersist
 
 include gar/category.mk
 
