@@ -1,6 +1,7 @@
 GARNAME = Perl-Tidy
-GARVERSION = 20060719
-CATEGORIES = utils
+GARVERSION = 20090616
+CATEGORIES = cpan
+AUTHOR = SHANCOCK
 
 DESCRIPTION = Indent and reformat Perl scripts.
 define BLURB
@@ -9,8 +10,8 @@ define BLURB
   follows the suggestions in perlstyle(1).
 endef
 
-MASTER_SITES = $(SF_MIRROR)/perltidy/
-
-DISTFILES += $(call admfiles,CSWperltidy,prototype)
+PACKAGES = CSWperltidy
+CATALOGNAME = perltidy
+ARCHALL = 1
 
 include gar/category.mk
