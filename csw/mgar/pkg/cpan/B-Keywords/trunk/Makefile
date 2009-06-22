@@ -10,6 +10,7 @@ endef
 
 PACKAGES = CSWpmbkeywords
 CATALOGNAME = pm_bkeywords
+ARCHALL = 1
 
 include gar/category.mk
 
