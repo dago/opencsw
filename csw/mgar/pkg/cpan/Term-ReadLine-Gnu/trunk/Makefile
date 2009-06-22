@@ -9,8 +9,8 @@ define BLURB
   Library.
 endef
 
-PACKAGES = CSWtermreadlinegnu
-CATALOGNAME = pm_termreadlinegnu
+PACKAGES = CSWpmtermreadlineg
+CATALOGNAME = pm_termreadlineg
 
 REQUIRED_PKGS = CSWreadline
 
