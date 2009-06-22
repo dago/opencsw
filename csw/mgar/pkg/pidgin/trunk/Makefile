@@ -1,5 +1,5 @@
 GARNAME = pidgin
-GARVERSION = 2.5.6
+GARVERSION = 2.5.7
 CATEGORIES = apps
 
 DESCRIPTION = Multi-protocol IM client
@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += fixme.sh
+STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += '--with-dbus-services=/opt/csw/etc/dbus-1'
@@ -46,7 +46,3 @@ REQUIRED_PKGS_CSWpidgin += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus
 
 include gar/category.mk
 
-post-configure-$(MODULATION):
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	$(DONADA)
