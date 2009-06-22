@@ -12,4 +12,6 @@ endef
 PACKAGES = CSWtermreadlinegnu
 CATALOGNAME = pm_termreadlinegnu
 
+REQUIRED_PKGS = CSWreadline
+
 include gar/category.mk
