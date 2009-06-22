@@ -7,7 +7,7 @@ DESCRIPTION = Persistent lexical variable values for arbitrary calls
 define BLURB
 endef
 
-PACKAGES = CSWlexicalpersist
+PACKAGES = CSWpmlexicalpersist
 CATALOGNAME = pm_lexicalpersist
 ARCHALL = 1
 

@@ -10,7 +10,7 @@ define BLURB
   those variables which are in scope at the point of the call.
 endef
 
-PACKAGES = CSWpadwalker
+PACKAGES = CSWpmpadwalker
 CATALOGNAME = pm_padwalker
 
 include gar/category.mk

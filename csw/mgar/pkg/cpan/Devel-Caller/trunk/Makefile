@@ -7,7 +7,7 @@ DESCRIPTION = Meatier versions of caller
 define BLURB
 endef
 
-PACKAGES = CSWdevelcaller
+PACKAGES = CSWpmdevelcaller
 CATALOGNAME = pm_develcaller
 
 REQUIRED_PKGS = CSWpmpadwalker

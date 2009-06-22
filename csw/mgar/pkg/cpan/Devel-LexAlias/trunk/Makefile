@@ -9,7 +9,7 @@ define BLURB
   subroutines scope to one of your choosing.
 endef
 
-PACKAGES = CSWdevellexalias
+PACKAGES = CSWpmdevellexalias
 CATALOGNAME = pm_devellexalias
 
 REQUIRED_PKGS = CSWpmdevelcaller CSWpmpadwalker
