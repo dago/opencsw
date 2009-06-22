@@ -24,3 +24,7 @@ ARCHALL = 1
 SPKG_SOURCEURL = http://www.sukria.net/perlconsole.html
 
 include gar/category.mk
+
+post-install-modulated:
+	chmod -R u+w $(INSTALLISADIR)
+	@$(MAKECOOKIE)
