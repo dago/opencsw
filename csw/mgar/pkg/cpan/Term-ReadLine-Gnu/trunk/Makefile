@@ -1,16 +1,15 @@
 GARNAME = Term-ReadLine-Gnu
-GARVERSION = 1.16
+GARVERSION = 1.19
 CATEGORIES = cpan
 AUTHOR = HAYASHI
 
-DESCRIPTION = extension for the GNU Readline/History Library
+DESCRIPTION = Perl extension for the GNU Readline/History Library
 define BLURB
   This is an implementation of Term::ReadLine using the GNU Readline/History
   Library.
 endef
 
-DISTFILES += CSWpmtermreadlinegnu.gspec CSWpmtermreadlinegnu.depend
-
-DEPENDS += lib/readline
+PACKAGES = CSWtermreadlinegnu
+CATALOGNAME = pm_termreadlinegnu
 
 include gar/category.mk
