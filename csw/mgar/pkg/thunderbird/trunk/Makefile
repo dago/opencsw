@@ -1,5 +1,5 @@
 GARNAME = thunderbird
-GARVERSION = 2.0.0.21
+GARVERSION = 2.0.0.22
 CATEGORIES = apps
 DISTNAME = $(GARNAME)
 
@@ -24,6 +24,10 @@ CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/thunderbird
 CFLAGS+= -DG_HAVE_ISO_VARARGS
 CXXFLAGS+= -DG_HAVE_ISO_VARARGS
 LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/thunderbird/lib -R/opt/csw/mozilla/thunderbird/lib -L/opt/csw/lib -R/opt/csw/lib
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
 
