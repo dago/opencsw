@@ -13,3 +13,9 @@ CATALOGNAME = pm_develcaller
 REQUIRED_PKGS = CSWpmpadwalker
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
