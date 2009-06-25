@@ -5,7 +5,8 @@
 #   formats properly (right now no formatting works, no paragraphs
 #   no headings, no nothing).
 GARNAME = autossh
-GARVERSION = 1.4b
+GARVERSION = 1.4
+RELEASE = b
 CATEGORIES = net
 
 DESCRIPTION = Automatically restart SSH sessions and tunnels
@@ -16,7 +17,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.harding.motd.ca/autossh/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+
+# We need to move the "b" in version to the end to make it
+# pkg-get compatible.
+DISTVERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
+DISTFILES  = $(DISTNAME).tgz
 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
@@ -28,6 +34,8 @@ NORUNPATH = 1
 BUILD_ARGS = 'SSH=/usr/bin/ssh'
 
 include gar/category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
 
 # Makefile doesn't honor $(DESTDIR) so we have to do it manually
 install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
