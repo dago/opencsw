@@ -42,7 +42,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-CONFIGURE_ARGS = $(DIRPATHS)
+EXTRA_CONFIGURE_ARGS = --with-vcs=git
 
 BUILD_SCRIPTS =
 
