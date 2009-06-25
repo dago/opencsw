@@ -3,9 +3,14 @@
 #
 # Adopted from Debian and adjusted for OpenCSW
 
-if [ ! $AUTOSSH_PORT ]; then export AUTOSSH_PORT="21021"; fi
+if [ ! "$AUTOSSH_PORT" ]; then 
+    AUTOSSH_PORT="21021"; 
+    export AUTOSSH_PORT
+fi
+
 if [ -f /opt/csw/bin/ssh ]; then 
-    export AUTOSSH_PATH=/opt/csw/bin/ssh
+    AUTOSSH_PATH=/opt/csw/bin/ssh
+    export AUTOSSH_PATH
 fi
 
 exec /opt/csw/libexec/autossh/autossh "$@"
