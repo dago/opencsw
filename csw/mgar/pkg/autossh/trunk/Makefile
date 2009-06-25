@@ -24,6 +24,9 @@ INSTALL_SCRIPTS = custom
 CONFIGURE_ARGS = $(DIRPATHS)
 NORUNPATH = 1
 
+# --with-ssh=/usr/bin/ssh doesn't work -> checking for ssh... /opt/csw/bin/ssh
+BUILD_ARGS = 'SSH=/usr/bin/ssh'
+
 include gar/category.mk
 
 # Makefile doesn't honor $(DESTDIR) so we have to do it manually
@@ -31,11 +34,13 @@ install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 install-custom: DOCS=CHANGES README
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
+	@ginstall -d $(DESTDIR)$(prefix)/libexec/autossh
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 	@ginstall -d $(DOCDEST)
 	@ginstall -d $(DOCDEST)/examples
 
-	@cp $(WORKSRC)/autossh $(DESTDIR)$(bindir)
+	@ginstall -m 755 $(FILEDIR)/autossh $(DESTDIR)$(bindir)
+	@cp $(WORKSRC)/autossh $(DESTDIR)$(prefix)/libexec/autossh
 	@cp $(FILEDIR)/autossh.1 $(DESTDIR)$(mandir)/man1
 	@cp $(FILEDIR)/autossh.1.txt $(DOCDEST)
 	@cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)

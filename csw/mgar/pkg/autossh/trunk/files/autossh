@@ -1,0 +1,11 @@
+#!/bin/sh
+# little wrapper to choose a default port for autossh [21021]
+#
+# Adopted from Debian and adjusted for OpenCSW
+
+if [ ! $AUTOSSH_PORT ]; then export AUTOSSH_PORT="21021"; fi
+if [ -f /opt/csw/bin/ssh ]; then 
+    export AUTOSSH_PATH=/opt/csw/bin/ssh
+fi
+
+exec /opt/csw/libexec/autossh/autossh "$@"
