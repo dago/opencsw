@@ -1,5 +1,9 @@
 # Todo
-# * man page seems broken, verify and check why
+# * man page doesn't propely format on Solaris. Upstream notified on
+#   2009-06-24, intends to work on it, has access to his own Solaris
+#   box. In case of a new upstream version, verify whether man page
+#   formats properly (right now no formatting works, no paragraphs
+#   no headings, no nothing).
 GARNAME = autossh
 GARVERSION = 1.4b
 CATEGORIES = net
@@ -32,7 +36,8 @@ install-custom:
 	@ginstall -d $(DOCDEST)/examples
 
 	@cp $(WORKSRC)/autossh $(DESTDIR)$(bindir)
-	@cp $(WORKSRC)/autossh.1 $(DESTDIR)$(mandir)/man1
+	@cp $(FILEDIR)/autossh.1 $(DESTDIR)$(mandir)/man1
+	@cp $(FILEDIR)/autossh.1.txt $(DOCDEST)
 	@cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	@cp $(addprefix $(WORKSRC)/,autossh.host rscreen) $(DOCDEST)/examples
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
