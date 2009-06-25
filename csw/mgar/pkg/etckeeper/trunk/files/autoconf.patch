@@ -1,15 +1,16 @@
 diff --git a/.gitignore b/.gitignore
 new file mode 100644
-index 0000000..6a517ac
+index 0000000..0ca708e
 --- /dev/null
 +++ b/.gitignore
-@@ -0,0 +1,6 @@
+@@ -0,0 +1,7 @@
 +configure
 +autom4te.cache
 +Makefile
 +config.log
 +config.status
 +etckeeper
++etckeeper.conf
 diff --git a/Makefile b/Makefile
 deleted file mode 100644
 index b2d6565..0000000
@@ -126,10 +127,10 @@ index 0000000..874bab9
 +.PHONY: etckeeper.spec
 diff --git a/configure.ac b/configure.ac
 new file mode 100644
-index 0000000..209d58c
+index 0000000..e52b273
 --- /dev/null
 +++ b/configure.ac
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,32 @@
 +AC_INIT([etckeeper], [0.37])
 +
 +dnl for MKDIR_P
@@ -137,10 +138,29 @@ index 0000000..209d58c
 +
 +AC_CONFIG_SRCDIR([etckeeper.8])
 +
-+AC_CONFIG_FILES([Makefile etckeeper])
++AC_CONFIG_FILES([Makefile etckeeper etckeeper.conf])
 +
 +AC_PROG_INSTALL
 +AC_PROG_MKDIR_P
++
++AC_ARG_WITH([vcs], [AS_HELP_STRING([--with-vcs],
++              [select the VCS package to use (default is git) (valid: git, bzr, darcs, hg)])],
++	      [
++AC_MSG_CHECKING([whether '$with_vcs' is a valid VCS selection])
++case "$with_vcs" in
++     git|darcs|hg|bzr) VCS=$with_vcs;;
++     *) VCS=error;;
++esac
++AS_IF([test "x$VCS" != "xerror"],
++	    AC_MSG_RESULT([yes]),
++		AC_MSG_RESULT([no])
++		AC_MSG_ERROR(['$with_vcs' is an invalid VCS selection], [1]))
++	],
++	      [VCS=git])
++
++
++
++AC_SUBST([VCS])
 +
 +AC_OUTPUT
 \ No newline at end of file
@@ -242,6 +262,83 @@ index 1b6c76c..0000000
 -for script in $(lsscripts "$ETCKEEPER_CONF_DIR/$command.d"); do
 -	"$script" "$@"
 -done
+diff --git a/etckeeper.conf b/etckeeper.conf
+deleted file mode 100644
+index f810870..0000000
+--- a/etckeeper.conf
++++ /dev/null
+@@ -1,34 +0,0 @@
+-# The VCS to use.
+-# VCS="hg"
+-VCS="git"
+-# VCS="bzr"
+-# VCS="darcs"
+-
+-# Options passed to git commit when run by etckeeper.
+-#GIT_COMMIT_OPTIONS=""
+-
+-# Options passed to hg commit when run by etckeeper.
+-#HG_COMMIT_OPTIONS=""
+-
+-# Options passed to bzr commit when run by etckeeper.
+-#BZR_COMMIT_OPTIONS=""
+-
+-# Options passed to darcs commit when run by etckeeper.
+-#DARCS_COMMIT_OPTIONS=""
+-
+-# Uncomment to avoid etckeeper committing existing changes
+-# to /etc automatically once per day.
+-#AVOID_DAILY_AUTOCOMMITS=1
+-
+-# Uncomment to avoid etckeeper committing existing changes to 
+-# /etc before installation. It will cancel the installation,
+-# so you can commit the changes by hand.
+-#AVOID_COMMIT_BEFORE_INSTALL=1
+-
+-# The high-level package manager that's being used.
+-# (apt, pacman-g2, yum etc)
+-HIGHLEVEL_PACKAGE_MANAGER=apt
+-
+-# The low-level package manager that's being used.
+-# (dpkg, rpm, pacman-g2, etc)
+-LOWLEVEL_PACKAGE_MANAGER=dpkg
+diff --git a/etckeeper.conf.in b/etckeeper.conf.in
+new file mode 100644
+index 0000000..621ae90
+--- /dev/null
++++ b/etckeeper.conf.in
+@@ -0,0 +1,31 @@
++# The VCS to use.  Valid options are: git, hg, bzr and darcs
++VCS="@VCS@"
++
++# Options passed to git commit when run by etckeeper.
++#GIT_COMMIT_OPTIONS=""
++
++# Options passed to hg commit when run by etckeeper.
++#HG_COMMIT_OPTIONS=""
++
++# Options passed to bzr commit when run by etckeeper.
++#BZR_COMMIT_OPTIONS=""
++
++# Options passed to darcs commit when run by etckeeper.
++#DARCS_COMMIT_OPTIONS=""
++
++# Uncomment to avoid etckeeper committing existing changes
++# to /etc automatically once per day.
++#AVOID_DAILY_AUTOCOMMITS=1
++
++# Uncomment to avoid etckeeper committing existing changes to 
++# /etc before installation. It will cancel the installation,
++# so you can commit the changes by hand.
++#AVOID_COMMIT_BEFORE_INSTALL=1
++
++# The high-level package manager that's being used.
++# (apt, pacman-g2, yum etc)
++HIGHLEVEL_PACKAGE_MANAGER=apt
++
++# The low-level package manager that's being used.
++# (dpkg, rpm, pacman-g2, etc)
++LOWLEVEL_PACKAGE_MANAGER=dpkg
 diff --git a/etckeeper.in b/etckeeper.in
 new file mode 100644
 index 0000000..6d91e8c
