@@ -36,7 +36,6 @@ REQUIRED_PKGS_CSWlibcairo     += CSWlibxrender
 REQUIRED_PKGS_CSWlibcairo     += CSWpixman
 REQUIRED_PKGS_CSWlibcairo     += CSWpng
 REQUIRED_PKGS_CSWlibcairo     += CSWzlib
-REQUIRED_PKGS_CSWlibcairo     += CSWlibrsvg
 REQUIRED_PKGS_CSWlibcairo     += CSWexpat
 REQUIRED_PKGS_CSWlibcairo     += CSWiconv
 REQUIRED_PKGS_CSWlibcairo     += CSWlibx11
@@ -56,7 +55,8 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
-CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=yes --enable-xcb=yes
+# SVG must be disabled as libsvg depends on libcairo and we would get a cyclic dependency
+CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=no --enable-xcb=yes
 CONFIGURE_ARGS += --enable-gtk-doc --enable-test-surfaces=yes 
 
 include gar/category.mk
