@@ -23,7 +23,7 @@ TEST_SCRIPTS =
 ENABLE_CHECK = 0
 ARCHALL = 1
 PACKAGES = CSWbdb43
-SPKG_DESCRIPTION = BerkeleyDB 4.3 libraries and utilities
+SPKG_DESC = BerkeleyDB 4.3 libraries and utilities
 CATALOGNAME = berkeleydb43
 REQUIRED_PKGS = CSWbdb
 
