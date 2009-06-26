@@ -14,3 +14,9 @@ ARCHALL = 1
 REQUIRED_PKGS = CSWpmpadwalker CSWpmdevellexalias
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
