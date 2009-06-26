@@ -67,14 +67,16 @@ index b2d6565..0000000
 -.PHONY: etckeeper.spec
 diff --git a/Makefile.in b/Makefile.in
 new file mode 100644
-index 0000000..874bab9
+index 0000000..5e690c8
 --- /dev/null
 +++ b/Makefile.in
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,79 @@
 +# You should configure etckeeper.conf for your distribution before
 +# installing etckeeper.
 +CONFFILE=etckeeper.conf
 +include $(CONFFILE)
++
++PACKAGE_TARNAME = @PACKAGE_TARNAME@
 +
 +DESTDIR?=
 +prefix = @prefix@
@@ -85,16 +87,39 @@ index 0000000..874bab9
 +libdir = @libdir@
 +mandir = @mandir@
 +vardir = @localstatedir@
++srcdir = @srcdir@
++docdir = @docdir@
 +
 +INSTALL = @INSTALL@
 +INSTALL_DATA = @INSTALL_DATA@
 +
 +MKDIR_P = @MKDIR_P@
 +
++SED = @SED@
++
++edit = $(SED) \
++	-e 's|@datadir[@]|$(pkgdatadir)|g' \
++	-e 's|@prefix[@]|$(prefix)|g' \
++	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
++	-e 's|@docdir[@]|$(docdir)|g'
++
++autoconffiles = etckeeper etckeeper.conf etckeeper.8
++
++$(autoconffiles): Makefile
++	rm -f $@ $@.tmp
++	$(edit) '$(srcdir)/$@.in' >$@.tmp
++	chmod +x $@.tmp
++	chmod a-w $@.tmp
++	mv $@.tmp $@
++
++etckeeper: $(srcdir)/etckeeper.in
++etckeeper.conf: $(srcdir)/etckeeper.conf.in
++etckeeper.8: $(srcdir)/etckeeper.8.in
++
 +build: etckeeper.spec
 +	-./etckeeper-bzr/__init__.py build || echo "** bzr support not built"
 +
-+install:
++install: $(autoconffiles)
 +	$(MKDIR_P) $(DESTDIR)$(etcdir)/etckeeper/ $(DESTDIR)$(vardir)/cache/etckeeper/ $(DESTDIR)$(sbindir) $(DESTDIR)$(mandir)/man8 $(DESTDIR)$(etcdir)/bash_completion.d/
 +	cp -a *.d $(DESTDIR)$(etcdir)/etckeeper/
 +	$(INSTALL_DATA) $(CONFFILE) $(DESTDIR)$(etcdir)/etckeeper/etckeeper.conf
@@ -127,21 +152,22 @@ index 0000000..874bab9
 +.PHONY: etckeeper.spec
 diff --git a/configure.ac b/configure.ac
 new file mode 100644
-index 0000000..e52b273
+index 0000000..a5cc5f3
 --- /dev/null
 +++ b/configure.ac
-@@ -0,0 +1,32 @@
+@@ -0,0 +1,31 @@
 +AC_INIT([etckeeper], [0.37])
 +
 +dnl for MKDIR_P
 +AC_PREREQ([2.60])
 +
-+AC_CONFIG_SRCDIR([etckeeper.8])
++AC_CONFIG_SRCDIR([apt.conf])
 +
-+AC_CONFIG_FILES([Makefile etckeeper etckeeper.conf])
++AC_CONFIG_FILES([Makefile])
 +
 +AC_PROG_INSTALL
 +AC_PROG_MKDIR_P
++AC_PROG_SED
 +
 +AC_ARG_WITH([vcs], [AS_HELP_STRING([--with-vcs],
 +              [select the VCS package to use (default is git) (valid: git, bzr, darcs, hg)])],
@@ -158,12 +184,9 @@ index 0000000..e52b273
 +	],
 +	      [VCS=git])
 +
-+
-+
 +AC_SUBST([VCS])
 +
 +AC_OUTPUT
-\ No newline at end of file
 diff --git a/etckeeper b/etckeeper
 deleted file mode 100755
 index 1b6c76c..0000000
@@ -262,6 +285,142 @@ index 1b6c76c..0000000
 -for script in $(lsscripts "$ETCKEEPER_CONF_DIR/$command.d"); do
 -	"$script" "$@"
 -done
+diff --git a/etckeeper.8 b/etckeeper.8
+deleted file mode 100644
+index 9070503..0000000
+--- a/etckeeper.8
++++ /dev/null
+@@ -1,62 +0,0 @@
+-.\" -*- nroff -*-
+-.TH ETCKEEPER 8 "" "" ""
+-.SH NAME
+-etckeeper \- store /etc in git, mercurial, bazaar, or darcs
+-.SH SYNOPSIS
+-.B etckeeper command [-d directory]
+-.SH DESCRIPTION
+-etckeeper manages /etc be stored in a git, mercurial, bazaar, or darcs
+-repository. By default each of the commands operates on /etc, but a
+-different directory can be specified to operate on a clone of the /etc
+-repository located elsewhere.
+-.SH COMMANDS
+-.TP
+-.B init
+-This initialises and sets up a git, mercurial, bazaar, or darcs
+-repository (depending on the VCS setting in
+-/etc/etckeeper/etckeeper.conf). Typically this is run in /etc once
+-when starting to use etckeeper on a machine. It can also be used to
+-initialise a clone of the /etc repository located elsewhere.
+-.TP
+-.B commit [message]
+-Commits all changes in /etc to the repository. A commit message can be
+-specified. You may also use the underlying VCS to commit manually.
+-.TP
+-.B pre-commit
+-This is called as a pre-commit hook. It stores metadata and does sanity
+-checks.
+-.TP
+-.B pre-install
+-This is called by apt's DPkg::Pre-Install-Pkgs hook, or by equivilant hooks
+-of other package managers. It allows committing any uncommitted changes before
+-packages are installed, upgraded, etc.
+-.TP
+-.B post-install
+-This is called by apt's DPkg::Post-Invoke hook, or by equivilant hooks
+-of other package managers. It commits changes made by packages into the
+-repository. (You can also call this by hand after running dpkg by hand.)
+-.TP
+-.B unclean
+-This returns true if the directory contains uncommitted changes.
+-.TP
+-.B update-ignore
+-This updates the VCS ignore file. Content outside a "managed by etckeeper"
+-block is not touched. This is generally run when upgrading to a new version
+-of etckeeper.
+-.TP
+-.B uninit [-f]
+-This command DESTROYS DATA! It is the inverse of the init command, removing
+-VCS information and etckeeper's own bookkeeping information from the
+-directory. Use with caution. A typical use case would be to run etckeeper
+-uninit, then modify etckeeper.conf to use a different VCS, and then run
+-etckeeper init. (The -f switch can be used to force uninit without
+-prompting.)
+-.SH FILES
+-/etc/etckeeper/etckeeper.conf is the configuration file.
+-
+-/etc/etckeeper also contains directories containing the programs that are
+-run for each of the above commands.
+-.SH SEE ALSO
+-/usr/share/doc/etckeeper/README.gz
+-.SH AUTHOR 
+-Joey Hess <joey@kitenet.net>
+diff --git a/etckeeper.8.in b/etckeeper.8.in
+new file mode 100644
+index 0000000..528b44b
+--- /dev/null
++++ b/etckeeper.8.in
+@@ -0,0 +1,62 @@
++.\" -*- nroff -*-
++.TH ETCKEEPER 8 "" "" ""
++.SH NAME
++etckeeper \- store /etc in git, mercurial, bazaar, or darcs
++.SH SYNOPSIS
++.B etckeeper command [-d directory]
++.SH DESCRIPTION
++etckeeper manages /etc be stored in a git, mercurial, bazaar, or darcs
++repository. By default each of the commands operates on /etc, but a
++different directory can be specified to operate on a clone of the /etc
++repository located elsewhere.
++.SH COMMANDS
++.TP
++.B init
++This initialises and sets up a git, mercurial, bazaar, or darcs
++repository (depending on the VCS setting in
++@sysconfdir@/etckeeper/etckeeper.conf). Typically this is run in /etc once
++when starting to use etckeeper on a machine. It can also be used to
++initialise a clone of the /etc repository located elsewhere.
++.TP
++.B commit [message]
++Commits all changes in /etc to the repository. A commit message can be
++specified. You may also use the underlying VCS to commit manually.
++.TP
++.B pre-commit
++This is called as a pre-commit hook. It stores metadata and does sanity
++checks.
++.TP
++.B pre-install
++This is called by apt's DPkg::Pre-Install-Pkgs hook, or by equivilant hooks
++of other package managers. It allows committing any uncommitted changes before
++packages are installed, upgraded, etc.
++.TP
++.B post-install
++This is called by apt's DPkg::Post-Invoke hook, or by equivilant hooks
++of other package managers. It commits changes made by packages into the
++repository. (You can also call this by hand after running dpkg by hand.)
++.TP
++.B unclean
++This returns true if the directory contains uncommitted changes.
++.TP
++.B update-ignore
++This updates the VCS ignore file. Content outside a "managed by etckeeper"
++block is not touched. This is generally run when upgrading to a new version
++of etckeeper.
++.TP
++.B uninit [-f]
++This command DESTROYS DATA! It is the inverse of the init command, removing
++VCS information and etckeeper's own bookkeeping information from the
++directory. Use with caution. A typical use case would be to run etckeeper
++uninit, then modify etckeeper.conf to use a different VCS, and then run
++etckeeper init. (The -f switch can be used to force uninit without
++prompting.)
++.SH FILES
++@sysconfdir@/etckeeper/etckeeper.conf is the configuration file.
++
++@sysconfdir@/etckeeper also contains directories containing the programs that are
++run for each of the above commands.
++.SH SEE ALSO
++@docdir@/README.gz
++.SH AUTHOR 
++Joey Hess <joey@kitenet.net>
 diff --git a/etckeeper.conf b/etckeeper.conf
 deleted file mode 100644
 index f810870..0000000
