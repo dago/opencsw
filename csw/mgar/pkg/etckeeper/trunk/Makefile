@@ -24,6 +24,8 @@ REQUIRED_PKGS_CSWetckeeper = CSWgit CSWbash
 
 SPKG_DESC_CSWetckeeper = Versioning for /etc
 
+LICENSE_CSWetckeeper = GPL
+
 GIT_REPOS = git://git.kitenet.net/etckeeper.git
 GIT_TREEISH_etckeeper.git = 0.37
 GIT_USE_PROXY = 1
@@ -42,7 +44,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-CONFIGURE_ARGS = $(DIRPATHS) --with-vcs=git
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-vcs=git --with-highlevel=apt --with-lowlevel=dpkg
+CONFIGURE_ARGS += --disable-bash-completion --disable-cruft-filter
 
 BUILD_SCRIPTS =
 
@@ -53,12 +57,14 @@ include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
 
 pre-configure-modulated:
-	@(cd $(WORKSRC); autoreconf )
+	@(cd $(WORKSRC); aclocal; autoconf; automake --add-missing --foreign )
 	@$(MAKECOOKIE)
 
 post-install-modulated:
-	( for d in apt cruft; do \
+	( for d in apt; do \
 		dir=$(DESTDIR)$(sysconfdir)/$$d; \
 		[ -d $$dir ] && rm -rf $$dir; \
-	    done )
+	    done; \
+	  mkdir -p $(DESTDIR)/$(docdir)/$(GARNAME); \
+	  gzip -c -9 $(WORKSRC)/README > $(DESTDIR)/$(docdir)/$(GARNAME)/README.gz  )
 	@$(MAKECOOKIE)
