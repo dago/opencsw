@@ -1,5 +1,5 @@
 GARNAME = icinga
-GARVERSION = 0.8
+GARVERSION = 0.8.1
 CATEGORIES = apps
 
 DESCRIPTION = icinga network monitoring base package (no plugins)

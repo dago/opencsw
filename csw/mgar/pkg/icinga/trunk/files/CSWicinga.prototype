@@ -102,12 +102,11 @@ f ugfiles /opt/csw/icinga/share/contexthelp/N5.html 0644 icinga icinga
 f ugfiles /opt/csw/icinga/share/contexthelp/N6.html 0644 icinga icinga
 f ugfiles /opt/csw/icinga/share/contexthelp/N7.html 0644 icinga icinga
 d ugfiles /opt/csw/icinga/share/docs 0755 icinga icinga
-f ugfiles /opt/csw/icinga/share/docs/ch-getstarted.html 0644 icinga icinga
-f ugfiles /opt/csw/icinga/share/docs/ch-running_icinga.html 0644 icinga icinga
+f ugfiles /opt/csw/icinga/share/docs/ch_running-icinga.html 0644 icinga icinga
 d ugfiles /opt/csw/icinga/share/docs/images 0755 icinga icinga
 f ugfiles /opt/csw/icinga/share/docs/images/logofullsize.png 0644 icinga icinga
 f ugfiles /opt/csw/icinga/share/docs/index.html 0644 icinga icinga
-f ugfiles /opt/csw/icinga/share/docs/relnotes.html 0644 icinga icinga
+f ugfiles /opt/csw/icinga/share/docs/ch_relnotes.html 0644 icinga icinga
 f ugfiles /opt/csw/icinga/share/docs/robots.txt 0644 icinga icinga
 f ugfiles /opt/csw/icinga/share/docs/wb_quickstart-icinga.html 0644 icinga icinga
 f ugfiles /opt/csw/icinga/share/docs/wb_quickstart-idoutils.html 0644 icinga icinga
