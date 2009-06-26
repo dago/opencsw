@@ -65,105 +65,108 @@ index b2d6565..0000000
 -	sed -i "s/Version:.*/Version: $$(perl -e '$$_=<>;print m/\((.*?)\)/'<debian/changelog)/" etckeeper.spec
 -
 -.PHONY: etckeeper.spec
-diff --git a/Makefile.in b/Makefile.in
+diff --git a/Makefile.am b/Makefile.am
 new file mode 100644
-index 0000000..5e690c8
+index 0000000..1173102
 --- /dev/null
-+++ b/Makefile.in
-@@ -0,0 +1,79 @@
-+# You should configure etckeeper.conf for your distribution before
-+# installing etckeeper.
-+CONFFILE=etckeeper.conf
-+include $(CONFFILE)
++++ b/Makefile.am
+@@ -0,0 +1,83 @@
++sysconfdirdir = $(sysconfdir)/$(PACKAGE)
 +
-+PACKAGE_TARNAME = @PACKAGE_TARNAME@
++sbin_SCRIPTS = etckeeper
++man_MANS = etckeeper.8
++sysconfdir_DATA = etckeeper.conf
 +
-+DESTDIR?=
-+prefix = @prefix@
-+exec_prefix = @exec_prefix@
-+datarootdir = @datarootdir@
-+sbindir = @sbindir@
-+etcdir = @sysconfdir@
-+libdir = @libdir@
-+mandir = @mandir@
-+vardir = @localstatedir@
-+srcdir = @srcdir@
-+docdir = @docdir@
++CLEANFILES = $(sbin_SCRIPTS) $(man8_MANS) $(sysconfdir_DATA)
 +
-+INSTALL = @INSTALL@
-+INSTALL_DATA = @INSTALL_DATA@
++NEED_SUBST = etckeeper.in etckeeper.conf.in etckeeper.8.in
 +
-+MKDIR_P = @MKDIR_P@
++APTFILES = apt.conf
++YUMFILES = yum-etckeeper.py yum-etckeeper.conf
++PACMANFILES = pacman-g2.hook
++BASHFILES = bash_completion
++CRUFTFILES = cruft_filter
 +
-+SED = @SED@
-+
-+edit = $(SED) \
-+	-e 's|@datadir[@]|$(pkgdatadir)|g' \
-+	-e 's|@prefix[@]|$(prefix)|g' \
-+	-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
-+	-e 's|@docdir[@]|$(docdir)|g'
-+
-+autoconffiles = etckeeper etckeeper.conf etckeeper.8
-+
-+$(autoconffiles): Makefile
-+	rm -f $@ $@.tmp
-+	$(edit) '$(srcdir)/$@.in' >$@.tmp
-+	chmod +x $@.tmp
-+	chmod a-w $@.tmp
-+	mv $@.tmp $@
-+
-+etckeeper: $(srcdir)/etckeeper.in
-+etckeeper.conf: $(srcdir)/etckeeper.conf.in
-+etckeeper.8: $(srcdir)/etckeeper.8.in
-+
-+build: etckeeper.spec
-+	-./etckeeper-bzr/__init__.py build || echo "** bzr support not built"
-+
-+install: $(autoconffiles)
-+	$(MKDIR_P) $(DESTDIR)$(etcdir)/etckeeper/ $(DESTDIR)$(vardir)/cache/etckeeper/ $(DESTDIR)$(sbindir) $(DESTDIR)$(mandir)/man8 $(DESTDIR)$(etcdir)/bash_completion.d/
-+	cp -a *.d $(DESTDIR)$(etcdir)/etckeeper/
-+	$(INSTALL_DATA) $(CONFFILE) $(DESTDIR)$(etcdir)/etckeeper/etckeeper.conf
-+	$(INSTALL) etckeeper $(DESTDIR)$(sbindir)/etckeeper
-+	$(INSTALL_DATA) etckeeper.8 $(DESTDIR)$(mandir)/man8/etckeeper.8
-+	$(INSTALL_DATA) bash_completion $(DESTDIR)$(etcdir)/bash_completion.d/etckeeper
-+ifeq ($(HIGHLEVEL_PACKAGE_MANAGER),apt)
-+	$(MKDIR_P) $(DESTDIR)$(etcdir)/apt/apt.conf.d/ $(DESTDIR)$(etcdir)/cruft/filters-unex
-+	$(INSTALL_DATA) apt.conf $(DESTDIR)$(etcdir)/apt/apt.conf.d/05etckeeper
-+	$(INSTALL_DATA) cruft_filter $(DESTDIR)$(etcdir)/cruft/filters-unex/etckeeper
++OPTS =
++if INST_BASH_COMPLETION
++OPTS += bash
 +endif
-+ifeq ($(LOWLEVEL_PACKAGE_MANAGER),pacman-g2)
-+	$(MKDIR_P) $(DESTDIR)$(etcdir)/pacman-g2/hooks
-+	$(INSTALL_DATA) pacman-g2.hook $(DESTDIR)$(etcdir)/pacman-g2/hooks/etckeeper
++if INST_CRUFT_FILTER
++OPTS += cruft
 +endif
-+ifeq ($(HIGHLEVEL_PACKAGE_MANAGER),yum)
-+	$(MKDIR_P) $(DESTDIR)$(libdir)/yum-plugins $(DESTDIR)$(etcdir)/yum/pluginconf.d
-+	$(INSTALL_DATA) yum-etckeeper.py $(DESTDIR)$(libdir)/yum-plugins/etckeeper.py
-+	$(INSTALL_DATA) yum-etckeeper.conf $(DESTDIR)$(etcdir)/yum/pluginconf.d/etckeeper.conf
-+endif
-+	-./etckeeper-bzr/__init__.py install --root=$(DESTDIR) || echo "** bzr support not installed"
-+	echo "** installation successful"
 +
-+clean: etckeeper.spec
-+	rm -rf build
++KEEPERSCRIPTS = $(wildcard *.d)
++KEEPERSCRIPTFILES = $(foreach KSD,$(KEEPERSCRIPTS),$(wildcard $(KSD)/*))
 +
-+etckeeper.spec:
-+	sed -i "s/Version:.*/Version: $$(perl -e '$$_=<>;print m/\((.*?)\)/'<debian/changelog)/" etckeeper.spec
++.PHONY: $(KEEPERSCRIPTS)
 +
-+.PHONY: etckeeper.spec
++EXTRA_DIST = $(NEED_SUBST) $(APTFILES) $(YUMFILES) $(PACMANFILES) $(KEEPERSCRIPTFILES) $(BASHFILES) $(CRUFTFILES)
++
++# files that need autoconf-ish substitutions.
++REQ_SUBST = $(NEED_SUBST:.in=)
++
++do_subst = sed \
++		-e 's|@datadir[@]|$(pkgdatadir)|g' \
++		-e 's|@prefix[@]|$(prefix)|g' \
++		-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
++		-e 's|@docdir[@]|$(docdir)|g' \
++		-e 's|@HIGHLEVEL[@]|$(HIGHLEVEL)|g' \
++		-e 's|@LOWLEVEL[@]|$(LOWLEVEL)|g'
++
++
++
++$(REQ_SUBST): % : %.in Makefile
++	$(do_subst) < $(srcdir)/$< > $@
++
++
++$(KEEPERSCRIPTS):
++	$(MKDIR_P) $(DESTDIR)$(sysconfdirdir)/$@
++	$(INSTALL_DATA) $(srcdir)/$@/* $(DESTDIR)/$(sysconfdirdir)/$@/
++
++high-apt: apt.conf
++	$(MKDIR_P) $(DESTDIR)/$(sysconfdir)/apt/apt.conf.d
++	$(INSTALL_DATA) apt.conf $(DESTDIR)/$(sysconfdir)/apt/apt.conf.d/05etckeeper
++
++low-dpkg:
++	/bin/true
++
++high-yum: yum-etckeeper.py yum-etckeeper.conf
++	$(MKDIR_P) $(DESTDIR)$(libdir)/yum-plugins $(DESTDIR)$(sysconfdir)/yum
++	$(INSTALL_DATA) yum-etckeeper.py $(DESTDIR)$(libdir)/yum-plugins/
++	$(INSTALL_DATA) yum-etckeeper.conf $(DESTDIR)$(sysconfdir)/yum/
++
++low-rpm:
++	/bin/true
++
++high-pacman-g2:
++	/bin/true
++
++low-pacman-g2:
++	$(MKDIR_P) $(DESTDIR)$(sysconfdir)/pacman-g2/hooks
++	$(INSTALL_DATA)  pacman-g2.hook $(DESTDIR)/$(sysconfdir)/pacman-g2/hook/
++
++bash:
++	$(MKDIR_P) $(DESTDIR)$(sysconfdir)/bash_completion.d
++	$(INSTALL_DATA) bash_completion $(DESTDIR)$(sysconfdir)/bash_completion.d/etckeeper
++
++cruft:
++	$(MKDIR_P) $(DESTDIR)$(sysconfdir)/cruft/filters-unex
++	$(INSTALL_DATA) cruft_filter $(DESTDIR)$(sysconfdir)/cruft/filters-unex/etckeeper
++
++install-data-local: $(KEEPERSCRIPTS) high-$(HIGHLEVEL) low-$(LOWLEVEL) $(OPTS)
 diff --git a/configure.ac b/configure.ac
 new file mode 100644
-index 0000000..a5cc5f3
+index 0000000..a242a44
 --- /dev/null
 +++ b/configure.ac
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,76 @@
 +AC_INIT([etckeeper], [0.37])
++AM_INIT_AUTOMAKE
 +
 +dnl for MKDIR_P
 +AC_PREREQ([2.60])
 +
 +AC_CONFIG_SRCDIR([apt.conf])
-+
-+AC_CONFIG_FILES([Makefile])
 +
 +AC_PROG_INSTALL
 +AC_PROG_MKDIR_P
@@ -184,7 +187,53 @@ index 0000000..a5cc5f3
 +	],
 +	      [VCS=git])
 +
++AC_ARG_WITH([highlevel], [AS_HELP_STRING([--with-highlevel],
++              [select the high level package tool to use (default is apt) (valid: apt, yum, pacman-g2)])],
++	      [
++AC_MSG_CHECKING([whether '$with_highlevel' is a valid high level package tool selection])
++case "$with_highlevel" in
++     apt|yum|pacman-g2) HIGHLEVEL=$with_highlevel;;
++     *) HIGHLEVEL=error;;
++esac
++AS_IF([test "x$HIGHLEVEL" != "xerror"],
++	    AC_MSG_RESULT([yes]),
++		AC_MSG_RESULT([no])
++		AC_MSG_ERROR(['$with_highlevel' is an invalid high level package tool selection], [1]))
++	],
++	      [HIGHLEVEL=apt])
++
++AC_ARG_WITH([lowlevel], [AS_HELP_STRING([--with-lowlevel],
++              [select the low level package tool to use (default is dpkg) (valid: dpkg, rpm, pacman-g2)])],
++	      [
++AC_MSG_CHECKING([whether '$with_lowlevel' is a valid low level package tool selection])
++case "$with_lowlevel" in
++     dpkg|rpm|pacman-g2) LOWLEVEL=$with_lowlevel;;
++     *) LOWLEVEL=error;;
++esac
++AS_IF([test "x$LOWLEVEL" != "xerror"],
++	    AC_MSG_RESULT([yes]),
++		AC_MSG_RESULT([no])
++		AC_MSG_ERROR(['$with_lowlevel' is an invalid low level package selection], [1]))
++	],
++	      [LOWLEVEL=dpkg])
++
++AC_ARG_ENABLE([bash-completion], [AS_HELP_STRING([--disable-bash-completion],
++				    [Do not install bash completion files.])],
++				 [BASH_COMPLETION=],
++				 [BASH_COMPLETION=yes])
++AM_CONDITIONAL([INST_BASH_COMPLETION], [ test x$BASH_COMPLETION = xyes ])
++
++AC_ARG_ENABLE([cruft-filter], [AS_HELP_STRING([--disable-cruft-filter],
++				[Do not install the cruft filter files.])],
++			[CRUFT_FILTER=],
++			[CRUFT_FILTER=yes])
++AM_CONDITIONAL([INST_CRUFT_FILTER], [ test x$CRUFT_FILTER = xyes ])
++
 +AC_SUBST([VCS])
++AC_SUBST([HIGHLEVEL])
++AC_SUBST([LOWLEVEL])
++
++AC_CONFIG_FILES([Makefile])
 +
 +AC_OUTPUT
 diff --git a/etckeeper b/etckeeper
@@ -463,7 +512,7 @@ index f810870..0000000
 -LOWLEVEL_PACKAGE_MANAGER=dpkg
 diff --git a/etckeeper.conf.in b/etckeeper.conf.in
 new file mode 100644
-index 0000000..621ae90
+index 0000000..980b52c
 --- /dev/null
 +++ b/etckeeper.conf.in
 @@ -0,0 +1,31 @@
@@ -493,11 +542,11 @@ index 0000000..621ae90
 +
 +# The high-level package manager that's being used.
 +# (apt, pacman-g2, yum etc)
-+HIGHLEVEL_PACKAGE_MANAGER=apt
++HIGHLEVEL_PACKAGE_MANAGER=@HIGHLEVEL@
 +
 +# The low-level package manager that's being used.
 +# (dpkg, rpm, pacman-g2, etc)
-+LOWLEVEL_PACKAGE_MANAGER=dpkg
++LOWLEVEL_PACKAGE_MANAGER=@LOWLEVEL@
 diff --git a/etckeeper.in b/etckeeper.in
 new file mode 100644
 index 0000000..6d91e8c
