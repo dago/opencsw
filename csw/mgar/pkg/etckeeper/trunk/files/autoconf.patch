@@ -67,10 +67,10 @@ index b2d6565..0000000
 -.PHONY: etckeeper.spec
 diff --git a/Makefile.am b/Makefile.am
 new file mode 100644
-index 0000000..1173102
+index 0000000..8241091
 --- /dev/null
 +++ b/Makefile.am
-@@ -0,0 +1,83 @@
+@@ -0,0 +1,82 @@
 +sysconfdirdir = $(sysconfdir)/$(PACKAGE)
 +
 +sbin_SCRIPTS = etckeeper
@@ -111,9 +111,8 @@ index 0000000..1173102
 +		-e 's|@sysconfdir[@]|$(sysconfdir)|g' \
 +		-e 's|@docdir[@]|$(docdir)|g' \
 +		-e 's|@HIGHLEVEL[@]|$(HIGHLEVEL)|g' \
-+		-e 's|@LOWLEVEL[@]|$(LOWLEVEL)|g'
-+
-+
++		-e 's|@LOWLEVEL[@]|$(LOWLEVEL)|g' \
++		-e 's|@VCS[@]|$(VCS)|g'
 +
 +$(REQ_SUBST): % : %.in Makefile
 +	$(do_subst) < $(srcdir)/$< > $@
