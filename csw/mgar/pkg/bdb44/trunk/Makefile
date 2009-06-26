@@ -44,7 +44,7 @@ install-custom:
 	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_cxx-4.so libdb_cxx-4.so
 	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_cxx.so libdb_cxx.so 
 	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.4.so
+	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.4_g.so
 	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.so 
 	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java.so libdb_java.so
 	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/db.jar db.jar
