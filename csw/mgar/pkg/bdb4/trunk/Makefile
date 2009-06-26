@@ -23,7 +23,7 @@ TEST_SCRIPTS =
 ENABLE_CHECK = 0
 ARCHALL = 1
 PACKAGES = CSWbdb4
-SPKG_DESCRIPTION = Embedded database libraries and utilities
+SPKG_DESC = Embedded database libraries and utilities
 CATALOGNAME = berkeleydb4 
 REQUIRED_PKGS = CSWbdb
 
