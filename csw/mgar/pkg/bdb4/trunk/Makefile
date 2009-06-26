@@ -20,6 +20,7 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS = 
 
+ENABLE_CHECK = 0
 ARCHALL = 1
 PACKAGES = CSWbdb4
 SPKG_DESCRIPTION = Embedded database libraries and utilities
