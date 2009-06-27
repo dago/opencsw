@@ -1,5 +1,5 @@
 GARNAME = libpango
-GARVERSION = 1.24.2
+GARVERSION = 1.24.3
 CATEGORIES = lib
 
 DESCRIPTION = A framework for the layout and rendering of international text
