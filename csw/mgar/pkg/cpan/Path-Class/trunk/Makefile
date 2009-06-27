@@ -1,5 +1,5 @@
 GARNAME = Path-Class
-GARVERSION = 0.16
+GARVERSION = 0.17
 CATEGORIES = cpan
 AUTHOR = KWILLIAMS
 
@@ -12,7 +12,15 @@ define BLURB
   Cygwin, OS/2, and NetWare.
 endef
 
-DISTFILES += $(call admfiles,CSWpmpathclass,prototype)
+PREREQUISITE_PKGS               = CSWpmextutilsdepends CSWpmextutpkgconf
+REQUIRED_PKGS_CSWpmpathclass = CSWpmextutilsdepends CSWpmextutpkgconf
+
+CATALOGNAME = pm_pathclass
+PACKAGES        = CSWpmpathclass
+
+ARCHALL_CSWpmpathclass = 1
+
+LICENSE = README
 
 include gar/category.mk
 
