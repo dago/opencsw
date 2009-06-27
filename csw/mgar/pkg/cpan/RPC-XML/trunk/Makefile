@@ -1,5 +1,5 @@
 GARNAME = RPC-XML
-GARVERSION = 0.59
+GARVERSION = 0.65
 CATEGORIES = cpan
 AUTHOR = RJRAY
 
@@ -13,10 +13,10 @@ define BLURB
 	from CPAN.
 endef
 
-DISTFILES = $(call admfiles,CSWpmrpcxml,depend prototype)
+REQUIRED_PKGS_CSWpmrpcxml = CSWpmlibwww CSWpmxmllibxml
 
-DEPENDS += cpan/XML-LibXML
-#DEPENDS += cpan/libwww-perl
+PACKAGES = CSWpmrpcxml
+CATALOGNAME = pm_rpcxml
+ARCHALL = 1
 
 include gar/category.mk
-
