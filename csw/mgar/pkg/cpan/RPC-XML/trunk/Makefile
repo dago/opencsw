@@ -19,4 +19,6 @@ PACKAGES = CSWpmrpcxml
 CATALOGNAME = pm_rpcxml
 ARCHALL = 1
 
+LICENSE = README
+
 include gar/category.mk
