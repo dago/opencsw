@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.6.2
+DISTVERSION = 1.6.3
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
