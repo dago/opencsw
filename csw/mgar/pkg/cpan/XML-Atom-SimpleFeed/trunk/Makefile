@@ -14,4 +14,6 @@ PACKAGES = CSWpmxmlatomsimplefd
 CATALOGNAME = pm_xmlatomsimplefeed
 ARCHALL = 1
 
+LICENSE = readme
+
 include gar/category.mk
