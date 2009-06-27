@@ -13,7 +13,7 @@ define BLURB
 endef
 
 PREREQUISITE_PKGS 		= CSWpmextutilsdepends CSWpmextutpkgconf
-PKGS_REQUIRED_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf
+REQUIRED_PKGS_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf
 
 CATALOGNAME = pm_glib
 PACKAGES	= CSWpmglib
