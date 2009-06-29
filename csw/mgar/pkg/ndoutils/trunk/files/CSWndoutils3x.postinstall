@@ -20,10 +20,9 @@ cat << EOF
    cd /opt/csw/nagios/ndoutils/contrib/db/
    ./installdb
 
- !!! Before starting NDOutils make sure, that the user running NDOutils
- (default: "nagios") has a valid login shell. The default for "nagios" is
- /bin/false which won't work.
-
  - (Re)start the NDO-Service
 
+ - Change your nagios.cfg -> /opt/csw/nagios/ndoutils/etc/nagios.cfg-sample
+ 
+ - (Re)start nagios
 EOF

@@ -3,10 +3,11 @@ f none /opt/csw/nagios/ndoutils/bin/log2ndo 0755 nagios nagios
 f none /opt/csw/nagios/ndoutils/bin/ndo2db-3x 0755 nagios nagios
 f none /opt/csw/nagios/ndoutils/bin/ndomod-3x.o 0755 nagios nagios
 d none /opt/csw/nagios/ndoutils/etc 0755 nagios nagios
+d none /var/opt/csw/ndoutils 0755 nagios nagios
 f cswpreserveconf /opt/csw/nagios/ndoutils/etc/ndo2db.cfg.CSW 0644 nagios nagios
 f cswpreserveconf /opt/csw/nagios/ndoutils/etc/ndomod.cfg.CSW 0644 nagios nagios
-f cswpreserveconf /opt/csw/nagios/ndoutils/etc/nagios3.cfg.CSW 0644 nagios nagios
 f cswpreserveconf /opt/csw/nagios/ndoutils/etc/ndomisccommands.cfg.CSW 0644 nagios nagios
+f none /opt/csw/nagios/ndoutils/etc/nagios.cfg-sample 0644 nagios nagios
 d none /opt/csw/share/doc/ndoutils 0755 root bin
 f none /opt/csw/share/doc/ndoutils/Changelog 0644 root bin
 f none /opt/csw/share/doc/ndoutils/NDOUTILS_DB_Model.pdf 0644 root bin

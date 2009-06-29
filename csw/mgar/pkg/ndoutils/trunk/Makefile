@@ -17,8 +17,8 @@ DISTFILES += $(call admfiles,CSWndoutils2x, prototype postinstall)
 DISTFILES += $(call admfiles,CSWndoutils3x, prototype postinstall)
 DISTFILES += cswndoutils
 
-PATCHFILES += config.diff
-PATCHFILES += installdb.diff
+#PATCHFILES += config.diff
+#PATCHFILES += installdb.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -51,6 +51,7 @@ INSTALL_SCRIPTS = custom
 CFGDIR = $(prefix)/nagios/ndoutils/etc
 BINDIR = $(prefix)/nagios/ndoutils/bin
 DOCDIR = $(prefix)/share/doc/ndoutils
+VARDIR = /var/opt/csw/ndoutils
 CONTRIBDIR = $(prefix)/nagios/ndoutils/contrib
 DOCS = Changelog README REQUIREMENTS TODO UPGRADING 
 
@@ -62,12 +63,12 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/$(CFGDIR)
 	@ginstall -m 755 -d $(DESTDIR)/$(BINDIR)
 	@ginstall -m 755 -d $(DESTDIR)/$(DOCDIR)
+	@ginstall -m 755 -d $(DESTDIR)/$(VARDIR)
 	@ginstall -m 755 -d $(DESTDIR)/$(localstatedir)
 	@ginstall -m 755 -d $(DESTDIR)/$(CONTRIBDIR)/db
 	@ginstall -m 644 $(WORKSRC)/config/ndo2db.cfg $(DESTDIR)/$(CFGDIR)/ndo2db.cfg.CSW
 	@ginstall -m 644 $(WORKSRC)/config/ndomod.cfg $(DESTDIR)/$(CFGDIR)/ndomod.cfg.CSW
-	@ginstall -m 644 $(WORKSRC)/config/nagios2.cfg $(DESTDIR)/$(CFGDIR)/nagios2.cfg.CSW
-	@ginstall -m 644 $(WORKSRC)/config/nagios3.cfg $(DESTDIR)/$(CFGDIR)/nagios3.cfg.CSW
+	@ginstall -m 644 $(WORKSRC)/config/nagios.cfg $(DESTDIR)/$(CFGDIR)/nagios.cfg-sample
 	@ginstall -m 644 $(WORKSRC)/config/misccommands.cfg $(DESTDIR)/$(CFGDIR)/ndomisccommands.cfg.CSW
 	@ginstall -m 755 $(WORKSRC)/src/ndo2db-2x $(DESTDIR)/$(BINDIR)
 	@ginstall -m 755 $(WORKSRC)/src/ndo2db-3x $(DESTDIR)/$(BINDIR)

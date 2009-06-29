@@ -33,22 +33,28 @@ then
 fi
 
 NDO_USER=nagios
+SOCK_FILE=/var/opt/csw/ndoutils/ndo.sock
 
 case "$1" in
 'start')
-	su - $NDO_USER -c "$BIN_DIR/$BIN_FILE -c $CONFIG_FILE"
+	$BIN_DIR/$BIN_FILE -c $CONFIG_FILE
+	
+	if [ -f $SOCK_FILE ]
+	then
+		rm $SOCK_FILE
+	fi
 	;;
 'stop') 
-	su - $NDO_USER -c "pkill $BIN_FILE"
+	pkill $BIN_FILE
 	sleep 1
-	su - $NDO_USER -c "pkill -9 $BIN_FILE"
+	pkill -9 $BIN_FILE
 	;;
 'restart')
-	su - $NDO_USER -c "pkill $BIN_FILE"
+	pkill $BIN_FILE
 	sleep 1
-	su - $NDO_USER -c "pkill -9 $BIN_FILE"
+	pkill -9 $BIN_FILE
 	sleep 1
-	su - $NDO_USER -c "$BIN_DIR/$BIN_FILE -c $CONFIG_FILE"
+	$BIN_DIR/$BIN_FILE -c $CONFIG_FILE
 	;;
 *)
         echo "Usage: $0 { start | stop | restart }"
