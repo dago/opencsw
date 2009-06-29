@@ -2,7 +2,7 @@ a2f5b70fe49839b0463c9d90af0f11dd  download/CSWvsftpd.preinstall
 8944fcd302add66d5b2b287d390b9c91  download/CSWvsftpd.prototype
 eeaf77528b2da0c7730323838f30b7ef  download/README.CSW
 281c51282cabd9475cceef363bbc699b  download/build_options.patch
-3ab328c0cf7c00b6d85956ba4c14e610  download/changelog.CSW
+16b388b04478ebdc9ee7ebac6a03387d  download/changelog.CSW
 54c1c39c6bfa8747a4457f135fd5bca1  download/csw_build_system.patch
 a9e994d2b57999b76a0e03503745c01a  download/csw_paths.patch
 98e1d831801985daf5ce2ed01fbc0efd  download/cswusergroup
