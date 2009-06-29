@@ -48,6 +48,8 @@ STRIP_LIBTOOL = 1
 PKGFILES_CSWpangodevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWpangodoc    = $(sharedstatedir)/gtk-doc/.*
 
+ARCHALL_CSWpangodoc = 1
+
 # Do not execute make test step
 TEST_SCRIPTS   = 
 
