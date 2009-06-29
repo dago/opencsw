@@ -47,7 +47,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWvsftpd.prototype CSWvsftpd.preinstall
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
-DISTFILES += cswvsftpd cswvsftpd.xml
+DISTFILES += cswvsftpd cswvsftpd.xml vsftpd.smf_wrapper
 DISTFILES += cswusergroup 
 
 # build options are set by modifying 
@@ -122,6 +122,7 @@ post-merge: merge-doc-files merge-config-files merge-init-file
 merge-init-file:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd" "$(PKGROOT)/etc/init.d/cswvsftpd"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswvsftpd.xml"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.smf_wrapper" "$(PKGROOT)/$(sbindir)/vsftpd.smf_wrapper"
 
 merge-config-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.conf" "$(PKGROOT)$(sysconfdir)/vsftpd/vsftpd.conf.CSW"

@@ -2,6 +2,8 @@ vsftpd (2.1.2,REV=2009.06.29) unstable
 
   * New upstream version.
   * Now uses SMF support from cswclassutils.
+  * Added vsftpd.smf_wrapper to be able to use SMF even if the background
+  option has not been set in vsftpd.conf
 
  -- Yann Rouillard <yann@opencsw.org>  Tue, 29 Jun 2009 22:44:34 +0200
 

@@ -1,0 +1,28 @@
+#!/bin/sh
+#####################################################################
+# vsftpd shell script wrapper for SMF
+#
+# SMF always expect a daemon to follow the fork/exec model, however
+# for vsftpd, this behaviour depends on the background option.
+# So the purpose of this script is to always launch vsftpd in 
+# background mode
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+CONF_DIR=/opt/csw/etc/vsftpd
+CONF_FILE=$CONF_DIR/vsftpd.conf
+
+if /usr/bin/egrep -i "^ *background *= *yes" ${CONF_FILE} > /dev/null; then
+	/opt/csw/sbin/vsftpd
+	exit $?
+else
+	/opt/csw/sbin/vsftpd &
+	exit $?
+fi
