@@ -1,5 +1,5 @@
 GARNAME      = pixman
-GARVERSION   = 0.15.12
+GARVERSION   = 0.15.14
 CATEGORIES   = lib
 
 DESCRIPTION = The pixel-manipulation library for X and cairo
@@ -16,10 +16,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_CFLAGS = -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 EXTRA_CXXFLAGS = -xlibmil -xlibmopt -features=tmplife -norunpath
 
-BUILD64 = 1
-NOISALIST = 1
+# BUILD64 = 1
+# NOISALIST = 1
 
-PATCHFILES = pixman-bits-image.c.diff pixman-private.h.diff
+PATCHFILES = pixman-private.h.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-gtk
