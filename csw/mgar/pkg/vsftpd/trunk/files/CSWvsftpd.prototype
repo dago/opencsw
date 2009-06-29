@@ -1,7 +1,7 @@
 d none /opt/csw/etc/pkg/CSWvsftpd 0755 root bin
 f cswinitsmf /etc/opt/csw/init.d/cswvsftpd 0755 root bin
 d none /opt/csw/etc/vsftpd 0755 root bin
-f none /opt/csw/etc/vsftpd/vsftpd.conf.CSW 0644 root bin
+f cswpreserveconf /opt/csw/etc/vsftpd/vsftpd.conf.CSW 0644 root bin
 f cswpreserveconf /opt/csw/etc/vsftpd/vsftpd.userlist.CSW 0644 root bin
 f cswusergroup /opt/csw/etc/pkg/CSWvsftpd/cswusergroup 0644 root bin
 f none /opt/csw/sbin/vsftpd 0755 root bin
