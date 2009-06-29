@@ -29,16 +29,31 @@ then
 fi
 
 BIN_FILE="/opt/csw/bin/nrpe"
-pidfile=`grep '^pid_file' $CONFIG_FILE |awk '{ FS = "=" } {print $2;}'`
-NRPE_USER=`awk -F'=' '/nrpe_user/ { print $NF }' $CONFIG_FILE`
+pidfile=`awk -F'=' '/^[ \t]*pid_file/ {print $2}' $CONFIG_FILE`
+NRPE_USER=`awk -F'=' '/^[ \t]*nrpe_user/ { print $2 }' $CONFIG_FILE`
 
 case "$1" in
 'restart')
-        [ -n "`pgrep -x -u 0,1,$NRPE_USER nrpe`" ] && /usr/bin/kill `head -1 $pidfile`
-        # remove pid file
+	#
+	# stop
+	#
+
         if [ -f "$pidfile" ]; then
-            rm "$pidfile"
-        fi
+        	[ -n "`pgrep -x -u 0,1,$NRPE_USER nrpe`" ] && /usr/bin/kill `head -1 $pidfile`
+            	rm "$pidfile"
+	else
+		if [ `uname -r` = 5.8 -o `uname -r` = 5.9 ]
+		then
+			/usr/bin/kill `pgrep -x -u 0,1,$NRPE_USER nrpe`
+		else
+			/usr/bin/kill `pgrep -x -u 0,1,$NRPE_USER -z \`zonename\` nrpe`
+		fi
+	fi
+	
+	#
+	# start
+	#
+
         if [ -f $CONFIG_FILE ]; then
             wait 1
             $BIN_FILE -c $CONFIG_FILE -d
@@ -52,11 +67,18 @@ case "$1" in
         ;;
 
 'stop') 
-        [ -n "`pgrep -x -u 0,1,$NRPE_USER nrpe`" ] && /usr/bin/kill `head -1 $pidfile`
         # remove pid file
         if [ -f "$pidfile" ]; then
-            rm "$pidfile"
-        fi
+        	[ -n "`pgrep -x -u 0,1,$NRPE_USER nrpe`" ] && /usr/bin/kill `head -1 $pidfile`
+            	rm "$pidfile"
+	else
+		if [ `uname -r` = 5.8 -o `uname -r` = 5.9 ]
+		then
+			/usr/bin/kill `pgrep -x -u 0,1,$NRPE_USER nrpe`
+		else
+			/usr/bin/kill `pgrep -x -u 0,1,$NRPE_USER -z \`zonename\` nrpe`
+		fi
+	fi
         ;;
 
 *)
