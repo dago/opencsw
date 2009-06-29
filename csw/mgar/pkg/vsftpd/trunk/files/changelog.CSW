@@ -1,8 +1,9 @@
-vsftpd (2.1.2,REV=2009.06.09) unstable
+vsftpd (2.1.2,REV=2009.06.29) unstable
 
   * New upstream version.
+  * Now uses SMF support from cswclassutils.
 
- -- Yann Rouillard <yann@opencsw.org>  Tue, 09 Jun 2009 22:44:34 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 29 Jun 2009 22:44:34 +0200
 
 vsftpd (2.1.1,REV=2009.05.28) unstable
 
