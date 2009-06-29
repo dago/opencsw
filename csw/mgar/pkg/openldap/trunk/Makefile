@@ -21,10 +21,12 @@ LICENSE = COPYRIGHT
 
 PACKAGES = CSWoldap CSWoldapclient CSWoldapdevel CSWoldaprt
 
+CATALOGNAME_CSWoldap       = openldap
 CATALOGNAME_CSWoldapclient = openldap_client
 CATALOGNAME_CSWoldapdevel  = openldap_devel
 CATALOGNAME_CSWoldaprt     = openldap_rt
 
+SPKG_DESC_CSWoldap       = OpenLDAP server for Lightweight Directory Access Protocol
 SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
