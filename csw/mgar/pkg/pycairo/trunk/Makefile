@@ -17,19 +17,11 @@ REQUIRED_PKGS += CSWcswclassutils
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-PACKAGES = CSWpycairo CSWpycairodevel
+PACKAGES = CSWpycairo
 
 CATALOGNAME_CSWpycairo      = pycairo
-CATALOGNAME_CSWpycairodevel = pycairo_devel
 SPKG_DESC_CSWpycairo        = $(DESCRIPTION)
-SPKG_DESC_CSWpycairodevel   = $(DESCRIPTION) development files
 
-PKGFILES_CSWpycairodevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWpycairodevel += $(prefix)/include/.*
-PKGFILES_CSWpycairodevel += $(prefix)/lib/.*\.a
-PKGFILES_CSWpycairodevel += $(prefix)/lib/pkgconfig/.*
-
-REQUIRED_PKGS_CSWpycairodevel = CSWpycairo
 REQUIRED_PKGS_CSWpycairo = CSWlibcairo CSWpython
 
 CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/$$ISALIST
