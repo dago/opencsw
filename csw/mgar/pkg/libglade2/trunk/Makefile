@@ -20,4 +20,7 @@ SPKG_SOURCEURL = http://www.gnome.org/
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+BUILD64 = 1
+CONFIGURE_ARGS  = $(DIRPATHS)
+
 include gar/category.mk
