@@ -7,7 +7,7 @@ eeaf77528b2da0c7730323838f30b7ef  download/README.CSW
 a9e994d2b57999b76a0e03503745c01a  download/csw_paths.patch
 98e1d831801985daf5ce2ed01fbc0efd  download/cswusergroup
 796d46089f9e9c25c897a34e0dcfadc8  download/cswvsftpd
-020a0de7fa69337c7884d2f73851d45d  download/cswvsftpd.xml
+93173edf9931b8eb835c6d0177a7c6bd  download/cswvsftpd.xml
 73e59f9ada47d3d20199f7c97849fb13  download/destdir.patch
 81d5a4a3831f318cd9e7ea3b3634f41b  download/no_rlimit_nproc.patch
 a9a65f55cbfd01f9d72d1de25e67148d  download/set_priv_sep_user.patch

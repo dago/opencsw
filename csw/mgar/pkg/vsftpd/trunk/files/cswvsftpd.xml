@@ -52,7 +52,7 @@ Modified for CSWvsftpd by Yann Rouillard 05/06
 			<exec_method
 				type='method'
 				name='start'
-				exec='/opt/csw/sbin/vsftpd'
+				exec='/opt/csw/sbin/vsftpd.smf_wrapper'
 				timeout_seconds='-1'>
 			</exec_method>
 
