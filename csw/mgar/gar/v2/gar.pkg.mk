@@ -540,7 +540,7 @@ package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-pack
 	$(DONADA)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
-package-%: $(WORKDIR)/%.gspec $(if $(filter %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+package-%: $(WORKDIR)/%.gspec $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
