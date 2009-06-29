@@ -5,11 +5,11 @@
 # Adapted by Yann Rouillard <yann@blastwave.org>
 #
 
-# RC_KNUM 15  
-# RC_SNUM 85   
-# RC_KLEV 0,1,2,S   
-# RC_SLEV 3         
-# MANIFEST /var/opt/csw/svc/manifest/network/cswvsftpd.xml
+#RC_KNUM 15  
+#RC_SNUM 85   
+#RC_KLEV 0,1,2,S   
+#RC_SLEV 3         
+#MANIFEST /var/opt/csw/svc/manifest/network/cswvsftpd.xml
 
  
 ################################
