@@ -120,7 +120,7 @@ pre-install-modulated:
 post-merge: merge-doc-files merge-config-files merge-init-file
 
 merge-init-file:
-	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd" "$(PKGROOT)/etc/init.d/cswvsftpd"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd" "$(PKGROOT)/etc/opt/csw/init.d/cswvsftpd"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswvsftpd.xml"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/vsftpd.smf_wrapper" "$(PKGROOT)/$(sbindir)/vsftpd.smf_wrapper"
 
