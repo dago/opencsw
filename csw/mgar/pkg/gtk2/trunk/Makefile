@@ -60,6 +60,8 @@ PKGFILES_CSWgtk2devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWgtk2devel +=  $(sharedstatedir)/gtk-2.0/demo/.*
 PKGFILES_CSWgtk2doc = $(sharedstatedir)/gtk-doc/.*
 
+ARCHALL_CSWgtk2doc = 1
+
 include gar/category.mk
 
 post-configure-modulated:
