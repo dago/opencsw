@@ -41,6 +41,7 @@ PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
 CFLAGS +=-xlibmil -D__solaris__ 
 CFLAGS += -xc99
+CXXFLAGS += -xc99
 
 CFLAGS += -DG_HAVE_ISO_VARARGS
 CXXFLAGS+= -DG_HAVE_ISO_VARARGS
