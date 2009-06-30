@@ -1,37 +1,64 @@
 GARNAME = Pound
-GARVERSION = 2.0.4
+GARVERSION = 1.10
 CATEGORIES = net
+CATALOGNAME = pound
 
 DESCRIPTION = reverse proxy load balancer
 define BLURB
-	The Pound program is a reverse proxy, load balancer and HTTPS front-end for
-	Web server(s). Pound was developed to enable distributing the load among
-	several Web-servers and to allow for a convenient SSL wrapper for those Web
-	servers that do not offer it natively. Pound is distributed under the GPL -
-	no warranty, it's free to use, copy and give away.
+  The Pound program is a reverse proxy, load balancer and HTTPS front-end for
+  Web server(s). Pound was developed to enable distributing the load among
+  several Web-servers and to allow for a convenient SSL wrapper for those Web
+  servers that do not offer it natively. Pound is distributed under the GPL -
+  no warranty, it's free to use, copy and give away.
+  As of release 1.0 Pound is declared to be production-quality code.
 endef
 
 MASTER_SITES = http://www.apsis.ch/pound/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWpound,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
-# Install properly when
-#    (a) destdir does not exist, and
-#    (b) installing as non root.
-PATCHFILES += install.diff
+# we require
+REQUIRED_PKGS = CSWosslrt
 
-# Look for regcomp() instead of pcreposix_regcomp()
-PATCHFILES += pcre.diff
+# patch conf/pid directory to fit our needs
+PATCHFILES  = patch-pound.h
+PATCHFILES += patch-pound.8
+# remove linux specific logfacility
+PATCHFILES += patch-config.c
 
+# configure args
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-super
 CONFIGURE_ARGS += --enable-msdav
+CONFIGURE_ARGS += --with-maxbuf=8192
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 
 # No test suite available
 TEST_SCRIPTS =
 
+# use a custom install
+INSTALL_SCRIPTS = custom docs
+
 include gar/category.mk
+
+install-custom: 
+	ginstall -d $(DESTDIR)$(sbindir)
+	ginstall -m 555 $(WORKSRC)/pound $(DESTDIR)$(sbindir)/pound
+	ginstall -d $(DESTDIR)$(mandir)/man8
+	ginstall -m 644 $(WORKSRC)/pound.8 $(DESTDIR)$(mandir)/man8/pound.8
+	ginstall -d $(DESTDIR)$(sysconfdir)/$(CATALOGNAME)
+	ginstall -m 644 $(FILEDIR)/pound-sample.cfg $(DESTDIR)$(sysconfdir)/$(CATALOGNAME)
+	ginstall -d $(DESTDIR)/var/opt/csw/run
+
+docs-list  = $(WORKSRC)/README
+docs-list += $(WORKSRC)/FAQ
+docs-list += $(WORKSRC)/z2_2_5_1.py
+docs-list += $(WORKSRC)/z2_2_6_1.py
+install-docs:
+	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
+	@( for file in $(docs-list) ; do \
+                ginstall -m 644 $$file $(DESTDIR)$(docdir)/$(CATALOGNAME) ; \
+                        done )
+	@$(MAKECOOKIE)

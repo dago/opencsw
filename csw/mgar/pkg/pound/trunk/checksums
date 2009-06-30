@@ -1,4 +1,4 @@
-d7953742a638210eb89cf8deb2cb2112  download/Pound-2.0.4.tgz
-d085eb0e8e6bb8dab8973e4811361659  download/CSWpound.gspec
-f8d673fef11f31d8388745d385540299  download/install.diff
-26acdce646286295106c1fe57c34e484  download/pcre.diff
+5792fd804907cc617e37607c6783d5f7  download/Pound-1.10.tgz
+3ae13bb3dfa78b654dda5936aca82233  download/patch-config.c
+677d2367d5fbcabc1c0e1cb062bbfe96  download/patch-pound.8
+64bee772a5ab4bddeb03706a6a717539  download/patch-pound.h
