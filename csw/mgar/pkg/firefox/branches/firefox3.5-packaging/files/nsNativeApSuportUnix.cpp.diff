@@ -1,0 +1,31 @@
+diff --speed-large-files --minimal -Nru firefox.orig/toolkit/xre/nsNativeAppSupportUnix.cpp firefox/toolkit/xre/nsNativeAppSupportUnix.cpp
+--- firefox.orig/toolkit/xre/nsNativeAppSupportUnix.cpp    2008-02-21 10:55:06.000000000 +0000
++++ firefox/toolkit/xre/nsNativeAppSupportUnix.cpp  2008-11-24 22:14:26.002326100 +0000
+@@ -237,19 +237,19 @@
+   // We will load gail, atk-bridge by ourself later
+   // We can't run atk-bridge init here, because gail get the control
+   // Set GNOME_ACCESSIBILITY to 0 can avoid this
+-  static const char *accEnv = "GNOME_ACCESSIBILITY";
+-  const char *accOldValue = getenv(accEnv);
+-  setenv(accEnv, "0", 1);
++//  static const char *accEnv = "GNOME_ACCESSIBILITY";
++//  const char *accOldValue = getenv(accEnv);
++//  setenv(accEnv, "0", 1);
+ #endif
+ 
+   gnome_program_init("Gecko", "1.0", libgnomeui_module_info_get(), gArgc, gArgv, NULL);
+ 
+ #ifdef ACCESSIBILITY
+-  if (accOldValue) { 
+-    setenv(accEnv, accOldValue, 1);
+-  } else {
+-    unsetenv(accEnv);
+-  }
++//  if (accOldValue) { 
++//    setenv(accEnv, accOldValue, 1);
++//  } else {
++//    unsetenv(accEnv);
++//  }
+ #endif
+ 
+   // Careful! These libraries cannot be unloaded after this point because
