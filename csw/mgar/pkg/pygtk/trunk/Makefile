@@ -1,5 +1,5 @@
 GARNAME = pygtk
-GARVERSION = 2.14.1
+GARVERSION = 2.15.1
 CATEGORIES = lang
 RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\.[0-9].*\)\.[0-9]*/\1/')
 
