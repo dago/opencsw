@@ -1,0 +1,71 @@
+*** Pound-2.4.5.orig/pound.8	Mon Jun 29 17:53:58 2009
+--- Pound-2.4.5/pound.8	Tue Jun 30 13:55:23 2009
+***************
+*** 155,161 ****
+  \fB\-f\fR config_file
+  Location of the configuration file (see below for a full description of the format).
+  Default:
+! .I /usr/local/etc/pound.cfg
+  .TP
+  \fB\-p\fR pid_file
+  Location of the pid file.
+--- 155,161 ----
+  \fB\-f\fR config_file
+  Location of the configuration file (see below for a full description of the format).
+  Default:
+! .I /opt/csw/etc/pound2/pound2.cfg
+  .TP
+  \fB\-p\fR pid_file
+  Location of the pid file.
+***************
+*** 163,169 ****
+  will write its own pid into this file. Normally this is used for shell
+  scripts that control starting and stopping of the daemon.
+  Default:
+! .I /var/run/pound.pid
+  .PP
+  In general, any number of back-end servers may be specified. Use the priority to
+  affect the load distribution among unequal-performance servers.
+--- 163,169 ----
+  will write its own pid into this file. Normally this is used for shell
+  scripts that control starting and stopping of the daemon.
+  Default:
+! .I /var/opt/csw/run/pound2.pid
+  .PP
+  In general, any number of back-end servers may be specified. Use the priority to
+  affect the load distribution among unequal-performance servers.
+***************
+*** 1107,1122 ****
+  .br
+  .SH FILES
+  .TP
+! \fI/var/run/pound.nnn\fR
+  this is where
+  .B Pound
+  will attempt to record its process id.
+  .TP
+! \fI/usr/local/etc/pound.cfg\fR
+  the default configuration file (the location may be changed when compiling - see the
+  F_CONF flag in the Makefile).
+  .TP
+! \fI/usr/local/etc/pound/cert.pem\fR
+  the certificate file(s) for HTTPS. The location must be defined in the configuration
+  file - this is only a suggestion. The file must contain a PEM-encoded certificate,
+  optionally a certificate chain from a known Certificate Authority to your server certificate
+--- 1107,1122 ----
+  .br
+  .SH FILES
+  .TP
+! \fI/var/opt/csw/run/pound2.nnn\fR
+  this is where
+  .B Pound
+  will attempt to record its process id.
+  .TP
+! \fI/opt/csw/etc/pound2/pound2.cfg\fR
+  the default configuration file (the location may be changed when compiling - see the
+  F_CONF flag in the Makefile).
+  .TP
+! \fI/opt/csw/etc/pound2/cert.pem\fR
+  the certificate file(s) for HTTPS. The location must be defined in the configuration
+  file - this is only a suggestion. The file must contain a PEM-encoded certificate,
+  optionally a certificate chain from a known Certificate Authority to your server certificate
