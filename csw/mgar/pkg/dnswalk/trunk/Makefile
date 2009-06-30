@@ -37,13 +37,15 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
-	@$(foreach BIN,$(BINLIST),cp $(WORKDIR)/$(BIN) $(DESTDIR)$(bindir);)
-	@( cd $(DESTDIR)$(bindir) ; \
+	@( cd $(WORKDIR) ; \
 	   sed 's|^#!/usr/contrib|#!/opt/csw|' dnswalk > dnswalk.sed ; \
-	   mv dnswalk.sed dnswalk )
-	@( cd $(DESTDIR)$(bindir) ; \
+	   mv dnswalk.sed dnswalk ; \
+	   chmod 755 dnswalk )
+	@( cd $(WORKDIR) ; \
 	   sed 's|^#!/usr/contrib|#!/opt/csw|' makereports > makereports.sed ; \
-	   mv makereports.sed makereports )
+	   mv makereports.sed makereports ; \
+	   chmod 755 makereports )
+	@$(foreach BIN,$(BINLIST),cp $(WORKDIR)/$(BIN) $(DESTDIR)$(bindir);)
 	@cp $(WORKDIR)/$(GARNAME).1 $(DESTDIR)$(mandir)/man1
 	@$(foreach DOC,$(DOCLIST),cp $(WORKDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	@$(MAKECOOKIE)
