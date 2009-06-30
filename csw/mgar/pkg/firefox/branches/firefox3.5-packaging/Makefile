@@ -41,10 +41,10 @@ PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
 CFLAGS +=-xlibmil -D__solaris__ 
 CFLAGS += -xc99
-CXXFLAGS += -xc99
 
 CFLAGS += -DG_HAVE_ISO_VARARGS
-CXXFLAGS+= -DG_HAVE_ISO_VARARGS
+CXXFLAGS+= -DG_HAVE_ISO_VARARGS ­D_XOPEN_SOURCE=600 ­D_XPG6 
+
 
 LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
