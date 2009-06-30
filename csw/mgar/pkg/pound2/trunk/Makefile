@@ -48,6 +48,8 @@ install-custom:
 docs-list  = $(WORKSRC)/README
 docs-list += $(WORKSRC)/FAQ
 docs-list += $(WORKSRC)/CHANGELOG
+docs-list += $(WORKSRC)/z2_2_5_1.py
+docs-list += $(WORKSRC)/z2_2_6_1.py
 install-docs:
 	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	@( for file in $(docs-list) ; do \
