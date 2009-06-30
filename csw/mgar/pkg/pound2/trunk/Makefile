@@ -48,7 +48,7 @@ install-custom:
 	ginstall -m 644 $(WORKSRC)/poundctl.8 $(DESTDIR)$(mandir)/man8/pound2ctl.8
 	ginstall -d $(DESTDIR)$(sysconfdir)/$(CATALOGNAME)
 	ginstall -m 644 $(FILEDIR)/pound2-sample.cfg $(DESTDIR)$(sysconfdir)/$(CATALOGNAME)
-	ginstall -d /var/opt/csw/run
+	ginstall -d $(DESTDIR)/var/opt/csw/run
 
 docs-list  = $(WORKSRC)/README
 docs-list += $(WORKSRC)/FAQ
