@@ -23,13 +23,19 @@ SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 # Defines the list of patches to be applied to the sources
 # PATCHFILES = autoconf.mk.in.diff
 # PATCHFILES += packager.mk.diff
-# PATCHFILES += jemalloc.c.diff
+PATCHFILES += jemalloc.c.diff
 # PATCHFILES += nsMathUtils.h.diff
 # PATCHFILES += file_id.cc.diff
 # PATCHFILES += md5.h.diff
 # PATCHFILES += solaris_lwp.h.diff
 # PATCHFILES += nsNativeApSuportUnix.cpp.diff
 # PATCHFILES += nsExceptionHandler.cpp.diff 
+
+# Use Sun studio 12 to compile it@
+GARCOMPILER = SOS12
+
+# pkg-config options
+EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
@@ -52,7 +58,7 @@ WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 post-extract:
-	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)
+	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla* $(WORK_BUILD)
 	@$(MAKECOOKIE)
 
 pre-configure:
