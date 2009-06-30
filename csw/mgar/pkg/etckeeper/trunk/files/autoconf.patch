@@ -67,19 +67,21 @@ index b2d6565..0000000
 -.PHONY: etckeeper.spec
 diff --git a/Makefile.am b/Makefile.am
 new file mode 100644
-index 0000000..8241091
+index 0000000..5fdabbf
 --- /dev/null
 +++ b/Makefile.am
-@@ -0,0 +1,82 @@
+@@ -0,0 +1,84 @@
 +sysconfdirdir = $(sysconfdir)/$(PACKAGE)
++
++KEEPERSCRIPTS = $(wildcard *.d)
++KSFILES = $(foreach KD,$(KEEPERSCRIPTS),$(wildcard $(KD)/*))
++KSINPUTS = $(filter %.in,$(KSFILES))
++KSINPUTTRANS = $(patsubst %.in,%,$(KSINPUTS))
++KSNONINPUTS = $(filter-out %.in,$(KSFILES))
 +
 +sbin_SCRIPTS = etckeeper
 +man_MANS = etckeeper.8
 +sysconfdir_DATA = etckeeper.conf
-+
-+CLEANFILES = $(sbin_SCRIPTS) $(man8_MANS) $(sysconfdir_DATA)
-+
-+NEED_SUBST = etckeeper.in etckeeper.conf.in etckeeper.8.in
 +
 +APTFILES = apt.conf
 +YUMFILES = yum-etckeeper.py yum-etckeeper.conf
@@ -89,18 +91,17 @@ index 0000000..8241091
 +
 +OPTS =
 +if INST_BASH_COMPLETION
-+OPTS += bash
++OPTS += inst-bash
 +endif
 +if INST_CRUFT_FILTER
-+OPTS += cruft
++OPTS += inst-cruft
 +endif
 +
-+KEEPERSCRIPTS = $(wildcard *.d)
-+KEEPERSCRIPTFILES = $(foreach KSD,$(KEEPERSCRIPTS),$(wildcard $(KSD)/*))
++EXTRA_DIST = $(NEED_SUBST) $(APTFILES) $(YUMFILES) $(PACMANFILES) $(KEEPERSCRIPTFILES) $(BASHFILES) $(CRUFTFILES) $(KSINPUTS)
 +
-+.PHONY: $(KEEPERSCRIPTS)
++CLEANFILES = $(sbin_SCRIPTS) $(man8_MANS) $(sysconfdir_DATA) $(KSINPUTTRANS)
 +
-+EXTRA_DIST = $(NEED_SUBST) $(APTFILES) $(YUMFILES) $(PACMANFILES) $(KEEPERSCRIPTFILES) $(BASHFILES) $(CRUFTFILES)
++NEED_SUBST = etckeeper.in etckeeper.conf.in etckeeper.8.in $(KSINPUTS)
 +
 +# files that need autoconf-ish substitutions.
 +REQ_SUBST = $(NEED_SUBST:.in=)
@@ -112,15 +113,11 @@ index 0000000..8241091
 +		-e 's|@docdir[@]|$(docdir)|g' \
 +		-e 's|@HIGHLEVEL[@]|$(HIGHLEVEL)|g' \
 +		-e 's|@LOWLEVEL[@]|$(LOWLEVEL)|g' \
-+		-e 's|@VCS[@]|$(VCS)|g'
++		-e 's|@VCS[@]|$(VCS)|g' \
++		-e 's|@SHELLPATH[@]|$(SHELLPATH)|g'
 +
 +$(REQ_SUBST): % : %.in Makefile
 +	$(do_subst) < $(srcdir)/$< > $@
-+
-+
-+$(KEEPERSCRIPTS):
-+	$(MKDIR_P) $(DESTDIR)$(sysconfdirdir)/$@
-+	$(INSTALL_DATA) $(srcdir)/$@/* $(DESTDIR)/$(sysconfdirdir)/$@/
 +
 +high-apt: apt.conf
 +	$(MKDIR_P) $(DESTDIR)/$(sysconfdir)/apt/apt.conf.d
@@ -144,21 +141,356 @@ index 0000000..8241091
 +	$(MKDIR_P) $(DESTDIR)$(sysconfdir)/pacman-g2/hooks
 +	$(INSTALL_DATA)  pacman-g2.hook $(DESTDIR)/$(sysconfdir)/pacman-g2/hook/
 +
-+bash:
++inst-bash:
 +	$(MKDIR_P) $(DESTDIR)$(sysconfdir)/bash_completion.d
 +	$(INSTALL_DATA) bash_completion $(DESTDIR)$(sysconfdir)/bash_completion.d/etckeeper
 +
-+cruft:
++inst-cruft:
 +	$(MKDIR_P) $(DESTDIR)$(sysconfdir)/cruft/filters-unex
 +	$(INSTALL_DATA) cruft_filter $(DESTDIR)$(sysconfdir)/cruft/filters-unex/etckeeper
 +
++$(KEEPERSCRIPTS): $(KSINPUTTRANS)
++	$(MKDIR_P) $(DESTDIR)$(sysconfdirdir)/$@
++	$(INSTALL_DATA) $(filter $@/%,$(KSINPUTTRANS) $(KSNONINPUTS)) $(DESTDIR)$(sysconfdirdir)/$@
++
 +install-data-local: $(KEEPERSCRIPTS) high-$(HIGHLEVEL) low-$(LOWLEVEL) $(OPTS)
++
+diff --git a/commit.d/10vcs-test b/commit.d/10vcs-test
+deleted file mode 100755
+index e33d734..0000000
+--- a/commit.d/10vcs-test
++++ /dev/null
+@@ -1,17 +0,0 @@
+-#!/bin/sh
+-set -e
+-	
+-not_enabled_warning() {
+-	echo "etckeeper warning: etckeeper is not yet enabled for $(pwd)" >&2
+-	echo "etckeeper warning: run etckeeper init to enable it" >&2
+-}
+-
+-if [ "$VCS" = git ] && [ ! -d .git ]; then
+-	not_enabled_warning
+-elif [ "$VCS" = hg ] && [ ! -d .hg ]; then
+-	not_enabled_warning
+-elif [ "$VCS" = bzr ] && [ ! -d .bzr ]; then
+-	not_enabled_warning
+-elif [ "$VCS" = darcs ] && [ ! -d _darcs ]; then
+-	not_enabled_warning
+-fi
+diff --git a/commit.d/10vcs-test.in b/commit.d/10vcs-test.in
+new file mode 100644
+index 0000000..5aa6b52
+--- /dev/null
++++ b/commit.d/10vcs-test.in
+@@ -0,0 +1,17 @@
++#!@SHELLPATH@
++set -e
++	
++not_enabled_warning() {
++	echo "etckeeper warning: etckeeper is not yet enabled for $(pwd)" >&2
++	echo "etckeeper warning: run etckeeper init to enable it" >&2
++}
++
++if [ "$VCS" = git ] && [ ! -d .git ]; then
++	not_enabled_warning
++elif [ "$VCS" = hg ] && [ ! -d .hg ]; then
++	not_enabled_warning
++elif [ "$VCS" = bzr ] && [ ! -d .bzr ]; then
++	not_enabled_warning
++elif [ "$VCS" = darcs ] && [ ! -d _darcs ]; then
++	not_enabled_warning
++fi
+diff --git a/commit.d/30bzr-add b/commit.d/30bzr-add
+deleted file mode 100755
+index 3e7e95d..0000000
+--- a/commit.d/30bzr-add
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = bzr ] && [ -d .bzr ]; then
+-	if ! bzr add -q .; then
+-		echo "etckeeper warning: bzr add failed" >&2
+-	fi
+-fi
+diff --git a/commit.d/30bzr-add.in b/commit.d/30bzr-add.in
+new file mode 100644
+index 0000000..e9012c7
+--- /dev/null
++++ b/commit.d/30bzr-add.in
+@@ -0,0 +1,8 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = bzr ] && [ -d .bzr ]; then
++	if ! bzr add -q .; then
++		echo "etckeeper warning: bzr add failed" >&2
++	fi
++fi
+diff --git a/commit.d/30darcs-add b/commit.d/30darcs-add
+deleted file mode 100755
+index 98be4bf..0000000
+--- a/commit.d/30darcs-add
++++ /dev/null
+@@ -1,14 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = darcs ] && [ -d _darcs ]; then
+-	rc=0
+-	res=$( darcs add -qr . 2>&1 ) || rc=$?
+-	if test $rc -ne 0; then
+-		if ! test $rc -eq 2 -a "${res%No files were added}" != "$res"; then
+-			printf "%s" "$res"
+-			echo "etckeeper warning: darcs add failed" >&2
+-		fi
+-	fi
+-	unset rc res
+-fi
+diff --git a/commit.d/30darcs-add.in b/commit.d/30darcs-add.in
+new file mode 100644
+index 0000000..46b50f2
+--- /dev/null
++++ b/commit.d/30darcs-add.in
+@@ -0,0 +1,14 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = darcs ] && [ -d _darcs ]; then
++	rc=0
++	res=$( darcs add -qr . 2>&1 ) || rc=$?
++	if test $rc -ne 0; then
++		if ! test $rc -eq 2 -a "${res%No files were added}" != "$res"; then
++			printf "%s" "$res"
++			echo "etckeeper warning: darcs add failed" >&2
++		fi
++	fi
++	unset rc res
++fi
+diff --git a/commit.d/30git-add b/commit.d/30git-add
+deleted file mode 100755
+index 66d96a9..0000000
+--- a/commit.d/30git-add
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ] && [ -d .git ]; then
+-	if ! git add .; then
+-		echo "etckeeper warning: git add failed" >&2
+-	fi
+-fi
+diff --git a/commit.d/30git-add.in b/commit.d/30git-add.in
+new file mode 100644
+index 0000000..09b5a8b
+--- /dev/null
++++ b/commit.d/30git-add.in
+@@ -0,0 +1,8 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ] && [ -d .git ]; then
++	if ! git add .; then
++		echo "etckeeper warning: git add failed" >&2
++	fi
++fi
+diff --git a/commit.d/30hg-addremove b/commit.d/30hg-addremove
+deleted file mode 100755
+index 1b999bb..0000000
+--- a/commit.d/30hg-addremove
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = hg ] && [ -d .hg ]; then
+-	if ! hg addremove .; then
+-		echo "etckeeper warning: hg addremove failed" >&2
+-	fi
+-fi
+diff --git a/commit.d/30hg-addremove.in b/commit.d/30hg-addremove.in
+new file mode 100644
+index 0000000..25218cd
+--- /dev/null
++++ b/commit.d/30hg-addremove.in
+@@ -0,0 +1,8 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = hg ] && [ -d .hg ]; then
++	if ! hg addremove .; then
++		echo "etckeeper warning: hg addremove failed" >&2
++	fi
++fi
+diff --git a/commit.d/40git-rm b/commit.d/40git-rm
+deleted file mode 100755
+index 26f492a..0000000
+--- a/commit.d/40git-rm
++++ /dev/null
+@@ -1,27 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-IFS='
+-'
+-
+-if [ "$VCS" = git ] && [ -d .git ]; then
+-	for file in $(git ls-files --deleted); do
+-		if [ ! -d "$file" ]; then
+-			# git removes directories when the last file
+-			# in them is removed, but empty directories
+-			# may be significant in /etc. Touch a flag file
+-			# to prevent git from removing the directory.
+-			dir="$(dirname "$file")"
+-			flagfile=""
+-			if [ -d "$dir" ] && 
+-			   [ -n "$(find "$dir" -maxdepth 0 -empty)" ]; then
+-				flagfile="$dir/.etckeeper-keep-empty"
+-				touch "$flagfile"
+-			fi
+-			git rm --quiet "$file"
+-			if [ -n "$flagfile" ]; then
+-				rm -f "$flagfile"
+-			fi
+-		fi
+-	done
+-fi
+diff --git a/commit.d/40git-rm.in b/commit.d/40git-rm.in
+new file mode 100644
+index 0000000..e7e41a8
+--- /dev/null
++++ b/commit.d/40git-rm.in
+@@ -0,0 +1,27 @@
++#!@SHELLPATH@
++set -e
++
++IFS='
++'
++
++if [ "$VCS" = git ] && [ -d .git ]; then
++	for file in $(git ls-files --deleted); do
++		if [ ! -d "$file" ]; then
++			# git removes directories when the last file
++			# in them is removed, but empty directories
++			# may be significant in /etc. Touch a flag file
++			# to prevent git from removing the directory.
++			dir="$(dirname "$file")"
++			flagfile=""
++			if [ -d "$dir" ] && 
++			   [ -n "$(find "$dir" -maxdepth 0 -empty)" ]; then
++				flagfile="$dir/.etckeeper-keep-empty"
++				touch "$flagfile"
++			fi
++			git rm --quiet "$file"
++			if [ -n "$flagfile" ]; then
++				rm -f "$flagfile"
++			fi
++		fi
++	done
++fi
+diff --git a/commit.d/50vcs-commit b/commit.d/50vcs-commit
+deleted file mode 100755
+index 1f4ab03..0000000
+--- a/commit.d/50vcs-commit
++++ /dev/null
+@@ -1,41 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-message="$1"
+-hostname=`hostname -f`
+-
+-if [ "$VCS" = git ] && [ -d .git ]; then
+-	if [ -n "$SUDO_USER" ]; then
+-		export GIT_COMMITTER_NAME="$SUDO_USER"
+-		export GIT_COMMITTER_EMAIL="$SUDO_USER@$hostname"
+-	fi
+-	if [ -n "$message" ]; then
+-		git commit $GIT_COMMIT_OPTIONS -m "$message"
+-	else
+-		git commit $GIT_COMMIT_OPTIONS
+-	fi
+-elif [ "$VCS" = hg ] && [ -d .hg ]; then
+-	if [ -n "$SUDO_USER" ]; then
+-		export LOGNAME="$SUDO_USER"
+-	fi
+-	if [ -n "$message" ]; then
+-		hg commit $HG_COMMIT_OPTIONS -m "$message"
+-	else
+-		hg commit $HG_COMMIT_OPTIONS
+-	fi
+-elif [ "$VCS" = bzr ] && [ -d .bzr ]; then
+-	if [ -n "$SUDO_USER" ]; then
+-		export EMAIL="$SUDO_USER <$SUDO_USER@$hostname>"
+-	fi
+-	if [ -n "$message" ]; then
+-		bzr commit $BZR_COMMIT_OPTIONS -m "$message"
+-	else
+-		bzr commit $BZR_COMMIT_OPTIONS
+-	fi
+-elif [ "$VCS" = darcs ] && [ -d _darcs ]; then
+-	logfile="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
+-	printf "%b" "$message" > "$logfile"
+-	darcs record $DARCS_COMMIT_OPTIONS --logfile="$logfile"
+-	rm -f "$logfile"
+-	unset logfile
+-fi
+diff --git a/commit.d/50vcs-commit.in b/commit.d/50vcs-commit.in
+new file mode 100644
+index 0000000..067e55f
+--- /dev/null
++++ b/commit.d/50vcs-commit.in
+@@ -0,0 +1,41 @@
++#!@SHELLPATH@
++set -e
++
++message="$1"
++hostname=`hostname -f`
++
++if [ "$VCS" = git ] && [ -d .git ]; then
++	if [ -n "$SUDO_USER" ]; then
++		export GIT_COMMITTER_NAME="$SUDO_USER"
++		export GIT_COMMITTER_EMAIL="$SUDO_USER@$hostname"
++	fi
++	if [ -n "$message" ]; then
++		git commit $GIT_COMMIT_OPTIONS -m "$message"
++	else
++		git commit $GIT_COMMIT_OPTIONS
++	fi
++elif [ "$VCS" = hg ] && [ -d .hg ]; then
++	if [ -n "$SUDO_USER" ]; then
++		export LOGNAME="$SUDO_USER"
++	fi
++	if [ -n "$message" ]; then
++		hg commit $HG_COMMIT_OPTIONS -m "$message"
++	else
++		hg commit $HG_COMMIT_OPTIONS
++	fi
++elif [ "$VCS" = bzr ] && [ -d .bzr ]; then
++	if [ -n "$SUDO_USER" ]; then
++		export EMAIL="$SUDO_USER <$SUDO_USER@$hostname>"
++	fi
++	if [ -n "$message" ]; then
++		bzr commit $BZR_COMMIT_OPTIONS -m "$message"
++	else
++		bzr commit $BZR_COMMIT_OPTIONS
++	fi
++elif [ "$VCS" = darcs ] && [ -d _darcs ]; then
++	logfile="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
++	printf "%b" "$message" > "$logfile"
++	darcs record $DARCS_COMMIT_OPTIONS --logfile="$logfile"
++	rm -f "$logfile"
++	unset logfile
++fi
 diff --git a/configure.ac b/configure.ac
 new file mode 100644
-index 0000000..a242a44
+index 0000000..39e742f
 --- /dev/null
 +++ b/configure.ac
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,85 @@
 +AC_INIT([etckeeper], [0.37])
 +AM_INIT_AUTOMAKE
 +
@@ -169,68 +501,77 @@ index 0000000..a242a44
 +
 +AC_PROG_INSTALL
 +AC_PROG_MKDIR_P
-+AC_PROG_SED
 +
-+AC_ARG_WITH([vcs], [AS_HELP_STRING([--with-vcs],
-+              [select the VCS package to use (default is git) (valid: git, bzr, darcs, hg)])],
++dnl EK_WITH_OPT(optname, optvar, default, valid)
++dnl --------------------------------------------
++dnl Commodity --with options that map to stock behaviours
++dnl valid should be a | separated list of options
++AC_DEFUN([EK_WITH_OPT], [
++  AC_ARG_WITH([$1], [AS_HELP_STRING([--with-$1],
++              [select the $2 package/tool to use (default is $3) (valid: $4)])],
 +	      [
-+AC_MSG_CHECKING([whether '$with_vcs' is a valid VCS selection])
-+case "$with_vcs" in
-+     git|darcs|hg|bzr) VCS=$with_vcs;;
-+     *) VCS=error;;
-+esac
-+AS_IF([test "x$VCS" != "xerror"],
++AC_MSG_CHECKING([whether '$withval' is a valid $2 selection])
++if test "$4" = "any"; then
++   $2=$withval
++else
++	case "$4" in
++	     *"$withval"*) $2=$withval;;
++	      *) $2=error;;
++	esac
++fi
++
++AS_IF([test "x$$2" != "xerror"],
 +	    AC_MSG_RESULT([yes]),
 +		AC_MSG_RESULT([no])
-+		AC_MSG_ERROR(['$with_vcs' is an invalid VCS selection], [1]))
++		AC_MSG_ERROR(['$withvar' is an invalid $2 selection], [1]))
 +	],
-+	      [VCS=git])
++	      [$2=$3])
++dnl if no default is supplied, we're not setting a value for etckeeper.conf
++AS_IF([test "$4" != "any"],
++	    AC_MSG_NOTICE([$2 in etckeeper.conf will be $$2])
++)
++AC_SUBST([$2])
++])
 +
-+AC_ARG_WITH([highlevel], [AS_HELP_STRING([--with-highlevel],
-+              [select the high level package tool to use (default is apt) (valid: apt, yum, pacman-g2)])],
-+	      [
-+AC_MSG_CHECKING([whether '$with_highlevel' is a valid high level package tool selection])
-+case "$with_highlevel" in
-+     apt|yum|pacman-g2) HIGHLEVEL=$with_highlevel;;
-+     *) HIGHLEVEL=error;;
-+esac
-+AS_IF([test "x$HIGHLEVEL" != "xerror"],
-+	    AC_MSG_RESULT([yes]),
-+		AC_MSG_RESULT([no])
-+		AC_MSG_ERROR(['$with_highlevel' is an invalid high level package tool selection], [1]))
-+	],
-+	      [HIGHLEVEL=apt])
++dnl EK_DISABLE_ADDON(addon, var, name)
++dnl ----------------------------------
++dnl Disable the installation of various addon features (bash completion, etc)
++dnl $1 = add-on-option
++dnl $2 = AUTOCONF_VAR
++dnl $3 = english name
++AC_DEFUN([EK_DISABLE_ADDON], [
++  AC_ARG_ENABLE([$1], [AS_HELP_STRING([--disable-$1],
++  		        [Do not install $3 files.])],
++[
++			case "$enableval" in
++			     no)
++			         AC_MSG_NOTICE([disabling $3 installation])
++			     	 $2=
++				 ;;
++			      *)
++			         AC_MSG_NOTICE([enabling $3 installation])
++			      	 $2=yes
++				 ;;
++			esac
++]
++			,
++[
++			AC_MSG_NOTICE([enabling $3 installation])
++			$2=yes
++])
 +
-+AC_ARG_WITH([lowlevel], [AS_HELP_STRING([--with-lowlevel],
-+              [select the low level package tool to use (default is dpkg) (valid: dpkg, rpm, pacman-g2)])],
-+	      [
-+AC_MSG_CHECKING([whether '$with_lowlevel' is a valid low level package tool selection])
-+case "$with_lowlevel" in
-+     dpkg|rpm|pacman-g2) LOWLEVEL=$with_lowlevel;;
-+     *) LOWLEVEL=error;;
-+esac
-+AS_IF([test "x$LOWLEVEL" != "xerror"],
-+	    AC_MSG_RESULT([yes]),
-+		AC_MSG_RESULT([no])
-+		AC_MSG_ERROR(['$with_lowlevel' is an invalid low level package selection], [1]))
-+	],
-+	      [LOWLEVEL=dpkg])
++  AM_CONDITIONAL([INST_$2], [ test x$$2 = xyes ])
++])
 +
-+AC_ARG_ENABLE([bash-completion], [AS_HELP_STRING([--disable-bash-completion],
-+				    [Do not install bash completion files.])],
-+				 [BASH_COMPLETION=],
-+				 [BASH_COMPLETION=yes])
-+AM_CONDITIONAL([INST_BASH_COMPLETION], [ test x$BASH_COMPLETION = xyes ])
 +
-+AC_ARG_ENABLE([cruft-filter], [AS_HELP_STRING([--disable-cruft-filter],
-+				[Do not install the cruft filter files.])],
-+			[CRUFT_FILTER=],
-+			[CRUFT_FILTER=yes])
-+AM_CONDITIONAL([INST_CRUFT_FILTER], [ test x$CRUFT_FILTER = xyes ])
++EK_WITH_OPT(vcs, VCS, git, git|bzr|darcs|hg)
++EK_WITH_OPT(highlevel, HIGHLEVEL, apt, apt|yum|pacman-g2)
++EK_WITH_OPT(lowlevel, LOWLEVEL, dpkg, dpkg|rpm|pacman-g2)
++EK_WITH_OPT(shell, SHELLPATH, /bin/sh, any)
 +
-+AC_SUBST([VCS])
-+AC_SUBST([HIGHLEVEL])
-+AC_SUBST([LOWLEVEL])
++EK_DISABLE_ADDON(bash-completion, BASH_COMPLETION, bash completion)
++EK_DISABLE_ADDON(cruft-filter, CRUFT_FILTER, cruft filter)
++
 +
 +AC_CONFIG_FILES([Makefile])
 +
@@ -548,11 +889,11 @@ index 0000000..980b52c
 +LOWLEVEL_PACKAGE_MANAGER=@LOWLEVEL@
 diff --git a/etckeeper.in b/etckeeper.in
 new file mode 100644
-index 0000000..6d91e8c
+index 0000000..bcea0b0
 --- /dev/null
 +++ b/etckeeper.in
 @@ -0,0 +1,92 @@
-+#!/bin/sh
++#!@SHELLPATH@
 +set -e
 +
 +if [ -z "$ETCKEEPER_CONF_DIR" ]; then
@@ -644,6 +985,484 @@ index 0000000..6d91e8c
 +for script in $(lsscripts "$ETCKEEPER_CONF_DIR/$command.d"); do
 +	"$script" "$@"
 +done
+diff --git a/init.d/10restore-metadata b/init.d/10restore-metadata
+deleted file mode 100755
+index 9c2bf65..0000000
+--- a/init.d/10restore-metadata
++++ /dev/null
+@@ -1,14 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-# Note that metastore doesn't check that the .metastore file only changes
+-# perms of files in the current directory. It's ok to trust the .metastore
+-# file won't do anything shady, because, as documented, etckeeper-init
+-# should only be run on repositories you trust.
+-if [ -e .metadata ]; then
+-	if which metastore >/dev/null; then
+-		metastore --apply --mtime
+-	else
+-		echo "etckeeper warning: legacy .metastore file is present but metastore is not installed" >&2
+-	fi
+-fi
+diff --git a/init.d/10restore-metadata.in b/init.d/10restore-metadata.in
+new file mode 100644
+index 0000000..8aef5b5
+--- /dev/null
++++ b/init.d/10restore-metadata.in
+@@ -0,0 +1,14 @@
++#!@SHELLPATH@
++set -e
++
++# Note that metastore doesn't check that the .metastore file only changes
++# perms of files in the current directory. It's ok to trust the .metastore
++# file won't do anything shady, because, as documented, etckeeper-init
++# should only be run on repositories you trust.
++if [ -e .metadata ]; then
++	if which metastore >/dev/null; then
++		metastore --apply --mtime
++	else
++		echo "etckeeper warning: legacy .metastore file is present but metastore is not installed" >&2
++	fi
++fi
+diff --git a/init.d/20restore-etckeeper b/init.d/20restore-etckeeper
+deleted file mode 100755
+index 5dc4425..0000000
+--- a/init.d/20restore-etckeeper
++++ /dev/null
+@@ -1,22 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-# Used by .etckeeper to run a command if the file it acts on
+-# (the last parameter) exists.
+-maybe () {
+-	command="$1"
+-	shift 1
+-
+-	if eval [ -e "\$$#" ]; then
+-		"$command" "$@"
+-	fi
+-}
+-
+-# Yes, this runs code from the repository. As documented, etckeeper-init
+-# should only be run on repositories you trust.
+-if [ -e .etckeeper ]; then
+-	. ./.etckeeper
+-else
+-	touch .etckeeper
+-	chmod 600 .etckeeper
+-fi
+diff --git a/init.d/20restore-etckeeper.in b/init.d/20restore-etckeeper.in
+new file mode 100644
+index 0000000..8ffb7f1
+--- /dev/null
++++ b/init.d/20restore-etckeeper.in
+@@ -0,0 +1,22 @@
++#!@SHELLPATH@
++set -e
++
++# Used by .etckeeper to run a command if the file it acts on
++# (the last parameter) exists.
++maybe () {
++	command="$1"
++	shift 1
++
++	if eval [ -e "\$$#" ]; then
++		"$command" "$@"
++	fi
++}
++
++# Yes, this runs code from the repository. As documented, etckeeper-init
++# should only be run on repositories you trust.
++if [ -e .etckeeper ]; then
++	. ./.etckeeper
++else
++	touch .etckeeper
++	chmod 600 .etckeeper
++fi
+diff --git a/init.d/40vcs-init b/init.d/40vcs-init
+deleted file mode 100755
+index 3c7a3bb..0000000
+--- a/init.d/40vcs-init
++++ /dev/null
+@@ -1,17 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ] && [ ! -e .git ]; then
+-	git init
+-	echo "$(hostname) /etc repository" > .git/description
+-elif [ "$VCS" = hg ] && [ ! -e .hg ]; then
+-	hg init
+-	echo  "[web]" > .hg/hgrc
+-	echo  "description = $(hostname) /etc repository" >> .hg/hgrc
+-elif [ "$VCS" = bzr ] && [ ! -e .bzr ]; then
+-	bzr init
+-	bzr nick "$(hostname) /etc repository"
+-elif [ "$VCS" = darcs ] && [ ! -e _darcs ]; then
+-	darcs initialize
+-	echo "$(hostname) /etc repository" > _darcs/prefs/motd
+-fi
+diff --git a/init.d/40vcs-init.in b/init.d/40vcs-init.in
+new file mode 100644
+index 0000000..1cf512f
+--- /dev/null
++++ b/init.d/40vcs-init.in
+@@ -0,0 +1,17 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ] && [ ! -e .git ]; then
++	git init
++	echo "$(hostname) /etc repository" > .git/description
++elif [ "$VCS" = hg ] && [ ! -e .hg ]; then
++	hg init
++	echo  "[web]" > .hg/hgrc
++	echo  "description = $(hostname) /etc repository" >> .hg/hgrc
++elif [ "$VCS" = bzr ] && [ ! -e .bzr ]; then
++	bzr init
++	bzr nick "$(hostname) /etc repository"
++elif [ "$VCS" = darcs ] && [ ! -e _darcs ]; then
++	darcs initialize
++	echo "$(hostname) /etc repository" > _darcs/prefs/motd
++fi
+diff --git a/init.d/50vcs-ignore b/init.d/50vcs-ignore
+deleted file mode 100755
+index bcc88ba..0000000
+--- a/init.d/50vcs-ignore
++++ /dev/null
+@@ -1,4 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-etckeeper update-ignore || true
+diff --git a/init.d/50vcs-ignore.in b/init.d/50vcs-ignore.in
+new file mode 100644
+index 0000000..0e703dc
+--- /dev/null
++++ b/init.d/50vcs-ignore.in
+@@ -0,0 +1,4 @@
++#!@SHELLPATH@
++set -e
++
++etckeeper update-ignore || true
+diff --git a/init.d/50vcs-perm b/init.d/50vcs-perm
+deleted file mode 100755
+index 4dd080b..0000000
+--- a/init.d/50vcs-perm
++++ /dev/null
+@@ -1,12 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ]; then
+-	chmod 700 .git
+-elif [ "$VCS" = hg ]; then
+-	chmod 700 .hg
+-elif [ "$VCS" = bzr ]; then
+-	chmod 700 .bzr
+-elif [ "$VCS" = darcs ]; then
+-	chmod 700 _darcs
+-fi
+diff --git a/init.d/50vcs-perm.in b/init.d/50vcs-perm.in
+new file mode 100644
+index 0000000..95b2a2e
+--- /dev/null
++++ b/init.d/50vcs-perm.in
+@@ -0,0 +1,12 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ]; then
++	chmod 700 .git
++elif [ "$VCS" = hg ]; then
++	chmod 700 .hg
++elif [ "$VCS" = bzr ]; then
++	chmod 700 .bzr
++elif [ "$VCS" = darcs ]; then
++	chmod 700 _darcs
++fi
+diff --git a/init.d/50vcs-pre-commit-hook b/init.d/50vcs-pre-commit-hook
+deleted file mode 100755
+index 06d433b..0000000
+--- a/init.d/50vcs-pre-commit-hook
++++ /dev/null
+@@ -1,47 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-case "$VCS" in
+-	git)
+-		if [ -x .git/hooks/pre-commit ]; then
+-			if ! grep -q "etckeeper pre-commit" .git/hooks/pre-commit; then
+-				echo "etckeeper warning: .git/hooks/pre-commit needs to be manually modified to run: etckeeper pre-commit -d `pwd`" >&2
+-			fi
+-		else
+-			cat >.git/hooks/pre-commit <<EOF
+-#!/bin/sh
+-# pre-commit hook for etckeeper, to store metadata and do sanity checks
+-set -e
+-etckeeper pre-commit -d `pwd`
+-EOF
+-		chmod +x .git/hooks/pre-commit
+-		fi
+-	;;
+-	hg)
+-		if [ -e .hg/hgrc ] && grep "^\[hooks\]" .hg/hgrc; then
+-			echo "etckeeper warning: [hooks] section in .hg/hgrc needs to be manually modified to run: etckeeper pre-commit -d `pwd`" >&2
+-		else
+-		touch .hg/hgrc
+-		cat >>.hg/hgrc <<EOF
+-[hooks]
+-# pre-commit hook for etckeeper, to store metadata and do sanity checks
+-precommit = etckeeper pre-commit -d `pwd`
+-EOF
+-		fi
+-	;;
+-	darcs)
+-		if [ -e _darcs/prefs/defaults ]; then
+-			if ! ( grep -q "record prehook etckeeper pre-commit" _darcs/prefs/defaults &&
+-				grep -q "whatsnew prehook etckeeper pre-commit" _darcs/prefs/defaults ); then
+-				echo "etckeeper warning: _darcs/prefs/defaults needs to be manually modified to run: etckeeper pre-commit -d `pwd`" >&2
+-			fi
+-		else
+-			cat >_darcs/prefs/defaults <<EOF
+-record prehook etckeeper pre-commit -d `pwd`
+-record run-prehook
+-whatsnew prehook etckeeper pre-commit -d `pwd`
+-whatsnew run-prehook
+-EOF
+-		fi
+-	;;
+-esac
+diff --git a/init.d/50vcs-pre-commit-hook.in b/init.d/50vcs-pre-commit-hook.in
+new file mode 100644
+index 0000000..f0152c1
+--- /dev/null
++++ b/init.d/50vcs-pre-commit-hook.in
+@@ -0,0 +1,47 @@
++#!@SHELLPATH@
++set -e
++
++case "$VCS" in
++	git)
++		if [ -x .git/hooks/pre-commit ]; then
++			if ! grep -q "etckeeper pre-commit" .git/hooks/pre-commit; then
++				echo "etckeeper warning: .git/hooks/pre-commit needs to be manually modified to run: etckeeper pre-commit -d `pwd`" >&2
++			fi
++		else
++			cat >.git/hooks/pre-commit <<EOF
++#!@SHELLPATH@
++# pre-commit hook for etckeeper, to store metadata and do sanity checks
++set -e
++etckeeper pre-commit -d `pwd`
++EOF
++		chmod +x .git/hooks/pre-commit
++		fi
++	;;
++	hg)
++		if [ -e .hg/hgrc ] && grep "^\[hooks\]" .hg/hgrc; then
++			echo "etckeeper warning: [hooks] section in .hg/hgrc needs to be manually modified to run: etckeeper pre-commit -d `pwd`" >&2
++		else
++		touch .hg/hgrc
++		cat >>.hg/hgrc <<EOF
++[hooks]
++# pre-commit hook for etckeeper, to store metadata and do sanity checks
++precommit = etckeeper pre-commit -d `pwd`
++EOF
++		fi
++	;;
++	darcs)
++		if [ -e _darcs/prefs/defaults ]; then
++			if ! ( grep -q "record prehook etckeeper pre-commit" _darcs/prefs/defaults &&
++				grep -q "whatsnew prehook etckeeper pre-commit" _darcs/prefs/defaults ); then
++				echo "etckeeper warning: _darcs/prefs/defaults needs to be manually modified to run: etckeeper pre-commit -d `pwd`" >&2
++			fi
++		else
++			cat >_darcs/prefs/defaults <<EOF
++record prehook etckeeper pre-commit -d `pwd`
++record run-prehook
++whatsnew prehook etckeeper pre-commit -d `pwd`
++whatsnew run-prehook
++EOF
++		fi
++	;;
++esac
+diff --git a/init.d/60darcs-deleted-symlinks b/init.d/60darcs-deleted-symlinks
+deleted file mode 100755
+index 8d10d56..0000000
+--- a/init.d/60darcs-deleted-symlinks
++++ /dev/null
+@@ -1,48 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-filter_ignore() {
+-	if [ "$VCS" = darcs ]; then
+-		ignorefile=.darcsignore
+-	fi
+-
+-	if [ "$VCS" = darcs ] && [ -e "$ignorefile" ]; then
+-		# Spaces embedded into patterns would break it.
+-		# But really, why would anyone want to use ' ' instead of '\s' ?
+-		#patterns=$( grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" | xargs -n 1 printf " -e %s" )
+-		#grep -Ev $patterns
+-		#unset patterns
+-		# Alternative using a temp file
+-		patternsfile="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
+-		grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" > "$patternsfile" || true
+-		grep -Evf "$patternsfile"
+-		rm -f "$patternsfile"
+-		unset patternsfile
+-	else
+-		cat -
+-	fi
+-}
+-
+-
+-if [ "$VCS" = darcs ];then
+-	NOVCS='. -wholename ./.git -prune -o -wholename ./.bzr -prune -o -wholename ./.hg -prune -o -wholename ./_darcs -prune -o'
+-
+-	# We assume that if .etckeeper is empty this is the first run
+-	if [ -s .etckeeper ]; then
+-		linksindex="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
+-		grep '^ln -s' .etckeeper | while IFS="'" read n n n link n; do
+-			printf "%s\n" "$link" >> "$linksindex"
+-		done
+-
+-		# Warn about symbolic links that shouldn't exist
+-		if links=$( find $NOVCS -type l -print | filter_ignore | grep -vFf "$linksindex" ); then
+-			printf "%s\n%s\n" \
+-				"The following symbolic links should not exist:" \
+-				"$links" >&2
+-		fi
+-
+-		rm -f "$linksindex"
+-		unset links linksindex
+-	fi
+-
+-fi
+diff --git a/init.d/60darcs-deleted-symlinks.in b/init.d/60darcs-deleted-symlinks.in
+new file mode 100644
+index 0000000..f7ee17f
+--- /dev/null
++++ b/init.d/60darcs-deleted-symlinks.in
+@@ -0,0 +1,48 @@
++#!@SHELLPATH@
++set -e
++
++filter_ignore() {
++	if [ "$VCS" = darcs ]; then
++		ignorefile=.darcsignore
++	fi
++
++	if [ "$VCS" = darcs ] && [ -e "$ignorefile" ]; then
++		# Spaces embedded into patterns would break it.
++		# But really, why would anyone want to use ' ' instead of '\s' ?
++		#patterns=$( grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" | xargs -n 1 printf " -e %s" )
++		#grep -Ev $patterns
++		#unset patterns
++		# Alternative using a temp file
++		patternsfile="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
++		grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" > "$patternsfile" || true
++		grep -Evf "$patternsfile"
++		rm -f "$patternsfile"
++		unset patternsfile
++	else
++		cat -
++	fi
++}
++
++
++if [ "$VCS" = darcs ];then
++	NOVCS='. -wholename ./.git -prune -o -wholename ./.bzr -prune -o -wholename ./.hg -prune -o -wholename ./_darcs -prune -o'
++
++	# We assume that if .etckeeper is empty this is the first run
++	if [ -s .etckeeper ]; then
++		linksindex="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
++		grep '^ln -s' .etckeeper | while IFS="'" read n n n link n; do
++			printf "%s\n" "$link" >> "$linksindex"
++		done
++
++		# Warn about symbolic links that shouldn't exist
++		if links=$( find $NOVCS -type l -print | filter_ignore | grep -vFf "$linksindex" ); then
++			printf "%s\n%s\n" \
++				"The following symbolic links should not exist:" \
++				"$links" >&2
++		fi
++
++		rm -f "$linksindex"
++		unset links linksindex
++	fi
++
++fi
+diff --git a/init.d/70vcs-add b/init.d/70vcs-add
+deleted file mode 100755
+index 9a9ec45..0000000
+--- a/init.d/70vcs-add
++++ /dev/null
+@@ -1,27 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ]; then
+-	if ! git add .; then
+-		echo "etckeeper warning: git add failed" >&2
+-	fi
+-elif [ "$VCS" = hg ]; then
+-	if ! hg add .; then
+-		echo "etckeeper warning: hg add failed" >&2
+-	fi
+-elif [ "$VCS" = bzr ]; then
+-	if ! bzr add .; then
+-		echo "etckeeper warning: bzr add failed" >&2
+-	fi
+-elif [ "$VCS" = darcs ]; then
+-	# Don't warn if all the files were already added.
+-	rc=0
+-	res=$( darcs add -qr . 2>&1 ) || rc=$?
+-	if test $rc -ne 0; then
+-		if ! test $rc -eq 2 -a "${res%No files were added}" != "$res"; then
+-			printf "%s" "$res"
+-			echo "etckeeper warning: darcs add failed" >&2
+-		fi
+-	fi
+-	unset rc res
+-fi
+diff --git a/init.d/70vcs-add.in b/init.d/70vcs-add.in
+new file mode 100644
+index 0000000..eb8a94c
+--- /dev/null
++++ b/init.d/70vcs-add.in
+@@ -0,0 +1,27 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ]; then
++	if ! git add .; then
++		echo "etckeeper warning: git add failed" >&2
++	fi
++elif [ "$VCS" = hg ]; then
++	if ! hg add .; then
++		echo "etckeeper warning: hg add failed" >&2
++	fi
++elif [ "$VCS" = bzr ]; then
++	if ! bzr add .; then
++		echo "etckeeper warning: bzr add failed" >&2
++	fi
++elif [ "$VCS" = darcs ]; then
++	# Don't warn if all the files were already added.
++	rc=0
++	res=$( darcs add -qr . 2>&1 ) || rc=$?
++	if test $rc -ne 0; then
++		if ! test $rc -eq 2 -a "${res%No files were added}" != "$res"; then
++			printf "%s" "$res"
++			echo "etckeeper warning: darcs add failed" >&2
++		fi
++	fi
++	unset rc res
++fi
 diff --git a/install-sh b/install-sh
 new file mode 100755
 index 0000000..a5897de
@@ -1169,3 +1988,993 @@ index 0000000..a5897de
 +# time-stamp-format: "%:y-%02m-%02d.%02H"
 +# time-stamp-end: "$"
 +# End:
+diff --git a/list-installed.d/50list-installed b/list-installed.d/50list-installed
+deleted file mode 100755
+index 177a6c2..0000000
+--- a/list-installed.d/50list-installed
++++ /dev/null
+@@ -1,10 +0,0 @@
+-#!/bin/sh
+-# Output to stdout a *sorted* list of all currently installed 
+-# (or removed but still with config-files) packages, in the
+-# format "package version\n" (or something similar).
+-if [ "$LOWLEVEL_PACKAGE_MANAGER" = dpkg ]; then
+-	dpkg-query -W -f '${Status}\t${Package} ${Version}\n' | \
+-		egrep '(ok installed|ok config-files)' | cut -f2,3
+-elif [ "$LOWLEVEL_PACKAGE_MANAGER" = rpm ]; then
+-	rpm -qa --queryformat "%{name} %{version} %{arch}\n" | sort
+-fi
+diff --git a/list-installed.d/50list-installed.in b/list-installed.d/50list-installed.in
+new file mode 100644
+index 0000000..dcee3a1
+--- /dev/null
++++ b/list-installed.d/50list-installed.in
+@@ -0,0 +1,10 @@
++#!@SHELLPATH@
++# Output to stdout a *sorted* list of all currently installed 
++# (or removed but still with config-files) packages, in the
++# format "package version\n" (or something similar).
++if [ "$LOWLEVEL_PACKAGE_MANAGER" = dpkg ]; then
++	dpkg-query -W -f '${Status}\t${Package} ${Version}\n' | \
++		egrep '(ok installed|ok config-files)' | cut -f2,3
++elif [ "$LOWLEVEL_PACKAGE_MANAGER" = rpm ]; then
++	rpm -qa --queryformat "%{name} %{version} %{arch}\n" | sort
++fi
+diff --git a/post-install.d/50vcs-commit b/post-install.d/50vcs-commit
+deleted file mode 100755
+index 12fd187..0000000
+--- a/post-install.d/50vcs-commit
++++ /dev/null
+@@ -1,20 +0,0 @@
+-#!/bin/sh
+-set -e
+-		
+-pl="/var/cache/etckeeper/packagelist"
+-NL="
+-"
+-
+-if etckeeper unclean; then
+-	message="committing changes in /etc after $HIGHLEVEL_PACKAGE_MANAGER run"
+-
+-	if [ -e $pl.pre-install ]; then
+-		diff="$(etckeeper list-installed | diff -U0 $pl.pre-install - | tail -n+4 | egrep '^[-+]')" || true
+-		if [ -n "$diff" ]; then
+-			message="$message$NL${NL}Package changes:$NL$diff"
+-		fi
+-		rm -f $pl.pre-install
+-	fi
+-
+-	etckeeper commit "$(printf "$message")"
+-fi
+diff --git a/post-install.d/50vcs-commit.in b/post-install.d/50vcs-commit.in
+new file mode 100644
+index 0000000..d0cf86d
+--- /dev/null
++++ b/post-install.d/50vcs-commit.in
+@@ -0,0 +1,20 @@
++#!@SHELLPATH@
++set -e
++		
++pl="/var/cache/etckeeper/packagelist"
++NL="
++"
++
++if etckeeper unclean; then
++	message="committing changes in /etc after $HIGHLEVEL_PACKAGE_MANAGER run"
++
++	if [ -e $pl.pre-install ]; then
++		diff="$(etckeeper list-installed | diff -U0 $pl.pre-install - | tail -n+4 | egrep '^[-+]')" || true
++		if [ -n "$diff" ]; then
++			message="$message$NL${NL}Package changes:$NL$diff"
++		fi
++		rm -f $pl.pre-install
++	fi
++
++	etckeeper commit "$(printf "$message")"
++fi
+diff --git a/pre-commit.d/20warn-hardlinks b/pre-commit.d/20warn-hardlinks
+deleted file mode 100755
+index 008e2f1..0000000
+--- a/pre-commit.d/20warn-hardlinks
++++ /dev/null
+@@ -1,10 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
+-	hardlinks=$(find -type f -not -links 1 | grep -v '/\(.git\|.hg\|.bzr\|_darcs\)/' ) || true
+-	if [ -n "$hardlinks" ]; then
+-		echo "etckeeper warning: hardlinked files could cause problems with $VCS:" >&2
+-		echo "$hardlinks" >&2
+-	fi
+-fi
+diff --git a/pre-commit.d/20warn-hardlinks.in b/pre-commit.d/20warn-hardlinks.in
+new file mode 100644
+index 0000000..479b0e5
+--- /dev/null
++++ b/pre-commit.d/20warn-hardlinks.in
+@@ -0,0 +1,10 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
++	hardlinks=$(find -type f -not -links 1 | grep -v '/\(.git\|.hg\|.bzr\|_darcs\)/' ) || true
++	if [ -n "$hardlinks" ]; then
++		echo "etckeeper warning: hardlinked files could cause problems with $VCS:" >&2
++		echo "$hardlinks" >&2
++	fi
++fi
+diff --git a/pre-commit.d/20warn-special-file b/pre-commit.d/20warn-special-file
+deleted file mode 100755
+index 665a3ce..0000000
+--- a/pre-commit.d/20warn-special-file
++++ /dev/null
+@@ -1,12 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
+-	special=$(find -not -type d -not -type f -not -type l | grep -v '/\(.git\|.hg\|.bzr\|_darcs\)/') || true
+-	if [ -n "$special" ]; then
+-		echo "etckeeper warning: special files could cause problems with $VCS:" >&2
+-		echo "$special" >&2
+-	fi
+-fi
+-
+-true
+diff --git a/pre-commit.d/20warn-special-file.in b/pre-commit.d/20warn-special-file.in
+new file mode 100644
+index 0000000..4921abe
+--- /dev/null
++++ b/pre-commit.d/20warn-special-file.in
+@@ -0,0 +1,12 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
++	special=$(find -not -type d -not -type f -not -type l | grep -v '/\(.git\|.hg\|.bzr\|_darcs\)/') || true
++	if [ -n "$special" ]; then
++		echo "etckeeper warning: special files could cause problems with $VCS:" >&2
++		echo "$special" >&2
++	fi
++fi
++
++true
+diff --git a/pre-commit.d/30store-metadata b/pre-commit.d/30store-metadata
+deleted file mode 100755
+index f4125f6..0000000
+--- a/pre-commit.d/30store-metadata
++++ /dev/null
+@@ -1,130 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-# Filters out UNKNOWN users and groups, prints a warning on stderr.
+-filter_unknown() {
+-	CMD=$1
+-	while read line; do
+-		# if the first n chars of $line equal "$CMD UNKNOWN "...
+-		if [ "$(printf %.$((9+${#CMD}))s "$line")" = "$CMD UNKNOWN " ]; then
+-			echo Bad "$2" for "$line" >&2
+-		else
+-			echo "$line"
+-		fi
+-	done
+-}
+-
+-filter_ignore() {
+-	if [ "$VCS" = darcs ]; then
+-		ignorefile=.darcsignore
+-	fi
+-
+-	if [ "$VCS" = darcs ] && [ -e "$ignorefile" ]; then
+-		# Spaces embedded into patterns would break it.
+-		# But really, why would anyone want to use ' ' instead of '\s' ?
+-		#patterns=$( grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" | xargs -n 1 printf " -e %s" )
+-		#grep -Ev $patterns
+-		#unset patterns
+-		# Alternative using a temp file
+-		patternsfile="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
+-		grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" > "$patternsfile" || true
+-		grep -Evf "$patternsfile"
+-		rm -f "$patternsfile"
+-		unset patternsfile
+-	else
+-		cat -
+-	fi
+-}
+-
+-generate_metadata() {
+-	# This function generates the script commands to fix any files
+-	# that aren't owner=root, group=root, or mode=0644 or 0755.
+-	# The script is produced on stdout.  Errors go to stderr.
+-	# 
+-	# The script can use a 'maybe' function, which only runs a command
+-	# if the file in its last argument exists.
+-
+-	# We maintain the permissions on the directory containing VCS data
+-	# but we want find to ignore the VCS files themselves.
+-	# 
+-	# (Note that when using this, the find expression must end with 
+-	# -print or -exec, else the excluded directories will actually be
+-	# printed!)
+-	NOVCS='. -wholename ./.git -prune -o -wholename ./.bzr -prune -o -wholename ./.hg -prune -o -wholename ./_darcs -prune -o'
+-
+-	# Keep the sort order the same at all times.
+-	LC_COLLATE=C
+-	export LC_COLLATE
+-
+-	if [ "$VCS" = git ] || [ "$VCS" = hg ]; then
+-		# These version control systems do not track directories,
+-		# so empty directories must be stored specially.
+-		find $NOVCS -type d -empty -print |
+-			sort | sed -e "s/^/mkdir -p '/" -e "s/\$/'/"
+-	fi
+-
+-	if [ "$VCS" = darcs ]; then
+-		# This version control system does not track symlinks,
+-		# so they must be stored specially.
+-		find $NOVCS -type l -print | sort | filter_ignore | while read link; do
+-			dest=$( readlink "$link" )
+-			printf "ln -sf '%s' '%s'\n" "$dest" "$link"
+-		done
+-	fi
+-
+-	# Find all files and directories that don't have the current user as the owner
+-	find $NOVCS \! -user "$(id -u)" -exec stat --format="maybe chown %U '{}'" {} \; \
+-		| sort | filter_unknown 'maybe chown' owner
+-	# Find all files and directories that don't have root as the group
+-	find $NOVCS \! -group $(id -g) -exec stat --format="maybe chgrp %G '{}'" {} \; \
+-		| sort | filter_unknown 'maybe chgrp' group
+-
+-	# Find all directories that aren't 0755
+-	find $NOVCS -type d \! -perm 0755 \
+-		-exec stat --format="maybe chmod %a '{}'" {} \; | sort
+-
+-	if [ "$VCS" = darcs ]; then
+-		# Find all files that aren't 0644 (darcs doesn't maintain
+-		# the executable bit).
+-		find $NOVCS -type f \! -perm 0644 \
+-			-exec stat --format="maybe chmod %a '{}'" {} \; | sort
+-	else
+-		# Find all files that aren't 0644 or 0755 (we can assume the VCS will
+-		# maintain the executable bit).
+-		find $NOVCS -type f \! -perm 0644 \! -perm 0755 \
+-			-exec stat --format="maybe chmod %a '{}'" {} \; | sort
+-	fi
+-
+-	# We don't handle xattrs.
+-	# Maybe check for getfattr/setfattr and use them if they're available?
+-}
+-
+-if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
+-	if [ -f .metadata ]; then
+-		# remove obsolete .metadata file
+-		# git allows fully deleting it at this point, other VCS
+-		# may not (the repo is locked for hg).
+-		if [ "$VCS" = git ]; then
+-			$VCS rm .metadata
+-		else
+-			rm -f .metadata
+-		fi
+-	fi
+-
+-	echo "# Generated by etckeeper.  Do not edit." > .etckeeper
+-	echo >> .etckeeper
+-
+-	# Make sure the file is not readable by others, since it can leak
+-	# information about contents of non-readable directories in /etc.
+-	chmod 700 .etckeeper
+-
+-	generate_metadata >> .etckeeper
+-
+-	# stage the file as part of the current commit
+-	if [ "$VCS" = git ]; then
+-		# this will do nothing if the metadata file is unchanged.
+-		git add .etckeeper
+-	fi
+-	# hg, bzr and darcs add not done, they will automatically
+-	# include the file in the current commit
+-fi
+diff --git a/pre-commit.d/30store-metadata.in b/pre-commit.d/30store-metadata.in
+new file mode 100644
+index 0000000..9fb2162
+--- /dev/null
++++ b/pre-commit.d/30store-metadata.in
+@@ -0,0 +1,130 @@
++#!@SHELLPATH@
++set -e
++
++# Filters out UNKNOWN users and groups, prints a warning on stderr.
++filter_unknown() {
++	CMD=$1
++	while read line; do
++		# if the first n chars of $line equal "$CMD UNKNOWN "...
++		if [ "$(printf %.$((9+${#CMD}))s "$line")" = "$CMD UNKNOWN " ]; then
++			echo Bad "$2" for "$line" >&2
++		else
++			echo "$line"
++		fi
++	done
++}
++
++filter_ignore() {
++	if [ "$VCS" = darcs ]; then
++		ignorefile=.darcsignore
++	fi
++
++	if [ "$VCS" = darcs ] && [ -e "$ignorefile" ]; then
++		# Spaces embedded into patterns would break it.
++		# But really, why would anyone want to use ' ' instead of '\s' ?
++		#patterns=$( grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" | xargs -n 1 printf " -e %s" )
++		#grep -Ev $patterns
++		#unset patterns
++		# Alternative using a temp file
++		patternsfile="$( mktemp -t etckeeper-$VCS.XXXXXXXXXX )"
++		grep -v '^[[:space:]]*\(#\|$\)' "$ignorefile" > "$patternsfile" || true
++		grep -Evf "$patternsfile"
++		rm -f "$patternsfile"
++		unset patternsfile
++	else
++		cat -
++	fi
++}
++
++generate_metadata() {
++	# This function generates the script commands to fix any files
++	# that aren't owner=root, group=root, or mode=0644 or 0755.
++	# The script is produced on stdout.  Errors go to stderr.
++	# 
++	# The script can use a 'maybe' function, which only runs a command
++	# if the file in its last argument exists.
++
++	# We maintain the permissions on the directory containing VCS data
++	# but we want find to ignore the VCS files themselves.
++	# 
++	# (Note that when using this, the find expression must end with 
++	# -print or -exec, else the excluded directories will actually be
++	# printed!)
++	NOVCS='. -wholename ./.git -prune -o -wholename ./.bzr -prune -o -wholename ./.hg -prune -o -wholename ./_darcs -prune -o'
++
++	# Keep the sort order the same at all times.
++	LC_COLLATE=C
++	export LC_COLLATE
++
++	if [ "$VCS" = git ] || [ "$VCS" = hg ]; then
++		# These version control systems do not track directories,
++		# so empty directories must be stored specially.
++		find $NOVCS -type d -empty -print |
++			sort | sed -e "s/^/mkdir -p '/" -e "s/\$/'/"
++	fi
++
++	if [ "$VCS" = darcs ]; then
++		# This version control system does not track symlinks,
++		# so they must be stored specially.
++		find $NOVCS -type l -print | sort | filter_ignore | while read link; do
++			dest=$( readlink "$link" )
++			printf "ln -sf '%s' '%s'\n" "$dest" "$link"
++		done
++	fi
++
++	# Find all files and directories that don't have the current user as the owner
++	find $NOVCS \! -user "$(id -u)" -exec stat --format="maybe chown %U '{}'" {} \; \
++		| sort | filter_unknown 'maybe chown' owner
++	# Find all files and directories that don't have root as the group
++	find $NOVCS \! -group $(id -g) -exec stat --format="maybe chgrp %G '{}'" {} \; \
++		| sort | filter_unknown 'maybe chgrp' group
++
++	# Find all directories that aren't 0755
++	find $NOVCS -type d \! -perm 0755 \
++		-exec stat --format="maybe chmod %a '{}'" {} \; | sort
++
++	if [ "$VCS" = darcs ]; then
++		# Find all files that aren't 0644 (darcs doesn't maintain
++		# the executable bit).
++		find $NOVCS -type f \! -perm 0644 \
++			-exec stat --format="maybe chmod %a '{}'" {} \; | sort
++	else
++		# Find all files that aren't 0644 or 0755 (we can assume the VCS will
++		# maintain the executable bit).
++		find $NOVCS -type f \! -perm 0644 \! -perm 0755 \
++			-exec stat --format="maybe chmod %a '{}'" {} \; | sort
++	fi
++
++	# We don't handle xattrs.
++	# Maybe check for getfattr/setfattr and use them if they're available?
++}
++
++if [ "$VCS" = git ] || [ "$VCS" = hg ] || [ "$VCS" = bzr ] || [ "$VCS" = darcs ]; then
++	if [ -f .metadata ]; then
++		# remove obsolete .metadata file
++		# git allows fully deleting it at this point, other VCS
++		# may not (the repo is locked for hg).
++		if [ "$VCS" = git ]; then
++			$VCS rm .metadata
++		else
++			rm -f .metadata
++		fi
++	fi
++
++	echo "# Generated by etckeeper.  Do not edit." > .etckeeper
++	echo >> .etckeeper
++
++	# Make sure the file is not readable by others, since it can leak
++	# information about contents of non-readable directories in /etc.
++	chmod 700 .etckeeper
++
++	generate_metadata >> .etckeeper
++
++	# stage the file as part of the current commit
++	if [ "$VCS" = git ]; then
++		# this will do nothing if the metadata file is unchanged.
++		git add .etckeeper
++	fi
++	# hg, bzr and darcs add not done, they will automatically
++	# include the file in the current commit
++fi
+diff --git a/pre-install.d/10packagelist b/pre-install.d/10packagelist
+deleted file mode 100755
+index f83acee..0000000
+--- a/pre-install.d/10packagelist
++++ /dev/null
+@@ -1,3 +0,0 @@
+-#!/bin/sh
+-# This list will be later used when committing.
+-etckeeper list-installed > /var/cache/etckeeper/packagelist.pre-install
+diff --git a/pre-install.d/10packagelist.in b/pre-install.d/10packagelist.in
+new file mode 100644
+index 0000000..4d0f79d
+--- /dev/null
++++ b/pre-install.d/10packagelist.in
+@@ -0,0 +1,3 @@
++#!@SHELLPATH@
++# This list will be later used when committing.
++etckeeper list-installed > /var/cache/etckeeper/packagelist.pre-install
+diff --git a/pre-install.d/50uncommitted-changes b/pre-install.d/50uncommitted-changes
+deleted file mode 100755
+index 47750ac..0000000
+--- a/pre-install.d/50uncommitted-changes
++++ /dev/null
+@@ -1,28 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$1" = "fail-debconf" ]; then
+-	. /usr/share/debconf/confmodule
+-	db_subst etckeeper/commit_failed VCS "$VCS"
+-	db_input critical etckeeper/commit_failed || true
+-	db_go || true
+-	db_reset etckeeper/commit_failed || true
+-fi
+-
+-if etckeeper unclean; then
+-	if [ "$AVOID_COMMIT_BEFORE_INSTALL" = 1 ]; then
+-		echo "" >&2
+-		echo "** etckeeper detected uncommitted changes in /etc prior to $HIGHLEVEL_PACKAGE_MANAGER run" >&2 
+-		echo "** Aborting $HIGHLEVEL_PACKAGE_MANAGER run. Manually commit and restart." >&2
+-		echo "" >&2
+-		exit 1
+-	fi
+-	if ! etckeeper commit "saving uncommitted changes in /etc prior to $HIGHLEVEL_PACKAGE_MANAGER run"; then
+-		if [ -e /usr/share/debconf/confmodule ]; then
+-			$0 fail-debconf
+-		else
+-			echo "error: etckeeper failed to commit changes in /etc using $VCS"
+-			exit 1
+-		fi
+-	fi
+-fi
+diff --git a/pre-install.d/50uncommitted-changes.in b/pre-install.d/50uncommitted-changes.in
+new file mode 100644
+index 0000000..bf01ac0
+--- /dev/null
++++ b/pre-install.d/50uncommitted-changes.in
+@@ -0,0 +1,28 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$1" = "fail-debconf" ]; then
++	. /usr/share/debconf/confmodule
++	db_subst etckeeper/commit_failed VCS "$VCS"
++	db_input critical etckeeper/commit_failed || true
++	db_go || true
++	db_reset etckeeper/commit_failed || true
++fi
++
++if etckeeper unclean; then
++	if [ "$AVOID_COMMIT_BEFORE_INSTALL" = 1 ]; then
++		echo "" >&2
++		echo "** etckeeper detected uncommitted changes in /etc prior to $HIGHLEVEL_PACKAGE_MANAGER run" >&2 
++		echo "** Aborting $HIGHLEVEL_PACKAGE_MANAGER run. Manually commit and restart." >&2
++		echo "" >&2
++		exit 1
++	fi
++	if ! etckeeper commit "saving uncommitted changes in /etc prior to $HIGHLEVEL_PACKAGE_MANAGER run"; then
++		if [ -e /usr/share/debconf/confmodule ]; then
++			$0 fail-debconf
++		else
++			echo "error: etckeeper failed to commit changes in /etc using $VCS"
++			exit 1
++		fi
++	fi
++fi
+diff --git a/unclean.d/50test b/unclean.d/50test
+deleted file mode 100755
+index 84e6be7..0000000
+--- a/unclean.d/50test
++++ /dev/null
+@@ -1,12 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ]; then
+-	[ -d .git ] && [ -n "`git ls-files --modified --deleted --others --exclude-standard`" ]
+-elif [ "$VCS" = hg ]; then
+-	[ -d .hg ] && ! hg status 2>&1 | wc -l | grep -q "^0$"
+-elif [ "$VCS" = bzr ]; then
+-	[ -d .bzr ] && ! bzr status 2>/dev/null | wc -l | grep -q "^0$"
+-elif [ "$VCS" = darcs ]; then
+-	[ -d _darcs ] && darcs whatsnew -l >/dev/null
+-fi
+diff --git a/unclean.d/50test.in b/unclean.d/50test.in
+new file mode 100644
+index 0000000..41dda67
+--- /dev/null
++++ b/unclean.d/50test.in
+@@ -0,0 +1,12 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ]; then
++	[ -d .git ] && [ -n "`git ls-files --modified --deleted --others --exclude-standard`" ]
++elif [ "$VCS" = hg ]; then
++	[ -d .hg ] && ! hg status 2>&1 | wc -l | grep -q "^0$"
++elif [ "$VCS" = bzr ]; then
++	[ -d .bzr ] && ! bzr status 2>/dev/null | wc -l | grep -q "^0$"
++elif [ "$VCS" = darcs ]; then
++	[ -d _darcs ] && darcs whatsnew -l >/dev/null
++fi
+diff --git a/uninit.d/01prompt b/uninit.d/01prompt
+deleted file mode 100755
+index 07f2e41..0000000
+--- a/uninit.d/01prompt
++++ /dev/null
+@@ -1,20 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$1" != "-f" ]; then
+-	echo "** Warning: This will DESTROY all recorded history for $ETCKEEPER_DIR,"
+-	echo "** including the $VCS repository and ignore file."
+-	echo ""
+-	printf "Are you sure you want to do this? [yN] "
+-	read answer
+-	case "$answer" in 
+-		[Yy]*)
+-			echo "Proceeding.."
+-			exit 0
+-		;;
+-		*)
+-			echo "Aborting etckeeper uninit."
+-			exit 1
+-		;;
+-	esac
+-fi
+diff --git a/uninit.d/01prompt.in b/uninit.d/01prompt.in
+new file mode 100644
+index 0000000..6b64a39
+--- /dev/null
++++ b/uninit.d/01prompt.in
+@@ -0,0 +1,20 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$1" != "-f" ]; then
++	echo "** Warning: This will DESTROY all recorded history for $ETCKEEPER_DIR,"
++	echo "** including the $VCS repository and ignore file."
++	echo ""
++	printf "Are you sure you want to do this? [yN] "
++	read answer
++	case "$answer" in 
++		[Yy]*)
++			echo "Proceeding.."
++			exit 0
++		;;
++		*)
++			echo "Aborting etckeeper uninit."
++			exit 1
++		;;
++	esac
++fi
+diff --git a/uninit.d/50remove-metadata b/uninit.d/50remove-metadata
+deleted file mode 100755
+index 0be8d36..0000000
+--- a/uninit.d/50remove-metadata
++++ /dev/null
+@@ -1,6 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-# Files generated by etckeeper to store metadata the VCS cannot preserve.
+-rm -f .etckeeper
+-rm -f .metadata # only generated by old versions
+diff --git a/uninit.d/50remove-metadata.in b/uninit.d/50remove-metadata.in
+new file mode 100644
+index 0000000..29332a1
+--- /dev/null
++++ b/uninit.d/50remove-metadata.in
+@@ -0,0 +1,6 @@
++#!@SHELLPATH@
++set -e
++
++# Files generated by etckeeper to store metadata the VCS cannot preserve.
++rm -f .etckeeper
++rm -f .metadata # only generated by old versions
+diff --git a/uninit.d/50vcs-uninit b/uninit.d/50vcs-uninit
+deleted file mode 100755
+index c9896ed..0000000
+--- a/uninit.d/50vcs-uninit
++++ /dev/null
+@@ -1,12 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ]; then
+-	rm -rf .git .gitignore
+-elif [ "$VCS" = hg ]; then
+-	rm -rf .hg .hgignore
+-elif [ "$VCS" = bzr ]; then
+-	rm -rf .bzr .bzrignore
+-elif [ "$VCS" = darcs ]; then
+-	rm -rf _darcs .darcsignore
+-fi
+diff --git a/uninit.d/50vcs-uninit.in b/uninit.d/50vcs-uninit.in
+new file mode 100644
+index 0000000..df23a2b
+--- /dev/null
++++ b/uninit.d/50vcs-uninit.in
+@@ -0,0 +1,12 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ]; then
++	rm -rf .git .gitignore
++elif [ "$VCS" = hg ]; then
++	rm -rf .hg .hgignore
++elif [ "$VCS" = bzr ]; then
++	rm -rf .bzr .bzrignore
++elif [ "$VCS" = darcs ]; then
++	rm -rf _darcs .darcsignore
++fi
+diff --git a/update-ignore.d/01update-ignore b/update-ignore.d/01update-ignore
+deleted file mode 100755
+index 510e13f..0000000
+--- a/update-ignore.d/01update-ignore
++++ /dev/null
+@@ -1,160 +0,0 @@
+-#!/bin/sh
+-set -e
+-
+-if [ "$VCS" = git ]; then
+-	dir=.git
+-	file=.gitignore
+-elif [ "$VCS" = hg ]; then
+-	dir=.hg
+-	file=.hgignore
+-elif [ "$VCS" = bzr ]; then
+-	dir=.bzr
+-	file=.bzrignore
+-elif [ "$VCS" = darcs ]; then
+-	dir=_darcs
+-	file=.darcsignore
+-else
+-	echo "etckeeper: unsupported VCS $VCS" >&2
+-	exit 1
+-fi
+-
+-if [ ! -d "$dir" ]; then
+-	exit 0
+-fi
+-
+-managed_by_etckeeper="managed by etckeeper"
+-
+-nl() {
+-	echo >>"$file"
+-}
+-
+-comment() {
+-	comment="$1"
+-	echo "# $comment" >>"$file"
+-}
+-
+-ignore() {
+-	glob="$1"
+-	
+-	case "$VCS" in
+-		git|bzr)
+-			echo "$glob" >>"$file"
+-		;;
+-		hg)
+-			# rather than converting the glob to a regexp, just
+-			# configure hg to use globs
+-			if [ -z "$hg_syntax_printed" ]; then
+-				comment "use glob syntax"
+-				echo "syntax: glob" >>"$file"
+-				nl
+-				hg_syntax_printed=1
+-			fi
+-			echo "$glob" >>"$file"
+-		;;
+-		darcs)
+-			# darcs doesn't understand globs, so we need to translate
+-			# them into regexs. Not a complete converter, but suitable
+-			# for given globs.
+-			if [ "${glob%\*}" != "$glob" ]; then
+-				glob="${glob%\*}"
+-			else
+-				glob="$glob"'($|/)'
+-			fi
+-			if [ "${glob#\*}" != "$glob" ]; then
+-				glob="${glob#\*}"
+-			else
+-				glob='(^|/)'"$glob"
+-			fi
+-			glob="$( printf %s $glob | sed -e 's/\./\\./g;s/\*/[^\/]*/g;s/\?/[^\/]/g' )"
+-			echo "$glob" >>"$file"
+-	esac
+-}
+-
+-writefile () {
+-	comment "begin section $managed_by_etckeeper (do not edit this section by hand)"
+-	nl
+-
+-	if [ "$VCS" = darcs ]; then
+-		darcs setpref boringfile .darcsignore
+-	fi
+-
+-	if [ "$LOWLEVEL_PACKAGE_MANAGER" = dpkg ]; then
+-		comment "new and old versions of conffiles, stored by dpkg"
+-		ignore "*.dpkg-*"
+-		nl
+-	elif [ "$LOWLEVEL_PACKAGE_MANAGER" = "rpm" ]; then
+-		comment "new and old versions of conffiles, stored by apt/rpm"
+-		ignore "*.rpm*"
+-		nl
+-	elif [ "$LOWLEVEL_PACKAGE_MANAGER" = "pacman-g2" ]; then
+-		comment "new and old versions of conffiles, stored by pacman"
+-		ignore "*.pacnew"
+-		ignore "*.pacorig"
+-		ignore "*.pacsave"
+-		nl
+-	fi
+-	
+-	comment "mount(8) records system state here, no need to store these"
+-	ignore blkid.tab
+-	ignore blkid.tab.old
+-	nl
+-	
+-	comment "some other files in /etc that typically do not need to be tracked"
+-	ignore nologin
+-	ignore ld.so.cache
+-	ignore mtab
+-	ignore .pwd.lock
+-	ignore network/run
+-	ignore adjtime
+-	ignore lvm/cache
+-	nl
+-	
+-	comment "editor temp files"
+-	ignore "*~"
+-	ignore ".*.sw?"
+-	ignore ".sw?"
+-	ignore "#*#"
+-	ignore DEADJOE
+-
+-	nl
+-	comment "end section $managed_by_etckeeper"
+-}
+-
+-if [ -e "$file" ]; then
+-	if ! grep -q "$managed_by_etckeeper" "$file"; then
+-		echo "etckeeper: "$file" does not contain \"$managed_by_etckeeper\" comment; not updating"
+-		exit 1
+-	fi
+-	realfile="$file"
+-	if [ -n "`type -p tempfile`" ]; then
+-		tempfile="tempfile"
+-	elif [ -n "`type -p mktemp`" ]; then
+-		tempfile="mktemp"
+-	else
+-		echo "etckeeper warning: can't find tempfile or mktemp" >&2
+-	fi
+-	file=$($tempfile)
+-	(
+-		skipping=
+-		while read line; do
+-			if echo "$line" | grep -q "$managed_by_etckeeper"; then
+-				if [ ! "$skipping" ]; then
+-					skipping=1
+-				else
+-					skipping=
+-					writefile
+-				fi
+-			elif [ ! "$skipping" ]; then
+-				echo "$line" >> "$file"
+-			fi
+-		done
+-		if [ "$skipping" ]; then
+-			# reached end of file w/o ending block
+-			writefile
+-		fi
+-	) <"$realfile"
+-
+-	mv -f "$file" "$realfile"
+-else
+-	writefile
+-fi
+diff --git a/update-ignore.d/01update-ignore.in b/update-ignore.d/01update-ignore.in
+new file mode 100644
+index 0000000..2de6e61
+--- /dev/null
++++ b/update-ignore.d/01update-ignore.in
+@@ -0,0 +1,160 @@
++#!@SHELLPATH@
++set -e
++
++if [ "$VCS" = git ]; then
++	dir=.git
++	file=.gitignore
++elif [ "$VCS" = hg ]; then
++	dir=.hg
++	file=.hgignore
++elif [ "$VCS" = bzr ]; then
++	dir=.bzr
++	file=.bzrignore
++elif [ "$VCS" = darcs ]; then
++	dir=_darcs
++	file=.darcsignore
++else
++	echo "etckeeper: unsupported VCS $VCS" >&2
++	exit 1
++fi
++
++if [ ! -d "$dir" ]; then
++	exit 0
++fi
++
++managed_by_etckeeper="managed by etckeeper"
++
++nl() {
++	echo >>"$file"
++}
++
++comment() {
++	comment="$1"
++	echo "# $comment" >>"$file"
++}
++
++ignore() {
++	glob="$1"
++	
++	case "$VCS" in
++		git|bzr)
++			echo "$glob" >>"$file"
++		;;
++		hg)
++			# rather than converting the glob to a regexp, just
++			# configure hg to use globs
++			if [ -z "$hg_syntax_printed" ]; then
++				comment "use glob syntax"
++				echo "syntax: glob" >>"$file"
++				nl
++				hg_syntax_printed=1
++			fi
++			echo "$glob" >>"$file"
++		;;
++		darcs)
++			# darcs doesn't understand globs, so we need to translate
++			# them into regexs. Not a complete converter, but suitable
++			# for given globs.
++			if [ "${glob%\*}" != "$glob" ]; then
++				glob="${glob%\*}"
++			else
++				glob="$glob"'($|/)'
++			fi
++			if [ "${glob#\*}" != "$glob" ]; then
++				glob="${glob#\*}"
++			else
++				glob='(^|/)'"$glob"
++			fi
++			glob="$( printf %s $glob | sed -e 's/\./\\./g;s/\*/[^\/]*/g;s/\?/[^\/]/g' )"
++			echo "$glob" >>"$file"
++	esac
++}
++
++writefile () {
++	comment "begin section $managed_by_etckeeper (do not edit this section by hand)"
++	nl
++
++	if [ "$VCS" = darcs ]; then
++		darcs setpref boringfile .darcsignore
++	fi
++
++	if [ "$LOWLEVEL_PACKAGE_MANAGER" = dpkg ]; then
++		comment "new and old versions of conffiles, stored by dpkg"
++		ignore "*.dpkg-*"
++		nl
++	elif [ "$LOWLEVEL_PACKAGE_MANAGER" = "rpm" ]; then
++		comment "new and old versions of conffiles, stored by apt/rpm"
++		ignore "*.rpm*"
++		nl
++	elif [ "$LOWLEVEL_PACKAGE_MANAGER" = "pacman-g2" ]; then
++		comment "new and old versions of conffiles, stored by pacman"
++		ignore "*.pacnew"
++		ignore "*.pacorig"
++		ignore "*.pacsave"
++		nl
++	fi
++	
++	comment "mount(8) records system state here, no need to store these"
++	ignore blkid.tab
++	ignore blkid.tab.old
++	nl
++	
++	comment "some other files in /etc that typically do not need to be tracked"
++	ignore nologin
++	ignore ld.so.cache
++	ignore mtab
++	ignore .pwd.lock
++	ignore network/run
++	ignore adjtime
++	ignore lvm/cache
++	nl
++	
++	comment "editor temp files"
++	ignore "*~"
++	ignore ".*.sw?"
++	ignore ".sw?"
++	ignore "#*#"
++	ignore DEADJOE
++
++	nl
++	comment "end section $managed_by_etckeeper"
++}
++
++if [ -e "$file" ]; then
++	if ! grep -q "$managed_by_etckeeper" "$file"; then
++		echo "etckeeper: "$file" does not contain \"$managed_by_etckeeper\" comment; not updating"
++		exit 1
++	fi
++	realfile="$file"
++	if [ -n "`type -p tempfile`" ]; then
++		tempfile="tempfile"
++	elif [ -n "`type -p mktemp`" ]; then
++		tempfile="mktemp"
++	else
++		echo "etckeeper warning: can't find tempfile or mktemp" >&2
++	fi
++	file=$($tempfile)
++	(
++		skipping=
++		while read line; do
++			if echo "$line" | grep -q "$managed_by_etckeeper"; then
++				if [ ! "$skipping" ]; then
++					skipping=1
++				else
++					skipping=
++					writefile
++				fi
++			elif [ ! "$skipping" ]; then
++				echo "$line" >> "$file"
++			fi
++		done
++		if [ "$skipping" ]; then
++			# reached end of file w/o ending block
++			writefile
++		fi
++	) <"$realfile"
++
++	mv -f "$file" "$realfile"
++else
++	writefile
++fi
