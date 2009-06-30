@@ -14,12 +14,21 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnrpe, prototype checkinstall preinstall preremove )
 DISTFILES += cswnrpe
+DISTFILES += README_8k
 DISTFILES += $(call admfiles,CSWnrpeplugin, prototype )
+
+PATCHFILES = patch.diff configure.diff
+
+PATCHFILES_isa-sparcv8-size-8k = common.h.diff
+PATCHFILES_isa-i386-size-8k = common.h.diff
 
 REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap CSWcswclassutils
 REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt 
 
 SPKG_CLASSES_CSWnrpe = none cswpreserveconf cswinitsmf
+
+EXTRA_MODULATORS = SIZE
+MODULATIONS_SIZE = 1k 8k
 
 NOISALIST = 1
 
@@ -32,9 +41,9 @@ CONFIGURE_ARGS += --enable-command-args
 CONFIGURE_ARGS += --prefix=/opt/csw
 CONFIGURE_ARGS += --exec-prefix=/opt/csw
 
-PATCHFILES = patch.diff	# Removal of LOG_AUTHPRIV and LOG_FTP
+#PATCHFILES = patch.diff	# Removal of LOG_AUTHPRIV and LOG_FTP
 			# Solaris doesn't have these log facilities
-PATCHFILES += configure.diff 
+#PATCHFILES += configure.diff 
 #PATCHFILES += common.h.diff # Enable packet size of 8192 bytes
 
 sysconfdir = $(prefix)/etc
@@ -44,6 +53,12 @@ datadir = $(prefix)/share
 
 TEST_TARGET = all
 INSTALL_SCRIPTS = custom
+
+MERGE_SCRIPTS_isa-sparcv8-size-1k = copy-all
+MERGE_SCRIPTS_isa-sparcv8-size-8k = copy-nrpe-only
+
+MERGE_SCRIPTS_isa-i386-size-1k = copy-all
+MERGE_SCRIPTS_isa-i386-size-8k = copy-nrpe-only
 
 include gar/category.mk
 
@@ -57,8 +72,9 @@ install-custom:
 	ginstall -m 755 -d $(DESTDIR)$(LIBEXECDIR)
 	ginstall -m 755 -d $(DESTDIR)$(BINDIR)
 	ginstall -m 755 $(WORKSRC)/src/check_nrpe $(DESTDIR)$(LIBEXECDIR)
-	ginstall -m 755 $(WORKSRC)/src/nrpe $(DESTDIR)$(BINDIR)
+	ginstall -m 755 $(WORKSRC)/src/nrpe $(DESTDIR)$(BINDIR)/nrpe_1k
 	ginstall -m 644 $(WORKSRC)/docs/NRPE.pdf $(DESTDIR)$(DOCDIR)
+	ginstall -m 644 $(FILEDIR)/README_8k $(DESTDIR)$(DOCDIR)
 	ginstall -m 644 $(WORKSRC)/LEGAL $(DESTDIR)$(DOCDIR)
 	ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(DOCDIR)
 	ginstall -m 644 $(WORKSRC)/README.SSL $(DESTDIR)$(DOCDIR)
@@ -68,3 +84,9 @@ install-custom:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswnrpe $(DESTDIR)/etc/opt/csw/init.d/cswnrpe
 	@$(MAKECOOKIE)
+
+merge-copy-nrpe-only:
+	cp $(INSTALLISADIR)$(bindir)/nrpe_1k $(PKGROOT)$(bindir)/nrpe_8k
+	cp $(INSTALLISADIR)$(LIBEXECDIR)/check_nrpe $(PKGROOT)$(LIBEXECDIR)/check_nrpe_8k
+	@$(MAKECOOKIE)
+

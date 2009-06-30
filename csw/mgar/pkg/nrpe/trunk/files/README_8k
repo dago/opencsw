@@ -1,0 +1,58 @@
+(1) General
+
+In this package two types of nrpe binaries are included:
+- binaries which support sending / receiving 1 kB of data
+- binaries which support sending / receiving 8 kB of data
+
+The version for 1 kB of data (default in most distributions) contains:
+- binary for the agent: nrpe_1k
+- binary for the Nagios plugin: check_nrpe
+
+The version for 8 kB of data contains:
+- binary for the agent: nrpe_8k
+- binary for Nagios plugin: check_nrpe_8k
+
+
+(2) On the Nagios side:
+
+Example service configuration:
+
+define service{
+	.
+	.
+	.
+	; for up to 8 kB of data
+	check_command	check_nrpe_8k!<arguments>
+}
+
+define service{
+	.
+	.
+	.
+	; for up to 1 kB of data
+	check_command	check_nrpe!<arguments>
+}
+
+Example Nagios command config:
+
+# 'check_nrpe' command definition
+define command{
+        command_name    check_nrpe
+        command_line    $USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
+        }
+
+# 'check_nrpe_8k' command definition
+define command{
+        command_name    check_nrpe_8k
+        command_line    $USER1$/check_nrpe_8k -H $HOSTADDRESS$ -c $ARG1$
+        }
+
+
+(3) On the agent side:
+
+/opt/csw/bin/nrpe is by default a link to /opt/csw/bin/nrpe_1k. If you want to
+submit more then 1 kB of data just set the link to /opt/csw/bin/nrpe_8k and 
+restart the NRPE service.
+
+Don't forget to set the check command in your service configuration on the 
+Nagios side accordingly (see (2)).

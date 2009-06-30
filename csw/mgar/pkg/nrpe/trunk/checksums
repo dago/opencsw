@@ -2,10 +2,12 @@ bda68135e2b65da40c3d2b68a3b8dc78  download/CSWnrpe.checkinstall
 1c656040abd280f9228b42df744d93eb  download/CSWnrpe.gspec
 53eea7ed36535bb6cbe1d6fe0aae3508  download/CSWnrpe.preinstall
 393872a95d2b9ec90363664c31074415  download/CSWnrpe.preremove
-ab50f565dba01e9c891f7fd0fc585fda  download/CSWnrpe.prototype
+ff0be2f6b8d7fa72875d570fff53c3e6  download/CSWnrpe.prototype
 2b35d5e0d57bcb3aff096040e0d06b8b  download/CSWnrpeplugin.gspec
-e22a7817c7665e79bcbad7e091375be9  download/CSWnrpeplugin.prototype
+6eafe4b86758d91ac3fc4c0e759f25a0  download/CSWnrpeplugin.prototype
+3bb2fbb228a6e2d0a99d981d82610d9a  download/README_8k
+36b85dd37d47a3813bfef5dee5804b61  download/common.h.diff
 4b51476c782d2c5764d10f8ed530ada0  download/configure.diff
-3276723a3d0c30b489f1a8c93bcbb048  download/cswnrpe
+0e9afe89caf7b60817165842c6e36780  download/cswnrpe
 b2d75e2962f1e3151ef58794d60c9e97  download/nrpe-2.12.tar.gz
 5b02d4385daaea2a8c13903539aa6189  download/patch.diff
