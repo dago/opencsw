@@ -1,5 +1,5 @@
 GARNAME      = pycairo
-GARVERSION   = 1.8.0
+GARVERSION   = 1.8.6
 CATEGORIES   = lib
 
 DESCRIPTION  = Python binder for Cairo library
@@ -28,6 +28,8 @@ CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/$$ISALIST
 CAIRO_CFLAGS = -I/opt/csw/include -I/opt/csw/include/cairo
 COMPILER_EXPORTS += CAIRO_LIBS CAIRO_CFLAGS
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
 
 include gar/category.mk
 
