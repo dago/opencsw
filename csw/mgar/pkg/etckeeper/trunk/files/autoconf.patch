@@ -67,21 +67,20 @@ index b2d6565..0000000
 -.PHONY: etckeeper.spec
 diff --git a/Makefile.am b/Makefile.am
 new file mode 100644
-index 0000000..5fdabbf
+index 0000000..1418a4f
 --- /dev/null
 +++ b/Makefile.am
 @@ -0,0 +1,84 @@
 +sysconfdirdir = $(sysconfdir)/$(PACKAGE)
++sbin_SCRIPTS = etckeeper
++man_MANS = etckeeper.8
++sysconfdir_DATA = etckeeper.conf
 +
 +KEEPERSCRIPTS = $(wildcard *.d)
 +KSFILES = $(foreach KD,$(KEEPERSCRIPTS),$(wildcard $(KD)/*))
 +KSINPUTS = $(filter %.in,$(KSFILES))
 +KSINPUTTRANS = $(patsubst %.in,%,$(KSINPUTS))
 +KSNONINPUTS = $(filter-out %.in,$(KSFILES))
-+
-+sbin_SCRIPTS = etckeeper
-+man_MANS = etckeeper.8
-+sysconfdir_DATA = etckeeper.conf
 +
 +APTFILES = apt.conf
 +YUMFILES = yum-etckeeper.py yum-etckeeper.conf
@@ -151,7 +150,8 @@ index 0000000..5fdabbf
 +
 +$(KEEPERSCRIPTS): $(KSINPUTTRANS)
 +	$(MKDIR_P) $(DESTDIR)$(sysconfdirdir)/$@
-+	$(INSTALL_DATA) $(filter $@/%,$(KSINPUTTRANS) $(KSNONINPUTS)) $(DESTDIR)$(sysconfdirdir)/$@
++	$(INSTALL_SCRIPT) $(filter $@/%,$(KSINPUTTRANS)) $(DESTDIR)$(sysconfdirdir)/$@
++	$(if $(filter $@/%,$(KSNONINPUTS)),$(INSTALL_DATA) $(filter $@/%,$(KSNONINPUTS)) $(DESTDIR)$(sysconfdirdir)/$@)
 +
 +install-data-local: $(KEEPERSCRIPTS) high-$(HIGHLEVEL) low-$(LOWLEVEL) $(OPTS)
 +
