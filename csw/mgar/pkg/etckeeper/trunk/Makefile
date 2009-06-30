@@ -47,6 +47,7 @@ localstatedir = /var/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-vcs=git --with-highlevel=apt --with-lowlevel=dpkg
 CONFIGURE_ARGS += --disable-bash-completion --disable-cruft-filter
+CONFIGURE_ARGS += --with-shell=/opt/csw/bin/bash
 
 BUILD_SCRIPTS =
 
