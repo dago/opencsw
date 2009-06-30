@@ -16,6 +16,9 @@ CATALOGNAME = libglade2
 SPKG_DESC = $(DESCRIPTION)
 SPKG_SOURCEURL = http://www.gnome.org/
 
+REQUIRED_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2
+REQUIRED_PKGS += CSWgtk2 CSWlibatk CSWlibcairo CSWlibxml2 CSWpango
+
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
