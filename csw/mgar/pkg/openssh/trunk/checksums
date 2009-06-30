@@ -1,3 +1,10 @@
+1d3d6d477c09e59c514e637fa3a2f7a4  download/CSWossh.checkinstall
+0993813fa5c752215f892cb67c86816f  download/CSWossh.preinstall
+62fa255ecd680eeeadc13d1188a61ff1  download/CSWossh.prototype
+5ce2cd89c1c7478a8c728e4688b26c90  download/CSWosshclient.prototype
+1d3d6d477c09e59c514e637fa3a2f7a4  download/CSWosshlpk.checkinstall
+0993813fa5c752215f892cb67c86816f  download/CSWosshlpk.preinstall
+22ffa2a9b7bf310d58d3b299805a41b1  download/CSWosshlpk.prototype
 a51dd54a24d61cad406d02343cc826f0  download/changelog.CSW
 9153031524651a18e7edaed4637aa769  download/contrib-openssh-lpk-5.2p1-0.3.9.patch
 a5ebb2e3fdaa06c3c9edba55aac5f83b  download/cswopenssh

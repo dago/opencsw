@@ -28,3 +28,4 @@ f none /opt/csw/share/man/man8/sftp-server.8 0644 root bin
 f none /opt/csw/share/man/man8/sshd.8 0644 root bin
 d none /opt/csw/share/openssh 0755 root bin
 d none /var/empty
+f none /var/opt/csw/svc/manifest/network/cswopenssh.xml 0644 root sys

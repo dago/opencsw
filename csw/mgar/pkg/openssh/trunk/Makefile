@@ -37,10 +37,12 @@ PACKAGES = CSWossh CSWosshclient
 CATALOGNAME_CSWossh = openssh
 SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
 REQUIRED_PKGS_CSWossh = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWosshclient
+SPKG_CLASSES_CSWossh = none cswpreserveconf cswinitsmf
 
 CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
 REQUIRED_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
+SPKG_CLASSES_CSWosshclient = none cswpreserveconf
 
 
 ###### Upstream and OpenCSW files information #######
@@ -54,6 +56,9 @@ DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
+DISTFILES += CSWossh.prototype CSWossh.preinstall CSWossh.checkinstall
+DISTFILES += CSWosshlpk.prototype CSWosshlpk.preinstall CSWosshlpk.checkinstall
+DISTFILES += CSWosshclient.prototype
 DISTFILES += changelog.CSW
 
 DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
@@ -77,7 +82,6 @@ DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARN
 
 # we're using conf handling class from the cswclassutils package
 REQUIRED_PKGS += CSWcswclassutils
-SPKG_CLASSES = none cswpreserveconf
 
 
 ##### Build and installation information #####
@@ -103,6 +107,7 @@ ifdef LPK
 	CATALOGNAME_CSWosshlpk = openssh_lpk
 	SPKG_DESC_CSWosshlpk = $(SPKG_DESC_CSWossh) with ldap public key support
 	REQUIRED_PKGS_CSWosshlpk = $(REQUIRED_PKGS_CSWossh) CSWoldaprt
+	SPKG_CLASSES_CSWosshlpk = none cswpreserveconf cswinitsmf
 	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
@@ -122,7 +127,13 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 # adding documentation files
-post-merge: merge-config-files merge-doc-files
+post-merge: merge-config-files merge-doc-files merge-init-files
+
+merge-init-files:
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswopenssh" "$(PKGROOT)/etc/opt/csw/init.d/cswopenssh"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswopenssh.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswopenssh.xml"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/sshd.smf_wrapper" "$(PKGROOT)/opt/csw/sbin/sshd.smf_wrapper"
+
 
 merge-doc-files:
 	for DOCDIR in $(foreach _PKG,$(PACKAGES),$(call catalogname,$(_PKG))); do \
