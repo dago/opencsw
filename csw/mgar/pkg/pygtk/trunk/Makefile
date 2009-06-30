@@ -13,7 +13,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpygtk
-REQUIRED_PKGS_CSWpygtk  = CSWpython 
+REQUIRED_PKGS_CSWpygtk  = CSWpython CSWfconfig CSWftype2 CSWggettextrt
+REQUIRED_PKGS_CSWpygtk += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
+REQUIRED_PKGS_CSWpygtk += CSWlibglade2 CSWlibxml2 CSWpango
 
 CATALOGNAME_CSWpygtk = py_gtk
 SPKG_DESC_CSWpygtk = pygtk support for Python
@@ -22,7 +24,10 @@ SPKG_DESC_CSWpygtk = pygtk support for Python
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*).tar.bz2
 
-#TEST_TARGET = check
+PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+EXTRA_EXPORTS = PKG_CONFIG_PATH
+
+TEST_TARGET = check
 TEST_SCRIPTS = 
 
 include gar/category.mk
