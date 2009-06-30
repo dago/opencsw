@@ -21,9 +21,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS) --with-docdir=$(docdir)/$(GARNAME)
 
 # no tests, well...
-TEST_SCRIPTS = custom
+TEST_SCRIPTS =
 
 include gar/category.mk
-
-test-custom:
-	@true
