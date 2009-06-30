@@ -31,7 +31,7 @@ PATCHFILES += jemalloc.c.diff
 # PATCHFILES += nsNativeApSuportUnix.cpp.diff
 # PATCHFILES += nsExceptionHandler.cpp.diff 
 
-# Use Sun studio 12 to compile it@
+# Use Sun studio 12 to compile it
 GARCOMPILER = SOS12
 
 # pkg-config options
@@ -39,10 +39,12 @@ EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
-CFLAGS+=-xlibmil -D__solaris__ 
+CFLAGS +=-xlibmil -D__solaris__ 
+CFLAGS += -xc99
 
-CFLAGS+= -DG_HAVE_ISO_VARARGS
+CFLAGS += -DG_HAVE_ISO_VARARGS
 CXXFLAGS+= -DG_HAVE_ISO_VARARGS
+
 LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
