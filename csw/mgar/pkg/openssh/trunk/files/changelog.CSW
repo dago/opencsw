@@ -1,3 +1,9 @@
+openssh (5.2,REV=2009.06.30_rev=p1) unstable
+
+  * Switched to cswclassutils for SMF support.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 30 Jun 2009 10:34:39 +0100
+
 openssh (5.2,REV=2008.03.28_rev=p1) unstable
 
   * New upstream version.

@@ -1,6 +1,0 @@
-%include        url file://%{PKGLIB}/csw_dyngspec.gspec
-%var            SERVICE_CONF_FILES /opt/csw/etc/ssh/sshd_config
-%var		RC_INIT_SCRIPT cswopenssh
-%var		SMF_MANIFEST cswopenssh.xml
-%var		SMF_SCRIPT svc-cswopenssh
-%include        url file://%{PKGLIB}/smf_enabled.gspec

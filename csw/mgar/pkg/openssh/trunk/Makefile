@@ -56,7 +56,7 @@ DISTNAME = $(GARNAME)-$(DISTVERSION)
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
 DISTFILES += changelog.CSW
 
-DISTFILES += cswopenssh svc-cswopenssh cswopenssh.xml
+DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
 
 LICENSE = LICENCE
 
@@ -79,11 +79,6 @@ DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARN
 REQUIRED_PKGS += CSWcswclassutils
 SPKG_CLASSES = none cswpreserveconf
 
-# little hack to be able to still use old smf support with gar v2
-# until openssh is migrated to cswclassutils init system
-DISTFILES += openssh_dyngspec.fakespec
-_CATEGORY_GSPEC_INCLUDE = $(if $(findstring CSWosshclient,$*),csw_dyndepend.gspec,../../$(DOWNLOADDIR)/openssh_dyngspec.fakespec)
-
 
 ##### Build and installation information #####
 
@@ -103,7 +98,6 @@ TEST_SCRIPTS	=
 # we always register the lpk related files so checksum 
 # is the same with LPK enabled or not
 DISTFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
-DISTFILES += openssh_lpk_dyngspec.fakespec
 ifdef LPK
 	PACKAGES = CSWosshlpk
 	CATALOGNAME_CSWosshlpk = openssh_lpk
@@ -113,8 +107,6 @@ ifdef LPK
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
 	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
-
-	_CATEGORY_GSPEC_INCLUDE = $(if $(findstring CSWosshclient,$*),csw_dyndepend.gspec,../../$(DOWNLOADDIR)/openssh_lpk_dyngspec.fakespec)
 	
 	# we must reset the CSWosshclient description to avoid a bug in the automatic dependancy generation
 	SPKG_DESC_CSWosshclient = 

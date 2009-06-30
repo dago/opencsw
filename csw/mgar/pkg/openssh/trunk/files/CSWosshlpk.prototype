@@ -1,8 +1,11 @@
-f none /opt/csw/etc/ssh/sshd_config.CSW 0744 root bin
+d none /opt/csw/etc/pkg/CSWosshlpk 0755 root bin
+f cswinitsmf /etc/opt/csw/init.d/cswopenssh 0755 root bin
+f cswpreserveconf /opt/csw/etc/ssh/sshd_config.CSW 0744 root bin
 f cswpreserveconf /opt/csw/etc/ssh/moduli.CSW 0644 root bin
 d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/sftp-server 0755 root bin
 f none /opt/csw/sbin/sshd 0755 root bin
+f none /opt/csw/sbin/sshd.smf_wrapper 0755 root bin
 f none /opt/csw/share/Ssh.bin 0644 root bin
 d none /opt/csw/share/doc/openssh_lpk 0755 root bin
 f none /opt/csw/share/doc/openssh_lpk/changelog.CSW 0644 root bin

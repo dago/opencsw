@@ -1,11 +1,9 @@
-ada79c7328a8551bdf55c95e631e7dad  download/openssh-5.2p1.tar.gz
-c9f2e90545738c1408a52647ae45be70  download/changelog.CSW
-73416a82ca98ba40e7b86ea94d0339cf  download/cswopenssh
-8e23e1f856f36e8e084a9283d22a7cbf  download/svc-cswopenssh
-547a915f1712c35dc79dc41378001ca9  download/cswopenssh.xml
-2768c47277b19c556403ea652cf8ceb3  download/openssh_dyngspec.fakespec
+a51dd54a24d61cad406d02343cc826f0  download/changelog.CSW
 9153031524651a18e7edaed4637aa769  download/contrib-openssh-lpk-5.2p1-0.3.9.patch
-d3f074f8af957bcb4f2f6122d4cc7442  download/openssh_lpk_dyngspec.fakespec
-bb77f4010f030d85f143b3d149aa6a69  download/openssh-5.2p1-gsskex-20081003.patch
+a5ebb2e3fdaa06c3c9edba55aac5f83b  download/cswopenssh
+8e765642349b6321d01b33e95304e113  download/cswopenssh.xml
 4b3e79120b60e8f25be5141eba53cac5  download/don_t_use_TIOCSCTTY.patch
 ca5403c8e1539d5ced0573f289ed7aef  download/no_x_forwarding_bug.patch
+bb77f4010f030d85f143b3d149aa6a69  download/openssh-5.2p1-gsskex-20081003.patch
+ada79c7328a8551bdf55c95e631e7dad  download/openssh-5.2p1.tar.gz
+db57ce80e8944213443caa4c52c884e5  download/sshd.smf_wrapper

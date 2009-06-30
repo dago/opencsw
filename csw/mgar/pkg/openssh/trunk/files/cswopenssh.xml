@@ -45,7 +45,7 @@
 			<exec_method
 				name='start'
 				type='method'
-				exec='/opt/csw/lib/svc/method/svc-cswopenssh start'
+				exec='/opt/csw/sbin/sshd.smf_wrapper'
 				timeout_seconds='60'>
 				<method_context/>
 			</exec_method>

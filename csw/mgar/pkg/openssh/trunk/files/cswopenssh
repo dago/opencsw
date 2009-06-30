@@ -2,6 +2,14 @@
 
 # stolen from solaris 9 sshd script, more or less.
 
+# cswclassutils smf variable
+#RC_KNUM 99  
+#RC_SNUM 99   
+#RC_KLEV 0,1,2,S   
+#RC_SLEV 3         
+#MANIFEST /var/opt/csw/svc/manifest/network/cswopenssh.xml
+
+
 PATH=/usr/bin:/opt/csw/bin:/usr/sbin
 
 KEYDIR=/opt/csw/etc/ssh
