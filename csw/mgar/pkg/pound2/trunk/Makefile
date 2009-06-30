@@ -1,7 +1,6 @@
-GARNAME = Pound
+GARNAME = pound2
 GARVERSION = 2.4.5
 CATEGORIES = net
-CATALOGNAME = pound2
 
 DESCRIPTION = reverse proxy load balancer
 define BLURB
@@ -13,7 +12,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.apsis.ch/pound/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = Pound-$(GARVERSION).tgz
+DISTNAME   = Pound-$(GARVERSION)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
@@ -46,8 +46,8 @@ install-custom:
 	ginstall -d $(DESTDIR)$(mandir)/man8
 	ginstall -m 644 $(WORKSRC)/pound.8 $(DESTDIR)$(mandir)/man8/pound2.8
 	ginstall -m 644 $(WORKSRC)/poundctl.8 $(DESTDIR)$(mandir)/man8/pound2ctl.8
-	ginstall -d $(DESTDIR)$(sysconfdir)/$(CATALOGNAME)
-	ginstall -m 644 $(FILEDIR)/pound2-sample.cfg $(DESTDIR)$(sysconfdir)/$(CATALOGNAME)
+	ginstall -d $(DESTDIR)$(sysconfdir)/$(GARNAME)
+	ginstall -m 644 $(FILEDIR)/pound2-sample.cfg $(DESTDIR)$(sysconfdir)/$(GARNAME)
 	ginstall -d $(DESTDIR)/var/opt/csw/run
 
 docs-list  = $(WORKSRC)/README
@@ -56,8 +56,8 @@ docs-list += $(WORKSRC)/CHANGELOG
 docs-list += $(WORKSRC)/z2_2_5_1.py
 docs-list += $(WORKSRC)/z2_2_6_1.py
 install-docs:
-	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@( for file in $(docs-list) ; do \
-		ginstall -m 644 $$file $(DESTDIR)$(docdir)/$(CATALOGNAME) ; \
+		ginstall -m 644 $$file $(DESTDIR)$(docdir)/$(GARNAME) ; \
 			done )
 	@$(MAKECOOKIE)

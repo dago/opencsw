@@ -1,5 +1,5 @@
 *** Pound-2.4.5.orig/pound.8	Mon Jun 29 17:53:58 2009
---- Pound-2.4.5/pound.8	Tue Jun 30 13:55:23 2009
+--- Pound-2.4.5/pound.8	Tue Jun 30 15:47:59 2009
 ***************
 *** 155,161 ****
   \fB\-f\fR config_file
@@ -34,6 +34,57 @@
   .PP
   In general, any number of back-end servers may be specified. Use the priority to
   affect the load distribution among unequal-performance servers.
+***************
+*** 833,839 ****
+  .br
+      Port    443
+  .br
+!     Cert    "/etc/pound/server.pem"
+  .br
+  
+  .br
+--- 833,839 ----
+  .br
+      Port    443
+  .br
+!     Cert    "/opt/csw/etc/pound2/server.pem"
+  .br
+  
+  .br
+***************
+*** 868,874 ****
+  .br
+      Port    443
+  .br
+!     Cert    "/etc/pound/server.pem"
+  .br
+  End
+  .br
+--- 868,874 ----
+  .br
+      Port    443
+  .br
+!     Cert    "/opt/csw/etc/pound2/server.pem"
+  .br
+  End
+  .br
+***************
+*** 1013,1019 ****
+  .br
+      Port    443
+  .br
+!     Cert    "/etc/pound/pound.pem"
+  .br
+      Client  20
+  .br
+--- 1013,1019 ----
+  .br
+      Port    443
+  .br
+!     Cert    "/opt/csw/etc/pound/pound2.pem"
+  .br
+      Client  20
+  .br
 ***************
 *** 1107,1122 ****
   .br
