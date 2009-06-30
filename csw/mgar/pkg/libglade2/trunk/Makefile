@@ -20,6 +20,9 @@ SPKG_SOURCEURL = http://www.gnome.org/
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+EXTRA_EXPORTS = PKG_CONFIG_PATH
+
 STRIP_LIBTOOL = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
