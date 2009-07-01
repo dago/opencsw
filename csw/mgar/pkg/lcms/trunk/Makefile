@@ -1,5 +1,5 @@
 GARNAME = lcms
-GARVERSION = 1.17
+GARVERSION = 1.18a
 CATEGORIES = lib
 
 DESCRIPTION = The little color management system and tools
