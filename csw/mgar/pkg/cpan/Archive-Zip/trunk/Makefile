@@ -1,5 +1,5 @@
 GARNAME = Archive-Zip
-GARVERSION = 1.28
+GARVERSION = 1.30
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
@@ -22,9 +22,6 @@ DISTFILES = COPYING
 PACKAGES = CSWpmarchivezip
 CATALOGNAME = pm_archivezip
 ARCHALL = 1
-
-# Fix bug affecting Archive::SelfExtract
-#PATCHFILES += seek.diff
 
 REQUIRED_PKGS = CSWpmcompresszlib
 
