@@ -1,0 +1,9 @@
+CSWbdb3 berkeleydb3 - file based pseudo-database library
+CSWcommon common - common files and dirs for CSW packages
+CSWlibpq libpq - libraries needed by postgresql server and clients
+CSWmysql4rt mysql4rt - run-time libraries for mysql4
+CSWoldaprt openldap_rt - OpenLDAP runtime libraries (oldaprt)
+CSWosslrt openssl_rt - Openssl runtime libraries
+CSWpcre pcre - Perl-compatible regular expression library
+CSWsasl sasl - Simple Authentication and Security Layer
+CSWzlib zlib - Zlib Data Compression Library

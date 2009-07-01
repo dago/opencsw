@@ -1,0 +1,76 @@
+<!--
+    $Id: postfix.xml,v 1.1 2007/05/23 05:31:25 sstallion Exp $
+
+    Postfix MTA Service Manifest
+
+    Original Author: Steven Stallion
+    Blastwave adjustments: Trygve Laugstol
+    Version: $Revision: 1.1 $, $Date: 2007/05/23 05:31:25 $
+-->
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+
+<service_bundle type='manifest' name='CSWpostfix:postfix'>
+    <service name='network/smtp/postfix' type='service' version='1'>
+
+        <create_default_instance enabled='false'/>
+        
+        <single_instance/>
+
+        <dependency
+            name='multi-user'
+            grouping='require_all'
+            restart_on='error'
+            type='service'>
+            <service_fmri value='svc:/milestone/multi-user'/>
+        </dependency>
+        
+        <dependency
+            name='nfs'
+            grouping='optional_all'
+            restart_on='error'
+            type='service'>
+            <service_fmri value='svc:/network/nfs/client'/>
+        </dependency>
+        
+        <exec_method
+            name='start'
+            type='method'
+            exec='/opt/csw/lib/svc/method/svc-cswpostfix start'
+            timeout_seconds='30'>
+        </exec_method>
+        
+        <exec_method
+            name='stop'
+            type='method'
+            exec='/opt/csw/lib/svc/method/svc-cswpostfix stop'
+            timeout_seconds='30'>
+        </exec_method>
+
+        <exec_method
+            name='refresh'
+            type='method'
+            exec='/opt/csw/lib/svc/method/svc-cswpostfix refresh'
+            timeout_seconds='30'>
+        </exec_method>        
+
+        <exec_method
+            name='restart'
+            type='method'
+            exec='/opt/csw/lib/svc/method/svc-cswpostfix refresh'
+            timeout_seconds='30'>
+        </exec_method>        
+        <stability value='Unstable'/>
+        
+        <template>
+            <common_name>
+                <loctext xml:lang='C'>Postfix MTA</loctext>
+            </common_name>
+            <documentation>
+                <manpage 
+                    title='postfix' 
+                    section='1'
+                    manpath='/opt/csw/share/man'/>
+            </documentation>
+        </template>
+    </service>
+</service_bundle>

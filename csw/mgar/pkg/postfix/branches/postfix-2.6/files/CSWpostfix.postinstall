@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# do we replace /usr/lib/sendmail, /usr/bin/newaliases, and /usr/bin/mailq?
+# this depends on whether the .OFF files exist. if the .OFF does NOT exist
+# then we replace, but if both exist then it's likely that either CSWsendmail
+# CSWexim or CSWpostfix are installed, in which case we don't replace.
+#
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR="/" ; fi
+
+PF_ACTION=replace
+
+if [ -f /usr/lib/sendmail ]; then
+ if [ -f /usr/lib/sendmail.OFF ]; then
+  printf "It would appear that /usr/lib/sendmail.OFF already exists!\n"
+  printf "CSWpostfix will NOT configure itself as the default MTA.\n"
+  PF_ACTION=leave
+ else
+  printf "CSWpostfix is renaming /usr/lib/sendmail, /usr/bin/newaliases\n"
+  printf "and /usr/bin/mailq to *.OFF.\n"
+  PF_ACTION=replace
+ fi
+else
+ PF_ACTION=leave
+fi
+
+if [ $PF_ACTION = "replace" ]; then
+#  printf "Stopping sendmail\n"
+#  /usr/sbin/chroot $PKG_ROOT_DIR /etc/init.d/sendmail stop
+
+  printf "Turning off /usr/lib/sendmail to enable the Postfix version\n"
+  /usr/sbin/chroot $PKG_ROOT_DIR /usr/bin/mv /usr/lib/sendmail /usr/lib/sendmail.OFF
+
+  printf "Turning off /usr/bin/newaliases to enable the Postfix version\n"
+  /usr/sbin/chroot $PKG_ROOT_DIR /usr/bin/mv /usr/bin/newaliases /usr/bin/newaliases.OFF
+
+  printf "Turning off /usr/bin/mailq to enable the Postfix version\n"
+  /usr/sbin/chroot $PKG_ROOT_DIR /usr/bin/mv /usr/bin/mailq /usr/bin/mailq.OFF
+
+  printf "Linking /usr/lib/sendmail to /opt/csw/sbin/postfix\n"
+  /usr/sbin/chroot $PKG_ROOT_DIR /usr/bin/ln -s /opt/csw/sbin/sendmail /usr/lib/sendmail
+
+  printf "Linking /usr/bin/newaliases to /opt/csw/bin/newaliases\n"
+  /usr/sbin/chroot $PKG_ROOT_DIR /usr/bin/ln -s /opt/csw/bin/newaliases /usr/bin/newaliases
+
+  printf "Linking /usr/bin/mailq to /opt/csw/bin/mailq\n"
+  /usr/sbin/chroot $PKG_ROOT_DIR /usr/bin/ln -s /opt/csw/bin/mailq /usr/bin/mailq
+fi
