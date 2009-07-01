@@ -32,22 +32,27 @@ SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 # PATCHFILES += nsExceptionHandler.cpp.diff 
 
 # Use Sun studio 12 to compile it
-GARCOMPILER = SOS12
+# GARCOMPILER = SOS12
+GARCOMPILER = GCC3
+
+# LD=/opt/csw/bin/gld
+# EXTRA_CONFIGURE_EXPORTS = LD
 
 # pkg-config options
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
+# CFLAGS += -xlibmil -D__solaris__ 
+CFLAGS += -D__solaris__ 
+CFLAGS += -DG_HAVE_ISO_VARARGS 
+
+# CXXFLAGS+= -xlibmil -xlibmopt -features=tmplife -norunpath
+CXXFLAGS+= -DG_HAVE_ISO_VARARGS 
+CXXFLAGS+= -D_XOPEN_SOURCE=500 -D_XPG5 
+
+LDFLAGS+=-dy
+# LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
+
 PERL=/opt/csw/bin/perl
-
-CXXFLAGS +=-xlibmil -xlibmopt -features=tmplife -norunpath
-CXXFLAGS += -DG_HAVE_ISO_VARARGS 
-
-CFLAGS +=-xlibmil -D__solaris__ 
-CFLAGS += -xc99
-CFLAGS += -DG_HAVE_ISO_VARARGS
-
-LDFLAGS +=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
-
 export PERL CFLAGS CXXFLAGS LDFLAGS
 
 CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/firefox
