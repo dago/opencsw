@@ -1,0 +1,6 @@
+indent (2.2.10,REV=2009.07.01)
+
+  * Adopted and updated to 2.2.10. (Closes #3747, #3277)
+  * Dropped texinfo2man from package.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed,  1 Jul 2009 19:21:56 +0200
