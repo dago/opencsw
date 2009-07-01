@@ -5,6 +5,9 @@ umask 0022
 if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
 
 echo 'Updating pango.modules...'
-test -x ${PKG_ROOT_DIR}/opt/csw/bin/pango-querymodules && chroot "${PKG_ROOT_DIR}" /opt/csw/bin/pango-querymodules >/opt/csw/etc/pango/pango.modules
+test -x ${PKG_ROOT_DIR}/opt/csw/bin/pango-querymodules && \
+	chroot "${PKG_ROOT_DIR}" /opt/csw/bin/pango-querymodules >/opt/csw/etc/pango/pango.modules &&
+	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWpango /opt/csw/etc/pango/pango.modules f 0644 root bin &&
+	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf -f CSWpango
 
 /bin/true
