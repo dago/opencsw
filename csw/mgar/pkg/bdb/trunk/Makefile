@@ -16,10 +16,6 @@ endef
 MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
-LEGACYLIB = libdb-3.3.so
-DISTFILES += $(LEGACYLIB)-i386
-DISTFILES += $(LEGACYLIB)-sparc
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -48,8 +44,6 @@ CONFIGURE_ARGS += --enable-tcl
 CONFIGURE_ARGS += --with-tcl=$(libdir)
 endif
 
-#FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb47/lib
-
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
@@ -75,8 +69,7 @@ SPKG_DESC_CSWbdb      = BerkeleyDB 4.7 embedded database libraries and utilities
 SPKG_DESC_CSWbdbdevel = BerkeleyDB 4.7 development support
 SPKG_DESC_CSWbdbdoc   = BerkeleyDB 4.7 documentation
 
-REQUIRED_PKGS_CSWbdb-devel = CSWbdb
-INCOMPATIBLE_PKGS_CSWbdb = CSWbdb3
+REQUIRED_PKGS_CSWbdbdevel = CSWbdb
 
 LICENSE = LICENSE
 
@@ -94,9 +87,4 @@ export PATH
 
 configure-dist:
 	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
-	@$(MAKECOOKIE)
-
-post-merge:
-	ginstall -d $(PKGROOT)$(BUILD_PREFIX)/lib
-	cp $(DOWNLOADDIR)/$(LEGACYLIB)-$(GARCH)  $(PKGROOT)$(BUILD_PREFIX)/lib/$(LEGACYLIB)
 	@$(MAKECOOKIE)
