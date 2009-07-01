@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru  firefox.orig/toolkit/crashreporter/google-breakpad/src/common/solaris/file_id.cc firefox/toolkit/crashreporter/google-breakpad/src/common/solaris/file_id.cc
+--- firefox.orig/toolkit/crashreporter/google-breakpad/src/common/solaris/file_id.cc       2007-10-21 15:36:06.000000000 +0000
++++ firefox/toolkit/crashreporter/google-breakpad/src/common/solaris/file_id.cc  2008-11-24 22:07:22.563549000 +0000
+@@ -37,6 +37,7 @@
+ #include <fcntl.h>
+ #include <gelf.h>
+ #include <sys/mman.h>
++#include <sys/stat.h>
+ #include <sys/ksyms.h>
+ #include <stdio.h>
+ #include <string.h>
