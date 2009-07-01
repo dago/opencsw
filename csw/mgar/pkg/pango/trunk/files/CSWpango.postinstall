@@ -1,0 +1,10 @@
+#!/bin/sh
+
+umask 0022
+
+if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+
+echo 'Updating pango.modules...'
+test -x ${PKG_ROOT_DIR}/opt/csw/bin/pango-querymodules && chroot "${PKG_ROOT_DIR}" /opt/csw/bin/pango-querymodules >/opt/csw/etc/pango/pango.modules
+
+/bin/true

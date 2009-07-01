@@ -13,6 +13,7 @@ endef
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.24/
 DISTNAME = pango-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.bz2
+DISTFILES += CSWpango.postinstall
 
 PACKAGES = CSWpango CSWpangodevel CSWpangodoc
 CATALOGNAME_CSWpango      = libpango
