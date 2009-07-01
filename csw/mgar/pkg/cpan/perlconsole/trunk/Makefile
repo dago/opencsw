@@ -28,6 +28,10 @@ REQUIRED_PKGS += CSWpmbkeywords
 
 include gar/category.mk
 
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
+	# Make directories writable (otherwise gmake clean bails out)
 	chmod -R u+w $(INSTALLISADIR)
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)
