@@ -2,7 +2,7 @@ GARNAME = dnswalk
 GARVERSION = 2.0.2
 CATEGORIES = utils
 
-DESCRIPTION = dnswalk is a DNS debugger
+DESCRIPTION = DNS debugger
 define BLURB
   dnswalk is a DNS debugger. It performs zone transfers of specified domains, and checks
   the database in numerous ways for internal consistency, as well as accuracy. 
