@@ -11,6 +11,10 @@
 # Pick up user information
 -include $(HOME)/.garrc
 
+ifeq ($(GARWIZARD),)
+  $(warning *** You are using GAR v1, which is deprecated. Please move to GAR v2 ***)
+endif
+
 # Outbound proxies
 http_proxy ?=
 ftp_proxy  ?=
