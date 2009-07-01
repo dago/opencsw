@@ -31,11 +31,12 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-REQUIRED_PKGS_CSWoldap       = CSWbdb4 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
+REQUIRED_PKGS_CSWoldap       = CSWbdb CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
 REQUIRED_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc CSWcswclassutils
-REQUIRED_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl
+REQUIRED_PKGS_CSWoldap      += CSWkrb5lib CSWlibicu CSWperl
+REQUIRED_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWkrb5lib
 REQUIRED_PKGS_CSWoldapdevel  = CSWoldaprt
-REQUIRED_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl
+REQUIRED_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl CSWkrb5lib
 
 SPKG_SOURCEURL = http://www.openldap.org
 
@@ -50,12 +51,28 @@ EXTRA_DOCS = README.CSW $(PATCHFILES)
 #EXTRA_LIB = $(prefix)/bdb44/lib 
 #EXTRA_INC = $(prefix)/bdb44/include
 
+#BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-crypt
+CONFIGURE_ARGS += --enable-lmpasswd
+CONFIGURE_ARGS += --enable-spasswd
+CONFIGURE_ARGS += --enable-modules
+CONFIGURE_ARGS += --enable-rlookups
+CONFIGURE_ARGS += --enable-slp
+# Disable TCPwrappers in 64 bit until the libraries are available
+#   <http://opencsw.org/mantis/view.php?id=3748>
+CONFIGURE_ARGS_32 = --enable-wrappers
+# Disable Cyrus SASL in 64 bit until the libraries are available
+#   <http://opencsw.org/mantis/view.php?id=3749>
+CONFIGURE_ARGS_64 += --without-cyrus-sasl
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
+CONFIGURE_ARGS += --enable-backends=mod
+CONFIGURE_ARGS += --enable-overlays=mod
+
+# Disable MySQL Cluster
+CONFIGURE_ARGS += --disable-ndb
 
 TEST_SCRIPTS =
-
-BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*
@@ -67,7 +84,8 @@ PKGFILES_CSWoldaprt  = $(PKGFILES_RT)
 PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
-PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswopenldap$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+INITSMF = /etc/opt/csw/init.d/cswopenldap
+#PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswopenldap$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 include gar/category.mk
 
