@@ -23,7 +23,7 @@ SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 # Defines the list of patches to be applied to the sources
 # PATCHFILES = autoconf.mk.in.diff
 # PATCHFILES += packager.mk.diff
-PATCHFILES += jemalloc.c.diff
+# PATCHFILES += jemalloc.c.diff
 # PATCHFILES += nsMathUtils.h.diff
 # PATCHFILES += file_id.cc.diff
 # PATCHFILES += md5.h.diff
@@ -38,15 +38,15 @@ GARCOMPILER = SOS12
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 PERL=/opt/csw/bin/perl
-CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
+
+CXXFLAGS +=-xlibmil -xlibmopt -features=tmplife -norunpath
+CXXFLAGS += -DG_HAVE_ISO_VARARGS 
+
 CFLAGS +=-xlibmil -D__solaris__ 
 CFLAGS += -xc99
-
 CFLAGS += -DG_HAVE_ISO_VARARGS
-CXXFLAGS+= -DG_HAVE_ISO_VARARGS ­D_XOPEN_SOURCE=600 ­D_XPG6 
 
-
-LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
+LDFLAGS +=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
 
