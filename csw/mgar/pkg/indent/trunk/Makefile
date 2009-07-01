@@ -13,6 +13,8 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+REQUIRED_PKGS = CSWggettextrt
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -20,15 +22,22 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/texinfo2man
 
 TEST_SCRIPTS =
+
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --docdir=$(docdir)
+CONFIGURE_ARGS += --disable-rpath
+
+# Don't be fooled, libiconv seems to be only needed for the gettext that
+# ships with indent (see $(WORKSRC)/intl), but we have our own CSWggettext
+# so no need for libiconv
+# CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
 
 include gar/category.mk
 
-# Cosmetic stuff: 
-# Get rid of the -R options derived by autoconfs "checking how to link with"
-post-configure-modulated:
-	perl -pi -e 's|-R/opt/csw/lib||' \
-		$(WORKSRC)/Makefile $(WORKSRC)/src/Makefile
+# docs need to go beneath $(prefix)/share/doc
+pre-configure-modulated:
+	perl -pi -e 's|\$$\(prefix\)/doc|\$$(prefix)/share/doc|' \
+		$(WORKSRC)/doc/Makefile.in
 	@$(MAKECOOKIE)
 
 # indent.1 (man page) comes with the tarball and is not a phony target
