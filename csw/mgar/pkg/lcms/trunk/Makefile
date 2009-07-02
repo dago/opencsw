@@ -1,5 +1,6 @@
 GARNAME = lcms
-GARVERSION = 1.18a
+GARVERSION = 1.18
+GARSUBREV = a
 CATEGORIES = lib
 
 DESCRIPTION = The little color management system and tools
@@ -14,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARSUBREV).tar.gz
 
 REQUIRED_PKGS += CSWjpeg CSWtiff CSWzlib
 
@@ -36,3 +37,5 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 include gar/category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
