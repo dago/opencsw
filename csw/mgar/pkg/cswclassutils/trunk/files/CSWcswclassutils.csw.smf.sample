@@ -52,7 +52,7 @@
 ##RC_SLEV 3          # Run levels that should have a start script symlink
 ##FMRI network       # FMRI path for service (S10+), the example would give
 #                      an FMRI of "svc:/network/cswfoo:default"
-##AUTOENABLE yes     # If set to no will not enable SMF service regardless of
+##AUTOENABLE yes     # If set to no will not enable service regardless of
 #                      local csw.conf, use when a package needs setup before
 #                      being useful, would otherwise leave service in
 #                      maintenance mode

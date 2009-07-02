@@ -31,7 +31,13 @@ while read src dest ; do
 		echo $confdest already exists. Not overwriting
 	else
 		echo Copying sample config to $confdest
-		cp -p $dest $confdest
+		contents=`grep "^$dest" /var/sadm/install/contents`
+		mode=`echo $contents | awk '{print $4}'`
+		user=`echo $contents | awk '{print $5}'`
+		group=`echo $contents | awk '{print $6}'`
+		cp $dest $confdest
+		chmod $mode $confdest
+		chown $user:$group $confdest
 	fi
 done
 
