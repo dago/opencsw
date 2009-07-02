@@ -34,10 +34,10 @@ PATCHFILES += jsstdint.h.diff
 
 # Use Sun studio 12 to compile it
 # GARCOMPILER = SOS12
-GARCOMPILER = GCC3
+GARCOMPILER = GCC4
 
-# LD=/opt/csw/bin/gld
-# EXTRA_CONFIGURE_EXPORTS = LD
+LD=/opt/csw/bin/gld
+EXTRA_CONFIGURE_EXPORTS = LD
 
 # pkg-config options
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
