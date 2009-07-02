@@ -1,0 +1,2 @@
+:postdrop:::::
+postfix:postfix:Postfix Daemon:/var/opt/csw/spool/postfix:/usr/bin/pfsh::
