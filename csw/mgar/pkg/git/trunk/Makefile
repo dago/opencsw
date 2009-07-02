@@ -4,7 +4,7 @@ GARVERSION = 1.6.3.2
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
-# TEST_SCRIPTS = 
+TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 
@@ -88,6 +88,9 @@ PKGFILES_CSWgitdoc = $(docdir)/.*
 # software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+
 CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --with-tcltk=$(bindir)/wish
@@ -98,10 +101,10 @@ CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
-		ETC_CONFIG=$(sysconfdir)/gitconfig V=1 \
+		ETC_GITCONFIG=$(sysconfdir)/gitconfig V=1 \
 		all doc
 
-INSTALL_ARGS = ETC_CONFIG=$(sysconfdir)/gitconfig \
+INSTALL_ARGS = ETC_GITCONFIG=$(sysconfdir)/gitconfig \
 		INSTALLDIRS=vendor \
 		install-doc
 
