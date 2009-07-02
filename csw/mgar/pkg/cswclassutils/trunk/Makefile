@@ -7,6 +7,8 @@ DESCRIPTION = CSW class action utilities
 MASTER_SITES = 
 DISTFILES += $(call admfiles,CSWcswclassutils,prototype)
 
+ARCHALL = 1
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
