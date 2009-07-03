@@ -1,9 +1,8 @@
 # Status
-# - Basic configuration, build completes, packaging not yet tested
+# - Build with all activated features completes, packaging not yet tested
 # - Beware: uses a modified GARv2 for USERGROUP=
 # TODO
 # - Check open bugs
-# - Activate features (SSL, LDAP, *SQL, ...)
 # - Integrate the manifest from files/ with cswinitsmf
 # - Check sed main.cf script functionality, do we need this?
 # - Check update script functionality, add handling for spool location change
