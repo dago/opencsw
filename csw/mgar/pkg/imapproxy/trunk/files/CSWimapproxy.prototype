@@ -1,7 +1,7 @@
 f none /opt/csw/etc/imapproxy.conf.CSW 0644 root bin
 d none /opt/csw/share/doc/doc/imapproxy 0755 root bin
 f none /opt/csw/share/doc/imapproxy/ChangeLog 0644 root bin
-f none /opt/csw/share/doc/imapproxy/README.CSW=README.CSW 0644 root bin
+f none /opt/csw/share/doc/imapproxy/README.CSW 0644 root bin
 f none /opt/csw/share/doc/imapproxy/README 0644 root bin
 f none /opt/csw/share/doc/imapproxy/README.ssl 0644 root bin
 f none /opt/csw/share/doc/imapproxy/README.known_issues 0644 root bin
