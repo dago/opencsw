@@ -92,14 +92,67 @@ DEFAULTS=\
 	-DDEF_DATA_DIR=\"$(DEF_DATA_DIR)\" \
 	-DDEF_README_DIR=\"$(DEF_README_DIR)\"
 
-CCARGS=$(CFLAGS) $(DEFAULTS)
+# Make sure libraries in the default location can be found
+AUXLIBS = -L/opt/csw/lib
+
+# Activate support for hash and btree lookup tables
+# http://www.postfix.org/DB_README.html
+FEATURES += -DHAS_DB
+INCLUDES += -I/opt/csw/bdb4/include
+AUXLIBS  += -L/opt/csw/bdb4/lib -R/opt/csw/bdb4/lib -ldb-4
+PREREQUISITE_PKGS += CSWbdb4
+REQUIRED_PKGS += CSWbdb4
+
+# Activate support for SSL/TLS
+# http://www.postfix.org/TLS_README.html
+FEATURES += -DUSE_TLS
+AUXLIBS  += -lssl -lcrypto
+PREREQUISITE_PKGS += CSWossldevel
+REQUIRED_PKGS += CSWosslrt
+
+# Activate support for Cyrus SASL (dovecot is incl. automatically)
+# http://www.postfix.org/SASL_README.html
+FEATURES += -DUSE_SASL_AUTH -DUSE_CYRUS_SASL
+INCLUDES += -I/opt/csw/include/sasl/
+AUXLIBS  += -lsasl2
+PREREQUISITE_PKGS += CSWsasl
+REQUIRED_PKGS += CSWsasl
+
+# Activate support for OpenLDAP
+# http://www.postfix.org/LDAP_README.html
+FEATURES += -DHAS_LDAP
+AUXLIBS  += -lldap -llber
+PREREQUISITE_PKGS += CSWoldapdevel
+REQUIRED_PKGS += CSWoldaprt
+
+# Activate support for MySQL
+# http://www.postfix.org/MYSQL_README.html
+FEATURES += -DHAS_MYSQL
+INCLUDES += -I/opt/csw/mysql5/include/mysql
+AUXLIBS  += -L/opt/csw/mysql5/lib/mysql -R/opt/csw/mysql5/lib/mysql
+AUXLIBS  += -lmysqlclient
+PREREQUISITE_PKGS += CSWmysql5devel
+REQUIRED_PKGS += CSWmysql5rt
+
+# Activate support for PostgreSQL
+# http://www.postfix.org/PGSQL_README.html
+FEATURES += -DHAS_PGSQL
+INCLUDES += -I/opt/csw/postgresql/include/
+AUXLIBS  += -L/opt/csw/postgresql/lib/ -R/opt/csw/postgresql/lib/
+AUXLIBS  += -lpq
+PREREQUISITE_PKGS += CSWlibpq
+REQUIRED_PKGS += CSWlibpq
+
+
+CCARGS=$(CFLAGS) $(FEATURES) $(DEFAULTS) $(INCLUDES)
 
 # We zero makedef's DEBUG and OPT, the relevant flags are set via GAR & CFLAGS
 configure-custom:
-	echo $(MAKE) -C $(WORKSRC) makefiles CC=$(CC) CCARGS='$(CCARGS)' DEBUG= OPT=
+	echo $(MAKE) -C $(WORKSRC) makefiles CC=$(CC) CCARGS='$(CCARGS)'
 	$(MAKE) -C $(WORKSRC) makefiles \
 		CC=$(CC) \
 		CCARGS='$(CCARGS)' \
+		AUXLIBS='$(AUXLIBS)' \
 		DEBUG= \
 		OPT=
 	@$(MAKECOOKIE)
