@@ -1,10 +1,10 @@
 GARNAME = git
-GARVERSION = 1.6.3.2
+GARVERSION = 1.6.3.3
 #xPATCHLEVEL = rc3
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
-TEST_SCRIPTS = 
+# TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 
