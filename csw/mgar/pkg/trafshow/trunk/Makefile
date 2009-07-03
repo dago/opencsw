@@ -12,7 +12,9 @@ define BLURB
   so you can inspect a required part of network traffic.
 endef
 
-MASTER_SITES = ftp://ftp.mgts.by/pub/FreeBSD/ports/distfiles/
+MASTER_SITES  = ftp://ftp.planix.com/pub/mirror/
+MASTER_SITES += ftp://ftp.eenet.ee/pub/gentoo/distfiles/
+MASTER_SITES += ftp://ftp.mgts.by/pub/FreeBSD/ports/distfiles/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -24,7 +26,7 @@ REQUIRED_PKGS = CSWlibpcap CSWslang
 # patch away GNUishm
 PATCHFILES  = Makefile.patch
 
-#
+# configure args
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 # no testscript

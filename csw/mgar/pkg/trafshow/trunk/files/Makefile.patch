@@ -1,0 +1,11 @@
+--- trafshow-5.2.1.orig/Makefile.in	2004-06-15 10:29:14.000000000 +0200
++++ trafshow-5.2.1/Makefile.in	2009-07-03 16:57:49.228840420 +0200
+@@ -28,7 +28,7 @@
+ 
+ PROG = trafshow
+ CC = @PTHREAD_CC@
+-CFLAGS = @CFLAGS@ -Wall -I. @DEFS@ @PTHREAD_CFLAGS@
++CFLAGS = @CFLAGS@ -I. @DEFS@ @PTHREAD_CFLAGS@
+ YACC = @YACC@
+ YFLAGS = -d -p `echo $@ | sed -e 's/\..*/_/'`
+ LEX = @LEX@
