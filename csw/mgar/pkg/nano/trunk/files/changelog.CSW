@@ -1,0 +1,6 @@
+nano (2.0.9,REV=2009.07.05)
+
+  * Adopted and updated to 2.0.9. (Closes #2969, #3082)
+  * Compiled against ncurses (default) instead of slang.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun,  5 Jul 2009 00:56:18 +0200
