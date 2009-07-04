@@ -1,6 +1,7 @@
 # Status
 # - Build with all activated features completes, packaging completes
 # - Beware: uses a modified GARv2 for USERGROUP=
+#   http://lists.opencsw.org/pipermail/maintainers/2009-July/003143.html
 # - Fixed bugs:
 #   #3580 Not sun4m compatible 
 #         $(CFLAGS) are now incorporated into $(CCARGS)
