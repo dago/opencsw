@@ -17,6 +17,8 @@ BUILD_TARGETS = hexdump hexdump.1
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+# hexdump Makefile only uses $(CC), not $(CFLAGS)
+BUILD_ARGS = CC='$(CC) $(CFLAGS)'
 NORUNPATH = 1
 
 include gar/category.mk
