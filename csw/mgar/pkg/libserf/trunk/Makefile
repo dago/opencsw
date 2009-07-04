@@ -23,13 +23,18 @@ UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2
 # UPSTREAM_MASTER_SITES = 
 
 DEPENDS = server/apache2rt
-STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-apr=$(prefix)/apache2
-CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2
-#CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
-#CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
+CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
+CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 
 TEST_TARGET = check
 include gar/category.mk
+
+EXTRA_LDFLAGS = -R/opt/csw/bdb44/lib
+APR_LIBTOOL = $(shell /opt/csw/apache2/bin/apr-config --apr-libtool)
+post-configure-modulated:
+	gcp $(APR_LIBTOOL) $(WORKSRC)
+	perl -i -pne 's|$(APR_LIBTOOL)|$(abspath $(WORKSRC)/libtool)|' $(WORKSRC)/Makefile
+	$(GARBIN)/fixlibtool $(WORKSRC)
+	@$(MAKECOOKIE)
