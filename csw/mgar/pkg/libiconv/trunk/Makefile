@@ -28,7 +28,7 @@ CATALOGNAME_CSWiconvdevel = libiconv_devel
 SPKG_DESC_CSWiconv = GNU iconv library
 SPKG_DESC_CSWiconvdevel = GNU iconv library development pacakge
 
-PKGFILES_CSWiconvdevel = $(PKGFILES_DEVEL) *.3.html
+PKGFILES_CSWiconvdevel = $(PKGFILES_DEVEL) .*.3.html
 # All other unspecified files go into CSWlibiconv
 
 # Dependencies:
@@ -42,6 +42,9 @@ REQUIRED_PKGS_CSWiconvdevel = CSWiconv
 #   http://sunsolve.sun.com/search/document.do?assetkey=1-1-6655406-1
 #PATCHFILES = patch-workaround-cc-bug-6655406.diff
 
+# The current 1.12 only has a 32-Bit iconv binary, leave it that way
+EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/.*/iconv
+NO_ISAEXEC = 1
 BUILD64 = 1
 
 # 'gmake test' shows three errors of coredumping printf's
