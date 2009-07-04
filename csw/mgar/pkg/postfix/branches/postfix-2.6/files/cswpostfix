@@ -5,6 +5,9 @@
 # Origionally written by Valery Kotchiev <valery@blastwave.org>
 # Maintained by Darin Perusich <darin@blastwave.org>
 # based on debians's postfix init.d script
+#
+# cswclassutils settings
+#MANIFEST /var/opt/csw/svc/manifest/network/cswpostfix.xml
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
 DAEMON=/opt/csw/sbin/postfix

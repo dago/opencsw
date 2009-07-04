@@ -1,13 +1,25 @@
 # Status
-# - Build with all activated features completes, packaging not yet tested
+# - Build with all activated features completes, packaging completes
 # - Beware: uses a modified GARv2 for USERGROUP=
+# - Fixed bugs:
+#   #3580 Not sun4m compatible 
+#         $(CFLAGS) are now incorporated into $(CCARGS)
+#   #3063 /opt/csw/libexec/postfix not stripped, takes ~30MB 
+#         $(STRIP_DIRS) added to build description
+#   #3017 Please depend against CSWpcrert instead of CSWpcre 
+#   #2843 No cyrus-sasl support
+#         Added cyrus SASL support, link postfix against the same 
+#         bdb version that CSWsasl uses.
+# - Moved queue and data dirs to /var/opt/csw (see DDEFs) as per standard
+# - Integrated CSWcswclassutils for user/group creation, configuration
+#   file handling, and SMF / init script support
+# 
 # TODO
-# - Check open bugs
-# - Integrate the manifest from files/ with cswinitsmf
-# - Check sed main.cf script functionality, do we need this?
+# - Check remaining open bugs
+# - Check sed main.cf script functionality
 # - Check update script functionality, add handling for spool location change
-# - See how the csw_conf_config for cfg files was handled in gar v1
-#   Does the currently available package preserve configuration files on
+# - Do we need to take care of file ownerships?
+# - Does the currently available package preserve configuration files on
 #   removal?
 GARNAME = postfix
 GARVERSION = 2.6.2
@@ -26,26 +38,22 @@ endef
 
 MASTER_SITES = ftp://ftp.porcupine.org/mirrors/postfix-release/official/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.postfix.org
+
+# Conflicting files (bin/mailq and bin/sendmail) in sendmail
+INCOMPATIBLE_PKGS = CSWsendmail
 
 DISTFILES += CSWpostfix.cswusergroup
 DISTFILES += CSWpostfix.postinstall
 DISTFILES += CSWpostfix.postremove
-#DISTFILES += cswpostfix.xml
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-PREREQUISITE_PKGS = CSWpcre
-REQUIRED_PKGS = CSWpcrert
 
 # Tag files for cswclassutils
 CONFIG_BASE  = /etc/opt/csw/postfix/
 CONFIG_FILES  = access aliases canonical generic header_checks
-CONFIG_FILES += main.cf master.cf
-CONFIG_FILES += relocated transport virtual
+CONFIG_FILES += main.cf master.cf relocated transport virtual
 
-SAMPLECONF  = $(prefix $(CONFIG_BASE), $(CONFIG_FILES))
+SAMPLECONF  = $(addprefix $(CONFIG_BASE), $(CONFIG_FILES))
 INITSMF     = /etc/opt/csw/init.d/cswpostfix
 USERGROUP   = $(sysconfdir)/pkg/CSWpostfix/cswusergroup
 
@@ -93,6 +101,13 @@ DEFAULTS=\
 
 # Make sure libraries in the default location can be found
 AUXLIBS = -L/opt/csw/lib
+
+# Activate support for PCRE
+# http://www.postfix.org/PCRE_README.html
+FEATURES += -DHAS_PCRE
+AUXLIBS  += -lpcre
+PREREQUISITE_PKGS += CSWpcre
+REQUIRED_PKGS += CSWpcrert
 
 # Activate support for hash and btree lookup tables
 # http://www.postfix.org/DB_README.html
@@ -143,6 +158,7 @@ PREREQUISITE_PKGS += CSWlibpq
 REQUIRED_PKGS += CSWlibpq
 
 
+# Make sure to include $(CFLAGS) so that we get sane defaults via GAR
 CCARGS=$(CFLAGS) $(FEATURES) $(DEFAULTS) $(INCLUDES)
 
 # We zero makedef's DEBUG and OPT, the relevant flags are set via GAR & CFLAGS
@@ -175,9 +191,6 @@ install-custom:
 	sed -f $(FILEDIR)/fix_main.cf.sed $(DESTDIR)/etc/opt/csw/postfix/main.cf > $(WORKDIR)/main.cf
 	cp $(WORKDIR)/main.cf $(DESTDIR)/etc/opt/csw/postfix/main.cf
 
-	# mv configuration files to .CSW
-	$(foreach F,$(prefix $(DESTDIR),$(SAMPLECONF)), mv $(F) $(F).CSW;)
-
 	# Script to handle the sysconfdir location change /opt -> /etc
 	# XXX: Needs to be checked and amended with /opt -> /var changes
 	ginstall -D -m 755 $(FILEDIR)/upgrade \
@@ -186,6 +199,8 @@ install-custom:
 	# Files for cswinitsmf and cswusergroup
 	ginstall -Dm 755 $(FILEDIR)/cswpostfix  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswpostfix
+	ginstall -D $(FILEDIR)/cswpostfix.xml \
+		$(DESTDIR)/var/opt/csw/svc/manifest/network/cswpostfix.xml"
 	ginstall -D $(FILEDIR)/CSWpostfix.cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/CSWpostfix/cswusergroup
 	@$(MAKECOOKIE)
