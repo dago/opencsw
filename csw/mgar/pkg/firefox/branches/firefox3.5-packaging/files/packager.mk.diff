@@ -4,18 +4,18 @@ diff --speed-large-files --minimal -Nru firefox.orig/toolkit/mozapps/installer/p
 @@ -394,7 +394,7 @@
  endif # MOZ_PKG_MANIFEST
  ifndef PKG_SKIP_STRIP
-        @echo "Stripping package directory..."
--       @cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_DIR); find . ! -type d \
-+       @cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_DIR); gfind . ! -type d \
-                        ! -name "*.js" \
-                        ! -name "*.xpt" \
-                        ! -name "*.gif" \
+ 	@echo "Stripping package directory..."
+-	@cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_APPNAME); find . ! -type d \
++	@cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_APPNAME); gfind . ! -type d \
+ 			! -name "*.js" \
+ 			! -name "*.xpt" \
+ 			! -name "*.gif" \
 @@ -458,7 +458,7 @@
-        (cd $(DIST)/sdk/include && tar $(TAR_CREATE_FLAGS) - .) | \
-          (cd $(DESTDIR)$(includedir)/stable && tar -xf -)
+ 	(cd $(DIST)/sdk/include && tar $(TAR_CREATE_FLAGS) - .) | \
+ 	  (cd $(DESTDIR)$(includedir)/stable && tar -xf -)
  # The dist/include has module subdirectories that we need to flatten
--       find $(DIST)/include -xtype f -exec $(SYSINSTALL) $(IFLAGS1) {} $(DESTDIR)$(includedir)/unstable \;
-+       gfind $(DIST)/include -xtype f -exec $(SYSINSTALL) $(IFLAGS1) {} $(DESTDIR)$(includedir)/unstable \;
+-	find $(DIST)/include -xtype f -exec $(SYSINSTALL) $(IFLAGS1) {} $(DESTDIR)$(includedir)/unstable \;
++	gfind $(DIST)/include -xtype f -exec $(SYSINSTALL) $(IFLAGS1) {} $(DESTDIR)$(includedir)/unstable \;
  # IDL directory is stable (dist/sdk/idl) and unstable (dist/idl)
-        $(NSINSTALL) -D $(DESTDIR)$(idldir)/stable
-        $(NSINSTALL) -D $(DESTDIR)$(idldir)/unstable
+ 	$(NSINSTALL) -D $(DESTDIR)$(idldir)/stable 
+ 	$(NSINSTALL) -D $(DESTDIR)$(idldir)/unstable
