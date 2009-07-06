@@ -21,10 +21,11 @@ CATALOGNAME_CSWfirefox 	= $(GARNAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
 # Defines the list of patches to be applied to the sources
-# PATCHFILES = autoconf.mk.in.diff
-# PATCHFILES += packager.mk.diff
 PATCHFILES += jemalloc.c.diff
 PATCHFILES += jsstdint.h.diff
+PATCHFILES += Nativei386.h.diff
+PATCHFILES = autoconf.mk.in.diff
+PATCHFILES += packager.mk.diff
 # PATCHFILES += nsMathUtils.h.diff
 # PATCHFILES += file_id.cc.diff
 # PATCHFILES += md5.h.diff
