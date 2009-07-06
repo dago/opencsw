@@ -47,6 +47,9 @@ EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/.*/iconv
 NO_ISAEXEC = 1
 BUILD64 = 1
 
+# Tweak optimization flags, BEWARE: ./configure on build8s hangs
+OPT_FLAGS_SOS = -fast -xnolibmopt
+
 # 'gmake test' shows three errors of coredumping printf's
 #
 #   ./check-translitfailure . TranslitFail1 ISO-8859-1 ASCII
