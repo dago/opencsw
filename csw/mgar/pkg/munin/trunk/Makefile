@@ -32,7 +32,8 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 REQUIRED_PKGS_CSWmuninmaster = CSWpmnetserver CSWperl CSWpython CSWpmparserecdescent 
-REQUIRED_PKGS_CSWmuninmaster = CSWpmhtmltmpl CSWpmdatemanip CSWpmmd5 CSWrrd CSWcswclassutils
+REQUIRED_PKGS_CSWmuninmaster = CSWpmhtmltmpl CSWpmdatemanip CSWpmmd5 CSWrrd CSWapache2
+REQUIRED_PKGS_CSWmuninmaster = CSWcswclassutils
 
 REQUIRED_PKGS_CSWmuninnode = CSWpmnetsnmp CSWpmnetserver CSWperl CSWtop CSWcswclassutils
 
