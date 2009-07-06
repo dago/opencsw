@@ -1,7 +1,10 @@
 #!/sbin/sh
 
+#RC_KLEV 0,1,S
+#RC_SLEV 2
+
 # rc-script for CSW Bind
-# Peter Bonivart, 2008-12-18
+# Peter Bonivart, 2009-01-24
 
 USER=named
 #OPTIONS="-d 1" # debug mode

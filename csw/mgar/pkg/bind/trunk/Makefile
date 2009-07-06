@@ -1,9 +1,11 @@
+# remove named.pid or change to type v
+
 GARNAME = bind
-GARVERSION = 9.6.0
-RELEASE = P1
-DISTVERSION = $(GARVERSION)-$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+GARVERSION = 9.6.1
+#RELEASE = P1
+#DISTVERSION = $(GARVERSION)-$(RELEASE)
+#DISTNAME = $(GARNAME)-$(DISTVERSION)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC BIND DNS reference implementation
@@ -15,12 +17,18 @@ define BLURB
 endef
 
 UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
+#DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWbind,preinstall preremove)
-DISTFILES += $(call admfiles,CSWbinddevel,)
-DISTFILES += $(call admfiles,CSWlibbind,)
-DISTFILES += $(call admfiles,CSWbindutils,)
+
+PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils
+CATALOGNAME_CSWbinddevel = bind_devel
+CATALOGNAME_CSWbindutils = bind_utils
+ARCHALL_CSWbinddevel = 1
+
+LICENSE = COPYRIGHT
 
 SPKG_DESC_CSWbind = ISC BIND DNS main package
 SPKG_DESC_CSWbinddevel = ISC BIND DNS development package
@@ -33,7 +41,7 @@ REQUIRED_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 REQUIRED_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)-([A-Z][0-9])
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(-([A-Z][0-9]))?
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libtool
@@ -53,14 +61,22 @@ ENABLE_CHECK = 0
 
 INSTALL_SCRIPTS = custom
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswnamed$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/named.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/named/ { $$$$5 = "named" } { print }'
+# fix class for conf file and named files
+PROTOTYPE_FILTER  = awk ' \
+	$$$$3 ~ /\/init.d\/cswnamed$$$$/ { $$$$2 = "cswinitsmf" } \
+	$$$$3 ~ /\/named.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+	$$$$3 ~ /\/var\/opt\/csw\/named/ { $$$$5 = "named" } \
+	{ print }'
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
+# use usergroup class also
 SPKG_CLASSES_CSWbind = none cswcpsampleconf cswinitsmf
 
 include gar/category.mk
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+#SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+
+DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
@@ -68,14 +84,9 @@ install-custom:
 	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
 	@cp $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf.CSW
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(FILEDIR)/CSWbind.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@cp $(FILEDIR)/CSWbind.db.127.0.0 $(DESTDIR)$(docdir)/$(GARNAME)/db.127.0.0
-	@cp $(FILEDIR)/CSWbind.db.localhost $(DESTDIR)$(docdir)/$(GARNAME)/db.localhost
-	@cp $(FILEDIR)/CSWbind.named.conf $(DESTDIR)$(docdir)/$(GARNAME)/named.conf
-	@cp $(FILEDIR)/CSWbind.named.root $(DESTDIR)$(docdir)/$(GARNAME)/named.root
-	@cp $(FILEDIR)/CSWbind.rndc.key $(DESTDIR)$(docdir)/$(GARNAME)/rndc.key
-	@cp $(WORKSRC)/COPYRIGHT $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
+	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
 	@touch $(DESTDIR)/var/opt/csw/named/named.pid
+# add usergroup conf file
 	@$(MAKECOOKIE)
