@@ -5,8 +5,8 @@ diff --speed-large-files --minimal -Nru firefox.orig/toolkit/mozapps/installer/p
  endif # MOZ_PKG_MANIFEST
  ifndef PKG_SKIP_STRIP
  	@echo "Stripping package directory..."
--	@cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_APPNAME); find . ! -type d \
-+	@cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_APPNAME); gfind . ! -type d \
+-       @cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_DIR); find . ! -type d \
++       @cd $(DIST)/$(STAGEPATH)$(MOZ_PKG_DIR); gfind . ! -type d \
  			! -name "*.js" \
  			! -name "*.xpt" \
  			! -name "*.gif" \
