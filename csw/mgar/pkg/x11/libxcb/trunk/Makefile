@@ -30,7 +30,7 @@ PKGFILES_CSWlibxcbdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxcbdoc   = $(PKGFILES_DOC)
 
 REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
-REQUIRED_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau
+REQUIRED_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau CSWlibxdmcp
 
 ARCHALL_CSWlibxcbdoc = 1
 
@@ -47,3 +47,14 @@ PATH := $(PATH):/opt/csw/graphviz2/bin
 post-install-modulated:
 	perl -pi -e 's/^(Cflags:.*)/\1 $(EXTRA_CFLAGS)/' $(DESTDIR)$(libdir)/pkgconfig/xcb.pc
 	@$(MAKECOOKIE)
+
+post-merge:
+	ginstall -d $(PKGROOT)$(BUILD_PREFIX)/lib
+	for lib in composite damage dpms glx record render res screensaver shape shm sync xevie xf86dri xfixes xinerama xprint xtest xv xvmc ; \
+	do gln -sf libxcb-$(lib).so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-$(lib).so.0 ; \
+	gln -sf libxcb-$(lib).so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-$(lib).so ; \
+	done
+	gln -sf libxcb-randr.so.1.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-randr.so.1
+	gln -sf libxcb-randr.so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-randr.so
+	gln -sf libxcb.so.1.1.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb.so.1
+	gln -sf libxcb.so.1.1.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb.so
