@@ -1,6 +1,6 @@
 GARNAME = ruby
 DISTVERSION = 1.8.7
-PATCHLEVEL = p72
+PATCHLEVEL = p174
 GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
@@ -59,6 +59,8 @@ PATCHFILES = rdoc_parse_order_fix.patch
 
 GARCOMPILER = GNU
 
+# This is for rbconfig.rb: without this, modules built may not get a proper
+# setting.
 EXTRA_LDFLAGS = -R /opt/csw/gcc4/lib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
