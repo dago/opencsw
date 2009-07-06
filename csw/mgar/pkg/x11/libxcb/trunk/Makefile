@@ -51,8 +51,8 @@ post-install-modulated:
 post-merge:
 	ginstall -d $(PKGROOT)$(BUILD_PREFIX)/lib
 	for lib in composite damage dpms glx record render res screensaver shape shm sync xevie xf86dri xfixes xinerama xprint xtest xv xvmc ; \
-	do gln -sf libxcb-$(lib).so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-$(lib).so.0 ; \
-	gln -sf libxcb-$(lib).so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-$(lib).so ; \
+	do gln -sf libxcb-$${lib}.so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-$${lib}.so.0 ; \
+	gln -sf libxcb-$${lib}.so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-$${lib}.so ; \
 	done
 	gln -sf libxcb-randr.so.1.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-randr.so.1
 	gln -sf libxcb-randr.so.0.0.0 $(PKGROOT)$(BUILD_PREFIX)/lib/lbxcb-randr.so
