@@ -1,0 +1,9 @@
+#!/bin/sh
+
+passwd -N munin
+
+echo 
+echo "Please append the following line to the crontab of the user 'munin':"
+echo 
+echo "   0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/test -x /opt/csw/bin/munin-cron && /opt/csw/bin/munin-cron"
+echo

@@ -1,0 +1,1 @@
+munin:munin:Munin user:/etc/opt/csw/munin:/bin/false:m:r

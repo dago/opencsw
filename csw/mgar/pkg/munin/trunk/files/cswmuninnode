@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# Copyright (c) 1992 - 2001 by Sun Microsystems, Inc.
+# All rights reserved.
+#
+# For OpenCSW by Juergen Arndt 2009-07-03
+
+#FMRI application       # FMRI path for service
+#AUTOENABLE yes
+
+SMF_EXIT_ERR_CONFIG=1
+
+if [ -f /lib/svc/share/smf_include.sh ]
+then
+	. /lib/svc/share/smf_include.sh
+fi
+
+CONFIG_FILE=/etc/opt/csw/munin/munin-node.conf
+
+if [ ! -f $CONFIG_FILE ]
+then
+	exit $SMF_EXIT_ERR_CONFIG
+fi
+
+BIN_FILE="/opt/csw/sbin/munin-node"
+pidfile=`awk -F' ' '/^[ \t]*pid_file/ {print $2}' $CONFIG_FILE`
+munin_user=`awk -F' ' '/^[ \t]*user/ {print $2}' $CONFIG_FILE`
+
+start_munin_node ()
+{
+        if [ -f $CONFIG_FILE ]; then
+            wait 1
+            $BIN_FILE -c $CONFIG_FILE -d
+        fi
+}
+
+stop_munin_node ()
+{
+	/usr/bin/kill `head -1 $pidfile`
+}
+
+case "$1" in
+'restart')
+	stop_munin_node
+	start_munin_node
+        ;;
+
+'start')
+	start_munin_node
+	;;
+'stop') 
+	stop_munin_node
+        ;;
+
+*)
+        echo "Usage: $0 { start | stop | restart }"
+        exit 1
+        ;;
+esac
+exit 0

@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru munin-1.3.4.orig/node/node.d.sunos/memory.in munin-1.3.4/node/node.d.sunos/memory.in
+--- munin-1.3.4.orig/node/node.d.sunos/memory.in	2008-03-08 02:42:39.000000000 +0100
++++ munin-1.3.4/node/node.d.sunos/memory.in	2009-07-03 11:50:10.815859151 +0200
+@@ -11,7 +11,7 @@
+ # FIXME1: Reporting size in MB is Wrong. Report bytes and let rrd scale units
+ # FIXME2: Using kstat would be much better!
+ 
+-TOP=${top:-/usr/local/bin/top}
++TOP=${top:-/opt/csw/bin/top}
+ 
+ if [ "$1" = "autoconf" ]; then
+     if [ -x $TOP ] ; then

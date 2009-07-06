@@ -1,0 +1,28 @@
+# Apache configurations for accessing munin 
+
+Alias /munin/ "/var/opt/csw/munin/www/"
+
+<Directory "/var/opt/csw/munin/www/">
+	Options None
+	AllowOverride None
+	Order allow,deny
+	Allow from all
+</Directory>
+
+
+# Apache configuration to support munin-cgi-graph
+#
+# In addition, the Munin log files and html area should be writable
+# to the web server. Therefor add the apache user to the munin group.
+#
+# Documentation for this is in http://munin.projects.linpro.no/wiki/CgiHowto
+
+ScriptAlias /munin/dyn/ /var/opt/csw/munin/www/cgi/
+
+<Directory /var/opt/csw/munin/www/cgi>
+	AllowOverride None
+	Options ExecCGI -MultiViews +SymLinksIfOwnerMatch
+	Order allow,deny
+	Allow from all
+</Directory>
+
