@@ -2,4 +2,4 @@ f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
 8cd01e82aa312e79ae4f4f8c779174c6  download/autoconf.mk.in.diff
 6dd59399db08963ef022a1d0e5010053  download/firefox-3.5-source.tar.bz2
-80820bc2dc41a4d74725a1ab2e15afed  download/packager.mk.diff
+1de554cffc12f15bddf11ecdba0fe32d  download/packager.mk.diff

@@ -1,10 +1,10 @@
 diff --speed-large-files --minimal -Nru firefox.orig/js/src/nanojit/Nativei386.h firefox/js/src/nanojit/Nativei386.h
 --- firefox.orig/js/src/nanojit/Nativei386.h	2008-12-19 16:11:09.743712966 +0800
 +++ firefox/js/src/nanojit/Nativei386.h		2008-12-19 16:12:32.156744648 +0800
-@@ -40,6 +40,14 @@
- #ifndef __nanojit_Nativei386__
- #define __nanojit_Nativei386__
- 
+@@ -87,6 +87,15 @@
+ #define count_imt()
+ #endif
+
 +#undef EAX
 +#undef EBX
 +#undef ECX
@@ -13,6 +13,7 @@ diff --speed-large-files --minimal -Nru firefox.orig/js/src/nanojit/Nativei386.h
 +#undef EBP
 +#undef ESI
 +#undef EDI
- 
++
  namespace nanojit
  {
+	const int NJ_LOG2_PAGE_SIZE     = 12;           // 4K
