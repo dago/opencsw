@@ -4,6 +4,9 @@ PATCHLEVEL = p174
 GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
+# disable test scripts (all passed with 1.8.7p174)
+TEST_SCRIPTS = 
+
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
