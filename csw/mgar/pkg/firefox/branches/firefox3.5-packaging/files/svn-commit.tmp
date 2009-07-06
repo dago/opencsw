@@ -1,0 +1,4 @@
+Set optimization flags for GCC
+--Cette ligne, et les suivantes ci-dessous, seront ignorées--
+
+M    .mozconfig
