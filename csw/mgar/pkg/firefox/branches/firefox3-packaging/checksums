@@ -2,8 +2,8 @@ f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
 45bba282258a321e5e4f73a742bcc31b  download/autoconf.mk.in.diff
 a71a4afaabc4d067f30d8fb184fea520  download/file_id.cc.diff
-1012e835a5c130d18479bccdee240640  download/firefox-3.0.10-source.tar.bz2
-dc2ff9299e65ef1acc7a1a684e1ed449  download/jemalloc.c.diff
+b509f7c05e9566ed290e2c098316c7c3  download/firefox-3.0.11-source.tar.bz2
+32ce70bf2a4a2193a7cdc24941549018  download/jemalloc.c.diff
 18b0cdc902caa4172b7f2d473239c9a9  download/md5.h.diff
 1a3d61e09378d28d9bc9f3df45a224bc  download/nsExceptionHandler.cpp.diff
 ca4162516d8c09deaa9f0b6f3b3ecffb  download/nsMathUtils.h.diff

@@ -1,6 +1,6 @@
 GARNAME = firefox
 GARVERSION = 3.0.11
-CATEGORIES = apps
+CATEGORIES = x11
 DISTNAME = $(GARNAME)
 
 DESCRIPTION = Firefox Community Edition web browser
