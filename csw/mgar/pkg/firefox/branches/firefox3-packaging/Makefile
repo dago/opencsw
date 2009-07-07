@@ -22,6 +22,8 @@ SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
 # Defines the list of patches to be applied to the sources
 PATCHFILES = autoconf.mk.in.diff
+PATCHFILES += configure.diff
+PATCHFILES += nsPluginsDirUnix.cpp.diff
 PATCHFILES += packager.mk.diff
 PATCHFILES += jemalloc.c.diff
 PATCHFILES += nsMathUtils.h.diff

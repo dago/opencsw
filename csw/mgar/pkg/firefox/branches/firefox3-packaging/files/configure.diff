@@ -1,0 +1,25 @@
+diff --speed-large-files --minimal -Nru firefox.orig/configure firefox/configure
+--- firefox.orig/configure      2009-07-07 21:46:57.267011389 +0200
++++ firefox/configure   	2009-07-07 21:49:10.319971404 +0200
+@@ -4382,8 +4382,8 @@
+     /usr/local/x11r5/include  \
+     /usr/lpp/Xamples/include  \
+                               \
+-    /usr/openwin/include      \
+-    /usr/openwin/share/include \
++    /opt/csw/X11/include      \
++    /opt/csw/X11/share/include \
+     ; \
+   do
+     if test -r "$ac_dir/$x_direct_test_include"; then
+@@ -4458,8 +4458,8 @@
+     /usr/lpp/Xamples/lib  \
+     /lib/usr/lib/X11     \
+                           \
+-    /usr/openwin/lib      \
+-    /usr/openwin/share/lib \
++    /opt/csw/X11/lib      \
++    /opt/csw/X11/share/lib \
+     ; \
+ do
+   for ac_extension in a so sl; do
