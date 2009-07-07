@@ -21,12 +21,12 @@ UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 #DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWbind,preinstall preremove)
-DISTFILES += $(,CSWbind,preinstall preremove)
 
 PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils
+
 CATALOGNAME_CSWbinddevel = bind_devel
 CATALOGNAME_CSWbindutils = bind_utils
+
 ARCHALL_CSWbinddevel = 1
 
 LICENSE = COPYRIGHT
@@ -58,6 +58,7 @@ PKGFILES_CSWbinddevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibbind   = $(libdir)/.*
 PKGFILES_CSWbindutils = $(bindir)/.*
 
+# checkpkg can't handle split packages
 ENABLE_CHECK = 0
 
 INSTALL_SCRIPTS = custom
