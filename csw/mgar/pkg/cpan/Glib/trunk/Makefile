@@ -18,8 +18,6 @@ REQUIRED_PKGS_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf CSWggettextrt C
 CATALOGNAME 	= pm_glib
 PACKAGES	= CSWpmglib
 
-# ARCHALL_CSWpmglib = 1
-
 LICENSE = README
 
 include gar/category.mk
