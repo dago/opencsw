@@ -21,7 +21,8 @@ UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 #DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWbind,preinstall preremove)
+#DISTFILES += $(call admfiles,CSWbind,preinstall preremove)
+DISTFILES += $(,CSWbind,preinstall preremove)
 
 PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils
 CATALOGNAME_CSWbinddevel = bind_devel
@@ -65,12 +66,13 @@ INSTALL_SCRIPTS = custom
 PROTOTYPE_FILTER  = awk ' \
 	$$$$3 ~ /\/init.d\/cswnamed$$$$/ { $$$$2 = "cswinitsmf" } \
 	$$$$3 ~ /\/named.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-	$$$$3 ~ /\/var\/opt\/csw\/named/ { $$$$5 = "named" } \
+	$$$$3 ~ /\/var\/opt\/csw\/named/ { $$$$5 = "named" ; $$$$2 = "ugfiles" } \
+	$$$$3 ~ /\/CSWbind\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } \
 	{ print }'
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 # use usergroup class also
-SPKG_CLASSES_CSWbind = none cswcpsampleconf cswinitsmf
+SPKG_CLASSES_CSWbind = none cswusergroup cswugfiles cswcpsampleconf cswinitsmf
 
 include gar/category.mk
 
@@ -83,10 +85,11 @@ install-custom:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
 	@cp $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf.CSW
+	@ginstall -d $(DESTDIR)/etc/opt/csw/CSWbind
+	@cp $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/CSWbind/
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
 	@touch $(DESTDIR)/var/opt/csw/named/named.pid
-# add usergroup conf file
 	@$(MAKECOOKIE)
