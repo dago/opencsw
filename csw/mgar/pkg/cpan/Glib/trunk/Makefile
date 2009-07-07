@@ -12,13 +12,13 @@ define BLURB
   environment, and are used in many unrelated projects.
 endef
 
-PREREQUISITE_PKGS 		= CSWpmextutilsdepends CSWpmextutpkgconf
-REQUIRED_PKGS_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf
+PREREQUISITE_PKGS 	= CSWpmextutilsdepends CSWpmextutpkgconf
+REQUIRED_PKGS_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf CSWggettextrt CSWglib2
 
-CATALOGNAME = pm_glib
+CATALOGNAME 	= pm_glib
 PACKAGES	= CSWpmglib
 
-ARCHALL_CSWpmglib = 1
+# ARCHALL_CSWpmglib = 1
 
 LICENSE = README
 
