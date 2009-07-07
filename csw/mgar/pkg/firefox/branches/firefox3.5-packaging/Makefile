@@ -24,7 +24,7 @@ SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 PATCHFILES += jemalloc.c.diff
 PATCHFILES += jsstdint.h.diff
 PATCHFILES += Nativei386.h.diff
-PATCHFILES = autoconf.mk.in.diff
+PATCHFILES += autoconf.mk.in.diff
 PATCHFILES += packager.mk.diff
 # PATCHFILES += nsMathUtils.h.diff
 # PATCHFILES += file_id.cc.diff
@@ -51,11 +51,10 @@ CFLAGS += -DG_HAVE_ISO_VARARGS
 CXXFLAGS+= -DG_HAVE_ISO_VARARGS 
 CXXFLAGS+= -D_XOPEN_SOURCE=500 -D_XPG5 
 
-LDFLAGS+=-dy
 # LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
-PERL=/opt/csw/bin/perl
-export PERL CFLAGS CXXFLAGS LDFLAGS
+# PERL=/opt/csw/bin/perl
+# export PERL 
 
 CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/firefox
 
