@@ -1,5 +1,3 @@
-# remove named.pid or change to type v
-
 GARNAME = bind
 GARVERSION = 9.6.1
 #RELEASE = P1
@@ -16,7 +14,6 @@ define BLURB
   high-volume and high-reliability applications.
 endef
 
-UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 #MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
 #DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
@@ -42,9 +39,10 @@ REQUIRED_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 REQUIRED_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(-([A-Z][0-9]))?
+UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
+UFILES_REGEX = (\d+(?:\.\d+)*)
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libtool
 CONFIGURE_ARGS += --with-openssl=/opt/csw
 CONFIGURE_ARGS += --enable-threads
@@ -63,7 +61,6 @@ ENABLE_CHECK = 0
 
 INSTALL_SCRIPTS = custom
 
-# fix class for conf file and named files
 PROTOTYPE_FILTER  = awk ' \
 	$$$$3 ~ /\/init.d\/cswnamed$$$$/ { $$$$2 = "cswinitsmf" } \
 	$$$$3 ~ /\/named.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
@@ -72,7 +69,6 @@ PROTOTYPE_FILTER  = awk ' \
 	{ print }'
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
-# use usergroup class also
 SPKG_CLASSES_CSWbind = none cswusergroup cswugfiles cswcpsampleconf cswinitsmf
 
 include gar/category.mk
@@ -86,8 +82,8 @@ install-custom:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
 	@cp $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf.CSW
-	@ginstall -d $(DESTDIR)/etc/opt/csw/CSWbind
-	@cp $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/CSWbind/
+	@ginstall -d $(DESTDIR)/opt/csw/etc/CSWbind
+	@cp $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/CSWbind/
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	( cd $(WORKSRC) ; \
