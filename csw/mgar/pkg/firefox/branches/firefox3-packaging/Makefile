@@ -20,6 +20,22 @@ PACKAGES 		= CSWfirefox
 CATALOGNAME_CSWfirefox 	= $(GARNAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
+REQUIRED_PKGS_CSWfirefox  = CSWdbusglib
+REQUIRED_PKGS_CSWfirefox += CSWfconfig
+REQUIRED_PKGS_CSWfirefox += CSWftype2
+REQUIRED_PKGS_CSWfirefox += CSWgconf2
+REQUIRED_PKGS_CSWfirefox += CSWglib2
+REQUIRED_PKGS_CSWfirefox += CSWgnomevfs2
+REQUIRED_PKGS_CSWfirefox += CSWgtk2
+REQUIRED_PKGS_CSWfirefox += CSWlibatk
+REQUIRED_PKGS_CSWfirefox += CSWlibcairo
+REQUIRED_PKGS_CSWfirefox += CSWlibdbus
+REQUIRED_PKGS_CSWfirefox += CSWlibgnome
+REQUIRED_PKGS_CSWfirefox += CSWlibx11
+REQUIRED_PKGS_CSWfirefox += CSWlibxrender
+REQUIRED_PKGS_CSWfirefox += CSWpango
+REQUIRED_PKGS_CSWfirefox += CSWsqlite3rt
+
 # Defines the list of patches to be applied to the sources
 PATCHFILES = autoconf.mk.in.diff
 PATCHFILES += configure.diff
@@ -33,6 +49,9 @@ PATCHFILES += solaris_lwp.h.diff
 PATCHFILES += nsNativeApSuportUnix.cpp.diff
 PATCHFILES += nsExceptionHandler.cpp.diff 
 
+# pkg-config options
+EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
+
 PERL=/opt/csw/bin/perl
 CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
 CFLAGS+=-xlibmil -D__solaris__ 
@@ -43,7 +62,7 @@ LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefo
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
 
-CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/firefox
+CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/firefox --disable-crashreporter
 
 TEST_SCRIPTS = 
 
@@ -55,6 +74,7 @@ WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 post-extract:
 	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)
+	@cp $(FILEDIR)/stdbool.h $(WORK_BUILD)/memory/jemalloc
 	@$(MAKECOOKIE)
 
 pre-configure:
