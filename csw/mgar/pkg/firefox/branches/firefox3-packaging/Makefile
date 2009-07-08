@@ -53,11 +53,15 @@ PATCHFILES += nsExceptionHandler.cpp.diff
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 PERL=/opt/csw/bin/perl
-CXXFLAGS+=-xlibmil -xlibmopt -features=tmplife -norunpath
-CFLAGS+=-xlibmil -D__solaris__ 
+CXXFLAGS +=-xlibmil -xlibmopt -features=tmplife -norunpath
+CFLAGS   +=-xlibmil -D__solaris__ 
+CFLAGS   += -DG_HAVE_ISO_VARARGS
+CXXFLAGS += -DG_HAVE_ISO_VARARGS
+CPPFLAGS  = -I/opt/csw/include -I/opt/csw/X11/include
+XCFLAGS   = -I/opt/csw/include -I/opt/csw/X11/include
 
-CFLAGS+= -DG_HAVE_ISO_VARARGS
-CXXFLAGS+= -DG_HAVE_ISO_VARARGS
+EXTRA_CONFIGURE_EXPORTS = XCFLAGS
+
 LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
 export PERL CFLAGS CXXFLAGS LDFLAGS
