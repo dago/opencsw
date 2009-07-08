@@ -59,7 +59,7 @@ CXXFLAGS+= -D_XOPEN_SOURCE=500 -D_XPG5
 # PERL=/opt/csw/bin/perl
 # export PERL 
 
-CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/firefox
+CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/firefox --disable-crashreporter
 
 TEST_SCRIPTS = 
 
