@@ -49,6 +49,7 @@ post-configure-modulated:
 	@perl -pi -e 's@-lssl -lcrypto -lcrypt@-lcrypt -lssl -lcrypto@' \
            ${WORKSRC}/src/Makefile
 
+
 # strange archive...
 post-build-modulated:
 	@chmod 751 $(WORKSRC)/x
@@ -56,3 +57,7 @@ post-build-modulated:
 # create config directory
 pre-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/$(SRCNAME)
+	ginstall -d $(DESTDIR)/var/opt/csw/run
+	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpd.h
+	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpwho-update.h
+	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/upload-pipe.h
