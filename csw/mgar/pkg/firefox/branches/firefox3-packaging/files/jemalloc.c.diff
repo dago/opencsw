@@ -13,3 +13,14 @@ diff --speed-large-files --minimal -Nru firefox.orig/memory/jemalloc/jemalloc.c 
  #include <stdlib.h>
  #include <string.h>
  #ifndef MOZ_MEMORY_DARWIN
+@@ -422,6 +422,12 @@
+ #endif
+ #endif
+ 
++#define issetugid() 0   
++char *strerror_r(int errnum, char *buf, size_t buflen)          
++{       
++    strncpy(buf, strerror(errnum), buflen);     
++}       
++
+ #define        SIZEOF_PTR              (1U << SIZEOF_PTR_2POW)
