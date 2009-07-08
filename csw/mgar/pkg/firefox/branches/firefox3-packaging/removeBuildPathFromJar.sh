@@ -18,3 +18,5 @@ rm $1
 jar cvf $BACKUP_OLD_DIR/$1 *
 
 cd $BACKUP_OLD_DIR
+
+rm -fr ~/.tempextractjar

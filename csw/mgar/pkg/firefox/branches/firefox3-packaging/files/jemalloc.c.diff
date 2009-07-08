@@ -24,3 +24,4 @@ diff --speed-large-files --minimal -Nru firefox.orig/memory/jemalloc/jemalloc.c 
 +}       
 +
  #define        SIZEOF_PTR              (1U << SIZEOF_PTR_2POW)
+

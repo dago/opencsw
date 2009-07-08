@@ -4,7 +4,7 @@ f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 c869762735a41bb30f417e510ccb7f31  download/configure.diff
 a71a4afaabc4d067f30d8fb184fea520  download/file_id.cc.diff
 b509f7c05e9566ed290e2c098316c7c3  download/firefox-3.0.11-source.tar.bz2
-0ec7159ba7a89a486fd21b97847368f5  download/jemalloc.c.diff
+759736d9c7ce8ab8616147843bd179bd  download/jemalloc.c.diff
 18b0cdc902caa4172b7f2d473239c9a9  download/md5.h.diff
 1a3d61e09378d28d9bc9f3df45a224bc  download/nsExceptionHandler.cpp.diff
 ca4162516d8c09deaa9f0b6f3b3ecffb  download/nsMathUtils.h.diff
