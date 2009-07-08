@@ -13,9 +13,10 @@ define BLURB
   conversation function is used (Authen::PAM::pam_default_conv).
 endef
 
-DISTFILES += CSWpmauthenpam.gspec
-
 # Disable interactive tests
 PATCHFILES = itest.diff
+# Fix names
+PACKAGES = CSWpmauthenpam
+CATALOGNAME = pm_authenpam
 
 include gar/category.mk
