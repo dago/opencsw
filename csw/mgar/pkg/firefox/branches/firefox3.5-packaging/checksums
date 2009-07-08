@@ -2,7 +2,10 @@ f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
 705741740ea1b5f2409bf4bfcf665220  download/Nativei386.h.diff
 8cd01e82aa312e79ae4f4f8c779174c6  download/autoconf.mk.in.diff
+37f4078ab1b34d16c1739d3b089b2947  download/configure.diff
 6dd59399db08963ef022a1d0e5010053  download/firefox-3.5-source.tar.bz2
 24e815d4265a9d0fe7786f3258e7dc5a  download/jemalloc.c.diff
+0589ca8ad5f6744f573bb8ce0ba71d78  download/js.src.configure.diff
 fafd09557dbb4d3acc01c51b78ce8120  download/jsstdint.h.diff
+f562a935a0fb2c5ad38f95af114d0a49  download/nsPluginsDirUnix.cpp.diff
 1de554cffc12f15bddf11ecdba0fe32d  download/packager.mk.diff
