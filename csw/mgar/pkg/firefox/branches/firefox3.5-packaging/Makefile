@@ -40,9 +40,6 @@ PATCHFILES += js.src.configure.diff
 # GARCOMPILER = SOS12
 GARCOMPILER = GCC4
 
-LD=/opt/csw/bin/gld
-EXTRA_CONFIGURE_EXPORTS = LD
-
 # pkg-config options
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
@@ -53,6 +50,12 @@ CFLAGS += -DG_HAVE_ISO_VARARGS
 # CXXFLAGS+= -xlibmil -xlibmopt -features=tmplife -norunpath
 CXXFLAGS+= -DG_HAVE_ISO_VARARGS 
 CXXFLAGS+= -D_XOPEN_SOURCE=500 -D_XPG5 
+
+CPPFLAGS  = -I/opt/csw/include -I/opt/csw/X11/include
+XCFLAGS   = -I/opt/csw/include -I/opt/csw/X11/include
+
+LD=/opt/csw/bin/gld
+EXTRA_CONFIGURE_EXPORTS = XCFLAGS LD
 
 # LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
