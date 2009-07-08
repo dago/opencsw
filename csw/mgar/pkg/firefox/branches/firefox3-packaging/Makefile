@@ -82,7 +82,7 @@ pre-configure:
 
 pre-install:
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
-	( cd $(WORK_INSTALL)/opt/csw/bin && if [ -L firefox ] ; then rm firefox ; fi  && ln -s ../mozilla/firefox/bin/firefox . )
+	( cd $(WORK_INSTALL)/opt/csw/bin && ln -sf ../mozilla/firefox/bin/firefox . )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )
 	( cp $(WORK_BUILD)/other-licenses/branding/firefox/mozicon128.png $(WORK_INSTALL)/opt/csw/share/pixmaps/firefox.png )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/applications )
@@ -92,8 +92,6 @@ pre-install:
 
 post-install:
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
-	( mv $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config.temp && gsed -e s\_-L$(WORK_INSTALL)/opt/csw/lib\_\_g  $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config.temp > $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config && rm $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config.temp )
-	( mv $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp && gsed -e s\_-L$(WORK_INSTALL)/opt/csw/lib\_\_g  $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp > $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc && rm $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp )
 	( gfind $(WORK_INSTALL)/opt/csw -name chromelist.txt -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )
 	( gfind $(WORK_INSTALL)/opt/csw/mozilla/firefox -name "*.js" -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )
 	( gfind $(WORK_INSTALL)/opt/csw/mozilla/firefox -name "*.jar" -exec bash -c "`pwd`/removeBuildPathFromJar.sh {} `pwd` $(WORKDIR) $(DISTNAME)" \; )
