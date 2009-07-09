@@ -1,9 +1,9 @@
 GARNAME = neon
-GARVERSION = 0.28.4
+GARVERSION = 0.28.5
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 0.26.4 0.28.4
+MODULATIONS_GARVERSION = 0.26.4 0.28.5
 
 DESCRIPTION = Neon HTTP and WebDAV client library
 define BLURB
@@ -41,18 +41,18 @@ MERGE_DIRS_isa-i386-garversion-0.26.4 = $(libdir)
 MERGE_SCRIPTS_isa-amd64-garversion-0.26.4 = copy-relocated-only
 MERGE_DIRS_isa-amd64-garversion-0.26.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-garversion-0.28.4 = copy-all
-MERGE_SCRIPTS_isa-amd64-garversion-0.28.4 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-0.28.4 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-i386-garversion-0.28.5 = copy-all
+MERGE_SCRIPTS_isa-amd64-garversion-0.28.5 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-0.28.5 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 MERGE_SCRIPTS_isa-sparcv8-garversion-0.26.4 = copy-only
 MERGE_DIRS_isa-sparcv8-garversion-0.26.4 = $(libdir)
 MERGE_SCRIPTS_isa-sparcv9-garversion-0.26.4 = copy-relocated-only
 MERGE_DIRS_isa-sparcv9-garversion-0.26.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-0.28.4 = copy-all
-MERGE_SCRIPTS_isa-sparcv9-garversion-0.28.4 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-0.28.4 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-garversion-0.28.5 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-garversion-0.28.5 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-0.28.5 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWneon-devel = $(PKGFILES_DEVEL)
 
