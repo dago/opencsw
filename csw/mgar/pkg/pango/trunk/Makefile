@@ -37,6 +37,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 BUILD64 = 1
 NOISALIST = 1
+ISAEXEC_EXCLUDE_FILES = $(bindir)/pango-querymodules
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-x --enable-gtk-doc
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
@@ -58,3 +59,6 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/preload\.1\.gz
 
 include gar/category.mk
 
+post-merge:
+	mkdir -p $(PKGROOT)$(sysconfdir)/64/pango
+	@$(MAKECOOKIE)
