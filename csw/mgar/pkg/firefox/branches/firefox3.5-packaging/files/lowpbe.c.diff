@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru firefox.orig/security/nss/lib/softoken/lowpbe.c firefox/security/nss/lib/softoken/lowpbe.c
+--- firefox.orig/security/nss/lib/softoken/lowpbe.c    2009-07-10 22:58:22.364751249 +0200
++++ firefox/security/nss/lib/softoken/lowpbe.c       2009-07-10 22:58:22.364751249 +0200
+@@ -36,6 +36,7 @@
+
+ #include "plarena.h"
+
++#include "secoidt.h"
+ #include "seccomon.h"
+ #include "secitem.h"
+ #include "secport.h"

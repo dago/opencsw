@@ -24,7 +24,7 @@ diff --speed-large-files --minimal -Nru firefox.orig/security/coreconf/SunOS5.mk
  endif
 
 -INCLUDES   += -I/usr/dt/include -I/usr/openwin/include
-+INCLUDES   += -I/usr/dt/include -I/opt/csw/X11/include -I/usr/include -I/usr/include/mps
++INCLUDES   += -I/usr/dt/include -I/opt/csw/include -I/opt/csw/X11/include -I/usr/include -I../../../../dist/include/nspr
 
  RANLIB      = echo
  CPU_ARCH    = sparc

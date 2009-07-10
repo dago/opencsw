@@ -1,7 +1,7 @@
 f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
 705741740ea1b5f2409bf4bfcf665220  download/Nativei386.h.diff
-e3d4fc128e15ef832ab2dbcc3fcdd05a  download/SunOS5.mk.diff
+70627abe2428c903bfa13d409f1c8bb1  download/SunOS5.mk.diff
 8cd01e82aa312e79ae4f4f8c779174c6  download/autoconf.mk.in.diff
 37f4078ab1b34d16c1739d3b089b2947  download/configure.diff
 6dd59399db08963ef022a1d0e5010053  download/firefox-3.5-source.tar.bz2

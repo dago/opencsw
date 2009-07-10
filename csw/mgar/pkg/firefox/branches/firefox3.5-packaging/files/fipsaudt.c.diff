@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru firefox.orig/security/nss/lib/softoken/fipsaudt.c firefox/security/nss/lib/softoken/fipsaudt.c
+--- firefox.orig/security/nss/lib/softoken/fipsaudt.c    2009-07-10 22:58:22.364751249 +0200
++++ firefox/security/nss/lib/softoken/fipsaudt.c       2009-07-10 22:58:22.364751249 +0200
+@@ -39,7 +39,7 @@
+  * Level 2.
+  */
+
+-#include "prprf.h"
++#include "../../../../dist/include/nspr/prprf.h"
+ #include "softoken.h"
+
+ /*
