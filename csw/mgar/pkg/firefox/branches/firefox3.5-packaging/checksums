@@ -12,4 +12,4 @@ fafd09557dbb4d3acc01c51b78ce8120  download/jsstdint.h.diff
 3ad7b67c350157d9b54270139e36c107  download/lowpbe.c.diff
 f562a935a0fb2c5ad38f95af114d0a49  download/nsPluginsDirUnix.cpp.diff
 1de554cffc12f15bddf11ecdba0fe32d  download/packager.mk.diff
-49140d25970bc0422700a7a0bd35eaee  download/softoken.mk.diff
+46e4778961dea277f8ee657f475a89dd  download/softoken.config.mk.diff
