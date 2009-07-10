@@ -29,6 +29,7 @@ PATCHFILES += packager.mk.diff
 PATCHFILES += configure.diff
 PATCHFILES += nsPluginsDirUnix.cpp.diff
 PATCHFILES += js.src.configure.diff
+PATCHFILES += SunOS5.mk.diff
 # PATCHFILES += nsMathUtils.h.diff
 # PATCHFILES += file_id.cc.diff
 # PATCHFILES += md5.h.diff
