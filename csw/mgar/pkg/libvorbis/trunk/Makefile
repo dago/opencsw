@@ -1,5 +1,5 @@
 GARNAME = libvorbis
-GARVERSION = 1.2.2
+GARVERSION = 1.2.3
 CATEGORIES = lib
 
 DESCRIPTION = Vorbis codec library.
