@@ -1,6 +1,6 @@
-diff -Naur libX11-1.2.1.orig/include/X11/Xlib.h libX11-1.2.1.patched/include/X11/Xlib.h
---- libX11-1.2.1.orig/include/X11/Xlib.h	2008-10-07 19:18:17.000000000 +0200
-+++ libX11-1.2.1.patched/include/X11/Xlib.h	2009-05-05 13:49:27.444486000 +0200
+diff -Naur libX11-1.2.2.orig/include/X11/Xlib.h libX11-1.2.2.patched/include/X11/Xlib.h
+--- libX11-1.2.2.orig/include/X11/Xlib.h	2009-07-09 05:55:54.000000000 +0200
++++ libX11-1.2.2.patched/include/X11/Xlib.h	2009-07-11 23:36:25.003094998 +0200
 @@ -38,6 +38,14 @@
  
  #define XlibSpecificationRelease 6
@@ -13,6 +13,6 @@ diff -Naur libX11-1.2.1.orig/include/X11/Xlib.h libX11-1.2.1.patched/include/X11
 +# define _X_ATTRIBUTE_PRINTF(x,y)
 +#endif /* GNUC >= 4 */
 +
- #ifdef USG
- #ifndef __TYPES__
- #include <sys/types.h>			/* forgot to protect it... */
+ #include <sys/types.h>
+ 
+ #if defined(__SCO__) || defined(__UNIXWARE__)

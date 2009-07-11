@@ -1,5 +1,5 @@
 GARNAME = libX11
-GARVERSION = 1.2.1
+GARVERSION = 1.2.2
 CATEGORIES = x11
 
 DESCRIPTION = X11 client-side library
