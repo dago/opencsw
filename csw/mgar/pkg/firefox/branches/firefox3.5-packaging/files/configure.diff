@@ -23,3 +23,12 @@ diff --speed-large-files --minimal -Nru firefox.orig/configure firefox/configure
      ; \
  do
    for ac_extension in a so sl; do
+@@ -5185,7 +5185,7 @@
+
+ MOZ_JS_LIBS='-L$(LIBXUL_DIST)/bin -lmozjs'
+ DYNAMIC_XPCOM_LIBS='-L$(LIBXUL_DIST)/bin -lxpcom -lxpcom_core'
+-MOZ_FIX_LINK_PATHS='-Wl,-rpath-link,$(LIBXUL_DIST)/bin -Wl,-rpath-link,$(prefix)/lib'
++MOZ_FIX_LINK_PATHS='-Wl,-R,$(LIBXUL_DIST)/bin -Wl,-R,$(prefix)/lib'
+ XPCOM_FROZEN_LDOPTS='-L$(LIBXUL_DIST)/bin -lxpcom'
+ LIBXUL_LIBS='$(XPCOM_FROZEN_LDOPTS) -lxul'
+ XPCOM_GLUE_LDOPTS='$(LIBXUL_DIST)/lib/$(LIB_PREFIX)xpcomglue_s.$(LIB_SUFFIX) $(XPCOM_FROZEN_LDOPTS)'

@@ -6,7 +6,7 @@ diff --speed-large-files --minimal -Nru firefox.orig/security/nss/lib/softoken/c
  # The -R '$ORIGIN' linker option instructs this library to search for its
  # dependencies in the same directory where it resides.
 -MKSHLIB += -R '$$ORIGIN'
-+MKSHLIB += -R '$$ORIGIN' -L../../../../dist/lib
++MKSHLIB += -R '$$ORIGIN' -L../../../../dist/lib -L/opt/csw/lib 
  OS_LIBS += -lbsm 
  endif
 

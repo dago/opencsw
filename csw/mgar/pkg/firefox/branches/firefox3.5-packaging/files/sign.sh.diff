@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru firefox.orig/security/nss/cmd/shlibsign/sign.sh firefox/security/nss/cmd/shlibsign/sign.sh
+--- firefox.orig/security/nss/cmd/shlibsign/sign.sh    2007-10-21 15:36:05.000000000 +0000
++++ firefox/security/nss/cmd/shlibsign/sign.sh       2008-11-24 21:59:04.857036600 +0000
+@@ -44,7 +44,7 @@
+     export LIBPATH
+     SHLIB_PATH=${1}/lib:${4}:$SHLIB_PATH
+     export SHLIB_PATH
+-    LD_LIBRARY_PATH=${1}/lib:${4}:$LD_LIBRARY_PATH
++    LD_LIBRARY_PATH=${1}/lib:${4}:$LD_LIBRARY_PATH:/opt/csw/lib
+     export LD_LIBRARY_PATH
+     DYLD_LIBRARY_PATH=${1}/lib:${4}:$DYLD_LIBRARY_PATH
+     export DYLD_LIBRARY_PATH

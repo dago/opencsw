@@ -20,6 +20,29 @@ PACKAGES 		= CSWfirefox
 CATALOGNAME_CSWfirefox 	= $(GARNAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
+# Defines dependencies
+REQUIRED_PKGS_CSWfirefox += CSWdbusglib
+REQUIRED_PKGS_CSWfirefox += CSWfconfig
+REQUIRED_PKGS_CSWfirefox += CSWftype2
+REQUIRED_PKGS_CSWfirefox += CSWgcc3core
+REQUIRED_PKGS_CSWfirefox += CSWgcc3corert
+REQUIRED_PKGS_CSWfirefox += CSWgcc3g++
+REQUIRED_PKGS_CSWfirefox += CSWgcc3g++rt
+REQUIRED_PKGS_CSWfirefox += CSWgcc4corert
+REQUIRED_PKGS_CSWfirefox += CSWgcc4g++rt
+REQUIRED_PKGS_CSWfirefox += CSWgconf2
+REQUIRED_PKGS_CSWfirefox += CSWglib2
+REQUIRED_PKGS_CSWfirefox += CSWgnomevfs2
+REQUIRED_PKGS_CSWfirefox += CSWgtk2
+REQUIRED_PKGS_CSWfirefox += CSWlibatk
+REQUIRED_PKGS_CSWfirefox += CSWlibcairo
+REQUIRED_PKGS_CSWfirefox += CSWlibdbus
+REQUIRED_PKGS_CSWfirefox += CSWlibgnome
+REQUIRED_PKGS_CSWfirefox += CSWlibxrender
+REQUIRED_PKGS_CSWfirefox += CSWpango
+REQUIRED_PKGS_CSWfirefox += CSWsqlite3rt
+REQUIRED_PKGS_CSWfirefox += CSWzlib
+
 # Defines the list of patches to be applied to the sources
 PATCHFILES += jemalloc.c.diff
 PATCHFILES += jsstdint.h.diff
@@ -33,6 +56,11 @@ PATCHFILES += SunOS5.mk.diff
 PATCHFILES += lowpbe.c.diff
 PATCHFILES += softoken.config.mk.diff
 PATCHFILES += fipsaudt.c.diff
+PATCHFILES += sign.sh.diff
+PATCHFILES += js.configure.diff
+PATCHFILES += libxul.Makefile.in.diff
+PATCHFILES += libxul.Makefile.diff
+PATCHFILES += npruntime.h.diff
 # PATCHFILES += nsMathUtils.h.diff
 # PATCHFILES += file_id.cc.diff
 # PATCHFILES += md5.h.diff
