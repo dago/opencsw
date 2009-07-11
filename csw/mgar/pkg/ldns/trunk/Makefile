@@ -1,5 +1,5 @@
 GARNAME = ldns
-GARVERSION = 1.5.1
+GARVERSION = 1.6.0
 CATEGORIES = lib
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
@@ -13,7 +13,7 @@ endef
 
 MASTER_SITES = http://www.nlnetlabs.nl/projects/ldns/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += doxyparse.diff
+DISTFILES += CSWldns.doxyparse.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -22,24 +22,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns\
 
-ifeq ($(shell uname -r),5.8)
-	GARCOMPILER = GCC4
-	REQUIRED_PKGS += CSWgcc4corert
-	ifeq ($(shell uname -p),sparc)
-		BUILD64 = 1
-	endif
-endif
-
-ifeq ($(shell uname -r),5.10)
-	GARCOMPILER = SOS12
-endif
-
+BUILD64 = 1
 EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
 REQUIRED_PKGS += CSWosslrt
 
-PATCHFILES = doxyparse.diff
+PATCHFILES = CSWldns.doxyparse.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
