@@ -155,12 +155,14 @@ SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(SAMPLECONF),$(if $(filter cswsampleconf,$(SPKG_CLASSES)),,cswsampleconf))
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf))
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(USERGROUP),$(if $(filter cswusergroup,$(SPKG_CLASSES)),,cswusergroup))
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF),)
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(SAMPLECONF),$$F[1] = "cswsampleconf" if ( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(PRESERVECONF),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
 _EXTRA_GAR_PKGS += CSWcswclassutils
 endif
