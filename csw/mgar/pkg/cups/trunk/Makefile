@@ -1,5 +1,5 @@
 GARNAME = cups
-GARVERSION = 1.3.9
+GARVERSION = 1.3.11
 CATEGORIES = net
 
 define BLURB
@@ -32,12 +32,15 @@ DISTFILES += $(call admfiles,CSWcups,depend prototype)
 
 DISTFILES += i.smfyes i.smfno space checkinstall
 
+REQUIRED_PKGS = CSWkrb5lib CSWosslrt
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWoldapdevel
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) --enable-pdftops
 
 # This is a hack that's needed, because configure (Makedefs) will otherwise
 # plase -ltiff, etc. first and -L/opt/csw/lib afterwards, thus being unable
@@ -86,8 +89,10 @@ post-install:
 	fi)
 	(cd $(DESTDIR); \
 	if [ -d usr/share ]; then \
-		mv usr/share/* ./$(prefix)/share; \
-		rmdir -p usr/share; \
+		cd usr/share; \
+		gtar cf - * | gtar xf - -C ./$(prefix)/share; \
+		cd ../..; \
+		rm -rf usr/share; \
 	fi)
 	(cd $(DESTDIR)$(prefix)/etc/cups; \
 	for i in cupsd.conf; do \
