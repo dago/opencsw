@@ -23,7 +23,7 @@ REQUIRED_PKGS_CSWrubydoc = CSWruby
 
 REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
 
-REQUIRED_PKGS_CSWrubydev = CSWruby CSWgcc4core
+REQUIRED_PKGS_CSWrubydev = CSWruby CSWgcc4core CSWgfile
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
