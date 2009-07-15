@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Disabling svc:/system/system-log:default"
+svcadm disable svc:/system/system-log:default
