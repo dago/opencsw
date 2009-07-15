@@ -40,6 +40,7 @@ REQUIRED_PKGS_CSWthunderbird += CSWglib2
 REQUIRED_PKGS_CSWthunderbird += CSWgnomekeyring 
 REQUIRED_PKGS_CSWthunderbird += CSWgnomevfs2
 REQUIRED_PKGS_CSWthunderbird += CSWgtk2 
+REQUIRED_PKGS_CSWthunderbird += CSWlibx11
 REQUIRED_PKGS_CSWthunderbird += CSWlibart 
 REQUIRED_PKGS_CSWthunderbird += CSWlibatk 
 REQUIRED_PKGS_CSWthunderbird += CSWlibbonoboui 
