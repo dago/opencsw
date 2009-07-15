@@ -25,8 +25,37 @@ CONFIGURE_ARGS += --with-ssl=$(prefix)
 
 TEST_SCRIPTS =
 
+INSTALL_SCRIPTS = bin conf man
+
 include gar/category.mk
 
-# fix sysconfdir, to honor $(DESTDIR)
-pre-build-modulated:
-	@perl -pi -e 's@sysconfdir = /opt/csw/etc@sysconfdir = \$(DESTDIR)/opt/csw/etc@' ${WORKSRC}/doc/Makefile
+# install is broken..
+bin-list  = $(WORKSRC)/src/siege
+bin-list += $(WORKSRC)/utils/bombardment
+bin-list += $(WORKSRC)/utils/siege2csv.pl
+bin-list += $(WORKSRC)/utils/siege.config
+conf-list  = $(WORKSRC)/doc/urls.txt
+conf-list += $(WORKSRC)/doc/siegerc
+
+install-bin:
+	ginstall -d $(DESTDIR)$(bindir)
+	@( for file in $(bin-list) ; do \
+		ginstall -m 644 $$file $(DESTDIR)$(bindir) ; \
+			done )
+
+install-conf:
+	ginstall -d $(DESTDIR)$(sysconfdir)/$(GARNAME)
+	@( for file in $(conf-list) ; do \
+		ginstall -m 644 $$file $(DESTDIR)$(sysconfdir)/$(GARNAME) ; \
+			done )
+
+install-man:
+	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall -m 644 $(WORKSRC)/doc/siege.1 $(DESTDIR)$(mandir)/man1
+	ginstall -m 644 $(WORKSRC)/doc/bombardment.1 $(DESTDIR)$(mandir)/man1
+	ginstall -m 644 $(WORKSRC)/doc/siege2csv.1 $(DESTDIR)$(mandir)/man1
+	ginstall -d $(DESTDIR)$(mandir)/man5
+	ginstall -m 644 $(WORKSRC)/doc/urls_txt.5 $(DESTDIR)$(mandir)/man5
+	ginstall -d $(DESTDIR)$(mandir)/man7
+	ginstall -m 644 $(WORKSRC)/doc/layingsiege.7 $(DESTDIR)$(mandir)/man7
+	@$(MAKECOOKIE)
