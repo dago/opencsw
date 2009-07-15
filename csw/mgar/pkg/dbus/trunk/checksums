@@ -1,6 +1,6 @@
-39bd582c3b06a261cac44d4cab6fd60b  download/dbus-1.2.12.tar.gz
 3b3e5d4ea2722ae6258c8ee0f7688c95  download/CSWdbus.gspec
 6e26e51243c4551ac222112edf67b5db  download/CSWdbus.preinstall
-1d5dad88ae16c76d47398f8e9c2e09a0  download/CSWlibdbusdev.gspec
 00bb177908f6107ef2f6caa082475f34  download/CSWlibdbus.gspec
-92b99c85d75cac9a2d5f4d3fc43a278d  download/cswdbus
+1d5dad88ae16c76d47398f8e9c2e09a0  download/CSWlibdbusdev.gspec
+2c465012736d7810257573dff4cd04b7  download/cswdbus
+39bd582c3b06a261cac44d4cab6fd60b  download/dbus-1.2.12.tar.gz
