@@ -1,5 +1,5 @@
 GARNAME      = dbus
-GARVERSION   = 1.2.12
+GARVERSION   = 1.2.16
 CATEGORIES   = lib
 
 DESCRIPTION  = DBus Message Bus System
