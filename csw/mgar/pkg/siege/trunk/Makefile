@@ -51,9 +51,9 @@ install-conf:
 
 install-man:
 	ginstall -d $(DESTDIR)$(mandir)/man1
-	ginstall -m 644 $(WORKSRC)/doc/siege.1 $(DESTDIR)$(mandir)/man1
-	ginstall -m 644 $(WORKSRC)/doc/bombardment.1 $(DESTDIR)$(mandir)/man1
-	ginstall -m 644 $(WORKSRC)/doc/siege2csv.1 $(DESTDIR)$(mandir)/man1
+	ginstall -m 751 $(WORKSRC)/doc/siege.1 $(DESTDIR)$(mandir)/man1
+	ginstall -m 751 $(WORKSRC)/doc/bombardment.1 $(DESTDIR)$(mandir)/man1
+	ginstall -m 751 $(WORKSRC)/doc/siege2csv.1 $(DESTDIR)$(mandir)/man1
 	ginstall -d $(DESTDIR)$(mandir)/man5
 	ginstall -m 644 $(WORKSRC)/doc/urls_txt.5 $(DESTDIR)$(mandir)/man5
 	ginstall -d $(DESTDIR)$(mandir)/man7
