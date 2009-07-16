@@ -1,5 +1,5 @@
 GARNAME      = sqlite3
-GARVERSION   = 3.6.10
+GARVERSION   = 3.6.16
 CATEGORIES   = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
@@ -40,6 +40,7 @@ EXTRA_BUILD_ISAS_sparc = sparcv9
 
 # Add some patches to the sources
 PATCHFILES     = gar-base.diff
+PATCHFILES    += shell.c.diff
 
 # Do not execute make test step
 TEST_SCRIPTS   = none
