@@ -10,7 +10,7 @@ TEST_SCRIPTS =
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
-PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev
+PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode
 
 ARCHALL_CSWrubydoc = 1
 
@@ -24,6 +24,8 @@ REQUIRED_PKGS_CSWrubydoc = CSWruby
 REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
 
 REQUIRED_PKGS_CSWrubydev = CSWruby CSWgcc4core CSWgfile
+
+REQUIRED_PKGS_CSWrubymode = CSWruby CSWemacscommon
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -42,11 +44,15 @@ SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
 
 SPKG_DESC_CSWrubydev = Ruby Extension Development Files
 
+SPKG_DESC_CSWrubymode = Ruby major mode for Emacs
+
 PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
 
 PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 PKGFILES_CSWrubydev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
+
+PKGFILES_CSWrubymode = $(datadir)/emacs/site-lisp/.*
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
@@ -88,12 +94,17 @@ MERGE_EXCLUDE_STATICLIBS =
 
 include gar/category.mk
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
 
-PI_TARGETS  = samples rbconfig rbscripts
+PI_TARGETS  = samples rbconfig rbscripts rubymode
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
+
+rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
+rubymode:
+	@(mkdir -p $(RMDIR); \
+		cp $(WORKSRC)/misc/*el $(RMDIR))
 
 # Fix up rbconfig
 rbconfig:
