@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru munin-1.3.4.orig/server/munin-graph.in munin-1.3.4/server/munin-graph.in
+--- munin-1.3.4.orig/server/munin-graph.in	2008-03-08 02:42:40.000000000 +0100
++++ munin-1.3.4/server/munin-graph.in	2009-07-07 10:51:42.606467982 +0200
+@@ -827,7 +827,7 @@
+ 	my @complete = ();
+ 	if ($RRDkludge) {
+ 	    push (@complete,
+-		  '--font' ,'LEGEND:7:@@LIBDIR@@/VeraMono.ttf',
++		  '--font' ,'LEGEND:7:@@LIBDIR@@/monospace',
+ 		  '--font' ,'UNIT:7:@@LIBDIR@@/VeraMono.ttf',
+ 		  '--font' ,'AXIS:7:@@LIBDIR@@/VeraMono.ttf');
+ 	}

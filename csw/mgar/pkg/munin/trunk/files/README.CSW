@@ -1,0 +1,9 @@
+To configure the Apache webserver you only need to include the file
+/etc/opt/csw/munin/apache/apache-munin.conf into your Apache main
+configuration:
+
+Include /etc/opt/csw/munin/apache/apache-munin.conf
+
+If you want CGI support for Munin, include the file apache-munin-cgi.conf:
+
+Include /etc/opt/csw/munin/apache/apache-munin-cgi.conf

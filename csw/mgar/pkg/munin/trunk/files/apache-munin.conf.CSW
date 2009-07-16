@@ -1,0 +1,10 @@
+# Apache configurations for accessing munin 
+
+Alias /munin/ "/var/opt/csw/munin/www/"
+
+<Directory "/var/opt/csw/munin/www/">
+	Options None
+	AllowOverride None
+	Order allow,deny
+	Allow from all
+</Directory>

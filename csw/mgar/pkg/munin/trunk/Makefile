@@ -16,13 +16,16 @@ DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmuninmaster, prototype postinstall)
 DISTFILES += $(call admfiles,CSWmuninnode, prototype)
 DISTFILES += cswusergroup
-DISTFILES += apache.conf-sample
+DISTFILES += apache-munin.conf.CSW apache-munin-cgi.conf.CSW
+DISTFILES += README.CSW
 
 PATCHFILES += makefile.diff
 PATCHFILES += makefile.config.diff 
 PATCHFILES += sunos_memory.in.diff
 PATCHFILES += munin-node.conf.in.diff
 PATCHFILES += munin.conf.in.diff
+PATCHFILES += munin-graph.in.diff # use monospace instead of VeraMono.ttf
+PATCHFILES += munin-update.in.diff # http://munin.projects.linpro.no/ticket/699
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -64,13 +67,17 @@ install-custom:
 	#mv $(DESTDIR)/opt/csw/lib/plugins $(DESTDIR)/opt/csw/lib/munin_plugins
 	mv $(DESTDIR)/etc/opt/csw/munin/munin-node.conf $(DESTDIR)/etc/opt/csw/munin/munin-node.conf.CSW
 	mv $(DESTDIR)/etc/opt/csw/munin/munin.conf $(DESTDIR)/etc/opt/csw/munin/munin.conf.CSW
+	@ginstall -d $(DESTDIR)/opt/csw/munin
+	@ginstall -d $(DESTDIR)/etc/opt/csw/munin/apache
+	@ginstall -m 644 $(FILEDIR)/apache-munin.conf.CSW $(DESTDIR)/etc/opt/csw/munin/apache/apache-munin.conf.CSW
+	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf.CSW $(DESTDIR)/etc/opt/csw/munin/apache/apache-munin-cgi.conf.CSW
 	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster
 	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/munin_master
+	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)/opt/csw/share/doc/munin_master/README.CSW
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster/cswusergroup
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode/cswusergroup
-	@ginstall -m 644 $(FILEDIR)/apache.conf-sample $(DESTDIR)/opt/csw/share/doc/munin_master/apache.conf-sample
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
 	@$(MAKECOOKIE)
