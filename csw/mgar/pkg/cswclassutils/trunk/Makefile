@@ -1,5 +1,5 @@
 GARNAME = cswclassutils
-GARVERSION = 1.17
+GARVERSION = 1.18
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
@@ -19,7 +19,8 @@ include gar/category.mk
 WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://www.opencsw.org
 
-CASLIST = cswcpsampleconf cswpreserveconf cswinitsmf cswusergroup cswpycompile
+CASLIST =  cswcpsampleconf cswpreserveconf cswinitsmf cswusergroup cswpycompile
+CASLIST += cswelispcompile
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
