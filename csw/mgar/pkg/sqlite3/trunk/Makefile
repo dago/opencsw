@@ -26,9 +26,8 @@ SPKG_DESC_CSWsqlite3rt    = $(SPKG_DESC_CSWsqlite3) runtime
 # Dynamic prototype
 PKGFILES_CSWsqlite3devel   = $(PKGFILES_DEVEL)
 PKGFILES_CSWsqlite3devel  += /opt/csw/share/doc/sqlite3devel/copyright.html
-PKGFILES_CSWsqlite3rt      = $(PKGFILES_RT)
-PKGFILES_CSWsqlite3rt     += /opt/csw/share/doc/sqlite3rt/copyright.html
-PKGFILES_CSWsqlite3rt     += /opt/csw/lib/.*
+PKGFILES_CSWsqlite3        = /opt/csw/share/doc/sqlite3/copyright.html
+PKGFILES_CSWsqlite3       += /opt/csw/bin/.*
 
 # Dependencies
 REQUIRED_PKGS_CSWsqlite3      = CSWsqlite3rt
