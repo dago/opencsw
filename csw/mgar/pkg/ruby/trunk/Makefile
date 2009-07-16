@@ -13,6 +13,7 @@ PREREQUISITE_PKGS += CSWreadline CSWzlib
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode
 
 ARCHALL_CSWrubydoc = 1
+ARCHALL_CSWrubymode = 1
 
 LICENSE = COPYING
 
