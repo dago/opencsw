@@ -2,9 +2,6 @@ GARNAME = xpdf
 GARVERSION = 3.02
 CATEGORIES = utils
 
-# ftp://ftp.foolabs.com/pub/xpdf/xpdf-3.02.tar.gz
-
-
 DESCRIPTION = Open source viewer for Portable Document Format (PDF) files
 define BLURB
   Xpdf is an open source viewer for Portable Document Format (PDF) files. 
