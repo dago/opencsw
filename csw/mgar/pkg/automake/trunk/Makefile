@@ -1,7 +1,10 @@
-PKGVERSION = 1.10.2
 GARNAME = automake
-GARVERSION ?= $(PKGVERSION)
+GARVERSION = 1.11
 CATEGORIES = devel
+
+EXTRA_MODULATORS = GARVERSION
+# Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on
+MODULATIONS_GARVERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.2 1.11
 
 DESCRIPTION = A tool for automatically generating Makefiles.
 define BLURB
@@ -16,28 +19,28 @@ define BLURB
     as an extensible, maintainable mechanism for augmenting autoconf.
 endef
 
-OLD_VERSIONS = 1.6.3 1.7.9 1.8.5 1.9.6
-ALL_VERSIONS = $(OLD_VERSIONS) $(PKGVERSION)
-
 MASTER_SITES = $(GNU_MIRROR)
-SOURCEFILES  = $(foreach VERSION, $(ALL_VERSIONS), $(GARNAME)-$(VERSION).tar.gz)
-DISTFILES    = $(SOURCEFILES)
-DISTFILES   += $(call admfiles,CSWautomake,depend)
-DISTFILES   += README.CSW
-NOEXTRACT    = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
+DISTFILES = $(SOURCEFILES)
+DISTFILES += README.CSW
+NOCHECKSUM = README.CSW
+NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
 
-COOKIEROOTDIR = cookies-$(GARVERSION)
-
-# Move old documentation away
-ifneq ($(GARVERSION), $(PKGVERSION))
-  infodir = /ignore
-endif
+REQUIRED_PKGS = CSWperl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-CLEAN_SCRIPTS = custom
+# Lots of test fail on Solaris, but they are safe to ignore for now:
+#   <http://lists.gnu.org/archive/html/bug-automake/2009-07/msg00001.html>
+SKIPTEST = 1
+
+ARCHALL = 1
+
+$(foreach VERSION,$(MODULATIONS_GARVERSION),$(eval MERGE_SCRIPTS_isa-$(ISA)-garversion-$(VERSION) = copy-all))
+
+#CLEAN_SCRIPTS = custom
 
 include gar/category.mk
 
@@ -45,22 +48,14 @@ $(DOWNLOADDIR)/README.CSW:
 	@echo " ==> Generating README.CSW"
 	@(exec >$@;								\
 	  echo "This package contains the following automake versions:";	\
-	  for VERSION in $(ALL_VERSIONS); do					\
+	  for VERSION in $(MODULATIONS_GARVERSION); do					\
 	    echo "  automake-$$VERSION";					\
 	  done)
 
-post-install:
-	@rm -f $(DESTDIR)$(prefix)/share/info/dir
-	@rm -f $(DESTDIR)$(bindir)/aclocal
-	@gln -s aclocal-1.10 $(DESTDIR)$(bindir)/aclocal
-	@rm -f $(DESTDIR)$(bindir)/automake
-	@gln -s automake-1.10 $(DESTDIR)$(bindir)/automake
-	@ginstall $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/
+post-merge:
+	@rm -f $(PKGROOT)$(bindir)/aclocal
+	@gln -s aclocal-1.11 $(PKGROOT)$(bindir)/aclocal
+	@rm -f $(PKGROOT)$(bindir)/automake
+	@gln -s automake-1.11 $(PKGROOT)$(bindir)/automake
+	@ginstall $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$(GARNAME)/
 	@$(MAKECOOKIE)
-
-pre-package:
-	@(for VERSION in $(OLD_VERSIONS); do gmake GARVERSION=$$VERSION install; done)
-	@$(MAKECOOKIE)
-	
-clean-custom: clean-all
-	@(for VERSION in $(OLD_VERSIONS); do gmake GARVERSION=$$VERSION clean-all; done)
