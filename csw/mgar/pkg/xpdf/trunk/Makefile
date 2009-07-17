@@ -40,3 +40,6 @@ PATCHFILES += patch-XPDFCore.cc
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+pre-build-modulated:
+	@cp files/xpdfrc ${WORKSRC}/doc/sample-xpdfrc
