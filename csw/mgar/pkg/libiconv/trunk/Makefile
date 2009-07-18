@@ -38,17 +38,19 @@ PKGFILES_CSWiconvdevel = $(PKGFILES_DEVEL) .*.3.html
 
 REQUIRED_PKGS_CSWiconvdevel = CSWiconv
 
-# Work around Sun Studio Preprocessor bug #6655406
-#   http://sunsolve.sun.com/search/document.do?assetkey=1-1-6655406-1
-#PATCHFILES = patch-workaround-cc-bug-6655406.diff
-
 # The current 1.12 only has a 32-Bit iconv binary, leave it that way
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/.*/iconv
 NO_ISAEXEC = 1
 BUILD64 = 1
 
-# Tweak optimization flags, BEWARE: ./configure on build8s hangs
+# Optimize. -fast causes ./configure on Sparc to hang on the stdbool.h test.
+# Patch the stdbool test away, stdbool is only available in C99 anyway.
+#
+# See the following posts for details
+# - http://lists.opencsw.org/pipermail/maintainers/2009-July/003152.html
+# - http://forums.sun.com/thread.jspa?threadID=5397065&tstart=0
 OPT_FLAGS_SOS = -fast -xnolibmopt
+PATCHFILES += patch-configure-stdbool.diff
 
 # 'gmake test' shows three errors of coredumping printf's
 #
