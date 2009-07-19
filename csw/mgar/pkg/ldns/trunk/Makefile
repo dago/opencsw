@@ -34,6 +34,10 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --enable-sha2
 
+MERGE_DIRS_isa-sparcv9 = $(libdir)
+MERGE_DIRS_isa-sparcv8plus = $(libdir)
+MERGE_DIRS_isa-pentium_pro = $(libdir)
+
 TEST_TARGET =
 
 include gar/category.mk
