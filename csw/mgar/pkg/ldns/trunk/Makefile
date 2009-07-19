@@ -36,6 +36,7 @@ CONFIGURE_ARGS += --enable-sha2
 
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-sparcv8plus = $(libdir)
+MERGE_DIRS_isa-amd64 = $(libdir)
 MERGE_DIRS_isa-pentium_pro = $(libdir)
 
 TEST_TARGET =
