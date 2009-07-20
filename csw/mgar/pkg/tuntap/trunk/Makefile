@@ -99,9 +99,11 @@ endef
 
 include gar/category.mk
 
-# remove bogus compiler flags
+# adjust compiler flags
 pre-build-modulated:
-	@perl -pi -e 's@-m64@@' $(WORKSRC)/Makefile
+	perl -pi -e 's@-m64@@' $(WORKSRC)/Makefile
+pre-build-isa-amd64:
+	perl -pi -e 's@(-D_KERNEL)@$$1 -xmodel=kernel@' $(WORKSRC)/Makefile
 
 # custom install
 install-custom:
