@@ -13,8 +13,8 @@ endef
 SF_PROJ = munin
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWmuninmaster, prototype postinstall)
-DISTFILES += $(call admfiles,CSWmuninnode, prototype)
+DISTFILES += CSWmuninmaster.prototype CSWmuninmaster.postinstall
+DISTFILES += CSWmuninnode.prototype
 DISTFILES += cswusergroup
 DISTFILES += apache-munin.conf.CSW apache-munin-cgi.conf.CSW
 DISTFILES += README.CSW
@@ -33,6 +33,12 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
+
+PACKAGES = CSWmuninmaster CSWmuninnode
+CATALOGNAME_CSWmuninmaster = munin_master
+CATALOGNAME_CSWmuninnode = munin_node
+
+ARCHALL_CSWmuninmaster = 1
 
 REQUIRED_PKGS_CSWmuninmaster = CSWpmnetserver CSWperl CSWpython CSWpmparserecdescent 
 REQUIRED_PKGS_CSWmuninmaster = CSWpmhtmltmpl CSWpmdatemanip CSWpmmd5 CSWrrd CSWapache2

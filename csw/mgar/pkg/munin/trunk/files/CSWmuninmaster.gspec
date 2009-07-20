@@ -1,3 +1,0 @@
-%var            bitname munin_master
-%var            pkgname CSWmuninmaster
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec

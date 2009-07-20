@@ -1,7 +1,5 @@
-7e6d51878164293b723270d9b0e86348  download/CSWmuninmaster.gspec
 39296b9aff25a2518394811796ef7ae6  download/CSWmuninmaster.postinstall
 bd055e305e9cc70994014917225d3777  download/CSWmuninmaster.prototype
-d6014841b8b2167308026bfe48782fb5  download/CSWmuninnode.gspec
 f7dd6a31454b6a40273d8932488234a1  download/CSWmuninnode.prototype
 e6bafa4aa3cba7fc16e444ad168b4cd1  download/README.CSW
 59409f4b412953283c3df4546fd4886c  download/apache-munin-cgi.conf.CSW
