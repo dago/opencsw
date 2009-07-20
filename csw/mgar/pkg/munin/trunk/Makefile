@@ -26,6 +26,7 @@ PATCHFILES += munin-node.conf.in.diff
 PATCHFILES += munin.conf.in.diff
 PATCHFILES += munin-graph.in.diff # use monospace instead of VeraMono.ttf
 PATCHFILES += munin-update.in.diff # http://munin.projects.linpro.no/ticket/699
+PATCHFILES += munindoc.in.diff # PATH to perl set to /opt/csw/bin/perl
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -39,6 +40,7 @@ CATALOGNAME_CSWmuninmaster = munin_master
 CATALOGNAME_CSWmuninnode = munin_node
 
 ARCHALL_CSWmuninmaster = 1
+ARCHALL_CSWmuninnode = 1
 
 REQUIRED_PKGS_CSWmuninmaster = CSWpmnetserver CSWperl CSWpython CSWpmparserecdescent 
 REQUIRED_PKGS_CSWmuninmaster = CSWpmhtmltmpl CSWpmdatemanip CSWpmmd5 CSWrrd CSWapache2
