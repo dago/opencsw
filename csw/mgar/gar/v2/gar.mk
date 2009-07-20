@@ -575,7 +575,7 @@ _MERGE_EXCLUDE_FILES += $(EXTRA_MERGE_EXCLUDE_FILES) $(EXTRA_MERGE_EXCLUDE_FILES
 # Exclude by replacing files with the empty string
 _INC_EXT_RULE = $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
 # Replace files by itself terminating on first match
-_INC_EXT_RULE += $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
+_INC_EXT_RULE += $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)$$,\1,")
 
 # These are used during merge phase to determine the base installation directory
 MERGEBASE_$(bindir)     ?= $(bindir_install)
