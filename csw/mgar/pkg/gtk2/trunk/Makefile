@@ -29,6 +29,10 @@ CATALOGNAME_CSWgtk2 = gtk2
 CATALOGNAME_CSWgtk2devel = gtk2_devel
 CATALOGNAME_CSWgtk2doc = gtk2_doc
 
+SPKG_DESC_CSWgtk2 = A feature rich toolkit for creating graphical user interfaces 
+SPKG_DESC_CSWgtk2devel = A feature rich toolkit for creating graphical user interfaces development package
+SPKG_DESC_CSWgtk2doc = A feature rich toolkit for creating graphical user interfaces documentation
+
 PREREQUISITE_PKGS = CSWbash
 REQUIRED_PKGS_CSWgtk2 = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
 REQUIRED_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
