@@ -1,5 +1,5 @@
 GARNAME = phpldapadmin
-GARVERSION = 1.1.0.7
+GARVERSION = 1.2.0
 CATEGORIES = apps
 
 DESCRIPTION = Web-based LDAP browser to manage your LDAP server
@@ -14,12 +14,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += CSWphpldapadmin.preinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=61828
-UPSTREAM_USE_SF = 1
+UPSTREAM_MASTER_SITES = https://sourceforge.net/projects/phpldapadmin/files/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
