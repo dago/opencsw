@@ -1,0 +1,20 @@
+--- siege-2.66.orig/utils/bombardment.in	2006-04-17 20:37:35.000000000 +0200
++++ siege-2.66/utils/bombardment.in	2009-07-21 16:58:09.089590445 +0200
+@@ -21,7 +21,7 @@
+ 
+ 
+ # Display help if no options or --help specified.
+-if [ -z $1 ] || [ $1 = --help ]
++if [ -z $1 ] || [ $1 = --help ] || [ $# -ne 5 ] || [ ! -r $1 ]
+ 	then 	
+ 		echo ""
+ 		echo "usage:"
+@@ -40,7 +40,7 @@
+ inc=$3
+ numruns=$4
+ delay=$5
+-serial=`date --iso-8601=minutes`
++serial=`od -X -N 4 -A n /dev/random | awk '{ print $1 }'`
+ 
+ # This script can easily be made to overwhelm system resources (processes
+ # and filehandles.  This bit calculates how many processes it will spawn

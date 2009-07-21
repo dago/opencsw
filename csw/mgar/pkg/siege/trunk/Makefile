@@ -18,14 +18,21 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
-REQUIRED_PKGS = CSWosslrt
+REQUIRED_PKGS = CSWcswclassutils CSWosslrt
+
+# handle config file
+PRESERVECONF = $(sysconfdir)/urls.txt.CSW
+
+# patch bombardment
+PATCHFILES  = patch-bombardment.in
+PATCHFILES += patch-configure
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 
 TEST_SCRIPTS =
 
-INSTALL_SCRIPTS = bin conf man
+INSTALL_SCRIPTS = bin man additional
 
 include gar/category.mk
 
@@ -34,8 +41,8 @@ bin-list  = $(WORKSRC)/src/siege
 bin-list += $(WORKSRC)/utils/bombardment
 bin-list += $(WORKSRC)/utils/siege2csv.pl
 bin-list += $(WORKSRC)/utils/siege.config
-conf-list  = $(WORKSRC)/doc/urls.txt
-conf-list += $(WORKSRC)/doc/siegerc
+share-list  = $(WORKSRC)/doc/urls.txt
+share-list += $(WORKSRC)/doc/siegerc
 
 install-bin:
 	ginstall -d $(DESTDIR)$(bindir)
@@ -43,11 +50,13 @@ install-bin:
 		ginstall -m 751 $$file $(DESTDIR)$(bindir) ; \
 			done )
 
-install-conf:
-	ginstall -d $(DESTDIR)$(sysconfdir)/$(GARNAME)
-	@( for file in $(conf-list) ; do \
-		ginstall -m 644 $$file $(DESTDIR)$(sysconfdir)/$(GARNAME) ; \
-			done )
+install-additional:
+	ginstall -d $(DESTDIR)$(sysconfdir)
+	ginstall -m 644 $(WORKSRC)/doc/urls.txt \
+		$(DESTDIR)$(sysconfdir)/urls.txt.CSW
+	ginstall -d $(DESTDIR)$(sharedstatedir)/$(GARNAME)
+	ginstall -m 644 $(WORKSRC)/doc/siegerc \
+		$(DESTDIR)$(sharedstatedir)/$(GARNAME)
 
 install-man:
 	ginstall -d $(DESTDIR)$(mandir)/man1
