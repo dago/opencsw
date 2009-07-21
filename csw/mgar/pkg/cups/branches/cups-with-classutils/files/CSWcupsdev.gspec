@@ -1,0 +1,6 @@
+%var            bitname cupsdev
+%var            pkgname CSWcupsdev
+%var            arch all
+%include        url file://%{GARDIR}/pkglib/csw_dyndepend.gspec
+%var            desc Development files for the Common UNIX Printing System
+%copyright      url file://%{WORKSRC}/LICENSE.txt
