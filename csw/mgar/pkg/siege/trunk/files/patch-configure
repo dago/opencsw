@@ -1,5 +1,5 @@
 --- siege-2.66.orig/configure	2007-03-29 20:07:30.000000000 +0200
-+++ siege-2.66/configure	2009-07-21 15:55:38.296970184 +0200
++++ siege-2.66/configure	2009-07-21 17:32:30.638575422 +0200
 @@ -26980,9 +26980,9 @@
  AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
   prefix=$prefix sysconfdir=$sysconfdir localstatedir=$localstatedir
@@ -13,3 +13,12 @@
  PLATFORM=$PLATFORM
  
  _ACEOF
+@@ -27891,7 +27891,7 @@
+ 
+ #define SIEGE_HOME     "$prefix"
+ #define CNF_FILE       "$sysconfdir/urls.txt"
+-#define LOG_FILE       "$localstatedir/siege.log"
++#define LOG_FILE       "$localstatedir/log/siege.log"
+ 
+ 
+ #endif/*JOEPATH_H*/
