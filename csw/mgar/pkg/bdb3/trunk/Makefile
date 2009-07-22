@@ -43,4 +43,10 @@ CONFIGURE_ARGS += --enable-java
 CONFIGURE_ARGS += --enable-tcl
 CONFIGURE_ARGS += --with-tcl=$(libdir)
 
+# The Makefile is too dumb for DESTDIR
+INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir includedir libdir docdir
+
+# Include only the library and nothing else
+EXTRA_PAX_ARGS = -s ",^\.\($(libdir)/libdb-3.3.so\)$$,\1," -s ",\..*,,"
+
 include gar/category.mk
