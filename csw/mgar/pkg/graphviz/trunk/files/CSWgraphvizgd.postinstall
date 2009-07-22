@@ -1,0 +1,12 @@
+#!/bin/sh
+
+CHROOTDIR=${BASEDIR:-/}
+
+echo
+echo "dot -c" is running now to record available graphviz plugins.
+echo
+
+${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/dot -c
+
+exit 0
+

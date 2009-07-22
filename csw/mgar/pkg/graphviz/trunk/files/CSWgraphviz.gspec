@@ -1,4 +1,0 @@
-%var            bitname graphviz
-%var            pkgname CSWgraphviz
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/COPYING

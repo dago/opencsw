@@ -1,2 +1,5 @@
-703089233da491b736e5d1548f25477f  download/graphviz-1.18.tar.gz
-7d7c6845f079132513d80078e403c0b6  download/CSWgraphviz.gspec
+b66d09e11339fc981ab7c62518b3f92e  download/CSWgraphvizdevil.postinstall
+b66d09e11339fc981ab7c62518b3f92e  download/CSWgraphvizdevil.postuninstall
+b66d09e11339fc981ab7c62518b3f92e  download/CSWgraphvizgd.postinstall
+b66d09e11339fc981ab7c62518b3f92e  download/CSWgraphvizgd.postuninstall
+806a30dbc3f8deb219216f35be0e7a40  download/graphviz-2.24.0.tar.gz
