@@ -14,6 +14,8 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 # disable dependency checks because plugins depend on libs from base package
 ENABLE_CHECK = 0
 
+PATCHFILES = no_svg_in_libcairo.diff
+
 PACKAGES = CSWgraphviz \
 	CSWgraphvizdevel \
 	CSWgraphvizdoc \

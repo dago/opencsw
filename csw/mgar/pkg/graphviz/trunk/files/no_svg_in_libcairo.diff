@@ -1,0 +1,31 @@
+--- graphviz-2.24.0.orig/plugin/pango/gvrender_pango.c	2009-06-02 21:10:57.000000000 -0400
++++ graphviz-2.24.0/plugin/pango/gvrender_pango.c	2009-07-22 17:37:30.000000000 -0400
+@@ -1,4 +1,4 @@
+-/* $Id: gvrender_pango.c,v 1.67 2009/06/03 01:10:57 ellson Exp $ $Revision: 1.67 $ */
++/* $Id: gvrender_pango.c,v 1.68 2009/07/22 21:24:26 ellson Exp $ $Revision: 1.68 $ */
+ /* vim:set shiftwidth=4 ts=8: */
+ 
+ /**********************************************************
+@@ -95,16 +95,22 @@
+ 	    cairo_destroy(cr);
+         switch (job->render.id) {
+         case FORMAT_PS:
++#ifdef CAIRO_HAS_PS_SURFACE
+ 	    surface = cairo_ps_surface_create_for_stream (writer,
+ 			job, job->width, job->height);
++#endif
+ 	    break;
+         case FORMAT_PDF:
++#ifdef CAIRO_HAS_PDF_SURFACE
+ 	    surface = cairo_pdf_surface_create_for_stream (writer,
+ 			job, job->width, job->height);
++#endif
+ 	    break;
+         case FORMAT_SVG:
++#ifdef CAIRO_HAS_SVG_SURFACE
+ 	    surface = cairo_svg_surface_create_for_stream (writer,
+ 			job, job->width, job->height);
++#endif
+ 	    break;
+         case FORMAT_CAIRO:
+         case FORMAT_PNG:
