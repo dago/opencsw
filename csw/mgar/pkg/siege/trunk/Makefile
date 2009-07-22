@@ -18,7 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
-REQUIRED_PKGS = CSWcswclassutils CSWosslrt
+REQUIRED_PKGS = CSWosslrt
 
 # handle config file
 PRESERVECONF = $(sysconfdir)/urls.txt.CSW
@@ -30,11 +30,16 @@ PATCHFILES += patch-configure
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 
-TEST_SCRIPTS =
+# no build tests
+SKIPTEST = 1
 
 INSTALL_SCRIPTS = bin man additional
 
 include gar/category.mk
+
+x-post-configure-modulated:
+	find $(WORKSRC) -name Makefile | xargs grep -l '^CFLAGS' \
+		| xargs perl -pi -e 's@CFLAGS =@CFLAGS = $(CFLAGS)@'
 
 # install is broken..
 bin-list  = $(WORKSRC)/src/siege

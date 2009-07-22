@@ -1,6 +1,17 @@
 --- siege-2.66.orig/configure	2007-03-29 20:07:30.000000000 +0200
-+++ siege-2.66/configure	2009-07-21 17:32:30.638575422 +0200
-@@ -26980,9 +26980,9 @@
++++ siege-2.66/configure	2009-07-22 17:21:11.798205557 +0200
+@@ -20688,9 +20688,8 @@
+   ;;
+ esac
+ 
++oldCFLAGS=$CFLAGS
+ if test -n "$GCC"; then
+-  oldCFLAGS=$CFLAGS
+-  CFLAGS="$CFLAGS -W -Wall -Werror"
+   echo "$as_me:$LINENO: checking for buggy pthread mutex initializers" >&5
+ echo $ECHO_N "checking for buggy pthread mutex initializers... $ECHO_C" >&6
+ 
+@@ -26980,9 +26979,9 @@
  AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
   prefix=$prefix sysconfdir=$sysconfdir localstatedir=$localstatedir
   VERSION=$VERSION DATE="$DATE" PROGRAM="$PROGRAM" AUTHOR="$AUTHOR" EMAIL="$EMAIL"
@@ -13,7 +24,7 @@
  PLATFORM=$PLATFORM
  
  _ACEOF
-@@ -27891,7 +27891,7 @@
+@@ -27891,7 +27890,7 @@
  
  #define SIEGE_HOME     "$prefix"
  #define CNF_FILE       "$sysconfdir/urls.txt"
