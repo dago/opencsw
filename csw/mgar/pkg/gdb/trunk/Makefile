@@ -18,6 +18,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+REQUIRED_PKGS = CSWexpat CSWggettextrt CSWiconv CSWncurses
+
 BUILD64 = 1
 NO_ISAEXEC = 1
 NOISALIST = 1
