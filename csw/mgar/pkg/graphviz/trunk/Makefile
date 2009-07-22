@@ -176,13 +176,13 @@ DISTFILES += CSWgraphvizdevil.postinstall CSWgraphvizdevil.postuninstall
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --without-ipsepcola
 CONFIGURE_ARGS += --with-sfdp
 CONFIGURE_ARGS += --with-gtk
 CONFIGURE_ARGS += --with-gdk-pixbuf
 CONFIGURE_ARGS += --with-ghostscript
 CONFIGURE_ARGS += --with-lasi
-CONFIGURE_ARGS += --with-rsvg
+CONFIGURE_ARGS += --without-ipsepcola
+CONFIGURE_ARGS += --without-rsvg
 CONFIGURE_ARGS += --disable-ruby
 CONFIGURE_ARGS += --disable-devil
 CONFIGURE_ARGS += --disable-java
