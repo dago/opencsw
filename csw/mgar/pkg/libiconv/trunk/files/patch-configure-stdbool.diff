@@ -123,3 +123,13 @@ diff --speed-large-files --minimal -Nru libiconv-1.13.orig/configure libiconv-1.
  { $as_echo "$as_me:$LINENO: result: $ac_cv_header_stdbool_h" >&5
  $as_echo "$ac_cv_header_stdbool_h" >&6; }
     { $as_echo "$as_me:$LINENO: checking for _Bool" >&5
+@@ -20525,7 +20525,7 @@
+ 
+ fi
+ 
+-   if test $ac_cv_header_stdbool_h = yes; then
++   if test "$ac_cv_header_stdbool_h" = yes; then
+ 
+ cat >>confdefs.h <<\_ACEOF
+ #define HAVE_STDBOOL_H 1
+

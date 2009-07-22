@@ -1,5 +1,5 @@
 GARNAME = libiconv
-GARVERSION = 1.13
+GARVERSION = 1.13.1
 CATEGORIES = lib
 
 DESCRIPTION = GNU iconv library
