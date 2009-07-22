@@ -176,7 +176,7 @@ DISTFILES += CSWgraphvizdevil.postinstall CSWgraphvizdevil.postuninstall
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-ipsepcola
+CONFIGURE_ARGS += --without-ipsepcola
 CONFIGURE_ARGS += --with-sfdp
 CONFIGURE_ARGS += --with-gtk
 CONFIGURE_ARGS += --with-gdk-pixbuf
