@@ -18,6 +18,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+BUILD64 = 1
+NO_ISAEXEC = 1
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+TEST_TARGET = check
+
 include gar/category.mk
+
+# Needed for testing
+PATH := $(PATH):/opt/csw/gcc4/bin
