@@ -5,7 +5,7 @@ b940bc6f09956cb97b5a68f0fe9b73a6  download/SunOS5.mk.diff
 8cd01e82aa312e79ae4f4f8c779174c6  download/autoconf.mk.in.diff
 463d0bd49aa3726c1d9e19c18b38ce70  download/configure.diff
 1178db1603e82d8bfefefa200d7e7ce7  download/fipsaudt.c.diff
-6dd59399db08963ef022a1d0e5010053  download/firefox-3.5-source.tar.bz2
+18169e189785d680827d4fce94524449  download/firefox-3.5.1-source.tar.bz2
 24e815d4265a9d0fe7786f3258e7dc5a  download/jemalloc.c.diff
 ed49bb0e38e1b577d4742936bd551d79  download/js.configure.diff
 0589ca8ad5f6744f573bb8ce0ba71d78  download/js.src.configure.diff

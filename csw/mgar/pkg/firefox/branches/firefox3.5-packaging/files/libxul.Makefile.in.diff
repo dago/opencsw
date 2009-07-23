@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru firefox.orig/toolkit/library/Makefile firefox/toolkit/library/Makefile
---- firefox.orig/toolkit/library/Makefile      	2009-07-07 21:46:57.267011389 +0200
-+++ firefox/toolkit/library/Makefile   		2009-07-07 21:49:10.319971404 +0200
+diff --speed-large-files --minimal -Nru firefox.orig/toolkit/library/Makefile.in firefox/toolkit/library/Makefile.in
+--- firefox.orig/toolkit/library/Makefile.in      	2009-07-07 21:46:57.267011389 +0200
++++ firefox/toolkit/library/Makefile.in   		2009-07-07 21:49:10.319971404 +0200
 @@ -252,7 +252,7 @@
  endif
 

@@ -1,5 +1,5 @@
 GARNAME = firefox
-GARVERSION = 3.5
+GARVERSION = 3.5.1
 CATEGORIES = apps
 DISTNAME = $(GARNAME)
 
@@ -59,7 +59,6 @@ PATCHFILES += fipsaudt.c.diff
 PATCHFILES += sign.sh.diff
 PATCHFILES += js.configure.diff
 PATCHFILES += libxul.Makefile.in.diff
-PATCHFILES += libxul.Makefile.diff
 PATCHFILES += npruntime.h.diff
 # PATCHFILES += nsMathUtils.h.diff
 # PATCHFILES += file_id.cc.diff
