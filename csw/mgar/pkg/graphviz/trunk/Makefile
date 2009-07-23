@@ -174,7 +174,7 @@ PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/.*\.tcl.README
 PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/pathplan_data/.*
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWgraphviz.postinstall CSWgraphviz.postuninstall
+DISTFILES += CSWgraphviz.postinstall
 DISTFILES += CSWgraphvizgd.postinstall CSWgraphvizgd.postuninstall
 DISTFILES += CSWgraphvizdevil.postinstall CSWgraphvizdevil.postuninstall
 
