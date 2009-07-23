@@ -45,7 +45,7 @@ PREREQUISITE_PKGS =
 
 REQUIRED_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender CSWgs \
 	CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWiconv \
-	CSWlibatk CSWliblasi CSWpng CSWzlib
+	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm
 REQUIRED_PKGS_CSWgraphvizdevel =
 REQUIRED_PKGS_CSWgraphvizdoc = 
 REQUIRED_PKGS_CSWgraphvizgraphs = 
@@ -174,6 +174,7 @@ PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/.*\.tcl.README
 PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/pathplan_data/.*
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWgraphviz.postinstall CSWgraphviz.postuninstall
 DISTFILES += CSWgraphvizgd.postinstall CSWgraphvizgd.postuninstall
 DISTFILES += CSWgraphvizdevil.postinstall CSWgraphvizdevil.postuninstall
 
