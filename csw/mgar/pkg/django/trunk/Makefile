@@ -16,6 +16,8 @@ endef
 MASTER_SITES = http://www.djangoproject.com/download/$(GARVERSION)/tarball/
 DISTFILES  = Django-$(GARVERSION)-final.tar.gz
 
+ARCHALL = 1
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
