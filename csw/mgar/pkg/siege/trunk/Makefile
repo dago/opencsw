@@ -59,9 +59,6 @@ install-additional:
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -m 644 $(WORKSRC)/doc/urls.txt \
 		$(DESTDIR)$(sysconfdir)/urls.txt.CSW
-	ginstall -d $(DESTDIR)$(sharedstatedir)/$(GARNAME)
-	ginstall -m 644 $(WORKSRC)/doc/siegerc \
-		$(DESTDIR)$(sharedstatedir)/$(GARNAME)
 
 install-man:
 	ginstall -d $(DESTDIR)$(mandir)/man1
