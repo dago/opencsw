@@ -99,7 +99,7 @@ SPKG_DESC_CSWgraphvizr = Graphviz language binding for R
 SPKG_DESC_CSWgraphvizruby = Graphviz language binding for ruby
 SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
 
-PKGFILES_CSWgraphviz = $(bindir)/(?!diffimg)
+PKGFILES_CSWgraphviz = $(bindir)/(?!diffimg).*
 PKGFILES_CSWgraphviz += $(libdir)/lib.*.so\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_core\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_pango\..*
