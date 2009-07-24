@@ -25,6 +25,7 @@ ENABLE_CHECK = 0
 
 PATCHFILES = Makefile-cups-$(GARVERSION).patch
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
+DISTFILES += CSWcupsd.postremove
 
 REQUIRED_PKGS = CSWkrb5lib CSWosslrt
 PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWoldapdevel
