@@ -21,16 +21,10 @@ CUPS_MIRRORS += http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub
 FULL_MIRRORS = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
 MASTER_SITES += $(FULL_MIRRORS)
 
-DISTFILES  = cups-$(GARVERSION)-source.tar.bz2
-DISTFILES += $(call admfiles,CSWlibcups,depend prototype)
-DISTFILES += $(call admfiles,CSWcupsd,depend prototype postinstall preremove \
-	postremove)
-DISTFILES += $(call admfiles,CSWcupsclient,depend prototype)
-DISTFILES += $(call admfiles,CSWcupsdoc,depend prototype)
-DISTFILES += $(call admfiles,CSWcupsdev,depend prototype)
-DISTFILES += $(call admfiles,CSWcups,depend prototype)
+ENABLE_CHECK = 0
 
-DISTFILES += i.smfyes i.smfno space checkinstall
+PATCHFILES = Makefile-cups-$(GARVERSION).patch
+DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
 
 REQUIRED_PKGS = CSWkrb5lib CSWosslrt
 PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWoldapdevel
@@ -38,9 +32,103 @@ PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWoldapdevel
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 
+SPKG_CLASSES = none cswcpsampleconf cswinitsmf
+
+PACKAGES = CSWcups CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev
+
+REQUIRED_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient CSWcupsdoc
+REQUIRED_PKGS_CSWcups += CSWcupsdev
+REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
+REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff
+REQUIRED_PKGS_CSWcupsclient = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
+REQUIRED_PKGS_CSWcupsdoc = CSWcswclassutils
+REQUIRED_PKGS_CSWcupsdev = CSWcswclassutils
+REQUIRED_PKGS_CSWlibcups = CSWcswclassutils CSWjpeg CSWpng CSWtiff CSWzlib
+
+PKGFILES_CSWlibcups  = $(prefix)
+PKGFILES_CSWlibcups += $(libdir)
+PKGFILES_CSWlibcups += $(libdir)/libcups.*
+
+PKGFILES_CSWcupsdoc  = $(prefix)
+PKGFILES_CSWcupsdoc += $(datadir)
+PKGFILES_CSWcupsdoc += $(datadir)/doc
+PKGFILES_CSWcupsdoc += $(datadir)/doc/.*
+
+PKGFILES_CSWcupsdev  = $(prefix)
+PKGFILES_CSWcupsdev += $(includedir)
+PKGFILES_CSWcupsdev += $(includedir)/cups/?.*
+PKGFILES_CSWcupsdev += $(mandir)
+PKGFILES_CSWcupsdev += $(mandir)/man1
+PKGFILES_CSWcupsdev += $(mandir)/man1/cups-config.1
+PKGFILES_CSWcupsdev += $(bindir)
+PKGFILES_CSWcupsdev += $(bindir)/cups-config
+
+PKGFILES_CSWcupsd  = $(prefix)
+PKGFILES_CSWcupsd += $(sysconfdir)
+PKGFILES_CSWcupsd += $(sysconfdir)/.*
+PKGFILES_CSWcupsd += $(mandir)
+PKGFILES_CSWcupsd += $(mandir)/man1m
+PKGFILES_CSWcupsd += $(mandir)/man1m/cups(filter|d|-polld|-deviced|-driverd|-lpd).*
+PKGFILES_CSWcupsd += $(mandir)/man7
+PKGFILES_CSWcupsd += $(mandir)/man7/(backend|filter).7
+PKGFILES_CSWcupsd += $(mandir)/man5
+PKGFILES_CSWcupsd += $(mandir)/man5/(cups-snmp.conf|subscriptions.conf).5
+PKGFILES_CSWcupsd += $(mandir)/man5/(mime.convs|classes.conf|cupsd.conf).5
+PKGFILES_CSWcupsd += $(mandir)/man5/(mime.types|printers.conf|mailto.conf).5
+PKGFILES_CSWcupsd += $(datadir)
+PKGFILES_CSWcupsd += $(datadir)/cups
+PKGFILES_CSWcupsd += $(datadir)/cups/(fonts|templates|charmaps|model).*
+PKGFILES_CSWcupsd += $(datadir)/cups/(banners|data|profiles|charsets).*
+PKGFILES_CSWcupsd += $(datadir)/locale/?.*
+PKGFILES_CSWcupsd += $(datadir)/applications/?.*
+PKGFILES_CSWcupsd += $(libdir)
+PKGFILES_CSWcupsd += $(libdir)/cups/?.*
+PKGFILES_CSWcupsd += $(libdir)/svc/?.*
+PKGFILES_CSWcupsd += $(sbindir)
+PKGFILES_CSWcupsd += $(sbindir)/(cupsfilter|cupsd)
+PKGFILES_CSWcupsd += $(localstatedir)/?.*
+
+PKGFILES_CSWcupsclient  = $(prefix)
+PKGFILES_CSWcupsclient += $(sbindir)
+PKGFILES_CSWcupsclient += $(sbindir)/(accept|reject|cups(addsmb|ctl|(en|dis)able))
+PKGFILES_CSWcupsclient += $(sbindir)/(lp(admin|p|c|info|move))
+PKGFILES_CSWcupsclient += $(bindir)
+PKGFILES_CSWcupsclient += $(bindir)/(cancel|cupstest(dsc|ppd))
+PKGFILES_CSWcupsclient += $(bindir)/(lp(|options|passwd|q|r|rm|stat)
+PKGFILES_CSWcupsclient += $(datadir)
+PKGFILES_CSWcupsclient += $(mandir)/man1
+PKGFILES_CSWcupsclient += $(mandir)/man1/(cancel|cupstest(dsc|ppd)|lp).1
+PKGFILES_CSWcupsclient += $(mandir)/man1/(lpoptions|lppasswd|lpq|lpr|lprm).1
+PKGFILES_CSWcupsclient += $(mandir)/man1/lpstat.1
+PKGFILES_CSWcupsclient += $(mandir)/man1m
+PKGFILES_CSWcupsclient += $(mandir)/man1m/(accept|cupsaddsmb|cupsctl).1m
+PKGFILES_CSWcupsclient += $(mandir)/man1m/(cups(en|dis)able).1m
+PKGFILES_CSWcupsclient += $(mandir)/man1m/(lpadmin|lpc|lpinfo|lpmove|reject).1m
+PKGFILES_CSWcupsclient += $(mandir)/man5
+PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
+
+
+
+SPKG_DESC_CSWcups = Common Unix Printing System
+SPKG_DESC_CSWlibcups = CUPS libraries
+SPKG_DESC_CSWcupsd = CUPS daemon
+SPKG_DESC_CSWcupsclient = CUPS client binaries
+SPKG_DESC_CSWcupsdoc = CUPS documentation
+SPKG_DESC_CSWcupsdev = CUPS header files
+
+PROTOTYPE_FILTER  = awk ' \
+    $$$$3 ~ /\/init.d\/cswcups$$$$/ { $$$$2 = "cswinitsmf" } \
+    $$$$3 ~ /\/cupsd\.conf\.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
+    { print }'
+
+
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-CONFIGURE_ARGS = $(DIRPATHS) --enable-pdftops
+CONFIGURE_ARGS  = $(DIRPATHS) --enable-pdftops
+CONFIGURE_ARGS += --with-menudir=$(datadir)/applications
+CONFIGURE_ARGS += --localedir=$(datadir)/locale
+CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)/init.d
+CONFIGURE_ARGS += --with-icondir=$(datadir)/icons
 
 # This is a hack that's needed, because configure (Makedefs) will otherwise
 # plase -ltiff, etc. first and -L/opt/csw/lib afterwards, thus being unable
@@ -55,55 +143,26 @@ export DSOFLAGS
 DSTROOT = $(DESTDIR)
 export DSTROOT
 
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+
 # Don't run tests (at least for now); there are some LD_LIBRARY_PATH issues
-TEST_TARGET = 
+TEST_TARGET =
 
 SPKG_SOURCEURL = http://www.cups.org/
 
-include gar/category.mk
-
 PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
+GARCOMPILER = SOS12
 
-post-configure:
-	(test -d $(PRIVATE_CUPS_INC) || mkdir -p $(PRIVATE_CUPS_INC); \
-	cd $(WORKSRC)/cups; \
-	cp -p adminutil.h array.h cups.h dir.h file.h http.h i18n.h ipp.h \
-		language.h md5.h ppd.h transcode.h $(PRIVATE_CUPS_INC); \
-	cd ../filter; \
-	cp -p image.h raster.h $(PRIVATE_CUPS_INC))
-
-post-install:
-	(test -d $(DESTDIR)$(prefix)/share || \
-	mkdir $(DESTDIR)$(prefix)/share; \
-	cd $(DESTDIR)$(prefix)/share; \
-	if [ ! -d locale ]; then \
-		test -d ../lib/locale && mv ../lib/locale .; \
-		cd locale; \
-		for i in *; do \
-			echo "Processing $$i..."; \
-			cd $$i; \
-			mkdir LC_MESSAGES; \
-			mv cups*.po LC_MESSAGES; \
-			cd ..; \
-		done \
-	fi)
-	(cd $(DESTDIR); \
-	if [ -d usr/share ]; then \
-		cd usr/share; \
-		gtar cf - * | gtar xf - -C ./$(prefix)/share; \
-		cd ../..; \
-		rm -rf usr/share; \
-	fi)
-	(cd $(DESTDIR)$(prefix)/etc/cups; \
+post-install-modulated:
+	(cd $(DESTDIR)$(sysconfdir)/cups; \
+	echo "Making .CSW configs in $(DESTDIR)$(sysconfdir)/cups"; \
 	for i in cupsd.conf; do \
 		if [ -r "$$i" ]; then \
 			echo "$$i -> $$i.CSW"; \
-			mv "$$i" "$$i.CSW";	\
+			mv "$$i" "$$i.CSW"; \
 		fi \
 	done)
-	files/create_rc.d.sh $(DESTDIR)
-	mkdir -p $(DESTDIR)$(prefix)/var/svc/manifest/application/print
-	cp -p files/cups.xml  $(DESTDIR)$(prefix)/var/svc/manifest/application/print
-	mkdir -p $(DESTDIR)$(prefix)/lib/svc/method
-	cp -p files/cswcups \
-		$(DESTDIR)$(prefix)/lib/svc/method/svc-cups
+	@$(MAKECOOKIE)
+
+include gar/category.mk

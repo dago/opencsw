@@ -1,6 +1,6 @@
 #!/sbin/sh
 
-etccups=${BASEDIR}opt/csw/etc/cups
+etccups=${BASEDIR}/etc/opt/csw/cups
 
 if [ -d "$etccups" ]; then
   echo ""
