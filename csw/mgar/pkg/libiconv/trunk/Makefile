@@ -32,7 +32,7 @@ SPKG_DESC_CSWlibiconvdevel = GNU iconv library development package
 SPKG_DESC_CSWiconv = GNU iconv library - meta package (deprecated)
 
 # CSWiconv is a dependencies-only pkg
-PKGFILES_CSWiconv = $(docdir)/CSWiconv/README.CSW
+PKGFILES_CSWiconv = $(docdir)/iconv/README.CSW
 
 # Devel files in _devel pkg, remaining files go into CSWlibiconv
 PKGFILES_CSWlibiconvdevel = $(PKGFILES_DEVEL) .*.3.html
