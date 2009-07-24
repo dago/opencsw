@@ -1,0 +1,13 @@
+diff -ru xc.orig/Makefile xc/Makefile
+--- xc.orig/Makefile	2004-09-03 17:18:17.000000000 +0100
++++ xc/Makefile	2009-07-24 17:26:36.403684029 +0100
+@@ -90,7 +90,8 @@
+ 	$(MAKE_CMD) $(MFLAGS) BOOTSTRAPSUBDIRS= clean
+ 	$(MAKE_CMD) $(MFLAGS) includes
+ 	$(MAKE_CMD) $(MFLAGS) depend
+-	$(MAKE_CMD) $(MFLAGS) $(WORLDOPTS) World
++	# $(MAKE_CMD) $(MFLAGS) $(WORLDOPTS) World
++	gmake -C programs/setxkbmap setxkbmap
+ 	@echo ""
+ 	@date
+ 	@echo ""
