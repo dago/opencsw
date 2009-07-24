@@ -75,16 +75,17 @@ CONFIGURE_ARGS += --with-fpectl
 CONFIGURE_ARGS += --with-system-ffi
 CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
 
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 # use prototype filters to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
-PACKAGES  = CSWidle CSWpython CSWpython-devel CSWpython-rt CSWpython-tk
+PACKAGES  = CSWidle CSWpython CSWpydistutils CSWpython-devel CSWpython-rt CSWpython-tk
 
 PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
 PKGFILES_CSWpython-devel  = $(includedir)/.*
 PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
-PKGFILES_CSWpython-devel += $(libdir)/.*/distutils/.*
+PKGFILES_CSWpydistutils += $(libdir)/.*/distutils/.*
 PKGFILES_CSWpython-rt += $(libdir)/.*libpython.*
 PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
 PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
@@ -97,8 +98,10 @@ REQUIRED_PKGS_CSWpython      += CSWncurses CSWosslrt CSWpython-rt CSWreadline
 REQUIRED_PKGS_CSWpython      += CSWsqlite3rt CSWzlib CSWcswclassutils
 REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 
 REQUIRED_PKGS_CSWpython-tk   += CSWpython-rt CSWcswclassutils
-REQUIRED_PKGS_CSWpython-devel = CSWcswclassutils
+REQUIRED_PKGS_CSWpydistutils  = CSWpython CSWcswclassutils 
+REQUIRED_PKGS_CSWpython-devel = CSWpython CSWcswclassutils
 
+CATALOGNAME_CSWpydistutils = pydistutils
 CATALOGNAME_CSWidle = idle
 CATALOGNAME_CSWpython = python
 CATALOGNAME_CSWpython-devel = python_devel
@@ -106,6 +109,7 @@ CATALOGNAME_CSWpython-rt = python_rt
 CATALOGNAME_CSWpython-tk = python_tk
 
 SPKG_DESC_CSWidle = Python IDE
+SPKG_DESC_CSWdistutils = Python Distutils makes modules and extensions easily available
 SPKG_DESC_CSWpython = A high-level scripting language.
 SPKG_DESC_CSWpython-devel = Development Files for Python
 SPKG_DESC_CSWpython-rt = Python Runtime Libraries
@@ -123,18 +127,6 @@ add-depricated-libs:
 		$(DESTDIR)$(libdir)/libpython2.5.so.1.0
 	cd $(DESTDIR)$(libdir);ln -s libpython2.5.so.1.0 libpython2.5.so
 	@$(MAKECOOKIE)
-
-remove-compiled-py:
-	@echo "Cleaning up pyc and pyo files"
-	@gfind $(DESTDIR)$(libdir) -name "*.py[co]" -exec grm -f {} \;
-	@$(MAKECOOKIE)
-
-define CSWpython_preremove
-#!/bin/sh
-echo "Cleaning up bytecode files..."
-find $(libdir)/python -name "*.py[co]" -exec grm -f {} \;
-exit 0
-endef
 
 include gar/category.mk
 
