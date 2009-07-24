@@ -85,5 +85,5 @@ post-install-modulated:
 	ginstall -D $(WORKSRC)/srcm4/iconv.m4 \
 		$(DESTDIR)$(datadir)/aclocal/iconv.m4
 	ginstall -D $(FILEDIR)/CSWiconv.README \
-		$(DESTDIR)$(docdir)/CSWiconv/README.CSW
+		$(DESTDIR)$(docdir)/iconv/README.CSW
 	@$(MAKECOOKIE)
