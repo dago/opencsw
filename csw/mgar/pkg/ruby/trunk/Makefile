@@ -10,7 +10,7 @@ TEST_SCRIPTS =
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
-PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode
+PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymode_el
 
 ARCHALL_CSWrubydoc = 1
 ARCHALL_CSWrubymode = 1
@@ -26,7 +26,9 @@ REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
 
 REQUIRED_PKGS_CSWrubydev = CSWruby CSWgcc4core CSWgfile
 
-REQUIRED_PKGS_CSWrubymode = CSWruby CSWemacscommon
+REQUIRED_PKGS_CSWrubymode = CSWemacscommon
+
+REQUIRED_PKGS_CSWrubymode_el = CSWemacscommon
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -47,13 +49,17 @@ SPKG_DESC_CSWrubydev = Ruby Extension Development Files
 
 SPKG_DESC_CSWrubymode = Ruby major mode for Emacs
 
+SPKG_DESC_CSWrubymode_el = Elisp source for ruby mode
+
 PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
 
 PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 PKGFILES_CSWrubydev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 
-PKGFILES_CSWrubymode = $(datadir)/emacs/site-lisp/.*
+PKGFILES_CSWrubymode = $(datadir)/emacs/site-lisp/.*elc$
+
+PKGFILES_CSWrubymode_el = $(datadir)/emacs/site-lisp/.*el$
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
@@ -104,8 +110,12 @@ post-install-modulated: $(PI_TARGETS)
 
 rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
 rubymode:
+	@echo " ===> Installing and Compilingn ruby-mode elisp"
 	@(mkdir -p $(RMDIR); \
-		cp $(WORKSRC)/misc/*el $(RMDIR))
+		cp $(WORKSRC)/misc/*el $(RMDIR); \
+		for f in $(RMDIR)/*; do \
+			emacs -L $(RMDIR) -batch -f batch-byte-compile "$$f"; \
+		done)
 
 # Fix up rbconfig
 rbconfig:
