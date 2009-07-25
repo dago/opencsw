@@ -55,8 +55,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
-# SVG must be disabled as libsvg depends on libcairo and we would get a cyclic dependency
-CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=no --enable-xcb=yes
+CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=yes --enable-xcb=yes
 CONFIGURE_ARGS += --enable-gtk-doc --enable-test-surfaces=yes 
 
 include gar/category.mk
