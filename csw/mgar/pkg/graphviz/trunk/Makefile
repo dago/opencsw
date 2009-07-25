@@ -41,15 +41,17 @@ INCOMPATIBLE_PKGS = CSWgraphvis CSWgraphviz2
 ARCHALL_CSWgraphvizdoc = 1
 ARCHALL_CSWgraphvizgraphs = 1
 
+BUILD64 = 1
+
 PREREQUISITE_PKGS = 
 
-REQUIRED_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender CSWgs \
-	CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWiconv \
+REQUIRED_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender \
+	CSWgs CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWiconv \
 	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm
 REQUIRED_PKGS_CSWgraphvizdevel =
 REQUIRED_PKGS_CSWgraphvizdoc = 
 REQUIRED_PKGS_CSWgraphvizgraphs = 
-REQUIRED_PKGS_CSWgraphvizgd = CSWgd CSWjpeg CSWxpm
+REQUIRED_PKGS_CSWgraphvizgd = CSWgd CSWjpeg
 REQUIRED_PKGS_CSWgraphvizdevil = CSWdevil
 REQUIRED_PKGS_CSWgraphvizsharp = CSWmono
 REQUIRED_PKGS_CSWgraphvizguile = CSWguile
@@ -99,7 +101,7 @@ SPKG_DESC_CSWgraphvizr = Graphviz language binding for R
 SPKG_DESC_CSWgraphvizruby = Graphviz language binding for ruby
 SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
 
-PKGFILES_CSWgraphviz = $(bindir)/(?!diffimg).*
+PKGFILES_CSWgraphviz = $(bindir)/(?!(diffimg|dot_static)).*
 PKGFILES_CSWgraphviz += $(libdir)/lib.*.so\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_core\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_pango\..*
@@ -123,6 +125,7 @@ PKGFILES_CSWgraphvizgraphs = $(sharedstatedir)/graphviz/graphs/.*
 
 PKGFILES_CSWgraphvizgd = $(libdir)/graphviz/libgvplugin_gd\..*
 PKGFILES_CSWgraphvizgd += $(bindir)/diffimg
+PKGFILES_CSWgraphvizgd += $(bindir)/dot_static
 
 PKGFILES_CSWgraphvizdevil = $(libdir)/graphviz/libgvplugin_devil\..*
 
@@ -196,6 +199,7 @@ CONFIGURE_ARGS += --disable-lua
 CONFIGURE_ARGS += --disable-ocaml
 CONFIGURE_ARGS += --disable-php
 CONFIGURE_ARGS += --disable-r
+CONFIGURE_ARGS += --enable-static --enable-shared
 CONFIGURE_ARGS += PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
 
 STRIP_LIBTOOL=1
