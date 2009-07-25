@@ -1,5 +1,5 @@
 GARNAME = mercurial
-GARVERSION = 1.3
+GARVERSION = 1.3.1
 CATEGORIES = devel
 
 DESCRIPTION = Fast, lightweight Source Control Management system
