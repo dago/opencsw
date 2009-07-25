@@ -6,6 +6,7 @@ f none /opt/csw/bin/ssh-add 0755 root bin
 f none /opt/csw/bin/ssh-agent 0755 root bin
 f none /opt/csw/bin/ssh-keygen 0755 root bin
 f none /opt/csw/bin/ssh-keyscan 0755 root bin
+d none /opt/csw/etc/ssh 0755 root bin
 f cswpreserveconf /opt/csw/etc/ssh/ssh_config.CSW 0644 root bin
 d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/ssh-keysign 4711 root bin
