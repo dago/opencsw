@@ -105,7 +105,7 @@ LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 CONFIGURE_ARGS  = $(DIRPATHS) --enable-pdftops
 CONFIGURE_ARGS += --with-menudir=$(datadir)/applications
 CONFIGURE_ARGS += --localedir=$(datadir)/locale
-CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)/init.d
+CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-icondir=$(datadir)/icons
 
 # This is a hack that's needed, because configure (Makedefs) will otherwise
