@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = bash
-GARVERSION = 4.0.24
+GARVERSION = 4.0.28
 CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
