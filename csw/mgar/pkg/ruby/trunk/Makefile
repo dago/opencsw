@@ -10,7 +10,7 @@ TEST_SCRIPTS =
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
-PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymode_el
+PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymodeel
 
 ARCHALL_CSWrubydoc = 1
 ARCHALL_CSWrubymode = 1
@@ -28,7 +28,7 @@ REQUIRED_PKGS_CSWrubydev = CSWruby CSWgcc4core CSWgfile
 
 REQUIRED_PKGS_CSWrubymode = CSWemacscommon
 
-REQUIRED_PKGS_CSWrubymode_el = CSWemacscommon
+REQUIRED_PKGS_CSWrubymodeel = CSWemacscommon
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -49,7 +49,7 @@ SPKG_DESC_CSWrubydev = Ruby Extension Development Files
 
 SPKG_DESC_CSWrubymode = Ruby major mode for Emacs
 
-SPKG_DESC_CSWrubymode_el = Elisp source for ruby mode
+SPKG_DESC_CSWrubymodeel = Elisp source for ruby mode
 
 PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
 
@@ -59,7 +59,7 @@ PKGFILES_CSWrubydev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 
 PKGFILES_CSWrubymode = $(datadir)/emacs/site-lisp/.*elc$
 
-PKGFILES_CSWrubymode_el = $(datadir)/emacs/site-lisp/.*el$
+PKGFILES_CSWrubymodeel = $(datadir)/emacs/site-lisp/.*el$
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
