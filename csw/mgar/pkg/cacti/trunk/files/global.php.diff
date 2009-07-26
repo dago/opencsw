@@ -1,0 +1,23 @@
+diff --speed-large-files --minimal -Nru cacti-0.8.7e.orig/include/global.php cacti-0.8.7e/include/global.php
+--- cacti-0.8.7e.orig/include/global.php	2009-06-28 18:07:11.000000000 +0200
++++ cacti-0.8.7e/include/global.php	2009-07-26 17:58:03.838733867 +0200
+@@ -34,8 +34,8 @@
+ $database_type = "mysql";
+ $database_default = "cacti";
+ $database_hostname = "localhost";
+-$database_username = "cactiuser";
+-$database_password = "cactiuser";
++$database_username = "cacti";
++$database_password = "cacti";
+ $database_port = "3306";
+ 
+ /* Default session name - Session name must contain alpha characters */
+@@ -89,7 +89,7 @@
+ $config["base_path"] = strtr(ereg_replace("(.*)[\\\/]include", "\\1", dirname(__FILE__)), "\\", "/");
+ $config["library_path"] = ereg_replace("(.*[\\\/])include", "\\1lib", dirname(__FILE__));
+ $config["include_path"] = dirname(__FILE__);
+-$config["rra_path"] = $config["base_path"] . '/rra';
++$config["rra_path"] = '/var/opt/csw/cacti/rra';
+ 
+ /* colors */
+ $colors["dark_outline"] = "454E53";

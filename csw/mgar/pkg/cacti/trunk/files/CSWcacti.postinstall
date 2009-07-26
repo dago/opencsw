@@ -1,0 +1,40 @@
+#!/bin/sh
+
+passwd -N cacti
+
+cat << EOF
+#
+#
+#
+
+The package automatically added a user called "cacti". If you don't like 
+this user name, rename it and change it in the files listed below.
+
+By default the database "cacti" is used. If you want to use another database,
+change the name in the files listed below.
+
+To get Cacti running, please follow these steps:
+
+(1) Edit some lines in /opt/csw/cacti/include/config.php to match your
+    environment:
+
+    Example: \$database_hostname = "localhost"
+
+(2) Check also /opt/csw/cacti/include/global.php
+
+(3) Edit /opt/csw/cacti/cacti.sql to match your environment.
+
+    Example: GRANT ALL ON cacti.* TO cacti@localhost IDENTIFIED BY 'cacti';
+
+(4) Run /opt/csw/cacti/cacti.sql to create the database:
+
+    Example: mysql -u root -p < /opt/csw/cacti/cacti.sql
+
+(5) Create a cronjob for the user "cacti" to collect the data:
+
+    0,5,10,15,20,25,30,35,40,45,50,55 * * * * /opt/csw/php5/bin/php /opt/csw/cacti/poller.php > /dev/null 2>&1
+
+#
+#
+#
+EOF

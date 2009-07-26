@@ -1,0 +1,16 @@
+diff --speed-large-files --minimal -Nru cacti-0.8.7e.orig/include/global_settings.php cacti-0.8.7e/include/global_settings.php
+--- cacti-0.8.7e.orig/include/global_settings.php	2009-06-28 18:07:11.000000000 +0200
++++ cacti-0.8.7e/include/global_settings.php	2009-07-08 18:42:12.167068681 +0200
+@@ -94,9 +94,10 @@
+ 			),
+ 		"path_cactilog" => array(
+ 			"friendly_name" => "Cacti Log File Path",
+-			"description" => "The path to your Cacti log file (if blank, defaults to <path_cacti>/log/cacti.log)",
++			"description" => "The path to your Cacti log file (if blank, defaults to /var/opt/csw/cacti/log/cacti.log)",
+ 			"method" => "filepath",
+-			"default" => $config["base_path"] . "/log/cacti.log",
++			#"default" => $config["base_path"] . "/log/cacti.log",
++			"default" => "/var/opt/csw/cacti/log/cacti.log",
+ 			"max_length" => "255"
+ 			),
+ 		"pollerpaths_header" => array(

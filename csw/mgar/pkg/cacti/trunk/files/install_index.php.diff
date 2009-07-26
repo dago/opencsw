@@ -1,0 +1,21 @@
+diff --speed-large-files --minimal -Nru cacti-0.8.7e.orig/install/index.php cacti-0.8.7e/install/index.php
+--- cacti-0.8.7e.orig/install/index.php	2009-06-28 18:07:11.000000000 +0200
++++ cacti-0.8.7e/install/index.php	2009-07-08 19:26:29.280331987 +0200
+@@ -93,7 +93,7 @@
+ 	if ($config["cacti_server_os"] == "win32") {
+ 		$search_paths = array("c:/usr/bin", "c:/cacti", "c:/rrdtool", "c:/spine", "c:/php", "c:/progra~1/php", "c:/net-snmp/bin", "c:/progra~1/net-snmp/bin", "d:/usr/bin", "d:/net-snmp/bin", "d:/progra~1/net-snmp/bin", "d:/cacti", "d:/rrdtool", "d:/spine", "d:/php", "d:/progra~1/php");
+ 	}else{
+-		$search_paths = array("/bin", "/sbin", "/usr/bin", "/usr/sbin", "/usr/local/bin", "/usr/local/sbin");
++		$search_paths = array("/bin", "/sbin", "/usr/bin", "/usr/sbin", "/usr/local/bin", "/usr/local/sbin","/opt/csw/bin","/opt/csw/php5/bin");
+ 	}
+ 
+ 	for ($i=0; $i<count($search_paths); $i++) {
+@@ -264,7 +264,7 @@
+ if (config_value_exists("path_cactilog")) {
+ 	$input["path_cactilog"]["default"] = read_config_option("path_cactilog");
+ } else {
+-	$input["path_cactilog"]["default"] = $config["base_path"] . "/log/cacti.log";
++	$input["path_cactilog"]["default"] = "/var/opt/csw/cacti/log/cacti.log";
+ }
+ 
+ /* SNMP Version */

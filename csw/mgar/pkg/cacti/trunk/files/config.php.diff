@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru cacti-0.8.7e.orig/include/config.php cacti-0.8.7e/include/config.php
+--- cacti-0.8.7e.orig/include/config.php	2009-06-28 18:07:11.000000000 +0200
++++ cacti-0.8.7e/include/config.php	2009-07-26 19:10:04.123759626 +0200
+@@ -26,8 +26,8 @@
+ $database_type = "mysql";
+ $database_default = "cacti";
+ $database_hostname = "localhost";
+-$database_username = "cactiuser";
+-$database_password = "cactiuser";
++$database_username = "cacti";
++$database_password = "cacti";
+ $database_port = "3306";
+ 
+ /* Default session name - Session name must contain alpha characters */
