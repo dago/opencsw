@@ -41,7 +41,8 @@ INCOMPATIBLE_PKGS = CSWgraphvis CSWgraphviz2
 ARCHALL_CSWgraphvizdoc = 1
 ARCHALL_CSWgraphvizgraphs = 1
 
-BUILD64 = 1
+# Sun's CC is broken on 64bit architectures!
+#BUILD64 = 1
 
 PREREQUISITE_PKGS = 
 
