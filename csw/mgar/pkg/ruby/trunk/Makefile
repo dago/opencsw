@@ -61,6 +61,8 @@ PKGFILES_CSWrubymode = $(datadir)/emacs/site-lisp/.*elc$
 
 PKGFILES_CSWrubymodeel = $(datadir)/emacs/site-lisp/.*el$
 
+CATALOGNAME_CSWrubymodeel = rubymode_el
+
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
