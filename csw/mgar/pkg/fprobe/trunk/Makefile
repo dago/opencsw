@@ -24,11 +24,18 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 # no build tests
 SKIPTEST = 1
 
+# directory for PID file
+RUNDIR = /var/opt/csw/run
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pcap=$(includedir)
 CONFIGURE_ARGS += --with-libpcap=$(libdir)
+CONFIGURE_ARGS += --with-piddir=$(RUNDIR)
 
 include gar/category.mk
 
 pre-configure-modulated:
 	@gsed -i'' 's,CFLAGS="$$CFLAGS -DWALL -W -Wall",,' $(WORKSRC)/configure
+
+pre-install-modulated:
+	@ginstall -d -m 0755 $(DESTDIR)$(RUNDIR)
