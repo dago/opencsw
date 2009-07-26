@@ -11,6 +11,9 @@ endef
 MASTER_SITES = http://downloads.sourceforge.net/project/fprobe/fprobe/1.1/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+# we require
+REQUIRED_PKGS = CSWlibpcap
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
