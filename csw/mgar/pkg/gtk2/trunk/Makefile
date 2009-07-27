@@ -19,6 +19,7 @@ endef
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/gtk+/2.16/
 
 DISTFILES = gtk+-$(GARVERSION).tar.bz2
+DISTFILES += CSWgtk2.postinstall
 DISTFILES += fixme.sh
 
 WORKSRC = $(WORKDIR)/gtk+-$(GARVERSION)
