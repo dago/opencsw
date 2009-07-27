@@ -14,7 +14,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWvorbis
 CATALOGNAME = libvorbis
-REQUIRED_PKGS = CSWlibogg
+REQUIRED_PKGS = CSWlibogg CSWsunmath
 
 SPKG_SOURCEURL = http://www.vorbis.com/
 
@@ -22,6 +22,8 @@ BUILD64 = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+EXTRA_LD_FLAGS = -L$(libdir) -lsunmath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
