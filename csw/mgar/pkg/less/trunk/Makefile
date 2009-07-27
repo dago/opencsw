@@ -1,5 +1,5 @@
 GARNAME = less
-GARVERSION = 429
+GARVERSION = 436
 CATEGORIES = utils
 
 DESCRIPTION = Less is a free, open-source file pager
