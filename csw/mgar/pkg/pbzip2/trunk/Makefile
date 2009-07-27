@@ -35,9 +35,7 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 pre-build-modulated:
-	@gsed -i'' \
-	's,-pthread,-I$(includedir) -L$(libdir),g;s,g++,$(CXX),;s,-O2,$(CFLAGS),' \
-	$(WORKSRC)/Makefile
+	@gsed -i'' 's,-pthread,-I$(includedir) -L$(libdir),g;s,g++,$(CXX),;s,-O2,-fast $(CFLAGS),' $(WORKSRC)/Makefile
 
 install-custom:
 	[ ! -d "$(DESTDIR)$(mandir)/man1" ] && \
