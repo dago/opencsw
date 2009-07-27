@@ -29,6 +29,12 @@ INSTALL_SCRIPTS = custom
 LICENSE = COPYING
 ARCHALL = 1
 REQUIRED_PKGS = CSWtcl CSWtk CSWtkdiff
+POST_INSTALL_TARGETS := fixscript
+
+# Script needs to run wish from /opt/csw
+fixscript:
+	@echo " ==> Fixing wish path in tkcvs script"
+	perl -i -plne "s{^exec wish}{exec ${bindir}/wish}g" $(DESTDIR)$(prefix)/bin/tkcvs
 
 include gar/category.mk
 
