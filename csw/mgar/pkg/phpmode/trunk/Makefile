@@ -52,5 +52,6 @@ post-install-modulated:
 	( gmkdir -p $(DESTDIR)/$(LISPDIR) $(DESTDIR)/$(INFODIR); \
 		emacs -batch -f batch-byte-compile $(WORKSRC)/php-mode.el; \
 		cp $(WORKSRC)/php-mode.el* $(DESTDIR)$(LISPDIR); \
+		chmod -x $(DESTDIR)$(LISPDIR)/*; \
 		cp $(WORKSRC)/*info $(DESTDIR)/$(INFODIR) )
 	@$(MAKECOOKIE)
