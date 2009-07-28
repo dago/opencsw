@@ -1,10 +1,10 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header$
 
 GARNAME = keychain
 GARVERSION = 2.6.8
-CATEGORIES = apps
+CATEGORIES = utils
 
 DESCRIPTION = Convenient ssh-agent and gpg-agent manager
 define BLURB
