@@ -48,7 +48,7 @@ REQUIRED_PKGS_CSWpidgin += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
 REQUIRED_PKGS_CSWpidgin += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
 REQUIRED_PKGS_CSWpidgin += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
 REQUIRED_PKGS_CSWpidgin += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus 
-REQUIRED_PKGS_CSWpidgin += CSWbdb CSWfconfig CSWftype2
+REQUIRED_PKGS_CSWpidgin += CSWfconfig CSWftype2
 
 include gar/category.mk
 
