@@ -30,6 +30,7 @@ REQUIRED_PKGS = CSWbdb
 include gar/category.mk
 
 install-custom-i386:
+	ginstall -d $(DESTDIR)$(prefix)/bdb44/lib
 	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s . i386
 
 install-custom-sparc:
@@ -62,6 +63,8 @@ install-custom-sparc:
 	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_hotbackup db_hotbackup
 
 install-custom-all:
+	ginstall -d $(DESTDIR)$(prefix)/bdb44/lib
+	ginstall -d $(DESTDIR)$(prefix)/bdb44/bin
 	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s . 32
 	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/db.jar db.jar
 	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb-4.so libdb-4.4.so
