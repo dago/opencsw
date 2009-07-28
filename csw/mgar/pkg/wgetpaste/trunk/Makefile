@@ -14,7 +14,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWshutils
+REQUIRED_PKGS = CSWshutils CSWwget
 
 PATCHFILES = wgetpaste-$(GARVERSION).patch
 
