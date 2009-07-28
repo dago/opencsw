@@ -57,6 +57,7 @@ install-custom-sparc:
 	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_verify db_verify
 
 install-custom-i386:
+	ginstall -d $(DESTDIR)$(prefix)/bdb4/lib
 	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s . i386
 
 install-custom-all:
