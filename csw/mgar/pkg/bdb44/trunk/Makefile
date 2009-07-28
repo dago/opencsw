@@ -18,11 +18,10 @@ SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
-INSTALL_SCRIPTS = custom
+INSTALL_SCRIPTS = custom-$(GARCH) custom-all
 TEST_SCRIPTS =
 
 ENABLE_CHECK = 0
-ARCHALL = 1
 PACKAGES = CSWbdb44 
 SPKG_DESC = BerkeleyDB 4.4 embedded database libraries and utilities
 CATALOGNAME = berkeleydb44
@@ -30,55 +29,60 @@ REQUIRED_PKGS = CSWbdb
 
 include gar/category.mk
 
-install-custom:
-	ginstall -d $(DESTDIR)$(prefix)/bdb4/lib/sparcv9
-	ginstall -d $(DESTDIR)$(prefix)/bdb4/bin/sparcv9
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s . sparcv8
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s . 32
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s sparcv9 64
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/db.jar db.jar
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb-4.so libdb-4.4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb-4.so libdb-4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb.so libdb.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_cxx-4.so libdb_cxx-4.4.so 
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_cxx-4.so libdb_cxx-4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_cxx.so libdb_cxx.so 
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.4_g.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.so 
-	cd $(DESTDIR)$(prefix)/bdb4/lib && gln -s $(libdir)/libdb_java.so libdb_java.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/db.jar db.jar
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb-4.so libdb-4.4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb-4.so libdb-4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb.so libdb.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_cxx-4.so libdb_cxx-4.4.so 
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_cxx-4.so libdb_cxx-4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_cxx.so libdb_cxx.so 
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java-4.so libdb_java-4.4.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java-4.so libdb_java-4.4_g.so
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java-4.so libdb_java-4.so 
-	cd $(DESTDIR)$(prefix)/bdb4/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java.so libdb_java.so
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_archive db_archive
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_checkpoint db_checkpoint
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_deadlock db_deadlock
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_dump db_dump
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_load db_load 
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_printlog db_printlog
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_recover db_recover 
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_stat db_stat
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_upgrade db_upgrade
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_verify db_verify 
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/berkeley_db_svc berkeley_db_svc
-	cd $(DESTDIR)$(prefix)/bdb4/bin && gln -s $(bindir)/db_hotbackup db_hotbackup
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_archive db_archive
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_checkpoint db_checkpoint 
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_deadlock db_deadlock
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_dump db_dump 
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_load db_load
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_printlog db_printlog
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_recover db_recover
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_stat db_stat
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_upgrade db_upgrade
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_verify db_verify
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/berkeley_db_svc berkeley_db_svc
-	cd $(DESTDIR)$(prefix)/bdb4/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_hotbackup db_hotbackup
+install-custom-i386:
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s . i386
+
+install-custom-sparc:
+	ginstall -d $(DESTDIR)$(prefix)/bdb44/lib/sparcv9
+	ginstall -d $(DESTDIR)$(prefix)/bdb44/bin/sparcv9
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s . sparcv8
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s sparcv9 64
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/db.jar db.jar
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb-4.so libdb-4.4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb-4.so libdb-4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb.so libdb.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_cxx-4.so libdb_cxx-4.4.so 
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_cxx-4.so libdb_cxx-4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_cxx.so libdb_cxx.so 
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java-4.so libdb_java-4.4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java-4.so libdb_java-4.4_g.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java-4.so libdb_java-4.so 
+	cd $(DESTDIR)$(prefix)/bdb44/lib/sparcv9 && gln -s $(libdir)/sparcv9/libdb_java.so libdb_java.so
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_archive db_archive
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_checkpoint db_checkpoint 
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_deadlock db_deadlock
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_dump db_dump 
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_load db_load
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_printlog db_printlog
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_recover db_recover
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_stat db_stat
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_upgrade db_upgrade
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_verify db_verify
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/berkeley_db_svc berkeley_db_svc
+	cd $(DESTDIR)$(prefix)/bdb44/bin/sparcv9 && gln -s $(bindir)/sparcv9/db_hotbackup db_hotbackup
+
+install-custom-all:
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s . 32
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/db.jar db.jar
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb-4.so libdb-4.4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb-4.so libdb-4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb.so libdb.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb_cxx-4.so libdb_cxx-4.4.so 
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb_cxx-4.so libdb_cxx-4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb_cxx.so libdb_cxx.so 
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.4.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.4_g.so
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb_java-4.so libdb_java-4.so 
+	cd $(DESTDIR)$(prefix)/bdb44/lib && gln -s $(libdir)/libdb_java.so libdb_java.so
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_archive db_archive
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_checkpoint db_checkpoint
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_deadlock db_deadlock
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_dump db_dump
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_load db_load 
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_printlog db_printlog
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_recover db_recover 
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_stat db_stat
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_upgrade db_upgrade
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_verify db_verify 
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/berkeley_db_svc berkeley_db_svc
+	cd $(DESTDIR)$(prefix)/bdb44/bin && gln -s $(bindir)/db_hotbackup db_hotbackup
