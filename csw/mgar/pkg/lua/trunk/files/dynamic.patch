@@ -19,7 +19,7 @@
  
  default: $(PLAT)
  
-@@ -47,10 +49,17 @@
+@@ -47,10 +49,18 @@
  
  a:	$(ALL_A)
  
@@ -31,8 +31,9 @@
  
 +$(LUA_SO): $(LUA_A)
 +	-rm -f $(LUA_SO)
-+	$(CC) -h $(LUA_SO).$(V) -G -o $(LUA_SO).$(R) $(CORE_O)
++	$(CC) -h $(LUA_SO).$(V) -G -o $(LUA_SO).$(R) $(CORE_O) $(LIB_O)
 +	ln -s $(LUA_SO).$(R) $(LUA_SO)
++	ln -s $(LUA_SO).$(V) $(LUA_SO)
 +
  $(LUA_T): $(LUA_O) $(LUA_A)
  	$(CC) -o $@ $(MYLDFLAGS) $(LUA_O) $(LUA_A) $(LIBS)
