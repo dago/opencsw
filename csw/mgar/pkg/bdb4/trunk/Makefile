@@ -21,7 +21,6 @@ INSTALL_SCRIPTS = custom-$(GARCH) custom-all
 TEST_SCRIPTS = 
 
 ENABLE_CHECK = 0
-ARCHALL = 1
 PACKAGES = CSWbdb4
 SPKG_DESC = Embedded database libraries and utilities
 CATALOGNAME = berkeleydb4 
