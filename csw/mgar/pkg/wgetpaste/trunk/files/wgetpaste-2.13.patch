@@ -1,6 +1,38 @@
 diff -ru wgetpaste-2.13.orig/wgetpaste wgetpaste-2.13/wgetpaste
 --- wgetpaste-2.13.orig/wgetpaste	2009-07-28 14:38:30.336410148 +0100
-+++ wgetpaste-2.13/wgetpaste	2009-07-28 14:39:32.398048919 +0100
++++ wgetpaste-2.13/wgetpaste	2009-07-28 18:28:16.513748108 +0100
+@@ -99,7 +99,7 @@
+ noxclip() {
+ 	cat <<EOF >&2
+ Could not find xclip on your system. In order to use --x$1 you must either
+-emerge x11-misc/xclip or define x_$1() globally in /etc/wgetpaste.conf or
++emerge x11-misc/xclip or define x_$1() globally in /etc/opt/csw/wgetpaste.conf/g or
+ per user in ~/.wgetpaste.conf to use another program (such as e.g. xcut or
+ klipper) to $2 your clipboard.
+ 
+@@ -288,11 +288,11 @@
+         --debug                   be *very* verbose (implies -v)
+ 
+     -h, --help                    show this help
+-    -g, --ignore-configs          ignore /etc/wgetpaste.conf, ~/.wgetpaste.conf etc.
++    -g, --ignore-configs          ignore /etc/opt/csw/wgetpaste.conf/g, ~/.wgetpaste.conf etc.
+         --version                 show version information
+ 
+ Defaults (DEFAULT_{NICK,SERVICE,LANGUAGE,EXPIRATION}[_\${SERVICE}]) can be overridden
+-globally in /etc/wgetpaste.conf or /etc/wgetpaste.d/*.conf or per user in any of
++globally in /etc/opt/csw/wgetpaste.conf/g or /etc/wgetpaste.d/*.conf or per user in any of
+ ~/.wgetpaste.conf or ~/.wgetpaste.d/*.conf.
+ EOF
+ }
+@@ -568,7 +568,7 @@
+ 	if [[ ! $IGNORECONFIGS ]]; then
+ 		# compatibility code
+ 		local f deprecated=
+-		for f in {/etc/,~/.}wgetpaste{.d/*.bash,}; do
++		for f in {/etc/,/etc/opt/csw/,~/.}wgetpaste{.d/*.bash,}; do
+ 			if [[ -f $f ]]; then
+ 				if [[ -z $deprecated ]]; then
+ 					echo "The config files for wgetpaste have changed to *.conf.$N" >&2
 @@ -589,7 +589,7 @@
  }
  load_configs
