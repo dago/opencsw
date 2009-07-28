@@ -1,0 +1,15 @@
+diff --speed-large-files --minimal -Nru thunderbird.orig/directory/c-sdk/ldap/libraries/libprldap/ldappr-int.h thunderbird/directory/c-sdk/ldap/libraries/libprldap/ldappr-int.h
+--- thunderbird.orig/directory/c-sdk/ldap/libraries/libprldap/ldappr-int.h	2009-05-27 10:01:14.924882377 +0200
++++ thunderbird/directory/c-sdk/ldap/libraries/libprldap/ldappr-int.h	2009-05-27 10:02:26.014267148 +0200
+@@ -41,9 +41,9 @@
+  *
+  */
+ 
+-#include "ldap.h"
++#include "../../include/ldap.h"
+ #include "nspr.h"
+-#include "ldappr.h"
++#include "../../include/ldappr.h"
+ 
+ #include <errno.h>
+ #include <string.h>

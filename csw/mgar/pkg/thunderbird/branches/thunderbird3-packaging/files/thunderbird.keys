@@ -1,0 +1,8 @@
+-------thunderbird.keys------------
+text/html
+        description=HyperText Markup Language File
+        icon_filename=i-thunderbird.png
+        default_action=application
+        short_list_application_ids_for_novice_user_level=thunderbird
+        category=Network
+-----------------------------------

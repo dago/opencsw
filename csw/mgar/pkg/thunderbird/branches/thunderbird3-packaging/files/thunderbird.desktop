@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Thunderbird
+Comment=Thunderbird Community Edition
+TryExec=Thunderbird
+Exec=thunderbird %u
+Icon=thunderbird.png
+MimeType=text/html;
+Categories=Application;Network;
