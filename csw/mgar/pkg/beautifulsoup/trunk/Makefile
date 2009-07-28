@@ -26,6 +26,8 @@ MASTER_SITES = http://www.crummy.com/software/$(EXT_NAME)/download/
 DISTFILES  = $(EXT_NAME).tar.gz
 WORKSRC = $(WORKDIR)/$(EXT_NAME)-$(GARVERSION)
 
+SPKG_CLASSES = none cswpycompile
+
 ARCHALL = 1
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = beautifulsoup
@@ -33,7 +35,11 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = beautifulsoup
 
 PACKAGES = CSWbeautifulsoup
-REQUIRED_PKGS = CSWpython
+REQUIRED_PKGS_CSWbeautifulsoup = CSWpython CSWcswclassutils
+
+PROTOTYPE_FILTER = awk ' \
+  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } \
+  { print }'
 
 build-beautifulsoup:
 	(cd $(WORKSRC); python setup.py build)
