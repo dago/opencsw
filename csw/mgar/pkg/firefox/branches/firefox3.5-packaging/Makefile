@@ -108,10 +108,10 @@ post-extract:
 	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla* $(WORK_BUILD)
 	@$(MAKECOOKIE)
 
-pre-configure:
+pre-configure-modulated:
 	@cp $(FILEDIR)/.mozconfig  $(WORK_BUILD)/.mozconfig
 
-pre-install:
+pre-install-modulated:
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
 	( cd $(WORK_INSTALL)/opt/csw/bin && if [ -L firefox ] ; then rm firefox ; fi  && ln -s ../mozilla/firefox/bin/firefox . )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )
@@ -121,7 +121,7 @@ pre-install:
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/gnome/mime-info )
 	( cp $(FILEDIR)/firefox.keys $(WORK_INSTALL)/opt/csw/share/gnome/mime-info/firefox.keys )
 
-post-install:
+post-install-modulated:
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 	( mv $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config.temp && gsed -e s\_-L$(WORK_INSTALL)/opt/csw/lib\_\_g  $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config.temp > $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config && rm $(WORK_INSTALL)/opt/csw/mozilla/firefox/bin/firefox-config.temp )
 	( mv $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp && gsed -e s\_-L$(WORK_INSTALL)/opt/csw/lib\_\_g  $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp > $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc && rm $(WORK_INSTALL)/opt/csw/mozilla/firefox/lib/pkgconfig/firefox-nspr.pc.temp )
