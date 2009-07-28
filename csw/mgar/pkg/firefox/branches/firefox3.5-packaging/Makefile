@@ -13,7 +13,8 @@ DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
-MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
+MASTER_SITES  = http://ftp.heanet.ie/pub/ftp.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
+MASTER_SITES += http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 
 PACKAGES 		= CSWfirefox
