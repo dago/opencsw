@@ -21,14 +21,15 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = tail-$(GARVERSION).patch
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz $(PATCHFILES)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_CLASSES = none cswpycompile
 
-REQUIRED_PKGS = CSWcswclassutils CSWpython CSWtwisted CSWzope
+REQUIRED_PKGS = CSWcswclassutils CSWpython CSWtwisted CSWzope CSWtextutils
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS = 
