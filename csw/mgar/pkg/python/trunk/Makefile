@@ -34,9 +34,9 @@ PATCHFILES += makesetup.diff
 PATCHFILES += modules.diff
 PATCHFILES += multiprocess.diff
 PATCHFILES += pyport.diff
-PATCHFILES += setup.diff
 PATCHFILES += site.diff
 PATCHFILES += python-config-in.diff
+PATCHFILES += bug3110.diff
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
@@ -93,7 +93,7 @@ PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
 ENABLE_CHECK = 0
 
 REQUIRED_PKGS_CSWidle         = CSWpython CSWpython-tk CSWcswclassutils
-REQUIRED_PKGS_CSWpython       = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
+REQUIRED_PKGS_CSWpython       = CSWbdb CSWbzip2 CSWgdbm CSWggettextrt 
 REQUIRED_PKGS_CSWpython      += CSWncurses CSWosslrt CSWpython-rt CSWreadline 
 REQUIRED_PKGS_CSWpython      += CSWsqlite3rt CSWzlib CSWcswclassutils
 REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 

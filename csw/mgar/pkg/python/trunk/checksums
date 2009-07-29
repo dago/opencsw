@@ -1,4 +1,5 @@
 245db9f1e0f09ab7e0faaa0cf7301011  download/Python-2.6.2.tar.bz2
+b241ac27f9eacaa1a4850d88c60a96d7  download/bug3110.diff
 42dd6523beb94a805d5764ae1276091c  download/faqwiz.diff
 5664b3970307d7d39d8d4061e7dccbb0  download/libpython2.5.so.1.0-isa-i386
 a87896c48b2f61b32053e6d02b07b022  download/libpython2.5.so.1.0-isa-sparcv8
@@ -7,5 +8,5 @@ a87896c48b2f61b32053e6d02b07b022  download/libpython2.5.so.1.0-isa-sparcv8
 369c5593c0c0edda03f3c1844788dbee  download/multiprocess.diff
 05724da367b025ce525de2bb704af6e3  download/pyport.diff
 a1d114e8a20870675649aeef007a9cac  download/python-config-in.diff
-48577bbc43b912a4df66d09b54bd61ae  download/setup.diff
+a17bf564b83d6b7821405b6b5ac043c1  download/setup.diff
 d6c86beae46033be70c44c8e0e4c1908  download/site.diff
