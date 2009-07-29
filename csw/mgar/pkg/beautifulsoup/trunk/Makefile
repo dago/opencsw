@@ -47,4 +47,7 @@ build-beautifulsoup:
 install-beautifulsoup:
 	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
 
+post-install-modulated:
+	rm $(DESTDIR)$(bindir)/*.sh
+
 include gar/category.mk
