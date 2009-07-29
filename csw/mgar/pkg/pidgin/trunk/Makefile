@@ -19,6 +19,9 @@ CONFIGURE_ARGS += '--enable-gnutls=yes'
 CONFIGURE_ARGS += '--disable-nss'
 CONFIGURE_ARGS += '--disable-avahi'
 CONFIGURE_ARGS += '--disable-nm'
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
+
 
 PATH = $(SOS11_CC_HOME)/bin:$(PATH)
 EXTRA_EXPORTS = PATH
@@ -38,8 +41,9 @@ TEST_SCRIPTS =
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
+
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_RUNPATH_DIRS = $(prefix)/X11/lib
+EXTRA_LDFLAGS = -R $(prefix)/X11/lib
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
