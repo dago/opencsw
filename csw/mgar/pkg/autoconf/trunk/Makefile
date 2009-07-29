@@ -27,6 +27,8 @@ TEST_TARGET = check
 # Tests take a loooooonnng time.
 TEST_SCRIPTS =
 
+EXTRA_MERGE_EXCLUDE_FILES = $(infodir)/standards.info
+
 include gar/category.mk
 
 # Package has two bad string which should be ignored:
