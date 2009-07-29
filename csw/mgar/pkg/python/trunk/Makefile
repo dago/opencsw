@@ -47,17 +47,9 @@ DEPENDS += lib/db
 DEPENDS += lib/gdbm
 
 ifeq ($(shell uname -p), i386)
-    ifeq ($(shell uname -r),5.10)
-        BASECFLAGS = -xO3 -xarch=amd64
-    else
-        BASECFLAGS = -xO3 -xarch=386
-    endif
+    BASECFLAGS = -xO3 -xarch=386
 else
-    ifeq ($(shell uname -r),5.10)
-        BASECFLAGS = -xO3 -xarch=v9
-    else
-        BASECFLAGS = -xO3 -xarch=v8
-    endif
+    BASECFLAGS = -xO3 -xarch=v8
 endif
 
 COMPILER_EXPORTS += BASECFLAGS
