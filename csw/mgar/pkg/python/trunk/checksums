@@ -4,7 +4,7 @@
 a87896c48b2f61b32053e6d02b07b022  download/libpython2.5.so.1.0-isa-sparcv8
 33f4094ee46ce865d3973a197f3fb4a0  download/makesetup.diff
 22c5f741b1744213eaef0818ab280ad5  download/modules.diff
-1d90f8a385230adfe469cd484e85f046  download/multiprocess.diff
+afcc79a94e2f8a576c7906a9700e35a0  download/multiprocess.diff
 05724da367b025ce525de2bb704af6e3  download/pyport.diff
 a1d114e8a20870675649aeef007a9cac  download/python-config-in.diff
 27747dd5678507a99fcaf427d8d5044f  download/setup.diff
