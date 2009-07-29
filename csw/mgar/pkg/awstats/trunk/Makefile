@@ -18,6 +18,8 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWawstats.postinstall
 
+PATCHFILES = patch-configdir.diff
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -36,7 +38,8 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-PRESERVECONF = $(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
+PRESERVECONF  = $(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
+PRESERVECONF += $(sysconfdir)/awstats.conf.CSW
 
 ARCHALL = 1
 
@@ -57,12 +60,21 @@ install-custom:
 	cp -R $(WORKSRC)/wwwroot/cgi-bin/* \
 		$(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/
 
+	ginstall -d $(DESTDIR)$(sysconfdir)/awstats/
+	cat $(WORKSRC)/tools/wwwroot/cgi-bin/awstats.model.conf | perl -p -e '\
+		s!/var/log/httpd/mylog.log!/var/opt/csw/awstats!;
+		'> $(DESTDIR)$(sysconfdir)/awstats.conf.CSW
+	rm -f $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/awstats.model.conf
+
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra/
 	cat $(WORKSRC)/tools/httpd_conf | perl -p -e '\
 		s!/usr/local/awstats/wwwroot/cgi-bin/!$(sharedstatedir)/www/awstats/cgi-bin/!; \
 		s!/usr/local/awstats/wwwroot/!$(sharedstatedir)/www/awstats/htdocs/!; \
-		s!/usr/local/awstats/wwwroot!$(sharedstatedir)/www/awstats/htdocs!;' \
-		> $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
+		s!/usr/local/awstats/wwwroot!$(sharedstatedir)/www/awstats/htdocs!; \
+		'> $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
 	rm -f $(DESTDIR)$(sharedstatedir)/awstats/httpd_conf
 
 	@$(MAKECOOKIE)
+
+# ./awstats_updateall.pl now -awstatsprog=/opt/csw/share/www/awstats/cgi-bin/awstats.pl -configdir=/opt/csw/etc
+

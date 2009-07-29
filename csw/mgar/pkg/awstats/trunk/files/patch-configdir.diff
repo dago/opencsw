@@ -1,0 +1,15 @@
+diff -Naur awstats-6.9.orig/wwwroot/cgi-bin/awstats.pl awstats-6.9.patched/wwwroot/cgi-bin/awstats.pl
+--- awstats-6.9.orig/wwwroot/cgi-bin/awstats.pl	2008-11-30 16:42:46.000000000 +0100
++++ awstats-6.9.patched/wwwroot/cgi-bin/awstats.pl	2009-07-29 19:21:45.456796688 +0200
+@@ -1642,9 +1642,8 @@
+ 	}
+ 	else {
+ 		@PossibleConfigDir = (
+-							   "$DIR",                   "/etc/awstats",
+-							   "/usr/local/etc/awstats", "/etc",
+-							   "/etc/opt/awstats"
++							   "$DIR",
++							   "/etc/opt/csw/", "/opt/csw/etc/"
+ 		);
+ 	}
+ 
