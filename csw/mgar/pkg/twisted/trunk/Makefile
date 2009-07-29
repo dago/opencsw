@@ -2,27 +2,47 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = mypkg
-GARVERSION = 1.0
+GARNAME = twisted
+MAJ_VERSION = 8.2
+PATCHLEVEL = 0
+GARVERSION = $(MAJ_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
 
-DESCRIPTION = This is a useful library
+DESCRIPTION = An event-driven networking engine
 define BLURB
-  It does stuff with things
+  Twisted is a networking engine written in Python, supporting numerous
+  protocols. It contains a web server, numerous chat clients, chat servers,
+  mail servers, and more.
 endef
 
-MASTER_SITES = 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DLOAD_NAME = Twisted
+
+MASTER_SITES = http://tmrc.mit.edu/mirror/$(GARNAME)/$(DLOAD_NAME)/$(MAJ_VERSION)/
+DISTFILES  = $(DLOAD_NAME)-$(GARVERSION).tar.bz2
+
+WORKSRC = $(WORKDIR)/$(DLOAD_NAME)-$(GARVERSION)
+SPKG_CLASSES = none cswpycompile
+REQUIRED_PKGS = CSWcswclassutils CSWpython
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-CONFIGURE_ARGS = $(DIRPATHS)
+ARCHALL = 1
+CONFIGURE_SCRIPTS = 
+BUILD_SCRIPTS = twisted
+TEST_SCRIPTS = 
+INSTALL_SCRIPTS = twisted
 
-# Remove the following rules and uncomment the
-# include before building.
-all: .DEFAULT
-.DEFAULT:
-	@true
+PROTOTYPE_FILTER = awk ' \
+  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } \
+  { print }'
 
-#include gar/category.mk
+build-twisted:
+	(cd $(WORKSRC); python setup.py build)
+	@$(MAKECOOKIE)
+
+install-twisted:
+	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
+	@$(MAKECOOKIE)
+
+include gar/category.mk
