@@ -1,0 +1,19 @@
+cat <<EOF
+___________________________________________________________________________
+The Awstats system has been installed but you must configure
+awstats.<your_virtualhost>.conf in /opt/csw/awstats/etc/.  An example 
+configuration file exists in
+/opt/csw/awstats/wwwroot/cgi-bin/awstats.model.conf.
+
+Additionally if you wamt Awstats accessible from your Apache webserver.  Run
+awstats_configure.pl.  This will create a configuration file for you and added
+the correct lines to your apache conf.  It should be smart enough to pick up
+on the correct version of apache.
+
+cd /opt/csw/awstats
+./awstats_configure.pl
+
+NOTE: If you only plan on running awstats on the command line you do not need
+to run awstats_configure.pl.
+___________________________________________________________________________
+EOF
