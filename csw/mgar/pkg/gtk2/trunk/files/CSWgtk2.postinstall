@@ -6,13 +6,18 @@ if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
 
 echo 'Updating gdk-pixbuf.loaders...'
 test -x ${PKG_ROOT_DIR}/opt/csw/bin/gdk-pixbuf-query-loaders && \
+	mkdir -p "${PKG_ROOT_DIR}"/opt/csw/etc/gtk-2.0 &&
 	chroot "${PKG_ROOT_DIR}" /opt/csw/bin/gdk-pixbuf-query-loaders >"${PKG_ROOT_DIR}"/opt/csw/etc/gtk-2.0/gdk-pixbuf.loaders &&
 	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/gtk-2.0/gdk-pixbuf.loaders f 0644 root bin
 test -x ${PKG_ROOT_DIR}/opt/csw/bin/sparcv9/gdk-pixbuf-query-loaders && \
+	mkdir -p "${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0 &&
 	chroot "${PKG_ROOT_DIR}" /opt/csw/bin/sparcv9/gdk-pixbuf-query-loaders >"${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders &&
+	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0 d 0755 root bin &&
 	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders f 0644 root bin
 test -x ${PKG_ROOT_DIR}/opt/csw/bin/amd64/gdk-pixbuf-query-loaders && \
+	mkdir -p "${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0 &&
 	chroot "${PKG_ROOT_DIR}" /opt/csw/bin/amd64/gdk-pixbuf-query-loaders >"${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders &&
+	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0 d 0755 root bin &&
 	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders f 0644 root bin
 
 chroot "${PKG_ROOT_DIR}" /usr/sbin/installf -f CSWgtk2
