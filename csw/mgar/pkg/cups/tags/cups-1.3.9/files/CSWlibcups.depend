@@ -1,0 +1,7 @@
+P      CSWzlib        zlib - Zlib Data Compression Library
+P      CSWjpeg        jpeg - lib and tools for JPEG image format
+P      CSWpng         png - library for Portable Network Graphics format (PNG)
+P      CSWtiff        tiff - lib and tools for Tag Image File Format
+P      CSWgcrypt      libgcrypt - GNU libcrypt
+P      CSWgnutls      gnutls - GNU Transport Layer Security lib and tools
+P      CSWgpgerr      libgpg_error - GNU gpg related library
