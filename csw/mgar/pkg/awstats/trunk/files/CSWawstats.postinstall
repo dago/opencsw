@@ -1,3 +1,5 @@
+#!/bin/sh
+
 cat <<EOF
 ___________________________________________________________________________
 The Awstats system has been installed but you must configure

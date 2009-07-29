@@ -36,6 +36,8 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+PRESERVECONF = $(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
+
 ARCHALL = 1
 
 include gar/category.mk
@@ -53,9 +55,14 @@ install-custom:
 		$(DESTDIR)$(sharedstatedir)/www/awstats/htdocs/
 	ginstall -d $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/
 	cp -R $(WORKSRC)/wwwroot/cgi-bin/* \
-			$(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/
-	ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
-	ln -s $(sharedstatedir)/www/awstats/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/awstats
-	ginstall -d $(DESTDIR)$(prefix)/apache2/share/cgi-bin
-	ln -s $(sharedstatedir)/www/awstats/cgi-bin $(DESTDIR)$(prefix)/apache2/share/cgi-bin/awstats
+		$(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/
+
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra/
+	cat $(WORKSRC)/tools/httpd_conf | perl -p -e '\
+		s!/usr/local/awstats/wwwroot/cgi-bin/!$(sharedstatedir)/www/awstats/cgi-bin/!; \
+		s!/usr/local/awstats/wwwroot/!$(sharedstatedir)/www/awstats/htdocs/!; \
+		s!/usr/local/awstats/wwwroot!$(sharedstatedir)/www/awstats/htdocs!;' \
+		> $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
+	rm -f $(DESTDIR)$(sharedstatedir)/awstats/httpd_conf
+
 	@$(MAKECOOKIE)
