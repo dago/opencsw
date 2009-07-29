@@ -1,3 +1,7 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
 GARNAME = mypkg
 GARVERSION = 1.0
 CATEGORIES = lib
