@@ -36,7 +36,7 @@ PATCHFILES += multiprocess.diff
 PATCHFILES += pyport.diff
 PATCHFILES += site.diff
 PATCHFILES += python-config-in.diff
-PATCHFILES += bug3110.diff
+PATCHFILES += setup.diff
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1

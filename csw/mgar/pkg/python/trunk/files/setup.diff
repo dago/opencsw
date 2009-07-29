@@ -1,25 +1,3 @@
-Index: Python-2.6.2/Modules/_multiprocessing/multiprocessing.h
-===================================================================
---- Python-2.6.2/Modules/_multiprocessing/multiprocessing.h  (revision 66181)
-+++ Python-2.6.2/Modules/_multiprocessing/multiprocessing.h  (working copy)
-@@ -37,6 +37,17 @@
- #endif
- 
- /*
-+ * Issue 3110 - Solaris does not define SEM_VALUE_MAX
-+ */
-+#ifndef SEM_VALUE_MAX
-+#  ifdef _SEM_VALUE_MAX
-+#    define SEM_VALUE_MAX _SEM_VALUE_MAX
-+#  else
-+#    define SEM_VALUE_MAX INT_MAX
-+#  endif
-+#endif
-+
-+/*
-  * Make sure Py_ssize_t available
-  */
-
 Index: setup.diff
 ===================================================================
 --- setup.diff  (revision 5088)
