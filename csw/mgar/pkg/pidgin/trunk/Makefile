@@ -30,16 +30,16 @@ MSGMERGE=/opt/csw/bin/gmsgmerge
 SED=/opt/csw/bin/gsed
 X11_CFLAGS=-D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS -DXTHREADS -DXUSE_MTSAFE_API
 X11_LIBS=-lX11
-PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
 EXTRA_CONFIGURE_EXPORTS  = DOT XGETTEXT MSGFMT MSGMERGE SED PKG_CONFIG_PATH
 EXTRA_CONFIGURE_EXPORTS += X11_CFLAGS X11_LIBS
 EXTRA_INC = /opt/csw/include/ncurses
-
 TEST_TARGET = check
 TEST_SCRIPTS =
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_RUNPATH_DIRS = $(prefix)/X11/lib
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
