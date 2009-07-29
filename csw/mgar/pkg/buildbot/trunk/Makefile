@@ -28,7 +28,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_CLASSES = none cswpycompile
 
-REQUIRED_PKGS = CSWcswclassutils CSWpython
+REQUIRED_PKGS = CSWcswclassutils CSWpython CSWtwisted
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS = 
