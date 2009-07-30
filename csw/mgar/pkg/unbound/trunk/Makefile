@@ -28,6 +28,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ifeq ($(shell uname -r),5.8)
 	GARCOMPILER = GCC4
 	REQUIRED_PKGS += CSWgcc4corert
+	DESCRIPTION = A validating, recursive, and caching DNS resolver (gcc)
 endif
 ifeq ($(shell uname -r),5.10)
 	GARCOMPILER = SOS12
