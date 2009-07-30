@@ -26,7 +26,7 @@ PATCHFILES = patch-CC-M.m4
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS     = custom
 TEST_SCRIPTS      = custom
-INSTALL_SCRIPTS   = custom
+#INSTALL_SCRIPTS   = custom
 
 PRESERVECONF  = $(sysconfdir)/mail/aliases.CSW
 PRESERVECONF += $(sysconfdir)/mail/sendmail.cf.CSW
@@ -49,11 +49,12 @@ MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             rmail/rmail.8 editmap/editmap.8
 
 configure-custom:
+	@( gsed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' \
+		$(FILEDIR)/site.config.m4 > \
+		$(WORKDIR)/$(DISTNAME)/devtools/Site/site.config.m4
 	@$(MAKECOOKIE)
 
 build-custom:
-	sed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' $(FILEDIR)/site.config.m4 > \
-		$(WORKDIR)/$(DISTNAME)/devtools/Site/site.config.m4
 	cd $(WORKDIR)/$(DISTNAME) && ./Build
 	@$(MAKECOOKIE)
 
