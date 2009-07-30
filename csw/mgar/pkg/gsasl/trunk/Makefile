@@ -21,7 +21,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PREREQUISITE_PKGS = CSWkrb5libdev CSWgnulinks
 REQUIRED_PKGS_CSWlibgsasl = CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm CSWreadline
-REQUIRED_PKGS_CSWgsasl = CSWlibgsasl
+REQUIRED_PKGS_CSWgsasl = CSWlibgsasl CSWgnutls
 
 SPKG_SOURCEURL = http://www.gnu.org/software/$(GNU_PROJ)
 
