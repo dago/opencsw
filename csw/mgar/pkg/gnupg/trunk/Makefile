@@ -40,4 +40,8 @@ REQUIRED_PKGS_CSWgnupg += CSWoldaprt CSWreadline CSWzlib
 
 TEST_TARGET = check
 
+PROTOTYPE_FILTER  = awk ' \
+    $$$$3 ~ /\/opt\/csw\/bin\/gpg$$$$/ { $$$$4 = "4755" } \
+    { print }'
+
 include gar/category.mk
