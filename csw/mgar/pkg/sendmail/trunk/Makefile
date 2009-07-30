@@ -22,6 +22,18 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 STRIP_LIBTOOL = 1
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+DISTFILES += site.config.m4
+
+CONFIGURE_SCRIPTS  = custom
+BUILD_SCRIPTS  = custom
 
 include gar/category.mk
+
+configure-custom:
+	@( cp $(DOWNLOADDIR)/site.config.m4 $(WORKSRC)/devtools/Site/ )
+	@$(MAKECOOKIE)
+
+build-custom:
+	@gmake -C $(WORKSRC) fresh
+	@$(MAKECOOKIE)
+
