@@ -27,13 +27,13 @@ REQUIRED_PKGS = CSWcswclassutils CSWpython CSWpython-rt
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-CONFIGURE_SCRIPTS = 
+CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = twisted
-TEST_SCRIPTS = 
+TEST_SCRIPTS =
 INSTALL_SCRIPTS = twisted
 
 PROTOTYPE_FILTER = awk ' \
-  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } \
+  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
   { print }'
 
 build-twisted:
@@ -42,6 +42,10 @@ build-twisted:
 
 install-twisted:
 	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
 	@$(MAKECOOKIE)
 
 include gar/category.mk
