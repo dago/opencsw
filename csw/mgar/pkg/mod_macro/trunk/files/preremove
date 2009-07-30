@@ -1,0 +1,24 @@
+#!/bin/sh
+
+CSW_PREFIX=/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_EXTRADIR=$AP2_CONFDIR/extra
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+
+# Disable module
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+chroot $PKG_INSTALL_ROOT \
+    $AP2_BINDIR/apxs -S LIBEXECDIR=$AP2_LIBEXEC -e -A -n \
+    macro_module mod_macro.so
+
+cat <<END
+
+NOTICE: mod_macro is disabled in httpd.conf but the server was not
+restarted.  Please check your configuration and restart apache2.
+
+END
+
+exit 0
