@@ -2,10 +2,12 @@
 PATH=/usr/bin
 export PATH
 
-if [ -f ${BASEDIR}/etc/shells ]; then
-	echo "${BASEDIR}/etc/shells already exists."
+# $BASEDIR ignored because the package isn't relocatable
+
+if [ -f ${PKG_INSTALL_ROOT}/etc/shells ]; then
+	echo "${PKG_INSTALL_ROOT}/etc/shells already exists."
 else
-	cat > ${BASEDIR}/etc/shells <<EOF
+	cat > ${PKG_INSTALL_ROOT}/etc/shells <<EOF
 /bin/bash
 /bin/csh
 /bin/jsh
@@ -31,9 +33,9 @@ else
 EOF
 fi
 
-if /usr/bin/grep "^${BASEDIR}/opt/csw/bin/zsh$" ${BASEDIR}/etc/shells 2> /dev/null > /dev/null; then
-	echo "${BASEDIR}/etc/shells is UNCHANGED because entry ${BASEDIR}/opt/csw/bin/zsh does already exists."
+if /usr/bin/grep "^/opt/csw/bin/zsh$" ${PKG_INSTALL_ROOT}/etc/shells 2> /dev/null > /dev/null; then
+	echo "${PKG_INSTALL_ROOT}/etc/shells is UNCHANGED because entry /opt/csw/bin/zsh already exists."
 else
-	echo "${BASEDIR}/opt/csw/bin/zsh" >> ${BASEDIR}/etc/shells
-	echo "ADDED ${BASEDIR}/opt/csw/bin/zsh to ${BASEDIR}/etc/shells."
+	echo "/opt/csw/bin/zsh" >> ${PKG_INSTALL_ROOT}/etc/shells
+	echo "ADDED /opt/csw/bin/zsh to ${PKG_INSTALL_ROOT}/etc/shells."
 fi

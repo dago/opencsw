@@ -2,9 +2,9 @@
 PATH=/usr/bin
 export PATH
 
-if /usr/bin/grep "^${BASEDIR}/opt/csw/bin/zsh$" ${BASEDIR}/etc/shells 2> /dev/null > /dev/null; then
-	/usr/bin/perl -i -pwe '$_ = "" if /\/opt\/csw\/bin\/zsh$/' ${BASEDIR}/etc/shells
-	echo "REMOVED ${BASEDIR}/opt/csw/bin/zsh from ${BASEDIR}/etc/shells."
+if /usr/bin/grep "^/opt/csw/bin/zsh$" ${PKG_INSTALL_ROOT}/etc/shells >/dev/null 2>&1; then
+	/usr/bin/perl -i -pwe '$_ = "" if /\/opt\/csw\/bin\/zsh$/' ${PKG_INSTALL_ROOT}/etc/shells
+	echo "REMOVED /opt/csw/bin/zsh from ${PKG_INSTALL_ROOT}/etc/shells."
 else
-	echo "${BASEDIR}/etc/shells is UNCHANGED because entry ${BASEDIR}/opt/csw/bin/zsh was already wiped."
+	echo "${PKG_INSTALL_ROOT}/etc/shells is UNCHANGED because no entry for /opt/csw/bin/zsh was found."
 fi
