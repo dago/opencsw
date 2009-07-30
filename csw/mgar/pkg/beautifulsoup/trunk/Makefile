@@ -38,7 +38,7 @@ PACKAGES = CSWbeautifulsoup
 REQUIRED_PKGS_CSWbeautifulsoup = CSWpython CSWcswclassutils
 
 PROTOTYPE_FILTER = awk ' \
-  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } \
+  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
   { print }'
 
 build-beautifulsoup:
@@ -49,5 +49,9 @@ install-beautifulsoup:
 
 post-install-modulated:
 	rm $(DESTDIR)$(bindir)/*.sh
+
+post-install-modulated:
+	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
+	@$(MAKECOOKIE)
 
 include gar/category.mk
