@@ -6,8 +6,8 @@ DESCRIPTION = Sendmail MTA
 define BLURB
 endef
 
-MASTER_SITES = http://ftp.sendmail.org/pub/sendmail/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
+DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 
 PACKAGES = CSWsendmail
 CATALOGNAME_CSWsendmail = sendmail
