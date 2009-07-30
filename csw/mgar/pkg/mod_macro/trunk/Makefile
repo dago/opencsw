@@ -9,6 +9,7 @@ endef
 
 MASTER_SITES = http://cri.ensmp.fr/~coelho/mod_macro/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  += CSWap2modmacro.postinstall CSWap2modmacro.preremove
 LICENSE = LICENSE
 
 PACKAGES = CSWap2modmacro
@@ -41,5 +42,6 @@ install-custom:
 	ginstall -d $(DOCDEST)
 	ginstall -D $(WORKSRC)/.libs/mod_macro.so $(AP2_LIBEXEC)/mod_macro.so
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	cp $(addprefix $(WORKSRC)/,$(EXTRA_DOCS)) $(DOCDEST)
+	cp $(WORKSRC)/CHANGES $(DOCDEST)/changelog
+	cp $(WORKSRC)/mod_macro.html $(DOCDEST)
 	@$(MAKECOOKIE)
