@@ -1,2 +1,12 @@
+2bfc78e0f774b7168e29628b6a18570a  download/aliases.CSW
+33aa403bba2c02d79754977c8af26db2  download/cswsendmail
+c816378b3028cbab410f72168b571775  download/helpfile.CSW
+d41d8cd98f00b204e9800998ecf8427e  download/local-host-names.CSW
 95c787a371c63caebc5d76faddba08e4  download/patch-CC-M.m4
 a5ee5d26e1f546a2da5fb9a513bd6bce  download/sendmail.8.14.3.tar.gz
+3c970e5b4e9831a8774906ed36e11f52  download/sendmail.cf.CSW
+ae82c974452cfdc7b4c5be2576154cdf  download/site.config.m4
+d41d8cd98f00b204e9800998ecf8427e  download/sm-client.st.CSW
+d41d8cd98f00b204e9800998ecf8427e  download/statistics.CSW
+b64521d2a1365dc3f5f93b332e026054  download/submit.cf.CSW
+d41d8cd98f00b204e9800998ecf8427e  download/trusted-users.CSW

@@ -9,6 +9,8 @@ endef
 
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
+DISTFILES += cswsendmail site.config.m4
+DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -26,7 +28,7 @@ PATCHFILES = patch-CC-M.m4
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS     = custom
 TEST_SCRIPTS      = custom
-#INSTALL_SCRIPTS   = custom
+INSTALL_SCRIPTS   = custom
 
 PRESERVECONF  = $(sysconfdir)/mail/aliases.CSW
 PRESERVECONF += $(sysconfdir)/mail/sendmail.cf.CSW
@@ -37,7 +39,7 @@ PRESERVECONF += $(sysconfdir)/mail/statistics.CSW
 
 include gar/category.mk
 
-OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.`uname -r`.`uname -i`
+OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.$(GAROSREL).sun4
 LIBFILES  = sendmail/sendmail mail.local/mail.local smrsh/smrsh rmail/rmail
 BINFILES  = vacation/vacation
 SBINFILES = makemap/makemap editmap/editmap praliases/praliases \
@@ -50,58 +52,64 @@ MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
 
 configure-custom:
 	@( gsed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' \
-		$(FILEDIR)/site.config.m4 > \
-		$(WORKDIR)/$(DISTNAME)/devtools/Site/site.config.m4 )
+		$(DOWNLOADDIR)/site.config.m4 > \
+		$(WORKSRC)/devtools/Site/site.config.m4 )
 	@$(MAKECOOKIE)
 
 build-custom:
-	cd $(WORKDIR)/$(DISTNAME) && ./Build
+	cd $(WORKSRC) && ./Build
 	@$(MAKECOOKIE)
 
 test-custom:
 	@$(MAKECOOKIE)
 
 install-custom:
-	@# install the binaries
-	ginstall -d -m 755 $(DESTDIR)$(libdir)
+	@# install dirs
+	ginstall -d $(DESTDIR)$(libdir)
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(sbindir)
+	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall -d $(DESTDIR)$(mandir)/man5
+	ginstall -d $(DESTDIR)$(mandir)/man8
+	ginstall -d $(DESTDIR)/var/opt/csw/spool/clientmqueue
+	ginstall -d $(DESTDIR)$(sharedstatedir)/mail
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall -d $(DESTDIR)$(sysconfdir)/mail
+
+	@# install the libraries
 	( for file in $(LIBFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
 		done )
-	ginstall -d -m 755 $(DESTDIR)$(bindir)
+
+	@# install the binaries
 	ginstall -m 755 $(OBJDIR)/$(BINFILES) $(DESTDIR)$(bindir)
-	ginstall -d -m 755 $(DESTDIR)$(sbindir)
-	ginstall -d -m 755 $(DESTDIR)$(mandir)
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
 		done )
+
 	@# install manpages
 	( for file in $(MANFILES1) ; do \
-		ginstall -d -m 755 $(DESTDIR)$(mandir)/1 ; \
-		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/1 ; \
+		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/man1 ; \
 		done )
 	( for file in $(MANFILES5) ; do \
-		ginstall -d -m 755 $(DESTDIR)$(mandir)/5 ; \
-		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/5 ; \
+		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/man5 ; \
 		done )
 	( for file in $(MANFILES8) ; do \
-		ginstall -d -m 755 $(DESTDIR)$(mandir)/8 ; \
-		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/8 ; \
+		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/man8 ; \
 		done )
+
 	@# install m4/cf macros
-	ginstall -d -m 755 $(DESTDIR)$(sharedstatedir)/mail
-	find $(WORKDIR)/$(DISTNAME)/cf -type f -exec chmod 644 {} +
-	cp -r $(WORKDIR)/$(DISTNAME)/cf $(DESTDIR)$(sharedstatedir)/mail
+	find $(WORKSRC)/cf -type f -exec chmod 644 {} +
+	cp -r $(WORKSRC)/cf $(DESTDIR)$(sharedstatedir)/mail
+
 	@# install startup script
-	ginstall -d -m 0755 $(DESTDIR)/etc/opt/csw/init.d
-	cp -p $(FILEDIR)/cswsendmail $(DESTDIR)/etc/opt/csw/init.d
+	cp -p $(DOWNLOADDIR)/cswsendmail $(DESTDIR)/etc/opt/csw/init.d
+
 	@# install configurations, XXX missing submit.cf/sendmail.cf
-	ginstall -d -m 0755 $(DESTDIR)$(etcdir)/mail
-	ginstall -m 644 $(WORKDIR)/$(DISTNAME)/sendmail/aliases \
-		$(DESTDIR)$(etcdir)/mail/aliases.CSW
-	ginstall -m 644 $(OBJDIR)/sendmail/statistics \
-		$(DESTDIR)$(etcdir)/mail/statistics.CSW
-	ginstall -m 644 $(OBJDIR)/sendmail/helpfile \
-		$(DESTDIR)$(etcdir)/mail/helpfile.CSW
-	touch $(DESTDIR)$(etcdir)/mail/trusted-users.CSW \
-		$(DESTDIR)$(etcdir)/mail/local-host-names.CSW
+	( for file in `cd $(DOWNLOADDIR) && ls *.CSW`; do \
+		ginstall -m 644  $(DOWNLOADDIR)/$$file \
+		$(DESTDIR)$(sysconfdir)/mail/$$file; \
+		done )
+
 	@$(MAKECOOKIE)
+
