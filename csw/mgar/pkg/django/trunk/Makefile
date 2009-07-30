@@ -16,6 +16,7 @@ endef
 MASTER_SITES = http://www.djangoproject.com/download/$(GARVERSION)/tarball/
 DISTFILES  = Django-$(GARVERSION)-final.tar.gz
 
+SPKG_CLASSES = none cswpycompile
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -23,7 +24,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 WORKSRC = $(WORKDIR)/Django-$(GARVERSION)-final
 
-REQUIRED_PKGS = CSWpython
+REQUIRED_PKGS = CSWpython CSWcswclassutils
 PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpython-devel
 
 CONFIGURE_SCRIPTS =
@@ -33,6 +34,14 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS += --root=$(DESTDIR) --prefix=$(prefix)
 
 TEST_SCRIPTS =
+
+PROTOTYPE_FILTER = awk ' \
+  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
+  { print }'
+
+post-install-modulated:
+	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
+	@$(MAKECOOKIE)
 
 # There's a problem that the download URL of the Django source tarball does not
 # contain the file name. The browser is being redirected instead. Hard-coding
