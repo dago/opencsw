@@ -51,7 +51,7 @@ MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
 configure-custom:
 	@( gsed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' \
 		$(FILEDIR)/site.config.m4 > \
-		$(WORKDIR)/$(DISTNAME)/devtools/Site/site.config.m4
+		$(WORKDIR)/$(DISTNAME)/devtools/Site/site.config.m4 )
 	@$(MAKECOOKIE)
 
 build-custom:
