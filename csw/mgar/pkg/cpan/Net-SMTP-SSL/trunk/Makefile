@@ -18,6 +18,6 @@ PACKAGES = CSWpmnetsmtpssl
 CATALOGNAME_CSWpmnetsmtpssl = pm_netsmtpssl
 
 PREREQUISITE_PKGS = CSWperl
-REQUIRED_PKGS = CSWperl
+REQUIRED_PKGS = CSWperl CSWpmiosocketssl
 
 include gar/category.mk
