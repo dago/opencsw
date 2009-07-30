@@ -14,6 +14,8 @@ what you want, and it's not a pain to specify that.
 For interface documentation, please see Net::SMTP.
 endef
 
+ARCHALL = 1
+
 PACKAGES = CSWpmnetsmtpssl
 CATALOGNAME_CSWpmnetsmtpssl = pm_netsmtpssl
 
