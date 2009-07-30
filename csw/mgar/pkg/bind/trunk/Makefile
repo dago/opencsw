@@ -1,9 +1,9 @@
 GARNAME = bind
 GARVERSION = 9.6.1
-#RELEASE = P1
-#DISTVERSION = $(GARVERSION)-$(RELEASE)
-#DISTNAME = $(GARNAME)-$(DISTVERSION)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(GARVERSION)-$(RELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC BIND DNS reference implementation
@@ -14,10 +14,10 @@ define BLURB
   high-volume and high-reliability applications.
 endef
 
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-#DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
+DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils
 
@@ -73,7 +73,7 @@ SPKG_CLASSES_CSWbind = none cswusergroup cswugfiles cswcpsampleconf cswinitsmf
 
 include gar/category.mk
 
-#SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
 
