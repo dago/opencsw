@@ -7,6 +7,10 @@ define BLURB
   XXX anacronism ;-) need text here
 endef
 
+INSTALLISADIR = $(WORKROOTDIR)/install-$(GAROSREL)-$(MODULATION)
+WORKDIR = $(WORKROOTDIR)/build-$(GAROSREL)-$(MODULATION)
+COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
+
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 DISTFILES += cswsendmail site.config.m4
@@ -57,6 +61,7 @@ MANFILES5 = sendmail/aliases.5
 MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             praliases/praliases.8 smrsh/smrsh.8 mail.local/mail.local.8 \
             rmail/rmail.8 editmap/editmap.8
+SOLVER = sol$(shell uname -r |sed 's/5\.//')
 
 configure-custom:
 	@( gsed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' \
@@ -85,7 +90,7 @@ install-custom:
 	ginstall -d $(DESTDIR)$(sysconfdir)/mail
 
 	@# install the libraries
-	( for file in $(LIBFILES) ; do \
+	@( for file in $(LIBFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
 		done )
 
@@ -94,6 +99,17 @@ install-custom:
 	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
+		done )
+
+	@# rename libraries and binaries os-specific
+	( for file in `ls $(DESTDIR)$(libdir)` ; do  \
+		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file ; \
+		done )
+	( for file in `ls $(DESTDIR)$(bindir)` ; do  \
+		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file ; \
+		done )
+	( for file in `ls $(DESTDIR)$(sbindir)` ; do  \
+		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file ; \
 		done )
 
 	@# install manpages
