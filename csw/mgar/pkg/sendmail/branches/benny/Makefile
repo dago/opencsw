@@ -29,7 +29,7 @@ INITSMF = /etc/opt/csw/init.d/cswsendmail
 PROTOTYPE_FILTER = awk '$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
                         $$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
                         $$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
-			$$$$3 ~/sendmail$$$$/ { $$$$4 = "2755" } \
+			$$$$3 ~/\/sendmail$$$$/ { $$$$4 = "2755" } \
                        { print }'
 
 
