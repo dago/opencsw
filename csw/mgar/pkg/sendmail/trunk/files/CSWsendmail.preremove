@@ -1,0 +1,55 @@
+# preremove - CSWsendmail
+# 2004-02-28. Correct error on rename mailq
+# 2005-12-14  Fix problem with stopping sendmail
+# 2007-02-25  Add support for Solaris 10+ zone enabled hosts.
+#             Replacing Sun's sendmail is no longer done.
+
+# Stop sendmail if it is running
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
+
+VER=`uname -r`
+if [ x"$VER" = x5.8 -o x"$VER" = x5.9 ] ; then
+    SERVER_PID=`pgrep -x -u 0 sendmail`
+else
+    if [ -x /usr/bin/zonename ] ; then
+        ZONE=`/usr/bin/zonename`
+        SERVER_PID=`pgrep -x -u 0 -z "$ZONE" sendmail`
+    else
+        SERVER_PID=`pgrep -x -u 0 sendmail`
+    fi
+fi
+
+if [ $SERVER_PID ]; then
+    echo "## Stopping sendmail"
+    if [ $smf = yes ]
+	then
+        # Disable service
+	/usr/sbin/svcadm disable -s svc:network/smtp:cswsendmail >/dev/null 2>&1
+    else
+	/etc/init.d/cswsendmail stop >/dev/null 2>&1
+    fi
+    while [ $SERVER_PID ]
+      do
+      sleep 1
+      # See if server pid still exists.
+      VER=`uname -r`
+      if [ x"$VER" = x5.8 -o x"$VER" = x5.9 ] ; then
+	  SERVER_PID=`pgrep -x -u 0 sendmail`
+      else
+	  if [ -x /usr/bin/zonename ] ; then
+	      ZONE=`/usr/bin/zonename`
+	      SERVER_PID=`pgrep -x -u 0 -z "$ZONE" sendmail`
+	  else
+	      SERVER_PID=`pgrep -x -u 0 sendmail`
+	  fi
+      fi
+    done
+fi
+
+if [ $smf = yes ] ; then
+    # Unregister with SMF
+    /usr/sbin/svccfg delete svc:network/smtp:cswsendmail >/dev/null 2>&1
+fi
+ 
+exit 0

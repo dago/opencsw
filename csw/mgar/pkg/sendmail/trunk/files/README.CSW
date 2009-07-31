@@ -1,0 +1,64 @@
+2009-07-31
+Initial GAR version of sendmail.
+
+2007-12-09
+Previous package versions replaced some of Sun's sendmail files with symlinks
+to the correponding CSWsendmail file.  This does not work properly in a zone
+enabled environment.  Therefore, this code is removed from the package
+install and package remove scripts.  The code to create the symlinks is now
+in /opt/csw/share/mail/.  To inactivate Sun's sendmail run
+Sun-sendmail-deactivate.sh.
+
+You should run the new inactivate script on the first package installation.
+
+If want to completely remove CSWsendmail, run the Sun-sendmail-activate.sh
+script to return the system to Sun's setup.
+
+PLEASE note that Sun's sendmail patches routinely replace symlink(s) to the
+CSW file(s).  You will need to fix this when it happens.
+
+2007-02-25
+This update includes the errata list dated 2007-02-06.
+
+This update fixes installation scripts to work on a Solaris 10 or later
+zone enabled host.  If you have issues or problems with the installation,
+please send me a email from the CSWsendmail package page on the web.  My
+email address is also listed with the package parameters from `pkgparam -v
+CSWsendmail`.
+
+2007-02-03
+This update adds support for csw.conf.
+
+CSW Sendmail Packaging - Alex Moore and Thomas Glanzmann
+
+This CSW package contains the features of Sun's Solaris 9 sendmail
+package plus MILTER, STARTTLS and SASL.  Like Sun's Solaris 9
+sendmail package, this CSW package includes support for Sun's
+directory server as a naming service which is known as 
+SUN_SIMPLIFIED_LDAP.  This support is provided for both Solaris 8
+and Solaris 9.
+
+Installation procedures provide the option to leave the Sun
+sendmail files as is or replace these files with symlinks to
+the CSW sendmail files.  The default is to leave the existing 
+sendmail installation as is, but it is recommended that the replace
+option be used.  The replace option will stop Sun's sendmail from
+starting on reboot and allow other programs that call the sendmail
+programs to work properly.
+
+The configuration directory in Sun's sendmail is /usr/lib/mail/cf.
+In this package, the configuration directory is 
+/opt/csw/share/mail.
+
+The sample configuration files are copied when they do not exist.
+The package follows Solaris procedures of using subsidiary.cf as
+the sendmail.cf file by default.  See the Solaris Resource
+Management Guide for the definitions of subsidiary and mailhost.
+
+Make changes to the .mc files and run make to create the .cf files.
+If you use main.cf, for non-subsidiary sendmail installations,
+copy it to /opt/csw/etc/mail/sendmail.cf.  Otherwise, copy
+subsidiary.cf to /opt/csw/etc/mail/sendmail.cf.   Submit.cf is
+copied to /opt/csw/etc/mail/ without changing the name.  Both
+files, sendmail.cf and submit.cf are required in /opt/csw/etc/mail/
+for sendmail to run.

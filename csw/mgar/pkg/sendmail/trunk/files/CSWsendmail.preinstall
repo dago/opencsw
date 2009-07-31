@@ -1,0 +1,61 @@
+# This script exists for the sole purpose of making sure
+# the required user accounts exist.
+# specifically, "user smmsp, group smmsp, group mail"
+
+# If installing on a filesystem that is not running the OS, exit this script.
+if [ ! x"$PKG_INSTALL_ROOT" = x"" -a ! x"$PKG_INSTALL_ROOT" = x"/" ] ; then exit 0 ; fi
+
+if [ x"$PKG_INSTALL_ROOT" = x"" ] ; then
+    PKG_INSTALL_ROOT="/"
+fi
+
+MYHOME=/
+
+#First check target machines password file, THEN check
+#NIS/NIS+/whatever
+
+/usr/bin/grep '^smmsp:' /etc/passwd >/dev/null
+if [ $? -ne 0 ] ; then
+        /usr/bin/getent passwd smmsp >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDUSER=1
+        fi
+fi
+
+/usr/bin/grep '^smmsp:' /etc/group >/dev/null
+if [ $? -ne 0 ] ; then
+        /usr/bin/getent group smmsp >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDGROUP=1
+        fi
+fi
+
+/usr/bin/grep '^mail:' /etc/group >/dev/null
+if [ $? -ne 0 ] ; then
+        /usr/bin/getent group mail >/dev/null
+        if [ $? -ne 0 ] ; then
+                NEEDMAILGROUP=1
+        fi
+fi
+
+if [ "$NEEDGROUP" = 1 ] ; then
+        echo adding smmsp group
+        chroot $PKG_INSTALL_ROOT /usr/sbin/groupadd smmsp
+else
+        echo smmsp group detected
+fi
+
+if [ "$NEEDUSER" = 1 ] ; then
+        echo adding smmsp user
+        chroot $PKG_INSTALL_ROOT /usr/sbin/useradd -g smmsp smmsp
+        chroot $PKG_INSTALL_ROOT /usr/sbin/usermod -c "SendMail Message Submission Program" -d $MYHOME smmsp
+else
+        echo smmsp user detected
+fi
+
+if [ "$NEEDMAILGROUP" = 1 ] ; then
+        echo adding mail group
+        chroot $PKG_INSTALL_ROOT /usr/sbin/groupadd mail
+else
+        echo mail group detected
+fi
