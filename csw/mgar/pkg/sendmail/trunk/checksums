@@ -1,10 +1,6 @@
 2bfc78e0f774b7168e29628b6a18570a  download/aliases.CSW
-f581c67e3834d6a520d8faf9dfb8c7eb  download/checkinstall
 2592f7d191867c1d1c63ff16d818dcb5  download/cswsendmail
 c816378b3028cbab410f72168b571775  download/helpfile.CSW
-27994344f69c7c92382d57264c7debf8  download/i.sol10
-24ffe87e0881ffa3e0495eeede9a0602  download/i.sol8
-b3510dc2ae95e585bc922cab8c89b8f0  download/i.sol9
 d41d8cd98f00b204e9800998ecf8427e  download/local-host-names.CSW
 95c787a371c63caebc5d76faddba08e4  download/patch-CC-M.m4
 a5ee5d26e1f546a2da5fb9a513bd6bce  download/sendmail.8.14.3.tar.gz

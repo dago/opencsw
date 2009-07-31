@@ -14,7 +14,6 @@ COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 DISTFILES += cswsendmail site.config.m4
-DISTFILES += i.sol8 i.sol9 i.sol10 checkinstall
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -25,10 +24,16 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 # we require
-PACKAGES = CSWsendmail CSWsendmail_common
+PACKAGES = CSWsendmail CSWsendmailcommon
+SPKG_DESC_CSWsendmail = $(DESCRIPTION)
+SPKG_DESC_CSWsendmailcommon = $(DESCRIPTION) common files
+CATALOGNAME_CSWsendmail = sendmail
+CATALOGNAME_CSWsendmailcommon = sendmail_common
+
+REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils CSWsendmailcommon
+REQUIRED_PKGS_CSWsendmailcommon = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
 ARCHALL_CSWsendmail_common = 1
 SPKG_CLASSES_CSWsendmail = none cswinitsmf
-REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
 PROTOTYPE_FILTER = awk '$$$$3 ~/\/init\.d\/cswsendmail$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 PKGFILES_CSWsendmail_common = .*$(sharedstatedir)/.*
@@ -37,6 +42,7 @@ PKGFILES_CSWsendmail_common = .*$(sysconfdir)/.*
 PKGFILES_CSWsendmail_common = .*/clientmqueue/.*
 PKGFILES_CSWsendmail_common = .*/csw/init\.d/.*
 
+ENABLE_CHECK = 0
 
 # patch away GNUism
 PATCHFILES = patch-CC-M.m4
@@ -103,17 +109,6 @@ install-custom:
 	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
-		done )
-
-	@# rename libraries and binaries os-specific
-	( for file in `ls $(DESTDIR)$(libdir)` ; do  \
-		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/ ; \
-		done )
-	( for file in `ls $(DESTDIR)$(bindir)` ; do  \
-		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/ ; \
-		done )
-	( for file in `ls $(DESTDIR)$(sbindir)` ; do  \
-		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir) ; \
 		done )
 
 	@# install manpages
