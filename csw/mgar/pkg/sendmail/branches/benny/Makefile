@@ -122,7 +122,7 @@ install-custom:
 
 	@# install m4/cf macros
 	find $(WORKSRC)/cf -type f -exec chmod 644 {} +
-	gsed -i '' 's,MAILDIR=/etc/mail,MAILDIR=$(sysconfdir)/mail,' \
+	perl -pi -e 's,MAILDIR=/etc/mail,MAILDIR=$(sysconfdir)/mail,' \
 		$(WORKSRC)/cf/cf/Makefile
 	cp -r $(WORKSRC)/cf $(DESTDIR)$(sharedstatedir)/mail
 	cp $(DOWNLOADDIR)/README.CSW $(DESTDIR)$(sharedstatedir)/mail
