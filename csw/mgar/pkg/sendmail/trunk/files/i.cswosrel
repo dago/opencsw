@@ -8,7 +8,7 @@ echo "Installing class <osrel> for ${MYOSREL}."
 
 while read src dest
 do
-    FILEOSREL="sol`echo ${dest} |sed 's/.*\(sol[0-9]*\).*//'`"
+    FILEOSREL="`echo ${dest} |sed 's/.*\(sol[0-9]*\).*//'`"
     if [ "_x${MYOSREL}x_" = "_x${FILEOSREL}x_" ]; then
 	    # Keep pkgadd happy by copying the file as defined
 	    /usr/bin/cp $src $dest || exit 2
