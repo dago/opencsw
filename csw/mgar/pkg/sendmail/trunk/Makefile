@@ -21,9 +21,12 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 # we require
-SPKG_CLASSES = none cswinitsmf
 REQUIRED_PKGS = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap
-PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsendmail$$$$/ { $$$$2 = "cswinitsmf" } || $$$$3 ~/sol8\./ { $$$$2 = "sol8" } || $$$$3 ~/sol9\./ { $$$$2 = "sol9" } || $$$$3 ~/sol10\./ { $$$$2 = "sol10" } { print }'
+INITSMF = /etc/opt/csw/init.d/cswsendmail
+PROTOTYPE_FILTER = awk '$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
+                        $$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
+                        $$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
+                       { print }'
 
 
 # patch away GNUism
@@ -88,6 +91,7 @@ install-custom:
 
 	@# install the binaries
 	ginstall -m 755 $(OBJDIR)/$(BINFILES) $(DESTDIR)$(bindir)
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
 		done )
@@ -108,7 +112,8 @@ install-custom:
 	cp -r $(WORKSRC)/cf $(DESTDIR)$(sharedstatedir)/mail
 
 	@# install startup script
-	cp -p $(DOWNLOADDIR)/cswsendmail $(DESTDIR)/etc/opt/csw/init.d
+	chmod +x $(DOWNLOADDIR)/cswsendmail && \
+		cp -p $(DOWNLOADDIR)/cswsendmail $(DESTDIR)/etc/opt/csw/init.d
 
 	@# install configurations, XXX missing submit.cf/sendmail.cf
 	( for file in `cd $(DOWNLOADDIR) && ls *.CSW`; do \
