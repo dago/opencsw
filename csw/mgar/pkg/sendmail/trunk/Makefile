@@ -12,10 +12,13 @@ WORKDIR = $(WORKROOTDIR)/build-$(GAROSREL)-$(MODULATION)
 COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
 
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
+
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 DISTFILES += README.CSW sendmail.schema
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
-DISTFILES += cswsendmail site.config.m4
+DISTFILES += cswsendmail site.config.m4 i.cswosrel
+DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
+DISTFILES += $(CLASS_SCRIPTS)
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -31,21 +34,20 @@ CATALOGNAME_CSWsendmailcommon = sendmail_common
 
 REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils CSWsendmailcommon
 REQUIRED_PKGS_CSWsendmailcommon = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
-ARCHALL_CSWsendmail_common = 1
-SPKG_CLASSES_CSWsendmail = none cswinitsmf
+ARCHALL_CSWsendmailcommon = 1
+SPKG_CLASSES_CSWsendmail = none cswinitsmf cswosrel
 PROTOTYPE_FILTER = awk \
 				   '$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
-					$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
-					$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
-					$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
-					$$$$3 ~/\/sendmail$$$$/ { $$$$4 = "2755" } \
+					$$$$3 ~/sol8\./ { $$$$2 = "cswosrel" } \
+					$$$$3 ~/sol9\./ { $$$$2 = "cswosrel" } \
+					$$$$3 ~/sol10\./ { $$$$2 = "cswosrel" } \
+					$$$$3 ~/\/sol[0-9]*\.sendmail$$$$/ { $$$$4 = "2755" } \
 					{ print }'
 
 PKGFILES_CSWsendmailcommon  = .*$(sharedstatedir)/.*
 PKGFILES_CSWsendmailcommon += .*$(mandir)/.*
 PKGFILES_CSWsendmailcommon += .*$(sysconfdir)/.*
 PKGFILES_CSWsendmailcommon += .*/clientmqueue/.*
-PKGFILES_CSWsendmailcommon += .*/csw\/init\.d/.*
 
 ENABLE_CHECK = 0
 
@@ -59,6 +61,7 @@ INSTALL_SCRIPTS   = custom
 EXTRA_MERGE_SCRIPTS = OS
 
 include gar/category.mk
+ADMSCRIPTS = preremove preinstall space depend i.sol8 i.sol9 i.sol10
 
 SOLVER = sol$(shell uname -r |sed 's/5\.//')
 PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
@@ -148,6 +151,7 @@ install-custom:
 		done )
 	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st.CSW \
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
+	cp $(DOWNLOADDIR)/i.cswosrel $(DESTDIR)/usr/sadm/install/scripts/
 	@$(MAKECOOKIE)
 
 merge-OS:

@@ -1,12 +1,13 @@
+4c53e32ed6b4ac66c35d5079ebcb548d  download/CSWsendmail.preinstall
+644a174b1a1e74ef8655ea0002aff8f7  download/CSWsendmail.preremove
+f49c3339aa897df97abf1baf54582fb8  download/CSWsendmail.space
 6c030e7a797209ddfa4f6dbc531d753c  download/README.CSW
 e89e68f3e0ae84d665c4ab898a8f3325  download/Sun-sendmail-deactivate.sh
 1c3a63f98171aa28a2714995ee938a2c  download/Sun-sendmail-reactivate.sh
 2bfc78e0f774b7168e29628b6a18570a  download/aliases.CSW
 2592f7d191867c1d1c63ff16d818dcb5  download/cswsendmail
 c816378b3028cbab410f72168b571775  download/helpfile.CSW
-27994344f69c7c92382d57264c7debf8  download/i.sol10
-24ffe87e0881ffa3e0495eeede9a0602  download/i.sol8
-b3510dc2ae95e585bc922cab8c89b8f0  download/i.sol9
+63ecca8e9ed3a37b6cd31e82d921d443  download/i.cswosrel
 d41d8cd98f00b204e9800998ecf8427e  download/local-host-names.CSW
 95c787a371c63caebc5d76faddba08e4  download/patch-CC-M.m4
 a5ee5d26e1f546a2da5fb9a513bd6bce  download/sendmail.8.14.3.tar.gz
