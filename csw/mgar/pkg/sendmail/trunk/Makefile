@@ -25,12 +25,17 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 # we require
-REQUIRED_PKGS = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap
-INITSMF = /etc/opt/csw/init.d/cswsendmail
-PROTOTYPE_FILTER = awk '$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
-                        $$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
-                        $$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
-                       { print }'
+PACKAGES = CSWsendmail CSWsendmail_common
+ARCHALL_CSWsendmail_common = 1
+SPKG_CLASSES_CSWsendmail = none cswinitsmf
+REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/init\.d\/cswsendmail$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+
+PKGFILES_CSWsendmail_common = .*$(sharedstatedir)/.*
+PKGFILES_CSWsendmail_common = .*$(mandir)/.*
+PKGFILES_CSWsendmail_common = .*$(sysconfdir)/.*
+PKGFILES_CSWsendmail_common = .*/clientmqueue/.*
+PKGFILES_CSWsendmail_common = .*/csw/init\.d/.*
 
 
 # patch away GNUism
@@ -61,7 +66,6 @@ MANFILES5 = sendmail/aliases.5
 MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             praliases/praliases.8 smrsh/smrsh.8 mail.local/mail.local.8 \
             rmail/rmail.8 editmap/editmap.8
-SOLVER = sol$(shell uname -r |sed 's/5\.//')
 
 configure-custom:
 	@( gsed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' \
@@ -103,13 +107,13 @@ install-custom:
 
 	@# rename libraries and binaries os-specific
 	( for file in `ls $(DESTDIR)$(libdir)` ; do  \
-		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file ; \
+		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/ ; \
 		done )
 	( for file in `ls $(DESTDIR)$(bindir)` ; do  \
-		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file ; \
+		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/ ; \
 		done )
 	( for file in `ls $(DESTDIR)$(sbindir)` ; do  \
-		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file ; \
+		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir) ; \
 		done )
 
 	@# install manpages
@@ -136,6 +140,7 @@ install-custom:
 		ginstall -m 644  $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
-
+	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st.CSW \
+		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 	@$(MAKECOOKIE)
 
