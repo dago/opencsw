@@ -1,0 +1,5 @@
+libiconv (1.13.1,REV=2009.07.31)
+
+  * Adopted and updated to 1.13.1. (Closes #2973, #3524, #3662)
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Fri, 31 Jul 2009 11:07:44 +0200

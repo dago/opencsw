@@ -1,0 +1,3 @@
+Note: iconv is a transitional meta-package that pulls in libiconv and 
+libiconvdevel. Please consider switching to one or both of these pkgs
+as iconv may be dropped in the future.
