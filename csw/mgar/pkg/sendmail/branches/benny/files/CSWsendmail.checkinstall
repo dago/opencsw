@@ -1,0 +1,21 @@
+# checkinstall for CSWsendmail
+# 2007-12-09 installation no longer moves files in Sun's sendmail package.
+#
+trap `exit 3` 15
+
+# Assign Solaris release class to install release specific files
+if [ `uname -r` = 5.8 ]; then
+	CLASSES='none sol8 cswinitsmf'
+elif [ `uname -r` = 5.9 ]; then
+	CLASSES='none sol9 cswinitsmf'
+elif [ `uname -r` = 5.10 ]; then
+    CLASSES='none sol10 cswinitsmf'
+fi
+
+# Make env variables available to other packaging scripts
+
+cat >$1 <<!
+CLASSES='$CLASSES'
+!
+
+exit 0

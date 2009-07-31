@@ -4,14 +4,19 @@ dnl ### we are using SUN Studio and OpenCSW
 define(`confCC', `%OCSWCC%')
 APPENDDEF(`confCCOPTS', `%CFLAGS%')
 define(`confEBINDIR',`/opt/csw/lib')
+define(`confMBINDIR',`/opt/csw/lib')
+define(`confEBINDIR',`/opt/csw/lib')
+define(`confUBINDIR',`/opt/csw/bin')
+define(`confSBINDIR',`/opt/csw/sbin')
+define(`confHFDIR', `/opt/csw/etc/mail')
+define(`confSTDIR', `/opt/csw/etc/mail')
 define(`confMANROOT',`/usr/csw/share/man')
 define(`confMANROOTMAN',`/usr/csw/share/man')
-define(`confMBINDIR',`/opt/csw/bin')
-define(`confSBINDIR',`/opt/csw/sbin')
-define(`confUBINDIR',`/opt/csw/bin')
+define(`confSHAREDLIBDIR', `/opt/csw/lib')
+define(`confMANROOT', `/opt/csw/share/man/cat')
+define(`confMANROOTMAN', `/opt/csw/share/man/man')
 define(`confNO_STATISTICS_INSTALL',`True')
-define(`confHFDIR', `/opt/csw/share/mail')
-
+define(`confMSP_QUEUE_DIR', `/var/opt/csw/spool/clientmqueue')
 dnl ### add OpenCSW lib and include directories
 APPENDDEF(`confLIBDIRS', `-L/opt/csw/lib -R/opt/csw/lib')
 APPENDDEF(`confINCDIRS', `-I/opt/csw/include')
@@ -32,6 +37,7 @@ dnl ### add SASL support
 APPENDDEF(`conf_sendmail_ENVDEF', `-DSASL=2')
 APPENDDEF(`conf_sendmail_ENVDEF', `-D_FFR_TLS_1')
 APPENDDEF(`conf_sendmail_LIBS', `-lsasl2')
+APPENDDEF(`confINCDIRS', `-I/opt/csw/include/sasl')
 
 dnl ### add STARTTLS support
 APPENDDEF(`confENVDEF',`-DSTARTTLS')
