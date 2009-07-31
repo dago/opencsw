@@ -76,8 +76,8 @@ else
 CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --with-iconv=$(prefix)
 CONFIGURE_ARGS += --with-ldap
-CONFIGURE_ARGS += --with-dbm=db44
-CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb44
+CONFIGURE_ARGS += --with-dbm=db47
+#CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb44
 #CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql
 CONFIGURE_ARGS += --without-sqlite2
 CONFIGURE_ARGS += --with-sqlite3=$(prefix)
@@ -106,14 +106,14 @@ CONFIGURE_ARGS += --enable-nonportable-atomics
 endif
 
 # Required for bdb44
-LIBS = -lnsl
-export LIBS
+#LIBS = -lnsl
+#export LIBS
 
 endif
 
 # Extra libpath
-EXTRA_LIB += $(prefix)/bdb44/lib
-EXTRA_INC += $(prefix)/bdb44/include
+#EXTRA_LIB += $(prefix)/bdb44/lib
+#EXTRA_INC += $(prefix)/bdb44/include
 
 #EXTRA_LIB += $(prefix)/postgresql/lib
 #EXTRA_INC += $(prefix)/postgresql/include
