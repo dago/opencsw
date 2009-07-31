@@ -70,9 +70,9 @@ configure-custom:
 	@( gsed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' \
 		$(DOWNLOADDIR)/site.config.m4 > \
 		$(WORKSRC)/devtools/Site/site.config.m4 )
-	@( gsed 's,/etc/mail/\(sendmail.cf\),$(sysconfdir)/mail/\1,' \
+	@( perl -pi -e 's,/etc/mail/\(sendmail.cf\),$(sysconfdir)/mail/\1,' \
 		$(WORKSRC)/include/sm/conf.h )
-	@( gsed 's,/etc/mail/\(sendmail.pid\),/var/opt/csw/run/\1,' \
+	@( perl -pi -e 's,/etc/mail/\(sendmail.pid\),/var/opt/csw/run/\1,' \
 		$(WORKSRC)/include/sm/conf.h )
 	@$(MAKECOOKIE)
 
