@@ -43,7 +43,8 @@ PRESERVECONF += $(sysconfdir)/mail/statistics.CSW
 
 include gar/category.mk
 
-OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.$(GAROSREL).sun4
+PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
+OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.$(GAROSREL).$(PLATFORM)
 LIBFILES  = sendmail/sendmail mail.local/mail.local smrsh/smrsh rmail/rmail
 BINFILES  = vacation/vacation
 SBINFILES = makemap/makemap editmap/editmap praliases/praliases \
