@@ -10,6 +10,7 @@ endef
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 DISTFILES += cswsendmail site.config.m4
+DISTFILES += i.sol8 i.sol9 i.sol10 checkinstall
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -20,7 +21,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 # we require
+SPKG_CLASSES = none cswinitsmf
 REQUIRED_PKGS = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" } || $$$$3 ~/sol8\./ { $$$$2 = "sol8" } || $$$$3 ~/sol9\./ { $$$$2 = "sol9" } || $$$$3 ~/sol10\./ { $$$$2 = "sol10" } { print }'
+
 
 # patch away GNUism
 PATCHFILES = patch-CC-M.m4

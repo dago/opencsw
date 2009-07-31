@@ -1,0 +1,23 @@
+# PKGINST parameter provided by installation services
+# Move the Solaris 9 version specific files to the base directory.
+# The files specific to Solaris release are:
+# bin/vacation
+# sbin/editmap
+# sbin/mailstats
+# sbin/makemap
+# sbin/praliases
+# lib/mail.local
+# lib/sendmail
+# lib/smrsh
+#
+echo "Installing class <sol10>."
+while read src dest
+do
+	# Keep pkgadd happy by copying the file as defined
+	/usr/bin/cp $src $dest || exit 2
+	# Copy the version specific file to the original name
+	dest2="`echo $dest | sed 's/sol10.//g'`" || exit 2
+	echo $dest2
+	/usr/bin/cp $src $dest2 || exit 2
+done
+exit 0
