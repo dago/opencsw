@@ -1,6 +1,6 @@
 P CSWapache2c apache2c - Apache 2.2 web server (core)
 P CSWapache2rt apache2rt - Apache 2.2 runtime libraries
-P CSWbdb44 berkeleydb44 - BerkeleyDB 4.4 libraries and utilities
+P CSWbdb4 berkeleydb - BerkeleyDB 4.7 embedded database libraries and utilities
 P CSWexpat expat -  XML Parser Toolkit
 P CSWgdbm gdbm - GNU dbm
 P CSWiconv libiconv - GNU iconv library
