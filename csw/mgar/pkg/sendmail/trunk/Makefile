@@ -23,7 +23,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # we require
 SPKG_CLASSES = none cswinitsmf
 REQUIRED_PKGS = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap
-PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" } || $$$$3 ~/sol8\./ { $$$$2 = "sol8" } || $$$$3 ~/sol9\./ { $$$$2 = "sol9" } || $$$$3 ~/sol10\./ { $$$$2 = "sol10" } { print }'
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsendmail$$$$/ { $$$$2 = "cswinitsmf" } || $$$$3 ~/sol8\./ { $$$$2 = "sol8" } || $$$$3 ~/sol9\./ { $$$$2 = "sol9" } || $$$$3 ~/sol10\./ { $$$$2 = "sol10" } { print }'
 
 
 # patch away GNUism
