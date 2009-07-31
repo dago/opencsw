@@ -13,18 +13,18 @@ COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
 
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
+DISTFILES += README.CSW sendmail.schema
+DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
+DISTFILES += i.sol8 i.sol9 i.sol10
 DISTFILES += cswsendmail site.config.m4
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
 # we require
 PACKAGES = CSWsendmail CSWsendmailcommon
+SPKG_SOURCEURL = http://www.sendmail.org/
 SPKG_DESC_CSWsendmail = $(DESCRIPTION)
 SPKG_DESC_CSWsendmailcommon = $(DESCRIPTION) common files
 CATALOGNAME_CSWsendmail = sendmail
@@ -34,13 +34,19 @@ REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcs
 REQUIRED_PKGS_CSWsendmailcommon = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
 ARCHALL_CSWsendmail_common = 1
 SPKG_CLASSES_CSWsendmail = none cswinitsmf
-PROTOTYPE_FILTER = awk '$$$$3 ~/\/init\.d\/cswsendmail$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+PROTOTYPE_FILTER = awk \
+				   '$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
+					$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
+					$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
+					$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
+					$$$$3 ~/\/sendmail$$$$/ { $$$$4 = "2755" } \
+					{ print }'
 
-PKGFILES_CSWsendmail_common = .*$(sharedstatedir)/.*
-PKGFILES_CSWsendmail_common = .*$(mandir)/.*
-PKGFILES_CSWsendmail_common = .*$(sysconfdir)/.*
-PKGFILES_CSWsendmail_common = .*/clientmqueue/.*
-PKGFILES_CSWsendmail_common = .*/csw/init\.d/.*
+PKGFILES_CSWsendmailcommon  = .*$(sharedstatedir)/.*
+PKGFILES_CSWsendmailcommon += .*$(mandir)/.*
+PKGFILES_CSWsendmailcommon += .*$(sysconfdir)/.*
+PKGFILES_CSWsendmailcommon += .*/clientmqueue/.*
+PKGFILES_CSWsendmailcommon += .*/csw\/init\.d/.*
 
 ENABLE_CHECK = 0
 
@@ -52,15 +58,9 @@ BUILD_SCRIPTS     = custom
 TEST_SCRIPTS      = custom
 INSTALL_SCRIPTS   = custom
 
-PRESERVECONF  = $(sysconfdir)/mail/aliases.CSW
-PRESERVECONF += $(sysconfdir)/mail/sendmail.cf.CSW
-PRESERVECONF += $(sysconfdir)/mail/submit.cf.CSW
-PRESERVECONF += $(sysconfdir)/mail/local-host-names.CSW
-PRESERVECONF += $(sysconfdir)/mail/trusted-users.CSW
-PRESERVECONF += $(sysconfdir)/mail/statistics.CSW
-
 include gar/category.mk
 
+SOLVER = sol$(shell uname -r |sed 's/5\.//')
 PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
 OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.$(GAROSREL).$(PLATFORM)
 LIBFILES  = sendmail/sendmail mail.local/mail.local smrsh/smrsh rmail/rmail
@@ -110,6 +110,17 @@ install-custom:
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
 		done )
+
+	@# rename libraries and binaries os-specific
+	( for file in `ls $(DESTDIR)$(libdir)` ; do  \ 
+	mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file ; \ 
+	done )
+	( for file in `ls $(DESTDIR)$(bindir)` ; do  \ 
+	mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file ; \ 
+	done )
+	( for file in `ls $(DESTDIR)$(sbindir)` ; do  \ 
+	mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file ; \ 
+	done )
 
 	@# install manpages
 	( for file in $(MANFILES1) ; do \
