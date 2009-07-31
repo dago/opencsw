@@ -1,0 +1,35 @@
+diff -ru nxcl.orig/doc/Makefile.am nxcl/doc/Makefile.am
+--- nxcl.orig/doc/Makefile.am	2008-03-10 23:13:08.000000000 +0000
++++ nxcl/doc/Makefile.am	2009-07-31 14:43:27.406751436 +0100
+@@ -2,7 +2,7 @@
+ 
+ DOXYFILE = Doxyfile
+ 
+-docdir = $(prefix)/doc/$(PACKAGE)-$(VERSION)
++docdir2 = $(docdir)/$(PACKAGE)-$(VERSION)
+ 
+ EXTRA_DIST = html
+ 
+@@ -15,17 +15,17 @@
+ 	doxygen
+ 
+ install-data-local:
+-	$(mkinstalldirs) $(DESTDIR)$(docdir)
++	$(mkinstalldirs) $(DESTDIR)$(docdir2)
+ 	@for file in $(srcdir)/html/*; do \
+ 		bn="`basename $$file`"; \
+-		echo " $(INSTALL_DATA) $$file $(DESTDIR)$(docdir)/$$bn"; \
+-		$(INSTALL_DATA) $$file $(DESTDIR)$(docdir)/$$bn; \
++		echo " $(INSTALL_DATA) $$file $(DESTDIR)$(docdir2)/$$bn"; \
++		$(INSTALL_DATA) $$file $(DESTDIR)$(docdir2)/$$bn; \
+ 	done
+ 
+ uninstall-local:
+ 	@for file in $(srcdir)/html/*; do \
+ 		bn="`basename $$file`"; \
+-		echo " rm -f $(DESTDIR)$(docdir)/$$bn"; \
+-		rm -f $(DESTDIR)$(docdir)/$$bn; \
++		echo " rm -f $(DESTDIR)$(docdir2)/$$bn"; \
++		rm -f $(DESTDIR)$(docdir2)/$$bn; \
+ 	done
+ 
