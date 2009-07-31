@@ -88,5 +88,6 @@ install-custom:
 	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
+	@ginstall -d $(DESTDIR)/var/opt/csw/named
 	@touch $(DESTDIR)/var/opt/csw/named/named.pid
 	@$(MAKECOOKIE)
