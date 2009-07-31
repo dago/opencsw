@@ -2,6 +2,7 @@
 #
 # Move the OS version specific files to the base directory.
 #
+
 MYOSREL="sol`/sbin/uname -r |sed 's/5\.//'`"
 echo "Installing class <osrel> for ${MYOSREL}."
 
@@ -12,7 +13,7 @@ do
 	    # Keep pkgadd happy by copying the file as defined
 	    /usr/bin/cp $src $dest || exit 2
 	    # Copy the version specific file to the original name
-	    dest2=`echo $dest | sed "s/sol${MYOSREL}.//g"` || exit 2
+	    dest2=`echo $dest | sed "s/${MYOSREL}.//g"` || exit 2
 	    echo $dest2
 	    /usr/bin/cp $src $dest2 || exit 2
     fi

@@ -18,7 +18,6 @@ DISTFILES += README.CSW sendmail.schema
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
 DISTFILES += cswsendmail site.config.m4 i.cswosrel
 DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
-DISTFILES += $(CLASS_SCRIPTS)
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -101,6 +100,7 @@ install-custom:
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mail
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)$(sysconfdir)/mail
+	ginstall -d $(DESTDIR)/usr/sadm/install/scripts
 
 	@# install the libraries
 	@( for file in $(LIBFILES) ; do \
