@@ -36,7 +36,7 @@ case "$1" in
 'start')
 	if [ -f $CSW_DIR/lib/sendmail -a -f $CSW_DIR/etc/mail/sendmail.cf ]; then
 		if [ ! -d $CSW_DIR/var/spool/mqueue ]; then
-			/usr/bin/mkdir -m 0750 $CSW_DIR/var/spool/mqueue
+			/usr/bin/mkdir -pm 0750 $CSW_DIR/var/spool/mqueue
 			/usr/bin/chown root:bin $CSW_DIR/var/spool/mqueue
 		fi
 		if [ ! -f $ALIASES_FILE.db ] && [ ! -f $ALIASES_FILE.dir ] \
