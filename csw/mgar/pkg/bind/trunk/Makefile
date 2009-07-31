@@ -69,7 +69,7 @@ PROTOTYPE_FILTER  = awk ' \
 	{ print }'
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
-SPKG_CLASSES_CSWbind = none cswusergroup cswugfiles cswcpsampleconf cswinitsmf
+SPKG_CLASSES_CSWbind = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 
 include gar/category.mk
 
