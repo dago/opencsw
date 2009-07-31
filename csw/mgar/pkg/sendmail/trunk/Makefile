@@ -15,7 +15,6 @@ MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 DISTFILES += README.CSW sendmail.schema
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
-DISTFILES += i.sol8 i.sol9 i.sol10
 DISTFILES += cswsendmail site.config.m4
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
@@ -57,6 +56,7 @@ CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS     = custom
 TEST_SCRIPTS      = custom
 INSTALL_SCRIPTS   = custom
+EXTRA_MERGE_SCRIPTS = OS
 
 include gar/category.mk
 
@@ -112,15 +112,15 @@ install-custom:
 		done )
 
 	@# rename libraries and binaries os-specific
-	( for file in `ls $(DESTDIR)$(libdir)` ; do  \ 
-	mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file ; \ 
-	done )
-	( for file in `ls $(DESTDIR)$(bindir)` ; do  \ 
-	mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file ; \ 
-	done )
-	( for file in `ls $(DESTDIR)$(sbindir)` ; do  \ 
-	mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file ; \ 
-	done )
+	( for file in `ls $(DESTDIR)$(libdir)`; do  \
+		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file; \
+		done )
+	( for file in `ls $(DESTDIR)$(bindir)`; do  \
+		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file; \
+		done )
+	( for file in `ls $(DESTDIR)$(sbindir)`; do  \
+		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file;\
+		done )
 
 	@# install manpages
 	( for file in $(MANFILES1) ; do \
@@ -150,3 +150,15 @@ install-custom:
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 	@$(MAKECOOKIE)
 
+merge-OS:
+	@# Install the other install trees
+	( for dir in `ls -d $(abspath $(WORKROOTDIR)/install*-$(MODULATION))` ; do \
+		( if [ "x`echo $$dir |sed "s/.*install-\(5.[0-9]*\)-$(MODULATION).*/\1/"`x" != "x$(GAROSREL)x" ]; then \
+			cd $$dir$(bindir) && \
+				/usr/bin/pax -rw -v * $(PKGROOT)$(bindir);\
+			cd $$dir$(sbindir) && \
+				/usr/bin/pax -rw -v * $(PKGROOT)$(sbindir);\
+			cd $$dir$(libdir) && \
+				/usr/bin/pax -rw -v * $(PKGROOT)$(libdir); \
+		fi ) \
+	done )
