@@ -23,3 +23,9 @@ PREREQUISITE_PKGS = CSWperl
 REQUIRED_PKGS = CSWpmiosocketssl
 
 include gar/category.mk
+
+
+post-extract-modulated:
+	@echo "Adding 'license' file..."
+	@cp $(FILEDIR)/COPYING $(WORKSRC)/
+	@$(MAKECOOKIE)
