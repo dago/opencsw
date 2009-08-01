@@ -13,7 +13,7 @@ DISTFILES += postinstall preremove space
 
 PACKAGES = CSWap2modwsgi
 
-REQUIRED_PKGS_CSWap2modwsgi = CSWap2prefork CSWpython
+REQUIRED_PKGS_CSWap2modwsgi = CSWap2prefork CSWpython-rt
 CATALOGNAME_CSWap2modwsgi   = ap2_modwsgi
 SPKG_DESC_CSWap2modwsgi     = an Apache/Python WSGI adapter module
 
