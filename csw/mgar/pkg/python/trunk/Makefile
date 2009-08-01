@@ -71,7 +71,7 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 # use prototype filters to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
-PACKAGES  = CSWidle CSWpython CSWpydistutils CSWpython-devel CSWpython-rt CSWpython-tk
+PACKAGES  = CSWidle CSWpython CSWpydistutils CSWpython-devel CSWpython-rt CSWpython-tk CSWpython-test
 
 PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle += $(bindir)/idle
@@ -81,6 +81,7 @@ PKGFILES_CSWpydistutils += $(libdir)/.*/distutils/.*
 PKGFILES_CSWpython-rt += $(libdir)/.*libpython.*
 PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
 PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython-test = $(libdir)/python/test/.*
 
 ENABLE_CHECK = 0
 
@@ -92,6 +93,7 @@ REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk
 REQUIRED_PKGS_CSWpython-tk   += CSWpython-rt CSWcswclassutils
 REQUIRED_PKGS_CSWpydistutils  = CSWpython CSWcswclassutils 
 REQUIRED_PKGS_CSWpython-devel = CSWpython CSWcswclassutils
+REQUIRED_PKGS_CSWpython-test  = CSWpython CSWcswclassutils
 
 CATALOGNAME_CSWpydistutils = pydistutils
 CATALOGNAME_CSWidle = idle
@@ -99,6 +101,7 @@ CATALOGNAME_CSWpython = python
 CATALOGNAME_CSWpython-devel = python_devel
 CATALOGNAME_CSWpython-rt = python_rt
 CATALOGNAME_CSWpython-tk = python_tk
+CATALOGNAME_CSWpython-test = python_test
 
 SPKG_DESC_CSWidle = Python IDE
 SPKG_DESC_CSWdistutils = Python Distutils makes modules and extensions easily available
@@ -106,9 +109,9 @@ SPKG_DESC_CSWpython = A high-level scripting language.
 SPKG_DESC_CSWpython-devel = Development Files for Python
 SPKG_DESC_CSWpython-rt = Python Runtime Libraries
 SPKG_DESC_CSWpython-tk = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython-test = Python Test modules
 
 POST_INST_SCR  = add-depricated-libs
-POST_INST_SCR += remove-compiled-py
 
 post-install-modulated: $(POST_INST_SCR)
 	@$(MAKECOOKIE)
