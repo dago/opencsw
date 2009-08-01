@@ -21,10 +21,8 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-EXTRA_LIB = $(prefix)/bdb44/lib $(SVNLIB)
-EXTRA_LIB += $(prefix)/apache2/lib
-EXTRA_INC = $(prefix)/bdb44/include
-EXTRA_INC += $(prefix)/apache2/include
+EXTRA_LIB = $(SVNLIB) $(prefix)/apache2/lib
+EXTRA_INC = $(prefix)/apache2/include
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
@@ -34,7 +32,7 @@ ARCHALL_CSWsvn-devel = 1
 
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
-REQUIRED_PKGS_CSWsvn       = CSWapache2rt CSWbdb44 CSWexpat CSWggettextrt
+REQUIRED_PKGS_CSWsvn       = CSWapache2rt CSWbdb CSWexpat CSWggettextrt
 REQUIRED_PKGS_CSWsvn      += CSWiconv CSWkrb5lib CSWlibnet CSWneon CSWoldaprt
 REQUIRED_PKGS_CSWsvn      += CSWosslrt CSWsasl CSWzlib CSWsqlite3rt
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
@@ -46,19 +44,19 @@ REQUIRED_PKGS_CSWap2svn    = CSWsvn CSWggettextrt CSWiconv
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
 REQUIRED_PKGS_CSWjavasvn   = CSWsvn CSWapache2rt CSWneon CSWoldaprt
-REQUIRED_PKGS_CSWjavasvn  += CSWbdb44 CSWexpat CSWggettextrt CSWiconv 
+REQUIRED_PKGS_CSWjavasvn  += CSWbdb CSWexpat CSWggettextrt CSWiconv 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
-REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl CSWapache2rt CSWbdb44 CSWexpat 
+REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl CSWapache2rt CSWbdb CSWexpat 
 REQUIRED_PKGS_CSWpmsvn    += CSWggettextrt CSWiconv CSWoldaprt
 SPKG_DESC_CSWpysvn         = Subversion Python Language Binding
 CATALOGNAME_CSWpysvn       = pysvn
-REQUIRED_PKGS_CSWpysvn     = CSWsvn CSWpython CSWapache2rt CSWbdb44 CSWexpat 
+REQUIRED_PKGS_CSWpysvn     = CSWsvn CSWpython CSWapache2rt CSWbdb CSWexpat 
 REQUIRED_PKGS_CSWpysvn    += CSWggettextrt CSWiconv CSWoldaprt
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
 REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby CSWiconv CSWoldaprt
-REQUIRED_PKGS_CSWrbsvn    += CSWapache2rt CSWbdb44 CSWexpat CSWggettextrt 
+REQUIRED_PKGS_CSWrbsvn    += CSWapache2rt CSWbdb CSWexpat CSWggettextrt 
 
 PKGFILES_CSWsvn-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWap2svn    = $(prefix)/apache2.*
@@ -91,7 +89,7 @@ SVNLIB = $(prefix)/lib/svn
 
 NOISALIST = 1
 LDFLAGS  = -R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/apache2/lib 
-LDFLAGS += -L/opt/csw/apache2/lib -L$(SVNLIB) -lintl -liconv
+LDFLAGS += -L/opt/csw/apache2/lib -L$(SVNLIB) -lintl -liconv 
 export LDFLAGS
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
@@ -102,6 +100,7 @@ REQUIRED_PKGS_CSWpysvn += CSWcswclassutils
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/include:/opt/csw/lib:db-4.7
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
@@ -124,6 +123,7 @@ BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(foreach LANG,$(BINDING_LANGS),svn-$(LANG))
 
 PI_DEPENDS  = install-extras
+PI_DEPENDS += fix-ra_dav
 PI_DEPENDS += $(BINDING_TARGETS)
 PI_DEPENDS += copy-templates
 PI_DEPENDS += fix-install
@@ -165,6 +165,16 @@ copy-templates:
 		$(WORKDIR)/svn_access.conf.CSW \
 		$(DESTDIR)$(prefix)/apache2/etc
 	$(MAKECOOKIE)
+
+fix-ra_dav:
+	@# libsvn_ra_dav-1* has been renamed to libsvn_ra_neon-1* 
+	@# in the new versions of subversion, 
+	@# we need to link for backward compatability
+	@(gln -s $(DESTDIR)$(libdir)/libsvn_ra_neon-1.so.0.0.0 \
+		$(DESTDIR)$(libdir)/libsvn_ra_dav-1.so.0)
+	@(gln -s $(DESTDIR)$(libdir)/libsvn_ra_neon-1.so.0.0.0 \
+		$(DESTDIR)$(libdir)/libsvn_ra_dav-1.so)
+	@$(MAKECOOKIE)
 
 install-extras:
 	@(ginstall -d $(DESTDIR)$(docdir)/subversion/tools)
