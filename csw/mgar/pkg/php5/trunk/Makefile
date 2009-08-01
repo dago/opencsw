@@ -32,8 +32,9 @@ CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Languages
 CATALOGNAME_CSWphp5devel   = php5_devel
 SPKG_DESC_CSWphp5devel     = Development files for php5
-REQUIRED_PKGS_CSWphp5      = CSWexpat CSWggettextrt CSWiconv 
-REQUIRED_PKGS_CSWphp5     += CSWlibxml2 CSWzlib CSWmysql5rt
+REQUIRED_PKGS_CSWphp5      = CSWexpat CSWggettextrt CSWiconv CSWpng CSWsqlite
+REQUIRED_PKGS_CSWphp5     += CSWlibxml2 CSWzlib CSWmysql5rt CSWxpm CSWt1lib
+REQUIRED_PKGS_CSWphp5     += CSWftype2 CSWgd CSWjpeg CSWlibmm
 REQUIRED_PKGS_CSWphp5devel = CSWphp5
 
 PKGFILES_CSWphp5devel  = $(bindir)/php-config
