@@ -1,6 +1,6 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
-# $Header$
+# $Id$
 
 ## This file contains comments to guide you through various GAR settings.
 ## Please remove unnecessary comments before committing your code to the code
