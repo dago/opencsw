@@ -37,6 +37,8 @@ BUILD_ARGS = php-mode.info
 INSTALL_SCRIPTS = 
 TEST_SCRIPTS =
 
+COMPILE_ELISP = 1
+
 include gar/category.mk
 
 LISPDIR = $(datadir)/emacs/site-lisp
@@ -49,9 +51,8 @@ post-extract-modulated:
 
 post-install-modulated:
 	@echo "Installing required files..."
-	( gmkdir -p $(DESTDIR)/$(LISPDIR) $(DESTDIR)/$(INFODIR); \
-		emacs -batch -f batch-byte-compile $(WORKSRC)/php-mode.el; \
-		cp $(WORKSRC)/php-mode.el* $(DESTDIR)$(LISPDIR); \
+	@( gmkdir -p $(DESTDIR)/$(LISPDIR) $(DESTDIR)/$(INFODIR); \
+		cp $(WORKSRC)/php-mode.el $(DESTDIR)$(LISPDIR); \
 		chmod -x $(DESTDIR)$(LISPDIR)/*; \
 		cp $(WORKSRC)/*info $(DESTDIR)/$(INFODIR) )
 	@$(MAKECOOKIE)
