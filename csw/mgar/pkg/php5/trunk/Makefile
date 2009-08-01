@@ -1,5 +1,5 @@
 GARNAME     = php5
-GARVERSION  = 5.2.9
+GARVERSION  = 5.2.10
 CATEGORIES  = lang
 SF_PROJ     = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJ)-$(GARVERSION)
@@ -19,11 +19,12 @@ define BLURB
 endef
 
 MASTER_SITES   = http://us.php.net/distributions/
-SPKG_SOURCEURL = http://www.php.net/downloads.php
+SPKG_SOURCEURL = http://www.php.net/
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
+STRIP_DIRS    += $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
 DISTFILES += $(DISTNAME).tar.bz2
-DISTFILES += php.ini.CSW phpext CSWphp5.postinstall
+DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
 
@@ -61,8 +62,6 @@ PATCHFILES += php-bug-45557-fix.diff
 EXTDIRLIST = $(shell ls -d extensions/*)
 include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
 
-EXTRA_LIB += $(prefix)/bdb44/lib
-EXTRA_INC += $(prefix)/bdb44/include
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
 NOISALIST = 1

@@ -19,7 +19,7 @@ define BLURB
 endef
 
 MASTER_SITES   = http://us.php.net/distributions/
-SPKG_SOURCEURL = http://www.php.net/downloads.php
+SPKG_SOURCEURL = http://www.php.net/
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 STRIP_DIRS    += $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
@@ -62,8 +62,6 @@ PATCHFILES += php-bug-45557-fix.diff
 EXTDIRLIST = $(shell ls -d extensions/*)
 include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
 
-EXTRA_LIB += $(prefix)/bdb44/lib
-EXTRA_INC += $(prefix)/bdb44/include
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
 NOISALIST = 1
