@@ -31,6 +31,8 @@ CHECKSUM_FILE ?= checksums
 MANIFEST_FILE ?= manifest
 LOGDIR ?= log
 
+ELISP_DIRS ?= $(datadir)/emacs/site-lisp $(EXTRA_ELISP_DIRS)
+
 GIT_PROXY_SCRIPT ?= $(abspath $(GARBIN))/gitproxy
 GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
 

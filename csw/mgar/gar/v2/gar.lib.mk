@@ -730,6 +730,19 @@ gzip-man:
 	gfind $(DESTDIR) -type f -iname *.[1-8] -size +2 -print | \
 		gxargs -r gzip --force
 
+compile-elisp:
+	@(for d in $(ELISP_DIRS); do \
+		echo " ===> Compiling .el files in $$d"; \
+		cd $(PKGROOT)/$$d; \
+		for f in `find . -name "*el"`; do \
+			bf=`basename $$f`; \
+			bd=`dirname $$f`; \
+			cd $$bd; \
+			emacs -L $(PKGROOT)/$$d -L $(PKGROOT)/$$d/$$bd $(EXTRA_EMACS_ARGS) -batch -f batch-byte-compile "$$bf"; \
+			cd $(PKGROOT)/$$d; \
+		done; \
+	done)
+
 include $(addprefix $(GARDIR)/,$(EXTRA_LIBS))
 
 # Mmm, yesssss.  cookies my preciousssss!  Mmm, yes downloads it
