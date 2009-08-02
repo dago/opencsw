@@ -1,0 +1,26 @@
+diff --speed-large-files --minimal -Nru munin-1.3.4.orig/node/node.d/exim_mailstats.in munin-1.3.4/node/node.d/exim_mailstats.in
+--- munin-1.3.4.orig/node/node.d/exim_mailstats.in	2008-03-08 02:42:39.000000000 +0100
++++ munin-1.3.4/node/node.d/exim_mailstats.in	2009-08-02 11:26:39.040437174 +0200
+@@ -1,4 +1,3 @@
+-#!/usr/bin/perl -w
+ #!@@PERL@@ -w
+ # -*- perl -*-
+ 
+diff --speed-large-files --minimal -Nru munin-1.3.4.orig/node/node.d/lpstat.in munin-1.3.4/node/node.d/lpstat.in
+--- munin-1.3.4.orig/node/node.d/lpstat.in	2008-03-08 02:42:39.000000000 +0100
++++ munin-1.3.4/node/node.d/lpstat.in	2009-08-02 11:26:48.080049173 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!@@PERL@@ -w
+ #############################################################################
+ #                                                                           #
+ # This script was initially developed by Anstat Pty Ltd for internal use    #
+diff --speed-large-files --minimal -Nru munin-1.3.4.orig/node/node.d/snmp__cpuload.in munin-1.3.4/node/node.d/snmp__cpuload.in
+--- munin-1.3.4.orig/node/node.d/snmp__cpuload.in	2008-03-08 02:42:39.000000000 +0100
++++ munin-1.3.4/node/node.d/snmp__cpuload.in	2009-08-02 11:26:57.614639171 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!@@PERL@@ -w
+ #
+ # Copyright (C) 2006 Lars Strand
+ #

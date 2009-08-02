@@ -27,6 +27,7 @@ PATCHFILES += munin.conf.in.diff
 PATCHFILES += munin-graph.in.diff # use monospace instead of VeraMono.ttf
 PATCHFILES += munin-update.in.diff # http://munin.projects.linpro.no/ticket/699
 PATCHFILES += munindoc.in.diff # PATH to perl set to /opt/csw/bin/perl
+PATCHFILES += perlpath.diff # shebang changed to #!@@PERL@@ -w
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz

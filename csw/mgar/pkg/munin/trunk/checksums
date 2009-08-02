@@ -12,5 +12,6 @@ ce97aa8e741383039fb365d1a322f3e7  download/munin-node.conf.in.diff
 4688659429fbebf8cafcc8eb8a1ee870  download/munin-update.in.diff
 737e3e3d2f68015dfb4e857909cde7da  download/munin.conf.in.diff
 e3a58e582407981d4f5c5aed59cbfc47  download/munin_1.3.4.tar.gz
-29e1278999379aa7108d3050c0b9d227  download/munindoc.in.diff
+8e21ff70a126779e33dd6457839184de  download/munindoc.in.diff
+d1623381c74f05a174aa4704896ef5b6  download/perlpath.diff
 43db53191eaae75be35b3548a993c31e  download/sunos_memory.in.diff
