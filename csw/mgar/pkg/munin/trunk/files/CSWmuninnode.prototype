@@ -1,7 +1,7 @@
-d none /etc/opt/csw/munin 0755 munin munin
-f cswpreserveconf /etc/opt/csw/munin/munin-node.conf.CSW 0644 munin munin
-d none /etc/opt/csw/munin/plugin-conf.d 0755 munin munin
-d none /etc/opt/csw/munin/plugins 0755 munin munin
+d none /etc/opt/csw/munin 0755 root bin
+f cswpreserveconf /etc/opt/csw/munin/munin-node.conf.CSW 0644 root bin
+d none /etc/opt/csw/munin/plugin-conf.d 0755 root bin
+d none /etc/opt/csw/munin/plugins 0755 root bin
 f none /opt/csw/bin/munindoc 0755 root bin
 d none /opt/csw/libexec/munin/plugins 0755 root bin
 f none /opt/csw/libexec/munin/plugins/amavis 0755 root bin
