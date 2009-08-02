@@ -17,6 +17,7 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = cfg2html
 TEST_SCRIPTS =
 WORKSRC = $(WORKDIR)/$(GARNAME)
+ARCHALL = 1
 
 install-cfg2html:
 	ginstall -d $(DESTDIR)$(datadir)/$(GARNAME)/plugins
