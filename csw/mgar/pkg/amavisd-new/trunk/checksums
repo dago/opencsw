@@ -1,11 +1,9 @@
-02b0bd38b40258841c60479603dc6842  download/amavisd-new-2.6.3.tar.gz
-979fd28f16513f660912311c3566786d  download/CSWamavisdnew.gspec
-1a54bc6b9d92afadc704c394cb93fa00  download/CSWamavisdnew.depend
 65f66fb3036b7949057733aa99cff724  download/CSWamavisdnew.postinstall
 171767585ab6662c0cbedae26e9baa2c  download/CSWamavisdnew.preinstall
 631e33b02eb813b9f3f13db03b5c12eb  download/CSWamavisdnew.prototype
 b9cafe6715bc2703ac9411f24f248cd3  download/amavisd-agent.diff
 3e81998c8b933129870e3cab68d40261  download/amavisd-nanny.diff
+02b0bd38b40258841c60479603dc6842  download/amavisd-new-2.6.3.tar.gz
 f218d10e5280940268a3ffaa125a00ae  download/amavisd-release.diff
 9c3d4118cf3837e559a6026d6b89b377  download/amavisd.conf.diff
 071af9fb79ee5e9d045905043fea2b96  download/amavisd.diff

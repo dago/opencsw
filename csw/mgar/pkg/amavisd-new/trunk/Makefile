@@ -7,12 +7,36 @@ define BLURB
 	amavisd-new is a performance-enhanced daemonized version of amavis-perl
 endef
 
+PACKAGES = CSWamavisdnew
+CATALOGNAME = amavisd_new
+ARCHALL = 1
+
 MASTER_SITES = http://www.ijs.si/software/amavisd/#download
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWamavisdnew, depend postinstall preinstall prototype)
+DISTFILES += CSWamavisdnew.postinstall
+DISTFILES += CSWamavisdnew.preinstall
+DISTFILES += CSWamavisdnew.prototype
+
+#DISTFILES += $(call admfiles,CSWamavisdnew, postinstall preinstall prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+REQUIRED_PKGS += CSWperl
+REQUIRED_PKGS += CSWcswclassutils
+REQUIRED_PKGS += CSWpmiostringy
+REQUIRED_PKGS += CSWpmnetserver
+REQUIRED_PKGS += CSWpmmailtools
+REQUIRED_PKGS += CSWpmmimetools
+REQUIRED_PKGS += CSWpmcompresszlib
+REQUIRED_PKGS += CSWpmarchivetar
+REQUIRED_PKGS += CSWpmarchivezip
+REQUIRED_PKGS += CSWspamassassin
+REQUIRED_PKGS += CSWpmberkeleydb
+REQUIRED_PKGS += CSWpmconverttnef
+REQUIRED_PKGS += CSWpmconvertuulib
+REQUIRED_PKGS += CSWpmmaildkim
+REQUIRED_PKGS += CSWpmunixsyslog
 
 PATCHFILES += amavisd-agent.diff
 PATCHFILES += amavisd-nanny.diff
@@ -29,9 +53,18 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 AMAVISBIN=amavisd-agent amavisd-nanny amavisd-release p0f-analyzer.pl
+AMAVISBIN += amavisd-nanny
+AMAVISBIN += amavisd-release
+AMAVISBIN += p0f-analyzer.pl
+
 AMAVISSBIN=amavisd-new
-AMAVISDOC=LDAP.schema README_FILES RELEASE_NOTES AAAREADME.first \
-          amavisd.conf-default amavisd.conf-sample
+
+AMAVISDOC=LDAP.schema
+AMAVISDOC += README_FILES
+AMAVISDOC += RELEASE_NOTES
+AMAVISDOC += AAAREADME.first
+AMAVISDOC += amavisd.conf-default
+AMAVISDOC += amavisd.conf-sample
 
 install-custom:
 	echo " ==> Installing $(GARNAME)"
