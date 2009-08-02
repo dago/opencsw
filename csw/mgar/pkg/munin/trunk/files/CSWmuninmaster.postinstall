@@ -2,8 +2,28 @@
 
 passwd -N munin
 
-echo 
-echo "Please append the following line to the crontab of the user 'munin':"
-echo 
-echo "   0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/test -x /opt/csw/bin/munin-cron && /opt/csw/bin/munin-cron"
-echo
+cat << EOF
+#
+#
+#
+
+To get Munin running, please follow these steps:
+
+(1) Append the following line to the crontab of the user 'munin':"
+ 
+    0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/test -x /opt/csw/bin/munin-cron && /opt/csw/bin/munin-cron"
+
+(2) Edit the Apache configuration for Munin: 
+    "Normal" mode: /etc/opt/csw/munin/apache/apache.conf
+    CGI mode: /etc/opt/csw/munin/apache/apache-munin-cgi.conf
+
+    (These files should work by default)
+
+(3) Add the following line to your Apache configuration
+
+    "Normal" mode: Include /etc/opt/csw/munin/apache.conf
+    CGI mode: Include /etc/opt/csw/munin/apache/apache-munin-cgi.conf
+
+#
+#
+#
