@@ -47,7 +47,7 @@ REQUIRED_PKGS_CSWmuninmaster = CSWpmnetserver CSWperl CSWpython CSWpmparserecdes
 REQUIRED_PKGS_CSWmuninmaster = CSWpmhtmltmpl CSWpmdatemanip CSWpmmd5 CSWrrd CSWapache2
 REQUIRED_PKGS_CSWmuninmaster = CSWcswclassutils
 
-REQUIRED_PKGS_CSWmuninnode = CSWpmnetsnmp CSWpmnetserver CSWperl CSWtop CSWcswclassutils
+REQUIRED_PKGS_CSWmuninnode = CSWpmdbi CSWpmnetsnmp CSWpmnetserver CSWperl CSWtop CSWcswclassutils
 
 SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswpreserveconf ugfiles
 SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswpreserveconf cswinitsmf
