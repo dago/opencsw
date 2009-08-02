@@ -1,0 +1,29 @@
+diff --speed-large-files --minimal -Nru BerkeleyDB-0.39.orig/config.in BerkeleyDB-0.39/config.in
+--- BerkeleyDB-0.39.orig/config.in	2009-06-06 20:04:31.000000000 +0200
++++ BerkeleyDB-0.39/config.in	2009-08-02 17:41:37.220435289 +0200
+@@ -9,7 +9,7 @@
+ 
+ #INCLUDE	= /usr/local/include
+ #INCLUDE	= ../..
+-INCLUDE	= /usr/local/BerkeleyDB/include
++INCLUDE	= /opt/csw/include
+ 
+ # 2. Where is libdb?
+ #
+@@ -18,7 +18,7 @@
+ 
+ #LIB	= /usr/local/lib
+ #LIB	= ../..
+-LIB	= /usr/local/BerkeleyDB/lib
++LIB	= /opt/csw/lib
+ 
+ # 3. Is the library called libdb?
+ #
+@@ -40,6 +40,6 @@
+ #    below (by removing the leading #) and edit the line to use the name
+ #    you have picked.
+ 
+-#DBNAME = -ldb-3.0
++DBNAME = -ldb-4.7
+ 
+ # end of file config.in
