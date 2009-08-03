@@ -1,5 +1,9 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
 GARNAME = libsamplerate
-GARVERSION = 0.1.2
+GARVERSION = 0.1.7
 CATEGORIES = lib
 
 DESCRIPTION = Secret Rabbit Code (aka libsamplerate) is a Sample Rate Converter for audio
@@ -11,14 +15,14 @@ rates can be an irrational number. The conversion ratio can also vary
 with time for speeding up and slowing down effects.
 endef
 
-MASTER_SITES = http://www.mega-nerd.com/SRC
+MASTER_SITES = http://www.mega-nerd.com/SRC/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWlibsamplerate,prototype depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES += $(notdir $(wildcard $(FILEDIR)/*.patch))
+REQUIRED_PKGS = CSWlibsndfile
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
