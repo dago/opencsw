@@ -1,5 +1,5 @@
 GARNAME = Trac
-GARVERSION = 0.11.4
+GARVERSION = 0.11.5
 CATEGORIES = apps
 
 DESCRIPTION = Integrated SCM and Project Management
