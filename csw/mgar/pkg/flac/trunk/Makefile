@@ -4,11 +4,13 @@ CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
 # Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on
-MODULATIONS_GARVERSION = 1.1.2 1.2.1
+MODULATIONS_GARVERSION = 1.0.4 1.1.2 1.2.1
 
 # There was no 64 bit legacy version. Do not provide it as new binaries should
 # link against the new version.
-SKIP_MODULATIONS = isa-sparcv9-garversion-1.1.2
+SKIP_MODULATIONS = isa-sparcv9-garversion-1.0.4
+SKIP_MODULATIONS += isa-amd64-garversion-1.0.4
+SKIP_MODULATIONS += isa-sparcv9-garversion-1.1.2
 SKIP_MODULATIONS += isa-amd64-garversion-1.1.2
 
 DESCRIPTION = Free lossless audio codec
@@ -58,6 +60,9 @@ UFILES_REGEX = flac-(\d+(?:\.\d+)*)-src
 
 BUILD64 = 1
 
+# For 1.0.4
+EXTRA_LINKER_FLAGS = -liconv
+
 NODIRPATHS = --includedir
 CPPFLAGS =
 
@@ -71,6 +76,11 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 TEST_TARGET = check
 
+MERGE_SCRIPTS_isa-i386-garversion-1.0.4 = copy-only
+MERGE_DIRS_isa-i386-garversion-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-amd64-garversion-1.0.4 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-1.0.4 = $(libdir)
+
 MERGE_SCRIPTS_isa-i386-garversion-1.1.2 = copy-only
 MERGE_DIRS_isa-i386-garversion-1.1.2 = $(libdir)
 MERGE_SCRIPTS_isa-amd64-garversion-1.1.2 = copy-relocated-only
@@ -79,6 +89,11 @@ MERGE_DIRS_isa-amd64-garversion-1.1.2 = $(libdir)
 MERGE_SCRIPTS_isa-i386-garversion-1.2.1 = copy-all
 MERGE_SCRIPTS_isa-amd64-garversion-1.2.1 = copy-relocated-only
 MERGE_DIRS_isa-amd64-garversion-1.2.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+MERGE_SCRIPTS_isa-sparcv8-garversion-1.0.4 = copy-only
+MERGE_DIRS_isa-sparcv8-garversion-1.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv9-garversion-1.0.4 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-1.0.4 = $(libdir)
 
 MERGE_SCRIPTS_isa-sparcv8-garversion-1.1.2 = copy-only
 MERGE_DIRS_isa-sparcv8-garversion-1.1.2 = $(libdir)
@@ -97,8 +112,16 @@ CC := $(abspath ./bin/cc)
 CXX := $(abspath ./bin/CC)
 PATH := ./bin:$(PATH):/usr/ccs/bin
 
+post-patch-isa-i386-garversion-1.0.4:
+	perl -pi -e "s/-O3 //g" $(WORKSRC)/configure
+	$(MAKECOOKIE)
+
 post-patch-isa-i386-garversion-1.1.2:
 	perl -pi -e "s/-O2 //g" $(WORKSRC)/configure
+	$(MAKECOOKIE)
+
+post-patch-isa-sparcv8-garversion-1.0.4:
+	perl -pi -e "s/-O3 //g" $(WORKSRC)/configure
 	$(MAKECOOKIE)
 
 post-patch-isa-sparcv8-garversion-1.1.2:
