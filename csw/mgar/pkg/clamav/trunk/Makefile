@@ -25,7 +25,7 @@ CATALOGNAME_CSWlibclamav = libclamav
 SPKG_DESC_CSWlibclamav = $(DESCRIPTION) Library
 
 REQUIRED_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWcswclassutils CSWncurses CSWlibtoolrt
-REQUIRED_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv
+REQUIRED_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv CSWlibtoolrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
