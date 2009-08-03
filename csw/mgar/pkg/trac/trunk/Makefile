@@ -15,9 +15,8 @@ MASTER_SITES = http://ftp.edgewall.com/pub/trac/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWtrac
-REQUIRED_PKGS_CSWtrac  = CSWpycs CSWpydocutils
-REQUIRED_PKGS_CSWtrac += CSWpysetuptools CSWpysqlite2 CSWpysvn
-REQUIRED_PKGS_CSWtrac += CSWpython
+REQUIRED_PKGS_CSWtrac = CSWpysetuptools CSWpysvn CSWgenshi
+REQUIRED_PKGS_CSWtrac += CSWpython-rt
 
 CATALOGNAME_CSWtrac = trac
 SPKG_DESC_CSWtrac = Integrated SCM and Project Management
