@@ -17,29 +17,25 @@ if [ -f ${BASEDIR}$DB_HOME/*.db ] ; then
         echo "Running db_verify (before upgrade) on $DB_HOME" >>$installlog
         for each_db in `ls *.db`
         do
-          #chroot $PKG_ROOT_DIR /opt/csw/bdb4/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
-          ${BASEDIR}/opt/csw/bdb44/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
+          ${BASEDIR}/opt/csw/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
         done
 
         # Update the database environment to the new value
         echo "Running db_recover on $DB_HOME" >>$installlog
-        #chroot $PKG_ROOT_DIR /opt/csw/bdb4/bin/db_recover -h $DB_HOME >>$installlog 2>&1
-        ${BASEDIR}/opt/csw/bdb44/bin/db_recover -h $DB_HOME >>$installlog 2>&1
+        ${BASEDIR}/opt/csw/bin/db_recover -h $DB_HOME >>$installlog 2>&1
 
         # Upgrade each file.  This does nothing if no upgrade is needed.
         echo "Running db_upgrade on $DB_HOME" >>$installlog
         for each_db in `ls *.db`
         do
-          #chroot $PKG_ROOT_DIR /opt/csw/bdb4/bin/db_upgrade -h $DB_HOME $each_db >>$installlog 2>&1
-          ${BASEDIR}/opt/csw/bdb44/bin/db_upgrade -h $DB_HOME $each_db >>$installlog 2>&1
+          ${BASEDIR}/opt/csw/bin/db_upgrade -h $DB_HOME $each_db >>$installlog 2>&1
         done
 
         # Verify each file
         echo "Running db_verify (after upgrade) on $DB_HOME" >>$installlog
         for each_db in `ls *.db`
         do
-          #chroot $PKG_ROOT_DIR /opt/csw/bdb4/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
-          ${BASEDIR}/opt/csw/bdb44/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
+          ${BASEDIR}/opt/csw/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
         done
 fi
 
