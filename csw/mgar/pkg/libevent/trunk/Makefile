@@ -1,7 +1,6 @@
 GARNAME = libevent
-GARVERSION = 1.4
-PATCHREV = .12
-DISTVERSION = $(GARVERSION)$(PATCHREV)-stable
+GARVERSION = 1.4.12
+DISTVERSION = $(GARVERSION)-stable
 CATEGORIES = lib
 
 DESCRIPTION = event notification library
@@ -22,15 +21,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-stable.tar.gz
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
-#CONFIGURE_ARGS  = $(DIRPATHS)
-#CONFIGURE_ARGS += --with-rtsig
-
 TEST_TARGET = verify
 
 include gar/category.mk
 
 #LIBS += -lresolv -lnsl
 #export LIBS
-
-#SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHREV)
 
