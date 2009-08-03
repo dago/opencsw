@@ -1,7 +1,7 @@
 GARNAME = libevent
-GARVERSION = 1.3
-PATCHREV = e
-DISTVERSION = $(GARVERSION)$(PATCHREV)
+GARVERSION = 1.4
+PATCHREV = .12
+DISTVERSION = $(GARVERSION)$(PATCHREV)-stable
 CATEGORIES = lib
 
 DESCRIPTION = event notification library
@@ -14,31 +14,23 @@ endef
 
 MASTER_SITES = http://www.monkey.org/~provos/
 DISTFILES    = $(GARNAME)-$(DISTVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWlibevent,depend prototype)
-DISTFILES   += $(call admfiles,CSWlibevent-devel,depend prototype)
+#DISTFILES   += $(call admfiles,CSWlibevent,depend prototype)
+#DISTFILES   += $(call admfiles,CSWlibevent-devel,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-GARCOMPILER = GNU
-
-# Adjust test.sh shell
-PATCHFILES += testsh.diff
-
-# We have no stdint.h
-PATCHFILES += stdint.diff
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-stable.tar.gz
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-rtsig
+#CONFIGURE_ARGS  = $(DIRPATHS)
+#CONFIGURE_ARGS += --with-rtsig
 
 TEST_TARGET = verify
 
 include gar/category.mk
 
-LIBS += -lresolv -lnsl
-export LIBS
+#LIBS += -lresolv -lnsl
+#export LIBS
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHREV)
+#SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHREV)
 

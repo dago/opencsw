@@ -1,9 +1,1 @@
-8553ad0f8a35d8d96ae0c69c387e06d3  download/libevent-1.3e.tar.gz
-8ea347baf835300219bd88bf73cb2c3f  download/CSWlibevent.gspec
-10c44d698c6a436c29ff72457a06310f  download/CSWlibevent.depend
-2274a4bc7557437a88cd3b64de5eece7  download/CSWlibevent.prototype
-649dd486e8c26791bbf4b44280bd4e55  download/CSWlibevent-devel.gspec
-fb52e1653adbc7d07e97a42dac3bcfee  download/CSWlibevent-devel.depend
-759d85644ee08b729fc05e471dedaa8c  download/CSWlibevent-devel.prototype
-efedb74c9c031929d5138c22ac2630d8  download/testsh.diff
-a76d6e6d3d07d85f25ac389c441a12f4  download/stdint.diff
+77b0d8b9885496871bb083165b35ba11  download/libevent-1.4.12-stable.tar.gz
