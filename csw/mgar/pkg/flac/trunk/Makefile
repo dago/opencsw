@@ -44,7 +44,7 @@ CATALOGNAME_CSWflac = libflac
 CATALOGNAME_CSWxmmsflac = xmms_flac
 
 REQUIRED_PKGS_CSWflac = CSWiconv CSWlibogg
-REQUIRED_PKGS_CSWxmmsflac = CSWglib CSWgtk CSWxmms CSWflac
+REQUIRED_PKGS_CSWxmmsflac = CSWglib CSWgtk CSWxmms CSWflac CSWiconv CSWlibogg
 
 SPKG_DESC_CSWflac = Free lossless audio codec
 SPKG_DESC_CSWxmmsflac = FLAC plugin for XMMS
