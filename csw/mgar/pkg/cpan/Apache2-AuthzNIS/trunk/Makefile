@@ -12,7 +12,7 @@ PACKAGES = CSWpmap2authznis
 CATALOGNAME = pm_ap2authznis
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmnetnis
+REQUIRED_PKGS = CSWpmnetnis CSWap2_modperl
 
 include gar/category.mk
 
