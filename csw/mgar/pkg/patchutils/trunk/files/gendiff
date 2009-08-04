@@ -1,0 +1,21 @@
+#!/opt/csw/bin/bash
+# $Owl: Owl/packages/rpm/gendiff,v 1.2 2005/11/16 13:31:51 solar Exp $
+
+if [ $# -ne 2 ]; then
+	echo "Usage: ${0##*/} DIRECTORY DIFF-SUFFIX" >&2
+	exit 1
+fi
+
+find "$1" \( -name "*$2" -o -name ".*$2" \) -print |
+while read OP; do
+	NP="${OP%$2}"
+	NN="${NP##*/}"
+	U=-u
+	[ "$NN" = "ChangeLog" ] && U=-U0
+	case "${NN##*.}" in
+	c|cc|C|cpp)
+		U=-up
+		;;
+	esac
+	/opt/csw/bin/gdiff $U "$OP" "$NP"
+done
