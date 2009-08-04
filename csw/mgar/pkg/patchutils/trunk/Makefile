@@ -13,10 +13,14 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # gendiff is needed for the tests
 DISTFILES += gendiff
 
+PATCHFILES = patch-use-csw-bash.diff
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PREREQUISITE_PKGS = CSWgnulinks CSWbash CSWdiffutils
+
+REQUIRED_PKGS = CSWbash CSWperl
 
 SPKG_SOURCEURL = http://cyberelk.net/tim/software/patchutils/
 
@@ -36,7 +40,5 @@ PATH := /opt/csw/gnu:$(WORKDIR):$(PATH)
 # /bin/bash is too old
 post-configure-modulated:
 	find $(WORKSRC) -type f | grep -v '\.in$$' | grep /tests/ | \
-		xargs perl -pi -e 's,#!/bin/bash,#!/opt/csw/bin/bash,'
-	find $(WORKSRC) -type f | fgrep -v .in | fgrep tests | \
-		xargs perl -pi -e 's,/bin/sh,/opt/csw/bin/bash,'
+		xargs perl -pi.orig -e 's,/bin/sh,/opt/csw/bin/bash,'
 	@$(MAKECOOKIE)

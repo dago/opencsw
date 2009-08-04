@@ -1,0 +1,45 @@
+diff -Naur patchutils-0.3.1.orig/editdiff.in patchutils-0.3.1.patched/editdiff.in
+--- patchutils-0.3.1.orig/editdiff.in	2008-06-11 12:01:28.000000000 +0200
++++ patchutils-0.3.1.patched/editdiff.in	2009-08-04 11:32:58.435884523 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ #
+ # editdiff - simple wrapper around rediff
+ # Copyright (C) 2001-2002 Tim Waugh <twaugh@redhat.com>
+diff -Naur patchutils-0.3.1.orig/espdiff.in patchutils-0.3.1.patched/espdiff.in
+--- patchutils-0.3.1.orig/espdiff.in	2008-06-11 12:01:28.000000000 +0200
++++ patchutils-0.3.1.patched/espdiff.in	2009-08-04 11:33:03.660183257 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ #
+ # espdiff - do whatever it was you wanted
+ # Copyright (C) 2003 Tim Waugh <twaugh@redhat.com>
+diff -Naur patchutils-0.3.1.orig/move-to-front patchutils-0.3.1.patched/move-to-front
+--- patchutils-0.3.1.orig/move-to-front	2008-06-11 12:01:28.000000000 +0200
++++ patchutils-0.3.1.patched/move-to-front	2009-08-04 11:33:39.577510591 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ if [ "$#" -eq 0 ] || [ "x$1" == "x--help" ]
+ then
+   echo "usage: move-to-front [PATCHES..] PATCH"
+diff -Naur patchutils-0.3.1.orig/tests/combine2/run-test patchutils-0.3.1.patched/tests/combine2/run-test
+--- patchutils-0.3.1.orig/tests/combine2/run-test	2008-07-02 13:11:08.000000000 +0200
++++ patchutils-0.3.1.patched/tests/combine2/run-test	2009-08-04 11:33:42.536530871 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ 
+ # This is a combinediff(1) testcase.
+ 
+diff -Naur patchutils-0.3.1.orig/tests/combine3/run-test patchutils-0.3.1.patched/tests/combine3/run-test
+--- patchutils-0.3.1.orig/tests/combine3/run-test	2008-07-02 13:11:08.000000000 +0200
++++ patchutils-0.3.1.patched/tests/combine3/run-test	2009-08-04 11:33:45.008706797 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ 
+ # This is a combinediff(1) testcase.
+ 
