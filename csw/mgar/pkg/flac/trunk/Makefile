@@ -34,14 +34,17 @@ PATCHFILES_isa-sparcv9-garversion-1.1.2 = libtool-64bit.patch
 PATCHFILES_isa-sparcv8-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 PATCHFILES_isa-sparcv9-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 
-PATCHFILES_isa-i386-garversion-1.1.2 = libtool-64bit.patch
+PATCHFILES_isa-i386-garversion-1.0.4 = strip-nasm-1.0.4.patch
+PATCHFILES_isa-i386-garversion-1.1.2 = strip-nasm-1.1.2.patch libtool-64bit.patch
 PATCHFILES_isa-amd64-garversion-1.1.2 = libtool-64bit.patch
-PATCHFILES_isa-i386-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
+PATCHFILES_isa-i386-garversion-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
 PATCHFILES_isa-amd64-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
 
 PACKAGES = CSWflac CSWxmmsflac
 CATALOGNAME_CSWflac = libflac
 CATALOGNAME_CSWxmmsflac = xmms_flac
+
+PREREQUISITE_PKGS = CSWbash CSWnasm
 
 REQUIRED_PKGS_CSWflac = CSWiconv CSWlibogg
 REQUIRED_PKGS_CSWxmmsflac = CSWglib CSWgtk CSWxmms CSWflac CSWiconv CSWlibogg

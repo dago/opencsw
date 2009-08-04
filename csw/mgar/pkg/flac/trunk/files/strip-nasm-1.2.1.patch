@@ -1,0 +1,34 @@
+diff -Naur flac-1.2.1.orig/src/libFLAC/ia32/Makefile.in flac-1.2.1.patched/src/libFLAC/ia32/Makefile.in
+--- flac-1.2.1.orig/src/libFLAC/ia32/Makefile.in	2007-09-16 22:05:12.000000000 +0200
++++ flac-1.2.1.patched/src/libFLAC/ia32/Makefile.in	2009-08-04 13:31:07.693331268 +0200
+@@ -234,7 +234,7 @@
+ 
+ SUFFIXES = .nasm .lo
+ 
+-STRIP_NON_ASM = sh $(top_srcdir)/strip_non_asm_libtool_args.sh
++STRIP_NON_ASM = /opt/csw/bin/bash $(top_srcdir)/strip_non_asm_libtool_args.sh
+ 
+ noinst_LTLIBRARIES = libFLAC-asm.la
+ libFLAC_asm_la_SOURCES = \
+diff -Naur flac-1.2.1.orig/strip_non_asm_libtool_args.sh flac-1.2.1.patched/strip_non_asm_libtool_args.sh
+--- flac-1.2.1.orig/strip_non_asm_libtool_args.sh	2004-07-29 08:43:23.000000000 +0200
++++ flac-1.2.1.patched/strip_non_asm_libtool_args.sh	2009-08-04 13:30:46.782902121 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # libtool assumes that the compiler can handle the -fPIC flag.
+ # This isn't always true (for example, nasm can't handle it).
+@@ -8,10 +8,12 @@
+ while [ $1 ]; do
+ 	if [ "$1" != "-fPIC" ]; then
+ 		if [ "$1" != "-DPIC" ]; then
++		if [ "$1" != "-KPIC" ]; then
+ 			if [ "$1" != "-fno-common" ]; then
+ 				command="$command $1"
+ 			fi
+ 		fi
++		fi
+ 	fi
+ 	shift
+ done

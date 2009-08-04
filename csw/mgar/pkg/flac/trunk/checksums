@@ -3,3 +3,6 @@ b1523e6ad8ef85d1df5b18f20a8cfad6  download/flac-1.0.4.tar.gz
 153c8b15a54da428d1f0fadc756c22c7  download/flac-1.2.1.tar.gz
 c9e9052e1d1238a21ac6c4ab263d2b7f  download/libtool-64bit.patch
 e3144fad8810ceaca718adb6f09dc8fa  download/no-stdint.patch
+03e0502642d568b5b004f69328485720  download/strip-nasm-1.0.4.patch
+394225d96661019d32cc0ebfdad3d377  download/strip-nasm-1.1.2.patch
+64e7f447c2ca09ec041e6740a209291d  download/strip-nasm-1.2.1.patch
