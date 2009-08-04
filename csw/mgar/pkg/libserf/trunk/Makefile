@@ -15,14 +15,10 @@ endef
 MASTER_SITES = http://serf.googlecode.com/files/
 DISTFILES  = $(DISTNAME).tar.bz2
 
+REQUIRED_PKGS_CSWlibserf = CSWapache2rt CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-DEPENDS = server/apache2rt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
@@ -31,7 +27,7 @@ CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 TEST_TARGET = check
 include gar/category.mk
 
-EXTRA_LDFLAGS = -R/opt/csw/bdb44/lib
+#EXTRA_LDFLAGS = -R/opt/csw/bdb44/lib
 APR_LIBTOOL = $(shell /opt/csw/apache2/bin/apr-config --apr-libtool)
 post-configure-modulated:
 	gcp $(APR_LIBTOOL) $(WORKSRC)
