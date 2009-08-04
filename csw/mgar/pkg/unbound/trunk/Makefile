@@ -9,7 +9,6 @@ define BLUR
   a server, but are linked into an application) are easily possible.
 endef
 
-TEST_SCRIPTS =
 PACKAGES = CSWunbound
 CATALOGNAME = unbound
 LICENSE = LICENSE
