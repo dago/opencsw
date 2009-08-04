@@ -9,9 +9,13 @@ define BLUR
   a server, but are linked into an application) are easily possible.
 endef
 
+TEST_SCRIPTS =
+PACKAGES = CSWunbound
+CATALOGNAME = unbound
+LICENSE = LICENSE
+
 MASTER_SITES = http://unbound.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWunbound)
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
