@@ -21,6 +21,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-stable.tar.gz
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
+CONFIGURE_ARGS  = $(DIRPATHS) 
+
 TEST_TARGET = verify
 
 include gar/category.mk
