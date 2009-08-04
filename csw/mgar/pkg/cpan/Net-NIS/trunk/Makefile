@@ -10,4 +10,13 @@ endef
 
 PACKAGES = CSWpmnetnis
 CATALOGNAME = pm_netnis
+
+REQUIRED_PKGS = SUNWnisu
+
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
