@@ -23,6 +23,8 @@ ARCHALL_CSWperldoc = 1
 REQUIRED_PKGS_CSWperl = CSWbdb CSWgdbm
 REQUIRED_PKGS_CSWperldoc = CSWperl
 
+LICENSE = Copying
+
 # Core module updates
 MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
 CORE_UPDATES  += PathTools-3.30
