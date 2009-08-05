@@ -1,7 +1,7 @@
-563e035ff1c5b010e539add95a61d219  download/CSWperl.depend
-c89c0ccbc325f496da5c21c581d4a156  download/CSWperl.gspec
-54aef7ec0bbc9b121e026ffafcd7bb69  download/CSWperl.prototype
-fd19c6295f6211062d4e4cdd93bc3278  download/CSWperldoc.depend
-a3592ece1e424b77e0ea21153da7d817  download/CSWperldoc.gspec
-aa50ae7a4f2dfc64c217b2d5b763be8d  download/CSWperldoc.prototype
-d2c39b002ebfd2c3c5dba589365c5a71  download/perl-5.10.0.tar.gz
+d1b217a7a2463d5543d25490ff1b3d14  download/CGI.pm-3.44.tar.gz
+a7e93cf2015881ded1f22b5b2d0cb391  download/File-Temp-0.22.tar.gz
+b88aaf2bb7437725b11e9eb48dfb6c93  download/IO-1.25.tar.gz
+18a72d6a66bb62ce9bbb422dfa41181a  download/PathTools-3.30.tar.gz
+2ba3f963daf86c1172cd7bbbd47891be  download/Storable-2.20.tar.gz
+eaafa92c9a21c4290dd9d0752bb744b0  download/Test-Simple-0.92.tar.gz
+b8c118d4360846829beb30b02a6b91a7  download/perl-5.8.8.tar.gz

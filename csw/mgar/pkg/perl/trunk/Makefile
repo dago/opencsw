@@ -1,5 +1,5 @@
 GARNAME = perl
-GARVERSION = 5.10.0
+GARVERSION = 5.8.8
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language
@@ -12,47 +12,47 @@ define BLURB
   libraries.
 endef
 
-#MASTER_SITES   = http://search.cpan.org/CPAN/authors/id/N/NW/NWCLARK/
-#SPKG_SOURCEURL = http://search.cpan.org/~nwclark/perl/
 MASTER_SITES   = http://www.cpan.org/src/
 SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWperl,depend prototype)
-#DISTFILES += $(call admfiles,CSWperldoc,depend prototype)
 
 PACKAGES = CSWperl CSWperldoc
 ARCHALL_CSWperldoc = 1
-REQUIRED_PKGS_CSWperl = CSWbdb44 CSWgdbm
+#REQUIRED_PKGS_CSWperl = CSWbdb44 CSWgdbm
+REQUIRED_PKGS_CSWperl = CSWbdb CSWgdbm
 REQUIRED_PKGS_CSWperldoc = CSWperl
 
-PKGFILES_CSWperldoc = $(PKGFILES_DOC)
-
 # Core module updates
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/K/KW/KWILLIAMS/
-#CORE_UPDATES  += PathTools-3.25
-#CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
+CORE_UPDATES  += PathTools-3.30
+CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
 
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
-#CORE_UPDATES  += CGI.pm-3.29
-#CORE_OBSOLETE += CGI*
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
+CORE_UPDATES  += CGI.pm-3.44
+CORE_OBSOLETE += CGI*
 
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
-#CORE_UPDATES  += Test-Simple-0.72
-#CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
+CORE_UPDATES  += Test-Simple-0.92
+CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
 
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
-#CORE_UPDATES  += File-Temp-0.18
-#CORE_OBSOLETE += File/Temp.pm
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
+CORE_UPDATES  += File-Temp-0.22
+CORE_OBSOLETE += File/Temp.pm
 
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
-#CORE_UPDATES  += IO-1.2301
-#CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
+CORE_UPDATES  += IO-1.25
+CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
 
-#DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/A/AM/AMS/
+CORE_UPDATES  += Storable-2.20
+CORE_OBSOLETE += Storable/* Storable.pm
+
+DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 # Dependencies
-LIBDEPS += lib/bdb44
+#LIBDEPS += lib/bdb44
+LIBDEPS += lib/bdb47
 LIBDEPS += lib/gdbm
 
 # Custom configure
@@ -64,7 +64,9 @@ PL_PATCH   = 0
 INC_COMPAT = $(foreach REV,$(PL_PATCH),$(PL_MAJOR).$(REV))
 
 # Force use of db-4.4
-PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.4 -ldl -lm -lpthread -lc
+#PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.4 -ldl -lm -lpthread -lc
+# Force use of db-4.7
+PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.7 -ldl -lm -lpthread -lc -lperl
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
@@ -99,11 +101,15 @@ CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
-CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/bdb44/lib /opt/csw/lib"
+#CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/bdb44/lib /opt/csw/lib"
+CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/lib"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
-EXTRA_LIB += $(prefix)/bdb44/lib
-EXTRA_INC += $(prefix)/bdb44/include
+#EXTRA_LIB += $(prefix)/bdb44/lib
+#EXTRA_INC += $(prefix)/bdb44/include
+
+EXTRA_MERGE_EXCLUDE_FILES = perllocal.pod
+PKGFILES_CSWperldoc = $(PKGFILES_DOC)
 
 # Tests take a long time
 TEST_SCRIPTS =
@@ -131,6 +137,18 @@ libperl:
 		ln -s libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
 		ln -s libperl.so.$(GARVERSION) libperl.so )
 	@$(MAKECOOKIE)
+#	echo YOUAREHERE
+#	( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION)/${TARGET}/CORE ; \
+#	   chmod 755 libperl.so.$(GARVERSION) ; \
+#	   rm libperl.so.$(LIB_MINOR) libperl.so ; \
+#	   ln -s libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
+#	   ln -s libperl.so.$(GARVERSION) libperl.so )
+#	( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION)/${TARGET} ; \
+#	   rm libperl* ; \
+#	   ln -s CORE/libperl.so.$(GARVERSION) libperl.so.$(GARVERSION) ; \
+#	   ln -s CORE/libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
+#	   ln -s CORE/libperl.so.$(GARVERSION) libperl.so )
+#	$(MAKECOOKIE)
 
 # Remove build paths from Config
 POST_TARGETS += perlconf
@@ -156,5 +174,8 @@ perlconf:
 	@$(MAKECOOKIE)
 
 # Invoke post-install targets
-post-install: $(POST_TARGETS)
+#post-install: $(POST_TARGETS)
+post-install-modulated: $(POST_TARGETS)
+	echo $(DESTDIR)
+	@rm $(DESTDIR)/opt/csw/lib/perl/5.8.8/perllocal.pod
 	@$(MAKECOOKIE)
