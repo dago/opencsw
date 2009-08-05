@@ -43,9 +43,9 @@ PROTOTYPE_FILTER = awk \
 					$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
 					$$$$3 ~/\/sol[0-9]*\.sendmail$$$$/ { $$$$4 = "2755" } \
 					{ print }'
-PROTOTYPE_FILTER += (fgrep -v "i.sol8";echo "i i.sol8=\$$$$WORKDIR_FIRSTMOD/i.sol8")
-PROTOTYPE_FILTER += (fgrep -v "i.sol9";echo "i i.sol9=\$$$$WORKDIR_FIRSTMOD/i.sol9")
-PROTOTYPE_FILTER += (fgrep -v "i.sol10";echo "i i.sol10=\$$$$WORKDIR_FIRSTMOD/i.sol10")
+PROTOTYPE_FILTER += fgrep -v "i.sol8";echo "i i.sol8=\$$$$WORKDIR_FIRSTMOD/i.sol8"
+PROTOTYPE_FILTER += fgrep -v "i.sol9";echo "i i.sol9=\$$$$WORKDIR_FIRSTMOD/i.sol9"
+PROTOTYPE_FILTER += fgrep -v "i.sol10";echo "i i.sol10=\$$$$WORKDIR_FIRSTMOD/i.sol10"
 
 PKGFILES_CSWsendmailcommon  = .*$(sharedstatedir)/.*
 PKGFILES_CSWsendmailcommon += .*$(mandir)/.*
