@@ -1,0 +1,20 @@
+README.CSW
+==========
+
+Default locations
+-----------------
+Configuration directory: /etc/opt/csw.
+Work directory: /var/opt/csw/named.
+
+Installation
+------------
+1. Modify the named.conf file in /etc/opt/csw.
+2. Create the zone files you specified in named.conf.
+3. Start Bind with "/etc/init.d/cswnamed start".
+
+There's sample files to look at in this directory.
+
+More info here: http://www.isc.org/software/BIND/.
+
+
+bonivart/081118

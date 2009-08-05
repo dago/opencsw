@@ -1,0 +1,45 @@
+#!/sbin/sh
+
+# rc-script for CSW Bind
+# Peter Bonivart, 2008-11-18
+
+USER=named
+#OPTIONS="-d 1" # debug mode
+#OPTIONS="-c /opt/csw/etc/named.conf" # use old location of conf file
+OPTIONS="-u $USER"
+
+ZONE= # used for initialization, do not change
+
+case "$1" in
+  'start')
+    if [ -f /opt/csw/sbin/named -a -f /etc/opt/csw/named.conf ]; then
+      echo 'Starting bind.'
+      # ulimit -n 1024
+      /opt/csw/sbin/named $OPTIONS &
+    fi
+    ;;
+  'stop')
+    echo 'Shutting down bind.'
+    if [ -x /usr/bin/zonename ]; then
+      if [ "`/usr/bin/zonename`" = "global" ]; then
+        ZONE="-z global"
+      fi
+    fi
+    pkill $ZONE named
+    exit 0
+    ;;
+  'reload')
+    echo 'Reloading bind.'
+    if [ -x /usr/bin/zonename ]; then
+      if [ "`/usr/bin/zonename`" = "global" ]; then
+        ZONE="-z global"
+      fi
+    fi
+    pkill -HUP $ZONE named
+    exit 0
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | reload }"
+    exit 1
+    ;;
+esac
