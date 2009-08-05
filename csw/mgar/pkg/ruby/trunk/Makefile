@@ -5,7 +5,7 @@ GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
 # disable test scripts (all passed with 1.8.7p174)
-TEST_SCRIPTS = 
+# TEST_SCRIPTS = 
 
 PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
@@ -18,7 +18,7 @@ ARCHALL_CSWrubymodeel = 1
 
 LICENSE = COPYING
 
-REQUIRED_PKGS_CSWruby = CSWbdb3 CSWgdbm CSWiconv CSWgcc4corert
+REQUIRED_PKGS_CSWruby = CSWbdb CSWgdbm CSWiconv CSWgcc4corert
 REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 REQUIRED_PKGS_CSWrubydoc = CSWruby
@@ -80,7 +80,7 @@ GARCOMPILER = GNU
 
 # This is for rbconfig.rb: without this, modules built may not get a proper
 # setting.
-EXTRA_LDFLAGS = -R /opt/csw/gcc4/lib
+EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread
@@ -102,6 +102,8 @@ DISTNAME = $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL)
 # We want libruby-static.a to ship.  mkmf tests for various things using it.
 MERGE_EXCLUDE_STATICLIBS = 
 
+COMPILE_ELISP = 1
+
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
@@ -115,10 +117,7 @@ rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
 rubymode:
 	@echo " ===> Installing and Compilingn ruby-mode elisp"
 	@(mkdir -p $(RMDIR); \
-		cp $(WORKSRC)/misc/*el $(RMDIR); \
-		for f in $(RMDIR)/*; do \
-			emacs -L $(RMDIR) -batch -f batch-byte-compile "$$f"; \
-		done)
+		cp $(WORKSRC)/misc/*el $(RMDIR))
 
 # Fix up rbconfig
 rbconfig:
