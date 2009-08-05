@@ -16,8 +16,7 @@ MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 DISTFILES += README.CSW sendmail.schema
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
-DISTFILES += cswsendmail site.config.m4 CSWsendmail.i.sol8
-DISTFILES += CSWsendmail.i.sol9 CSWsendmail.i.sol10
+DISTFILES += cswsendmail site.config.m4 i.sol8 i.sol9 i.sol10
 DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
@@ -36,16 +35,16 @@ REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcs
 REQUIRED_PKGS_CSWsendmailcommon = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
 ARCHALL_CSWsendmailcommon = 1
 SPKG_CLASSES_CSWsendmail = none cswinitsmf cswosrel
-PROTOTYPE_FILTER = awk \
+PROTOTYPE_FILTER = (awk \
 				   '$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
 					$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
 					$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
 					$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
 					$$$$3 ~/\/sol[0-9]*\.sendmail$$$$/ { $$$$4 = "2755" } \
-					{ print }'
-PROTOTYPE_FILTER += fgrep -v "i.sol8";echo "i i.sol8=\$$$$WORKDIR_FIRSTMOD/i.sol8"
-PROTOTYPE_FILTER += fgrep -v "i.sol9";echo "i i.sol9=\$$$$WORKDIR_FIRSTMOD/i.sol9"
-PROTOTYPE_FILTER += fgrep -v "i.sol10";echo "i i.sol10=\$$$$WORKDIR_FIRSTMOD/i.sol10"
+					{ print }')
+PROTOTYPE_FILTER += (fgrep -v "i.sol8";echo "i i.sol8=\$$$$WORKDIR_FIRSTMOD/i.sol8")
+PROTOTYPE_FILTER += (fgrep -v "i.sol9";echo "i i.sol9=\$$$$WORKDIR_FIRSTMOD/i.sol9")
+PROTOTYPE_FILTER += (fgrep -v "i.sol10";echo "i i.sol10=\$$$$WORKDIR_FIRSTMOD/i.sol10")
 
 PKGFILES_CSWsendmailcommon  = .*$(sharedstatedir)/.*
 PKGFILES_CSWsendmailcommon += .*$(mandir)/.*
