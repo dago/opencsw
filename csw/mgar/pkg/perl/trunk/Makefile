@@ -108,8 +108,8 @@ CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 #EXTRA_LIB += $(prefix)/bdb44/lib
 #EXTRA_INC += $(prefix)/bdb44/include
 
-EXTRA_MERGE_EXCLUDE_FILES = perllocal.pod
-PKGFILES_CSWperldoc = $(PKGFILES_DOC)
+EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
+PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 
 # Tests take a long time
 TEST_SCRIPTS =
@@ -176,6 +176,4 @@ perlconf:
 # Invoke post-install targets
 #post-install: $(POST_TARGETS)
 post-install-modulated: $(POST_TARGETS)
-	echo $(DESTDIR)
-	@rm $(DESTDIR)/opt/csw/lib/perl/5.8.8/perllocal.pod
 	@$(MAKECOOKIE)
