@@ -1,15 +1,16 @@
 GARNAME = Clone
-GARVERSION = 0.22
+GARVERSION = 0.31
 CATEGORIES = cpan
 AUTHOR = RDF
 
-DESCRIPTION = recursively copy Perl datatypes
+DESCRIPTION = Recursively copy Perl datatypes
 define BLURB
   This module provides a clone() method which makes recursive copies of nested
   hash, array, scalar and reference types, including tied variables and
   objects.
 endef
 
-DISTFILES = $(call admfiles,CSWpmclone,depend prototype)
+PACKAGES = CSWpmclone
+CATALOGNAME = pm_clone
 
 include gar/category.mk
