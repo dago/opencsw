@@ -1,9 +1,9 @@
 GARNAME = Class-Inspector
-GARVERSION = 1.16
+GARVERSION = 1.24
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
-DESCRIPTION = provides information about classes
+DESCRIPTION = Get information about a class and its structure
 define BLURB
   Class::Inspector allows you to get information about a loaded class. Most or
   all of this information can be found in other ways, but they arn't always
@@ -12,6 +12,11 @@ define BLURB
   easier, more friendly interface to this information.
 endef
 
-DISTFILES += CSWpmclassinspector.gspec
+LICENSE = LICENSE
+
+PACKAGES = CSWpmclassinspector
+CATALOGNAME = pm_classinspector
+
+ARCHALL = 1
 
 include gar/category.mk
