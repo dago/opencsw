@@ -1,9 +1,9 @@
 GARNAME = ExtUtils-CBuilder
-GARVERSION = 0.18
+GARVERSION = 0.2603
 CATEGORIES = cpan
-AUTHOR = KWILLIAMS
+AUTHOR = DAGOLDEN
 
-DESCRIPTION = compile and link C code for Perl modules
+DESCRIPTION = Compile and link C code for Perl modules
 define BLURB
   This module can build the C portions of Perl modules by invoking the
   appropriate compilers and linkers in a cross-platform manner. It was
@@ -13,6 +13,11 @@ define BLURB
   goal!
 endef
 
-DISTFILES += $(call admfiles,CSWpmextutcbuilder,depend prototype)
+PACKAGES = CSWpmextutcbuilder
+CATALOGNAME = pm_extutcbuilder
+
+ARCHALL = 1
+
+SPKG_VERSION = 0.26.03
 
 include gar/category.mk
