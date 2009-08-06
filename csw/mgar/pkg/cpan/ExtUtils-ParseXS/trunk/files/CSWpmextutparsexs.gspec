@@ -1,9 +1,0 @@
-%var            bitname pm_extutparsexs
-%var            pkgname CSWpmextutparsexs
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
-Copyright 2002-2003 Ken Williams.  All rights reserved.
-
-This library is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.

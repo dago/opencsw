@@ -1,9 +1,9 @@
 GARNAME = ExtUtils-ParseXS
-GARVERSION = 2.18
+GARVERSION = 2.2002
 CATEGORIES = cpan
-AUTHOR = KWILLIAMS
+AUTHOR = DAGOLDEN
 
-DESCRIPTION = converts Perl XS code into C code
+DESCRIPTION = Converts Perl XS code into C code
 define BLURB
   ExtUtils::ParseXS will compile XS code into C code by embedding the
   constructs necessary to let C functions manipulate Perl values and creates
@@ -12,8 +12,11 @@ define BLURB
   values.
 endef
 
-DISTFILES += $(call admfiles,CSWpmextutparsexs,prototype)
+PACKAGES = CSWpmextutparsexs
+CATALOGNAME = pm_extutparsexs
 
-BUILDDEPS += cpan/ExtUtils-CBuilder
+ARCHALL = 1
+
+SPKG_VERSION = 2.20.02
 
 include gar/category.mk
