@@ -1,5 +1,5 @@
 GARNAME = YAML
-GARVERSION = 0.62
+GARVERSION = 0.68
 CATEGORIES = cpan
 AUTHOR = INGY
 
@@ -11,9 +11,9 @@ define BLURB
   structures of most modern programming languages. (Including Perl!!!)
 endef
 
-DISTFILES = $(call admfiles,CSWpmyaml,prototype)
+PACKAGES = CSWpmyaml
+CATALOGNAME = pm_yaml
 
-# Don't ask questions
-PATCHFILES += build.diff
+ARCHALL = 1
 
 include gar/category.mk
