@@ -1,5 +1,5 @@
 GARNAME = openldap
-GARVERSION = 2.4.16
+GARVERSION = 2.4.17
 CATEGORIES = server
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
