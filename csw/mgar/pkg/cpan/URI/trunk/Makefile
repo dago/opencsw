@@ -1,5 +1,5 @@
 GARNAME = URI
-GARVERSION = 1.35
+GARVERSION = 1.38
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -10,6 +10,9 @@ define BLURB
   updated by RFC 2732).
 endef
 
-DISTFILES += $(call admfiles,CSWpmuri,depend prototype)
+PACKAGES = CSWpmuri
+CATALOGNAME = pm_uri
+
+ARCHALL = 1
 
 include gar/category.mk
