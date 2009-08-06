@@ -38,7 +38,8 @@ PREREQUISITE_PKGS = CSWbash
 REQUIRED_PKGS_CSWgtk2 = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
 REQUIRED_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
 REQUIRED_PKGS_CSWgtk2 += CSWlibgsf CSWlibcroco
-REQUIRED_PKGS_CSWgtk2devel = CSWgtk2
+REQUIRED_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel
+REQUIRED_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibx11devel CSWlibxrenderdevel CSWpangodevel
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
