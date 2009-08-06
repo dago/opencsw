@@ -3,14 +3,18 @@ GARVERSION = 0.34
 CATEGORIES = cpan
 AUTHOR = CLKAO
 
-DESCRIPTION = handle data in a hierarchical structure
+DESCRIPTION = Handle data in a hierarchical structure
 define BLURB
   Data::Hierarchy provides a simple interface for manipulating inheritable
   data attached to a hierarchical environment (like filesystem).
 endef
 
-DISTFILES = $(call admfiles,CSWpmdatahier,depend prototype)
+PREREQUISITE_PKGS = CSWpmtstexcept
+REQUIRED_PKGS = CSWpmclone
 
-DEPENDS += cpan/Clone
+PACKAGES = CSWpmdatahier
+CATALOGNAME = pm_datahier
+
+ARCHALL = 1
 
 include gar/category.mk
