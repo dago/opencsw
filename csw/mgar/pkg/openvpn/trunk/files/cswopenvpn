@@ -4,9 +4,9 @@
 #
 # Multiple openvpd daemon processes are possible, but this script will
 # only handle the first one.
-
-OPENVPN_CONF=/etc/csw/openvpn/openvpn.conf
-PATH=$/opt/csw/bin:$PATH
+# AUTOENABLE no
+OPENVPN_CONF=/opt/csw/etc/openvpn/openvpn.conf
+PATH=/opt/csw/bin:$PATH
 OPENVPN_DAEMON=/opt/csw/sbin/openvpn
 
 case $1 in
@@ -25,4 +25,3 @@ case $1 in
         exit 1
         ;;
 esac
-
