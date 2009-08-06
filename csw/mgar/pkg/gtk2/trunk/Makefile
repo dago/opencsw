@@ -37,6 +37,7 @@ SPKG_DESC_CSWgtk2doc = A feature rich toolkit for creating graphical user interf
 PREREQUISITE_PKGS = CSWbash
 REQUIRED_PKGS_CSWgtk2 = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
 REQUIRED_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
+REQUIRED_PKGS_CSWgtk2 += CSWlibgsf CSWlibcroco
 REQUIRED_PKGS_CSWgtk2devel = CSWgtk2
 
 SPKG_SOURCEURL = http://www.gtk.org/
