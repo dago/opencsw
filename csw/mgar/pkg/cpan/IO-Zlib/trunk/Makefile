@@ -1,5 +1,5 @@
 GARNAME = IO-Zlib
-GARVERSION = 1.05
+GARVERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = TOMHUGHES
 
@@ -10,8 +10,11 @@ define BLURB
   IO::Handle interface.
 endef
 
-DISTFILES += $(call admfiles,CSWpmiozlib,depend prototype)
+REQUIRED_PKGS = CSWpmcompresszlib
 
-DEPENDS += cpan/Compress-Zlib
+PACKAGES = CSWpmiozlib
+CATALOGNAME = pm_iozlib
+
+ARCHALL = 1
 
 include gar/category.mk
