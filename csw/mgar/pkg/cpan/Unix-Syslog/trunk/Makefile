@@ -1,5 +1,5 @@
 GARNAME = Unix-Syslog
-GARVERSION = 0.100
+GARVERSION = 1.0
 CATEGORIES = cpan
 AUTHOR = MHARNISCH
 
@@ -11,6 +11,9 @@ define BLURB
   use this module right away.
 endef
 
-DISTFILES += CSWpmunixsyslog.gspec
+LICENSE = Artistic
+
+PACKAGES = CSWpmunixsyslog
+CATALOGNAME = pm_unixsyslog
 
 include gar/category.mk
