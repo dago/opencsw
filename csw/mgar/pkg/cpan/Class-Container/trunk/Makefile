@@ -3,7 +3,7 @@ GARVERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = KWILLIAMS
 
-DESCRIPTION = glues object frameworks together transparently
+DESCRIPTION = Glues object frameworks together transparently
 define BLURB
   This class facilitates building frameworks of several classes that
   inter-operate. It was first designed and built for HTML::Mason, in which the
@@ -13,8 +13,11 @@ define BLURB
   any of these objects.
 endef
 
-DISTFILES += CSWpmclscontainer.gspec CSWpmclscontainer.depend
+REQUIRED_PKGS = CSWpmprmsvldt
 
-DEPENDS += cpan/Params-Validate
+PACKAGES = CSWpmclscontainer
+CATALOGNAME = pm_clscontainer
+
+ARCHALL = 1
 
 include gar/category.mk
