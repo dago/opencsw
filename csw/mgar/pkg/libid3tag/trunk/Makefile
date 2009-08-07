@@ -10,6 +10,7 @@ endef
 SF_PROJ = mad
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(REV).tar.gz
+DISTFILES += id3tag.pc-32 id3tag.pc-64
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -28,3 +29,8 @@ TEST_TARGET = check
 include gar/category.mk
 
 SPKG_VERSION := $(SPKG_VERSION)_rev=$(REV)
+
+post-install-modulated:
+	@ginstall -d $(DESTDIR)$(libdir)/pkgconfig
+	@ginstall $(WORKDIR)/id3tag.pc-$(MEMORYMODEL) $(DESTDIR)$(libdir)/pkgconfig/id3tag.pc
+	@$(MAKECOOKIE)
