@@ -1,5 +1,5 @@
 GARNAME = curl
-GARVERSION = 7.19.4
+GARVERSION = 7.19.5
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
@@ -43,31 +43,32 @@ REQUIRED_PKGS_CSWcurldevel = CSWcurlrt
 
 SKIPTEST = 1
 
+EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-32.h,p"
+EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-64.h,p"
+EXTRA_PAX_ARGS_isa-sparcv8 = $(EXTRA_PAX_ARGS_32)
+EXTRA_PAX_ARGS_isa-sparcv9 = $(EXTRA_PAX_ARGS_64)
+EXTRA_PAX_ARGS_isa-i386 = $(EXTRA_PAX_ARGS_32)
+EXTRA_PAX_ARGS_isa-amd64 = $(EXTRA_PAX_ARGS_64)
+
 PKGFILES_CSWcurldevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWcurlrt  = $(PKGFILES_RT)
 
 include gar/category.mk
 
 post-install-isa-sparcv8:
-	@cp $(FILEDIR)/libcurl.so.3.0.0.s $(INSTALLISADIR)/opt/csw/lib/libcurl.so.3.0.0
-	@cp $(FILEDIR)/libcurl.so.2.0.2.s $(INSTALLISADIR)/opt/csw/lib/libcurl.so.2.0.2
-	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.3.0.0 libcurl.so.3 )
-	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.2.0.2 libcurl.so.2 )
-	@mv $(INSTALLISADIR)/opt/csw/include/curl/curlbuild.h $(INSTALLISADIR)/opt/csw/include/curl/curlbuild-32.h
-	@cp $(FILEDIR)/curlbuild.h $(INSTALLISADIR)/opt/csw/include/curl/curlbuild.h
-	$(DONADA)
-
-post-install-isa-sparcv9:
-	@mv $(INSTALLISADIR)/opt/csw/include/curl/curlbuild.h $(INSTALLISADIR)/opt/csw/include/curl/curlbuild-64.h
-	$(DONADA)
-
-post-merge-isa-sparcv9:
-	@cp $(INSTALLISADIR)/opt/csw/include/curl/curlbuild-64.h $(PKGROOT)/opt/csw/include/curl/curlbuild-64.h
-	$(DONADA)
+	@ginstall $(FILEDIR)/libcurl.so.3.0.0.s $(INSTALLISADIR)$(libdir)/libcurl.so.3.0.0
+	@ginstall $(FILEDIR)/libcurl.so.2.0.2.s $(INSTALLISADIR)$(libdir)/libcurl.so.2.0.2
+	@ln -s libcurl.so.3.0.0 $(INSTALLISADIR)$(libdir)/libcurl.so.3
+	@ln -s libcurl.so.2.0.2 $(INSTALLISADIR)$(libdir)/libcurl.so.2
+	@$(MAKECOOKIE)
 
 post-install-isa-i386:
 	@cp $(FILEDIR)/libcurl.so.3.0.0.i $(INSTALLISADIR)/opt/csw/lib/libcurl.so.3.0.0
 	@cp $(FILEDIR)/libcurl.so.2.0.2.i $(INSTALLISADIR)/opt/csw/lib/libcurl.so.2.0.2
-	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.3.0.0 libcurl.so.3 )
-	@( cd $(INSTALLISADIR)/opt/csw/lib; ln -s libcurl.so.2.0.2 libcurl.so.2 )
-	$(DONADA)
+	@ln -s libcurl.so.3.0.0 $(INSTALLISADIR)$(libdir)/libcurl.so.3
+	@ln -s libcurl.so.2.0.2 $(INSTALLISADIR)$(libdir)libcurl.so.2
+	@$(MAKECOOKIE)
+
+post-merge:
+	ginstall $(FILEDIR)/curlbuild.h $(PKGROOT)$(includedir)/curl/curlbuild.h
+	@$(MAKECOOKIE)
