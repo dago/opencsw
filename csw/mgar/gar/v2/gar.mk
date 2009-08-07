@@ -491,6 +491,7 @@ reset-install-modulated:
 	@$(call _pmod,Reset install state)
 	@rm -rf $(INSTALLISADIR) $(COOKIEDIR)/install-work
 	@rm -f $(foreach C,pre-install-modulated install-modulated post-install-modulated,$(COOKIEDIR)/$C)
+	@rm -f $(COOKIEDIR)/pre-install-$(MODULATION) $(COOKIEDIR)/post-install-$(MODULATION)
 	@rm -f $(COOKIEDIR)/strip
 	@rm -f $(COOKIEROOTDIR)/global/install-$(MODULATION)
 
