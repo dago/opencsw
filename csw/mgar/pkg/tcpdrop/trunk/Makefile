@@ -27,5 +27,5 @@ install-custom:
 	mkdir -p $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(WORKSRC)/README $(DOCDEST)
 	cp $(WORKSRC)/OPENSOLARIS.LICENSE $(DOCDEST)/CDDL
-	ginstall -Dm 755 $(WORKSRC)/tcpdrop $(DESTDIR)$(bindir)/tcpdrop
+	ginstall -Dm 755 $(WORKSRC)/tcpdrop $(DESTDIR)$(sbindir)/tcpdrop
 	@$(MAKECOOKIE)
