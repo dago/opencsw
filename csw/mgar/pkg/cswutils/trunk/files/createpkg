@@ -87,12 +87,15 @@ PKG=`sed -n 's/^PKG=//p' pkginfo`
 PKGREV=`sed -n 's/^VERSION=//p' pkginfo`
 SOFTNAME=`sed -n 's/^NAME=//p' pkginfo|awk '{print $1}'`
 
-case $SOFTNAME in
-     *[A-Z]*)
+isLower(){
+	typeset -l LOWER=$1
+	[ "$LOWER" = "$1" ]
+}
+
+if ! isLower $SOFTWARE ; then
 	echo ERROR: $SOFTNAME must be all lowercase
 	exit 1
-	;;
-esac
+fi
 
 PKGFILE=$SOFTNAME-$PKGREV-SunOS`uname -r`-$ARCH-CSW.pkg
 

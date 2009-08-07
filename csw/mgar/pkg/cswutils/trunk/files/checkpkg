@@ -145,12 +145,15 @@ hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
 basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
 pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
 
-case $software in
-     *[A-Z]*)
+isLower(){
+	typeset -l LOWER=$1
+	[ "$LOWER" = "$1" ]
+}
+
+if ! isLower $software ; then
 	echo ERROR: $software must be all lowercase
 	exit 1
-	;;
-esac
+fi
 
 case `basename $f` in
 	${software}-${version}-*)
