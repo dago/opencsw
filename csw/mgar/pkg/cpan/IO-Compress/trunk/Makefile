@@ -27,4 +27,6 @@ REQUIRED_PKGS += CSWpmcompressrawbz2
 PACKAGES = CSWpmiocompress
 CATALOGNAME = pm_iocompress
 
+ARCHALL = 1
+
 include gar/category.mk
