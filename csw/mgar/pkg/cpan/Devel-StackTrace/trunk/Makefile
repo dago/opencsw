@@ -1,9 +1,9 @@
 GARNAME = Devel-StackTrace
-GARVERSION = 1.13
+GARVERSION = 1.22
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
-DESCRIPTION = stack trace and stack trace frame objects
+DESCRIPTION = Stack trace and stack trace frame objects
 define BLURB
   The Devel::StackTrace module contains two classes, Devel::StackTrace and
   Devel::StackTraceFrame. The goal of this object is to encapsulate the
@@ -11,6 +11,9 @@ define BLURB
   providing a simple interface to this data.
 endef
 
-DISTFILES += CSWpmdevstacktrace.gspec
+PACKAGES = CSWpmdevstacktrace
+CATALOGNAME = pm_devstacktrace
+
+ARCHALL = 1
 
 include gar/category.mk
