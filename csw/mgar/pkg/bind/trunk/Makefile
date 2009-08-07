@@ -33,10 +33,10 @@ SPKG_DESC_CSWbinddevel = ISC BIND DNS development package
 SPKG_DESC_CSWlibbind = ISC BIND DNS library package
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 
-REQUIRED_PKGS_CSWbind = CSWlibbind CSWbindutils CSWcswclassutils
+REQUIRED_PKGS_CSWbind = CSWlibbind CSWbindutils CSWcswclassutils CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 REQUIRED_PKGS_CSWbinddevel = CSWbind
 REQUIRED_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-REQUIRED_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt
+REQUIRED_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
