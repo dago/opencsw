@@ -1,13 +1,16 @@
 GARNAME = Devel-Symdump
-GARVERSION = 2.07
+GARVERSION = 2.08
 CATEGORIES = cpan
 AUTHOR = ANDK
 
-DESCRIPTION = dump symbol names or the symbol table
+DESCRIPTION = Dump symbol names or the symbol table
 define BLURB
   This little package serves to access the symbol table of perl.
 endef
 
-DISTFILES += $(call admfiles,CSWpmdevelsymdump,depend prototype)
+PACKAGES = CSWpmdevelsymdump
+CATALOGNAME = pm_develsymdump
+
+ARCHALL = 1
 
 include gar/category.mk
