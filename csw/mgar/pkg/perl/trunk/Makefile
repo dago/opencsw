@@ -19,7 +19,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWperl CSWperldoc
 ARCHALL_CSWperldoc = 1
-#REQUIRED_PKGS_CSWperl = CSWbdb44 CSWgdbm
 REQUIRED_PKGS_CSWperl = CSWbdb CSWgdbm
 REQUIRED_PKGS_CSWperldoc = CSWperl
 
@@ -50,10 +49,13 @@ MASTER_SITES  += $(CPAN_FIRST_MIRROR)/A/AM/AMS/
 CORE_UPDATES  += Storable-2.20
 CORE_OBSOLETE += Storable/* Storable.pm
 
+MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
+CORE_UPDATES  += ExtUtils-MakeMaker-6.54
+CORE_OBSOLETE += ExtUtils/*
+
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 # Dependencies
-#LIBDEPS += lib/bdb44
 LIBDEPS += lib/bdb47
 LIBDEPS += lib/gdbm
 
@@ -61,12 +63,10 @@ LIBDEPS += lib/gdbm
 CONFIGURE_SCRIPTS = perl
 
 # Compatable with all prior patch revs
-PL_MAJOR   = 5.10
-PL_PATCH   = 0
+PL_MAJOR   = 5.8
+PL_PATCH   = 0 2 4 6 7
 INC_COMPAT = $(foreach REV,$(PL_PATCH),$(PL_MAJOR).$(REV))
 
-# Force use of db-4.4
-#PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.4 -ldl -lm -lpthread -lc
 # Force use of db-4.7
 PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.7 -ldl -lm -lpthread -lc -lperl
 
@@ -103,12 +103,14 @@ CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
-#CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/bdb44/lib /opt/csw/lib"
 CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/lib"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
 #EXTRA_LIB += $(prefix)/bdb44/lib
 #EXTRA_INC += $(prefix)/bdb44/include
+
+#EXTRA_LDFLAGS = -lperl
+EXTRA_LDFLAGS = -L/opt/csw/lib/libperl.so
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
@@ -176,6 +178,5 @@ perlconf:
 	@$(MAKECOOKIE)
 
 # Invoke post-install targets
-#post-install: $(POST_TARGETS)
 post-install-modulated: $(POST_TARGETS)
 	@$(MAKECOOKIE)
