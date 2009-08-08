@@ -43,7 +43,7 @@ CONFIGURE_ARGS += --with-ignore-dot
 CONFIGURE_ARGS += --with-env-editor
 CONFIGURE_ARGS += --disable-path-info
 CONFIGURE_ARGS += --with-logpath=/var/opt/csw/sudo/logs/sudolog
-ifneq ($(GAROSREL),5.8)
+ifneq ($(shell uname -r),5.8)
     CONFIGURE_ARGS += --with-project
 endif
 
