@@ -1,6 +1,10 @@
 GARNAME = sudo
-GARVERSION = 1.7.1
+GARVERSION = 1.7.2
 CATEGORIES = utils
+RELEASE = p1
+
+DISTVERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
 
 DESCRIPTION = Provides limited super user privileges
 define BLURB
@@ -11,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz 
 PATCHFILES = install.diff
 
 # We define upstream file regex so we can be notifed of new 
@@ -20,7 +24,6 @@ UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
 PACKAGES = CSWsudo CSWsudo-common
 
-BUILD64 = 1
 CATALOGNAME_CSWsudo = sudo
 SPKG_DESC_CSWsudo = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws
@@ -38,6 +41,7 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-logging=both
 CONFIGURE_ARGS += --with-ignore-dot
 CONFIGURE_ARGS += --with-env-editor
+CONFIGURE_ARGS += --with-project
 
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
@@ -58,3 +62,6 @@ post-merge-modulated:
 	@( cd $(PKGROOT)$(bindir); \
 		gfind . -type f -name sudo\* -exec gchmod 4755 {} \; )
 	@$(MAKECOOKIE)
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+
