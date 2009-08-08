@@ -1,9 +1,9 @@
 GARNAME = Log-Message
-GARVERSION = 0.01
+GARVERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = KANE
 
-DESCRIPTION = Generic message storage mechanism.
+DESCRIPTION = A generic message storage mechanism
 define BLURB
   Log::Message is a generic message storage mechanism. It allows you to store
   messages on a stack -- either shared or private -- and assign meta-data to
@@ -13,9 +13,16 @@ define BLURB
   (for example, log it, or die with it)
 endef
 
-DISTFILES += $(call admfiles,CSWpmlogmessage,depend prototype)
+PACKAGES = CSWpmlogmessage
+CATALOGNAME = pm_logmessage 
+ARCHALL = 1
 
-DEPENDS += cpan/Params-Check
-DEPENDS += cpan/Locale-Maketext-Simple
+REQUIRED_PKGS = CSWpmlclemktxtsimple CSWpmprmscheck CSWpmmodload
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
