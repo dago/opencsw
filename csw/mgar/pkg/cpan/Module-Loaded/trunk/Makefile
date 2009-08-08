@@ -1,5 +1,5 @@
 GARNAME = Module-Loaded
-GARVERSION = 0.01
+GARVERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = KANE
 
@@ -13,6 +13,14 @@ define BLURB
   unloaded.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodloaded,prototype)
+PACKAGES = CSWpmmodloaded
+CATALOGNAME = pm_modloaded
+ARCHALL = 1
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
