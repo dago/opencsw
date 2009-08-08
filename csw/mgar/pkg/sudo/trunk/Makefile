@@ -41,7 +41,11 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-logging=both
 CONFIGURE_ARGS += --with-ignore-dot
 CONFIGURE_ARGS += --with-env-editor
-CONFIGURE_ARGS += --with-project
+CONFIGURE_ARGS += --disable-path-info
+CONFIGURE_ARGS += --with-logpath=/var/opt/csw/sudo/logs/sudolog
+ifneq ($(GAROSREL),5.8)
+    CONFIGURE_ARGS += --with-project
+endif
 
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
