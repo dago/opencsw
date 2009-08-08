@@ -10,8 +10,16 @@ define BLURB
   must be named.
 endef
 
-DISTFILES += $(call admfiles,CSWpmprmscheck,depend prototype)
+PACKAGES = CSWpmprmscheck 
+CATALOGNAME = pm_prmscheck 
+ARCHALL = 1
 
-DEPENDS += cpan/Locale-Maketext-Simple
+REQUIRED_PKGS = CSWpmlclemktxtsimple
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
