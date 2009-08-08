@@ -38,7 +38,7 @@ CONFIGURE_ARGS += --with-ldap=$(prefix)
 CONFIGURE_ARGS += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 CONFIGURE_ARGS += --disable-path-info
 CONFIGURE_ARGS += --with-logpath=/var/opt/csw/sudo/logs/sudolog
-ifneq ($(GAROSREL),5.8)
+ifneq ($(shell uname -r),5.8)
     CONFIGURE_ARGS += --with-project
 endif
 
