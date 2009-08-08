@@ -35,13 +35,12 @@ CONFIGURE_ARGS += --with-included-regex
 CONFIGURE_ARGS += --enable-threads=solaris
 CONFIGURE_ARGS += --disable-asm
 
+EXTRA_MERGE_EXCLUDE_FILES += .*/charset.alias
+PROTOTYPE_FILTER = awk ' $$$$3 ~/\/gpg$$$$/ { $$$$4 = 4755 } '
+
 REQUIRED_PKGS_CSWgnupg  = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
 REQUIRED_PKGS_CSWgnupg += CSWoldaprt CSWreadline CSWzlib
 
 TEST_TARGET = check
-
-PROTOTYPE_FILTER  = awk ' \
-    $$$$3 ~ /\/opt\/csw\/bin\/gpg$$$$/ { $$$$4 = "4755" } \
-    { print }'
 
 include gar/category.mk
