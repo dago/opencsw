@@ -1,5 +1,5 @@
 GARNAME = squirrelmail
-GARVERSION = 1.4.17
+GARVERSION = 1.4.19
 CATEGORIES = apps
 
 DESCRIPTION = A standards-based webmail package written in PHP.
