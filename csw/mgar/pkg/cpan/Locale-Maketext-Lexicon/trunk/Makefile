@@ -1,14 +1,22 @@
 GARNAME = Locale-Maketext-Lexicon
-GARVERSION = 0.62
+GARVERSION = 0.77
 CATEGORIES = cpan
-AUTHOR = AUTRIJUS
+AUTHOR = DRTECH
 
-DESCRIPTION = use other catalog formats in Maketext
+DESCRIPTION = Use other catalog formats in Maketext
 define BLURB
   This module provides lexicon-handling modules to read from other
   localization formats, such as Gettext, Msgcat, and so on.
 endef
 
-DISTFILES = $(call admfiles,CSWpmlclemktxtlex,depend prototype)
+PACKAGES = CSWpmlclemktxtlex 
+CATALOGNAME = pm_lclemktxtlex 
+ARCHALL = 1
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
