@@ -1,5 +1,5 @@
 GARNAME      = gcc
-GARVERSION   = 4.3.3
+GARVERSION   = 4.4.1
 CATEGORIES   = lang
 
 DESCRIPTION  = The GNU Compiler Collection
