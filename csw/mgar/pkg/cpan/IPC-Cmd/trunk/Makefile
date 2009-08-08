@@ -1,5 +1,5 @@
 GARNAME = IPC-Cmd
-GARVERSION = 0.36
+GARVERSION = 0.46
 CATEGORIES = cpan
 AUTHOR = KANE
 
@@ -9,11 +9,16 @@ define BLURB
   independent but have them still work.
 endef
 
-DISTFILES += $(call admfiles,CSWpmipccmd,depend prototype)
+PACKAGES = CSWpmipccmd
+CATALOGNAME = pm_ipccmd 
+ARCHALL = 1
 
-DEPENDS += cpan/Params-Check
-DEPENDS += cpan/Module-Load-Conditional
-DEPENDS += cpan/Locale-Maketext-Simple
-DEPENDS += cpan/IPC-Run
+REQUIRED_PKGS = CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
