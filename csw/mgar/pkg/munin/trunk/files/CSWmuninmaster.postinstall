@@ -21,7 +21,7 @@ To get Munin running, please follow these steps:
 
 (3) Add the following line to your Apache configuration
 
-    "Normal" mode: Include /etc/opt/csw/munin/apache.conf
+    "Normal" mode: Include /etc/opt/csw/munin/apache/apache.conf
     CGI mode: Include /etc/opt/csw/munin/apache/apache-munin-cgi.conf
 
 (4) Add the user your webserver is running under (nobody for Apache) to
