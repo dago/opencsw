@@ -36,7 +36,7 @@ case $1 in
                 rm -f $DBUS_VAR_RUN_DIR/pid
         fi
 
-        /opt/csw/bin/dbus-daemon --system --config-file=/opt/csw/etc/dbus-1/system.conf
+        /opt/csw/bin/dbus-daemon --system 
         err=$?
         if [ $err -ne 0 ]; then
                 echo "dbus failed to start: error $err"
