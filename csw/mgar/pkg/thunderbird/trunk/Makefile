@@ -55,6 +55,7 @@ REQUIRED_PKGS_CSWthunderbird += CSWlibxrender
 REQUIRED_PKGS_CSWthunderbird += CSWorbit2 
 REQUIRED_PKGS_CSWthunderbird += CSWpango 
 REQUIRED_PKGS_CSWthunderbird += CSWzlib
+REQUIRED_PKGS_CSWthunderbird += CSWdbus
 
 PATCHFILES  = autoconf.mk.in.diff 
 PATCHFILES += lber-int.h.diff 
