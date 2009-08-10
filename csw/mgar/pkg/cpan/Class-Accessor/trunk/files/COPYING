@@ -1,8 +1,3 @@
-%var            bitname pm_clsaccessor
-%var            pkgname CSWpmclsaccessor
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright
 Copyright 2006 Marty Pauley <marty+perl@kasei.com>
 
 This program is free software; you can redistribute it and/or modify it
