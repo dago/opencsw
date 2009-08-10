@@ -9,6 +9,9 @@ define BLURB
   line ending. It works for both input and output handles.
 endef
 
-DISTFILES = $(call admfiles,CSWpmperlioeol,depend prototype)
+PACKAGES = CSWpmperlioeol
+CATALOGNAME = pm_perlioeol
+
+ARCHALL = 1
 
 include gar/category.mk
