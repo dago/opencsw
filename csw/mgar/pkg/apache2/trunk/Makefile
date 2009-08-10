@@ -1,5 +1,5 @@
 GARNAME = httpd
-GARVERSION = 2.2.12
+GARVERSION = 2.2.13
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
