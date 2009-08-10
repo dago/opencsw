@@ -1,5 +1,5 @@
 GARNAME = version
-GARVERSION = 0.70
+GARVERSION = 0.7701
 CATEGORIES = cpan
 AUTHOR = JPEACOCK
 
@@ -10,6 +10,7 @@ define BLURB
   5.10.0.
 endef
 
-DISTFILES += $(call admfiles,CSWpmversion,depend prototype)
+PACKAGES = CSWpmversion
+CATALOGNAME = pm_version
 
 include gar/category.mk
