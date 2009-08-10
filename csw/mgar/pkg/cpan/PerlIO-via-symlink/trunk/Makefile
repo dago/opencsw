@@ -9,6 +9,9 @@ define BLURB
   the file handle.
 endef
 
-DISTFILES = $(call admfiles,CSWpmperlioviasym,depend prototype)
+PACKAGES = CSWpmperlioviasym
+CATALOGNAME = pm_perlioviasym
+
+ARCHALL = 1
 
 include gar/category.mk
