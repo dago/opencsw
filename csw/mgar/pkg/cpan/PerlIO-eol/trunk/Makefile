@@ -12,6 +12,4 @@ endef
 PACKAGES = CSWpmperlioeol
 CATALOGNAME = pm_perlioeol
 
-ARCHALL = 1
-
 include gar/category.mk
