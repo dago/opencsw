@@ -1,5 +1,5 @@
 GARNAME = YAML-Syck
-GARVERSION = 0.82
+GARVERSION = 1.07
 CATEGORIES = cpan
 AUTHOR = AUDREYT
 
@@ -10,6 +10,9 @@ define BLURB
   structures to YAML strings, and the other way around.
 endef
 
-DISTFILES = $(call admfiles,CSWpmyamlsyck,prototype)
+PACKAGES = CSWpmyamlsyck
+CATALOGNAME = pm_yamlsyck
+
+ARCHALL = 1
 
 include gar/category.mk
