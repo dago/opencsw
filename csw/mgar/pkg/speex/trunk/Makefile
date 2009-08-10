@@ -13,6 +13,26 @@ endef
 MASTER_SITES = http://downloads.xiph.org/releases/speex/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# The important lines are these:
+#
+# diff -Naur speex-1.2rc1.orig/src/Makefile.am speex-1.2rc1.patched/src/Makefile.am
+# --- speex-1.2rc1.orig/src/Makefile.am   2008-06-02 10:21:21.000000000 +0200
+# +++ speex-1.2rc1.patched/src/Makefile.am        2009-08-10 16:44:45.255831787 +0200
+# @@ -18,8 +18,8 @@
+# 
+#  speexenc_SOURCES = speexenc.c wav_io.c skeleton.c
+#  speexenc_LDADD = $(top_builddir)/libspeex/libspeex.la $(top_builddir)/libspeex/libspeexdsp.la \
+# -       $(OGG_LIBS)  @FFT_LIBS@
+# +       $(OGG_LIBS)  @FFT_LIBS@ $(LIBOBJS)
+# 
+#  speexdec_SOURCES = speexdec.c wav_io.c
+#  speexdec_LDADD = $(top_builddir)/libspeex/libspeex.la \
+# -       $(OGG_LIBS)  @FFT_LIBS@
+# +       $(OGG_LIBS)  @FFT_LIBS@ $(LIBOBJS)
+#
+# All the other stuff is generated (and the newlines on getopt*.c were stripped of ^M)
+PATCHFILES = speex-getopt.patch.bz2
+
 PACKAGES = CSWspeex
 CATALOGNAME = libspeex
 REQUIRED_PKGS = CSWlibogg
@@ -24,7 +44,7 @@ SPKG_SOURCEURL = http://www.speex.org/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # 64-bit doesn't build on x86.
-# BUILD64 = 1
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 
