@@ -17,13 +17,11 @@ define BLURB
   streams inside the files.
 endef
 
-DISTFILES = COPYING
-
 PACKAGES = CSWpmarchivezip
 CATALOGNAME = pm_archivezip
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmcompresszlib
+REQUIRED_PKGS = CSWiocompress
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
