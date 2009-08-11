@@ -11,14 +11,10 @@ define BLURB
   module aims to provide such a capability.
 endef
 
+REQUIRED_PKGS = CSWpmclassinspector CSWpmconfigtiny CSWpmparamsutil
+
 PACKAGES = CSWpmtestclassapi
 CATALOGNAME = pm_testclassapi
-
-#Warning: prerequisite Class::Inspector 1.12 not found.
-#Warning: prerequisite Config::Tiny 2.00 not found.
-#Warning: prerequisite ExtUtils::MakeMaker 6.42 not found. We have 6.30.
-#Warning: prerequisite Params::Util 1.00 not found.
-
 
 ARCHALL = 1
 
