@@ -1,9 +1,9 @@
 GARNAME = IPC-Run3
-GARVERSION = 0.01
+GARVERSION = 0.043
 CATEGORIES = cpan
-AUTHOR = RBS
+AUTHOR = RJBS
 
-DESCRIPTION = run a subprocess in batch mode
+DESCRIPTION = Run a subprocess with input/ouput redirection
 define BLURB
   This module allows you to run a subprocess and redirect stdin, stdout,
   and/or stderr to files and perl data structures. It aims to satisfy 99% of
@@ -11,6 +11,9 @@ define BLURB
   API and none of the bloat and rarely used features of IPC::Run.
 endef
 
-DISTFILES = $(call admfiles,CSWpmipcrun3,depend prototype)
+PACKAGES = CSWpmipcrun3
+CATALOGNAME = pm_ipcrun3
+
+ARCHALL = 1
 
 include gar/category.mk
