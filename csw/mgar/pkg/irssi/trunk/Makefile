@@ -1,5 +1,5 @@
 GARNAME = irssi
-GARVERSION = 0.8.13
+GARVERSION = 0.8.14
 CATEGORIES = apps
 
 DESCRIPTION = IRC client with IPv6, proxy, bot, socks and Perl support
@@ -13,7 +13,6 @@ endef
 
 MASTER_SITES = http://www.irssi.org/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWirssi)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
