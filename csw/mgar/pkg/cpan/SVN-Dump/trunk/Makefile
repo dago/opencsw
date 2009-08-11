@@ -8,7 +8,7 @@ define BLURB
 endef
 
 PACKAGES = CSWpmsvndump
-CATALOGNAME = pmsvndump
+CATALOGNAME = pm_svndump
 
 ARCHALL = 1
 
