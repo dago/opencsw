@@ -13,8 +13,9 @@ DISTFILES  = $(SF_PROJ)-$(GARVERSION).tar.bz2
 DISTNAME = $(SF_PROJ)-$(GARVERSION)
 
 PACKAGES = CSWfaac
-CATALOGNAME_CSWfaac = $(GARNAME)
-SPKG_DESC_CSWfaac = $(DESCRIPTION)
+CATALOGNAME = $(GARNAME)
+
+SPKG_SOURCEURL = http://www.audiocoding.com/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.bz2
