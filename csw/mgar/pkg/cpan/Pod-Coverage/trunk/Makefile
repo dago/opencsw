@@ -1,9 +1,9 @@
 GARNAME = Pod-Coverage
-GARVERSION = 0.19
+GARVERSION = 0.20
 CATEGORIES = cpan
 AUTHOR = RCLAMP
 
-DESCRIPTION = checks if the documentation of a module is comprehensive
+DESCRIPTION = Checks if the documentation of a module is comprehensive
 define BLURB
   Developers hate writing documentation. They'd hate it even more if their
   computer tattled on them, but maybe they'll be even more thankful in the
@@ -12,9 +12,14 @@ define BLURB
   comprehensive.
 endef
 
-DISTFILES += $(call admfiles,CSWpmpodcoverage,depend)
+PREREQUISITE_PKS = CSWpmmodulebuild CSWpmtestpod
+REQUIRED_PKGS = CSWpmdevelsymdump
 
-DEPENDS   += cpan/Devel-Symdump
-BUILDDEPS += cpan/Module-Build
+DISTFILES = COPYING
+
+PACKAGES = CSWpmpodcoverage
+CATALOGNAME = pm_podcoverage
+
+ARCHALL = 1
 
 include gar/category.mk
