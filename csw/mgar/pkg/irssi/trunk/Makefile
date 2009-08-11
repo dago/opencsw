@@ -30,7 +30,7 @@ CONFIGURE_ARGS += --with-perl-lib=vendor
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
-REQUIRED_PKGS = CSWglib2
+REQUIRED_PKGS += CSWglib2
 REQUIRED_PKGS += CSWiconv
 REQUIRED_PKGS += CSWosslrt
 REQUIRED_PKGS += CSWperl
