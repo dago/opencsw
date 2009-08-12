@@ -6,7 +6,7 @@ PACKAGES = CSWyamlmode
 
 CATALOGNAME_CSWyamlmode = yaml_mode
 
-REQUIRED_PKGS_CSWphpmode = CSWemacscommon
+REQUIRED_PKGS_CSWyamlmode = CSWemacscommon
 
 ARCHALL_CSWyamlmode = 1
 
