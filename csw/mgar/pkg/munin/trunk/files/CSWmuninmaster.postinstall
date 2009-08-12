@@ -9,9 +9,9 @@ cat << EOF
 
 To get Munin running, please follow these steps:
 
-(1) Append the following line to the crontab of the user 'munin':"
+(1) Append the following line to the crontab of the user 'munin':
  
-    0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/test -x /opt/csw/bin/munin-cron && /opt/csw/bin/munin-cron"
+    0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/test -x /opt/csw/bin/munin-cron && /opt/csw/bin/munin-cron
 
 (2) Edit the Apache configuration for Munin: 
     "Normal" mode: /etc/opt/csw/munin/apache/apache.conf
