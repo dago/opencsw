@@ -25,6 +25,8 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print 
 SPKG_CLASSES = none cswpycompile 
 REQUIRED_PKGS += CSWcswclassutils
 
+ENABLE_CHECK = 0
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*)
 
