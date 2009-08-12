@@ -15,7 +15,7 @@ fi
 # Make env variables available to other packaging scripts
 
 cat >$1 <<!
-CLASSES='$CLASSES'
+CLASSES="'$CLASSES'"
 !
 
 exit 0
