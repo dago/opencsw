@@ -54,6 +54,10 @@ endif
 
 COMPILER_EXPORTS += BASECFLAGS
 
+ifneq ($(shell uname -r), 5.8)
+    GARCOMPILER = SOS12
+endif
+
 NOISALIST = 1
 LD_OPTIONS = -R/opt/csw/lib
 export LD_OPTIONS
