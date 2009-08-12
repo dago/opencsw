@@ -1,15 +1,13 @@
 GARNAME = diffstat
-GARVERSION = 1.47
+GARVERSION = 1.48
 CATEGORIES = utils
 
 DESCRIPTION = A utility which provides statistics based on the output of diff
 define BLURB
-  Long description
 endef
 
 MASTER_SITES = ftp://invisible-island.net/diffstat/
 DISTFILES  = $(GARNAME).tar.gz
-PATCHFILES = diffstat-47a.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
