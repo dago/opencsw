@@ -12,7 +12,6 @@ endef
 
 MASTER_SITES = http://apache.jumper.nu/spamassassin/source/
 DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWspamassassin,checkinstall depend postinstall)
 
 LICENSE = $(WORKDIR)/$(SPKG_NAME)-$(GARVERSION)/LICENSE
 
@@ -61,8 +60,8 @@ build-custom:
 
 test-custom:
 	@echo " ==> Testing $(GARNAME) (custom)"
-#	@( cd $(WORKSRC) ; \
-#	   gmake test )
+	@( cd $(WORKSRC) ; \
+	   gmake test )
 	@$(MAKECOOKIE)
 
 install-custom:
@@ -76,9 +75,6 @@ install-custom:
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.cswusergroup $(DESTDIR)$(sysconfdir)/CSWspamassassin/cswusergroup
 	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(GARNAME)/README.spamd
-#	@cp $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)$(docdir)/$(GARNAME)/cswspamd
-#	@cp $(FILEDIR)/CSWspamassassin.spamd.xml.CSW $(DESTDIR)$(docdir)/$(GARNAME)/spamd.xml.CSW
-#	@cp $(FILEDIR)/CSWspamassassin.svc-spamd.CSW $(DESTDIR)$(docdir)/$(GARNAME)/svc-spamd.CSW
 	@( cd $(WORKSRC) ; \
 	   gmake install )
 	@( cd $(WORKSRC) ; \
