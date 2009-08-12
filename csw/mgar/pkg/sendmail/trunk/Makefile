@@ -37,7 +37,6 @@ CATALOGNAME_CSWsendmailcommon = sendmail_common
 REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils CSWsendmailcommon
 REQUIRED_PKGS_CSWsendmailcommon = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
 ARCHALL_CSWsendmailcommon = 1
-SPKG_CLASSES_CSWsendmail = none cswinitsmf cswosrel
 
 PROTOTYPE_FILTER = awk \
 				   '$$$$2 ~/i.sol8/ { next } \
