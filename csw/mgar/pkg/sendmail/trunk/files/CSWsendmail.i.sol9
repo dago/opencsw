@@ -19,5 +19,6 @@ do
 	dest2="`echo $dest | sed 's/sol9.//g'`" || exit 2
 	echo $dest2
 	/usr/bin/cp $src $dest2 || exit 2
+    /usr/bin/chmod 0755 $dest2
 done
 exit 0

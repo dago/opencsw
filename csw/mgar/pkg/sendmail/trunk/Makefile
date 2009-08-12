@@ -112,12 +112,11 @@ install-custom:
 
 	@# install the libraries
 	@( for file in $(LIBFILES) ; do \
-		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
+		ginstall -c -m 755 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
 		done )
 
 	@# install the binaries
 	ginstall -m 755 $(OBJDIR)/$(BINFILES) $(DESTDIR)$(bindir)
-	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
 		done )
@@ -132,6 +131,12 @@ install-custom:
 	( for file in `ls $(DESTDIR)$(sbindir)`; do  \
 		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file;\
 		done )
+
+	@# create links in bindir
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/mailq
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/purgestats
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/hoststat
 
 	@# install manpages
 	( for file in $(MANFILES1) ; do \
