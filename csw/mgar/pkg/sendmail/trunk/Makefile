@@ -132,12 +132,6 @@ install-custom:
 		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file;\
 		done )
 
-	@# create links in bindir
-	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
-	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/mailq
-	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/purgestats
-	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/hoststat
-
 	@# install manpages
 	( for file in $(MANFILES1) ; do \
 		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/man1 ; \
@@ -167,6 +161,12 @@ install-custom:
 	@$(MAKECOOKIE)
 
 merge-OS:
+	@# create links in bindir
+	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/newaliases
+	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/mailq
+	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/purgestats
+	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/hoststat
+
 	@# Install the other install trees
 	( for dir in `ls -d $(abspath $(WORKROOTDIR)/install*-$(MODULATION))` ; do \
 		( if [ "x`echo $$dir |sed "s/.*install-\(5.[0-9]*\)-$(MODULATION).*/\1/"`x" != "x$(GAROSREL)x" ]; then \
