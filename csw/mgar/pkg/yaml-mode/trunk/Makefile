@@ -38,17 +38,17 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 COMPILE_ELISP = 1
-ELISP_DIR = /opt/csw/share/emacs/site-lisp
 
 include gar/category.mk
 
 cp-extract-yaml-mode.el: $(WORKSRC)
 	@echo " ===> Copying yaml-mode.el into work source directory."
 	@cp $(DOWNLOADDIR)/yaml-mode.el $(WORKSRC)
+	@cp $(FILEDIR)/gpl* $(WORKSRC)/COPYING
 	@$(MAKECOOKIE)
 
 install-custom:
 	@( cd $(WORKSRC); \
-		gmkdir -p $(DESTDIR)$(ELISP_DIR); \
-		cp yaml-mode.el $(DESTDIR)$(ELISP_DIR) )
+		gmkdir -p $(DESTDIR)$(lispdir); \
+		cp yaml-mode.el $(DESTDIR)$(lispdir) )
 	@$(MAKECOOKIE)
