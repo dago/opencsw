@@ -19,7 +19,7 @@ MY_CLASSES = CSWsendmail.i.sol8 CSWsendmail.i.sol9 CSWsendmail.i.sol10
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
 DISTFILES += README.CSW sendmail.schema
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
-DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES)
+DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
 DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
