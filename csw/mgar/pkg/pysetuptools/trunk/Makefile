@@ -15,7 +15,7 @@ ARCHALL_CSWpysetuptools = 1
 MASTER_SITES = http://cheeseshop.python.org/packages/source/s/setuptools/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS_CSWpysetuptools = CSWpython
+REQUIRED_PKGS_CSWpysetuptools = CSWpython CSWpydistutils
 PACKAGES = CSWpysetuptools
 CATALOGNAME_CSWpysetuptools = pysetuptools
 SPKG_DESC_CSWpysetuptools = Distribution Utiltiies for Python
