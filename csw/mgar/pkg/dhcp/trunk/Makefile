@@ -1,5 +1,5 @@
 GARNAME = dhcp
-GARVERSION = 4.1.1b1
+GARVERSION = 4.1.1b2
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
@@ -16,6 +16,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PACKAGES = CSWdhcp CSWdhcpdevel
 CATALOGNAME_CSWdhcpdevel = dhcp_devel
 SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
+LICENSE = LICENSE
 
 REQUIRED_PKGS_CSWdhcp = CSWcswclassutils CSWosslrt
 REQUIRED_PKGS_CSWdhcpdevel = CSWdhcp
@@ -61,7 +62,6 @@ install-custom:
 	   mv dhcpd.conf dhcpd.conf.CSW ; \
 	   mv dhclient.conf dhclient.conf.CSW )
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(WORKSRC)/LICENSE $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(FILEDIR)/CSWdhcp.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/db
 	@touch $(DESTDIR)/var/opt/csw/$(GARNAME)/db/dhcpd.leases.CSW
