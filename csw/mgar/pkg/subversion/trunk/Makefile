@@ -1,5 +1,5 @@
 GARNAME = subversion
-DISTVERSION = 1.6.3
+DISTVERSION = 1.6.4
 GARVERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = utils
 
@@ -100,7 +100,7 @@ REQUIRED_PKGS_CSWpysvn += CSWcswclassutils
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --disable-static
-CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/include:/opt/csw/lib:db-4.7
+CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/include:/opt/csw/lib:db
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
