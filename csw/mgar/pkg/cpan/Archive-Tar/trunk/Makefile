@@ -1,9 +1,9 @@
 GARNAME = Archive-Tar
-GARVERSION = 1.30
+GARVERSION = 1.52
 CATEGORIES = cpan
 AUTHOR = KANE
 
-DESCRIPTION = module for manipulations of tar archives
+DESCRIPTION = Module for manipulations of tar archives
 define BLURB
   Archive::Tar provides an object oriented mechanism for handling tar files.
   It provides class methods for quick and easy files handling while also
@@ -12,8 +12,11 @@ define BLURB
   compressed or gzipped tar files.
 endef
 
-DISTFILES += $(call admfiles,CSWpmarchivetar,depend prototype)
+REQUIRED_PKGS = CSWpmiozlib CSWpmiocompress CSWpmpkgconst CSWpmtextdiff
 
-DEPENDS += cpan/IO-Zlib
+PACKAGES = CSWpmarchivetar
+CATALOGNAME = pm_archivetar
+
+ARCHALL = 1
 
 include gar/category.mk
