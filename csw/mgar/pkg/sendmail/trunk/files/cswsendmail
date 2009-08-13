@@ -6,13 +6,13 @@
 #ident	"@(#)sendmail	1.19	01/12/05 SMI"
 # Modified for CSW by Alex Moore 01/01/2004
 
+CSW_DIR="/opt/csw"
 ERRMSG1='WARNING: /var/mail is NFS-mounted without setting actimeo=0,'
 ERRMSG2='this can cause mailbox locking and access problems.'
 SERVER_PID_FILE="/var/run/sendmail.pid"
-CLIENT_PID_FILE="/opt/csw/var/spool/clientmqueue/sm-client.pid"
-DEFAULT_FILE="/opt/csw/etc/default/sendmail"
-ALIASES_FILE="/opt/csw/etc/mail/aliases"
-CSW_DIR="/opt/csw"
+CLIENT_PID_FILE="/var${CSW_DIR}/spool/clientmqueue/sm-client.pid"
+DEFAULT_FILE="${CSW_DIR}/etc/default/sendmail"
+ALIASES_FILE="${CSW_DIR}/etc/mail/aliases"
 
 check_queue_interval_syntax()
 {
@@ -34,14 +34,14 @@ case "$1" in
 	;;
 
 'start')
-	if [ -f $CSW_DIR/lib/sendmail -a -f $CSW_DIR/etc/mail/sendmail.cf ]; then
-		if [ ! -d $CSW_DIR/var/spool/mqueue ]; then
-			/usr/bin/mkdir -pm 0750 $CSW_DIR/var/spool/mqueue
-			/usr/bin/chown root:bin $CSW_DIR/var/spool/mqueue
+	if [ -f ${CSW_DIR}/lib/sendmail -a -f ${CSW_DIR}/etc/mail/sendmail.cf ]; then
+		if [ ! -d /var${CSW_DIR}/spool/mqueue ]; then
+			/usr/bin/mkdir -pm 0750 /var${CSW_DIR}/spool/mqueue
+			/usr/bin/chown root:bin /var${CSW_DIR}/spool/mqueue
 		fi
 		if [ ! -f $ALIASES_FILE.db ] && [ ! -f $ALIASES_FILE.dir ] \
 		    && [ ! -f $ALIASES_FILE.pag ]; then
-			$CSW_DIR/bin/newaliases
+			${CSW_DIR}/bin/newaliases
 		fi
 		MODE="-bd"
 		[ -f $DEFAULT_FILE ] && . $DEFAULT_FILE
@@ -62,8 +62,8 @@ case "$1" in
 		fi
 		check_queue_interval_syntax $CLIENTQUEUEINTERVAL
 		CLIENTQUEUEINTERVAL=$answer
-		$CSW_DIR/lib/sendmail -L sm-mta $MODE -q$QUEUEOPTION$QUEUEINTERVAL $OPTIONS &
-		$CSW_DIR/lib/sendmail -L sm-msp -Ac -q$CLIENTQUEUEINTERVAL $CLIENTOPTIONS &
+		${CSW_DIR}/lib/sendmail -L sm-mta $MODE -q$QUEUEOPTION$QUEUEINTERVAL $OPTIONS &
+		${CSW_DIR}/lib/sendmail -L sm-msp -Ac -q$CLIENTQUEUEINTERVAL $CLIENTOPTIONS &
 		#
 		# ETRN_HOSTS should be of the form
 		# "s1:c1.1,c1.2        s2:c2.1 s3:c3.1,c3.2,c3.3"

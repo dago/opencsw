@@ -65,7 +65,7 @@ V10/Berkeley
 
 Cwlocalhost
 # file containing names of hosts for which we receive email
-Fw/etc/mail/local-host-names
+Fw/opt/csw/etc/mail/local-host-names
 
 # my official domain name
 # ... define this only if sendmail cannot automatically determine your domain
@@ -94,7 +94,7 @@ C{ResOk}OKR
 
 
 # Hosts for which relaying is permitted ($=R)
-FR-o /etc/mail/relay-domains
+FR-o /opt/csw/etc/mail/relay-domains
 
 # arithmetic map
 Karith arith
@@ -139,7 +139,7 @@ O SevenBitInput=False
 O AliasWait=10
 
 # location of alias file
-O AliasFile=/etc/mail/aliases
+O AliasFile=/opt/csw/etc/mail/aliases
 
 # minimum number of free blocks on filesystem
 O MinFreeBlocks=100
@@ -160,7 +160,7 @@ O HoldExpensive=False
 O DeliveryMode=background
 
 # error message header/file
-#O ErrorHeader=/etc/mail/error-header
+#O ErrorHeader=/opt/csw/etc/mail/error-header
 
 # error mode
 #O ErrorMode=print
@@ -181,7 +181,7 @@ O TempFileMode=0600
 #O MaxHopCount=25
 
 # location of help file
-O HelpFile=/etc/mail/helpfile
+O HelpFile=/opt/csw/etc/mail/helpfile
 
 # ignore dots as terminators in incoming messages?
 #O IgnoreDots=False
@@ -335,7 +335,7 @@ O SuperSafe=True
 #O DefaultUser=mailnull
 
 # list of locations of user database file (null means no lookup)
-#O UserDatabaseSpec=/etc/mail/userdb
+#O UserDatabaseSpec=/opt/csw/etc/mail/userdb
 
 # fallback MX host
 #O FallbackMXhost=fall.back.host.net
@@ -383,7 +383,7 @@ O SuperSafe=True
 #O DefaultCharSet=unknown-8bit
 
 # service switch file (name hardwired on Solaris, Ultrix, OSF/1, others)
-#O ServiceSwitchFile=/etc/mail/service.switch
+#O ServiceSwitchFile=/opt/csw/etc/mail/service.switch
 
 # hosts file (normally /etc/hosts)
 #O HostsFile=/etc/hosts
@@ -497,7 +497,7 @@ O MaxHeadersLength=32768
 #O AuthRealm
 
 # default authentication information for outgoing connections
-#O DefaultAuthInfo=/etc/mail/default-auth-info
+#O DefaultAuthInfo=/opt/csw/etc/mail/default-auth-info
 
 # SMTP AUTH flags
 #O AuthOptions
@@ -557,7 +557,7 @@ Pjunk=-100
 #####################
 
 # this is equivalent to setting class "t"
-#Ft/etc/mail/trusted-users
+#Ft/opt/csw/etc/mail/trusted-users
 Troot
 Tdaemon
 Tuucp
