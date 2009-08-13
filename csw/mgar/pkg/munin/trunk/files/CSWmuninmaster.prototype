@@ -3,7 +3,7 @@ d none /etc/opt/csw/munin/apache 0755 root bin
 f cswpreserveconf /etc/opt/csw/munin/munin.conf.CSW 0644 root bin
 f none /opt/csw/bin/munin-check 0755 root bin
 f none /opt/csw/bin/munin-cron 0755 root bin
-f none /opt/csw/libexec/munin/VeraMono.ttf 0755 root bin
+f none /opt/csw/share/munin/fonts/VeraMono.ttf 0644 root bin
 f none /opt/csw/libexec/munin/munin-graph 0755 root bin
 f none /opt/csw/libexec/munin/munin-html 0755 root bin
 f none /opt/csw/libexec/munin/munin-limits 0755 root bin

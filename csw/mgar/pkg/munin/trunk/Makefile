@@ -89,4 +89,7 @@ install-custom:
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode/cswusergroup
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
+	@ginstall -d $(DESTDIR)/opt/csw/share/munin/fonts
+	@ginstall -m 644 $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
+	@rm $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-929bda5dc234904152566ab8865082db  download/CSWmuninmaster.postinstall
-f542a35d07f20348daa1460d32911d0a  download/CSWmuninmaster.prototype
+b494ca780b9becd6a8611e255e606dd4  download/CSWmuninmaster.postinstall
+29939c1794e6c602d54effac74e5c89d  download/CSWmuninmaster.prototype
 6cb29ccba599b5ddcea7581197bf986d  download/CSWmuninnode.prototype
 e6bafa4aa3cba7fc16e444ad168b4cd1  download/README.CSW
 59409f4b412953283c3df4546fd4886c  download/apache-munin-cgi.conf.CSW
@@ -7,7 +7,7 @@ e701d132ba0b6f3dcc90190860f5aa6b  download/apache-munin.conf.CSW
 50fa4a545f878d79e219891c6ac8d2d2  download/cswusergroup
 4eb0923e09f12335da8249ab7923e250  download/makefile.config.diff
 3ea1ba00633ac52c3a25306c3c9c52e0  download/makefile.diff
-f44022c818a112b1121d10e1112e107e  download/munin-graph.in.diff
+064e12aa12bc7d4cb312b576ae658d1e  download/munin-graph.in.diff
 ce97aa8e741383039fb365d1a322f3e7  download/munin-node.conf.in.diff
 4688659429fbebf8cafcc8eb8a1ee870  download/munin-update.in.diff
 737e3e3d2f68015dfb4e857909cde7da  download/munin.conf.in.diff
