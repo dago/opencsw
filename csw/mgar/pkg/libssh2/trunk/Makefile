@@ -1,5 +1,5 @@
 GARNAME = libssh2
-GARVERSION = 1.1
+GARVERSION = 1.2
 CATEGORIES = lib
 
 DESCRIPTION = A Library Implementing the SSH2 Protocol.
@@ -10,7 +10,7 @@ define BLURB
 	SECSH-PUBLICKEY. 
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = http://www.libssh2.org/download/
 SPKG_SOURCEURL = http://www.libssh2.org
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
@@ -19,6 +19,7 @@ CATALOGNAME_CSWlibssh2 = libssh2
 SPKG_DESC_CSWlibssh2 = $(DESCRIPTION)
 
 REQUIRED_PKGS_CSWlibssh2  = CSWosslrt CSWzlib
+
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
