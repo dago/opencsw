@@ -1,5 +1,5 @@
 GARNAME = curl
-GARVERSION = 7.19.5
+GARVERSION = 7.19.6
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
