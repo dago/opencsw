@@ -20,8 +20,9 @@ endef
 PACKAGES = CSWpmarchivezip
 CATALOGNAME = pm_archivezip
 ARCHALL = 1
+LICENSE = LICENSE
 
-REQUIRED_PKGS = CSWiocompress
+REQUIRED_PKGS = CSWpmiocompress
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
