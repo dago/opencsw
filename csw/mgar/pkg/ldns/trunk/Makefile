@@ -1,5 +1,5 @@
 GARNAME = ldns
-GARVERSION = 1.6.0
+GARVERSION = 1.6.1
 CATEGORIES = lib
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
