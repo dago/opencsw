@@ -101,7 +101,7 @@ install-custom:
 	ginstall -d $(DESTDIR)/var/opt/csw/spool/clientmqueue
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mail
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -d $(DESTDIR)/etc/mail
+	ginstall -d $(DESTDIR)$(sysconfdir)/mail
 
 	@# install the libraries
 	@( for file in $(LIBFILES) ; do \
@@ -147,9 +147,9 @@ install-custom:
 	@# install configurations, XXX missing submit.cf/sendmail.cf
 	( for file in `cd $(DOWNLOADDIR) && ls *.CSW`; do \
 		ginstall -m 644  $(DOWNLOADDIR)/$$file \
-		$(DESTDIR)/etc/mail/$$file; \
+		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
-	( mv $(DESTDIR)/etc/mail/sm-client.st.CSW \
+	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st.CSW \
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 	@$(MAKECOOKIE)
 

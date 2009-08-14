@@ -38,7 +38,7 @@
 #####  $Id: proto.m4,v 8.734 2008/01/24 23:42:01 ca Exp $  #####
 
 # level 10 config file format
-V10
+V10/Berkeley
 
 # override file safeties - setting this option compromises system security,
 # addressing the actual file configuration problem is preferred

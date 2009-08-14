@@ -1,7 +1,7 @@
 #!/bin/sh
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
 
-CONFDIR=/etc/mail
+CONFDIR=/opt/csw/etc/mail
 
 for file in `cd ${CONFDIR} && ls *.CSW 2>/dev/null`
 do 
@@ -13,6 +13,11 @@ do
         echo "Preserving ${real_file}..."
     fi
 done
+
+echo "** IMPORTANT **"
+echo "This package no longer replaces Sun's sendmail files."
+echo "Be sure to Deactivate Sun's Sendmail program."
+echo
 
 exit 0
 

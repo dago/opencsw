@@ -21,13 +21,13 @@ dnl ### add OpenCSW lib and include directories
 APPENDDEF(`confLIBDIRS', `-L/opt/csw/lib -R/opt/csw/lib')
 APPENDDEF(`confINCDIRS', `-I/opt/csw/include')
 APPENDDEF(`conf_sendmail_ENVDEF', `-I/opt/csw/include')
-dnl we should not need this..
-dnl APPENDDEF(`confLIBDIRS', `-L/opt/csw/bdb44/lib -R/opt/csw/bdb44/lib')
-dnl APPENDDEF(`confINCDIRS', `-I/opt/csw/bdb44/include')
 
 dnl ### add NIS/NIS+ support
 APPENDDEF(`confENVDEF', `-DNIS')
 APPENDDEF(`confENVDEF', `-DNISPLUS')
+
+dnl ### use our sendmail.cf path
+APPENDDEF(`confENVDEF', `-DUSE_VENDOR_CF_PATH')
 
 dnl ### add LDAP support
 APPENDDEF(`conf_libsm_ENVDEF', `-DLDAPMAP')
