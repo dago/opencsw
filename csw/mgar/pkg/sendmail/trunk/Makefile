@@ -17,26 +17,24 @@ MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 MY_CLASSES = CSWsendmail.i.sol8 CSWsendmail.i.sol9 CSWsendmail.i.sol10
 
 DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
-DISTFILES += README.CSW sendmail.schema
+DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
 DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
 DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of 
+# new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
-PACKAGES = CSWsendmail CSWsendmailcommon
+PACKAGES = CSWsendmail 
 SPKG_SOURCEURL = http://www.sendmail.org/
 SPKG_DESC_CSWsendmail = $(DESCRIPTION)
-SPKG_DESC_CSWsendmailcommon = $(DESCRIPTION) common files
 CATALOGNAME_CSWsendmail = sendmail
-CATALOGNAME_CSWsendmailcommon = sendmail_common
 
-REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils CSWsendmailcommon
-REQUIRED_PKGS_CSWsendmailcommon = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap CSWcswclassutils
-ARCHALL_CSWsendmailcommon = 1
+REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap 
+REQUIRED_PKGS_CSWsendmail = CSWcswclassutils 
 
 PROTOTYPE_FILTER = awk \
 				   '$$$$2 ~/i.sol8/ { next } \
@@ -51,11 +49,6 @@ PROTOTYPE_FILTER = awk \
 				    END { { print "i i.sol8=CSWsendmail.i.sol8" } \
 					{ print "i i.sol9=CSWsendmail.i.sol9" } \
 					{ print "i i.sol10=CSWsendmail.i.sol10" } } '
-
-PKGFILES_CSWsendmailcommon  = .*$(sharedstatedir)/.*
-PKGFILES_CSWsendmailcommon += .*$(mandir)/.*
-PKGFILES_CSWsendmailcommon += .*$(sysconfdir)/.*
-PKGFILES_CSWsendmailcommon += .*/clientmqueue/.*
 
 ENABLE_CHECK = 0
 
@@ -108,7 +101,6 @@ install-custom:
 	ginstall -d $(DESTDIR)/var/opt/csw/spool/clientmqueue
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mail
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -d $(DESTDIR)$(sysconfdir)/mail
 
 	@# install the libraries
 	@( for file in $(LIBFILES) ; do \
@@ -154,9 +146,9 @@ install-custom:
 	@# install configurations, XXX missing submit.cf/sendmail.cf
 	( for file in `cd $(DOWNLOADDIR) && ls *.CSW`; do \
 		ginstall -m 644  $(DOWNLOADDIR)/$$file \
-		$(DESTDIR)$(sysconfdir)/mail/$$file; \
+		$(DESTDIR)/etc/mail/$$file; \
 		done )
-	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st.CSW \
+	( mv $(DESTDIR)/etc/mail/sm-client.st.CSW \
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 	@$(MAKECOOKIE)
 

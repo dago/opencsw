@@ -20,5 +20,6 @@ do
 	echo $dest2
 	/usr/bin/cp $src $dest2 || exit 2
     /usr/bin/chmod 0755 $dest2
-done
+done | /usr/sbin/installf -c sol10 $PKGINST -
+/usr/sbin/installf -f -c sol10 $PKGINST
 exit 0

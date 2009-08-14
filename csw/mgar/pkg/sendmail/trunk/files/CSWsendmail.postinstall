@@ -1,0 +1,19 @@
+#!/bin/sh
+PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
+
+CONFDIR=/etc/mail
+
+for file in `cd ${CONFDIR} && ls *.CSW 2>/dev/null`
+do 
+    real_file="`echo ${file} |sed 's/\.CSW$//'`"
+    if [ ! -f ${CONFDIR}/${real_file} ]
+    then
+        cp ${CONFDIR}/${file} ${CONFDIR}/${real_file}
+    else
+        echo "Preserving ${real_file}..."
+    fi
+done
+
+exit 0
+
+
