@@ -1,5 +1,5 @@
 GARNAME = git
-GARVERSION = 1.6.3.3
+GARVERSION = 1.6.4
 #xPATCHLEVEL = rc3
 CATEGORIES = devel
 
@@ -102,6 +102,7 @@ CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ETC_GITCONFIG=$(sysconfdir)/gitconfig V=1 \
+		ASCIIDOC_NO_ROFF=YesPlease \
 		all doc
 
 INSTALL_ARGS = ETC_GITCONFIG=$(sysconfdir)/gitconfig \
