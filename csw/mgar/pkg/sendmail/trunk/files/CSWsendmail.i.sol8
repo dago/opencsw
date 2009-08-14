@@ -7,10 +7,10 @@ do
 	# Copy the version specific file to the original name
 	dest2="`echo $dest | sed 's/sol8.//g'`" || exit 2
 	echo $dest2
-	/usr/bin/cp $src $dest2 || exit 2
-    /usr/bin/chmod 0755 $dest2 || exit 2
-    /usr/sbin/removef -c sol8 $PKGINST $src >/dev/null || exit 2
+	/usr/bin/cp -p $src $dest2 || exit 2
+    /usr/bin/rm -f $src
+    /usr/sbin/removef $PKGINST $src >/dev/null || exit 2
 done | /usr/sbin/installf -c sol8 $PKGINST -
 /usr/sbin/installf -f -c sol8 $PKGINST
-/usr/sbin/removef -f -c sol8 $PKGINST
+/usr/sbin/removef -f $PKGINST
 exit 0
