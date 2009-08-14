@@ -101,6 +101,7 @@ install-custom:
 	ginstall -d $(DESTDIR)/var/opt/csw/spool/clientmqueue
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mail
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall -d $(DESTDIR)/etc/mail
 
 	@# install the libraries
 	@( for file in $(LIBFILES) ; do \
