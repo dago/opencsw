@@ -15,34 +15,71 @@ do
     fi
 done
 
-## Fixing package Dtabase
-echo "Notify Package Dtabase about file renaming"
-installf -c ${SOLVER} $PKGINST /opt/csw/bin/vacation
-installf -c ${SOLVER} $PKGINST /opt/csw/lib/mail.local
-installf -c ${SOLVER} $PKGINST /opt/csw/lib/rmail
-installf -c ${SOLVER} $PKGINST /opt/csw/lib/sendmail
-installf -c ${SOLVER} $PKGINST /opt/csw/lib/smrsh
-installf -c ${SOLVER} $PKGINST /opt/csw/sbin/mailstats
-installf -c ${SOLVER} $PKGINST /opt/csw/sbin/praliases
-installf -c ${SOLVER} $PKGINST /opt/csw/sbin/editmap
-installf -c ${SOLVER} $PKGINST /opt/csw/sbin/makemap
+echo "Updating Package Dtabase for /opt/csw/bin/vacation"
+chmod 0555 /opt/csw/bin/vacation
+chown root:bin /opt/csw/bin/vacation
+installf -c ${SOLVER} $PKGINST /opt/csw/bin/vacation f 0555 root bin || exit 2
+echo "Updating Package Dtabase for /opt/csw/lib/mail.local"
+chown root:bin /opt/csw/lib/mail.local
+chmod 0555 /opt/csw/lib/mail.local
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/mail.local f 0555 root bin || exit 2
+echo "Updating Package Dtabase for /opt/csw/lib/rmail"
+chown root:bin /opt/csw/lib/rmail
+chmod 0555 /opt/csw/lib/rmail
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/rmail f 0555 root bin || exit 2
+echo "Updating Package Dtabase for /opt/csw/lib/sendmail"
+chown root:smmsp /opt/csw/lib/sendmail
+chmod 2555 /opt/csw/lib/sendmail
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/sendmail f 2555 root smmsp || exit 2
+echo "Updating Package Dtabase for /opt/csw/lib/smrsh"
+chown root:bin /opt/csw/lib/smrsh
+chmod 0555 /opt/csw/lib/smrsh
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/smrsh f 0555 root bin || exit 2
+echo "Updating Package Dtabase for /opt/csw/sbin/mailstats"
+chown root:bin /opt/csw/sbin/mailstats
+chmod 0555 /opt/csw/sbin/mailstats
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/mailstats f 0555 root bin || exit 2
+echo "Updating Package Dtabase for /opt/csw/sbin/praliases"
+chown root:bin /opt/csw/sbin/praliases
+chmod 0555 /opt/csw/sbin/praliases
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/praliases f 0555 root bin || exit 2
+echo "Updating Package Dtabase for /opt/csw/sbin/editmap"
+chown root:bin /opt/csw/sbin/editmap
+chmod 0555 /opt/csw/sbin/editmap
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/editmap f 0555 root bin || exit 2
+echo "Updating Package Dtabase for /opt/csw/sbin/makemap"
+chown root:bin /opt/csw/sbin/makemap
+chmod 0555 /opt/csw/sbin/makemap
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/makemap f 0555 root bin || exit 2
+
 installf -f -c ${SOLVER} $PKGINST
+
+## Cleanup of OS Versioned Class files
+echo "Updating Pacakge Database for /opt/csw/bin/${SOLVER}.vacation"
 rm -f /opt/csw/bin/${SOLVER}.vacation
 removef $PKGINST /opt/csw/bin/${SOLVER}.vacation
+echo "Updating Pacakge Database for /opt/csw/lib/${SOLVER}.mail.local"
 rm -f /opt/csw/lib/${SOLVER}.mail.local
 removef $PKGINST /opt/csw/lib/${SOLVER}.mail.local
+echo "Updating Pacakge Database for /opt/csw/lib/${SOLVER}.rmail"
 rm -f /opt/csw/lib/${SOLVER}.rmail
 removef $PKGINST /opt/csw/lib/${SOLVER}.rmail
+echo "Updating Pacakge Database for /opt/csw/lib/${SOLVER}.sendmail"
 rm -f /opt/csw/lib/${SOLVER}.sendmail
 removef $PKGINST /opt/csw/lib/${SOLVER}.sendmail
+echo "Updating Pacakge Database for /opt/csw/lib/${SOLVER}.smrsh"
 rm -f /opt/csw/lib/${SOLVER}.smrsh
 removef $PKGINST /opt/csw/lib/${SOLVER}.smrsh
+echo "Updating Pacakge Database for /opt/csw/sbin/${SOLVER}.mailstats"
 rm -f /opt/csw/sbin/${SOLVER}.mailstats
 removef $PKGINST /opt/csw/sbin/${SOLVER}.mailstats
+echo "Updating Pacakge Database for /opt/csw/sbin/${SOLVER}.praliases"
 rm -f /opt/csw/sbin/${SOLVER}.praliases
 removef $PKGINST /opt/csw/sbin/${SOLVER}.praliases
+echo "Updating Pacakge Database for /opt/csw/sbin/${SOLVER}.editmap"
 rm -f /opt/csw/sbin/${SOLVER}.editmap
 removef $PKGINST /opt/csw/sbin/${SOLVER}.editmap
+echo "Updating Pacakge Database for /opt/csw/sbin/${SOLVER}.makemap"
 rm -f /opt/csw/sbin/${SOLVER}.makemap
 removef $PKGINST /opt/csw/sbin/${SOLVER}.makemap
 removef -f $PKGINST

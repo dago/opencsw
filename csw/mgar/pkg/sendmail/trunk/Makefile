@@ -44,7 +44,6 @@ PROTOTYPE_FILTER = awk \
 					$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
 					$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
 					$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
-					$$$$3 ~/\/sol[0-9]*\.sendmail$$$$/ { $$$$4 = "2755" } \
 					{ print } \
 				    END { { print "i i.sol8=CSWsendmail.i.sol8" } \
 					{ print "i i.sol9=CSWsendmail.i.sol9" } \
