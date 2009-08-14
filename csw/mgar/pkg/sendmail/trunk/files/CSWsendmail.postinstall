@@ -2,6 +2,7 @@
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
 
 CONFDIR=/opt/csw/etc/mail
+SOLVER="sol`uname -r |sed 's/5\.//'`"
 
 for file in `cd ${CONFDIR} && ls *.CSW 2>/dev/null`
 do 
@@ -14,10 +15,37 @@ do
     fi
 done
 
-echo "** IMPORTANT **"
-echo "This package no longer replaces Sun's sendmail files."
-echo "Be sure to Deactivate Sun's Sendmail program."
-echo
+## Fixing package Dtabase
+echo "Notify Package Dtabase about file renaming"
+installf -c ${SOLVER} $PKGINST /opt/csw/bin/vacation
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/mail.local
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/rmail
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/sendmail
+installf -c ${SOLVER} $PKGINST /opt/csw/lib/smrsh
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/mailstats
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/praliases
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/editmap
+installf -c ${SOLVER} $PKGINST /opt/csw/sbin/makemap
+installf -f -c ${SOLVER} $PKGINST
+rm -f /opt/csw/bin/${SOLVER}.vacation
+removef $PKGINST /opt/csw/bin/${SOLVER}.vacation
+rm -f /opt/csw/lib/${SOLVER}.mail.local
+removef $PKGINST /opt/csw/lib/${SOLVER}.mail.local
+rm -f /opt/csw/lib/${SOLVER}.rmail
+removef $PKGINST /opt/csw/lib/${SOLVER}.rmail
+rm -f /opt/csw/lib/${SOLVER}.sendmail
+removef $PKGINST /opt/csw/lib/${SOLVER}.sendmail
+rm -f /opt/csw/lib/${SOLVER}.smrsh
+removef $PKGINST /opt/csw/lib/${SOLVER}.smrsh
+rm -f /opt/csw/sbin/${SOLVER}.mailstats
+removef $PKGINST /opt/csw/sbin/${SOLVER}.mailstats
+rm -f /opt/csw/sbin/${SOLVER}.praliases
+removef $PKGINST /opt/csw/sbin/${SOLVER}.praliases
+rm -f /opt/csw/sbin/${SOLVER}.editmap
+removef $PKGINST /opt/csw/sbin/${SOLVER}.editmap
+rm -f /opt/csw/sbin/${SOLVER}.makemap
+removef $PKGINST /opt/csw/sbin/${SOLVER}.makemap
+removef -f $PKGINST
 
 exit 0
 
