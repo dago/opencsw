@@ -2,7 +2,7 @@ GARNAME = db
 GARVERSION = 4.2.52
 CATEGORIES = lib
 
-DESCRIPTION = Provides embedded database support for applications
+DESCRIPTION = This is a stub to BerkeleyDB 4.7 libraries from CSWbdb
 define BLURB
   Berkeley DB (libdb) is a programmatic toolkit that provides embedded database
   support for both traditional and client/server applications. It includes
@@ -13,7 +13,13 @@ define BLURB
   (MSVC 4, 5 and 6).
 endef
 
-MASTER_SITES = ftp://ftp.sleepycat.com/releases/
+
+REQUIRED_PKGS = CSWbdb
+
+PACKAGES = CSWbdb4
+CATALOGNAME = berkeleydb4 
+
+SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = 
@@ -21,10 +27,6 @@ INSTALL_SCRIPTS = custom-$(GARCH) custom-all
 TEST_SCRIPTS = 
 
 ENABLE_CHECK = 0
-PACKAGES = CSWbdb4
-SPKG_DESC = Embedded database libraries and utilities
-CATALOGNAME = berkeleydb4 
-REQUIRED_PKGS = CSWbdb
 
 include gar/category.mk
 
