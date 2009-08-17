@@ -118,6 +118,9 @@ PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 # Tests take a long time
 TEST_SCRIPTS =
 
+# Do not exclude static libs as at least DynaLoader.a is needed for XS compilation
+MERGE_EXCLUDE_STATICLIBS =
+
 include gar/category.mk
 ifneq ($(CORE_UPDATES),)
 POST_TARGETS = install-core-updates
