@@ -17,6 +17,7 @@ MASTER_SITES = http://rubyforge.org/frs/download.php/56872/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
 LICENSE = MIT-LICENSE
+ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
