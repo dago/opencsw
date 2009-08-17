@@ -51,7 +51,7 @@ CORE_OBSOLETE += Storable/* Storable.pm
 
 MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
 CORE_UPDATES  += ExtUtils-MakeMaker-6.54
-CORE_OBSOLETE += ExtUtils/*
+#CORE_OBSOLETE += ExtUtils/*
 
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
