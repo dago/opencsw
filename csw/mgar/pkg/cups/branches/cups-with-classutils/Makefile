@@ -35,6 +35,9 @@ SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 
 PACKAGES = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
 
+ARCHALL_CSWcupsdoc = 1
+ARCHALL_CSWcupsdev = 1
+
 REQUIRED_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient CSWcupsdoc
 REQUIRED_PKGS_CSWcups += CSWcupsdev
 REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
