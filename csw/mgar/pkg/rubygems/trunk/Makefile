@@ -33,7 +33,7 @@ include gar/category.mk
 
 install-custom:
 	( cd $(WORKSRC) ; \
-		ruby ./setup.rb --destdir=$(DESTDIR)/$(prefix); )
+		ruby ./setup.rb --destdir=$(DESTDIR); )
 	@$(MAKECOOKIE)
 
 post-install-modulated: copy-contrib
