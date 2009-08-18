@@ -1,5 +1,5 @@
 GARNAME = rubygems
-GARVERSION = 1.3.1
+GARVERSION = 1.3.5
 CATEGORIES = xtra
 
 DESCRIPTION = Ruby package manager
@@ -10,7 +10,7 @@ endef
 
 
 SPKG_SOURCEURL = http://rubyforge.org/projects/rubygems/
-MASTER_SITES   = http://rubyforge.org/frs/download.php/45905/
+MASTER_SITES   = http://rubyforge.org/frs/download.php/60718/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
@@ -43,6 +43,4 @@ copy-contrib:
 	@gcp -v  $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
 	@gcp -v  $(WORKSRC)/LICENSE.txt $(DESTDIR)$(docdir)/$(GARNAME)
 	@gcp -v  $(WORKSRC)/GPL.txt $(DESTDIR)$(docdir)/$(GARNAME)
-	@gcp -vr $(WORKSRC)/scripts $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)
-
