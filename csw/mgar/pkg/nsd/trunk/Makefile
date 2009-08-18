@@ -25,7 +25,6 @@ SPKG_DESC = An authoritative only non-recursive name server
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswusergroup
 DISTFILES += cswnsd
-DISTFILES += Makefile.in.diff
 
 SPKG_CLASSES = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswnsd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWnsd\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/nsd\/nsd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$2 = "ugfiles" }  $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$5 = "nsd" } $$$$3 ~ /\/var\/opt\/csw\/nsd/ { $$$$6 = "nsd" } { print }'
