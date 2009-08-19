@@ -1,9 +1,9 @@
 GARNAME = neon
-GARVERSION = 0.28.5
+GARVERSION = 0.28.6
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 0.26.4 0.28.5
+MODULATIONS_GARVERSION = 0.26.4 0.28.6
 
 DESCRIPTION = Neon HTTP and WebDAV client library
 define BLURB
@@ -16,8 +16,14 @@ endef
 MASTER_SITES = http://www.webdav.org/$(GARNAME)/
 SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
 DISTFILES  = $(SOURCEFILES)
-DISTFILES += $(call admfiles,CSWneon,)
-DISTFILES += $(call admfiles,CSWneon-devel,)
+DISTFILES += COPYING
+
+NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+
+PACKAGES = CSWneon CSWneon-devel
+
+CATALOGNAME_CSWneon = neon
+CATALOGNAME_CSWneon-devel = neon_devel
 
 REQUIRED_PKGS_CSWneon = CSWexpat CSWkrb5lib CSWosslrt CSWzlib CSWggettextrt
 REQUIRED_PKGS_CSWneon-devel = CSWneon
@@ -36,23 +42,27 @@ CONFIGURE_ARGS += --with-expat
 BUILD64 = 1
 NO_ISAEXEC = 1
 
+# Omit version number suffix on docdir
+INSTALL_OVERRIDE_VARS = docdir
+INSTALL_OVERRIDE_VAR_docdir = $(datadir)/doc/neon
+
 MERGE_SCRIPTS_isa-i386-garversion-0.26.4 = copy-only
 MERGE_DIRS_isa-i386-garversion-0.26.4 = $(libdir)
 MERGE_SCRIPTS_isa-amd64-garversion-0.26.4 = copy-relocated-only
 MERGE_DIRS_isa-amd64-garversion-0.26.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-i386-garversion-0.28.5 = copy-all
-MERGE_SCRIPTS_isa-amd64-garversion-0.28.5 = copy-relocated-only
-MERGE_DIRS_isa-amd64-garversion-0.28.5 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-i386-garversion-0.28.6 = copy-all
+MERGE_SCRIPTS_isa-amd64-garversion-0.28.6 = copy-relocated-only
+MERGE_DIRS_isa-amd64-garversion-0.28.6 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 MERGE_SCRIPTS_isa-sparcv8-garversion-0.26.4 = copy-only
 MERGE_DIRS_isa-sparcv8-garversion-0.26.4 = $(libdir)
 MERGE_SCRIPTS_isa-sparcv9-garversion-0.26.4 = copy-relocated-only
 MERGE_DIRS_isa-sparcv9-garversion-0.26.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv8-garversion-0.28.5 = copy-all
-MERGE_SCRIPTS_isa-sparcv9-garversion-0.28.5 = copy-relocated-only
-MERGE_DIRS_isa-sparcv9-garversion-0.28.5 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-garversion-0.28.6 = copy-all
+MERGE_SCRIPTS_isa-sparcv9-garversion-0.28.6 = copy-relocated-only
+MERGE_DIRS_isa-sparcv9-garversion-0.28.6 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWneon-devel = $(PKGFILES_DEVEL)
 

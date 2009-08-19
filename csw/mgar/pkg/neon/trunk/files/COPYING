@@ -1,7 +1,3 @@
-%var            bitname neon
-%var            pkgname CSWneon
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      
 neon is licensed under the GNU Library GPL; see src/COPYING.LIB for
 full details.  The manual is licensed under the terms of the GNU FDL;
 see doc/fdl.sgml or the generated documentation.  The autoconf macros
