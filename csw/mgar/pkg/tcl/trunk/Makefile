@@ -1,5 +1,5 @@
 GARNAME = tcl
-GARVERSION = 8.4.19
+GARVERSION = 8.5.7
 CATEGORIES = lang
 
 DESCRIPTION = Tcl programming language
@@ -11,7 +11,6 @@ MASTER_SITES = $(SF_MIRRORS)
 
 DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
-DISTFILES += $(call admfiles,CSWtcl,)
 
 SPKG_SOURCEURL = http://www.tcl.tk/
 
