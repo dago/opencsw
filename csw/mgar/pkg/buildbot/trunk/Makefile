@@ -3,7 +3,8 @@
 # $Id$
 
 GARNAME = buildbot
-GARVERSION = 0.7.11p1
+GARVERSION = 0.7.11
+PATCHLEVEL = p1
 CATEGORIES = utils
 
 DESCRIPTION = A system to automate the compile/test cycle
@@ -17,12 +18,13 @@ define BLURB
   to test their changes everywhere before checkin will at least know shortly
   afterwards whether they have broken the build or not. Warning counts, lint
   checks, image size, compile time, and other build parameters can be tracked
-  over time, are more visible, and are therefore easier to improve. 
+  over time, are more visible, and are therefore easier to improve.
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-PATCHFILES = tail-$(GARVERSION).patch
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz $(PATCHFILES)
+PATCHFILES  = tail-$(GARVERSION)$(PATCHLEVEL).patch
+PATCHFILES += debug-$(GARVERSION)$(PATCHLEVEL).patch
+DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATCHLEVEL).tar.gz $(PATCHFILES)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -32,19 +34,29 @@ SPKG_CLASSES = none cswpycompile
 REQUIRED_PKGS = CSWcswclassutils CSWpython CSWtwisted CSWzope CSWtextutils
 
 ARCHALL = 1
-CONFIGURE_SCRIPTS = 
+CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = buildbot
-TEST_SCRIPTS = 
+TEST_SCRIPTS =
 INSTALL_SCRIPTS = buildbot
 
 PROTOTYPE_FILTER = awk ' \
-  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } \
+  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
   { print }'
+
+WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)$(PATCHLEVEL)
 
 build-buildbot:
 	(cd $(WORKSRC); python setup.py build)
+	@$(MAKECOOKIE)
 
 install-buildbot:
 	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
+	@$(MAKECOOKIE)
 
 include gar/category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)

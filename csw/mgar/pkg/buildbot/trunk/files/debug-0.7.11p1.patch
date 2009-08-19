@@ -1,0 +1,25 @@
+diff -ru buildbot-0.7.11p1.orig/buildbot/changes/changes.py buildbot-0.7.11p1/buildbot/changes/changes.py
+--- buildbot-0.7.11p1.orig/buildbot/changes/changes.py	2009-07-15 20:09:30.000000000 +0100
++++ buildbot-0.7.11p1/buildbot/changes/changes.py	2009-07-30 13:30:01.632031291 +0100
+@@ -73,6 +73,9 @@
+         self.files = files[:]
+         self.files.sort()
+ 
++    def __repr__(self):
++        return "branch(%s) at %s by %s" % (self.branch, self.revision, self.who)
++
+     def asText(self):
+         data = ""
+         data += self.getFileContents()
+diff -ru buildbot-0.7.11p1.orig/buildbot/scheduler.py buildbot-0.7.11p1/buildbot/scheduler.py
+--- buildbot-0.7.11p1.orig/buildbot/scheduler.py	2009-07-15 20:09:30.000000000 +0100
++++ buildbot-0.7.11p1/buildbot/scheduler.py	2009-07-30 16:56:59.195283110 +0100
+@@ -287,6 +287,8 @@
+ 
+     def addChange(self, change):
+         branch = change.branch
++        log.msg("branch = %s" % repr(branch))
++        log.msg("self.branches = %s" % repr(self.branches))
+         if self.branches is not None and branch not in self.branches:
+             log.msg("%s ignoring off-branch %s" % (self, change))
+             return
