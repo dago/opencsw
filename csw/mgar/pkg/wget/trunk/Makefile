@@ -13,14 +13,13 @@ define BLURB
   whole file has been retrieved.
 endef
 
-MASTER_SITES = http://www.gnu.org/software/wget/
+MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWwget)
-
-UPSTREAM_MASTER_SITES = $(GNU_MIRROR)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+SPKG_SOURCEURL = http://www.gnu.org/software/wget/
 
 EXTRA_MODULATORS = STATIC
 MODULATIONS_STATIC = disable enable
@@ -36,29 +35,21 @@ CONFIGURE_ARGS += --disable-nls
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_STATIC-$(STATIC))
 
 TEST_TARGET = check
-REQUIRED_PKGS = CSWosslrt CSWcswclassutils
+REQUIRED_PKGS = CSWosslrt
 
-SPKG_CLASSES = none cswcpsampleconf
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/wgetrc.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }' 
+SAMPLECONF = $(sysconfdir)/wgetrc.CSW
+EXTRA_PAX_ARGS = -s ",^\(.$(sysconfdir)/wgetrc\)\$$,\1.CSW,p"
 
 MERGE_SCRIPTS_isa-sparcv8-static-disable = copy-all
- MERGE_SCRIPTS_isa-sparcv8-static-enable = rename-wget copy-only
+ MERGE_SCRIPTS_isa-sparcv8-static-enable = copy-static-wget-only
     MERGE_DIRS_isa-sparcv8-static-enable = $(bindir)
 
     MERGE_SCRIPTS_isa-i386-static-disable = copy-all
      MERGE_SCRIPTS_isa-i386-static-enable = rename-wget copy-only
         MERGE_DIRS_isa-i386-static-enable = $(bindir)
 
-merge-rename-wget:
-	@mv $(DESTDIR)$(bindir)/wget $(DESTDIR)$(bindir)/wget.static
-
-post-install-modulated:
-	(cd $(DESTDIR)$(prefix)/etc; \
-	for i in wgetrc; do \
-		if [ -r "$$i" ]; then \
-			echo "$$i -> $$i.CSW"; \
-			mv "$$i" "$$i.CSW";     \
-		fi \
-	done)
+merge-copy-static-wget-only:
+	ginstall $(INSTALLISADIR)$(bindir)/wget $(PKGROOT)$(bindir)/wget.static
+	@$(MAKECOOKIE)
 
 include gar/category.mk
