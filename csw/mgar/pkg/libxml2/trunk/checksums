@@ -1,7 +1,1 @@
-dc43ff7ae6aded45f578c87b7b0c8766  download/libxml2-2.7.2.tar.gz
-590a7d5677be4f5c67a52b08eba6fb2b  download/CSWpylibxml2.gspec
-dd8c26f51eb9a53545b4cd914b40675b  download/CSWpylibxml2.depend
-f07ada794bee08b0d3ec7dcd68d1e0ac  download/CSWlibxml2.gspec
-115241717779eb81926e5ff971d7fbd7  download/CSWlibxml2.depend
-0633f70c4570a204284c219c02a3c00e  download/CSWlibxml2devel.gspec
-915b1265ec08b5efcfedb03ade19040f  download/CSWlibxml2devel.depend
+8f4fda3969237c2a33bdb1583b5d06b2  download/libxml2-2.7.3.tar.gz
