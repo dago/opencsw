@@ -11,8 +11,8 @@
 ## For more information about GAR variables, please see:
 ## https://sourceforge.net/apps/trac/gar/wiki/GAR%20Variable%20Reference
 ##
-GARNAME = mypkg
-GARVERSION = 1.0
+GARNAME = wxWidgets
+GARVERSION = 2.8.10
 ##
 ## The category that your software fits in. This is not a descriptive field, but
 ## influences the build process. Depending on the CATEGORIES setting, different
@@ -25,7 +25,7 @@ GARVERSION = 1.0
 CATEGORIES = lib
 ##
 ## A one-line description of the package, which will appear in the pkginfo.
-DESCRIPTION = <please fill in>
+DESCRIPTION = A portable widget library
 ##
 ## A longer description of the package. This is only for descriptive purposes
 ## inside the Makefile and is not used elsewhere. 
@@ -39,12 +39,12 @@ SPKG_SOURCEURL =
 ##
 ## Whitespace-separated list of URLs to download the source package from.
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
-MASTER_SITES = 
+MASTER_SITES = $(SF_MIRRORS)
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
 ## Sourceforge project name differs from $(GARNAME). Specifies the Sourceforge
 ## project name of the software you wish to download. 
-## SF_PROJ =
+SF_PROJ = wxwindows
 ##
 ## A list of space separated patch filenames from files/ that are to be applied
 ## to the extracted software before the ./configure stage. Patches need to be
@@ -61,7 +61,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ##
 ## Catalog name is the name to be used with pkg{-get,util} -i <pkgname>.
 ## It is different from the system package name, which by convention is CSWpkgname.
-## CATALOGNAME =
+CATALOGNAME = wxwidgets
 ##
 ## Set to 1 to mark the package as architecture-independent.
 ## ARCHALL = 0
@@ -120,10 +120,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## INITSMF =
 ## USERGROUP =
 ## A list of runtime package dependencies in the form of CSWfoo.
-## REQUIRED_PKGS =
+REQUIRED_PKGS = CSWgtk2
 ##
 ## A list of packages necessary to build this package
-## PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWgtk2devel
 ##
 ## When using non-empty $(PACKAGES):
 ## REQUIRED_PKGS_CSWpkgname =
@@ -157,13 +157,16 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## BUILD_ARGS =
 ##
 ## Arguments passed to the ./configure script.
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-gtk=2 --with-gtk-prefix=/opt/csw --without-regex
+CONFIGURE_ARGS += --disable-unicode --with-opengl
 ##
 ## BUILD64 =
 ## CONFIGURE_ENV =
-## EXTRA_CFLAGS =
+EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt
+## -L/opt/csw/lib -R/opt/csw/lib
 ## EXTRA_LDFLAGS =
-## EXTRA_INC =
+## EXTRA_INC = /opt/csw/include/gtk-2.0
 ## EXTRA_LIB =
 ## GARFLAVOR =
 ## INSTALL_ARGS =
@@ -173,10 +176,5 @@ CONFIGURE_ARGS = $(DIRPATHS)
 ## The compiler to use. Defaults to SOS11, can be also: SOS12, GCC3, GCC4.
 ## GARCOMPILER = SOS11
 ##
-# Remove the following rules and uncomment the
-# include before building.
-all: .DEFAULT
-.DEFAULT:
-	@true
-
-#include gar/category.mk
+PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+include gar/category.mk
