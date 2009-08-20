@@ -44,8 +44,8 @@ ARCHALL_CSWmuninmaster = 1
 ARCHALL_CSWmuninnode = 1
 
 REQUIRED_PKGS_CSWmuninmaster = CSWpmnetserver CSWperl CSWpython CSWpmparserecdescent 
-REQUIRED_PKGS_CSWmuninmaster = CSWpmhtmltmpl CSWpmdatemanip CSWpmmd5 CSWrrd CSWapache2
-REQUIRED_PKGS_CSWmuninmaster = CSWcswclassutils
+REQUIRED_PKGS_CSWmuninmaster += CSWpmhtmltmpl CSWpmdatemanip CSWpmmd5 CSWrrd CSWapache2
+REQUIRED_PKGS_CSWmuninmaster += CSWcswclassutils
 
 REQUIRED_PKGS_CSWmuninnode = CSWpmdbi CSWpmnetsnmp CSWpmnetserver CSWperl CSWtop CSWcswclassutils
 
