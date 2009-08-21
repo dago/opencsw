@@ -2,6 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+# It's a work in progress!
+#
+# Done: configuration phase completes now.
+# TODO:
+#  - Make sure the compilation phase completes
+#  - Split the installed files into separate packages
+
 ## This file contains comments to guide you through various GAR settings.
 ## Please remove unnecessary comments before committing your code to the code
 ## repository. The comments to remove are marked with double hashes.
@@ -30,16 +37,16 @@ DESCRIPTION = A portable widget library
 ## A longer description of the package. This is only for descriptive purposes
 ## inside the Makefile and is not used elsewhere. 
 define BLURB
-  <please fill in>
 endef
 ##
 ## Upstream URL that should show up in the VENDOR field as well as on
 ## http://opencsw.org/packages/<packagename>.
-SPKG_SOURCEURL =
+SPKG_SOURCEURL = http://www.wxwidgets.org/
 ##
 ## Whitespace-separated list of URLs to download the source package from.
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES  = $(SF_MIRRORS)
+MASTER_SITES += http://trac.wxwidgets.org/raw-attachment/ticket/10660/
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
 ## Sourceforge project name differs from $(GARNAME). Specifies the Sourceforge
@@ -49,12 +56,14 @@ SF_PROJ = wxwindows
 ## A list of space separated patch filenames from files/ that are to be applied
 ## to the extracted software before the ./configure stage. Patches need to be
 ## included in the DISTFILES variable as well.
-## PATCHFILES =
+PATCHFILES  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
+PATCHFILES += 0002-Fixing-retarded-checks-for-libGL.patch
 ##
 ## Whitespace-separated list of files which comprise this build. mGAR will look
 ## for the files in the $(FILEDIR) (trunk/files) directory and on the
 ## $(MASTER_SITES).
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(PATCHFILES)
 ##
 ## We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -166,8 +175,8 @@ CONFIGURE_ARGS += --disable-unicode --with-opengl
 EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt
 ## -L/opt/csw/lib -R/opt/csw/lib
 ## EXTRA_LDFLAGS =
-## EXTRA_INC = /opt/csw/include/gtk-2.0
-## EXTRA_LIB =
+EXTRA_INC = /opt/csw/X11/include
+EXTRA_LIB = /opt/csw/X11/lib
 ## GARFLAVOR =
 ## INSTALL_ARGS =
 ## OPT_FLAGS_SOS = -xO3
@@ -177,4 +186,5 @@ EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt
 ## GARCOMPILER = SOS11
 ##
 PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+
 include gar/category.mk
