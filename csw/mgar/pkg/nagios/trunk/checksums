@@ -1,10 +1,9 @@
-900e3f4164f4b2a18485420eeaefe812  download/nagios-3.0.6.tar.gz
-725a49b8ec806a8d0c817fe4c1208b3c  download/CSWnagios.gspec
 e407a4b179bd7de72b3e8c21f309f9b7  download/CSWnagios.checkinstall
 47cc36016f5518dfd5614b870f56e944  download/CSWnagios.preinstall
 92437323de0cceaa58c6238ec9e6c954  download/CSWnagios.preremove
-a238294a9fc50821dd134b2a50fff545  download/CSWnagios.prototype
+42672e3ae1e539bf9747f369cb4db7f1  download/CSWnagios.prototype
+e493345589ac2c592c2b958499bc8c20  download/configure.diff
 d3b39178a60cf866a243d4d8f8eabb9b  download/cswnagios
-0ef601e30d01a511822dd27df6b0e531  download/patch.diff
-4faa5ec86586be23dfbbd9165f50046d  download/configure.diff
 f3161bcb7c65f89707ee37b0a8d861d5  download/install-opts.diff
+3566167cc60ddeaad34e7d2e26ed4a58  download/nagios-3.2.0.tar.gz
+91407bdea2047b6ff5a1542550933144  download/patch.diff

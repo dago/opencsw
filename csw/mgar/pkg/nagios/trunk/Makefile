@@ -1,5 +1,5 @@
 GARNAME = nagios
-GARVERSION = 3.0.6
+GARVERSION = 3.2.0
 CATEGORIES = apps
 
 DESCRIPTION = nagios network monitoring base package (no plugins)
@@ -9,22 +9,26 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnagios,checkinstall preinstall preremove prototype )
+#DISTFILES += $(call admfiles,CSWnagios,checkinstall preinstall preremove prototype )
+DISTFILES += CSWnagios.checkinstall CSWnagios.preinstall CSWnagios.preremove CSWnagios.prototype
 DISTFILES += cswnagios
 
 PATCHFILES = patch.diff	# cgi/cmd.c - GNU macro __attribute__ unknown to compiler
 			# http://article.gmane.org/gmane.network.nagios.devel/4726
 			# (Error 2)
-PATCHFILES += configure.diff	# configure.in
-				# http://unix.derkeiler.com/Mailing-Lists/SunManagers/2004-11/0424.html
-				# -lsunmath is needed in configure for checking of libgd
+PATCHFILES += configure.diff	# configure
 PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (empty)
 				# necessary, so ginstall doesn't get -o and -g options
 
+PACKAGES = CSWnagios
+CATALOGNAME = nagios
+
 REQUIRED_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
-REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWcswclassutils
+REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWcswclassutils
 
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
+
+NOISALIST = 1
 
 prefix = $(BUILD_PREFIX)/nagios
 libexecdir = $(BUILD_PREFIX)/libexec/nagios-plugins
@@ -35,9 +39,12 @@ CONFIGURE_ARGS += --exec-prefix=$(exec_prefix)
 CONFIGURE_ARGS += --with-command-user=nagios
 CONFIGURE_ARGS += --with-command-group=nagios
 CONFIGURE_ARGS += --with-httpd-conf=$(sysconfdir)
+CONFIGURE_ARGS += --with-gd-lib-dir=$(BUILD_PREFIX)/lib
+CONFIGURE_ARGS += --with-gd-lib-inc=$(BUILD_PREFIX)/inc
 CONFIGURE_ARGS += --enable-embedded-perl
 
 EXTRA_LIB = $(BUILD_PREFIX)/lib
+EXTRA_INC = $(BUILD_PREFIX)/include
 
 BUILD_ARGS = all
 
@@ -48,6 +55,9 @@ TEST_TARGET = none
 INSTALL_ARGS += install-init
 #INSTALL_ARGS += install-config
 INSTALL_ARGS += install-commandmode
+
+LD_OPTIONS += -R/opt/csw/lib
+LD_OPTIONS -= -R/opt/csw/nagios/lib
 
 include gar/category.mk
 
