@@ -22,7 +22,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_CLASSES = none cswcpsampleconf
 
-REQUIRED_PKGS  = CSWlibiconv
+REQUIRED_PKGS  = CSWiconv
 REQUIRED_PKGS += CSWreadline
 REQUIRED_PKGS += CSWcswclassutils
 
@@ -30,6 +30,7 @@ sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
 CONFIGURE_ARGS = $(DIRPATHS)  --enable-gui=no
+BUILD64 = 1
 
 PROTOTYPE_FILTER  = awk ' \
     $$$$3 ~ /\/etc\/opt\/csw\/.*\.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
