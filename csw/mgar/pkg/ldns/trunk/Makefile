@@ -15,6 +15,13 @@ MASTER_SITES = http://www.nlnetlabs.nl/projects/ldns/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWldns.doxyparse.diff
 
+PACKAGES = CSWldns CSWldnsdevel
+CATALOGNAME_CSWldns = ldns
+CATALOGNAME_CSWldnsdevel = ldns_devel
+
+SPKG_DESC_CSWldns = $(DESCRIPTION)
+SPKG_DESC_CSWldnsdevel = $(DESCRIPTION) development package
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -26,7 +33,8 @@ BUILD64 = 1
 EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
-REQUIRED_PKGS += CSWosslrt
+REQUIRED_PKGS_CSWldns += CSWosslrt
+REQUIRED_PKGS_CSWldnsdevel += CSWldns
 
 PATCHFILES = CSWldns.doxyparse.diff
 
@@ -40,5 +48,8 @@ MERGE_DIRS_isa-amd64 = $(libdir)
 MERGE_DIRS_isa-pentium_pro = $(libdir)
 
 TEST_TARGET =
+
+PKGFILES_CSWldnsdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWldnsrt = $(PKGFILES_RT)
 
 include gar/category.mk
