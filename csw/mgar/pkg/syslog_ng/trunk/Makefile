@@ -46,6 +46,9 @@ CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
 REQUIRED_PKGS  = CSWgcc4corert
 REQUIRED_PKGS += CSWeventlog
+REQUIRED_PKGS += CSWosslrt
+REQUIRED_PKGS += CSWzlib
+REQUIRED_PKGS += CSWpcrert
 REQUIRED_PKGS += CSWggettextrt
 REQUIRED_PKGS += CSWglib2
 REQUIRED_PKGS += CSWtcpwrap
