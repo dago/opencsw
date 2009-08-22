@@ -1,5 +1,5 @@
 GARNAME = syslog-ng
-GARVERSION = 3.0.3
+GARVERSION = 3.0.4
 CATEGORIES = server
 
 DESCRIPTION = A powerful syslogd replacement
@@ -9,7 +9,7 @@ define BLURB
   logs using TCP.
 endef
 
-MASTER_SITES = http://www.balabit.com/downloads/files/$(GARNAME)/open-source-edition/$(GARVERSION)/source/
+MASTER_SITES = http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += $(GARNAME).conf.CSW
 DISTFILES += cswsyslog_ng
