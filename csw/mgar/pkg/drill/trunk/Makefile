@@ -1,5 +1,5 @@
 GARNAME = drill
-GARVERSION = 1.6.0
+GARVERSION = 1.6.1
 CATEGORIES = utils
 
 DESCRIPTION = A dig style dnssec aware dns debugging tool
