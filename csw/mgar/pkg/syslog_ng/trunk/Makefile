@@ -23,7 +23,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWsyslogng
 
-SPKG_SOURCEURL = http://www.balabit.com/network-security/$(GARNAME)/
+SPKG_SOURCEURL = http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/$(GARVERSION)/source/
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER  = awk ' \
