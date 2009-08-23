@@ -26,9 +26,17 @@ report-%:
 		$(MAKE) -C $$i $* || echo "	*** make $* in $$i failed ***" >> $(BUILDLOG); \
 	done
 
+lcase = $(shell echo $(1) | tr '[A-Z]' '[a-z]' ) 
+
+# You can either use "gmake newpkg-Perl-Module" or "gmake newpkg-Perl::Module".
+# Ideally this would also figure out the AUTHOR by querying CPAN. Alternatively
+# we might think about dropping the AUTHOR field and determine that on the fly
+# during the build. Ideas?
+newpkg-%: catalogname = $(shell echo $(call lcase,$*) | tr -d ':-' )
+newpkg-%: dir = $(subst ::,-,$*)
 newpkg-%:
-	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
-	@(echo "GARNAME = Type-Package";                                \
+	@svn mkdir $(dir) $(dir)/tags $(dir)/branches $(dir)/trunk $(dir)/trunk/files
+	@(echo "GARNAME = $(dir)";                                \
 	echo "GARVERSION = 1.0";                                        \
 	echo "CATEGORIES = cpan";                                       \
 	echo "AUTHOR = MYSELF";                                         \
@@ -38,19 +46,19 @@ newpkg-%:
 	echo "  Long description";                                      \
 	echo "endef";                                                   \
 	echo "";                                                        \
-	echo "PACKAGES = CSWpmmymodule";                                \
-	echo "CATALOGNAME = pm_mymodule";                               \
+	echo "PACKAGES = CSWpm$(catalogname)";                                \
+	echo "CATALOGNAME = pm_$(catalogname)";                               \
+	echo "";                                                        \
 	echo "include gar/category.mk";                                 \
-	) > $*/trunk/Makefile
-	@touch $*/trunk/checksums
-	@svn add $*/trunk/Makefile $*/trunk/checksums
-	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $*/trunk
-	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $*/trunk
+	) > $(dir)/trunk/Makefile
+	@touch $(dir)/trunk/checksums
+	@svn add $(dir)/trunk/Makefile $(dir)/trunk/checksums
+	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $(dir)/trunk
+	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $(dir)/trunk
 	@if [ -d ../../gar/v2 ]; then \
-	  ln -s ../../../../gar/v2 $*/trunk/gar; \
+	  ln -s ../../../../gar/v2 $(dir)/trunk/gar; \
 	else \
-	  svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $*/trunk/gar; \
+	  svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $(dir)/trunk/gar; \
 	fi
 	@echo
-	@echo "Your package is set up for editing at $*/trunk"
-
+	@echo "Your package is set up for editing at $(dir)/trunk"
