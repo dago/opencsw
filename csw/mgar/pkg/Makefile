@@ -57,7 +57,7 @@ pkglist:
 
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
-	@(echo "GARNAME = package";                                     								\
+	@(echo "GARNAME = $*";                                     								\
 	echo "GARVERSION = 1.0";                                        								\
 	echo "CATEGORIES = category";                                   								\
 	echo "";                                                        								\
