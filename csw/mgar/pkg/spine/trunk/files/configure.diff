@@ -1,0 +1,54 @@
+diff --speed-large-files --minimal -Nru cacti-spine-0.8.7e.orig/configure cacti-spine-0.8.7e/configure
+--- cacti-spine-0.8.7e.orig/configure	2009-06-29 04:03:42.000000000 +0200
++++ cacti-spine-0.8.7e/configure	2009-08-23 10:58:42.345538990 +0200
+@@ -20169,7 +20169,10 @@
+ LIBTOOL_DEPS="$ac_aux_dir/ltmain.sh"
+ 
+ # Always use our own libtool.
+-LIBTOOL='$(SHELL) $(top_builddir)/libtool'
++#LIBTOOL='$(SHELL) $(top_builddir)/libtool'
++
++# use OpenCSW libtool
++LIBTOOL=/opt/csw/bin/libtool
+ 
+ # Prevent multiple expansion
+ 
+@@ -22740,7 +22743,7 @@
+   fi
+ fi
+ 
+-LDFLAGS="-L$SNMP_LIBDIR $LDFLAGS"
++LDFLAGS="-L/opt/csw/lib -L/opt/csw/lib/mysql $LDFLAGS"
+ CFLAGS="-I$SNMP_INCDIR -I$SNMP_INCDIR/.. $CFLAGS"
+ 
+ # Net/UCD-SNMP includes v3 support and insists on crypto unless compiled --without-openssl
+@@ -22833,6 +22836,7 @@
+     { $as_echo "$as_me:$LINENO: result: yes" >&5
+ $as_echo "yes" >&6; }
+      SNMP_SSL=yes
++     LIBS="$LIBS -lcrypto"
+ 
+ else
+   $as_echo "$as_me: failed program was:" >&5
+@@ -22851,7 +22855,7 @@
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lnetsnmp  $LIBS"
++LIBS="$LIBS -lnetsnmp -lssl"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -23155,6 +23159,7 @@
+ # Solaris or Irix Check
+ { $as_echo "$as_me:$LINENO: checking for Solaris/Irix gethostbyname_r" >&5
+ $as_echo_n "checking for Solaris/Irix gethostbyname_r... " >&6; }
++LIBS="$LIBS -lssl -lnsl"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -24764,4 +24769,3 @@
+   { $as_echo "$as_me:$LINENO: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
+ $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
+ fi
+-

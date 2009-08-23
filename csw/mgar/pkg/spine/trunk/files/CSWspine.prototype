@@ -1,0 +1,10 @@
+f none /opt/csw/bin/spine 0755 root bin
+f cswpreserveconf /opt/csw/etc/spine.conf.CSW 0644 root bin
+d none /opt/csw/share/doc/spine 0755 root bin
+f none /opt/csw/share/doc/spine/COPYING 0644 root bin
+f none /opt/csw/share/doc/spine/ChangeLog 0644 root bin
+f none /opt/csw/share/doc/spine/INSTALL 0644 root bin
+f none /opt/csw/share/doc/spine/LICENSE 0644 root bin
+f none /opt/csw/share/doc/spine/LICENSE.LGPL 0644 root bin
+f none /opt/csw/share/doc/spine/README 0644 root bin
+f none /opt/csw/share/doc/spine/README-WINDOWS 0644 root bin
