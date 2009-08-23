@@ -157,7 +157,7 @@ SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PRESERVECONF),$(if $(filter cswpreserveco
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(USERGROUP),$(if $(filter cswusergroup,$(SPKG_CLASSES)),,cswusergroup))
 # - set class for all config files
-ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF),)
+ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF)$(USERGROUP),)
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(SAMPLECONF),$$F[1] = "cswsampleconf" if ( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(PRESERVECONF),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
