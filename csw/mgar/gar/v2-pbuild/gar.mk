@@ -152,17 +152,43 @@ $(1)-$(2):
 
 endef
 
+define _modulate_merge
+merge-$(2): $(3)
+merge-$(2): BUILDHOST=$$$$(call modulation2host)
+merge-$(2):
+	echo modulation: $(2)
+	echo vars: $(3)
+	echo ISA: $(ISA)
+	echo BUILDHOST=$(BUILDHOST)
+	echo BUILDHOST=$(call modulation2host)
+	echo BUILDHOST=$$(call modulation2host)
+	echo BUILDHOST=$(eval $(call modulation2host))
+	echo BUILDHOST=$$(eval $(call modulation2host))
+	echo BUILDHOST=$$(eval $$(call modulation2host))
+	echo THISHOST=$(THISHOST)
+	echo "Building modulation on host '$(BUILDHOST)'"
+	$(if $(and $(BUILDHOST),$(filter-out $(THISHOST),$(BUILDHOST))),\
+		ssh $(BUILDHOST) "gmake -C $(CURDIR) MODULATION=$(2) $(3) merge-modulated",\
+		gmake MODULATION=$(2) $(3) merge-modulated\
+	)
+	@# The next line has intentionally been left blank to explicitly terminate this make rule
+
+endef
+
 define _modulate_do
 $(call _modulate_target,extract,$(2),$(4))
 $(call _modulate_target,patch,$(2),$(4))
 $(call _modulate_target,configure,$(2),$(4))
 $(call _modulate_target_nocookie,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
+#$(call _modulate_build,,$(2),$(4))
 $(call _modulate_target_nocookie,reset-build,$(2),$(4))
 $(call _modulate_target,test,$(2),$(4))
 $(call _modulate_target,install,$(2),$(4))
+#$(call _modulate_install,,$(2),$(4))
 $(call _modulate_target_nocookie,reset-install,$(2),$(4))
-$(call _modulate_target,merge,$(2),$(4))
+#$(call _modulate_target,merge,$(2),$(4))
+$(call _modulate_merge,,$(2),$(4))
 $(call _modulate_target_nocookie,reset-merge,$(2),$(4))
 $(call _modulate_target_nocookie,clean,$(2),$(4))
 $(call _modulate_target_nocookie,_modenv,$(2),$(4))
@@ -607,13 +633,22 @@ merge-sequential: $(foreach M,$(MODULATIONS),merge-$M)
 
 merge-parallel: _PIDFILE=$(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid
 merge-parallel: merge-watch
-	$(_DBG_MERGE)$(foreach M,$(MODULATIONS),$(MAKE) merge-$M >$(WORKROOTDIR)/build-$M/build.log 2>&1 &) wait
-	$(_DBG_MERGE)if [ -f $(_PIDFILE) ]; then kill `cat $(_PIDFILE)` && stty sane; fi
+	$(_DBG_MERGE)trap "kill -9 `cat $(_PIDFILE) $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.pid) 2>/dev/null`;stty sane" INT;\
+		$(foreach M,$(MODULATIONS),($(MAKE) merge-$M >$(WORKROOTDIR)/build-$M/build.log 2>&1; echo $$? >$(WORKROOTDIR)/build-$M/build.ret) & echo $$! >$(WORKROOTDIR)/build-$M/build.pid; ) wait
+	$(_DBG_MERGE)if [ -f $(_PIDFILE) ]; then kill `cat $(_PIDFILE)`; stty sane; fi
+	$(foreach M,$(MODULATIONS),if [ "`cat $(WORKROOTDIR)/build-$M/build.ret`" -ne 0 ]; then \
+		echo "Build error in modulation $M. Please see"; \
+		echo "  $(WORKROOTDIR)/build-$M/build.log"; \
+		echo "for details:"; \
+		echo; \
+		tail -100 $(WORKROOTDIR)/build-$M/build.log; \
+		exit `cat $(WORKROOTDIR)/build-$M/build.ret`; \
+	fi;)
 
 merge-watch: _USEMULTITAIL=$(shell test -x $(MULTITAIL) && test -x $(TTY) && $(TTY) >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo yes; fi)
 merge-watch:
 	$(_DBG_MERGE)$(if $(_USEMULTITAIL),\
-		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -J & echo $$! > $(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid,\
+		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -j & echo $$! > $(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid,\
 		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\
 	)
 
