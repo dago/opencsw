@@ -1,5 +1,5 @@
 GARNAME = eventlog
-GARVERSION = 0.2.5
+GARVERSION = 0.2.9
 CATEGORIES = lib
 
 DESCRIPTION = Replacement of the simple syslog() API providing structure to messages.
@@ -14,14 +14,18 @@ define BLURB
 	via a configuration file.
 endef
 
+PACKAGES = CSWeventlog
+CATALOGNAME = eventlog
+
 MASTER_SITES = http://www.balabit.com/downloads/files/eventlog/0.2/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWeventlog,depend)
+DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+REQUIRED_PKGS += CSWgcc4corert
 
 GARCOMPILER = GNU
 TEST_SCRIPTS =
