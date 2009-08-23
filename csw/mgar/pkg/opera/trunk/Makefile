@@ -9,9 +9,11 @@ define BLURB
   like Opera's groundbreaking E-mail program, RSS Newsfeeds and IRC chat
 endef
 
+PACKAGES = CSWopera
+CATALOGNAME = opera
+
 MASTER_SITES = http://www.opera.com/
 DISTFILES  = $(GARNAME)-$(GARVERSION).gcc3-static-qt3.tar.gz
-DISTFILES += $(call admfiles,CSWopera, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
