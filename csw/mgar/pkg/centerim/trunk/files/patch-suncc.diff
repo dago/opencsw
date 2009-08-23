@@ -1,0 +1,478 @@
+diff -ur centerim-4.22.7.orig/firetalk/irc.c work/build-isa-i386/centerim-4.22.7/firetalk/irc.c
+--- centerim-4.22.7.orig/firetalk/irc.c	2009-03-07 21:14:39.338938013 +0100
++++ work/build-isa-i386/centerim-4.22.7/firetalk/irc.c	2009-03-08 00:07:40.855793699 +0100
+@@ -1623,47 +1623,47 @@
+ }
+ 
+ const firetalk_protocol_t firetalk_protocol_irc = {
+-	strprotocol:		"IRC",
+-	default_server:		"irc.n.ml.org",
+-	default_port:		6667,
+-	default_buffersize:	1024/2,
+-	periodic:		irc_periodic,
+-	preselect:		irc_preselect,
+-	postselect:		irc_postselect,
+-	got_data:		irc_got_data,
+-	got_data_connecting:	irc_got_data_connecting,
+-	comparenicks:		irc_compare_nicks,
+-	isprintable:		irc_isprint,
+-	disconnect:		irc_disconnect,
+-	signon:			irc_signon,
+-	get_info:		irc_get_info,
+-	set_info:		irc_set_info,
+-	set_away:		irc_set_away,
+-	set_nickname:		irc_set_nickname,
+-	set_password:		irc_set_password,
+-	im_add_buddy:		irc_im_add_buddy,
+-	im_remove_buddy:	irc_im_remove_buddy,
+-	im_add_deny:		irc_im_add_deny,
+-	im_remove_deny:		irc_im_remove_deny,
+-	im_upload_buddies:	irc_im_upload_buddies,
+-	im_upload_denies:	irc_im_upload_denies,
+-	im_send_message:	irc_im_send_message,
+-	im_send_action:		irc_im_send_action,
+-	im_evil:		irc_im_evil,
+-	chat_join:		irc_chat_join,
+-	chat_part:		irc_chat_part,
+-	chat_invite:		irc_chat_invite,
+-	chat_set_topic:		irc_chat_set_topic,
+-	chat_op:		irc_chat_op,
+-	chat_deop:		irc_chat_deop,
+-	chat_kick:		irc_chat_kick,
+-	chat_send_message:	irc_chat_send_message,
+-	chat_send_action:	irc_chat_send_action,
+-//	subcode_send_request:	irc_subcode_send_request,
+-//	subcode_send_reply:	irc_subcode_send_reply,
+-	subcode_encode:		irc_ctcp_encode,
+-	set_privacy:		irc_set_privacy,
+-	room_normalize:		irc_normalize_room_name,
+-	create_handle:		irc_create_handle,
+-	destroy_handle:		irc_destroy_handle,
++	.strprotocol=		"IRC",
++	.default_server=		"irc.n.ml.org",
++	.default_port=		6667,
++	.default_buffersize=	1024/2,
++	.periodic=		irc_periodic,
++	.preselect=		irc_preselect,
++	.postselect=		irc_postselect,
++	.got_data=		irc_got_data,
++	.got_data_connecting=	irc_got_data_connecting,
++	.comparenicks=		irc_compare_nicks,
++	.isprintable=		irc_isprint,
++	.disconnect=		irc_disconnect,
++	.signon=			irc_signon,
++	.get_info=		irc_get_info,
++	.set_info=		irc_set_info,
++	.set_away=		irc_set_away,
++	.set_nickname=		irc_set_nickname,
++	.set_password=		irc_set_password,
++	.im_add_buddy=		irc_im_add_buddy,
++	.im_remove_buddy=	irc_im_remove_buddy,
++	.im_add_deny=		irc_im_add_deny,
++	.im_remove_deny=		irc_im_remove_deny,
++	.im_upload_buddies=	irc_im_upload_buddies,
++	.im_upload_denies=	irc_im_upload_denies,
++	.im_send_message=	irc_im_send_message,
++	.im_send_action=		irc_im_send_action,
++	.im_evil=		irc_im_evil,
++	.chat_join=		irc_chat_join,
++	.chat_part=		irc_chat_part,
++	.chat_invite=		irc_chat_invite,
++	.chat_set_topic=		irc_chat_set_topic,
++	.chat_op=		irc_chat_op,
++	.chat_deop=		irc_chat_deop,
++	.chat_kick=		irc_chat_kick,
++	.chat_send_message=	irc_chat_send_message,
++	.chat_send_action=	irc_chat_send_action,
++//	.subcode_send_request=	irc_subcode_send_request,
++//	.subcode_send_reply=	irc_subcode_send_reply,
++	.subcode_encode=		irc_ctcp_encode,
++	.set_privacy=		irc_set_privacy,
++	.room_normalize=		irc_normalize_room_name,
++	.create_handle=		irc_create_handle,
++	.destroy_handle=		irc_destroy_handle,
+ };
+diff -ur centerim-4.22.7.orig/firetalk/toc.c work/build-isa-i386/centerim-4.22.7/firetalk/toc.c
+--- centerim-4.22.7.orig/firetalk/toc.c	2009-03-07 21:14:39.473437850 +0100
++++ work/build-isa-i386/centerim-4.22.7/firetalk/toc.c	2009-03-08 00:09:21.056805524 +0100
+@@ -2580,53 +2580,53 @@
+ */
+ 
+ const firetalk_protocol_t firetalk_protocol_toc2 = {
+-	strprotocol:		"TOC2",
+-	default_server:		"toc.n.ml.org",
+-	default_port:		9898,
+-	default_buffersize:	1024*8,
+-	periodic:		toc_periodic,
+-	preselect:		toc_preselect,
+-	postselect:		toc_postselect,
+-	got_data:		toc_got_data,
+-	got_data_connecting:	toc_got_data_connecting,
+-	comparenicks:		toc_compare_nicks,
+-	isprintable:		toc_isprint,
+-	disconnect:		toc_disconnect,
+-	signon:			toc_signon,
+-	get_info:		toc_get_info,
+-	set_info:		toc_set_info,
+-	set_away:		toc_set_away,
+-	set_nickname:		toc_set_nickname,
+-	set_password:		toc_set_password,
+-	set_privacy:		toc_set_privacy,
+-	im_add_buddy:		toc_im_add_buddy,
+-	im_remove_buddy:	toc_im_remove_buddy,
+-	im_add_deny:		toc_im_add_deny,
+-	im_remove_deny:		toc_im_remove_deny,
+-	im_upload_buddies:	toc_im_upload_buddies,
+-	im_upload_denies:	toc_im_upload_denies,
+-	im_send_message:	toc_im_send_message,
+-	im_send_action:		toc_im_send_action,
+-	im_evil:		toc_im_evil,
+-	chat_join:		toc_chat_join,
+-	chat_part:		toc_chat_part,
+-	chat_invite:		toc_chat_invite,
+-	chat_set_topic:		toc_chat_set_topic,
+-	chat_op:		toc_chat_op,
+-	chat_deop:		toc_chat_deop,
+-	chat_kick:		toc_chat_kick,
+-	chat_send_message:	toc_chat_send_message,
+-	chat_send_action:	toc_chat_send_action,
+-//	subcode_send_request:	toc_subcode_send_request,
+-//	subcode_send_reply:	toc_subcode_send_reply,
+-	subcode_encode:		toc_ctcp_encode,
+-	room_normalize:		aim_normalize_room_name,
+-	create_handle:		toc_create_handle,
+-	destroy_handle:		toc_destroy_handle,
++	.strprotocol=		"TOC2",
++	.default_server=		"toc.n.ml.org",
++	.default_port=		9898,
++	.default_buffersize=	1024*8,
++	.periodic=		toc_periodic,
++	.preselect=		toc_preselect,
++	.postselect=		toc_postselect,
++	.got_data=		toc_got_data,
++	.got_data_connecting=	toc_got_data_connecting,
++	.comparenicks=		toc_compare_nicks,
++	.isprintable=		toc_isprint,
++	.disconnect=		toc_disconnect,
++	.signon=			toc_signon,
++	.get_info=		toc_get_info,
++	.set_info=		toc_set_info,
++	.set_away=		toc_set_away,
++	.set_nickname=		toc_set_nickname,
++	.set_password=		toc_set_password,
++	.set_privacy=		toc_set_privacy,
++	.im_add_buddy=		toc_im_add_buddy,
++	.im_remove_buddy=	toc_im_remove_buddy,
++	.im_add_deny=		toc_im_add_deny,
++	.im_remove_deny=		toc_im_remove_deny,
++	.im_upload_buddies=	toc_im_upload_buddies,
++	.im_upload_denies=	toc_im_upload_denies,
++	.im_send_message=	toc_im_send_message,
++	.im_send_action=		toc_im_send_action,
++	.im_evil=		toc_im_evil,
++	.chat_join=		toc_chat_join,
++	.chat_part=		toc_chat_part,
++	.chat_invite=		toc_chat_invite,
++	.chat_set_topic=		toc_chat_set_topic,
++	.chat_op=		toc_chat_op,
++	.chat_deop=		toc_chat_deop,
++	.chat_kick=		toc_chat_kick,
++	.chat_send_message=	toc_chat_send_message,
++	.chat_send_action=	toc_chat_send_action,
++//	.subcode_send_request=	toc_subcode_send_request,
++//	.subcode_send_reply=	toc_subcode_send_reply,
++	.subcode_encode=		toc_ctcp_encode,
++	.room_normalize=		aim_normalize_room_name,
++	.create_handle=		toc_create_handle,
++	.destroy_handle=		toc_destroy_handle,
+ #ifdef ENABLE_NEWGROUPS
+-	im_remove_group:	toc_im_remove_group,
++	.im_remove_group=	toc_im_remove_group,
+ #endif
+ #ifdef ENABLE_FILE_OFFER
+-	file_offer:		toc_file_offer,
++	.file_offer=		toc_file_offer,
+ #endif
+ };
+diff -ur centerim-4.22.7.orig/kkconsui/include/conf.h work/build-isa-i386/centerim-4.22.7/kkconsui/include/conf.h
+--- centerim-4.22.7.orig/kkconsui/include/conf.h	2009-03-07 21:14:37.890410559 +0100
++++ work/build-isa-i386/centerim-4.22.7/kkconsui/include/conf.h	2009-03-07 22:24:41.739170169 +0100
+@@ -9,6 +9,10 @@
+ #define __KTOOL_USE_NAMESPACES
+ #endif
+ 
++#if defined(__sun) && !defined(__GNUC__)
++#define __KTOOL_USE_NAMESPACES
++#endif
++
+ #if defined(__COMO__)
+ #define __KTOOL_USE_NAMESPACES
+ #endif
+diff -ur centerim-4.22.7.orig/kkconsui/include/conscommon.h work/build-isa-i386/centerim-4.22.7/kkconsui/include/conscommon.h
+--- centerim-4.22.7.orig/kkconsui/include/conscommon.h	2009-03-07 21:14:38.194262682 +0100
++++ work/build-isa-i386/centerim-4.22.7/kkconsui/include/conscommon.h	2009-03-07 23:02:06.557916079 +0100
+@@ -23,7 +23,7 @@
+ #include <ncurses.h>
+ #endif
+ 
+-#ifdef __sun__
++#if defined(__sun__) || defined(__sun)
+ #include <sys/termio.h>
+ #include <sys/filio.h>
+ #endif
+diff -ur centerim-4.22.7.orig/kkconsui/src/Makefile.in work/build-isa-i386/centerim-4.22.7/kkconsui/src/Makefile.in
+--- centerim-4.22.7.orig/kkconsui/src/Makefile.in	2009-03-07 21:14:37.608529366 +0100
++++ work/build-isa-i386/centerim-4.22.7/kkconsui/src/Makefile.in	2009-03-07 23:04:44.188371770 +0100
+@@ -236,7 +236,6 @@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CXXFLAGS = -Wno-write-strings
+ AM_CPPFLAGS = -I$(top_srcdir)/kkconsui/include -I$(top_srcdir)/kkstrtext
+ noinst_LIBRARIES = libsrc.a
+ libsrc_a_SOURCES = treeview.cc colorschemer.cc textinputline.cc fileselector.cc textwindow.cc texteditor.cc dialogbox.cc screenarea.cc textbrowser.cc abstractui.cc horizontalbar.cc linkedlist.cc cmenus.cc conscommon.cc
+diff -ur centerim-4.22.7.orig/kkstrtext/Makefile.in work/build-isa-i386/centerim-4.22.7/kkstrtext/Makefile.in
+--- centerim-4.22.7.orig/kkstrtext/Makefile.in	2009-03-07 21:14:39.712922424 +0100
++++ work/build-isa-i386/centerim-4.22.7/kkstrtext/Makefile.in	2009-03-07 22:24:41.784541354 +0100
+@@ -234,7 +234,6 @@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CXXFLAGS = -Wno-write-strings
+ noinst_LIBRARIES = libkkstrtext.a
+ libkkstrtext_a_SOURCES = kkstrtext.cc
+ noinst_HEADERS = kkstrtext.h conf.h
+diff -ur centerim-4.22.7.orig/kkstrtext/conf.h work/build-isa-i386/centerim-4.22.7/kkstrtext/conf.h
+--- centerim-4.22.7.orig/kkstrtext/conf.h	2009-03-07 21:14:39.655787090 +0100
++++ work/build-isa-i386/centerim-4.22.7/kkstrtext/conf.h	2009-03-07 22:24:41.839000985 +0100
+@@ -9,6 +9,10 @@
+ #define __KTOOL_USE_NAMESPACES
+ #endif
+ 
++#if defined(__sun) && !defined(__GNUC__)
++#define __KTOOL_USE_NAMESPACES
++#endif
++
+ #if defined(__COMO__)
+ #define __KTOOL_USE_NAMESPACES
+ #endif
+diff -ur centerim-4.22.7.orig/kksystr/include/conf.h work/build-isa-i386/centerim-4.22.7/kksystr/include/conf.h
+--- centerim-4.22.7.orig/kksystr/include/conf.h	2009-03-07 21:14:41.770865274 +0100
++++ work/build-isa-i386/centerim-4.22.7/kksystr/include/conf.h	2009-03-07 22:24:41.883217677 +0100
+@@ -5,6 +5,10 @@
+ #define __KTOOL_USE_NAMESPACES
+ #endif
+ 
++#if defined(__sun) && !defined(__GNUC__)
++#define __KTOOL_USE_NAMESPACES
++#endif
++
+ #if defined(__COMO__)
+ #define __KTOOL_USE_NAMESPACES
+ #endif
+diff -ur centerim-4.22.7.orig/kksystr/include/kkiproc.h work/build-isa-i386/centerim-4.22.7/kksystr/include/kkiproc.h
+--- centerim-4.22.7.orig/kksystr/include/kkiproc.h	2009-03-07 21:14:41.674558310 +0100
++++ work/build-isa-i386/centerim-4.22.7/kksystr/include/kkiproc.h	2009-03-07 23:01:19.532990896 +0100
+@@ -29,7 +29,7 @@
+ 
+ __KTOOL_END_C
+ 
+-#ifdef __sun__
++#if defined(__sun__) || defined(__sun)
+ 
+ void setenv(const string &name, const string &value, int replace);
+ 
+diff -ur centerim-4.22.7.orig/kksystr/src/Makefile.in work/build-isa-i386/centerim-4.22.7/kksystr/src/Makefile.in
+--- centerim-4.22.7.orig/kksystr/src/Makefile.in	2009-03-07 21:14:41.543601436 +0100
++++ work/build-isa-i386/centerim-4.22.7/kksystr/src/Makefile.in	2009-03-07 22:24:41.929008103 +0100
+@@ -231,7 +231,6 @@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CXXFLAGS = -Wno-write-strings
+ AM_CPPFLAGS = -I$(top_srcdir)/kksystr/include -I$(top_srcdir)//kkstrtext
+ noinst_LIBRARIES = libsrc.a
+ libsrc_a_SOURCES = kkfsys.cc kkiproc.cc
+diff -ur centerim-4.22.7.orig/kksystr/src/kkiproc.cc work/build-isa-i386/centerim-4.22.7/kksystr/src/kkiproc.cc
+--- centerim-4.22.7.orig/kksystr/src/kkiproc.cc	2009-03-07 21:14:41.517730785 +0100
++++ work/build-isa-i386/centerim-4.22.7/kksystr/src/kkiproc.cc	2009-03-07 23:01:43.176282019 +0100
+@@ -28,7 +28,7 @@
+ #include <signal.h>
+ #include <memory>
+ 
+-#ifdef __sun__
++#if defined(__sun__) || defined(__sun)
+ #include <sys/termio.h>
+ #include <sys/filio.h>
+ #endif
+@@ -169,7 +169,7 @@
+     return 0;
+ }
+ 
+-#ifdef __sun__
++#if defined(__sun__) || defined(__sun)
+ 
+ void setenv(const string &name, const string &value, int replace) {
+     if(getenv(name.c_str()) && replace) {
+diff -ur centerim-4.22.7.orig/libicq2000/src/RateLimits.cpp work/build-isa-i386/centerim-4.22.7/libicq2000/src/RateLimits.cpp
+--- centerim-4.22.7.orig/libicq2000/src/RateLimits.cpp	2009-03-07 21:14:35.261260355 +0100
++++ work/build-isa-i386/centerim-4.22.7/libicq2000/src/RateLimits.cpp	2009-03-07 23:16:48.031177184 +0100
+@@ -36,7 +36,7 @@
+             unsigned short f, s;
+             b >> f;
+             b >> s;
+-            members.insert( std::pair<unsigned short, unsigned short>(f, s) );
++            members.insert( std::pair<const unsigned short, unsigned short>(f, s) );
+         }
+     }
+ 
+diff -ur centerim-4.22.7.orig/libicq2000/src/buffer.cpp work/build-isa-i386/centerim-4.22.7/libicq2000/src/buffer.cpp
+--- centerim-4.22.7.orig/libicq2000/src/buffer.cpp	2009-03-07 21:14:35.603892985 +0100
++++ work/build-isa-i386/centerim-4.22.7/libicq2000/src/buffer.cpp	2009-03-07 23:13:10.556883841 +0100
+@@ -27,6 +27,8 @@
+ using std::string;
+ using std::endl;
+ using std::ostream;
++using std::find;
++using std::copy;
+ 
+ namespace ICQ2000
+ {
+diff -ur centerim-4.22.7.orig/libicq2000/src/socket.cpp work/build-isa-i386/centerim-4.22.7/libicq2000/src/socket.cpp
+--- centerim-4.22.7.orig/libicq2000/src/socket.cpp	2009-03-07 21:14:35.370108444 +0100
++++ work/build-isa-i386/centerim-4.22.7/libicq2000/src/socket.cpp	2009-03-07 23:09:57.940655718 +0100
+@@ -40,7 +40,7 @@
+ using std::string;
+ using std::ostringstream;
+ using std::istringstream;
+-//using std::copy;
++using std::copy;
+ 
+ namespace ICQ2000
+ {
+diff -ur centerim-4.22.7.orig/libmsn/msn/message.cpp work/build-isa-i386/centerim-4.22.7/libmsn/msn/message.cpp
+--- centerim-4.22.7.orig/libmsn/msn/message.cpp	2009-03-07 21:14:31.329003051 +0100
++++ work/build-isa-i386/centerim-4.22.7/libmsn/msn/message.cpp	2009-03-07 23:28:37.815256260 +0100
+@@ -325,7 +325,7 @@
+         {
+             if (*i == '\r')
+             {
+-                return retval.substr(0, std::distance(retval.begin(), i));
++                return retval.substr(0, i - retval.begin());
+             }
+         }
+         return "";
+diff -ur centerim-4.22.7.orig/libmsn/msn/notificationserver.cpp work/build-isa-i386/centerim-4.22.7/libmsn/msn/notificationserver.cpp
+--- centerim-4.22.7.orig/libmsn/msn/notificationserver.cpp	2009-03-07 21:14:31.445922840 +0100
++++ work/build-isa-i386/centerim-4.22.7/libmsn/msn/notificationserver.cpp	2009-03-07 23:38:29.701797647 +0100
+@@ -483,11 +483,13 @@
+         std::list<Buddy>::iterator flist_i;
+         std::list<Buddy>::iterator alist_i;
+         std::list<Buddy>::iterator blist_i;
++	std::list<Buddy>::size_type nr1, nr2;
+         
+         for (flist_i = flist.begin(); flist_i != flist.end(); flist_i++)
+         {
+-            if (std::count_if(alist.begin(), alist.end(), _sameUserName<Buddy>(*flist_i)) == 0 &&
+-                std::count_if(blist.begin(), blist.end(), _sameUserName<Buddy>(*flist_i)) == 0)
++            std::count_if(alist.begin(), alist.end(), _sameUserName<Buddy>(*flist_i), nr1);
++            std::count_if(blist.begin(), blist.end(), _sameUserName<Buddy>(*flist_i), nr2);
++            if ((nr1 == 0) && (nr2 == 0))
+             {
+                 this->myNotificationServer()->externalCallbacks.gotNewReverseListEntry(this, (*flist_i).userName, (*flist_i).friendlyName);
+             }
+diff -ur centerim-4.22.7.orig/src/Makefile.in work/build-isa-i386/centerim-4.22.7/src/Makefile.in
+--- centerim-4.22.7.orig/src/Makefile.in	2009-03-07 21:14:30.134047329 +0100
++++ work/build-isa-i386/centerim-4.22.7/src/Makefile.in	2009-03-07 22:24:41.984452081 +0100
+@@ -284,7 +284,6 @@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CXXFLAGS = -Wno-write-strings
+ centerim_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/hooks \
+ 	-I$(top_srcdir)/connwrap -I$(top_srcdir)/firetalk \
+ 	-I$(top_srcdir)/firetalk/../connwrap \
+diff -ur centerim-4.22.7.orig/src/accountmanager.cc work/build-isa-i386/centerim-4.22.7/src/accountmanager.cc
+--- centerim-4.22.7.orig/src/accountmanager.cc	2009-03-07 21:14:29.505826571 +0100
++++ work/build-isa-i386/centerim-4.22.7/src/accountmanager.cc	2009-03-08 00:57:59.576865788 +0100
+@@ -69,7 +69,7 @@
+ 	getcolor(cp_dialog_selected), _("Change"), _("Done"), 0));
+ 
+     db.addautokeys();
+-    db.idle = &face.dialogidle;
++    db.idle = face.dialogidle;
+ 
+     treeview &t = *db.gettree();
+ 
+Only in work/build-isa-i386/centerim-4.22.7/src: git-version.h
+diff -ur centerim-4.22.7.orig/src/hooks/Makefile.in work/build-isa-i386/centerim-4.22.7/src/hooks/Makefile.in
+--- centerim-4.22.7.orig/src/hooks/Makefile.in	2009-03-07 21:14:28.756066332 +0100
++++ work/build-isa-i386/centerim-4.22.7/src/hooks/Makefile.in	2009-03-07 22:24:42.042759579 +0100
+@@ -236,7 +236,6 @@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CXXFLAGS = -Wno-write-strings
+ libhooks_a_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/hooks -I$(top_srcdir)/connwrap -I$(top_srcdir)/firetalk -I$(top_srcdir)/firetalk/../connwrap -I$(top_srcdir)/firetalk/../connwrap-0.1 -I$(top_srcdir)/kkconsui -I$(top_srcdir)/kkconsui/include -I$(top_srcdir)/kkconsui/../kkstrtext -I$(top_srcdir)/kkconsui/../kkstrtext-0.1 -I$(top_srcdir)/kkstrtext -I$(top_srcdir)/kksystr -I$(top_srcdir)/kksystr/include -I$(top_srcdir)/kksystr/../kkstrtext -I$(top_srcdir)/kksystr/../kkstrtext-0.1 -I$(top_srcdir)/libgadu -I$(top_srcdir)/libicq2000 -I$(top_srcdir)/libicq2000/libicq2000 -I$(top_srcdir)/libjabber -I$(top_srcdir)/libjabber/../connwrap -I$(top_srcdir)/libjabber/../connwrap-0.1 -I$(top_srcdir)/libmsn -I$(top_srcdir)/libmsn/../connwrap -I$(top_srcdir)/libmsn/../connwrap-0.1 -I$(top_srcdir)/libyahoo2 -I$(top_srcdir)/libyahoo2/../connwrap -I$(top_srcdir)/libyahoo2/../connwrap-0.1 -I$(top_srcdir)/intl
+ noinst_LIBRARIES = libhooks.a
+ libhooks_a_SOURCES = rsshook.cc HTTPClient.cc yahoohook.cc jabberhook.cc aimhook.cc icqhook.cc gaduhook.cc irchook.cc ljhook.cc msnhook.cc abstracthook.cc
+diff -ur centerim-4.22.7.orig/src/hooks/yahoohook.cc work/build-isa-i386/centerim-4.22.7/src/hooks/yahoohook.cc
+--- centerim-4.22.7.orig/src/hooks/yahoohook.cc	2009-03-07 21:14:29.314747497 +0100
++++ work/build-isa-i386/centerim-4.22.7/src/hooks/yahoohook.cc	2009-03-08 00:43:02.994994953 +0100
+@@ -912,7 +912,7 @@
+     em.store(imnotification(cont, text));
+     em.store(imnotification(cont, _("Auto-joined the conference")));
+ 
+-    yhook.tobedone.push_back(make_pair(tbdConfLogon, room));
++    yhook.tobedone.push_back(make_pair(tbdConfLogon, std::string(room)));
+ }
+ 
+ void yahoohook::conf_userdecline(int id, char *who, char *room, char *msg) {
+diff -ur centerim-4.22.7.orig/src/icqconf.cc work/build-isa-i386/centerim-4.22.7/src/icqconf.cc
+--- centerim-4.22.7.orig/src/icqconf.cc	2009-03-07 21:14:28.571482609 +0100
++++ work/build-isa-i386/centerim-4.22.7/src/icqconf.cc	2009-03-08 01:11:41.611351355 +0100
+@@ -27,7 +27,7 @@
+ #include <dirent.h>
+ #include <fstream>
+ 
+-#if defined(__sun__) || defined(__NetBSD__) || defined(__sgi__)
++#if defined(__sun__) || defined(__sun) || defined(__NetBSD__) || defined(__sgi__)
+ #include <sys/statvfs.h>
+ #endif
+ 
+@@ -1812,7 +1812,10 @@
+ void icqconf::checkdiskspace() {
+     fenoughdiskspace = true;
+ 
+-#if !(defined(__sun__) || defined(__NetBSD__) || defined(__sgi__))
++#if defined(__sun__) || defined (__sun)
++    struct statvfs st;
++    if(!statvfs(conf->getdirname().c_str(), &st)) {
++#elif defined(__NetBSD__) || defined(__sgi__))
+     struct statfs st;
+     if(!statfs(conf->getdirname().c_str(), &st)) {
+ #else
+diff -ur centerim-4.22.7.orig/src/icqface.cc work/build-isa-i386/centerim-4.22.7/src/icqface.cc
+--- centerim-4.22.7.orig/src/icqface.cc	2009-03-07 21:14:29.892212167 +0100
++++ work/build-isa-i386/centerim-4.22.7/src/icqface.cc	2009-03-08 01:20:29.781866266 +0100
+@@ -2597,7 +2597,7 @@
+ 		if(cc) imc->nickname = cc->getnick();
+ 	    }
+ 
+-	    clst.push_back(make_pair(imc->uin, imc->nickname));
++	    clst.push_back(make_pair((unsigned) imc->uin, imc->nickname));
+ 	}
+ 
+ 	muins = smuins;
+diff -ur centerim-4.22.7.orig/src/imevents.cc work/build-isa-i386/centerim-4.22.7/src/imevents.cc
+--- centerim-4.22.7.orig/src/imevents.cc	2009-03-07 21:14:29.822885424 +0100
++++ work/build-isa-i386/centerim-4.22.7/src/imevents.cc	2009-03-08 01:20:11.920764863 +0100
+@@ -574,7 +574,7 @@
+ 	    buf.erase(pos, 1);
+ 
+ 	if((pos = buf.find("\t")) != -1) {
+-	    contacts.push_back(make_pair(atoi(buf.substr(0, pos).c_str()), buf.substr(pos+1)));
++	    contacts.push_back(make_pair((unsigned) atoi(buf.substr(0, pos).c_str()), buf.substr(pos+1)));
+ 	}
+     }
+ }
