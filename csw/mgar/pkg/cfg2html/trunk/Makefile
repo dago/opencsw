@@ -3,14 +3,15 @@
 # $Id$
 
 GARNAME = cfg2html
-GARVERSION = 1.14r1.8
+GARVERSION = 1.14
+PATCHLEVEL = r1.8
 CATEGORIES = utils
 DESCRIPTION = Configuration documentation generator
 define BLURB
 endef
 SPKG_SOURCEURL = http://tech.groups.yahoo.com/group/cfg2html/
 MASTER_SITES = http://tech.groups.yahoo.com/group/cfg2html/files/sun/
-DISTFILES  = $(GARNAME)-sun_$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-sun_$(GARVERSION)$(PATCHLEVEL).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -35,3 +36,5 @@ install-cfg2html:
 	ginstall -m 0755 $(WORKSRC)/cfg2html_sun.sh $(DESTDIR)$(bindir)
 
 include gar/category.mk
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
