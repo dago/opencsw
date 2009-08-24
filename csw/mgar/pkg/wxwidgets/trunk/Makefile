@@ -38,7 +38,11 @@ REQUIRED_PKGS += CSWpng
 REQUIRED_PKGS += CSWtiff
 REQUIRED_PKGS += CSWzlib
 
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWgtk2devel CSWlibpthreadstubs
+PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS += CSWgtk2devel
+PREREQUISITE_PKGS += CSWlibpthreadstubs
+PREREQUISITE_PKGS += CSWxproto
+PREREQUISITE_PKGS += CSWkbproto
 PKGFILES_CSWwxwidgetsdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWwxwidgetsdevel += /opt/csw/lib/wx/include/.*
 PKGFILES_CSWwxwidgetsrt = $(PKGFILES_RT)
