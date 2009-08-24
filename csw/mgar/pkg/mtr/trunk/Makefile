@@ -1,12 +1,7 @@
-# Todo
+# TODO
 # ----
-# * Build-machines pkg-config for GTK+-2.0 stuff is broken right now, 
-#   wait for it to become usable again to compile the regular CSWmtr pkg
-#   ...
-#   checking for GTK+ - version >= 2.4.0... sh: gnome-config: not found
-#   see: http://lists.opencsw.org/pipermail/maintainers/2009-June/002893.html
-#     http://lists.freebsd.org/pipermail/freebsd-gnome/2003-April/000453.html
-#
+# * Find a way to somehow package out of the install dirs, we don't need
+#   merging for the two incompatible modulations/packages.
 # * Revisit curses autoconf detection. Maybe have a chat with upstream
 #   as the README says that there are known, yet unsolved Solaris autoconf
 #   recipe problems
@@ -48,21 +43,28 @@ PROTOTYPE_FILTER = awk ' \
 	$$$$3 ~ /sbin\/mtr$$$$/ { $$$$4 = "4755" } \
 	{ print }'
 
-# Call with gmake TINY=1 to build and packaage the non-X11 version ...
-ifeq ($(TINY), 1)
+# We would like to have two packages: one with GUI support and one without
+# GUI support.
+#
+EXTRA_MODULATORS = GUI
+MODULATIONS_GUI = disable enable
+
+ifeq ($(GUI), disable)
 CONFIGURE_ARGS += --without-gtk
 PACKAGES = CSWmtrtiny
 CATALOGNAME = mtr_tiny
 INCOMPATIBLE_PKGS = CSWmtr
 endif
 
-# ... default is with X11
-ifneq ($(TINY), 1)
+ifeq ($(GUI), enable)
 CONFIGURE_ARGS += --disable-gtktest
 REQUIRED_PKGS += CSWgtk2 CSWlibatk CSWpango CSWlibcairo
 REQUIRED_PKGS += CSWggettextrt CSWglib2
 INCOMPATIBLE_PKGS = CSWmtrtiny
+EXTRA_PKG_CONFIG_PATH = /opt/csw/X11/lib/pkgconfig
 endif
+#
+# /end modulations
 
 include gar/category.mk
 
