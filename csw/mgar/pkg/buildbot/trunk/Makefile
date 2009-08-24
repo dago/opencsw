@@ -4,7 +4,7 @@
 
 GARNAME = buildbot
 GARVERSION = 0.7.11
-PATCHLEVEL = p1
+PATCHLEVEL = p3
 CATEGORIES = utils
 
 DESCRIPTION = A system to automate the compile/test cycle
