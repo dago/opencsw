@@ -1,6 +1,6 @@
 GARNAME = bind
-GARVERSION = 9.4.2
-RELEASE = P2
+GARVERSION = 9.4.3
+RELEASE = P3
 DISTVERSION = $(GARVERSION)-$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
@@ -18,6 +18,9 @@ UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 DISTFILES += $(call admfiles,CSWbind,preinstall postinstall preremove)
+
+LICENSE = COPYRIGHT
+REQUIRED_PKGS = CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)-([A-Z][0-9])
@@ -54,7 +57,6 @@ install-custom:
 	@cp $(FILEDIR)/CSWbind.named.conf $(DESTDIR)$(docdir)/$(GARNAME)/named.conf
 	@cp $(FILEDIR)/CSWbind.named.root $(DESTDIR)$(docdir)/$(GARNAME)/named.root
 	@cp $(FILEDIR)/CSWbind.rndc.key $(DESTDIR)$(docdir)/$(GARNAME)/rndc.key
-	@cp $(WORKSRC)/COPYRIGHT $(DESTDIR)$(docdir)/$(GARNAME)/LICENSE
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
 	@$(MAKECOOKIE)
