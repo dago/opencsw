@@ -9,7 +9,7 @@ define BLURB
   logs using TCP.
 endef
 
-MASTER_SITES = http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
+MASTER_SITES = http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += $(GARNAME).conf.CSW
 DISTFILES += cswsyslog_ng
@@ -23,7 +23,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWsyslogng
 
-SPKG_SOURCEURL = http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/$(GARVERSION)/source/
+SPKG_SOURCEURL = http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER  = awk ' \
@@ -64,5 +64,6 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswsyslog_ng \
 		$(DESTDIR)/etc/opt/csw/init.d/cswsyslog_ng
+	$(MAKECOOKIE)
 
 include gar/category.mk

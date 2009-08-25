@@ -1,4 +1,6 @@
 #!/bin/sh
 
-echo "Enabling svc:/system/system-log:default"
-svcadm enable svc:/system/system-log:default
+if [ -e /usr/sbin/svcadm ]; then
+  echo "Enabling svc:/system/system-log:default"
+  /usr/sbin/svcadm enable svc:/system/system-log:default
+fi
