@@ -19,7 +19,6 @@ CATALOGNAME = wxwidgets
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
-ARCHALL_CSWwxwidgetscommon = 1
 ARCHALL_CSWwxwidgetsdevel  = 1
 REQUIRED_PKGS  = CSWexpat
 REQUIRED_PKGS += CSWfconfig
@@ -47,6 +46,7 @@ PREREQUISITE_PKGS += CSWlibxau
 PREREQUISITE_PKGS += CSWlibxaudevel
 PREREQUISITE_PKGS += CSWlibxrenderdevel
 PREREQUISITE_PKGS += CSWrenderproto
+PREREQUISITE_PKGS += SUNWxwinc
 
 PKGFILES_CSWwxwidgetsdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWwxwidgetsgtk2  = /opt/csw/lib/wx/(include|config)/gtk2-.*
