@@ -19,7 +19,6 @@ CATALOGNAME = wxwidgets
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
-PACKAGES += CSWwxwidgetsrt
 ARCHALL_CSWwxwidgetscommon = 1
 ARCHALL_CSWwxwidgetsdevel  = 1
 ARCHALL_CSWwxwidgetsgtk2   = 1
@@ -43,18 +42,24 @@ PREREQUISITE_PKGS += CSWgtk2devel
 PREREQUISITE_PKGS += CSWlibpthreadstubs
 PREREQUISITE_PKGS += CSWxproto
 PREREQUISITE_PKGS += CSWkbproto
-PKGFILES_CSWwxwidgetsdevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWwxwidgetsdevel += /opt/csw/lib/wx/include/.*
-PKGFILES_CSWwxwidgetsrt = $(PKGFILES_RT)
-PKGFILES_CSWwxwidgetsgtk2 = non-existing
+PREREQUISITE_PKGS += CSWlibxcb
+PREREQUISITE_PKGS += CSWlibxcbdevel
+PREREQUISITE_PKGS += CSWlibxau
+PREREQUISITE_PKGS += CSWlibxaudevel
+PREREQUISITE_PKGS += CSWlibxrenderdevel
+PREREQUISITE_PKGS += CSWrenderproto
 
-REQUIRED_PKGS_CSWwxwidgetsgtk2 = CSWwxwidgetsrt
-REQUIRED_PKGS_CSWwxwidgetsrt   = CSWwxwidgetscommon
+PKGFILES_CSWwxwidgetsdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWwxwidgetsgtk2  = /opt/csw/lib/wx/(include|config)/gtk2-.*
+PKGFILES_CSWwxwidgetsgtk2 += /opt/csw/lib/libwx_gtk2.*
+PKGFILES_CSWwxwidgetsgtk2 += /opt/csw/bin/wx(-config|rc(|-2.8))
+
+REQUIRED_PKGS_CSWwxwidgetsgtk2 = CSWwxwidgetscommon
+REQUIRED_PKGS_CSWwxwidgetsdevel = CSWwxwidgetscommon
 
 CATALOGNAME_CSWwxwidgetscommon = wxwidgets_common
 CATALOGNAME_CSWwxwidgetsdevel  = wxwidgets_devel
 CATALOGNAME_CSWwxwidgetsgtk2   = wxwidgets_gtk2
-CATALOGNAME_CSWwxwidgetsrt   = wxwidgets_rt
 TEST_SCRIPTS =
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gtk=2 --with-gtk-prefix=/opt/csw --without-regex
