@@ -21,7 +21,6 @@ PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
 ARCHALL_CSWwxwidgetscommon = 1
 ARCHALL_CSWwxwidgetsdevel  = 1
-ARCHALL_CSWwxwidgetsgtk2   = 1
 REQUIRED_PKGS  = CSWexpat
 REQUIRED_PKGS += CSWfconfig
 REQUIRED_PKGS += CSWftype2
