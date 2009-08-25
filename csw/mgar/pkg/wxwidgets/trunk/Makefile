@@ -62,9 +62,9 @@ CATALOGNAME_CSWwxwidgetsgtk2   = wxwidgets_gtk2
 TEST_SCRIPTS =
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gtk=2 --with-gtk-prefix=/opt/csw --without-regex
-CONFIGURE_ARGS += --disable-unicode --with-opengl
+CONFIGURE_ARGS += --enable-unicode --with-opengl
 EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt
-EXTRA_INC = /opt/csw/X11/include
+EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
 EXTRA_LIB = /opt/csw/X11/lib
 PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
 
