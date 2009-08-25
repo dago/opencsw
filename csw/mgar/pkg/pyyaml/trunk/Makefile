@@ -32,20 +32,41 @@ endef
 MASTER_SITES = http://pyyaml.org/download/pyyaml/
 DISTFILES  = $(PROJ_NAME)-$(GARVERSION).tar.gz
 WORKSRC = $(WORKDIR)/$(PROJ_NAME)-$(GARVERSION)
+SPKG_SOURCEURL = http://pyyaml.org/wiki/PyYAML
+SPKG_CLASSES = none cswpycompile
 
-# We define upstream file regex so we can be notifed of new upstream software release
+PACKAGES = CSWpyyaml CSWpyyamlrt
+CATALOGNAME_CSWpyyaml = py_pyyaml
+CATALOGNAME_CSWpyyamlrt = py_pyyaml_rt
+
+REQUIRED_PKGS_CSWpyyaml = CSWpython
+REQUIRED_PKGS_CSWpyyamlrt = CSWpython-rt CSWlibyaml
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+
+ARCHALL_CSWpyyaml = 1
+PKGFILES_CSWpyyamlrt = /opt/csw/lib/python/site-packages/.*\.so
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-ARCHALL = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = pyyaml
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = pyyaml
 
+PROTOTYPE_FILTER = awk ' \
+  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
+  { print }'
+
 build-pyyaml:
-	(cd $(WORKSRC); python setup.py build)
+	(cd $(WORKSRC); $(BUILD_ENV) python setup.py --with-libyaml build)
+	@$(MAKECOOKIE)
 
 install-pyyaml:
-	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
+	(cd $(WORKSRC); $(INSTALL_ENV) python setup.py install --root=$(DESTDIR))
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
+	@$(MAKECOOKIE)
 
 include gar/category.mk
