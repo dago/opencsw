@@ -25,8 +25,15 @@ PATCHFILES = Makefile-cups-$(GARVERSION).patch
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
 DISTFILES += CSWcupsd.postremove
 
-REQUIRED_PKGS = CSWkrb5lib CSWosslrt
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWoldapdevel
+PREREQUISITE_PKGS  = CSWggettext
+PREREQUISITE_PKGS += CSWjpeg
+PREREQUISITE_PKGS += CSWoldapdevel
+PREREQUISITE_PKGS += CSWossldevel
+PREREQUISITE_PKGS += CSWtiff
+PREREQUISITE_PKGS += CSWzlib
+PREREQUISITE_PKGS += SUNWhea
+PREREQUISITE_PKGS += SUNWlibm
+PREREQUISITE_PKGS += SUNWslpu
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
@@ -43,7 +50,7 @@ REQUIRED_PKGS_CSWcups += CSWcupsdev
 REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
 REQUIRED_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
-
+REQUIRED_PKGS_CSWcupsd += CSWkrb5lib
 REQUIRED_PKGS_CSWcupsclient  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1
 REQUIRED_PKGS_CSWcupsdoc = CSWcswclassutils
