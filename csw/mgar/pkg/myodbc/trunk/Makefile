@@ -26,12 +26,13 @@ localstatedir = /var/opt/csw
 
 REQUIRED_PKGS  = CSWiconv
 REQUIRED_PKGS += CSWlibtoolrt
-REQUIRED_PKGS += CSWmysql5devel
 REQUIRED_PKGS += CSWmysql5rt
 REQUIRED_PKGS += CSWunixodbc
 REQUIRED_PKGS += CSWzlib
 
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS += CSWmysql5devel
+
 # The tests act weird. They require a shared library that doesn't get built at all.
 TEST_SCRIPTS =
 WORKSRC = $(WORKDIR)/$(DL_NAME)-$(GARVERSION)$(PATCHLEVEL)
