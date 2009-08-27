@@ -39,12 +39,12 @@ ARCHALL = 1
 include gar/category.mk
 
 post-extract-modulated:
-	@gln -s $(DISTNAME) $(WORKSRC)/pca
+	@mv $(WORKSRC)/$(DISTNAME) $(WORKSRC)/pca
 	@$(MAKECOOKIE)
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall $(WORKSRC)/$(DISTNAME) $(DESTDIR)$(bindir)/pca
+	@ginstall $(WORKSRC)/pca $(DESTDIR)$(bindir)/pca
 	@ginstall -d $(DESTDIR)$(mandir)/man8
-	@pod2man --section=8 $(WORKSRC)/$(DISTNAME) > $(DESTDIR)$(mandir)/man8/pca.8
+	@pod2man --section=8 $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man8/pca.8
 	@$(MAKECOOKIE)
