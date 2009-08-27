@@ -597,7 +597,7 @@ endef
 # has not, so we use this one for appending.
 
 
-_PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS_$(MODULATION)) $(EXTRA_PAX_ARGS)
+_PAX_ARGS = $(_INC_EXT_RULE) $(_EXTRA_PAX_ARGS) $(EXTRA_PAX_ARGS_$(MODULATION)) $(EXTRA_PAX_ARGS)
 
 # The basic merge merges the compiles for all ISAs on the current architecture
 merge: checksum pre-merge $(addprefix merge-,$(MODULATIONS)) merge-license $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge

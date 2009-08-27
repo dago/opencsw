@@ -168,12 +168,15 @@ SPKG_CLASSES := $(SPKG_CLASSES) $(if $(USERGROUP),$(if $(filter cswusergroup,$(S
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF)$(USERGROUP),)
 _CSWCLASS_FILTER = | perl -ane '\
-		$(foreach FILE,$(SAMPLECONF),$$F[1] = "cswsampleconf" if ( $$F[2] =~ m(^$(FILE)$$) );)\
-		$(foreach FILE,$(PRESERVECONF),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(SAMPLECONF:%.CSW=%),$$F[1] = "cswsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
+		$(foreach FILE,$(PRESERVECONF:%.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
 _EXTRA_GAR_PKGS += CSWcswclassutils
+# Make sure the configuration files always have a .CSW suffix and rename the
+# configuration files to this if necessary during merge.
+_EXTRA_PAX_ARGS += $(foreach FILE,$(SAMPLECONF:%.CSW=%) $(PRESERVECONF:%.CSW=%),-s ",^\.\($(FILE)\)$$,.\1.CSW,p")
 endif
 
 PKGGET_DESTDIR ?=
