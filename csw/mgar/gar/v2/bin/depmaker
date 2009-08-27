@@ -27,12 +27,14 @@ my $VERSION = "1.0";
 my $do_script = 1;
 my $be_quiet  = 0;
 my (@nodep, $rootdir);
+my $text_files = 0;
 GetOptions(
     'script!'   => \$do_script,
     'quiet|q'   => \$be_quiet,
     'root=s'    => \$rootdir,
     'nodep=s'   => \@nodep,
     'help|h'    => \&usage,
+    'text|t'    => \$text_files,
     'version|V' => sub {
         print STDERR "$self v$VERSION\n";
         exit 2;
@@ -43,7 +45,7 @@ GetOptions(
 my $nodep = join "|", @nodep;
 
 sub usage {
-    print STDERR "Usage: $self [--no/script] [--nodep <pkg>] [--root <path>] < path_list > depend\n";
+    print STDERR "Usage: $self [--text] [--no/script] [--nodep <pkg>] [--root <path>] < path_list > depend\n";
     exit 1;
 }
 
@@ -110,6 +112,9 @@ foreach (<>) {
             #msg "    $lib\n";    
             $depfiles{$lib}++ if $lib;
         }
+    }
+    elsif ($text_files and $ftype =~ /text/) {
+        $depfiles{$filesrc}++;
     }
 }
 exit 0 unless scalar keys %depfiles;
