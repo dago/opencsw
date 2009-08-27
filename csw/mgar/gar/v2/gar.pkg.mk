@@ -452,6 +452,14 @@ define pkgvar
 $(if $($(1)_$(2)),$($(1)_$(2)),$($(1)))
 endef
 
+# Make sure every producable package contains specific descriptions.
+# We explicitly ignore NOPACKAGE here to disallow circumventing the check.
+$(foreach P,$(SPKG_SPECS),\
+  $(foreach Q,$(filter-out $P,$(SPKG_SPECS)),\
+    $(if $(shell if test "$(SPKG_DESC_$P)" = "$(SPKG_DESC_$Q)"; then echo ERROR; fi),\
+      $(error The package descriptions for $P and $Q are identical, please make sure all package descriptions are unique by setting SPKG_DESC_<pkg> for each package) \
+)))
+
 .PRECIOUS: $(WORKDIR)/%.pkginfo
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
