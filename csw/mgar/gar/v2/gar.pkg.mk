@@ -127,13 +127,22 @@ GAWK ?= /opt/csw/bin/gawk
 # 3. There is a svn binary, but not everything was committed properly -> UNCOMMITTED
 # 4. There is a svn binary and everything was committed -> r<revision>
 
+ifndef SPKG_PACKAGER
+  $(warning Please set SPKG_PACKAGER in your .garrc file to your name)
+  SPKG_PACKAGER = Unknown
+endif
+
+ifndef SPKG_EMAIL
+  $(warning Please set SPKG_EMAIL in your .garrc file to your email address)
+  SPKG_EMAIL = Unknown
+endif
+
+
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
 SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
-SPKG_PACKAGER  ?= Unknown
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
-SPKG_EMAIL     ?= Unknown
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
@@ -141,7 +150,7 @@ SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 
 SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)
-SPKG_EXPORT    ?= $(WORKDIR)
+SPKG_EXPORT    ?= $(HOME)/staging/build-$(shell date '+%d.%b.%Y')
 SPKG_PKGROOT   ?= $(PKGROOT)
 SPKG_PKGBASE   ?= $(PKGROOT)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
