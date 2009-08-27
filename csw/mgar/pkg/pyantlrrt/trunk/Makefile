@@ -17,6 +17,7 @@ DISTFILES  = antlr_python_runtime-$(GARVERSION).tar.gz
 WORKSRC = $(WORKDIR)/antlr_python_runtime-$(GARVERSION)
 
 REQUIRED_PKGS = CSWcswclassutils CSWpython CSWpython-rt
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpysetuptools
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
