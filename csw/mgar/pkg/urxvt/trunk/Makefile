@@ -20,14 +20,13 @@ endef
 
 MASTER_SITES = http://dist.schmorp.de/rxvt-unicode/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWurxvt,)
-PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris8.patch
+# PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris8.patch
 
-# We define upstream file regex so we can be notifed of new upstream software
-# release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
 SPKG_SOURCEURL = http://software.schmorp.de/pkg/rxvt-unicode.html
+
+PACKAGES = CSWurxvt
+CATALOGNAME_CSWurxvt = urxvt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-perl
