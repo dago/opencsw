@@ -1,5 +1,5 @@
 GARNAME = pca
-GARVERSION = 20090723-01
+GARVERSION = 20090827-01
 CATEGORIES = utils
 
 DESCRIPTION = Patch Check Advanced
@@ -18,6 +18,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)
 DISTFILES += COPYING
 DISTFILES += pca.conf
 
+PATCHFILES = 0001-prefer-opencsw-perl.diff
+#PATCHDIRLEVEL = 0
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d{8}-\d{2})
 
@@ -34,6 +37,10 @@ SPKG_VERSION = $(shell echo $(GARVERSION) | sed -e 's/-/./g')
 ARCHALL = 1
 
 include gar/category.mk
+
+post-extract-modulated:
+	@gln -s $(DISTNAME) $(WORKSRC)/pca
+	@$(MAKECOOKIE)
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)

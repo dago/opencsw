@@ -1,0 +1,10 @@
+--- pca.orig/pca	2009-08-27 14:19:12.482759685 +0200
++++ pca.patched/pca	2009-08-27 14:19:43.651239697 +0200
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ #! -*- perl -*-
+-eval 'exec perl -x -w $0 ${1+"$@"}'
++eval 'PATH=/opt/csw/bin:$PATH exec perl -x -w $0 ${1+"$@"}'
+   if 0;
+ 
+ # PCA - Patch Check Advanced
