@@ -25,6 +25,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 SPKG_SOURCEURL = http://pywebsvcs.sf.net/
 PACKAGES = CSWpyzsi
 CATALOGNAME = py_zsi
+ARCHALL = 1
 
 REQUIRED_PKGS = CSWpyxml
 
