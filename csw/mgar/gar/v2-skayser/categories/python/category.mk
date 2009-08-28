@@ -1,13 +1,12 @@
 # Add a dependency to CSWpython
 _EXTRA_GAR_PKGS += CSWpython
 
-# Put PYCOMPILE in here for now and let gar.pkg.mk handle the usual
-# cswclassutils stuff.
-PYCOMPILE = .*\.py
+# We just set PYCOMPILE, gar.mk then excludes the corresponding .py{c,o} 
+# files. Only thing we explicitly exclude here are the egg-info files. 
+# gar.pkg.mk handles the usual cswclassutils stuff. 
 
-# Could we have "setup.py install" just _not_ compile .py{c,o} files
-# in the first place?
-_MERGE_EXCLUDE_CATEGORY = .*\.pyo .*\.pyc .*\.egg-info.*
+PYCOMPILE = /opt/csw/lib/python/site-packages/.*\.py
+_MERGE_EXCLUDE_CATEGORY += .*\.egg-info.*
 
 # Haven't seen a python module with a configure phase so far
 CONFIGURE_SCRIPTS ?=
@@ -16,5 +15,6 @@ CONFIGURE_SCRIPTS ?=
 BUILD_SCRIPTS ?= $(WORKSRC)/setup.py
 INSTALL_SCRIPTS ?= $(WORKSRC)/setup.py
 INSTALL_ARGS ?= --root=$(DESTDIR) --prefix=$(prefix)
+TEST_SCRIPTS ?= $(WORKSRC)/setup.py
 
 include gar/gar.mk
