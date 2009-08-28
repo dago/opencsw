@@ -12,15 +12,19 @@ endef
 SF_PROJ = ganglia
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpackage,)
+#DISTFILES += $(call admfiles,CSWpackage,)
 
-PACKAGES = CSWgangliart CSWgangliaagent
+PACKAGES = CSWgangliaagent CSWgangliart
 
+CATALOGNAME_CSWganglia		= ganglia
 CATALOGNAME_CSWgangliart	= ganglia_rt
 CATALOGNAME_CSWgangliaagent	= ganglia_agent
 
+SPKG_DESC_CSWganglia		= Dummy package
 SPKG_DESC_CSWgangliart		= Ganglia runtime libraries
 SPKG_DESC_CSWgangliaagent	= Ganglia performance monitoring agent gmond
+
+PREREQUISITE_PKGS = CSWexpat CSWlibconfuse CSWapache2rt
 
 REQUIRED_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
 REQUIRED_PKGS_CSWgangliaagent = CSWexpat CSWlibconfuse CSWapache2rt
@@ -43,6 +47,18 @@ CONFIGURE_ARGS += --without-gmetad
 # Reduce dependencies, no gettext:
 CONFIGURE_ARGS += --disable-nls
 
+# For Ganglia 3.1.2, the test suite doesn't compile cleanly on Solaris,
+# so we skip it.  This should be re-assessed with each new release
+# from upstream.  Proposed fixes for the test suite to be submitted
+# upstream.
+ifeq ($(GARVERSION),3.1.2)
+#TEST_TARGET = check
+TEST_SCRIPTS = skip
+test-skip:
+        $(DONADA)
+endif
+
+PKGFILES_CSWganglia = 
 PKGFILES_CSWgangliart = $(libdir)/libganglia.*
 
 include gar/category.mk
