@@ -32,8 +32,10 @@ UFILES_REGEX = (\d+(?:\.\d+)*).tar.bz2
 PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
 EXTRA_EXPORTS = PKG_CONFIG_PATH
 
+CONFIGURE_ARGS  = $(DIRPATHS)
+
 TEST_TARGET = check
-TEST_SCRIPTS = 
+#TEST_SCRIPTS = 
 
 include gar/category.mk
 
