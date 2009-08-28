@@ -561,10 +561,7 @@ MERGE_EXCLUDE_CATEGORY ?= $(_MERGE_EXCLUDE_CATEGORY)
 
 # Support for cswpycompile, skip pre-compiled python files (.pyc, .pyo)
 # during the merge phase.
-ifneq ($(PYCOMPILE),)
-MERGE_EXCLUDE_PYCOMPILE += $(addsuffix c,$(PYCOMPILE))
-MERGE_EXCLUDE_PYCOMPILE += $(addsuffix o,$(PYCOMPILE))
-endif
+MERGE_EXCLUDE_PYCOMPILE ?= $(addsuffix c,$(PYCOMPILE)) $(addsuffix o,$(PYCOMPILE))
 
 MERGE_EXCLUDE_INFODIR ?= $(sharedstatedir)/info/dir
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/.*\.la
