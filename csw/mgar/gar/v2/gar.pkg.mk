@@ -173,7 +173,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(PRESERVECONF:%.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
-		$(foreach FILE,$(PYCOMPILE),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		print join(" ",@F),"\n";'
 _EXTRA_GAR_PKGS += CSWcswclassutils
 # Make sure the configuration files always have a .CSW suffix and rename the
