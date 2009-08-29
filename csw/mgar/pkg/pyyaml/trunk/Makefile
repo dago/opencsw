@@ -1,14 +1,13 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header$
 
 GARNAME = pyyaml
 GARVERSION = 3.08
-CATEGORIES = lib
+CATEGORIES = python
 
 PROJ_NAME = PyYAML
 
-DESCRIPTION = YAML parser and emitter for Python
 define BLURB
   PyYAML is a YAML parser and emitter for the Python programming language.
 
@@ -39,34 +38,21 @@ PACKAGES = CSWpyyaml CSWpyyamlrt
 CATALOGNAME_CSWpyyaml = py_pyyaml
 CATALOGNAME_CSWpyyamlrt = py_pyyaml_rt
 
-REQUIRED_PKGS_CSWpyyaml = CSWpython
 REQUIRED_PKGS_CSWpyyamlrt = CSWpython-rt CSWlibyaml
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS = CSWpython CSWlibyaml
+
+SPKG_DESC_CSWpyyaml = YAML parser and emitter for Python
+SPKG_DESC_CSWpyyamlrt = Runtime libraries for YAML parser and emitter
 
 ARCHALL_CSWpyyaml = 1
 PKGFILES_CSWpyyamlrt = /opt/csw/lib/python/site-packages/.*\.so
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = pyyaml
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = pyyaml
-
-PROTOTYPE_FILTER = awk ' \
-  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
-  { print }'
 
 build-pyyaml:
 	(cd $(WORKSRC); $(BUILD_ENV) python setup.py --with-libyaml build)
-	@$(MAKECOOKIE)
-
-install-pyyaml:
-	(cd $(WORKSRC); $(INSTALL_ENV) python setup.py install --root=$(DESTDIR))
-	@$(MAKECOOKIE)
-
-post-install-modulated:
-	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
 	@$(MAKECOOKIE)
 
 include gar/category.mk
