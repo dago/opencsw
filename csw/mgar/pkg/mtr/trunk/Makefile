@@ -1,7 +1,5 @@
 # TODO
 # ----
-# * Find a way to somehow package out of the install dirs, we don't need
-#   merging for the two incompatible modulations/packages.
 # * Revisit curses autoconf detection. Maybe have a chat with upstream
 #   as the README says that there are known, yet unsolved Solaris autoconf
 #   recipe problems
@@ -28,7 +26,21 @@ MASTER_SITES = ftp://ftp.bitwizard.nl/mtr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS  = CSWncurses
+PACKAGES = CSWmtr CSWmtrtiny
+
+CATALOGNAME_CSWmtr       = mtr
+SPKG_DESC_CSWmtr         = Combined traceroute and ping utility
+REQUIRED_PKGS_CSWmtr     = CSWgtk2 CSWlibatk CSWpango CSWlibcairo
+REQUIRED_PKGS_CSWmtr    += CSWggettextrt CSWglib2 CSWncurses
+REQUIRED_PKGS_CSWmtr    += CSWfconfig CSWftype2 CSWzlib
+INCOMPATIBLE_PKGS_CSWmtr = CSWmtrtiny
+EXTRA_PKGFILES_EXCLUDED_CSWmtr = $(sbindir)/mtr-nongui
+
+CATALOGNAME_CSWmtrtiny       = mtr_tiny
+SPKG_DESC_CSWmtrtiny         = Combined traceroute and ping utility (CLI only version)
+REQUIRED_PKGS_CSWmtrtiny     = CSWncurses
+INCOMPATIBLE_PKGS_CSWmtrtiny = CSWmtr
+EXTRA_PKGFILES_EXCLUDED_CSWmtrtiny = $(sbindir)/mtr-gui
 
 # 1) Check for socklen_t via sys/socket.h (not netinet/in.h)
 # 2) Don't cast sin_addr to (struct in_addr), cc bails out with invalid cast
@@ -38,33 +50,50 @@ TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# Make mtr setuid so that it can access raw sockets
-PROTOTYPE_FILTER = awk ' \
-	$$$$3 ~ /sbin\/mtr$$$$/ { $$$$4 = "4755" } \
-	{ print }'
-
-# We would like to have two packages: one with GUI support and one without
-# GUI support.
+# ------------------ BEWARE:  NASTY HACK AHEAD --------------------
+#
+# We employ modulations to produce two mtr binaries, one with X support
+# the other one without (less dependencies). We need to transform the
+# name on merge so that the binaries don't clash and fiddle the correct
+# binary into the proper path again on package assembly (via prototype).
 #
 EXTRA_MODULATORS = GUI
 MODULATIONS_GUI = disable enable
 
 ifeq ($(GUI), disable)
 CONFIGURE_ARGS += --without-gtk
-PACKAGES = CSWmtrtiny
-CATALOGNAME = mtr_tiny
-INCOMPATIBLE_PKGS = CSWmtr
 endif
 
 ifeq ($(GUI), enable)
 CONFIGURE_ARGS += --disable-gtktest
-REQUIRED_PKGS += CSWgtk2 CSWlibatk CSWpango CSWlibcairo
-REQUIRED_PKGS += CSWggettextrt CSWglib2
-INCOMPATIBLE_PKGS = CSWmtrtiny
 EXTRA_PKG_CONFIG_PATH = /opt/csw/X11/lib/pkgconfig
 endif
-#
-# /end modulations
+
+# Rename the modulated binaries so that we can distinguish them
+# Could also be done via ./configure --program-suffix, but the
+# install-exec-hook for mtr doesn't honor the transformed name
+# and fails.
+EXTRA_PAX_ARGS_isa-sparcv8-gui-enable  = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-gui,p"
+EXTRA_PAX_ARGS_isa-sparcv8-gui-disable = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-nongui,p"
+EXTRA_PAX_ARGS_isa-i386-gui-enable     = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-gui,p"
+EXTRA_PAX_ARGS_isa-i386-gui-disable    = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-nongui,p"
+
+# Simply copy all files, EXTRA_PAX_ARGS above takes care not to overwrite the 
+# mtr binary on merging.
+MERGE_SCRIPTS_isa-sparcv8-gui-enable  = copy-all
+MERGE_SCRIPTS_isa-sparcv8-gui-disable = copy-all
+MERGE_SCRIPTS_isa-i386-gui-enable     = copy-all
+MERGE_SCRIPTS_isa-i386-gui-disable    = copy-all
+
+# 1) Move the GUI/non-GUI binaries to their proper location
+# 2) Make mtr setuid so that it can access raw sockets
+PROTOTYPE_FILTER = awk ' \
+	$$$$3 ~ /^\/opt\/csw\/sbin\/mtr-/ { \
+		$$$$3 = "/opt/csw/sbin/mtr=" $$$$3; \
+		$$$$4 = "4755"; \
+	} { print }'
+
+# ------------------ /BEWARE:  NASTY HACK AHEAD --------------------
 
 include gar/category.mk
 
