@@ -9,7 +9,6 @@ fafd09557dbb4d3acc01c51b78ce8120  download/jsstdint.h.diff
 463d0bd49aa3726c1d9e19c18b38ce70  download/configure.diff
 f562a935a0fb2c5ad38f95af114d0a49  download/nsPluginsDirUnix.cpp.diff
 0589ca8ad5f6744f573bb8ce0ba71d78  download/js.src.configure.diff
-b940bc6f09956cb97b5a68f0fe9b73a6  download/SunOS5.mk.diff
 3ad7b67c350157d9b54270139e36c107  download/lowpbe.c.diff
 969c809ca9889cc8292ff50220b46efd  download/softoken.config.mk.diff
 1178db1603e82d8bfefefa200d7e7ce7  download/fipsaudt.c.diff

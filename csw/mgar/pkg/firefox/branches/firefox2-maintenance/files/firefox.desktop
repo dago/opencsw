@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Firefox
+Comment=Firefox Community Edition
+TryExec=firefox
+Exec=firefox %u
+Icon=firefox.png
+MimeType=text/html;
+Categories=Application;Network;

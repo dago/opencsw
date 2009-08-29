@@ -1,5 +1,7 @@
 f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 6ede39c29b3672fb1fc1d8fe397a7863  download/CSWfirefox.postremove
+9eaa0433fd8d1d7a3b39442b4b4c3e14  download/SunOS5.mk.diff
+03e4d0e627dd508ea895c99c5e7ed184  download/autoconf.mk.diff
 45bba282258a321e5e4f73a742bcc31b  download/autoconf.mk.in.diff
 c869762735a41bb30f417e510ccb7f31  download/configure.diff
 a71a4afaabc4d067f30d8fb184fea520  download/file_id.cc.diff

@@ -9,7 +9,7 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
-DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall 
+DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall autoconf.mk.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
@@ -48,6 +48,7 @@ PATCHFILES += md5.h.diff
 PATCHFILES += solaris_lwp.h.diff
 PATCHFILES += nsNativeApSuportUnix.cpp.diff
 PATCHFILES += nsExceptionHandler.cpp.diff 
+PATCHFILES += SunOS5.mk.diff
 
 # pkg-config options
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
@@ -81,10 +82,13 @@ post-extract:
 	@cp $(FILEDIR)/stdbool.h $(WORK_BUILD)/memory/jemalloc
 	@$(MAKECOOKIE)
 
-pre-configure:
+pre-configure-modulated:
 	@cp $(FILEDIR)/.mozconfig  $(WORK_BUILD)/.mozconfig
 
-pre-install:
+post-configure-modulated:
+	@gpatch -d$(WORKSRC) -p1 -F2 < download/autoconf.mk.diff
+
+pre-install-modulated:
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
 	( cd $(WORK_INSTALL)/opt/csw/bin && ln -sf ../mozilla/firefox/bin/firefox . )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )
@@ -94,7 +98,7 @@ pre-install:
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/gnome/mime-info )
 	( cp $(FILEDIR)/firefox.keys $(WORK_INSTALL)/opt/csw/share/gnome/mime-info/firefox.keys )
 
-post-install:
+post-install-modulated:
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 	( gfind $(WORK_INSTALL)/opt/csw -name chromelist.txt -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )
 	( gfind $(WORK_INSTALL)/opt/csw/mozilla/firefox -name "*.js" -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )

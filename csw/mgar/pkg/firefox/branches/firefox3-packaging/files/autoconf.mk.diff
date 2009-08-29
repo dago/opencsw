@@ -1,0 +1,31 @@
+--- firefox.orig/config/autoconf.mk	2009-08-29 21:57:42.151999781 +0200
++++ firefox/config/autoconf.mk		2009-08-29 22:05:33.912567245 +0200
+@@ -238,7 +238,7 @@
+ 
+ MOZ_PREF_EXTENSIONS = 1
+ 
+-MOZ_CAIRO_LIBS = -L/opt/csw/lib -lcairo -lfreetype -lz -lfontconfig    -L/usr/openwin/lib -R/usr/openwin/lib -L/opt/csw/lib -L/opt/csw/X11/lib -lXrender -lcairo -lX11  
++MOZ_CAIRO_LIBS = -L/opt/csw/lib -lcairo -lfreetype -lz -lfontconfig  -L/opt/csw/lib -L/opt/csw/X11/lib -lXrender -lcairo -lX11  
+ 
+ MOZ_ENABLE_GNOMEUI = 1
+ MOZ_GNOMEUI_CFLAGS = -DORBIT2=1 -D_REENTRANT -D_PTHREADS -D__solaris__ -D_POSIX_PTHREAD_SEMANTICS -I/opt/csw/include/libgnomeui-2.0 -I/opt/csw/include/libgnome-2.0 -I/opt/csw/include/libgnomecanvas-2.0 -I/opt/csw/include/gtk-2.0 -I/opt/csw/include/libart-2.0 -I/opt/csw/include/gconf/2 -I/opt/csw/include/libbonoboui-2.0 -I/opt/csw/include/gnome-vfs-2.0 -I/opt/csw/lib/gnome-vfs-2.0/include -I/opt/csw/include/gnome-keyring-1 -I/opt/csw/include/glib-2.0 -I/opt/csw/lib/glib-2.0/include -I/opt/csw/include/orbit-2.0 -I/opt/csw/include/libbonobo-2.0 -I/opt/csw/include/bonobo-activation-2.0 -I/opt/csw/include/pango-1.0 -I/opt/csw/include/freetype2 -I/opt/csw/include -I/opt/csw/lib/gtk-2.0/include -I/opt/csw/include/atk-1.0 -I/opt/csw/include/cairo -I/opt/csw/include/pixman-1 -I/opt/csw/include/libpng12 -I/opt/csw/include/libxml2 -I/opt/csw/X11/include  
+@@ -270,7 +270,7 @@
+ 
+ CROSS_COMPILE   = 
+ 
+-OS_CPPFLAGS	= -I/opt/csw/include -I/opt/csw/X11/include  -I/usr/openwin/include
++OS_CPPFLAGS	= -I/opt/csw/include -I/opt/csw/X11/include 
+ OS_CFLAGS	= $(OS_CPPFLAGS) -xlibmil -D__solaris__ -DG_HAVE_ISO_VARARGS -xlibmil -D__solaris__ -DG_HAVE_ISO_VARARGS -xlibmieee -xstrconst -xbuiltin=%none -mt
+ OS_CXXFLAGS	= $(OS_CPPFLAGS) -xlibmil -xlibmopt -features=tmplife -norunpath -DG_HAVE_ISO_VARARGS -xlibmil -xlibmopt -features=tmplife -norunpath -DG_HAVE_ISO_VARARGS -xlibmieee -xbuiltin=%none -features=tmplife -norunpath -mt
+ OS_LDFLAGS	= -lpthread -M /usr/lib/ld/map.noexstk -xildoff -z lazyload -z combreloc -L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3 -L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3 -z ignore -R '$$ORIGIN:$$ORIGIN/..'
+@@ -297,8 +297,8 @@
+ PROFILE_USE_CFLAGS = -xlinkopt=2 -xprofile=use:/home/wbonnet/mgar/pkg/firefox/branches/firefox3-packaging/work/build-isa-sparcv8/firefox/browser
+ PROFILE_USE_LDFLAGS = -xlinkopt=2 -xprofile=use:/home/wbonnet/mgar/pkg/firefox/branches/firefox3-packaging/work/build-isa-sparcv8/firefox/browser
+ 
+-XCFLAGS		=  -I/usr/openwin/include
+-XLDFLAGS	=  -L/usr/openwin/lib -R/usr/openwin/lib
++XCFLAGS		=  -I/opt/csw/X11/include
++XLDFLAGS	=  -L/opt/csw/X11/lib -R/opt/csw/X11/lib
+ XLIBS		= -lX11 -lsocket  -lnsl
+ 
+ WIN_TOP_SRC	= 

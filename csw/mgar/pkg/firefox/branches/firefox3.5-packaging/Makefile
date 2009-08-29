@@ -90,6 +90,7 @@ LD=/opt/csw/bin/gld
 EXTRA_CONFIGURE_EXPORTS = XCFLAGS LD
 
 # LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
+LDFLAGS += -L/opt/csw/mozilla/firefox/lib -R/opt/csw/mozilla/firefox/lib -L/opt/csw/lib -R/opt/csw/lib -lsqlite3
 
 # PERL=/opt/csw/bin/perl
 # export PERL 
