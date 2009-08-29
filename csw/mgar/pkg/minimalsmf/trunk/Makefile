@@ -1,5 +1,5 @@
 GARNAME = minimalsmf
-GARVERSION = 0.2
+GARVERSION = 0.3
 CATEGORIES = server
 
 DESCRIPTION = A test of an SMF-enabled package and mGAR SMF support
@@ -21,10 +21,7 @@ MASTER_SITES =
 DISTFILES  = sleeping-beauty
 DISTFILES += csw$(GARNAME)
 
-REQUIRED_PKGS = CSWcswclassutils
-SPKG_CLASSES = none cswinitsmf
-
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswminimalsmf$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+INITSMF = /etc/opt/csw/init.d/cswminimalsmf
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -32,9 +29,11 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = $(GARNAME)
 
 install-$(GARNAME):
-	ginstall -d $(DESTDIR)
+	# Installing the executable
 	ginstall -d $(DESTDIR)$(bindir)
-	ginstall -m 755 files/sleeping-beauty $(DESTDIR)$(bindir)
+	ginstall -m 755 $(FILEDIR)/sleeping-beauty $(DESTDIR)$(bindir)
+	# Installing the startup script. It uses init.d for Solaris 8 and 9, and
+	# SMF for Solaris 10.
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/csw$(GARNAME) \
 		$(DESTDIR)/etc/opt/csw/init.d/csw$(GARNAME)

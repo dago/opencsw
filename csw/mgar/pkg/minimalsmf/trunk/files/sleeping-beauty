@@ -2,6 +2,6 @@
 
 while true
 do
-	sleep 10
+	sleep 30
 	logger user.info "Sleeping $(date)"
 done
