@@ -1,4 +1,4 @@
-#!/opt/csw/bin/bash
+#!/opt/csw/bin/bash -x
 
 if [ -d ~/.tempextractjar ] ; 
 then 
@@ -14,7 +14,9 @@ jar xvf $BACKUP_OLD_DIR/$1
 
 gfind . -name "*.js" -exec bash -x -c " mv {} {}.temp && gsed -e  s_\$REPLACEDIR\_\_g {}.temp > {} && rm {}.temp"  \; 
 
-rm $BACKUP_OLD_DIR/$1
+rm $1
 jar cvf $BACKUP_OLD_DIR/$1 *
 
 cd $BACKUP_OLD_DIR
+
+rm -fr ~/.tempextractjar
