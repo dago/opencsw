@@ -1,3 +1,4 @@
-8d328f55faaa8eee181c9083f2c0525b  download/wgetpaste-2.13.patch
+0a96eee7e51fe1b7e9054dd302ca0508  download/0001-Using-gwhoami-instead-of-whoami.patch
+4ce4101e5be2ea7af5b5ea18be7f8693  download/0002-CSW-bash.patch
 a341c778d745b0a7ad11163a4a2c1ea9  download/wgetpaste-2.13.tar.bz2
 67425820c0281729a7f63e3e3339c49f  download/wgetpaste.conf

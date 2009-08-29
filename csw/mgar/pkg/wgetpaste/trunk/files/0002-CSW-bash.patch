@@ -1,0 +1,22 @@
+From f40b9334fad600f6270280a7f3b4e769dabfb9e2 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@build8s.(none)>
+Date: Sat, 29 Aug 2009 11:24:37 +0200
+Subject: [PATCH 2/2] CSW bash
+
+---
+ wgetpaste |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/wgetpaste b/wgetpaste
+index 9b40432..f536fbc 100755
+--- a/wgetpaste
++++ b/wgetpaste
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env bash
++#!/opt/csw/bin/bash
+ # A Script that automates pasting to a number of pastebin services
+ # relying only on bash, sed, coreutils (mktemp/sort/tr/wc/whoami/tee) and wget
+ # Copyright (c) 2007 Bo Ørsted Andresen <bo.andresen@zlin.dk>
+-- 
+1.6.3.2
+

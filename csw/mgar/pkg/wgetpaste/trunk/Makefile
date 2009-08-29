@@ -15,9 +15,10 @@ DISTFILES += wgetpaste.conf
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWshutils CSWwget CSWcswclassutils
+REQUIRED_PKGS = CSWshutils CSWwget CSWcswclassutils CSWbash
 
-PATCHFILES = wgetpaste-$(GARVERSION).patch
+PATCHFILES  = 0001-Using-gwhoami-instead-of-whoami.patch
+PATCHFILES += 0002-CSW-bash.patch
 
 ARCHALL = 1
 
