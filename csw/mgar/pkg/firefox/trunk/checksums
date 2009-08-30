@@ -6,6 +6,8 @@ f9c7fb69080051172bd7357370731ba3  download/CSWfirefox.postinstall
 c869762735a41bb30f417e510ccb7f31  download/configure.diff
 a71a4afaabc4d067f30d8fb184fea520  download/file_id.cc.diff
 040d01a1e22a1ec1b28188479df06007  download/firefox-3.0.13-source.tar.bz2
+7343359131b4b31b985ba59fc9a2e3fe  download/firefox.diff
+1a32b697eeec4c0e3cb844407b8253ca  download/firefox.dist.bin.diff
 a19792f0b67f28c9227d19d069369369  download/jemalloc.c.diff
 18b0cdc902caa4172b7f2d473239c9a9  download/md5.h.diff
 1a3d61e09378d28d9bc9f3df45a224bc  download/nsExceptionHandler.cpp.diff

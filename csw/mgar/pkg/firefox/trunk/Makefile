@@ -9,7 +9,7 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
-DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall autoconf.mk.diff
+DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall autoconf.mk.diff firefox.diff firefox.dist.bin.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
@@ -86,11 +86,13 @@ pre-configure-modulated:
 	@cp $(FILEDIR)/.mozconfig  $(WORK_BUILD)/.mozconfig
 
 post-configure-modulated:
-	@gpatch -d$(WORKSRC) -p1 -F2 < download/autoconf.mk.diff
+	@grep openwin $(WORKSRC)/config/autoconf.mk && gpatch -d$(WORKSRC) --forward -p1 -F2 < download/autoconf.mk.diff || true
 
 pre-install-modulated:
+	@grep "LD_LIBRARY_PATH=.LD_LIBRARY_PATH:/usr/lib/lwp" $(WORKSRC)/browser/app/firefox || gpatch -d$(WORKSRC) --forward  -p1 -F2 < download/firefox.diff
+	@grep "LD_LIBRARY_PATH=.LD_LIBRARY_PATH:/usr/lib/lwp" $(WORKSRC)/dist/bin/firefox || gpatch -d$(WORKSRC) --forward  -p1 -F2 < download/firefox.dist.bin.diff
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
-	( cd $(WORK_INSTALL)/opt/csw/bin && ln -sf ../mozilla/firefox/bin/firefox . )
+	( cd $(WORK_INSTALL)/opt/csw/bin ; rm -f firefox ; ln -sf ../mozilla/firefox/bin/firefox . )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )
 	( cp $(WORK_BUILD)/other-licenses/branding/firefox/mozicon128.png $(WORK_INSTALL)/opt/csw/share/pixmaps/firefox.png )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/applications )
