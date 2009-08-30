@@ -1,13 +1,14 @@
 diff --speed-large-files --minimal -Nru firefox.orig/dist/bin/firefox firefox/dist/bin/firefox
 --- firefox.orig/dist/bin/firefox    2009-08-27 23:43:31.266507053 +0200
 +++ firefox/dist/bin/firefox     	2009-08-27 23:44:53.015182925 +0200
-@@ -54,6 +54,11 @@
+@@ -54,6 +54,12 @@
 
  moz_libdir=/opt/csw/mozilla/firefox/lib
 
 +if [ "`uname -r`" = "5.8" ] ; then
 +       LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/lwp
 +       LD_LIBRARY_PATH_64=$LD_LIBRARY_PATH_64:/usr/lib/lwp/64
++       export LD_LIBRARY_PATH LD_LIBRARY_PATH_64
 +fi
 +
  # Use run-mozilla.sh in the current dir if it exists
