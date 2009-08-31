@@ -20,6 +20,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+SPKG_SOURCEURL = http://www.zlib.net/pigz/
+
 LICENSE = README
 
 REQUIRED_PKGS = CSWzlib
