@@ -1,8 +1,8 @@
-082fc09dd4f090fd402ecea74de04512  download/jdk-6u13-solaris-sparc.sh
-9d21b094dda0f2cebdf4a7db97679e0a  download/jdk-6u13-solaris-sparcv9.sh
-62ee4b88ddc74af6fb15c1d8d3d2edce  download/jdk-6u13-solaris-i586.sh
-08824246000783adc6cae525b183b983  download/jdk-6u13-solaris-x64.sh
-e97f304567b9a3504ed23ab5203b1d6a  download/CSWjdk6.gspec
-db63838ec6ecabef9af5dbaeece93854  download/CSWjre6.gspec
 49e3f19f300f9634301324c66e9c538f  download/CSWjdk.gspec
+e97f304567b9a3504ed23ab5203b1d6a  download/CSWjdk6.gspec
 e8c5435c1ec2ee4b55bc64a7e43092f5  download/CSWjre.gspec
+db63838ec6ecabef9af5dbaeece93854  download/CSWjre6.gspec
+3b3403d0b8a5bba0f681f2bca66a2294  download/jdk-6u16-solaris-i586.sh
+d1ac0843e934663fa0d6b64fc6482bad  download/jdk-6u16-solaris-sparc.sh
+ac9da8dfdde3ae213d4dd0d8867b00a1  download/jdk-6u16-solaris-sparcv9.sh
+3b80a03228161bc58ae96e2399a3b939  download/jdk-6u16-solaris-x64.sh
