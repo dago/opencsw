@@ -360,9 +360,11 @@ endif
 # REQUESTED_ISAS contains all ISAs that should be built
 # NEEDED_ISAS contains all ISAs that must be build for this architecture to make the package
 # BUILD_ISAS contains all ISAs that can be built on the current kernel
+# It is guaranteed that all BUILD_ISAS come first in NEEDED_ISAS
 # Set 'BUILD64 = 1' to build 64 bit versions automatically
 REQUESTED_ISAS ?= $(strip $(foreach A,$(GARCHLIST),$(ISA_DEFAULT_$A) $(if $(BUILD64),$(ISA_DEFAULT64_$A)) $(EXTRA_BUILD_ISAS_$A)) $(EXTRA_BUILD_ISAS))
-NEEDED_ISAS ?= $(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))
+NEEDED_ISAS ?= $(filter     $(ISALIST_$(KERNELISA)),$(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))) \
+               $(filter-out $(ISALIST_$(KERNELISA)),$(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS)))
 BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(NEEDED_ISAS))
 
 # Subdirectories for specialized binaries and libraries
