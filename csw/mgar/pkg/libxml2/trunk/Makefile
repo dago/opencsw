@@ -17,7 +17,11 @@ PACKAGES = CSWlibxml2 CSWlibxml2devel CSWpylibxml2
 
 CATALOGNAME_CSWlibxml2 = libxml2
 CATALOGNAME_CSWlibxml2devel = libxml2_devel
-CATALOGNAME_CSWpylibxml2 = pylibxml2
+CATALOGNAME_CSWpylibxml2 = py_libxml2
+
+SPKG_DESC_CSWlibxml2      = XML Parser Library
+SPKG_DESC_CSWlibxml2devel = XML Parser Library Developer Files
+SPKG_DESC_CSWpylibxml2    = XML Parser Library Python Bindings
 
 REQUIRED_PKGS_CSWlibxml2 = CSWiconv CSWzlib
 REQUIRED_PKGS_CSWlibxml2devel = CSWlibxml2
