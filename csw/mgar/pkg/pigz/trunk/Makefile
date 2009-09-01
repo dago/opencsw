@@ -26,7 +26,8 @@ LICENSE = README
 
 REQUIRED_PKGS = CSWzlib
 
-REQUESTED_ISAS = $(ISALIST_$(GARCOMPILER))
+# Optimization show effects < 5%
+#REQUESTED_ISAS = $(ISALIST_$(GARCOMPILER))
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
@@ -38,12 +39,13 @@ include gar/category.mk
 build-custom:
 	cd $(WORKSRC) && $(CC) $(CFLAGS) -c yarn.c
 	cd $(WORKSRC) && $(CC) $(CFLAGS) -c pigz.c
-	cd $(WORKSRC) && $(CC) $(LDFLAGS) -o pigz yarn.o pigz.o -lpthread -lz
+	cd $(WORKSRC) && LD_OPTIONS="$(LD_OPTIONS)" $(CC) $(LDFLAGS) -o pigz yarn.o pigz.o -lpthread -lz
 	@$(MAKECOOKIE)
 
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/pigz $(DESTDIR)$(bindir)
+	cd $(DESTDIR)$(bindir) && gln pigz unpigz
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	ginstall $(WORKSRC)/pigz.1 $(DESTDIR)$(mandir)/man1
 	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
