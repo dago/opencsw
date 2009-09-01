@@ -1,0 +1,73 @@
+#!/bin/sh
+#
+# $Id$
+#
+# vim:set sw=2 ts=2 sts=2 expandtab:
+#
+# # If old_path exists:
+#  # Create a file named {{old_path.THIS_LOCATION_IS_DEPRECATED}} and leave a message inside the file.
+#  # If new_path and new_path.CSW files are identical:
+#   # Remove new_path (it's only a copy of the .CSW default file, no data loss)
+#   # Create a symlink from new_path to old_path
+#  # Otherwise:
+#   # Create a file named {{old_path.THIS_FILE_IS_PROBABLY_UNUSED}}
+#
+# http://wiki.opencsw.org/configuration-directory-migration
+
+deprecated_info="
+This location (/opt/csw/etc) is deprecated.
+
+Configuration files are currently being placed in /etc/opt/csw.  Please make
+sure your new configuration is in /etc/opt/csw and remove the old one from
+/opt/csw/etc.
+"
+deprecated_file_ext="THIS_LOCATION_IS_DEPRECATED"
+
+filepairs="/opt/csw/etc/odbc.ini:/etc/opt/csw/odbc.ini"
+filepairs="${filepairs} /opt/csw/etc/odbcinst.ini:/etc/opt/csw/odbcinst.ini"
+dirpairs="/opt/csw/etc/ODBCDataSources:/etc/opt/csw/ODBCDataSources"
+
+return_code=0
+
+# Generated ../../../ when given a path like /etc/opt/csw/odbc.ini
+gen_dubdots() {
+  echo "$1" \
+    | sed -e 's+[^/]+.+g' \
+    | sed -e 's+\.*$++g' \
+    | tr -s . \
+    | sed -e 's+\.+..+g' \
+    | sed -e 's+^/++'
+}
+
+files_are_identical() {
+  cmp "$1" "$2" > /dev/null
+}
+
+drop_warning() {
+  echo "${deprecated_info}" > "$1.${deprecated_file_ext}"
+}
+
+for ff in ${filepairs} ${dirpairs}; do
+  old_location=`echo ${ff} | awk -F: '{print $1}'`
+  new_location=`echo ${ff} | awk -F: '{print $2}'`
+  abs_old_location="${PKG_INSTSALL_ROOT}${old_location}"
+  abs_new_location="${PKG_INSTSALL_ROOT}${new_location}"
+  old_location_noslash=`echo "${old_location}" | sed -e 's+^/++'`
+  dubdots=`gen_dubdots "${new_location}"`
+  if [ -r "${abs_old_location}" ]; then
+    drop_warning "${abs_old_location}"
+    if [ -r "${abs_new_location}" ]; then
+      if files_are_identical "${abs_new_location}" "${abs_new_location}.CSW"; then
+        rm "${abs_new_location}"
+        ln -s "${dubdots}${old_location_noslash}" "${abs_new_location}"
+      else
+        touch "${abs_old_location}.THIS_FILE_IS_PROBABLY_UNUSED"
+      fi
+    else
+      # The file doesn't exist.
+      ln -s "${dubdots}${old_location_noslash}" "${abs_new_location}"
+    fi
+  fi
+done
+
+exit "${return_code}"
