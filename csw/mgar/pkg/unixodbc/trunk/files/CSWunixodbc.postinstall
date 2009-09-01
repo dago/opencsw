@@ -56,7 +56,10 @@ for ff in ${filepairs} ${dirpairs}; do
   dubdots=`gen_dubdots "${new_location}"`
   if [ -r "${abs_old_location}" ]; then
     drop_warning "${abs_old_location}"
-    if [ -r "${abs_new_location}" ]; then
+    if [ -h "${abs_new_location}" ]; then
+      # It's a symbolic link already, doing nothing.
+      true
+    elif [ -r "${abs_new_location}" ]; then
       if files_are_identical "${abs_new_location}" "${abs_new_location}.CSW"; then
         rm "${abs_new_location}"
         ln -s "${dubdots}${old_location_noslash}" "${abs_new_location}"
@@ -64,7 +67,7 @@ for ff in ${filepairs} ${dirpairs}; do
         touch "${abs_old_location}.THIS_FILE_IS_PROBABLY_UNUSED"
       fi
     else
-      # The file doesn't exist.
+      # The file or directory doesn't exist.
       ln -s "${dubdots}${old_location_noslash}" "${abs_new_location}"
     fi
   fi
