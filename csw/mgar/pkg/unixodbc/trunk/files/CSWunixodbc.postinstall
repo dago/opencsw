@@ -50,8 +50,8 @@ drop_warning() {
 for ff in ${filepairs} ${dirpairs}; do
   old_location=`echo ${ff} | awk -F: '{print $1}'`
   new_location=`echo ${ff} | awk -F: '{print $2}'`
-  abs_old_location="${PKG_INSTSALL_ROOT}${old_location}"
-  abs_new_location="${PKG_INSTSALL_ROOT}${new_location}"
+  abs_old_location="${PKG_INSTALL_ROOT}${old_location}"
+  abs_new_location="${PKG_INSTALL_ROOT}${new_location}"
   old_location_noslash=`echo "${old_location}" | sed -e 's+^/++'`
   dubdots=`gen_dubdots "${new_location}"`
   if [ -r "${abs_old_location}" ]; then
