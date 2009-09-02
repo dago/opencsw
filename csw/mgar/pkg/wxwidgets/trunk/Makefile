@@ -78,4 +78,11 @@ EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
 EXTRA_LIB = /opt/csw/X11/lib
 PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
 
+INSTALL_SCRIPTS = wxwidgets
+
+install-wxwidgets:
+	(cd $(WORKSRC); $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
+	(cd $(WORKSRC)/contrib; $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
+	@$(MAKECOOKIE)
+
 include gar/category.mk
