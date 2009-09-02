@@ -1,5 +1,5 @@
 GARNAME = jdk5
-SPKG_VERSION = 1.5.0_17
+SPKG_VERSION = 1.5.0_19
 GARVERSION = $(shell echo $(SPKG_VERSION) | sed -e 's/\./_/g')
 CATEGORIES = lang
 
@@ -18,8 +18,10 @@ SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 DISTNAME = jdk$(SPKG_VERSION)
 DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
 NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(GARVERSION)-solaris-$S.sh)
-DISTFILES += $(call admfiles,CSWjdk5)
-DISTFILES += $(call admfiles,CSWjre5)
+
+PACKAGES = CSWjdk5 CSWjre5
+
+LICENSE = LICENSE
 
 SPKG_SOURCEURL = http://java.sun.com/javase/downloads/index_jdk5.jsp
 
@@ -42,6 +44,10 @@ PKGFILES_CSWjre5  = $(prefix)/java/jdk/$(DISTNAME)/jre/.*
 PKGFILES_CSWjre5 += $(prefix)/java/jdk/$(DISTNAME)/man/.*/$(MANPAGE_REGEX)
 PKGFILES_CSWjre5 += $(prefix)/java/jre/jre$(SPKG_VERSION)
 PKGFILES_CSWjre5 += $(prefix)/java/jre/jre5
+
+# The package must not be checked on Solaris 8 as the package contains
+# partly material for Solaris 10
+ENABLE_CHECK = 0
 
 # Tell the user to download the file manually
 manual//%:

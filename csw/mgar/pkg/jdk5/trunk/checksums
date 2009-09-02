@@ -1,6 +1,4 @@
-7d8b35d7eb7664d36ff2387e73baa15b  download/jdk-1_5_0_17-solaris-sparc.sh
-7e0ccd19d636bc3fdf1781c07a99cb8d  download/jdk-1_5_0_17-solaris-sparcv9.sh
-f000bd7d44c2964dd811f3f526572106  download/jdk-1_5_0_17-solaris-i586.sh
-419310f32f7f2bfff715bc6f1d1258c4  download/jdk-1_5_0_17-solaris-amd64.sh
-43194293b08b51d47ebc1c78af346942  download/CSWjdk5.gspec
-68ebd77b4f7648109eb11c58f8959b5b  download/CSWjre5.gspec
+8b8a01786a9dc91a38c3cc2208ec9df5  download/jdk-1_5_0_19-solaris-amd64.sh
+28f99e41bec07c9a458c2cc625876ced  download/jdk-1_5_0_19-solaris-i586.sh
+d7d5385d69629d03393d4ff02e91c406  download/jdk-1_5_0_19-solaris-sparc.sh
+8df216d7b51f333efeb9fd9f2407d5c6  download/jdk-1_5_0_19-solaris-sparcv9.sh
