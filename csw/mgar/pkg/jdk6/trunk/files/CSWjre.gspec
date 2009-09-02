@@ -1,5 +1,0 @@
-%var            bitname jre
-%var            pkgname CSWjre
-%var		arch all
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE

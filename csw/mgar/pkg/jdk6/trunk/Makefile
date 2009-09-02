@@ -18,12 +18,20 @@ SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 DISTNAME = jdk$(SPKG_VERSION)
 DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
 NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(GARVERSION)-solaris-$S.sh)
-DISTFILES += $(call admfiles,CSWjdk6)
-DISTFILES += $(call admfiles,CSWjre6)
-DISTFILES += $(call admfiles,CSWjdk)
-DISTFILES += $(call admfiles,CSWjre)
 
 SPKG_SOURCEURL = http://java.sun.com/javase/downloads/index.jsp
+
+PACKAGES = CSWjdk6 CSWjre6 CSWjdk CSWjre
+
+CATALOGNAME_CSWjdk6 = jdk6
+CATALOGNAME_CSWjre6 = jre6
+CATALOGNAME_CSWjdk = jdk
+CATALOGNAME_CSWjre = jre
+
+ARCHALL_CSWjdk = 1
+ARCHALL_CSWjre = 1
+
+LICENSE = LICENSE
 
 SPKG_DESC_CSWjdk6 = Java Development Kit 6
 SPKG_DESC_CSWjre6 = Java Runtime Environment 6

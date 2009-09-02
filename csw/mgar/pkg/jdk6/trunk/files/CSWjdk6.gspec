@@ -1,4 +1,0 @@
-%var            bitname jdk6
-%var            pkgname CSWjdk6
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE
