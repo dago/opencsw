@@ -493,6 +493,7 @@ reset-install-modulated:
 	@rm -f $(foreach C,pre-install-modulated install-modulated post-install-modulated,$(COOKIEDIR)/$C)
 	@rm -f $(COOKIEDIR)/pre-install-$(MODULATION) $(COOKIEDIR)/post-install-$(MODULATION)
 	@rm -f $(COOKIEDIR)/strip
+	@rm -f $(foreach S,$(INSTALL_TARGETS),$(COOKIEDIR)/$S)
 	@rm -f $(COOKIEROOTDIR)/global/install-$(MODULATION)
 
 # merge in all isas to the package directory after installation
