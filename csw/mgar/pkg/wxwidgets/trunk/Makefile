@@ -5,8 +5,12 @@
 GARNAME = wxWidgets
 GARVERSION = 2.8.10
 CATEGORIES = lib
-DESCRIPTION = A portable widget library
 define BLURB
+  wxWidgets lets developers create applications for Win32, Mac OS X, GTK+, X11,
+  Motif, WinCE, and more using one codebase. It can be used from languages such
+  as C++, Python, Perl, and C#/.NET. Unlike other cross-platform toolkits,
+  wxWidgets applications look and feel native. This is because wxWidgets uses
+  the platform's own native controls rather than emulating them.
 endef
 SPKG_SOURCEURL = http://www.wxwidgets.org/
 MASTER_SITES  = $(SF_MIRRORS)
@@ -20,6 +24,9 @@ PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
 ARCHALL_CSWwxwidgetsdevel  = 1
+SPKG_DESC_CSWwxwidgetscommon = A cross-platform toolkit, common files
+SPKG_DESC_CSWwxwidgetsdevel = A cross-platform toolkit, header files
+SPKG_DESC_CSWwxwidgetsgtk2 = A cross-platform toolkit, gtk2 support
 REQUIRED_PKGS  = CSWexpat
 REQUIRED_PKGS += CSWfconfig
 REQUIRED_PKGS += CSWftype2
