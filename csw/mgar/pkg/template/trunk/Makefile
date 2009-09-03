@@ -20,15 +20,15 @@ GARVERSION = 1.0
 ## adjust the build settings for the respective category.
 ##
 ## Possible settings are:
-## apps, cpan, devel, gnome, java, kde, lang, lib, meta, net, server, utils, x11,
-## xfce, xorg, xtra
+## apps, cpan, devel, gnome, java, kde, lang, lib, meta, net, python, server,
+## utils, x11, xfce, xorg, xtra
 CATEGORIES = lib
 ##
 ## A one-line description of the package, which will appear in the pkginfo.
 DESCRIPTION = <please fill in>
 ##
 ## A longer description of the package. This is only for descriptive purposes
-## inside the Makefile and is not used elsewhere. 
+## inside the Makefile and is not used elsewhere.
 define BLURB
   <please fill in>
 endef
@@ -39,11 +39,11 @@ SPKG_SOURCEURL =
 ##
 ## Whitespace-separated list of URLs to download the source package from.
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
-MASTER_SITES = 
+MASTER_SITES =
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
 ## Sourceforge project name differs from $(GARNAME). Specifies the Sourceforge
-## project name of the software you wish to download. 
+## project name of the software you wish to download.
 ## SF_PROJ =
 ##
 ## A list of space separated patch filenames from files/ that are to be applied
@@ -68,7 +68,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ##
 ## A list of files / patterns that should be excluded from the package. Amends
 ## the default list of excluded filenames $(MERGE_EXCLUDE_DEFAULT), which
-## contains things like libtool .la files and files with a leading ~. 
+## contains things like libtool .la files and files with a leading ~.
 ## EXTRA_MERGE_EXCLUDE_FILES =
 ##
 ## A list of space separated package names that should be marked as
@@ -76,19 +76,19 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## When a user has one of the incompatible packages installed and installs
 ## your package, he will be prompted that the incompatible package must be
 ## removed. He will however not be prevented to install your package without
-## removing the conflicting package first. 
+## removing the conflicting package first.
 ## INCOMPATIBLE_PKGS =
 ##
 ##  The name of the license file that should be included in your package. Defaults
 ##  to COPYING. See http://sourceforge.net/apps/trac/gar/wiki/CopyRightfor details
-##  on including and displaying licenses. 
+##  on including and displaying licenses.
 ## LICENSE =
 ##
 ## A list of space separated package names that should be produced from your
 ## Makefile. This is used when a software has different components that can be
 ## packaged and used individually (think runtime libraries, client tools, server
 ## files, development headers). You don't need to set this when you just want to
-## produce one package. 
+## produce one package.
 ##
 ## When you set this variable to include more than one package, you also need to
 ## set PKGFILES_CSWpkgname for each package (except for the first one in your
@@ -103,7 +103,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## to prepare the prototype file for use with cswclassutils (see
 ## $(SPKG_CLASSES)). Now that there are convenience variables for cswclassutils,
 ## you will rarely have to use this. A still valid use case would be to change
-## the file permissions of a file to be set-UID. 
+## the file permissions of a file to be set-UID.
 ## See http://wiki.opencsw.org/cswclassutils-package for common usage information
 ## PROTOTYPE_FILTER =
 ##
@@ -153,7 +153,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
 ##
 ## BUILD_ARGS is passed as an argument to gmake during the build phase. Use this
-## for example, if you need to override Makefile variables. 
+## for example, if you need to override Makefile variables.
 ## BUILD_ARGS =
 ##
 ## Arguments passed to the ./configure script.
