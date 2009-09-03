@@ -1,0 +1,39 @@
+--- confuse-2.6/src/confuse.c	(revision x)
++++ confuse-2.6/src/confuse.c	(revision y)
+@@ -65,7 +65,6 @@
+ 
+ static int cfg_parse_internal(cfg_t *cfg, int level,
+                               int force_state, cfg_opt_t *force_opt);
+-static cfg_value_t *cfg_setopt(cfg_t *cfg, cfg_opt_t *opt, char *value);
+ 
+ #define STATE_CONTINUE 0
+ #define STATE_EOF -1
+@@ -531,7 +530,7 @@
+     }
+ }
+ 
+-static cfg_value_t *cfg_setopt(cfg_t *cfg, cfg_opt_t *opt, char *value)
++DLLIMPORT cfg_value_t *cfg_setopt(cfg_t *cfg, cfg_opt_t *opt, char *value)
+ {
+     cfg_value_t *val = 0;
+     int b;
+--- confuse-2.6/src/confuse.h	(revision x)
++++ confuse-2.6/src/confuse.h	(revision y)
+@@ -839,6 +839,16 @@
+  */
+ DLLIMPORT int __export cfg_parse_boolean(const char *s);
+ 
++/** Set an option (create an instance of an option).
++ *
++ * @param cfg The configuration file context.
++ * @param opt The option definition.
++ * @param value The initial value for the option.
++ *
++ * @return Returns a pointer to the value object.
++ */
++DLLIMPORT cfg_value_t __export *cfg_setopt(cfg_t *cfg, cfg_opt_t *opt, char *value);
++
+ /** Return an option given it's name.
+  *
+  * @param cfg The configuration file context.
+

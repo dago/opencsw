@@ -8,9 +8,7 @@ CATEGORIES = lib
 # upstream.
 ifeq ($(GARVERSION),2.6)
 #TEST_TARGET = check
-TEST_SCRIPTS = skip
-test-skip:
-	$(DONADA)
+TEST_SCRIPTS = 
 endif
 
 DESCRIPTION = a configuration file parser library
@@ -25,8 +23,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://bzero.se/confuse/
+PATCHFILES = setopt.diff
 DISTFILES  = confuse-$(GARVERSION).tar.gz
+DISTFILES += $(PATCHFILES)
 DISTNAME = confuse-$(GARVERSION)
+
+EXTRA_DOCS = $(PATCHFILES)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
