@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = elinks
-GARVERSION = 0.11.6
+GARVERSION = 0.11.7
 CATEGORIES = net
 
 DESCRIPTION = An advanced text mode web browser
