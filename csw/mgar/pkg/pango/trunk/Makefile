@@ -1,5 +1,5 @@
 GARNAME = libpango
-GARVERSION = 1.24.3
+GARVERSION = 1.24.5
 CATEGORIES = lib
 
 DESCRIPTION = A framework for the layout and rendering of international text
@@ -24,6 +24,10 @@ PREREQUISITE_PKGS = CSWgtk-doc CSWlibxslt CSWglib2devel CSWlibxft2devel
 REQUIRED_PKGS_CSWpango  = CSWggettextrt CSWglib2 CSWfconfig CSWftype2
 REQUIRED_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib CSWlibx11
 REQUIRED_PKGS_CSWpangodevel = CSWpango
+
+SPKG_DESC_CSWpango = Pango, a framework for the layout and rendering of international text
+SPKG_DESC_CSWpangodevel = Pango Developer Files
+SPKG_DESC_CSWpangodoc = Pango Documentation
 
 SPKG_SOURCEURL = http://www.pango.org/
 
