@@ -1,0 +1,87 @@
+diff -Naur lt-orig/libtool lt-patched/libtool
+--- lt-orig/libtool	2009-09-03 20:43:39.235079615 +0200
++++ lt-patched/libtool	2009-09-03 20:56:11.509318512 +0200
+@@ -138,7 +138,7 @@
+ LTCC="/opt/studio/SOS11/SUNWspro/bin/cc"
+ 
+ # LTCC compiler flags.
+-LTCFLAGS="-xO3 -xarch=v8 -I/opt/csw/include"
++LTCFLAGS="-O"
+ 
+ # Take the output of nm and produce a listing of raw symbols and C names.
+ global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([BDRT][BDRT]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p'"
+@@ -682,6 +682,8 @@
+ # positional parameter $0, within a function call, is the name of the
+ # function.
+ progpath="$0"
++confpath="$0"
++tagspath="$0"
+ 
+ # The name of this program:
+ # In the unlikely event $progname began with a '-', it would play havoc with
+@@ -1128,11 +1130,11 @@
+     re_endcf='^# ### END LIBTOOL'
+ 
+     # Default configuration.
+-    $SED "1,/$re_begincf CONFIG/d;/$re_endcf CONFIG/,\$d" < "$progpath"
++    $SED "1,/$re_begincf CONFIG/d;/$re_endcf CONFIG/,\$d" < "$confpath"
+ 
+     # Now print the configurations for the tags.
+     for tagname in $taglist; do
+-      $SED -n "/$re_begincf TAG CONFIG: $tagname\$/,/$re_endcf TAG CONFIG: $tagname\$/p" < "$progpath"
++      $SED -n "/$re_begincf TAG CONFIG: $tagname\$/,/$re_endcf TAG CONFIG: $tagname\$/p" < "$tagspath"
+     done
+ 
+     exit $?
+@@ -1182,14 +1184,14 @@
+   case $tagname in
+     CC) ;;
+     *)
+-      if $GREP "$re_begincf" "$progpath" >/dev/null 2>&1; then
++      if $GREP "$re_begincf" "$tagspath" >/dev/null 2>&1; then
+ 	taglist="$taglist $tagname"
+ 
+ 	# Evaluate the configuration.  Be careful to quote the path
+ 	# and the sed script, to avoid splitting on whitespace, but
+ 	# also don't use non-portable quotes within backquotes within
+ 	# quotes we have to do it in 2 steps:
+-	extractedcf=`$SED -n -e "$sed_extractcf" < "$progpath"`
++	extractedcf=`$SED -n -e "$sed_extractcf" < "$tagspath"`
+ 	eval "$extractedcf"
+       else
+ 	func_error "ignoring unknown tag $tagname"
+@@ -1303,7 +1305,21 @@
+ 
+       -*)		func_fatal_help "unrecognized option \`$opt'"	;;
+ 
+-      *)		nonopt="$opt"
++      *)		case `which "$opt"` in
++			/opt/csw/gcc3/bin/*)
++				. /opt/csw/share/libtool/gcc3.conf
++				tagspath=/opt/csw/share/libtool/gcc3.tags
++				;;
++			/opt/csw/gcc4/bin/*)
++				. /opt/csw/share/libtool/gcc4.conf
++				tagspath=/opt/csw/share/libtool/gcc4.tags
++				;;
++			esac
++
++
++
++
++nonopt="$opt"
+ 			break
+ 			;;
+     esac
+@@ -1530,9 +1546,9 @@
+       # if we don't check for them as well.
+       *)
+ 	for z in $available_tags; do
+-	  if $GREP "^# ### BEGIN LIBTOOL TAG CONFIG: $z$" < "$progpath" > /dev/null; then
++	  if $GREP "^# ### BEGIN LIBTOOL TAG CONFIG: $z$" < "$tagspath" > /dev/null; then
+ 	    # Evaluate the configuration.
+-	    eval "`${SED} -n -e '/^# ### BEGIN LIBTOOL TAG CONFIG: '$z'$/,/^# ### END LIBTOOL TAG CONFIG: '$z'$/p' < $progpath`"
++	    eval "`${SED} -n -e '/^# ### BEGIN LIBTOOL TAG CONFIG: '$z'$/,/^# ### END LIBTOOL TAG CONFIG: '$z'$/p' < $tagspath`"
+ 	    CC_quoted=
+ 	    for arg in $CC; do
+ 	      # Double-quote args containing other shell metacharacters.
