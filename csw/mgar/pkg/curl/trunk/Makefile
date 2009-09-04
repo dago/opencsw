@@ -26,7 +26,7 @@ CATALOGNAME_CSWcurl = curl
 CATALOGNAME_CSWcurlrt = curlrt
 CATALOGNAME_CSWcurldevel = curldevel
 
-SPKG_DESC_CSWcurl      = Curl, a command line tool and library for client-side URL transfers
+SPKG_DESC_CSWcurl      = A command line tool and library for client-side URL transfers
 SPKG_DESC_CSWcurlrt    = Curl Runtime Libraries
 SPKG_DESC_CSWcurldevel = Curl Developer Files
 
