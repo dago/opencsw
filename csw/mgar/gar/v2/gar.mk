@@ -539,7 +539,7 @@ _ISAEXEC_FILES = $(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EX
 		)
 ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 	$(shell for F in $(_ISAEXEC_FILES); do		\
-		if test -f "$$F"; then echo $$F; fi;	\
+		if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;	\
 	done)),)
 
 ifneq ($(ISAEXEC_FILES),)
