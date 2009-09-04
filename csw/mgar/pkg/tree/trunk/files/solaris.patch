@@ -1,0 +1,64 @@
+diff --git a/Makefile b/Makefile
+index 54260a7..e622acd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -6,9 +6,9 @@
+ # warranties, including, without limitation, the implied warranties
+ # of merchant-ability and fitness for a particular purpose.
+ 
+-prefix = /usr
++prefix = /opt/csw
+ 
+-CC=gcc
++# CC=gcc
+ 
+ VERSION=1.5.2.2
+ TREE_DEST=tree
+@@ -20,8 +20,9 @@ MANDIR=${prefix}/man/man1
+ 
+ # Linux defaults:
+ #CFLAGS=-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+-CFLAGS=-O2 -Wall -fomit-frame-pointer -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+-LDFLAGS=-s
++#CFLAGS=-O2 -Wall -fomit-frame-pointer -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
++#LDFLAGS=-s
++#INSTALL=$(INSTALL)
+ 
+ # Uncomment for FreeBSD:
+ #CFLAGS=-O2 -Wall -fomit-frame-pointer
+@@ -29,11 +30,12 @@ LDFLAGS=-s
+ #XOBJS=strverscmp.o
+ 
+ # Uncomment for Solaris:
+-#CC=cc
+-#CFLAGS=-xO0 -v
+-#LDFLAGS=
+-#XOBJS=strverscmp.o
+-#MANDIR=${prefix}/share/man/man1
++CC=cc
++CFLAGS=-xO0 -v
++LDFLAGS=
++XOBJS=strverscmp.o
++MANDIR=${prefix}/share/man/man1
++INSTALL=ginstall
+ 
+ # Uncomment for Cygwin:
+ #CFLAGS=-O2 -Wall -fomit-frame-pointer -DCYGWIN
+@@ -83,12 +85,12 @@ clean:
+ 	rm -f *~
+ 
+ install: tree
+-	install -d $(BINDIR)
+-	install -d $(MANDIR)
+-	if [ -e $(TREE_DEST) ]; then \
+-		install -s $(TREE_DEST) $(BINDIR)/$(TREE_DEST); \
++	$(INSTALL) -d $(DESTDIR)$(BINDIR)
++	$(INSTALL) -d $(DESTDIR)$(MANDIR)
++	if [ -r $(TREE_DEST) ]; then \
++		$(INSTALL) -s $(TREE_DEST) $(DESTDIR)$(BINDIR)/$(TREE_DEST); \
+ 	fi
+-	install man/$(MAN) $(MANDIR)/$(MAN)
++	$(INSTALL) man/$(MAN) $(DESTDIR)$(MANDIR)/$(MAN)
+ 
+ distclean:
+ 	if [ -f tree.o ]; then rm *.o; fi
