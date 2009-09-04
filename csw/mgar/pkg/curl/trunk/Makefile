@@ -26,15 +26,21 @@ CATALOGNAME_CSWcurl = curl
 CATALOGNAME_CSWcurlrt = curlrt
 CATALOGNAME_CSWcurldevel = curldevel
 
+SPKG_DESC_CSWcurl      = Curl, a command line tool and library for client-side URL transfers
+SPKG_DESC_CSWcurlrt    = Curl Runtime Libraries
+SPKG_DESC_CSWcurldevel = Curl Developer Files
+
 SPKG_SOURCEURL = http://curl.haxx.se
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+EXTRA_CONFIGURE_ARGS_isa-amd64 = --disable-ldap
 CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
+CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_isa-$(ISA))
 
-#Can't build amd64 until openldap has an amd64 build (Mantis 3028)
-#BUILD64 = 1
-EXTRA_BUILD_ISAS_sparc = sparcv9
+# amd64 is built without openldap because there are no libs available right now (Mantis 3028)
+BUILD64 = 1
+#EXTRA_BUILD_ISAS_sparc = sparcv9
 
 REQUIRED_PKGS_CSWcurl  = CSWiconv CSWlibidn CSWlibnet CSWoldaprt CSWosslrt
 REQUIRED_PKGS_CSWcurl += CSWsasl CSWzlib CSWcurlrt
