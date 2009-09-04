@@ -12,6 +12,7 @@ endef
 
 MASTER_SITES = http://www.zlib.net/pigz/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += pigz-wrapper
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -29,6 +30,8 @@ REQUIRED_PKGS = CSWzlib
 # Optimization show effects < 5%
 #REQUESTED_ISAS = $(ISALIST_$(GARCOMPILER))
 
+EXTRA_CFLAGS = -mt
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
@@ -44,8 +47,11 @@ build-custom:
 
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
-	ginstall $(WORKSRC)/pigz $(DESTDIR)$(bindir)
+	ginstall $(WORKDIR)/pigz-wrapper $(DESTDIR)$(bindir)/pigz
 	cd $(DESTDIR)$(bindir) && gln pigz unpigz
+	ginstall -d $(DESTDIR)$(libexecdir)
+	ginstall $(WORKSRC)/pigz $(DESTDIR)$(libexecdir)
+	cd $(DESTDIR)$(libexecdir) && gln pigz unpigz
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	ginstall $(WORKSRC)/pigz.1 $(DESTDIR)$(mandir)/man1
 	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
