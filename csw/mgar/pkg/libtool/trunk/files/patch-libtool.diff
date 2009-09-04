@@ -1,15 +1,6 @@
 diff -Naur lt-orig/libtool lt-patched/libtool
 --- lt-orig/libtool	2009-09-03 20:43:39.235079615 +0200
 +++ lt-patched/libtool	2009-09-03 20:56:11.509318512 +0200
-@@ -138,7 +138,7 @@
- LTCC="/opt/studio/SOS11/SUNWspro/bin/cc"
- 
- # LTCC compiler flags.
--LTCFLAGS="-xO3 -xarch=v8 -I/opt/csw/include"
-+LTCFLAGS="-O"
- 
- # Take the output of nm and produce a listing of raw symbols and C names.
- global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([BDRT][BDRT]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p'"
 @@ -682,6 +682,8 @@
  # positional parameter $0, within a function call, is the name of the
  # function.

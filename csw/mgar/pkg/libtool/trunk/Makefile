@@ -9,6 +9,8 @@ MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS11
 
 # Modulate over compiler only for 2.2.6
 SKIP_MODULATIONS = $(foreach I,sparcv8 sparcv9 i386 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-1.5.26-garcompiler-$C))
+# Compile 64 bit libraries only with SOS11
+SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-2.2.6-garcompiler-$C))
 
 FILEVERSION_1.5.26 = 1.5.26
 FILEVERSION_2.2.6 = 2.2.6$(RELEASE)
@@ -91,6 +93,8 @@ post-install-modulated: $(if $(COMPILER_TAGNAME_$(GARCOMPILER)),install-libtool-
 
 patch-libtool:
 	cat $(WORKDIR)/$(PATCHFILES_POSTINSTALL_$(MODULATION)) | (cd $(DESTDIR)$(bindir) && gpatch -p1)
+	# Remove arch-specific flags from the libtool-compilation so they don't spoil the target build
+	perl -pi -e 's/^LTCFLAGS=.*/LTCFLAGS="-O"/' $(DESTDIR)$(bindir)/libtool
 
 install-libtool-%:
 	perl -ane 'print if( /^available_tags/ ); $$p = 1 if( /^# ### BEGIN LIBTOOL CONFIG/ ); print if( $$p ); $$p = 0 if( /^# ### END LIBTOOL CONFIG/ )' \
