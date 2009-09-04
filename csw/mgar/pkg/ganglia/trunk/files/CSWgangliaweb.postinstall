@@ -3,12 +3,13 @@
 AP2EXTRADIR=/opt/csw/apache2/etc/extra
 AP2CONF=/opt/csw/apache2/etc/httpd.conf
 
-if [ -f "${AP2EXTRADIR}/httpd-ganglia.conf" ];
-then
-  echo "Existing config found"
-else
-  cp "${AP2EXTRADIR}/httpd-ganglia.conf.CSW" "${AP2EXTRADIR}/httpd-ganglia.conf"
-fi
+# no longer needed thanks to cswpreserveconf
+#if [ -f "${AP2EXTRADIR}/httpd-ganglia.conf" ];
+#then
+#  echo "Existing config found"
+#else
+#  cp "${AP2EXTRADIR}/httpd-ganglia.conf.CSW" "${AP2EXTRADIR}/httpd-ganglia.conf"
+#fi
 
 if [ -n "`grep 'Include etc/extra/httpd-ganglia.conf' ${AP2CONF}`" ]; then
       perl -i -pne 's|#(Include etc/extra/httpd-ganglia.conf)|$1|' ${AP2CONF}

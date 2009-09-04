@@ -99,7 +99,7 @@ INSTALL_SCRIPTS = $(WORKSRC)/Makefile custom
 
 WWWROOT = /opt/csw/share/www
 WWWGANGLIA = $(WWWROOT)/ganglia
-ETCGANGLIA = /opt/csw/etc/ganglia
+ETCGANGLIA = /etc/opt/csw/ganglia
 
 PKGFILES_CSWganglia = 
 PKGFILES_CSWgangliart = $(libdir)/libganglia.*
@@ -107,6 +107,8 @@ PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWgangliadevel = .*/include/.*.h .*/bin/ganglia-config
 PKGFILES_CSWgangliagmetad = .*/gmetad.* /opt/csw/var/ganglia/rrds
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/.*
+
+PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
 
 PROTOTYPE_FILTER_CSWgangliagmetad = awk '\
 $$$$3 ~ /\/opt\/csw\/var\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
@@ -130,7 +132,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(ETCGANGLIA)/conf.d
 	@$(WORKSRC)/gmond/gmond -t | grep -v "^include" \
 		> $(DESTDIR)$(ETCGANGLIA)/gmond.conf
-	@echo "include ('/opt/csw/etc/ganglia/conf.d/*.conf')" \
+	@echo "include ('/etc/opt/csw/ganglia/conf.d/*.conf')" \
 		>> $(DESTDIR)$(ETCGANGLIA)/gmond.conf
 #	@ginstall -D $(FILEDIR)/gmond.conf \
 #		$(DESTDIR)$(ETCGANGLIA)/gmond.conf
