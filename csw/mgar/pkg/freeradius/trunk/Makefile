@@ -7,7 +7,7 @@ define BLURB
   A free RADIUS server implementation
 endef
 
-MASTER_SITES = http://freeradius.org/
+MASTER_SITES = ftp://ftp.freeradius.org:/pub/freeradius/
 DISTFILES  = $(GARNAME)-server-$(GARVERSION).tar.gz
 DISTNAME = $(GARNAME)-server-$(GARVERSION)
 
@@ -18,7 +18,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-#GARCOMPILER = GCC3
+SPKG_SOURCEURL = http://freeradius.org/
+
+GARCOMPILER = GCC3
 
 STRIP_LIBTOOL = 1
 
@@ -48,5 +50,9 @@ CONFIGURE_ARGS += --without-rlm_pam
 CONFIGURE_ARGS += --without-rlm_python
 CONFIGURE_ARGS += --without-snmp
 
+# No tests available
+TEST_TARGET =
+
 include gar/category.mk
+
 PATH := /opt/csw/gnu:$(PATH)
