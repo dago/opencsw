@@ -1,0 +1,21 @@
+#!/bin/sh
+
+PATH=/usr/bin:/usr/sbin
+
+AP2CONF=/opt/csw/apache2/etc/httpd.conf
+
+perl -i -pne 's|(?<!#)(Include etc/extra/httpd-ganglia.conf)|#$1|' ${AP2CONF}
+
+cat << _EOM_
+
+*********************************************************************
+*    NOTICE:
+*          Ganglia has been disabled in ${AP2CONF}
+*          You will need to restart your web server
+*          To finish the removal.
+*********************************************************************
+
+_EOM_
+
+exit 0
+
