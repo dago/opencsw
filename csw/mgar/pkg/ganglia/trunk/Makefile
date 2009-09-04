@@ -22,7 +22,7 @@ SF_PROJ = ganglia
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWgangliaweb.postinstall CSWgangliaweb.preremove
-DISTFILES += httpd-ganglia.conf.CSW
+DISTFILES += httpd-ganglia.conf.CSW cswgmond cswgmetad
 
 PACKAGES = CSWgangliaagent CSWgangliart CSWgangliadevel CSWgangliagmetad CSWgangliaweb CSWgangliamodpython
 
@@ -105,10 +105,15 @@ PKGFILES_CSWganglia =
 PKGFILES_CSWgangliart = $(libdir)/libganglia.*
 PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWgangliadevel = .*/include/.*.h .*/bin/ganglia-config
-PKGFILES_CSWgangliagmetad = .*/gmetad.* /opt/csw/var/ganglia/rrds
+PKGFILES_CSWgangliagmetad = .*/gmetad.* /opt/csw/var/ganglia/rrds /etc/opt/csw/init.d/cswgmetad
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/.*
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
+
+# For gmond
+INITSMF = /etc/opt/csw/init.d/cswgmond
+# For gmetad
+INITSMF += /etc/opt/csw/init.d/cswgmetad
 
 PROTOTYPE_FILTER_CSWgangliagmetad = awk '\
 $$$$3 ~ /\/opt\/csw\/var\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
@@ -121,6 +126,10 @@ $$$$3 ~ /\/opt\/csw\/var\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" }
 include gar/category.mk
 
 install-custom:
+	@ginstall -D $(DOWNLOADDIR)/cswgmond \
+		$(PKGROOT)/etc/opt/csw/init.d/cswgmond
+	@ginstall -D $(DOWNLOADDIR)/cswgmetad \
+		$(PKGROOT)/etc/opt/csw/init.d/cswgmetad
 	@ginstall -d $(DESTDIR)$(WWWGANGLIA)
 	@cd $(WORKSRC)/web; \
 		cp -R * $(DESTDIR)$(WWWGANGLIA)
