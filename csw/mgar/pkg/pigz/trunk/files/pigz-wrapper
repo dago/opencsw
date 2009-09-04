@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Needed on native Solaris 8
+# See http://www.opencsw.org/bugtrack/view.php?id=3879
+# and http://developers.sun.com/solaris/articles/alt_thread_lib.html
+LD_LIBRARY_PATH=/usr/lib/lwp
+export LD_LIBRARY_PATH
+exec `/usr/bin/dirname $0`/../libexec/`/usr/bin/basename $0` "$@"
