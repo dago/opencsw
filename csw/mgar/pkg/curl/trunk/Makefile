@@ -40,7 +40,9 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_isa-$(ISA))
 
 # amd64 is built without openldap because there are no libs available right now (Mantis 3028)
 BUILD64 = 1
-#EXTRA_BUILD_ISAS_sparc = sparcv9
+
+# We are doing 64 bit only for the libs
+NO_ISAEXEC = 1
 
 REQUIRED_PKGS_CSWcurl  = CSWiconv CSWlibidn CSWlibnet CSWoldaprt CSWosslrt
 REQUIRED_PKGS_CSWcurl += CSWsasl CSWzlib CSWcurlrt
@@ -48,6 +50,10 @@ REQUIRED_PKGS_CSWcurlrt = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsa
 REQUIRED_PKGS_CSWcurldevel = CSWcurlrt
 
 SKIPTEST = 1
+
+# The 64 bit binary just takes space
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = $(bindir)/curl
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = $(bindir)/curl
 
 EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-32.h,p"
 EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-64.h,p"
