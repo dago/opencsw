@@ -1,0 +1,13 @@
+diff --speed-large-files --minimal -Nru  thunderbird.orig/storage/src/mozStorageAsyncIO.cpp.orig thunderbird/storage/src/mozStorageAsyncIO.cpp
+--- thunderbird.orig/storage/src/mozStorageAsyncIO.cpp  2009-09-05 22:39:51.740805104 +0200
++++ thunderbird/storage/src/mozStorageAsyncIO.cpp       2009-09-05 22:41:38.590070067 +0200
+@@ -503,7 +503,8 @@
+ nsresult
+ mozStorageService::InitStorageAsyncIO()
+ {
+-  sqlite3OsVtbl* vtable = sqlite3_os_switch();
++  sqlite3OsVtbl* vtable = &sqlite3Os;
++//sqlite3_os_switch();
+
+   sqliteOrigOpenReadWrite = vtable->xOpenReadWrite;
+   sqliteOrigOpenReadOnly = vtable->xOpenReadOnly;

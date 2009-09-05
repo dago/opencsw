@@ -62,6 +62,7 @@ PATCHFILES  = autoconf.mk.in.diff
 PATCHFILES += lber-int.h.diff 
 PATCHFILES += ldappr-int.h.diff
 PATCHFILES += ldap-int.h.diff
+PATCHFILES += mozStorageAsyncIO.cpp.diff
 
 TEST_SCRIPTS = 
 

@@ -2,4 +2,5 @@
 46527aded9c373b6095fea546d4d74f0  download/lber-int.h.diff
 46ef334e67dab2301b53b661494f9d58  download/ldap-int.h.diff
 e7054c1d1d6dc708805a6110ccfa7f70  download/ldappr-int.h.diff
+14a88ff4a88cd308b5cd7e25cb4b6172  download/mozStorageAsyncIO.cpp.diff
 2e118fcf752ee60ce994f1471f9632d1  download/thunderbird-2.0.0.23-source.tar.bz2
