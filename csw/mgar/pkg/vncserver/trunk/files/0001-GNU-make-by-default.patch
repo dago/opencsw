@@ -1,0 +1,25 @@
+From 985baba7fd98f7e329fdbe09559f8f98c1bcce82 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sat, 5 Sep 2009 14:18:18 +0100
+Subject: [PATCH] GNU make by default
+
+---
+ Xvnc/config/cf/svr4.cf |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Xvnc/config/cf/svr4.cf b/Xvnc/config/cf/svr4.cf
+index b9fbcfc..2d7d3ab 100644
+--- a/Xvnc/config/cf/svr4.cf
++++ b/Xvnc/config/cf/svr4.cf
+@@ -74,7 +74,7 @@ XCOMM $XFree86: xc/config/cf/svr4.cf,v 3.25.2.2 1997/07/05 15:55:30 dawes Exp $
+ #define	LexCmd	/usr/ccs/bin/lex
+ #endif
+ #ifndef MakeCmd
+-#define	MakeCmd	/usr/ccs/bin/make
++#define	MakeCmd	/opt/csw/bin/gmake
+ #endif
+ #ifndef YaccCmd
+ #define	YaccCmd	/usr/ccs/bin/yacc
+-- 
+1.6.3.2
+

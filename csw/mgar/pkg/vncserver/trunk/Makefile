@@ -18,7 +18,6 @@ SPKG_SOURCEURL = http://www.tightvnc.org/
 
 REQUIRED_PKGS = CSWjpeg CSWtcpwrap
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=14067
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)_unixsrc.tar.bz2
@@ -28,7 +27,8 @@ DISTNAME = vnc_unixsrc
 # Use tightvnc.spec
 
 EXTRA_DEFINES = -DUSE_LIBWRAP=1
-EXTRA_INCLUDE = $(CFLAGS)
+EXTRA_INC = /usr/openwin/share/include/X11
+EXTRA_LDFLAGS = /opt/csw/lib
 LOCAL_LDFLAGS = $(LINKER_FLAGS)
 BUILD_OVERRIDE_DIRS = EXTRA_DEFINES EXTRA_INCLUDE LOCAL_LDFLAGS
 
@@ -38,9 +38,12 @@ CONFIGURE_ARGS = -a
 BUILD_SCRIPTS = vnc Xvnc
 
 # VNC doesn't come with tests
-TEST_SCRIPTS =
+SKIPTEST = 1
 
 INSTALL_SCRIPTS = vnc
+
+PATCHFILES  = 0001-GNU-make-by-default.patch
+# PATCHFILES += work-in-progress.patch
 
 include gar/category.mk
 
@@ -62,7 +65,10 @@ build-vnc:
 
 build-Xvnc: configure-Xvnc
 	banner "Build Xvnc"
-	cd $(WORKSRC)/Xvnc && $(MAKE) EXTRA_LIBRARIES="-lwrap" EXTRA_DEFINES="-DUSE_LIBWRAP=1"
+	# $(MAKE) -C $(WORKSRC)/Xvnc $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap" EXTRA_DEFINES="-DUSE_LIBWRAP=1" World
+	$(MAKE) -C $(WORKSRC) $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap" EXTRA_DEFINES="-DUSE_LIBWRAP=1" World
+	$(MAKE) -C $(WORKSRC)/Xvnc $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap -lsocket" EXTRA_DEFINES="-DUSE_LIBWRAP=1" EXTRA_LDOPTIONS="-L/opt/csw/lib -L/usr/lib" World
+	@$(MAKECOOKIE)
 
 #xmkmf -a
 #make CDEBUGFLAGS="$RPM_OPT_FLAGS" World
@@ -129,4 +135,3 @@ install-vnc:
 # VNCSERVERS="1:myusername"
 #EOF
 #chmod 644 %{buildroot}/etc/sysconfig/vncservers
-
