@@ -43,7 +43,7 @@ SKIPTEST = 1
 INSTALL_SCRIPTS = vnc
 
 PATCHFILES  = 0001-GNU-make-by-default.patch
-# PATCHFILES += work-in-progress.patch
+PATCHFILES += 0002-Test-for-Makefile-presence.patch
 
 include gar/category.mk
 

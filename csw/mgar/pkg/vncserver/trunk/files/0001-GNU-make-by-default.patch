@@ -1,7 +1,7 @@
-From 985baba7fd98f7e329fdbe09559f8f98c1bcce82 Mon Sep 17 00:00:00 2001
-From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
-Date: Sat, 5 Sep 2009 14:18:18 +0100
-Subject: [PATCH] GNU make by default
+From f12b77cb177de6014ac23913c385c7f4ab9717e3 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 5 Sep 2009 22:52:49 +0200
+Subject: [PATCH 1/2] GNU make by default
 
 ---
  Xvnc/config/cf/svr4.cf |    2 +-
