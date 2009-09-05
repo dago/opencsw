@@ -12,6 +12,7 @@ MASTER_SITES = http://www.cacti.net/downloads/spine/
 #DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES  = cacti-$(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswusergroup CSWspine.postinstall
+DISTNAME = cacti-$(GARNAME)-$(GARVERSION)
 
 PATCHFILES += configure.diff
 
@@ -30,16 +31,10 @@ REQUIRED_PKGS = CSWmysql5rt CSWnetsnmp CSWosslrt CSWzlib CSWcswclassutils
 
 SPKG_CLASSES = none cswpreserveconf
 
-WORKSRC = $(WORKDIR)/cacti-$(GARNAME)-$(GARVERSION)
-
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-mysql=/opt/csw/mysql5
 CONFIGURE_ARGS += --with-snmp=/opt/csw/include/net-snmp
 
-EXTRA_LIB += $(BUILD_PREFIX)/lib
-LD_OPTIONS += -L/opt/csw/lib
-
-CONFIGURE_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
 SKIPTEST = 1
@@ -50,15 +45,14 @@ CFGDIR = $(DESTDIR)$(BUILD_PREFIX)/etc
 
 include gar/category.mk
 
-configure-custom:
-	@echo " ==> Configuring in $(WORKSRC)"
+pre-configure-modulated:
+	@echo " ==> Pre-configure in $(WORKSRC)"
 	@rm $(WORKSRC)/config/ltmain.sh
 	@rm $(WORKSRC)/config/config.sub
 	@rm $(WORKSRC)/config/config.guess
 	@ln -s /opt/csw/share/libtool/config/ltmain.sh  $(WORKSRC)/config/ltmain.sh
 	@ln -s /opt/csw/share/libtool/config/config.sub  $(WORKSRC)/config/config.sub
 	@ln -s /opt/csw/share/libtool/config/config.guess  $(WORKSRC)/config/config.guess
-	@( cd $(WORKSRC) ; ./configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 install-custom:
