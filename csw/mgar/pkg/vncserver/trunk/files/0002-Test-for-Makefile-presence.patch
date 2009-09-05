@@ -1,0 +1,27 @@
+From 1045270d1e76278f5c613eb74e2a8f347632dc73 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Sep 2009 00:16:10 +0200
+Subject: [PATCH 2/2] Test for Makefile presence
+
+---
+ Xvnc/config/cf/Imake.rules |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Xvnc/config/cf/Imake.rules b/Xvnc/config/cf/Imake.rules
+index 5ab9a18..6f5f7c4 100644
+--- a/Xvnc/config/cf/Imake.rules
++++ b/Xvnc/config/cf/Imake.rules
+@@ -1304,8 +1304,8 @@ InstallNamedTargetNoClobber(install,srcname,$(INSTBINFLAGS),dest,dstname)
+  */
+ #ifndef MakeNamedTargetSubdir
+ #define MakeNamedTargetSubdir(dir,flags,subname)\
+-		(cd dir && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) \	@@\
+-			flags subname)
++		(cd dir && [ -r Makefile ] && $(MAKE) $(MFLAGS) $(PARALLELMFLAGS) \	@@\
++			flags subname || true)
+ #endif
+ 
+ /*
+-- 
+1.6.3.2
+
