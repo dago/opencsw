@@ -18,7 +18,7 @@ diff --speed-large-files --minimal -Nru cacti-spine-0.8.7e.orig/configure cacti-
  fi
  
 -LDFLAGS="-L$SNMP_LIBDIR $LDFLAGS"
-+LDFLAGS="-L/opt/csw/lib -L/opt/csw/lib/mysql $LDFLAGS"
++LDFLAGS="-L/opt/csw/lib -L/opt/csw/lib/mysql -L/opt/csw/mysql5/lib/mysql $LDFLAGS"
  CFLAGS="-I$SNMP_INCDIR -I$SNMP_INCDIR/.. $CFLAGS"
  
  # Net/UCD-SNMP includes v3 support and insists on crypto unless compiled --without-openssl
