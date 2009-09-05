@@ -51,13 +51,13 @@ REQUIRED_PKGS_CSWcups += CSWcupsdev
 REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
 REQUIRED_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
-REQUIRED_PKGS_CSWcupsd += CSWkrb5lib
+REQUIRED_PKGS_CSWcupsd += CSWkrb5lib CSWosslrt
 REQUIRED_PKGS_CSWcupsclient  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
-REQUIRED_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1
+REQUIRED_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
 REQUIRED_PKGS_CSWcupsdoc = CSWcswclassutils
 REQUIRED_PKGS_CSWcupsdev = CSWcswclassutils
 REQUIRED_PKGS_CSWlibcups  = CSWcswclassutils CSWjpeg CSWpng CSWtiff CSWzlib
-REQUIRED_PKGS_CSWlibcups += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1
+REQUIRED_PKGS_CSWlibcups += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
 
