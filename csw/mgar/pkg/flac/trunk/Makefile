@@ -27,7 +27,10 @@ endef
 SF_PROJ = flac
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(SF_PROJ)-$(GARVERSION)
-DISTFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(SF_PROJ)-$(VERSION).tar.gz)
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(SF_PROJ)-$(VERSION).tar.gz)
+DISTFILES = $(SOURCEFILES)
+
+NOEXTRACT = $(filter-out $(SF_PROJ)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 
 PATCHFILES_isa-sparcv8-garversion-1.1.2 = libtool-64bit.patch
 PATCHFILES_isa-sparcv9-garversion-1.1.2 = libtool-64bit.patch
@@ -38,7 +41,7 @@ PATCHFILES_isa-i386-garversion-1.0.4 = strip-nasm-1.0.4.patch
 PATCHFILES_isa-i386-garversion-1.1.2 = strip-nasm-1.1.2.patch libtool-64bit.patch
 PATCHFILES_isa-amd64-garversion-1.1.2 = libtool-64bit.patch
 PATCHFILES_isa-i386-garversion-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
-PATCHFILES_isa-amd64-garversion-1.2.1 = libtool-64bit.patch no-stdint.patch
+PATCHFILES_isa-amd64-garversion-1.2.1 = strip-nasm-1.2.1.patch libtool-64bit.patch no-stdint.patch
 
 PACKAGES = CSWflac CSWxmmsflac
 CATALOGNAME_CSWflac = libflac
@@ -76,6 +79,9 @@ EXTRA_BUILD_EXPORTS = AM_CFLAGS
 EXTRA_CONFIGURE_ARGS_mm-64 = --disable-xmms-plugin
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
+
+# XXX: Assembler optimization just doesn't work. Disable for now.
+CONFIGURE_ARGS += --disable-asm-optimizations
 
 TEST_TARGET = check
 
