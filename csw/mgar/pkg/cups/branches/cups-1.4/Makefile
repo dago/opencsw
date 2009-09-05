@@ -1,5 +1,5 @@
 GARNAME = cups
-GARVERSION = 1.3.11
+GARVERSION = 1.4.0
 CATEGORIES = net
 
 define BLURB
@@ -21,12 +21,13 @@ CUPS_MIRRORS += http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub
 FULL_MIRRORS = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
 MASTER_SITES += $(FULL_MIRRORS)
 
-PATCHFILES = Makefile-cups-$(GARVERSION).patch
+PATCHFILES = 0001-Makefile.patch
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
 DISTFILES += CSWcupsd.postremove
 
 PREREQUISITE_PKGS  = CSWggettext
 PREREQUISITE_PKGS += CSWjpeg
+PREREQUISITE_PKGS += CSWkrb5libdev
 PREREQUISITE_PKGS += CSWoldapdevel
 PREREQUISITE_PKGS += CSWossldevel
 PREREQUISITE_PKGS += CSWtiff
@@ -62,10 +63,13 @@ PKGFILES_CSWlibcups  = $(libdir)/libcups.*
 
 PKGFILES_CSWcupsdoc  = $(datadir)/doc
 PKGFILES_CSWcupsdoc += $(datadir)/doc/.*
+PKGFILES_CSWcupsdoc += $(datadir)/cups/examples.*
 
 PKGFILES_CSWcupsdev  = $(includedir)/cups/?.*
 PKGFILES_CSWcupsdev += $(mandir)/man1/cups-config.1
 PKGFILES_CSWcupsdev += $(bindir)/cups-config
+PKGFILES_CSWcupsdev += $(datadir)/cups/ppdc.*
+PKGFILES_CSWcupsdev += $(datadir)/cups/drv.*
 
 PKGFILES_CSWcupsd  = $(sysconfdir)/.*
 PKGFILES_CSWcupsd += $(mandir)/man1m
@@ -79,22 +83,30 @@ PKGFILES_CSWcupsd += $(datadir)/cups/(fonts|templates|charmaps|model).*
 PKGFILES_CSWcupsd += $(datadir)/cups/(banners|data|profiles|charsets).*
 PKGFILES_CSWcupsd += $(datadir)/locale/.*
 PKGFILES_CSWcupsd += $(datadir)/applications/.*
+PKGFILES_CSWcupsd += $(datadir)/cups/mime.*
+PKGFILES_CSWcupsd += $(datadir)/icons.*
 PKGFILES_CSWcupsd += $(libdir)/cups/.*
 PKGFILES_CSWcupsd += $(libdir)/svc/.*
+PKGFILES_CSWcupsd += $(bindir)/ppd(c|html|i|merge|po)
 PKGFILES_CSWcupsd += $(sbindir)/(cupsfilter|cupsd)
 PKGFILES_CSWcupsd += $(localstatedir)/.*
 
 PKGFILES_CSWcupsclient  = $(sbindir)/(accept|reject|cups(addsmb|ctl|(en|dis)able))
+PKGFILES_CSWcupsclient += $(sbindir)/cups(accept|reject)
 PKGFILES_CSWcupsclient += $(sbindir)/(lp(admin|p|c|info|move))
 PKGFILES_CSWcupsclient += $(bindir)/(cancel|cupstest(dsc|ppd))
 PKGFILES_CSWcupsclient += $(bindir)/(lp(|options|passwd|q|r|rm|stat))
 PKGFILES_CSWcupsclient += $(mandir)/man1/(cancel|cupstest(dsc|ppd)|lp).1
 PKGFILES_CSWcupsclient += $(mandir)/man1/(lpoptions|lppasswd|lpq|lpr|lprm).1
 PKGFILES_CSWcupsclient += $(mandir)/man1/lpstat.1
+PKGFILES_CSWcupsclient += $(mandir)/man1/ppd.*\.1
+PKGFILES_CSWcupsclient += $(mandir)/man1m/cups.*\.1m
 PKGFILES_CSWcupsclient += $(mandir)/man1m/(accept|cupsaddsmb|cupsctl).1m
 PKGFILES_CSWcupsclient += $(mandir)/man1m/(cups(en|dis)able).1m
 PKGFILES_CSWcupsclient += $(mandir)/man1m/(lpadmin|lpc|lpinfo|lpmove|reject).1m
 PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
+PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
+PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
 
 
 
