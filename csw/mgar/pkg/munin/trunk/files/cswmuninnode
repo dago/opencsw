@@ -4,9 +4,14 @@
 # All rights reserved.
 #
 # For OpenCSW by Juergen Arndt 2009-07-03
+# Run levels added - 2009-09-05
 
 #FMRI application       # FMRI path for service
 #AUTOENABLE yes
+#RC_KNUM 20         # Number used for kill script symlink, e.g. K20cswfoo
+#RC_SNUM 80         # Number used for start script symlink, e.g. S80cswfoo
+#RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
+#RC_SLEV 3          # Run levels that should have a start script symlink
 
 SMF_EXIT_ERR_CONFIG=1
 

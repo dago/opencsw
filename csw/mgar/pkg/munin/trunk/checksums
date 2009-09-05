@@ -4,6 +4,7 @@ b494ca780b9becd6a8611e255e606dd4  download/CSWmuninmaster.postinstall
 e6bafa4aa3cba7fc16e444ad168b4cd1  download/README.CSW
 59409f4b412953283c3df4546fd4886c  download/apache-munin-cgi.conf.CSW
 e701d132ba0b6f3dcc90190860f5aa6b  download/apache-munin.conf.CSW
+31aec7f9a9a452cc6c75c1096c937fdd  download/cswmuninnode
 50fa4a545f878d79e219891c6ac8d2d2  download/cswusergroup
 4eb0923e09f12335da8249ab7923e250  download/makefile.config.diff
 3ea1ba00633ac52c3a25306c3c9c52e0  download/makefile.diff

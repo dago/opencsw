@@ -2,19 +2,18 @@ GARNAME = munin
 GARVERSION = 1.3.4
 CATEGORIES = apps
 
-SPKG_DESC_CSWmuninmaster = munin master
-SPKG_DESC_CSWmuninnode = munin node
+SPKG_DESC_CSWmuninmaster = master component of the graphical network and system monitoring munin
+SPKG_DESC_CSWmuninnode = node component of the graphical network and system monitoring munin
 
-#DESCRIPTION = graphical network and system monitoring
 define BLURB
-  Long description
+  Munin the monitoring tool surveys all your computers and remembers what it saw. It presents all the information in graphs through a web interface.
 endef
 
 SF_PROJ = munin
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += CSWmuninmaster.prototype CSWmuninmaster.postinstall
-DISTFILES += CSWmuninnode.prototype
+DISTFILES += CSWmuninnode.prototype cswmuninnode
 DISTFILES += cswusergroup
 DISTFILES += apache-munin.conf.CSW apache-munin-cgi.conf.CSW
 DISTFILES += README.CSW
