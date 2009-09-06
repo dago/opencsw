@@ -14,6 +14,8 @@ DISTFILES += $(call admfiles,CSWlibxslt,)
 DISTFILES += $(call admfiles,CSWlibxsltdevel,)
 DISTFILES += $(call admfiles,CSWpylibxslt,)
 
+PATCHFILES = fix-segfault-in-debug.patch
+
 PREREQUISITE_PKGS = CSWlibxml2 CSWlibxml2devel
 
 SPKG_DESC_CSWlibxslt =  XSLT engine runtime package
