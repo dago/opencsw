@@ -1,0 +1,30 @@
+diff --speed-large-files --minimal -Nru cacti-spine-0.8.7e.orig/spine.h cacti-spine-0.8.7e/spine.h
+--- cacti-spine-0.8.7e.orig/spine.h	2009-06-29 04:03:36.000000000 +0200
++++ cacti-spine-0.8.7e/spine.h	2009-09-06 12:09:46.987245799 +0200
+@@ -135,21 +135,22 @@
+ #define SPINE_FORK 0
+ 
+ /* locations to search for the config file */
+-#define CONFIG_PATHS 4
++#define CONFIG_PATHS 5
+ #define CONFIG_PATH_1 ""
+ #define CONFIG_PATH_2 "/etc/"
+ #define CONFIG_PATH_3 "/etc/cacti/"
+ #define CONFIG_PATH_4 "../etc/"
++#define CONFIG_PATH_5 "/etc/opt/csw/"
+ 
+ /* config file defaults */
+ #define DEFAULT_CONF_FILE "spine.conf"
+ #define DEFAULT_THREADS 5
+ #define DEFAULT_DB_HOST "localhost"
+ #define DEFAULT_DB_DB "cacti"
+-#define DEFAULT_DB_USER "cactiuser"
+-#define DEFAULT_DB_PASS "cactiuser"
++#define DEFAULT_DB_USER "cacti"
++#define DEFAULT_DB_PASS "cacti"
+ #define DEFAULT_DB_PORT 3306
+-#define DEFAULT_LOGFILE "/var/www/html/cacti/log/cacti.log"
++#define DEFAULT_LOGFILE "/var/opt/csw/cacti/log/cacti.log"
+ #define DEFAULT_TIMEOUT 294000000
+ 
+ /* threads constants */

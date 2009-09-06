@@ -1,0 +1,29 @@
+diff --speed-large-files --minimal -Nru cacti-spine-0.8.7e.orig/spine.conf cacti-spine-0.8.7e/spine.conf
+--- cacti-spine-0.8.7e.orig/spine.conf	2009-06-29 04:03:36.000000000 +0200
++++ cacti-spine-0.8.7e/spine.conf	2009-09-06 15:11:25.880901586 +0200
+@@ -11,7 +11,7 @@
+ # | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           |
+ # | GNU General Public License for more details.                            |
+ # +-------------------------------------------------------------------------+
+-# | spine: a backend data gatherer for Cacti                               |
++# | spine: a backend data gatherer for Cacti                                |
+ # +-------------------------------------------------------------------------+
+ # | This poller would not have been possible without:                       |
+ # |   - Larry Adams (current development and enhancements)                  |
+@@ -25,11 +25,11 @@
+ # |              IP Address for Windows                                     |
+ # | DB_Database  Database name, typically 'cacti'                           |
+ # | DB_Port      The database port to use                                   |
+-# | DB_User      The user to access the database, typically 'cactiuser'     |
++# | DB_User      The user to access the database, typically 'cacti'         |
+ # | DB_Pass      The password for the Cacti user                            |
+ # +-------------------------------------------------------------------------+
+ DB_Host         localhost
+ DB_Database     cacti
+-DB_User         cactiuser
+-DB_Pass         cactiuser
+-DB_Port         3306
+\ No newline at end of file
++DB_User         cacti
++DB_Pass         cacti
++DB_Port         3306

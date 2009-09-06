@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru cacti-spine-0.8.7e.orig/util.c cacti-spine-0.8.7e/util.c
+--- cacti-spine-0.8.7e.orig/util.c	2009-06-29 04:03:36.000000000 +0200
++++ cacti-spine-0.8.7e/util.c	2009-09-06 12:30:28.429083179 +0200
+@@ -503,6 +503,7 @@
+ 	STRNCOPY(config_paths[1], CONFIG_PATH_2);
+ 	STRNCOPY(config_paths[2], CONFIG_PATH_3);
+ 	STRNCOPY(config_paths[3], CONFIG_PATH_4);
++	STRNCOPY(config_paths[4], CONFIG_PATH_5);
+ 
+ 	set.log_destination = LOGDEST_FILE;
+ }

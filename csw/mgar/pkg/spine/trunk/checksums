@@ -1,4 +1,8 @@
-54e3c3f6ca757815ac1cccf78b7a086c  download/CSWspine.postinstall
+6c312db77872d0ab0fa66b02774ce066  download/CSWspine.postinstall
+75d4f19e408bbd07fc3205d76841b5e3  download/CSWspine.prototype
 99e5bde07fc31d1ed8aa23c59de00417  download/cacti-spine-0.8.7e.tar.gz
 2fbbedbfc20811cbc81ddf748ebdb58e  download/configure.diff
 b762d50320246dc8ce21c20233479231  download/cswusergroup
+e38aac4a5f8c7c3145d45c4d0dba141c  download/spine.conf.diff
+cc35553f4bcd9dc4ab961330484a959b  download/spine.h.diff
+5e66f551b2d320a3a6b68ce170e9fec7  download/util.c.diff

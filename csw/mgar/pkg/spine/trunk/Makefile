@@ -11,10 +11,13 @@ endef
 MASTER_SITES = http://www.cacti.net/downloads/spine/
 #DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES  = cacti-$(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += cswusergroup CSWspine.postinstall
+DISTFILES += cswusergroup CSWspine.postinstall CSWspine.prototype
 DISTNAME = cacti-$(GARNAME)-$(GARVERSION)
 
 PATCHFILES += configure.diff
+PATCHFILES += spine.h.diff
+PATCHFILES += util.c.diff
+PATCHFILES += spine.conf.diff
 
 NOISALIST = 1
 
@@ -39,9 +42,11 @@ INSTALL_SCRIPTS = custom
 
 SKIPTEST = 1
 
+EXTRA_LIB += /opt/csw/mysql5/lib/mysql
+
 DOCDEST = $(DESTDIR)$(BUILD_PREFIX)/share/doc/spine
 BINDIR = $(DESTDIR)$(BUILD_PREFIX)/bin
-CFGDIR = $(DESTDIR)$(BUILD_PREFIX)/etc
+CFGDIR = $(DESTDIR)/etc$(BUILD_PREFIX)
 
 include gar/category.mk
 

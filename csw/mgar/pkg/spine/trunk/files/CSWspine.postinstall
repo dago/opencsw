@@ -4,7 +4,11 @@ cat << EOF
 
 =======================================================================
 
-Please check and edit your configuration in /opt/csw/etc/spine.conf !
+To get spine running, follow these steps:
+
+(1) Check and edit the configuration file /etc/opt/csw/spine.conf
+
+(2) Follow the instructions on http://www.cacti.net/spine_install.php
 
 =======================================================================
 
