@@ -28,7 +28,7 @@ SPKG_DESC_CSWvncs = TightVNC server
 SPKG_DESC_CSWvncv = TightVNC viewer
 
 REQUIRED_PKGS = CSWjpeg CSWtcpwrap CSWzlib
-REQUIRED_PKGS += SUNWcslr SUNWlibmsr SUNWxwice SUNWxwplt 
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
