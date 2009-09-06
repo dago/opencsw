@@ -1,5 +1,2 @@
-01dba7c998bd516e5c6845d5babe3d21  download/CSWlibxslt.gspec
-9d6a28c9ac7dea73ae95423e2f431fcd  download/CSWlibxsltdevel.gspec
-1fb5e9ee1b80283247e56231713082e0  download/CSWpylibxslt.gspec
 967047de707d0f20d7fa3b0d0916fdd9  download/fix-segfault-in-debug.patch
 e83ec5d27fc4c10c6f612879bea9a153  download/libxslt-1.1.24.tar.gz
