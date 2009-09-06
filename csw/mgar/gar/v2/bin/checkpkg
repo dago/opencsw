@@ -1,8 +1,8 @@
 #!/bin/ksh -p
 
-# checkpkg 1.46a (diff to 1.46: modified errmsg -> warnmsg on two places)
+# checkpkg 1.50 (diff to 1.46a: check multiple package files)
 # This script examines a package that has been put together
-# for submittal to the CSW archive
+# for submittal to the CSW archive at opencsw.org
 #
 # It examines it for compliance with the packaging standards at
 # http://www.opencsw.org/standards/
@@ -29,10 +29,15 @@ cleanup(){
 		rm -rf $EXTRACTDIR
 	fi
 	if [[ "$TMPARCHIVE" != "" ]] ; then
-		rm $TMPARCHIVE
+		[ -f "$TMPARCHIVE" ] && rm $TMPARCHIVE
 	fi
 }
 
+cleanupset(){
+    if [ "`echo $SETINF*`" != "$SETINF*" ]; then
+	rm $SETINF*
+    fi
+}
 warnmsg(){
 	print WARNING: $* >/dev/fd/2
 	if [[ "$quit_on_warn" != "" ]] ; then
@@ -45,6 +50,7 @@ warnmsg(){
 errmsg(){
 	print ERROR: $* >/dev/fd/2
 	cleanup
+	cleanupset
 	exit 1
 }
 
@@ -57,6 +63,12 @@ if [[ "$1" == "-h" ]] ; then
 	print '   -e = "exit on warnings"'
 	shift
 fi
+
+# a unique filename for the list of package deps and libs we see in a 'set'
+SETINF=/tmp/checkpkg.$$.`date +%Y%m%d%H%M%S`
+SETLIBS=$SETINF.libs
+SETDEPS=$SETINF.deps
+
 
 for f in "$@"
 do
@@ -121,7 +133,6 @@ fi
 mkdir $EXTRACTDIR
 
 TMPFILE=$EXTRACTDIR/pkginfo
-
 
 
 dd if=$f skip=1 | (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo)
@@ -215,6 +226,13 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
 case $version in
 	*-*)
 		print ERROR: VERSION field not allowed to have '"-"' in it
+		exit 1
+	;;
+	*,REV=20[01][0-9].[0-9][0-9].[0-9][0-9]*)
+		:
+	;;
+	*)
+		print ERROR: no REV=YYYY.MM.DD field in VERSION
 		exit 1
 	;;
 esac
@@ -377,16 +395,18 @@ if [[ "$goodarch" = "yes" ]] ; then
 	# man ld.so.1 for more info on this hack
 	export LD_NOAUXFLTR=1
 
-	listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/tmplist
+	listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/elflist
 	# have to do this for ldd to work. arrg.
-	if [ -s "$EXTRACTDIR/tmplist" ] ; then
-		chmod 0755 `cat $EXTRACTDIR/tmplist`
+	if [ -s "$EXTRACTDIR/elflist" ] ; then
+		chmod 0755 `cat $EXTRACTDIR/elflist`
 
-	#cat $EXTRACTDIR/tmplist| xargs ldd  2>/dev/null |fgrep  '.so' |
+	#cat $EXTRACTDIR/elflist| xargs ldd  2>/dev/null |fgrep  '.so' |
 	#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
 
-		cat $EXTRACTDIR/tmplist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
+		cat $EXTRACTDIR/elflist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
 			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
+
+			
 
 		print libraries used are:
 		cat $EXTRACTDIR/liblist
@@ -398,6 +418,10 @@ fi
 
 #If these dont exist, it is Bad.
 touch $EXTRACTDIR/liblist $EXTRACTDIR/libpkgs
+
+# store things that look like shared objects from the package map for
+# delayed library validation.
+grep "\.so" $EXTRACTDIR/$pkgname/pkgmap >> $SETLIBS
 
 if [[ -f $EXTRACTDIR/$pkgname/install/depend ]] ; then
 	print 
@@ -416,11 +440,26 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
+#to retain a record of all packages currently being examined from $@
+echo $pkgname >> $SETDEPS
+
 nawk '$1=="P" {print $2}'  $EXTRACTDIR/$pkgname/install/depend |
 	sort >$EXTRACTDIR/deppkgs
 for dep in `cat $EXTRACTDIR/deppkgs`
 do
-	pkginfo $dep || warnmsg  invalid package $dep specified
+    pkginfo $dep
+    if [[ $? -ne 0 ]]; then
+	#if we've already looked at the package named $dep,
+	#it'll be in the file.
+ 	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/xpg4/bin/grep -q $dep
+ 	if [[ $? -ne 0 ]]; then #we haven't yet seen this package in our set
+	    echo "Can't validate dependence on $dep.  Storing for delayed validation."
+	    #store for validation at the end.
+	    echo "$dep $pkgname" >> $SETDEPS.missing
+	else
+	    echo "Found $dep as part of the package set being evaluated."
+	fi
+    fi
 done
 
 egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
@@ -433,13 +472,20 @@ for lib in `cat $EXTRACTDIR/liblist` ; do
 	if [[ $? -eq 0 ]] ; then
 		echo $lib provided by package itself
 		continue
+	else
+	    grep "[/=]$lib[ =]" $SETLIBS
+	    if [[ $? -eq 0 ]]; then
+		echo "$lib provided by package set being evaluated."
+		continue
+	    fi
 	fi
 
 	libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
 	      sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
 
 	if [[ -z "$libpkg" ]] ; then
-		warnmsg cannot find package for $lib
+		echo "$lib $pkgname" >> $SETLIBS.missing
+		print Cannot find package providing $lib.  Storing for delayed validation.
 	else
 		print $libpkg | fmt -1 >>$EXTRACTDIR/libpkgs
 	fi
@@ -458,19 +504,53 @@ fi
 
 
 if [[ "$basedir" != "" ]] ; then
-	print 
-	print "Checking relocation ability..."
-	xargs strings <$EXTRACTDIR/tmplist | grep /opt/csw
-	if [[ $? -eq 0 ]] ; then
-		errmsg package build as relocatable, but binaries have hardcoded /opt/csw paths in them
+	print
+	if [[ -f $EXTRACTDIR/elflist ]] ; then
+		print "Checking relocation ability..."
+		xargs strings < $EXTRACTDIR/elflist| grep /opt/csw
+		if [[ $? -eq 0 ]] ; then
+			errmsg package build as relocatable, but binaries have hardcoded /opt/csw paths in them
+		else
+			print trivial check passed
+		fi
 	else
-		print trivial check passed
+		echo No relocation check done for non-binary relocatable package.
 	fi
 fi
 
-cleanup
 
+cleanup
 
 print ""
 
 done
+
+if [ -s $SETDEPS.missing ]; then
+    print "Doing late evaluations of package dependencies."
+    while read mdep; do
+	dep=`echo $mdep | nawk '{print $1}'`
+	pkg=`echo $mdep | nawk '{print $2}'`
+	/usr/xpg4/bin/grep -q $dep $SETDEPS
+	if [ $? -ne 0 ]; then
+	    errmsg "Couldn't validate $dep as a dependency in package $pkg"
+	else
+	    print "Validated $dep as a dependency for $pkg."
+	fi
+    done < $SETDEPS.missing
+fi
+
+if [ -s $SETLIBS.missing ]; then
+    print "Doing late evaluations of package library dependencies."
+    while read ldep; do
+	lib=`echo $ldep | nawk '{print $1}'`
+	pkg=`echo $ldep | nawk '{print $2}'`
+	/usr/xpg4/bin/grep -q "[/=]$lib[ =]" $SETLIBS
+	if [ $? -ne 0 ]; then
+	    errmsg "Couldn't find a package providing $lib"
+	else
+	    print "A package in the set being evaluated provides $lib"
+	fi
+    done < $SETLIBS.missing
+fi
+
+cleanupset
