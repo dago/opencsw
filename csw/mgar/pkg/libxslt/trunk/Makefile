@@ -13,6 +13,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWlibxslt CSWlibxsltdevel CSWpylibxslt
 
+CATALOGNAME_CSWlibxsltdevel = libxslt_devel
+CATALOGNAME_CSWpylibxslt = py_libxslt
+
 PATCHFILES = fix-segfault-in-debug.patch
 
 PREREQUISITE_PKGS = CSWlibxml2 CSWlibxml2devel
