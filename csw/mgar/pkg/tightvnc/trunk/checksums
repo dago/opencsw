@@ -1,4 +1,5 @@
-c041ccc52996cf7e085e8f3a51747aea  download/0001-GNU-make-by-default.patch
-88d1dfca0c88c191f54f5aa5c6aab460  download/0002-Test-for-Makefile-presence.patch
+76166d097bf2e70627cb6c87d312bca5  download/0001-Sun-compiler-in-sun.cf.patch
+51441e1d47891f910f0929cd65a487a7  download/0002-pass-f-xmakefile-flag-when-appropriate.patch
+1264014c1ce47a119a724f17a6e0a768  download/0003-GNU-make-by-default.patch
 397b35faad32d5246b6d44b142f8304f  download/tightvnc-1.3.10_unixsrc.tar.bz2
 56c09be17c17184e96193c13246fd649  download/vncservers

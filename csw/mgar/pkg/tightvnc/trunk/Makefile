@@ -38,15 +38,19 @@ EXTRA_INC = /usr/openwin/share/include/X11
 EXTRA_LDFLAGS = /opt/csw/lib
 LOCAL_LDFLAGS = $(LINKER_FLAGS)
 BUILD_OVERRIDE_DIRS = EXTRA_DEFINES EXTRA_INCLUDE LOCAL_LDFLAGS
-CONFIGURE_SCRIPTS = $(WORKSRC)/Imakefile Xvnc
+CONFIGURE_SCRIPTS = $(WORKSRC)/Imakefile
+# Xvnc
 CONFIGURE_ARGS = -a
 BUILD_SCRIPTS = vnc Xvnc
-SKIPTEST = 1
+TEST_SCRIPTS =
 INSTALL_SCRIPTS = vnc
-PATCHFILES  = 0001-GNU-make-by-default.patch
 # This patch has been sent upstream with a bug report.
 # http://sourceforge.net/tracker/?func=detail&aid=2852808&group_id=14067&atid=114067
-PATCHFILES += 0002-Test-for-Makefile-presence.patch
+# PATCHFILES += 0002-Test-for-Makefile-presence.patch
+#
+PATCHFILES  = 0001-Sun-compiler-in-sun.cf.patch
+PATCHFILES += 0002-pass-f-xmakefile-flag-when-appropriate.patch
+PATCHFILES += 0003-GNU-make-by-default.patch
 
 include gar/category.mk
 
@@ -57,27 +61,24 @@ pre-configure-modulated:
 configure-Xvnc:
 	banner "Config Xvnc"
 	perl -pi -e "s|^(\s*make)\s*$$|\1 CC=$(CC)|" $(WORKSRC)/Xvnc/configure
-	cd $(WORKSRC)/Xvnc && ./configure
+	(cd $(WORKSRC)/Xvnc && $(BUILD_ENV) ./configure)
 	@$(MAKECOOKIE)
 
 build-vnc:
 	banner "Build VNC"
 	cd $(WORKSRC) && $(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") World
+	# $(MAKE) -C $(WORKSRC) $(BUILD_ENV) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") World
 	@$(MAKECOOKIE)
 
 build-Xvnc: configure-Xvnc
+	# $(MAKE) -C $(WORKSRC) $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap" EXTRA_DEFINES="-DUSE_LIBWRAP=1" World
+	# banner "Config Xvnc"
+	# (cd $(WORKSRC)/Xvnc && $(BUILD_ENV) ./configure)
 	banner "Build Xvnc"
-	# $(MAKE) -C $(WORKSRC)/Xvnc $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap" EXTRA_DEFINES="-DUSE_LIBWRAP=1" World
-	$(MAKE) -C $(WORKSRC) $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap" EXTRA_DEFINES="-DUSE_LIBWRAP=1" World
 	$(MAKE) -C $(WORKSRC)/Xvnc $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap -lsocket" EXTRA_DEFINES="-DUSE_LIBWRAP=1" EXTRA_LDOPTIONS="-L/opt/csw/lib -L/usr/lib" World
+	# cd $(WORKSRC) && $(MAKE) $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap" EXTRA_DEFINES="-DUSE_LIBWRAP=1" World
+	# cd $(WORKSRC)/Xvnc && $(MAKE) $(BUILD_ENV) EXTRA_LIBRARIES="-lwrap -lsocket" EXTRA_DEFINES="-DUSE_LIBWRAP=1" EXTRA_LDOPTIONS="-L/opt/csw/lib -L/usr/lib" World
 	@$(MAKECOOKIE)
-
-#xmkmf -a
-#make CDEBUGFLAGS="$RPM_OPT_FLAGS" World
-#cd Xvnc
-#./configure
-#make EXTRA_LIBRARIES="-lwrap -lnss_nis" CDEBUGFLAGS="$RPM_OPT_FLAGS" \
-#     EXTRA_DEFINES="-DUSE_LIBWRAP=1"
 
 install-vnc:
 	ginstall -d $(DESTDIR)$(bindir)
