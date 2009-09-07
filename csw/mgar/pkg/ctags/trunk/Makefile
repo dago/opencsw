@@ -1,8 +1,8 @@
 GARNAME = ctags
-GARVERSION = 5.5.4
+GARVERSION = 5.8
 CATEGORIES = utils
 
-DESCRIPTION =  Exuberant ctags
+DESCRIPTION = Exuberant Ctags: A multilanguage implementation of Ctags
 define BLURB
   Ctags generates an index (or tag) file of language objects found in source
   files that allows these items to be quickly and easily located by a text
@@ -11,17 +11,19 @@ define BLURB
   object).
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
+MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += CSWctags.gspec CSWctags.prototype
+
+# Respect DESTDIR
+PATCHFILES = install.diff
+
+PACKAGES = CSWectags
+CATALOGNAME = ectags
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=6556
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
-
-# Respect DESTDIR
-PATCHFILES += install.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-custom-config=$(sysconfdir)/ctags.conf
