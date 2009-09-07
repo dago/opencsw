@@ -561,7 +561,12 @@ prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPE
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
 package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
-	$(DONADA)
+	@echo
+	@echo "The following packages have been built:"
+	@echo
+	@$(foreach SPEC,$(_PKG_SPECS),echo $(SPEC);echo "  $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz";)
+	@echo
+	@$(DONADA)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
 package-%: $(WORKDIR)/%.gspec $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
