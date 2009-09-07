@@ -1,0 +1,50 @@
+From 796212b91212ad84a516554ba5bb6250d8fd1c87 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 7 Sep 2009 10:08:34 +0200
+Subject: [PATCH 2/3] pass -f xmakefile flag when appropriate
+
+---
+ Xvnc/config/cf/Imake.rules |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/Xvnc/config/cf/Imake.rules b/Xvnc/config/cf/Imake.rules
+index 5ab9a18..353dabf 100644
+--- a/Xvnc/config/cf/Imake.rules
++++ b/Xvnc/config/cf/Imake.rules
+@@ -2469,7 +2469,7 @@ $(ONESUBDIR)/Makefile:							@@\
+ 	fi;								@@\
+ 									@@\
+ target::								@@\
+-	-@MakeFlagsToShellFlags(ik,set +e); \				@@\
++	MakeFlagsToShellFlags(ik,set +e); \				@@\
+ 	MakeFlagsToShellFlags(n,executeit="no"); \			@@\
+ 	for i in dirs ;\						@@\
+ 	do \								@@\
+@@ -2477,7 +2477,7 @@ target::								@@\
+ 		.) curdir= ;; \						@@\
+ 		*) curdir=$(CURRENT_DIR)/ ;; \				@@\
+ 		esac; \							@@\
+-		echo "making Makefiles in $$curdir$$i..."; \		@@\
++		echo "making Makefiles in '$$curdir'::'$$i'..."; \		@@\
+ 		itmp=`echo $$i | sed -e 's;^\./;;g' -e 's;/\./;/;g'`; \	@@\
+ 		curtmp="$(CURRENT_DIR)" \				@@\
+ 		toptmp=""; \						@@\
+@@ -2514,7 +2514,14 @@ target::								@@\
+ 				$(MV) $$i/Makefile $$i/Makefile.bak; \	@@\
+ 			fi; \						@@\
+ 		fi; \							@@\
+-		$(MAKE) $(MFLAGS) $(MAKE_OPTS) ONESUBDIR=$$i ONECURDIR=$$curdir IMAKETOP=$$imaketop IMAKEPREFIX=$$imakeprefix $$i/Makefile; \	@@\
++		[ -r xmakefile ] && $(MAKE) -f xmakefile $(MFLAGS) \    @@\
++		       $(MAKE_OPTS) ONESUBDIR=$$i ONECURDIR=$$curdir \  @@\
++		       IMAKETOP=$$imaketop IMAKEPREFIX=$$imakeprefix \  @@\
++		       $$i/Makefile || \	                        @@\
++		$(MAKE) $(MFLAGS) \                                     @@\
++		       $(MAKE_OPTS) ONESUBDIR=$$i ONECURDIR=$$curdir \  @@\
++		       IMAKETOP=$$imaketop IMAKEPREFIX=$$imakeprefix \  @@\
++		       $$i/Makefile; \	                                @@\
+ 		if [ -d $$i ] ; then \					@@\
+ 			cd $$i; \					@@\
+ 			$(MAKE) $(MFLAGS) Makefiles; \			@@\
+-- 
+1.6.3.2
+
