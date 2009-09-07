@@ -34,7 +34,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CONFIGURE_AGGS_32 =
+CONFIGURE_ARGS_32 =
 CONFIGURE_ARGS_64 = --without-python
 CONFIGURE_ARGS = $(DIRPATHS) $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
