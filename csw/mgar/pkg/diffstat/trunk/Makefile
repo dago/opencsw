@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://invisible-island.net/diffstat/
-DISTFILES  = $(GARNAME).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-#UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
 SPKG_SOURCEURL = http://invisible-island.net/diffstat/
 
