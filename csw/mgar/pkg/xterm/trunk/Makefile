@@ -1,5 +1,5 @@
 GARNAME = xterm
-GARVERSION = 243
+GARVERSION = 247
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
@@ -51,12 +51,6 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 
 include gar/category.mk
-
-# Hack for now to address the double /opt/csw/lib in $R*PATH. One comes
-# from LD_OPTIONS and this one from pkg-config i suppose.
-pre-build-modulated:
-	@perl -pi -e 's|-R/opt/csw/lib ||' $(WORKSRC)/Makefile
-	@$(MAKECOOKIE)
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
