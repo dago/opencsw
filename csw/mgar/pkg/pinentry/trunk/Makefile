@@ -9,7 +9,7 @@ DESCRIPTION = Allows entering passwords into gpg-agent.
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.gnupg.org/
-PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig
+PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/pinentry/
 PATCHFILES  = 0001-remove-__extension__-from-util.c.patch
 PATCHFILES += 0002-ncurses-include.patch
