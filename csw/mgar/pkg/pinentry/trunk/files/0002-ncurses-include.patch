@@ -1,0 +1,25 @@
+From 257626c95990b2f220bccf2fbc08e51d4eb07e76 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Tue, 8 Sep 2009 20:02:57 +0100
+Subject: [PATCH 2/2] ncurses include
+
+---
+ pinentry/pinentry-curses.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/pinentry/pinentry-curses.c b/pinentry/pinentry-curses.c
+index b4417fb..60721f1 100644
+--- a/pinentry/pinentry-curses.c
++++ b/pinentry/pinentry-curses.c
+@@ -22,7 +22,7 @@
+ #include <config.h>
+ #endif
+ #include <assert.h>
+-#include <curses.h>
++#include <ncurses/ncurses.h>
+ #include <signal.h>
+ #include <fcntl.h>
+ #include <unistd.h>
+-- 
+1.6.3.2
+
