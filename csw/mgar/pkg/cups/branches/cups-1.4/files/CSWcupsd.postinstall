@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+if [ -d "${PKG_INSTALL_ROOT}/opt/csw/etc/cups" ]; then
+  echo
+  echo "The old configuration directory /opt/csw/etc/cup exists."
+  echo "Please move your configuration to /etc/opt/csw/cups."
+  echo
+  exit 1
+fi

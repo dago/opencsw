@@ -1,3 +1,7 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
 GARNAME = cups
 GARVERSION = 1.4.0
 CATEGORIES = net
@@ -23,6 +27,8 @@ MASTER_SITES += $(FULL_MIRRORS)
 
 PATCHFILES = 0001-Makefile.patch
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
+DISTFILES += CSWcupsclient.postinstall
+DISTFILES += CSWcupsd.postinstall
 DISTFILES += CSWcupsd.postremove
 
 PREREQUISITE_PKGS  = CSWggettext
@@ -36,7 +42,6 @@ PREREQUISITE_PKGS += SUNWhea
 PREREQUISITE_PKGS += SUNWlibm
 PREREQUISITE_PKGS += SUNWslpu
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
@@ -108,8 +113,6 @@ PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
 PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
 PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
 
-
-
 SPKG_DESC_CSWcups = Common Unix Printing System
 SPKG_DESC_CSWlibcups = CUPS libraries
 SPKG_DESC_CSWcupsd = CUPS daemon
@@ -121,7 +124,6 @@ PROTOTYPE_FILTER  = awk ' \
     $$$$3 ~ /\/init.d\/cswcups$$$$/ { $$$$2 = "cswinitsmf" } \
     $$$$3 ~ /\/cupsd\.conf\.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
     { print }'
-
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
