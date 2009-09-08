@@ -1,0 +1,70 @@
+	Von: 	car@crank.org.uk
+	Betreff: 	Re: ctags
+	Datum: 	14. April 2007 22:52:11 MESZ
+	An: 	enh@jessies.org
+
+
+On 15/04/2007, at 7:37 AM, Elliott Hughes wrote:
+/etc/alternatives, overwriting/uninstalling the system ctags, or arranging for the new "ctags" to be higher on the path seem to be the most common solutions.
+
+Yeah, unfortunately none of those is open to me.  I'm not allowed to remove or declare and incompatibility with the existing package, and I'm not allowed to clash.  My two options are to rename my executable or stick it somewhere other than /opt/csw/bin.
+
+i've seen it called ectags before where it would otherwise be ambiguous, but not xctags.
+
+That's good enough for me.  I can't even call it gtags/gctags because the other one's GNU.  Which came first.
+
+etags is Emacs' crippled ctags variant.
+
+Exuberant ctags comes with a symbolic link, on request, to cripple it so.  I'm not tempted to to prefix that, too, and call the pair ectags and eetags -- I'll have to alter the code, which I don't like doing.
+
+Yuck, Emacs.
+
+Evergreen currently relies on it being the first "ctags" on the path.
+
+Yes.  Unfortunately we'll have to rely on the symbolic link trick to achieve that end.
+
+-- 
+Chris Reece
+http://www.crank.org.uk/
+
+
+
+	Von: 	car@crank.org.uk
+	Betreff: 	/newpkgs ectags
+	Datum: 	26. April 2007 00:16:52 MESZ
+	An: 	phil@bolthole.com
+
+Phil,
+
+I'll get back to you on the matter of autoenabling and bandwidthd, just a
+wee bit busy at the moment, I'm sure you're even more so.
+
+I do have another package, though, in newpkgs:
+
+/export/medusa/newpkgs/ectags-5.6,REV=2007.04.25-SunOS5.8-i386-CSW.pkg.gz
+/export/medusa/newpkgs/ectags-5.6,REV=2007.04.25-SunOS5.8-sparc-CSW.pkg.gz
+
+Unfortunately, by default it clashes with the GNU Ctags binary "ctags"
+(why these people can't find a new name when they fork, I don't know)
+which is bundled with CSWemacs. I am assured, however, that this is the
+default ctags on many Linuxes, it certainly seems fairly popular, and it
+has tag support for a wider range of languages.  There's precedent for
+renaming it "ectags" or "exuberant-ctags" where it co-exists with GNU
+ctags.  The former seems most popular, so that's what I've gone with.
+
+It's compiled to read configuration from /opt/csw/etc/ectags.conf, and I
+*would* include a dummy config file listing the sensible defaults except
+that there's no way to comment the config file without causing ectags to
+spout a warning every time it's executed  I'm reliably informed that
+no-one uses the configuration file, and it certainly smells of an
+abandoned, half implemented feature.  So, instead of a config file, a
+message at install-time, that seems the best we can do.
+
+Cheers,
+
+Chris.
+
+
+
+
+

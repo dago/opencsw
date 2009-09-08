@@ -31,4 +31,6 @@ CONFIGURE_ARGS += --enable-custom-config=$(sysconfdir)/ctags.conf
 # No test suite
 TEST_SCRIPTS =
 
+EXTRA_PAX_ARGS = -s ",/ctags,/ectags,p"
+
 include gar/category.mk
