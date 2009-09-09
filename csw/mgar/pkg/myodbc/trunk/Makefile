@@ -40,6 +40,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-unixODBC=/opt/csw --with-mysql-path=/opt/csw/mysql5 --enable-gui=no
 CONFIGURE_ARGS += --with-odbc-ini=/etc/opt/csw
 EXTRA_INC = $(abspath $(WORKDIR))/mysql-5.0.84/include
+EXTRA_LD_OPTIONS = -R/opt/csw/mysql5/lib/mysql
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
