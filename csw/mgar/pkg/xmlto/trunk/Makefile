@@ -36,10 +36,10 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-mktemp=/opt/csw/bin/mktemp
-CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
-CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
-CONFIGURE_ARGS += --with-getopt=/opt/csw/bin/ggetopt
+CONFIGURE_ARGS += GETOPT=/opt/csw/bin/ggetopt
+CONFIGURE_ARGS += BASH=/opt/csw/bin/bash
+CONFIGURE_ARGS += FIND=/opt/csw/bin/gfind
+CONFIGURE_ARGS += MKTEMP=/opt/csw/bin/mktemp
 
 include gar/category.mk
 
