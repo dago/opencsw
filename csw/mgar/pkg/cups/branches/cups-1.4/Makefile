@@ -133,6 +133,13 @@ CONFIGURE_ARGS += --localedir=$(datadir)/locale
 CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-icondir=$(datadir)/icons
 
+CONFIGURE_ARGS_DBG  = --enable-debug
+CONFIGURE_ARGS_DBG += --enable-debug-guards
+CONFIGURE_ARGS_DBG += --enable-debug-printfs
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+
+
 # This is a hack that's needed, because configure (Makedefs) will otherwise
 # plase -ltiff, etc. first and -L/opt/csw/lib afterwards, thus being unable
 # to find any of the image libraries.
@@ -155,6 +162,11 @@ TEST_TARGET =
 SPKG_SOURCEURL = http://www.cups.org/
 
 PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
+
+# CUPS uses the 'OPTIM' variable to set the optimization flags.
+OPTIM_DBG = -g -xO0
+OPTIM = $(OPTIM_$(GARFLAVOR))
+export OPTIM
 
 post-install-modulated:
 	(cd $(DESTDIR)$(sysconfdir)/cups; \
