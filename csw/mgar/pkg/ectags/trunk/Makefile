@@ -20,6 +20,8 @@ PATCHFILES = install.diff
 PACKAGES = CSWectags
 CATALOGNAME = ectags
 
+SPKG_SOURCEURL = http://ctags.sourceforge.net/
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=6556
 UPSTREAM_USE_SF = 1
