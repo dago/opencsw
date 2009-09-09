@@ -1,0 +1,25 @@
+From 490679f2825057f4516557abce0109a324c95a8a Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 9 Sep 2009 11:36:02 +0200
+Subject: [PATCH 3/3] libdix.a after libos.a
+
+---
+ Xvnc/programs/Xserver/Imakefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Xvnc/programs/Xserver/Imakefile b/Xvnc/programs/Xserver/Imakefile
+index 4209d1f..89a1a97 100644
+--- a/Xvnc/programs/Xserver/Imakefile
++++ b/Xvnc/programs/Xserver/Imakefile
+@@ -11,7 +11,7 @@ XCOMM $XFree86: xc/programs/Xserver/Imakefile,v 3.85.2.8 1998/02/07 00:44:33 daw
+ INSTPGMFLAGS = 
+ #endif
+ 
+-#define PreFbLibs $(DIX) $(OS) $(FONT) $(XPDDX)
++#define PreFbLibs $(DIX) $(OS) $(DIX) $(FONT) $(XPDDX)
+ #define BarePostFbLibs $(MFB) $(XPFBLIBS) $(MI)
+ #define PostFbLibs BarePostFbLibs $(EXTENSIONS)
+ #define NoMfbBarePostFbLibs $(XPFBLIBS) $(MI)
+-- 
+1.6.3.2
+
