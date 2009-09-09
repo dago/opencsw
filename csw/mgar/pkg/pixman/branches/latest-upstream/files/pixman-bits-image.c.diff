@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru  pixman-0.15.12.orig/pixman/pixman-bits-image.c pixman-0.15.12/pixman/pixman-bits-image.c
+--- pixman-0.15.12.orig/pixman/pixman-bits-image.c    2009-06-18 23:17:05.103503620 +0200
++++ pixman-0.15.12/pixman/pixman-bits-image.c         2009-06-18 23:17:14.684711072 +0200
+@@ -251,7 +251,7 @@
+        coords[i + 1] = y;
+     }
+
+-    return bits_image_fetch_pixels_src_clip (image, buffer, n_pixels);
++    bits_image_fetch_pixels_src_clip (image, buffer, n_pixels);
+ }
+
+ #define N_TMP_PIXELS   (256)

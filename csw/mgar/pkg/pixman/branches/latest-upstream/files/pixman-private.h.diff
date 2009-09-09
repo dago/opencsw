@@ -1,0 +1,11 @@
+diff --speed-large-files --minimal -Nru  pixman-0.15.12.orig/pixman/pixman-private.h pixman-0.15.12/pixman/pixman-private.h
+--- pixman-0.15.12.orig/pixman/pixman-private.h    2009-06-18 23:17:05.103503620 +0200
++++ pixman-0.15.12/pixman/pixman-private.h         2009-06-18 23:17:14.684711072 +0200
+@@ -788,6 +788,7 @@
+                                                 pixman_region16_data_t *empty_data,
+                                                 pixman_region16_data_t *broken_data);
+
++#undef PIXMAN_TIMERS
+ #ifdef PIXMAN_TIMERS
+
+ /* Timing */
