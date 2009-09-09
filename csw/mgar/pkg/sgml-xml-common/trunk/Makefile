@@ -44,10 +44,12 @@ RH_AM_LINKS = install-sh missing mkinstalldirs
 # a destination xml catalog
 XMLCATALOG=$(DESTDIR)/$(sysconfdir)/xml/catalog
 
+sysconfdir=/etc/opt/csw/
+
 include gar/category.mk
 
 # fix up auto* stuff
-pre-configure:
+pre-configure-modulated:
 	( cd $(WORKSRC)/; \
 		for f in $(RH_AM_LINKS); do \
 			rm $$f; \
