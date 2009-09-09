@@ -19,6 +19,8 @@ endef
 MASTER_SITES = https://fedorahosted.org/releases/x/m/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+PATCHFILES = no-hardcode-bash.patch
+
 TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -27,8 +29,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 # we don't link to anything besides libc and libm.
 NORUNPATH = 1
 
-pre-configure:
+pre-configure-modulated:
 	@(cd $(WORKSRC); \
+		autoreconf; \
 		touch doc/xmlto.xml doc/xmlif.xml )
 	@$(MAKECOOKIE)
 
