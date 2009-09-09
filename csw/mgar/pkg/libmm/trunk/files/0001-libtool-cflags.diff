@@ -1,0 +1,20 @@
+diff -Naur mm-1.4.2.orig/Makefile.in mm-1.4.2.patched/Makefile.in
+--- mm-1.4.2.orig/Makefile.in	2006-08-10 21:05:55.000000000 +0200
++++ mm-1.4.2.patched/Makefile.in	2009-09-09 16:25:45.161331795 +0200
+@@ -75,14 +75,14 @@
+ all: $(LIBS) $(MANS) $(TSTS)
+ 
+ libmm.la: $(OBJS)
+-	$(LIBTOOL) --quiet --mode=link $(CC) -o $@ $(OBJS) \
++	$(LIBTOOL) --quiet --mode=link $(CC) $(CFLAGS) -o $@ $(OBJS) \
+ 	    -rpath $(libdir) -version-info `$(SHTOOL) version -l c -d libtool mm_vers.c`
+ 
+ mm_alloc.c mm_core.c mm_global.c: mm.h mm_vers.c
+ mm.h: config.h
+ 
+ mm_test: mm_test.lo libmm.la
+-	$(LIBTOOL) --quiet --mode=link $(CC) -o $@ mm_test.lo libmm.la
++	$(LIBTOOL) --quiet --mode=link $(CC) $(CFLAGS) -o $@ mm_test.lo libmm.la
+ 
+ mm.3: mm.pod
+ 	V1=`$(SHTOOL) version -l c -d short mm_vers.c`; \
