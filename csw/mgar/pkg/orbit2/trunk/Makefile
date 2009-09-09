@@ -9,10 +9,21 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+
+PACKAGES = CSWorbit2
+CATALOGNAME = orbit2
+
+REQUIRED_PKGS = CSWggettextrt CSWglib2 CSWlibidl
 
 SPKG_SOURCEURL = http://projects.gnome.org/ORBit2/
 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+# Patch from
+#   https://bugzilla.gnome.org/show_bug.cgi?id=563046
+# This also solves
+#   https://bugzilla.gnome.org/show_bug.cgi?id=558796
+PATCHFILES = patch-test-foo.diff
+PATCHDIRLEVEL = 0
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 STRIP_LIBTOOL = 1
