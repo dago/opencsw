@@ -1,5 +1,5 @@
 GARNAME = xmlto
-GARVERSION = 0.0.21
+GARVERSION = 0.0.22
 CATEGORIES = utils
 
 PREREQUISITE_PKGS += CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt
@@ -16,7 +16,7 @@ for the conversion you want and applies it using an external XSL-T processor.
 It also performs any necessary post-processing.
 endef
 
-MASTER_SITES = https://fedorahosted.org/$(GARNAME)/export/1/
+MASTER_SITES = https://fedorahosted.org/releases/x/m/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 TEST_TARGET = check
