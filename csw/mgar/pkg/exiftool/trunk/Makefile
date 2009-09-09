@@ -1,5 +1,5 @@
 GARNAME = exiftool
-GARVERSION = 7.81
+GARVERSION = 7.93
 CATEGORIES = cpan
 
 DESCRIPTION = Read, Write and Edit Image File Meta Information
@@ -15,7 +15,7 @@ MODDIST =
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += $(call admfiles,CSWexiftool,)
 
-REQUIRED_PKGS += CSWperl CSWpmcompresszlib
+REQUIRED_PKGS += CSWperl CSWpmiocompress 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = Image-ExifTool-(\d+(?:\.\d+)*).tar.gz
