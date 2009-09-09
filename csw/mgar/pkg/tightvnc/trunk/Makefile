@@ -38,14 +38,16 @@ EXTRA_INC = /usr/openwin/share/include/X11
 EXTRA_INCLUDES = $(EXTRA_INC)
 EXTRA_LDFLAGS = /opt/csw/lib
 LOCAL_LDFLAGS = $(LINKER_FLAGS)
-BUILD_OVERRIDE_DIRS = EXTRA_DEFINES EXTRA_INCLUDES LOCAL_LDFLAGS
+EXTRA_LIBRARIES = -lwrap -lsocket
+BUILD_OVERRIDE_DIRS = EXTRA_DEFINES EXTRA_INCLUDES LOCAL_LDFLAGS EXTRA_LIBRARIES
 CONFIGURE_SCRIPTS = vnc
-BUILD_SCRIPTS = maciej
+BUILD_SCRIPTS = vnc
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = vnc
 PATCHFILES  = 0001-Sun-compiler-in-sun.cf.patch
 PATCHFILES += 0003-GNU-make-by-default.patch
 PATCHFILES += 0003-libdix.a-after-libos.a.patch
+PATCHFILES += 0001-Force-the-use-of-libwrap.patch
 
 include gar/category.mk
 
@@ -57,7 +59,7 @@ configure-vnc:
 	(cd $(WORKSRC) && $(CONFIGURE_ENV) xmkmf)
 	@$(MAKECOOKIE)
 
-build-maciej:
+build-vnc:
 	(cd $(WORKSRC) && $(BUILD_ENV) \
 		EXTRA_INCLUDES="-I/opt/csw/include" \
 		LOCAL_LDFLAGS="-L/opt/csw/lib" \
@@ -69,17 +71,11 @@ build-maciej:
 		LOCAL_LDFLAGS="-L/opt/csw/lib" \
 		./configure)
 	(cd $(WORKSRC)/Xvnc && $(BUILD_ENV) \
-		EXTRA_INCLUDES="-I/opt/csw/include" \
+		EXTRA_LIBRARIES="-lwrap -lsocket" \
+		EXTRA_DEFINES="-DUSE_LIBWRAP=1" \
 		LOCAL_LDFLAGS="-L/opt/csw/lib" \
-		gmake)
-	# <maciej> This is something that Dago wanted to do, but it causes the build to
-	# fail. I'm leaving it for future reference.
-	# (cd $(WORKSRC)/Xvnc && $(BUILD_ENV) \
-	# 	EXTRA_LIBRARIES="-lwrap -lsocket" \
-	# 	EXTRA_DEFINES="-DUSE_LIBWRAP=1" \
-	# 	LOCAL_LDFLAGS="-L/opt/csw/lib" \
-	# 	EXTRA_INCLUDES="-I/opt/csw/include" \
-	# 	$(MAKE))
+		EXTRA_INCLUDES="-I/opt/csw/include" \
+		$(MAKE))
 
 install-vnc:
 	ginstall -d $(DESTDIR)$(bindir)

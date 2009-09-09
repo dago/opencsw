@@ -1,0 +1,25 @@
+From dd810a41debde8e4e24241a87b7ba19766407032 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 9 Sep 2009 18:18:18 +0200
+Subject: [PATCH] Force the use of libwrap
+
+---
+ Xvnc/config/cf/vnclibs.def |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Xvnc/config/cf/vnclibs.def b/Xvnc/config/cf/vnclibs.def
+index c033ca7..948fd7a 100644
+--- a/Xvnc/config/cf/vnclibs.def
++++ b/Xvnc/config/cf/vnclibs.def
+@@ -11,7 +11,7 @@ VNCLIBS = $(TOP)/../libvncauth/libvncauth.a
+ /* Avoid linking with different libjpeg in /usr/shlib under Tru64. */
+ VNCSYSLIBS = /usr/local/lib/libjpeg.a /usr/local/lib/libz.a -lcrypt
+ #else
+-VNCSYSLIBS = -L/usr/local/lib -ljpeg -lz -lcrypt
++VNCSYSLIBS = -L/usr/local/lib -ljpeg -lz -lcrypt -lwrap
+ #endif
+ 
+ VNCCPPFLAGS = -I$(TOP)/../include -I/usr/local/include
+-- 
+1.6.3.2
+
