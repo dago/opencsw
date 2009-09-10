@@ -34,8 +34,6 @@ EXTRA_FILES = xml.dcl html.dcl xml.soc html.soc
 
 MASTER_SITES = ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += CSWsgmlcommon.gspec CSWsgmlcommon.prototype CSWsgmlcommon.depend
-DISTFILES += CSWxmlcommon.gspec CSWxmlcommon.prototype
 DISTFILES += $(EXTRA_FILES)
 
 # We define upstream file regex so we can be notifed of new upstream software release
