@@ -6,5 +6,5 @@
  
 -echo "/etc/sgml/sgml.conf"
 +# modified for CSW (this should be handled with autoconf, but i'm lazy)
-+echo "/opt/csw/etc/sgml/sgml.conf"
++echo "/etc/opt/csw/sgml/sgml.conf"
  # Simple, isn't it? ;-)
