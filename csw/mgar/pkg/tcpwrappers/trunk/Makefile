@@ -2,7 +2,7 @@ GARNAME = tcp_wrappers
 GARVERSION = 7.6
 CATEGORIES = lib
 
-DESCRIPTION = Socket Wrappers
+DESCRIPTION = Socket wrappers for pre-screening tcp connections (ipv6.4 patched)
 define BLURB
   Socket Wrappers is an improved version of tcp_wrappers by Wietse Venema.
 endef
