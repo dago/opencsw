@@ -27,8 +27,8 @@ MASTER_SITES += $(FULL_MIRRORS)
 
 PATCHFILES = 0001-Makefile.patch
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
-DISTFILES += CSWcupsclient.postinstall
-DISTFILES += CSWcupsd.postinstall
+DISTFILES += CSWcupsclient.preinstall
+DISTFILES += CSWcupsd.preinstall
 DISTFILES += CSWcupsd.postremove
 
 PREREQUISITE_PKGS  = CSWggettext

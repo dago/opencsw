@@ -1,0 +1,34 @@
+#!/bin/sh
+# vim:set sw=2 ts=2 sts=2 expandtab:
+#
+# $Id$
+#
+
+obsolete_dir_information="
+This configuration directory is obsolete. Current CUPS package is using the
+/etc/opt/csw/cups directory. Files in this directory are going to be ignored.
+Please move your configuration to /etc/opt/csw/cups.
+
+Feel free to remove this file afterwards.
+"
+obsolete_dir_file_name="README.THIS_DIRECTORY_IS_OBSOLETE"
+
+if [ -d "${PKG_INSTALL_ROOT}/opt/csw/etc/cups" ]; then
+  echo
+  echo "*******************************************************************"
+  echo "* The old configuration directory /opt/csw/etc/cups still exists. *"
+  echo "* Please move your configuration to /etc/opt/csw/cups.            *"
+  echo "*                                                                 *"
+  echo "*       Installation will continue in 10 seconds.                 *"
+  echo "*         Press CTRL+C if you want to stop now.                   *"
+  echo "*******************************************************************"
+  echo
+  sleep 10
+  
+  # Leaving a note for the sysadmin if the they proceed with the installation.
+  fn="${PKG_INSTALL_ROOT}/opt/csw/etc/cups/${obsolete_dir_file_name}"
+  if touch "${fn}" 2>/dev/null; then
+    echo "${obsolete_dir_information}" > "${fn}"
+  fi
+  exit 0
+fi
