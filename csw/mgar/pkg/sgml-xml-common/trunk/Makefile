@@ -75,7 +75,7 @@ pre-configure-modulated:
 		automake --add-missing --copy )
 	@$(MAKECOOKIE)
 
-post-install:
+post-install-modulated:
 	# this is almost 100% copy from the sgml-common rpm spec from rhel5
 	mkdir -p $(DESTDIR)/$(sysconfdir)/xml
 	mkdir -p $(DESTDIR)/$(datadir)/sgml/docbook
@@ -98,7 +98,6 @@ post-install:
 		"http://www.oasis-open.org/docbook/" \
 		"file://$(datadir)/sgml/docbook/xmlcatalog" $(XMLCATALOG)
 	# Also create the common DocBook catalog
-
 	xmlcatalog --noout --create \
 		$(DESTDIR)/$(datadir)/sgml/docbook/xmlcatalog
 	rm -f $(DESTDIR)/$(datadir)/sgml/xml.dcl
