@@ -14,6 +14,8 @@ endef
 
 PREREQUISITE_PKGS = CSWautomake CSWautoconf
 
+ARCHALL = 1
+
 PACKAGES = CSWxmlcommon CSWsgmlcommon
 
 SPKG_DESC_CSWsgmlcommon = A collection of sgml entities and DTDs
