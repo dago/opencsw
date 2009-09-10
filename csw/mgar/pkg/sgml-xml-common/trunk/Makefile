@@ -14,6 +14,22 @@ endef
 
 PREREQUISITE_PKGS = CSWautomake CSWautoconf
 
+PACKAGES = CSWxmlcommon CSWsgmlcommon
+
+SPKG_DESC_CSWsgmlcommon = A collection of sgml entities and DTDs
+SPKG_DESC_CSWxmlcommon = A collection of xml entities and DTDs
+
+CATALOGNAME_CSWsgmlcommon = sgmlcommon
+CATALOGNAME_CSWxmlcommon = xmlcommon
+
+PKGFILES_CSWsgmlcommon =  .*sgmlwhich.* .*install-catalog.*
+PKGFILES_CSWsgmlcommon += /opt/csw/share/sgml/.* /etc/opt/csw/sgml/.*
+PKGFILES_CSWsgmlcommon += /opt/csw/share/doc/sgml.*
+
+PKGFILES_CSWxmlcommon = /etc/opt/csw/xml/.* /opt/csw/share/xml.* .*xmlcatalog
+
+REQUIRED_PKGS_CSWsgmlcommon = CSWbash CSWggrep CSWgsed
+
 EXTRA_FILES = xml.dcl html.dcl xml.soc html.soc
 
 MASTER_SITES = ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/
