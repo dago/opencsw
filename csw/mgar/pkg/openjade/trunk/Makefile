@@ -35,12 +35,14 @@ GARCOMPILER = GCC3
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(GARNAME)
 CONFIGURE_ARGS += --enable-splibdir=$(libdir)
-CONFIGURE_ARGS += --enable-default-catalog=/opt/csw/etc/sgml/catalog
+CONFIGURE_ARGS += --enable-default-catalog=$(sysconfdir)/sgml/catalog
 CONFIGURE_ARGS += --disable-static
 
 TEST_SCRIPTS = 
 
 INSTALL_ARGS = install install-man
+
+sysconfdir = /etc/opt/csw
 
 include gar/category.mk
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONFCAT=/opt/csw/etc/sgml/openjade.soc
+CONFCAT=/etc/opt/csw/sgml/openjade.soc
 CATALOG=/opt/csw/share/sgml/openjade/catalog
 
 insterror()
@@ -8,7 +8,7 @@ insterror()
     cat <<EOF
 An error was encountered while removing the openjade sgml catalog info.
 
-Please look in /opt/csw/etc/sgml and possibly rerun:
+Please look in /etc/opt/csw/sgml and possibly rerun:
 /opt/csw/bin/install-catalog --remove $CONFCAT $CATALOG
 
 EOF
