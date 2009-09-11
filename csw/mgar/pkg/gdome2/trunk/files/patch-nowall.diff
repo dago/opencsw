@@ -1,15 +1,3 @@
-diff -Naur gdome2-0.8.1.orig/configure gdome2-0.8.1.patched/configure
---- gdome2-0.8.1.orig/configure	2003-10-05 22:52:20.000000000 +0200
-+++ gdome2-0.8.1.patched/configure	2009-09-11 12:00:18.168479806 +0200
-@@ -1507,7 +1507,7 @@
- fi
- 
- if test $ac_cv_header_stdc = yes; then
--  # /bin/cc in Irix-4.0.5 gets non-ANSI ctype macros unless using -ansi.
-+  # /bin/cc in Irix-4.0.5 gets non-ANSI ctype macros unless using .
- if test "$cross_compiling" = yes; then
-   :
- else
 diff -Naur gdome2-0.8.1.orig/libgdome/Makefile.am gdome2-0.8.1.patched/libgdome/Makefile.am
 --- gdome2-0.8.1.orig/libgdome/Makefile.am	2002-07-16 16:15:56.000000000 +0200
 +++ gdome2-0.8.1.patched/libgdome/Makefile.am	2009-09-11 12:00:17.924132266 +0200
