@@ -44,24 +44,26 @@ SPKG_SOURCEURL = http://www.openldap.org
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = patch-oldap-2.4.16-ntlm.diff
-DISTFILES += $(PATCHFILES)
+PATCHFILES += patch-libtool-64bit.diff
+DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
 EXTRA_DOCS = README.CSW $(PATCHFILES)
 
 #EXTRA_LIB = $(prefix)/bdb44/lib 
 #EXTRA_INC = $(prefix)/bdb44/include
 
-#BUILD64 = 1
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-crypt
 CONFIGURE_ARGS += --enable-lmpasswd
-CONFIGURE_ARGS += --enable-spasswd
 CONFIGURE_ARGS += --enable-modules
 CONFIGURE_ARGS += --enable-rlookups
 CONFIGURE_ARGS += --enable-slp
 # Disable TCPwrappers in 64 bit until the libraries are available
 #   <http://opencsw.org/mantis/view.php?id=3748>
 CONFIGURE_ARGS_32 = --enable-wrappers
+# spasswd requires Cyrus SASL
+CONFIGURE_ARGS_32 += --enable-spasswd
 # Disable Cyrus SASL in 64 bit until the libraries are available
 #   <http://opencsw.org/mantis/view.php?id=3749>
 CONFIGURE_ARGS_64 += --without-cyrus-sasl

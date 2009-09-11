@@ -4,5 +4,6 @@ c50f5c4040139b6cf57fcc08abffbee7  download/cswopenldap
 5e82103780f8cfc2b2fbd0f77c47c158  download/openldap-2.4.17.tgz
 0e57547ad2b5fedca9f0bd4beaddfe39  download/openldap.xml
 ab2ac7519b092ce8d16124c5270bfec0  download/openldaprc
+93dc2a04fd943c198ad00edd4d88ce65  download/patch-libtool-64bit.diff
 d3dee9018137c39f357859b652e3a67c  download/patch-oldap-2.4.16-ntlm.diff
 e15c2020566e56f02118e75c89111f15  download/svc-openldap
