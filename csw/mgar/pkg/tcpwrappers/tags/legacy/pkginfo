@@ -1,0 +1,8 @@
+PKG=CSWtcpwrap
+NAME=tcpwrappers - (ipv6.4 patched) lib and tools for pre-screening tcp connections
+VERSION=7.6,REV=2006.03.30.ipv6.4
+ARCH=i386
+CATEGORY=system
+VENDOR=http://ftp.porcupine.org/pub/security/ packaged for CSW by Philip Brown
+HOTLINE=http://www.blastwave.com/bugtrack/
+EMAIL=phil@blastwave.org

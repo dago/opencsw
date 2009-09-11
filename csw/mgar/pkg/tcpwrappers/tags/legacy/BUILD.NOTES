@@ -1,0 +1,25 @@
+
+# Patch the makefile to allow for compile of a shared lib.
+# Plus, define a sneaky ELF .obj that contains "weak" magic symbols
+
+#Note that the library is compiled to use LOG_LOCAL1 as the
+#syslog type, NOT "LOG_MAIL", the default
+#ALSO, it uses /opt/csw/etc, NOT /etc/hosts.XXX
+
+gpatch <~/pkgs/tcpwrap/sharedlib.patch
+
+#update manpage paths about /opt/csw/etc
+gpatch <~/pkgs/tcpwrap/man.patch
+
+
+gmake REAL_DAEMON_DIR=/usr/sbin sunos5-shared
+mv libwrap.so.1 libwrap-std.so.1
+gmake clean
+
+gmake REAL_DAEMON_DIR=/usr/sbin sunos5-sharedext
+mv libwrap.so.1 libwrap-ext.so.1
+
+cd ~/pkgs/tcpwrap
+cp README.t /export/home/phil/build/tcp_wrappers_7.6-ipv6.4
+createpkg -r /export/home/phil/build/tcp_wrappers_7.6-ipv6.4
+

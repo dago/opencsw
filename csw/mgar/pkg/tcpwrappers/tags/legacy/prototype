@@ -1,0 +1,29 @@
+i pkginfo
+i copyright
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/tcpwrappers 0755 root bin
+f none /opt/csw/share/doc/tcpwrappers/README=README.t 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libwrap-std.so.1=libwrap-std.so.1 0755 root bin
+f none /opt/csw/lib/libwrap-ext.so.1=libwrap-ext.so.1 0755 root bin
+s none /opt/csw/lib/libwrap.so.1=libwrap-std.so.1
+s none /opt/csw/lib/libwrap.so=libwrap.so.1
+d none /opt/csw/libexec 0755 root bin
+f none /opt/csw/libexec/tcpd=tcpd 0755 root bin
+f none /opt/csw/libexec/tcpdmatch=tcpdmatch 0755 root bin
+f none /opt/csw/libexec/try-from=try-from 0755 root bin
+f none /opt/csw/libexec/safe_finger=safe_finger 0755 root bin
+f none /opt/csw/libexec/tcpdchk=tcpdchk 0755 root bin
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/tcpd.h=tcpd.h 0644 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man3 0755 root bin
+d none /opt/csw/share/man/man5 0755 root bin
+d none /opt/csw/share/man/man8 0755 root bin
+f none /opt/csw/share/man/man3/hosts_access.3=hosts_access.3 0644 root bin
+f none /opt/csw/share/man/man5/hosts_access.5=hosts_access.5 0644 root bin
+f none /opt/csw/share/man/man5/hosts_options.5=hosts_options.5 0644 root bin
+f none /opt/csw/share/man/man8/tcpd.8=tcpd.8 0644 root bin
+f none /opt/csw/share/man/man8/tcpdchk.8=tcpdchk.8 0644 root bin
+f none /opt/csw/share/man/man8/tcpdmatch.8=tcpdmatch.8 0644 root bin

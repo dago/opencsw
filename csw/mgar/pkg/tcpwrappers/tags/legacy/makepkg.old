@@ -1,0 +1,61 @@
+#!/bin/ksh -p
+
+## MODIFIED BUILDPKG - this builds directly from source tree!!
+
+if [ "$1" = "" ] ; then
+	echo ERROR: need source dir
+	exit 1
+fi
+
+if [ ! -f "$1/libwrap.a" ] ; then
+	echo ERROR: do not detect built libwrap.a
+	exit 1
+fi
+
+
+
+# This script actually builds the package.. once you have already
+# put together the pkginfo and prototype file.
+# See the makeproto script for a way to make a prototype file.
+
+ARCH=all
+
+die()
+{
+	print ERROR: $*
+	exit 1
+}
+
+PROTO=prototype
+
+
+grep 'i copyright' $PROTO || die need copyright in $PROTO
+grep 'root other' $PROTO && die fix $PROTO file
+
+grep 'Replace this file' copyright && die fix copyright file
+
+mode=relative
+
+
+PKG=`sed -n 's/^PKG=//p' pkginfo`
+PKGREV=`sed -n 's/^VERSION=//p' pkginfo`
+SOFTNAME=`sed -n 's/^NAME=//p' pkginfo|awk '{print $1}'`
+ARCH=`uname -p`
+
+PKGFILE=$SOFTNAME-$PKGREV-SunOS`uname -r`-$ARCH-CSW.pkg
+
+if [ "$PKGREV" = "" -o "$SOFTNAME" = "" ] ; then
+	echo ERROR: need VERSION and NAME defined properly in pkginfo
+	exit 1
+fi
+
+pkgmk -b $1 -a $ARCH -f $PROTO
+
+
+if [ $? -ne 0 ] ; then die package creation failed ; fi
+
+
+pkgtrans -s /var/spool/pkg `pwd`/$PKGFILE $PKG
+echo gzipping pkgfile
+gzip $PKGFILE
+rm -r /var/spool/pkg/$PKG

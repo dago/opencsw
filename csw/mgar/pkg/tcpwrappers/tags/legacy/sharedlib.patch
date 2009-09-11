@@ -1,0 +1,71 @@
+--- Makefile.pre-csw	2006-03-30 16:47:20.849031000 -0500
++++ Makefile	2006-03-30 16:49:56.343391000 -0500
+@@ -197,6 +197,24 @@
+ 	BUGS="$(BUGS) -DSOLARIS_24_GETHOSTBYNAME_BUG" IPV6="$(IPV6)" \
+ 	EXTRA_CFLAGS=-DUSE_STRERROR all
+ 
++sunos5-shared:
++	@$(MAKE) REAL_DAEMON_DIR=$(REAL_DAEMON_DIR) STYLE=$(STYLE) \
++	LIBS="-lsocket -lnsl" RANLIB=/bin/true \
++	AR=ld ARFLAGS="-G -h libwrap.so.1 -o " \
++	LIB=libwrap.so.1 VSYSLOG= \
++	NETGROUP=-DNETGROUP AUX_OBJ="setenv.o sharedhack.o" TLI=-DTLI \
++	BUGS="$(BUGS) -DSOLARIS_24_GETHOSTBYNAME_BUG" IPV6="$(IPV6)" \
++	EXTRA_CFLAGS="-DUSE_STRERROR -Kpic" all
++
++sunos5-sharedext:
++	@$(MAKE) REAL_DAEMON_DIR=$(REAL_DAEMON_DIR) STYLE=$(STYLE) \
++	LIBS="-lsocket -lnsl" RANLIB=/bin/true \
++	AR=ld ARFLAGS="-G -h libwrap.so.1 -o " \
++	LIB=libwrap.so.1 VSYSLOG= STYLE=-DPROCESS_OPTIONS \
++	NETGROUP=-DNETGROUP AUX_OBJ="setenv.o sharedhack.o" TLI=-DTLI \
++	BUGS="$(BUGS) -DSOLARIS_24_GETHOSTBYNAME_BUG" IPV6="$(IPV6)" \
++	EXTRA_CFLAGS="-DUSE_STRERROR -Kpic" all
++
+ # Generic SYSV40
+ esix sysv4:
+ 	@make REAL_DAEMON_DIR=$(REAL_DAEMON_DIR) STYLE=$(STYLE) \
+@@ -481,7 +499,7 @@
+ # If your system has IPv6 and supports getipnode* and inet_pton/inet_ntop
+ # uncomment the following (Solaris 8)
+ 
+-# IPV6 = -DHAVE_IPV6
++IPV6 = -DHAVE_IPV6
+ 
+ # If your system does not have getipnodebyname() but uses the obsolete
+ # gethostbyname2() instead, use this (AIX)
+@@ -527,7 +545,7 @@
+ #
+ # The LOG_XXX names below are taken from the /usr/include/syslog.h file.
+ 
+-FACILITY= LOG_MAIL	# LOG_MAIL is what most sendmail daemons use
++FACILITY= LOG_LOCAL1	# LOG_MAIL is what most sendmail daemons use
+ 
+ # The syslog priority at which successful connections are logged.
+ 
+@@ -603,7 +621,7 @@
+ # look for access control information. Watch out for the quotes and
+ # backslashes when you make changes.
+ 
+-TABLES	= -DHOSTS_DENY=\"/etc/hosts.deny\" -DHOSTS_ALLOW=\"/etc/hosts.allow\"
++TABLES	= -DHOSTS_DENY=\"/opt/csw/etc/hosts.deny\" -DHOSTS_ALLOW=\"/opt/csw/etc/hosts.allow\"
+ 
+ ####################################################
+ # Optional: dealing with host name/address conflicts
+@@ -725,7 +743,7 @@
+ 	$(CC) $(CFLAGS) -o $@ miscd.o $(LIB) $(LIBS)
+ 
+ safe_finger: safe_finger.o $(LIB)
+-	$(CC) $(CFLAGS) -o $@ safe_finger.o $(LIB) $(LIBS)
++	$(CC) $(CFLAGS) -o $@ safe_finger.o $(LIBS)
+ 
+ TCPDMATCH_OBJ = tcpdmatch.o fakelog.o inetcf.o scaffold.o
+ 
+--- /dev/null	2006-03-30 15:03:19.000000000 -0500
++++ sharedhack.c	2006-03-30 16:50:50.946442000 -0500
+@@ -0,0 +1,5 @@
++/* This must be compiled with Sun CC for the pragma */
++#pragma weak deny_severity
++#pragma weak allow_severity
++int deny_severity=0;
++int allow_severity=0;
