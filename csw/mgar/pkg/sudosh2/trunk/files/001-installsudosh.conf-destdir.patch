@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru sudosh2-1.0.2.orig/src/Makefile.in sudosh2-1.0.2/src/Makefile.in
+--- sudosh2-1.0.2.orig/src/Makefile.in	2008-02-22 22:11:01.000000000 +0100
++++ sudosh2-1.0.2/src/Makefile.in	2009-09-12 00:15:07.491559672 +0200
+@@ -441,8 +441,8 @@
+ 
+ 
+ install-sudosh.conf:
+-	test -z "$(sysconfdir)" || $(mkdir_p) "$(DESTDIR)$(sysconfdir)"
+-	test -f $(sysconfdir)/sudosh.conf || $(INSTALL) -o 0 -g 0 -m 0444 '$(srcdir)/sudosh.conf' '$(sysconfdir)/sudosh.conf'
++	test -z "$(DESTDIR)$(sysconfdir)" || $(mkdir_p) "$(DESTDIR)$(sysconfdir)"
++	test -f "$(DESTDIR)$(sysconfdir)/sudosh.conf" || $(INSTALL) -m 0444 '$(srcdir)/sudosh.conf' '$(DESTDIR)$(sysconfdir)/sudosh.conf'
+ 
+ install: install-am install-sudosh.conf
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
