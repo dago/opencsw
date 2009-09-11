@@ -1,0 +1,41 @@
+# sad thing: it takes 3 times as long to configure the thing,
+# as it does to "make" it.
+
+
+CFLAGS=-O CC=cc CXX=CC ./configure --prefix=/opt/csw --infodir=/opt/csw/share/info
+
+gmake
+MAKE=gmake stagepkg
+
+mv cswstage/opt/csw/bin/libtool cswstage/opt/csw/bin/libtool.cc
+
+gmake clean  # distclean does not seem to work??
+
+CC=gcc CXX=g++ ./configure --prefix=/opt/csw
+gmake
+cp libtool cswstage/opt/csw/bin/libtool.gcc
+
+cp ~/pkgs/libtool/libtool.ksh cswstage/opt/csw/bin/libtool
+
+# [the rest is from pkg directory ....]
+
+cd ~/pkgs/libtool
+createpkg -r $HOME/build/libtool*/cswstage
+
+
+
+############################################################
+Notes on CCvsgcc issues with libtool:
+$ diff -r csw-forte cswstage|egrep '^diff|Binary'       
+diff -r csw-forte/opt/csw/bin/libtool cswstage/opt/csw/bin/libtool
+Binary files csw-forte/opt/csw/lib/libltdl.a and cswstage/opt/csw/lib/libltdl.a differ
+Binary files csw-forte/opt/csw/lib/libltdl.so and cswstage/opt/csw/lib/libltdl.so differ
+Binary files csw-forte/opt/csw/lib/libltdl.so.3 and cswstage/opt/csw/lib/libltdl.so.3 differ
+Binary files csw-forte/opt/csw/lib/libltdl.so.3.1.0 and cswstage/opt/csw/lib/libltdl.so.3.1.0 differ
+
+
+According to "nm", there are ACTUAL FUNCTION DIFFERENCES between the two
+libltdl.a files. The forte one is bigger, because it has a whole
+bunch of  things like, ".XAAj6Ia8srTA10P.archive_ext"
+But only if you forget to DISABLE THE STUPID INCREMENTAL LINKER.
+

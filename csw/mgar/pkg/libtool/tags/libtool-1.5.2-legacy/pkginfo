@@ -1,0 +1,8 @@
+PKG=CSWlibtool
+NAME=libtool - GNU tool for compiling libraries
+VERSION=1.5.2
+ARCH=i386
+CATEGORY=system
+VENDOR=http://ftp.gnu.org/pub/gnu/libtool  packaged for CSW by Philip Brown
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=phil@bolthole.com

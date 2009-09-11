@@ -1,0 +1,49 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/info 0755 root bin
+f none /opt/csw/share/info/libtool.info 0644 root bin
+f none /opt/csw/share/info/libtool.info-1 0644 root bin
+f none /opt/csw/share/info/libtool.info-2 0644 root bin
+f none /opt/csw/share/info/libtool.info-3 0644 root bin
+f none /opt/csw/share/info/libtool.info-4 0644 root bin
+f none /opt/csw/share/info/libtool.info-5 0644 root bin
+d none /opt/csw/share/aclocal 0755 root bin
+f none /opt/csw/share/aclocal/libtool.m4 0644 root bin
+f none /opt/csw/share/aclocal/ltdl.m4 0644 root bin
+d none /opt/csw/share/libtool 0755 root bin
+f none /opt/csw/share/libtool/ltmain.sh 0644 root bin
+f none /opt/csw/share/libtool/config.guess 0755 root bin
+f none /opt/csw/share/libtool/config.sub 0755 root bin
+d none /opt/csw/share/libtool/libltdl 0755 root bin
+f none /opt/csw/share/libtool/libltdl/README 0644 root bin
+f none /opt/csw/share/libtool/libltdl/ltdl.h 0644 root bin
+f none /opt/csw/share/libtool/libltdl/COPYING.LIB 0644 root bin
+f none /opt/csw/share/libtool/libltdl/Makefile.am 0644 root bin
+f none /opt/csw/share/libtool/libltdl/Makefile.in 0644 root bin
+f none /opt/csw/share/libtool/libltdl/acinclude.m4 0644 root bin
+f none /opt/csw/share/libtool/libltdl/aclocal.m4 0644 root bin
+f none /opt/csw/share/libtool/libltdl/config-h.in 0644 root bin
+f none /opt/csw/share/libtool/libltdl/config.guess 0755 root bin
+f none /opt/csw/share/libtool/libltdl/config.sub 0755 root bin
+f none /opt/csw/share/libtool/libltdl/configure 0755 root bin
+f none /opt/csw/share/libtool/libltdl/configure.ac 0644 root bin
+f none /opt/csw/share/libtool/libltdl/install-sh 0755 root bin
+f none /opt/csw/share/libtool/libltdl/ltmain.sh 0644 root bin
+f none /opt/csw/share/libtool/libltdl/missing 0755 root bin
+f none /opt/csw/share/libtool/libltdl/mkinstalldirs 0755 root bin
+f none /opt/csw/share/libtool/libltdl/ltdl.c 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libltdl.so.3.1.0 0755 root bin
+s none /opt/csw/lib/libltdl.so.3=libltdl.so.3.1.0
+s none /opt/csw/lib/libltdl.so=libltdl.so.3.1.0
+f none /opt/csw/lib/libltdl.la 0755 root bin
+f none /opt/csw/lib/libltdl.a 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/libtool 0755 root bin
+f none /opt/csw/bin/libtool.cc 0755 root bin
+f none /opt/csw/bin/libtool.gcc 0755 root bin
+f none /opt/csw/bin/libtoolize 0755 root bin
+d none /opt/csw/include 0755 root bin
+f none /opt/csw/include/ltdl.h 0644 root bin
