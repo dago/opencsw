@@ -1,0 +1,32 @@
+diff -Naur gdome2-0.8.1.orig/gtk-doc/Makefile.am gdome2-0.8.1.patched/gtk-doc/Makefile.am
+--- gdome2-0.8.1.orig/gtk-doc/Makefile.am	2002-04-04 08:58:04.000000000 +0200
++++ gdome2-0.8.1.patched/gtk-doc/Makefile.am	2009-09-11 15:10:49.023110574 +0200
+@@ -33,9 +33,9 @@
+ 	rm -rf sgml html gdome2-decl-list.txt gdome2-decl.txt 
+ 
+ install-data-local:
+-	-install -d -m 0755 $(TARGET_DIR)
+-	-install -m 0644 $(srcdir)/html/*.html $(TARGET_DIR)
+-	-install -m 0644 $(srcdir)/html/index.sgml $(TARGET_DIR)
++	-$(INSTALL) -d -m 0755 $(TARGET_DIR)
++	-$(INSTALL) -m 0644 $(srcdir)/html/*.html $(TARGET_DIR)
++	-$(INSTALL) -m 0644 $(srcdir)/html/index.sgml $(TARGET_DIR)
+ 	-(cd $(DESTDIR); gtkdoc-fixxref --module=$(DOC_MODULE) --html-dir=$(HTML_DIR))
+ 
+ .PHONY : html sgml templates scan
+diff -Naur gdome2-0.8.1.orig/gtk-doc/Makefile.in gdome2-0.8.1.patched/gtk-doc/Makefile.in
+--- gdome2-0.8.1.orig/gtk-doc/Makefile.in	2003-10-05 22:52:52.000000000 +0200
++++ gdome2-0.8.1.patched/gtk-doc/Makefile.in	2009-09-11 15:11:27.730500581 +0200
+@@ -273,9 +273,9 @@
+ 	rm -rf sgml html gdome2-decl-list.txt gdome2-decl.txt 
+ 
+ install-data-local:
+-	-install -d -m 0755 $(TARGET_DIR)
+-	-install -m 0644 $(srcdir)/html/*.html $(TARGET_DIR)
+-	-install -m 0644 $(srcdir)/html/index.sgml $(TARGET_DIR)
++	-$(INSTALL) -d -m 0755 $(TARGET_DIR)
++	-$(INSTALL) -m 0644 $(srcdir)/html/*.html $(TARGET_DIR)
++	-$(INSTALL) -m 0644 $(srcdir)/html/index.sgml $(TARGET_DIR)
+ 	-(cd $(DESTDIR); gtkdoc-fixxref --module=$(DOC_MODULE) --html-dir=$(HTML_DIR))
+ 
+ .PHONY : html sgml templates scan

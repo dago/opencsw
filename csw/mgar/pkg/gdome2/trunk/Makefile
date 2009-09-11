@@ -10,6 +10,8 @@ endef
 MASTER_SITES = http://gdome2.cs.unibo.it/tarball/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = patch-nowall.diff
+PATCHFILES += patch-doc-destdir.diff
+PATCHFILES += patch-use-install.diff
 
 REQUIRED_PKGS = CSWggettextrt CSWglib2 CSWiconv CSWlibxml2 CSWzlib
 
