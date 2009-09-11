@@ -17,6 +17,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWgiflib CSWungif
 
+CATALOGNAME_CSWgiflib = giflib
+CATALOGNAME_CSWungif = libungif
+
 SPKG_DESC_CSWgiflib = A library for reading and writing gif images
 SPKG_DESC_CSWungif = Links to giflib now the patent is dropped
 
