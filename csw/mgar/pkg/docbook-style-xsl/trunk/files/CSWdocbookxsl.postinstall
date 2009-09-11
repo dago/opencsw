@@ -12,7 +12,7 @@ CATCMD=/opt/csw/bin/xmlcatalog
 
 DBHOME=/opt/csw/share/sgml/docbook
 
-CATALOG=/opt/csw/etc/xml/catalog
+CATALOG=/etc/opt/csw/xml/catalog
 
 #we need a version here, since that will be referenced in URLS being redirected
 VERSION=$(GARVERSION)

@@ -7,7 +7,7 @@ esac
 
 PATH=/opt/csw/bin:$PATH
 
-CATALOG=/opt/csw/etc/xml/catalog
+CATALOG=/etc/opt/csw/xml/catalog
 XMLCAT=/opt/csw/bin/xmlcatalog
 DBHOME=/opt/csw/share/sgml/docbook
 
