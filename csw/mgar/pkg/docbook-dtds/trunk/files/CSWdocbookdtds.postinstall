@@ -10,7 +10,7 @@ case "$PKG_INSTALL_ROOT" in
 esac
 
 XMLCAT=/opt/csw/bin/xmlcatalog
-CSWSGMLCNF=/opt/csw/etc/sgml
+CSWSGMLCNF=/etc/opt/csw/sgml
 CSWSGML=/opt/csw/share/sgml
 
 ##
