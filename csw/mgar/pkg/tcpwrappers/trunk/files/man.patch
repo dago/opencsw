@@ -1,0 +1,154 @@
+diff -Naur tcp_wrappers_7.6-ipv6.4.orig/hosts_access.3 tcp_wrappers_7.6-ipv6.4.patched/hosts_access.3
+--- tcp_wrappers_7.6-ipv6.4.orig/hosts_access.3	1996-02-11 17:01:27.000000000 +0100
++++ tcp_wrappers_7.6-ipv6.4.patched/hosts_access.3	2009-09-11 18:54:28.630235290 +0200
+@@ -78,7 +78,7 @@
+ hosts_access(5), format of the access control tables.
+ hosts_options(5), optional extensions to the base language.
+ .SH FILES
+-/etc/hosts.allow, /etc/hosts.deny, access control tables.
++/etc/opt/csw/hosts.allow, /etc//opt/csw/hosts.deny, access control tables.
+ .SH BUGS
+ hosts_access() uses the strtok() library function. This may interfere
+ with other code that relies on strtok().
+diff -Naur tcp_wrappers_7.6-ipv6.4.orig/hosts_access.5 tcp_wrappers_7.6-ipv6.4.patched/hosts_access.5
+--- tcp_wrappers_7.6-ipv6.4.orig/hosts_access.5	1995-01-30 19:51:47.000000000 +0100
++++ tcp_wrappers_7.6-ipv6.4.patched/hosts_access.5	2009-09-11 18:54:28.633332432 +0200
+@@ -21,10 +21,10 @@
+ at the first match:
+ .IP \(bu
+ Access will be granted when a (daemon,client) pair matches an entry in
+-the \fI/etc/hosts.allow\fR file.
++the \fI/etc/opt/csw/hosts.allow\fR file.
+ .IP \(bu
+ Otherwise, access will be denied when a (daemon,client) pair matches an
+-entry in the \fI/etc/hosts.deny\fR file.
++entry in the \fI/etc/opt/csw/hosts.deny\fR file.
+ .IP \(bu
+ Otherwise, access will be granted.
+ .PP
+@@ -268,7 +268,7 @@
+ file:
+ .PP
+ .ne 2
+-/etc/hosts.deny: 
++/etc/opt/csw/hosts.deny: 
+ .in +3
+ ALL: ALL
+ .PP
+@@ -279,7 +279,7 @@
+ For example:
+ .PP
+ .ne 2
+-/etc/hosts.allow: 
++/etc/opt/csw/hosts.allow: 
+ .in +3
+ ALL: LOCAL @some_netgroup
+ .br
+@@ -298,7 +298,7 @@
+ that it can be omitted.  The explicitly non-authorized hosts are listed
+ in the deny file. For example:
+ .PP
+-/etc/hosts.deny:
++/etc/opt/csw/hosts.deny:
+ .in +3
+ ALL: some.host.name, .some.domain
+ .br
+@@ -313,13 +313,13 @@
+ host. The result is mailed to the superuser.
+ .PP
+ .ne 2
+-/etc/hosts.allow:
++/etc/opt/csw/hosts.allow:
+ .in +3
+ .nf
+ in.tftpd: LOCAL, .my.domain
+ .PP
+ .ne 2
+-/etc/hosts.deny:
++/etc/opt/csw/hosts.deny:
+ .in +3
+ .nf
+ in.tftpd: ALL: (/some/where/safe_finger -l @%h | \\
+@@ -353,8 +353,8 @@
+ .SH FILES
+ .na
+ .nf
+-/etc/hosts.allow, (daemon,client) pairs that are granted access.
+-/etc/hosts.deny, (daemon,client) pairs that are denied access.
++/etc/opt/csw/hosts.allow, (daemon,client) pairs that are granted access.
++/etc/opt/csw/hosts.deny, (daemon,client) pairs that are denied access.
+ .ad
+ .fi
+ .SH SEE ALSO
+diff -Naur tcp_wrappers_7.6-ipv6.4.orig/tcpd.8 tcp_wrappers_7.6-ipv6.4.patched/tcpd.8
+--- tcp_wrappers_7.6-ipv6.4.orig/tcpd.8	1996-02-21 16:39:16.000000000 +0100
++++ tcp_wrappers_7.6-ipv6.4.patched/tcpd.8	2009-09-11 18:54:28.635231817 +0200
+@@ -146,7 +146,7 @@
+ only non-trivial service that is affected by this limitation is
+ \fIrexd\fR, which is used by the \fIon(1)\fR command. This is no great
+ loss.  On most systems, \fIrexd\fR is less secure than a wildcard in
+-/etc/hosts.equiv.
++/etc/opt/csw/hosts.equiv.
+ .PP
+ RPC broadcast requests (for example: \fIrwall, rup, rusers\fR) always
+ appear to come from the responding host. What happens is that the
+@@ -158,9 +158,9 @@
+ .PP
+ The default locations of the host access control tables are:
+ .PP
+-/etc/hosts.allow
++/etc/opt/csw/hosts.allow
+ .br
+-/etc/hosts.deny
++/etc/opt/csw/hosts.deny
+ .SH SEE ALSO
+ .na
+ .nf
+diff -Naur tcp_wrappers_7.6-ipv6.4.orig/tcpdchk.8 tcp_wrappers_7.6-ipv6.4.patched/tcpdchk.8
+--- tcp_wrappers_7.6-ipv6.4.orig/tcpdchk.8	1995-01-08 17:00:31.000000000 +0100
++++ tcp_wrappers_7.6-ipv6.4.patched/tcpdchk.8	2009-09-11 18:54:28.636911201 +0200
+@@ -8,7 +8,7 @@
+ \fItcpdchk\fR examines your tcp wrapper configuration and reports all
+ potential and real problems it can find. The program examines the
+ \fItcpd\fR access control files (by default, these are
+-\fI/etc/hosts.allow\fR and \fI/etc/hosts.deny\fR), and compares the
++\fI/etc/opt/csw/hosts.allow\fR and \fI/etc/opt/csw/hosts.deny\fR), and compares the
+ entries in these files against entries in the \fIinetd\fR or \fItlid\fR
+ network configuration files.
+ .PP
+@@ -44,9 +44,9 @@
+ .PP
+ The default locations of the \fItcpd\fR access control tables are:
+ .PP
+-/etc/hosts.allow
++/etc/opt/csw/hosts.allow
+ .br
+-/etc/hosts.deny
++/etc/opt/csw/hosts.deny
+ .SH SEE ALSO
+ .na
+ .nf
+diff -Naur tcp_wrappers_7.6-ipv6.4.orig/tcpdmatch.8 tcp_wrappers_7.6-ipv6.4.patched/tcpdmatch.8
+--- tcp_wrappers_7.6-ipv6.4.orig/tcpdmatch.8	1996-02-11 17:01:36.000000000 +0100
++++ tcp_wrappers_7.6-ipv6.4.patched/tcpdmatch.8	2009-09-11 18:54:28.638584325 +0200
+@@ -11,7 +11,7 @@
+ request for service.  Examples are given below.
+ .PP
+ The program examines the \fItcpd\fR access control tables (default
+-\fI/etc/hosts.allow\fR and \fI/etc/hosts.deny\fR) and prints its
++\fI/etc/opt/csw/hosts.allow\fR and \fI/etc/opt/csw/hosts.deny\fR) and prints its
+ conclusion.  For maximal accuracy, it extracts additional information
+ from your \fIinetd\fR or \fItlid\fR network configuration file.
+ .PP
+@@ -76,9 +76,9 @@
+ .PP
+ The default locations of the \fItcpd\fR access control tables are:
+ .PP
+-/etc/hosts.allow
++/etc/opt/csw/hosts.allow
+ .br
+-/etc/hosts.deny
++/etc/opt/csw/hosts.deny
+ .SH SEE ALSO
+ .na
+ .nf

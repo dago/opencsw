@@ -1,1 +1,6 @@
-e6fa25f71226d090f34de3f6b122fb5a  download/tcp_wrappers_7.6.tar.gz
+071bd69cb78b18888ea5e3da5c3127fa  download/COPYING
+b268880c14ab6d31140015275c82d6aa  download/README
+89e8f9d1ed25d8e809674af9bf3d18e6  download/man.patch
+af28873e5c16c4f921237148e2507826  download/patch-cflags.diff
+39ff14b0cc741a02a8427c4107c5d7d4  download/sharedlib.patch
+ccbc2676977c31bbd43783abfbf2fdcf  download/tcp_wrappers_7.6-ipv6.4.tar.gz
