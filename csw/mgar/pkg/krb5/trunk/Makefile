@@ -1,5 +1,5 @@
 GARNAME = krb5
-GARVERSION = 1.6.3
+GARVERSION = 1.7
 CATEGORIES = server
 
 DESCRIPTION = MIT Kerberos 5
@@ -11,22 +11,36 @@ define BLURB
   Kerberos is available in many commercial products as well.
 endef
 
-MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/1.6/
+MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/1.7/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-signed.tar
-DISTFILES += $(call admfiles,CSWkrb5adminserver,depend)
-DISTFILES += $(call admfiles,CSWkrb5doc)
-DISTFILES += $(call admfiles,CSWkrb5kdc,depend)
-DISTFILES += $(call admfiles,CSWkrb5lib)
-DISTFILES += $(call admfiles,CSWkrb5libdev,depend)
-DISTFILES += $(call admfiles,CSWkrb5user,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
 
-PATCHFILES  = patch-man2html-perl.diff
-PATCHFILES += patch-ldap-const.diff
+PATCHFILES = patch-man2html-perl.diff
 
 PREREQUISITE_PKGS = CSWtcl
+
+PACKAGES = CSWkrb5adminserver CSWkrb5doc CSWkrb5kdc CSWkrb5lib CSWkrb5libdev CSWkrb5user
+
+CATALOGNAME_CSWkrb5adminserver = krb5_admin_server
+CATALOGNAME_CSWkrb5doc         = krb5_doc
+CATALOGNAME_CSWkrb5kdc         = krb5_kdc
+CATALOGNAME_CSWkrb5lib         = krb5_lib
+CATALOGNAME_CSWkrb5libdev      = krb5_lib_dev
+CATALOGNAME_CSWkrb5user        = krb5_user
+
+SPKG_DESC_CSWkrb5adminserver = MIT Kerberos 5 admin server
+SPKG_DESC_CSWkrb5doc         = MIT Kerberos 5 documentation
+SPKG_DESC_CSWkrb5kdc         = MIT Kerberos 5 key distribution center
+SPKG_DESC_CSWkrb5lib         = MIT Kerberos 5 core libraries
+SPKG_DESC_CSWkrb5libdev      = MIT Kerberos 5 developer libraries
+SPKG_DESC_CSWkrb5user        = MIT Kerberos 5 user tools
+
+REQUIRED_PKGS_CSWkrb5adminserver = CSWkrb5kdc CSWkrb5lib
+REQUIRED_PKGS_CSWkrb5kdc = CSWkrb5lib CSWkrb5user
+REQUIRED_PKGS_CSWkrb5libdev = CSWkrb5lib
+REQUIRED_PKGS_CSWkrb5user = CSWkrb5lib
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
@@ -50,6 +64,8 @@ TEST_SCRIPTS = $(WORKSRC)/src/Makefile
 TEST_TARGET = check
 
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile custom
+
+ARCHALL_CSWkrb5doc = 1
 
 ADMINSERVER_BINS = kprop|kadmind|kadmin\.local
 PKGFILES_CSWkrb5adminserver  = $(mandir)/man8/($(ADMINSERVER_BINS))\.8
@@ -78,7 +94,7 @@ PKGFILES_CSWkrb5libdev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss
 #PKGFILES_CSWkrb5user += $(sharedstatedir)/examples/krb5/krb5.conf
 #PKGFILES_CSWkrb5user += $(bindir)/($(USER_BINS))
 
-include ../category.mk
+include gar/category.mk
 
 # The flags must not contain additional spaces or the build freaks out
 CFLAGS := $(strip $(CFLAGS) -L$(libdir)/$(MM_LIBDIR))
