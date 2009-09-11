@@ -78,9 +78,9 @@ build-custom:
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo " => Installing $(GARNAME)"
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	cd $(WORKDIR) && ginstall -v -m 644 README $(DESTDIR)$(docdir)/$(GARNAME)
+	@echo " => Installing $(CATALOGNAME)"
+	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
+	cd $(WORKDIR) && ginstall -v -m 644 README $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	ginstall -d $(DESTDIR)$(libexecdir)
 	cd $(WORKSRC) && ginstall -v -m 755 safe_finger tcpd tcpdchk tcpdmatch try-from $(DESTDIR)$(libexecdir)
 	ginstall -d $(DESTDIR)$(includedir)
