@@ -1,0 +1,171 @@
+diff -Naur gdome2-0.8.1.orig/configure gdome2-0.8.1.patched/configure
+--- gdome2-0.8.1.orig/configure	2003-10-05 22:52:20.000000000 +0200
++++ gdome2-0.8.1.patched/configure	2009-09-11 12:00:18.168479806 +0200
+@@ -1507,7 +1507,7 @@
+ fi
+ 
+ if test $ac_cv_header_stdc = yes; then
+-  # /bin/cc in Irix-4.0.5 gets non-ANSI ctype macros unless using -ansi.
++  # /bin/cc in Irix-4.0.5 gets non-ANSI ctype macros unless using .
+ if test "$cross_compiling" = yes; then
+   :
+ else
+diff -Naur gdome2-0.8.1.orig/libgdome/Makefile.am gdome2-0.8.1.patched/libgdome/Makefile.am
+--- gdome2-0.8.1.orig/libgdome/Makefile.am	2002-07-16 16:15:56.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/Makefile.am	2009-09-11 12:00:17.924132266 +0200
+@@ -12,7 +12,7 @@
+ 	-I$(top_srcdir)/libgdome/events 	\
+ 	-I$(top_srcdir)/libgdome/xpath	 	\
+ 	 $(LIBXML_CFLAGS) $(GLIB_CFLAGS) 	\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ lib_LTLIBRARIES = libgdome.la
+diff -Naur gdome2-0.8.1.orig/libgdome/Makefile.in gdome2-0.8.1.patched/libgdome/Makefile.in
+--- gdome2-0.8.1.orig/libgdome/Makefile.in	2003-10-05 22:52:47.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/Makefile.in	2009-09-11 12:00:17.964737249 +0200
+@@ -111,7 +111,7 @@
+ 	-I$(top_srcdir)/libgdome/events 	\
+ 	-I$(top_srcdir)/libgdome/xpath	 	\
+ 	 $(LIBXML_CFLAGS) $(GLIB_CFLAGS) 	\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ 
+diff -Naur gdome2-0.8.1.orig/libgdome/events/Makefile.am gdome2-0.8.1.patched/libgdome/events/Makefile.am
+--- gdome2-0.8.1.orig/libgdome/events/Makefile.am	2001-05-19 16:18:35.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/events/Makefile.am	2009-09-11 12:00:17.938633857 +0200
+@@ -4,7 +4,7 @@
+ 	-I$(top_srcdir)/libgdome/gdomecore 	\
+ 	 $(LIBXML_CFLAGS) 			\
+ 	$(GLIB_CFLAGS) 				\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ noinst_LTLIBRARIES = libgdomeevents.la
+diff -Naur gdome2-0.8.1.orig/libgdome/events/Makefile.in gdome2-0.8.1.patched/libgdome/events/Makefile.in
+--- gdome2-0.8.1.orig/libgdome/events/Makefile.in	2003-10-05 22:52:49.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/events/Makefile.in	2009-09-11 12:00:17.942890311 +0200
+@@ -102,7 +102,7 @@
+ 	-I$(top_srcdir)/libgdome/gdomecore 	\
+ 	 $(LIBXML_CFLAGS) 			\
+ 	$(GLIB_CFLAGS) 				\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ 
+diff -Naur gdome2-0.8.1.orig/libgdome/gdomecore/Makefile.am gdome2-0.8.1.patched/libgdome/gdomecore/Makefile.am
+--- gdome2-0.8.1.orig/libgdome/gdomecore/Makefile.am	2002-04-03 09:05:00.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/gdomecore/Makefile.am	2009-09-11 12:00:18.044626103 +0200
+@@ -6,7 +6,7 @@
+ 	-I$(top_srcdir)/libgdome/xpath 		\
+ 	$(LIBXML_CFLAGS) 			\
+ 	$(GLIB_CFLAGS) 				\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ noinst_LTLIBRARIES = libgdomecore.la
+diff -Naur gdome2-0.8.1.orig/libgdome/gdomecore/Makefile.in gdome2-0.8.1.patched/libgdome/gdomecore/Makefile.in
+--- gdome2-0.8.1.orig/libgdome/gdomecore/Makefile.in	2003-10-05 22:52:48.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/gdomecore/Makefile.in	2009-09-11 12:00:18.056327975 +0200
+@@ -104,7 +104,7 @@
+ 	-I$(top_srcdir)/libgdome/xpath 		\
+ 	$(LIBXML_CFLAGS) 			\
+ 	$(GLIB_CFLAGS) 				\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ 
+diff -Naur gdome2-0.8.1.orig/libgdome/gdomecore/gdome-xml-node.c gdome2-0.8.1.patched/libgdome/gdomecore/gdome-xml-node.c
+--- gdome2-0.8.1.orig/libgdome/gdomecore/gdome-xml-node.c	2003-10-03 17:53:33.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/gdomecore/gdome-xml-node.c	2009-09-11 13:34:49.857555834 +0200
+@@ -252,9 +252,9 @@
+   switch (type) {
+   case XML_DOCUMENT_TYPE_NODE:
+   case XML_DTD_NODE:
+-    return gdome_xml_dt_unref (self, exc);
++    gdome_xml_dt_unref (self, exc); return;
+   case XML_DOCUMENT_NODE:
+-    return gdome_xml_doc_unref (self, exc);
++    gdome_xml_doc_unref (self, exc); return;
+   default:
+     if (priv->refcnt > 0)
+       priv->refcnt--;
+diff -Naur gdome2-0.8.1.orig/libgdome/xpath/Makefile.am gdome2-0.8.1.patched/libgdome/xpath/Makefile.am
+--- gdome2-0.8.1.orig/libgdome/xpath/Makefile.am	2002-03-01 05:00:25.000000000 +0100
++++ gdome2-0.8.1.patched/libgdome/xpath/Makefile.am	2009-09-11 12:00:17.952259279 +0200
+@@ -4,7 +4,7 @@
+ 	-I$(top_srcdir)/libgdome/gdomecore 	\
+ 	 $(LIBXML_CFLAGS) 			\
+ 	$(GLIB_CFLAGS) 				\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ noinst_LTLIBRARIES = libgdomexpath.la
+diff -Naur gdome2-0.8.1.orig/libgdome/xpath/Makefile.in gdome2-0.8.1.patched/libgdome/xpath/Makefile.in
+--- gdome2-0.8.1.orig/libgdome/xpath/Makefile.in	2003-10-05 22:52:50.000000000 +0200
++++ gdome2-0.8.1.patched/libgdome/xpath/Makefile.in	2009-09-11 12:00:17.951202991 +0200
+@@ -102,7 +102,7 @@
+ 	-I$(top_srcdir)/libgdome/gdomecore 	\
+ 	 $(LIBXML_CFLAGS) 			\
+ 	$(GLIB_CFLAGS) 				\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ 
+diff -Naur gdome2-0.8.1.orig/test/Makefile.am gdome2-0.8.1.patched/test/Makefile.am
+--- gdome2-0.8.1.orig/test/Makefile.am	2002-05-29 02:24:49.000000000 +0200
++++ gdome2-0.8.1.patched/test/Makefile.am	2009-09-11 12:00:17.850381240 +0200
+@@ -10,7 +10,7 @@
+ 	-I$(top_srcdir)/libgdome 		\
+ 	-I$(top_srcdir)/libgdome/gdomecore 	\
+ 	$(LIBXML_CFLAGS) $(GLIB_CFLAGS)        	\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ noinst_PROGRAMS =		\
+diff -Naur gdome2-0.8.1.orig/test/Makefile.in gdome2-0.8.1.patched/test/Makefile.in
+--- gdome2-0.8.1.orig/test/Makefile.in	2003-10-05 22:52:51.000000000 +0200
++++ gdome2-0.8.1.patched/test/Makefile.in	2009-09-11 12:00:17.859781302 +0200
+@@ -109,7 +109,7 @@
+ 	-I$(top_srcdir)/libgdome 		\
+ 	-I$(top_srcdir)/libgdome/gdomecore 	\
+ 	$(LIBXML_CFLAGS) $(GLIB_CFLAGS)        	\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ 
+diff -Naur gdome2-0.8.1.orig/test/apigen/Makefile.am gdome2-0.8.1.patched/test/apigen/Makefile.am
+--- gdome2-0.8.1.orig/test/apigen/Makefile.am	2002-11-08 17:38:34.000000000 +0100
++++ gdome2-0.8.1.patched/test/apigen/Makefile.am	2009-09-11 12:00:17.901805128 +0200
+@@ -3,7 +3,7 @@
+ INCLUDES =					\
+ 	-I$(top_srcdir)/libgdome 		\
+ 	$(LIBXML_CFLAGS) $(GLIB_CFLAGS)        	\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ noinst_PROGRAMS =	\
+diff -Naur gdome2-0.8.1.orig/test/apigen/Makefile.in gdome2-0.8.1.patched/test/apigen/Makefile.in
+--- gdome2-0.8.1.orig/test/apigen/Makefile.in	2003-10-05 22:52:52.000000000 +0200
++++ gdome2-0.8.1.patched/test/apigen/Makefile.in	2009-09-11 12:00:17.892676920 +0200
+@@ -101,7 +101,7 @@
+ INCLUDES = \
+ 	-I$(top_srcdir)/libgdome 		\
+ 	$(LIBXML_CFLAGS) $(GLIB_CFLAGS)        	\
+-	-Wall -ansi				\
++	 				\
+ 	$(NULL)
+ 
+ 
