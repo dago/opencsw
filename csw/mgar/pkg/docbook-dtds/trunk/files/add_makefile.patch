@@ -1,8 +1,8 @@
 --- /dev/null	2008-12-15 18:41:04.000000000 +0100
 +++ docbookdtds-5.0/Makefile	2008-12-15 18:55:18.651895350 +0100
-@@ -0,0 +1,96 @@
+@@ -0,0 +1,84 @@
 +prefix = /opt/csw
-+sysconfdir = $(prefix)/etc
++sysconfdir = /etc/opt/csw
 +datadir = $(prefix)/share
 +
 +
@@ -53,8 +53,6 @@
 +		[ -d $$dir ] || $(INSTALL_DIR) $$dir; \
 +		$(INSTALL_DATA) $$x.1-sgml/ChangeLog $$dir/; \
 +	done
-+	$(INSTALL_DIR) $(DESTDIR)/$(docdir)/5.0
-+	cp -R 5.0-xml/docs/ $(DESTDIR)/$(docdir)/5.0/
 +
 +inst-%-sgml: DD=$(DESTDIR)/$(docbookdir)/sgml-dtd-$*
 +inst-%-sgml:
@@ -81,16 +79,6 @@
 +			$(INSTALL_DIR) $(DD)/ent; \
 +			$(INSTALL_DATA) ent/* $(DD)/ent/; \
 +		fi )
-+
-+inst-5.0-xml: DD=$(DESTDIR)/$(docbookdir)/xml-schemas-5.0
-+inst-5.0-xml:
-+	@echo Installing 5.0-xml
-+	@( cd 5.0-xml/; \
-+	      gmkdir -p $(DD); \
-+	      for d in dtd rng sch xsd; do \
-+	      	  cp -R $$d $(DD); \
-+	      done; \
-+	      $(INSTALL_DATA) catalog.xml $(DD)/catalog; )
 +
 +build:
 +	@echo Nothing to build...dummy statement in action.

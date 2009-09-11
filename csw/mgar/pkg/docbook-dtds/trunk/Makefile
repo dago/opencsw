@@ -5,7 +5,7 @@
 # version supplied in the package.
 
 GARNAME = docbookdtds
-GARVERSION = 5.0
+GARVERSION = 4.5
 
 CATEGORIES = xtra
 
@@ -47,13 +47,12 @@ O_SRC += $(OASIS)/sgml/4.1/ $(OASIS)/xml/4.1.2/ $(OASIS)/sgml/4.2/
 O_SRC += $(OASIS)/xml/4.2/
 D_SRC = $(DOCBOOK)/sgml/4.3/ $(DOCBOOK)/xml/4.3/ $(DOCBOOK)/sgml/4.4/
 D_SRC += $(DOCBOOK)/xml/4.4/ $(DOCBOOK)/sgml/4.5/ $(DOCBOOK)/xml/4.5/
-D_SRC += $(DOCBOOK)/xml/5.0/
 
 # the various files we'll need to fetch from the various sources
 DBFILES = docbk30.zip docbk31.zip docbk40.zip docbk41.zip docbkx412.zip
 DBFILES += docbook-4.2.zip docbook-xml-4.2.zip docbook-4.3.zip
 DBFILES += docbook-xml-4.3.zip docbook-4.4.zip docbook-xml-4.4.zip
-DBFILES += docbook-4.5.zip docbook-xml-4.5.zip docbook-5.0.zip
+DBFILES += docbook-4.5.zip docbook-xml-4.5.zip
 
 MASTER_SITES = $(O_SRC) $(D_SRC)
 DISTFILES  = $(DBFILES)
@@ -144,13 +143,6 @@ zip-extract-docbook-xml-4.4.zip:
 zip-extract-docbook-xml-4.5.zip:
 	ginstall -d $(WORKSRC)/4.5-xml
 	unzip $(DOWNLOADDIR)/docbook-xml-4.5.zip -d $(WORKSRC)/4.5-xml
-	@$(MAKECOOKIE)
-
-zip-extract-docbook-5.0.zip:
-	ginstall -d $(WORKSRC)/5.0-xml
-	unzip $(DOWNLOADDIR)/docbook-5.0.zip -d $(WORKSRC)/5.0-xml
-	mv $(WORKSRC)/5.0-xml/docbook-5.0/* $(WORKSRC)/5.0-xml/
-	rmdir $(WORKSRC)/5.0-xml/docbook-5.0
 	@$(MAKECOOKIE)
 
 post-extract:
