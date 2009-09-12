@@ -18,6 +18,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 PACKAGES = CSWgiflib CSWgiflibrt CSWgiflibdoc CSWungif
 
 CATALOGNAME_CSWgiflib = giflib
+CATALOGNAME_CSWgiflibrt = giflib_rt
+CATALOGNAME_CSWgiflibdoc = giflib_doc
 CATALOGNAME_CSWungif = libungif
 
 SPKG_DESC_CSWgiflib = A library for reading and writing gif images
@@ -26,7 +28,7 @@ SPKG_DESC_CSWgiflibdoc = giflib documentation
 SPKG_DESC_CSWungif = Links to giflib now the patent is dropped
 
 REQUIRED_PKGS_CSWgiflib = CSWgiflibrt
-REQUIRED_PKGS_CSWungif = CSWgiflibrt
+REQUIRED_PKGS_CSWungif = CSWgiflib
 
 BUILD64 = 1
 
