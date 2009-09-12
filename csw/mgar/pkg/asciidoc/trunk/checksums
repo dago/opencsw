@@ -1,5 +1,2 @@
-5f04247c505cc85987c657eb6f6505db  download/asciidoc-8.4.2.tar.gz
-38527e11ffe879f2cac4a63b6268b4ca  download/CSWasciidoc.gspec
-204ab2546bda5c6fb0510ba8e366db7d  download/CSWasciidoc.depend
-46d75ac8ad96048e25ee1a9883e96224  download/fix-autoconf-version.patch
-ca66107f476039013fe578e571f92ff5  download/fix-Makefile-am.patch
+9f21d6e352b3ab668f9def3eb7497da2  download/asciidoc-8.4.5.tar.gz
+ec48eeea1eafdaa7e507bc11327f6eae  download/handle-csw-etc-paths.patch

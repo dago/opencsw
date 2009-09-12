@@ -1,5 +1,5 @@
 GARNAME = asciidoc
-GARVERSION = 8.4.2
+GARVERSION = 8.4.5
 CATEGORIES = utils
 
 DESCRIPTION = An Documentation Generator
@@ -24,17 +24,18 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(AUTOFILES)
 
-#it would really seem this author "doesn't get" auto* stuff.
-PATCHFILES = fix-autoconf-version.patch fix-Makefile-am.patch
-
-PREREQUISITE_PKGS = CSWautoconf
+PATCHFILES = handle-csw-etc-paths.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67797
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
+sysconfdir = /etc/opt/csw
+
 CONFIGURE_ARGS = $(DIRPATHS)
+
+INSTALL_ARGS = vimdir=/opt/csw/etc/vim
 
 include gar/category.mk
 

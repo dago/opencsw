@@ -1,0 +1,30 @@
+diff --speed-large-files --minimal -Nru asciidoc-8.4.5.orig/Makefile.in asciidoc-8.4.5/Makefile.in
+--- asciidoc-8.4.5.orig/Makefile.in	2009-09-12 02:55:35.338113740 +0200
++++ asciidoc-8.4.5/Makefile.in	2009-09-12 02:54:58.281794009 +0200
+@@ -4,6 +4,8 @@
+ 
+ .NOTPARALLEL:
+ 
++SHELL = /opt/csw/bin/bash
++
+ INSTALL = @INSTALL@
+ INSTALL_PROG = @INSTALL_PROGRAM@
+ INSTALL_DATA = @INSTALL_DATA@
+@@ -127,7 +129,7 @@
+ 	done
+ 
+ install-vim:
+-	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
++	@for d in $(DESTDIR)/$(vimdir); do \
+ 		if ! test -d $$d; then continue; fi ; \
+ 		echo "installing Vim files in $$d" ; \
+ 		$(INSTALL) -d $$d/syntax ; \
+@@ -137,7 +139,7 @@
+ 	done
+ 
+ uninstall-vim:
+-	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
++	@for d in $(DESTDIR)/$(vimdir); do \
+ 		if ! test -d $$d; then continue; fi ; \
+ 		echo "uninstalling Vim files in $$d" ; \
+ 		rm -f $$d/syntax/asciidoc.vim ; \
