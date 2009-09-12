@@ -115,7 +115,7 @@ CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ETC_GITCONFIG=$(sysconfdir)/gitconfig V=1 \
 		ASCIIDOC_NO_ROFF=YesPlease \
-		all doc
+		all
 
 INSTALL_ARGS = ETC_GITCONFIG=$(sysconfdir)/gitconfig \
 		INSTALLDIRS=vendor \
@@ -138,6 +138,7 @@ pre-configure-modulated:
 post-build-modulated:
 	@echo Builing Emacs Git extension
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs )
+	@( cd $(WORKSRC)/Documentation; $(MAKE) )
 
 post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)
 post-install-modulated:
@@ -157,6 +158,7 @@ post-install-modulated:
 		cp -R Documentation/howto Documentation/technical $(GD)/; )
 	@echo Installing Bash Completion files
 	@( cd $(WORKSRC); \
+		mkdir -p $(DESTDIR)/$(bashconfdir); \
 		cp contrib/completion/* \
 			$(DESTDIR)/$(bashconfdir)/bash_completion.d/ )
 	@$(MAKECOOKIE)
