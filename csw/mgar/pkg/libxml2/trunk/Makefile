@@ -56,5 +56,8 @@ PKGFILES_CSWlibxml2devel += $(call isadirs,$(libdir),xml2Conf.sh)
 PKGFILES_CSWpylibxml2  = $(libdir)/python/.*
 PKGFILES_CSWpylibxml2 += $(docdir)/pylibxml2/.*
 
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+
 include gar/category.mk
 
