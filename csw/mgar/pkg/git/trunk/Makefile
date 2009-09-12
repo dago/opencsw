@@ -7,6 +7,7 @@ CATEGORIES = devel
 # TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
+PACKAGES += CSWgitcompletion
 
 CATALOGNAME_CSWgit = git
 CATALOGNAME_CSWgitcvs = git_cvs
@@ -15,6 +16,7 @@ CATALOGNAME_CSWgitemacs = git_emacs
 CATALOGNAME_CSWgitgui = git_gui
 CATALOGNAME_CSWgitdoc = git_doc
 CATALOGNAME_CSWgitk = gitk
+CATALOGNAME_CSWgitcompletion = git_completion
 
 ARCHALL_CSWgitsvn = 1
 ARCHALL_CSWgitcvs = 1
@@ -22,6 +24,7 @@ ARCHALL_CSWgitk = 1
 ARCHALL_CSWgitgui = 1
 ARCHALL_CSWgitemacs = 1
 ARCHALL_CSWgitdoc = 1
+ARCHALL_CSWgitcompletion = 1
 
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
 PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
@@ -44,6 +47,10 @@ REQUIRED_PKGS_CSWgitemacs = CSWgit CSWemacs
 
 REQUIRED_PKGS_CSWgitdoc = CSWgit
 
+# We include bash here even though git itself depends on it because in theory
+# git could use any other POSIX compliant shell and drop the dependency...
+REQUIRED_PKGS_CSWgitcompletion = CSWgit CSWbash
+
 LICENSE_CSWgit = COPYING
 LICENSE_CSWgitk = COPYING
 LICENSE_CSWgitgui = COPYING
@@ -51,6 +58,7 @@ LICENSE_CSWgitsvn = COPYING
 LICENSE_CSWgitcvs = COPYING
 LICENSE_CSWgitemacs = COPYING
 LICENSE_CSWgitdoc = COPYING
+LICENSE_CSWgitcompletion = COPYING
 
 DESCRIPTION = Fast Version Control System
 define BLURB
@@ -66,6 +74,7 @@ SPKG_DESC_CSWgitsvn = Git tools for working with Subversion repositories
 SPKG_DESC_CSWgitcvs = Git tools for working with CVS repositories
 SPKG_DESC_CSWgitdoc = Documentation for Git
 SPKG_DESC_CSWgitemacs = Git VCS support for Emacs
+SPKG_DESC_CSWgitcompletion = Bash completion support for Git
 
 #NOTE: If you need to proxy git:// connections, set GIT_USE_PROXY in
 #	your .garrc file.  (That leaves this recipe in a more generic form.)
@@ -83,6 +92,7 @@ PKGFILES_CSWgitk = $(call _git_files,gitk)
 PKGFILES_CSWgitcvs = $(foreach d,$(fdirs),$(d)/.*cvs.*)
 PKGFILES_CSWgitemacs = .*emacs.*
 PKGFILES_CSWgitdoc = $(docdir)/.*
+PKGFILES_CSWgitcompletion = $(bashconfdir)/bash_completion.d/.*
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
@@ -90,6 +100,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
+#set bashconfdir to sysconfdir when bash changes
+bashconfdir = /opt/csw/etc/
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
@@ -143,4 +155,8 @@ post-install-modulated:
 		cp -R contrib/hooks README COPYING $(GD)/; \
 		cp -R Documentation/*.html Documentation/docbook-xsl.css $(GD)/; \
 		cp -R Documentation/howto Documentation/technical $(GD)/; )
+	@echo Installing Bash Completion files
+	@( cd $(WORKSRC); \
+		cp contrib/completion/* \
+			$(DESTDIR)/$(bashconfdir)/bash_completion.d/ )
 	@$(MAKECOOKIE)
