@@ -141,6 +141,7 @@ post-build-modulated:
 	@( cd $(WORKSRC)/Documentation; $(MAKE) )
 
 post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)
+post-install-modulated: BD=$(DESTDIR)/$(bashconfdir)/bash_completion.d
 post-install-modulated:
 	@echo Cleaning up perl stuff
 	@rm -rf $(DESTDIR)/$(libdir)/perl5/site_perl/5*
@@ -158,7 +159,7 @@ post-install-modulated:
 		cp -R Documentation/howto Documentation/technical $(GD)/; )
 	@echo Installing Bash Completion files
 	@( cd $(WORKSRC); \
-		mkdir -p $(DESTDIR)/$(bashconfdir); \
+		ginstall -c -m 0755 -d $(BD); \
 		cp contrib/completion/* \
-			$(DESTDIR)/$(bashconfdir)/bash_completion.d/ )
+			$(BD)/ )
 	@$(MAKECOOKIE)
