@@ -41,6 +41,8 @@ CONFIGURE_ARGS += BASH=/opt/csw/bin/bash
 CONFIGURE_ARGS += FIND=/opt/csw/bin/gfind
 CONFIGURE_ARGS += MKTEMP=/opt/csw/bin/mktemp
 
+sysconfdir = /etc/opt/csw
+
 include gar/category.mk
 
 # We need this for 'tail -n'
@@ -48,4 +50,4 @@ PATH := /opt/csw/gnu:/usr/xpg4/bin:/opt/csw/bin:$(PATH)
 
 #reset XML_CATALOG lookup (we rely on having packages that provide stylesheets
 #etc).  Having xsltproc not find them during build makes us blow up!!
-XML_CATALOG_FILES = /opt/csw/etc/xml/catalog
+XML_CATALOG_FILES = /etc/opt/csw/xml/catalog
