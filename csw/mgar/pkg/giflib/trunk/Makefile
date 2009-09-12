@@ -25,7 +25,8 @@ SPKG_DESC_CSWgiflibrt = giflib runtime libraries
 SPKG_DESC_CSWgiflibdoc = giflib documentation
 SPKG_DESC_CSWungif = Links to giflib now the patent is dropped
 
-REQUIRED_PKGS_CSWungif = CSWgiflib
+REQUIRED_PKGS_CSWgiflib = CSWgiflibrt
+REQUIRED_PKGS_CSWungif = CSWgiflibrt
 
 BUILD64 = 1
 
