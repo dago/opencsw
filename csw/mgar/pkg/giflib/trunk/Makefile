@@ -15,12 +15,14 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PACKAGES = CSWgiflib CSWungif
+PACKAGES = CSWgiflib CSWgiflibrt CSWgiflibdoc CSWungif
 
 CATALOGNAME_CSWgiflib = giflib
 CATALOGNAME_CSWungif = libungif
 
 SPKG_DESC_CSWgiflib = A library for reading and writing gif images
+SPKG_DESC_CSWgiflibrt = giflib runtime libraries
+SPKG_DESC_CSWgiflibdoc = giflib documentation
 SPKG_DESC_CSWungif = Links to giflib now the patent is dropped
 
 REQUIRED_PKGS_CSWungif = CSWgiflib
@@ -36,6 +38,8 @@ NO_ISAEXEC = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-amd64 = $(libdir)
 
+PKGFILES_CSWgiflibrt = .*/libgif\..*
+PKGFILES_CSWgiflibdoc = $(PKGFILES_DOC)
 PKGFILES_CSWungif = .*/libungif\..*
 
 include gar/category.mk
