@@ -1,0 +1,13 @@
+--- firefox.orig/security/nss/lib/softoken/legacydb/config.mk	2009-09-12 16:48:35.872144730 +0200
++++ firefox/security/nss/lib/softoken/legacydb/config.mk	        2009-09-12 16:49:37.894263860 +0200
+@@ -83,6 +83,10 @@
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
++    -L/opt/csw/lib \
++    -R/opt/csw/lib \
++    -L/opt/csw/X11/lib \
++    -R/opt/csw/X11/lib \
+ 	-L$(DIST)/lib \
+ 	-lnssutil3 \
+ 	-L$(NSPR_LIB_DIR) \

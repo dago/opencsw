@@ -34,6 +34,7 @@ REQUIRED_PKGS_CSWfirefox += CSWlibgnome
 REQUIRED_PKGS_CSWfirefox += CSWlibx11
 REQUIRED_PKGS_CSWfirefox += CSWlibxrender
 REQUIRED_PKGS_CSWfirefox += CSWpango
+REQUIRED_PKGS_CSWfirefox += CSWzlib
 REQUIRED_PKGS_CSWfirefox += CSWsqlite3rt
 
 # Defines the list of patches to be applied to the sources
@@ -49,6 +50,11 @@ PATCHFILES += solaris_lwp.h.diff
 PATCHFILES += nsNativeApSuportUnix.cpp.diff
 PATCHFILES += nsExceptionHandler.cpp.diff 
 PATCHFILES += SunOS5.mk.diff
+PATCHFILES += nsWildCard.cpp.diff
+PATCHFILES += softoken.manifest.mm.diff
+PATCHFILES += softoken.config.mk.diff
+PATCHFILES += legacydb.manifest.mm.diff
+PATCHFILES += legacydb.config.mk.diff
 
 # pkg-config options
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig

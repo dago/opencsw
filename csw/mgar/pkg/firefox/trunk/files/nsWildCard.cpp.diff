@@ -1,0 +1,199 @@
+--- firefox.orig/xpfe/components/filepicker/src/nsWildCard.cpp	2009-09-12 11:39:56.098357687 +0200
++++ firefox/xpfe/components/filepicker/src]nsWildCard.cpp	2009-09-12 16:06:48.580505412 +0200
+@@ -57,38 +57,34 @@
+ 
+ typedef int static_assert_character_code_arrangement['a' > 'A' ? 1 : -1];
+ 
+-template<class T>
+ static int
+-alpha(T c)
++alpha(PRUnichar c)
+ {
+     return ('a' <= c && c <= 'z') ||
+            ('A' <= c && c <= 'Z');
+ }
+ 
+-template<class T>
+ static int
+-alphanumeric(T c)
++alphanumeric(PRUnichar c)
+ {
+     return ('0' <= c && c <= '9') || alpha(c);
+ }
+ 
+-template<class T>
+ static int
+-lower(T c)
++lower(PRUnichar c)
+ {
+     return ('A' <= c && c <= 'Z') ? c + ('a' - 'A') : c;
+ }
+ 
+-template<class T>
+ static int
+-upper(T c)
++upper(PRUnichar c)
+ {
+     return ('a' <= c && c <= 'z') ? c - ('a' - 'A') : c;
+ }
+ 
+ /* ----------------------------- _valid_subexp ---------------------------- */
+ 
+-template<class T>
++template<typename T>
+ static int
+ _valid_subexp(const T *expr, T stop1, T stop2)
+ {
+@@ -162,7 +158,7 @@
+ }
+ 
+ 
+-template<class T>
++template<typename T>
+ int
+ NS_WildCardValid_(const T *expr)
+ {
+@@ -183,9 +179,8 @@
+ #define NOMATCH 1
+ #define ABORTED -1
+ 
+-template<class T>
+ static int
+-_shexp_match(const T *str, const T *expr, PRBool case_insensitive, unsigned int level);
++_shexp_match(const PRUnichar *str, const PRUnichar *expr, PRBool case_insensitive, unsigned int level);
+ 
+ /**
+  * Count characters until we reach a NUL character or either of the
+@@ -196,9 +191,8 @@
+  * Return index in input string of first stop found, or ABORTED if not found.
+  * If "dest" is non-NULL, copy counted characters to it and NUL terminate.
+  */
+-template<class T>
+ static int
+-_scan_and_copy(const T *expr, T stop1, T stop2, T *dest)
++_scan_and_copy(const PRUnichar *expr, PRUnichar stop1, PRUnichar stop2, PRUnichar *dest)
+ {
+     register int sx;     /* source index */
+     register char cc;
+@@ -219,7 +213,7 @@
+     }
+     if (dest && sx) {
+         /* Copy all but the closing delimiter. */
+-        memcpy(dest, expr, sx * sizeof(T));
++        memcpy(dest, expr, sx * sizeof(PRUnichar));
+         dest[sx] = 0;
+     }
+     return cc ? sx : ABORTED; /* index of closing delimiter */
+@@ -233,36 +227,35 @@
+  * matches the input string.  Repeat this until some alternative matches,
+  * or we have an abort.
+  */
+-template<class T>
+ static int
+-_handle_union(const T *str, const T *expr, PRBool case_insensitive,
++_handle_union(const PRUnichar *str, const PRUnichar *expr, PRBool case_insensitive,
+               unsigned int level)
+ {
+     register int sx;     /* source index */
+     int cp;              /* source index of closing parenthesis */
+     int count;
+     int ret   = NOMATCH;
+-    T *e2;
++    PRUnichar *e2;
+ 
+     /* Find the closing parenthesis that ends this union in the expression */
+-    cp = ::_scan_and_copy(expr, T(')'), T('\0'), static_cast<T*>(NULL));
++    cp = ::_scan_and_copy(expr, PRUnichar(')'), PRUnichar('\0'), static_cast<PRUnichar*>(NULL));
+     if (cp == ABORTED || cp < 4) /* must be at least "(a|b" before ')' */
+         return ABORTED;
+     ++cp;                /* now index of char after closing parenthesis */
+-    e2 = (T *) NS_Alloc((1 + nsCharTraits<T>::length(expr)) * sizeof(T));
++    e2 = (PRUnichar *) NS_Alloc((1 + nsCharTraits<PRUnichar>::length(expr)) * sizeof(PRUnichar));
+     if (!e2)
+         return ABORTED;
+     for (sx = 1; ; ++sx) {
+         /* Here, expr[sx] is one character past the preceeding '(' or '|'. */
+         /* Copy everything up to the next delimiter to e2 */
+-        count = ::_scan_and_copy(expr + sx, T(')'), T('|'), e2);
++        count = ::_scan_and_copy(expr + sx, PRUnichar(')'), PRUnichar('|'), e2);
+         if (count == ABORTED || !count) {
+             ret = ABORTED;
+             break;
+         }
+         sx += count;
+         /* Append everything after closing parenthesis to e2. This is safe. */
+-        nsCharTraits<T>::copy(e2 + count, expr + cp, nsCharTraits<T>::length(expr + cp) + 1);
++        nsCharTraits<PRUnichar>::copy(e2 + count, expr + cp, nsCharTraits<PRUnichar>::length(expr + cp) + 1);
+         ret = ::_shexp_match(str, e2, case_insensitive, level + 1);
+         if (ret != NOMATCH || !expr[sx] || expr[sx] == ')')
+             break;
+@@ -284,9 +277,8 @@
+     return map[lower(val)];
+ }
+ 
+-template<class T>
+ static int
+-_shexp_match(const T *str, const T *expr, PRBool case_insensitive,
++_shexp_match(const PRUnichar *str, const PRUnichar *expr, PRBool case_insensitive,
+              unsigned int level)
+ {
+     register int x;   /* input string index */
+@@ -326,7 +318,7 @@
+             else
+                 return NOMATCH;
+         case '[': {
+-            T start, end = 0;
++            PRUnichar start, end = 0;
+             int i;
+             neg = ((expr[++y] == '^') && (expr[y+1] != ']'));
+             if (neg)
+@@ -342,9 +334,9 @@
+             }
+             if (alphanumeric(end) && expr[i] == ']') {
+                 /* This is a range form: a-b */
+-                T val = str[x];
++                PRUnichar val = str[x];
+                 if (end < start) { /* swap them */
+-                    T tmp = end;
++                    PRUnichar tmp = end;
+                     end = start;
+                     start = tmp;
+                 }
+@@ -405,21 +397,20 @@
+ }
+ 
+ 
+-template<class T>
+ static int
+-ns_WildCardMatch(const T *str, const T *xp, PRBool case_insensitive)
++ns_WildCardMatch(const PRUnichar *str, const PRUnichar *xp, PRBool case_insensitive)
+ {
+-    T *expr = NULL;
++    PRUnichar *expr = NULL;
+     int x, ret = MATCH;
+ 
+-    if (!nsCharTraits<T>::find(xp, nsCharTraits<T>::length(xp), T('~')))
++    if (!nsCharTraits<PRUnichar>::find(xp, nsCharTraits<PRUnichar>::length(xp), PRUnichar('~')))
+         return _shexp_match(str, xp, case_insensitive, 0);
+ 
+-    expr = (T *) NS_Alloc((nsCharTraits<T>::length(xp) + 1) * sizeof(T));
++    expr = (PRUnichar *) NS_Alloc((nsCharTraits<PRUnichar>::length(xp) + 1) * sizeof(PRUnichar));
+     if(!expr)
+         return NOMATCH;
+ 
+-    x = ::_scan_and_copy(expr, T('~'), T('\0'), static_cast<T*>(NULL));
++    x = ::_scan_and_copy(expr, PRUnichar('~'), PRUnichar('\0'), static_cast<PRUnichar*>(NULL));
+     if (x != ABORTED && expr[x] == '~') {
+         expr[x++] = '\0';
+         ret = ::_shexp_match(str, &expr[x], case_insensitive, 0);
+@@ -436,9 +427,8 @@
+     return ret;
+ }
+ 
+-template<class T>
+ NS_COM int
+-NS_WildCardMatch_(const T *str, const T *expr, PRBool case_insensitive)
++NS_WildCardMatch_(const PRUnichar *str, const PRUnichar *expr, PRBool case_insensitive)
+ {
+     int is_valid = NS_WildCardValid(expr);
+     switch(is_valid) {
