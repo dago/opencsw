@@ -1,3 +1,10 @@
+058f97fd1a482f544e00706fa4d9b85a  download/CSWseamonkey.postinstall
+b7484bcb84a902a5a110758cd5ffad99  download/CSWseamonkey.postremove
+23b32e46acefebe1eb21566d0336075e  download/SunOS5.mk.diff
+923bc1a8e0f98039c863a4f01dec9ec4  download/autoconf.mk.in.diff
+e06ffefa6534521de5ed91c812a4a9c6  download/legacydb.config.mk.diff
+f06035b459f608ed5032252bcaf87fb2  download/legacydb.manifest.mm.diff
 3b03f00259d6897e017254e9dceed493  download/packager.mk.diff
 ef4455becf3a12833dca7dd92854aeaa  download/seamonkey-1.1.18.source.tar.bz2
 c815868b27233888ae5623967cc012f5  download/softoken.config.mk.diff
+1150110fc60db3d7f5475e6906fe80c6  download/softoken.manifest.mm.diff

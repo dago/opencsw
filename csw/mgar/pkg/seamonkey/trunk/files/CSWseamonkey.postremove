@@ -1,0 +1,12 @@
+#!/bin/sh
+
+PLUGIN_FILE=/opt/csw/mozilla/seamonkey/lib/plugins/libjavaplugin_oji.so
+
+if [ -f $PLUGIN_FILE ]; then
+    echo
+    echo "The java plugin has been detected in $PLUGIN_FILE"
+    echo "It has been installed by this package, but it may have been modified after installation"
+    echo "Please delete it manually if you need to remove this file definitively"
+    echo
+fi
+exit 0

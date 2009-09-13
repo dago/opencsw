@@ -9,7 +9,7 @@ Web-browser, advanced e-mail and newsgroup client, IRC chat client, and HTML edi
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).source.tar.bz2
-# DISTFILES += CSWseamonkey.postremove CSWseamonkey.postinstall 
+DISTFILES += CSWseamonkey.postremove CSWseamonkey.postinstall 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
@@ -86,7 +86,6 @@ WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 post-extract:
 	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)
-#	@cp $(FILEDIR)/stdbool.h $(WORK_BUILD)/memory/jemalloc
 	@$(MAKECOOKIE)
 
 pre-configure:
@@ -95,12 +94,6 @@ pre-configure:
 pre-install:
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
 	( cd $(WORK_INSTALL)/opt/csw/bin ; rm -f seamonkey ; ln -sf ../mozilla/seamonkey/bin/seamonkey . )
-#	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )
-#	( cp $(WORK_BUILD)/other-licenses/branding/seamonkey/mozicon128.png $(WORK_INSTALL)/opt/csw/share/pixmaps/seamonkey.png )
-#	( mkdir -p $(WORK_INSTALL)/opt/csw/share/applications )
-#	( cp $(FILEDIR)/seamonkey.desktop $(WORK_INSTALL)/opt/csw/share/applications/seamonkey.desktop )
-#	( mkdir -p $(WORK_INSTALL)/opt/csw/share/gnome/mime-info )
-#	( cp $(FILEDIR)/seamonkey.keys $(WORK_INSTALL)/opt/csw/share/gnome/mime-info/seamonkey.keys )
 
 post-install:
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

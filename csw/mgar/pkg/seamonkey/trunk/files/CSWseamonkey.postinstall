@@ -1,0 +1,44 @@
+#!/bin/sh
+
+UNAME_P=`uname -p`
+UNAME_R=`uname -r`
+
+PLUGIN_PATH=/opt/csw/mozilla/seamonkey/lib/plugins
+PLUGIN_BASEFILE=libjavaplugin_oji.so
+PLUGIN_DEST=$PLUGIN_PATH/$PLUGIN_BASEFILE
+PLUGIN_BASE=/usr/java/jre/plugin
+
+# There is no need to detect the different java installed version
+# This script uses default location for jre : /usr/java/jre
+# This directory is linked during java installation
+
+# Create the link only if it does not already exist
+if [ ! -f $PLUGIN_PATH/$PLUGIN_BASEFILE ]; then
+    # Try to use the most recent plugin version
+    PLUGIN_FILE="$PLUGIN_BASE/${UNAME_P}/ns7/$PLUGIN_BASEFILE"
+    if [ ! -f $PLUGIN_FILE ] ; then
+        PLUGIN_FILE="$PLUGIN_BASE/${UNAME_P}/ns610/$PLUGIN_BASEFILE"
+        if [ ! -f $PLUGIN_FILE ] ; then
+            PLUGIN_FILE="$PLUGIN_BASE/${UNAME_P}/ns600/$PLUGIN_BASEFILE"
+            if [ ! -f $PLUGIN_FILE ] ; then
+                PLUGIN_FILE="$PLUGIN_BASE/${UNAME_P}/ns4/$PLUGIN_BASEFILE"
+                if [ ! -f $PLUGIN_FILE ] ; then
+                    echo "No Java plugin found."
+                    exit 0
+                fi
+            fi
+        fi
+    fi
+
+    # Still here ? thus at least one of the plugin was found and var is set
+    echo Solaris $UNAME_R $UNAME_P
+    echo "Installing Java plugin..."
+    echo "Java plugin location:"
+    echo ${PLUGIN_FILE}
+    cd $PLUGIN_PATH && ln -s ${PLUGIN_FILE} libjavaplugin_oji.so
+else
+    echo "Java plugin $PLUGIN_PATH/$PLUGIN_BASEFILE is already installed"
+    echo "The existing plugin has not been modified" 
+fi
+
+exit 0
