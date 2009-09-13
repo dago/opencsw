@@ -1,6 +1,4 @@
 #!/bin/sh
-#
-# Blastwave.org Firefox Community Edition preremove script
 
 PLUGIN_FILE=/opt/csw/mozilla/firefox/lib/plugins/libjavaplugin_oji.so
 
