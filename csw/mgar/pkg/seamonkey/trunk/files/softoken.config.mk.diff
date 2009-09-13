@@ -1,0 +1,13 @@
+--- seamonkey.orig/security/nss/lib/softoken/config.mk	2009-09-12 16:29:40.981589923 +0200
++++ seamonkey/security/nss/lib/softoken/config.mk	        2009-09-12 16:40:15.362584742 +0200
+@@ -84,6 +84,10 @@
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
++	-L/opt/csw/lib \
++	-R/opt/csw/lib \
++	-L/opt/csw/X11/lib \
++	-R/opt/csw/X11/lib \
+ 	-L$(DIST)/lib \
+ 	-lnssutil3 \
+ 	-lsqlite3 \

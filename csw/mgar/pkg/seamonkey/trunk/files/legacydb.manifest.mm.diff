@@ -1,0 +1,10 @@
+--- seamonkey.orig/security/nss/lib/softoken/legacydb/manifest.mn	2009-09-12 16:48:43.152291326 +0200
++++ seamonkey/security/nss/lib/softoken/legacydb/manifest.mn	2009-09-12 16:49:12.293669070 +0200
+@@ -48,6 +48,7 @@
+ 
+ ifdef MOZILLA_CLIENT
+ INCLUDES += -I$(DIST)/include/sqlite3
++INCLUDES += -I/opt/csw/include
+ endif
+ 
+ CSRCS = \

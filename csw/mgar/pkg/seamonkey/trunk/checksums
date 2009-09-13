@@ -1,1 +1,3 @@
-9eba600ba6ca522b8eada9a0a8e890e2  download/seamonkey-1.1.17.source.tar.bz2
+3b03f00259d6897e017254e9dceed493  download/packager.mk.diff
+ef4455becf3a12833dca7dd92854aeaa  download/seamonkey-1.1.18.source.tar.bz2
+c815868b27233888ae5623967cc012f5  download/softoken.config.mk.diff
