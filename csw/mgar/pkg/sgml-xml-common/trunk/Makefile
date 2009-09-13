@@ -24,9 +24,10 @@ SPKG_DESC_CSWxmlcommon = A collection of xml entities and DTDs
 CATALOGNAME_CSWsgmlcommon = sgmlcommon
 CATALOGNAME_CSWxmlcommon = xmlcommon
 
-PKGFILES_CSWsgmlcommon =  /opt/csw/bin/.* /opt/csw/share/doc/sgml/.*
-PKGFILES_CSWsgmlcommon += /opt/csw/share/sgml/.* /etc/opt/csw/sgml/sgml.conf
-PKGFILES_CSWsgmlcommon += /opt/csw/share/man/.*
+PKGFILES_CSWsgmlcommon =  /opt/csw/bin/.* /opt/csw/share/man/.*
+PKGFILES_CSWsgmlcommon += /opt/csw/share/doc/sgml/.* /etc/opt/csw/sgml/.*
+PKGFILES_CSWsgmlcommon += /opt/csw/share/sgml/sgml-iso-entities-8879.1986/.*
+PKGFILES_CSWsgmlcommon += /opt/csw/share/sgml/.*soc /opt/csw/share/sgml/.*dcl
 
 PKGFILES_CSWxmlcommon = /etc/opt/csw/xml/.* /opt/csw/share/xml.* /opt/csw/share/sgml/docbook/xmlcatalog
 
