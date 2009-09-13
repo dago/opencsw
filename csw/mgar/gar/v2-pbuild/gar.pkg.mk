@@ -533,6 +533,17 @@ $(SPKG_DESTDIRS):
 # On a normal packaging workflow this is not used.
 prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPECS),$(WORKDIR)/$(SPEC).prototype-$(GARCH))
 
+# On these platforms packages are built.
+# They will include binaries for all ISAs that are specified for the platform.
+PACKAGING_PLATFORMS ?= solaris8-sparc solaris8-i386
+
+# Only override for testing purposes
+THIS_PLATFORM ?= solaris$(shell uname -r | sed -e 's/5.//')-$(shell uname -p)
+
+ifeq (,$(filter $(THIS_PLATFORM),$(PACKAGING_PLATFORMS)))
+  $(warn *** You are building a package on a non-requested platform ($(THIS_PLATFORM)). Requested platforms were $(PACKAGING_PLATFORMS))
+endif
+
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.

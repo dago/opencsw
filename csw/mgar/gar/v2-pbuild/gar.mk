@@ -153,22 +153,19 @@ $(1)-$(2):
 endef
 
 define _modulate_merge
-merge-$(2): $(3)
-merge-$(2): BUILDHOST=$$$$(call modulation2host)
+$(foreach ASSIGNMENT,$(3),
+merge-$(2): $(ASSIGNMENT)
+)
+merge-$(2): BUILDHOST=$$(call modulation2host)
 merge-$(2):
 	echo modulation: $(2)
 	echo vars: $(3)
-	echo ISA: $(ISA)
-	echo BUILDHOST=$(BUILDHOST)
-	echo BUILDHOST=$(call modulation2host)
-	echo BUILDHOST=$$(call modulation2host)
-	echo BUILDHOST=$(eval $(call modulation2host))
-	echo BUILDHOST=$$(eval $(call modulation2host))
-	echo BUILDHOST=$$(eval $$(call modulation2host))
-	echo THISHOST=$(THISHOST)
-	echo "Building modulation on host '$(BUILDHOST)'"
-	$(if $(and $(BUILDHOST),$(filter-out $(THISHOST),$(BUILDHOST))),\
-		ssh $(BUILDHOST) "gmake -C $(CURDIR) MODULATION=$(2) $(3) merge-modulated",\
+	echo ISA: $$(ISA)
+	echo BUILDHOST="$$(BUILDHOST)"
+	echo THISHOST="$$(THISHOST)"
+	echo "Building modulation on host '$$(BUILDHOST)'"
+	$$(if $$(and $$(BUILDHOST),$$(filter-out $$(THISHOST),$$(BUILDHOST))),\
+		ssh $$(BUILDHOST) "gmake -C $$(CURDIR) MODULATION=$(2) $(3) merge-modulated",\
 		gmake MODULATION=$(2) $(3) merge-modulated\
 	)
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
