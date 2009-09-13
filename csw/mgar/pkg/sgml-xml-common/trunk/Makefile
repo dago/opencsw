@@ -25,10 +25,10 @@ CATALOGNAME_CSWsgmlcommon = sgmlcommon
 CATALOGNAME_CSWxmlcommon = xmlcommon
 
 PKGFILES_CSWsgmlcommon =  .*sgmlwhich.* .*install-catalog.*
-PKGFILES_CSWsgmlcommon += /opt/csw/share/sgml/.* /etc/opt/csw/sgml/.*
+PKGFILES_CSWsgmlcommon += /opt/csw/share/sgml/.* /etc/opt/csw/sgml/sgml.conf
 PKGFILES_CSWsgmlcommon += /opt/csw/share/doc/sgml.*
 
-PKGFILES_CSWxmlcommon = /etc/opt/csw/xml/.* /opt/csw/share/xml.* .*xmlcatalog
+PKGFILES_CSWxmlcommon = /etc/opt/csw/xml/.* /opt/csw/share/xml.* /etc/opt/csw/sgml/docbook/xmlcatalog
 
 REQUIRED_PKGS_CSWsgmlcommon = CSWbash CSWggrep CSWgsed
 
