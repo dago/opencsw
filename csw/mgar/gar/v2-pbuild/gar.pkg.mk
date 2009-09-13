@@ -537,17 +537,21 @@ prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPE
 # They will include binaries for all ISAs that are specified for the platform.
 PACKAGING_PLATFORMS ?= solaris8-sparc solaris8-i386
 
-# Only override for testing purposes
-THIS_PLATFORM ?= solaris$(shell uname -r | sed -e 's/5.//')-$(shell uname -p)
-
-ifeq (,$(filter $(THIS_PLATFORM),$(PACKAGING_PLATFORMS)))
-  $(warn *** You are building a package on a non-requested platform ($(THIS_PLATFORM)). Requested platforms were $(PACKAGING_PLATFORMS))
-endif
+validateplatform:
+	$(if $(filter $(THISHOST),$(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),,\
+		$(warning ***)\
+		$(warning *** You are building this package on a non-requested platform host '$(THISHOST)'. The follow platforms were requested:)\
+		$(foreach P,$(PACKAGING_PLATFORMS),\
+			$(warning *** - $P $(if $(PACKAGING_HOST_$P),to be build on host '$(PACKAGING_HOST_$P)',with no suitable host available))\
+		)\
+		$(warning *** You can execute '$(MAKE) platforms' to automatically build on all necessary platforms.)\
+		$(warning ***)\
+	)
 
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
-package: extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+package: validateplatform extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
 	$(DONADA)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
@@ -595,6 +599,19 @@ pkgreset-%:
 	@rm -f $(WORKDIR)/copyright $(WORKDIR)/*.copyright
 
 repackage: pkgreset package
+
+# This rule automatically logs into every host where a package for this software should
+# be built. It is especially suited for automated build bots.
+platforms:
+	$(foreach P,$(PACKAGING_PLATFORMS),\
+		$(if $(PACKAGING_HOST_$P),\
+			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
+				$(MAKE) package;,\
+				ssh $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) package";\
+			),\
+			$(error *** No host has been defined for platform $P)\
+		)\
+	)
 
 # dependb - update the dependency database
 #
