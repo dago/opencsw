@@ -1,6 +1,4 @@
 #!/bin/sh
-#
-# Blastwave.org Firefox Community Edition web browser postinstall script
 
 UNAME_P=`uname -p`
 UNAME_R=`uname -r`
