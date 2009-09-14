@@ -1,4 +1,4 @@
 3e43af7de9f725ed3057021862ae9899  download/Makefile.PL.in.diff
 a711dd1aba91d78b5a5d84e57edaa5df  download/xf-conf-locking-utils.h.diff
 d4d3018767ea9eb4b57cc57d4038023b  download/xfconf-4.6.1.tar.bz2
-bc8e1b6b529591ed0b0f0410734cee24  download/xfconf-gvaluefuncs.h.diff
+dedc7f77147cc0de1919290c97032e8e  download/xfconf-gvaluefuncs.h.diff
