@@ -19,8 +19,8 @@
 +SGMLTARG = $(patsubst %,inst-%,$(SGML))
 +XMLTARG = $(patsubst %,inst-%,$(XML))
 +
-+CUR_SGML = $(lastword $(sort $(subst -sgml,,$(SGMLTARG))))
-+CUR_XML = $(lastword $(sort $(subst -xml,,$(XMLTARG))))
++CUR_SGML = $(lastword $(sort $(subst -sgml,,$(SGML))))
++CUR_XML = $(lastword $(sort $(subst -xml,,$(XML))))
 +
 +.PHONY: $(SGML) $(XMLT)
 +
