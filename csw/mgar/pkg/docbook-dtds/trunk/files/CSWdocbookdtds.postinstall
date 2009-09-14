@@ -122,14 +122,6 @@ $PREFIX $XMLCAT --sgml --noout --add \
 	$CSWSGMLCNF/xml-docbook-4.5.cat \
 	$CSWSGML/docbook/xml-dtd-4.5/catalog
 
-# DocBook 5.0
-$PREFIX $XMLCAT --sgml --noout --add \
-        $CSWSGMLCNF/xml-docbook-5.0.cat \
-	$CSWSGML/sgml-iso-entities-8879.1986/catalog
-$PREFIX $XMLCAT --sgml --noout --add \
-        $CSWSGMLCNF/xml-docbook-5.0.cat \
-        $CSWSGML/docbook/xml-schemas-5.0/catalog
-
 # Fix up SGML super catalog so that there isn't an XML DTD before an
 # SGML one.  We need to do this (*sigh*) because xmlcatalog messes up
 # the order of the lines, and SGML tools don't like to see XML things
