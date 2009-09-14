@@ -25,7 +25,9 @@ CUPS_MIRRORS += http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub
 FULL_MIRRORS = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
 MASTER_SITES += $(FULL_MIRRORS)
 
-PATCHFILES = 0001-Makefile.patch
+PATCHFILES  = 0001-cswcups-for-service-name.patch
+PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
+PATCHFILES += 0003-Reference-counting-for-printers-only.patch
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
 DISTFILES += CSWcupsclient.preinstall
 DISTFILES += CSWcupsd.preinstall
