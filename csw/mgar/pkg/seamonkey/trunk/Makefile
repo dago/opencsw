@@ -54,6 +54,9 @@ PATCHFILES += legacydb.config.mk.diff
 PATCHFILES += softoken.manifest.mm.diff
 PATCHFILES += softoken.config.mk.diff
 PATCHFILES += packager.mk.diff
+PATCHFILES += lber-int.h.diff
+PATCHFILES += ldap-int.h.diff
+PATCHFILES += ldappr-int.h.diff
 
 # PATCHFILES += configure.diff
 
