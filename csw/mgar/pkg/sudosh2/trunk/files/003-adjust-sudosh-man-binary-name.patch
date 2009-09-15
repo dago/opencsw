@@ -1,0 +1,16 @@
+diff --git a/sudosh.1.in b/sudosh.1.in
+index cd60622..dd46be3 100644
+--- a/sudosh.1.in
++++ b/sudosh.1.in
+@@ -5,9 +5,9 @@
+ .SH NAME
+ @PACKAGE_NAME@ \- works like a VCR and records shell sessions.
+ .SH SYNOPSIS
+-.B @PACKAGE_NAME@ [OPTION]...
++.B sudosh [OPTION]...
+ .SH DESCRIPTION
+-.B @PACKAGE_NAME@
++.B sudosh
+ can be used as a default login shell or as a filter.  sudosh takes advantage of pty devices in order to sit between the user's keyboard and a program, in this case a shell.  It was designed specifically to be used in conjunction with
+ .BR sudo (8)
+ and allows execution of a shell with logging.  It is basically a VCR and will record shell sessions and also has the ability to play back the sessions as they were originally recorded.  It records all input/output, keyboard input, and timing information so that the session acn be played back in the original format.

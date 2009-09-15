@@ -1,1 +1,4 @@
+652d339ec04952f3d114b9aea838afc5  download/001-installsudosh.conf-destdir.patch
+9752d641a2233caf7789711ecbcd890e  download/002-strip-man-page-blank.patch
+882f7d2ddb59330350dd2d82184aff50  download/003-adjust-sudosh-man-binary-name.patch
 4c837f7739d9db780ad324ed8482e8a7  download/sudosh2-1.0.2.tgz
