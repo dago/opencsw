@@ -1,2 +1,4 @@
-a39f8b6fdb2219dca513145a4fca63ac  download/no-hardcode-bash.patch
+037997ead86e0589b4e34538d7d2694a  download/0001-add-support-for-selection-of-posix-tail-binary.patch
+134ec47ba3f225ebd04bfb629b230e69  download/0002-add-handling-so-that-gnu-cp-can-be-specified.patch
+b53522eb1413d28da8e661b76f4ab098  download/0003-do-no-hardcode-bin-bash-to-override-env-check.patch
 12f297dc7051e4fef08339980f88a1dd  download/xmlto-0.0.22.tar.bz2

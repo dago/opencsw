@@ -1,0 +1,48 @@
+From 788a65e1792057ac1379c459e111eccf06b4a034 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 15 Sep 2009 19:01:55 +0200
+Subject: [PATCH 1/2] add support for selection of posix tail binary
+
+---
+ configure.in |    3 +++
+ xmlto.in     |    3 ++-
+ 2 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index c41bb72..0fb685e 100644
+--- a/configure.in
++++ b/configure.in
+@@ -107,6 +107,9 @@ AC_PATH_PROG([LINKS], [links], [links])
+ AC_ARG_VAR([W3M], [Name and path of the `w3m' browser.])
+ AC_PATH_PROG([W3M], [w3m], [w3m])
+ 
++AC_ARG_VAR([TAIL], [Name and path of a tail binary that supports -n.])
++AC_PATH_PROG([TAIL], [tail], [tail])
++
+ dnl
+ dnl default webrowser
+ dnl
+diff --git a/xmlto.in b/xmlto.in
+index 66423b3..21f9acc 100755
+--- a/xmlto.in
++++ b/xmlto.in
+@@ -21,6 +21,7 @@ FIND=@FIND@     # This must be GNU find (need -maxdepth)
+ MKTEMP=@MKTEMP@ # See http://www.mktemp.org if missing on your system
+ BASH=@BASH@     # GNU bash, for running the format scripts
+ GETOPT=@GETOPT@ # a getopt that supports --longoptions
++TAIL=@TAIL@     # a tail that supports -n (posix)
+ 
+ version () {
+   echo "@PACKAGE@ version @VERSION@"
+@@ -407,7 +408,7 @@ esac
+ #     sed -e 's/^<?[^?>]*?>//g' -e 's/^<![^>]*>//g' -e 's/^<\([^ ]*\).*$/\1/')
+ 
+ # Seems reasonable fix the file command and teach it to identify the DTD/Schema but this is faster to write:
+-rootel=$(echo "xpath *" | "$XMLLINT_PATH" --shell "$INPUT_FILE" 2> /dev/null | head -n 3 |tail -n 1 | cut -f 4 -d " " )
++rootel=$(echo "xpath *" | "$XMLLINT_PATH" --shell "$INPUT_FILE" 2> /dev/null | head -n 3 |$TAIL -n 1 | cut -f 4 -d " " )
+ 
+ case $(echo $rootel) in
+   fo:root)
+-- 
+1.6.3.2
+

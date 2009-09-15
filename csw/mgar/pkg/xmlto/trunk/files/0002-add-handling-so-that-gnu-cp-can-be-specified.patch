@@ -1,0 +1,191 @@
+From d8102af69b3d635abfb913771d3fe9b1d11ad971 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 15 Sep 2009 19:39:54 +0200
+Subject: [PATCH 2/2] add handling so that gnu cp can be specified
+
+---
+ configure.in                  |    3 +++
+ format/docbook/fo             |    2 +-
+ format/docbook/html           |    2 +-
+ format/docbook/html-nochunks  |    2 +-
+ format/docbook/htmlhelp       |    2 +-
+ format/docbook/javahelp       |    2 +-
+ format/docbook/man            |    2 +-
+ format/docbook/xhtml          |    2 +-
+ format/docbook/xhtml-nochunks |    2 +-
+ format/fo/dvi                 |    2 +-
+ format/fo/pdf                 |    2 +-
+ format/xhtml1/fo              |    2 +-
+ xmlto.in                      |    2 ++
+ 13 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 0fb685e..727da83 100644
+--- a/configure.in
++++ b/configure.in
+@@ -110,6 +110,9 @@ AC_PATH_PROG([W3M], [w3m], [w3m])
+ AC_ARG_VAR([TAIL], [Name and path of a tail binary that supports -n.])
+ AC_PATH_PROG([TAIL], [tail], [tail])
+ 
++AC_ARG_VAR([GCP], [Name and path of a GNU cp binary (need at least -P)])
++AC_PATH_PROG([GCP], [cp], [cp])
++
+ dnl
+ dnl default webrowser
+ dnl
+diff --git a/format/docbook/fo b/format/docbook/fo
+index 699fe3b..8b4f200 100755
+--- a/format/docbook/fo
++++ b/format/docbook/fo
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://docbook.sourceforge.net/release/xsl/current/fo/docbook.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
++  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
+   ;;
+ esac
+diff --git a/format/docbook/html b/format/docbook/html
+index 56bed62..3b2cd71 100755
+--- a/format/docbook/html
++++ b/format/docbook/html
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://docbook.sourceforge.net/release/xsl/current/html/chunk.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- * "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R -P -p -- * "$OUTPUT_DIR"
+   ;;
+ esac
+diff --git a/format/docbook/html-nochunks b/format/docbook/html-nochunks
+index 18a0a63..82b635b 100755
+--- a/format/docbook/html-nochunks
++++ b/format/docbook/html-nochunks
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").html"
++  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").html"
+   ;;
+ esac
+diff --git a/format/docbook/htmlhelp b/format/docbook/htmlhelp
+index 6ae2750..01553df 100755
+--- a/format/docbook/htmlhelp
++++ b/format/docbook/htmlhelp
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://docbook.sourceforge.net/release/xsl/current/htmlhelp/htmlhelp.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- * "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R -P -p -- * "$OUTPUT_DIR"
+   ;;
+ esac
+diff --git a/format/docbook/javahelp b/format/docbook/javahelp
+index ad50388..57710f0 100755
+--- a/format/docbook/javahelp
++++ b/format/docbook/javahelp
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://docbook.sourceforge.net/release/xsl/current/javahelp/javahelp.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- *.htm* *.hs *.xml *.jhm "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R -P -p -- *.htm* *.hs *.xml *.jhm "$OUTPUT_DIR"
+   ;;
+ esac
+diff --git a/format/docbook/man b/format/docbook/man
+index 1b0d561..525b03b 100755
+--- a/format/docbook/man
++++ b/format/docbook/man
+@@ -8,6 +8,6 @@ stylesheet)
+   ;;
+ post-process)
+   [ -e "$XSLT_PROCESSED" ] && rm "$XSLT_PROCESSED"
+-  cp -R -P -p -- * "$OUTPUT_DIR" 2>/dev/null
++  ${GCP_PATH:-cp} -R -P -p -- * "$OUTPUT_DIR" 2>/dev/null
+   ;;
+ esac
+diff --git a/format/docbook/xhtml b/format/docbook/xhtml
+index 940c250..8204549 100755
+--- a/format/docbook/xhtml
++++ b/format/docbook/xhtml
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://docbook.sourceforge.net/release/xsl/current/xhtml/chunk.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- *.*htm* "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R -P -p -- *.*htm* "$OUTPUT_DIR"
+   ;;
+ esac
+diff --git a/format/docbook/xhtml-nochunks b/format/docbook/xhtml-nochunks
+index 3ae4c81..82b555d 100755
+--- a/format/docbook/xhtml-nochunks
++++ b/format/docbook/xhtml-nochunks
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://docbook.sourceforge.net/release/xsl/current/xhtml/docbook.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename ${XSLT_PROCESSED%.*}).html"
++  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename ${XSLT_PROCESSED%.*}).html"
+   ;;
+ esac
+diff --git a/format/fo/dvi b/format/fo/dvi
+index 1c797a6..9db53c7 100755
+--- a/format/fo/dvi
++++ b/format/fo/dvi
+@@ -34,6 +34,6 @@ post-process)
+       [ "$VERBOSE" -ge 3 ] && cat $OUT
+     fi
+   fi
+-  cp -R -P -p -- *.dvi "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").dvi"
++  ${GCP_PATH:-cp} -R -P -p -- *.dvi "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").dvi"
+   ;;
+ esac
+diff --git a/format/fo/pdf b/format/fo/pdf
+index c6f55a4..670cd3c 100755
+--- a/format/fo/pdf
++++ b/format/fo/pdf
+@@ -37,7 +37,7 @@ DEFAULT|DBLATEX)
+ 	      [ "$VERBOSE" -ge 3 ] && cat $OUT
+ 	    fi
+ 	  fi
+-	  cp -R -P -p -- *.pdf "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").pdf"
++	  ${GCP_PATH:-cp} -R -P -p -- *.pdf "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").pdf"
+ 	  ;;
+ 	esac
+ 	;;
+diff --git a/format/xhtml1/fo b/format/xhtml1/fo
+index 588051e..a445ea0 100755
+--- a/format/xhtml1/fo
++++ b/format/xhtml1/fo
+@@ -7,6 +7,6 @@ stylesheet)
+   echo "http://www.antennahouse.com/XSLsample/sample-xsl-xhtml2fo/xhtml2fo.xsl"
+   ;;
+ post-process)
+-  cp -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
++  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
+   ;;
+ esac
+diff --git a/xmlto.in b/xmlto.in
+index 21f9acc..dcab15e 100755
+--- a/xmlto.in
++++ b/xmlto.in
+@@ -245,6 +245,7 @@ fi
+ LINKS_PATH=@LINKS@
+ W3M_PATH=@W3M@
+ LYNX_PATH=@LYNX@
++GCP_PATH=@GCP@
+ 
+ # Process any options
+ ARGS=$(${GETOPT} \
+@@ -441,6 +442,7 @@ fi
+ XSLT_PROCESSOR="$XSLTPROC_PATH" # We only know about xsltproc right now.
+ export XSLT_PROCESSOR
+ export W3M_PATH
++export GCP_PATH
+ export LINKS_PATH
+ export LYNX_PATH
+ export FOP_PATH
+-- 
+1.6.3.2
+
