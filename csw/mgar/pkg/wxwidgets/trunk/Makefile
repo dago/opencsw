@@ -70,7 +70,7 @@ TEST_SCRIPTS =
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gtk=2
 CONFIGURE_ARGS += --with-gtk-prefix=/opt/csw
-CONFIGURE_ARGS += --without-regex
+CONFIGURE_ARGS += --with-regex
 CONFIGURE_ARGS += --with-opengl
 # Unicode-enabled build on Solaris 8 fails with:
 # "./src/common/wxchar.cpp", line 1693: Error: The function "vswscanf" must have
