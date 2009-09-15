@@ -7,7 +7,7 @@ PREREQUISITE_PKGS += CSWflex CSWggetopt
 
 REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
 REQUIRED_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m CSWmktemp
-REQUIRED_PKGS += CSWggetopt CSWbash
+REQUIRED_PKGS += CSWggetopt CSWbash CSWgfile
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
