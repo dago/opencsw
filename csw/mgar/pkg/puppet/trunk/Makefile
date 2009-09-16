@@ -1,19 +1,29 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+#
+# Based on a build script[1] written by Gary Law.
+#
+# [1] http://garylaw.net/packages/puppet-build.sh
 
 GARNAME = puppet
-GARVERSION = 0.25.0
+GARVERSION = 0.24.8
 CATEGORIES = apps
 
 define BLURB
-  Long description
+  Puppet helps accomplish the goal of a hands-off, automated infrastructure.
+  The benefits of automated infrastructure go beyond policy-enforced
+  consistency and auditing.  The impact of hardware failure and other disaster
+  scenarios can be mitigated, as services can be quickly restored by Puppet. In
+  conjunction with virtualizaton, the ability to reliably create new systems
+  running consistent services can be leveraged to create autoscaling
+  applications as well as test systems identical to production environments.
 endef
 
 MASTER_SITES = http://reductivelabs.com/downloads/puppet/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += cswpuppetd cswpuppetmasterd cswusergroup
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 SPKG_SOURCEURL = http://reductivelabs.com/products/puppet/
 
 INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
@@ -25,6 +35,7 @@ USERGROUP = $(sysconfdir)/pkg/CSWpuppet/cswusergroup
 PACKAGES = CSWpuppet CSWpuppetmaster
 
 REQUIRED_PKGS = CSWfacter
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 REQUIRED_PKGS_CSWpuppetmaster = CSWpuppet
 
 PKGFILES_CSWpuppetmaster = $(sysconfdir)/init\.d/cswpuppetmasterd
@@ -44,23 +55,23 @@ INSTALL_SCRIPTS   = puppet
 include gar/category.mk
 
 install-puppet:
-	@ginstall -d $(DESTDIR)
-	@ginstall -d $(DESTDIR)$(sysconfdir)/puppet
-	@ginstall -d $(DESTDIR)$(localstatedir)/puppet/run
+	ginstall -d $(DESTDIR)
+	ginstall -d $(DESTDIR)$(sysconfdir)/puppet
+	ginstall -d $(DESTDIR)$(localstatedir)/puppet/run
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
-	(cd $(WORKDIR)/$(DISTNAME) ; \
+	(cd $(WORKSRC) && \
 	gsed -e "s|/var/puppet|/var/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
 	gsed -e "s|/etc/puppet|/etc/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
-	gsed -e "s|/var/run/puppet|/var/opt/csw/puppet/run|g" -i ./lib/puppet/defaults.rb; \
-	DESTDIR=$(DESTDIR) ruby install.rb; \
-	cd $(DESTDIR)$(mandir)/man8 && gunzip *)
-	(cd $(WORKDIR)/$(DISTNAME)/examples/etc/puppet ; \
+	gsed -e "s|/var/run/puppet|/var/opt/csw/puppet/run|g" -i ./lib/puppet/defaults.rb)
+	cd $(WORKSRC) && DESTDIR=$(DESTDIR) ruby install.rb
+	cd $(DESTDIR)$(mandir)/man8 && gunzip *
+	(cd $(WORKSRC)/examples/etc/puppet && \
 	for f in *; do \
-		if [ -f $$f ] ; then \
-			cp $$f $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
-			chmod 644 $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
-		fi \
+	    if [ -f $$f ] ; then \
+	        cp $$f $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
+	        chmod 644 $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
+	    fi \
 	done)
 	@$(MAKECOOKIE)

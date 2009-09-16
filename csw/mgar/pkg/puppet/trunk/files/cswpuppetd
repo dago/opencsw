@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# $Id$
+#
 # This is the /etc/init.d file for puppetd
 # Modified for CSW
 #
@@ -21,7 +24,7 @@ start)
 
     printf "Starting Puppet client services:"
 
-    /opt/csw/bin/puppetd
+    ${sbindir}/puppetd
 
     printf " puppetd"
     echo ""
@@ -45,8 +48,8 @@ reload)
 
     kill -HUP `cat $pidfile`
 
-	printf " puppetd"
-	echo ""
+    printf " puppetd"
+    echo ""
     ;;
 status)
     if [ -f $pidfile ]; then
@@ -62,5 +65,3 @@ status)
     fi
 esac
 exit 0
-
-# $Id$
