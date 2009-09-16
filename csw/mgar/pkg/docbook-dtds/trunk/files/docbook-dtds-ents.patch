@@ -32,3 +32,22 @@
 +--
    -- End of catalog data for DocBook V4.4 ................................. --
    -- ...................................................................... --
+diff -urNp docbook-dtds-1.0-orig/4.5-sgml/docbook.cat docbook-dtds-1.0/4.5-sgml/docbook.cat
+--- docbook-dtds-1.0-orig/4.5-sgml/docbook.cat	2009-02-19 13:45:22.000000000 +0100
++++ docbook-dtds-1.0/4.5-sgml/docbook.cat	2009-02-19 13:47:31.000000000 +0100
+@@ -60,6 +60,7 @@ PUBLIC "-//OASIS//ENTITIES DocBook Chara
+ 
+   -- ...................................................................... --
+   -- ISO entity sets ...................................................... --
++--
+ 
+ PUBLIC "ISO 8879:1986//ENTITIES Diacritical Marks//EN"
+        "iso-dia.gml"
+@@ -118,5 +119,7 @@ PUBLIC "ISO 8879:1986//ENTITIES Russian 
+ PUBLIC "ISO 8879:1986//ENTITIES Non-Russian Cyrillic//EN"
+        "iso-cyr2.gml"
+ 
++--
++
+   -- End of catalog data for DocBook V4.5 ................................. --
+   -- ...................................................................... --
