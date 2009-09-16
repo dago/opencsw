@@ -14,6 +14,13 @@ FILTER_DIRS = CVS/
 default:
 	@echo "You are in the pkg/ directory."
 
+scm-update-packages:
+	@echo "Updating packages..."
+	@svn up --ignore-externals
+
+scm-help:
+	@cat ../gar/v2/scm-help
+
 %:
 	@for i in $(filter-out $(FILTER_DIRS),$(wildcard */)) ; do \
 		$(MAKE) -C $$i $* ; \
