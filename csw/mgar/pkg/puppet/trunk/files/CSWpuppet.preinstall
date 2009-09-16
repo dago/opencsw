@@ -1,6 +1,20 @@
-PKG_INSTALL_ROOT=\${PKG_INSTALL_ROOT:-/}
-\$PKG_INSTALL_ROOT/usr/sbin/chroot \$PKG_INSTALL_ROOT/ /usr/bin/getent group puppet > /dev/null || /usr/sbin/chroot \$PKG_INSTALL_ROOT /usr/sbin/groupadd puppet
-\$PKG_INSTALL_ROOT/usr/sbin/chroot \$PKG_INSTALL_ROOT/ /usr/bin/getent passwd puppet > /dev/null || /usr/sbin/chroot \$PKG_INSTALL_ROOT /usr/sbin/useradd -g puppet -c "Puppet" -d /var/opt/csw/puppet -s "/bin/true" puppet
+#!/bin/sh
+#
+# $Id$
+#
 
-mkdir -p \$PKG_INSTALL_ROOT/etc/opt/csw/puppet
-chown root:bin \$PKG_INSTALL_ROOT/etc/opt/csw/puppet
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+
+# Replaced with cswusergroup
+
+exit 0
+
+$PKG_INSTALL_ROOT/usr/sbin/chroot $PKG_INSTALL_ROOT/ /usr/bin/getent group puppet \
+    > /dev/null \
+    || /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/sbin/groupadd puppet
+$PKG_INSTALL_ROOT/usr/sbin/chroot $PKG_INSTALL_ROOT/ /usr/bin/getent passwd puppet \
+    > /dev/null \
+    || /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/sbin/useradd -g puppet -c "Puppet" -d /var/opt/csw/puppet -s "/bin/true" puppet
+
+mkdir -p $PKG_INSTALL_ROOT/etc/opt/csw/puppet
+chown root:bin $PKG_INSTALL_ROOT/etc/opt/csw/puppet

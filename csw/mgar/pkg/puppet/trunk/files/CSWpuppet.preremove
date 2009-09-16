@@ -1,2 +1,11 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+# Replaced with INITSMF
+
+exit 0
+
 /usr/sbin/svcadm disable svc:network/puppetd 2>/dev/null || /bin/true
 /usr/sbin/svccfg delete svc:network/puppetd || /bin/true

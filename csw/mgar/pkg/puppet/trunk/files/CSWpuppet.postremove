@@ -1,4 +1,12 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+# Not sure if this cleanup is the right thing to do. TODO(maciej): review
+
 rm /etc/puppet || /bin/true
 rm /opt/csw/etc/puppet || /bin/true
 rm /var/puppet || /bin/true
 rm /opt/csw/var/puppet || /bin/true
+rm -rf /opt/csw/lib/ruby/site_ruby/1.8/puppet
