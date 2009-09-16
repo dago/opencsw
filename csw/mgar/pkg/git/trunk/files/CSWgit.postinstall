@@ -1,0 +1,11 @@
+#!/bin/sh
+
+GC_OLD="$PKG_INSTALL_ROOT/opt/csw/etc/gitconfig"
+GC_NEW="$PKG_INSTALL_ROOT/etc/opt/csw/gitconfig"
+
+# this will hopefully ease the /opt/csw/etc -> /etc/opt/csw
+# transition.
+if [ -f "$GC_OLD" -a ! -f "$GC_NEW" ]; then
+   echo "Copying /opt/csw/etc/gitconfig to /etc/opt/csw/gitconfig"
+   cp -p "$GC_OLD" "$GC_NEW"
+fi

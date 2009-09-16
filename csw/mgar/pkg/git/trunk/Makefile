@@ -86,6 +86,8 @@ SPKG_DESC_CSWgitdevel = Headers and static libraries for Git
 GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
 GIT_TREEISH_git.git = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 
+DISTFILES = CSWgit.postinstall
+
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
 $(foreach d,$(fdirs),$(d)/.*$(1).*) $(sharedstatedir)/$(1).*
