@@ -1,6 +1,6 @@
 dfa31028b4d06d1d226f55fe3a2ab7b3  download/ghc-6.8.3-src.tar.bz2
+c92b368262a194e8b859815415bc10d0  download/testsuite-6.8.3.tar.gz
 ee43ceea42b9353b6613db6d4058ab0a  download/ghc-6.8.3-sparc-sun-solaris2.tar.bz2
 907c15e1d7d33dfd5a829936fe18176a  download/ghc-6.8.3-i386-unknown-solaris2.tar.bz2
-c92b368262a194e8b859815415bc10d0  download/testsuite-6.8.3.tar.gz
-41b4ca8ae020320be23571cd8a71d4dd  download/CSWghc.gspec
-2c370b5638a7c14488b6844972e74aae  download/CSWghc-prof.gspec
+8f73e728ba2e6f65f738a302d1cc8ff4  download/CSWghc.gspec
+2a3d93a43a4499e0c3366f660ffda4bf  download/CSWghc-prof.gspec

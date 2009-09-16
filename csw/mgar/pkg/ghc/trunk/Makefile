@@ -42,7 +42,14 @@ DISTFILES += $(call admfiles,CSW$(GARNAME)-prof,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARVERSION)/$(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PKGFILES_CSWghc-prof = $(prefix)/.*\.p_hi
+PKGFILES_CSWghc-prof  = $(prefix)/.*\.p_hi
+PKGFILES_CSWghc-prof += $(prefix)/.*\.so
+
+#PKGFILES_CSWghc  =
+#PKGFILES_CSWghc  = $(prefix)/.*
+#PKGFILES_CSWghc += $(prefix)/.*\.a
+#PKGFILES_CSWghc += $(PKGFILES_DEVEL)
+#PKGFILES_CSWghc += $(PKGFILES_RT)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 # Disabled for now
