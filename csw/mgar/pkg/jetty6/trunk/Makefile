@@ -1,7 +1,6 @@
 GARNAME = jetty6
-GARVERSION = 6.1.7
+GARVERSION = 6.1.14
 CATEGORIES = server
-
 GARCH=all
 
 DESCRIPTION = Standards-based, full-featured web server and servlet container.
@@ -21,20 +20,26 @@ DISTFILES += cswjetty6 cswjetty6.xml svc-cswjetty6
 DISTFILES += $(call admfiles,CSW$(GARNAME),prototype csw_usrgrp_config postinstall)
 DISTFILES += $(call admfiles,CSW$(GARNAME)doc,prototype)
 
+REQUIRED_PKGS = 
+
+SPKG_SOURCEURL = http://jetty.mortbay.org
+
+SPKG_DESC_CSWjetty6doc=Documentation for Jetty 6
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = jetty-(\d+(?:\.\d+)*).zip
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = common
+#CONFIGURE_SCRIPTS =
+#BUILD_SCRIPTS =
+SKIPTEST = 1
+#INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
 COPY_FILES=LICENSES README.txt VERSION.txt etc lib resources/log4j.properties start.jar javadoc
 TO_COPY=$(foreach file,$(COPY_FILES),cp $(WORKDIR)/jetty-$(GARVERSION)/$(COPY_FILES) $(DESTDIR)/opt/csw/share/jetty6/$(COPY_FILES))
 
-install-common:
+install-custom:
 	mkdir -p $(DESTDIR)/opt/csw/share
 	mkdir -p $(DESTDIR)/etc/init.d
 	mkdir -p $(DESTDIR)/etc/default
