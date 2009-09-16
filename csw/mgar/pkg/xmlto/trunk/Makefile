@@ -22,6 +22,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 PATCHFILES += 0001-add-support-for-selection-of-posix-tail-binary.patch
 PATCHFILES += 0002-add-handling-so-that-gnu-cp-can-be-specified.patch
 PATCHFILES += 0003-do-no-hardcode-bin-bash-to-override-env-check.patch
+PATCHFILES += 0004-switch-file-detection-from-which-to-type.patch
 
 TEST_TARGET = check
 
