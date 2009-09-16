@@ -590,6 +590,12 @@ then
 	$PREFIX $XMLCAT --noout --add "public" \
 	        "-//OASIS//DTD XML Exchange Table Model 19990315//EN" \
 	        "xml-dtd-4.5/soextblx.dtd" $CATALOG
+	$PREFIX $XMLCAT --noout --add "rewriteSystem" \
+		"http://www.oasis-open.org/docbook/xml/4.5" \
+		"xml-dtd-4.5" $CATALOG
+	$PREFIX $XMLCAT --noout --add "rewriteURI" \
+		"http://www.oasis-open.org/docbook/xml/4.5" \
+		"xml-dtd-4.5" $CATALOG
 fi
 
 # Finally, make sure everything in $CSWSGMLCNF is readable!

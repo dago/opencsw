@@ -64,6 +64,7 @@ PATCHFILES += docbook-dtd40-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd41-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtd42-sgml-1.0.catalog.patch
 PATCHFILES += docbook-dtds-ents.patch
+PATCHFILES += docbook-sgml-systemrewrite.patch
 PATCHFILES += add_makefile.patch
 
 # we don't need no stinkin' configure! :)

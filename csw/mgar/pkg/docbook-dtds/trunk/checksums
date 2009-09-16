@@ -1,4 +1,4 @@
-c4074456da444839aa6010c8721a56da  download/CSWdocbookdtds.postinstall
+f0d84543fabf17484edd08a39b2c6db0  download/CSWdocbookdtds.postinstall
 da4b8f64c222276d2c291bf8afb20517  download/CSWdocbookdtds.preremove
 39e1c752fddfed4f89c8276c42ec95d4  download/add_makefile.patch
 9a7f5b1b7dd52d0ca4fb080619f0459c  download/docbk30.zip
@@ -17,6 +17,7 @@ e3067045964536cc7445d5c3f1e99916  download/docbook-dtd30-sgml-1.0.catalog.patch
 e976c302070ec2e14316d4a601c224cb  download/docbook-dtd41-sgml-1.0.catalog.patch
 0ee42c28835cd448b6b47b2345394b28  download/docbook-dtd42-sgml-1.0.catalog.patch
 7e4a8a4b7c5d311ab3dcaf81a9dc6a08  download/docbook-dtds-ents.patch
+698cd105d772a263c022a613339bb9b5  download/docbook-sgml-systemrewrite.patch
 73fe50dfe74ca631c1602f558ed8961f  download/docbook-xml-4.2.zip
 ab200202b9e136a144db1e0864c45074  download/docbook-xml-4.3.zip
 cbb04e9a700955d88c50962ef22c1634  download/docbook-xml-4.4.zip
