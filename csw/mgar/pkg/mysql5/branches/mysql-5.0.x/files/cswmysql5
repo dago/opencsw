@@ -1,0 +1,180 @@
+#!/bin/sh
+# Start script for CSW www.blastwave.org package of MySQL database.
+#
+# NOTE: Make sure DB_DIR is owned BY the mysql user and group and chmod 
+# 700.
+#
+# First time installation can use quick_start-csw in
+#   /opt/csw/mysql5/share/mysql to build the mysql database for the
+#   grant tables.  Or create the initial database yourself.
+#
+# Use my.cnf for startup options.  See MySQL documention 
+#   for 'Using Option Files'.
+# Support for mysql5rc still remains in this startup script.
+#
+
+RETVAL=0
+MYSQLHOME=/opt/csw/mysql5
+MYSQLD_DATADIR=$MYSQLHOME/var
+MYSQLD_PID_FILE=$MYSQLHOME/var/mysql.pid
+CONFFILE=$MYSQLHOME/my.cnf
+
+#
+# Source configuration
+[ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
+[ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
+
+# To get started quickly, copy a sample configuration file from 
+#   $MYSQLHOME/share/mysql
+# For example,
+#  cp /opt/csw/mysql5/share/mysql/my-medium.cnf /opt/csw/mysql5/var/my.cnf
+#
+# Or, manually follow the database creation steps below, and have
+# mysql just use defaults for everything.
+
+# 2006-03-11 Changed to only look for the grant tables database
+# 2006-04-16 Changed again.  Look for either the grant tables database
+#            or the options file.
+# 2006-12-28 Fix problem.  Look for either the grant tables database in
+#            the default location or the default options file.
+if [ ! -d "$MYSQLD_DATADIR/mysql" -a ! -f "$CONFFILE" ] ; then
+    exit 0
+fi
+
+# If CONFFILE is the server default file, unset CONFFILE
+if [ x"$CONFFILE" = x"$MYSQLHOME/my.cnf" ]; then
+    CONFFILE=
+fi
+
+# If MYSQLD_DATADIR does not contain a mysql directory, unset MYSQLD_DATADIR
+# Also, check that MYSQLD_DATADIR contains a mysql directory
+if [ ! -d "$MYSQLHOME/var/mysql" -a ! -d "$MYSQLD_DATADIR/mysql" ] ; then
+    MYSQLD_DATADIR=
+fi
+
+# Make sure required vars are set
+MYSQLD_PID_FILE=${MYSQLD_PID_FILE:=$MYSQLHOME/var/mysql.pid}
+
+# If a database already exists, start whether or not there is a conf file.
+# If no conf file, the database will just use internal defaults for everything.
+
+start_it() {
+    if test -r $MYSQLD_PID_FILE ; then
+	if kill -0 `cat $MYSQLD_PID_FILE` > /dev/null 2>&1 ; then
+	    echo "mysqld (`cat $MYSQLD_PID_FILE`) seems to be running."
+	    return 1
+	fi
+    fi
+
+    printf "%-60s" "Starting mysqld: "
+# 2006-03-11
+# This script no longer creates the default database. You may create the 
+# default database manually or use /opt/csw/mysql5/share/mysql/quick_start-csw
+#    if [ ! -d "$MYSQLHOME/var/mysql" ] ; then
+#        echo MySQL core database has not been created.
+#         echo Creating it now...
+#	$MYSQLHOME/bin/mysql_install_db
+#	chown -R mysql:mysql $MYSQLHOME/var
+#    fi
+
+# 2006-04-16  --defaults-file is changed to --defaults-extra-file    
+    $MYSQLHOME/bin/mysqld_safe \
+        `[ -n "$CONFFILE" ] && echo "--defaults-extra-file=$CONFFILE"` \
+	--pid-file=$MYSQLD_PID_FILE \
+	`[ -n "$MYSQLD_PROG" ] && echo "--mysqld=$MYSQLD_PROG"` \
+	`[ -n "$MYSQLD_ANSI" ] && echo "--ansi"` \
+	`[ -n "$MYSQLD_BASEDIR" ] && echo "--basedir=$MYSQLD_BASEDIR"` \
+	`[ -n "$MYSQLD_BIG_TABLES" ] && echo "--big-tables"` \
+	`[ -n "$MYSQLD_BIND_ADDRESS" ] && echo "--bind-address=$MYSQLD_BIND_ADDRESS"` \
+	`[ -n "$MYSQLD_CHARACTER_SETS" ] && echo "--character-sets-dir=$MYSQLD_CHARACTER_SETS"` \
+	`[ -n "$MYSQLD_CHROOT" ] && echo "--chroot=$MYSQLD_CHROOT"` \
+	`[ -n "$MYSQLD_DATADIR" ] && echo "--datadir=$MYSQLD_DATADIR"` \
+	`[ -n "$MYSQLD_DEFAULT_CHARSET" ] && echo "--default-character-set=$MYSQLD_DEFAULT_CHARSET"` \
+	`[ -n "$MYSQLD_DEFAULT_TABLE_TYPE" ] && echo "--default-table-type=$MYSQLD_DEFAULT_TABLE_TYPE"` \
+	`[ -n "$MYSQLD_DELAY_KEY_WRITE_TABLES" ] && echo "--delay-key-write-for-all-tables"` \
+	`[ -n "$MYSQLD_ENABLE_LOCKING" ] && echo "--enable-locking"` \
+	`[ -n "$MYSQLD_EXIT_INFO" ] && echo "--exit-info"` \
+	`[ -n "$MYSQLD_FLUSH" ] && echo "--flush"` \
+	`[ -n "$MYSQLD_INIT_FILE" ] && echo "--init-file=$MYSQLD_INIT_FILE"` \
+	`[ -n "$MYSQLD_LANGUAGE" ] && echo "--language=$MYSQLD_LANGUAGE"` \
+	`[ -n "$MYSQLD_LOG" ] && echo "--log=$MYSQLD_LOG"` \
+	`[ -n "$MYSQLD_LOG_ISAM" ] && echo "--log-isam=$MYSQLD_LOG_ISAM"` \
+	`[ -n "$MYSQLD_LOG_SLOW_QUERIES" ] && echo "--log-slow-queries=$MYSQLD_LOG_SLOW_QUERIES` \
+	`[ -n "$MYSQLD_LOG_UPDATE" ] && echo "--log-update=$MYSQLD_LOG_UPDATE"` \
+	`[ -n "$MYSQLD_LOG_LONG_FORMAT" ] && echo "--log-long-format"` \
+	`[ -n "$MYSQLD_LOW_PRIORITY_UPDATES" ] && echo "--low-priority-updates"` \
+	`[ -n "$MYSQLD_MEMLOCK" ] && echo "--memlock"` \
+	`[ -n "$MYSQLD_MYISAM_RECOVER" ] && echo "--myisam-recover=$MYSQLD_MYISAM_RECOVER"` \
+	`[ -n "$MYSQLD_PORT" ] && echo "--port=$MYSQLD_PORT"` \
+	`[ -n "$MYSQLD_OLD_PROTOCOL" ] && echo "--old-protocol"` \
+	`[ -n "$MYSQLD_ONE_THREAD" ] && echo "--one-thread"` \
+	`[ -n "$MYSQLD_SET_VARIABLE" ] && echo "--set-variablevar=$MYSQLD_SET_VARIABLE"` \
+	`[ -n "$MYSQLD_SKIP_GRANT_TABLES" ] && echo "--skip-grant-tables"` \
+	`[ -n "$MYSQLD_SAFE_MODE" ] && echo "--safe-mode"` \
+	`[ -n "$MYSQLD_SECURE" ] && echo "--secure"` \
+	`[ -n "$MYSQLD_SKIP_CONCURRENT_INSERT" ] && echo "--skip-concurrent-insert"` \
+	`[ -n "$MYSQLD_SKIP_DELAY_KEY_WRITE" ] && echo "--skip-delay-key-write"` \
+	`[ -n "$MYSQLD_SKIP_LOCKING" ] && echo "--skip-locking"` \
+	`[ -n "$MYSQLD_SKIP_NAME_RESOLVE" ] && echo "--skip-name-resolve"` \
+	`[ -n "$MYSQLD_SKIP_NETWORKING" ] && echo "--skip-networking"` \
+	`[ -n "$MYSQLD_SKIP_NEW" ] && echo "--skip-new"` \
+	`[ -n "$MYSQLD_SKIP_HOST_CACHE" ] && echo "--skip-host-cache"` \
+	`[ -n "$MYSQLD_SKIP_SHOW_DATABASE" ] && echo "--skip-show-database"` \
+	`[ -n "$MYSQLD_SKIP_THREAD_PRIORITY" ] && echo "--skip-thread-priority"` \
+	`[ -n "$MYSQLD_SOCKET" ] && echo "--socket=$MYSQLD_SOCKET"` \
+	`[ -n "$MYSQLD_TMPDIR" ] && echo "--tmpdir=$MYSQLD_TMPDIR"` \
+	`[ -n "$MYSQLD_USER" ] && echo "--user=$MYSQLD_USER"` \
+	& >/dev/null 2>&1
+    RETVAL=$?
+    if [ $RETVAL = 0 ] ; then
+	echo "[  OK  ]"
+    else
+	echo "[FAILED]"
+	return 1
+    fi
+    return 0
+}
+
+stop_it() {
+
+    printf "%-60s" "Shutting down mysqld: "
+    if test -f "$MYSQLD_PID_FILE" ; then
+	pkill mysqld_safe >/dev/null 2>&1
+	kill `cat $MYSQLD_PID_FILE` >/dev/null 2>&1
+	RETVAL=$?
+    else
+	RETVAL=1
+    fi
+    if [ $RETVAL = 0 ] ; then
+	echo "[  OK  ]"
+    else
+	echo "[FAILED]"
+    fi
+    echo ""
+    return 0
+}
+
+case $1 in
+    start)
+    start_it
+    ;;
+
+    stop)
+    stop_it
+    ;;
+
+    restart)
+    stop_it
+    while pgrep mysqld > /dev/null
+      do
+      sleep 1
+    done
+    start_it
+    ;;
+
+    *)
+    echo "Usage: $0  { start | stop | restart } "
+    ;;
+esac
+
+exit $RETVAL
