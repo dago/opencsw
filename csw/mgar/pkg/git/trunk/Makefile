@@ -7,7 +7,7 @@ CATEGORIES = devel
 # TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
-PACKAGES += CSWgitcompletion
+PACKAGES += CSWgitcompletion CSWgitdevel
 
 CATALOGNAME_CSWgit = git
 CATALOGNAME_CSWgitcvs = git_cvs
@@ -17,6 +17,7 @@ CATALOGNAME_CSWgitgui = git_gui
 CATALOGNAME_CSWgitdoc = git_doc
 CATALOGNAME_CSWgitk = gitk
 CATALOGNAME_CSWgitcompletion = git_completion
+CATALOGNAME_CSWgitdevel = git_devel
 
 ARCHALL_CSWgitsvn = 1
 ARCHALL_CSWgitcvs = 1
@@ -47,6 +48,8 @@ REQUIRED_PKGS_CSWgitemacs = CSWgit CSWemacs
 
 REQUIRED_PKGS_CSWgitdoc = CSWgit
 
+REQUIRED_PKGS_CSWgitdevel = CSWgit
+
 # We include bash here even though git itself depends on it because in theory
 # git could use any other POSIX compliant shell and drop the dependency...
 REQUIRED_PKGS_CSWgitcompletion = CSWgit CSWbash
@@ -59,6 +62,7 @@ LICENSE_CSWgitcvs = COPYING
 LICENSE_CSWgitemacs = COPYING
 LICENSE_CSWgitdoc = COPYING
 LICENSE_CSWgitcompletion = COPYING
+LICENSE_CSWgitdevel = COPYING
 
 DESCRIPTION = Fast Version Control System
 define BLURB
@@ -75,6 +79,7 @@ SPKG_DESC_CSWgitcvs = Git tools for working with CVS repositories
 SPKG_DESC_CSWgitdoc = Documentation for Git
 SPKG_DESC_CSWgitemacs = Git VCS support for Emacs
 SPKG_DESC_CSWgitcompletion = Bash completion support for Git
+SPKG_DESC_CSWgitdevel = Headers and static libraries for Git
 
 #NOTE: If you need to proxy git:// connections, set GIT_USE_PROXY in
 #	your .garrc file.  (That leaves this recipe in a more generic form.)
@@ -93,6 +98,7 @@ PKGFILES_CSWgitcvs = $(foreach d,$(fdirs),$(d)/.*cvs.*)
 PKGFILES_CSWgitemacs = .*emacs.*
 PKGFILES_CSWgitdoc = $(docdir)/.*
 PKGFILES_CSWgitcompletion = $(bashconfdir)/bash_completion.d/.*
+PKGFILES_CSWgitdevel = $(includedir)/.* $(libdir)/.*
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
@@ -121,6 +127,9 @@ INSTALL_ARGS = ETC_GITCONFIG=$(sysconfdir)/gitconfig \
 		INSTALLDIRS=vendor \
 		install-doc
 
+# We want static libs installed for our devel package
+MERGE_EXCLUDE_STATICLIBS =
+
 include gar/category.mk
 
 # for tail -n and to override things like, etc with the gnu counterparts
@@ -142,6 +151,8 @@ post-build-modulated:
 
 post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)
 post-install-modulated: BD=$(DESTDIR)/$(bashconfdir)/bash_completion.d
+post-install-modulated: ID=$(DESTDIR)/$(includedir)/git
+post-install-modulated: LD=$(DESTDIR)/$(libdir_install)/git
 post-install-modulated:
 	@echo Cleaning up perl stuff
 	@rm -rf $(DESTDIR)/$(libdir)/perl5/site_perl/5*
@@ -150,6 +161,16 @@ post-install-modulated:
 	@echo Installing Emacs Git extension
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs install \
 		emacsdir=$(DESTDIR)/$(datadir)/emacs/site-lisp )
+	@echo Installing devel files
+	@( cd $(WORKSRC); \
+		ginstall -c -m 0755 -d $(ID) $(LD); \
+		for f in `find . -name "*.h"`; do \
+			dn=`dirname $$f`; \
+			ginstall -c -m 0755 -d $(ID)/$$dn; \
+			ginstall -c -m 0644 $$f $(ID)/$$dn; \
+		done; \
+		ginstall -c -m 0444 libgit.a $(LD)/; \
+		ginstall -c -m 0444 ./xdiff/lib.a $(LD)/libxdiff.a )
 	@echo Installing Documentation
 	@( cd $(WORKSRC); \
 		ginstall -c -m 0755 -d $(GD); \
