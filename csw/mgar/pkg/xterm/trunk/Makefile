@@ -1,5 +1,5 @@
 GARNAME = xterm
-GARVERSION = 247
+GARVERSION = 248
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
@@ -19,7 +19,9 @@ REQUIRED_PKGS = CSWfconfig CSWlibxft2
 # enable -mk_width per default to address unicode form character width woes, 
 # can be taken out once upstream enhances wcwidth() sanity checking 
 #   http://article.gmane.org/gmane.comp.lib.ncurses.bugs/3795
-PATCHFILES = patch-mkwidth.diff
+#
+# fixed in #244, let's see whether it works
+#PATCHFILES = patch-mkwidth.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
