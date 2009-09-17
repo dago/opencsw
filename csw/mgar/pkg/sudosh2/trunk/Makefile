@@ -1,6 +1,5 @@
 # TODO/Issues
 # - Submit 001- (DESTDIR) and 002- (man page) patches upstream
-# - What about --logdir perms? Any other special perms required?
 GARNAME = sudosh2
 GARVERSION = 1.0.2
 CATEGORIES = apps
@@ -27,7 +26,20 @@ sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
 SAMPLECONF = $(sysconfdir)/sudosh.conf
-PROTOTYPE_FILTER = awk '$$$$3 ~/^\/var\/opt\/csw\/sudosh$$$$/ { $$$$4 = 0700 } { print }'
+
+# logdir is writable by all users (needs to be so that all users can use 
+# sudosh). This might look horribly wrong at first, but when looking at 
+# the logfile names one can see that they are created with some entropy.
+#
+#   skayser-root-input-1253202076-FMssssssOOOOOOuu
+#   skayser-root-script-1253202076-FMssssssOOOOOOuu
+#   skayser-root-time-1253202076-FMssssssOOOOOOuu
+#
+# This way, an ordinary user would need to guess such a name to be able to 
+# access or modify the related session files. Might not be 100% bullet-proof,
+# but then again, you probably will use something else than sudosh in an 
+# environment that calls for 100% bullet-proof.
+PROTOTYPE_FILTER = awk '$$$$3 ~/^\/var\/opt\/csw\/sudosh$$$$/ { $$$$4 = 0733 } { print }'
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-logdir=$(localstatedir)/sudosh
