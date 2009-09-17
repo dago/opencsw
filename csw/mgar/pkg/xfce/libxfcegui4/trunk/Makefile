@@ -33,7 +33,10 @@ PKGFILES_CSWlibxfcegui4doc    = /opt/csw/share/gtk-doc/.*
 # Defines dependencies
 REQUIRED_PKGS_CSWlibxfcegui4      = CSWdbusglib CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
 REQUIRED_PKGS_CSWlibxfcegui4     += CSWlibdbus CSWlibglade2 CSWlibxfce4util CSWlibxml2 CSWpango
-REQUIRED_PKGS_CSWlibxfcegui4     += CSWstartupnotif CSWxfconf
+REQUIRED_PKGS_CSWlibxfcegui4     += CSWstartupnotif CSWxfconf CSWfconfig
+REQUIRED_PKGS_CSWlibxfcegui4     += CSWftype2
+REQUIRED_PKGS_CSWlibxfcegui4     += CSWsunmath
+
 REQUIRED_PKGS_CSWlibxfcegui4devel = 
 REQUIRED_PKGS_CSWlibxfcegui4doc   = 
 
