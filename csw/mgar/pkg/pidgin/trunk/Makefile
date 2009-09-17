@@ -1,5 +1,7 @@
+# $Id$
+
 GARNAME = pidgin
-GARVERSION = 2.5.8
+GARVERSION = 2.6.2
 CATEGORIES = apps
 
 DESCRIPTION = Multi-protocol IM client
@@ -21,6 +23,7 @@ CONFIGURE_ARGS += '--disable-avahi'
 CONFIGURE_ARGS += '--disable-nm'
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
+CONFIGURE_ARGS += --disable-vv
 
 
 PATH = $(SOS11_CC_HOME)/bin:$(PATH)
@@ -47,12 +50,14 @@ EXTRA_LDFLAGS = -R $(prefix)/X11/lib
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
-REQUIRED_PKGS_CSWpidgin  = CSWaspell CSWdbusglib CSWgcrypt CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWpidgin += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
-REQUIRED_PKGS_CSWpidgin += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
-REQUIRED_PKGS_CSWpidgin += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
-REQUIRED_PKGS_CSWpidgin += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus 
-REQUIRED_PKGS_CSWpidgin += CSWfconfig CSWftype2 CSWlibx11
+REQUIRED_PKGS  = CSWaspell CSWdbusglib CSWgcrypt CSWggettextrt CSWglib2
+REQUIRED_PKGS += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
+REQUIRED_PKGS += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
+REQUIRED_PKGS += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
+REQUIRED_PKGS += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus
+REQUIRED_PKGS += CSWfconfig CSWftype2 CSWlibx11 CSWbdb CSWlibidn
+
+
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWlibdbusdev CSWdbusglibdev CSWgnutlsdevel
 
 include gar/category.mk
-
