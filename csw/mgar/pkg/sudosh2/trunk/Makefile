@@ -27,6 +27,7 @@ sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
 SAMPLECONF = $(sysconfdir)/sudosh.conf
+PROTOTYPE_FILTER = awk '$$$$3 ~/^\/var\/opt\/csw\/sudosh$$$$/ { $$$$4 = 0700 } { print }'
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-logdir=$(localstatedir)/sudosh
@@ -61,4 +62,6 @@ post-install-modulated:
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	cp $(WORKSRC)/ChangeLog $(DOCDEST)/changelog
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+
+	perl -pi -e 's|/usr/local/bin|$(bindir)|g' $(DOCDEST)/README
 	@$(MAKECOOKIE)
