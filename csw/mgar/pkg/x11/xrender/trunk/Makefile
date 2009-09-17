@@ -10,7 +10,7 @@ define BLURB
   into either triangles or trapezoids.
 endef
 
-MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
+MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTNAME = libXrender-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
 

@@ -8,7 +8,7 @@ define BLURB
   at time of writing, it includes support for UNIX sockets, IPv4, IPv6, and DECnet.
 endef
 
-MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
+MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release

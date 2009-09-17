@@ -9,7 +9,7 @@ define BLURB
   functions of the window system. 
 endef
 
-MASTER_SITES =http://xorg.freedesktop.org/releases/individual/lib/
+MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = patch-stdint.diff
 # Add workaround for http://bugs.sourcemage.org/show_bug.cgi?id=13476

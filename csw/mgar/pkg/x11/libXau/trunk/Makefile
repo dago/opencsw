@@ -8,7 +8,7 @@ define BLURB
   which controls authorisation for X connections, both client-side and server-side. 
 endef
 
-MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
+MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PREREQUISITE_PKGS = CSWinputproto CSWkbproto CSWrenderproto CSWxcbproto

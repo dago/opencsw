@@ -8,7 +8,7 @@ define BLURB
   protocol library, which allows for remote logins to display managers. 
 endef
 
-MASTER_SITES = http://xorg.freedesktop.org/releases/individual/lib/
+MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
