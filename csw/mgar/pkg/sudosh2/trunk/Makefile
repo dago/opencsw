@@ -23,8 +23,13 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+
+SAMPLECONF = $(sysconfdir)/sudosh.conf
+
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-logdir=/var/opt/csw/sudosh
+CONFIGURE_ARGS += --with-logdir=$(localstatedir)/sudosh
 
 # No tests available
 TEST_SCRIPTS = 
@@ -51,7 +56,7 @@ pre-configure-modulated:
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: DOCS=AUTHORS NEWS README
 post-install-modulated:
-	ginstall -d $(DESTDIR)/var/opt/csw/sudosh
+	ginstall -d $(DESTDIR)$(localstatedir)/sudosh
 	ginstall -d $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	cp $(WORKSRC)/ChangeLog $(DOCDEST)/changelog
