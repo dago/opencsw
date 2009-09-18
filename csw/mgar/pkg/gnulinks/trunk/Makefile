@@ -1,5 +1,5 @@
 GARNAME = gnulinks
-GARVERSION = 1.1
+GARVERSION = 1.2
 CATEGORIES = xtra
 
 SPKG_SOURCEURL = No Source
@@ -24,4 +24,3 @@ newproto:
 	@/bin/ls -1 /opt/csw/bin/g* | pkgproto | \
 		perl -plne 's,bin/g([\w\d-]+) 0755 root bin,gnu/$$1=../bin/g$$1 ? ? ?,' \
 		> $(FILEDIR)/CSWgnulinks.prototype
-
