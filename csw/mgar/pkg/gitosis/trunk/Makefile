@@ -16,6 +16,8 @@ define CSWgitosis_postinstall
 #!/bin/sh
 
 /usr/bin/passwd -N gitosis
+
+echo See $(docdir)/$(GARNAME)/README.csw for first use instructions.
 endef
 
 PACKAGES = CSWgitosis
