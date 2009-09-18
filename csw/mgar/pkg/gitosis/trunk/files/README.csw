@@ -11,7 +11,7 @@ checkout of the gitosis-admin repo.
 
 Perform the following steps on the gitosis server:
 
-1. su - gitosis
+1. su - gitosis (as root, since gitosis is a no-login account)
 2. gitosis-init < /tmp/id_dsa.pub
 
 The server should now be ready to go.  Now, in the account holding the
