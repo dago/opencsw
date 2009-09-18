@@ -1,5 +1,5 @@
 GARNAME = xapian-bindings
-GARVERSION = 1.0.16
+GARVERSION = 1.0.11
 CATEGORIES = lib
 
 DESCRIPTION = Xapian bindings for SWIG and JNI
@@ -19,7 +19,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWxapianbindings
 CATALOGNAME_CSWxapianbindings = xapian_bindings
 
-REQUIRED_PKGS = CSWxapiancore
+REQUIRED_PKGS = CSWxapiancore CSWstlport
 
 #EXTRA_LD_FLAGS = -lm
 
