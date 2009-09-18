@@ -18,13 +18,14 @@ CATALOGNAME_CSWasciidoc = asciidoc
 
 ARCHALL_CSWasciidoc = 1
 
-REQUIRED_PKGS_CSWasciidoc = CSWpython
+REQUIRED_PKGS_CSWasciidoc = CSWpython CSWgnulinks CSWggetopt
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(AUTOFILES)
 
 PATCHFILES = handle-csw-etc-paths.patch
+PATCHFILES += add-csw-gnu-path-to-a2x.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67797

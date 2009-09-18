@@ -1,0 +1,13 @@
+diff --speed-large-files --minimal -Nru asciidoc-8.4.5.orig/a2x asciidoc-8.4.5/a2x
+--- asciidoc-8.4.5.orig/a2x	2009-05-12 00:26:16.000000000 +0200
++++ asciidoc-8.4.5/a2x	2009-09-18 21:32:44.546730245 +0200
+@@ -7,6 +7,9 @@
+ # under the terms of the GNU General Public License (GPL).
+ #
+ 
++PATH=/opt/csw/gnu:$PATH
++export PATH
++
+ VERSION=1.0.0
+ BASENAME=$(basename "$0")
+ REALNAME="$0"
