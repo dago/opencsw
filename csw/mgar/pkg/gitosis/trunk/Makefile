@@ -3,7 +3,7 @@ GARVERSION = 0.2
 # This represents the tip of master as of 20090516.  It is ahead of
 # release/0.2
 PATCHLEVEL = 73a03
-CATEGORIES = utils
+CATEGORIES = python
 
 DESCRIPTION = Software for hosting git repositories
 define BLURB
@@ -24,7 +24,7 @@ ARCHALL_CSWgitosis = 1
 
 PREREQUISITE_PKGS_CSWgitosis = CSWpython CSWpysetuptools
 
-REQUIRED_PKGS_CSWgitosis = CSWgit CSWpython CSWcswclassutils CSWpysetuptools
+REQUIRED_PKGS_CSWgitosis = CSWgit CSWpysetuptools
 
 GIT_REPOS = git://eagain.net/gitosis.git
 GIT_USE_PROXY = 1
@@ -52,19 +52,17 @@ GITOSISHOME = /var/opt/csw/gitosis
 CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/bin/bash::
 CSWUGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
 
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+USERGROUP = /opt/csw/etc/pkg/CSWgitosis/cswusergroup
 
-PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/CSWgitosis\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" }; $$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" }; $$$$3 ~ /\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" }; { print }'
 
-SPKG_CLASSES = none cswpycompile cswusergroup ugfiles
+SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:$(PATH)
-
 # Set a slightly altered revstamp to indicate that we're not using a
 # pressed release.
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(PATCHLEVEL)
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
 
 post-install-modulated:
 	@( gmkdir -p $(CSWUGD); \
