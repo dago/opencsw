@@ -68,7 +68,7 @@ gitrepo//%:
 # to update the code.
 # we possibly proxy the git:// references depending on GIT_USE_PROXY
 git-http//%:
-	@$git clone --bare http://$* $(PARTIALDIR)/$(call GITPROJ,$*)
+	@git clone --bare http://$* $(PARTIALDIR)/$(call GITPROJ,$*)
 	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
 		git remote add origin http://$*; \
 		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
