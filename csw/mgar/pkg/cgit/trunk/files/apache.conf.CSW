@@ -1,0 +1,12 @@
+<Directory "/opt/csw/libexec/cgit">
+  AllowOverride None
+  Options ExecCGI
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<Directory "/opt/csw/share/cgit/httpd">
+  AllowOverride None
+  Order allow,deny
+  Allow from all
+</Directory>

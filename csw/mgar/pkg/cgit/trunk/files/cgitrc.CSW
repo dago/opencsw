@@ -1,0 +1,12 @@
+cache-size=1000
+
+snapshots=tar.gz tar.bz2 zip
+
+#scan-path=/var/opt/csw/gitosis/repositories
+
+repo.url=cgit
+repo.path=/home/trygvis/dev/net.hjemli/cgit/.git
+repo.desc=the master foo repository
+repo.owner=fooman@foobar.com
+repo.readme=info/web/about.html
+
