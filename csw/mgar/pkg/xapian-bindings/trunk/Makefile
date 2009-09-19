@@ -46,4 +46,7 @@ TEST_TARGET = check
 MERGE_SCRIPTS_isa-sparcv8-binding-ruby = copy-all
 MERGE_SCRIPTS_isa-sparcv8-binding-python = copy-all
 
+PKGFILES_CSWrbxapian = $(libdir)/ruby/.*
+PKGFILES_CSWrbxapian += $(docdir)/xapian-bindings/ruby/.*
+
 include gar/category.mk
