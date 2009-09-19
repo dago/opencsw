@@ -30,6 +30,8 @@ SPKG_DESC_CSWrbxapian = Xapian bindings for Ruby
 PREREQUISITE_PKGS = CSWrubydev
 REQUIRED_PKGS_CSWpyxapian = CSWpython CSWxapianrt
 REQUIRED_PKGS_CSWrbxapian = CSWruby CSWxapianrt CSWgcc3corert
+# This should be CSWgcc3g++rt, but the lib is actually in CSWgcc3g++
+REQUIRED_PKGS_CSWrbxapian += CSWgcc3g++
 
 GARCOMPILER_ruby = GCC3
 GARCOMPILER_python = SOS11
@@ -45,6 +47,9 @@ TEST_TARGET = check
 
 MERGE_SCRIPTS_isa-sparcv8-binding-ruby = copy-all
 MERGE_SCRIPTS_isa-sparcv8-binding-python = copy-all
+
+MERGE_SCRIPTS_isa-i386-binding-ruby = copy-all
+MERGE_SCRIPTS_isa-i386-binding-python = copy-all
 
 PKGFILES_CSWrbxapian = $(libdir)/ruby/.*
 PKGFILES_CSWrbxapian += $(docdir)/xapian-bindings/ruby/.*
