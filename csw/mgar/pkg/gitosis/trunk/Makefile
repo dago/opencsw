@@ -62,6 +62,9 @@ SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
+# override the category exclusion
+_MERGE_EXCLUDE_CATEGORY =
+
 # Set a slightly altered revstamp to indicate that we're not using a
 # pressed release.
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
