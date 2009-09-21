@@ -99,7 +99,7 @@ start_it() {
 	`[ -n "$MYSQLD_LANGUAGE" ] && echo "--language=$MYSQLD_LANGUAGE"` \
 	`[ -n "$MYSQLD_LOG" ] && echo "--log=$MYSQLD_LOG"` \
 	`[ -n "$MYSQLD_LOG_ISAM" ] && echo "--log-isam=$MYSQLD_LOG_ISAM"` \
-	`[ -n "$MYSQLD_LOG_SLOW_QUERIES" ] && echo "--log-slow-queries=$MYSQLD_LOG_SLOW_QUERIES` \
+	`[ -n "$MYSQLD_LOG_SLOW_QUERIES" ] && echo "--log-slow-queries=$MYSQLD_LOG_SLOW_QUERIES"` \
 	`[ -n "$MYSQLD_LOG_UPDATE" ] && echo "--log-update=$MYSQLD_LOG_UPDATE"` \
 	`[ -n "$MYSQLD_LOG_LONG_FORMAT" ] && echo "--log-long-format"` \
 	`[ -n "$MYSQLD_LOW_PRIORITY_UPDATES" ] && echo "--low-priority-updates"` \
