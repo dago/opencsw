@@ -2,7 +2,8 @@ a0b98a7320bce2da3e1f90da704d3c85  download/0001-Use-libc-not-libcrypt.patch
 1414d06fab1530484a508927a0de4154  download/0002-cast-user_info-pw_gid-to-gid_t.patch
 5415f365f1b0f7a179d1efc25f45bbee  download/0003-OpenCSW-perl-for-tests.patch
 8ab232cd4d232b3cda3bbced93f80237  download/0004-basedir-and-datadir-in-the-cnf-files.patch
+cc2a219abbe7dc6049775cff070a27a5  download/CSWmysql.preinstall
 70d7860bfa776dfc5510fc11d7c14203  download/README.CSW
-815a50011c356cd29758ca2195804952  download/cswmysql5
+fa8f33c812604457f2c0792e875f6967  download/cswmysql5
 671348f1a5b078da9ca76f97e1fda325  download/mysql-5.0.84.tar.gz
 1d79b3cfc4f91db05952bf71f0181fe7  download/quick_start-csw
