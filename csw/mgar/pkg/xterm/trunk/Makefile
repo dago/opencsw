@@ -43,6 +43,8 @@ CONFIGURE_ARGS += --enable-warnings
 CONFIGURE_ARGS += --enable-wide-chars
 CONFIGURE_ARGS += --program-suffix=86 --with-xterm-symlink
 CONFIGURE_ARGS += --with-freetype-cflags="-I$(includedir)/freetype2"
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
 
 # luit comes with snv_85 
 #   http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6662431
