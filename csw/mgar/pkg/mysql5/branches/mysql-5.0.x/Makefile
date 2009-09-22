@@ -134,7 +134,7 @@ PROTOTYPE_FILTER = awk ' \
                                             $$$$5 = "mysql"; \
                                             $$$$6 = "mysql" } \
     { print }'
-SPKG_CLASSES = none ugfiles
+SPKG_CLASSES = none cswusergroup ugfiles
 
 include gar/category.mk
 
