@@ -17,8 +17,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWxextproto
-REQUIRED_PKGS = CSWlibx11
+PREREQUISITE_PKGS = CSWxextproto CSWlibx11devel CSWlibxaudevel
 
 PACKAGES = CSWlibxext CSWlibxextdevel
 
@@ -28,6 +27,7 @@ CATALOGNAME_CSWlibxextdevel = libxext_devel
 SPKG_DESC_CSWlibxext = X11 miscellaneous extensions library
 SPKG_DESC_CSWlibxextdevel = X11 miscellaneous extensions library development files
 
+REQUIRED_PKGS_CSWlibxext = CSWlibx11 CSWlibxau
 REQUIRED_PKGS_CSWlibxextdevel = CSWlibxext
 
 PKGFILES_CSWlibxextdevel  = $(PKGFILES_DEVEL)
