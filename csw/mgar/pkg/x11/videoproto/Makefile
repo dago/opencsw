@@ -1,7 +1,7 @@
 # vim: ft=make ts=4 sw=4 noet
 
 default:
-	@echo "You are in the pkg/ directory."
+	@echo "You are in the pkg/x11/videoproto directory."
 
 %:
 	$(MAKE) -C trunk $* 
