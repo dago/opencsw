@@ -1,1 +1,1 @@
-mysql:mysql:MySQL database user:/opt/csw/mysql:/bin/false::
+mysql:mysql:MySQL database user:/var/opt/csw/mysql5:/bin/false::

@@ -95,6 +95,8 @@ MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.0/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
 DISTFILES += cswmysql5 quick_start-csw README.CSW
 DISTFILES += CSWmysql5.preinstall
+DISTFILES += CSWmysql5.postinstall
+DISTFILES += cswusergroup
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -107,6 +109,7 @@ EXTRA_LIB = /opt/csw/lib
 EXTRA_INC = /opt/csw/include
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+EXTRA_LIB = /opt/csw/mysql5/lib/$$ISALIST/mysql
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -139,14 +142,14 @@ include gar/category.mk
 
 post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)
-	ginstall -m 755 -d $(DESTDIR)$(datadir)/mysql5/doc
-	ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(datadir)/mysql5/doc
-	ginstall -m 755 -d $(DESTDIR)/opt/csw/share/mysql5/doc
-	ln -sf ../../../mysql5/share/mysql5/doc/README.CSW \
-		$(DESTDIR)/opt/csw/share/mysql5/doc/README.CSW
+	ginstall -m 755 -d $(DESTDIR)$(datadir)/mysql/doc
+	ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(datadir)/mysql/doc
+	ginstall -m 755 -d $(DESTDIR)/opt/csw/share/mysql/doc
+	ln -sf ../../../mysql5/share/mysql/doc/README.CSW \
+		$(DESTDIR)/opt/csw/share/mysql/doc/README.CSW
 	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswmysql5 $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -m 755 $(FILEDIR)/quick_start-csw $(DESTDIR)$(datadir)/mysql5
+	ginstall -m 755 $(FILEDIR)/quick_start-csw $(DESTDIR)$(datadir)/mysql
 	ginstall -m 755 -d $(DESTDIR)$(global_sysconfdir)/pkg/CSWmysql5
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(DESTDIR)$(global_sysconfdir)/pkg/CSWmysql5

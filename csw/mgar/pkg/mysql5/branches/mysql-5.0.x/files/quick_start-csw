@@ -12,7 +12,7 @@ SAVE_DEFAULTS_FILE=$BASEDIR/my.cnf
 MYSQLD_USER=mysql
 #
 # Provide a default data directory
-MYSQLD_DATADIR=/opt/csw/mysql5/var
+MYSQLD_DATADIR=/var/opt/csw/mysql5
 #
 echo
 echo  "This is the blastwave quick start script to setup a MySQL5 database"
@@ -108,7 +108,7 @@ chown -R mysql:mysql $MYSQLD_DATADIR
 #
 # Update --datadir in the cnf file with the correct value if file was copied
 if [ x"$CNFCOPIED" = xyes ]; then
-    sed -e "s|/opt/csw/mysql5/var|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
+    sed -e "s|/var/opt/csw/mysql5|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
     mv $DEFAULTS_FILE.new $DEFAULTS_FILE
 fi
 
@@ -126,7 +126,7 @@ if [ $smf = yes ]
 then
     echo "To start mysqld; run \`svcadm enable cswmysql5\` on Solaris 10 or later"
 else
-    echo "To start mysqld; run \`/etc/init.d/cswmysql start\` on Solaris 9 or earlier"
+    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql start\` on Solaris 9 or earlier"
 fi
 
 exit 0
