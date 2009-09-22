@@ -1,4 +1,4 @@
-GARNAME = libXau
+GARNAME = libxau
 GARVERSION = 1.0.4
 CATEGORIES = x11
 
@@ -9,7 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTNAME = libXau-$(GARVERSION)
+DISTFILES = $(DISTNAME).tar.bz2
 
 PREREQUISITE_PKGS = CSWinputproto CSWkbproto CSWrenderproto CSWxcbproto
 PREREQUISITE_PKGS += CSWxextproto CSWxproto CSWxtrans CSWlibpthreadstubs
