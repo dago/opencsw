@@ -4,7 +4,7 @@ GARVERSION = 1.6.4.4
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
-# TEST_SCRIPTS = 
+TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 PACKAGES += CSWgitcompletion CSWgitdevel
