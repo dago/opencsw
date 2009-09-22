@@ -17,7 +17,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxi CSWlibxidevel
 
-CATALOGNAME_CSWlibxi = libxii
+CATALOGNAME_CSWlibxi = libxi
 CATALOGNAME_CSWlibxidevel = libxi_devel
 
 SPKG_DESC_CSWlibxi = Client library for XInput
