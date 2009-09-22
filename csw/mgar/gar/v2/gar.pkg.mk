@@ -160,11 +160,12 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
 # Handle cswclassutils
-# - prepend cswpreserveconf if it is not already in SPKG_CLASSES
+# - append csw* classes if they are used and not already contained in SPKG_CLASSES
+# - exception: prepend cswusergroup so that required accounts are setup first
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(SAMPLECONF),$(if $(filter cswcpsampleconf,$(SPKG_CLASSES)),,cswcpsampleconf))
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf))
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
-SPKG_CLASSES := $(SPKG_CLASSES) $(if $(USERGROUP),$(if $(filter cswusergroup,$(SPKG_CLASSES)),,cswusergroup))
+SPKG_CLASSES := $(if $(USERGROUP),$(if $(filter cswusergroup,$(SPKG_CLASSES)),,cswusergroup)) $(SPKG_CLASSES) 
 SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PYCOMPILE),$(if $(filter cswpycompile,$(SPKG_CLASSES)),,cswpycompile))
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
