@@ -16,7 +16,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWlibxkbfile CSWlibxkbfiledevel
 
-CATALOGNAME_CSWlibxkbfile = libxkfileb
+CATALOGNAME_CSWlibxkbfile = libxkbfile
 CATALOGNAME_CSWlibxkbfiledevel = libxkbfile_devel
 
 SPKG_DESC_CSWlibxkbfile = X11 keyboard file manipulation library
