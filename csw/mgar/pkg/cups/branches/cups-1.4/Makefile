@@ -53,8 +53,7 @@ PACKAGES = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
 ARCHALL_CSWcupsdoc = 1
 ARCHALL_CSWcupsdev = 1
 
-REQUIRED_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient CSWcupsdoc
-REQUIRED_PKGS_CSWcups += CSWcupsdev
+REQUIRED_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient
 REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
 REQUIRED_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
