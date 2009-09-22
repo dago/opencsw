@@ -1,10 +1,10 @@
 GARNAME = libxtst
-GARVERSION = 1.0.99.2
+GARVERSION = 1.0.3
 CATEGORIES = x11
 
-DESCRIPTION = 
+DESCRIPTION = The Xtst Library
 define BLURB
-  Long description
+  The Xtst Library
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
@@ -14,12 +14,20 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PACKAGES = CSWlibxtst CSWlibxtstdevel
+
+CATALOGNAME_CSWlibxtst = libxtst
+CATALOGNAME_CSWlibxtstdevel = libxtst_devel
+
+SPKG_DESC_CSWlibxtst = The Xtst Library
+SPKG_DESC_CSWlibxtstdevel = The Xtst Library development files
+
+REQUIRED_PKGS_CSWlibxtstdevel = CSWlibxtst
 
 BUILD64 = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+
+PKGFILES_CSWlibxtstdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
