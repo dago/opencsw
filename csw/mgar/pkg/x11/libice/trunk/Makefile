@@ -18,7 +18,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 PACKAGES = CSWlibice CSWlibicedevel
 
 CATALOGNAME_CSWlibice = libice
-CATALOGNAME_CSWlibice = libice_devel
+CATALOGNAME_CSWlibicedevel = libice_devel
 
 SPKG_DESC_CSWlibice = X11 Inter-Client Exchange library
 SPKG_DESC_CSWlibicedevel = X11 Inter-Client Exchange library development files
