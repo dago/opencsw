@@ -1,5 +1,5 @@
 GARNAME = xextproto
-GARVERSION = 7.1.1
+GARVERSION = 7.0.5
 
 CATEGORIES = x11
 
