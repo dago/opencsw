@@ -1,4 +1,4 @@
-GARNAME = libXdmcp
+GARNAME = libxdmcp
 GARVERSION = 1.0.2
 CATEGORIES = x11
 
@@ -9,7 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTNAME = libXdmcp-$(GARVERSION)
+DISTFILES = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -18,24 +19,15 @@ PACKAGES = CSWlibxdmcp CSWlibxdmcpdevel
 CATALOGNAME_CSWlibxdmcp = libxdmcp
 CATALOGNAME_CSWlibxdmcpdevel = libxdmcp_devel
 
-REQUIRED_PKGS_CSWlibxdmcpdevel = CSWlibxdmcp
-
 SPKG_DESC_CSWlibxdmcp = X11 display manager control protocol library
 SPKG_DESC_CSWlibxdmcpdevel = X11 display manager control protocol library development package
 
-PKGFILES_CSWlibxdmcpdevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibxdmcpdevel += $(prefix)/X11/include/.*
-PKGFILES_CSWlibxdmcpdevel += $(prefix)/X11/lib/.*\.a
-PKGFILES_CSWlibxdmcpdevel += $(prefix)/X11/lib/pkgconfig/.*
+REQUIRED_PKGS_CSWlibxdmcpdevel = CSWlibxdmcp
 
 BUILD64 = 1
 NOISALIST = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
+PKGFILES_CSWlibxdmcpdevel  = $(PKGFILES_DEVEL)
+
 include gar/category.mk
-
-post-merge:
-	gln -s . $(PKGROOT)$(libdir)/32
-	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
-	@$(MAKECOOKIE)
-
