@@ -2,13 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-# TODO(maciej):
-#   - include the right symlinks in the right packages
-#   - declare mysql4 incompatible
-#   - reduce the size of the package
-#   - define file ownerships with cswusergroup
-#   - verify file permissions
-
 GARNAME = mysql5
 GARVERSION = 5.0.84
 CATEGORIES = server
@@ -45,7 +38,12 @@ CATALOGNAME_CSWmysql5devel  = $(GARNAME)devel
 CATALOGNAME_CSWmysql5rt     = $(GARNAME)rt
 CATALOGNAME_CSWmysql5test   = $(GARNAME)test
 
-INCOMPATIBLE_PKGS_CSWmysql5 = CSWmysql4
+INCOMPATIBLE_PKGS_CSWmysql5bench  = CSWmysql4bench
+INCOMPATIBLE_PKGS_CSWmysql5client = CSWmysql4client
+INCOMPATIBLE_PKGS_CSWmysql5       = CSWmysql4
+INCOMPATIBLE_PKGS_CSWmysql5devel  = CSWmysql4devel
+INCOMPATIBLE_PKGS_CSWmysql5rt     = CSWmysql4rt
+INCOMPATIBLE_PKGS_CSWmysql5test   = CSWmysql4test
 
 SPKG_DESC_CSWmysql5       = Multithreaded SQL database
 SPKG_DESC_CSWmysql5bench  = MySQL 5 benchmarking
@@ -61,39 +59,43 @@ support64 = (/(amd64|i386))?
 CSWmysql5client_programs  = myisamlog
 CSWmysql5client_programs += myisampack
 CSWmysql5client_programs += mysql
-CSWmysql5client_programs += mysql_client_test
-CSWmysql5client_programs += mysql_zap
 CSWmysql5client_programs += mysqlaccess
 CSWmysql5client_programs += mysqladmin
 CSWmysql5client_programs += mysqlbin
 CSWmysql5client_programs += mysqlbinlog
 CSWmysql5client_programs += mysqlcheck
+CSWmysql5client_programs += mysql_client_test
 CSWmysql5client_programs += mysqldump
 CSWmysql5client_programs += mysqlhotcopy
 CSWmysql5client_programs += mysqlimport
 CSWmysql5client_programs += mysqlshow
+CSWmysql5client_programs += mysql_zap
 CSWmysql5client_programs += perror
 CSWmysql5client_programs += replace
 
 
+PKGFILES_CSWmysql5bench   = $(prefix)/sql-bench.*
 PKGFILES_CSWmysql5client  = $(bindir)
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(bindir)$(support64)/$(bin_name))
+PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(mandir)/man1/$(bin_name)\.1)
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSWmysql5devel   = $(prefix)/include.*
 PKGFILES_CSWmysql5devel  += $(bindir)$(support64)/mysql_config
 PKGFILES_CSWmysql5devel  += $(mandir)/man1/mysql_config\.1
+PKGFILES_CSWmysql5devel   = $(prefix)/include.*
 PKGFILES_CSWmysql5rt      = $(prefix)/lib/.*\.so.*
-PKGFILES_CSWmysql5bench   = $(prefix)/sql-bench.*
 PKGFILES_CSWmysql5test    = $(prefix)/mysql-test.*
 
-REQUIRED_PKGS_CSWmysql5client = CSWmysql5rt
+REQUIRED_PKGS_CSWmysql5bench       = CSWmysql5
+REQUIRED_PKGS_CSWmysql5client      = CSWmysql5rt
+REQUIRED_PKGS_CSWmysql5            = CSWmysql5client CSWmysql5rt
+REQUIRED_PKGS_CSWmysql5devel       = CSWmysql5
+REQUIRED_PKGS_CSWmysql5test        = CSWmysql5
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.0/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
 DISTFILES += cswmysql5 quick_start-csw README.CSW
-DISTFILES += CSWmysql.preinstall
+DISTFILES += CSWmysql5.preinstall
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -132,6 +134,7 @@ PROTOTYPE_FILTER = awk ' \
                                             $$$$5 = "mysql"; \
                                             $$$$6 = "mysql" } \
     { print }'
+SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
