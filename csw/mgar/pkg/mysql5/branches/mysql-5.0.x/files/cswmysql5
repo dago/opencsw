@@ -15,7 +15,7 @@
 
 RETVAL=0
 MYSQLHOME=/opt/csw/mysql5
-MYSQLD_DATADIR=$MYSQLHOME/var
+MYSQLD_DATADIR=/var/opt/csw/mysql5
 MYSQLD_PID_FILE=$MYSQLHOME/var/mysql.pid
 CONFFILE=$MYSQLHOME/my.cnf
 
