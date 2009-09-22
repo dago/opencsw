@@ -1,5 +1,5 @@
 GARNAME = libxext
-GARVERSION = 1.0.99.4
+GARVERSION = 1.0.5
 CATEGORIES = x11
 
 DESCRIPTION = X11 miscellaneous extensions library1
@@ -19,6 +19,18 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PREREQUISITE_PKGS = CSWxextproto
 REQUIRED_PKGS = CSWlibx11
+
+PACKAGES = CSWlibxext CSWlibxextdevel
+
+CATALOGNAME_CSWlibxext = libxext
+CATALOGNAME_CSWlibxextdevel = libxext_devel
+
+SPKG_DESC_CSWlibxext = X11 miscellaneous extensions library
+SPKG_DESC_CSWlibxextdevel = X11 miscellaneous extensions library development files
+
+REQUIRED_PKGS_CSWlibxextdevel = CSWlibxext
+
+PKGFILES_CSWlibxextdevel  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1
 NOISALIST = 1
