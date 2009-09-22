@@ -1,5 +1,5 @@
 GARNAME = inputproto
-GARVERSION = 1.5.0
+GARVERSION = 1.5.1
 
 CATEGORIES = x11
 
