@@ -42,7 +42,6 @@ INCOMPATIBLE_PKGS_CSWmysql5bench  = CSWmysql4bench
 INCOMPATIBLE_PKGS_CSWmysql5client = CSWmysql4client
 INCOMPATIBLE_PKGS_CSWmysql5       = CSWmysql4
 INCOMPATIBLE_PKGS_CSWmysql5devel  = CSWmysql4devel
-INCOMPATIBLE_PKGS_CSWmysql5rt     = CSWmysql4rt
 INCOMPATIBLE_PKGS_CSWmysql5test   = CSWmysql4test
 
 SPKG_DESC_CSWmysql5       = Multithreaded SQL database
