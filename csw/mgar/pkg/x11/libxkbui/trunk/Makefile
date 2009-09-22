@@ -23,6 +23,7 @@ CATALOGNAME_CSWlibxkbuidevel = libxkbui_devel
 SPKG_DESC_CSWlibxkbui = X11 keyboard UI presentation library
 SPKG_DESC_CSWlibxkbuidevel = X11 keyboard UI presentation library development files
 
+REQUIRED_PKGS_CSWlibxkbui = CSWlibice CSWlibsm CSWlibx11 CSWlibxkbfile CSWlibxt
 REQUIRED_PKGS_CSWlibxkbuidevel = CSWlibxkbui
 
 BUILD64 = 1
