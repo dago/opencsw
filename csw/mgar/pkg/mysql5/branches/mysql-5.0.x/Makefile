@@ -126,7 +126,7 @@ TEST_SCRIPTS =
 # Enable 64 bits build
 BUILD64 = 1
 
-USERGROUP = /opt/csw/etc/pkg/CSWmysql5/cswusergroup
+USERGROUP = /etc/opt/csw/pkg/CSWmysql5/cswusergroup
 PROTOTYPE_FILTER = awk ' \
     $$$$3 ~ /\/var\/opt\/csw\/mysql5$$$$/ { $$$$2 = "ugfiles"; \
                                             $$$$4 = "0700"; \
