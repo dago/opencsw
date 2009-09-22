@@ -1,5 +1,5 @@
 GARNAME = renderproto
-GARVERSION = 0.9.3
+GARVERSION = 0.11
 
 CATEGORIES = x11
 
