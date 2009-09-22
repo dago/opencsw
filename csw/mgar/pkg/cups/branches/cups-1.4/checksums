@@ -1,7 +1,7 @@
 1e5e54a2b503cfdeeda1b683bcccab83  download/0001-cswcups-for-service-name.patch
 0da4ea6bf72d61adfc4316a738b90ab5  download/0002-Adding-the-refcount-member-to-mime_type_t.patch
 a80b8543633e2f9b3b1e531ac2289306  download/0003-Reference-counting-for-printers-only.patch
-8418cf872043eada2d46c8db6e6451c0  download/CSWcupsclient.preinstall
+dec0baa8c3ec0e171183496da8f24323  download/CSWcupsclient.preinstall
 ca7718998e56c320c08a77cfefe046f6  download/CSWcupsd.postremove
-8418cf872043eada2d46c8db6e6451c0  download/CSWcupsd.preinstall
+dec0baa8c3ec0e171183496da8f24323  download/CSWcupsd.preinstall
 bc5e777d4320cecdd1a64de8035171a8  download/cups-1.4.0-source.tar.bz2
