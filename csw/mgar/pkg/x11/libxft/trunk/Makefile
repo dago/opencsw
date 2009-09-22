@@ -2,7 +2,7 @@ GARNAME = libXft
 GARVERSION = 2.1.13
 CATEGORIES = x11
 
-DESCRIPTION = X11 authorisation library
+DESCRIPTION = A client-side font API for X applications
 define BLURB
   Xft provides a client-side font API for X applications, making the
   FreeType font rasterizer available to X clients. Fontconfig is used
