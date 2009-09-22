@@ -1,4 +1,4 @@
-GARNAME = libX11
+GARNAME = libx11
 GARVERSION = 1.2.2
 CATEGORIES = x11
 
@@ -10,7 +10,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTNAME = libX11-$(GARVERSION)
+DISTFILES = $(DISTNAME).tar.gz
 PATCHFILES = patch-stdint.diff
 # Add workaround for http://bugs.sourcemage.org/show_bug.cgi?id=13476
 PATCHFILES += patch-xlib-sentinel.diff
