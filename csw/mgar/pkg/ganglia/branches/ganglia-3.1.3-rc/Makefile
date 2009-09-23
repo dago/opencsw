@@ -99,7 +99,8 @@ INSTALL_SCRIPTS = $(WORKSRC)/Makefile custom
 
 WWWROOT = /opt/csw/share/www
 WWWGANGLIA = $(WWWROOT)/ganglia
-ETCGANGLIA = /etc/opt/csw/ganglia
+sysconfdir = /etc/opt/csw/ganglia
+ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
 PKGFILES_CSWgangliart = $(libdir)/libganglia.*
