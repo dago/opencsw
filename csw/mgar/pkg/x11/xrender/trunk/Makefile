@@ -31,7 +31,7 @@ PACKAGES = CSWlibxrender CSWlibxrenderdevel
 CATALOGNAME_CSWlibxrender      = libxrender
 CATALOGNAME_CSWlibxrenderdevel = libxrender_devel
 
-PREREQUISITE_PKGS = CSWrenderproto
+PREREQUISITE_PKGS = CSWxrenderproto
 REQUIRED_PKGS_CSWlibxrenderdevel = CSWlibxrender
 REQUIRED_PKGS_CSWlibxrender = CSWx11common CSWlibx11
 
