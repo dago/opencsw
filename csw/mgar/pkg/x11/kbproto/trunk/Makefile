@@ -14,6 +14,8 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES = CSWxkbproto
+
 REQUIRED_PKGS = CSWx11common
 
 BUILD64 = 1
