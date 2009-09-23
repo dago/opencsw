@@ -7,6 +7,8 @@ define BLURB
   Video extension headers
 endef
 
+PACKAGES = CSWxvideoproto
+
 MASTER_SITES  = $(X11_PROTO_MASTER_SITE)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
