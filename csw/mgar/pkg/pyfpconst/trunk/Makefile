@@ -13,6 +13,7 @@ endef
 MASTER_SITES = http://pypi.python.org/packages/source/f/fpconst/
 DISTNAME = fpconst-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
+SPKG_SOURCEURL = http://pypi.python.org/pypi/fpconst/
 
 PACKAGES = CSWpyfpconst
 CATALOGNAME = py_fpconst
@@ -21,3 +22,9 @@ ARCHALL = 1
 TEST_SCRIPTS = 
 
 include gar/category.mk
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
+post-install-modulated:
+	@ginstall -d $(DOCDEST)
+	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
