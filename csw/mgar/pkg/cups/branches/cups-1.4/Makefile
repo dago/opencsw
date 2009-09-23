@@ -11,7 +11,24 @@ define BLURB
   systems.  It is developed and maintained by Easy Software Products to
   promote a standard printing solution and is the standard printing system
   in MacOS(R) X and most Linux(R) distributions.
+
+  http://www.cups.org/str.php?L3324
 endef
+
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+
+# There's a problem with cups-polld going into a busy-wait loop when polling
+# print servers.
+#
+#   http://www.cups.org/str.php?L3257
+#
+# The problem with cups-polld seems to be going away when CUPS is compiled with
+# debugging symbols. The debugging options is turned on for this package, in
+# order to be able to debug the binary if it ever shows the problem.
+#
+# TODO: Check whether the issue is gone or not.
+GARFLAVOR = DBG
 
 # These are the source mirrors published on the CUPS home-page.
 CUPS_MIRRORS = http://ftp.easysw.com/pub
@@ -57,7 +74,8 @@ REQUIRED_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient
 REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
 REQUIRED_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
-REQUIRED_PKGS_CSWcupsd += CSWkrb5lib CSWosslrt
+REQUIRED_PKGS_CSWcupsd += CSWkrb5lib CSWosslrt CSWcupsdoc
+REQUIRED_PKGS_CSWcupsd += CSWdbusglib CSWggettextrt CSWglib2
 REQUIRED_PKGS_CSWcupsclient  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
 REQUIRED_PKGS_CSWcupsdoc = CSWcswclassutils
@@ -121,10 +139,9 @@ SPKG_DESC_CSWcupsclient = CUPS client binaries
 SPKG_DESC_CSWcupsdoc = CUPS documentation
 SPKG_DESC_CSWcupsdev = CUPS header files
 
-PROTOTYPE_FILTER  = awk ' \
-    $$$$3 ~ /\/init.d\/cswcups$$$$/ { $$$$2 = "cswinitsmf" } \
-    $$$$3 ~ /\/cupsd\.conf\.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-    { print }'
+# http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
+SAMPLECONF = $(sysconfdir)/cups/cupsd.conf.CSW
+INITSMF    = $(sysconfdir)/init\.d/cswcups
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -154,9 +171,6 @@ export DSOFLAGS
 DSTROOT = $(DESTDIR)
 export DSTROOT
 
-sysconfdir = /etc/opt/csw
-localstatedir = /var/opt/csw
-
 # Don't run tests (at least for now); there are some LD_LIBRARY_PATH issues
 TEST_TARGET =
 
@@ -176,6 +190,7 @@ post-install-modulated:
 		if [ -r "$$i" ]; then \
 			echo "$$i -> $$i.CSW"; \
 			mv "$$i" "$$i.CSW"; \
+			chmod 0644 "$$i.CSW"; \
 		fi \
 	done)
 	@$(MAKECOOKIE)
