@@ -169,8 +169,8 @@ SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PYCOMPILE),$(if $(filter cswpycompile,$(S
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _CSWCLASS_FILTER = | perl -ane '\
-		$(foreach FILE,$(SAMPLECONF:%.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
-		$(foreach FILE,$(PRESERVECONF:%.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
+		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
+		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
@@ -178,7 +178,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 _EXTRA_GAR_PKGS += CSWcswclassutils
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
-_EXTRA_PAX_ARGS += $(foreach FILE,$(SAMPLECONF:%.CSW=%) $(PRESERVECONF:%.CSW=%),-s ",^\.\($(FILE)\)$$,.\1.CSW,p")
+_EXTRA_PAX_ARGS += $(foreach FILE,$(SAMPLECONF:%\.CSW=%) $(PRESERVECONF:%\.CSW=%),-s ",^\.\($(FILE)\)$$,.\1\.CSW,p")
 endif
 
 PKGGET_DESTDIR ?=
