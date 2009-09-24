@@ -1,0 +1,3 @@
+This is just a dummy package that depends on all CSW packages that are
+required to create packages with GAR.  Feel free to remove it after
+you've used it to install the current requirements.
