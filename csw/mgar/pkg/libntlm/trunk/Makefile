@@ -1,5 +1,5 @@
 GARNAME = libntlm
-GARVERSION = 1.1
+GARVERSION = 20090924
 CATEGORIES = lib
 
 DESCRIPTION = Microsoft WinNT domain authentication library
@@ -13,12 +13,15 @@ endef
 
 MASTER_SITES = http://josefsson.org/libntlm/releases/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+WORKSRC = $(WORKDIR)/libntlm-1.2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD64 = 1
+# We don't need it and if defined the test breaks
+LD_OPTIONS =
 
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
