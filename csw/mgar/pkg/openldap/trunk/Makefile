@@ -1,6 +1,8 @@
 GARNAME = openldap
 GARVERSION = 2.4.18
 CATEGORIES = server
+EXTRA_MODULATORS = GARVERSION
+MODULATIONS_GARVERSION = 2.3.43 2.4.18
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -11,11 +13,23 @@ define BLURB
   OpenLDAP Suite and its related documentation.
 endef
 
+# Missing lib: ld.so.1: svn: fatal: libldap-2.3.so.0: open failed: No such file or directory
+
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tgz)
+DISTFILES  = $(SOURCEFILES)
 DISTFILES += $(call admfiles,CSWoldap)
 DISTFILES += README.CSW openldaprc
 DISTFILES += cswopenldap openldap.xml svc-openldap
+
+PATCHFILES_isa-sparcv8-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv9-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-i386-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-amd64-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
+DISTFILES += patch-oldap-2.4.16-ntlm.diff
+
+
+NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tgz,$(SOURCEFILES))
 
 LICENSE = COPYRIGHT
 
@@ -43,12 +57,9 @@ SPKG_SOURCEURL = http://www.openldap.org
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES += patch-libtool-64bit.diff
-DISTFILES += patch-oldap-2.4.16-ntlm.diff
-
 EXTRA_DOCS = README.CSW $(PATCHFILES)
 
+# OpenLDAP 2.3 was bound to bdb44
 #EXTRA_LIB = $(prefix)/bdb44/lib 
 #EXTRA_INC = $(prefix)/bdb44/include
 
