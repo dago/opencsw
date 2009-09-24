@@ -26,7 +26,7 @@ ARCHALL_CSWgitosis = 1
 
 PREREQUISITE_PKGS_CSWgitosis = CSWpython CSWpysetuptools
 
-REQUIRED_PKGS_CSWgitosis = CSWgit CSWpysetuptools CSWbash
+REQUIRED_PKGS_CSWgitosis = CSWgit CSWpysetuptools
 
 GIT_REPOS = git://eagain.net/gitosis.git
 GIT_USE_PROXY = 1
