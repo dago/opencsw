@@ -26,7 +26,7 @@ ARCHALL_CSWgitosis = 1
 
 PREREQUISITE_PKGS_CSWgitosis = CSWpython CSWpysetuptools
 
-REQUIRED_PKGS_CSWgitosis = CSWgit CSWpysetuptools
+REQUIRED_PKGS_CSWgitosis = CSWgit CSWpysetuptools CSWbash
 
 GIT_REPOS = git://eagain.net/gitosis.git
 GIT_USE_PROXY = 1
@@ -51,16 +51,17 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS = --root $(DESTDIR) --single-version-externally-managed
 
 GITOSISHOME = /var/opt/csw/gitosis
-CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/bin/bash::
+CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/opt/csw/bin/bash::
 CSWUGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
 
 USERGROUP = /opt/csw/etc/pkg/CSWgitosis/cswusergroup
 
 PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" }; { print }'
 
-SPKG_CLASSES = none ugfiles
-
 include gar/category.mk
+
+# this has to be after cswusergroup is added automatically...
+SPKG_CLASSES += ugfiles
 
 # override the category exclusion
 _MERGE_EXCLUDE_CATEGORY =
