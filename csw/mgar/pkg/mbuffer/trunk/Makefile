@@ -1,5 +1,20 @@
+# TODO
+# - sparcv9 (64-bit) tests fail with assertion failures (we have had this before,
+#   upstream doesn't test 64-bit builds) --> report upstream:
+#
+# ./mbuffer -q -I :8000 | openssl md5 > test2.md5 &
+# sleep 1
+# rm -f test2.tar
+# ./mbuffer -i test.tar -o /dev/null -O localhost:8000 -o test2.tar -H
+# mbuffer: warning: error connecting localhost:8000: Network is unreachable
+# 
+# mbuffer: warning: error connecting localhost:8000: Network is unreachable
+# Assertion failed: (err == 0) && (bsize == sizeof(osize)), file network.c, line 64
+# Assertion failed: (err == 0) && (bsize == sizeof(osize)), file network.c, line 64
+#
+
 GARNAME = mbuffer
-GARVERSION = 20090215
+GARVERSION = 20090628
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -16,7 +31,7 @@ MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 LICENSE = LICENSE
 
-# Required for the test target
+# Required during packaging (for the "test" target)
 PREREQUISITE_PKGS = CSWmktemp CSWgcc4core
 
 REQUIRED_PKGS = CSWosslrt
@@ -26,7 +41,7 @@ REQUIRED_PKGS = CSWosslrt
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # To build the mixed package for x86 you have to do the following
-# 1)  build8x: gmake build-isa-i386
+# 1)  build8x: gmake merge
 # 2) build10x: gmake merge
 # 3)  build8x: gmake package
 BUILD64 = 1
@@ -53,9 +68,12 @@ include gar/category.mk
 test-custom: TMPDIR := $(shell mktemp -d -p /tmp)
 test-custom:
 	echo "Running target test-custom, TMPDIR = $(TMPDIR)"
-	@cp $(WORKSRC)/mbuffer $(WORKSRC)/Makefile $(TMPDIR)/
-	@$(MAKE) -C $(TMPDIR) check
-	@rm -rf $(TMPDIR)
+	cp $(WORKSRC)/mbuffer $(WORKSRC)/Makefile $(TMPDIR)/
+
+	# Target test3 is skipped because it contains IPV6 tests which
+	# are not supported by the build farm boxes (yet).
+	$(MAKE) -C $(TMPDIR) -o test3 check
+	rm -rf $(TMPDIR)
 	@$(MAKECOOKIE)
 
 # Solaris 10 on build10x has libm.so which points to libm.so.2. libm.so.2 
