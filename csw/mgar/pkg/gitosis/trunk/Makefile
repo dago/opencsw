@@ -17,6 +17,13 @@ define CSWgitosis_postinstall
 
 /usr/bin/passwd -N gitosis
 
+# in case the gitosis package was still using /bin/bash.
+/usr/bin/getent passwd gitosis | /usr/xpg4/bin/grep -q ':/bin/bash'
+if [ $$? -eq 0 ]; then
+	echo Updating shell for gitosis account to /opt/csw/bin/bash.
+	/usr/sbin/usermod -s /opt/csw/bin/bash gitosis
+fi
+
 echo See $(docdir)/$(GARNAME)/README.csw for first use instructions.
 endef
 
