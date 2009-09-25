@@ -18,6 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 REQUIRED_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
 REQUIRED_PKGS += CSWlibatk CSWlibcairo CSWlibglade2 CSWlibxml2 CSWpango
+REQUIRED_PKGS += CSWbash
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = rox
@@ -33,13 +34,15 @@ build-rox:
 	@$(MAKECOOKIE)
 
 install-rox:
-	# $(INSTALL_ENV) gmake -C $(WORKSRC)/ROX-Filer/build install
 	ginstall -d $(DESTDIR)$(bindir)
-	ginstall $(WORKSRC)/ROX-Filer/ROX-Filer $(DESTDIR)$(bindir)
-	ginstall -d $(DESTDIR)$(libdir)
-	gcp -av $(WORKSRC)/ROX-Filer/ROX $(DESTDIR)$(libdir)
-	gfind $(DESTDIR)$(libdir) -type d -exec chmod 0755 {} \;
-	gfind $(DESTDIR)$(libdir) -type f -exec chmod 0644 {} \;
+	ginstall -m 755 $(FILEDIR)/rox-filer $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(libexecdir)
+	ginstall $(WORKSRC)/ROX-Filer/ROX-Filer $(DESTDIR)$(libexecdir)
+	ginstall -d $(DESTDIR)$(datadir)/ROX
+	gcp -av $(WORKSRC)/ROX-Filer/ROX $(DESTDIR)$(datadir)
+	gcp -av $(WORKSRC)/ROX-Filer/images $(DESTDIR)$(datadir)/ROX
+	gfind $(DESTDIR)$(datadir) -type d -exec chmod 0755 {} \;
+	gfind $(DESTDIR)$(datadir) -type f -exec chmod 0644 {} \;
 	@$(MAKECOOKIE)
 
 include gar/category.mk

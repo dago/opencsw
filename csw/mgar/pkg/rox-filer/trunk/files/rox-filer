@@ -1,0 +1,4 @@
+#!/opt/csw/bin/bash
+
+export APP_DIR="/opt/csw/share/ROX"
+exec /opt/csw/libexec/ROX-Filer
