@@ -1,0 +1,13 @@
+diff -Naur db-4.4.20.orig/dist/ltmain.sh db-4.4.20/dist/ltmain.sh
+--- dist/ltmain.sh	2005-10-17 16:35:53.000000000 +0200
++++ dist/ltmain.sh	2008-05-14 08:30:26.766534000 +0200
+@@ -1552,9 +1552,7 @@
+ 	esac
+         compile_command="$compile_command $arg"
+         finalize_command="$finalize_command $arg"
+-        if test "$with_gcc" = "yes" ; then
+           compiler_flags="$compiler_flags $arg"
+-        fi
+         continue
+         ;;
+ 
