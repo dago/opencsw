@@ -29,10 +29,15 @@ SPKG_DESC_CSWlibxtdevel = X11 toolkit intrinsics library development files
 REQUIRED_PKGS_CSWlibxtdevel = CSWlibxt
 
 PKGFILES_CSWlibxtdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxtdevel += .*/makestrs.*
 
 BUILD64 = 1
 NOISALIST = 1
-
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+
+# No need for 64 bit makestrs
+MERGE_DIRS_isa-sparcv9 = $(libdir)
+MERGE_DIRS_isa-amd64 = $(libdir)
 
 include gar/category.mk
