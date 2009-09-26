@@ -20,8 +20,8 @@ PACKAGES = CSWlibfs CSWlibfsdevel
 CATALOGNAME_CSWlibfs = libfs
 CATALOGNAME_CSWlibfsdevel = libfs_devel
 
-SPKG_DESC_CSWlibfs = X11 Inter-Client Exchange library
-SPKG_DESC_CSWlibfsdevel = X11 Inter-Client Exchange library development files
+SPKG_DESC_CSWlibfs = $(DESCRIPTION)
+SPKG_DESC_CSWlibfsdevel = $(DESCRIPTION) development files
 
 REQUIRED_PKGS_CSWlibfsdevel = CSWlibfs
 

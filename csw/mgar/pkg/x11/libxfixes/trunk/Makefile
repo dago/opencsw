@@ -25,6 +25,7 @@ SPKG_DESC_CSWlibxfixesdevel = $(DESCRIPTION) development files
 
 PREREQUISITE_PKGS = CSWfixesproto
 
+REQUIRED_PKGS_CSWlibxfixes      = CSWlibx11
 REQUIRED_PKGS_CSWlibxfixesdevel = CSWlibxfixes
 
 PKGFILES_CSWlibxfixesdevel  = $(PKGFILES_DEVEL)
