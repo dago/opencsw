@@ -15,17 +15,18 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-PACKAGES = CSWlibfs CSWlibfsdevel
+PACKAGES = CSWlibxcursor CSWlibxcursordevel
 
-CATALOGNAME_CSWlibfs = libfs
-CATALOGNAME_CSWlibfsdevel = libfs_devel
+CATALOGNAME_CSWlibxcursor = libxcursor
+CATALOGNAME_CSWlibxcursordevel = libxcursor_devel
 
-SPKG_DESC_CSWlibfs = X11 Inter-Client Exchange library
-SPKG_DESC_CSWlibfsdevel = X11 Inter-Client Exchange library development files
+SPKG_DESC_CSWlibxcursor = $(DESCRIPTION)
+SPKG_DESC_CSWlibxcursordevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWlibfsdevel = CSWlibfs
+REQUIRED_PKGS_CSWlibxcursordevel = CSWlibxcursor
+REQUIRED_PKGS_CSWlibxcursor      = CSWlibx11 CSWlibxcomposite CSWlibxfixes CSWlibxrender
 
-PKGFILES_CSWlibfsdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxcursordevel  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1
 NOISALIST = 1
