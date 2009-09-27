@@ -13,7 +13,8 @@ endef
 DL_NAME = unixODBC
 MASTER_SITES = http://www.unixodbc.org/
 DISTFILES  = $(DL_NAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWunixodbc.postinstall
+# The configuration migratin is pending decision.
+# DISTFILES += CSWunixodbc.postinstall
 WORKSRC = $(WORKDIR)/$(DL_NAME)-$(GARVERSION)
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
 REQUIRED_PKGS  = CSWiconv

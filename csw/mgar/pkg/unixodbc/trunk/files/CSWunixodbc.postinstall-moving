@@ -1,0 +1,159 @@
+#!/bin/sh
+# vim:set sw=2 ts=2 sts=2 expandtab:
+#
+# $Id$
+#
+# old_path: e.g. /opt/csw/etc/foo.conf
+# new_path: e.g. /etc/opt/csw/foo.conf
+# arch_path: e.g. /etc/opt/csw/migration-archive/foo.conf
+#
+# # If old_path exists:
+#  # Create a file named {{old_path.THIS_LOCATION_IS_DEPRECATED}} and leave a message inside the file.
+#  # Move old_path to archive_path
+# # If new_path does not exist:
+#  # Copy archive_path to new_path
+#
+# http://wiki.opencsw.org/configuration-directory-migration
+#
+# old_path: /opt/csw/etc/foo.conf
+# arch_path: /opt/csw/etc/migration-archive/foo.conf
+# new_path: /etc/opt/csw/foo.conf
+#
+# if old_path exists:
+#   move old_path to arch_path
+# if arch_path exists and new_path doesn't:
+#   copy arch_path to new_path
+
+set -u
+
+# To prevent issues with a-z in regular expressions
+unset LC_ALL
+LANG=C
+
+MIGRATE_FILES="odbc.ini odbcinst.ini ODBCDataSources"
+
+
+# The defaults
+SOURCE_DIR___default__="/opt/csw/etc"
+readonly SOURCE_DIR___default__
+ARCH_DIR___default__="/opt/csw/etc/migration-archive"
+readonly ARCH_DIR___default__
+DEST_DIR___default__="/etc/opt/csw"
+readonly DEST_DIR___default__
+
+return_code=0
+
+migration_info="
+This location (/opt/csw/etc) is deprecated.
+
+Configuration files are currently being placed in /etc/opt/csw.  Please make
+sure your new configuration is in /etc/opt/csw and remove the old one from
+/opt/csw/etc.
+
+For more information, please see
+http://wiki.opencsw.org/configuration-directory-migration
+"
+readonly migration_info
+deprecated_file_ext="README.migration"
+readonly deprecated_file_ext
+
+give_a_chance_to_stop() {
+  echo
+  echo "*******************************************************************"
+  echo "* The old configuration directory ${obsolete_dir} still exists.    "
+  echo "* Please move your configuration to ${new_dir}.                    "
+  echo "*                                                                  "
+  echo "*       Installation will continue in 10 seconds.                  "
+  echo "*         Press CTRL+C if you want to stop now.                    "
+  echo "*******************************************************************"
+  echo
+  sleep 10
+}
+
+
+files_are_identical() {
+  cmp "$1" "$2" > /dev/null
+}
+
+drop_warning() {
+  echo "${migration_info}" > "$1.${deprecated_file_ext}"
+}
+
+sanitize() {
+  echo "$1" | sed -e 's/[^a-zA-Z0-9]/_/g'
+}
+
+expand_modifiers() {
+  # Emulating local variables
+  __per_file_variable="$1"
+  __per_file_modifier_value="$2"
+  eval echo `echo \\${${__per_file_variable}_${__per_file_modifier_value}:-}`
+}
+
+place_signpost_for() {
+	__file_name="$1"
+	echo "${migration_info}" > "${__file_name}.${deprecated_file_ext}"
+}
+
+main() {
+  for file_name in ${MIGRATE_FILES}; do
+    modifier_value=`sanitize "${file_name}"`
+    echo "file: ${file_name}"
+    echo "modifier_value: ${modifier_value}"
+
+    # Perhaps the following three segments of code could be turned into
+    # a function, but it would require complicated eval calls.
+    per_file_srcdir=`expand_modifiers SOURCE_DIR ${modifier_value}`
+    default_srcdir=`expand_modifiers SOURCE_DIR __default__`
+    srcdir="${per_file_srcdir:-${default_srcdir}}"
+    per_file_dstdir=`expand_modifiers DEST_DIR ${modifier_value}`
+    default_dstdir=`expand_modifiers DEST_DIR __default__`
+    dstdir="${per_file_dstdir:-${default_dstdir}}"
+    per_file_archdir=`expand_modifiers ARCH_DIR ${modifier_value}`
+    default_archdir=`expand_modifiers ARCH_DIR __default__`
+    archdir="${per_file_archdir:-${default_archdir}}"
+    srcpath="${srcdir}/${file_name}"
+    dstpath="${dstdir}/${file_name}"
+    archpath="${archdir}/${file_name}"
+
+    # Make sure we have the environment we expect
+    if [ ! -d "${archdir}" ]
+    then
+      echo "Creating ${archdir}"
+      mkdir -m 755 -p "${archdir}"
+      if [ $? -ne 0 ]
+      then
+        echo "Couldn't create '${archdir}', bailing out."
+        exit 1
+      fi
+    fi
+
+    # All variables are set, the main algorithm goes here.
+
+    # Moving the file will only work in the global zone. The assumption is that
+    # the preinstall script is going to be run in the global zone first; by the
+    # time it gets to the non-global zones, the ${srcpath} will have been
+    # moved already.
+    if [ -r "${srcpath}" ]
+    then
+      place_signpost_for "${srcpath}"
+      mv "${srcpath}" "${archpath}"
+    fi
+
+    # If the destination file is not there and the archived file is, copy it.
+    if [ ! -r "${dstpath}" ]
+    then
+      if [ -r "${archpath}" ]
+      then
+        cp "${archpath}" "${dstpath}"
+      else
+        echo "The archived file does not exist: ${archpath}"
+        echo "Nothing to copy to ${dstpath}."
+      fi
+    fi
+  done
+}
+
+main
+
+exit "${return_code}"
