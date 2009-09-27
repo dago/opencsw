@@ -8,21 +8,35 @@
 # arch_path: e.g. /etc/opt/csw/migration-archive/foo.conf
 #
 # # If old_path exists:
-#  # Create a file named {{old_path.THIS_LOCATION_IS_DEPRECATED}} and leave a message inside the file.
+#  # Create a file named {{old_path.README.migration}}
+#    and leave a message inside the file.
 #  # Move old_path to archive_path
 # # If new_path does not exist:
 #  # Copy archive_path to new_path
 #
 # http://wiki.opencsw.org/configuration-directory-migration
 #
-# old_path: /opt/csw/etc/foo.conf
-# arch_path: /opt/csw/etc/migration-archive/foo.conf
-# new_path: /etc/opt/csw/foo.conf
+# Usage:
 #
-# if old_path exists:
-#   move old_path to arch_path
-# if arch_path exists and new_path doesn't:
-#   copy arch_path to new_path
+# A configuration should be set:
+#
+# A list of files to migrate:
+# MIGRATE_FILES="odbc.ini odbcinst.ini ODBCDataSources"
+#
+# The directories to use:
+# SOURCE_DIR___default__="/opt/csw/etc"
+# readonly SOURCE_DIR___default__
+# ARCH_DIR___default__="/opt/csw/etc/migration-archive"
+# readonly ARCH_DIR___default__
+# DEST_DIR___default__="/etc/opt/csw"
+# readonly DEST_DIR___default__
+#
+# If a file needs to be moved to a different directory than the default,
+# a special setting can be used:
+#
+# DEST_DIR_odbc_ini="/etc/opt/csw/foo/odbc.ini"
+# 
+# The same applies to DEST_DIR and ARCH_DIR.
 
 set -u
 
@@ -131,7 +145,7 @@ main() {
     # All variables are set, the main algorithm goes here.
 
     # Moving the file will only work in the global zone. The assumption is that
-    # the preinstall script is going to be run in the global zone first; by the
+    # the postinstall script is going to be run in the global zone first; by the
     # time it gets to the non-global zones, the ${srcpath} will have been
     # moved already.
     if [ -r "${srcpath}" ]
