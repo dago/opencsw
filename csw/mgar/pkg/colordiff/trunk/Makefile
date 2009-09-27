@@ -8,6 +8,7 @@ endef
 
 MASTER_SITES = http://colordiff.sourceforge.net/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = fix-entity-nesting.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

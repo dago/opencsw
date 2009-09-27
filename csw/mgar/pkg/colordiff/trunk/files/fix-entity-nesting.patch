@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru colordiff-1.0.9.orig/colordiff.xml colordiff-1.0.9/colordiff.xml
+--- colordiff-1.0.9.orig/colordiff.xml	2009-01-25 05:59:25.000000000 -0500
++++ colordiff-1.0.9/colordiff.xml	2009-09-25 20:07:56.801979000 -0400
+@@ -22,8 +22,8 @@
+ <refsynopsisdiv id='synopsis'>
+   <cmdsynopsis>
+     <command>colordiff</command>
+-    <arg><replaceable>&diff; options</replaceable></arg>
+-    <arg><replaceable>&colordiff; options</replaceable></arg>
++    <arg><replaceable>diff options</replaceable></arg>
++    <arg><replaceable>colordiff options</replaceable></arg>
+     <arg choice='req'><replaceable>file1</replaceable></arg>
+     <arg choice='req'><replaceable>file2</replaceable></arg>
+   </cmdsynopsis>
