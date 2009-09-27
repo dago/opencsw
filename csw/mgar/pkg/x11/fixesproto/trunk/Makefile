@@ -1,5 +1,5 @@
 GARNAME = fixesproto
-GARVERSION = 4.1
+GARVERSION = 4.0
 CATEGORIES = x11
 
 DESCRIPTION =  X11 Fixes extension protocol specification 
