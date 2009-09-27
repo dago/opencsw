@@ -23,6 +23,7 @@ SPKG_SOURCEURL = http://packages.debian.org/unstable/devel/autoproject
 MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/a/$(GARNAME)/
 DISTFILES  = $(GARNAME)_$(GARVERSION).orig.tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+ARCHALL = 1
 REQUIRED_PKGS = CSWautomake
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
