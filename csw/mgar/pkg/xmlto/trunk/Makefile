@@ -19,6 +19,11 @@ endef
 MASTER_SITES = https://fedorahosted.org/releases/x/m/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+# Out gcp (from the very old fileutils) spits out warnings about -P changing
+# meanings.  xmlto is depending on the new meaning.  We'll explicitly use
+# the long forms of -P (--no-dereference) and -p (--presever).
+PATCHFILES = gcp-explicit-args.patch
+
 TEST_TARGET = check
 
 # We define upstream file regex so we can be notifed of new upstream software release

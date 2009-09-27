@@ -1,0 +1,122 @@
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/fo xmlto-0.0.23/format/docbook/fo
+--- xmlto-0.0.23.orig/format/docbook/fo	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/fo	2009-09-27 03:29:35.202032412 +0200
+@@ -7,6 +7,6 @@
+   echo "http://docbook.sourceforge.net/release/xsl/current/fo/docbook.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/html xmlto-0.0.23/format/docbook/html
+--- xmlto-0.0.23.orig/format/docbook/html	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/html	2009-09-27 03:29:11.664862459 +0200
+@@ -7,6 +7,6 @@
+   echo "http://docbook.sourceforge.net/release/xsl/current/html/chunk.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- * "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- * "$OUTPUT_DIR"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/html-nochunks xmlto-0.0.23/format/docbook/html-nochunks
+--- xmlto-0.0.23.orig/format/docbook/html-nochunks	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/html-nochunks	2009-09-27 03:29:01.147776511 +0200
+@@ -7,6 +7,6 @@
+   echo "http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").html"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").html"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/htmlhelp xmlto-0.0.23/format/docbook/htmlhelp
+--- xmlto-0.0.23.orig/format/docbook/htmlhelp	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/htmlhelp	2009-09-27 03:28:44.785383980 +0200
+@@ -7,6 +7,6 @@
+   echo "http://docbook.sourceforge.net/release/xsl/current/htmlhelp/htmlhelp.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- * "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- * "$OUTPUT_DIR"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/javahelp xmlto-0.0.23/format/docbook/javahelp
+--- xmlto-0.0.23.orig/format/docbook/javahelp	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/javahelp	2009-09-27 03:28:30.573820522 +0200
+@@ -7,6 +7,6 @@
+   echo "http://docbook.sourceforge.net/release/xsl/current/javahelp/javahelp.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- *.htm* *.hs *.xml *.jhm "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- *.htm* *.hs *.xml *.jhm "$OUTPUT_DIR"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/man xmlto-0.0.23/format/docbook/man
+--- xmlto-0.0.23.orig/format/docbook/man	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/man	2009-09-27 03:32:18.415718330 +0200
+@@ -8,6 +8,6 @@
+   ;;
+ post-process)
+   [ -e "$XSLT_PROCESSED" ] && rm "$XSLT_PROCESSED"
+-  ${GCP_PATH:-cp} -R -P -p -- * "$OUTPUT_DIR" 2>/dev/null
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- * "$OUTPUT_DIR" 2>/dev/null
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/xhtml xmlto-0.0.23/format/docbook/xhtml
+--- xmlto-0.0.23.orig/format/docbook/xhtml	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/xhtml	2009-09-27 03:27:05.450989625 +0200
+@@ -7,6 +7,6 @@
+   echo "http://docbook.sourceforge.net/release/xsl/current/xhtml/chunk.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- *.*htm* "$OUTPUT_DIR"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- *.*htm* "$OUTPUT_DIR"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/docbook/xhtml-nochunks xmlto-0.0.23/format/docbook/xhtml-nochunks
+--- xmlto-0.0.23.orig/format/docbook/xhtml-nochunks	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/docbook/xhtml-nochunks	2009-09-27 03:30:29.045829717 +0200
+@@ -7,6 +7,6 @@
+   echo "http://docbook.sourceforge.net/release/xsl/current/xhtml/docbook.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename ${XSLT_PROCESSED%.*}).html"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename ${XSLT_PROCESSED%.*}).html"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/fo/dvi xmlto-0.0.23/format/fo/dvi
+--- xmlto-0.0.23.orig/format/fo/dvi	2009-09-18 12:06:23.000000000 +0200
++++ xmlto-0.0.23/format/fo/dvi	2009-09-27 03:31:55.252241931 +0200
+@@ -34,6 +34,6 @@
+       [ "$VERBOSE" -ge 3 ] && cat $OUT
+     fi
+   fi
+-  ${GCP_PATH:-cp} -R -P -p -- *.dvi "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").dvi"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- *.dvi "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").dvi"
+   ;;
+ esac
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/fo/pdf xmlto-0.0.23/format/fo/pdf
+--- xmlto-0.0.23.orig/format/fo/pdf	2009-09-18 12:06:23.000000000 +0200
++++ xmlto-0.0.23/format/fo/pdf	2009-09-27 03:32:06.485584110 +0200
+@@ -37,7 +37,7 @@
+ 	      [ "$VERBOSE" -ge 3 ] && cat $OUT
+ 	    fi
+ 	  fi
+-	  ${GCP_PATH:-cp} -R -P -p -- *.pdf "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").pdf"
++	  ${GCP_PATH:-cp} -R --no-dereference --preserve -- *.pdf "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").pdf"
+ 	  ;;
+ 	esac
+ 	;;
+diff --speed-large-files --minimal -Nru xmlto-0.0.23.orig/format/xhtml1/fo xmlto-0.0.23/format/xhtml1/fo
+--- xmlto-0.0.23.orig/format/xhtml1/fo	2009-09-18 12:02:48.000000000 +0200
++++ xmlto-0.0.23/format/xhtml1/fo	2009-09-27 03:31:43.246030247 +0200
+@@ -7,6 +7,6 @@
+   echo "http://www.antennahouse.com/XSLsample/sample-xsl-xhtml2fo/xhtml2fo.xsl"
+   ;;
+ post-process)
+-  ${GCP_PATH:-cp} -R -P -p -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
++  ${GCP_PATH:-cp} -R --no-dereference --preserve -- "$XSLT_PROCESSED" "$OUTPUT_DIR/$(basename "${XSLT_PROCESSED%.*}").fo"
+   ;;
+ esac
