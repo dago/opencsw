@@ -1,0 +1,9 @@
+diff -Naur colordiff-1.0.9.orig/colordiff.pl colordiff-1.0.9.patched/colordiff.pl
+--- colordiff-1.0.9.orig/colordiff.pl	2009-01-28 21:12:10.000000000 +0100
++++ colordiff-1.0.9.patched/colordiff.pl	2009-09-28 14:52:56.066588736 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ ########################################################################
+ #                                                                      #

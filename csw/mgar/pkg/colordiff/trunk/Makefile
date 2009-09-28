@@ -9,9 +9,12 @@ endef
 MASTER_SITES = http://colordiff.sourceforge.net/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = fix-entity-nesting.patch
+PATCHFILES += force-csw-perl.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+REQUIRED_PKGS = CSWperl
 
 CONFIGURE_SCRIPTS = 
 BUILD_ARGS = doc
@@ -20,6 +23,8 @@ INSTALL_SCRIPTS = custom
 
 sysconfdir = /etc/opt/csw
 PRESERVECONF = $(sysconfdir)/colordiffrc
+
+ARCHALL = 1
 
 include gar/category.mk
 
