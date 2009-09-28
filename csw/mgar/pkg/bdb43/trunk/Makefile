@@ -13,20 +13,44 @@ define BLURB
   (MSVC 4, 5 and 6).
 endef
 
-MASTER_SITES = http://downloads.sleepycat.com/
+MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWbdb43,depend prototype)
-DISTFILES += $(call admfiles,CSWbdb43-devel,depend prototype)
-DISTFILES += $(call admfiles,CSWbdb43-doc,depend prototype)
+
+PATCHDIR = $(WORKSRC)/..
+PATCHDIRLEVEL = 0
+PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
+PACKAGES = CSWbdb43 CSWbdb43-devel CSWbdb43-doc
+
+CATALOGNAME_CSWbdb43 = berkeleydb43
+CATALOGNAME_CSWbdb43-devel = berkeleydb43_devel
+CATALOGNAME_CSWbdb43-doc = berkeleydb43_doc
+
+SPKG_DESC_CSWbdb43 = BerkeleyDB 4.3
+SPKG_DESC_CSWbdb43-devel = BerkeleyDB 4.3 development support
+SPKG_DESC_CSWbdb43-doc = BerkeleyDB 4.3 documentation
+
+SPKG_SOURCEURL = http://www.oracle.com/technology/products/berkeley-db/index.html
+
+REQUIRED_PKGS_CSWbdb43-devel = CSWbdb43
+
+INCOMPATIBLE_PKGS_CSWbdb43-doc = CSWbdb43doc
+
+LICENSE = LICENSE
+
+ARCHALL_CSWbdb43-doc = 1
+
 CONFIGURE_SCRIPTS = dist
 
-CONFIGURE_ARGS  = --prefix $(prefix)/bdb43
+prefix = $(BUILD_PREFIX)/bdb43
+docdir = $(BUILD_PREFIX)/share/doc
+
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-cryptography
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-rpc
@@ -41,6 +65,10 @@ STRIP_DIRS     += $(DESTDIR)$(prefix)/bdb43/bin
 
 # bdb tests are time consuming
 TEST_SCRIPTS =
+
+PKGFILES_CSWbdb43-doc = $(prefix)/docs/.*
+
+PKGFILES_CSWbdb43-devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
