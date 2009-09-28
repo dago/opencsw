@@ -37,4 +37,6 @@ EXTRA_CFLAGS = -I.
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6
 
+INSTALL_ARGS = install-shared
+
 include gar/category.mk

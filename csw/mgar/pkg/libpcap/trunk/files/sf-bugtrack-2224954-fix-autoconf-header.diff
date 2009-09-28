@@ -1,15 +1,3 @@
-diff -Naur libpcap-1.0.0.orig/Makefile.in libpcap-1.0.0.patched/Makefile.in
---- libpcap-1.0.0.orig/Makefile.in	2008-10-28 02:26:13.000000000 +0100
-+++ libpcap-1.0.0.patched/Makefile.in	2009-09-28 16:33:43.194864215 +0200
-@@ -445,6 +445,8 @@
- 	    $(DESTDIR)$(includedir)/pcap-bpf.h
- 	$(INSTALL_DATA) $(srcdir)/pcap-namedb.h \
- 	    $(DESTDIR)$(includedir)/pcap-namedb.h
-+	[ -d $(DESTDIR)$(bindir) ] || \
-+	    (mkdir -p $(DESTDIR)$(bindir); chmod 755 $(DESTDIR)$(bindir))
- 	$(INSTALL_PROGRAM) pcap-config $(DESTDIR)$(bindir)/pcap-config
- 	for i in $(MAN1); do \
- 		$(INSTALL_DATA) $(srcdir)/$$i \
 diff -Naur libpcap-1.0.0.orig/configure libpcap-1.0.0.patched/configure
 --- libpcap-1.0.0.orig/configure	2008-10-28 02:26:13.000000000 +0100
 +++ libpcap-1.0.0.patched/configure	2009-09-28 16:32:19.576622377 +0200
