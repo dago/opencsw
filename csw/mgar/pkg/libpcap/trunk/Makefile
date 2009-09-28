@@ -1,5 +1,5 @@
 GARNAME = libpcap
-GARVERSION = 0.9.8
+GARVERSION = 1.0.0
 CATEGORIES = lib
 
 DESCRIPTION = Libraries for network diagnostics
@@ -15,9 +15,12 @@ LICENSE = LICENSE
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PATCHFILES  = sf-bugtrack-2224954-fix-autoconf-header.diff
+PATCHFILES += sf-bugtrack-2504874-create-dir-patch.diff
+
 # Shared libraries patch
-PATCHFILES  = Makefile.in.diff
-PATCHFILES += scanner.l.diff
+#PATCHFILES  = Makefile.in.diff
+#PATCHFILES += scanner.l.diff
 
 # No test target for libpcap
 TEST_SCRIPTS =

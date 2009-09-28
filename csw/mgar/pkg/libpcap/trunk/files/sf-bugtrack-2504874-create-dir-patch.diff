@@ -1,0 +1,47 @@
+diff --git a/Makefile.in b/Makefile.in
+index 5c4d679..f2717d5 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -445,11 +445,17 @@ install: libpcap.a pcap-config
+ 	    $(DESTDIR)$(includedir)/pcap-bpf.h
+ 	$(INSTALL_DATA) $(srcdir)/pcap-namedb.h \
+ 	    $(DESTDIR)$(includedir)/pcap-namedb.h
++	[ -d $(DESTDIR)$(bindir) ] || \
++	    (mkdir -p $(DESTDIR)$(bindir); chmod 755 $(DESTDIR)$(bindir))
+ 	$(INSTALL_PROGRAM) pcap-config $(DESTDIR)$(bindir)/pcap-config
+ 	for i in $(MAN1); do \
++		[ -d $(DESTDIR)$(mandir)/man1 ] || \
++		    (mkdir -p $(DESTDIR)$(mandir)/man1; chmod 755 $(DESTDIR)$(mandir)/man1); \
+ 		$(INSTALL_DATA) $(srcdir)/$$i \
+ 		    $(DESTDIR)$(mandir)/man1/$$i; done
+ 	for i in $(MAN3PCAP); do \
++		[ -d $(DESTDIR)$(mandir)/man3 ] || \
++		    (mkdir -p $(DESTDIR)$(mandir)/man3; chmod 755 $(DESTDIR)$(mandir)/man3); \
+ 		$(INSTALL_DATA) $(srcdir)/$$i \
+ 		    $(DESTDIR)$(mandir)/man3/$$i; done
+ 	ln $(DESTDIR)$(mandir)/man3/pcap_datalink_val_to_name.3pcap \
+@@ -471,16 +477,24 @@ install: libpcap.a pcap-config
+ 	ln $(DESTDIR)$(mandir)/man3/pcap_setnonblock.3pcap \
+ 		 $(DESTDIR)$(mandir)/man3/pcap_getnonblock.3pcap
+ 	for i in $(MANFILE); do \
++		[ -d $(DESTDIR)$(mandir)/man@MAN_FILE_FORMATS@ ] || \
++		    (mkdir -p $(DESTDIR)$(mandir)/man@MAN_FILE_FORMATS@; chmod 755 $(DESTDIR)$(mandir)/man@MAN_FILE_FORMATS@); \
+ 		$(INSTALL_DATA) $(srcdir)/`echo $$i | sed 's/.manfile.in/.manfile/'` \
+ 		    $(DESTDIR)$(mandir)/man@MAN_FILE_FORMATS@/`echo $$i | sed 's/.manfile.in/.@MAN_FILE_FORMATS@/'`; done
+ 	for i in $(MANMISC); do \
++		[ -d $(DESTDIR)$(mandir)/man@MAN_MISC_INFO@ ] || \
++		    (mkdir -p $(DESTDIR)$(mandir)/man@MAN_MISC_INFO@; chmod 755 $(DESTDIR)$(mandir)/man@MAN_MISC_INFO@); \
+ 		$(INSTALL_DATA) $(srcdir)/`echo $$i | sed 's/.manmisc.in/.manmisc/'` \
+ 		    $(DESTDIR)$(mandir)/man@MAN_MISC_INFO@/`echo $$i | sed 's/.manmisc.in/.@MAN_MISC_INFO@/'`; done
+ 
+ install-shared: install-shared-$(DYEXT)
+ install-shared-so: libpcap.so
++	[ -d $(DESTDIR)$(libdir) ] || \
++	    (mkdir -p $(DESTDIR)$(libdir); chmod 755 $(DESTDIR)$(libdir))
+ 	$(INSTALL_PROGRAM) libpcap.so.`cat VERSION` $(DESTDIR)$(libdir)/libpcap.so.`cat VERSION`
+ install-shared-dylib: libpcap.dylib
++	[ -d $(DESTDIR)$(libdir) ] || \
++	    (mkdir -p $(DESTDIR)$(libdir); chmod 755 $(DESTDIR)$(libdir))
+ 	$(INSTALL_PROGRAM) libpcap.`cat VERSION`.dylib $(DESTDIR)$(libdir)/libpcap.`cat VERSION`.dylib
+ 	VER=`cat VERSION`; cd $(DESTDIR)$(libdir) && ln -sf libpcap.$$VER.dylib libpcap.A.dylib;  ln -sf libpcap.A.dylib libpcap.dylib
+ 

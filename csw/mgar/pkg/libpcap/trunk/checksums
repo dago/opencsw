@@ -1,3 +1,2 @@
-5208f24d0328ee7c20b52c43eaa9aa0e  download/libpcap-0.9.8.tar.gz
-d036716d6563bcad5fad70916f5c2c2e  download/Makefile.in.diff
-c0002322e0b90a3e9eed0b7ac9e6c050  download/scanner.l.diff
+e2396bd0e71b247413ea26ced5ca923f  download/fix-autoconf-header.diff
+9ad1358c5dec48456405eac197a46d3d  download/libpcap-1.0.0.tar.gz
