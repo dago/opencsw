@@ -35,7 +35,7 @@
 # a special setting can be used:
 #
 # DEST_DIR_odbc_ini="/etc/opt/csw/foo/odbc.ini"
-# 
+#
 # The same applies to DEST_DIR and ARCH_DIR.
 
 set -u
@@ -54,6 +54,8 @@ ARCH_DIR___default__="/opt/csw/etc/migration-archive"
 readonly ARCH_DIR___default__
 DEST_DIR___default__="/etc/opt/csw"
 readonly DEST_DIR___default__
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
 
 return_code=0
 
@@ -105,8 +107,8 @@ expand_modifiers() {
 }
 
 place_signpost_for() {
-	__file_name="$1"
-	echo "${migration_info}" > "${__file_name}.${deprecated_file_ext}"
+  __file_name="$1"
+  echo "${migration_info}" > "${__file_name}.${deprecated_file_ext}"
 }
 
 main() {
@@ -126,9 +128,9 @@ main() {
     per_file_archdir=`expand_modifiers ARCH_DIR ${modifier_value}`
     default_archdir=`expand_modifiers ARCH_DIR __default__`
     archdir="${per_file_archdir:-${default_archdir}}"
-    srcpath="${srcdir}/${file_name}"
-    dstpath="${dstdir}/${file_name}"
-    archpath="${archdir}/${file_name}"
+    srcpath="${PKG_INSTALL_ROOT}/${srcdir}/${file_name}"
+    dstpath="${PKG_INSTALL_ROOT}/${dstdir}/${file_name}"
+    archpath="${PKG_INSTALL_ROOT}/${archdir}/${file_name}"
 
     # Make sure we have the environment we expect
     if [ ! -d "${archdir}" ]
