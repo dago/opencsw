@@ -1,5 +1,5 @@
 GARNAME = fontconfig
-GARVERSION = 2.6.0
+GARVERSION = 2.7.3
 CATEGORIES = lib
 
 DESCRIPTION = A library for configuring and customizing font access.
@@ -15,6 +15,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWfconfig.postinstall
 DISTFILES += CSWfconfig.checkinstall
 
+PATCHFILES = fontconfig.h.diff
+PATCHFILES += fix-zerowidth-struct.patch
+
 REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -22,7 +25,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 PACKAGES = CSWfconfig
-CATALOGNAME_CSWfconfig = fontconfig
+CATALOGNAME = fontconfig
+
+SPKG_SOURCEURL = http://www.fontconfig.org/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-fonts=/usr/openwin/lib/X11/fonts
@@ -30,10 +35,6 @@ CONFIGURE_ARGS += --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts,/opt
 CONFIGURE_ARGS += --with-cache-dir=/var/opt/csw/cache/fontconfig
 CONFIGURE_ARGS += --with-confdir=/opt/csw/etc/fontconfig
 
-PATCHFILES = fontconfig.h.diff
-pre-package:
-	@rm -f $(DESTDIR)$(libdir)/libfontconfig.la*
-	@rm -f $(DESTDIR)/opt/csw/etc/fonts/fonts.conf.bak
-	@$(MAKECOOKIE)
+EXTRA_MERGE_EXCLUDE_FILES = .*/fonts.conf.bak
 
 include gar/category.mk

@@ -1,0 +1,12 @@
+diff -Naur fontconfig-2.7.3.orig/src/fcint.h fontconfig-2.7.3.patched/src/fcint.h
+--- fontconfig-2.7.3.orig/src/fcint.h	2009-06-28 19:46:36.000000000 +0200
++++ fontconfig-2.7.3.patched/src/fcint.h	2009-09-28 15:47:07.195049714 +0200
+@@ -253,7 +253,7 @@
+   FcExprPage *next_page;
+   FcExpr *next;
+   FcExpr exprs[(1024 - 2/* two pointers */ - 2/* malloc overhead */) * sizeof (void *) / sizeof (FcExpr)];
+-  FcExpr end[0];
++  FcExpr end[];
+ };
+ 
+ typedef enum _FcQual {
