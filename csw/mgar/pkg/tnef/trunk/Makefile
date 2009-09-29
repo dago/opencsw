@@ -1,5 +1,5 @@
 GARNAME = tnef
-GARVERSION = 1.4.5
+GARVERSION = 1.4.6
 CATEGORIES = utils
 
 DESCRIPTION = Unpacks Microsoft TNEF MIME attachments
