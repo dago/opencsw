@@ -1,4 +1,5 @@
-be6cc7699fff3ee29d1fd4d562377386  download/nagios-plugins-1.4.13.tar.gz
 61f490e92b603ac8628fb0c6cebb39ce  download/CSWnagiosp.gspec
 65bdf1c84228ccd98397837636004761  download/CSWnagiosp.prototype
 4e1d82a9b3b21ade03ad39652352857e  download/check_procs.c.diff
+be6cc7699fff3ee29d1fd4d562377386  download/nagios-plugins-1.4.13.tar.gz
+54ff8a8e4484fd06f1edf9df4adefabf  download/subst.in.diff

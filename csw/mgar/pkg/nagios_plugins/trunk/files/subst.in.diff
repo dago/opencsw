@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru nagios-plugins-1.4.13.orig/plugins-scripts/subst.in nagios-plugins-1.4.13/plugins-scripts/subst.in
+--- nagios-plugins-1.4.13.orig/plugins-scripts/subst.in	2005-08-31 00:11:42.000000000 +0200
++++ nagios-plugins-1.4.13/plugins-scripts/subst.in	2009-09-29 22:00:50.232667015 +0200
+@@ -62,7 +62,7 @@
+ # subst will replace the fully qualified command with whatever is
+ # returned from the which subroutine
+ #
+-/^[^#]/ && /(\/.*)?\/(bin|sbin|lib|libexec)\// {
++/^[^#]/ && /(\/.*)?\/(bin|sbin|lib)\// {
+ 	match($0,/(\/.*)?\/(bin|sbin|lib|libexec)\/[-_a-zA-Z0-9]+/);
+ 	c=substr($0,RSTART,RLENGTH);
+ 	sub(c,which(c,path));

@@ -12,6 +12,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWnagiosp,prototype )
 
 PATCHFILES += check_procs.c.diff
+PATCHFILES += subst.in.diff
 
 REQUIRED_PKGS_CSWnagiosp  = CSWggettextrt CSWiconv CSWlibnet CSWlibpq 
 REQUIRED_PKGS_CSWnagiosp += CSWmysql5rt CSWoldaprt CSWosslrt CSWsasl
@@ -25,6 +26,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-mysql-dir=/opt/csw/mysql5/bin
 CONFIGURE_ARGS += --with-pg-dir=/opt/csw/postgresql/include/
 CONFIGURE_ARGS += --disable-largefile
+CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
+CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/nagios-plugins
 
 libexecdir ?= $(prefix)/libexec/nagios-plugins
 
