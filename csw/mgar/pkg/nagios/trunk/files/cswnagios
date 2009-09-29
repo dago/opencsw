@@ -28,26 +28,28 @@
 #
 # Modified for CSW by Alex Moore 2006-02-27
 # Modified for OpenCSW by Juergen Arndt 2009-03-11
+#
+# 2009-09-24 Alexander Skwar <alexander@skwar.name>
+#  - Load Solaris SMF file, if present
+#  - Use SMF exitcodes, if SMF file was loaded
+#  - use printf instead of "echo -n"
 
 #FMRI application       # FMRI path for service, see http://wiki.opencsw.org/cswclassutils-package#toc0
+
+# Load Solaris SMF Variables
+test -r /lib/svc/share/smf_include.sh && . /lib/svc/share/smf_include.sh
 
 status_nagios ()
 {
 
-	if test ! -f $NagiosRun; then
-		echo "No lock file found in $NagiosRun"
-		return 1
-	fi
-
-	NagiosPID=`head -n 1 $NagiosRun`
 	if test -x $NagiosCGI/daemonchk.cgi; then
-		if $NagiosCGI/daemonchk.cgi -l $NagiosRun; then
+		if $NagiosCGI/daemonchk.cgi -l $NagiosRunFile; then
 		        return 0
 		else
 			return 1
 		fi
 	else
-		if ps -p $NagiosPID; then
+		if ps -p $NagiosPID > /dev/null 2>&1; then
 		        return 0
 		else
 			return 1
@@ -57,19 +59,39 @@ status_nagios ()
 	return 1
 }
 
+printstatus_nagios()
+{
+
+	if status_nagios $1 $2; then
+		echo "nagios (pid $NagiosPID) is running..."
+	else
+		echo "nagios is not running"
+	fi
+}
 
 killproc_nagios ()
 {
 
-        if [ ! -f $NagiosRun ]; then
-		echo "No lock file found in $NagiosRun"
+        if [ ! -f $NagiosRunFile ]; then
+		echo "No lock file found in $NagiosRunFile"
 		return 1
 	fi
 
-	NagiosPID=`head -n 1 $NagiosRun`
+	NagiosPID=`head -n 1 $NagiosRunFile`
 	kill $2 $NagiosPID
 }
 
+pid_nagios ()
+{
+
+	if test ! -f $NagiosRunFile; then
+		echo "No lock file found in $NagiosRunFile"
+		test -z "$SMF_EXIT_ERR_FATAL" && exit 1
+		test -n "$SMF_EXIT_ERR_FATAL" && exit $SMF_EXIT_ERR_FATAL
+	fi
+
+	NagiosPID=`head -n 1 $NagiosRunFile`
+}
 
 # Source function library
 # Solaris doesn't have an rc.d directory, so do a test first
@@ -81,91 +103,146 @@ fi
 
 prefix=/opt/csw/nagios
 exec_prefix=${prefix}
+NagiosVarDir=/var/${prefix}
 NagiosBin=${exec_prefix}/bin/nagios
-NagiosCfg=${prefix}/etc/nagios.cfg
-NagiosLog=${prefix}/var/status.log
-NagiosTmp=${prefix}/var/nagios.tmp
-NagiosSav=${prefix}/var/status.sav
-NagiosCmd=${prefix}/var/rw/nagios.cmd
-NagiosVar=${prefix}/var
-NagiosRun=${prefix}/var/nagios.lock
-NagiosLckDir=/var/lock/subsys
-NagiosLckFile=nagios
-NagiosCGI=${exec_prefix}/sbin
-Nagios=nagios
-          
+NagiosCfgFile=/etc/${prefix}/nagios.cfg
+NagiosStatusFile=${NagiosVarDir}/status.dat
+NagiosRetentionFile=${NagiosVarDir}/retention.dat
+NagiosCommandFile=${NagiosVarDir}/rw/nagios.cmd
+NagiosRunFile=${NagiosVarDir}/nagios.lock
+NagiosLockDir=/var/lock/subsys
+NagiosLockFile=nagios
+NagiosCGIDir=${exec_prefix}/sbin
+NagiosUser=nagios
+NagiosGroup=nagios          
 
 # Check that nagios exists.
-test -f $NagiosBin || exit 0
+if [ ! -f $NagiosBin ]; then
+    echo "Executable file $NagiosBin not found.  Exiting."
+    test -z "$SMF_EXIT_ERR_FATAL" && exit 1
+    test -n "$SMF_EXIT_ERR_FATAL" && exit $SMF_EXIT_ERR_FATAL
+fi
 
 # Check that nagios.cfg exists.
-test -f $NagiosCfg || exit 0
+if [ ! -f $NagiosCfgFile ]; then
+    echo "Configuration file $NagiosCfgFile not found.  Exiting."
+    test -z "$SMF_EXIT_ERR_CONFIG" && exit 1
+    test -n "$SMF_EXIT_ERR_CONFIG" && exit $SMF_EXIT_ERR_CONFIG
+fi
           
 # See how we were called.
 case "$1" in
 
 	start)
-		echo "Starting network monitor: nagios"
-		su - $Nagios -c "touch $NagiosVar/nagios.log $NagiosSav"
-		rm -f $NagiosCmd
-		$NagiosBin -d $NagiosCfg
-		if [ -d $NagiosLckDir ]; then touch $NagiosLckDir/$NagiosLckFile; fi
-		sleep 1
-		status_nagios nagios
+		printf "Starting nagios:"
+		$NagiosBin -v $NagiosCfgFile > /dev/null 2>&1;
+		if [ $? -eq 0 ]; then
+			su - $NagiosUser -c "touch $NagiosVarDir/nagios.log $NagiosRetentionFile"
+			rm -f $NagiosCommandFile
+			touch $NagiosRunFile
+			chown $NagiosUser:$NagiosGroup $NagiosRunFile
+			$NagiosBin -d $NagiosCfgFile
+			if [ -d $NagiosLockDir ]; then touch $NagiosLockDir/$NagiosLockFile; fi
+			echo " done."
+			test -z "$SMF_EXIT_OK" && exit 0
+			test -n "$SMF_EXIT_OK" && exit $SMF_EXIT_OK
+		else
+			echo "CONFIG ERROR!  Start aborted.  Check your Nagios configuration."
+			test -z "$SMF_EXIT_ERR_CONFIG" && exit 1
+			test -n "$SMF_EXIT_ERR_CONFIG" && exit $SMF_EXIT_ERR_CONFIG
+		fi
 		;;
 
 	stop)
-		echo "Stopping network monitor: nagios"
+		printf "Stopping nagios: "
+
+		pid_nagios
 		killproc_nagios nagios
-		rm -f $NagiosLog $NagiosTmp $NagiosRun $NagiosLckDir/$NagiosLckFile $NagiosCmd
+
+ 		# now we have to wait for nagios to exit and remove its
+ 		# own NagiosRunFile, otherwise a following "start" could
+ 		# happen, and then the exiting nagios will remove the
+ 		# new NagiosRunFile, allowing multiple nagios daemons
+ 		# to (sooner or later) run - John Sellens
+		#printf 'Waiting for nagios to exit .'
+ 		for i in 1 2 3 4 5 6 7 8 9 10 ; do
+ 		    if status_nagios > /dev/null; then
+ 			printf '.'
+ 			sleep 1
+ 		    else
+ 			break
+ 		    fi
+ 		done
+ 		if status_nagios > /dev/null; then
+ 		    echo ''
+ 		    echo 'Warning - nagios did not exit in a timely manner'
+ 		else
+ 		    echo 'done.'
+ 		fi
+
+		rm -f $NagiosStatusFile $NagiosRunFile $NagiosLockDir$NagiosLockFile $NagiosCommandFile
 		;;
 
 	status)
-		status_nagios nagios
+		pid_nagios
+		printstatus_nagios nagios
+		;;
+
+	checkconfig)
+		printf "Running configuration check..."
+		$NagiosBin -v $NagiosCfgFile > /dev/null 2>&1;
+		if [ $? -eq 0 ]; then
+			echo " OK."
+		else
+			echo " CONFIG ERROR!  Check your Nagios configuration."
+			test -z "$SMF_EXIT_ERR_CONFIG" && exit 1
+			test -n "$SMF_EXIT_ERR_CONFIG" && exit $SMF_EXIT_ERR_CONFIG
+		fi
 		;;
 
 	restart)
 		printf "Running configuration check..."
-		$NagiosBin -v $NagiosCfg > /dev/null 2>&1;
+		$NagiosBin -v $NagiosCfgFile > /dev/null 2>&1;
 		if [ $? -eq 0 ]; then
-			echo "done"
-			$0 stop
-			$0 start
+			echo "done."
+			"$0" stop
+			"$0" start
 		else
-			$NagiosBin -v $NagiosCfg
-			echo "failed - aborting restart."
-			exit 1
+			echo " CONFIG ERROR!  Restart aborted.  Check your Nagios configuration."
+			test -z "$SMF_EXIT_ERR_CONFIG" && exit 1
+			test -n "$SMF_EXIT_ERR_CONFIG" && exit $SMF_EXIT_ERR_CONFIG
 		fi
 		;;
 
 	reload|force-reload)
 		printf "Running configuration check..."
-		$NagiosBin -v $NagiosCfg > /dev/null 2>&1;
+		$NagiosBin -v $NagiosCfgFile > /dev/null 2>&1;
 		if [ $? -eq 0 ]; then
-			echo "done"
-			if test ! -f $NagiosRun; then
-				$0 start
+			echo "done."
+			if test ! -f $NagiosRunFile; then
+				"$0" start
 			else
-				NagiosPID=`head -n 1 $NagiosRun`
+				pid_nagios
 				if status_nagios > /dev/null; then
 					printf "Reloading nagios configuration..."
 					killproc_nagios nagios -HUP
 					echo "done"
 				else
-					$0 stop
-					$0 start
+					"$0" stop
+					"$0" start
 				fi
 			fi
 		else
-			$NagiosBin -v $NagiosCfg
-			echo "failed - aborting reload."
-			exit 1
+			echo " CONFIG ERROR!  Reload aborted.  Check your Nagios configuration."
+			test -z "$SMF_EXIT_ERR_CONFIG" && exit 1
+			test -n "$SMF_EXIT_ERR_CONFIG" && exit $SMF_EXIT_ERR_CONFIG
 		fi
 		;;
 
 	*)
-		echo "Usage: nagios {start|stop|restart|reload|force-reload|status}"
-		exit 1
+		echo "Usage: nagios {start|stop|restart|reload|force-reload|status|checkconfig}"
+		test -z "$SMF_EXIT_ERR_FATAL" && exit 1
+		test -n "$SMF_EXIT_ERR_FATAL" && exit $SMF_EXIT_ERR_FATAL
 		;;
 
 esac

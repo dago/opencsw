@@ -4,7 +4,30 @@
 # 2007-09-11 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
 #            relocatable packages.
 
+
 echo "Executing preinstall"
+
+cat << EOF
+
+=======================================================================
+
+From Nagios 3.2.0 on the configuration and log files for the OpenCSW 
+package are stored in /etc/opt/csw/nagios/ and /var/opt/csw/nagios/.
+
+Changes you made to your existing config will automatically 
+moved to the new location.
+
+
+Please be aware, that it's very likely that you have to change your
+nagios.cfg to that changes.
+
+            Installation will proceed in 30 seconds. 
+             Press CTRL+C if you want to stop now.
+
+=======================================================================
+EOF
+
+sleep 30
 
 #If installing package on a filesystem tree not running the OS; then exit.
 if [ ! x"$PKG_INSTALL_ROOT" = x"" ] ; then exit 0 ; fi
@@ -31,17 +54,5 @@ if [ "$NEEDCMDGROUP" = 1 ] ; then
         /usr/sbin/usermod -G nagioscm nagios
 fi
 
-cat << EOF
-
-=======================================================================
-
-Configuration files were moved from /opt/csw/nagios/etc/ to
-/etc/opt/csw/nagios/.
-
-Changes which were made to the existing config will automatically 
-moved to the new location.
-
-=======================================================================
-EOF
 
 exit 0

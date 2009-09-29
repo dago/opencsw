@@ -4,7 +4,7 @@ d none /opt/csw/nagios 0755 root bin
 d none /opt/csw/nagios/bin 0755 nagios nagios
 f none /opt/csw/nagios/bin/nagios 0754 nagios nagios
 f none /opt/csw/nagios/bin/nagiostats 0754 nagios nagios
-f none /opt/csw/nagios/bin/p1.pl 075 nagios nagios
+f none /opt/csw/nagios/bin/p1.pl 0754 nagios nagios
 d none /etc/opt/csw/nagios 0755 nagios nagios
 f cswpreserveconf /etc/opt/csw/nagios/cgi.cfg.CSW 0644 nagios nagios
 f none /etc/opt/csw/nagios/httpd-nagios.conf 0644 nagios nagios
