@@ -1,3 +1,4 @@
 9ad1358c5dec48456405eac197a46d3d  download/libpcap-1.0.0.tar.gz
 4b3aba885cc3a967721616419e1b17d1  download/sf-bugtrack-2224954-fix-autoconf-header.diff
 10f021b867602038e71a48f5662467bc  download/sf-bugtrack-2504874-create-dir-patch.diff
+3115b52dbe16ed2b4174ed19fb63f2d6  download/shared-library.diff
