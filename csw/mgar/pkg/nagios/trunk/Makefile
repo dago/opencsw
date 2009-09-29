@@ -32,6 +32,7 @@ NOISALIST = 1
 
 prefix = $(BUILD_PREFIX)/nagios
 libexecdir = $(BUILD_PREFIX)/libexec/nagios-plugins
+sysconfdir = /etc$(prefix)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --prefix=$(prefix)
@@ -42,6 +43,9 @@ CONFIGURE_ARGS += --with-httpd-conf=$(sysconfdir)
 CONFIGURE_ARGS += --with-gd-lib-dir=$(BUILD_PREFIX)/lib
 CONFIGURE_ARGS += --with-gd-lib-inc=$(BUILD_PREFIX)/inc
 CONFIGURE_ARGS += --enable-embedded-perl
+CONFIGURE_ARGS += --with-checkresult-dir=/var/opt/csw/nagios/spool/checkresults
+CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/nagios/nagios.lock
+CONFIGURE_ARGS += --localstatedir=/var$(prefix)
 
 EXTRA_LIB = $(BUILD_PREFIX)/lib
 EXTRA_INC = $(BUILD_PREFIX)/include
@@ -64,14 +68,13 @@ include gar/category.mk
 DOCS = Changelog INSTALLING README UPGRADING
 DOCDEST = $(DESTDIR)$(BUILD_PREFIX)/share/doc/nagios
 HTTPD_CONF = $(DESTDIR)$(sysconfdir)
-CFGDIR = $(prefix)/etc
+CFGDIR = /etc/$(prefix)
 
 post-install-modulated:
 	@ginstall -m 755 -d $(DOCDEST)
 	@ginstall -m 755 -d $(HTTPD_CONF)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 644 $(WORKSRC)/LICENSE $(DOCDEST)
-	@ginstall -m 644 $(WORKSRC)/sample-config/httpd.conf $(HTTPD_CONF)/httpd-nagios.conf
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswnagios $(DESTDIR)/etc/opt/csw/init.d/cswnagios
 	@ginstall -m 775 -d $(DESTDIR)$(CFGDIR)
@@ -79,6 +82,7 @@ post-install-modulated:
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/nagios.cfg $(DESTDIR)$(CFGDIR)/nagios.cfg.CSW
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/cgi.cfg $(DESTDIR)$(CFGDIR)/cgi.cfg.CSW
 	@ginstall -b -m 660 $(WORKSRC)/sample-config/resource.cfg $(DESTDIR)$(CFGDIR)/resource.cfg.CSW
+	@ginstall -b -m 644 $(WORKSRC)/sample-config/httpd.conf $(DESTDIR)$(CFGDIR)/httpd-nagios.conf
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/templates.cfg $(DESTDIR)$(CFGDIR)/objects/templates.cfg.CSW
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/commands.cfg $(DESTDIR)$(CFGDIR)/objects/commands.cfg.CSW
 	@ginstall -b -m 664 $(WORKSRC)/sample-config/template-object/contacts.cfg $(DESTDIR)$(CFGDIR)/objects/contacts.cfg.CSW

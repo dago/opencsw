@@ -31,4 +31,17 @@ if [ "$NEEDCMDGROUP" = 1 ] ; then
         /usr/sbin/usermod -G nagioscm nagios
 fi
 
+cat << EOF
+
+=======================================================================
+
+Configuration files were moved from /opt/csw/nagios/etc/ to
+/etc/opt/csw/nagios/.
+
+Changes which were made to the existing config will automatically 
+moved to the new location.
+
+=======================================================================
+EOF
+
 exit 0
