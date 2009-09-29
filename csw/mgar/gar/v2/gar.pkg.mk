@@ -227,7 +227,7 @@ ADMADDON    = $(ADMSTANDARD) postinstall preremove
 # between the prefix and the suffix.
 # usage: $(call isadirs,<prefix>,<suffix>)
 # expands to <prefix>/<isa1>/<suffix> <prefix>/<isa2>/<suffix> ...
-isadirs = $(foreach ISA,$(ISALIST),$(1)/$(ISA)/$(2))
+isadirs = $(foreach ISA,$(ISALIST),$(1)/$(subst +,\+,$(subst -,\-,$(ISA)))/$(2))
 
 # This is a helper function just like isadirs, but also contains the
 # prefix and suffix without an ISA subdirectories inserted.
