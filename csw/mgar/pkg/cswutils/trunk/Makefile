@@ -6,12 +6,18 @@ DESCRIPTION = Utilities for CSW maintainers
 define BLURB
 endef
 
-MASTER_SITES = 
+SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
+SVN_REV = 74
+
+MASTER_SITES =
 DISTFILES = COPYING
 DISTFILES += checkpkg checkpkg.8
 DISTFILES += cpan2pkg
 DISTFILES += createpkg createpkg.8
 DISTFILES += stagepkg stagepkg.8
+DISTFILES += stagepkg stagepkg.8
+DISTFILES += compare_pkgs.py-r$(SVN_REV)
+DISTFILES += opencsw_lib.py-r$(SVN_REV)
 
 REQUIRED_PKGS = CSWtextutils CSWfakeroot CSWperl
 REQUIRED_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
@@ -34,6 +40,16 @@ ENABLE_CHECK = 0
 
 include gar/category.mk
 
+download/compare_pkgs.py-r$(SVN_REV):
+	svn export -r $(SVN_REV) $(SVNROOT)compare_pkgs.py
+	mv compare_pkgs.py download/compare_pkgs.py-r$(SVN_REV)
+	@$(MAKECOOKIE)
+
+download/opencsw_lib.py-r$(SVN_REV):
+	svn export -r $(SVN_REV) $(SVNROOT)opencsw_lib.py
+	mv opencsw_lib.py download/opencsw_lib.py-r$(SVN_REV)
+	@$(MAKECOOKIE)
+
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall $(WORKSRC)/checkpkg $(DESTDIR)$(bindir)
@@ -45,4 +61,10 @@ install-custom:
 	@ginstall $(WORKSRC)/checkpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
+	@ginstall -d $(DESTDIR)$(libdir)/opencsw
+	@ginstall $(WORKSRC)/compare_pkgs.py-r$(SVN_REV) \
+		$(DESTDIR)$(libdir)/opencsw/compare_pkgs.py
+	@ginstall $(WORKSRC)/opencsw_lib.py-r$(SVN_REV) \
+		$(DESTDIR)$(libdir)/opencsw/opencsw_lib.py
+	@ln -s ../lib/opencsw/compare_pkgs.py $(DESTDIR)$(bindir)/csw-pkg-diff
 	@$(MAKECOOKIE)
