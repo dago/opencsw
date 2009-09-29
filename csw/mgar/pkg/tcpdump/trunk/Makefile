@@ -1,10 +1,9 @@
 GARNAME = tcpdump
-GARVERSION = 3.9.8
+GARVERSION = 4.0.0
 CATEGORIES = utils
 
 DESCRIPTION = tcpdump allows you to dump the traffic on a network
 define BLURB
- 
 endef
 
 MASTER_SITES = http://www.tcpdump.org/release/ 
@@ -14,8 +13,11 @@ LICENSE = LICENSE
 
 PREREQUISITE_PKGS = CSWlibpcap CSWosslrt CSWossldevel
 REQUIRED_PKGS = CSWlibpcap CSWosslrt
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+SPKG_SOURCEURL = http://www.tcpdump.org/
 
 # Shared libraries patch
 #PATCHFILES = solib.diff
