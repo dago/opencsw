@@ -47,33 +47,33 @@ TEST_SCRIPTS =
 
 NO_ISAEXEC = 1
 
-PACKAGES = CSWbdb CSWbdbdevel CSWbdbdoc
+PACKAGES = CSWbdb47 CSWbdb47devel CSWbdb47doc
 
-CATALOGNAME_CSWbdb      = berkeleydb
-CATALOGNAME_CSWbdbdevel = berkeleydb_devel
-CATALOGNAME_CSWbdbdoc   = berkeleydb_doc
+CATALOGNAME_CSWbdb47      = berkeleydb47
+CATALOGNAME_CSWbdb47devel = berkeleydb47_devel
+CATALOGNAME_CSWbdb47doc   = berkeleydb47_doc
 
 # Remove the license from share/doc/berkeleydb/license/.*
 # because GAR expects license to be a file instead of a directory
 EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
 
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb),'
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb47),'
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
 ARCHALL_CSWbdbdoc = 1
 
-SPKG_DESC_CSWbdb      = BerkeleyDB 4.7 embedded database libraries and utilities
-SPKG_DESC_CSWbdbdevel = BerkeleyDB 4.7 development support
-SPKG_DESC_CSWbdbdoc   = BerkeleyDB 4.7 documentation
+SPKG_DESC_CSWbdb47      = BerkeleyDB 4.7 embedded database libraries and utilities
+SPKG_DESC_CSWbdb47devel = BerkeleyDB 4.7 development support
+SPKG_DESC_CSWbdb47doc   = BerkeleyDB 4.7 documentation
 
-REQUIRED_PKGS_CSWbdbdevel = CSWbdb
+REQUIRED_PKGS_CSWbdb47devel = CSWbdb47
 
 LICENSE = LICENSE
 
-PKGFILES_CSWbdbdoc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb47doc = $(PKGFILES_DOC)
 
-PKGFILES_CSWbdbdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb47devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
