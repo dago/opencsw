@@ -12,7 +12,18 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
-DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
+#DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
+DISTFILES += $(call admfiles,CSWpkgutil,postinstall preremove)
+
+PACKAGES = CSWpkgutil CSWpkgutilplus
+
+SPKG_DESC_CSWpkgutil = $(DESCRIPTION)
+SPKG_DESC_CSWpkgutilplus = Extends pkgutil functionality
+
+REQUIRED_PKGS_CSWpkgutilplus = CSWperl CSWgnupg
+
+PKGFILES_CSWpkgutilplus  = .*bldcat.*
+PKGFILES_CSWpkgutilplus += .*chkcat.*
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).zip
