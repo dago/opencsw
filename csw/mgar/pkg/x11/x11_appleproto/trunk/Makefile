@@ -1,6 +1,8 @@
-GARNAME = applewmproto
+PROTONAME = applewmproto
 GARVERSION = 1.4.1
 CATEGORIES = x11
+GARNAME = x11_$(PROTONAME)
+DISTNAME = $(PROTONAME)-$(GARVERSION)
 
 DESCRIPTION = AppleWM extension headers from X.org
 define BLURB
@@ -8,10 +10,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_PROTO_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
+
+PACKAGES = CSWx11applewmproto
+CATALOGNAME_CSWx11applewmproto = x11_applewmproto
 
 REQUIRED_PKGS = CSWx11common
 
