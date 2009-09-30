@@ -1,8 +1,8 @@
 GARNAME = db
-GARVERSION = 4.7.25
+GARVERSION = 4.6.21
 CATEGORIES = lib
 
-DESCRIPTION = Berkeley DB 4.7
+DESCRIPTION = Berkeley DB 4.6
 define BLURB
   Berkeley DB (libdb) is a programmatic toolkit that provides embedded database
   support for both traditional and client/server applications. It includes
@@ -30,7 +30,7 @@ PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 BUILD64 = 1
 CONFIGURE_SCRIPTS = dist
 
-prefix = $(BUILD_PREFIX)/bdb47
+prefix = $(BUILD_PREFIX)/bdb46
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-o_direct
