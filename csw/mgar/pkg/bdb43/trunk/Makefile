@@ -56,12 +56,13 @@ CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-rpc
 CONFIGURE_ARGS += --enable-cxx
 CONFIGURE_ARGS += --enable-java
-CONFIGURE_ARGS += --enable-tcl
-CONFIGURE_ARGS += --with-tcl=$(libdir)
 CONFIGURE_ARGS += --enable-o_direct
 
-LIBTOOL_LADIR   = $(DESTDIR)$(prefix)/bdb43/lib
-STRIP_DIRS     += $(DESTDIR)$(prefix)/bdb43/bin
+# Exclude TCL support for 64 bit until we have a 64 bit TCL
+CONFIGURE_ARGS-mm-32 = --enable-tcl --with-tcl=$(libpath)
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-mm-$(MEMORYMODEL))
+
+FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb43/lib
 
 # bdb tests are time consuming
 TEST_SCRIPTS =
@@ -79,6 +80,6 @@ PATH := /usr/j2se/bin:$(PATH)
 export PATH
 
 configure-dist:
-	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
+	( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
