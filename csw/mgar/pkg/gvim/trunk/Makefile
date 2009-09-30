@@ -56,7 +56,7 @@ REQUIRED_PKGS_CSWgvim += CSWggettextrt CSWglib2 CSWgnomekeyring CSWgnomevfs2 CSW
 REQUIRED_PKGS_CSWgvim += CSWiconv CSWlibart CSWlibatk CSWlibbonoboui CSWlibcairo
 REQUIRED_PKGS_CSWgvim += CSWlibgnome CSWlibgnomecanvas CSWlibgnomeui CSWlibpopt
 REQUIRED_PKGS_CSWgvim += CSWlibxml2 CSWlibxrender CSWncurses CSWorbit2 CSWpango
-REQUIRED_PKGS_CSWgvim += CSWperl CSWpng CSWzlib
+REQUIRED_PKGS_CSWgvim += CSWperl CSWpng CSWzlib CSWlibx11
 
 INSTALL_SCRIPTS = minimal
 
