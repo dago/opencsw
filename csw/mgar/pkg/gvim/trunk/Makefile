@@ -31,6 +31,9 @@ PATCHFILES += vimtutor.patch
 
 WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
 
+EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
+EXTRA_LDFLAGS = -R /opt/csw/X11/lib
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
 CONFIGURE_ARGS += --with-features=huge
@@ -39,6 +42,9 @@ CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-cscope
 CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --enable-gui=gnome2
+CONFIGURE_ARGS += --x-includes=/opt/csw/X11/include
+CONFIGURE_ARGS += --x-libraries=/opt/csw/X11/lib
+
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
