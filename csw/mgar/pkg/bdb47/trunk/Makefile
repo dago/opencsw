@@ -71,7 +71,7 @@ REQUIRED_PKGS_CSWbdb47devel = CSWbdb47
 
 LICENSE = LICENSE
 
-PKGFILES_CSWbdb47doc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb47doc = /opt/csw/share/doc/.*
 
 PKGFILES_CSWbdb47devel = $(PKGFILES_DEVEL)
 
