@@ -1,5 +1,5 @@
 GARNAME = memconf
-GARVERSION = 2.10
+GARVERSION = 2.11
 CATEGORIES = utils
 
 DESCRIPTION = perl script that displays memory modules installed
