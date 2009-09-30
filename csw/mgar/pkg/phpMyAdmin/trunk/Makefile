@@ -14,7 +14,9 @@ endef
 
 MASTER_SITES = http://garr.dl.sourceforge.net/sourceforge/phpmyadmin/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-all-languages.tar.bz2
-DISTFILES += $(call admfiles,CSWphpmyadmin,)
+
+PACKAGES = CSWphpmyadmin
+CATALOGNAME = phpmyadmin
 
 REQUIRED_PKGS  = CSWapache2 CSWap2modphp5 CSWmysql5 CSWphp5 CSWphp5gd CSWphp5mcrypt
 REQUIRED_PKGS += CSWphp5mysqli CSWphp5session CSWphp5mbstring CSWphp5ctype CSWphp5zip
@@ -27,6 +29,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+ARCHALL = 1
 SPKG_SOURCEURL = http://www.phpmyadmin.net
 
 include gar/category.mk
