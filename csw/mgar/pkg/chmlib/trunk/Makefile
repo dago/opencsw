@@ -14,6 +14,8 @@ endef
 MASTER_SITES = http://www.jedrea.com/chmlib/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+PATCHFILES = 0001-Add-autoconf-support-from-gnulib-for-getopt.h.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
