@@ -1,5 +1,5 @@
 GARNAME = geolitedb
-GARVERSION = 090422
+GARVERSION = 091001
 CATEGORIES = net
 
 DESCRIPTION = geolite country database
