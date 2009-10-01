@@ -61,7 +61,7 @@ EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAM
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-ARCHALL_CSWbdbdoc = 1
+ARCHALL_CSWbdb45doc = 1
 
 SPKG_DESC_CSWbdb45      = BerkeleyDB 4.5 embedded database libraries and utilities
 SPKG_DESC_CSWbdb45devel = BerkeleyDB 4.5 development support
