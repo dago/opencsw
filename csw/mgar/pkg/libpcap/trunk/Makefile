@@ -29,8 +29,8 @@ SPKG_DESC_CSWlibpcapdevel = libpcap development files
 
 BUILD64 = 1
 
-EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv8plus+vis 
-EXTRA_BUILD_ISAS_i386  = pentium pentium_pro+mmx
+EXTRA_BUILD_ISAS_sparc = sparcv8plus
+EXTRA_BUILD_ISAS_i386  = pentium
 
 TEST_TARGET = check
 
@@ -51,10 +51,12 @@ INSTALL_ARGS = install-shared
 TEST_SCRIPTS =
 
 MERGE_DIRS_isa-sparcv8plus = $(libdir)
-MERGE_DIRS_isa-sparcv8plus+vis = $(libdir)
 MERGE_DIRS_isa-pentium = $(libdir)
-MERGE_DIRS_isa-pentium_pro+mmx = $(libdir)
 
 PKGFILES_CSWlibpcapdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
+
+post-install-modulated:
+	ln -s libpcap.so.1.0.0 $(DESTDIR)$(libdir)/libpcap.so
+	@$(MAKECOOKIE)
