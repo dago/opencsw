@@ -12,15 +12,15 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
-#DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
-DISTFILES += $(call admfiles,CSWpkgutil,postinstall preremove)
+DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
+#DISTFILES += $(call admfiles,CSWpkgutil,postinstall preremove)
 
 PACKAGES = CSWpkgutil CSWpkgutilplus
 
 SPKG_DESC_CSWpkgutil = $(DESCRIPTION)
 SPKG_DESC_CSWpkgutilplus = Extends pkgutil functionality
 
-REQUIRED_PKGS_CSWpkgutilplus = CSWperl CSWgnupg
+REQUIRED_PKGS_CSWpkgutilplus = CSWperl CSWgnupg CSWpkgutil
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
@@ -46,6 +46,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(sysconfdir)
 	@ginstall -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)plus
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 #	@ginstall -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
@@ -57,6 +58,7 @@ install-custom:
 	@cp $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
 	@cp $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
+	@cp $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
 #	@cp $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
 #	@cp $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil
 	@cp $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
