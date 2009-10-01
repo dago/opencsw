@@ -29,7 +29,7 @@ PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 
-BUILD64 = 1
+#BUILD64 = 1
 
 CONFIGURE_SCRIPTS = dist
 
@@ -73,6 +73,8 @@ REQUIRED_PKGS_CSWbdb33-devel = CSWbdb33
 INCOMPATIBLE_PKGS_CSWbdb33-doc = CSWbdb33doc
 
 LICENSE = LICENSE
+
+INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir includedir libdir
 
 # Leave the docs where they are for now
 #EXTRA_PAX_ARGS_isa-sparcv8 = -s ",^\.$(prefix)/docs/,$(docdir)/bdb33/,p"
