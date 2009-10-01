@@ -140,7 +140,7 @@ SPKG_DESC_CSWcupsdoc = CUPS documentation
 SPKG_DESC_CSWcupsdev = CUPS header files
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
-SAMPLECONF = $(sysconfdir)/cups/cupsd.conf.CSW
+SAMPLECONF = $(sysconfdir)/cups/cupsd\.conf\.CSW
 INITSMF    = $(sysconfdir)/init\.d/cswcups
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
