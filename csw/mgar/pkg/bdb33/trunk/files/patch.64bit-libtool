@@ -1,0 +1,22 @@
+diff -Naur db-4.2.52.orig/dist/ltmain.sh db-4.2.52.patched/dist/ltmain.sh
+--- dist/ltmain.sh	2003-04-26 19:45:37.000000000 +0200
++++ dist/ltmain.sh	2009-09-30 15:15:43.792423773 +0200
+@@ -1298,7 +1298,7 @@
+       # but this is not reliable with gcc because gcc may use -mfoo to
+       # select a different linker, different libraries, etc, while
+       # -Wl,-mfoo simply passes -mfoo to the linker.
+-      -m*)
++      -m*|-xarch=*)
+ 	# Unknown arguments in both finalize_command and compile_command need
+ 	# to be aesthetically quoted because they are evaled later.
+ 	arg=`$echo "X$arg" | $Xsed -e "$sed_quote_subst"`
+@@ -1309,9 +1309,7 @@
+ 	esac
+         compile_command="$compile_command $arg"
+         finalize_command="$finalize_command $arg"
+-        if test "$with_gcc" = "yes" ; then
+           compiler_flags="$compiler_flags $arg"
+-        fi
+         continue
+         ;;
+ 

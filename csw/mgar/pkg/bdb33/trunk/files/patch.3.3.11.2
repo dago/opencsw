@@ -1,0 +1,15 @@
+*** build_vxworks/db.h.orig	Mon Jul 30 09:49:54 2001
+--- build_vxworks/db.h	Wed Dec 31 19:00:00 1969
+***************
+*** 32,37 ****
+--- 32,41 ----
+  extern "C" {
+  #endif
+  
++ #ifndef	HAVE_VXWORKS
++ #define	HAVE_VXWORKS	1
++ #endif
++ 
+  /*
+   * XXX
+   * Handle function prototypes and the keyword "const".  This steps on name
