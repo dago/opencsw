@@ -66,5 +66,5 @@ install-custom:
 		$(DESTDIR)$(libdir)/opencsw/compare_pkgs.py
 	@ginstall $(WORKSRC)/opencsw_lib.py-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/opencsw/opencsw_lib.py
-	@ln -s ../lib/opencsw/compare_pkgs.py $(DESTDIR)$(bindir)/csw-pkg-diff
+	@ln -s ../lib/opencsw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
 	@$(MAKECOOKIE)
