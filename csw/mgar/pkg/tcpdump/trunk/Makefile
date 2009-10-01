@@ -19,15 +19,12 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.tcpdump.org/
 
-# Shared libraries patch
-#PATCHFILES = solib.diff
-
 # No test target for libpcap
 TEST_SCRIPTS =
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6
 
-#INSTALL_OVERRIDE_DIRS = prefix exec_prefix includedir libdir mandir 
+EXTRA_MERGE_EXCLUDE_FILES = $(sbindir)/tcpdump\..*
 
 include gar/category.mk
