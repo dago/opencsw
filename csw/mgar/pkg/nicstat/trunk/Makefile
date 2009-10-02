@@ -45,7 +45,6 @@ install-custom:
 	@echo " ==> Install $(GARNAME) (custom)"
 	@ginstall -d $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/nicstat $(DESTDIR)$(bindir)
-	@cp $(WORKSRC)/enicstat $(DESTDIR)$(bindir)
 	@chmod 755 $(DESTDIR)$(bindir)/?nicstat
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 	@cp $(WORKSRC)/nicstat.1 $(DESTDIR)$(mandir)/man1
