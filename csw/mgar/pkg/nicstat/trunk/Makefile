@@ -26,17 +26,24 @@ INSTALL_SCRIPTS = custom
 
 WORKSRC = $(WORKDIR)
 
+ifeq ($(shell uname -p), sparc)
+  MYARCH = -xarch=v8
+else
+  MYARCH =
+endif
+
 include gar/category.mk
 
 build-custom:
 	@echo " ==> Build $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-	  cp Makefile.Solaris Makefile ; \
+	  sed "s/CFLAGS =/CFLAGS = $(MYARCH) /" Makefile.Solaris > Makefile ; \
 	  gmake )
 	@$(MAKECOOKIE)
 
 install-custom:
 	@echo " ==> Install $(GARNAME) (custom)"
-	( cd $(WORKSRC) ; \
+	@( cd $(WORKSRC) ; \
 	  gmake BASEDIR=$(DESTDIR)/opt/csw install )
+	@cp $(WORKSRC)/enicstat $(DESTDIR)$(bindir)
 	@$(MAKECOOKIE)
