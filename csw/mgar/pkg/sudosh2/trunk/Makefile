@@ -1,5 +1,7 @@
 # TODO/Issues
 # - Submit 001- (DESTDIR) and 002- (man page) patches upstream
+# - clearenvironment is not documented in sudosh.conf(5), others?
+# - add /opt/csw/bin/sudosh to /etc/shells in postinstall
 GARNAME = sudosh2
 GARVERSION = 1.0.2
 CATEGORIES = apps
@@ -21,6 +23,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+SPKG_SOURCEURL = http://sudosh2.sf.net
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
