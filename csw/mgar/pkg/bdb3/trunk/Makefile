@@ -2,7 +2,7 @@ GARNAME = db
 GARVERSION = 3.3.11
 CATEGORIES = lib
 
-DESCRIPTION = BerkeleyDB 3
+DESCRIPTION = Stub package as contents moved to CSWbdb33
 define BLURB
   Berkeley DB (libdb) is a programmatic toolkit that provides embedded database
   support for both traditional and client/server applications. It includes
@@ -13,40 +13,20 @@ define BLURB
   (MSVC 4, 5 and 6).
 endef
 
-MASTER_SITES = http://download.oracle.com/berkeley-db/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# See http://www.sleepycat.com/update/4.1.25/patch.4.1.25.html
-PATCHFILES = patch.$(GARVERSION).1 patch.$(GARVERSION).2
-PATCHDIRLEVEL = 0
-
-LICENSE = LICENSE
-
 PACKAGES = CSWbdb3
 CATALOGNAME = berkeleydb3
 
-CONFIGURE_SCRIPTS = $(WORKSRC)/dist/configure
-BUILD_SCRIPTS = $(WORKSRC)/dist/Makefile
-INSTALL_SCRIPTS = $(WORKSRC)/dist/Makefile
+REQUIRED_PKGS = CSWbdb33
+
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+INSTALL_SCRIPTS = custom
 
 TEST_SCRIPTS =
 
-#NODIRPATHS = --prefix
-CONFIGURE_ARGS  = --prefix $(prefix) $(DIRPATHS)
-CONFIGURE_ARGS += --enable-compat185
-CONFIGURE_ARGS += --enable-rpc
-CONFIGURE_ARGS += --enable-cxx
-CONFIGURE_ARGS += --enable-java
-CONFIGURE_ARGS += --enable-tcl
-CONFIGURE_ARGS += --with-tcl=$(libdir)
-
-# The Makefile is too dumb for DESTDIR
-INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir includedir libdir docdir
-
-# Include only the library and nothing else
-EXTRA_PAX_ARGS = -s ",^\.\($(libdir)/libdb-3.3.so\)$$,\1," -s ",\..*,,"
-
 include gar/category.mk
+
+install-custom:
+	ginstall -d $(DESTDIR)$(libdir)
+	ln -s ../bdb33/lib/libdb-3.3.so $(DESTDIR)$(libdir)
+	@$(MAKECOOKIE)
