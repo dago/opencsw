@@ -1,4 +1,6 @@
-7331526709cf8cbce59421157068c184  download/cswpuppetd
-066f9053e1342b19cf83f3f78ce2259c  download/cswpuppetmasterd
+cbf89ddcce76bfbce3b92aa4599f4e4c  download/0001-pkgutil-provider.patch
+4bf70f19b9a69bf00590d0e639f4e344  download/0002-pkgutil-specific-command-line-opts.patch
+71174fc47265e5c81a0e32366563e5e4  download/cswpuppetd
+fd5e49b7d2b7d288d5beb224d0cfa855  download/cswpuppetmasterd
 3ab0d4f9801075bc78b68b766b496fc7  download/cswusergroup
 288d46dee00acad64d0f3ecc6d8ba6fa  download/puppet-0.24.8.tgz

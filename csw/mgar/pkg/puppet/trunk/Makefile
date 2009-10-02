@@ -52,6 +52,9 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
+PATCHFILES  = 0001-pkgutil-provider.patch
+PATCHFILES += 0002-pkgutil-specific-command-line-opts.patch
+
 include gar/category.mk
 
 install-puppet:

@@ -1,0 +1,39 @@
+From ff82126b6566776f7b988a84c00c7552edde9db1 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Fri, 2 Oct 2009 12:27:44 +0100
+Subject: [PATCH 2/2] pkgutil-specific command line opts
+
+---
+ lib/puppet/provider/package/pkgutil.rb |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/lib/puppet/provider/package/pkgutil.rb b/lib/puppet/provider/package/pkgutil.rb
+index 9242cb1..8d8551b 100755
+--- a/lib/puppet/provider/package/pkgutil.rb
++++ b/lib/puppet/provider/package/pkgutil.rb
+@@ -83,7 +83,7 @@ Puppet::Type.type(:package).provide :pkgutil, :parent => :sun, :source => :sun d
+     end
+ 
+     def install
+-        pkgutil "-y", :install, @resource[:name]
++        pkgutil "-y", "--install", @resource[:name]
+     end
+ 
+     # Retrieve the version from the current package file.
+@@ -102,11 +102,11 @@ Puppet::Type.type(:package).provide :pkgutil, :parent => :sun, :source => :sun d
+ 
+     # Remove the old package, and install the new one
+     def update
+-        pkgutil "-y", :upgrade, @resource[:name]
++        pkgutil "-y", "--upgrade", @resource[:name]
+     end
+ 
+     def uninstall
+-        pkgutil "-y", :remove, @resource[:name]
++        pkgutil "-y", "--remove", @resource[:name]
+     end
+ end
+ 
+-- 
+1.6.3.2
+
