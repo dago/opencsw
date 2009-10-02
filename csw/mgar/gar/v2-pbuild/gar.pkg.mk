@@ -533,12 +533,11 @@ $(SPKG_DESTDIRS):
 # On a normal packaging workflow this is not used.
 prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPECS),$(WORKDIR)/$(SPEC).prototype-$(GARCH))
 
-# On these platforms packages are built.
-# They will include binaries for all ISAs that are specified for the platform.
-PACKAGING_PLATFORMS ?= solaris8-sparc solaris8-i386
-
+# Verify that the host on we are currently packaging is one of the platform
+# hosts. If there are no platform hosts defined the test is skipped.
 validateplatform:
-	$(if $(filter $(THISHOST),$(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),,\
+	$(if $(strip $(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),\
+	  $(if $(filter $(THISHOST),$(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),,\
 		$(warning ***)\
 		$(warning *** You are building this package on a non-requested platform host '$(THISHOST)'. The follow platforms were requested:)\
 		$(foreach P,$(PACKAGING_PLATFORMS),\
@@ -546,13 +545,14 @@ validateplatform:
 		)\
 		$(warning *** You can execute '$(MAKE) platforms' to automatically build on all necessary platforms.)\
 		$(warning ***)\
-	)
+	))
+	@$(MAKECOOKIE)
 
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
-package: validateplatform extract merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
-	$(DONADA)
+package: validateplatform checksum merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+	@$(DONADA)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
 package-%: $(WORKDIR)/%.gspec $(if $(filter %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
@@ -606,10 +606,23 @@ platforms:
 	$(foreach P,$(PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) package;,\
-				ssh $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) package";\
+				$(MAKE) PLATFORM=$P package;,\
+				ssh $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P package";\
 			),\
 			$(error *** No host has been defined for platform $P)\
+		)\
+	)
+
+# Print relecant informations about the platform
+platformenv:
+	@$(foreach P,$(PACKAGING_PLATFORMS),\
+		echo "* Platform '$P'";\
+		$(if $(PACKAGING_HOST_$P),\
+			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
+				echo "  - Package built on this host";,\
+				echo "  - Package built on host '$(PACKAGING_HOST_$P)'";\
+			),\
+			echo "Package can not be built for this platform as there is no host defined";\
 		)\
 	)
 

@@ -165,8 +165,8 @@ merge-$(2):
 	echo THISHOST="$$(THISHOST)"
 	echo "Building modulation on host '$$(BUILDHOST)'"
 	$$(if $$(and $$(BUILDHOST),$$(filter-out $$(THISHOST),$$(BUILDHOST))),\
-		ssh $$(BUILDHOST) "gmake -C $$(CURDIR) MODULATION=$(2) $(3) merge-modulated",\
-		gmake MODULATION=$(2) $(3) merge-modulated\
+		ssh $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
+		gmake $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated\
 	)
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
 
@@ -294,12 +294,15 @@ CHECKSUM_TARGETS = $(addprefix checksum-,$(filter-out $(_NOCHECKSUM) $(NOCHECKSU
 checksum: fetch $(COOKIEDIR) pre-checksum $(CHECKSUM_TARGETS) post-checksum
 	@$(DONADA)
 
+checksum-global:
+	@$(MAKE) -s ISA=global checksum
+	@$(MAKECOOKIE)
+
 # The next rule handles the dependency from the modulated context to
 # the contextless checksumming. The rule is called when the cookie
 # to the global checksum is requested. If the global checksum has not run,
 # then run it. Otherwise it is silently accepted.
-checksum-modulated: $(COOKIEDIR)
-	@$(MAKE) -s ISA=global checksum
+checksum-modulated: $(if $(test ! -e $(COOKIEDIR)/build-global/checksum),checksum-global)
 	@$(DONADA)
 
 # returns true if checksum has completed successfully, false
@@ -308,11 +311,11 @@ checksum-p:
 	@$(foreach COOKIEFILE,$(CHECKSUM_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 # makesum		- Generate distinfo (only do this for your own ports!).
-MAKESUM_TARGETS =  $(addprefix $(DOWNLOADDIR)/,$(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES))) 
+MAKESUM_TARGETS =  $(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES))
 
-makesum: fetch $(MAKESUM_TARGETS)
+makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS))
 	@if test "x$(MAKESUM_TARGETS)" != "x "; then \
-		gmd5sum $(MAKESUM_TARGETS) > $(CHECKSUM_FILE) ; \
+		(cd $(DOWNLOADDIR) && gmd5sum $(MAKESUM_TARGETS)) > $(CHECKSUM_FILE) ; \
 		echo "Checksums made for $(MAKESUM_TARGETS)" ; \
 		cat $(CHECKSUM_FILE) ; \
 	fi
@@ -618,6 +621,25 @@ endef
 
 _PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
 
+define killprocandparent
+cpids() { \
+  P=$1 \
+  PPIDS=$P \
+  PP=`ps -eo pid,ppid | awk "BEGIN { ORS=\" \" } \\$2 == $P { print \\$1 }\"` \
+  while [ -n "$PP" ]; do \
+    PQ=$PP \
+    PP= \
+    for q in $PQ; do \
+      PPIDS="$PPIDS $q" \
+      PP=$PP\ `ps -eo pid,ppid | awk "BEGIN { ORS=\" \" } \\$2 == $q { print \\$1 }\"` \
+    done \
+  done \
+ \
+  echo $PPIDS \
+}
+endef
+
+
 # The basic merge merges the compiles for all ISAs on the current architecture
 merge: checksum pre-merge merge-do merge-license $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
 	@$(DONADA)
@@ -626,7 +648,7 @@ merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
 
 merge-sequential: $(foreach M,$(MODULATIONS),merge-$M)
 
-merge-parallel: _PIDFILE=$(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid
+merge-parallel: _PIDFILE=$(WORKROOTDIR)/build-global/multitail.pid
 merge-parallel: merge-watch
 	$(_DBG_MERGE)trap "kill -9 `cat $(_PIDFILE) $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.pid) 2>/dev/null`;stty sane" INT;\
 		$(foreach M,$(MODULATIONS),($(MAKE) merge-$M >$(WORKROOTDIR)/build-$M/build.log 2>&1; echo $$? >$(WORKROOTDIR)/build-$M/build.ret) & echo $$! >$(WORKROOTDIR)/build-$M/build.pid; ) wait
@@ -643,7 +665,7 @@ merge-parallel: merge-watch
 merge-watch: _USEMULTITAIL=$(shell test -x $(MULTITAIL) && test -x $(TTY) && $(TTY) >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo yes; fi)
 merge-watch:
 	$(_DBG_MERGE)$(if $(_USEMULTITAIL),\
-		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -j & echo $$! > $(WORKROOTDIR)/build-global-$(GARCH)/multitail.pid,\
+		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -j & echo $$! > $(WORKROOTDIR)/build-global/multitail.pid,\
 		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\
 	)
 
@@ -709,7 +731,7 @@ reset-merge-modulated:
 # cookie, but that would be lame and unportable).
 
 clean: $(addprefix clean-,$(MODULATIONS))
-	@rm -rf $(WORKROOTDIR) $(COOKIEROOTDIR) $(DOWNLOADDIR)
+	rm -rf $(WORKROOTDIR) $(COOKIEROOTDIR) $(DOWNLOADDIR)
 
 clean-modulated:
 	$(call _pmod,Cleaning )
@@ -742,7 +764,7 @@ imageclean:
 
 spotless: imageclean
 	@echo " ==> Removing $(DESTDIR)"
-	@-rm -rf $(DESTDIR)
+	@-rm -rf work
 
 # Print package dependencies
 PKGDEP_LIST = $(filter-out $(BUILDDEPS),$(DEPEND_LIST))

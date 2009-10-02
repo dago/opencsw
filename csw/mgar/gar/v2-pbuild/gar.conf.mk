@@ -11,16 +11,29 @@
 
 # Pick up user information
 -include $(HOME)/.garrc
+-include /etc/opt/csw/garrc
 -include /opt/csw/etc/garrc
 
-MODULATION ?= global-$(GARCH)
+THISHOST := $(shell uname -n)
+
+# On these platforms packages are built.
+# They will include binaries for all ISAs that are specified for the platform.
+PACKAGING_PLATFORMS ?= solaris8-sparc solaris8-i386
+
+# This is the platform we are currently building. It is either set when
+# invoked from "gmake platforms" or when you build a package on a host
+# that is suitable for the platform.
+# If there are no platform hosts defined the feature is disabled.
+PLATFORM ?= $(firstword $(foreach P,$(PACKAGING_PLATFORMS),$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),$P)))
+
+MODULATION ?= global
 FILEDIR ?= files
-DOWNLOADDIR ?= download
-PARTIALDIR ?= $(DOWNLOADDIR)/partial
-WORKROOTDIR ?= work
+WORKROOTDIR ?= $(if $(PLATFORM),work/$(PLATFORM),work)
 WORKDIR ?= $(WORKROOTDIR)/build-$(MODULATION)
 WORKDIR_FIRSTMOD ?= $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))
-COOKIEROOTDIR ?= cookies
+DOWNLOADDIR ?= $(WORKROOTDIR)/download
+PARTIALDIR ?= $(DOWNLOADDIR)/partial
+COOKIEROOTDIR ?= $(WORKROOTDIR)/cookies
 COOKIEDIR ?= $(COOKIEROOTDIR)/$(MODULATION)
 EXTRACTDIR ?= $(WORKDIR)
 WORKSRC ?= $(WORKDIR)/$(DISTNAME)
@@ -135,7 +148,7 @@ libpath            ?= $(abspath $(libpath_install)/$(MM_LIBDIR))
 DESTROOT ?= $(HOME)
 
 # This is the directory from where the package is build from
-PKGROOT ?= $(abspath $(WORKROOTDIR)/pkgroot-$(GARCH))
+PKGROOT ?= $(abspath $(WORKROOTDIR)/pkgroot)
 
 # Each ISA has a separate installation directory inside the
 # working directory for that package. The files are copied
@@ -273,8 +286,6 @@ ARCHFLAGS_SOS12_i386             = -m32 -xarch=386
 
 # ISALIST_$(GARCOMPILER) contains all ISAs which are compilable with the selected compiler
 $(foreach C,$(GARCOMPILERS),$(eval ISALIST_$(C) ?= $(foreach I,$(ISALIST),$(if $(filter-out ERROR,$(ARCHFLAGS_$C_$I)),$I))))
-
-THISHOST := $(shell uname -n)
 
 # BUILDHOST_isa-$ISA is the name of the host where the compilation should take place
 # It defaults to the corresponding BUILD_(sparc|i386)-(32|64)
