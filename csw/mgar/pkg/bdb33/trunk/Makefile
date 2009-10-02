@@ -1,6 +1,5 @@
 GARNAME = db
 GARVERSION = 3.3.11
-RELEASE = p2
 CATEGORIES = lib
 
 DESCRIPTION = embedded database libraries and utilities
@@ -17,20 +16,18 @@ endef
 MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
-PACKAGES = CSWbdb33 CSWbdb33-devel CSWbdb33-doc
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
+RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
 
 #BUILD64 = 1
+NO_ISAEXEC = 1
 
 CONFIGURE_SCRIPTS = dist
 
@@ -56,22 +53,22 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb33/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-NO_ISAEXEC = 1
+PACKAGES = CSWbdb33 CSWbdb33devel CSWbdb33doc
 
-PACKAGES = CSWbdb33 CSWbdb33-devel CSWbdb33-doc
+CATALOGNAME_CSWbdb33      = berkeleydb33
+CATALOGNAME_CSWbdb33devel = berkeleydb33_devel
+CATALOGNAME_CSWbdb33doc   = berkeleydb33_doc
 
-CATALOGNAME_CSWbdb33       = berkeleydb33
-CATALOGNAME_CSWbdb33-devel = berkeleydb33_devel
-CATALOGNAME_CSWbdb33-doc   = berkeleydb33_doc
+ARCHALL_CSWbdb33doc = 1
 
-ARCHALL_CSWbdb33-doc = 1
+SPKG_DESC_CSWbdb33      = BerkeleyDB 3.3 embedded database libraries and utilities
+SPKG_DESC_CSWbdb33devel = BerkeleyDB 3.3 development support
+SPKG_DESC_CSWbdb33doc   = BerkeleyDB 3.3 documentation
 
-SPKG_DESC_CSWbdb33       = BerkeleyDB 3.3 embedded database libraries and utilities
-SPKG_DESC_CSWbdb33-devel = BerkeleyDB 3.3 development support
-SPKG_DESC_CSWbdb33-doc   = BerkeleyDB 3.3 documentation
+SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
-REQUIRED_PKGS_CSWbdb33-devel = CSWbdb33
-INCOMPATIBLE_PKGS_CSWbdb33-doc = CSWbdb33doc
+REQUIRED_PKGS_CSWbdb33devel = CSWbdb33
+INCOMPATIBLE_PKGS_CSWbdb33doc = CSWbdb33doc
 
 LICENSE = LICENSE
 
@@ -81,9 +78,8 @@ EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAM
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-PKGFILES_CSWbdb33-doc = $(PKGFILES_DOC)
-
-PKGFILES_CSWbdb33-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb33doc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb33devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
