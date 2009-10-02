@@ -35,7 +35,6 @@ prefix = $(BUILD_PREFIX)/bdb42
 docdir = $(BUILD_PREFIX)/share/doc
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-cryptography
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-o_direct
 CONFIGURE_ARGS += --enable-rpc
@@ -43,10 +42,8 @@ CONFIGURE_ARGS += --enable-cxx
 CONFIGURE_ARGS += --enable-java
 
 # Exclude TCL support for 64 bit until we have a 64 bit TCL
-ifeq ($(MEMORYMODEL),32)
-CONFIGURE_ARGS += --enable-tcl
-CONFIGURE_ARGS += --with-tcl=$(libdir)
-endif
+CONFIGURE_ARGS-mm-32 = --enable-tcl --with-tcl=$(libpath)
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-mm-$(MEMORYMODEL))
 
 FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb42/lib
 

@@ -35,7 +35,6 @@ prefix = $(BUILD_PREFIX)/bdb43
 docdir = $(BUILD_PREFIX)/share/doc
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-cryptography
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-rpc
 CONFIGURE_ARGS += --enable-cxx
