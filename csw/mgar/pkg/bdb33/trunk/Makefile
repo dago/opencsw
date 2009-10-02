@@ -1,5 +1,6 @@
 GARNAME = db
 GARVERSION = 3.3.11
+RELEASE = p2
 CATEGORIES = lib
 
 DESCRIPTION = embedded database libraries and utilities
@@ -76,12 +77,11 @@ LICENSE = LICENSE
 
 INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir includedir libdir
 
-# Leave the docs where they are for now
-#EXTRA_PAX_ARGS_isa-sparcv8 = -s ",^\.$(prefix)/docs/,$(docdir)/bdb33/,p"
-#EXTRA_PAX_ARGS_isa-i386    = -s ",^\.$(prefix)/docs/,$(docdir)/bdb33/,p"
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb33),'
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-#PKGFILES_CSWbdb33-doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb33-doc = $(prefix)/docs/.*
+PKGFILES_CSWbdb33-doc = $(PKGFILES_DOC)
 
 PKGFILES_CSWbdb33-devel = $(PKGFILES_DEVEL)
 
@@ -101,3 +101,6 @@ post-merge:
 	gln -s . $(PKGROOT)$(libdir)/32
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
 	@$(MAKECOOKIE)
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+
