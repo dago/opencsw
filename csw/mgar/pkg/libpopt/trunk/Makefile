@@ -1,5 +1,5 @@
 GARNAME = popt
-GARVERSION = 1.14
+GARVERSION = 1.15
 CATEGORIES = lib
 
 DESCRIPTION = Popt is a C library for parsing command line parameters
