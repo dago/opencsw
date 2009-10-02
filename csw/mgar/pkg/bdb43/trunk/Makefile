@@ -1,5 +1,6 @@
 GARNAME = db
 GARVERSION = 4.3.29
+RELEASE = p1
 CATEGORIES = lib
 
 DESCRIPTION = BerkeleyDB 4.3 libraries and utilities
@@ -70,8 +71,11 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb43/lib
 # bdb tests are time consuming
 TEST_SCRIPTS =
 
-PKGFILES_CSWbdb43-doc = $(prefix)/docs/.*
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb43),'
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
+PKGFILES_CSWbdb43-doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb43-devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
@@ -85,4 +89,6 @@ export PATH
 configure-dist:
 	( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
