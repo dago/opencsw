@@ -61,10 +61,10 @@ install-custom:
 	@ginstall $(WORKSRC)/checkpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
-	@ginstall -d $(DESTDIR)$(libdir)/opencsw
+	@ginstall -d $(DESTDIR)$(libdir)/python/opencsw
 	@ginstall $(WORKSRC)/compare_pkgs.py-r$(SVN_REV) \
-		$(DESTDIR)$(libdir)/opencsw/compare_pkgs.py
+		$(DESTDIR)$(libdir)/python/opencsw/compare_pkgs.py
 	@ginstall $(WORKSRC)/opencsw_lib.py-r$(SVN_REV) \
-		$(DESTDIR)$(libdir)/opencsw/opencsw_lib.py
-	@ln -s ../lib/opencsw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
+		$(DESTDIR)$(libdir)/python/opencsw/opencsw_lib.py
+	@ln -s ../lib/python/opencsw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
 	@$(MAKECOOKIE)
