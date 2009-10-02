@@ -16,20 +16,18 @@ endef
 MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
-PACKAGES = CSWbdb44 CSWbdb44-devel CSWbdb44-doc
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
-PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*.diff))
+PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
+RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
 
 BUILD64 = 1
+NO_ISAEXEC = 1
 
 CONFIGURE_SCRIPTS = dist
 
@@ -55,33 +53,30 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb44/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-NO_ISAEXEC = 1
+PACKAGES = CSWbdb44 CSWbdb44devel CSWbdb44doc
 
-PACKAGES = CSWbdb44 CSWbdb44-devel CSWbdb44-doc
+CATALOGNAME_CSWbdb44      = berkeleydb44
+CATALOGNAME_CSWbdb44devel = berkeleydb44_devel
+CATALOGNAME_CSWbdb44doc   = berkeleydb44_doc
 
-CATALOGNAME_CSWbdb44       = berkeleydb44
-CATALOGNAME_CSWbdb44-devel = berkeleydb44_devel
-CATALOGNAME_CSWbdb44-doc   = berkeleydb44_doc
+ARCHALL_CSWbdb44doc = 1
 
-ARCHALL_CSWbdb44-doc = 1
+SPKG_DESC_CSWbdb44      = BerkeleyDB 4.4 embedded database libraries and utilities
+SPKG_DESC_CSWbdb44devel = BerkeleyDB 4.4 development support
+SPKG_DESC_CSWbdb44doc   = BerkeleyDB 4.4 documentation
 
-SPKG_DESC_CSWbdb44       = BerkeleyDB 4.4 embedded database libraries and utilities
-SPKG_DESC_CSWbdb44-devel = BerkeleyDB 4.4 development support
-SPKG_DESC_CSWbdb44-doc   = BerkeleyDB 4.4 documentation
+SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
-REQUIRED_PKGS_CSWbdb44-devel = CSWbdb44
-INCOMPATIBLE_PKGS_CSWbdb44-doc = CSWbdb44doc
+REQUIRED_PKGS_CSWbdb44devel = CSWbdb44
 
 LICENSE = LICENSE
 
-# Leave the docs where they are for now
-#EXTRA_PAX_ARGS_isa-sparcv8 = -s ",^\.$(prefix)/docs/,$(docdir)/bdb44/,p"
-#EXTRA_PAX_ARGS_isa-i386    = -s ",^\.$(prefix)/docs/,$(docdir)/bdb44/,p"
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb44),'
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-#PKGFILES_CSWbdb44-doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb44-doc = $(prefix)/docs/.*
-
-PKGFILES_CSWbdb44-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb44doc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb44devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
@@ -99,3 +94,6 @@ post-merge:
 	gln -s . $(PKGROOT)$(libdir)/32
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
 	@$(MAKECOOKIE)
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+

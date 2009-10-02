@@ -1,6 +1,5 @@
 GARNAME = db
 GARVERSION = 4.3.29
-RELEASE = p1
 CATEGORIES = lib
 
 DESCRIPTION = BerkeleyDB 4.3 libraries and utilities
@@ -20,31 +19,12 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
+RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
-
-PACKAGES = CSWbdb43 CSWbdb43-devel CSWbdb43-doc
-
-CATALOGNAME_CSWbdb43 = berkeleydb43
-CATALOGNAME_CSWbdb43-devel = berkeleydb43_devel
-CATALOGNAME_CSWbdb43-doc = berkeleydb43_doc
-
-SPKG_DESC_CSWbdb43 = BerkeleyDB 4.3
-SPKG_DESC_CSWbdb43-devel = BerkeleyDB 4.3 development support
-SPKG_DESC_CSWbdb43-doc = BerkeleyDB 4.3 documentation
-
-SPKG_SOURCEURL = http://www.oracle.com/technology/products/berkeley-db/index.html
-
-REQUIRED_PKGS_CSWbdb43-devel = CSWbdb43
-
-INCOMPATIBLE_PKGS_CSWbdb43-doc = CSWbdb43doc
-
-LICENSE = LICENSE
-
-ARCHALL_CSWbdb43-doc = 1
 
 BUILD64 = 1
 NO_ISAEXEC = 1
@@ -71,12 +51,30 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb43/lib
 # bdb tests are time consuming
 TEST_SCRIPTS =
 
+PACKAGES = CSWbdb43 CSWbdb43devel CSWbdb43doc
+
+CATALOGNAME_CSWbdb43      = berkeleydb43
+CATALOGNAME_CSWbdb43devel = berkeleydb43_devel
+CATALOGNAME_CSWbdb43doc   = berkeleydb43_doc
+
+ARCHALL_CSWbdb43doc = 1
+
+SPKG_DESC_CSWbdb43      = BerkeleyDB 4.3
+SPKG_DESC_CSWbdb43devel = BerkeleyDB 4.3 development support
+SPKG_DESC_CSWbdb43doc   = BerkeleyDB 4.3 documentation
+
+SPKG_SOURCEURL = http://www.oracle.com/technology/products/berkeley-db/index.html
+
+REQUIRED_PKGS_CSWbdb43devel = CSWbdb43
+
+LICENSE = LICENSE
+
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb43),'
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-PKGFILES_CSWbdb43-doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb43-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb43doc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb43devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
@@ -88,6 +86,11 @@ export PATH
 
 configure-dist:
 	( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
+	@$(MAKECOOKIE)
+
+post-merge:
+	gln -s . $(PKGROOT)$(libdir)/32
+	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
 	@$(MAKECOOKIE)
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)

@@ -19,18 +19,21 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
-
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
+RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
 
 BUILD64 = 1
+NO_ISAEXEC = 1
+
 CONFIGURE_SCRIPTS = dist
 
 prefix = $(BUILD_PREFIX)/bdb46
+docdir = $(BUILD_PREFIX)/share/doc
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-o_direct
@@ -45,21 +48,11 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-mm-$(MEMORYMODEL))
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-NO_ISAEXEC = 1
-
 PACKAGES = CSWbdb46 CSWbdb46devel CSWbdb46doc
 
 CATALOGNAME_CSWbdb46      = berkeleydb46
 CATALOGNAME_CSWbdb46devel = berkeleydb46_devel
 CATALOGNAME_CSWbdb46doc   = berkeleydb46_doc
-
-# Remove the license from share/doc/berkeleydb/license/.*
-# because GAR expects license to be a file instead of a directory
-EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
-
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb46),'
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
 ARCHALL_CSWbdb46doc = 1
 
@@ -67,12 +60,17 @@ SPKG_DESC_CSWbdb46      = BerkeleyDB 4.6 embedded database libraries and utiliti
 SPKG_DESC_CSWbdb46devel = BerkeleyDB 4.6 development support
 SPKG_DESC_CSWbdb46doc   = BerkeleyDB 4.6 documentation
 
+SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
+
 REQUIRED_PKGS_CSWbdb46devel = CSWbdb46
 
 LICENSE = LICENSE
 
-PKGFILES_CSWbdb46doc = /opt/csw/share/doc/.*
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb46),'
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
+PKGFILES_CSWbdb46doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb46devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
@@ -86,3 +84,11 @@ export PATH
 configure-dist:
 	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
+
+post-merge:
+	gln -s . $(PKGROOT)$(libdir)/32
+	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
+	@$(MAKECOOKIE)
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+

@@ -19,8 +19,6 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
-
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
@@ -28,9 +26,13 @@ PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 
 BUILD64 = 1
+NO_ISAEXEC = 1
+
 CONFIGURE_SCRIPTS = dist
 
 prefix = $(BUILD_PREFIX)/bdb47
+docdir = $(BUILD_PREFIX)/share/doc
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-compat185
 CONFIGURE_ARGS += --enable-o_direct
@@ -45,21 +47,11 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-mm-$(MEMORYMODEL))
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-NO_ISAEXEC = 1
-
 PACKAGES = CSWbdb47 CSWbdb47devel CSWbdb47doc
 
 CATALOGNAME_CSWbdb47      = berkeleydb47
 CATALOGNAME_CSWbdb47devel = berkeleydb47_devel
 CATALOGNAME_CSWbdb47doc   = berkeleydb47_doc
-
-# Remove the license from share/doc/berkeleydb/license/.*
-# because GAR expects license to be a file instead of a directory
-EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
-
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb47),'
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
 ARCHALL_CSWbdb47doc = 1
 
@@ -67,12 +59,17 @@ SPKG_DESC_CSWbdb47      = BerkeleyDB 4.7 embedded database libraries and utiliti
 SPKG_DESC_CSWbdb47devel = BerkeleyDB 4.7 development support
 SPKG_DESC_CSWbdb47doc   = BerkeleyDB 4.7 documentation
 
+SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
+
 REQUIRED_PKGS_CSWbdb47devel = CSWbdb47
 
 LICENSE = LICENSE
 
-PKGFILES_CSWbdb47doc = /opt/csw/share/doc/.*
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb47),'
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
+PKGFILES_CSWbdb47doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb47devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
@@ -86,3 +83,11 @@ export PATH
 configure-dist:
 	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ../dist/configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
+
+post-merge:
+	gln -s . $(PKGROOT)$(libdir)/32
+	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
+	@$(MAKECOOKIE)
+
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
+

@@ -68,7 +68,6 @@ SPKG_DESC_CSWbdb33doc   = BerkeleyDB 3.3 documentation
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 REQUIRED_PKGS_CSWbdb33devel = CSWbdb33
-INCOMPATIBLE_PKGS_CSWbdb33doc = CSWbdb33doc
 
 LICENSE = LICENSE
 

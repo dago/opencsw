@@ -1,6 +1,5 @@
 GARNAME = db
 GARVERSION = 4.2.52
-RELEASE = p5
 CATEGORIES = lib
 
 DESCRIPTION = embedded database libraries and utilities
@@ -17,18 +16,15 @@ endef
 MASTER_SITES = http://download.oracle.com/berkeley-db/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
 
-PACKAGES = CSWbdb42 CSWbdb42-devel CSWbdb42-doc
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
-PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*.diff))
+PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
+RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
 
 BUILD64 = 1
 NO_ISAEXEC = 1
@@ -57,20 +53,21 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb42/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-PACKAGES = CSWbdb42 CSWbdb42-devel CSWbdb42-doc
+PACKAGES = CSWbdb42 CSWbdb42devel CSWbdb42doc
 
-CATALOGNAME_CSWbdb42       = berkeleydb42
-CATALOGNAME_CSWbdb42-devel = berkeleydb42_devel
-CATALOGNAME_CSWbdb42-doc   = berkeleydb42_doc
+CATALOGNAME_CSWbdb42      = berkeleydb42
+CATALOGNAME_CSWbdb42devel = berkeleydb42_devel
+CATALOGNAME_CSWbdb42doc   = berkeleydb42_doc
 
-ARCHALL_CSWbdb42-doc = 1
+ARCHALL_CSWbdb42doc = 1
 
-SPKG_DESC_CSWbdb42       = BerkeleyDB 4.2 embedded database libraries and utilities
-SPKG_DESC_CSWbdb42-devel = BerkeleyDB 4.2 development support
-SPKG_DESC_CSWbdb42-doc   = BerkeleyDB 4.2 documentation
+SPKG_DESC_CSWbdb42      = BerkeleyDB 4.2 embedded database libraries and utilities
+SPKG_DESC_CSWbdb42devel = BerkeleyDB 4.2 development support
+SPKG_DESC_CSWbdb42doc   = BerkeleyDB 4.2 documentation
 
-REQUIRED_PKGS_CSWbdb42-devel = CSWbdb42
-INCOMPATIBLE_PKGS_CSWbdb42-doc = CSWbdb42doc
+SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
+
+REQUIRED_PKGS_CSWbdb42devel = CSWbdb42
 
 LICENSE = LICENSE
 
@@ -78,9 +75,8 @@ EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAM
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-PKGFILES_CSWbdb42-doc = $(PKGFILES_DOC)
-
-PKGFILES_CSWbdb42-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb42doc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb42devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
