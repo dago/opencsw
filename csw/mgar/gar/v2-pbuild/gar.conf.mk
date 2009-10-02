@@ -52,6 +52,7 @@ GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
 PARALLELMODULATIONS ?= 
 MULTITAIL ?= /opt/csw/bin/multitail
 TTY ?= /usr/bin/tty
+SSH ?= /usr/bin/ssh
 
 # Outbound proxies
 http_proxy ?= 

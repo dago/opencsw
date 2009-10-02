@@ -607,7 +607,7 @@ platforms:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) PLATFORM=$P package;,\
-				ssh $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P package";\
+				$(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P package";\
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\

@@ -165,7 +165,7 @@ merge-$(2):
 	echo THISHOST="$$(THISHOST)"
 	echo "Building modulation on host '$$(BUILDHOST)'"
 	$$(if $$(and $$(BUILDHOST),$$(filter-out $$(THISHOST),$$(BUILDHOST))),\
-		ssh $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
+		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
 		gmake $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated\
 	)
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
