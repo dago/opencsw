@@ -3,6 +3,7 @@ GARVERSION = 0.83.4.1
 CATEGORIES = python
 
 DESCRIPTION = Robust, user-friendly, and extensible IRC bot
+define BLURB
   Supybot is a robust (it doesn't crash), user friendly (it's easy to
   configure) and programmer friendly (plugins are *extremely* easy to
   write) Python IRC bot. It aims to be an adequate replacement for most
