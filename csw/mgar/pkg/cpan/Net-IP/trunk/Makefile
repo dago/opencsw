@@ -9,8 +9,9 @@ define BLURB
   IPv6 addresses.
 endef
 
-DISTFILES += $(call admfiles,CSWpmnetip,)
+PACKAGES = CSWpmnetip
+CATALOGNAME = pm_netip
 
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+ARCHALL = 1
 
 include gar/category.mk
