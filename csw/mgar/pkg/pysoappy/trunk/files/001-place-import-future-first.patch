@@ -1,0 +1,72 @@
+diff --git a/SOAPpy/Client.py b/SOAPpy/Client.py
+index 15542b0..922e098 100644
+--- a/SOAPpy/Client.py
++++ b/SOAPpy/Client.py
+@@ -39,12 +39,11 @@
+ #
+ ################################################################################
+ """
++from __future__ import nested_scopes
+ 
+ ident = '$Id: Client.py,v 1.20 2004/04/10 04:22:52 irjudson Exp $'
+ from version import __version__
+ 
+-from __future__ import nested_scopes
+-
+ #import xml.sax
+ import urllib
+ from types import *
+diff --git a/SOAPpy/GSIServer.py b/SOAPpy/GSIServer.py
+index 3c723e7..0c0876a 100644
+--- a/SOAPpy/GSIServer.py
++++ b/SOAPpy/GSIServer.py
+@@ -42,12 +42,11 @@ GSIServer - Contributed by Ivan R. Judson <judson@mcs.anl.gov>
+ #
+ ################################################################################
+ """
++from __future__ import nested_scopes
+ 
+ ident = '$Id: GSIServer.py,v 1.4 2004/02/04 03:21:02 irjudson Exp $'
+ from version import __version__
+ 
+-from __future__ import nested_scopes
+-
+ #import xml.sax
+ import re
+ import socket
+diff --git a/SOAPpy/Server.py b/SOAPpy/Server.py
+index d6efce2..1419790 100644
+--- a/SOAPpy/Server.py
++++ b/SOAPpy/Server.py
+@@ -39,12 +39,11 @@
+ #
+ ################################################################################
+ """
++from __future__ import nested_scopes
+ 
+ ident = '$Id: Server.py,v 1.19 2004/04/27 15:23:46 warnes Exp $'
+ from version import __version__
+ 
+-from __future__ import nested_scopes
+-
+ #import xml.sax
+ import re
+ import socket
+diff --git a/SOAPpy/Types.py b/SOAPpy/Types.py
+index cc8bc7b..f907dcf 100644
+--- a/SOAPpy/Types.py
++++ b/SOAPpy/Types.py
+@@ -32,12 +32,11 @@
+ #
+ ################################################################################
+ """
++from __future__ import nested_scopes
+ 
+ ident = '$Id: Types.py,v 1.16 2004/04/14 03:42:50 irjudson Exp $'
+ from version import __version__
+ 
+-from __future__ import nested_scopes
+-
+ import UserList
+ import base64
+ import cgi
