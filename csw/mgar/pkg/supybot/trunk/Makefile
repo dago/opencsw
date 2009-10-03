@@ -17,6 +17,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = Supybot-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
+ARCHALL = 1
 REQUIRED_PKGS = CSWpysqlite CSWtwisted
 
 EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
