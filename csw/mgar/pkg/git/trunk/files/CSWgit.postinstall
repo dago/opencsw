@@ -9,9 +9,9 @@ if [ -f "$GC_OLD" -a ! -f "$GC_NEW" ]; then
    cp -p "$GC_OLD" "$GC_NEW"
 fi
 
-/usr/xpg4/bin/grep -q CSWgit /etc/services
+/usr/xpg4/bin/grep -q CSWgit /etc/inet/services
 if [ $? -ne 0 ]; then
-    echo <<EOF >>/etc/services
+    cat <<EOF >>/etc/inet/services
 git             9418/tcp                        # CSWgit: git transfer service
 git             9418/udp                        # CSWgit: git transfer service
 EOF
