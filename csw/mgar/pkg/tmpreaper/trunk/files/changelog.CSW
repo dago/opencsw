@@ -1,0 +1,6 @@
+tmpreaper (1.6.13,REV=2009.10.03)
+
+  * Adopted and updated to 1.6.13
+  * Added README.CSW with crontab example.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sat,  3 Oct 2009 23:49:33 +0200

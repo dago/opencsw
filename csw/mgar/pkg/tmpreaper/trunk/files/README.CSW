@@ -1,0 +1,12 @@
+To get started, create a crontab entry such as the following:
+
+0 4 * * * /opt/csw/bin/tmpreaper --mtime-dir --symlinks 7d --protect '/tmp/.X*-{lock,unix,unix/*}' /tmp
+
+  This will run every day at 04:00 AM, cleaning the /tmp directory of files
+  not accessed withing 7 days, including symlinks. Empty directories not
+  modified in the last 7 days will also be removed. The --protect option
+  causes tmpreaper to skip files with matching names. You can supply more
+  than one --protect option, and you can supply more than one directory
+  to be cleaned.
+  Feel free to adjust as you wish; see the manpage for options.  You can use
+  the --test option to only show what would be done.

@@ -1,0 +1,13 @@
+diff --git a/tmpreaper.c b/tmpreaper.c
+index a6d172c..111c647 100644
+--- a/tmpreaper.c
++++ b/tmpreaper.c
+@@ -356,7 +356,7 @@ cleanupDirectory (const char	   * dirname ,
+ 	int	l;
+ 	/* the admin will want to know where the problem lies */
+ #ifdef NO_get_current_dir_name
+-	if (getcwd(path, PATH_MAX) < 0)
++	if (getcwd(path, PATH_MAX) == NULL)
+ 	    /* too long even for PATH_MAX, show something anyway */
+ #else
+ 	if ((path = get_current_dir_name()) < 0)
