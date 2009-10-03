@@ -127,13 +127,22 @@ GAWK ?= /opt/csw/bin/gawk
 # 3. There is a svn binary, but not everything was committed properly -> UNCOMMITTED
 # 4. There is a svn binary and everything was committed -> r<revision>
 
+ifndef SPKG_PACKAGER
+  $(warning Please set SPKG_PACKAGER in your .garrc file to your name)
+  SPKG_PACKAGER = Unknown
+endif
+
+ifndef SPKG_EMAIL
+  $(warning Please set SPKG_EMAIL in your .garrc file to your email address)
+  SPKG_EMAIL = Unknown
+endif
+
+
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
 SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
-SPKG_PACKAGER  ?= Unknown
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
-SPKG_EMAIL     ?= Unknown
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
@@ -141,7 +150,7 @@ SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
 
 SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)
-SPKG_EXPORT    ?= $(WORKDIR)
+SPKG_EXPORT    ?= $(HOME)/staging/build-$(shell date '+%d.%b.%Y')
 SPKG_PKGROOT   ?= $(PKGROOT)
 SPKG_PKGBASE   ?= $(PKGROOT)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
@@ -152,17 +161,24 @@ SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch
 
 # Handle cswclassutils
 # - prepend cswpreserveconf if it is not already in SPKG_CLASSES
-SPKG_CLASSES += $(if $(SAMPLECONF),$(if $(filter cswsampleconf,$(SPKG_CLASSES)),,cswsampleconf))
-SPKG_CLASSES += $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf))
-SPKG_CLASSES += $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(SAMPLECONF),$(if $(filter cswcpsampleconf,$(SPKG_CLASSES)),,cswcpsampleconf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(USERGROUP),$(if $(filter cswusergroup,$(SPKG_CLASSES)),,cswusergroup))
+SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PYCOMPILE),$(if $(filter cswpycompile,$(SPKG_CLASSES)),,cswpycompile))
 # - set class for all config files
-ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF),)
+ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _CSWCLASS_FILTER = | perl -ane '\
-		$(foreach FILE,$(SAMPLECONF),$$F[1] = "cswsampleconf" if ( $$F[2] =~ m(^$(FILE)$$) );)\
-		$(foreach FILE,$(PRESERVECONF),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
-		$(foreach FILE,$(INITMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
+		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
+		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		print join(" ",@F),"\n";'
 _EXTRA_GAR_PKGS += CSWcswclassutils
+# Make sure the configuration files always have a .CSW suffix and rename the
+# configuration files to this if necessary during merge.
+_EXTRA_PAX_ARGS += $(foreach FILE,$(SAMPLECONF:%\.CSW=%) $(PRESERVECONF:%\.CSW=%),-s ",^\.\($(FILE)\)$$,.\1\.CSW,p")
 endif
 
 PKGGET_DESTDIR ?=
@@ -211,7 +227,7 @@ ADMADDON    = $(ADMSTANDARD) postinstall preremove
 # between the prefix and the suffix.
 # usage: $(call isadirs,<prefix>,<suffix>)
 # expands to <prefix>/<isa1>/<suffix> <prefix>/<isa2>/<suffix> ...
-isadirs = $(foreach ISA,$(ISALIST),$(1)/$(ISA)/$(2))
+isadirs = $(foreach ISA,$(ISALIST),$(1)/$(subst +,\+,$(subst -,\-,$(ISA)))/$(2))
 
 # This is a helper function just like isadirs, but also contains the
 # prefix and suffix without an ISA subdirectories inserted.
@@ -441,6 +457,14 @@ define pkgvar
 $(if $($(1)_$(2)),$($(1)_$(2)),$($(1)))
 endef
 
+# Make sure every producable package contains specific descriptions.
+# We explicitly ignore NOPACKAGE here to disallow circumventing the check.
+$(foreach P,$(SPKG_SPECS),\
+  $(foreach Q,$(filter-out $P,$(SPKG_SPECS)),\
+    $(if $(shell if test "$(SPKG_DESC_$P)" = "$(SPKG_DESC_$Q)"; then echo ERROR; fi),\
+      $(error The package descriptions for $P and $Q are identical, please make sure all package descriptions are unique by setting SPKG_DESC_<pkg> for each package) \
+)))
+
 .PRECIOUS: $(WORKDIR)/%.pkginfo
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
@@ -552,10 +576,15 @@ validateplatform:
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
 package: validateplatform checksum merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+	@echo
+	@echo "The following packages have been built:"
+	@echo
+	@$(foreach SPEC,$(_PKG_SPECS),echo $(SPEC);echo "  $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz";)
+	@echo
 	@$(DONADA)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
-package-%: $(WORKDIR)/%.gspec $(if $(filter %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+package-%: $(WORKDIR)/%.gspec $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \

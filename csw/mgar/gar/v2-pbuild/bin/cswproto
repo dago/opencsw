@@ -112,6 +112,8 @@ if( $common ) {
     open F, $common || die "Couldn't open $common";
     while (<F>) {
         chomp; next if /^\s*$/ or /^#/;
+	s/\+/\\+/g;
+	s/\-/\\-/g;
         my @c = split( m!/! );
         my @pc = map { join( '/', @c[0..$_] ) } 1..$#c;
         $alldirs{$_} = 1 foreach (@pc);

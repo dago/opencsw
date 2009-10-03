@@ -515,7 +515,10 @@ reset-install-modulated:
 	@$(call _pmod,Reset install state)
 	@rm -rf $(INSTALLISADIR) $(COOKIEDIR)/install-work
 	@rm -f $(foreach C,pre-install-modulated install-modulated post-install-modulated,$(COOKIEDIR)/$C)
+	@rm -f $(COOKIEDIR)/pre-install-$(MODULATION) $(COOKIEDIR)/post-install-$(MODULATION)
 	@rm -f $(COOKIEDIR)/strip
+	@rm -f $(foreach S,$(INSTALL_TARGETS),$(COOKIEDIR)/$S)
+	@rm -f $(COOKIEROOTDIR)/global/install-$(MODULATION)
 
 # merge in all isas to the package directory after installation
 
@@ -544,9 +547,9 @@ ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 else
 ISAEXEC_DIRS ?= $(if $(NO_ISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
-MERGE_DIRS_isa-$(ISA_DEFAULT) ?=
+MERGE_DIRS_isa-$(ISA_DEFAULT) ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
 MERGE_DIRS_isa-$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA))
-MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 MERGE_SCRIPTS_isa-$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
 endif
 
@@ -560,7 +563,7 @@ _ISAEXEC_FILES = $(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EX
 		)
 ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 	$(shell for F in $(_ISAEXEC_FILES); do		\
-		if test -f "$$F"; then echo $$F; fi;	\
+		if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;	\
 	done)),)
 
 ifneq ($(ISAEXEC_FILES),)
@@ -581,11 +584,18 @@ _MERGE_INCLUDE_FILES += $(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES
 # This can be defined in category.mk
 MERGE_EXCLUDE_CATEGORY ?= $(_MERGE_EXCLUDE_CATEGORY)
 
+# Support for cswpycompile, skip pre-compiled python files (.pyc, .pyo)
+# during the merge phase.
+_PYCOMPILE_FILES = /opt/csw/lib/python/site-packages/.*\.py
+MERGE_EXCLUDE_PYCOMPILE ?= $(if $(PYCOMPILE), $(addsuffix c,$(_PYCOMPILE_FILES)) $(addsuffix o,$(_PYCOMPILE_FILES)))
+
 MERGE_EXCLUDE_INFODIR ?= $(sharedstatedir)/info/dir
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/.*\.la
 MERGE_EXCLUDE_BACKUPFILES ?= .*\~
 MERGE_EXCLUDE_STATICLIBS ?= $(libdir)/.*\.a
-MERGE_EXCLUDE_DEFAULT ?= $(MERGE_EXCLUDE_CATEGORY) $(MERGE_EXCLUDE_INFODIR) $(MERGE_EXCLUDE_LIBTOOL) $(MERGE_EXCLUDE_BACKUPFILES) $(MERGE_EXCLUDE_STATICLIBS)
+# Exclude all other .pc-files apart from the default 32- and 64 bit versions
+MERGE_EXCLUDE_EXTRA_ISA_PKGCONFIG ?= $(if $(filter-out $(ISA_DEFAULT) $(ISA_DEFAULT64),$(ISA)),$(libdir)/.*\.pc)
+MERGE_EXCLUDE_DEFAULT ?= $(MERGE_EXCLUDE_CATEGORY) $(MERGE_EXCLUDE_INFODIR) $(MERGE_EXCLUDE_LIBTOOL) $(MERGE_EXCLUDE_BACKUPFILES) $(MERGE_EXCLUDE_STATICLIBS) $(MERGE_EXCLUDE_EXTRA_ISA_PKGCONFIG) $(MERGE_EXCLUDE_PYCOMPILE)
 
 # Exclude these files
 ifeq ($(origin MERGE_EXCLUDE_FILES_$(MODULATION)), undefined)
@@ -599,7 +609,7 @@ _MERGE_EXCLUDE_FILES += $(EXTRA_MERGE_EXCLUDE_FILES) $(EXTRA_MERGE_EXCLUDE_FILES
 # Exclude by replacing files with the empty string
 _INC_EXT_RULE = $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
 # Replace files by itself terminating on first match
-_INC_EXT_RULE += $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)\$,\1,")
+_INC_EXT_RULE += $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)$$,\1,")
 
 # These are used during merge phase to determine the base installation directory
 MERGEBASE_$(bindir)     ?= $(bindir_install)
@@ -619,7 +629,7 @@ endef
 # has not, so we use this one for appending.
 
 
-_PAX_ARGS = $(_INC_EXT_RULE) $(EXTRA_PAX_ARGS)
+_PAX_ARGS = $(_INC_EXT_RULE) $(_EXTRA_PAX_ARGS) $(EXTRA_PAX_ARGS_$(MODULATION)) $(EXTRA_PAX_ARGS)
 
 define killprocandparent
 cpids() { \
@@ -641,12 +651,12 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
+merge: checksum pre-merge merge-do merge-license $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
 	@$(DONADA)
 
 merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
 
-merge-sequential: $(foreach M,$(MODULATIONS),merge-$M)
+merge-sequential: $(addprefix merge-,$(MODULATIONS))
 
 merge-parallel: _PIDFILE=$(WORKROOTDIR)/build-global/multitail.pid
 merge-parallel: merge-watch
@@ -718,7 +728,7 @@ merge-copy-config-only:
 remerge: reset-merge merge
 
 reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-src
-	@rm -f $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge
+	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
 	@$(DONADA)
 

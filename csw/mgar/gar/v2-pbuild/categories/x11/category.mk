@@ -1,5 +1,6 @@
 # X11
 X11_PROTO_MASTER_SITE = http://xorg.freedesktop.org/releases/individual/proto/
+X11_LIB_MASTER_SITE = http://xorg.freedesktop.org/releases/individual/lib/
 XCB_MASTER_SITES = http://xcb.freedesktop.org/dist/
 
 # C and C++ compiler flags

@@ -5,7 +5,7 @@ if [ -n "${http_proxy}" ]; then
     REMHOST=$1
     REMPORT=$2
 
-    set - $(echo "${http_proxy}" | sed 's/http//i' | tr -d '/' | tr ':' ' ')
+    set - $(echo "${http_proxy}" | gsed 's/http//i' | tr -d '/' | tr ':' ' ')
     PROXYHOST=$1
     PROXYPORT=$2
 

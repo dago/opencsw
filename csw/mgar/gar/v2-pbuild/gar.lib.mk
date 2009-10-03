@@ -68,7 +68,7 @@ gitrepo//%:
 # to update the code.
 # we possibly proxy the git:// references depending on GIT_USE_PROXY
 git-http//%:
-	@$git clone --bare http://$* $(PARTIALDIR)/$(call GITPROJ,$*)
+	@git clone --bare http://$* $(PARTIALDIR)/$(call GITPROJ,$*)
 	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
 		git remote add origin http://$*; \
 		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
@@ -583,17 +583,17 @@ test-%/setup.py:
 # just run make install and hope for the best.
 install-%/Makefile:
 	@echo " ==> Running make install in $*"
-	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 install-%/makefile:
 	@echo " ==> Running make install in $*"
-	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 install-%/GNUmakefile:
 	@echo " ==> Running make install in $*"
-	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 # Ruby makefiles
@@ -731,6 +731,19 @@ gzip-info:
 gzip-man:
 	gfind $(DESTDIR) -type f -iname *.[1-8] -size +2 -print | \
 		gxargs -r gzip --force
+
+compile-elisp:
+	@(for d in $(ELISP_DIRS); do \
+		echo " ===> Compiling .el files in $$d"; \
+		cd $(PKGROOT)/$$d; \
+		for f in `find . -name "*el"`; do \
+			bf=`basename $$f`; \
+			bd=`dirname $$f`; \
+			cd $$bd; \
+			emacs -L $(PKGROOT)/$$d -L $(PKGROOT)/$$d/$$bd $(EXTRA_EMACS_ARGS) -batch -f batch-byte-compile "$$bf"; \
+			cd $(PKGROOT)/$$d; \
+		done; \
+	done)
 
 include $(addprefix $(GARDIR)/,$(EXTRA_LIBS))
 

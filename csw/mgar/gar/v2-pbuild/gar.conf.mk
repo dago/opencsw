@@ -45,6 +45,8 @@ CHECKSUM_FILE ?= checksums
 MANIFEST_FILE ?= manifest
 LOGDIR ?= log
 
+ELISP_DIRS ?= $(datadir)/emacs/site-lisp $(EXTRA_ELISP_DIRS)
+
 GIT_PROXY_SCRIPT ?= $(abspath $(GARBIN))/gitproxy
 GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
 
@@ -400,9 +402,11 @@ endif
 # REQUESTED_ISAS contains all ISAs that should be built
 # NEEDED_ISAS contains all ISAs that must be build for this architecture to make the package
 # BUILD_ISAS contains all ISAs that can be built on the current kernel
+# It is guaranteed that all BUILD_ISAS come first in NEEDED_ISAS
 # Set 'BUILD64 = 1' to build 64 bit versions automatically
 REQUESTED_ISAS ?= $(strip $(foreach A,$(GARCHLIST),$(ISA_DEFAULT_$A) $(if $(BUILD64),$(ISA_DEFAULT64_$A)) $(EXTRA_BUILD_ISAS_$A)) $(EXTRA_BUILD_ISAS))
-NEEDED_ISAS ?= $(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))
+NEEDED_ISAS ?= $(strip $(filter     $(ISALIST_$(KERNELISA)),$(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))) \
+                       $(filter-out $(ISALIST_$(KERNELISA)),$(filter $(ISALIST_$(ISA_DEFAULT64_$(GARCH))),$(REQUESTED_ISAS))))
 BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(NEEDED_ISAS))
 
 # Subdirectories for specialized binaries and libraries
@@ -519,7 +523,7 @@ ASFLAGS  ?= $(strip $($(GARCOMPILER)_AS_FLAGS) $(_CATEGORY_ASFLAGS) $(EXTRA_ASFL
 OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(_CATEGORY_OPTFLAGS) $(EXTRA_OPTFLAGS))
 
 GCC3_LD_OPTIONS = -R$(GCC3_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
-GCC4_LD_OPTIONS = -R$(GCC4_CC_HOME)/lib $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
+GCC4_LD_OPTIONS = -R$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR)) $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
 SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 
@@ -542,9 +546,10 @@ endif
 #
 
 # Gnome
+GNOME_PROJ  ?= $(GARNAME)
 GNOME_ROOT   = http://ftp.gnome.org/pub/GNOME/sources
 GNOME_SUBV   = $(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')
-GNOME_MIRROR = $(GNOME_ROOT)/$(GARNAME)/$(GNOME_SUBV)/
+GNOME_MIRROR = $(GNOME_ROOT)/$(GNOME_PROJ)/$(GNOME_SUBV)/
 
 # SourceForge
 SF_PROJ     ?= $(GARNAME)
