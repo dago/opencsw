@@ -607,7 +607,7 @@ pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
 
 pkgcheck-%:
 	@echo " ==> Checking compliance: $*"
-	@( LC_ALL=C checkpkg $(SPKG_EXPORT)/`$(call _PKG_ENV,$1) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
+	@( LC_ALL=C $(GARBIN)/checkpkg $(SPKG_EXPORT)/`$(call _PKG_ENV,$1) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
 
 pkgcheck-p:
 	@$(foreach COOKIEFILE,$(PKGCHECK_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
