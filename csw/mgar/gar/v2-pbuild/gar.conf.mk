@@ -52,7 +52,11 @@ GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
 PARALLELMODULATIONS ?= 
 MULTITAIL ?= /opt/csw/bin/multitail
 TTY ?= /usr/bin/tty
-SSH ?= /usr/bin/ssh
+
+# For platform hopping
+# Use whatever SSH is found in the path. That is /opt/csw/bin/ssh for Solaris 8 and
+# /usr/bin/ssh for Solaris 9+ and
+SSH ?= ssh
 
 # Outbound proxies
 http_proxy ?= 
