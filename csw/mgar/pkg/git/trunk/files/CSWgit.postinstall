@@ -7,6 +7,14 @@ GC_NEW="$PKG_INSTALL_ROOT/etc/opt/csw/gitconfig"
 if [ -f "$GC_OLD" -a ! -f "$GC_NEW" ]; then
    echo "Copying /opt/csw/etc/gitconfig to /etc/opt/csw/gitconfig"
    cp -p "$GC_OLD" "$GC_NEW"
+   cat <<EOF > "$GC_OLD.THIS_LOCATION_IS_DEPRECATED"
+This location (/opt/csw/etc) is deprecated.
+
+Configuration files are currently being placed in /etc/opt/csw.
+Please make sure your configuration have been moved to /etc/opt/csw
+and remove the old one from this location.
+
+EOF
 fi
 
 /usr/xpg4/bin/grep -q CSWgit /etc/inet/services
