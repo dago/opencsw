@@ -1,5 +1,5 @@
 GARNAME = libtheora
-GARVERSION = 1.0
+GARVERSION = 1.1.1
 CATEGORIES = lib
 
 DESCRIPTION = Theora video codec support library
