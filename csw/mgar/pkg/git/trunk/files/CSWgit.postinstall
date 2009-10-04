@@ -11,8 +11,8 @@ if [ -f "$GC_OLD" -a ! -f "$GC_NEW" ]; then
 This location (/opt/csw/etc) is deprecated.
 
 Configuration files are currently being placed in /etc/opt/csw.
-Please make sure your configuration have been moved to /etc/opt/csw
-and remove the old one from this location.
+Please make sure your configuration (gitconfig) was properly moved to
+/etc/opt/csw and then remove the old one from this location.
 
 EOF
 fi
