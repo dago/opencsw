@@ -9,6 +9,11 @@ endef
 
 MASTER_SITES = http://www.sra.co.jp/people/m-kasahr/cvsproxy/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWcvsproxy.postinstall
+DISTFILES += CSWcvsproxy.preremove
+
+REQUIRED_PKGS = CSWtcpwrap
+SPKG_SOURCEURL = http://www.sra.co.jp/people/m-kasahr/cvsproxy
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -25,4 +30,8 @@ post-install-modulated:
 	@cp $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(WORKSRC)/NEWS $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(GARNAME)
+	@mv $(DESTDIR)/opt/csw/libexec/cvsproxy $(DESTDIR)/opt/csw/libexec/cvsproxy.tmp
+	@ginstall -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)
+	@cp $(FILEDIR)/editconf.pl $(DESTDIR)/opt/csw/libexec/$(GARNAME)
+	@mv $(DESTDIR)/opt/csw/libexec/cvsproxy.tmp $(DESTDIR)/opt/csw/libexec/$(GARNAME)/cvsproxy
 	@$(MAKECOOKIE)

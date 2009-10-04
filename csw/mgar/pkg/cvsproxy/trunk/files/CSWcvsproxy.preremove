@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+if [ "$PKG_ROOT_DIR" = "" ]; then
+	PKG_ROOT_DIR=/;
+fi
+
+EDITCONF="$PKG_ROOT_DIR/opt/csw/libexec/cvsproxy/editconf.pl"
+
+echo "Removing cvsproxy from /etc/services"
+"$EDITCONF" "$PKG_ROOT_DIR/etc/services" remove '^cvsproxy'
+
+echo "Removing cvsproxy from inetd.conf"
+"$EDITCONF" "$PKG_ROOT_DIR/etc/inetd.conf" remove '^cvsproxy'
+"$EDITCONF" "$PKG_ROOT_DIR/etc/inetd.conf" remove 'Transparent CVS proxy'
+
+echo "Restarting inetd..."
+pkill -HUP inetd
+
+exit 0
