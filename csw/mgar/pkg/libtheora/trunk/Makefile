@@ -32,4 +32,6 @@ CONFIGURE_ARGS += --disable-asm
 
 TEST_TARGET = check
 
+EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(GARNAME)-$(GARVERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
+
 include gar/category.mk
