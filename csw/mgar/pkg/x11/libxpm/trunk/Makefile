@@ -45,6 +45,10 @@ MERGE_DIRS_isa-sparcv8plus+vis = $(libdir)
 
 include gar/category.mk
 
+post-install-modulated:
+	ln -s libXpm.so.4.11.0 $(DESTDIR)$(libdir)/libXpm.so.4.11
+	@$(MAKECOOKIE)
+
 post-merge:
 ifeq ($(GARCH),sparc)
 	@ginstall -d $(PKGROOT)/opt/csw/lib/sparcv8plus+vis
