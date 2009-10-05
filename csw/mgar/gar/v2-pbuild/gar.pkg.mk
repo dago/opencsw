@@ -656,7 +656,9 @@ platforms:
 			  $(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
-	#@$(MAKECOOKIE)
+	@$(MAKECOOKIE)
+
+replatforms: spotless platforms
 
 # Print relecant informations about the platform
 platformenv:
