@@ -69,6 +69,10 @@ EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAM
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
+# Remove the license from share/doc/berkeleydb/license/.*
+# because GAR expects license to be a file instead of a directory
+EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
+
 PKGFILES_CSWbdb47doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb47devel = $(PKGFILES_DEVEL)
 
