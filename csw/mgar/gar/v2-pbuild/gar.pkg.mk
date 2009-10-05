@@ -573,13 +573,17 @@ validateplatform:
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
-package: validateplatform checksum merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+
+package: _package
 	@echo
 	@echo "The following packages have been built:"
 	@echo
-	@$(foreach SPEC,$(_PKG_SPECS),echo $(SPEC);echo "  $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz";)
-	@echo
+	@$(MAKE) -s PLATFORM=$(PLATFORM) _pkgshow
 	@$(DONADA)
+
+_pkgshow:
+	@$(foreach SPEC,$(_PKG_SPECS),printf "  %-20s %s\n"  $(SPEC) $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz;)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
 package-%: $(WORKDIR)/%.gspec $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
@@ -601,7 +605,7 @@ package-p:
 # pkgcheck - check if the package is compliant
 #
 pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
-	$(DONADA)
+	@$(DONADA)
 
 pkgcheck-%:
 	@echo " ==> Checking compliance: $*"
@@ -633,12 +637,25 @@ platforms:
 	$(foreach P,$(PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) PLATFORM=$P package && ,\
-				$(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P package" && \
+				$(MAKE) PLATFORM=$P _package && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
 	) true
+	@echo
+	@echo "The following packages have been built during this invocation:"
+	@echo
+	@$(foreach P,$(PACKAGING_PLATFORMS),\
+		echo "* Platform $P\c";\
+		$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
+			echo " (built on this host)";\
+			  $(MAKE) -s PLATFORM=$P _pkgshow;echo;,\
+			echo " (built on host '$(PACKAGING_HOST_$P)')";\
+			  $(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
+		)\
+	)
+	#@$(MAKECOOKIE)
 
 # Print relecant informations about the platform
 platformenv:
