@@ -1,6 +1,8 @@
-GARNAME = dri2proto
 GARVERSION = 2.1
 CATEGORIES = x11
+PROTONAME = dri2proto
+GARNAME = x11_$(PROTONAME)
+DISTNAME = $(PROTONAME)-$(GARVERSION)
 
 DESCRIPTION = X.Org DRI2 prototype headers
 define BLURB
@@ -8,10 +10,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_PROTO_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
+
+PACKAGES = CSWx11$(PROTONAME)
+CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
 
 REQUIRED_PKGS = CSWx11common
 
