@@ -158,12 +158,7 @@ merge-$(2): $(ASSIGNMENT)
 )
 merge-$(2): BUILDHOST=$$(call modulation2host)
 merge-$(2):
-	echo modulation: $(2)
-	echo vars: $(3)
-	echo ISA: $$(ISA)
-	echo BUILDHOST="$$(BUILDHOST)"
-	echo THISHOST="$$(THISHOST)"
-	echo "Building modulation on host '$$(BUILDHOST)'"
+	@echo "[===== Building modulation '$(2)' on host '$$(BUILDHOST)' =====]"
 	$$(if $$(and $$(BUILDHOST),$$(filter-out $$(THISHOST),$$(BUILDHOST))),\
 		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
 		gmake $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated\
@@ -663,17 +658,17 @@ merge-parallel: merge-watch
 	$(_DBG_MERGE)trap "kill -9 `cat $(_PIDFILE) $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.pid) 2>/dev/null`;stty sane" INT;\
 		$(foreach M,$(MODULATIONS),($(MAKE) merge-$M >$(WORKROOTDIR)/build-$M/build.log 2>&1; echo $$? >$(WORKROOTDIR)/build-$M/build.ret) & echo $$! >$(WORKROOTDIR)/build-$M/build.pid; ) wait
 	$(_DBG_MERGE)if [ -f $(_PIDFILE) ]; then kill `cat $(_PIDFILE)`; stty sane; fi
-	$(foreach M,$(MODULATIONS),if [ "`cat $(WORKROOTDIR)/build-$M/build.ret`" -ne 0 ]; then \
+	$(_DBG_MERGE)$(foreach M,$(MODULATIONS),if [ "`cat $(WORKROOTDIR)/build-$M/build.ret`" -ne 0 ]; then \
 		echo "Build error in modulation $M. Please see"; \
 		echo "  $(WORKROOTDIR)/build-$M/build.log"; \
 		echo "for details:"; \
 		echo; \
 		tail -100 $(WORKROOTDIR)/build-$M/build.log; \
-		exit `cat $(WORKROOTDIR)/build-$M/build.ret`; \
+		exit "Return code: `cat $(WORKROOTDIR)/build-$M/build.ret`"; \
 	fi;)
 
 merge-watch: _USEMULTITAIL=$(shell test -x $(MULTITAIL) && test -x $(TTY) && $(TTY) >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo yes; fi)
-merge-watch:
+merge-watch: $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS))
 	$(_DBG_MERGE)$(if $(_USEMULTITAIL),\
 		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -j & echo $$! > $(WORKROOTDIR)/build-global/multitail.pid,\
 		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\

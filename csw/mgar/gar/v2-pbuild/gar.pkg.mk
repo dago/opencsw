@@ -561,16 +561,14 @@ prototypes: extract merge $(SPKG_DESTDIRS) pre-package $(foreach SPEC,$(_PKG_SPE
 # hosts. If there are no platform hosts defined the test is skipped.
 validateplatform:
 	$(if $(strip $(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),\
-	  $(if $(filter $(THISHOST),$(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),,\
-		$(warning ***)\
+	  $(if $(filter $(THISHOST),$(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),\
+	    @$(MAKECOOKIE),\
 		$(warning *** You are building this package on a non-requested platform host '$(THISHOST)'. The follow platforms were requested:)\
 		$(foreach P,$(PACKAGING_PLATFORMS),\
 			$(warning *** - $P $(if $(PACKAGING_HOST_$P),to be build on host '$(PACKAGING_HOST_$P)',with no suitable host available))\
 		)\
-		$(warning *** You can execute '$(MAKE) platforms' to automatically build on all necessary platforms.)\
-		$(warning ***)\
-	))
-	@$(MAKECOOKIE)
+		$(error You can execute '$(MAKE) platforms' to automatically build on all necessary platforms.)\
+	),@$(MAKECOOKIE))
 
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
@@ -635,12 +633,12 @@ platforms:
 	$(foreach P,$(PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) PLATFORM=$P package;,\
-				$(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P package";\
+				$(MAKE) PLATFORM=$P package && ,\
+				$(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
-	)
+	) true
 
 # Print relecant informations about the platform
 platformenv:

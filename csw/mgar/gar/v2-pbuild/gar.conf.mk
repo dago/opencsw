@@ -294,24 +294,6 @@ ARCHFLAGS_SOS12_i386             = -m32 -xarch=386
 # ISALIST_$(GARCOMPILER) contains all ISAs which are compilable with the selected compiler
 $(foreach C,$(GARCOMPILERS),$(eval ISALIST_$(C) ?= $(foreach I,$(ISALIST),$(if $(filter-out ERROR,$(ARCHFLAGS_$C_$I)),$I))))
 
-# BUILDHOST_isa-$ISA is the name of the host where the compilation should take place
-# It defaults to the corresponding BUILD_(sparc|i386)-(32|64)
-# An empty string means "stay on the current host"
-define BUILDHOST
-$(strip
-  $(if $(filter $1,$(ISALIST_sparcv9),
-    $(if $(BUILDHOST_sparc-$(MEMORYMODEL_$1)),
-      $(if $(eq $(BUILDHOST_sparc-$(MEMORYMODEL_$1)),$(THISHOST)),,$(BUILDHOST_sparc-$(MEMORYMODEL_$1))),
-    ),
-    $(if $(filter $1,$(ISALIST_amd64),
-      $(if $(BUILDHOST_i386-$(MEMORYMODEL_$1)),
-        $(if $(eq $(BUILDHOST_i386-$(MEMORYMODEL_$1)),$(THISHOST)),,$(BUILDHOST_i386-$(MEMORYMODEL_$1))),
-      ),
-    ),
-  ),
-)
-endef
-
 # This is the memory model of the currently compiled architecture
 MEMORYMODEL = $(MEMORYMODEL_$(ISA))
 
