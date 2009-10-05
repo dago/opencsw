@@ -530,8 +530,10 @@ reset-merge-license:
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
 	$(_DBG)mkdir -p $(_SRCDIR)/files
-	$(_DBG)(cd $(DOWNLOADDIR); pax -rH -w -v $(foreach F,$(DISTFILES) $(PATCHFILES),$F) $(_SRCDIR)/files)
-	$(_DBG)(cd $(CURDIR); pax -rH -w -v Makefile checksums $(_SRCDIR))
+	$(_DBG)-rm -f $(addprefix $(_SRCDIR)/files/,$(DISTFILES) $(PATCHFILES))
+	$(_DBG)(cd $(DOWNLOADDIR); cp $(DISTFILES) $(PATCHFILES) $(_SRCDIR)/files)
+	$(_DBG)-rm -f $(addprefix $(_SRCDIR)/,Makefile checksums gar)
+	$(_DBG)(cd $(CURDIR); cp Makefile checksums $(_SRCDIR))
 	$(_DBG)ln -s ../gar/$(GARSYSTEMVERSION) $(_SRCDIR)/gar
 	$(MAKECOOKIE)
 
