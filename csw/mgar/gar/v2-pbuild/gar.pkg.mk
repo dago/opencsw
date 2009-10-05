@@ -580,6 +580,7 @@ package: _package
 	@echo "The following packages have been built:"
 	@echo
 	@$(MAKE) -s PLATFORM=$(PLATFORM) _pkgshow
+	@echo
 	@$(DONADA)
 
 _pkgshow:
