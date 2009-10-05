@@ -22,7 +22,7 @@ PACKAGES = CSWtheora
 CATALOGNAME = libtheora
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = (\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 
