@@ -12,7 +12,7 @@ DISTFILES += $(call admfiles,CSWmercurial,changelog.CSW)
 
 SPKG_DESC_CSWmercurial = Mercurial
 
-REQUIRED_PKGS_CSWmercurial = CSWpython
+REQUIRED_PKGS_CSWmercurial = CSWpython CSWpython-rt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
