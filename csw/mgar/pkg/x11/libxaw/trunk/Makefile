@@ -25,8 +25,8 @@ CATALOGNAME_CSWlibxawdevel = libxaw_devel
 SPKG_DESC_CSWlibxaw = X Athena Widgets
 SPKG_DESC_CSWlibxawdevel = X Athena Widgets development files
 
-REQUIRED_PKGS_CSWlibxaw = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxmu CSWlibxt
-REQUIRED_PKGS_CSWlibxawdevel = CSWlibxpm
+REQUIRED_PKGS_CSWlibxaw = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxmu CSWlibxt CSWlibxpm
+REQUIRED_PKGS_CSWlibxawdevel = CSWlibxpmdevel
 
 BUILD64 = 1
 NOISALIST = 1
