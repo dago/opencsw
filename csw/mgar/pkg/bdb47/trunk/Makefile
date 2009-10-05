@@ -24,6 +24,7 @@ WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
+RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
 
 BUILD64 = 1
 NO_ISAEXEC = 1
