@@ -1,0 +1,20 @@
+#!/opt/csw/bin/bash
+#
+# A workaround because of a Solaris 10 kernel bug:
+# http://bugs.opensolaris.org/view_bug.do?bug_id=6268715
+
+set -u
+
+executable=$(basename $0)
+libexec="/opt/csw/libexec"
+libexec_binary="${libexec}/${executable}"
+
+if [[ ! -r "${libexec_binary}" ]]; then
+  echo "Can't read ${libexec_binary}"
+  exit 1
+fi
+
+# The workaround itself:
+export LIBEV_FLAGS=1
+
+exec "${libexec_binary}" "$@"

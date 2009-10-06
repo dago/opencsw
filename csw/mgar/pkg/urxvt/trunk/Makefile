@@ -20,6 +20,7 @@ endef
 
 MASTER_SITES = http://dist.schmorp.de/rxvt-unicode/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += urxvt-wrapper
 # PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris8.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
@@ -33,7 +34,21 @@ CONFIGURE_ARGS += --disable-perl
 
 GARCOMPILER = GNU
 
-REQUIRED_PKGS_CSWurxvt = CSWfconfig CSWftype2 CSWlibxft2 CSWlibxrender CSWzlib
+REQUIRED_PKGS_CSWurxvt  = CSWbash
+REQUIRED_PKGS_CSWurxvt += CSWfconfig
+REQUIRED_PKGS_CSWurxvt += CSWftype2
+REQUIRED_PKGS_CSWurxvt += CSWlibxft2
+REQUIRED_PKGS_CSWurxvt += CSWlibxrender
+REQUIRED_PKGS_CSWurxvt += CSWzlib
 TEST_SCRIPTS =
+
+post-install-modulated:
+	ginstall -m 755 -d $(DESTDIR)$(libexecdir)
+	for b in urxvt urxvtd urxvtc; do \
+	  mv $(DESTDIR)$(bindir)/$${b} $(DESTDIR)$(libexecdir); \
+	  ln -s ../libexec/urxvt-wrapper $(DESTDIR)$(bindir)/$${b}; \
+	done
+	ginstall -m 755 $(FILEDIR)/urxvt-wrapper $(DESTDIR)$(libexecdir)
+	@$(MAKECOOKIE)
 
 include gar/category.mk
