@@ -33,8 +33,8 @@ SPKG_SOURCEURL = http://www.sendmail.org/
 SPKG_DESC_CSWsendmail = $(DESCRIPTION)
 CATALOGNAME_CSWsendmail = sendmail
 
-REQUIRED_PKGS_CSWsendmail = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap 
-REQUIRED_PKGS_CSWsendmail = CSWcswclassutils 
+REQUIRED_PKGS_CSWsendmail  = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap 
+REQUIRED_PKGS_CSWsendmail += CSWcswclassutils 
 
 PROTOTYPE_FILTER = awk \
 				   '$$$$2 ~/i.sol8/ { next } \
