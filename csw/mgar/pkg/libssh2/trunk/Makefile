@@ -27,6 +27,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 NO_ISAEXEC = 1
+TEST_SCRIPTS =
 TEST_TARGET = check
 
 CONFIGURE_ARGS  = $(DIRPATHS)
