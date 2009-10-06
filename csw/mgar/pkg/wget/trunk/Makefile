@@ -1,5 +1,5 @@
 GARNAME = wget
-GARVERSION = 1.11.4
+GARVERSION = 1.12
 CATEGORIES = net
 
 DESCRIPTION = A network utility to retrieve files from the Web
