@@ -1,5 +1,5 @@
 GARNAME = drupal
-GARVERSION = 6.12
+GARVERSION = 6.14
 CATEGORIES = apps
 
 DESCRIPTION = An open source content management platform
