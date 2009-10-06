@@ -1,5 +1,5 @@
 GARNAME = libssh2
-GARVERSION = 1.2
+GARVERSION = 1.2.1
 CATEGORIES = lib
 
 DESCRIPTION = A Library Implementing the SSH2 Protocol.
