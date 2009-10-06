@@ -543,6 +543,7 @@ if [ -s $SETLIBS.missing ]; then
     print "Doing late evaluations of package library dependencies."
     while read ldep; do
 	lib=`echo $ldep | nawk '{print $1}'`
+        [ "$lib" = "libm.so.2" ] && continue
 	pkg=`echo $ldep | nawk '{print $2}'`
 	/usr/xpg4/bin/grep -q "[/=]$lib[ =]" $SETLIBS
 	if [ $? -ne 0 ]; then

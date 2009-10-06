@@ -279,7 +279,7 @@ endef
 # The package may be generated during this build or already installed on the system.
 # /etc/crypto/certs/SUNWObjectCA=../../../etc/certs/SUNWObjectCA l none SUNWcsr
 #perl -ane '$$f=quotemeta("$1");if($$F[0]=~/^$$f(=.*)?$$/){print join(" ",$$F[3..$$#F]),"\n";exit}'</var/sadm/install/contents
-#$(shell /usr/sbin/pkgchk -l -p $1 2>/dev/null | awk '/^Current/ {p=0} p==1 {print} /^Referenced/ {p=1}' | perl -ane 'print join("\n",@F)')
+#$(shell /usr/sbin/pkgchk -l -p $1 2>/dev/null | $(GAWK) '/^Current/ {p=0} p==1 {print} /^Referenced/ {p=1}' | perl -ane 'print join("\n",@F)')
 # 'pkchk -l -p' doesn't work as it concatenates package names with more than 14 characters,
 # e. g. SUNWgnome-base-libs-develSUNWgnome-calculatorSUNWgnome-freedb-libsSUNWgnome-cd-burnerSUNWgnome-character-map
 define file2pkg
@@ -374,7 +374,7 @@ $(WORKDIR)/%.depend: $(WORKDIR)
 		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
-				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | awk '{ $$1 = "P"; print } ')"; \
+				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | $(GAWK) '{ $$1 = "P"; print } ')"; \
 			) \
 		)) >$@)
 
@@ -674,6 +674,14 @@ platformenv:
 			echo "Package can not be built for this platform as there is no host defined";\
 		)\
 	)
+
+submitpkg: submitpkg-default
+
+submitpkg-%: _PKGURL=$(shell svn info .. | $(GAWK) '$$1 == "URL:" { print $$2 }')
+submitpkg-%:
+	@$(if $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),\
+		$(error You have local files not in the repository. Please commit everything before submitting a package))
+	$(SVN) -m "$(GARNAME): Tag as release $(SPKG_VERSION)$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(GARNAME)-$(SPKG_VERSION)$(SPKG_REVSTAMP)
 
 # dependb - update the dependency database
 #
