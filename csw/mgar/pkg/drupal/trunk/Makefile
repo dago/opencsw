@@ -37,7 +37,7 @@ BUILD_SCRIPTS     =
 INSTALL_SCRIPTS   = custom
 TEST_SCRIPTS = 
 
-REQUIRED_PKGS_CSWdrupal  = CSWapache2c CSWphp5 CSWphp5gd CSWphp5mbstring
+REQUIRED_PKGS_CSWdrupal  = CSWapache2 CSWphp5 CSWphp5gd CSWphp5mbstring
 REQUIRED_PKGS_CSWdrupal += CSWphp5session CSWap2modphp5
 
 DRUPAL_INST_DIR = $(DESTDIR)$(sharedstatedir)/$(GARNAME)/$(GARVERSION)
