@@ -99,7 +99,7 @@ PKGFILES_CSWgitk = $(call _git_files,gitk)
 PKGFILES_CSWgitcvs = $(foreach d,$(fdirs),$(d)/.*cvs.*)
 PKGFILES_CSWgitemacs = .*emacs.*
 PKGFILES_CSWgitdoc = $(docdir)/.*
-PKGFILES_CSWgitcompletion = $(bashconfdir)/bash_completion.d/.*
+PKGFILES_CSWgitcompletion = .*/bash_completion.d/.*
 PKGFILES_CSWgitdevel = $(includedir)/.* $(libdir)/.*
 
 # We define upstream file regex so we can be notifed of new upstream
