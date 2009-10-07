@@ -1,19 +1,22 @@
-GARNAME = recordproto
 GARVERSION = 1.13.2
 CATEGORIES = x11
+PROTONAME = recordproto
+GARNAME = x11_$(PROTONAME)
+DISTNAME = $(PROTONAME)-$(GARVERSION)
 
 DESCRIPTION = Record extension headers
 define BLURB
   Record extension headers
 endef
-
-MASTER_SITES  = $(X11_PROTO_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+	
+MASTER_SITES = $(X11_PROTO_MASTER_SITE)
+DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWxrecordproto
+PACKAGES = CSWx11$(PROTONAME)
+CATALOGNAME_CSWx11$(PROTONAME) = x11_$(PROTONAME)
 
 REQUIRED_PKGS = CSWx11common
 
