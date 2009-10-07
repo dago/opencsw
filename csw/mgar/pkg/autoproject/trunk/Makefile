@@ -22,9 +22,14 @@ endef
 SPKG_SOURCEURL = http://packages.debian.org/unstable/devel/autoproject
 MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/a/$(GARNAME)/
 DISTFILES  = $(GARNAME)_$(GARVERSION).orig.tar.gz
+PATCHFILES = 0001-gawk-and-ggrep.patch
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL = 1
-REQUIRED_PKGS = CSWautomake
+REQUIRED_PKGS = CSWautomake CSWbash CSWgawk CSWggrep
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
+AWK=gawk
+export AWK
+GREP=ggrep
+export GREP
 include gar/category.mk

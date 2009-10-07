@@ -1,0 +1,123 @@
+From e740fa7364ce0c3a4e67474df83533aae4e85595 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Wed, 7 Oct 2009 10:56:16 +0100
+Subject: [PATCH] gawk and ggrep
+
+---
+ autoproject.in |   25 +++++++++++++------------
+ 1 files changed, 13 insertions(+), 12 deletions(-)
+
+diff --git a/autoproject.in b/autoproject.in
+index d7d1ce8..faa67cc 100755
+--- a/autoproject.in
++++ b/autoproject.in
+@@ -12,7 +12,8 @@ set -e
+ 
+ prefix=@prefix@
+ DATADIR=@datadir@
+-AWK=awk
++AWK=gawk
++GREP=ggrep
+ NAME=
+ EMAIL=
+ theoptions=a:d:e:i:l:n:o:p:vVh
+@@ -67,7 +68,7 @@ while
+ 	    DESCRIPTION="$OPTARG"; shift $two ;;
+ 	e|-e|--email) EMAIL="$OPTARG"; shift $two ;;
+ 	i|-i|--interface)
+-	    if echo "$STDIFS"|grep -q -- " $OPTARG "; then
++	    if echo "$STDIFS"|${GREP} -q -- " $OPTARG "; then
+ 		IFACE="$OPTARG"; shift $two;
+ 	    else
+ 		echo "unrecognized interface $OPTARG";
+@@ -78,13 +79,13 @@ while
+ 	    if [ "$OPTARG" = "" ]; then 
+ 		SKELETONS="";
+ 	    else
+-		if (echo $OPTARG|grep ^/ >/dev/null); then true; \
++		if (echo $OPTARG|${GREP} ^/ >/dev/null); then true; \
+ 		else OPTARG=`pwd`/$OPTARG; fi
+ 		SKELETONS="$OPTARG $SKELETONS";
+ 	    fi;
+ 	    shift $two;;
+ 	l|-l|--language)
+-	    if echo "$STDLANGS"|grep -F -q -- " $OPTARG "; then
++	    if echo "$STDLANGS"|${GREP} -F -q -- " $OPTARG "; then
+ 		PROJECT_LANG="$PROJECT_LANG $OPTARG "; shift $two;
+ 	    else
+ 		echo "unrecognized language $OPTARG";
+@@ -94,7 +95,7 @@ while
+ 	n|-n|--name)
+ 	    NAME=$OPTARG; shift $two ;;
+ 	o|-o|--option)
+-	    if echo "$STDOPTS"|grep -q -- " $OPTARG "; then
++	    if echo "$STDOPTS"|${GREP} -q -- " $OPTARG "; then
+ 		OPTS="$OPTS $OPTARG"; shift $two;
+ 	    else
+ 		echo "unrecognized option $OPTARG";
+@@ -102,7 +103,7 @@ while
+ 		exit 1;
+ 	    fi ;;
+ 	p|-p|--parser)
+-	    if echo "$STDPARSERS"|grep -q -- " $OPTARG "; then
++	    if echo "$STDPARSERS"|${GREP} -q -- " $OPTARG "; then
+ 		PARSER="$OPTARG"; shift $two;
+ 	    else
+ 		echo "unrecognized parser generator $OPTARG";
+@@ -163,7 +164,7 @@ while [ $finished != yes ]; do
+ 	else
+ 	    echo "$HELP";
+ 	fi
+-    else if echo "$CHOICES" | grep -q -- " $ans "; then
++    else if echo "$CHOICES" | ${GREP} -q -- " $ans "; then
+ 	finished=yes;
+     else echo "    unrecognized choice $ans"; fi; fi
+ done
+@@ -251,7 +252,7 @@ fi
+ 
+ echo "Please indicate which of the following standard options $NAME will use:"
+ for op in $STDOPTS; do
+-    if echo " $OPTS "|grep -q -- " $op "; then
++    if echo " $OPTS "|${GREP} -q -- " $op "; then
+ 	true;
+     else
+ 	echo -n "    $op? [yN] "; read ans;
+@@ -279,7 +280,7 @@ if [ "$AUTHOR" = "" ]; then
+ 	# Give NIS a try
+ 	AUTHOR=`ypmatch $USER passwd.byname|$AWK -F: '{ print $5; }'`
+     fi
+-    if echo $AUTHOR | grep -q -- "\,"; then
++    if echo $AUTHOR | ${GREP} -q -- "\,"; then
+     	X=`expr index "$AUTHOR" ","`
+    	X=`expr $X - 1` || true
+    	AUTHOR=`expr substr "$AUTHOR" 1 $X` || true
+@@ -325,7 +326,7 @@ cd "$NAME"
+ # Create a small awk script to select the appropriate options fragments
+ 
+ for op in $STDOPTS; do
+-    if echo " $OPTS " | grep -q -- " $op " ; then
++    if echo " $OPTS " | ${GREP} -q -- " $op " ; then
+ 	# lines like "@item --output=@var{name}" are not special
+ 	cat >>optionsub <<EOF
+ /^@$op@\$/,/^@@\$/{if(\$0~/^@.*@\$/)next}
+@@ -375,7 +376,7 @@ for LIB in $SKELETONS; do
+     			    fi
+     			    process_file <$DIR/$i |$AWK -f optionsub >$i
+ 			    if [ -x $DIR/$i ]; then chmod +x $i; fi
+-			    PROCESSED=`awk "BEGIN{print $PROCESSED+1}"`
++			    PROCESSED=`${AWK} "BEGIN{print $PROCESSED+1}"`
+     			fi
+     		    done
+     		fi
+@@ -402,7 +403,7 @@ fi
+ 
+ # insert language-specific macros into configure.in
+ insert(){
+-if echo "$PROJECT_LANG"|grep -F -q -- " $1 "; then
++if echo "$PROJECT_LANG"|${GREP} -F -q -- " $1 "; then
+     echo "using $1 - adding $2 to configure.in"
+     $AWK "{print}/^AC_PROG_CC/{print \"$2\"}" \
+ 	configure.in >tmp && mv tmp configure.in
+-- 
+1.6.3.2
+
