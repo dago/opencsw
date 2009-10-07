@@ -28,11 +28,12 @@ while read dest; do
 		inetdsvc=`cat $dest`
 		set -- $inetdsvc
 		svcname=$1
-		echo "Removing $svcname service from inetd.conf"
-		/usr/xpg4/bin/sed -e '/# CSWgitosis/{
+		echo "Removing $svcname service from inetd.conf (original: $inetdconf.$PKGINST)"
+		cp -p $inetdconf $inetdconf.$PKGINST
+		/usr/xpg4/bin/sed -e "/# $PKGINST/{
 $!N
-/^# CSWgitosis.*\n#git.*$/d
-}' $inetdconf > $inetdconf.$$ && \
+/^# $PKGINST.*\n#$svcname.*$/d
+}" $inetdconf > $inetdconf.$$ && \
 		mv $inetdconf.$$ $inetdconf && \
 
 		chown root:sys $inetdconf && \
