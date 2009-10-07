@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# r.cswinetd - Class action script for CSW inetd support
+#
+# Written and maintained by Ben Walton
+#
+# 2009-10-02 Initial release
+
+case "`uname -r`" in
+    5.8|5.9) useinetconv=no;;
+    *) useinetconv=yes;
+esac
+
+while read dest; do
+    case "$dest" in
+	*xml)
+	    # we know that this won't happen for sol8/9
+	    fmri=`/usr/sbin/svccfg inventory $dest | grep -v default`
+	    echo "Disabling and removing $fmri"
+	    inetadm -d $fmri
+	    svccfg delete $fmri
+	    ;;
+	*)
+	    if [ "$useinetconv" = "no" ]; then
+		# sol 8 or 9
+
+		inetdconf=/etc/inet/inetd.conf
+		inetdsvc=`cat $dest`
+		set -- $inetdsvc
+		svcname=$1
+		echo "Removing $svcname service from inetd.conf"
+		/usr/xpg4/bin/sed -e '/# CSWgitosis/{
+$!N
+/^# CSWgitosis.*\n#git.*$/d
+}' $inetdconf > $inetdconf.$$ && \
+		mv $inetdconf.$$ $inetdconf && \
+
+		chown root:sys $inetdconf && \
+		chmod 444 $inetdconf 
+
+		# even if the service was disabled, this shouldn't hurt
+		/usr/bin/pkill -HUP inetd
+	    fi
+	    ;;
+    esac
+
+    echo $dest
+    rm -f $dest
+done

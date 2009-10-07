@@ -1,0 +1,119 @@
+#!/bin/sh
+#
+# i.cswinetd - Class action script for CSW inetd support
+#
+# Written and maintained by Ben Walton
+#
+# 2009-10-02 Initial release
+
+# set DEBUG to any value to enable trace outpu.
+DEBUG=
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# Determine if we should import the file with inetconv
+case "`uname -r`" in
+    5.8|5.9) useinetconv=no;;
+    *) useinetconv=yes;;
+esac
+
+echo "Installing class <cswinetd> ..."
+
+while read src dest; do
+
+  echo $dest
+  /usr/bin/cp $src $dest || exit 2
+
+  inetdsvc=`cat $dest`
+  set -- $inetdsvc
+  svcname=$1
+  proto=$3
+
+  if [ -n "$DEBUG" ]; then
+      echo "svcname: $svcname; proto: $proto"
+  fi
+
+  case "$svcname" in
+      */*) isrpc=yes;;
+      *) isrpc=no;;
+  esac
+
+  # Determine if service should be started or not
+  daemon=yes
+  if [ "$autoenable_daemons" = "no" ]; then
+      daemon=no
+  fi
+  eval autoenable_service="\$autoenable_$svcname"
+  if [ "$autoenable_service" = "no" ]; then
+      daemon=no
+  elif [ "$autoenable_service" = "yes" ]; then
+      daemon=yes
+  fi
+
+  # we won't register with inetd if the service name isn't registered
+  # in the global services file.
+  /usr/xpg4/bin/grep -q "^$svcname[[:space:]]" /etc/inet/services
+  if [ $? -eq 0 ]; then
+      if [ -n "$DEBUG" ]; then
+	  echo "Installing inetd service:"
+	  echo "$inetdsvc"
+      fi
+
+      if [ "$useinetconv" = "yes" ]; then
+	  [ -n "$DEBUG" ] && echo "For solaris 10 (or newer)"
+
+	  outdir=/var/opt/csw/svc/manifest/network
+	  if [ "$isrpc" = "yes" ]; then
+	      outdir=$outdir/rpc
+	  fi
+	  manifest=$outdir/$svcname-$proto.xml
+
+	  echo "$inetdsvc" > /tmp/$svcname.$$
+
+	  # we use -f to force any in the specified inetd to take precedence
+	  /usr/sbin/inetconv -f -i /tmp/$svcname.$$ -o $outdir || exit 2
+	  if [ "$daemon" = "yes" ]; then
+	      /usr/sbin/inetadm -e svc:/network/$svcname/$proto:default
+	  else
+	      /usr/sbin/inetadm -d svc:/network/$svcname/$proto:default
+	  fi
+
+	  /usr/sbin/installf -c cswinetd $PKGINST $manifest f 644 root bin
+	  /usr/bin/chmod 644 $manifest
+	  /usr/bin/chown root:bin $manifest
+
+	  rm /tmp/$svcname.$$
+      else
+	  [ -n "$DEBUG" ] && echo "For solaris 8 or 9"
+
+	  inetdconf=$PKG_INSTALL_ROOT/etc/inet/inetd.conf
+
+	  echo "Installing '$svcname' into inetd.conf."
+	  echo "# $PKGINST: added by i.cswinetd" >> $inetdconf
+	  if [ "$daemon" = "yes" ]; then
+
+	      echo "$inetdsvc" >> $inetdconf
+	      /usr/bin/pkill -HUP inetd
+	  else
+	      echo "#$inetdsvc" >> $inetdconf
+	  fi
+      fi
+
+      if [ "$daemon" = "yes" ]; then
+	  echo "Inetd service '$svcname' should be enabled by default."
+      else
+	  echo "Inetd service '$svcname' should be disabled by default."
+      fi
+  else
+      echo "Service '$svcname' not found in /etc/inet/services.  Won't setup inetd for it."
+      exit 2
+  fi
+done
+
+exit 0
