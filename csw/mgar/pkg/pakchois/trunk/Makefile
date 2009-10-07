@@ -2,10 +2,10 @@ GARNAME = pakchois
 GARVERSION = 0.4
 CATEGORIES = lib
 
-DESCRIPTION = Just another PKCS #11 wrapper library
+DESCRIPTION = Just another PKCS \#11 wrapper library
 define BLURB
-  pakchois is just another PKCS #11 wrapper library. pakchois aims to provide
-  a thin wrapper over the PKCS#11 interface.
+  pakchois is just another PKCS \#11 wrapper library. pakchois aims to provide
+  a thin wrapper over the PKCS \#11 interface.
 endef
 
 MASTER_SITES = http://www.manyfish.co.uk/pakchois/
