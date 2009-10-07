@@ -157,7 +157,7 @@ SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
 
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
-SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION}%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
+SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
 # Handle cswclassutils
 # - prepend cswpreserveconf if it is not already in SPKG_CLASSES
@@ -191,9 +191,9 @@ SPKG_FULL_REVSTAMP=1
 endif
 
 ifeq ($(SPKG_FULL_REVSTAMP),1)
-SPKG_REVSTAMP  ?= ,REV=$(shell date '+%Y.%m.%d.%H.%M')
+$(call SETONCE,SPKG_REVSTAMP,REV=$(shell date '+%Y.%m.%d.%H.%M'))
 else
-SPKG_REVSTAMP  ?= ,REV=$(shell date '+%Y.%m.%d')
+$(call SETONCE,SPKG_REVSTAMP,REV=$(shell date '+%Y.%m.%d'))
 endif
 
 # Where we find our mkpackage global templates
@@ -470,7 +470,7 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
 	echo "NAME=$(call catalogname,$*) - $(call pkgvar,SPKG_DESC,$*)"; \
 	echo "ARCH=$(if $(or $(ARCHALL),$(ARCHALL_$*)),all,$(call pkgvar,GARCH,$*))"; \
-	echo "VERSION=$(call pkgvar,SPKG_VERSION,$*)$(call pkgvar,SPKG_REVSTAMP,$*)"; \
+	echo "VERSION=$(call pkgvar,SPKG_VERSION,$*),$(call pkgvar,SPKG_REVSTAMP,$*)"; \
 	echo "CATEGORY=$(call pkgvar,SPKG_CATEGORY,$*)"; \
 	echo "VENDOR=$(call pkgvar,SPKG_VENDOR,$*)"; \
 	echo "EMAIL=$(call pkgvar,SPKG_EMAIL,$*)"; \
@@ -681,7 +681,7 @@ submitpkg-%: _PKGURL=$(shell svn info .. | $(GAWK) '$$1 == "URL:" { print $$2 }'
 submitpkg-%:
 	@$(if $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),\
 		$(error You have local files not in the repository. Please commit everything before submitting a package))
-	$(SVN) -m "$(GARNAME): Tag as release $(SPKG_VERSION)$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(GARNAME)-$(SPKG_VERSION)$(SPKG_REVSTAMP)
+	$(SVN) -m "$(GARNAME): Tag as release $(SPKG_VERSION),$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(GARNAME)-$(SPKG_VERSION),$(SPKG_REVSTAMP)
 
 # dependb - update the dependency database
 #

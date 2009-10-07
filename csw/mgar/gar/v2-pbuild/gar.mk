@@ -33,6 +33,10 @@ ROOTFROMDEST = $(call DIRSTODOTS,$(DESTDIR))
 MAKEPATH = $(shell echo $(1) | perl -lne 'print join(":", split)')
 TOLOWER = $(shell echo $(1) | tr '[A-Z]' '[a-z]')
 
+# If you call this the value is only evaluated the first time
+# Usage: $(call SETONCE,A,MyComplexVariableEvaluatedOnlyOnce)
+SETONCE = $(eval $(1) ?= $(2))
+
 #meant to take a git url and return just the $proj.git part
 GITPROJ = $(lastword $(subst /, ,$(1)))
 
