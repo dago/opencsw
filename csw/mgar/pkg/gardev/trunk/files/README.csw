@@ -1,3 +1,15 @@
 This is just a dummy package that depends on all CSW packages that are
 required to create packages with GAR.  Feel free to remove it after
 you've used it to install the current requirements.
+
+It is useful _only_ in the situation where you'd like to checkout
+package build descriptions from the gar.sourceforge.net subversion
+repository on a machine and roll your own packages from it.
+
+Currently, this package will pull everything required by GAR except
+the compilers.  These, you will need to get and install yourself.  If
+packages you're working on need GCC, you can obtain v3 or v4 packages
+from OpenCSW.  Sun compilers must be obtained from sun.com.
+
+Please see http://sourceforge.net/apps/trac/gar/wiki/GarSetup for more
+help getting a working GAR development environment on your machine.
