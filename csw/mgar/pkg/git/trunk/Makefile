@@ -52,7 +52,7 @@ REQUIRED_PKGS_CSWgitdevel = CSWgit
 
 # We include bash here even though git itself depends on it because in theory
 # git could use any other POSIX compliant shell and drop the dependency...
-REQUIRED_PKGS_CSWgitcompletion = CSWgit CSWbash
+REQUIRED_PKGS_CSWgitcompletion = CSWgit CSWbash CSWbashcmplt
 
 LICENSE_CSWgit = COPYING
 LICENSE_CSWgitk = COPYING
