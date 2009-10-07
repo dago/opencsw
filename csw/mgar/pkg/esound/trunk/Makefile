@@ -18,6 +18,11 @@ REQUIRED_PKGS = CSWaudiofile
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+# TODO on next release:
+# - Move config file from /opt/csw/etc to /etc/opt/csw
+# - Document the location in esd(1)
+# - Skip 64 binaries
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
