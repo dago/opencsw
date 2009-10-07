@@ -1,5 +1,5 @@
 GARNAME = diffstat
-GARVERSION = 1.49
+GARVERSION = 1.50
 CATEGORIES = utils
 
 DESCRIPTION = A utility which provides statistics based on the output of diff
