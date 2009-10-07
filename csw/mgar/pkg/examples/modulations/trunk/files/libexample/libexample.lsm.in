@@ -1,0 +1,21 @@
+Begin3
+Title:		libexample
+Version:	@VERSION@
+Entered-date:	@ISODATE@
+Description:	A shared library example project
+		@configure_input@
+		Please edit libexample.lsm.in to fix the Keywords and
+		Primary-site entries, add several more lines of
+		description here if appropriate, and to delete these
+		instructions.
+Keywords:	[substitute your keywords here]
+Author: 	maciej@opencsw.org (Maciej Blizinski)
+Maintained-by:	maciej@opencsw.org (Maciej Blizinski)
+Primary-site:	metlab.unc.edu pub/Linux/apps/some/directory
+		31k libexample-@VERSION@.tar.gz
+		500  libexample.lsm
+Alternate-site: 
+Original-site:  
+Platforms:      
+Copying-policy:	GNU copyleft
+End
