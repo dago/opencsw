@@ -307,6 +307,28 @@ _test-linktargets:
 $(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER_$(SPEC)),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER_$(SPEC)))))
 $(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER),$(eval _PROTOTYPE_FILTER_$(SPEC) ?= | $(PROTOTYPE_FILTER))))
 
+# Assemble prototype modifiers
+# PROTOTYPE_MODIFIERS = mytweaks
+# PROTOTYPE_FTYPE_mytweaks = e
+# PROTOTYPE_CLASS_mytweaks = cswconffile
+# PROTOTYPE_FILES_mytweaks = $(bindir)/.*\.conf
+# PROTOTYPE_PERMS_mytweaks = 0644
+# PROTOTYPE_USER_mytweaks = somebody
+# PROTOTYPE_GROUP_mytweaks = somegroup
+
+_PROTOTYPE_MODIFIERS = | perl -ane '\
+		$(foreach M,$(PROTOTYPE_MODIFIERS),\
+			$(if $(PROTOTYPE_FILES_$M),if( $$F[2] =~ m(^$(PROTOTYPE_FILES_$M)$$) ) {)\
+				$(if $(PROTOTYPE_FTYPE_$M),$$F[0] = "$(PROTOTYPE_FTYPE_$M)";)\
+				$(if $(PROTOTYPE_CLASS_$M),$$F[1] = "$(PROTOTYPE_CLASS_$M)";)\
+				$(if $(PROTOTYPE_PERMS_$M),$$F[3] = "$(PROTOTYPE_PERMS_$M)";)\
+				$(if $(PROTOTYPE_USER_$M),$$F[4] = "$(PROTOTYPE_USER_$M)";)\
+				$(if $(PROTOTYPE_GROUP_$M),$$F[5] = "$(PROTOTYPE_GROUP_$M)";)\
+			$(if $(PROTOTYPE_FILES_$M),})\
+		)\
+                print join(" ",@F),"\n";'
+
+
 # This file contains all installed pathes. This can be used as a starting point
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
@@ -342,13 +364,13 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	               ) \
 	              <$(PROTOTYPE); \
 	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
-	  ) $(_CSWCLASS_FILTER) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  ) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	else \
-	  cat $(PROTOTYPE) $(_CSWCLASS_FILTER) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  cat $(PROTOTYPE) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
-	$(_DBG)cat $(WORKDIR)/$*.prototype $(_PROTOTYPE_FILTER_$*) >$@
+	$(_DBG)cat $(WORKDIR)/$*.prototype >$@
 
 # Dynamic depends are constructed as follows:
 # - Packages the currently constructed one depends on can be specified with
