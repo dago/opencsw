@@ -20,7 +20,8 @@ endef
 MASTER_SITES = http://fping.sourceforge.net/download/
 MASTER_SITES += http://oss.oetiker.ch/smokeping/pub/
 DISTFILES  = $(GARNAME).tar.gz
-PATCHFILES = fping-2.4b2_to-sequence-fix.patch
+#PATCHFILES = fping-2.4b2_to-sequence-fix.patch
+PATCHFILES += fping-ipv6.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

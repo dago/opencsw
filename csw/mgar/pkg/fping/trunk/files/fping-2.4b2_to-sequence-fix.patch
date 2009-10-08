@@ -1,0 +1,82 @@
+Only in fping-2.4b2_to.patch: Makefile
+Only in fping-2.4b2_to.patch: config.h
+Only in fping-2.4b2_to.patch: config.log
+Only in fping-2.4b2_to.patch: config.status
+Only in fping-2.4b2_to.patch: fping
+diff -u fping-2.4b2_to/fping.c fping-2.4b2_to.patch/fping.c
+--- fping-2.4b2_to/fping.c	2001-07-20 19:10:26.000000000 +0200
++++ fping-2.4b2_to.patch/fping.c	2008-08-18 22:14:38.000000000 +0200
+@@ -1440,7 +1440,7 @@
+ 	icp->icmp_type = ICMP_ECHO;
+ 	icp->icmp_code = 0;
+ 	icp->icmp_cksum = 0;
+-	icp->icmp_seq = h->i;
++	icp->icmp_seq = h->i + (h->num_sent) * num_hosts;
+ 	icp->icmp_id = ident;
+ 
+ 	pdp = ( PING_DATA* )( buffer + SIZE_ICMP_HDR );
+@@ -1527,6 +1527,7 @@
+ 	int n, avg;
+ 	HOST_ENTRY *h;
+ 	long this_reply;
++	long id;
+ 	int this_count;
+ 	struct timeval sent_time;
+ 
+@@ -1568,6 +1569,7 @@
+ 	}/* IF */
+ 
+ 	icp = ( struct icmp* )( buffer + hlen );
++	id = icp->icmp_seq % num_hosts;
+ 	if( icp->icmp_type != ICMP_ECHOREPLY )
+ 	{
+ 		/* handle some problem */
+@@ -1583,10 +1585,10 @@
+ 
+ 	num_pingreceived++;
+ 
+-	if( icp->icmp_seq  >= ( n_short )num_hosts )
++	if( id >= ( n_short )num_hosts )
+ 		return( 1 ); /* packet received, don't worry about it anymore */
+ 
+-	n = icp->icmp_seq;
++	n = id;
+ 	h = table[n];
+ 
+ 	/* received ping is cool, so process it */
+@@ -1726,6 +1728,7 @@
+ {
+ 	struct icmp *sent_icmp;
+ 	struct ip *sent_ip;
++	long id = sent_icmp->icmp_seq % num_hosts;
+ 	u_char *c;
+ 	HOST_ENTRY *h;
+ 
+@@ -1737,10 +1740,10 @@
+ 		
+ 		if( ( sent_icmp->icmp_type == ICMP_ECHO ) &&
+ 			( sent_icmp->icmp_id == ident ) &&
+-			( sent_icmp->icmp_seq < ( n_short )num_hosts ) )
++			( id < ( n_short )num_hosts ) )
+ 		{
+ 			/* this is a response to a ping we sent */
+-			h = table[sent_icmp->icmp_seq];
++			h = table[id];
+ 			
+ 			if( p->icmp_code > ICMP_UNREACH_MAXTYPE )
+ 			{
+@@ -1771,10 +1774,10 @@
+ 		sent_icmp = ( struct icmp* )( c + 28 );
+ 		if( ( sent_icmp->icmp_type = ICMP_ECHO ) && 
+ 			( sent_icmp->icmp_id = ident ) &&
+-			( sent_icmp->icmp_seq < ( n_short )num_hosts ) )
++			( id < ( n_short )num_hosts ) )
+ 		{
+ 			/* this is a response to a ping we sent */
+-			h = table[sent_icmp->icmp_seq];
++			h = table[id];
+ 			fprintf( stderr, "%s from %s for ICMP Echo sent to %s",
+ 				icmp_type_str[p->icmp_type], inet_ntoa( addr->sin_addr ), h->host );
+       
+Only in fping-2.4b2_to.patch: fping.o
+Only in fping-2.4b2_to.patch: stamp-h
