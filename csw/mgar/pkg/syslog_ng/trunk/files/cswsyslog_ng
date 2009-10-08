@@ -1,42 +1,44 @@
 #!/bin/sh
+# vim:set ts=2 sw=2 sts=2 expandtab:
 #
-# $Id: init.d.solaris,v 1.3 2003/04/11 13:37:47 bazsi Exp $
+# $Id$
 #
 # adapted to syslog-ng by BJ, Aug, 7th 2000
 # cleaned up by Bazsi, Oct, 12th 2000
 # minor fix by Bojan Zdrnja, Apr, 11th 2003
 #   added nicer options field
 # changes for OpenCSW by Ihsan Dogan, 10. November 2008
+# changes for zone support by Maciej Blizinski, 2009-07-15.
 
 DAEMON=/opt/csw/sbin/syslog-ng
 OPTIONS="-f /etc/opt/csw/syslog-ng.conf"
 
 case "$1" in
-	start)
-	        if [ -f /etc/opt/csw/syslog-ng.conf -a -f /opt/csw/sbin/syslog-ng ]; then
-	                echo 'syslog-ng service starting.'
-	                #
-	                # Before syslog-ng starts, save any messages from previous
-	                # crash dumps so that messages appear in chronological order.
-	                #
-	                /usr/bin/savecore -m
-	                if [ -r /etc/dumpadm.conf ]; then
-	                        . /etc/dumpadm.conf
-	                        [ "x$DUMPADM_DEVICE" != xswap ] && \
-	                            /usr/bin/savecore -m -f $DUMPADM_DEVICE
-	                fi
-	                $DAEMON $OPTIONS -p /var/run/syslog-ng.pid
-	        fi
-        	;;
+  start)
+    if [ -f /etc/opt/csw/syslog-ng.conf -a -f /opt/csw/sbin/syslog-ng ]; then
+      echo 'syslog-ng service starting.'
+      #
+      # Before syslog-ng starts, save any messages from previous
+      # crash dumps so that messages appear in chronological order.
+      #
+      /usr/bin/savecore -m
+      if [ -r /etc/dumpadm.conf ]; then
+        . /etc/dumpadm.conf
+        [ "x$DUMPADM_DEVICE" != xswap ] && \
+            /usr/bin/savecore -m -f $DUMPADM_DEVICE
+      fi
+      $DAEMON $OPTIONS -p /var/run/syslog-ng.pid
+    fi
+    ;;
 
-	stop)
-	        if [ -f /var/run/syslog-ng.pid ]; then
-	                syspid=`/usr/bin/cat /var/run/syslog-ng.pid`
-	                [ "$syspid" -gt 0 ] && kill -15 $syspid && rm /var/run/syslog-ng.pid
-	        fi
-        	;;
-	*)
-	        echo "Usage: $0 { start | stop }"
-	        exit 1
-        	;;
+  stop)
+    if [ -f /var/run/syslog-ng.pid ]; then
+      syspid=`/usr/bin/cat /var/run/syslog-ng.pid`
+      [ "$syspid" -gt 0 ] && kill -15 $syspid && rm /var/run/syslog-ng.pid
+    fi
+    ;;
+  *)
+    echo "Usage: $0 { start | stop }"
+    exit 1
+    ;;
 esac
