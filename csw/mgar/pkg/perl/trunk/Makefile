@@ -19,8 +19,10 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWperl CSWperldoc
 ARCHALL_CSWperldoc = 1
-REQUIRED_PKGS_CSWperl = CSWbdb CSWgdbm
+REQUIRED_PKGS_CSWperl = CSWbdb47 CSWgdbm
 REQUIRED_PKGS_CSWperldoc = CSWperl
+SPKG_DESC_CSWperl = $(DESCRIPTION)
+SPKG_DESC_CSWperldoc = Perl documentation
 
 LICENSE = Copying
 
@@ -56,7 +58,7 @@ CORE_UPDATES  += ExtUtils-MakeMaker-6.54
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 # Dependencies
-LIBDEPS += lib/bdb47
+#LIBDEPS += bdb48/lib
 LIBDEPS += lib/gdbm
 
 # Custom configure
@@ -106,8 +108,8 @@ CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
 CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/lib"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
-#EXTRA_LIB += $(prefix)/bdb44/lib
-#EXTRA_INC += $(prefix)/bdb44/include
+EXTRA_LIB += $(prefix)/bdb47/lib
+EXTRA_INC += $(prefix)/bdb47/include
 
 #EXTRA_LDFLAGS = -lperl
 EXTRA_LDFLAGS = -L/opt/csw/lib/libperl.so
