@@ -1,0 +1,12 @@
+diff -Naur colordiff-1.0.9.orig/colordiff.pl colordiff-1.0.9.patched/colordiff.pl
+--- colordiff-1.0.9.orig/colordiff.pl	2009-01-28 21:12:10.000000000 +0100
++++ colordiff-1.0.9.patched/colordiff.pl	2009-10-08 14:26:51.806222906 +0200
+@@ -178,7 +178,7 @@
+ my $exitcode = 0;
+ if ((defined $ARGV[0]) || (-t STDIN)) {
+     # More reliable way of pulling in arguments
+-    my $pid = open2(\*INPUTSTREAM, undef, "diff", @ARGV);
++    my $pid = open2(\*INPUTSTREAM, undef, "/opt/csw/bin/gdiff", @ARGV);
+     @inputstream = <INPUTSTREAM>;
+     close INPUTSTREAM;
+     waitpid $pid, 0;

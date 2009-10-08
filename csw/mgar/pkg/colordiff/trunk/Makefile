@@ -11,11 +11,12 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = fix-entity-nesting.patch
 PATCHFILES += force-csw-perl.patch
 PATCHFILES += force-csw-less.patch
+PATCHFILES += force-csw-gdiff.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWperl CSWless
+REQUIRED_PKGS = CSWdiffutils CSWperl CSWless
 
 CONFIGURE_SCRIPTS = 
 BUILD_ARGS = doc

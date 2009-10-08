@@ -1,4 +1,5 @@
 31864847eaa4e900f72bbb6bbc64f1ec  colordiff-1.0.9.tar.gz
 d202632e9ec507e53445232a930c9c6f  fix-entity-nesting.patch
+4e078d43dfd8032c95699190c3bf9f16  force-csw-gdiff.patch
 94bb55618657dd39b3d4d1b8b321eac3  force-csw-less.patch
 b37c28fccba12407d69a9d856d81a396  force-csw-perl.patch
