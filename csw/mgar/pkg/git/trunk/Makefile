@@ -4,7 +4,7 @@ GARVERSION = 1.6.4.4
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
-TEST_SCRIPTS = 
+#TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 PACKAGES += CSWgitcompletion CSWgitdevel
@@ -87,6 +87,7 @@ GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
 GIT_TREEISH_git.git = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 
 DISTFILES = CSWgit.postinstall
+PATCHFILES = 0001-ls-files-make-option-parser-keep-argv-0.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files

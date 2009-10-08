@@ -1,0 +1,42 @@
+From a613b30af3b8a74e8b2d8f5f9910564fb44bf59d Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Date: Wed, 7 Oct 2009 16:25:38 -0400
+Subject: [PATCH] ls-files: make option parser keep argv[0]
+
+The ls-files built-in was not asking the option parser to maintain
+argv[0].  This led to the possibility of fprintf(stderr, "...", NULL).
+On Solaris, this was causing a segfault.  On glibc systems, printed
+error messages didn't contain proper strings, but rather, "(null)":...
+
+A trigger for this bug was: `git ls-files -i`
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ builtin-ls-files.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index f473220..9a3705a 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -482,7 +482,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+-			ls_files_usage, 0);
++			ls_files_usage, PARSE_OPT_KEEP_ARGV0);
+ 	if (show_tag || show_valid_bit) {
+ 		tag_cached = "H ";
+ 		tag_unmerged = "M ";
+@@ -505,7 +505,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 	if (require_work_tree && !is_inside_work_tree())
+ 		setup_work_tree();
+ 
+-	pathspec = get_pathspec(prefix, argv);
++	pathspec = get_pathspec(prefix, argv + 1);
+ 
+ 	/* be nice with submodule paths ending in a slash */
+ 	read_cache();
+-- 
+1.6.4.4
+
