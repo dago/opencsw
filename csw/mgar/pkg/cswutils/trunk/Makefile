@@ -1,3 +1,5 @@
+# $Id$
+
 GARNAME = cswutils
 GARVERSION = 1.14.4
 CATEGORIES = utils
@@ -7,7 +9,7 @@ define BLURB
 endef
 
 SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
-SVN_REV = 74
+SVN_REV = 77
 
 MASTER_SITES =
 DISTFILES = COPYING
@@ -62,9 +64,9 @@ install-custom:
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
-	@ginstall $(WORKSRC)/compare_pkgs.py-r$(SVN_REV) \
+	@ginstall -m 755 $(WORKSRC)/compare_pkgs.py-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/python/csw/compare_pkgs.py
-	@ginstall $(WORKSRC)/opencsw_lib.py-r$(SVN_REV) \
+	@ginstall -m 644 $(WORKSRC)/opencsw_lib.py-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/python/csw/opencsw_lib.py
 	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
 	@$(MAKECOOKIE)
