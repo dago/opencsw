@@ -16,7 +16,7 @@ DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWx11xf86vidmdproto
-CATALOGNAME_CSWx11xf86vidmdproto = $(PROTONAME)
+CATALOGNAME_CSWx11xf86vidmdproto = x11_$(PROTONAME)
 
 REQUIRED_PKGS = CSWx11common
 
