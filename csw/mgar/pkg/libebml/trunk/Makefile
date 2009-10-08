@@ -33,6 +33,7 @@ TEST_SCRIPTS =
 INSTALL_OVERRIDE_VARS = CC CXX LD CFLAGS WARNINGFLAGS INSTALL
 INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 INSTALL_OVERRIDE_DIRS = prefix libdir includedir
+includedir = $(prefix)/include/ebml
 INSTALL_SCRIPTS = $(WORKSRC)/make/linux/Makefile
 
 include gar/category.mk
