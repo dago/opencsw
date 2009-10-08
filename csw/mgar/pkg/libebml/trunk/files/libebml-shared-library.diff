@@ -1,0 +1,12 @@
+diff -Naur libebml-0.7.8.orig/make/linux/Makefile libebml-0.7.8.patched/make/linux/Makefile
+--- libebml-0.7.8.orig/make/linux/Makefile	2006-06-02 16:32:15.000000000 +0200
++++ libebml-0.7.8.patched/make/linux/Makefile	2009-10-08 10:49:26.151491509 +0200
+@@ -94,7 +94,7 @@
+ 	$(RANLIB) $@
+ 
+ $(LIBRARY_SO): $(objects_so)
+-	$(CXX) -shared -Wl,-soname,$(LIBRARY_SO_VER) -o $(LIBRARY_SO_VER) $(objects_so)
++	$(CXX) -G $(LDFLAGS) -o $(LIBRARY_SO_VER) $(objects_so)
+ 	rm -f $(LIBRARY_SO)
+ 	ln -s $(LIBRARY_SO_VER) $(LIBRARY_SO)
+ 
