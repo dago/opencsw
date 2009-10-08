@@ -10,11 +10,12 @@ MASTER_SITES = http://colordiff.sourceforge.net/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = fix-entity-nesting.patch
 PATCHFILES += force-csw-perl.patch
+PATCHFILES += force-csw-less.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWperl
+REQUIRED_PKGS = CSWperl CSWless
 
 CONFIGURE_SCRIPTS = 
 BUILD_ARGS = doc
