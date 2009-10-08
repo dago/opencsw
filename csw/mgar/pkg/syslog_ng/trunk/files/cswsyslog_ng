@@ -14,7 +14,7 @@ localstatedir=/var/opt/csw
 sysconfdir=/etc/opt/csw
 DAEMON=/opt/csw/sbin/syslog-ng
 CONFIG_FILE="${sysconfdir}/syslog-ng.conf"
-PID_FILE="${localstatedir}/run"
+PID_FILE="/var/run/syslog-ng.pid"
 OPTIONS="-f ${CONFIG_FILE}"
 
 case "$1" in
