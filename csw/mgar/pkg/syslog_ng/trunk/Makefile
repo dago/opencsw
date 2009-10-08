@@ -9,7 +9,7 @@ define BLURB
   logs using TCP.
 endef
 
-MASTER_SITES = http://www.balabit.com/downloads/files/syslog-ng/open-source-edition/$(GARVERSION)/source/
+MASTER_SITES = http://www.balabit.com/downloads/files/$(GARNAME)/open-source-edition/$(GARVERSION)/source/
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += $(GARNAME).conf.CSW
 DISTFILES += cswsyslog_ng
@@ -31,6 +31,10 @@ PROTOTYPE_FILTER  = awk ' \
     $$$$3 ~ /\/syslog-ng\.conf\.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
     { print }'
 
+# shared /opt/csw support:
+localstatedir = /var/opt/csw
+sysconfdir = /etc/opt/csw
+
 PREREQUISITE_PKGS  = CSWeventlog
 PREREQUISITE_PKGS += CSWggettext
 PREREQUISITE_PKGS += CSWglib2
@@ -42,7 +46,6 @@ PREREQUISITE_PKGS += CSWgcc4core
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic-linking
 CONFIGURE_ARGS += --enable-spoof-source=no
-CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
 REQUIRED_PKGS  = CSWgcc4corert
 REQUIRED_PKGS += CSWeventlog
@@ -64,6 +67,7 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswsyslog_ng \
 		$(DESTDIR)/etc/opt/csw/init.d/cswsyslog_ng
-	$(MAKECOOKIE)
+	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/run
+	@$(MAKECOOKIE)
 
 include gar/category.mk

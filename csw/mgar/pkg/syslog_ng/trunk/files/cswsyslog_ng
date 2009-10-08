@@ -10,12 +10,16 @@
 # changes for OpenCSW by Ihsan Dogan, 10. November 2008
 # changes for zone support by Maciej Blizinski, 2009-07-15.
 
+localstatedir=/var/opt/csw
+sysconfdir=/etc/opt/csw
 DAEMON=/opt/csw/sbin/syslog-ng
-OPTIONS="-f /etc/opt/csw/syslog-ng.conf"
+CONFIG_FILE="${sysconfdir}/syslog-ng.conf"
+PID_FILE="${localstatedir}/run"
+OPTIONS="-f ${CONFIG_FILE}"
 
 case "$1" in
   start)
-    if [ -f /etc/opt/csw/syslog-ng.conf -a -f /opt/csw/sbin/syslog-ng ]; then
+    if [ -f "${CONFIG_FILE}" -a -f "${DAEMON}" ]; then
       echo 'syslog-ng service starting.'
       #
       # Before syslog-ng starts, save any messages from previous
@@ -27,14 +31,14 @@ case "$1" in
         [ "x$DUMPADM_DEVICE" != xswap ] && \
             /usr/bin/savecore -m -f $DUMPADM_DEVICE
       fi
-      $DAEMON $OPTIONS -p /var/run/syslog-ng.pid
+      $DAEMON $OPTIONS -p ${PID_FILE}
     fi
     ;;
 
   stop)
-    if [ -f /var/run/syslog-ng.pid ]; then
-      syspid=`/usr/bin/cat /var/run/syslog-ng.pid`
-      [ "$syspid" -gt 0 ] && kill -15 $syspid && rm /var/run/syslog-ng.pid
+    if [ -f ${PID_FILE} ]; then
+      syspid=`/usr/bin/cat ${PID_FILE}`
+      [ "$syspid" -gt 0 ] && kill -15 $syspid && rm ${PID_FILE}
     fi
     ;;
   *)
