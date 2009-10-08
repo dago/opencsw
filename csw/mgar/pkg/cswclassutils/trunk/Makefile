@@ -5,10 +5,9 @@ CATEGORIES = utils
 DESCRIPTION = CSW class action utilities
 
 MASTER_SITES = 
+DISTFILES = COPYING
 
 ARCHALL = 1
-
-LICENSE = license
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -33,6 +32,5 @@ install-custom:
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/method
 	@ginstall -m 0755 $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/etc/opt/csw/init.d/csw.smf.sample
 	@ginstall -m 0444 $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@cp $(FILEDIR)/CSW$(GARNAME).copyright $(WORKSRC)/license
 	@$(foreach CAS,$(CASLIST),ginstall -m 0555 $(FILEDIR)/CSW$(GARNAME).$(CAS) $(DESTDIR)/usr/sadm/install/scripts/$(CAS);)
 	@$(MAKECOOKIE)
