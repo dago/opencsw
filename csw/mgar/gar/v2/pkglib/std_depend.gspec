@@ -1,1 +1,0 @@
-%depend exec gawk '$1 ~ /f/{print $3}' %{prototype} | depmaker --root %{DESTDIR} --nodep %{pkgname} %{DEPMAKER_EXTRA_ARGS}
