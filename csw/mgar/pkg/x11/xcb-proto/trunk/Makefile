@@ -1,7 +1,8 @@
-GARNAME = xcb-proto
 GARVERSION = 1.5
-
 CATEGORIES = x11
+PROTONAME = xcb-proto
+GARNAME = x11_$(PROTONAME)
+DISTNAME = $(PROTONAME)-$(GARVERSION)
 
 DESCRIPTION = XCB protocol descriptions (in XML)
 define BLURB
@@ -25,16 +26,19 @@ define BLURB
 endef
 
 MASTER_SITES = $(XCB_MASTER_SITES)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(DISTNAME).tar.gz
 
-PACKAGES = CSWxcbproto CSWpyxcbproto
+PACKAGES = CSWx11xcbproto CSWpyx11xcbproto
+
+CATALOGNAME_CSWx11xcbproto = x11_xcbproto
+CATALOGNAME_CSWpyx11xcbproto = py_x11xcbproto
 
 PREREQUISITE_PKGS = CSWpython
 REQUIRED_PKGS_CSWxcbproto = CSWx11common
-REQUIRED_PKGS_CSWpyxcbproto = CSWxcbproto CSWpython
+REQUIRED_PKGS_CSWpyxcbproto = CSWx11xcbproto CSWpython
 
-SPKG_DESC_CSWxcbproto = XCB protocol descriptions (in XML)
-SPKG_DESC_CSWpyxcbproto = XCB protocol descriptions (in XML) Python Bindings
+SPKG_DESC_CSWx11xcbproto = XCB protocol descriptions (in XML)
+SPKG_DESC_CSWpyx11xcbproto = XCB protocol descriptions (in XML) Python Bindings
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -48,11 +52,8 @@ PYTHON_PREFIX=$(BUILD_PREFIX)/lib/python/site-packages
 EXTRA_PAX_ARGS = -s ',^.*/\(xcbgen/.*\.py\),.$(BUILD_PREFIX)/lib/python/site-packages/\1,'
 EXTRA_PAX_ARGS += -s ',^\.$(libdir)/python.*,,'
 
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
+PYCOMPILE = 1
 
-PKGFILES_CSWpyxcbproto = .*\.py
+PKGFILES_CSWpyx11xcbproto = .*\.py
 
 include gar/category.mk
