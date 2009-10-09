@@ -69,8 +69,8 @@ REQUIRED_PKGS_CSWbdb43devel = CSWbdb43
 LICENSE = LICENSE
 
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb43),'
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.* $(libdir)/db.jar
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.* $(libdir)/db.jar
 
 PKGFILES_CSWbdb43doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb43devel = $(PKGFILES_DEVEL)

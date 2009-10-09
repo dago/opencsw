@@ -68,8 +68,8 @@ REQUIRED_PKGS_CSWbdb48devel = CSWbdb48
 LICENSE = LICENSE
 
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb48),'
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.* $(libdir)/db.jar
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.* $(libdir)/db.jar
 
 # Remove the license from share/doc/berkeleydb/license/.*
 # because GAR expects license to be a file instead of a directory
