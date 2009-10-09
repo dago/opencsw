@@ -13,10 +13,10 @@
 ###### Package information #######
 
 GARNAME = openssh
-GARVERSION = 5.2
+GARVERSION = 5.3
 RELEASE = p1
 GSSKEX_PATCH_VERSION = $(GARVERSION)$(RELEASE)
-GSSKEX_PATCH_DATE = 20081003
+GSSKEX_PATCH_DATE = 20090726
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
@@ -66,7 +66,7 @@ DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
 LICENSE = LICENCE
 
 # The GSSAPI key exchange patch
-PATCHFILES = openssh-$(GSSKEX_PATCH_VERSION)-gsskex-$(GSSKEX_PATCH_DATE).patch
+PATCHFILES = openssh-$(GSSKEX_PATCH_VERSION)-gsskex-all-$(GSSKEX_PATCH_DATE).patch
 
 # Prevent TIOCSCTTY from being used to avoid error:
 # ioctl(TIOCSCTTY): Invalid argument
