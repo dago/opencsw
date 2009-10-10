@@ -67,7 +67,7 @@ merge-opencsw-completion:
 
 
 merge-additional-docs:
-	@( for FILE in AUTHORS README TODO CHANGES; do \
+	@( for FILE in AUTHORS README TODO; do \
 		ginstall -D "$(WORKSRC_FIRSTMOD)/$$FILE" "$(PKGROOT)$(docdir)/$(GARNAME)/$$FILE"; \
 	done )
 	@$(MAKECOOKIE)	
