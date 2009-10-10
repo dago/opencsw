@@ -5,7 +5,7 @@ cbe3d9921fca3130e42db09914c6ea07  CSWosshclient.prototype
 1d3d6d477c09e59c514e637fa3a2f7a4  CSWosshlpk.checkinstall
 0993813fa5c752215f892cb67c86816f  CSWosshlpk.preinstall
 22ffa2a9b7bf310d58d3b299805a41b1  CSWosshlpk.prototype
-385098d42f4454b7928e0273ee32c00c  changelog.CSW
+d9eea5c8d787a514827e94d80e4f5574  changelog.CSW
 9153031524651a18e7edaed4637aa769  contrib-openssh-lpk-5.2p1-0.3.9.patch
 a5ebb2e3fdaa06c3c9edba55aac5f83b  cswopenssh
 8e765642349b6321d01b33e95304e113  cswopenssh.xml

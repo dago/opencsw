@@ -151,6 +151,7 @@ merge-config-files:
 	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' \
 		-e 's,/usr/libexec/,/opt/csw/libexec/,g' \
 		-e 's,^ *# *UsePAM *.*,UsePAM yes,g' \
+		-e 's,^ *# *PrintMotd *.*,PrintMotd no,g' \
 	       	-e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config" > "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
 	@$(MAKECOOKIE)
 

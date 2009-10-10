@@ -1,6 +1,8 @@
 openssh (5.3,REV=2009.10.10_rev=p1) unstable
 
   * New upstream release.
+  * PrintMotd is now no in the default config file to avoid a double login
+  banner (Closes: #3829)
 
  -- Yann Rouillard <yann@opencsw.org>  Fri, 10 Oct 2009 21:47:46 +0200
 
