@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = vsftpd
-GARVERSION = 2.1.2
+GARVERSION = 2.2.0
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.
@@ -70,9 +70,6 @@ PATCHFILES += set_priv_sep_user.patch
 # patch to add DESTDIR support to 
 # vsftpd makfile
 PATCHFILES += destdir.patch
-
-# solaris doesn't have RLIMIT_NPROC
-PATCHFILES += no_rlimit_nproc.patch
 
 # Documentation files
 DOCFILES  = AUDIT BENCHMARKS BUGS COPYING COPYRIGHT Changelog FAQ INSTALL LICENSE REFS

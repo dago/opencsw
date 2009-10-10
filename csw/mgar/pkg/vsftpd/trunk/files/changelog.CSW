@@ -1,3 +1,11 @@
+vsftpd (2.2.0,REV=2009.10.10) unstable
+
+  * New upstream version.
+  * Removed no_rlimit_nproc.patch as the same modification has been applied
+  upstream.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 10 Oct 2009 23:37:15 +0200
+
 vsftpd (2.1.2,REV=2009.06.30) unstable
 
   * New upstream version.
