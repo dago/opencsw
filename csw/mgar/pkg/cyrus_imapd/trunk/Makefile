@@ -1,5 +1,19 @@
+#####################################################################
+# OpenCSW build recipe for Cyrus Imap
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+###### Package information #######
+
 GARNAME = cyrus_imapd
-GARVERSION = 2.3.14
+GARVERSION = 2.3.15
 CATEGORIES = server
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
@@ -15,10 +29,14 @@ define BLURB
   multiple SASL mechanisms, and the Sieve mail filtering language.
 endef
 
-MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/ http://email.uoa.gr/download/cyrus/cyrus-imapd-$(GARVERSION)/
+
+###### Upstream and opencsw files information #######
+
+#MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/ http://email.uoa.gr/download/cyrus/cyrus-imapd-$(GARVERSION)/
+MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/ http://email.uoa.gr/download/cyrus/cyrus-imapd-2.3.14/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = cyrus-imapd-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend checkinstall)
@@ -33,9 +51,6 @@ DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype depend)
 DISTFILES += cyrus_imapd_utils.changelog.CSW
 DISTFILES += pm_cyrus.changelog.CSW
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
-
 # compile_et is not provided by krb5lib_dev so we must provide our own version
 # taken from the krb5 source.
 DISTFILES += compile_et et_c.awk et_h.awk
@@ -48,7 +63,7 @@ SPKG_CLASSES = none services conf
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
 #PATCHFILES = cyrus-imapd-$(GARVERSION)-autocreate-0.10-0.diff cyrus-imapd-$(GARVERSION)-autosieve-0.6.0.diff 
-PATCHFILES = cyrus-imapd-2.3.13-autocreate-0.10-0.diff cyrus-imapd-2.3.13-autosieve-0.6.0.diff 
+PATCHFILES = cyrus-imapd-2.3.14-autocreate-0.10-0.diff cyrus-imapd-2.3.14-autosieve-0.6.0.diff 
  
 # UPDATE: not necessary anymore, integrated upstream
 # This patch adds a new option which allows cyrus to
@@ -71,6 +86,8 @@ PATCHFILES += restore_allowplaintext_default.patch
 #GARCOMPILER = GNU
 #GNU_CC_OPT = -g
 #GNU_LD_OPT = -g
+
+##### Build and installation information #####
 
 # files are extracted in cyrus_imapd not cyrus-imapd
 WORKSRC = $(WORKDIR)/$(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION)
@@ -124,7 +141,7 @@ post-build:
 	find doc -type f -exec perl -pi -e 's/\/opt\/csw\/etc\/cyrus\/sasldb2/\/opt\/csw\/etc\/sasldb2/g' '{}' ';')
 	@$(MAKECOOKIE)
 
-pre-install:
+pre-merge:
 	# we must create the directory where perl libraries will be installed
 	mkdir -p $(DESTDIR)/$(prefix)/lib/perl
 	mkdir -p $(DESTDIR)/$(sbindir)
@@ -132,7 +149,7 @@ pre-install:
 	mkdir -p $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd
 	@$(MAKECOOKIE)
 
-post-install:
+post-merge:
 	# we install binary under tools as part of the package
 	cp -r $(WORKSRC)/tools/* $(DESTDIR)$(sbindir)
 	ginstall -D $(DESTDIR)$(sbindir)/arbitronsort.pl $(DESTDIR)$(sbindir)/arbitronsort
