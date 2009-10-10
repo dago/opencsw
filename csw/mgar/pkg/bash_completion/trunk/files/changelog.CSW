@@ -1,8 +1,8 @@
-bash_completion (1.1,REV=2009.10.10)
+bash_completion (1.1,REV=2009.10.11)
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 10 Oct 2009 22:34:13 +0200
+   -- Yann Rouillard <yann@opencsw.org>  Sat, 11 Oct 2009 00:34:13 +0200
 
 bash_completion (1.0,REV=2009.04.07)
 
