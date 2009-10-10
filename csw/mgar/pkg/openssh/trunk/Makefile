@@ -44,6 +44,7 @@ SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client
 REQUIRED_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
 SPKG_CLASSES_CSWosshclient = none cswpreserveconf
 
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386 solaris10-sparc solaris10-i386
 
 ###### Upstream and OpenCSW files information #######
 
