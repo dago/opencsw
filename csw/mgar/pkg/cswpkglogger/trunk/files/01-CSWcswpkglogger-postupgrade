@@ -1,0 +1,62 @@
+#!/opt/csw/bin/bash
+
+script=$0
+
+set -- ${1/-/ }
+PKG=$1
+VER=$2
+
+function logdie() {
+    logger -t "CSW Package Logger" "$1"
+    exit 0
+}
+
+function success() {
+    case ${script} in
+	*install) MSG="installed ${PKG} ${VER}";;
+	*upgrade) MSG="upgraded ${PKG} to ${VER} (from: $1)";;
+	*remove) MSG="removed ${PKG} ${VER}";;
+    esac
+
+    logdie "${MSG}"
+}
+
+function failure() {
+    case ${script} in
+	*install) MSG="Failed to install ${PKG} ${VER}";;
+	*upgrade) MSG="Failed to upgrade ${PKG} ${VER} (current: $1)";;
+	*remove) MSG="Failed to remove ${PKG} ${VER}";;
+    esac
+
+    logdie "${MSG}"
+}
+
+if [ -d /var/sadm/pkg/${PKG} ]; then
+    SYSTEMVER=$(pkgparam ${PKG} VERSION 2>/dev/null)
+    pf=/var/opt/csw/pkg-hooks/CSWpkglogger.upgrade.${PKG}
+    if [ -f ${pf} ]; then
+	PREVVER=$(cat ${pf} 2>/dev/null)
+	rm -f ${pf}
+    fi
+
+    case ${script} in
+	*remove)
+	    failure
+	    ;;
+	*install|*upgrade)
+	    case "${VER}" in
+		${SYSTEMVER}) success ${PREVVER};;
+		*) failure ${SYSTEMVER};;
+	    esac
+	    ;;
+    esac
+else
+    case ${script} in
+	*remove)
+	    success
+	    ;;
+	*install|*upgrade)
+	    failure
+	    ;;
+    esac
+fi
