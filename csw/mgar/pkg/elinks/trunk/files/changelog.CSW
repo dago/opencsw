@@ -1,8 +1,8 @@
-elinks (0.11.7,REV=2009.09.04) unstable
+elinks (0.11.7,REV=2009.10.10) unstable
 
   * New upstream version.
 
- -- Yann Rouillard <yann@opencsw.org>  Sun, 04 Sep 2009 10:38:39 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 10 Oct 2009 21:38:39 +0100
 
 elinks (0.11.6,REV=2009.03.22) unstable
 
