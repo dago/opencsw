@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = bash_completion
-GARVERSION = 1.0
+GARVERSION = 1.1
 CATEGORIES = xtra
 
 DESCRIPTION = Programmable completion for bash
