@@ -59,6 +59,7 @@ f none /opt/csw/libexec/cyrus/sievec 0755 root bin
 s none /opt/csw/sbin/sievec=../libexec/cyrus/sievec
 s none /opt/csw/sbin/cyrus-master=../libexec/cyrus/cyrus-master
 f none /opt/csw/libexec/cyrus/cyrus-master 0755 root bin
+f none /opt/csw/libexec/cyrus/cyr_df 0755 root bin
 f none /opt/csw/libexec/cyrus/imapd 0755 root bin
 f none /opt/csw/libexec/cyrus/pop3d 0755 root bin
 f none /opt/csw/libexec/cyrus/fud 0755 root bin
