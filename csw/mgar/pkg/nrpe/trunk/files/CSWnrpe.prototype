@@ -3,7 +3,7 @@ f none /opt/csw/bin/nrpe_1k 0775 root bin
 f none /opt/csw/bin/nrpe_8k 0775 root bin
 s none /opt/csw/bin/nrpe=/opt/csw/bin/nrpe_1k
 d none /opt/csw/etc 0755 root bin
-f cswpreserveconf /opt/csw/etc/nrpe.cfg.CSW 0644 root bin
+f cswpreserveconf /etc/opt/csw/nrpe.cfg.CSW 0644 root bin
 d none /opt/csw/share/doc/nrpe 0755 root bin
 f none /opt/csw/share/doc/nrpe/NRPE.pdf 0644 root bin
 f none /opt/csw/share/doc/nrpe/LEGAL 0644 root bin
@@ -11,6 +11,9 @@ f none /opt/csw/share/doc/nrpe/README 0644 root bin
 f none /opt/csw/share/doc/nrpe/README_8k 0644 root bin
 f none /opt/csw/share/doc/nrpe/README.SSL 0644 root bin
 f none /opt/csw/share/doc/nrpe/SECURITY 0644 root bin
+d none /opt/csw/nagios 755 root bin
 f cswinitsmf /etc/opt/csw/init.d/cswnrpe 0755 root bin
+d none /opt/csw/etc/pkg/CSWnrpe 0755 root bin
+f cswusergroup /opt/csw/etc/pkg/CSWnrpe/cswusergroup 0644 root bin
 i depend=CSWnrpe.depend
 i pkginfo=CSWnrpe.pkginfo

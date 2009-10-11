@@ -12,20 +12,30 @@ endef
 SF_PROJ = nagios
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnrpe, prototype checkinstall preinstall preremove )
-DISTFILES += cswnrpe
+
+# Distfiles for CSWnrpe
+
+DISTFILES += CSWnrpe.preinstall CSWnrpe.prototype
+DISTFILES += cswnrpe cswusergroup
 DISTFILES += README_8k
-DISTFILES += $(call admfiles,CSWnrpeplugin, prototype )
+
+# Distfiles for check_nrpe
+
+DISTFILES += CSWnrpeplugin.prototype
 
 PATCHFILES = patch.diff configure.diff
 
 PATCHFILES_isa-sparcv8-size-8k = common.h.diff
 PATCHFILES_isa-i386-size-8k = common.h.diff
 
+PACKAGES = CSWnrpe CSWnrpeplugin
+CATALOGNAME_CSWmuninmaster = nrpe
+CATALOGNAME_CSWmuninnode = nrpe_plugin
+
 REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap CSWcswclassutils
 REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt 
 
-SPKG_CLASSES_CSWnrpe = none cswpreserveconf cswinitsmf
+SPKG_CLASSES_CSWnrpe = none cswusergroup cswpreserveconf cswinitsmf
 
 EXTRA_MODULATORS = SIZE
 MODULATIONS_SIZE = 1k 8k
@@ -41,12 +51,7 @@ CONFIGURE_ARGS += --enable-command-args
 CONFIGURE_ARGS += --prefix=/opt/csw
 CONFIGURE_ARGS += --exec-prefix=/opt/csw
 
-#PATCHFILES = patch.diff	# Removal of LOG_AUTHPRIV and LOG_FTP
-			# Solaris doesn't have these log facilities
-#PATCHFILES += configure.diff 
-#PATCHFILES += common.h.diff # Enable packet size of 8192 bytes
-
-sysconfdir = $(prefix)/etc
+sysconfdir = /etc/${prefix}
 bindir = $(prefix)/bin
 libexecdir = $(prefix)/libexec/nagios-plugins
 datadir = $(prefix)/share
@@ -71,6 +76,7 @@ install-custom:
 	ginstall -m 775 -d $(DESTDIR)$(DOCDIR)
 	ginstall -m 755 -d $(DESTDIR)$(LIBEXECDIR)
 	ginstall -m 755 -d $(DESTDIR)$(BINDIR)
+	ginstall -m 755 -d $(DESTDIR)/nagios
 	ginstall -m 755 $(WORKSRC)/src/check_nrpe $(DESTDIR)$(LIBEXECDIR)
 	ginstall -m 755 $(WORKSRC)/src/nrpe $(DESTDIR)$(BINDIR)/nrpe_1k
 	ginstall -m 644 $(WORKSRC)/docs/NRPE.pdf $(DESTDIR)$(DOCDIR)
@@ -83,6 +89,8 @@ install-custom:
 	ginstall -m 644 $(WORKSRC)/sample-config/nrpe.cfg $(DESTDIR)$(CFGDIR)/nrpe.cfg.CSW
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswnrpe $(DESTDIR)/etc/opt/csw/init.d/cswnrpe
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/pkg/CSWnrpe
+	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWnrpe/cswusergroup
 	@$(MAKECOOKIE)
 
 merge-copy-nrpe-only:

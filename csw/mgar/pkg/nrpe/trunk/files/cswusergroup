@@ -1,0 +1,1 @@
+nagios:nagios:Nagios user:/opt/csw/nagios:/bin/false:m:r

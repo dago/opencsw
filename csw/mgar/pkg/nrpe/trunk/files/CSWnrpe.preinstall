@@ -1,23 +1,18 @@
-# This script exists to make sure the required user
-# accounts nagios and groups nagios exist.
-# 2006-02-27: group nagioscm is required.
-# 2007-09-11 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
-#            relocatable packages.
+cat << EOF
 
-#If installing package on a filesystem tree not running the OS; then exit.
-if [ ! x"$PKG_INSTALL_ROOT" = x"" ] ; then exit 0 ; fi
+=======================================================================
 
-NAGIOSHOME=/opt/csw/nagios
+From package revision nrpe-2.12,REV=2009.10.11 on the configuration
+file for NRPE is stored in /etc/opt/csw/.
 
-if [ "$NEEDNAGGROUP" = 1 ] ; then
-        echo adding nagios group
-        /usr/sbin/groupadd nagios
-fi
+No further action is needed (to have a backup is always a good idea).
 
-if [ "$NEEDNAGUSER" = 1 ] ; then
-        echo adding nagios user
-        /usr/sbin/useradd -g nagios nagios
-        /usr/sbin/usermod -s /bin/false -d $NAGIOSHOME nagios
-fi
+            Installation will proceed in 10 seconds.
+             Press CTRL+C if you want to stop now.
+
+=======================================================================
+EOF
+
+sleep 10
 
 exit 0
