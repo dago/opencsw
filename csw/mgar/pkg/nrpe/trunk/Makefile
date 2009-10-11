@@ -19,7 +19,7 @@ DISTFILES += CSWnrpe.preinstall CSWnrpe.prototype
 DISTFILES += cswnrpe cswusergroup
 DISTFILES += README_8k
 
-# Distfiles for check_nrpe
+# Distfiles for nrpe_plugin
 
 DISTFILES += CSWnrpeplugin.prototype
 
@@ -29,8 +29,8 @@ PATCHFILES_isa-sparcv8-size-8k = common.h.diff
 PATCHFILES_isa-i386-size-8k = common.h.diff
 
 PACKAGES = CSWnrpe CSWnrpeplugin
-CATALOGNAME_CSWmuninmaster = nrpe
-CATALOGNAME_CSWmuninnode = nrpe_plugin
+CATALOGNAME_CSWnrpe = nrpe
+CATALOGNAME_CSWnrpeplugin = nrpe_plugin
 
 REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap CSWcswclassutils
 REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt 
