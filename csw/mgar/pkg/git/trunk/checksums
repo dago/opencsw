@@ -1,2 +1,2 @@
-286ebdc4e98afca87750145775cbe918  download/0001-ls-files-make-option-parser-keep-argv-0.patch
+43f73e9e39bc388253c4c48986ef7b5c  download/0001-ls-files-die-instead-of-fprintf-exit-in-i-error.patch
 0f3606cd6720f525e7261cea87c11a61  download/CSWgit.postinstall

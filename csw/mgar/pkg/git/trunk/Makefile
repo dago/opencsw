@@ -1,10 +1,10 @@
 GARNAME = git
-GARVERSION = 1.6.4.4
+GARVERSION = 1.6.5
 #xPATCHLEVEL = rc3
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
-TEST_SCRIPTS = 
+# TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 PACKAGES += CSWgitcompletion CSWgitdevel
@@ -30,8 +30,7 @@ ARCHALL_CSWgitcompletion = 1
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
 PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
-PREREQUISITE_PKGS += CSWautoconf
-
+  
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
 REQUIRED_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
 REQUIRED_PKGS_CSWgit += CSWpmtermreadkey
@@ -87,7 +86,7 @@ GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
 GIT_TREEISH_git.git = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 
 DISTFILES = CSWgit.postinstall
-PATCHFILES = 0001-ls-files-make-option-parser-keep-argv-0.patch
+#PATCHFILES = 0001-ls-files-die-instead-of-fprintf-exit-in-i-error.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
@@ -122,7 +121,7 @@ CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
-		ETC_GITCONFIG=$(sysconfdir)/gitconfig V=1 \
+		ETC_GITCONFIG=$(sysconfdir)/gitconfig \
 		ASCIIDOC_NO_ROFF=YesPlease \
 		all
 
@@ -150,7 +149,6 @@ pre-configure-modulated:
 post-build-modulated:
 	@echo Builing Emacs Git extension
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs )
-	@( cd $(WORKSRC)/Documentation; $(MAKE) )
 
 post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)
 post-install-modulated: BD=$(DESTDIR)/$(bashconfdir)/bash_completion.d
