@@ -29,6 +29,23 @@ define BLURB
   multiple SASL mechanisms, and the Sieve mail filtering language.
 endef
 
+PACKAGES = CSWcyrusimapd CSWcyrusimapdutils CSWpmcyrus
+
+SPKG_DESC_CSWcyrusimapd = Pop and Imap server from the Cyrus mail system
+CATALOGNAME_CSWcyrusimapd = cyrus_imapd
+REQUIRED_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb4 CSWkrb5lib CSWtcpwrap CSWnetsnmp CSWpcrert
+SPKG_CLASSES_CSWcyrusimapd = none services cswpreserveconf cswinitsmf
+
+SPKG_DESC_CSWcyrusimapdutils = Various admin utilities for Cyrus Imapd/Popd
+CATALOGNAME_CSWcyrusimapdutils = cyrus_imapd_utils
+REQUIRED_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb4 CSWkrb5lib CSWpcrert
+SPKG_CLASSES_CSWcyrusimapd = none 
+
+SPKG_DESC_CSWpmcyrus = Perl interface to Cyrus Imap functions
+CATALOGNAME_CSWpmcyrus = pm_cyrus
+REQUIRED_PKGS_CSWpmcyrus = CSWperl CSWbdb4 CSWosslrt CSWsasl
+SPKG_CLASSES_CSWcyrusimapd = none
+
 
 ###### Upstream and opencsw files information #######
 
@@ -38,16 +55,17 @@ MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/ http://email.uoa.gr/down
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWcyrusimapd,prototype preinstall depend checkinstall)
+DISTNAME = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION)
+
+DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += CSWcyrusimapd.prototype CSWcyrusimapd.preinstall CSWcyrusimapd.checkinstall
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
 DISTFILES += i.services r.services services
-DISTFILES += i.conf r.conf
-DISTFILES += cswcyrus.init cswcyrus.xml svc-cswcyrus
+DISTFILES += cswcyrus cswcyrus.xml
 DISTFILES += imapd.conf cyrus.conf
 
-DISTFILES += $(call admfiles,CSWpmcyrus,prototype depend)
-DISTFILES += $(call admfiles,CSWcyrusimapdutils,prototype depend)
+DISTFILES += CSWpmcyrus.prototype
+DISTFILES += CSWcyrusimapdutils.prototype
 DISTFILES += cyrus_imapd_utils.changelog.CSW
 DISTFILES += pm_cyrus.changelog.CSW
 
@@ -58,18 +76,11 @@ DISTFILES += compile_et et_c.awk et_h.awk
 # le fichier install-upgrade de cyrus 2.3.11 est incomplet
 DISTFILES += install-upgrade
 
-SPKG_CLASSES = none services conf
-
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
 #PATCHFILES = cyrus-imapd-$(GARVERSION)-autocreate-0.10-0.diff cyrus-imapd-$(GARVERSION)-autosieve-0.6.0.diff 
-PATCHFILES = cyrus-imapd-2.3.14-autocreate-0.10-0.diff cyrus-imapd-2.3.14-autosieve-0.6.0.diff 
+PATCHFILES = cyrus-imapd-2.3.15-autocreate-0.10-0.diff cyrus-imapd-2.3.14-autosieve-0.6.0.diff 
  
-# UPDATE: not necessary anymore, integrated upstream
-# This patch adds a new option which allows cyrus to
-# accept mails with 8bits characters in header
-# PATCHFILES += cyrus-imapd-2.2.7-munge8bit.patch
-
 # This patch makes cyrus more tolerant with mails containing
 # invalid From headers 
 # This avoids "Invalid Message header" error messages
@@ -88,9 +99,6 @@ PATCHFILES += restore_allowplaintext_default.patch
 #GNU_LD_OPT = -g
 
 ##### Build and installation information #####
-
-# files are extracted in cyrus_imapd not cyrus-imapd
-WORKSRC = $(WORKDIR)/$(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-cyrus-prefix=$(prefix)
@@ -120,7 +128,7 @@ CONFIGURE_ENV += COMPILE_ET="$(CURDIR)/files/compile_et -d $(CURDIR)/files/"
 pre-patch:
 	cp $(WORKDIR)/install-upgrade $(WORKSRC)/doc/text
 
-pre-configure:
+pre-configure-modulated:
 	# master is a too common name, so we rename it cyrus-master
 	cp $(WORKSRC)/man/master.8 $(WORKSRC)/man/cyrus-master.8
 	cp $(WORKSRC)/doc/man/master.8.html $(WORKSRC)/doc/man/cyrus-master.8.html
@@ -143,33 +151,48 @@ post-build:
 
 pre-merge:
 	# we must create the directory where perl libraries will be installed
-	mkdir -p $(DESTDIR)/$(prefix)/lib/perl
-	mkdir -p $(DESTDIR)/$(sbindir)
-	mkdir -p $(DESTDIR)/$(sysconfdir)/cyrus
-	mkdir -p $(DESTDIR)/$(prefix)/share/doc/cyrus_imapd
+	mkdir -p $(PKGROOT)/$(prefix)/lib/perl
+	mkdir -p $(PKGROOT)/$(sbindir)
+	mkdir -p $(PKGROOT)/$(sysconfdir)/cyrus
+	mkdir -p $(PKGROOT)/$(prefix)/share/doc/cyrus_imapd
 	@$(MAKECOOKIE)
 
 post-merge:
+	# we provide our class action scripts to modify /etc/inet/services
+	ginstall $(WORKDIR_FIRSTMOD)/*.services $(WORKDIR)/
+	ginstall -D $(WORKDIR_FIRSTMOD)/services $(PKGROOT)/etc/inet/services
+	
+	# configuration and init file installation
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswcyrus" "$(PKGROOT)/etc/opt/csw/init.d/cswcyrus"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswcyrus.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswcyrus.xml"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/imapd.conf" "$(PKGROOT)/$(sysconfdir)/cyrus/imapd.conf.CSW"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cyrus.conf" "$(PKGROOT)/$(sysconfdir)/cyrus/cyrus.conf.CSW"
+
+
 	# we install binary under tools as part of the package
-	cp -r $(WORKSRC)/tools/* $(DESTDIR)$(sbindir)
-	ginstall -D $(DESTDIR)$(sbindir)/arbitronsort.pl $(DESTDIR)$(sbindir)/arbitronsort
+	cp -r $(WORKSRC_FIRSTMOD)/tools/* $(PKGROOT)$(sbindir)
+	ginstall -D $(PKGROOT)$(sbindir)/arbitronsort.pl $(PKGROOT)$(sbindir)/arbitronsort
 
 	# we want perl script to use opencsw perl
-	perl -pi -e 's/exec\s+perl/exec \/opt\/csw\/bin\/perl/g' $(DESTDIR)$(sbindir)/* $(DESTDIR)$(bindir)/*
+	perl -pi -e 's/exec\s+perl/exec \/opt\/csw\/bin\/perl/g' $(PKGROOT)$(sbindir)/* $(PKGROOT)$(bindir)/*
 	( for FILE in convert-sieve.pl mupdate-loadgen.pl translatesieve undohash upgradesieve arbitronsort; do \
-	    perl -pi -e 's/^#!\/usr\/(local\/)?bin\/perl/#!\/usr\/bin\/perl/' $(DESTDIR)$(sbindir)/$$FILE; \
+	    perl -pi -e 's/^#!\/usr\/(local\/)?bin\/perl/#!\/usr\/bin\/perl/' $(PKGROOT)$(sbindir)/$$FILE; \
 	    done )
 
 	# we install the documentation
-	cp -r $(WORKSRC)/doc/* $(DESTDIR)/$(docdir)/cyrus_imapd
+	cp -r $(WORKSRC_FIRSTMOD)/doc/* $(PKGROOT)/$(docdir)/cyrus_imapd
 	( for PKG in cyrus_imapd cyrus_imapd_utils pm_cyrus; do \
-		ginstall -D $(WORKDIR)/$$PKG.changelog.CSW $(DESTDIR)/$(docdir)/$$PKG/changelog.CSW; \
+		ginstall -D $(WORKDIR_FIRSTMOD)/$$PKG.changelog.CSW $(PKGROOT)/$(docdir)/$$PKG/changelog.CSW; \
+		ginstall -D $(WORKDIR_FIRSTMOD)/README.CSW $(PKGROOT)/$(docdir)/$$PKG/README.CSW; \
 	  done )
 
 	# we rename some tools with too generic names
-	ginstall -D $(DESTDIR)/$(sbindir)/mkimap $(DESTDIR)/$(sbindir)/mkdirs
+	ginstall -D $(PKGROOT)/$(sbindir)/mkimap $(PKGROOT)/$(sbindir)/mkdirs
 	( for FILE in mkdirs mknewsgroups dohash undohash rehash; do \
-		ginstall -D $(DESTDIR)/$(sbindir)/$$FILE $(DESTDIR)/$(sbindir)/cyrus-$$FILE; \
+		ginstall -D $(PKGROOT)/$(sbindir)/$$FILE $(PKGROOT)/$(sbindir)/cyrus-$$FILE; \
 	  done )
-	@$(MAKECOOKIE)
 	
+	# we fix some permission problems
+	chmod -R u+w "$(PKGROOT)/"
+
+	@$(MAKECOOKIE)

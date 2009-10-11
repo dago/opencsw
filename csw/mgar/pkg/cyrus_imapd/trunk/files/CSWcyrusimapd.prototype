@@ -1,11 +1,11 @@
-i i.conf=i.conf
-i r.conf=r.conf
-i i.services=i.services
-i r.services=r.services
-e services /etc/inet/services=services
+i i.services
+i r.services
+e services /etc/inet/services 0444 root sys
 d none /opt/csw/etc/cyrus 0755 root bin
-e conf /opt/csw/etc/cyrus/imapd.conf=imapd.conf 0640 root mail
-f none /opt/csw/etc/cyrus/cyrus.conf.CSW=cyrus.conf 0640 root mail
+d none /opt/csw/etc/pkg/CSWcyrusimapd 0755 root bin
+f cswinitsmf /etc/opt/csw/init.d/cswcyrus 0755 root bin
+f preserveconf /opt/csw/etc/cyrus/imapd.conf.CSW 0640 root mail
+f preserveconf /opt/csw/etc/cyrus/cyrus.conf.CSW 0640 root mail
 d none /opt/csw/var/cyrus 0755 cyrus mail
 d none /opt/csw/var/cyrus/sieve 0755 cyrus mail
 d none /opt/csw/var/cyrus/config 0755 cyrus mail
@@ -17,45 +17,6 @@ d none /opt/csw/var/cyrus/config/msg 0755 cyrus mail
 d none /opt/csw/var/cyrus/config/ptclient 0755 cyrus mail
 d none /opt/csw/var/cyrus/mail 0755 cyrus mail
 d none /opt/csw/var/cyrus/mail/stage. 0755 cyrus mail
-d none /opt/csw/include/cyrus 0755 root bin
-f none /opt/csw/include/cyrus/acl.h 0644 root bin
-f none /opt/csw/include/cyrus/assert.h 0644 root bin
-f none /opt/csw/include/cyrus/auth.h 0644 root bin
-f none /opt/csw/include/cyrus/bsearch.h 0644 root bin
-f none /opt/csw/include/cyrus/byteorder64.h 0644 root bin
-f none /opt/csw/include/cyrus/charset.h 0644 root bin
-f none /opt/csw/include/cyrus/cyrusdb.h 0644 root bin
-f none /opt/csw/include/cyrus/glob.h 0644 root bin
-f none /opt/csw/include/cyrus/gmtoff.h 0644 root bin
-f none /opt/csw/include/cyrus/hash.h 0644 root bin
-f none /opt/csw/include/cyrus/hmac-md5.h 0644 root bin
-f none /opt/csw/include/cyrus/imapopts.h 0644 root bin
-f none /opt/csw/include/cyrus/imapurl.h 0644 root bin
-f none /opt/csw/include/cyrus/imclient.h 0644 root bin
-f none /opt/csw/include/cyrus/imparse.h 0644 root bin
-f none /opt/csw/include/cyrus/iptostring.h 0644 root bin
-f none /opt/csw/include/cyrus/libconfig.h 0644 root bin
-f none /opt/csw/include/cyrus/libcyr_cfg.h 0644 root bin
-f none /opt/csw/include/cyrus/lock.h 0644 root bin
-f none /opt/csw/include/cyrus/lsort.h 0644 root bin
-f none /opt/csw/include/cyrus/map.h 0644 root bin
-f none /opt/csw/include/cyrus/md5.h 0644 root bin
-f none /opt/csw/include/cyrus/mkgmtime.h 0644 root bin
-f none /opt/csw/include/cyrus/mpool.h 0644 root bin
-f none /opt/csw/include/cyrus/nonblock.h 0644 root bin
-f none /opt/csw/include/cyrus/parseaddr.h 0644 root bin
-f none /opt/csw/include/cyrus/prot.h 0644 root bin
-f none /opt/csw/include/cyrus/retry.h 0644 root bin
-f none /opt/csw/include/cyrus/rfc822date.h 0644 root bin
-f none /opt/csw/include/cyrus/strhash.h 0644 root bin
-f none /opt/csw/include/cyrus/stristr.h 0644 root bin
-f none /opt/csw/include/cyrus/sysexits.h 0644 root bin
-f none /opt/csw/include/cyrus/util.h 0644 root bin
-f none /opt/csw/include/cyrus/xmalloc.h 0644 root bin
-f none /opt/csw/include/cyrus/xstrlcat.h 0644 root bin
-f none /opt/csw/include/cyrus/xstrlcpy.h 0644 root bin
-f none /opt/csw/lib/libcyrus.a 0644 root bin
-f none /opt/csw/lib/libcyrus_min.a 0644 root bin
 f none /opt/csw/share/man/man3/imclient.3 0644 root bin
 f none /opt/csw/share/man/man5/imapd.conf.5 0644 root bin
 f none /opt/csw/share/man/man5/krb.equiv.5 0644 root bin
@@ -301,5 +262,5 @@ f none /opt/csw/share/doc/cyrus_imapd/text/readme 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/text/sieve-protocol 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/text/sieve 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/text/specs 0644 root bin
-f none /opt/csw/share/doc/cyrus_imapd/README.CSW=README.CSW 0644 root bin
+f none /opt/csw/share/doc/cyrus_imapd/README.CSW 0644 root bin
 f none /opt/csw/share/doc/cyrus_imapd/changelog.CSW 0644 root bin

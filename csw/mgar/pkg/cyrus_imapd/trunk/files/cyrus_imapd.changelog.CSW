@@ -1,6 +1,8 @@
 cyrus_imapd (2.3.15,REV=2009.10.11) unstable
 
   * New upstream version.
+  * Switched to cswclassutils for SMF support and configuration file handling.
+  * Removed devel files (.h and .a).
 
  -- Yann Rouillard <yann@opencsw.org>  Sun, 11 Oct 2009 00:47:17 +0200
 

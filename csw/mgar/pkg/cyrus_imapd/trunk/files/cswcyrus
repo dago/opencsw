@@ -1,12 +1,16 @@
 #!/sbin/sh
 #
-# Cyrus startup script for blastwave
+# Cyrus startup script for opencsw
 #
 # Yann Rouillard <yann@blastwave.org>
 
-# chkconfig stuff
-# chkconfig: 3 90 10
-# description: Pop and Imap server from the Cyrus mail system
+# cswclassutils smf variable
+#RC_KNUM 99  
+#RC_SNUM 10   
+#RC_KLEV 0,1,2,S   
+#RC_SLEV 3         
+#MANIFEST /var/opt/csw/svc/manifest/network/cswcyrus.xml
+
 
 PID_FILE="/var/run/cyrus-master.pid"
 COMMAND=/opt/csw/sbin/cyrus-master
