@@ -16,11 +16,3 @@ Please make sure your configuration (gitconfig) was properly moved to
 
 EOF
 fi
-
-/usr/xpg4/bin/grep -q CSWgit /etc/inet/services
-if [ $? -ne 0 ]; then
-    cat <<EOF >>/etc/inet/services
-git             9418/tcp                        # CSWgit: git transfer service
-git             9418/udp                        # CSWgit: git transfer service
-EOF
-fi
