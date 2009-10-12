@@ -1,6 +1,7 @@
 GARNAME = tig
 GARVERSION = 0.14.1
 CATEGORIES = utils
+PATCHLEVEL = 1e69632
 
 DESCRIPTION = A git repository browser
 define BLURB
@@ -21,7 +22,7 @@ PREREQUISITE_PKGS = CSWncurses CSWasciidoc CSWxmlto CSWiconv
 REQUIRED_PKGS = CSWncurses CSWiconv CSWgit
 
 GIT_REPOS = http://jonas.nitro.dk/tig/tig.git
-GIT_TREEISH_tig.git = $(GARNAME)-$(GARVERSION)
+GIT_TREEISH_tig.git = $(PATCHLEVEL)
 
 PATCHFILES = 0001-add-install-detection-to-the-autoconf-setup.patch
 
@@ -35,6 +36,10 @@ TEST_SCRIPTS =
 INSTALL_ARGS = install install-doc
 
 include gar/category.mk
+
+# Set a slightly altered revstamp to indicate that we're not using a
+# pressed release.
+SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
 
 # automake isn't used, but we want install-sh.  automake exits 1, so
 # we run true after to keep gmake happy
