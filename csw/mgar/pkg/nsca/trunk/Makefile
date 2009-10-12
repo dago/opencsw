@@ -11,23 +11,38 @@ endef
 
 MASTER_SITES = http://mesh.dl.sourceforge.net/sourceforge/nagios/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnsca, prototype checkinstall preinstall )
-DISTFILES += $(call admfiles,CSWsendnsca, prototype preinstall )
-DISTFILES += cswnsca
+
+#
+## Distfiles for CSWnsca
+#
+
+DISTFILES += CSWnsca.prototype CSWnsca.preinstall
+DISTFILES += cswnsca CSWnsca.cswusergroup
+
+#
+## Distfiles for CSWsendnsca
+#
+
+DISTFILES += CSWsendnsca.prototype CSWsendnsca.preinstall
+DISTFILES += CSWsendnsca.cswusergroup
 
 PATCHFILES += submit_check_results.diff
+
+PACKAGES = CSWnsca CSWsendnsca
+CATALOGNAME_CSWnsca = nsca
+CATALOGNAME_CSWsendnsca = send_nsca
 
 REQUIRED_PKGS_CSWnsca     = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
 REQUIRED_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
 
-SPKG_CLASSES_CSWnsca = none cswpreserveconf cswinitsmf
-SPKG_CLASSES_CSWsendnsca = none cswpreserveconf
+SPKG_CLASSES_CSWnsca = none cswusergroup cswpreserveconf cswinitsmf
+SPKG_CLASSES_CSWsendnsca = none cswusergroup cswpreserveconf
 
 NOISALIST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-nsca-port=5667
-CONFIGURE_ARGS += --localstatedir=/opt/csw/nagios/var
+CONFIGURE_ARGS += --localstatedir=/var/opt/csw/nagios
 
 BUILD_TARGETS = nsca
 
@@ -37,8 +52,7 @@ include gar/category.mk
 
 BINDIR=$(prefix)/bin
 NAGIOSBINDIR=$(prefix)/nagios/bin
-CFGDIR=$(prefix)/etc
-NAGIOSCFGDIR=$(prefix)/nagios/etc
+NAGIOSCFGDIR=/etc$(prefix)/nagios
 NSCADOCDIR=$(prefix)/share/doc/nsca
 SENDNSCADOCDIR=$(prefix)/share/doc/send_nsca
 
@@ -57,11 +71,15 @@ post-install-modulated:
 	ginstall -m 755 $(WORKSRC)/src/send_nsca $(DESTDIR)$(BINDIR)
 	ginstall -m 755 -d $(DESTDIR)$(SENDNSCADOCDIR)
 	ginstall -m 755 $(WORKSRC)/src/submit_check_result-sample $(DESTDIR)$(SENDNSCADOCDIR)
-	ginstall -m 600 $(WORKSRC)/sample-config/send_nsca.cfg $(DESTDIR)$(CFGDIR)/send_nsca.cfg.CSW
+	ginstall -m 600 $(WORKSRC)/sample-config/send_nsca.cfg $(DESTDIR)$(NAGIOSCFGDIR)/send_nsca.cfg.CSW
 	ginstall -m 644 $(WORKSRC)/Changelog $(DESTDIR)$(SENDNSCADOCDIR)
 	ginstall -m 644 $(WORKSRC)/LEGAL $(DESTDIR)$(SENDNSCADOCDIR)
 	ginstall -m 644 $(WORKSRC)/README $(DESTDIR)$(SENDNSCADOCDIR)
 	ginstall -m 644 $(WORKSRC)/SECURITY $(DESTDIR)$(SENDNSCADOCDIR)
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d/
 	ginstall -m 755 $(FILEDIR)/cswnsca $(DESTDIR)/etc/opt/csw/init.d/
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/pkg/CSWsendnsca
+	@ginstall -m 644 $(FILEDIR)/CSWsendnsca.cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWsendnsca/cswusergroup
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/pkg/CSWnsca
+	@ginstall -m 644 $(FILEDIR)/CSWnsca.cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWnsca/cswusergroup
 	@$(MAKECOOKIE)

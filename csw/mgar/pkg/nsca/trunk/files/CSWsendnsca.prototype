@@ -1,12 +1,14 @@
 d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/send_nsca 0755 root bin
 d none /opt/csw/etc 0755 root bin
-f cswpreserveconf /opt/csw/etc/send_nsca.cfg.CSW 0644 root bin
+f cswpreserveconf /etc/opt/csw/nagios/send_nsca.cfg.CSW 0644 root bin
 d none /opt/csw/share/doc/send_nsca 0755 root bin
 f none /opt/csw/share/doc/send_nsca/Changelog 0644 root bin
 f none /opt/csw/share/doc/send_nsca/LEGAL 0644 root bin
 f none /opt/csw/share/doc/send_nsca/README 0644 root bin
 f none /opt/csw/share/doc/send_nsca/SECURITY 0644 root bin
 f none /opt/csw/share/doc/send_nsca/submit_check_result-sample 0755 root bin
+d none /opt/csw/etc/pkg/CSWsendnsca 0755 root bin
+f cswusergroup /opt/csw/etc/pkg/CSWsendnsca/cswusergroup 0644 root bin
 i pkginfo=CSWsendnsca.pkginfo
 i preinstall=CSWsendnsca.preinstall

@@ -5,38 +5,21 @@
 # 2007-12-02 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
 #            relocatable packages.
 
-NAGIOSHOME=/opt/csw/nagios
+cat << EOF
 
-#First check target machines password file, THEN check
-#NIS/NIS+/whatever
+=======================================================================
 
-grep '^nagios:' /etc/passwd >/dev/null
-if [ $? -ne 0 ] ; then
-        getent passwd nagios >/dev/null
-        if [ $? -ne 0 ] ; then
-                NEEDUSER=1
-        fi
-fi
+From NSCA 2.7.2,REV=2009.10.05 on the configuration file for the
+OpenCSW package is stored in /etc/opt/csw/nagios/.
 
-grep '^nagios:' /etc/group >/dev/null
-if [ $? -ne 0 ] ; then
-        getent group nagios >/dev/null
-        if [ $? -ne 0 ] ; then
-                NEEDGROUP=1
-        fi
-fi
+No further action is needed (to have a backup is always a good idea).
 
-if [ "$NEEDGROUP" = 1 ] ; then
-        echo adding nagios group
-        /usr/sbin/groupadd nagios
-else
-        echo nagios group detected
-fi
+            Installation will proceed in 10 seconds.
+             Press CTRL+C if you want to stop now.
+             
+=======================================================================
+EOF
 
-if [ "$NEEDUSER" = 1 ] ; then
-        echo adding nagios user
-        /usr/sbin/useradd -g nagios nagios
-        /usr/sbin/usermod -s /bin/false -d $NAGIOSHOME nagios
-else
-        echo nagios user detected
-fi
+sleep 10
+
+exit 0

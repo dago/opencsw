@@ -1,11 +1,12 @@
 1 f none /opt/csw/nagios/bin/nsca 0755 root bin
-1 f cswpreserveconf /opt/csw/nagios/etc/nsca.cfg.CSW 0644 root bin
+1 f cswpreserveconf /etc/opt/csw/nagios/nsca.cfg.CSW 0644 root bin
 1 d none /opt/csw/share/doc/nsca 0755 root bin
 1 f none /opt/csw/share/doc/nsca/Changelog 0644 root bin
 1 f none /opt/csw/share/doc/nsca/LEGAL 0644 root bin
 1 f none /opt/csw/share/doc/nsca/README 0644 root bin
 1 f none /opt/csw/share/doc/nsca/SECURITY 0644 root bin
+d none /opt/csw/etc/pkg/CSWnsca 0755 root bin
+f cswusergroup /opt/csw/etc/pkg/CSWnsca/cswusergroup 0644 root bin
 f cswinitsmf /etc/opt/csw/init.d/cswnsca 0755 root bin
-1 i checkinstall=CSWnsca.checkinstall
 1 i pkginfo=CSWnsca.pkginfo
 1 i preinstall=CSWnsca.preinstall

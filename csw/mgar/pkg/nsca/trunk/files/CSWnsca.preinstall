@@ -3,16 +3,21 @@
 # 2007-12-02 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
 #            relocatable packages.
 
-if [ "$ADDCMDGROUP" = "1" ] ; then
-        /usr/sbin/groupadd nagioscm
-        echo "Added nagioscm group."
-        /usr/sbin/usermod -G nagioscm nagios
-        echo "Added nagios user to nagioscm group."
-        echo "**"
-        echo "To use external commands, you must add your apache"
-        echo "  user to the nagioscm group."
-        echo "Example: usermod -G nagioscm apache"
-        echo "**"
-fi
-#
+cat << EOF
+
+=======================================================================
+
+From NSCA 2.7.2,REV=2009.10.12 on the configuration file for the
+OpenCSW package is stored in /etc/opt/csw/nagios/.
+
+No further action is needed (to have a backup is always a good idea).
+
+            Installation will proceed in 10 seconds.
+             Press CTRL+C if you want to stop now.
+             
+=======================================================================
+EOF
+
+sleep 10
+
 exit 0
