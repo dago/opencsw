@@ -4,3 +4,13 @@ if [ -x /usr/sbin/svcadm ]; then
   echo "Disabling svc:/system/system-log:default"
   /usr/sbin/svcadm disable svc:/system/system-log:default
 fi
+
+# The assumption is that this script is going to be run from the global zone
+# first. The -f option is for the rm command not to complain if it can't remove
+# the file.
+for f in /opt/csw/var/syslog-ng.{ctl,persist}; do
+  if [ -r "${f}" ];
+    echo "Removing an obsolete file: '${f}'."
+    rm -f "${f}"
+  fi
+done

@@ -15,33 +15,16 @@ DISTFILES += $(GARNAME).conf.CSW
 DISTFILES += cswsyslog_ng
 DISTFILES += CSWsyslogng.preinstall
 DISTFILES += CSWsyslogng.postremove
-
-CATALOGNAME = syslog_ng
-
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
 PACKAGES = CSWsyslogng
-
+CATALOGNAME = syslog_ng
 SPKG_SOURCEURL = http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
-
-SPKG_CLASSES = none cswcpsampleconf cswinitsmf
-PROTOTYPE_FILTER  = awk ' \
-    $$$$3 ~ /\/init.d\/cswsyslog_ng$$$$/ { $$$$2 = "cswinitsmf" } \
-    $$$$3 ~ /\/syslog-ng\.conf\.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-    { print }'
+INITSMF = /etc/opt/csw/init\.d/cswsyslog_ng
+SAMPLECONF = /etc/opt/csw/syslog-ng\.conf\.CSW
 
 # shared /opt/csw support:
 localstatedir = /var/opt/csw
 sysconfdir = /etc/opt/csw
-
-PREREQUISITE_PKGS  = CSWeventlog
-PREREQUISITE_PKGS += CSWggettext
-PREREQUISITE_PKGS += CSWglib2
-PREREQUISITE_PKGS += CSWglib2devel
-PREREQUISITE_PKGS += CSWtcpwrap
-PREREQUISITE_PKGS += CSWpkgconfig
-PREREQUISITE_PKGS += CSWgcc4core
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic-linking
@@ -56,6 +39,12 @@ REQUIRED_PKGS += CSWggettextrt
 REQUIRED_PKGS += CSWglib2
 REQUIRED_PKGS += CSWtcpwrap
 REQUIRED_PKGS += CSWcswclassutils
+
+PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS += CSWggettext
+PREREQUISITE_PKGS += CSWglib2devel
+PREREQUISITE_PKGS += CSWpkgconfig
+PREREQUISITE_PKGS += CSWgcc4core
 
 GARCOMPILER = GNU
 TEST_SCRIPTS =
