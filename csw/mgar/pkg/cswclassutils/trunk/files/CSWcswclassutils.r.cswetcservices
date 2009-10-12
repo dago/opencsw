@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# r.cswetcservices - Class action script
+# 		     for CSW /etc/inet/services registrations
+#
+# Written and maintained by Ben Walton
+#
+# 2009-10-11 Initial release
+
+# NOTE: In the future, we could offer a variable in csw.conf
+#       to remove values from /etc/services too.  For now, we'll
+#       just leave them.
+
+while read dest; do
+    echo $dest
+    rm -f $dest
+done
+

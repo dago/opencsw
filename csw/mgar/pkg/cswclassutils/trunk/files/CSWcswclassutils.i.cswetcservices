@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# r.cswetcservices - Class action script
+# 		     for CSW /etc/inet/services registrations
+#
+# Written and maintained by Ben Walton
+#
+# 2009-10-11 Initial release
+
+# set DEBUG to any value to enable trace outpu.
+DEBUG=
+
+echo "Installing class <cswetcservices> ..."
+
+while read src dest; do
+
+  echo $dest
+  /usr/bin/cp $src $dest || exit 2
+
+  svcfile=/etc/inet/services
+
+  /usr/xpg4/bin/grep -v "^#" $dest | while read svc; do
+      set -- $svc
+      svcname=$1
+      port_proto=$2
+
+      if [ -n "$DEBUG" ]; then
+	  echo "svcname: $svcname; port/proto: $port_proto"
+      fi
+
+
+      /usr/xpg4/bin/grep -q "^$svcname[[:space:]]$port_proto" $svcfile
+      if [ $? -ne 0 ]; then
+	  echo "$svcname		$port_proto	# $PKGINST" >> $svcfile
+      fi
+  done
+done
+
+exit 0
