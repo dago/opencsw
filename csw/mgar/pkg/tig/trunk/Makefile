@@ -19,7 +19,7 @@ GARCOMPILER = GNU
 
 PREREQUISITE_PKGS = CSWncurses CSWasciidoc CSWxmlto CSWiconv
 
-REQUIRED_PKGS = CSWncurses CSWiconv CSWgit
+REQUIRED_PKGS = CSWncurses CSWiconv CSWgit CSWgcc4corert
 
 GIT_REPOS = http://jonas.nitro.dk/tig/tig.git
 GIT_TREEISH_tig.git = $(PATCHLEVEL)
