@@ -1,0 +1,73 @@
+From d12d5d6f186ac25d83324c6cd87eaef87d6df6bb Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 12 Oct 2009 02:03:17 +0200
+Subject: [PATCH] add install detection to the autoconf setup
+
+---
+ Makefile       |    8 ++++----
+ config.make.in |    2 ++
+ configure.ac   |    2 ++
+ 3 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index d764644..cf0771b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -68,7 +68,7 @@ doc-html: $(HTMLDOC)
+ install: all
+ 	mkdir -p $(DESTDIR)$(bindir) && \
+ 	for prog in $(PROGS); do \
+-		install -p -m 0755 "$$prog" "$(DESTDIR)$(bindir)"; \
++		$(INSTALL) -p -m 0755 "$$prog" "$(DESTDIR)$(bindir)"; \
+ 	done
+ 
+ install-doc-man: doc-man
+@@ -77,8 +77,8 @@ install-doc-man: doc-man
+ 	for doc in $(MANDOC); do \
+ 		sed 's#++SYSCONFDIR++#$(sysconfdir)#' < "$$doc" > "$$doc+"; \
+ 		case "$$doc" in \
+-		*.1) install -p -m 0644 "$$doc+" "$(DESTDIR)$(mandir)/man1/$$doc" ;; \
+-		*.5) install -p -m 0644 "$$doc+" "$(DESTDIR)$(mandir)/man5/$$doc" ;; \
++		*.1) $(INSTALL) -p -m 0644 "$$doc+" "$(DESTDIR)$(mandir)/man1/$$doc" ;; \
++		*.5) $(INSTALL) -p -m 0644 "$$doc+" "$(DESTDIR)$(mandir)/man5/$$doc" ;; \
+ 		esac; \
+ 		$(RM) "$$doc+"; \
+ 	done
+@@ -88,7 +88,7 @@ install-doc-html: doc-html
+ 	for doc in $(HTMLDOC); do \
+ 		sed 's#++SYSCONFDIR++#$(sysconfdir)#' < "$$doc" > "$$doc+"; \
+ 		case "$$doc" in \
+-		*.html) install -p -m 0644 "$$doc+" "$(DESTDIR)$(docdir)/tig/$$doc" ;; \
++		*.html) $(INSTALL) -p -m 0644 "$$doc+" "$(DESTDIR)$(docdir)/tig/$$doc" ;; \
+ 		esac; \
+ 		$(RM) "$$doc+"; \
+ 	done
+diff --git a/config.make.in b/config.make.in
+index 3962050..a5621e9 100644
+--- a/config.make.in
++++ b/config.make.in
+@@ -12,6 +12,8 @@ CPPFLAGS = @CPPFLAGS@ -DHAVE_CONFIG_H
+ LDFLAGS = @LDFLAGS@
+ LDLIBS = @LIBS@
+ 
++INSTALL = @INSTALL@
++
+ ASCIIDOC = @ASCIIDOC@
+ XMLTO = @XMLTO@
+ DOCBOOK2PDF = @DOCBOOK2PDF@
+diff --git a/configure.ac b/configure.ac
+index b179389..5225c7c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -23,6 +23,8 @@ AM_ICONV
+ 
+ AC_PROG_CC
+ 
++AC_PROG_INSTALL
++
+ AC_CHECK_PROG(GIT, [git], [git], [AC_ERROR([git not found])])
+ AC_MSG_CHECKING([which config subcommand git supports])
+ GIT_CONFIG="repo-config"
+-- 
+1.6.3.2
+

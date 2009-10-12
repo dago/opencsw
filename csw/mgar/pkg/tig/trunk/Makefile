@@ -14,11 +14,29 @@ and showing the commit with the log message, diffstat, and the diff.
 Using it as a pager, it will display input from stdin and colorize it.
 endef
 
+GARCOMPILER = GNU
+
 PREREQUISITE_PKGS = CSWncurses CSWasciidoc CSWxmlto CSWiconv
+
+REQUIRED_PKGS = CSWncurses CSWiconv CSWgit
 
 GIT_REPOS = http://jonas.nitro.dk/tig/tig.git
 GIT_TREEISH_tig.git = $(GARNAME)-$(GARVERSION)
 
+PATCHFILES = 0001-add-install-detection-to-the-autoconf-setup.patch
+
+sysconfdir = /etc/opt/csw
+
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-libiconv=$(prefix)
+
+TEST_SCRIPTS =
+
+INSTALL_ARGS = install install-doc
 
 include gar/category.mk
+
+# automake isn't used, but we want install-sh.  automake exits 1, so
+# we run true after to keep gmake happy
+pre-configure-modulated:
+	@(cd $(WORKSRC); autoreconf; automake --add-missing; true)
