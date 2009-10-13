@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # i.cswetcservices - Class action script
-# 		     for CSW /etc/inet/services registrations
+# 		     for CSW /etc/services registrations
 #
 # Written and maintained by Ben Walton
 #
@@ -17,7 +17,7 @@ while read src dest; do
   echo $dest
   /usr/bin/cp $src $dest || exit 2
 
-  svcfile=/etc/inet/services
+  svcfile=/etc/services
 
   /usr/xpg4/bin/grep -v "^#" $dest | while read svc; do
       set -- $svc
@@ -27,7 +27,6 @@ while read src dest; do
       if [ -n "$DEBUG" ]; then
 	  echo "svcname: $svcname; port/proto: $port_proto"
       fi
-
 
       /usr/xpg4/bin/grep -q "^$svcname[[:space:]].*$port_proto.*$PKGINST" $svcfile
       if [ $? -ne 0 ]; then

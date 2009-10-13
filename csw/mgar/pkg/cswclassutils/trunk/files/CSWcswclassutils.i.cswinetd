@@ -58,7 +58,7 @@ while read src dest; do
 
   # we won't register with inetd if the service name isn't registered
   # in the global services file.
-  /usr/xpg4/bin/grep -q "^$svcname[[:space:]]" /etc/inet/services
+  /usr/xpg4/bin/grep -q "^$svcname[[:space:]]" /etc/services
   if [ $? -eq 0 ]; then
       if [ -n "$DEBUG" ]; then
 	  echo "Installing inetd service:"
@@ -92,7 +92,7 @@ while read src dest; do
       else
 	  [ -n "$DEBUG" ] && echo "For solaris 8 or 9"
 
-	  inetdconf=$PKG_INSTALL_ROOT/etc/inet/inetd.conf
+	  inetdconf=$PKG_INSTALL_ROOT/etc/inetd.conf
 
 	  echo "Installing '$svcname' into inetd.conf."
 	  echo "# $PKGINST: added by i.cswinetd" >> $inetdconf
