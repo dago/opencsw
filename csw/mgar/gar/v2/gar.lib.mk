@@ -143,7 +143,7 @@ svn-https//%:
 # checksums without path this is not necessary.
 checksum-%: $(CHECKSUM_FILE) 
 	@echo " ==> Running checksum on $*"
-	@if gegrep -- '[ /]$*$$' $(CHECKSUM_FILE); then \
+	@if ggrep -- '[ /]$*$$' $(CHECKSUM_FILE); then \
 		if cat $(CHECKSUM_FILE) | sed -e 's!download/!!' | (cd $(DOWNLOADDIR); LC_ALL="C" LANG="C" gmd5sum -c 2>&1) | \
 			ggrep -- '$*' | ggrep -v ':[ ]\+OK'; then \
 			echo '(!!!) $* failed checksum test!' 1>&2; \
