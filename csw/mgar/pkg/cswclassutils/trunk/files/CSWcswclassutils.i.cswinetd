@@ -6,7 +6,7 @@
 #
 # 2009-10-02 Initial release
 
-# set DEBUG to any value to enable trace outpu.
+# set DEBUG to any value to enable trace output
 DEBUG=
 
 # Source csw.conf, if it exists
