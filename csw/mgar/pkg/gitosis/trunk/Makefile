@@ -59,9 +59,10 @@ INSTALL_ARGS = --root $(DESTDIR) --single-version-externally-managed
 
 GITOSISHOME = /var/opt/csw/gitosis
 CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/opt/csw/bin/bash::
-CSWUGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
+CSWPKGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
 
 USERGROUP = /opt/csw/etc/pkg/CSWgitosis/cswusergroup
+INETDCONF = /opt/csw/etc/pkg/CSWgitosis/inetd.conf
 
 PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" }; { print }'
 
@@ -78,8 +79,9 @@ _MERGE_EXCLUDE_CATEGORY =
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
 
 post-install-modulated:
-	@( gmkdir -p $(CSWUGD); \
-		echo "$(CSWUG)" > $(CSWUGD)/cswusergroup; \
+	@( gmkdir -p $(CSWPKGD); \
+		echo "$(CSWUG)" > $(CSWPKGD)/cswusergroup; \
+	   ginstall -m 0644 $(FILEDIR)/inetd.conf $(CSWPKGD); \
 	   gmkdir -p $(INSTALLISADIR)$(GITOSISHOME); \
 	   echo 'PATH=/opt/csw/bin:$$PATH' > $(INSTALLISADIR)$(GITOSISHOME)/.bashrc; \
 	   echo 'PATH=/opt/csw/bin:$$PATH' > $(INSTALLISADIR)$(GITOSISHOME)/.bash_profile; \
