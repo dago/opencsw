@@ -29,7 +29,7 @@ while read src dest; do
       fi
 
 
-      /usr/xpg4/bin/grep -q "^$svcname[[:space:]]$port_proto" $svcfile
+      /usr/xpg4/bin/grep -q "^$svcname[[:space:]].*$port_proto.*$PKGINST" $svcfile
       if [ $? -ne 0 ]; then
 	  echo "$svcname		$port_proto	# $PKGINST" >> $svcfile
       fi
