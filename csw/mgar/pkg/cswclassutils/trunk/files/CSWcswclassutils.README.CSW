@@ -38,10 +38,20 @@ Currently it has:
 - cswpycompile
 
   This class takes care of creating/removing python's normal and optimized
-  bytecode files.  Set all *.py files' class = pycompile to activate.
-  Example:
-  # use prototype filters to set the class
-  PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } { print }'
+  bytecode files.  Set all *.py files' class = cswpycompile to activate.
+
+  In GAR, set the variable PYCOMPILE = 1 to activate.
+
+- cswinetdconf
+
+  This class manipulates /etc/inetd.conf (solaris 8/9) or enables an
+  inetd service in smf (solaris 10+).
+
+- cswetcservices
+
+  This class takes care of registering services in the global
+  /etc/services file.  It is a one way manipulation.  At package
+  removal, the service entries are left behind.
 
 Read more on the wiki: http://wiki.opencsw.org/cswclassutils-package.
 
