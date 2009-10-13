@@ -393,6 +393,9 @@ extract-archive-%.gz: gz-extract-%.gz
 extract-archive-%.git: git-extract-%.git
 	@$(MAKECOOKIE)
 
+extract-copy-%: cp-extract-%
+	@$(MAKECOOKIE)
+
 # anything we don't know about, we just assume is already
 # uncompressed and unarchived in plain format
 extract-archive-%: cp-extract-%
