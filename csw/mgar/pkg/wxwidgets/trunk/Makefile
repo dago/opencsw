@@ -105,7 +105,7 @@ EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt
 EXTRA_CXXFLAGS = -fast -xstrconst -xnolibmopt
 EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
 EXTRA_LIB = /opt/csw/X11/lib
-EXTRA_PKG_CONFIG_PATH = /opt/csw/X11/lib/pkgconfig
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 INSTALL_SCRIPTS = wxwidgets
 
