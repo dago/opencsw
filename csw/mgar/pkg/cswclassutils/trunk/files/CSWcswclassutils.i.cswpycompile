@@ -7,6 +7,7 @@
 # Written by Mike Watters
 #
 # 2009-05-25 First Release
+# 2009-10-14 Update to only compile package specific files (Ben Walton)
 #
 
 # Force Path for the script to use
@@ -20,13 +21,38 @@ PY_LIBDIR=${PY_PREFIX}/lib/python
 if [ "${DEBUG}" ]; then
     echo PACKAGE: $PKGINST
 fi
+
+TMPPY=/tmp/pycomp.$$.`date +%Y%m%d%H%M%S`.py
+
+cat <<EOF > $TMPPY
+import py_compile
+
+pyfiles = [
+EOF
+
+echo "Installing class <cswpycompile> ..."
+
 while read src dest; do
     if [ "$DEBUG" ]; then
         echo SRC: $src DEST: $dest
     fi
 
     /usr/bin/cp -p $src $dest || exit 2
+    echo $dest
+
+    echo "	\"$dest\"," >> $TMPPY
 done
+
+cat <<EOF >> $TMPPY
+	]
+
+for f in pyfiles:
+	try:
+		py_compile.compile(f, doraise=True)
+	except PyCompileError:
+		print "Error compiling: %s" % f
+
+EOF
 
 if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
     echo "Could not find or execute ${PY_BINDIR}/python"
@@ -34,20 +60,12 @@ if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
     exit 2
 fi
     
-if [ ! -f ${PY_LIBDIR}/compileall.py ]; then
-    echo "Could not find ${PY_LIBDIR}/compileall.py"
-    echo "Check your Python installation."
-    exit 2
-fi
-
 echo "Compiling py files to normal bytecode ..."
-# Compile .py libraries to .pyc files
-${PY_BINDIR}/python -Wi -tt ${PY_LIBDIR}/compileall.py \
-    -d ${PY_LIBDIR} -x 'bad_coding|badsyntax' ${PY_LIBDIR}
+${PY_BINDIR}/python -Wi -tt $TMPPY
 
 echo "Compiling py files to optimized bytecode ..."
-# Compile .py libraries to .pyo files
-${PY_BINDIR}/python -Wi -tt -O ${PY_LIBDIR}/compileall.py \
-    -d ${PY_LIBDIR} -x 'bad_coding|badsyntax' ${PY_LIBDIR}
- 
+${PY_BINDIR}/python -Wi -tt -O $TMPPY
+
+rm $TMPPY
+
 exit 0
