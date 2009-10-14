@@ -160,17 +160,30 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
 # Handle cswclassutils
-# - prepend cswpreserveconf if it is not already in SPKG_CLASSES
-SPKG_CLASSES := $(SPKG_CLASSES) $(if $(SAMPLECONF),$(if $(filter cswcpsampleconf,$(SPKG_CLASSES)),,cswcpsampleconf))
-SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PRESERVECONF),$(if $(filter cswpreserveconf,$(SPKG_CLASSES)),,cswpreserveconf))
-SPKG_CLASSES := $(SPKG_CLASSES) $(if $(INITSMF),$(if $(filter cswinitsmf,$(SPKG_CLASSES)),,cswinitsmf))
-SPKG_CLASSES := $(SPKG_CLASSES) $(if $(USERGROUP),$(if $(filter cswusergroup,$(SPKG_CLASSES)),,cswusergroup))
-SPKG_CLASSES := $(SPKG_CLASSES) $(if $(PYCOMPILE),$(if $(filter cswpycompile,$(SPKG_CLASSES)),,cswpycompile))
+# append $2 to SPKG_CLASSES if $1 is non-null
+define _spkg_cond_add
+$(SPKG_CLASSES) $(if $($(1)),$(if $(filter $(2),$(SPKG_CLASSES)),,$(2)))
+endef
+
+# NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
+#	always be the last two added.  The reason for this is that
+#	you need to ensure any binaries and config files are already on disk
+#	and able to be consumed by a service that might be started.
+SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
+SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
+SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
+SPKG_CLASSES := $(call _spkg_cond_add,USERGROUP,cswusergroup)
+SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
+SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
+SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
+
 # - set class for all config files
-ifneq ($(SAMPLECONF)$(PRESERVECONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
+ifneq ($(SAMPLECONF)$(PRESERVECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
+		$(foreach FILE,$(ETCSERVICES),$$F[1] = "cswetcservices" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(INETDCONF),$$F[1] = "cswinetd" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
