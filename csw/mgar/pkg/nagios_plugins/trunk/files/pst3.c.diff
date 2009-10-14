@@ -1,12 +1,18 @@
 diff --speed-large-files --minimal -Nru nagios-plugins-1.4.14.orig/plugins-root/pst3.c nagios-plugins-1.4.14/plugins-root/pst3.c
 --- nagios-plugins-1.4.14.orig/plugins-root/pst3.c	2009-09-14 12:21:24.000000000 +0200
-+++ nagios-plugins-1.4.14/plugins-root/pst3.c	2009-10-14 19:50:47.193501484 +0200
-@@ -43,8 +43,6 @@
++++ nagios-plugins-1.4.14/plugins-root/pst3.c	2009-10-14 22:02:53.643787730 +0200
+@@ -43,11 +43,11 @@
  
  #include <stdio.h>
  #include <stdlib.h>
 -#include <string.h>
 -#include <unistd.h>
++#include "/usr/include/string.h"
++#include "/usr/include/unistd.h"
  #include <dirent.h>
  #include <errno.h>
- #include <fcntl.h>
+-#include <fcntl.h>
++#include "/usr/include/fcntl.h"
+ #include <procfs.h>
+ #include <errno.h>
+ #include <sys/types32.h>
