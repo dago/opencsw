@@ -80,24 +80,36 @@ while read src dest; do
       fi
 
       if [ -n "$nopass" ]; then
-	  omask=`umask`
-	  umask 0377
-	  awk 'BEGIN { FS=":"; OFS=":" } $1 == "'$user'" { $2 = "NP" } { print }' /etc/shadow > /etc/shadow.$PKGINST
-	  if [ $? -eq 0 ]; then
-	      cmp -s /etc/shadow /etc/shadow.$PKGINST
-	      if [ $? -ne 0 ]; then
-		  echo "Updating account '$user' to be no-login (NP)"
-		  chgrp sys /etc/shadow.$PKGINST
-		  cp -p /etc/shadow /etc/shadow.CSW && \
-		      mv /etc/shadow.$PKGINST /etc/shadow
-	      else
-		  rm /etc/shadow.$PKGINST
-	      fi
-	  else
-	      echo "ERROR: Setting NP for '$user' failed."
-	      rm /etc/shadow.$PKGINST
-	  fi
-	  umask $omask
+	  case "`uname -r`" in
+	      5.8|5.9)
+		  # for old solaris, we munge the shadow file manually.
+		  omask=`umask`
+		  umask 0377
+		  awk 'BEGIN { FS=":"; OFS=":" } $1 == "'$user'" { $2 = "NP" } { print }' /etc/shadow > /etc/shadow.$PKGINST
+		  if [ $? -eq 0 ]; then
+		      cmp -s /etc/shadow /etc/shadow.$PKGINST
+		      if [ $? -ne 0 ]; then
+			  echo "Updating account '$user' to be no-login (NP)"
+			  chgrp sys /etc/shadow.$PKGINST
+			  cp -p /etc/shadow /etc/shadow.CSW && \
+			      mv /etc/shadow.$PKGINST /etc/shadow
+		      else
+			  rm /etc/shadow.$PKGINST
+		      fi
+		  else
+		      echo "ERROR: Setting NP for '$user' failed."
+		      rm /etc/shadow.$PKGINST
+		  fi
+		  umask $omask
+		  ;;
+	      *)
+		  # for modern solaris, use the built-in tools
+		  passwd -N $user
+		  if [ $? -ne 0 ]; then
+		      echo "ERROR: Setting NP for '$user' failed."
+		  fi
+		  ;;
+	      esac
       fi
     else
       echo No user to create
