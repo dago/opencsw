@@ -12,14 +12,33 @@ define BLURB
   wxWidgets applications look and feel native. This is because wxWidgets uses
   the platform's own native controls rather than emulating them.
 endef
+EXTRA_MODULATORS = GARVERSION
+MODULATIONS_GARVERSION = 2.8.5 2.8.10
+MERGE_SCRIPTS_isa-i386-garversion-2.8.5 = copy-only
+MERGE_DIRS_isa-i386-garversion-2.8.5 = $(libdir)
+MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.5 = copy-only
+MERGE_DIRS_isa-sparcv8-garversion-2.8.5 = $(libdir)
+MERGE_SCRIPTS_isa-i386-garversion-2.8.10 = copy-all
+MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.10 = copy-all
+
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
+NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 SPKG_SOURCEURL = http://www.wxwidgets.org/
 MASTER_SITES  = $(SF_MIRRORS)
 SF_PROJ = wxwindows
-PATCHFILES  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
-PATCHFILES += 0002-Fixing-retarded-checks-for-libGL.patch
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+PATCHFILES_isa-i386-garversion-2.8.5  = 0500-wxT-macro-first-iteration.patch
+PATCHFILES_isa-i386-garversion-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
+PATCHFILES_isa-i386-garversion-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
+PATCHFILES_isa-sparcv8-garversion-2.8.5  = 0500-wxT-macro-first-iteration.patch
+PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
+PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
+PATCHFILES_isa-i386-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
+PATCHFILES_isa-i386-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
+PATCHFILES_isa-sparcv8-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
+PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
+DISTFILES  = $(SOURCEFILES)
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-CATALOGNAME = wxwidgets
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
@@ -27,6 +46,7 @@ ARCHALL_CSWwxwidgetsdevel  = 1
 SPKG_DESC_CSWwxwidgetscommon = A cross-platform toolkit, common files
 SPKG_DESC_CSWwxwidgetsdevel = A cross-platform toolkit, header files
 SPKG_DESC_CSWwxwidgetsgtk2 = A cross-platform toolkit, gtk2 support
+
 REQUIRED_PKGS  = CSWexpat
 REQUIRED_PKGS += CSWfconfig
 REQUIRED_PKGS += CSWftype2
@@ -42,6 +62,9 @@ REQUIRED_PKGS += CSWpng
 REQUIRED_PKGS += CSWtiff
 REQUIRED_PKGS += CSWzlib
 
+REQUIRED_PKGS_CSWwxwidgetsgtk2 = CSWwxwidgetscommon
+REQUIRED_PKGS_CSWwxwidgetsdevel = CSWwxwidgetscommon
+
 PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
 PREREQUISITE_PKGS += CSWgtk2devel
 PREREQUISITE_PKGS += CSWlibpthreadstubs
@@ -56,12 +79,10 @@ PREREQUISITE_PKGS += CSWrenderproto
 PREREQUISITE_PKGS += SUNWxwinc
 
 PKGFILES_CSWwxwidgetsdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/bin/wx-config
 PKGFILES_CSWwxwidgetsgtk2  = /opt/csw/lib/wx/(include|config)/gtk2-.*
 PKGFILES_CSWwxwidgetsgtk2 += /opt/csw/lib/libwx_gtk2.*
 PKGFILES_CSWwxwidgetsgtk2 += /opt/csw/bin/wx(-config|rc(|-2.8))
-
-REQUIRED_PKGS_CSWwxwidgetsgtk2 = CSWwxwidgetscommon
-REQUIRED_PKGS_CSWwxwidgetsdevel = CSWwxwidgetscommon
 
 CATALOGNAME_CSWwxwidgetscommon = wxwidgets_common
 CATALOGNAME_CSWwxwidgetsdevel  = wxwidgets_devel
@@ -81,9 +102,10 @@ CONFIGURE_ARGS_5.9  = --enable-unicode
 CONFIGURE_ARGS_5.10 = --enable-unicode
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
 EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt
+EXTRA_CXXFLAGS = -fast -xstrconst -xnolibmopt
 EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
 EXTRA_LIB = /opt/csw/X11/lib
-PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+EXTRA_PKG_CONFIG_PATH = /opt/csw/X11/lib/pkgconfig
 
 INSTALL_SCRIPTS = wxwidgets
 

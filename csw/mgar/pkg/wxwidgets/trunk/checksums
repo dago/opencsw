@@ -1,3 +1,6 @@
 7830ab8006ade9b14567341b5481eadd  download/0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
 45df2933ed2fa53f229feda01467db81  download/0002-Fixing-retarded-checks-for-libGL.patch
+75ecdc04af4392f918ff6856a3ba6605  download/0500-wxT-macro-first-iteration.patch
+17d8d019fd2e4137b4cd44816b14e282  download/0501-a-possible-fix-to-wxchar.h.patch
 05b32ca051651f4b1885a90f62969faf  download/wxWidgets-2.8.10.tar.gz
+43274231ee50eb1f35e04e693ebab902  download/wxWidgets-2.8.5.tar.gz
