@@ -34,6 +34,7 @@ while read src dest; do
     dir=`echo $i | awk -F':' '{print $4}'`
     shell=`echo $i | awk -F':' '{print $5}'`
     create=`echo $i | awk -F':' '{print $6}'`
+    nopass=`echo $i | awk -F':' '{print $8}'`
     if [ -n "$group" ]; then
       /bin/getent group $group > /dev/null
       if [ $? -ne 0 ]; then
@@ -76,6 +77,27 @@ while read src dest; do
         fi
       else
         echo User $user already exists
+      fi
+
+      if [ -n "$nopass" ]; then
+	  omask=`umask`
+	  umask 0377
+	  awk 'BEGIN { FS=":"; OFS=":" } $1 == "'$user'" { $2 = "NP" } { print }' /etc/shadow > /etc/shadow.$PKGINST
+	  if [ $? -eq 0 ]; then
+	      cmp -s /etc/shadow /etc/shadow.$PKGINST
+	      if [ $? -ne 0 ]; then
+		  echo "Updating account '$user' to be no-login (NP)"
+		  chgrp sys /etc/shadow.$PKGINST
+		  cp -p /etc/shadow /etc/shadow.CSW && \
+		      mv /etc/shadow.$PKGINST /etc/shadow
+	      else
+		  rm /etc/shadow.$PKGINST
+	      fi
+	  else
+	      echo "ERROR: Setting NP for '$user' failed."
+	      rm /etc/shadow.$PKGINST
+	  fi
+	  umask $omask
       fi
     else
       echo No user to create
