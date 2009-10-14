@@ -15,8 +15,6 @@ endef
 define CSWgitosis_postinstall
 #!/bin/sh
 
-/usr/bin/passwd -N gitosis
-
 # in case the gitosis package was still using /bin/bash.
 /usr/bin/getent passwd gitosis | /usr/xpg4/bin/grep -q ':/bin/bash'
 if [ $$? -eq 0 ]; then
@@ -58,7 +56,7 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS = --root $(DESTDIR) --single-version-externally-managed
 
 GITOSISHOME = /var/opt/csw/gitosis
-CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/opt/csw/bin/bash::
+CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/opt/csw/bin/bash:::NP
 CSWPKGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
 
 USERGROUP = /opt/csw/etc/pkg/CSWgitosis/cswusergroup
