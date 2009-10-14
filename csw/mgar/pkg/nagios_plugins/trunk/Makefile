@@ -1,5 +1,5 @@
 GARNAME = nagios-plugins
-GARVERSION = 1.4.13
+GARVERSION = 1.4.14
 CATEGORIES = apps
 
 DESCRIPTION = plugins for nagios
@@ -9,10 +9,15 @@ endef
 
 MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnagiosp,prototype )
+
+DISTFILES += CSWnagiosp.prototype
 
 PATCHFILES += check_procs.c.diff
 PATCHFILES += subst.in.diff
+PATCHFILES += pst3.c.diff
+
+PACKAGES = CSWnagiosp
+CATALOGNAME_CSWnagiosp = nagios_plugins
 
 REQUIRED_PKGS_CSWnagiosp  = CSWggettextrt CSWiconv CSWlibnet CSWlibpq 
 REQUIRED_PKGS_CSWnagiosp += CSWmysql5rt CSWoldaprt CSWosslrt CSWsasl

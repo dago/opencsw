@@ -1,3 +1,0 @@
-%var            bitname nagios_plugins
-%var            pkgname CSWnagiosp
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
