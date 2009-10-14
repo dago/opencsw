@@ -4,7 +4,7 @@ GARVERSION = 1.6.5
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
-# TEST_SCRIPTS = 
+TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 PACKAGES += CSWgitcompletion CSWgitdevel
@@ -30,7 +30,7 @@ ARCHALL_CSWgitcompletion = 1
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
 PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
-  
+
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
 REQUIRED_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
 REQUIRED_PKGS_CSWgit += CSWpmtermreadkey
@@ -123,14 +123,16 @@ CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ETC_GITCONFIG=$(sysconfdir)/gitconfig \
 		ASCIIDOC_NO_ROFF=YesPlease \
-		all
+		all doc
 
 INSTALL_ARGS = ETC_GITCONFIG=$(sysconfdir)/gitconfig \
 		INSTALLDIRS=vendor \
-		install-doc
+		install-man install-html
 
 # We want static libs installed for our devel package
 MERGE_EXCLUDE_STATICLIBS =
+
+ETCSERVICES = /opt/csw/etc/pkg/CSWgit/services
 
 include gar/category.mk
 
@@ -155,6 +157,10 @@ post-install-modulated: BD=$(DESTDIR)/$(bashconfdir)/bash_completion.d
 post-install-modulated: ID=$(DESTDIR)/$(includedir)/git
 post-install-modulated: LD=$(DESTDIR)/$(libdir_install)/git
 post-install-modulated:
+	@echo Installing /etc/services definitions file
+	@( ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/pkg/CSWgit/; \
+	   echo "git 9418/tcp" >> $(DESTDIR)/$(ETCSERVICES); \
+	   echo "git 9418/udp" >> $(DESTDIR)/$(ETCSERVICES); )
 	@echo Cleaning up perl stuff
 	@rm -rf $(DESTDIR)/$(libdir)/perl5/site_perl/5*
 	@rm -rf $(DESTDIR)/$(perllib)/
@@ -172,13 +178,6 @@ post-install-modulated:
 		done; \
 		ginstall -c -m 0444 libgit.a $(LD)/; \
 		ginstall -c -m 0444 ./xdiff/lib.a $(LD)/libxdiff.a )
-	@echo Installing Documentation
-	@( cd $(WORKSRC); \
-		ginstall -c -m 0755 -d $(GD); \
-		cp -R Documentation/*.txt $(GD)/; \
-		cp -R contrib/hooks README COPYING $(GD)/; \
-		cp -R Documentation/*.html Documentation/docbook-xsl.css $(GD)/; \
-		cp -R Documentation/howto Documentation/technical $(GD)/; )
 	@echo Installing Bash Completion files
 	@( cd $(WORKSRC); \
 		ginstall -c -m 0755 -d $(BD); \
