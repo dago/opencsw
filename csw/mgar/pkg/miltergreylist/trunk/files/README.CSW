@@ -1,0 +1,26 @@
+README.CSW
+==========
+
+Installation
+------------
+
+1. If you're adding directly to your mc-file you should use this instead of
+   what's in the official README since the location of the socket isn't correct.
+
+INPUT_MAIL_FILTER(`greylist', `S=local:/var/opt/csw/milter-greylist/milter-greyl
+ist.sock')
+define(`confMILTER_MACROS_CONNECT', `j, {if_addr}')
+define(`confMILTER_MACROS_HELO', `{verify}, {cert_subject}')
+define(`confMILTER_MACROS_ENVFROM', `i, {auth_authen}')
+define(`confMILTER_MACROS_ENVRCPT', `{greylist}')
+
+   The included m4-file is fixed.
+
+2. Build a new cf-file.
+3. Modify /etc/opt/csw/greylist.conf as needed.
+4. Start milter-greylist with "/etc/init.d/cswmiltergreylist start" or
+   "svcadm enable cswmiltergreylist".
+
+More info: http://milter-greylist.wikidot.com.
+
+bonivart/091013

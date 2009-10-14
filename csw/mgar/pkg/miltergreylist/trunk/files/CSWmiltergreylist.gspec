@@ -1,7 +1,0 @@
-%var            bitname miltergreylist
-%var            pkgname CSWmiltergreylist
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright
-
-Please see /opt/csw/share/doc/miltergreylist/README for license information
-

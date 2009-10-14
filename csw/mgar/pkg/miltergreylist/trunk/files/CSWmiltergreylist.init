@@ -1,0 +1,47 @@
+#!/sbin/sh
+
+# 2009-10-13 Peter Bonivart
+
+if [ -f /lib/svc/share/smf_include.sh ]; then
+  . /lib/svc/share/smf_include.sh
+fi
+
+MILDIR=/var/opt/csw/miltergreylist
+BINDIR=/opt/csw/bin
+USER=greylist
+
+#OPTIONS="-v -w 14m"
+OPTIONS="-u $USER -f /etc/opt/csw/greylist.conf"
+
+case "$1" in
+  start)
+        # Start daemon
+        echo "Starting milter-greylist ..."
+        chown $USER $MILDIR
+        ulimit -n 1024
+        $BINDIR/milter-greylist $OPTIONS
+        ;;
+  stop)
+        # Stop daemon
+        echo "Shutting down milter-greylist ..."
+        /usr/bin/kill `cat $MILDIR/milter-greylist.pid` > /dev/null 2>&1
+        ;;
+  restart)
+        echo "Restarting milter-greylist ... "
+        $0 stop
+        echo "Waiting for milter-greylist to stop: \c"
+        while ( pgrep milter-greylist > /dev/null )
+        do
+          echo ".\c"
+          sleep 1
+        done
+        echo
+        sleep 1
+        $0 start
+        ;;
+  *)
+        echo "Usage: `basename $0` { start | stop | restart}"
+        exit 1
+esac
+
+exit 0
