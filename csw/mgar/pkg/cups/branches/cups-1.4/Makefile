@@ -31,24 +31,26 @@ localstatedir = /var/opt/csw
 GARFLAVOR = DBG
 
 # These are the source mirrors published on the CUPS home-page.
-CUPS_MIRRORS = http://ftp.easysw.com/pub
+CUPS_MIRRORS  = http://ftp.easysw.com/pub
 CUPS_MIRRORS += ftp://ftp2.easysw.com/pub
 CUPS_MIRRORS += ftp://ftp3.easysw.com/pub
 CUPS_MIRRORS += http://www.nu6.org/_/mirror/ftp.easysw.com/pub
 CUPS_MIRRORS += http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
 CUPS_MIRRORS += ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
 CUPS_MIRRORS += http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub
+
 # Complete the mirror paths by adding /cups/x.y.z/ at the end.
-FULL_MIRRORS = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
+FULL_MIRRORS  = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
 MASTER_SITES += $(FULL_MIRRORS)
+
+DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
+DISTFILES += CSWcupsclient.preinstall
+DISTFILES += CSWcupsd.preinstall
+DISTFILES += CSWcupsd.postremove
 
 PATCHFILES  = 0001-cswcups-for-service-name.patch
 PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
 PATCHFILES += 0003-Reference-counting-for-printers-only.patch
-DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
-DISTFILES += CSWcupsclient.preinstall
-DISTFILES += CSWcupsd.preinstall
-DISTFILES += CSWcupsd.postremove
 
 PREREQUISITE_PKGS  = CSWggettext
 PREREQUISITE_PKGS += CSWjpeg
@@ -183,6 +185,8 @@ OPTIM_DBG = -g -xO0
 OPTIM = $(OPTIM_$(GARFLAVOR))
 export OPTIM
 
+include gar/category.mk
+
 post-install-modulated:
 	(cd $(DESTDIR)$(sysconfdir)/cups; \
 	echo "Making .CSW configs in $(DESTDIR)$(sysconfdir)/cups"; \
@@ -194,5 +198,3 @@ post-install-modulated:
 		fi \
 	done)
 	@$(MAKECOOKIE)
-
-include gar/category.mk
