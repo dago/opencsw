@@ -40,6 +40,7 @@ install-certificates: $(WORKDIR)/certdata.txt
 	cd "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla" && perl "$(CURDIR)/$(WORKDIR)/certdata2pem.pl" < "$(CURDIR)/$(WORKDIR)/certdata.txt"
 
 install-custom: install-certificates $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
+	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl"
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl/certs"
 	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates"
 	ginstall -D "$(WORKDIR)/update-ca-certificates" "$(DESTDIR)/$(sbindir)/update-ca-certificates"

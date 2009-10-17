@@ -1,3 +1,15 @@
+# workaround to not fail if /opt/csw is read-only
+# in the nfs-shared or sparse zone case
+# this is temporary until configuration is moved in /etc/opt/csw
+if touch /opt/csw/.ca_certificate.test  2>/dev/null; then
+	rm -f /opt/csw/.ca_certificate.test
+else
+	echo "WARNING: /opt/csw seems to be read-only, certification authorities list will not be updated"
+	echo "         if /opt/csw is shared by nfs or among solaris zones, this is normal and you don't have
+	echo "         to worry about it, the certification authorities list present on the nfs server or in 
+	echo "         the global zone will be used."
+	exit 0
+fi
 
 # Update ca lists
 if [ -n "${BASEDIR}" ]; then

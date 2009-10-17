@@ -5,5 +5,5 @@ b4f6772525da6772d51eb30f90605d60  download/ca-certificates.conf
 c7fd74bceddf27039a26a5f1dfede163  download/README.CSW
 787d361f8d8b8ecf89e83bb813fdaec5  download/CSWcacertificates.gspec
 31227010faaad1c2b9893ba91d6b16bb  download/CSWcacertificates.depend
-32e6ea27867c760d2279330fd4c480d3  download/CSWcacertificates.postinstall
+3f166eabf87f3f97ce51351eb070724d  download/CSWcacertificates.postinstall
 0e166bd746f506c06e1001b0c6274958  download/CSWcacertificates.postremove
