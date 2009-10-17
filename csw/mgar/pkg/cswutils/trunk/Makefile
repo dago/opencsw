@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = cswutils
-GARVERSION = 1.14.4
+GARVERSION = 1.14.5
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
-SVN_REV = 77
+SVN_REV = 90
 
 MASTER_SITES =
 DISTFILES = COPYING
@@ -20,6 +20,7 @@ DISTFILES += stagepkg stagepkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += compare_pkgs.py-r$(SVN_REV)
 DISTFILES += opencsw_lib.py-r$(SVN_REV)
+DISTFILES += submit_to_newpkgs.py-r$(SVN_REV)
 
 REQUIRED_PKGS = CSWtextutils CSWfakeroot CSWperl
 REQUIRED_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
@@ -42,14 +43,11 @@ ENABLE_CHECK = 0
 
 include gar/category.mk
 
-download/compare_pkgs.py-r$(SVN_REV):
-	svn export -r $(SVN_REV) $(SVNROOT)compare_pkgs.py
-	mv compare_pkgs.py download/compare_pkgs.py-r$(SVN_REV)
-	@$(MAKECOOKIE)
+SVN_FILES = submit_to_newpkgs compare_pkgs opencsw_lib
 
-download/opencsw_lib.py-r$(SVN_REV):
-	svn export -r $(SVN_REV) $(SVNROOT)opencsw_lib.py
-	mv opencsw_lib.py download/opencsw_lib.py-r$(SVN_REV)
+$(foreach F,$(SVN_FILES),$(DOWNLOADDIR)/$(F).py-r$(SVN_REV)):
+	svn export -r $(SVN_REV) $(SVNROOT)$(subst -r$(SVN_REV),,$(notdir $@))
+	mv $(subst -r$(SVN_REV),,$(notdir $@)) $@
 	@$(MAKECOOKIE)
 
 install-custom:
@@ -64,9 +62,12 @@ install-custom:
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
-	@ginstall -m 755 $(WORKSRC)/compare_pkgs.py-r$(SVN_REV) \
-		$(DESTDIR)$(libdir)/python/csw/compare_pkgs.py
 	@ginstall -m 644 $(WORKSRC)/opencsw_lib.py-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/python/csw/opencsw_lib.py
+	@for f in compare_pkgs.py submit_to_newpkgs.py; do \
+		ginstall -m 755 $(WORKSRC)/$${f}-r$(SVN_REV) \
+		$(DESTDIR)$(libdir)/python/csw/$${f}; \
+	done
 	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
+	@ln -s ../lib/python/csw/submit_to_newpkgs.py $(DESTDIR)$(bindir)/submitpkg
 	@$(MAKECOOKIE)
