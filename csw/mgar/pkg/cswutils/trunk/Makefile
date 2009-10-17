@@ -12,18 +12,18 @@ SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
 SVN_REV = 90
 
 MASTER_SITES =
+SVN_FILES = submit_to_newpkgs.py compare_pkgs.py opencsw_lib.py
 DISTFILES = COPYING
 DISTFILES += checkpkg checkpkg.8
 DISTFILES += cpan2pkg
 DISTFILES += createpkg createpkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += stagepkg stagepkg.8
-DISTFILES += compare_pkgs.py-r$(SVN_REV)
-DISTFILES += opencsw_lib.py-r$(SVN_REV)
-DISTFILES += submit_to_newpkgs.py-r$(SVN_REV)
+DISTFILES += $(foreach F,$(SVN_FILES),$(F)-r$(SVN_REV))
 
 REQUIRED_PKGS = CSWtextutils CSWfakeroot CSWperl
 REQUIRED_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
+REQUIRED_PKGS += CSWpython
 
 WORKSRC = $(WORKDIR)
 
@@ -43,9 +43,8 @@ ENABLE_CHECK = 0
 
 include gar/category.mk
 
-SVN_FILES = submit_to_newpkgs compare_pkgs opencsw_lib
-
-$(foreach F,$(SVN_FILES),$(DOWNLOADDIR)/$(F).py-r$(SVN_REV)):
+# This target doesn't work when defined as $(DOWNLOADDIR)/%-r$(SVN_REV)
+$(foreach F,$(SVN_FILES),$(DOWNLOADDIR)/$(F)-r$(SVN_REV)):
 	svn export -r $(SVN_REV) $(SVNROOT)$(subst -r$(SVN_REV),,$(notdir $@))
 	mv $(subst -r$(SVN_REV),,$(notdir $@)) $@
 	@$(MAKECOOKIE)
