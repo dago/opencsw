@@ -18,7 +18,7 @@ index a8e2faa..c360615 100755
  
  echo Info: Install hooks
 -echo '#!/bin/sh' >${TESTROOT}/repos/hooks/pre-commit
-+echo '#!/bin/bash' >${TESTROOT}/repos/hooks/pre-commit
++echo '#!/opt/csw/bin/bash' >${TESTROOT}/repos/hooks/pre-commit
  echo export PYTHONPATH=$PYTHONPATH >>${TESTROOT}/repos/hooks/pre-commit
  echo echo $PYTHON ${WORKDIR}/Tests/test_04_pre_commit_test_1.py '"$@"' ">${TESTROOT}/test_1.output" >>${TESTROOT}/repos/hooks/pre-commit
  echo $PYTHON ${WORKDIR}/Tests/test_04_pre_commit_test_1.py '"$@"' ">>${TESTROOT}/test_1.output" >>${TESTROOT}/repos/hooks/pre-commit
