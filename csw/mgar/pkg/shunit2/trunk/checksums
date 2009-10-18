@@ -1,0 +1,3 @@
+b35832f18a1557c0f5d4b58dcc2c32d3  download/0001-fix-shlib-path-in-docbookPrep.sh.patch
+3d422c3b03478a37280e08d98a7c14aa  download/0002-abspath-instead-of-PWD.patch
+f434f0095f7ca9a698ade330feae356a  download/shunit2-2.1.5.tgz

@@ -1,0 +1,25 @@
+From ed54daa547e0bc6c3b69bd45c565b58142ccd49e Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 18 Oct 2009 19:10:42 +0200
+Subject: [PATCH] fix shlib path in docbookPrep.sh
+
+---
+ bin/docbookPrep.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/bin/docbookPrep.sh b/bin/docbookPrep.sh
+index ab3172a..0d46ba9 100755
+--- a/bin/docbookPrep.sh
++++ b/bin/docbookPrep.sh
+@@ -21,7 +21,7 @@ MY_BASE=`basename "$0"`
+ MY_DIR=`dirname "$0"`
+ 
+ # load shlib
+-. "${MY_DIR}/../lib/sh/shlib"
++. "${MY_DIR}/../lib/shlib"
+ 
+ BASE_DIR=`shlib_relToAbsPath "${MY_DIR}/.."`
+ DL_DIR="${BASE_DIR}/tmp"
+-- 
+1.6.3.2
+

@@ -1,0 +1,37 @@
+From 5a5f760453cec85e4f3f1c6d19448c4e16020fdd Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 18 Oct 2009 19:56:54 +0200
+Subject: [PATCH] abspath instead of PWD
+
+---
+ Makefile |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 080ba0c..0b88336 100644
+--- a/Makefile
++++ b/Makefile
+@@ -9,13 +9,13 @@
+ 
+ PROG=shunit2
+ 
+-BIN_DIR=$(PWD)/bin
+-BUILD_DIR=$(PWD)/build
+-DIST_DIR=$(PWD)/dist
+-LIB_DIR=$(PWD)/lib
+-SHARE_DIR=$(PWD)/share
+-SRC_DIR=$(PWD)/src
+-TMP_DIR=$(PWD)/tmp
++BIN_DIR=$(abspath bin)
++BUILD_DIR=$(abspath build)
++DIST_DIR=$(abspath dist)
++LIB_DIR=$(abspath lib)
++SHARE_DIR=$(abspath share)
++SRC_DIR=$(abspath src)
++TMP_DIR=$(abspath tmp)
+ 
+ DOCBOOK_BUILD_DIR=$(BUILD_DIR)/docbook
+ DOCBOOK_SHARE_DIR=$(SHARE_DIR)/docbook
+-- 
+1.6.3.2
+
