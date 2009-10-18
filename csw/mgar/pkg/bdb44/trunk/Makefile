@@ -50,21 +50,21 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb44/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-PACKAGES = CSWbdb44 CSWbdb44devel CSWbdb44doc
+PACKAGES = CSWbdb44 CSWbdb44-devel CSWbdb44-doc
 
-CATALOGNAME_CSWbdb44      = berkeleydb44
-CATALOGNAME_CSWbdb44devel = berkeleydb44_devel
-CATALOGNAME_CSWbdb44doc   = berkeleydb44_doc
+CATALOGNAME_CSWbdb44       = berkeleydb44
+CATALOGNAME_CSWbdb44-devel = berkeleydb44_devel
+CATALOGNAME_CSWbdb44-doc   = berkeleydb44_doc
 
-ARCHALL_CSWbdb44doc = 1
+ARCHALL_CSWbdb44-doc = 1
 
-SPKG_DESC_CSWbdb44      = BerkeleyDB 4.4 embedded database libraries and utilities
-SPKG_DESC_CSWbdb44devel = BerkeleyDB 4.4 development support
-SPKG_DESC_CSWbdb44doc   = BerkeleyDB 4.4 documentation
+SPKG_DESC_CSWbdb44       = BerkeleyDB 4.4 embedded database libraries and utilities
+SPKG_DESC_CSWbdb44-devel = BerkeleyDB 4.4 development support
+SPKG_DESC_CSWbdb44-doc   = BerkeleyDB 4.4 documentation
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
-REQUIRED_PKGS_CSWbdb44devel = CSWbdb44
+REQUIRED_PKGS_CSWbdb44-devel = CSWbdb44
 
 LICENSE = LICENSE
 
@@ -72,8 +72,8 @@ EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAM
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.* $(libdir)/db.jar
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.* $(libdir)/db.jar
 
-PKGFILES_CSWbdb44doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb44devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb44-doc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb44-devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
