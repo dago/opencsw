@@ -1,0 +1,38 @@
+From 16c4295ff5290649ea7952624c5201992434b4bf Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sun, 18 Oct 2009 09:27:32 +0100
+Subject: [PATCH 2/2] pysvn.hpp: <string> includes first
+
+---
+ Source/pysvn.hpp |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Source/pysvn.hpp b/Source/pysvn.hpp
+index 4a1d65c..ab60f82 100644
+--- a/Source/pysvn.hpp
++++ b/Source/pysvn.hpp
+@@ -7,6 +7,10 @@
+ //
+ // ====================================================================
+ //
++#include <string>
++#include <list>
++#include <map>
++
+ #include "Python.h"
+ #include "CXX/Objects.hxx"
+ #include "CXX/Extensions.hxx"
+@@ -14,10 +18,6 @@
+ 
+ #include "pysvn_svnenv.hpp"
+ 
+-#include <string>
+-#include <list>
+-#include <map>
+-
+ //--------------------------------------------------------------------------------
+ class pysvn_module : public Py::ExtensionModule<pysvn_module>
+ {
+-- 
+1.6.3.2
+

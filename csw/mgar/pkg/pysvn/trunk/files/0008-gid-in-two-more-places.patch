@@ -1,0 +1,39 @@
+From 89ec666ff204e5d45f0d051ff5a2ed9e7236f7ef Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sun, 18 Oct 2009 11:12:30 +0100
+Subject: [PATCH] gid in two more places
+
+---
+ Tests/test-01.sh |    2 +-
+ Tests/test-06.sh |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Tests/test-01.sh b/Tests/test-01.sh
+index ed79049..bc11292 100755
+--- a/Tests/test-01.sh
++++ b/Tests/test-01.sh
+@@ -5,7 +5,7 @@ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ cd ${WORKDIR}/Tests
+ echo WorkDir: ${WORKDIR}
+ echo PYTHON: ${PYTHON}
+-echo Username: $(id -u -n)
++echo Username: $(gid -u -n)
+ 
+ cmd () {
+         echo Info: CWD: $(pwd)
+diff --git a/Tests/test-06.sh b/Tests/test-06.sh
+index b6e2fb4..07a8597 100755
+--- a/Tests/test-06.sh
++++ b/Tests/test-06.sh
+@@ -5,7 +5,7 @@ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ cd ${WORKDIR}/Tests
+ echo WorkDir: ${WORKDIR}
+ echo PYTHON: ${PYTHON}
+-echo Username: $(id -u -n)
++echo Username: $(gid -u -n)
+ 
+ cmd () {
+         echo Info: CWD: $(pwd)
+-- 
+1.6.3.2
+

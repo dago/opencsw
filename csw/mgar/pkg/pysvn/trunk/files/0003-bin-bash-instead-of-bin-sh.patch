@@ -1,0 +1,85 @@
+From 848b922929a73b8c9587aec91876da7e544d376d Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sun, 18 Oct 2009 10:38:05 +0100
+Subject: [PATCH 3/3] /bin/bash instead of /bin/sh
+
+---
+ Tests/test-01.sh |    2 +-
+ Tests/test-03.sh |    2 +-
+ Tests/test-04.sh |    4 ++--
+ Tests/test-05.sh |    2 +-
+ Tests/test-06.sh |    2 +-
+ Tests/test-07.sh |    2 +-
+ 6 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Tests/test-01.sh b/Tests/test-01.sh
+index 22ef9d0..ed79049 100755
+--- a/Tests/test-01.sh
++++ b/Tests/test-01.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # need to get rid of any symbolic links in the WORKDIR
+ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ 
+diff --git a/Tests/test-03.sh b/Tests/test-03.sh
+index bd36b00..7f63e5c 100755
+--- a/Tests/test-03.sh
++++ b/Tests/test-03.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # need to get rid of any symbolic links in the WORKDIR
+ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ 
+diff --git a/Tests/test-04.sh b/Tests/test-04.sh
+index 1c61fdc..a8e2faa 100755
+--- a/Tests/test-04.sh
++++ b/Tests/test-04.sh
+@@ -1,11 +1,11 @@
+-#!/bin/sh
++#!/bin/bash
+ # need to get rid of any symbolic links in the WORKDIR
+ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ 
+ cd ${WORKDIR}/Tests
+ echo WorkDir: ${WORKDIR}
+ echo PYTHON: ${PYTHON}
+-echo Username: $(id -u -n)
++echo Username: $(gid -u -n)
+ 
+ cmd () {
+ 	echo Info: Command: $*
+diff --git a/Tests/test-05.sh b/Tests/test-05.sh
+index 8e892b9..32976c0 100755
+--- a/Tests/test-05.sh
++++ b/Tests/test-05.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # need to get rid of any symbolic links in the WORKDIR
+ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ 
+diff --git a/Tests/test-06.sh b/Tests/test-06.sh
+index 9b8cc6b..b6e2fb4 100755
+--- a/Tests/test-06.sh
++++ b/Tests/test-06.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # need to get rid of any symbolic links in the WORKDIR
+ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ 
+diff --git a/Tests/test-07.sh b/Tests/test-07.sh
+index 5847027..903d321 100755
+--- a/Tests/test-07.sh
++++ b/Tests/test-07.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # need to get rid of any symbolic links in the WORKDIR
+ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ 
+-- 
+1.6.3.2
+

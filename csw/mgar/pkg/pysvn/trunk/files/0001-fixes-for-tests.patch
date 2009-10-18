@@ -1,0 +1,53 @@
+From ec286163180177e43b95e5fce366b19cc7750f27 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sun, 18 Oct 2009 11:04:23 +0100
+Subject: [PATCH] fixes for tests
+
+---
+ Tests/test-04.sh |    2 +-
+ Tests/test-05.sh |    2 +-
+ Tests/test-07.sh |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Tests/test-04.sh b/Tests/test-04.sh
+index a8e2faa..c360615 100755
+--- a/Tests/test-04.sh
++++ b/Tests/test-04.sh
+@@ -30,7 +30,7 @@ cmd ${PYSVN} mkdir file://${TESTROOT}/repos/trunk -m "test-04 add trunk"
+ cmd ${PYSVN} mkdir file://${TESTROOT}/repos/trunk/test -m "test-04 add test"
+ 
+ echo Info: Install hooks
+-echo '#!/bin/sh' >${TESTROOT}/repos/hooks/pre-commit
++echo '#!/bin/bash' >${TESTROOT}/repos/hooks/pre-commit
+ echo export PYTHONPATH=$PYTHONPATH >>${TESTROOT}/repos/hooks/pre-commit
+ echo echo $PYTHON ${WORKDIR}/Tests/test_04_pre_commit_test_1.py '"$@"' ">${TESTROOT}/test_1.output" >>${TESTROOT}/repos/hooks/pre-commit
+ echo $PYTHON ${WORKDIR}/Tests/test_04_pre_commit_test_1.py '"$@"' ">>${TESTROOT}/test_1.output" >>${TESTROOT}/repos/hooks/pre-commit
+diff --git a/Tests/test-05.sh b/Tests/test-05.sh
+index 32976c0..81f2754 100755
+--- a/Tests/test-05.sh
++++ b/Tests/test-05.sh
+@@ -5,7 +5,7 @@ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ cd ${WORKDIR}/Tests
+ echo WorkDir: ${WORKDIR}
+ echo PYTHON: ${PYTHON}
+-echo Username: $(id -u -n)
++echo Username: $(gid -u -n)
+ 
+ cmd () {
+         echo Info: CWD: $(pwd)
+diff --git a/Tests/test-07.sh b/Tests/test-07.sh
+index 903d321..d7c48a4 100755
+--- a/Tests/test-07.sh
++++ b/Tests/test-07.sh
+@@ -5,7 +5,7 @@ export WORKDIR=$( ${PYTHON} -c 'import os;os.chdir("..");print( os.getcwd() )' )
+ cd ${WORKDIR}/Tests
+ echo WorkDir: ${WORKDIR}
+ echo PYTHON: ${PYTHON}
+-echo Username: $(id -u -n)
++echo Username: $(gid -u -n)
+ 
+ cmd () {
+         echo Info: CWD: $(pwd)
+-- 
+1.6.3.2
+

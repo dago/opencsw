@@ -1,0 +1,25 @@
+From e1c99ab2895e81b627aeed5be5e71cb0655cc0b6 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sun, 18 Oct 2009 09:36:12 +0100
+Subject: [PATCH 5/6] Use dash-capital-R for runtime path
+
+---
+ Source/setup_configure.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Source/setup_configure.py b/Source/setup_configure.py
+index 39c5019..8e4ccac 100644
+--- a/Source/setup_configure.py
++++ b/Source/setup_configure.py
+@@ -381,7 +381,7 @@ CCFLAGS=-Wall -fPIC %(includes)s %(debug_cflags)s
+ PYCXX=%(pycxx_dir)s
+ PYCXXSRC=%(pycxx_src_dir)s
+ LDSHARED=g++ -shared %(debug_cflags)s
+-LDLIBS=-L%(svn_lib_dir)s -Wl,--rpath -Wl,%(svn_lib_dir)s \
++LDLIBS=-L%(svn_lib_dir)s -R%(svn_lib_dir)s \
+ -lsvn_client-1 \
+ -lsvn_diff-1 \
+ -lsvn_repos-1 \
+-- 
+1.6.3.2
+

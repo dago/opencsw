@@ -1,0 +1,25 @@
+From a110241e323d4029c2ebc82ee57b1af41adb47c1 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sun, 18 Oct 2009 09:39:07 +0100
+Subject: [PATCH 6/6] Use /opt/csw/lib
+
+---
+ Source/setup_configure.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Source/setup_configure.py b/Source/setup_configure.py
+index 8e4ccac..36cda90 100644
+--- a/Source/setup_configure.py
++++ b/Source/setup_configure.py
+@@ -381,7 +381,7 @@ CCFLAGS=-Wall -fPIC %(includes)s %(debug_cflags)s
+ PYCXX=%(pycxx_dir)s
+ PYCXXSRC=%(pycxx_src_dir)s
+ LDSHARED=g++ -shared %(debug_cflags)s
+-LDLIBS=-L%(svn_lib_dir)s -R%(svn_lib_dir)s \
++LDLIBS=-L%(svn_lib_dir)s -L/opt/csw/lib -R/opt/csw/lib -R%(svn_lib_dir)s \
+ -lsvn_client-1 \
+ -lsvn_diff-1 \
+ -lsvn_repos-1 \
+-- 
+1.6.3.2
+
