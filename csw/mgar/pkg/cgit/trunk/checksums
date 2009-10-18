@@ -1,3 +1,4 @@
-b013ec63820f1841df1cddaa35d66ed3  download/0001-cgit.conf
-27ef98eeb9066a301e60def5b6895a2c  download/apache.conf.CSW
-03d013bbfdad0143ddcb4c29acf1b637  download/cgitrc.CSW
+b013ec63820f1841df1cddaa35d66ed3  0001-cgit.conf
+ab2c07418eec63118a2da512a99d7e34  8071e18dcbf56b98ecea4332e85884cdd91236cc-d8eb68d5d487014a16b680e7d52122d3415303da.diff
+27ef98eeb9066a301e60def5b6895a2c  apache.conf.CSW
+03d013bbfdad0143ddcb4c29acf1b637  cgitrc.CSW

@@ -1,5 +1,5 @@
 GARNAME = cgit
-GARVERSION = 0.8.3-opencsw-1
+GARVERSION = 0.8.3_opencsw_1
 CATEGORIES = devel
 
 DESCRIPTION = Web front-end for Git
@@ -38,7 +38,8 @@ PATH := /usr/ucb:$(PATH)
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-PATCHFILES = 0001-cgit.conf
+PATCHFILES  = 0001-cgit.conf
+PATCHFILES += 8071e18dcbf56b98ecea4332e85884cdd91236cc-d8eb68d5d487014a16b680e7d52122d3415303da.diff
 
 CONFIGURE_SCRIPTS = 
 
