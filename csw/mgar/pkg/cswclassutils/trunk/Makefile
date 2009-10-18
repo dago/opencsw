@@ -1,10 +1,12 @@
+# $Id$
+
 GARNAME = cswclassutils
-GARVERSION = 1.23
+GARVERSION = 1.24
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
 
-MASTER_SITES = 
+MASTER_SITES =
 DISTFILES = COPYING
 
 ARCHALL = 1
@@ -16,7 +18,9 @@ INSTALL_SCRIPTS = custom
 
 SPKG_SOURCEURL = http://www.opencsw.org
 
-CASLIST = $(foreach F,$(wildcard $(FILEDIR)/CSW$(GARNAME).[ir].*), $(subst $(FILEDIR)/CSW$(GARNAME).,,$(F)))
+CASFILES = $(wildcard $(FILEDIR)/CSW$(GARNAME).[ir].*)
+CASLIST = $(foreach F,$(CASFILES), $(subst $(FILEDIR)/CSW$(GARNAME).,,$(F)))
+DISTFILES += $(subst $(FILEDIR)/,,$(CASFILES))
 
 PROTOTYPE_FILTER = sed -e '/^d.*\/usr/d; /scripts/{ s/bin/sys/; }'
 

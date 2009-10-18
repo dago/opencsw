@@ -1,0 +1,250 @@
+#!/bin/sh
+# vim:set sw=2 ts=2 sts=2 expandtab:
+#
+# (c) 2009 Maciej Blizinski
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+#
+# http://wiki.opencsw.org/configuration-directory-migration
+
+# To prevent issues with a-z in regular expressions
+unset LC_ALL
+LANG=C
+
+# Print errors when trying to read from an unset variable.
+set -u
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+
+return_code=0
+
+migration_info="
+This location (/opt/csw/etc) is deprecated.
+
+Configuration files are currently being placed in /etc/opt/csw.  Please make
+sure your new configuration is in /etc/opt/csw and remove the old one from
+/opt/csw/etc.
+
+For more information, please see
+http://wiki.opencsw.org/configuration-directory-migration
+"
+readonly migration_info
+deprecated_file_ext="README.migration"
+readonly deprecated_file_ext
+
+# Create /etc/opt/csw/cswclassutils.DEBUG to enable debugging of this script
+if [ -r ${PKG_INSTALL_ROOT}etc/opt/csw/cswclassutils.DEBUG ]; then
+  DEBUG=1
+else
+  DEBUG=
+fi
+
+give_a_chance_to_stop() {
+  echo
+  echo "*******************************************************************"
+  echo "* Configuration files are going to be migrated from the deprecated "
+  echo "* location (/opt/csw/etc) to the new location (/etc/opt/csw).      "
+  echo "*                                                                  "
+  echo "*         Migration will continue in 10 seconds.                   "
+  echo "*          Press CTRL+C if you want to stop now.                   "
+  echo "*******************************************************************"
+  echo
+  for i in 10 9 8 7 6 5 4 3 2 1; do
+    printf "$i "
+    sleep 1
+  done
+  echo "0."
+}
+
+files_are_identical() {
+  cmp "$1" "$2" > /dev/null
+}
+
+drop_warning() {
+  echo "${migration_info}" > "$1.${deprecated_file_ext}"
+}
+
+sanitize() {
+  echo "$1" | sed -e 's/[^a-zA-Z0-9]/_/g'
+}
+
+expand_modifiers() {
+  # Emulating local variables
+  __per_file_variable="$1"
+  __per_file_modifier_value="$2"
+  eval echo `echo \\${${__per_file_variable}_${__per_file_modifier_value}:-}`
+}
+
+place_signpost_for() {
+  __file_name="$1"
+  echo "${migration_info}" > "${__file_name}.${deprecated_file_ext}"
+}
+
+debug() {
+  [ "${DEBUG}" ] & echo "$@"
+}
+
+should_copy_archived_file() {
+  __archived_file_name="$1"
+  __dest_file_name="$2"
+  __do_copy=0
+  __do_not_copy=1
+  debug "should_copy_archived_file(${__archived_file_name}, ${__dest_file_name})"
+  if [ ! -r "${__archived_file_name}" ]; then
+    debug "No archived file or directory at ${__archived_file_name}"
+    return "${__do_not_copy}"
+  else
+    debug "Archived version found in ${__archived_file_name}"
+  fi
+
+  if [ ! -r "${__dest_file_name}" -a ! -h "${__dest_file_name}" ]; then
+    debug "Destination file ${__dest_file_name} not readable and not a symlink."
+    return "${__do_copy}"
+  else
+    debug "Destination file ${__dest_file_name} is readable or a symlink."
+  fi
+
+  if [ -h "${__dest_file_name}" ]; then # symlink
+    debug "${__dest_file_name} is a symlink"
+    debug `ls -l "${__dest_file_name}"`
+    # Okay, it's a symlink, but is it a dangling symlink?
+    if [ -r "${__dest_file_name}" ]; then
+      debug "Symlink is readable"
+      return "${__do_not_copy}"
+    else
+      debug "Symlink not readable. Can delete."
+      return "${__do_copy}"
+    fi
+  fi # end symlink
+
+  # If there's a sample configuration file, remove the copied one.
+  __sample_conf="${__dest_file_name}.CSW"
+  if [ -r "${__sample_conf}" ]; then
+    if files_are_identical "${__sample_conf}" "${__dest_file_name}"; then
+      return "${__do_copy}"
+    else
+      return "${__do_not_copy}"
+    fi
+  fi
+  # If there's no sample configuration and the destination file exists, it
+  # shouldn't be overwritten.
+  return "${__do_not_copy}"
+}
+
+is_dangling_symlink() {
+  [ -h "$1" -a ! -r "$1" ]
+}
+
+run_already=0
+
+while read confsrc confdst ; do
+  # We're not sure if the files to be migrated have already been copied or not.
+
+  cp "$confsrc" "$confdst"
+  # Sourcing the file, it should contain the configuration.
+  if [ -r "$confsrc" ]; then
+    debug "Sourcing ${confsrc}"
+    . "$confsrc"
+  else
+    echo "${confsrc} is missing"
+    exit 1
+  fi
+
+  if [ -z "${MIGRATE_FILES}" ]; then
+    echo "ERROR! \$MIGRATE_FILES variable is empty."
+    exit 1
+  fi
+
+  if [ "${run_already}" -ne 0 ]; then
+    echo "ERROR! You can only use one configuration file."
+    exit 1
+  else
+    run_already=1
+  fi
+
+  # The defaults, if not set already by the script.
+  SOURCE_DIR___default__="${SOURCE_DIR___default__:-opt/csw/etc}"
+  readonly SOURCE_DIR___default__
+  ARCH_DIR___default__="${ARCH_DIR___default__:-opt/csw/etc/migration-archive}"
+  readonly ARCH_DIR___default__
+  DEST_DIR___default__="${DEST_DIR___default__:-etc/opt/csw}"
+  readonly DEST_DIR___default__
+
+  for file_name in ${MIGRATE_FILES}; do
+    modifier_value=`sanitize "${file_name}"`
+    debug "Processing file: ${file_name}"
+    debug "modifier_value: ${modifier_value}"
+
+    # Perhaps the following three segments of code could be turned into
+    # a function, but it would require complicated eval calls.
+    per_file_srcdir=`expand_modifiers SOURCE_DIR ${modifier_value}`
+    default_srcdir=`expand_modifiers SOURCE_DIR __default__`
+    srcdir="${per_file_srcdir:-${default_srcdir}}"
+    per_file_dstdir=`expand_modifiers DEST_DIR ${modifier_value}`
+    default_dstdir=`expand_modifiers DEST_DIR __default__`
+    dstdir="${per_file_dstdir:-${default_dstdir}}"
+    per_file_archdir=`expand_modifiers ARCH_DIR ${modifier_value}`
+    default_archdir=`expand_modifiers ARCH_DIR __default__`
+    archdir="${per_file_archdir:-${default_archdir}}"
+    srcpath="${PKG_INSTALL_ROOT}${srcdir}/${file_name}"
+    dstpath="${PKG_INSTALL_ROOT}${dstdir}/${file_name}"
+    archpath="${PKG_INSTALL_ROOT}${archdir}/${file_name}"
+
+    # Make sure we have the environment we expect
+    if [ ! -d "${archdir}" ]
+    then
+      debug "Creating ${archdir}"
+      mkdir -m 755 -p "${archdir}"
+      if [ $? -ne 0 ]
+      then
+        echo "ERROR: Couldn't create '${archdir}', bailing out."
+        exit 1
+      fi
+    fi
+
+    # All variables are set, the main algorithm goes here.
+
+    # Moving the file will only work in the global zone. The assumption is that
+    # the postinstall script is going to be run in the global zone first; by the
+    # time it gets to the non-global zones, the ${srcpath} will have been
+    # moved already.
+    if [ -r "${srcpath}" ]
+    then
+      place_signpost_for "${srcpath}"
+      debug "Moving '${srcpath}' to '${archpath}'"
+      mv "${srcpath}" "${archpath}"
+      if [ -r "${srcpath}" ]; then
+        echo "WARNING: '${srcpath}' still exists"
+      fi
+    fi
+
+    # If the destination file is not there and the archived file is, copy it over.
+    if should_copy_archived_file "${archpath}" "${dstpath}"; then
+      echo "Copying '${archpath}' to '${dstpath}'"
+
+      # Is it a dangling symlink?
+      if is_dangling_symlink "${dstpath}"; then
+        debug "Removing dangling symlink: '${dstpath}'"
+        rm "${dstpath}"
+      fi
+
+      # Directories are copied in whole
+      if [ -d "${archpath}" ]; then
+        debug "(cd ${archpath}/..; tar cf - `basename ${archpath}` \
+| ( mkdir ${dstpath}; cd ${dstpath}; cd ..; tar xf -))"
+        (cd ${archpath}/..; tar cf - `basename ${archpath}` \
+            | ( mkdir ${dstpath}; cd ${dstpath}; cd ..; tar xf -) \
+        )
+      elif [ -f "${archpath}" ]; then
+        debug cp "${archpath}" "${dstpath}"
+        cp "${archpath}" "${dstpath}"
+      else
+        echo "WARNING: ${archpath} is neither a file or directory."
+      fi
+    else
+      debug "Not copying '${archpath}' to '${dstpath}'."
+    fi
+  done
+done
+
+exit "${return_code}"
