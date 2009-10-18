@@ -50,32 +50,32 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb33/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-PACKAGES = CSWbdb33 CSWbdb33devel CSWbdb33doc
+PACKAGES = CSWbdb3 CSWbdb3devel CSWbdb3doc
 
-CATALOGNAME_CSWbdb33      = berkeleydb33
-CATALOGNAME_CSWbdb33devel = berkeleydb33_devel
-CATALOGNAME_CSWbdb33doc   = berkeleydb33_doc
+CATALOGNAME_CSWbdb3      = berkeleydb3
+CATALOGNAME_CSWbdb3devel = berkeleydb3_devel
+CATALOGNAME_CSWbdb3doc   = berkeleydb3_doc
 
-ARCHALL_CSWbdb33doc = 1
+ARCHALL_CSWbdb3doc = 1
 
-SPKG_DESC_CSWbdb33      = BerkeleyDB 3.3 embedded database libraries and utilities
-SPKG_DESC_CSWbdb33devel = BerkeleyDB 3.3 development support
-SPKG_DESC_CSWbdb33doc   = BerkeleyDB 3.3 documentation
+SPKG_DESC_CSWbdb3      = BerkeleyDB 3.3 embedded database libraries and utilities
+SPKG_DESC_CSWbdb3devel = BerkeleyDB 3.3 development support
+SPKG_DESC_CSWbdb3doc   = BerkeleyDB 3.3 documentation
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
-REQUIRED_PKGS_CSWbdb33devel = CSWbdb33
+REQUIRED_PKGS_CSWbdb3devel = CSWbdb3
 
 LICENSE = LICENSE
 
 INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir includedir libdir
 
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb33),'
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb3),'
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
 
-PKGFILES_CSWbdb33doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb33devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb3doc = $(PKGFILES_DOC)
+PKGFILES_CSWbdb3devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
