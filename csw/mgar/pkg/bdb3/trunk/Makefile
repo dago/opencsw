@@ -92,6 +92,7 @@ configure-dist:
 post-merge:
 	gln -s . $(PKGROOT)$(libdir)/32
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
+	ginstall -d $(PKGROOT)$(libpath)
 	gln -s ../bdb33/lib/libdb-3.3.so $(PKGROOT)$(libpath)
 	@$(MAKECOOKIE)
 
