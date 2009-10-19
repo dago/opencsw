@@ -4,6 +4,7 @@ e services /etc/inet/services 0444 root sys
 d none /opt/csw/etc/cyrus 0755 root bin
 d none /opt/csw/etc/pkg/CSWcyrusimapd 0755 root bin
 f cswinitsmf /etc/opt/csw/init.d/cswcyrus 0755 root bin
+f none /var/opt/csw/svc/manifest/network/cswcyrus.xml 0644 root sys
 f preserveconf /opt/csw/etc/cyrus/imapd.conf.CSW 0640 root mail
 f preserveconf /opt/csw/etc/cyrus/cyrus.conf.CSW 0640 root mail
 d none /opt/csw/var/cyrus 0755 cyrus mail
