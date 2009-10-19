@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = cups
-GARVERSION = 1.4.0
+GARVERSION = 1.4.1
 CATEGORIES = net
 
 define BLURB
@@ -51,6 +51,7 @@ DISTFILES += CSWcupsd.postremove
 PATCHFILES  = 0001-cswcups-for-service-name.patch
 PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
 PATCHFILES += 0003-Reference-counting-for-printers-only.patch
+PATCHFILES += 0004-Fix-for-usb-unix.c-from-http-www.cups.org-str.php-L3.patch
 
 PREREQUISITE_PKGS  = CSWggettext
 PREREQUISITE_PKGS += CSWjpeg
