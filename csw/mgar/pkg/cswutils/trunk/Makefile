@@ -9,7 +9,7 @@ define BLURB
 endef
 
 SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
-SVN_REV = 90
+SVN_REV = 93
 
 MASTER_SITES =
 SVN_FILES = submit_to_newpkgs.py compare_pkgs.py opencsw_lib.py
