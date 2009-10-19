@@ -1,0 +1,8 @@
+--- /oinkmaster.pl	2009-10-19 14:43:55.515734169 +0200
++++ /oinkmaster.pl	2009-10-19 14:44:05.592041663 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ # $Id: oinkmaster.pl,v 1.406 2006/02/10 13:02:44 andreas_o Exp $ #
+ 
