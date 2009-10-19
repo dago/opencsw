@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = cswclassutils
-GARVERSION = 1.24
+GARVERSION = 1.25
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
@@ -34,6 +34,7 @@ install-custom:
 	@ginstall -m 0755 -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/manifest
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/method
+	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/cswclassutils
 	@ginstall -m 0755 $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/etc/opt/csw/init.d/csw.smf.sample
 	@ginstall -m 0444 $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@$(foreach CAS,$(CASLIST),ginstall -m 0555 $(FILEDIR)/CSW$(GARNAME).$(CAS) $(DESTDIR)/usr/sadm/install/scripts/$(CAS);)

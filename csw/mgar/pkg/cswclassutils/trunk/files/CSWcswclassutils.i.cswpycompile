@@ -22,7 +22,7 @@ if [ "${DEBUG}" ]; then
     echo PACKAGE: $PKGINST
 fi
 
-TMPPY=/tmp/pycomp.$$.`date +%Y%m%d%H%M%S`.py
+TMPPY=/var/opt/csw/cswclassutils/pycomp.$$.`date +%Y%m%d%H%M%S`.py
 
 cat <<EOF > $TMPPY
 import py_compile
