@@ -15,6 +15,7 @@ LANG=C
 set -u
 
 PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+readonly PKG_INSTALL_ROOT
 
 return_code=0
 
@@ -36,7 +37,7 @@ readonly deprecated_file_ext
 if [ -r ${PKG_INSTALL_ROOT}etc/opt/csw/cswclassutils.DEBUG ]; then
   DEBUG=1
 else
-  DEBUG=
+  DEBUG=0
 fi
 
 give_a_chance_to_stop() {
@@ -81,7 +82,7 @@ place_signpost_for() {
 }
 
 debug() {
-  [ "${DEBUG}" ] & echo "$@"
+  [ "${DEBUG}" = "1" ] && echo "$@"
 }
 
 should_copy_archived_file() {
@@ -141,6 +142,10 @@ while read confsrc confdst ; do
   # We're not sure if the files to be migrated have already been copied or not.
 
   cp "$confsrc" "$confdst"
+
+  cat "${confdst}"
+  give_a_chance_to_stop
+
   # Sourcing the file, it should contain the configuration.
   if [ -r "$confsrc" ]; then
     debug "Sourcing ${confsrc}"
