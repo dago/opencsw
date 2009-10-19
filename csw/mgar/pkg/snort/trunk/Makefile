@@ -13,38 +13,32 @@ define BLURB
 endef
 
 MASTER_SITES = http://dl.snort.org/snort-current/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-
-#PACKAGES = 
-#CATALOGNAME_CSWx =
-#SPKG_DESC_CSWx =
-#ARCHALL_CSWx = 1
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 REQUIRED_PKGS  = CSWpcrert CSWlibpcap CSWgcc4corert
-#REQUIRED_PKGS += CSWcswclassutils CSWosslrt CSWmysql4rt CSWzlib
+#REQUIRED_PKGS += CSWosslrt CSWmysql4rt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS = $(DIRPATHS) --libdir=/opt/csw/lib
+CONFIGURE_ARGS  = $(DIRPATHS) --libdir=/opt/csw/lib
 CONFIGURE_ARGS += --enable-dynamicplugin
 
 TEST_TARGET = check
 
+SAMPLECONF = /etc/opt/csw/snort/snort.conf
+
 include gar/category.mk
 
 post-install-modulated:
-	@mkdir -p $(DESTDIR)/opt/csw/etc
-	@cp $(WORKSRC)/etc/snort.conf $(DESTDIR)/opt/csw/etc/snort.conf.CSW
-	@cp $(WORKSRC)/etc/unicode.map $(DESTDIR)/opt/csw/etc/unicode.map
-	@cp $(WORKSRC)/etc/sid-msg.map $(DESTDIR)/opt/csw/etc/sid-msg.map
-	@cp $(WORKSRC)/etc/gen-msg.map $(DESTDIR)/opt/csw/etc/gen-msg.map
-	@cp $(WORKSRC)/etc/classification.config $(DESTDIR)/opt/csw/etc/classification.config
-	@cp $(WORKSRC)/etc/reference.config $(DESTDIR)/opt/csw/etc/reference.config
-#	@cp $(WORKSRC)/etc/generators $(DESTDIR)/opt/csw/etc/generators
+	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/snort
+	@cp $(WORKSRC)/etc/snort.conf $(DESTDIR)/etc/opt/csw/snort/snort.conf
+	@cp $(WORKSRC)/etc/unicode.map $(DESTDIR)/etc/opt/csw/snort/unicode.map
+	@cp $(WORKSRC)/etc/sid-msg.map $(DESTDIR)/etc/opt/csw/snort/sid-msg.map
+	@cp $(WORKSRC)/etc/gen-msg.map $(DESTDIR)/etc/opt/csw/snort/gen-msg.map
+	@cp $(WORKSRC)/etc/classification.config $(DESTDIR)/etc/opt/csw/snort/classification.config
+	@cp $(WORKSRC)/etc/reference.config $(DESTDIR)/etc/opt/csw/snort/reference.config
+#	@cp $(WORKSRC)/etc/generators $(DESTDIR)/etc/opt/csw/snort/generators
 	@$(MAKECOOKIE)
-
-#post-install:
-#	( rm -rf $(DESTDIR)/opt/csw/src )
