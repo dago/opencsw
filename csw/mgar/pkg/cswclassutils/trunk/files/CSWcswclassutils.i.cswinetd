@@ -74,10 +74,12 @@ while read src dest; do
 	  fi
 	  manifest=$outdir/$svcname-$proto.xml
 
-	  echo "$inetdsvc" > /tmp/$svcname.$$
+	  TMPOUT=/var/opt/csw/cswclassutils/$svcname.$$
+
+	  echo "$inetdsvc" > $TMPOUT
 
 	  # we use -f to force any in the specified inetd to take precedence
-	  /usr/sbin/inetconv -f -i /tmp/$svcname.$$ -o $outdir || exit 2
+	  /usr/sbin/inetconv -f -i $TMPOUT -o $outdir || exit 2
 	  if [ "$daemon" = "yes" ]; then
 	      /usr/sbin/inetadm -e svc:/network/$svcname/$proto:default
 	  else
@@ -88,7 +90,7 @@ while read src dest; do
 	  /usr/bin/chmod 644 $manifest
 	  /usr/bin/chown root:bin $manifest
 
-	  rm /tmp/$svcname.$$
+	  rm $TMPOUT
       else
 	  [ -n "$DEBUG" ] && echo "For solaris 8 or 9"
 
