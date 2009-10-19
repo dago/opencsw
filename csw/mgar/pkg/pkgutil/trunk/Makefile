@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.7
+GARVERSION = 1.8b1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -24,6 +24,9 @@ REQUIRED_PKGS_CSWpkgutilplus = CSWperl CSWgnupg CSWpkgutil
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
+PKGFILES_CSWpkgutilplus += .*pkgutilplus.*
+
+ARCHALL_CSWpkgutilplus = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).zip
@@ -57,6 +60,7 @@ install-custom:
 	@cp $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
+	@cp $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(GARNAME)plus/readme
 	@cp $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
 	@cp $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
 #	@cp $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
