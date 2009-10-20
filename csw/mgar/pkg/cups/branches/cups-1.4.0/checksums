@@ -1,0 +1,9 @@
+1e5e54a2b503cfdeeda1b683bcccab83  0001-cswcups-for-service-name.patch
+0da4ea6bf72d61adfc4316a738b90ab5  0002-Adding-the-refcount-member-to-mime_type_t.patch
+a80b8543633e2f9b3b1e531ac2289306  0003-Reference-counting-for-printers-only.patch
+2fd940524ebf6d6c0c22f4e52e253911  0005-Mapping-GNUTLS_E_INVALID_SESSION-to-EIO-in-http_read.patch
+0dd35cc0938696577104852781ec1df6  0006-Fail-compilation-if-no-SSL-impl-chosen.patch
+dec0baa8c3ec0e171183496da8f24323  CSWcupsclient.preinstall
+ca7718998e56c320c08a77cfefe046f6  CSWcupsd.postremove
+dec0baa8c3ec0e171183496da8f24323  CSWcupsd.preinstall
+bc5e777d4320cecdd1a64de8035171a8  cups-1.4.0-source.tar.bz2
