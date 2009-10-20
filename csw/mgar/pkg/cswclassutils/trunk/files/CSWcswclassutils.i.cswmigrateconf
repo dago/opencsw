@@ -14,7 +14,9 @@ LANG=C
 # Print errors when trying to read from an unset variable.
 set -u
 
-PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+# PKG_INSTALL_ROOT does not have a trailing slash. It's for instance: /a
+# http://docs.sun.com/app/docs/doc/820-4042/package-2?a=view
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-}
 readonly PKG_INSTALL_ROOT
 
 return_code=0
@@ -34,7 +36,7 @@ deprecated_file_ext="README.migration"
 readonly deprecated_file_ext
 
 # Create /etc/opt/csw/cswclassutils.DEBUG to enable debugging of this script
-if [ -r ${PKG_INSTALL_ROOT}etc/opt/csw/cswclassutils.DEBUG ]; then
+if [ -r ${PKG_INSTALL_ROOT}/etc/opt/csw/cswclassutils.DEBUG ]; then
   DEBUG=1
 else
   DEBUG=0
@@ -168,11 +170,11 @@ while read confsrc confdst ; do
   fi
 
   # The defaults, if not set already by the script.
-  SOURCE_DIR___default__="${SOURCE_DIR___default__:-opt/csw/etc}"
+  SOURCE_DIR___default__="${SOURCE_DIR___default__:-/opt/csw/etc}"
   readonly SOURCE_DIR___default__
-  ARCH_DIR___default__="${ARCH_DIR___default__:-opt/csw/etc/migration-archive}"
+  ARCH_DIR___default__="${ARCH_DIR___default__:-/opt/csw/etc/migration-archive}"
   readonly ARCH_DIR___default__
-  DEST_DIR___default__="${DEST_DIR___default__:-etc/opt/csw}"
+  DEST_DIR___default__="${DEST_DIR___default__:-/etc/opt/csw}"
   readonly DEST_DIR___default__
 
   for file_name in ${MIGRATE_FILES}; do
