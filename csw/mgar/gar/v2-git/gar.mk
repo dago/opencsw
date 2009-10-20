@@ -345,9 +345,26 @@ extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated
+		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated post-extract-git
 	@$(DONADA)
 
+post-extract-git:
+ifeq ($(ENABLE_GIT_$(GARNAME)),1)
+	if [ -d "$(WORKSRC)" ];then \
+		if [ -d "$(GIT_DIR)/.git" -a ! -d "$(WORKSRC)/.git" ]; then \
+			echo rsync -rv "$(GIT_DIR)/$(GARNAME)-$(GARVERSION)-git/.git" $(WORKSRC); \
+			git clone file://$(GIT_DIR)/$(GARNAME)-$(GARVERSION)-git $(WORKSRC)-git; \
+			gmv -v $(WORKSRC)-git/.git $(WORKSRC); \
+			grm -rfv $(WORKSRC)-git; \
+		else \
+			cd "$(WORKSRC)"; \
+			git init; \
+			git add .; \
+			git commit -a -m "Initial import of $(GARNAME)-$(GARVERSION)."; \
+		fi; \
+	fi
+endif
+	@$(DONADA)
 # returns true if extract has completed successfully, false
 # otherwise
 extract-p:
@@ -366,7 +383,27 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATI
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated post-patch-git
+	@$(DONADA)
+
+post-patch-git:
+ifeq ($(ENABLE_GIT_$(GARNAME)),1)
+	if [ -d "$(WORKSRC)" ]; then \
+		cd "$(WORKSRC)"; \
+		git add .; \
+		git commit -a -m "GAR: automatic commit with patches for $(GARNAME)-$(GARVERSION)."; \
+		echo "Patches have been submitted to git"; \
+	fi
+	@# Only clone the repository if not already cloned.
+	if [ -d "$(WORKSRC)" -a -d "$(GIT_DIR)" -a ! -d "$(GIT_DIR)/$(GARNAME)-$(GARVERSION)" ]; then \
+		cd "$(GIT_DIR)"; \
+		git clone file://$(abspath $(WORKSRC)) $(GARNAME)-$(GARVERSION)-git; \
+		cd $(GARNAME)-$(GARVERSION)-git; \
+		git remote add gar-src file://$(abspath $(WORKSRC)); \
+		git fetch gar-src; \
+	fi
+	@# What if the repository has already been cloned?
+endif
 	@$(DONADA)
 
 # returns true if patch has completed successfully, false
