@@ -15,8 +15,8 @@ DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWx11applewmproto
-CATALOGNAME_CSWx11applewmproto = x11_applewmproto
+PACKAGES = CSWx11bigreqsproto
+CATALOGNAME_CSWx11bigreqsproto = x11_bigreqsproto
 
 REQUIRED_PKGS = CSWx11common
 
