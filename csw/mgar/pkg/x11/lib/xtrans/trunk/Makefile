@@ -1,5 +1,5 @@
 GARNAME = xtrans
-GARVERSION = 1.2.3
+GARVERSION = 1.2.1
 CATEGORIES = x11
 
 DESCRIPTION = X transport library
