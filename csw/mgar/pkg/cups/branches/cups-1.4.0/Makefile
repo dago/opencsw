@@ -21,13 +21,13 @@ localstatedir = /var/opt/csw
 # There's a problem with cups-polld going into a busy-wait loop when polling
 # print servers.
 #
-#   http://www.cups.org/str.php?L3257
+#   http://www.cups.org/str.php?L3257 (closed)
+#   http://www.cups.org/str.php?L3381 (filed again)
 #
 # The problem with cups-polld seems to be going away when CUPS is compiled with
 # debugging symbols. The debugging options is turned on for this package, in
 # order to be able to debug the binary if it ever shows the problem.
-#
-# TODO: Check whether the issue is gone or not.
+
 GARFLAVOR = DBG
 
 # These are the source mirrors published on the CUPS home-page.
@@ -52,7 +52,7 @@ PATCHFILES  = 0001-cswcups-for-service-name.patch
 PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
 PATCHFILES += 0003-Reference-counting-for-printers-only.patch
 # PATCHFILES += 0004-Fix-for-usb-unix.c-from-http-www.cups.org-str.php-L3.patch
-PATCHFILES += 0005-Mapping-GNUTLS_E_INVALID_SESSION-to-EIO-in-http_read.patch
+PATCHFILES += 0005-Mapping-gnutls_record_recv-return-error-codes-to-err.patch
 PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
 
 PREREQUISITE_PKGS  = CSWggettext
