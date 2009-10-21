@@ -4,10 +4,10 @@ PATCHLEVEL = p174
 GARVERSION = $(DISTVERSION)
 CATEGORIES = lang
 
-# disable test scripts (all passed with 1.8.7p174)
-# TEST_SCRIPTS = 
+TEST_SCRIPTS =
+TEST_ARGS = test-all
 
-PREREQUISITE_PKGS = CSWbdb3 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
+PREREQUISITE_PKGS = CSWbdb CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymodeel
@@ -18,14 +18,14 @@ ARCHALL_CSWrubymodeel = 1
 
 LICENSE = COPYING
 
-REQUIRED_PKGS_CSWruby = CSWbdb CSWgdbm CSWiconv CSWgcc4corert
+REQUIRED_PKGS_CSWruby = CSWbdb CSWgdbm CSWiconv 
 REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 REQUIRED_PKGS_CSWrubydoc = CSWruby
 
 REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
 
-REQUIRED_PKGS_CSWrubydev = CSWruby CSWgcc4core CSWgfile
+REQUIRED_PKGS_CSWrubydev = CSWruby CSWgfile
 
 REQUIRED_PKGS_CSWrubymode = CSWemacscommon
 
@@ -76,11 +76,6 @@ DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
 
-GARCOMPILER = GNU
-
-# This is for rbconfig.rb: without this, modules built may not get a proper
-# setting.
-EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread
@@ -103,6 +98,17 @@ DISTNAME = $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL)
 MERGE_EXCLUDE_STATICLIBS = 
 
 COMPILE_ELISP = 1
+
+ifdef USEGCC
+GARCOMPILER = GNU
+REQUIRED_PKGS_CSWruby += CSWgcc4corert
+REQUIRED_PKGS_CSWrubydev += CSWgcc4core
+# This is for rbconfig.rb: without this, modules built may not get a proper
+# setting.
+EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
+else
+SOS11_LD_FLAGS =
+endif
 
 include gar/category.mk
 
