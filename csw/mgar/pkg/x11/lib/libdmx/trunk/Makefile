@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibdmxdevel = libdmx_devel
 SPKG_DESC_CSWlibdmx = $(DESCRIPTION)
 SPKG_DESC_CSWlibdmxdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWdmxproto
+PREREQUISITE_PKGS = CSWx11dmxproto
 
 REQUIRED_PKGS_CSWlibdmx      =  CSWlibx11 CSWlibxext
 REQUIRED_PKGS_CSWlibdmxdevel = CSWlibdmx
