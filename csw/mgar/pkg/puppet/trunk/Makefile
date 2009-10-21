@@ -28,7 +28,7 @@ SPKG_SOURCEURL = http://reductivelabs.com/products/puppet/
 
 INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
 INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
-USERGROUP = $(sysconfdir)/pkg/CSWpuppet/cswusergroup
+USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
 # service isn't started upon the installation of CSWpuppet.
@@ -57,9 +57,9 @@ PATCHFILES  = 0001-pkgutil-support.patch
 include gar/category.mk
 
 install-puppet:
-	ginstall -d $(DESTDIR)
-	ginstall -d $(DESTDIR)$(sysconfdir)/puppet
-	ginstall -d $(DESTDIR)$(localstatedir)/puppet/run
+	ginstall -m 755 -d $(DESTDIR)
+	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/puppet
+	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/puppet/run
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
@@ -76,4 +76,7 @@ install-puppet:
 	        chmod 644 $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
 	    fi \
 	done)
+	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
+	ginstall -m 644 $(FILEDIR)/cswusergroup \
+		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
 	@$(MAKECOOKIE)
