@@ -27,12 +27,12 @@ EXTRA_INC = $(prefix)/apache2/include
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION)
 
 PACKAGES  = CSWsvn CSWsvn-devel CSWap2svn CSWpmsvn
-PACKAGES += CSWpysvn CSWrbsvn CSWjavasvn
+PACKAGES += CSWpythonsvn CSWrbsvn CSWjavasvn
 ARCHALL_CSWsvn-devel = 1
 
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
-REQUIRED_PKGS_CSWsvn       = CSWapache2rt CSWbdb CSWexpat CSWggettextrt
+REQUIRED_PKGS_CSWsvn       = CSWapache2rt CSWbdb47 CSWexpat CSWggettextrt
 REQUIRED_PKGS_CSWsvn      += CSWiconv CSWkrb5lib CSWlibnet CSWneon CSWoldaprt
 REQUIRED_PKGS_CSWsvn      += CSWosslrt CSWsasl CSWzlib CSWsqlite3rt
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
@@ -44,19 +44,19 @@ REQUIRED_PKGS_CSWap2svn    = CSWsvn CSWggettextrt CSWiconv
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
 REQUIRED_PKGS_CSWjavasvn   = CSWsvn CSWapache2rt CSWneon CSWoldaprt
-REQUIRED_PKGS_CSWjavasvn  += CSWbdb CSWexpat CSWggettextrt CSWiconv 
+REQUIRED_PKGS_CSWjavasvn  += CSWbdb47 CSWexpat CSWggettextrt CSWiconv 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
-REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl CSWapache2rt CSWbdb CSWexpat 
+REQUIRED_PKGS_CSWpmsvn     = CSWsvn CSWperl CSWapache2rt CSWbdb47 CSWexpat 
 REQUIRED_PKGS_CSWpmsvn    += CSWggettextrt CSWiconv CSWoldaprt
-SPKG_DESC_CSWpysvn         = Subversion Python Language Binding
-CATALOGNAME_CSWpysvn       = pysvn
-REQUIRED_PKGS_CSWpysvn     = CSWsvn CSWpython CSWapache2rt CSWbdb CSWexpat 
-REQUIRED_PKGS_CSWpysvn    += CSWggettextrt CSWiconv CSWoldaprt
+SPKG_DESC_CSWpythonsvn         = Subversion Python Language Binding
+CATALOGNAME_CSWpythonsvn       = pythonsvn
+REQUIRED_PKGS_CSWpythonsvn     = CSWsvn CSWpython CSWapache2rt CSWbdb47 CSWexpat 
+REQUIRED_PKGS_CSWpythonsvn    += CSWggettextrt CSWiconv CSWoldaprt
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
 REQUIRED_PKGS_CSWrbsvn     = CSWsvn CSWruby CSWiconv CSWoldaprt
-REQUIRED_PKGS_CSWrbsvn    += CSWapache2rt CSWbdb CSWexpat CSWggettextrt 
+REQUIRED_PKGS_CSWrbsvn    += CSWapache2rt CSWbdb47 CSWexpat CSWggettextrt 
 
 PKGFILES_CSWsvn-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWap2svn    = $(prefix)/apache2.*
@@ -64,8 +64,8 @@ PKGFILES_CSWjavasvn   = $(SVNLIB)/.*java.*
 PKGFILES_CSWpmsvn     = $(libdir)/perl.*
 PKGFILES_CSWpmsvn    += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn    += $(mandir)/.*swig_perl.*
-PKGFILES_CSWpysvn     = $(libdir)/python.*
-PKGFILES_CSWpysvn    += $(SVNLIB)/.*swig_py.*
+PKGFILES_CSWpythonsvn     = $(libdir)/python.*
+PKGFILES_CSWpythonsvn    += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWrbsvn     = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn    += $(SVNLIB)/.*swig_ruby.*
 
@@ -90,17 +90,18 @@ SVNLIB = $(prefix)/lib/svn
 NOISALIST = 1
 LDFLAGS  = -R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/apache2/lib 
 LDFLAGS += -L/opt/csw/apache2/lib -L$(SVNLIB) -lintl -liconv 
+LDFLAGS += -R/opt/csw/bdb47/lib -L/opt/csw/bdb47/lib
 export LDFLAGS
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES_CSWpysvn = none cswpycompile
-REQUIRED_PKGS_CSWpysvn += CSWcswclassutils
+SPKG_CLASSES_CSWpythonsvn = none cswpycompile
+REQUIRED_PKGS_CSWpythonsvn += CSWcswclassutils
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --disable-static
-CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/include:/opt/csw/lib:db
+CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/bdb47/include:/opt/csw/bdb47/lib:db
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
@@ -109,6 +110,7 @@ CONFIGURE_ARGS += --with-jdk=$(JDK)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --with-serf=$(prefix)
 
 TEST_TARGET = check
 # Tests take *forever*
