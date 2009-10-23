@@ -54,6 +54,7 @@ PATCHFILES += 0003-Reference-counting-for-printers-only.patch
 # PATCHFILES += 0004-Fix-for-usb-unix.c-from-http-www.cups.org-str.php-L3.patch
 PATCHFILES += 0005-Mapping-gnutls_record_recv-return-error-codes-to-err.patch
 PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
+PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
 
 PREREQUISITE_PKGS  = CSWggettext
 PREREQUISITE_PKGS += CSWjpeg
