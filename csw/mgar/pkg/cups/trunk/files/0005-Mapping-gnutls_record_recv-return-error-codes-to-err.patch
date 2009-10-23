@@ -1,0 +1,42 @@
+From 77851ae023d84a70379d8897ca5b2e5cfcfebeba Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 21 Oct 2009 12:40:39 +0200
+Subject: [PATCH] Mapping gnutls_record_recv return error codes to errno
+
+---
+ cups/http.c |   19 ++++++++++++++++++-
+ 1 files changed, 18 insertions(+), 1 deletions(-)
+
+diff --git a/cups/http.c b/cups/http.c
+index 840e3fc..e255375 100644
+--- a/cups/http.c
++++ b/cups/http.c
+@@ -2719,7 +2719,24 @@ http_read_ssl(http_t *http,		/* I - Connection to server */
+   return (SSL_read((SSL *)(http->tls), buf, len));
+ 
+ #  elif defined(HAVE_GNUTLS)
+-  return (gnutls_record_recv(((http_tls_t *)(http->tls))->session, buf, len));
++  int result;
++  result = (gnutls_record_recv(((http_tls_t *)(http->tls))->session, buf, len));
++  if (result < 0 && !errno) {
++    switch (result)
++    {
++      case GNUTLS_E_INTERRUPTED :
++        errno = EINTR;
++        break;
++      case GNUTLS_E_AGAIN :
++        errno = EAGAIN;
++        break;
++      default :
++        errno = EPIPE;
++        break;
++    }
++    result = -1;
++  }
++  return result;
+ 
+ #  elif defined(HAVE_CDSASSL)
+   int		result;			/* Return value */
+-- 
+1.6.5
+
