@@ -28,7 +28,7 @@ localstatedir = /var/opt/csw
 # debugging symbols. The debugging options is turned on for this package, in
 # order to be able to debug the binary if it ever shows the problem.
 
-GARFLAVOR = DBG
+# GARFLAVOR = DBG
 
 # These are the source mirrors published on the CUPS home-page.
 CUPS_MIRRORS  = http://ftp.easysw.com/pub
