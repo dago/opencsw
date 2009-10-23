@@ -1,8 +1,8 @@
 This small package performs logging on package maintenance actions.
 It logs install, upgrade and removal actions to the user.notice
-facility.  Successes and failures are logged.  There is no 'switch' to
-disable the logging, simply remove the package that provided the hook
-scripts.
+facility.  Successes and failures are logged.  There are no options
+for these scripts.  They are always active.  Remove the package to
+disable them.
 
 If you experience problems with this package, contact:
 

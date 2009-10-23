@@ -35,6 +35,7 @@ HOOKS = $(PREHOOKS) $(POSTHOOKS)
 install-custom:
 	@echo Installing CSWcswpkglogger files...
 	@( ginstall -m 0755 -d $(DESTDIR)/opt/csw/share/doc/cswpkglogger/ $(HOOKDIR) $(addprefix $(HOOKDIR)/,$(addsuffix .d,$(HOOKS))); \
+	  ginstall -m 0644 $(FILEDIR)/README $(DESTDIR)/opt/csw/share/doc/cswpkglogger/; \
 	  ginstall -m 0755 $(FILEDIR)/01-CSWcswpkglogger-postupgrade $(HOOKDIR)/postupgrade.d/; \
 	  ln $(HOOKDIR)/postupgrade.d/01-CSWcswpkglogger-postupgrade $(HOOKDIR)/postinstall.d/01-CSWcswpkglogger-postinstall; \
 	  ln $(HOOKDIR)/postupgrade.d/01-CSWcswpkglogger-postupgrade $(HOOKDIR)/postremove.d/01-CSWcswpkglogger-postremove; \
