@@ -1,8 +1,0 @@
-#!/sbin/sh
-
-etccups=${BASEDIR}/etc/opt/csw/cups
-
-if [ -d "$etccups" ]; then
-  echo ""
-  echo "You might want to manually remove files in $etccups."
-fi
