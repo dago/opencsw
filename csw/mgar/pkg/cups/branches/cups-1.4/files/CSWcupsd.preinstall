@@ -4,6 +4,11 @@
 # $Id$
 #
 
+set -u
+
+PKG_INSTALL_ROOT="${PKG_INSTALL_ROOT:-}"
+readonly PKG_INSTALL_ROOT
+
 obsolete_directories="/opt/csw/etc/cups:/etc/opt/csw/cups"
 
 obsolete_dir_information="
@@ -17,7 +22,7 @@ obsolete_dir_file_name="README.THIS_DIRECTORY_IS_OBSOLETE"
 for dirpair in ${obsolete_directories}; do
   obsolete_dir=`echo ${dirpair} | cut -d: -f1`
   new_dir=`echo ${dirpair} | cut -d: -f2`
-  if [ -d "${PKG_INSTALL_ROOT}${obsolete_dir}" ]; then
+  if [ -d "${PKG_INSTALL_ROOT}/${obsolete_dir}" ]; then
     echo
     echo "*******************************************************************"
     echo "* The old configuration directory ${obsolete_dir} still exists.    "
@@ -30,7 +35,7 @@ for dirpair in ${obsolete_directories}; do
     sleep 10
 
     # Leaving a note for the sysadmin if the they proceed with the installation.
-    fn="${PKG_INSTALL_ROOT}${obsolete_dir}/${obsolete_dir_file_name}"
+    fn="${PKG_INSTALL_ROOT}/${obsolete_dir}/${obsolete_dir_file_name}"
     if touch "${fn}" 2>/dev/null; then
       echo "${obsolete_dir_information}" > "${fn}"
     fi
