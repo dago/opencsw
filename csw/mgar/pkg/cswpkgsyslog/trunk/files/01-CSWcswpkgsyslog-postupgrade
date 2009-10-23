@@ -7,7 +7,7 @@ PKG=$1
 VER=$2
 
 function logdie() {
-    logger -t "cswpkglogger" "$1"
+    logger -t "cswpkgsyslog" "$1"
     exit 0
 }
 
@@ -33,7 +33,7 @@ function failure() {
 
 if [ -d /var/sadm/pkg/${PKG} ]; then
     SYSTEMVER=$(pkgparam ${PKG} VERSION 2>/dev/null)
-    pf=/var/opt/csw/pkg-hooks/CSWcswpkglogger.upgrade.${PKG}
+    pf=/var/opt/csw/pkg-hooks/CSWcswpkgsyslog.upgrade.${PKG}
     if [ -f ${pf} ]; then
 	PREVVER=$(cat ${pf} 2>/dev/null)
 	rm -f ${pf}
