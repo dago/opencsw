@@ -4,8 +4,13 @@ facility.  Successes and failures are logged.  There are no options
 for these scripts.  They are always active.  Remove the package to
 disable them.
 
-If you experience problems with this package, contact:
+For this functionality to work, you must use a package management tool
+that supports the hook functionality described at:
 
-Ben Walton <bwalton@opencsw.org>
+http://wiki.opencsw.org/package-hooks
+
+Currently, this means pkgutil v1.7 or later.
 
 These scripts are licensed under the GPL v3.
+
+Ben Walton <bwalton@opencsw.org>
