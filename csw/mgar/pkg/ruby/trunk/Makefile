@@ -7,7 +7,7 @@ CATEGORIES = lang
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
-PREREQUISITE_PKGS = CSWbdb CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
+PREREQUISITE_PKGS = CSWbdb47 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
 PREREQUISITE_PKGS += CSWreadline CSWzlib
 
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymodeel
@@ -18,7 +18,7 @@ ARCHALL_CSWrubymodeel = 1
 
 LICENSE = COPYING
 
-REQUIRED_PKGS_CSWruby = CSWbdb CSWgdbm CSWiconv 
+REQUIRED_PKGS_CSWruby = CSWbdb47 CSWgdbm CSWiconv 
 REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 REQUIRED_PKGS_CSWrubydoc = CSWruby
@@ -82,7 +82,7 @@ CONFIGURE_ARGS += --enable-pthread
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-tcl-dir=$(prefix)
 CONFIGURE_ARGS += --with-tk-dir=$(prefix)
-CONFIGURE_ARGS += --with-dbm-dir=$(prefix)
+CONFIGURE_ARGS += --with-dbm-dir=$(prefix)/bdb47
 CONFIGURE_ARGS += --with-gdbm-dir=$(prefix)
 CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
 CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
