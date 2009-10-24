@@ -1,6 +1,11 @@
 # X11
-X11_PROTO_MASTER_SITE = http://xorg.freedesktop.org/releases/individual/proto/
-X11_LIB_MASTER_SITE = http://xorg.freedesktop.org/releases/individual/lib/
+
+# Version of X11 
+X11_RELEASE_VERSION = X11R7.4
+
+# Definition of the URL to access sources
+X11_PROTO_MASTER_SITE = http://xorg.freedesktop.org/releases/$(X11_RELEASE_VERSION)/src/proto/
+X11_LIB_MASTER_SITE = http://xorg.freedesktop.org/releases/$(X11_RELEASE_VERSION)/src/lib/
 XCB_MASTER_SITES = http://xcb.freedesktop.org/dist/
 
 # C and C++ compiler flags
