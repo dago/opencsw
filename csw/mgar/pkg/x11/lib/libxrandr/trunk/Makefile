@@ -25,7 +25,7 @@ SPKG_DESC_CSWlibxrandrdevel = $(DESCRIPTION) development files
 
 REQUIRED_PKGS_CSWlibxrandrdevel = CSWlibxrandr
 
-PREREQUISITE_PKGS = CSWrandrproto CSWlibxextdevel 
+# PREREQUISITE_PKGS = CSWrandrproto CSWlibxextdevel 
 
 PKGFILES_CSWlibxrandrdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxrandr       = CSWlibx11 CSWlibxext CSWlibxrender

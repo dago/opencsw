@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibxxf86dgadevel = libxxf86dga_devel
 SPKG_DESC_CSWlibxxf86dga = $(DESCRIPTION)
 SPKG_DESC_CSWlibxxf86dgadevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWxf86dgaproto
+# PREREQUISITE_PKGS = CSWxf86dgaproto
 
 REQUIRED_PKGS_CSWlibxxf86dga = CSWlibx11 CSWlibxext
 REQUIRED_PKGS_CSWlibxxf86dgadevel = CSWlibxxf86dga

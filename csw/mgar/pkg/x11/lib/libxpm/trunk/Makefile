@@ -25,6 +25,8 @@ CATALOGNAME_CSWlibxpmdevel = libxpm_devel
 SPKG_DESC_CSWlibxpm = X11 pixmap library
 SPKG_DESC_CSWlibxpmdevel = X11 pixmap library development files
 
+PREREQUISITE_PKGS = CSWx11xproto CSWlibx11devel
+
 REQUIRED_PKGS_CSWlibxpm = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxt
 REQUIRED_PKGS_CSWlibxpmdevel = CSWlibxpm
 REQUIRED_PKGS_CSWxpm = CSWlibxpm

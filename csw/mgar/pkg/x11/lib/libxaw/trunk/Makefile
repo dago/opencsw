@@ -15,7 +15,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # xproto x11 xext xextproto xt xmu xpm
-PREREQUISITE_PKGS = CSWlibxpmdevel
+# PREREQUISITE_PKGS = CSWlibxpmdevel
 
 PACKAGES = CSWlibxaw CSWlibxawdevel
 

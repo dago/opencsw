@@ -16,7 +16,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PREREQUISITE_PKGS = CSWlibicedevel
+# PREREQUISITE_PKGS = CSWlibicedevel
 REQUIRED_PKGS = CSWlibice
 
 PACKAGES = CSWlibsm CSWlibsmdevel

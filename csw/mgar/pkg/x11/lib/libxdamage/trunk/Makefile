@@ -25,7 +25,7 @@ SPKG_DESC_CSWlibxdamagedevel = $(DESCRIPTION) development files
 
 REQUIRED_PKGS_CSWlibxdamagedevel = CSWlibxdamage
 
-PREREQUISITE_PKGS = CSWdamageproto
+# PREREQUISITE_PKGS = CSWdamageproto
 
 PKGFILES_CSWlibxdamagedevel  = $(PKGFILES_DEVEL)
 

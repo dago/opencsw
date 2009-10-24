@@ -12,8 +12,8 @@ MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTNAME = libXau-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
-PREREQUISITE_PKGS = CSWinputproto CSWxkbproto CSWxrenderproto CSWxcbproto
-PREREQUISITE_PKGS += CSWxextproto CSWxproto CSWxtrans CSWlibpthreadstubs
+# PREREQUISITE_PKGS = CSWinputproto CSWxkbproto CSWxrenderproto CSWxcbproto
+# PREREQUISITE_PKGS += CSWxextproto CSWxproto CSWxtrans CSWlibpthreadstubs
 
 PACKAGES = CSWlibxau CSWlibxaudevel
 

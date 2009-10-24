@@ -12,14 +12,14 @@ endef
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTNAME = libX11-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
-PATCHFILES = patch-stdint.diff
+# PATCHFILES = patch-stdint.diff
 # Add workaround for http://bugs.sourcemage.org/show_bug.cgi?id=13476
-PATCHFILES += patch-xlib-sentinel.diff
+# PATCHFILES += patch-xlib-sentinel.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWxcbproto CSWxextproto CSWxtrans CSWxkbproto CSWinputproto CSWlibpthreadstubs CSWlibxcbdevel
+PREREQUISITE_PKGS = CSWxcbproto CSWx11xextproto CSWxtrans CSWx11inputproto CSWlibpthreadstubs CSWlibxcbdevel
 
 PACKAGES = CSWlibx11 CSWlibx11devel
 

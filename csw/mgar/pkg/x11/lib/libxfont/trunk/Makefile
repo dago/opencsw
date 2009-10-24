@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibxfontdevel = libxfont_devel
 SPKG_DESC_CSWlibxfont = $(DESCRIPTION)
 SPKG_DESC_CSWlibxfontdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWlibfontencdevel
+# PREREQUISITE_PKGS = CSWlibfontencdevel
 REQUIRED_PKGS_CSWlibxfontdevel = CSWlibxfont
 REQUIRED_PKGS_CSWlibxfont = CSWftype2 CSWlibfontenc CSWzlib
 
