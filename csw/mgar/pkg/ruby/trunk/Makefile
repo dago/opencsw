@@ -23,7 +23,7 @@ REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 REQUIRED_PKGS_CSWrubydoc = CSWruby
 
-REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk
+REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk CSWtcl
 
 REQUIRED_PKGS_CSWrubydev = CSWruby CSWgfile
 
