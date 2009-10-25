@@ -24,8 +24,7 @@ REQUIRED_PKGS_CSWcgit = CSWiconv CSWosslrt CSWzlib
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-#GIT_REPOS  = git://github.com/trygvis/cgit.git
-GIT_REPOS  = http://localhost/cgit/cgit
+GIT_REPOS  = git://github.com/trygvis/cgit.git
 #GIT_TREEISH_cgit = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 GIT_TREEISH_cgit = solaris
 
@@ -39,7 +38,6 @@ PATH := /usr/ucb:$(PATH)
 # UPSTREAM_MASTER_SITES = 
 
 PATCHFILES  = 0001-cgit.conf
-PATCHFILES += 8071e18dcbf56b98ecea4332e85884cdd91236cc-d8eb68d5d487014a16b680e7d52122d3415303da.diff
 
 CONFIGURE_SCRIPTS = 
 
