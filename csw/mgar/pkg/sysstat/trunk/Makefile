@@ -1,5 +1,5 @@
 GARNAME = sysstat
-GARVERSION = 20090805
+GARVERSION = 20091024
 CATEGORIES = utils
 
 DESCRIPTION = Key system statistics at a glance
@@ -54,7 +54,9 @@ INSTALL_SCRIPTS = custom
 # only done via sysstatd which uses isaexec.
 ISAEXEC_FILES = $(sbindir)/sysstatd
 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/sysstatd$$$$/ { $$$$4 = "4755" } { print }'
+PROTOTYPE_MODIFIERS = makesuid
+PROTOTYPE_FILES_makesuid = .*/sysstatd
+PROTOTYPE_PERMS_makesuid = 4755
 
 include gar/category.mk
 
