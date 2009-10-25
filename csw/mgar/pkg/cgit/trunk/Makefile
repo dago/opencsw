@@ -26,7 +26,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GIT_REPOS  = git://github.com/trygvis/cgit.git
 #GIT_TREEISH_cgit = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
-GIT_TREEISH_cgit = solaris
+GIT_TREEISH_cgit.git = solaris
 
 DISTFILES = apache.conf.CSW cgitrc.CSW
 
