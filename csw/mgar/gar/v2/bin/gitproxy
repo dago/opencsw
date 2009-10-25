@@ -15,6 +15,6 @@ if [ -n "${http_proxy}" ]; then
     nc ${PROXYHOST} ${PROXYPORT} | (read a; read a; cat )
 
 else
-    echo Please set http_proxy in your environment.
+    echo Please set http_proxy in your environment. >&2
     exit 1
 fi
