@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.8b1
+GARVERSION = 1.8b2
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
