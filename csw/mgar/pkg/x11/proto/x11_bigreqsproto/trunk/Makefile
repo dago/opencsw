@@ -2,7 +2,7 @@ PROTONAME = bigreqsproto
 CATEGORIES = x11
 GARNAME = x11_$(PROTONAME)
 DISTNAME = $(PROTONAME)-$(GARVERSION)
-GARVERSION = 1.0.2
+GARVERSION = 1.1.0
 
 DESCRIPTION = Prototype headers for BigReqs extension to X11
 define BLURB

@@ -19,7 +19,7 @@ DISTFILES = $(DISTNAME).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWxcbproto CSWx11xextproto CSWxtrans CSWx11inputproto CSWlibpthreadstubs CSWlibxcbdevel
+PREREQUISITE_PKGS =  CSWx11xextproto CSWxtrans CSWx11inputproto CSWlibpthreadstubs CSWlibxcbdevel
 
 PACKAGES = CSWlibx11 CSWlibx11devel
 
