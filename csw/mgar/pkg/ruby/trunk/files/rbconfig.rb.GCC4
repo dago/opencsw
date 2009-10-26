@@ -1,0 +1,182 @@
+
+# This file was created by mkconfig.rb when ruby was built.  Any
+# changes made to this file will be lost the next time ruby is built.
+
+module Config
+  RUBY_VERSION == "1.8.7" or
+    raise "ruby lib version (1.8.7) doesn't match executable version (#{RUBY_VERSION})"
+
+  TOPDIR = File.dirname(__FILE__).chomp!("/lib/ruby/1.8/i386-solaris2.8")
+  DESTDIR = '' unless defined? DESTDIR
+  CONFIG = {}
+  CONFIG["DESTDIR"] = DESTDIR
+  CONFIG["INSTALL"] = '/opt/csw/bin/ginstall -c'
+  CONFIG["prefix"] = (TOPDIR || DESTDIR + "/opt/csw")
+  CONFIG["EXEEXT"] = ""
+  CONFIG["ruby_install_name"] = "ruby"
+  CONFIG["RUBY_INSTALL_NAME"] = "ruby"
+  CONFIG["RUBY_SO_NAME"] = "ruby"
+  CONFIG["SHELL"] = "/bin/bash"
+  CONFIG["PATH_SEPARATOR"] = ":"
+  CONFIG["PACKAGE_NAME"] = ""
+  CONFIG["PACKAGE_TARNAME"] = ""
+  CONFIG["PACKAGE_VERSION"] = ""
+  CONFIG["PACKAGE_STRING"] = ""
+  CONFIG["PACKAGE_BUGREPORT"] = ""
+  CONFIG["exec_prefix"] = "$(DESTDIR)/opt/csw"
+  CONFIG["bindir"] = "$(DESTDIR)/opt/csw/bin"
+  CONFIG["sbindir"] = "$(DESTDIR)/opt/csw/sbin"
+  CONFIG["libexecdir"] = "$(DESTDIR)/opt/csw/libexec"
+  CONFIG["datarootdir"] = "$(prefix)/share"
+  CONFIG["datadir"] = "$(DESTDIR)/opt/csw/share"
+  CONFIG["sysconfdir"] = "$(DESTDIR)/opt/csw/etc"
+  CONFIG["sharedstatedir"] = "$(DESTDIR)/opt/csw/share"
+  CONFIG["localstatedir"] = "$(DESTDIR)/opt/csw/var"
+  CONFIG["includedir"] = "$(DESTDIR)/opt/csw/include"
+  CONFIG["oldincludedir"] = "/usr/include"
+  CONFIG["docdir"] = "$(datarootdir)/doc/$(PACKAGE)"
+  CONFIG["infodir"] = "$(DESTDIR)/opt/csw/share/info"
+  CONFIG["htmldir"] = "$(docdir)"
+  CONFIG["dvidir"] = "$(docdir)"
+  CONFIG["pdfdir"] = "$(docdir)"
+  CONFIG["psdir"] = "$(docdir)"
+  CONFIG["libdir"] = "$(DESTDIR)/opt/csw/lib"
+  CONFIG["localedir"] = "$(datarootdir)/locale"
+  CONFIG["mandir"] = "$(DESTDIR)/opt/csw/share/man"
+  CONFIG["DEFS"] = "-D_FILE_OFFSET_BITS=64"
+  CONFIG["ECHO_C"] = ""
+  CONFIG["ECHO_N"] = "-n"
+  CONFIG["ECHO_T"] = ""
+  CONFIG["LIBS"] = "-lpthread -lrt -ldl -lcrypt -lm "
+  CONFIG["build_alias"] = ""
+  CONFIG["host_alias"] = ""
+  CONFIG["target_alias"] = ""
+  CONFIG["MAJOR"] = "1"
+  CONFIG["MINOR"] = "8"
+  CONFIG["TEENY"] = "7"
+  CONFIG["build"] = "i386-pc-solaris2.8"
+  CONFIG["build_cpu"] = "i386"
+  CONFIG["build_vendor"] = "pc"
+  CONFIG["build_os"] = "solaris2.8"
+  CONFIG["host"] = "i386-pc-solaris2.8"
+  CONFIG["host_cpu"] = "i386"
+  CONFIG["host_vendor"] = "pc"
+  CONFIG["host_os"] = "solaris2.8"
+  CONFIG["target"] = "i386-pc-solaris2.8"
+  CONFIG["target_cpu"] = "i386"
+  CONFIG["target_vendor"] = "pc"
+  CONFIG["target_os"] = "solaris2.8"
+  CONFIG["CC"] = "/opt/csw/gcc4/bin/gcc"
+  CONFIG["CFLAGS"] = "-mtune=i686 -O2 -pipe -m32 -march=i386 -I/opt/csw/include  -fPIC $(cflags)"
+  CONFIG["LDFLAGS"] = "-L. -L/opt/csw/gcc4/lib/. -m32 -march=i386 -R /opt/csw/gcc4/lib -L/opt/csw/lib"
+  CONFIG["CPPFLAGS"] = "-I/opt/csw/include $(DEFS) $(cppflags)"
+  CONFIG["OBJEXT"] = "o"
+  CONFIG["CPP"] = "/opt/csw/gcc4/bin/gcc -E"
+  CONFIG["GREP"] = "/opt/csw/bin/ggrep"
+  CONFIG["EGREP"] = "/opt/csw/bin/ggrep -E"
+  CONFIG["GNU_LD"] = "no"
+  CONFIG["CPPOUTFILE"] = "-o conftest.i"
+  CONFIG["OUTFLAG"] = "-o "
+  CONFIG["YACC"] = "bison -y"
+  CONFIG["YFLAGS"] = ""
+  CONFIG["RANLIB"] = "ranlib"
+  CONFIG["AR"] = "ar"
+  CONFIG["AS"] = "as"
+  CONFIG["ASFLAGS"] = ""
+  CONFIG["NM"] = ""
+  CONFIG["WINDRES"] = ""
+  CONFIG["DLLWRAP"] = ""
+  CONFIG["OBJDUMP"] = ""
+  CONFIG["LN_S"] = "ln -s"
+  CONFIG["SET_MAKE"] = ""
+  CONFIG["INSTALL_PROGRAM"] = "$(INSTALL)"
+  CONFIG["INSTALL_SCRIPT"] = "$(INSTALL)"
+  CONFIG["INSTALL_DATA"] = "$(INSTALL) -m 644"
+  CONFIG["RM"] = "rm -f"
+  CONFIG["CP"] = "cp"
+  CONFIG["MAKEDIRS"] = "mkdir -p"
+  CONFIG["ALLOCA"] = ""
+  CONFIG["DLDFLAGS"] = ""
+  CONFIG["ARCH_FLAG"] = ""
+  CONFIG["STATIC"] = ""
+  CONFIG["CCDLFLAGS"] = " -fPIC"
+  CONFIG["LDSHARED"] = "$(CC) -shared"
+  CONFIG["DLEXT"] = "so"
+  CONFIG["DLEXT2"] = ""
+  CONFIG["LIBEXT"] = "a"
+  CONFIG["LINK_SO"] = ""
+  CONFIG["LIBPATHFLAG"] = " -L%1$-s"
+  CONFIG["RPATHFLAG"] = " -Wl,-R%1$-s"
+  CONFIG["LIBPATHENV"] = "LD_LIBRARY_PATH"
+  CONFIG["TRY_LINK"] = ""
+  CONFIG["STRIP"] = "strip"
+  CONFIG["EXTSTATIC"] = ""
+  CONFIG["setup"] = "Setup"
+  CONFIG["PREP"] = "miniruby$(EXEEXT)"
+  CONFIG["EXTOUT"] = ".ext"
+  CONFIG["ARCHFILE"] = ""
+  CONFIG["RDOCTARGET"] = "install-doc"
+  CONFIG["cppflags"] = "-I/opt/csw/include"
+  CONFIG["cflags"] = "$(optflags) $(debugflags)"
+  CONFIG["optflags"] = ""
+  CONFIG["debugflags"] = ""
+  CONFIG["LIBRUBY_LDSHARED"] = "$(CC) -shared"
+  CONFIG["LIBRUBY_DLDFLAGS"] = " -Wl,-h,$(@|#_!!_#|F)"
+  CONFIG["rubyw_install_name"] = ""
+  CONFIG["RUBYW_INSTALL_NAME"] = ""
+  CONFIG["LIBRUBY_A"] = "lib$(RUBY_SO_NAME)-static.a"
+  CONFIG["LIBRUBY_SO"] = "lib$(RUBY_SO_NAME).so.$(MAJOR)"
+  CONFIG["LIBRUBY_ALIASES"] = "lib$(RUBY_SO_NAME).so.$(MAJOR).$(MINOR).$(TEENY) lib$(RUBY_SO_NAME).so"
+  CONFIG["LIBRUBY"] = "$(LIBRUBY_SO)"
+  CONFIG["LIBRUBYARG"] = "$(LIBRUBYARG_SHARED)"
+  CONFIG["LIBRUBYARG_STATIC"] = "-l$(RUBY_SO_NAME)-static"
+  CONFIG["LIBRUBYARG_SHARED"] = "-Wl,-R -Wl,$(libdir) -L$(libdir) -l$(RUBY_SO_NAME)"
+  CONFIG["SOLIBS"] = "$(LIBS)"
+  CONFIG["DLDLIBS"] = " -lc"
+  CONFIG["ENABLE_SHARED"] = "yes"
+  CONFIG["MAINLIBS"] = ""
+  CONFIG["COMMON_LIBS"] = ""
+  CONFIG["COMMON_MACROS"] = ""
+  CONFIG["COMMON_HEADERS"] = ""
+  CONFIG["EXPORT_PREFIX"] = ""
+  CONFIG["MAKEFILES"] = "Makefile"
+  CONFIG["arch"] = "i386-solaris2.8"
+  CONFIG["sitearch"] = "i386-solaris2.8"
+  CONFIG["sitedir"] = "$(libdir)/ruby/site_ruby"
+  CONFIG["vendordir"] = "$(libdir)/ruby/vendor_ruby"
+  CONFIG["configure_args"] = " '--prefix=/opt/csw' '--exec_prefix=/opt/csw' '--bindir=/opt/csw/bin' '--sbindir=/opt/csw/sbin' '--libexecdir=/opt/csw/libexec' '--datadir=/opt/csw/share' '--sysconfdir=/opt/csw/etc' '--sharedstatedir=/opt/csw/share' '--localstatedir=/opt/csw/var' '--libdir=/opt/csw/lib' '--infodir=/opt/csw/share/info' '--includedir=/opt/csw/include' '--mandir=/opt/csw/share/man' '--enable-pthread' '--enable-shared' '--with-tcl-dir=/opt/csw' '--with-tk-dir=/opt/csw' '--with-dbm-dir=/opt/csw' '--with-gdbm-dir=/opt/csw' '--with-iconv-dir=/opt/csw' '--with-openssl-dir=/opt/csw' '--with-readline-dir=/opt/csw' '--with-zlib-dir=/opt/csw' '--enable-install-doc' 'CC=/opt/csw/gcc4/bin/gcc' 'CFLAGS=-mtune=i686 -O2 -pipe -m32 -march=i386 -I/opt/csw/include' 'LDFLAGS=-L/opt/csw/gcc4/lib/. -m32 -march=i386 -R /opt/csw/gcc4/lib -L/opt/csw/lib' 'CPPFLAGS=-I/opt/csw/include'"
+  CONFIG["NROFF"] = "/usr/bin/nroff"
+  CONFIG["MANTYPE"] = "man"
+  CONFIG["ruby_version"] = "$(MAJOR).$(MINOR)"
+  CONFIG["rubylibdir"] = "$(libdir)/ruby/$(ruby_version)"
+  CONFIG["archdir"] = "$(rubylibdir)/$(arch)"
+  CONFIG["sitelibdir"] = "$(sitedir)/$(ruby_version)"
+  CONFIG["sitearchdir"] = "$(sitelibdir)/$(sitearch)"
+  CONFIG["vendorlibdir"] = "$(vendordir)/$(ruby_version)"
+  CONFIG["vendorarchdir"] = "$(vendorlibdir)/$(sitearch)"
+  CONFIG["topdir"] = File.dirname(__FILE__)
+  MAKEFILE_CONFIG = {}
+  CONFIG.each{|k,v| MAKEFILE_CONFIG[k] = v.dup}
+  def Config::expand(val, config = CONFIG)
+    val.gsub!(/\$\$|\$\(([^()]+)\)|\$\{([^{}]+)\}/) do |var|
+      if !(v = $1 || $2)
+	'$'
+      elsif key = config[v = v[/\A[^:]+(?=(?::(.*?)=(.*))?\z)/]]
+	pat, sub = $1, $2
+	config[v] = false
+	Config::expand(key, config)
+	config[v] = key
+	key = key.gsub(/#{Regexp.quote(pat)}(?=\s|\z)/n) {sub} if pat
+	key
+      else
+	var
+      end
+    end
+    val
+  end
+  CONFIG.each_value do |val|
+    Config::expand(val)
+  end
+end
+RbConfig = Config # compatibility for ruby-1.9
+CROSS_COMPILING = nil unless defined? CROSS_COMPILING

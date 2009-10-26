@@ -114,10 +114,22 @@ include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
 
-PI_TARGETS  = samples rbconfig rbscripts rubymode
+RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.8/rbconfig.rb
+
+PI_TARGETS  = samples rbconfig rbscripts rubymode multiconfig
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
+
+multiconfig:
+	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
+	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS11
+	@gcp $(FILEDIR)/rbconfig.rb.GCC4 $(DESTDIR)/$(RBCONFIG).GCC4
+	@gln -s $(RBCONFIG).SOS11 $(DESTDIR)$(RBCONFIG)
+	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/
+	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig
+	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/ruby/
+	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/ruby/
 
 rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
 rubymode:
