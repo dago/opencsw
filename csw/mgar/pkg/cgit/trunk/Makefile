@@ -44,6 +44,9 @@ CONFIGURE_SCRIPTS =
 # Disable tests for now, need a round GNU'ism removal there too
 TEST_SCRIPTS =
 
+# pdf-doc does not work yet
+INSTALL_ARGS += man-doc html-doc
+
 PRESERVECONF  = /etc/opt/csw/cgit/apache.conf.CSW
 PRESERVECONF += /etc/opt/csw/cgit/cgitrc.CSW
 
@@ -51,10 +54,16 @@ PRESERVECONF += /etc/opt/csw/cgit/cgitrc.CSW
 pre-extract-modulated: git-extract-cgit
 
 post-install-modulated:
-	@mkdir -p $(DESTDIR)/etc/opt/csw/cgit/
+	@mkdir -p $(DESTDIR)/etc/opt/csw/cgit
+	@mkdir -p $(DESTDIR)/opt/csw/share/man/man5
+	@mkdir -p $(DESTDIR)/opt/csw/share/doc/cgit
 	@cp $(FILEDIR)/apache.conf.CSW \
 		$(FILEDIR)/cgitrc.CSW \
 		$(DESTDIR)/etc/opt/csw/cgit/
-#	@$(MAKECOOKIE)
+	@cp $(WORKSRC)/cgitrc.5 $(DESTDIR)/opt/csw/share/man/man5
+	@cp $(WORKSRC)/cgitrc.5.txt $(DESTDIR)/opt/csw/share/doc/cgit
+	@cp $(WORKSRC)/cgitrc.5.html $(DESTDIR)/opt/csw/share/doc/cgit
+#	@cp $(WORKSRC)/cgitrc.5.pdf $(DESTDIR)/opt/csw/share/doc/cgit
+	@$(MAKECOOKIE)
 
 include gar/category.mk
