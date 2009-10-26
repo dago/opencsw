@@ -1,4 +1,4 @@
-GARVERSION = 1.0.2
+GARVERSION = 1.1.0
 CATEGORIES = x11
 PROTONAME = evieext
 GARNAME = x11_$(PROTONAME)
@@ -9,7 +9,7 @@ define BLURB
   EvIE protocol headers from modular X.org X11
 endef
 
-MASTER_SITES = $(X11_PROTO_MASTER_SITE)
+MASTER_SITES = $(X11_INDIVIDUAL_PROTO_MASTER_SITE)
 DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release

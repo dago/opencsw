@@ -9,7 +9,7 @@ define BLURB
    	X11 print extension wire protocol Headers
 endef
 
-MASTER_SITES = $(X11_PROTO_MASTER_SITE)
+MASTER_SITES = $(X11_INDIVIDUAL_PROTO_MASTER_SITE)
 DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
