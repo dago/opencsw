@@ -113,6 +113,11 @@ PKGFILES_CSWgangliagmetad = .*/gmetad.* /opt/csw/var/ganglia/rrds /etc/opt/csw/i
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/.*
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/gmond.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/gmetad.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/conf.d/modgstatus.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/conf.d/modpython.conf.CSW
+PRESERVECONF += $(WWWGANGLIA)/conf.php
 
 # For gmond
 INITSMF = /etc/opt/csw/init.d/cswgmond
@@ -138,25 +143,26 @@ install-custom:
 	@cd $(WORKSRC)/web; \
 		cp -R * $(DESTDIR)$(WWWGANGLIA)
 	@ginstall -D $(FILEDIR)/conf.php \
-		$(DESTDIR)$(WWWGANGLIA)/conf.php
+		$(DESTDIR)$(WWWGANGLIA)/conf.php.CSW
 	@rm -rf $(DESTDIR)$(WWWGANGLIA)/*.in
 	@ginstall -D $(FILEDIR)/httpd-ganglia.conf.CSW \
 		$(DESTDIR)/opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
 	@ginstall -d $(DESTDIR)$(ETCGANGLIA)/conf.d
 	@$(WORKSRC)/gmond/gmond -t | grep -v "^include" \
-		> $(DESTDIR)$(ETCGANGLIA)/gmond.conf
+		> $(DESTDIR)$(ETCGANGLIA)/gmond.conf.CSW
 	@echo "include ('/etc/opt/csw/ganglia/conf.d/*.conf')" \
-		>> $(DESTDIR)$(ETCGANGLIA)/gmond.conf
+		>> $(DESTDIR)$(ETCGANGLIA)/gmond.conf.CSW
 #	@ginstall -D $(FILEDIR)/gmond.conf \
 #		$(DESTDIR)$(ETCGANGLIA)/gmond.conf
 	@ginstall -D $(FILEDIR)/gmetad.conf \
-		$(DESTDIR)$(ETCGANGLIA)/gmetad.conf
+		$(DESTDIR)$(ETCGANGLIA)/gmetad.conf.CSW
 	@cd $(WORKSRC)/gmond/modules/conf.d; \
-		cp -R *.conf $(DESTDIR)$(ETCGANGLIA)/conf.d
-	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/example.conf \
-		$(DESTDIR)$(ETCGANGLIA)/conf.d/multicpu.conf
+		for CONF_FILE in *.conf ; \
+		do cp -R "$${CONF_FILE}" $(DESTDIR)$(ETCGANGLIA)/conf.d/"$${CONF_FILE}.CSW" ; done
+	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/example.conf.CSW \
+		$(DESTDIR)$(ETCGANGLIA)/conf.d/multicpu.conf.CSW
 ifeq ($(GARVERSION),3.1.2)
-	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf
+	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf.CSW
 endif
 	@ginstall -d $(DESTDIR)/opt/csw/var/ganglia/rrds
 	
