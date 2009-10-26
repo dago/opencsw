@@ -94,6 +94,9 @@ CONFIGURE_ARGS += --disable-python
 ifeq ($(GARVERSION),3.1.3)
 TEST_SCRIPTS = 
 endif
+ifeq ($(GARVERSION),3.1.4)
+TEST_SCRIPTS =
+endif
 
 INSTALL_SCRIPTS = $(WORKSRC)/Makefile custom
 
