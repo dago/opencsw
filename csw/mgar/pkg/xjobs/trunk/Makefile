@@ -17,6 +17,8 @@ endef
 MASTER_SITES = http://www.maier-komor.de/xjobs/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
+SPKG_SOURCEURL = http://www.maier-komor.de/xjobs.html
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
