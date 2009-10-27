@@ -1,19 +1,21 @@
 GARNAME = Log-Dispatch
-GARVERSION = 2.16
+GARVERSION = 2.26
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
-DESCRIPTION = dispatches messages to one or more outputs
+DESCRIPTION = Dispatch messages to noe or more outputs
 define BLURB
   This module manages a set of Log::Dispatch::* objects, allowing you to add
   and remove output objects as desired.
 endef
 
-DISTFILES += $(call admfiles,CSWpmlogdispatch,depend prototype)
+REQUIRED_PKGS = CSWpmprmsvldt CSWpmunivrequire
 
-DEPENDS += cpan/Module-Build
-DEPENDS += cpan/Params-Validate
+PACKAGES = CSWpmlogdispatch
+CATALOGNAME = pm_logdispatch
 
-CONFIGURE_ARGS = destdir=$(DESTDIR)
+LICENSE = LICENSE
+
+ARCHALL = 1
 
 include gar/category.mk
