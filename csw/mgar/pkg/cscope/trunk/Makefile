@@ -10,7 +10,8 @@ define BLURB
   years, and has been used to manage projects involving 20 million lines of code! 
 endef
 
-MASTER_SITES = http://ncu.dl.sourceforge.net/project/cscope/cscope/$(GARVERSION)/
+MASTER_SITES = $(SF_MIRRORS)
+SF_PROJ = cscope
 
 DISTFILES = $(DISTNAME).tar.bz2
 
