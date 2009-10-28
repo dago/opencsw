@@ -34,3 +34,12 @@ TEST_TARGET = check
 PACKAGES = CSWlibmhash
 
 include gar/category.mk
+
+# Don't include the most common defines. In general it is a bad idea to include
+# the config file as it may collide with the config file from the main package
+# using libmhash.
+post-install-modulated:
+	perl -pi -e 's,^(#define (?:PACKAGE|PACKAGE_BUGREPORT|PACKAGE_NAME|PACKAGE_STRING|PACKAGE_TARNAME|PACKAGE_VERSION|VERSION) .*),/* \1 */,' \
+		$(DESTDIR)$(includedir)/mutils/mhash_config.h
+	@$(MAKECOOKIE)
+
