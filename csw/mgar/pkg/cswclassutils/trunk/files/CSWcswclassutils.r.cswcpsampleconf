@@ -23,7 +23,7 @@ while read dest ; do
 	if cmp $confdest $dest >/dev/null ; then
 		echo $confdest is identical to sample config file $dest
 		echo Removing $confdest
-		rm $confdest
+		rm -f $confdest
 	fi
-	rm $dest
+	rm -f $dest
 done

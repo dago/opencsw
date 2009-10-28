@@ -31,7 +31,7 @@ while read src dest ; do
 		echo $confdest already exists. Not overwriting
 	else
 		echo Copying sample config to $confdest
-		[ -x /usr/bin/pkgadm ] && /usr/bin/pkgadm sync -R $PKG_INSTALL_ROOT > /dev/null 2>&1
+		[ -x /usr/bin/pkgadm ] && /usr/bin/pkgadm sync > /dev/null 2>&1
 		contents=`grep "^$dest" /var/sadm/install/contents`
 		mode=`echo $contents | awk '{print $4}'`
 		user=`echo $contents | awk '{print $5}'`

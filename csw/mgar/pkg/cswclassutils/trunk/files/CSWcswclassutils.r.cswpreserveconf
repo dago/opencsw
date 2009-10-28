@@ -28,7 +28,7 @@ while read dest ; do
 		if cmp $confdest $dest >/dev/null ; then
 			echo $confdest is identical to sample config file $dest
 			echo Removing $confdest
-			rm $confdest
+			rm -f $confdest
 		else
 			echo "preserving $confdest to $preservedconf"
 			mkdir -p $preservedir
@@ -37,5 +37,5 @@ while read dest ; do
 	fi
 
 	# Any way it shakes out, we always remove the "sample conf"
-	rm $dest
+	rm -f $dest
 done
