@@ -1,5 +1,5 @@
 GARNAME = sasl
-GARVERSION = 2.1.22
+GARVERSION = 2.1.23
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 # Source location
-MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail
+MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
 
 # Visitor information
 SPKG_SOURCEURL = http://asg.web.cmu.edu/sasl/
@@ -21,34 +21,52 @@ WORKSRC = $(WORKDIR)/cyrus-$(GARNAME)-$(GARVERSION)
 
 DISTFILES = cyrus-$(GARNAME)-$(GARVERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = cyrus-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-BUILD_ENV = _REENTRANT=1
-
-TEST_TARGET = check
-
-SED=/usr/bin/sed
-EGREP=/usr/bin/egrep
-max_cmd_line=65535
-
 # SASL libraries and utilities
-DISTFILES += $(call admfiles,CSWsasl,$(ADMSTANDARD) $(ADMISCRIPTS))
+DISTFILES += CSWsasl.preinstall CSWsasl.postinstall
 # SASL authentication server
-DISTFILES += $(call admfiles,CSWsaslauthd,$(ADMADDON))
+#DISTFILES += $(call admfiles,CSWsaslauthd,$(ADMADDON))
 # SASL sql plugin
-DISTFILES += $(call admfiles,CSWsaslsql,$(ADMSTANDARD))
+#DISTFILES += $(call admfiles,CSWsaslsql,$(ADMSTANDARD))
 # SASL gssapi plugin
-DISTFILES += $(call admfiles,CSWsaslgssapi,$(ADMSTANDARD))
+#DISTFILES += $(call admfiles,CSWsaslgssapi,$(ADMSTANDARD))
+
+DISTFILES += cswusergroup
 
 # Init files for SASLAUTHD
 DISTFILES += cswsaslauthd.init saslauthd.init.CSW
 
 PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
 
-#INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir
+PACKAGES = CSWsasl CSWsaslauthd CSWsaslgssapi CSWsaslsql
 
-EXTRA_LIBS += /opt/csw/bdb4/lib
+CATALOGNAME_CSWsasl = sasl
+CATALOGNAME_CSWsaslauthd = saslauthd
+CATALOGNAME_CSWsaslgssapi = sasl_gssapi
+CATALOGNAME_CSWsaslsql = sasl_sql
+
+REQUIRED_PKGS_CSWsasl = CSWosslrt CSWbdb4
+REQUIRED_PKGS_CSWsaslauthd = CSWosslrt CSWoldaprt CSWkrb5lib
+REQUIRED_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
+REQUIRED_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql4rt CSWsqlite
+
+SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
+SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
+SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI Binding
+SPKG_DESC_CSWsaslsql = Cyrus Simple Authentication and Security Layer SQL Binding
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = cyrus-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+BUILD64 = 1
+
+# Do not use LD_OPTIONS as it breaks tests by using the installed libraries
+# before the newly built ones.
+EXTRA_LDFLAGS = $(RUNPATH_LINKER_FLAGS)
+LD_OPTIONS =
+
+BUILD_ENV = _REENTRANT=1
+
+EXTRA_LIBS += /opt/csw/bdb47/lib
 EXTRA_LIBS += /opt/csw/mysql4/lib
 EXTRA_LIBS += /opt/csw/postgresql/lib
 
@@ -56,8 +74,8 @@ EXTRA_LIBS += /opt/csw/postgresql/lib
 CONFIGURE_ARGS = $(DIRPATHS) 
 CONFIGURE_ARGS += --disable-static 
 CONFIGURE_ARGS += --enable-sql
-CONFIGURE_ARGS += --with-bdb-libdir=/opt/csw/bdb4/lib 
-CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb4/include/ 
+CONFIGURE_ARGS += --with-bdb-libdir=/opt/csw/bdb47/lib 
+CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb47/include/ 
 CONFIGURE_ARGS += --with-saslauthd=/var/opt/csw/saslauthd 
 CONFIGURE_ARGS += --with-ipctype=unix 
 CONFIGURE_ARGS += --with-ldap=/opt/csw 
@@ -68,12 +86,17 @@ CONFIGURE_ARGS += --with-dbpath=/opt/csw/etc/sasldb2
 CONFIGURE_ARGS += --with-plugindir=/opt/csw/lib/sasl2 
 CONFIGURE_ARGS += --enable-login
 
+SED=/usr/bin/sed
+EGREP=/usr/bin/egrep
+max_cmd_line=65535
 
-all: .DEFAULT
-.DEFAULT:
-	@true
+TEST_TARGET = check
 
-post-install: testsaslauthd install-testsaslauthd install-doc
+#INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir
+
+include gar/category.mk
+
+post-install-modulated: testsaslauthd install-testsaslauthd install-doc
 
 DOC_FILES = rfc1321.txt \
                 rfc1939.txt \
@@ -139,5 +162,3 @@ install-doc:
 	cp $(WORKSRC)/saslauthd/LDAP_SASLAUTHD $(INSTDIR)/share/doc/saslauthd
 	cp files/README.saslauthd $(INSTDIR)/share/doc/saslauthd/README.CSW
 
-
-include gar/category.mk
