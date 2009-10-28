@@ -1,0 +1,28 @@
+i copyright=CSWsaslauthd.copyright
+i depend=CSWsaslauthd.depend
+i pkginfo=CSWsaslauthd.pkginfo
+i postinstall=CSWsaslauthd.postinstall
+i preinstall=CSWsaslauthd.preremove
+d none /opt/csw/etc 0755 root bin
+f none /opt/csw/etc/saslauthd.init.CSW=saslauthd.init.CSW 0755 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/testsaslauthd 0755 root bin
+d none /opt/csw/sbin 0755 root bin
+f none /opt/csw/sbin/saslauthd 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man8 0755 root bin
+f none /opt/csw/share/man/man8/saslauthd.8 0644 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/saslauthd 0755 root bin
+f none /opt/csw/share/doc/saslauthd/LDAP_SASLAUTHD 0644 root bin
+f none /opt/csw/share/doc/saslauthd/README.CSW 0644 root bin
+d none /var/opt 0755 root bin
+d none /var/opt/csw 0755 root bin
+d none /var/opt/csw/saslauthd 2770 root sasl
+f none /etc/init.d/cswsaslauthd=cswsaslauthd.init 0755 root sys
+s none /etc/rc2.d/S85cswsaslauthd=../init.d/cswsaslauthd
+s none /etc/rc0.d/K15cswsaslauthd=../init.d/cswsaslauthd
+s none /etc/rc1.d/K15cswsaslauthd=../init.d/cswsaslauthd
+s none /etc/rc2.d/K15cswsaslauthd=../init.d/cswsaslauthd
+s none /etc/rcS.d/K15cswsaslauthd=../init.d/cswsaslauthd

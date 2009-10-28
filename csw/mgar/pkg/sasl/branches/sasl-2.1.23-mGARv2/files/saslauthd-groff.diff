@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru cyrus-sasl-2.1.21.orig/saslauthd/Makefile.am cyrus-sasl-2.1.21/saslauthd/Makefile.am
+--- cyrus-sasl-2.1.21.orig/saslauthd/Makefile.am	2006-02-12 07:42:01.758715000 -0500
++++ cyrus-sasl-2.1.21/saslauthd/Makefile.am	2006-02-12 07:41:33.267463000 -0500
+@@ -32,7 +32,7 @@
+ dist-hook: saslauthd.8
+ 
+ saslauthd.8: saslauthd.mdoc
+-	nroff -mdoc $(srcdir)/saslauthd.mdoc > $(srcdir)/saslauthd.8
++	sed -e '/.Sh/a\.ll 65' $(srcdir)/saslauthd.mdoc | gnroff -c -mdoc > $(srcdir)/saslauthd.8
+ 
+ install-data-local: saslauthd.8
+ 	$(mkinstalldirs) $(DESTDIR)$(mandir)/cat8
+diff --speed-large-files --minimal -Nru cyrus-sasl-2.1.21.orig/saslauthd/Makefile.in cyrus-sasl-2.1.21/saslauthd/Makefile.in
+--- cyrus-sasl-2.1.21.orig/saslauthd/Makefile.in	2006-02-12 07:42:01.785104000 -0500
++++ cyrus-sasl-2.1.21/saslauthd/Makefile.in	2006-02-12 07:41:23.435575000 -0500
+@@ -614,7 +614,7 @@
+ dist-hook: saslauthd.8
+ 
+ saslauthd.8: saslauthd.mdoc
+-	nroff -mdoc $(srcdir)/saslauthd.mdoc > $(srcdir)/saslauthd.8
++	sed -e '/.Sh/a\.ll 65' $(srcdir)/saslauthd.mdoc | gnroff -c -mdoc > $(srcdir)/saslauthd.8
+ 
+ install-data-local: saslauthd.8
+ 	$(mkinstalldirs) $(DESTDIR)$(mandir)/cat8

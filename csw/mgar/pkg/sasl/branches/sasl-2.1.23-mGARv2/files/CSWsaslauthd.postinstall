@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
+
+if [ "$autoenable_daemons" = "no" ] ; then
+  CONFDIR=$PKG_INSTALL_ROOT/opt/csw/etc
+  # check if the saslauthd.init file exists before overwriting it.
+  if [ ! -f $CONFDIR/saslauthd.init ] ; then
+        echo "saslauthd.init doesn't exists. Copying $CONFDIR/saslauthd.init.CSW to $CONFDIR/saslauthd.init"
+        cp -p $CONFDIR/saslauthd.init.CSW $CONFDIR/saslauthd.init
+        echo
+  fi
+fi
+
+# Start the server again...
+$PKG_INSTALL_ROOT/etc/init.d/cswsaslauthd start
+
+
+# Display message
+echo '***'
+echo '*** See README.CSW in /opt/csw/share/doc/saslauthd **'
+echo '***'
+
+exit 0

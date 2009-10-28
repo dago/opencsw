@@ -1,0 +1,7 @@
+i copyright=CSWsaslsql.copyright
+i depend=CSWsaslsql.depend
+i pkginfo=CSWsaslsql.pkginfo
+f none /opt/csw/lib/sasl2/libsql.la 0755 root bin
+f none /opt/csw/lib/sasl2/libsql.so.2.0.22 0755 root bin
+s none /opt/csw/lib/sasl2/libsql.so.2=libsql.so.2.0.22 root bin
+s none /opt/csw/lib/sasl2/libsql.so=libsql.so.2.0.22 root bin

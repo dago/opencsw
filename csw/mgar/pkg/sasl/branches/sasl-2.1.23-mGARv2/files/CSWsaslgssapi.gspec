@@ -1,0 +1,5 @@
+%var            bitname sasl_gssapi
+%var            pkgname CSWsaslgssapi
+%copyright      url file://%{WORKSRC}/COPYING
+%depend         url file://%{GARDIR}/lib/sasl/files/CSWsaslgssapi.depend
+%include	url file://%{GARDIR}/pkglib/csw_standard.gspec

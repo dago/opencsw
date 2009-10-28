@@ -1,0 +1,6 @@
+# Stops the server if running...
+if [ -x /etc/init.d/cswsaslauthd ]; then
+   /etc/init.d/cswsaslauthd stop
+fi
+exit 0
+

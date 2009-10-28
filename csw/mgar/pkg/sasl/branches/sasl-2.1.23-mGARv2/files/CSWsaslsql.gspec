@@ -1,0 +1,5 @@
+%var            bitname sasl_sql
+%var            pkgname CSWsaslsql
+%copyright      url file://%{WORKSRC}/COPYING
+%depend         url file://%{GARDIR}/lib/sasl/files/CSWsaslsql.depend
+%include	url file://%{GARDIR}/pkglib/csw_standard.gspec

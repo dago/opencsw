@@ -1,0 +1,60 @@
+#!/bin/sh
+# Startup script for saslauthd
+
+INIT_FILE=/etc/opt/csw/saslauthd.init
+if [ -f "${INIT_FILE}" ]; then
+  INIT_FILE=/opt/csw/etc/saslauthd.init
+fi
+
+# Source defaults file; edit that file to configure this script.
+if [ -f "${INIT_FILE}" ]; then
+	. "${INIT_FILE}"
+else
+	echo "You need to create ${INIT_FILE} and configure mechanism to be used"
+	exit 0
+fi
+
+
+# Check if we have any mechanisms defined
+if [ "x${MECHANISM}" = "x" ]; then
+    echo "You need to configure ${INIT_FILE} with mechanism to be used"
+    exit 0
+else
+    PARAMS="${PARAMS} -a ${MECHANISM}"
+fi
+
+# Pass the ldap configuration file if it's defined.
+if [ "x${CONFIG_FILE}" != "x" ]; then
+    PARAMS="${PARAMS} -O ${CONFIG_FILE}"
+fi
+
+start() {
+    echo "Starting saslauthd " 
+    /opt/csw/sbin/saslauthd ${PARAMS}
+    echo
+}
+
+stop() {
+    if test "x`pgrep saslauthd`" != x; then
+        echo "Stopping saslauthd "
+        pkill saslauthd
+        echo
+    fi
+}
+
+case "$1" in
+        start)
+            start
+            ;;
+        stop)
+            stop
+            ;;
+        restart)
+            stop
+            start
+            ;;
+        *)
+            echo $"Usage: $0 {start|stop|restart}"
+            exit 1
+esac
+exit 0

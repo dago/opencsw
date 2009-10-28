@@ -1,0 +1,5 @@
+%var            bitname saslauthd
+%var            pkgname CSWsaslauthd
+%copyright      url file://%{WORKSRC}/COPYING
+%depend         url file://%{GARDIR}/lib/sasl/files/CSWsaslauthd.depend
+%include	url file://%{GARDIR}/pkglib/csw_standard.gspec

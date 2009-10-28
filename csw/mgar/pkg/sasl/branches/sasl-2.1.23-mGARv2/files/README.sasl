@@ -1,0 +1,18 @@
+List of changes in sasl-2.1.22,REV=2007.06.10 
+- upgraded sasl to version 2.1.22
+- runpath was not applied for libraries [#1566][#1637][#1934][#2268] 
+
+List of changes in sasl-2.1.21,REV=2006.03.09
+- /opt/csw/etc/sasldb2 is a directory [#1393]
+- preinstall script is using PKG_INSTALL_ROOT variable instead of PKG_ROOT_DIR
+
+List of changes in sasl-2.1.21,REV=2005.09.07:
+- upgraded to version 2.1.21
+- included unsupported LOGIN SASL mechanism, because I received several
+  requests for this mechanism. Some mail clients (e.g. MS Outlook) only support
+  LOGIN mechanism.
+- included auxprop plugins for MySQL, PostreSQL and SQLLite
+- included kerberos mechanisms (GSSAPI)
+- CSWsasl creates a group 'sasl'. Any process which is not running as root,
+  must belong to this group to perform authentiaction against SASLdb or via saslauthd.
+

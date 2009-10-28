@@ -1,0 +1,7 @@
+P SUNWcsr  - Core Solaris, (Root)
+P SUNWcsl  - Core Solaris, (Shared Libs)
+P SUNWlibms - Sun WorkShop Bundled shared libm
+P CSWsasl - sasl, Simple Authentication and Security Layer
+P CSWlibpq - libraries needed by postgresql server and clients
+P CSWmysql4rt - run-time lib for mysql4
+P CSWsqlite -  An embeddable SQL engine in a C library

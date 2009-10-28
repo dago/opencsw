@@ -1,0 +1,5 @@
+P SUNWcsl - Core Solaris, (Shared Libs)
+P SUNWgss - GSSAPI V2
+P CSWossl - OpenSSL Secure Sockets Layer lib and utilities
+P CSWoldaprt - openldap, ldap clients,libraries and server
+P CSWkrb5lib - A Kerberos 5 implementation: libraries
