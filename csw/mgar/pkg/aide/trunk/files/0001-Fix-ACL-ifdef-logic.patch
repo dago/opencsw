@@ -1,0 +1,30 @@
+From 18d19087b6f54812b5b3c363231e81a79456bf2a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 28 Oct 2009 14:31:38 +0100
+Subject: [PATCH 1/2] Fix ACL ifdef logic
+
+---
+ include/db_config.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/include/db_config.h b/include/db_config.h
+index 3ba0973..3b9c82a 100644
+--- a/include/db_config.h
++++ b/include/db_config.h
+@@ -52,12 +52,12 @@ typedef struct acl_type{
+ #ifndef WITH_ACL
+ # error "No ACL support ... but POSIX ACL support."
+ #endif
+-#endif
+ 
+ typedef struct acl_type {
+  char *acl_a; /* ACCESS */
+  char *acl_d; /* DEFAULT, directories only */
+ } acl_type;
++#endif
+ 
+ #ifdef WITH_XATTR /* Do generic user Xattrs. */
+ #include <sys/xattr.h>
+-- 
+1.6.5
+
