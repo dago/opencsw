@@ -1,0 +1,107 @@
+Optimization error when compiling on sparcv9 with -xO2 or greater
+-----------------------------------------------------------------
+
+The cause is unclear and the code is in general picky about alignment
+and not written in a robust way. There are several bugs reported against
+differnet versions of libmhash regarding alignment which may or may not
+lead to this problem. Details follow:
+
+
+Checking fragmentation capabilities of HAVAL256: FAIL: frag_test
+
+build8s% cd work/build-isa-sparcv9/mhash-0.9.9.9/src/
+build8s% mdb .libs/
+driver       frag_test    hmac_test    keygen_test  rest_test
+build8s% mdb .libs/frag_test core 
+mdb: warning: core file is from SunOS 5.10 Generic_138888-07; shared text mappings may not match installed libraries
+Loading modules: [ ]
+> ::stack 
+libmhash.so.2`mutils_word32nswap+0xb8(100104990, 20, 1f, 6c24cc00, 1, 20754a1616aa27a)
+libmhash.so.2`havalTransform3+0xc(1001047d4, ffffffff7fffefcd, 100104880, 143367, a19b3906, 1f3213955f32139)
+libmhash.so.2`havalUpdate+0x130(1001047d0, ffffffff7fffefcc, 81, ffffffffffffffff, 1001047f4, 408)
+libmhash.so.2`mhash+0x14(100101fd0, ffffffff7fffefcc, 81, fffffffffffffffd, 0, 7ffeff021eb8)
+frag_test+0x98(100, 81, 1, 958, ffffffff7fffefcc, 80)
+main+0x8c(1c, 7ffeff1329ce, 1, 100101620, 100001038, 100101588)
+_start+0x17c(0, ffffffff7ffff238, 0, 1, 7ffeffe0d6cc, 7ffefff10000)
+> ::dis mutils_word32nswap
+libmhash.so.2`mutils_word32nswap:       save      %sp, -0xb0, %sp
+libmhash.so.2`mutils_word32nswap+4:     btst      0xff, %i2
+libmhash.so.2`mutils_word32nswap+8:     bne,pn    %icc,+0x24    <libmhash.so.2`mutils_word32nswap+0x2c>
+libmhash.so.2`mutils_word32nswap+0xc:   mov       %i0, %l4
+libmhash.so.2`mutils_word32nswap+0x10:  sll       %i1, 2, %l6
+libmhash.so.2`mutils_word32nswap+0x14:  call      +0x12d494     <0x7ffeff131aa0>
+libmhash.so.2`mutils_word32nswap+0x18:  srl       %l6, 0, %o0
+libmhash.so.2`mutils_word32nswap+0x1c:  brnz,pn   %o0, +0x14    <libmhash.so.2`mutils_word32nswap+0x30>
+libmhash.so.2`mutils_word32nswap+0x20:  mov       %o0, %i0
+libmhash.so.2`mutils_word32nswap+0x24:  ret
+libmhash.so.2`mutils_word32nswap+0x28:  restore   %g0, 0, %o0
+libmhash.so.2`mutils_word32nswap+0x2c:  mov       %l4, %i0
+libmhash.so.2`mutils_word32nswap+0x30:  cmp       %i1, 0
+libmhash.so.2`mutils_word32nswap+0x34:  bleu,pn   %icc,+0x264   <libmhash.so.2`mutils_word32nswap+0x298>
+libmhash.so.2`mutils_word32nswap+0x38:  cmp       %i1, 4
+libmhash.so.2`mutils_word32nswap+0x3c:  bl,pn     %icc,+0x200   <libmhash.so.2`mutils_word32nswap+0x23c>
+libmhash.so.2`mutils_word32nswap+0x40:  mov       %i0, %l6
+libmhash.so.2`mutils_word32nswap+0x44:  sra       %i1, 0, %o0
+libmhash.so.2`mutils_word32nswap+0x48:  sub       %i0, %l4, %l7
+libmhash.so.2`mutils_word32nswap+0x4c:  srax      %l7, 0x3f, %g4
+libmhash.so.2`mutils_word32nswap+0x50:  sethi     %hi(0x7ffffc00), %l1
+libmhash.so.2`mutils_word32nswap+0x54:  srl       %i1, 0, %l2
+libmhash.so.2`mutils_word32nswap+0x58:  xor       %l7, %g4, %g5
+libmhash.so.2`mutils_word32nswap+0x5c:  sllx      %o0, 2, %g3
+libmhash.so.2`mutils_word32nswap+0x60:  add       %l1, 0x3fe, %l0
+libmhash.so.2`mutils_word32nswap+0x64:  sub       %g5, %g4, %g2
+libmhash.so.2`mutils_word32nswap+0x68:  sub       %l2, %l0, %o2
+libmhash.so.2`mutils_word32nswap+0x6c:  srlx      %o2, 0x3f, %o1
+libmhash.so.2`mutils_word32nswap+0x70:  cmp       %g2, %g3
+libmhash.so.2`mutils_word32nswap+0x74:  clr       %g1
+libmhash.so.2`mutils_word32nswap+0x78:  and       %o1, 1, %i4
+libmhash.so.2`mutils_word32nswap+0x7c:  movge %xcc,1, %g1
+libmhash.so.2`mutils_word32nswap+0x80:  btst      %g1, %i4
+libmhash.so.2`mutils_word32nswap+0x84:  be,a,pn   %icc,+0x1bc   <libmhash.so.2`mutils_word32nswap+0x240>
+libmhash.so.2`mutils_word32nswap+0x88:  clr       %l2
+libmhash.so.2`mutils_word32nswap+0x8c:  sethi     %hi(0xfc00), %l5
+libmhash.so.2`mutils_word32nswap+0x90:  add       %i1, 0, %g4
+libmhash.so.2`mutils_word32nswap+0x94:  add       %l5, 0x300, %l3
+libmhash.so.2`mutils_word32nswap+0x98:  add       %i1, -1, %i2
+libmhash.so.2`mutils_word32nswap+0x9c:  clr       %l1
+libmhash.so.2`mutils_word32nswap+0xa0:  sethi     %hi(0xff000000), %l2
+libmhash.so.2`mutils_word32nswap+0xa4:  sethi     %hi(0xff0000), %l5
+libmhash.so.2`mutils_word32nswap+0xa8:  cmp       %g4, 5
+libmhash.so.2`mutils_word32nswap+0xac:  bl,pn     %icc,+0x13c   <libmhash.so.2`mutils_word32nswap+0x1e8>
+libmhash.so.2`mutils_word32nswap+0xb0:  sub       %i2, 3, %o7
+libmhash.so.2`mutils_word32nswap+0xb4:  add       %l1, 1, %l1
+libmhash.so.2`mutils_word32nswap+0xb8:  ld        [%l4], %g5
+libmhash.so.2`mutils_word32nswap+0xbc:  add       %l4, 4, %l4
+libmhash.so.2`mutils_word32nswap+0xc0:  and       %g5, %l5, %o1
+
+
+> ::regs
+%g0 = 0x0000000000000000                 %l0 = 0x000000007ffffffe 
+%g1 = 0x0000000000000001                 %l1 = 0x0000000000000001 
+%g2 = 0x00000001801059c3                 %l2 = 0x00000000ff000000 
+%g3 = 0x0000000000000080                 %l3 = 0x000000000000ff00 
+%g4 = 0x0000000000000020                 %l4 = 0xffffffff7fffefcd 
+%g5 = 0x00000001801059c3                 %l5 = 0x0000000000ff0000 
+%g6 = 0x0000000000000000                 %l6 = 0x0000000100104990 
+%g7 = 0x0000000000000000                 %l7 = 0x00000001801059c3 
+
+%o0 = 0x0000000000000020                 %i0 = 0x0000000100104990 
+%o1 = 0x0000000000000001                 %i1 = 0x0000000000000020 
+%o2 = 0xffffffff80000022                 %i2 = 0x000000000000001f 
+%o3 = 0x000000007f7e7e7e                 %i3 = 0x000000006c24cc00 
+%o4 = 0x00000000007e0000                 %i4 = 0x0000000000000001 
+%o5 = 0x0000000100104990                 %i5 = 0x020754a1616aa27a 
+%o6 = 0xffffffff7fffe151                 %i6 = 0xffffffff7fffe201 
+%o7 = 0x000000000000001c                 %i7 = 0x00007ffeff0190ec libmhash.so.2`havalTransform3+0xc
+
+ %ccr = 0x00 xcc=nzvc icc=nzvc
+   %y = 0x0000000000000000
+  %pc = 0x00007ffeff0046b0 libmhash.so.2`mutils_word32nswap+0xb8
+ %npc = 0x00007ffeff0046b4 libmhash.so.2`mutils_word32nswap+0xbc
+  %sp = 0xffffffff7fffe151
+  %fp = 0xffffffff7fffe201
+
+ %asi = 0x82
+%fprs = 0x07
+
+

@@ -18,8 +18,17 @@ EXTRA_CPPFLAGS = -D__const=const
 
 BUILD64 = 1
 NOISALIST = 1
+
+# sparcv9 compile fails with optimization beyond -xO1 at HAVAL256: FAIL: frag_test
+# Please see files/README for details.
+
+ifeq ($(ISA),sparcv9)
+OPT_FLAGS_SOS = -xO1
+endif
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
+# Always run testsuite as the code is prone to optimization errors
 TEST_TARGET = check
 
 PACKAGES = CSWlibmhash
