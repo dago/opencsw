@@ -1,9 +1,9 @@
 GARNAME = MIME-Types
-GARVERSION = 1.18
+GARVERSION = 1.27
 CATEGORIES = cpan
 AUTHOR = MARKOV
 
-DESCRIPTION = definition of MIME types
+DESCRIPTION = Perl MIME::Types module
 define BLURB
   This module maintains a set of MIME::Type objects, which each describe one
   known mime type. There are many types defined by RFCs and vendors, so the
@@ -11,6 +11,9 @@ define BLURB
   additional information.
 endef
 
-DISTFILES += CSWpmmimetypes.gspec
+PACKAGES = CSWpmmimetypes
+CATALOGNAME = pm_mimetypes
+
+ARCHALL = 1
 
 include gar/category.mk
