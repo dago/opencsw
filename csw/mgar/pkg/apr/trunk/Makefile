@@ -11,8 +11,8 @@ endef
 
 MASTER_SITES = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWapr,depend prototype)
-DISTFILES += $(call admfiles,CSWapr-devel,depend prototype)
+#DISTFILES += $(call admfiles,CSWapr,depend prototype)
+#DISTFILES += $(call admfiles,CSWapr-devel,depend prototype)
 DISTFILES += config.layout
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -30,9 +30,11 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-pre-configure:
+pre-configure-modulated:	install-layout
+
+install-layout:
 	@sed -e s,INSTALL_PREFIX,$(prefix),g \
-		$(WORKDIR)/config.layout > $(WORKSRC)/config.layout
+		$(WORKDIR)/config.layout > $(WORKDIR)/$(GARNAME)-$(GARVERSION)/config.layout
 	@$(MAKECOOKIE)
 
 post-install: create-link fix-libtool
