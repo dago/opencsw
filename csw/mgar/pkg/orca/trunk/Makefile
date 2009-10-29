@@ -28,17 +28,27 @@ endef
 
 MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWorca,depend prototype)
+DISTFILES += CSWorca-web.postinstall CSWorca-web.preremove
 DISTFILES += csworcallator.init csworcallator.xml svc-csworcallator
 DISTFILES += csworca_services
-DISTFILES += $(call admfiles,CSWorca-web,depend prototype postinstall preremove)
+
+PACKAGES = CSWorca CSWorca-web
+
+CATALOGNAME_CSWorca     = orca
+CATALOGNAME_CSWorca-web = orca_web
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
+
+SPKG_SOURCEURL = http://www.orcaware.com/orca
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PREREQUISITE_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
+
+REQUIRED_PKGS_CSWorca     = CSWcswclassutils CSWsetoolkit CSWperl CSWpmtimedate
+REQUIRED_PKGS_CSWorca    += CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
+REQUIRED_PKGS_CSWorca-web = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
 
 #libdir = $(exec_prefix)/lib/$(GARNAME)
 localstatedir = /var/opt/csw
@@ -46,15 +56,30 @@ localstatedir = /var/opt/csw
 COMMON_EXPORTS += perlcswlib
 
 CONFIGURE_ARGS = $(DIRPATHS) \
-	--with-html-dir=$(prefix)/apache2/share/htdocs/orca \
+	--with-html-dir=$(sharedstatedir)/www/orca \
 	--disable-librrdtool
 
 SPKG_CLASSES = none cswinitsmf
 
+PKGFILES_CSWorca-web  = $(prefix)/apache2/.*
+PKGFILES_CSWorca-web += $(sharedstatedir)/www/orca/.*
+PKGFILES_CSWorca-web += $(bindir)/orca
+PKGFILES_CSWorca-web += $(sysconfdir)/.*\.cfg
+PKGFILES_CSWorca-web += $(libdir)/perl/.*
+PKGFILES_CSWorca-web += $(mandir)/man1/orca\.1
+PKGFILES_CSWorca-web += /var/opt/csw/.*
+
 include gar/category.mk
 
-post-install:
+post-install-modulated:
 	@ginstall -d $(DESTDIR)$(sysconfdir)/init.d
 	@ginstall $(WORKDIR)/csworcallator.init $(DESTDIR)$(sysconfdir)/init.d/csworcallator
 	@ginstall $(WORKDIR)/csworca_services $(DESTDIR)$(sysconfdir)/init.d/csworca_services
 	@$(MAKE_COOKIE)
+
+post-merge:
+	@ginstall -d $(PKGROOT)/var/opt/csw/orca/rrd/orcallator
+	@ginstall -d $(PKGROOT)$(prefix)/share/www/orca/orcallator
+	@ginstall -d $(PKGROOT)$(prefix)/apache2/share/htdocs
+	@ln -s $(prefix)/share/www/orca $(PKGROOT)$(prefix)/apache2/share/htdocs/orca
+	@$(MAKECOOKIE)
