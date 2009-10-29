@@ -9,7 +9,7 @@ define BLURB
   library's pseudo-random number generator
 endef
 
-PACKAGES = CSWpmcryptosslrand
+PACKAGES = CSWpmcryptosslrandom
 CATALOGNAME = pm_cryptosslrand
 
 REQUIRED_PKGS = CSWosslrt
