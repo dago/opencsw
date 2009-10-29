@@ -1,16 +1,17 @@
 GARNAME = Crypt-OpenSSL-Random
-GARVERSION = 0.03
+GARVERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = IROBERTS
 
-DESCRIPTION = routines for accessing the OpenSSL pseudo-random number generator
+DESCRIPTION = Perl Crypt::OpenSSL::Random module
 define BLURB
   Crypt::OpenSSL::Random provides the ability to seed and query the OpenSSL
   library's pseudo-random number generator
 endef
 
-DISTFILES += CSWpmcryptosslrand.gspec CSWpmcryptosslrand.depend
+PACKAGES = CSWpmcryptosslrand
+CATALOGNAME = pm_cryptosslrand
 
-DEPENDS += lib/openssl
+REQUIRED_PKGS = CSWosslrt
 
 include gar/category.mk
