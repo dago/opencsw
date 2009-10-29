@@ -1,5 +1,5 @@
 GARNAME = clamav
-GARVERSION = 0.95.2
+GARVERSION = 0.95.3
 #DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
@@ -33,6 +33,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # add usergroup class
 SPKG_CLASSES_CSWclamav = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 
+PATCHFILES  = CSWclamav.freshclam.conf.p
+PATCHFILES += CSWclamav.clamd.conf.p
+
 OPT_FLAGS_SOS = -xO2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -63,7 +66,7 @@ SPKG_SOURCEURL = http://www.clamav.net
 TEST_TARGET = check
 
 # can not run checkpkg due to libs in separate package
-ENABLE_CHECK=0
+#ENABLE_CHECK=0
 
 include gar/category.mk
 
@@ -81,11 +84,7 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/etc/opt/csw/init.d/cswclamd
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/etc/opt/csw/init.d/cswclamav-milter
-	@( cd $(DESTDIR)$(sysconfdir) ; \
-	   gpatch < ../../../../../$(FILEDIR)/CSWclamav.clamd.conf.p )
 	@mv $(DESTDIR)$(sysconfdir)/clamd.conf $(DESTDIR)$(sysconfdir)/clamd.conf.CSW
-	@( cd $(DESTDIR)$(sysconfdir) ; \
-	   gpatch < ../../../../../$(FILEDIR)/CSWclamav.freshclam.conf.p )
 	@mv $(DESTDIR)$(sysconfdir)/freshclam.conf $(DESTDIR)$(sysconfdir)/freshclam.conf.CSW
 	@mv $(DESTDIR)$(sysconfdir)/clamav-milter.conf $(DESTDIR)$(sysconfdir)/clamav-milter.conf.CSW
 	@ginstall -d $(DESTDIR)$(sysconfdir)/CSWclamav
