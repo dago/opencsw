@@ -17,6 +17,10 @@ endef
 MASTER_SITES = http://rpm5.org/files/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# This fixes a minor failing check. See for details
+#   http://www.mail-archive.com/popt-devel@rpm5.org/msg00155.html
+PATCHFILES = 0001-Fix-failing-tests.patch
+
 PACKAGES = CSWlibpopt
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

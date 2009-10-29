@@ -1,0 +1,34 @@
+From 47be5f0af0829a29d86ad7025648a0309b49ea21 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 29 Oct 2009 09:04:42 +0100
+Subject: [PATCH] Fix failing tests
+
+---
+ testit.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/testit.sh b/testit.sh
+index 0a0ba09..4b667b5 100755
+--- a/testit.sh
++++ b/testit.sh
+@@ -111,7 +111,7 @@ run test1 "test1 - 53" "arg1: 0 arg2: (none) aFlag: 0x8888" --nobitset
+ run test1 "test1 - 54" "arg1: 0 arg2: (none) aFlag: 0xface" --nobitclr
+ 
+ run test1 "test1 - 55" "\
+-Usage: lt-test1 [-I?] [-c|--cb2=STRING] [--arg1] [-2|--arg2=ARG]
++Usage: test1 [-I?] [-c|--cb2=STRING] [--arg1] [-2|--arg2=ARG]
+         [-3|--arg3=ANARG] [-onedash] [--optional=STRING] [--val]
+         [-i|--int=INT] [-l|--long=LONG] [-L|--longlong=LONGLONG]
+         [-f|--float=FLOAT] [-d|--double=DOUBLE] [--randint=INT]
+@@ -120,7 +120,7 @@ Usage: lt-test1 [-I?] [-c|--cb2=STRING] [--arg1] [-2|--arg2=ARG]
+         [-c|--cb=STRING] [--longopt] [-?|--help] [--usage] [--simple=ARG]" --usage
+ 
+ run test1 "test1 - 56" "\
+-Usage: lt-test1 [OPTION...]
++Usage: test1 [OPTION...]
+       --arg1                      First argument with a really long
+                                   description. After all, we have to test
+                                   argument help wrapping somehow, right?
+-- 
+1.6.5
+
