@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+
+open F, "pkgmap";
+while( <F> ) {
+  chomp;
+  my @l = split /\s+/;
+
+}
