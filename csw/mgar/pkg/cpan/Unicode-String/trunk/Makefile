@@ -13,6 +13,7 @@ define BLURB
   character set, but uses a 16-bit encoding to support full multilingual text.
 endef
 
-DISTFILES += CSWpmunistr.gspec
+PACKAGES = CSWpmunicodestring
+CATALOGNAME = pm_unicodestring
 
 include gar/category.mk
