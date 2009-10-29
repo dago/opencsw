@@ -1,5 +1,5 @@
 GARNAME = XML-Simple
-GARVERSION = 2.16
+GARVERSION = 2.18
 CATEGORIES = cpan
 AUTHOR = GRANTM
 
@@ -10,8 +10,11 @@ define BLURB
   Two functions are exported: XMLin() and XMLout().
 endef
 
-DISTFILES += CSWpmxmlsimple.gspec CSWpmxmlsimple.depend
+PACKAGES = CSWpmxmlsimple
+CATALOGNAME = pm_xmlsimple
 
-DEPENDS += cpan/XML-Parser cpan/XML-SAX
+REQUIRED_PKGS = CSWpmxmlparser CSWpmxmlsax
+
+ARCHALL = 1
 
 include gar/category.mk

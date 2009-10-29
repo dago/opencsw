@@ -1,9 +1,0 @@
-%var            bitname pm_xmlsimple
-%var            pkgname CSWpmxmlsimple
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
-Copyright 1999-2004 Grant McLean <grantm@cpan.org>
-
-This library is free software; you can redistribute it
-and/or modify it under the same terms as Perl itself.
