@@ -33,18 +33,31 @@ endef
 MASTER_SITES = http://www.mega-nerd.com/libsndfile/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0001-Add-lrintf-workaround-to-regtest.patch
+PATCHFILES += 0002-Add-workaround-for-missing-libm-function-lrint-and-l.patch
+PATCHFILES += 0003-Workaround-mising-stdint.h-and-Sun-Studio-shortcomin.patch
+PATCHFILES += 0004-Disable-stop-on-error-until-cpp_test-refcount-error-.patch
 
-REQUIRED_PKGS = CSWvorbis CSWflac CSWlibogg
+REQUIRED_PKGS = CSWvorbis CSWflac CSWlibogg CSWsqlite3rt
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 SPKG_SOURCEURL = http://www.mega-nerd.com/libsndfile/
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-TEST_SCRIPTS =
+# EXTRA_CFLAGS = -features=extensions
+# EXTRA_CXXFLAGS = -features=extensions
+
+BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_CFLAGS = -features=extensions
-EXTRA_CXXFLAGS = -features=extensions
+TEST_TARGET = check
+
+# We want only 64 bit libs, no 64 bit executables
+MERGE_DIRS_isa-extra = $(libdir)
+
+# Relocate docs to standard location
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(BUILD_PREFIX)/share/doc/$(GARNAME),'
 
 include gar/category.mk
