@@ -1,5 +1,5 @@
 GARNAME = nicstat
-GARVERSION = 1.20
+GARVERSION = 1.21
 CATEGORIES = net
 
 DESCRIPTION = Network monitoring tool
@@ -43,8 +43,10 @@ build-custom:
 
 install-custom:
 	@echo " ==> Install $(GARNAME) (custom)"
-	@ginstall -d $(DESTDIR)$(bindir)
+	@ginstall -d -m 755 $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/nicstat $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(mandir)/man1
+	@ginstall -d -m 755 $(DESTDIR)$(mandir)/man1
 	@cp $(WORKSRC)/nicstat.1 $(DESTDIR)$(mandir)/man1
+	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp $(WORKSRC)/README.txt $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)
