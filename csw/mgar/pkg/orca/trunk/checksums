@@ -1,8 +1,6 @@
-ba8e48e429008f53037e85fef2fcfe36  download/orca-snapshot-r535.tar.bz2
-401650ab4f3fcb9c04af2c48493e1070  download/CSWorca-web.postinstall
-03a866c2a3c4b915e110408a9ede07cf  download/CSWorca-web.preremove
-72c1eaa8d3f1ab48363e7ed5792e2855  download/csworcallator.init
-a99644ffcc9164d9d0f4df2b44c61917  download/csworcallator.xml
-23a2b76456b96c5fcff4a1d92c02e140  download/svc-csworcallator
-4c74f4f1449fabd0838d0cd71678144c  download/csworca_services
-ce08f37aa52f7b27bc82cc9c976d56b4  download/orca-snapshot-r535-se-3.5.0.patch
+4c74f4f1449fabd0838d0cd71678144c  csworca_services
+72c1eaa8d3f1ab48363e7ed5792e2855  csworcallator
+a99644ffcc9164d9d0f4df2b44c61917  csworcallator.xml
+ce08f37aa52f7b27bc82cc9c976d56b4  orca-snapshot-r535-se-3.5.0.patch
+ba8e48e429008f53037e85fef2fcfe36  orca-snapshot-r535.tar.bz2
+23a2b76456b96c5fcff4a1d92c02e140  svc-csworcallator

@@ -28,14 +28,16 @@ endef
 
 MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += CSWorca-web.postinstall CSWorca-web.preremove
-DISTFILES += csworcallator.init csworcallator.xml svc-csworcallator
+DISTFILES += csworcallator csworcallator.xml svc-csworcallator
 DISTFILES += csworca_services
 
 PACKAGES = CSWorca CSWorca-web
 
 CATALOGNAME_CSWorca     = orca
 CATALOGNAME_CSWorca-web = orca_web
+
+SPKG_DESC_CSWorca = Performance Data Collector
+SPKG_DESC_CSWorcs-web = Performance Data Viewer
 
 PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
 
@@ -50,7 +52,7 @@ REQUIRED_PKGS_CSWorca     = CSWcswclassutils CSWsetoolkit CSWperl CSWpmtimedate
 REQUIRED_PKGS_CSWorca    += CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
 REQUIRED_PKGS_CSWorca-web = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
 
-#libdir = $(exec_prefix)/lib/$(GARNAME)
+sysconfdir    = /etc/opt/csw
 localstatedir = /var/opt/csw
 
 COMMON_EXPORTS += perlcswlib
@@ -59,7 +61,18 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 	--with-html-dir=$(sharedstatedir)/www/orca \
 	--disable-librrdtool
 
-SPKG_CLASSES = none cswinitsmf
+# Exclude se-libraries for old SE Toolkit versions. We depend on 3.5.0 which
+# includes all needed se-libraries.
+EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/lib/SE/.*
+
+PRESERVECONF = /etc/opt/csw/orcallator.cfg
+PRESERVECONF += /etc/opt/csw/winallator.cfg
+PRESERVECONF += /etc/opt/csw/procallator.cfg
+PRESERVECONF += /etc/opt/csw/orca_services.cfg
+
+INITSMF = /etc/opt/csw/init.d/csworcallator
+
+ARCHALL = 1
 
 PKGFILES_CSWorca-web  = $(prefix)/apache2/.*
 PKGFILES_CSWorca-web += $(sharedstatedir)/www/orca/.*
@@ -73,8 +86,9 @@ include gar/category.mk
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(sysconfdir)/init.d
-	@ginstall $(WORKDIR)/csworcallator.init $(DESTDIR)$(sysconfdir)/init.d/csworcallator
-	@ginstall $(WORKDIR)/csworca_services $(DESTDIR)$(sysconfdir)/init.d/csworca_services
+	@# TBD: Use custom manifest for Solaris 10 SMF support
+	@#ginstall $(WORKDIR)/csworcallator $(DESTDIR)$(sysconfdir)/init.d/csworcallator
+	@#ginstall $(WORKDIR)/csworca_services $(DESTDIR)$(sysconfdir)/init.d/csworca_services
 	@$(MAKE_COOKIE)
 
 post-merge:
