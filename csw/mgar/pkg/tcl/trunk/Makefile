@@ -12,6 +12,11 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 
+# Patch to use libsunmath on x86 from
+#   http://sourceforge.net/tracker/index.php?func=detail&aid=1839067&group_id=10894&atid=110894
+PATCHFILES = patch-libsunmath-amd64.diff
+PATCHDIR = $(WORKDIR)/$(DISTNAME)
+
 SPKG_SOURCEURL = http://www.tcl.tk/
 
 # We define upstream file regex so we can be notifed of new upstream software release
