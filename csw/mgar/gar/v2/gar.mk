@@ -191,6 +191,48 @@ endef
 
 $(eval $(call _modulate,$(MODULATORS)))
 
+# --- This next block allows you to use collapsed ISAs in modulations
+#   isa-default-...      instead of isa-sparcv8-... and isa-i386-...
+#   isa-default64-...    instead of isa-sparcv9-... and isa-amd64-...
+#   isa-extra-...        instead of any other ISA (if default64 is undefined it falls back to 'extra')
+
+__collapsedisa = $(strip $(or $(and $(filter $(ISA_DEFAULT_sparc) $(ISA_DEFAULT_i386),$(1)),default),\
+                              $(and $(filter $(ISA_DEFAULT64_sparc) $(ISA_DEFAULT64_i386),$(1)),default64),\
+                              extra))
+
+__collapsedisa64 = default64
+__collapsedisaextra = extra
+
+__isacollapsedmodulation_1 = $(call tolower,$(1))-$(if $(filter ISA,$(1)),$(call $(2),$(ISA)),$($(1)))
+__isacollapsedmodulation = $(if $(word 2,$(1)),\
+		$(foreach P,$(call __isacollapsedmodulation_1,$(firstword $(1)),$(2)),\
+			$(addprefix $(P)-,$(call __isacollapsedmodulation,$(wordlist 2,$(words $(1)),$(1))))\
+		),\
+		$(call __isacollapsedmodulation_1,$(1),$(2)))
+
+# This is the name of the current modulation but with the ISA i386, sparcv8 and amd64, sparcv9 replaced
+# with the collapsed name 'default', 'default64' and everything else as 'extra'.
+MODULATION_ISACOLLAPSED = $(strip $(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisa))
+
+# This is the name of the current modulation but with the ISA replaced with 'default64'
+MODULATION_ISACOLLAPSED64 = $(strip $(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisa64))
+
+# This is the name of the current modulation but with the ISA replaced with 'extra'
+MODULATION_ISACOLLAPSEDEXTRA = $(strip $(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisaextra))
+
+# $(warning Mod: $(MODULATION) ISA: $(ISA) coll: $(MODULATION_ISACOLLAPSED) 64: $(MODULATION_ISACOLLAPSED64) extra: $(MODULATION_ISACOLLAPSEDEXTRA))
+
+# Call this function to get either the modulation-specific value or the default.
+# Instead of $(myvar_$(MODULATION)) $(call modulationvalue,myvar)
+define modulationvalue
+$(strip $(or $($(1)_$(MODULATION)),\
+             $($(1)_$(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisa)),\
+             $($(1)_$(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisaextra))\
+))
+endef
+
+# --- end of collapsed ISA modulations
+
 #################### DIRECTORY MAKERS ####################
 
 # This is to make dirs as needed by the base rules
@@ -553,10 +595,15 @@ ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 else
 ISAEXEC_DIRS ?= $(if $(NO_ISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
-MERGE_DIRS_isa-$(ISA_DEFAULT) ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
-MERGE_DIRS_isa-$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA))
-MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
-MERGE_SCRIPTS_isa-$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_DIRS_isa-default ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
+MERGE_DIRS_isa-extra ?= $(bindir) $(sbindir) $(libexecdir) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA))
+MERGE_DIRS_$(MODULATION_ISACOLLAPSED64) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSEDEXTRA))
+MERGE_DIRS_$(MODULATION) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSED))
+
+MERGE_SCRIPTS_isa-default ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-extra ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED64) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSEDEXTRA))
+MERGE_SCRIPTS_$(MODULATION) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED))
 endif
 
 # These directories get relocated into their ISA subdirectories
