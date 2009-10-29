@@ -12,6 +12,9 @@ define BLURB
   and (perhaps someday) standard way.
 endef
 
-DISTFILES += CSWpmspiffy.gspec
+PACKAGES = CSWpmspiffy
+CATALOGNAME = pm_spiffy
+
+ARCHALL = 1
 
 include gar/category.mk
