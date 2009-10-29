@@ -11,9 +11,6 @@ endef
 
 MASTER_SITES = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWapr,depend prototype)
-#DISTFILES += $(call admfiles,CSWapr-devel,depend prototype)
-DISTFILES += config.layout
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -25,26 +22,30 @@ CONFIGURE_ARGS += --enable-layout=csw
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-other-child
 
-# Tests verified: 1.3.8
-TEST_SCRIPTS =
+TEST_TARGET = check
 
 include gar/category.mk
 
-pre-configure-modulated:	install-layout
-
-install-layout:
-	@sed -e s,INSTALL_PREFIX,$(prefix),g \
-		$(WORKDIR)/config.layout > $(WORKDIR)/$(GARNAME)-$(GARVERSION)/config.layout
+post-extract-modulated:
+	ginstall -d $(WORKSRC)
+	(echo "# csw layout";\
+	echo "<Layout csw>";\
+	echo "    prefix:        $(prefix)";\
+	echo "    exec_prefix:   $(exec_prefix)";\
+	echo "    bindir:        $(bindir)";\
+	echo "    sbindir:       $(sbindir)";\
+	echo "    libdir:        $(libdir)";\
+	echo "    libexecdir:    $(libdir)/apr/modules";\
+	echo "    mandir:        $(mandir)";\
+	echo "    datadir:       $(datadir)/apr";\
+	echo "    includedir:    $(includedir)/apr-$${APR_MAJOR_VERSION}";\
+	echo "    localstatedir: /var/run";\
+	echo "    runtimedir:    /var/run";\
+	echo "    infodir:       $(infodir)";\
+	echo "    libsuffix:    -$${APR_MAJOR_VERSION}";\
+	echo "</Layout>") >$(WORKSRC)/config.layout
 	@$(MAKECOOKIE)
 
-post-install: create-link fix-libtool
-
-create-link:
-	@( cd $(DESTDIR)$(bindir) ; ln -s apr-1-config apr-config )
+post-install-modulated:
+	gln -s apr-1-config $(DESTDIR)$(bindir)/apr-config
 	@$(MAKECOOKIE)
-
-fix-libtool:
-	@sed -i -e s,/export/home/comand/bin/sed,$(bindir)/gsed,g \
-		$(DESTDIR)$(datadir)/apr/build-1/libtool
-	@$(MAKECOOKIE)
-
