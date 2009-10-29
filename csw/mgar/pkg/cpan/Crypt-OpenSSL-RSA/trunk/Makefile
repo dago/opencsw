@@ -1,5 +1,5 @@
 GARNAME = Crypt-OpenSSL-RSA
-GARVERSION = 0.24
+GARVERSION = 0.25
 CATEGORIES = cpan
 AUTHOR = IROBERTS
 
@@ -10,9 +10,9 @@ define BLURB
   decryption, signatures and signature verification.
 endef
 
-DISTFILES += CSWpmcryptosslrsa.gspec CSWpmcryptosslrsa.depend
+PACKAGES = CSWpmcryptosslrsa
+CATALOGNAME = pm_cryptosslrsa
 
-DEPENDS += lib/openssl
-DEPENDS += cpan/Crypt-OpenSSL-Random
+REQUIRED_PKGS = CSWpmcryptosslrandom
 
 include gar/category.mk
