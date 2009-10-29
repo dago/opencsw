@@ -10,7 +10,7 @@ define BLURB
 endef
 
 PACKAGES = CSWpmcryptosslrandom
-CATALOGNAME = pm_cryptosslrand
+CATALOGNAME = pm_osslrandom
 
 REQUIRED_PKGS = CSWosslrt
 
