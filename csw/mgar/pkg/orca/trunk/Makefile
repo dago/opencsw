@@ -48,7 +48,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PREREQUISITE_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
 
-REQUIRED_PKGS_CSWorca     = CSWcswclassutils CSWsetoolkit CSWperl CSWpmtimedate
+REQUIRED_PKGS_CSWorca     = CSWsetoolkit CSWperl CSWpmtimedate
 REQUIRED_PKGS_CSWorca    += CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
 REQUIRED_PKGS_CSWorca-web = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
 
