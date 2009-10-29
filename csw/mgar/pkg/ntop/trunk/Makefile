@@ -1,5 +1,5 @@
 GARNAME = ntop
-GARVERSION = 2.2
+GARVERSION = 3.3.9
 CATEGORIES = net
 
 DESCRIPTION = A network traffic usage monitor.
@@ -12,16 +12,15 @@ define BLURB
   and RRD for persistently storing traffic statistics.
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES += $(call admfiles,CSWntop,)
+MASTER_SITES = $(SF_MIRRORS)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+# PATCHFILES = intdef.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=17233
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
-
-LIBDEPS += utils/rrdtool
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
