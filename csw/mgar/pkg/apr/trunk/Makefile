@@ -1,5 +1,5 @@
 GARNAME = apr
-GARVERSION = 1.2.2
+GARVERSION = 1.3.8
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime
@@ -18,12 +18,14 @@ DISTFILES += config.layout
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+BUILD64 = 1
+
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --enable-layout=csw
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-other-child
 
-# Tests verified: 1.2.2
+# Tests verified: 1.3.8
 TEST_SCRIPTS =
 
 include gar/category.mk
