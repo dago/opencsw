@@ -1,0 +1,79 @@
+.TH DISKTYPE 1 "Feb 21, 2005"
+.SH NAME
+disktype - disk format detector
+.\"
+.SH SYNOPSIS
+disktype file...
+.\"
+.SH DESCRIPTION
+The purpose of
+disktype
+is to detect the content format of a disk or
+disk image. It knows about common file systems, partition tables, and
+boot codes.
+.\"
+.SH USAGE
+disktype
+can be run with any number of regular files or
+device special files as arguments. They will be analyzed in the order
+given, and the results printed to standard output. There are no
+switches in this version. Note that running disktype on device files
+like your hard disk will likely require root rights.
+.PP
+See the online documentation at <http://disktype.sourceforge.net/doc/>
+for some example command lines.
+.\"
+.SH RECOGNIZED FORMATS
+The following formats are recognized by this version of
+disktype
+.TP 4
+.I File systems:
+FAT12/FAT16/FAT32, NTFS, HPFS, MFS, HFS, HFS Plus,
+ISO9660, ext2/ext3, Minix, ReiserFS, Reiser4, Linux romfs, Linux
+cramfs, Linux squashfs, UFS (some variations), SysV FS (some
+variations), JFS, XFS, Amiga FS/FFS, BeOS BFS, QNX4 FS, UDF, 3DO
+CD-ROM file system, Veritas VxFS, Xbox DVD file system.
+.TP 4
+.I Partitioning:
+DOS/PC style, Apple, Amiga "Rigid Disk", ATARI ST (AHDI3),
+BSD disklabel, Linux RAID physical disks, Linux LVM1 physical volumes,
+Linux LVM2 physical volumes, Solaris x86 disklabel (vtoc),
+Solaris SPARC disklabel.
+.TP 4
+.I Other structures:
+Debian split floppy header, Linux swap.
+.TP 4
+.I Disk images:
+Raw CD image (.bin), Virtual PC hard disk image,
+Apple UDIF disk image (limited).
+.TP 4
+.I Boot codes:
+LILO, GRUB, SYSLINUX, ISOLINUX, Linux kernel, FreeBSD loader,
+Sega Dreamcast (?).
+.TP 4
+.I Compression formats:
+gzip, compress, bzip2.
+.TP 4
+.I Archive formats:
+tar, cpio, bar, dump/restore.
+.PP
+Compressed files (gzip, compress, bzip2 formats) will also have their
+contents analyzed using transparent decompression. The appropriate
+compression program must be installed on the system, i.e. gzip(1)
+for the gzip and compress formats, bzip2(1) for the bzip2 format.
+.PP
+Disk images in general will also have their contents analyzed using
+the proper mapping, with the exception of the Apple UDIF format.
+.PP
+See the online documentation at <http://disktype.sourceforge.net/doc/>
+for more details on the supported formats and their quirks.
+.\"
+.SH HOMEPAGE
+http://disktype.sourceforge.net/
+.\"
+.SH AUTHOR
+Christoph Pfisterer <chrisp@users.sourceforge.net>
+.\"
+.SH "SEE ALSO"
+.BR file(1),
+.BR gpart(8)

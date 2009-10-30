@@ -11,6 +11,11 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# The provided manpage doesn't work with Solaris nroff.
+# See for details bug #1055:
+#   http://www.opencsw.org/mantis/view.php?id=1055
+DISTFILES += disktype.1
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -29,5 +34,5 @@ install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/disktype $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(mandir)/man1
-	ginstall $(WORKSRC)/disktype.1 $(DESTDIR)$(mandir)/man1/
+	ginstall $(WORKDIR)/disktype.1 $(DESTDIR)$(mandir)/man1/
 	@$(MAKECOOKIE)
