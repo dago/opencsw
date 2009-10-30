@@ -22,7 +22,7 @@ PACKAGES = CSWmantis
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = doc/LICENSE
-REQUIRED_PKGS = CSWapache2 CSWap2modphp5 CSWphp5mysql
+REQUIRED_PKGS = CSWapache2 CSWap2modphp5 CSWphp5mysql CSWphp5session
 ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
