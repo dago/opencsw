@@ -14,6 +14,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+SPKG_SOURCEURL = http://mhash.sourceforge.net/
+
 EXTRA_CPPFLAGS = -D__const=const
 
 BUILD64 = 1
