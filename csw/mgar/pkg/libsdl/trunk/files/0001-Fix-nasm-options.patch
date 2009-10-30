@@ -1,0 +1,25 @@
+From 735a89c8e05c6fa0684deb6e7019192959abb869 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 30 Oct 2009 11:09:15 +0100
+Subject: [PATCH] Fix nasm options
+
+---
+ build-scripts/strip_fPIC.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/build-scripts/strip_fPIC.sh b/build-scripts/strip_fPIC.sh
+index 45d34ba..5953112 100755
+--- a/build-scripts/strip_fPIC.sh
++++ b/build-scripts/strip_fPIC.sh
+@@ -5,7 +5,7 @@
+ command=""
+ while [ $# -gt 0 ]; do
+     case "$1" in
+-        -fPIC)
++        -fPIC|-KPIC)
+             # Ignore -fPIC option
+             ;;
+         -fno-common)
+-- 
+1.6.5
+
