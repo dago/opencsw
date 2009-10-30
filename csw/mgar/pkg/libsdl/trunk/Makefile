@@ -1,5 +1,5 @@
 GARNAME = SDL
-GARVERSION = 1.2.13
+GARVERSION = 1.2.14
 CATEGORIES = lib
 
 DESCRIPTION = Simple DirectMedia Layer library
@@ -12,11 +12,12 @@ endef
 MASTER_SITES = http://www.libsdl.org/release/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWiconv
-
 SPKG_SOURCEURL = http://www.libsdl.org/
 
 PACKAGES = CSWlibsdl CSWlibsdldevel
+
+REQUIRED_PKGS_CSWlibsdl = CSWiconv CSWlibx11 CSWlibxext
+REQUIRED_PKGS_CSWlibsdldevel = CSWlibsdl
 
 CATALOGNAME_CSWlibsdl      = libsdl
 CATALOGNAME_CSWlibsdldevel = libsdl_devel
@@ -32,6 +33,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 PKGFILES_CSWlibsdldevel = $(PKGFILES_DEVEL)
 
