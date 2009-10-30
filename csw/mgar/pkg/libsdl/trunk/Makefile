@@ -11,6 +11,7 @@ endef
 
 MASTER_SITES = http://www.libsdl.org/release/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0001-Fix-nasm-options.patch
 
 SPKG_SOURCEURL = http://www.libsdl.org/
 
