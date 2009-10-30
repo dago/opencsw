@@ -10,7 +10,9 @@ define BLURB
   fields into a CSV string and parse a CSV string into fields.
 endef
 
-PACKAGES = CSWpmtextcsvxs
+# XXX: This package name contains a type, it was released this way a long time
+# ago and should be renamed sometime.
+PACKAGES = CSWpmttextcsvxs
 CATALOGNAME = pm_textcsvxs
 
 # This module uses .tgz instead of .tar.gz :-(
