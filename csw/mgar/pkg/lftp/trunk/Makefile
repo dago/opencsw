@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = lftp
-GARVERSION = 4.0.2
+GARVERSION = 4.0.3
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
