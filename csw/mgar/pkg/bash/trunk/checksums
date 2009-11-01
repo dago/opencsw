@@ -33,6 +33,8 @@ fcc367e6471267d2e397257e703b817d  bash40-028
 389635281133416de9d13295251cabc7  bash40-031
 d646cb4aed8e0f0d1d47eea2ed5f3690  bash40-032
 d3e77d2a0a051478aca8c30d13ded834  bash40-033
-2e65971f182336356e87af544a24ccfe  changelog.CSW
+05a54807fd388e71bac8912ad530ac6d  bash40-034
+fc3d8fdb83ccc407ab7f6d1b7ac6a221  bash40-035
+52c58cea6ccac9d7e51fb63adffbbfb3  changelog.CSW
 60956e6be20f69dafbb06fcc83bab88e  shells
 29607316cff22f7427322d8f190cbadf  use_system_bashrc_and_logout.patch
