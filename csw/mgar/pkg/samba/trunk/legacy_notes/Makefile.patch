@@ -1,0 +1,4 @@
+86c86
+< SHELL=/bin/sh
+---
+> SHELL=/bin/bash

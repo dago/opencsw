@@ -1,0 +1,55 @@
+INSTRUCTIONS (reasons for it lower down)
+
+# edit source/Makefile and change SHELL to /bin/bash
+# patch <~/pkgs/samba/Makefile.patch
+
+cd packaging/Solaris
+patch <~/pkgs/samba/makepkg.sh.diff
+
+# tweak pkginfo.master as desired, for test package
+bash ./makepkg.sh build
+
+You should then manually KILL IT, when it starts the compile phase.
+ Then cd ../../source, and edit out -z text from Makefile, and
+ do a make.
+
+ (Where does it come from!?!? It's not in Makefile.in ?!!)
+
+------------------------------------------------------------
+
+PROBLEMS:
+
+bombs out  after loong time, with error under
+ source/lib/ldb with <undefined> reference or something
+  from ldb_module.o
+
+both gcc and cc die.
+Apparently, it's because samba does "bad things" with 
+reallocation of what should be read-only code in shared libs.
+This makes it 'inefficient', by itself.
+  Unfortunately,"-z text" makes it a fatal flaw.. so, have to
+   manually remove that flag from Makefile, after configure!!
+http://docsun.cites.uiuc.edu/sun_docs/C/solaris_9/SUNWdev/LLM/p24.html
+
+Additionally, need to change SHELL=/bin/sh to SHELL=bin/bash in Makefile
+
+LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R$ORIGIN/../lib -R/opt/csw/lib -L/opt/csw/lib'
+
+
+TO PACKAGE UP THEIR WAY:
+Need to patch paths, and use
+packaging/Solaris/makepkg.sh.csw
+
+Which also has to hack LD_LIBRARY_PATH because they script does naughty things
+
+plus, errors in final packaging:
+
+    no object for <lib/libsmbclient.a> found in root directory
+    no object for <lib/libmsrpc.so> found in root directory
+    no object for <lib/libmsrpc.a> found in root directory
+    no object for <include/libmsrpc.h> found in root directory
+    no object for <docs/*pdf> found in root directory
+# libsmbclient libmsrpc
+
+Late note: patch the sample smb.conf.default to have /var/opt
+instead of /usr/local/samba/var reference

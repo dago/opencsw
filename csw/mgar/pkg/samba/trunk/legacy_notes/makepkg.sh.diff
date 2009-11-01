@@ -1,0 +1,152 @@
+*** makepkg.sh	Thu Sep 18 08:49:02 2008
+--- makepkg.sh.csw	Mon Oct 27 18:57:08 2008
+***************
+*** 4,12 ****
+  # Copyright (C) Gerald Carter    2004
+  #
+  # script for build solaris Samba package
+! #
+  
+! INSTALL_BASE=/opt/samba
+  
+  SBINPROGS="smbd nmbd winbindd swat"
+  BINPROGS="findsmb nmblookup eventlogadm pdbedit rpcclient smbclient smbcquotas smbspool smbtar tdbbackup testparm wbinfo net ntlm_auth profiles smbcacls smbcontrol smbpasswd smbstatus smbtree tdbdump"
+--- 4,19 ----
+  # Copyright (C) Gerald Carter    2004
+  #
+  # script for build solaris Samba package
+! # Modified slightly by Philip Brown, to adhere to CSW standards
+! #  http://www.opencsw.org/
+! 
+! # Even though the link flags are *NICE* and use -$ORIGIN/../lib, #
+! # the build/install scripts do wierd things, and call smbd from its SOURCE TREE location.
+! # which then breaks dynamic libs. arg. SO need to override only for install purposes.
+! LD_LIBRARY_PATH='$ORIGIN:$ORIGIN/../lib'
+! export LD_LIBRARY_PATH
+  
+! INSTALL_BASE=/opt/csw
+  
+  SBINPROGS="smbd nmbd winbindd swat"
+  BINPROGS="findsmb nmblookup eventlogadm pdbedit rpcclient smbclient smbcquotas smbspool smbtar tdbbackup testparm wbinfo net ntlm_auth profiles smbcacls smbcontrol smbpasswd smbstatus smbtree tdbdump"
+***************
+*** 50,62 ****
+  	
+  	echo "#\n# libsmbclient\n#"
+  	echo f none lib/libsmbclient.so 0755 root other
+! 	echo f none lib/libsmbclient.a 0755 root other
+  	echo f none include/libsmbclient.h 0644 root other
+  
+  	echo "#\n# libmsrpc\n#"
+! 	echo f none lib/libmsrpc.so 0755 root other
+! 	echo f none lib/libmsrpc.a 0755 root other
+! 	echo f none include/libmsrpc.h 0644 root other
+  
+  	if [ -f lib/smbwrapper.so -a -f bin/smbsh ]; then
+  		echo "#\n# smbwrapper\n#"
+--- 57,71 ----
+  	
+  	echo "#\n# libsmbclient\n#"
+  	echo f none lib/libsmbclient.so 0755 root other
+! #static lib doesnt get built. rather than try to "fix" this, dont bother. --CSW
+! #	echo f none lib/libsmbclient.a 0755 root other
+  	echo f none include/libsmbclient.h 0644 root other
+  
++ #libmsrpc doesnt seem to get built. so dont try to package it after all. --CSW
+  	echo "#\n# libmsrpc\n#"
+! #	echo f none lib/libmsrpc.so 0755 root other
+! #	echo f none lib/libmsrpc.a 0755 root other
+! #	echo f none include/libmsrpc.h 0644 root other
+  
+  	if [ -f lib/smbwrapper.so -a -f bin/smbsh ]; then
+  		echo "#\n# smbwrapper\n#"
+***************
+*** 76,92 ****
+  	echo "#\n# man pages \n#"
+  
+  	# Create directories for man page sections if nonexistent
+! 	cd man
+  	for i in 1 2 3 4 5 6 7 8 9; do
+  		manpages=`ls man$i 2>/dev/null`
+  		if [ $? -eq 0 ]; then
+! 			echo d none man/man${i} ? ? ?
+  			for manpage in $manpages; do
+! 				echo f none man/man${i}/${manpage} 0644 root other
+  			done
+  		fi
+  	done
+! 	cd ..
+  
+  	echo "#\n# SWAT \n#"
+  	list=`find swat -type d | grep -v "/.svn$"`
+--- 85,101 ----
+  	echo "#\n# man pages \n#"
+  
+  	# Create directories for man page sections if nonexistent
+! 	cd share/man
+  	for i in 1 2 3 4 5 6 7 8 9; do
+  		manpages=`ls man$i 2>/dev/null`
+  		if [ $? -eq 0 ]; then
+! 			echo d none share/man/man${i} ? ? ?
+  			for manpage in $manpages; do
+! 				echo f none share/man/man${i}/${manpage} 0644 root other
+  			done
+  		fi
+  	done
+! 	cd ../..
+  
+  	echo "#\n# SWAT \n#"
+  	list=`find swat -type d | grep -v "/.svn$"`
+***************
+*** 103,111 ****
+  		fi
+  	done
+  
+  	# Create entries for docs for the beginner
+! 	echo 's none docs/using_samba=$BASEDIR/swat/using_samba'
+! 	for file in docs/*pdf; do
+  		echo f none $file 0644 root other
+  	done
+  }
+--- 112,122 ----
+  		fi
+  	done
+  
++ 	mkdir share/doc
++ 	mv docs share/doc/samba
+  	# Create entries for docs for the beginner
+! 	echo 's none share/doc/samba/using_samba=$BASEDIR/swat/using_samba'
+! 	for file in share/doc/samba/*pdf; do
+  		echo f none $file 0644 root other
+  	done
+  }
+***************
+*** 128,141 ****
+  
+  cd $DISTR_BASE/source
+  
+! if test "x$1" = "xbuild" ]; then
+  	./configure --prefix=$INSTALL_BASE \
+! 		--localstatedir=/var/lib/samba \
+  		--with-piddir=/var/run \
+  		--with-logfilebase=/var/log/samba \
+! 		--with-privatedir=/etc/samba/private \
+! 		--with-configdir=/etc/samba \
+! 		--with-lockdir=/var/lib/samba \
+  		--with-pam --with-acl-support \
+  		--with-quotas --with-included-popt \
+  	&& make
+--- 139,152 ----
+  
+  cd $DISTR_BASE/source
+  
+! if test "x$1" = "xbuild" ; then
+  	./configure --prefix=$INSTALL_BASE \
+! 		--localstatedir=/var/opt/csw/samba \
+  		--with-piddir=/var/run \
+  		--with-logfilebase=/var/log/samba \
+! 		--with-privatedir=/etc/opt/csw/samba/private \
+! 		--with-configdir=/etc/opt/csw/samba \
+! 		--with-lockdir=/var/opt/csw/samba \
+  		--with-pam --with-acl-support \
+  		--with-quotas --with-included-popt \
+  	&& make
