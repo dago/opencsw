@@ -1,6 +1,7 @@
 pm_cyrus (2.3.15,REV=2009.10.11) unstable
 
   * New upstream version.
+  * Now depends explicitly on berkeleydb42 instead of berkeleydb4.
 
  -- Yann Rouillard <yann@opencsw.org>  Sun, 11 Oct 2009 00:47:17 +0200
 

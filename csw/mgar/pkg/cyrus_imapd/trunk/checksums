@@ -13,14 +13,14 @@ d89cb1b55023188938f332b7ef120fae  cyrus-imapd-2.3.15.tar.gz
 b4c99489eacf0fb7befeef5e3098a5c1  cyrus-imapd-2.3.7-nobarenewlinescheck.patch
 6127a7b62ec4679a54985f6a2d915e52  cyrus-imapd-acceptinvalidfrom.patch
 fdb3416ec41f3a56d1594ca25a6dcd7d  cyrus.conf
-e8868f4e344649d1f2939d5d00f3f800  cyrus_imapd.changelog.CSW
-d722bfe708263b946d7bbc7f4d0ddf46  cyrus_imapd_utils.changelog.CSW
+1228b6378951f1b5434bd785973cab34  cyrus_imapd.changelog.CSW
+da92e9f3f78942431ad5ca9f9c842083  cyrus_imapd_utils.changelog.CSW
 5375c25c8bc325a90553d0be87a64a04  et_c.awk
 d1d86e61463a1dfefccbadedb11a8604  et_h.awk
 79211aee56db01e15566ced1ba4078da  i.services
 908dbf764d3ccd541c4de881ac81a6ae  imapd.conf
 14bb6e8c6d6914351f80df293982e88a  install-upgrade
-e6730668fa500fc77120ee007e535274  pm_cyrus.changelog.CSW
+fc47edab821dfac970ca342b7f20bde8  pm_cyrus.changelog.CSW
 149ac6b6d82ef9ef4bb1b314f1a1cac4  r.services
 dce627f9a464ae4efe8a66c8dbd358d5  restore_allowplaintext_default.patch
 6dfee20f7c02139350caf9f75199e587  services

@@ -33,17 +33,17 @@ PACKAGES = CSWcyrusimapd CSWcyrusimapdutils CSWpmcyrus
 
 SPKG_DESC_CSWcyrusimapd = Pop and Imap server from the Cyrus mail system
 CATALOGNAME_CSWcyrusimapd = cyrus_imapd
-REQUIRED_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb4 CSWkrb5lib CSWtcpwrap CSWnetsnmp CSWpcrert
+REQUIRED_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWtcpwrap CSWnetsnmp CSWpcrert
 SPKG_CLASSES_CSWcyrusimapd = none services cswpreserveconf cswinitsmf
 
 SPKG_DESC_CSWcyrusimapdutils = Various admin utilities for Cyrus Imapd/Popd
 CATALOGNAME_CSWcyrusimapdutils = cyrus_imapd_utils
-REQUIRED_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb4 CSWkrb5lib CSWpcrert
+REQUIRED_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWpcrert
 SPKG_CLASSES_CSWcyrusimapdutils = none 
 
 SPKG_DESC_CSWpmcyrus = Perl interface to Cyrus Imap functions
 CATALOGNAME_CSWpmcyrus = pm_cyrus
-REQUIRED_PKGS_CSWpmcyrus = CSWperl CSWbdb4 CSWosslrt CSWsasl
+REQUIRED_PKGS_CSWpmcyrus = CSWperl CSWbdb42 CSWosslrt CSWsasl
 SPKG_CLASSES_CSWpmcyrus = none
 
 
@@ -104,8 +104,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-cyrus-prefix=$(prefix)
 CONFIGURE_ARGS += --with-service-path=$(libexecdir)/cyrus 
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/cyrus 
-CONFIGURE_ARGS += --with-bdb-libdir=$(prefix)/bdb4/lib 
-CONFIGURE_ARGS += --with-bdb-incdir=$(prefix)/bdb4/include 
+CONFIGURE_ARGS += --with-bdb-libdir=$(prefix)/bdb42/lib 
+CONFIGURE_ARGS += --with-bdb-incdir=$(prefix)/bdb42/include 
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-perl=$(prefix)/bin/perl 
