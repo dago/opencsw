@@ -47,8 +47,8 @@ TEST_SCRIPTS =
 # pdf-doc does not work yet
 INSTALL_ARGS += man-doc html-doc
 
-PRESERVECONF  = /etc/opt/csw/cgit/apache.conf.CSW
-PRESERVECONF += /etc/opt/csw/cgit/cgitrc.CSW
+PRESERVECONF  = /etc/opt/csw/cgit/apache.conf
+PRESERVECONF += /etc/opt/csw/cgit/cgitrc
 
 # Trick to get the gar+git support to export the source code
 pre-extract-modulated: git-extract-cgit
