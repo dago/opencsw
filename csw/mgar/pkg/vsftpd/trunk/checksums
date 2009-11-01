@@ -2,7 +2,7 @@ a2f5b70fe49839b0463c9d90af0f11dd  CSWvsftpd.preinstall
 8944fcd302add66d5b2b287d390b9c91  CSWvsftpd.prototype
 eeaf77528b2da0c7730323838f30b7ef  README.CSW
 281c51282cabd9475cceef363bbc699b  build_options.patch
-1680c237d8aa01a3571b80e426dba7a3  changelog.CSW
+c402d9755c9ea931dec6f256aef16541  changelog.CSW
 54c1c39c6bfa8747a4457f135fd5bca1  csw_build_system.patch
 a9e994d2b57999b76a0e03503745c01a  csw_paths.patch
 98e1d831801985daf5ce2ed01fbc0efd  cswusergroup
@@ -10,7 +10,7 @@ a9e994d2b57999b76a0e03503745c01a  csw_paths.patch
 93173edf9931b8eb835c6d0177a7c6bd  cswvsftpd.xml
 73e59f9ada47d3d20199f7c97849fb13  destdir.patch
 a9a65f55cbfd01f9d72d1de25e67148d  set_priv_sep_user.patch
-e4eb190af270ae65d57a84274a38ec31  vsftpd-2.2.0.tar.gz
+a25e53dd86fada8d3897910b8f0efdb7  vsftpd-2.2.1.tar.gz
 f6ce22a6959b93e500a4ae800295c2ee  vsftpd.conf
 0d4a1cf36560892adb9eb9410a01c522  vsftpd.smf_wrapper
 60c736802e2ce00c531953b01e4a26f6  vsftpd.userlist
