@@ -94,7 +94,7 @@ while read src dest; do
       else
 	  [ -n "$DEBUG" ] && echo "For solaris 8 or 9"
 
-	  inetdconf=$PKG_INSTALL_ROOT/etc/inetd.conf
+	  inetdconf=$PKG_INSTALL_ROOT/etc/inet/inetd.conf
 
 	  echo "Installing '$svcname' into inetd.conf."
 	  echo "# $PKGINST: added by i.cswinetd" >> $inetdconf
