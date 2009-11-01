@@ -21,7 +21,7 @@ define BLURB
   rlwrap is a readline wrapper, a small utility that uses the GNU readline library to allow the editing of keyboard input for any other command. It maintains a separate input history for each command, and can TAB-expand words using all previously seen words and/or a user-specified file.
 endef
 
-PACKAGES = rlwrap
+PACKAGES = CSWrlwrap
 
 REQUIRED_PKGS  = CSWreadline 
 
