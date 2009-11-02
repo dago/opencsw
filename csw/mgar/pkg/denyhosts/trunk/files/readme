@@ -1,0 +1,17 @@
+### opencsw denyhosts readme
+
+Please make sure, you have configured syslogd and sshd 
+to log the auth messages. 
+Sshd defaults to auth.info on Solaris, so an entry for 
+/etc/syslog.conf could look like:
+
+[snip]
+auth.info               /var/log/authlog
+[snap]
+
+Please configure /etc/opt/csw/denyhosts.cfg accordingly:
+[snip]
+SECURE_LOG = /var/log/authlog
+[snap]
+
+Restart syslogd and denyhosts for the changes to take effect.
