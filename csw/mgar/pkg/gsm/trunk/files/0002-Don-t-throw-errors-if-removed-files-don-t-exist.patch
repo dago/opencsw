@@ -1,0 +1,140 @@
+From 158e510f219f29090b4fda509dc5372f9bdd98c7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 2 Nov 2009 09:42:37 +0100
+Subject: [PATCH 2/2] Don't throw errors if removed files don't exist
+
+---
+ Makefile |   38 +++++++++++++++++++-------------------
+ 1 files changed, 19 insertions(+), 19 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index cfab74f..571eb5a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -17,7 +17,7 @@ SASR	= -DSASR
+ 
+ # LTP_CUT	= -DLTP_CUT
+ LTP_CUT	=
+-######### Define to enable the GSM library's long-term correlation 
++######### Define to enable the GSM library's long-term -f correlation 
+ ######### approximation option---faster, but worse; works for
+ ######### both integer and floating point multiplications.
+ ######### This flag is still in the experimental stage.
+@@ -300,7 +300,7 @@ install:	toastinstall gsminstall
+ # The basic API: libgsm
+ 
+ $(LIBGSM):	$(LIB) $(GSM_OBJECTS)
+-		-rm $(RMFLAGS) $(LIBGSM)
++		-rm -f $(RMFLAGS) $(LIBGSM)
+ 		$(AR) $(ARFLAGS) $(LIBGSM) $(GSM_OBJECTS)
+ 		$(RANLIB) $(LIBGSM)
+ 
+@@ -311,11 +311,11 @@ $(TOAST):	$(BIN) $(TOAST_OBJECTS) $(LIBGSM)
+ 		$(LD) $(LFLAGS) -o $(TOAST) $(TOAST_OBJECTS) $(LIBGSM) $(LDLIB)
+ 
+ $(UNTOAST):	$(BIN) $(TOAST)
+-		-rm $(RMFLAGS) $(UNTOAST)
++		-rm -f $(RMFLAGS) $(UNTOAST)
+ 		$(LN) $(TOAST) $(UNTOAST)
+ 
+ $(TCAT):	$(BIN) $(TOAST)
+-		-rm $(RMFLAGS) $(TCAT)
++		-rm -f $(RMFLAGS) $(TCAT)
+ 		$(LN) $(TOAST) $(TCAT)
+ 
+ 
+@@ -342,59 +342,59 @@ toastinstall:
+ 
+ gsmuninstall:
+ 		-if [ x"$(GSM_INSTALL_ROOT)" != x ] ; then	\
+-			rm $(RMFLAGS) $(GSM_INSTALL_TARGETS) ;	\
++			rm -f $(RMFLAGS) $(GSM_INSTALL_TARGETS) ;	\
+ 		fi
+ 
+ toastuninstall:
+ 		-if [ x"$(TOAST_INSTALL_ROOT)" != x ] ; then 	\
+-			rm $(RMFLAGS) $(TOAST_INSTALL_TARGETS);	\
++			rm -f $(RMFLAGS) $(TOAST_INSTALL_TARGETS);	\
+ 		fi
+ 
+ $(TOAST_INSTALL_BIN)/toast:	$(TOAST)
+-		-rm $@
++		-rm -f $@
+ 		cp $(TOAST) $@
+ 		chmod 755 $@
+ 
+ $(TOAST_INSTALL_BIN)/untoast:	$(TOAST_INSTALL_BIN)/toast
+-		-rm $@
++		-rm -f $@
+ 		ln $? $@
+ 
+ $(TOAST_INSTALL_BIN)/tcat:	$(TOAST_INSTALL_BIN)/toast
+-		-rm $@
++		-rm -f $@
+ 		ln $? $@
+ 
+ $(TOAST_INSTALL_MAN)/toast.1:	$(MAN)/toast.1
+-		-rm $@
++		-rm -f $@
+ 		cp $? $@
+ 		chmod 444 $@
+ 
+ $(GSM_INSTALL_MAN)/gsm.3:	$(MAN)/gsm.3
+-		-rm $@
++		-rm -f $@
+ 		cp $? $@
+ 		chmod 444 $@
+ 
+ $(GSM_INSTALL_MAN)/gsm_option.3:	$(MAN)/gsm_option.3
+-		-rm $@
++		-rm -f $@
+ 		cp $? $@
+ 		chmod 444 $@
+ 
+ $(GSM_INSTALL_MAN)/gsm_explode.3:	$(MAN)/gsm_explode.3
+-		-rm $@
++		-rm -f $@
+ 		cp $? $@
+ 		chmod 444 $@
+ 
+ $(GSM_INSTALL_MAN)/gsm_print.3:	$(MAN)/gsm_print.3
+-		-rm $@
++		-rm -f $@
+ 		cp $? $@
+ 		chmod 444 $@
+ 
+ $(GSM_INSTALL_INC)/gsm.h:	$(INC)/gsm.h
+-		-rm $@
++		-rm -f $@
+ 		cp $? $@
+ 		chmod 444 $@
+ 
+ $(GSM_INSTALL_LIB)/libgsm.a:	$(LIBGSM)
+-		-rm $@
++		-rm -f $@
+ 		cp $? $@
+ 		chmod 444 $@
+ 
+@@ -416,16 +416,16 @@ uninstall:	toastuninstall gsmuninstall
+ 		@-echo uninstall: Done.
+ 
+ semi-clean:
+-		-rm $(RMFLAGS)  */*.o			\
++		-rm -f $(RMFLAGS)  */*.o			\
+ 			$(TST)/lin2cod $(TST)/lin2txt	\
+ 			$(TST)/cod2lin $(TST)/cod2txt	\
+ 			$(TST)/gsm2cod 			\
+ 			$(TST)/*.*.*
+ 		-$(FIND) . \( -name core -o -name foo \) \
+-			-print | xargs rm $(RMFLAGS)
++			-print | xargs rm -f $(RMFLAGS)
+ 
+ clean:	semi-clean
+-		-rm $(RMFLAGS) $(LIBGSM) $(ADDTST)/add		\
++		-rm -f $(RMFLAGS) $(LIBGSM) $(ADDTST)/add		\
+ 			$(TOAST) $(TCAT) $(UNTOAST)	\
+ 			$(ROOT)/gsm-1.0.tar.Z
+ 
+-- 
+1.6.5
+

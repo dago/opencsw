@@ -34,14 +34,25 @@ BUILD_ARGS = CC="$(CC)" CFLAGS="-c $(CFLAGS) -Iinc"
 TEST_TARGET = tst addtst misc
 TEST_ARGS = $(BUILD_ARGS)
 
-INSTALL_ARGS = TOAST_INSTALL_ROOT="$(DESTDIR)$(prefix)"
-INSTALL_ARGS += GSM_INSTALL_ROOT="$(DESTDIR)$(prefix)"
+INSTALL_SCRIPTS = custom
+#INSTALL_ARGS = TOAST_INSTALL_ROOT="$(DESTDIR)$(prefix)"
+#INSTALL_ARGS += GSM_INSTALL_ROOT="$(DESTDIR)$(prefix)"
 
 include gar/category.mk
 
-pre-install-modulated:
+post-build-modulated:
+
+install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
+	ginstall $(WORKSRC)/bin/toast $(DESTDIR)$(bindir)
+	gln untoast $(DESTDIR)$(bindir)/toast
+	gln tcat $(DESTDIR)$(bindir)/toast
 	ginstall -d $(DESTDIR)$(libdir)
-	ginstall -d $(DESTDIR)$(prefix)/inc
-	ginstall -d $(DESTDIR)$(prefix)/man/man1
+	ginstall $(WORKSRC)/lib/libgsm.a $(DESTDIR)$(libdir)
+	ginstall -d $(DESTDIR)$(includedir)
+	ginstall $(WORKSRC)/inc/gsm.h $(DESTDIR)$(includedir)
+	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall $(WORKSRC)/man/toast.1 $(DESTDIR)$(mandir)/man1
+	ginstall -d $(DESTDIR)$(mandir)/man3
+	ginstall $(WORKSRC)/man/*.3 $(DESTDIR)$(mandir)/man3
 	@$(MAKECOOKIE)
