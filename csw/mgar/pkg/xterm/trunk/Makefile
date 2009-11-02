@@ -1,20 +1,23 @@
 GARNAME = xterm
-GARVERSION = 248
+GARVERSION = 250
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
 define BLURB
-The xterm program is a terminal emulator for the X Window System. It provides
-DEC VT102 and Tektronix 4014 compatible terminals for programs that can't use
-the window system directly. This version implements ISO/ANSI colors using the
-"new" color model (i.e., background color erase). It also implements most of
-the control sequences for VT220.
+  The xterm program is a terminal emulator for the X Window System. It provides
+  DEC VT102 and Tektronix 4014 compatible terminals for programs that can't use
+  the window system directly. This version implements ISO/ANSI colors using the
+  "new" color model (i.e., background color erase). It also implements most of
+  the control sequences for VT220.
 endef
 
 MASTER_SITES = ftp://invisible-island.net/xterm/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
 REQUIRED_PKGS = CSWfconfig CSWlibxft2
+# We needed to switch to CSW-built X11 (build against Solaris X11 was broken
+# on the build boxes, ) and these came along as dependencies.
+REQUIRED_PKGS += CSWlibice CSWlibx11 CSWlibxaw CSWlibxmu CSWlibxt
 
 # enable -mk_width per default to address unicode form character width woes, 
 # can be taken out once upstream enhances wcwidth() sanity checking 
@@ -54,9 +57,15 @@ CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 
+# The need for the following extra flags also came along with the switch 
+# to CSW X11, didn't yet investigate what exactly broke ./configure
+EXTRA_LDFLAGS = -L$(libdir) -lfontconfig
+
 include gar/category.mk
 
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
 post-install-modulated:
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DOCDEST)
+	cp $(FILEDIR)/README.CSW $(DOCDEST)
+	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)
