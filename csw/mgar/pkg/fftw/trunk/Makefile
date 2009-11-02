@@ -20,8 +20,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.fftw.org/
 
 BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+MERGE_DIRS_isa-extra = $(bindir)
 
 include gar/category.mk
