@@ -2,6 +2,7 @@
 #
 # Init script for denyhosts
 #
+# AUTOENABLE no
 
 PATH=/opt/csw/bin:$PATH
 NAME=denyhosts
