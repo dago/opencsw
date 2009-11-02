@@ -1,0 +1,67 @@
+#! /bin/sh 
+#
+# Init script for denyhosts
+#
+
+PATH=/opt/csw/bin:$PATH
+NAME=denyhosts
+PROG=/opt/csw/bin/$NAME
+PYTHON=/opt/csw/bin/python
+PIDFILE=/var/opt/csw/run/denyhosts.pid
+CONFIG=/etc/opt/csw/denyhosts.cfg
+FLAGS="--purge --config=$CONFIG"
+
+# start denyhosts
+start() {
+  test -x $PYTHON || exit 5
+  test -f $CONFIG || { 
+    echo "$CONFIG does not exist!" 
+    exit 1
+  }
+
+  HOSTS_DENY=`grep '^HOSTS_DENY' $CONFIG  | cut -d = -f 2`
+  test -f $HOSTS_DENY || touch $HOSTS_DENY
+
+  if [ -f $PIDFILE ]; then
+    pid=`cat $PIDFILE`
+    if kill -0 "$pid" > /dev/null; then
+      echo "$NAME already running"
+      return
+    else
+      echo "Removing stale PID file $PIDFILE."
+      rm -f $PIDFILE
+    fi
+  fi
+  $PYTHON $PROG --daemon --purge --config=$CONFIG
+  [ $? -eq 0 ] && echo "started $NAME" || echo "start $NAME failed"
+}
+
+# stop denyhosts
+stop() {
+  if [ -f $PIDFILE ]; then
+    pid=`cat $PIDFILE`
+    if kill -0 "$pid" > /dev/null; then
+       kill `cat $PIDFILE`
+       [ $? -eq 0 ] && echo "stopped $NAME" || echo "stop $NAME failed"
+    else
+       echo "stop $NAME failed"
+       rm -f $PIDFILE
+    fi
+  fi
+}
+
+# start or stop denyhosts
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  *)
+        echo "Usage: $NAME {start|stop}" >&2
+        exit 3
+        ;;
+esac
+
+exit 0

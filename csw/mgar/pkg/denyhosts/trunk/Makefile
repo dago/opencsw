@@ -1,6 +1,3 @@
-# TODO
-# - Integrate into SMF, do we need daemon-control-dist at all?
-# - Test the package
 GARNAME = denyhosts
 GARVERSION = 2.6
 CATEGORIES = python
@@ -26,6 +23,7 @@ DISTNAME = DenyHosts-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 LICENSE = LICENSE.txt
 ARCHALL = 1
+INITSMF = /etc/opt/csw/init.d/cswdenyhosts
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -49,6 +47,7 @@ post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	ginstall -d $(DESTDIR)$(sysconfdir)
+	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -d $(DESTDIR)$(localstatedir)/$(GARNAME)
 	mv $(DESTDIR)$(bindir)/denyhosts.py $(DESTDIR)$(bindir)/denyhosts
 	rm $(DESTDIR)$(datadir)/$(GARNAME)/README.txt
@@ -57,17 +56,18 @@ post-install-modulated:
 	mv $(DESTDIR)$(datadir)/$(GARNAME)/CHANGELOG.txt $(DOCDEST)/changelog
 	mv $(DESTDIR)$(datadir)/$(GARNAME)/denyhosts.cfg-dist \
 		$(DESTDIR)$(sysconfdir)/denyhosts.cfg
+	ginstall -m 0755 $(FILEDIR)/cswdenyhosts $(DESTDIR)$(sysconfdir)/init.d
 
 	#Adjust config to match Solaris paths + our package paths
 	gsed -i \
 		-e 's,/var/log/secure,path to ssh log,' \
 		-e 's,/usr/share/denyhosts/data,$(localstatedir)/$(GARNAME),' \
-		-e 's,/var/lock/subsys/denyhosts,/var/run/denyhosts.pid,' \
-		-e 's,/var/log/denyhosts,$(localestatedir)/$(GARNAME)/$(GARNAME).log,' \
+		-e 's,/var/lock/subsys/denyhosts,/var/opt/csw/run/denyhosts.pid,' \
+		-e 's,/var/log/denyhosts,$(localstatedir)/$(GARNAME)/$(GARNAME).log,' \
 		$(DESTDIR)$(sysconfdir)/denyhosts.cfg
 
 	gsed -i \
-		-e 's,denyhosts.cfg,$(sysconfdir)/denyhosts.cfg' \
+		-e 's,denyhosts.cfg,$(sysconfdir)/denyhosts.cfg,' \
 		$(DESTDIR)/opt/csw/lib/python/site-packages/DenyHosts/constants.py
 
 	#Adjust daemon-control-dist wrapper script to match our package paths
