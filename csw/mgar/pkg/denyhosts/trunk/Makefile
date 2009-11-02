@@ -24,6 +24,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 LICENSE = LICENSE.txt
 ARCHALL = 1
 INITSMF = /etc/opt/csw/init.d/cswdenyhosts
+REQUIRED_PKGS = CSWpython
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
