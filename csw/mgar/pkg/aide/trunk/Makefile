@@ -11,6 +11,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += aide.conf
 
 # Disable Sun ACLs for now until bug #2887984 is fixed:
 #   http://sourceforge.net/tracker/?func=detail&aid=2887984&group_id=86976&atid=581579
@@ -25,6 +26,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWcurlrt CSWgcrypt CSWgpgerr CSWlibidn CSWlibmhash CSWlibpq
 REQUIRED_PKGS += CSWoldaprt CSWosslrt CSWzlib
+
+sysconfdir = /etc/opt/csw/aide
+PRESERVECONF = $(sysconfdir)/aide.conf
 
 EXTRA_LIB = $(prefix)/postgresql/lib
 EXTRA_INC = $(prefix)/postgresql/include
@@ -48,3 +52,7 @@ EXTRA_LINKER_FLAGS = -lgcrypt -lgpg-error
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)/etc/opt/csw/aide
+	ginstall $(WORKDIR)/aide.conf $(DESTDIR)/etc/opt/csw/aide/
