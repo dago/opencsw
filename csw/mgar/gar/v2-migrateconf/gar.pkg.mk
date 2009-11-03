@@ -171,7 +171,7 @@ endef
 #	and able to be consumed by a service that might be started.
 SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
 SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
-SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswpycompile)
+SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswmigrateconf)
 SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
 SPKG_CLASSES := $(call _spkg_cond_add,USERGROUP,cswusergroup)
 SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
