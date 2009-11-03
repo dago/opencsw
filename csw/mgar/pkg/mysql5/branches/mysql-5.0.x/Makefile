@@ -51,8 +51,6 @@ SPKG_DESC_CSWmysql5devel  = MySQL 5 header files
 SPKG_DESC_CSWmysql5rt     = MySQL 5 runtime files
 SPKG_DESC_CSWmysql5test   = MySQL 5 testing files
 
-support64 = (/(amd64|i386))?
-
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
 CSWmysql5client_programs  = myisamlog
@@ -75,11 +73,11 @@ CSWmysql5client_programs += replace
 
 PKGFILES_CSWmysql5bench   = $(prefix)/sql-bench.*
 PKGFILES_CSWmysql5client  = $(bindir)
-PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(bindir)$(support64)/$(bin_name))
+PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(mandir)/man1/$(bin_name)\.1)
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSWmysql5devel  += $(bindir)$(support64)/mysql_config
+PKGFILES_CSWmysql5devel  += $(call baseisadirs,$(bindir),mysql_config)
 PKGFILES_CSWmysql5devel  += $(mandir)/man1/mysql_config\.1
 PKGFILES_CSWmysql5devel   = $(prefix)/include.*
 PKGFILES_CSWmysql5rt      = $(prefix)/lib/.*\.so.*
@@ -105,11 +103,11 @@ PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 # because we alter the prefix.  this gets us proper linking as well as
 # LD_OPTIONS (RPATH)
-EXTRA_LIB = /opt/csw/lib
-EXTRA_INC = /opt/csw/include
+# EXTRA_LIB = /opt/csw/lib
+# EXTRA_INC = /opt/csw/include
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-EXTRA_LIB = /opt/csw/mysql5/lib/$$ISALIST/mysql
+# EXTRA_LIB = /opt/csw/mysql5/lib/$$ISALIST/mysql
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -130,13 +128,15 @@ TEST_SCRIPTS =
 BUILD64 = 1
 
 USERGROUP = /etc/opt/csw/pkg/CSWmysql5/cswusergroup
-PROTOTYPE_FILTER = awk ' \
-    $$$$3 ~ /\/var\/opt\/csw\/mysql5$$$$/ { $$$$2 = "ugfiles"; \
-                                            $$$$4 = "0700"; \
-                                            $$$$5 = "mysql"; \
-                                            $$$$6 = "mysql" } \
-    { print }'
-SPKG_CLASSES = none cswusergroup ugfiles
+
+PROTOTYPE_MODIFIERS = ownmysql
+PROTOTYPE_FILES_ownmysql = /var/opt/csw/mysql5
+PROTOTYPE_USER_ownmysql = mysql
+PROTOTYPE_GROUP_ownmysql = mysql
+PROTOTYPE_PERMS_ownmysql = 0700
+PROTOTYPE_CLASS_ownmysql = ugfiles
+
+SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
