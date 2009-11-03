@@ -1,0 +1,3 @@
+# $Id$
+
+MIGRATE_FILES="odbc.ini odbcinst.ini ODBCDataSources"
