@@ -1,6 +1,6 @@
-diff -Naur 2.0-orig/include/config.php.CSW 2.0-patched/include/config.php.CSW
---- 2.0-orig/include/config.php.CSW	2007-11-07 10:52:53.790976000 +0100
-+++ 2.0-patched/include/config.php.CSW	2007-11-07 10:58:37.414630000 +0100
+diff -Naur 2.0-orig/include/distconfig.php 2.0-patched/include/distconfig.php
+--- 2.0-orig/include/distconfig.php	2007-11-07 10:52:53.790976000 +0100
++++ 2.0-patched/include/distconfig.php 2007-11-07 10:58:37.414630000 +0100
 @@ -33,17 +33,23 @@
  // Configure these lines if your commands aren't on your path. 
  //

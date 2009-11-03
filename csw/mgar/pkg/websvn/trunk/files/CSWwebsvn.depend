@@ -1,7 +1,0 @@
-P CSWapache2   apache2 - Apache 2.2 web server
-P CSWdiffutils diffutils - GNU diff and related utils
-P CSWsvn       subversion - Version control rethought
-P CSWenscript  enscript - convert text files to PostScript
-P CSWgsed      gsed - The GNU non-interactive text Stream-oriented EDitor (sed)
-P CSWgtar      gtar - GNU tape archiver
-P CSWgzip      gzip - GNU compression utility (replacement for compress)

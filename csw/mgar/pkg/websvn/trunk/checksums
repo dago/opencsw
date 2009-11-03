@@ -1,5 +1,2 @@
-953d95d8a7ee6451acfb7ebb06893ae8  download/CSWwebsvn.gspec
-858def27dd10cc82f447b7220b3473f1  download/CSWwebsvn.depend
-afea5f097c11a1d4e3da2b790dd65fdf  download/CSWwebsvn.postinstall
-67cef58e940c379cddd8a61e6023a6da  download/CSWwebsvn.preremove
-b380450f1a5135649a0588cb8eaa10e4  download/websvn-csw-config.patch
+f7eb3d57840aa3d1917bb0c645794601  websvn-2.2.1.tar.gz
+c9e2b0372fe02393c2376c0ea707c522  websvn-csw-config.patch

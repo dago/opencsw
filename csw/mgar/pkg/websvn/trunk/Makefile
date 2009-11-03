@@ -1,5 +1,5 @@
 GARNAME = websvn
-GARVERSION = 2.0
+GARVERSION = 2.2.1
 CATEGORIES = apps
 
 DESCRIPTION = PHP based web interface of Subversion repositories
@@ -12,30 +12,35 @@ define BLURB
   a particular revision.
 endef
 
-MASTER_SITES  = svn-http://websvn.tigris.org/svn/$(GARNAME)/tags/
-DISTFILES = $(GARVERSION)
-NOCHECKSUM = $(GARVERSION)
-SVNHTTP_CO_ARGS = --no-auth-cache --username guest --password guest
+# MASTER_SITES  = svn-http://websvn.tigris.org/svn/$(GARNAME)/tags/
+# DISTFILES = $(GARVERSION)
+# NOCHECKSUM = $(GARVERSION)
+# SVNHTTP_CO_ARGS = --no-auth-cache --username guest --password guest
+
+MASTER_SITES  = http://websvn.tigris.org/files/documents/1380/45918/
+DISTFILES = $(DISTNAME).tar.gz
 
 SPKG_SOURCEURL = http://websvn.tigris.org/
 
-DISTFILES += $(call admfiles,CSWwebsvn,depend postinstall preremove)
+LICENSE = license.txt
+
+# DISTFILES += $(call admfiles,CSWwebsvn,depend postinstall preremove)
 PATCHFILES = websvn-csw-config.patch
 
-WORKSRC = $(WORKDIR)/$(GARVERSION)
+REQUIRED_PKGS = CSWapache2 CSWdiffutils CSWsvn CSWenscript CSWgsed CSWgtar CSWgzip
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-include gar/category.mk
+EXTRA_PAX_ARGS += -s ',^\.\(.*\)/distconfig.php$$,.\1/config.php,'
 
-post-extract:
-	@echo " ==> Preparing include/config.php.CSW"
-	@cp $(WORKSRC)/include/distconfig.php \
-		$(WORKSRC)/include/config.php.CSW
-	@$(MAKECOOKIE)
+PRESERVECONF = $(sharedstatedir)/www/websvn/include/config.php
+
+ARCHALL = 1
+
+include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
