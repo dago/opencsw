@@ -14,7 +14,7 @@
 #
 
 GARNAME = mbuffer
-GARVERSION = 20090628
+GARVERSION = 20091103
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
