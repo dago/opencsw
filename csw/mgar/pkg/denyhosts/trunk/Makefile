@@ -58,7 +58,7 @@ post-install-modulated:
 	mv $(DESTDIR)$(datadir)/$(GARNAME)/denyhosts.cfg-dist \
 		$(DESTDIR)$(sysconfdir)/denyhosts.cfg
 	ginstall -m 0755 $(FILEDIR)/cswdenyhosts $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -m 0644 $(FILEDIR)/readme $(DOCDEST)
+	ginstall -m 0644 $(FILEDIR)/README.CSW $(DOCDEST)
 
 	#Adjust config to match Solaris paths + our package paths
 	gsed -i \
