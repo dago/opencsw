@@ -55,11 +55,14 @@ EXTRA_MERGE_DIRS_isa-pentium = $(includedir)
 
 PACKAGES = CSWlibgmp
 
+REQUIRED_PKGS = CSWgcc4rt
+
 include gar/category.mk
+
 ifeq ($(ISA), sparcv8plus)
 	ARCHFLAGS_$(GARCOMPILER)_$(ISA) = -mcpu=v9 -mv8plus
 endif
 ifeq ($(ISA), sparcv8plus+vis)
-	ARCHFLAGS_$(GARCOMPILER)_$(ISA) = -mcpu=v9 -mvis
+	ARCHFLAGS_$(GARCOMPILER)_$(ISA) = -mcpu=ultrasparc -mvis
 endif
 
