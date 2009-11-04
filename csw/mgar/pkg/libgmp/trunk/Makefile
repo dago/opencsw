@@ -55,7 +55,7 @@ EXTRA_MERGE_DIRS_isa-pentium = $(includedir)
 
 PACKAGES = CSWlibgmp
 
-REQUIRED_PKGS = CSWgcc4rt
+REQUIRED_PKGS = CSWgcc4corert
 
 include gar/category.mk
 
