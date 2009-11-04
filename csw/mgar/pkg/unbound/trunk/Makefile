@@ -28,6 +28,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 ifeq ($(shell uname -r),5.8)
 	GARCOMPILER = GCC4
 	REQUIRED_PKGS += CSWgcc4corert
@@ -39,6 +42,7 @@ endif
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGUTE_ARGS += --with-solaris-threads
+CONFIGURE_ARGS += --with-ldns=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
