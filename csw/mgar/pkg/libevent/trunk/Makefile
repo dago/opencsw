@@ -3,12 +3,12 @@ GARVERSION = 1.4.12
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.1b 1.4.12
+MODULATIONS_GARVERSION = 1.1a 1.4.12
 
-SKIP_MODULATIONS = isa-sparcv9-garversion-1.1b
-SKIP_MODULATIONS += isa-amd64-garversion-1.1b
+SKIP_MODULATIONS = isa-sparcv9-garversion-1.1a
+SKIP_MODULATIONS += isa-amd64-garversion-1.1a
 
-DISTVERSION-1.1b = 1.1b
+DISTVERSION-1.1a = 1.1a
 DISTVERSION-1.4.12 = 1.4.12-stable
 
 DESCRIPTION = Event notification library
@@ -48,10 +48,10 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 
 TEST_TARGET = verify
 
-MERGE_SCRIPTS_isa-default-garversion-1.1b = copy-only
-MERGE_DIRS_isa-default-garversion-1.1b = $(libdir)
-MERGE_SCRIPTS_isa-extra-garversion-1.1b = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.1b = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-1.1a = copy-only
+MERGE_DIRS_isa-default-garversion-1.1a = $(libdir)
+MERGE_SCRIPTS_isa-extra-garversion-1.1a = copy-relocated-only
+MERGE_DIRS_isa-extra-garversion-1.1a = $(libdir)
 
 MERGE_SCRIPTS_isa-default-garversion-1.4.12 = copy-all
 MERGE_SCRIPTS_isa-extra-garversion-1.4.12 = copy-relocated-only
