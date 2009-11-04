@@ -662,10 +662,9 @@ reset-package: pkgreset
 
 pkgreset-%:
 	@echo " ==> Reset packaging state for $* ($(DESTIMG))"
-	@rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
-	@rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
-	@rm -rf $(WORKDIR)/$*.* $(WORKDIR)/prototype
-	@rm -f $(WORKDIR)/copyright $(WORKDIR)/*.copyright
+	$(_DBG)rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
+	$(_DBG)rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
+	$(_DBG)rm -rf $(addprefix $(WORKDIR)/,$(filter-out $(DISTFILES),$(patsubst $(WORKDIR)/%,%,$(wildcard $(WORKDIR)/$*.*)) prototype copyright $*.copyright))
 
 repackage: pkgreset package
 
