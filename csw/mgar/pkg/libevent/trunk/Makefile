@@ -66,5 +66,5 @@ include gar/category.mk
 #export LIBS
 
 post-extract-modulated:
-	test -f $(WORKSRC)/test/test.sh && perl -pi -e 's,#!/bin/sh,#!/bin/bash,' $(WORKSRC)/test/test.sh
+	-test -f $(WORKSRC)/test/test.sh && perl -pi -e 's,#!/bin/sh,#!/bin/bash,' $(WORKSRC)/test/test.sh
 	@$(MAKECOOKIE)
