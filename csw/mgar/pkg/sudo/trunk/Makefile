@@ -50,9 +50,10 @@ endif
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
-include gar/category.mk
+PKGFILES_CSWsudo  = $(bindir)/sudo.minimal
+PKGFILES_CSWsudo += $(bindir)/sudo
 
-PKGFILES_CSWsudo  = .*$(bindir).*/sudo.minimal
+include gar/category.mk
 
 post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.minimal )
@@ -68,4 +69,3 @@ post-merge-modulated:
 	@$(MAKECOOKIE)
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
-
