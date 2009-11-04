@@ -451,7 +451,7 @@ do
     if [[ $? -ne 0 ]]; then
 	#if we've already looked at the package named $dep,
 	#it'll be in the file.
- 	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/xpg4/bin/grep -q $dep
+ 	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/bin/grep $dep >/dev/null
  	if [[ $? -ne 0 ]]; then #we haven't yet seen this package in our set
 	    echo "Can't validate dependence on $dep.  Storing for delayed validation."
 	    #store for validation at the end.
@@ -530,7 +530,7 @@ if [ -s $SETDEPS.missing ]; then
     while read mdep; do
 	dep=`echo $mdep | nawk '{print $1}'`
 	pkg=`echo $mdep | nawk '{print $2}'`
-	/usr/xpg4/bin/grep -q $dep $SETDEPS
+	/usr/bin/grep $dep $SETDEPS >/dev/null
 	if [ $? -ne 0 ]; then
 	    errmsg "Couldn't validate $dep as a dependency in package $pkg"
 	else
@@ -545,7 +545,7 @@ if [ -s $SETLIBS.missing ]; then
 	lib=`echo $ldep | nawk '{print $1}'`
         [ "$lib" = "libm.so.2" ] && continue
 	pkg=`echo $ldep | nawk '{print $2}'`
-	/usr/xpg4/bin/grep -q "[/=]$lib[ =]" $SETLIBS
+	/usr/bin/grep -q "[/=]$lib[ =]" $SETLIBS >/dev/null
 	if [ $? -ne 0 ]; then
 	    errmsg "Couldn't find a package providing $lib"
 	else
