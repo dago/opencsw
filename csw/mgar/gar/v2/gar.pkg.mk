@@ -660,6 +660,8 @@ pkgreset: $(addprefix pkgreset-,$(SPKG_SPECS))
 
 reset-package: pkgreset
 
+# Make sure we don't delete files we deliberately added with DISTFILES. They
+# will not be copied to WORKDIR again.
 pkgreset-%:
 	@echo " ==> Reset packaging state for $* ($(DESTIMG))"
 	$(_DBG)rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
