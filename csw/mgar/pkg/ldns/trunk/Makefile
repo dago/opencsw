@@ -11,7 +11,7 @@ define BLURB
   scripting languages.
 endef
 
-MASTER_SITES = http://www.nlnetlabs.nl/projects/ldns/
+MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWldns.doxyparse.diff
 
@@ -22,12 +22,14 @@ CATALOGNAME_CSWldnsdevel = ldns_devel
 SPKG_DESC_CSWldns = $(DESCRIPTION)
 SPKG_DESC_CSWldnsdevel = $(DESCRIPTION) development package
 
+SPKG_SOURCEURL = http://www.nlnetlabs.nl/projects/ldns/
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns\
+UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns
 
 BUILD64 = 1
 EXTRA_BUILD_ISAS_i386 = pentium_pro
