@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# i.cswtexinfo - Class action script
+# 		 for registration of info pages to CSWtexinfo
+#
+# Written and maintained by Dagobert Michelsen
+#
+# 2009-11-04 Initial release
+
+echo "Installing class <cswtexinfo> ..."
+
+while read src dest; do
+
+  echo $dest
+  /usr/bin/cp $src $dest || exit 2
+
+  if [ -x ${PKG_INSTALL_ROOT}/opt/csw/bin/install-info ]; then
+    ${PKG_INSTALL_ROOT}/opt/csw/bin/install-info $dest ${PKG_INSTALL_ROOT}/opt/csw/info/dir
+  else
+    echo "CSWtexinfo couldn't be found."
+  fi
+done
+
+exit 0

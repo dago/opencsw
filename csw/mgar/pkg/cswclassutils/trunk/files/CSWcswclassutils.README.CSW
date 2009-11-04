@@ -53,6 +53,19 @@ Currently it has:
   /etc/services file.  It is a one way manipulation.  At package
   removal, the service entries are left behind.
 
+- cswtexinfo
+
+  This class takes care of keeping the info/dir page of CSWtexinfo
+  in sync with all texinfo pages installed. It adds entries on
+  package installation and removes them on package removal.
+
+- cswcrontab
+
+  This class allows adding entries to the crontab for arbitrary users.
+  The entries will be tagged with the package name and removed on
+  package removal. If the entries have been changed manually they will
+  not be preserved.
+
 Read more on the wiki: http://wiki.opencsw.org/cswclassutils-package.
 
 -- 

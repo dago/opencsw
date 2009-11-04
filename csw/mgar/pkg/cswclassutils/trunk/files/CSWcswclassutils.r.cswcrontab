@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# r.cswcrontab - Class action script
+#                for registration of crontab entries
+#
+# Written and maintained by Dagobert Michelsen
+#
+
+echo "Removing class <cswcrontab> ..."
+
+while read dest; do
+  echo $dest
+  rm -f $dest
+
+  USERNAME=`/usr/bin/basename $dest`
+  TMPFILE=/tmp/cswcrontab.${PKGINST}.$$
+
+  umask 600
+
+  echo "The following lines will be removed from the crontab of the user '${USERNAME}':"
+  /usr/bin/crontab -l ${USERNAME} | /usr/bin/grep "# Added by ${PKGINST}\$"
+
+  /usr/bin/crontab -l ${USERNAME} | /usr/bin/grep -v "# Added by ${PKGINST}\$" > ${TMPFILE}
+
+  if [ -n "$DEBUG" ]; then
+    echo "DEBUG: Installing crontab for user '${USERNAME}'" >&2
+    cat ${TMPFILE} >&2
+  fi
+
+  su ${USERNAME} /usr/bin/crontab ${TMPFILE}
+  rm -f ${TMPFILE}
+ 
+done

@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# i.cswcrontab - Class action script
+#                for registration of crontab entries
+#
+# Written and maintained by Dagobert Michelsen
+#
+
+# set DEBUG to any value to enable trace output
+DEBUG=
+
+echo "Installing class <cswcrontab> ..."
+
+while read src dest; do
+
+  echo $dest
+  /usr/bin/cp $src $dest || exit 2
+
+  USERNAME=`/usr/bin/basename $dest`
+  echo "The following lines will be added to the crontab of the user '${USERNAME}':"
+  cat $dest
+
+  TMPFILE=/tmp/cswcrontab.${PKGINST}.$$
+
+  umask 600
+  /usr/bin/crontab -l ${USERNAME} | /usr/bin/grep -v "# Added by ${PKGINST}\$" > ${TMPFILE}
+
+  if [ -n "$DEBUG" ]; then
+    echo "DEBUG: Contents of ${TMPFILE} after removing old lines from this package:" >&2
+    cat ${TMPFILE} >&2
+  fi
+
+  cat $dest | while read LINE; do
+    echo "${LINE} % Added by ${PKGINST}" >> ${TMPFILE}
+    if [ -n "$DEBUG" ]; then
+      echo "DEBUG: Adding '${LINE} % Added by ${PKGINST}' to the end of the crontab" >&2
+    fi
+  done
+
+  if [ -n "$DEBUG" ]; then
+    echo "DEBUG: Installing crontab for user '${USERNAME}'" >&2
+    cat ${TMPFILE} >&2
+  fi
+
+  su ${USERNAME} /usr/bin/crontab ${TMPFILE}
+  rm -f ${TMPFILE}
+  
+done
+
+exit 0
