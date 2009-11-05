@@ -579,6 +579,8 @@ reset-merge-src:
 # package - Use the mkpackage utility to create Solaris packages
 #
 
+PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC))
+
 SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
 
 $(SPKG_DESTDIRS):
