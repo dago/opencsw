@@ -1,12 +1,19 @@
 GARNAME = Email-Simple
-GARVERSION = 2.005
+GARVERSION = 2.100
 CATEGORIES = cpan
 AUTHOR = RJBS
 
-DESCRIPTION = simple parsing of RFC2822 message format and headers
+DESCRIPTION = Perl Email::Simple module for RFC2822 message format and headers
 define BLURB
 endef
 
-DISTFILES += CSWpmemailsimple.gspec
+REQUIRED_PKGS = CSWpmemaildateformat
+
+PACKAGES = CSWpmemailsimple
+CATALOGNAME = pm_emailsimple
+
+LICENSE = LICENSE
+
+ARCHALL = 1
 
 include gar/category.mk
