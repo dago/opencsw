@@ -120,9 +120,6 @@ INSTALL_ARGS = INSTALLDIRS=vendor
 
 TEST_SCRIPTS = 
 
-# Disable package check for now as pmcyrus dependancy is not recognized
-ENABLE_CHECK=0
-
 include gar/category.mk
 
 # compile_et is missing so we want our to be used
