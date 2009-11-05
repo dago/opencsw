@@ -1,7 +1,5 @@
-# Todo
-# * Non-maintainer upload, needs to be checked by Alexander
 GARNAME = scala
-GARVERSION = 2.7.4
+GARVERSION = 2.7.7
 CATEGORIES = java
 
 DESCRIPTION = The Scala programming language
@@ -12,7 +10,7 @@ define BLURB
   languages. It is also fully interoperable with Java.
 endef
 
-MASTER_SITES = http://www.scala-lang.org/sites/default/files/linuxsoft_archives/downloads/distrib/files/
+MASTER_SITES = http://www.scala-lang.org/downloads/distrib/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).final.tgz
 DISTNAME = $(GARNAME)-$(GARVERSION).final
 
