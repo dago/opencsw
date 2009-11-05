@@ -2,9 +2,12 @@ GARNAME = unrar
 GARVERSION = 3.9.6
 CATEGORIES = utils
 
-DESCRIPTION = Brief description
+DESCRIPTION = RAR archive extractor
 define BLURB
-  Long description
+  WinRAR is a powerful archive manager. It can backup your data and reduce the size
+  of email attachments, decompress RAR, ZIP and other files downloaded from Internet
+  and create new archives in RAR and ZIP file format. You can try WinRAR before buy,
+  its trial version is available in downloads.
 endef
 
 MASTER_SITES = http://www.rarlab.com/rar/
@@ -24,17 +27,11 @@ CONFIGURE_SCRIPTS =
 
 OPT_FLAGS_SOS = -fast -erroff=wvarhidemem
 
-#BUILD_SCRIPTS = $(WORKSRC)/makefile.unix
 BUILD_ARGS = -f makefile.unix CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" DEFINES="-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE" STRIP=strip
 
 TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
-
-#CXXFLAGS=-fast -erroff=wvarhidemem
-#DEFINES=-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
-#STRIP=strip
-#DESTDIR=/usr
 
 include gar/category.mk
 
