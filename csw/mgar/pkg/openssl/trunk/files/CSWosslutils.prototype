@@ -62,7 +62,7 @@ f none /opt/csw/ssl/misc/c_issuer 0755 root bin
 f none /opt/csw/ssl/misc/c_name 0755 root bin
 s none /opt/csw/ssl/openssl.cnf=/opt/csw/etc/ssl/openssl.cnf 0644 root bin
 d none /opt/csw/etc/ssl 0755 root bin
-e conf /opt/csw/etc/ssl/openssl.cnf 0644 root bin
+f cswpreserveconf /opt/csw/etc/ssl/openssl.cnf.CSW 0644 root bin
 f none /opt/csw/share/doc/openssl_utils/changelog.CSW=changelog.CSW 644 root bin
 f none /opt/csw/share/doc/openssl_utils/CHANGES=CHANGES 644 root bin
 f none /opt/csw/share/doc/openssl_utils/CHANGES.SSLeay=CHANGES 644 root bin

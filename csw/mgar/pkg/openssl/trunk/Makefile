@@ -43,7 +43,7 @@ REQUIRED_PKGS_CSWossldevel = CSWosslrt
 SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
 CATALOGNAME_CSWosslutils = openssl_utils
 REQUIRED_PKGS_CSWosslutils = CSWosslrt
-SPKG_CLASSES_CSWosslutils = none conf
+SPKG_CLASSES_CSWosslutils = none cswpreserveconf
 
 
 ###### Upstream and opencsw files information #######
@@ -60,7 +60,6 @@ DISTFILES += CSWosslrt.checkinstall CSWosslrt.preinstall CSWosslrt.postinstall C
 DISTFILES += CSWossldevel.prototype-i386 CSWossldevel.prototype-sparc
 DISTFILES += CSWosslutils.prototype
 DISTFILES += changelog.CSW README.CSW
-DISTFILES += i.conf r.conf
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
@@ -164,7 +163,7 @@ install-doc:
 
 install-certs: 
 	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
-		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf
+		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
 
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%:
