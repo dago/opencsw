@@ -1,14 +1,14 @@
 i pkginfo=CSWpkgutil.pkginfo
 i copyright=CSWpkgutil.copyright
-i postinstall=CSWpkgutil.postinstall
-i preremove=CSWpkgutil.preremove
+i i.cswpkgutil
+i r.cswpkgutil
 d none /etc/opt/csw 0755 root bin
-f none /etc/opt/csw/pkgutil.conf.CSW 644 root bin
+f cswpkgutil /etc/opt/csw/pkgutil.conf.CSW 644 root bin
 d none /opt/csw 0755 root bin
 d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/pkgutil 755 root bin
 d none /opt/csw/etc 0755 root bin
-f none /opt/csw/etc/pkgutil.conf.CSW 644 root bin
+f cswpkgutil /opt/csw/etc/pkgutil.conf.CSW 644 root bin
 d none /opt/csw/libexec 0755 root bin
 d none /opt/csw/libexec/pkgutil 0755 root bin
 f none /opt/csw/libexec/pkgutil/wget 755 root bin
@@ -22,5 +22,5 @@ d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/pkgutil.1 644 root bin
 d none /var/opt/csw 0755 root bin
 d none /var/opt/csw/pkgutil 0755 root bin
-f none /var/opt/csw/pkgutil/admin.CSW 644 root bin
+f cswpkgutil /var/opt/csw/pkgutil/admin.CSW 644 root bin
 d none /var/opt/csw/pkgutil/packages 0755 root bin

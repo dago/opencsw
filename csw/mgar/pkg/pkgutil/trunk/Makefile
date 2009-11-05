@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.8
+GARVERSION = 1.9b1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -12,8 +12,9 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
-DISTFILES += $(call admfiles,CSWpkgutil,prototype postinstall preremove)
-#DISTFILES += $(call admfiles,CSWpkgutil,postinstall preremove)
+DISTFILES += $(call admfiles,CSWpkgutil,prototype)
+DISTFILES += i.cswpkgutil
+DISTFILES += r.cswpkgutil
 
 PACKAGES = CSWpkgutil CSWpkgutilplus
 
@@ -40,35 +41,29 @@ include gar/category.mk
 
 WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://pkgutil.wikidot.com/
-#SPKG_CLASSES = none cswpkgutil
+SPKG_CLASSES_CSWpkgutil = none cswpkgutil
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d
-	@cp $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
-	@cp $(WORKSRC)/pkgutillog $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d/01-CSW$(GARNAME)plus-log
+	@ginstall $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
+	@ginstall -m 755 $(WORKSRC)/pkgutillog $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d/01-CSW$(GARNAME)plus-log
 	@ginstall -m 755 -d $(DESTDIR)$(bindir)
-	@cp $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)
-	@cp $(WORKSRC)/bldcat $(DESTDIR)$(bindir)
-	@cp $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
+	@ginstall $(WORKSRC)/$(GARNAME) $(WORKSRC)/bldcat $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
 	@ginstall -m 755 -d $(DESTDIR)$(sysconfdir)
-	@cp $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
+	@ginstall $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)
-	@cp $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
+	@ginstall $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(GARNAME)/
-	@cp $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
+	@ginstall $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)plus
-	@cp $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
-	@cp $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(GARNAME)plus/readme
+	@ginstall $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
+	@ginstall $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(GARNAME)plus/readme
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man1
 	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@pod2man --section=1 $(WORKSRC)/bldcat > $(DESTDIR)$(mandir)/man1/bldcat.1
 	@pod2man --section=1 $(WORKSRC)/chkcat > $(DESTDIR)$(mandir)/man1/chkcat.1
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
-	@cp $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
-#	@ginstall -m 755 -d $(DESTDIR)/usr/sadm/install/scripts
-#	@cp $(FILEDIR)/CSWpkgutil.i.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/i.cswpkgutil
-#	@cp $(FILEDIR)/CSWpkgutil.r.cswpkgutil $(DESTDIR)/usr/sadm/install/scripts/r.cswpkgutil
+	@ginstall $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
 	@$(MAKECOOKIE)

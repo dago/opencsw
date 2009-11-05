@@ -1,0 +1,12 @@
+#!/bin/sh
+
+while read dest
+do
+  conf=`echo $dest | sed 's/.CSW$//'`
+  if [ "`cmp "$conf" "$dest" > /dev/null`" ]; then
+    rm $conf
+  else
+    echo "$conf modified, will not remove it."
+  fi
+  rm $dest
+done
