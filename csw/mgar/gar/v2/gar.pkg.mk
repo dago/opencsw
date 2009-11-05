@@ -579,12 +579,6 @@ reset-merge-src:
 # package - Use the mkpackage utility to create Solaris packages
 #
 
-ifneq ($(ENABLE_CHECK),0)
-PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC) pkgcheck-$(SPEC))
-else
-PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC))
-endif
-
 SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
 
 $(SPKG_DESTDIRS):
@@ -610,7 +604,8 @@ validateplatform:
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
-_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package $(if $(filter-out 0,$(ENABLE_CHECK)),pkgcheck)
+	@$(MAKECOOKIE)
 
 package: _package
 	@echo
@@ -642,12 +637,9 @@ package-p:
 
 # pkgcheck - check if the package is compliant
 #
-pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
-	@$(DONADA)
-
-pkgcheck-%:
-	@echo " ==> Checking compliance: $*"
-	@( LC_ALL=C $(GARBIN)/checkpkg $(SPKG_EXPORT)/`$(call _PKG_ENV,$1) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
+pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
+	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
+	@$(MAKECOOKIE)
 
 pkgcheck-p:
 	@$(foreach COOKIEFILE,$(PKGCHECK_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
