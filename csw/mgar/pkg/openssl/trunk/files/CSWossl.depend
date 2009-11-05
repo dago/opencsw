@@ -1,3 +1,0 @@
-P CSWossldevel openssl_devel Openssl development support
-P CSWosslutils openssl_utils Openssl binaries and related files
-P CSWosslrt openssl_rt Openssl runtime libraries

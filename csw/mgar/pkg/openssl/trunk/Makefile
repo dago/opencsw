@@ -1,9 +1,22 @@
+#####################################################################
+# OpenCSW build recipe for OpenSSL
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+###### Package information #######
+
 GARNAME = openssl
 GARVERSION = 0.9.8k
-CATEGORIES = lib
-
 OPENSSL_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
 OPENSSL_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/[^a-z]//g')
+CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
 define BLURB
@@ -13,6 +26,28 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
+PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils
+
+SPKG_DESC_CSWossl = Openssl meta package
+CATALOGNAME_CSWossl = openssl
+REQUIRED_PKGS_CSWossl = CSWossldevel CSWosslutils CSWosslrt
+
+SPKG_DESC_CSWosslrt = Openssl runtime libraries
+CATALOGNAME_CSWosslrt = openssl_rt
+REQUIRED_PKGS_CSWosslrt = CSWcacertificates
+
+SPKG_DESC_CSWossldevel = Openssl development files
+CATALOGNAME_CSWossldevel = openssl_devel
+REQUIRED_PKGS_CSWossldevel = CSWosslrt
+
+SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
+CATALOGNAME_CSWosslutils = openssl_utils
+REQUIRED_PKGS_CSWosslutils = CSWosslrt
+SPKG_CLASSES_CSWosslutils = none conf
+
+
+###### Upstream and opencsw files information #######
+
 MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -20,18 +55,19 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
 
 DISTNAME   = $(GARNAME)-$(GARVERSION)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWossl,depend prototype)
-DISTFILES += $(call admfiles,CSWosslrt,checkinstall preinstall postinstall depend prototype-i386 prototype-sparc)
-DISTFILES += $(call admfiles,CSWossldevel,depend prototype-i386 prototype-sparc)
-DISTFILES += $(call admfiles,CSWosslutils,depend prototype)
+DISTFILES += CSWossl.prototype
+DISTFILES += CSWosslrt.checkinstall CSWosslrt.preinstall CSWosslrt.postinstall CSWosslrt.prototype-i386 CSWosslrt.prototype-sparc
+DISTFILES += CSWossldevel.prototype-i386 CSWossldevel.prototype-sparc
+DISTFILES += CSWosslutils.prototype
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += i.conf r.conf
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
-SPKG_CLASSES = none conf
-
 PATCHFILES = openssl.$(OPENSSL_VERSION).patch
+
+
+##### Build and installation information #####
 
 GARCOMPILER = SOS11
 
@@ -83,7 +119,6 @@ INSTALL_ARGS += MANDIR=$(mandir)
 OLDLIBS                 = 0.9.7m
 
 SKIPTEST = 1
-
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
 ifdef PKCS11
