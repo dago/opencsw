@@ -140,10 +140,6 @@ endif
 
 include gar/category.mk
 
-# we redefine the timestamp to fulfill opencsw standard
-SPKG_VERSION := $(OPENSSL_VERSION)
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
-
 
 pre-configure-modulated: 
 	echo " ==> Creating configure script"
