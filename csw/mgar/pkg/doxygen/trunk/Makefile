@@ -27,12 +27,13 @@
 #
 
 GARNAME = doxygen
-GARVERSION = 1.5.9
+GARVERSION = 1.6.1
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
 define BLURB
-  Long description
+  Doxygen is a documentation system for C++, C, Java, Objective-C, Python,
+  IDL (Corba and Microsoft flavors), Fortran, VHDL, PHP, C#, and to some extent D.
 endef
 
 MASTER_SITES = http://ftp.stack.nl/pub/users/dimitri/
@@ -43,6 +44,8 @@ SPKG_SOURCEURL = http://www.stack.nl/~dimitri/doxygen/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).src.tar.gz
 UPSTREAM_MASTER_SITES = $(SPKG_SOURCEURL)
 
+PREREQUISITE_PKGS = CSWgraphviz2
+
 CONFIGURE_ARGS = $(subst =, ,$(filter --prefix=% , $(DIRPATHS)))
 CONFIGURE_ARGS += --docdir $(docdir)
 CONFIGURE_ARGS += --platform solaris-cc
@@ -50,6 +53,9 @@ CONFIGURE_ARGS += --platform solaris-cc
 TEST_SCRIPTS = 
 
 include gar/category.mk
+
+# For 'dot'
+PATH := $(PATH):/opt/csw/graphviz2/bin
 
 post-extract-modulated:
 	perl -pi -e 'if (/^TMAKE_CXXFLAGS_RELEASE/) { \
