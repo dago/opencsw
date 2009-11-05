@@ -203,8 +203,8 @@ ARCHFLAGS_SOS12_sparcv9+vis2     = -m64 -xarch=sparcvis2
 
 ARCHFLAGS_SOS11_sparcv9+vis      = -xarch=v9a
 ARCHFLAGS_SOS12_sparcv9+vis      = -m64 -xarch=sparcvis
- ARCHFLAGS_GCC3_sparcv9+vis      = -m64 -mcpu=v9 -mvis
- ARCHFLAGS_GCC4_sparcv9+vis      = -m64 -mcpu=v9 -mvis
+ ARCHFLAGS_GCC3_sparcv9+vis      = -m64 -mcpu=ultrasparc -mvis
+ ARCHFLAGS_GCC4_sparcv9+vis      = -m64 -mcpu=ultrasparc -mvis
     MEMORYMODEL_sparcv9+vis      = 64
 
 ARCHFLAGS_SOS11_sparcv9          = -xarch=v9
