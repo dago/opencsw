@@ -1,5 +1,5 @@
 GARNAME     = php5
-GARVERSION  = 5.2.10
+GARVERSION  = 5.2.11
 CATEGORIES  = lang
 SF_PROJ     = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJ)-$(GARVERSION)
@@ -82,7 +82,7 @@ CONFIGURE_ARGS += --with-pear=shared
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
-ENABLE_CHECK = 0
+#ENABLE_CHECK = 0
 
 include files/scripts.mk
 include gar/category.mk
