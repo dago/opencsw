@@ -1,0 +1,12 @@
+#!/bin/sh
+
+BASE=${PKG_INSTALL_ROOT}/opt/csw
+
+echo "Registering existing texinfo-files..."
+
+FILES=`ls $BASE/share/info/*.info $BASE/share/info/*.info-*`
+
+for i in $FILES; do
+        /opt/csw/bin/install-info $i $BASE/share/info/dir 2> /dev/null
+done
+
