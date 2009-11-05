@@ -1,5 +1,5 @@
 GARNAME = gnutls
-GARVERSION = 2.6.5
+GARVERSION = 2.8.5
 CATEGORIES = lib
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
@@ -22,23 +22,21 @@ DISTFILES += libgnutls-openssl.so.13.s
 DISTFILES += libgnutls.so.13.i
 DISTFILES += libgnutls.so.13.s
 
-GARCOMPILER = GNU
-
 SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-#Waiting on gcc4 for amd64
-#BUILD64 = 1
-EXTRA_BUILD_ISAS_sparc = sparcv9
+BUILD64 = 1
 NO_ISAEXEC = 1
+
+EXTRA_LDFLAGS = -L$(libdir) -lgpg-error -lsocket -lnsl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-REQUIRED_PKGS_CSWgnutls  = CSWgcc4corert CSWgcc4g++rt CSWgcrypt CSWggettextrt
+REQUIRED_PKGS_CSWgnutls  = CSWgcrypt CSWggettextrt
 REQUIRED_PKGS_CSWgnutls += CSWgpgerr CSWlibtasn1 CSWreadline CSWzlib CSWiconv
 REQUIRED_PKGS_CSWgnutlsdevel = CSWgnutls
 
