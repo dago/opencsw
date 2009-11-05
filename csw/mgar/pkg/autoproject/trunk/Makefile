@@ -6,7 +6,7 @@ GARNAME = autoproject
 GARVERSION = 0.20
 
 CATEGORIES = apps
-DESCRIPTION = creates a source package which follows the GNU programming standards
+DESCRIPTION = A utility for automated configuration of GNU autotools
 define BLURB
 
   autoproject interviews the user, then creates a source package for a new
