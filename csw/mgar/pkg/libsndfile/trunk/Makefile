@@ -38,6 +38,10 @@ PATCHFILES += 0002-Add-workaround-for-missing-libm-function-lrint-and-l.patch
 PATCHFILES += 0003-Workaround-mising-stdint.h-and-Sun-Studio-shortcomin.patch
 PATCHFILES += 0004-Disable-stop-on-error-until-cpp_test-refcount-error-.patch
 
+# TODO: The __func__ replacement may be enhanced with
+#   http://mail-index.netbsd.org/pkgsrc-users/2009/05/18/msg009885.html
+# PATCHFILES += sunpro-extensions.patch
+
 REQUIRED_PKGS = CSWvorbis CSWflac CSWlibogg CSWsqlite3rt
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
