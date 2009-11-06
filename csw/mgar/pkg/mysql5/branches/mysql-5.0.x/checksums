@@ -6,7 +6,7 @@ a0b98a7320bce2da3e1f90da704d3c85  0001-Use-libc-not-libcrypt.patch
 cc2a219abbe7dc6049775cff070a27a5  CSWmysql5.preinstall
 e691b0cf00a3925ac55c1844045d6e30  ChangeLog
 e42afb5ec1b1ab02d2ec3b46d0922636  README.CSW
-33387959f9de060dc0af915c9c49bca8  cswmysql5
+aaca748fc044834e71ad544ab293c494  cswmysql5
 67228e1f096fe08a94f4267439a4ec36  cswusergroup
 671348f1a5b078da9ca76f97e1fda325  mysql-5.0.84.tar.gz
-ca622220c7c3ab7427eb1604ddecded6  quick_start-csw
+fe747c88f7e6bd6a9636ba8ef2e96871  quick_start-csw
