@@ -147,7 +147,7 @@ install-changelog:
 
 install-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
-		ginstall -d $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME; \
+		ginstall -d $(PKGROOT)/$(docdir)/$$CATALOGNAME; \
 		(cd $(WORKSRC_FIRSTMOD)/ && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 		ginstall -D $(WORKDIR_FIRSTMOD)/README.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/README.CSW; \
 	done
