@@ -1,0 +1,31 @@
+From 91792a0837969dd584dd469c06874111d80cfcec Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Nov 2009 16:05:59 +0100
+Subject: [PATCH] Disable stdio hack to rewind pipes
+
+---
+ src/formats.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/src/formats.c b/src/formats.c
+index 556f611..f238929 100644
+--- a/src/formats.c
++++ b/src/formats.c
+@@ -397,13 +397,12 @@ static void UNUSED rewind_pipe(FILE * fp)
+   fp->_r += AUTO_DETECT_SIZE;
+ #elif defined __GLIBC__
+   fp->_IO_read_ptr = fp->_IO_read_base;
+-#elif defined _MSC_VER || defined __MINGW_H || defined _ISO_STDIO_ISO_H
++#elif !defined _LP64 && (defined _MSC_VER || defined __MINGW_H || defined _ISO_STDIO_ISO_H)
+   fp->_ptr = fp->_base;
+ #else
+   /* To fix this #error, either simply remove the #error line and live without
+    * file-type detection with pipes, or add support for your compiler in the
+    * lines above.  Test with cat monkey.au | ./sox --info - */
+-  #error FIX NEEDED HERE
+   #define NO_REWIND_PIPE
+   (void)fp;
+ #endif
+-- 
+1.6.5.1
+
