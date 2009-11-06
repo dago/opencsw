@@ -70,6 +70,8 @@ CSWmysql5client_programs += mysql_zap
 CSWmysql5client_programs += perror
 CSWmysql5client_programs += replace
 
+CSWmysql5devel_programs += mysql_config
+
 
 PKGFILES_CSWmysql5bench   = $(prefix)/sql-bench.*
 PKGFILES_CSWmysql5client  = $(bindir)
@@ -77,9 +79,30 @@ PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(cal
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(mandir)/man1/$(bin_name)\.1)
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSWmysql5devel  += $(call baseisadirs,$(bindir),mysql_config)
+PKGFILES_CSWmysql5devel  += $(foreach bin_name,$(CSWmysql5devel_programs),$(call baseisadirs,$(bindir),$(bin_name)))
+PKGFILES_CSWmysql5devel  += $(foreach bin_name,$(CSWmysql5devel_programs),$(mandir)/man1/$(bin_name)\.1)
+PKGFILES_CSWmysql5devel  += $(foreach bin_name,$(CSWmysql5devel_programs),/opt/csw/bin/$(bin_name))
+PKGFILES_CSWmysql5devel  += $(foreach bin_name,$(CSWmysql5devel_programs),/opt/csw/sbin/$(bin_name))
 PKGFILES_CSWmysql5devel  += $(mandir)/man1/mysql_config\.1
-PKGFILES_CSWmysql5devel   = $(prefix)/include.*
+PKGFILES_CSWmysql5devel  += $(prefix)/include.*
+PKGFILES_CSWmysql5devel  += /opt/csw/include/mysql
+
+# -/opt/csw/include/mysql --> ../mysql5/include/mysql
+# -/opt/csw/mysql5/bin
+# -/opt/csw/mysql5/bin/mysql_config
+#
+# /opt/csw/bin/mysql_config=../mysql5/bin/mysql_config
+# /opt/csw/mysql5/bin/amd64/mysql_config 0755 root bin
+# /opt/csw/mysql5/bin/i386/mysql_config=/opt/csw/mysql5/bin/mysql_config 0755 root bin
+# /opt/csw/mysql5/bin/mysql_config=/opt/csw/bin/isaexec 0755 root bin
+# /opt/csw/mysql5/share/man/man1/mysql_config.1 0644 root bin
+
+
+# work/build-global/CSWmysql5client.prototype:s none /opt/csw/bin/mysql_config=../mysql5/bin/mysql_config
+# work/build-global/CSWmysql5client.prototype:f none /opt/csw/mysql5/bin/amd64/mysql_config 0755 root bin
+# work/build-global/CSWmysql5client.prototype:f none /opt/csw/mysql5/bin/mysql_config 0755 root bin
+# work/build-global/CSWmysql5client.prototype:f none /opt/csw/mysql5/share/man/man1/mysql_config.1 0644 root bin
+
 PKGFILES_CSWmysql5rt      = $(prefix)/lib/.*\.so.*
 PKGFILES_CSWmysql5test    = $(prefix)/mysql-test.*
 
@@ -91,7 +114,7 @@ REQUIRED_PKGS_CSWmysql5test        = CSWmysql5
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.0/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
-DISTFILES += cswmysql5 quick_start-csw README.CSW
+DISTFILES += cswmysql5 quick_start-csw README.CSW ChangeLog
 DISTFILES += CSWmysql5.preinstall
 DISTFILES += CSWmysql5.postinstall
 DISTFILES += cswusergroup
@@ -101,13 +124,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 REQUIRED_PKGS = CSWncurses CSWzlib
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
-# because we alter the prefix.  this gets us proper linking as well as
-# LD_OPTIONS (RPATH)
-# EXTRA_LIB = /opt/csw/lib
-# EXTRA_INC = /opt/csw/include
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-# EXTRA_LIB = /opt/csw/mysql5/lib/$$ISALIST/mysql
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -122,6 +140,7 @@ CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
 
+# TODO: Make the tests pass. They don't at the moment.
 TEST_SCRIPTS =
 
 # Enable 64 bits build
@@ -143,6 +162,7 @@ include gar/category.mk
 post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)
 	ginstall -m 755 -d $(DESTDIR)$(datadir)/mysql/doc
+	ginstall -m 644 $(FILEDIR)/ChangeLog $(DESTDIR)$(datadir)/mysql/doc
 	ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(datadir)/mysql/doc
 	ginstall -m 755 -d $(DESTDIR)/opt/csw/share/mysql/doc
 	ln -sf ../../../mysql5/share/mysql/doc/README.CSW \
@@ -153,8 +173,10 @@ post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(global_sysconfdir)/pkg/CSWmysql5
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(DESTDIR)$(global_sysconfdir)/pkg/CSWmysql5
-
-	# Create symlinks
+	# A symlink for mysql5 include files
+	ginstall -m 755 -d $(DESTDIR)/opt/csw/include
+	ln -s ../mysql5/include/mysql $(DESTDIR)/opt/csw/include/mysql
+	# Create symlinks to binaries
 	ginstall -m 755 -d $(DESTDIR)$(global_bindir)
 	for f in $(DESTDIR)$(bindir)/*; do \
 		ln -s ../mysql5/bin/`basename $$f` $(DESTDIR)$(global_bindir)/`basename $$f`; \

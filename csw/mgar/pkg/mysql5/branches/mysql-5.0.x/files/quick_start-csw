@@ -1,21 +1,24 @@
 #!/bin/ksh -p
+#
+# $Id$
+#
 # initial version for blastwave.org by Alex Moore 2006.02.25
 # Revised 2006.03.25 - see bug report 0001542
 #
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
-# 
 #
 BASEDIR=/opt/csw/mysql5
+MYSQL_VAR=/var/opt/csw/mysql5
 DEFAULTS_FILE=$BASEDIR/my.cnf
-SAVE_DEFAULTS_FILE=$BASEDIR/my.cnf
+SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
 MYSQLD_USER=mysql
 #
 # Provide a default data directory
-MYSQLD_DATADIR=/var/opt/csw/mysql5
+MYSQLD_DATADIR=$MYSQL_VAR
 #
 echo
-echo  "This is the blastwave quick start script to setup a MySQL5 database"
+echo  "This is the start script to setup a MySQL-5 database"
 echo  "  directory."
 echo
 echo  "  The base directory is $BASEDIR."
@@ -48,11 +51,11 @@ usrin=`/usr/bin/ckpath -f -d [default] \
     ` || exit $?
 if [ $usrin = "[default]" ]; then
     if [ ! -f "$DEFAULTS_FILE" ]; then
-	IN_DEFAULTS_FILE=$BASEDIR/share/mysql/my-small.cnf
-	echo "Using $IN_DEFAULTS_FILE to create the options file."
+        IN_DEFAULTS_FILE=$BASEDIR/share/mysql/my-small.cnf
+        echo "Using $IN_DEFAULTS_FILE to create the options file."
     else
-	IN_DEFAULTS_FILE=$DEFAULTS_FILE
-	echo "Using $DEFAULTS_FILE as the options file."
+        IN_DEFAULTS_FILE=$DEFAULTS_FILE
+        echo "Using $DEFAULTS_FILE as the options file."
     fi
 else
     IN_DEFAULTS_FILE=$usrin
