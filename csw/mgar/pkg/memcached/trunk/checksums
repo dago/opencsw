@@ -1,7 +1,1 @@
-a08851f7fa7b15e92ee6320b7a79c321  download/memcached-1.2.2.tar.gz
-b8864491e6eba79a2af3e3b2ad7fae85  download/CSWmemcached.gspec
-fb52e1653adbc7d07e97a42dac3bcfee  download/CSWmemcached.depend
-5625832835a8377d55ab5e5c8791d042  download/CSWmemcached.prototype
-c6c43cc3c0da436ba55716d287e0ba44  download/daemon.c
-51969a2161c429524dfe4ae1e8b11f7b  download/daemon.h
-365b8479afe297a36e1491b2500fba3a  download/solaris.diff
+a2f988a668317fc3cfd91b22b05ab929  memcached-1.4.3_rc2_2_g8c0a108.tar.gz
