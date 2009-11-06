@@ -1,3 +1,2 @@
-b3ab07862a1e25dc63c1f5f2a006f474  download/balance-3.11.tar.gz
-3c06491c6dc775fc8883ef7346427343  download/CSWbalance.gspec
-8dfddaec5c9b69f163e581447f1b592b  download/build.diff
+dff93af413acf3cfe6e54f9f8ec99327  0001-Adjust-Makefile.patch
+24bc4063e8af298471d7d0a2ac7462a6  balance-3.42.tar.gz
