@@ -1,0 +1,11 @@
+diff -u -r qucs-0.0.15/qucs-transcalc/coplanar.cpp qucs-0.0.15.ok/qucs-transcalc/coplanar.cpp
+--- qucs-0.0.15/qucs-transcalc/coplanar.cpp	2008-04-10 14:44:26.000000000 +0200
++++ qucs-0.0.15.ok/qucs-transcalc/coplanar.cpp	2009-11-06 17:26:59.389086865 +0100
+@@ -27,6 +27,7 @@
+ #include <string.h>
+ #include <math.h>
+ #include <float.h>
++#include <ieeefp.h>
+ 
+ #ifdef __MINGW32__
+ # define finite(x) _finite(x)

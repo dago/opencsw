@@ -1,0 +1,29 @@
+diff -u -r qucs-0.0.15/qucs/qucsdigi qucs-0.0.15.ok/qucs/qucsdigi
+--- qucs-0.0.15/qucs/qucsdigi	2008-09-25 21:15:57.000000000 +0200
++++ qucs-0.0.15.ok/qucs/qucsdigi	2009-11-06 23:02:04.765281763 +0100
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ #
+ # qucsdigi - wrapper script for digital simulation
+ #
+diff -u -r qucs-0.0.15/qucs/qucsveri qucs-0.0.15.ok/qucs/qucsveri
+--- qucs-0.0.15/qucs/qucsveri	2007-03-26 21:39:25.000000000 +0200
++++ qucs-0.0.15.ok/qucs/qucsveri	2009-11-06 23:01:59.453243209 +0100
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ #
+ # qucsveri - wrapper script for digital simulation
+ #
+diff -u -r qucs-0.0.15/qucs-transcalc/coplanar.cpp qucs-0.0.15.ok/qucs-transcalc/coplanar.cpp
+--- qucs-0.0.15/qucs-transcalc/coplanar.cpp	2008-04-10 14:44:26.000000000 +0200
++++ qucs-0.0.15.ok/qucs-transcalc/coplanar.cpp	2009-11-06 23:01:31.414290151 +0100
+@@ -27,6 +27,7 @@
+ #include <string.h>
+ #include <math.h>
+ #include <float.h>
++#include <ieeefp.h>
+ 
+ #ifdef __MINGW32__
+ # define finite(x) _finite(x)
