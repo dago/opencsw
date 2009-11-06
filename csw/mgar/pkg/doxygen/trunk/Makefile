@@ -41,6 +41,8 @@ TEST_SCRIPTS =
 
 INSTALL_ARGS = install_docs
 
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/man,.$(mandir),'
+
 PKGFILES_CSWdoxygendoc = $(PKGFILES_DOC)
 
 include gar/category.mk
