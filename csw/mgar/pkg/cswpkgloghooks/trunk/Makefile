@@ -1,4 +1,4 @@
-GARNAME = cswpkgsyslog
+GARNAME = cswpkgloghooks
 GARVERSION = 1.0
 CATEGORIES = utils
 
