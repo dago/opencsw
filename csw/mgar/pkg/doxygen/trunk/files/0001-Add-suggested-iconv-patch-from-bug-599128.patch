@@ -1,0 +1,25 @@
+From af9b36d8e00b4db23c2d5dfb5657cf12c269d296 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Nov 2009 10:57:44 +0100
+Subject: [PATCH] Add suggested iconv patch from bug #599128
+
+---
+ src/htmlhelp.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/htmlhelp.cpp b/src/htmlhelp.cpp
+index f120a93..7283eb9 100644
+--- a/src/htmlhelp.cpp
++++ b/src/htmlhelp.cpp
+@@ -302,7 +302,7 @@ static QDict<QCString> s_languageDict;
+ void HtmlHelp::initialize()
+ {
+   const char *str = Config_getString("CHM_INDEX_ENCODING");
+-  if(!str) str = "Windows-1250";
++  if(!str) str = "CP1250";
+   m_fromUtf8 = portable_iconv_open(str,"UTF-8"); 
+ 
+   /* open the contents file */
+-- 
+1.6.5.1
+
