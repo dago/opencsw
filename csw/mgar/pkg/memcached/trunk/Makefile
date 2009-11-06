@@ -23,5 +23,7 @@ REQUIRED_PKGS = CSWlibevent
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+SKIPTEST = 1
+
 include gar/category.mk
 
