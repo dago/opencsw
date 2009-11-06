@@ -30,14 +30,14 @@ s none /opt/csw/ssl/certs=../etc/ssl/certs
 s none /opt/csw/ssl/private=../../../etc/opt/csw/ssl/private
 d none /etc/opt/csw/ssl/private 0700 root bin
 s none /opt/csw/etc/ssl/private=../../../../etc/opt/csw/ssl/private
-f none /opt/csw/share/doc/openssl_rt/changelog.CSW=changelog.CSW 644 root bin
-f none /opt/csw/share/doc/openssl_rt/CHANGES=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/CHANGES.SSLeay=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/PROBLEMS=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/FAQ=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README.ASN1=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/INSTALL=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/NEWS=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README.ENGINE=CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README.CSW=README.CSW 644 root bin
+f none /opt/csw/share/doc/openssl_rt/changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl_rt/CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/CHANGES.SSLeay 644 root bin
+f none /opt/csw/share/doc/openssl_rt/PROBLEMS 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README 644 root bin
+f none /opt/csw/share/doc/openssl_rt/FAQ 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.ASN1 644 root bin
+f none /opt/csw/share/doc/openssl_rt/INSTALL 644 root bin
+f none /opt/csw/share/doc/openssl_rt/NEWS 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.ENGINE 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.CSW 644 root bin
