@@ -1,5 +1,5 @@
 #####################################################################
-# OpenCSW build recipe for openssl 1.x
+# OpenCSW build recipe for OpenSSL
 #
 # Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
 # All rights reserved.  Use is subject to license terms.
@@ -13,11 +13,8 @@
 ###### Package information #######
 
 GARNAME = openssl
-GARVERSION = 1.0.0-beta2
+GARVERSION = 1.0.0-beta3
 CATEGORIES = lib
-
-OPENSSL_VERSION := $(shell echo $(GARVERSION) | cut -d- -f1)
-OPENSSL_RELEASE := $(shell echo $(GARVERSION) | cut -d- -f2)
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
 define BLURB
@@ -32,18 +29,29 @@ PACKAGES = CSWossl1rt CSWossl1devel CSWossl1utils
 CATALOGNAME_CSWossl1rt = openssl1_rt
 REQUIRED_PKGS_CSWossl1rt = CSWcacertificates
 SPKG_DESC_CSWossl1rt = Openssl 1.0 runtime libraries
-PKGFILES_CSWossl1rt = $(PKGFILES_RT)
+PKGFILES_CSWossl1rt = $(libdir).*\.so(\.\d+)*
+PKGFILES_CSWossl1rt += $(sysconfdir)/etc/ssl/private $(prefix)/ssl/private $(prefix)/ssl/certs /etc/$(prefix)/ssl/private
+PKGFILES_CSWossl1rt += $(docdir)/openssl1_rt/.* 
 
 CATALOGNAME_CSWossl1devel = openssl1_devel
 REQUIRED_PKGS_CSWossl1devel = CSWossl1rt
 SPKG_DESC_CSWossl1devel = Openssl 1.0 development support files
-PKGFILES_CSWossl1devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWossl1devel = $(PKGFILES_DEVEL) 
+PKGFILES_CSWossl1devel += $(docdir)/openssl1_devel/.*
 
 CATALOGNAME_CSWossl1utils = openssl1_utils
 REQUIRED_PKGS_CSWossl1utils = CSWossl1rt
 SPKG_DESC_CSWossl1utils = Openssl 1.0 binaries and related tools
+SPKG_CLASSES_CSWossl1utils = none cswpreserveconf
+PKGFILES_CSWossl1utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
+PKGFILES_CSWossl1utils += $(prefix)/ssl/misc/.* 
+PKGFILES_CSWossl1utils += $(prefix)/ssl/openssl\.cnf $(sysconfdir)/ssl/openssl\.cnf.*
+PKGFILES_CSWossl1utils += $(docdir)/openssl1_utils/.*
 
-SPKG_CLASSES = none conf
+PROTOTYPE_MODIFIERS = conf
+PROTOTYPE_FILES_conf = $(sysconfdir)/ssl/openssl.cnf.CSW
+PROTOTYPE_CLASS_conf = cswpreserveconf
+PROTOTYPE_PERMS_conf = 0644
 
 
 ###### Upstream and opencsw files information #######
@@ -53,21 +61,18 @@ MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
 
-DISTNAME   = $(GARNAME)-$(GARVERSION)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += CSWossl1rt.checkinstall CSWossl1rt.preinstall CSWossl1rt.postinstall 
+DISTFILES += CSWossl1rt.checkinstall CSWossl1rt.preinstall CSWossl1rt.postinstall
 DISTFILES += changelog.CSW README.CSW
-DISTFILES += i.conf r.conf
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
-# add ...
-PATCHFILES += more_configure_targets.patch
+# This patch add optimised build targets for some solaris isa, ie:
+# solaris-pentium_pro-cc and solaris-sparcv9+vis-cc
+PATCHFILES = more_configure_targets.patch
 
 
 ##### Build and installation information #####
-
-ENABLE_CHECK = 0
 
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
@@ -77,18 +82,20 @@ EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 # we don't yet use isaexec support so we disable
 # isa relocation for default isa
 NO_ISAEXEC = 1
+
 # GAR wants and puts sparcv9 in lib/64 but openssl build system
 # isn't the standard autoconf/automake one so we disable this
 # relocation for now
 ISALIBDIR_sparcv9 = .
 libdir = /opt/csw/lib
 
-# we redefine the default merge exclude so *.a files are not excluded
-MERGE_EXCLUDE_DEFAULT = $(MERGE_EXCLUDE_INFODIR)
+# we include *.a files in the devel package so we don't want them excluded
+MERGE_EXCLUDE_STATICLIBS = 
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
 i386_OS_COMPILER 	= solaris-x86-cc
+pentium_OS_COMPILER	= solaris-pentium-cc
 pentium_pro_OS_COMPILER	= solaris-pentium_pro-cc
 amd64_OS_COMPILER 	= solaris64-x86_64-cc
 
@@ -112,14 +119,7 @@ EXT_CXXFLAGS += -noex -mt
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
 
-SKIPTEST = 1
-
-
 include gar/category.mk
-
-# we redefine the timestamp to fulfill opencsw standard
-SPKG_VERSION := $(OPENSSL_VERSION)
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(OPENSSL_RELEASE)
 
 
 pre-configure-modulated: 
@@ -142,7 +142,7 @@ install-changelog:
 
 install-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
-		ginstall -d $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME; \
+		ginstall -d $(PKGROOT)/$(docdir)/$$CATALOGNAME; \
 		(cd $(WORKSRC_FIRSTMOD)/ && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 		ginstall -D $(WORKDIR_FIRSTMOD)/README.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/README.CSW; \
 	done
@@ -150,7 +150,12 @@ install-doc:
 
 install-certs: 
 	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
-		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf
+		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
+	ginstall -d $(PKGROOT)/etc/$(prefix)/ssl/private
+	rm -rf $(PKGROOT)/$(prefix)/ssl/openssl.cnf && ln -s ../etc/ssl/openssl.cnf $(PKGROOT)/$(prefix)/ssl/openssl.cnf
+	rm -rf $(PKGROOT)/$(prefix)/ssl/certs && ln -s ../etc/ssl/certs $(PKGROOT)/$(prefix)/ssl/certs
+	rm -rf $(PKGROOT)/$(prefix)/ssl/private && ln -s ../../../etc/opt/csw/ssl/private $(PKGROOT)/$(prefix)/ssl/private
+	rm -rf $(PKGROOT)/$(prefix)/etc/ssl/private && ln -s ../../../../etc/opt/csw/ssl/private $(PKGROOT)/$(prefix)/etc/ssl/private 
+	@$(MAKECOOKIE)
 
 post-merge: install-certs install-changelog install-doc
-
