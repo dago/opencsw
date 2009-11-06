@@ -671,7 +671,7 @@ platforms:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -685,7 +685,7 @@ platforms:
 			echo " (built on this host)";\
 			  $(MAKE) -s PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)
