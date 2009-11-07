@@ -102,7 +102,11 @@ fi
 echo "Creating MySQL core database in $MYSQLD_DATADIR"
 echo
 echo "###  The following messages are from mysql_install_db."
-$BASEDIR/bin/mysql_install_db --defaults-extra-file=$DEFAULTS_FILE --user=$MYSQLD_USER --basedir=$BASEDIR --datadir=$MYSQLD_DATADIR
+$BASEDIR/bin/mysql_install_db \
+    --defaults-extra-file=$DEFAULTS_FILE \
+    --user=$MYSQLD_USER \
+    --basedir=$BASEDIR \
+    --datadir=$MYSQLD_DATADIR
 
 #
 # Fix permissions on the data directory
@@ -125,7 +129,7 @@ echo "  These messages are from mysql_install_db.  See the following"
 echo "  for starting CSWmysql5."
 smf=no
 if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
-if [ $smf = yes ] 
+if [ $smf = yes ]
 then
     echo "To start mysqld; run \`svcadm enable cswmysql5\` on Solaris 10 or later"
 else

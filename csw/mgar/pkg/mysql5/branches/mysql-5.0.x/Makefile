@@ -72,7 +72,6 @@ CSWmysql5client_programs += replace
 
 CSWmysql5devel_programs += mysql_config
 
-
 PKGFILES_CSWmysql5bench   = $(prefix)/sql-bench.*
 PKGFILES_CSWmysql5client  = $(bindir)
 PKGFILES_CSWmysql5client += $(foreach bin_name,$(CSWmysql5client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
@@ -86,22 +85,6 @@ PKGFILES_CSWmysql5devel  += $(foreach bin_name,$(CSWmysql5devel_programs),/opt/c
 PKGFILES_CSWmysql5devel  += $(mandir)/man1/mysql_config\.1
 PKGFILES_CSWmysql5devel  += $(prefix)/include.*
 PKGFILES_CSWmysql5devel  += /opt/csw/include/mysql
-
-# -/opt/csw/include/mysql --> ../mysql5/include/mysql
-# -/opt/csw/mysql5/bin
-# -/opt/csw/mysql5/bin/mysql_config
-#
-# /opt/csw/bin/mysql_config=../mysql5/bin/mysql_config
-# /opt/csw/mysql5/bin/amd64/mysql_config 0755 root bin
-# /opt/csw/mysql5/bin/i386/mysql_config=/opt/csw/mysql5/bin/mysql_config 0755 root bin
-# /opt/csw/mysql5/bin/mysql_config=/opt/csw/bin/isaexec 0755 root bin
-# /opt/csw/mysql5/share/man/man1/mysql_config.1 0644 root bin
-
-
-# work/build-global/CSWmysql5client.prototype:s none /opt/csw/bin/mysql_config=../mysql5/bin/mysql_config
-# work/build-global/CSWmysql5client.prototype:f none /opt/csw/mysql5/bin/amd64/mysql_config 0755 root bin
-# work/build-global/CSWmysql5client.prototype:f none /opt/csw/mysql5/bin/mysql_config 0755 root bin
-# work/build-global/CSWmysql5client.prototype:f none /opt/csw/mysql5/share/man/man1/mysql_config.1 0644 root bin
 
 PKGFILES_CSWmysql5rt      = $(prefix)/lib/.*\.so.*
 PKGFILES_CSWmysql5test    = $(prefix)/mysql-test.*
@@ -119,13 +102,23 @@ DISTFILES += CSWmysql5.preinstall
 DISTFILES += CSWmysql5.postinstall
 DISTFILES += cswusergroup
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = mysql-(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWncurses CSWzlib
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+
+# Without this EXTRA_LD_OPTIONS setting, /opt/csw/bin/mysql fails with a shared
+# library not found.  EXTRA_LIB was tried too, but did not work, as the -R path
+# ended up with having two $ISALIST tokens.
+#
+# Without this setting it looks for:
+# /opt/csw/mysql5/lib/amd64/libmysqlclient.so.15
+# The library is at:
+# /opt/csw/mysql5/lib/amd64/mysql/libmysqlclient.so.15
+EXTRA_LD_OPTIONS  = -R/opt/csw/mysql5/lib/\$$ISALIST/mysql
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
