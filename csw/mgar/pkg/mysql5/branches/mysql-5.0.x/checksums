@@ -2,11 +2,11 @@ a0b98a7320bce2da3e1f90da704d3c85  0001-Use-libc-not-libcrypt.patch
 1414d06fab1530484a508927a0de4154  0002-cast-user_info-pw_gid-to-gid_t.patch
 5415f365f1b0f7a179d1efc25f45bbee  0003-OpenCSW-perl-for-tests.patch
 8ab232cd4d232b3cda3bbced93f80237  0004-basedir-and-datadir-in-the-cnf-files.patch
-d5272c16bcc250df520ffe44bd60ef2a  CSWmysql5.postinstall
-cc2a219abbe7dc6049775cff070a27a5  CSWmysql5.preinstall
+747637bc4be42207974ae845d832ae65  CSWmysql5.postinstall
+60162ea667507a6a487027e7c389ca55  CSWmysql5.preinstall
 e691b0cf00a3925ac55c1844045d6e30  ChangeLog
 e42afb5ec1b1ab02d2ec3b46d0922636  README.CSW
 aaca748fc044834e71ad544ab293c494  cswmysql5
 67228e1f096fe08a94f4267439a4ec36  cswusergroup
 671348f1a5b078da9ca76f97e1fda325  mysql-5.0.84.tar.gz
-6342b90f82fbcdb85cd7f8269c0f860d  quick_start-csw
+90b7cfcd11ab56e021a195a6a085fa21  quick_start-csw
