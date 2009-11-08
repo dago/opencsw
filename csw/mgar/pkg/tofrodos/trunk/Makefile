@@ -2,9 +2,12 @@ GARNAME = tofrodos
 GARVERSION = 1.7.8
 CATEGORIES = utils
 
-DESCRIPTION = Brief description
+DESCRIPTION = Text file conversion utility that converts ASCII files between the MSDOS (or Windows) to Unix format.
 define BLURB
-  Long description
+It is a useful utility to have around when you have to convert files between 
+MSDOS (or Windows) and Unix/Linux/BSD (and her clones and variants). It comes 
+standard with a number of systems and is often found on the system as "todos", 
+"fromdos", "dos2unix" and "unix2dos".
 endef
 
 WORKSRC ?= $(WORKDIR)/$(GARNAME)/src
