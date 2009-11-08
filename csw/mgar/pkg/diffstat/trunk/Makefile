@@ -20,3 +20,7 @@ CONFIGURE_ARGS += --with-install-prefix=$(DESTDIR)
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-extract-modulated:
+	-test -f $(WORKSRC)/diffstat.1 && perl -n -e 'next if( !/^\.\\"/ ); s/\.\\"//; print "*$$_"' $(WORKSRC)/diffstat.1 >$(WORKSRC)/COPYING
+	@$(MAKECOOKIE)
