@@ -23,6 +23,8 @@ CATALOGNAME_CSWdoxygendoc = doxygen_doc
 SPKG_DESC_CSWdoxygen = A documentation system for programming languages
 SPKG_DESC_CSWdoxygendoc = doxygen documentation
 
+LICENSE = LICENSE
+
 SPKG_SOURCEURL = http://www.stack.nl/~dimitri/doxygen/
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -43,6 +45,7 @@ INSTALL_ARGS = install_docs
 
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/man,.$(mandir),'
 
+ARCHALL_CSWdoxygendoc = 1
 PKGFILES_CSWdoxygendoc = $(PKGFILES_DOC)
 
 include gar/category.mk
