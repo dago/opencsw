@@ -1,0 +1,25 @@
+--- ./freehdl/freehdl-config.orig	2009-11-08 16:03:07.101570078 +0100
++++ ./freehdl/freehdl-config	2009-11-08 16:03:21.400958210 +0100
+@@ -21,14 +21,14 @@
+ #
+ 
+ option="$1"
+-prefix=`pkg-config --variable prefix freehdl`
+-exec_prefix=`pkg-config --variable exec_prefix freehdl`
+-includedir=`pkg-config --variable includedir freehdl`
+-libdir=`pkg-config --variable libdir freehdl`
+-version=`pkg-config --modversion freehdl`
+-cxxflags=`pkg-config --variable cxxflags freehdl`
+-cxx=`pkg-config --variable cxx freehdl`
+-linker=`pkg-config --variable libtool freehdl`
++prefix=`/opt/csw/bin/pkg-config --variable prefix freehdl`
++exec_prefix=`/opt/csw/bin/pkg-config --variable exec_prefix freehdl`
++includedir=`/opt/csw/bin/pkg-config --variable includedir freehdl`
++libdir=`/opt/csw/bin/pkg-config --variable libdir freehdl`
++version=`/opt/csw/bin/pkg-config --modversion freehdl`
++cxxflags=`/opt/csw/bin/pkg-config --variable cxxflags freehdl`
++cxx=`/opt/csw/bin/pkg-config --variable cxx freehdl`
++linker=`/opt/csw/bin/pkg-config --variable libtool freehdl`
+ 
+ case "$option" in
+ 

@@ -14,7 +14,8 @@ endef
 
 MASTER_SITES = http://freehdl.seul.org/~enaroska/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = 0000-Mirring-strings.h-include.patch
+PATCHFILES  = 0000-Mirring-strings.h-include.patch
+PATCHFILES += 0001-Use-OpenCSW-pkg-config.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -28,5 +29,8 @@ GARCOMPILER = GNU
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS =
+
+REQUIRED_PKGS = CSWgcc4corert CSWgcc4g++ CSWgcc4g++rt CSWpkgconfig
+#CSWgcc3core CSWgcc3corert CSWgcc3g++ CSWgcc3g++rt
 
 include gar/category.mk
