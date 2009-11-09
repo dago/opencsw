@@ -67,7 +67,7 @@ build-p4:
 
 install-p4:
 	ginstall -m 755 -d $(DESTDIR)$(bindir)
-	ginstall -m 755 $(WORKDIR)/p4-$(GARVERSION)-$(P4OS)$(P4ARCH) $(DESTDIR)$(bindir)/p4
+	ginstall -m 755 $(WORKDIR)/p4-$(GARVERSION)-solaris10$(P4ARCH) $(DESTDIR)$(bindir)/p4
 	ginstall -m 755 -d $(DESTDIR)$(docdir)/p4
 	ginstall -m 644 $(DOWNLOADDIR)/commercial.pdf $(DESTDIR)$(docdir)/p4
 	@$(MAKECOOKIE)
