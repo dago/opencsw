@@ -1,4 +1,17 @@
 /etc/opt/csw
+/etc/opt/csw/pkg-hooks
+/etc/opt/csw/pkg-hooks/postbatchinstall.d
+/etc/opt/csw/pkg-hooks/postbatchremove.d
+/etc/opt/csw/pkg-hooks/postbatchupgrade.d
+/etc/opt/csw/pkg-hooks/postinstall.d
+/etc/opt/csw/pkg-hooks/postremove.d
+/etc/opt/csw/pkg-hooks/postupgrade.d
+/etc/opt/csw/pkg-hooks/prebatchinstall.d
+/etc/opt/csw/pkg-hooks/prebatchremove.d
+/etc/opt/csw/pkg-hooks/prebatchupgrade.d
+/etc/opt/csw/pkg-hooks/preinstall.d
+/etc/opt/csw/pkg-hooks/preremove.d
+/etc/opt/csw/pkg-hooks/preupgrade.d
 /opt/csw
 /opt/csw/bin
 /opt/csw/bin/amd64
@@ -140,3 +153,6 @@
 /opt/csw/share/man
 /opt/csw/var
 /var/opt/csw
+/var/opt/csw/pkg-hooks
+/var
+/var/run

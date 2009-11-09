@@ -19,17 +19,17 @@ update() {
   mkdir $TMPDIR
   (
     cd $TMPDIR
-    wget http://mirror.opencsw.org/opencsw/current/$1/5.8/common-1.4.6,REV=2008.04.28-SunOS5.8-$1-CSW.pkg.gz
-    gzip -c -d common-* | pkgtrans /dev/fd/0 $TMPDIR all
+    wget http://mirror.opencsw.org/opencsw/current/$1/5.8/common-1.4.7,REV=2009.09.20-SunOS5.8-$1-CSW.pkg
+    cat common-* | pkgtrans /dev/fd/0 $TMPDIR all
   )
 
-  perl -ne '
+  ( perl -ne '
 my @l = split;
 if( $l[1] =~ /^[ds]$/ ) {
   print ($l[3] =~ /([^=]*)/);
   print "\n";
 }
-  ' $TMPDIR/CSWcommon/pkgmap > ../etc/commondirs-$1
+  ' $TMPDIR/CSWcommon/pkgmap; echo "/var"; echo "/var/run") > ../etc/commondirs-$1
 
   rm -rf $TMPDIR
 }
