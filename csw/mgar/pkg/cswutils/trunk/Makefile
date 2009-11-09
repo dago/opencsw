@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = cswutils
-GARVERSION = 1.14.5
+GARVERSION = 1.14.6
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
-SVN_REV = 93
+SVN_REV = 96
 
 MASTER_SITES =
 SVN_FILES = submit_to_newpkgs.py compare_pkgs.py opencsw_lib.py
