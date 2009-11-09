@@ -606,7 +606,8 @@ validateplatform:
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
-_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package $(if $(filter-out 0,$(ENABLE_CHECK)),pkgcheck)
+ENABLE_CHECK ?= 1
+_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
 	@$(MAKECOOKIE)
 
 package: _package
