@@ -16,6 +16,12 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NO_ISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = --prefix=$(prefix)
+CONFIGURE_ARGS += --bindir=$(bindir)
+CONFIGURE_ARGS += --datadir=$(datadir)
+CONFIGURE_ARGS += --libdir=$(libdir)
+CONFIGURE_ARGS += --shlibdir=$(libdir)
+CONFIGURE_ARGS += --incdir=$(includedir)
+CONFIGURE_ARGS += --mandir=$(mandir)
 
 include gar/category.mk
