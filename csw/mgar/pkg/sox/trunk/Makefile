@@ -20,6 +20,8 @@ SPKG_SOURCEURL = http://sox.sourceforge.net/
 
 # XXX: Add gsm, lpc10 and wavpack
 REQUIRED_PKGS = CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
+REQUIRED_PKGS += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib
+
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
