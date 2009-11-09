@@ -35,9 +35,6 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/\.svn/.*
 
 ARCHALL = 1
 
-# Because the bad pathes are in the bad pathes check we cannot check ourselves
-ENABLE_CHECK = 0
-
 include gar/category.mk
 
 install-gar:
