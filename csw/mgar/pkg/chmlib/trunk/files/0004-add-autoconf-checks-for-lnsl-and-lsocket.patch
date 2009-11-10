@@ -1,0 +1,28 @@
+From 0661bd18efbb825a5b7d7c002ed82fb29b83a103 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 10 Nov 2009 02:50:08 +0100
+Subject: [PATCH 4/4] add autoconf checks for -lnsl and -lsocket
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure.in |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 14c4b8a..9f3b328 100644
+--- a/configure.in
++++ b/configure.in
+@@ -115,6 +115,10 @@ if test -n "$CHM_USE_PREAD"; then
+             CHM_USE_PREAD=""])
+ fi
+ 
++AC_CHECK_FUNC(gethostent, , AC_CHECK_LIB(nsl, gethostent, LDFLAGS="$LDFLAGS -lnsl"))
++AC_CHECK_FUNC(setsockopt, , AC_CHECK_LIB(socket, setsockopt, LDFLAGS="$LDFLAGS -lsocket"))
++
++
+ AC_ARG_ENABLE([examples],
+ [  --enable-examples        Build example programs that use chmlib],
+ [case "${enableval}" in
+-- 
+1.6.5.1
+

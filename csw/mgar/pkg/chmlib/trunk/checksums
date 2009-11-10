@@ -1,2 +1,5 @@
-b7276bc25fffbf7044018f94ebe1baf9  download/0001-Add-autoconf-support-from-gnulib-for-getopt.h.patch
-7ea49ed8c335215c1edc6fae83e6b912  download/chmlib-0.40.tar.bz2
+b454cb00abe8653f2e3c11318a884e0e  0001-gnulib-import-getopt-posix.patch
+c181447a053d0c5a83099af4a68a5510  0002-integrate-gnulib-into-the-auto-tool-files.patch
+b96303db2702dd6696ea45dfba2de5dc  0003-add-dummy-config.h-file.patch
+883567051286cd6984b7a1b23fa8e783  0004-add-autoconf-checks-for-lnsl-and-lsocket.patch
+7ea49ed8c335215c1edc6fae83e6b912  chmlib-0.40.tar.bz2

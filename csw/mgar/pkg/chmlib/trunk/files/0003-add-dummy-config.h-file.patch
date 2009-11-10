@@ -1,0 +1,22 @@
+From 872ada7a4c1f2d3a2dff26c50c5cb7eb7f201898 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 10 Nov 2009 02:49:58 +0100
+Subject: [PATCH 3/4] add dummy config.h file
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ gnulib/config.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 gnulib/config.h
+
+diff --git a/gnulib/config.h b/gnulib/config.h
+new file mode 100644
+index 0000000..9977f97
+--- /dev/null
++++ b/gnulib/config.h
+@@ -0,0 +1,2 @@
++/* This is a dummy file to appease gnulib.  chmlib doesn't use
++   config.h */
+-- 
+1.6.5.1
+
