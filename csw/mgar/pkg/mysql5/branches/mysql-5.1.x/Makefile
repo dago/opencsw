@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = mysql5
-GARVERSION = 5.0.84
+GARVERSION = 5.1.40
 CATEGORIES = server
 
 DISTNAME = mysql-$(GARVERSION)
@@ -95,7 +95,7 @@ REQUIRED_PKGS_CSWmysql5            = CSWmysql5client CSWmysql5rt
 REQUIRED_PKGS_CSWmysql5devel       = CSWmysql5
 REQUIRED_PKGS_CSWmysql5test        = CSWmysql5 CSWperl
 
-MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.0/
+MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.1/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
 DISTFILES += cswmysql5 quick_start-csw README.CSW ChangeLog
 DISTFILES += CSWmysql5.preinstall
@@ -107,6 +107,9 @@ UFILES_REGEX = mysql-(\d+(?:\.\d+)*).tar.gz
 REQUIRED_PKGS = CSWncurses CSWzlib
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
+# MySQL-5.1.40 doesn't compile without setting EXTRA_INC.
+EXTRA_INC = /opt/csw/include
+EXTRA_LIB = /opt/csw/lib
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
@@ -134,7 +137,8 @@ CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
 
 # TODO: Make the tests pass. They don't at the moment.
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
+TEST_TARGETS = check
 
 # Enable 64 bits build
 BUILD64 = 1
