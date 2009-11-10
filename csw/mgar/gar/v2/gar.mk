@@ -46,14 +46,16 @@ export PARALLELMFLAGS
 DISTNAME ?= $(GARNAME)-$(GARVERSION)
 
 DYNSCRIPTS = $(foreach PKG,$(SPKG_SPECS),$(foreach SCR,$(ADMSCRIPTS),$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
-_NOCHECKSUM += $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))
+_NOCHECKSUM += $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R))) $(_EXTRA_GAR_NOCHECKSUM)
+
+DISTFILES += $(_EXTRA_GAR_DISTFILES)
 
 # Allow overriding of only specific components of ALLFILES by clearing e. g. 'ALLFILES_DYNSCRIPTS = '
 ALLFILES_DISTFILES ?= $(DISTFILES)
 ALLFILES_PATCHFILES ?= $(PATCHFILES) $(foreach M,$(MODULATIONS),$(PATCHFILES_$M))
 ALLFILES_DYNSCRIPTS ?= $(DYNSCRIPTS)
 ALLFILES_GIT_REPOS ?= $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))
-ALLFILES ?= $(sort $(ALLFILES_DISTFILES) $(ALLFILES_PATCHFILES) $(ALLFILES_DYNSCRIPTS) $(ALLFILES_GIT_REPOS) $(EXTRA_ALLFILES))
+ALLFILES ?= $(sort $(ALLFILES_DISTFILES) $(ALLFILES_PATCHFILES) $(ALLFILES_DYNSCRIPTS) $(ALLFILES_GIT_REPOS) $(EXTRA_ALLFILES) $(_EXTRA_GAR_ALLFILES))
 
 ifeq ($(MAKE_INSTALL_DIRS),1)
 INSTALL_DIRS = $(addprefix $(DESTDIR),$(prefix) $(exec_prefix) $(bindir) $(sbindir) $(libexecdir) $(datadir) $(sysconfdir) $(sharedstatedir) $(localstatedir) $(libdir) $(infodir) $(lispdir) $(includedir) $(mandir) $(foreach NUM,1 2 3 4 5 6 7 8, $(mandir)/man$(NUM)) $(sourcedir))
@@ -708,7 +710,7 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
+merge: checksum pre-merge merge-do merge-license merge-migrateconf $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
 	@$(DONADA)
 
 merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)

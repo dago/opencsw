@@ -159,6 +159,24 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
+# Migration default
+ifneq ($(MIGRATE_FILES),)
+MIGRATECONF ?= /etc/opt/csw/pkg/$(call catalogname,$(firstword $(SPKG_SPECS)))/cswmigrateconf
+_EXTRA_GAR_DISTFILES += cswmigrateconf
+_EXTRA_GAR_NOCHECKSUM += cswmigrateconf
+
+$(DOWNLOADDIR)/cswmigrateconf:
+	@echo "[ Generating cswmigrateconf ]"
+	@(echo "MIGRATE_FILES=\"$(MIGRATE_FILES)\"";\
+		$(foreach F,$(MIGRATE_FILES),\
+			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
+			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
+		)\
+	) >$@
+
+
+endif
+
 # Handle cswclassutils
 # append $2 to SPKG_CLASSES if $1 is non-null
 define _spkg_cond_add
@@ -169,6 +187,7 @@ endef
 #	always be the last two added.  The reason for this is that
 #	you need to ensure any binaries and config files are already on disk
 #	and able to be consumed by a service that might be started.
+SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswmigrateconf)
 SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
 SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
 SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
@@ -178,8 +197,9 @@ SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
 SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
 
 # - set class for all config files
-ifneq ($(SAMPLECONF)$(PRESERVECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
+ifneq ($(SAMPLECONF)$(PRESERVECONF)$(MIGRATECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _CSWCLASS_FILTER = | perl -ane '\
+		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(ETCSERVICES),$$F[1] = "cswetcservices" if( $$F[2] =~ m(^$(FILE)$$) );)\
@@ -561,6 +581,12 @@ reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
 	@$(DONADA)
 
+merge-migrateconf: $(WORKDIR)
+	$(if $(MIGRATECONF),\
+		ginstall -d $(PKGROOT)$(dir $(MIGRATECONF));\
+		ginstall $(DOWNLOADDIR)/cswmigrateconf $(PKGROOT)$(MIGRATECONF)\
+	)
+	@$(MAKECOOKIE)
 
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
