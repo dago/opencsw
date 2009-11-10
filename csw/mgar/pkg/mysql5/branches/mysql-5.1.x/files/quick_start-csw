@@ -1,0 +1,139 @@
+#!/bin/ksh -p
+#
+# $Id$
+#
+# initial version for blastwave.org by Alex Moore 2006.02.25
+# Revised 2006.03.25 - see bug report 0001542
+#
+# This script creates a default database with the small-memory footprint.
+# Input may be provided for DATADIR and DEFAULTS_FILE
+#
+BASEDIR=/opt/csw/mysql5
+MYSQL_VAR=/var/opt/csw/mysql5
+DEFAULTS_FILE=$BASEDIR/my.cnf
+SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
+MYSQLD_USER=mysql
+#
+# Provide a default data directory
+MYSQLD_DATADIR=$MYSQL_VAR
+#
+echo
+echo  "This is the start script to setup a MySQL-5 database"
+echo  "  directory."
+echo
+echo  "  The base directory is $BASEDIR."
+echo  "  The default database directory is $MYSQLD_DATADIR."
+echo
+echo  "  If you have not setup a partition for the database and"
+echo  "  you want one; now is a good time to exit this script and"
+echo  "  create and mount the partition."
+echo
+echo  "  If you have not setup a my.cnf file and you do not want"
+echo  "  one of the sample files; now is a good time to exit and"
+echo  "  create the file $DEFAULTS_FILE."
+echo
+echo  "Data directory: The default is $MYSQLD_DATADIR."
+unset usrin
+usrin=`/usr/bin/ckpath -ay -d [default] \
+    -p "Accept the default or enter a directory"
+    ` || exit $?
+if [ ! "$usrin" = "[default]" ]; then
+    MYSQLD_DATADIR=$usrin
+fi
+echo
+echo  "my.cnf pathname: The default is either to use the supplied file in"
+echo  "  the base directory or to create one in the base directory from"
+echo  "  the small memory footprint sample.  If your enter a pathname,"
+echo  "  it will be used to create the options file in the base directory."
+unset usrin
+usrin=`/usr/bin/ckpath -f -d [default] \
+    -p "Accept the default or enter a pathname"
+    ` || exit $?
+if [ $usrin = "[default]" ]; then
+    if [ ! -f "$DEFAULTS_FILE" ]; then
+        IN_DEFAULTS_FILE=$BASEDIR/share/mysql/my-small.cnf
+        echo "Using $IN_DEFAULTS_FILE to create the options file."
+    else
+        IN_DEFAULTS_FILE=$DEFAULTS_FILE
+        echo "Using $DEFAULTS_FILE as the options file."
+    fi
+else
+    IN_DEFAULTS_FILE=$usrin
+    echo "Using $IN_DEFAULTS_FILE to create the options file."
+fi
+
+echo "data directory is $MYSQLD_DATADIR"
+if [ ! -d "$MYSQLD_DATADIR" ]; then
+    echo "data directory will be created."
+fi
+
+unset usrin
+usrin=`/usr/bin/ckyorn -d y \
+    -p "Continue with installation or quit"
+                ` || exit $?
+if [ "$usrin" = "n" ] ; then
+    echo  "Leaving script without doing anything."
+    exit 0
+fi
+
+if [ -d "$MYSQLD_DATADIR/mysql" ]; then
+    echo  "mysql database already exists.  Leaving script without doing anything."
+    exit 0
+fi
+
+echo  "Setting up the database"
+# Create the database directory and set the permissions if needed
+if [ ! -d "$MYSQLD_DATADIR" ] ; then
+    mkdir -p $MYSQLD_DATADIR
+    chown -R root:bin $MYSQLD_DATADIR
+    chmod -R 0755 $MYSQLD_DATADIR
+    chown mysql:mysql $MYSQLD_DATADIR
+    chmod 0700 $MYSQLD_DATADIR
+fi
+#
+# copy the configuration file if not exists.
+CNFCOPIED=no
+if [ ! -f "$DEFAULTS_FILE" ] ; then
+    cp -p $IN_DEFAULTS_FILE $DEFAULTS_FILE
+    CNFCOPIED=yes
+fi
+#
+# Run the mysql script to create the database
+echo "Creating MySQL core database in $MYSQLD_DATADIR"
+echo
+echo "###  The following messages are from mysql_install_db."
+$BASEDIR/bin/mysql_install_db \
+    --defaults-extra-file=$DEFAULTS_FILE \
+    --user=$MYSQLD_USER \
+    --basedir=$BASEDIR \
+    --datadir=$MYSQLD_DATADIR
+
+#
+# Fix permissions on the data directory
+chown -R mysql:mysql $MYSQLD_DATADIR
+
+#
+# Update --datadir in the cnf file with the correct value if file was copied
+if [ x"$CNFCOPIED" = xyes ]; then
+    sed -e "s|/var/opt/csw/mysql5|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
+    mv $DEFAULTS_FILE.new $DEFAULTS_FILE
+fi
+
+#
+# Ending message
+echo
+echo "###  The following messages are from quick_start-csw."
+echo "See /opt/csw/mysql5/share/mysql/doc/README.CSW for packaging changes."
+echo "Please ignore references to starting mysqld_safe in the messages above."
+echo "  These messages are from mysql_install_db.  See the following"
+echo "  for starting CSWmysql5."
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
+if [ $smf = yes ]
+then
+    echo "To start mysqld; run \`svcadm enable cswmysql5\` on Solaris 10 or later"
+else
+    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql start\` on Solaris 9 or earlier"
+fi
+
+exit 0

@@ -1,0 +1,37 @@
+2009-11-05  Maciej Bliziński  <maciej@opencsw.org>
+
+	* Makefile: Reworked the package from ground up, using GAR.
+
+2007-06-17  Alex Moore
+
+	* Version 5.1: MySQL 5.1 is still in beta.  This package is released
+	for your testing only.
+
+2007-06-03  Alex Moore
+
+	* Startup script: This update fixes a startup script problem that
+	caused the script to not work when --datadir is not the default.  This
+	update also adds amd64 mysqld and client libraries.
+
+2006-12-29  Alex Moore
+
+	* csw.conf: This update adds support for csw.conf.  See the following
+	url for details.  http://www.blastwave.org/standards/csw.conf.html The
+	daemon specific name for this package is mysql5.
+	*** IMPORTANT ***
+	If you are using mysql5rc; please move your options to my.cnf and
+	eliminate mysql5rc.  A future release will remove mysql5rc.  my.cnf is
+	more flexible and any new or missing options will not be added to
+	mysql5rc.  quick_start-csw is changed with this release to Not write
+	mysql5rc.  Options for --basedir and --datadir are included in the
+	default my.cnf files.
+	*** END OF IMPORTANT ***
+
+2006-04-16  Alex Moore
+
+	* quick_start-csw: This update fixes some problems with
+	quick_start-csw and svc-mysql5.  I have also corrected some issues
+	when using a database directory that is not /opt/csw/mysql5/var If you
+	are not using the default location for --datadir, package installation
+	will NOT start CSWmysql5.  More code is needed for that.  I welcome
+	patches.
