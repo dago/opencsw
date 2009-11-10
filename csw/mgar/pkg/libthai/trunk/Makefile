@@ -20,14 +20,26 @@ UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=34448
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES = CSWlibthai CSWlibthaidevel
+
+CATALOGNAME_CSWlibthai = libthai
+CATALOGNAME_CSWlibthaidevel = libthai_devel
+
+SPKG_DESC_CSWlibthai = Thai language support routines
+SPKG_DESC_CSWlibthaidevel = Thai language support routines development files
+
 SPKG_SOURCEURL = http://linux.thai.net/projects/libthai/
 
-REQUIRED_PKGS = CSWlibdatrie
-PREREQUISUITE_PKGS = $(REQUIRED_PKGS)
+REQUIRED_PKGS_CSWlibthai = CSWlibdatrie
+REQUIRED_PKGS_CSWlibthaidevel = CSWlibthai
+PREREQUISUITE_PKGS = $(REQUIRED_PKGS_CSWlibthai)
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+PKGFILES_CSWlibthaidevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibthaidevel += $(docdir)/.*
 
 include gar/category.mk
