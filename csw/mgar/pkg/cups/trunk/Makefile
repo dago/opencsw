@@ -76,17 +76,17 @@ PACKAGES = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
 ARCHALL_CSWcupsdoc = 1
 ARCHALL_CSWcupsdev = 1
 
-REQUIRED_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient
-REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
+REQUIRED_PKGS_CSWcups  = CSWcupsd CSWcupsclient
+REQUIRED_PKGS_CSWcupsd  = CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
 REQUIRED_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
 REQUIRED_PKGS_CSWcupsd += CSWkrb5lib CSWosslrt CSWcupsdoc
 REQUIRED_PKGS_CSWcupsd += CSWdbusglib CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWcupsclient  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
+REQUIRED_PKGS_CSWcupsclient  = CSWlibcups CSWoldaprt CSWzlib
 REQUIRED_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
-REQUIRED_PKGS_CSWcupsdoc = CSWcswclassutils
-REQUIRED_PKGS_CSWcupsdev = CSWcswclassutils
-REQUIRED_PKGS_CSWlibcups  = CSWcswclassutils CSWjpeg CSWpng CSWtiff CSWzlib
+REQUIRED_PKGS_CSWcupsdoc = 
+REQUIRED_PKGS_CSWcupsdev = 
+REQUIRED_PKGS_CSWlibcups  = CSWjpeg CSWpng CSWtiff CSWzlib
 REQUIRED_PKGS_CSWlibcups += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
