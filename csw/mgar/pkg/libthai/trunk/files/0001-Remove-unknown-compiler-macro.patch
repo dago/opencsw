@@ -1,0 +1,25 @@
+From 89c9fcf2d67a3be06fb2f687fb8c7a231529bd24 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 10 Nov 2009 14:04:11 +0100
+Subject: [PATCH] Remove unknown compiler macro
+
+---
+ src/libthai.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/libthai.c b/src/libthai.c
+index bb7e8e0..91ae32a 100644
+--- a/src/libthai.c
++++ b/src/libthai.c
+@@ -7,7 +7,7 @@
+ 
+ #include "thbrk/thbrk-private.h"
+ 
+-__attribute__ ((destructor)) void
++/* __attribute__ ((destructor)) */ void
+ _libthai_on_unload ()
+ {
+     thbrk_on_unload ();
+-- 
+1.6.5.1
+
