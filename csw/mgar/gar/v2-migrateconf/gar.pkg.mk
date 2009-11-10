@@ -159,6 +159,24 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
+# Migration default
+ifneq ($(MIGRATE_FILES),)
+MIGRATECONF ?= /etc/opt/csw/pkg/$(call catalogname,$(firstword $(SPKG_SPECS)))/cswmigrateconf
+_EXTRA_GAR_DISTFILES += cswmigrateconf
+_EXTRA_GAR_NOCHECKSUM += cswmigrateconf
+
+$(DOWNLOADDIR)/cswmigrateconf:
+	@echo "[ Generating cswmigrateconf ]"
+	@(echo "MIGRATE_FILES=\"$(MIGRATE_FILES)\"";\
+		$(foreach F,$(MIGRATE_FILES),\
+			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
+			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
+		)\
+	) >$@
+
+
+endif
+
 # Handle cswclassutils
 # append $2 to SPKG_CLASSES if $1 is non-null
 define _spkg_cond_add
@@ -374,7 +392,7 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license) \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
 		      $(if $(_PKGFILES_INCLUDE),-x '.*',$(foreach FILE,$(_PKGFILES_EXCLUDE),-x '$(FILE)')) \
-	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
+		        $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
 	                  -e '$(IE)=$(dir $(IE))$(ISA_DEFAULT)/$(notdir $(IE))' \
 	               ) \
 	              <$(PROTOTYPE); \
@@ -563,6 +581,12 @@ reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
 	@$(DONADA)
 
+merge-migrateconf: $(WORKDIR)
+	$(if $(MIGRATECONF),\
+		ginstall -d $(PKGROOT)$(dir $(MIGRATECONF));\
+		ginstall $(DOWNLOADDIR)/cswmigrateconf $(PKGROOT)$(MIGRATECONF)\
+	)
+	@$(MAKECOOKIE)
 
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
