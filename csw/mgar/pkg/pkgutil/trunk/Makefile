@@ -10,6 +10,9 @@ define BLURB
 	package automatically.
 endef
 
+# Disable inclusion of CSWcommon by default.
+COMMON_PKG_DEPENDS = 
+
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += $(call admfiles,CSWpkgutil,prototype)
@@ -21,7 +24,8 @@ PACKAGES = CSWpkgutil CSWpkgutilplus
 SPKG_DESC_CSWpkgutil = $(DESCRIPTION)
 SPKG_DESC_CSWpkgutilplus = Extends pkgutil functionality
 
-REQUIRED_PKGS_CSWpkgutilplus = CSWperl CSWgnupg CSWpkgutil
+# Explicitly depend on CSWcommon here since it's not the default
+REQUIRED_PKGS_CSWpkgutilplus = CSWcommon CSWperl CSWgnupg CSWpkgutil
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
