@@ -446,7 +446,7 @@ fi
 # Verify that there are no double depends
 repeated_depends="$(awk '{print $2}' $EXTRACTDIR/$pkgname/install/depend \
   | sort | uniq -c | awk '{print $1}' | sort | uniq | wc -l)"
-if [[ "$repeated_depends" -ne 1 ]]; then
+if [[ "$repeated_depends" -gt 1 ]]; then
         cat $EXTRACTDIR/$pkgname/install/depend
         print ERROR: $pkgname has double depends
         exit 1
