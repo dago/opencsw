@@ -23,9 +23,17 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 # - Document the location in esd(1)
 # - Skip 64 binaries
 
+sysconfdir = /etc/opt/csw
+
+PRESERVECONF = $(sysconfdir)/esd.conf
+MIGRATE_FILES = esd.conf
+
 BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
