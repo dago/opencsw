@@ -1,5 +1,5 @@
 GARNAME = cfengine
-GARVERSION = 2.1.20
+GARVERSION = 2.2.10
 CATEGORIES = utils
 
 DESCRIPTION = A tool for administering Networks of Diverse Machines
@@ -13,20 +13,20 @@ define BLURB
   scripts. You can also use it as a netwide front-end for `cron'.
 endef
 
-MASTER_SITES = ftp://ftp.iu.hio.no/pub/$(GARNAME)/
+MASTER_SITES = http://www.cfengine.org/tarballs/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
-DISTFILES += $(call admfiles,CSWcfengine,)
+
+REQUIRED_PKGS = CSWosslrt CSWbdb3
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Requires GNU texi
-PATCHFILES = nodoc.diff
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-DCE
-CONFIGURE_ARGS += --with-berkeleydb=$(tool_prefix)
-CONFIGURE_ARGS += --with-openssl=$(tool_prefix)
+CONFIGURE_ARGS += --with-docs
+CONFIGURE_ARGS += --with-berkeleydb=/opt/csw/bdb33
+
+GARCOMPILER = GCC3
 
 TEST_TARGET = check
 
