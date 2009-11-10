@@ -164,6 +164,8 @@ DESTDIR  ?= $(abspath $(INSTALLISADIR))
 
 DESTIMG ?= $(LOGNAME)-$(shell hostname)
 
+# A default list of packages that everyone will depend on
+COMMON_PKG_DEPENDS ?= CSWcommon
 
 # These are the core packages which must be installed for GAR to function correctly
 DEF_BASE_PKGS = CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2

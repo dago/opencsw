@@ -619,6 +619,10 @@ ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 		if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;	\
 	done)),)
 
+ifneq ($(COMMON_PKG_DEPENDS),)
+_EXTRA_GAR_PKGS += $(COMMON_PKG_DEPENDS)
+endif
+
 ifneq ($(ISAEXEC_FILES),)
 _EXTRA_GAR_PKGS += CSWisaexec
 endif
