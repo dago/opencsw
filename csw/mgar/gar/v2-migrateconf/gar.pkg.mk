@@ -187,9 +187,9 @@ endef
 #	always be the last two added.  The reason for this is that
 #	you need to ensure any binaries and config files are already on disk
 #	and able to be consumed by a service that might be started.
+SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswmigrateconf)
 SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
 SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
-SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswmigrateconf)
 SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
 SPKG_CLASSES := $(call _spkg_cond_add,USERGROUP,cswusergroup)
 SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
@@ -199,9 +199,9 @@ SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(MIGRATECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _CSWCLASS_FILTER = | perl -ane '\
+		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
-		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(ETCSERVICES),$$F[1] = "cswetcservices" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INETDCONF),$$F[1] = "cswinetd" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
