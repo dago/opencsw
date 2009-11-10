@@ -1,0 +1,51 @@
+From 500575a6535481ebb2b5067c7e47ada6d7338152 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 10 Nov 2009 16:02:20 +0100
+Subject: [PATCH] Add missing ifdefs to shield Linux
+
+---
+ nfswatch.c  |    2 +-
+ pktfilter.c |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/nfswatch.c b/nfswatch.c
+index abb595e..0607b4e 100644
+--- a/nfswatch.c
++++ b/nfswatch.c
+@@ -637,12 +637,12 @@ main(int argc, char **argv)
+ 		finish(-1);
+ 	    }
+ 	}
+-#endif /* USE_LINUX */
+ 
+ 	if (ls.pcap == NULL) {
+ 		fprintf(stderr, "%s: no valid interfaces.\n", pname);
+ 		finish(-1);
+ 	}
++#endif /* USE_LINUX */
+ 
+ 	/*
+ 	 * Now lose super-user permission, since we
+diff --git a/pktfilter.c b/pktfilter.c
+index 2005012..eafcc63 100644
+--- a/pktfilter.c
++++ b/pktfilter.c
+@@ -196,6 +196,7 @@ pkt_filter_fddi(char *cp, u_int length, struct timeval *tstamp)
+ 	pkt_dispatch(packet, bdcst, etype, tstamp);
+ }
+ 
++#ifdef LINUX
+ /*
+  * A DLT_LINUX_SLL fake link-layer header.
+  */
+@@ -244,6 +245,7 @@ pkt_filter_sll(char *cp, u_int length, struct timeval *tstamp)
+ 	 */
+ 	pkt_dispatch(packet, bdcst, sheader.sll_protocol, tstamp);
+ }
++#endif
+ 
+ /*
+  * pkt_dispatch - count a packet, and pass it off to the appropriate filter.
+-- 
+1.6.5.1
+
