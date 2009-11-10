@@ -111,6 +111,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ##
 ## A list of action classes. Possible values are:
 ## none cswpreserveconf cswcpsampleconf cswpycompile cswusergroup cswinitsmf
+##	cswinetd cswetcservices
 ## The class 'cswinitsmf' must be the last class listed. When you use cswclassutils,
 ## you need to add CSWcswclassutils to REQUIRED_PKGS.
 ## SPKG_CLASSES = none
@@ -119,6 +120,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## SAMPLECONF =
 ## INITSMF =
 ## USERGROUP =
+## ETCSERVICES = <file containing an entry for /etc/services>
+## INETDCONF = <file containing an inetd.conf formatted entry>
 ## A list of runtime package dependencies in the form of CSWfoo.
 ## REQUIRED_PKGS =
 ##
