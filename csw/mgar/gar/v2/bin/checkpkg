@@ -557,7 +557,7 @@ if [ -s $SETLIBS.missing ]; then
 	lib=`echo $ldep | nawk '{print $1}'`
         [ "$lib" = "libm.so.2" ] && continue
 	pkg=`echo $ldep | nawk '{print $2}'`
-	/usr/bin/grep -q "[/=]$lib[ =]" $SETLIBS >/dev/null
+	/usr/bin/grep "[/=]$lib[ =]" $SETLIBS >/dev/null
 	if [ $? -ne 0 ]; then
 	    errmsg "Couldn't find a package providing $lib"
 	else
