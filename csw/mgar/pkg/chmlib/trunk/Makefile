@@ -22,10 +22,14 @@ PATCHFILES += 0004-add-autoconf-checks-for-lnsl-and-lsocket.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-examples
 
 TEST_TARGET = check
+
+MERGE_DIRS_isa-extra = $(libdir)
 
 DOCS  = NEWS README
 DOCS += ChmLib-ds6.zip ChmLib-ce.zip
