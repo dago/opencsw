@@ -87,6 +87,7 @@ build-vnc:
 		LOCAL_LDFLAGS="-L/opt/csw/lib" \
 		EXTRA_INCLUDES="-I/opt/csw/include" \
 		$(MAKE))
+	@$(MAKECOOKIE)
 
 install-vnc:
 	ginstall -d $(DESTDIR)$(bindir)
@@ -100,3 +101,4 @@ install-vnc:
 	ginstall -m 644 $(WORKDIR)/vncservers $(DESTDIR)$(sysconfdir)/vncservers
 	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 644 $(FILEDIR)/cswvncserver $(DESTDIR)/etc/opt/csw/init.d
+	@$(MAKECOOKIE)
