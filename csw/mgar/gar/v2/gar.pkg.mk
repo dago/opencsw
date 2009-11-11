@@ -180,6 +180,9 @@ SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
 SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
 SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
 
+# This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
+TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
+
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(MIGRATECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _CSWCLASS_FILTER = | perl -ane '\
@@ -191,7 +194,9 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
+		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
+
 _EXTRA_GAR_PKGS += CSWcswclassutils
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
@@ -405,6 +410,13 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 
 # $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
 .PRECIOUS: $(WORKDIR)/%.depend
+
+# The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
+# The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
+# actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
+$(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),CSWcswclassutils)
+
 $(WORKDIR)/%.depend: $(WORKDIR)
 	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
@@ -493,7 +505,7 @@ $(shell echo
 endef
 
 define pkgvar
-$(if $($(1)_$(2)),$($(1)_$(2)),$($(1)))
+$(strip $(if $($(1)_$(2)),$($(1)_$(2)),$($(1))))
 endef
 
 # Make sure every producable package contains specific descriptions.
@@ -505,6 +517,11 @@ $(foreach P,$(SPKG_SPECS),\
 )))
 
 .PRECIOUS: $(WORKDIR)/%.pkginfo
+
+# The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
+$(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),cswtexinfo)
+
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
 	echo "NAME=$(call catalogname,$*) - $(call pkgvar,SPKG_DESC,$*)"; \
@@ -646,7 +663,7 @@ _pkgshow:
 	@$(foreach SPEC,$(_PKG_SPECS),printf "  %-20s %s\n"  $(SPEC) $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz;)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
-package-%: $(WORKDIR)/%.gspec $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo)
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
