@@ -1,5 +1,5 @@
 GARNAME = SDL_image
-GARVERSION = 1.2.7
+GARVERSION = 1.2.8
 CATEGORIES = lib
 
 DESCRIPTION = SDL image file loading library
@@ -9,7 +9,6 @@ endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_image/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsdlimage, prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
