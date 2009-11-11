@@ -377,7 +377,7 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf) \
+	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-I $I)) \
 		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license -X /etc/opt/csw/pkg/$S/cswmigrateconf) \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
 		      $(if $(_PKGFILES_INCLUDE),-x '.*',$(foreach FILE,$(_PKGFILES_EXCLUDE),-x '$(FILE)')) \
