@@ -1,5 +1,5 @@
-91e692a52c4c9668e3bcf8b8816425c3  CSWsyslogng.postremove
-c3da292b828f03158c7227f5b35feb12  CSWsyslogng.preinstall
+ab950f80af5ca165ef3f5ba2df04f9be  CSWsyslogng.postremove
+d58b011085f44206053562078c012857  CSWsyslogng.preinstall
 fcd5effdaa96da8abf9788bc5745bda3  cswsyslog_ng
 69bad95775b98d26e52db8a8292e2790  syslog-ng.conf.CSW
 86c39779261545d2289e9c309e262b8d  syslog-ng_3.0.4.tar.gz
