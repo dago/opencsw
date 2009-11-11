@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# $Id$
+#
 
 if [ -x /usr/sbin/svcadm ]; then
   echo "Disabling svc:/system/system-log:default"
@@ -9,8 +12,10 @@ fi
 # first. The -f option is for the rm command not to complain if it can't remove
 # the file.
 for f in /opt/csw/var/syslog-ng.{ctl,persist}; do
-  if [ -r "${f}" ];
+  if [ -r "${f}" ]; then
     echo "Removing an obsolete file: '${f}'."
     rm -f "${f}"
   fi
 done
+
+exit 0

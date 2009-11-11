@@ -1,4 +1,7 @@
 #!/bin/sh
+# 
+# $Id$
+#
 
 if [ -x /usr/sbin/svcadm ]; then
   echo "Enabling svc:/system/system-log:default"
