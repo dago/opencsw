@@ -116,6 +116,8 @@ EXTRA_LDFLAGS = -L/opt/csw/lib/libperl.so
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
+EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
+EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 
 # Tests take a long time
 TEST_SCRIPTS =
