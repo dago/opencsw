@@ -14,6 +14,7 @@ SF_PROJ = vnc-tight
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION)_unixsrc.tar.bz2
 DISTFILES += vncservers
+DISTFILES += cswvncserver
 PACKAGES = CSWvncs CSWvncv
 CATALOGNAME_CSWvncs = vncserver
 CATALOGNAME_CSWvncv = vncviewer
@@ -27,7 +28,17 @@ PKGFILES_CSWvncv += $(mandir)/man1/vncviewer\.1
 SPKG_DESC_CSWvncs = TightVNC server
 SPKG_DESC_CSWvncv = TightVNC viewer
 
-REQUIRED_PKGS = CSWjpeg CSWtcpwrap CSWzlib
+MIGRATE_FILES_CSWvncs = vncservers
+INITSMF = /etc/opt/csw/init.d/cswvncserver
+
+REQUIRED_PKGS  = CSWbash
+REQUIRED_PKGS += CSWjpeg
+REQUIRED_PKGS += CSWlibice
+REQUIRED_PKGS += CSWlibsm
+REQUIRED_PKGS += CSWlibxext
+REQUIRED_PKGS += CSWtcpwrap
+REQUIRED_PKGS += CSWzlib
+
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 sysconfdir = /etc/opt/csw
@@ -87,3 +98,5 @@ install-vnc:
 	#install -m755 vncserver.init %{buildroot}/etc/rc.d/init.d/vncserver
 	ginstall -d $(DESTDIR)$(sysconfdir)/vncservers
 	ginstall -m 644 $(WORKDIR)/vncservers $(DESTDIR)$(sysconfdir)/vncservers
+	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall -m 644 $(FILEDIR)/cswvncserver $(DESTDIR)/etc/opt/csw/init.d

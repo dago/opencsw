@@ -1,0 +1,63 @@
+#!/opt/csw/bin/bash
+#
+# $Id$
+#
+# description: Starts and stops vncserver. \
+#	       used to provide remote X administration services.
+
+VNCSERVERS=""
+ARGS=""
+if [ -f /etc/opt/csw/vncservers ] ; then
+   . /etc/opt/csw/vncservers
+fi
+
+prog="VNC server"
+
+start() {
+    echo "Starting $prog: "
+    ulimit -c 0 >/dev/null 2>&1
+    RETVAL=0
+    for display in ${VNCSERVERS}
+    do
+        echo "${display} "
+        su ${display##*:} -c "cd ~ && [ -f .vnc/passwd ] && vncserver ${ARGS} :${display%%:*}"
+        RETVAL=$?
+        [ "$RETVAL" -ne 0 ] && break
+    done
+    [ "$RETVAL" -eq 0 ] && touch /var/spool/locks/vncserver
+}
+
+stop() {
+    echo "Shutting down $prog: "
+    for display in ${VNCSERVERS}
+    do
+        echo "${display} "
+	su ${display##*:} -c "vncserver -kill :${display%%:*} >/dev/null 2>&1"
+        RETVAL=$?
+    done
+    [ "$RETVAL" -eq 0 ] && rm -f /var/spool/locks/vncserver
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart|reload)
+	stop
+	start
+	;;
+  condrestart)
+	if [ -f /var/spool/locks/vncserver ]; then
+	    stop
+	    start
+	fi
+	;;
+  *)
+	echo $"Usage: $0 {start|stop|restart|condrestart}"
+	exit 1
+esac
+
