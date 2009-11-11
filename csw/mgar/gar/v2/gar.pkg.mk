@@ -159,29 +159,13 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
-# Migration default
-ifneq ($(MIGRATE_FILES),)
-MIGRATECONF ?= /etc/opt/csw/pkg/$(call catalogname,$(firstword $(SPKG_SPECS)))/cswmigrateconf
-_EXTRA_GAR_DISTFILES += cswmigrateconf
-_EXTRA_GAR_NOCHECKSUM += cswmigrateconf
-
-$(DOWNLOADDIR)/cswmigrateconf:
-	@echo "[ Generating cswmigrateconf ]"
-	@(echo "MIGRATE_FILES=\"$(MIGRATE_FILES)\"";\
-		$(foreach F,$(MIGRATE_FILES),\
-			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
-			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
-		)\
-	) >$@
-
-
-endif
-
 # Handle cswclassutils
 # append $2 to SPKG_CLASSES if $1 is non-null
 define _spkg_cond_add
 $(SPKG_CLASSES) $(if $($(1)),$(if $(filter $(2),$(SPKG_CLASSES)),,$(2)))
 endef
+
+MIGRATECONF ?= $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf))
 
 # NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
 #	always be the last two added.  The reason for this is that
@@ -388,8 +372,8 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license) \
-		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license) \
+	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf) \
+		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license -X /etc/opt/csw/pkg/$S/cswmigrateconf) \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
 		      $(if $(_PKGFILES_INCLUDE),-x '.*',$(foreach FILE,$(_PKGFILES_EXCLUDE),-x '$(FILE)')) \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
@@ -579,14 +563,28 @@ merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 
 reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
-	@$(DONADA)
 
-merge-migrateconf: $(WORKDIR)
-	$(if $(MIGRATECONF),\
-		ginstall -d $(PKGROOT)$(dir $(MIGRATECONF));\
-		ginstall $(DOWNLOADDIR)/cswmigrateconf $(PKGROOT)$(MIGRATECONF)\
-	)
+merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)
+
+merge-migrateconf-%: MIGRATE_FILES_$* ?= $(MIGRATE_FILES)
+merge-migrateconf-%: MIGRATE_SOURCE_DIR_$* ?= $(MIGRATE_SOURCE_DIR)
+merge-migrateconf-%: MIGRATE_DEST_DIR_$* ?= $(MIGRATE_DEST_DIR)
+merge-migrateconf-%:
+	@echo "[ Generating cswmigrateconf for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)(echo "MIGRATE_FILES=\"$(MIGRATE_FILES_$*)\"";\
+		 $(if $(MIGRATE_SOURCE_DIR_$*),echo "SOURCE_DIR___default__=\"$(MIGRATE_SOURCE_DIR_$*)\"";)\
+		 $(if $(MIGRATE_DEST_DIR_$*),echo "DEST_DIR___default__=\"$(MIGRATE_DEST_DIR_$*)\"";)\
+		 $(foreach F,$(MIGRATE_FILES_$*),\
+			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
+			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
+		)\
+	) >$(PKGROOT)/etc/opt/csw/pkg/$*/cswmigrateconf
+	@$(MAKECOOKIE)
+
+reset-merge-migrateconf:
+	@rm -f $(COOKIEDIR)/merge-migrateconf $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-migrateconf-$(SPEC))
 
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
