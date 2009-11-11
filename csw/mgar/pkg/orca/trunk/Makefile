@@ -87,8 +87,8 @@ include gar/category.mk
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(sysconfdir)/init.d
 	@# TBD: Use custom manifest for Solaris 10 SMF support
-	@#ginstall $(WORKDIR)/csworcallator $(DESTDIR)$(sysconfdir)/init.d/csworcallator
-	@#ginstall $(WORKDIR)/csworca_services $(DESTDIR)$(sysconfdir)/init.d/csworca_services
+	@ginstall $(WORKDIR)/csworcallator $(DESTDIR)$(sysconfdir)/init.d/csworcallator
+	@ginstall $(WORKDIR)/csworca_services $(DESTDIR)$(sysconfdir)/init.d/csworca_services
 	@$(MAKE_COOKIE)
 
 post-merge:
