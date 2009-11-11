@@ -88,6 +88,9 @@ CATALOGNAME_CSWwxwidgetscommon = wxwidgets_common
 CATALOGNAME_CSWwxwidgetsdevel  = wxwidgets_devel
 CATALOGNAME_CSWwxwidgetsgtk2   = wxwidgets_gtk2
 TEST_SCRIPTS =
+
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gtk=2
 CONFIGURE_ARGS += --with-gtk-prefix=/opt/csw
