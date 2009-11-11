@@ -14,6 +14,8 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
+GARFLAVOR = DBG
+
 # Change prefix to /opt/csw/mysql5
 prefix = /opt/csw/mysql5
 sysconfdir = /etc/opt/csw/mysql5
@@ -135,6 +137,9 @@ CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
+CONFIGURE_ARGS += --with-comment
+CONFIGURE_ARGS_DBG = --with-debug
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 # TODO: Make the tests pass. They don't at the moment.
 # TEST_SCRIPTS =
