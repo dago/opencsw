@@ -7,8 +7,9 @@
 
 VNCSERVERS=""
 ARGS=""
-if [ -f /etc/opt/csw/vncservers ] ; then
-   . /etc/opt/csw/vncservers
+VNCSERVERS_CONF="/etc/opt/csw/vncservers/vncservers"
+if [ -f "${VNCSERVERS_CONF}" ] ; then
+   . "${VNCSERVERS_CONF}"
 fi
 
 prog="VNC server"
