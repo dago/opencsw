@@ -16,7 +16,17 @@ endef
 MASTER_SITES = http://www.cfengine.org/tarballs/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 
-REQUIRED_PKGS = CSWosslrt CSWbdb3
+PACKAGES = CSWcfengine CSWcfenginedoc
+PKGFILES_CSWcfenginedoc  = .*/share/info/.*
+PKGFILES_CSWcfenginedoc += .*/share/cfengine/.*
+
+CATALOGNAME_CSWcfengine = cfengine
+SPKG_DESC_CSWcfengine = A tool for administering Networks of Diverse Machines
+REQUIRED_PKGS_CSWcfengine = CSWosslrt CSWbdb3
+
+CATALOGNAME_CSWcfenginedoc = cfengine_doc
+SPKG_DESC_CSWcfenginedoc = Cfengine documentation
+ARCHALL_CSWcfenginedoc = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
