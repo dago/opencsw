@@ -167,6 +167,15 @@ endef
 
 MIGRATECONF ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
 
+# It is NOT sufficient to change the pathes here, they must be adjusted in merge-* also
+_USERGROUP_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_usergroup),/etc/opt/csw/pkg/$S/cswusergroup)))
+_INETDCONF_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_inetdconf),/etc/opt/csw/pkg/$S/inetd.conf)))
+_ETCSERVICES_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_etcservices),/etc/opt/csw/pkg/$S/services)))
+
+USERGROUP += $(_USERGROUP_FILES)
+INETDCONF += $(_INETDCONF_FILES)
+ETCSERVICES += $(_ETCSERVICES_FILES)
+
 # NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
 #	always be the last two added.  The reason for this is that
 #	you need to ensure any binaries and config files are already on disk
@@ -580,6 +589,10 @@ merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
 
+merge-classutils: merge-migrateconf merge-usergroup merge-inetdconf merge-etcservices
+
+reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merge-inetdconf reset-merge-etcservices
+
 merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)
 
@@ -601,6 +614,43 @@ merge-migrateconf-%:
 
 reset-merge-migrateconf:
 	@rm -f $(COOKIEDIR)/merge-migrateconf $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-migrateconf-$(SPEC))
+
+_show_classutilvar//%:
+	$($*)
+
+merge-usergroup: $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_usergroup),merge-usergroup-$S))
+	@$(MAKECOOKIE)
+
+merge-usergroup-%:
+	@echo "[ Generating cswusergroup for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)$(MAKE) --no-print-directory -n _show_classutilvar//$*_usergroup >$(PKGROOT)/etc/opt/csw/pkg/$*/cswusergroup
+	@$(MAKECOOKIE)
+
+reset-merge-usergroup:
+	@rm -f $(COOKIEDIR)/merge-usergroup $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-usergroup-$(SPEC))
+
+merge-inetdconf: $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_inetdconf),merge-inetdconf-$S))
+
+merge-inetdconf-%:
+	@echo "[ Generating inetd.conf for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)$(MAKE) --no-print-directory -n _show_classutilvar//$*_inetdconf >$(PKGROOT)/etc/opt/csw/pkg/$*/inetd.conf
+	@$(MAKECOOKIE)
+
+reset-merge-inetdconf:
+	@rm -f $(COOKIEDIR)/merge-inetdconf $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-inetdconf-$(SPEC))
+
+merge-etcservices: $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_etcservices),merge-etcservices-$S))
+
+merge-etcservices-%:
+	@echo "[ Generating services for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)$(MAKE) --no-print-directory -n _show_classutilvar//$*_etcservices >$(PKGROOT)/etc/opt/csw/pkg/$*/services
+	@$(MAKECOOKIE)
+
+reset-merge-etcservices:
+	@rm -f $(COOKIEDIR)/merge-etcservices $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-etcservices-$(SPEC))
 
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
