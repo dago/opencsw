@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = mysql5
-GARVERSION = 5.0.84
+GARVERSION = 5.0.87
 CATEGORIES = server
 
 DISTNAME = mysql-$(GARVERSION)
