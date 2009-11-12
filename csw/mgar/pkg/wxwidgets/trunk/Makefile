@@ -12,6 +12,12 @@ define BLURB
   wxWidgets applications look and feel native. This is because wxWidgets uses
   the platform's own native controls rather than emulating them.
 endef
+
+# The unicode version can't be currently built on Solaris 8.  Doing separate
+# builds on Solaris 8 and Solaris 9.  Unicode support will start in Solaris 9.
+# More details below, look for 'unicode'.
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386 solaris9-sparc solaris9-i386
+
 EXTRA_MODULATORS = GARVERSION
 MODULATIONS_GARVERSION = 2.8.5 2.8.10
 MERGE_SCRIPTS_isa-i386-garversion-2.8.5 = copy-only
@@ -112,11 +118,16 @@ EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
 EXTRA_LIB = /opt/csw/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
+# The 2.8.5 version has been compiled as a monolithic library.  Building it the
+# same way for backwards compatibility.
+CONFIGURE_ARGS_garversion-2.8.5 = --enable-monolithic
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_garversion-$(GARVERSION))
+
 INSTALL_SCRIPTS = wxwidgets
+
+include gar/category.mk
 
 install-wxwidgets:
 	(cd $(WORKSRC); $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
 	(cd $(WORKSRC)/contrib; $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
 	@$(MAKECOOKIE)
-
-include gar/category.mk
