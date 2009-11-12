@@ -21,6 +21,7 @@ PACKAGES = CSWperl CSWperldoc
 ARCHALL_CSWperldoc = 1
 REQUIRED_PKGS_CSWperl = CSWbdb47 CSWgdbm
 REQUIRED_PKGS_CSWperldoc = CSWperl
+INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 SPKG_DESC_CSWperl = $(DESCRIPTION)
 SPKG_DESC_CSWperldoc = Perl documentation
 
