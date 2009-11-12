@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = libyaml
-GARVERSION = 0.1.2
+GARVERSION = 0.1.3
 CATEGORIES = lib
 DESCRIPTION = a YAML 1.1 parser and emitter written in C
 define BLURB
