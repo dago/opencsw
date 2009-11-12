@@ -15,9 +15,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWpython
-
 SPKG_SOURCEURL = http://cvs2svn.tigris.org/
+
+ARCHALL = 1
+PYCOMPILE = 1
+REQUIRED_PKGS = CSWpython
 
 CONFIGURE_SCRIPTS =
 
