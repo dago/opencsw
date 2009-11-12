@@ -165,7 +165,7 @@ define _spkg_cond_add
 $(SPKG_CLASSES) $(if $($(1)),$(if $(filter $(2),$(SPKG_CLASSES)),,$(2)))
 endef
 
-MIGRATECONF ?= $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf))
+MIGRATECONF ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
 
 # NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
 #	always be the last two added.  The reason for this is that
