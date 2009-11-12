@@ -3,7 +3,7 @@
 # $Header$
 
 GARNAME = pyyaml
-GARVERSION = 3.08
+GARVERSION = 3.09
 CATEGORIES = python
 
 PROJ_NAME = PyYAML
@@ -32,26 +32,26 @@ MASTER_SITES = http://pyyaml.org/download/pyyaml/
 DISTFILES  = $(PROJ_NAME)-$(GARVERSION).tar.gz
 WORKSRC = $(WORKDIR)/$(PROJ_NAME)-$(GARVERSION)
 SPKG_SOURCEURL = http://pyyaml.org/wiki/PyYAML
-SPKG_CLASSES = none cswpycompile
 
-PACKAGES = CSWpyyaml CSWpyyamlrt
-CATALOGNAME_CSWpyyaml = py_pyyaml
-CATALOGNAME_CSWpyyamlrt = py_pyyaml_rt
+PACKAGES = CSWpy-yaml CSWpy-yaml-rt
+CATALOGNAME_CSWpy-yaml = py_yaml
+CATALOGNAME_CSWpy-yaml-rt = py_yaml_rt
 
-REQUIRED_PKGS_CSWpyyamlrt = CSWpython-rt CSWlibyaml
-PREREQUISITE_PKGS = CSWpython CSWlibyaml
+REQUIRED_PKGS_CSWpy-yaml = CSWpython
+REQUIRED_PKGS_CSWpy-yaml-rt = CSWpython-rt CSWlibyaml
+PREREQUISITE_PKGS = $(REQUIRED_PKGS_CSWpy-yaml) $(REQUIRED_PKGS_CSWpy-yaml-rt)
 
-SPKG_DESC_CSWpyyaml = YAML parser and emitter for Python
-SPKG_DESC_CSWpyyamlrt = Runtime libraries for YAML parser and emitter
+SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
+SPKG_DESC_CSWpy-yaml-rt = Runtime libraries for YAML parser and emitter
 
-ARCHALL_CSWpyyaml = 1
-PKGFILES_CSWpyyamlrt = /opt/csw/lib/python/site-packages/.*\.so
+ARCHALL_CSWpy-yaml = 1
+PKGFILES_CSWpy-yaml-rt = /opt/csw/lib/python/site-packages/.*\.so
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD_SCRIPTS = pyyaml
+BUILD_SCRIPTS = py-yaml
 
-build-pyyaml:
+build-py-yaml:
 	(cd $(WORKSRC); $(BUILD_ENV) python setup.py --with-libyaml build)
 	@$(MAKECOOKIE)
 
