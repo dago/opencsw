@@ -14,5 +14,6 @@ DISTFILES  = yaml-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1
 WORKSRC = $(WORKDIR)/yaml-$(GARVERSION)
 include gar/category.mk
