@@ -283,9 +283,6 @@ define _pkgfiles_exclude
 $(strip 
   $(foreach S,$(filter-out $(1),$(_PKG_SPECS)), 
     $(PKGFILES_$(S)) 
-    $(EXTRA_PKGFILES_EXCLUDED) 
-    $(EXTRA_PKGFILES_EXCLUDED_$(1)) 
-    $(_EXTRA_PKGFILES_EXCLUDED) 
   ) 
 )
 endef
@@ -377,8 +374,10 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-I $I)) \
+	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf) \
 		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license -X /etc/opt/csw/pkg/$S/cswmigrateconf) \
+		      $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-i '$I') \
+		      $(foreach X,$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$*),-x '$X') \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
 		      $(if $(_PKGFILES_INCLUDE),-x '.*',$(foreach FILE,$(_PKGFILES_EXCLUDE),-x '$(FILE)')) \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
