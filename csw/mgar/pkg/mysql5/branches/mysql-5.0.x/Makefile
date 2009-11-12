@@ -152,7 +152,7 @@ SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
-post-install-modulated:
+post-install:
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)
 	ginstall -m 755 -d $(DESTDIR)$(datadir)/mysql/doc
 	ginstall -m 644 $(FILEDIR)/ChangeLog $(DESTDIR)$(datadir)/mysql/doc
