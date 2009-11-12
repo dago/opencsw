@@ -1,0 +1,4 @@
+3dd1f6628a7ecfd1d65f0b93451fad48  0001-Fix-extra-comma-at-end-of-enum.patch
+c9e7de423f7a79f280aee0ed3dc3e0f7  0002-Remove-W-Wall-for-Sun-Studio.patch
+6b248d3b57a9b479be69a7c8475bdc66  0003-Use-inttypes.h-instead-of-stdint.h.patch
+4f34bc046fcc59f1af590d8eb1e08934  xchm-1.17.tar.gz

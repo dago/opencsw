@@ -1,0 +1,39 @@
+From 514f5e2682428b392fb5027b04f4557a837dbb64 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 12 Nov 2009 10:42:32 +0100
+Subject: [PATCH 3/3] Use inttypes.h instead of stdint.h
+
+---
+ src/bitfiddle.inl |    2 +-
+ src/chmfile.h     |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/bitfiddle.inl b/src/bitfiddle.inl
+index 3edd779..6bbb2ae 100644
+--- a/src/bitfiddle.inl
++++ b/src/bitfiddle.inl
+@@ -23,7 +23,7 @@
+ 
+ 
+ #include <wx/string.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ 
+ #define FIXENDIAN16(x) (x = wxUINT16_SWAP_ON_BE(x))
+diff --git a/src/chmfile.h b/src/chmfile.h
+index dc00013..d740d20 100644
+--- a/src/chmfile.h
++++ b/src/chmfile.h
+@@ -24,7 +24,7 @@
+ #define __CHMFILE_H_
+ 
+ #include <config.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <chm_lib.h>
+ #include <wx/filefn.h>
+ #include <wx/string.h>
+-- 
+1.6.5
+
