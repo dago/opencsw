@@ -1,20 +1,12 @@
-# TODO
-# - sparcv9 (64-bit) tests fail with assertion failures (we have had this before,
-#   upstream doesn't test 64-bit builds) --> report upstream:
-#
-# ./mbuffer -q -I :8000 | openssl md5 > test2.md5 &
-# sleep 1
-# rm -f test2.tar
-# ./mbuffer -i test.tar -o /dev/null -O localhost:8000 -o test2.tar -H
-# mbuffer: warning: error connecting localhost:8000: Network is unreachable
-# 
-# mbuffer: warning: error connecting localhost:8000: Network is unreachable
-# Assertion failed: (err == 0) && (bsize == sizeof(osize)), file network.c, line 64
-# Assertion failed: (err == 0) && (bsize == sizeof(osize)), file network.c, line 64
-#
+# STATUS/TODO
+# - 20090628 contained assertion failures in 64-bit code which have been fixed
+#   with 20091012, 20091012 introduced hickups with non-IPv6 systems when using
+#   -I / -O (and not explicitly specifying -4)
+# - 20091110 does not work on Solaris 8 / 9 any more .. upstream informed
+# - 20091110 dumps core on connection refused .. upstream informed
 
 GARNAME = mbuffer
-GARVERSION = 20091103
+GARVERSION = 20091110
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -27,18 +19,17 @@ define BLURB
   if used correctly and speed up the whole backup process.
 endef
 
-MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+MASTER_SITES   = http://www.maier-komor.de/software/mbuffer/
+DISTFILES      = $(GARNAME)-$(GARVERSION).tgz
+UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+SPKG_SOURCEURL = http://www.maier-komor.de/mbuffer.html
+
 LICENSE = LICENSE
 
 # Required during packaging (for the "test" target)
 PREREQUISITE_PKGS = CSWmktemp CSWgcc4core
 
-REQUIRED_PKGS = CSWosslrt
-
-# We define upstream file regex so we can be notifed of new upstream software 
-# release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+REQUIRED_PKGS = CSWosslrt CSWlibmhash
 
 # To build the mixed package for x86 you have to do the following
 # 1)  build8x: gmake merge
@@ -54,6 +45,12 @@ NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_SCRIPTS = custom
+
+# Required for updated libmhash (mbuffer builds against it) which allows for
+# flexible const/non-const definitions.  There should be a more intelligent 
+# way to do this than to just put it into every build recipe which requires
+# libmhash though ...
+EXTRA_CPPFLAGS = -D__const=const
 
 include gar/category.mk
 
@@ -76,19 +73,10 @@ test-custom:
 	rm -rf $(TMPDIR)
 	@$(MAKECOOKIE)
 
-# Solaris 10 on build10x has libm.so which points to libm.so.2. libm.so.2 
-# is however not available on Solaris 8. So we have to explicitly use 
-# libm.so.1 during linking and get rid of the -lm reference. Otherwise
-# the package check on build8x (when running "gmake package") fails.
-post-configure-isa-amd64:
-	@echo "Patching Makefile to use /lib/64/libm.so.1 instead of -lm"
-	@perl -pi -e 's#-lm#/lib/64/libm.so.1#' $(WORKSRC)/Makefile
-	@$(MAKECOOKIE)
-
 post-install-modulated: DOCS = ChangeLog README AUTHORS
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@$(foreach DOC,$(DOCS),cp $(WORKSRC)/$(DOC) $(DOCDEST);)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	ginstall -d $(DOCDEST)
+	$(foreach DOC,$(DOCS),cp $(WORKSRC)/$(DOC) $(DOCDEST);)
+	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)
