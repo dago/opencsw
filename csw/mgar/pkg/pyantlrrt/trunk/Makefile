@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pyantlrrt
+GARNAME = py_antlr
 GARVERSION = 3.1.1
-CATEGORIES = lib
+CATEGORIES = python
 
 DESCRIPTION = Python ANTLR runtime
 define BLURB
@@ -16,28 +16,23 @@ DISTFILES  = antlr_python_runtime-$(GARVERSION).tar.gz
 
 WORKSRC = $(WORKDIR)/antlr_python_runtime-$(GARVERSION)
 
-REQUIRED_PKGS = CSWcswclassutils CSWpython CSWpython-rt
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpysetuptools
+PACKAGES = CSWpy-antlr
+CATALOGNAME = py_antlr
+PREREQUISITE_PKGS = CSWpysetuptools
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_CLASSES = none cswpycompile
 ARCHALL = 1
 
-PROTOTYPE_FILTER = awk ' \
-  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "pycompile" } \
-  { print }'
+# BUILD_SCRIPTS = $(WORKSRC)/setup.py
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = $(WORKSRC)/setup.py
-
-INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-INSTALL_ARGS += --root=$(DESTDIR) --prefix=$(prefix)
+# INSTALL_SCRIPTS = $(WORKSRC)/setup.py
+# INSTALL_ARGS += --root=$(DESTDIR) --prefix=$(prefix)
 
 TEST_SCRIPTS =
 
-post-install-modulated:
+include gar/category.mk
+
+post-install:
 	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
 	@$(MAKECOOKIE)
-
-include gar/category.mk
