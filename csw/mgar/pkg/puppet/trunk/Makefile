@@ -53,6 +53,7 @@ TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
 PATCHFILES  = 0001-pkgutil-support.patch
+PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
 
 include gar/category.mk
 
