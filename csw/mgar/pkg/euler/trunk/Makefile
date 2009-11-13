@@ -16,10 +16,24 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+PATCHFILES = 0001-Remove-static-setting-of-CFLAGS.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tz
 
+REQUIRED_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
+REQUIRED_PKGS += CSWlibatk CSWlibcairo CSWlibxext CSWpango
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS += CSWglib2devel CSWgtk2devel
+PREREQUISITE_PKGS += CSWlibcairodevel CSWlibxextdevel CSWpangodevel
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+
+EXTRA_LDFLAGS = -lm /usr/openwin/lib/libXext.so
+
+BUILD_OVERRIDE_DIRS = CFLAGS
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

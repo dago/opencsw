@@ -1,0 +1,43 @@
+From f860746c9111658622bf8f524c421fb9fc6a4064 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 13 Nov 2009 12:31:27 +0100
+Subject: [PATCH] Remove static setting of CFLAGS
+
+---
+ src/Makefile.am |    4 ----
+ src/Makefile.in |    4 ----
+ 2 files changed, 0 insertions(+), 8 deletions(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index d061923..38006c7 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -7,10 +7,6 @@
+ INCLUDES = \
+ 	$(GTK_CFLAGS)
+ 
+-AM_CFLAGS =\
+-	 -Wall\
+-	 -O3
+-
+ bin_PROGRAMS = euler
+ 
+ euler_SOURCES = \
+diff --git a/src/Makefile.in b/src/Makefile.in
+index f4fbb7b..db80e65 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -193,10 +193,6 @@ target_alias = @target_alias@
+ INCLUDES = \
+ 	$(GTK_CFLAGS)
+ 
+-AM_CFLAGS = \
+-	 -Wall\
+-	 -O3
+-
+ euler_SOURCES = \
+ 	main.c\
+ 	binary.c\
+-- 
+1.6.5.1
+
