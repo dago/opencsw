@@ -30,6 +30,7 @@ start() {
 
 stop() {
     echo "Shutting down $prog: "
+    RETVAL=0
     for display in ${VNCSERVERS}
     do
         echo "${display} "
