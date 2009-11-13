@@ -49,7 +49,7 @@ cat <<EOF >> $TMPPY
 for f in pyfiles:
 	try:
 		py_compile.compile(f, doraise=True)
-	except PyCompileError:
+	except py_compile.PyCompileError:
 		print "Error compiling: %s" % f
 
 EOF
