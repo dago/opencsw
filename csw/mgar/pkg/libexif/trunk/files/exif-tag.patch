@@ -1,0 +1,11 @@
+--- libexif-0.6.19.orig/libexif/exif-tag.c	2009-11-08 07:13:41.000000000 +0100
++++ libexif-0.6.19/libexif/exif-tag.c	2009-11-13 14:06:20.669421347 +0100
+@@ -870,7 +870,7 @@
+  * Return the number of entries in the EXIF tag table, including the
+  * terminating NULL entry.
+  */
+-inline unsigned int
++unsigned int
+ exif_tag_table_count (void)
+ {
+ 	return sizeof (ExifTagTable) / sizeof (ExifTagTable[0]);

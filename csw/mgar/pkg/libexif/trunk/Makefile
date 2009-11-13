@@ -1,5 +1,5 @@
 GARNAME = libexif
-GARVERSION = 0.6.17
+GARVERSION = 0.6.19
 CATEGORIES = lib
 
 DESCRIPTION = EXIF Tag Parsing Library
@@ -28,6 +28,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 # UPSTREAM_MASTER_SITES = 
 
 PATCHFILES = Makefile.patch
+PATCHFILES += exif-tag.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
