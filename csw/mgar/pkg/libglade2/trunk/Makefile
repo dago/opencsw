@@ -23,11 +23,18 @@ REQUIRED_PKGS += CSWgtk2 CSWlibatk CSWlibcairo CSWlibxml2 CSWpango
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PKG_CONFIG_PATH = /opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
-EXTRA_EXPORTS = PKG_CONFIG_PATH
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-STRIP_LIBTOOL = 1
+SUNX11SUB_sparcv9 = sparcv9/
+SUNX11SUB_amd64 = amd64/
+EXTRA_LDFLAGS = -lm /usr/openwin/lib/$(SUNX11SUB_$(ISA))libXext.so
+
+BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 TEST_TARGET = check
+
 include gar/category.mk
