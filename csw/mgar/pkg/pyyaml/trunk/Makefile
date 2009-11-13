@@ -44,7 +44,6 @@ PREREQUISITE_PKGS = $(REQUIRED_PKGS_CSWpy-yaml) $(REQUIRED_PKGS_CSWpy-yaml-rt)
 SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
 SPKG_DESC_CSWpy-yaml-rt = Runtime libraries for YAML parser and emitter
 
-BUILD64 = 1
 ARCHALL_CSWpy-yaml = 1
 PKGFILES_CSWpy-yaml-rt = /opt/csw/lib/python/site-packages/.*\.so
 
