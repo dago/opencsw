@@ -1,5 +1,5 @@
 GARNAME = exiftool
-GARVERSION = 7.93
+GARVERSION = 7.99
 CATEGORIES = cpan
 
 DESCRIPTION = Read, Write and Edit Image File Meta Information
