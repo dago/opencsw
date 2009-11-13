@@ -4,7 +4,7 @@ while read src dest
 do
   cp $src $dest
   conf=`echo $dest | sed 's/.CSW$//'`
-  if [-f "$conf"]; then
+  if [ -f "$conf" ]; then
     echo "$conf already exists, will not copy $dest to it."
   else
     cp $dest $conf

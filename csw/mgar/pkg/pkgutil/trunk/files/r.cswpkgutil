@@ -4,9 +4,9 @@ while read dest
 do
   conf=`echo $dest | sed 's/.CSW$//'`
   if [ "`cmp "$conf" "$dest" > /dev/null`" ]; then
-    rm $conf
+    rm -f $conf
   else
     echo "$conf modified, will not remove it."
   fi
-  rm $dest
+  rm -f $dest
 done

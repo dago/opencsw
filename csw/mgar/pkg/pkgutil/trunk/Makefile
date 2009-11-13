@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.9b1
+GARVERSION = 1.9b2
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -68,6 +68,7 @@ install-custom:
 	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@pod2man --section=1 $(WORKSRC)/bldcat > $(DESTDIR)$(mandir)/man1/bldcat.1
 	@pod2man --section=1 $(WORKSRC)/chkcat > $(DESTDIR)$(mandir)/man1/chkcat.1
+	@chmod 444 $(DESTDIR)$(mandir)/man1/*
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
 	@ginstall $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
 	@$(MAKECOOKIE)

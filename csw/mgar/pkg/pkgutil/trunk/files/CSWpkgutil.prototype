@@ -15,11 +15,11 @@ f none /opt/csw/libexec/pkgutil/wget 755 root bin
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/pkgutil 0755 root bin
-f none /opt/csw/share/doc/pkgutil/license 644 root bin
-f none /opt/csw/share/doc/pkgutil/readme 644 root bin
+f none /opt/csw/share/doc/pkgutil/license 444 root bin
+f none /opt/csw/share/doc/pkgutil/readme 444 root bin
 d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
-f none /opt/csw/share/man/man1/pkgutil.1 644 root bin
+f none /opt/csw/share/man/man1/pkgutil.1 444 root bin
 d none /var/opt/csw 0755 root bin
 d none /var/opt/csw/pkgutil 0755 root bin
 f cswpkgutil /var/opt/csw/pkgutil/admin.CSW 644 root bin
