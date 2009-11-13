@@ -1,9 +1,10 @@
 #!/opt/csw/bin/bash
+# vim:set ft=4 sw=4 sts=4 expandtab:
 #
 # $Id$
 #
 # description: Starts and stops vncserver. \
-#	       used to provide remote X administration services.
+#              used to provide remote X administration services.
 
 VNCSERVERS=""
 ARGS=""
@@ -34,7 +35,7 @@ stop() {
     for display in ${VNCSERVERS}
     do
         echo "${display} "
-	su ${display##*:} -c "vncserver -kill :${display%%:*} >/dev/null 2>&1"
+        su ${display##*:} -c "vncserver -kill :${display%%:*} >/dev/null 2>&1"
         RETVAL=$?
     done
     [ "$RETVAL" -eq 0 ] && rm -f /var/spool/locks/vncserver
@@ -43,23 +44,23 @@ stop() {
 # See how we were called.
 case "$1" in
   start)
-	start
-	;;
+        start
+        ;;
   stop)
-	stop
-	;;
+        stop
+        ;;
   restart|reload)
-	stop
-	start
-	;;
+        stop
+        start
+        ;;
   condrestart)
-	if [ -f /var/spool/locks/vncserver ]; then
-	    stop
-	    start
-	fi
-	;;
+        if [ -f /var/spool/locks/vncserver ]; then
+            stop
+            start
+        fi
+        ;;
   *)
-	echo $"Usage: $0 {start|stop|restart|condrestart}"
-	exit 1
+        echo $"Usage: $0 {start|stop|restart|condrestart}"
+        exit 1
 esac
 
