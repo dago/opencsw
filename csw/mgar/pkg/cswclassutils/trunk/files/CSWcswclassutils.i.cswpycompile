@@ -61,10 +61,10 @@ if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
 fi
     
 echo "Compiling py files to normal bytecode ..."
-${PY_BINDIR}/python -Wi -tt $TMPPY
+${PY_BINDIR}/python -Wi -t $TMPPY
 
 echo "Compiling py files to optimized bytecode ..."
-${PY_BINDIR}/python -Wi -tt -O $TMPPY
+${PY_BINDIR}/python -Wi -t -O $TMPPY
 
 rm $TMPPY
 
