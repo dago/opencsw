@@ -12,6 +12,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWsdlmixer
 REQUIRED_PKGS = CSWlibsdl
+EXTRA_LDFLAGS = -lm
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
