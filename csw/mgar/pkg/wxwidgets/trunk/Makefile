@@ -97,23 +97,18 @@ CATALOGNAME_CSWwxwidgetsdevel  = wxwidgets_devel
 CATALOGNAME_CSWwxwidgetsgtk2   = wxwidgets_gtk2
 TEST_SCRIPTS =
 
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+# To fix a problem with unresolved symbols
+EXTRA_LINKER_FLAGS  = /usr/openwin/lib/libXext.so
+# For vsscanf support
+EXTRA_LINKER_FLAGS += /opt/csw/lib/libncursesw.so
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gtk=2
 CONFIGURE_ARGS += --with-gtk-prefix=/opt/csw
 CONFIGURE_ARGS += --with-regex
 CONFIGURE_ARGS += --with-opengl
-# Unicode-enabled build on Solaris 8 fails with:
-# "./src/common/wxchar.cpp", line 1693: Error: The function "vswscanf" must have
-# a prototype.
-# Building Unicode support for Solaris 9 and 10 only.
-CONFIGURE_ARGS_5.8  = --disable-unicode
-CONFIGURE_ARGS_5.9  = --enable-unicode
-CONFIGURE_ARGS_5.10 = --enable-unicode
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
-EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt
-EXTRA_CXXFLAGS = -fast -xstrconst -xnolibmopt
+EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt -D__EXTENSIONS__
+EXTRA_CXXFLAGS = -fast -xstrconst -xnolibmopt -D__EXTENSIONS__
 EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
 EXTRA_LIB = /opt/csw/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
