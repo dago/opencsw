@@ -1,0 +1,35 @@
+From e17159437af26336537a46cf64825c9130e91267 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Date: Fri, 13 Nov 2009 12:08:02 -0500
+Subject: [PATCH 2/2] make git version dynamic when building documentation
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ Makefile |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index faefffd..9b204bd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,6 +2,8 @@ prefix ?= /usr/local
+ mandir ?= $(prefix)/share/man
+ gitdir ?= $(shell git --exec-path)
+ 
++gitver ?= $(word 3,$(shell git --version))
++
+ # this should be set to a 'standard' bsd-type install program
+ INSTALL ?= install
+ INSTALL_DATA = $(INSTALL) -c -m 0644
+@@ -32,7 +34,7 @@ doc: git-subtree.1
+ 
+ %.xml: %.txt
+ 	asciidoc -b docbook -d manpage -f asciidoc.conf \
+-		-agit_version=1.6.3 $^
++		-agit_version=$(gitver) $^
+ 
+ clean:
+ 	rm -f *~ *.xml *.html *.1
+-- 
+1.6.5
+
