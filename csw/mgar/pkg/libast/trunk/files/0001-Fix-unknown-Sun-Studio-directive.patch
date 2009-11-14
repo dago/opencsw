@@ -1,0 +1,451 @@
+From 530336bdbb1de36263137a2fc73fe6d75e06816e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 14 Nov 2009 23:06:39 +0100
+Subject: [PATCH] Fix unknown Sun Studio directive
+
+---
+ src/array.c          |    3 ++-
+ src/builtin_hashes.c |    4 ++--
+ src/conf.c           |    4 ++--
+ src/debug.c          |    4 ++--
+ src/dlinked_list.c   |    4 ++--
+ src/file.c           |    4 ++--
+ src/linked_list.c    |    4 ++--
+ src/mbuff.c          |    4 ++--
+ src/mem.c            |    4 ++--
+ src/msgs.c           |    4 ++--
+ src/obj.c            |    4 ++--
+ src/objpair.c        |    4 ++--
+ src/options.c        |    4 ++--
+ src/regexp.c         |    4 ++--
+ src/snprintf.c       |    2 ++
+ src/socket.c         |    4 ++--
+ src/str.c            |    4 ++--
+ src/strings.c        |    6 +++---
+ src/tok.c            |    4 ++--
+ src/url.c            |    4 ++--
+ 20 files changed, 41 insertions(+), 38 deletions(-)
+
+diff --git a/src/array.c b/src/array.c
+index 8dde32d..e00d809 100644
+--- a/src/array.c
++++ b/src/array.c
+@@ -21,13 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: array.c,v 1.18 2004/07/16 23:22:18 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+ 
+ /* *INDENT-OFF* */
+ SPIF_DECL_OBJ(array_iterator) {
+diff --git a/src/builtin_hashes.c b/src/builtin_hashes.c
+index 7de999a..48b3c2d 100644
+--- a/src/builtin_hashes.c
++++ b/src/builtin_hashes.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: builtin_hashes.c,v 1.3 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ #define BUILTIN_RANDOM_SEED   (SPIF_CAST(uint32) 0xf721b64d)
+ 
+ /*
+diff --git a/src/conf.c b/src/conf.c
+index 3df8280..2c98677 100644
+--- a/src/conf.c
++++ b/src/conf.c
+@@ -31,14 +31,14 @@
+  * @author Michael Jennings <mej@eterm.org>
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: conf.c,v 1.26 2005/03/07 22:29:07 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ static spifconf_var_t *spifconf_new_var(void);
+ static void spifconf_free_var(spifconf_var_t *);
+ static spif_charptr_t spifconf_get_var(const spif_charptr_t);
+diff --git a/src/debug.c b/src/debug.c
+index f0da466..abbb1e5 100644
+--- a/src/debug.c
++++ b/src/debug.c
+@@ -32,14 +32,14 @@
+  * $Date: 2004/12/15 00:00:22 $
+  */
+ 
++#include "libast_internal.h"
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: debug.c,v 1.14 2004/12/15 00:00:22 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include "libast_internal.h"
+-
+ /**
+  * Debug level.
+  *
+diff --git a/src/dlinked_list.c b/src/dlinked_list.c
+index a220f6e..87990ec 100644
+--- a/src/dlinked_list.c
++++ b/src/dlinked_list.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: dlinked_list.c,v 1.21 2004/07/20 22:32:08 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ SPIF_DECL_OBJ(dlinked_list_iterator) {
+     SPIF_DECL_PARENT_TYPE(obj);
+diff --git a/src/file.c b/src/file.c
+index f77981c..8ac9945 100644
+--- a/src/file.c
++++ b/src/file.c
+@@ -32,14 +32,14 @@
+  * $Date: 2004/07/23 21:38:39 $
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: file.c,v 1.11 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /**
+  * Create and open a temporary file.
+  *
+diff --git a/src/linked_list.c b/src/linked_list.c
+index 53a3425..11b8cfc 100644
+--- a/src/linked_list.c
++++ b/src/linked_list.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: linked_list.c,v 1.26 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ SPIF_DECL_OBJ(linked_list_iterator) {
+     SPIF_DECL_PARENT_TYPE(obj);
+diff --git a/src/mbuff.c b/src/mbuff.c
+index 30ffd0d..bb87101 100644
+--- a/src/mbuff.c
++++ b/src/mbuff.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: mbuff.c,v 1.1 2004/12/15 00:00:22 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ static SPIF_CONST_TYPE(mbuffclass) mb_class = {
+     {
+diff --git a/src/mem.c b/src/mem.c
+index bb564ac..a4f5d6c 100644
+--- a/src/mem.c
++++ b/src/mem.c
+@@ -32,14 +32,14 @@
+  * $Date: 2005/12/22 23:28:55 $
+  */
+ 
++#include "libast_internal.h"
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: mem.c,v 1.25 2005/12/22 23:28:55 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include "libast_internal.h"
+-
+ static void memrec_add_var(memrec_t *, const spif_charptr_t, unsigned long, void *, size_t);
+ static ptr_t *memrec_find_var(memrec_t *, const void *);
+ static void memrec_rem_var(memrec_t *, const spif_charptr_t, const spif_charptr_t, unsigned long, const void *);
+diff --git a/src/msgs.c b/src/msgs.c
+index d68b659..ea32ac5 100644
+--- a/src/msgs.c
++++ b/src/msgs.c
+@@ -33,14 +33,14 @@
+  * $Date: 2004/07/23 21:38:39 $
+  */
+ 
++#include "libast_internal.h"
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: msgs.c,v 1.11 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include "libast_internal.h"
+-
+ /**
+  * Program name.
+  *
+diff --git a/src/obj.c b/src/obj.c
+index fa89837..1954187 100644
+--- a/src/obj.c
++++ b/src/obj.c
+@@ -32,14 +32,14 @@
+  * $Date: 2004/07/23 21:38:39 $
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: obj.c,v 1.27 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ /**
+  * The actual class structure for the @c obj type.
+diff --git a/src/objpair.c b/src/objpair.c
+index dc999dd..0efc707 100644
+--- a/src/objpair.c
++++ b/src/objpair.c
+@@ -32,14 +32,14 @@
+  * $Date: 2004/07/23 21:38:39 $
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: objpair.c,v 1.10 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ /**
+  * The actual class structure for the @c objpair type.
+diff --git a/src/options.c b/src/options.c
+index a34bca6..cf2ddaf 100644
+--- a/src/options.c
++++ b/src/options.c
+@@ -33,14 +33,14 @@
+  * $Date: 2004/10/26 18:01:53 $
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: options.c,v 1.18 2004/10/26 18:01:53 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /*@{*/
+ /**
+  * @name Internal Parser Macros
+diff --git a/src/regexp.c b/src/regexp.c
+index 9e975d3..e5a162e 100644
+--- a/src/regexp.c
++++ b/src/regexp.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: regexp.c,v 1.15 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ static SPIF_CONST_TYPE(class) r_class = {
+     SPIF_DECL_CLASSNAME(regexp),
+diff --git a/src/snprintf.c b/src/snprintf.c
+index 4e79f92..8087f5f 100644
+--- a/src/snprintf.c
++++ b/src/snprintf.c
+@@ -9,6 +9,8 @@
+ # undef HAVE_STDARG_H
+ #endif
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: snprintf.c,v 1.6 2004/07/23 21:38:39 mej Exp $";
+ 
+ /* 
+diff --git a/src/socket.c b/src/socket.c
+index da601b4..b040cde 100644
+--- a/src/socket.c
++++ b/src/socket.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: socket.c,v 1.23 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ static spif_url_t spif_url_new_from_ipaddr(spif_ipsockaddr_t);
+ static spif_bool_t spif_url_init_from_ipaddr(spif_url_t, spif_ipsockaddr_t);
+ static spif_url_t spif_url_new_from_unixaddr(spif_unixsockaddr_t);
+diff --git a/src/str.c b/src/str.c
+index 62d41b4..aa7a943 100644
+--- a/src/str.c
++++ b/src/str.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: str.c,v 1.32 2004/12/15 00:00:22 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ static SPIF_CONST_TYPE(strclass) s_class = {
+     {
+diff --git a/src/strings.c b/src/strings.c
+index 080f5ee..5b4b700 100644
+--- a/src/strings.c
++++ b/src/strings.c
+@@ -30,14 +30,14 @@
+  * @author Michael Jennings <mej@eterm.org>
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: strings.c,v 1.25 2005/03/07 22:29:07 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ #if !(HAVE_MEMMEM)
+ /* Find first occurance of bytestring needle of size needlelen in memory region
+    haystack of size haystacklen */
+@@ -159,7 +159,7 @@ strrev(register char *str)
+     REQUIRE_RVAL(str != SPIF_NULL_TYPE(ptr), SPIF_NULL_TYPE(ptr));
+     i = strlen(str);
+     for (j = 0, i--; i > j; i--, j++) {
+-        (void) SWAP(str[j], str[i]);
++        SWAP(str[j], str[i]);
+     }
+     return (str);
+ 
+diff --git a/src/tok.c b/src/tok.c
+index e0f99b3..8952efc 100644
+--- a/src/tok.c
++++ b/src/tok.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: tok.c,v 1.22 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ static SPIF_CONST_TYPE(class) t_class = {
+     SPIF_DECL_CLASSNAME(tok),
+diff --git a/src/url.c b/src/url.c
+index f78766f..c699a5f 100644
+--- a/src/url.c
++++ b/src/url.c
+@@ -21,14 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast_internal.h>
++
+ static const char __attribute__((unused)) cvs_ident[] = "$Id: url.c,v 1.20 2004/07/23 21:38:39 mej Exp $";
+ 
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+ 
+-#include <libast_internal.h>
+-
+ /* *INDENT-OFF* */
+ static SPIF_CONST_TYPE(class) u_class = {
+     SPIF_DECL_CLASSNAME(url),
+-- 
+1.6.5.1
+
