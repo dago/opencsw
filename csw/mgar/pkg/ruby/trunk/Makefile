@@ -112,7 +112,7 @@ endif
 
 include gar/category.mk
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
+SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
 RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.8/rbconfig.rb
 
