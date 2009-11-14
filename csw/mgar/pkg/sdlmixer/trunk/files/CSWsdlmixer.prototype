@@ -1,9 +1,0 @@
-d none /opt/csw/include/SDL 0755 root bin
-f none /opt/csw/include/SDL/SDL_mixer.h 0644 root bin
-d none /opt/csw/lib 0755 root bin
-f none /opt/csw/lib/libSDL_mixer-1.2.so.0.2.6 0755 root bin
-s none /opt/csw/lib/libSDL_mixer-1.2.so.0=libSDL_mixer-1.2.so.0.2.6
-s none /opt/csw/lib/libSDL_mixer.so=libSDL_mixer-1.2.so.0.2.6
-i copyright=CSWsdlmixer.copyright
-i depend=CSWsdlmixer.depend
-i pkginfo=CSWsdlmixer.pkginfo
