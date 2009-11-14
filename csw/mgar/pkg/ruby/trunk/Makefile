@@ -124,7 +124,7 @@ post-install-modulated: $(PI_TARGETS)
 multiconfig:
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS11
-	@gcp $(FILEDIR)/rbconfig.rb.GCC4 $(DESTDIR)/$(RBCONFIG).GCC4
+	@gcp $(FILEDIR)/rbconfig.rb.GCC4.$(GARCH) $(DESTDIR)/$(RBCONFIG).GCC4
 	@gln -s $(RBCONFIG).SOS11 $(DESTDIR)$(RBCONFIG)
 	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/
 	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig
