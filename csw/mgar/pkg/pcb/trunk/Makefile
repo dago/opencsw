@@ -12,6 +12,7 @@ define BLURB
 	reduce layout time. 
 endef
 
+SF_PROJ = $(GARNAME)
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
@@ -20,6 +21,14 @@ SPKG_SOURCEURL = http://pcb.gpleda.org
 LICENSE = COPYING
 
 #REQUIRED_PKGS = CSWggettextrt CSWiconv
+PREREQUISITE_PKGS  = CSWglib2devel
+PREREQUISITE_PKGS += CSWgtk2devel
+PREREQUISITE_PKGS += CSWlibxcbdevel
+PREREQUISITE_PKGS += CSWlibpthreadstubs
+PREREQUISITE_PKGS += CSWlibxaudevel
+PREREQUISITE_PKGS += CSWrenderproto
+PREREQUISITE_PKGS += CSWxproto
+PREREQUISITE_PKGS += CSWkbproto
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=73743
@@ -33,6 +42,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 # Patch submitted to upstream, pending new release
 #PATCHFILES = iptc-dataset.patch
 
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-update-desktop-database
 CONFIGURE_ARGS += --disable-update-mime-database
