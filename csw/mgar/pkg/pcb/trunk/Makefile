@@ -65,28 +65,12 @@ CONFIGURE_ARGS += --disable-update-mime-database
 
 TEST_SCRIPTS =
 
-# 2009-11-15:If these are not excluded pkgmk core dumps or just fails. - trygvis
-EXTRA_MERGE_EXCLUDE_FILES  = .*/connector/single-ended.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/1.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/10.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/12.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/16.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/2.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/20.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/24.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/32.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/4.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/5.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/8.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/DIL.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/EIA.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/PLCC.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/QFP.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/SMD.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/SMD-W.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/W-DIL.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/ZIF.*
-EXTRA_MERGE_EXCLUDE_FILES += .*/generic/ZIP.*
-
-
 include gar/category.mk
+
+post-extract-modulated:
+	@echo " ==> Renaming files (' ' => '_')"
+	@find $(WORKSRC)/lib/pcblib-newlib -name \*\ \* | \
+		while read f; \
+		do \
+			mv "$$f" `echo $$f | tr " " _`; \
+		done
