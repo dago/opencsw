@@ -1,7 +1,1 @@
-2756b01f428b910d33267aeaa0e2d59a  download/guile-1.6.8.tar.gz
-4dfbfa0a9c83ce718bc9e84f912a1463  download/CSWguile.gspec
-55b9e3cd0e4bb084a23aa431375ca2ec  download/CSWguile.prototype
-3360bc130644f066d92ee36acb4d12dd  download/CSWguile.depend
-3e6e797ea03ebaa3e1e8e19886beb563  download/CSWguilelib12.gspec
-677ed30ce2900e4013b262a93ec42753  download/CSWguilelib12.prototype
-620a1fb38f3a59a12f40a0d1b01d0f77  download/CSWguilelib12.depend
+991b5b3efcbbc3f7507d05bc42f80a5e  guile-1.8.7.tar.gz
