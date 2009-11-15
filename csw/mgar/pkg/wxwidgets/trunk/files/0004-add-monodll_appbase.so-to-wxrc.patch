@@ -8,18 +8,6 @@ Subject: [PATCH] add monodll_appbase.so to wxrc
  utils/wxrc/Makefile.in |    3 ++-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/common/wxchar.cpp b/src/common/wxchar.cpp
-index 1550acc..f594796 100644
---- a/src/common/wxchar.cpp
-+++ b/src/common/wxchar.cpp
-@@ -15,7 +15,6 @@
- 
- // For compilers that support precompilation, includes "wx.h".
- #include "wx/wxprec.h"
--#include "ncursesw/ncurses.h"
- 
- #ifdef __BORLANDC__
-     #pragma hdrstop
 diff --git a/utils/wxrc/Makefile.in b/utils/wxrc/Makefile.in
 index 086ba6f..9f1f171 100644
 --- a/utils/wxrc/Makefile.in
