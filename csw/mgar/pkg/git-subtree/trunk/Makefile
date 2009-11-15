@@ -1,6 +1,6 @@
 GARNAME = git-subtree
 GARVERSION = 0.2
-PATCHLEVEL = c567d9
+PATCHLEVEL = d8b2c
 CATEGORIES = devel
 
 DESCRIPTION = Subtree support for git
