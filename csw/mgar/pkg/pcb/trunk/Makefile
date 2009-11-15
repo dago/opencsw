@@ -49,4 +49,6 @@ CONFIGURE_ARGS += --disable-update-mime-database
 
 TEST_SCRIPTS =
 
+EXTRA_MERGE_EXCLUDE_FILES = .*/single-ended\ .*
+
 include gar/category.mk
