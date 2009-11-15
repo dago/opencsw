@@ -107,6 +107,7 @@ CONFIGURE_ARGS += --with-gtk=2
 CONFIGURE_ARGS += --with-gtk-prefix=/opt/csw
 CONFIGURE_ARGS += --with-regex
 CONFIGURE_ARGS += --with-opengl
+CONFIGURE_ARGS += --enable-unicode
 EXTRA_CFLAGS = -fast -xstrconst -xnolibmopt -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -fast -xstrconst -xnolibmopt -D__EXTENSIONS__
 EXTRA_INC = /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
