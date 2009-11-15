@@ -2,6 +2,7 @@
 45df2933ed2fa53f229feda01467db81  0002-Fixing-retarded-checks-for-libGL.patch
 225f6163a1c31d1f96a3b0548b338105  0003-vsscanf-support-via-ncursesw.patch
 f073300d39ce7c88db1033bbce64cdca  0004-add-monodll_appbase.so-to-wxrc.patch
+969c363847e675dc4d3ad6b8871b96db  0005-stupid-vwscanf-workaround.patch
 75ecdc04af4392f918ff6856a3ba6605  0500-wxT-macro-first-iteration.patch
 17d8d019fd2e4137b4cd44816b14e282  0501-a-possible-fix-to-wxchar.h.patch
 05b32ca051651f4b1885a90f62969faf  wxWidgets-2.8.10.tar.gz

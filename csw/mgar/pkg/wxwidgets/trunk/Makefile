@@ -16,7 +16,7 @@ endef
 # The unicode version can't be currently built on Solaris 8.  Doing separate
 # builds on Solaris 8 and Solaris 9.  Unicode support will start in Solaris 9.
 # More details below, look for 'unicode'.
-PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386 solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
 
 EXTRA_MODULATORS = GARVERSION
 MODULATIONS_GARVERSION = 2.8.5 2.8.10
@@ -29,27 +29,32 @@ MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.10 = copy-all
 
 SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+DISTFILES  = $(SOURCEFILES)
 SPKG_SOURCEURL = http://www.wxwidgets.org/
 MASTER_SITES  = $(SF_MIRRORS)
 SF_PROJ = wxwindows
+
 
 PATCHFILES_isa-i386-garversion-2.8.5  = 0500-wxT-macro-first-iteration.patch
 PATCHFILES_isa-i386-garversion-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
 PATCHFILES_isa-i386-garversion-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
 PATCHFILES_isa-i386-garversion-2.8.5 += 0003-vsscanf-support-via-ncursesw.patch
 PATCHFILES_isa-i386-garversion-2.8.5 += 0004-add-monodll_appbase.so-to-wxrc.patch
+PATCHFILES_isa-i386-garversion-2.8.5 += 0005-stupid-vwscanf-workaround.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.5  = 0500-wxT-macro-first-iteration.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0501-a-possible-fix-to-wxchar.h.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0002-Fixing-retarded-checks-for-libGL.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0003-vsscanf-support-via-ncursesw.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0004-add-monodll_appbase.so-to-wxrc.patch
+PATCHFILES_isa-sparcv8-garversion-2.8.5 += 0005-stupid-vwscanf-workaround.patch
 PATCHFILES_isa-i386-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
 PATCHFILES_isa-i386-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
 PATCHFILES_isa-i386-garversion-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
+PATCHFILES_isa-i386-garversion-2.8.10 += 0005-stupid-vwscanf-workaround.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
-DISTFILES  = $(SOURCEFILES)
+PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0005-stupid-vwscanf-workaround.patch
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
@@ -106,7 +111,8 @@ TEST_SCRIPTS =
 # To fix a problem with unresolved symbols
 EXTRA_LINKER_FLAGS  = /usr/openwin/lib/libXext.so
 # For vsscanf support
-EXTRA_LINKER_FLAGS += /opt/csw/lib/libncursesw.so
+# EXTRA_LINKER_FLAGS += /opt/csw/lib/libncursesw.so
+EXTRA_LINKER_FLAGS += -lncursesw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gtk=2
