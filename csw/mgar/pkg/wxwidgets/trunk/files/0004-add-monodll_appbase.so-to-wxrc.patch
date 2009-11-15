@@ -1,0 +1,39 @@
+From 97b45391f2f97c5455d600051445dd9852a5c58b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 15 Nov 2009 10:25:28 +0100
+Subject: [PATCH] add monodll_appbase.so to wxrc
+
+---
+ src/common/wxchar.cpp  |    1 -
+ utils/wxrc/Makefile.in |    3 ++-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/common/wxchar.cpp b/src/common/wxchar.cpp
+index 1550acc..f594796 100644
+--- a/src/common/wxchar.cpp
++++ b/src/common/wxchar.cpp
+@@ -15,7 +15,6 @@
+ 
+ // For compilers that support precompilation, includes "wx.h".
+ #include "wx/wxprec.h"
+-#include "ncursesw/ncurses.h"
+ 
+ #ifdef __BORLANDC__
+     #pragma hdrstop
+diff --git a/utils/wxrc/Makefile.in b/utils/wxrc/Makefile.in
+index 086ba6f..9f1f171 100644
+--- a/utils/wxrc/Makefile.in
++++ b/utils/wxrc/Makefile.in
+@@ -44,7 +44,8 @@ WXRC_CXXFLAGS = -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
+ 	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
+ 	-I$(srcdir) $(__DLLFLAG_p) -DwxUSE_GUI=0 $(CPPFLAGS) $(CXXFLAGS)
+ WXRC_OBJECTS =  \
+-	wxrc_wxrc.o
++	wxrc_wxrc.o \
++	../../monodll_appbase.o
+ 
+ ### Conditionally set variables: ###
+ 
+-- 
+1.6.2.1
+
