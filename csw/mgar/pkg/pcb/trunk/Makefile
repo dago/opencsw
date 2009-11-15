@@ -20,7 +20,23 @@ SPKG_SOURCEURL = http://pcb.gpleda.org
 
 LICENSE = COPYING
 
-#REQUIRED_PKGS = CSWggettextrt CSWiconv
+REQUIRED_PKGS  = CSWfconfig
+REQUIRED_PKGS += CSWftype2
+REQUIRED_PKGS += CSWgd
+REQUIRED_PKGS += CSWggettextrt
+REQUIRED_PKGS += CSWglib2
+REQUIRED_PKGS += CSWgtk2
+REQUIRED_PKGS += CSWiconv
+REQUIRED_PKGS += CSWjpeg
+REQUIRED_PKGS += CSWlibatk
+REQUIRED_PKGS += CSWlibcairo
+REQUIRED_PKGS += CSWlibxpm
+REQUIRED_PKGS += CSWlibxrender
+REQUIRED_PKGS += CSWpango
+REQUIRED_PKGS += CSWpng
+REQUIRED_PKGS += CSWxpm
+REQUIRED_PKGS += CSWzlib
+
 PREREQUISITE_PKGS  = CSWglib2devel
 PREREQUISITE_PKGS += CSWgtk2devel
 PREREQUISITE_PKGS += CSWlibxcbdevel
@@ -49,6 +65,28 @@ CONFIGURE_ARGS += --disable-update-mime-database
 
 TEST_SCRIPTS =
 
-EXTRA_MERGE_EXCLUDE_FILES = .*/single-ended\ .*
+# 2009-11-15:If these are not excluded pkgmk core dumps or just fails. - trygvis
+EXTRA_MERGE_EXCLUDE_FILES  = .*/connector/single-ended.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/1.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/10.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/12.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/16.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/2.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/20.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/24.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/32.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/4.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/5.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/8.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/DIL.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/EIA.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/PLCC.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/QFP.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/SMD.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/SMD-W.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/W-DIL.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/ZIF.*
+EXTRA_MERGE_EXCLUDE_FILES += .*/generic/ZIP.*
+
 
 include gar/category.mk
