@@ -12,7 +12,7 @@ define BLURB
   plugins providing around 400 actual commands. 
 endef
 
-SPKG_SOURCEURL = http://sourceforge.net/projects/supybot/
+SPKG_SOURCEURL = http://supybot.com/
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = Supybot-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
@@ -25,10 +25,12 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
-post-install-modulated: DOCS=ChangeLog ACKS
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCS=ChangeLog ACKS docs/*
+post-install-modulated: MANDEST=$(DESTDIR)$(mandir)/man1
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	cp $(addprefix $(WORKSRC)/, $(DOCS)) $(DOCDEST)	
+	-cp $(addprefix $(WORKSRC)/, $(DOCS)) $(DOCDEST)	
+	ginstall -d $(MANDEST) && cp $(WORKSRC)/docs/man/* $(MANDEST)
 	@$(MAKECOOKIE)
