@@ -76,8 +76,10 @@ REQUIRED_PKGS += CSWlibatk
 REQUIRED_PKGS += CSWlibsm
 REQUIRED_PKGS += CSWlibxext
 REQUIRED_PKGS += CSWmesa
+REQUIRED_PKGS += CSWncurses
 REQUIRED_PKGS += CSWpango
 REQUIRED_PKGS += CSWpng
+REQUIRED_PKGS += CSWsunmath
 REQUIRED_PKGS += CSWtiff
 REQUIRED_PKGS += CSWzlib
 
@@ -113,6 +115,8 @@ EXTRA_LINKER_FLAGS  = /usr/openwin/lib/libXext.so
 # For vsscanf support
 # EXTRA_LINKER_FLAGS += /opt/csw/lib/libncursesw.so
 EXTRA_LINKER_FLAGS += -lncursesw
+# To fix the __sincos problem on x86
+EXTRA_LINKER_FLAGS += -lsunmath
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gtk=2
