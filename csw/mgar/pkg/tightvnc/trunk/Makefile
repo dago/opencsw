@@ -56,7 +56,7 @@ BUILD_SCRIPTS = vnc
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = vnc
 PATCHFILES  = 0001-Sun-compiler-in-sun.cf.patch
-PATCHFILES += 0003-GNU-make-by-default.patch
+PATCHFILES += 0002-GNU-make-by-default.patch
 PATCHFILES += 0003-libdix.a-after-libos.a.patch
 PATCHFILES += 0001-Force-the-use-of-libwrap.patch
 
@@ -73,17 +73,18 @@ configure-vnc:
 build-vnc:
 	(cd $(WORKSRC) && $(BUILD_ENV) \
 		EXTRA_INCLUDES="-I/opt/csw/include" \
+		EXTRA_DEFINES="$(CFLAGS)" \
 		LOCAL_LDFLAGS="-L/opt/csw/lib" \
 		gmake World)
 	(cd $(WORKSRC)/Xvnc && $(CONFIGURE_ENV) \
 		EXTRA_LIBRARIES="-lwrap -lsocket" \
-		EXTRA_DEFINES="-DUSE_LIBWRAP=1" \
+		EXTRA_DEFINES="-DUSE_LIBWRAP=1 $(CFLAGS)" \
 		EXTRA_INCLUDES="-I/opt/csw/include" \
 		LOCAL_LDFLAGS="-L/opt/csw/lib" \
 		./configure)
 	(cd $(WORKSRC)/Xvnc && $(BUILD_ENV) \
 		EXTRA_LIBRARIES="-lwrap -lsocket" \
-		EXTRA_DEFINES="-DUSE_LIBWRAP=1" \
+		EXTRA_DEFINES="-DUSE_LIBWRAP=1 $(CFLAGS)" \
 		LOCAL_LDFLAGS="-L/opt/csw/lib" \
 		EXTRA_INCLUDES="-I/opt/csw/include" \
 		$(MAKE))
