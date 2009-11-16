@@ -1,5 +1,5 @@
 GARNAME = patch
-GARVERSION = 2.5.9
+GARVERSION = 2.6
 CATEGORIES = utils
 
 DESCRIPTION = GNU patch utility
