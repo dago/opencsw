@@ -1,19 +1,15 @@
 GARNAME = libtool
-RELEASE = a
-GARVERSION = 2.2.6
+GARVERSION = 2.2.6b
 CATEGORIES = devel
 
 EXTRA_MODULATORS = GARVERSION GARCOMPILER
-MODULATIONS_GARVERSION = 1.5.26 2.2.6
+MODULATIONS_GARVERSION = 1.5.26 2.2.6b
 MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS11
 
 # Modulate over compiler only for 2.2.6
 SKIP_MODULATIONS = $(foreach I,sparcv8 sparcv9 i386 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-1.5.26-garcompiler-$C))
 # Compile 64 bit libraries only with SOS11
 SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-2.2.6-garcompiler-$C))
-
-FILEVERSION_1.5.26 = 1.5.26
-FILEVERSION_2.2.6 = 2.2.6$(RELEASE)
 
 DESCRIPTION = A generic library support tool
 define BLURB
@@ -23,7 +19,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(FILEVERSION_$(VERSION)).tar.gz)
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
 DISTFILES    = $(SOURCEFILES)
 
 PATCH_LIBTOOL = patch-libtool.diff
@@ -31,7 +27,7 @@ PATCHFILES_POSTINSTALL_isa-i386-garversion-2.2.6-garcompiler-SOS11 = $(PATCH_LIB
 PATCHFILES_POSTINSTALL_isa-sparcv8-garversion-2.2.6-garcompiler-SOS11 = $(PATCH_LIBTOOL)
 DISTFILES += $(PATCH_LIBTOOL)
 
-NOEXTRACT = $(filter-out $(GARNAME)-$(FILEVERSION_$(GARVERSION)).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 
 EXTRA_TAGS = gcc3 gcc4
 COMPILER_TAGNAME_GCC3 = gcc3
@@ -58,35 +54,21 @@ NO_ISAEXEC = 1
 SKIPTEST = 1
 TEST_TARGET = check
 
-   MERGE_SCRIPTS_isa-i386-garversion-1.5.26-garcompiler-SOS11 = copy-only
-      MERGE_DIRS_isa-i386-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
-  MERGE_SCRIPTS_isa-amd64-garversion-1.5.26-garcompiler-SOS11 = copy-relocated-only
-     MERGE_DIRS_isa-amd64-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
+   MERGE_SCRIPTS_isa-default-garversion-1.5.26-garcompiler-SOS11 = copy-only
+      MERGE_DIRS_isa-default-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
+ MERGE_SCRIPTS_isa-default64-garversion-1.5.26-garcompiler-SOS11 = copy-relocated-only
+    MERGE_DIRS_isa-default64-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
 
-    MERGE_SCRIPTS_isa-i386-garversion-2.2.6-garcompiler-SOS11 = copy-all
-   MERGE_SCRIPTS_isa-amd64-garversion-2.2.6-garcompiler-SOS11 = copy-relocated-only
-      MERGE_DIRS_isa-amd64-garversion-2.2.6-garcompiler-SOS11 = $(libdir)
+   MERGE_SCRIPTS_isa-default-garversion-2.2.6b-garcompiler-SOS11 = copy-all
+ MERGE_SCRIPTS_isa-default64-garversion-2.2.6b-garcompiler-SOS11 = copy-relocated-only
+    MERGE_DIRS_isa-default64-garversion-2.2.6b-garcompiler-SOS11 = $(libdir)
 
-     MERGE_SCRIPTS_isa-i386-garversion-2.2.6-garcompiler-GCC3 = copy-tags
-     MERGE_SCRIPTS_isa-i386-garversion-2.2.6-garcompiler-GCC4 = copy-tags
-
-MERGE_SCRIPTS_isa-sparcv8-garversion-1.5.26-garcompiler-SOS11 = copy-only
-   MERGE_DIRS_isa-sparcv8-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
-MERGE_SCRIPTS_isa-sparcv9-garversion-1.5.26-garcompiler-SOS11 = copy-relocated-only
-   MERGE_DIRS_isa-sparcv9-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
-
- MERGE_SCRIPTS_isa-sparcv8-garversion-2.2.6-garcompiler-SOS11 = copy-all
- MERGE_SCRIPTS_isa-sparcv9-garversion-2.2.6-garcompiler-SOS11 = copy-relocated-only
-    MERGE_DIRS_isa-sparcv9-garversion-2.2.6-garcompiler-SOS11 = $(libdir)
-
-  MERGE_SCRIPTS_isa-sparcv8-garversion-2.2.6-garcompiler-GCC3 = copy-tags
-  MERGE_SCRIPTS_isa-sparcv8-garversion-2.2.6-garcompiler-GCC4 = copy-tags
+    MERGE_SCRIPTS_isa-default-garversion-2.2.6b-garcompiler-GCC3 = copy-tags
+    MERGE_SCRIPTS_isa-default-garversion-2.2.6b-garcompiler-GCC4 = copy-tags
 
 PKGFILES_CSWlibtoolrt = $(PKGFILES_RT)
 
 include gar/category.mk
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 post-install-modulated: $(if $(PATCHFILES_POSTINSTALL_$(MODULATION)),patch-libtool)
 post-install-modulated: $(if $(COMPILER_TAGNAME_$(GARCOMPILER)),install-libtool-$(COMPILER_TAGNAME_$(GARCOMPILER)))
