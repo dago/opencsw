@@ -9,7 +9,7 @@ MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS11
 # Modulate over compiler only for 2.2.6
 SKIP_MODULATIONS = $(foreach I,sparcv8 sparcv9 i386 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-1.5.26-garcompiler-$C))
 # Compile 64 bit libraries only with SOS11
-SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-2.2.6-garcompiler-$C))
+SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-2.2.6b-garcompiler-$C))
 
 DESCRIPTION = A generic library support tool
 define BLURB
