@@ -19,6 +19,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://rapidsvn.tigris.org/
+PREREQUISITE_PKGS = CSWsvn-devel CSWapache2-devel
 
 # RapidSVN 0.9.1 omits the manpage from the dist archive
 # DISTFILES += rapidsvn.xml
