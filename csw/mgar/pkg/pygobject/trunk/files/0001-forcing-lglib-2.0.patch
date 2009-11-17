@@ -1,0 +1,25 @@
+From bdf70ab64e91f0c1ad058447ff843de9be055662 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Sun, 18 Oct 2009 13:16:29 +0100
+Subject: [PATCH] forcing -lglib-2.0
+
+---
+ gobject/Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gobject/Makefile.am b/gobject/Makefile.am
+index fa0ea20..112e750 100644
+--- a/gobject/Makefile.am
++++ b/gobject/Makefile.am
+@@ -26,7 +26,7 @@ constants.py: generate-constants$(EXEEXT) constants.py.in
+ 	$(top_builddir)/gobject/generate-constants$(EXEEXT) >> constants.py
+ 	chmod 444 constants.py
+ 
+-generate_constants_CFLAGS = $(GLIB_CFLAGS) $(PYTHON_INCLUDES)
++generate_constants_CFLAGS = $(GLIB_CFLAGS) $(PYTHON_INCLUDES) -lglib-2.0
+ 
+ noinst_PROGRAMS = generate-constants
+ CLEANFILES = constants.py
+-- 
+1.6.3.2
+

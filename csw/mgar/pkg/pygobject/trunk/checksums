@@ -1,2 +1,2 @@
-522b813219a6ad14b85b25d953b08727  download/pygobject-2.18.0.tar.bz2
-58a4ba1e53516251eb4c69fae6372208  download/pygobject.diff
+bc2cdac34e1084f4d72eb2bf762e700c  0001-forcing-lglib-2.0.patch
+10e1fb79be3d698476a28b1e1b0c5640  pygobject-2.20.0.tar.bz2
