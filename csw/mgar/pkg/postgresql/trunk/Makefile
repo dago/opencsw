@@ -60,6 +60,8 @@ PRESERVECONF = /opt/csw/etc/postgresql.conf
 
 include gar/category.mk
 
+CFLAGS := $(filter-out -I%,$(CFLAGS))
+
 post-merge:
 	ginstall -d $(PKGROOT)/etc/init.d && ginstall $(WORKDIR)/cswpostgres $(PKGROOT)/etc/init.d/
 	ginstall -d $(PKGROOT)/opt/csw/etc/pkg/postgresql && ginstall $(WORKDIR)/cswusergroup $(PKGROOT)/opt/csw/etc/pkg/postgresql/
