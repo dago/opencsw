@@ -47,6 +47,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
 DISTFILES += CSWcupsclient.preinstall
 DISTFILES += CSWcupsd.preinstall
 DISTFILES += CSWcupsd.postremove
+DISTFILES += client.conf.CSW
 
 PATCHFILES  = 0001-cswcups-for-service-name.patch
 PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
@@ -100,7 +101,13 @@ PKGFILES_CSWcupsdev += $(bindir)/cups-config
 PKGFILES_CSWcupsdev += $(datadir)/cups/ppdc.*
 PKGFILES_CSWcupsdev += $(datadir)/cups/drv.*
 
-PKGFILES_CSWcupsd  = $(sysconfdir)/.*
+PKGFILES_CSWcupsd  = $(sysconfdir)/init\.d/.*
+PKGFILES_CSWcupsd += $(sysconfdir)/rc.*
+PKGFILES_CSWcupsd += $(sysconfdir)/cups/cupsd.*
+PKGFILES_CSWcupsd += $(sysconfdir)/cups/interfaces.*
+PKGFILES_CSWcupsd += $(sysconfdir)/cups/ppd.*
+PKGFILES_CSWcupsd += $(sysconfdir)/cups/snmp.*
+PKGFILES_CSWcupsd += $(sysconfdir)/cups/ssl.*
 PKGFILES_CSWcupsd += $(mandir)/man1m
 PKGFILES_CSWcupsd += $(mandir)/man1m/cups(filter|d|-polld|-deviced|-driverd|-lpd).*
 PKGFILES_CSWcupsd += $(mandir)/man7/(backend|filter).7
@@ -136,6 +143,7 @@ PKGFILES_CSWcupsclient += $(mandir)/man1m/lp(admin|c|info|move)\.1m
 PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
 PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
 PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
+PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
 
 SPKG_DESC_CSWcups = Common Unix Printing System
 SPKG_DESC_CSWlibcups = CUPS libraries
@@ -145,7 +153,8 @@ SPKG_DESC_CSWcupsdoc = CUPS documentation
 SPKG_DESC_CSWcupsdev = CUPS header files
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
-SAMPLECONF = $(sysconfdir)/cups/cupsd\.conf\.CSW
+SAMPLECONF  = $(sysconfdir)/cups/cupsd\.conf\.CSW
+SAMPLECONF += $(sysconfdir)/cups/client\.conf\.CSW
 INITSMF    = $(sysconfdir)/init\.d/cswcups
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
@@ -200,4 +209,7 @@ post-install-modulated:
 			chmod 0644 "$$i.CSW"; \
 		fi \
 	done)
+	ginstall -m 644 \
+		$(FILEDIR)/client.conf.CSW \
+		$(DESTDIR)$(sysconfdir)/cups/client.conf.CSW
 	@$(MAKECOOKIE)
