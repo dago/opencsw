@@ -1,6 +1,6 @@
 GARNAME = git-subtree
 GARVERSION = 0.2
-PATCHLEVEL = d8b2c
+PATCHLEVEL = d20ac
 CATEGORIES = devel
 
 DESCRIPTION = Subtree support for git
@@ -19,9 +19,6 @@ REQUIRED_PKGS_CSWgitsubtree = CSWbash CSWgit
 
 GIT_REPOS = git://github.com/apenwarr/git-subtree.git
 GIT_TREEISH_git-subtree.git = $(PATCHLEVEL)
-
-PATCHFILES  = 0001-add-installation-support-to-Makefile.patch
-PATCHFILES += 0002-make-git-version-dynamic-when-building-documentation.patch
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
