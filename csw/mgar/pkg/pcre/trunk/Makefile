@@ -30,6 +30,7 @@ SPKG_DESC_CSWpcre = Perl-compatible regular expression tools
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
+NO_ISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-unicode-properties
@@ -40,6 +41,8 @@ CONFIGURE_ARGS += --enable-pcretest-libreadline
 EXTRA_LINKER_FLAGS = -lncurses
 
 TEST_TARGET = check
+
+MERGE_DIRS_isa-extra = $(libdir)
 
 PKGFILES_CSWpcrert = $(PKGFILES_RT)
 
