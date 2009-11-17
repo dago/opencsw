@@ -16,4 +16,6 @@ PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 PACKAGES = CSWpmshout
 CATALOGNAME = pm_shout
 
+EXTRA_MERGE_EXCLUDE_FILES = .*/example\.pl .*/example2\.pl
+
 include gar/category.mk
