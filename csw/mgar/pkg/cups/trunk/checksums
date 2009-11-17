@@ -7,5 +7,5 @@ bbf0295c76cd06b5311ac3a3467fd431  0005-Mapping-gnutls_record_recv-return-error-c
 cf6a3fe902545aac1ab2303e41c08a3e  CSWcupsclient.preinstall
 ca7718998e56c320c08a77cfefe046f6  CSWcupsd.postremove
 cf6a3fe902545aac1ab2303e41c08a3e  CSWcupsd.preinstall
-b69e58be75aab71165f77e9c1ec49ea3  client.conf.CSW
+4e6b68d829be4e88afd27ac4897957f4  client.conf.CSW
 d95e2d588e3d36e563027a963b117b1b  cups-1.4.2-source.tar.bz2
