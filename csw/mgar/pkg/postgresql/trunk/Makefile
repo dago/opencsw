@@ -1,10 +1,27 @@
 GARNAME = postgresql
-GARVERSION = 8.4.1
+BASE_VERSION = 8.4
+PATCHLEVEL = 1
+GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
 DESCRIPTION = An advanced open source database
 define BLURB
 endef
+
+bindir = $(prefix)/bin/$(GARNAME)/$(BASE_VERSION)
+datadir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
+docdir=$(prefix)/share/doc/$(GARNAME)/$(BASE_VERSION)
+includedir=$(prefix)/include/$(GARNAME)/$(BASE_VERSION)
+infodir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/info
+libdir=$(prefix)/lib/$(GARNAME)/$(BASE_VERSION)
+libexecdir=$(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
+lispdir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/emacs/site-lisp
+localstatedir = /var/opt/csw/$(GARNAME)/$(BASE_VERSION)
+mandir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/man
+sbindir = $(prefix)/sbin/$(GARNAME)/$(BASE_VERSION)
+sharedstatedir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
+sourcedir=$(prefix)/src/$(GARNAME)/$(BASE_VERSION)
+sysconfdir = /etc/opt/csw/$(GARNAME)/$(BASE_VERSION)
 
 MASTER_SITES = http://wwwmaster.postgresql.org/redir/53/h/source/v$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
@@ -32,8 +49,8 @@ REQUIRED_PKGS_CSWpostgresqldevel = CSWpostgresql
 
 LICENSE = COPYRIGHT
 
-prefix = $(BUILD_PREFIX)/postgresql
-docdir = $(BUILD_PREFIX)/share/doc
+# prefix = $(BUILD_PREFIX)/postgresql
+# docdir = $(BUILD_PREFIX)/share/doc
 
 EXTRA_INC = $(BUILD_PREFIX)/include
 EXTRA_LIB = $(BUILD_PREFIX)/lib
@@ -50,21 +67,29 @@ PKGFILES_CSWpostgresqldevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibpq = $(PKGFILES_RT)
 
 # -> TODO: start in rc3.d S10, Stop everywhere else in K90
-INITSMF = /etc/init.d/cswpostgres
+INITSMF = /etc/opt/csw/init\.d/cswpostgres-$(BASE_VERSION)
 
 # -> TODO: Migrate /opt/csw/var/pgdata to /var/opt/csw/postgresql/pgdata
-USERGROUP = /opt/csw/etc/pkg/postgresql
+USERGROUP = /etc/opt/csw/pkg/postgresql-$(BASE_VERSION)
 
 # -> TODO: Migrate /opt/csw/etc/postgresql.conf to /etc/opt/csw/postgresql.conf
-PRESERVECONF = /opt/csw/etc/postgresql.conf
+PRESERVECONF = /opt/csw/etc/postgresql\.conf
 
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
 
 post-merge:
-	ginstall -d $(PKGROOT)/etc/init.d && ginstall $(WORKDIR)/cswpostgres $(PKGROOT)/etc/init.d/
-	ginstall -d $(PKGROOT)/opt/csw/etc/pkg/postgresql && ginstall $(WORKDIR)/cswusergroup $(PKGROOT)/opt/csw/etc/pkg/postgresql/
-	ginstall -d $(PKGROOT)/opt/csw/etc && ginstall $(WORKDIR)/postgresql.conf $(PKGROOT)/opt/csw/etc/
-	ginstall -d $(PKGROOT)$(docdir)/postgresql/ && ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)/postgresql/
+	ginstall -d $(PKGROOT)/etc/opt/csw/init.d
+	ginstall \
+		$(WORKDIR)/cswpostgres \
+		$(PKGROOT)/etc/opt/csw/init.d/cswpostgres-$(BASE_VERSION)
+	ginstall -d $(PKGROOT)/opt/csw/etc/pkg/$(GARNAME)
+	ginstall $(WORKDIR)/cswusergroup \
+		$(PKGROOT)/etc/opt/csw/pkg/postgresql/$(GARNAME)-$(BASE_VERSION)
+	ginstall -d $(PKGROOT)/etc/opt/csw/$(GARNAME)-$(BASE_VERSION)
+	ginstall $(WORKDIR)/postgresql.conf \
+		$(PKGROOT)/etc/opt/csw/$(GARNAME)-$(BASE_VERSION)
+	ginstall -d $(PKGROOT)$(docdir)/$(GARNAME)
+	ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)/$(GARNAME)/
 	@$(MAKECOOKIE)
