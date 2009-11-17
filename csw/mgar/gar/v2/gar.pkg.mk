@@ -192,8 +192,6 @@ SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 
-$(warning TEXINFO: $(TEXINFO) )
-
 # - set class for all config files
 ifneq ($(SAMPLECONF)$(PRESERVECONF)$(MIGRATECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE)$(TEXINFO),)
 _CSWCLASS_FILTER = | perl -ane '\
