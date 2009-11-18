@@ -1,5 +1,7 @@
+# TODO
+# - Migrate configuration from /opt to /etc
 GARNAME = axel
-GARVERSION = 2.3
+GARVERSION = 2.4
 CATEGORIES = utils
 
 DESCRIPTION = Lightweight command-line download accelerator
@@ -9,42 +11,44 @@ define BLURB
   very useful on bootdisks or other small systems as a wget replacement
 endef
 
-MASTER_SITES = http://alioth.debian.org/frs/download.php/2717/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-
+# Beware: When bumping the version, you also need to visit the download page
+# and get the correct DOWNLOAD_ID for the new version. If you don't change it,
+# you will get the tarball with the corrent name, but with the old content.
 SPKG_SOURCEURL = http://axel.alioth.debian.org/
-SPKG_CLASSES = none cswcpsampleconf
+MASTER_SITES   = http://alioth.debian.org/frs/download.php/$(DOWNLOAD_ID)/
+DOWNLOAD_ID    = 3015
+DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
+UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWcswclassutils
+# upstream_watch currently uses lftp and lftp only lists files when
+# they are offered via the SAME scheme as the requested page. The
+# axel download page can be accessed via http:// and https:// but 
+# the files themselves are only offered via https://, thus https://.
+UPSTREAM_MASTER_SITES = https://alioth.debian.org/frs/?group_id=100070
 
-# Doesn't work yet, upstream watch needs to be improved first
-#UPSTREAM_MASTER_SITES = http://alioth.debian.org/frs/?group_id=100070
-#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# Make ./configure play nicely with /bin/sh and /opt/csw prefix
+PATCHFILES = 0001-configure-use-backticks-and-honor-prefix-for-gettext.patch
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --i18n=0
 
+# axel doesn't come with a test suite
 TEST_SCRIPTS =
 
-PROTOTYPE_FILTER = awk '\
-	$$$$3 ~ /axelrc.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-	 { print }'
+SAMPLECONF = $(sysconfdir)/axelrc
 
 include gar/category.mk
 
-# ./configure is not your usual kind of configure ...
-post-configure-modulated:
-	@perl -pi -e 's|-g -Os||' $(WORKSRC)/Makefile.settings
-	@echo CFLAGS+=$(CFLAGS) >> $(WORKSRC)/Makefile.settings
-	@$(MAKECOOKIE)
-
+# Get rid of hard-coded -Wall gcc'ism
 pre-build-modulated:
-	@perl -pi -e 's/-Wall//g' $(WORKSRC)/Makefile
+	perl -pi -e 's/-Wall//g' $(WORKSRC)/Makefile
 	@$(MAKECOOKIE)
 
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
-	@perl -pi -e "s#/etc/axelrc#$(sysconfdir)/axelrc#" \
+	ginstall -d $(DOCDEST)
+	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	perl -pi -e "s#/etc/axelrc#$(sysconfdir)/axelrc#" \
 		$(DESTDIR)$(mandir)/man1/axel.1 \
 		$(DESTDIR)$(mandir)/zh_CN/man1/axel.1
-	@mv $(DESTDIR)$(sysconfdir)/axelrc \
-		$(DESTDIR)$(sysconfdir)/axelrc.CSW
 	@$(MAKECOOKIE)

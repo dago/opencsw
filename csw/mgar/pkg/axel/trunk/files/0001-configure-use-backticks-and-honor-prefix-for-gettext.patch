@@ -1,0 +1,40 @@
+From 7de9123636a2d04d6d8bdeec4a8de367c666d031 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Wed, 18 Nov 2009 18:33:30 +0100
+Subject: [PATCH] configure: use backticks and honor prefix for gettext
+
+---
+ configure |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/configure b/configure
+index 81ecb99..535a0af 100755
+--- a/configure
++++ b/configure
+@@ -42,8 +42,8 @@ EOF
+ 		exit;
+ 	fi
+ 	
+-	keyname=$(expr "$e" : '\(.*\)=.*' | sed 's/[^a-z0-9_]/_/g')
+-	value=$(expr "$e" : '.*=\(.*\)' | sed "s/'/_/g")
++	keyname=`expr "$e" : '\(.*\)=.*' | sed 's/[^a-z0-9_]/_/g'`
++	value=`expr "$e" : '.*=\(.*\)' | sed "s/'/_/g"`
+ 	
+ 	eval "$keyname='$value'"
+ 	shift;
+@@ -106,9 +106,9 @@ fi
+ if [ "$i18n" = "1" ]; then
+ 	echo 'I18N=1' >> Makefile.settings
+ 	echo '#define I18N' >> config.h
+-	if cat /usr/local/include/libintl.h > /dev/null 2> /dev/null; then
+-		echo 'CFLAGS+=-I/usr/local/include' >> Makefile.settings
+-		echo 'LFLAGS+=-L/usr/local/lib' >> Makefile.settings;
++	if [ -f "${prefix}/include/libintl.h" ]; then
++		echo "CFLAGS+=-I${prefix}/include" >> Makefile.settings
++		echo "LFLAGS+=-L${prefix}/lib" >> Makefile.settings;
+ 	fi;
+ fi
+ 
+-- 
+1.6.5.1
+
