@@ -31,7 +31,7 @@ writable() {
                   -a \
               -perm -u+w \
           \) \
-      \) | grep "$1"
+      \) | grep "$1" > /dev/null
 }
 
 if writable "${test_dir}"; then
