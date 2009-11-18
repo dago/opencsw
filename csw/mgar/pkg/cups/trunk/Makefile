@@ -71,7 +71,12 @@ UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 
-PACKAGES = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
+PACKAGES  = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
+PACKAGES += CSWcupsclient-ln
+
+INCOMPATIBLE_PKGS_CSWcupsclient-ln = SUNWpcr SUNWpcu
+CATALOGNAME_CSWcupsclient-ln = cupsclient_ln
+ARCHALL_CSWcupsclient-ln = 1
 
 ARCHALL_CSWcupsdoc = 1
 ARCHALL_CSWcupsdev = 1
@@ -88,6 +93,7 @@ REQUIRED_PKGS_CSWcupsdoc =
 REQUIRED_PKGS_CSWcupsdev = 
 REQUIRED_PKGS_CSWlibcups  = CSWjpeg CSWpng CSWtiff CSWzlib
 REQUIRED_PKGS_CSWlibcups += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
+REQUIRED_PKGS_CSWcupsclient-ln = CSWcupsclient
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
 
@@ -144,6 +150,8 @@ PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
 PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
 PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
 PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
+PKGFILES_CSWcupsclient-ln  = /usr/sbin/.*
+PKGFILES_CSWcupsclient-ln += /usr/bin/.*
 
 SPKG_DESC_CSWcups = Common Unix Printing System
 SPKG_DESC_CSWlibcups = CUPS libraries
@@ -151,6 +159,7 @@ SPKG_DESC_CSWcupsd = CUPS daemon
 SPKG_DESC_CSWcupsclient = CUPS client binaries
 SPKG_DESC_CSWcupsdoc = CUPS documentation
 SPKG_DESC_CSWcupsdev = CUPS header files
+SPKG_DESC_CSWcupsclient-ln = Drop-in replacement for SUNWpcu and SUNWpcr
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF  = $(sysconfdir)/cups/cupsd\.conf\.CSW
@@ -199,7 +208,7 @@ export OPTIM
 
 include gar/category.mk
 
-post-install-modulated:
+post-install:
 	(cd $(DESTDIR)$(sysconfdir)/cups; \
 	echo "Making .CSW configs in $(DESTDIR)$(sysconfdir)/cups"; \
 	for i in cupsd.conf; do \
@@ -212,4 +221,12 @@ post-install-modulated:
 	ginstall -m 644 \
 		$(FILEDIR)/client.conf.CSW \
 		$(DESTDIR)$(sysconfdir)/cups/client.conf.CSW
+	ginstall -d -m 755 $(DESTDIR)/usr/bin
+	for f in cancel lp lpoptions lppassd lpq lpr lprm lpstat; do \
+		ln -s ../../opt/csw/bin/$$f $(DESTDIR)/usr/bin/$$f; \
+	done
+	ginstall -d -m 755 $(DESTDIR)/usr/sbin
+	for f in accept lpadmin lpc lpinfo lpmove reject; do \
+		ln -s ../../opt/csw/sbin/$$f $(DESTDIR)/usr/sbin/$$f; \
+	done
 	@$(MAKECOOKIE)
