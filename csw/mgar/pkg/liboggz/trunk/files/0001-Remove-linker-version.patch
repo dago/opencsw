@@ -1,0 +1,55 @@
+From 98520890bdf48d718490927f04197c48a1958647 Mon Sep 17 00:00:00 2001
+From: dam <dam@lcsw.(none)>
+Date: Mon, 9 Nov 2009 03:55:19 +0100
+Subject: [PATCH] Remove linker version
+
+---
+ configure    |    8 --------
+ configure.ac |   12 ------------
+ 2 files changed, 0 insertions(+), 20 deletions(-)
+
+diff --git a/configure b/configure
+index 9342074..cafccae 100755
+--- a/configure
++++ b/configure
+@@ -15629,14 +15629,6 @@ if test "x${ac_enable_gcc_werror}" = xyes ; then
+ fi
+ 
+ 
+-case "$target_os" in
+-  linux* | solaris*|k*bsd*-gnu*|gnu-*)
+-    SHLIB_VERSION_ARG="-Wl,--version-script=Version_script"
+-    ;;
+-  *)
+-    ;;
+-esac
+-
+ # Checks for library functions.
+ 
+ 
+diff --git a/configure.ac b/configure.ac
+index bc9acb8..1098ca1 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -396,18 +396,6 @@ if test "x${ac_enable_gcc_werror}" = xyes ; then
+   CFLAGS="-Werror $CFLAGS"
+ fi
+ 
+-dnl
+-dnl Shared library symbol versioning and hiding
+-dnl
+-
+-case "$target_os" in
+-  linux* | solaris*|k*bsd*-gnu*|gnu-*)
+-    SHLIB_VERSION_ARG="-Wl,--version-script=Version_script"
+-    ;;
+-  *)
+-    ;;
+-esac
+-
+ # Checks for library functions.
+ 
+ dnl
+-- 
+1.6.3.2
+
