@@ -84,7 +84,7 @@ post-merge:
 	ginstall \
 		$(WORKDIR)/cswpostgres \
 		$(PKGROOT)/etc/opt/csw/init.d/cswpostgres-$(BASE_VERSION)
-	ginstall -d $(PKGROOT)/opt/csw/etc/pkg/$(GARNAME)
+	ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$(GARNAME)
 	ginstall $(WORKDIR)/cswusergroup \
 		$(PKGROOT)/etc/opt/csw/pkg/postgresql/$(GARNAME)-$(BASE_VERSION)
 	ginstall -d $(PKGROOT)/etc/opt/csw/$(GARNAME)-$(BASE_VERSION)
