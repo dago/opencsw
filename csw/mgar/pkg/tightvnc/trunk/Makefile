@@ -15,6 +15,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION)_unixsrc.tar.bz2
 DISTFILES += vncservers
 DISTFILES += cswvncserver
+DISTFILES += vncserver-wrapper.sh
 PACKAGES = CSWvncs CSWvncv
 CATALOGNAME_CSWvncs = vncserver
 CATALOGNAME_CSWvncv = vncviewer
