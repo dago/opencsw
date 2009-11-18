@@ -1,5 +1,5 @@
-xterm (250,REV=2009.11.02)
+xterm (251,REV=2009.11.18)
 
   * Updated to 250. (Fixes #3937, #3856)
 
- -- Sebastian Kayser <skayser@opencsw.org>  Mon,  2 Nov 2009 16:11:49 +0100
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed, 18 Nov 2009 03:23:47 +0100
