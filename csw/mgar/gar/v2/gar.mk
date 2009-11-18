@@ -734,7 +734,7 @@ merge-parallel: merge-watch
 merge-watch: _USEMULTITAIL=$(shell test -x $(MULTITAIL) && test -x $(TTY) && $(TTY) >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo yes; fi)
 merge-watch: $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS))
 	$(_DBG_MERGE)$(if $(_USEMULTITAIL),\
-		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -t "multi-platform-build in progress" -wh 1 -j & echo $$! > $(WORKROOTDIR)/build-global/multitail.pid,\
+		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -t "build(s) in progress" -wh 1 -j & echo $$! > $(WORKROOTDIR)/build-global/multitail.pid,\
 		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\
 	)
 
