@@ -1,5 +1,3 @@
-# TODO
-# - Migrate configuration from /opt to /etc
 GARNAME = axel
 GARVERSION = 2.4
 CATEGORIES = utils
@@ -29,13 +27,16 @@ UPSTREAM_MASTER_SITES = https://alioth.debian.org/frs/?group_id=100070
 # Make ./configure play nicely with /bin/sh and /opt/csw prefix
 PATCHFILES = 0001-configure-use-backticks-and-honor-prefix-for-gettext.patch
 
+sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --etcdir=$(sysconfdir)
 CONFIGURE_ARGS += --i18n=0
 
 # axel doesn't come with a test suite
 TEST_SCRIPTS =
 
 SAMPLECONF = $(sysconfdir)/axelrc
+MIGRATE_FILES = axelrc
 
 include gar/category.mk
 
