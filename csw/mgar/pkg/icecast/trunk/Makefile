@@ -16,6 +16,7 @@ SPKG_SOURCEURL = http://www.icecast.org/
 
 REQUIRED_PKGS = CSWlibogg CSWosslrt CSWtheora CSWvorbis CSWzlib
 REQUIRED_PKGS += CSWcurlrt CSWlibidn CSWoldaprt CSWspeex
+REQUIRED_PKGS += CSWiconv CSWlibnet CSWlibxml2 CSWlibxslt CSWsasl
 
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
