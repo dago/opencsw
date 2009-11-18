@@ -97,7 +97,10 @@ case $f in
 	# Need to rewrite this whole thing to also
 	# check for badly set RUNPATHs. sigh.
 	#
-	for badpath in /export/medusa /opt/build ; do
+	# Using rot13 so that checkpkg can check itself without reporting
+	# an error.
+	badpaths="$(echo /rkcbeg/zrqhfn /bcg/ohvyq | gtr a-mn-z n-za-m)"
+	for badpath in $badpaths ; do
 		GREP=/bin/grep gzgrep "$badpath" $f
 		if [[ $? -eq 0 ]] ; then
 			print ""
@@ -440,6 +443,15 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
+# Verify that there are no double depends
+repeated_depends="$(awk '{print $2}' $EXTRACTDIR/$pkgname/install/depend \
+  | sort | uniq -c | awk '{print $1}' | sort | uniq | wc -l)"
+if [[ "$repeated_depends" -gt 1 ]]; then
+        cat $EXTRACTDIR/$pkgname/install/depend
+        print ERROR: $pkgname has double depends
+        exit 1
+fi
+
 #to retain a record of all packages currently being examined from $@
 echo $pkgname >> $SETDEPS
 
@@ -451,7 +463,7 @@ do
     if [[ $? -ne 0 ]]; then
 	#if we've already looked at the package named $dep,
 	#it'll be in the file.
- 	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/xpg4/bin/grep -q $dep
+ 	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/bin/grep $dep >/dev/null
  	if [[ $? -ne 0 ]]; then #we haven't yet seen this package in our set
 	    echo "Can't validate dependence on $dep.  Storing for delayed validation."
 	    #store for validation at the end.
@@ -530,7 +542,7 @@ if [ -s $SETDEPS.missing ]; then
     while read mdep; do
 	dep=`echo $mdep | nawk '{print $1}'`
 	pkg=`echo $mdep | nawk '{print $2}'`
-	/usr/xpg4/bin/grep -q $dep $SETDEPS
+	/usr/bin/grep $dep $SETDEPS >/dev/null
 	if [ $? -ne 0 ]; then
 	    errmsg "Couldn't validate $dep as a dependency in package $pkg"
 	else
@@ -545,7 +557,7 @@ if [ -s $SETLIBS.missing ]; then
 	lib=`echo $ldep | nawk '{print $1}'`
         [ "$lib" = "libm.so.2" ] && continue
 	pkg=`echo $ldep | nawk '{print $2}'`
-	/usr/xpg4/bin/grep -q "[/=]$lib[ =]" $SETLIBS
+	/usr/bin/grep "[/=]$lib[ =]" $SETLIBS >/dev/null
 	if [ $? -ne 0 ]; then
 	    errmsg "Couldn't find a package providing $lib"
 	else

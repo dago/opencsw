@@ -498,6 +498,12 @@ configure-%/setup.rb:
 	@( cd $* ; $(CONFIGURE_ENV) ruby ./setup.rb config $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
+# WAF build, for details see http://code.google.com/p/waf/
+configure-%/waf:
+	@echo " ==> Running waf configure in $*"
+	cd $* && $(CONFIGURE_ENV) ./waf configure $(CONFIGURE_ARGS)
+	@$(MAKECOOKIE)
+
 #################### BUILD RULES ####################
 
 # build from a standard gnu-style makefile's default rule.
@@ -535,6 +541,12 @@ build-%/rakefile:
 build-%/setup.rb:
 	@echo " ==> Running setup.rb setup in $*"
 	@( cd $* ; $(BUILD_ENV) ruby ./setup.rb setup $(BUILD_ARGS) )
+	@$(MAKECOOKIE)
+
+# WAF build, for details see http://code.google.com/p/waf/
+build-%/waf:
+	@echo " ==> Running waf build in $*"
+	@$(cd $* ; (BUILD_ENV) ./waf build $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
 # This can be: build, build_py, build_ext, build_clib, build_scripts
@@ -613,6 +625,12 @@ install-%/rakefile:
 install-%/setup.rb:
 	@echo " ==> Running setup.rb install in $*"
 	@( cd $* ; $(INSTALL_ENV) ruby ./setup.rb install --prefix=$(DESTDIR) )
+	@$(MAKECOOKIE)
+
+# WAF build, for details see http://code.google.com/p/waf/
+install-%/waf:
+	@echo " ==> Running waf install in $*"
+	@$(cd $* ; (INSTALL_ENV) ./waf install $(INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
 # This can be: install, install_lib, install_headers, install_scripts,

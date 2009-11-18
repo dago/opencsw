@@ -164,6 +164,8 @@ DESTDIR  ?= $(abspath $(INSTALLISADIR))
 
 DESTIMG ?= $(LOGNAME)-$(shell hostname)
 
+# A default list of packages that everyone will depend on
+COMMON_PKG_DEPENDS ?= CSWcommon
 
 # These are the core packages which must be installed for GAR to function correctly
 DEF_BASE_PKGS = CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2
@@ -203,8 +205,8 @@ ARCHFLAGS_SOS12_sparcv9+vis2     = -m64 -xarch=sparcvis2
 
 ARCHFLAGS_SOS11_sparcv9+vis      = -xarch=v9a
 ARCHFLAGS_SOS12_sparcv9+vis      = -m64 -xarch=sparcvis
- ARCHFLAGS_GCC3_sparcv9+vis      = -m64 -mcpu=v9 -mvis
- ARCHFLAGS_GCC4_sparcv9+vis      = -m64 -mcpu=v9 -mvis
+ ARCHFLAGS_GCC3_sparcv9+vis      = -m64 -mcpu=ultrasparc -mvis
+ ARCHFLAGS_GCC4_sparcv9+vis      = -m64 -mcpu=ultrasparc -mvis
     MEMORYMODEL_sparcv9+vis      = 64
 
 ARCHFLAGS_SOS11_sparcv9          = -xarch=v9
@@ -492,7 +494,7 @@ endif
 RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $(abspath $D/$(MM_LIBDIR)))) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
 endif
 
-LINKER_FLAGS ?= $(foreach ELIB,$(libdir_install) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
+LINKER_FLAGS ?= $(foreach ELIB,$(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
 
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)

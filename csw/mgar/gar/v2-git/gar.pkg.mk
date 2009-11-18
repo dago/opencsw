@@ -165,10 +165,22 @@ define _spkg_cond_add
 $(SPKG_CLASSES) $(if $($(1)),$(if $(filter $(2),$(SPKG_CLASSES)),,$(2)))
 endef
 
+MIGRATECONF ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
+
+# It is NOT sufficient to change the pathes here, they must be adjusted in merge-* also
+_USERGROUP_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_usergroup),/etc/opt/csw/pkg/$S/cswusergroup)))
+_INETDCONF_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_inetdconf),/etc/opt/csw/pkg/$S/inetd.conf)))
+_ETCSERVICES_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_etcservices),/etc/opt/csw/pkg/$S/services)))
+
+USERGROUP += $(_USERGROUP_FILES)
+INETDCONF += $(_INETDCONF_FILES)
+ETCSERVICES += $(_ETCSERVICES_FILES)
+
 # NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
 #	always be the last two added.  The reason for this is that
 #	you need to ensure any binaries and config files are already on disk
 #	and able to be consumed by a service that might be started.
+SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswmigrateconf)
 SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
 SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
 SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
@@ -177,9 +189,13 @@ SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
 SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
 SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
 
+# This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
+TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
+
 # - set class for all config files
-ifneq ($(SAMPLECONF)$(PRESERVECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
+ifneq ($(SAMPLECONF)$(PRESERVECONF)$(MIGRATECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE)$(TEXINFO),)
 _CSWCLASS_FILTER = | perl -ane '\
+		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(ETCSERVICES),$$F[1] = "cswetcservices" if( $$F[2] =~ m(^$(FILE)$$) );)\
@@ -187,7 +203,9 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
+		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
+
 _EXTRA_GAR_PKGS += CSWcswclassutils
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
@@ -274,9 +292,6 @@ define _pkgfiles_exclude
 $(strip 
   $(foreach S,$(filter-out $(1),$(_PKG_SPECS)), 
     $(PKGFILES_$(S)) 
-    $(EXTRA_PKGFILES_EXCLUDED) 
-    $(EXTRA_PKGFILES_EXCLUDED_$(1)) 
-    $(_EXTRA_PKGFILES_EXCLUDED) 
   ) 
 )
 endef
@@ -368,8 +383,10 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license) \
-		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license) \
+	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf) \
+		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license -X /etc/opt/csw/pkg/$S/cswmigrateconf) \
+		      $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-i '$I') \
+		      $(foreach X,$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$*),-x '$X') \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
 		      $(if $(_PKGFILES_INCLUDE),-x '.*',$(foreach FILE,$(_PKGFILES_EXCLUDE),-x '$(FILE)')) \
 	              $(foreach IE,$(abspath $(ISAEXEC_FILES_$*) $(ISAEXEC_FILES)), \
@@ -401,6 +418,13 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 
 # $_EXTRA_GAR_PKGS is for dynamic dependencies added by GAR itself (like CSWisaexec or CSWcswclassutils)
 .PRECIOUS: $(WORKDIR)/%.depend
+
+# The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
+# The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
+# actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
+$(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),CSWcswclassutils)
+
 $(WORKDIR)/%.depend: $(WORKDIR)
 	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
@@ -489,7 +513,7 @@ $(shell echo
 endef
 
 define pkgvar
-$(if $($(1)_$(2)),$($(1)_$(2)),$($(1)))
+$(strip $(if $($(1)_$(2)),$($(1)_$(2)),$($(1))))
 endef
 
 # Make sure every producable package contains specific descriptions.
@@ -501,6 +525,11 @@ $(foreach P,$(SPKG_SPECS),\
 )))
 
 .PRECIOUS: $(WORKDIR)/%.pkginfo
+
+# The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
+$(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),cswtexinfo)
+
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
 	echo "NAME=$(call catalogname,$*) - $(call pkgvar,SPKG_DESC,$*)"; \
@@ -547,7 +576,7 @@ merge-license-%: $(WORKDIR)
 		    if [ -f "$$LICENSEFILE" ]; then cp $$LICENSEFILE $(WORKDIR)/$*.copyright; fi;, \
 		    echo "Please see $$LICENSEDIR/license for license information." > $(WORKDIR)/$*.copyright; \
 		) \
-		  mkdir -p $(PKGROOT)$$LICENSEDIR && \
+		  umask 022 && mkdir -p $(PKGROOT)$$LICENSEDIR && \
 		  rm -f $(PKGROOT)$$LICENSEDIR/license && \
 		  cp $$LICENSEFILE $(PKGROOT)$$LICENSEDIR/license; \
 		fi \
@@ -559,8 +588,69 @@ merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 
 reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
-	@$(DONADA)
 
+merge-classutils: merge-migrateconf merge-usergroup merge-inetdconf merge-etcservices
+
+reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merge-inetdconf reset-merge-etcservices
+
+merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
+	@$(MAKECOOKIE)
+
+merge-migrateconf-%: MIGRATE_FILES_$* ?= $(MIGRATE_FILES)
+merge-migrateconf-%: MIGRATE_SOURCE_DIR_$* ?= $(MIGRATE_SOURCE_DIR)
+merge-migrateconf-%: MIGRATE_DEST_DIR_$* ?= $(MIGRATE_DEST_DIR)
+merge-migrateconf-%:
+	@echo "[ Generating cswmigrateconf for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)(echo "MIGRATE_FILES=\"$(MIGRATE_FILES_$*)\"";\
+		 $(if $(MIGRATE_SOURCE_DIR_$*),echo "SOURCE_DIR___default__=\"$(MIGRATE_SOURCE_DIR_$*)\"";)\
+		 $(if $(MIGRATE_DEST_DIR_$*),echo "DEST_DIR___default__=\"$(MIGRATE_DEST_DIR_$*)\"";)\
+		 $(foreach F,$(MIGRATE_FILES_$*),\
+			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
+			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
+		)\
+	) >$(PKGROOT)/etc/opt/csw/pkg/$*/cswmigrateconf
+	@$(MAKECOOKIE)
+
+reset-merge-migrateconf:
+	@rm -f $(COOKIEDIR)/merge-migrateconf $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-migrateconf-$(SPEC))
+
+_show_classutilvar//%:
+	$($*)
+
+merge-usergroup: $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_usergroup),merge-usergroup-$S))
+	@$(MAKECOOKIE)
+
+merge-usergroup-%:
+	@echo "[ Generating cswusergroup for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)$(MAKE) --no-print-directory -n _show_classutilvar//$*_usergroup >$(PKGROOT)/etc/opt/csw/pkg/$*/cswusergroup
+	@$(MAKECOOKIE)
+
+reset-merge-usergroup:
+	@rm -f $(COOKIEDIR)/merge-usergroup $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-usergroup-$(SPEC))
+
+merge-inetdconf: $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_inetdconf),merge-inetdconf-$S))
+
+merge-inetdconf-%:
+	@echo "[ Generating inetd.conf for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)$(MAKE) --no-print-directory -n _show_classutilvar//$*_inetdconf >$(PKGROOT)/etc/opt/csw/pkg/$*/inetd.conf
+	@$(MAKECOOKIE)
+
+reset-merge-inetdconf:
+	@rm -f $(COOKIEDIR)/merge-inetdconf $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-inetdconf-$(SPEC))
+
+merge-etcservices: $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_etcservices),merge-etcservices-$S))
+
+merge-etcservices-%:
+	@echo "[ Generating services for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
+	$(_DBG)$(MAKE) --no-print-directory -n _show_classutilvar//$*_etcservices >$(PKGROOT)/etc/opt/csw/pkg/$*/services
+	@$(MAKECOOKIE)
+
+reset-merge-etcservices:
+	@rm -f $(COOKIEDIR)/merge-etcservices $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-etcservices-$(SPEC))
 
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
@@ -579,11 +669,7 @@ reset-merge-src:
 # package - Use the mkpackage utility to create Solaris packages
 #
 
-ifneq ($(ENABLE_CHECK),0)
-PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC) pkgcheck-$(SPEC))
-else
 PACKAGE_TARGETS = $(foreach SPEC,$(_PKG_SPECS), package-$(SPEC))
-endif
 
 SPKG_DESTDIRS = $(SPKG_SPOOLDIR) $(SPKG_EXPORT)
 
@@ -610,7 +696,9 @@ validateplatform:
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
-_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package
+ENABLE_CHECK ?= 1
+_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
+	@$(MAKECOOKIE)
 
 package: _package
 	@echo
@@ -624,7 +712,7 @@ _pkgshow:
 	@$(foreach SPEC,$(_PKG_SPECS),printf "  %-20s %s\n"  $(SPEC) $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz;)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
-package-%: $(WORKDIR)/%.gspec $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo) $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend
+package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo)
 	@echo " ==> Processing $*.gspec"
 	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
@@ -642,12 +730,9 @@ package-p:
 
 # pkgcheck - check if the package is compliant
 #
-pkgcheck: $(addprefix pkgcheck-,$(_PKG_SPECS))
-	@$(DONADA)
-
-pkgcheck-%:
-	@echo " ==> Checking compliance: $*"
-	@( LC_ALL=C $(GARBIN)/checkpkg $(SPKG_EXPORT)/`$(call _PKG_ENV,$1) mkpackage -qs $(WORKDIR)/$*.gspec -D pkgfile`.gz ) || exit 2
+pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
+	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
+	@$(MAKECOOKIE)
 
 pkgcheck-p:
 	@$(foreach COOKIEFILE,$(PKGCHECK_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
@@ -660,12 +745,13 @@ pkgreset: $(addprefix pkgreset-,$(SPKG_SPECS))
 
 reset-package: pkgreset
 
+# Make sure we don't delete files we deliberately added with DISTFILES. They
+# will not be copied to WORKDIR again.
 pkgreset-%:
 	@echo " ==> Reset packaging state for $* ($(DESTIMG))"
-	@rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
-	@rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
-	@rm -rf $(WORKDIR)/$*.* $(WORKDIR)/prototype
-	@rm -f $(WORKDIR)/copyright $(WORKDIR)/*.copyright
+	$(_DBG)rm -rf $(foreach T,extract checksum package pkgcheck,$(COOKIEDIR)/*$(T)-$**)
+	$(_DBG)rm -rf $(COOKIEDIR)/pre-package $(COOKIEDIR)/post-package
+	$(_DBG)rm -rf $(addprefix $(WORKDIR)/,$(filter-out $(DISTFILES),$(patsubst $(WORKDIR)/%,%,$(wildcard $(WORKDIR)/$*.*)) prototype copyright $*.copyright))
 
 repackage: pkgreset package
 
@@ -676,7 +762,7 @@ platforms:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -690,7 +776,7 @@ platforms:
 			echo " (built on this host)";\
 			  $(MAKE) -s PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "$(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)

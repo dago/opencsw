@@ -46,14 +46,16 @@ export PARALLELMFLAGS
 DISTNAME ?= $(GARNAME)-$(GARVERSION)
 
 DYNSCRIPTS = $(foreach PKG,$(SPKG_SPECS),$(foreach SCR,$(ADMSCRIPTS),$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
-_NOCHECKSUM += $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))
+_NOCHECKSUM += $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R))) $(_EXTRA_GAR_NOCHECKSUM)
+
+DISTFILES += $(_EXTRA_GAR_DISTFILES)
 
 # Allow overriding of only specific components of ALLFILES by clearing e. g. 'ALLFILES_DYNSCRIPTS = '
 ALLFILES_DISTFILES ?= $(DISTFILES)
 ALLFILES_PATCHFILES ?= $(PATCHFILES) $(foreach M,$(MODULATIONS),$(PATCHFILES_$M))
 ALLFILES_DYNSCRIPTS ?= $(DYNSCRIPTS)
 ALLFILES_GIT_REPOS ?= $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))
-ALLFILES ?= $(sort $(ALLFILES_DISTFILES) $(ALLFILES_PATCHFILES) $(ALLFILES_DYNSCRIPTS) $(ALLFILES_GIT_REPOS) $(EXTRA_ALLFILES))
+ALLFILES ?= $(sort $(ALLFILES_DISTFILES) $(ALLFILES_PATCHFILES) $(ALLFILES_DYNSCRIPTS) $(ALLFILES_GIT_REPOS) $(EXTRA_ALLFILES) $(_EXTRA_GAR_ALLFILES))
 
 ifeq ($(MAKE_INSTALL_DIRS),1)
 INSTALL_DIRS = $(addprefix $(DESTDIR),$(prefix) $(exec_prefix) $(bindir) $(sbindir) $(libexecdir) $(datadir) $(sysconfdir) $(sharedstatedir) $(localstatedir) $(libdir) $(infodir) $(lispdir) $(includedir) $(mandir) $(foreach NUM,1 2 3 4 5 6 7 8, $(mandir)/man$(NUM)) $(sourcedir))
@@ -190,6 +192,48 @@ define _pmod
 endef
 
 $(eval $(call _modulate,$(MODULATORS)))
+
+# --- This next block allows you to use collapsed ISAs in modulations
+#   isa-default-...      instead of isa-sparcv8-... and isa-i386-...
+#   isa-default64-...    instead of isa-sparcv9-... and isa-amd64-...
+#   isa-extra-...        instead of any other ISA (if default64 is undefined it falls back to 'extra')
+
+__collapsedisa = $(strip $(or $(and $(filter $(ISA_DEFAULT_sparc) $(ISA_DEFAULT_i386),$(1)),default),\
+                              $(and $(filter $(ISA_DEFAULT64_sparc) $(ISA_DEFAULT64_i386),$(1)),default64),\
+                              extra))
+
+__collapsedisa64 = default64
+__collapsedisaextra = extra
+
+__isacollapsedmodulation_1 = $(call tolower,$(1))-$(if $(filter ISA,$(1)),$(call $(2),$(ISA)),$($(1)))
+__isacollapsedmodulation = $(if $(word 2,$(1)),\
+		$(foreach P,$(call __isacollapsedmodulation_1,$(firstword $(1)),$(2)),\
+			$(addprefix $(P)-,$(call __isacollapsedmodulation,$(wordlist 2,$(words $(1)),$(1))))\
+		),\
+		$(call __isacollapsedmodulation_1,$(1),$(2)))
+
+# This is the name of the current modulation but with the ISA i386, sparcv8 and amd64, sparcv9 replaced
+# with the collapsed name 'default', 'default64' and everything else as 'extra'.
+MODULATION_ISACOLLAPSED = $(strip $(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisa))
+
+# This is the name of the current modulation but with the ISA replaced with 'default64'
+MODULATION_ISACOLLAPSED64 = $(strip $(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisa64))
+
+# This is the name of the current modulation but with the ISA replaced with 'extra'
+MODULATION_ISACOLLAPSEDEXTRA = $(strip $(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisaextra))
+
+# $(warning Mod: $(MODULATION) ISA: $(ISA) coll: $(MODULATION_ISACOLLAPSED) 64: $(MODULATION_ISACOLLAPSED64) extra: $(MODULATION_ISACOLLAPSEDEXTRA))
+
+# Call this function to get either the modulation-specific value or the default.
+# Instead of $(myvar_$(MODULATION)) $(call modulationvalue,myvar)
+define modulationvalue
+$(strip $(or $($(1)_$(MODULATION)),\
+             $($(1)_$(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisa)),\
+             $($(1)_$(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisaextra))\
+))
+endef
+
+# --- end of collapsed ISA modulations
 
 #################### DIRECTORY MAKERS ####################
 
@@ -590,10 +634,15 @@ ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 else
 ISAEXEC_DIRS ?= $(if $(NO_ISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
-MERGE_DIRS_isa-$(ISA_DEFAULT) ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
-MERGE_DIRS_isa-$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA))
-MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
-MERGE_SCRIPTS_isa-$(ISA) ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_DIRS_isa-default ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
+MERGE_DIRS_isa-extra ?= $(bindir) $(sbindir) $(libexecdir) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA))
+MERGE_DIRS_$(MODULATION_ISACOLLAPSED64) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSEDEXTRA))
+MERGE_DIRS_$(MODULATION) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSED))
+
+MERGE_SCRIPTS_isa-default ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-extra ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED64) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSEDEXTRA))
+MERGE_SCRIPTS_$(MODULATION) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED))
 endif
 
 # These directories get relocated into their ISA subdirectories
@@ -608,6 +657,10 @@ ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
 	$(shell for F in $(_ISAEXEC_FILES); do		\
 		if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;	\
 	done)),)
+
+ifneq ($(COMMON_PKG_DEPENDS),)
+_EXTRA_GAR_PKGS += $(COMMON_PKG_DEPENDS)
+endif
 
 ifneq ($(ISAEXEC_FILES),)
 _EXTRA_GAR_PKGS += CSWisaexec
@@ -694,7 +747,7 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
+merge: checksum pre-merge merge-do merge-license merge-classutils $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
 	@$(DONADA)
 
 merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
@@ -718,7 +771,7 @@ merge-parallel: merge-watch
 merge-watch: _USEMULTITAIL=$(shell test -x $(MULTITAIL) && test -x $(TTY) && $(TTY) >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo yes; fi)
 merge-watch: $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS))
 	$(_DBG_MERGE)$(if $(_USEMULTITAIL),\
-		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -j & echo $$! > $(WORKROOTDIR)/build-global/multitail.pid,\
+		$(MULTITAIL) --retry-all $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.log) -t "build(s) in progress" -wh 1 -j & echo $$! > $(WORKROOTDIR)/build-global/multitail.pid,\
 		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\
 	)
 
@@ -729,14 +782,14 @@ merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $
 
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -p e -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") \
 		. $(PKGROOT))
 	@$(MAKECOOKIE)
 
 # Copy only the merge directories
 merge-copy-only: $(PKGROOT)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -p e -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") -s ",.*,," \
 		. $(PKGROOT) \
 	)
@@ -744,7 +797,7 @@ merge-copy-only: $(PKGROOT)
 
 # Copy the whole tree and relocate the directories in $(MERGE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -p e -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") \
 		. $(PKGROOT) \
 	)
@@ -752,7 +805,7 @@ merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -p e -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") -s ",.*,," \
 		 . $(PKGROOT) \
 	)
@@ -760,7 +813,7 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy 
 merge-copy-config-only:
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); pax -r -w -p e -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		-s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
 		-s ",.*,," \
 		. $(PKGROOT) \
@@ -770,7 +823,7 @@ merge-copy-config-only:
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
-reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-src
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-src
 	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
 	@$(DONADA)

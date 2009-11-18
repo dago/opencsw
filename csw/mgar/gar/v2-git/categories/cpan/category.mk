@@ -34,7 +34,7 @@ USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 
 _MERGE_EXCLUDE_CATEGORY = .*/perllocal\.pod .*/\.packlist
-_CATEGORY_GSPEC_INCLUDE ?= csw_cpan.gspec
+_CATEGORY_GSPEC_INCLUDE ?= csw_cpan_dyngspec.gspec
 
 include gar/gar.mk
 
