@@ -102,4 +102,9 @@ install-vnc:
 	ginstall -m 644 $(WORKDIR)/vncservers $(DESTDIR)$(sysconfdir)/vncservers
 	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 644 $(FILEDIR)/cswvncserver $(DESTDIR)/etc/opt/csw/init.d
+	ginstall -d -m 755 $(DESTDIR)$(libexecdir)
+	mv $(DESTDIR)$(bindir)/vncserver $(DESTDIR)$(libexecdir)
+	ginstall -m 755 \
+		$(FILEDIR)/vncserver-wrapper.sh \
+		$(DESTDIR)$(bindir)/vncserver
 	@$(MAKECOOKIE)
