@@ -21,6 +21,7 @@ PKGFILES_CSWnspr-devel += $(prefix)/pkgconfig/nspr\.pc
 SPKG_DESC_CSWnspr = Netscape Portable Runtime
 SPKG_DESC_CSWnspr-devel = Netscape Portable Runtime development files
 CATALOGNAME_CSWnspr-devel = nspr_devel
+REQUIRED_PKGS_CSWnspr-devel = CSWnspr
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
