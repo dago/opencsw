@@ -11,6 +11,7 @@ define BLURB
   to create a network bridge, while TUN is used with routing. 
 endef
 
+SPKG_SOURCEURL = http://www.whiteboard.ne.jp/~admin2/tuntap/
 MASTER_SITES = http://www.whiteboard.ne.jp/~admin2/tuntap/source/tuntap/
 # fix Dist
 DISTNAME = tuntap
@@ -24,7 +25,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # one Makefile for both packages
 PACKAGES = CSWtun CSWtap
 CATALOGNAME_CSWtun = tun
+SPKG_DESC_CSWtun = tun
 CATALOGNAME_CSWtap = tap
+SPKG_DESC_CSWtap = tap
 # define packagefiles
 PKGFILES_CSWtun  = /usr/kernel/drv/tun
 PKGFILES_CSWtun += /usr/kernel/drv/tun.conf
