@@ -1,3 +1,2 @@
-ba49bc35e2068f54893d3ea7031ad59c  download/nspr-4.6.6.tar.gz
-8c1d57aae51158397ae963ecac053a4d  download/CSWnspr.gspec
-a5616e691e9a4fed991893ee673b1a88  download/CSWnspr.depend
+4720bb68a64bfa9188ac6318458b47d2  nspr-4.6.1-config.patch
+e0916a72bcc6c427551ea262183fdb26  nspr-4.8.tar.gz
