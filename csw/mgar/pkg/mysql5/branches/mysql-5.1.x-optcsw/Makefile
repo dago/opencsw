@@ -3,7 +3,9 @@
 # $Id$
 
 GARNAME = mysql5
-GARVERSION = 5.1.40
+BASE_VERSION = 5.1
+PATCHLEVEL = 40
+GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
 DISTNAME = mysql-$(GARVERSION)
@@ -16,14 +18,27 @@ endef
 
 GARFLAVOR = DBG
 
-# Change prefix to /opt/csw/mysql5
-prefix = /opt/csw/mysql5
-sysconfdir = /etc/opt/csw/mysql5
-localstatedir = /var/opt/csw/mysql5
+bindir = $(prefix)/bin/mysql/$(BASE_VERSION)
+datadir=$(prefix)/share/mysql/$(BASE_VERSION)
+docdir=$(prefix)/share/doc/mysql/$(BASE_VERSION)
+includedir=$(prefix)/include/mysql/$(BASE_VERSION)
+infodir=$(prefix)/share/mysql/$(BASE_VERSION)/info
+libdir=$(prefix)/lib/mysql/$(BASE_VERSION)
+libexecdir=$(prefix)/libexec/mysql/$(BASE_VERSION)
+lispdir=$(prefix)/share/mysql/$(BASE_VERSION)/emacs/site-lisp
+localstatedir = /var/opt/csw/mysql/$(BASE_VERSION)
+mandir=$(prefix)/share/mysql/$(BASE_VERSION)/man
+sbindir = $(prefix)/sbin/mysql/$(BASE_VERSION)
+sharedstatedir=$(prefix)/share/mysql/$(BASE_VERSION)
+sourcedir=$(prefix)/src/mysql/$(BASE_VERSION)
+sysconfdir = /etc/opt/csw/mysql/$(BASE_VERSION)
+
+# Where to put the init script
 global_sysconfdir = /etc/opt/csw
+# Where to link the binaries
 global_bindir = /opt/csw/bin
 
-INITSMF = $(global_sysconfdir)/init\.d/cswmysql5
+INITSMF = $(global_sysconfdir)/init\.d/cswmysql-$(BASE_VERSION)
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
@@ -97,7 +112,7 @@ REQUIRED_PKGS_CSWmysql5            = CSWmysql5client CSWmysql5rt
 REQUIRED_PKGS_CSWmysql5devel       = CSWmysql5
 REQUIRED_PKGS_CSWmysql5test        = CSWmysql5 CSWperl
 
-MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.1/
+MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
 DISTFILES += cswmysql5 quick_start-csw README.CSW ChangeLog
 DISTFILES += CSWmysql5.preinstall
@@ -142,7 +157,7 @@ CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 # TODO: Make the tests pass. They don't at the moment.
-# TEST_SCRIPTS =
+TEST_SCRIPTS =
 TEST_TARGETS = check
 
 # Enable 64 bits build
@@ -181,6 +196,6 @@ post-install-modulated:
 	# Create symlinks to binaries
 	ginstall -m 755 -d $(DESTDIR)$(global_bindir)
 	for f in $(DESTDIR)$(bindir)/*; do \
-		ln -s ../mysql5/bin/`basename $$f` $(DESTDIR)$(global_bindir)/`basename $$f`; \
+		ln -s mysql/$(BASE_VERSION)/`basename $$f` $(DESTDIR)$(global_bindir)/`basename $$f`; \
 	done
 	@$(MAKECOOKIE)
