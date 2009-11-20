@@ -21,8 +21,14 @@ REQUIRED_PKGS += CSWiconv CSWlibnet CSWlibxml2 CSWlibxslt CSWsasl
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
 sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+PRESERVECONF = $(sysconfdir)/icecast.xml
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-install-modulated:
+	@ginstall -d $(DESTDIR)$(localstatedir)/log/icecast
