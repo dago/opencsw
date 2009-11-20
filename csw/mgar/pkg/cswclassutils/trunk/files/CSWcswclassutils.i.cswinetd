@@ -72,6 +72,8 @@ while read src dest; do
 	  if [ "$isrpc" = "yes" ]; then
 	      outdir=$outdir/rpc
 	  fi
+	  [ -d $outdir ] || mkdir -p $outdir
+
 	  manifest=$outdir/$svcname-$proto.xml
 
 	  TMPOUT=/var/opt/csw/cswclassutils/$svcname.$$
