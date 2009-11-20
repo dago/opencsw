@@ -596,16 +596,14 @@ reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merg
 merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)
 
-merge-migrateconf-%: MIGRATE_FILES_$* ?= $(MIGRATE_FILES)
-merge-migrateconf-%: MIGRATE_SOURCE_DIR_$* ?= $(MIGRATE_SOURCE_DIR)
-merge-migrateconf-%: MIGRATE_DEST_DIR_$* ?= $(MIGRATE_DEST_DIR)
 merge-migrateconf-%:
 	@echo "[ Generating cswmigrateconf for package $* ]"
+	@echo "X: $(MIGRATE_FILES_$*) Y: $(MIGRATE_FILES)"
 	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
-	$(_DBG)(echo "MIGRATE_FILES=\"$(MIGRATE_FILES_$*)\"";\
+	$(_DBG)(echo "MIGRATE_FILES=\"$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES))\"";\
 		 $(if $(MIGRATE_SOURCE_DIR_$*),echo "SOURCE_DIR___default__=\"$(MIGRATE_SOURCE_DIR_$*)\"";)\
 		 $(if $(MIGRATE_DEST_DIR_$*),echo "DEST_DIR___default__=\"$(MIGRATE_DEST_DIR_$*)\"";)\
-		 $(foreach F,$(MIGRATE_FILES_$*),\
+		 $(foreach F,$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES)),\
 			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
 			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
 		)\
