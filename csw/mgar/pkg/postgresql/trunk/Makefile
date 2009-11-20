@@ -8,17 +8,17 @@ DESCRIPTION = An advanced open source database
 define BLURB
 endef
 
-bindir = $(prefix)/bin/$(GARNAME)/$(BASE_VERSION)
+bindir_install = $(prefix)/bin/$(GARNAME)/$(BASE_VERSION)
 datadir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
 docdir=$(prefix)/share/doc/$(GARNAME)/$(BASE_VERSION)
 includedir=$(prefix)/include/$(GARNAME)/$(BASE_VERSION)
 infodir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/info
-libdir=$(prefix)/lib/$(GARNAME)/$(BASE_VERSION)
-libexecdir=$(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
+libdir_install =$(prefix)/lib/$(GARNAME)/$(BASE_VERSION)
+libexecdir_install =$(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
 lispdir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/emacs/site-lisp
 localstatedir = /var/opt/csw/$(GARNAME)/$(BASE_VERSION)
 mandir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/man
-sbindir = $(prefix)/sbin/$(GARNAME)/$(BASE_VERSION)
+sbindir_install = $(prefix)/sbin/$(GARNAME)/$(BASE_VERSION)
 sharedstatedir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
 sourcedir=$(prefix)/src/$(GARNAME)/$(BASE_VERSION)
 sysconfdir = /etc/opt/csw/$(GARNAME)/$(BASE_VERSION)
