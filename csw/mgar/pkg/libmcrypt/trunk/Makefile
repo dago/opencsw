@@ -15,6 +15,7 @@ DISTFILES  = $(SF_PROJ)-$(GARVERSION).tar.gz
 DISTNAME = $(SF_PROJ)-$(GARVERSION)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+PATCHFILES = no-wall.patch
 
 BUILD64 = 1
 NOISALIST = 1
@@ -22,6 +23,8 @@ NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic-loading
 CONFIGURE_ARGS += --with-included-algos=cast-128,gost,rijndael-128,twofish,arcfour,cast-256,loki97,rijndael-192,saferplus,wake,blowfish-compat,des,rijndael-256,serpent,xtea,blowfish,enigma,rc2,tripledes
+
+EXTRA_CFLAGS = -D__const=const
 
 TEST_TARGET = check
 
