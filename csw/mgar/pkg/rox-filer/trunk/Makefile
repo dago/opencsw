@@ -18,7 +18,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 REQUIRED_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
 REQUIRED_PKGS += CSWlibatk CSWlibcairo CSWlibglade2 CSWlibxml2 CSWpango
-REQUIRED_PKGS += CSWbash
+REQUIRED_PKGS += CSWbash CSWlibice CSWlibsm
+
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = rox
@@ -41,6 +42,12 @@ install-rox:
 	ginstall -d $(DESTDIR)$(datadir)/ROX
 	gcp -av $(WORKSRC)/ROX-Filer/ROX $(DESTDIR)$(datadir)
 	gcp -av $(WORKSRC)/ROX-Filer/images $(DESTDIR)$(datadir)/ROX
+	gcp -av $(WORKSRC)/ROX-Filer/Help $(DESTDIR)$(datadir)/ROX
+	gcp -av $(WORKSRC)/ROX-Filer/Options.xml $(DESTDIR)$(datadir)/ROX
+	gcp -av $(WORKSRC)/ROX-Filer/Messages $(DESTDIR)$(datadir)/ROX
+	gcp -av $(WORKSRC)/ROX-Filer/AppInfo.xml $(DESTDIR)$(datadir)/ROX
+	ginstall -d -m 755 $(DESTDIR)$(mandir)/man1
+	ginstall -m 644 $(WORKSRC)/rox.1 $(DESTDIR)$(mandir)/man1
 	gfind $(DESTDIR)$(datadir) -type d -exec chmod 0755 {} \;
 	gfind $(DESTDIR)$(datadir) -type f -exec chmod 0644 {} \;
 	@$(MAKECOOKIE)
