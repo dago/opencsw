@@ -14,9 +14,10 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES  = nspr-4.6.1-config.patch
 
 PACKAGES = CSWnspr CSWnspr-devel
-PKGFILES_CSWnspr-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWnspr-devel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWnspr-devel += $(bindir).*nspr-config
-PKGFILES_CSWnspr-devel += $(prefix)/pkgconfig/nspr\.pc
+PKGFILES_CSWnspr-devel += .*/nspr\.pc
+PKGFILES_CSWnspr-devel += .*compile-et\.pl
 
 SPKG_DESC_CSWnspr = Netscape Portable Runtime
 SPKG_DESC_CSWnspr-devel = Netscape Portable Runtime development files
@@ -38,19 +39,26 @@ export PERL
 libdir = $(prefix)/lib/nspr
 localstatedir = /var/opt/csw
 sysconfdir = /etc/opt/csw
+# Move the include files to include/nspr to prevent polluting the main
+# header file namespace.
+includedir = $(prefix)/include/nspr
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-mozilla
-CONFIGURE_ARGS += --disable-debug
-CONFIGURE_ARGS += --enable-strip
 CONFIGURE_ARGS += --with-native-threads
 CONFIGURE_ARGS += --enable-ipv6
-CONFIGURE_ARGS += --enable-optimize="-xO3"
-CONFIGURE_ARGS += --disable-tests
 CONFIGURE_ARGS += --enable-system-sqlite
 CONFIGURE_ARGS_isa-sparcv9 = --enable-64bit
 CONFIGURE_ARGS_isa-amd64 = --enable-64bit
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
+CONFIGURE_ARGS_OPT  = --enable-optimize="-xO3"
+CONFIGURE_ARGS_OPT += --disable-debug
+CONFIGURE_ARGS_OPT += --enable-strip
+CONFIGURE_ARGS_OPT += --disable-tests
+CONFIGURE_ARGS_DBG  = --enable-debug
+CONFIGURE_ARGS_DBG += --disable-strip
+CONFIGURE_ARGS_DBG += --enable-tests
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 # These options I'm unsure about, are they really needed?
 # EXTRA_LDFLAGS = -R'\$\$ORIGIN:\$\$ORIGIN/..' -R/opt/csw/lib
@@ -89,5 +97,4 @@ install-nspr:
 		$(DESTDIR)$(libdir)/pkgconfig
 	rm $(DESTDIR)$(bindir)/prerr.properties
 	rm $(DESTDIR)$(bindir)/nspr.pc
-	rm $(DESTDIR)$(bindir)/compile-et.pl
 	@$(MAKECOOKIE)
