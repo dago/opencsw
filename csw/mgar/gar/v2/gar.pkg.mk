@@ -193,7 +193,6 @@ SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 
 # - set class for all config files
-ifneq ($(SAMPLECONF)$(PRESERVECONF)$(MIGRATECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE)$(TEXINFO),)
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
@@ -206,6 +205,8 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
 
+# The TEXINFO dependency is handled dynamically by looking at the prototype for matching files
+ifneq ($(MIGRATECONF)$(SAMPLECONF)$(PRESERVECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _EXTRA_GAR_PKGS += CSWcswclassutils
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
