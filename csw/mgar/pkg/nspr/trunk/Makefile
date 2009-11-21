@@ -36,7 +36,7 @@ INSTALL_SCRIPTS = nspr
 
 export PERL
 
-libdir = $(prefix)/lib/nspr
+libdir_install = $(prefix)/lib/nspr
 localstatedir = /var/opt/csw
 sysconfdir = /etc/opt/csw
 # Move the include files to include/nspr to prevent polluting the main
@@ -92,9 +92,9 @@ install-nspr:
 	ginstall -m 755 -d $(DESTDIR)$(bindir)
 	ginstall -m 755 $(WORKSRC)/build/config/nspr-config \
 		$(DESTDIR)$(bindir)
-	ginstall -m 755 -d $(DESTDIR)$(libdir)/pkgconfig
+	ginstall -m 755 -d $(DESTDIR)$(prefix)/lib/pkgconfig
 	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc \
-		$(DESTDIR)$(libdir)/pkgconfig
+		$(DESTDIR)$(prefix)/lib/pkgconfig
 	rm $(DESTDIR)$(bindir)/prerr.properties
 	rm $(DESTDIR)$(bindir)/nspr.pc
 	@$(MAKECOOKIE)
