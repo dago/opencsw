@@ -4,5 +4,5 @@
 c5e9c3e4017caa65d14a0b98858043b9  0003-libdix.a-after-libos.a.patch
 691ddda52a4bcbc14ee1c19f77e465a1  cswvncserver
 397b35faad32d5246b6d44b142f8304f  tightvnc-1.3.10_unixsrc.tar.bz2
-46d0bcb1569025d9a559bab091aa79fa  vncserver-wrapper.sh
+e5deb36e898ac88a64dfb960976d251c  vncserver-wrapper.sh
 56c09be17c17184e96193c13246fd649  vncservers

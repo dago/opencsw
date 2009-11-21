@@ -36,6 +36,8 @@ writable() {
 
 if writable "${test_dir}"; then
 	exec /opt/csw/libexec/vncserver "$@"
+elif [ ! -d "${test_dir}" ]; then
+	exec /opt/csw/libexec/vncserver "$@"
 else
 	cat <<EOF
 The ${test_dir} directory is not world-writable.  This is a known issue on
