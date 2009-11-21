@@ -190,9 +190,6 @@ BUILD64 = 1
 ##
 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-## # To fix PR_STATIC_ASSERT(sizeof(size_t) > 4); in drbg.c, line 510
-## EXTRA_CFLAGS = -DNS_PTR_GT_32=1
-## EXTRA_CXXFLAGS = -DNS_PTR_GT_32=1
 BUILD_OPT = 1
 NSS_USE_SYSTEM_SQLITE = 1
 NSPR_INCLUDE_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --cflags-only-I nspr | gsed 's/-I//')
@@ -207,11 +204,13 @@ FREEBL_NO_DEPEND = 1
 # export DSO_LDOPTS
 ifeq ($(MODULATION),isa-sparcv9)
 	USE_64 = 1
+	export USE_64
 endif
 ifeq ($(MODULATION),isa-amd64)
 	USE_64 = 1
+	export USE_64
 endif
-export BUILD_OPT NSS_USE_SYSTEM_SQLITE NSPR_INCLUDE_DIR NSPR_LIB_DIR USE_64
+export BUILD_OPT NSS_USE_SYSTEM_SQLITE NSPR_INCLUDE_DIR NSPR_LIB_DIR
 export USE_SYSTEM_ZLIB ZLIB_LIBS NSDISTMODE NSS_ENABLE_ECC XCFLAGS FREEBL_NO_DEPEND
 
 include gar/category.mk

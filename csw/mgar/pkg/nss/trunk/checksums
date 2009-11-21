@@ -1,4 +1,4 @@
 8f76e381bf2339d731bfd5b8116c25a4  nss-3.12.4-with-nspr-4.8.tar.gz
 39b9d2431d4ff717d103b742fcaefb81  nss-3.12.4.patch
 f0f40bd021423ab1680b4d87cd19c1db  platlibs-sqlite3.patch
-971cfae38e3070d64dccb0960e5deae0  shared-libs.patch
+31aeaf6718c269812c445fb3e86f6ac6  shared-libs.patch
