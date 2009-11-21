@@ -1,0 +1,18 @@
+--- nss-3.12.4/mozilla/security/nss/lib/softoken/config.mk	2009-11-21 15:53:39.167529521 +0100
++++ nss-3.12.4/mozilla/security/nss/lib/softoken/config.mk.orig	2009-11-21 15:52:38.972288644 +0100
+@@ -54,7 +54,6 @@
+ 
+ ifdef NS_USE_GCC
+ EXTRA_SHARED_LIBS += \
+-	-L/opt/csw/lib \
+ 	-L$(DIST)/lib \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
+@@ -81,7 +80,6 @@
+ # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
+ # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
+ EXTRA_SHARED_LIBS += \
+-	-L/opt/csw/lib \
+ 	-L$(DIST)/lib \
+ 	-L$(NSSUTIL_LIB_DIR) \
+ 	-lnssutil3 \
