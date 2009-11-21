@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Squid-cache preremove script
+
+PATH=/usr/bin:/usr/sbin
+umask 0022
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+SQUID_CONFDIR=${CSW_PREFIX}/etc
+SQUID_VARDIR=/var/opt/csw/squid
+SQUID_SBINDIR=${CSW_PREFIX}/sbin
+USER=''
+GRP=''
+
+if [ -f ${SQUID_CONFDIR}/squid.conf ]; then
+    echo 'squid.conf found, Preserving Existing Config!'
+    USER="`awk '$1  ~ /cache_effective_user/ {print $2}' \
+           ${SQUID_CONFDIR}/squid.conf`"
+    GRP="`awk '$1 ~ /cache_effective_group/ {print $2}' \
+           ${SQUID_CONFDIR}/squid.conf`"
+else
+    cp ${SQUID_CONFDIR}/squid.conf.CSW ${SQUID_CONFDIR}/squid.conf
+    chmod 0644 ${SQUID_CONFDIR}/squid.conf
+fi
+
+if [ "_x${USER}x_" = "_xx_" ]; then
+    USER=nobody
+fi
+if [ "_x${GRP}x_" = "_xx_" ]; then
+    GRP=nobody
+fi
+
+chown ${USER}:${GRP} ${SQUID_VARDIR}/logs
+chown ${USER}:${GRP} ${SQUID_VARDIR}/cache
+
+${SQUID_SBINDIR}/squid -z
+
+exit 0
