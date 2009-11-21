@@ -43,7 +43,8 @@ SPKG_SOURCEURL = http://www.mozilla.org/projects/security/pki/nss/
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
 # TODO: Generate RTM_NAME from GARVERSION
 RTM_NAME = NSS_3_12_4_RTM
-MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
+# MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
+MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_12_4_RTM/src/
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
 ## Sourceforge project name differs from $(GARNAME). Specifies the Sourceforge
@@ -56,12 +57,15 @@ MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM
 # http://bugs.gentoo.org/show_bug.cgi?id=256102
 PATCHFILES  = nss-3.12.4.patch
 PATCHFILES += shared-libs.patch
+PATCHFILES += platlibs-sqlite3.patch
 ## PATCHFILES = freebl.patch
 ##
 ## Whitespace-separated list of files which comprise this build. mGAR will look
 ## for the files in the $(FILEDIR) (trunk/files) directory and on the
 ## $(MASTER_SITES).
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+# DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION)-with-nspr-4.8.tar.gz
+DISTNAME = $(GARNAME)-$(GARVERSION)-with-nspr-4.8
 ##
 ## We define upstream file regex so we can be notifed of new upstream software
 ## release
