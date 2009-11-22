@@ -1,5 +1,5 @@
 GARNAME = coreutils
-GARVERSION = 7.6
+GARVERSION = 8.1
 CATEGORIES = utils
 
 DESCRIPTION = GNU core utilities
@@ -22,6 +22,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-acl --program-prefix=g
 
 TEST_ARGS = check
 
