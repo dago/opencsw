@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+GARFLAVOR = DBG
+
 ## This file contains comments to guide you through various GAR settings.
 ## Please remove unnecessary comments before committing your code to the code
 ## repository. The comments to remove are marked with double hashes.
@@ -13,6 +15,12 @@
 ##
 # Based on:
 # http://sources.gentoo.org/viewcvs.py/gentoo-x86/dev-libs/nss/nss-3.12.4-r1.ebuild?view=markup
+# and
+# https://developer.mozilla.org/en/NSS_reference/Building_and_installing_NSS/Build_instructions
+# and
+# https://developer.mozilla.org/en/NSS_reference/NSS_environment_variables
+# and
+# https://developer.mozilla.org/en/NSS_reference/Building_and_installing_NSS/Installation_guide
 GARNAME = nss
 GARVERSION = 3.12.4
 # http://www.gentoo-portage.com/AJAX/Ebuild/96014
@@ -58,6 +66,8 @@ MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_
 PATCHFILES  = nss-3.12.4.patch
 PATCHFILES += shared-libs.patch
 PATCHFILES += platlibs-sqlite3.patch
+PATCHFILES += whoami.patch
+PATCHFILES += runtime-search-path.patch
 ## PATCHFILES = freebl.patch
 ##
 ## Whitespace-separated list of files which comprise this build. mGAR will look
@@ -190,10 +200,12 @@ BUILD64 = 1
 ##
 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-BUILD_OPT = 1
+ifeq (OPT,$(GARFLAVOR))
+	BUILD_OPT = 1
+endif
 NSS_USE_SYSTEM_SQLITE = 1
 NSPR_INCLUDE_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --cflags-only-I nspr | gsed 's/-I//')
-NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//')
+NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
 USE_SYSTEM_ZLIB = 1
 ZLIB_LIBS = -lz
 NSDISTMODE = copy
@@ -202,6 +214,7 @@ XCFLAGS=$(CFLAGS)
 FREEBL_NO_DEPEND = 1
 # DSO_LDOPTS = -R/opt/csw/lib/$$$$ISALIST -L/opt/csw/lib
 # export DSO_LDOPTS
+LDOPTS = $(LD_OPTIONS)
 ifeq ($(MODULATION),isa-sparcv9)
 	USE_64 = 1
 	export USE_64
@@ -215,14 +228,38 @@ export USE_SYSTEM_ZLIB ZLIB_LIBS NSDISTMODE NSS_ENABLE_ECC XCFLAGS FREEBL_NO_DEP
 
 include gar/category.mk
 
-configure-nss:
+configure-nss: respect-ldflags add-runtime-search-path
+	@$(MAKECOOKIE)
+
+respect-ldflags:
 	(cd $(WORKSRC)/mozilla/security/coreconf \
 		&& \
 	gsed -e 's:SOURCE_PREFIX = $$(CORE_DEPTH)/\.\./dist:SOURCE_PREFIX = $$(CORE_DEPTH)/dist:' \
 		-i source.mk \
 		&& \
-	gsed -i -e 's/\$$(MKSHLIB) -o/\$$(MKSHLIB) \$$(LDFLAGS) -o/g' rules.mk \
-	)
+	gsed -i -e 's/\$$(MKSHLIB) -o/\$$(MKSHLIB) \$$(LDFLAGS) -o/g' rules.mk)
+	@$(MAKECOOKIE)
+
+add-runtime-search-path:
+	for f in \
+			mozilla/security/nss/cmd/pk11mode/Makefile \
+			mozilla/security/nss/cmd/platlibs.mk \
+			mozilla/security/nss/cmd/shlibsign/Makefile \
+			mozilla/security/nss/cmd/shlibsign/mangle/Makefile \
+			mozilla/security/nss/lib/ckfw/builtins/Makefile \
+			mozilla/security/nss/lib/ckfw/capi/Makefile \
+			mozilla/security/nss/lib/ckfw/nssmkey/Makefile \
+			mozilla/security/nss/lib/freebl/config.mk \
+			mozilla/security/nss/lib/nss/config.mk \
+			mozilla/security/nss/lib/smime/config.mk \
+			mozilla/security/nss/lib/softoken/config.mk \
+			mozilla/security/nss/lib/softoken/legacydb/config.mk \
+			mozilla/security/nss/lib/ssl/config.mk \
+			mozilla/security/nss/lib/util/config.mk; do \
+		gsed -i -e 's|-L\$$(NSPR_LIB_DIR)|-L$$(NSPR_LIB_DIR) -R$$(NSPR_LIB_DIR)/$$$$ISALIST|' $(WORKSRC)/$$f; \
+	done;
+	# A form of assert
+	ggrep -- -R $(WORKSRC)/mozilla/security/nss/lib/freebl/config.mk
 	@$(MAKECOOKIE)
 
 build-nss: build-coreconf build-dbm build-nss-compile
@@ -250,3 +287,4 @@ build-nss-compile:
 		&& \
 	gmake -j1 CC="$(CC)")
 	@$(MAKECOOKIE)
+

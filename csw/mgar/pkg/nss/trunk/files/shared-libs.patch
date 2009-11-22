@@ -1,20 +1,32 @@
---- nss-3.12.4-with-nspr-4.8/mozilla/security/nss/lib/softoken/config.mk.orig	2009-11-21 21:00:43.881431583 +0100
-+++ nss-3.12.4-with-nspr-4.8/mozilla/security/nss/lib/softoken/config.mk	2009-11-21 21:01:18.985608134 +0100
-@@ -54,6 +54,8 @@
+--- nss-3.12.4-with-nspr-4.8/mozilla/security/nss/lib/softoken/config.mk.orig	2009-11-22 11:39:49.492474635 +0100
++++ nss-3.12.4-with-nspr-4.8/mozilla/security/nss/lib/softoken/config.mk	2009-11-22 11:40:51.857227138 +0100
+@@ -54,10 +54,14 @@
  
  ifdef NS_USE_GCC
  EXTRA_SHARED_LIBS += \
 +	-R/opt/csw/lib/$$ISALIST \
 +	-L/opt/csw/lib \
  	-L$(DIST)/lib \
++	-R$(NSSUTIL_LIB_DIR)/$$ISALIST \
  	-L$(NSSUTIL_LIB_DIR) \
  	-lnssutil3 \
-@@ -80,6 +82,8 @@
+ 	-lsqlite3 \
++	-R$(NSPR_LIB_DIR)/$$ISALIST \
+ 	-L$(NSPR_LIB_DIR) \
+ 	-lplc4 \
+ 	-lplds4 \
+@@ -80,10 +84,14 @@
  # $(PROGRAM) has NO explicit dependencies on $(EXTRA_SHARED_LIBS)
  # $(EXTRA_SHARED_LIBS) come before $(OS_LIBS), except on AIX.
  EXTRA_SHARED_LIBS += \
 +	-R/opt/csw/lib/$$ISALIST \
 +	-L/opt/csw/lib \
  	-L$(DIST)/lib \
++	-R$(NSSUTIL_LIB_DIR)/$$ISALIST \
  	-L$(NSSUTIL_LIB_DIR) \
  	-lnssutil3 \
+ 	-lsqlite3 \
++	-R$(NSPR_LIB_DIR)/$$ISALIST \
+ 	-L$(NSPR_LIB_DIR) \
+ 	-lplc4 \
+ 	-lplds4 \
