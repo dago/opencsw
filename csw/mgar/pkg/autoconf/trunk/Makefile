@@ -1,5 +1,5 @@
 GARNAME = autoconf
-GARVERSION = 2.64
+GARVERSION = 2.65
 CATEGORIES = devel
 
 DESCRIPTION = GNU auto-configuration tool
@@ -15,7 +15,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = use-csw-tools.patch
+PATCHFILES = 0001-Prefer-CSW-tools.patch
 
 PREREQUISITE_PKGS = CSWhelp2man
 REQUIRED_PKGS = CSWgawk CSWgm4 CSWperl
@@ -38,6 +38,4 @@ FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/emacs/site-lisp
 
 post-install:
 	@echo " ==> Fixing install anomalies"
-
-	@rm -f $(DESTDIR)$(prefix)/share/info/dir
 	@rm -f $(DESTDIR)$(prefix)/share/info/standards.info

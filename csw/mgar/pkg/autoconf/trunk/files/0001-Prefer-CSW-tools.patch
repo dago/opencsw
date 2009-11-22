@@ -1,10 +1,20 @@
-diff -Naur autoconf-2.63.orig/bin/autoreconf.in autoconf-2.63/bin/autoreconf.in
---- autoconf-2.63.orig/bin/autoreconf.in	2008-08-28 04:08:10.000000000 +0200
-+++ autoconf-2.63/bin/autoreconf.in	2008-09-18 18:22:49.127382000 +0200
-@@ -109,11 +109,11 @@
- # Lib files.
+From bcf37e64f81ff412b506a4d1c0d52f1a7fc8a615 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 22 Nov 2009 22:30:05 +0100
+Subject: [PATCH] Prefer CSW tools
+
+---
+ bin/autoreconf.in |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/bin/autoreconf.in b/bin/autoreconf.in
+index 9f82071..139bf34 100644
+--- a/bin/autoreconf.in
++++ b/bin/autoreconf.in
+@@ -110,11 +110,11 @@ Written by David J. MacKenzie and Akim Demaille.
  my $autoconf   = $ENV{'AUTOCONF'}   || '@bindir@/@autoconf-name@';
  my $autoheader = $ENV{'AUTOHEADER'} || '@bindir@/@autoheader-name@';
+ my $autom4te   = $ENV{'AUTOM4TE'}   || '@bindir@/@autom4te-name@';
 -my $automake   = $ENV{'AUTOMAKE'}   || 'automake';
 -my $aclocal    = $ENV{'ACLOCAL'}    || 'aclocal';
 -my $libtoolize = $ENV{'LIBTOOLIZE'} || 'libtoolize';
@@ -18,3 +28,6 @@ diff -Naur autoconf-2.63.orig/bin/autoreconf.in autoconf-2.63/bin/autoreconf.in
  
  # --install -- as --add-missing in other tools.
  my $install = 0;
+-- 
+1.6.5.1
+
