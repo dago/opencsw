@@ -1,0 +1,54 @@
+From 2f1eeb8502a426f38189d24760d52760448cd2ae Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 22 Nov 2009 18:29:07 +0100
+Subject: [PATCH] Fix solaris acl support breakage
+
+In the standard solaris acl support, ENOSYS was handled cleanly. This
+patch makes the code path handle EOPNOTSUPP identically to ENOSYS,
+preventing errors when attempting to a pply acl's on filesystems that
+don't implement the acl api (NFS).
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ lib/copy-acl.c     |    4 ++--
+ lib/set-mode-acl.c |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/lib/copy-acl.c b/lib/copy-acl.c
+index af85a08..346dd5c 100644
+--- a/lib/copy-acl.c
++++ b/lib/copy-acl.c
+@@ -253,7 +253,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
+ 
+       if (ace_count < 0)
+ 	{
+-	  if (errno == ENOSYS || errno == EINVAL)
++	  if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+ 	    {
+ 	      ace_count = 0;
+ 	      ace_entries = NULL;
+@@ -358,7 +358,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
+       if (ret < 0 && saved_errno == 0)
+ 	{
+ 	  saved_errno = errno;
+-	  if (errno == ENOSYS && !acl_nontrivial (count, entries))
++	  if ((errno == ENOSYS || errno == EOPNOTSUPP) && !acl_nontrivial (count, entries))
+ 	    saved_errno = 0;
+ 	}
+       else
+diff --git a/lib/set-mode-acl.c b/lib/set-mode-acl.c
+index ddac4df..fdc74f2 100644
+--- a/lib/set-mode-acl.c
++++ b/lib/set-mode-acl.c
+@@ -387,7 +387,7 @@ qset_acl (char const *name, int desc, mode_t mode)
+       ret = acl (name, SETACL, sizeof (entries) / sizeof (aclent_t), entries);
+     if (ret < 0)
+       {
+-	if (errno == ENOSYS)
++	if (errno == ENOSYS || errno == EOPNOTSUPP)
+ 	  return chmod_or_fchmod (name, desc, mode);
+ 	return -1;
+       }
+-- 
+1.6.5.1
+

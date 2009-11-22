@@ -9,9 +9,9 @@ The GNU Core Utilities are the basic file, shell and text manipulation utilities
 Previously these utilities were offered as three individual sets of GNU utilities, Fileutils, Shellutils, and Textutils. Those three have been combined into a single set of utilities called Coreutils.
 endef
 
-
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0001-Fix-solaris-acl-support-breakage.patch
 
 PREREQUISITE_PKGS =  CSWautomake CSWautoconf CSWbison CSWggettext CSWgit
 PREREQUISITE_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
@@ -22,7 +22,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-acl --program-prefix=g
+CONFIGURE_ARGS += --program-prefix=g
+CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
+CONFIGURE_ARGS += --with-iconv-prefix=/opt/csw/
 
 TEST_ARGS = check
 
