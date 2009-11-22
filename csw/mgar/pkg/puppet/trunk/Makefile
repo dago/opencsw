@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 GARNAME = puppet
-GARVERSION = 0.24.8
+GARVERSION = 0.25.1
 CATEGORIES = apps
 
 define BLURB
@@ -21,9 +21,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://reductivelabs.com/downloads/puppet/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswpuppetd cswpuppetmasterd cswusergroup
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://reductivelabs.com/products/puppet/
 
 INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
@@ -35,7 +35,7 @@ USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 PACKAGES = CSWpuppet CSWpuppetmaster
 
 REQUIRED_PKGS = CSWfacter
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+#PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 REQUIRED_PKGS_CSWpuppetmaster = CSWpuppet
 
 PKGFILES_CSWpuppetmaster = $(sysconfdir)/init\.d/cswpuppetmasterd
