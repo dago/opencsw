@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = facter
-GARVERSION = 1.5.6
+GARVERSION = 1.5.7
 CATEGORIES = apps
 
 DESCRIPTION = a system fact gatherer
