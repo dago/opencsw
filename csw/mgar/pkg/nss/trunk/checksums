@@ -1,3 +1,6 @@
+a1ce38c03b142eb2bd54f1f111661e30  csw-include.patch
+7116f8de3ac8b35104365c1b3fc6aea4  gln.patch
+63476fb10c2d14f7e0585fe327ae9341  nss-3.12.4-gentoo-fixups-1.diff
 8f76e381bf2339d731bfd5b8116c25a4  nss-3.12.4-with-nspr-4.8.tar.gz
 39b9d2431d4ff717d103b742fcaefb81  nss-3.12.4.patch
 f0f40bd021423ab1680b4d87cd19c1db  platlibs-sqlite3.patch

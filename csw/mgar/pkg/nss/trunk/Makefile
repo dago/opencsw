@@ -13,7 +13,10 @@
 GARFLAVOR = DBG
 
 GARNAME = nss
-GARVERSION = 3.12.4
+MAJOR_VERSION = 3
+MINOR_VERSION = 12
+PATCHLEVEL = 4
+GARVERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
 DESCRIPTION = Network Security Services library, implements PKI support
 define BLURB
@@ -29,6 +32,9 @@ PATCHFILES += platlibs-sqlite3.patch
 PATCHFILES += platlibs-sunos.patch
 PATCHFILES += whoami.patch
 PATCHFILES += runtime-search-path.patch
+PATCHFILES += nss-3.12.4-gentoo-fixups-1.diff
+PATCHFILES += csw-include.patch
+PATCHFILES += gln.patch
 DIST_SUFFIX = -with-nspr-4.8
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(DIST_SUFFIX).tar.gz
 DISTNAME = $(GARNAME)-$(GARVERSION)$(DIST_SUFFIX)
@@ -40,6 +46,9 @@ BUILD_SCRIPTS = nss
 INSTALL_SCRIPTS = nss
 TEST_SCRIPTS =
 BUILD64 = 1
+
+install_libdir = $(prefix)/lib/nss
+includedir = $(prefix)/include/nss
 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 ifeq (OPT,$(GARFLAVOR))
@@ -53,7 +62,6 @@ ZLIB_LIBS = -lz
 NSDISTMODE = copy
 NSS_ENABLE_ECC = 1
 XCFLAGS = $(CFLAGS)
-FREEBL_NO_DEPEND = 1
 LDOPTS = $(LD_OPTIONS)
 ifeq ($(MODULATION),isa-sparcv9)
 	USE_64 = 1
@@ -64,7 +72,7 @@ ifeq ($(MODULATION),isa-amd64)
 	export USE_64
 endif
 export BUILD_OPT NSS_USE_SYSTEM_SQLITE NSPR_INCLUDE_DIR NSPR_LIB_DIR
-export USE_SYSTEM_ZLIB ZLIB_LIBS NSDISTMODE NSS_ENABLE_ECC XCFLAGS FREEBL_NO_DEPEND
+export USE_SYSTEM_ZLIB ZLIB_LIBS NSDISTMODE NSS_ENABLE_ECC XCFLAGS
 
 include gar/category.mk
 
@@ -115,3 +123,23 @@ build-nss-compile:
 	gmake -j1 CC="$(CC)")
 	@$(MAKECOOKIE)
 
+install-nss:
+	ginstall -d -m 755 $(DESTDIR)$(libdir)
+	gcp -a $(WORKSRC)/mozilla/security/dist/*/lib/*.so $(DESTDIR)$(libdir)
+	ginstall -d -m 755 $(DESTDIR)$(bindir)
+	gcp -a $(WORKSRC)/mozilla/security/dist/*/bin/nss-config $(DESTDIR)$(bindir)
+	ginstall -d -m 755 $(DESTDIR)/lib/pkgconfig
+	ginstall -m 644 \
+		$(WORKSRC)/mozilla/security/dist/*/lib/pkgconfig/nss.pc \
+		$(DESTDIR)/lib/pkgconfig
+	ginstall -d -m 755 $(DESTDIR)$(includedir)
+	gcp -a $(WORKSRC)/mozilla/security/dist/private/nss/*.h $(DESTDIR)$(includedir)
+	gcp -a $(WORKSRC)/mozilla/security/dist/public/nss/*.h $(DESTDIR)$(includedir)
+	(cd $(DESTDIR)$(libdir); for file in *.so; do \
+		mv $${file} $$(file).$(MINOR_VERSION); \
+		ln -s $${file}.$(MINOR_VERSION) $${file}; \
+	done)
+	(for file in $(WORKSRC)/mozilla/security/dist/*/bin/*; do \
+		ginstall -m 755 $${file} $(DESTDIR)$(bindir)/nss$$(basename $${file}); \
+	done)
+	@$(MAKECOOKIE)

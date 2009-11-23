@@ -1,0 +1,11 @@
+--- nss-3.12.4-with-nspr-4.8/mozilla/security/coreconf/SunOS5.mk.orig	2009-11-23 02:33:18.896095984 +0100
++++ nss-3.12.4-with-nspr-4.8/mozilla/security/coreconf/SunOS5.mk	2009-11-23 02:33:40.956347570 +0100
+@@ -104,7 +104,7 @@
+ 	endif
+ endif
+ 
+-INCLUDES   += -I/usr/dt/include -I/usr/openwin/include
++INCLUDES   += -I/usr/dt/include -I/usr/openwin/include -I/opt/csw/include
+ 
+ RANLIB      = echo
+ CPU_ARCH    = sparc
