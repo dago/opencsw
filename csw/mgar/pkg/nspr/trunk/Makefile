@@ -60,12 +60,6 @@ CONFIGURE_ARGS_DBG += --disable-strip
 CONFIGURE_ARGS_DBG += --enable-tests
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
-# These options I'm unsure about, are they really needed?
-# EXTRA_LDFLAGS = -R'\$\$ORIGIN:\$\$ORIGIN/..' -R/opt/csw/lib
-# prefix = /opt/csw/mozilla/nspr
-# CONFIGURE_ARGS += --with-dist-prefix=$(DESTDIR)/opt/csw/mozilla/nspr
-# CONFIGURE_ARGS += --with-dist-bindir=$(DESTDIR)/opt/csw/mozilla/nspr/lib
-
 BUILD64 = 1
 
 include gar/category.mk
@@ -84,7 +78,7 @@ build-nspr:
 
 install-nspr:
 	(cd $(WORKSRC)/build && $(INSTALL_ENV) gmake install DESTDIR=$(DESTDIR))
-	(cd $(DESTDIR)/opt/csw/lib/nspr \
+	(cd $(DESTDIR)$(libdir) \
 		&& for file in *.so; do \
 			mv $${file} $${file}.$(MIN_VERSION); \
 			ln -s $${file}.$(MIN_VERSION) $${file}; \
@@ -95,6 +89,16 @@ install-nspr:
 	ginstall -m 755 -d $(DESTDIR)$(prefix)/lib/pkgconfig
 	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc \
 		$(DESTDIR)$(prefix)/lib/pkgconfig
-	rm $(DESTDIR)$(bindir)/prerr.properties
-	rm $(DESTDIR)$(bindir)/nspr.pc
+	rm -f $(DESTDIR)$(bindir)/prerr.properties
+	rm -f $(DESTDIR)$(bindir)/nspr.pc
+	@$(MAKECOOKIE)
+
+# Create symlinks allowing to use -L/opt/csw/lib/nspr/64 for 64-bit
+# architectures.
+post-merge:
+	if [ "$(GARCH)" = sparc ]; then \
+		gln -sf sparcv9 $(PKGROOT)$(libdir)/64; \
+	elif [ "$(GARCH)" = i386 ]; then \
+		gln -sf amd64 $(PKGROOT)$(libdir)/64; \
+	fi
 	@$(MAKECOOKIE)
