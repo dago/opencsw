@@ -10,6 +10,9 @@
 #     * Distinguishing between reload and restart
 #     * Made the script zone-friendly
 #     * Supported custom pid file locations.
+#
+#   2009-11-23 Gary Law
+#     * changed sbindir
 
 . /lib/svc/share/smf_include.sh
 
