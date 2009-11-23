@@ -1,6 +1,6 @@
 abaa404420106f9f28e9e1218b4e365b  0001-pkgutil-support.patch
 9c27c0cdca051eae986b56b91ef889ca  0002-Using-the-single-option-of-pkgutil.patch
-6135a983b7f020bea07178801f261693  cswpuppetd
-51156a9016cbc41c92e3bbd3ee1bdbb6  cswpuppetmasterd
+0ccf353707349bdc9c04297a8bef1f3d  cswpuppetd
+aba2c79e589b9bd1c881a22aa663a213  cswpuppetmasterd
 3ab0d4f9801075bc78b68b766b496fc7  cswusergroup
 55ced6102fe6ad8b2ecb2b1384008167  puppet-0.25.1.tar.gz
