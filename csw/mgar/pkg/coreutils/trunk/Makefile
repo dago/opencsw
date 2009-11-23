@@ -24,7 +24,7 @@ localstatedir = /var/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
-CONFIGURE_ARGS += --with-iconv-prefix=/opt/csw/
+CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
 
 TEST_ARGS = check
 
