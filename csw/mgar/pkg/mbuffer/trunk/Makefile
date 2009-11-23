@@ -1,12 +1,8 @@
 # STATUS/TODO
-# - 20090628 contained assertion failures in 64-bit code which have been fixed
-#   with 20091012, 20091012 introduced hickups with non-IPv6 systems when using
-#   -I / -O (and not explicitly specifying -4)
-# - 20091110 does not work on Solaris 8 / 9 any more .. upstream informed
-# - 20091110 dumps core on connection refused .. upstream informed
-
+# - provide feedback about -xarch=generic64 to upstream
+# - verify that tests pass
 GARNAME = mbuffer
-GARVERSION = 20091110
+GARVERSION = 20091122
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -69,8 +65,15 @@ test-custom:
 
 	# Target test3 is skipped because it contains IPV6 tests which
 	# are not supported by the build farm boxes (yet).
-	$(MAKE) -C $(TMPDIR) -o test3 check
-	rm -rf $(TMPDIR)
+	$(MAKE) -C $(TMPDIR) -o test3 check || rm -rf $(TMPDIR) && exit 1
+	test -d $(TMPDIR) && rm -rf $(TMPDIR)
+	@$(MAKECOOKIE)
+
+# mbuffer-20091122 always tries to use -xarch=generic64,
+# even for non-64bit builds
+post-configure-modulated:
+	[ "$(GARCH)" -eq "i386" -o "$(GARCH)" -eq "sparcv8" ] && \
+		gsed -ie 's/-xarch=generic64//' $(WORKSRC)/Makefile
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCS = ChangeLog README AUTHORS
