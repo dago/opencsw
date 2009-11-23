@@ -1,5 +1,5 @@
 GARNAME = firefox
-GARVERSION = 3.0.14
+GARVERSION = 3.0.15
 CATEGORIES = x11
 DISTNAME = $(GARNAME)
 
@@ -19,6 +19,8 @@ UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/rele
 PACKAGES 		= CSWfirefox
 CATALOGNAME_CSWfirefox 	= $(GARNAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
+
+PREREQUISITE_PKGS = CSWgtk2devel CSWlibdbusdev CSWdbusglibdev CSWsqlite3devel CSWkbproto CSWrenderproto
 
 REQUIRED_PKGS_CSWfirefox  = CSWdbusglib
 REQUIRED_PKGS_CSWfirefox += CSWfconfig
@@ -84,9 +86,9 @@ WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 post-extract:
-	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)
-	@cp $(FILEDIR)/stdbool.h $(WORK_BUILD)/memory/jemalloc
-	@$(MAKECOOKIE)
+	mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD) 
+	cp $(FILEDIR)/stdbool.h $(WORK_BUILD)/memory/jemalloc
+	$(MAKECOOKIE)
 
 pre-configure-modulated:
 	@cp $(FILEDIR)/.mozconfig  $(WORK_BUILD)/.mozconfig
@@ -95,8 +97,8 @@ post-configure-modulated:
 	@grep openwin $(WORKSRC)/config/autoconf.mk && gpatch -d$(WORKSRC) --forward -p1 -F2 < download/autoconf.mk.diff || true
 
 pre-install-modulated:
-	@grep "LD_LIBRARY_PATH=.LD_LIBRARY_PATH:/usr/lib/lwp" $(WORKSRC)/browser/app/firefox || gpatch -d$(WORKSRC) --forward  -p1 -F2 < download/firefox.diff
-	@grep "LD_LIBRARY_PATH=.LD_LIBRARY_PATH:/usr/lib/lwp" $(WORKSRC)/dist/bin/firefox || gpatch -d$(WORKSRC) --forward  -p1 -F2 < download/firefox.dist.bin.diff
+	@grep "LD_LIBRARY_PATH=.LD_LIBRARY_PATH:/usr/lib/lwp" $(WORKSRC)/browser/app/firefox || gpatch -d$(WORKSRC) --forward  -p1 -F2 < $(FILEDIR)/firefox.diff
+	@grep "LD_LIBRARY_PATH=.LD_LIBRARY_PATH:/usr/lib/lwp" $(WORKSRC)/dist/bin/firefox || gpatch -d$(WORKSRC) --forward  -p1 -F2 < $(FILEDIR)/firefox.dist.bin.diff
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
 	( cd $(WORK_INSTALL)/opt/csw/bin ; rm -f firefox ; ln -sf ../mozilla/firefox/bin/firefox . )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )

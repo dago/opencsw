@@ -1,6 +1,6 @@
 --- firefox.orig/xpfe/components/filepicker/src/nsWildCard.cpp	2009-09-12 11:39:56.098357687 +0200
-+++ firefox/xpfe/components/filepicker/src]nsWildCard.cpp	2009-09-12 16:06:48.580505412 +0200
-@@ -57,38 +57,34 @@
++++ firefox/xpfe/components/filepicker/src/nsWildCard.cpp	2009-09-12 16:06:48.580505412 +0200
+@@ -57,40 +57,35 @@
  
  typedef int static_assert_character_code_arrangement['a' > 'A' ? 1 : -1];
  
@@ -40,20 +40,36 @@
  /* ----------------------------- _valid_subexp ---------------------------- */
  
 -template<class T>
-+template<typename T>
  static int
- _valid_subexp(const T *expr, T stop1, T stop2)
+-_valid_subexp(const T *expr, T stop1, T stop2)
++_valid_subexp(const PRUnichar *expr, PRUnichar stop1, PRUnichar stop2)
  {
-@@ -162,7 +158,7 @@
+     register int x;
+     int nsc = 0;     /* Number of special characters */
+@@ -132,7 +127,7 @@
+                 return INVALID_SXP;
+             np = -1;
+             do {
+-                int t = ::_valid_subexp(&expr[++x], T(')'), T('|'));
++                int t = ::_valid_subexp(&expr[++x], PRUnichar(')'), PRUnichar('|'));
+                 if(t == 0 || t == INVALID_SXP)
+                     return INVALID_SXP;
+                 x+=t;
+@@ -162,11 +157,10 @@
  }
  
  
 -template<class T>
-+template<typename T>
  int
- NS_WildCardValid_(const T *expr)
+-NS_WildCardValid_(const T *expr)
++NS_WildCardValid_(const PRUnichar *expr)
  {
-@@ -183,9 +179,8 @@
+-    int x = ::_valid_subexp(expr, T('\0'), T('\0'));
++    int x = ::_valid_subexp(expr, PRUnichar('\0'), PRUnichar('\0'));
+     return (x < 0 ? x : VALID_SXP);
+ }
+ 
+@@ -183,9 +177,8 @@
  #define NOMATCH 1
  #define ABORTED -1
  
@@ -64,7 +80,7 @@
  
  /**
   * Count characters until we reach a NUL character or either of the
-@@ -196,9 +191,8 @@
+@@ -196,9 +189,8 @@
   * Return index in input string of first stop found, or ABORTED if not found.
   * If "dest" is non-NULL, copy counted characters to it and NUL terminate.
   */
@@ -75,7 +91,7 @@
  {
      register int sx;     /* source index */
      register char cc;
-@@ -219,7 +213,7 @@
+@@ -219,7 +211,7 @@
      }
      if (dest && sx) {
          /* Copy all but the closing delimiter. */
@@ -84,7 +100,7 @@
          dest[sx] = 0;
      }
      return cc ? sx : ABORTED; /* index of closing delimiter */
-@@ -233,36 +227,35 @@
+@@ -233,36 +225,35 @@
   * matches the input string.  Repeat this until some alternative matches,
   * or we have an abort.
   */
@@ -127,7 +143,7 @@
          ret = ::_shexp_match(str, e2, case_insensitive, level + 1);
          if (ret != NOMATCH || !expr[sx] || expr[sx] == ')')
              break;
-@@ -284,9 +277,8 @@
+@@ -284,9 +275,8 @@
      return map[lower(val)];
  }
  
@@ -138,7 +154,7 @@
               unsigned int level)
  {
      register int x;   /* input string index */
-@@ -326,7 +318,7 @@
+@@ -326,7 +316,7 @@
              else
                  return NOMATCH;
          case '[': {
@@ -147,7 +163,7 @@
              int i;
              neg = ((expr[++y] == '^') && (expr[y+1] != ']'));
              if (neg)
-@@ -342,9 +334,9 @@
+@@ -342,9 +332,9 @@
              }
              if (alphanumeric(end) && expr[i] == ']') {
                  /* This is a range form: a-b */
@@ -159,7 +175,7 @@
                      end = start;
                      start = tmp;
                  }
-@@ -405,21 +397,20 @@
+@@ -405,22 +395,21 @@
  }
  
  
@@ -177,7 +193,9 @@
          return _shexp_match(str, xp, case_insensitive, 0);
  
 -    expr = (T *) NS_Alloc((nsCharTraits<T>::length(xp) + 1) * sizeof(T));
+-    memcpy(expr, xp, (nsCharTraits<T>::length(xp) + 1) * sizeof(T));
 +    expr = (PRUnichar *) NS_Alloc((nsCharTraits<PRUnichar>::length(xp) + 1) * sizeof(PRUnichar));
++    memcpy(expr, xp, (nsCharTraits<PRUnichar>::length(xp) + 1) * sizeof(PRUnichar));
      if(!expr)
          return NOMATCH;
  
@@ -186,7 +204,7 @@
      if (x != ABORTED && expr[x] == '~') {
          expr[x++] = '\0';
          ret = ::_shexp_match(str, &expr[x], case_insensitive, 0);
-@@ -436,9 +427,8 @@
+@@ -437,9 +426,8 @@
      return ret;
  }
  
