@@ -1,0 +1,141 @@
+--- mozilla/security/nss/lib/freebl/stubs.c.dist	2009-09-16 17:46:24.600678560 +0100
++++ b/mozilla/security/nss/lib/freebl/stubs.c	2009-09-16 18:09:59.275307160 +0100
+@@ -70,9 +70,32 @@
+ #include <secitem.h>
+ #include <blapi.h>
+ 
+-#define FREEBL_NO_WEAK 1
++#ifdef __sgi
++# include <rld_interface.h>
++# ifndef _RLD_INTERFACE_DLFCN_H_DLADDR
++#  define _RLD_INTERFACE_DLFCN_H_DLADDR
++   typedef struct Dl_info {
++       const char * dli_fname;
++       void       * dli_fbase;
++       const char * dli_sname;
++       void       * dli_saddr;
++       int          dli_version;
++       int          dli_reserved1;
++       long         dli_reserved[4];
++   } Dl_info;
++# endif
++# define _RLD_DLADDR             14
++int dladdr(void *address, Dl_info *dl);
++
++int dladdr(void *address, Dl_info *dl)
++{
++    void *v;
++    v = _rld_new_interface(_RLD_DLADDR,address,dl);
++    return (int)v;
++}
++#endif
+ 
+-#define WEAK __attribute__((weak))
++#define FREEBL_NO_WEAK 1
+ 
+ #ifdef FREEBL_NO_WEAK
+ 
+@@ -93,17 +116,17 @@
+    static type_##fn ptr_##fn = NULL
+ 
+ #define STUB_SAFE_CALL0(fn) \
+-    if (ptr_##fn) { return ptr_##fn(); }
++    if (ptr_##fn) { ptr_##fn(); }
+ #define STUB_SAFE_CALL1(fn,a1) \
+-    if (ptr_##fn) { return ptr_##fn(a1); }
++    if (ptr_##fn) { ptr_##fn(a1); }
+ #define STUB_SAFE_CALL2(fn,a1,a2) \
+-    if (ptr_##fn) { return ptr_##fn(a1,a2); }
++    if (ptr_##fn) { ptr_##fn(a1,a2); }
+ #define STUB_SAFE_CALL3(fn,a1,a2,a3) \
+-    if (ptr_##fn) { return ptr_##fn(a1,a2,a3); }
++    if (ptr_##fn) { ptr_##fn(a1,a2,a3); }
+ #define STUB_SAFE_CALL4(fn,a1,a2,a3,a4) \
+-    if (ptr_##fn) { return ptr_##fn(a1,a2,a3,a4); }
++    if (ptr_##fn) { ptr_##fn(a1,a2,a3,a4); }
+ #define STUB_SAFE_CALL6(fn,a1,a2,a3,a4,a5,a6) \
+-    if (ptr_##fn) { return ptr_##fn(a1,a2,a3,a4,a5,a6); }
++    if (ptr_##fn) { ptr_##fn(a1,a2,a3,a4,a5,a6); }
+ 
+ #define STUB_FETCH_FUNCTION(fn) \
+     ptr_##fn = (type_##fn) dlsym(lib,#fn); \
+@@ -118,6 +141,8 @@
+  * libutil will not resolve these symbols.
+  */
+ 
++#define WEAK __attribute__((weak))
++
+ #define STUB_DECLARE(ret, fn,  args) \
+    WEAK extern ret fn args
+ 
+@@ -200,7 +225,7 @@ extern void
+ PORT_Free_stub(void *ptr)
+ {
+     STUB_SAFE_CALL1(PORT_Free_Util, ptr);
+-    return free(ptr);
++    free(ptr);
+ }
+ 
+ extern void *
+@@ -220,14 +245,14 @@ PORT_ZFree_stub(void *ptr, size_t len)
+ {
+     STUB_SAFE_CALL2(PORT_ZFree_Util, ptr, len);
+     memset(ptr, 0, len);
+-    return free(ptr);
++    free(ptr);
+ }
+ 
+ extern void
+ PR_Free_stub(void *ptr)
+ {
+     STUB_SAFE_CALL1(PR_Free, ptr);
+-    return free(ptr);
++    free(ptr);
+ }
+ 
+ /*
+@@ -530,7 +555,7 @@ freebl_InitNSSUtil(void *lib)
+  * fetch the library if it's loaded. For NSS it should already be loaded
+  */
+ #define freebl_getLibrary(libName)  \
+-    dlopen (libName, RTLD_LAZY|RTLD_NOLOAD)
++    dlopen (libName, RTLD_LAZY)
+ 
+ #define freebl_releaseLibrary(lib) \
+     if (lib) dlclose(lib)
+@@ -538,7 +563,7 @@ freebl_InitNSSUtil(void *lib)
+ static void * FREEBLnsprGlobalLib = NULL;
+ static void * FREEBLnssutilGlobalLib = NULL;
+ 
+-void __attribute ((destructor)) FREEBL_unload()
++void FREEBL_unload()
+ {
+     freebl_releaseLibrary(FREEBLnsprGlobalLib);
+     freebl_releaseLibrary(FREEBLnssutilGlobalLib);
+--- mozilla/security/nss/lib/freebl/nsslowhash.c.dist	2009-09-16 18:16:17.529500640 +0100
++++ b/mozilla/security/nss/lib/freebl/nsslowhash.c	2009-09-16 18:16:37.634080480 +0100
+@@ -375,21 +375,21 @@ NSSLOWHASH_NewContext(NSSLOWInitContext 
+ void
+ NSSLOWHASH_Begin(NSSLOWHASHContext *context)
+ {
+-   return context->hashObj->begin(context->hashCtxt);
++   context->hashObj->begin(context->hashCtxt);
+ }
+ 
+ void
+ NSSLOWHASH_Update(NSSLOWHASHContext *context, const unsigned char *buf, 
+ 						 unsigned int len)
+ {
+-   return context->hashObj->update(context->hashCtxt, buf, len);
++   context->hashObj->update(context->hashCtxt, buf, len);
+ }
+ 
+ void
+ NSSLOWHASH_End(NSSLOWHASHContext *context, unsigned char *buf, 
+ 					 unsigned int *ret, unsigned int len)
+ {
+-   return context->hashObj->end(context->hashCtxt, buf, ret, len);
++   context->hashObj->end(context->hashCtxt, buf, ret, len);
+ }
+ 
+ void
