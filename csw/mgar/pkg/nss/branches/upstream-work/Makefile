@@ -22,39 +22,29 @@ SPKG_SOURCEURL = http://www.mozilla.org/projects/security/pki/nss/
 # TODO: Generate RTM_NAME from GARVERSION
 RTM_NAME = NSS_3_12_4_RTM
 MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
-# This patch taken from http://bugs.gentoo.org/show_bug.cgi?id=256102
-PATCHFILES  = nss-3.12.4.patch
-PATCHFILES += shared-libs.patch
-PATCHFILES += platlibs-sqlite3.patch
-PATCHFILES += platlibs-sunos.patch
-PATCHFILES += whoami.patch
-PATCHFILES += runtime-search-path.patch
 DIST_SUFFIX = -with-nspr-4.8
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(DIST_SUFFIX).tar.gz
 DISTNAME = $(GARNAME)-$(GARVERSION)$(DIST_SUFFIX)
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)$(DIST_SUFFIX).tar.gz
 REQUIRED_PKGS = CSWnspr CSWsqlite3
 PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWnspr-devel CSWsqlite3devel
-CONFIGURE_SCRIPTS = nss
+CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = nss
 INSTALL_SCRIPTS = nss
 TEST_SCRIPTS =
 BUILD64 = 1
 
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 ifeq (OPT,$(GARFLAVOR))
 	BUILD_OPT = 1
 endif
-NSS_USE_SYSTEM_SQLITE = 1
+
+# NSPR is installed in /opt/csw/lib/nspr, nspr.pc is in /opt/csw/lib/pkgconfig
 NSPR_INCLUDE_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --cflags-only-I nspr | gsed 's/-I//')
+export NSPR_INCLUDE_DIR
 NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
-USE_SYSTEM_ZLIB = 1
-ZLIB_LIBS = -lz
-NSDISTMODE = copy
-NSS_ENABLE_ECC = 1
-XCFLAGS = $(CFLAGS)
-FREEBL_NO_DEPEND = 1
-LDOPTS = $(LD_OPTIONS)
+export NSPR_LIB_DIR
+
+# 64-bit suppport
 ifeq ($(MODULATION),isa-sparcv9)
 	USE_64 = 1
 	export USE_64
@@ -63,31 +53,8 @@ ifeq ($(MODULATION),isa-amd64)
 	USE_64 = 1
 	export USE_64
 endif
-export BUILD_OPT NSS_USE_SYSTEM_SQLITE NSPR_INCLUDE_DIR NSPR_LIB_DIR
-export USE_SYSTEM_ZLIB ZLIB_LIBS NSDISTMODE NSS_ENABLE_ECC XCFLAGS FREEBL_NO_DEPEND
 
 include gar/category.mk
-
-configure-nss: respect-ldflags add-runtime-search-path
-	@$(MAKECOOKIE)
-
-respect-ldflags:
-	(cd $(WORKSRC)/mozilla/security/coreconf \
-		&& \
-	gsed -i -e 's:SOURCE_PREFIX = $$(CORE_DEPTH)/\.\./dist:SOURCE_PREFIX = $$(CORE_DEPTH)/dist:' \
-			source.mk \
-		&& \
-	gsed -i -e 's/\$$(MKSHLIB) -o/\$$(MKSHLIB) \$$(LDFLAGS) -o/g' rules.mk)
-	@$(MAKECOOKIE)
-
-add-runtime-search-path:
-	# Make sure that the runtime search path is added in all Makefiles.
-	gfind $(WORKSRC) \( -name Makefile -o -name '*.mk' \) \
-		-exec gsed -i -e 's|-L\$$(NSPR_LIB_DIR)|-L$$(NSPR_LIB_DIR) -R$$(NSPR_LIB_DIR)/$$$$ISALIST|' \
-		{} \;
-	# A form of assert
-	gegrep -- '-R.*ISALIST' $(WORKSRC)/mozilla/security/nss/lib/freebl/config.mk
-	@$(MAKECOOKIE)
 
 build-nss: build-coreconf build-dbm build-nss-compile
 
@@ -114,4 +81,3 @@ build-nss-compile:
 		&& \
 	gmake -j1 CC="$(CC)")
 	@$(MAKECOOKIE)
-
