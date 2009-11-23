@@ -1,5 +1,5 @@
-axel (2.4,REV=2009.11.18)
+axel (2.4,REV=2009.11.23)
 
   * Updated to 2.4. (Fixes #4032)
 
- -- Sebastian Kayser <skayser@opencsw.org>  Wed, 18 Nov 2009 16:13:33 +0100
+ -- Sebastian Kayser <skayser@opencsw.org>  Mon, 23 Nov 2009 12:39:17 +0100
