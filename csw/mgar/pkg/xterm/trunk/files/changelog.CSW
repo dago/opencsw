@@ -1,5 +1,13 @@
-xterm (251,REV=2009.11.18)
+xterm (251,REV=2009.11.23)
 
-  * Updated to 250. (Fixes #3937, #3856)
+  * Updated to 251. (Fixes #3937, #3856)
+  * Built with CSW X11 from /opt/csw/X11 (previously X11 from /usr/X11)
+    as both, libXft and libXrender, are now built against CSW X11.
 
- -- Sebastian Kayser <skayser@opencsw.org>  Wed, 18 Nov 2009 03:23:47 +0100
+ -- Sebastian Kayser <skayser@opencsw.org>  Mon, 23 Nov 2009 11:51:17 +0100
+
+xterm (243,REV=2009.04.09)
+
+  * Adopted and updated to 243.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Thu, 09 Apr 2009 12:03:42 +0200
