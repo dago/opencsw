@@ -1,5 +1,5 @@
 GARNAME = SDL_image
-GARVERSION = 1.2.8
+GARVERSION = 1.2.10
 CATEGORIES = lib
 
 DESCRIPTION = SDL image file loading library
