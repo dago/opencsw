@@ -16,6 +16,7 @@ endef
 MASTER_SITES = http://downloads.xiph.org/releases/liboggz/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 0001-Remove-linker-version.patch
+PATCHFILES += 0002-Add-getopt.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

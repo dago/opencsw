@@ -1,0 +1,38 @@
+From e404bd5d314bbd97a2d4579607679667bc4d099f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 24 Nov 2009 22:12:30 +0100
+Subject: [PATCH] Add getopt.h
+
+---
+ include/getopt.h |   19 +++++++++++++++++++
+ 1 files changed, 19 insertions(+), 0 deletions(-)
+ create mode 100644 include/getopt.h
+
+diff --git a/include/getopt.h b/include/getopt.h
+new file mode 100644
+index 0000000..0e98fed
+--- /dev/null
++++ b/include/getopt.h
+@@ -0,0 +1,19 @@
++/**
++ * @file getopt.h
++ * @ingroup wbxml2xml_tool
++ * @ingroup xml2wbxml_tool
++ *
++ * @author Kannel Team (http://www.kannel.org/)
++ *
++ * @brief getopt() implementation
++ */
++
++#ifndef WBXML_GETOPT_H
++#define WBXML_GETOPT_H
++
++extern int opterr;
++extern int optind;
++extern int optopt;
++extern char *optarg;
++
++#endif
+-- 
+1.6.5.1
+

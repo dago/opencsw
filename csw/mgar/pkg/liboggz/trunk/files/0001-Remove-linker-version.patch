@@ -27,29 +27,6 @@ index 9342074..cafccae 100755
  # Checks for library functions.
  
  
-diff --git a/configure.ac b/configure.ac
-index bc9acb8..1098ca1 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -396,18 +396,6 @@ if test "x${ac_enable_gcc_werror}" = xyes ; then
-   CFLAGS="-Werror $CFLAGS"
- fi
- 
--dnl
--dnl Shared library symbol versioning and hiding
--dnl
--
--case "$target_os" in
--  linux* | solaris*|k*bsd*-gnu*|gnu-*)
--    SHLIB_VERSION_ARG="-Wl,--version-script=Version_script"
--    ;;
--  *)
--    ;;
--esac
--
- # Checks for library functions.
- 
- dnl
 -- 
 1.6.3.2
 

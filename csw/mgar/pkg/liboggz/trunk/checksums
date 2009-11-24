@@ -1,2 +1,3 @@
-f4ec200018ed77f1cb44fee2c4687d49  0001-Remove-linker-version.patch
+2bcd76f053e973f82df1593400ca94fb  0001-Remove-linker-version.patch
+008aac5337ca7e23490927baa4a38589  0002-Add-getopt.h.patch
 f97f1d57820a9fc1d080409cf203b38a  liboggz-1.1.0.tar.gz
