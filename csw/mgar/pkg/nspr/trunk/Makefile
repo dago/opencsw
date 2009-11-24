@@ -19,6 +19,8 @@ PKGFILES_CSWnspr-devel += $(bindir).*nspr-config
 PKGFILES_CSWnspr-devel += .*/nspr\.pc
 PKGFILES_CSWnspr-devel += .*compile-et\.pl
 
+ARCHALL_CSWnspr-devel = 1
+
 SPKG_DESC_CSWnspr = Netscape Portable Runtime
 SPKG_DESC_CSWnspr-devel = Netscape Portable Runtime development files
 CATALOGNAME_CSWnspr-devel = nspr_devel
@@ -95,10 +97,6 @@ install-nspr:
 
 # Create symlinks allowing to use -L/opt/csw/lib/nspr/64 for 64-bit
 # architectures.
-post-merge:
-	if [ "$(GARCH)" = sparc ]; then \
-		gln -sf sparcv9 $(PKGROOT)$(libdir)/64; \
-	elif [ "$(GARCH)" = i386 ]; then \
-		gln -sf amd64 $(PKGROOT)$(libdir)/64; \
-	fi
+post-merge-modulated:
+	gln -s "$(ISA_DEFAULT_64)" "$(PKGROOT)$(libdir)/64"
 	@$(MAKECOOKIE)
