@@ -122,10 +122,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## ETCSERVICES = <file containing an entry for /etc/services>
 ## INETDCONF = <file containing an inetd.conf formatted entry>
 ## A list of runtime package dependencies in the form of CSWfoo.
-## REQUIRED_PKGS =
+REQUIRED_PKGS =
 ##
 ## A list of packages necessary to build this package
-## PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWgcc CSWbison CSWflex
 ##
 ## When using non-empty $(PACKAGES):
 ## REQUIRED_PKGS_CSWpkgname =
