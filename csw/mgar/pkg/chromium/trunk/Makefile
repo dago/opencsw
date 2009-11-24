@@ -176,10 +176,47 @@ TEST_SCRIPTS = chromium
 ## The compiler to use. Defaults to SOS11, can be also: SOS12, GCC3, GCC4.
 ## GARCOMPILER = SOS11
 ##
+
+GYP_GENERATORS = make
+export GYP_GENERATORS
+
+WORKSRC = $(WORKDIR)/home/chrome-svn/tarball/chromium
+CHROMIUM_ROOT = $(WORKSRC)
+
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+
+GARCOMPILER = GNU
+
 include gar/category.mk
 
-configure-chromium: depot-tools
-	false
+$(WORKSRC)/.gclient:
+	(cd $(WORKSRC) && \
+		PATH=$$PATH:$(abspath $(WORKDIR)/depot_tools) \
+		GYP_GENERATORS=make \
+	gclient config http://src.chromium.org/svn/trunk/src)
+
+# Skipping gclient sync for now; running only gclient runhooks.  The build
+# instructions say that we'll miss on some platform-specific depends, but
+# I don't think there's anything platform-specific for Solaris in the source
+# code repository.
+
+configure-chromium: depot-tools gclient-runhooks
+	@$(MAKECOOKIE)
+
+gclient-sync: $(WORKSRC)/.gclient
+	(cd $(WORKSRC) \
+		&& \
+		PATH=$$PATH:$(abspath $(WORKDIR)/depot_tools):/opt/csw/gcc4/bin \
+		GYP_GENERATORS=make \
+	gclient sync)
+	@$(MAKECOOKIE)
+
+gclient-runhooks: $(WORKSRC)/.gclient
+	(cd $(WORKSRC) \
+		&& \
+		PATH=$$PATH:$(abspath $(WORKDIR)/depot_tools):/opt/csw/gcc4/bin \
+		GYP_GENERATORS=make \
+	gclient runhooks --force)
 	@$(MAKECOOKIE)
 
 depot-tools:
@@ -192,3 +229,9 @@ depot-tools:
 	 fi \
 	)
 	@$(MAKECOOKIE)
+
+build-chromium:
+	(cd $(CHROMIUM_ROOT)/src \
+		&& \
+	PATH=$$PATH:$(abspath $(WORKDIR)/depot_tools):/opt/csw/gcc4/bin \
+	gmake chrome)
