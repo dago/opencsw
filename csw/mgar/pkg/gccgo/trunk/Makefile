@@ -125,7 +125,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 REQUIRED_PKGS =
 ##
 ## A list of packages necessary to build this package
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWgcc CSWbison CSWflex
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWbison CSWflex
 ##
 ## When using non-empty $(PACKAGES):
 ## REQUIRED_PKGS_CSWpkgname =
