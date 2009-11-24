@@ -1,7 +1,7 @@
 GARNAME = Archive-Tar
-GARVERSION = 1.52
+GARVERSION = 1.54
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = Module for manipulations of tar archives
 define BLURB
