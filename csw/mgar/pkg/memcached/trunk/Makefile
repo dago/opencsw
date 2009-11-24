@@ -28,5 +28,7 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+SKIPTEST ?= 1
+
 include gar/category.mk
 
