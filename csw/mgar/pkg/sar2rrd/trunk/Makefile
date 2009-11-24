@@ -25,6 +25,8 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+ARCHALL = 1
+
 include gar/category.mk
 
 post-extract-modulated:
