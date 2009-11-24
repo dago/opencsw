@@ -145,8 +145,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## this variable an empty value. The procedure works for configure, build,
 ## install and test steps.
 CONFIGURE_SCRIPTS = gccgo
-BUILD_SCRIPTS = gccgo
-INSTALL_SCRIPTS = gccgo
+## BUILD_SCRIPTS = gccgo # using the default target
+## INSTALL_SCRIPTS = gccgo # using the default target
 TEST_SCRIPTS = gccgo
 ##
 ## Compilation settings
@@ -159,7 +159,8 @@ TEST_SCRIPTS = gccgo
 ## BUILD_ARGS =
 ##
 ## Arguments passed to the ./configure script.
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-languages=c,c++,go
 ##
 ## BUILD64 =
 ## CONFIGURE_ENV =
@@ -173,9 +174,29 @@ CONFIGURE_ARGS = $(DIRPATHS)
 ## OPT_FLAGS_GCC = -O2 -pipe
 ##
 ## The compiler to use. Defaults to SOS11, can be also: SOS12, GCC3, GCC4.
-## GARCOMPILER = SOS11
-##
+
+# Compiling gcc with gcc
+GARCOMPILER = GNU
+
+WORKSRC = $(WORKDIR)/objdir
+
 include gar/category.mk
 
 post-extract-modulated:
-	(cd $(WORKDIR) && svn checkout svn://gcc.gnu.org/svn/gcc/branches/gccgo gccgo)
+	(cd $(WORKDIR) && \
+		if [ -d gccgo ]; then \
+			(cd gccgo && svn up); \
+		else \
+			svn checkout svn://gcc.gnu.org/svn/gcc/branches/gccgo gccgo; \
+		fi)
+	mkdir -p $(WORKSRC)
+	@$(MAKECOOKIE)
+
+configure-gccgo:
+	(cd $(WORKSRC) && $(CONFIGURE_ENV) ../gccgo/configure $(CONFIGURE_ARGS))
+	@$(MAKECOOKIE)
+
+test-gccgo:
+	echo "Tests?"
+	false
+	@$(MAKECOOKIE)
