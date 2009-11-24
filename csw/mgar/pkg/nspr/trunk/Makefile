@@ -97,6 +97,10 @@ install-nspr:
 
 # Create symlinks allowing to use -L/opt/csw/lib/nspr/64 for 64-bit
 # architectures.
-post-merge-modulated:
-	gln -s "$(ISA_DEFAULT_64)" "$(PKGROOT)$(libdir)/64"
+post-merge:
+	if [ "$(GARCH)" = sparc ]; then \
+		gln -sf sparc9 $(PKGROOT)$(libdir)/64; \
+	elif [ "$(GARCH)" = i386 ]; then \
+		gln -sf amd64 $(PKGROOT)$(libdir)/64; \
+	fi
 	@$(MAKECOOKIE)
