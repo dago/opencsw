@@ -1,5 +1,5 @@
 GARNAME = SDL_mixer
-GARVERSION = 1.2.10
+GARVERSION = 1.2.11
 CATEGORIES = lib
 
 DESCRIPTION = multi-channel audio mixer library
