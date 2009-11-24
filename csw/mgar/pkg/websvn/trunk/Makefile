@@ -12,20 +12,13 @@ define BLURB
   a particular revision.
 endef
 
-# MASTER_SITES  = svn-http://websvn.tigris.org/svn/$(GARNAME)/tags/
-# DISTFILES = $(GARVERSION)
-# NOCHECKSUM = $(GARVERSION)
-# SVNHTTP_CO_ARGS = --no-auth-cache --username guest --password guest
-
 MASTER_SITES  = http://websvn.tigris.org/files/documents/1380/45918/
 DISTFILES = $(DISTNAME).tar.gz
+PATCHFILES = websvn-csw-config.patch
 
 SPKG_SOURCEURL = http://websvn.tigris.org/
 
 LICENSE = license.txt
-
-# DISTFILES += $(call admfiles,CSWwebsvn,depend postinstall preremove)
-PATCHFILES = websvn-csw-config.patch
 
 REQUIRED_PKGS = CSWapache2 CSWdiffutils CSWsvn CSWenscript CSWgsed CSWgtar CSWgzip
 
