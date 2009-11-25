@@ -19,7 +19,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.libspf2.org
 
-REQUIRED_PGKS = CSWggettextrt
+REQUIRED_PKGS = CSWggettextrt
 
 BUILD64 = 1
 NO_ISAEXEC = 1
