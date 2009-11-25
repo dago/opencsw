@@ -33,9 +33,14 @@ BUILD64 = 1
 NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_CPPFLAGS = -Dfabsf=fabs
+EXTRA_CPPFLAGS_isa-sparcv8 = -Dfabsf=fabs
+EXTRA_CPPFLAGS_isa-sparcv9 = -Dfabsf=fabs
+EXTRA_CPPFLAGS_isa-i386 = -Dfabsf=fabs
+EXTRA_CPPFLAGS = $(EXTRA_CPPFLAGS_isa-$(ISA))
 
 MERGE_DIRS_isa-extra = $(libdir)
+
+ARCHALL_CSWlibsmimibs = 1
 
 PKGFILES_CSWlibsmimibs = $(sharedstatedir)/mibs/.*
 PKGFILES_CSWlibsmimibs += $(sharedstatedir)/pibs/.*
