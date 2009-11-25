@@ -19,6 +19,16 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.libspf2.org
 
+REQUIRED_PGKS = CSWggettextrt
+
+BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+
+EXTRA_LINKER_FLAGS = -lresolv  -lsocket  -lnsl 
+
+TEST_TARGET = check
+
+MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
