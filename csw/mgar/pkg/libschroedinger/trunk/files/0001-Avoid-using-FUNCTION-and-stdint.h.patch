@@ -1,0 +1,39 @@
+From c9016f3e69fcfc75bb3256654c2128f2c56995ec Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 25 Nov 2009 13:40:09 +0100
+Subject: [PATCH] Avoid using FUNCTION and stdint.h
+
+---
+ schroedinger/schrodebug.h |    2 +-
+ schroedinger/schroutils.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/schroedinger/schrodebug.h b/schroedinger/schrodebug.h
+index 5a7edf0..835246e 100644
+--- a/schroedinger/schrodebug.h
++++ b/schroedinger/schrodebug.h
+@@ -50,7 +50,7 @@ typedef void (*SchroDebugLogFunc) (int level, const char *file,
+   SCHRO_DEBUG_LEVEL(SCHRO_LEVEL_LOG, __VA_ARGS__)
+ 
+ #define SCHRO_DEBUG_LEVEL(level,...) \
+-  schro_debug_log ((level), __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
++  schro_debug_log ((level), __FILE__, "", __LINE__, __VA_ARGS__)
+ 
+ #define SCHRO_ASSERT(test) do { \
+   if (!(test)) { \
+diff --git a/schroedinger/schroutils.h b/schroedinger/schroutils.h
+index 17eda4b..4199c58 100644
+--- a/schroedinger/schroutils.h
++++ b/schroedinger/schroutils.h
+@@ -12,7 +12,7 @@ typedef unsigned __int16 uint16_t;
+ typedef unsigned __int32 uint32_t;
+ #endif
+ #else
+-#include <stdint.h>
++#include <inttypes.h>
+ #endif
+ 
+ #ifndef TRUE
+-- 
+1.6.5.1
+
