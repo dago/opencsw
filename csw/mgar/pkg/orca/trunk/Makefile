@@ -1,6 +1,6 @@
 GARNAME = orca
 GARVERSION = snapshot-r535
-SPKG_VERSION = r535
+SPKG_VERSION = snapshot_r535
 CATEGORIES = utils
 
 DESCRIPTION = A system performance monitoring tool
