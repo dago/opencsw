@@ -1,0 +1,26 @@
+From 159a22dd99c2d86891fc5c1f76d35fdacec37368 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 25 Nov 2009 12:48:11 +0100
+Subject: [PATCH] Enable getisax only for Solaris 10
+
+---
+ liboil/liboilcpu-x86.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/liboil/liboilcpu-x86.c b/liboil/liboilcpu-x86.c
+index e7a1978..9851209 100644
+--- a/liboil/liboilcpu-x86.c
++++ b/liboil/liboilcpu-x86.c
+@@ -60,7 +60,9 @@
+ /***** i386, amd64 *****/
+ 
+ #if defined(__sun)
++#if defined(_SYS_AUXV_386_H)
+ #define USE_I386_GETISAX
++#endif
+ #else
+ #define USE_I386_CPUID
+ #endif
+-- 
+1.6.5.1
+

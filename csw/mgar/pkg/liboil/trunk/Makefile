@@ -15,6 +15,7 @@ endef
 MASTER_SITES = http://liboil.freedesktop.org/download/
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES = 0001-Use-inttypes.h.patch
+PATCHFILES += 0002-Enable-getisax-only-for-Solaris-10.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
