@@ -1,22 +1,22 @@
 GARNAME = libmikmod
-GARVERSION = 3.1.11
+GARVERSION = 3.2.0
+RELEASE = beta2
+DISTVERSION = $(GARVERSION)-$(RELEASE)
+DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lib
-
 DESCRIPTION = library for MOD audio files and other types
 define BLURB
-  Long description
+  library supporting many formats, including mod, s3m, it, and xm. Originally a player for MS-DOS,
 endef
 
 MASTER_SITES = http://mikmod.raphnet.net/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+TEST_SCRIPTS =
 
 include gar/category.mk
