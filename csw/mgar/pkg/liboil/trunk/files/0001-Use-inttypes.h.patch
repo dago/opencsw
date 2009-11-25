@@ -1,0 +1,25 @@
+From 85ebb1b1bf68211fd4ad8f0156aa146c6ab27ee7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 24 Nov 2009 23:39:42 +0100
+Subject: [PATCH] Use inttypes.h
+
+---
+ examples/jpeg/jpeg.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/examples/jpeg/jpeg.h b/examples/jpeg/jpeg.h
+index 49eaf6a..a03b38c 100644
+--- a/examples/jpeg/jpeg.h
++++ b/examples/jpeg/jpeg.h
+@@ -2,7 +2,7 @@
+ #ifndef _JPEG_DECODER_H_
+ #define _JPEG_DECODER_H_
+ 
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #define JPEG_MARKER_STUFFED		0x00
+ #define JPEG_MARKER_TEM			0x01
+-- 
+1.6.5.1
+
