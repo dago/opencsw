@@ -7,5 +7,5 @@ Name: NSS
 Description: Network Security Services
 Version: 3.12.4
 Requires: nspr >= 4.8.0
-Libs: -L${libdir} -lssl3 -lsmime3 -lnssutil3 -lnss3 -R${libdir}
+Libs: -L${libdir} -lssl3 -lsmime3 -lnss3 -lnssutil3 -R${libdir}
 Cflags: -I${includedir}

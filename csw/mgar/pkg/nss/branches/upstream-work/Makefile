@@ -22,15 +22,19 @@ GARVERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
 DESCRIPTION = Network Security Services library, implements PKI support
 define BLURB
+  Network Security Services (NSS) is a set of libraries designed to support
+  cross-platform development of security-enabled client and server
+  applications. Applications built with NSS can support SSL v2 and v3, TLS,
+  PKCS #5, PKCS #7, PKCS #11, PKCS #12, S/MIME, X.509 v3 certificates, and
+  other security standards.
 endef
 SPKG_SOURCEURL = http://www.mozilla.org/projects/security/pki/nss/
 # TODO: Generate RTM_NAME from GARVERSION
 RTM_NAME = NSS_3_12_4_RTM
-MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
-DIST_SUFFIX = -with-nspr-4.8
-DISTFILES = $(GARNAME)-$(GARVERSION)$(DIST_SUFFIX).tar.gz
-DISTNAME  = $(GARNAME)-$(GARVERSION)$(DIST_SUFFIX)
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)$(DIST_SUFFIX).tar.gz
+MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTNAME  = $(GARNAME)-$(GARVERSION)
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 REQUIRED_PKGS = CSWnspr CSWsqlite3
 PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWnspr-devel CSWsqlite3devel
 CONFIGURE_SCRIPTS =
@@ -39,8 +43,7 @@ INSTALL_SCRIPTS = nss
 TEST_SCRIPTS =
 BUILD64 = 1
 
-libdir_install = $(prefix)/lib/nss
-# libdir = $(prefix)/lib/nss
+libdir_install = $(prefix)/lib
 includedir = $(prefix)/include/nss
 
 ifeq (OPT,$(GARFLAVOR))
@@ -52,20 +55,19 @@ endif
 NSPR_INCLUDE_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --cflags-only-I nspr | gsed 's/-I//')
 export NSPR_INCLUDE_DIR
 
-# To consider in the future.
-# NSS_ENABLE_ECC = 1
-# export NSS_ENABLE_ECC
+NSS_ENABLE_ECC = 1
+export NSS_ENABLE_ECC
 
 # 64-bit suppport
 ifeq ($(MODULATION),isa-sparcv9)
 	USE_64 = 1
-	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
 	export USE_64
+	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
 else
 ifeq ($(MODULATION),isa-amd64)
 	USE_64 = 1
-	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
 	export USE_64
+	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')/64
 else
 	NSPR_LIB_DIR = $(shell PKG_CONFIG_PATH=/opt/csw/lib pkg-config --libs-only-L nspr | gsed 's/-L//' | tr -d ' ')
 endif
@@ -74,6 +76,16 @@ export NSPR_LIB_DIR
 
 # For DBG builds
 PATCHFILES = whoami.patch
+
+NSS_BINARIES  = addbuiltin
+NSS_BINARIES += certutil
+NSS_BINARIES += cmsutil
+NSS_BINARIES += crlutil
+NSS_BINARIES += modutil
+NSS_BINARIES += pk12util
+NSS_BINARIES += signtool
+NSS_BINARIES += signver
+NSS_BINARIES += ssltap
 
 include gar/category.mk
 
@@ -107,25 +119,23 @@ build-nss-compile:
 install-nss:
 	ginstall -d -m 755 $(DESTDIR)$(libdir)
 	for f in $(WORKSRC)/mozilla/dist/SunOS5*/lib/*.so; do \
-		ginstall -m 755 $${f} $(DESTDIR)$(libdir); \
+	  ginstall -m 755 $${f} $(DESTDIR)$(libdir); \
+	  if [ -r $(WORKSRC)/mozilla/dist/SunOS5*/lib/`basename $${f} .so`.chk ]; then \
+	    ginstall -m 644 \
+	      $(WORKSRC)/mozilla/dist/SunOS5*/lib/`basename $${f} .so`.chk \
+	      $(DESTDIR)$(libdir); \
+	  fi \
 	done
 	ginstall -d -m 755 $(DESTDIR)$(bindir)
 	# TODO: nss-config
 	# gcp -a $(WORKSRC)/mozilla/dist/*/bin/nss-config $(DESTDIR)$(bindir)
 	ginstall -d -m 755 $(DESTDIR)$(includedir)
 	for f in \
-			$(WORKSRC)/mozilla/dist/private/nss/*.h \
 			$(WORKSRC)/mozilla/dist/public/nss/*.h; \
 		do \
 		ginstall -m 644 $${f} $(DESTDIR)$(includedir); \
 	done
-	cd $(DESTDIR)$(libdir) && for file in *.so; do \
-		if [ ! -h $${file} ]; then \
-			gmv -v $${file} $${file}.$(MINOR_VERSION); \
-			gln -s $${file}.$(MINOR_VERSION) $${file}; \
-		fi; \
-	done
-	for file in $(WORKSRC)/mozilla/dist/*/bin/* ; do \
+	for bin in  in $(WORKSRC)/mozilla/dist/*/bin/* ; do \
 		ginstall -m 755 $${file} $(DESTDIR)$(bindir)/nss`basename $${file}`; \
 	done
 	# Asserting that we have the right version in the .pc file
@@ -139,14 +149,4 @@ install-nss:
 	ginstall -m 644 \
 		$(FILEDIR)/nss.pc \
 		$(DESTDIR)$(prefix)/lib/pkgconfig
-	@$(MAKECOOKIE)
-
-# Create symlinks allowing to use -L/opt/csw/lib/nss/64 for 64-bit
-# architectures.
-post-merge:
-	if [ "$(GARCH)" = sparc ]; then \
-		gln -sf sparcv9 $(PKGROOT)$(libdir)/64; \
-	elif [ "$(GARCH)" = i386 ]; then \
-		gln -sf amd64 $(PKGROOT)$(libdir)/64; \
-	fi
 	@$(MAKECOOKIE)
