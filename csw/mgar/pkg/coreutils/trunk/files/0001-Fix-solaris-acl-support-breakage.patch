@@ -1,32 +1,33 @@
-From 2f1eeb8502a426f38189d24760d52760448cd2ae Mon Sep 17 00:00:00 2001
-From: Ben Walton <bwalton@opencsw.org>
-Date: Sun, 22 Nov 2009 18:29:07 +0100
-Subject: [PATCH] Fix solaris acl support breakage
+From bd8c66a7789d05bee45a162adf3f6f488fde75bf Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Date: Wed, 25 Nov 2009 04:59:51 +0100
+Subject: [PATCH 1/2] Fix solaris acl support breakage
 
-In the standard solaris acl support, ENOSYS was handled cleanly. This
-patch makes the code path handle EOPNOTSUPP identically to ENOSYS,
-preventing errors when attempting to a pply acl's on filesystems that
-don't implement the acl api (NFS).
+Solaris has support for ACL's on NFS, but only in certain combinations
+of client and server.  When ACL operations are attempted in
+unsupported situations, EOPNOTSUPP can be returned instead of ENOSYS.
+This patch allows utilities that work with ACL's to handle the
+difference properly.
 
-Signed-off-by: Ben Walton <bwalton@opencsw.org>
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
 ---
  lib/copy-acl.c     |    4 ++--
  lib/set-mode-acl.c |    2 +-
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/lib/copy-acl.c b/lib/copy-acl.c
-index af85a08..346dd5c 100644
+index af85a08..bfacf20 100644
 --- a/lib/copy-acl.c
 +++ b/lib/copy-acl.c
-@@ -253,7 +253,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
+@@ -294,7 +294,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
  
-       if (ace_count < 0)
+       if (count < 0)
  	{
--	  if (errno == ENOSYS || errno == EINVAL)
-+	  if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+-	  if (errno == ENOSYS || errno == ENOTSUP)
++	  if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
  	    {
- 	      ace_count = 0;
- 	      ace_entries = NULL;
+ 	      count = 0;
+ 	      entries = NULL;
 @@ -358,7 +358,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
        if (ret < 0 && saved_errno == 0)
  	{
