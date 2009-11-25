@@ -14,12 +14,17 @@ endef
 
 MASTER_SITES = http://liboil.freedesktop.org/download/
 DISTFILES  = $(DISTNAME).tar.gz
+PATCHFILES = 0001-Use-inttypes.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+SPKG_SOURCEURL = http://liboil.freedesktop.org/
+
 BUILD64 = 1
 NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
 
 include gar/category.mk
