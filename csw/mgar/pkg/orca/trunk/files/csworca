@@ -1,0 +1,33 @@
+#!/bin/sh
+
+prefix=/opt/csw
+exec_prefix=/opt/csw
+bindir=/opt/csw/bin
+
+orca="$bindir/orca"
+
+case "$1" in
+  start)
+    if test -x $orca; then
+      umask 022
+      $orca -daemon -logfile /var/opt/csw/orca/orca.log /etc/opt/csw/orcallator.cfg &
+      echo $! >/var/run/orca.pid
+    else
+      echo "$0: $start_orcallator does not exist or is not executable."
+    fi
+    ;;
+
+  stop)
+    if test -f /var/run/orca.pid; then
+      kill `cat /var/run/orca.pid`
+      rm -f /var/run/orca.pid
+    fi
+    ;;
+
+  *)
+    echo "usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

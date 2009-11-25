@@ -1,6 +1,8 @@
+dcb171adb47a8a7d8c55ec4b7f9b5218  csworca
 4c74f4f1449fabd0838d0cd71678144c  csworca_services
 72c1eaa8d3f1ab48363e7ed5792e2855  csworcallator
 a99644ffcc9164d9d0f4df2b44c61917  csworcallator.xml
+22e921ee0ebc822479e99041d1045952  fix-start-orcallator.patch
 ce08f37aa52f7b27bc82cc9c976d56b4  orca-snapshot-r535-se-3.5.0.patch
 ba8e48e429008f53037e85fef2fcfe36  orca-snapshot-r535.tar.bz2
 23a2b76456b96c5fcff4a1d92c02e140  svc-csworcallator

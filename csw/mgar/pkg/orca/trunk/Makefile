@@ -30,16 +30,17 @@ MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += csworcallator csworcallator.xml svc-csworcallator
 DISTFILES += csworca_services
+DISTFILES += csworca
+PATCHFILES  = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
+PATCHFILES += fix-start-orcallator.patch
 
-PACKAGES = CSWorca CSWorca-web
+PACKAGES = CSWorca CSWorcaweb
 
-CATALOGNAME_CSWorca     = orca
-CATALOGNAME_CSWorca-web = orca_web
+CATALOGNAME_CSWorca    = orca
+CATALOGNAME_CSWorcaweb = orca_web
 
 SPKG_DESC_CSWorca = Performance Data Collector
-SPKG_DESC_CSWorcs-web = Performance Data Viewer
-
-PATCHFILES = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
+SPKG_DESC_CSWorcaweb = Performance Data Viewer
 
 SPKG_SOURCEURL = http://www.orcaware.com/orca
 
@@ -50,7 +51,7 @@ PREREQUISITE_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CS
 
 REQUIRED_PKGS_CSWorca     = CSWsetoolkit CSWperl CSWpmtimedate
 REQUIRED_PKGS_CSWorca    += CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
-REQUIRED_PKGS_CSWorca-web = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
+REQUIRED_PKGS_CSWorcaweb  = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
 
 sysconfdir    = /etc/opt/csw
 localstatedir = /var/opt/csw
@@ -70,23 +71,26 @@ PRESERVECONF += /etc/opt/csw/winallator.cfg
 PRESERVECONF += /etc/opt/csw/procallator.cfg
 PRESERVECONF += /etc/opt/csw/orca_services.cfg
 
-INITSMF = /etc/opt/csw/init.d/csworcallator
+INITSMF = /etc/opt/csw/init.d/csworca
+INITSMF += /etc/opt/csw/init.d/csworcallator
 
 ARCHALL = 1
 
-PKGFILES_CSWorca-web  = $(prefix)/apache2/.*
-PKGFILES_CSWorca-web += $(sharedstatedir)/www/orca/.*
-PKGFILES_CSWorca-web += $(bindir)/orca
-PKGFILES_CSWorca-web += $(sysconfdir)/.*\.cfg
-PKGFILES_CSWorca-web += $(libdir)/perl/.*
-PKGFILES_CSWorca-web += $(mandir)/man1/orca\.1
-PKGFILES_CSWorca-web += /var/opt/csw/.*
+PKGFILES_CSWorcaweb  = $(prefix)/apache2/.*
+PKGFILES_CSWorcaweb += $(sharedstatedir)/www/orca/.*
+PKGFILES_CSWorcaweb += $(bindir)/orca
+PKGFILES_CSWorcaweb += $(sysconfdir)/.*\.cfg
+PKGFILES_CSWorcaweb += $(libdir)/perl/.*
+PKGFILES_CSWorcaweb += $(mandir)/man1/orca\.1
+PKGFILES_CSWorcaweb += /var/opt/csw/.*
+PKGFILES_CSWorcaweb += /etc/opt/csw/init.d/csworca
 
 include gar/category.mk
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(sysconfdir)/init.d
 	@# TBD: Use custom manifest for Solaris 10 SMF support
+	@ginstall $(WORKDIR)/csworca $(DESTDIR)$(sysconfdir)/init.d/csworca
 	@ginstall $(WORKDIR)/csworcallator $(DESTDIR)$(sysconfdir)/init.d/csworcallator
 	@ginstall $(WORKDIR)/csworca_services $(DESTDIR)$(sysconfdir)/init.d/csworca_services
 	@$(MAKE_COOKIE)

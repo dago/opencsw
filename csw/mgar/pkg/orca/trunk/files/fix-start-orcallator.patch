@@ -1,0 +1,28 @@
+--- orca-snapshot-r535/data_gatherers/orcallator/start_orcallator.sh.in	2005-09-09 05:51:41.000000000 +0200
++++ orca-snapshot-r535/data_gatherers/orcallator/start_orcallator.sh.in.new	2009-11-25 12:19:03.700007723 +0100
+@@ -118,7 +118,7 @@
+   exit 1
+ fi
+ 
+-echo "Writing data into $OUTDIR/"
++# echo "Writing data into $OUTDIR/"
+ if test "$WEB_LOG"; then
+   echo "Using www access log file $WEB_LOG"
+ fi
+@@ -138,8 +138,8 @@
+ fi
+ 
+ # Now start the logging.
+-echo "Starting logging"
+-nohup $SE $SE_PATCHES -DWATCH_OS $WATCH_WEB -I$libdir/SE/$SE_VERSION $libdir/orcallator.se &
++# echo "Starting logging"
++nohup $SE $SE_PATCHES -DWATCH_OS $WATCH_WEB -I$libdir/SE/$SE_VERSION $libdir/orca/orcallator.se >$OUTDIR/orcallator.log 2>&1 &
+ 
+ # Write the PID of orcallator to a file to make killing easier.
+ pid=$!
+@@ -147,4 +147,4 @@
+ 
+ # Sleep for a couple of seconds to allow any orcallator startup
+ # warnings to appear on the terminal before exiting.
+-sleep 5
++# sleep 5
