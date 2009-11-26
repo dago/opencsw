@@ -1,8 +1,8 @@
 GARNAME = openldap
-GARVERSION = 2.4.18
+GARVERSION = 2.4.19
 CATEGORIES = server
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 2.3.43 2.4.18
+MODULATIONS_GARVERSION = 2.3.43 2.4.19
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -13,8 +13,6 @@ define BLURB
   OpenLDAP Suite and its related documentation.
 endef
 
-# Missing lib: ld.so.1: svn: fatal: libldap-2.3.so.0: open failed: No such file or directory
-
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tgz)
 DISTFILES  = $(SOURCEFILES)
@@ -22,12 +20,12 @@ DISTFILES += $(call admfiles,CSWoldap)
 DISTFILES += README.CSW openldaprc
 DISTFILES += cswopenldap openldap.xml svc-openldap
 
-PATCHFILES_isa-sparcv8-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-sparcv9-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-i386-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-amd64-garversion-2.4.18 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv8-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv9-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-i386-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-amd64-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
-
 
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tgz,$(SOURCEFILES))
 
@@ -45,7 +43,7 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-REQUIRED_PKGS_CSWoldap       = CSWbdb CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
+REQUIRED_PKGS_CSWoldap       = CSWbdb47 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
 REQUIRED_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc CSWcswclassutils
 REQUIRED_PKGS_CSWoldap      += CSWkrb5lib CSWlibicu CSWperl
 REQUIRED_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWkrb5lib
@@ -59,11 +57,20 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_DOCS = README.CSW $(PATCHFILES)
 
-# OpenLDAP 2.3 was bound to bdb44
-#EXTRA_LIB = $(prefix)/bdb44/lib 
-#EXTRA_INC = $(prefix)/bdb44/include
+EXTRA_LIB_garversion-2.3.43 = $(prefix)/bdb44/lib 
+EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
+EXTRA_LIB_garversion-2.4.19 = $(prefix)/bdb47/lib 
+EXTRA_INC_garversion-2.4.19 = $(prefix)/bdb47/include
+EXTRA_LIB = $(EXTRA_LIB_garversion-$(GARVERSION))
+EXTRA_INC = $(EXTRA_INC_garversion-$(GARVERSION))
+
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
+
+MIGRATECONF = openldap
 
 BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-crypt
 CONFIGURE_ARGS += --enable-lmpasswd
@@ -85,7 +92,16 @@ CONFIGURE_ARGS += --enable-overlays=mod
 # Disable MySQL Cluster
 CONFIGURE_ARGS += --disable-ndb
 
-TEST_SCRIPTS =
+TEST_TARGET = check
+
+MERGE_SCRIPTS_isa-default-garversion-2.3.43 = copy-only
+MERGE_DIRS_isa-default-garversion-2.3.43 = $(libdir)
+MERGE_SCRIPTS_isa-default64-garversion-2.3.43 = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-2.3.43 = $(libdir)
+
+MERGE_SCRIPTS_isa-default-garversion-2.4.19 = copy-all
+MERGE_SCRIPTS_isa-default64-garversion-2.4.19 = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-2.4.19 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*
@@ -98,7 +114,6 @@ PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
 INITSMF = /etc/opt/csw/init.d/cswopenldap
-#PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswopenldap$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 include gar/category.mk
 
@@ -109,4 +124,4 @@ post-merge:
 	ginstall -D $(DOWNLOADDIR)/cswopenldap \
 		$(PKGROOT)/etc/opt/csw/init.d/cswopenldap
 	$(foreach F,$(EXTRA_DOCS),ginstall -D $(DOWNLOADDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
-	#@$(MAKECOOKIE)
+	@$(MAKECOOKIE)
