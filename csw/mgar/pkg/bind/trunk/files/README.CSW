@@ -10,11 +10,12 @@ Installation
 ------------
 1. Modify the named.conf file in /etc/opt/csw.
 2. Create the zone files you specified in named.conf.
-3. Start Bind with "/etc/init.d/cswnamed start".
+3. Start Bind with "/etc/init.d/cswnamed start"
+   or with SMF (Solaris 10+) "svcadm enable cswnamed".
 
 There's sample files to look at in this directory.
 
 More info here: http://www.isc.org/software/BIND/.
 
 
-bonivart/081118
+bonivart/091119

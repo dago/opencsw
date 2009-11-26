@@ -1,1 +1,1 @@
-named::CSW BIND DNS:/false:/bin/false::
+named:named:CSW BIND DNS:/false:/bin/false:::NP
