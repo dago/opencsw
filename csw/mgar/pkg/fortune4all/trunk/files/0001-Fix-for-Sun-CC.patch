@@ -1,0 +1,38 @@
+From c2f3273c69fc4982a2429e03fdb8a952c7a6f166 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 26 Nov 2009 13:19:22 +0100
+Subject: [PATCH] Fix for Sun CC
+
+---
+ Fortune.c |    2 +-
+ panic.c   |    1 +
+ 2 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Fortune.c b/Fortune.c
+index 20538f5..096aa0d 100644
+--- a/Fortune.c
++++ b/Fortune.c
+@@ -78,7 +78,7 @@ int main()
+ 	 */
+ 	(void)memset(data,'\0',DATA_SZ); 
+     }
+-#elif
++#endif
+ #else
+     (void)ReadFortune(data, cur_for++);
+     printf("%s\n\n\n",data);
+diff --git a/panic.c b/panic.c
+index 094df29..58bbfcf 100644
+--- a/panic.c
++++ b/panic.c
+@@ -7,6 +7,7 @@
+ #include <stdarg.h>
+ #include <string.h>
+ #include <stdlib.h>
++#include <unistd.h>
+ 
+ static char panic_buf[1024];
+ /*
+-- 
+1.6.5.1
+
