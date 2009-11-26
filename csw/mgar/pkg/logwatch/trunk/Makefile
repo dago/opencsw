@@ -32,6 +32,10 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
+sysconfdir = /etc/opt/csw
+CRONDIR = $(sysconfdir)/CSW$(GARNAME)/crontabs
+CRONTABS = $(CRONDIR)/root
+
 INSTALL = /opt/csw/bin/ginstall
 INSTALLDIR = $(INSTALL) -m 0755 -d
 INSTALLEXE = $(INSTALL) -m 0755
@@ -41,7 +45,7 @@ BINDIR = $(bindir)
 SHAREDIR = $(datadir)/$(GARNAME)
 MANDIR = $(datadir)/man
 DOCDIR = $(datadir)/doc/$(GARNAME)
-CONFDIR = /etc/opt/csw/$(GARNAME)
+CONFDIR = $(sysconfdir)/$(GARNAME)
 TMPDIR = /var/opt/csw/$(GARNAME)
 
 post-extract-modulated:
@@ -99,5 +103,7 @@ install-custom:
 		echo "TmpDir = $(TMPDIR)" >> $(DESTDIR)$(CONFDIR)/conf/logwatch.conf; \
 		$(INSTALLDIR) $(DESTDIR)$(MANDIR)/man8; \
 		$(INSTALLDATA) logwatch.8 $(DESTDIR)$(MANDIR)/man8; \
-		$(INSTALLEXE) logwatch.wrapper $(DESTDIR)$(BINDIR)/logwatch )
+		$(INSTALLEXE) logwatch.wrapper $(DESTDIR)$(BINDIR)/logwatch; \
+		$(INSTALLDIR) $(DESTDIR)$(CRONDIR); \
+		echo "02 4 * * * /opt/csw/sbin/logwatch" > $(DESTDIR)$(CRONTABS) )
 	@$(MAKECOOKIE)
