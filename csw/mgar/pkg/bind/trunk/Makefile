@@ -2,7 +2,8 @@ GARNAME = bind
 GARVERSION = 9.6.1
 RELEASE = P2
 DISTVERSION = $(GARVERSION)-$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
+SPKG_VERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
@@ -15,7 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 #MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
 #DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
@@ -78,8 +79,6 @@ SPKG_SOURCEURL = http://www.isc.org/software/bind
 SPKG_CLASSES_CSWbind = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 
 include gar/category.mk
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
 
