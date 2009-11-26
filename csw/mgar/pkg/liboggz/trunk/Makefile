@@ -33,3 +33,8 @@ TEST_TARGET = check
 MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
+
+# Solaris 10 does have getopt.h which interferes with the shipped one included first.
+post-configure-isa-amd64:
+	rm -f $(WORKSRC)/include/getopt.h
+	@$(MAKECOOKIE)
