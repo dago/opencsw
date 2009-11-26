@@ -1,10 +1,13 @@
 GARNAME = netsnmp
-GARVERSION = 5.4.2.1
+GARVERSION = 5.5
 CATEGORIES = apps
 
-DESCRIPTION = Brief description
+DESCRIPTION = A suite of applications used to implement SNMP
 define BLURB
-  Long description
+  Simple Network Management Protocol (SNMP) is a widely used protocol for monitoring
+  the health and welfare of network equipment (eg. routers), computer equipment and
+  even devices like UPSs. Net-SNMP is a suite of applications used to implement
+  SNMP v1, SNMP v2c and SNMP v3 using both IPv4 and IPv6. The suite includes:
 endef
 
 SF_PROJ = net-snmp
@@ -23,6 +26,9 @@ REQUIRED_PKGS += CSWosslrt CSWtcpwrap CSWpython
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=12694
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
+
+BUILD64 = 1
+NO_ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-snmp-version=1
