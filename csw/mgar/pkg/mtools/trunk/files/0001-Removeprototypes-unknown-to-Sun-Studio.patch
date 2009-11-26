@@ -1,0 +1,25 @@
+From acaf71a39ce5155d336b0fcdfea3a475952bcfdf Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 26 Nov 2009 10:10:13 +0100
+Subject: [PATCH] Removeprototypes unknown to Sun Studio
+
+---
+ mtools.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/mtools.h b/mtools.h
+index 0d4fa6f..94ffc63 100644
+--- a/mtools.h
++++ b/mtools.h
+@@ -251,7 +251,7 @@ char getDrive(Stream_t *Stream);
+ 
+ 
+ void printOom(void);
+-int ask_confirmation(const char *, ...)  __attribute__ ((format (printf, 1, 2)));
++int ask_confirmation(const char *, ...);
+ 
+ int helpFlag(int, char **);
+ 
+-- 
+1.6.5.1
+
