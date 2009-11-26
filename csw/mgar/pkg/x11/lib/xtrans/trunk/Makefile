@@ -1,5 +1,5 @@
 GARNAME = xtrans
-GARVERSION = 1.2.1
+GARVERSION = 1.2.5
 CATEGORIES = x11
 
 DESCRIPTION = X transport library
@@ -18,6 +18,9 @@ REQUIRED_PKGS = CSWx11common
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+
+PATCHFILES  = Makefile.am.diff
+PATCHFILES += Makefile.in.diff
 
 include gar/category.mk
 

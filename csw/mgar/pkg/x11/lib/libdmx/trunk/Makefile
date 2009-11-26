@@ -1,5 +1,5 @@
 GARNAME = libdmx
-GARVERSION = 1.0.2
+GARVERSION = 1.1.0
 CATEGORIES = x11
 
 DESCRIPTION = X11 Distributed Multihead extension library

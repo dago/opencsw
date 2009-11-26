@@ -1,5 +1,5 @@
 GARNAME = libICE
-GARVERSION = 1.0.4
+GARVERSION = 1.0.6
 CATEGORIES = x11
 
 DESCRIPTION = X11 Inter-Client Exchange Library

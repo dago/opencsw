@@ -1,5 +1,5 @@
 GARNAME = libxt
-GARVERSION = 1.0.5
+GARVERSION = 1.0.7
 CATEGORIES = x11
 
 DESCRIPTION = X11 toolkit intrinsics library

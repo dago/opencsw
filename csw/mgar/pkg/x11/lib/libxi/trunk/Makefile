@@ -1,5 +1,5 @@
 GARNAME = libxi
-GARVERSION = 1.1.3
+GARVERSION = 1.3
 CATEGORIES = x11
 
 DESCRIPTION = Client library for XInput

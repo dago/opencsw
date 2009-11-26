@@ -1,5 +1,5 @@
 GARNAME = libFS
-GARVERSION = 1.0.1
+GARVERSION = 1.0.2
 CATEGORIES = x11
 
 DESCRIPTION = X11 Font Services library

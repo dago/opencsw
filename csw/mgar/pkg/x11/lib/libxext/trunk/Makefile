@@ -1,5 +1,5 @@
 GARNAME = libxext
-GARVERSION = 1.0.4
+GARVERSION = 1.1.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 miscellaneous extensions library1
