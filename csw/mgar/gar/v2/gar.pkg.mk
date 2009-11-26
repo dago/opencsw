@@ -185,9 +185,11 @@ SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
 SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
 SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
 SPKG_CLASSES := $(call _spkg_cond_add,USERGROUP,cswusergroup)
+SPKG_CLASSES := $(call _spkg_cond_add,CRONTABS,cswcrontab)
 SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
 SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
 SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
+
 
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
@@ -201,6 +203,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(INETDCONF),$$F[1] = "cswinetd" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(CRONTABS),$$F[1] = "cswcrontab" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
