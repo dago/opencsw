@@ -1,3 +1,7 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
 GARNAME = ffmpeg
 GARVERSION = 0.5
 CATEGORIES = lib
@@ -11,17 +15,17 @@ endef
 MASTER_SITES = http://ffmpeg.org/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
+PATCHFILES = gnu-grep.patch
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NO_ISAEXEC = 1
-CONFIGURE_ARGS = --prefix=$(prefix)
-CONFIGURE_ARGS += --bindir=$(bindir)
-CONFIGURE_ARGS += --datadir=$(datadir)
-CONFIGURE_ARGS += --libdir=$(libdir)
-CONFIGURE_ARGS += --shlibdir=$(libdir)
-CONFIGURE_ARGS += --incdir=$(includedir)
-CONFIGURE_ARGS += --mandir=$(mandir)
+
+FFMPEG_CONFIGURE_ARGS_1 = $(filter-out --exec_%,$(DIRPATHS))
+FFMPEG_CONFIGURE_ARGS_2 = $(filter-out --sbindir%,$(FFMPEG_CONFIGURE_ARGS_1))
+CONFIGURE_ARGS = $(FFMPEG_CONFIGURE_ARGS)
+
+GARCOMPILER = GNU
 
 include gar/category.mk

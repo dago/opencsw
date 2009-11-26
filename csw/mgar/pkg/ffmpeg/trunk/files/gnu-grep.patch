@@ -1,0 +1,74 @@
+--- ffmpeg-0.5/configure.orig	2009-11-25 00:00:57.441086148 +0100
++++ ffmpeg-0.5/configure	2009-11-25 00:01:18.358790303 +0100
+@@ -1217,7 +1217,7 @@
+     disable source_path_used
+ else
+     source_path="`cd \"$source_path\"; pwd`"
+-    echo "$source_path" | grep -q '[[:blank:]]' &&
++    echo "$source_path" | ggrep -q '[[:blank:]]' &&
+         die "Out of tree builds are impossible with whitespace in source path."
+ fi
+ 
+@@ -1363,13 +1363,13 @@
+ fi
+ rm $TMPSH
+ 
+-if   $cc --version 2>/dev/null | grep -qi gcc; then
++if   $cc --version 2>/dev/null | ggrep -qi gcc; then
+     cc_type=gcc
+-elif $cc --version 2>/dev/null | grep -q Intel; then
++elif $cc --version 2>/dev/null | ggrep -q Intel; then
+     cc_type=icc
+-elif $cc -v 2>&1 | grep -q xlc; then
++elif $cc -v 2>&1 | ggrep -q xlc; then
+     cc_type=xlc
+-elif $cc -V 2>/dev/null | grep -q Compaq; then
++elif $cc -V 2>/dev/null | ggrep -q Compaq; then
+     cc_type=ccc
+     DEPEND_CMD='$(CC) $(CFLAGS) -M $< | sed -e "/^\#.*/d" -e "s,^[[:space:]]*$(*F)\\.o,$(@D)/$(*F).o,"'
+     add_ldflags -Wl,-z,now # calls to libots crash without this
+@@ -1488,7 +1488,7 @@
+         # helps building libavcodec
+         add_cflags -DPIC -fomit-frame-pointer
+         # 3 gcc releases known for BeOS, each with ugly bugs
+-        gcc_version="`$cc -v 2>&1 | grep version | cut -d ' ' -f3-`"
++        gcc_version="`$cc -v 2>&1 | ggrep version | cut -d ' ' -f3-`"
+         case "$gcc_version" in
+           2.9-beos-991026*|2.9-beos-000224*) echo "R5/GG gcc"
+             disable mmx
+@@ -1503,7 +1503,7 @@
+         # no need for libm, but the inet stuff
+         # Check for BONE
+         # XXX: actually should check for NOT net_server
+-        if echo $BEINCLUDES | grep -q 'headers/be/bone'; then
++        if echo $BEINCLUDES | ggrep -q 'headers/be/bone'; then
+             network_extralibs="-lbind -lsocket"
+         else
+             enable beos_netserver
+@@ -1798,7 +1798,7 @@
+ check_cc <<EOF || die "Symbol mangling check failed."
+ int ff_extern;
+ EOF
+-sym=$($nm -P -g $TMPO | grep ff_extern)
++sym=$($nm -P -g $TMPO | ggrep ff_extern)
+ extern_prefix=${sym%%ff_extern*}
+ 
+ check_asm inline_asm '""'
+@@ -1896,7 +1896,7 @@
+ check_cc <<EOF || die "endian test failed"
+ unsigned int endian = 'B' << 24 | 'I' << 16 | 'G' << 8 | 'E';
+ EOF
+-od -A n -t x1 $TMPO | grep -q '42 *49 *47 *45' && enable bigendian
++od -A n -t x1 $TMPO | ggrep -q '42 *49 *47 *45' && enable bigendian
+ 
+ # ---
+ # check availability of some header files
+@@ -2413,7 +2413,7 @@
+ get_version(){
+     name=$1
+     file=$source_path/$2
+-    eval $(grep "#define ${name}_VERSION_M" "$file" | awk '{ print $2"="$3 }')
++    eval $(ggrep "#define ${name}_VERSION_M" "$file" | awk '{ print $2"="$3 }')
+     eval ${name}_VERSION=\$${name}_VERSION_MAJOR.\$${name}_VERSION_MINOR.\$${name}_VERSION_MICRO
+     lcname=$(tolower $name)
+     eval echo "${lcname}_VERSION=\$${name}_VERSION" >> config.mak
