@@ -1,0 +1,27 @@
+From 16a37676464c7e728d930a8c044a8917c6198aa8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 26 Nov 2009 16:11:48 +0100
+Subject: [PATCH] Fix 64 bit libtool
+
+---
+ autotools/ltmain.sh |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/autotools/ltmain.sh b/autotools/ltmain.sh
+index a926477..5b3be50 100644
+--- a/autotools/ltmain.sh
++++ b/autotools/ltmain.sh
+@@ -1191,6 +1191,10 @@ compiler."
+ 	continue
+ 	;;
+ 
++      -xarch=*)
++        linker_flags="$linker_flags $flag"
++        # Fall through
++
+       # Some other compiler flag.
+       -* | +*)
+ 	# Unknown arguments in both finalize_command and compile_command need
+-- 
+1.6.5.1
+

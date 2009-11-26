@@ -1,0 +1,10 @@
+prefix=/opt/csw
+exec_prefix=/opt/csw
+libdir=/opt/csw/lib/64
+includedir=/opt/csw/include
+
+Name: liba52
+Description: A decoding library for ATSC A/52 streams.
+Version: 0.7.4
+Libs: -L${libdir} -la52
+Cflags: -I${includedir}/a52dec
