@@ -54,3 +54,4 @@ post-merge:
 			base=$$(basename $$f); \
 			gln -s $$f ./$${base/g/}; \
 		done )
+	@$(MAKECOOKIE)
