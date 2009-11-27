@@ -27,7 +27,7 @@ CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
 
-TEST_ARGS = check
+TEST_SCRIPTS = custom
 
 include gar/category.mk
 
@@ -36,3 +36,7 @@ include gar/category.mk
 # 	@$(MAKECOOKIE)
 
 PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
+
+test-custom:
+	@(cd $(WORKSRC); gmake check)
+	@$(MAKECOOKIE)
