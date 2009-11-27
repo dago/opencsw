@@ -32,15 +32,11 @@ CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
 CONFIGURE_ARGS += --enable-no-install-program=arch,hostname,su,chcon
 
-TEST_SCRIPTS = custom
+TEST_TARGET = check
 
 include gar/category.mk
 
 PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
-
-test-custom:
-	@(cd $(WORKSRC); gmake check)
-	@$(MAKECOOKIE)
 
 post-install-modulated:
 	@echo Cleaning up install directory...
