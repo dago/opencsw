@@ -13,7 +13,7 @@ PATCHFILES = 0001-Update-Paths-and-Binary-Tool-Names-for-CSW.patch
 
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWgmake CSWshutils
+REQUIRED_PKGS = CSWgmake CSWshutils CSWperl CSWless
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
