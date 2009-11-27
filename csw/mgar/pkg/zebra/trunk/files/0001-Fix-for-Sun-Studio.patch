@@ -1,0 +1,61 @@
+From 8fbae5034f3fcbb3c197cfa854bc37142e239967 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 27 Nov 2009 09:53:39 +0100
+Subject: [PATCH] Fix for Sun Studio
+
+---
+ lib/prefix.h |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/lib/prefix.h b/lib/prefix.h
+index 7d7cde6..60e8439 100644
+--- a/lib/prefix.h
++++ b/lib/prefix.h
+@@ -41,7 +41,7 @@ struct prefix
+       struct in_addr adv_router;
+     } lp;
+     u_char val[8];
+-  } u __attribute__ ((aligned (8)));
++  } u;
+ };
+ 
+ /* IPv4 prefix structure. */
+@@ -49,7 +49,7 @@ struct prefix_ipv4
+ {
+   u_char family;
+   u_char prefixlen;
+-  struct in_addr prefix __attribute__ ((aligned (8)));
++  struct in_addr prefix;
+ };
+ 
+ /* IPv6 prefix structure. */
+@@ -58,7 +58,7 @@ struct prefix_ipv6
+ {
+   u_char family;
+   u_char prefixlen;
+-  struct in6_addr prefix __attribute__ ((aligned (8)));
++  struct in6_addr prefix;
+ };
+ #endif /* HAVE_IPV6 */
+ 
+@@ -66,7 +66,7 @@ struct prefix_ls
+ {
+   u_char family;
+   u_char prefixlen;
+-  struct in_addr id __attribute__ ((aligned (8)));
++  struct in_addr id;
+   struct in_addr adv_router;
+ };
+ 
+@@ -75,7 +75,7 @@ struct prefix_rd
+ {
+   u_char family;
+   u_char prefixlen;
+-  u_char val[8] __attribute__ ((aligned (8)));
++  u_char val[8];
+ };
+ 
+ #ifndef INET_ADDRSTRLEN
+-- 
+1.6.5.1
+
