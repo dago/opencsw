@@ -1,0 +1,54 @@
+From df457b512ae24c966ac200c3910cf86e2599d8d8 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 27 Nov 2009 03:22:18 +0100
+Subject: [PATCH] Update Paths and Binary Tool Names for CSW
+
+/usr/bin/perl -> /opt/csw/bin/perl
+export PATH=/opt/csw/bin:$PATH
+make -> gmake
+stty -> gstty
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ clmake       |    4 +++-
+ cmake        |    4 +++-
+ colormake.pl |    2 +-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/clmake b/clmake
+index c091e23..de484ea 100755
+--- a/clmake
++++ b/clmake
+@@ -4,4 +4,6 @@
+ # Jumps to the first gcc error that occurs during the build process.
+ #
+ 
+-make $* 2>&1 | colormake.pl `stty size` | less -r -pError
++export PATH=/opt/csw/bin:$PATH
++
++gmake $* 2>&1 | colormake.pl `gstty size` | less -r -pError
+diff --git a/cmake b/cmake
+index 303e91e..4f2eabd 100755
+--- a/cmake
++++ b/cmake
+@@ -4,4 +4,6 @@
+ # Jumps to the first gcc error that occurs during the build process.
+ #
+ 
+-make $* 2>&1 | colormake.pl `stty size`
++export PATH=/opt/csw/bin:$PATH
++
++gmake $* 2>&1 | colormake.pl `gstty size`
+diff --git a/colormake.pl b/colormake.pl
+index 1d9edb2..7d7b7d2 100755
+--- a/colormake.pl
++++ b/colormake.pl
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ #
+ # colormake.pl 0.3
+ #
+-- 
+1.6.5.1
+
