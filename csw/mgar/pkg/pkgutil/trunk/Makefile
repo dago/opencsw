@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.9b2
+GARVERSION = 1.9
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -63,8 +63,8 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)plus
-	@ginstall $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
-	@ginstall $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(GARNAME)plus/readme
+	@ginstall -m 444 $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
+	@ginstall -m 444 $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(GARNAME)plus/readme
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man1
 	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@pod2man --section=1 $(WORKSRC)/bldcat > $(DESTDIR)$(mandir)/man1/bldcat.1
