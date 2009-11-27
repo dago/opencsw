@@ -54,7 +54,8 @@ MASTER_SITES = http://build.chromium.org/buildbot/archives/
 ## Whitespace-separated list of files which comprise this build. mGAR will look
 ## for the files in the $(FILEDIR) (trunk/files) directory and on the
 ## $(MASTER_SITES).
-DISTFILES  = chromium.r$(CHROMIUM_REVISION).tgz
+# DISTFILES  = chromium.r$(CHROMIUM_REVISION).tgz
+DISTFILES   =
 ##
 ## We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -123,10 +124,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## ETCSERVICES = <file containing an entry for /etc/services>
 ## INETDCONF = <file containing an inetd.conf formatted entry>
 ## A list of runtime package dependencies in the form of CSWfoo.
-REQUIRED_PKGS = CSWnspr CSWnss
+REQUIRED_PKGS = CSWnspr CSWnss CSWffmpeg
 ##
 ## A list of packages necessary to build this package
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWnspr-devel CSWlibxcbdevel
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWnspr-devel CSWlibxcbdevel CSWffmpeg
 ##
 ## When using non-empty $(PACKAGES):
 ## REQUIRED_PKGS_CSWpkgname =
@@ -180,12 +181,16 @@ TEST_SCRIPTS = chromium
 GYP_GENERATORS = make
 export GYP_GENERATORS
 
-WORKSRC = $(WORKDIR)/home/chrome-svn/tarball/chromium
+# WORKSRC = $(WORKDIR)/home/chrome-svn/tarball/chromium
+WORKSRC = $(WORKDIR)/chromium
 CHROMIUM_ROOT = $(WORKSRC)
 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 GARCOMPILER = GNU
+
+# Because of bashisms in Makefiles in Chromium
+SHELL = /opt/csw/bin/bash
 
 include gar/category.mk
 
@@ -195,20 +200,32 @@ $(WORKSRC)/.gclient:
 		GYP_GENERATORS=make \
 	gclient config http://src.chromium.org/svn/trunk/src)
 
+post-extract-modulated:
+	mkdir -p $(WORKSRC)
+	(cd $(WORKSRC) \
+		&& \
+	if [ -d src ]; then \
+	  (cd src && git fetch ); \
+	else \
+	  git clone git://git.chromium.org/chromium.git src; \
+	fi)
+	@$(MAKECOOKIE)
+
 # Skipping gclient sync for now; running only gclient runhooks.  The build
 # instructions say that we'll miss on some platform-specific depends, but
 # I don't think there's anything platform-specific for Solaris in the source
 # code repository.
 
-configure-chromium: depot-tools gclient-runhooks
-	@$(MAKECOOKIE)
+configure-chromium: depot-tools gclient-sync
 
 gclient-sync: $(WORKSRC)/.gclient
 	(cd $(WORKSRC) \
 		&& \
 		PATH=$$PATH:$(abspath $(WORKDIR)/depot_tools):/opt/csw/gcc4/bin \
+		GYP_DEFINES="use_system_ffmpeg=1" \
 		GYP_GENERATORS=make \
-	gclient sync)
+	gclient sync --revision src@$(CHROMIUM_REVISION))
+	# gclient sync)
 	@$(MAKECOOKIE)
 
 gclient-runhooks: $(WORKSRC)/.gclient
@@ -216,6 +233,7 @@ gclient-runhooks: $(WORKSRC)/.gclient
 		&& \
 		PATH=$$PATH:$(abspath $(WORKDIR)/depot_tools):/opt/csw/gcc4/bin \
 		GYP_GENERATORS=make \
+		GYP_DEFINES="use_system_ffmpeg=1" \
 	gclient runhooks --force)
 	@$(MAKECOOKIE)
 
@@ -234,4 +252,4 @@ build-chromium:
 	(cd $(CHROMIUM_ROOT)/src \
 		&& \
 	PATH=$$PATH:$(abspath $(WORKDIR)/depot_tools):/opt/csw/gcc4/bin \
-	gmake chrome)
+	gmake $(PARALLELMFLAGS) chrome)
