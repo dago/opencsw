@@ -35,4 +35,6 @@ SAMPLECONF += /etc/opt/csw/ospfd.conf
 SAMPLECONF += /etc/opt/csw/ripd.conf
 SAMPLECONF += /etc/opt/csw/zebra.conf
 
+MIGRATE_FILES = bgpd.conf ospfd.conf ripd.conf zebra.conf
+
 include gar/category.mk
