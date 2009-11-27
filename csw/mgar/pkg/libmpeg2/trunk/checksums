@@ -1,2 +1,6 @@
-92ebb653c36deb0a93fe597de10a546e  0001-Don-t-use-arm-specific-assembly-on-Sparc.patch
+1c38d557879a40e54ba4e80a2f7ebf23  0001-Don-t-use-arm-specific-assembly-on-Sparc.patch
+333b714575b3a86d4a45141cef51e5f1  0002-Fix-return-type-for-Sun-Studio.patch
+dc6400408df379128e8e46d2e552bad4  0003-Add-missing-m4-files.patch
+ec86eac972d1c6e4b92a2e43150c7b85  0004-Add-missing-libtool.patch
+1f472c14ffdc946564f4771d2a533896  0005-Add-missing-autostuff.patch
 0f92c7454e58379b4a5a378485bbd8ef  libmpeg2-0.5.1.tar.gz

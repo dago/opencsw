@@ -1,0 +1,25 @@
+From 407d9df72c4125ab714052962574ddfb2baec694 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 27 Nov 2009 16:56:23 +0100
+Subject: [PATCH 2/3] Fix return type for Sun Studio
+
+---
+ src/mpeg2dec.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/mpeg2dec.c b/src/mpeg2dec.c
+index 59b36d7..e216ba5 100644
+--- a/src/mpeg2dec.c
++++ b/src/mpeg2dec.c
+@@ -63,7 +63,7 @@ static RETSIGTYPE signal_handler (int sig)
+ {
+     sigint = 1;
+     signal (sig, SIG_DFL);
+-    return (RETSIGTYPE)0;
++    return;
+ }
+ 
+ static void print_fps (int final)
+-- 
+1.6.5.1
+
