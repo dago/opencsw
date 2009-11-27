@@ -31,7 +31,7 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-post-extract-modulated:
+post-extract:
 	@cd $(WORKDIR_FIRSTMOD); mv $(GARNAME) $(GARNAME)-$(GARVERSION);
 	@$(MAKECOOKIE)
 
