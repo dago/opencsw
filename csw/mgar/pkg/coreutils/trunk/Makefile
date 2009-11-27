@@ -30,6 +30,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
+CONFIGURE_ARGS += --enable-no-install-program=arch,hostname,su,chcon
 
 TEST_SCRIPTS = custom
 
