@@ -2,6 +2,10 @@ GARNAME = coreutils
 GARVERSION = 8.1
 CATEGORIES = utils
 
+SHELL = /opt/csw/bin/bash
+
+PREREQUISITE_PKGS = CSWbash
+
 DESCRIPTION = GNU core utilities
 define BLURB
 The GNU Core Utilities are the basic file, shell and text manipulation utilities of the GNU operating system. These are the core utilities which are expected to exist on every operating system.
@@ -31,12 +35,21 @@ TEST_SCRIPTS = custom
 
 include gar/category.mk
 
-# pre-configure-modulated:
-# 	@(cd $(WORKSRC); /opt/csw/bin/bash ./bootstrap; )
-# 	@$(MAKECOOKIE)
-
 PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 
 test-custom:
 	@(cd $(WORKSRC); gmake check)
 	@$(MAKECOOKIE)
+
+post-install-modulated:
+	@echo Cleaning up install directory...
+	rm -rf $(DESTDIR)/$(libdir)
+
+post-merge:
+	@(cd $(PKGROOT)$(prefix); \
+		mkdir gnu; cd gnu; \
+		for f in ../bin/g*; do \
+			echo Linking $$f; \
+			base=$$(basename $$f); \
+			gln -s $$f ./$${base/g/}; \
+		done )
