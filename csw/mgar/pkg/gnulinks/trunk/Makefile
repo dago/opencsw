@@ -35,7 +35,7 @@ newproto:
 		pkgutil -L $$p | grep /opt/csw/bin/g; \
 	     done } | \
 		pkgproto | \
-		perl -plne 's,f none /opt/csw/bin/g([\w\d-\+\.]+) 0755 root bin,s none /opt/csw/gnu/$$1=../bin/g$$1,' | \
+		perl -plne 's,f none /opt/csw/bin/g([\w\d-\+\.]+) (45|07)55 root bin,s none /opt/csw/gnu/$$1=../bin/g$$1,' | \
 		grep -v "^l " | sort > $(FILEDIR)/CSWgnulinks.prototype.new )
 	@echo Installing new prototype.
 	@mv $(FILEDIR)/CSWgnulinks.prototype.new \
