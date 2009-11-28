@@ -1,16 +1,18 @@
-diff --speed-large-files --minimal -Nru munin-1.3.4.orig/server/munin-graph.in munin-1.3.4/server/munin-graph.in
---- munin-1.3.4.orig/server/munin-graph.in	2008-03-08 02:42:40.000000000 +0100
-+++ munin-1.3.4/server/munin-graph.in	2009-08-13 20:59:35.901535076 +0200
-@@ -827,9 +827,9 @@
- 	my @complete = ();
- 	if ($RRDkludge) {
- 	    push (@complete,
--		  '--font' ,'LEGEND:7:@@LIBDIR@@/VeraMono.ttf',
--		  '--font' ,'UNIT:7:@@LIBDIR@@/VeraMono.ttf',
--		  '--font' ,'AXIS:7:@@LIBDIR@@/VeraMono.ttf');
-+		  '--font' ,'LEGEND:7:@@LIBDIR@@/monospace',
-+		  '--font' ,'UNIT:7:/opt/csw/share/munin/fonts/VeraMono.ttf',
-+		  '--font' ,'AXIS:7:/opt/csw/share/munin/fonts/VeraMono.ttf');
- 	}
- 	push(@complete,'-W', $watermark) if $RRDs::VERSION >= 1.2;
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/master/_bin/munin-graph.in munin-1.4.0/master/_bin/munin-graph.in
+--- munin-1.4.0.orig/master/_bin/munin-graph.in	2009-11-27 12:17:18.000000000 +0100
++++ munin-1.4.0/master/_bin/munin-graph.in	2009-11-28 13:41:02.135025435 +0100
+@@ -135,10 +135,10 @@
+ 
+ =head1 FILES
+ 
+-	@@CONFDIR@@/munin.conf
+-	@@DBDIR@@/*
+-	@@LOGDIR@@/munin-graph
+-	@@STATEDIR@@/*
++	/etc/opt/csw/munin/munin.conf
++	/var/opt/csw/munin/*
++	/var/opt/csw/munin/munin-graph
++	/var/opt/csw/munin/*
+ 
+ =head1 AUTHORS
  

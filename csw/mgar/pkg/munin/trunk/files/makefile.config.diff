@@ -1,9 +1,9 @@
-diff --speed-large-files --minimal -Nru munin-1.3.4.orig/Makefile.config munin-1.3.4/Makefile.config
---- munin-1.3.4.orig/Makefile.config	2008-03-08 07:35:13.000000000 +0100
-+++ munin-1.3.4/Makefile.config	2009-07-05 11:01:24.956040045 +0200
-@@ -6,13 +6,15 @@
- # DESTDIR is empty during building, and optionally set to point to
- # a shadow tree during make install.
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile.config munin-1.4.0/Makefile.config
+--- munin-1.4.0.orig/Makefile.config	2009-11-27 12:17:18.000000000 +0100
++++ munin-1.4.0/Makefile.config	2009-11-28 16:51:45.380818848 +0100
+@@ -14,13 +14,15 @@
+ # and LOGDIR as subdirectories.  Today, DBDIR contains configured
+ # domains, as well as PLUGSTATE, and we risk collisions.
  
 +DESTDIR=$(DESTDIR)
 +
@@ -19,7 +19,7 @@ diff --speed-large-files --minimal -Nru munin-1.3.4.orig/Makefile.config munin-1
  
  # Server only - where to put munin-cron
  BINDIR     = $(PREFIX)/bin
-@@ -21,37 +23,37 @@
+@@ -29,17 +31,17 @@
  SBINDIR    = $(PREFIX)/sbin
  
  # Where to put text and html documentation
@@ -35,9 +35,15 @@ diff --speed-large-files --minimal -Nru munin-1.3.4.orig/Makefile.config munin-1
 +LIBDIR     = $(PREFIX)/libexec/munin
  
  # Server only - Output directory
--HTMLDIR    = $(PREFIX)/var/www
+-HTMLDIR    = $(PREFIX)/www/docs
+-CGIDIR     = $(PREFIX)/www/cgi
 +HTMLDIR    = /var/opt/csw/munin/www
- CGIDIR     = $(HTMLDIR)/cgi
++CGIDIR     = /var/opt/csw/munin/www/cgi
+ 
+ # Server only - spool directory for data gathered from nodes by
+ # munin-gather - experimental.  Place on ramdisk to make munin
+@@ -52,24 +54,24 @@
+ # SSPOOLDIR := /tmp/muninspool
  
  # Client only - Where to put RRD files and other intenal data
 -DBDIR      = $(DESTDIR)/var/opt/munin
@@ -48,7 +54,7 @@ diff --speed-large-files --minimal -Nru munin-1.3.4.orig/Makefile.config munin-1
  PLUGSTATE  = $(DBDIR)/plugin-state
  
  # Where Munin should place its logs.
--LOGDIR     = $(DESTDIR)/var/log/munin
+-LOGDIR     = $(PREFIX)/log/munin
 +LOGDIR     = /var/opt/csw/munin/log
  
  # Location of PID files and other statefiles. On the server, must be
@@ -57,54 +63,54 @@ diff --speed-large-files --minimal -Nru munin-1.3.4.orig/Makefile.config munin-1
 +STATEDIR   = /var/opt/csw/munin/run
  
  # The perl interpreter to use
--PERL       = $(shell which perl)
-+PERL       = /opt/csw/bin/perl
+-PERL       := $(shell which perl)
++PERL       := /opt/csw/bin/perl
  
  # The python interpreter to use (used by some plugins)
--PYTHON     = /usr/bin/env python
-+PYTHON     = /opt/csw/bin/python
+-PYTHON     := /usr/bin/env python
++PYTHON     := /opt/csw/bin/python
  
- # A modern (posix) shell.  We're not looking for arrays, but $() and
- # other modern stuff is expected.  On a posix-system the expression
-@@ -64,10 +66,10 @@
- GOODSH     = $(shell PATH=`getconf PATH` sh -c 'type sh | sed "s/.* //"')
+ # The ruby interpreter to use (used by some plugins)
+ RUBY       := /usr/bin/env ruby
+@@ -95,11 +97,11 @@
+ GOODSH     := $(shell PATH=`getconf PATH` sh -c 'type sh | sed "s/.* //"')
  
  # Path of bash for bash specific plugins
--BASH       = /bin/bash
-+BASH       = /usr/bin/bash
+-BASH       := /bin/bash
++BASH       := /usr/bin/bash
  
  # Server only - Where to install the perl libraries
--PERLLIB    = $(DESTDIR)$(shell $(PERL) -V:sitelib | cut -d"'" -f2)
+ PERLSITELIB := $(shell $(PERL) -V:sitelib | cut -d"'" -f2)
+-PERLLIB    = $(DESTDIR)$(PERLSITELIB)
 +PERLLIB    = $(shell $(PERL) -V:sitelib | cut -d"'" -f2)
  
  # Client only - Install plugins for this architecture
- OSTYPE     = $(shell uname | tr '[A-Z]' '[a-z]')
-@@ -79,7 +81,7 @@
+ OSTYPE     := $(shell uname | tr '[A-Z]' '[a-z]')
+@@ -111,7 +113,7 @@
  # What is the safest way to create a tempfile.
  # Default is to figure it out by testing various methods.
  # Replace this with a known platform-specific method
--MKTEMP     = $(shell ./test-mktemp)
-+MKTEMP     = $(shell mktemp)
+-MKTEMP     := $(shell ./test-mktemp)
++MKTEMP     := $(shell mktemp)
  
  # Munin version number.
- VERSION    = $(shell cat RELEASE)
-@@ -94,9 +96,9 @@
+ VERSION    := $(shell ./getversion)
+@@ -126,9 +128,9 @@
  # Which command to use to check if the USER and GROUP to run Munin as, exists.
  # These will work on most modern OSes:
  #
--GETENT = $(shell which getent || which true 2>/dev/null)
--CHECKUSER  = $(shell $(GETENT) passwd $(USER) >/dev/null 2>/dev/null || (echo "echo User $(USER) nonexistant. Create the user and retry; exit 2"))
--CHECKGROUP = $(shell $(GETENT) group $(GROUP) >/dev/null 2>/dev/null || (echo "echo Group $(GROUP) nonexistant. Create the group and retry; exit 2"))
-+#GETENT = $(shell which getent || which true 2>/dev/null)
-+#CHECKUSER  = $(shell $(GETENT) passwd $(USER) >/dev/null 2>/dev/null || (echo "echo User $(USER) nonexistant. Create the user and retry; exit 2"))
-+#CHECKGROUP = $(shell $(GETENT) group $(GROUP) >/dev/null 2>/dev/null || (echo "echo Group $(GROUP) nonexistant. Create the group and retry; exit 2"))
+-GETENT     := $(shell which getent || which true 2>/dev/null)
+-CHECKUSER  := $(shell $(GETENT) passwd $(USER) >/dev/null 2>/dev/null || (echo "echo User $(USER) nonexistent. Create the user and retry; exit 2"))
+-CHECKGROUP := $(shell $(GETENT) group $(GROUP) >/dev/null 2>/dev/null || (echo "echo Group $(GROUP) nonexistent. Create the group and retry; exit 2"))
++#GETENT     := $(shell which getent || which true 2>/dev/null)
++#CHECKUSER  := $(shell $(GETENT) passwd $(USER) >/dev/null 2>/dev/null || (echo "echo User $(USER) nonexistent. Create the user and retry; exit 2"))
++#CHECKGROUP := $(shell $(GETENT) group $(GROUP) >/dev/null 2>/dev/null || (echo "echo Group $(GROUP) nonexistent. Create the group and retry; exit 2"))
  
  # For OSX, comment out the previous two lines and comment in these
  #
-@@ -117,5 +119,5 @@
- CHGRP      = chgrp
+@@ -159,4 +161,4 @@
+ JCVALID    := $(shell $(JC) -version >/dev/null 2>/dev/null && echo "yes")
  
  # Check whether setruid functionality can be used
--HASSETR = $(shell perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
-+HASSETR = $(shell /opt/csw/bin/perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
- 
+-HASSETR    := $(shell perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
++HASSETR    := $(shell /opt/csw/bin/perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )

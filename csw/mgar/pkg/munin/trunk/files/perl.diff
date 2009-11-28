@@ -1,0 +1,45 @@
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/master/_bin/munin-update.in munin-1.4.0/master/_bin/munin-update.in
+--- munin-1.4.0.orig/master/_bin/munin-update.in	2009-11-27 12:17:18.000000000 +0100
++++ munin-1.4.0/master/_bin/munin-update.in	2009-11-28 19:30:06.713647230 +0100
+@@ -1,4 +1,4 @@
+-#! /usr/bin/perl
++#!@@PERL@@ 
+ 
+ use warnings;
+ use strict;
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/node/bin/munindoc munin-1.4.0/node/bin/munindoc
+--- munin-1.4.0.orig/node/bin/munindoc	2009-11-27 12:17:13.000000000 +0100
++++ munin-1.4.0/node/bin/munindoc	2009-11-28 19:28:26.453064302 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- perl -*-
+ #
+ # This script provides the basis for a plugin documentation system for
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/node/sbin/munin-node munin-1.4.0/node/sbin/munin-node
+--- munin-1.4.0.orig/node/sbin/munin-node	2009-11-27 12:17:13.000000000 +0100
++++ munin-1.4.0/node/sbin/munin-node	2009-11-28 19:28:26.455172374 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- cperl -*-
+ #
+ # Copyright (C) 2002-2009 Audun Ytterdal, Jimmy Olsen, Tore Anderson,
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/node/sbin/munin-node-configure munin-1.4.0/node/sbin/munin-node-configure
+--- munin-1.4.0.orig/node/sbin/munin-node-configure	2009-11-27 12:17:13.000000000 +0100
++++ munin-1.4.0/node/sbin/munin-node-configure	2009-11-28 19:28:26.457840168 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- cperl -*-
+ #
+ # Copyright (C) 2003-2006 Jimmy Olsen, Nicolai Langfeldt.
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/node/sbin/munin-run munin-1.4.0/node/sbin/munin-run
+--- munin-1.4.0.orig/node/sbin/munin-run	2009-11-27 12:17:13.000000000 +0100
++++ munin-1.4.0/node/sbin/munin-run	2009-11-28 19:28:26.459939564 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- perl -*-
+ 
+ # Copyright (C) 2004-2009

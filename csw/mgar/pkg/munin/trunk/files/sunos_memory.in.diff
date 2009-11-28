@@ -1,9 +1,18 @@
-diff --speed-large-files --minimal -Nru munin-1.3.4.orig/node/node.d.sunos/memory.in munin-1.3.4/node/node.d.sunos/memory.in
---- munin-1.3.4.orig/node/node.d.sunos/memory.in	2008-03-08 02:42:39.000000000 +0100
-+++ munin-1.3.4/node/node.d.sunos/memory.in	2009-07-03 11:50:10.815859151 +0200
-@@ -11,7 +11,7 @@
- # FIXME1: Reporting size in MB is Wrong. Report bytes and let rrd scale units
- # FIXME2: Using kstat would be much better!
+diff --speed-large-files --minimal -Nru munin-1.4.0.orig/plugins/node.d.sunos/memory.in munin-1.4.0/plugins/node.d.sunos/memory.in
+--- munin-1.4.0.orig/plugins/node.d.sunos/memory.in	2009-11-27 12:17:12.000000000 +0100
++++ munin-1.4.0/plugins/node.d.sunos/memory.in	2009-11-28 11:53:12.048911726 +0100
+@@ -15,7 +15,7 @@
+ 
+ =item top
+ 
+-The path to "top" (Default: "/usr/local/bin/top")
++The path to "top" (Default: "/opt/csw/bin/top")
+ 
+ =back
+ 
+@@ -50,7 +50,7 @@
+ 
+ . $MUNIN_LIBDIR/plugins/plugin.sh
  
 -TOP=${top:-/usr/local/bin/top}
 +TOP=${top:-/opt/csw/bin/top}

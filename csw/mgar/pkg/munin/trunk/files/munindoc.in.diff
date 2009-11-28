@@ -1,9 +1,0 @@
-diff --speed-large-files --minimal -Nru munin-1.3.4.orig/node/munindoc.in munin-1.3.4/node/munindoc.in
---- munin-1.3.4.orig/node/munindoc.in	2008-03-08 02:42:39.000000000 +0100
-+++ munin-1.3.4/node/munindoc.in	2009-08-02 11:31:16.881795848 +0200
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl -w
-+#!@@PERL@@ -w
- # -*- perl -*-
- #
- # This script provides the basis for a plugin documentation system for

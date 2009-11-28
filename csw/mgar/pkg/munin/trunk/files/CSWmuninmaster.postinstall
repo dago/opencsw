@@ -3,9 +3,8 @@
 passwd -N munin
 
 cat << EOF
-#
-#
-#
+
+=======================================================================
 
 To get Munin running, please follow these steps:
 
@@ -31,7 +30,6 @@ To get Munin running, please follow these steps:
 
     svcadm restart cswapache2
 
-#
-#
-#
+=======================================================================
+
 EOF
