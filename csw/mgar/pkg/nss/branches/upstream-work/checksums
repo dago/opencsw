@@ -1,8 +1,0 @@
-4b2246d07092fe8b2f29a1a01e9bc821  include.patch
-79083e118f3d885957910fc845844c1c  ld-options.patch
-1ee3ed9c1900079319bd1de51388d856  nss-3.12.4.tar.gz
-bd8d96c42238c7cfd07ec1ba21191066  platlibs-sqlite3-64.patch
-f0f40bd021423ab1680b4d87cd19c1db  platlibs-sqlite3.patch
-cae46161d981e8aea822953b34339e60  sqlite3-32.patch
-b07d3de42785866c3c4385846fd8eb52  sqlite3-64.patch
-221646aa1954b4a255ac03e7d8b0225d  whoami.patch
