@@ -4,6 +4,8 @@ CATEGORIES = xtra
 
 GLINKPKGS = CSWdiffutils CSWggettext CSWggettextrt CSWbison CSWbinutils
 GLINKPKGS += CSWggrep CSWgawk CSWgsed CSWggetopt CSWfindutils
+GLINKPKGS += CSWgmake CSWgpatch CSWgm4 CSWgwhois CSWgtar
+GLINKPKGS += CSWshutils CSWgfile CSWtextutils
 PREREQUISITE_PKGS = $(GLINKPKGS) CSWpkgutil
 
 SPKG_SOURCEURL = No Source
