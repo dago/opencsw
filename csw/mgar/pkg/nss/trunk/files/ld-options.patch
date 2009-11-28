@@ -1,0 +1,10 @@
+--- a/mozilla/security/coreconf/SunOS5.mk.orig	2009-11-26 11:52:54.279684353 +0100
++++ b/mozilla/security/coreconf/SunOS5.mk	2009-11-26 11:53:05.767884648 +0100
+@@ -175,6 +175,6 @@
+ RPATH = -R '$$ORIGIN:/usr/lib/mps/secv1:/usr/lib/mps'
+ endif
+ else
+-RPATH = -R '$$ORIGIN'
++RPATH = $(LDFLAGS)  $(LD_OPTIONS)
+ endif
+ 

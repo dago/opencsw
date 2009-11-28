@@ -1,10 +1,8 @@
-a1ce38c03b142eb2bd54f1f111661e30  csw-include.patch
-7116f8de3ac8b35104365c1b3fc6aea4  gln.patch
-63476fb10c2d14f7e0585fe327ae9341  nss-3.12.4-gentoo-fixups-1.diff
-8f76e381bf2339d731bfd5b8116c25a4  nss-3.12.4-with-nspr-4.8.tar.gz
-39b9d2431d4ff717d103b742fcaefb81  nss-3.12.4.patch
+4b2246d07092fe8b2f29a1a01e9bc821  include.patch
+79083e118f3d885957910fc845844c1c  ld-options.patch
+1ee3ed9c1900079319bd1de51388d856  nss-3.12.4.tar.gz
+bd8d96c42238c7cfd07ec1ba21191066  platlibs-sqlite3-64.patch
 f0f40bd021423ab1680b4d87cd19c1db  platlibs-sqlite3.patch
-441f12a9396a89841d384d8c89a052ff  platlibs-sunos.patch
-d41d8cd98f00b204e9800998ecf8427e  runtime-search-path.patch
-90b4d32437b3e3fdadcf4f16339aa2ed  shared-libs.patch
+cae46161d981e8aea822953b34339e60  sqlite3-32.patch
+b07d3de42785866c3c4385846fd8eb52  sqlite3-64.patch
 221646aa1954b4a255ac03e7d8b0225d  whoami.patch
