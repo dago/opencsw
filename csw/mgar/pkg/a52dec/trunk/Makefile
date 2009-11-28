@@ -18,7 +18,7 @@ UPSTREAM_MASTER_SITES = http://liba52.sourceforge.net/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PACKAGES = CSWliba52
-CATALOGNAME = CSWliba52
+CATALOGNAME = liba52
 
 REQUIRED_PKGS = CSWsunmath
 EXTRA_LINKER_FLAGS = -lsunmath
