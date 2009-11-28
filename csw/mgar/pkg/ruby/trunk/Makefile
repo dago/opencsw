@@ -130,12 +130,14 @@ multiconfig:
 	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig
 	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/ruby/
 	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/ruby/
+	@$(MAKECONFIG)
 
 rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
 rubymode:
 	@echo " ===> Installing and Compilingn ruby-mode elisp"
 	@(mkdir -p $(RMDIR); \
 		cp $(WORKSRC)/misc/*el $(RMDIR))
+	@$(MAKECOOKIE)
 
 # Fix up rbconfig
 rbconfig:
