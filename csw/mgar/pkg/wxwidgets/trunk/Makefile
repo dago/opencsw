@@ -19,7 +19,12 @@ endef
 PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 2.8.5 2.8.10
+
+# Once upon a time, this build also supported the version 2.8.5 for backward
+# compatibility. Unfortunately, it was segfaulting.  As a workaround, binary
+# files copied from the old package have been provided.
+MODULATIONS_GARVERSION = 2.8.10
+
 MERGE_SCRIPTS_isa-i386-garversion-2.8.5 = copy-only
 MERGE_DIRS_isa-i386-garversion-2.8.5 = $(libdir)
 MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.5 = copy-only
@@ -30,6 +35,10 @@ MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.10 = copy-all
 SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 DISTFILES  = $(SOURCEFILES)
+DISTFILES += libwx_gtk2u-2.8.so.0.2.0-i386
+DISTFILES += libwx_gtk2u-2.8.so.0.2.0-sparc
+DISTFILES += libwx_gtk2u_gl-2.8.so.0.2.0-i386
+DISTFILES += libwx_gtk2u_gl-2.8.so.0.2.0-sparc
 SPKG_SOURCEURL = http://www.wxwidgets.org/
 MASTER_SITES  = $(SF_MIRRORS)
 SF_PROJ = wxwindows
@@ -142,4 +151,13 @@ include gar/category.mk
 install-wxwidgets:
 	(cd $(WORKSRC); $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
 	(cd $(WORKSRC)/contrib; $(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) install)
+	@$(MAKECOOKIE)
+
+post-merge:
+	ginstall -m 755 \
+	  $(FILEDIR)/libwx_gtk2u-2.8.so.0.2.0-$(GARCH) \
+	  $(PKGROOT)$(libdir)/libwx_gtk2u-2.8.so.0.2.0
+	ginstall -m 755 \
+	  $(FILEDIR)/libwx_gtk2u_gl-2.8.so.0.2.0-$(GARCH) \
+	  $(PKGROOT)$(libdir)/libwx_gtk2u_gl-2.8.so.0.2.0
 	@$(MAKECOOKIE)

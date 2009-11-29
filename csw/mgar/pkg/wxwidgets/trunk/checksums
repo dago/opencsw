@@ -1,9 +1,9 @@
 7830ab8006ade9b14567341b5481eadd  0001-Patches-from-http-trac.wxwidgets.org-ticket-10660.patch
 45df2933ed2fa53f229feda01467db81  0002-Fixing-retarded-checks-for-libGL.patch
 225f6163a1c31d1f96a3b0548b338105  0003-vsscanf-support-via-ncursesw.patch
-f073300d39ce7c88db1033bbce64cdca  0004-add-monodll_appbase.so-to-wxrc.patch
 969c363847e675dc4d3ad6b8871b96db  0005-stupid-vwscanf-workaround.patch
-75ecdc04af4392f918ff6856a3ba6605  0500-wxT-macro-first-iteration.patch
-17d8d019fd2e4137b4cd44816b14e282  0501-a-possible-fix-to-wxchar.h.patch
+d4a33d7a1a30965edf15b54bfb011174  libwx_gtk2u-2.8.so.0.2.0-i386
+6a5857bca9695738ba5e185aac4d26e7  libwx_gtk2u-2.8.so.0.2.0-sparc
+9f2495b8a4b9b91998a74164efc9ca3a  libwx_gtk2u_gl-2.8.so.0.2.0-i386
+5870955c6c23ec655c17b4da92548207  libwx_gtk2u_gl-2.8.so.0.2.0-sparc
 05b32ca051651f4b1885a90f62969faf  wxWidgets-2.8.10.tar.gz
-43274231ee50eb1f35e04e693ebab902  wxWidgets-2.8.5.tar.gz
