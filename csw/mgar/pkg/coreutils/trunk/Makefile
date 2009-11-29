@@ -30,7 +30,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
-CONFIGURE_ARGS += --enable-no-install-program=arch,hostname,su,chcon
+CONFIGURE_ARGS += --enable-no-install-program=chcon
 
 TEST_TARGET = check
 
@@ -41,6 +41,8 @@ PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 post-install-modulated:
 	@echo Cleaning up install directory...
 	rm -rf $(DESTDIR)/$(libdir)
+	@echo Manually install gsu (so no root rights required)
+	cp $(WORKSRC)/src/su $(DESTDIR)$(bindir)/gsu
 
 post-merge:
 	@(cd $(PKGROOT)$(prefix); \
