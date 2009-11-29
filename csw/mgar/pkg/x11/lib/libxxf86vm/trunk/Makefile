@@ -1,5 +1,5 @@
 GARNAME = libXxf86vm
-GARVERSION = 1.0.2
+GARVERSION = 1.1.0
 CATEGORIES = x11
 
 DESCRIPTION = X11 XFree86 video mode extension library
@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibxxf86vmdevel = libxxf86vm_devel
 SPKG_DESC_CSWlibxxf86vm = $(DESCRIPTION)
 SPKG_DESC_CSWlibxxf86vmdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWxf86vidmodeproto
+PREREQUISITE_PKGS = CSWx11xf86vidmdproto
 REQUIRED_PKGS_CSWlibxxf86vm = CSWlibx11 CSWlibxext
 REQUIRED_PKGS_CSWlibxxf86vmdevel = CSWlibxxf86vm
 

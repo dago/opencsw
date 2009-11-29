@@ -1,5 +1,5 @@
 GARNAME = libXcomposite
-GARVERSION = 0.4.0
+GARVERSION = 0.4.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 Composite extension library
@@ -15,19 +15,19 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-PACKAGES = CSWlibxcomposite CSWlibxcompositedevel
+PACKAGES = CSWlibxcomposite CSWlibxcompositedev
 
 CATALOGNAME_CSWlibxcomposite = libxcomposite
-CATALOGNAME_CSWlibxcompositedevel = libxcomposite_devel
+CATALOGNAME_CSWlibxcompositedev = libxcomposite_devel
 
 SPKG_DESC_CSWlibxcomposite = $(DESCRIPTION)
-SPKG_DESC_CSWlibxcompositedevel = $(DESCRIPTION) development files
+SPKG_DESC_CSWlibxcompositedev = $(DESCRIPTION) development files
 
 # PREREQUISITE_PKGS = CSWcompositeproto
-REQUIRED_PKGS_CSWlibxcompositedevel = CSWlibxcomposite
-REQUIRED_PKGS_CSWlibxcomposite      = CSWlibx11 CSWlibxext CSWlibxfixes
+REQUIRED_PKGS_CSWlibxcompositedev = CSWlibxcomposite
+REQUIRED_PKGS_CSWlibxcomposite    = CSWlibx11 CSWlibxext CSWlibxfixes
 
-PKGFILES_CSWlibxcompositedevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxcompositedev  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1
 NOISALIST = 1

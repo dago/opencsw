@@ -1,5 +1,5 @@
 GARNAME = libXrandr
-GARVERSION = 1.2.3
+GARVERSION = 1.3.0
 CATEGORIES = x11
 
 DESCRIPTION = X11 RandR extension library

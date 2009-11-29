@@ -1,5 +1,5 @@
 GARNAME = libxaw
-GARVERSION = 1.0.4
+GARVERSION = 1.0.7
 CATEGORIES = x11
 
 DESCRIPTION = X Athena Widgets

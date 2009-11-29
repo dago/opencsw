@@ -1,5 +1,5 @@
 GARNAME = libxrender
-GARVERSION = 0.9.4
+GARVERSION = 0.9.5
 CATEGORIES = x11
 
 DESCRIPTION = X Render Extension Library
@@ -31,7 +31,7 @@ PACKAGES = CSWlibxrender CSWlibxrenderdevel
 CATALOGNAME_CSWlibxrender      = libxrender
 CATALOGNAME_CSWlibxrenderdevel = libxrender_devel
 
-PREREQUISITE_PKGS = CSWxrenderproto
+PREREQUISITE_PKGS = CSWx11renderproto
 REQUIRED_PKGS_CSWlibxrenderdevel = CSWlibxrender
 REQUIRED_PKGS_CSWlibxrender = CSWx11common CSWlibx11
 

@@ -1,5 +1,5 @@
 GARNAME = libxpm
-GARVERSION = 3.5.7
+GARVERSION = 3.5.8
 CATEGORIES = x11
 
 DESCRIPTION = X11 pixmap library

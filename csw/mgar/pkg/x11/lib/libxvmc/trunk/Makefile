@@ -1,5 +1,5 @@
 GARNAME = libXvMC
-GARVERSION = 1.0.4
+GARVERSION = 1.0.5
 CATEGORIES = x11
 
 DESCRIPTION = XVideo Motion Compensation Library

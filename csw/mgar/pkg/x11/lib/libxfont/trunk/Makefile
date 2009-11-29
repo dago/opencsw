@@ -1,5 +1,5 @@
 GARNAME = libXfont
-GARVERSION = 1.3.3
+GARVERSION = 1.4.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 font rasterisation library
@@ -23,6 +23,9 @@ CATALOGNAME_CSWlibxfontdevel = libxfont_devel
 SPKG_DESC_CSWlibxfont = $(DESCRIPTION)
 SPKG_DESC_CSWlibxfontdevel = $(DESCRIPTION) development files
 
+PATCHFILES = pcfread.c.diff
+
+#
 # PREREQUISITE_PKGS = CSWlibfontencdevel
 REQUIRED_PKGS_CSWlibxfontdevel = CSWlibxfont
 REQUIRED_PKGS_CSWlibxfont = CSWftype2 CSWlibfontenc CSWzlib
@@ -31,5 +34,7 @@ PKGFILES_CSWlibxfontdevel  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1
 NOISALIST = 1
+
+EXTRA_CFLAGS = -D__solaris__
 
 include gar/category.mk

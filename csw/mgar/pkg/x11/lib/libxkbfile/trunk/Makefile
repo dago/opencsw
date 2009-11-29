@@ -1,5 +1,5 @@
 GARNAME = libxkbfile
-GARVERSION = 1.0.5
+GARVERSION = 1.0.6
 CATEGORIES = x11
 
 DESCRIPTION = X11 keyboard file manipulation library

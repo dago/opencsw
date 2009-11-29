@@ -1,5 +1,5 @@
 GARNAME = libXres
-GARVERSION = 1.0.3
+GARVERSION = 1.0.4
 CATEGORIES = x11
 
 DESCRIPTION = X11 Resource extension library

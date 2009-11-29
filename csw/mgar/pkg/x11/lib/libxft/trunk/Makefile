@@ -1,5 +1,5 @@
 GARNAME = libXft
-GARVERSION = 2.1.13
+GARVERSION = 2.1.14
 CATEGORIES = x11
 
 DESCRIPTION = A client-side font API for X applications
@@ -29,6 +29,9 @@ CATALOGNAME_CSWlibxft2devel = libxft2_devel
 
 REQUIRED_PKGS_CSWlibxft2 = CSWzlib CSWfconfig CSWftype2 CSWlibx11 CSWlibxrender
 REQUIRED_PKGS_CSWlibxft2devel = CSWlibxft2
+
+SPKG_DESC_CSWlibxft2 = $(DESCRIPTION)
+SPKG_DESC_CSWlibxft2devel = $(DESCRIPTION) development package
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

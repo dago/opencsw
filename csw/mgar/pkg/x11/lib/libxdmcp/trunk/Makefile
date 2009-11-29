@@ -1,5 +1,5 @@
 GARNAME = libxdmcp
-GARVERSION = 1.0.2
+GARVERSION = 1.0.3
 CATEGORIES = x11
 
 DESCRIPTION = X11 display manager control protocol library

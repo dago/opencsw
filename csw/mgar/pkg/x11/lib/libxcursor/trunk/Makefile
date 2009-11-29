@@ -1,5 +1,5 @@
 GARNAME = libXcursor
-GARVERSION = 1.1.9
+GARVERSION = 1.1.10
 CATEGORIES = x11
 
 DESCRIPTION = X client-side cursor loading library

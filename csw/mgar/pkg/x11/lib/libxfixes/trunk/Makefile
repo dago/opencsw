@@ -1,5 +1,5 @@
 GARNAME = libXfixes
-GARVERSION = 4.0.3
+GARVERSION = 4.0.4
 CATEGORIES = x11
 
 DESCRIPTION = X11 miscellaneous 'fixes' extension library

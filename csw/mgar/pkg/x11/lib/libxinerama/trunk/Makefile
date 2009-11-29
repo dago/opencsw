@@ -1,5 +1,5 @@
 GARNAME = libXinerama
-GARVERSION = 1.0.3
+GARVERSION = 1.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 Xinerama extension library
@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibxineramadevel = libxinerama_devel
 SPKG_DESC_CSWlibxinerama = $(DESCRIPTION)
 SPKG_DESC_CSWlibxineramadevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWxineramaproto
+PREREQUISITE_PKGS = CSWx11xineramaproto
 
 REQUIRED_PKGS_CSWlibxineramadevel = CSWlibxinerama
 REQUIRED_PKGS_CSWlibxinerama      = CSWlibx11 CSWlibxext

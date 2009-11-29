@@ -1,5 +1,5 @@
 GARNAME = libXxf86dga
-GARVERSION = 1.0.2
+GARVERSION = 1.1.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 Direct Graphics Access extension library

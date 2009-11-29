@@ -1,5 +1,5 @@
 GARNAME = libxmu
-GARVERSION = 1.0.4
+GARVERSION = 1.0.5
 CATEGORIES = x11
 
 DESCRIPTION = A set of miscellaneous utility convenience functions for X libraries to use

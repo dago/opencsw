@@ -1,5 +1,5 @@
 GARNAME = libx11
-GARVERSION = 1.1.5
+GARVERSION = 1.3.2
 CATEGORIES = x11
 
 DESCRIPTION = X11 client-side library
@@ -12,9 +12,9 @@ endef
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTNAME = libX11-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
-# PATCHFILES = patch-stdint.diff
+PATCHFILES = patch-stdint.diff
 # Add workaround for http://bugs.sourcemage.org/show_bug.cgi?id=13476
-# PATCHFILES += patch-xlib-sentinel.diff
+PATCHFILES += patch-xlib-sentinel.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

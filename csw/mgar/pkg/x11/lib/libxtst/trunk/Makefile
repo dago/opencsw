@@ -1,5 +1,5 @@
 GARNAME = libxtst
-GARVERSION = 1.0.3
+GARVERSION = 1.1.0
 CATEGORIES = x11
 
 DESCRIPTION = The Xtst Library

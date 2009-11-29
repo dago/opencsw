@@ -1,0 +1,14 @@
+--- libXfont-1.4.1.orig/src/bitmap/pcfread.c	2009-11-28 14:31:05.959205251 +0100
++++ libXfont-1.4.1/src/bitmap/pcfread.c		2009-11-28 14:36:05.152906100 +0100
+@@ -44,7 +44,11 @@
+ #endif
+ 
+ #include <stdarg.h>
++#if defined(__solaris__)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ 
+ void
+ pcfError(const char* message, ...)

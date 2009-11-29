@@ -1,5 +1,5 @@
 GARNAME = libXdamage
-GARVERSION = 1.1.1
+GARVERSION = 1.1.2
 CATEGORIES = x11
 
 DESCRIPTION = X11 Font Services library
@@ -23,6 +23,7 @@ CATALOGNAME_CSWlibxdamagedevel = libxdamage_devel
 SPKG_DESC_CSWlibxdamage = $(DESCRIPTION)
 SPKG_DESC_CSWlibxdamagedevel = $(DESCRIPTION) development files
 
+REQUIRED_PKGS_CSWlibxdamage =  CSWlibx11 CSWlibxfixes
 REQUIRED_PKGS_CSWlibxdamagedevel = CSWlibxdamage
 
 # PREREQUISITE_PKGS = CSWdamageproto
