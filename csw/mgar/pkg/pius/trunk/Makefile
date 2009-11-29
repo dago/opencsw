@@ -14,10 +14,13 @@ SF_PROJ = pgpius
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 REQUIRED_PKGS = CSWpython
+ARCHALL = 1
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS = pius
 TEST_SCRIPTS =
+
 include gar/category.mk
 
 install-pius:
