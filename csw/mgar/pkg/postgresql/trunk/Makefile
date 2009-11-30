@@ -57,6 +57,8 @@ SPKG_DESC_CSWlibpq = PostgreSQL Libraries
 REQUIRED_PKGS_CSWpostgresql = CSWreadline CSWzlib CSWlibpq
 REQUIRED_PKGS_CSWpostgresqldevel = CSWpostgresql
 
+ARCHALL_CSWpostgresqldevel = 1
+
 LICENSE = COPYRIGHT
 
 EXTRA_INC = $(BUILD_PREFIX)/include
@@ -92,13 +94,8 @@ PKGFILES_CSWpostgresqldevel += $(prefix)/share/doc/postgresql/html.*
 PKGFILES_CSWlibpq  = $(PKGFILES_RT)
 PKGFILES_CSWlibpq += $(libdir)/64
 
-# -> TODO: start in rc3.d S10, Stop everywhere else in K90
 INITSMF = /etc$(prefix)/init\.d/cswpostgres-$(BASE_VERSION)
-
-# -> TODO: Migrate $(prefix)/var/pgdata to /var$(prefix)/postgresql/pgdata
 USERGROUP = /etc$(prefix)/pkg/postgresql-$(BASE_VERSION)
-
-# -> TODO: Migrate $(prefix)/etc/postgresql.conf to /etc$(prefix)/postgresql.conf
 PRESERVECONF = $(sysconfdir)/postgresql\.conf
 
 BIN_NAMES  = clusterdb createdb createlang createuser dropdb droplang dropuser
