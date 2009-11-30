@@ -11,12 +11,6 @@ USER=named
 #OPTIONS="-c /opt/csw/etc/named.conf" # use old location of conf file
 OPTIONS="-u $USER"
 
-if [ -r /etc/opt/csw/pkg/CSWbind/bind && /bin/egrep -q '^ROOTDIR=' /etc/opt/csw/pkg/CSWbind/bind ]; then
-  :;
-else
-  echo ROOTDIR="/var/named/chroot" >> /etc/sysconfig/named;
-fi
-
 # Source config file
 [ -r /etc/opt/csw/pkg/CSWbind/bind ] && . /etc/opt/csw/pkg/CSWbind/bind
 
@@ -25,13 +19,17 @@ ZONE= # used for initialization, do not change
 case "$1" in
   start)
     if [ -f /opt/csw/sbin/named -a -f /etc/opt/csw/named.conf ]; then
-      echo 'Starting bind.'
+      echo "Starting bind."
+      if [ -n "$ROOTDIR" ]; then
+        echo ROOTDIR set to $ROOTDIR
+        ROOTDIR="-t $ROOTDIR"
+      fi
       # ulimit -n 1024
       /opt/csw/sbin/named $OPTIONS $ROOTDIR &
     fi
     ;;
   stop)
-    echo 'Shutting down bind.'
+    echo "Shutting down bind."
     if [ -x /usr/bin/zonename ]; then
       if [ "`/usr/bin/zonename`" = "global" ]; then
         ZONE="-z global"
@@ -40,7 +38,7 @@ case "$1" in
     pkill $ZONE -x named
     ;;
   reload|refresh)
-    echo 'Reloading bind.'
+    echo "Reloading bind."
     if [ -x /usr/bin/zonename ]; then
       if [ "`/usr/bin/zonename`" = "global" ]; then
         ZONE="-z global"

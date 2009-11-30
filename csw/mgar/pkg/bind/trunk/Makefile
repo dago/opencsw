@@ -70,8 +70,8 @@ PROTOTYPE_FILTER  = awk ' \
 	{ print }'
 
 INITSMF = /etc/opt/csw/init.d/cswnamed
-SAMPLECONF = /etc/opt/csw/named.conf /etc/opt/csw/CSWbind/bind
-USERGROUP = /etc/opt/csw/CSWbind/cswusergroup
+SAMPLECONF = /etc/opt/csw/named.conf /etc/opt/csw/pkg/CSWbind/bind
+USERGROUP = /etc/opt/csw/pkg/CSWbind/cswusergroup
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
@@ -88,9 +88,9 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
 	@ginstall -m 644 $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf
-	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/CSWbind
-	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/CSWbind/
-	@ginstall -m 644 $(FILEDIR)/bind.CSW $(DESTDIR)/etc/opt/csw/CSWbind/bind
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWbind
+	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWbind/
+	@ginstall -m 644 $(FILEDIR)/bind.CSW $(DESTDIR)/etc/opt/csw/pkg/CSWbind/bind
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	( cd $(WORKSRC) ; \

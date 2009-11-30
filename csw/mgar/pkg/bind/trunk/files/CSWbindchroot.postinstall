@@ -12,7 +12,7 @@ do
   MAJOR=`echo $DEVICE | awk '{print $5}' | awk -F',' '{print $1}'`
   MINOR=`echo $DEVICE | awk '{print $6}'`
   echo "Creating device $i ($MAJOR,$MINOR)"
-  mknod $ROOTDIR/dev/$i $MAJOR $MINOR
+  mknod $ROOTDIR/dev/$i c $MAJOR $MINOR
 done
 
 # Copy config from /etc/opt/csw
@@ -24,11 +24,11 @@ cp -p /etc/TIMEZONE $ROOTDIR/etc
 # change owner on all files/dirs under /var/opt/csw/named/chroot
 chown -R named:named $ROOTDIR
 
-# show info about svc
+# show info
 echo
 echo "System prepared for chrooted BIND."
 echo
 echo "Move your zone files into $ROOTDIR/var/named"
-echo "and your rndc keys and so on into $ROOTDIR/etc/opt/csw."
+echo "and your rndc key into $ROOTDIR/etc/opt/csw."
 echo
-echo "The directory option in named.conf must be set to $ROOTDIR/var/named."
+echo "The directory option in named.conf must be set to /var/named."
