@@ -32,3 +32,5 @@ echo "Move your zone files into $ROOTDIR/var/named"
 echo "and your rndc key into $ROOTDIR/etc/opt/csw."
 echo
 echo "The directory option in named.conf must be set to /var/named."
+echo
+echo "Uncomment the ROOTDIR option in /etc/opt/csw/pkg/CSWbind/bind."

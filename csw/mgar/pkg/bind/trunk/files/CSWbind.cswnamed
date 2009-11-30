@@ -6,11 +6,6 @@
 # rc-script for CSW Bind
 # Peter Bonivart, 2009-11-30
 
-USER=named
-#OPTIONS="-d 1" # debug mode
-#OPTIONS="-c /opt/csw/etc/named.conf" # use old location of conf file
-OPTIONS="-u $USER"
-
 # Source config file
 [ -r /etc/opt/csw/pkg/CSWbind/bind ] && . /etc/opt/csw/pkg/CSWbind/bind
 
@@ -25,7 +20,7 @@ case "$1" in
         ROOTDIR="-t $ROOTDIR"
       fi
       # ulimit -n 1024
-      /opt/csw/sbin/named $OPTIONS $ROOTDIR &
+      /opt/csw/sbin/named -u named $OPTIONS $ROOTDIR &
     fi
     ;;
   stop)

@@ -4,5 +4,8 @@
 #
 # Peter Bonivart, OpenCSW
 
+# Options
+#OPTIONS=""
+
 # Chroot directory
 #ROOTDIR=/var/opt/csw/named/chroot
