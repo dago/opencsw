@@ -1,5 +1,5 @@
 6e4e2a7755acf94bc83200a308e21ef3  README-CSW.txt
-73f96aa85c8f99caf4d708c874e23dab  cswpostgres
-443171cc5303a8ea0f0a13cbb5e32189  cswusergroup
+922febb720931220e272c2872ebf47e4  cswpostgres.tmpl
+9e1e49d76fee70cb8e2d49304695ec89  cswusergroup.tmpl
 f2015af17bacbbfe140daf0d1067f9c9  postgresql-8.4.1.tar.bz2
-20c32ebdca7d585728b6078798fa1f50  postgresql.conf
+8237c74666058f607f5418e3b57c74a9  postgresql.conf.tmpl
