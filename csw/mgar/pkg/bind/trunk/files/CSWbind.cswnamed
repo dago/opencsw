@@ -4,12 +4,21 @@
 #RC_SLEV 2
 
 # rc-script for CSW Bind
-# Peter Bonivart, 2009-01-24
+# Peter Bonivart, 2009-11-30
 
 USER=named
 #OPTIONS="-d 1" # debug mode
 #OPTIONS="-c /opt/csw/etc/named.conf" # use old location of conf file
 OPTIONS="-u $USER"
+
+if [ -r /etc/opt/csw/pkg/CSWbind/bind && /bin/egrep -q '^ROOTDIR=' /etc/opt/csw/pkg/CSWbind/bind ]; then
+  :;
+else
+  echo ROOTDIR="/var/named/chroot" >> /etc/sysconfig/named;
+fi
+
+# Source config file
+[ -r /etc/opt/csw/pkg/CSWbind/bind ] && . /etc/opt/csw/pkg/CSWbind/bind
 
 ZONE= # used for initialization, do not change
 
@@ -18,7 +27,7 @@ case "$1" in
     if [ -f /opt/csw/sbin/named -a -f /etc/opt/csw/named.conf ]; then
       echo 'Starting bind.'
       # ulimit -n 1024
-      /opt/csw/sbin/named $OPTIONS &
+      /opt/csw/sbin/named $OPTIONS $ROOTDIR &
     fi
     ;;
   stop)

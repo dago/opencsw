@@ -1,0 +1,34 @@
+#!/bin/sh
+
+ROOTDIR=/var/opt/csw/named/chroot
+
+# Create devices
+DEVICELIST="null poll random zero"
+
+for i in $DEVICELIST
+do
+  DEV=`ls -l /dev/$i | awk '{print $11}'`
+  DEVICE=`ls -l /dev/$DEV`
+  MAJOR=`echo $DEVICE | awk '{print $5}' | awk -F',' '{print $1}'`
+  MINOR=`echo $DEVICE | awk '{print $6}'`
+  echo "Creating device $i ($MAJOR,$MINOR)"
+  mknod $ROOTDIR/dev/$i $MAJOR $MINOR
+done
+
+# Copy config from /etc/opt/csw
+cp /etc/opt/csw/named.conf $ROOTDIR/etc/opt/csw
+
+# Timezone info
+cp -p /etc/TIMEZONE $ROOTDIR/etc
+
+# change owner on all files/dirs under /var/opt/csw/named/chroot
+chown -R named:named $ROOTDIR
+
+# show info about svc
+echo
+echo "System prepared for chrooted BIND."
+echo
+echo "Move your zone files into $ROOTDIR/var/named"
+echo "and your rndc keys and so on into $ROOTDIR/etc/opt/csw."
+echo
+echo "The directory option in named.conf must be set to $ROOTDIR/var/named."
