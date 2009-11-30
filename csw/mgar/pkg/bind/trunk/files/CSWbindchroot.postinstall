@@ -7,8 +7,13 @@ DEVICELIST="null poll random zero"
 
 for i in $DEVICELIST
 do
-  DEV=`ls -l /dev/$i | awk '{print $11}'`
-  DEVICE=`ls -l /dev/$DEV`
+  DEV=`ls -l /dev/$i | cut -c1`
+  if [ "$DEV" = "c" ]; then
+    DEVICE=`ls -l /dev/$i`
+  else
+    DEV=`ls -l /dev/$i | awk '{print $11}'`
+    DEVICE=`ls -l /dev/$DEV`
+  fi
   MAJOR=`echo $DEVICE | awk '{print $5}' | awk -F',' '{print $1}'`
   MINOR=`echo $DEVICE | awk '{print $6}'`
   echo "Creating device $i ($MAJOR,$MINOR)"
