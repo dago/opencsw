@@ -16,5 +16,6 @@ CATALOGNAME = pm_mailspf
 ARCHALL = 1
 
 EXTRA_PAX_ARGS = '-s,spfquery,spfquery-cpan,p'
+EXTRA_PAX_ARGS += '-s,spfd,spfd-cpan,p'
 
 include gar/category.mk
