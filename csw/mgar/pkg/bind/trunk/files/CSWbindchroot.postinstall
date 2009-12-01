@@ -17,7 +17,7 @@ do
   MAJOR=`echo $DEVICE | awk '{print $5}' | awk -F',' '{print $1}'`
   MINOR=`echo $DEVICE | awk '{print $6}'`
   echo "Creating device $i ($MAJOR,$MINOR)"
-  mknod $ROOTDIR/dev/$i c $MAJOR $MINOR
+  [ ! -c $ROOTDIR/dev/$i ] && mknod $ROOTDIR/dev/$i c $MAJOR $MINOR
 done
 
 # Copy config from /etc/opt/csw
