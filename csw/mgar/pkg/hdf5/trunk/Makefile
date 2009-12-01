@@ -1,12 +1,12 @@
 GARNAME = hdf5
-GARVERSION = 1.8.3
+GARVERSION = 1.8.4
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.6.9 1.8.3
+MODULATIONS_GARVERSION = 1.6.10 1.8.4
 
-SKIP_MODULATIONS = isa-sparcv9-garversion-1.6.9
-SKIP_MODULATIONS += isa-amd64-garversion-1.6.9
+SKIP_MODULATIONS = isa-sparcv9-garversion-1.6.10
+SKIP_MODULATIONS += isa-amd64-garversion-1.6.10
 
 DESCRIPTION = Event notification library
 define BLURB
@@ -44,14 +44,14 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 
 TEST_TARGET = check
 
-MERGE_SCRIPTS_isa-default-garversion-1.6.9 = copy-only
-MERGE_DIRS_isa-default-garversion-1.6.9 = $(libdir)
-MERGE_SCRIPTS_isa-extra-garversion-1.6.9 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.6.9 = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-1.6.10 = copy-only
+MERGE_DIRS_isa-default-garversion-1.6.10 = $(libdir)
+MERGE_SCRIPTS_isa-extra-garversion-1.6.10 = copy-relocated-only
+MERGE_DIRS_isa-extra-garversion-1.6.10 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-1.8.3 = copy-all
-MERGE_SCRIPTS_isa-extra-garversion-1.8.3 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.8.3 = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-1.8.4 = copy-all
+MERGE_SCRIPTS_isa-extra-garversion-1.8.4 = copy-relocated-only
+MERGE_DIRS_isa-extra-garversion-1.8.4 = $(libdir)
 
 PKGFILES_CSWhdf5rt = $(PKGFILES_RT)
 
