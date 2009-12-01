@@ -26,15 +26,26 @@ REQUIRED_PKGS_CSWmpeg2dec = CSWlibmpeg2 CSWlibsdl
 
 SPKG_SOURCEURL = http://libmpeg2.sourceforge.net
 
-# This stupid configure script adds '-fast' overwriting -xarch and
-# especially activating 64 bit.
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+# This stupid configure script adds '-fast' overwriting -xarch ande especially activating 64 bit.
 BUILD_ARGS = MPEG2DEC_CFLAGS= OPT_CFLAGS=
 
-BUILD64 = 1
+BUILD64_platform-solaris8-sparc = 1
+BUILD64_platform-solaris10-sparc = 1
+BUILD64_platform-solaris10-i386 = 1
+BUILD64 = $(BUILD64_platform-$(PLATFORM))
+
 NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-# Do this only for sparcv8 and i386, otherwise make sure to compile on vis/mmx-enable ISA
-CONFIGURE_ARGS += --disable-accel-detect
+
+CONFIGURE_ARGS_garosrel-5.8  = --x-includes=/usr/openwin/include
+CONFIGURE_ARGS_garosrel-5.8 += --x-libraries=/usr/openwin/lib 
+CONFIGURE_ARGS_garosrel-5.10  = --x-includes=/usr/X11/include
+CONFIGURE_ARGS_garosrel-5.10 += --x-libraries=/usr/X11/lib 
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_garosrel-$(GAROSREL))
 
 MERGE_DIRS_isa-extra = $(libdir)
 
