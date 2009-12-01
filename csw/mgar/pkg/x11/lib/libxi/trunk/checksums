@@ -1,1 +1,17 @@
+d95bdf63f185d137a6c8f2e05d293298  XExtInt.c.diff
+27309cebc8303847fab98a8e420da406  XGetCPtr.c.diff
+6a5891b82318eb5e0d15d9102a44b4bc  XIAllowEvents.c.diff
+da48611d1f64a9072cab0afeb8267b1d  XIDefineCursor.c.diff
+619aa946e0795ee3f29c0478a84dd620  XIGetDevFocus.c.diff
+fcb606dd69e87c852b84332634182d17  XIGrabDevice.c.diff
+9bc00af97e2ce1fdce5835fd6a0d958f  XIHierarchy.c.diff
+8ad06ba31a36b0f4f296a940acc4d9e0  XIPassiveGrab.c.diff
+f7eca3ea1289267b7e5b949c266045c6  XIProperties.c.diff
+7fe2b8efb13fef03d68d52dd06dcc3d1  XIQueryDevice.c.diff
+f425a7ebe13aff5382b64cafbc11bcad  XIQueryPointer.c.diff
+336cb168b33dca2bf3bf0fe49f51ef55  XIQueryVersion.c.diff
+4a032e1634db5afbaafd49372930bb18  XISelEv.c.diff
+59275ffc08d5c8d8aa0c838929f1c7ba  XISetDevFocus.c.diff
+90a67e6b1ca050cd9c7e47d9d486cf6d  XIWarpPointer.c.diff
+f3dfe2f596b169a7c8f6a13265633cc1  XSetCPtr.c.diff
 8df4ece9bd1efb02c28acb2b6f485e09  libXi-1.3.tar.bz2

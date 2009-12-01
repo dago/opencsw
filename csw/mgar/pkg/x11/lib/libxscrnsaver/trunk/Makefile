@@ -1,5 +1,5 @@
 GARNAME = libXScrnSaver
-GARVERSION = 1.1.3
+GARVERSION = 1.2.0
 CATEGORIES = x11
 
 DESCRIPTION = The XScrnSaver Library
@@ -15,19 +15,19 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-PACKAGES = CSWlibxscrnsaver CSWlibxscrnsaverdevel
+PACKAGES = CSWlibxscrnsaver CSWlibxscrnsaverdev
 
 CATALOGNAME_CSWlibxscrnsaver = libxscrnsaver
-CATALOGNAME_CSWlibxscrnsaverdevel = libxscrnsaver_devel
+CATALOGNAME_CSWlibxscrnsaverdev = libxscrnsaver_devel
 
 SPKG_DESC_CSWlibxscrnsaver = $(DESCRIPTION)
-SPKG_DESC_CSWlibxscrnsaverdevel = $(DESCRIPTION) development files
+SPKG_DESC_CSWlibxscrnsaverdev = $(DESCRIPTION) development files
 
 # PREREQUISITE_PKGS = CSWscrnsaverproto
 REQUIRED_PKGS_CSWlibxscrnsaver      = CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibxscrnsaverdevel = CSWlibxscrnsaver
+REQUIRED_PKGS_CSWlibxscrnsaverdev = CSWlibxscrnsaver
 
-PKGFILES_CSWlibxscrnsaverdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxscrnsaverdev  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1
 NOISALIST = 1

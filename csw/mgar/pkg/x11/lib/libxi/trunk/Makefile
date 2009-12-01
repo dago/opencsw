@@ -32,4 +32,23 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 PKGFILES_CSWlibxidevel = $(PKGFILES_DEVEL)
 
+PATCHFILES  = XGetCPtr.c.diff
+PATCHFILES += XSetCPtr.c.diff
+PATCHFILES += XExtInt.c.diff
+PATCHFILES += XIAllowEvents.c.diff
+PATCHFILES += XIGrabDevice.c.diff
+PATCHFILES += XIQueryDevice.c.diff
+PATCHFILES += XIQueryVersion.c.diff
+PATCHFILES += XISetDevFocus.c.diff
+PATCHFILES += XIGetDevFocus.c.diff
+PATCHFILES += XIPassiveGrab.c.diff
+PATCHFILES += XIProperties.c.diff
+PATCHFILES += XISelEv.c.diff
+PATCHFILES += XIWarpPointer.c.diff
+PATCHFILES += XIHierarchy.c.diff
+PATCHFILES += XIDefineCursor.c.diff
+PATCHFILES += XIQueryPointer.c.diff
+
+EXTRA_CFLAGS = -D__solaris__
+
 include gar/category.mk

@@ -1,5 +1,5 @@
 GARNAME = libWindowsWM
-GARVERSION = 1.0.0
+GARVERSION = 1.0.1
 CATEGORIES = x11
 
 DESCRIPTION = Cygwin/X rootless window management extension
@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibwindowswmdevel = libwindowswm_devel
 SPKG_DESC_CSWlibwindowswm = $(DESCRIPTION)
 SPKG_DESC_CSWlibwindowswmdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWwindowswmproto
+PREREQUISITE_PKGS = CSWx11windowswmproto
 
 REQUIRED_PKGS_CSWlibwindowswm =  CSWlibx11 CSWlibxext
 REQUIRED_PKGS_CSWlibwindowswmdevel = CSWlibwindowswm
