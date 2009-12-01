@@ -22,7 +22,7 @@ PACKAGES = CSWlibmpeg2 CSWmpeg2dec
 SPKG_DESC_CSWlibmpeg2 = A free MPEG-2 video stream library
 SPKG_DESC_CSWmpeg2dec = A free MPEG-2 video stream decoder
 
-REQUIRED_PKGS_CSWmpeg2dec = CSWlibmpeg2
+REQUIRED_PKGS_CSWmpeg2dec = CSWlibmpeg2 CSWlibsdl
 
 SPKG_SOURCEURL = http://libmpeg2.sourceforge.net
 
