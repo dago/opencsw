@@ -19,12 +19,23 @@ PATCHFILES = 0001-Avoid-using-FUNCTION-and-stdint.h.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWliboil
+SPKG_SOURCEURL = http://diracvideo.org/
+
+PACKAGES = CSWlibschro CSWlibschrodevel
+
+SPKG_DESC_CSWlibschro = $(DESCRIPTION)
+SPKG_DESC_CSWlibschrodevel = libschroedinger developer files
+
+REQUIRED_PKGS_CSWlibschro = CSWliboil
+REQUIRED_PKGS_CSWlibschrodevel = CSWlibschro
 
 BUILD64 = 1
 NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+PKGFILES_CSWlibschrodevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibschrodevel += $(sharedstatedir)/gtk-doc/.*
 
 include gar/category.mk
