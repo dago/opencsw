@@ -24,3 +24,4 @@ d none /var/opt/csw 0755 root bin
 d none /var/opt/csw/pkgutil 0755 root bin
 f cswpkgutil /var/opt/csw/pkgutil/admin.CSW 644 root bin
 d none /var/opt/csw/pkgutil/packages 0755 root bin
+d none /var/opt/csw/pkgutil/pkgask 0755 root bin

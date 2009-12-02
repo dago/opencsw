@@ -71,5 +71,6 @@ install-custom:
 	@pod2man --section=1 $(WORKSRC)/chkcat > $(DESTDIR)$(mandir)/man1/chkcat.1
 	@chmod 444 $(DESTDIR)$(mandir)/man1/*
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/pkgask
 	@ginstall $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
 	@$(MAKECOOKIE)
