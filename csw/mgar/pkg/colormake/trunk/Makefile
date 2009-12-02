@@ -39,6 +39,7 @@ install-custom: CMDD=$(docdir)/$(GARNAME)
 install-custom:
 	@(cd $(WORKSRC); \
 		ginstall -d -m 0755 $(DESTDIR)$(bindir) $(DESTDIR)$(CMDD); \
-		ginstall -m 0755 colormake.pl cmake clmake $(DESTDIR)$(bindir); \
+		ginstall -m 0755 colormake.pl clmake $(DESTDIR)$(bindir); \
+		ginstall -m 0755 cmake $(DESTDIR)$(bindir)/colormake; \
 		ginstall -m 0644 AUTHORS README $(DESTDIR)$(CMDD) )
 	@$(MAKECOOKIE)
