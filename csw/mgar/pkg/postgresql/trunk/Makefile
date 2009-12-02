@@ -9,7 +9,7 @@ GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
 # Useful when making a series of builds on the same day
-GARFLAVOR = DBG
+GARFLAVOR ?= DBG
 
 DESCRIPTION = An advanced open source database
 SPKG_SOURCEURL = http://www.postgresql.org/
