@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = rlwrap
-GARVERSION = 0.32
+GARVERSION = 0.33
 CATEGORIES = utils
 
 DESCRIPTION = A readline wrapper
