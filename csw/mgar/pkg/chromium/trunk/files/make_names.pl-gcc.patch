@@ -1,0 +1,11 @@
+--- src/third_party/WebKit/WebCore/dom/make_names.pl.orig	2009-11-28 10:24:25.492039333 +0000
++++ src/third_party/WebKit/WebCore/dom/make_names.pl	2009-11-28 10:24:37.696563843 +0000
+@@ -46,7 +46,7 @@
+ my %attrs = ();
+ my %parameters = ();
+ my $extraDefines = 0;
+-my $preprocessor = "/usr/bin/gcc -E -P -x c++";
++my $preprocessor = "/opt/csw/gcc4/bin/gcc -E -P -x c++";
+ 
+ GetOptions(
+     'tags=s' => \$tagsFile, 

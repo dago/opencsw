@@ -35,6 +35,8 @@ AssertionError: element stack messed up - bad nodeName
 gmake[1]: *** [gclient-sync] Error 1
 gmake[1]: Leaving directory `/export/home/blizinski/opencsw/pkg/chromium/trunk'
 gmake: *** [build-isa-i386] Error 2
+
+It was fixed by removing CSWpyxml.
 """
 
 __author__ = 'Maciej Bliziński (blizinski@google.com)'

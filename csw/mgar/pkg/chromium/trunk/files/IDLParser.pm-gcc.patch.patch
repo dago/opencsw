@@ -1,0 +1,11 @@
+--- src/third_party/WebKit/WebCore/bindings/scripts/IDLParser.pm.orig	2009-11-28 10:25:59.122473741 +0000
++++ src/third_party/WebKit/WebCore/bindings/scripts/IDLParser.pm	2009-11-28 10:26:07.807234188 +0000
+@@ -64,7 +64,7 @@
+     $parentsOnly = shift;
+ 
+     if (!$preprocessor) {
+-        $preprocessor = "/usr/bin/gcc -E -P -x c++";
++        $preprocessor = "/opt/csw/gcc4/bin/gcc -E -P -x c++";
+     }
+ 
+     if (!$defines) {

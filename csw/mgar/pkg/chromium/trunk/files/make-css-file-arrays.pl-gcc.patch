@@ -1,0 +1,11 @@
+--- src/third_party/WebKit/WebCore/css/make-css-file-arrays.pl.orig	2009-11-28 10:22:54.972192369 +0000
++++ src/third_party/WebKit/WebCore/css/make-css-file-arrays.pl	2009-11-28 10:23:20.152912664 +0000
+@@ -28,7 +28,7 @@
+ GetOptions('preprocessor=s' => \$preprocessor);
+ 
+ if (!$preprocessor) {
+-    $preprocessor = "/usr/bin/gcc -E -P -x c++";
++    $preprocessor = "/opt/csw/gcc4/bin/gcc -E -P -x c++";
+ }
+ 
+ my $header = $ARGV[0];
