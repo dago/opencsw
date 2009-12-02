@@ -84,11 +84,7 @@ BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-includes=/opt/csw/include
-CONFIGURE_ARGS_isa-sparcv8 += --with-libraries=/opt/csw/lib/32
-CONFIGURE_ARGS_isa-i386    += --with-libraries=/opt/csw/lib/32
-CONFIGURE_ARGS_isa-sparcv9 += --with-libraries=/opt/csw/lib/64
-CONFIGURE_ARGS_isa-amd64   += --with-libraries=/opt/csw/lib/64
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
+CONFIGURE_ARGS += --with-library=$(abspath /opt/csw/lib/$(MM_LIBDIR))
 
 # # Perl support only in the 32-bit version
 # CONFIGURE_ARGS_isa-sparcv8 += --with-perl
@@ -119,9 +115,8 @@ PKGFILES_CSWpostgresqldevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWpostgresqldevel += $(prefix)/share/doc/postgresql/html.*
 PKGFILES_CSWlibpq  = $(PKGFILES_RT)
 PKGFILES_CSWlibpq += $(libdir)/64
-PKGFILES_CSWlibpq += $(libdir)/32
 
-INITSMF = /etc$(prefix)/init\.d/cswpostgresql_$(BASE_VERSION)
+INITSMF = /etc$(prefix)/init\.d/cswpostgres_$(BASE_VERSION)
 USERGROUP = /etc$(prefix)/pkg/postgresql-$(BASE_VERSION)
 PRESERVECONF = $(sysconfdir)/postgresql\.conf
 
@@ -203,5 +198,4 @@ post-merge:
 	done
 	ginstall -d $(PKGROOT)$(PGDATA)
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
-	gln -s . $(PKGROOT)$(libdir)/32
 	@$(MAKECOOKIE)
