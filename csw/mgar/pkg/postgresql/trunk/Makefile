@@ -111,8 +111,8 @@ TEST_TARGET = check
 # EXTRA_PAX_ARGS = -s ",^\./opt/csw/postgresql/share/doc,./opt/csw/share/doc/postgresql,p"
 
 PKGFILES_CSWpostgresqldoc = $(PKGFILES_DOC)
+PKGFILES_CSWpostgresqldoc += $(prefix)/share/doc/postgresql/html.*
 PKGFILES_CSWpostgresqldevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWpostgresqldevel += $(prefix)/share/doc/postgresql/html.*
 PKGFILES_CSWlibpq  = $(PKGFILES_RT)
 PKGFILES_CSWlibpq += $(libdir)/64
 
