@@ -1,0 +1,40 @@
+#!/sbin/sh
+
+# 2009-12-02 Peter Bonivart
+
+if [ -f /lib/svc/share/smf_include.sh ]; then
+  . /lib/svc/share/smf_include.sh
+fi
+
+SERVICE=postgrey
+
+OPTIONS="--inet=10023 -d --whitelist-clients=/etc/opt/csw/postfix/postgrey_whitelist_clients --whitelist-recipients=/etc/opt/csw/postfix/postgrey_whitelist_recipients --pidfile=/var/opt/csw/postgrey/postgrey.pid"
+
+case "$1" in
+  start)
+        echo "Starting $SERVICE ..."
+        /opt/csw/sbin/postgrey $OPTIONS
+        ;;
+  stop)
+        echo "Stopping $SERVICE ..."
+        pkill $SERVICE
+        ;;
+  restart)
+        echo "Restarting $SERVICE ... "
+        $0 stop
+        echo "Waiting for $SERVICE to stop: \c"
+        while ( pgrep $SERVICE > /dev/null )
+        do
+          echo ".\c"
+          sleep 1
+        done
+        echo
+        sleep 1
+        $0 start
+        ;;
+  *)
+        echo "Usage: `basename $0` { start | stop | restart}"
+        exit 1
+esac
+
+exit 0
