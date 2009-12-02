@@ -60,6 +60,7 @@ REQUIRED_PKGS_CSWpostgresqldevel = CSWpostgresql
 REQUIRED_PKGS_CSWlibpq = CSWkrb5lib CSWlibxml2 CSWlibxslt CSWosslrt CSWzlib
 
 ARCHALL_CSWpostgresqldevel = 1
+ARCHALL_CSWpostgresqldoc = 1
 
 LICENSE = COPYRIGHT
 
