@@ -54,8 +54,10 @@ SPKG_DESC_CSWpostgresqldoc = PostgreSQL Documentation
 SPKG_DESC_CSWpostgresqldevel = PostgreSQL Developer Files
 SPKG_DESC_CSWlibpq = PostgreSQL Libraries
 
-REQUIRED_PKGS_CSWpostgresql = CSWreadline CSWzlib CSWlibpq CSWlibxml2 CSWlibxslt CSWosslrt
+REQUIRED_PKGS_CSWpostgresql  = CSWreadline CSWzlib CSWlibpq
+REQUIRED_PKGS_CSWpostgresql += CSWlibxml2 CSWlibxslt CSWosslrt CSWkrb5lib
 REQUIRED_PKGS_CSWpostgresqldevel = CSWpostgresql
+REQUIRED_PKGS_CSWlibpq = CSWkrb5lib CSWlibxml2 CSWlibxslt CSWosslrt CSWzlib
 
 ARCHALL_CSWpostgresqldevel = 1
 
