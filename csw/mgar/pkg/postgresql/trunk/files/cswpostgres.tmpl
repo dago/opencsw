@@ -4,10 +4,14 @@
 # PostgreSQL startup script - part of the CSWpostgresql package
 # mark@blastwave.org
 # 
-# 2009-11-29:  Parametrized file locations
-#              Maciej Blizinski (maciej@opencsw.org)
+# 2009-11-29  Maciej Blizinski (maciej@opencsw.org)
+#   - Parametrized file locations
+#   - Style changes
+#              
 #
-# Variables to substitute:
+# This files is a template.  The following variables need to be substituted
+# before it can be run:
+#
 # - PGDATA
 # - bindir
 # - sysconfdir
@@ -27,6 +31,8 @@
 # version - it checks if the 64-bit server was last run. If so,
 # it forces the 64-bit server, otherwise it won't start up!
 # And vice-versa for the 32-bit server...
+#
+# This version doesn't check the i386/amd64 architectures.
 if [ -f "${PGDATA}/postmaster.opts" ]; then
   if grep 'sparcv9' ${PGDATA}/postmaster.opts > /dev/null; then
     echo ${PGCTL} | grep "sparcv8" > /dev/null
@@ -47,14 +53,14 @@ if [ -f "${PGDATA}/postmaster.opts" ]; then
     PGINIT=@bindir@/sparcv8/initdb
   else
   	echo "Couldn't detect whether the previously run version was 32 or 64-bit."
+  	echo "Running the default."
   	PGCTL=@bindir@/pg_ctl
   	PGINIT=@bindir@/initdb
   fi
 fi
 
 # Exit if postgres user hasn't been created.
-grep '^postgres:' /etc/passwd >/dev/null
-if [ $? -ne 0 ] ; then
+if ! grep '^postgres:' /etc/passwd >/dev/null; then
         getent passwd postgres >/dev/null
         if [ $? -ne 0 ] ; then
                exit 0
@@ -65,7 +71,7 @@ fi
 # a directory that they can read
 cd /var/tmp
 
-case "${1}" in
+case "$1" in
 start)
       if [ -d ${PGDATA} -a `ls -l ${PGDATA} 2> /dev/null | wc -l` -gt 1 ]; then
          # PostgreSQL data directory exists and is populated
@@ -110,4 +116,4 @@ init)
 
 esac
 
-# vim:set sw=2 ts=2 sts=2 expandtab:
+# vim:set ft=sh sw=2 ts=2 sts=2 expandtab si ci:

@@ -82,7 +82,7 @@ BUILD64 = 1
 #
 # NO_ISAEXEC = 1
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-includes=/opt/csw/include
 CONFIGURE_ARGS_isa-sparcv8 += --with-libraries=/opt/csw/lib/32
 CONFIGURE_ARGS_isa-i386    += --with-libraries=/opt/csw/lib/32
@@ -90,10 +90,29 @@ CONFIGURE_ARGS_isa-sparcv9 += --with-libraries=/opt/csw/lib/64
 CONFIGURE_ARGS_isa-amd64   += --with-libraries=/opt/csw/lib/64
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 
+# # Perl support only in the 32-bit version
+# CONFIGURE_ARGS_isa-sparcv8 += --with-perl
+# CONFIGURE_ARGS_isa-i386 += --with-perl
 
+# # Python support in 32-bit only
+# CONFIGURE_ARGS_isa-sparcv8 += --with-python
+# CONFIGURE_ARGS_isa-i386 += --with-python
+
+CONFIGURE_ARGS += --with-gssapi
+# CONFIGURE_ARGS += --with-krb5
+CONFIGURE_ARGS += --with-pam
+# CONFIGURE_ARGS += --with-bonjour
+CONFIGURE_ARGS += --with-openssl
+CONFIGURE_ARGS += --with-libxml
+CONFIGURE_ARGS += --with-libxslt
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
+
+# Skipping tests to save time during packaging, and to enable x86 builds.
+SKIPTEST = 1
 TEST_TARGET = check
 
-EXTRA_PAX_ARGS = -s ",^\./opt/csw/postgresql/share/doc,./opt/csw/share/doc/postgresql,p"
+# What's that for?
+# EXTRA_PAX_ARGS = -s ",^\./opt/csw/postgresql/share/doc,./opt/csw/share/doc/postgresql,p"
 
 PKGFILES_CSWpostgresqldoc = $(PKGFILES_DOC)
 PKGFILES_CSWpostgresqldevel  = $(PKGFILES_DEVEL)
@@ -102,13 +121,35 @@ PKGFILES_CSWlibpq  = $(PKGFILES_RT)
 PKGFILES_CSWlibpq += $(libdir)/64
 PKGFILES_CSWlibpq += $(libdir)/32
 
-INITSMF = /etc$(prefix)/init\.d/cswpostgres-$(BASE_VERSION)
+INITSMF = /etc$(prefix)/init\.d/cswpostgresql_$(BASE_VERSION)
 USERGROUP = /etc$(prefix)/pkg/postgresql-$(BASE_VERSION)
 PRESERVECONF = $(sysconfdir)/postgresql\.conf
 
-BIN_NAMES  = clusterdb createdb createlang createuser dropdb droplang dropuser
-BIN_NAMES += ecpg initdb pg_config pg_controldata pg_ctl pg_dump pg_dumpall
-BIN_NAMES += pg_resetxlog pg_restore postgres postmaster psql reindexdb
+BIN_NAMES  = clusterdb
+BIN_NAMES += createdb
+BIN_NAMES += createlang
+BIN_NAMES += createuser
+BIN_NAMES += dropdb
+BIN_NAMES += droplang
+BIN_NAMES += dropuser
+BIN_NAMES += ecpg
+BIN_NAMES += initdb
+BIN_NAMES += oid2name
+BIN_NAMES += pg_config
+BIN_NAMES += pg_controldata
+BIN_NAMES += pg_ctl
+BIN_NAMES += pg_dump
+BIN_NAMES += pg_dumpall
+BIN_NAMES += pg_resetxlog
+BIN_NAMES += pg_restore
+BIN_NAMES += pg_standby
+BIN_NAMES += pgbench
+BIN_NAMES += postgres
+BIN_NAMES += postmaster
+BIN_NAMES += psql
+BIN_NAMES += reindexdb
+BIN_NAMES += vacuumdb
+BIN_NAMES += vacuumlo
 
 PGDATA = $(localstatedir)/pgdata
 
@@ -139,10 +180,10 @@ post-merge:
 		-e 's+@sysconfdir@+$(sysconfdir)+' \
 		-e 's+@bindir@+$(bindir)+' \
 		< $(FILEDIR)/cswpostgres.tmpl \
-		> $(WORKDIR)/cswpostgres
+		> $(WORKDIR)/cswpostgres_$(BASE_VERSION)
 	ginstall \
-		$(WORKDIR)/cswpostgres \
-		$(PKGROOT)/etc$(prefix)/init.d/cswpostgres-$(BASE_VERSION)
+		$(WORKDIR)/cswpostgres_$(BASE_VERSION) \
+		$(PKGROOT)/etc$(prefix)/init.d/cswpostgres_$(BASE_VERSION)
 	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(GARNAME)
 	sed -e 's+@PGDATA@+$(PGDATA)+' \
 		< $(FILEDIR)/cswusergroup.tmpl \
