@@ -1,4 +1,7 @@
-652d339ec04952f3d114b9aea838afc5  download/001-installsudosh.conf-destdir.patch
-9752d641a2233caf7789711ecbcd890e  download/002-strip-man-page-blank.patch
-882f7d2ddb59330350dd2d82184aff50  download/003-adjust-sudosh-man-binary-name.patch
-4c837f7739d9db780ad324ed8482e8a7  download/sudosh2-1.0.2.tgz
+652d339ec04952f3d114b9aea838afc5  001-installsudosh.conf-destdir.patch
+9752d641a2233caf7789711ecbcd890e  002-strip-man-page-blank.patch
+882f7d2ddb59330350dd2d82184aff50  003-adjust-sudosh-man-binary-name.patch
+41edfc118e6aaf191e647decee641bee  004-replay-close-fds.patch
+0b8a0b464681f636262f716d096420f6  CSWsudosh2.postinstall
+e324c66237a431004242d274fa2ad1f4  CSWsudosh2.postremove
+4c837f7739d9db780ad324ed8482e8a7  sudosh2-1.0.2.tgz

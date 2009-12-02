@@ -1,0 +1,22 @@
+#!/bin/sh
+PATH=/usr/bin
+export PATH
+
+SHELLS=/etc/shells
+SUDOSH=/opt/csw/bin/sudosh
+
+if [ -z "${PKG_INSTALL_ROOT}" -o "${PKG_INSTALL_ROOT}" = "/" ]
+then
+	RSHELLS=${SHELLS}
+	RSUDOSH=${SUDOSH}
+else
+	RSHELLS=${PKG_INSTALL_ROOT}${SHELLS}
+	RSUDOSH=${SUDOSH}
+fi
+
+if /usr/bin/grep "^${RSUDOSH}" ${RSHELLS} > /dev/null 2>&1; then
+	/usr/bin/perl -i -pwe '$_ = "" if m%^'${RSUDOSH}'%' ${RSHELLS}
+	echo "REMOVED ${RSUDOSH} from ${RSHELLS}."
+else
+	echo "${RSHELLS} UNCHANGED because it did not contain entry ${RSUDOSH}."
+fi

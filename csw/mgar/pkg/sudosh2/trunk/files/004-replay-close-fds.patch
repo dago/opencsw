@@ -1,0 +1,36 @@
+diff -uNr sudosh2-1.0.2/src/replay.c sudosh2-1.0.3/src/replay.c
+--- sudosh2-1.0.2/src/replay.c	2008-01-30 16:56:15.000000000 -0600
++++ sudosh2-1.0.3/src/replay.c	2008-04-02 10:50:38.000000000 -0500
+@@ -345,8 +345,7 @@
+ 	    fprintf(stderr,
+ 		    "[warning]: session %s is missing input information.\n",
+ 		    scan->id);
+-	else
+-	    close(scan->input.fd);
++        close(scan->input.fd);
+ 
+ 	if ((scan->script.fd = open(scan->script.str, O_RDONLY)) == -1) {
+ 	    LL();
+@@ -355,6 +354,7 @@
+ 		    scan->id);
+ 	    continue;
+ 	}
++	close(scan->script.fd);
+ 
+ 	if(!strcmp(scan->type, "interactive"))
+ 		fprintf(stdout, "%-19s %-8s %-12s %-12s %s\n", scan->date,
+@@ -469,6 +469,8 @@
+ 	fflush(stdout);
+ 	memset(read_buffer, '\0', BUFSIZ);
+     }
++    close(s_script.fd);
++    fclose(s_time.f);
+     fprintf(stderr, "[info]: EOF\n");
+     fflush(stderr);
+ }
+@@ -655,4 +657,5 @@
+     }
+ 
+     s->secs = (long) t_time;
++    fclose(s_time.f);
+ }

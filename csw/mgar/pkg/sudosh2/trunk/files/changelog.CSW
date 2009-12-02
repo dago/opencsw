@@ -1,3 +1,11 @@
+sudosh2 (1.0.2,REV=2009.12.02)
+
+  * Applied file handle leak patch so that sudosh-replay doesn't run out of
+    file handles when listing sessions (#2040342 @ SF).
+  * Added postinstall/postremove scripts to include sudosh in /etc/shells
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed,  2 Dec 2009 16:35:14 +0100
+
 sudosh2 (1.0.2,REV=2009.09.17)
 
   * Initial release.

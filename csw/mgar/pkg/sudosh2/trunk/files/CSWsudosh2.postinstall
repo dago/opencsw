@@ -1,0 +1,52 @@
+#!/bin/sh
+PATH=/usr/bin
+export PATH
+
+SHELLS=/etc/shells
+SUDOSH=/opt/csw/bin/sudosh
+
+if [ -z "${PKG_INSTALL_ROOT}" -o "${PKG_INSTALL_ROOT}" = "/" ]
+then
+	RSHELLS=${SHELLS}
+	RSUDOSH=${SUDOSH}
+else
+	RSHELLS=${PKG_INSTALL_ROOT}${SHELLS}
+	RSUDOSH=${SUDOSH}
+fi
+
+if [ -f "${RSHELLS}" ]; then
+	echo "${RSHELLS} already exists."
+else
+	cat > ${RSHELLS} <<EOF
+# This file created by CSWsudosh2
+/bin/bash
+/bin/csh
+/bin/jsh
+/bin/ksh
+/bin/pfcsh
+/bin/pfksh
+/bin/pfsh
+/bin/sh
+/bin/tcsh
+/bin/zsh
+/sbin/jsh
+/sbin/sh
+/usr/bin/bash
+/usr/bin/csh
+/usr/bin/jsh
+/usr/bin/ksh
+/usr/bin/pfcsh
+/usr/bin/pfksh
+/usr/bin/pfsh
+/usr/bin/sh
+/usr/bin/tcsh
+/usr/bin/zsh
+EOF
+fi
+
+if /usr/bin/grep "^${RSUDOSH}" ${RSHELLS} > /dev/null 2>&1; then
+	echo "${RSHELLS} UNCHANGED because entry ${RSUDOSH} already exists."
+else
+	echo "${RSUDOSH}  # Added by CSWsudosh2" >> ${RSHELLS}
+	echo "ADDED ${RSUDOSH} to ${RSHELLS}."
+fi
