@@ -23,6 +23,7 @@ INSTALL_SCRIPTS = custom
 
 INITSMF = /etc/opt/csw/init.d/cswpostgrey
 USERGROUP = /etc/opt/csw/pkg/CSWpostgrey/cswusergroup
+SAMPLECONF = /etc/opt/csw/postfix/postgrey_whitelist_clients /etc/opt/csw/postfix/postgrey_whitelist_recipients
 
 include gar/category.mk
 
