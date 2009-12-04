@@ -185,15 +185,16 @@ SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
 SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
 SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
 SPKG_CLASSES := $(call _spkg_cond_add,USERGROUP,cswusergroup)
+SPKG_CLASSES := $(call _spkg_cond_add,CRONTABS,cswcrontab)
 SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
 SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
 SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
+
 
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 
 # - set class for all config files
-ifneq ($(SAMPLECONF)$(PRESERVECONF)$(MIGRATECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE)$(TEXINFO),)
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
@@ -202,10 +203,13 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(INETDCONF),$$F[1] = "cswinetd" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(CRONTABS),$$F[1] = "cswcrontab" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
 
+# The TEXINFO dependency is handled dynamically by looking at the prototype for matching files
+ifneq ($(MIGRATECONF)$(SAMPLECONF)$(PRESERVECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
 _EXTRA_GAR_PKGS += CSWcswclassutils
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
@@ -596,16 +600,14 @@ reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merg
 merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)
 
-merge-migrateconf-%: MIGRATE_FILES_$* ?= $(MIGRATE_FILES)
-merge-migrateconf-%: MIGRATE_SOURCE_DIR_$* ?= $(MIGRATE_SOURCE_DIR)
-merge-migrateconf-%: MIGRATE_DEST_DIR_$* ?= $(MIGRATE_DEST_DIR)
 merge-migrateconf-%:
 	@echo "[ Generating cswmigrateconf for package $* ]"
+	@echo "X: $(MIGRATE_FILES_$*) Y: $(MIGRATE_FILES)"
 	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
-	$(_DBG)(echo "MIGRATE_FILES=\"$(MIGRATE_FILES_$*)\"";\
+	$(_DBG)(echo "MIGRATE_FILES=\"$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES))\"";\
 		 $(if $(MIGRATE_SOURCE_DIR_$*),echo "SOURCE_DIR___default__=\"$(MIGRATE_SOURCE_DIR_$*)\"";)\
 		 $(if $(MIGRATE_DEST_DIR_$*),echo "DEST_DIR___default__=\"$(MIGRATE_DEST_DIR_$*)\"";)\
-		 $(foreach F,$(MIGRATE_FILES_$*),\
+		 $(foreach F,$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES)),\
 			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
 			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
 		)\
