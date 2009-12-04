@@ -15,10 +15,17 @@ PACKAGES += CSWmysql5rt CSWmysql5test
 
 CATALOGNAME_CSWmysql5 = $(GARNAME)
 CATALOGNAME_CSWmysql5bench = $(GARNAME)bench
-CATALOGNAME_CSWmysql5clien = $(GARNAME)client
+CATALOGNAME_CSWmysql5client = $(GARNAME)client
 CATALOGNAME_CSWmysql5devel = $(GARNAME)devel
 CATALOGNAME_CSWmysql5rt = $(GARNAME)rt
 CATALOGNAME_CSWmysql5test = $(GARNAME)test
+
+SPKG_DESC_CSWmysql5 = $(DESCRIPTION)
+SPKG_DESC_CSWmysql5bench = MySQL 5 benchmark tools
+SPKG_DESC_CSWmysql5client = MySQL 5 client
+SPKG_DESC_CSWmysql5devel = MySQL 5 development files
+SPKG_DESC_CSWmysql5rt = MySQL 5 runtime libraries
+SPKG_DESC_CSWmysql5test = MySQL 5 testing environment
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.1/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
@@ -31,7 +38,7 @@ prefix = /opt/csw/mysql5
 
 # because we alter the prefix.  this gets us proper linking as well as
 # LD_OPTIONS (RPATH)
-EXTRA_LIB = /opt/csw/lib
+# EXTRA_LIB = /opt/csw/lib
 EXTRA_INC = /opt/csw/include
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__ 
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
