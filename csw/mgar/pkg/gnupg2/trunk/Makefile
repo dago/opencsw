@@ -37,7 +37,9 @@ CONFIGURE_ARGS += --with-zlib
 CONFIGURE_ARGS += --with-bzip2
 CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --enable-threads=solaris
-CONFIGURE_ARGS += --with-pinentry-pgm=/opt/csw/bin/pinentry-curses
+
+# Waits for pinentry to be compiled on Solaris 8.
+# CONFIGURE_ARGS += --with-pinentry-pgm=/opt/csw/bin/pinentry-curses
 
 PROTOTYPE_FILTER = awk '$$$$3 ~/\/gpg2$$$$/ { $$$$4 = 4755 } { print }'
 
@@ -49,7 +51,11 @@ EXTRA_LINKER_FLAGS += -lrt
 REQUIRED_PKGS  = CSWlibksba CSWgpgerr CSWgcrypt
 REQUIRED_PKGS += CSWcurlrt CSWoldaprt CSWzlib CSWpth CSWlibidn
 REQUIRED_PKGS += CSWbzip2 CSWreadline CSWggettextrt CSWiconv CSWosslrt
-REQUIRED_PKGS += CSWpinentry CSWlibassuan
+REQUIRED_PKGS += CSWlibassuan
+
+# Waits for pinentry to be compiled on Solaris 8.
+# REQUIRED_PKGS += CSWpinentry
+
 PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
 
 INCOMPATIBLE_PKGS = CSWgnupg
@@ -59,5 +65,5 @@ TEST_TARGET = check
 include gar/category.mk
 
 post-merge:
-	ln -s gnupg2 $(DESTDIR)$(bindir)/gnupg
+	ln -s gnupg2 $(PKGROOT)$(bindir)/gnupg
 	@$(MAKECOOKIE)
