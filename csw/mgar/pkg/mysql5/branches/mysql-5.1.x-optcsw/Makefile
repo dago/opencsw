@@ -8,7 +8,11 @@ PATCHLEVEL = 40
 GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
+# Useful when making a series of builds on the same day
+GARFLAVOR = DBG
+
 DISTNAME = mysql-$(GARVERSION)
+SPKG_SOURCEURL = http://www.mysql.com/
 
 DESCRIPTION = Multithreaded SQL database server
 define BLURB
@@ -16,37 +20,43 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-GARFLAVOR = DBG
-
-bindir = $(prefix)/bin/mysql/$(BASE_VERSION)
-datadir=$(prefix)/share/mysql/$(BASE_VERSION)
-docdir=$(prefix)/share/doc/mysql/$(BASE_VERSION)
-includedir=$(prefix)/include/mysql/$(BASE_VERSION)
-infodir=$(prefix)/share/mysql/$(BASE_VERSION)/info
-libdir=$(prefix)/lib/mysql/$(BASE_VERSION)
-libexecdir=$(prefix)/libexec/mysql/$(BASE_VERSION)
-lispdir=$(prefix)/share/mysql/$(BASE_VERSION)/emacs/site-lisp
-localstatedir = /var/opt/csw/mysql/$(BASE_VERSION)
-mandir=$(prefix)/share/mysql/$(BASE_VERSION)/man
-sbindir = $(prefix)/sbin/mysql/$(BASE_VERSION)
-sharedstatedir=$(prefix)/share/mysql/$(BASE_VERSION)
-sourcedir=$(prefix)/src/mysql/$(BASE_VERSION)
-sysconfdir = /etc/opt/csw/mysql/$(BASE_VERSION)
+bindir_install = $(prefix)/bin/$(GARNAME)/$(BASE_VERSION)
+datadir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
+docdir=$(prefix)/share/doc/$(GARNAME)/$(BASE_VERSION)
+includedir=$(prefix)/include/$(GARNAME)/$(BASE_VERSION)
+infodir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/info
+libdir_install =$(prefix)/lib/$(GARNAME)/$(BASE_VERSION)
+libexecdir_install =$(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
+lispdir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/emacs/site-lisp
+localstatedir = /var$(prefix)/$(GARNAME)/$(BASE_VERSION)
+mandir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/man
+sbindir_install = $(prefix)/sbin/$(GARNAME)/$(BASE_VERSION)
+sharedstatedir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
+sourcedir=$(prefix)/src/$(GARNAME)/$(BASE_VERSION)
+sysconfdir = /etc$(prefix)/$(GARNAME)/$(BASE_VERSION)
 
 # Where to put the init script
-global_sysconfdir = /etc/opt/csw
+global_sysconfdir = /etc$(prefix)
 # Where to link the binaries
-global_bindir = /opt/csw/bin
+global_bindir = /opt$(prefix)
 
 INITSMF = $(global_sysconfdir)/init\.d/cswmysql-$(BASE_VERSION)
+
+PACKAGES  = CSWmysql5 CSWmysql5bench CSWmysql5client CSWmysql5devel
+PACKAGES += CSWmysql5rt CSWmysql5test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
 
-PACKAGES  = CSWmysql5 CSWmysql5bench CSWmysql5client CSWmysql5devel
-PACKAGES += CSWmysql5rt CSWmysql5test
+SPKG_DESC_CSWmysql5       = Multithreaded SQL database
+SPKG_DESC_CSWmysql5bench  = MySQL 5 benchmarking
+SPKG_DESC_CSWmysql5client = MySQL 5 client binaries
+SPKG_DESC_CSWmysql5devel  = MySQL 5 header files
+SPKG_DESC_CSWmysql5rt     = MySQL 5 runtime files
+SPKG_DESC_CSWmysql5test   = MySQL 5 testing files
+
 
 CATALOGNAME_CSWmysql5       = $(GARNAME)
 CATALOGNAME_CSWmysql5bench  = $(GARNAME)bench
@@ -60,13 +70,6 @@ INCOMPATIBLE_PKGS_CSWmysql5client = CSWmysql4client
 INCOMPATIBLE_PKGS_CSWmysql5       = CSWmysql4
 INCOMPATIBLE_PKGS_CSWmysql5devel  = CSWmysql4devel
 INCOMPATIBLE_PKGS_CSWmysql5test   = CSWmysql4test
-
-SPKG_DESC_CSWmysql5       = Multithreaded SQL database
-SPKG_DESC_CSWmysql5bench  = MySQL 5 benchmarking
-SPKG_DESC_CSWmysql5client = MySQL 5 client binaries
-SPKG_DESC_CSWmysql5devel  = MySQL 5 header files
-SPKG_DESC_CSWmysql5rt     = MySQL 5 runtime files
-SPKG_DESC_CSWmysql5test   = MySQL 5 testing files
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
@@ -87,7 +90,20 @@ CSWmysql5client_programs += mysql_zap
 CSWmysql5client_programs += perror
 CSWmysql5client_programs += replace
 
+# Without this EXTRA_LD_OPTIONS setting, /opt/csw/bin/mysql fails with a shared
+# library not found.  EXTRA_LIB was tried too, but did not work, as the -R path
+# ended up with having two $ISALIST tokens.
+#
+# Without this setting it looks for:
+# /opt/csw/mysql5/lib/amd64/libmysqlclient.so.15
+# The library is at:
+# /opt/csw/mysql5/lib/amd64/mysql/libmysqlclient.so.15
+EXTRA_LD_OPTIONS  = -R$(libdir)/\$$ISALIST/mysql
+
 CSWmysql5devel_programs += mysql_config
+
+# Enable 64 bits build
+BUILD64 = 1
 
 PKGFILES_CSWmysql5bench   = $(prefix)/sql-bench.*
 PKGFILES_CSWmysql5client  = $(bindir)
@@ -130,20 +146,10 @@ EXTRA_LIB = /opt/csw/lib
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
-# Without this EXTRA_LD_OPTIONS setting, /opt/csw/bin/mysql fails with a shared
-# library not found.  EXTRA_LIB was tried too, but did not work, as the -R path
-# ended up with having two $ISALIST tokens.
-#
-# Without this setting it looks for:
-# /opt/csw/mysql5/lib/amd64/libmysqlclient.so.15
-# The library is at:
-# /opt/csw/mysql5/lib/amd64/mysql/libmysqlclient.so.15
-EXTRA_LD_OPTIONS  = -R/opt/csw/mysql5/lib/\$$ISALIST/mysql
-
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-assembler
-CONFIGURE_ARGS += --without-docs
+# CONFIGURE_ARGS += --without-docs
 CONFIGURE_ARGS += --enable-local-infile
 CONFIGURE_ARGS += --with-extra-charsets=all
 CONFIGURE_ARGS += --with-low-memory
@@ -160,42 +166,43 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 TEST_SCRIPTS =
 TEST_TARGETS = check
 
-# Enable 64 bits build
-BUILD64 = 1
 
 USERGROUP = /etc/opt/csw/pkg/CSWmysql5/cswusergroup
 
-PROTOTYPE_MODIFIERS = ownmysql
-PROTOTYPE_FILES_ownmysql = /var/opt/csw/mysql5
-PROTOTYPE_USER_ownmysql = mysql
-PROTOTYPE_GROUP_ownmysql = mysql
-PROTOTYPE_PERMS_ownmysql = 0700
-PROTOTYPE_CLASS_ownmysql = ugfiles
+PROTOTYPE_MODIFIERS = dbdir
+PROTOTYPE_FILES_dbdir = $(localstatedir)
+PROTOTYPE_USER_dbdir = mysql
+PROTOTYPE_GROUP_dbdir = mysql
+PROTOTYPE_PERMS_dbdir = 0700
+PROTOTYPE_CLASS_dbdir = ugfiles
 
 SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
-post-install-modulated:
-	ginstall -m 755 -d $(DESTDIR)$(localstatedir)
-	ginstall -m 755 -d $(DESTDIR)$(datadir)/mysql/doc
-	ginstall -m 644 $(FILEDIR)/ChangeLog $(DESTDIR)$(datadir)/mysql/doc
-	ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(datadir)/mysql/doc
-	ginstall -m 755 -d $(DESTDIR)/opt/csw/share/mysql/doc
-	ln -sf ../../../mysql5/share/mysql/doc/README.CSW \
-		$(DESTDIR)/opt/csw/share/mysql/doc/README.CSW
-	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -m 755 $(FILEDIR)/cswmysql5 $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -m 755 $(FILEDIR)/quick_start-csw $(DESTDIR)$(datadir)/mysql
-	ginstall -m 755 -d $(DESTDIR)$(global_sysconfdir)/pkg/CSWmysql5
+CFLAGS := $(filter-out -I%,$(CFLAGS))
+
+post-merge:
+	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
+	ginstall -m 755 -d $(PKGROOT)$(datadir)/mysql/doc
+	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/mysql/doc
+	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/mysql/doc
+	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/mysql/doc
+	# ln -sf ../../../mysql5/share/mysql/doc/README.CSW \
+	# 	$(PKGROOT)/opt/csw/share/mysql/doc/README.CSW
+	ginstall -m 755 -d $(PKGROOT)/etc/opt/csw/init.d
+	ginstall -m 755 $(FILEDIR)/cswmysql5 $(PKGROOT)/etc/opt/csw/init.d
+	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
+	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSWmysql5
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
-		        $(DESTDIR)$(global_sysconfdir)/pkg/CSWmysql5
-	# A symlink for mysql5 include files
-	ginstall -m 755 -d $(DESTDIR)/opt/csw/include
-	ln -s ../mysql5/include/mysql $(DESTDIR)/opt/csw/include/mysql
+		        $(PKGROOT)$(global_sysconfdir)/pkg/CSWmysql5
+	## A symlink for mysql5 include files
+	## ginstall -m 755 -d $(PKGROOT)/opt/csw/include
+	## ln -s ../mysql5/include/mysql $(PKGROOT)/opt/csw/include/mysql
 	# Create symlinks to binaries
-	ginstall -m 755 -d $(DESTDIR)$(global_bindir)
-	for f in $(DESTDIR)$(bindir)/*; do \
-		ln -s mysql/$(BASE_VERSION)/`basename $$f` $(DESTDIR)$(global_bindir)/`basename $$f`; \
+	ginstall -m 755 -d $(PKGROOT)$(global_bindir)
+	for f in $(PKGROOT)$(bindir)/*; do \
+		ln -s mysql/$(BASE_VERSION)/`basename $$f` $(PKGROOT)$(global_bindir)/`basename $$f`; \
 	done
+	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
 	@$(MAKECOOKIE)
