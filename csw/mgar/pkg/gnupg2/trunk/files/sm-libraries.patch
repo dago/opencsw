@@ -1,0 +1,29 @@
+Otherwise:
+
+        /opt/studio/SOS11/SUNWspro/bin/cc -DHAVE_CONFIG_H -I. -I..  -I../gl -I../common -I../intl -DLOCALEDIR=\"/opt/csw/share/locale\" -DGNUPG_BINDIR="\"/opt/csw/bin\"" -DGNUPG_LIBEXECDIR="\"/opt/csw/libexec\"" -DGNUPG_LIBDIR="\"/opt/csw/lib/gnupg\"" -DGNUPG_DATADIR="\"/opt/csw/share/gnupg\"" -DGNUPG_SYSCONFDIR="\"/opt/csw/etc/gnupg\""  -DGNUPG_DEFAULT_PINENTRY="\"/opt/csw/bin/pinentry-curses\""    -I/opt/csw/include -I/opt/csw/include -I/opt/csw/include -I/opt/csw/include  -xO3 -xarch=386 -I/opt/csw/include -c qualified.c
+/opt/studio/SOS11/SUNWspro/bin/cc -I/opt/csw/include -I/opt/csw/include -I/opt/csw/include  -xO3 -xarch=386 -I/opt/csw/include  -xarch=386 -L/opt/csw/lib -lgpg-error -lrt -o gpgsm gpgsm.o misc.o keydb.o server.o call-agent.o call-dirmngr.o fingerprint.o base64.o certlist.o certdump.o certcheck.o certchain.o keylist.o verify.o sign.o encrypt.o decrypt.o import.o export.o delete.o certreqgen.o certreqgen-ui.o qualified.o ../common/libcommon.a ../kbx/libkeybox.a ../jnlib/libjnlib.a ../gl/libgnu.a ../common/libgpgrl.a -L/opt/csw/lib -lgcrypt -lgpg-error -L/opt/csw/lib -lksba -lgpg-error -L/opt/csw/lib -lassuan -L/opt/csw/lib -lgpg-error -lreadline /opt/csw/lib/libintl.so -R/opt/csw/lib -lz -lbz2 /opt/csw/lib/libiconv.so -R/opt/csw/lib
+Undefined                       first referenced
+ symbol                             in file
+__xnet_connect                      /opt/csw/lib/libassuan.a(assuan-socket.o)  (symbol belongs to implicit dependency /lib/libsocket.so.1)
+__xnet_socket                       /opt/csw/lib/libassuan.a(assuan-socket.o)  (symbol belongs to implicit dependency /lib/libsocket.so.1)
+__xnet_socketpair                   /opt/csw/lib/libassuan.a(assuan-pipe-connect.o)  (symbol belongs to implicit dependency /lib/libsocket.so.1)
+__xnet_bind                         /opt/csw/lib/libassuan.a(assuan-socket.o)  (symbol belongs to implicit dependency /lib/libsocket.so.1)
+__xnet_recvmsg                      /opt/csw/lib/libassuan.a(assuan-io.o)  (symbol belongs to implicit dependency /lib/libsocket.so.1)
+__xnet_sendmsg                      /opt/csw/lib/libassuan.a(assuan-io.o)  (symbol belongs to implicit dependency /lib/libsocket.so.1)
+ld: fatal: Symbol referencing errors. No output written to gpgsm
+gmake[4]: *** [gpgsm] Error 1
+gmake[4]: Leaving directory `/export/home/blizinski/opencsw/pkg/gnupg2/trunk/work/build-isa-i386/gnupg-2.0.13/sm'
+
+
+diff -Nru gnupg-2.0.10.orig/sm/Makefile.in gnupg-2.0.10/sm/Makefile.in
+--- gnupg-2.0.10.orig/sm/Makefile.in	2009-01-12 03:29:44.000000000 -0600
++++ gnupg-2.0.10/sm/Makefile.in	2009-02-03 21:30:03.836999289 -0600
+@@ -375,7 +375,7 @@
+ common_libs = $(libcommon) ../kbx/libkeybox.a ../jnlib/libjnlib.a \
+               ../gl/libgnu.a
+ 
+-gpgsm_LDADD = $(common_libs) ../common/libgpgrl.a \
++gpgsm_LDADD = $(common_libs) ../common/libgpgrl.a $(NETLIBS) \
+               $(LIBGCRYPT_LIBS) $(KSBA_LIBS) $(LIBASSUAN_LIBS) \
+               $(GPG_ERROR_LIBS) $(LIBREADLINE) $(LIBINTL) $(ZLIBS) $(LIBICONV)
+ 

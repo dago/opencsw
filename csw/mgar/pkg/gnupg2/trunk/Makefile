@@ -1,5 +1,9 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
 GARNAME    = gnupg
-GARVERSION = 2.0.10
+GARVERSION = 2.0.13
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP.
@@ -19,10 +23,8 @@ DISTFILES      = $(GARNAME)-$(GARVERSION).tar.bz2
 # Bug ID 996 filed up stream along with patch
 # Supposed to be Fixed in the 01/2009 SVN version but has not
 # made it into a release at the time of this packaging
-PATCHFILES = patch-keyserver_and_sm.diff
+PATCHFILES = sm-libraries.patch
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 NOISALIST  = 1
@@ -35,16 +37,27 @@ CONFIGURE_ARGS += --with-zlib
 CONFIGURE_ARGS += --with-bzip2
 CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --enable-threads=solaris
+CONFIGURE_ARGS += --with-pinentry-pgm=/opt/csw/bin/pinentry-curses
+
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/gpg2$$$$/ { $$$$4 = 4755 } { print }'
 
 # This is somehow not correctly detected from autoconf
 EXTRA_LINKER_FLAGS  = -lgpg-error
 # Needed for nanosleep()
 EXTRA_LINKER_FLAGS += -lrt
 
-REQUIRED_PKGS  = CSWlibksba CSWgpgerr CSWgcrypt 
-REQUIRED_PKGS += CSWcurlrt CSWoldaprt CSWzlib CSWpth CSWlibidn 
+REQUIRED_PKGS  = CSWlibksba CSWgpgerr CSWgcrypt
+REQUIRED_PKGS += CSWcurlrt CSWoldaprt CSWzlib CSWpth CSWlibidn
 REQUIRED_PKGS += CSWbzip2 CSWreadline CSWggettextrt CSWiconv CSWosslrt
+REQUIRED_PKGS += CSWpinentry CSWlibassuan
+PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
+
+INCOMPATIBLE_PKGS = CSWgnupg
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-merge:
+	ln -s gnupg2 $(DESTDIR)$(bindir)/gnupg
+	@$(MAKECOOKIE)
