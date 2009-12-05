@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+MYSQLDATADIR=/var/opt/csw/mysql5
+if [ ! -d "${MYSQLDATADIR}/mysql" ] ; then
+  echo "No database directory found in the default location:"
+  echo "${MYSQLDATADIR}/mysql"
+  echo "If you need to build the initial database directory,"
+  echo "  see /opt/csw/mysql5/share/mysql/quick_start-csw"
+  echo "If you are using a non-default database directory location,"
+  echo "  please start mysql manually."
+  exit 0
+fi
