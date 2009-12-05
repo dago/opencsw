@@ -17,23 +17,24 @@ SPKG_SOURCEURL = http://www.postgresql.org/
 define BLURB
 endef
 
-bindir_install = $(prefix)/bin/$(GARNAME)/$(BASE_VERSION)
-datadir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-docdir=$(prefix)/share/doc/$(GARNAME)/$(BASE_VERSION)
-includedir=$(prefix)/include/$(GARNAME)/$(BASE_VERSION)
-infodir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/info
-libdir_install =$(prefix)/lib/$(GARNAME)/$(BASE_VERSION)
-libexecdir_install =$(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
-lispdir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/emacs/site-lisp
+version_dependent = /lib/$(GARNAME)/$(BASE_VERSION)
+bindir_install = $(prefix)$(version_dependent)/bin
+sbindir_install = $(prefix)$(version_dependent)/sbin
+libdir_install = $(prefix)$(version_dependent)/lib
 localstatedir = /var$(prefix)/$(GARNAME)/$(BASE_VERSION)
-mandir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)/man
-sbindir_install = $(prefix)/sbin/$(GARNAME)/$(BASE_VERSION)
-sharedstatedir=$(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-sourcedir=$(prefix)/src/$(GARNAME)/$(BASE_VERSION)
 sysconfdir = /etc$(prefix)/$(GARNAME)/$(BASE_VERSION)
+datadir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
+docdir = $(prefix)/share/doc/$(GARNAME)-$(BASE_VERSION)
+includedir = $(prefix)/include/$(GARNAME)/$(BASE_VERSION)
+infodir = $(datadir)/info
+libexecdir_install = $(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
+lispdir = $(datadir)/emacs/site-lisp
+mandir = $(datadir)/man
+sharedstatedir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
+sourcedir = $(prefix)/src/$(GARNAME)/$(BASE_VERSION)
 
-MIGRATE_FILES = postgresql.conf
-MIGRATE_DEST_DIR = $(sysconfdir)
+MIGRATE_FILES_CSWpostgresql-8.4    = postgresql.conf
+MIGRATE_DEST_DIR_CSWpostgresql-8.4 = $(sysconfdir)
 
 MASTER_SITES = http://wwwmaster.postgresql.org/redir/53/h/source/v$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
@@ -42,25 +43,31 @@ DISTFILES += cswusergroup.tmpl
 DISTFILES += postgresql.conf.tmpl
 DISTFILES += README-CSW.txt
 
-PACKAGES = CSWpostgresql CSWpostgresqldoc CSWpostgresqldevel CSWlibpq
+PACKAGES  = CSWpostgresql-84 CSWpostgresql-84-doc CSWpostgresql-84-dev CSWlibpq-84
+PACKAGES += CSWpostgresql
 
-CATALOGNAME_CSWpostgresql      = postgresql
-CATALOGNAME_CSWpostgresqldoc   = postgresql_doc
-CATALOGNAME_CSWpostgresqldevel = postgresql_devel
-CATALOGNAME_CSWlibpq           = libpq
+CATALOGNAME_CSWpostgresql-84      = postgresql_84
+CATALOGNAME_CSWpostgresql-84-doc  = postgresql_84_doc
+CATALOGNAME_CSWpostgresql-84-dev  = postgresql_84_devel
+CATALOGNAME_CSWlibpq-84           = libpq84
+CATALOGNAME_CSWpostgresql         = postgresql
 
-SPKG_DESC_CSWpostgresql = An advanced open source database
-SPKG_DESC_CSWpostgresqldoc = PostgreSQL Documentation
-SPKG_DESC_CSWpostgresqldevel = PostgreSQL Developer Files
-SPKG_DESC_CSWlibpq = PostgreSQL Libraries
+SPKG_DEST_CSWpostgresql        = An advanced open source database, a metapackage
+SPKG_DESC_CSWpostgresql-84     = An advanced open source database, version 8.4.x
+SPKG_DESC_CSWpostgresql-84-doc = PostgreSQL Documentation
+SPKG_DESC_CSWpostgresql-84-dev = PostgreSQL Developer Files
+SPKG_DESC_CSWlibpq-84          = PostgreSQL Libraries
 
-REQUIRED_PKGS_CSWpostgresql  = CSWreadline CSWzlib CSWlibpq
-REQUIRED_PKGS_CSWpostgresql += CSWlibxml2 CSWlibxslt CSWosslrt CSWkrb5lib
-REQUIRED_PKGS_CSWpostgresqldevel = CSWpostgresql
-REQUIRED_PKGS_CSWlibpq = CSWkrb5lib CSWlibxml2 CSWlibxslt CSWosslrt CSWzlib
+REQUIRED_PKGS_CSWpostgresql        = CSWpostgresql-84
+REQUIRED_PKGS_CSWpostgresql-84     = CSWreadline CSWzlib CSWlibpq-84
+REQUIRED_PKGS_CSWpostgresql-84    += CSWlibxml2 CSWlibxslt CSWosslrt CSWkrb5lib
+REQUIRED_PKGS_CSWpostgresql-84-dev = CSWpostgresql-84
+REQUIRED_PKGS_CSWlibpq-84          = CSWkrb5lib CSWlibxml2 CSWlibxslt CSWosslrt
+REQUIRED_PKGS_CSWlibpq-84         += CSWzlib
 
-ARCHALL_CSWpostgresqldevel = 1
-ARCHALL_CSWpostgresqldoc = 1
+ARCHALL_CSWpostgresql        = 1
+ARCHALL_CSWpostgresql-84-doc = 1
+ARCHALL_CSWpostgresql-84-doc = 1
 
 LICENSE = COPYRIGHT
 
@@ -107,17 +114,15 @@ CONFIGURE_ARGS += --with-libxslt
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 
 # Skipping tests to save time during packaging, and to enable x86 builds.
-SKIPTEST = 1
+SKIPTEST ?= 1
 TEST_TARGET = check
 
-# What's that for?
-# EXTRA_PAX_ARGS = -s ",^\./opt/csw/postgresql/share/doc,./opt/csw/share/doc/postgresql,p"
-
-PKGFILES_CSWpostgresqldoc = $(PKGFILES_DOC)
-PKGFILES_CSWpostgresqldoc += $(prefix)/share/doc/postgresql/html.*
-PKGFILES_CSWpostgresqldevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibpq  = $(PKGFILES_RT)
-PKGFILES_CSWlibpq += $(libdir)/64
+PKGFILES_CSWpostgresql        = $(prefix)/bin/.*
+PKGFILES_CSWpostgresql-84-doc = $(PKGFILES_DOC)
+PKGFILES_CSWpostgresql-84-doc += $(prefix)/share/doc/postgresql/html.*
+PKGFILES_CSWpostgresql-84-dev  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibpq-84  = $(PKGFILES_RT)
+PKGFILES_CSWlibpq-84 += $(libdir)/64
 
 INITSMF = /etc$(prefix)/init\.d/cswpostgres_$(BASE_VERSION)
 USERGROUP = /etc$(prefix)/pkg/postgresql-$(BASE_VERSION)
@@ -152,7 +157,7 @@ BIN_NAMES += vacuumlo
 PGDATA = $(localstatedir)/pgdata
 
 PROTOTYPE_MODIFIERS = pgdata
-PROTOTYPE_FILES_pgdata = $(PGDATA)
+PROTOTYPE_FILES_pgdata = $(localstatedir) $(PGDATA)
 PROTOTYPE_USER_pgdata = postgres
 PROTOTYPE_GROUP_pgdata = postgres
 PROTOTYPE_PERMS_pgdata = 0700
@@ -196,8 +201,9 @@ post-merge:
 		$(PKGROOT)$(sysconfdir)
 	ginstall -d $(PKGROOT)$(docdir)
 	ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)
+	ginstall -m 755 -d $(PKGROOT)$(prefix)/bin
 	for b in $(BIN_NAMES); do \
-	  gln -s $(GARNAME)/$(BASE_VERSION)/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
+	  gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
 	done
 	ginstall -d $(PKGROOT)$(PGDATA)
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
