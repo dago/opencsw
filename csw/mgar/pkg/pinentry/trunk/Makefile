@@ -50,6 +50,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER = SOS12
 
 PACKAGING_PLATFORMS ?= solaris9-sparc solaris9-i386
-
+BUILDHOST_sparc-32 = build9s
+BUILDHOST_sparc-64 = build9s
+BUILDHOST_i386-32 = build9x
+BUILDHOST_i386-64 = build10x
 
 include gar/category.mk
