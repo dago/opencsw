@@ -1,0 +1,60 @@
+From e5752fdc0313d3b2ec35d8192bdeb39c25e0795c Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 4 Dec 2009 18:55:28 +0100
+Subject: [PATCH] TEMP_FAILURE_RETRY macro expansion
+
+---
+ secmem/util.c |   22 ++++++++++++++++++++--
+ 1 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/secmem/util.c b/secmem/util.c
+index 580fd34..0ee1e8d 100644
+--- a/secmem/util.c
++++ b/secmem/util.c
+@@ -32,6 +32,11 @@
+ 
+ #include "util.h"
+ 
++/*
++ * This macro does not work with Sun Studio 11.
++ */
++
++#if 0
+ #ifndef TEMP_FAILURE_RETRY
+ #define TEMP_FAILURE_RETRY(expression) \
+   (__extension__							      \
+@@ -40,6 +45,7 @@
+        while (__result == -1L && errno == EINTR);			      \
+        __result; }))
+ #endif
++#endif
+ 
+ #ifndef HAVE_DOSISH_SYSTEM
+ static int uid_set = 0;
+@@ -53,9 +59,21 @@ ssize_t xwrite(int fd, const void *data, size_t bytes)
+   size_t todo;
+   ssize_t written = 0;
+ 
+-  for (ptr = (char *)data, todo = bytes; todo; ptr += written, todo -= written)
+-    if ((written = TEMP_FAILURE_RETRY(write(fd, ptr, todo))) < 0)
++  for (ptr = (char *)data, todo = bytes; todo; ptr += written, todo -= written) {
++
++    do {
++      written = (long int) write(fd, ptr, todo);
++    } while (written == -1L && errno == EINTR);
++
++    if (written < 0)
+       break;
++  }
++  /*
++   * Original code inside the for loop:
++   *
++   * if ((written = TEMP_FAILURE_RETRY(write(fd, ptr, todo))) < 0)
++   *   break;
++  */
+   return written;
+ }
+ 
+-- 
+1.6.5.1
+

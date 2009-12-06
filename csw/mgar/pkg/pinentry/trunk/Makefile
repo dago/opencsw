@@ -14,45 +14,57 @@ EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/pinentry/
 # PATCHFILES  = 0001-remove-__extension__-from-util.c.patch
+PATCHFILES += 0002-ncurses-include.patch
+PATCHFILES += 0003-TEMP_FAILURE_RETRY-macro-expansion.patch
+PATCHFILES += 0004-adding-prereq-2.59-to-configure.ac.patch
+PATCHFILES += 0005-Importing-getopt-posix-gnulib-module.patch
+PATCHFILES += 0006-enabling-gnulib-getopt-module.patch
 EXTRA_CFLAGS = -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -D__EXTENSIONS__
-PATCHFILES += 0002-ncurses-include.patch
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-REQUIRED_PKGS = CSWglib CSWgtk CSWiconv CSWncurses
+REQUIRED_PKGS  = CSWfconfig
+REQUIRED_PKGS += CSWftype2
+REQUIRED_PKGS += CSWggettextrt
+REQUIRED_PKGS += CSWglib
+REQUIRED_PKGS += CSWglib2
+REQUIRED_PKGS += CSWgtk
+REQUIRED_PKGS += CSWgtk2
+REQUIRED_PKGS += CSWiconv
+REQUIRED_PKGS += CSWlibatk
+REQUIRED_PKGS += CSWlibcairo
+REQUIRED_PKGS += CSWlibxext
+REQUIRED_PKGS += CSWncurses
+REQUIRED_PKGS += CSWpango
 PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 PREREQUISITE_PKGS += CSWgtk2devel
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
-
-# Unfortunately, the compilation fails with SOS11. Because of that, pinentry
-# can't be compiled on Solaris 8, and CSWgnupg2 needs to be compiled for
-# Solaris 8 with no pinentry support.
-#
-# gmake[4]: Entering directory
-# `(...)/pinentry-0.7.6/secmem'
-# source='util.c' object='util.o' libtool=no \
-#         DEPDIR=.deps depmode=none /bin/bash ../depcomp \
-#         /opt/studio/SOS11/SUNWspro/bin/cc -DHAVE_CONFIG_H -I. -I.. \
-#         -I/opt/csw/X11/include -I/opt/csw/include  -xO3 -xarch=v8 \
-#         -D__EXTENSIONS__ -c util.c
-# "util.c", line 57: warning: implicit function declaration: __extension__
-# "util.c", line 57: syntax error before or at: {
-# "util.c", line 57: undefined symbol: __result
-# "util.c", line 57: undefined symbol: __result
-# "util.c", line 57: undefined symbol: __result
-# "util.c", line 57: syntax error before or at: )
-# "util.c", line 58: warning: syntax error:  empty declaration
-# "util.c", line 59: warning: old-style declaration or incorrect type for: written
-# cc: acomp failed for util.c
-# gmake[4]: *** [util.o] Error 2
-
-GARCOMPILER = SOS12
-
-PACKAGING_PLATFORMS ?= solaris9-sparc solaris9-i386
-BUILDHOST_sparc-32 = build9s
-BUILDHOST_sparc-64 = build9s
-BUILDHOST_i386-32 = build9x
-BUILDHOST_i386-64 = build10x
+EXTRA_LINKER_FLAGS_isa-i386    = /usr/openwin/lib/libXext.so
+EXTRA_LINKER_FLAGS_isa-sparcv8 = /usr/openwin/lib/libXext.so
+EXTRA_LINKER_FLAGS_isa-amd64   = /usr/openwin/lib/sparcv9/libXext.so
+EXTRA_LINKER_FLAGS_isa-sparcv9 = /usr/openwin/lib/sparcv9/libXext.so
+EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(MODULATION))
+BUILD64 = 1
 
 include gar/category.mk
+
+# Switch this target on when working with gnulib.
+# pre-configure-modulated:
+# 	# To pick up the gnulib bits.
+# 	( \
+# 	  cd $(WORKSRC) \
+# 	    && \
+# 	  aclocal -I m4 \
+# 	    && \
+# 	  autoconf -I m4 \
+# 	    && \
+# 	  autoheader \
+# 	    && \
+# 	  automake --add-missing --foreign \
+# 	)
+# 	@$(MAKECOOKIE)
+
+# It works with SOS11 now, thanks to
+# 0003-TEMP_FAILURE_RETRY-macro-expansion.patch
+# GARCOMPILER = SOS12

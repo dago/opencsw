@@ -1,3 +1,6 @@
-2964e403781bf656b04b46b3846057e4  download/0001-remove-__extension__-from-util.c.patch
-1cfd306236b7fb0bc01a2a408f4f5abb  download/0002-ncurses-include.patch
-5a4f676375fa882009da02013d77210f  download/pinentry-0.7.6.tar.gz
+1cfd306236b7fb0bc01a2a408f4f5abb  0002-ncurses-include.patch
+acafe7b0e415b707d2ab91dd5c24ac68  0003-TEMP_FAILURE_RETRY-macro-expansion.patch
+9ce352e0abab7435d54123ad3bad03ce  0004-adding-prereq-2.59-to-configure.ac.patch
+b2817a6ea1682a53e6d89ea96e64d5fc  0005-Importing-getopt-posix-gnulib-module.patch
+c4440acb2da95db03342e45eb10bec4d  0006-enabling-gnulib-getopt-module.patch
+5a4f676375fa882009da02013d77210f  pinentry-0.7.6.tar.gz

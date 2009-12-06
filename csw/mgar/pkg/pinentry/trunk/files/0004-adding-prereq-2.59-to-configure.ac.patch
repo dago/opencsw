@@ -1,0 +1,25 @@
+From 6f95e3011e203a98a1dc7cde43887a155bd2c041 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 4 Dec 2009 19:37:47 +0100
+Subject: [PATCH 4/6] adding-prereq-2.59-to-configure.ac
+
+---
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index e091dd9..8707ff1 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -19,7 +19,7 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+  
+ # (Process this file with autoconf to produce a configure script.)
+-AC_PREREQ(2.57)
++AC_PREREQ(2.59)
+ min_automake_version="1.7.6"
+ 
+ # Version number: Remember to change it immediately *after* a release.
+-- 
+1.6.5.1
+
