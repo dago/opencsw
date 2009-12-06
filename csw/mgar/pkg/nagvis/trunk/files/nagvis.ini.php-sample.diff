@@ -1,0 +1,24 @@
+diff --speed-large-files --minimal -Nru nagvis-1.4.5.orig/etc/nagvis.ini.php-sample nagvis-1.4.5/etc/nagvis.ini.php-sample
+--- nagvis-1.4.5.orig/etc/nagvis.ini.php-sample	2009-11-27 16:41:36.000000000 +0100
++++ nagvis-1.4.5/etc/nagvis.ini.php-sample	2009-12-05 18:18:53.986605941 +0100
+@@ -25,7 +25,7 @@
+ ; Path definitions
+ [paths]
+ ; absolute physical NagVis path
+-;base="/usr/local/nagios/share/nagvis/"
++base="/opt/csw/nagios/share/nagvis/"
+ ; absolute html NagVis path
+ ;htmlbase="/nagios/nagvis"
+ ; absolute html NagVis cgi path
+@@ -173,9 +173,9 @@
+ ; database name for NDO-db
+ ;dbname="nagios"
+ ; username for NDO-db
+-;dbuser="root"
++dbuser="nagios"
+ ; password for NDO-db
+-;dbpass=""
++dbpass="nagios"
+ ; prefix for tables in NDO-db
+ ;dbprefix="nagios_"
+ ; instance name for tables in NDO-db

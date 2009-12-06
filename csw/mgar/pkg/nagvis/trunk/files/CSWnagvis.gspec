@@ -1,3 +1,0 @@
-%var            bitname nagvis
-%var            pkgname CSWnagvis
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
