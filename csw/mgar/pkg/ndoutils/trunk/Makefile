@@ -17,8 +17,8 @@ DISTFILES += $(call admfiles,CSWndoutils2x, prototype postinstall)
 DISTFILES += $(call admfiles,CSWndoutils3x, prototype postinstall)
 DISTFILES += cswndoutils
 
-#PATCHFILES += config.diff
-#PATCHFILES += installdb.diff
+PATCHFILES += config.diff
+PATCHFILES += installdb.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 #UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -76,7 +76,7 @@ install-custom:
 	@ginstall -m 755 $(WORKSRC)/src/ndomod-3x.o $(DESTDIR)/$(BINDIR)
 	@ginstall -m 755 $(WORKSRC)/src/file2sock $(DESTDIR)/$(BINDIR)
 	@ginstall -m 755 $(WORKSRC)/src/log2ndo $(DESTDIR)/$(BINDIR)
-	cp -r $(WORKSRC)/db $(DESTDIR)/$(CONTRIBDIR)
+	@cp -r $(WORKSRC)/db $(DESTDIR)/$(CONTRIBDIR)
 	#@ginstall -m 744 $(WORKSRC)/db/installdb $(DESTDIR)/$(DOCDIR)/db
 	@ginstall -m 644 $(WORKSRC)/docs/"NDOUTILS_DB_Model.pdf" $(DESTDIR)/$(DOCDIR)
 	@ginstall -m 644 $(WORKSRC)/docs/"NDOUtils_Documentation.pdf" $(DESTDIR)/$(DOCDIR)
