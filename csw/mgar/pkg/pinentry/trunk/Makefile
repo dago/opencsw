@@ -45,7 +45,10 @@ EXTRA_LINKER_FLAGS_isa-sparcv8 = /usr/openwin/lib/libXext.so
 EXTRA_LINKER_FLAGS_isa-amd64   = /usr/openwin/lib/amd64/libXext.so
 EXTRA_LINKER_FLAGS_isa-sparcv9 = /usr/openwin/lib/sparcv9/libXext.so
 EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(MODULATION))
-BUILD64 = 1
+
+# There's a problem with building on Solaris 10 as getopt.h is already present
+# in /usr/include and conflicts with the one provided by gnulib.
+# BUILD64 = 1
 
 include gar/category.mk
 
