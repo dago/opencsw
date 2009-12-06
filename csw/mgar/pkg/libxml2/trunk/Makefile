@@ -9,6 +9,8 @@ endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxml2/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = ld-symbol-handling-fixup.patch
+PATCHFILES += 0001-relaxng.c-add-cast-to-allow-compilation-with-sun-stu.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -38,6 +40,10 @@ CONFIGURE_ARGS = $(DIRPATHS) $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 BUILD64 = 1
 NO_ISAEXEC = 1
+
+PYCOMPILE = 1
+
+STRIP_LIBTOOL = 1
 
 # Skip 64 bit binaries - they are just big and gain nothing
 MERGE_DIRS_isa-sparcv9 = $(libdir)

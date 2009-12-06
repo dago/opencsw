@@ -1,0 +1,42 @@
+From 960433c24da65100dcb57ec9ce801d59a86722cb Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Date: Sat, 5 Dec 2009 13:32:49 -0500
+Subject: [PATCH] relaxng.c: add cast to allow compilation with sun studio 11
+
+Sun Studio 11 was failing to compile relaxng.c due to a type mismatch
+when calling xmlRngPErr.  The issue was caused by a type mismatch with
+in the outcomes of a ternary operation ("nothing" vs node->name).
+
+Cleanup another warning by casting a string literal to const unsigned
+char *.
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ relaxng.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/relaxng.c b/relaxng.c
+index 075fc4a..9c6019d 100644
+--- a/relaxng.c
++++ b/relaxng.c
+@@ -5369,7 +5369,7 @@ xmlRelaxNGParseNameClass(xmlRelaxNGParserCtxtPtr ctxt, xmlNodePtr node,
+     } else {
+         xmlRngPErr(ctxt, node, XML_RNGP_CHOICE_CONTENT,
+                    "expecting name, anyName, nsName or choice : got %s\n",
+-                   (node == NULL ? "nothing" : node->name), NULL);
++                   (node == NULL ? (const unsigned char *) "nothing" : node->name), NULL);
+         return (NULL);
+     }
+     if (ret != def) {
+@@ -9459,7 +9459,7 @@ xmlRelaxNGValidateInterleave(xmlRelaxNGValidCtxtPtr ctxt,
+             ctxt->states = NULL;
+             if (found == 0) {
+                 if (cur == NULL) {
+-                    VALID_ERR2(XML_RELAXNG_ERR_INTEREXTRA, "noname");
++		     VALID_ERR2(XML_RELAXNG_ERR_INTEREXTRA, (const unsigned char *) "noname");
+                 } else {
+                     VALID_ERR2(XML_RELAXNG_ERR_INTEREXTRA, cur->name);
+                 }
+-- 
+1.6.5.3
+
