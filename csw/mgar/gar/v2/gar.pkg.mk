@@ -159,12 +159,6 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
-# Handle cswclassutils
-# append $2 to SPKG_CLASSES if $1 is non-null
-define _spkg_cond_add
-$(SPKG_CLASSES) $(if $($(1)),$(if $(filter $(2),$(SPKG_CLASSES)),,$(2)))
-endef
-
 MIGRATECONF ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
 
 # It is NOT sufficient to change the pathes here, they must be adjusted in merge-* also
@@ -175,21 +169,6 @@ _ETCSERVICES_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_etcser
 USERGROUP += $(_USERGROUP_FILES)
 INETDCONF += $(_INETDCONF_FILES)
 ETCSERVICES += $(_ETCSERVICES_FILES)
-
-# NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
-#	always be the last two added.  The reason for this is that
-#	you need to ensure any binaries and config files are already on disk
-#	and able to be consumed by a service that might be started.
-SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswmigrateconf)
-SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
-SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
-SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
-SPKG_CLASSES := $(call _spkg_cond_add,USERGROUP,cswusergroup)
-SPKG_CLASSES := $(call _spkg_cond_add,CRONTABS,cswcrontab)
-SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
-SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
-SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
-
 
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
@@ -211,8 +190,20 @@ _CSWCLASS_FILTER = | perl -ane '\
 # If you add another filter above, also add the class to this list. It is used
 # to detect if a package needs to depends on CSWcswclassutils by looking at
 # files belonging to one of these in the prototype.
-_CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf cswetcservices cswinetd cswinitsmf
-_CSWCLASSES += cswusergroup cswcrontab cswpycompile cswtexinfo
+
+# NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
+#	always be the last two added.  The reason for this is that
+#	you need to ensure any binaries and config files are already on disk
+#	and able to be consumed by a service that might be started.
+
+_CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf
+_CSWCLASSES += cswetcservices
+_CSWCLASSES += cswusergroup
+_CSWCLASSES += cswcrontab
+_CSWCLASSES += cswpycompile
+_CSWCLASSES += cswinetd
+_CSWCLASSES += cswinitsmf
+_CSWCLASSES += cswtexinfo
 
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
@@ -534,7 +525,7 @@ $(foreach P,$(SPKG_SPECS),\
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
-$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),cswtexinfo)
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C " if( $$F[1] eq "$C" && !$$done{$C}++ );)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
