@@ -1,8 +1,9 @@
 #!/sbin/sh
 
 # rc-script for CSW DHCP
-# Peter Bonivart, 2009-01-27
+# Peter Bonivart, 2009-12-04
 
+SERVICE=dhcp
 PID=/var/opt/csw/dhcp/dhcpd.pid
 #CONF=/opt/csw/etc/dhcpd.conf  # use old location of conf file
 CONF=/etc/opt/csw/dhcpd.conf
@@ -11,14 +12,14 @@ OPTIONS="-pf /var/opt/csw/dhcp/dhcpd.pid"
 ZONE= # used for initialization, do not change
 
 case "$1" in
-  'start')
+  start)
     if [ -f /opt/csw/sbin/dhcpd -a -f $CONF ]; then
-      echo 'Starting dhcp.'
+      echo "Starting $SERVICE."
       /opt/csw/sbin/dhcpd -cf $CONF $OPTIONS
     fi
     ;;
-  'stop')
-    echo 'Shutting down dhcp.'
+  stop)
+    echo "Stopping $SERVICE."
     if [ -x /usr/bin/zonename ]; then
       if [ "`/usr/bin/zonename`" = "global" ]; then
         ZONE="-z global"
@@ -28,8 +29,25 @@ case "$1" in
     [ -f $PID ] && /usr/bin/rm $PID
     exit 0
     ;;
+  restart)
+    FAIL=
+    /opt/csw/sbin/dhcpd -cf $CONF -t || FAIL=1
+    /opt/csw/sbin/dhcpd -cf $CONF -T || FAIL=2
+    [ $FAIL = 1 ] && echo "Your configuration seems broken. Exiting."
+    [ $FAIL = 2 ] && echo "Your lease file seems broken. Exiting."
+    [ $FAIL ] && exit 1
+    $0 stop
+    echo "Waiting for $SERVICE to stop.\c"
+    while ( /usr/bin/pgrep -x dhcpd > /dev/null ); do
+      echo ".\c"
+      sleep 1
+    done
+    echo
+    sleep 1
+    $0 start
+    ;;
   *)
-    echo "Usage: $0 { start | stop }"
+    echo "Usage: $0 { start | stop | restart }"
     exit 1
     ;;
 esac

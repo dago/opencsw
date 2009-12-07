@@ -42,18 +42,10 @@ PKGFILES_CSWdhcpdevel = $(PKGFILES_DEVEL)
 
 INSTALL_SCRIPTS = custom
 
-#PROTOTYPE_FILTER  = awk ' \
-#  $$$$3 ~ /\/init.d\/cswdhcpd$$$$/ { $$$$2 = "cswinitsmf" } \
-#  $$$$3 ~ /\/dhcpd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-#  $$$$3 ~ /\/dhclient.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-#  $$$$3 ~ /\/dhcpd.leases.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-#  { print }'
-
 INITSMF = /etc/opt/csw/init.d/cswdhcpd
 SAMPLECONF = /etc/opt/csw/dhcpd.conf /etc/opt/csw/dhclient.conf /var/opt/csw/dhcp/db/dhcpd.leases
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
-#SPKG_CLASSES_CSWdhcp = none cswcpsampleconf cswinitsmf
 
 include gar/category.mk
 
@@ -64,12 +56,8 @@ install-custom:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWdhcp.cswdhcpd $(DESTDIR)/etc/opt/csw/init.d/cswdhcpd
 	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswdhcpd
-#	@( cd $(DESTDIR)/etc/opt/csw ; \
-#	   mv dhcpd.conf dhcpd.conf.CSW ; \
-#	   mv dhclient.conf dhclient.conf.CSW )
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(FILEDIR)/CSWdhcp.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/db
-#	@touch $(DESTDIR)/var/opt/csw/$(GARNAME)/db/dhcpd.leases.CSW
 	@touch $(DESTDIR)/var/opt/csw/$(GARNAME)/db/dhcpd.leases
 	@$(MAKECOOKIE)
