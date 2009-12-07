@@ -1,9 +1,9 @@
-openssl (0.9.8l,REV=2009.03.27) unstable
+openssl (0.9.8l,REV=2009.12.08) unstable
 
   * New upstream version.
   * Changed package version numbering scheme.
 
-   -- Yann Rouillard <yann@opencsw.org>  Fri, 06 Nov 2009 11:16:03 +0100
+   -- Yann Rouillard <yann@opencsw.org>  Fri, 08 Dec 2009 11:16:03 +0100
 
 openssl (0.9.8,REV=2009.03.27_rev=k) unstable
 
