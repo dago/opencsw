@@ -20,5 +20,6 @@ DISTNAME = $(DL_NAME)-$(GARVERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = py_cheetah
-PACKAGES = CSWpycheetah
+PACKAGES = CSWpy-cheetah
+REQUIRED_PKGS_CSWpy-cheetah = CSWpython-rt
 include gar/category.mk
