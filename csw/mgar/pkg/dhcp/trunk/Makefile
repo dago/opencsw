@@ -49,8 +49,8 @@ INSTALL_SCRIPTS = custom
 #  $$$$3 ~ /\/dhcpd.leases.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
 #  { print }'
 
-INITSMF_CSWdhcp = /etc/opt/csw/init.d/cswdhcpd
-SAMPLECONF_CSWdhcp = /etc/opt/csw/dhcpd.conf /etc/opt/csw/dhclient.conf /var/opt/csw/dhcp/db/dhcpd.leases
+INITSMF = /etc/opt/csw/init.d/cswdhcpd
+SAMPLECONF = /etc/opt/csw/dhcpd.conf /etc/opt/csw/dhclient.conf /var/opt/csw/dhcp/db/dhcpd.leases
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 #SPKG_CLASSES_CSWdhcp = none cswcpsampleconf cswinitsmf
