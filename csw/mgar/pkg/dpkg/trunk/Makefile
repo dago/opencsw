@@ -10,7 +10,7 @@ GARVERSION = 1.15.5.3
 CATEGORIES = lib
 DESCRIPTION = Debian package manager
 PACKAGES = CSWalternatives
-SPKG_DESC_CSWalternative = Alternatives management for CSW
+SPKG_DESC_CSWalternatives = Alternatives management for CSW, based on dpkg
 define BLURB
 endef
 SPKG_SOURCEURL = http://wiki.debian.org/Teams/Dpkg
