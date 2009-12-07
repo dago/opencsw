@@ -208,13 +208,15 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
 
-# The TEXINFO dependency is handled dynamically by looking at the prototype for matching files
-ifneq ($(MIGRATECONF)$(SAMPLECONF)$(PRESERVECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
-_EXTRA_GAR_PKGS += CSWcswclassutils
+# If you add another filter above, also add the class to this list. It is used
+# to detect if a package needs to depends on CSWcswclassutils by looking at
+# files belonging to one of these in the prototype.
+_CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf cswetcservices cswinetd cswinitsmf
+_CSWCLASSES += cswusergroup cswcrontab cswpycompile cswtexinfo
+
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
 _EXTRA_PAX_ARGS += $(foreach FILE,$(SAMPLECONF:%\.CSW=%) $(PRESERVECONF:%\.CSW=%),-s ",^\.\($(FILE)\)$$,.\1\.CSW,p")
-endif
 
 PKGGET_DESTDIR ?=
 
@@ -427,7 +429,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
-$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),CSWcswclassutils)
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
 $(WORKDIR)/%.depend: $(WORKDIR)
 	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
