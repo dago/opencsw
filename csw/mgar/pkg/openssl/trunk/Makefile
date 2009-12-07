@@ -29,6 +29,7 @@ PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils
 SPKG_DESC_CSWossl = Openssl meta package
 CATALOGNAME_CSWossl = openssl
 REQUIRED_PKGS_CSWossl = CSWossldevel CSWosslutils CSWosslrt
+ARCH_ALL_CSWossl = 1
 
 SPKG_DESC_CSWosslrt = Openssl runtime libraries
 CATALOGNAME_CSWosslrt = openssl_rt
