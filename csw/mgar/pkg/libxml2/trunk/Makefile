@@ -10,7 +10,7 @@ endef
 MASTER_SITES = ftp://xmlsoft.org/libxml2/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = ld-symbol-handling-fixup.patch
-PATCHFILES += 0001-relaxng.c-add-cast-to-allow-compilation-with-sun-stu.patch
+PATCHFILES += 0001-relaxng.c-cast-to-allow-compilation-with-sun-studio-.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

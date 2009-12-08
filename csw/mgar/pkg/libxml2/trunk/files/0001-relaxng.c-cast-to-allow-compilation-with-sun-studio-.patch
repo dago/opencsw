@@ -1,24 +1,25 @@
-From e7372dda4881e8421b55b80f556f62ec977bfe0f Mon Sep 17 00:00:00 2001
+From f2cee2dd783b6c71ea3d98ab9701b9b397753f0a Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@artsci.utoronto.ca>
 Date: Sat, 5 Dec 2009 13:32:49 -0500
-Subject: [PATCH] relaxng.c: add cast to allow compilation with sun studio 11
+Subject: [PATCH] relaxng.c: cast to allow compilation with sun studio 11
 
 Sun Studio 11 was failing to compile relaxng.c due to a type mismatch
-when calling xmlRngPErr.  The issue was caused by a type mismatch with
-in the outcomes of a ternary operation ("nothing" vs node->name).
-Cast the string literal to const xmlChar * so that both outcomes are
-of the same type and compatible with the xmlRngPErr function prototype.
+in a ternary operator used to provide an argument to xmlRngPErr.  It
+seems that sos11 cc is more pedantic about this part of the C99
+standard.  GCC issues a warning but doesn't fail by default.
 
-Cleanup another warning by casting a string literal to const unsigned
-char *.
+After casting the string literal "nothing" to (const xmlChar *) sos11
+cc is happy.  GCC no longer issues a warning either.
+
+Another warning was cleaned up with an identical cast.
 
 Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
 ---
- relaxng.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+ relaxng.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/relaxng.c b/relaxng.c
-index 075fc4a..e78fa18 100644
+index 075fc4a..6dbc499 100644
 --- a/relaxng.c
 +++ b/relaxng.c
 @@ -5369,7 +5369,8 @@ xmlRelaxNGParseNameClass(xmlRelaxNGParserCtxtPtr ctxt, xmlNodePtr node,
@@ -31,12 +32,13 @@ index 075fc4a..e78fa18 100644
          return (NULL);
      }
      if (ret != def) {
-@@ -9459,7 +9460,7 @@ xmlRelaxNGValidateInterleave(xmlRelaxNGValidCtxtPtr ctxt,
+@@ -9459,7 +9460,8 @@ xmlRelaxNGValidateInterleave(xmlRelaxNGValidCtxtPtr ctxt,
              ctxt->states = NULL;
              if (found == 0) {
                  if (cur == NULL) {
 -                    VALID_ERR2(XML_RELAXNG_ERR_INTEREXTRA, "noname");
-+		    VALID_ERR2(XML_RELAXNG_ERR_INTEREXTRA, (const unsigned char *) "noname");
++		    VALID_ERR2(XML_RELAXNG_ERR_INTEREXTRA,
++			       (const xmlChar *) "noname");
                  } else {
                      VALID_ERR2(XML_RELAXNG_ERR_INTEREXTRA, cur->name);
                  }
