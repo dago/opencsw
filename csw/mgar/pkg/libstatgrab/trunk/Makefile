@@ -18,10 +18,13 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Don't pull in ncurses from CSW
-LINKER_FLAGS = 
+SPKG_SOURCEURL = http://www.i-scream.org/libstatgrab/
+
+# Don't pull in ncurses from CSW, but add needed libraries to be self-sufficient
+LINKER_FLAGS = -lkstat -ldevinfo -lsocket -lnsl
 
 BUILD64 = 1
+NORUNPATH = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses-prefix=/usr
 
