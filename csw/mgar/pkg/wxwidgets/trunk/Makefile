@@ -70,30 +70,38 @@ PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
 ARCHALL_CSWwxwidgetsdevel  = 1
 SPKG_DESC_CSWwxwidgetscommon = A cross-platform toolkit, common files
-SPKG_DESC_CSWwxwidgetsdevel = A cross-platform toolkit, header files
-SPKG_DESC_CSWwxwidgetsgtk2 = A cross-platform toolkit, gtk2 support
+SPKG_DESC_CSWwxwidgetsdevel  = A cross-platform toolkit, header files
+SPKG_DESC_CSWwxwidgetsgtk2   = A cross-platform toolkit, gtk2 support
 
-REQUIRED_PKGS  = CSWexpat
-REQUIRED_PKGS += CSWfconfig
-REQUIRED_PKGS += CSWftype2
-REQUIRED_PKGS += CSWggettextrt
-REQUIRED_PKGS += CSWglib2
-REQUIRED_PKGS += CSWgtk2
-REQUIRED_PKGS += CSWiconv
-REQUIRED_PKGS += CSWjpeg
-REQUIRED_PKGS += CSWlibatk
-REQUIRED_PKGS += CSWlibsm
-REQUIRED_PKGS += CSWlibxext
-REQUIRED_PKGS += CSWmesa
-REQUIRED_PKGS += CSWncurses
-REQUIRED_PKGS += CSWpango
-REQUIRED_PKGS += CSWpng
-REQUIRED_PKGS += CSWsunmath
-REQUIRED_PKGS += CSWtiff
-REQUIRED_PKGS += CSWzlib
+REQUIRED_PKGS_CSWwxwidgetscommon += CSWexpat
+REQUIRED_PKGS_CSWwxwidgetscommon += CSWiconv
+REQUIRED_PKGS_CSWwxwidgetscommon += CSWlibxext
+REQUIRED_PKGS_CSWwxwidgetscommon += CSWncurses
+REQUIRED_PKGS_CSWwxwidgetscommon += CSWsunmath
+REQUIRED_PKGS_CSWwxwidgetscommon += CSWzlib
 
-REQUIRED_PKGS_CSWwxwidgetsgtk2 = CSWwxwidgetscommon
-REQUIRED_PKGS_CSWwxwidgetsdevel = CSWwxwidgetscommon
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWexpat
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWfconfig
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWftype2
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWggettextrt
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWglib2
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWgtk2
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWiconv
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWjpeg
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWlibatk
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWlibsm
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWlibxext
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWmesa
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWncurses
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWpango
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWpng
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWsunmath
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWtiff
+REQUIRED_PKGS_CSWwxwidgetsgtk2 += CSWzlib
+
+# Dependencies between wxwidgets subpackages
+REQUIRED_PKGS_CSWwxwidgetsgtk2  += CSWwxwidgetscommon
+REQUIRED_PKGS_CSWwxwidgetsdevel += CSWwxwidgetscommon CSWwxwidgetsgtk2
 
 PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
 PREREQUISITE_PKGS += CSWgtk2devel
@@ -110,6 +118,13 @@ PREREQUISITE_PKGS += SUNWxwinc
 
 PKGFILES_CSWwxwidgetsdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWwxwidgetsdevel += /opt/csw/bin/wx-config
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/share/bakefile/presets.*
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/share/aclocal.*
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/bin/wx-config
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/bin/wxrc=wxrc-2.8
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/bin/wxrc-2.8
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/lib/wx/config.*
+PKGFILES_CSWwxwidgetsdevel += /opt/csw/lib/wx/include.*
 PKGFILES_CSWwxwidgetsgtk2  = /opt/csw/lib/wx/(include|config)/gtk2-.*
 PKGFILES_CSWwxwidgetsgtk2 += /opt/csw/lib/libwx_gtk2.*
 PKGFILES_CSWwxwidgetsgtk2 += /opt/csw/bin/wx(-config|rc(|-2.8))
