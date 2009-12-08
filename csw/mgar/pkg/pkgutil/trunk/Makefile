@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 1.9
+GARVERSION = 1.9.1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -13,11 +13,14 @@ endef
 # Disable inclusion of CSWcommon by default.
 COMMON_PKG_DEPENDS = 
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES  = $(SF_MIRRORS)
+MASTER_SITES += svn-http://gar.svn.sourceforge.net/svnroot/opencsw/
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += $(call admfiles,CSWpkgutil,prototype)
 DISTFILES += i.cswpkgutil
 DISTFILES += r.cswpkgutil
+DISTFILES += utilities
+NOCHECKSUM = utilities
 
 PACKAGES = CSWpkgutil CSWpkgutilplus
 
@@ -31,6 +34,8 @@ REQUIRED_PKGS_CSWpkgutilplus = CSWcommon CSWperl CSWgnupg CSWpkgutil
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
 PKGFILES_CSWpkgutilplus += .*pkgutilplus.*
+PKGFILES_CSWpkgutilplus += .*build_sun_catalog.*
+PKGFILES_CSWpkgutilplus += .*opencsw.py.*
 
 ARCHALL_CSWpkgutilplus = 1
 
@@ -60,6 +65,9 @@ install-custom:
 	@ginstall $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)
 	@ginstall $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
+	@ginstall $(WORKSRC)/utilities/build_sun_catalog.py $(DESTDIR)/opt/csw/libexec/$(GARNAME)
+	@ginstall $(WORKSRC)/utilities/opencsw.py $(DESTDIR)/opt/csw/libexec/$(GARNAME)
+	@ln -s ../libexec/pkgutil/build_sun_catalog.py $(DESTDIR)$(bindir)/build_sun_catalog
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)plus
