@@ -29,7 +29,7 @@ SPKG_DESC_CSWpkgutilplus = Extends pkgutil functionality
 
 # Explicitly depend on CSWcommon here since it's not the default
 #REQUIRED_PKGS_CSWpkgutilplus = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWpmwwwcurl
-REQUIRED_PKGS_CSWpkgutilplus = CSWcommon CSWperl CSWgnupg CSWpkgutil
+REQUIRED_PKGS_CSWpkgutilplus = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWcswpkgloghooks CSWpython
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
