@@ -2,6 +2,9 @@ GARNAME = coreutils
 GARVERSION = 8.1
 CATEGORIES = utils
 
+# building with gcc gets us extra tools (eg: stdbuf)
+GARCOMPILER = GCC4
+
 SHELL = /opt/csw/bin/bash
 
 PREREQUISITE_PKGS = CSWbash
