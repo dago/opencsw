@@ -1,10 +1,10 @@
 GARNAME = automake
-GARVERSION = 1.11
+GARVERSION = 1.11.1
 CATEGORIES = devel
 
 EXTRA_MODULATORS = GARVERSION
 # Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on
-MODULATIONS_GARVERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.2 1.11
+MODULATIONS_GARVERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.1
 
 DESCRIPTION = A tool for automatically generating Makefiles.
 define BLURB
