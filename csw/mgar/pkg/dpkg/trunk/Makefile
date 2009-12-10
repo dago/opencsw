@@ -10,6 +10,7 @@ GARVERSION = 1.15.5.3
 CATEGORIES = lib
 DESCRIPTION = Debian package manager
 PACKAGES = CSWalternatives
+ARCHALL_CSWalternatives = 1
 SPKG_DESC_CSWalternatives = Alternatives management for CSW, based on dpkg
 define BLURB
 endef
