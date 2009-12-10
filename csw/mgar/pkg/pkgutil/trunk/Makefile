@@ -14,13 +14,12 @@ endef
 COMMON_PKG_DEPENDS = 
 
 MASTER_SITES  = $(SF_MIRRORS)
-MASTER_SITES += svn-http://gar.svn.sourceforge.net/svnroot/opencsw/
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += $(call admfiles,CSWpkgutil,prototype)
 DISTFILES += i.cswpkgutil
 DISTFILES += r.cswpkgutil
-DISTFILES += utilities
-NOCHECKSUM = utilities
+DISTFILES += build_sun_catalog.py
+DISTFILES += opencsw.py
 
 PACKAGES = CSWpkgutil CSWpkgutilplus
 
@@ -57,19 +56,18 @@ install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d
-	@ginstall $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
+	@ginstall -m 644 $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
 	@ginstall -m 755 $(WORKSRC)/pkgutillog $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d/01-CSW$(GARNAME)plus-log
 	@ginstall -m 755 -d $(DESTDIR)$(bindir)
-	@ginstall $(WORKSRC)/$(GARNAME) $(WORKSRC)/bldcat $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
-	@ginstall -m 755 -d $(DESTDIR)$(sysconfdir)
-	@ginstall $(WORKSRC)/$(GARNAME).conf $(DESTDIR)$(sysconfdir)/$(GARNAME).conf.CSW
+	@ginstall -m 755 $(WORKSRC)/$(GARNAME) $(WORKSRC)/bldcat $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc
+	@ginstall -m 644 $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/opt/csw/etc/$(GARNAME).conf.CSW
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)
-	@ginstall $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
-	@ginstall $(WORKSRC)/utilities/build_sun_catalog.py $(DESTDIR)/opt/csw/libexec/$(GARNAME)
-	@ginstall $(WORKSRC)/utilities/opencsw.py $(DESTDIR)/opt/csw/libexec/$(GARNAME)
+	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
+	@ginstall -m 755 $(FILEDIR)/build_sun_catalog.py $(FILEDIR)/opencsw.py $(DESTDIR)/opt/csw/libexec/$(GARNAME)
 	@ln -s ../libexec/pkgutil/build_sun_catalog.py $(DESTDIR)$(bindir)/build_sun_catalog
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
+	@ginstall -m 444 $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)plus
 	@ginstall -m 444 $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
 	@ginstall -m 444 $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(GARNAME)plus/readme
@@ -80,5 +78,5 @@ install-custom:
 	@chmod 444 $(DESTDIR)$(mandir)/man1/*
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/pkgask
-	@ginstall $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
+	@ginstall -m 644 $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
 	@$(MAKECOOKIE)
