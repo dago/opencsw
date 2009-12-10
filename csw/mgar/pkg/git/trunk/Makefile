@@ -1,6 +1,6 @@
 GARNAME = git
-GARVERSION = 1.6.5.1
-#xPATCHLEVEL = rc3
+GARVERSION = 1.6.6
+PATCHLEVEL = rc2
 CATEGORIES = devel
 
 # disable tests until next version bump (at the top so it stands out)
@@ -33,7 +33,7 @@ PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
 REQUIRED_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
-REQUIRED_PKGS_CSWgit += CSWpmtermreadkey CSWpmnetsmtpssl
+REQUIRED_PKGS_CSWgit += CSWpmtermreadkey CSWpmnetsmtpssl CSWless
 
 REQUIRED_PKGS_CSWgitk = CSWgit CSWtk
 
@@ -86,7 +86,6 @@ GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
 GIT_TREEISH_git.git = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 
 DISTFILES = CSWgit.postinstall
-#PATCHFILES = 0001-ls-files-die-instead-of-fprintf-exit-in-i-error.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
@@ -115,18 +114,19 @@ CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --with-tcltk=$(bindir)/wish
 CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --with-default_pager=/opt/csw/bin/less
 CONFIGURE_ARGS += --with-iconv=$(prefix)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
+CONFIGURE_ARGS += --with-gitconfig=$(sysconfdir)/gitconfig
+CONFIGURE_ARGS += --with-pager=/opt/csw/bin/less
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
-		ETC_GITCONFIG=$(sysconfdir)/gitconfig \
 		ASCIIDOC_NO_ROFF=YesPlease \
 		all doc
 
-INSTALL_ARGS = ETC_GITCONFIG=$(sysconfdir)/gitconfig \
-		INSTALLDIRS=vendor \
+INSTALL_ARGS = 	INSTALLDIRS=vendor \
 		install-man install-html
 
 # We want static libs installed for our devel package
