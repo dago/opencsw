@@ -33,9 +33,9 @@ case "$1" in
     FAIL=
     /opt/csw/sbin/dhcpd -cf $CONF -t || FAIL=1
     /opt/csw/sbin/dhcpd -cf $CONF -T || FAIL=2
-    [ $FAIL = 1 ] && echo "Your configuration seems broken. Exiting."
-    [ $FAIL = 2 ] && echo "Your lease file seems broken. Exiting."
-    [ $FAIL ] && exit 1
+    [ "$FAIL" = 1 ] && echo "Your configuration seems broken. Not restarting."
+    [ "$FAIL" = 2 ] && echo "Your lease file seems broken. Not restarting."
+    [ "$FAIL" ] && exit 1
     $0 stop
     echo "Waiting for $SERVICE to stop.\c"
     while ( /usr/bin/pgrep -x dhcpd > /dev/null ); do

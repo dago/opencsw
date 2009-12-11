@@ -1,5 +1,5 @@
 GARNAME = dhcp
-GARVERSION = 4.1.1b3
+GARVERSION = 4.1.1rc1
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
