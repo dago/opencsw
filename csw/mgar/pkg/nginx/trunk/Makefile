@@ -18,6 +18,9 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWosslrt CSWpcrert CSWzlib
 
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
