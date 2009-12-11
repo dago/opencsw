@@ -30,15 +30,15 @@ PATCHFILES = sm-libraries.patch
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 NOISALIST  = 1
-BUILD64    = 1
+# There are no 64-bit ldap libraries, disabling the 64-bit build
+# BUILD64    = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-libcurl
-CONFIGURE_ARGS += --with-ldap
-CONFIGURE_ARGS += --with-zlib
-CONFIGURE_ARGS += --with-bzip2
-CONFIGURE_ARGS += --with-readline
-CONFIGURE_ARGS += --enable-threads=solaris
+CONFIGURE_ARGS += --with-libcurl=/opt/csw
+CONFIGURE_ARGS += --with-ldap=/opt/csw
+CONFIGURE_ARGS += --with-zlib=/opt/csw
+CONFIGURE_ARGS += --with-bzip2=/opt/csw
+CONFIGURE_ARGS += --with-readline=/opt/csw
 
 CONFIGURE_ARGS += --with-pinentry-pgm=/opt/csw/bin/pinentry-curses
 
@@ -54,27 +54,35 @@ PKGFILES_CSWgnupg-agent += .*gpg-connect-agent.*
 PKGFILES_CSWgnupg-agent += .*gpgkey2ssh.*
 PKGFILES_CSWgnupg-agent += .*symcryptrun.*
 
-REQUIRED_PKGS_common_CSWgnupg2  = CSWbzip2
-REQUIRED_PKGS_common_CSWgnupg2 += CSWcurlrt
-REQUIRED_PKGS_common_CSWgnupg2 += CSWgcrypt
-REQUIRED_PKGS_common_CSWgnupg2 += CSWggettextrt
-REQUIRED_PKGS_common_CSWgnupg2 += CSWgpgerr
-REQUIRED_PKGS_common_CSWgnupg2 += CSWiconv
-REQUIRED_PKGS_common_CSWgnupg2 += CSWlibassuan
-REQUIRED_PKGS_common_CSWgnupg2 += CSWlibidn
-REQUIRED_PKGS_common_CSWgnupg2 += CSWlibksba
-REQUIRED_PKGS_common_CSWgnupg2 += CSWoldaprt
-REQUIRED_PKGS_common_CSWgnupg2 += CSWosslrt
-REQUIRED_PKGS_common_CSWgnupg2 += CSWpth
-REQUIRED_PKGS_common_CSWgnupg2 += CSWreadline
-REQUIRED_PKGS_common_CSWgnupg2 += CSWzlib
+REQUIRED_PKGS_common  = CSWbzip2
+REQUIRED_PKGS_common += CSWcurlrt
+REQUIRED_PKGS_common += CSWgcrypt
+REQUIRED_PKGS_common += CSWggettextrt
+REQUIRED_PKGS_common += CSWgpgerr
+REQUIRED_PKGS_common += CSWiconv
+REQUIRED_PKGS_common += CSWlibassuan
+REQUIRED_PKGS_common += CSWlibidn
+REQUIRED_PKGS_common += CSWlibksba
+REQUIRED_PKGS_common += CSWoldaprt
+REQUIRED_PKGS_common += CSWosslrt
+REQUIRED_PKGS_common += CSWpth
+REQUIRED_PKGS_common += CSWreadline
+REQUIRED_PKGS_common += CSWzlib
 
-REQUIRED_PKGS_CSWgnupg2 += $(REQUIRED_PKGS_common_CSWgnupg2)
+
+REQUIRED_PKGS_CSWgnupg2 += $(REQUIRED_PKGS_common)
 REQUIRED_PKGS_CSWgnupg2 += CSWgnupg-agent
 
-REQUIRED_PKGS_CSWgnupg-agent = CSWpinentry
+REQUIRED_PKGS_CSWgnupg-agent  = CSWpinentry
+REQUIRED_PKGS_CSWgnupg-agent += CSWgcrypt
+REQUIRED_PKGS_CSWgnupg-agent += CSWggettextrt
+REQUIRED_PKGS_CSWgnupg-agent += CSWgpgerr
+REQUIRED_PKGS_CSWgnupg-agent += CSWiconv
+REQUIRED_PKGS_CSWgnupg-agent += CSWpth
+REQUIRED_PKGS_CSWgnupg-agent += CSWreadline
 
-PREREQUISITE_PKGS  = $(REQUIRED_PKGS_common_CSWgnupg2)
+
+PREREQUISITE_PKGS  = $(REQUIRED_PKGS_common)
 PREREQUISITE_PKGS += $(REQUIRED_PKGS_CSWgnupg-agent)
 
 TEST_TARGET = check
