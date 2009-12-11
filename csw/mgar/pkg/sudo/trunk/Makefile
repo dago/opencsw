@@ -1,7 +1,7 @@
 GARNAME = sudo
 GARVERSION = 1.7.2
 CATEGORIES = utils
-RELEASE = p1
+RELEASE = p2
 
 DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
@@ -46,6 +46,10 @@ CONFIGURE_ARGS += --with-logpath=/var/opt/csw/sudo/logs/sudolog
 ifneq ($(shell uname -r),5.8)
     CONFIGURE_ARGS += --with-project
 endif
+
+# sysconfdir to be enabled later
+# sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
 
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
