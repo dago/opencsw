@@ -38,11 +38,11 @@ localstatedir=/var/opt/csw
 CONFIGURE_ARGS += --with-cpu-opt=$(NGINXCPU)
 CONFIGURE_ARGS += --with-cc-opt="-I$(includedir) -I$(includedir)/openssl"
 CONFIGURE_ARGS += --with-ld-opt="$(LDFLAGS)"
+CONFIGURE_ARGS += --lock-path=/var/run/nginx/nginx.lock
+CONFIGURE_ARGS += --pid-path=/var/run/nginx/nginx.pid
 CONFIGURE_ARGS += --conf-path=$(sysconfdir)/nginx/nginx.conf
 CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
 CONFIGURE_ARGS += --prefix=$(localstatedir)/nginx
-CONFIGURE_ARGS += --lock-path=$(localstatedir)/nginx/nginx.lock
-CONFIGURE_ARGS += --pid-path=$(localstatedir)/nginx/nginx.pid
 CONFIGURE_ARGS += --http-client-body-temp-path=$(localstatedir)/nginx/client
 CONFIGURE_ARGS += --http-fastcgi-temp-path=$(localstatedir)/nginx/fastcgi
 CONFIGURE_ARGS += --http-proxy-temp-path=$(localstatedir)/nginx/proxy
