@@ -12,6 +12,8 @@ MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswnginx
 
+LICENSE = LICENSE
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
