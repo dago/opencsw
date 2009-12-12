@@ -1,5 +1,5 @@
 GARNAME = coreutils
-GARVERSION = 8.1
+GARVERSION = 8.2
 CATEGORIES = utils
 
 # building with gcc gets us extra tools (eg: stdbuf)
