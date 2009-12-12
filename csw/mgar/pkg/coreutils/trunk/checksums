@@ -1,3 +1,3 @@
 0fde2b11f34c49995765566acf6cd5b4  0001-Fix-solaris-acl-support-breakage.patch
 acbd08eef41092a7b348d03206dad625  0002-Add-lintl-to-xalloc-die-LDADD-flags.patch
-4cde9f31604f4da188ed302ca55545ea  coreutils-8.1.tar.gz
+dfb0d3dbc5f555386339f4f74621cda0  coreutils-8.2.tar.gz
