@@ -4,8 +4,8 @@
 #
 
 NGINX=/opt/csw/sbin/nginx
-CFGFILE=/opt/csw/etc/nginx/nginx.conf
-VARRUNX=/opt/csw/var/run/nginx
+CFGFILE=/etc/opt/csw/nginx/nginx.conf
+VARRUNX=/var/run/nginx
 PIDFILE=${VARRUNX}/nginx.pid
 PIDFILO=${VARRUNX}/nginx.pid.oldbin
 
