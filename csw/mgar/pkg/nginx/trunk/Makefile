@@ -32,6 +32,9 @@ NGINXCPU = $(NGINXCPU_$(ISA))
 
 CFLAGS =
 
+sysconfdir=/etc/opt/csw
+localstatedir=/var/opt/csw
+
 CONFIGURE_ARGS += --with-cpu-opt=$(NGINXCPU)
 CONFIGURE_ARGS += --with-cc-opt="-I$(includedir) -I$(includedir)/openssl"
 CONFIGURE_ARGS += --with-ld-opt="$(LDFLAGS)"
