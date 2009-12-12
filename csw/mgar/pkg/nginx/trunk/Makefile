@@ -1,5 +1,5 @@
 GARNAME = nginx
-GARVERSION = 0.7.55
+GARVERSION = 0.7.64
 CATEGORIES = server
 
 DESCRIPTION = HTTP server and mail proxy server
@@ -18,7 +18,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWosslrt CSWpcrert CSWzlib
 
-PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS  = solaris8-sparc  solaris8-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 EXTRA_BUILD_ISAS_i386  = pentium_pro
@@ -40,11 +40,11 @@ CONFIGURE_ARGS += --conf-path=$(sysconfdir)/nginx/nginx.conf
 CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
 CONFIGURE_ARGS += --lock-path=$(prefix)/var/run/nginx/nginx.lock
 CONFIGURE_ARGS += --pid-path=$(prefix)/var/run/nginx/nginx.pid
-CONFIGURE_ARGS += --http-client-body-temp-path=$(prefix)/var/spool/nginx/client
-CONFIGURE_ARGS += --http-fastcgi-temp-path=$(prefix)/var/spool/nginx/fastcgi
-CONFIGURE_ARGS += --http-proxy-temp-path=$(prefix)/var/spool/nginx/proxy
-CONFIGURE_ARGS += --error-log-path=$(prefix)/var/log/nginx/error.log
-CONFIGURE_ARGS += --http-log-path=$(prefix)/var/log/nginx/access.log
+CONFIGURE_ARGS += --http-client-body-temp-path=$(prefix)/var/nginx/client
+CONFIGURE_ARGS += --http-fastcgi-temp-path=$(prefix)/var/nginx/fastcgi
+CONFIGURE_ARGS += --http-proxy-temp-path=$(prefix)/var/nginx/proxy
+CONFIGURE_ARGS += --error-log-path=$(prefix)/var/nginx/logs/error.log
+CONFIGURE_ARGS += --http-log-path=$(prefix)/var/nginx/logs/access.log
 CONFIGURE_ARGS += --with-md5=YES
 CONFIGURE_ARGS += --with-sha1=YES
 CONFIGURE_ARGS += --with-http_ssl_module
@@ -55,7 +55,7 @@ CONFIGURE_ARGS += --with-http_stub_status_module
 
 TEST_SCRIPTS =
 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest\/site))))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/spool\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest\/site))))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
 
 include gar/category.mk
 
@@ -70,11 +70,11 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/nginx/conf.d
 	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
 	ginstall -d $(DESTDIR)$(docdir)/nginx
-	ginstall -d $(DESTDIR)$(prefix)/var/log/nginx
+	ginstall -d $(DESTDIR)$(prefix)/var/nginx/client
+	ginstall -d $(DESTDIR)$(prefix)/var/nginx/fastcgi
+	ginstall -d $(DESTDIR)$(prefix)/var/nginx/logs
+	ginstall -d $(DESTDIR)$(prefix)/var/nginx/proxy
 	ginstall -d $(DESTDIR)$(prefix)/var/nginx/sites
-	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/client
-	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/fastcgi
-	ginstall -d $(DESTDIR)$(prefix)/var/spool/nginx/proxy
 	mv $(DESTDIR)$(sysconfdir)/nginx/fastcgi_params $(DESTDIR)$(sysconfdir)/nginx/fastcgi_params.CSW
 	mv $(DESTDIR)$(sysconfdir)/nginx/mime.types $(DESTDIR)$(sysconfdir)/nginx/mime.types.CSW
 	mv $(DESTDIR)$(sysconfdir)/nginx/nginx.conf $(DESTDIR)$(sysconfdir)/nginx/nginx.conf.CSW
