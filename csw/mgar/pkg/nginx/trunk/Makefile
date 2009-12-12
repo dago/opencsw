@@ -10,8 +10,7 @@ endef
 
 MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWnginx,checkinstall postinstall preremove)
-DISTFILES += cswnginx.xml svc-cswnginx
+DISTFILES += cswnginx
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -60,16 +59,20 @@ TEST_SCRIPTS =
 
 #PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest\/site))))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
 
-include gar/category.mk
+INITSMF    = $(sysconfdir)/init.d/cswnginx
+SAMPLECONF = $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf
 
-NGINXDOCS = CHANGES CHANGES.ru LICENSE README
+NGINXDOCS  = CHANGES CHANGES.ru LICENSE README
+
+
+include gar/category.mk
 
 post-configure-modulated:
 	gsed -i s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
 	$(MAKECOOKIE)
 
 post-install-modulated:
-	cp $(WORKDIR)/svc-cswnginx $(WORKDIR)/cswnginx
+	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -d $(DESTDIR)$(sysconfdir)/nginx/conf.d
 	ginstall -d $(DESTDIR)$(sharedstatedir)/nginx/contrib
 	ginstall -d $(DESTDIR)$(docdir)/nginx
@@ -78,9 +81,7 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(localstatedir)/nginx/logs
 	ginstall -d $(DESTDIR)$(localstatedir)/nginx/proxy
 	ginstall -d $(DESTDIR)$(localstatedir)/nginx/sites
-	mv $(DESTDIR)$(sysconfdir)/nginx/fastcgi_params $(DESTDIR)$(sysconfdir)/nginx/fastcgi_params.CSW
-	mv $(DESTDIR)$(sysconfdir)/nginx/mime.types $(DESTDIR)$(sysconfdir)/nginx/mime.types.CSW
-	mv $(DESTDIR)$(sysconfdir)/nginx/nginx.conf $(DESTDIR)$(sysconfdir)/nginx/nginx.conf.CSW
+	cp $(WORKDIR)/cswnginx $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); \
 	cp -r contrib/* $(DESTDIR)$(sharedstatedir)/nginx/contrib; \
 	cp $(NGINXDOCS) $(DESTDIR)$(docdir)/nginx

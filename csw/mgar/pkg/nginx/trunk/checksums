@@ -1,7 +1,2 @@
-bb85ec05a172562e6de38a1e8a64198c  CSWnginx.checkinstall
-12b5333e18e985b17f8a5465646e9a8a  CSWnginx.gspec
-bb404771e330fe98f93cb2d12a808121  CSWnginx.postinstall
-e9178dc33f2d38aab8f118a8f0550ac7  CSWnginx.preremove
-5c832758a62ee319ea9dfd1829d736eb  cswnginx.xml
+518551b950c0243f9cdc5d978d40d3e1  cswnginx
 cfa97c0f784532820110b5eee57fef6d  nginx-0.7.64.tar.gz
-c5b3babbd1261bcb3f3e17494822bb9f  svc-cswnginx
