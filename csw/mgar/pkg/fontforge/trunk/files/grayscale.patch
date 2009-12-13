@@ -1,0 +1,12 @@
+--- fontforge-20090923/fontforge/freetypeui.c.orig	2009-12-13 11:06:55.587423639 +0100
++++ fontforge-20090923/fontforge/freetypeui.c	2009-12-13 11:07:48.584395183 +0100
+@@ -187,7 +187,8 @@
+ return( TT_Err_Execution_Too_Long );		/* Some random error code, says we're probably in a infinite loop */
+     dc->exc = exc;
+ #if FREETYPE_MAJOR>2 || (FREETYPE_MAJOR==2 && (FREETYPE_MINOR>1 || (FREETYPE_MINOR==1 && FREETYPE_PATCH>11 )))
+-    exc->grayscale = !dc->is_bitmap;		/* if we are in 'prep' or 'fpgm' freetype doesn't know this yet */
++    /* The keyword 'grayscale' doesn't come up in the freetype library headers. */
++    /* exc->grayscale = !dc->is_bitmap;	*/	/* if we are in 'prep' or 'fpgm' freetype doesn't know this yet */
+ #endif
+ 
+     /* Set up for watch points */

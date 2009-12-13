@@ -1,0 +1,13 @@
+--- fontforge-20090923/fontforge/cvdgloss.c.orig	2009-12-13 11:09:40.099444315 +0100
++++ fontforge-20090923/fontforge/cvdgloss.c	2009-12-13 11:15:08.708601663 +0100
+@@ -1041,7 +1041,10 @@
+ 	    (val1&2) ? exc->tt_metrics.rotated ? "(rotated) | ": "(not rotated) | " : "",
+ 	    (val1&4) ? exc->tt_metrics.stretched ? "(stretched) | ": "(not stretched) | " : "",
+ #if FREETYPE_MAJOR>2 || (FREETYPE_MAJOR==2 && (FREETYPE_MINOR>1 || (FREETYPE_MINOR==1 && FREETYPE_PATCH>11 )))
++	    /*
+ 	    (val1&32) ? exc->grayscale ? "(grey scale)": "(black/white)" : ""
++	    */
++	    ""
+ #else
+ 	    ""
+ #endif
