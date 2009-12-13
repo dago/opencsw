@@ -525,7 +525,7 @@ $(foreach P,$(SPKG_SPECS),\
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
-$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C " if( $$F[1] eq "$C" && !$$done{$C}++ );)')
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
