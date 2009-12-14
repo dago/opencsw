@@ -461,7 +461,7 @@ sub parse {
     # specified file.
 
     my ( $dname, $spec, $line, $flag );
-    for ( my $i = 0 ; $i <= $#{@$content} ; $i++ ) {
+    for ( my $i = 0 ; $i <= $#$content ; $i++ ) {
 
         my ( $source, $lineno, $line ) = @{ $content->[$i] };
 
