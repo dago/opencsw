@@ -41,7 +41,7 @@ REQUIRED_PKGS_CSWossldevel = CSWosslrt
 
 SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
 CATALOGNAME_CSWosslutils = openssl_utils
-REQUIRED_PKGS_CSWosslutils = CSWosslrt
+REQUIRED_PKGS_CSWosslutils = CSWosslrt CSWcswclassutils
 SPKG_CLASSES_CSWosslutils = none cswpreserveconf
 
 
