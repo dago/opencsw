@@ -22,14 +22,15 @@ REQUIRED_PKGS = CSWosslrt CSWpcrert CSWzlib
 PACKAGING_PLATFORMS  = solaris8-sparc  solaris8-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-#EXTRA_BUILD_ISAS_i386  = pentium_pro
+EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
-NGINXCPU_pentium_pro = pentiumpro
-NGINXCPU_sparcv8 = sparc32
-NGINXCPU_sparcv9 = sparc64
-NGINXCPU_$(ISA) ?= $(ISA)
-NGINXCPU = $(NGINXCPU_$(ISA))
+NGINXCPU_i386        = pentium
+NGINXCPU_pentium_pro = pentium3
+NGINXCPU_sparcv8     = sparc32
+NGINXCPU_sparcv9     = sparc64
+NGINXCPU_$(ISA)     ?= $(ISA)
+NGINXCPU             = $(NGINXCPU_$(ISA))
 
 CFLAGS =
 
@@ -51,18 +52,17 @@ CONFIGURE_ARGS += --error-log-path=$(localstatedir)/nginx/logs/error.log
 CONFIGURE_ARGS += --http-log-path=$(localstatedir)/nginx/logs/access.log
 CONFIGURE_ARGS += --with-md5=YES
 CONFIGURE_ARGS += --with-sha1=YES
-CONFIGURE_ARGS += --with-http_ssl_module
-CONFIGURE_ARGS += --with-http_realip_module
 CONFIGURE_ARGS += --with-http_dav_module
 CONFIGURE_ARGS += --with-http_flv_module
+CONFIGURE_ARGS += --with-http_realip_module
+CONFIGURE_ARGS += --with-http_secure_link_module
+CONFIGURE_ARGS += --with-http_ssl_module
 CONFIGURE_ARGS += --with-http_stub_status_module
 
 TEST_SCRIPTS =
 
-#PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/((log|run)|(svc|(svc\/(manifest|manifest\/site))))$$$$/ { $$$$6 = "sys" } $$$$3 ~ /\/var\/nginx\/(client|fastcgi|proxy)$$$$/ { $$$$4 = "700" } { print }'
-
-INITSMF    = $(sysconfdir)/init.d/cswnginx
-SAMPLECONF = $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf
+INITSMF      = $(sysconfdir)/init.d/cswnginx
+PRESERVECONF = $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf
 
 NGINXDOCS  = CHANGES CHANGES.ru LICENSE README
 

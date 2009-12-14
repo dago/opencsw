@@ -1,6 +1,10 @@
 #!/bin/sh
 #
-# SMF Method file for nginx
+#RC_KNUM 20
+#RC_SNUM 88
+#RC_KLEV 0,1,S
+#RC_SLEV 2
+#AUTOENABLE no
 #
 
 NGINX=/opt/csw/sbin/nginx
