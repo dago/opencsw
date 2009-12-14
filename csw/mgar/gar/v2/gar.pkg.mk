@@ -776,6 +776,17 @@ platforms:
 	)
 	@$(MAKECOOKIE)
 
+platforms-%:
+	$(foreach P,$(PACKAGING_PLATFORMS),\
+		$(if $(PACKAGING_HOST_$P),\
+			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
+				$(MAKE) PLATFORM=$P $* && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P $*" && \
+			),\
+			$(error *** No host has been defined for platform $P)\
+		)\
+	) true
+
 replatforms: spotless platforms
 
 # Print relecant informations about the platform
