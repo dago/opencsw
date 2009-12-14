@@ -3,7 +3,8 @@
 # $Id$
 
 GARNAME = fontforge
-GARVERSION = 20090923
+VERSION_DATESTAMP = 20090923
+GARVERSION = 0.$(VERSION_DATESTAMP)
 CATEGORIES = lib
 DESCRIPTION = An outline font editor
 define BLURB
@@ -15,10 +16,13 @@ REQUIRED_PKGS += CSWggettextrt
 REQUIRED_PKGS += CSWiconv
 REQUIRED_PKGS += CSWlibice
 REQUIRED_PKGS += CSWlibsm
+REQUIRED_PKGS += CSWpython
 REQUIRED_PKGS += CSWpython-rt
 
-PATCHFILES = grayscale.patch grayscale-cvdgloss.c.patch
-DISTFILES  = fontforge_full-$(GARVERSION).tar.bz2
+DISTNAME = fontforge-$(VERSION_DATESTAMP)
+PATCHFILES  = grayscale.patch
+PATCHFILES += grayscale-cvdgloss.c.patch
+DISTFILES  = fontforge_full-$(VERSION_DATESTAMP).tar.bz2
 UFILES_REGEX = fontforge_full-(\d+(?:\.\d+)*).tar.bz2
 CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_LINKER_FLAGS = -liconv -lintl -lrt
