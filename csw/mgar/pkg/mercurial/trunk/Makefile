@@ -1,5 +1,5 @@
 GARNAME = mercurial
-GARVERSION = 1.4
+GARVERSION = 1.4.1
 CATEGORIES = devel
 
 DESCRIPTION = Fast, lightweight Source Control Management system
@@ -20,7 +20,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py
 # Some tests fail, but manual inspection of the failures show no significant failures.
-TEST_TARGET = #tests
+TEST_TARGET = tests
 
 INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS += --root=$(DESTDIR) --prefix=/opt/csw
