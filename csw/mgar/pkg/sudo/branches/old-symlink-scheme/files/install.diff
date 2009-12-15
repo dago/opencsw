@@ -1,0 +1,31 @@
+diff --speed-large-files --minimal -Nru sudo-1.6.8p5.orig/install-sh sudo-1.6.8p5/install-sh
+--- sudo-1.6.8p5.orig/install-sh	2004-12-16 20:35:30.273969000 -0500
++++ sudo-1.6.8p5/install-sh	2004-12-16 20:34:57.655925000 -0500
+@@ -15,7 +15,7 @@
+ MKDIR=mkdir
+ MV=mv
+ RM=rm
+-STRIP=strip
++STRIP="echo fake strip"
+ WHOAMI="echo root"
+ 
+ ##  Some systems don't support -x, so we have to use -f.
+@@ -35,12 +35,12 @@
+     fi
+ done
+ 
+-for d in /usr/ccs/bin /usr/bin /bin; do
+-    if [ -f $d/strip ]; then
+-	STRIP=${d}/strip
+-	break
+-    fi
+-done
++#for d in /usr/ccs/bin /usr/bin /bin; do
++#    if [ -f $d/strip ]; then
++#	STRIP=${d}/strip
++#	break
++#    fi
++#done
+ 
+ ##  Defaults.
+ CHOWNIT=false
