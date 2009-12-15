@@ -2,6 +2,11 @@ GARNAME = coreutils
 GARVERSION = 8.2
 CATEGORIES = utils
 
+# seq has issues related to the handling of long double's with -O2.
+# this issue manifested on sol8 and sol9 x86 only.  sparc was unaffected
+# and sol10 x86 was fine too.
+OPT_FLAGS_GCC = -O1 -pipe
+
 # building with gcc gets us extra tools (eg: stdbuf)
 GARCOMPILER = GCC4
 
