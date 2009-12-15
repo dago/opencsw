@@ -1,5 +1,5 @@
 GARNAME = mod_wsgi
-GARVERSION = 2.5
+GARVERSION = 3.1
 CATEGORIES = lib
 
 DESCRIPTION = an Apache/Python WSGI adapter module

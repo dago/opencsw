@@ -1,4 +1,4 @@
-43ad11c477799e2f780c50197c420afd  download/mod_wsgi-2.5.tar.gz
-a2e8679f45232e56efbc352597ffe456  download/postinstall
-a67766841dedbaba0d7b15e7f08c8658  download/preremove
-0dd379f20ceb32fc77bb3a9bf045097f  download/space
+f9aabdcd7a3f66a2319d10793477f9e9  mod_wsgi-3.1.tar.gz
+a2e8679f45232e56efbc352597ffe456  postinstall
+a67766841dedbaba0d7b15e7f08c8658  preremove
+0dd379f20ceb32fc77bb3a9bf045097f  space
