@@ -1,5 +1,5 @@
 GARNAME = Trac
-GARVERSION = 0.11.5
+GARVERSION = 0.11.6
 CATEGORIES = apps
 
 DESCRIPTION = Integrated SCM and Project Management
@@ -16,7 +16,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWtrac
 REQUIRED_PKGS_CSWtrac = CSWpysetuptools CSWpysvn CSWgenshi
-REQUIRED_PKGS_CSWtrac += CSWpython-rt
+REQUIRED_PKGS_CSWtrac += CSWpython CSWpython-devel
 
 CATALOGNAME_CSWtrac = trac
 SPKG_DESC_CSWtrac = Integrated SCM and Project Management
