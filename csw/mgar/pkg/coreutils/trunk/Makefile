@@ -24,7 +24,6 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 0001-Fix-solaris-acl-support-breakage.patch
-PATCHFILES += 0002-Add-lintl-to-xalloc-die-LDADD-flags.patch
 
 PREREQUISITE_PKGS =  CSWautomake CSWautoconf CSWbison CSWggettext CSWgit
 PREREQUISITE_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
@@ -49,7 +48,7 @@ PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 post-install-modulated:
 	@echo Cleaning up install directory...
 	rm -rf $(DESTDIR)/$(libdir)
-	@echo Manually install gsu (so no root rights required)
+	@echo Manually install gsu \(so no root rights required\)
 	cp $(WORKSRC)/src/su $(DESTDIR)$(bindir)/gsu
 
 post-merge:
