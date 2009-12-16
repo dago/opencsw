@@ -2,6 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+# A known issue: There's a problem with getpass.getpass() on Solaris, in which
+# it echoes the entered password.
+# http://bugs.python.org/issue7208
+
 GARNAME = django
 GARVERSION = 1.1.1
 CATEGORIES = python
