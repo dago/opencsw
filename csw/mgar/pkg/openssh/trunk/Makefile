@@ -13,9 +13,8 @@
 ###### Package information #######
 
 GARNAME = openssh
-GARVERSION = 5.3
-RELEASE = p1
-GSSKEX_PATCH_VERSION = $(GARVERSION)$(RELEASE)
+GARVERSION = 5.3p1
+GSSKEX_PATCH_VERSION = $(GARVERSION)
 GSSKEX_PATCH_DATE = 20090726
 CATEGORIES = server
 
@@ -53,10 +52,7 @@ MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sx
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
-DISTVERSION = $(GARVERSION)$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
-
-DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWossh.prototype CSWossh.preinstall CSWossh.checkinstall
 DISTFILES += CSWosshlpk.prototype CSWosshlpk.preinstall CSWosshlpk.checkinstall
 DISTFILES += CSWosshclient.prototype
@@ -156,4 +152,3 @@ merge-config-files:
 	@$(MAKECOOKIE)
 
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
