@@ -26,8 +26,6 @@ MASTER_SITES = http://www.djangoproject.com/download/$(GARVERSION)/tarball/
 DISTFILES  = Django-$(GARVERSION).tar.gz
 PACKAGES = CSWpy-django
 CATALOGNAME_CSWpy-django = py_django
-# In case someone has an old version from testing
-INCOMPATIBLE_PKGS = CSWdjango
 ARCHALL = 1
 UFILES_REGEX = Django-(\d+(?:\.\d+)*).tar.gz
 WORKSRC = $(WORKDIR)/Django-$(GARVERSION)
