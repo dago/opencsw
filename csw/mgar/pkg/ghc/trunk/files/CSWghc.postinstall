@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+# Implement the procedure described here:
+#   http://hackage.haskell.org/trac/ghc/wiki/Building/Solaris
+
+/opt/csw/bin/ghc-pkg describe rts > /tmp/rts.pkg.in
+
+cat /tmp/rts.pkg.in | sed \
+  -e "s, -R/opt/csw/lib ,,g" \
+  -e "s,^\(ld-options:\) \(.*\),\1 -R/opt/csw/lib \2," > /tmp/rts.pkg.out
+
+/opt/csw/bin/ghc-pkg update /tmp/rts.pkg.out

@@ -1,0 +1,20 @@
+From bb8a10ec43f99716c4767e0788dba2c36f66529b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Trygve=20Laugst=C3=B8l?= <trygvis@inamo.no>
+Date: Wed, 16 Dec 2009 15:18:57 +0100
+Subject: [PATCH] mk/build.mk: Adding correct runtime options.
+
+---
+ mk/build.mk |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 mk/build.mk
+
+diff --git a/mk/build.mk b/mk/build.mk
+new file mode 100644
+index 0000000..ab87adf
+--- /dev/null
++++ b/mk/build.mk
+@@ -0,0 +1 @@
++SRC_HC_OPTS=-optl-R/opt/csw/lib
+-- 
+1.6.5.1
+
