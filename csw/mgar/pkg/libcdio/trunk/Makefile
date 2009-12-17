@@ -17,7 +17,20 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 
+REQUIRED_PKGS = CSWgcc4corert CSWgcc4g++rt CSWiconv
+
 BUILD64 = 1
+NO_ISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+MERGE_DIRS_isa-extra = $(libdir)
+
+# There is a minor test regarding timezones failing.
+# Disable tests for now until this is fixed:
+#   https://savannah.gnu.org/support/index.php?107175
+SKIPTEST = 1
+
 include gar/category.mk
+
+# Force GNU ld
+PATH := /opt/csw/gnu:$(PATH)
