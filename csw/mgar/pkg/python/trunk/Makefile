@@ -43,6 +43,7 @@ PATCHFILES += pyport.diff
 PATCHFILES += site.diff
 PATCHFILES += python-config-in.diff
 PATCHFILES += setup.diff
+PATCHFILES += getpass.patch
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
