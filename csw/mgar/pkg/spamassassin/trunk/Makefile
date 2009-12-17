@@ -14,8 +14,7 @@ endef
 MASTER_SITES = http://people.apache.org/~wtogami/devel/
 #DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
 DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-beta1.tar.gz
-
-LICENSE = $(WORKDIR)/$(SPKG_NAME)-$(GARVERSION)/LICENSE
+DISTFILES += COPYING
 
 REQUIRED_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha1
 REQUIRED_PKGS += CSWpmiosocketinet6 CSWpmiosocketssl CSWpmiozlib
