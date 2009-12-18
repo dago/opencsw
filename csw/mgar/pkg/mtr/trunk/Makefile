@@ -48,6 +48,7 @@ PATCHFILES = gar-base.diff
 
 TEST_SCRIPTS =
 
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # ------------------ BEWARE:  NASTY HACK AHEAD --------------------
@@ -60,38 +61,31 @@ CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_MODULATORS = GUI
 MODULATIONS_GUI = disable enable
 
-ifeq ($(GUI), disable)
-CONFIGURE_ARGS += --without-gtk
-endif
 
-ifeq ($(GUI), enable)
-CONFIGURE_ARGS += --disable-gtktest
-EXTRA_PKG_CONFIG_PATH = /opt/csw/X11/lib/pkgconfig
-endif
+
+CONFIGURE_ARGS_GUI-disable = --without-gtk
+CONFIGURE_ARGS_GUI-enable = --disable-gtktest
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_GUI-$(GUI))
+
+EXTRA_PKG_CONFIG_PATH_GUI-enable = /opt/csw/X11/lib/pkgconfig
+EXTRA_PKG_CONFIG_PATH += $(EXTRA_PKG_CONFIG_PATH_GUI-$(GUI))
 
 # Rename the modulated binaries so that we can distinguish them
 # Could also be done via ./configure --program-suffix, but the
 # install-exec-hook for mtr doesn't honor the transformed name
 # and fails.
-EXTRA_PAX_ARGS_isa-sparcv8-gui-enable  = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-gui,p"
-EXTRA_PAX_ARGS_isa-sparcv8-gui-disable = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-nongui,p"
-EXTRA_PAX_ARGS_isa-i386-gui-enable     = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-gui,p"
-EXTRA_PAX_ARGS_isa-i386-gui-disable    = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-nongui,p"
+EXTRA_PAX_ARGS_isa-default-gui-enable  = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-gui,p"
+EXTRA_PAX_ARGS_isa-default-gui-disable = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-nongui,p"
 
 # Simply copy all files, EXTRA_PAX_ARGS above takes care not to overwrite the 
 # mtr binary on merging.
-MERGE_SCRIPTS_isa-sparcv8-gui-enable  = copy-all
-MERGE_SCRIPTS_isa-sparcv8-gui-disable = copy-all
-MERGE_SCRIPTS_isa-i386-gui-enable     = copy-all
-MERGE_SCRIPTS_isa-i386-gui-disable    = copy-all
+MERGE_SCRIPTS_isa-default-gui-enable  = copy-all
+MERGE_SCRIPTS_isa-default-gui-disable = copy-all
 
-# 1) Move the GUI/non-GUI binaries to their proper location
-# 2) Make mtr setuid so that it can access raw sockets
-PROTOTYPE_FILTER = awk ' \
-	$$$$3 ~ /^\/opt\/csw\/sbin\/mtr-/ { \
-		$$$$3 = "/opt/csw/sbin/mtr=" $$$$3; \
-		$$$$4 = "4755"; \
-	} { print }'
+# Make mtr setuid so that it can access raw sockets
+PROTOTYPE_MODIFIERS = makesuid
+PROTOTYPE_FILES_makesuid = $(sbindir)/mtr-.*
+PROTOTYPE_PERMS_makesuid = 4755
 
 # ------------------ /BEWARE:  NASTY HACK AHEAD --------------------
 
