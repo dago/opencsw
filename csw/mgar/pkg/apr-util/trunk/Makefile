@@ -1,5 +1,5 @@
 GARNAME = apr-util
-GARVERSION = 1.2.2
+GARVERSION = 1.3.9
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime Utilities
