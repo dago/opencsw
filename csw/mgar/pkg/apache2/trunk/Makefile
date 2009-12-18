@@ -8,6 +8,14 @@ define BLURB
   best around in terms of functionality, efficiency, security and speed.
 endef
 
+SPKG_DESC_CSWapache2 = Apache 2.2 web server
+SPKG_DESC_CSWapache2c = Apache 2.2 web server (core)
+SPKG_DESC_CSWapache2rt = Apache 2.2 runtime libraries
+SPKG_DESC_CSWap2prefork = Apache 2.2 prefork MPM
+SPKG_DESC_CSWap2suexec = Apache 2.2 suEXEC support
+SPKG_DESC_CSWapache2-devel = Apache 2.2 development support
+SPKG_DESC_CSWapache2-manual = Apache 2.2 manual
+
 include files/config.mk
 
 # We define upstream file regex so we can be notifed of new upstream software release
