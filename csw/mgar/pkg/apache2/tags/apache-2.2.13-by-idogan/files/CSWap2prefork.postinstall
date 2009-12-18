@@ -1,0 +1,18 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_HTTPD=$AP2_BINDIR/httpd
+AP2_CTRL=$AP2_BINDIR/apachectl
+AP2_CONF=$AP2_PREFIX/httpd.conf
+SVCADM=/usr/sbin/svcadm
+
+# Fix MPM links
+[ -x "$AP2_HTTPD" ] && mv $AP2_HTTPD $AP2_HTTPD.prefork-save
+cd $AP2_BINDIR
+ln httpd.prefork httpd
+installf $PKGINST $AP2_HTTPD
+installf -f $PKGINST
+
+exit 0

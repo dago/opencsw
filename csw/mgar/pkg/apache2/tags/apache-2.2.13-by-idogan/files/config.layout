@@ -1,0 +1,23 @@
+# CSW Layout
+<Layout csw>
+    prefix:        INSTALL_PREFIX
+    exec_prefix:   ${prefix}
+    bindir:        ${exec_prefix}/bin
+    sbindir:       ${exec_prefix}/sbin
+    libdir:        ${exec_prefix}/lib
+    libexecdir:    ${exec_prefix}/libexec
+    mandir:        ${exec_prefix}/man
+    sysconfdir:    ${exec_prefix}/etc
+    datadir:       ${prefix}/share
+    installbuilddir: ${datadir}/build
+    errordir:      ${datadir}/error
+    iconsdir:      ${datadir}/icons
+    htdocsdir:     ${datadir}/htdocs
+    manualdir:     ${datadir}/manual
+    cgidir:        ${datadir}/cgi-bin
+    includedir:    ${exec_prefix}/include
+    localstatedir: ${prefix}/var
+    runtimedir:    /var/run
+    logfiledir:    ${localstatedir}/log
+    proxycachedir: ${datadir}/proxy
+</Layout>

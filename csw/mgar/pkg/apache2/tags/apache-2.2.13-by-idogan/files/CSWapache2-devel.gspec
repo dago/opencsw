@@ -1,0 +1,5 @@
+%var            bitname apache2_devel
+%var            pkgname CSWapache2-devel
+%include        url file://%{PKGLIB}/csw_standard.gspec
+%var            desc Apache 2.2 development support
+%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE

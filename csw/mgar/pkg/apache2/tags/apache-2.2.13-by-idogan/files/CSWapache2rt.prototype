@@ -1,0 +1,30 @@
+d none /opt/csw/apache2 0755 root bin
+d none /opt/csw/apache2/bin 0755 root bin
+f none /opt/csw/apache2/bin/apr-1-config 0755 root bin
+f none /opt/csw/apache2/bin/apu-1-config 0755 root bin
+s none /opt/csw/apache2/bin/apr-config=apr-1-config
+s none /opt/csw/apache2/bin/apu-config=apu-1-config
+d none /opt/csw/apache2/lib 0755 root bin
+s none /opt/csw/apache2/lib/libaprutil-1.so=libaprutil-1.so.0.3.9
+s none /opt/csw/apache2/lib/libaprutil-1.so.0=libaprutil-1.so.0.3.9
+s none /opt/csw/apache2/lib/libapr-1.so.0=libapr-1.so.0.3.8
+d none /opt/csw/apache2/lib/apr-util-1 0755 root bin
+s none /opt/csw/apache2/lib/apr-util-1/apr_dbd_sqlite3.so=apr_dbd_sqlite3-1.so
+s none /opt/csw/apache2/lib/apr-util-1/apr_ldap.so=apr_ldap-1.so
+f none /opt/csw/apache2/lib/apr-util-1/apr_dbd_sqlite3.la 0755 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_dbd_sqlite3-1.so 0755 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_dbd_sqlite3.a 0644 root bin
+f none /opt/csw/apache2/lib/apr-util-1/apr_ldap-1.so 0755 root bin
+d none /opt/csw/apache2/lib/pkgconfig 0755 root bin
+f none /opt/csw/apache2/lib/libapr-1.so.0.3.8 0755 root bin
+s none /opt/csw/apache2/lib/libapr-1.so=libapr-1.so.0.3.8
+f none /opt/csw/apache2/lib/libaprutil-1.so.0.3.9 0755 root bin
+d none /opt/csw/apache2/man 0755 root bin
+d none /opt/csw/apache2/man/man8 0755 root bin
+f none /opt/csw/apache2/man/man8/apxs.8 0644 root bin
+d none /opt/csw/apache2/sbin 0755 root bin
+f none /opt/csw/apache2/sbin/apxs 0755 root bin
+d none /opt/csw/apache2/share 0755 root bin
+d none /opt/csw/apache2/share/build 0755 root bin
+f none /opt/csw/apache2/share/build/config_vars.mk 0644 root bin
+f none /opt/csw/apache2/share/build/instdso.sh 0755 root bin

@@ -1,0 +1,75 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_EXTRADIR=$AP2_CONFDIR/extra
+
+UPGRADE_CONFIGS="\
+    httpd.conf \
+    ssl.conf \
+    extra/httpd-ssl.conf \
+    extra/httpd-mpm.conf \
+    "
+# Don't overwrite config if it exists
+warn_update=0
+echo "Checking configuration files:"
+for file in $UPGRADE_CONFIGS; do
+    config=$AP2_CONFDIR/$file
+    if [ -f "$config" ]; then 
+        if [ -n "`grep mod_auth.so $config`" ]; then
+            echo "Updating syntax of $config to Apache 2.2"
+            $AP2_BINDIR/update20to22 $config
+            warn_update=1
+        fi
+        # Ensure that the PidFile is pointed at ServerRoot relative path.
+        perl -i -plne 's#PidFile /var#PidFile var#'
+    elif [ -f "$config.CSW" ]; then
+        echo "Creating $config from template"
+        hostname=`hostname`
+        sed -e s,@HOSTNAME@,$hostname,g   \
+            -e s,@USER@,nobody,g          \
+            -e s,@GROUP@,nobody,g         \
+            -e s,@ADMIN@,root@$hostname,g $config.CSW > $config
+    fi
+done
+
+if [ $warn_update -eq 1 ] ; then
+cat << EOF
+
+*** NOTICE: Existing configuration files have been updated to
+*** Apache 2.2 syntax.  Additional files can be updated using
+*** /opt/csw/apache2/sbin/update20to22.
+
+EOF
+fi
+
+# Copy templates
+template_list="\
+    share/htdocs/index.html \
+    etc/extra/httpd-autoindex.conf \
+    etc/extra/httpd-dav.conf \
+    etc/extra/httpd-default.conf \
+    etc/extra/httpd-info.conf \
+    etc/extra/httpd-languages.conf \
+    etc/extra/httpd-multilang-errordoc.conf \
+    etc/extra/httpd-userdir.conf \
+    etc/extra/httpd-vhosts.conf \
+    etc/magic \
+    etc/mime.types"
+
+echo Copying CSW templates:
+for file in $template_list
+do
+    filepath=$AP2_PREFIX/$file
+    if [ -f "$filepath" ]; then
+        echo "  preserving $filepath"
+    elif [ -f "$filepath.CSW" ]; then
+        echo "  creating $filepath"
+        cp $filepath.CSW $filepath
+    fi
+done
+
+exit 0

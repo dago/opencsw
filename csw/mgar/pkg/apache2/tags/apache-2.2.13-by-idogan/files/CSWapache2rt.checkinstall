@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ "`uname -r`" = "5.8" ]; then
+    arch=`uname -p`
+    patchrev="115831"
+    [ "$arch" = "i386" ] && patchrev="115832"
+
+    if [ -z "`showrev -p | grep $patchrev`" ]; then
+        echo "$PKGINST on $arch requires patch $patchrev"
+        exit 1
+    fi
+fi
+
+exit 0
