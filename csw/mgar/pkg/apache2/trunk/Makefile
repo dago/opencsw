@@ -10,6 +10,23 @@ define BLURB
   best around in terms of functionality, efficiency, security and speed.
 endef
 
+include files/config.mk
+
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+# <maciej> All the admfiles can go away.  Move the static prototype files
+# aside, replace them with PKGFILES_CSWfoo = regexp lines.
+
+# <maciej> The PACKAGES variable tell GAR which packages to build
+PACKAGES  = CSWapache2
+PACKAGES += CSWapache2c
+PACKAGES += CSWapache2rt
+PACKAGES += CSWap2prefork
+PACKAGES += CSWap2suexec
+PACKAGES += CSWapache2-devel
+PACKAGES += CSWapache2-manual
+
+# Descriptions for every package
 SPKG_DESC_CSWapache2 = Apache 2.2 web server
 SPKG_DESC_CSWapache2c = Apache 2.2 web server (core)
 SPKG_DESC_CSWapache2rt = Apache 2.2 runtime libraries
@@ -18,30 +35,43 @@ SPKG_DESC_CSWap2suexec = Apache 2.2 suEXEC support
 SPKG_DESC_CSWapache2-devel = Apache 2.2 development support
 SPKG_DESC_CSWapache2-manual = Apache 2.2 manual
 
-include files/config.mk
+# Contents for every package.
+# <maciej> The CSWapache2 package is supposed to be an empty meta-package
+PKGFILES_CSWapache2 = non-existing
+# <maciej> You don't define PKGFILES_CSWapache2c, it's going to be the default,
+# catch-all package.
+# PKGFILES_CSWapache2c =
+# <maciej> The runtime package might use the GAR shortcut for the runtime
+# files.
+PKGFILES_CSWapache2rt = $(PKGFILES_RT)
+PKGFILES_CSWap2prefork = $(sbindir)/httpd.prefork
+PKGFILES_CSWap2suexec  = $(libexecdir)/mod_suexec.so
+PKGFILES_CSWap2suexec += $(mandir)/man8/suexec.8
+PKGFILES_CSWap2suexec += $(sbindir)/suexec
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# <maciej> The rest of PKGFILES is for you to do.  You look at the rest of the
+# prototype files and construct appropriate regexes for every package.
 
-# <maciej> All the admfiles can go away.  Move the static prototype files
-# aside, replace them with PKGFILES_CSWfoo = regexp lines.
-
-# Dummy toplevel package
-DISTFILES += $(call admfiles,CSWapache2,prototype)
-# Runtime
-DISTFILES += $(call admfiles,CSWapache2rt,prototype checkinstall)
-# Server (core)
-CSWapache2c_admfiles = prototype postinstall space
-DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))
-# Prefork MPM (default)
-CSWap2prefork_admfiles  = prototype postinstall postremove space
-DISTFILES += $(call admfiles,CSWap2prefork,$(CSWap2prefork_admfiles))
-# mod_suexec
-CSWap2suexec_admfiles = prototype postinstall preremove
-DISTFILES += $(call admfiles,CSWap2suexec,$(CSWap2suexec_admfiles))
-# Manual
-DISTFILES += $(call admfiles,CSWapache2-manual,prototype)
-# Development support
-DISTFILES += $(call admfiles,CSWapache2-devel,prototype)
+# <maciej> You don't need the $(call admfiles,...) any more.  But you might
+# need the files/*.prototype files to figure out how to populate packages by
+# writing regexes.
+## # Dummy toplevel package
+## DISTFILES += $(call admfiles,CSWapache2,prototype)
+## # Runtime
+## DISTFILES += $(call admfiles,CSWapache2rt,prototype checkinstall)
+## # Server (core)
+## CSWapache2c_admfiles = prototype postinstall space
+## DISTFILES += $(call admfiles,CSWapache2c,$(CSWapache2c_admfiles))
+## # Prefork MPM (default)
+## CSWap2prefork_admfiles  = prototype postinstall postremove space
+## DISTFILES += $(call admfiles,CSWap2prefork,$(CSWap2prefork_admfiles))
+## # mod_suexec
+## CSWap2suexec_admfiles = prototype postinstall preremove
+## DISTFILES += $(call admfiles,CSWap2suexec,$(CSWap2suexec_admfiles))
+## # Manual
+## DISTFILES += $(call admfiles,CSWapache2-manual,prototype)
+## # Development support
+## DISTFILES += $(call admfiles,CSWapache2-devel,prototype)
 
 # Standard package bits
 DISTFILES += CSWapache2.killproc cswapache2
@@ -66,7 +96,13 @@ REQUIRED_PKGS_CSWap2suexec = CSWapache2
 REQUIRED_PKGS_CSWapache2-devel = CSWapache2rt
 REQUIRED_PKGS_CSWapache2-manual = CSWapache2
 
-SPKG_CLASSES_CSWapache2c = none cswinitsmf
+# The SMF support: you don't need to specify cswinitsmf any more.  You need to
+# make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
+# the post-install stage, and add "INITSMF = /etc/opt/csw/init.d/cswapache" to
+# the Makefile.
+
+# The following line can go:
+## SPKG_CLASSES_CSWapache2c = none cswinitsmf
 
 pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); \
