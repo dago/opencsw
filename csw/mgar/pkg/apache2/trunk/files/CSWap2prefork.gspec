@@ -1,7 +1,0 @@
-%var            bitname ap2_prefork
-%var            pkgname CSWap2prefork
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Apache 2.2 prefork MPM
-%copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE
-%preinstall     url file://%{WORKDIR}/CSWapache2.killproc
-%preremove      url file://%{WORKDIR}/CSWapache2.killproc
