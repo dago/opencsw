@@ -2,5 +2,4 @@
 %var            pkgname CSWapache2
 %var            arch all
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Apache 2.2 web server
 %copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE

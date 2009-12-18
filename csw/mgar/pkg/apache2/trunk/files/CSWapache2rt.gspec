@@ -1,5 +1,4 @@
 %var            bitname apache2rt
 %var            pkgname CSWapache2rt
 %include        url file://%{PKGLIB}/csw_standard.gspec
-%var            desc Apache 2.2 runtime libraries
 %copyright      url file://%{WORKSRC_FIRSTMOD}/LICENSE
