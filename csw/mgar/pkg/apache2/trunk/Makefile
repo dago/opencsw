@@ -25,6 +25,9 @@ PACKAGES += CSWap2prefork
 PACKAGES += CSWap2suexec
 PACKAGES += CSWapache2-devel
 PACKAGES += CSWapache2-manual
+# packages with dashes need this so gar does not thing -devel is a version number
+CATALOGNAME_CSWapache2-devel = apache2_devel
+CATALOGNAME_CSWapache2-manual = apache2_manual
 
 # Descriptions for every package
 SPKG_DESC_CSWapache2 = Apache 2.2 web server
@@ -43,14 +46,18 @@ PKGFILES_CSWapache2 = non-existing
 # PKGFILES_CSWapache2c =
 # <maciej> The runtime package might use the GAR shortcut for the runtime
 # files.
-PKGFILES_CSWapache2rt = $(PKGFILES_RT)
-PKGFILES_CSWap2prefork = $(sbindir)/httpd.prefork
-PKGFILES_CSWap2suexec  = $(libexecdir)/mod_suexec.so
-PKGFILES_CSWap2suexec += $(mandir)/man8/suexec.8
-PKGFILES_CSWap2suexec += $(sbindir)/suexec
+PKGFILES_CSWapache2rt   = $(PKGFILES_RT)
+PKGFILES_CSWap2prefork  = $(sbindir)/httpd.prefork
+PKGFILES_CSWap2suexec   = $(libexecdir)/mod_suexec.so
+PKGFILES_CSWap2suexec  += $(mandir)/man8/suexec.8
+PKGFILES_CSWap2suexec  += $(sbindir)/suexec
 
 # <maciej> The rest of PKGFILES is for you to do.  You look at the rest of the
 # prototype files and construct appropriate regexes for every package.
+# <rt> - this tseems not to work
+# PKGFILES_CSWapache2-devel   = $(PKGFILES_DEVEL)
+# PKGFILES_CSWapache2-manual  = $(PKGFILES_DOC)
+# PKGFILES_CSWapache2-manual += $(prefix)/etc/extra/httpd-manual.conf
 
 # <maciej> You don't need the $(call admfiles,...) any more.  But you might
 # need the files/*.prototype files to figure out how to populate packages by
@@ -82,18 +89,18 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
-REQUIRED_PKGS_CSWapache2 = CSWapache2c CSWap2prefork
-REQUIRED_PKGS_CSWapache2c = CSWapache2rt CSWbdb CSWexpat CSWgdbm CSWiconv
-REQUIRED_PKGS_CSWapache2c += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
-REQUIRED_PKGS_CSWapache2c += CSWsqlite3 CSWcswclassutils
-REQUIRED_PKGS_CSWapache2rt = CSWbdb CSWexpat CSWgdbm CSWggettextrt CSWgsed
-REQUIRED_PKGS_CSWapache2rt += CSWiconv CSWoldaprt CSWosslrt CSWperl CSWsasl
-REQUIRED_PKGS_CSWapache2rt += CSWzlib CSWsqlite3 CSWlibnet CSWsqlite3rt
-REQUIRED_PKGS_CSWap2prefork = CSWapache2c CSWapache2rt CSWbdb CSWexpat CSWgdbm
-REQUIRED_PKGS_CSWap2prefork += CSWiconv CSWlibnet CSWoldaprt CSWosslrt CSWsasl
-REQUIRED_PKGS_CSWap2prefork += CSWzlib CSWsqlite3
-REQUIRED_PKGS_CSWap2suexec = CSWapache2
-REQUIRED_PKGS_CSWapache2-devel = CSWapache2rt
+REQUIRED_PKGS_CSWapache2        = CSWapache2c CSWap2prefork
+REQUIRED_PKGS_CSWapache2c       = CSWapache2rt CSWbdb CSWexpat CSWgdbm CSWiconv
+REQUIRED_PKGS_CSWapache2c      += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
+REQUIRED_PKGS_CSWapache2c      += CSWsqlite3 CSWcswclassutils
+REQUIRED_PKGS_CSWapache2rt      = CSWbdb CSWexpat CSWgdbm CSWggettextrt CSWgsed
+REQUIRED_PKGS_CSWapache2rt     += CSWiconv CSWoldaprt CSWosslrt CSWperl CSWsasl
+REQUIRED_PKGS_CSWapache2rt     += CSWzlib CSWsqlite3 CSWlibnet CSWsqlite3rt
+REQUIRED_PKGS_CSWap2prefork     = CSWapache2c CSWapache2rt CSWbdb CSWexpat CSWgdbm
+REQUIRED_PKGS_CSWap2prefork    += CSWiconv CSWlibnet CSWoldaprt CSWosslrt CSWsasl
+REQUIRED_PKGS_CSWap2prefork    += CSWzlib CSWsqlite3
+REQUIRED_PKGS_CSWap2suexec      = CSWapache2
+REQUIRED_PKGS_CSWapache2-devel  = CSWapache2rt
 REQUIRED_PKGS_CSWapache2-manual = CSWapache2
 
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
