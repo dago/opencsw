@@ -1,5 +1,4 @@
 %var            bitname aprutil_devel
 %var            pkgname CSWaprutil-devel
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Apache Portable Runtime Utility development support
 %copyright      url file://%{WORKSRC}/LICENSE

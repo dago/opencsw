@@ -9,6 +9,8 @@ define BLURB
   interface to underlying platform-specific implementations.
 endef
 
+SPKG_DESC_CSWaprutil-devel = Apache Portable Runtime Utility development support
+
 MASTER_SITES  = http://apache.crihan.fr/dist/apr/
 MASTER_SITES += http://apache.webthing.com/database/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
