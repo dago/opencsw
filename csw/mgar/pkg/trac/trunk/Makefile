@@ -15,7 +15,7 @@ MASTER_SITES = http://ftp.edgewall.com/pub/trac/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWtrac
-REQUIRED_PKGS_CSWtrac = CSWpysetuptools CSWpysvn CSWgenshi
+REQUIRED_PKGS_CSWtrac = CSWpysetuptools CSWpythonsvn CSWgenshi
 REQUIRED_PKGS_CSWtrac += CSWpython CSWpython-devel
 
 CATALOGNAME_CSWtrac = trac
