@@ -1,5 +1,5 @@
 GARNAME = apr
-GARVERSION = 1.3.8
+GARVERSION = 1.3.9
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime
