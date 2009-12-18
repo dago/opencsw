@@ -1,3 +1,5 @@
+# $Id$
+
 GARNAME = httpd
 GARVERSION = 2.2.14
 CATEGORIES = server
@@ -18,8 +20,10 @@ SPKG_DESC_CSWapache2-manual = Apache 2.2 manual
 
 include files/config.mk
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+# <maciej> All the admfiles can go away.  Move the static prototype files
+# aside, replace them with PKGFILES_CSWfoo = regexp lines.
 
 # Dummy toplevel package
 DISTFILES += $(call admfiles,CSWapache2,prototype)
@@ -124,4 +128,3 @@ create-templates:
 				gmv -v $$file $$file.CSW ; \
 			done )
 	@$(MAKECOOKIE)
-
