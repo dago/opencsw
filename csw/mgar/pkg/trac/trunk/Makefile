@@ -15,27 +15,26 @@ MASTER_SITES = http://ftp.edgewall.com/pub/trac/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWtrac
-REQUIRED_PKGS_CSWtrac = CSWpysetuptools CSWpythonsvn CSWgenshi
-REQUIRED_PKGS_CSWtrac += CSWpython CSWpython-devel
+REQUIRED_PKGS_CSWtrac  = CSWpysetuptools CSWpythonsvn CSWgenshi
+REQUIRED_PKGS_CSWtrac += CSWpython 
 
-CATALOGNAME_CSWtrac = trac
-SPKG_DESC_CSWtrac = Integrated SCM and Project Management
+CATALOGNAME_CSWtrac    = trac
+SPKG_DESC_CSWtrac      = Integrated SCM and Project Management
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://trac.edgewall.org/wiki/TracDownload
+SPKG_SOURCEURL         = http://trac.edgewall.org/wiki/TracDownload
+SPKG_CLASSES           = none cswpycompile
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = $(WORKSRC)/setup.py
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-INSTALL_ARGS = --root=$(DESTDIR)
+CONFIGURE_SCRIPTS      =
+BUILD_SCRIPTS          = $(WORKSRC)/setup.py
+TEST_SCRIPTS           =
+INSTALL_SCRIPTS        = $(WORKSRC)/setup.py
+INSTALL_ARGS           = --root=$(DESTDIR)
 
 include gar/category.mk
 
