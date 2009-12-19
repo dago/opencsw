@@ -1,5 +1,5 @@
 GARNAME = exiftool
-GARVERSION = 8.00
+GARVERSION = 8.02
 CATEGORIES = cpan
 
 DESCRIPTION = Read, Write and Edit Image File Meta Information
@@ -13,9 +13,8 @@ DISTNAME = Image-ExifTool-$(GARVERSION)
 MASTER_SITES = http://owl.phy.queensu.ca/~phil/exiftool/
 MODDIST =
 DISTFILES  = $(DISTNAME).tar.gz
-DISTFILES += COPYING
 
-REQUIRED_PKGS = CSWpmiocompress 
+REQUIRED_PKGS += CSWpmiocompress 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = Image-ExifTool-(\d+(?:\.\d+)*).tar.gz
@@ -25,7 +24,5 @@ UFILES_REGEX = Image-ExifTool-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-ARCHALL = 1
 
 include gar/category.mk
