@@ -8,7 +8,7 @@ CATEGORIES = lang
 # - ctypes module doesn't compile
 #   - http://forums.sun.com/thread.jspa?threadID=5148204
 
-SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
+SPKG_SOURCEURL = http://python.org/download/releases/$(GARVERSION)
 SPKG_CLASSES = none cswpycompile
 
 DESCRIPTION = A high-level scripting language.
@@ -22,8 +22,8 @@ define BLURB
   an extension language for applications that need a programmable interface.
 endef
 
-MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
-UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
+MASTER_SITES = http://python.org/ftp/python/$(GARVERSION)/
+UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
