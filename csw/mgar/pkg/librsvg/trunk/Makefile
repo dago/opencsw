@@ -47,6 +47,8 @@ LIBS=-lm
 EXTRA_COMMON_EXPORTS = LIBS
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared=yes --enable-static=no
+EXTRA_LD_OPTIONS = -R/opt/csw/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 STRIP_LIBTOOL=1
 
