@@ -1,3 +1,4 @@
+5e2c9e1d117c41a0eb6c977c984e7c36  0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 32b2cc8a237404d160a5617ea2da53d8  CSWap2svn.postinstall
 586b9c9924c1547d44451a84d2aca702  CSWap2svn.preremove
 395ec6d1bfe07efadc1c0aa8816673fa  CSWsvn.checkinstall
