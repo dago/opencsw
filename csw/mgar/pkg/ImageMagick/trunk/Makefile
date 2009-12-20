@@ -1,6 +1,6 @@
 GARNAME = imagemagick
-GARVERSION = 6.5.4
-GARSUBREV = 1
+GARVERSION = 6.5.8
+GARSUBREV = 6
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -24,7 +24,7 @@ REQUIRED_PKGS += CSWbzip2 CSWdjvulibre CSWfconfig CSWftype2 CSWggettextrt
 REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWilmbase CSWjasper CSWjbigkit
 REQUIRED_PKGS += CSWjpeg CSWlcms CSWlibcairo CSWlibfpx CSWlibrsvg CSWlibxml2
 REQUIRED_PKGS += CSWopenexr CSWperl CSWpng CSWsunmath CSWtiff CSWwmf CSWzlib
-REQUIRED_PKGS += CSWlibtoolrt
+REQUIRED_PKGS += CSWlibtoolrt CSWlibice CSWlibsm CSWlibxext
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = ImageMagick-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
