@@ -64,6 +64,7 @@ includedir = $(prefix)/include/nss
 ifneq (DBG,$(GARFLAVOR))
 	BUILD_OPT = 1
 	export BUILD_OPT
+	CONFIGURE_ARGS += --disable-debug --enable-optimize
 endif
 
 # NSPR is installed in /opt/csw/lib/nspr, nspr.pc is in /opt/csw/lib/pkgconfig
