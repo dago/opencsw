@@ -1,3 +1,8 @@
+# TODO
+# - Although watch links against ncursesw, non-ASCII character handling
+#   is broken. German umlauts for example won't display at all. Try: 
+#   python -c 'print u"\u00E4"' vs. watch -d python -c 'print u"\u00E4"'
+#   Needs further investigation.
 GARNAME = watch
 GARVERSION = 0.2.0
 CATEGORIES = utils
@@ -10,7 +15,7 @@ endef
 # Usually we would use $(SF_MIRROR), but the procps folks didn't upload
 # procps the usual way
 SF_PROJ 	= procps
-SF_PROJ_VER	= 3.2.7
+SF_PROJ_VER	= 3.2.8
 MASTER_SITES 	= http://$(SF_PROJ).sourceforge.net/
 DISTFILES  	= $(SF_PROJ)-$(SF_PROJ_VER).tar.gz
 DISTNAME   	= $(SF_PROJ)-$(SF_PROJ_VER)
@@ -30,7 +35,7 @@ PATCHFILES += patch-sigpipe.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_INC = /opt/csw/include/ncurses
+EXTRA_INC = /opt/csw/include/ncursesw
 
 include gar/category.mk
 
@@ -43,36 +48,39 @@ include gar/category.mk
 # GNU getopt taken from 
 #   http://svn.cherokee-project.com/browser/cherokee/trunk/cherokee/getopt
 # snprintf.c taken from http://www.jhweiss.de/software/snprintf.html
-#
 
-# Don't tell snprintf.c that you have v?snprintf, output will be garbled 
+pre-build-modulated:
+	rm $(WORKSRC)/ps/module.mk $(WORKSRC)/proc/module.mk
+	cp $(FILEDIR)/snprintf* $(WORKSRC)
+	cp $(FILEDIR)/getopt* $(WORKSRC)
+	cp $(FILEDIR)/gettext.h* $(WORKSRC)
+	@$(MAKECOOKIE)
+
+# Feature flags for snprintf.c. Don't tell it that you have v?snprintf,
+# output will be garbled.
 CFLAGS := $(CFLAGS) -DHAVE_STDARG_H -DHAVE_STDLIB_H -DHAVE_STDDEF
 CFLAGS := $(CFLAGS) -DHAVE_INTTYPES_H -DHAVE_LOCALE_H -DHAVE_LOCALECONV
 CFLAGS := $(CFLAGS) -DHAVE_LOCALECONV -DHAVE_UINTMAX_T -DHAVE_VA_COPY
 
-pre-build-modulated:
-	@rm $(WORKSRC)/ps/module.mk $(WORKSRC)/proc/module.mk
-	@cp $(FILEDIR)/snprintf* $(WORKSRC)
-	@cp $(FILEDIR)/getopt* $(WORKSRC)
-	@cp $(FILEDIR)/gettext.h* $(WORKSRC)
-	$(MAKECOOKIE)
-
+# CURSES and BUILD_ARGS w/ ALL_?FLAGS req. for $(WORKSRC)/Makefile
+build-custom: CURSES=-lncursesw
 build-custom: BUILD_ARGS:=ALL_CFLAGS="$(CFLAGS)" ALL_LDFLAGS="$(LDFLAGS)"
 build-custom:
-	@$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) snprintf.o
-	@$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt.o
-	@$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt1.o
-	@$(BUILD_ENV) gmake -C $(WORKSRC) \
+	$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) snprintf.o
+	$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt.o
+	$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt1.o
+	$(BUILD_ENV) gmake -C $(WORKSRC) \
 		ALL_CFLAGS="$(CFLAGS) snprintf.o getopt.o getopt1.o" \
-	        ALL_LDFLAGS="$(LDFLAGS)" watch
-	$(MAKECOOKIE)
+	        ALL_LDFLAGS="$(LDFLAGS)" \
+		CURSES=$(CURSES) watch
+	@$(MAKECOOKIE)
 
 install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 install-custom:
-	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(mandir)/man1
-	@ginstall -d $(DOCDEST)
-	@ginstall -m 755 $(WORKSRC)/watch $(DESTDIR)$(bindir)
-	@cp $(WORKSRC)/watch.1 $(DESTDIR)$(mandir)/man1
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	$(MAKECOOKIE)
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall -d $(DOCDEST)
+	ginstall -m 755 $(WORKSRC)/watch $(DESTDIR)$(bindir)
+	cp $(WORKSRC)/watch.1 $(DESTDIR)$(mandir)/man1
+	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
