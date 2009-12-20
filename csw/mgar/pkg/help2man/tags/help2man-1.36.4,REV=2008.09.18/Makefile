@@ -1,5 +1,5 @@
 GARNAME = help2man
-GARVERSION = 1.37.1
+GARVERSION = 1.36.4
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating simple manual pages from program output
@@ -11,11 +11,11 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(call admfiles,CSWhelp2man,depend)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWpmlocalegettext
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+PREREQUISITE_PKGS = CSWpmlocalegettext
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # We need to disable NLS as we don't have preloadable_libintl.so
@@ -24,6 +24,8 @@ CONFIGURE_ARGS += --disable-nls
 
 TEST_SCRIPTS =
 
-ARCHALL = 1
-
 include gar/category.mk
+
+post-install:
+	@echo " ==> Fixing install anomalies"
+	@rm -f $(DESTDIR)$(prefix)/share/info/dir
