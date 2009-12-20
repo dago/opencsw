@@ -20,4 +20,10 @@ DISTFILES  = gtest-$(GARVERSION).tar.gz
 WORKSRC = $(WORKDIR)/gtest-$(GARVERSION)
 UFILES_REGEX = gtest-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
+TEST_SCRIPTS = googletest
+TEST_TARGETS = check
 include gar/category.mk
+
+test-googletest:
+	(cd $(WORKSRC) && gmake check)
+	@$(MAKECOOKIE)
