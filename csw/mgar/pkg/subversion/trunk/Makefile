@@ -78,6 +78,7 @@ DISTFILES += fixme.sh
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
 PATCHFILES += javahl_headers_for_nested_classes.diff
 PATCHFILES += subversion161.diff
+PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 
 DEPENDS = server/apache2
 DEPENDS = lib/neon
