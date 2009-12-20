@@ -162,6 +162,10 @@ SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
+pre-configure-modulated:
+	# To work around the libtool version mismatch problem.
+	cd $(WORKSRC) && autoreconf --force --install --symlink
+
 post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)
 	ginstall -m 755 -d $(DESTDIR)$(datadir)/mysql/doc
