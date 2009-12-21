@@ -17,10 +17,17 @@ DISTFILES += liba52.pc-32 liba52.pc-64
 UPSTREAM_MASTER_SITES = http://liba52.sourceforge.net/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-PACKAGES = CSWliba52
-CATALOGNAME = liba52
+PACKAGES = CSWliba52 CSWa52dec
 
-REQUIRED_PKGS = CSWsunmath
+CATALOGNAME_CSWliba52 = liba52
+CATALOGNAME_CSWa52dec = a52dec
+
+SPKG_DESC_CSWliba52 = $(DESCRIPTION) library
+SPKG_DESC_CSWa52dec = $(DESCRIPTION) application
+
+REQUIRED_PKGS_CSWliba52 = CSWsunmath
+REQUIRED_PKGS_CSWa52dec = CSWsunmath CSWliba52
+
 EXTRA_LINKER_FLAGS = -lsunmath
 
 BUILD64 = 1
@@ -33,6 +40,9 @@ CONFIGURE_ARGS += --enable-shared --disable-static
 BUILD_ARGS = CFLAGS="$(CFLAGS)"
 
 MERGE_DIRS_isa-extra = $(libdir)
+
+PKGFILES_CSWa52dec = $(bindir)/.*
+PKGFILES_CSWa52dec += $(mandir)/man1/.*
 
 include gar/category.mk
 
