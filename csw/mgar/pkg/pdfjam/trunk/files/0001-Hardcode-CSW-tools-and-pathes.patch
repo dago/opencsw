@@ -1,0 +1,80 @@
+From 260e4cde6050335998d92f62b068e357e2d1ca4c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 21 Dec 2009 15:14:31 +0100
+Subject: [PATCH] Hardcode CSW tools and pathes
+
+---
+ scripts/pdf90   |    4 ++--
+ scripts/pdfjoin |    4 ++--
+ scripts/pdfnup  |    4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/scripts/pdf90 b/scripts/pdf90
+index 8b9ac02..7402567 100755
+--- a/scripts/pdf90
++++ b/scripts/pdf90
+@@ -23,7 +23,7 @@ echo "This is pdf90 version ""$version"
+ ##  
+ ##  First say where your "pdflatex" program lives:
+ ##
+-pdflatex=pdflatex
++pdflatex=/opt/csw/bin/pdflatex
+ #pdflatex="pdflatex.exe"    ## this for Windows computers
+ ##
+ ##  Next a permitted location for temporary files on your system:
+@@ -40,7 +40,7 @@ tidy=true              ## delete all temporary files immediately
+ ##
+ ##  Read the configuration file(s) if such exist:
+ ##
+-for d in /etc /usr/share/etc /usr/local/share /usr/local/etc
++for d in /opt/csw/etc /etc/opt/csw
+ do if test -f $d/pdfnup.conf; then
+    echo "Reading site configuration from $d/pdfnup.conf"
+    . $d/pdfnup.conf
+diff --git a/scripts/pdfjoin b/scripts/pdfjoin
+index 761c68a..afce83a 100755
+--- a/scripts/pdfjoin
++++ b/scripts/pdfjoin
+@@ -28,7 +28,7 @@ shopt -u xpg_echo ## mainly to cope with Mac OS 10.5 "Leopard"
+ ##  
+ ##  First say where your "pdflatex" program lives:
+ ##
+-pdflatex=pdflatex
++pdflatex=/opt/csw/bin/pdflatex
+ #pdflatex="pdflatex.exe"    ## this for Windows computers
+ ##
+ ##  Next a permitted location for temporary files on your system:
+@@ -52,7 +52,7 @@ tidy=true              ## delete all temporary files immediately
+ ##
+ ##  Read the configuration file(s) if such exist:
+ ##
+-for d in /etc /usr/share/etc /usr/local/share /usr/local/etc
++for d in /opt/csw/etc /etc/opt/csw
+ do if test -f $d/pdfnup.conf; then
+    echo "Reading site configuration from $d/pdfnup.conf"
+    . $d/pdfnup.conf
+diff --git a/scripts/pdfnup b/scripts/pdfnup
+index b4efe1c..71330c3 100755
+--- a/scripts/pdfnup
++++ b/scripts/pdfnup
+@@ -24,7 +24,7 @@ echo "This is pdfnup version ""$version"
+ ##  
+ ##  First say where your "pdflatex" program lives:
+ ##
+-pdflatex=pdflatex
++pdflatex=/opt/csw/bin/pdflatex
+ #pdflatex="pdflatex.exe"    ## this for Windows computers
+ ##
+ ##  Next a permitted location for temporary files on your system:
+@@ -55,7 +55,7 @@ tidy=true              ## delete all temporary files immediately
+ ##
+ ##  Read the configuration file(s) if such exist:
+ ##
+-for d in /etc /usr/share/etc /usr/local/share /usr/local/etc
++for d in /opt/csw/etc /etc/opt/csw
+ do if test -f $d/pdfnup.conf; then
+      echo "Reading site configuration from $d/pdfnup.conf"
+      . $d/pdfnup.conf
+-- 
+1.6.5.1
+

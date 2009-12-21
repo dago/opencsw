@@ -11,11 +11,14 @@ endef
 
 MASTER_SITES = http://www.warwick.ac.uk/go/pdfjam/
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
+PATCHFILES = 0001-Hardcode-CSW-tools-and-pathes.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic/firth/software/pdfjam
+
+REQUIRED_PKGS = CSWtetex
 
 DISTNAME = pdfjam
 
