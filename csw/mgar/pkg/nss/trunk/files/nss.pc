@@ -1,6 +1,6 @@
 prefix=/opt/csw
 exec_prefix=${prefix}
-libdir=${prefix}/lib/nss
+libdir=${prefix}/lib
 includedir=${prefix}/include/nss
 
 Name: NSS
