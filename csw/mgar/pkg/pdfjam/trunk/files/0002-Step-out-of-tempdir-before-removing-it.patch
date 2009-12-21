@@ -1,0 +1,53 @@
+From 339813fa03f83e99b0f98626f1ca72f75ab82ca5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 21 Dec 2009 15:22:00 +0100
+Subject: [PATCH] Step out of tempdir before removing it
+
+---
+ scripts/pdf90   |    2 +-
+ scripts/pdfjoin |    2 +-
+ scripts/pdfnup  |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/pdf90 b/scripts/pdf90
+index 7402567..5df5a37 100755
+--- a/scripts/pdf90
++++ b/scripts/pdf90
+@@ -213,7 +213,7 @@ EndTemplate
+                    "$outfileDir"/"$outfileNameRoot"".pdf"
+          fi
+     case "$tidy" in
+-      true) rm "$tempfileDir"/"$uniqueName"* ;;
++      true) cd && rm "$tempfileDir"/"$uniqueName"* ;;
+     esac
+     outFile=""
+   else echo "  Failed: output file not written"
+diff --git a/scripts/pdfjoin b/scripts/pdfjoin
+index afce83a..24551ce 100755
+--- a/scripts/pdfjoin
++++ b/scripts/pdfjoin
+@@ -263,7 +263,7 @@ if test -f "$tempfileDir"/"$uniqueName"".aux";
+                  "$outfileDir"/"$outfileNameRoot"".pdf"
+        fi
+        case "$tidy" in
+-         true) rm "$tempfileDir"/"$uniqueName"* ;;
++         true) cd && rm "$tempfileDir"/"$uniqueName"* ;;
+        esac
+   else echo "  Failed: output file not written"
+ fi 
+diff --git a/scripts/pdfnup b/scripts/pdfnup
+index 71330c3..d7872ac 100755
+--- a/scripts/pdfnup
++++ b/scripts/pdfnup
+@@ -342,7 +342,7 @@ EndTemplate
+                    "$outfileDir"/"$outfileNameRoot"".pdf"
+          fi
+          case "$tidy" in
+-           true) rm "$tempfileDir"/"$uniqueName"* ;;
++           true) cd && rm "$tempfileDir"/"$uniqueName"* ;;
+          esac
+          outFile=""
+     else echo "  Failed: output file not written"
+-- 
+1.6.5.1
+

@@ -1,0 +1,44 @@
+From 5f8d163c0b2fa7c6eb6eba6dc271e96573293340 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 21 Dec 2009 15:28:31 +0100
+Subject: [PATCH] Use CSW bash because the Solaris shipped one is too old
+
+---
+ scripts/pdf90   |    2 +-
+ scripts/pdfjoin |    2 +-
+ scripts/pdfnup  |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/pdf90 b/scripts/pdf90
+index 5df5a37..cf15109 100755
+--- a/scripts/pdf90
++++ b/scripts/pdf90
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ ##
+ ##  pdf90: A shell program to rotate all pages of PDF files
+ ##
+diff --git a/scripts/pdfjoin b/scripts/pdfjoin
+index 24551ce..0bac762 100755
+--- a/scripts/pdfjoin
++++ b/scripts/pdfjoin
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ ##
+ ##  pdfjoin: A shell program to concatenate PDF pages into one file
+ ##
+diff --git a/scripts/pdfnup b/scripts/pdfnup
+index d7872ac..6baeeb1 100755
+--- a/scripts/pdfnup
++++ b/scripts/pdfnup
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/opt/csw/bin/bash
+ ##
+ ##  pdfnup: A shell program to generate a "n-up" version of a PDF file
+ ##
+-- 
+1.6.5.1
+

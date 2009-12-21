@@ -1,2 +1,4 @@
 ad3f63f1304a73f7ef25d4ea70c03b7f  0001-Hardcode-CSW-tools-and-pathes.patch
+267c5818992a3c1de19f2bcc074892b3  0002-Step-out-of-tempdir-before-removing-it.patch
+3b0072b467cb1d961056a1164c531602  0003-Use-CSW-bash-because-the-Solaris-shipped-one-is-too-.patch
 71d2d664777d32ec4154ab4c2e5965dc  pdfjam_1.21.tar.gz
