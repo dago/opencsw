@@ -114,11 +114,11 @@ PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
 ENABLE_CHECK = 0
 
 REQUIRED_PKGS_CSWidle         = CSWpython CSWpython-tk
-REQUIRED_PKGS_CSWpython       = CSWbdb CSWbzip2 CSWgdbm CSWggettextrt 
-REQUIRED_PKGS_CSWpython      += CSWncurses CSWosslrt CSWpython-rt CSWreadline 
+REQUIRED_PKGS_CSWpython       = CSWbdb47 CSWbzip2 CSWgdbm CSWggettextrt 
+REQUIRED_PKGS_CSWpython      += CSWncurses CSWosslrt CSWreadline 
 REQUIRED_PKGS_CSWpython      += CSWsqlite3rt CSWzlib
 REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 
-REQUIRED_PKGS_CSWpython-tk   += CSWpython-rt
+REQUIRED_PKGS_CSWpython-tk   += CSWpython
 REQUIRED_PKGS_CSWpython-devel = CSWpython
 REQUIRED_PKGS_CSWpython-test  = CSWpython
 
