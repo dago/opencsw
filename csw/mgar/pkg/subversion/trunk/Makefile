@@ -73,8 +73,6 @@ DISTFILES += CSWsvn.checkinstall
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 DISTFILES += fixme.sh
-DISTFILES += libsvn_ra_dav-1.so.0.0.0.i
-DISTFILES += libsvn_ra_dav-1.so.0.0.0.s
 
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
@@ -174,10 +172,8 @@ fix-ra_dav:
 	@# libsvn_ra_dav-1* has been renamed to libsvn_ra_neon-1* 
 	@# in the new versions of subversion, 
 	@# we need to link for backward compatability
-	@(gln -s $(DESTDIR)$(libdir)/libsvn_ra_neon-1.so.0.0.0 \
-		$(DESTDIR)$(libdir)/libsvn_ra_dav-1.so.0)
-	@(gln -s $(DESTDIR)$(libdir)/libsvn_ra_neon-1.so.0.0.0 \
-		$(DESTDIR)$(libdir)/libsvn_ra_dav-1.so)
+	@(gln -s libsvn_ra_neon-1.so.0.0.0 $(DESTDIR)$(SVNLIB)/libsvn_ra_dav-1.so.0)
+	@(gln -s libsvn_ra_neon-1.so.0.0.0 $(DESTDIR)$(SVNLIB)/libsvn_ra_dav-1.so)
 	@$(MAKECOOKIE)
 
 install-extras:
@@ -220,14 +216,3 @@ svn-java:
 	$(BUILD_ENV)   gmake -C $(WORKSRC) javahl;
 	$(INSTALL_ENV) gmake -C $(WORKSRC) install-javahl;
 	$(MAKECOOKIE)
-
-post-install-isa-sparcv8:
-	ginstall $(FILEDIR)/libsvn_ra_dav-1.so.0.0.0.s $(DESTDIR)$(libdir)/libsvn_ra_dav-1.so.0.0.0
-	ln -s libsvn_ra_dav-1.so.0.0.0 $(DESTDIR)$(libdir)/libsvn_ra_dav-1.so.0
-	@$(MAKECOOKIE)
-
-post-install-isa-i386:
-	cp $(FILEDIR)/libsvn_ra_dav-1.so.0.0.0.i $(DESTDIR)$(libdir)/libsvn_ra_dav-1.so.0.0.0
-	ln -s libsvn_ra_dav-1.so.0.0.0 $(DESTDIR)$(libdir)/libsvn_ra_dav-1.so.0
-	@$(MAKECOOKIE)
-
