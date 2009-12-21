@@ -3,7 +3,9 @@
 # $Id$
 
 GARNAME = mysql5
-GARVERSION = 5.0.87
+MYSQL_MINOR_VERSION = 0
+MYSQL_PATCHLEVEL = 87
+GARVERSION = 5.$(MYSQL_MINOR_VERSION).$(MYSQL_PATCHLEVEL)
 CATEGORIES = server
 
 DISTNAME = mysql-$(GARVERSION)
@@ -37,12 +39,6 @@ CATALOGNAME_CSWmysql5client = $(GARNAME)client
 CATALOGNAME_CSWmysql5devel  = $(GARNAME)devel
 CATALOGNAME_CSWmysql5rt     = $(GARNAME)rt
 CATALOGNAME_CSWmysql5test   = $(GARNAME)test
-
-INCOMPATIBLE_PKGS_CSWmysql5bench  = CSWmysql4bench
-INCOMPATIBLE_PKGS_CSWmysql5client = CSWmysql4client
-INCOMPATIBLE_PKGS_CSWmysql5       = CSWmysql4
-INCOMPATIBLE_PKGS_CSWmysql5devel  = CSWmysql4devel
-INCOMPATIBLE_PKGS_CSWmysql5test   = CSWmysql4test
 
 SPKG_DESC_CSWmysql5       = Multithreaded SQL database
 SPKG_DESC_CSWmysql5bench  = MySQL 5 benchmarking
@@ -95,7 +91,7 @@ REQUIRED_PKGS_CSWmysql5            = CSWmysql5client CSWmysql5rt
 REQUIRED_PKGS_CSWmysql5devel       = CSWmysql5
 REQUIRED_PKGS_CSWmysql5test        = CSWmysql5 CSWperl
 
-MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.0/
+MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.$(MYSQL_MINOR_VERSION)/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
 DISTFILES += cswmysql5 quick_start-csw README.CSW ChangeLog
 DISTFILES += CSWmysql5.preinstall
@@ -152,7 +148,11 @@ SPKG_CLASSES = none ugfiles
 
 include gar/category.mk
 
-post-install:
+pre-configure-modulated:
+	# To work around the libtool version mismatch problem.
+	cd $(WORKSRC) && autoreconf --force --install --symlink
+
+post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)
 	ginstall -m 755 -d $(DESTDIR)$(datadir)/mysql/doc
 	ginstall -m 644 $(FILEDIR)/ChangeLog $(DESTDIR)$(datadir)/mysql/doc
