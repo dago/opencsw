@@ -1,5 +1,5 @@
 GARNAME    = gnupg
-GARVERSION = 1.4.9
+GARVERSION = 1.4.10
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP.
