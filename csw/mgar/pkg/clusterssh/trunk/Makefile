@@ -22,6 +22,8 @@ REQUIRED_PKGS += CSWpmtk
 REQUIRED_PKGS += CSWpmx11protocol
 # REQUIRED_PKGS += CSWossh
 
+ARCHALL = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Not gonna do it
