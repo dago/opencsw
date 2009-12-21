@@ -118,7 +118,6 @@ REQUIRED_PKGS_CSWpython       = CSWbdb47 CSWbzip2 CSWgdbm CSWggettextrt
 REQUIRED_PKGS_CSWpython      += CSWncurses CSWosslrt CSWreadline 
 REQUIRED_PKGS_CSWpython      += CSWsqlite3rt CSWzlib
 REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 
-REQUIRED_PKGS_CSWpython-tk   += CSWpython
 REQUIRED_PKGS_CSWpython-devel = CSWpython
 REQUIRED_PKGS_CSWpython-test  = CSWpython
 
