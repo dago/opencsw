@@ -111,7 +111,7 @@ PKGFILES_CSWpython-test += $(libdir)/python/json/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/lib2to3/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
 
-ENABLE_CHECK = 0
+ARCHALL_CSWpython-rt = 1
 
 REQUIRED_PKGS_CSWidle         = CSWpython CSWpython-tk
 REQUIRED_PKGS_CSWpython       = CSWbdb47 CSWbzip2 CSWgdbm CSWggettextrt 
