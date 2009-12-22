@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = cadaver
-GARVERSION = 0.23.2
+GARVERSION = 0.23.3
 CATEGORIES = net
 
 DESCRIPTION = WebDAV commandline tool
