@@ -29,6 +29,8 @@ PACKAGES = CSWbash
 REQUIRED_PKGS = CSWggettextrt
 REQUIRED_PKGS += CSWiconv
 
+SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
+
 SPKG_CLASSES = none build
 
 ###### Upstream and opencsw files information #######

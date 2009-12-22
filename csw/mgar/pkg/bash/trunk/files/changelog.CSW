@@ -1,3 +1,9 @@
+bash (4.0.35,REV=2009.12.23) unstable
+
+  * Fixed Source url info (bug #4087).
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 23 Dec 2009 00:22:40 +0100
+
 bash (4.0.35,REV=2009.11.01) unstable
 
   * Added bash patches bash40-034 to bash40-035.
