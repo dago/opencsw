@@ -1,3 +1,9 @@
+pm_cyrus (2.3.16,REV=2009.12.23) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 23 Dec 2009 00:10:44 +0100
+
 pm_cyrus (2.3.15,REV=2009.10.11) unstable
 
   * New upstream version.
