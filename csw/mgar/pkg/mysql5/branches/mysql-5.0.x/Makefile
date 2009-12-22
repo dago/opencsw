@@ -47,6 +47,8 @@ SPKG_DESC_CSWmysql5devel  = MySQL 5 header files
 SPKG_DESC_CSWmysql5rt     = MySQL 5 runtime files
 SPKG_DESC_CSWmysql5test   = MySQL 5 testing files
 
+ARCHALL_CSWmysql5bench = 1
+
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
 CSWmysql5client_programs  = myisamlog
