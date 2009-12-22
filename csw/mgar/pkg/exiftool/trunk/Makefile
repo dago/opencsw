@@ -25,4 +25,5 @@ UFILES_REGEX = Image-ExifTool-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+ARCHALL = 1 
 include gar/category.mk
