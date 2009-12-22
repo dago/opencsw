@@ -36,6 +36,11 @@ EXTRA_LDFLAGS = -lm /usr/openwin/lib/libXext.so
 BUILD_OVERRIDE_DIRS = CFLAGS
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
+# Strange thing - there are no tests done during this phase, but everything gets
+# rebuild (and CFLAGS are again ignored...)
+TEST_SCRIPTS =
+
+INSTALL_OVERRIDE_VARS = CFLAGS
+INSTALL_OVERRIDE_VAR_CFLAGS = $(CFLAGS)
 
 include gar/category.mk
