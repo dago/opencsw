@@ -120,6 +120,7 @@ REQUIRED_PKGS_CSWpython      += CSWsqlite3rt CSWzlib
 REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 
 REQUIRED_PKGS_CSWpython-devel = CSWpython
 REQUIRED_PKGS_CSWpython-test  = CSWpython
+REQUIRED_PKGS_CSWpython-rt    = CSWpython
 
 CATALOGNAME_CSWidle = idle
 CATALOGNAME_CSWpython = python
