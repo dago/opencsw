@@ -1,107 +1,119 @@
+lftp (4.0.5,REV=2009.12.23) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 23 Dec 2009 00:13:55 +0100
+
 lftp (4.0.4,REV=2009.12.02) unstable
 
   * New upstream release.
 
-   -- Yann Rouillard <yann@opencsw.org>  Wed, 02 Dec 2009 21:47:50 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 02 Dec 2009 21:47:50 +0100
+
+lftp (4.0.4,REV=2009.12.02) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 02 Dec 2009 21:47:50 +0100
 
 lftp (4.0.3,REV=2009.11.01) unstable
 
   * New upstream release.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sun, 01 Nov 2009 01:23:45 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 01 Nov 2009 01:23:45 +0100
 
 lftp (4.0.2,REV=2009.10.11) unstable
 
   * New upstream release.
 
-   -- Yann Rouillard <yann@opencsw.org>  Fri, 11 Oct 2009 00:45:36 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 11 Oct 2009 00:45:36 +0200
 
 lftp (3.7.15,REV=2009.07.25) unstable
 
   * New upstream release.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 25 Jul 2009 13:10:19 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 25 Jul 2009 13:10:19 +0200
 
 lftp (3.7.14,REV=2009.05.16) unstable
 
   * New upstream release.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 16 May 2009 15:40:33 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 16 May 2009 15:40:33 +0200
 
 lftp (3.7.13,REV=2009.05.09) unstable
 
   * New upstream release.
 
-   -- Yann Rouillard <yann@opencsw.org>  Fri, 09 May 2009 17:17:30 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 09 May 2009 17:17:30 +0200
 
 lftp (3.7.11,REV=2009.03.29) unstable
 
   * Now uses cswpreserveconf class from cswclassutils to handle lftp.conf
   configuration file.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sun, 29 Mar 2009 16:16:22 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 29 Mar 2009 16:16:22 +0200
 
 lftp (3.7.11,REV=2009.03.27) unstable
 
   * Fixed double CSWcommon dependancy.
 
-   -- Yann Rouillard <yann@opencsw.org>  Wed, 25 Mar 2009 23:08:42 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 25 Mar 2009 23:08:42 +0100
 
 lftp (3.7.11,REV=2009.03.21) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 21 Mar 2009 12:55:58 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 21 Mar 2009 12:55:58 +0100
 
 lftp (3.7.8,REV=2009.02.15) unstable
 
   * Changed gettext dependancy to follow gettext package split
   (Closes: #3099).
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 14 Feb 2009 23:53:41 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 14 Feb 2009 23:53:41 +0100
 
 lftp (3.7.8,REV=2009.01.24) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 24 Jan 2009 16:14:12 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 24 Jan 2009 16:14:12 +0100
 
 lftp (3.7.7,REV=2008.12.12) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 13 Dec 2008 11:53:59 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 13 Dec 2008 11:53:59 +0100
 
 lftp (3.7.6,REV=2008.11.30) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sun, 30 Nov 2008 22:43:16 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 30 Nov 2008 22:43:16 +0100
    
 lftp (3.7.4,REV=2008.10.04) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@opencsw.org>  Fri, 04 Oct 2008 23:41:47 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 04 Oct 2008 23:41:47 +0200
    
 lftp (3.7.3,REV=2008.06.02) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@blastwave.org>  Mon, 02 Jun 2008 22:08:32 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Mon, 02 Jun 2008 22:08:32 +0200
    
 lftp (3.6.3,REV=2008.02.16) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@blastwave.org>  Sat, 16 Feb 2008 10:58:45 +0100
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 16 Feb 2008 10:58:45 +0100
 
 lftp (3.6.2,REV=2008.01.21) unstable
 
   * New upstream version.
   * Removed files/xstring_char_cast_bugfix.patch: bug fixed upstream.
 
-   -- Yann Rouillard <yann@blastwave.org>  Mon, 21 Jan 2008 23:54:26 +0100
+ -- Yann Rouillard <yann@blastwave.org>  Mon, 21 Jan 2008 23:54:26 +0100
 
 lftp (3.6.1,REV=2007.12.21) unstable
 
@@ -109,51 +121,51 @@ lftp (3.6.1,REV=2007.12.21) unstable
   * Added files/xstring_char_cast_bugfix.patch:
   	workaround a cast problem
 
-   -- Yann Rouillard <yann@blastwave.org>  Fri, 21 Dec 2007 23:20:29 +0100
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 21 Dec 2007 23:20:29 +0100
 
 lftp (3.5.13,REV=2007.08.24) unstable
 
   * New upstream version.
   * Removed static libraries files.
 
-   -- Yann Rouillard <yann@blastwave.org>  Fri, 24 Aug 2007 01:50:48 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 24 Aug 2007 01:50:48 +0200
 
 lftp (3.5.12,REV=2007.08.17) unstable
 
   * New upstream version.
 
-   -- Yann Rouillard <yann@blastwave.org>  Fri, 17 Aug 2007 20:17:39 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Fri, 17 Aug 2007 20:17:39 +0200
 
 lftp (3.5.11) unstable
 
   * Depends on openssl_rt rather than openssl.
 
-   -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 17:30:07 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 28 Jul 2007 17:30:07 +0200
 
 lftp (3.5.11) unstable
 
    * New upstream version.
 
-  -- Yann Rouillard <yann@blastwave.org>  Wed, 06 May 2007 04:42:47 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Wed, 06 May 2007 04:42:47 +0200
 
 lftp (3.5.10) unstable
 
    * New upstream version.
 
-  -- Yann Rouillard <yann@blastwave.org>  Wed, 11 Apr 2007 00:30:58 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Wed, 11 Apr 2007 00:30:58 +0200
 
 lftp (3.5.9) unstable
 
    * New upstream version.
 
-  -- Yann Rouillard <yann@blastwave.org>  Mon, 15 Jan 2007 23:48:35 +0100
+ -- Yann Rouillard <yann@blastwave.org>  Mon, 15 Jan 2007 23:48:35 +0100
 
 lftp (3.5.6) unstable
  
    * New upstream version.
    * Removed MakeRef_macro.patch not necessary anymore.
  
-  -- Yann Rouillard <yann@blastwave.org>  Mon,  4 Dec 2006 23:07:36 +0100
+ -- Yann Rouillard <yann@blastwave.org>  Mon,  4 Dec 2006 23:07:36 +0100
  
 lftp (3.5.4) unstable
  
@@ -162,7 +174,7 @@ lftp (3.5.4) unstable
    * Added MakeRef_macro.patch to fixed a incorrect macro call 
      which caused segmentation fault with sftp protocol.
  
-  -- Yann Rouillard <yann@blastwave.org>  Sat, 19 Aug 2006 20:24:04 +0200
+ -- Yann Rouillard <yann@blastwave.org>  Sat, 19 Aug 2006 20:24:04 +0200
  
 lftp (3.5.2) unstable
 
