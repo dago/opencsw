@@ -1,6 +1,13 @@
 #!/bin/ksh -p
-
-# checkpkg 1.50 (diff to 1.46a: check multiple package files)
+# 
+# $Id$
+#
+# checkpkg 1.51
+#
+# diff to 1.46a
+#  - check multiple package files
+#  - checkpkg.d plugin support
+#
 # This script examines a package that has been put together
 # for submittal to the CSW archive at opencsw.org
 #
@@ -443,13 +450,12 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
-# Verify that there are no double depends
+# Verify that there are no multiple depends
 repeated_depends="$(awk '{print $2}' $EXTRACTDIR/$pkgname/install/depend \
   | sort | uniq -c | awk '{print $1}' | sort | uniq | wc -l)"
 if [[ "$repeated_depends" -gt 1 ]]; then
         cat $EXTRACTDIR/$pkgname/install/depend
-        print ERROR: $pkgname has double depends
-        exit 1
+        errmsg "$pkgname has multiple depends"
 fi
 
 #to retain a record of all packages currently being examined from $@
@@ -530,6 +536,34 @@ if [[ "$basedir" != "" ]] ; then
 	fi
 fi
 
+# Plugin section.
+#
+# Plugins should live in checkpkg.d subdirectory in the same directory in which
+# checkpkg is.  Each plugin file name should be an executable and begin with
+# "checkpkg-".
+
+echo "Running the experimental plugin infrastructure."
+checkpkg_scriptname=`basename $0`
+checkpkg_basedir=${0%/${checkpkg_scriptname}}
+plugindir=${checkpkg_basedir}/checkpkg.d
+echo "plugindir: '$plugindir'"
+if [[ -d "$plugindir" ]]; then
+	# echo plugin dir exists
+	for plugin in "${plugindir}"/checkpkg-*; do
+		if [[ -x "${plugin}" ]]; then
+			echo "Executing: '${plugin} -e \"${EXTRACTDIR}\" -p \"${pkgname}\"'"
+			${plugin} -e "${EXTRACTDIR}" -p "${pkgname}"
+			if [[ "$?" -ne 0 ]]; then
+				errmsg "Plugin ${plugin} has returned an error."
+			fi
+		else
+			echo "'${plugin}' is not executable"
+		fi
+	done
+else
+	echo plugin dir does not exist
+fi
+# End of plugin section
 
 cleanup
 
