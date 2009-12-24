@@ -117,6 +117,7 @@ REQUIRED_PKGS_CSWmysql5client      = CSWmysql5rt
 REQUIRED_PKGS_CSWmysql5            = CSWmysql5client CSWmysql5rt
 REQUIRED_PKGS_CSWmysql5devel       = CSWmysql5
 REQUIRED_PKGS_CSWmysql5test        = CSWmysql5 CSWperl
+REQUIRED_PKGS_CSWmysql5rt          = CSWosslrt
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
