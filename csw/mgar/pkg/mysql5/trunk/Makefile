@@ -108,7 +108,8 @@ PKGFILES_CSWmysql5devel  += $(mandir)/man1/mysql_config\.1
 PKGFILES_CSWmysql5devel  += $(prefix)/include.*
 PKGFILES_CSWmysql5devel  += /opt/csw/include/mysql
 
-PKGFILES_CSWmysql5rt      = $(prefix)/lib/.*\.so.*
+PKGFILES_CSWmysql5rt      = $(libdir)
+PKGFILES_CSWmysql5rt     += $(libdir)/.*
 PKGFILES_CSWmysql5test    = $(prefix)/mysql-test.*
 
 REQUIRED_PKGS_CSWmysql5bench       = CSWmysql5
