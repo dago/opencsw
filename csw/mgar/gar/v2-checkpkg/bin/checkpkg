@@ -35,9 +35,15 @@ cleanup(){
 	if [[ -d "$EXTRACTDIR" ]] ; then
 		rm -rf $EXTRACTDIR
 	fi
-	if [[ "$TMPARCHIVE" != "" ]] ; then
-		[ -f "$TMPARCHIVE" ] && rm $TMPARCHIVE
-	fi
+	cleantmparchives
+}
+
+cleantmparchives() {
+	for TMPARCHIVE in $tmparchives; do
+		if [[ "$TMPARCHIVE" != "" ]]; then
+			[ -f "$TMPARCHIVE" ] && rm $TMPARCHIVE
+		fi
+	done
 }
 
 cleanupset(){
@@ -61,6 +67,22 @@ errmsg(){
 	exit 1
 }
 
+set_variables_for_individual_package_check() {
+	f=$1
+	file $f |sed 's/^.*://' |grep gzip >/dev/null
+	if [ $? -eq 0 ] ; then
+		TMPARCHIVE=/tmp/`basename $f`
+		if [[ -f $TMPARCHIVE ]] ; then
+			print ERROR: $TMPARCHIVE already exists
+			
+		fi
+		gzcat $f >$TMPARCHIVE || exit 1
+		f=$TMPARCHIVE
+	fi
+	pkgname=`nawk 'NR == 2 {print $1; exit;}' $f`
+	pkgnames="$pkgnames $pkgname"
+}
+
 if [[ "$1" == "-e" ]] ; then
 	quit_on_warn=1;
 	shift
@@ -75,7 +97,15 @@ fi
 SETINF=/tmp/checkpkg.$$.`date +%Y%m%d%H%M%S`
 SETLIBS=$SETINF.libs
 SETDEPS=$SETINF.deps
+pkgnames=""
+tmparchives=""
 
+EXTRACTDIR=/tmp/dissect.$$
+
+if [ -d $EXTRACTDIR ] ; then
+	print ERROR: $EXTRACTDIR already exists
+	exit 1
+fi
 
 for f in "$@"
 do
@@ -89,9 +119,6 @@ fi
 
 
 case $f in
-	cswutils-*)
-		:
-	;;
 	*)
 	print Examining $f
 
@@ -118,30 +145,13 @@ case $f in
 	done
 esac
 
-print Extracting files for more detailed inspection...
+print Extracting all files for more detailed inspection...
 
-file $f |sed 's/^.*://' |grep gzip >/dev/null
-if [ $? -eq 0 ] ; then
-	TMPARCHIVE=/tmp/`basename $f`
-	if [[ -f $TMPARCHIVE ]] ; then
-		print ERROR: $TMPARCHIVE already exists
-		
-	fi
-	gzcat $f >$TMPARCHIVE || exit 1
-	f=$TMPARCHIVE
-fi
-
-pkgname=`nawk 'NR == 2 {print $1; exit;}' $f`
-
-EXTRACTDIR=/tmp/dissect.$$
-
-if [ -d $EXTRACTDIR ] ; then
-	print ERROR: $EXTRACTDIR already exists
-	exit 1
-fi
+set_variables_for_individual_package_check "$f"
 
 mkdir $EXTRACTDIR
 
+# FIXME: This doesn't support multiple packages
 TMPFILE=$EXTRACTDIR/pkginfo
 
 
@@ -310,7 +320,6 @@ pkgtrans(){
 print ""
 print Extracing pkg for examination of files...
 pkgtrans $f $EXTRACTDIR $pkgname
-
 
 #############################################################
 # We now have the package expanded, in "directory" form, in
@@ -542,6 +551,15 @@ fi
 # checkpkg is.  Each plugin file name should be an executable and begin with
 # "checkpkg-".
 
+tmparchives="$tmparchives $TMPARCHIVE"
+done
+
+# All packages have been extracted.
+
+# Now running all the plugin checks
+
+set_variables_for_individual_package_check "$f"
+
 echo "Running the experimental plugin infrastructure."
 checkpkg_scriptname=`basename $0`
 checkpkg_basedir=${0%/${checkpkg_scriptname}}
@@ -551,8 +569,8 @@ if [[ -d "$plugindir" ]]; then
 	# echo plugin dir exists
 	for plugin in "${plugindir}"/checkpkg-*; do
 		if [[ -x "${plugin}" ]]; then
-			echo "Executing: '${plugin} -e \"${EXTRACTDIR}\" -p \"${pkgname}\"'"
-			${plugin} -e "${EXTRACTDIR}" -p "${pkgname}"
+			echo "Executing: ${plugin} -e \"${EXTRACTDIR}\" ${pkgnames}"
+			${plugin} -e "${EXTRACTDIR}" ${pkgnames}
 			if [[ "$?" -ne 0 ]]; then
 				errmsg "Plugin ${plugin} has returned an error."
 			fi
@@ -565,11 +583,13 @@ else
 fi
 # End of plugin section
 
-cleanup
+# Not doing the cleanup now
+# cleanup
 
 print ""
 
-done
+# Cleaning up after all packages
+cleanup
 
 if [ -s $SETDEPS.missing ]; then
     print "Doing late evaluations of package dependencies."

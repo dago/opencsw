@@ -19,8 +19,16 @@ RUNPATH = "runpath"
 def main():
   logging.basicConfig(level=logging.DEBUG)
   options, args = checkpkg.GetOptions()
-  checker = checkpkg.CheckpkgBase(options.extractdir, options.pkgname)
-  binaries = checker.ListBinaries()
+  pkgnames = args
+  checkers = []
+  for pkgname in pkgnames:
+    checker = checkpkg.CheckpkgBase(options.extractdir, pkgname)
+    checkers.append(checker)
+  binaries = []
+  for checker in checkers:
+    binaries.extend(checker.ListBinaries())
+  # Make them unique
+  binaries = set(binaries)
   ws_re = re.compile(r"\s+")
 
   # if [[ "$goodarch" = "yes" ]] ; then
@@ -128,6 +136,9 @@ def main():
     else:
     	print ("%s is required by %s, but we don't know what provides it."
     	       % (soname, binaries_by_soname[soname]))
+  # TODO: extract package names from the pkgmap lines
+  # TODO: print per-package deps (requires the transition: pkgname -> soname ->
+  # pkgname)
 
   # for lib in `cat $EXTRACTDIR/liblist` ; do
   #   grep "[/=]$lib[ =]" $EXTRACTDIR/$pkgname/pkgmap

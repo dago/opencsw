@@ -29,16 +29,12 @@ def GetOptions():
   parser = optparse.OptionParser()
   parser.add_option("-e", dest="extractdir",
                     help="The directory into which the package has been extracted")
-  parser.add_option("-p", dest="pkgname",
-                    help="The pkgname, e.g. CSWfoo")
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")
   (options, args) = parser.parse_args()
   if not options.extractdir:
     raise ConfigurationError("ERROR: -e option is missing.")
-  if not options.pkgname:
-    raise ConfigurationError("ERROR: -p option is missing.")
   return options, args
 
 
