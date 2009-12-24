@@ -1,32 +1,36 @@
 GARNAME = qt4
-GARVERSION = 4.3.3
+GARVERSION = 4.6.0
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework
 define BLURB
-  Qt is a comprehensive cross-platform C++ application framework. Qt 4.3
-  introduces new features and many improvements over the 3.x series. See
-  http://doc.trolltech.com/4.3/qt4-intro.html for details.
+  Qt is a comprehensive cross-platform C++ application framework. Qt 4
+  introduces new features and many improvements over the 3.x series.
 endef
 
-MASTER_SITES = ftp://ftp.trolltech.com/qt/source/
-DISTFILES    = qt-x11-opensource-src-$(GARVERSION).tar.gz
-DISTFILES   += $(call admfiles,CSWqt4,depend prototype-sparc prototype-i386)
-DISTFILES   += $(call admfiles,CSWqt4-devel,depend prototype-sparc prototype-i386)
-DISTFILES   += $(call admfiles,CSWqt4-docs,prototype)
+MASTER_SITES = http://get.qt.nokia.com/qt/source/
+DISTFILES    = qt-everywhere-opensource-src-$(GARVERSION).tar.gz
+#DISTFILES   += $(call admfiles,CSWqt4,depend prototype-sparc prototype-i386)
+#DISTFILES   += $(call admfiles,CSWqt4-devel,depend prototype-sparc prototype-i386)
+#DISTFILES   += $(call admfiles,CSWqt4-docs,prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = qt-x11-opensource-src-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = qt-everywhere-opensource-src-(\d+(?:\.\d+)*).tar.gz
 
-ifndef DO64
-PLATFORM=solaris-cc
-else
-PLATFORM=solaris-cc-64
-endif
+# The PACKAGES variable tell GAR which packages to build
+#PACKAGES  = CSWqt4 CSWqt4-devel
 
-WORKSRC = $(WORKDIR)/qt-x11-opensource-src-$(GARVERSION)
+WORKSRC = $(WORKDIR)/qt-everywhere-opensource-src-$(GARVERSION)
+REQUIRED_PKGS_CSWqt4 = CSWfconfig CSWftype2 CSWggettext CSWglib2 CSWjpeg CSWlibxrender CSWpng CSWtiff CSWzlib 
+#REQUIRED_PKGS_CSWqt4-devel = CSWqt4
 
-PREREQUISITE_PKGS = CSWpkgconfig CSWfconfig CSWlibdbusdev
+#ifndef DO64
+#PLATFORM=solaris-cc
+#else
+#PLATFORM=solaris-cc-64
+#endif
+
+#PREREQUISITE_PKGS = CSWpkgconfig CSWfconfig CSWlibdbusdev
 
 CONFIGURE_ARGS = -prefix $(prefix) \
 			-bindir $(bindir) \
@@ -41,13 +45,13 @@ CONFIGURE_ARGS = -prefix $(prefix) \
 			-demosdir $(sharedstatedir)/qt4/demos \
 			-I$(includedir) \
 			-L$(libdir) \
-			-platform $(PLATFORM) \
 			-confirm-license \
+			-opensource \
 			-verbose
 
 # SKIPTEST = 1
 
-INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
+#INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
 
 SRC_CLEAN_TARGET = confclean
 
