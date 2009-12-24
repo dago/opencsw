@@ -132,8 +132,8 @@ PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 # MySQL-5.1.40 doesn't compile without setting EXTRA_INC.
 EXTRA_INC = /opt/csw/include
 EXTRA_LIB = /opt/csw/lib
-EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+# EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+# EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -150,11 +150,15 @@ CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
 CONFIGURE_ARGS += --with-comment
+CONFIGURE_ARGS += --with-mysqld-libs=-lmtmalloc
+CONFIGURE_ARGS += --with-big-tables
+CONFIGURE_ARGS += --enable-thread-safe-client
 CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 # TODO: Make the tests pass. They don't at the moment.
-# TEST_SCRIPTS =
+SKIPTEST ?= 1
+TEST_SCRIPTS = custom
 TEST_TARGETS = check
 
 
@@ -173,9 +177,16 @@ include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
 
+test-custom:
+	alias sh=/usr/bin/bash; \
+		cd $(WORKSRC)/mysql-test; \
+		perl mysql-test-run.pl --mem --big-test --force \
+		--skip-test=archive-big --skip-test=/gis/
+
 pre-configure-modulated:
 	# To work around the libtool version mismatch problem.
 	cd $(WORKSRC) && autoreconf --force --install --symlink
+	@$(MAKECOOKIE)
 
 post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
@@ -200,5 +211,10 @@ post-merge:
 		ln -s ../mysql5/bin/`basename $$f` \
 		      $(PKGROOT)$(global_bindir)/`basename $$f`; \
 	done
+	# /opt/csw/mysql5/lib/sparc9/mysql -- by GAR, it's logical
+	# /opt/csw/mysql5/lib/mysql/sparcv9 -- expected by other packages
+	gln -s ../$(ISA_DEFAULT64)/mysql $(PKGROOT)$(libdir)/mysql/$(ISA_DEFAULT64)
+	# For other applications to link against
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
+	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/mysql/64
 	@$(MAKECOOKIE)
