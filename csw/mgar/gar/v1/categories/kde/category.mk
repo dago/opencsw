@@ -1,7 +1,7 @@
 
 # KDE
 KDE_ROOT      = http://download.kde.org
-KDE_VERSION   = 3.5.2
+KDE_VERSION   = 3.5.10
 KDE_DIST      = stable
 KDE_MIRROR    = $(KDE_ROOT)/$(KDE_DIST)/$(KDE_VERSION)/src/
 
