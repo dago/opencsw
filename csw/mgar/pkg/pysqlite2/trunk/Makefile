@@ -9,7 +9,7 @@ define BLURB
   SQLite support for Python
 endef
 
-MASTER_SITES = http://oss.itsystementwicklung.de/download/pysqlite/$(RELVER)/$(GARVERSION)/
+MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpysqlite2
@@ -20,7 +20,6 @@ SPKG_DESC_CSWpysqlite2 = SQLite3 support for Python
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
