@@ -499,47 +499,6 @@ do
     fi
 done
 
-egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
-		fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
-
-
-
-for lib in `cat $EXTRACTDIR/liblist` ; do
-	grep "[/=]$lib[ =]" $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-		echo $lib provided by package itself
-		continue
-	else
-	    grep "[/=]$lib[ =]" $SETLIBS
-	    if [[ $? -eq 0 ]]; then
-		echo "$lib provided by package set being evaluated."
-		continue
-	    fi
-	fi
-
-	libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
-	      sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
-
-	if [[ -z "$libpkg" ]] ; then
-		echo "$lib $pkgname" >> $SETLIBS.missing
-		print Cannot find package providing $lib.  Storing for delayed validation.
-	else
-		print $libpkg | fmt -1 >>$EXTRACTDIR/libpkgs
-	fi
-done
-
-sort -u $EXTRACTDIR/libpkgs >$EXTRACTDIR/libpkgs.x
-mv $EXTRACTDIR/libpkgs.x $EXTRACTDIR/libpkgs
-
-diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs >/dev/null
-if [[ $? -ne 0 ]] ; then
-	print SUGGESTION: you may want to add some or all of the following as depends:
-	print '   (Feel free to ignore SUNW or SPRO packages)'
-	diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs | fgrep '>'
-fi
-
-
-
 if [[ "$basedir" != "" ]] ; then
 	print
 	if [[ -f $EXTRACTDIR/elflist ]] ; then
@@ -620,21 +579,6 @@ if [ -s $SETDEPS.missing ]; then
 	    print "Validated $dep as a dependency for $pkg."
 	fi
     done < $SETDEPS.missing
-fi
-
-if [ -s $SETLIBS.missing ]; then
-    print "Doing late evaluations of package library dependencies."
-    while read ldep; do
-	lib=`echo $ldep | nawk '{print $1}'`
-        [ "$lib" = "libm.so.2" ] && continue
-	pkg=`echo $ldep | nawk '{print $2}'`
-	/usr/bin/grep "[/=]$lib[ =]" $SETLIBS >/dev/null
-	if [ $? -ne 0 ]; then
-	    errmsg "Couldn't find a package providing $lib"
-	else
-	    print "A package in the set being evaluated provides $lib"
-	fi
-    done < $SETLIBS.missing
 fi
 
 cleanupset
