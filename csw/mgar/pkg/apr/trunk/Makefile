@@ -22,9 +22,7 @@ CONFIGURE_ARGS += --enable-layout=csw
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-other-child
 
-# ipv6 tests fail
-# TEST_TARGET = check
-TEST_TARGET = 
+TEST_TARGET = check
 
 include gar/category.mk
 
