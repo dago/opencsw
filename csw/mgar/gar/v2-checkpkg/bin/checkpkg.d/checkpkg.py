@@ -35,7 +35,8 @@ def GetOptions():
   (options, args) = parser.parse_args()
   if not options.extractdir:
     raise ConfigurationError("ERROR: -e option is missing.")
-  return options, args
+  # Using set() to make the arguments unique.
+  return options, set(args)
 
 
 class CheckpkgBase(object):

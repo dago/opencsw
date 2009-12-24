@@ -25,9 +25,13 @@ def main():
     checker = checkpkg.CheckpkgBase(options.extractdir, pkgname)
     checkers.append(checker)
   binaries = []
+  binaries_by_pkgname = {}
   for checker in checkers:
-    binaries.extend(checker.ListBinaries())
-  # Make them unique
+    pkg_binary_paths = checker.ListBinaries()
+    binaries_base = [os.path.split(x)[1] for x in pkg_binary_paths]
+    binaries_by_pkgname[checker.pkgname] = binaries_base
+    binaries.extend(pkg_binary_paths)
+  # Make the binaries unique
   binaries = set(binaries)
   ws_re = re.compile(r"\s+")
 
@@ -55,7 +59,7 @@ def main():
    
   env = copy.copy(os.environ)
   env["LD_NOAUXFLTR"] = "1"
-  binaries_by_name = {}
+  needed_sonames_by_binary = {}
   # Assembling a data structure with the data about binaries.
   # {
   #   <binary1 name>: {NEEDED_SONAMES: [...],
@@ -66,16 +70,17 @@ def main():
   #
   for binary in binaries:
     binary_base_name = binary.split("/")[-1]
-    if binary_base_name not in binaries_by_name:
-      binaries_by_name[binary_base_name] = {}
-    binary_data = binaries_by_name[binary_base_name]
+    if binary_base_name not in needed_sonames_by_binary:
+      needed_sonames_by_binary[binary_base_name] = {}
+    binary_data = needed_sonames_by_binary[binary_base_name]
     args = [DUMP_BIN, "-Lv", binary]
     dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
     stdout, stderr = dump_proc.communicate()
     ret = dump_proc.wait()
     for line in stdout.splitlines():
       fields = re.split(ws_re, line)
-      logging.debug("%s says: %s", DUMP_BIN, fields)
+      # TODO: Make it a unit test
+      # logging.debug("%s says: %s", DUMP_BIN, fields)
       if len(fields) < 3:
         continue
       if fields[1] == "NEEDED":
@@ -88,7 +93,8 @@ def main():
         binary_data[RUNPATH].extend(fields[2].split(":"))
         # Adding the default runtime path search option.
         binary_data[RUNPATH].append("/usr/lib")
-  print binaries_by_name
+  # TODO: make it a unit test
+  # print needed_sonames_by_binary
 
   # Building indexes
   runpath_by_needed_soname = {}
@@ -97,7 +103,7 @@ def main():
   # }
   needed_sonames = set()
   binaries_by_soname = {}
-  for binary_name, data in binaries_by_name.iteritems():
+  for binary_name, data in needed_sonames_by_binary.iteritems():
     for soname in data[NEEDED_SONAMES]:
       needed_sonames.add(soname)
       if soname not in runpath_by_needed_soname:
@@ -115,28 +121,48 @@ def main():
   lines_by_soname = {}
   for soname in needed_sonames:
     if soname in paths_by_soname:
-      logging.debug("%s found", repr(soname))
+      # logging.debug("%s found", repr(soname))
       # Finding the first matching path
       for runpath in runpath_by_needed_soname[soname]:
         if runpath in paths_by_soname[soname]:
-          logging.debug("%s found in %s", runpath, paths_by_soname[soname])
-          logging.debug("line found: %s", repr(paths_by_soname[soname][runpath]))
+          # logging.debug("%s found in %s", runpath, paths_by_soname[soname])
+          # logging.debug("line found: %s", repr(paths_by_soname[soname][runpath]))
           lines_by_soname[soname] = paths_by_soname[soname][runpath]
           break
     else:
       logging.debug("%s not found in the soname list!", soname)
+  pkgs_by_soname = {}
+  for soname, line in lines_by_soname.iteritems():
+    # TODO: Find all the packages, not just the last field.
+    fields = re.split(ws_re, line.strip())
+    # For now, we'll assume that the last field is the package.
+    pkgname = fields[-1]
+    pkgs_by_soname[soname] = pkgname
   for soname in needed_sonames:
     if soname in binaries:
-    	print "%s is provided by the package itself" % soname
+      print "%s is provided by the package itself" % soname
     elif soname in lines_by_soname:
       print ("%s is required by %s and provided by %s" 
              % (soname,
                 binaries_by_soname[soname],
-                repr(lines_by_soname[soname])))
+                repr(pkgs_by_soname[soname])))
     else:
-    	print ("%s is required by %s, but we don't know what provides it."
-    	       % (soname, binaries_by_soname[soname]))
-  # TODO: extract package names from the pkgmap lines
+      print ("%s is required by %s, but we don't know what provides it."
+             % (soname, binaries_by_soname[soname]))
+  dependent_pkgs = {}
+  for pkgname in binaries_by_pkgname:
+    # logging.debug("Reporting package %s", pkgname)
+    dependencies = set()
+    for binary in binaries_by_pkgname[pkgname]:
+      if binary in needed_sonames_by_binary:
+        for soname in needed_sonames_by_binary[binary][NEEDED_SONAMES]:
+          dependencies.add(pkgs_by_soname[soname])
+      else:
+        logging.warn("%s not found in needed_sonames_by_binary (%s)",
+                     binary, needed_sonames_by_binary.keys())
+    logging.info("%s depends on %s", pkgname, dependencies)
+
+  # binaries_by_pkgname --> needed_sonames_by_binary --> pkgs_by_soname
   # TODO: print per-package deps (requires the transition: pkgname -> soname ->
   # pkgname)
 
