@@ -11,14 +11,20 @@ import copy
 import re
 import subprocess
 import logging
+import sys
 
 DUMP_BIN = "/usr/ccs/bin/dump"
 NEEDED_SONAMES = "needed sonames"
 RUNPATH = "runpath"
+TYPICAL_DEPENDENCIES = set(["CSWcommon", "CSWcswclassutils"])
 
 def main():
-  logging.basicConfig(level=logging.DEBUG)
   options, args = checkpkg.GetOptions()
+  if options.debug:
+    logging.basicConfig(level=logging.DEBUG)
+  else:
+    logging.basicConfig(level=logging.INFO)
+  result_ok = True
   pkgnames = args
   checkers = []
   for pkgname in pkgnames:
@@ -31,39 +37,18 @@ def main():
     binaries_base = [os.path.split(x)[1] for x in pkg_binary_paths]
     binaries_by_pkgname[checker.pkgname] = binaries_base
     binaries.extend(pkg_binary_paths)
-  # Make the binaries unique
+  # Making the binaries unique
   binaries = set(binaries)
   ws_re = re.compile(r"\s+")
 
-  # if [[ "$goodarch" = "yes" ]] ; then
-  #   # man ld.so.1 for more info on this hack
-  #   export LD_NOAUXFLTR=1
-  # 
-  #   listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/elflist
-  #   # have to do this for ldd to work. arrg.
-  #   if [ -s "$EXTRACTDIR/elflist" ] ; then
-  #     chmod 0755 `cat $EXTRACTDIR/elflist`
-  # 
-  #     cat $EXTRACTDIR/elflist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
-  #       sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
-  # 
-  #       
-  # 
-  #     print libraries used are:
-  #     cat $EXTRACTDIR/liblist
-  #     print "cross-referencing with depend file (May take a while)"
-  #   else
-  #     print No dynamic libraries in the package
-  #   fi
-  # fi
-   
+  # man ld.so.1 for more info on this hack
   env = copy.copy(os.environ)
   env["LD_NOAUXFLTR"] = "1"
   needed_sonames_by_binary = {}
   # Assembling a data structure with the data about binaries.
   # {
-  #   <binary1 name>: {NEEDED_SONAMES: [...],
-  #                   RUNPATH:     [...]},
+  #   <binary1 name>: { NEEDED_SONAMES: [...],
+  #                     RUNPATH:        [...]},
   #   <binary2 name>: ...,
   #   ...
   # }
@@ -74,7 +59,7 @@ def main():
       needed_sonames_by_binary[binary_base_name] = {}
     binary_data = needed_sonames_by_binary[binary_base_name]
     args = [DUMP_BIN, "-Lv", binary]
-    dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
     stdout, stderr = dump_proc.communicate()
     ret = dump_proc.wait()
     for line in stdout.splitlines():
@@ -114,23 +99,19 @@ def main():
       binaries_by_soname[soname].append(binary_name)
 
   pkgmap = checkpkg.SystemPkgmap()
-  paths_by_soname = pkgmap.paths_by_soname
-
-  logging.debug("Determining soname-file relationships.")
+  logging.debug("Determining the soname-package relationships.")
   # lines by soname is an equivalent of $EXTRACTDIR/shortcatalog
   lines_by_soname = {}
   for soname in needed_sonames:
-    if soname in paths_by_soname:
-      # logging.debug("%s found", repr(soname))
-      # Finding the first matching path
+    try:
       for runpath in runpath_by_needed_soname[soname]:
-        if runpath in paths_by_soname[soname]:
-          # logging.debug("%s found in %s", runpath, paths_by_soname[soname])
-          # logging.debug("line found: %s", repr(paths_by_soname[soname][runpath]))
-          lines_by_soname[soname] = paths_by_soname[soname][runpath]
+        if runpath in pkgmap.GetPkgmapLineByBasename(soname):
+          # logging.debug("%s found in %s", runpath, pkgmap.GetPkgmapLineByBasename(soname))
+          # logging.debug("line found: %s", repr(pkgmap.GetPkgmapLineByBasename(soname)[runpath]))
+          lines_by_soname[soname] = pkgmap.GetPkgmapLineByBasename(soname)[runpath]
           break
-    else:
-      logging.debug("%s not found in the soname list!", soname)
+    except KeyError, e:
+      logging.debug("KeyError: %s", soname, e)
   pkgs_by_soname = {}
   for soname, line in lines_by_soname.iteritems():
     # TODO: Find all the packages, not just the last field.
@@ -138,8 +119,10 @@ def main():
     # For now, we'll assume that the last field is the package.
     pkgname = fields[-1]
     pkgs_by_soname[soname] = pkgname
+
+  # A shared object dependency/provisioning report, plus checking.
   for soname in needed_sonames:
-    if soname in binaries:
+    if soname in needed_sonames_by_binary:
       print "%s is provided by the package itself" % soname
     elif soname in lines_by_soname:
       print ("%s is required by %s and provided by %s" 
@@ -149,90 +132,48 @@ def main():
     else:
       print ("%s is required by %s, but we don't know what provides it."
              % (soname, binaries_by_soname[soname]))
+      result_ok = False
+
   dependent_pkgs = {}
-  for pkgname in binaries_by_pkgname:
+  for checker in checkers:
+    orphan_sonames = set()
+    pkgname = checker.pkgname
     # logging.debug("Reporting package %s", pkgname)
-    dependencies = set()
+    declared_dependencies = checker.GetDependencies()
+    so_dependencies = set()
     for binary in binaries_by_pkgname[pkgname]:
       if binary in needed_sonames_by_binary:
         for soname in needed_sonames_by_binary[binary][NEEDED_SONAMES]:
-          dependencies.add(pkgs_by_soname[soname])
+          if soname in pkgs_by_soname:
+            so_dependencies.add(pkgs_by_soname[soname])
+          else:
+            orphan_sonames.add(soname)
       else:
         logging.warn("%s not found in needed_sonames_by_binary (%s)",
                      binary, needed_sonames_by_binary.keys())
-    logging.info("%s depends on %s", pkgname, dependencies)
+    declared_dependencies_set = set(declared_dependencies)
+    print "You can consider including the following packages in the dependencies:"
+    for dep_pkgname in sorted(so_dependencies.difference(declared_dependencies_set)):
+      print "  ", dep_pkgname,
+      if dep_pkgname.startswith("SUNW"):
+        print "(it's safe to ignore this one)",
+      print
+    
+    surplus_dependencies = declared_dependencies_set.difference(so_dependencies)
+    surplus_dependencies = surplus_dependencies.difference(TYPICAL_DEPENDENCIES)
+    if surplus_dependencies:
+      print "The following packages might be unnecessary dependencies:"
+      for dep_pkgname in surplus_dependencies:
+        print "  ", dep_pkgname
+    if orphan_sonames:
+      print "The following sonames don't belong to any package:"
+      for soname in sorted(orphan_sonames):
+        print "  ", soname
 
-  # binaries_by_pkgname --> needed_sonames_by_binary --> pkgs_by_soname
-  # TODO: print per-package deps (requires the transition: pkgname -> soname ->
-  # pkgname)
-
-  # for lib in `cat $EXTRACTDIR/liblist` ; do
-  #   grep "[/=]$lib[ =]" $EXTRACTDIR/$pkgname/pkgmap
-  #   if [[ $? -eq 0 ]] ; then
-  #     echo $lib provided by package itself
-  #     continue
-  #   else
-  #       grep "[/=]$lib[ =]" $SETLIBS
-  #       if [[ $? -eq 0 ]]; then
-  #     echo "$lib provided by package set being evaluated."
-  #     continue
-  #       fi
-  #   fi
-  # 
-  #   libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
-  #         sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
-  # 
-  #   if [[ -z "$libpkg" ]] ; then
-  #     echo "$lib $pkgname" >> $SETLIBS.missing
-  #     print Cannot find package providing $lib.  Storing for delayed validation.
-  #   else
-  #     print $libpkg | fmt -1 >>$EXTRACTDIR/libpkgs
-  #   fi
-  # done
-  # 
-  # sort -u $EXTRACTDIR/libpkgs >$EXTRACTDIR/libpkgs.x
-  # mv $EXTRACTDIR/libpkgs.x $EXTRACTDIR/libpkgs
-  # 
-  # diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs >/dev/null
-  # if [[ $? -ne 0 ]] ; then
-  #   print SUGGESTION: you may want to add some or all of the following as depends:
-  #   print '   (Feel free to ignore SUNW or SPRO packages)'
-  #   diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs | fgrep '>'
-  # fi
-  # 
-  # 
-  # 
-  # if [[ "$basedir" != "" ]] ; then
-  #   print
-  #   if [[ -f $EXTRACTDIR/elflist ]] ; then
-  #     print "Checking relocation ability..."
-  #     xargs strings < $EXTRACTDIR/elflist| grep /opt/csw
-  #     if [[ $? -eq 0 ]] ; then
-  #       errmsg package build as relocatable, but binaries have hardcoded /opt/csw paths in them
-  #     else
-  #       print trivial check passed
-  #     fi
-  #   else
-  #     echo No relocation check done for non-binary relocatable package.
-  #   fi
-  # fi
-  #
-  # ...
-  # 
-  # if [ -s $SETLIBS.missing ]; then
-  #     print "Doing late evaluations of package library dependencies."
-  #     while read ldep; do
-  #   lib=`echo $ldep | nawk '{print $1}'`
-  #         [ "$lib" = "libm.so.2" ] && continue
-  #   pkg=`echo $ldep | nawk '{print $2}'`
-  #   /usr/bin/grep "[/=]$lib[ =]" $SETLIBS >/dev/null
-  #   if [ $? -ne 0 ]; then
-  #       errmsg "Couldn't find a package providing $lib"
-  #   else
-  #       print "A package in the set being evaluated provides $lib"
-  #   fi
-  #     done < $SETLIBS.missing
-  # fi
+  if result_ok:
+    sys.exit(0)
+  else:
+    sys.exit(1)
 
 
 if __name__ == '__main__':

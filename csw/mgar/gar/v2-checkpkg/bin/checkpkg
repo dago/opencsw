@@ -83,6 +83,11 @@ set_variables_for_individual_package_check() {
 	pkgnames="$pkgnames $pkgname"
 }
 
+if [[ "$1" == "-d" ]] ; then
+	DEBUG=1
+	shift
+fi
+
 if [[ "$1" == "-e" ]] ; then
 	quit_on_warn=1;
 	shift
@@ -422,7 +427,7 @@ if [[ "$goodarch" = "yes" ]] ; then
 	#cat $EXTRACTDIR/elflist| xargs ldd  2>/dev/null |fgrep  '.so' |
 	#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
 
-		cat $EXTRACTDIR/elflist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
+		cat $EXTRACTDIR/elflist| xargs /usr/ccs/bin/dump -Lv |nawk '$2=="NEEDED"{print $3}' |
 			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
 
 			
@@ -564,13 +569,16 @@ echo "Running the experimental plugin infrastructure."
 checkpkg_scriptname=`basename $0`
 checkpkg_basedir=${0%/${checkpkg_scriptname}}
 plugindir=${checkpkg_basedir}/checkpkg.d
+if [[ "${DEBUG}" != "" ]]; then
+	extra_options="--debug"
+fi
 echo "plugindir: '$plugindir'"
 if [[ -d "$plugindir" ]]; then
 	# echo plugin dir exists
 	for plugin in "${plugindir}"/checkpkg-*; do
 		if [[ -x "${plugin}" ]]; then
-			echo "Executing: ${plugin} -e \"${EXTRACTDIR}\" ${pkgnames}"
-			${plugin} -e "${EXTRACTDIR}" ${pkgnames}
+			echo "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
+			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames}
 			if [[ "$?" -ne 0 ]]; then
 				errmsg "Plugin ${plugin} has returned an error."
 			fi
@@ -581,10 +589,9 @@ if [[ -d "$plugindir" ]]; then
 else
 	echo plugin dir does not exist
 fi
+# echo "Profiling."
+# python -m cProfile gar/bin/checkpkg.d/checkpkg-libs.py --debug -e "${EXTRACTDIR}"  ${pkgnames}
 # End of plugin section
-
-# Not doing the cleanup now
-# cleanup
 
 print ""
 
