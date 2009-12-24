@@ -3,6 +3,7 @@
 
 import checkpkg
 import os.path
+import logging
 
 def main():
   options, args = checkpkg.GetOptions()
@@ -12,8 +13,8 @@ def main():
     pkgpath = os.path.join(options.extractdir, pkgname)
     if not os.path.isdir(pkgpath):
       raise checkpkg.PackageError("The package directory doesn't exist: %s" % pkgpath)
-    print ("Dummy plugin says the package %s is extracted to %s"
-           % (pkgname, options.extractdir))
+    logging.debug("Dummy plugin says the package %s is extracted to %s",
+                  pkgname, options.extractdir)
 
 
 if __name__ == '__main__':

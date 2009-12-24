@@ -121,18 +121,21 @@ def main():
     pkgs_by_soname[soname] = pkgname
 
   # A shared object dependency/provisioning report, plus checking.
-  for soname in needed_sonames:
-    if soname in needed_sonames_by_binary:
-      print "%s is provided by the package itself" % soname
-    elif soname in lines_by_soname:
-      print ("%s is required by %s and provided by %s" 
-             % (soname,
-                binaries_by_soname[soname],
-                repr(pkgs_by_soname[soname])))
-    else:
-      print ("%s is required by %s, but we don't know what provides it."
-             % (soname, binaries_by_soname[soname]))
-      result_ok = False
+  if needed_sonames:
+    print "Analysis of sonames needed by the package set:"
+    for soname in needed_sonames:
+      if soname in needed_sonames_by_binary:
+        print "%s is provided by the package itself" % soname
+      elif soname in lines_by_soname:
+        print ("%s is required by %s and provided by %s" 
+               % (soname,
+                  binaries_by_soname[soname],
+                  repr(pkgs_by_soname[soname])))
+      else:
+        print ("%s is required by %s, but we don't know what provides it."
+               % (soname, binaries_by_soname[soname]))
+        result_ok = False
+    print
 
   dependent_pkgs = {}
   for checker in checkers:
@@ -152,12 +155,12 @@ def main():
         logging.warn("%s not found in needed_sonames_by_binary (%s)",
                      binary, needed_sonames_by_binary.keys())
     declared_dependencies_set = set(declared_dependencies)
-    print "You can consider including the following packages in the dependencies:"
-    for dep_pkgname in sorted(so_dependencies.difference(declared_dependencies_set)):
-      print "  ", dep_pkgname,
-      if dep_pkgname.startswith("SUNW"):
-        print "(it's safe to ignore this one)",
-      print
+    missing_deps = so_dependencies.difference(declared_dependencies_set)
+    if missing_deps:
+      print "SUGGESTION: you may want to add some or all of the following as depends:"
+      print "   (Feel free to ignore SUNW or SPRO packages)"
+      for dep_pkgname in sorted(missing_deps):
+        print ">", dep_pkgname
     
     surplus_dependencies = declared_dependencies_set.difference(so_dependencies)
     surplus_dependencies = surplus_dependencies.difference(TYPICAL_DEPENDENCIES)

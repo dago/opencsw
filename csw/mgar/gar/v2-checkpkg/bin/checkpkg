@@ -26,7 +26,6 @@ PATH=$PATH:/usr/sbin
 
 LOCAL_ARCH=`uname -p`
 
-
 # always print out a warning message. (to stderr)
 # exit script, if quit_on_warn set
 
@@ -65,6 +64,12 @@ errmsg(){
 	cleanup
 	cleanupset
 	exit 1
+}
+
+debugmsg() {
+	if [[ "${DEBUG}" != "" ]]; then
+		print "DEBUG: $*" > /dev/fd/2
+	fi
 }
 
 set_variables_for_individual_package_check() {
@@ -566,32 +571,37 @@ done
 set_variables_for_individual_package_check "$f"
 
 echo "Running the experimental plugin infrastructure."
+test_suite_ok=1
 checkpkg_scriptname=`basename $0`
 checkpkg_basedir=${0%/${checkpkg_scriptname}}
 plugindir=${checkpkg_basedir}/checkpkg.d
 if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
 fi
-echo "plugindir: '$plugindir'"
+debugmsg "plugindir: '$plugindir'"
 if [[ -d "$plugindir" ]]; then
 	# echo plugin dir exists
 	for plugin in "${plugindir}"/checkpkg-*; do
 		if [[ -x "${plugin}" ]]; then
-			echo "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
+			debugmsg "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
 			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames}
 			if [[ "$?" -ne 0 ]]; then
-				errmsg "Plugin ${plugin} has returned an error."
+				print "TEST: ${plugin} [FAIL]"
+				test_suite_ok=0
+			else
+				print "TEST: ${plugin} [OK]"
 			fi
 		else
-			echo "'${plugin}' is not executable"
+			debugmsg "'${plugin}' is not executable"
 		fi
 	done
 else
-	echo plugin dir does not exist
+	debugmsg "plugin dir does not exist"
 fi
-# echo "Profiling."
-# python -m cProfile gar/bin/checkpkg.d/checkpkg-libs.py --debug -e "${EXTRACTDIR}"  ${pkgnames}
-# End of plugin section
+
+if [[ ${test_suite_ok} -ne 1 ]]; then
+	errmsg "One or more tests have failed."
+fi
 
 print ""
 

@@ -10,6 +10,7 @@ import logging
 import subprocess
 import cPickle
 import re
+import sqlite3
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
@@ -89,26 +90,38 @@ class CheckpkgBase(object):
 class SystemPkgmap(object):
   """A class to hold and manipulate the /var/sadm/install/contents file."""
   
-  PICKLE_NAME = "var-sadm-install-contents.pickle"
   STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"] 
   CHECKPKG_DIR = ".checkpkg"
+  SQLITE3_DBNAME = "var-sadm-install-contents-cache"
 
   def __init__(self):
     """There is no need to re-parse it each time.
 
     Read it slowly the first time and cache it for later."""
     self.checkpkg_dir = os.path.join(os.environ["HOME"], self.CHECKPKG_DIR)
-    self.pickle_path = os.path.join(self.checkpkg_dir, self.PICKLE_NAME)
-    if os.path.exists(self.pickle_path):
-      logging.info("Unpickling %s, this can take up to 30s.", self.pickle_path)
-      pickle_fd = open(self.pickle_path, "r")
-      self.pkmap_lines_by_basename = cPickle.load(pickle_fd)
-      pickle_fd.close()
+    self.db_path = os.path.join(self.checkpkg_dir, self.SQLITE3_DBNAME)
+    if os.path.exists(self.db_path):
+      logging.debug("Connecting to the %s database.", self.db_path)
+      self.conn = sqlite3.connect(self.db_path)
     else:
-      # The original checkpkg code to port is in the comments.
-      #
+      logging.info("Building a cache of /var/sadm/install/contents.")
+      if not os.path.exists(self.checkpkg_dir):
+        logging.debug("Creating %s", self.checkpkg_dir)
+        os.mkdir(self.checkpkg_dir)
+      self.conn = sqlite3.connect(self.db_path)
+      c = self.conn.cursor()
+      c.execute("""
+          CREATE TABLE systempkgmap (
+            id INTEGER PRIMARY KEY,
+            basename TEXT,
+            path TEXT,
+            line TEXT
+          );
+      """)
+
       # egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
       #     fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
+
       system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
 
       stop_re = re.compile("(%s)" % "|".join(self.STOP_PKGS))
@@ -117,29 +130,23 @@ class SystemPkgmap(object):
       # soname - {<path1>: <line1>, <path2>: <line2>, ...}
       logging.debug("Building in-memory data structure for the %s file",
                     SYSTEM_PKGMAP)
-      pkmap_lines_by_basename = {}
       for line in system_pkgmap_fd:
         if stop_re.search(line):
           continue
         fields = re.split(WS_RE, line)
         pkgmap_entry_path = fields[0].split("=")[0]
         pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
-        if pkgmap_entry_base_name not in pkmap_lines_by_basename:
-          pkmap_lines_by_basename[pkgmap_entry_base_name] = {}
-        pkmap_lines_by_basename[pkgmap_entry_base_name][pkgmap_entry_dir] = line
-      logging.debug("The data structure contains %s files",
-                    len(pkmap_lines_by_basename))
-      self.pkmap_lines_by_basename = pkmap_lines_by_basename
-      if not os.path.exists(self.checkpkg_dir):
-        logging.debug("Creating %s", self.checkpkg_dir)
-        os.mkdir(self.checkpkg_dir)
-      logging.debug("Pickling to %s", self.pickle_path)
-      pickle_fd = open(self.pickle_path, "w")
-      cPickle.dump(self.pkmap_lines_by_basename, pickle_fd)
-      pickle_fd.close()
+        sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
+        c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line))
+      logging.info("Creating an index.")
+      sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
+      self.conn.execute(sql)
 
   def GetPkgmapLineByBasename(self, filename):
-    if filename in self.pkmap_lines_by_basename:
-      return self.pkmap_lines_by_basename[filename]
-    else:
-      raise KeyError, "%s not found in self.pkmap_lines_by_basename" % filename
+    sql = "SELECT path, line FROM systempkgmap WHERE basename = ?;"
+    c = self.conn.cursor()
+    c.execute(sql, [filename])
+    lines = {}
+    for row in c:
+      lines[row[0]] = row[1]
+    return lines
