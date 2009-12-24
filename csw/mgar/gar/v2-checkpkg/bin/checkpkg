@@ -538,12 +538,16 @@ if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
 fi
 debugmsg "plugindir: '$plugindir'"
+log_files=""
 if [[ -d "$plugindir" ]]; then
 	# echo plugin dir exists
 	for plugin in "${plugindir}"/checkpkg-*; do
 		if [[ -x "${plugin}" ]]; then
 			debugmsg "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
-			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames}
+			plugin_base_name=`basename ${plugin}`
+			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
+			log_files="${log_files} ${plugin_log}"
+			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
 				print "TEST: ${plugin} [FAIL]"
 				test_suite_ok=0
@@ -558,8 +562,22 @@ else
 	debugmsg "plugin dir does not exist"
 fi
 
+echo
+for log_file in ${log_files}; do
+	if [[ -s "${log_file}" ]]; then
+		echo "LOG START: ${log_file}"
+		echo
+		cat "${log_file}"
+		echo
+		echo "LOG END: ${log_file}"
+	fi
+done
+echo
+
 if [[ ${test_suite_ok} -ne 1 ]]; then
 	errmsg "One or more tests have failed."
+else
+	print "All tests were successful."
 fi
 
 print ""
