@@ -1,5 +1,5 @@
 GARNAME = pysqlite
-GARVERSION = 2.5.5
+GARVERSION = 2.5.6
 CATEGORIES = lang
 
 RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
@@ -13,7 +13,7 @@ MASTER_SITES = http://oss.itsystementwicklung.de/download/pysqlite/$(RELVER)/$(G
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpysqlite2
-REQUIRED_PKGS_CSWpysqlite2 = CSWpython-rt CSWsqlite3rt
+REQUIRED_PKGS_CSWpysqlite2 = CSWpython CSWsqlite3rt
 CATALOGNAME_CSWpysqlite2 = pysqlite2
 SPKG_DESC_CSWpysqlite2 = SQLite3 support for Python
 

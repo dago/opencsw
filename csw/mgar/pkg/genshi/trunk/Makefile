@@ -19,7 +19,7 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print 
 SPKG_CLASSES = none cswpycompile
 REQUIRED_PKGS += CSWcswclassutils
 
-REQUIRED_PKGS_CSWgenshi = CSWpython-rt
+REQUIRED_PKGS_CSWgenshi = CSWpython
 CATALOGNAME_CSWgenshi = genshi
 SPKG_DESC_CSWgenshi   = $(DESCRIPTION)
 
