@@ -102,6 +102,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-cyrus-prefix=$(prefix)
 CONFIGURE_ARGS += --with-service-path=$(libexecdir)/cyrus 
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/cyrus 
+CONFIGURE_ARGS += --with-bdb=db-4.2
 CONFIGURE_ARGS += --with-bdb-libdir=$(prefix)/bdb42/lib 
 CONFIGURE_ARGS += --with-bdb-incdir=$(prefix)/bdb42/include 
 CONFIGURE_ARGS += --with-openssl=$(prefix)
