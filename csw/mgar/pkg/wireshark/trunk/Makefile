@@ -20,21 +20,24 @@ SPKG_SOURCEURL = http://www.wireshark.org/
 #SED = /opt/csw/bin/gsed
 #EXTRA_COMMON_EXPORTS = SED
 
-#EXTRA_INC = $(prefix)/X11/include
-#EXTRA_LIB = $(prefix)/X11/lib
-#EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-EXTRA_INC += /opt/csw/include/gtk-2.0
-EXTRA_INC += /opt/csw/lib/gtk-2.0/include
-EXTRA_INC += /opt/csw/include/glib-2.0
-EXTRA_INC += /opt/csw/lib/glib-2.0/include
-EXTRA_INC += /opt/csw/include/cairo
-EXTRA_INC += /opt/csw/include/pango-1.0
-EXTRA_INC += /opt/csw/include/atk-1.0
+#EXTRA_INC += /opt/csw/include/gtk-2.0
+#EXTRA_INC += /opt/csw/lib/gtk-2.0/include
+#EXTRA_INC += /opt/csw/include/glib-2.0
+#EXTRA_INC += /opt/csw/lib/glib-2.0/include
+#EXTRA_INC += /opt/csw/include/cairo
+#EXTRA_INC += /opt/csw/include/pango-1.0
+#EXTRA_INC += /opt/csw/include/atk-1.0
 
-EXTRA_LINKER_FLAGS = -lgtk-x11-2.0 -lX11 /usr/openwin/lib/libXext.so
+#EXTRA_LINKER_FLAGS = -lgtk-x11-2.0 -lX11 /usr/openwin/lib/libXext.so
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_SCRIPTS =
 
 include gar/category.mk
 
