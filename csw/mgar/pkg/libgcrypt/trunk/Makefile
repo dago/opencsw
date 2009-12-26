@@ -1,5 +1,5 @@
 GARNAME = libgcrypt
-GARVERSION = 1.4.4
+GARVERSION = 1.4.5
 CATEGORIES = lib
 
 DESCRIPTION = GNU libgcrypt
@@ -9,9 +9,11 @@ endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgcrypt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWgcrypt,)
 
-SPKG_SOURCEURL = http://www.gnupg.org/download/
+PACKAGES = CSWgcrypt
+CATALOGNAME = llibgcrypt
+
+SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.en.html#lib-libgcrypt
 
 REQUIRED_PKGS = CSWgpgerr
 
