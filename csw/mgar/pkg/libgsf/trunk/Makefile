@@ -21,15 +21,14 @@ REQUIRED_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib CSWiconv
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-
-#NPATH = /opt/csw/gnu:$(PATH)
-
 CONFIGURE_ARGS = $(DIRPATHS)
 #CONFIGURE_ARGS = "PATH=$(NPATH)" $(DIRPATHS)
 #CONFIGURE_ARGS += --enable-gtk-doc=no
 #CONFIGURE_ARGS += --disable-man-gtk-doc
 
 TEST_TARGET = check
+
+EXTRA_LD_OPTIONS = -L../gsf/.libs -L../../gsf/.libs
 
 include gar/category.mk
 
@@ -38,6 +37,7 @@ PATH := /opt/csw/gnu:$(PATH)
 post-configure-$(MODULATION):
 	@(echo "~~~ Fixing Libtool ~~~")
 	@$(FILEDIR)/fixme.sh $(WORKSRC)
+#	@$(FILEDIR)/fixme2.sh $(WORKSRC)
 	$(DONADA)
 
 post-install-isa-sparcv8:
