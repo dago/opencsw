@@ -34,5 +34,6 @@ packageName=`echo ${packageTemp} | tr - \  | gawk '{ print $1 }`
 packageOsVersion=`echo ${packageTemp} | tr - \  | gawk '{ print $3 }' | gsed -e s/SunOS//`
 packageArch=`echo ${packageTemp} | tr - \  | gawk '{ print $4 }`
 targetOsVersion=`uname -r | gsed -e s/SunOS//`
+packageSource=`echo $1 | tr / \  | gawk '{ i = NF - 3 ; print $i }`
 
-wget "http://www-mockup.opencsw.org/tools/statistics/packageSurvey.php?packageName=${packageName}&packageArch=${packageArch}&packageOsVersion=${packageOsVersion}&targetOsVersion=${targetOsVersion}" -O /dev/null
+wget "http://www-mockup.opencsw.org/tools/statistics/packageSurvey.php?packageName=${packageName}&packageArch=${packageArch}&packageOsVersion=${packageOsVersion}&targetOsVersion=${targetOsVersion}&packageSource=${packageSource}" -O /dev/null
