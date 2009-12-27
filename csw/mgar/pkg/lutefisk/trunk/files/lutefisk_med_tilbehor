@@ -1,0 +1,37 @@
+#!/bin/sh 
+#
+# The contents of this file are subject to the COMMON DEVELOPMENT AND
+# DISTRIBUTION LICENSE (CDDL) (the "License"); you may not use this
+# file except in compliance with the License.
+#
+# Software distributed under the License is distributed on an "AS IS" basis,
+# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# for the specific language governing rights and limitations under the
+# License.
+#
+# Alternatively, the contents of this file may be used under the terms of
+# either the GNU General Public License Version 3 or later (the "GPL"),
+# in which case the provisions of the GPL are applicable instead
+# of those above. If you wish to allow use of your version of this file only
+# under the terms of either the GPL, and not to allow others to
+# use your version of this file under the terms of the CDDL, indicate your
+# decision by deleting the provisions above and replace them with the notice
+# and other provisions required by the GPL. If you do not delete
+# the provisions above, a recipient may use your version of this file under
+# the terms of any one of the CDDL, or the GPL.
+
+# Copyright 2009 OpenCSW (http://www.opencsw.org).  All rights reserved.
+# Use is subject to license terms.
+#
+#
+# Contributors list :
+#
+#      William Bonnet wbonnet@opencsw.org
+#
+
+mirrorName=`echo $1 | gawk -F/ '{ a = "" ; for (i=1; i <= NF - 5; i++) a = a $i "/" ; i = NF -4 ; a = a $i ; print a  }'`
+mirrorOsVersion=`echo $1 | tr / \  | gawk '{ i = NF -1 ; print $i }`
+mirrorArch=`echo $1 | tr / \  | gawk '{ i = NF - 2 ; print $i }`
+mirrorSource=`echo $1 | tr / \  | gawk '{ i = NF - 3 ; print $i }`
+
+wget "http://www-mockup.opencsw.org/tools/statistics/mirrorSurvey.php?mirrorName=${mirrorName}&mirrorArch=${mirrorArch}&mirrorOsVersion=${mirrorOsVersion}&mirrorSource=${mirrorSource}" -O /dev/null
