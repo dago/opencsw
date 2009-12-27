@@ -14,6 +14,9 @@ import sqlite3
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
+NEEDED_SONAMES = "needed sonames"
+# Don't report these as unnecessary.
+TYPICAL_DEPENDENCIES = set(["CSWcommon", "CSWcswclassutils", "CSWisaexec"])
 
 class Error(Exception):
   pass
@@ -51,6 +54,11 @@ class CheckpkgBase(object):
     self.pkgname = pkgname
     self.pkgpath = os.path.join(self.extractdir, self.pkgname)
 
+  def CheckPkgpathExists(self):
+    if not os.path.isdir(self.pkgpath):
+      raise PackageError("%s does not exist or is not a directory"
+                         % self.pkgpath)
+
   def ListBinaries(self):
     # #########################################
     # # find all executables and dynamic libs,and list their filenames.
@@ -63,10 +71,8 @@ class CheckpkgBase(object):
     # 
     #   find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
     # }
+    self.CheckPkgpathExists()
     find_tmpl = "find %s -print | xargs file | grep ELF | nawk -F: '{print $1}'"
-    if not os.path.isdir(self.pkgpath):
-      raise PackageError("%s does not exist or is not a directory"
-                         % self.pkgpath)
     find_proc = subprocess.Popen(find_tmpl % self.pkgpath,
                                  shell=True, stdout=subprocess.PIPE)
     stdout, stderr = find_proc.communicate()
@@ -74,6 +80,13 @@ class CheckpkgBase(object):
     if ret:
       logging.error("The find command returned an error.")
     return stdout.splitlines()
+
+  def GetAllFilenames(self):
+    self.CheckPkgpathExists()
+    file_basenames = []
+    for root, dirs, files in os.walk(self.pkgpath):
+    	file_basenames.extend(files)
+    return file_basenames
 
   def GetDependencies(self):
     fd = open(os.path.join(self.pkgpath, "install", "depend"), "r")
@@ -150,3 +163,69 @@ class SystemPkgmap(object):
     for row in c:
       lines[row[0]] = row[1]
     return lines
+
+def SharedObjectDependencies(pkgname,
+                             binaries_by_pkgname,
+                             needed_sonames_by_binary,
+                             pkgs_by_soname,
+                             filenames_by_soname,
+                             pkg_by_any_filename):
+  so_dependencies = set()
+  orphan_sonames = set()
+  self_provided = set()
+  for binary in binaries_by_pkgname[pkgname]:
+    if binary in needed_sonames_by_binary:
+      for soname in needed_sonames_by_binary[binary][NEEDED_SONAMES]:
+        if soname in filenames_by_soname:
+          filename = filenames_by_soname[soname]
+          pkg = pkg_by_any_filename[filename]
+          self_provided.add(soname)
+          so_dependencies.add(pkg)
+        elif soname in pkgs_by_soname:
+          so_dependencies.add(pkgs_by_soname[soname])
+        else:
+          orphan_sonames.add(soname)
+    else:
+      logging.warn("%s not found in needed_sonames_by_binary (%s)",
+                   binary, needed_sonames_by_binary.keys())
+  return so_dependencies, self_provided, orphan_sonames
+
+
+def AnalyzeDependencies(pkgname,
+                        declared_dependencies,
+                        binaries_by_pkgname,
+                        needed_sonames_by_binary,
+                        pkgs_by_soname,
+                        filenames_by_soname,
+                        pkg_by_any_filename):
+    """
+    missing_deps, surplus_deps, orphan_sonames = checkpkg.AnalyzeDependencies(...)
+    """
+    so_dependencies, self_provided, orphan_sonames = SharedObjectDependencies(
+        pkgname,
+        binaries_by_pkgname,
+        needed_sonames_by_binary,
+        pkgs_by_soname,
+        filenames_by_soname,
+        pkg_by_any_filename)
+    guessed_deps = set()
+    patterns = (
+        (r".*\.py", u"CSWpython"),
+        (r".*\.pl", u"CSWperl"),
+        (r".*\.rb", u"CSWruby"),
+    )
+    for pattern, dep_pkgname in patterns:
+      # If any file name matches, add the dep, go to the next pattern/pkg
+      # combination.
+      tmp_re = re.compile("^%s$" % pattern)
+      for f in pkg_by_any_filename:
+        if re.match(tmp_re, f):
+          if pkgname == pkg_by_any_filename[f]:
+            guessed_deps.add(dep_pkgname)
+            break
+    auto_dependencies = so_dependencies.union(guessed_deps)
+    declared_dependencies_set = set(declared_dependencies)
+    missing_deps = auto_dependencies.difference(declared_dependencies_set)
+    surplus_deps = declared_dependencies_set.difference(auto_dependencies)
+    surplus_deps = surplus_deps.difference(TYPICAL_DEPENDENCIES)
+    return missing_deps, surplus_deps, orphan_sonames
