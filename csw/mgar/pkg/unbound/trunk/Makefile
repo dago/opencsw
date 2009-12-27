@@ -1,5 +1,5 @@
 GARNAME = unbound
-GARVERSION = 1.3.4
+GARVERSION = 1.4.1
 CATEGORIES = server
 
 DESCRIPTION = A validating, recursive, and caching DNS resolver
