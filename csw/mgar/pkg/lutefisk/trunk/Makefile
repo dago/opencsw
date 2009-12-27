@@ -29,8 +29,8 @@ CATALOGNAME_CSWlutefisktilbehor = lutefisktilbehor
 CATALOGNAME_CSWlutefisksmor     = lutefisksmor
 
 # Defines package description
-SPKG_DESC_CSWlutefisksmor     = Lutefisk med smor $(DESCRIPTION) packages use
-SPKG_DESC_CSWlutefisktilbehor = Lutefisk med tilbehor $(DESCRIPTION) mirrors use
+SPKG_DESC_CSWlutefisksmor     = Lutefisk med smor $(DESCRIPTION) OpenCSW packages use
+SPKG_DESC_CSWlutefisktilbehor = Lutefisk med tilbehor $(DESCRIPTION) OpenCSW mirrors use
 
 # Defines dependencies
 REQUIRED_PKGS_CSWlutefisktilbehor = CSWwget CSWgawk 
