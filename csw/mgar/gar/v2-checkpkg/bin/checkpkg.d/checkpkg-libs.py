@@ -3,6 +3,10 @@
 # $Id$
 #
 # A check for dependencies between shared libraries.
+#
+# This is currently more of a prototype than a mature program, but it has some
+# unit tests and it appears to be working.  The main problem is that it's not
+# divided into smaller testable sections.
 
 import checkpkg
 import os
@@ -39,16 +43,11 @@ def main():
     binaries_base = [os.path.split(x)[1] for x in pkg_binary_paths]
     binaries_by_pkgname[checker.pkgname] = binaries_base
     binaries.extend(pkg_binary_paths)
-    for f in checker.GetAllFilenames():
-    	pkg_by_any_filename[f] = checker.pkgname
+    for filename in checker.GetAllFilenames():
+      pkg_by_any_filename[filename] = checker.pkgname
   # Making the binaries unique
   binaries = set(binaries)
   ws_re = re.compile(r"\s+")
-
-  # TODO: map from binaries_by_pkgname to sonames_by_pkgname
-  #
-  # Essentially, we must look at libfoo.so.1.2.3 and map it to libfoo.so.1,
-  # whatever soname it has
 
   # man ld.so.1 for more info on this hack
   env = copy.copy(os.environ)
@@ -124,7 +123,7 @@ def main():
       # TODO: Expand $ISALIST to whatever the 'isalist' command outputs for
       # better matching.
       for runpath in runpath_by_needed_soname[soname]:
-      	soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
+        soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
         if runpath in soname_runpath_data:
           lines_by_soname[soname] = soname_runpath_data[runpath]
           break
@@ -140,6 +139,7 @@ def main():
     pkgs_by_filename[soname] = pkgname
 
   # A shared object dependency/provisioning report, plus checking.
+  # TODO: Rewrite this using cheetah
   if needed_sonames:
     print "Analysis of sonames needed by the package set:"
     for soname in needed_sonames:
@@ -157,12 +157,6 @@ def main():
                                      % (soname, binaries_by_soname[soname])))
     print
 
-  # Data needed for this section:
-  # - pkgname
-  # - declared dependencies
-  # - binaries_by_pkgname
-  # - needed_sonames_by_binary
-  # - pkgs_by_filename
   dependent_pkgs = {}
   for checker in checkers:
     orphan_sonames = set()
@@ -178,20 +172,22 @@ def main():
         filenames_by_soname,
         pkg_by_any_filename)
 
-    save_testing_data = True
-    if save_testing_data:
-      test_fd = open("/var/tmp/checkpkg-dep-testing-data-%s.py" % pkgname, "w")
+    if options.debug:
+      data_file_name = "/var/tmp/checkpkg-dep-testing-data-%s.py" % pkgname
+      logging.warn("Saving test data to %s." % repr(data_file_name))
+      test_fd = open(data_file_name, "w")
       sanitized_pkgname = pkgname.replace("-", "_")
       print >>test_fd, "# Testing data for %s" % pkgname
-      print >>test_fd, "DATA_PKGNAME =" % sanitized_pkgname, repr(pkgname)
-      print >>test_fd, "DATA_DECLARED_DEPENDENCIES =" % sanitized_pkgname, repr(declared_dependencies)
-      print >>test_fd, "DATA_BINARIES_BY_PKGNAME =" % sanitized_pkgname, repr(binaries_by_pkgname)
-      print >>test_fd, "DATA_NEEDED_SONAMES_BY_BINARY =" % sanitized_pkgname, repr(needed_sonames_by_binary)
-      print >>test_fd, "DATA_PKGS_BY_FILENAME =" % sanitized_pkgname, repr(pkgs_by_filename)
-      print >>test_fd, "DATA_FILENAMES_BY_SONAME =" % sanitized_pkgname, repr(filenames_by_soname)
-      print >>test_fd, "DATA_PKG_BY_ANY_FILENAME =" % sanitized_pkgname, repr(pkg_by_any_filename)
+      print >>test_fd, "DATA_PKGNAME =", repr(pkgname)
+      print >>test_fd, "DATA_DECLARED_DEPENDENCIES =", repr(declared_dependencies)
+      print >>test_fd, "DATA_BINARIES_BY_PKGNAME =", repr(binaries_by_pkgname)
+      print >>test_fd, "DATA_NEEDED_SONAMES_BY_BINARY =", repr(needed_sonames_by_binary)
+      print >>test_fd, "DATA_PKGS_BY_FILENAME =", repr(pkgs_by_filename)
+      print >>test_fd, "DATA_FILENAMES_BY_SONAME =", repr(filenames_by_soname)
+      print >>test_fd, "DATA_PKG_BY_ANY_FILENAME =", repr(pkg_by_any_filename)
       test_fd.close()
 
+    # TODO: Rewrite this using cheetah templates.
     if missing_deps:
       print "SUGGESTION: you may want to add some or all of the following as depends:"
       print "   (Feel free to ignore SUNW or SPRO packages)"
@@ -207,6 +203,7 @@ def main():
         errors.append(checkpkg.Error("The following soname does't belong to "
                                      "any package: %s" % soname))
         print "! ", soname
+    print
 
   if errors:
     for error in errors:
@@ -218,3 +215,5 @@ def main():
 
 if __name__ == '__main__':
   main()
+
+# vim:set sw=2 ts=2 sts=2 expandtab:

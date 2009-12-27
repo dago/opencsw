@@ -18,6 +18,7 @@ NEEDED_SONAMES = "needed sonames"
 # Don't report these as unnecessary.
 TYPICAL_DEPENDENCIES = set(["CSWcommon", "CSWcswclassutils", "CSWisaexec"])
 
+
 class Error(Exception):
   pass
 
@@ -85,7 +86,7 @@ class CheckpkgBase(object):
     self.CheckPkgpathExists()
     file_basenames = []
     for root, dirs, files in os.walk(self.pkgpath):
-    	file_basenames.extend(files)
+      file_basenames.extend(files)
     return file_basenames
 
   def GetDependencies(self):
@@ -97,7 +98,6 @@ class CheckpkgBase(object):
         depends[fields[1]] = " ".join(fields[1:])
     fd.close()
     return depends
-
 
 
 class SystemPkgmap(object):
@@ -191,6 +191,46 @@ def SharedObjectDependencies(pkgname,
   return so_dependencies, self_provided, orphan_sonames
 
 
+def GuessDepsByFilename(pkgname, pkg_by_any_filename):
+  """Guesses dependencies based on filename regexes."""
+  guessed_deps = set()
+  patterns = (
+      (r".*\.py", u"CSWpython"),
+      (r".*\.pl", u"CSWperl"),
+      (r".*\.rb", u"CSWruby"),
+  )
+  for pattern, dep_pkgname in patterns:
+    # If any file name matches, add the dep, go to the next pattern/pkg
+    # combination.
+    pattern_re = re.compile("^%s$" % pattern)
+    for filename in pkg_by_any_filename:
+      if (re.match(pattern_re, filename)
+            and
+          pkgname == pkg_by_any_filename[filename]):
+        guessed_deps.add(dep_pkgname)
+        break
+  return guessed_deps
+
+
+def GuessDepsByPkgname(pkgname, pkg_by_any_filename):
+  # More guessed dependencies: If one package is a substring of another, it
+  # might be a hint. For example, CSWmysql51test should depend on CSWmysql51.
+  # However, the rt (runtime) packages should not want to depend on the main
+  # package.
+  guessed_deps = set()
+  all_other_pkgs = set(pkg_by_any_filename.values())
+  for other_pkg in all_other_pkgs:
+    other_pkg = unicode(other_pkg)
+    if pkgname == other_pkg:
+      continue
+    if pkgname.startswith(other_pkg):
+      endings = ["devel", "test", "bench", "dev"]
+      for ending in endings:
+        if pkgname.endswith(ending):
+          guessed_deps.add(other_pkg)
+  return guessed_deps
+
+
 def AnalyzeDependencies(pkgname,
                         declared_dependencies,
                         binaries_by_pkgname,
@@ -198,34 +238,45 @@ def AnalyzeDependencies(pkgname,
                         pkgs_by_soname,
                         filenames_by_soname,
                         pkg_by_any_filename):
-    """
-    missing_deps, surplus_deps, orphan_sonames = checkpkg.AnalyzeDependencies(...)
-    """
-    so_dependencies, self_provided, orphan_sonames = SharedObjectDependencies(
-        pkgname,
-        binaries_by_pkgname,
-        needed_sonames_by_binary,
-        pkgs_by_soname,
-        filenames_by_soname,
-        pkg_by_any_filename)
-    guessed_deps = set()
-    patterns = (
-        (r".*\.py", u"CSWpython"),
-        (r".*\.pl", u"CSWperl"),
-        (r".*\.rb", u"CSWruby"),
-    )
-    for pattern, dep_pkgname in patterns:
-      # If any file name matches, add the dep, go to the next pattern/pkg
-      # combination.
-      tmp_re = re.compile("^%s$" % pattern)
-      for f in pkg_by_any_filename:
-        if re.match(tmp_re, f):
-          if pkgname == pkg_by_any_filename[f]:
-            guessed_deps.add(dep_pkgname)
-            break
-    auto_dependencies = so_dependencies.union(guessed_deps)
-    declared_dependencies_set = set(declared_dependencies)
-    missing_deps = auto_dependencies.difference(declared_dependencies_set)
-    surplus_deps = declared_dependencies_set.difference(auto_dependencies)
-    surplus_deps = surplus_deps.difference(TYPICAL_DEPENDENCIES)
-    return missing_deps, surplus_deps, orphan_sonames
+  """Gathers and merges dependency results from other functions.
+
+  declared_dependencies: Dependencies that the package in question claims to
+                         have.
+
+  binaries_by_pkgname: A dictionary mapping pkgnames (CSWfoo) to binary names
+                       (without paths)
+
+  needed_sonames_by_binary: A dictionary mapping binary file name to
+                            a dictionary containing: "needed sonames",
+                            "soname", "rpath". Based on examining the binary
+                            files within the packages.
+
+  pkgs_by_soname: A dictionary mapping sonames to pkgnames, based on the
+                  contents of the system wide pkgmap
+                  (/var/sadm/install/contents)
+
+  filenames_by_soname: A dictionary mapping shared library sonames to filenames,
+                       based on files within packages
+
+  pkg_by_any_filename: Mapping from file names to packages names, based on the
+                       contents of the packages under examination.
+  """
+  declared_dependencies_set = set(declared_dependencies)
+
+  so_dependencies, self_provided, orphan_sonames = SharedObjectDependencies(
+      pkgname,
+      binaries_by_pkgname,
+      needed_sonames_by_binary,
+      pkgs_by_soname,
+      filenames_by_soname,
+      pkg_by_any_filename)
+  auto_dependencies = reduce(lambda x, y: x.union(y),
+      [
+        so_dependencies,
+        GuessDepsByFilename(pkgname, pkg_by_any_filename),
+        GuessDepsByPkgname(pkgname, pkg_by_any_filename),
+      ])
+  missing_deps = auto_dependencies.difference(declared_dependencies_set)
+  surplus_deps = declared_dependencies_set.difference(auto_dependencies)
+  surplus_deps = surplus_deps.difference(TYPICAL_DEPENDENCIES)
+  return missing_deps, surplus_deps, orphan_sonames
