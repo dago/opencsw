@@ -11,6 +11,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://code.google.com/p/pymox/
 MASTER_SITES = http://pymox.googlecode.com/files/
+PACKAGES = CSWpy-mox
+CATALOGNAME_CSWpy-mox = py_mox
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_SCRIPTS =
