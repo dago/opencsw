@@ -11,9 +11,9 @@ define BLURB
 endef
 
 #MASTER_SITES = http://apache.jumper.nu/spamassassin/source/
-MASTER_SITES = http://people.apache.org/~wtogami/devel/
+MASTER_SITES = http://people.apache.org/~wtogami/devel/3.3.0-rc1/
 #DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
-DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-beta1.tar.gz
+DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc1.tar.gz
 DISTFILES += COPYING
 
 REQUIRED_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha1
@@ -68,13 +68,11 @@ test-custom:
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
-	@echo "LICENSE = $(WORKSRC)/LICENSE"
-	@ls -l $(WORKSRC)/LICENSE
 	@rm -rf $(DESTDIR)
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)
-	@ginstall -d $(DESTDIR)$(sysconfdir)/CSWspamassassin
-	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
+	@ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/CSWspamassassin
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/etc/opt/csw/init.d/cswspamd
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.cswusergroup $(DESTDIR)$(sysconfdir)/CSWspamassassin/cswusergroup
 	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
