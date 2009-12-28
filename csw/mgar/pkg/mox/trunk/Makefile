@@ -6,6 +6,7 @@ GARNAME = mox
 GARVERSION = 0.5.0
 CATEGORIES = python
 DESCRIPTION = a mock object framework for Python
+ARCHALL = 1
 define BLURB
 endef
 SPKG_SOURCEURL = http://code.google.com/p/pymox/
