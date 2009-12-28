@@ -2,11 +2,18 @@
 
 BASE=${PKG_INSTALL_ROOT}/opt/csw
 
-echo "Registering existing texinfo-files..."
+# Does it exist and is writable or can at least be created?
+# This must be tested as we may be inside a sparse zone without
+# write access to $BASE.
+if test -f ${BASE}/share/info/dir -a -w ${BASE}/share/info/dir || \
+   touch ${BASE}/share/info/dir 2>/dev/null; then
 
-FILES=`ls $BASE/share/info/*.info $BASE/share/info/*.info-*`
-
-for i in $FILES; do
-        /opt/csw/bin/install-info $i $BASE/share/info/dir 2> /dev/null
-done
+  echo "Registering existing texinfo-files..."
+  FILES=`ls ${BASE}/share/info/*.info ${BASE}/share/info/*.info-*`
+  for i in $FILES; do
+    ${BASE}/bin/install-info $i ${BASE}/share/info/dir 2> /dev/null
+  done
+else
+  echo "Skip registering pages as ${BASE}/share/info/dir is not writable"
+fi
 
