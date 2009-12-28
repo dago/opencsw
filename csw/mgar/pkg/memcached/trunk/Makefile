@@ -1,5 +1,5 @@
 GARNAME = memcached
-GARVERSION = 1.4.3
+GARVERSION = 1.4.4
 CATEGORIES = net
 
 DESCRIPTION = Distributed memory object caching system
