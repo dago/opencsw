@@ -21,6 +21,17 @@ DUMP_BIN = "/usr/ccs/bin/dump"
 RUNPATH = "runpath"
 SONAME = "soname"
 
+def GetIsalist():
+  args = ["isalist"]
+  isalist_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+  stdout, stderr = isalist_proc.communicate()
+  ret = isalist_proc.wait()
+  if ret:
+  	logging.error("Calling isalist has failed.")
+  isalist = re.split(r"\s+", stdout.strip())
+  return isalist
+
+
 def main():
   errors = []
   options, args = checkpkg.GetOptions()
@@ -67,6 +78,10 @@ def main():
     if binary_base_name not in needed_sonames_by_binary:
       needed_sonames_by_binary[binary_base_name] = {}
     binary_data = needed_sonames_by_binary[binary_base_name]
+    if checkpkg.NEEDED_SONAMES not in binary_data:
+      binary_data[checkpkg.NEEDED_SONAMES] = []
+    if RUNPATH not in binary_data:
+      binary_data[RUNPATH] = []
     args = [DUMP_BIN, "-Lv", binary]
     dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
     stdout, stderr = dump_proc.communicate()
@@ -78,12 +93,8 @@ def main():
       if len(fields) < 3:
         continue
       if fields[1] == "NEEDED":
-        if checkpkg.NEEDED_SONAMES not in binary_data:
-          binary_data[checkpkg.NEEDED_SONAMES] = []
         binary_data[checkpkg.NEEDED_SONAMES].append(fields[2])
       elif fields[1] == "RUNPATH":
-        if RUNPATH not in binary_data:
-          binary_data[RUNPATH] = []
         binary_data[RUNPATH].extend(fields[2].split(":"))
         # Adding the default runtime path search option.
         binary_data[RUNPATH].append("/usr/lib")
@@ -93,7 +104,8 @@ def main():
       filenames_by_soname[binary_data[SONAME]] = binary_base_name
   # TODO: make it a unit test
   # print needed_sonames_by_binary
-
+  isalist = GetIsalist()
+  
   # Building indexes
   runpath_by_needed_soname = {}
   # {"foo.so": ["/opt/csw/lib/gcc4", "/opt/csw/lib", ...],
@@ -108,28 +120,14 @@ def main():
         runpath_by_needed_soname[soname] = []
       runpath_by_needed_soname[soname].extend(data[RUNPATH])
       if soname not in binaries_by_soname:
-        binaries_by_soname[soname] = []
-      binaries_by_soname[soname].append(binary_name)
+        binaries_by_soname[soname] = set()
+      binaries_by_soname[soname].add(binary_name)
 
   pkgmap = checkpkg.SystemPkgmap()
   logging.debug("Determining the soname-package relationships.")
   # lines by soname is an equivalent of $EXTRACTDIR/shortcatalog
-  lines_by_soname = {}
-  for soname in needed_sonames:
-    try:
-      # This is the critical part of the algorithm: it iterates over the
-      # runpath and finds the first matching one.
-      # 
-      # TODO: Expand $ISALIST to whatever the 'isalist' command outputs for
-      # better matching.
-      for runpath in runpath_by_needed_soname[soname]:
-        soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
-        if runpath in soname_runpath_data:
-          lines_by_soname[soname] = soname_runpath_data[runpath]
-          break
-    except KeyError, e:
-      logging.debug("couldn't find %s in the needed sonames list: %s",
-                    soname, e)
+  lines_by_soname = checkpkg.GetLinesBySoname(
+      pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
   pkgs_by_filename = {}
   for soname, line in lines_by_soname.iteritems():
     # TODO: Find all the packages, not just the last field.
@@ -172,7 +170,7 @@ def main():
         filenames_by_soname,
         pkg_by_any_filename)
 
-    if options.debug:
+    if options.debug or True:
       data_file_name = "/var/tmp/checkpkg-dep-testing-data-%s.py" % pkgname
       logging.warn("Saving test data to %s." % repr(data_file_name))
       test_fd = open(data_file_name, "w")
@@ -185,6 +183,7 @@ def main():
       print >>test_fd, "DATA_PKGS_BY_FILENAME =", repr(pkgs_by_filename)
       print >>test_fd, "DATA_FILENAMES_BY_SONAME =", repr(filenames_by_soname)
       print >>test_fd, "DATA_PKG_BY_ANY_FILENAME =", repr(pkg_by_any_filename)
+      print >>test_fd, "DATA_LINES_BY_SONAME =", repr(lines_by_soname)
       test_fd.close()
 
     # TODO: Rewrite this using cheetah templates.

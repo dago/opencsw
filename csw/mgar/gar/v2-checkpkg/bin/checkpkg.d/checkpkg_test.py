@@ -2,11 +2,13 @@
 # $Id$
 
 import unittest
+import mox
 import checkpkg
 import checkpkg_test_data_CSWmysql51rt as d1
 import checkpkg_test_data_CSWmysql51client as d2
 import checkpkg_test_data_CSWmysql51 as d3
 import checkpkg_test_data_CSWmysql51devel as d4
+import checkpkg_test_data_CSWlibpq_84 as d5
 
 class DependenciesUnitTest_1(unittest.TestCase):
 
@@ -104,6 +106,31 @@ class DependenciesUnitTest_4(unittest.TestCase):
     self.assertEquals(expected, self.missing_deps)
 
 
+class DependenciesUnitTest_5(unittest.TestCase):
+
+  def setUp(self):
+    self.missing_deps, self.surplus_deps, self.orphan_sonames = checkpkg.AnalyzeDependencies(
+        d5.DATA_PKGNAME,
+        d5.DATA_DECLARED_DEPENDENCIES,
+        d5.DATA_BINARIES_BY_PKGNAME,
+        d5.DATA_NEEDED_SONAMES_BY_BINARY,
+        d5.DATA_PKGS_BY_FILENAME,
+        d5.DATA_FILENAMES_BY_SONAME,
+        d5.DATA_PKG_BY_ANY_FILENAME,
+    )
+
+  def testSurplusDeps(self):
+    self.assertEquals(set([]), self.surplus_deps)
+
+  def testOrphanSonames(self):
+    self.assertEquals(set([]), self.orphan_sonames)
+
+  def testMissingDeps(self):
+    # This tends to report itself...
+    expected = set([u'SUNWgss', u'SUNWcsl', u'SUNWlibms'])
+    self.assertEquals(expected, self.missing_deps)
+
+
 class GuessDepsUnitTest(unittest.TestCase):
 
   def testGuessDepsByFilename1(self):
@@ -166,5 +193,52 @@ class GuessDepsUnitTest(unittest.TestCase):
     self.assertEqual(set([]), checkpkg.GuessDepsByPkgname(u"CSWmysql51rt", data2))
 
 
+class GetLinesBySonameUnitTest(unittest.TestCase):
+
+  def setUp(self):
+    self.pkgmap_mocker = mox.Mox()
+
+  def testExpandRunpath(self):
+    isalist = ["foo", "bar"]
+    runpath = "/opt/csw/lib/$ISALIST"
+    expected = ["/opt/csw/lib/foo", "/opt/csw/lib/bar"]
+    self.assertEquals(expected, checkpkg.ExpandRunpath(runpath, isalist))
+
+  def test_1(self):
+    expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
+    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
+    pkgmap.GetPkgmapLineByBasename("foo")
+    lines1 = {"/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+              "/usr/lib":                  "/usr/lib/foo.so.1 foo"}
+    # pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
+    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
+    self.pkgmap_mocker.ReplayAll()
+    pkgmap.GetPkgmapLineByBasename("foo")
+    needed_sonames = set(["foo.so.1"])
+    runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
+    isalist = ["isa-value-1", "isa-value-2"]
+    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+    self.pkgmap_mocker.VerifyAll()
+    self.assertEqual(expected, result)
+
+  def test_2(self):
+    expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
+    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
+    pkgmap.GetPkgmapLineByBasename("foo")
+    lines1 = {"/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+              "/opt/csw/lib":             "/opt/csw/lib/foo.so.1 foo",
+              "/usr/lib":                 "/usr/lib/foo.so.1 foo"}
+    # pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
+    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
+    self.pkgmap_mocker.ReplayAll()
+    pkgmap.GetPkgmapLineByBasename("foo")
+    needed_sonames = set(["foo.so.1"])
+    runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
+    isalist = ["isa-value-1", "isa-value-2"]
+    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+    self.pkgmap_mocker.VerifyAll()
+    self.assertEqual(expected, result)
+
+
 if __name__ == '__main__':
-	unittest.main()
+  unittest.main()

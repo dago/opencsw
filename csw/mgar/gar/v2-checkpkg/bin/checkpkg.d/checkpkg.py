@@ -111,6 +111,7 @@ class SystemPkgmap(object):
     """There is no need to re-parse it each time.
 
     Read it slowly the first time and cache it for later."""
+    self.cache = {}
     self.checkpkg_dir = os.path.join(os.environ["HOME"], self.CHECKPKG_DIR)
     self.db_path = os.path.join(self.checkpkg_dir, self.SQLITE3_DBNAME)
     if os.path.exists(self.db_path):
@@ -156,12 +157,15 @@ class SystemPkgmap(object):
       self.conn.execute(sql)
 
   def GetPkgmapLineByBasename(self, filename):
+    if filename in self.cache:
+    	return self.cache[filename]
     sql = "SELECT path, line FROM systempkgmap WHERE basename = ?;"
     c = self.conn.cursor()
     c.execute(sql, [filename])
     lines = {}
     for row in c:
       lines[row[0]] = row[1]
+    self.cache[filename] = lines
     return lines
 
 def SharedObjectDependencies(pkgname,
@@ -277,6 +281,37 @@ def AnalyzeDependencies(pkgname,
         GuessDepsByPkgname(pkgname, pkg_by_any_filename),
       ])
   missing_deps = auto_dependencies.difference(declared_dependencies_set)
+  # Don't report itself as a suggested dependency.
+  missing_deps = missing_deps.difference(set([pkgname]))
   surplus_deps = declared_dependencies_set.difference(auto_dependencies)
   surplus_deps = surplus_deps.difference(TYPICAL_DEPENDENCIES)
   return missing_deps, surplus_deps, orphan_sonames
+
+
+def ExpandRunpath(runpath, isalist):
+  if '$ISALIST' in runpath:
+    runpath_expanded_list = [runpath.replace('$ISALIST', isa) for isa in isalist]
+  else:
+    runpath_expanded_list = [runpath]
+  return runpath_expanded_list
+
+
+def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
+  lines_by_soname = {}
+  for soname in needed_sonames:
+    # This is the critical part of the algorithm: it iterates over the
+    # runpath and finds the first matching one.
+    runpath_found = False
+    for runpath in runpath_by_needed_soname[soname]:
+      runpath_list = ExpandRunpath(runpath, isalist)
+      soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
+      for runpath_expanded in runpath_list:
+        if runpath_expanded in soname_runpath_data:
+          lines_by_soname[soname] = soname_runpath_data[runpath_expanded]
+          runpath_found = True
+          # This break only goes out of the inner loop,
+          # need another one below to finish the outer loop.
+          break
+      if runpath_found:
+      	break
+  return lines_by_soname
