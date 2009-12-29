@@ -1,5 +1,5 @@
 GARNAME = sysstat
-GARVERSION = 20091024
+GARVERSION = 20091228a
 CATEGORIES = utils
 
 DESCRIPTION = Key system statistics at a glance
@@ -25,6 +25,8 @@ REQUIRED_PKGS = CSWncurses
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.maier-komor.de/sysstat.html
+
+LICENSE = LICENSE
 
 PATCHFILES = patch-onlyisaexec-sysstatd.diff
 
@@ -75,15 +77,15 @@ $(WORKSRC)/mkrules:
 	@(	echo "OS              = SunOS"; \
 		echo "INSTALL         = /usr/sbin/install"; \
 		echo "CC              = ${CC}"; \
-		echo "C_CFLAGS        = ${CFLAGS} -xc99=no_lib -I$(includedir)/ncurses -DUSECURSES -DSOLARIS=$(SOLARIS)"; \
-		echo "D_CFLAGS        = ${CFLAGS} -xc99=no_lib -I$(includedir)/ncurses -DUSECURSES -DSOLARIS=$(SOLARIS)"; \
+		echo "C_CFLAGS        = ${CFLAGS} -xc99=no_lib -I$(includedir)/ncurses -I$(includedir) -DSOLARIS=$(SOLARIS)"; \
+		echo "D_CFLAGS        = ${CFLAGS} -xc99=no_lib -I$(includedir)/ncurses -I$(includedir) -DSOLARIS=$(SOLARIS)"; \
 		echo "CDIR            = app"; \
 		echo "DDIR            = daemon"; \
 		echo 'C_LIBS          += $(LDFLAGS) -lncurses -lsocket -lnsl'; \
 		echo 'LIBS            = '; \
 		echo "PREFIX          = ${DESTDIR}${prefix}"; \
 		echo "ISAEXEC         = ${bindir}/isaexec"; \
-		echo "MKDEP           = ${CC} -xM1 ${CFLAGS} -I$(includedir)/ncurses"; \
+		echo "MKDEP           = ${CC} -xM1 ${CFLAGS} -I$(includedir)/ncurses -I$(includedir)"; \
 		echo "modules:        $(MKRULES_MODULES)"; \
 		echo "install:        $(MKRULES_INSTALL)"; \
 	) > $@
