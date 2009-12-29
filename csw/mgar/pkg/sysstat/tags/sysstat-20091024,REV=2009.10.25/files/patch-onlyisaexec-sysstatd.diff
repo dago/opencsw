@@ -1,0 +1,33 @@
+diff -Naur sysstat-20081207.orig/client.c sysstat-20081207.patched/client.c
+--- sysstat-20081207.orig/client.c	2008-12-07 23:24:38.000000000 +0100
++++ sysstat-20081207.patched/client.c	2008-12-09 14:37:26.459180110 +0100
+@@ -81,7 +81,7 @@
+ 		dbug("Execname %s\n",Execname);
+ 		strcpy(bin,dirname(Execname));
+ 		dbug("Execdir %s\n",bin);
+-		strcat(bin,"/../../sbin/sysstatd");
++		strcat(bin,"/../sbin/sysstatd");
+ 		if (access(bin,X_OK) != 0) {
+ 			error("cannot find sysstatd at %s",bin);
+ 			return -1;
+diff -Naur sysstat-20081207.orig/sysstat.c sysstat-20081207.patched/sysstat.c
+--- sysstat-20081207.orig/sysstat.c	2008-12-07 23:24:38.000000000 +0100
++++ sysstat-20081207.patched/sysstat.c	2008-12-09 14:37:51.199133788 +0100
+@@ -506,7 +506,7 @@
+ 		char cmd[PATH_MAX];
+ 		int ret = 0;
+ 		strcpy(cmd,dirname(Execname));
+-		strcat(cmd,"/../../sbin/sysstatd -k");
++		strcat(cmd,"/../sbin/sysstatd -k");
+ 		ret = system(cmd);
+ 		if (ret == -1) {
+ 			error("could not execute '%s': %s\n",cmd,strerror(errno));
+@@ -554,7 +554,7 @@
+ 			char *args[16];
+ 			int num = 0;
+ 			strcpy(bin,dirname(Execname));
+-			strcat(bin,"/../../sbin/sysstatd");
++			strcat(bin,"/../sbin/sysstatd");
+ 			args[num++] = bin;
+ 			if (verbose)
+ 				args[num++] = "-v";
