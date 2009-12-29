@@ -8,15 +8,22 @@ import os
 import os.path
 import logging
 import subprocess
-import cPickle
 import re
 import sqlite3
+import socket
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
 NEEDED_SONAMES = "needed sonames"
-# Don't report these as unnecessary.
-TYPICAL_DEPENDENCIES = set(["CSWcommon", "CSWcswclassutils", "CSWisaexec"])
+RUNPATH = "runpath"
+SONAME = "soname"
+DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
+DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
+                             u"*SUNWcslr", u"*SUNWlibC", u"*SUNWlibms"])
+
+# This shared library is present on Solaris 10 on amd64, but it's missing on
+# Solaris 8 on i386.  It's okay if it's missing.
+ALLOWED_ORPHAN_SONAMES = set([u"libm.so.2"])
 
 
 class Error(Exception):
@@ -61,6 +68,10 @@ class CheckpkgBase(object):
                          % self.pkgpath)
 
   def ListBinaries(self):
+    """Shells out to list all the binaries from a given package.
+
+    Original checkpkg code:
+
     # #########################################
     # # find all executables and dynamic libs,and list their filenames.
     # listbinaries() {
@@ -72,6 +83,7 @@ class CheckpkgBase(object):
     # 
     #   find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
     # }
+    """
     self.CheckPkgpathExists()
     find_tmpl = "find %s -print | xargs file | grep ELF | nawk -F: '{print $1}'"
     find_proc = subprocess.Popen(find_tmpl % self.pkgpath,
@@ -101,11 +113,14 @@ class CheckpkgBase(object):
 
 
 class SystemPkgmap(object):
-  """A class to hold and manipulate the /var/sadm/install/contents file."""
+  """A class to hold and manipulate the /var/sadm/install/contents file.
+
+  TODO: Implement timestamp checking and refreshing the cache.
+  """
   
   STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"] 
   CHECKPKG_DIR = ".checkpkg"
-  SQLITE3_DBNAME = "var-sadm-install-contents-cache"
+  SQLITE3_DBNAME_TMPL = "var-sadm-install-contents-cache-%s"
 
   def __init__(self):
     """There is no need to re-parse it each time.
@@ -113,12 +128,15 @@ class SystemPkgmap(object):
     Read it slowly the first time and cache it for later."""
     self.cache = {}
     self.checkpkg_dir = os.path.join(os.environ["HOME"], self.CHECKPKG_DIR)
-    self.db_path = os.path.join(self.checkpkg_dir, self.SQLITE3_DBNAME)
+    self.fqdn = socket.getfqdn()
+    self.db_path = os.path.join(self.checkpkg_dir,
+                                self.SQLITE3_DBNAME_TMPL % self.fqdn)
     if os.path.exists(self.db_path):
       logging.debug("Connecting to the %s database.", self.db_path)
       self.conn = sqlite3.connect(self.db_path)
     else:
-      logging.info("Building a cache of /var/sadm/install/contents.")
+      print "Building a cache of /var/sadm/install/contents."
+      print "The cache will be kept in %s." % self.db_path
       if not os.path.exists(self.checkpkg_dir):
         logging.debug("Creating %s", self.checkpkg_dir)
         os.mkdir(self.checkpkg_dir)
@@ -133,6 +151,8 @@ class SystemPkgmap(object):
           );
       """)
 
+      # Original bit of code from checkpkg:
+      #
       # egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
       #     fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
 
@@ -142,7 +162,7 @@ class SystemPkgmap(object):
 
       # Creating a data structure:
       # soname - {<path1>: <line1>, <path2>: <line2>, ...}
-      logging.debug("Building in-memory data structure for the %s file",
+      logging.debug("Building sqlite3 cache db of the %s file",
                     SYSTEM_PKGMAP)
       for line in system_pkgmap_fd:
         if stop_re.search(line):
@@ -151,20 +171,22 @@ class SystemPkgmap(object):
         pkgmap_entry_path = fields[0].split("=")[0]
         pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
         sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
-        c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line))
-      logging.info("Creating an index.")
+        c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
+      print "Creating a database index."
       sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
       self.conn.execute(sql)
 
   def GetPkgmapLineByBasename(self, filename):
     if filename in self.cache:
-    	return self.cache[filename]
+      return self.cache[filename]
     sql = "SELECT path, line FROM systempkgmap WHERE basename = ?;"
     c = self.conn.cursor()
     c.execute(sql, [filename])
     lines = {}
     for row in c:
       lines[row[0]] = row[1]
+    if len(lines) == 0:
+      logging.debug("Cache doesn't contain filename %s", filename)
     self.cache[filename] = lines
     return lines
 
@@ -178,20 +200,46 @@ def SharedObjectDependencies(pkgname,
   orphan_sonames = set()
   self_provided = set()
   for binary in binaries_by_pkgname[pkgname]:
-    if binary in needed_sonames_by_binary:
-      for soname in needed_sonames_by_binary[binary][NEEDED_SONAMES]:
-        if soname in filenames_by_soname:
-          filename = filenames_by_soname[soname]
-          pkg = pkg_by_any_filename[filename]
-          self_provided.add(soname)
-          so_dependencies.add(pkg)
-        elif soname in pkgs_by_soname:
-          so_dependencies.add(pkgs_by_soname[soname])
-        else:
-          orphan_sonames.add(soname)
+    # tmp_so_dependencies, tmp_self_provided, tmp_orphan_sonames = DependenciesOfABinary(
+    #     binary, binaries_by_pkgname, needed_sonames_by_binary,
+    #     pkgs_by_soname, filenames_by_soname, pkg_by_any_filename)
+    # so_dependencies.union(tmp_so_dependencies)
+    # orphan_sonames.union(tmp_orphan_sonames)
+    # self_provided.union(tmp_self_provided)
+    needed_sonames = needed_sonames_by_binary[binary][NEEDED_SONAMES]
+    # DependenciesOfABinary(binary, needed_sonames, filenames_by_soname, pkgs_by_soname)
+    for soname in needed_sonames:
+      if soname in filenames_by_soname:
+        filename = filenames_by_soname[soname]
+        pkg = pkg_by_any_filename[filename]
+        self_provided.add(soname)
+        so_dependencies.add(pkg)
+      elif soname in pkgs_by_soname:
+        so_dependencies.add(pkgs_by_soname[soname])
+      else:
+        orphan_sonames.add(soname)
+  return so_dependencies, self_provided, orphan_sonames
+
+
+def DependenciesOfABinary(binary,
+                          binaries_by_pkgname,
+                          needed_sonames_by_binary,
+                          pkgs_by_soname,
+                          filenames_by_soname,
+                          pkg_by_any_filename):
+  so_dependencies = set()
+  orphan_sonames = set()
+  self_provided = set()
+  for soname in needed_sonames_by_binary[binary][NEEDED_SONAMES]:
+    if soname in filenames_by_soname:
+      filename = filenames_by_soname[soname]
+      pkg = pkg_by_any_filename[filename]
+      self_provided.add(soname)
+      so_dependencies.add(pkg)
+    elif soname in pkgs_by_soname:
+      so_dependencies.add(pkgs_by_soname[soname])
     else:
-      logging.warn("%s not found in needed_sonames_by_binary (%s)",
-                   binary, needed_sonames_by_binary.keys())
+      orphan_sonames.add(soname)
   return so_dependencies, self_provided, orphan_sonames
 
 
@@ -283,20 +331,39 @@ def AnalyzeDependencies(pkgname,
   missing_deps = auto_dependencies.difference(declared_dependencies_set)
   # Don't report itself as a suggested dependency.
   missing_deps = missing_deps.difference(set([pkgname]))
+  missing_deps = missing_deps.difference(set(DO_NOT_REPORT_MISSING))
   surplus_deps = declared_dependencies_set.difference(auto_dependencies)
-  surplus_deps = surplus_deps.difference(TYPICAL_DEPENDENCIES)
+  surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
+  orphan_sonames = orphan_sonames.difference(ALLOWED_ORPHAN_SONAMES)
   return missing_deps, surplus_deps, orphan_sonames
 
 
 def ExpandRunpath(runpath, isalist):
+  # Emulating $ISALIST expansion
   if '$ISALIST' in runpath:
-    runpath_expanded_list = [runpath.replace('$ISALIST', isa) for isa in isalist]
+    expanded_list = [runpath.replace('$ISALIST', isa) for isa in isalist]
   else:
-    runpath_expanded_list = [runpath]
-  return runpath_expanded_list
+    expanded_list = [runpath]
+  return expanded_list
+
+def Emulate64BitSymlinks(runpath_list):
+  """Need to emulate the 64 -> amd64, 64 -> sparcv9 symlink
+
+  Since we don't know the architecture, we'll adding both amd64 and sparcv9.
+  It should be safe.
+  """
+  symlinked_list = []
+  for runpath in runpath_list:
+    if runpath.endswith("/64"):
+      symlinked_list.append("%s/amd64" % runpath[:-3])
+      symlinked_list.append("%s/sparcv9" % runpath[:-3])
+    else:
+    	symlinked_list.append(runpath)
+  return symlinked_list
 
 
 def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
+  """Works out which system pkgmap lines correspond to given sonames."""
   lines_by_soname = {}
   for soname in needed_sonames:
     # This is the critical part of the algorithm: it iterates over the
@@ -304,7 +371,10 @@ def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
     runpath_found = False
     for runpath in runpath_by_needed_soname[soname]:
       runpath_list = ExpandRunpath(runpath, isalist)
+      runpath_list = Emulate64BitSymlinks(runpath_list)
       soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
+      logging.debug("%s: will be looking for %s in %s" %
+                    (soname, runpath_list, soname_runpath_data.keys()))
       for runpath_expanded in runpath_list:
         if runpath_expanded in soname_runpath_data:
           lines_by_soname[soname] = soname_runpath_data[runpath_expanded]
@@ -313,5 +383,49 @@ def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
           # need another one below to finish the outer loop.
           break
       if runpath_found:
-      	break
+        break
   return lines_by_soname
+
+
+def BuildIndexesBySoname(needed_sonames_by_binary):
+  """Builds data structures indexed by soname.
+
+  Building indexes
+  {"foo.so": ["/opt/csw/lib/gcc4", "/opt/csw/lib", ...],
+   ...
+  }
+  """
+  needed_sonames = set()
+  binaries_by_soname = {}
+  runpath_by_needed_soname = {}
+  for binary_name, data in needed_sonames_by_binary.iteritems():
+    for soname in data[NEEDED_SONAMES]:
+      needed_sonames.add(soname)
+      if soname not in runpath_by_needed_soname:
+        runpath_by_needed_soname[soname] = []
+      runpath_by_needed_soname[soname].extend(data[RUNPATH])
+      if soname not in binaries_by_soname:
+        binaries_by_soname[soname] = set()
+      binaries_by_soname[soname].add(binary_name)
+  return needed_sonames, binaries_by_soname, runpath_by_needed_soname
+
+
+def ParseDumpOutput(dump_output):
+  binary_data = {RUNPATH: [],
+                 NEEDED_SONAMES: []}
+  for line in dump_output.splitlines():
+    fields = re.split(WS_RE, line)
+    # TODO: Make it a unit test
+    # logging.debug("%s says: %s", DUMP_BIN, fields)
+    if len(fields) < 3:
+      continue
+    if fields[1] == "NEEDED":
+      binary_data[NEEDED_SONAMES].append(fields[2])
+    elif fields[1] == "RUNPATH":
+      binary_data[RUNPATH].extend(fields[2].split(":"))
+      # Adding the default runtime path search option.
+      binary_data[RUNPATH].append("/usr/lib/$ISALIST")
+      binary_data[RUNPATH].append("/usr/lib")
+    elif fields[1] == "SONAME":
+      binary_data[SONAME] = fields[2]
+  return binary_data

@@ -16,10 +16,9 @@ import re
 import subprocess
 import logging
 import sys
+import textwrap
 
 DUMP_BIN = "/usr/ccs/bin/dump"
-RUNPATH = "runpath"
-SONAME = "soname"
 
 def GetIsalist():
   args = ["isalist"]
@@ -68,60 +67,29 @@ def main():
   # Assembling a data structure with the data about binaries.
   # {
   #   <binary1 name>: { checkpkg.NEEDED_SONAMES: [...],
-  #                     RUNPATH:        [...]},
+  #                     checkpkg.RUNPATH:        [...]},
   #   <binary2 name>: ...,
   #   ...
   # }
   #
   for binary in binaries:
     binary_base_name = binary.split("/")[-1]
-    if binary_base_name not in needed_sonames_by_binary:
-      needed_sonames_by_binary[binary_base_name] = {}
-    binary_data = needed_sonames_by_binary[binary_base_name]
-    if checkpkg.NEEDED_SONAMES not in binary_data:
-      binary_data[checkpkg.NEEDED_SONAMES] = []
-    if RUNPATH not in binary_data:
-      binary_data[RUNPATH] = []
     args = [DUMP_BIN, "-Lv", binary]
     dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
     stdout, stderr = dump_proc.communicate()
     ret = dump_proc.wait()
-    for line in stdout.splitlines():
-      fields = re.split(ws_re, line)
-      # TODO: Make it a unit test
-      # logging.debug("%s says: %s", DUMP_BIN, fields)
-      if len(fields) < 3:
-        continue
-      if fields[1] == "NEEDED":
-        binary_data[checkpkg.NEEDED_SONAMES].append(fields[2])
-      elif fields[1] == "RUNPATH":
-        binary_data[RUNPATH].extend(fields[2].split(":"))
-        # Adding the default runtime path search option.
-        binary_data[RUNPATH].append("/usr/lib")
-      elif fields[1] == "SONAME":
-        binary_data[SONAME] = fields[2]
-    if SONAME in binary_data:
-      filenames_by_soname[binary_data[SONAME]] = binary_base_name
-  # TODO: make it a unit test
-  # print needed_sonames_by_binary
+    binary_data = checkpkg.ParseDumpOutput(stdout)
+    needed_sonames_by_binary[binary_base_name] = binary_data
+    if checkpkg.SONAME in binary_data:
+      filenames_by_soname[binary_data[checkpkg.SONAME]] = binary_base_name
   isalist = GetIsalist()
   
-  # Building indexes
-  runpath_by_needed_soname = {}
-  # {"foo.so": ["/opt/csw/lib/gcc4", "/opt/csw/lib", ...],
-  #  ...
-  # }
-  needed_sonames = set()
-  binaries_by_soname = {}
-  for binary_name, data in needed_sonames_by_binary.iteritems():
-    for soname in data[checkpkg.NEEDED_SONAMES]:
-      needed_sonames.add(soname)
-      if soname not in runpath_by_needed_soname:
-        runpath_by_needed_soname[soname] = []
-      runpath_by_needed_soname[soname].extend(data[RUNPATH])
-      if soname not in binaries_by_soname:
-        binaries_by_soname[soname] = set()
-      binaries_by_soname[soname].add(binary_name)
+  # Building indexes by soname to simplify further processing
+  # These are indexes "by soname".
+  (needed_sonames,
+   binaries_by_soname,
+   runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
+       needed_sonames_by_binary)
 
   pkgmap = checkpkg.SystemPkgmap()
   logging.debug("Determining the soname-package relationships.")
@@ -137,17 +105,20 @@ def main():
     pkgs_by_filename[soname] = pkgname
 
   # A shared object dependency/provisioning report, plus checking.
-  # TODO: Rewrite this using cheetah
+  # TODO: Rewrite this using cheetah templates
   if needed_sonames:
     print "Analysis of sonames needed by the package set:"
     for soname in needed_sonames:
+      logging.debug("Analyzing: %s", soname)
       if soname in filenames_by_soname:
         print "%s is provided by the package itself" % soname
       elif soname in lines_by_soname:
-        print ("%s is required by %s and provided by %s" 
+        print ("%s is provided by %s and required by:" 
                % (soname,
-                  binaries_by_soname[soname],
                   repr(pkgs_by_filename[soname])))
+        filename_lines = textwrap.wrap(" ".join(sorted(binaries_by_soname[soname])), 75)
+        for line in filename_lines:
+        	print " ", line
       else:
         print ("%s is required by %s, but we don't know what provides it."
                % (soname, binaries_by_soname[soname]))
@@ -159,8 +130,29 @@ def main():
   for checker in checkers:
     orphan_sonames = set()
     pkgname = checker.pkgname
-    print "%s:" % pkgname
     declared_dependencies = checker.GetDependencies()
+    if options.debug:
+      sanitized_pkgname = pkgname.replace("-", "_")
+      data_file_name = "/var/tmp/checkpkg_test_data_%s.py" % sanitized_pkgname
+      logging.warn("Saving test data to %s." % repr(data_file_name))
+      test_fd = open(data_file_name, "w")
+      print >>test_fd, "# Testing data for %s" % pkgname
+      print >>test_fd, "# $Id$"
+      print >>test_fd, "DATA_PKGNAME =", repr(pkgname)
+      print >>test_fd, "DATA_DECLARED_DEPENDENCIES =", repr(declared_dependencies)
+
+      
+      print >>test_fd, "DATA_BINARIES_BY_PKGNAME =", repr(binaries_by_pkgname)
+      print >>test_fd, "DATA_NEEDED_SONAMES_BY_BINARY =", repr(needed_sonames_by_binary)
+      print >>test_fd, "DATA_PKGS_BY_FILENAME =", repr(pkgs_by_filename)
+      print >>test_fd, "DATA_FILENAMES_BY_SONAME =", repr(filenames_by_soname)
+      print >>test_fd, "DATA_PKG_BY_ANY_FILENAME =", repr(pkg_by_any_filename)
+      print >>test_fd, "DATA_LINES_BY_SONAME =", repr(lines_by_soname)
+      print >>test_fd, "DATA_PKGMAP_CACHE =", repr(pkgmap.cache)
+      print >>test_fd, "DATA_BINARIES_BY_SONAME =", repr(binaries_by_soname)
+      print >>test_fd, "DATA_ISALIST =", repr(isalist)
+      test_fd.close()
+
     missing_deps, surplus_deps, orphan_sonames = checkpkg.AnalyzeDependencies(
         pkgname,
         declared_dependencies,
@@ -170,38 +162,29 @@ def main():
         filenames_by_soname,
         pkg_by_any_filename)
 
-    if options.debug or True:
-      data_file_name = "/var/tmp/checkpkg-dep-testing-data-%s.py" % pkgname
-      logging.warn("Saving test data to %s." % repr(data_file_name))
-      test_fd = open(data_file_name, "w")
-      sanitized_pkgname = pkgname.replace("-", "_")
-      print >>test_fd, "# Testing data for %s" % pkgname
-      print >>test_fd, "DATA_PKGNAME =", repr(pkgname)
-      print >>test_fd, "DATA_DECLARED_DEPENDENCIES =", repr(declared_dependencies)
-      print >>test_fd, "DATA_BINARIES_BY_PKGNAME =", repr(binaries_by_pkgname)
-      print >>test_fd, "DATA_NEEDED_SONAMES_BY_BINARY =", repr(needed_sonames_by_binary)
-      print >>test_fd, "DATA_PKGS_BY_FILENAME =", repr(pkgs_by_filename)
-      print >>test_fd, "DATA_FILENAMES_BY_SONAME =", repr(filenames_by_soname)
-      print >>test_fd, "DATA_PKG_BY_ANY_FILENAME =", repr(pkg_by_any_filename)
-      print >>test_fd, "DATA_LINES_BY_SONAME =", repr(lines_by_soname)
-      test_fd.close()
-
     # TODO: Rewrite this using cheetah templates.
+    print "%s:" % pkgname
+    msg_printed = False
     if missing_deps:
       print "SUGGESTION: you may want to add some or all of the following as depends:"
       print "   (Feel free to ignore SUNW or SPRO packages)"
       for dep_pkgname in sorted(missing_deps):
         print ">", dep_pkgname
+      msg_printed = True
     if surplus_deps:
       print "The following packages might be unnecessary dependencies:"
       for dep_pkgname in surplus_deps:
         print "? ", dep_pkgname
+      msg_printed = True
     if orphan_sonames:
       print "The following sonames don't belong to any package:"
       for soname in sorted(orphan_sonames):
         errors.append(checkpkg.Error("The following soname does't belong to "
                                      "any package: %s" % soname))
         print "! ", soname
+      msg_printed = True
+    if not msg_printed:
+    	print "+  Dependencies of %s look good." % pkgname
     print
 
   if errors:
