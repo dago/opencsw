@@ -4,11 +4,11 @@
 import unittest
 import mox
 import checkpkg
-import checkpkg_test_data_CSWmysql51rt as d1
-import checkpkg_test_data_CSWmysql51client as d2
-import checkpkg_test_data_CSWmysql51 as d3
-import checkpkg_test_data_CSWmysql51devel as d4
-import checkpkg_test_data_CSWlibpq_84 as d5
+import testdata.checkpkg_test_data_CSWmysql51rt as d1
+import testdata.checkpkg_test_data_CSWmysql51client as d2
+import testdata.checkpkg_test_data_CSWmysql51 as d3
+import testdata.checkpkg_test_data_CSWmysql51devel as d4
+import testdata.checkpkg_test_data_CSWlibpq_84 as d5
 
 class DependenciesUnitTest_1(unittest.TestCase):
 
