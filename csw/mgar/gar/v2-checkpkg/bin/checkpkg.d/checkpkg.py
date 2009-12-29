@@ -196,18 +196,16 @@ def SharedObjectDependencies(pkgname,
                              pkgs_by_soname,
                              filenames_by_soname,
                              pkg_by_any_filename):
+  """This is one of the more obscure and more important pieces of code.
+
+  I tried to make it simpler, but given that the operations here involve
+  whole sets of packages, it's not easy.
+  """
   so_dependencies = set()
   orphan_sonames = set()
   self_provided = set()
   for binary in binaries_by_pkgname[pkgname]:
-    # tmp_so_dependencies, tmp_self_provided, tmp_orphan_sonames = DependenciesOfABinary(
-    #     binary, binaries_by_pkgname, needed_sonames_by_binary,
-    #     pkgs_by_soname, filenames_by_soname, pkg_by_any_filename)
-    # so_dependencies.union(tmp_so_dependencies)
-    # orphan_sonames.union(tmp_orphan_sonames)
-    # self_provided.union(tmp_self_provided)
     needed_sonames = needed_sonames_by_binary[binary][NEEDED_SONAMES]
-    # DependenciesOfABinary(binary, needed_sonames, filenames_by_soname, pkgs_by_soname)
     for soname in needed_sonames:
       if soname in filenames_by_soname:
         filename = filenames_by_soname[soname]
@@ -218,28 +216,6 @@ def SharedObjectDependencies(pkgname,
         so_dependencies.add(pkgs_by_soname[soname])
       else:
         orphan_sonames.add(soname)
-  return so_dependencies, self_provided, orphan_sonames
-
-
-def DependenciesOfABinary(binary,
-                          binaries_by_pkgname,
-                          needed_sonames_by_binary,
-                          pkgs_by_soname,
-                          filenames_by_soname,
-                          pkg_by_any_filename):
-  so_dependencies = set()
-  orphan_sonames = set()
-  self_provided = set()
-  for soname in needed_sonames_by_binary[binary][NEEDED_SONAMES]:
-    if soname in filenames_by_soname:
-      filename = filenames_by_soname[soname]
-      pkg = pkg_by_any_filename[filename]
-      self_provided.add(soname)
-      so_dependencies.add(pkg)
-    elif soname in pkgs_by_soname:
-      so_dependencies.add(pkgs_by_soname[soname])
-    else:
-      orphan_sonames.add(soname)
   return so_dependencies, self_provided, orphan_sonames
 
 
