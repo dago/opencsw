@@ -26,7 +26,7 @@ def GetIsalist():
   stdout, stderr = isalist_proc.communicate()
   ret = isalist_proc.wait()
   if ret:
-  	logging.error("Calling isalist has failed.")
+    logging.error("Calling isalist has failed.")
   isalist = re.split(r"\s+", stdout.strip())
   return isalist
 
@@ -80,10 +80,16 @@ def main():
     ret = dump_proc.wait()
     binary_data = checkpkg.ParseDumpOutput(stdout)
     needed_sonames_by_binary[binary_base_name] = binary_data
-    if checkpkg.SONAME in binary_data:
-      filenames_by_soname[binary_data[checkpkg.SONAME]] = binary_base_name
+    if checkpkg.SONAME not in binary_data:
+      logging.info("The %s shared library doesn't provide a SONAME.",
+                   binary_base_name)
+      # The shared library doesn't tell its SONAME.  We're guessing it's the
+      # same as the base file name.
+      binary_data[checkpkg.SONAME] = binary_base_name
+    filenames_by_soname[binary_data[checkpkg.SONAME]] = binary_base_name
+
   isalist = GetIsalist()
-  
+
   # Building indexes by soname to simplify further processing
   # These are indexes "by soname".
   (needed_sonames,
@@ -116,6 +122,7 @@ def main():
   # TODO: Rewrite this using cheetah templates
   if needed_sonames:
     print "Analysis of sonames needed by the package set:"
+    binaries_with_missing_sonames = set([])
     for soname in needed_sonames:
       logging.debug("Analyzing: %s", soname)
       if soname in filenames_by_soname:
@@ -126,17 +133,24 @@ def main():
                   repr(pkgs_by_filename[soname])))
         filename_lines = " ".join(sorted(binaries_by_soname[soname]))
         for line in textwrap.wrap(filename_lines, 70):
-        	print " ", line
+          print " ", line
       else:
         print ("%s is required by %s, but we don't know what provides it."
                % (soname, binaries_by_soname[soname]))
+        for binary in binaries_by_soname[soname]:
+          binaries_with_missing_sonames.add(binary)
         if soname in checkpkg.ALLOWED_ORPHAN_SONAMES:
-        	print "However, it's a whitelisted soname."
+          print "However, it's a whitelisted soname."
         else:
           errors.append(
               checkpkg.Error("%s is required by %s, but "
                              "we don't know what provides it."
                              % (soname, binaries_by_soname[soname])))
+    if binaries_with_missing_sonames:
+      print "The following are binaries with missing sonames:"
+      binary_lines = " ".join(sorted(binaries_with_missing_sonames))
+      for line in textwrap.wrap(binary_lines, 70):
+        print " ", line
     print
 
   dependent_pkgs = {}
@@ -194,7 +208,7 @@ def main():
         print "! ", soname
       msg_printed = True
     if not msg_printed:
-    	print "+  Dependencies of %s look good." % pkgname
+      print "+  Dependencies of %s look good." % pkgname
     print
 
   if errors:

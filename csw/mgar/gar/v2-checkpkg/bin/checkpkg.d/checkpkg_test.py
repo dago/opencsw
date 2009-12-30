@@ -11,6 +11,7 @@ import testdata.checkpkg_test_data_CSWmysql51devel as d4
 import testdata.checkpkg_test_data_CSWlibpq_84 as d5
 import testdata.checkpkg_test_data_CSWmysql5client_8x as d6
 import testdata.dump_output_1 as dump_1
+import testdata.dump_output_2 as dump_2
 
 """A set of unit tests for the library checking code.
 
@@ -410,9 +411,11 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
                     '/opt/csw/mysql5/lib/$ISALIST',
                     '/opt/csw/mysql5/lib',
                     '/opt/csw/mysql5/lib/$ISALIST/mysql',
-                    # These two are artificially appended
+                    # These four are artificially appended
                     '/usr/lib/$ISALIST',
-                    '/usr/lib'],
+                    '/usr/lib',
+                    '/lib/$ISALIST',
+                    '/lib'],
         'needed sonames': ['librt.so.1',
                            'libresolv.so.2',
                            'libc.so.1',
@@ -423,6 +426,12 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
                            'libz.so.1']}
     self.assertEqual(expected,
                      checkpkg.ParseDumpOutput(dump_1.DATA_DUMP_OUTPUT))
+
+  def test_2(self):
+    expected_runpath = ['/usr/lib/$ISALIST', '/usr/lib', '/lib/$ISALIST', '/lib']
+    self.assertEqual(
+        expected_runpath,
+        checkpkg.ParseDumpOutput(dump_2.DATA_DUMP_OUTPUT)["runpath"])
 
 
 if __name__ == '__main__':

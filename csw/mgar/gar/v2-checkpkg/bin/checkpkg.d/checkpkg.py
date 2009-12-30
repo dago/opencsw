@@ -399,11 +399,11 @@ def ParseDumpOutput(dump_output):
       binary_data[NEEDED_SONAMES].append(fields[2])
     elif fields[1] == "RUNPATH":
       binary_data[RUNPATH].extend(fields[2].split(":"))
-      # Adding the default runtime path search option.
-      binary_data[RUNPATH].append("/usr/lib/$ISALIST")
-      binary_data[RUNPATH].append("/usr/lib")
-      binary_data[RUNPATH].append("/lib/$ISALIST")
-      binary_data[RUNPATH].append("/lib")
     elif fields[1] == "SONAME":
       binary_data[SONAME] = fields[2]
+  # Adding the default runtime path search option.
+  binary_data[RUNPATH].append("/usr/lib/$ISALIST")
+  binary_data[RUNPATH].append("/usr/lib")
+  binary_data[RUNPATH].append("/lib/$ISALIST")
+  binary_data[RUNPATH].append("/lib")
   return binary_data
