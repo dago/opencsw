@@ -264,6 +264,17 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     expected = ["/opt/csw/mysql5/lib/foo/mysql", "/opt/csw/mysql5/lib/bar/mysql"]
     self.assertEquals(expected, checkpkg.ExpandRunpath(runpath, isalist))
 
+  def testEmulate64BitSymlinks_1(self):
+    runpath_list = ["/opt/csw/mysql5/lib/foo/mysql/64"]
+    expected = "/opt/csw/mysql5/lib/foo/mysql/amd64"
+    self.assertTrue(expected in checkpkg.Emulate64BitSymlinks(runpath_list))
+
+  def testEmulate64BitSymlinks_2(self):
+    runpath_list = ["/opt/csw/mysql5/lib/64/mysql/foo"]
+    expected = "/opt/csw/mysql5/lib/amd64/mysql/foo"
+    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    self.assertTrue(expected in result, "%s not in %s" % (expected, result))
+
   def testGetLinesBySoname(self):
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
     pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)

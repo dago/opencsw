@@ -330,9 +330,9 @@ def Emulate64BitSymlinks(runpath_list):
   """
   symlinked_list = []
   for runpath in runpath_list:
-    if runpath.endswith("/64"):
-      symlinked_list.append("%s/amd64" % runpath[:-3])
-      symlinked_list.append("%s/sparcv9" % runpath[:-3])
+    if "/64" in runpath:
+      symlinked_list.append(runpath.replace("/64", "/amd64"))
+      symlinked_list.append(runpath.replace("/64", "/sparcv9"))
     else:
     	symlinked_list.append(runpath)
   return symlinked_list
