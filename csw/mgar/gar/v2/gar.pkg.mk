@@ -154,6 +154,7 @@ SPKG_EXPORT    ?= $(HOME)/staging/build-$(shell date '+%d.%b.%Y')
 SPKG_PKGROOT   ?= $(PKGROOT)
 SPKG_PKGBASE   ?= $(PKGROOT)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
+SPKG_TMPDIR    ?= /tmp
 
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
@@ -709,8 +710,10 @@ _pkgshow:
 # The dynamic pkginfo is only generated for dynamic gspec-files
 package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo)
 	@echo " ==> Processing $*.gspec"
-	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
+	$(_DBG)( $(call _PKG_ENV,$*) mkpackage \
+						 --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
+						 --tmpdir   $(SPKG_TMPDIR)  \
 						 --destdir  $(SPKG_EXPORT) \
 						 --workdir  $(SPKG_WORKDIR) \
 						 --pkgbase  $(SPKG_PKGBASE) \
@@ -726,7 +729,7 @@ package-p:
 # pkgcheck - check if the package is compliant
 #
 pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
-	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
+	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
 	@$(MAKECOOKIE)
 
 pkgcheck-p:

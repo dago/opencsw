@@ -850,7 +850,7 @@ printdepends:
 
 # Update inter-package depends
 makedepend:
-	@for gspec in `gfind $(CURDIR) -type f -name '*.gspec' | ggrep files`; do \
+	$(_DBG)for gspec in `gfind $(CURDIR) -type f -name '*.gspec' | ggrep files`; do \
 		pkgname=`basename $$gspec .gspec` ; \
 		pkgfiles=`dirname $$gspec` ; \
 		pkgdir=`dirname $$pkgfiles` ; \

@@ -402,6 +402,8 @@ def ParseDumpOutput(dump_output):
       # Adding the default runtime path search option.
       binary_data[RUNPATH].append("/usr/lib/$ISALIST")
       binary_data[RUNPATH].append("/usr/lib")
+      binary_data[RUNPATH].append("/lib/$ISALIST")
+      binary_data[RUNPATH].append("/lib")
     elif fields[1] == "SONAME":
       binary_data[SONAME] = fields[2]
   return binary_data

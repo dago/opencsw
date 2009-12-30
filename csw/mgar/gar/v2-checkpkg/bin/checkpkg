@@ -25,6 +25,11 @@
 PATH=$PATH:/usr/sbin
 
 LOCAL_ARCH=`uname -p`
+if [[ -z "${CHECKPKG_TMPDIR}" ]]; then
+  readonly CHECKPKG_TMPDIR="/var/tmp"
+else
+  readonly CHECKPKG_TMPDIR
+fi
 
 # always print out a warning message. (to stderr)
 # exit script, if quit_on_warn set
@@ -76,7 +81,7 @@ set_variables_for_individual_package_check() {
 	f=$1
 	file $f |sed 's/^.*://' |grep gzip >/dev/null
 	if [ $? -eq 0 ] ; then
-		TMPARCHIVE=/tmp/`basename $f`
+		TMPARCHIVE=$CHECKPKG_TMPDIR/`basename $f`
 		if [[ -f $TMPARCHIVE ]] ; then
 			print ERROR: $TMPARCHIVE already exists
 			
@@ -104,13 +109,13 @@ if [[ "$1" == "-h" ]] ; then
 fi
 
 # a unique filename for the list of package deps and libs we see in a 'set'
-SETINF=/tmp/checkpkg.$$.`date +%Y%m%d%H%M%S`
+SETINF=$CHECKPKG_TMPDIR/checkpkg.$$.`date +%Y%m%d%H%M%S`
 SETLIBS=$SETINF.libs
 SETDEPS=$SETINF.deps
 pkgnames=""
 tmparchives=""
 
-EXTRACTDIR=/tmp/dissect.$$
+EXTRACTDIR=$CHECKPKG_TMPDIR/dissect.$$
 
 if [ -d $EXTRACTDIR ] ; then
 	print ERROR: $EXTRACTDIR already exists
