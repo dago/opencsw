@@ -21,7 +21,10 @@ sys.path.append("gar/bin/checkpkg.d")
 import checkpkg
 import testdata.checkpkg_test_data_CSWmysql5client_8x as d6
 
-checkpkg.SharedObjectDependencies("CSWmysql5client", d6.DATA_BINARIES_BY_PKGNAME, d6.DATA_NEEDED_SONAMES_BY_BINARY, d6.DATA_PKGS_BY_FILENAME, d6.DATA_FILENAMES_BY_SONAME, d6.DATA_PKG_BY_ANY_FILENAME)
+checkpkg.SharedObjectDependencies("CSWmysql5client",
+d6.DATA_BINARIES_BY_PKGNAME, d6.DATA_NEEDED_SONAMES_BY_BINARY,
+d6.DATA_PKGS_BY_FILENAME, d6.DATA_FILENAMES_BY_SONAME,
+d6.DATA_PKG_BY_ANY_FILENAME)
 
 sqlite3 ~/.checkpkg/var-sadm-install-contents-cache-build8x
 SELECT * FROM systempkgmap WHERE basename = 'libncursesw.so.5';
@@ -369,7 +372,10 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     """A test for 64-bit symlink expansion."""
     soname = u'libncursesw.so.5'
     # To test the 64-bit symlink expansion
-    expected = {u'libncursesw.so.5': u'/opt/csw/lib/amd64/libncursesw.so.5=libncursesw.so.5.7 s none CSWncurses\n'}
+    expected = {
+    	  u'libncursesw.so.5':
+    	    u'/opt/csw/lib/amd64/libncursesw.so.5=libncursesw.so.5.7 '
+    	    u's none CSWncurses\n'}
     pkgmap_stub = self.PkgmapStub(d6.DATA_PKGMAP_CACHE)
     (needed_sonames,
      binaries_by_soname,

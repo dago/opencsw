@@ -32,14 +32,14 @@ def GetIsalist():
 
 
 def main():
+  result_ok = True
   errors = []
   options, args = checkpkg.GetOptions()
+  pkgnames = args
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
   else:
     logging.basicConfig(level=logging.INFO)
-  result_ok = True
-  pkgnames = args
   checkers = []
   for pkgname in pkgnames:
     checker = checkpkg.CheckpkgBase(options.extractdir, pkgname)
@@ -96,6 +96,8 @@ def main():
   # lines by soname is an equivalent of $EXTRACTDIR/shortcatalog
   lines_by_soname = checkpkg.GetLinesBySoname(
       pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+
+  # Creating a map from files to packages.
   pkgs_by_filename = {}
   for soname, line in lines_by_soname.iteritems():
     # TODO: Find all the packages, not just the last field.
@@ -105,6 +107,12 @@ def main():
     pkgs_by_filename[soname] = pkgname
 
   # A shared object dependency/provisioning report, plus checking.
+  #
+  # This section is somewhat overlapping with checkpkg.AnalyzeDependencies(),
+  # it has a different purpose: it reports the relationships between shared
+  # libraries, binaries using them and packages providing them.  Ideally, the
+  # same bit of code with do checking and reporting.
+  #
   # TODO: Rewrite this using cheetah templates
   if needed_sonames:
     print "Analysis of sonames needed by the package set:"
@@ -116,19 +124,23 @@ def main():
         print ("%s is provided by %s and required by:" 
                % (soname,
                   repr(pkgs_by_filename[soname])))
-        filename_lines = textwrap.wrap(" ".join(sorted(binaries_by_soname[soname])), 75)
-        for line in filename_lines:
+        filename_lines = " ".join(sorted(binaries_by_soname[soname]))
+        for line in textwrap.wrap(filename_lines, 70):
         	print " ", line
       else:
         print ("%s is required by %s, but we don't know what provides it."
                % (soname, binaries_by_soname[soname]))
-        errors.append(checkpkg.Error("%s is required by %s, but we don't know what provides it."
-                                     % (soname, binaries_by_soname[soname])))
+        if soname in checkpkg.ALLOWED_ORPHAN_SONAMES:
+        	print "However, it's a whitelisted soname."
+        else:
+          errors.append(
+              checkpkg.Error("%s is required by %s, but "
+                             "we don't know what provides it."
+                             % (soname, binaries_by_soname[soname])))
     print
 
   dependent_pkgs = {}
   for checker in checkers:
-    orphan_sonames = set()
     pkgname = checker.pkgname
     declared_dependencies = checker.GetDependencies()
     if options.debug:
@@ -138,19 +150,17 @@ def main():
       test_fd = open(data_file_name, "w")
       print >>test_fd, "# Testing data for %s" % pkgname
       print >>test_fd, "# $Id$"
-      print >>test_fd, "DATA_PKGNAME =", repr(pkgname)
-      print >>test_fd, "DATA_DECLARED_DEPENDENCIES =", repr(declared_dependencies)
-
-      
-      print >>test_fd, "DATA_BINARIES_BY_PKGNAME =", repr(binaries_by_pkgname)
+      print >>test_fd, "DATA_PKGNAME                  =", repr(pkgname)
+      print >>test_fd, "DATA_DECLARED_DEPENDENCIES    =", repr(declared_dependencies)
+      print >>test_fd, "DATA_BINARIES_BY_PKGNAME      =", repr(binaries_by_pkgname)
       print >>test_fd, "DATA_NEEDED_SONAMES_BY_BINARY =", repr(needed_sonames_by_binary)
-      print >>test_fd, "DATA_PKGS_BY_FILENAME =", repr(pkgs_by_filename)
-      print >>test_fd, "DATA_FILENAMES_BY_SONAME =", repr(filenames_by_soname)
-      print >>test_fd, "DATA_PKG_BY_ANY_FILENAME =", repr(pkg_by_any_filename)
-      print >>test_fd, "DATA_LINES_BY_SONAME =", repr(lines_by_soname)
-      print >>test_fd, "DATA_PKGMAP_CACHE =", repr(pkgmap.cache)
-      print >>test_fd, "DATA_BINARIES_BY_SONAME =", repr(binaries_by_soname)
-      print >>test_fd, "DATA_ISALIST =", repr(isalist)
+      print >>test_fd, "DATA_PKGS_BY_FILENAME         =", repr(pkgs_by_filename)
+      print >>test_fd, "DATA_FILENAMES_BY_SONAME      =", repr(filenames_by_soname)
+      print >>test_fd, "DATA_PKG_BY_ANY_FILENAME      =", repr(pkg_by_any_filename)
+      print >>test_fd, "DATA_LINES_BY_SONAME          =", repr(lines_by_soname)
+      print >>test_fd, "DATA_PKGMAP_CACHE             =", repr(pkgmap.cache)
+      print >>test_fd, "DATA_BINARIES_BY_SONAME       =", repr(binaries_by_soname)
+      print >>test_fd, "DATA_ISALIST                  =", repr(isalist)
       test_fd.close()
 
     missing_deps, surplus_deps, orphan_sonames = checkpkg.AnalyzeDependencies(
