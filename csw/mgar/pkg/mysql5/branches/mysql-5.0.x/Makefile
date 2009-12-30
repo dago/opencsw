@@ -204,6 +204,8 @@ post-merge:
 	# Create symlinks to binaries
 	ginstall -m 755 -d $(PKGROOT)$(global_bindir)
 	for f in $(PKGROOT)$(bindir)/*; do \
+		if echo $$f | grep amd64$$; then continue; fi; \
+		if echo $$f | grep sparcv9$$; then continue; fi; \
 		ln -s ../$(GARNAME)/bin/`basename $$f` \
 		      $(PKGROOT)$(global_bindir)/`basename $$f`; \
 	done
