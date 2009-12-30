@@ -29,8 +29,8 @@ sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic-linking
 CONFIGURE_ARGS += --enable-spoof-source=no
+CONFIGURE_ARGS += --enable-tcp-wrapper
 
-REQUIRED_PKGS  = CSWgcc4corert
 REQUIRED_PKGS += CSWeventlog
 REQUIRED_PKGS += CSWosslrt
 REQUIRED_PKGS += CSWzlib
@@ -47,6 +47,10 @@ PREREQUISITE_PKGS += CSWgcc4core
 
 GARCOMPILER = GNU
 TEST_SCRIPTS =
+
+# The configure script finds -lwrap but doesn't actually use it.
+# We need to be more pushy.
+EXTRA_LDFLAGS = -L/opt/csw/lib -lwrap -lsocket
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw
