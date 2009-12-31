@@ -908,7 +908,7 @@ sub transfer_package {
         my $compress =
           $config{usebzip}
           ? 'bzip2 -9 -f %s'
-          : 'pigz --fast -f %s';
+          : 'gzip -9 -f %s';
 
         vexec( sprintf( $compress, $tmppkg ), "Failed to compress $tmppkg" );
         $tmppkg .= $config{usebzip} ? ".bz2" : ".gz";
