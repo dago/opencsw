@@ -17,11 +17,12 @@ TEST_SCRIPTS =
 
 prefix = /opt/oracle
 
-PACKAGES = GOOGoracle
-CATALOGNAME_GOOGoracle = oracle
-SPKG_DESC_GOOGoracle = The Oracle database
+PACKAGES = CSWoracle
+CATALOGNAME_CSWoracle = oracle
+SPKG_DESC_CSWoracle = The Oracle database
 
-REQUIRED_PKGS = CSWggettextrt CSWlibxext CSWunixodbc
+REQUIRED_PKGS =
+# Maybe CSWunixodbc, but how would it know how to locate the shared library?
 
 PROTOTYPE_FILTER = awk '$$$$3 ~/\/extjob$$$$/ \
 	{ $$$$4 = 3755; $$$$5 = "nobody"; $$$$6 = "nobody" } \
@@ -39,12 +40,24 @@ post-merge:
 	# This takes a really long time.
 	gtar -cf - -C $(prefix) . | gtar -xpf - -C $(PKGROOT)$(prefix)
 	# echo foo > $(PKGROOT)$(prefix)/bar
-	grm -f $(PKGROOT)$(ORACLE_HOME)/inventory/Templates/perl/lib/5.8.3/sun4-solaris-thread-multi/perllocal.pod
-	grm -f $(PKGROOT)$(ORACLE_HOME)/perl/lib/5.8.3/sun4-solaris-thread-multi/perllocal.pod
-	# Removing one shared library, because:
-	# ERROR: Couldn't find a package providing libEntrust.so
-	grm -f $(PKGROOT)$(ORACLE_HOME)/lib32/libnnzentr10.so
-	# ERROR: Couldn't find a package providing libc.so.6
-	grm -f $(PKGROOT)$(ORACLE_HOME)/lib/libcxa.so.3
-	grm -f $(PKGROOT)$(ORACLE_HOME)/bin/rtsora32
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/inventory/Templates/perl/lib/5.8.3/sun4-solaris-thread-multi/perllocal.pod
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/perl/lib/5.8.3/sun4-solaris-thread-multi/perllocal.pod
+	# Removing shared libraries, because they depend on other shared
+	# libraries that aren't there.
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib32/libnnzentr10.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib/libcxa.so.3
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/bin/rtsora32
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib32/hsdb_inf.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib/hsdb_inf.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib32/hsdb_syb.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib/hsdb_syb.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/jre/1.4.2/lib/sparcv9/libJdbcOdbc.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/jre/1.4.2/lib/sparc/libJdbcOdbc.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/jdk/jre/lib/sparcv9/libJdbcOdbc.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/jdk/jre/lib/sparc/libJdbcOdbc.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib/libcoresh10.so
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib32/libsqora.so.10.1
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/lib/libsqora.so.10.1
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/ctx/lib/libxml4c.so.54.0
+	grm -fv $(PKGROOT)$(ORACLE_HOME)/ctx/lib/xmllib.so
 	@$(MAKECOOKIE)
