@@ -33,15 +33,20 @@ SPKG_DESC_CSWsqlite3devel = $(SPKG_DESC_CSWsqlite3) development package
 PKGFILES_CSWsqlite3 = $(bindir)/.*
 PKGFILES_CSWsqlite3devel = $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWsqlite3 = CSWsqlite3rt
+REQUIRED_PKGS_CSWsqlite3  = CSWsqlite3rt
+REQUIRED_PKGS_CSWsqlite3 += CSWreadline
+REQUIRED_PKGS_CSWsqlite3 += CSWncurses
 REQUIRED_PKGS_CSWsqlite3devel = CSWsqlite3
+
+PREREQUISITE_PKGS = CSWreadline CSWncurses
 
 BUILD64 = 1
 NO_ISAEXEC = 1
 
 # Make configure options
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-threadsafe --disable-debug 
+CONFIGURE_ARGS += --enable-threadsafe --disable-debug
+CONFIGURE_ARGS += --with-readline-inc="-I/opt/csw/include/readline"
 
 TEST_SCRIPTS =
 
