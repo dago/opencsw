@@ -1,5 +1,5 @@
 GARNAME = Net-DNS
-GARVERSION = 0.65
+GARVERSION = 0.66
 CATEGORIES = cpan
 AUTHOR = OLAF
 
@@ -10,7 +10,10 @@ define BLURB
   beyond the capabilities of gethostbyname and gethostbyaddr.
 endef
 
-DISTFILES += $(call admfiles,CSWpmnetdns,)
+PACKAGES = CSWpmnetdns
+CATALOGNAME = pm_netdns
+
+DISTFILES += COPYING
 
 REQUIRED_PKGS = CSWpmdigesthmac CSWpmnetip
 
