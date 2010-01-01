@@ -11,7 +11,7 @@ MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgcrypt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 PACKAGES = CSWgcrypt
-CATALOGNAME = llibgcrypt
+CATALOGNAME = libgcrypt
 
 SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.en.html#lib-libgcrypt
 
