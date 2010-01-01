@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Squid-cache preremove script
+
+PATH=/usr/bin:/usr/sbin
+export PATH
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+SQUID_CONFDIR=${CSW_PREFIX}/etc
+
+if [ -x /usr/sbin/svccfg -a -x /usr/sbin/svcadm ]; then
+    echo 'Stopping squid server and unregistering from smf'
+    svcadm disable -s svc:application/server/cswsquid:default
+    svccfg delete svc:application/server/cswsquid:default
+else
+    echo 'Stopping squid server'
+    if [ -x ${PKG_INSTALL_ROOT}/etc/opt/csw/init.d/cswsquid ]; then
+        ${PKG_INSTALL_ROOT}/etc/opt/csw/init.d/cswsquid stop
+    else
+        pkill -9 squid
+    fi
+fi
+
+exit 0
