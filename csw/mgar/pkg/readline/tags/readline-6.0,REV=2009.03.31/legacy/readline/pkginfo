@@ -1,0 +1,7 @@
+PKG=CSWreadline
+NAME=readline - library to enable interactive line editing
+VERSION=5.1
+CATEGORY=system
+VENDOR=http://ftp.gnu.org/pub/gnu/readline/ packaged for CSW by Mark Round
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=mark@blastwave.org
