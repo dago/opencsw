@@ -17,35 +17,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 
-CONFIGURE_ARGS  = --prefix=$(prefix)
-CONFIGURE_ARGS += --enable-layout=csw
+CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-other-child
 
 TEST_TARGET = check
 
 include gar/category.mk
-
-post-extract-modulated:
-	ginstall -d $(WORKSRC)
-	(echo "# csw layout";\
-	echo "<Layout csw>";\
-	echo "    prefix:        $(prefix)";\
-	echo "    exec_prefix:   $(exec_prefix)";\
-	echo "    bindir:        $(bindir)";\
-	echo "    sbindir:       $(sbindir)";\
-	echo "    libdir:        $(libdir)";\
-	echo "    libexecdir:    $(libdir)/apr/modules";\
-	echo "    mandir:        $(mandir)";\
-	echo "    datadir:       $(datadir)/apr";\
-	echo "    includedir:    $(includedir)/apr-$${APR_MAJOR_VERSION}";\
-	echo "    localstatedir: /var/run";\
-	echo "    runtimedir:    /var/run";\
-	echo "    infodir:       $(infodir)";\
-	echo "    libsuffix:    -$${APR_MAJOR_VERSION}";\
-	echo "</Layout>") >$(WORKSRC)/config.layout
-	@$(MAKECOOKIE)
-
-post-install-modulated:
-	gln -s apr-1-config $(DESTDIR)$(bindir)/apr-config
-	@$(MAKECOOKIE)
