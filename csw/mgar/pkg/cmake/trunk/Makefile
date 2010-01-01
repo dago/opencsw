@@ -1,5 +1,5 @@
 GARNAME = cmake
-GARVERSION = 2.6.3
+GARVERSION = 2.8.0
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
@@ -13,8 +13,8 @@ define BLURB
 endef
 
 RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
-SPKG_SOURCEURL = http://www.cmake.org/
-MASTER_SITES = http://www.cmake.org/files/v$(RELVER)/
+SPKG_SOURCEURL = http://cmake.org/
+MASTER_SITES = http://cmake.org/files/v$(RELVER)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWcmake
