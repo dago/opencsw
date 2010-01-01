@@ -42,7 +42,7 @@ MERGE_DIRS_isa-default-garversion-4.3 = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-4.3 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-4.3 = $(libdir)
 
-MERGE_SCRIPTS_default-i386-garversion-5.2 = copy-only
+MERGE_SCRIPTS_isa-deafult-garversion-5.2 = copy-only
 MERGE_DIRS_isa-default-garversion-5.2 = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-5.2 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-5.2 = $(libdir)
