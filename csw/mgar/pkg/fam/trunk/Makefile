@@ -1,0 +1,27 @@
+GARNAME = fam
+GARVERSION = 2.7.0
+CATEGORIES = server
+
+DESCRIPTION = File Alteration Monitor, daemon and interface library
+define BLURB
+  GUI tools should not mislead the user; they should display the current
+  state of the system, even when changes to the system originate from outside
+  of the tools themselves. FAM helps make GUI tools more usable by notifying
+  them when the files they're interested in are created, modified, executed,
+  and removed.
+endef
+
+MASTER_SITES = ftp://oss.sgi.com/projects/fam/download/stable/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+SPKG_SOURCEURL = http://oss.sgi.com/projects/fam/
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+CSWfam_etcrpc = "sgi_fam		391002"
+CSWfam_inetdconf = "sgi_fam/1-2	stream	rpc/tcp	wait	root	$(bindir)/fam	fam"
+
+include gar/category.mk
