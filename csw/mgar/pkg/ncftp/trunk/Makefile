@@ -1,5 +1,5 @@
 GARNAME = ncftp
-GARVERSION = 3.2.0
+GARVERSION = 3.2.3
 CATEGORIES = net
 
 DESCRIPTION = File Transfer Protocol (FTP) client applications.
@@ -10,17 +10,18 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.ncftp.com/ncftp/
-DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.bz2
-DISTFILES += $(call admfiles,CSWncftp,depend)
+DISTFILES = $(DISTNAME)-src.tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.bz2
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
+REQUIRED_PKGS = CSWgtar
 
-CONFIGURE_ARGS = $(DIRPATHS) --without-ncurses
+LICENSE = doc/LICENSE.txt
 
-PATCHFILES = Makefile.in.diff
+SPKG_SOURCEURL = http://www.ncftp.com/
+
+CONFIGURE_ARGS = $(DIRPATHS)
 
 # No test target in the makefile
 TEST_SCRIPTS =
