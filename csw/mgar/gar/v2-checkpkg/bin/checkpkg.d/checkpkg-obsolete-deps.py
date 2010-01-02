@@ -8,11 +8,11 @@ import sys
 
 OBSOLETE_DEPS = {
     # "CSWfoo": {
-    #   "reason": "Due to...",
+    #   "hint": "Do this...",
     #   "url": "http://www.opencsw.org/bugtrack/view.php?id=..."
     # },
     "CSWpython-rt": {
-      "reason": "CSWpython-rt is deprecated.",
+      "hint": "CSWpython-rt is deprecated, use CSWpython instead.",
       "url": "http://www.opencsw.org/bugtrack/view.php?id=4031"
     },
 }
@@ -30,8 +30,8 @@ def main():
       for pkg in obsolete_pkg_deps:
         print ("ERROR: Package %s should not depend on %s."
                % (checker.pkgname, pkg))
-        if "reason" in OBSOLETE_DEPS[pkg]:
-          print "Reason:", OBSOLETE_DEPS[pkg]["reason"]
+        if "hint" in OBSOLETE_DEPS[pkg]:
+          print "Hint:", OBSOLETE_DEPS[pkg]["hint"]
         if "url" in OBSOLETE_DEPS[pkg]:
           print "URL:", OBSOLETE_DEPS[pkg]["url"]
   if ok:
