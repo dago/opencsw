@@ -12,6 +12,7 @@ SF_PROJ = faac
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(DISTNAME).tar.bz2
 PATCHFILES  = 0001-Remove-iquote-from-CFLAGS-unknown-to-SS.patch
+PATCHFILES += 0002-Use-inline-suitable-for-SS.patch
 
 PACKAGES = CSWfaad2
 CATALOGNAME = faad2

@@ -1,0 +1,25 @@
+From f25a74ff2b2bed01cc6e5ed702f4c80947b7c8c6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 2 Jan 2010 17:40:18 +0100
+Subject: [PATCH] Use inline suitable for SS
+
+---
+ libfaad/common.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libfaad/common.h b/libfaad/common.h
+index d3b21c3..6247de6 100644
+--- a/libfaad/common.h
++++ b/libfaad/common.h
+@@ -41,7 +41,7 @@ extern "C" {
+ 
+ #include "neaacdec.h"
+ 
+-#if 1
++#if 0
+ #define INLINE __inline
+ #else
+ #define INLINE inline
+-- 
+1.6.6
+
