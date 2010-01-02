@@ -156,7 +156,7 @@ class SystemPkgmap(object):
             line TEXT
           );
       """)
-      self.debug("Creating the config table.")
+      logging.debug("Creating the config table.")
       c.execute("""
           CREATE TABLE config (
             key VARCHAR(255) PRIMARY KEY,
