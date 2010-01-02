@@ -552,12 +552,13 @@ if [[ -d "$plugindir" ]]; then
 			plugin_base_name=`basename ${plugin}`
 			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
 			log_files="${log_files} ${plugin_log}"
+			printf "TEST: ${plugin} running..."
 			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
-				print "TEST: ${plugin} [FAIL]"
+				printf "\rTEST: ${plugin} \\033[1;31;40m[OK]\\033[00m        \\n"
 				test_suite_ok=0
 			else
-				print "TEST: ${plugin} [OK]"
+				printf "\rTEST: ${plugin} \\033[0;32;40m[OK]\\033[00m        \\n"
 			fi
 		else
 			debugmsg "'${plugin}' is not executable"
