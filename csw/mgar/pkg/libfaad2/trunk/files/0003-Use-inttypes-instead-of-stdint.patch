@@ -1,0 +1,26 @@
+From c02c28a516d3baecef4253f305af295078c530c8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 2 Jan 2010 17:49:08 +0100
+Subject: [PATCH 3/3] Use inttypes instead of stdint
+
+---
+ common/mp4ff/mp4ff_int_types.h |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/common/mp4ff/mp4ff_int_types.h b/common/mp4ff/mp4ff_int_types.h
+index 15e7fd6..bf8b0c0 100644
+--- a/common/mp4ff/mp4ff_int_types.h
++++ b/common/mp4ff/mp4ff_int_types.h
+@@ -19,7 +19,8 @@ typedef unsigned __int64 uint64_t;
+ 
+ #else
+ 
+-#include <stdint.h>
++/* #include <stdint.h> */
++#include <inttypes.h>
+ 
+ #endif
+ 
+-- 
+1.6.6
+
