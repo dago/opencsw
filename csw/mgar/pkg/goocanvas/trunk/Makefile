@@ -1,0 +1,55 @@
+GARNAME = goocanvas
+GARVERSION = 0.15
+CATEGORIES = gnome
+
+DESCRIPTION = A cairo-based canvas widget for GTK
+define BLURB
+	GooCanvas is a canvas widget for GTK that uses the cairo 2D library
+	for drawing. 
+endef
+
+MASTER_SITES =  $(GNOME_MIRROR)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTNAME  = $(GARNAME)-$(GARVERSION)
+
+PACKAGES = CSWgoocanvas CSWgoocanvasdevel CSWgoocanvasdoc
+CATALOGNAME_CSWgoocanvas = goocanvas
+CATALOGNAME_CSWgoocanvasdevel = goocanvas_devel
+CATALOGNAME_CSWgoocanvasdoc = goocanvas_doc
+
+SPKG_DESC_CSWgoocanvas += A cairo-based canvas widget for GTK
+SPKG_DESC_CSWgoocanvasdevel += A cairo-based canvas widget for GTK - developer package
+SPKG_DESC_CSWgoocanvasdoc += A cairo-based canvas widget for GTK - documentation
+
+REQUIRED_PKGS_CSWgoocanvas += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
+REQUIRED_PKGS_CSWgoocanvas += CSWgtk2 CSWlibatk CSWlibcairo CSWpango
+REQUIRED_PKGS_CSWgoocanvasdevel += CSWgoocanvas
+REQUIRED_PKGS_CSWgoocanvasdoc += CSWgoocanvas
+
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+SPKG_SOURCEURL = http://live.gnome.org/GooCanvas
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+
+#NO_ISAEXEC = 1
+#NOISALIST = 1
+#BUILD64 = 1
+
+PKGFILES_CSWgoocanvasdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWgoocanvasdoc = $(sharedstatedir)/gtk-doc/.*
+
+ARCHALL_CSWgoocanvasdoc = 1
+
+LIBS = -lm
+export LIBS
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
+
+include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)
