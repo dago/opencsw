@@ -8,7 +8,6 @@ DESCRIPTION = Fast, lightweight Source Control Management system
 
 MASTER_SITES = http://selenic.com/mercurial/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWmercurial,changelog.CSW)
 
 SPKG_DESC_CSWmercurial = Mercurial
 
