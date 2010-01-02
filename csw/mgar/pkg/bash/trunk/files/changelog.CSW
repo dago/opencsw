@@ -1,3 +1,9 @@
+bash (4.1,REV=2010.01.02) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 02 Jan 2010 14:12:18 +0100
+
 bash (4.0.35,REV=2009.12.23) unstable
 
   * Fixed Source url info (bug #4087).
