@@ -555,7 +555,7 @@ if [[ -d "$plugindir" ]]; then
 			printf "TEST: ${plugin} running..."
 			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
-				printf "\rTEST: ${plugin} \\033[1;31;40m[OK]\\033[00m        \\n"
+				printf "\rTEST: ${plugin} \\033[1;31;40m[FAIL]\\033[00m        \\n"
 				test_suite_ok=0
 			else
 				printf "\rTEST: ${plugin} \\033[0;32;40m[OK]\\033[00m        \\n"
