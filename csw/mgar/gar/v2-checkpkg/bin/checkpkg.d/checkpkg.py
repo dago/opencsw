@@ -3,20 +3,22 @@
 # This is the checkpkg library, common for all checkpkg tests written in
 # Python.
 
+import itertools
+import logging
 import optparse
 import os
 import os.path
-import logging
-import subprocess
 import re
-import sqlite3
 import socket
+import sqlite3
+import subprocess
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
 NEEDED_SONAMES = "needed sonames"
 RUNPATH = "runpath"
 SONAME = "soname"
+CONFIG_MTIME = "mtime"
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
                              u"*SUNWcslr", u"*SUNWlibC", u"*SUNWlibms"])
@@ -24,7 +26,6 @@ DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
 ALLOWED_ORPHAN_SONAMES = set([u"libm.so.2"])
-
 
 class Error(Exception):
   pass
@@ -131,9 +132,14 @@ class SystemPkgmap(object):
     self.fqdn = socket.getfqdn()
     self.db_path = os.path.join(self.checkpkg_dir,
                                 self.SQLITE3_DBNAME_TMPL % self.fqdn)
+    self.file_mtime = None
+    self.cache_mtime = None
     if os.path.exists(self.db_path):
       logging.debug("Connecting to the %s database.", self.db_path)
       self.conn = sqlite3.connect(self.db_path)
+      if not self.IsDatabaseUpToDate():
+        self.PurgeDatabase()
+        self.PopulateDatabase()
     else:
       print "Building a cache of /var/sadm/install/contents."
       print "The cache will be kept in %s." % self.db_path
@@ -150,31 +156,62 @@ class SystemPkgmap(object):
             line TEXT
           );
       """)
+      self.debug("Creating the config table.")
+      c.execute("""
+          CREATE TABLE config (
+            key VARCHAR(255) PRIMARY KEY,
+            float_value FLOAT,
+            str_value VARCHAR(255)
+          );
+      """)
+      self.PopulateDatabase()
 
-      # Original bit of code from checkpkg:
-      #
-      # egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
-      #     fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
+  def PopulateDatabase(self):
+    """Imports data into the database.
 
-      system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
+    Original bit of code from checkpkg:
+    
+    egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
+        fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
+    """
 
-      stop_re = re.compile("(%s)" % "|".join(self.STOP_PKGS))
+    system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
+    stop_re = re.compile("(%s)" % "|".join(self.STOP_PKGS))
+    # Creating a data structure:
+    # soname - {<path1>: <line1>, <path2>: <line2>, ...}
+    logging.debug("Building sqlite3 cache db of the %s file",
+                  SYSTEM_PKGMAP)
+    c = self.conn.cursor()
+    count = itertools.count()
+    for line in system_pkgmap_fd:
+      i = count.next()
+      if not i % 1000:
+        print "\r%s" % i,
+      if stop_re.search(line):
+        continue
+      fields = re.split(WS_RE, line)
+      pkgmap_entry_path = fields[0].split("=")[0]
+      pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
+      sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
+      c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
+    print
+    print "Creating the main database index."
+    sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
+    c.execute(sql)
+    self.SetDatabaseMtime()
+    self.conn.commit()
 
-      # Creating a data structure:
-      # soname - {<path1>: <line1>, <path2>: <line2>, ...}
-      logging.debug("Building sqlite3 cache db of the %s file",
-                    SYSTEM_PKGMAP)
-      for line in system_pkgmap_fd:
-        if stop_re.search(line):
-          continue
-        fields = re.split(WS_RE, line)
-        pkgmap_entry_path = fields[0].split("=")[0]
-        pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
-        sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
-        c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
-      print "Creating a database index."
-      sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
-      self.conn.execute(sql)
+  def SetDatabaseMtime(self):
+    c = self.conn.cursor()
+    sql = "DELETE FROM config WHERE key = ?;"
+    c.execute(sql, [CONFIG_MTIME])
+    mtime = self.GetFileMtime()
+    logging.debug("Inserting the mtime (%s) into the database.", mtime)
+    sql = """
+    INSERT INTO config (key, float_value)
+    VALUES (?, ?);
+    """
+    c.execute(sql, [CONFIG_MTIME, mtime])
 
   def GetPkgmapLineByBasename(self, filename):
     if filename in self.cache:
@@ -189,6 +226,46 @@ class SystemPkgmap(object):
       logging.debug("Cache doesn't contain filename %s", filename)
     self.cache[filename] = lines
     return lines
+
+  def GetDatabaseMtime(self):
+    if not self.cache_mtime:
+      sql = """
+      SELECT float_value FROM config
+      WHERE key = ?;
+      """
+      c = self.conn.cursor()
+      c.execute(sql, [CONFIG_MTIME])
+      row = c.fetchone()
+      if not row:
+      	# raise ConfigurationError("Could not find the mtime setting")
+        self.cache_mtime = 1
+      else:
+        self.cache_mtime = row[0]
+    return self.cache_mtime
+
+  def GetFileMtime(self):
+    if not self.file_mtime:
+      stat_data = os.stat(SYSTEM_PKGMAP)
+      self.file_mtime = stat_data.st_mtime
+    return self.file_mtime
+
+  def IsDatabaseUpToDate(self):
+    f_mtime = self.GetFileMtime()
+    d_mtime = self.GetDatabaseMtime()
+    logging.debug("f_mtime", f_mtime, "d_time", d_mtime)
+    return self.GetFileMtime() <= self.GetDatabaseMtime()
+
+  def PurgeDatabase(self):
+    c = self.conn.cursor()
+    sql = "DELETE FROM config;"
+    c.execute(sql)
+    sql = "DELETE FROM systempkgmap;"
+    c.execute(sql)
+    sql = "DROP INDEX basename_idx;"
+    try:
+      c.execute(sql)
+    except sqlite3.OperationalError, e:
+      logging.warn(e)
 
 def SharedObjectDependencies(pkgname,
                              binaries_by_pkgname,
@@ -334,7 +411,7 @@ def Emulate64BitSymlinks(runpath_list):
       symlinked_list.append(runpath.replace("/64", "/amd64"))
       symlinked_list.append(runpath.replace("/64", "/sparcv9"))
     else:
-    	symlinked_list.append(runpath)
+      symlinked_list.append(runpath)
   return symlinked_list
 
 
