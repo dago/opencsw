@@ -31,6 +31,17 @@ else
   readonly CHECKPKG_TMPDIR
 fi
 
+# Colors only when running interactively
+if [[ -t 1 ]]; then
+	GREEN="\\033[0;32;40m"
+	RED="\\033[1;31;40m"
+	COLOR_RESET="\\033[00m"
+else
+	GREEN=""
+	RED=""
+	COLOR_RESET=""
+fi
+
 # always print out a warning message. (to stderr)
 # exit script, if quit_on_warn set
 
@@ -555,10 +566,10 @@ if [[ -d "$plugindir" ]]; then
 			printf "TEST: ${plugin} running..."
 			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
-				printf "\rTEST: ${plugin} \\033[1;31;40m[FAIL]\\033[00m        \\n"
+				printf "\rTEST: ${plugin} ${RED}[FAIL]${COLOR_RESET}        \\n"
 				test_suite_ok=0
 			else
-				printf "\rTEST: ${plugin} \\033[0;32;40m[OK]\\033[00m        \\n"
+				printf "\rTEST: ${plugin} ${GREEN}[OK]${COLOR_RESET}        \\n"
 			fi
 		else
 			debugmsg "'${plugin}' is not executable"
