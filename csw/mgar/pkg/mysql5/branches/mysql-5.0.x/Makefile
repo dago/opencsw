@@ -169,8 +169,6 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
-SPKG_CLASSES = none ugfiles
-
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
