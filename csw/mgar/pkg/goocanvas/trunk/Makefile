@@ -33,10 +33,15 @@ SPKG_SOURCEURL = http://live.gnome.org/GooCanvas
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_LINKER_FLAGS_isa-i386    = /usr/openwin/lib/libXext.so
+EXTRA_LINKER_FLAGS_isa-sparcv8 = /usr/openwin/lib/libXext.so
+EXTRA_LINKER_FLAGS_isa-amd64   = /usr/openwin/lib/amd64/libXext.so
+EXTRA_LINKER_FLAGS_isa-sparcv9 = /usr/openwin/lib/sparcv9/libXext.so
+EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(MODULATION))
 
 #NO_ISAEXEC = 1
 #NOISALIST = 1
-#BUILD64 = 1
+BUILD64 = 1
 
 PKGFILES_CSWgoocanvasdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWgoocanvasdoc = $(sharedstatedir)/gtk-doc/.*
@@ -45,6 +50,8 @@ ARCHALL_CSWgoocanvasdoc = 1
 
 LIBS = -lm
 export LIBS
+
+STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
