@@ -2,12 +2,14 @@
 #
 # $Id$
 #
-# initial version for blastwave.org by Alex Moore 2006.02.25
-# Revised 2006.03.25 - see bug report 0001542
+# initial version for blastwave.org by Alex Moore 2006.02.25 Revised 2006.03.25
+# - see bug report 0001542
 #
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
+# TODO: This file should be integrated with CSWmysql5.postinstall file.
+
 BASEDIR=/opt/csw/mysql5
 MYSQL_VAR=/var/opt/csw/mysql5
 DEFAULTS_FILE=$BASEDIR/my.cnf
