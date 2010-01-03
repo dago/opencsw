@@ -1,5 +1,5 @@
 GARNAME = asciidoc
-GARVERSION = 8.4.5
+GARVERSION = 8.5.2
 CATEGORIES = utils
 
 DESCRIPTION = An Documentation Generator
