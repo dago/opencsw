@@ -36,9 +36,16 @@ SPKG_SOURCEURL = http://live.gnome.org/GtkSourceView
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+#This is ugly, should be EXTRA_LINKER_FLAGS, but due to libtool it doesn't work
+EXTRA_LD_FLAGS_isa-i386    = -L/usr/openwin/lib -lXext
+EXTRA_LD_FLAGS_isa-sparcv8 = -L/usr/openwin/lib -lXext
+EXTRA_LD_FLAGS_isa-amd64   = -L/usr/openwin/lib/amd64 -lXext
+EXTRA_LD_FLAGS_isa-sparcv9 = -L/usr/openwin/lib/sparcv9 -lXext
+EXTRA_LD_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
 
 #NO_ISAEXEC = 1
 #NOISALIST = 1
+# gconf-2 not 64-bit yet
 #BUILD64 = 1
 
 PKGFILES_CSWgtksourceviewdev = $(PKGFILES_DEVEL)
@@ -53,6 +60,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 #
 #TEST_TARGET = check
 TEST_TARGET = 
+
+STRIP_LIBTOOL = 1
 
 include gar/category.mk
 
