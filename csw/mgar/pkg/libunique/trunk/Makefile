@@ -59,6 +59,8 @@ ARCHALL_CSWlibuniquedoc = 1
 LIBS = -lsocket -lnsl
 export LIBS
 
+STRIP_LIBTOOL = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
