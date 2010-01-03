@@ -24,8 +24,9 @@ SPKG_DESC_CSWgtksourceview += A text widget with features typical of a source co
 SPKG_DESC_CSWgtksourceviewdev += A text widget with features typical of a source code editor - developer package
 SPKG_DESC_CSWgtksourceviewdoc += A text widget with features typical of a source code editor - documentation
 
-REQUIRED_PKGS_CSWgtksourceview += CSWfconfig CSWftype2 CSWgconf2 CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWgtksourceview += CSWgtk2 CSWlibatk CSWlibcairo CSWlibxml2 CSWpango
+REQUIRED_PKGS_CSWgtksourceview += CSWfconfig CSWftype2 CSWgconf2 CSWggettextrt 
+REQUIRED_PKGS_CSWgtksourceview += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
+REQUIRED_PKGS_CSWgtksourceview += CSWlibxml2 CSWpango CSWlibxext
 REQUIRED_PKGS_CSWgtksourceviewdev += CSWgtksourceview
 REQUIRED_PKGS_CSWgtksourceviewdoc += CSWgtksourceview
 
