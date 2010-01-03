@@ -199,7 +199,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 
 _CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf
 _CSWCLASSES += cswetcservices
-_CSWCLASSES += cswusergroup
+_CSWCLASSES += cswusergroup ugfiles
 _CSWCLASSES += cswcrontab
 _CSWCLASSES += cswpycompile
 _CSWCLASSES += cswinetd
