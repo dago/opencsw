@@ -53,12 +53,17 @@ CONFIGURE_ARGS = $(DIRPATHS)
 PATCHFILES = ImathMath.patch
 PATCHFILES += ltmain.sh.patch
 
-LIBS += -lCstd -lCrun -lc -lm
-export LIBS
+EXTRA_LD_FLAGS += -lCstd -lCrun -lc -lm
+EXTRA_CXX_FLAGS_isa-i386    = 
+EXTRA_CXX_FLAGS_isa-sparcv8 = 
+EXTRA_CXX_FLAGS_isa-amd64   = -KPIC
+EXTRA_CXX_FLAGS_isa-sparcv9 = -KPIC
+EXTRA_CXX_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
 
 BUILD64 = 1
 
 # Check fails if library isn't installed /opt/csw/lib and until a 64-bit
+# lib is installed test has to be disabled
 #TEST_TARGET = check
 TEST_TARGET = 
 
@@ -66,6 +71,9 @@ STRIP_LIBTOOL = 1
 
 include gar/category.mk
 
+#
+# Test to see if rebuilding libtool would fix 64-bit problem...
+#
 #pre-configure-modulated:
 #	@echo " ==> Regenerating build tools..."
 #	@(cd $(WORKSRC) ; \
