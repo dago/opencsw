@@ -10,9 +10,12 @@ define BLURB
 endef
 
 SF_PROJ = mpeg4ip
+# SF doesn't have the latest version as it was removed due to some breakage
+# So we get it from another place and patch the flaw away
 MASTER_SITES = http://download.m0k.org/handbrake/contrib/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTNAME = $(GARNAME)
+PATCHFILES = mpeg4ip-1.6.1-mjj.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

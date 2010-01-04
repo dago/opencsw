@@ -1,0 +1,13 @@
+#!/bin/echo ERROR_you_must_source_this_file
+
+if [ ! -s ${cfgmarker:-"Makefile"} ]; then
+    eval ${cfgprogram:-"$SHELL ./configure"} ${cfgflags:-"--prefix=/opt/csw"}
+fi
+
+eval "$MAKE MAKE=$MAKE $mkflags" || exit
+
+mkdir -p $buildroot || exit
+
+rootvar=${rootvar:-DESTDIR}
+
+eval "$MAKE MAKE=$MAKE $rootvar=$buildroot $instflags install" || exit

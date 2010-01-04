@@ -1,0 +1,93 @@
+#!/bin/echo ERROR_you_must_source_this_file
+
+[ -n "$LD_LIBRARY_PATH" ] && unset LD_LIBRARY_PATH
+
+SHELL=bash
+CONFIG_SHELL=bash
+MAKE=gmake
+
+PATH=/opt/csw/bin:/usr/openwin/bin:/usr/ccs/bin:/usr/sbin:/usr/xpg4/bin:/usr/bin
+
+CPPFLAGS="-D_FILE_OFFSET_BITS=64 -D_REENTRANT -I/opt/csw/include"
+CFLAGS="-g"
+CXXFLAGS="-g"
+LDFLAGS="-g -L/opt/csw/lib"
+if [ -n "$nozdefs" ]; then
+    LD_OPTIONS="-R/opt/csw/lib -L/opt/csw/lib"
+else
+    LD_OPTIONS="-z defs -R/opt/csw/lib -L/opt/csw/lib"
+fi
+
+case `uname -p` in
+
+sparc)
+    gccopt="-O3 -mcpu=v8"
+    ccopt="-fast -xarch=v8"
+    ;;
+
+i386)
+    gccopt="-O3 -march=i486"
+    ccopt="-fast -xarch=386"
+    ;;
+
+*)
+    echo huh\? 1>&2
+    exit 1
+    ;;
+
+esac
+
+case ${compiler-ss8} in
+
+gcc[34])
+    base=/opt/csw/${compiler}
+    gccver=`$base/bin/gcc -dumpversion`
+    PATH=$base/bin:$PATH
+    CPPFLAGS="-I$base/include -I$base/include/c++/$gccver $CPPFLAGS"
+    CFLAGS="$gccopt $CFLAGS"
+    CXXFLAGS="$gccopt $CXXFLAGS"
+    LD_OPTIONS="-L$base/lib $LD_OPTIONS"
+    CC=${CC-"gcc"}
+    CXX=${CXX-"g++"}
+    PICFLAG=${PICFLAG-"-fPIC"}
+    SHLDFLAG=${SHLDFLAG-"-shared"}
+    [ -n "$noztext" ] && SHLDFLAG="$SHLDFLAG -mimpure-text"
+    ;;
+
+gcc2)
+    CFLAGS="$gccopt $CFLAGS"
+    CXXFLAGS="$gccopt $CXXFLAGS"
+    CC=${CC-"gcc"}
+    CXX=${CXX-"g++"}
+    PICFLAG=${PICFLAG-"-fPIC"}
+    SHLDFLAG=${SHLDFLAG-"-shared"}
+    [ -n "$noztext" ] && SHLDFLAG="$SHLDFLAG -mimpure-text"
+    ;;
+
+ss8|cc|ss10|ss11)
+    case ${compiler-ss8} in
+    ss8|cc)	base=/opt/SUNWspro		;;
+    ss10)	base=/opt/studio10/SUNWspro	;;
+    ss11)	base=/opt/studio11/SUNWspro	;;
+    *)		echo huh\? 1>&2; exit 1		;;
+    esac
+    PATH="$base/bin:$PATH"
+    CFLAGS="$ccopt $CFLAGS"
+    CXXFLAGS="$ccopt $CXXFLAGS"
+    LD_OPTIONS="-L$base/lib $LD_OPTIONS"
+    CC=${CC-"cc"}
+    CXX=${CXX-"CC"}
+    PICFLAG=${PICFLAG-"-KPIC"}
+    SHLDFLAG=${SHLDFLAG-"-G"}
+    ;;
+
+esac
+
+export PATH SHELL CONFIG_SHELL MAKE CPPFLAGS CC CFLAGS CXX CXXFLAGS
+export LDFLAGS LD_OPTIONS PICFLAG SHLDFLAG
+
+# configure sometimes gets this wrong ... the csw
+# gcc is set up to use system as/ld/etc from /usr/ccs
+lt_cv_path_LD=/usr/ccs/bin/ld; export lt_cv_path_LD
+# speed up
+lt_cv_sys_max_cmd_len=262144; export lt_cv_sys_max_cmd_len
