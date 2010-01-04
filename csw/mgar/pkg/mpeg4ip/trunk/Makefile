@@ -15,7 +15,8 @@ SF_PROJ = mpeg4ip
 MASTER_SITES = http://download.m0k.org/handbrake/contrib/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTNAME = $(GARNAME)
-PATCHFILES = mpeg4ip-1.6.1-mjj.patch
+# PATCHFILES = mpeg4ip-1.6.1-mjj.patch
+PATCHFILES += 0001-Bootstrap-again.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
