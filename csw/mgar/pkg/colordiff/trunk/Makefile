@@ -31,8 +31,8 @@ ARCHALL = 1
 include gar/category.mk
 
 install-custom:
-	ginstall -d $(DESTDIR)$(docdir)
-	(cd $(WORKSRC) && ginstall BUGS CHANGES INSTALL README TODO $(DESTDIR)$(docdir))
+	ginstall -d $(DESTDIR)$(docdir)/colordiff
+	(cd $(WORKSRC) && ginstall BUGS CHANGES INSTALL README TODO $(DESTDIR)$(docdir)/colordiff)
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	(cd $(WORKSRC) && ginstall cdiff.1 colordiff.1 $(DESTDIR)$(mandir)/man1)
 	ginstall -d $(DESTDIR)$(sysconfdir)
