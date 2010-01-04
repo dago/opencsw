@@ -29,41 +29,65 @@ DISTFILES += libIex.so.2.0.2.s
 DISTFILES += libImath.so.2.0.2.i
 DISTFILES += libImath.so.2.0.2.s
 
+PACKAGES = CSWilmbase CSWilmbasedevel
+CATALOGNAME_CSWilmbase = ilmbase
+CATALOGNAME_CSWilmbasedevel = ilmbase_devel
+
+SPKG_DESC_CSWilmbase += Base libraries used by OpenEXR
+SPKG_DESC_CSWilmbasedevel += Base libraries used by OpenEXR - developer package
+
+PKGFILES_CSWilmbasedevel = $(PKGFILES_DEVEL)
+
+REQUIRED_PKGS_CSWilmbase += 
+REQUIRED_PKGS_CSWilmbasedevel += CSWilmbase
+
 SPKG_SOURCEURL = http://www.openexr.com
 
 LICENSE = LICENSE
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+UPSTREAM_MASTER_SITES = http://download.savannah.nongnu.org/releases/openexr/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PATCHFILES = ImathMath.patch
+PATCHFILES += ltmain.sh.patch
 
 LIBS += -lCstd -lCrun -lc -lm
 export LIBS
 
-TEST_TARGET = check
+BUILD64 = 1
+
+# Check fails if library isn't installed /opt/csw/lib and until a 64-bit
+#TEST_TARGET = check
+TEST_TARGET = 
+
+STRIP_LIBTOOL = 1
 
 include gar/category.mk
 
+#pre-configure-modulated:
+#	@echo " ==> Regenerating build tools..."
+#	@(cd $(WORKSRC) ; \
+#		aclocal                       && \
+#		autoconf                      && \
+#		libtoolize --automake --force && \
+#		aclocal                       && \
+#		automake -a )
+#	@$(MAKECOOKIE)
 
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libHalf.so.2.0.2.s $(INSTALLISADIR)/opt/csw/lib/libHalf.so.2.0.2
 	@cp $(FILEDIR)/libIex.so.2.0.2.s $(INSTALLISADIR)/opt/csw/lib/libIex.so.2.0.2
 	@cp $(FILEDIR)/libImath.so.2.0.2.s $(INSTALLISADIR)/opt/csw/lib/libImath.so.2.0.2
-	@ln -s libHalf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libHalf.so.2
-	@ln -s libIex.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIex.so.2
-	@ln -s libImath.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libImath.so.2
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libHalf.so.2 ] ; then ln -s libHalf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libHalf.so.2 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libIex.so.2 ] ; then ln -s libIex.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIex.so.2 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libImath.so.2 ] ; then ln -s libImath.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libImath.so.2 ; fi )
 
 post-install-isa-i386:
 	@cp $(FILEDIR)/libHalf.so.2.0.2.i $(INSTALLISADIR)/opt/csw/lib/libHalf.so.2.0.2
 	@cp $(FILEDIR)/libIex.so.2.0.2.i $(INSTALLISADIR)/opt/csw/lib/libIex.so.2.0.2
 	@cp $(FILEDIR)/libImath.so.2.0.2.i $(INSTALLISADIR)/opt/csw/lib/libImath.so.2.0.2
-	@ln -s libHalf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libHalf.so.2
-	@ln -s libIex.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIex.so.2
-	@ln -s libImath.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libImath.so.2
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libHalf.so.2 ] ; then ln -s libHalf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libHalf.so.2 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libIex.so.2 ] ; then ln -s libIex.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIex.so.2 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libImath.so.2 ] ; then ln -s libImath.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libImath.so.2 ; fi )
