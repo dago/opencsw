@@ -22,27 +22,52 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += libIlmImf.so.2.0.2.i
 DISTFILES += libIlmImf.so.2.0.2.s
 
+PACKAGES = CSWopenexr CSWopenexrdevel
+CATALOGNAME_CSWopenexr = openexr
+CATALOGNAME_CSWopenexrdevel = openexr_devel
+
+SPKG_DESC_CSWopenexr += High dynamic-range (HDR) image file format developed by Industrial Light & Magic
+SPKG_DESC_CSWopenexrdevel += High dynamic-range (HDR) image file format developed by Industrial Light & Magic - developer package
+
+PKGFILES_CSWopenexrdevel = $(PKGFILES_DEVEL)
+
+REQUIRED_PKGS_CSWopenexr += CSWilmbase CSWzlib
+REQUIRED_PKGS_CSWopenexrdevel += CSWopenexr
+
 SPKG_SOURCEURL = http://www.openexr.com
+
 LICENSE = LICENSE 
 
-REQUIRED_PKGS += CSWilmbase CSWzlib
-
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+PATCHFILES += ltmain.sh.patch
+PATCHFILES += makePreview.cpp.patch
+
+EXTRA_LD_FLAGS += -lCstd -lCrun -lc -lm
+EXTRA_CXX_FLAGS_isa-i386    = 
+EXTRA_CXX_FLAGS_isa-sparcv8 = 
+EXTRA_CXX_FLAGS_isa-amd64   = -KPIC
+EXTRA_CXX_FLAGS_isa-sparcv9 = -KPIC
+EXTRA_CXX_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
+
+BUILD64 = 1
+
+# Check fails if library isn't installed /opt/csw/lib and until a 64-bit
+# lib is installed test has to be disabled
+TEST_TARGET = check
+#TEST_TARGET = 
+
+STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-LIBS += -lCstd -lCrun -lc -lm
-export LIBS
-
-TEST_SCRIPTS =
-
 include gar/category.mk
 
+# Until kdeoffice_gcc is rebuilt using new openexr/ilmbase
 post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libIlmImf.so.2.0.2.s $(INSTALLISADIR)/opt/csw/lib/libIlmImf.so.2.0.2
-	@ln -s libIlmImf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIlmImf.so.2
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libIlmImf.so.2 ] ; then ln -s libIlmImf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIlmImf.so.2 ; fi )
 
 post-install-isa-i386:
 	@cp $(FILEDIR)/libIlmImf.so.2.0.2.i $(INSTALLISADIR)/opt/csw/lib/libIlmImf.so.2.0.2
-	@ln -s libIlmImf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIlmImf.so.2
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libIlmImf.so.2 ] ; then ln -s libIlmImf.so.2.0.2 $(INSTALLISADIR)/opt/csw/lib/libIlmImf.so.2 ; fi )

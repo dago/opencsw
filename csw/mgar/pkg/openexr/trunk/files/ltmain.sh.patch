@@ -1,0 +1,43 @@
+diff -Nru openexr-1.6.1.orig/ltmain.sh openexr-1.6.1/ltmain.sh
+--- openexr-1.6.1.orig/ltmain.sh	2004-05-24 20:14:34.000000000 +0200
++++ openexr-1.6.1/ltmain.sh	2010-01-04 18:01:46.879978336 +0100
+@@ -1382,7 +1382,7 @@
+       # but this is not reliable with gcc because gcc may use -mfoo to
+       # select a different linker, different libraries, etc, while
+       # -Wl,-mfoo simply passes -mfoo to the linker.
+-      -m*)
++      -m*|-xarch=*)
+ 	# Unknown arguments in both finalize_command and compile_command need
+ 	# to be aesthetically quoted because they are evaled later.
+ 	arg=`$echo "X$arg" | $Xsed -e "$sed_quote_subst"`
+@@ -1393,9 +1393,10 @@
+ 	esac
+         compile_command="$compile_command $arg"
+         finalize_command="$finalize_command $arg"
+-        if test "$with_gcc" = "yes" ; then
++# 64-bit fix for CC
++#        if test "$with_gcc" = "yes" ; then
+           compiler_flags="$compiler_flags $arg"
+-        fi
++#        fi
+         continue
+         ;;
+ 
+@@ -3890,7 +3891,7 @@
+ 	save_ifs="$IFS"; IFS='~'
+ 	for cmd in $cmds; do
+ 	  IFS="$save_ifs"
+-	  eval cmd=\"$cmd\"
++	  eval cmd=\"$cmd -norunpath\"
+ 	  $show "$cmd"
+ 	  $run eval "$cmd" || exit $?
+ 	done
+@@ -4512,7 +4513,7 @@
+ 	$echo "$modename: \`$output' will be relinked during installation" 1>&2
+       else
+ 	if test "$fast_install" != no; then
+-	  link_command="$finalize_var$compile_command$finalize_rpath"
++	  link_command="$finalize_var$compile_command -norunpath"
+ 	  if test "$fast_install" = yes; then
+ 	    relink_command=`$echo "X$compile_var$compile_command$compile_rpath" | $Xsed -e 's%@OUTPUT@%\$progdir/\$file%g'`
+ 	  else
