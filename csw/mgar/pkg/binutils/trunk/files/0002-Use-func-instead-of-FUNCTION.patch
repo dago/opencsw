@@ -1,0 +1,39 @@
+From de1f53ab369be21c59cc9b2dd2e68aee27b19de8 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 4 Jan 2010 12:34:30 +0100
+Subject: [PATCH] Use func instead of FUNCTION
+
+---
+ bfd/elf32-i386.c   |    2 ++
+ bfd/elf64-x86-64.c |    2 ++
+ 2 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/bfd/elf32-i386.c b/bfd/elf32-i386.c
+index 9de1a6c..d39fd6e 100644
+--- a/bfd/elf32-i386.c
++++ b/bfd/elf32-i386.c
+@@ -29,6 +29,8 @@
+ #include "objalloc.h"
+ #include "hashtab.h"
+ 
++#define __FUNCTION__ __func__
++
+ /* 386 uses REL relocations instead of RELA.  */
+ #define USE_REL	1
+ 
+diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
+index 4fb325a..4f24260 100644
+--- a/bfd/elf64-x86-64.c
++++ b/bfd/elf64-x86-64.c
+@@ -31,6 +31,8 @@
+ 
+ #include "elf/x86-64.h"
+ 
++#define __FUNCTION__ __func__
++
+ /* In case we're on a 32-bit machine, construct a 64-bit "-1" value.  */
+ #define MINUS_ONE (~ (bfd_vma) 0)
+ 
+-- 
+1.6.5.1
+

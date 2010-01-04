@@ -1,1 +1,3 @@
-09a8c5821a2dfdbb20665bc0bd680791  download/binutils-2.19.1.tar.bz2
+da13e88df454002f329e47f26cc51018  0001-Remove-gcc-specific-warning-no-error.patch
+52296e0f180d98a9857913a5d9050907  0002-Use-func-instead-of-FUNCTION.patch
+ee2d3e996e9a2d669808713360fa96f8  binutils-2.20.tar.bz2

@@ -1,0 +1,63 @@
+From 36557d4e77aaca996e7906ec5c9e9899f8b44135 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 4 Jan 2010 10:33:49 +0100
+Subject: [PATCH] Remove gcc specific warning no-error
+
+---
+ binutils/Makefile.am |    8 ++++----
+ binutils/Makefile.in |    8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/binutils/Makefile.am b/binutils/Makefile.am
+index abade21..ff935bc 100644
+--- a/binutils/Makefile.am
++++ b/binutils/Makefile.am
+@@ -255,16 +255,16 @@ sysinfo$(EXEEXT_FOR_BUILD): sysinfo.o syslex.o
+ 
+ syslex.o: syslex.c sysinfo.h config.h
+ 	if [ -r syslex.c ]; then \
+-	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) syslex.c -Wno-error ; \
++	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) syslex.c ; \
+ 	else \
+-	  $(CC_FOR_BUILD) -c -I. -I$(srcdir) $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/syslex.c -Wno-error ;\
++	  $(CC_FOR_BUILD) -c -I. -I$(srcdir) $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/syslex.c ;\
+ 	fi
+ 
+ sysinfo.o: sysinfo.c
+ 	if [ -r sysinfo.c ]; then \
+-	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) sysinfo.c -Wno-error ; \
++	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) sysinfo.c ; \
+ 	else \
+-	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/sysinfo.c -Wno-error ; \
++	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/sysinfo.c ; \
+ 	fi
+ 
+ bin2c$(EXEEXT_FOR_BUILD):
+diff --git a/binutils/Makefile.in b/binutils/Makefile.in
+index a1f3800..543ab6c 100644
+--- a/binutils/Makefile.in
++++ b/binutils/Makefile.in
+@@ -1197,16 +1197,16 @@ sysinfo$(EXEEXT_FOR_BUILD): sysinfo.o syslex.o
+ 
+ syslex.o: syslex.c sysinfo.h config.h
+ 	if [ -r syslex.c ]; then \
+-	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) syslex.c -Wno-error ; \
++	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) syslex.c ; \
+ 	else \
+-	  $(CC_FOR_BUILD) -c -I. -I$(srcdir) $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/syslex.c -Wno-error ;\
++	  $(CC_FOR_BUILD) -c -I. -I$(srcdir) $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/syslex.c ;\
+ 	fi
+ 
+ sysinfo.o: sysinfo.c
+ 	if [ -r sysinfo.c ]; then \
+-	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) sysinfo.c -Wno-error ; \
++	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) sysinfo.c ; \
+ 	else \
+-	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/sysinfo.c -Wno-error ; \
++	  $(CC_FOR_BUILD) -c -I. $(AM_CFLAGS) $(CFLAGS_FOR_BUILD) $(srcdir)/sysinfo.c ; \
+ 	fi
+ 
+ bin2c$(EXEEXT_FOR_BUILD):
+-- 
+1.6.6
+
