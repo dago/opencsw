@@ -1,6 +1,13 @@
 #!/bin/ksh -p
-
-# checkpkg 1.50 (diff to 1.46a: check multiple package files)
+# 
+# $Id$
+#
+# checkpkg 1.51
+#
+# diff to 1.46a
+#  - check multiple package files
+#  - checkpkg.d plugin support
+#
 # This script examines a package that has been put together
 # for submittal to the CSW archive at opencsw.org
 #
@@ -18,7 +25,22 @@
 PATH=$PATH:/usr/sbin
 
 LOCAL_ARCH=`uname -p`
+if [[ -z "${CHECKPKG_TMPDIR}" ]]; then
+  readonly CHECKPKG_TMPDIR="/var/tmp"
+else
+  readonly CHECKPKG_TMPDIR
+fi
 
+# Colors only when running interactively
+if [[ -t 1 ]]; then
+	GREEN="\\033[0;32;40m"
+	RED="\\033[1;31;40m"
+	COLOR_RESET="\\033[00m"
+else
+	GREEN=""
+	RED=""
+	COLOR_RESET=""
+fi
 
 # always print out a warning message. (to stderr)
 # exit script, if quit_on_warn set
@@ -28,9 +50,15 @@ cleanup(){
 	if [[ -d "$EXTRACTDIR" ]] ; then
 		rm -rf $EXTRACTDIR
 	fi
-	if [[ "$TMPARCHIVE" != "" ]] ; then
-		[ -f "$TMPARCHIVE" ] && rm $TMPARCHIVE
-	fi
+	cleantmparchives
+}
+
+cleantmparchives() {
+	for TMPARCHIVE in $tmparchives; do
+		if [[ "$TMPARCHIVE" != "" ]]; then
+			[ -f "$TMPARCHIVE" ] && rm $TMPARCHIVE
+		fi
+	done
 }
 
 cleanupset(){
@@ -54,6 +82,33 @@ errmsg(){
 	exit 1
 }
 
+debugmsg() {
+	if [[ "${DEBUG}" != "" ]]; then
+		print "DEBUG: $*" > /dev/fd/2
+	fi
+}
+
+set_variables_for_individual_package_check() {
+	f=$1
+	file $f |sed 's/^.*://' |grep gzip >/dev/null
+	if [ $? -eq 0 ] ; then
+		TMPARCHIVE=$CHECKPKG_TMPDIR/`basename $f`
+		if [[ -f $TMPARCHIVE ]] ; then
+			print ERROR: $TMPARCHIVE already exists
+			
+		fi
+		gzcat $f >$TMPARCHIVE || exit 1
+		f=$TMPARCHIVE
+	fi
+	pkgname=`nawk 'NR == 2 {print $1; exit;}' $f`
+	pkgnames="$pkgnames $pkgname"
+}
+
+if [[ "$1" == "-d" ]] ; then
+	DEBUG=1
+	shift
+fi
+
 if [[ "$1" == "-e" ]] ; then
 	quit_on_warn=1;
 	shift
@@ -65,10 +120,18 @@ if [[ "$1" == "-h" ]] ; then
 fi
 
 # a unique filename for the list of package deps and libs we see in a 'set'
-SETINF=/tmp/checkpkg.$$.`date +%Y%m%d%H%M%S`
+SETINF=$CHECKPKG_TMPDIR/checkpkg.$$.`date +%Y%m%d%H%M%S`
 SETLIBS=$SETINF.libs
 SETDEPS=$SETINF.deps
+pkgnames=""
+tmparchives=""
 
+EXTRACTDIR=$CHECKPKG_TMPDIR/dissect.$$
+
+if [ -d $EXTRACTDIR ] ; then
+	print ERROR: $EXTRACTDIR already exists
+	exit 1
+fi
 
 for f in "$@"
 do
@@ -82,9 +145,6 @@ fi
 
 
 case $f in
-	cswutils-*)
-		:
-	;;
 	*)
 	print Examining $f
 
@@ -111,30 +171,13 @@ case $f in
 	done
 esac
 
-print Extracting files for more detailed inspection...
+print Extracting all files for more detailed inspection...
 
-file $f |sed 's/^.*://' |grep gzip >/dev/null
-if [ $? -eq 0 ] ; then
-	TMPARCHIVE=/tmp/`basename $f`
-	if [[ -f $TMPARCHIVE ]] ; then
-		print ERROR: $TMPARCHIVE already exists
-		
-	fi
-	gzcat $f >$TMPARCHIVE || exit 1
-	f=$TMPARCHIVE
-fi
-
-pkgname=`nawk 'NR == 2 {print $1; exit;}' $f`
-
-EXTRACTDIR=/tmp/dissect.$$
-
-if [ -d $EXTRACTDIR ] ; then
-	print ERROR: $EXTRACTDIR already exists
-	exit 1
-fi
+set_variables_for_individual_package_check "$f"
 
 mkdir $EXTRACTDIR
 
+# FIXME: This doesn't support multiple packages
 TMPFILE=$EXTRACTDIR/pkginfo
 
 
@@ -304,7 +347,6 @@ print ""
 print Extracing pkg for examination of files...
 pkgtrans $f $EXTRACTDIR $pkgname
 
-
 #############################################################
 # We now have the package expanded, in "directory" form, in
 # $EXTRACTDIR/$pkgname
@@ -406,7 +448,7 @@ if [[ "$goodarch" = "yes" ]] ; then
 	#cat $EXTRACTDIR/elflist| xargs ldd  2>/dev/null |fgrep  '.so' |
 	#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
 
-		cat $EXTRACTDIR/elflist| xargs dump -Lv |nawk '$2=="NEEDED"{print $3}' |
+		cat $EXTRACTDIR/elflist| xargs /usr/ccs/bin/dump -Lv |nawk '$2=="NEEDED"{print $3}' |
 			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
 
 			
@@ -443,13 +485,12 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
-# Verify that there are no double depends
+# Verify that there are no multiple depends
 repeated_depends="$(awk '{print $2}' $EXTRACTDIR/$pkgname/install/depend \
   | sort | uniq -c | awk '{print $1}' | sort | uniq | wc -l)"
 if [[ "$repeated_depends" -gt 1 ]]; then
         cat $EXTRACTDIR/$pkgname/install/depend
-        print ERROR: $pkgname has double depends
-        exit 1
+        errmsg "$pkgname has multiple depends"
 fi
 
 #to retain a record of all packages currently being examined from $@
@@ -474,47 +515,6 @@ do
     fi
 done
 
-egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
-		fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
-
-
-
-for lib in `cat $EXTRACTDIR/liblist` ; do
-	grep "[/=]$lib[ =]" $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-		echo $lib provided by package itself
-		continue
-	else
-	    grep "[/=]$lib[ =]" $SETLIBS
-	    if [[ $? -eq 0 ]]; then
-		echo "$lib provided by package set being evaluated."
-		continue
-	    fi
-	fi
-
-	libpkg=`grep /$lib $EXTRACTDIR/shortcatalog |
-	      sed 's/^.* \([^ ]*\)$/\1/' |sort -u`
-
-	if [[ -z "$libpkg" ]] ; then
-		echo "$lib $pkgname" >> $SETLIBS.missing
-		print Cannot find package providing $lib.  Storing for delayed validation.
-	else
-		print $libpkg | fmt -1 >>$EXTRACTDIR/libpkgs
-	fi
-done
-
-sort -u $EXTRACTDIR/libpkgs >$EXTRACTDIR/libpkgs.x
-mv $EXTRACTDIR/libpkgs.x $EXTRACTDIR/libpkgs
-
-diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs >/dev/null
-if [[ $? -ne 0 ]] ; then
-	print SUGGESTION: you may want to add some or all of the following as depends:
-	print '   (Feel free to ignore SUNW or SPRO packages)'
-	diff $EXTRACTDIR/deppkgs $EXTRACTDIR/libpkgs | fgrep '>'
-fi
-
-
-
 if [[ "$basedir" != "" ]] ; then
 	print
 	if [[ -f $EXTRACTDIR/elflist ]] ; then
@@ -530,12 +530,77 @@ if [[ "$basedir" != "" ]] ; then
 	fi
 fi
 
+# Plugin section.
+#
+# Plugins should live in checkpkg.d subdirectory in the same directory in which
+# checkpkg is.  Each plugin file name should be an executable and begin with
+# "checkpkg-".
 
-cleanup
+tmparchives="$tmparchives $TMPARCHIVE"
+done
+
+# All packages have been extracted.
+
+# Now running all the plugin checks
+
+set_variables_for_individual_package_check "$f"
+
+echo "Running the experimental plugin infrastructure."
+test_suite_ok=1
+checkpkg_scriptname=`basename $0`
+checkpkg_basedir=${0%/${checkpkg_scriptname}}
+plugindir=${checkpkg_basedir}/checkpkg.d
+if [[ "${DEBUG}" != "" ]]; then
+	extra_options="--debug"
+fi
+debugmsg "plugindir: '$plugindir'"
+log_files=""
+if [[ -d "$plugindir" ]]; then
+	# echo plugin dir exists
+	for plugin in "${plugindir}"/checkpkg-*; do
+		if [[ -x "${plugin}" ]]; then
+			debugmsg "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
+			plugin_base_name=`basename ${plugin}`
+			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
+			log_files="${log_files} ${plugin_log}"
+			printf "TEST: ${plugin} running..."
+			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
+			if [[ "$?" -ne 0 ]]; then
+				printf "\rTEST: ${plugin} ${RED}[FAIL]${COLOR_RESET}        \\n"
+				test_suite_ok=0
+			else
+				printf "\rTEST: ${plugin} ${GREEN}[OK]${COLOR_RESET}        \\n"
+			fi
+		else
+			debugmsg "'${plugin}' is not executable"
+		fi
+	done
+else
+	debugmsg "plugin dir does not exist"
+fi
+
+echo
+for log_file in ${log_files}; do
+	if [[ -s "${log_file}" ]]; then
+		echo "LOG START: ${log_file}"
+		echo
+		cat "${log_file}"
+		echo
+		echo "LOG END: ${log_file}"
+	fi
+done
+echo
+
+if [[ ${test_suite_ok} -ne 1 ]]; then
+	errmsg "One or more tests have failed."
+else
+	print "All tests were successful."
+fi
 
 print ""
 
-done
+# Cleaning up after all packages
+cleanup
 
 if [ -s $SETDEPS.missing ]; then
     print "Doing late evaluations of package dependencies."
@@ -549,21 +614,6 @@ if [ -s $SETDEPS.missing ]; then
 	    print "Validated $dep as a dependency for $pkg."
 	fi
     done < $SETDEPS.missing
-fi
-
-if [ -s $SETLIBS.missing ]; then
-    print "Doing late evaluations of package library dependencies."
-    while read ldep; do
-	lib=`echo $ldep | nawk '{print $1}'`
-        [ "$lib" = "libm.so.2" ] && continue
-	pkg=`echo $ldep | nawk '{print $2}'`
-	/usr/bin/grep "[/=]$lib[ =]" $SETLIBS >/dev/null
-	if [ $? -ne 0 ]; then
-	    errmsg "Couldn't find a package providing $lib"
-	else
-	    print "A package in the set being evaluated provides $lib"
-	fi
-    done < $SETLIBS.missing
 fi
 
 cleanupset
