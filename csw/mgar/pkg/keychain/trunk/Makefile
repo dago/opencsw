@@ -35,8 +35,8 @@ PREREQUISITE_PKGS = CSWperl
 include gar/category.mk
 
 build-keychain:
-	(cd $(WORKSRC); gmake keychain)
-	(cd $(WORKSRC); gmake keychain.1)
+	(cd $(WORKSRC); gmake SED=gsed keychain)
+	(cd $(WORKSRC); gmake SED=gsed keychain.1)
 	@$(MAKECOOKIE)
 
 install-keychain:
