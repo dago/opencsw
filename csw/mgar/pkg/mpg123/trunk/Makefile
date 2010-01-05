@@ -23,6 +23,7 @@ BUILD64 = 1
 NO_ISAEXEC = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-cpu=generic_fpu
 
 # When we compile 64 bit largefiles are always on
 CONFIGURE_ARGS_mm-64 += --disable-largefile
