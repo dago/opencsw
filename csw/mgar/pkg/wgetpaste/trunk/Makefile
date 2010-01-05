@@ -12,10 +12,11 @@ MASTER_SITES = http://wgetpaste.zlin.dk/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += wgetpaste.conf
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWshutils CSWwget CSWcswclassutils CSWbash
+REQUIRED_PKGS  = CSWbash
+REQUIRED_PKGS += CSWshutils
+REQUIRED_PKGS += CSWwget
 
 PATCHFILES  = 0001-Using-gwhoami-instead-of-whoami.patch
 PATCHFILES += 0002-CSW-bash.patch
@@ -24,17 +25,14 @@ ARCHALL = 1
 
 sysconfdir = /etc/opt/csw
 
-SPKG_CLASSES = none cswcpsampleconf
-PROTOTYPE_FILTER  = awk ' \
-  $$$$3 ~ /\/wgetpaste.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-  { print }'
+SAMPLECONF = /etc/opt/csw/wgetpaste\.conf\.CSW
 
-
-CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS = wgetpaste
 TEST_SCRIPTS =
+
+include gar/category.mk
 
 install-wgetpaste:
 	ginstall -d $(DESTDIR)$(bindir)
@@ -42,5 +40,3 @@ install-wgetpaste:
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -m 644 $(FILEDIR)/wgetpaste.conf $(DESTDIR)$(sysconfdir)/wgetpaste.conf.CSW
 	@$(MAKECOOKIE)
-
-include gar/category.mk
