@@ -3,7 +3,7 @@
 # $Header$
 
 GARNAME = keychain
-GARVERSION = 2.6.8
+GARVERSION = 2.7.0
 CATEGORIES = utils
 
 DESCRIPTION = Convenient ssh-agent and gpg-agent manager
@@ -18,17 +18,26 @@ define BLURB
   . ~/.keychain/$$HOSTNAME-sh
 endef
 
-MASTER_SITES = http://agriffis.n01se.net/keychain/
+MASTER_SITES = http://www.funtoo.org/archive/keychain/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+PATCHFILES = gsed.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
+BUILD_SCRIPTS = keychain
 INSTALL_SCRIPTS = keychain
 TEST_SCRIPTS =
+
+PREREQUISITE_PKGS = CSWperl
+
+include gar/category.mk
+
+build-keychain:
+	(cd $(WORKSRC); gmake keychain)
+	(cd $(WORKSRC); gmake keychain.1)
+	@$(MAKECOOKIE)
 
 install-keychain:
 	ginstall -d $(DESTDIR)$(bindir_install)
@@ -36,8 +45,7 @@ install-keychain:
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	ginstall -m 644 $(WORKSRC)/keychain.1 $(DESTDIR)$(mandir)/man1/
 	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	ginstall $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall $(WORKSRC)/README.rst $(DESTDIR)$(docdir)/$(GARNAME)
 	ginstall $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(GARNAME)
 	ginstall $(WORKSRC)/keychain.pod $(DESTDIR)$(docdir)/$(GARNAME)
-
-include gar/category.mk
+	@$(MAKECOOKIE)

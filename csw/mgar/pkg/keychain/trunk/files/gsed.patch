@@ -1,0 +1,11 @@
+--- keychain-2.7.0/Makefile.orig	2010-01-05 22:14:32.175890134 +0100
++++ keychain-2.7.0/Makefile	2010-01-05 22:14:48.137272015 +0100
+@@ -1,7 +1,7 @@
+ V:=$(shell /bin/sh keychain.sh --version 2>&1 | \
+ 	awk -F'[ ;]' '/^K/{print $$2; exit}')
+ D:=$(shell date +'%d %b %Y')
+-SED = $(shell sed --version > /dev/null && echo sed || (gsed --version && echo gsed || false))
++SED = $(shell sed --version > /dev/null && echo sed || gsed --version && echo gsed || false)
+ TARBALL_CONTENTS=keychain README.rst ChangeLog COPYING keychain.pod keychain.1 \
+ 				 keychain.spec
+ 
