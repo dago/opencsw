@@ -1,6 +1,6 @@
 GARNAME = imagemagick
 GARVERSION = 6.5.8
-GARSUBREV = 6
+GARSUBREV = 10
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -60,11 +60,10 @@ post-install-isa-sparcv8:
 	@cp $(FILEDIR)/libMagick.so.10.0.4.s $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4
 	@cp $(FILEDIR)/libWand.so.10.0.4.s $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4
 	@cp $(FILEDIR)/libMagick++.so.10.0.4.s $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4
-	@ln -s libMagick.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick.so.10
-	@ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10
-	@ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4 ] ; then ln -s libMagick.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick.so.10 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4 ] ; then ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4 ] ; then ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10 ; fi )
 	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
-	echo $(DESTDIR)
 	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/lib_6.2.9_s.tar.gz |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
 	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
@@ -74,11 +73,10 @@ post-install-isa-i386:
 	@cp $(FILEDIR)/libMagick.so.10.0.4.i $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4
 	@cp $(FILEDIR)/libWand.so.10.0.4.i $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4
 	@cp $(FILEDIR)/libMagick++.so.10.0.4.i $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4
-	@ln -s libMagick.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick.so.10
-	@ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10
-	@ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4 ] ; then ln -s libMagick.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick.so.10 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4 ] ; then ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4 ] ; then ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10 ; fi )
 	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
-	echo $(DESTDIR)
 	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/lib_6.2.9_i.tar.gz |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
 	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
