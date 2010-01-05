@@ -1,5 +1,5 @@
---- work/solaris8-sparc/build-isa-sparcv8/wgetpaste-2.16/wgetpaste.orig	2010-01-05 14:42:30.127801164 +0100
-+++ work/solaris8-sparc/build-isa-sparcv8/wgetpaste-2.16/wgetpaste	2010-01-05 14:43:42.007282206 +0100
+--- wgetpaste-2.16/wgetpaste.orig	2010-01-05 14:42:30.127801164 +0100
++++ wgetpaste-2.16/wgetpaste	2010-01-05 14:43:42.007282206 +0100
 @@ -114,7 +114,7 @@
  noxclip() {
  	cat <<EOF >&2
