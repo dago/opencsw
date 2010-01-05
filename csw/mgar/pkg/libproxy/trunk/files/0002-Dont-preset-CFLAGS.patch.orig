@@ -14,6 +14,21 @@ Subject: [PATCH 2/2] Initial commit
  ac_config_files="$ac_config_files libproxy-1.0.pc Makefile libproxy.spec src/Makefile src/lib/Makefile src/modules/Makefile src/bin/Makefile src/bindings/Makefile src/bindings/python/Makefile src/bindings/java/Makefile src/platform/Makefile src/platform/win32/Makefile src/bindings/dotnet/Makefile src/bindings/dotnet/libproxy-sharp-1.0.pc src/bindings/dotnet/AssemblyInfo.cs"
  
  cat >confcache <<\_ACEOF
+diff --git a/configure.ac b/configure.ac
+index c9e0bb9..4139f95 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -238,7 +238,7 @@ case $host in
+      AC_CHECK_LIB(ws2_32, main)
+ esac
+ 
+-CFLAGS="-g -Wall -pedantic $CFLAGS"
++#CFLAGS="-g -Wall -pedantic $CFLAGS"
+ AC_CONFIG_FILES([libproxy-1.0.pc Makefile libproxy.spec src/Makefile src/lib/Makefile
+                  src/modules/Makefile src/bin/Makefile src/bindings/Makefile
+                  src/bindings/python/Makefile src/bindings/java/Makefile
+diff --git a/src/lib/Makefile b/src/lib/Makefile
+index 867b01b..0ba55f6 100644
 
 -- 
 1.6.6

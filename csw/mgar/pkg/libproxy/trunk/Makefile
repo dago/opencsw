@@ -19,7 +19,15 @@ PATCHFILES += 0002-Dont-preset-CFLAGS.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+EXTRA_LINKER_FLAGS = -lnsl
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+TEST_TARGET = check
+
 include gar/category.mk
+
+# There is actually the cpp executable in /usr/lib
+PATH := $(PATH):/usr/lib
