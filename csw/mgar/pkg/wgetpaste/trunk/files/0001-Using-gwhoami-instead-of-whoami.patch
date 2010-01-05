@@ -1,17 +1,6 @@
-From c98a64ed5f18a50d9d249bd4bd0916374272a597 Mon Sep 17 00:00:00 2001
-From: Maciej Blizinski <maciej@build8s.(none)>
-Date: Sat, 29 Aug 2009 11:20:28 +0200
-Subject: [PATCH 1/2] Using gwhoami instead of whoami
-
----
- wgetpaste |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/wgetpaste b/wgetpaste
-index d4addbd..9b40432 100755
---- a/wgetpaste
-+++ b/wgetpaste
-@@ -99,7 +99,7 @@ notreadable() {
+--- work/solaris8-sparc/build-isa-sparcv8/wgetpaste-2.16/wgetpaste.orig	2010-01-05 14:42:30.127801164 +0100
++++ work/solaris8-sparc/build-isa-sparcv8/wgetpaste-2.16/wgetpaste	2010-01-05 14:43:42.007282206 +0100
+@@ -114,7 +114,7 @@
  noxclip() {
  	cat <<EOF >&2
  Could not find xclip on your system. In order to use --x$1 you must either
@@ -20,7 +9,7 @@ index d4addbd..9b40432 100755
  per user in ~/.wgetpaste.conf to use another program (such as e.g. xcut or
  klipper) to $2 your clipboard.
  
-@@ -288,11 +288,11 @@ Options:
+@@ -303,11 +303,11 @@
          --debug                   be *very* verbose (implies -v)
  
      -h, --help                    show this help
@@ -34,7 +23,7 @@ index d4addbd..9b40432 100755
  ~/.wgetpaste.conf or ~/.wgetpaste.d/*.conf.
  EOF
  }
-@@ -568,7 +568,7 @@ load_configs() {
+@@ -586,7 +586,7 @@
  	if [[ ! $IGNORECONFIGS ]]; then
  		# compatibility code
  		local f deprecated=
@@ -43,15 +32,12 @@ index d4addbd..9b40432 100755
  			if [[ -f $f ]]; then
  				if [[ -z $deprecated ]]; then
  					echo "The config files for wgetpaste have changed to *.conf.$N" >&2
-@@ -589,7 +589,7 @@ load_configs() {
+@@ -607,7 +607,7 @@
  }
  load_configs
  [[ $SERVICESET ]] && verifyservice "$SERVICESET" && SERVICE=$(escape "$SERVICESET")
 -DEFAULT_NICK=${DEFAULT_NICK:-$(whoami)} || die "whoami failed"
-+DEFAULT_NICK=${DEFAULT_NICK:-$(gwhoami)} || die "whoami failed"
- DEFAULT_SERVICE=${DEFAULT_SERVICE:-dpaste}
++DEFAULT_NICK=${DEFAULT_NICK:-$(gwhoami)} || die "gwhoami failed"
+ DEFAULT_SERVICE=${DEFAULT_SERVICE:-pocoo}
  DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-Plain Text}
  DEFAULT_EXPIRATION=${DEFAULT_EXPIRATION:-1 month}
--- 
-1.6.3.2
-

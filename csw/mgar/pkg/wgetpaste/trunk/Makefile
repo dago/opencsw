@@ -1,5 +1,5 @@
 GARNAME = wgetpaste
-GARVERSION = 2.13
+GARVERSION = 2.16
 CATEGORIES = utils
 
 DESCRIPTION = A command-line utility for text pasting websites.
