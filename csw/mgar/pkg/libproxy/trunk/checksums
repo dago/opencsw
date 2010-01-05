@@ -1,0 +1,3 @@
+70b8c804d1e0a5e98a1e708bd3102329  0001-Use-xc99-for-Sun-Studio-compiler.patch
+d5847505f454b61bd3ddc32b7f00eb7b  0002-Dont-preset-CFLAGS.patch
+6ded75a6c6aef53be657ece207cc26c4  libproxy-0.3.0.tar.gz
