@@ -1,0 +1,11 @@
+--- libfpx-1.3.0.orig/ole/olecomm.h	2007-11-02 08:10:05.000000000 +0100
++++ libfpx-1.3.0/ole/olecomm.h	2010-01-05 01:12:45.667877575 +0100
+@@ -68,7 +68,7 @@
+ #  ifdef __linux__
+ #   include <endian.h>
+ #  elif defined(__sun)
+-#   include <solaris.h>
++#   include <sys/byteorder.h>
+ #  else
+ #   include <machine/endian.h>
+ #  endif
