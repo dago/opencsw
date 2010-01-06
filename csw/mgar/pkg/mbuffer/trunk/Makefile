@@ -1,8 +1,5 @@
-# STATUS/TODO
-# - provide feedback about -xarch=generic64 to upstream
-# - verify that tests pass
 GARNAME = mbuffer
-GARVERSION = 20091122
+GARVERSION = 20091227
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -22,25 +19,26 @@ SPKG_SOURCEURL = http://www.maier-komor.de/mbuffer.html
 
 LICENSE = LICENSE
 
+# The tests use background process and wait, but don't issue the wait
+# in the same shell as the background processes were launched in. Fix this.
+# Already submitted to upstream, maybe integrated in future versions.
+PATCHFILES = 0001-Makefile-put-background-jobs-in-same-shell-as-the-wa.patch
+
 # Required during packaging (for the "test" target)
-PREREQUISITE_PKGS = CSWmktemp CSWgcc4core
+PREREQUISITE_PKGS  = CSWmktemp
+PREREQUISITE_PKGS += CSWgcc4core
 
-REQUIRED_PKGS = CSWosslrt CSWlibmhash
+REQUIRED_PKGS = CSWlibmhash
 
-# To build the mixed package for x86 you have to do the following
-# 1)  build8x: gmake merge
-# 2) build10x: gmake merge
-# 3)  build8x: gmake package
+# 64-bit build enables buffers >= 2GB (see README).
 BUILD64 = 1
-
-# 64-bit isn't thorougly tested by upstream, default to 32-bit, but still
-# deliver 64-bit in case someone might want to play around with 2GB+ buffers
-# ISAEXEC_BINS = $(bindir)/mbuffer
-NO_ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_SCRIPTS = custom
+# While we have IPv6 loopback interfaces on the buildfarm now, build10x
+# is missing an localhost IPv6 address entry for /etc/hosts. test3 requires 
+# one, thus we omit it for the time being.
+TEST_TARGET = -o test3 check
 
 # Required for updated libmhash (mbuffer builds against it) which allows for
 # flexible const/non-const definitions.  There should be a more intelligent 
@@ -50,36 +48,10 @@ EXTRA_CPPFLAGS = -D__const=const
 
 include gar/category.mk
 
-# The test scripts do file IO and this is so sloooooow when being run 
-# in a NFS mounted $HOME. The local disk on build8x is no better, so
-# just do the testing from /tmp instead.
-#
-# TODO: 
-# * Clean up $TMPDIR even when the nested make fails.
-# * Somehow assert that the isa-amd64 test is run on build10x
-#
-test-custom: TMPDIR := $(shell mktemp -d -p /tmp)
-test-custom:
-	echo "Running target test-custom, TMPDIR = $(TMPDIR)"
-	cp $(WORKSRC)/mbuffer $(WORKSRC)/Makefile $(TMPDIR)/
-
-	# Target test3 is skipped because it contains IPV6 tests which
-	# are not supported by the build farm boxes (yet).
-	$(MAKE) -C $(TMPDIR) -o test3 check || rm -rf $(TMPDIR) && exit 1
-	test -d $(TMPDIR) && rm -rf $(TMPDIR)
-	@$(MAKECOOKIE)
-
-# mbuffer-20091122 always tries to use -xarch=generic64,
-# even for non-64bit builds
-post-configure-modulated:
-	[ "$(GARCH)" -eq "i386" -o "$(GARCH)" -eq "sparcv8" ] && \
-		gsed -ie 's/-xarch=generic64//' $(WORKSRC)/Makefile
-	@$(MAKECOOKIE)
-
 post-install-modulated: DOCS = ChangeLog README AUTHORS
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
-	$(foreach DOC,$(DOCS),cp $(WORKSRC)/$(DOC) $(DOCDEST);)
+	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)
