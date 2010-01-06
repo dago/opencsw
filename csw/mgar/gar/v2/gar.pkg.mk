@@ -141,7 +141,7 @@ endif
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
-SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
+SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) $(MASTER_SITES) $(GIT_REPOS))
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
