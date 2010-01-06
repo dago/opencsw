@@ -3,3 +3,4 @@ f93b41b44ce6b023df65b72f00386ac5  CSWbash.prototype
 8b104a3cddca41849186af53c8602eef  changelog.CSW
 60956e6be20f69dafbb06fcc83bab88e  shells
 29607316cff22f7427322d8f190cbadf  use_system_bashrc_and_logout.patch
+f2876ca41b05f236621abddc713af3e7  vsnprintf.patch

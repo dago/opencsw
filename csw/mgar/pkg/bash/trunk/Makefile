@@ -67,6 +67,8 @@ PATCHFILES = $(shell LEVEL=1; \
 # opencsw bash use /etc/bash.bashrc and /etc/bash.bash_logout files
 PATCHFILES += use_system_bashrc_and_logout.patch
 
+# Temporary fix for vsnprintf definition clash
+PATCHFILES += vsnprintf.patch
 
 ##### Build and installation information #####
 

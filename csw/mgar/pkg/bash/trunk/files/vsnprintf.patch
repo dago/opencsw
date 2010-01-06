@@ -1,0 +1,47 @@
+diff --speed-large-files -Nur builtins/printf.def builtins/printf.def
+--- builtins/printf.def	2010-01-06 15:15:00.498275417 +0100
++++ builtins/printf.def	2010-01-06 15:13:39.646642489 +0100
+@@ -172,7 +172,9 @@
+ #endif
+ 
+ #if !HAVE_VSNPRINTF
+-extern int vsnprintf __P((char *, size_t, const char *, ...)) __attribute__((__format__ (printf, 3, 4)));
++extern int bash_vsnprintf __P((char *, size_t, const char *, ...)) __attribute__((__format__ (printf, 3, 4)));
++#else
++#  define bash_vsnprintf vsnprintf
+ #endif
+ 
+ static void printf_erange __P((char *));
+@@ -885,7 +887,7 @@
+   int blen;
+ 
+   SH_VA_START (args, format);
+-  blen = vsnprintf (vbuf + vblen, vbsize - vblen, format, args);
++  blen = bash_vsnprintf (vbuf + vblen, vbsize - vblen, format, args);
+   va_end (args);
+ 
+   nlen = vblen + blen + 1;
+@@ -894,7 +896,7 @@
+       vbsize = ((nlen + 63) >> 6) << 6;
+       vbuf = (char *)xrealloc (vbuf, vbsize);
+       SH_VA_START (args, format);
+-      blen = vsnprintf (vbuf + vblen, vbsize - vblen, format, args);
++      blen = bash_vsnprintf (vbuf + vblen, vbsize - vblen, format, args);
+       va_end (args);
+     }
+ 
+diff --speed-large-files -Nur lib/sh/snprintf.c lib/sh/snprintf.c
+--- lib/sh/snprintf.c	2010-01-06 15:14:47.740952207 +0100
++++ lib/sh/snprintf.c	2010-01-06 15:14:25.727971179 +0100
+@@ -1655,9 +1655,9 @@
+ 
+ int
+ #if defined (__STDC__)
+-vsnprintf(char *string, size_t length, const char *format, va_list args)
++bash_vsnprintf(char *string, size_t length, const char *format, va_list args)
+ #else
+-vsnprintf(string, length, format, args)
++bash_vsnprintf(string, length, format, args)
+      char *string;
+      size_t length;
+      const char *format;
