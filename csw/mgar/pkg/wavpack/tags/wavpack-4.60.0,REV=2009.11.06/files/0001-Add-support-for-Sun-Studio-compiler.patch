@@ -1,0 +1,48 @@
+From e4e9a2384beca0d8be8f2742ec5c9b6607b20f10 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Nov 2009 13:49:55 +0100
+Subject: [PATCH] Add support for Sun Studio compiler
+
+---
+ cli/utils.c       |    4 ++--
+ include/wavpack.h |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/cli/utils.c b/cli/utils.c
+index 6094f52..442685b 100644
+--- a/cli/utils.c
++++ b/cli/utils.c
+@@ -16,7 +16,7 @@
+ #include <io.h>
+ #include <conio.h>
+ #include <shlobj.h>
+-#elif defined(__GNUC__)
++#elif defined(__GNUC__) || defined(__sun)
+ #include <glob.h>
+ #include <unistd.h>
+ #endif
+@@ -164,7 +164,7 @@ char *filespec_ext (char *filespec)
+ // returned.                                                                //
+ //////////////////////////////////////////////////////////////////////////////
+ 
+-#if defined(__GNUC__) && !defined(WIN32)
++#if (defined(__GNUC__) || defined(__sun)) && !defined(WIN32)
+ 
+ char *filespec_path (char *filespec)
+ {
+diff --git a/include/wavpack.h b/include/wavpack.h
+index d264bdc..92caa48 100644
+--- a/include/wavpack.h
++++ b/include/wavpack.h
+@@ -33,7 +33,7 @@ typedef float float32_t;
+ 
+ typedef unsigned char   uchar;
+ 
+-#if !defined(__GNUC__) || defined(WIN32)
++#if (!defined(__GNUC__) && !defined(__sun)) || defined(WIN32)
+ typedef unsigned short  ushort;
+ typedef unsigned int    uint;
+ #endif
+-- 
+1.6.5.1
+
