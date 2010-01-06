@@ -1,0 +1,53 @@
+GARNAME = evolution-exchange
+GARVERSION = 2.28.2
+CATEGORIES = gnome
+
+DESCRIPTION = Evolution Web Calendar
+define BLURB
+endef
+
+MASTER_SITES =  $(GNOME_MIRROR)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTNAME  = $(GARNAME)-$(GARVERSION)
+
+PACKAGES = CSWevolutionexchange CSWevolutionexchange-devel CSWevolutionexchange-doc
+CATALOGNAME_CSWevolutionexchange = evolution_webcal
+CATALOGNAME_CSWevolutionexchange-devel = evolution_webcal_devel
+CATALOGNAME_CSWevolutionexchange-doc = evolution_webcal_doc
+
+SPKG_DESC_CSWevolutionexchange += Evolution Web Calendar
+SPKG_DESC_CSWevolutionexchange-devel += Evolution Web Calendar - developer package
+SPKG_DESC_CSWevolutionexchange-doc += Evolution Web Calendar - documentation
+
+REQUIRED_PKGS_CSWevolutionexchange += 
+REQUIRED_PKGS_CSWevolutionexchange += 
+REQUIRED_PKGS_CSWevolutionexchange += 
+REQUIRED_PKGS_CSWevolutionexchange-devel += CSWevolution
+REQUIRED_PKGS_CSWevolutionexchange-doc += CSWevolution
+
+PKGFILES_CSWevolutionexchange-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWevolutionexchange-doc = $(sharedstatedir)/gtk-doc/.*
+
+ARCHALL_CSWevolutionexchange-doc = 1
+
+INCOMPATIBLE_PKGS_CSWevolutionexchange = CSWximian-connector 
+
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+SPKG_SOURCEURL =http://projects.gnome.org/evolution-webcal
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+
+BUILD64 = 1
+
+STRIP_LIBTOOL = 1
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
+
+include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)
