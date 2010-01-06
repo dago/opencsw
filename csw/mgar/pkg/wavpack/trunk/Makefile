@@ -1,5 +1,5 @@
 GARNAME = wavpack
-GARVERSION = 4.60.0
+GARVERSION = 4.60.1
 CATEGORIES = lib
 
 DESCRIPTION = Open audio compression format
@@ -13,12 +13,13 @@ endef
 
 MASTER_SITES = http://www.wavpack.com/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-PATCHFILES += 0001-Add-support-for-Sun-Studio-compiler.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 REQUIRED_PKGS = CSWiconv
+
+LICENSE = license.txt
 
 BUILD64 = 1
 NO_ISAEXEC = 1
