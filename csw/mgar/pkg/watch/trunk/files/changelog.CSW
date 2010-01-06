@@ -1,3 +1,10 @@
+watch (0.2.0,REV=2010.01.06)
+
+  * Updated upstream version. Fixes 8-bit character handling when using
+    the -d option. (Closes: #3952).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed,  6 Jan 2010 19:28:33 +0100
+
 watch (0.2.0,REV=2009.05.10)
 
   * Recompiled with adjusted GAR build system (Closes: #3603).

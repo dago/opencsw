@@ -1,8 +1,13 @@
-# TODO
-# - Although watch links against ncursesw, non-ASCII character handling
-#   is broken. German umlauts for example won't display at all. Try: 
-#   python -c 'print u"\u00E4"' vs. watch -d python -c 'print u"\u00E4"'
-#   Needs further investigation.
+# Known issues
+# - watch only handles characters on a byte-by-byte basis, as such it
+#   doesn't cope with wide characters like the ones encoded via UTF-8.
+#   LATIN SMALL LETTER A WITH DIAERESIS (U+00E4) encoded in UTF-8
+#   for example is simply skipped in the output. For the current 
+#   implementation of watch it depends on the result of isprint() 
+#   whether a one byte component of a character is printed.
+
+# watch doesn't follow the procps versioning. It has a hardcoded
+# version in watch.c which is emitted when calling watch -v
 GARNAME = watch
 GARVERSION = 0.2.0
 CATEGORIES = utils
@@ -14,11 +19,12 @@ endef
 
 # Usually we would use $(SF_MIRROR), but the procps folks didn't upload
 # procps the usual way
-SF_PROJ 	= procps
-SF_PROJ_VER	= 3.2.8
-MASTER_SITES 	= http://$(SF_PROJ).sourceforge.net/
-DISTFILES  	= $(SF_PROJ)-$(SF_PROJ_VER).tar.gz
-DISTNAME   	= $(SF_PROJ)-$(SF_PROJ_VER)
+SF_PROJ        = procps
+SF_PROJ_VER    = 3.2.8
+MASTER_SITES   = http://$(SF_PROJ).sourceforge.net/
+DISTFILES      = $(SF_PROJ)-$(SF_PROJ_VER).tar.gz
+DISTNAME       = $(SF_PROJ)-$(SF_PROJ_VER)
+UFILES_REGEX   = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.gz
 
 REQUIRED_PKGS = CSWncurses
 
@@ -35,7 +41,7 @@ PATCHFILES += patch-sigpipe.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_INC = /opt/csw/include/ncursesw
+EXTRA_INC = /opt/csw/include/ncurses
 
 include gar/category.mk
 
@@ -62,17 +68,15 @@ CFLAGS := $(CFLAGS) -DHAVE_STDARG_H -DHAVE_STDLIB_H -DHAVE_STDDEF
 CFLAGS := $(CFLAGS) -DHAVE_INTTYPES_H -DHAVE_LOCALE_H -DHAVE_LOCALECONV
 CFLAGS := $(CFLAGS) -DHAVE_LOCALECONV -DHAVE_UINTMAX_T -DHAVE_VA_COPY
 
-# CURSES and BUILD_ARGS w/ ALL_?FLAGS req. for $(WORKSRC)/Makefile
-build-custom: CURSES=-lncursesw
+# BUILD_ARGS with ALL_?FLAGS req. for $(WORKSRC)/Makefile
 build-custom: BUILD_ARGS:=ALL_CFLAGS="$(CFLAGS)" ALL_LDFLAGS="$(LDFLAGS)"
 build-custom:
 	$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) snprintf.o
 	$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt.o
 	$(BUILD_ENV) gmake -C $(WORKSRC) $(BUILD_ARGS) getopt1.o
 	$(BUILD_ENV) gmake -C $(WORKSRC) \
-		ALL_CFLAGS="$(CFLAGS) snprintf.o getopt.o getopt1.o" \
-	        ALL_LDFLAGS="$(LDFLAGS)" \
-		CURSES=$(CURSES) watch
+		ALL_CFLAGS="$(CPPFLAGS) $(CFLAGS) snprintf.o getopt.o getopt1.o" \
+	        ALL_LDFLAGS="$(LDFLAGS)" watch
 	@$(MAKECOOKIE)
 
 install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
@@ -83,4 +87,7 @@ install-custom:
 	ginstall -m 755 $(WORKSRC)/watch $(DESTDIR)$(bindir)
 	cp $(WORKSRC)/watch.1 $(DESTDIR)$(mandir)/man1
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	printf "This watch version (%s) was taken from procps %s, %s\n" \
+		$(GARVERSION) $(SF_PROJ_VER) $(subst sourceforge,sf,$(MASTER_SITES)) \
+		>> $(DOCDEST)/README.CSW
 	@$(MAKECOOKIE)
