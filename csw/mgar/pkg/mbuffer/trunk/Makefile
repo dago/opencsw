@@ -35,10 +35,7 @@ BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# While we have IPv6 loopback interfaces on the buildfarm now, build10x
-# is missing an localhost IPv6 address entry for /etc/hosts. test3 requires 
-# one, thus we omit it for the time being.
-TEST_TARGET = -o test3 check
+TEST_TARGET = check
 
 # Required for updated libmhash (mbuffer builds against it) which allows for
 # flexible const/non-const definitions.  There should be a more intelligent 
