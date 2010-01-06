@@ -1,0 +1,12 @@
+diff --speed-large-files --minimal -Nru MPlayer-1.0rc2.orig/configure MPlayer-1.0rc2/configure
+--- MPlayer-1.0rc2.orig/configure	2007-10-07 15:49:33.000000000 -0400
++++ MPlayer-1.0rc2/configure	2007-11-05 05:51:15.070425934 -0500
+@@ -1970,7 +1970,7 @@
+ 	    sun4c) proc=v7 ;; 
+ 	    sun4d) proc=v8 ;;
+ 	    sun4m) proc=v8 ;;
+-	    sun4u) proc=ultrasparc _vis='yes' ;;
++	    sun4u) proc=ultrasparc _vis='no' ;;
+ 	    sun4v) proc=v9 ;;
+ 	    *) proc=v8 ;;
+ 	esac
