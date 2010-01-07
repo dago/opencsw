@@ -1,6 +1,7 @@
-bash (4.1,REV=2010.01.02) unstable
+bash (4.1,REV=2010.01.07) unstable
 
   * New upstream release.
+  * Added patch vsnprintf.patch to fix bash vsnprintf declaration.
 
  -- Yann Rouillard <yann@opencsw.org>  Sat, 02 Jan 2010 14:12:18 +0100
 
