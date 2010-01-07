@@ -1,5 +1,5 @@
 GARNAME = nsd
-GARVERSION = 3.2.3
+GARVERSION = 3.2.4
 CATEGORIES = server
 
 DESCRIPTION = An authoritative only non-recursive name server
@@ -8,7 +8,8 @@ define BLURB
   authoritative DNS nameserver.
 endef
 
-MASTER_SITES = http://www.nlnetlabs.nl/projects/nsd/
+MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
+SPKG_SOURCE_URL = http://www.nlnetlabs.nl/projects/nsd/
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -18,7 +19,7 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWnsd
-REQUIRED_PKGS = CSWcswclassutils CSWosslrt
+REQUIRED_PKGS = CSWosslrt
 CATALOGNAME = nsd
 SPKG_DESC = An authoritative only non-recursive name server
 

@@ -1,4 +1,3 @@
-bc1f6a6a33f1204454cf013273f0521c  download/Makefile.in.diff
-0eece57abde9d1cef8a962461b453d03  download/cswnsd
-7a7560acb5d56847ea16fb8cd77b6ca5  download/cswusergroup
-5ddb35dfb7da0defb82cda4f7388cba2  download/nsd-3.2.3.tar.gz
+0eece57abde9d1cef8a962461b453d03  cswnsd
+7a7560acb5d56847ea16fb8cd77b6ca5  cswusergroup
+0c394fd713d194bde24a1035e56d5a79  nsd-3.2.4.tar.gz
