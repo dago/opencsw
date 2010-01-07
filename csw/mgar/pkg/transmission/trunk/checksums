@@ -1,2 +1,3 @@
-0b6395df62da35201f8663ceea204f51  download/CSWtransmission.gspec
-8b30cf189240f0c50ccd11c618a6906a  download/transmission-1.60.tar.bz2
+cbdb5cfaf24b68727042c3828b252534  icons-makefile.patch
+7124b4836210a10fe649bba75c706cc9  linker-include.patch
+ac44511ba4c203998be3079626126ede  transmission-1.76.tar.bz2
