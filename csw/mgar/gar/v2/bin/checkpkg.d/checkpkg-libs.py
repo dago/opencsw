@@ -81,7 +81,8 @@ def main():
     binary_data = checkpkg.ParseDumpOutput(stdout)
     needed_sonames_by_binary[binary_base_name] = binary_data
     if checkpkg.SONAME not in binary_data:
-      logging.info("The %s shared library doesn't provide a SONAME.",
+      logging.debug("The %s binary doesn't provide a SONAME. "
+                    "(It might be an executable)",
                    binary_base_name)
       # The shared library doesn't tell its SONAME.  We're guessing it's the
       # same as the base file name.
@@ -130,7 +131,7 @@ def main():
       elif soname in lines_by_soname:
         print ("%s is provided by %s and required by:" 
                % (soname,
-                  repr(pkgs_by_filename[soname])))
+                  pkgs_by_filename[soname]))
         filename_lines = " ".join(sorted(binaries_by_soname[soname]))
         for line in textwrap.wrap(filename_lines, 70):
           print " ", line
