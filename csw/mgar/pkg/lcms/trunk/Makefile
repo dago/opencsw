@@ -1,6 +1,6 @@
 GARNAME = lcms
-GARVERSION = 1.18
-GARSUBREV = a
+GARVERSION = 1.19
+GARSUBREV = 
 CATEGORIES = lib
 
 DESCRIPTION = The little color management system and tools
@@ -16,8 +16,19 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARSUBREV).tar.gz
+#DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARSUBREV).tar.gz
 
-REQUIRED_PKGS += CSWjpeg CSWtiff CSWzlib
+PACKAGES = CSWlcms CSWlcmsdevel
+CATALOGNAME_CSWlcms = lcms
+CATALOGNAME_CSWlcmsdevel = lcms_devel
+
+SPKG_DESC_CSWlcms += The little color management system and tools
+SPKG_DESC_CSWlcmsdevel += The little color management system and tools - developer package
+
+REQUIRED_PKGS_CSWlcms += CSWjpeg CSWtiff CSWzlib
+REQUIRED_PKGS_CSWlcmsdevel += CSWlcms
+
+PKGFILES_CSWlcmsdevel = $(PKGFILES_DEVEL)
 
 SPKG_SOURCEURL = http://www.littlecms.com
 
@@ -34,8 +45,10 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+BUILD64 = 1
+
 TEST_TARGET = check
 
 include gar/category.mk
 
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
+#SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
