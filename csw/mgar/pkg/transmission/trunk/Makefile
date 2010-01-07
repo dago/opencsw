@@ -1,4 +1,4 @@
-GARNAME = transmission 
+GARNAME = transmission
 GARVERSION = 1.76
 CATEGORIES = net
 
