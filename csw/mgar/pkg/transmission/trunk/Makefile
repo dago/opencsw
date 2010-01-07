@@ -1,4 +1,4 @@
-GARNAME = transmission
+GARNAME = transmission 
 GARVERSION = 1.76
 CATEGORIES = net
 
@@ -13,46 +13,46 @@ PATCHFILES += linker-include.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
-PACKAGES  = CSWtransmisson
-PACKAGES += CSWtransmissongtk2
-SPKG_DESC_CSWtransmisson = Fast, easy, and free multi-platform BitTorrent client
-SPKG_DESC_CSWtransmissongtk2 = Fast, easy, and free multi-platform BitTorrent client ,  gtk2 Interface
+PACKAGES  = CSWtransmission
+PACKAGES += CSWtransmissiongtk2
+SPKG_DESC_CSWtransmission = Fast, easy, and free multi-platform BitTorrent client
+SPKG_DESC_CSWtransmissiongtk2 = Fast, easy, and free multi-platform BitTorrent client ,  gtk2 Interface
 
-REQUIRED_PKGS_CSWtransmissongtk2 = CSWcurlrt
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWdbusglib
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWfconfig
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWftype2
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWggettextrt
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWglib2
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWgtk2
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWlibatk
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWlibcairo
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWlibdbus
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWlibevent
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWlibxext
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWosslrt
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWpango
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWzlib
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWdbus
+REQUIRED_PKGS_CSWtransmissiongtk2 = CSWcurlrt
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWdbusglib
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWfconfig
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWftype2
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWggettextrt
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWglib2
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWgtk2
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibatk
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibcairo
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibdbus
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibevent
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibxext
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWosslrt
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWpango
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWzlib
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWdbus
 
-REQUIRED_PKGS_CSWtransmisson = CSWcurlrt
-REQUIRED_PKGS_CSWtransmisson += CSWlibevent
-REQUIRED_PKGS_CSWtransmisson += CSWggettextrt
-REQUIRED_PKGS_CSWtransmisson += CSWosslrt
-REQUIRED_PKGS_CSWtransmisson += CSWzlib
+REQUIRED_PKGS_CSWtransmission = CSWcurlrt
+REQUIRED_PKGS_CSWtransmission += CSWlibevent
+REQUIRED_PKGS_CSWtransmission += CSWggettextrt
+REQUIRED_PKGS_CSWtransmission += CSWosslrt
+REQUIRED_PKGS_CSWtransmission += CSWzlib
 
 
 
-REQUIRED_PKGS_CSWtransmissongtk2 += CSWtransmisson
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWtransmission
 
-PKGFILES_CSWtransmisson  = /opt/csw/bin/transmissioncli
-PKGFILES_CSWtransmisson  += /opt/csw/bin/transmission-.*
-PKGFILES_CSWtransmisson  += /opt/csw/share/locale/.*
-PKGFILES_CSWtransmisson  += /opt/csw/share/man/.*
-PKGFILES_CSWtransmisson  += /opt/csw/share/transmission/.*
+PKGFILES_CSWtransmission  = /opt/csw/bin/transmissioncli
+PKGFILES_CSWtransmission  += /opt/csw/bin/transmission-.*
+PKGFILES_CSWtransmission  += /opt/csw/share/locale/.*
+PKGFILES_CSWtransmission  += /opt/csw/share/man/.*
+PKGFILES_CSWtransmission  += /opt/csw/share/transmission/.*
 
-CATALOGNAME_CSWtransmisson = transmisson
-CATALOGNAME_CSWtransmissongtk2 = transmisson_gtk2
+CATALOGNAME_CSWtransmission = transmission
+CATALOGNAME_CSWtransmissiongtk2 = transmission_gtk2
 
 
 EXTRA_CFLAGS = -DNO_SYS_QUEUE_H -lresolv -mt
