@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = libsndfile
-GARVERSION = 1.0.20
+GARVERSION = 1.0.21
 
 CATEGORIES = lib
 
@@ -30,7 +30,7 @@ define BLURB
   writing new sound file formats. 
 endef
 
-MASTER_SITES = http://www.mega-nerd.com/libsndfile/
+MASTER_SITES = http://www.mega-nerd.com/libsndfile/files/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 0001-Add-lrintf-workaround-to-regtest.patch
