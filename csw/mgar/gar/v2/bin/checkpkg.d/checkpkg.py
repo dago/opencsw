@@ -12,6 +12,7 @@ import re
 import socket
 import sqlite3
 import subprocess
+import StringIO
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
@@ -111,6 +112,32 @@ class CheckpkgBase(object):
         depends[fields[1]] = " ".join(fields[1:])
     fd.close()
     return depends
+
+  def FormatDepsReport(self, missing_deps, surplus_deps, orphan_sonames):
+    """A intermediate version in which StringIO is used."""
+    s = StringIO.StringIO()
+    print >>s,  "%s:" % self.pkgname
+    msg_printed = False
+    if missing_deps:
+      print >>s,  "SUGGESTION: you may want to add some or all of the following as depends:"
+      print >>s,  "   (Feel free to ignore SUNW or SPRO packages)"
+      for dep_pkgname in sorted(missing_deps):
+        print >>s,  ">", dep_pkgname
+      msg_printed = True
+    if surplus_deps:
+      print >>s,  "The following packages might be unnecessary dependencies:"
+      for dep_pkgname in surplus_deps:
+        print >>s,  "? ", dep_pkgname
+      msg_printed = True
+    if orphan_sonames:
+      print >>s,  "The following sonames don't belong to any package:"
+      for soname in sorted(orphan_sonames):
+        print >>s,  "! ", soname
+      msg_printed = True
+    if not msg_printed:
+      print >>s,  "+  Dependencies of %s look good." % self.pkgname
+    s.seek(0)
+    return s.read()
 
 
 class SystemPkgmap(object):

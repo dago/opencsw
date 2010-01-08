@@ -186,31 +186,13 @@ def main():
         pkgs_by_filename,
         filenames_by_soname,
         pkg_by_any_filename)
+    print checker.FormatDepsReport(missing_deps,
+                                   surplus_deps,
+                                   orphan_sonames)
 
-    # TODO: Rewrite this using cheetah templates.
-    print "%s:" % pkgname
-    msg_printed = False
-    if missing_deps:
-      print "SUGGESTION: you may want to add some or all of the following as depends:"
-      print "   (Feel free to ignore SUNW or SPRO packages)"
-      for dep_pkgname in sorted(missing_deps):
-        print ">", dep_pkgname
-      msg_printed = True
-    if surplus_deps:
-      print "The following packages might be unnecessary dependencies:"
-      for dep_pkgname in surplus_deps:
-        print "? ", dep_pkgname
-      msg_printed = True
-    if orphan_sonames:
-      print "The following sonames don't belong to any package:"
-      for soname in sorted(orphan_sonames):
-        errors.append(checkpkg.Error("The following soname does't belong to "
-                                     "any package: %s" % soname))
-        print "! ", soname
-      msg_printed = True
-    if not msg_printed:
-      print "+  Dependencies of %s look good." % pkgname
-    print
+    for soname in orphan_sonames:
+      errors.append(checkpkg.Error("The following soname does't belong to "
+                                   "any package: %s" % checker.soname))
 
   if errors:
     for error in errors:

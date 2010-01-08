@@ -3,6 +3,7 @@
 
 import unittest
 import mox
+import difflib
 import checkpkg
 import testdata.checkpkg_test_data_CSWmysql51rt as d1
 import testdata.checkpkg_test_data_CSWmysql51client as d2
@@ -432,6 +433,31 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
     self.assertEqual(
         expected_runpath,
         checkpkg.ParseDumpOutput(dump_2.DATA_DUMP_OUTPUT)["runpath"])
+
+
+class FormatDepsReportUnitTest(unittest.TestCase):
+
+  def AssertTextEqual(self, text1, text2):
+    difference = "\n".join(difflib.context_diff(text2.splitlines(), text1.splitlines()))
+    self.assertEqual(text1, text2, difference)
+
+  def test_1(self):
+    missing_deps = set([u'SUNWgss', u'*SUNWlxsl'])
+    surplus_deps = set(['CSWsudo', 'CSWlibxslt'])
+    orphan_sonames = set([])
+    testdata = (missing_deps, surplus_deps, orphan_sonames)
+    checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
+    expected = u"""CSWfoo:
+SUGGESTION: you may want to add some or all of the following as depends:
+   (Feel free to ignore SUNW or SPRO packages)
+> *SUNWlxsl
+> SUNWgss
+The following packages might be unnecessary dependencies:
+?  CSWsudo
+?  CSWlibxslt
+"""
+    result = checker.FormatDepsReport(*testdata)
+    self.AssertTextEqual(result, expected)
 
 
 if __name__ == '__main__':
