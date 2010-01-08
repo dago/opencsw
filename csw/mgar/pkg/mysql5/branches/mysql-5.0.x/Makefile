@@ -144,15 +144,16 @@ EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-assembler
-CONFIGURE_ARGS += --without-docs
 CONFIGURE_ARGS += --enable-local-infile
+CONFIGURE_ARGS += --enable-thread-safe-client
 CONFIGURE_ARGS += --with-extra-charsets=all
 CONFIGURE_ARGS += --with-low-memory
+CONFIGURE_ARGS += --with-plugins=max-no-ndb
 CONFIGURE_ARGS += --with-pthread
 CONFIGURE_ARGS += --with-readline
-CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
-CONFIGURE_ARGS += --with-plugins=max-no-ndb
+CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
+CONFIGURE_ARGS += --without-docs
 CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 

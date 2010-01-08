@@ -86,8 +86,8 @@ then
   svcadm clear cswmysql5
   svcadm enable cswmysql5
 else
-	echo "Running \`/etc/opt/csw/init.d/cswmysql\` start to start the database."
-	/etc/opt/csw/init.d/cswmysql start
+  echo "Running \`/etc/opt/csw/init.d/cswmysql\` start to start the database."
+  /etc/opt/csw/init.d/cswmysql start
 fi
 
 exit 0
