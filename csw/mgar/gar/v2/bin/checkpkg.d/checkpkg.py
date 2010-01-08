@@ -13,6 +13,7 @@ import socket
 import sqlite3
 import subprocess
 import StringIO
+from Cheetah import Template
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
@@ -27,6 +28,31 @@ DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
 ALLOWED_ORPHAN_SONAMES = set([u"libm.so.2"])
+
+REPORT_TMPL = u"""$pkgname:
+#if $missing_deps
+SUGGESTION: you may want to add some or all of the following as depends:
+   (Feel free to ignore SUNW or SPRO packages)
+#for $pkg in $sorted($missing_deps)
+> $pkg
+#end for
+#end if
+#if $surplus_deps
+The following packages might be unnecessary dependencies:
+#for $pkg in $sorted($surplus_deps)
+? $pkg
+#end for
+#end if
+#if $orphan_sonames
+The following sonames don't belong to any package:
+#for $soname in $sorted($orphan_sonames)
+! $soname
+#end for
+#end if
+#if not $missing_deps and not $surplus_deps and not $orphan_sonames
++ Dependencies of $pkgname look good.
+#end if
+"""
 
 class Error(Exception):
   pass
@@ -115,29 +141,14 @@ class CheckpkgBase(object):
 
   def FormatDepsReport(self, missing_deps, surplus_deps, orphan_sonames):
     """A intermediate version in which StringIO is used."""
-    s = StringIO.StringIO()
-    print >>s,  "%s:" % self.pkgname
-    msg_printed = False
-    if missing_deps:
-      print >>s,  "SUGGESTION: you may want to add some or all of the following as depends:"
-      print >>s,  "   (Feel free to ignore SUNW or SPRO packages)"
-      for dep_pkgname in sorted(missing_deps):
-        print >>s,  ">", dep_pkgname
-      msg_printed = True
-    if surplus_deps:
-      print >>s,  "The following packages might be unnecessary dependencies:"
-      for dep_pkgname in surplus_deps:
-        print >>s,  "? ", dep_pkgname
-      msg_printed = True
-    if orphan_sonames:
-      print >>s,  "The following sonames don't belong to any package:"
-      for soname in sorted(orphan_sonames):
-        print >>s,  "! ", soname
-      msg_printed = True
-    if not msg_printed:
-      print >>s,  "+  Dependencies of %s look good." % self.pkgname
-    s.seek(0)
-    return s.read()
+    namespace = {
+        "pkgname": self.pkgname,
+        "missing_deps": missing_deps,
+        "surplus_deps": surplus_deps,
+        "orphan_sonames": orphan_sonames,
+    }
+    t = Template.Template(REPORT_TMPL, searchList=[namespace])
+    return unicode(t)
 
 
 class SystemPkgmap(object):

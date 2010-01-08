@@ -441,10 +441,10 @@ class FormatDepsReportUnitTest(unittest.TestCase):
     difference = "\n".join(difflib.context_diff(text2.splitlines(), text1.splitlines()))
     self.assertEqual(text1, text2, difference)
 
-  def test_1(self):
+  def testAll(self):
     missing_deps = set([u'SUNWgss', u'*SUNWlxsl'])
     surplus_deps = set(['CSWsudo', 'CSWlibxslt'])
-    orphan_sonames = set([])
+    orphan_sonames = set([u'libm.so.2'])
     testdata = (missing_deps, surplus_deps, orphan_sonames)
     checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
     expected = u"""CSWfoo:
@@ -453,8 +453,22 @@ SUGGESTION: you may want to add some or all of the following as depends:
 > *SUNWlxsl
 > SUNWgss
 The following packages might be unnecessary dependencies:
-?  CSWsudo
-?  CSWlibxslt
+? CSWlibxslt
+? CSWsudo
+The following sonames don't belong to any package:
+! libm.so.2
+"""
+    result = checker.FormatDepsReport(*testdata)
+    self.AssertTextEqual(result, expected)
+
+  def testNone(self):
+    missing_deps = set([])
+    surplus_deps = set([])
+    orphan_sonames = set([])
+    testdata = (missing_deps, surplus_deps, orphan_sonames)
+    checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
+    expected = u"""CSWfoo:
++ Dependencies of CSWfoo look good.
 """
     result = checker.FormatDepsReport(*testdata)
     self.AssertTextEqual(result, expected)
