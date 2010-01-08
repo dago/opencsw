@@ -1,0 +1,4320 @@
+From 248d9e77494156217abdf698446163e09690ab8e Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 9 Jan 2010 00:12:02 +0100
+Subject: [PATCH 3/3] autoreconf results
+
+---
+ INSTALL                                         |   97 ++-
+ Makefile.in                                     |   19 +-
+ aclocal.m4                                      |   65 +-
+ backends/Makefile.in                            |    6 +-
+ backends/gstreamer/Makefile.in                  |    2 +-
+ bindings/Makefile.in                            |    6 +-
+ bindings/python/Makefile.in                     |    2 +-
+ bindings/vala/Makefile.in                       |    2 +-
+ config.guess                                    |  142 ++--
+ config.sub                                      |   30 +-
+ configure                                       |  968 +++++++++++------------
+ data/Makefile.in                                |    6 +-
+ data/icons/Makefile.in                          |    6 +-
+ data/icons/hicolor/16x16/Makefile.in            |    6 +-
+ data/icons/hicolor/16x16/actions/Makefile.in    |    2 +-
+ data/icons/hicolor/16x16/apps/Makefile.in       |    2 +-
+ data/icons/hicolor/16x16/places/Makefile.in     |    2 +-
+ data/icons/hicolor/16x16/status/Makefile.in     |    2 +-
+ data/icons/hicolor/22x22/Makefile.in            |    6 +-
+ data/icons/hicolor/22x22/actions/Makefile.in    |    2 +-
+ data/icons/hicolor/22x22/apps/Makefile.in       |    2 +-
+ data/icons/hicolor/22x22/places/Makefile.in     |    2 +-
+ data/icons/hicolor/22x22/status/Makefile.in     |    2 +-
+ data/icons/hicolor/24x24/Makefile.in            |    6 +-
+ data/icons/hicolor/24x24/apps/Makefile.in       |    2 +-
+ data/icons/hicolor/32x32/Makefile.in            |    6 +-
+ data/icons/hicolor/32x32/actions/Makefile.in    |    2 +-
+ data/icons/hicolor/32x32/apps/Makefile.in       |    2 +-
+ data/icons/hicolor/32x32/places/Makefile.in     |    2 +-
+ data/icons/hicolor/32x32/status/Makefile.in     |    2 +-
+ data/icons/hicolor/48x48/Makefile.in            |    6 +-
+ data/icons/hicolor/48x48/apps/Makefile.in       |    2 +-
+ data/icons/hicolor/Makefile.in                  |    6 +-
+ data/icons/hicolor/scalable/Makefile.in         |    6 +-
+ data/icons/hicolor/scalable/actions/Makefile.in |    2 +-
+ data/icons/hicolor/scalable/apps/Makefile.in    |    2 +-
+ data/icons/hicolor/scalable/places/Makefile.in  |    2 +-
+ data/icons/hicolor/scalable/status/Makefile.in  |    2 +-
+ data/ui/Makefile.in                             |    2 +-
+ doc/Makefile.in                                 |    6 +-
+ doc/reference/Makefile.in                       |    2 +-
+ help/Makefile.in                                |    2 +-
+ lib/Makefile.in                                 |    6 +-
+ lib/libmediaplayerid/Makefile.in                |    2 +-
+ ltmain.sh                                       |   37 +-
+ macros/Makefile.in                              |    2 +-
+ macros/libtool.m4                               |   27 +-
+ macros/ltversion.m4                             |   10 +-
+ metadata/Makefile.in                            |    6 +-
+ plugins/Makefile.in                             |    6 +-
+ plugins/artdisplay/Makefile.in                  |    6 +-
+ plugins/artdisplay/artdisplay/Makefile.in       |    2 +-
+ plugins/audiocd/Makefile.in                     |    2 +-
+ plugins/audioscrobbler/Makefile.in              |    2 +-
+ plugins/brasero-disc-recorder/Makefile.in       |    2 +-
+ plugins/cd-recorder/Makefile.in                 |    2 +-
+ plugins/coherence/Makefile.in                   |    6 +-
+ plugins/coherence/upnp_coherence/Makefile.in    |    2 +-
+ plugins/context/Makefile.in                     |    6 +-
+ plugins/context/context/Makefile.in             |    2 +-
+ plugins/daap/Makefile.in                        |    2 +-
+ plugins/fmradio/Makefile.in                     |    2 +-
+ plugins/generic-player/Makefile.in              |    2 +-
+ plugins/im-status/Makefile.in                   |    2 +-
+ plugins/ipod/Makefile.in                        |    2 +-
+ plugins/iradio/Makefile.in                      |    2 +-
+ plugins/jamendo/Makefile.in                     |    6 +-
+ plugins/jamendo/jamendo/Makefile.in             |    2 +-
+ plugins/lirc/Makefile.in                        |    2 +-
+ plugins/lyrics/Makefile.in                      |    6 +-
+ plugins/lyrics/lyrics/Makefile.in               |    2 +-
+ plugins/magnatune/Makefile.in                   |    6 +-
+ plugins/magnatune/magnatune/Makefile.in         |    2 +-
+ plugins/mmkeys/Makefile.in                      |    2 +-
+ plugins/mtpdevice/Makefile.in                   |    2 +-
+ plugins/power-manager/Makefile.in               |    2 +-
+ plugins/pythonconsole/Makefile.in               |    2 +-
+ plugins/rb/Makefile.in                          |    2 +-
+ plugins/sample-python/Makefile.in               |    2 +-
+ plugins/sample-vala/Makefile.in                 |    2 +-
+ plugins/sample/Makefile.in                      |    2 +-
+ plugins/status-icon/Makefile.in                 |    2 +-
+ plugins/visualizer/Makefile.in                  |    2 +-
+ podcast/Makefile.in                             |    2 +-
+ remote/Makefile.in                              |    6 +-
+ remote/dbus/Makefile.in                         |    2 +-
+ rhythmdb/Makefile.in                            |    2 +-
+ shell/Makefile.in                               |    2 +-
+ sources/Makefile.in                             |    2 +-
+ tests/Makefile.in                               |    2 +-
+ widgets/Makefile.in                             |    6 +-
+ widgets/libsexy/Makefile.in                     |    2 +-
+ 92 files changed, 812 insertions(+), 841 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 2550dab..7d1c323 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -4,8 +4,10 @@ Installation Instructions
+ Copyright (C) 1994, 1995, 1996, 1999, 2000, 2001, 2002, 2004, 2005,
+ 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+ 
+-   This file is free documentation; the Free Software Foundation gives
+-unlimited permission to copy, distribute and modify it.
++   Copying and distribution of this file, with or without modification,
++are permitted in any medium without royalty provided the copyright
++notice and this notice are preserved.  This file is offered as-is,
++without warranty of any kind.
+ 
+ Basic Installation
+ ==================
+@@ -13,7 +15,11 @@ Basic Installation
+    Briefly, the shell commands `./configure; make; make install' should
+ configure, build, and install this package.  The following
+ more-detailed instructions are generic; see the `README' file for
+-instructions specific to this package.
++instructions specific to this package.  Some packages provide this
++`INSTALL' file but do not implement all of the features documented
++below.  The lack of an optional feature in a given package is not
++necessarily a bug.  More recommendations for GNU packages can be found
++in *note Makefile Conventions: (standards)Makefile Conventions.
+ 
+    The `configure' shell script attempts to guess correct values for
+ various system-dependent variables used during compilation.  It uses
+@@ -42,7 +48,7 @@ may remove or edit it.
+ you want to change it or regenerate `configure' using a newer version
+ of `autoconf'.
+ 
+-The simplest way to compile this package is:
++   The simplest way to compile this package is:
+ 
+   1. `cd' to the directory containing the package's source code and type
+      `./configure' to configure the package for your system.
+@@ -53,12 +59,22 @@ The simplest way to compile this package is:
+   2. Type `make' to compile the package.
+ 
+   3. Optionally, type `make check' to run any self-tests that come with
+-     the package.
++     the package, generally using the just-built uninstalled binaries.
+ 
+   4. Type `make install' to install the programs and any data files and
+-     documentation.
+-
+-  5. You can remove the program binaries and object files from the
++     documentation.  When installing into a prefix owned by root, it is
++     recommended that the package be configured and built as a regular
++     user, and only the `make install' phase executed with root
++     privileges.
++
++  5. Optionally, type `make installcheck' to repeat any self-tests, but
++     this time using the binaries in their final installed location.
++     This target does not install anything.  Running this target as a
++     regular user, particularly if the prior `make install' required
++     root privileges, verifies that the installation completed
++     correctly.
++
++  6. You can remove the program binaries and object files from the
+      source code directory by typing `make clean'.  To also remove the
+      files that `configure' created (so you can compile the package for
+      a different kind of computer), type `make distclean'.  There is
+@@ -67,8 +83,15 @@ The simplest way to compile this package is:
+      all sorts of other programs in order to regenerate files that came
+      with the distribution.
+ 
+-  6. Often, you can also type `make uninstall' to remove the installed
+-     files again.
++  7. Often, you can also type `make uninstall' to remove the installed
++     files again.  In practice, not all packages have tested that
++     uninstallation works correctly, even though it is required by the
++     GNU Coding Standards.
++
++  8. Some packages, particularly those that use Automake, provide `make
++     distcheck', which can by used by developers to test that all other
++     targets like `make install' and `make uninstall' work correctly.
++     This target is generally not run by end users.
+ 
+ Compilers and Options
+ =====================
+@@ -93,7 +116,8 @@ same time, by placing the object files for each architecture in their
+ own directory.  To do this, you can use GNU `make'.  `cd' to the
+ directory where you want the object files and executables to go and run
+ the `configure' script.  `configure' automatically checks for the
+-source code in the directory that `configure' is in and in `..'.
++source code in the directory that `configure' is in and in `..'.  This
++is known as a "VPATH" build.
+ 
+    With a non-GNU `make', it is safer to compile the package for one
+ architecture at a time in the source code directory.  After you have
+@@ -120,7 +144,8 @@ Installation Names
+    By default, `make install' installs the package's commands under
+ `/usr/local/bin', include files under `/usr/local/include', etc.  You
+ can specify an installation prefix other than `/usr/local' by giving
+-`configure' the option `--prefix=PREFIX'.
++`configure' the option `--prefix=PREFIX', where PREFIX must be an
++absolute file name.
+ 
+    You can specify separate installation prefixes for
+ architecture-specific files and architecture-independent files.  If you
+@@ -131,15 +156,46 @@ Documentation and other data files still use the regular prefix.
+    In addition, if you use an unusual directory layout you can give
+ options like `--bindir=DIR' to specify different values for particular
+ kinds of files.  Run `configure --help' for a list of the directories
+-you can set and what kinds of files go in them.
++you can set and what kinds of files go in them.  In general, the
++default for these options is expressed in terms of `${prefix}', so that
++specifying just `--prefix' will affect all of the other directory
++specifications that were not explicitly provided.
++
++   The most portable way to affect installation locations is to pass the
++correct locations to `configure'; however, many packages provide one or
++both of the following shortcuts of passing variable assignments to the
++`make install' command line to change installation locations without
++having to reconfigure or recompile.
++
++   The first method involves providing an override variable for each
++affected directory.  For example, `make install
++prefix=/alternate/directory' will choose an alternate location for all
++directory configuration variables that were expressed in terms of
++`${prefix}'.  Any directories that were specified during `configure',
++but not in terms of `${prefix}', must each be overridden at install
++time for the entire installation to be relocated.  The approach of
++makefile variable overrides for each directory variable is required by
++the GNU Coding Standards, and ideally causes no recompilation.
++However, some platforms have known limitations with the semantics of
++shared libraries that end up requiring recompilation when using this
++method, particularly noticeable in packages that use GNU Libtool.
++
++   The second method involves providing the `DESTDIR' variable.  For
++example, `make install DESTDIR=/alternate/directory' will prepend
++`/alternate/directory' before all installation names.  The approach of
++`DESTDIR' overrides is not required by the GNU Coding Standards, and
++does not work on platforms that have drive letters.  On the other hand,
++it does better at avoiding recompilation issues, and works well even
++when some directory options were not specified in terms of `${prefix}'
++at `configure' time.
++
++Optional Features
++=================
+ 
+    If the package supports it, you can cause programs to be installed
+ with an extra prefix or suffix on their names by giving `configure' the
+ option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
+ 
+-Optional Features
+-=================
+-
+    Some packages pay attention to `--enable-FEATURE' options to
+ `configure', where FEATURE indicates an optional part of the package.
+ They may also pay attention to `--with-PACKAGE' options, where PACKAGE
+@@ -152,6 +208,13 @@ find the X include and library files automatically, but if it doesn't,
+ you can use the `configure' options `--x-includes=DIR' and
+ `--x-libraries=DIR' to specify their locations.
+ 
++   Some packages offer the ability to configure how verbose the
++execution of `make' will be.  For these packages, running `./configure
++--enable-silent-rules' sets the default to minimal output, which can be
++overridden with `make V=1'; while running `./configure
++--disable-silent-rules' sets the default to verbose, which can be
++overridden with `make V=0'.
++
+ Particular systems
+ ==================
+ 
+@@ -288,7 +351,7 @@ operates.
+      `configure' can determine that directory automatically.
+ 
+ `--prefix=DIR'
+-     Use DIR as the installation prefix.  *Note Installation Names::
++     Use DIR as the installation prefix.  *note Installation Names::
+      for more details, including other options available for fine-tuning
+      the installation locations.
+ 
+diff --git a/Makefile.in b/Makefile.in
+index 834112b..511d23a 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -115,7 +115,7 @@ GZIP_ENV = --best
+ DIST_ARCHIVES = $(distdir).tar.bz2
+ distcleancheck_listfiles = find . -type f -print
+ ACLOCAL = @ACLOCAL@
+-ACLOCAL_AMFLAGS = @ACLOCAL_AMFLAGS@
++ACLOCAL_AMFLAGS = -I macros
+ ALL_LINGUAS = @ALL_LINGUAS@
+ AMTAR = @AMTAR@
+ AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
+@@ -435,7 +435,7 @@ distclean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -460,7 +460,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -624,7 +624,8 @@ distdir: $(DISTFILES)
+ 	  fi; \
+ 	done
+ 	-test -n "$(am__skip_mode_fix)" \
+-	|| find "$(distdir)" -type d ! -perm -777 -exec chmod a+rwx {} \; -o \
++	|| find "$(distdir)" -type d ! -perm -755 \
++		-exec chmod u+rwx,go+rx {} \; -o \
+ 	  ! -type d ! -perm -444 -links 1 -exec chmod a+r {} \; -o \
+ 	  ! -type d ! -perm -400 -exec chmod a+r {} \; -o \
+ 	  ! -type d ! -perm -444 -exec $(install_sh) -c -m a+r {} {} \; \
+@@ -667,17 +668,17 @@ dist dist-all: distdir
+ distcheck: dist
+ 	case '$(DIST_ARCHIVES)' in \
+ 	*.tar.gz*) \
+-	  GZIP=$(GZIP_ENV) gunzip -c $(distdir).tar.gz | $(am__untar) ;;\
++	  GZIP=$(GZIP_ENV) gzip -dc $(distdir).tar.gz | $(am__untar) ;;\
+ 	*.tar.bz2*) \
+-	  bunzip2 -c $(distdir).tar.bz2 | $(am__untar) ;;\
++	  bzip2 -dc $(distdir).tar.bz2 | $(am__untar) ;;\
+ 	*.tar.lzma*) \
+-	  unlzma -c $(distdir).tar.lzma | $(am__untar) ;;\
++	  lzma -dc $(distdir).tar.lzma | $(am__untar) ;;\
+ 	*.tar.xz*) \
+ 	  xz -dc $(distdir).tar.xz | $(am__untar) ;;\
+ 	*.tar.Z*) \
+ 	  uncompress -c $(distdir).tar.Z | $(am__untar) ;;\
+ 	*.shar.gz*) \
+-	  GZIP=$(GZIP_ENV) gunzip -c $(distdir).shar.gz | unshar ;;\
++	  GZIP=$(GZIP_ENV) gzip -dc $(distdir).shar.gz | unshar ;;\
+ 	*.zip*) \
+ 	  unzip $(distdir).zip ;;\
+ 	esac
+diff --git a/aclocal.m4 b/aclocal.m4
+index 5c6c2cb..85a1d8e 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -1,4 +1,4 @@
+-# generated automatically by aclocal 1.11 -*- Autoconf -*-
++# generated automatically by aclocal 1.11.1 -*- Autoconf -*-
+ 
+ # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
+ # 2005, 2006, 2007, 2008, 2009  Free Software Foundation, Inc.
+@@ -13,8 +13,8 @@
+ 
+ m4_ifndef([AC_AUTOCONF_VERSION],
+   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
+-m4_if(m4_defn([AC_AUTOCONF_VERSION]), [2.64],,
+-[m4_warning([this file was generated for autoconf 2.64.
++m4_if(m4_defn([AC_AUTOCONF_VERSION]), [2.65],,
++[m4_warning([this file was generated for autoconf 2.65.
+ You have another version of autoconf.  It may work, but is not guaranteed to.
+ If you have problems, you may need to regenerate the build system entirely.
+ To do so, use the procedure documented by the package, typically `autoreconf'.])])
+@@ -34,10 +34,8 @@ AC_DEFUN([AM_GCONF_SOURCE_2],
+     GCONF_SCHEMA_CONFIG_SOURCE=$GCONF_SCHEMA_INSTALL_SOURCE
+   fi
+ 
+-  AC_ARG_WITH([gconf-source],
+-	      AC_HELP_STRING([--with-gconf-source=sourceaddress],
+-			     [Config database for installing schema files.]),
+-	      [GCONF_SCHEMA_CONFIG_SOURCE="$withval"],)
++  AC_ARG_WITH(gconf-source, 
++  [  --with-gconf-source=sourceaddress      Config database for installing schema files.],GCONF_SCHEMA_CONFIG_SOURCE="$withval",)
+ 
+   AC_SUBST(GCONF_SCHEMA_CONFIG_SOURCE)
+   AC_MSG_RESULT([Using config source $GCONF_SCHEMA_CONFIG_SOURCE for schema installation])
+@@ -46,20 +44,17 @@ AC_DEFUN([AM_GCONF_SOURCE_2],
+     GCONF_SCHEMA_FILE_DIR='$(sysconfdir)/gconf/schemas'
+   fi
+ 
+-  AC_ARG_WITH([gconf-schema-file-dir],
+-	      AC_HELP_STRING([--with-gconf-schema-file-dir=dir],
+-			     [Directory for installing schema files.]),
+-	      [GCONF_SCHEMA_FILE_DIR="$withval"],)
++  AC_ARG_WITH(gconf-schema-file-dir, 
++  [  --with-gconf-schema-file-dir=dir        Directory for installing schema files.],GCONF_SCHEMA_FILE_DIR="$withval",)
+ 
+   AC_SUBST(GCONF_SCHEMA_FILE_DIR)
+   AC_MSG_RESULT([Using $GCONF_SCHEMA_FILE_DIR as install directory for schema files])
+ 
+   AC_ARG_ENABLE(schemas-install,
+-  	AC_HELP_STRING([--disable-schemas-install],
+-		       [Disable the schemas installation]),
++     [  --disable-schemas-install	Disable the schemas installation],
+      [case ${enableval} in
+        yes|no) ;;
+-       *) AC_MSG_ERROR([bad value ${enableval} for --enable-schemas-install]) ;;
++       *) AC_MSG_ERROR(bad value ${enableval} for --enable-schemas-install) ;;
+       esac])
+   AM_CONDITIONAL([GCONF_SCHEMAS_INSTALL], [test "$enable_schemas_install" != no])
+ ])
+@@ -597,16 +592,14 @@ fi])
+ # _PKG_CONFIG([VARIABLE], [COMMAND], [MODULES])
+ # ---------------------------------------------
+ m4_define([_PKG_CONFIG],
+-[if test -n "$PKG_CONFIG"; then
+-    if test -n "$$1"; then
+-        pkg_cv_[]$1="$$1"
+-    else
+-        PKG_CHECK_EXISTS([$3],
+-                         [pkg_cv_[]$1=`$PKG_CONFIG --[]$2 "$3" 2>/dev/null`],
+-			 [pkg_failed=yes])
+-    fi
+-else
+-	pkg_failed=untried
++[if test -n "$$1"; then
++    pkg_cv_[]$1="$$1"
++ elif test -n "$PKG_CONFIG"; then
++    PKG_CHECK_EXISTS([$3],
++                     [pkg_cv_[]$1=`$PKG_CONFIG --[]$2 "$3" 2>/dev/null`],
++		     [pkg_failed=yes])
++ else
++    pkg_failed=untried
+ fi[]dnl
+ ])# _PKG_CONFIG
+ 
+@@ -650,9 +643,9 @@ See the pkg-config man page for more details.])
+ if test $pkg_failed = yes; then
+         _PKG_SHORT_ERRORS_SUPPORTED
+         if test $_pkg_short_errors_supported = yes; then
+-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "$2"`
++	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "$2" 2>&1`
+         else 
+-	        $1[]_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2"`
++	        $1[]_PKG_ERRORS=`$PKG_CONFIG --print-errors "$2" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$$1[]_PKG_ERRORS" >&AS_MESSAGE_LOG_FD
+@@ -702,7 +695,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],
+ [am__api_version='1.11'
+ dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
+ dnl require some minimum version.  Point them to the right macro.
+-m4_if([$1], [1.11], [],
++m4_if([$1], [1.11.1], [],
+       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
+ ])
+ 
+@@ -718,7 +711,7 @@ m4_define([_AM_AUTOCONF_VERSION], [])
+ # Call AM_AUTOMAKE_VERSION and AM_AUTOMAKE_VERSION so they can be traced.
+ # This function is AC_REQUIREd by AM_INIT_AUTOMAKE.
+ AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
+-[AM_AUTOMAKE_VERSION([1.11])dnl
++[AM_AUTOMAKE_VERSION([1.11.1])dnl
+ m4_ifndef([AC_AUTOCONF_VERSION],
+   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
+ _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
+@@ -1586,6 +1579,14 @@ python2.1 python2.0])
+        am__strip_prefix=`echo "$am_py_prefix" | sed 's|.|.|g'`
+        am_cv_python_pythondir=`echo "$am_cv_python_pythondir" | sed "s,^$am__strip_prefix,$PYTHON_PREFIX,"`
+        ;;
++     *)
++       case $am_py_prefix in
++         /usr|/System*) ;;
++         *)
++	  am_cv_python_pythondir=$PYTHON_PREFIX/lib/python$PYTHON_VERSION/site-packages
++	  ;;
++       esac
++       ;;
+      esac
+     ])
+   AC_SUBST([pythondir], [$am_cv_python_pythondir])
+@@ -1616,6 +1617,14 @@ python2.1 python2.0])
+        am__strip_prefix=`echo "$am_py_exec_prefix" | sed 's|.|.|g'`
+        am_cv_python_pyexecdir=`echo "$am_cv_python_pyexecdir" | sed "s,^$am__strip_prefix,$PYTHON_EXEC_PREFIX,"`
+        ;;
++     *)
++       case $am_py_exec_prefix in
++         /usr|/System*) ;;
++         *)
++	   am_cv_python_pyexecdir=$PYTHON_EXEC_PREFIX/lib/python$PYTHON_VERSION/site-packages
++	   ;;
++       esac
++       ;;
+      esac
+     ])
+   AC_SUBST([pyexecdir], [$am_cv_python_pyexecdir])
+diff --git a/backends/Makefile.in b/backends/Makefile.in
+index 0f540b8..4d91f29 100644
+--- a/backends/Makefile.in
++++ b/backends/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -488,7 +488,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -513,7 +513,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/backends/gstreamer/Makefile.in b/backends/gstreamer/Makefile.in
+index be98d7f..434782b 100644
+--- a/backends/gstreamer/Makefile.in
++++ b/backends/gstreamer/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/bindings/Makefile.in b/bindings/Makefile.in
+index 885d20f..84d232d 100644
+--- a/bindings/Makefile.in
++++ b/bindings/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -375,7 +375,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -400,7 +400,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/bindings/python/Makefile.in b/bindings/python/Makefile.in
+index 5301ded..2747295 100644
+--- a/bindings/python/Makefile.in
++++ b/bindings/python/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/bindings/vala/Makefile.in b/bindings/vala/Makefile.in
+index 58595d5..7165e63 100644
+--- a/bindings/vala/Makefile.in
++++ b/bindings/vala/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/config.guess b/config.guess
+index e3a2116..dc84c68 100755
+--- a/config.guess
++++ b/config.guess
+@@ -4,7 +4,7 @@
+ #   2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+ #   Free Software Foundation, Inc.
+ 
+-timestamp='2009-06-10'
++timestamp='2009-11-20'
+ 
+ # This file is free software; you can redistribute it and/or modify it
+ # under the terms of the GNU General Public License as published by
+@@ -27,16 +27,16 @@ timestamp='2009-06-10'
+ # the same distribution terms that you use for the rest of that program.
+ 
+ 
+-# Originally written by Per Bothner <per@bothner.com>.
+-# Please send patches to <config-patches@gnu.org>.  Submit a context
+-# diff and a properly formatted ChangeLog entry.
++# Originally written by Per Bothner.  Please send patches (context
++# diff format) to <config-patches@gnu.org> and include a ChangeLog
++# entry.
+ #
+ # This script attempts to guess a canonical system name similar to
+ # config.sub.  If it succeeds, it prints the system name on stdout, and
+ # exits with 0.  Otherwise, it exits with 1.
+ #
+-# The plan is that this can be called by configure scripts if you
+-# don't specify an explicit build system type.
++# You can get the latest version of this script from:
++# http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD
+ 
+ me=`echo "$0" | sed -e 's,.*/,,'`
+ 
+@@ -333,6 +333,9 @@ case "${UNAME_MACHINE}:${UNAME_SYSTEM}:${UNAME_RELEASE}:${UNAME_VERSION}" in
+     sun4*:SunOS:5.*:* | tadpole*:SunOS:5.*:*)
+ 	echo sparc-sun-solaris2`echo ${UNAME_RELEASE}|sed -e 's/[^.]*//'`
+ 	exit ;;
++    i86pc:AuroraUX:5.*:* | i86xen:AuroraUX:5.*:*)
++	echo i386-pc-auroraux${UNAME_RELEASE}
++	exit ;;
+     i86pc:SunOS:5.*:* | i86xen:SunOS:5.*:*)
+ 	eval $set_cc_for_build
+ 	SUN_ARCH="i386"
+@@ -807,12 +810,12 @@ EOF
+     i*:PW*:*)
+ 	echo ${UNAME_MACHINE}-pc-pw32
+ 	exit ;;
+-    *:Interix*:[3456]*)
++    *:Interix*:*)
+     	case ${UNAME_MACHINE} in
+ 	    x86)
+ 		echo i586-pc-interix${UNAME_RELEASE}
+ 		exit ;;
+-	    EM64T | authenticamd | genuineintel)
++	    authenticamd | genuineintel | EM64T)
+ 		echo x86_64-unknown-interix${UNAME_RELEASE}
+ 		exit ;;
+ 	    IA64)
+@@ -854,6 +857,20 @@ EOF
+     i*86:Minix:*:*)
+ 	echo ${UNAME_MACHINE}-pc-minix
+ 	exit ;;
++    alpha:Linux:*:*)
++	case `sed -n '/^cpu model/s/^.*: \(.*\)/\1/p' < /proc/cpuinfo` in
++	  EV5)   UNAME_MACHINE=alphaev5 ;;
++	  EV56)  UNAME_MACHINE=alphaev56 ;;
++	  PCA56) UNAME_MACHINE=alphapca56 ;;
++	  PCA57) UNAME_MACHINE=alphapca56 ;;
++	  EV6)   UNAME_MACHINE=alphaev6 ;;
++	  EV67)  UNAME_MACHINE=alphaev67 ;;
++	  EV68*) UNAME_MACHINE=alphaev68 ;;
++        esac
++	objdump --private-headers /bin/sh | grep -q ld.so.1
++	if test "$?" = 0 ; then LIBC="libc1" ; else LIBC="" ; fi
++	echo ${UNAME_MACHINE}-unknown-linux-gnu${LIBC}
++	exit ;;
+     arm*:Linux:*:*)
+ 	eval $set_cc_for_build
+ 	if echo __ARM_EABI__ | $CC_FOR_BUILD -E - 2>/dev/null \
+@@ -876,6 +893,17 @@ EOF
+     frv:Linux:*:*)
+     	echo frv-unknown-linux-gnu
+ 	exit ;;
++    i*86:Linux:*:*)
++	LIBC=gnu
++	eval $set_cc_for_build
++	sed 's/^	//' << EOF >$dummy.c
++	#ifdef __dietlibc__
++	LIBC=dietlibc
++	#endif
++EOF
++	eval `$CC_FOR_BUILD -E $dummy.c 2>/dev/null | grep '^LIBC'`
++	echo "${UNAME_MACHINE}-pc-linux-${LIBC}"
++	exit ;;
+     ia64:Linux:*:*)
+ 	echo ${UNAME_MACHINE}-unknown-linux-gnu
+ 	exit ;;
+@@ -901,39 +929,18 @@ EOF
+ 	#endif
+ 	#endif
+ EOF
+-	eval "`$CC_FOR_BUILD -E $dummy.c 2>/dev/null | sed -n '
+-	    /^CPU/{
+-		s: ::g
+-		p
+-	    }'`"
++	eval `$CC_FOR_BUILD -E $dummy.c 2>/dev/null | grep '^CPU'`
+ 	test x"${CPU}" != x && { echo "${CPU}-unknown-linux-gnu"; exit; }
+ 	;;
+     or32:Linux:*:*)
+ 	echo or32-unknown-linux-gnu
+ 	exit ;;
+-    ppc:Linux:*:*)
+-	echo powerpc-unknown-linux-gnu
+-	exit ;;
+-    ppc64:Linux:*:*)
+-	echo powerpc64-unknown-linux-gnu
+-	exit ;;
+-    alpha:Linux:*:*)
+-	case `sed -n '/^cpu model/s/^.*: \(.*\)/\1/p' < /proc/cpuinfo` in
+-	  EV5)   UNAME_MACHINE=alphaev5 ;;
+-	  EV56)  UNAME_MACHINE=alphaev56 ;;
+-	  PCA56) UNAME_MACHINE=alphapca56 ;;
+-	  PCA57) UNAME_MACHINE=alphapca56 ;;
+-	  EV6)   UNAME_MACHINE=alphaev6 ;;
+-	  EV67)  UNAME_MACHINE=alphaev67 ;;
+-	  EV68*) UNAME_MACHINE=alphaev68 ;;
+-        esac
+-	objdump --private-headers /bin/sh | grep -q ld.so.1
+-	if test "$?" = 0 ; then LIBC="libc1" ; else LIBC="" ; fi
+-	echo ${UNAME_MACHINE}-unknown-linux-gnu${LIBC}
+-	exit ;;
+     padre:Linux:*:*)
+ 	echo sparc-unknown-linux-gnu
+ 	exit ;;
++    parisc64:Linux:*:* | hppa64:Linux:*:*)
++	echo hppa64-unknown-linux-gnu
++	exit ;;
+     parisc:Linux:*:* | hppa:Linux:*:*)
+ 	# Look for CPU level
+ 	case `grep '^cpu[^a-z]*:' /proc/cpuinfo 2>/dev/null | cut -d' ' -f2` in
+@@ -942,8 +949,11 @@ EOF
+ 	  *)    echo hppa-unknown-linux-gnu ;;
+ 	esac
+ 	exit ;;
+-    parisc64:Linux:*:* | hppa64:Linux:*:*)
+-	echo hppa64-unknown-linux-gnu
++    ppc64:Linux:*:*)
++	echo powerpc64-unknown-linux-gnu
++	exit ;;
++    ppc:Linux:*:*)
++	echo powerpc-unknown-linux-gnu
+ 	exit ;;
+     s390:Linux:*:* | s390x:Linux:*:*)
+ 	echo ${UNAME_MACHINE}-ibm-linux
+@@ -966,58 +976,6 @@ EOF
+     xtensa*:Linux:*:*)
+     	echo ${UNAME_MACHINE}-unknown-linux-gnu
+ 	exit ;;
+-    i*86:Linux:*:*)
+-	# The BFD linker knows what the default object file format is, so
+-	# first see if it will tell us. cd to the root directory to prevent
+-	# problems with other programs or directories called `ld' in the path.
+-	# Set LC_ALL=C to ensure ld outputs messages in English.
+-	ld_supported_targets=`cd /; LC_ALL=C ld --help 2>&1 \
+-			 | sed -ne '/supported targets:/!d
+-				    s/[ 	][ 	]*/ /g
+-				    s/.*supported targets: *//
+-				    s/ .*//
+-				    p'`
+-        case "$ld_supported_targets" in
+-	  elf32-i386)
+-		TENTATIVE="${UNAME_MACHINE}-pc-linux-gnu"
+-		;;
+-	esac
+-	# Determine whether the default compiler is a.out or elf
+-	eval $set_cc_for_build
+-	sed 's/^	//' << EOF >$dummy.c
+-	#include <features.h>
+-	#ifdef __ELF__
+-	# ifdef __GLIBC__
+-	#  if __GLIBC__ >= 2
+-	LIBC=gnu
+-	#  else
+-	LIBC=gnulibc1
+-	#  endif
+-	# else
+-	LIBC=gnulibc1
+-	# endif
+-	#else
+-	#if defined(__INTEL_COMPILER) || defined(__PGI) || defined(__SUNPRO_C) || defined(__SUNPRO_CC)
+-	LIBC=gnu
+-	#else
+-	LIBC=gnuaout
+-	#endif
+-	#endif
+-	#ifdef __dietlibc__
+-	LIBC=dietlibc
+-	#endif
+-EOF
+-	eval "`$CC_FOR_BUILD -E $dummy.c 2>/dev/null | sed -n '
+-	    /^LIBC/{
+-		s: ::g
+-		p
+-	    }'`"
+-	test x"${LIBC}" != x && {
+-		echo "${UNAME_MACHINE}-pc-linux-${LIBC}"
+-		exit
+-	}
+-	test x"${TENTATIVE}" != x && { echo "${TENTATIVE}"; exit; }
+-	;;
+     i*86:DYNIX/ptx:4*:*)
+ 	# ptx 4.0 does uname -s correctly, with DYNIX/ptx in there.
+ 	# earlier versions are messed up and put the nodename in both
+@@ -1247,6 +1205,16 @@ EOF
+     *:Darwin:*:*)
+ 	UNAME_PROCESSOR=`uname -p` || UNAME_PROCESSOR=unknown
+ 	case $UNAME_PROCESSOR in
++	    i386)
++		eval $set_cc_for_build
++		if [ "$CC_FOR_BUILD" != 'no_compiler_found' ]; then
++		  if (echo '#ifdef __LP64__'; echo IS_64BIT_ARCH; echo '#endif') | \
++		      (CCOPTS= $CC_FOR_BUILD -E - 2>/dev/null) | \
++		      grep IS_64BIT_ARCH >/dev/null
++		  then
++		      UNAME_PROCESSOR="x86_64"
++		  fi
++		fi ;;
+ 	    unknown) UNAME_PROCESSOR=powerpc ;;
+ 	esac
+ 	echo ${UNAME_PROCESSOR}-apple-darwin${UNAME_RELEASE}
+diff --git a/config.sub b/config.sub
+index eb0389a..2a55a50 100755
+--- a/config.sub
++++ b/config.sub
+@@ -4,7 +4,7 @@
+ #   2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+ #   Free Software Foundation, Inc.
+ 
+-timestamp='2009-06-11'
++timestamp='2009-11-20'
+ 
+ # This file is (in principle) common to ALL GNU software.
+ # The presence of a machine in this file suggests that SOME GNU software
+@@ -32,13 +32,16 @@ timestamp='2009-06-11'
+ 
+ 
+ # Please send patches to <config-patches@gnu.org>.  Submit a context
+-# diff and a properly formatted ChangeLog entry.
++# diff and a properly formatted GNU ChangeLog entry.
+ #
+ # Configuration subroutine to validate and canonicalize a configuration type.
+ # Supply the specified configuration type as an argument.
+ # If it is invalid, we print an error message on stderr and exit with code 1.
+ # Otherwise, we print the canonical config type on stdout and succeed.
+ 
++# You can get the latest version of this script from:
++# http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD
++
+ # This file is supposed to be the same for all GNU packages
+ # and recognize all the CPU types, system types and aliases
+ # that are meaningful with *any* GNU software.
+@@ -149,7 +152,7 @@ case $os in
+ 	-convergent* | -ncr* | -news | -32* | -3600* | -3100* | -hitachi* |\
+ 	-c[123]* | -convex* | -sun | -crds | -omron* | -dg | -ultra | -tti* | \
+ 	-harris | -dolphin | -highlevel | -gould | -cbm | -ns | -masscomp | \
+-	-apple | -axis | -knuth | -cray)
++	-apple | -axis | -knuth | -cray | -microblaze)
+ 		os=
+ 		basic_machine=$1
+ 		;;
+@@ -284,6 +287,7 @@ case $basic_machine in
+ 	| pdp10 | pdp11 | pj | pjl \
+ 	| powerpc | powerpc64 | powerpc64le | powerpcle | ppcbe \
+ 	| pyramid \
++	| rx \
+ 	| score \
+ 	| sh | sh[1234] | sh[24]a | sh[24]aeb | sh[23]e | sh[34]eb | sheb | shbe | shle | sh[1234]le | sh3ele \
+ 	| sh64 | sh64le \
+@@ -291,13 +295,14 @@ case $basic_machine in
+ 	| sparcv8 | sparcv9 | sparcv9b | sparcv9v \
+ 	| spu | strongarm \
+ 	| tahoe | thumb | tic4x | tic80 | tron \
++	| ubicom32 \
+ 	| v850 | v850e \
+ 	| we32k \
+ 	| x86 | xc16x | xscale | xscalee[bl] | xstormy16 | xtensa \
+ 	| z8k | z80)
+ 		basic_machine=$basic_machine-unknown
+ 		;;
+-	m6811 | m68hc11 | m6812 | m68hc12)
++	m6811 | m68hc11 | m6812 | m68hc12 | picochip)
+ 		# Motorola 68HC11/12.
+ 		basic_machine=$basic_machine-unknown
+ 		os=-none
+@@ -340,7 +345,7 @@ case $basic_machine in
+ 	| lm32-* \
+ 	| m32c-* | m32r-* | m32rle-* \
+ 	| m68000-* | m680[012346]0-* | m68360-* | m683?2-* | m68k-* \
+-	| m88110-* | m88k-* | maxq-* | mcore-* | metag-* \
++	| m88110-* | m88k-* | maxq-* | mcore-* | metag-* | microblaze-* \
+ 	| mips-* | mipsbe-* | mipseb-* | mipsel-* | mipsle-* \
+ 	| mips16-* \
+ 	| mips64-* | mips64el-* \
+@@ -368,7 +373,7 @@ case $basic_machine in
+ 	| pdp10-* | pdp11-* | pj-* | pjl-* | pn-* | power-* \
+ 	| powerpc-* | powerpc64-* | powerpc64le-* | powerpcle-* | ppcbe-* \
+ 	| pyramid-* \
+-	| romp-* | rs6000-* \
++	| romp-* | rs6000-* | rx-* \
+ 	| sh-* | sh[1234]-* | sh[24]a-* | sh[24]aeb-* | sh[23]e-* | sh[34]eb-* | sheb-* | shbe-* \
+ 	| shle-* | sh[1234]le-* | sh3ele-* | sh64-* | sh64le-* \
+ 	| sparc-* | sparc64-* | sparc64b-* | sparc64v-* | sparc86x-* | sparclet-* \
+@@ -377,6 +382,7 @@ case $basic_machine in
+ 	| tahoe-* | thumb-* \
+ 	| tic30-* | tic4x-* | tic54x-* | tic55x-* | tic6x-* | tic80-* | tile-* \
+ 	| tron-* \
++	| ubicom32-* \
+ 	| v850-* | v850e-* | vax-* \
+ 	| we32k-* \
+ 	| x86-* | x86_64-* | xc16x-* | xps100-* | xscale-* | xscalee[bl]-* \
+@@ -726,6 +732,9 @@ case $basic_machine in
+ 		basic_machine=ns32k-utek
+ 		os=-sysv
+ 		;;
++        microblaze)
++		basic_machine=microblaze-xilinx
++		;;
+ 	mingw32)
+ 		basic_machine=i386-pc
+ 		os=-mingw32
+@@ -1247,6 +1256,9 @@ case $os in
+         # First match some system type aliases
+         # that might get confused with valid system types.
+ 	# -solaris* is a basic system type, with this one exception.
++        -auroraux)
++	        os=-auroraux
++		;;
+ 	-solaris1 | -solaris1.*)
+ 		os=`echo $os | sed -e 's|solaris1|sunos4|'`
+ 		;;
+@@ -1268,8 +1280,8 @@ case $os in
+ 	# -sysv* is not here because it comes later, after sysvr4.
+ 	-gnu* | -bsd* | -mach* | -minix* | -genix* | -ultrix* | -irix* \
+ 	      | -*vms* | -sco* | -esix* | -isc* | -aix* | -cnk* | -sunos | -sunos[34]*\
+-	      | -hpux* | -unos* | -osf* | -luna* | -dgux* | -solaris* | -sym* \
+-	      | -kopensolaris* \
++	      | -hpux* | -unos* | -osf* | -luna* | -dgux* | -auroraux* | -solaris* \
++	      | -sym* | -kopensolaris* \
+ 	      | -amigaos* | -amigados* | -msdos* | -newsos* | -unicos* | -aof* \
+ 	      | -aos* | -aros* \
+ 	      | -nindy* | -vxsim* | -vxworks* | -ebmon* | -hms* | -mvs* \
+@@ -1290,7 +1302,7 @@ case $os in
+ 	      | -os2* | -vos* | -palmos* | -uclinux* | -nucleus* \
+ 	      | -morphos* | -superux* | -rtmk* | -rtmk-nova* | -windiss* \
+ 	      | -powermax* | -dnix* | -nx6 | -nx7 | -sei* | -dragonfly* \
+-	      | -skyos* | -haiku* | -rdos* | -toppers* | -drops*)
++	      | -skyos* | -haiku* | -rdos* | -toppers* | -drops* | -es*)
+ 	# Remember, each alternative MUST END IN *, to match a version number.
+ 		;;
+ 	-qnx*)
+diff --git a/configure b/configure
+index 5b20f98..8f4c200 100755
+--- a/configure
++++ b/configure
+@@ -1,12 +1,14 @@
+ #! /bin/sh
+ # Guess values for system-dependent variables and create Makefiles.
+-# Generated by GNU Autoconf 2.64 for rhythmbox 0.12.6.
++# Generated by GNU Autoconf 2.65 for rhythmbox 0.12.6.
+ #
+ # Report bugs to <https://bugzilla.gnome.org/enter_bug.cgi?product=rhythmbox>.
+ #
++#
+ # Copyright (C) 1992, 1993, 1994, 1995, 1996, 1998, 1999, 2000, 2001,
+-# 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software
+-# Foundation, Inc.
++# 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation,
++# Inc.
++#
+ #
+ # This configure script is free software; the Free Software Foundation
+ # gives unlimited permission to copy, distribute and modify it.
+@@ -677,7 +679,8 @@ fi
+ 
+ 
+ 
+-exec 7<&0 </dev/null 6>&1
++test -n "$DJDIR" || exec 7<&0 </dev/null
++exec 6>&1
+ 
+ # Name of the host.
+ # hostname on some systems (SVR3.2, Linux) returns a bogus exit status,
+@@ -1782,13 +1785,12 @@ Optional Features:
+   --disable-libnotify     Disable libnotify support
+   --disable-musicbrainz   don't build with MusicBrainz support
+   --disable-mmkeys        don't build with Multimedia Keys support
+-  --disable-schemas-install
+-                          Disable the schemas installation
++  --disable-schemas-install	Disable the schemas installation
+   --enable-lirc           enable lirc support
+   --enable-uninstalled-build
+                           Search for files in build directory as well
+   --enable-more-warnings  Maximum compiler warnings
+-  --enable-gtk-doc        use gtk-doc to build documentation [default=no]
++  --enable-gtk-doc        use gtk-doc to build documentation [[default=no]]
+   --disable-scrollkeeper  do not make updates to the scrollkeeper database
+   --enable-python         Enable python support
+   --enable-vala           Enable Vala plugin support
+@@ -1814,10 +1816,8 @@ Optional Packages:
+   --with-x                use the X Window System
+   --with-libbrasero-media Build with libbrasero-media support
+   --with-libnautilus-burn Build with libnautilus-burn support
+-  --with-gconf-source=sourceaddress
+-                          Config database for installing schema files.
+-  --with-gconf-schema-file-dir=dir
+-                          Directory for installing schema files.
++  --with-gconf-source=sourceaddress      Config database for installing schema files.
++  --with-gconf-schema-file-dir=dir        Directory for installing schema files.
+   --with-internal-libsexy Build using internal libsexy library
+   --with-html-dir=PATH    path to installed docs
+   --with-help-dir=DIR     path to help docs
+@@ -1831,7 +1831,7 @@ Some influential environment variables:
+   LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
+               nonstandard directory <lib dir>
+   LIBS        libraries to pass to the linker, e.g. -l<library>
+-  CPPFLAGS    C/C++/Objective C preprocessor flags, e.g. -I<include dir> if
++  CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
+               you have headers in a nonstandard directory <include dir>
+   CPP         C preprocessor
+   PKG_CONFIG  path to pkg-config utility
+@@ -1975,7 +1975,7 @@ test -n "$ac_init_help" && exit $ac_status
+ if $ac_init_version; then
+   cat <<\_ACEOF
+ rhythmbox configure 0.12.6
+-generated by GNU Autoconf 2.64
++generated by GNU Autoconf 2.65
+ 
+ Copyright (C) 2009 Free Software Foundation, Inc.
+ This configure script is free software; the Free Software Foundation
+@@ -2022,7 +2022,7 @@ sed 's/^/| /' conftest.$ac_ext >&5
+ 	ac_retval=1
+ fi
+   eval $as_lineno_stack; test "x$as_lineno_stack" = x && { as_lineno=; unset as_lineno;}
+-  return $ac_retval
++  as_fn_set_status $ac_retval
+ 
+ } # ac_fn_c_try_compile
+ 
+@@ -2068,7 +2068,7 @@ fi
+   # left behind by Apple's compiler.  We do this before executing the actions.
+   rm -rf conftest.dSYM conftest_ipa8_conftest.oo
+   eval $as_lineno_stack; test "x$as_lineno_stack" = x && { as_lineno=; unset as_lineno;}
+-  return $ac_retval
++  as_fn_set_status $ac_retval
+ 
+ } # ac_fn_c_try_link
+ 
+@@ -2172,7 +2172,7 @@ sed 's/^/| /' conftest.$ac_ext >&5
+     ac_retval=1
+ fi
+   eval $as_lineno_stack; test "x$as_lineno_stack" = x && { as_lineno=; unset as_lineno;}
+-  return $ac_retval
++  as_fn_set_status $ac_retval
+ 
+ } # ac_fn_c_try_cpp
+ 
+@@ -2214,7 +2214,7 @@ sed 's/^/| /' conftest.$ac_ext >&5
+ fi
+   rm -rf conftest.dSYM conftest_ipa8_conftest.oo
+   eval $as_lineno_stack; test "x$as_lineno_stack" = x && { as_lineno=; unset as_lineno;}
+-  return $ac_retval
++  as_fn_set_status $ac_retval
+ 
+ } # ac_fn_c_try_run
+ 
+@@ -2423,7 +2423,7 @@ rm -f conftest.val
+ 
+   fi
+   eval $as_lineno_stack; test "x$as_lineno_stack" = x && { as_lineno=; unset as_lineno;}
+-  return $ac_retval
++  as_fn_set_status $ac_retval
+ 
+ } # ac_fn_c_compute_int
+ 
+@@ -2524,7 +2524,7 @@ This file contains any messages produced by compilers while
+ running configure, to aid debugging if configure makes a mistake.
+ 
+ It was created by rhythmbox $as_me 0.12.6, which was
+-generated by GNU Autoconf 2.64.  Invocation command line was
++generated by GNU Autoconf 2.65.  Invocation command line was
+ 
+   $ $0 $@
+ 
+@@ -2777,7 +2777,7 @@ fi
+ for ac_site_file in "$ac_site_file1" "$ac_site_file2"
+ do
+   test "x$ac_site_file" = xNONE && continue
+-  if test -r "$ac_site_file"; then
++  if test /dev/null != "$ac_site_file" && test -r "$ac_site_file"; then
+     { $as_echo "$as_me:${as_lineno-$LINENO}: loading site script $ac_site_file" >&5
+ $as_echo "$as_me: loading site script $ac_site_file" >&6;}
+     sed 's/^/| /' "$ac_site_file" >&5
+@@ -2786,9 +2786,9 @@ $as_echo "$as_me: loading site script $ac_site_file" >&6;}
+ done
+ 
+ if test -r "$cache_file"; then
+-  # Some versions of bash will fail to source /dev/null (special
+-  # files actually), so we avoid doing that.
+-  if test -f "$cache_file"; then
++  # Some versions of bash will fail to source /dev/null (special files
++  # actually), so we avoid doing that.  DJGPP emulates it as a regular file.
++  if test /dev/null != "$cache_file" && test -f "$cache_file"; then
+     { $as_echo "$as_me:${as_lineno-$LINENO}: loading cache $cache_file" >&5
+ $as_echo "$as_me: loading cache $cache_file" >&6;}
+     case $cache_file in
+@@ -3210,6 +3210,7 @@ IFS=$as_save_IFS
+ 
+ fi
+ 
++  test -d ./--version && rmdir ./--version
+   if test "${ac_cv_path_mkdir+set}" = set; then
+     MKDIR_P="$ac_cv_path_mkdir -p"
+   else
+@@ -3217,7 +3218,6 @@ fi
+     # value for MKDIR_P within a source directory, because that will
+     # break other packages using the cache if that directory is
+     # removed, or if the value is a relative name.
+-    test -d ./--version && rmdir ./--version
+     MKDIR_P="$ac_install_sh -d"
+   fi
+ fi
+@@ -3816,32 +3816,30 @@ $as_echo "$ac_try_echo"; } >&5
+ ... rest of stderr output deleted ...
+          10q' conftest.err >conftest.er1
+     cat conftest.er1 >&5
+-    rm -f conftest.er1 conftest.err
+   fi
++  rm -f conftest.er1 conftest.err
+   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+   test $ac_status = 0; }
+ done
+ 
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-#include <stdio.h>
++
+ int
+ main ()
+ {
+-FILE *f = fopen ("conftest.out", "w");
+- return ferror (f) || fclose (f) != 0;
+ 
+   ;
+   return 0;
+ }
+ _ACEOF
+ ac_clean_files_save=$ac_clean_files
+-ac_clean_files="$ac_clean_files a.out a.out.dSYM a.exe b.out conftest.out"
++ac_clean_files="$ac_clean_files a.out a.out.dSYM a.exe b.out"
+ # Try to create an executable without -o first, disregard a.out.
+ # It will help us diagnose broken compilers, and finding out an intuition
+ # of exeext.
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for C compiler default output file name" >&5
+-$as_echo_n "checking for C compiler default output file name... " >&6; }
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the C compiler works" >&5
++$as_echo_n "checking whether the C compiler works... " >&6; }
+ ac_link_default=`$as_echo "$ac_link" | sed 's/ -o *conftest[^ ]*//'`
+ 
+ # The possible output files:
+@@ -3903,10 +3901,10 @@ test "$ac_cv_exeext" = no && ac_cv_exeext=
+ else
+   ac_file=''
+ fi
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_file" >&5
+-$as_echo "$ac_file" >&6; }
+ if test -z "$ac_file"; then :
+-  $as_echo "$as_me: failed program was:" >&5
++  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
++$as_echo "no" >&6; }
++$as_echo "$as_me: failed program was:" >&5
+ sed 's/^/| /' conftest.$ac_ext >&5
+ 
+ { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+@@ -3914,51 +3912,18 @@ $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+ { as_fn_set_status 77
+ as_fn_error "C compiler cannot create executables
+ See \`config.log' for more details." "$LINENO" 5; }; }
++else
++  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
++$as_echo "yes" >&6; }
+ fi
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for C compiler default output file name" >&5
++$as_echo_n "checking for C compiler default output file name... " >&6; }
++{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_file" >&5
++$as_echo "$ac_file" >&6; }
+ ac_exeext=$ac_cv_exeext
+ 
+-# Check that the compiler produces executables we can run.  If not, either
+-# the compiler is broken, or we cross compile.
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the C compiler works" >&5
+-$as_echo_n "checking whether the C compiler works... " >&6; }
+-# If not cross compiling, check that we can run a simple program.
+-if test "$cross_compiling" != yes; then
+-  if { ac_try='./$ac_file'
+-  { { case "(($ac_try" in
+-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+-  *) ac_try_echo=$ac_try;;
+-esac
+-eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
+-$as_echo "$ac_try_echo"; } >&5
+-  (eval "$ac_try") 2>&5
+-  ac_status=$?
+-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+-  test $ac_status = 0; }; }; then
+-    cross_compiling=no
+-  else
+-    if test "$cross_compiling" = maybe; then
+-	cross_compiling=yes
+-    else
+-	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error "cannot run C compiled programs.
+-If you meant to cross compile, use \`--host'.
+-See \`config.log' for more details." "$LINENO" 5; }
+-    fi
+-  fi
+-fi
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+-$as_echo "yes" >&6; }
+-
+-rm -f -r a.out a.out.dSYM a.exe conftest$ac_cv_exeext b.out conftest.out
++rm -f -r a.out a.out.dSYM a.exe conftest$ac_cv_exeext b.out
+ ac_clean_files=$ac_clean_files_save
+-# Check that the compiler produces executables we can run.  If not, either
+-# the compiler is broken, or we cross compile.
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we are cross compiling" >&5
+-$as_echo_n "checking whether we are cross compiling... " >&6; }
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $cross_compiling" >&5
+-$as_echo "$cross_compiling" >&6; }
+-
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for suffix of executables" >&5
+ $as_echo_n "checking for suffix of executables... " >&6; }
+ if { { ac_try="$ac_link"
+@@ -3991,13 +3956,72 @@ $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+ as_fn_error "cannot compute suffix of executables: cannot compile and link
+ See \`config.log' for more details." "$LINENO" 5; }
+ fi
+-rm -f conftest$ac_cv_exeext
++rm -f conftest conftest$ac_cv_exeext
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_exeext" >&5
+ $as_echo "$ac_cv_exeext" >&6; }
+ 
+ rm -f conftest.$ac_ext
+ EXEEXT=$ac_cv_exeext
+ ac_exeext=$EXEEXT
++cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++/* end confdefs.h.  */
++#include <stdio.h>
++int
++main ()
++{
++FILE *f = fopen ("conftest.out", "w");
++ return ferror (f) || fclose (f) != 0;
++
++  ;
++  return 0;
++}
++_ACEOF
++ac_clean_files="$ac_clean_files conftest.out"
++# Check that the compiler produces executables we can run.  If not, either
++# the compiler is broken, or we cross compile.
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether we are cross compiling" >&5
++$as_echo_n "checking whether we are cross compiling... " >&6; }
++if test "$cross_compiling" != yes; then
++  { { ac_try="$ac_link"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
++$as_echo "$ac_try_echo"; } >&5
++  (eval "$ac_link") 2>&5
++  ac_status=$?
++  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
++  test $ac_status = 0; }
++  if { ac_try='./conftest$ac_cv_exeext'
++  { { case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:${as_lineno-$LINENO}: $ac_try_echo\""
++$as_echo "$ac_try_echo"; } >&5
++  (eval "$ac_try") 2>&5
++  ac_status=$?
++  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
++  test $ac_status = 0; }; }; then
++    cross_compiling=no
++  else
++    if test "$cross_compiling" = maybe; then
++	cross_compiling=yes
++    else
++	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
++$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
++as_fn_error "cannot run C compiled programs.
++If you meant to cross compile, use \`--host'.
++See \`config.log' for more details." "$LINENO" 5; }
++    fi
++  fi
++fi
++{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $cross_compiling" >&5
++$as_echo "$cross_compiling" >&6; }
++
++rm -f conftest.$ac_ext conftest$ac_cv_exeext conftest.out
++ac_clean_files=$ac_clean_files_save
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for suffix of object files" >&5
+ $as_echo_n "checking for suffix of object files... " >&6; }
+ if test "${ac_cv_objext+set}" = set; then :
+@@ -4654,8 +4678,8 @@ INTLTOOL_SOUNDLIST_RULE='%.soundlist: %.soundlist.in $(INTLTOOL_MERGE) $(wildcar
+ 
+ 
+ # Check the gettext tools to make sure they are GNU
+-# Extract the first word of "xgettext", so it can be a program name with args.
+-set dummy xgettext; ac_word=$2
++# Extract the first word of "gxgettext", so it can be a program name with args.
++set dummy gxgettext; ac_word=$2
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+ $as_echo_n "checking for $ac_word... " >&6; }
+ if test "${ac_cv_path_XGETTEXT+set}" = set; then :
+@@ -4694,8 +4718,8 @@ $as_echo "no" >&6; }
+ fi
+ 
+ 
+-# Extract the first word of "msgmerge", so it can be a program name with args.
+-set dummy msgmerge; ac_word=$2
++# Extract the first word of "gmsgmerge", so it can be a program name with args.
++set dummy gmsgmerge; ac_word=$2
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+ $as_echo_n "checking for $ac_word... " >&6; }
+ if test "${ac_cv_path_MSGMERGE+set}" = set; then :
+@@ -4734,8 +4758,8 @@ $as_echo "no" >&6; }
+ fi
+ 
+ 
+-# Extract the first word of "msgfmt", so it can be a program name with args.
+-set dummy msgfmt; ac_word=$2
++# Extract the first word of "gmsgfmt", so it can be a program name with args.
++set dummy gmsgfmt; ac_word=$2
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+ $as_echo_n "checking for $ac_word... " >&6; }
+ if test "${ac_cv_path_MSGFMT+set}" = set; then :
+@@ -5312,8 +5336,8 @@ $as_echo "$ac_try_echo"; } >&5
+ ... rest of stderr output deleted ...
+          10q' conftest.err >conftest.er1
+     cat conftest.er1 >&5
+-    rm -f conftest.er1 conftest.err
+   fi
++  rm -f conftest.er1 conftest.err
+   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+   test $ac_status = 0; }
+ done
+@@ -6045,8 +6069,8 @@ esac
+ 
+ 
+ 
+-macro_version='2.2.6'
+-macro_revision='1.3012'
++macro_version='2.2.6b'
++macro_revision='1.3017'
+ 
+ 
+ 
+@@ -6587,13 +6611,13 @@ if test "${lt_cv_nm_interface+set}" = set; then :
+ else
+   lt_cv_nm_interface="BSD nm"
+   echo "int some_variable = 0;" > conftest.$ac_ext
+-  (eval echo "\"\$as_me:6590: $ac_compile\"" >&5)
++  (eval echo "\"\$as_me:6614: $ac_compile\"" >&5)
+   (eval "$ac_compile" 2>conftest.err)
+   cat conftest.err >&5
+-  (eval echo "\"\$as_me:6593: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
++  (eval echo "\"\$as_me:6617: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
+   cat conftest.err >&5
+-  (eval echo "\"\$as_me:6596: output\"" >&5)
++  (eval echo "\"\$as_me:6620: output\"" >&5)
+   cat conftest.out >&5
+   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
+     lt_cv_nm_interface="MS dumpbin"
+@@ -7063,7 +7087,7 @@ linux* | k*bsd*-gnu)
+   lt_cv_deplibs_check_method=pass_all
+   ;;
+ 
+-netbsd* | netbsdelf*-gnu)
++netbsd*)
+   if echo __ELF__ | $CC -E - | $GREP __ELF__ > /dev/null; then
+     lt_cv_deplibs_check_method='match_pattern /lib[^/]+(\.so\.[0-9]+\.[0-9]+|_pic\.a)$'
+   else
+@@ -7798,7 +7822,7 @@ ia64-*-hpux*)
+   ;;
+ *-*-irix6*)
+   # Find out which ABI we are using.
+-  echo '#line 7801 "configure"' > conftest.$ac_ext
++  echo '#line 7825 "configure"' > conftest.$ac_ext
+   if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
+   (eval $ac_compile) 2>&5
+   ac_status=$?
+@@ -9078,11 +9102,11 @@ else
+    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
+    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
+    -e 's:$: $lt_compiler_flag:'`
+-   (eval echo "\"\$as_me:9081: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:9105: $lt_compile\"" >&5)
+    (eval "$lt_compile" 2>conftest.err)
+    ac_status=$?
+    cat conftest.err >&5
+-   echo "$as_me:9085: \$? = $ac_status" >&5
++   echo "$as_me:9109: \$? = $ac_status" >&5
+    if (exit $ac_status) && test -s "$ac_outfile"; then
+      # The compiler can only warn and ignore the option if not recognized
+      # So say no if there are warnings other than the usual output.
+@@ -9417,11 +9441,11 @@ else
+    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
+    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
+    -e 's:$: $lt_compiler_flag:'`
+-   (eval echo "\"\$as_me:9420: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:9444: $lt_compile\"" >&5)
+    (eval "$lt_compile" 2>conftest.err)
+    ac_status=$?
+    cat conftest.err >&5
+-   echo "$as_me:9424: \$? = $ac_status" >&5
++   echo "$as_me:9448: \$? = $ac_status" >&5
+    if (exit $ac_status) && test -s "$ac_outfile"; then
+      # The compiler can only warn and ignore the option if not recognized
+      # So say no if there are warnings other than the usual output.
+@@ -9522,11 +9546,11 @@ else
+    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
+    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
+    -e 's:$: $lt_compiler_flag:'`
+-   (eval echo "\"\$as_me:9525: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:9549: $lt_compile\"" >&5)
+    (eval "$lt_compile" 2>out/conftest.err)
+    ac_status=$?
+    cat out/conftest.err >&5
+-   echo "$as_me:9529: \$? = $ac_status" >&5
++   echo "$as_me:9553: \$? = $ac_status" >&5
+    if (exit $ac_status) && test -s out/conftest2.$ac_objext
+    then
+      # The compiler can only warn and ignore the option if not recognized
+@@ -9577,11 +9601,11 @@ else
+    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
+    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
+    -e 's:$: $lt_compiler_flag:'`
+-   (eval echo "\"\$as_me:9580: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:9604: $lt_compile\"" >&5)
+    (eval "$lt_compile" 2>out/conftest.err)
+    ac_status=$?
+    cat out/conftest.err >&5
+-   echo "$as_me:9584: \$? = $ac_status" >&5
++   echo "$as_me:9608: \$? = $ac_status" >&5
+    if (exit $ac_status) && test -s out/conftest2.$ac_objext
+    then
+      # The compiler can only warn and ignore the option if not recognized
+@@ -9696,9 +9720,6 @@ $as_echo_n "checking whether the $compiler linker ($LD) supports shared librarie
+   openbsd*)
+     with_gnu_ld=no
+     ;;
+-  linux* | k*bsd*-gnu)
+-    link_all_deplibs=no
+-    ;;
+   esac
+ 
+   ld_shlibs=yes
+@@ -9881,7 +9902,7 @@ _LT_EOF
+       fi
+       ;;
+ 
+-    netbsd* | netbsdelf*-gnu)
++    netbsd*)
+       if echo __ELF__ | $CC -E - | $GREP __ELF__ >/dev/null; then
+ 	archive_cmds='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
+ 	wlarc=
+@@ -10056,7 +10077,6 @@ _LT_EOF
+ 	if test "$aix_use_runtimelinking" = yes; then
+ 	  shared_flag="$shared_flag "'${wl}-G'
+ 	fi
+-	link_all_deplibs=no
+       else
+ 	# not using gcc
+ 	if test "$host_cpu" = ia64; then
+@@ -10383,7 +10403,7 @@ rm -f core conftest.err conftest.$ac_objext \
+       link_all_deplibs=yes
+       ;;
+ 
+-    netbsd* | netbsdelf*-gnu)
++    netbsd*)
+       if echo __ELF__ | $CC -E - | $GREP __ELF__ >/dev/null; then
+ 	archive_cmds='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
+       else
+@@ -11328,18 +11348,6 @@ rm -f core conftest.err conftest.$ac_objext \
+   dynamic_linker='GNU/Linux ld.so'
+   ;;
+ 
+-netbsdelf*-gnu)
+-  version_type=linux
+-  need_lib_prefix=no
+-  need_version=no
+-  library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major ${libname}${shared_ext}'
+-  soname_spec='${libname}${release}${shared_ext}$major'
+-  shlibpath_var=LD_LIBRARY_PATH
+-  shlibpath_overrides_runpath=no
+-  hardcode_into_libs=yes
+-  dynamic_linker='NetBSD ld.elf_so'
+-  ;;
+-
+ netbsd*)
+   version_type=sunos
+   need_lib_prefix=no
+@@ -11960,7 +11968,7 @@ else
+   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
+   lt_status=$lt_dlunknown
+   cat > conftest.$ac_ext <<_LT_EOF
+-#line 11963 "configure"
++#line 11971 "configure"
+ #include "confdefs.h"
+ 
+ #if HAVE_DLFCN_H
+@@ -12056,7 +12064,7 @@ else
+   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
+   lt_status=$lt_dlunknown
+   cat > conftest.$ac_ext <<_LT_EOF
+-#line 12059 "configure"
++#line 12067 "configure"
+ #include "confdefs.h"
+ 
+ #if HAVE_DLFCN_H
+@@ -12696,7 +12704,7 @@ Report bugs to <bug-libtool@gnu.org>."
+ 
+ lt_cl_version="\
+ rhythmbox config.lt 0.12.6
+-configured by $0, generated by GNU Autoconf 2.64.
++configured by $0, generated by GNU Autoconf 2.65.
+ 
+ Copyright (C) 2008 Free Software Foundation, Inc.
+ This config.lt script is free software; the Free Software Foundation
+@@ -14092,11 +14100,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for RB_CLIENT" >&5
+ $as_echo_n "checking for RB_CLIENT... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$RB_CLIENT_CFLAGS"; then
+-        pkg_cv_RB_CLIENT_CFLAGS="$RB_CLIENT_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$RB_CLIENT_CFLAGS"; then
++    pkg_cv_RB_CLIENT_CFLAGS="$RB_CLIENT_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"glib-2.0 >= \$GLIB_REQS gio-2.0 >= \$GLIB_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "glib-2.0 >= $GLIB_REQS gio-2.0 >= $GLIB_REQS") 2>&5
+   ac_status=$?
+@@ -14106,15 +14113,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$RB_CLIENT_LIBS"; then
+-        pkg_cv_RB_CLIENT_LIBS="$RB_CLIENT_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$RB_CLIENT_LIBS"; then
++    pkg_cv_RB_CLIENT_LIBS="$RB_CLIENT_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"glib-2.0 >= \$GLIB_REQS gio-2.0 >= \$GLIB_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "glib-2.0 >= $GLIB_REQS gio-2.0 >= $GLIB_REQS") 2>&5
+   ac_status=$?
+@@ -14124,9 +14129,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14139,9 +14143,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        RB_CLIENT_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "glib-2.0 >= $GLIB_REQS gio-2.0 >= $GLIB_REQS"`
++	        RB_CLIENT_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "glib-2.0 >= $GLIB_REQS gio-2.0 >= $GLIB_REQS" 2>&1`
+         else
+-	        RB_CLIENT_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "glib-2.0 >= $GLIB_REQS gio-2.0 >= $GLIB_REQS"`
++	        RB_CLIENT_PKG_ERRORS=`$PKG_CONFIG --print-errors "glib-2.0 >= $GLIB_REQS gio-2.0 >= $GLIB_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$RB_CLIENT_PKG_ERRORS" >&5
+@@ -14221,11 +14225,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for RHYTHMBOX" >&5
+ $as_echo_n "checking for RHYTHMBOX... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$RHYTHMBOX_CFLAGS"; then
+-        pkg_cv_RHYTHMBOX_CFLAGS="$RHYTHMBOX_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$RHYTHMBOX_CFLAGS"; then
++    pkg_cv_RHYTHMBOX_CFLAGS="$RHYTHMBOX_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\\
+ 		  gtk+-2.0 >= \$GTK_REQS			\\
+ 		  glib-2.0 >= \$GLIB_REQS		\\
+@@ -14259,15 +14262,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$RHYTHMBOX_LIBS"; then
+-        pkg_cv_RHYTHMBOX_LIBS="$RHYTHMBOX_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$RHYTHMBOX_LIBS"; then
++    pkg_cv_RHYTHMBOX_LIBS="$RHYTHMBOX_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\\
+ 		  gtk+-2.0 >= \$GTK_REQS			\\
+ 		  glib-2.0 >= \$GLIB_REQS		\\
+@@ -14301,9 +14302,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14316,7 +14316,7 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        RHYTHMBOX_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "\
++	        RHYTHMBOX_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "\
+ 		  gtk+-2.0 >= $GTK_REQS			\
+ 		  glib-2.0 >= $GLIB_REQS		\
+ 		  gio-2.0 >= $GLIB_REQS			\
+@@ -14324,9 +14324,9 @@ fi
+ 		  gnome-media-profiles >= $GNOME_MEDIA_PROFILES_REQS \
+ 		  libsoup-2.4 >= $LIBSOUP_REQS		\
+ 		  libsoup-gnome-2.4 >= $LIBSOUP_REQS	\
+-		  $LIBGNOME_REQS"`
++		  $LIBGNOME_REQS" 2>&1`
+         else
+-	        RHYTHMBOX_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "\
++	        RHYTHMBOX_PKG_ERRORS=`$PKG_CONFIG --print-errors "\
+ 		  gtk+-2.0 >= $GTK_REQS			\
+ 		  glib-2.0 >= $GLIB_REQS		\
+ 		  gio-2.0 >= $GLIB_REQS			\
+@@ -14334,7 +14334,7 @@ fi
+ 		  gnome-media-profiles >= $GNOME_MEDIA_PROFILES_REQS \
+ 		  libsoup-2.4 >= $LIBSOUP_REQS		\
+ 		  libsoup-gnome-2.4 >= $LIBSOUP_REQS	\
+-		  $LIBGNOME_REQS"`
++		  $LIBGNOME_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$RHYTHMBOX_PKG_ERRORS" >&5
+@@ -14384,11 +14384,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for TOTEM_PLPARSER" >&5
+ $as_echo_n "checking for TOTEM_PLPARSER... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$TOTEM_PLPARSER_CFLAGS"; then
+-        pkg_cv_TOTEM_PLPARSER_CFLAGS="$TOTEM_PLPARSER_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$TOTEM_PLPARSER_CFLAGS"; then
++    pkg_cv_TOTEM_PLPARSER_CFLAGS="$TOTEM_PLPARSER_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"totem-plparser >= \$TOTEM_PLPARSER_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "totem-plparser >= $TOTEM_PLPARSER_REQS") 2>&5
+   ac_status=$?
+@@ -14398,15 +14397,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$TOTEM_PLPARSER_LIBS"; then
+-        pkg_cv_TOTEM_PLPARSER_LIBS="$TOTEM_PLPARSER_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$TOTEM_PLPARSER_LIBS"; then
++    pkg_cv_TOTEM_PLPARSER_LIBS="$TOTEM_PLPARSER_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"totem-plparser >= \$TOTEM_PLPARSER_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "totem-plparser >= $TOTEM_PLPARSER_REQS") 2>&5
+   ac_status=$?
+@@ -14416,9 +14413,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14431,9 +14427,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        TOTEM_PLPARSER_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "totem-plparser >= $TOTEM_PLPARSER_REQS"`
++	        TOTEM_PLPARSER_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "totem-plparser >= $TOTEM_PLPARSER_REQS" 2>&1`
+         else
+-	        TOTEM_PLPARSER_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "totem-plparser >= $TOTEM_PLPARSER_REQS"`
++	        TOTEM_PLPARSER_PKG_ERRORS=`$PKG_CONFIG --print-errors "totem-plparser >= $TOTEM_PLPARSER_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$TOTEM_PLPARSER_PKG_ERRORS" >&5
+@@ -14472,11 +14468,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GUDEV" >&5
+ $as_echo_n "checking for GUDEV... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GUDEV_CFLAGS"; then
+-        pkg_cv_GUDEV_CFLAGS="$GUDEV_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GUDEV_CFLAGS"; then
++    pkg_cv_GUDEV_CFLAGS="$GUDEV_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gudev-1.0 >= \$GUDEV_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "gudev-1.0 >= $GUDEV_REQS") 2>&5
+   ac_status=$?
+@@ -14486,15 +14481,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GUDEV_LIBS"; then
+-        pkg_cv_GUDEV_LIBS="$GUDEV_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GUDEV_LIBS"; then
++    pkg_cv_GUDEV_LIBS="$GUDEV_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gudev-1.0 >= \$GUDEV_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "gudev-1.0 >= $GUDEV_REQS") 2>&5
+   ac_status=$?
+@@ -14504,9 +14497,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14519,9 +14511,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        GUDEV_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gudev-1.0 >= $GUDEV_REQS"`
++	        GUDEV_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "gudev-1.0 >= $GUDEV_REQS" 2>&1`
+         else
+-	        GUDEV_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gudev-1.0 >= $GUDEV_REQS"`
++	        GUDEV_PKG_ERRORS=`$PKG_CONFIG --print-errors "gudev-1.0 >= $GUDEV_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$GUDEV_PKG_ERRORS" >&5
+@@ -14575,11 +14567,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for HAL" >&5
+ $as_echo_n "checking for HAL... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$HAL_CFLAGS"; then
+-        pkg_cv_HAL_CFLAGS="$HAL_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$HAL_CFLAGS"; then
++    pkg_cv_HAL_CFLAGS="$HAL_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"hal >= 0.5 hal < 0.6\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "hal >= 0.5 hal < 0.6") 2>&5
+   ac_status=$?
+@@ -14589,15 +14580,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$HAL_LIBS"; then
+-        pkg_cv_HAL_LIBS="$HAL_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$HAL_LIBS"; then
++    pkg_cv_HAL_LIBS="$HAL_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"hal >= 0.5 hal < 0.6\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "hal >= 0.5 hal < 0.6") 2>&5
+   ac_status=$?
+@@ -14607,9 +14596,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14622,9 +14610,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        HAL_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "hal >= 0.5 hal < 0.6"`
++	        HAL_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "hal >= 0.5 hal < 0.6" 2>&1`
+         else
+-	        HAL_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "hal >= 0.5 hal < 0.6"`
++	        HAL_PKG_ERRORS=`$PKG_CONFIG --print-errors "hal >= 0.5 hal < 0.6" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$HAL_PKG_ERRORS" >&5
+@@ -14677,11 +14665,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for IPOD" >&5
+ $as_echo_n "checking for IPOD... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$IPOD_CFLAGS"; then
+-        pkg_cv_IPOD_CFLAGS="$IPOD_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$IPOD_CFLAGS"; then
++    pkg_cv_IPOD_CFLAGS="$IPOD_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgpod-1.0 >= \$LIBGPOD_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libgpod-1.0 >= $LIBGPOD_REQS") 2>&5
+   ac_status=$?
+@@ -14691,15 +14678,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$IPOD_LIBS"; then
+-        pkg_cv_IPOD_LIBS="$IPOD_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$IPOD_LIBS"; then
++    pkg_cv_IPOD_LIBS="$IPOD_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libgpod-1.0 >= \$LIBGPOD_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libgpod-1.0 >= $LIBGPOD_REQS") 2>&5
+   ac_status=$?
+@@ -14709,9 +14694,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14724,9 +14708,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        IPOD_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libgpod-1.0 >= $LIBGPOD_REQS"`
++	        IPOD_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libgpod-1.0 >= $LIBGPOD_REQS" 2>&1`
+         else
+-	        IPOD_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libgpod-1.0 >= $LIBGPOD_REQS"`
++	        IPOD_PKG_ERRORS=`$PKG_CONFIG --print-errors "libgpod-1.0 >= $LIBGPOD_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$IPOD_PKG_ERRORS" >&5
+@@ -14780,11 +14764,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for MTP" >&5
+ $as_echo_n "checking for MTP... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$MTP_CFLAGS"; then
+-        pkg_cv_MTP_CFLAGS="$MTP_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$MTP_CFLAGS"; then
++    pkg_cv_MTP_CFLAGS="$MTP_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmtp >= \$LIBMTP_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libmtp >= $LIBMTP_REQS") 2>&5
+   ac_status=$?
+@@ -14794,15 +14777,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$MTP_LIBS"; then
+-        pkg_cv_MTP_LIBS="$MTP_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$MTP_LIBS"; then
++    pkg_cv_MTP_LIBS="$MTP_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmtp >= \$LIBMTP_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libmtp >= $LIBMTP_REQS") 2>&5
+   ac_status=$?
+@@ -14812,9 +14793,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14827,9 +14807,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        MTP_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libmtp >= $LIBMTP_REQS"`
++	        MTP_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libmtp >= $LIBMTP_REQS" 2>&1`
+         else
+-	        MTP_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libmtp >= $LIBMTP_REQS"`
++	        MTP_PKG_ERRORS=`$PKG_CONFIG --print-errors "libmtp >= $LIBMTP_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$MTP_PKG_ERRORS" >&5
+@@ -14886,11 +14866,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GNOME_KEYRING" >&5
+ $as_echo_n "checking for GNOME_KEYRING... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GNOME_KEYRING_CFLAGS"; then
+-        pkg_cv_GNOME_KEYRING_CFLAGS="$GNOME_KEYRING_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GNOME_KEYRING_CFLAGS"; then
++    pkg_cv_GNOME_KEYRING_CFLAGS="$GNOME_KEYRING_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gnome-keyring-1\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "gnome-keyring-1") 2>&5
+   ac_status=$?
+@@ -14900,15 +14879,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GNOME_KEYRING_LIBS"; then
+-        pkg_cv_GNOME_KEYRING_LIBS="$GNOME_KEYRING_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GNOME_KEYRING_LIBS"; then
++    pkg_cv_GNOME_KEYRING_LIBS="$GNOME_KEYRING_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gnome-keyring-1\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "gnome-keyring-1") 2>&5
+   ac_status=$?
+@@ -14918,9 +14895,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -14933,9 +14909,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        GNOME_KEYRING_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gnome-keyring-1"`
++	        GNOME_KEYRING_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "gnome-keyring-1" 2>&1`
+         else
+-	        GNOME_KEYRING_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gnome-keyring-1"`
++	        GNOME_KEYRING_PKG_ERRORS=`$PKG_CONFIG --print-errors "gnome-keyring-1" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$GNOME_KEYRING_PKG_ERRORS" >&5
+@@ -15022,11 +14998,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GSTREAMER_0_10" >&5
+ $as_echo_n "checking for GSTREAMER_0_10... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GSTREAMER_0_10_CFLAGS"; then
+-        pkg_cv_GSTREAMER_0_10_CFLAGS="$GSTREAMER_0_10_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GSTREAMER_0_10_CFLAGS"; then
++    pkg_cv_GSTREAMER_0_10_CFLAGS="$GSTREAMER_0_10_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\\
+ 	gstreamer-0.10 >= \$GST_0_10_REQS
+ 	gstreamer-base-0.10 >= \$GST_0_10_REQS
+@@ -15045,15 +15020,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GSTREAMER_0_10_LIBS"; then
+-        pkg_cv_GSTREAMER_0_10_LIBS="$GSTREAMER_0_10_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GSTREAMER_0_10_LIBS"; then
++    pkg_cv_GSTREAMER_0_10_LIBS="$GSTREAMER_0_10_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\\
+ 	gstreamer-0.10 >= \$GST_0_10_REQS
+ 	gstreamer-base-0.10 >= \$GST_0_10_REQS
+@@ -15072,9 +15045,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -15087,15 +15059,15 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        GSTREAMER_0_10_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "\
++	        GSTREAMER_0_10_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "\
+ 	gstreamer-0.10 >= $GST_0_10_REQS
+ 	gstreamer-base-0.10 >= $GST_0_10_REQS
+-	gstreamer-plugins-base-0.10 >= $GST_0_10_REQS"`
++	gstreamer-plugins-base-0.10 >= $GST_0_10_REQS" 2>&1`
+         else
+-	        GSTREAMER_0_10_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "\
++	        GSTREAMER_0_10_PKG_ERRORS=`$PKG_CONFIG --print-errors "\
+ 	gstreamer-0.10 >= $GST_0_10_REQS
+ 	gstreamer-base-0.10 >= $GST_0_10_REQS
+-	gstreamer-plugins-base-0.10 >= $GST_0_10_REQS"`
++	gstreamer-plugins-base-0.10 >= $GST_0_10_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$GSTREAMER_0_10_PKG_ERRORS" >&5
+@@ -15162,11 +15134,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for AVAHI" >&5
+ $as_echo_n "checking for AVAHI... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$AVAHI_CFLAGS"; then
+-        pkg_cv_AVAHI_CFLAGS="$AVAHI_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$AVAHI_CFLAGS"; then
++    pkg_cv_AVAHI_CFLAGS="$AVAHI_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"avahi-client >= \$AVAHI_REQS
+    avahi-glib >= \$AVAHI_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "avahi-client >= $AVAHI_REQS
+@@ -15179,15 +15150,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$AVAHI_LIBS"; then
+-        pkg_cv_AVAHI_LIBS="$AVAHI_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$AVAHI_LIBS"; then
++    pkg_cv_AVAHI_LIBS="$AVAHI_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"avahi-client >= \$AVAHI_REQS
+    avahi-glib >= \$AVAHI_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "avahi-client >= $AVAHI_REQS
+@@ -15200,9 +15169,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -15215,11 +15183,11 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        AVAHI_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "avahi-client >= $AVAHI_REQS
+-   avahi-glib >= $AVAHI_REQS"`
++	        AVAHI_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "avahi-client >= $AVAHI_REQS
++   avahi-glib >= $AVAHI_REQS" 2>&1`
+         else
+-	        AVAHI_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "avahi-client >= $AVAHI_REQS
+-   avahi-glib >= $AVAHI_REQS"`
++	        AVAHI_PKG_ERRORS=`$PKG_CONFIG --print-errors "avahi-client >= $AVAHI_REQS
++   avahi-glib >= $AVAHI_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$AVAHI_PKG_ERRORS" >&5
+@@ -15275,11 +15243,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for NOTIFY" >&5
+ $as_echo_n "checking for NOTIFY... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$NOTIFY_CFLAGS"; then
+-        pkg_cv_NOTIFY_CFLAGS="$NOTIFY_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$NOTIFY_CFLAGS"; then
++    pkg_cv_NOTIFY_CFLAGS="$NOTIFY_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\\
+ 			  libnotify >= \$LIBNOTIFY_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "\
+@@ -15292,15 +15259,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$NOTIFY_LIBS"; then
+-        pkg_cv_NOTIFY_LIBS="$NOTIFY_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$NOTIFY_LIBS"; then
++    pkg_cv_NOTIFY_LIBS="$NOTIFY_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\\
+ 			  libnotify >= \$LIBNOTIFY_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "\
+@@ -15313,9 +15278,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -15328,11 +15292,11 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        NOTIFY_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "\
+-			  libnotify >= $LIBNOTIFY_REQS"`
++	        NOTIFY_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "\
++			  libnotify >= $LIBNOTIFY_REQS" 2>&1`
+         else
+-	        NOTIFY_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "\
+-			  libnotify >= $LIBNOTIFY_REQS"`
++	        NOTIFY_PKG_ERRORS=`$PKG_CONFIG --print-errors "\
++			  libnotify >= $LIBNOTIFY_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$NOTIFY_PKG_ERRORS" >&5
+@@ -15466,11 +15430,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GSTCDDA" >&5
+ $as_echo_n "checking for GSTCDDA... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GSTCDDA_CFLAGS"; then
+-        pkg_cv_GSTCDDA_CFLAGS="$GSTCDDA_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GSTCDDA_CFLAGS"; then
++    pkg_cv_GSTCDDA_CFLAGS="$GSTCDDA_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gstreamer-cdda-0.10\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "gstreamer-cdda-0.10") 2>&5
+   ac_status=$?
+@@ -15480,15 +15443,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$GSTCDDA_LIBS"; then
+-        pkg_cv_GSTCDDA_LIBS="$GSTCDDA_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$GSTCDDA_LIBS"; then
++    pkg_cv_GSTCDDA_LIBS="$GSTCDDA_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"gstreamer-cdda-0.10\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "gstreamer-cdda-0.10") 2>&5
+   ac_status=$?
+@@ -15498,9 +15459,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -15513,9 +15473,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        GSTCDDA_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "gstreamer-cdda-0.10"`
++	        GSTCDDA_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "gstreamer-cdda-0.10" 2>&1`
+         else
+-	        GSTCDDA_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "gstreamer-cdda-0.10"`
++	        GSTCDDA_PKG_ERRORS=`$PKG_CONFIG --print-errors "gstreamer-cdda-0.10" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$GSTCDDA_PKG_ERRORS" >&5
+@@ -15566,11 +15526,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for MUSICBRAINZ3" >&5
+ $as_echo_n "checking for MUSICBRAINZ3... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$MUSICBRAINZ3_CFLAGS"; then
+-        pkg_cv_MUSICBRAINZ3_CFLAGS="$MUSICBRAINZ3_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$MUSICBRAINZ3_CFLAGS"; then
++    pkg_cv_MUSICBRAINZ3_CFLAGS="$MUSICBRAINZ3_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmusicbrainz3 >= \$MUSICBRAINZ3_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libmusicbrainz3 >= $MUSICBRAINZ3_REQS") 2>&5
+   ac_status=$?
+@@ -15580,15 +15539,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$MUSICBRAINZ3_LIBS"; then
+-        pkg_cv_MUSICBRAINZ3_LIBS="$MUSICBRAINZ3_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$MUSICBRAINZ3_LIBS"; then
++    pkg_cv_MUSICBRAINZ3_LIBS="$MUSICBRAINZ3_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmusicbrainz3 >= \$MUSICBRAINZ3_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libmusicbrainz3 >= $MUSICBRAINZ3_REQS") 2>&5
+   ac_status=$?
+@@ -15598,9 +15555,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -15613,9 +15569,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        MUSICBRAINZ3_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libmusicbrainz3 >= $MUSICBRAINZ3_REQS"`
++	        MUSICBRAINZ3_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libmusicbrainz3 >= $MUSICBRAINZ3_REQS" 2>&1`
+         else
+-	        MUSICBRAINZ3_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libmusicbrainz3 >= $MUSICBRAINZ3_REQS"`
++	        MUSICBRAINZ3_PKG_ERRORS=`$PKG_CONFIG --print-errors "libmusicbrainz3 >= $MUSICBRAINZ3_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$MUSICBRAINZ3_PKG_ERRORS" >&5
+@@ -15637,11 +15593,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for MUSICBRAINZ" >&5
+ $as_echo_n "checking for MUSICBRAINZ... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$MUSICBRAINZ_CFLAGS"; then
+-        pkg_cv_MUSICBRAINZ_CFLAGS="$MUSICBRAINZ_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$MUSICBRAINZ_CFLAGS"; then
++    pkg_cv_MUSICBRAINZ_CFLAGS="$MUSICBRAINZ_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmusicbrainz >= \$MUSICBRAINZ_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libmusicbrainz >= $MUSICBRAINZ_REQS") 2>&5
+   ac_status=$?
+@@ -15651,15 +15606,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$MUSICBRAINZ_LIBS"; then
+-        pkg_cv_MUSICBRAINZ_LIBS="$MUSICBRAINZ_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$MUSICBRAINZ_LIBS"; then
++    pkg_cv_MUSICBRAINZ_LIBS="$MUSICBRAINZ_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libmusicbrainz >= \$MUSICBRAINZ_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libmusicbrainz >= $MUSICBRAINZ_REQS") 2>&5
+   ac_status=$?
+@@ -15669,9 +15622,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -15684,9 +15636,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        MUSICBRAINZ_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libmusicbrainz >= $MUSICBRAINZ_REQS"`
++	        MUSICBRAINZ_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libmusicbrainz >= $MUSICBRAINZ_REQS" 2>&1`
+         else
+-	        MUSICBRAINZ_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libmusicbrainz >= $MUSICBRAINZ_REQS"`
++	        MUSICBRAINZ_PKG_ERRORS=`$PKG_CONFIG --print-errors "libmusicbrainz >= $MUSICBRAINZ_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$MUSICBRAINZ_PKG_ERRORS" >&5
+@@ -16499,11 +16451,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for LIBBRASERO_MEDIA" >&5
+ $as_echo_n "checking for LIBBRASERO_MEDIA... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$LIBBRASERO_MEDIA_CFLAGS"; then
+-        pkg_cv_LIBBRASERO_MEDIA_CFLAGS="$LIBBRASERO_MEDIA_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$LIBBRASERO_MEDIA_CFLAGS"; then
++    pkg_cv_LIBBRASERO_MEDIA_CFLAGS="$LIBBRASERO_MEDIA_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libbrasero-media >= \$BRASERO_MIN_REQS gtk+-x11-2.0\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libbrasero-media >= $BRASERO_MIN_REQS gtk+-x11-2.0") 2>&5
+   ac_status=$?
+@@ -16513,15 +16464,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$LIBBRASERO_MEDIA_LIBS"; then
+-        pkg_cv_LIBBRASERO_MEDIA_LIBS="$LIBBRASERO_MEDIA_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$LIBBRASERO_MEDIA_LIBS"; then
++    pkg_cv_LIBBRASERO_MEDIA_LIBS="$LIBBRASERO_MEDIA_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libbrasero-media >= \$BRASERO_MIN_REQS gtk+-x11-2.0\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libbrasero-media >= $BRASERO_MIN_REQS gtk+-x11-2.0") 2>&5
+   ac_status=$?
+@@ -16531,9 +16480,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -16546,9 +16494,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        LIBBRASERO_MEDIA_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libbrasero-media >= $BRASERO_MIN_REQS gtk+-x11-2.0"`
++	        LIBBRASERO_MEDIA_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libbrasero-media >= $BRASERO_MIN_REQS gtk+-x11-2.0" 2>&1`
+         else
+-	        LIBBRASERO_MEDIA_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libbrasero-media >= $BRASERO_MIN_REQS gtk+-x11-2.0"`
++	        LIBBRASERO_MEDIA_PKG_ERRORS=`$PKG_CONFIG --print-errors "libbrasero-media >= $BRASERO_MIN_REQS gtk+-x11-2.0" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$LIBBRASERO_MEDIA_PKG_ERRORS" >&5
+@@ -16596,11 +16544,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for LIBNAUTILUS_BURN" >&5
+ $as_echo_n "checking for LIBNAUTILUS_BURN... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$LIBNAUTILUS_BURN_CFLAGS"; then
+-        pkg_cv_LIBNAUTILUS_BURN_CFLAGS="$LIBNAUTILUS_BURN_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$LIBNAUTILUS_BURN_CFLAGS"; then
++    pkg_cv_LIBNAUTILUS_BURN_CFLAGS="$LIBNAUTILUS_BURN_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libnautilus-burn >= \$NCB_MIN_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libnautilus-burn >= $NCB_MIN_REQS") 2>&5
+   ac_status=$?
+@@ -16610,15 +16557,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$LIBNAUTILUS_BURN_LIBS"; then
+-        pkg_cv_LIBNAUTILUS_BURN_LIBS="$LIBNAUTILUS_BURN_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$LIBNAUTILUS_BURN_LIBS"; then
++    pkg_cv_LIBNAUTILUS_BURN_LIBS="$LIBNAUTILUS_BURN_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libnautilus-burn >= \$NCB_MIN_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libnautilus-burn >= $NCB_MIN_REQS") 2>&5
+   ac_status=$?
+@@ -16628,9 +16573,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -16643,9 +16587,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        LIBNAUTILUS_BURN_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libnautilus-burn >= $NCB_MIN_REQS"`
++	        LIBNAUTILUS_BURN_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libnautilus-burn >= $NCB_MIN_REQS" 2>&1`
+         else
+-	        LIBNAUTILUS_BURN_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libnautilus-burn >= $NCB_MIN_REQS"`
++	        LIBNAUTILUS_BURN_PKG_ERRORS=`$PKG_CONFIG --print-errors "libnautilus-burn >= $NCB_MIN_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$LIBNAUTILUS_BURN_PKG_ERRORS" >&5
+@@ -17575,11 +17519,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for DBUS" >&5
+ $as_echo_n "checking for DBUS... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$DBUS_CFLAGS"; then
+-        pkg_cv_DBUS_CFLAGS="$DBUS_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$DBUS_CFLAGS"; then
++    pkg_cv_DBUS_CFLAGS="$DBUS_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"dbus-glib-1 >= \$DBUS_MIN_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "dbus-glib-1 >= $DBUS_MIN_REQS") 2>&5
+   ac_status=$?
+@@ -17589,15 +17532,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$DBUS_LIBS"; then
+-        pkg_cv_DBUS_LIBS="$DBUS_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$DBUS_LIBS"; then
++    pkg_cv_DBUS_LIBS="$DBUS_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"dbus-glib-1 >= \$DBUS_MIN_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "dbus-glib-1 >= $DBUS_MIN_REQS") 2>&5
+   ac_status=$?
+@@ -17607,9 +17548,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -17622,9 +17562,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        DBUS_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "dbus-glib-1 >= $DBUS_MIN_REQS"`
++	        DBUS_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "dbus-glib-1 >= $DBUS_MIN_REQS" 2>&1`
+         else
+-	        DBUS_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "dbus-glib-1 >= $DBUS_MIN_REQS"`
++	        DBUS_PKG_ERRORS=`$PKG_CONFIG --print-errors "dbus-glib-1 >= $DBUS_MIN_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$DBUS_PKG_ERRORS" >&5
+@@ -17842,11 +17782,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for LIBSEXY" >&5
+ $as_echo_n "checking for LIBSEXY... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$LIBSEXY_CFLAGS"; then
+-        pkg_cv_LIBSEXY_CFLAGS="$LIBSEXY_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$LIBSEXY_CFLAGS"; then
++    pkg_cv_LIBSEXY_CFLAGS="$LIBSEXY_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libsexy >= 0.1.5\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libsexy >= 0.1.5") 2>&5
+   ac_status=$?
+@@ -17856,15 +17795,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$LIBSEXY_LIBS"; then
+-        pkg_cv_LIBSEXY_LIBS="$LIBSEXY_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$LIBSEXY_LIBS"; then
++    pkg_cv_LIBSEXY_LIBS="$LIBSEXY_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libsexy >= 0.1.5\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "libsexy >= 0.1.5") 2>&5
+   ac_status=$?
+@@ -17874,9 +17811,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -17889,9 +17825,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        LIBSEXY_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libsexy >= 0.1.5"`
++	        LIBSEXY_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libsexy >= 0.1.5" 2>&1`
+         else
+-	        LIBSEXY_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libsexy >= 0.1.5"`
++	        LIBSEXY_PKG_ERRORS=`$PKG_CONFIG --print-errors "libsexy >= 0.1.5" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$LIBSEXY_PKG_ERRORS" >&5
+@@ -18435,6 +18371,14 @@ else
+        am__strip_prefix=`echo "$am_py_prefix" | sed 's|.|.|g'`
+        am_cv_python_pythondir=`echo "$am_cv_python_pythondir" | sed "s,^$am__strip_prefix,$PYTHON_PREFIX,"`
+        ;;
++     *)
++       case $am_py_prefix in
++         /usr|/System*) ;;
++         *)
++	  am_cv_python_pythondir=$PYTHON_PREFIX/lib/python$PYTHON_VERSION/site-packages
++	  ;;
++       esac
++       ;;
+      esac
+ 
+ fi
+@@ -18465,6 +18409,14 @@ else
+        am__strip_prefix=`echo "$am_py_exec_prefix" | sed 's|.|.|g'`
+        am_cv_python_pyexecdir=`echo "$am_cv_python_pyexecdir" | sed "s,^$am__strip_prefix,$PYTHON_EXEC_PREFIX,"`
+        ;;
++     *)
++       case $am_py_exec_prefix in
++         /usr|/System*) ;;
++         *)
++	   am_cv_python_pyexecdir=$PYTHON_EXEC_PREFIX/lib/python$PYTHON_VERSION/site-packages
++	   ;;
++       esac
++       ;;
+      esac
+ 
+ fi
+@@ -18515,11 +18467,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for PYGTK" >&5
+ $as_echo_n "checking for PYGTK... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$PYGTK_CFLAGS"; then
+-        pkg_cv_PYGTK_CFLAGS="$PYGTK_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$PYGTK_CFLAGS"; then
++    pkg_cv_PYGTK_CFLAGS="$PYGTK_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"
+ 		pygtk-2.0 >= \$PYGTK_REQUIRED \\
+ 		gst-python-0.10 >= \$GST_PYTHON_REQUIRED\""; } >&5
+@@ -18535,15 +18486,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$PYGTK_LIBS"; then
+-        pkg_cv_PYGTK_LIBS="$PYGTK_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$PYGTK_LIBS"; then
++    pkg_cv_PYGTK_LIBS="$PYGTK_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"
+ 		pygtk-2.0 >= \$PYGTK_REQUIRED \\
+ 		gst-python-0.10 >= \$GST_PYTHON_REQUIRED\""; } >&5
+@@ -18559,9 +18508,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -18574,13 +18522,13 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        PYGTK_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "
++	        PYGTK_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "
+ 		pygtk-2.0 >= $PYGTK_REQUIRED \
+-		gst-python-0.10 >= $GST_PYTHON_REQUIRED"`
++		gst-python-0.10 >= $GST_PYTHON_REQUIRED" 2>&1`
+         else
+-	        PYGTK_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "
++	        PYGTK_PKG_ERRORS=`$PKG_CONFIG --print-errors "
+ 		pygtk-2.0 >= $PYGTK_REQUIRED \
+-		gst-python-0.10 >= $GST_PYTHON_REQUIRED"`
++		gst-python-0.10 >= $GST_PYTHON_REQUIRED" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$PYGTK_PKG_ERRORS" >&5
+@@ -18699,11 +18647,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for VALA" >&5
+ $as_echo_n "checking for VALA... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$VALA_CFLAGS"; then
+-        pkg_cv_VALA_CFLAGS="$VALA_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$VALA_CFLAGS"; then
++    pkg_cv_VALA_CFLAGS="$VALA_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"vala-1.0 >= \$VALA_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "vala-1.0 >= $VALA_REQS") 2>&5
+   ac_status=$?
+@@ -18713,15 +18660,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$VALA_LIBS"; then
+-        pkg_cv_VALA_LIBS="$VALA_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$VALA_LIBS"; then
++    pkg_cv_VALA_LIBS="$VALA_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"vala-1.0 >= \$VALA_REQS\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "vala-1.0 >= $VALA_REQS") 2>&5
+   ac_status=$?
+@@ -18731,9 +18676,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -18746,9 +18690,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        VALA_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "vala-1.0 >= $VALA_REQS"`
++	        VALA_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "vala-1.0 >= $VALA_REQS" 2>&1`
+         else
+-	        VALA_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "vala-1.0 >= $VALA_REQS"`
++	        VALA_PKG_ERRORS=`$PKG_CONFIG --print-errors "vala-1.0 >= $VALA_REQS" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$VALA_PKG_ERRORS" >&5
+@@ -18815,11 +18759,10 @@ pkg_failed=no
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for CHECK" >&5
+ $as_echo_n "checking for CHECK... " >&6; }
+ 
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$CHECK_CFLAGS"; then
+-        pkg_cv_CHECK_CFLAGS="$CHECK_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$CHECK_CFLAGS"; then
++    pkg_cv_CHECK_CFLAGS="$CHECK_CFLAGS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"check\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "check") 2>&5
+   ac_status=$?
+@@ -18829,15 +18772,13 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$CHECK_LIBS"; then
+-        pkg_cv_CHECK_LIBS="$CHECK_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
++if test -n "$CHECK_LIBS"; then
++    pkg_cv_CHECK_LIBS="$CHECK_LIBS"
++ elif test -n "$PKG_CONFIG"; then
++    if test -n "$PKG_CONFIG" && \
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"check\""; } >&5
+   ($PKG_CONFIG --exists --print-errors "check") 2>&5
+   ac_status=$?
+@@ -18847,9 +18788,8 @@ if test -n "$PKG_CONFIG"; then
+ else
+   pkg_failed=yes
+ fi
+-    fi
+-else
+-	pkg_failed=untried
++ else
++    pkg_failed=untried
+ fi
+ 
+ 
+@@ -18862,9 +18802,9 @@ else
+         _pkg_short_errors_supported=no
+ fi
+         if test $_pkg_short_errors_supported = yes; then
+-	        CHECK_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "check"`
++	        CHECK_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "check" 2>&1`
+         else
+-	        CHECK_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "check"`
++	        CHECK_PKG_ERRORS=`$PKG_CONFIG --print-errors "check" 2>&1`
+         fi
+ 	# Put the nasty error message in config.log where it belongs
+ 	echo "$CHECK_PKG_ERRORS" >&5
+@@ -19561,7 +19501,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
+ # values after options handling.
+ ac_log="
+ This file was extended by rhythmbox $as_me 0.12.6, which was
+-generated by GNU Autoconf 2.64.  Invocation command line was
++generated by GNU Autoconf 2.65.  Invocation command line was
+ 
+   CONFIG_FILES    = $CONFIG_FILES
+   CONFIG_HEADERS  = $CONFIG_HEADERS
+@@ -19601,6 +19541,7 @@ Usage: $0 [OPTION]... [TAG]...
+ 
+   -h, --help       print this help, then exit
+   -V, --version    print version number and configuration settings, then exit
++      --config     print configuration, then exit
+   -q, --quiet, --silent
+                    do not print progress messages
+   -d, --debug      don't remove temporary files
+@@ -19623,10 +19564,11 @@ Report bugs to <https://bugzilla.gnome.org/enter_bug.cgi?product=rhythmbox>."
+ 
+ _ACEOF
+ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
++ac_cs_config="`$as_echo "$ac_configure_args" | sed 's/^ //; s/[\\""\`\$]/\\\\&/g'`"
+ ac_cs_version="\\
+ rhythmbox config.status 0.12.6
+-configured by $0, generated by GNU Autoconf 2.64,
+-  with options \\"`$as_echo "$ac_configure_args" | sed 's/^ //; s/[\\""\`\$]/\\\\&/g'`\\"
++configured by $0, generated by GNU Autoconf 2.65,
++  with options \\"\$ac_cs_config\\"
+ 
+ Copyright (C) 2009 Free Software Foundation, Inc.
+ This config.status script is free software; the Free Software Foundation
+@@ -19664,6 +19606,8 @@ do
+     ac_cs_recheck=: ;;
+   --version | --versio | --versi | --vers | --ver | --ve | --v | -V )
+     $as_echo "$ac_cs_version"; exit ;;
++  --config | --confi | --conf | --con | --co | --c )
++    $as_echo "$ac_cs_config"; exit ;;
+   --debug | --debu | --deb | --de | --d | -d )
+     debug=: ;;
+   --file | --fil | --fi | --f )
+@@ -20196,7 +20140,7 @@ s/'"$ac_delim"'$//
+ t delim
+ :nl
+ h
+-s/\(.\{148\}\).*/\1/
++s/\(.\{148\}\)..*/\1/
+ t more1
+ s/["\\]/\\&/g; s/^/"/; s/$/\\n"\\/
+ p
+@@ -20210,7 +20154,7 @@ s/.\{148\}//
+ t nl
+ :delim
+ h
+-s/\(.\{148\}\).*/\1/
++s/\(.\{148\}\)..*/\1/
+ t more2
+ s/["\\]/\\&/g; s/^/"/; s/$/"/
+ p
+diff --git a/data/Makefile.in b/data/Makefile.in
+index ba4055b..80d1e46 100644
+--- a/data/Makefile.in
++++ b/data/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -505,7 +505,7 @@ uninstall-serviceDATA:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -530,7 +530,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/Makefile.in b/data/icons/Makefile.in
+index 1c71366..ed67665 100644
+--- a/data/icons/Makefile.in
++++ b/data/icons/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/16x16/Makefile.in b/data/icons/hicolor/16x16/Makefile.in
+index a3222d3..c9f83b0 100644
+--- a/data/icons/hicolor/16x16/Makefile.in
++++ b/data/icons/hicolor/16x16/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/16x16/actions/Makefile.in b/data/icons/hicolor/16x16/actions/Makefile.in
+index 1ea457b..aa063e2 100644
+--- a/data/icons/hicolor/16x16/actions/Makefile.in
++++ b/data/icons/hicolor/16x16/actions/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/16x16/apps/Makefile.in b/data/icons/hicolor/16x16/apps/Makefile.in
+index cb2e87c..5ba4ba1 100644
+--- a/data/icons/hicolor/16x16/apps/Makefile.in
++++ b/data/icons/hicolor/16x16/apps/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/16x16/places/Makefile.in b/data/icons/hicolor/16x16/places/Makefile.in
+index 5d9ffa2..6b10436 100644
+--- a/data/icons/hicolor/16x16/places/Makefile.in
++++ b/data/icons/hicolor/16x16/places/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/16x16/status/Makefile.in b/data/icons/hicolor/16x16/status/Makefile.in
+index fd77c78..cfdf94e 100644
+--- a/data/icons/hicolor/16x16/status/Makefile.in
++++ b/data/icons/hicolor/16x16/status/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/22x22/Makefile.in b/data/icons/hicolor/22x22/Makefile.in
+index 3f9d98c..c09384f 100644
+--- a/data/icons/hicolor/22x22/Makefile.in
++++ b/data/icons/hicolor/22x22/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/22x22/actions/Makefile.in b/data/icons/hicolor/22x22/actions/Makefile.in
+index a7e45a8..4d30d8f 100644
+--- a/data/icons/hicolor/22x22/actions/Makefile.in
++++ b/data/icons/hicolor/22x22/actions/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/22x22/apps/Makefile.in b/data/icons/hicolor/22x22/apps/Makefile.in
+index dd1bfee..7b86056 100644
+--- a/data/icons/hicolor/22x22/apps/Makefile.in
++++ b/data/icons/hicolor/22x22/apps/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/22x22/places/Makefile.in b/data/icons/hicolor/22x22/places/Makefile.in
+index 7d5b717..91c2c6a 100644
+--- a/data/icons/hicolor/22x22/places/Makefile.in
++++ b/data/icons/hicolor/22x22/places/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/22x22/status/Makefile.in b/data/icons/hicolor/22x22/status/Makefile.in
+index 94f1c71..f9bd6b3 100644
+--- a/data/icons/hicolor/22x22/status/Makefile.in
++++ b/data/icons/hicolor/22x22/status/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/24x24/Makefile.in b/data/icons/hicolor/24x24/Makefile.in
+index a47c759..97e66e6 100644
+--- a/data/icons/hicolor/24x24/Makefile.in
++++ b/data/icons/hicolor/24x24/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/24x24/apps/Makefile.in b/data/icons/hicolor/24x24/apps/Makefile.in
+index 0917cbe..0d5f539 100644
+--- a/data/icons/hicolor/24x24/apps/Makefile.in
++++ b/data/icons/hicolor/24x24/apps/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/32x32/Makefile.in b/data/icons/hicolor/32x32/Makefile.in
+index 1d96323..fa985be 100644
+--- a/data/icons/hicolor/32x32/Makefile.in
++++ b/data/icons/hicolor/32x32/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/32x32/actions/Makefile.in b/data/icons/hicolor/32x32/actions/Makefile.in
+index 2c5fd12..e7265bb 100644
+--- a/data/icons/hicolor/32x32/actions/Makefile.in
++++ b/data/icons/hicolor/32x32/actions/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/32x32/apps/Makefile.in b/data/icons/hicolor/32x32/apps/Makefile.in
+index 739c3ba..ba5ef8b 100644
+--- a/data/icons/hicolor/32x32/apps/Makefile.in
++++ b/data/icons/hicolor/32x32/apps/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/32x32/places/Makefile.in b/data/icons/hicolor/32x32/places/Makefile.in
+index a1eb8f2..067640e 100644
+--- a/data/icons/hicolor/32x32/places/Makefile.in
++++ b/data/icons/hicolor/32x32/places/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/32x32/status/Makefile.in b/data/icons/hicolor/32x32/status/Makefile.in
+index e45b49b..9b6cce8 100644
+--- a/data/icons/hicolor/32x32/status/Makefile.in
++++ b/data/icons/hicolor/32x32/status/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/48x48/Makefile.in b/data/icons/hicolor/48x48/Makefile.in
+index 5f9210f..7083081 100644
+--- a/data/icons/hicolor/48x48/Makefile.in
++++ b/data/icons/hicolor/48x48/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/48x48/apps/Makefile.in b/data/icons/hicolor/48x48/apps/Makefile.in
+index 37198c8..b585267 100644
+--- a/data/icons/hicolor/48x48/apps/Makefile.in
++++ b/data/icons/hicolor/48x48/apps/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/Makefile.in b/data/icons/hicolor/Makefile.in
+index e7a5fd8..95409f0 100644
+--- a/data/icons/hicolor/Makefile.in
++++ b/data/icons/hicolor/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -374,7 +374,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -399,7 +399,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/scalable/Makefile.in b/data/icons/hicolor/scalable/Makefile.in
+index 26312ac..c8eaad9 100644
+--- a/data/icons/hicolor/scalable/Makefile.in
++++ b/data/icons/hicolor/scalable/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/data/icons/hicolor/scalable/actions/Makefile.in b/data/icons/hicolor/scalable/actions/Makefile.in
+index e154f38..48885ce 100644
+--- a/data/icons/hicolor/scalable/actions/Makefile.in
++++ b/data/icons/hicolor/scalable/actions/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/scalable/apps/Makefile.in b/data/icons/hicolor/scalable/apps/Makefile.in
+index c35a487..997d681 100644
+--- a/data/icons/hicolor/scalable/apps/Makefile.in
++++ b/data/icons/hicolor/scalable/apps/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/scalable/places/Makefile.in b/data/icons/hicolor/scalable/places/Makefile.in
+index b4a81bc..df4024d 100644
+--- a/data/icons/hicolor/scalable/places/Makefile.in
++++ b/data/icons/hicolor/scalable/places/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/icons/hicolor/scalable/status/Makefile.in b/data/icons/hicolor/scalable/status/Makefile.in
+index 6c4c199..e881e17 100644
+--- a/data/icons/hicolor/scalable/status/Makefile.in
++++ b/data/icons/hicolor/scalable/status/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/data/ui/Makefile.in b/data/ui/Makefile.in
+index 500ad19..17a4ebb 100644
+--- a/data/ui/Makefile.in
++++ b/data/ui/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/doc/Makefile.in b/doc/Makefile.in
+index e5a4a8d..a0ab422 100644
+--- a/doc/Makefile.in
++++ b/doc/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/doc/reference/Makefile.in b/doc/reference/Makefile.in
+index 2215f19..f836769 100644
+--- a/doc/reference/Makefile.in
++++ b/doc/reference/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/help/Makefile.in b/help/Makefile.in
+index bfb02a1..995f714 100644
+--- a/help/Makefile.in
++++ b/help/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/lib/Makefile.in b/lib/Makefile.in
+index 8434811..4d98d9e 100644
+--- a/lib/Makefile.in
++++ b/lib/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -511,7 +511,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -536,7 +536,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/lib/libmediaplayerid/Makefile.in b/lib/libmediaplayerid/Makefile.in
+index 945a89a..413075a 100644
+--- a/lib/libmediaplayerid/Makefile.in
++++ b/lib/libmediaplayerid/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/ltmain.sh b/ltmain.sh
+index 3506ead..a72f2fd 100755
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -1,6 +1,6 @@
+ # Generated from ltmain.m4sh.
+ 
+-# ltmain.sh (GNU libtool) 2.2.6
++# ltmain.sh (GNU libtool) 2.2.6b
+ # Written by Gordon Matzigkeit <gord@gnu.ai.mit.edu>, 1996
+ 
+ # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007 2008 Free Software Foundation, Inc.
+@@ -65,7 +65,7 @@
+ #       compiler:		$LTCC
+ #       compiler flags:		$LTCFLAGS
+ #       linker:		$LD (gnu? $with_gnu_ld)
+-#       $progname:		(GNU libtool) 2.2.6 Debian-2.2.6a-4
++#       $progname:		(GNU libtool) 2.2.6b
+ #       automake:		$automake_version
+ #       autoconf:		$autoconf_version
+ #
+@@ -73,9 +73,9 @@
+ 
+ PROGRAM=ltmain.sh
+ PACKAGE=libtool
+-VERSION="2.2.6 Debian-2.2.6a-4"
++VERSION=2.2.6b
+ TIMESTAMP=""
+-package_revision=1.3012
++package_revision=1.3017
+ 
+ # Be Bourne compatible
+ if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; then
+@@ -5033,10 +5033,7 @@ func_mode_link ()
+ 	case $pass in
+ 	dlopen) libs="$dlfiles" ;;
+ 	dlpreopen) libs="$dlprefiles" ;;
+-	link)
+-	  libs="$deplibs %DEPLIBS%"
+-	  test "X$link_all_deplibs" != Xno && libs="$libs $dependency_libs"
+-	  ;;
++	link) libs="$deplibs %DEPLIBS% $dependency_libs" ;;
+ 	esac
+       fi
+       if test "$linkmode,$pass" = "lib,dlpreopen"; then
+@@ -5347,19 +5344,19 @@ func_mode_link ()
+ 	    # It is a libtool convenience library, so add in its objects.
+ 	    convenience="$convenience $ladir/$objdir/$old_library"
+ 	    old_convenience="$old_convenience $ladir/$objdir/$old_library"
+-	    tmp_libs=
+-	    for deplib in $dependency_libs; do
+-	      deplibs="$deplib $deplibs"
+-	      if $opt_duplicate_deps ; then
+-		case "$tmp_libs " in
+-		*" $deplib "*) specialdeplibs="$specialdeplibs $deplib" ;;
+-		esac
+-	      fi
+-	      tmp_libs="$tmp_libs $deplib"
+-	    done
+ 	  elif test "$linkmode" != prog && test "$linkmode" != lib; then
+ 	    func_fatal_error "\`$lib' is not a convenience library"
+ 	  fi
++	  tmp_libs=
++	  for deplib in $dependency_libs; do
++	    deplibs="$deplib $deplibs"
++	    if $opt_duplicate_deps ; then
++	      case "$tmp_libs " in
++	      *" $deplib "*) specialdeplibs="$specialdeplibs $deplib" ;;
++	      esac
++	    fi
++	    tmp_libs="$tmp_libs $deplib"
++	  done
+ 	  continue
+ 	fi # $pass = conv
+ 
+@@ -5896,7 +5893,6 @@ func_mode_link ()
+ 	  if test "$link_all_deplibs" != no; then
+ 	    # Add the search paths of all dependency libraries
+ 	    for deplib in $dependency_libs; do
+-	      path=
+ 	      case $deplib in
+ 	      -L*) path="$deplib" ;;
+ 	      *.la)
+@@ -6210,9 +6206,6 @@ func_mode_link ()
+ 	    revision="$number_minor"
+ 	    lt_irix_increment=no
+ 	    ;;
+-	  *)
+-	    func_fatal_configuration "$modename: unknown library version type \`$version_type'"
+-	    ;;
+ 	  esac
+ 	  ;;
+ 	no)
+diff --git a/macros/Makefile.in b/macros/Makefile.in
+index c8cb51e..0885b4a 100644
+--- a/macros/Makefile.in
++++ b/macros/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/macros/libtool.m4 b/macros/libtool.m4
+index 1e7ea47..39ba996 100644
+--- a/macros/libtool.m4
++++ b/macros/libtool.m4
+@@ -2485,18 +2485,6 @@ linux* | k*bsd*-gnu)
+   dynamic_linker='GNU/Linux ld.so'
+   ;;
+ 
+-netbsdelf*-gnu)
+-  version_type=linux
+-  need_lib_prefix=no
+-  need_version=no
+-  library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major ${libname}${shared_ext}'
+-  soname_spec='${libname}${release}${shared_ext}$major'
+-  shlibpath_var=LD_LIBRARY_PATH
+-  shlibpath_overrides_runpath=no
+-  hardcode_into_libs=yes
+-  dynamic_linker='NetBSD ld.elf_so'
+-  ;;
+-
+ netbsd*)
+   version_type=sunos
+   need_lib_prefix=no
+@@ -3088,7 +3076,7 @@ linux* | k*bsd*-gnu)
+   lt_cv_deplibs_check_method=pass_all
+   ;;
+ 
+-netbsd* | netbsdelf*-gnu)
++netbsd*)
+   if echo __ELF__ | $CC -E - | $GREP __ELF__ > /dev/null; then
+     lt_cv_deplibs_check_method='match_pattern /lib[[^/]]+(\.so\.[[0-9]]+\.[[0-9]]+|_pic\.a)$'
+   else
+@@ -3769,7 +3757,7 @@ m4_if([$1], [CXX], [
+ 	    ;;
+ 	esac
+ 	;;
+-      netbsd* | netbsdelf*-gnu)
++      netbsd*)
+ 	;;
+       *qnx* | *nto*)
+         # QNX uses GNU C++, but need to define -shared option too, otherwise
+@@ -4194,9 +4182,6 @@ m4_if([$1], [CXX], [
+   cygwin* | mingw* | cegcc*)
+     _LT_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED -e '\''/^[[BCDGRS]][[ ]]/s/.*[[ ]]\([[^ ]]*\)/\1 DATA/;/^.*[[ ]]__nm__/s/^.*[[ ]]__nm__\([[^ ]]*\)[[ ]][[^ ]]*/\1 DATA/;/^I[[ ]]/d;/^[[AITW]][[ ]]/s/.* //'\'' | sort | uniq > $export_symbols'
+   ;;
+-  linux* | k*bsd*-gnu)
+-    _LT_TAGVAR(link_all_deplibs, $1)=no
+-  ;;
+   *)
+     _LT_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
+   ;;
+@@ -4261,9 +4246,6 @@ dnl Note also adjust exclude_expsyms for C++ above.
+   openbsd*)
+     with_gnu_ld=no
+     ;;
+-  linux* | k*bsd*-gnu)
+-    _LT_TAGVAR(link_all_deplibs, $1)=no
+-    ;;
+   esac
+ 
+   _LT_TAGVAR(ld_shlibs, $1)=yes
+@@ -4446,7 +4428,7 @@ _LT_EOF
+       fi
+       ;;
+ 
+-    netbsd* | netbsdelf*-gnu)
++    netbsd*)
+       if echo __ELF__ | $CC -E - | $GREP __ELF__ >/dev/null; then
+ 	_LT_TAGVAR(archive_cmds, $1)='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
+ 	wlarc=
+@@ -4621,7 +4603,6 @@ _LT_EOF
+ 	if test "$aix_use_runtimelinking" = yes; then
+ 	  shared_flag="$shared_flag "'${wl}-G'
+ 	fi
+-	_LT_TAGVAR(link_all_deplibs, $1)=no
+       else
+ 	# not using gcc
+ 	if test "$host_cpu" = ia64; then
+@@ -4860,7 +4841,7 @@ _LT_EOF
+       _LT_TAGVAR(link_all_deplibs, $1)=yes
+       ;;
+ 
+-    netbsd* | netbsdelf*-gnu)
++    netbsd*)
+       if echo __ELF__ | $CC -E - | $GREP __ELF__ >/dev/null; then
+ 	_LT_TAGVAR(archive_cmds, $1)='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
+       else
+diff --git a/macros/ltversion.m4 b/macros/ltversion.m4
+index b8e154f..f3c5309 100644
+--- a/macros/ltversion.m4
++++ b/macros/ltversion.m4
+@@ -9,15 +9,15 @@
+ 
+ # Generated from ltversion.in.
+ 
+-# serial 3012 ltversion.m4
++# serial 3017 ltversion.m4
+ # This file is part of GNU Libtool
+ 
+-m4_define([LT_PACKAGE_VERSION], [2.2.6])
+-m4_define([LT_PACKAGE_REVISION], [1.3012])
++m4_define([LT_PACKAGE_VERSION], [2.2.6b])
++m4_define([LT_PACKAGE_REVISION], [1.3017])
+ 
+ AC_DEFUN([LTVERSION_VERSION],
+-[macro_version='2.2.6'
+-macro_revision='1.3012'
++[macro_version='2.2.6b'
++macro_revision='1.3017'
+ _LT_DECL(, macro_version, 0, [Which release of libtool.m4 was used?])
+ _LT_DECL(, macro_revision, 0)
+ ])
+diff --git a/metadata/Makefile.in b/metadata/Makefile.in
+index a5642b9..bfee6a0 100644
+--- a/metadata/Makefile.in
++++ b/metadata/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -594,7 +594,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -619,7 +619,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/Makefile.in b/plugins/Makefile.in
+index 0efec34..bb77d44 100644
+--- a/plugins/Makefile.in
++++ b/plugins/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -403,7 +403,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -428,7 +428,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/artdisplay/Makefile.in b/plugins/artdisplay/Makefile.in
+index 756f5db..a4f0659 100644
+--- a/plugins/artdisplay/Makefile.in
++++ b/plugins/artdisplay/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -447,7 +447,7 @@ uninstall-pluginDATA:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -472,7 +472,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/artdisplay/artdisplay/Makefile.in b/plugins/artdisplay/artdisplay/Makefile.in
+index 9a0676c..1f44a67 100644
+--- a/plugins/artdisplay/artdisplay/Makefile.in
++++ b/plugins/artdisplay/artdisplay/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/audiocd/Makefile.in b/plugins/audiocd/Makefile.in
+index 7c377c1..515dd57 100644
+--- a/plugins/audiocd/Makefile.in
++++ b/plugins/audiocd/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/audioscrobbler/Makefile.in b/plugins/audioscrobbler/Makefile.in
+index eda6289..275eaf1 100644
+--- a/plugins/audioscrobbler/Makefile.in
++++ b/plugins/audioscrobbler/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/brasero-disc-recorder/Makefile.in b/plugins/brasero-disc-recorder/Makefile.in
+index 99dc84d..5c5aaab 100644
+--- a/plugins/brasero-disc-recorder/Makefile.in
++++ b/plugins/brasero-disc-recorder/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/cd-recorder/Makefile.in b/plugins/cd-recorder/Makefile.in
+index 493c128..a9f19c9 100644
+--- a/plugins/cd-recorder/Makefile.in
++++ b/plugins/cd-recorder/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/coherence/Makefile.in b/plugins/coherence/Makefile.in
+index a453f87..0b19095 100644
+--- a/plugins/coherence/Makefile.in
++++ b/plugins/coherence/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -425,7 +425,7 @@ uninstall-pluginDATA:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -450,7 +450,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/coherence/upnp_coherence/Makefile.in b/plugins/coherence/upnp_coherence/Makefile.in
+index b326ecb..1306643 100644
+--- a/plugins/coherence/upnp_coherence/Makefile.in
++++ b/plugins/coherence/upnp_coherence/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/context/Makefile.in b/plugins/context/Makefile.in
+index a401e68..4ea6c2d 100644
+--- a/plugins/context/Makefile.in
++++ b/plugins/context/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -479,7 +479,7 @@ uninstall-tmplDATA:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -504,7 +504,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/context/context/Makefile.in b/plugins/context/context/Makefile.in
+index 8443b55..62e6640 100644
+--- a/plugins/context/context/Makefile.in
++++ b/plugins/context/context/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/daap/Makefile.in b/plugins/daap/Makefile.in
+index 29991a9..b00e7eb 100644
+--- a/plugins/daap/Makefile.in
++++ b/plugins/daap/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/fmradio/Makefile.in b/plugins/fmradio/Makefile.in
+index 861b8c2..9ccfb98 100644
+--- a/plugins/fmradio/Makefile.in
++++ b/plugins/fmradio/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/generic-player/Makefile.in b/plugins/generic-player/Makefile.in
+index 2923af7..8b5a1a3 100644
+--- a/plugins/generic-player/Makefile.in
++++ b/plugins/generic-player/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/im-status/Makefile.in b/plugins/im-status/Makefile.in
+index a6d7383..835cb6d 100644
+--- a/plugins/im-status/Makefile.in
++++ b/plugins/im-status/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/ipod/Makefile.in b/plugins/ipod/Makefile.in
+index 2f0f3f5..8651f39 100644
+--- a/plugins/ipod/Makefile.in
++++ b/plugins/ipod/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/iradio/Makefile.in b/plugins/iradio/Makefile.in
+index 09c6d11..2cfe7e9 100644
+--- a/plugins/iradio/Makefile.in
++++ b/plugins/iradio/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/jamendo/Makefile.in b/plugins/jamendo/Makefile.in
+index 05cb0f2..a70e272 100644
+--- a/plugins/jamendo/Makefile.in
++++ b/plugins/jamendo/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -478,7 +478,7 @@ uninstall-pluginDATA:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -503,7 +503,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/jamendo/jamendo/Makefile.in b/plugins/jamendo/jamendo/Makefile.in
+index 751e8c3..e2ac66f 100644
+--- a/plugins/jamendo/jamendo/Makefile.in
++++ b/plugins/jamendo/jamendo/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/lirc/Makefile.in b/plugins/lirc/Makefile.in
+index 634d6eb..f3e49b4 100644
+--- a/plugins/lirc/Makefile.in
++++ b/plugins/lirc/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/lyrics/Makefile.in b/plugins/lyrics/Makefile.in
+index d9abab3..c223b91 100644
+--- a/plugins/lyrics/Makefile.in
++++ b/plugins/lyrics/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -450,7 +450,7 @@ uninstall-pluginDATA:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -475,7 +475,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/lyrics/lyrics/Makefile.in b/plugins/lyrics/lyrics/Makefile.in
+index fe6e3dd..1d380a5 100644
+--- a/plugins/lyrics/lyrics/Makefile.in
++++ b/plugins/lyrics/lyrics/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/magnatune/Makefile.in b/plugins/magnatune/Makefile.in
+index 8224ccf..06cad1d 100644
+--- a/plugins/magnatune/Makefile.in
++++ b/plugins/magnatune/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -479,7 +479,7 @@ uninstall-pluginDATA:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -504,7 +504,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/plugins/magnatune/magnatune/Makefile.in b/plugins/magnatune/magnatune/Makefile.in
+index ca13c2f..be13b18 100644
+--- a/plugins/magnatune/magnatune/Makefile.in
++++ b/plugins/magnatune/magnatune/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/mmkeys/Makefile.in b/plugins/mmkeys/Makefile.in
+index 34a962e..018fede 100644
+--- a/plugins/mmkeys/Makefile.in
++++ b/plugins/mmkeys/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/mtpdevice/Makefile.in b/plugins/mtpdevice/Makefile.in
+index b907623..c2d6049 100644
+--- a/plugins/mtpdevice/Makefile.in
++++ b/plugins/mtpdevice/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/power-manager/Makefile.in b/plugins/power-manager/Makefile.in
+index e610143..59120be 100644
+--- a/plugins/power-manager/Makefile.in
++++ b/plugins/power-manager/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/pythonconsole/Makefile.in b/plugins/pythonconsole/Makefile.in
+index edb8527..5f625b5 100644
+--- a/plugins/pythonconsole/Makefile.in
++++ b/plugins/pythonconsole/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/rb/Makefile.in b/plugins/rb/Makefile.in
+index fa70af3..87392c0 100644
+--- a/plugins/rb/Makefile.in
++++ b/plugins/rb/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/sample-python/Makefile.in b/plugins/sample-python/Makefile.in
+index cd594fb..d3550b8 100644
+--- a/plugins/sample-python/Makefile.in
++++ b/plugins/sample-python/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/sample-vala/Makefile.in b/plugins/sample-vala/Makefile.in
+index c71cb5f..22ccc5c 100644
+--- a/plugins/sample-vala/Makefile.in
++++ b/plugins/sample-vala/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/sample/Makefile.in b/plugins/sample/Makefile.in
+index d0b77b6..ef82971 100644
+--- a/plugins/sample/Makefile.in
++++ b/plugins/sample/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/status-icon/Makefile.in b/plugins/status-icon/Makefile.in
+index f091751..560444f 100644
+--- a/plugins/status-icon/Makefile.in
++++ b/plugins/status-icon/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/plugins/visualizer/Makefile.in b/plugins/visualizer/Makefile.in
+index 319011a..9c428e1 100644
+--- a/plugins/visualizer/Makefile.in
++++ b/plugins/visualizer/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/podcast/Makefile.in b/podcast/Makefile.in
+index b2e5520..5ab6a7f 100644
+--- a/podcast/Makefile.in
++++ b/podcast/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/remote/Makefile.in b/remote/Makefile.in
+index 06a8815..b192f91 100644
+--- a/remote/Makefile.in
++++ b/remote/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -373,7 +373,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -398,7 +398,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/remote/dbus/Makefile.in b/remote/dbus/Makefile.in
+index 77973d4..219e559 100644
+--- a/remote/dbus/Makefile.in
++++ b/remote/dbus/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/rhythmdb/Makefile.in b/rhythmdb/Makefile.in
+index 40bbe93..a5190ad 100644
+--- a/rhythmdb/Makefile.in
++++ b/rhythmdb/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/shell/Makefile.in b/shell/Makefile.in
+index 0a5546d..e9dd600 100644
+--- a/shell/Makefile.in
++++ b/shell/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/sources/Makefile.in b/sources/Makefile.in
+index 4a5af20..7b532aa 100644
+--- a/sources/Makefile.in
++++ b/sources/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/tests/Makefile.in b/tests/Makefile.in
+index 68cc336..e92bdcc 100644
+--- a/tests/Makefile.in
++++ b/tests/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+diff --git a/widgets/Makefile.in b/widgets/Makefile.in
+index 7e93515..d51b00c 100644
+--- a/widgets/Makefile.in
++++ b/widgets/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+@@ -529,7 +529,7 @@ clean-libtool:
+ #     (which will cause the Makefiles to be regenerated when you run `make');
+ # (2) otherwise, pass the desired values on the `make' command line.
+ $(RECURSIVE_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+@@ -554,7 +554,7 @@ $(RECURSIVE_TARGETS):
+ 	fi; test -z "$$fail"
+ 
+ $(RECURSIVE_CLEAN_TARGETS):
+-	@failcom='exit 1'; \
++	@fail= failcom='exit 1'; \
+ 	for f in x $$MAKEFLAGS; do \
+ 	  case $$f in \
+ 	    *=* | --[!k]*);; \
+diff --git a/widgets/libsexy/Makefile.in b/widgets/libsexy/Makefile.in
+index d981d6f..9b89a27 100644
+--- a/widgets/libsexy/Makefile.in
++++ b/widgets/libsexy/Makefile.in
+@@ -1,4 +1,4 @@
+-# Makefile.in generated by automake 1.11 from Makefile.am.
++# Makefile.in generated by automake 1.11.1 from Makefile.am.
+ # @configure_input@
+ 
+ # Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+-- 
+1.6.6
+
