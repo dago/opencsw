@@ -1,0 +1,9 @@
+###################################################
+# System-wide screenrc file
+###################################################
+
+# Make sure programs used under screen use the 
+# csw terminfo database, this is necessary
+# as solaris native on doesn't know TERM=screen
+setenv TERMINFO /opt/csw/share/terminfo
+

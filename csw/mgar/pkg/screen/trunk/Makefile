@@ -1,7 +1,3 @@
-# TODO
-# - This is a NMU (bumped to 4.0.3, switched to GAR v2) which fails to
-#   build. Yann needs to incorporate his current build script into this
-#   recipe once he is working on an updated version/revision.
 GARNAME = screen
 GARVERSION = 4.0.3
 CATEGORIES = utils
@@ -20,6 +16,9 @@ MASTER_SITES = http://ftp.gnu.org/gnu/screen/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+DISTFILES += screenrc
+DISTFILES += changelog.CSW
+
 PACKAGES = CSWscrn
 CATALOGNAME = screen
 
@@ -27,21 +26,21 @@ CATALOGNAME = screen
 # windows per screen session.
 PATCHFILES = screen-maxwin.patch
 
-# patch used by the previous maintainer Derek Morr, I don't know exactly what
-# it is supposed to do or fix but I keep it to no introduce any breakage
+# screen is not isntalled with setuid bit so we disable utmp update
 PATCHFILES += screen-utmp.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
 CONFIGURE_ARGS += --enable-telnet
 CONFIGURE_ARGS += --enable-colors256
+CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/
 
 TEST_TARGET = check
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
-post-install-modulated:
-	ginstall -d $(DOCDEST)
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+post-merge:
+	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc
+	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(GARNAME)/changelog.CSW
 	@$(MAKECOOKIE)
+
