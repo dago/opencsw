@@ -1,5 +1,5 @@
 GARNAME = glib
-GARVERSION = 2.20.0
+GARVERSION = 2.23.1
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -20,8 +20,10 @@ MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 PATCHFILES  = glib-typedetect.patch
-PATCHFILES += checksum-test.patch
+PATCHFILES += FIXED_STR.patch
 PATCHFILES += gsize.patch
+PATCHFILES += gconverter.patch
+PATCHFILES += CMSG_LEN.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
@@ -32,15 +34,25 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 BUILD64 = 1
 NO_ISAEXEC = 1
 
-REQUIRED_PKGS_CSWglib2 = CSWggettextrt CSWiconv
-REQUIRED_PKGS_CSWglib2devel = CSWglib2 CSWggettextrt CSWiconv
+REQUIRED_PKGS_CSWglib2 += CSWggettextrt
+REQUIRED_PKGS_CSWglib2 += CSWiconv
+REQUIRED_PKGS_CSWglib2 += CSWzlib
+REQUIRED_PKGS_CSWglib2devel += CSWfam
+REQUIRED_PKGS_CSWglib2devel += CSWggettextrt
+REQUIRED_PKGS_CSWglib2devel += CSWglib2
+REQUIRED_PKGS_CSWglib2devel += CSWiconv
+REQUIRED_PKGS_CSWglib2devel += CSWpython
+REQUIRED_PKGS_CSWglib2devel += CSWzlib
 
 TEST_TARGET = check
+SKIPTEST ?= 0
 
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias
 
 PKGFILES_CSWglib2  = $(PKGFILES_RT)
 PKGFILES_CSWglib2 += /opt/csw/share/locale/.*
+
+EXTRA_LDFLAGS = -lsocket
 
 include gar/category.mk
