@@ -1,0 +1,13 @@
+--- djvulibre-3.5.22.orig/tools/ddjvu.cpp	2009-02-13 10:46:27.000000000 +0100
++++ djvulibre-3.5.22/tools/ddjvu.cpp	2010-01-07 17:45:43.925544787 +0100
+@@ -66,6 +66,10 @@
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
++#if (defined(__SUNPRO_CC) && ( defined(__SunOS_5_8) || defined(__SunOS_5_9))) && !defined(__sparcv9)
++using std::__flsbuf;
++using std::__filbuf;
++#endif
+ #include <stdarg.h>
+ #include <string.h>
+ #include <locale.h>
