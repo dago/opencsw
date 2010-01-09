@@ -13,15 +13,34 @@ endef
 SF_PROJ = wvware
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = libwmf-$(GARVERSION).tar.gz
-
 DISTNAME = libwmf-$(GARVERSION)
 
 SPKG_SOURCEURL = http://wvware.sourceforge.net
 
-LICENSE = COPYING
+PACKAGES = CSWwmf CSWwmfdevel CSWwmfdoc
+CATALOGNAME_CSWwmf = wmf
+CATALOGNAME_CSWwmfdevel = wmf_devel
+CATALOGNAME_CSWwmfdoc = wmf_doc
 
-REQUIRED_PKGS += CSWexpat CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWjpeg
-REQUIRED_PKGS += CSWpng CSWzlib
+SPKG_DESC_CSWwmf += Library and tools for manipulating Windows metafiles
+SPKG_DESC_CSWwmfdevel += Library and tools for manipulating Windows metafiles - developer package
+SPKG_DESC_CSWwmfdoc += Library and tools for manipulating Windows metafiles - documentation
+
+REQUIRED_PKGS_CSWwmf += CSWexpat CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
+REQUIRED_PKGS_CSWwmf += CSWjpeg CSWlibx11 CSWpng CSWzlib
+REQUIRED_PKGS_CSWwmfdevel += CSWwmf
+REQUIRED_PKGS_CSWwmfdoc += CSWwmf
+
+PKGFILES_CSWwmfdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWwmfdoc = $(sharedstatedir)/doc/.*
+
+ARCHALL_CSWwmfdoc = 1
+
+BUILD64 = 1
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10501
@@ -32,9 +51,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-include gar/category.mk
+STRIP_LIBTOOL = 1
 
-post-configure-modulated:
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(FILEDIR)/fixme.sh $(WORKSRC)
-	$(DONADA)
+include gar/category.mk
+PATH := /opt/csw/gnu:$(PATH)
