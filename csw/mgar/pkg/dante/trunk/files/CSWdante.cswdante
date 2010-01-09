@@ -5,11 +5,8 @@
 
 PATH=/usr/bin:/opt/csw/bin:/usr/sbin
 
-PIDFILE=/var/opt/csw/dante/sockd.pid
-CONFIG=/opt/csw/etc/sockd.conf
-CONFIG_LOCAL=/etc/opt/csw/etc/sockd.conf
-
-[ -r $CONFIG_LOCAL ] && CONFIG=$CONFIG_LOCAL
+PIDFILE=/var/run/cswsockd.pid
+CONFIG=/etc/opt/csw/etc/sockd.conf
 
 case $1 in
         'start')

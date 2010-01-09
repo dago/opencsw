@@ -1,5 +1,5 @@
-dante|libsocks (1.1.19,REV=2009.06.05)
+dante (1.2.0,REV=2010.01.09)
 
-  * Adopted and updated to 1.1.19.
+  * Adopted and updated to 1.2.0
 
- -- Sebastian Kayser <skayser@opencsw.org>  Fri,  5 Jun 2009 00:02:09 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Sat,  9 Jan 2010 19:18:23 +0100

@@ -1,12 +1,16 @@
-Known client issue: $SOCKS_CONF not used
-----------------------------------------
+Known issue: libsocks does not support $SOCKS_CONF
+--------------------------------------------------
 
-The Dante socks client libraries are supposed to evaluate the environment
-variable $SOCKS_CONF that can be used to specify an alternative config
-location. This is _not working_ with this version. 
+This build of the libsocks _does not_ support an alternate socks.conf
+passed via the environment variable SOCKS_CONF. As a workaround you can
+specify a SOCKS server via the environment variables pointed out in
+socksify(1).
 
-Dante employs SETUID/SETGID safety checks before evaluating $SOCKS_CONF 
-and Solaris 8 (our base build platform) does not offer the required system
-calls. Dante hence deactivates looking for $SOCK_CONF.
+       SOCKS_SERVER, SOCKS4_SERVER, SOCKS5_SERVER
 
-This might change in a future version of this package or Dante.
+Background information:
+libsocks employs a setuid/setgid safety check via issetugid(2) before
+opening $SOCKS_CONF. Our base build platform (Solaris 8) does not offer
+this system call, thus the libsocks build completely deactivates support
+for $SOCK_CONF out of security reasons. This might change if we decide
+to provide a Solaris 10 specific package of libsocks.
