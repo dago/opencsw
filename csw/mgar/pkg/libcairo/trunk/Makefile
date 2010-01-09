@@ -28,7 +28,7 @@ PKGFILES_CSWlibcairodevel += $(docdir)/libcairo_devel/.*
 PKGFILES_CSWlibcairodoc    = $(sharedstatedir)/gtk-doc.*
 PKGFILES_CSWlibcairodoc   += $(docdir)/libcairo_doc/.*
 
-PREREQUISITE_PKGS = CSWrenderdev
+PREREQUISITE_PKGS = CSWlibxrenderdevel
 
 REQUIRED_PKGS_CSWlibcairo      = CSWfconfig
 REQUIRED_PKGS_CSWlibcairo     += CSWftype2
@@ -52,10 +52,20 @@ BUILD64 = 1
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+# We want libcairo to be linked with Xrender from $(prefix)/X11/lib not
+# $(prefix)/lib since the latter is linked to /usr/openwin/lib/libX11.so.4
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+# imagediff in testsuite needs -lsocket
+EXTRA_LDFLAGS = -lsocket -lnsl
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-full-testing --enable-xlib=yes --enable-xlib-xrender=yes --enable-ft=yes --with-x 
 CONFIGURE_ARGS += --enable-png=yes --enable-ps=yes --enable-pdf=yes --enable-svg=yes --enable-xcb=yes
 CONFIGURE_ARGS += --enable-gtk-doc --enable-test-surfaces=yes 
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 include gar/category.mk
+
+# configure have problems with non-gnu utilities
+PATH := /opt/csw/gnu:$(PATH)
