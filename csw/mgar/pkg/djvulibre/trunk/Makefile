@@ -32,8 +32,6 @@ LICENSE = COPYING
 
 PATCHFILES += ddjvu.cpp.patch
 
-# We define upstream file regex so we can be notifed of new upstream software re
-lease
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=32953
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
