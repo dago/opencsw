@@ -1,3 +1,9 @@
+rlwrap (0.35,REV=2010.01.09) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard  <yann@opencsw.org>  Sat, 09 Jan 2010 13:48:33 +0100
+
 rlwrap (0.34,REV=2009.12.29) unstable
 
   * New upstream release.
