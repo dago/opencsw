@@ -33,7 +33,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
 CONFIGURE_ARGS += --enable-telnet
 CONFIGURE_ARGS += --enable-colors256
-CONFIGURE_ARGS += --sysconfdir=/etc/$(prefix)/
+CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
 
 TEST_TARGET = check
 
