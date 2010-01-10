@@ -54,9 +54,14 @@ CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_LD_OPTIONS = -R/opt/csw/X11/lib
 
-BUILD64 = 1
+# We want to be linked with Xrender from $(prefix)/X11/lib not
+# $(prefix)/lib since the latter is linked to /usr/openwin/lib/libX11.so.4
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+#EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+# Won't work until libgsf-1 is 64bit
+#BUILD64 = 1
 
 STRIP_LIBTOOL=1
 
