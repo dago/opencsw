@@ -61,8 +61,9 @@ CONFIGURE_ARGS += --without-glibc-secure
 # UPNP support requires miniupnp from http://miniupnp.free.fr/
 CONFIGURE_ARGS += --without-upnp
 
-
-INITSMF = /etc/opt/csw/init\.d/cswdante
+SAMPLECONF  = $(sysconfdir)/socks.conf.CSW
+SAMPLECONF += $(sysconfdir)/sockd.conf.CSW
+INITSMF     = /etc/opt/csw/init\.d/cswdante
 
 include gar/category.mk
 
@@ -86,6 +87,9 @@ post-install-libsocks:
 	cp $(WORKSRC)/example/socks*.conf $(DOCDEST)/examples
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	cp $(addprefix $(FILEDIR)/,$(CSWDOCS)) $(DOCDEST)
+
+	ginstall -d $(DESTDIR)$(sysconfdir)
+	cp $(FILEDIR)/socks.conf.CSW $(DESTDIR)$(sysconfdir)
 	@$(MAKECOOKIE)
 
 
@@ -103,8 +107,8 @@ post-install-dante:
 	ginstall -m 0755 $(FILEDIR)/cswdante \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdante
 
-	ginstall -d $(DESTDIR)/etc/opt/csw
-	cp $(FILEDIR)/sockd.conf.CSW $(DESTDIR)/etc/opt/csw
+	ginstall -d $(DESTDIR)$(sysconfdir)
+	cp $(FILEDIR)/sockd.conf.CSW $(DESTDIR)$(sysconfdir)
 
 	# This is where sockd.log goes, ref. $(FILEDIR)/sockd.conf.CSW
 	ginstall -d $(DESTDIR)$(localstatedir)/dante

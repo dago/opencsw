@@ -1,0 +1,22 @@
+##
+## A simple sample socks.conf for users with a local nameserver.
+##
+## Please see socks.conf(5) and /opt/csw/share/doc/libsocks/examples for
+## guidance on how to configure libsocks to your requirements. Please
+## also see /opt/csw/share/doc/libsocks/README.CSW as alternate configs
+## specified via $SOCKS_CONF are not supported with this build.
+##
+
+# Assuming de0 is on the lan-net, the below will make connections to it
+# (and anything else on the lan), be direct, i.e. not go via the proxy.
+#route { from: 0.0.0.0/0 to: de0 via: direct }
+
+# Clients going anywhere else go via the proxyserver listening at
+# localhost, port 1080.  Uncomment the line(s) corresponding to the
+# proxyprotocols your proxyserver supports.
+route {
+        from: 0.0.0.0/0   to: 0.0.0.0/0   via: 127.0.0.1 port = 1080
+        proxyprotocol: socks_v5         # server supports socks v5.
+        proxyprotocol: socks_v4         # server supports socks v4
+#        proxyprotocol: http_v1.0        # server supports http v1
+}
