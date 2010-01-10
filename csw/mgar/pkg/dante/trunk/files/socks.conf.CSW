@@ -7,6 +7,10 @@
 ## specified via $SOCKS_CONF are not supported with this build.
 ##
 
+# Uncomment these if you are having troubles with libsocks
+#debug: 1
+#logoutput: stderr
+
 # Assuming de0 is on the lan-net, the below will make connections to it
 # (and anything else on the lan), be direct, i.e. not go via the proxy.
 #route { from: 0.0.0.0/0 to: de0 via: direct }
