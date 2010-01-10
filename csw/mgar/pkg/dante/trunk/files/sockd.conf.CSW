@@ -17,8 +17,8 @@ logoutput: /var/opt/csw/dante/sockd.log
 internal: localhost port = 1080
 external: pcn0:1
 
-# Globally enable authentication modules
-method: pam
+# Which authentication methods should be advertised in the SOCKS5 negotiation
+method: pam none
 # PAM service name defaults to "sockd". If no PAM configuration for this service
 # name can be found, the PAM libs will default to "other".
 #pam.servicename: sockd
@@ -57,21 +57,21 @@ client pass {
 # Block connections to localhost, or they will appear to come from the proxy.
 block {
         from: 0.0.0.0/0 to: localhost
-        log: connect
+        log: connect error
 }
 
 # Block bind to ports lower than 1023
 block {
         from: 0.0.0.0/0 to: 0.0.0.0/0 port le 1023
         command: bind
-        log: connect
+        log: connect error
 }
 
 # Allow all other SOCKS requestes, but require them to be authenticated.
 # Authentication is a SOCKS5 feature only, thus requires SOCKS5 clients.
 pass {
         from: 0.0.0.0/0 to: 0.0.0.0/0
-        log: connect
+        log: connect error
         method: pam
 }
 

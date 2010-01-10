@@ -1,6 +1,10 @@
 # Known limitation:
 # - The libsocks build doesn't support $SOCKS_CONF. See README.CSW
 #   and INSTALL with its description of `--without-glibc-secure'.
+# 
+# TODO
+# - socksify throws a core dump after the request is finished,
+#   to reproduce: /opt/csw/bin/socksify wget -qO http://google.com
 GARNAME = dante
 GARVERSION = 1.2.0
 CATEGORIES = net
