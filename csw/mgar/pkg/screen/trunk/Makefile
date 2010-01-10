@@ -22,11 +22,17 @@ DISTFILES += changelog.CSW
 PACKAGES = CSWscrn
 CATALOGNAME = screen
 
+REQUIRED_PKGS = CSWncurses
+
+# we want to use opencsw libncurses and not solaris libcurses
+# so we modify configure.in so ncurses is tried before curses
+PATCHFILES += enable_ncurses.patch
+
 # this patch increases the maximum number of simultaneously allowed 
 # windows per screen session.
-PATCHFILES = screen-maxwin.patch
+PATCHFILES += screen-maxwin.patch
 
-# screen is not isntalled with setuid bit so we disable utmp update
+# screen is not installed with setuid bit so we disable utmp update
 PATCHFILES += screen-utmp.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -38,6 +44,10 @@ CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
 TEST_TARGET = check
 
 include gar/category.mk
+
+# we must recreate configure as we modified configure.in
+pre-configure-modulated:
+	cd $(WORKSRC) && $(prefix)/bin/autoconf
 
 post-merge:
 	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc
