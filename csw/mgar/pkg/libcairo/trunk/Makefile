@@ -55,6 +55,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 # We want libcairo to be linked with Xrender from $(prefix)/X11/lib not
 # $(prefix)/lib since the latter is linked to /usr/openwin/lib/libX11.so.4
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 # imagediff in testsuite needs -lsocket
 EXTRA_LDFLAGS = -lsocket -lnsl
 
