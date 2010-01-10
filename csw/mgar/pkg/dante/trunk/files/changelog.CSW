@@ -1,5 +1,6 @@
 dante (1.2.0,REV=2010.01.10)
 
   * Adopted and updated to 1.2.0
+  * sockd/libsocks now look in /etc/opt/csw/ for their configuration files.
 
  -- Sebastian Kayser <skayser@opencsw.org>  Sun, 10 Jan 2010 14:09:19 +0100
