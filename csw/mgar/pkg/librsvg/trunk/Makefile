@@ -45,10 +45,18 @@ PATCHFILES += doc_makefile.patch
 
 LIBS=-lm
 EXTRA_COMMON_EXPORTS = LIBS
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared=yes --enable-static=no
-EXTRA_LD_OPTIONS = -R/opt/csw/X11/lib
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_LD_OPTIONS = -R/opt/csw/X11/lib
+
+BUILD64 = 1
 
 STRIP_LIBTOOL=1
 
