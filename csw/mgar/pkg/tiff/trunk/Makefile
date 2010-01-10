@@ -41,7 +41,7 @@ EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-docdir=/opt/csw/share/doc/tiff
+CONFIGURE_ARGS += --with-docdir=$(docdir)/tiff
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-cxx
 CONFIGURE_ARGS += --with-zlib-include-dir=/opt/csw/include
