@@ -65,6 +65,8 @@ SAMPLECONF  = $(sysconfdir)/socks.conf.CSW
 SAMPLECONF += $(sysconfdir)/sockd.conf.CSW
 INITSMF     = /etc/opt/csw/init\.d/cswdante
 
+EXTRA_PAX_ARGS = '-s,NEWS$$,changelog,p'
+
 include gar/category.mk
 
 post-configure-modulated:
