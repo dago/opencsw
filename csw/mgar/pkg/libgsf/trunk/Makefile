@@ -18,8 +18,9 @@ PREREQUISITE_PKGS += CSWgnulinks CSWgtk-doc CSWglib2devel CSWlibxml2devel
 REQUIRED_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
 REQUIRED_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib CSWiconv
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+EXTRA_LD_OPTIONS = -L../gsf/.libs -L../../gsf/.libs
 
 CONFIGURE_ARGS = $(DIRPATHS)
 #CONFIGURE_ARGS = "PATH=$(NPATH)" $(DIRPATHS)
@@ -28,26 +29,24 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-EXTRA_LD_OPTIONS = -L../gsf/.libs -L../../gsf/.libs
+# Missing 64-bit libs:
+# libgnomevfs-2.so libgconf-2.so libbonobo-2.so libbonobo-activation.so
+#BUILD64 = 1
+
+STRIP_LIBTOOL = 1
 
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
 
-post-configure-$(MODULATION):
-	@(echo "~~~ Fixing Libtool ~~~")
-	@$(FILEDIR)/fixme.sh $(WORKSRC)
-#	@$(FILEDIR)/fixme2.sh $(WORKSRC)
-	$(DONADA)
-
 post-install-isa-sparcv8:
 	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
 	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1.9.1
-	@ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
-	@ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ] ; then ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ] ; then ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ; fi )
 
 post-install-isa-i386:
 	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
 	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1.9.1
-	@ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
-	@ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ] ; then ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ; fi )
+	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ] ; then ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ; fi )
