@@ -1,0 +1,64 @@
+#!/sbin/sh
+# Simple init script for dante.
+#
+#AUTOENABLE no
+
+DAEMON=/opt/csw/sbin/sockd
+CONFIG=/etc/opt/csw/sockd.conf
+OUTPUT=/var/opt/csw/dante/sockd.log
+# PIDFILE is not deleted upon stop by sockd, but simply emptied
+PIDFILE=/var/run/cswsockd.pid
+
+case $1 in
+	'start')
+		printf "Starting SOCKS proxy: cswdante ... "
+		if [ ! -f "$CONFIG" ]; then
+			echo "no configuration, not starting"
+			# exit code 96 translates to SMF_EXIT_ERR_CONFIG on Solaris 10
+			exit 96
+		fi
+		$DAEMON -D -f $CONFIG; RC=$?
+		if [ $RC -ne 0 ]; then
+			echo "failed (see $OUTPUT)"
+			exit $RC
+		else
+			echo "OK"
+		fi
+		;;
+	'stop')
+		printf "Stopping SOCKS proxy: cswdante ... "
+		if [ -s "$PIDFILE" ]; then
+			/usr/bin/kill `/usr/bin/cat $PIDFILE`
+			echo "OK"
+		else
+			echo " no PID found, not running?"
+		fi
+		;;
+	'restart')
+		if $DAEMON -V -f $CONFIG; then
+			$0 stop
+			$0 start
+		else
+			RC=$?
+			echo "Not restarting cswdante. Configuration verification failed."
+			echo "(see $OUTPUT)"
+			exit $RC	
+		fi
+		;;
+	'reload')
+		# Make the parent process reload the config file, but leave
+		# child processes untouched.
+		printf "Reloading SOCKS proxy: cswdante ... "
+		if [ -s "$PIDFILE" ]; then
+			/usr/bin/kill -HUP `/usr/bin/cat $PIDFILE`
+		else
+			echo " no PID found, not running?"
+		fi
+		;;
+	*)
+		echo "Usage: $0 { start | stop | restart | reload }"
+		exit 1
+		;;
+esac
+
+exit 0

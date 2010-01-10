@@ -1,0 +1,78 @@
+##
+## This configuration serves as a very basic example. It makes sockd listen
+## on localhost and accepts PAM authenticated connection requestes to any
+## target. All requested connections are logged to /var/opt/csw/dante/sockd.log.
+##
+## Please see sockd.conf(5) and /opt/csw/share/doc/dante/examples for
+## guidance on how to configure sockd to your requirements.
+##
+
+## Part #1: general server setttings
+
+# Write sockd output to a logfile
+logoutput: /var/opt/csw/dante/sockd.log
+
+# sockd listens on localhost and uses interface pcn0:1 for outgoing connections.
+# You will very likely need to adjust the external interface name.
+internal: localhost port = 1080
+external: pcn0:1
+
+# Globally enable authentication modules
+method: pam
+# PAM service name defaults to "sockd". If no PAM configuration for this service
+# name can be found, the PAM libs will default to "other".
+#pam.servicename: sockd
+
+user.privileged: root
+user.unprivileged: nobody
+user.libwrap: nobody
+
+
+## Part #2: client access rules
+## There are two sets of access rules and they work at different levels. Rules
+## prefixed with client are checked first and are used to see if the client
+## is allowed to connect to the Dante server.
+
+# Allow connections from localhost to our sockd listening on localhost.
+client pass {
+        from: localhost to: localhost
+}
+
+# To allow LAN connections for an example network of 192.168.0.0
+# you would need to un-comment the following and add another interface
+# for sockd to listen to via the "internal" directive at the top.
+# client pass { from: 192.168.0.0/24 to: 0.0.0.0/0 }
+
+
+## Part #3: SOCKS request rules
+## The other rules, are a level higher and are checked after the client
+## connection has been accepted by the client-rules. The socks-rules are
+## used to evaluate the socks request that the client sends.
+##
+## The format and content of the rules is identical, but
+## client-rules may contain only a subset of the socks-rules. More
+## concrete, they may not contain any keywords related to the socks
+## protocol.
+
+# Block connections to localhost, or they will appear to come from the proxy.
+block {
+        from: 0.0.0.0/0 to: localhost
+        log: connect
+}
+
+# Block bind to ports lower than 1023
+block {
+        from: 0.0.0.0/0 to: 0.0.0.0/0 port le 1023
+        command: bind
+        log: connect
+}
+
+# Allow all other SOCKS requestes, but require them to be authenticated.
+# Authentication is a SOCKS5 feature only, thus requires SOCKS5 clients.
+pass {
+        from: 0.0.0.0/0 to: 0.0.0.0/0
+        log: connect
+        method: pam
+}
+
+# Fallthrough would be an implicit block

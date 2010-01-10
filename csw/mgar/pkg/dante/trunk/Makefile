@@ -1,10 +1,6 @@
-# Known issue:
+# Known limitation:
 # - The libsocks build doesn't support $SOCKS_CONF. See README.CSW
 #   and INSTALL with its description of `--without-glibc-secure'.
-#
-# Todo:
-# - Look into kerberos linking issues
-# - Test sockd and its init script
 GARNAME = dante
 GARVERSION = 1.2.0
 CATEGORIES = net
@@ -21,7 +17,7 @@ define BLURB
   the server administrator. 
 endef
 
-SPKG_SOURCEURL = http://www.inet.no/dante/
+VENDOR_URL     = http://www.inet.no/dante/
 MASTER_SITES   = ftp://ftp.inet.no/pub/socks/
 MASTER_SITES  += ftp://ftp.inet.no/pub/socks/old/
 DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
@@ -29,21 +25,23 @@ UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 
-PACKAGES = CSWlibsocks CSWdante
+# See doc/README.usage: dante is stand-alone. libsocks can be used to 
+# compile or run-time link applications against the SOCKS library
+PACKAGES = CSWdante CSWlibsocks
 
-SPKG_DESC_CSWlibsocks = Dante SOCKS runtime libraries (and socksify wrapper)
-SPKG_DESC_CSWdante = Dante SOCKS (v4 and v5) proxy daemon
+SPKG_DESC_CSWdante    = Dante SOCKS (v4 and v5) proxy daemon
+SPKG_DESC_CSWlibsocks = Dante SOCKS library (and socksify wrapper)
 
-# There is no pkg compiling against dante right now, just drop the dev files
-EXTRA_MERGE_EXCLUDE_FILES = $(includedir)/.*
-
-PKGFILES_CSWlibsocks  = $(PKGFILES_RT) .*socks.*
-PKGFILES_CSWlibsocks += $(docdir)/libsocks/.*
 PKGFILES_CSWdante     = .*sockd.* /etc/opt/csw/init.d/cswdante
 PKGFILES_CSWdante    += $(docdir)/dante/.*
+PKGFILES_CSWlibsocks  = $(PKGFILES_RT) .*socks.*
+PKGFILES_CSWlibsocks += $(docdir)/libsocks/.*
+PKGFILES_CSWlibsocks += $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWdante = CSWtcpwrap
+REQUIRED_PKGS_CSWdante    = CSWtcpwrap CSWkrb5lib
+REQUIRED_PKGS_CSWlibsocks = CSWkrb5lib
 
+# dante doesn't come with a test suite
 TEST_SCRIPTS =
 
 sysconfdir = /etc/opt/csw
@@ -60,11 +58,6 @@ CONFIGURE_ARGS += --with-socks-conf=$(sysconfdir)/socks.conf
 CONFIGURE_ARGS += --with-sockd-conf=$(sysconfdir)/sockd.conf
 CONFIGURE_ARGS += --with-pidfile=/var/run/cswsockd.pid
 CONFIGURE_ARGS += --without-glibc-secure
-
-# Kerberos linking fails .. looks like it is missing -L/opt/csw/lib.
-# Needs investigation.
-CONFIGURE_ARGS += --without-gssapi
-
 # UPNP support requires miniupnp from http://miniupnp.free.fr/
 CONFIGURE_ARGS += --without-upnp
 
@@ -78,6 +71,11 @@ ifneq ($(GARFLAVOR),DBG)
 	# Get rid of debugging flags which ./configure determines per default
 	perl -pi -e 's#-(g|xs|xO0) ##g if /^CFLAGS =/' $(WORKSRC)/*/Makefile
 endif
+	# Kerberos linking fails with the shipped libtool, so make ./configure
+    # use /opt/csw/bin/libtool (similar to what Debian does). See
+	# http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5275
+	gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
+		$(WORKSRC)/configure
 	@$(MAKECOOKIE)
 
 post-install-libsocks: DOCDEST = $(DESTDIR)$(docdir)/libsocks
@@ -102,8 +100,14 @@ post-install-dante:
 	cp $(addprefix $(FILEDIR)/,$(CSWDOCS)) $(DOCDEST)
 
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -m 0755 $(FILEDIR)/CSWdante.cswdante \
+	ginstall -m 0755 $(FILEDIR)/cswdante \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdante
+
+	ginstall -d $(DESTDIR)/etc/opt/csw
+	cp $(FILEDIR)/sockd.conf.CSW $(DESTDIR)/etc/opt/csw
+
+	# This is where sockd.log goes, ref. $(FILEDIR)/sockd.conf.CSW
+	ginstall -d $(DESTDIR)$(localstatedir)/dante
 	@$(MAKECOOKIE)
 
 # Make the man pages reference our CSW locations instead of /etc/*.conf
