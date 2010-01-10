@@ -65,6 +65,8 @@ CONFIGURE_ARGS += --without-glibc-secure
 # UPNP support requires miniupnp from http://miniupnp.free.fr/
 CONFIGURE_ARGS += --without-upnp
 
+CONFIGURE_ARGS += --without-gssapi
+
 SAMPLECONF  = $(sysconfdir)/socks.conf
 SAMPLECONF += $(sysconfdir)/sockd.conf
 INITSMF     = /etc/opt/csw/init\.d/cswdante
@@ -81,8 +83,8 @@ endif
 	# Kerberos linking fails with the shipped libtool, so make ./configure
     # use /opt/csw/bin/libtool (similar to what Debian does). See
 	# http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5275
-	gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
-		$(WORKSRC)/configure
+	#gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
+	#	$(WORKSRC)/configure
 	@$(MAKECOOKIE)
 
 post-install-libsocks: DOCDEST = $(DESTDIR)$(docdir)/libsocks
