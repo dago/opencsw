@@ -49,8 +49,7 @@ PKGFILES_CSWlibsocks  = $(PKGFILES_RT) .*socks.*
 PKGFILES_CSWlibsocks += $(docdir)/libsocks/.*
 PKGFILES_CSWlibsocks += $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWdante    = CSWtcpwrap CSWkrb5lib
-REQUIRED_PKGS_CSWlibsocks = CSWkrb5lib
+REQUIRED_PKGS_CSWdante    = CSWtcpwrap
 
 # dante doesn't come with a test suite
 TEST_SCRIPTS =
