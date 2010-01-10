@@ -109,7 +109,7 @@ post-install-libsocks:
 	cp $(FILEDIR)/socks.conf.CSW $(DESTDIR)$(sysconfdir)/socks.conf
 
 	# /bin/sh doesn't understand "if ! test", reported to dante-bugs@inet.no
-	gsed -ie 's,/bin/sh,/usr/bin/bash,' $(DESTDIR)$(bindir)/socksify
+	gsed -i -e 's,/bin/sh,/usr/bin/bash,' $(DESTDIR)$(bindir)/socksify
 	@$(MAKECOOKIE)
 
 
