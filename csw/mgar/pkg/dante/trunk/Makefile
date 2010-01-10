@@ -1,10 +1,12 @@
 # Known limitation:
 # - The libsocks build doesn't support $SOCKS_CONF. See README.CSW
 #   and INSTALL with its description of `--without-glibc-secure'.
-# 
-# TODO
-# - socksify throws a core dump after the request is finished,
-#   to reproduce: /opt/csw/bin/socksify wget -qO http://google.com
+#
+# Known issues:
+# - When compiled with GSSAPI/kerberos support, socksify core dumps
+#   at the end of the connection (when all data has been transmitted).
+#   To reproduce: /opt/csw/bin/socksify wget -qO http://google.com
+#
 GARNAME = dante
 GARVERSION = 1.2.0
 CATEGORIES = net
@@ -64,8 +66,8 @@ CONFIGURE_ARGS += --with-pidfile=/var/run/cswsockd.pid
 CONFIGURE_ARGS += --without-glibc-secure
 # UPNP support requires miniupnp from http://miniupnp.free.fr/
 CONFIGURE_ARGS += --without-upnp
-
-CONFIGURE_ARGS += --without-gssapi
+# See "Known issues" at the top of this Makefile
+#CONFIGURE_ARGS += --without-gssapi
 
 SAMPLECONF  = $(sysconfdir)/socks.conf
 SAMPLECONF += $(sysconfdir)/sockd.conf
@@ -75,16 +77,19 @@ EXTRA_PAX_ARGS = '-s,NEWS$$,changelog,p'
 
 include gar/category.mk
 
+pre-configure-modulated:
+	# Kerberos linking fails with the shipped libtool, so make ./configure
+	# use /opt/csw/bin/libtool (similar to what Debian does). See
+	# http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5275
+	gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
+		$(WORKSRC)/configure
+	@$(MAKECOOKIE)
+
 post-configure-modulated:
 ifneq ($(GARFLAVOR),DBG)
 	# Get rid of debugging flags which ./configure determines per default
 	perl -pi -e 's#-(g|xs|xO0) ##g if /^CFLAGS =/' $(WORKSRC)/*/Makefile
 endif
-	# Kerberos linking fails with the shipped libtool, so make ./configure
-    # use /opt/csw/bin/libtool (similar to what Debian does). See
-	# http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5275
-	#gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
-	#	$(WORKSRC)/configure
 	@$(MAKECOOKIE)
 
 post-install-libsocks: DOCDEST = $(DESTDIR)$(docdir)/libsocks
@@ -98,6 +103,9 @@ post-install-libsocks:
 
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	cp $(FILEDIR)/socks.conf.CSW $(DESTDIR)$(sysconfdir)/socks.conf
+
+	# /bin/sh doesn't understand "if ! test", reported to dante-bugs@inet.no
+	gsed -ie 's,/bin/sh,/usr/bin/bash,' $(DESTDIR)$(bindir)/socksify
 	@$(MAKECOOKIE)
 
 
