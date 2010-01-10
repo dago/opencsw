@@ -31,6 +31,8 @@ REQUIRED_PKGS_CSWwmf += CSWjpeg CSWlibx11 CSWpng CSWzlib
 REQUIRED_PKGS_CSWwmfdevel += CSWwmf
 REQUIRED_PKGS_CSWwmfdoc += CSWwmf
 
+PREREQUISITE_PKGS += CSWgtk2devel
+
 PKGFILES_CSWwmfdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWwmfdoc = $(sharedstatedir)/doc/.*
 
@@ -48,6 +50,8 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
