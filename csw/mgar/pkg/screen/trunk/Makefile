@@ -24,6 +24,9 @@ CATALOGNAME = screen
 
 REQUIRED_PKGS = CSWncurses
 
+PRESERVECONF = /etc/opt/csw/screenrc
+MIGRATE_FILES = screenrc
+
 # we want to use opencsw libncurses and not solaris libcurses
 # so we modify configure.in so ncurses is tried before curses
 PATCHFILES += enable_ncurses.patch
