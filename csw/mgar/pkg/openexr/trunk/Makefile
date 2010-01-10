@@ -51,11 +51,12 @@ EXTRA_CXX_FLAGS_isa-sparcv9 = -KPIC
 EXTRA_CXX_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
 
 BUILD64 = 1
+NO_ISAEXEC = 1
 
 # Check fails if library isn't installed /opt/csw/lib and until a 64-bit
 # lib is installed test has to be disabled
-TEST_TARGET = check
-#TEST_TARGET = 
+#TEST_TARGET = check
+TEST_TARGET = 
 
 STRIP_LIBTOOL = 1
 
