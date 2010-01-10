@@ -19,6 +19,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 DISTFILES += screenrc
 DISTFILES += changelog.CSW
 
+DOCFILES = FAQ INSTALL NEWS NEWS.3.5 NEWS.3.6 NEWS.3.7 NEWS.3.9 README TODO ChangeLog
+
 PACKAGES = CSWscrn
 CATALOGNAME = screen
 
@@ -53,6 +55,9 @@ pre-configure-modulated:
 	cd $(WORKSRC) && $(prefix)/bin/autoconf
 
 post-merge:
+	for FILE in $(DOCFILES); do \
+		ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)/$(docdir)/$(GARNAME)/$$FILE; \
+	done
 	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(GARNAME)/changelog.CSW
 	@$(MAKECOOKIE)
