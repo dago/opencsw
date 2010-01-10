@@ -2,6 +2,7 @@ dante (1.2.0,REV=2010.01.10)
 
   * Adopted and updated to 1.2.0
   * sockd/libsocks now look in /etc/opt/csw/ for their configuration files.
+  * Removed dante dependency on libsocks (not required).
   * Enhanced init script to verify configuration syntax on restart.
   * Automatic rc.d and SMF setup now done by cswclassutils.
   * Config file handling now done via cswclassutils (i.e. config files
