@@ -53,7 +53,7 @@ pre-configure-modulated:
 	cd $(WORKSRC) && $(prefix)/bin/autoconf
 
 post-merge:
-	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc
+	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(GARNAME)/changelog.CSW
 	@$(MAKECOOKIE)
 
