@@ -1,5 +1,15 @@
-Known issue: libsocks does not support $SOCKS_CONF
---------------------------------------------------
+Known limitation: libsocks/sockd without Kerberos support
+---------------------------------------------------------
+
+These builds of libsocks/sockd come without Kerberos support. If you
+require Kerberos support and are willing to invest some time, feel
+free to ping our maintainers mailing list and we will get you started
+with our build system. If you can't help out, but still require
+Kerberos support, please file a bug report so that we know about
+your requirement.
+
+Known limitation: libsocks does not support $SOCKS_CONF
+-------------------------------------------------------
 
 This build of the libsocks _does not_ support an alternate socks.conf
 passed via the environment variable SOCKS_CONF. As a workaround you can

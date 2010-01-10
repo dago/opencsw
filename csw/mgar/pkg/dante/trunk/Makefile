@@ -3,9 +3,14 @@
 #   and INSTALL with its description of `--without-glibc-secure'.
 #
 # Known issues:
-# - When compiled with GSSAPI/kerberos support, socksify core dumps
+# - When compiled with GSSAPI/Kerberos support, socksify core dumps
 #   at the end of the connection (when all data has been transmitted).
 #   To reproduce: /opt/csw/bin/socksify wget -qO http://google.com
+#   Observed on Solaris 10 U7 x86 with CSWkrb5lib 1.4.4,REV=2006.12.27.
+#   Not investigated in depth. If anyone needs Kerberos support, feel
+#   free to tackle this. Might be bug in Dante, might have to do with
+#   the LIBTOOL hack (see pre-configure-modulated) or might also
+#   originate in our downrev Kerberos libs.
 #
 GARNAME = dante
 GARVERSION = 1.2.0
@@ -67,7 +72,7 @@ CONFIGURE_ARGS += --without-glibc-secure
 # UPNP support requires miniupnp from http://miniupnp.free.fr/
 CONFIGURE_ARGS += --without-upnp
 # See "Known issues" at the top of this Makefile
-#CONFIGURE_ARGS += --without-gssapi
+CONFIGURE_ARGS += --without-gssapi
 
 SAMPLECONF  = $(sysconfdir)/socks.conf
 SAMPLECONF += $(sysconfdir)/sockd.conf
@@ -81,8 +86,8 @@ pre-configure-modulated:
 	# Kerberos linking fails with the shipped libtool, so make ./configure
 	# use /opt/csw/bin/libtool (similar to what Debian does). See
 	# http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5275
-	gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
-		$(WORKSRC)/configure
+	#gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
+	#	$(WORKSRC)/configure
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
@@ -111,7 +116,7 @@ post-install-libsocks:
 
 post-install-dante: DOCDEST = $(DESTDIR)$(docdir)/dante
 post-install-dante: DOCS = CREDITS NEWS SUPPORT
-post-install-dante: CSWDOCS = changelog.CSW
+post-install-dante: CSWDOCS = README.CSW changelog.CSW
 post-install-dante:
 	ginstall -d $(DESTDIR)/var/opt/csw/dante
 	ginstall -d $(DOCDEST)/examples
