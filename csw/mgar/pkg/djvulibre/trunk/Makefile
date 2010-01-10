@@ -44,7 +44,6 @@ PTHREAD_CFLAGS = -D_REENTRANT
 EXTRA_COMMON_EXPORTS += PTHREAD_LIBS
 EXTRA_COMMON_EXPORTS += PTHREAD_CFLAGS
 
-
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
@@ -55,8 +54,8 @@ EXTRA_COMMON_EXPORTS += X_CFLAGS
 EXTRA_COMMON_EXPORTS += X_LIBS 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-extra-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --with-extra-libraries=$(prefix)/X11/lib
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 BUILD64 = 1
 
