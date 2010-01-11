@@ -2,13 +2,13 @@ GARNAME = gnulinks
 GARVERSION = 1.2
 CATEGORIES = xtra
 
+VENDOR_URL = http://opencsw.org
+
 GLINKPKGS = CSWdiffutils CSWggettext CSWggettextrt CSWbison CSWbinutils
 GLINKPKGS += CSWggrep CSWgawk CSWgsed CSWggetopt CSWfindutils
 GLINKPKGS += CSWgmake CSWgpatch CSWgm4 CSWgwhois CSWgtar
 GLINKPKGS += CSWshutils CSWgfile CSWtextutils
 PREREQUISITE_PKGS = $(GLINKPKGS) CSWpkgutil
-
-SPKG_SOURCEURL = No Source
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
 define BLURB
