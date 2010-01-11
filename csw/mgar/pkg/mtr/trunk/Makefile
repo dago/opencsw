@@ -28,27 +28,27 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Build the base package without X support and have an additional one that
 # supports X. http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5090
-PACKAGES = CSWmtr CSWmtr-gtk
+PACKAGES = CSWmtr CSWmtr-x11
 
-# Just catch those files belonging to CSWmtr-gtk, all others will go to CSWmtr.
-PKGFILES_CSWmtr-gtk  = .*/mtr_gtk.*
-PKGFILES_CSWmtr-gtk += .*/xmtr.*
+# Just catch those files belonging to CSWmtr-x11, all others will go to CSWmtr.
+PKGFILES_CSWmtr-x11  = .*/mtr_x11.*
+PKGFILES_CSWmtr-x11 += .*/xmtr.*
 
 CATALOGNAME_CSWmtr         = mtr
 SPKG_DESC_CSWmtr           = Combined traceroute and ping utility (CLI only)
 REQUIRED_PKGS_CSWmtr      += CSWncurses
 
-CATALOGNAME_CSWmtr-gtk     = mtr_gtk
-SPKG_DESC_CSWmtr-gtk       = Combined traceroute and ping utility (GUI version)
-REQUIRED_PKGS_CSWmtr-gtk   = CSWgtk2
-REQUIRED_PKGS_CSWmtr-gtk  += CSWfconfig
-REQUIRED_PKGS_CSWmtr-gtk  += CSWftype2
-REQUIRED_PKGS_CSWmtr-gtk  += CSWggettextrt
-REQUIRED_PKGS_CSWmtr-gtk  += CSWglib2
-REQUIRED_PKGS_CSWmtr-gtk  += CSWlibatk
-REQUIRED_PKGS_CSWmtr-gtk  += CSWlibcairo
-REQUIRED_PKGS_CSWmtr-gtk  += CSWncurses
-REQUIRED_PKGS_CSWmtr-gtk  += CSWpango
+CATALOGNAME_CSWmtr-x11     = mtr_x11
+SPKG_DESC_CSWmtr-x11       = Combined traceroute and ping utility (GUI version)
+REQUIRED_PKGS_CSWmtr-x11   = CSWgtk2
+REQUIRED_PKGS_CSWmtr-x11  += CSWfconfig
+REQUIRED_PKGS_CSWmtr-x11  += CSWftype2
+REQUIRED_PKGS_CSWmtr-x11  += CSWggettextrt
+REQUIRED_PKGS_CSWmtr-x11  += CSWglib2
+REQUIRED_PKGS_CSWmtr-x11  += CSWlibatk
+REQUIRED_PKGS_CSWmtr-x11  += CSWlibcairo
+REQUIRED_PKGS_CSWmtr-x11  += CSWncurses
+REQUIRED_PKGS_CSWmtr-x11  += CSWpango
 
 # 1) Check for socklen_t via sys/socket.h (not netinet/in.h)
 # 2) Don't cast sin_addr to (struct in_addr), cc bails out with invalid cast
@@ -112,7 +112,7 @@ post-configure-modulated:
 
 post-merge:
 	ginstall -d $(PKGROOT)$(docdir)/mtr
-	ginstall -d $(PKGROOT)$(docdir)/mtr_gtk
+	ginstall -d $(PKGROOT)$(docdir)/mtr_x11
 	cp $(FILEDIR)/changelog.CSW $(PKGROOT)$(docdir)/mtr/
-	cp $(FILEDIR)/changelog.CSW $(PKGROOT)$(docdir)/mtr_gtk/
+	cp $(FILEDIR)/changelog.CSW $(PKGROOT)$(docdir)/mtr_x11/
 	@$(MAKECOOKIE)
