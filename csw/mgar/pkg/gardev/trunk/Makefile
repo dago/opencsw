@@ -19,7 +19,7 @@ CATALOGNAME_CSWgardevel = gar_devel
 REQUIRED_PKGS_CSWgardevel  = CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile
 REQUIRED_PKGS_CSWgardevel += CSWtextutils CSWwget CSWfindutils CSWgsed
 REQUIRED_PKGS_CSWgardevel += CSWgawk CSWbzip2 CSWlftp CSWgit CSWnetcat
-REQUIRED_PKGS_CSWgardevel += CSWsvn
+REQUIRED_PKGS_CSWgardevel += CSWsvn CSWpython CSWpy-cheetah
 
 MASTER_SITES = 
 
