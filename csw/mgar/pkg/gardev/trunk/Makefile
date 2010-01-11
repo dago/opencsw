@@ -2,6 +2,8 @@ GARNAME = gar_devel
 GARVERSION = 1.0
 CATEGORIES = devel
 
+VENDOR_URL = http://opencsw.org
+
 DESCRIPTION = Ease setting up a GAR development environment
 define BLURB
 Pull in all packages required to get started developing OpenCSW packages
