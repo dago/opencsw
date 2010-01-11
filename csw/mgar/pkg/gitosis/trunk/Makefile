@@ -5,6 +5,8 @@ GARVERSION = 0.2
 PATCHLEVEL = 73a03
 CATEGORIES = python
 
+VENDOR_URL = http://eagain.net/gitweb/?p=gitosis.git
+
 DESCRIPTION = Software for hosting git repositories
 define BLURB
 Manage git repositories, provide access to them over SSH, with tight access control and not needing shell accounts.
