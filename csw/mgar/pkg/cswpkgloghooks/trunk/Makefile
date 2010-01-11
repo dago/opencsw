@@ -2,6 +2,8 @@ GARNAME = cswpkgloghooks
 GARVERSION = 1.0
 CATEGORIES = utils
 
+VENDOR_URL = http://opencsw.org
+
 DESCRIPTION = Hook scripts to log package maintenance actions
 define BLURB
 This set of hook scripts will log package maintenance actions to syslog.
