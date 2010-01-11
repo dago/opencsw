@@ -3,6 +3,8 @@ GARVERSION = 0.2
 PATCHLEVEL = d20ac
 CATEGORIES = devel
 
+VENDOR_URL = http://github.com/apenwarr/git-subtree
+
 DESCRIPTION = Subtree support for git
 define BLURB
 An experimental alternative to the git-submodule command.
