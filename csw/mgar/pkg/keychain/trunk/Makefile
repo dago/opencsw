@@ -20,7 +20,8 @@ endef
 
 MASTER_SITES = http://www.funtoo.org/archive/keychain/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-PATCHFILES = gsed.patch
+PATCHFILES += bash.patch
+PATCHFILES += gsed.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -30,7 +31,8 @@ BUILD_SCRIPTS = keychain
 INSTALL_SCRIPTS = keychain
 TEST_SCRIPTS =
 
-PREREQUISITE_PKGS = CSWperl
+REQUIRED_PKGS = CSWbash
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWperl
 
 include gar/category.mk
 

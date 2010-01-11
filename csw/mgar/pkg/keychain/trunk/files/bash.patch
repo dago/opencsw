@@ -1,0 +1,11 @@
+Looks like keychain is written in bash, but declares /bin/sh as the shell.
+Let's fix it.
+
+--- keychain-2.7.0/keychain.sh.orig	2010-01-11 18:18:26.606373414 +0100
++++ keychain-2.7.0/keychain.sh	2010-01-11 18:18:42.710377114 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ 
+ # Copyright 1999-2005 Gentoo Foundation
+ # Copyright 2007 Aron Griffis <agriffis@n01se.net>
