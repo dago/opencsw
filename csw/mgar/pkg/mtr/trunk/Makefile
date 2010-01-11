@@ -1,6 +1,6 @@
 # TODO
 # ----
-# * Revisit curses autoconf detection. Maybe have a chat with upstream
+# - Revisit curses autoconf detection. Maybe have a chat with upstream
 #   as the README says that there are known, yet unsolved Solaris autoconf
 #   recipe problems
 #
@@ -21,85 +21,98 @@ define BLURB
   about each machine.
 endef
 
-SPKG_SOURCEURL = http://www.bitwizard.nl/mtr/
+VENDOR_URL   = http://www.bitwizard.nl/mtr/
 MASTER_SITES = ftp://ftp.bitwizard.nl/mtr/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWmtr CSWmtrtiny
+# Build the base package without X support and have an additional one that
+# supports X. http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5090
+PACKAGES = CSWmtr CSWmtr-gtk
 
-CATALOGNAME_CSWmtr       = mtr
-SPKG_DESC_CSWmtr         = Combined traceroute and ping utility
-REQUIRED_PKGS_CSWmtr     = CSWgtk2 CSWlibatk CSWpango CSWlibcairo
-REQUIRED_PKGS_CSWmtr    += CSWggettextrt CSWglib2 CSWncurses
-REQUIRED_PKGS_CSWmtr    += CSWfconfig CSWftype2 CSWzlib
-INCOMPATIBLE_PKGS_CSWmtr = CSWmtrtiny
-EXTRA_PKGFILES_EXCLUDED_CSWmtr = $(sbindir)/mtr-nongui
+# Just catch those files belonging to CSWmtr-gtk, all others will go to CSWmtr.
+PKGFILES_CSWmtr-gtk  = .*/mtr_gtk.*
+PKGFILES_CSWmtr-gtk += .*/xmtr.*
 
-CATALOGNAME_CSWmtrtiny       = mtr_tiny
-SPKG_DESC_CSWmtrtiny         = Combined traceroute and ping utility (CLI only version)
-REQUIRED_PKGS_CSWmtrtiny     = CSWncurses
-INCOMPATIBLE_PKGS_CSWmtrtiny = CSWmtr
-EXTRA_PKGFILES_EXCLUDED_CSWmtrtiny = $(sbindir)/mtr-gui
+CATALOGNAME_CSWmtr         = mtr
+SPKG_DESC_CSWmtr           = Combined traceroute and ping utility (CLI only)
+REQUIRED_PKGS_CSWmtr      += CSWncurses
+
+CATALOGNAME_CSWmtr-gtk     = mtr_gtk
+SPKG_DESC_CSWmtr-gtk       = Combined traceroute and ping utility (GUI version)
+REQUIRED_PKGS_CSWmtr-gtk   = CSWgtk2
+REQUIRED_PKGS_CSWmtr-gtk  += CSWfconfig
+REQUIRED_PKGS_CSWmtr-gtk  += CSWftype2
+REQUIRED_PKGS_CSWmtr-gtk  += CSWggettextrt
+REQUIRED_PKGS_CSWmtr-gtk  += CSWglib2
+REQUIRED_PKGS_CSWmtr-gtk  += CSWlibatk
+REQUIRED_PKGS_CSWmtr-gtk  += CSWlibcairo
+REQUIRED_PKGS_CSWmtr-gtk  += CSWncurses
+REQUIRED_PKGS_CSWmtr-gtk  += CSWpango
 
 # 1) Check for socklen_t via sys/socket.h (not netinet/in.h)
 # 2) Don't cast sin_addr to (struct in_addr), cc bails out with invalid cast
 PATCHFILES = gar-base.diff
+PATCHFILES += 0001-Makefile.am-honor-program-prefix-suffix-transform-na.patch
+# Could be redone into a proper portable socklen_t check like the one from
+# gnulib's socklen.m4 and submitted back upstream.
+PATCHFILES += 0002-configure.in-check-socklen_t-via-sys-socket.h.patch
 
 TEST_SCRIPTS =
 
-
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# ------------------ BEWARE:  NASTY HACK AHEAD --------------------
-#
 # We employ modulations to produce two mtr binaries, one with X support
-# the other one without (less dependencies). We need to transform the
-# name on merge so that the binaries don't clash and fiddle the correct
-# binary into the proper path again on package assembly (via prototype).
+# the other one without (less dependencies).
 #
 EXTRA_MODULATORS = GUI
 MODULATIONS_GUI = disable enable
 
-
-
 CONFIGURE_ARGS_GUI-disable = --without-gtk
-CONFIGURE_ARGS_GUI-enable = --disable-gtktest
+CONFIGURE_ARGS_GUI-enable  = --disable-gtktest
+CONFIGURE_ARGS_GUI-enable  += --program-prefix=x
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_GUI-$(GUI))
 
-EXTRA_PKG_CONFIG_PATH_GUI-enable = /opt/csw/X11/lib/pkgconfig
-EXTRA_PKG_CONFIG_PATH += $(EXTRA_PKG_CONFIG_PATH_GUI-$(GUI))
+ifeq ($(GUI),enable)
+EXTRA_PKG_CONFIG_PATH = /opt/csw/X11/lib/pkgconfig
+EXTRA_SOS_LD_FLAGS    = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+endif
 
-# Rename the modulated binaries so that we can distinguish them
-# Could also be done via ./configure --program-suffix, but the
-# install-exec-hook for mtr doesn't honor the transformed name
-# and fails.
-EXTRA_PAX_ARGS_isa-default-gui-enable  = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-gui,p"
-EXTRA_PAX_ARGS_isa-default-gui-disable = -s ",^.$(sbindir)/mtr$$,$(sbindir)/mtr-nongui,p"
+# These two should work instead of the four ones below, but they don't.
+# license is the only file that ends up in pkgroot/.
+#MERGE_SCRIPTS_isa-default-gui-enable  = copy-all
+#MERGE_SCRIPTS_isa-default-gui-disable = copy-all
 
-# Simply copy all files, EXTRA_PAX_ARGS above takes care not to overwrite the 
-# mtr binary on merging.
-MERGE_SCRIPTS_isa-default-gui-enable  = copy-all
-MERGE_SCRIPTS_isa-default-gui-disable = copy-all
+MERGE_SCRIPTS_isa-i386-gui-enable  = copy-all
+MERGE_SCRIPTS_isa-sparcv8-gui-enable  = copy-all
+MERGE_SCRIPTS_isa-i386-gui-disable = copy-all
+MERGE_SCRIPTS_isa-sparcv8-gui-disable = copy-all
 
 # Make mtr setuid so that it can access raw sockets
 PROTOTYPE_MODIFIERS = makesuid
-PROTOTYPE_FILES_makesuid = $(sbindir)/mtr-.*
+PROTOTYPE_FILES_makesuid = $(sbindir)/x?mtr
 PROTOTYPE_PERMS_makesuid = 4755
 
-# ------------------ /BEWARE:  NASTY HACK AHEAD --------------------
+# ---- end of modulations relevant settings
 
 include gar/category.mk
+
+# Need to autoreconf as we patch configure.in and Makefile.am
+pre-configure-modulated:
+	autoreconf -fi $(WORKSRC)
+	@$(MAKECOOKIE)
 
 # curses detection is somehow broken, ncurses.h is included but no curses
 # lib is added to LIBS (according to comments in configure.in termcap is only
 # included to satisfy Solaris curses dependencies)
 post-configure-modulated:
-	@perl -pi -e 'if (/^LIBS =/) { s|-ltermcap|-lncurses| }' \
+	perl -pi -e 'if (/^LIBS =/) { s|-ltermcap|-lncurses| }' \
 		$(WORKSRC)/Makefile
 	@$(MAKECOOKIE)
 
-post-install-modulated:
-	@ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
-	@cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(CATALOGNAME)
+post-merge:
+	ginstall -d $(PKGROOT)$(docdir)/mtr
+	ginstall -d $(PKGROOT)$(docdir)/mtr_gtk
+	cp $(FILEDIR)/changelog.CSW $(PKGROOT)$(docdir)/mtr/
+	cp $(FILEDIR)/changelog.CSW $(PKGROOT)$(docdir)/mtr_gtk/
 	@$(MAKECOOKIE)

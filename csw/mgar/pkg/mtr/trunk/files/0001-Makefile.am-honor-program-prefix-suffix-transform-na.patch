@@ -1,0 +1,28 @@
+From e237f1d4993f48be1cbbf283b0965426af195206 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Mon, 11 Jan 2010 22:25:30 +0100
+Subject: [PATCH] Makefile.am: honor --program-{prefix,suffix,transform-name}
+
+---
+ Makefile.am |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 7ff9ddf..1702674 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,8 +2,10 @@ SUBDIRS = img
+ 
+ sbin_PROGRAMS = mtr
+ man_MANS = mtr.8
++actual_mtr = `echo mtr | sed '$(transform)'`
++
+ install-exec-hook: 
+-	chmod u+s $(DESTDIR)$(sbindir)/mtr
++	chmod u+s $(DESTDIR)$(sbindir)/$(actual_mtr)
+ 
+ mtr_SOURCES = mtr.c \
+               net.c net.h \
+-- 
+1.6.5.1
+

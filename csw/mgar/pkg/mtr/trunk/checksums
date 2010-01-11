@@ -1,2 +1,4 @@
+46fbebe2240c1beeefd2b8df272c153a  0001-Makefile.am-honor-program-prefix-suffix-transform-na.patch
+2574238ad108bd6f1737adf5fc50df5f  0002-configure.in-check-socklen_t-via-sys-socket.h.patch
 4a3e6fef662eb4794e61e334f6c33722  gar-base.diff
 23baca52d0922c2ecba7eba05317868c  mtr-0.75.tar.gz

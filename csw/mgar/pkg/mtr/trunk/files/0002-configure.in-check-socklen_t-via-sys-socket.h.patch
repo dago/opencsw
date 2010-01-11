@@ -1,0 +1,25 @@
+From c1321af12b27e917b29a427b58d2539e89cc44b2 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Mon, 11 Jan 2010 21:57:53 +0100
+Subject: [PATCH] configure.in: check socklen_t via sys/socket.h
+
+---
+ configure.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index d73e994..1015f7b 100644
+--- a/configure.in
++++ b/configure.in
+@@ -96,7 +96,7 @@ AC_CHECK_DECLS(errno, , , [[
+ ]] )
+ 
+ AC_CHECK_TYPE(socklen_t, AC_DEFINE([HAVE_SOCKLEN_T], [], [Define if your system has socklen_t]) , , [[
+-#include <netinet/in.h>
++#include <sys/socket.h>
+ ]])
+ 
+ AC_CHECK_TYPE(struct in_addr, AC_DEFINE([HAVE_STRUCT_INADDR], [], [Define if you have struct in_addr]), , [[
+-- 
+1.6.5.1
+

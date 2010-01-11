@@ -1,5 +1,7 @@
 mtr (0.75,REV=2009.06.19)
 
   * Adopted and updated to 0.75. (Closes #2557, #3278)
+  * Split off a separate mtr_gtk package for the GUI version. The mtr package
+    is now CLI only which equates to less dependencies.
 
  -- Sebastian Kayser <skayser@opencsw.org>  Fri, 19 Jun 2009 00:26:08 +0200
