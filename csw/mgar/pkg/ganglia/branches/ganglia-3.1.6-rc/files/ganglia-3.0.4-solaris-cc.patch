@@ -1,0 +1,104 @@
+diff -Naur ganglia-3.0.3-orig/configure ganglia-3.0.3-sun64cc/configure
+--- ganglia-3.0.3-orig/configure	2006-04-17 16:42:55.000000000 +0200
++++ ganglia-3.0.3-sun64cc/configure	2006-11-22 16:19:29.367843000 +0100
+@@ -23585,9 +23585,6 @@
+    LDFLAGS="$LDFLAGS -lmpatrol -lbfd -liberty "
+ fi
+ 
+-CFLAGS="$CFLAGS -Wall"
+-
+-
+ varstatedir="/var/lib"
+ 
+ case "$host" in
+@@ -23690,7 +23687,7 @@
+ 		if test "$ac_cv_c_compiler_gnu" = yes; then
+ 		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		else
+-		   CFLAGS="$CFLAGS -D__STDC__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
++		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		fi
+ 
+ cat >>confdefs.h <<\_ACEOF
+diff -Naur ganglia-3.0.3-orig/configure.in ganglia-3.0.3-sun64cc/configure.in
+--- ganglia-3.0.3-orig/configure.in	2006-04-17 16:42:55.000000000 +0200
++++ ganglia-3.0.3-sun64cc/configure.in	2006-11-22 16:18:40.886836000 +0100
+@@ -307,7 +307,8 @@
+ fi
+ 
+ dnl Always use -Wall, even though its annoying. Like eating your vegetables.
+-CFLAGS="$CFLAGS -Wall"
++dnl This breaks the Sun Studio Compiler, so it is better to restrict this to gcc only
++dnl CFLAGS="$CFLAGS -Wall"
+ 
+ dnl Some system-specific stuff ...
+ dnl Some operating systems require additional flags in order to get all
+@@ -360,7 +361,7 @@
+ 		if test "$ac_cv_prog_gcc" = yes; then
+ 		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		else
+-		   CFLAGS="$CFLAGS -D__STDC__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
++		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		fi 
+                 AC_DEFINE(SOLARIS,1,SOLARIS);;
+ *freebsd*)      CFLAGS="-pthread $CFLAGS -D_REENTRANT" 
+diff -Naur ganglia-3.0.3-orig/gmetad/Makefile.am ganglia-3.0.3-sun64cc/gmetad/Makefile.am
+--- ganglia-3.0.3-orig/gmetad/Makefile.am	2006-04-17 16:42:55.000000000 +0200
++++ ganglia-3.0.3-sun64cc/gmetad/Makefile.am	2006-11-22 15:57:22.538526000 +0100
+@@ -1,4 +1,4 @@
+-AM_CFLAGS = -O0 -I$(top_builddir)/lib -I$(top_builddir)/gmond -I$(top_builddir)/srclib/expat/lib/
++AM_CFLAGS = -I$(top_builddir)/lib -I$(top_builddir)/gmond -I$(top_builddir)/srclib/expat/lib/
+ 
+ sbin_PROGRAMS = gmetad 
+ gmetad_SOURCES =  gmetad.c cmdline.c cmdline.h gmetad.h data_thread.c \
+diff -Naur ganglia-3.0.3-orig/gmetad/Makefile.in ganglia-3.0.3-sun64cc/gmetad/Makefile.in
+--- ganglia-3.0.3-orig/gmetad/Makefile.in	2006-04-17 16:42:55.000000000 +0200
++++ ganglia-3.0.3-sun64cc/gmetad/Makefile.in	2006-11-22 15:57:30.786966000 +0100
+@@ -185,7 +185,7 @@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ varstatedir = @varstatedir@
+-AM_CFLAGS = -O0 -I$(top_builddir)/lib -I$(top_builddir)/gmond -I$(top_builddir)/srclib/expat/lib/
++AM_CFLAGS = -I$(top_builddir)/lib -I$(top_builddir)/gmond -I$(top_builddir)/srclib/expat/lib/
+ gmetad_SOURCES = gmetad.c cmdline.c cmdline.h gmetad.h data_thread.c \
+    server.c process_xml.c rrd_helpers.c conf.c conf.h type_hash.c \
+    xml_hash.c cleanup.c
+diff -Naur ganglia-3.0.3-orig/srclib/confuse/src/lexer.l ganglia-3.0.3-sun64cc/srclib/confuse/src/lexer.l
+--- ganglia-3.0.3-orig/srclib/confuse/src/lexer.l	2006-04-17 16:42:55.000000000 +0200
++++ ganglia-3.0.3-sun64cc/srclib/confuse/src/lexer.l	2006-11-22 16:44:56.959206000 +0100
+@@ -44,7 +44,11 @@
+ typedef char * YYSTYPE;
+ extern YYSTYPE cfg_yylval;
+ 
++#ifdef YY_USE_PROTOS
+ #define YY_DECL int cfg_yylex YY_PROTO(( cfg_t *cfg ))
++#else
++#define YY_DECL int cfg_yylex(cfg_t *cfg)
++#endif
+ 
+ /* temporary buffer for the quoted strings scanner
+  */
+diff -Naur ganglia-3.0.3-orig/libmetrics/configure ganglia-3.0.3-sun64cc/srclib/libmetrics/configure
+--- ganglia-3.0.3-orig/libmetrics/configure	2006-04-17 16:42:55.000000000 +0200
++++ ganglia-3.0.3-sun64cc/libmetrics/configure	2006-11-22 16:20:50.206938000 +0100
+@@ -23968,7 +23968,7 @@
+ 		if test "$ac_cv_c_compiler_gnu" = yes; then
+ 		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		else
+-		   CFLAGS="$CFLAGS -D__STDC__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
++		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		fi
+ 
+ cat >>confdefs.h <<\_ACEOF
+diff -Naur ganglia-3.0.3-orig/srclib/libmetrics/configure.in ganglia-3.0.3-sun64cc/srclib/libmetrics/configure.in
+--- ganglia-3.0.3-orig/libmetrics/configure.in	2006-04-17 16:42:55.000000000 +0200
++++ ganglia-3.0.3-sun64cc/libmetrics/configure.in	2006-11-22 16:20:03.897959000 +0100
+@@ -121,7 +121,7 @@
+ 		if test "$ac_cv_prog_gcc" = yes; then
+ 		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		else
+-		   CFLAGS="$CFLAGS -D__STDC__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
++		   CFLAGS="$CFLAGS -D__EXTENSIONS__ -D_POSIX_C_SOURCE=199506L -DHAVE_STRERROR"
+ 		fi 
+                 AC_DEFINE(SOLARIS,1,SOLARIS);;
+ *freebsd*)      OS="freebsd"
