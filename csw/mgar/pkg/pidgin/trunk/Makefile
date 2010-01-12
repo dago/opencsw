@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = pidgin
-GARVERSION = 2.6.4
+GARVERSION = 2.6.5
 CATEGORIES = apps
 
 DESCRIPTION = Multi-protocol IM client
