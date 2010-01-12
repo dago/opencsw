@@ -1,3 +1,9 @@
+dante (1.2.0,REV=2010.01.12)
+
+  * Updated libsocks package description
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue, 12 Jan 2010 19:21:47 +0100
+
 dante (1.2.0,REV=2010.01.10)
 
   * Adopted and updated to 1.2.0
