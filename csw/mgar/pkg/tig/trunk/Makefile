@@ -3,6 +3,8 @@ GARVERSION = 0.14.1
 CATEGORIES = utils
 PATCHLEVEL = 1e69632
 
+VENDOR_URL = http://jonas.nitro.dk/tig/
+
 DESCRIPTION = A git repository browser
 define BLURB
 Tig is a git repository browser that additionally can act as a pager
