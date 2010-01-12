@@ -41,7 +41,7 @@ LICENSE = LICENSE
 PACKAGES = CSWdante CSWlibsocks
 
 SPKG_DESC_CSWdante    = Dante SOCKS (v4 and v5) proxy daemon
-SPKG_DESC_CSWlibsocks = Dante SOCKS library (and socksify wrapper)
+SPKG_DESC_CSWlibsocks = Dante SOCKS library (and socksify wrapper) to socksify applications
 
 PKGFILES_CSWdante     = .*sockd.* /etc/opt/csw/init.d/cswdante
 PKGFILES_CSWdante    += $(docdir)/dante/.*
@@ -109,6 +109,7 @@ post-install-libsocks:
 	cp $(FILEDIR)/socks.conf.CSW $(DESTDIR)$(sysconfdir)/socks.conf
 
 	# /bin/sh doesn't understand "if ! test", reported to dante-bugs@inet.no
+	# Should be fixed in the next release, so upon version bump, verify and drop
 	gsed -i -e 's,/bin/sh,/usr/bin/bash,' $(DESTDIR)$(bindir)/socksify
 	@$(MAKECOOKIE)
 
