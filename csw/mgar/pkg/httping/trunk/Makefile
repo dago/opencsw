@@ -1,5 +1,8 @@
+# TODO (release-critical prefixed with !, non release-critical with *)
+# * Submit 0001-* patch upstream
+# * -6 not documented in man page (any others?), feedback to upstream
 GARNAME = httping
-GARVERSION = 1.3.0
+GARVERSION = 1.4.1
 CATEGORIES = net
 
 DESCRIPTION = Httping is like 'ping' but for http-requests.
@@ -11,25 +14,34 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.vanheusden.com/httping/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES    = $(GARNAME)-$(GARVERSION).tgz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
 REQUIRED_PKGS = CSWosslrt
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
-
-PATCHFILES = gar-base.diff
+# Makefile comes pre-set with gcc defaults and hardcoded tools
+PATCHFILES = 0001-Makefile-make-options-and-tools-configurable.patch
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# Build options (see $(WORKSRC)/Makefile)
+EXTRA_LD_FLAGS = -lsocket -lnsl
+EXTRA_BUILD_EXPORTS = WFLAGS OFLAGS
+WFLAGS =
+OFLAGS =
+
+# Install options (see $(WORKSRC)/Makefile)
+INSTALL_EXPORTS = PREFIX INSTALL STRIP
+PREFIX  = $(prefix)
+INSTALL = ginstall
+STRIP   = /usr/ccs/bin/strip
 
 LICENSE = license.txt
 
 include gar/category.mk
 
 post-install-modulated:
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)

@@ -1,2 +1,2 @@
-9f75ad45daa91e67c6677c9959165f89  download/gar-base.diff
-41c912a9ecc904e51d7260053fc2195c  download/httping-1.3.0.tgz
+828d966da2d49e3300a0914e8d6f7b16  0001-Makefile-make-options-and-tools-configurable.patch
+bde1ff3c01343d2371d8f34fbf8a1d9a  httping-1.4.1.tgz
