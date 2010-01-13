@@ -23,10 +23,16 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
+ifeq ($(shell uname -p), sparc)
+  PATCHFILE = Makefile.sparc.p
+else
+  PATCHFILE = Makefile.i386.p
+endif
+
 pre-build-modulated:
 	@echo " ==> Pre-build $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-	   gpatch < ../../../../$(FILEDIR)/Makefile.p )
+	   gpatch < ../../../../$(FILEDIR)/$(PATCHFILE) )
 	@$(MAKECOOKIE)
 
 install-custom:
