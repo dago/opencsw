@@ -78,15 +78,8 @@ EXTRA_PKG_CONFIG_PATH = /opt/csw/X11/lib/pkgconfig
 EXTRA_SOS_LD_FLAGS    = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 endif
 
-# These two should work instead of the four ones below, but they don't.
-# license is the only file that ends up in pkgroot/.
-#MERGE_SCRIPTS_isa-default-gui-enable  = copy-all
-#MERGE_SCRIPTS_isa-default-gui-disable = copy-all
-
-MERGE_SCRIPTS_isa-i386-gui-enable  = copy-all
-MERGE_SCRIPTS_isa-sparcv8-gui-enable  = copy-all
-MERGE_SCRIPTS_isa-i386-gui-disable = copy-all
-MERGE_SCRIPTS_isa-sparcv8-gui-disable = copy-all
+MERGE_SCRIPTS_isa-default-gui-enable  = copy-all
+MERGE_SCRIPTS_isa-default-gui-disable = copy-all
 
 # Make mtr setuid so that it can access raw sockets
 PROTOTYPE_MODIFIERS = makesuid
