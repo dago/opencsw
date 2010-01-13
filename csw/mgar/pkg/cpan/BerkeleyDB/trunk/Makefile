@@ -1,5 +1,5 @@
 GARNAME = BerkeleyDB
-GARVERSION = 0.39
+GARVERSION = 0.41
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -11,10 +11,11 @@ endef
 PACKAGES = CSWpmberkeleydb
 CATALOGNAME = pm_berkeleydb
 
-DISTFILES += CSWpmberkeleydb.config.in.diff
-
 PATCHFILES = CSWpmberkeleydb.config.in.diff
 
-REQUIRED_PKGS += CSWbdb
+NOISALIST = 1
+EXTRA_LIB = /opt/csw/bdb47/lib
+
+REQUIRED_PKGS = CSWbdb47
 
 include gar/category.mk
