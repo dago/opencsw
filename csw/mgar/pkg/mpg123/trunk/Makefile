@@ -31,6 +31,11 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 TEST_TARGET = check
 
+# Looks like we do need libtool files for plugins:
+#   http://www.opencsw.org/mantis/view.php?id=4145
+# Skip for libmpg123, though.
+MERGE_EXCLUDE_LIBTOOL = $(libdir)/[^/]*\.la
+
 MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
