@@ -1,9 +1,9 @@
 GARNAME = neon
-GARVERSION = 0.29.2
+GARVERSION = 0.29.3
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 0.26.4 0.29.2
+MODULATIONS_GARVERSION = 0.26.4 0.29.3
 
 DESCRIPTION = Neon HTTP and WebDAV client library
 define BLURB
@@ -51,9 +51,9 @@ MERGE_DIRS_isa-default-garversion-0.26.4 = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-0.26.4 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-0.26.4 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-0.29.2 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-0.29.2 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.29.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-0.29.3 = copy-all
+MERGE_SCRIPTS_isa-default64-garversion-0.29.3 = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-0.29.3 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWneon-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWneon-devel += $(docdir)/.*
