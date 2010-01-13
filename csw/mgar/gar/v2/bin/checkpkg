@@ -295,6 +295,17 @@ case $pkgarch in
 	exit 1
 esac
 
+case $f in
+  *${pkgarch}*)
+    print "f: $f, pkgarch: $pkgarch"
+    ;;
+  *)
+    print "The file name is '$f'."
+    print "The pkgarch is '$pkgarch'."
+    errmsg "ERROR: package file name and pkgarch don't match."
+    ;;
+esac
+
 goodarch=yes
 case $f in
 	*${LOCAL_ARCH}*)
