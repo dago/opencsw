@@ -18,5 +18,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = hachoir_parser
 ARCHALL = 1
+REQUIRED_PKGS = CSWhachoir-core
 TEST_SCRIPTS =
 include gar/category.mk
