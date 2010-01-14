@@ -11,6 +11,7 @@ import testdata.checkpkg_test_data_CSWmysql51 as d3
 import testdata.checkpkg_test_data_CSWmysql51devel as d4
 import testdata.checkpkg_test_data_CSWlibpq_84 as d5
 import testdata.checkpkg_test_data_CSWmysql5client_8x as d6
+import testdata.checkpkg_test_data_CSWpostfix as d7
 import testdata.dump_output_1 as dump_1
 import testdata.dump_output_2 as dump_2
 
@@ -179,6 +180,32 @@ class DependenciesUnitTest_6(unittest.TestCase):
     self.assertEquals(expected, self.missing_deps)
 
 
+class DependenciesUnitTest_7(unittest.TestCase):
+
+  def setUp(self):
+    (self.missing_deps,
+     self.surplus_deps,
+     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
+        d7.DATA_PKGNAME,
+        d7.DATA_DECLARED_DEPENDENCIES,
+        d7.DATA_BINARIES_BY_PKGNAME,
+        d7.DATA_NEEDED_SONAMES_BY_BINARY,
+        d7.DATA_PKGS_BY_FILENAME,
+        d7.DATA_FILENAMES_BY_SONAME,
+        d7.DATA_PKG_BY_ANY_FILENAME,
+    )
+
+  def testSurplusDeps(self):
+    self.assertEquals(set([]), self.surplus_deps)
+
+  def testOrphanSonames(self):
+    self.assertEquals(set([]), self.orphan_sonames)
+
+  def testMissingDeps(self):
+    expected = set([u'SUNWcslx'])
+    self.assertEquals(expected, self.missing_deps)
+
+
 class GuessDepsUnitTest(unittest.TestCase):
 
   def testGuessDepsByFilename1(self):
@@ -276,6 +303,26 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     expected = "/opt/csw/mysql5/lib/amd64/mysql/foo"
     result = checkpkg.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
+
+  def testEmulate64BitSymlinks_3(self):
+    runpath_list = ["/opt/csw/mysql5/lib/64/mysql/foo"]
+    expected = "/opt/csw/mysql5/lib/sparcv9/mysql/foo"
+    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    self.assertTrue(expected in result, "%s not in %s" % (expected, result))
+
+  def testEmulateSymlinks_3(self):
+    runpath_list = ["/opt/csw/bdb4"]
+    expected = "/opt/csw/bdb42"
+    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    self.assertTrue(expected in result, "%s not in %s" % (expected, result))
+
+  def testEmulateSymlinks_4(self):
+    runpath_list = ["/opt/csw/bdb42"]
+    expected = "/opt/csw/bdb42"
+    not_expected = "/opt/csw/bdb422"
+    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    self.assertTrue(expected in result, "%s not in %s" % (expected, result))
+    self.assertFalse(not_expected in result, "%s is in %s" % (not_expected, result))
 
   def testGetLinesBySoname(self):
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
@@ -400,6 +447,29 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
         runpath_by_needed_soname,
         d6.DATA_ISALIST)
     self.assertEqual(expected, result)
+
+  def testGetLinesBySoname_8(self):
+    expected = {'foo.so.1': '/opt/csw/postgresql/lib/foo.so.1 foo'}
+    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
+    pkgmap.GetPkgmapLineByBasename("foo")
+    lines1 = {"/opt/csw/lib/postgresql": "/opt/csw/lib/postgresql/foo.so.1 foo"}
+    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
+    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
+    self.pkgmap_mocker.ReplayAll()
+    pkgmap.GetPkgmapLineByBasename("foo")
+    needed_sonames = set(["foo.so.1"])
+    runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/postgresql/lib/", "/usr/lib"]}
+    isalist = ["isa-value-1", "isa-value-2"]
+    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+    self.pkgmap_mocker.VerifyAll()
+    self.assertEqual(expected, result)
+
+  def testSanitizeRunpath_1(self):
+    self.assertEqual("/opt/csw/lib", checkpkg.SanitizeRunpath("/opt/csw/lib/"))
+
+  def testSanitizeRunpath_2(self):
+    self.assertEqual("/opt/csw/lib", checkpkg.SanitizeRunpath("/opt//csw////lib/"))
+
 
 
 class ParseDumpOutputUnitTest(unittest.TestCase):

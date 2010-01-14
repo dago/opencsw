@@ -275,7 +275,7 @@ class SystemPkgmap(object):
       c.execute(sql, [CONFIG_MTIME])
       row = c.fetchone()
       if not row:
-      	# raise ConfigurationError("Could not find the mtime setting")
+        # raise ConfigurationError("Could not find the mtime setting")
         self.cache_mtime = 1
       else:
         self.cache_mtime = row[0]
@@ -443,14 +443,32 @@ def Emulate64BitSymlinks(runpath_list):
   Since we don't know the architecture, we'll adding both amd64 and sparcv9.
   It should be safe.
   """
+  symlinks = (
+      ("/opt/csw/bdb4", ["/opt/csw/bdb42"]),
+      ("/64", ["/amd64", "/sparcv9"]),
+  )
   symlinked_list = []
   for runpath in runpath_list:
-    if "/64" in runpath:
-      symlinked_list.append(runpath.replace("/64", "/amd64"))
-      symlinked_list.append(runpath.replace("/64", "/sparcv9"))
-    else:
-      symlinked_list.append(runpath)
+    for symlink, expansion_list in symlinks:
+      symlink_re = re.compile(r"%s(/|$)" % symlink)
+      if re.search(symlink_re, runpath):
+        for expansion in expansion_list:
+          symlinked_list.append(runpath.replace(symlink, expansion))
+      else:
+        symlinked_list.append(runpath)
   return symlinked_list
+
+
+def SanitizeRunpath(runpath):
+  ok = False
+  while True:
+    if runpath.endswith("/"):
+      runpath = runpath[:-1]
+    elif "//" in runpath:
+      runpath = runpath.replace("//", "/")
+    else:
+      break
+  return runpath
 
 
 def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
@@ -461,6 +479,7 @@ def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
     # runpath and finds the first matching one.
     runpath_found = False
     for runpath in runpath_by_needed_soname[soname]:
+      runpath = SanitizeRunpath(runpath)
       runpath_list = ExpandRunpath(runpath, isalist)
       runpath_list = Emulate64BitSymlinks(runpath_list)
       soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
