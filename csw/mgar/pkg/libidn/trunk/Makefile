@@ -25,6 +25,7 @@ NO_ISAEXEC = 1
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
