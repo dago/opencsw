@@ -1,4 +1,2 @@
-63ac43075e092255cb266e5270ce5364  download/CSWpostfix.cswusergroup
-76e992eb49e5d2d8c51305be8891566f  download/CSWpostfix.postinstall
-980c70abf5ea711adec41f3dd4e37141  download/CSWpostfix.postremove
-1f0edbd521d2b0473626f4d61e8bb4eb  download/postfix-2.6.2.tar.gz
+64dadd7a3737c6a82211b301e380a31a  CSWpostfix.checkinstall
+1f0edbd521d2b0473626f4d61e8bb4eb  postfix-2.6.2.tar.gz

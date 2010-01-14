@@ -43,4 +43,29 @@ for dirpair in ${obsolete_directories}; do
   fi
 done
 
+# Verify that there are no possibly important files in the old spool location
+# (where old <= 2.4.6,REV=2008.05.28). Bail out otherwise and instruct user to
+# manually migrate. Skips named pipes as well as all files in pid/.
+old_spooldir="/opt/csw/var/spool/postfix/"
+new_spooldir="/var/opt/csw/
+old_spoolfiles=`find ${PKG_INSTALL_ROOT}/opt/csw/var/spool/postfix/ \
+  -name pid -prune -o ! -type d ! -type p | grep -v '/pid$'`
+if [ "${old_spoolfiles}" != "" ]; then
+    echo
+    echo "*******************************************************************"
+    echo "* The old spool directory ${old_spooldir} still contains files.    "
+    echo "* Please migrate these as needed to ${new_spooldir}.               "
+    echo "*                                                                  "
+    echo "* Installation will now terminate. Please restart the installation "
+    echo "* once the files have been migrated or removed.                    "
+    echo "*******************************************************************"
+    echo
+    echo "*******************************************************************"
+    echo "* This is the list of affected files:                              "
+    echo ${old_spoolfiles}
+    echo
+
+    exit 1
+fi
+
 exit 0

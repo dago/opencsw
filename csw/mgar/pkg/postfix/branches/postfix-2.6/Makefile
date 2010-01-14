@@ -1,18 +1,16 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-# ! Obsolete postinstall scripts:
-#   #3060 http://www.opencsw.org/bugtrack/view.php?id=3060
-#   #2964 http://www.opencsw.org/bugtrack/view.php?id=2964
-#   #1943 http://www.opencsw.org/bugtrack/view.php?id=1943
-# ! Handle spool location change (bail out and force user interaction?)
 # ! Handle system integration (refer to README.CSW or alike), see
 #   http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
-# ! Does the currently available package preserve configuration files on
-#   removal?
 # ! Update to most recent postfix version (2.6.5 as of 13th Jan 2010)
 # ! Verify CONFIG_FILES list (can this be generated on the fly?)
 # ! Ship simple default configuration
-# ! Build, install and test package (works? spool permissions ok?)
+# ! Build, install and test package (bails out on existing spool files?
+#   works? spool permissions ok?)
 #   WRT to permissions, run "postfix set-permissions" and compare
+#
+# NICE TO KNOW
+# - 2.4.6,REV=2008.05.28 preserves modified configuration files via
+#   package-shipped CAS class csw_conf.
 #
 GARNAME = postfix
 GARVERSION = 2.6.2
