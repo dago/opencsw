@@ -192,7 +192,7 @@ def main():
 
     for soname in orphan_sonames:
       errors.append(checkpkg.Error("The following soname does't belong to "
-                                   "any package: %s" % checker.soname))
+                                   "any package: %s" % soname))
 
   if errors:
     for error in errors:
