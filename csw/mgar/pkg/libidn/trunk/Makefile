@@ -1,5 +1,5 @@
 GARNAME = libidn
-GARVERSION = 1.15
+GARVERSION = 1.16
 CATEGORIES = lib
 
 DESCRIPTION = GNU IDN Library
@@ -25,8 +25,6 @@ REQUIRED_PKGS = CSWggettextrt CSWiconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# The failing test is due to a bug in libiconv. This is fixed in libiconv 0.13
-#TEST_TARGET = check
-TEST_TARGET =
+TEST_TARGET = check
 
 include gar/category.mk
