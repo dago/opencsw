@@ -18,10 +18,13 @@ SPKG_SOURCEURL = http://www.gnu.org/software/libidn/
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+REQUIRED_PKGS = CSWggettextrt CSWiconv
+
 BUILD64 = 1
 NO_ISAEXEC = 1
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv
+# We don't need it and if defined the test breaks
+LD_OPTIONS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
