@@ -132,10 +132,10 @@ REQUIRED_PKGS += CSWpcrert
 # Activate support for hash and btree lookup tables
 # http://www.postfix.org/DB_README.html
 FEATURES += -DHAS_DB
-INCLUDES += -I/opt/csw/bdb4/include
-AUXLIBS  += -L/opt/csw/bdb4/lib -R/opt/csw/bdb4/lib -ldb-4
-PREREQUISITE_PKGS += CSWbdb4
-REQUIRED_PKGS += CSWbdb4
+INCLUDES += -I/opt/csw/bdb42/include 
+AUXLIBS  += -L/opt/csw/bdb42/lib -R/opt/csw/bdb42/lib -ldb-4.2
+PREREQUISITE_PKGS += CSWbdb42devel
+REQUIRED_PKGS += CSWbdb42
 
 # Activate support for SSL/TLS
 # http://www.postfix.org/TLS_README.html
@@ -179,7 +179,7 @@ REQUIRED_PKGS += CSWlibpq
 
 
 # Make sure to include $(CFLAGS) so that we get sane defaults via GAR
-CCARGS=$(CFLAGS) $(FEATURES) $(DEFAULTS) $(INCLUDES)
+CCARGS=$(CPPFLAGS) $(INCLUDES) $(FEATURES) $(DEFAULTS) $(CFLAGS)
 
 # We zero makedef's DEBUG and OPT, the relevant flags are set via GAR & CFLAGS
 configure-custom:
