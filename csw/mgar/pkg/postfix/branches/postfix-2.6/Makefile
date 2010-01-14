@@ -1,27 +1,19 @@
-# Status
-# - Build with all activated features completes, packaging completes
-# - Beware: uses a modified GARv2 for USERGROUP=
-#   http://lists.opencsw.org/pipermail/maintainers/2009-July/003143.html
-# - Fixed bugs:
-#   #3580 Not sun4m compatible 
-#         $(CFLAGS) are now incorporated into $(CCARGS)
-#   #3063 /opt/csw/libexec/postfix not stripped, takes ~30MB 
-#         $(STRIP_DIRS) added to build description
-#   #3017 Please depend against CSWpcrert instead of CSWpcre 
-#   #2843 No cyrus-sasl support
-#         Added cyrus SASL support, link postfix against the same 
-#         bdb version that CSWsasl uses.
-# - Moved queue and data dirs to /var/opt/csw (see DDEFs) as per standard
-# - Integrated CSWcswclassutils for user/group creation, configuration
-#   file handling, and SMF / init script support
-# 
-# TODO
-# - Check remaining open bugs
-# - Check sed main.cf script functionality
-# - Check update script functionality, add handling for spool location change
-# - Do we need to take care of file ownerships?
-# - Does the currently available package preserve configuration files on
+# TODO (release-critical prefixed with !, non release-critical with *)
+# ! Obsolete postinstall scripts:
+#   #3060 http://www.opencsw.org/bugtrack/view.php?id=3060
+#   #2964 http://www.opencsw.org/bugtrack/view.php?id=2964
+#   #1943 http://www.opencsw.org/bugtrack/view.php?id=1943
+# ! Handle spool location change (bail out and force user interaction?)
+# ! Handle system integration (refer to README.CSW or alike), see
+#   http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
+# ! Does the currently available package preserve configuration files on
 #   removal?
+# ! Update to most recent postfix version (2.6.5 as of 13th Jan 2010)
+# ! Verify CONFIG_FILES list (can this be generated on the fly?)
+# ! Ship simple default configuration
+# ! Build, install and test package (works? spool permissions ok?)
+#   WRT to permissions, run "postfix set-permissions" and compare
+#
 GARNAME = postfix
 GARVERSION = 2.6.2
 CATEGORIES = server
@@ -37,33 +29,62 @@ define BLURB
   completely different.
 endef
 
+VENDOR_URL   = http://www.postfix.org
 MASTER_SITES = ftp://ftp.porcupine.org/mirrors/postfix-release/official/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-SPKG_SOURCEURL = http://www.postfix.org
 
-# Conflicting files (bin/mailq and bin/sendmail) in sendmail
-INCOMPATIBLE_PKGS = CSWsendmail
+DISTFILES += CSWpostfix.checkinstall
 
-DISTFILES += CSWpostfix.cswusergroup
-DISTFILES += CSWpostfix.postinstall
-DISTFILES += CSWpostfix.postremove
+# Tag configuration files for handling via cswclassutils
+CONFIG_BASE   = /etc/opt/csw/postfix/
+CONFIG_FILES  = access 
+CONFIG_FILES += aliases
+CONFIG_FILES += canonical
+CONFIG_FILES += generic
+CONFIG_FILES += header_checks
+CONFIG_FILES += main.cf
+CONFIG_FILES += master.cf
+CONFIG_FILES += relocated
+CONFIG_FILES += transport
+CONFIG_FILES += virtual
+SAMPLECONF    = $(addprefix $(CONFIG_BASE), $(CONFIG_FILES))
 
-# Tag files for cswclassutils
-CONFIG_BASE  = /etc/opt/csw/postfix/
-CONFIG_FILES  = access aliases canonical generic header_checks
-CONFIG_FILES += main.cf master.cf relocated transport virtual
-
-SAMPLECONF  = $(addprefix $(CONFIG_BASE), $(CONFIG_FILES))
 INITSMF     = /etc/opt/csw/init.d/cswpostfix
 USERGROUP   = $(sysconfdir)/pkg/CSWpostfix/cswusergroup
 
+# Make postdrop setgid so that it can deliver to $(DEF_QUEUE_DIR)/maildrop
+PROTOTYPE_MODIFIERS = makesgid
+PROTOTYPE_FILES_makesgid = $(sbindir)/postdrop
+PROTOTYPE_PERMS_makesgid = 2755
+
+# Make $(DEF_QUEUE_DIR) subdirs accessible/writable to postfix only
+PROTOTYPE_MODIFIERS += spooldir
+PROTOTYPE_FILES_spooldir = $(DEF_QUEUE_DIR)/*
+PROTOTYPE_USER_spooldir  = postfix
+PROTOTYPE_PERMS_spooldir = 0700
+PROTOTYPE_CLASS_spooldir = ugfiles
+
+# Make $(DEF_QUEUE_DIR)/maildrop accessible by postdrop group
+PROTOTYPE_MODIFIERS += maildrop
+PROTOTYPE_FILES_maildrop = $(DEF_QUEUE_DIR)/maildrop
+PROTOTYPE_GROUP_maildrop = postdrop
+PROTOTYPE_PERMS_maildrop = 0730
+PROTOTYPE_CLASS_maildrop = ugfiles
+
+# IMPORTANT! Make $(DEF_QUEUE_DIR)/pid accessible by root only
+# http://www.openwall.com/lists/oss-security/2009/09/18/6
+PROTOTYPE_MODIFIERS += pid
+PROTOTYPE_FILES_pid = $(DEF_QUEUE_DIR)/pid
+PROTOTYPE_USER_pid  = root
+PROTOTYPE_GROUP_pid = bin
+PROTOTYPE_PERMS_pid = 0755
+PROTOTYPE_CLASS_pid = ugfiles
+
 EXTRA_MERGE_EXCLUDE_FILES  = /etc/opt/csw/postfix/LICENSE
-EXTRA_MERGE_EXCLUDE_FILES += /etc/opt/csw/postfix/TLS_LICENSE
 EXTRA_MERGE_EXCLUDE_FILES += /etc/opt/csw/postfix/makedefs.out
 
 STRIP_DIRS = $(DESTDIR)$(libexecdir)/postfix
-
 
 CONFIGURE_SCRIPTS = custom
 TEST_SCRIPTS      =
@@ -188,20 +209,9 @@ install-custom:
 		readme_directory=$(DEF_README_DIR) \
 		html_directory=$(DEF_HTML_DIR)
 
-	# XXX: Needs to be checked/revised for current version
-	sed -f $(FILEDIR)/fix_main.cf.sed $(DESTDIR)/etc/opt/csw/postfix/main.cf > $(WORKDIR)/main.cf
-	cp $(WORKDIR)/main.cf $(DESTDIR)/etc/opt/csw/postfix/main.cf
-
-	# Script to handle the sysconfdir location change /opt -> /etc
-	# XXX: Needs to be checked and amended with /opt -> /var changes
-	ginstall -D -m 755 $(FILEDIR)/upgrade \
-		$(DESTDIR)/opt/csw/share/postfix/upgrade
-
 	# Files for cswinitsmf and cswusergroup
 	ginstall -Dm 755 $(FILEDIR)/cswpostfix  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswpostfix
-	ginstall -D $(FILEDIR)/cswpostfix.xml \
-		$(DESTDIR)/var/opt/csw/svc/manifest/network/cswpostfix.xml"
-	ginstall -D $(FILEDIR)/CSWpostfix.cswusergroup \
+	ginstall -D $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/CSWpostfix/cswusergroup
 	@$(MAKECOOKIE)
