@@ -1,4 +1,5 @@
 4376789925fa9002d0567d739f717748  0001-prefer-opencsw-perl.diff
+78c76967d20b4c9c69acacd7417527e1  0002-Add-etc-opt-csw-as-config-location.patch
 6f2f2376eba0a788795dd43d68ad32d1  COPYING
 7236327edeb969fd2a223cd5b60c0b57  pca-20091216-02
 12de68ff8f67b4bb8b095e5646402208  pca.conf

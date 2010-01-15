@@ -18,7 +18,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)
 DISTFILES += COPYING
 DISTFILES += pca.conf
 
-PATCHFILES = 0001-prefer-opencsw-perl.diff
+PATCHFILES  = 0001-prefer-opencsw-perl.diff
+PATCHFILES += 0002-Add-etc-opt-csw-as-config-location.patch
+
 #PATCHDIRLEVEL = 0
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -34,17 +36,21 @@ INSTALL_SCRIPTS = custom
 SPKG_SOURCEURL = http://www.par.univie.ac.at/solaris/pca/
 SPKG_VERSION = $(shell echo $(GARVERSION) | sed -e 's/-/./g')
 
+SAMPLECONF = /etc/opt/csw/pca.conf
+
 ARCHALL = 1
 
 include gar/category.mk
 
 post-extract-modulated:
-	@mv $(WORKSRC)/$(DISTNAME) $(WORKSRC)/pca
+	mv $(WORKSRC)/$(DISTNAME) $(WORKSRC)/pca
 	@$(MAKECOOKIE)
 
 install-custom:
-	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall $(WORKSRC)/pca $(DESTDIR)$(bindir)/pca
-	@ginstall -d $(DESTDIR)$(mandir)/man8
-	@pod2man --section=8 $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man8/pca.8
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall $(WORKSRC)/pca $(DESTDIR)$(bindir)/pca
+	ginstall -d $(DESTDIR)/etc/opt/csw
+	ginstall $(WORKSRC)/pca.conf $(DESTDIR)/etc/opt/csw
+	ginstall -d $(DESTDIR)$(mandir)/man8
+	pod2man --section=8 $(WORKSRC)/pca > $(DESTDIR)$(mandir)/man8/pca.8
 	@$(MAKECOOKIE)

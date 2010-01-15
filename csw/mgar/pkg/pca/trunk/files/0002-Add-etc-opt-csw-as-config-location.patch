@@ -1,0 +1,30 @@
+From 00323f9c9023a24b559f59938bc5258caf74501e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 15 Jan 2010 17:41:19 +0100
+Subject: [PATCH] Add /etc/opt/csw as config location
+
+---
+ pca |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/pca b/pca
+index b0206f9..45140f1 100644
+--- a/pca
++++ b/pca
+@@ -2394,11 +2394,13 @@ sub parse_args {
+   if ($o{proxy}) {
+     push (@conf, dirname($0)."/../etc/pca-proxy.conf");
+     push (@conf, "/etc/pca-proxy.conf");
++    push (@conf, "/etc/opt/csw/pca-proxy.conf");
+     push (@conf, "pca-proxy.conf");
+   } else {
+     push (@conf, dirname($0)."/pca.conf");
+     push (@conf, dirname($0)."/../etc/pca.conf");
+     push (@conf, "/etc/pca.conf");
++    push (@conf, "/etc/opt/csw/pca.conf");
+     $ENV{HOME} && push (@conf, $ENV{HOME}."/.pca");
+     push (@conf, "pca.conf");
+   }
+-- 
+1.6.6
+
