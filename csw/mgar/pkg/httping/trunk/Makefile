@@ -1,6 +1,7 @@
-# TODO (release-critical prefixed with !, non release-critical with *)
-# * Submit 0001-* patch upstream
-# * -6 not documented in man page (any others?), feedback to upstream
+# Known issue:
+# - Options -C, -6, and -y not documented in man page. Reported upstream,
+#   feedback pending.
+#
 GARNAME = httping
 GARVERSION = 1.4.1
 CATEGORIES = net
@@ -20,6 +21,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 REQUIRED_PKGS = CSWosslrt
 
 # Makefile comes pre-set with gcc defaults and hardcoded tools
+# Already submitted upstream, feedback pending.
 PATCHFILES = 0001-Makefile-make-options-and-tools-configurable.patch
 
 CONFIGURE_SCRIPTS =
