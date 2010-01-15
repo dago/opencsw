@@ -32,15 +32,27 @@ PATCHFILES_isa-i386 += Solaris8-have-no-stdc99-flag.patch
 PATCHFILES_isa-i386 += stdfiles.patch
 PATCHFILES_isa-i386 += proxy.c.patch
 
-PREREQUISITE_PKGS += CSWlibx11devel CSWlibxmudevel CSWlibdbusdev
-#Disable Mozilla plugin until there is a 64-bit version
-#PREREQUISITE_PKGS += CSWmozilla CSWseamonkey
+PACKAGES = CSWlibproxy CSWlibproxydevel CSWpy-libproxy
+CATALOGNAME_CSWlibproxy = libproxy
+CATALOGNAME_CSWlibproxydevel = libproxy_devel
+CATALOGNAME_CSWpy-libproxy = py_libproxy
+SPKG_DESC_CSWlibproxy = A library that provides automatic proxy configuration management
+SPKG_DESC_CSWlibproxydevel = A library that provides automatic proxy configuration management - development files
+SPKG_DESC_CSWpy-libproxy = A library that provides automatic proxy configuration management - Python bindings
 
-REQUIRED_PKGS += CSWlibice CSWlibsm CSWlibx11 CSWlibxmu CSWlibxt
+REQUIRED_PKGS_CSWlibproxy += CSWlibice CSWlibsm CSWlibx11 CSWlibxmu CSWlibxt
+REQUIRED_PKGS_CSWlibproxydevel += CSWlibproxy
+REQUIRED_PKGS_CSWpy-libproxy += CSWpython CSWlibproxy
+PREREQUISITE_PKGS += CSWlibx11devel CSWlibxmudevel CSWlibdbusdev
+#Disable Mozilla/Firefox/Seamonkey plugin until there is a 64-bit version
+#PREREQUISITE_PKGS += CSWmozilla CSWseamonkey CSWfirefox
+
+PKGFILES_CSWlibproxydevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWpy-libproxy = $(libdir).*/python/site-packages/.*
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 EXTRA_LINKER_FLAGS = -lnsl
 BUILD64 = 1
@@ -48,12 +60,14 @@ BUILD64 = 1
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/lib
-EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/seamonkey/lib
+#Disable Mozilla/Firefox/Seamonkey plugin until there is a 64-bit version
+#EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/lib
+#EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/firefox/lib
+#EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/seamonkey/lib
 
 
 CONFIGURE_ARGS = $(DIRPATHS)
-#Disable Mozilla plugin until there is a 64-bit version
+#Disable Mozilla/Firefox/Seamonkey plugin until there is a 64-bit version
 CONFIGURE_ARGS += --without-mozjs
 CONFIGURE_ARGS += --with-python
 CONFIGURE_ARGS += --disable-silent-rules
