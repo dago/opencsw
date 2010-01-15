@@ -16,8 +16,8 @@ SPKG_SOURCEURL = http://bitbucket.org/haypo/hachoir/wiki/Home
 MASTER_SITES = http://cheeseshop.python.org/packages/source/h/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-CATALOGNAME = hachoir_parser
+CATALOGNAME = py_hachoir_parser
 ARCHALL = 1
-REQUIRED_PKGS = CSWhachoir-core
+REQUIRED_PKGS = CSWpy-hachoir-core
 TEST_SCRIPTS =
 include gar/category.mk
