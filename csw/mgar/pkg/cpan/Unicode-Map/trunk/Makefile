@@ -13,4 +13,8 @@ endef
 PACKAGES = CSWpmunicodemap
 CATALOGNAME = pm_unicodemap
 
+# This is needed for mirrorMappings:
+#   http://www.opencsw.org/mantis/view.php?id=2710
+REQUIRED_PKGS = CSWpmlibwww
+
 include gar/category.mk
