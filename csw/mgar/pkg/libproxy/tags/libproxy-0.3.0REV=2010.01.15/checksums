@@ -1,0 +1,6 @@
+acd3e61f107ff188722fb1335e0ed37c  0002-Dont-preset-CFLAGS.patch
+dd08c0fd4795084e5970d59f8de149dd  Solaris8-have-no-stdc99-flag.patch
+95c2645311c9e840c0ed81c7a9aefadb  SunStudio-have-no-stdc99-flag.patch
+6ded75a6c6aef53be657ece207cc26c4  libproxy-0.3.0.tar.gz
+647cefd3bb414eb269cb59aace9eb35b  proxy.c.patch
+7dd25dd1f615fe7a3c2a1d9c9a179e74  stdfiles.patch

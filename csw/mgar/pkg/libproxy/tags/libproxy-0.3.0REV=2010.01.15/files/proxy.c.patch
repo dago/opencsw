@@ -1,0 +1,40 @@
+diff -Nru libproxy-0.3.0.orig/src/lib/proxy.c libproxy-0.3.0/src/lib/proxy.c
+--- libproxy-0.3.0.orig/src/lib/proxy.c	2009-08-14 21:00:32.000000000 +0200
++++ libproxy-0.3.0/src/lib/proxy.c	2010-01-07 11:57:19.188739832 +0100
+@@ -162,17 +162,37 @@
+ 	if (!px_module_manager_register_type(self->mm, pxWPADModule,      _px_wpad_module_cmp,   false)) goto error;
+ 
+     /* If we have a config file, load the config order from it */
++#if (defined(__SUNPRO_C) && ( defined(__SunOS_5_8) || defined(__SunOS_5_9)))
++    char *envp;
++		envp = px_malloc0(strlen("_PX_CONFIG_ORDER")+3);
++		sprintf(envp,"_PX_CONFIG_ORDER=");
++		putenv(envp);
++#else
+     setenv("_PX_CONFIG_ORDER", "", 1);
++#endif
+ 	pxConfigFile *cf = px_config_file_new(SYSCONFDIR "proxy.conf");
+     if (cf)
+     {
+     	char *tmp = px_config_file_get_value(cf, PX_CONFIG_FILE_DEFAULT_SECTION, "config_order");
+     	px_config_file_free(cf);
++#if (defined(__SUNPRO_C) && ( defined(__SunOS_5_8) || defined(__SunOS_5_9)))
++			if (tmp) {
++				int retval;
++				envp = px_malloc0(strlen("_PX_CONFIG_ORDER")+strlen(tmp)+2);
++				sprintf(envp,"_PX_CONFIG_ORDER=%s",tmp);
++				retval = putenv(envp);
++				if(retval) {
++    			px_free(tmp);
++    			goto error;
++    		}
++			}
++#else
+     	if (tmp && setenv("_PX_CONFIG_ORDER", tmp, 1))
+     	{
+     		px_free(tmp);
+     		goto error;
+     	}
++#endif
+     	px_free(tmp);
+     }

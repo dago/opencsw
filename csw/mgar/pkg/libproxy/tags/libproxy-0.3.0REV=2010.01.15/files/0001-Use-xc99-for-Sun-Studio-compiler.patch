@@ -1,0 +1,56 @@
+From 3ea26b980c8929de2f92a33de49a09dc12f63a68 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 5 Jan 2010 15:29:01 +0100
+Subject: [PATCH] Use xc99 for Sun Studio compiler
+
+---
+ src/bin/Makefile.am     |    2 +-
+ src/bin/Makefile.in     |    2 +-
+ src/lib/Makefile.am     |    2 +-
+ src/lib/Makefile.in     |    2 +-
+ src/modules/Makefile.am |    2 +-
+ src/modules/Makefile.in |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/bin/Makefile.in b/src/bin/Makefile.in
+index 625fbb3..ed8cd56 100644
+--- a/src/bin/Makefile.in
++++ b/src/bin/Makefile.in
+@@ -239,7 +239,7 @@ xmu_LIBS = @xmu_LIBS@
+ 
+ # Command line interface to libproxy
+ proxy_SOURCES = proxy.c
+-proxy_CPPFLAGS = -I$(top_srcdir)/src/lib -std=c99
++proxy_CPPFLAGS = -I$(top_srcdir)/src/lib -xc99
+ proxy_LDADD = ../lib/libproxy.la
+ all: all-am
+ 
+diff --git a/src/lib/Makefile.in b/src/lib/Makefile.in
+index 77bb2da..73e087c 100644
+--- a/src/lib/Makefile.in
++++ b/src/lib/Makefile.in
+@@ -277,7 +277,7 @@ libproxy_la_SOURCES = \
+ 						strdict.c strdict.h \
+ 						url.c url.h
+ 
+-libproxy_la_CFLAGS = -DMODULEDIR=\"@MODULEDIR@@DIR_SEPARATOR@\" -DSYSCONFDIR=\"@SYSCONFDIR@@DIR_SEPARATOR@\" -std=c99 -D_POSIX_C_SOURCE=200112L
++libproxy_la_CFLAGS = -DMODULEDIR=\"@MODULEDIR@@DIR_SEPARATOR@\" -DSYSCONFDIR=\"@SYSCONFDIR@@DIR_SEPARATOR@\" -xc99 -D_POSIX_C_SOURCE=200112L
+ libproxy_la_LDFLAGS = -lpthread -lm -no-undefined
+ include_HEADERS = proxy.h
+ all: all-am
+diff --git a/src/modules/Makefile.in b/src/modules/Makefile.in
+index 6965056..45c9c57 100644
+--- a/src/modules/Makefile.in
++++ b/src/modules/Makefile.in
+@@ -359,7 +359,7 @@ x11_LIBS = @x11_LIBS@
+ xmu_CFLAGS = @xmu_CFLAGS@
+ xmu_LIBS = @xmu_LIBS@
+ moduledir = @MODULEDIR@
+-AM_CFLAGS = -std=c99
++AM_CFLAGS = -xc99
+ AM_LDFLAGS = -module -avoid-version -no-undefined
+ 
+ # Which modules to build
+-- 
+1.6.6
+
