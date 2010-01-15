@@ -1,17 +1,26 @@
 GARNAME = DBD-SQLite
-GARVERSION = 1.14
+GARVERSION = 1.29
 CATEGORIES = cpan
-AUTHOR = MSERGEANT
+AUTHOR = ADAMK
 
 DESCRIPTION = self contained RDBMS in a DBI driver
 define BLURB
-  SQLite is a public domain RDBMS database engine that you can find at
-  http://www.hwaci.com/sw/sqlite/.
+    DBD::SQLite is a Perl DBI driver for SQLite, that includes the entire
+    thing in the distribution. So in order to get a fast transaction capable
+    RDBMS working for your perl project you simply have to install this
+    module, and nothing else.
 endef
 
-DISTFILES += CSWpmdbdsqlite.gspec
+PACKAGES = CSWpmdbdsqlite
+CATALOGNAME = pm_dbdsqlite
+REQUIRED_PKGS = CSWpmdbi
 
-# Use Perl's Config{optimize} instead of -O6
-PATCHFILES = optimize.diff
+LICENSE = LICENSE
 
 include gar/category.mk
+
+post-install-modulated:
+	@echo "Post-Install (custom)"
+	@ginstall -d -m 755 $(DESTDIR)$(docdir)/pm_dbdsqlite
+	@ginstall -m 444 $(WORKSRC)/README $(DESTDIR)$(docdir)/pm_dbdsqlite
+	@$(MAKECOOKIE)
