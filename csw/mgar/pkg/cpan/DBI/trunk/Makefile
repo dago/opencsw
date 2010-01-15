@@ -1,5 +1,5 @@
 GARNAME = DBI
-GARVERSION = 1.607
+GARVERSION = 1.609
 CATEGORIES = cpan
 AUTHOR = TIMB
 
@@ -13,12 +13,11 @@ endef
 
 DISTFILES = COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWpmdbi
 CATALOGNAME = pm_dbi
 
-REQUIRED_PKGS = CSWpmplrpc
+#REQUIRED_PKGS = CSWpmplrpc
 
 include gar/category.mk
