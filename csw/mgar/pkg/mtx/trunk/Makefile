@@ -34,3 +34,7 @@ TEST_TARGET =
 INSTALL_OVERRIDE_DIRS = sbindir mandir
 
 include gar/category.mk
+
+post-install-modulated:
+	ginstall $(WORKSRC)/contrib/config_sgen_solaris.sh $(DESTDIR)$(sbindir)
+	@$(MAKECOOKIE)
