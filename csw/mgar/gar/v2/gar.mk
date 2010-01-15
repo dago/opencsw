@@ -368,7 +368,7 @@ makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS))
 # I am always typing this by mistake
 makesums: makesum
 
-GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(ALLFILES))
+GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(filter-out $(ALLFILES_DYNSCRIPTS), $(ALLFILES)))
 
 garchive: checksum $(GARCHIVE_TARGETS) ;
 
