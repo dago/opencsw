@@ -50,6 +50,8 @@ PREREQUISITE_PKGS += CSWlibx11devel CSWlibxmudevel CSWlibdbusdev
 PKGFILES_CSWlibproxydevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWpy-libproxy = $(libdir).*/python/site-packages/.*
 
+ARCHALL_CSWpy-libproxy = 1
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 #PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
