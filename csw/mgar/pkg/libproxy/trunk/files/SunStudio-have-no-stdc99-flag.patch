@@ -1,0 +1,69 @@
+diff -Nru libproxy-0.3.0.orig/src/bin/Makefile.am libproxy-0.3.0/src/bin/Makefile.am
+--- libproxy-0.3.0.orig/src/bin/Makefile.am	2009-08-14 21:00:32.000000000 +0200
++++ libproxy-0.3.0/src/bin/Makefile.am	2010-01-07 12:16:16.608932753 +0100
+@@ -2,5 +2,5 @@
+ 
+ # Command line interface to libproxy
+ proxy_SOURCES = proxy.c
+-proxy_CPPFLAGS  = -I$(top_srcdir)/src/lib -std=c99
++proxy_CPPFLAGS  = -I$(top_srcdir)/src/lib -xc99
+ proxy_LDADD   = ../lib/libproxy.la
+diff -Nru libproxy-0.3.0.orig/src/lib/Makefile.am libproxy-0.3.0/src/lib/Makefile.am
+--- libproxy-0.3.0.orig/src/lib/Makefile.am	2009-08-14 21:00:32.000000000 +0200
++++ libproxy-0.3.0/src/lib/Makefile.am	2010-01-07 12:17:37.568266736 +0100
+@@ -10,8 +10,8 @@
+ 						strdict.c strdict.h \
+ 						url.c url.h
+ 
+-libproxy_la_CFLAGS  = -DMODULEDIR=\"@MODULEDIR@@DIR_SEPARATOR@\" -DSYSCONFDIR=\"@SYSCONFDIR@@DIR_SEPARATOR@\" -std=c99 -D_POSIX_C_SOURCE=200112L
++libproxy_la_CFLAGS  = -DMODULEDIR=\"@MODULEDIR@@DIR_SEPARATOR@\" -DSYSCONFDIR=\"@SYSCONFDIR@@DIR_SEPARATOR@\" -xc99 -D_POSIX_C_SOURCE=200112L
+ libproxy_la_LDFLAGS = -lpthread -lm -no-undefined
+ 
+ include_HEADERS     = proxy.h
+ 
+diff -Nru libproxy-0.3.0.orig/src/lib/Makefile.in libproxy-0.3.0/src/lib/Makefile.in
+--- libproxy-0.3.0.orig/src/lib/Makefile.in	2009-08-14 21:05:15.000000000 +0200
++++ libproxy-0.3.0/src/lib/Makefile.in	2010-01-07 11:58:19.284179024 +0100
+@@ -277,7 +277,7 @@
+ 						strdict.c strdict.h \
+ 						url.c url.h
+ 
+-libproxy_la_CFLAGS = -DMODULEDIR=\"@MODULEDIR@@DIR_SEPARATOR@\" -DSYSCONFDIR=\"@SYSCONFDIR@@DIR_SEPARATOR@\" -std=c99 -D_POSIX_C_SOURCE=200112L
++libproxy_la_CFLAGS = -DMODULEDIR=\"@MODULEDIR@@DIR_SEPARATOR@\" -DSYSCONFDIR=\"@SYSCONFDIR@@DIR_SEPARATOR@\" -xc99 -D_POSIX_C_SOURCE=200112L
+ libproxy_la_LDFLAGS = -lpthread -lm -no-undefined
+ include_HEADERS = proxy.h
+ all: all-am
+diff -Nru libproxy-0.3.0.orig/src/modules/Makefile.am libproxy-0.3.0/src/modules/Makefile.am
+--- libproxy-0.3.0.orig/src/modules/Makefile.am	2009-08-14 21:06:30.000000000 +0200
++++ libproxy-0.3.0/src/modules/Makefile.am	2010-01-07 12:18:24.020865842 +0100
+@@ -1,5 +1,5 @@
+ moduledir = @MODULEDIR@
+-AM_CFLAGS    = -std=c99
++AM_CFLAGS    = -xc99
+ AM_LDFLAGS   = -module -avoid-version -no-undefined
+ 
+ 
+diff -Nru libproxy-0.3.0.orig/src/modules/Makefile.in libproxy-0.3.0/src/modules/Makefile.in
+--- libproxy-0.3.0.orig/src/modules/Makefile.in	2009-08-14 21:07:00.000000000 +0200
++++ libproxy-0.3.0/src/modules/Makefile.in	2010-01-14 18:03:41.850944638 +0100
+@@ -359,7 +359,7 @@
+ xmu_CFLAGS = @xmu_CFLAGS@
+ xmu_LIBS = @xmu_LIBS@
+ moduledir = @MODULEDIR@
+-AM_CFLAGS = -std=c99
++AM_CFLAGS = -xc99
+ AM_LDFLAGS = -module -avoid-version -no-undefined
+ 
+ # Which modules to build
+diff -Nru libproxy-0.3.0.orig/src/bin/Makefile.in libproxy-0.3.0/src/bin/Makefile.in
+--- libproxy-0.3.0.orig/src/bin/Makefile.in	2009-08-14 21:05:15.000000000 +0200
++++ libproxy-0.3.0/src/bin/Makefile.in	2010-01-14 18:04:24.531275033 +0100
+@@ -239,7 +239,7 @@
+ 
+ # Command line interface to libproxy
+ proxy_SOURCES = proxy.c
+-proxy_CPPFLAGS = -I$(top_srcdir)/src/lib -std=c99
++proxy_CPPFLAGS = -I$(top_srcdir)/src/lib -xc99
+ proxy_LDADD = ../lib/libproxy.la
+ all: all-am
+ 
