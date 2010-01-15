@@ -11,18 +11,17 @@ define BLURB
 endef
 
 #MASTER_SITES = http://apache.jumper.nu/spamassassin/source/
-MASTER_SITES = http://people.apache.org/~wtogami/devel/3.3.0-rc1/
+MASTER_SITES = http://people.apache.org/~wtogami/devel/3.3.0-rc3.unofficial/
 #DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
-DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc1.tar.gz
+DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc3.tar.gz
 DISTFILES += COPYING
 
-REQUIRED_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha1
+REQUIRED_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha
 REQUIRED_PKGS += CSWpmiosocketinet6 CSWpmiosocketssl CSWpmiozlib
 REQUIRED_PKGS += CSWpmipcountry CSWpmldap CSWpmlibwww CSWpmmaildkim
-REQUIRED_PKGS += CSWpmmailspf CSWpmmailtools CSWpmmimebase64 CSWpmnetdns
+REQUIRED_PKGS += CSWpmmailspf CSWpmmailtools CSWpmmimebase64 CSWpmnetaddrip CSWpmnetdns
 REQUIRED_PKGS += CSWpmuri CSWpmhtmlparser CSWzlib
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(SPKG_NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SAMPLECONF  = /opt/csw/etc/spamassassin/.+\.pre\.CSW
