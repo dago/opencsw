@@ -15,6 +15,10 @@ endef
 PACKAGES = CSWpmspiffy
 CATALOGNAME = pm_spiffy
 
+# Add required module due to bug report:
+#   http://www.opencsw.org/mantis/view.php?id=2711
+REQUIRED_PKGS = CSWpmyaml
+
 ARCHALL = 1
 
 include gar/category.mk
