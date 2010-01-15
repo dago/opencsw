@@ -43,6 +43,12 @@ else
 fi
 
 give_a_chance_to_stop() {
+  if [ "${chance_to_stop_given}" -ne 0 ]; then
+    return
+  fi
+  echo "----8<---- migration configuration start ----8<----"
+  cat "${confdst}"
+  echo "----8<---- migration configuration end   ----8<----"
   echo
   echo "*******************************************************************"
   echo "* Configuration files are going to be migrated from the deprecated "
@@ -57,6 +63,7 @@ give_a_chance_to_stop() {
     sleep 1
   done
   echo "0."
+  chance_to_stop_given=1
 }
 
 files_are_identical() {
@@ -139,15 +146,11 @@ is_dangling_symlink() {
 }
 
 run_already=0
+chance_to_stop_given=0
 
 while read confsrc confdst ; do
   # We're not sure if the files to be migrated have already been copied or not.
-
   cp "$confsrc" "$confdst"
-
-  cat "${confdst}"
-  give_a_chance_to_stop
-
   # Sourcing the file, it should contain the configuration.
   if [ -r "$confsrc" ]; then
     debug "Sourcing ${confsrc}"
@@ -217,6 +220,7 @@ while read confsrc confdst ; do
     # moved already.
     if [ -r "${srcpath}" ]
     then
+      give_a_chance_to_stop
       place_signpost_for "${srcpath}"
       debug "Moving '${srcpath}' to '${archpath}'"
       mv "${srcpath}" "${archpath}"
