@@ -55,8 +55,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-# Patch submitted to upstream, pending new release
-#PATCHFILES = iptc-dataset.patch
+# See [1] and [2]. [1] seems to fix the problem, but [2] is included too. - trygvis
+# [1]: http://www.mail-archive.com/geda-user@moria.seul.org/msg14911.html
+# [2]: http://www.mail-archive.com/geda-user@moria.seul.org/msg14914.html
+PATCHFILES  = 0001-Fix-off-by-one-error-in-the-GTK-HID-s-netlist-window.patch
+PATCHFILES += 0001-Regenerate-rats-r-tree-when-re-allocating-a-bigger-r.patch
 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 CONFIGURE_ARGS = $(DIRPATHS)

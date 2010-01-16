@@ -1,0 +1,37 @@
+From 40347a55413e152c7b5fc2bac074c75c7687b766 Mon Sep 17 00:00:00 2001
+From: Peter Clifton <pcjc2@cam.ac.uk>
+Date: Wed, 24 Dec 2008 13:14:27 +0000
+Subject: [PATCH] Regenerate rats r-tree when re-allocating a bigger rats array.
+
+Shuould fix crashes observed on a board with a large number of rats.
+---
+ src/mymem.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+diff --git a/src/mymem.c b/src/mymem.c
+index 57eca2d..36b13d5 100644
+--- a/src/mymem.c
++++ b/src/mymem.c
+@@ -305,10 +305,19 @@ GetRatMemory (DataTypePtr Data)
+   if (Data->RatN >= Data->RatMax)
+     {
+       Data->RatMax += STEP_RAT;
++      /* all of the pointers move, so rebuild the whole tree */
++      if (Data->rat_tree)
++        r_destroy_tree (&Data->rat_tree);
+       rat = MyRealloc (rat, Data->RatMax * sizeof (RatType),
+ 		       "GetRatMemory()");
+       Data->Rat = rat;
+       memset (rat + Data->RatN, 0, STEP_RAT * sizeof (RatType));
++      Data->rat_tree = r_create_tree (NULL, 0, 0);
++      RAT_LOOP (Data);
++      {
++        r_insert_entry (Data->rat_tree, (BoxTypePtr) line, 0);
++      }
++      END_LOOP;
+     }
+   return (rat + Data->RatN++);
+ }
+-- 
+1.5.6.5
+

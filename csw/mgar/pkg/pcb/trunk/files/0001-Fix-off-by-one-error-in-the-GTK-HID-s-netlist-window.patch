@@ -1,0 +1,28 @@
+From d053b4e41da10fd033429cb4b88c6e3b52769eb7 Mon Sep 17 00:00:00 2001
+From: Peter Clifton <pcjc2@cam.ac.uk>
+Date: Wed, 24 Dec 2008 03:07:02 +0000
+Subject: [PATCH] Fix off-by one error in the GTK HID's netlist window model generation
+
+Broken when I added support for a hierarchical view of nets. The bug
+caused invalid memory to be read, possibly leading to a crash, as the
+last (and missing) element from g_new0 was supposed to be a terminator.
+---
+ src/hid/gtk/gui-netlist-window.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/hid/gtk/gui-netlist-window.c b/src/hid/gtk/gui-netlist-window.c
+index 8dc2299..848fb7e 100644
+--- a/src/hid/gtk/gui-netlist-window.c
++++ b/src/hid/gtk/gui-netlist-window.c
+@@ -385,7 +385,7 @@ net_model_create (void)
+         parent_iter = new_iter;
+         parent_ptr = &parent_iter;
+ 
+-        join_array = g_new0 (char *, try_depth + 1);
++        join_array = g_new0 (char *, try_depth + 2);
+         memcpy (join_array, path_segments, sizeof (char *) * (try_depth + 1));
+ 
+         hash_string = g_strjoinv (NET_HIERARCHY_SEPARATOR, join_array);
+-- 
+1.5.6.5
+
