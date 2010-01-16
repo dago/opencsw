@@ -25,6 +25,8 @@ SPKG_SOURCEURL = http://www.s-lang.org/
 # definitions if the installed lib is older than the newly built one.
 LINKER_FLAGS =
 
+sysconfdir = /etc/opt/csw
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -42,8 +44,7 @@ MERGE_DIRS_isa-default64-garversion-1.4.9 = $(libdir)
 
 MERGE_SCRIPTS_isa-default-garversion-2.2.2 = copy-all
 MERGE_SCRIPTS_isa-default64-garversion-2.2.2 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.2.2 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-
+MERGE_DIRS_isa-default64-garversion-2.2.2 = $(libdir)
 
 include gar/category.mk
 
