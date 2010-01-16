@@ -27,6 +27,7 @@ LINKER_FLAGS =
 
 sysconfdir = /etc/opt/csw
 
+NO_ISAEXEC = 1
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
