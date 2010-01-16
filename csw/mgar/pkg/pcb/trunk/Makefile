@@ -77,3 +77,6 @@ post-extract-modulated:
 		do \
 			mv "$$f" `echo $$f | tr " " _`; \
 		done
+
+post-install-modulated:
+	@rmdir $(DESTDIR)/opt/csw/share/pcb-20081128
