@@ -95,8 +95,9 @@ LDFLAGS += -R/opt/csw/bdb47/lib -L/opt/csw/bdb47/lib
 export LDFLAGS
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES_CSWpythonsvn = none cswpycompile
+PROTOTYPE_MODIFIERS += cswpycompile
+PROTOTYPE_FILES_cswpycompile = $(libdir)/python/.*\.py
+PROTOTYPE_CLASS_cswpycompile = cswpycompile
 
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
