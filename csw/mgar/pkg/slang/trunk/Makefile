@@ -5,6 +5,10 @@ CATEGORIES = lib
 EXTRA_MODULATORS = GARVERSION
 MODULATIONS_GARVERSION = 1.4.9 2.2.2
 
+# The old package didn't contain 64 bit, so don't bother building it for compat
+SKIP_MODULATIONS  = isa-sparcv9-garversion-1.4.9
+SKIP_MODULATIONS += isa-amd64-garversion-1.4.9
+
 DESCRIPTION = Library primarily to provide an alternative to libcurses
 define BLURB
 endef
@@ -37,6 +41,13 @@ TEST_TARGET = $(TEST_TARGET_GARVERSION-$(GARVERSION))
 
 INSTALL_ARGS_GARVERSION-1.4.9 = install-elf install-links
 INSTALL_ARGS = $(INSTALL_ARGS_GARVERSION-$(GARVERSION))
+
+BUILD_ARGS_GARVERSION-1.4.9 = elf
+BUILD_ARGS = $(BUILD_ARGS_GARVERSION-$(GARVERSION))
+
+BUILD_OVERRIDE_VARS_GARVERSION-1.4.9 = ELF_CFLAGS
+BUILD_OVERRIDE_VARS = $(BUILD_OVERRIDE_VARS_GARVERSION-$(GARVERSION))
+BUILD_OVERRIDE_VAR_ELF_CFLAGS = -K pic $(CFLAGS)
 
 MERGE_SCRIPTS_isa-default-garversion-1.4.9 = copy-only
 MERGE_DIRS_isa-default-garversion-1.4.9 = $(libdir)
