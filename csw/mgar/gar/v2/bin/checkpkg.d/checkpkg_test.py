@@ -450,13 +450,10 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
 
   def testGetLinesBySoname_8(self):
     expected = {'foo.so.1': '/opt/csw/postgresql/lib/foo.so.1 foo'}
+    lines1 = {"/opt/csw/postgresql/lib": "/opt/csw/postgresql/lib/foo.so.1 foo"}
     pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo")
-    lines1 = {"/opt/csw/lib/postgresql": "/opt/csw/lib/postgresql/foo.so.1 foo"}
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
     pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
     self.pkgmap_mocker.ReplayAll()
-    pkgmap.GetPkgmapLineByBasename("foo")
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/postgresql/lib/", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
