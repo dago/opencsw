@@ -552,15 +552,17 @@ done
 
 # All packages have been extracted.
 
-# Now running all the plugin checks
-
 set_variables_for_individual_package_check "$f"
 
-echo "Running the experimental plugin infrastructure."
+echo "Running modular tests"
 test_suite_ok=1
 checkpkg_scriptname=`basename $0`
 checkpkg_basedir=${0%/${checkpkg_scriptname}}
 plugindir=${checkpkg_basedir}/checkpkg.d
+
+# /var/sadm/install/contents cache update
+${plugindir}/update_contents_cache.py
+
 if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
 fi
@@ -603,7 +605,7 @@ done
 echo
 
 if [[ ${test_suite_ok} -ne 1 ]]; then
-	errmsg "One or more tests have failed."
+	errmsg "One or more modular tests have failed."
 else
 	print "All tests were successful."
 fi
