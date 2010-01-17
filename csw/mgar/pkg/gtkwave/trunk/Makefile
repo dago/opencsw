@@ -22,9 +22,12 @@ PREREQUISITE_BASE_PKGS = CSWtofrodos
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS = $(DIRPATHS) LDFLAGS=-lintl
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += LDFLAGS=-lintl
 
-pre-build-modulated:
+CONFIGURE_ENV  = PKG_CONFIG_PATH=/opt/csw/X11/lib/pkgconfig
+
+post-extract-modulated:
 	find $(WORKSRC) -type f | xargs -I _ /opt/csw/bin/dos2unix _ _
 	@$(MAKECOOKIE)
 
