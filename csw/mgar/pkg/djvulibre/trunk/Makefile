@@ -21,7 +21,7 @@ SPKG_DESC_CSWdjvulibredevel += DjVu standalone viewer, browser plug-in, commandl
 
 REQUIRED_PKGS_CSWdjvulibre += CSWdjvulibrert CSWjpeg CSWtiff CSWzlib
 REQUIRED_PKGS_CSWdjvulibrert += CSWjpeg
-REQUIRED_PKGS_CSWdjvulibredevel += CSWdjvulibre
+REQUIRED_PKGS_CSWdjvulibredevel += CSWdjvulibrert
 
 PKGFILES_CSWdjvulibrert = $(PKGFILES_RT)
 PKGFILES_CSWdjvulibredevel = $(PKGFILES_DEVEL)
