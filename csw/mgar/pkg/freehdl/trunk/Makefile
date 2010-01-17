@@ -1,8 +1,11 @@
+#
+# TODO: Consider adding this patch: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549484
+
 GARNAME = freehdl
 GARVERSION = 0.0.7
 CATEGORIES = devel
 
-DESCRIPTION = A project to develop a free, open source, GPL'ed VHDL simulator for Linux!
+DESCRIPTION = A free, open source, GPL'ed VHDL simulator
 define BLURB
 To develop a VHDL simulator that:
  o Has a graphical waveform viewer.
@@ -16,6 +19,7 @@ MASTER_SITES = http://freehdl.seul.org/~enaroska/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES  = 0000-Mirring-strings.h-include.patch
 PATCHFILES += 0001-Use-OpenCSW-pkg-config.patch
+PATCHFILES += fix_seg_fault_2-1.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -26,11 +30,17 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 
-CONFIGURE_ARGS = $(DIRPATHS)
+#GARFLAVOR           = DBG
+CONFIGURE_ARGS      = $(DIRPATHS)
+CONFIGURE_ARGS     += $(CONFIGURE_ARGS_$(GARFLAVOR))
+CONFIGURE_ARGS_DBG  = --enable-trace --enable-warnings
 
 TEST_SCRIPTS =
 
-REQUIRED_PKGS = CSWgcc4corert CSWgcc4g++ CSWgcc4g++rt CSWpkgconfig
+REQUIRED_PKGS = CSWlibtool CSWgcc4corert CSWgcc4g++ CSWgcc4g++rt CSWpkgconfig
 #CSWgcc3core CSWgcc3corert CSWgcc3g++ CSWgcc3g++rt
 
 include gar/category.mk
+
+# We want the .la files, freehdl is based around those
+MERGE_EXCLUDE_LIBTOOL =

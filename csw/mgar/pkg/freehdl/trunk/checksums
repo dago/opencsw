@@ -1,3 +1,4 @@
 75dd38573b84d23a93a10c028051305d  0000-Mirring-strings.h-include.patch
-2950515cac5a87c43c97b264195ff5f7  0001-Use-OpenCSW-pkg-config.patch
+6a6e16025feda49ecfc4b5b22e0ad70d  0001-Use-OpenCSW-pkg-config.patch
+4193d606cf4445811e78a79865d9485e  fix_seg_fault_2-1.patch
 6d702aa188fb2c62f8cfca5a2f66d956  freehdl-0.0.7.tar.gz

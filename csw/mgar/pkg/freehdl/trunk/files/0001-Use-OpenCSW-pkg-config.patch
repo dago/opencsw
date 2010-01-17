@@ -19,7 +19,7 @@
 +version=`/opt/csw/bin/pkg-config --modversion freehdl`
 +cxxflags=`/opt/csw/bin/pkg-config --variable cxxflags freehdl`
 +cxx=`/opt/csw/bin/pkg-config --variable cxx freehdl`
-+linker=`/opt/csw/bin/pkg-config --variable libtool freehdl`
++linker=/opt/csw/bin/libtool
  
  case "$option" in
  

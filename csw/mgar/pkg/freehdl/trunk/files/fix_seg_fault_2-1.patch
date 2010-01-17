@@ -1,0 +1,39 @@
+diff -rupN freehdl-0.0.6.old/v2cc/v2cc-decl.cc freehdl-0.0.6/v2cc/v2cc-decl.cc
+--- freehdl-0.0.6.old/v2cc/v2cc-decl.cc	2007-10-23 22:14:26.000000000 +0200
++++ freehdl-0.0.6/v2cc/v2cc-decl.cc	2009-10-04 12:41:50.000000000 +0200
+@@ -865,7 +865,8 @@ m_emit_hdr (pIIR_ArchitectureDeclaration
+   emit_decls (extended_declarations(a), str, rstack, 2);				// emit signal decls
+   str += "};\n";										
+   
+-  emit_hdr(a->architecture_statement_part, str, rstack, 2);		// emit process hdrs
++  if (a->architecture_statement_part != NULL)
++    emit_hdr(a->architecture_statement_part, str, rstack, 2);		// emit process hdrs
+ }
+ 
+ void							// ConcStat headers
+diff -rupN freehdl-0.0.6.old/v2cc/v2cc-explore.cc freehdl-0.0.6/v2cc/v2cc-explore.cc
+--- freehdl-0.0.6.old/v2cc/v2cc-explore.cc	2008-02-15 19:12:30.000000000 +0100
++++ freehdl-0.0.6/v2cc/v2cc-explore.cc	2009-10-04 12:28:28.000000000 +0200
+@@ -1108,7 +1108,8 @@ m_explore_and_check (pIIR_ArchitectureDe
+   }
+ 
+   // Explore concurrent statements of entity
+-  error_count += explore_and_check(a->architecture_statement_part, rstack, collect_access_info);
++  if(a->architecture_statement_part != NULL)
++    error_count += explore_and_check(a->architecture_statement_part, rstack, collect_access_info);
+ 
+   // Collect all external declarations into 
+   merge (external_decls_list, a->external_decls, rstack);
+diff -rupN freehdl-0.0.6.old/v2cc/v2cc-impl.cc freehdl-0.0.6/v2cc/v2cc-impl.cc
+--- freehdl-0.0.6.old/v2cc/v2cc-impl.cc	2007-10-23 22:23:22.000000000 +0200
++++ freehdl-0.0.6/v2cc/v2cc-impl.cc	2009-10-04 12:39:48.000000000 +0200
+@@ -1134,7 +1134,8 @@ emit_handle (pIIR_ArchitectureDeclaratio
+ void
+ m_emit_impl (pIIR_ArchitectureDeclaration a, string &str, RegionStack &rstack, int l)
+ {
+-  emit_impl (a->architecture_statement_part, str, rstack, 2);		// process impls
++  if (a->architecture_statement_part != NULL)
++    emit_impl (a->architecture_statement_part, str, rstack, 2);		// process impls
+   emit_handle (a, str, rstack);					// handle for sim
+   emit_constructor(a, str, rstack);					// arch constructor
+ }
