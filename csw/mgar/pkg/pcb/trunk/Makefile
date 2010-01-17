@@ -70,13 +70,16 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-extract-modulated:
-	@echo " ==> Renaming files (' ' => '_')"
-	@find $(WORKSRC)/lib/pcblib-newlib -name \*\ \* | \
-		while read f; \
-		do \
-			mv "$$f" `echo $$f | tr " " _`; \
-		done
+post-install-modulated:
+	@echo " ==> Packaging up lib/"
+	@echo " DESTDIR=" $(DESTDIR)
+	false
+	mkdir -p $(DESTDIR)/var/opt/csw/pcb/
+	gtar cf - -C $(DESTDIR)/lib . | gzip -c - > $(DESTDIR)/var/opt/csw/pcb/lib.tar.gz
+	rm -rf $(DESTDIR)/opt/csw/share/pcb/lib
+	false
+	@$(MAKECOOKIE)
 
 post-install-modulated:
 	@rmdir $(DESTDIR)/opt/csw/share/pcb-20081128
+	@$(MAKECOOKIE)
