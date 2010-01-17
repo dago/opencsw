@@ -14,6 +14,7 @@ endef
 
 MASTER_SITES = ftp://ftp.kaybee.org/pub/linux/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = fix-manpage-paths.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release

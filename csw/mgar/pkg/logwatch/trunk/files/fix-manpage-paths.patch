@@ -1,0 +1,27 @@
+diff -u -r logwatch-7.3.6.orig/logwatch.8 logwatch-7.3.6/logwatch.8
+--- logwatch-7.3.6.orig/logwatch.8	2010-01-17 22:15:53.115085073 +0100
++++ logwatch-7.3.6/logwatch.8	2010-01-17 22:17:10.483671625 +0100
+@@ -105,12 +105,12 @@
+ .IP "\fB--help\fR"
+ same as --usage.
+ .SH FILES
+-.IP /usr/share/logwatch/
++.IP /opt/csw/share/logwatch/
+ .RS
+ This directory contains all the perl executables and
+ configuration files shipped with the logwatch distribution.
+ .RE
+-.IP /etc/logwatch
++.IP /etc/opt/csw/logwatch
+ .RS
+ This directory contains local configuration files that override
+ the default configuration.  See \fBMORE INFORMATION\fR below for more
+@@ -127,7 +127,7 @@
+ This will print out login information for the previous day...
+ .RE
+ .SH MORE INFORMATION
+-The directory /usr/share/doc/logwatch-* contains several files with additional
++The directory /opt/csw//share/doc/logwatch contains several files with additional
+ documentation:
+ .RE
+ .I HOWTO-Customize-LogWatch
