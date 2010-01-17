@@ -366,7 +366,8 @@ PROTOTYPE = $(WORKDIR)/prototype
 $(PROTOTYPE): $(WORKDIR) merge
 	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=/ >$@
 
-# The pathfilter rules are as follows:
+# pathfilter lives in bin/pathfilter and takes care of including/excluding paths from
+# a prototype (see "perldoc bin/pathfilter"). We employ it here to:
 # - include license for current package
 # - exclude licenses for all other packages
 # - if other includes are given, only include these files
