@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+PATH=/sbin:/usr/sbin:/opt/csw/sbin:/bin:/usr/bin:/opt/csw/bin
+
+if [ "$PKG_INSTALL_ROOT" = "" ]
+then
+  PKG_INSTALL_ROOT="/"
+fi
+
+echo "Removing footprint library..."
+
+cd $PKG_INSTALL_ROOT/opt/csw/share/pcb
+gzcat $PKG_INSTALL_ROOT/opt/csw/share/pcb/lib.tar.gz | tar tf - | grep -v /$ | while read f
+do
+  rm "$PKG_INSTALL_ROOT/opt/csw/share/pcb/$f"
+done
+
+# Remove all directories in the tar file
+gzcat $PKG_INSTALL_ROOT/opt/csw/share/pcb/lib.tar.gz | tar tf - | grep /$ | sort -r | while read d
+do
+  rmdir "$d"
+done

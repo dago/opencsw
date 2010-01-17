@@ -1,3 +1,5 @@
 509826c8a9184b46055258861228b555  0001-Fix-off-by-one-error-in-the-GTK-HID-s-netlist-window.patch
 00fd904d4439493a998100f40891fffd  0001-Regenerate-rats-r-tree-when-re-allocating-a-bigger-r.patch
+19b4f08dc4fedfaf1388727463a4d344  CSWpcb.postinstall
+e4bcdb905fc698d3fdbf7449b495c774  CSWpcb.preremove
 e192ee993b04749f82dd3e8b529d40c0  pcb-20081128.tar.gz

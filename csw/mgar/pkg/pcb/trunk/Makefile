@@ -15,6 +15,8 @@ endef
 SF_PROJ = $(GARNAME)
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSW$(GARNAME).postinstall
+DISTFILES += CSW$(GARNAME).preremove
 
 SPKG_SOURCEURL = http://pcb.gpleda.org
 
@@ -70,16 +72,15 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
+PACKAGED_DIRECTORIES = newlib pcblib pcblib-newlib
+
 post-install-modulated:
 	@echo " ==> Packaging up lib/"
 	@echo " DESTDIR=" $(DESTDIR)
-	false
-	mkdir -p $(DESTDIR)/var/opt/csw/pcb/
-	gtar cf - -C $(DESTDIR)/lib . | gzip -c - > $(DESTDIR)/var/opt/csw/pcb/lib.tar.gz
-	rm -rf $(DESTDIR)/opt/csw/share/pcb/lib
-	false
-	@$(MAKECOOKIE)
-
-post-install-modulated:
+	@echo " PKGROOT=" $(PKGROOT)
+	gtar zcf $(DESTDIR)/opt/csw/share/pcb/lib.tar.gz \
+		-C $(DESTDIR)/opt/csw/share/pcb \
+		$(PACKAGED_DIRECTORIES)
+	(cd $(DESTDIR)/opt/csw/share/pcb; rm -rf $(PACKAGED_DIRECTORIES))
 	@rmdir $(DESTDIR)/opt/csw/share/pcb-20081128
 	@$(MAKECOOKIE)
