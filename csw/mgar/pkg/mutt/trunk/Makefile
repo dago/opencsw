@@ -20,8 +20,8 @@ LICENSE = COPYRIGHT
 PACKAGES = CSWmutt-base CSWmutt-ncurses CSWmutt-slang
 
 REQUIRED_PKGS_CSWmutt-base = CSWggettextrt CSWiconv CSWlibidn
-REQUIRED_PKGS_CSWmutt-ncurses = CSWmutt-base CSWncurses CSWggettextrt CSWiconv CSWlibidn
-REQUIRED_PKGS_CSWmutt-slang = CSWmutt-base CSWslang CSWggettextrt CSWiconv CSWlibidn
+REQUIRED_PKGS_CSWmutt-ncurses = CSWmutt-base CSWncurses CSWggettextrt CSWiconv CSWlibidn CSWgdbm CSWsasl 
+REQUIRED_PKGS_CSWmutt-slang = CSWmutt-base CSWslang CSWggettextrt CSWiconv CSWlibidn CSWgdbm CSWsasl
 
 CATALOGNAME_CSWmutt-base = mutt_base
 CATALOGNAME_CSWmutt-ncurses = mutt_ncurses
@@ -38,6 +38,13 @@ OPT_FLAGS_SOS = -xO4
 sysconfdir = /etc/opt/csw
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+# Add requested header fields requested in this bug:
+#   http://www.opencsw.org/mantis/view.php?id=3726
+CONFIGURE_ARGS += --with-sasl --enable-hcache
+# This required POP and/or IMAP
+CONFIGURE_ARGS += --enable-pop --enable-imap
+
 CONFIGURE_ARGS_SLANG-no =
 CONFIGURE_ARGS_SLANG-yes = --with-slang=$(prefix)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_SLANG-$(SLANG))
