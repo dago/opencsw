@@ -1,0 +1,9 @@
+subversion (1.6.6,REV=2010.01.17)
+
+  * Restricted cswpycompile usage to python modules. (Closes #4156)
+  * Corrected libsvn_ra_dav-1.so.0 symlinks. (Closes #4096)
+  * Dropped openssl_rt dependency (neon with SSL support is built separately).
+  * Dropped kerberos dependency (neon comes with Kerberos support).
+  * Dropped libnet dependency (not required).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 17 Jan 2010 02:39:59 +0100
