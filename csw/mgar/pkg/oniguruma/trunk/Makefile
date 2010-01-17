@@ -17,6 +17,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+SPKG_SOURCEURL = http://www.geocities.jp/kosako3/oniguruma/
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
