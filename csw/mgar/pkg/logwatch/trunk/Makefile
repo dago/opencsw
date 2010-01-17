@@ -34,7 +34,7 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 sysconfdir = /etc/opt/csw
-CRONDIR = $(sysconfdir)/CSW$(GARNAME)/crontabs
+CRONDIR = $(sysconfdir)/pkg/CSW$(GARNAME)/crontabs
 CRONTABS = $(CRONDIR)/root
 
 INSTALL = /opt/csw/bin/ginstall
