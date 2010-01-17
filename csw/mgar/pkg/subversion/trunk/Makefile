@@ -7,6 +7,13 @@
 #   list, but they also link against the main libsvn_client-1.so which in
 #   turn pulls in the rest. Can this be tweaked?
 #
+# Known build issues/facts:
+#
+# * Build takes about 50 mins on build8x/build8s
+# * checkpkg suggests CSWbdb over CSWbdb47, because it picks up the
+#   libdb-4.7.so symlink in $(libdir) which belongs to the stub CSWbdb. As
+#   the lib itself belongs to CSWbdb47, the CSWbdb47 dep is completely fine.
+#
 GARNAME = subversion
 GARVERSION = 1.6.6
 CATEGORIES = utils
@@ -116,18 +123,21 @@ PATCHFILES += javahl_headers_for_nested_classes.diff
 PATCHFILES += subversion161.diff
 PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 
-EXTRA_LIB = $(SVNLIB) $(prefix)/apache2/lib
-EXTRA_INC = $(prefix)/apache2/include
+SVNLIB     = $(prefix)/lib/svn
+JDK        = /usr/jdk1.5.0_15
 
-JDK = /usr/jdk1.5.0_15
-EXTRA_INC += $(JDK)/include
-SVNLIB = $(prefix)/lib/svn
+EXTRA_INC  = $(JDK)/include
+EXTRA_INC += $(prefix)/apache2/include
 
-NOISALIST = 1
-LDFLAGS  = -R/opt/csw/lib -L/opt/csw/lib -R/opt/csw/apache2/lib 
-LDFLAGS += -L/opt/csw/apache2/lib -L$(SVNLIB) -lintl -liconv 
-LDFLAGS += -R/opt/csw/bdb47/lib -L/opt/csw/bdb47/lib
-export LDFLAGS
+EXTRA_LIB  = /opt/csw/bdb47/lib
+EXTRA_LIB += /opt/csw/apache2/lib
+EXTRA_LIB += $(SVNLIB)
+EXTRA_LINKER_FLAGS = -lintl -liconv
+
+# Only add $ISALIST to dirs which ship optimized versions (done by explicitly
+# excluding those lib dirs which are known not to ship optimized versions).
+RUNPATH_ISALIST  = $(libdir)
+RUNPATH_ISALIST += $(filter-out /opt/csw/apache2/lib $(SVNLIB),$(EXTRA_LIB)) 
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 PROTOTYPE_MODIFIERS += cswpycompile
