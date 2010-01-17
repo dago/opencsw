@@ -28,6 +28,12 @@ DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
 ALLOWED_ORPHAN_SONAMES = set([u"libm.so.2"])
+DEPENDENCY_FILENAME_REGEXES = (
+    (r".*\.pl", u"CSWperl"),
+    (r".*\.pm", u"CSWperl"),
+    (r".*\.py", u"CSWpython"),
+    (r".*\.rb", u"CSWruby"),
+)
 
 REPORT_TMPL = u"""$pkgname:
 #if $missing_deps
@@ -337,12 +343,7 @@ def SharedObjectDependencies(pkgname,
 def GuessDepsByFilename(pkgname, pkg_by_any_filename):
   """Guesses dependencies based on filename regexes."""
   guessed_deps = set()
-  patterns = (
-      (r".*\.py", u"CSWpython"),
-      (r".*\.pl", u"CSWperl"),
-      (r".*\.rb", u"CSWruby"),
-  )
-  for pattern, dep_pkgname in patterns:
+  for pattern, dep_pkgname in DEPENDENCY_FILENAME_REGEXES:
     # If any file name matches, add the dep, go to the next pattern/pkg
     # combination.
     pattern_re = re.compile("^%s$" % pattern)
