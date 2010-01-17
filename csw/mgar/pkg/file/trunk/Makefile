@@ -19,11 +19,18 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.darwinsys.com/file/
 
+REQUIRED_PKGS = CSWzlib
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 
 TEST_TARGET = check
+
+# The "file" util is used during stripbin. As the newly build binary
+# requires libmagic which is not installed yet we must not use the
+# newly built "file".
+IGNORE_DESTDIR = 1
 
 include gar/category.mk
