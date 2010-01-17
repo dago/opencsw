@@ -13,15 +13,14 @@ ARCHALL = 1
 
 MASTER_SITES = http://www.ijs.si/software/amavisd/#download
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWamavisdnew.cswusergroup
 DISTFILES += CSWamavisdnew.postinstall
 DISTFILES += CSWamavisdnew.preinstall
-DISTFILES += CSWamavisdnew.prototype
-
-#DISTFILES += $(call admfiles,CSWamavisdnew, postinstall preinstall prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+REQUIRED_PKGS += CSWbdb47
 REQUIRED_PKGS += CSWperl
 REQUIRED_PKGS += CSWcswclassutils
 REQUIRED_PKGS += CSWpmiostringy
@@ -46,20 +45,27 @@ PATCHFILES += amavisd.diff
 PATCHFILES += p0f-analyzer.pl.diff
 
 SPKG_CLASSES = none cswinitsmf
+PROTOTYPE_FILTER  = awk ' \
+    $$$$3 ~ /\/init.d\/cswamavisdnew$$$$/ { $$$$2 = "cswinitsmf" } \
+    $$$$3 ~ /\/csw\/amavisd-new.conf$$$$/ { $$$$2 = "cswcpsampleconf" } \
+    { print }'
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-AMAVISBIN=amavisd-agent amavisd-nanny amavisd-release p0f-analyzer.pl
+PCONFDIR = $(DESTDIR)/etc/opt/csw
+PVARDIR = $(DESTDIR)/var/opt/csw/$(GARNAME)
+
+AMAVISBIN = amavisd-agent amavisd-nanny amavisd-release p0f-analyzer.pl
 AMAVISBIN += amavisd-nanny
 AMAVISBIN += amavisd-release
 AMAVISBIN += p0f-analyzer.pl
 
-AMAVISSBIN=amavisd-new
+AMAVISSBIN = amavisd-new
 
-AMAVISDOC=LDAP.schema
+AMAVISDOC = LDAP.schema
 AMAVISDOC += README_FILES
 AMAVISDOC += RELEASE_NOTES
 AMAVISDOC += AAAREADME.first
@@ -81,6 +87,7 @@ install-custom:
 	cp -r $(AMAVISDOC) $(DESTDIR)$(prefix)/share/doc/amavisd-new
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 files/cswamavisdnew $(DESTDIR)/etc/opt/csw/init.d/cswamavisdnew
+	ginstall -m 644 files/CSWamavisdnew.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWamavisdnew/cswusergroup
 	$(MAKECOOKIE)
 
 include gar/category.mk
