@@ -11,25 +11,39 @@ SF_PROJ = $(GARNAME)
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
 
 PREREQUISITE_BASE_PKGS = CSWtofrodos
 
 GARCOMPILER = GNU
 
+REQUIRED_PKGS  = CSWfconfig
+REQUIRED_PKGS += CSWftype2
+REQUIRED_PKGS += CSWggettextrt
+REQUIRED_PKGS += CSWglib2
+REQUIRED_PKGS += CSWgtk2
+REQUIRED_PKGS += CSWlibatk
+REQUIRED_PKGS += CSWlibcairo
+REQUIRED_PKGS += CSWpango
+REQUIRED_PKGS += CSWtcl
+REQUIRED_PKGS += CSWzlib
+
+PATCHFILES  = removing-stdint.h-include.patch
+
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += LDFLAGS=-lintl
+CONFIGURE_ARGS += LDFLAGS="-lintl /usr/openwin/lib/libXext.so"
 
 CONFIGURE_ENV  = PKG_CONFIG_PATH=/opt/csw/X11/lib/pkgconfig
 
 post-extract-modulated:
+	@echo WORKSRC=$(WORKSRC)
+	@echo post-extract-modulated
 	find $(WORKSRC) -type f | xargs -I _ /opt/csw/bin/dos2unix _ _
 	@$(MAKECOOKIE)
+
+#post-extract:
+#	@echo WORKSRC=$(WORKSRC)
+#	@echo post-extract
 
 TEST_SCRIPTS =
 
