@@ -1,9 +1,12 @@
 GARNAME = libtasn1
-GARVERSION = 2.3
+GARVERSION = 2.4
 CATEGORIES = lib
 
 DESCRIPTION = GNU ASN1 library
 define BLURB
+  Libtasn1 is the ASN.1 library used by GnuTLS, GNU Shishi and some other packages.
+  It was written by Fabio Fiorina, and has been shipped as part of GnuTLS for some
+  time but is now a proper GNU package.
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
