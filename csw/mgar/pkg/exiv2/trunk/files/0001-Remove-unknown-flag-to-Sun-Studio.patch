@@ -1,0 +1,25 @@
+From 34049ff8c3eeaa116ccf07e4ee37ffaa7511860b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 18 Jan 2010 16:37:20 +0100
+Subject: [PATCH] Remove unknown flag to Sun Studio
+
+---
+ xmpsdk/src/Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/xmpsdk/src/Makefile b/xmpsdk/src/Makefile
+index 02b06f4..3b27979 100644
+--- a/xmpsdk/src/Makefile
++++ b/xmpsdk/src/Makefile
+@@ -86,7 +86,7 @@ SHELL = /bin/sh
+ .PRECIOUS: %.cpp
+ 
+ # For a debug build, replace -DNDEBUG=1 with -DDEBUG=1 -D_DEBUG=1
+-CPPFLAGS += -I../include -funsigned-char -DNDEBUG=1 $(EXPAT_CPPFLAGS)
++CPPFLAGS += -I../include -DNDEBUG=1 $(EXPAT_CPPFLAGS)
+ ifdef HAVE_STDINT
+ 	CPPFLAGS += -DEXV_HAVE_STDINT_H=1
+ endif
+-- 
+1.6.6
+

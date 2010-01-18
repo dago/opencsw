@@ -12,6 +12,7 @@ endef
 
 MASTER_SITES = http://www.exiv2.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0001-Remove-unknown-flag-to-Sun-Studio.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
