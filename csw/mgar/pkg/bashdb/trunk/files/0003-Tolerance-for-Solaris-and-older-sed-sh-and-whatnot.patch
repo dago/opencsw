@@ -1,0 +1,38 @@
+From 92da4be05ec48c9c07b19527fa26cad088e6ec3c Mon Sep 17 00:00:00 2001
+From: rocky <rocky@gnu.org>
+Date: Sun, 20 Dec 2009 18:27:17 +0100
+Subject: [PATCH 3/6] Tolerance for Solaris and older sed, sh and whatnot - forgot to add new files to distro
+
+---
+ test/data/Makefile.am        |    1 +
+ test/integration/Makefile.am |    2 ++
+ 2 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/test/data/Makefile.am b/test/data/Makefile.am
+index f44b617..071aaf1 100644
+--- a/test/data/Makefile.am
++++ b/test/data/Makefile.am
+@@ -69,6 +69,7 @@ check_DATA = \
+ 	sig.right \
+ 	sig-41.right \
+ 	sig-Darwin.right \
++	sig-SunOS.right \
+ 	skip.cmd \
+ 	skip.right \
+ 	sopts.right \
+diff --git a/test/integration/Makefile.am b/test/integration/Makefile.am
+index f64ab30..0708330 100644
+--- a/test/integration/Makefile.am
++++ b/test/integration/Makefile.am
+@@ -16,6 +16,8 @@ check_DATA = \
+ 	subshell2.tests    \
+ 	subshell3.tests    \
+ 	subshell4.tests    \
++	test-misc.in       \
++	test-setshow.in    \
+ 	trace.tests	   \
+ 	trace2.tests
+ 
+-- 
+1.6.2.1
+

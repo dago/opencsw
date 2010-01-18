@@ -1,1 +1,6 @@
-faab06bdb35626033fd795d9c1ccfd41  zshdb-0.04.tar.gz
+ff1262d4ab1f61ac1223cb21c7887b88  0002-Tolerance-for-Solaris-and-older-sed-sh-and-whatnot.patch
+028815125c41c1b37a77c38c3ca684f3  0003-Tolerance-for-Solaris-and-older-sed-sh-and-whatnot.patch
+4b47af8460ffdfec3101aac858296373  0004-Looks-like-sig-line-fixes-back-ported-to-bash-4.0.-N.patch
+79335104890385a5b0d8f0f47a7261b3  0005-Administrivia.patch
+4d2b0f7d3999219d4aa29968d08e3eef  0006-sig-SunOS.right-is-same-as-sig-41.right.patch
+eb411b64d27ccbd0093789e9e945a589  bashdb-4.0-0.4.tar.bz2

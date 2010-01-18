@@ -1,0 +1,350 @@
+From 146bf13599cb835e8efdb8a4402286ac46ffe8c7 Mon Sep 17 00:00:00 2001
+From: rocky <rocky@gnu.org>
+Date: Sun, 20 Dec 2009 18:25:07 +0100
+Subject: [PATCH 2/6] Tolerance for Solaris and older sed, sh and whatnot
+
+---
+ configure.ac                        |    4 ++
+ test/data/sig-SunOS.right           |   63 +++++++++++++++++++++++++++++++++++
+ test/integration/check-common.sh.in |    2 +-
+ test/integration/settrace.tests     |    4 +-
+ test/integration/test-interrupt     |    7 +++-
+ test/integration/test-misc          |    6 ++--
+ test/integration/test-misc.in       |   35 +++++++++++++++++++
+ test/integration/test-multi         |    2 +-
+ test/integration/test-parm          |    2 +-
+ test/integration/test-setshow       |    6 ++--
+ test/integration/test-setshow.in    |   26 ++++++++++++++
+ test/integration/test-settrace      |    2 +-
+ test/integration/test-sig           |    2 +
+ test/integration/test-subshell      |    2 +-
+ test/integration/test-tbreak        |    2 +-
+ test/integration/test-trace         |    2 +-
+ 16 files changed, 151 insertions(+), 16 deletions(-)
+ create mode 100644 test/data/sig-SunOS.right
+ create mode 100755 test/integration/test-misc.in
+ create mode 100755 test/integration/test-setshow.in
+
+diff --git a/configure.ac b/configure.ac
+index 15ddaf5..fa151e7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -242,6 +242,10 @@ AC_CONFIG_FILES([test/unit/test-save-restore.sh],
+ AC_CONFIG_FILES([test/unit/test-set0.sh], [chmod +x test/unit/test-set0.sh])
+ AC_CONFIG_FILES([test/unit/test-sort.sh], 
+ 		[chmod +x test/unit/test-sort.sh])
++AC_CONFIG_FILES([test/integration/test-misc],
++	        [chmod +x test/integration/test-misc])
++AC_CONFIG_FILES([test/integration/test-setshow],
++	        [chmod +x test/integration/test-setshow])
+ 
+ AC_CONFIG_FILES([ \
+ 	bashdb-main.inc \
+diff --git a/test/data/sig-SunOS.right b/test/data/sig-SunOS.right
+new file mode 100644
+index 0000000..4656d84
+--- /dev/null
++++ b/test/data/sig-SunOS.right
+@@ -0,0 +1,63 @@
++(sig.sh:7):
++7:	if [[ "$1"x != x ]] ; then 
+++# Test that debugged program's signals are saved and restored across
+++# debug calls.
+++### Testing that we have our signal set up...
+++info signals
++Signal       Stop   Print   Stack     Value
++EXIT         stop   noprint nostack   trap -- '_Dbg_exit_handler "$BASH_COMMAND"' EXIT
++EXIT         stop   noprint nostack   trap -- '_Dbg_exit_handler "$BASH_COMMAND"' EXIT
++SIGINT       stop   print   showstack trap -- '_Dbg_sig_handler 2 "$BASH_COMMAND" "$@"' SIGINT
++SIGQUIT      stop   print   showstack trap -- '_Dbg_sig_handler 3 "$BASH_COMMAND" "$@"' SIGQUIT
++SIGILL       stop   print   showstack trap -- '_Dbg_sig_handler 4 "$BASH_COMMAND" "$@"' SIGILL
++SIGTRAP      stop   print   showstack trap -- '_Dbg_sig_handler 5 "$BASH_COMMAND" "$@"' SIGTRAP
++SIGTERM      stop   print   showstack trap -- '_Dbg_sig_handler 15 "$BASH_COMMAND" "$@"' SIGTERM
+++### Testing handle command...
+++handle TERM nostack
+++handle foo
++Bad signal name: foo
+++handle 1000
++Bad signal number: 1000
+++handle TERM bogus
++Need to give a command: stop, nostop, stack, nostack, print, noprint
+++eval kill -TERM $$
++Program received signal SIGTERM (15)...
+++### Should not have printed a stack trace above...
+++handle TERM noprint
+++handle TERM stack
+++handle INT nostop
+++eval kill -TERM $$
+++info signals
++Signal       Stop   Print   Stack     Value
++EXIT         stop   noprint nostack   trap -- '_Dbg_exit_handler "$BASH_COMMAND"' EXIT
++EXIT         stop   noprint nostack   trap -- '_Dbg_exit_handler "$BASH_COMMAND"' EXIT
++SIGINT       nostop print   showstack trap -- '_Dbg_sig_handler 2 "$BASH_COMMAND" "$@"' SIGINT
++SIGQUIT      stop   print   showstack trap -- '_Dbg_sig_handler 3 "$BASH_COMMAND" "$@"' SIGQUIT
++SIGILL       stop   print   showstack trap -- '_Dbg_sig_handler 4 "$BASH_COMMAND" "$@"' SIGILL
++SIGTRAP      stop   print   showstack trap -- '_Dbg_sig_handler 5 "$BASH_COMMAND" "$@"' SIGTRAP
++SIGTERM      stop   noprint showstack trap -- '_Dbg_sig_handler 15 "$BASH_COMMAND" "$@"' SIGTERM
+++continue 
++Program received signal SIGTERM (15)...
++->0 in file `eval.sh' at line 1
++##1 _Dbg_do_eval("kill", "-TERM", "$$") called from file `processor.sh' at line 402
++##2 _Dbg_onecmd("eval", "kill -TERM $$") called from file `processor.sh' at line 167
++##3 _Dbg_process_commands() called from file `hook.sh' at line 188
++##4 _Dbg_debug_trap_handler("0", "[[ "$1"x != x ]]") called from file `sig.sh' at line 7
++##5 source("sig.sh") called from file `bashdb' at line 157
++##6 main() called from file `bashdb' at line 0
+++### Should have printed a stack trace above...
+++continue 
+++where 1
++->0 in file `sig.sh' at line 1
+++continue 
++Program received signal SIGINT (2)...
++->0 in file `sig.sh' at line 1
++##1 source("sig.sh") called from file `bashdb' at line 157
++##2 main() called from file `bashdb' at line 0
++Program received signal SIGINT (2)...
++->0 in file `sig.sh' at line 1
++##1 source("sig.sh") called from file `bashdb' at line 157
++##2 main() called from file `bashdb' at line 0
++Debugged program terminated normally. Use q to quit or R to restart.
+++kill 
++sig.tests: line 12: 28364 Killed                  $SH ${top_builddir}/bashdb -B -q -L $top_builddir -x $cmdfile $debugged_script
+diff --git a/test/integration/check-common.sh.in b/test/integration/check-common.sh.in
+index c5d8053..c5c1532 100644
+--- a/test/integration/check-common.sh.in
++++ b/test/integration/check-common.sh.in
+@@ -3,7 +3,7 @@
+ 
+ srcdir=@srcdir@
+ builddir=@builddir@
+-[ -z "$SH" ] && SH=@SH_PROG@
++[ -z "$SH" ] && export SH=@SH_PROG@
+ 
+ export top_builddir=@abs_top_builddir@
+ export top_srcdir=@abs_top_srcdir@
+diff --git a/test/integration/settrace.tests b/test/integration/settrace.tests
+index 2f741cc..8c25943 100755
+--- a/test/integration/settrace.tests
++++ b/test/integration/settrace.tests
+@@ -1,10 +1,10 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ # -*- shell-script -*-
+ #$Id: settrace.tests,v 1.1 2008/08/22 19:25:06 rockyb Exp $
+ 
+ [ -z "$srcdir" ] && export srcdir=$PWD
+ [ -z "$builddir" ] && export builddir=$PWD
+-[ -z "$top_builddir" ] && export top_builddir=$builddir/..
++[ -z "$top_builddir" ] && export top_builddir=$builddir/../..
+ 
+ cmdfile=${top_builddir}/test/data/settrace.cmd
+ debugged_script="$top_builddir/test/example/settrace.sh"
+diff --git a/test/integration/test-interrupt b/test/integration/test-interrupt
+index 9977a68..2a6f63d 100755
+--- a/test/integration/test-interrupt
++++ b/test/integration/test-interrupt
+@@ -5,7 +5,12 @@
+ 
+ . ${builddir}/check-common.sh
+ 
+-[[ $host_os == cygwin ]] || [[ $host_os = darwin* ]] && exit 77
++case $host_os in 
++    cygwin | darwin* | solaris* )
++	exit ;;
++    * )
++	break ;;
++esac
+ 
+ TEST_NAME=interrupt
+ TEST_FILE="$builddir/${TEST_NAME}.check"
+diff --git a/test/integration/test-misc b/test/integration/test-misc
+index 818f56d..80f387a 100755
+--- a/test/integration/test-misc
++++ b/test/integration/test-misc
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env bash
++#!/opt/csw/bin/bash
+ # -*- shell-script -*-
+ #$Id: test-misc,v 1.3 2008/08/23 17:09:36 rockyb Exp $
+ 
+@@ -16,8 +16,8 @@ debugged_script="$top_builddir/test/example/dbg-test2.sh"
+ 
+ # Different OS's handle ARGV differently, and "info args" may come out
+ # differently depending on that.
+-cat ${TEST_FILE} | sed -e "s:1 = .*/dbg-test2.sh:1 = ./example/dbg-test2.sh:" \
+-| sed -e 's:record the command history is .*:record the command history is: ' \
++cat ${TEST_FILE} | /opt/csw/bin/gsed -e "s:1 = .*/dbg-test2.sh:1 = ./example/dbg-test2.sh:" \
++| /opt/csw/bin/gsed -e 's:record the command history is .*:record the command history is: ' \
+ > ${TEST_FILTERED_FILE}
+ 
+ if (( BASH_VERSINFO[0] > 4 || \
+diff --git a/test/integration/test-misc.in b/test/integration/test-misc.in
+new file mode 100755
+index 0000000..84ad349
+--- /dev/null
++++ b/test/integration/test-misc.in
+@@ -0,0 +1,35 @@
++#!@SH_PROG@
++# -*- shell-script -*-
++#$Id: test-misc,v 1.3 2008/08/23 17:09:36 rockyb Exp $
++
++[ -z "$srcdir" ] && export srcdir=$PWD
++[ -z "$builddir" ] && export builddir=$PWD
++[ -z "$top_builddir" ] && export top_builddir=$builddir/../..
++
++TEST_NAME='misc'
++
++. ${top_builddir}/test/integration/check-common.sh
++
++debugged_script="$top_builddir/test/example/dbg-test2.sh"
++
++(cd $srcdir && run_debugger $debugged_script 2>&1 >$TEST_FILE </dev/null)
++
++# Different OS's handle ARGV differently, and "info args" may come out
++# differently depending on that.
++cat ${TEST_FILE} | @SED@ -e "s:1 = .*/dbg-test2.sh:1 = ./example/dbg-test2.sh:" \
++| @SED@ -e 's:record the command history is .*:record the command history is: ' \
++> ${TEST_FILTERED_FILE}
++
++if (( BASH_VERSINFO[0] > 4 || \
++    (BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] >= 1) )) ; then 
++    RIGHT_FILE="${top_srcdir}/test/data/${TEST_NAME}-output-41.right"
++fi
++
++check_output $TEST_FILTERED_FILE $RIGHT_FILE
++rc=$?
++
++((0 != rc)) && exit $rc
++rm -f $TEST_FILE
++
++# Return code tells testing mechanism whether passed or not.
++exit 0
+diff --git a/test/integration/test-multi b/test/integration/test-multi
+index c9469e7..6443b66 100755
+--- a/test/integration/test-multi
++++ b/test/integration/test-multi
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ # -*- shell-script -*-
+ #$Id: test-multi,v 1.2 2008/08/23 16:56:21 rockyb Exp $
+ 
+diff --git a/test/integration/test-parm b/test/integration/test-parm
+index c330c64..15d988e 100755
+--- a/test/integration/test-parm
++++ b/test/integration/test-parm
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ # -*- shell-script -*-
+ #$Id: test-parm,v 1.2 2008/08/23 16:56:21 rockyb Exp $
+ 
+diff --git a/test/integration/test-setshow b/test/integration/test-setshow
+index 612a03b..deeb3ba 100755
+--- a/test/integration/test-setshow
++++ b/test/integration/test-setshow
+@@ -1,4 +1,4 @@
+-#!/bin/bash -f
++#!/opt/csw/bin/bash -f
+ # -*- shell-script -*-
+ #$Id: test-setshow,v 1.3 2008/08/23 17:09:36 rockyb Exp $
+ 
+@@ -12,8 +12,8 @@ TEST_NAME='setshow'
+ 
+ (cd $srcdir && $SH ${srcdir}/${TEST_NAME}.tests > $TEST_FILE 2>&1 < /dev/null)
+ 
+-cat ${TEST_FILE} | sed -e "s:-L .* -x .*/data/setshow\.cmd .*/example/dbg-test2.sh:-L .. -x data/setshow.cmd example/dbg-test2.sh:" \
+-| sed -e 's:record the command history is .*:record the command history is: ' \
++cat ${TEST_FILE} | /opt/csw/bin/gsed -e "s:-L .* -x .*/data/setshow\.cmd .*/example/dbg-test2.sh:-L .. -x data/setshow.cmd example/dbg-test2.sh:" \
++| /opt/csw/bin/gsed -e 's:record the command history is .*:record the command history is: ' \
+ > ${TEST_FILTERED_FILE}
+ 
+ check_output $TEST_FILTERED_FILE $RIGHT_FILE
+diff --git a/test/integration/test-setshow.in b/test/integration/test-setshow.in
+new file mode 100755
+index 0000000..8be8546
+--- /dev/null
++++ b/test/integration/test-setshow.in
+@@ -0,0 +1,26 @@
++#!@SH_PROG@ -f
++# -*- shell-script -*-
++#$Id: test-setshow,v 1.3 2008/08/23 17:09:36 rockyb Exp $
++
++[ -z "$srcdir" ] && export srcdir=$PWD
++[ -z "$builddir" ] && export builddir=$PWD
++[ -z "$top_builddir" ] && export top_builddir=$builddir/../..
++
++TEST_NAME='setshow'
++
++. ${top_builddir}/test/integration/check-common.sh
++
++(cd $srcdir && $SH ${srcdir}/${TEST_NAME}.tests > $TEST_FILE 2>&1 < /dev/null)
++
++cat ${TEST_FILE} | @SED@ -e "s:-L .* -x .*/data/setshow\.cmd .*/example/dbg-test2.sh:-L .. -x data/setshow.cmd example/dbg-test2.sh:" \
++| @SED@ -e 's:record the command history is .*:record the command history is: ' \
++> ${TEST_FILTERED_FILE}
++
++check_output $TEST_FILTERED_FILE $RIGHT_FILE
++rc=$?
++
++((0 != rc)) && exit $rc
++rm -f $TEST_FILE
++
++# Return code tells testing mechanism whether passed or not.
++exit 0
+diff --git a/test/integration/test-settrace b/test/integration/test-settrace
+index a176850..f6b66f7 100755
+--- a/test/integration/test-settrace
++++ b/test/integration/test-settrace
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ # -*- shell-script -*-
+ #$Id: test-settrace,v 1.2 2008/08/23 16:56:21 rockyb Exp $
+ 
+diff --git a/test/integration/test-sig b/test/integration/test-sig
+index f968e03..98b2359 100755
+--- a/test/integration/test-sig
++++ b/test/integration/test-sig
+@@ -15,6 +15,8 @@ if (( BASH_VERSINFO[0] > 4 || \
+     RIGHT_FILE="${top_srcdir}/test/data/${TEST_NAME}-41.right"
+ elif [[ $(uname -s) == 'Darwin' ]] ; then
+     RIGHT_FILE="${top_srcdir}/test/data/${TEST_NAME}-Darwin.right"
++elif [[ $(uname -s) == 'SunOS' ]] ; then
++    RIGHT_FILE="${top_srcdir}/test/data/${TEST_NAME}-SunOS.right"
+ fi
+ FILTERED_TEST_FILE="/tmp/${TEST_NAME}-filtered.check"
+ FILTERED_RIGHT_FILE="/tmp/${TEST_NAME}-filtered.right"
+diff --git a/test/integration/test-subshell b/test/integration/test-subshell
+index 7144b20..7c92aa8 100755
+--- a/test/integration/test-subshell
++++ b/test/integration/test-subshell
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ # -*- shell-script -*-
+ #$Id: test-subshell,v 1.3 2008/08/29 02:55:44 rockyb Exp $
+ 
+diff --git a/test/integration/test-tbreak b/test/integration/test-tbreak
+index f078829..7891c83 100755
+--- a/test/integration/test-tbreak
++++ b/test/integration/test-tbreak
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ # -*- shell-script -*-
+ #$Id: test-tbreak,v 1.2 2008/08/23 16:56:21 rockyb Exp $
+ 
+diff --git a/test/integration/test-trace b/test/integration/test-trace
+index 409f597..85c8340 100755
+--- a/test/integration/test-trace
++++ b/test/integration/test-trace
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ # -*- shell-script -*-
+ #$Id: test-trace,v 1.2 2008/08/23 16:56:21 rockyb Exp $
+ 
+-- 
+1.6.2.1
+

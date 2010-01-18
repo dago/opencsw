@@ -1,0 +1,48 @@
+From af51c5aba3ecd33b36423ddfc524f621e29a3a87 Mon Sep 17 00:00:00 2001
+From: rocky <rocky@gnu.org>
+Date: Sun, 20 Dec 2009 12:57:11 -0500
+Subject: [PATCH 5/6] Administrivia
+
+---
+ .gitignore                  |    4 +++-
+ test/integration/.gitignore |    6 ++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index a91f589..8b0b39f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,8 +1,11 @@
++/*~
+ /Makefile
+ /Makefile.in
+ /aclocal.m4
+ /autom4te.cache
+ /bashdb
++/bashdb-4.*tar.gz
++/bashdb-4.*tar.bz2
+ /bashdb-main.inc
+ /bashdb-trace
+ /compile
+@@ -20,4 +23,3 @@
+ /libtool
+ /missing
+ /stamp-h1
+-/*~
+diff --git a/test/integration/.gitignore b/test/integration/.gitignore
+index ff80915..45f7bb3 100644
+--- a/test/integration/.gitignore
++++ b/test/integration/.gitignore
+@@ -1,5 +1,7 @@
++/*.check
++/*~
+ /Makefile
+ /Makefile.in
+ /check-common.sh
+-/*.check
+-/*~
++/test-misc
++/test-setshow
+-- 
+1.6.2.1
+

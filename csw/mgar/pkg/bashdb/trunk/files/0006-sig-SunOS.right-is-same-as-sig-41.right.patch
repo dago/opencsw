@@ -1,0 +1,24 @@
+From fe4012d2196d8b0ab2ef531e62616e13e479d1f2 Mon Sep 17 00:00:00 2001
+From: rocky <rocky@gnu.org>
+Date: Thu, 24 Dec 2009 22:54:12 -0500
+Subject: [PATCH 6/6] sig-SunOS.right is same as sig-41.right.
+
+---
+ test/data/Makefile.am |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/test/data/Makefile.am b/test/data/Makefile.am
+index 071aaf1..f44b617 100644
+--- a/test/data/Makefile.am
++++ b/test/data/Makefile.am
+@@ -69,7 +69,6 @@ check_DATA = \
+ 	sig.right \
+ 	sig-41.right \
+ 	sig-Darwin.right \
+-	sig-SunOS.right \
+ 	skip.cmd \
+ 	skip.right \
+ 	sopts.right \
+-- 
+1.6.2.1
+
