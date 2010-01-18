@@ -13,24 +13,31 @@ endef
 
 MASTER_SITES = http://libproxy.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += SunStudio-have-no-stdc99-flag.patch
+DISTFILES += Solaris8-have-no-stdc99-flag.patch
+DISTFILES += stdfiles.patch
+DISTFILES += proxy.c.patch
+DISTFILES += 0002-Dont-preset-CFLAGS.patch
+
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 #PATCHFILES  = 0001-Use-xc99-for-Sun-Studio-compiler.patch
-PATCHFILES += 0002-Dont-preset-CFLAGS.patch
 # For Solaris 10 targets
-#PATCHFILES_isa-amd64 += SunStudio-have-no-stdc99-flag.patch
-#PATCHFILES_isa-sparcv8 += SunStudio-have-no-stdc99-flag.patch
-#PATCHFILES_isa-sparcv9 += SunStudio-have-no-stdc99-flag.patch
-#PATCHFILES_isa-i386 += SunStudio-have-no-stdc99-flag.patch
+PATCHFILES_solaris10-sparc += SunStudio-have-no-stdc99-flag.patch
+PATCHFILES_solaris10-i386 += SunStudio-have-no-stdc99-flag.patch
 #For Solaris 8 targets
-PATCHFILES_isa-amd64 += SunStudio-have-no-stdc99-flag.patch
-PATCHFILES_isa-sparcv8 += Solaris8-have-no-stdc99-flag.patch
-PATCHFILES_isa-sparcv8 += stdfiles.patch
-PATCHFILES_isa-sparcv8 += proxy.c.patch
-PATCHFILES_isa-sparcv9 += Solaris8-have-no-stdc99-flag.patch
-PATCHFILES_isa-sparcv9 += stdfiles.patch
-PATCHFILES_isa-sparcv9 += proxy.c.patch
-PATCHFILES_isa-i386 += Solaris8-have-no-stdc99-flag.patch
-PATCHFILES_isa-i386 += stdfiles.patch
-PATCHFILES_isa-i386 += proxy.c.patch
+PATCHFILES_solaris8-sparc += Solaris8-have-no-stdc99-flag.patch
+PATCHFILES_solaris8-sparc += stdfiles.patch
+PATCHFILES_solaris8-sparc += proxy.c.patch
+PATCHFILES_solaris8-i386_isa-amd64 += SunStudio-have-no-stdc99-flag.patch
+PATCHFILES_solaris8-i386_isa-i386 += Solaris8-have-no-stdc99-flag.patch
+PATCHFILES_solaris8-i386_isa-i386 += stdfiles.patch
+PATCHFILES_solaris8-i386_isa-i386 += proxy.c.patch
+PATCHFILES += $(PATCHFILES_$(PLATFORM))
+PATCHFILES += $(PATCHFILES_$(PLATFORM)_$(MODULATION))
+PATCHFILES += 0002-Dont-preset-CFLAGS.patch
+
 
 PACKAGES = CSWlibproxy CSWlibproxydevel CSWpy-libproxy
 CATALOGNAME_CSWlibproxy = libproxy
