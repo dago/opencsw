@@ -561,6 +561,10 @@ UPSTREAM_USE_SF	?= 0
 GOOGLE_PROJECT ?= $(GARNAME)
 GOOGLE_MIRROR  ?= http://$(GOOGLE_PROJECT).googlecode.com/files/
 
+# Berlios
+BERLIOS_PROJECT ?= $(GARNAME)
+BERLIOS_MIRROR ?= http://download.berlios.de/$(BERLIOS_PROJECT)/ http://download2.berlios.de/$(BERLIOS_PROJECT)/
+
 # GNU
 GNU_SITE     = http://mirrors.kernel.org
 GNU_GNUROOT  = $(GNU_SITE)/gnu
