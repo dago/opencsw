@@ -90,7 +90,9 @@ debugmsg() {
 
 set_variables_for_individual_package_check() {
 	f=$1
-	file $f |sed 's/^.*://' |grep gzip >/dev/null
+	file $f \
+	    | sed 's/^[^:]*://' \
+	    | grep gzip >/dev/null
 	if [ $? -eq 0 ] ; then
 		TMPARCHIVE=$CHECKPKG_TMPDIR/`basename $f`
 		if [[ -f $TMPARCHIVE ]] ; then
