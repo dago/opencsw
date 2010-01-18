@@ -32,7 +32,7 @@ CATALOGNAME_CSWsaslsql = sasl_sql
 REQUIRED_PKGS_CSWsasl = CSWosslrt CSWbdb47
 REQUIRED_PKGS_CSWsaslauthd = CSWosslrt CSWoldaprt CSWkrb5lib
 REQUIRED_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
-REQUIRED_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql4rt CSWsqlite
+REQUIRED_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
 
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
@@ -53,8 +53,10 @@ LD_OPTIONS =
 BUILD_ENV = _REENTRANT=1
 
 EXTRA_LIBS += /opt/csw/bdb47/lib
-EXTRA_LIBS += /opt/csw/mysql4/lib
+EXTRA_LIBS += /opt/csw/mysql5/lib
 EXTRA_LIBS += /opt/csw/postgresql/lib
+
+EXTRA_INC = /opt/csw/mysql5/include
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
@@ -69,7 +71,7 @@ CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb47/include/
 CONFIGURE_ARGS += --with-saslauthd=$(localstatedir)/saslauthd 
 CONFIGURE_ARGS += --with-ipctype=unix 
 CONFIGURE_ARGS += --with-ldap=$(prefix)
-CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql4/ 
+CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5/ 
 CONFIGURE_ARGS += --with-pgsql=$(prefix)/postgresql 
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-dbpath=$(sysconfdir)/sasldb2
