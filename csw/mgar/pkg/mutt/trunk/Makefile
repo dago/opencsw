@@ -23,9 +23,18 @@ LICENSE = COPYRIGHT
 
 PACKAGES = CSWmutt-base CSWmutt-ncurses CSWmutt-slang
 
-REQUIRED_PKGS_CSWmutt-base = CSWggettextrt CSWiconv CSWlibidn
-REQUIRED_PKGS_CSWmutt-ncurses = CSWmutt-base CSWncurses CSWggettextrt CSWiconv CSWlibidn CSWgdbm CSWsasl 
-REQUIRED_PKGS_CSWmutt-slang = CSWmutt-base CSWslang CSWggettextrt CSWiconv CSWlibidn CSWgdbm CSWsasl
+REQUIRED_PKGS_core  = CSWgdbm
+REQUIRED_PKGS_core += CSWggettextrt
+REQUIRED_PKGS_core += CSWgpgerr
+REQUIRED_PKGS_core += CSWgpgme
+REQUIRED_PKGS_core += CSWiconv
+REQUIRED_PKGS_core += CSWlibidn
+REQUIRED_PKGS_core += CSWosslrt
+REQUIRED_PKGS_core += CSWsasl
+REQUIRED_PKGS_core += CSWzlib
+REQUIRED_PKGS_CSWmutt-ncurses = $(REQUIRED_PKGS_core) CSWmutt-base CSWncurses
+REQUIRED_PKGS_CSWmutt-slang   = $(REQUIRED_PKGS_core) CSWmutt-base CSWslang
+REQUIRED_PKGS_CSWmutt-base    = CSWggettextrt CSWiconv CSWlibidn
 
 CATALOGNAME_CSWmutt-base = mutt_base
 CATALOGNAME_CSWmutt-ncurses = mutt_ncurses
