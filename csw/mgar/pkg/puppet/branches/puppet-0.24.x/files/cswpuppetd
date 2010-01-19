@@ -17,16 +17,17 @@
 . /lib/svc/share/smf_include.sh
 
 prefix="/opt/csw"
-exec_prefix="/opt/csw"
-sysconfdir="/etc/csw/opt"
-sbindir="/opt/csw/sbin"
-localstatedir="/var/opt/csw"
+exec_prefix="${prefix}"
+sysconfdir="/etc${prefix}"
+bindir="${prefix}/bin"
+sbindir="${prefix}/sbin"
+localstatedir="/var${prefix}"
 
 
 start_puppetd() {
   cd /
   # Start daemons.
-  ${sbindir}/puppetd
+  ${bindir}/puppetd
 }
 
 reload_puppetd() {
