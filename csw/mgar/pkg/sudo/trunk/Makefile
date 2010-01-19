@@ -36,13 +36,15 @@ REQUIRED_PKGS_CSWsudo-common = CSWggettextrt
 
 DISTFILES += CSWsudo-common.postinstall 
 
+LOGPATH = /var/opt/csw/log/sudo
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-logging=both
 CONFIGURE_ARGS += --with-ignore-dot
 CONFIGURE_ARGS += --with-env-editor
 CONFIGURE_ARGS += --disable-path-info
-CONFIGURE_ARGS += --with-logpath=/var/opt/csw/sudo/logs/sudolog
+CONFIGURE_ARGS += --with-logpath=$(LOGPATH)/sudolog
 ifneq ($(shell uname -r),5.8)
     CONFIGURE_ARGS += --with-project
 endif
@@ -57,6 +59,10 @@ FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 PKGFILES_CSWsudo  = $(bindir)/sudo.minimal
 PKGFILES_CSWsudo += $(bindir)/sudo
 
+PROTOTYPE_MODIFIERS = sudo
+PROTOTYPE_FILES_sudo = $(bindir)/sudo.minimal
+PROTOTYPE_PERMS_sudo = 4755
+
 include gar/category.mk
 
 post-install-modulated:
@@ -65,6 +71,7 @@ post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; grm -f sudoedit )
 	@( cd $(DESTDIR)$(bindir) ; gcp sudo.minimal sudoedit )
 	@( cd $(DESTDIR)$(sysconfdir) ; gmv sudoers sudoers.CSW )
+	install -m 755 -d $(DESTDIR)$(LOGPATH)/logs
 	@$(MAKECOOKIE)
 
 post-merge-modulated:
