@@ -7,12 +7,16 @@ MODULATIONS_SLANG = no yes
 
 DESCRIPTION = A text-based mail client for Unix operating systems
 define BLURB
+  Mutt is a small but very powerful text-based MIME mail client. Mutt is
+  highly configurable, and is well suited to the mail power user with
+  advanced features like key bindings, keyboard macros, mail threading,
+  regular expression searches and a powerful pattern matching language for
+  selecting groups of messages.
 endef
 
+VENDOR_URL   = http://www.mutt.org
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-
-# We define upstream file regex so we can be notifed of new upstream software release
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = COPYRIGHT
@@ -37,13 +41,16 @@ OPT_FLAGS_SOS = -xO4
 
 sysconfdir = /etc/opt/csw
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-# Add requested header fields requested in this bug:
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-pop
+CONFIGURE_ARGS += --enable-imap
+CONFIGURE_ARGS += --enable-smtp
+CONFIGURE_ARGS += --enable-gpgme
+# Add IMAP header caching and SASL as requested per:
 #   http://www.opencsw.org/mantis/view.php?id=3726
-CONFIGURE_ARGS += --with-sasl --enable-hcache
-# This required POP and/or IMAP
-CONFIGURE_ARGS += --enable-pop --enable-imap
+CONFIGURE_ARGS += --enable-hcache
+CONFIGURE_ARGS += --with-sasl
+CONFIGURE_ARGS += --with-ssl
 
 CONFIGURE_ARGS_SLANG-no =
 CONFIGURE_ARGS_SLANG-yes = --with-slang=$(prefix)
