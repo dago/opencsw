@@ -1,5 +1,5 @@
 GARNAME = dhcp
-GARVERSION = 4.1.1rc1
+GARVERSION = 4.1.1
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
@@ -24,7 +24,6 @@ REQUIRED_PKGS_CSWdhcpdevel = CSWdhcp
 CATALOGNAME_CSWdhcpdevel = dhcp_devel
 ARCHALL_CSWdhcpdevel = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = ($(GARNAME)-\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
