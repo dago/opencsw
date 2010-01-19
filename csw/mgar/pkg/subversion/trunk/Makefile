@@ -281,3 +281,9 @@ svn-java:
 	$(BUILD_ENV)   gmake -C $(WORKSRC) javahl;
 	$(INSTALL_ENV) gmake -C $(WORKSRC) install-javahl;
 	@$(MAKECOOKIE)
+
+post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
+
+install-changelog-%:
+	ginstall -D $(FILEDIR)/changelog.CSW \
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
