@@ -55,7 +55,7 @@ CATALOGNAME_CSWtransmission = transmission
 CATALOGNAME_CSWtransmissiongtk2 = transmission_gtk2
 
 
-EXTRA_CFLAGS = -DNO_SYS_QUEUE_H -lresolv -mt
+EXTRA_CFLAGS = -DNO_SYS_QUEUE_H -lresolv 
 
 EXTRA_INC = /opt/csw/X11/include
 EXTRA_LIB = /opt/csw/X11/lib 
