@@ -21,7 +21,7 @@ NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib 
+REQUIRED_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib CSWoniguruma
 
 SPKG_SOURCEURL = http://www.s-lang.org/
 
