@@ -25,8 +25,10 @@ PACKAGES = CSWneon CSWneon-devel
 CATALOGNAME_CSWneon = neon
 CATALOGNAME_CSWneon-devel = neon_devel
 
-REQUIRED_PKGS_CSWneon = CSWexpat CSWkrb5lib CSWosslrt CSWzlib CSWggettextrt CSWpakchois
+REQUIRED_PKGS_CSWneon = CSWexpat CSWkrb5lib CSWosslrt CSWzlib CSWggettextrt CSWpakchois CSWlibproxy
 REQUIRED_PKGS_CSWneon-devel = CSWneon
+
+PREREQUISITE_PKGS = $(REQUIRED_PKGS_CSWneon)
 
 SPKG_DESC_CSWneon       = Neon HTTP and WebDAV client library
 SPKG_DESC_CSWneon-devel = Neon HTTP and WebDAV development support
