@@ -1,5 +1,5 @@
 GARNAME = pcre
-GARVERSION = 8.00
+GARVERSION = 8.01
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
@@ -12,12 +12,13 @@ endef
 
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0001-Add-missing-inttypes.h.patch
 
 SPKG_SOURCEURL = http://www.pcre.org
 
 PREREQUISITE_PKGS = CSWgnulinks
-REQUIRED_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline CSWncurses
-REQUIRED_PKGS_CSWpcre = CSWpcrert $(REQUIRED_PKGS_CSWpcrert)
+REQUIRED_PKGS_CSWpcrert = CSWncurses
+REQUIRED_PKGS_CSWpcre = CSWpcrert CSWzlib CSWbzip2 CSWreadline $(REQUIRED_PKGS_CSWpcrert)
 
 PACKAGES = CSWpcre CSWpcrert
 CATALOGNAME_CSWpcrert = pcre_rt
