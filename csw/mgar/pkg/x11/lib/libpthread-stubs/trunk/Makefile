@@ -1,5 +1,5 @@
 GARNAME = libpthread-stubs
-GARVERSION = 0.1
+GARVERSION = 0.3
 CATEGORIES = x11
 
 DESCRIPTION = pthread stubs not provided by native libc
