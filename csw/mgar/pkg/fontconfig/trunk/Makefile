@@ -14,6 +14,8 @@ MASTER_SITES = http://www.fontconfig.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWfconfig.postinstall
 
+PATCHFILES = fix-zerowidth-struct.patch
+
 REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
