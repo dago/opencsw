@@ -19,8 +19,19 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS += CSWexpat CSWstlport CSWzlib
-PREREQUISITE_PKGS += CSWiconv CSWboostrt CSWboostdevel
+PACKAGES = CSWexempi CSWexempidevel
+CATALOGNAME_CSWexempi = exempi
+CATALOGNAME_CSWexempidevel = exempi_devel
+SPKG_DESC_CSWexempi = Exempi is an implementation of XMP
+SPKG_DESC_CSWexempidevel = Exempi is an implementation of XMP - developer package
+
+REQUIRED_PKGS_CSWexempi += CSWexpat CSWstlport CSWzlib CSWiconv
+REQUIRED_PKGS_CSWexempidevel += CSWexempi
+
+PREREQUISITE_PKGS += $(REQUIRED_PKGS_CSWexempi)
+PREREQUISITE_PKGS += CSWboostrt CSWboostdevel
+
+PKGFILES_CSWexempidevel = $(PKGFILES_DEVEL)
 
 PATCHFILES += Makefiles.patch
 PATCHFILES += RIFF_Support.cpp
@@ -31,7 +42,9 @@ PATCHFILES += utils.cpp.patch
 PATCHFILES += xmp.h.patch
 PATCHFILES += boost.m4.patch
 
-EXTRA_CXXFLAGS = -D__EXTENSIONS__ -library=stlport4 -DHAVE_NATIVE_TLS=0
+EXTRA_CXXFLAGS = -D__EXTENSIONS__ -library=stlport4
+# Ugly, but need to owerwrite this since autoconf system doesn't work
+EXTRA_CXXFLAGS += -DHAVE_NATIVE_TLS=0
 EXTRA_LINKER_FLAGS = -liconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
