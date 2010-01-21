@@ -18,6 +18,9 @@ DISTNAME     = vanessa_logger-$(GARVERSION)
 UFILES_REGEX = (\d+(?:\.\d+)*)
 UPSTREAM_MASTER_SITES = $(VENDOR_URL)/download/vanessa_logger/
 
+PACKAGES = CSWlibvanessa-logger
+CATALOGNAME = libvanessa_logger
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET =
