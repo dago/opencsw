@@ -1,5 +1,5 @@
 GARNAME = transmission
-GARVERSION = 1.76
+GARVERSION = 1.80
 CATEGORIES = net
 
 DESCRIPTION = Fast, easy, and free multi-platform BitTorrent client
@@ -34,6 +34,7 @@ REQUIRED_PKGS_CSWtransmissiongtk2 += CSWosslrt
 REQUIRED_PKGS_CSWtransmissiongtk2 += CSWpango
 REQUIRED_PKGS_CSWtransmissiongtk2 += CSWzlib
 REQUIRED_PKGS_CSWtransmissiongtk2 += CSWdbus
+REQUIRED_PKGS_CSWtransmissiongtk2 += CSWgconf2
 
 REQUIRED_PKGS_CSWtransmission = CSWcurlrt
 REQUIRED_PKGS_CSWtransmission += CSWlibevent
@@ -61,7 +62,8 @@ EXTRA_INC = /opt/csw/X11/include
 EXTRA_LIB = /opt/csw/X11/lib 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-CONFIGURE_ARGS = $(DIRPATHS) --enable-gtk
+CONFIGURE_ARGS = $(DIRPATHS) --enable-gtk 
+STRIP_LIBTOOL = 1
 
 TEST_TARGET = check
 
