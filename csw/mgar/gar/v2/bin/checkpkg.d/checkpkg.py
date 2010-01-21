@@ -23,7 +23,8 @@ SONAME = "soname"
 CONFIG_MTIME = "mtime"
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
-                             u"*SUNWcslr", u"*SUNWlibC", u"*SUNWlibms"])
+                             u"*SUNWcslr", u"*SUNWlibC", u"*SUNWlibms",
+                             u"SUNWcslx"])
 SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4", ["/opt/csw/bdb42"]),
     ("/64", ["/amd64", "/sparcv9"]),
