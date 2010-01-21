@@ -1,0 +1,159 @@
+diff -Nru exempi-2.1.1.orig/exempi/Makefile.in exempi-2.1.1/exempi/Makefile.in
+--- exempi-2.1.1.orig/exempi/Makefile.in	2009-05-16 05:25:19.000000000 +0200
++++ exempi-2.1.1/exempi/Makefile.in	2010-01-20 21:17:55.040718572 +0100
+@@ -276,7 +276,7 @@
+ exempidir = $(includedir)/@EXEMPI_INCLUDE_BASE@/exempi
+ exempi_HEADERS = xmp.h xmpconsts.h xmperrors.h
+ INCLUDES = -I$(top_srcdir)/public/include
+-AM_CPPFLAGS = -Wall -D@EXEMPI_PLATFORM_DEF@=1
++AM_CPPFLAGS = -D@EXEMPI_PLATFORM_DEF@=1
+ lib_LTLIBRARIES = libexempi.la
+ pkgconfig_DATA = exempi-@EXEMPI_MAJOR_VERSION@.pc
+ libexempi_la_SOURCES = exempi.cpp
+diff -Nru exempi-2.1.1.orig/exempi/tests/Makefile.in exempi-2.1.1/exempi/tests/Makefile.in
+--- exempi-2.1.1.orig/exempi/tests/Makefile.in	2009-05-16 01:33:41.000000000 +0200
++++ exempi-2.1.1/exempi/tests/Makefile.in	2010-01-21 07:54:09.406465019 +0100
+@@ -188,6 +188,8 @@
+ AUTOMAKE = @AUTOMAKE@
+ AWK = @AWK@
+ BOOST_CPPFLAGS = @BOOST_CPPFLAGS@
++BOOST_TEST_EXEC_MONITOR_LDFLAGS = @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
++BOOST_TEST_EXEC_MONITOR_LIBS = @BOOST_TEST_EXEC_MONITOR_LIBS@
+ BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS = @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
+ BOOST_UNIT_TEST_FRAMEWORK_LIBS = @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+ CC = @CC@
+@@ -323,32 +325,32 @@
+ EXTRA_DIST = $(check_DATA) $(check_SCRIPTS)
+ CLEANFILES = test.jpg
+ testinit_SOURCES = testinit.cpp utils.cpp
+-testinit_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testinit_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testinit_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testinit_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ testexempicore_SOURCES = test-exempi-core.cpp utils.cpp
+-testexempicore_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testexempicore_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testexempicore_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testexempicore_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ testserialise_SOURCES = test-serialise.cpp utils.cpp
+-testserialise_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testserialise_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testserialise_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testserialise_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ testwritenewprop_SOURCES = test-write-new-prop.cpp utils.cpp
+-testwritenewprop_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testwritenewprop_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testwritenewprop_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testwritenewprop_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ testtiffleak_SOURCES = test-tiff-leak.cpp utils.cpp
+-testtiffleak_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testtiffleak_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testtiffleak_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testtiffleak_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ testxmpfiles_SOURCES = test-xmpfiles.cpp utils.cpp
+-testxmpfiles_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testxmpfiles_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testxmpfiles_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testxmpfiles_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ testxmpfileswrite_SOURCES = test-xmpfiles-write.cpp utils.cpp
+-testxmpfileswrite_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testxmpfileswrite_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testxmpfileswrite_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testxmpfileswrite_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ test3_SOURCES = test3.cpp utils.cpp
+-test3_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-test3_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++test3_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++test3_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ testfdo18635_SOURCES = test-bgo.cpp utils.cpp
+-testfdo18635_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+-testfdo18635_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
++testfdo18635_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@ @BOOST_TEST_EXEC_MONITOR_LIBS@
++testfdo18635_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@ @BOOST_TEST_EXEC_MONITOR_LDFLAGS@
+ all: all-am
+ 
+ .SUFFIXES:
+diff -Nru exempi-2.1.1.orig/samples/source/Makefile.in exempi-2.1.1/samples/source/Makefile.in
+--- exempi-2.1.1.orig/samples/source/Makefile.in	2009-05-16 01:33:42.000000000 +0200
++++ exempi-2.1.1/samples/source/Makefile.in	2010-01-21 04:13:57.049873855 +0100
+@@ -273,8 +273,7 @@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-AM_CXXFLAGS = -fexceptions -funsigned-char -fPIC \
+-	-Wno-multichar -Wno-implicit -Wno-ctor-dtor-privacy
++AM_CXXFLAGS = -xchar=unsigned -KPIC 
+ 
+ AM_CPPFLAGS = -D@EXEMPI_PLATFORM_DEF@=1 -D_FILE_OFFSET_BITS=64
+ XMPLIBS = $(top_builddir)/source/XMPCore/libXMPCore.la \
+diff -Nru exempi-2.1.1.orig/source/XMPCore/Makefile.in exempi-2.1.1/source/XMPCore/Makefile.in
+--- exempi-2.1.1.orig/source/XMPCore/Makefile.in	2009-05-16 01:33:42.000000000 +0200
++++ exempi-2.1.1/source/XMPCore/Makefile.in	2010-01-20 21:31:48.303689677 +0100
+@@ -252,10 +252,9 @@
+ 	-I$(srcdir)/../common/ \
+ 	-I$(top_srcdir)/third-party/MD5
+ 
+-AM_CXXFLAGS = -Wno-multichar -Wno-implicit -Wno-ctor-dtor-privacy \
+-	-funsigned-char -fexceptions
++AM_CXXFLAGS = -xchar=unsigned
+ 
+-AM_CPPFLAGS = -Wall \
++AM_CPPFLAGS = \
+ 	-D@EXEMPI_PLATFORM_DEF@=1 -DXMP_IMPL=1 -DXMP_ClientBuild=0 \
+ 	-D_FILE_OFFSET_BITS=64 -DHAVE_EXPAT_CONFIG_H=1 -DXML_STATIC=1 
+ 
+diff -Nru exempi-2.1.1.orig/source/XMPFiles/FileHandlers/Makefile.in exempi-2.1.1/source/XMPFiles/FileHandlers/Makefile.in
+--- exempi-2.1.1.orig/source/XMPFiles/FileHandlers/Makefile.in	2009-05-16 01:33:42.000000000 +0200
++++ exempi-2.1.1/source/XMPFiles/FileHandlers/Makefile.in	2010-01-20 21:33:24.157916525 +0100
+@@ -260,6 +260,8 @@
+ 	-I$(top_srcdir)/public/include/ -I$(top_srcdir)/build/ \
+ 	-I$(top_srcdir)/third-party/MD5
+ 
++AM_CXXFLAGS = 
++
+ AM_CPPFLAGS = \
+ 	-D@EXEMPI_PLATFORM_DEF@=1 -DXMP_IMPL=1 -DXMP_ClientBuild=0 \
+ 	-D_FILE_OFFSET_BITS=64 -DHAVE_EXPAT_CONFIG_H=1 -DXML_STATIC=1
+diff -Nru exempi-2.1.1.orig/source/XMPFiles/FormatSupport/Makefile.in exempi-2.1.1/source/XMPFiles/FormatSupport/Makefile.in
+--- exempi-2.1.1.orig/source/XMPFiles/FormatSupport/Makefile.in	2009-05-16 01:33:42.000000000 +0200
++++ exempi-2.1.1/source/XMPFiles/FormatSupport/Makefile.in	2010-01-20 21:34:48.039865264 +0100
+@@ -266,7 +266,9 @@
+ 	-I$(top_srcdir)/public/include/ -I$(top_srcdir)/build/ \
+ 	-I$(top_srcdir)/third-party/MD5
+ 
+-AM_CPPFLAGS = -Wno-multichar\
++AM_CXXFLAGS =
++
++AM_CPPFLAGS = \
+ 	-D@EXEMPI_PLATFORM_DEF@=1 -DXMP_IMPL=1 -DXMP_ClientBuild=0 \
+ 	-D_FILE_OFFSET_BITS=64 -DHAVE_EXPAT_CONFIG_H=1 -DXML_STATIC=1
+ 
+diff -Nru exempi-2.1.1.orig/source/XMPFiles/Makefile.in exempi-2.1.1/source/XMPFiles/Makefile.in
+--- exempi-2.1.1.orig/source/XMPFiles/Makefile.in	2009-05-16 01:33:42.000000000 +0200
++++ exempi-2.1.1/source/XMPFiles/Makefile.in	2010-01-20 21:33:54.330126061 +0100
+@@ -261,10 +261,9 @@
+ 	-I$(srcdir)/../common/ \
+ 	-I$(top_srcdir)/third-party/MD5
+ 
+-AM_CXXFLAGS = -Wno-multichar -Wno-implicit -Wno-ctor-dtor-privacy \
+-	-funsigned-char -fexceptions -fno-strict-aliasing
++AM_CXXFLAGS = -xchar=unsigned
+ 
+-AM_CPPFLAGS = -Wall\
++AM_CPPFLAGS = \
+ 	-D@EXEMPI_PLATFORM_DEF@=1 -DXMP_IMPL=1 -DXMP_ClientBuild=0 \
+ 	-D_FILE_OFFSET_BITS=64 -DHAVE_EXPAT_CONFIG_H=1 -DXML_STATIC=1 \
+ 	-DDISABLE_QUICKTIME
+diff -Nru exempi-2.1.1.orig/source/common/Makefile.in exempi-2.1.1/source/common/Makefile.in
+--- exempi-2.1.1.orig/source/common/Makefile.in	2009-05-16 01:33:42.000000000 +0200
++++ exempi-2.1.1/source/common/Makefile.in	2010-01-20 21:28:47.770546778 +0100
+@@ -246,8 +246,7 @@
+ INCLUDES = -I$(top_srcdir)/public/include \
+ 	-I$(top_srcdir)/public/include/client-glue
+ 
+-AM_CXXFLAGS = -Wno-multichar -Wno-implicit -Wno-ctor-dtor-privacy \
+-	-funsigned-char -fexceptions
++AM_CXXFLAGS = -xchar=unsigned
+ 
+ AM_CPPFLAGS = \
+ 	-D@EXEMPI_PLATFORM_DEF@=1 -DXMP_IMPL=1 -DXMP_ClientBuild=0 \

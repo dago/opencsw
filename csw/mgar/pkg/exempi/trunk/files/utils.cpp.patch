@@ -1,0 +1,12 @@
+diff -Nru exempi-2.1.1.orig/exempi/tests/utils.cpp exempi-2.1.1/exempi/tests/utils.cpp
+--- exempi-2.1.1.orig/exempi/tests/utils.cpp	2009-02-17 05:10:40.000000000 +0100
++++ exempi-2.1.1/exempi/tests/utils.cpp	2010-01-20 21:24:39.303070019 +0100
+@@ -34,6 +34,8 @@
+  * OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+ 
++#include <stdlib.h>
++#include <stdio.h>
+ #include <cstdio>
+ 
+ #include <boost/test/unit_test.hpp>

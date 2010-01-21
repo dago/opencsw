@@ -1,0 +1,12 @@
+--- exempi-2.1.1.orig/m4/boost.m4	2009-02-17 05:10:40.000000000 +0100
++++ exempi-2.1.1/m4/boost.m4	2010-01-21 07:23:38.252002318 +0100
+@@ -489,6 +489,9 @@
+ BOOST_FIND_LIB([unit_test_framework], [$1],
+                [boost/test/unit_test.hpp], [BOOST_CHECK(2==2);],
+                [using boost::unit_test::test_suite; test_suite* init_unit_test_suite( int argc, char ** argv ) { return NULL;}])
++BOOST_FIND_LIB([test_exec_monitor], [$1],
++               [boost/test/test_tools.hpp], [BOOST_CHECK(1==1);],
++               [int test_main( int argc, char ** argv ) {return 0;}])
+ ])# BOOST_TEST
+ 
+ 

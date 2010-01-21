@@ -1,0 +1,9 @@
+8fded282d0b747d5be8d401f268e6c87  Makefiles.patch
+58df21dd4e8418040ef8e422b7f50fe9  RIFF_Support.cpp
+2624b4b7c56c09d1311716c28aa94424  XML_Node.cpp
+ad7b0d343edb20fdca06f7a2b66e3b46  boost.m4.patch
+432f995204aff834ac8ac6a5d6ff4a1f  configure.patch
+62ecb5a01387b9f940a5429b3df67e65  exempi-2.1.1.tar.gz
+9919b1d4e37a3b48a8d9977c433e6193  exempi.cpp.patch
+24f2cde07cbd4d999d9ec30625841158  utils.cpp.patch
+eede9560fa348ca476dc37ae2dc93271  xmp.h.patch

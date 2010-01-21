@@ -1,0 +1,15 @@
+diff -Nru exempi-2.1.1.orig/exempi/xmp.h exempi-2.1.1/exempi/xmp.h
+--- exempi-2.1.1.orig/exempi/xmp.h	2009-02-17 05:10:40.000000000 +0100
++++ exempi-2.1.1/exempi/xmp.h	2010-01-21 04:16:45.610494834 +0100
+@@ -43,8 +43,10 @@
+ /* stdbool choke on Sun (bug# 14612) */
+ #if !defined(__sun)
+ #include <stdbool.h>
+-#endif
+ #include <stdint.h>
++#else
++#include <sys/inttypes.h>
++#endif
+ 
+ #include <time.h>
+ 

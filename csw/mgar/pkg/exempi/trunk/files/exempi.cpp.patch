@@ -1,0 +1,21 @@
+diff -Nru exempi-2.1.1.orig/exempi/exempi.cpp exempi-2.1.1/exempi/exempi.cpp
+--- exempi-2.1.1.orig/exempi/exempi.cpp	2009-05-16 05:25:05.000000000 +0200
++++ exempi-2.1.1/exempi/exempi.cpp	2010-01-21 04:42:31.483045937 +0100
+@@ -587,7 +587,7 @@
+ 		SXMPMeta *txmp = (SXMPMeta *)xmp;
+ 		XMP_OptionBits optionBits;
+ 		// the long converstion is needed until XMPCore is fixed it use proper types.
+-		ret = txmp->GetProperty_Int(schema, name, property, &optionBits);
++		ret = txmp->GetProperty_Int(schema, name, (long *) property, &optionBits);
+ 		if(propsBits) {
+ 			*propsBits = optionBits;
+ 		}
+@@ -988,7 +988,7 @@
+ 	return titer->Next(reinterpret_cast<std::string*>(schema),
+ 										 reinterpret_cast<std::string*>(propName),
+ 										 reinterpret_cast<std::string*>(propValue),
+-										 options);
++										 (unsigned long *)options);
+ }
+ 
+ bool xmp_iterator_skip(XmpIteratorPtr iter, XmpIterSkipOptions options)

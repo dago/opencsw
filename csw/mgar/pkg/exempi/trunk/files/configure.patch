@@ -1,0 +1,11 @@
+diff -Nru exempi-2.1.1.orig/configure exempi-2.1.1/configure
+--- exempi-2.1.1.orig/configure	2009-05-16 01:32:11.000000000 +0200
++++ exempi-2.1.1/configure	2010-01-20 21:14:55.409183278 +0100
+@@ -16528,6 +16528,7 @@
+     "defined _MSC_VER && _MSC_VER == 1300 @ vc7" \
+     "defined __GNUC__ && __GNUC__ == 4 && __GNUC_MINOR__ == 3 && !defined __ICC @ gcc43" \
+     "defined __GNUC__ && __GNUC__ == 2 && __GNUC_MINOR__ == 95 && !defined __ICC @ gcc295" \
++		"defined __SUNPRO_CC @ sun" \
+     "defined __MWERKS__ && __MWERKS__ <= 0x32FF @ cw9" \
+     "defined _MSC_VER && _MSC_VER < 1300 && !defined UNDER_CE @ vc6" \
+     "defined _MSC_VER && _MSC_VER < 1300 && defined UNDER_CE @ evc4" \
