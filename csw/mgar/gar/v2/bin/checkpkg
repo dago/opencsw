@@ -599,11 +599,11 @@ fi
 echo
 for log_file in ${log_files}; do
 	if [[ -s "${log_file}" ]]; then
-		echo "LOG START: ${log_file}"
-		echo
+		debugmsg "LOG START: ${log_file}"
+		debugmsg
 		cat "${log_file}"
-		echo
-		echo "LOG END: ${log_file}"
+		debugmsg
+		debugmsg "LOG END: ${log_file}"
 	fi
 done
 echo
@@ -611,7 +611,7 @@ echo
 if [[ ${test_suite_ok} -ne 1 ]]; then
 	errmsg "One or more modular tests have failed."
 else
-	print "All tests were successful."
+	print "All modular tests were successful."
 fi
 
 print ""
