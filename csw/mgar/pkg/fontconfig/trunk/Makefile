@@ -13,10 +13,6 @@ endef
 MASTER_SITES = http://www.fontconfig.org/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 DISTFILES += CSWfconfig.postinstall
-DISTFILES += CSWfconfig.checkinstall
-
-PATCHFILES = fontconfig.h.diff
-PATCHFILES += fix-zerowidth-struct.patch
 
 REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
@@ -34,7 +30,5 @@ CONFIGURE_ARGS += --with-default-fonts=/usr/openwin/lib/X11/fonts
 CONFIGURE_ARGS += --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts,/opt/csw/share/fonts
 CONFIGURE_ARGS += --with-cache-dir=/var/opt/csw/cache/fontconfig
 CONFIGURE_ARGS += --with-confdir=/opt/csw/etc/fontconfig
-
-EXTRA_MERGE_EXCLUDE_FILES = .*/fonts.conf.bak
 
 include gar/category.mk

@@ -3,8 +3,8 @@
 CHROOTDIR=${BASEDIR:-/}
 
 echo 
-echo fc-cache is running now to build font information caches
-echo this may take up to several minutes on slow workstations
+echo Fontconfig needs to update its font cache.
+echo This can take up to a couple of minutes.
 echo
 
 ${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/fc-cache -f -s
@@ -15,6 +15,8 @@ ${BASEDIR}/usr/sbin/chroot ${CHROOTDIR} /opt/csw/bin/fc-list 2>&1 >/dev/null &
 find ${BASEDIR}/usr/openwin/lib/X11/fonts -user root -name fonts.cache-csw-1 -exec rm -f {} \;
 find ${BASEDIR}/usr/openwin/lib/locale -user root -name fonts.cache-csw-1 -exec rm -f {} \;
 find ${BASEDIR}/opt/csw -user root -name fonts.cache-csw-1 -exec rm -f {} \;
+# removing ancient *.cache-csw-2 files
+rm "${BASEDIR}/opt/csw/var/cache/fontconfig/*.cache-csw-2" 2>/dev/null
 # remove obsolete cache dir
 [ -d "${BASEDIR}/opt/csw/var/cache-fontconfig" ] && rm -r "${BASEDIR}/opt/csw/var/cache-fontconfig" 2>/dev/null
 
