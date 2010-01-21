@@ -310,6 +310,13 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     result = checkpkg.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
 
+  def testEmulate64BitSymlinks_4(self):
+    """No repeated paths because of symlink expansion"""
+    runpath_list = ["/opt/csw/lib"]
+    expected = "/opt/csw/lib"
+    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    self.assertEquals(1, len(result), "len(%s) != %s" % (result, 1))
+
   def testEmulateSymlinks_3(self):
     runpath_list = ["/opt/csw/bdb4"]
     expected = "/opt/csw/bdb42"
@@ -321,6 +328,22 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     expected = "/opt/csw/bdb42"
     not_expected = "/opt/csw/bdb422"
     result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    self.assertTrue(expected in result, "%s not in %s" % (expected, result))
+    self.assertFalse(not_expected in result, "%s is in %s" % (not_expected, result))
+
+  def testEmulateSymlinks_5(self):
+    """Install time symlink expansion."""
+    runpath_list = ["/opt/csw/lib/i386"]
+    expected = "/opt/csw/lib"
+    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    self.assertTrue(expected in result, "%s not in %s" % (expected, result))
+
+  def testEmulateSymlinks_6(self):
+    """ExpandSymlink for /opt/csw/lib/i386."""
+    runpath_list = ["/opt/csw/lib/i386"]
+    expected = "/opt/csw/lib"
+    not_expected = "/opt/csw/lib/i386"
+    result = checkpkg.ExpandSymlink("/opt/csw/lib/i386", "/opt/csw/lib", "/opt/csw/lib/i386")
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
     self.assertFalse(not_expected in result, "%s is in %s" % (not_expected, result))
 
@@ -441,11 +464,14 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
      binaries_by_soname,
      runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
          d6.DATA_NEEDED_SONAMES_BY_BINARY)
+    # The original data did not have amd64 in the isalist.
+    isalist = ['amd64', 'pentium_pro+mmx', 'pentium_pro', 'pentium+mmx',
+               'pentium', 'i486', 'i386', 'i86']
     result = checkpkg.GetLinesBySoname(
         pkgmap_stub,
         set([soname]),
         runpath_by_needed_soname,
-        d6.DATA_ISALIST)
+        isalist)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_8(self):
@@ -456,6 +482,24 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     self.pkgmap_mocker.ReplayAll()
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/postgresql/lib/", "/usr/lib"]}
+    isalist = ["isa-value-1", "isa-value-2"]
+    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+    self.pkgmap_mocker.VerifyAll()
+    self.assertEqual(expected, result)
+
+  def testGetLinesBySoname_9(self):
+    """Emulation of binaries installed into /opt/csw/lib/i386.
+
+    The problem is that /opt/csw/lib/i386 is a symlink and the binaries
+    end up in /opt/csw/lib instead.
+    """
+    expected = {'foo.so.0': '/opt/csw/lib/i386/foo.so.0 foo'}
+    lines1 = {"/opt/csw/lib/i386": "/opt/csw/lib/i386/foo.so.0 foo"}
+    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
+    pkgmap.GetPkgmapLineByBasename("foo.so.0").AndReturn(lines1)
+    self.pkgmap_mocker.ReplayAll()
+    needed_sonames = set(["foo.so.0"])
+    runpath_by_needed_soname = {"foo.so.0": ["/opt/csw/lib", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
     result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
     self.pkgmap_mocker.VerifyAll()

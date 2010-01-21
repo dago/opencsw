@@ -24,6 +24,11 @@ CONFIG_MTIME = "mtime"
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
                              u"*SUNWcslr", u"*SUNWlibC", u"*SUNWlibms"])
+SYSTEM_SYMLINKS = (
+    ("/opt/csw/bdb4", ["/opt/csw/bdb42"]),
+    ("/64", ["/amd64", "/sparcv9"]),
+    ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
+)
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -182,6 +187,7 @@ class SystemPkgmap(object):
       logging.debug("Connecting to the %s database.", self.db_path)
       self.conn = sqlite3.connect(self.db_path)
       if not self.IsDatabaseUpToDate():
+      	logging.warning("Rebuilding the package cache, can take a few minutes.")
         self.PurgeDatabase()
         self.PopulateDatabase()
     else:
@@ -209,6 +215,10 @@ class SystemPkgmap(object):
           );
       """)
       self.PopulateDatabase()
+
+  def SymlinkDuringInstallation(self, p):
+    """Emulates the effect of some symlinks present during installations."""
+    p = p.replace("/opt/csw/lib/i386", "/opt/csw/lib")
 
   def PopulateDatabase(self):
     """Imports data into the database.
@@ -296,10 +306,11 @@ class SystemPkgmap(object):
   def IsDatabaseUpToDate(self):
     f_mtime = self.GetFileMtime()
     d_mtime = self.GetDatabaseMtime()
-    logging.debug("f_mtime", f_mtime, "d_time", d_mtime)
+    logging.debug("f_mtime %s, d_time: %s", f_mtime, d_mtime)
     return self.GetFileMtime() <= self.GetDatabaseMtime()
 
   def PurgeDatabase(self):
+    logging.info("Purging the cache database")
     c = self.conn.cursor()
     sql = "DELETE FROM config;"
     c.execute(sql)
@@ -438,25 +449,27 @@ def ExpandRunpath(runpath, isalist):
     expanded_list = [runpath]
   return expanded_list
 
+def ExpandSymlink(symlink, target, input_path):
+  symlink_re = re.compile(r"%s(/|$)" % symlink)
+  if re.search(symlink_re, input_path):
+    result = input_path.replace(symlink, target)
+  else:
+    result = input_path
+  return result
+
 def Emulate64BitSymlinks(runpath_list):
   """Need to emulate the 64 -> amd64, 64 -> sparcv9 symlink
 
   Since we don't know the architecture, we'll adding both amd64 and sparcv9.
   It should be safe.
   """
-  symlinks = (
-      ("/opt/csw/bdb4", ["/opt/csw/bdb42"]),
-      ("/64", ["/amd64", "/sparcv9"]),
-  )
   symlinked_list = []
   for runpath in runpath_list:
-    for symlink, expansion_list in symlinks:
-      symlink_re = re.compile(r"%s(/|$)" % symlink)
-      if re.search(symlink_re, runpath):
-        for expansion in expansion_list:
-          symlinked_list.append(runpath.replace(symlink, expansion))
-      else:
-        symlinked_list.append(runpath)
+    for symlink, expansion_list in SYSTEM_SYMLINKS:
+      for target in expansion_list:
+      	expanded = ExpandSymlink(symlink, target, runpath)
+        if expanded not in symlinked_list:
+        	symlinked_list.append(expanded)
   return symlinked_list
 
 
@@ -484,6 +497,17 @@ def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
       runpath_list = ExpandRunpath(runpath, isalist)
       runpath_list = Emulate64BitSymlinks(runpath_list)
       soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
+      # Emulating the install time symlinks, for instance, if the prototype contains
+      # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
+      # the shared library ends up in /opt/csw/lib/foo.so.0 and should be findable even when
+      # RPATH does not contain $ISALIST.
+      new_soname_runpath_data = {}
+      for p in soname_runpath_data:
+      	expanded_p_list = Emulate64BitSymlinks([p])
+        for expanded_p in expanded_p_list:
+          new_soname_runpath_data[expanded_p] = soname_runpath_data[p]
+      soname_runpath_data = new_soname_runpath_data
+
       logging.debug("%s: will be looking for %s in %s" %
                     (soname, runpath_list, soname_runpath_data.keys()))
       for runpath_expanded in runpath_list:

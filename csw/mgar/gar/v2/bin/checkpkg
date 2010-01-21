@@ -556,7 +556,6 @@ done
 
 set_variables_for_individual_package_check "$f"
 
-echo "Running modular tests"
 test_suite_ok=1
 checkpkg_scriptname=`basename $0`
 checkpkg_basedir=${0%/${checkpkg_scriptname}}
@@ -571,6 +570,7 @@ fi
 debugmsg "plugindir: '$plugindir'"
 log_files=""
 if [[ -d "$plugindir" ]]; then
+  echo "Running modular tests"
 	# echo plugin dir exists
 	for plugin in "${plugindir}"/checkpkg-*; do
 		if [[ -x "${plugin}" ]]; then
