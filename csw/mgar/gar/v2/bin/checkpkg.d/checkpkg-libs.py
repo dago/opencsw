@@ -121,7 +121,7 @@ def main():
   # same bit of code with do checking and reporting.
   #
   # TODO: Rewrite this using cheetah templates
-  if needed_sonames:
+  if options.debug and needed_sonames:
     print "Analysis of sonames needed by the package set:"
     binaries_with_missing_sonames = set([])
     for soname in needed_sonames:

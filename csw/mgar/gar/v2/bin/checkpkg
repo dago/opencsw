@@ -42,6 +42,9 @@ else
 	COLOR_RESET=""
 fi
 
+readonly selfpath="$0"
+readonly selfargs="$*"
+
 # always print out a warning message. (to stderr)
 # exit script, if quit_on_warn set
 
@@ -79,6 +82,8 @@ errmsg(){
 	print ERROR: $* >/dev/fd/2
 	cleanup
 	cleanupset
+	print "To run checkpkg in the debug mode, add the '-d' flag:"
+	print "${selfpath} -d ${selfargs}"
 	exit 1
 }
 
@@ -203,8 +208,7 @@ pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
 
 case $software in
      *[A-Z]*)
-	echo ERROR: $software must be all lowercase
-	exit 1
+	errmsg "$software must be all lowercase"
 	;;
 esac
 
@@ -273,8 +277,7 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
 
 case $version in
 	*-*)
-		print ERROR: VERSION field not allowed to have '"-"' in it
-		exit 1
+		errmsg "VERSION field not allowed to have \"-\" in it"
 	;;
 	*,REV=20[01][0-9].[0-9][0-9].[0-9][0-9]*)
 		:
@@ -494,8 +497,7 @@ fi
 # sanity check against "depends on self"
 nawk '$2=="'$pkgname'" {exit 1}' $EXTRACTDIR/$pkgname/install/depend
 if [[ $? -ne 0 ]] ; then
-	print ERROR: $pkgname references self in depend file
-	exit 1
+	errmsg "$pkgname references self in depend file"
 fi
 
 # Verify that there are no multiple depends
