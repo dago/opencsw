@@ -1,5 +1,5 @@
 GARNAME = fontconfig
-GARVERSION = 2.7.3
+GARVERSION = 2.8.0
 CATEGORIES = lib
 
 DESCRIPTION = A library for configuring and customizing font access.
