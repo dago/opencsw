@@ -1,6 +1,7 @@
 f93b41b44ce6b023df65b72f00386ac5  CSWbash.prototype
 9800d8724815fd84994d9be65ab5e7b8  bash-4.1.tar.gz
-c2f23fbca9f119574b933d4f335a838d  changelog.CSW
+582dea5671b557f783e18629c2f77b68  bash41-001
+118d465095d4a4706eb1d34696a2666a  bash41-002
+0cdd3f1f6e96a3307d83317231d9b170  changelog.CSW
 60956e6be20f69dafbb06fcc83bab88e  shells
 29607316cff22f7427322d8f190cbadf  use_system_bashrc_and_logout.patch
-44859f2b196b79f037134d32c4ee79ea  vsnprintf.patch

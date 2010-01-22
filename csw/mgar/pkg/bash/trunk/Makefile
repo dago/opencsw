@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = bash
-GARVERSION = 4.1.0
+GARVERSION = 4.1.2
 CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -67,8 +67,6 @@ PATCHFILES = $(shell LEVEL=1; \
 # opencsw bash use /etc/bash.bashrc and /etc/bash.bash_logout files
 PATCHFILES += use_system_bashrc_and_logout.patch
 
-# Temporary fix for vsnprintf definition 
-PATCHFILES += vsnprintf.patch
 
 ##### Build and installation information #####
 
