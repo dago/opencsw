@@ -1,0 +1,12 @@
+diff -u -r ngspice-20.orig/src/spicelib/parser/inpptree.c ngspice-20/src/spicelib/parser/inpptree.c
+--- ngspice-20.orig/src/spicelib/parser/inpptree.c	2010-01-19 01:07:08.590249587 +0100
++++ ngspice-20/src/spicelib/parser/inpptree.c	2010-01-19 01:07:57.394826730 +0100
+@@ -10,6 +10,8 @@
+ #include "inpptree.h"
+ #include "inp.h"
+ 
++#include <strings.h>
++
+ static INPparseNode *mkcon(double value);
+ static INPparseNode *mkb(int type, INPparseNode * left,
+ 			 INPparseNode * right);
