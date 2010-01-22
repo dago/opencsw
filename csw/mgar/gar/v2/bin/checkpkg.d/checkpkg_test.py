@@ -202,7 +202,7 @@ class DependenciesUnitTest_7(unittest.TestCase):
     self.assertEquals(set([]), self.orphan_sonames)
 
   def testMissingDeps(self):
-    expected = set([u'SUNWcslx'])
+    expected = set([])
     self.assertEquals(expected, self.missing_deps)
 
 
