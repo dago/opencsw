@@ -71,6 +71,8 @@ MERGE_SCRIPTS_isa-sparcv9-extended-off = copy-relocated-only
    MERGE_SCRIPTS_isa-amd64-extended-on = copy-relocated-only
       MERGE_DIRS_isa-amd64-extended-on = $(libdir)
 
+MIGRATE_FILES = hosts.allow hosts.deny
+
 include gar/category.mk
 
 build-custom:
