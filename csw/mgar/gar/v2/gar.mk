@@ -356,9 +356,11 @@ checksum-p:
 	@$(foreach COOKIEFILE,$(CHECKSUM_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 # makesum		- Generate distinfo (only do this for your own ports!).
+GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(filter-out $(ALLFILES_DYNSCRIPTS), $(ALLFILES)))
+
 MAKESUM_TARGETS =  $(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES))
 
-makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS))
+makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS)) $(GARCHIVE_TARGETS)
 	@if test "x$(MAKESUM_TARGETS)" != "x "; then \
 		(cd $(DOWNLOADDIR) && gmd5sum $(MAKESUM_TARGETS)) > $(CHECKSUM_FILE) ; \
 		echo "Checksums made for $(MAKESUM_TARGETS)" ; \
@@ -367,8 +369,6 @@ makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS))
 
 # I am always typing this by mistake
 makesums: makesum
-
-GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(filter-out $(ALLFILES_DYNSCRIPTS), $(ALLFILES)))
 
 garchive: checksum $(GARCHIVE_TARGETS) ;
 
