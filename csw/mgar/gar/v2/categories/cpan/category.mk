@@ -88,9 +88,10 @@ test-%/Build:
 	@( cd $* ; $(TEST_ENV) ./Build test )
 	@$(MAKECOOKIE)
 
+PERLBUILD_INSTALL_ARGS ?= destdir=$(DESTDIR) $(EXTRA_PERLBUILD_INSTALL_ARGS)
 install-%/Build:
 	@echo " ==> Running Build install in $*"
-	@( cd $* ; $(INSTALL_ENV) ./Build install destdir=$(DESTDIR) )
+	( cd $* ; $(INSTALL_ENV) ./Build install $(PERLBUILD_INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
 # Check for a CPAN module version update
