@@ -1,5 +1,5 @@
 GARNAME = pureftpd
-GARVERSION = 1.0.22
+GARVERSION = 1.0.27
 CATEGORIES = net
 SRCNAME = pure-ftpd
 
