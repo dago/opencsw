@@ -1,3 +1,4 @@
-4acf8817dc68474af49acd8a73353559  download/patch-bombardment.in
-e71b9d49cf017469f779448b32102468  download/patch-configure
-a5592e42d4217572d8035dec000f479c  download/siege-2.66.tar.gz
+8921c3aa03b87a4c02ac977bee5f415e  patch-auth.c
+4acf8817dc68474af49acd8a73353559  patch-bombardment.in
+a48a4fb226a52894fdf59d0e0f67cf06  patch-configure
+77190ad255dfa14232137d03fd0d994b  siege-2.69.tar.gz

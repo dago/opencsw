@@ -1,5 +1,5 @@
 GARNAME = siege
-GARVERSION = 2.66
+GARVERSION = 2.69
 CATEGORIES = xtra
 
 DESCRIPTION = A http regression testing and benchmarking utility
@@ -26,6 +26,7 @@ PRESERVECONF = $(sysconfdir)/urls.txt.CSW
 # patch bombardment
 PATCHFILES  = patch-bombardment.in
 PATCHFILES += patch-configure
+PATCHFILES += patch-auth.c
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
@@ -36,6 +37,10 @@ SKIPTEST = 1
 INSTALL_SCRIPTS = bin man additional
 
 include gar/category.mk
+
+pre-configure-modulated:
+	gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
+		$(WORKSRC)/configure
 
 x-post-configure-modulated:
 	find $(WORKSRC) -name Makefile | xargs grep -l '^CFLAGS' \
