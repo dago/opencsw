@@ -1,4 +1,4 @@
-bash (4.1.02,REV=2010.01.07) unstable
+bash (4.1.02,REV=2010.01.23) unstable
 
   * Added bash patches bash41-001 and bash41-002.
   * Removed patch vsnprintf.patch applied upstream.
