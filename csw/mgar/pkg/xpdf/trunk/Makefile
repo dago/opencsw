@@ -1,7 +1,7 @@
 GARNAME = xpdf
 GARVERSION = 3.02
 CATEGORIES = utils
-RELEASE = rev=p3
+RELEASE = rev=p4
 
 DESCRIPTION = Open source viewer for Portable Document Format (PDF) files
 define BLURB
@@ -34,6 +34,7 @@ CONFIGURE_ARGS += --with-freetype2-includes=$(includedir)/freetype2
 PATCHFILES  = xpdf-3.02pl1.patch
 PATCHFILES += xpdf-3.02pl2.patch
 PATCHFILES += xpdf-3.02pl3.patch
+PATCHFILES += xpdf-3.02pl4.patch
 PATCHFILES += patch-GString.cc
 PATCHFILES += patch-XPDFCore.cc
 
