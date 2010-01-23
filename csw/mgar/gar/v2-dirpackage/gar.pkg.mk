@@ -693,7 +693,7 @@ validateplatform:
 # We depend on extract as the additional package files (like .gspec) must be
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
-ENABLE_CHECK ?= 1
+_package: ENABLE_CHECK ?= 1
 _package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
 	@$(MAKECOOKIE)
 
@@ -704,6 +704,18 @@ package: _package
 	@$(MAKE) -s PLATFORM=$(PLATFORM) _pkgshow
 	@echo
 	@$(DONADA)
+
+dirpackage: _DIRPACKAGE=1
+dirpackage: ENABLE_CHECK=
+dirpackage: _package
+	@echo "The following packages have been built:"
+	@echo
+	@$(MAKE) -s PLATFORM=$(PLATFORM) _dirpkgshow
+	@echo
+	@$(DONADA)
+
+_dirpkgshow:
+	@$(foreach SPEC,$(_PKG_SPECS),echo "  $(SPKG_SPOOLDIR)/$(SPEC)";)
 
 _pkgshow:
 	@$(foreach SPEC,$(_PKG_SPECS),printf "  %-20s %s\n"  $(SPEC) $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz;)
@@ -720,7 +732,7 @@ package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depen
 						 --pkgbase  $(SPKG_PKGBASE) \
 						 --pkgroot  $(SPKG_PKGROOT) \
 						-v WORKDIR_FIRSTMOD=../build-$(firstword $(MODULATIONS)) \
-						 --compress \
+						 $(if $(_DIRPACKAGE),--notransfer --nocompress,--compress) \
 						 $(MKPACKAGE_ARGS) ) || exit 2
 	@$(MAKECOOKIE)
 
@@ -753,6 +765,8 @@ pkgreset-%:
 	$(_DBG)rm -rf $(addprefix $(WORKDIR)/,$(filter-out $(DISTFILES),$(patsubst $(WORKDIR)/%,%,$(wildcard $(WORKDIR)/$*.*)) prototype copyright $*.copyright))
 
 repackage: pkgreset package
+
+redirpackage: pkgreset dirpackage
 
 # This rule automatically logs into every host where a package for this software should
 # be built. It is especially suited for automated build bots.
