@@ -1,3 +1,9 @@
+# known build facts
+#
+# no linkage against
+# - ldap
+# - mysql 
+# - pgsql
 GARNAME = pureftpd
 GARVERSION = 1.0.27
 CATEGORIES = net
@@ -40,6 +46,9 @@ EXTRA_CFLAGS = -D_XOPEN_SOURCE=1 -D_XOPEN_SOURCE_EXTENDED=1
 # No test suite available
 TEST_SCRIPTS =
 
+sysconfdir = /etc/opt/csw
+SAMPLECONF = $(sysconfdir)/$(SRCNAME)/*.conf
+
 include gar/category.mk
 
 # make sure, the linker uses libcrypt before libssl
@@ -57,7 +66,19 @@ post-build-modulated:
 # create config directory
 pre-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/$(SRCNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(SRCNAME)
 	ginstall -d $(DESTDIR)/var/opt/csw/run
 	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpd.h
 	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/ftpwho-update.h
 	perl -pi -e 's@/var/run@/var/opt/csw/run@' ${WORKSRC}/src/upload-pipe.h
+	@$(MAKECOOKIE)
+
+conf-list  = $(WORKSRC)/pureftpd-ldap.conf
+conf-list += $(WORKSRC)/pureftpd-mysql.conf
+conf-list += $(WORKSRC)/pureftpd-pgsql.conf
+post-install-modulated:
+	( for file in $(conf-list) ; do \
+		ginstall -m 644 $$file $(DESTDIR)$(sysconfdir)/$(SRCNAME) ; \
+		done )
+	ginstall -m 644 $(WORKSRC)/pureftpd.schema $(DESTDIR)$(docdir)/$(SRCNAME)
+	@$(MAKECOOKIE)
