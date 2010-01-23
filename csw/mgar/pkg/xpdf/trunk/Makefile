@@ -1,7 +1,7 @@
 GARNAME = xpdf
 GARVERSION = 3.02
 CATEGORIES = utils
-RELEASE = rev=p4
+RELEASE = p4
 
 DESCRIPTION = Open source viewer for Portable Document Format (PDF) files
 define BLURB
@@ -42,7 +42,7 @@ PATCHFILES += patch-XPDFCore.cc
 TEST_SCRIPTS =
 
 include gar/category.mk
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
+SPKG_VERSION := $(SPKG_VERSION)$(RELEASE)
 
 pre-build-modulated:
 	@cp files/xpdfrc ${WORKSRC}/doc/sample-xpdfrc
