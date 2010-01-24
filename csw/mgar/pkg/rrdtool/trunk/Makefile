@@ -1,5 +1,5 @@
 GARNAME = rrdtool
-GARVERSION = 1.3.8
+GARVERSION = 1.4.2
 CATEGORIES = utils
 
 DESCRIPTION = time-series data logging and graphing.
@@ -36,13 +36,18 @@ EXTRA_LIB = $(prefix)/X11/lib
 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+CONFIGURE_ARS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-python
 CONFIGURE_ARGS += --enable-ruby
 CONFIGURE_ARGS += --disable-libintl
 CONFIGURE_ARGS += --enable-perl
 CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
