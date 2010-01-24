@@ -27,10 +27,12 @@ CATALOGNAME = fontconfig
 
 SPKG_SOURCEURL = http://www.fontconfig.org/
 
+MIGRATE_FILES = fontconfig
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-fonts=/usr/openwin/lib/X11/fonts
 CONFIGURE_ARGS += --with-add-fonts=/usr/openwin/lib/locale,/usr/share/fonts,/opt/csw/share/fonts
 CONFIGURE_ARGS += --with-cache-dir=/var/opt/csw/cache/fontconfig
-CONFIGURE_ARGS += --with-confdir=/opt/csw/etc/fontconfig
+CONFIGURE_ARGS += --with-confdir=/etc/opt/csw/fontconfig
 
 include gar/category.mk
