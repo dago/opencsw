@@ -15,8 +15,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).final.tgz
 DISTNAME = $(GARNAME)-$(GARVERSION).final
 
 SPKG_SOURCEURL = http://www.scala-lang.org/
-SPKG_CLASSES = none cswpreserveconf
-REQUIRED_PKGS = CSWcswclassutils
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -28,10 +26,7 @@ CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-PROTOTYPE_FILTER  = awk '\
-    $$$$3 ~ /meta\/[^/]+.CSW$$$$/ { $$$$2 = "cswpreserveconf" } \
-    $$$$3 ~ /config\/[^/]+.CSW$$$$/ { $$$$2 = "cswpreserveconf" } \
-     { print }'
+PRESERVECONF = .*/meta/[^/]+ .*/config/[^/]+
 
 include gar/category.mk
 
