@@ -1,3 +1,4 @@
+#!/opt/csw/bin/python2.6
 # $Id$
 
 import unittest
