@@ -26,6 +26,10 @@ REQUIRED_PKGS = CSWbzip2
 # since there is no configure script, this is intentionally left empty
 CONFIGURE_SCRIPTS =
 
+# build 64bit binary
+BUILD64 = 1
+NO_ISAEXEC = 1
+
 # no build tests
 SKIPTEST = 1
 
