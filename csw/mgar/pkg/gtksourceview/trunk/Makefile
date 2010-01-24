@@ -37,12 +37,7 @@ SPKG_SOURCEURL = http://live.gnome.org/GtkSourceView
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-#This is ugly, should be EXTRA_LINKER_FLAGS, but due to libtool it doesn't work
-EXTRA_LD_FLAGS_isa-i386    = -L/usr/openwin/lib -lXext
-EXTRA_LD_FLAGS_isa-sparcv8 = -L/usr/openwin/lib -lXext
-EXTRA_LD_FLAGS_isa-amd64   = -L/usr/openwin/lib/amd64 -lXext
-EXTRA_LD_FLAGS_isa-sparcv9 = -L/usr/openwin/lib/sparcv9 -lXext
-EXTRA_LD_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 #NO_ISAEXEC = 1
 #NOISALIST = 1
@@ -55,6 +50,8 @@ PKGFILES_CSWgtksourceviewdoc = $(sharedstatedir)/gtk-doc/.*
 ARCHALL_CSWgtksourceviewdoc = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 # Test fails due to:
 # Xlib:  extension "Generic Event Extension" missing on display ":0.0".
