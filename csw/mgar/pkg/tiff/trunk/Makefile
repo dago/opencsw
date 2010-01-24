@@ -10,19 +10,23 @@ MASTER_SITES =  http://download.osgeo.org/libtiff/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTNAME  = $(GARNAME)-$(GARVERSION)
 
-PACKAGES = CSWtiff CSWtiffdevel CSWtiffdoc
+PACKAGES = CSWtiff CSWtiffrt CSWtiffdevel CSWtiffdoc
 CATALOGNAME_CSWtiff = tiff
+CATALOGNAME_CSWtiffrt = tiffrt
 CATALOGNAME_CSWtiffdevel = tiff_devel
 CATALOGNAME_CSWtiffdoc = tiff_doc
 
-SPKG_DESC_CSWtiff += Library for writing single instance application
-SPKG_DESC_CSWtiffdevel += Library for writing single instance application - developer package
-SPKG_DESC_CSWtiffdoc += Library for writing single instance application - documentation
+SPKG_DESC_CSWtiff += lib and tools for Tag Image File Format
+SPKG_DESC_CSWtiffrt += lib and tools for Tag Image File Format - runtime package
+SPKG_DESC_CSWtiffdevel += lib and tools for Tag Image File Format - developer package
+SPKG_DESC_CSWtiffdoc += lib and tools for Tag Image File Format - documentation
 
-REQUIRED_PKGS_CSWtiff += CSWjbigkit CSWjpeg CSWzlib
-REQUIRED_PKGS_CSWtiffdevel += CSWtiff
-REQUIRED_PKGS_CSWtiffdoc += CSWtiff
+REQUIRED_PKGS_CSWtiff += CSWtiffrtCSWjbigkit CSWjpeg CSWzlib
+REQUIRED_PKGS_CSWtiffrt += CSWjbigkit CSWjpeg CSWzlib
+REQUIRED_PKGS_CSWtiffdevel += CSWtiffrt
+REQUIRED_PKGS_CSWtiffdoc += 
 
+PKGFILES_CSWtiffrt = $(PKGFILES_RT)
 PKGFILES_CSWtiffdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWtiffdoc = $(sharedstatedir)/doc/.*
 
@@ -31,6 +35,12 @@ ARCHALL_CSWtiffdoc = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.remotesensing.org/libtiff/
+
+# Patches from upstream (found via src.opensolaris.org), not applied for now
+#PATCHFILES += libtiff-mantypo.patch
+#PATCHFILES += libtiff-scanlinesize.patch
+#PATCHFILES += libtiff-jpeg-scanline.patch
+#PATCHFILES += libtiff-CVE-2009-2347.patch
 
 BUILD64 = 1
 
