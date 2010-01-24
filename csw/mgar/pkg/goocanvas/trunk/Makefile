@@ -33,11 +33,7 @@ SPKG_SOURCEURL = http://live.gnome.org/GooCanvas
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_LINKER_FLAGS_isa-i386    = /usr/openwin/lib/libXext.so
-EXTRA_LINKER_FLAGS_isa-sparcv8 = /usr/openwin/lib/libXext.so
-EXTRA_LINKER_FLAGS_isa-amd64   = /usr/openwin/lib/amd64/libXext.so
-EXTRA_LINKER_FLAGS_isa-sparcv9 = /usr/openwin/lib/sparcv9/libXext.so
-EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(MODULATION))
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 #NO_ISAEXEC = 1
 #NOISALIST = 1
@@ -54,6 +50,8 @@ export LIBS
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
