@@ -1,5 +1,5 @@
 GARNAME = p7zip
-GARVERSION = 4.65
+GARVERSION = 9.04
 CATEGORIES = utils
 
 DESCRIPTION = File archiver with high compression ratio
