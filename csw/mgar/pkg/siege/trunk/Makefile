@@ -21,7 +21,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 REQUIRED_PKGS = CSWosslrt
 
 # handle config file
-PRESERVECONF = $(sysconfdir)/urls.txt.CSW
+PRESERVECONF = $(sysconfdir)/urls.txt
 
 # patch bombardment
 PATCHFILES  = patch-bombardment.in
@@ -41,10 +41,12 @@ include gar/category.mk
 pre-configure-modulated:
 	gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
 		$(WORKSRC)/configure
+	@$(MAKECOOKIE)
 
 x-post-configure-modulated:
 	find $(WORKSRC) -name Makefile | xargs grep -l '^CFLAGS' \
 		| xargs perl -pi -e 's@CFLAGS =@CFLAGS = $(CFLAGS)@'
+	@$(MAKECOOKIE)
 
 # install is broken..
 bin-list  = $(WORKSRC)/src/siege
@@ -59,11 +61,13 @@ install-bin:
 	@( for file in $(bin-list) ; do \
 		ginstall -m 751 $$file $(DESTDIR)$(bindir) ; \
 			done )
+	@$(MAKECOOKIE)
 
 install-additional:
 	ginstall -d $(DESTDIR)$(sysconfdir)
 	ginstall -m 644 $(WORKSRC)/doc/urls.txt \
-		$(DESTDIR)$(sysconfdir)/urls.txt.CSW
+		$(DESTDIR)$(sysconfdir)/urls.txt
+	@$(MAKECOOKIE)
 
 install-man:
 	ginstall -d $(DESTDIR)$(mandir)/man1
