@@ -9,11 +9,17 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+PACKAGES = CSWgs
+CATALOGNAME_CSWgs = ghostscript
+SPKG_DESC_CSWgs = Ghostscript, a PostScript and PDF interpreter for previewing, conversion and printing
+
+REQUIRED_PKGS_CSWgs += CSWfconfig CSWjpeg CSWlibcairo CSWgsfonts
+REQUIRED_PKGS_CSWgs += CSWftype2 CSWggettextrt CSWglib2 CSWgnutls CSWgtk2
+REQUIRED_PKGS_CSWgs += CSWkrb5lib CSWlibatk CSWlibcups CSWpango CSWperl CSWzlib
+# Pending release of libpaper
+#REQUIRED_PKGS_CSWgs += CSWlibpaper
+
 SPKG_SOURCEURL = http://www.ghostscript.com
-
-LICENSE = COPYING
-
-REQUIRED_PKGS += 
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=
 UPSTREAM_USE_SF = 1
@@ -22,21 +28,40 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 #PATCHFILES += 0001-Support-libjpeg7.patch
 PATCHFILES += 0002-Rearrange-compiler-flags.patch
 PATCHFILES += 0003-Change-gcc-flags-to-sun.patch
+PATCHFILES += 0004-PLATFORM-is-used-by-GAR.patch
+PATCHFILES += 0005-Fix-pathes-according-to-old-package.patch
+PATCHFILES += 0006-Fix-dynamic-link-flag.patch
 
-#BUILD64 = 1
+# Not until libcupsimage.so libcups.so libkrb5.so libk5crypto.so
+# libcom_err.so libkrb5support.so are 64-bit
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+# We want to be linked with Xrender from $(prefix)/X11/lib not
+# $(prefix)/lib since the latter is linked to /usr/openwin/lib/libX11.so.4
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic
+CONFIGURE_ARGS += --enable-cups
+CONFIGURE_ARGS += --with-fontpath=$(datadir)/ghostscript/fonts
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
 
+# This fails due to ghostscript using PLATFORM for internal use which gets set
+# by GAR
+#TEST_TARGET = check
+TEST_TARGET = 
+
 include gar/category.mk
 
+BUILD_ARGS = std so
+INSTALL_ARGS = install install-so
+
+# Use CSW build packages instead of bundled stuff
 pre-configure-$(MODULATION):
-	@(echo "~~~ Removing bundled jpeglib ~~~")
+	@(echo "~~~ Removing bundled stuff ~~~")
 	@rm -rf $(WORKSRC)/jpeg
+	@rm -rf $(WORKSRC)/jbig2dec
 #	@rm -rf $(WORKSRC)/jasper
