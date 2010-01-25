@@ -1,6 +1,9 @@
+# readme for chroot pkg?
+# owner/group for device files? (root:sys)
+
 GARNAME = bind
 GARVERSION = 9.6.1
-RELEASE = P2
+RELEASE = P3
 DISTVERSION = $(GARVERSION)-$(RELEASE)
 SPKG_VERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
@@ -44,7 +47,6 @@ REQUIRED_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 REQUIRED_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 REQUIRED_PKGS_CSWbindchroot = CSWbind
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
