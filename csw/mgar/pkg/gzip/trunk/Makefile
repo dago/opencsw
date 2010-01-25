@@ -18,11 +18,9 @@ PATCHFILES = 0001-Force-ggrep-as-Solaris-grep-doesn-t-understand-the-f.patch
 # For one possible approach to this, please see:
 #   http://www.samba.org/netfilter/diary/gzip.rsync.patch
 #
-# An updated version is available at
-#   http://ozlabs.org/~rusty/gzip.rsync.patch2
-#
-# Unfortunately both don't apply cleanly. Disable for now.
-# PATCHFILES += gzip.rsync.patch2
+# Update patch from
+#  http://cvs.fedoraproject.org/viewvc/rpms/gzip/F-12/gzip-1.3.9-rsync.patch?revision=1.2&content-type=text%2Fplain&view=co
+PATCHFILES += gzip-1.3.9-rsync.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
