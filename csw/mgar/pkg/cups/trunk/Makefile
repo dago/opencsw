@@ -72,28 +72,34 @@ UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 
 PACKAGES  = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
-PACKAGES += CSWcupsclient-ln
+PACKAGES += CSWcupslinks
 
-INCOMPATIBLE_PKGS_CSWcupsclient-ln = SUNWpcr SUNWpcu
-CATALOGNAME_CSWcupsclient-ln = cupsclient_ln
-ARCHALL_CSWcupsclient-ln = 1
+INCOMPATIBLE_PKGS_CSWcupslinks = SUNWpcr SUNWpcu
+CATALOGNAME_CSWcupslinks = cups_links
+ARCHALL_CSWcupslinks = 1
 
 ARCHALL_CSWcupsdoc = 1
 ARCHALL_CSWcupsdev = 1
 
 REQUIRED_PKGS_CSWcups  = CSWcupsd CSWcupsclient
-REQUIRED_PKGS_CSWcupsd  = CSWlibcups CSWoldaprt CSWzlib
-REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
-REQUIRED_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
-REQUIRED_PKGS_CSWcupsd += CSWkrb5lib CSWosslrt CSWcupsdoc
-REQUIRED_PKGS_CSWcupsd += CSWdbusglib CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWcupsclient  = CSWlibcups CSWoldaprt CSWzlib
-REQUIRED_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
+REQUIRED_PKGS_CSWcupsd += CSWgnutls
+REQUIRED_PKGS_CSWcupsd += CSWkrb5lib
+REQUIRED_PKGS_CSWcupsd += CSWlibcups
+REQUIRED_PKGS_CSWcupsd += CSWlibdbus
+REQUIRED_PKGS_CSWcupsd += CSWoldaprt
+REQUIRED_PKGS_CSWcupsd += CSWzlib
+
+REQUIRED_PKGS_CSWcupsclient  = CSWgnutls
+REQUIRED_PKGS_CSWcupsclient += CSWlibcups
+REQUIRED_PKGS_CSWcupsclient += CSWzlib
 REQUIRED_PKGS_CSWcupsdoc = 
-REQUIRED_PKGS_CSWcupsdev = 
-REQUIRED_PKGS_CSWlibcups  = CSWjpeg CSWpng CSWtiff CSWzlib
-REQUIRED_PKGS_CSWlibcups += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1 CSWosslrt
-REQUIRED_PKGS_CSWcupsclient-ln = CSWcupsclient
+REQUIRED_PKGS_CSWcupsdev = CSWcupsd
+REQUIRED_PKGS_CSWlibcups += CSWgnutls
+REQUIRED_PKGS_CSWlibcups += CSWjpeg
+REQUIRED_PKGS_CSWlibcups += CSWpng
+REQUIRED_PKGS_CSWlibcups += CSWtiff
+REQUIRED_PKGS_CSWlibcups += CSWzlib
+REQUIRED_PKGS_CSWcupslinks = CSWcupsclient
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
 
@@ -150,8 +156,8 @@ PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
 PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
 PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
 PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
-PKGFILES_CSWcupsclient-ln  = /usr/sbin/.*
-PKGFILES_CSWcupsclient-ln += /usr/bin/.*
+PKGFILES_CSWcupslinks  = /usr/sbin/.*
+PKGFILES_CSWcupslinks += /usr/bin/.*
 
 SPKG_DESC_CSWcups = Common Unix Printing System
 SPKG_DESC_CSWlibcups = CUPS libraries
@@ -159,7 +165,7 @@ SPKG_DESC_CSWcupsd = CUPS daemon
 SPKG_DESC_CSWcupsclient = CUPS client binaries
 SPKG_DESC_CSWcupsdoc = CUPS documentation
 SPKG_DESC_CSWcupsdev = CUPS header files
-SPKG_DESC_CSWcupsclient-ln = Drop-in replacement for SUNWpcu and SUNWpcr
+SPKG_DESC_CSWcupslinks = Drop-in replacement for SUNWpcu and SUNWpcr
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF  = $(sysconfdir)/cups/cupsd\.conf\.CSW
@@ -208,7 +214,7 @@ export OPTIM
 
 include gar/category.mk
 
-post-install:
+post-install-modulated:
 	(cd $(DESTDIR)$(sysconfdir)/cups; \
 	echo "Making .CSW configs in $(DESTDIR)$(sysconfdir)/cups"; \
 	for i in cupsd.conf; do \
@@ -228,5 +234,8 @@ post-install:
 	ginstall -d -m 755 $(DESTDIR)/usr/sbin
 	for f in accept lpadmin lpc lpinfo lpmove reject; do \
 		ln -s ../../opt/csw/sbin/$$f $(DESTDIR)/usr/sbin/$$f; \
+	done
+	for f in $(DESTDIR)$(libdir)/cups/backend/*; do \
+		chmod 0700 $${f}; \
 	done
 	@$(MAKECOOKIE)
