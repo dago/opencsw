@@ -32,13 +32,21 @@ UFILES_REGEX = ImageMagick-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 
 #CPPFLAGS += -I/usr/openwin/include -I/usr/openwin/include/X11
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-perl=$(bindir)/perl
-CONFIGURE_ARGS += --enable-shared --disable-static
-CONFIGURE_ARGS += --with-dps=yes --with-gslib=yes
-CONFIGURE_ARGS += --x-includes=/opt/csw/X11/include
-CONFIGURE_ARGS += --x-libraries=/opt/csw/X11/lib 
-CONFIGURE_ARGS += --disable-openmp
+CONFIGURE_ARGS_COMMON  = $(DIRPATHS)
+CONFIGURE_ARGS_COMMON += --with-perl=$(bindir)/perl
+CONFIGURE_ARGS_COMMON += --enable-shared --disable-static
+CONFIGURE_ARGS_COMMON += --with-dps=yes --with-gslib=yes
+CONFIGURE_ARGS_COMMON += --x-includes=/opt/csw/X11/include
+CONFIGURE_ARGS_COMMON += --x-libraries=/opt/csw/X11/lib 
+CONFIGURE_ARGS_COMMON += --disable-openmp
+CONFIGURE_ARGS_isa-amd64 += --without-gvc
+CONFIGURE_ARGS_isa-amd64 += --without-rsvg
+CONFIGURE_ARGS_isa-amd64 += --without-perl
+CONFIGURE_ARGS_isa-sparcv9 += --without-gvc
+CONFIGURE_ARGS_isa-sparcv9 += --without-rsvg
+CONFIGURE_ARGS_isa-sparcv9 += --without-perl
+
+CONFIGURE_ARGS ?= $(CONFIGURE_ARGS_COMMON) $(foreach M,$(MODULATIONS),$(CONFIGURE_ARGS_$M))
 
 PATCHFILES += Makefile.patch
 # Temporary patch until upstream make a more permenent fix
@@ -48,13 +56,17 @@ PATCHFILES += Makefile.patch
 #TEST_TARGET = check
 TEST_TARGET = 
 
+BUILD64 = 1
+
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_LD_OPTIONS = -L./magick/.libs 
+#EXTRA_LDFLAGS = -L./magick/.libs 
+#EXTRA_LD_OPTIONS = -L./magick/.libs 
 # We want to be link with Xrender from $(prefix)/X11/lib not $(prefix)/lib
 # since the latter is linked to /usr/openwin/lib/libX11.so.4
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_FLAGS  = -L./magick/.libs
+EXTRA_SOS_LD_FLAGS +=-L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
@@ -73,7 +85,7 @@ post-install-isa-sparcv8:
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4 ] ; then ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10 ; fi )
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4 ] ; then ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10 ; fi )
 	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
-	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/lib_6.2.9_s.tar.gz |tar xf -)
+	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(CURDIR)/$(FILEDIR)/lib_6.2.9_s.tar.gz |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
 	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
 	@$(MAKECOOKIE)
@@ -86,7 +98,7 @@ post-install-isa-i386:
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4 ] ; then ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10 ; fi )
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4 ] ; then ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10 ; fi )
 	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
-	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(DESTDIR)/../../$(FILEDIR)/lib_6.2.9_i.tar.gz |tar xf -)
+	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(CURDIR)/$(FILEDIR)/lib_6.2.9_i.tar.gz |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
 	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
 	@$(MAKECOOKIE)
