@@ -11,9 +11,9 @@ define BLURB
 endef
 
 #MASTER_SITES = http://apache.jumper.nu/spamassassin/source/
-MASTER_SITES = http://people.apache.org/~wtogami/devel/3.3.0-rc3.unofficial/
-#DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
-DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc3.tar.gz
+MASTER_SITES = http://people.apache.org/~jm/devel/
+DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
+#DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc3.tar.gz
 DISTFILES += COPYING
 
 REQUIRED_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha
@@ -40,18 +40,24 @@ include gar/category.mk
 WORKSRC = $(WORKDIR)/$(SPKG_NAME)-$(GARVERSION)
 SPKG_SOURCEURL = http://spamassassin.apache.org/
 
+ifeq ($(shell uname -p), sparc)
+  SEDCFLAGS = -xarch=v8
+else
+  SEDCFLAGS = 
+endif
+
 configure-custom:
 	@echo " ==> Configuring $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/opt/csw/etc/spamassassin LOCALSTATEDIR=/var/opt/csw/spamassassin CONTACT_ADDRESS=postmaster )
 	@$(MAKECOOKIE)
 
-#pre-build-modulated:
-#	@echo " ==> Pre-build $(GARNAME) (custom)"
-#	@( cd $(WORKSRC)/spamc ; \
-#	   sed 's/CFLAGS = /CFLAGS = -xarch=v8 /' Makefile.in > Makefile.tmp ; \
-#	   cp Makefile.tmp Makefile.in )
-#	@$(MAKECOOKIE)
+pre-build-modulated:
+	@echo " ==> Pre-build $(GARNAME) (custom)"
+	@( cd $(WORKSRC)/spamc ; \
+	   sed 's/CFLAGS = /CFLAGS = $(SEDCFLAGS) /' Makefile.in > Makefile.tmp ; \
+	   cp Makefile.tmp Makefile.in )
+	@$(MAKECOOKIE)
 
 build-custom:
 	@echo " ==> Building $(GARNAME) (custom)"
