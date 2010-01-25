@@ -1,9 +1,14 @@
 #!/opt/csw/bin/python2.6
 # $Id$
 
+"""This is a dummy check. You can use it as a boilerplate for your own checks.
+
+Copy it and modify.
+"""
+
 import checkpkg
-import os.path
 import logging
+import os.path
 
 def main():
   options, args = checkpkg.GetOptions()
