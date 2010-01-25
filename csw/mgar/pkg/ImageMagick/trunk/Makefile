@@ -1,6 +1,6 @@
 GARNAME = imagemagick
-GARVERSION = 6.5.8
-GARSUBREV = 10
+GARVERSION = 6.5.9
+GARSUBREV = 0
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -30,8 +30,6 @@ REQUIRED_PKGS += CSWlibx11 CSWlibxt
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = ImageMagick-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 
-#CPPFLAGS += -I/usr/openwin/include -I/usr/openwin/include/X11
-
 CONFIGURE_ARGS_COMMON  = $(DIRPATHS)
 CONFIGURE_ARGS_COMMON += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS_COMMON += --enable-shared --disable-static
@@ -39,6 +37,7 @@ CONFIGURE_ARGS_COMMON += --with-dps=yes --with-gslib=yes
 CONFIGURE_ARGS_COMMON += --x-includes=/opt/csw/X11/include
 CONFIGURE_ARGS_COMMON += --x-libraries=/opt/csw/X11/lib 
 CONFIGURE_ARGS_COMMON += --disable-openmp
+CONFIGURE_ARGS_COMMON += --disable-silent-rules
 CONFIGURE_ARGS_isa-amd64 += --without-gvc
 CONFIGURE_ARGS_isa-amd64 += --without-rsvg
 CONFIGURE_ARGS_isa-amd64 += --without-perl
