@@ -18,32 +18,33 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARSUBREV).tar.gz
 #DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARSUBREV).tar.gz
 
-PACKAGES = CSWlcms CSWlcmsdevel
+PACKAGES = CSWlcms CSWlcmsrt CSWlcmsdevel
 CATALOGNAME_CSWlcms = lcms
+CATALOGNAME_CSWlcmsrt = lcms_rt
 CATALOGNAME_CSWlcmsdevel = lcms_devel
 
 SPKG_DESC_CSWlcms += The little color management system and tools
+SPKG_DESC_CSWlcmsrt += The little color management system and tools - runtime package
 SPKG_DESC_CSWlcmsdevel += The little color management system and tools - developer package
 
-REQUIRED_PKGS_CSWlcms += CSWjpeg CSWtiff CSWzlib
+REQUIRED_PKGS_CSWlcms += CSWlcmsrt CSWjpeg CSWtiff CSWzlib
+REQUIRED_PKGS_CSWlcmsrt += 
 REQUIRED_PKGS_CSWlcmsdevel += CSWlcms
 
+PKGFILES_CSWlcmsrt = $(PKGFILES_RT)
 PKGFILES_CSWlcmsdevel = $(PKGFILES_DEVEL)
 
 SPKG_SOURCEURL = http://www.littlecms.com
 
 LICENSE = COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=26279
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-static=no
+CONFIGURE_ARGS += --with-python
 
 BUILD64 = 1
 
@@ -51,4 +52,3 @@ TEST_TARGET = check
 
 include gar/category.mk
 
-#SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
