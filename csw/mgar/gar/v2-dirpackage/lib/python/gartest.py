@@ -1,4 +1,7 @@
 # $Id$
+#
+# Style guide:
+# http://code.google.com/p/soc/wiki/PythonStyleGuide
 
 import Cheetah.Template
 import shutil
@@ -7,6 +10,7 @@ import unittest
 import os
 import os.path
 import subprocess
+import sys
 import opencsw
 
 """A module used to do end-to-end testing of GAR."""
@@ -17,7 +21,7 @@ $varname = $garvars[$varname]
 #end for
 #if $blurb
 define BLURB
-  blurb
+  $blurb
 endef
 #end if
 include gar/category.mk
@@ -34,6 +38,7 @@ TMPDIR_PREFIX = "gartest-"
 # FIXME: This information should be pulled out from GAR
 DIR_PKG_OUT_DIR = os.path.join(os.environ["HOME"], "spool.5.8-sparc")
 
+
 class Error(Exception):
   pass
 
@@ -47,13 +52,15 @@ class GarBuild(object):
 
   def GetDebugHelp(self):
     """To be overriden in subclasses."""
-    return ""
+    return ("When subclassing GarBuild, add here "
+            "information about how to reproduce\n"
+            "the build problem.")
 
   def Build(self):
     if self.built:
       return 0
     args = ["gmake", "dirpackage"]
-    gar_proc = subprocess.Popen(args, cwd=self.tmpdir,
+    gar_proc = subprocess.Popen(args, cwd=self.build_dir,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
     stdout, stderr = gar_proc.communicate()
@@ -63,7 +70,7 @@ class GarBuild(object):
       print stdout
       print stderr
       self.built = False
-      # To allow debugging
+      # To allow debugging, don't clean up, leaving the files for inspection.
       self.cleanup = False
       print self.GetDebugHelp()
     else:
@@ -74,7 +81,7 @@ class GarBuild(object):
     if not self.built:
       raise Error("The packages have not been built yet.")
     args = ["gmake", "pkglist"]
-    gar_proc = subprocess.Popen(args, cwd=self.tmpdir, stdout=subprocess.PIPE)
+    gar_proc = subprocess.Popen(args, cwd=self.build_dir, stdout=subprocess.PIPE)
     stdout, stderr = gar_proc.communicate()
     ret = gar_proc.wait()
     pkglist = []
@@ -101,9 +108,9 @@ class DynamicGarBuild(GarBuild):
   """
   def __init__(self):
     super(DynamicGarBuild, self).__init__()
-    self.tmpdir = tempfile.mkdtemp(prefix=TMPDIR_PREFIX)
-    self.filedir = os.path.join(self.tmpdir, "files")
-    self.makefile_filename = os.path.join(self.tmpdir, "Makefile")
+    self.build_dir = tempfile.mkdtemp(prefix=TMPDIR_PREFIX)
+    self.filedir = os.path.join(self.build_dir, "files")
+    self.makefile_filename = os.path.join(self.build_dir, "Makefile")
     os.mkdir(self.filedir)
     self.install_files = []
     self.garvars = {
@@ -124,19 +131,18 @@ class DynamicGarBuild(GarBuild):
         "garsrc": os.path.join(os.getcwd(), ".."),
         "blurb": None,
         "install_files": self.install_files,
-        "tmpdir": self.tmpdir,
+        "build_dir": self.build_dir,
         "test_id": "$Id$",
     }
-    os.symlink(self.tmpldata["garsrc"], os.path.join(self.tmpdir, "gar"))
+    os.symlink(self.tmpldata["garsrc"], os.path.join(self.build_dir, "gar"))
 
   def SetGarVariable(self, varname, value):
     self.garvars[varname] = value
 
   def WriteGarFiles(self):
-    # print "The tmpdir is", self.tmpdir
     for filedir_name, directory, filename, content in self.install_files:
       file_path = os.path.join(self.filedir, filedir_name)
-      print "Writing to %s" % file_path
+      # print "Writing to %s" % file_path
       fp = open(file_path, "w")
       fp.write(content)
       fp.close()
@@ -144,7 +150,7 @@ class DynamicGarBuild(GarBuild):
     t = Cheetah.Template.Template(MAKEFILE_TMPL, searchlist)
     # For easy debugging, but only until we find a better solution, because it
     # clutters the screen.
-    print t
+    # print t
     fp = open(self.makefile_filename, "w")
     fp.write(str(t))
     fp.close()
@@ -159,11 +165,11 @@ class DynamicGarBuild(GarBuild):
   def GetDebugHelp(self):
     return ("Please look into %s.\n"
             "Remember to remove it when you're done debugging."
-            % repr(self.tmpdir))
+            % repr(self.build_dir))
 
   def __del__(self):
     if self.cleanup:
-      shutil.rmtree(self.tmpdir)
+      shutil.rmtree(self.build_dir)
 
 
 class StaticGarBuild(GarBuild):
@@ -171,6 +177,9 @@ class StaticGarBuild(GarBuild):
   def __init__(self, build_dir):
     super(StaticGarBuild, self).__init__()
     self.build_dir = build_dir
-    self.tmpdir = build_dir
+
+  def __del__(self):
+    if self.cleanup:
+    	shutil.rmtree(os.path.join(self.build_dir, "work"))
 
 # vim:set ts=2 sts=2 sw=2 expandtab:
