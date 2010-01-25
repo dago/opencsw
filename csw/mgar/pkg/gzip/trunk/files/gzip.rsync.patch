@@ -1,0 +1,252 @@
+diff -ur gzip-1.2.4.debian/deflate.c gzip-1.2.4-working/deflate.c
+--- gzip-1.2.4.debian/deflate.c	Fri Aug 13 22:35:31 1993
++++ gzip-1.2.4-working/deflate.c	Wed Oct 18 18:03:04 2000
+@@ -121,6 +121,14 @@
+ #endif
+ /* Matches of length 3 are discarded if their distance exceeds TOO_FAR */
+ 
++#ifndef RSYNC_WIN
++#  define RSYNC_WIN 8192
++#endif
++/* Size of rsync window, must be < MAX_DIST */
++
++#define RSYNC_SUM_MATCH(sum) (((sum) & (RSYNC_WIN - 1)) == 0)
++/* Whether window sum matches magic value */
++
+ /* ===========================================================================
+  * Local data used by the "longest match" routines.
+  */
+@@ -202,6 +210,8 @@
+ unsigned near good_match;
+ /* Use a faster search when the previous match is longer than this */
+ 
++local ulg rsync_sum;  /* rolling sum of rsync window */
++local ulg rsync_chunk_end; /* next rsync sequence point */
+ 
+ /* Values for max_lazy_match, good_match and max_chain_length, depending on
+  * the desired pack level (0..9). The values given below have been tuned to
+@@ -300,6 +310,10 @@
+ #endif
+     /* prev will be initialized on the fly */
+ 
++    /* rsync params */
++    rsync_chunk_end = 0xFFFFFFFFUL;
++    rsync_sum = 0;
++
+     /* Set the default configuration parameters:
+      */
+     max_lazy_match   = configuration_table[pack_level].max_lazy;
+@@ -317,6 +331,7 @@
+ 
+     strstart = 0;
+     block_start = 0L;
++    rsync_chunk_end = 0xFFFFFFFFUL;
+ #ifdef ASMV
+     match_init(); /* initialize the asm code */
+ #endif
+@@ -536,6 +551,8 @@
+         memcpy((char*)window, (char*)window+WSIZE, (unsigned)WSIZE);
+         match_start -= WSIZE;
+         strstart    -= WSIZE; /* we now have strstart >= MAX_DIST: */
++	if (rsync_chunk_end != 0xFFFFFFFFUL)
++	    rsync_chunk_end -= WSIZE;
+ 
+         block_start -= (long) WSIZE;
+ 
+@@ -563,6 +580,39 @@
+     }
+ }
+ 
++local void rsync_roll(start, num)
++    unsigned start;
++    unsigned num;
++{
++    unsigned i;
++
++    if (start < RSYNC_WIN) {
++	/* before window fills. */
++	for (i = start; i < RSYNC_WIN; i++) {
++	    if (i == start + num) return;
++	    rsync_sum += (ulg)window[i];
++	}
++	num -= (RSYNC_WIN - start);
++	start = RSYNC_WIN;
++    }
++
++    /* buffer after window full */
++    for (i = start; i < start+num; i++) {
++	/* New character in */
++	rsync_sum += (ulg)window[i];
++	/* Old character out */
++	rsync_sum -= (ulg)window[i - RSYNC_WIN];
++	if (rsync_chunk_end == 0xFFFFFFFFUL && RSYNC_SUM_MATCH(rsync_sum))
++	    rsync_chunk_end = i;
++    }
++}
++
++/* ===========================================================================
++ * Set rsync_chunk_end if window sum matches magic value.
++ */
++#define RSYNC_ROLL(s, n) \
++   do { if (rsync) rsync_roll((s), (n)); } while(0)
++
+ /* ===========================================================================
+  * Flush the current block, with given end-of-file flag.
+  * IN assertion: strstart is set to the end of the current match.
+@@ -609,6 +659,7 @@
+ 
+             lookahead -= match_length;
+ 
++	    RSYNC_ROLL(strstart, match_length);
+ 	    /* Insert new strings in the hash table only if the match length
+              * is not too large. This saves time but degrades compression.
+              */
+@@ -637,9 +688,18 @@
+             /* No match, output a literal byte */
+             Tracevv((stderr,"%c",window[strstart]));
+             flush = ct_tally (0, window[strstart]);
++	    RSYNC_ROLL(strstart, 1);
+             lookahead--;
+ 	    strstart++; 
+         }
++	if (rsync && strstart > rsync_chunk_end) {
++	    ush  attr = 0;          /* ascii/binary flag */
++
++	    flush = 1;
++	    /* Reset huffman tree */
++	    ct_init(&attr, &method);
++	    rsync_chunk_end = 0xFFFFFFFFUL;
++	}
+         if (flush) FLUSH_BLOCK(0), block_start = strstart;
+ 
+         /* Make sure that we always have enough lookahead, except
+@@ -715,6 +775,7 @@
+              */
+             lookahead -= prev_length-1;
+             prev_length -= 2;
++	    RSYNC_ROLL(strstart, prev_length+1);
+             do {
+                 strstart++;
+                 INSERT_STRING(strstart, hash_head);
+@@ -727,24 +788,51 @@
+             match_available = 0;
+             match_length = MIN_MATCH-1;
+             strstart++;
+-            if (flush) FLUSH_BLOCK(0), block_start = strstart;
+ 
++	    if (rsync && strstart > rsync_chunk_end) {
++		ush  attr = 0;          /* ascii/binary flag */
++
++		/* Reset huffman tree */
++		ct_init(&attr, &method);
++		rsync_chunk_end = 0xFFFFFFFFUL;
++		flush = 1;
++	    }
++            if (flush) FLUSH_BLOCK(0), block_start = strstart;
+         } else if (match_available) {
+             /* If there was no match at the previous position, output a
+              * single literal. If there was a match but the current match
+              * is longer, truncate the previous match to a single literal.
+              */
+             Tracevv((stderr,"%c",window[strstart-1]));
+-            if (ct_tally (0, window[strstart-1])) {
+-                FLUSH_BLOCK(0), block_start = strstart;
+-            }
++	    flush = ct_tally (0, window[strstart-1]);
++	    if (rsync && strstart > rsync_chunk_end) {
++		ush  attr = 0;          /* ascii/binary flag */
++
++		/* Reset huffman tree */
++		ct_init(&attr, &method);
++		rsync_chunk_end = 0xFFFFFFFFUL;
++
++		flush = 1;
++	    }
++            if (flush) FLUSH_BLOCK(0), block_start = strstart;
++	    RSYNC_ROLL(strstart, 1);
+             strstart++;
+             lookahead--;
+         } else {
+             /* There is no previous match to compare with, wait for
+              * the next step to decide.
+              */
++	    if (rsync && strstart > rsync_chunk_end) {
++		ush  attr = 0;          /* ascii/binary flag */
++
++		/* Reset huffman tree */
++		ct_init(&attr, &method);
++		rsync_chunk_end = 0xFFFFFFFFUL;
++
++		FLUSH_BLOCK(0), block_start = strstart;
++	    }
+             match_available = 1;
++	    RSYNC_ROLL(strstart, 1);
+             strstart++;
+             lookahead--;
+         }
+diff -ur gzip-1.2.4.debian/gzip.c gzip-1.2.4-working/gzip.c
+--- gzip-1.2.4.debian/gzip.c	Wed Oct 18 16:05:08 2000
++++ gzip-1.2.4-working/gzip.c	Wed Oct 18 15:42:59 2000
+@@ -239,6 +239,7 @@
+ unsigned insize;           /* valid bytes in inbuf */
+ unsigned inptr;            /* index of next byte to be processed in inbuf */
+ unsigned outcnt;           /* bytes in output buffer */
++int rsync = 0;             /* make ryncable chunks */
+ 
+ struct option longopts[] =
+ {
+@@ -268,6 +269,7 @@
+     {"best",       0, 0, '9'}, /* compress better */
+     {"lzw",        0, 0, 'Z'}, /* make output compatible with old compress */
+     {"bits",       1, 0, 'b'}, /* max number of bits per code (implies -Z) */
++    {"rsyncable",  0, 0, 'R'}, /* make rsync-friendly archive */
+     { 0, 0, 0, 0 }
+ };
+ 
+@@ -357,6 +359,7 @@
+  " -Z --lzw         produce output compatible with old compress",
+  " -b --bits maxbits   max number of bits per code (implies -Z)",
+ #endif
++ "    --rsyncable   Make rsync-friendly archive",
+  " file...          files to (de)compress. If none given, use standard input.",
+   0};
+     char **p = help_msg;
+@@ -516,6 +519,9 @@
+ #else
+ 	    recursive = 1; break;
+ #endif
++	case 'R':
++	    rsync = 1; break;
++
+ 	case 'S':
+ #ifdef NO_MULTIPLE_DOTS
+             if (*optarg == '.') optarg++;
+diff -ur gzip-1.2.4.debian/gzip.h gzip-1.2.4-working/gzip.h
+--- gzip-1.2.4.debian/gzip.h	Wed Oct 18 16:05:08 2000
++++ gzip-1.2.4-working/gzip.h	Wed Oct 18 17:57:48 2000
+@@ -131,6 +131,7 @@
+ extern unsigned insize; /* valid bytes in inbuf */
+ extern unsigned inptr;  /* index of next byte to be processed in inbuf */
+ extern unsigned outcnt; /* bytes in output buffer */
++extern int rsync;  /* deflate into rsyncable chunks */
+ 
+ extern long bytes_in;   /* number of input bytes */
+ extern long bytes_out;  /* number of output bytes */
+diff -ur gzip-1.2.4.debian/gzip.texi gzip-1.2.4-working/gzip.texi
+--- gzip-1.2.4.debian/gzip.texi	Thu Aug 19 06:42:50 1993
++++ gzip-1.2.4-working/gzip.texi	Wed Oct 18 16:58:05 2000
+@@ -316,6 +316,14 @@
+ into the directory and compress all the files it finds there (or
+ decompress them in the case of @code{gunzip}).
+ 
++@item --rsyncable
++While compressing, synchronize the output occasionally based on the
++input.  This can reduce the compression slightly in some cases, but
++means that the @code{rsync} program can take advantage of similarities
++in the uncompressed input when syncronizing two files compressed with
++this flag.  @code{gunzip} cannot tell the difference between a
++compressed file created with this option, and one created without it.
++
+ @item --suffix @var{suf}
+ @itemx -S @var{suf}
+ Use suffix @samp{@var{suf}} instead of @samp{.gz}. Any suffix can be
