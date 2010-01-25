@@ -26,14 +26,36 @@ SPKG_SOURCEURL = http://librsvg.sourceforge.net
 
 LICENSE = COPYING.LIB
 
-REQUIRED_PKGS += CSWbzip2 CSWfconfig CSWftype2 CSWggettextrt
-REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWiconv CSWlibatk
-REQUIRED_PKGS += CSWlibcairo CSWlibcroco CSWlibgsf CSWlibx11
-REQUIRED_PKGS += CSWlibxml2 CSWlibxml2devel CSWpango CSWpng CSWzlib
-REQUIRED_PKGS += CSWbonobo2 CSWgconf2 CSWgnomevfs2 CSWlibxrender CSWorbit2
+PACKAGES = CSWlibrsvg CSWlibrsvgdevel CSWlibrsvgdoc CSWlibrsvgmozilla
+
+CATALOGNAME_CSWlibrsvg = librsvg
+CATALOGNAME_CSWlibrsvgdevel = librsvg_devel
+CATALOGNAME_CSWlibrsvgdoc = librsvg_doc
+CATALOGNAME_CSWlibrsvgmozilla = librsvg_mozilla
+
+SPKG_DESC_CSWlibrsvg += Scalable Vector Graphics library
+SPKG_DESC_CSWlibrsvgdevel += Scalable Vector Graphics library - developer package
+SPKG_DESC_CSWlibrsvgdoc += Scalable Vector Graphics library - documentation
+SPKG_DESC_CSWlibrsvgmozilla += Scalable Vector Graphics library - Mozilla plugin
+
+REQUIRED_PKGS_CSWlibrsvg += CSWfconfig CSWftype2 CSWggettextrt
+REQUIRED_PKGS_CSWlibrsvg += CSWglib2 CSWgtk2 CSWlibatk
+REQUIRED_PKGS_CSWlibrsvg += CSWlibcairo CSWlibcroco CSWlibgsf CSWlibx11
+REQUIRED_PKGS_CSWlibrsvg += CSWlibxml2 CSWpango CSWpng CSWzlib CSWorbit2
+REQUIRED_PKGS_CSWlibrsvg += CSWbonobo2 CSWgconf2 CSWgnomevfs2 CSWlibxrender 
+REQUIRED_PKGS_CSWlibrsvgdevel += CSWlibrsvg
+REQUIRED_PKGS_CSWlibrsvgdoc +=
+REQUIRED_PKGS_CSWlibrsvgmozilla += CSWggettextrt CSWglib2
+
+PKGFILES_CSWlibrsvgdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibrsvgmozilla = $(libdir)/mozilla/.*
+PKGFILES_CSWlibrsvgdoc = $(sharedstatedir)/gtk-doc/.*
+
+ARCHALL_CSWlibrsvgdoc = 1
 
 # Only if building mozilla plugin
-#PREREQUISITE_PKGS += CSWmozilla
+PREREQUISITE_PKGS += CSWmozilla
+PREREQUISITE_PKGS += CSWlibxml2devel
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
