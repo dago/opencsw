@@ -28,11 +28,13 @@ LICENSE = COPYING.LIB
 
 REQUIRED_PKGS += CSWbzip2 CSWfconfig CSWftype2 CSWggettextrt
 REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWiconv CSWlibatk
-REQUIRED_PKGS += CSWlibcairo CSWlibcroco CSWlibgsf
+REQUIRED_PKGS += CSWlibcairo CSWlibcroco CSWlibgsf CSWlibx11
 REQUIRED_PKGS += CSWlibxml2 CSWlibxml2devel CSWpango CSWpng CSWzlib
 REQUIRED_PKGS += CSWbonobo2 CSWgconf2 CSWgnomevfs2 CSWlibxrender CSWorbit2
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# Only if building mozilla plugin
+#PREREQUISITE_PKGS += CSWmozilla
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Upstream develops on gcc only 
@@ -40,8 +42,8 @@ PATCHFILES = pdiff.patch
 PATCHFILES += perceptualdiff.patch
 # Upstream have missed adding some required libs
 PATCHFILES += test_makefiles.patch
-# gtkdoc-rebase doesn't exist
-PATCHFILES += doc_makefile.patch
+# gtkdoc-rebase doesn't exist (now it does)
+#PATCHFILES += doc_makefile.patch
 
 LIBS=-lm
 EXTRA_COMMON_EXPORTS = LIBS
