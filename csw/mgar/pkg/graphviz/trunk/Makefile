@@ -1,5 +1,5 @@
 GARNAME = graphviz
-GARVERSION = 2.24.0
+GARVERSION = 2.26.3
 CATEGORIES = utils
 
 DESCRIPTION = Graph visualization tools 
@@ -14,7 +14,7 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 # disable dependency checks because plugins depend on libs from base package
 ENABLE_CHECK = 0
 
-PATCHFILES = no_svg_in_libcairo.diff
+PATCHFILES =  Draw.c.diff
 
 PACKAGES = CSWgraphviz \
 	CSWgraphvizdevel \
@@ -36,7 +36,10 @@ PACKAGES = CSWgraphviz \
 #	CSWgraphvizruby \
 #
 
-INCOMPATIBLE_PKGS = CSWgraphvis CSWgraphviz2
+INCOMPATIBLE_PKGS = CSWgraphvis
+
+# defer for some time to allow CSWgraphviz2 upgrades
+# INCOMPATIBLE_PKGS = CSWgraphviz2
 
 ARCHALL_CSWgraphvizdoc = 1
 ARCHALL_CSWgraphvizgraphs = 1
@@ -48,7 +51,7 @@ PREREQUISITE_PKGS =
 
 REQUIRED_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender \
 	CSWgs CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWiconv \
-	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm
+	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm CSWlibrsvg
 REQUIRED_PKGS_CSWgraphvizdevel =
 REQUIRED_PKGS_CSWgraphvizdoc = 
 REQUIRED_PKGS_CSWgraphvizgraphs = 
@@ -61,7 +64,7 @@ REQUIRED_PKGS_CSWgraphvizlua = CSWlua
 REQUIRED_PKGS_CSWgraphvizocaml = CSWocaml
 REQUIRED_PKGS_CSWgraphvizperl = CSWperl
 REQUIRED_PKGS_CSWgraphvizphp = CSWphp5
-REQUIRED_PKGS_CSWgraphvizpython = CSWpython-rt
+REQUIRED_PKGS_CSWgraphvizpython = CSWpython
 REQUIRED_PKGS_CSWgraphvizr = CSWr
 REQUIRED_PKGS_CSWgraphvizruby = CSWruby
 REQUIRED_PKGS_CSWgraphviztcl = CSWtcl CSWtk
@@ -116,6 +119,7 @@ PKGFILES_CSWgraphviz += $(sharedstatedir)/graphviz/lefty/.*
 PKGFILES_CSWgraphviz += $(mandir)/man1/.*\.1
 PKGFILES_CSWgraphviz += $(mandir)/man7/.*\.7
 
+PKGFILES_CSWgraphvizdevel = $(libdir)/.*\.so
 PKGFILES_CSWgraphvizdevel = $(libdir)/pkgconfig/.*\.pc
 PKGFILES_CSWgraphvizdevel += $(includedir)/.*\.h
 PKGFILES_CSWgraphvizdevel += $(mandir)/man3/.*\.3
@@ -187,12 +191,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-sfdp
+CONFIGURE_ARGS += --without-smyrna
 CONFIGURE_ARGS += --with-gtk
 CONFIGURE_ARGS += --with-gdk-pixbuf
 CONFIGURE_ARGS += --with-ghostscript
 CONFIGURE_ARGS += --with-lasi
 CONFIGURE_ARGS += --without-ipsepcola
-CONFIGURE_ARGS += --without-rsvg
+CONFIGURE_ARGS += --with-rsvg
 CONFIGURE_ARGS += --disable-ruby
 CONFIGURE_ARGS += --disable-devil
 CONFIGURE_ARGS += --disable-java
