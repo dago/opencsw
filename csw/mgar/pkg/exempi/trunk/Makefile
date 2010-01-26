@@ -33,6 +33,8 @@ PREREQUISITE_PKGS += CSWboostrt CSWboostdevel
 
 PKGFILES_CSWexempidevel = $(PKGFILES_DEVEL)
 
+SPKG_SOURCEURL = http://libopenraw.freedesktop.org/wiki/Exempi
+
 PATCHFILES += Makefiles.patch
 PATCHFILES += RIFF_Support.cpp
 PATCHFILES += XML_Node.cpp
@@ -45,7 +47,8 @@ PATCHFILES += boost.m4.patch
 EXTRA_CXXFLAGS = -D__EXTENSIONS__ -library=stlport4
 # Ugly, but need to owerwrite this since autoconf system doesn't work
 EXTRA_CXXFLAGS += -DHAVE_NATIVE_TLS=0
-EXTRA_LINKER_FLAGS = -liconv
+# Autoconf doesn't find iconv, the rest is found but not runpath
+EXTRA_LINKER_FLAGS = -liconv -lexpat -lz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-boost=/opt/csw
