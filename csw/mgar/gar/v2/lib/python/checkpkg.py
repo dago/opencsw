@@ -42,28 +42,28 @@ DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.rb", u"CSWruby"),
 )
 
-REPORT_TMPL = u"""$pkgname:
+REPORT_TMPL = u"""# $pkgname:
 #if $missing_deps
-SUGGESTION: you may want to add some or all of the following as depends:
-   (Feel free to ignore SUNW or SPRO packages)
+# SUGGESTION: you may want to add some or all of the following as depends:
+#    (Feel free to ignore SUNW or SPRO packages)
 #for $pkg in $sorted($missing_deps)
-> $pkg
+REQUIRED_PKGS_$pkgname += $pkg
 #end for
 #end if
 #if $surplus_deps
-The following packages might be unnecessary dependencies:
+# The following dependencies might be unnecessary:
 #for $pkg in $sorted($surplus_deps)
-? $pkg
+# ? $pkg
 #end for
 #end if
 #if $orphan_sonames
-The following sonames don't belong to any package:
+# The following required sonames would not be found at runtime:
 #for $soname in $sorted($orphan_sonames)
-! $soname
+# ! $soname
 #end for
 #end if
 #if not $missing_deps and not $surplus_deps and not $orphan_sonames
-+ Dependencies of $pkgname look good.
+# + Dependencies of $pkgname look good.
 #end if
 """
 
