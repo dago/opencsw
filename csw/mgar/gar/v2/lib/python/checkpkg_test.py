@@ -558,16 +558,16 @@ class FormatDepsReportUnitTest(unittest.TestCase):
     orphan_sonames = set([u'libm.so.2'])
     testdata = (missing_deps, surplus_deps, orphan_sonames)
     checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
-    expected = u"""CSWfoo:
-SUGGESTION: you may want to add some or all of the following as depends:
-   (Feel free to ignore SUNW or SPRO packages)
-> *SUNWlxsl
-> SUNWgss
-The following packages might be unnecessary dependencies:
-? CSWlibxslt
-? CSWsudo
-The following sonames don't belong to any package:
-! libm.so.2
+    expected = u"""# CSWfoo:
+# SUGGESTION: you may want to add some or all of the following as depends:
+#    (Feel free to ignore SUNW or SPRO packages)
+REQUIRED_PKGS_CSWfoo += *SUNWlxsl
+REQUIRED_PKGS_CSWfoo += SUNWgss
+# The following dependencies might be unnecessary:
+# ? CSWlibxslt
+# ? CSWsudo
+# The following required sonames would not be found at runtime:
+# ! libm.so.2
 """
     result = checker.FormatDepsReport(*testdata)
     self.AssertTextEqual(result, expected)
@@ -578,8 +578,8 @@ The following sonames don't belong to any package:
     orphan_sonames = set([])
     testdata = (missing_deps, surplus_deps, orphan_sonames)
     checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
-    expected = u"""CSWfoo:
-+ Dependencies of CSWfoo look good.
+    expected = u"""# CSWfoo:
+# + Dependencies of CSWfoo look good.
 """
     result = checker.FormatDepsReport(*testdata)
     self.AssertTextEqual(result, expected)

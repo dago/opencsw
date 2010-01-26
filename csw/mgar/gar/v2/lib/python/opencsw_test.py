@@ -46,7 +46,9 @@ PKG_CAS_PASSRELATIVE= none
 class ParsePackageFileNameTest(unittest.TestCase):
 
   def testParsePackageFileName1(self):
-    test_data = open("example-catalog.txt")
+    # FIXME: it doesn't find the file if the pwd is not the same as the
+    # location of this file.
+    test_data = open("testdata/example-catalog.txt")
     split_re = re.compile(r"\s+")
     for line in test_data:
       fields = re.split(split_re, line)
