@@ -14,6 +14,7 @@ import sqlite3
 import subprocess
 import StringIO
 from Cheetah import Template
+import opencsw
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
@@ -63,6 +64,18 @@ The following sonames don't belong to any package:
 #end if
 #if not $missing_deps and not $surplus_deps and not $orphan_sonames
 + Dependencies of $pkgname look good.
+#end if
+"""
+
+ERROR_REPORT_TMPL = u"""#if $errors
+ERROR: One or more errors have been found by $name.
+#for $error in $errors
+$repr($error)
+#end for
+#else
+#if $debug
+OK: $name found no problems.
+#end if
 #end if
 """
 
@@ -141,18 +154,8 @@ class CheckpkgBase(object):
       file_basenames.extend(files)
     return file_basenames
 
-  def GetDependencies(self):
-    fd = open(os.path.join(self.pkgpath, "install", "depend"), "r")
-    depends = {}
-    for line in fd:
-      fields = re.split(WS_RE, line)
-      if fields[0] == "P":
-        depends[fields[1]] = " ".join(fields[1:])
-    fd.close()
-    return depends
-
   def FormatDepsReport(self, missing_deps, surplus_deps, orphan_sonames):
-    """A intermediate version in which StringIO is used."""
+    """To be removed."""
     namespace = {
         "pkgname": self.pkgname,
         "missing_deps": missing_deps,
@@ -567,3 +570,48 @@ def ParseDumpOutput(dump_output):
   binary_data[RUNPATH].append("/lib/$ISALIST")
   binary_data[RUNPATH].append("/lib")
   return binary_data
+
+
+class CheckpkgManager(object):
+  """Takes care of calling checking functions"""
+
+  def __init__(self, name, extractdir, pkgname_list, debug=False):
+    self.debug = debug
+    self.name = name
+    self.extractdir = extractdir
+    self.pkgname_list = pkgname_list
+    self.errors = []
+    self.individual_checks = []
+    self.set_checks = []
+    self.packages = []
+
+  def RegisterIndividualCheck(self, function):
+    self.individual_checks.append(function)
+
+  def RegisterSetCheck(self, function):
+    self.set_checks.append(function)
+
+  def Run(self):
+    """Runs all the checks
+
+    Returns a tuple of an exit code and a report.
+    """
+    packages = []
+    errors = []
+    for pkgname in self.pkgname_list:
+    	pkg_path = os.path.join(self.extractdir, pkgname)
+    	packages.append(opencsw.DirectoryFormatPackage(pkg_path))
+    for pkg in packages:
+      for function in self.individual_checks:
+      	errors.extend(function(pkg))
+    # Set checks
+    for function in self.set_checks:
+    	errors.extend(function(packages))
+    namespace = {
+        "name": self.name,
+        "errors": errors,
+        "debug": self.debug,
+    }
+    t = Template.Template(ERROR_REPORT_TMPL, searchList=[namespace])
+    exit_code = bool(errors)
+    return (exit_code, unicode(t))

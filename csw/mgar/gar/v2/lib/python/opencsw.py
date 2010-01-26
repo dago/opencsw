@@ -35,6 +35,8 @@ NO_VERSION_CHANGE = "no version change"
 REVISION_ADDED = "revision number added"
 PKG_URL_TMPL = "http://www.opencsw.org/packages/%s"
 CATALOG_URL = "http://mirror.opencsw.org/opencsw/current/i386/5.10/catalog"
+WS_RE = re.compile(r"\s+")
+
 ADMIN_FILE_CONTENT = """
 basedir=default
 runlevel=nocheck
@@ -52,6 +54,7 @@ networkretries=5
 keystore=/var/sadm/security
 proxy=
 """
+
 EMAIL_TMPL = """From: %(from)s
 To: %(to)s
 Cc: %(cc)s
@@ -615,6 +618,17 @@ class DirectoryFormatPackage(ShellMixin, object):
     description = pkginfo_dict["DESC"]
     pkginfo_name = "%s - %s" % (catalog_name, description)
     self.SetPkginfoEntry("NAME", pkginfo_name)
+
+  def GetDependencies(self):
+    fd = open(os.path.join(self.directory, "install", "depend"), "r")
+    depends = {}
+    for line in fd:
+      fields = re.split(WS_RE, line)
+      if fields[0] == "P":
+        depends[fields[1]] = " ".join(fields[1:])
+    fd.close()
+    return depends
+
 
 class Pkgmap(object):
 

@@ -24,6 +24,7 @@ path_list = [os.getcwd(),
              "..", "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
+import opencsw
 
 DUMP_BIN = "/usr/ccs/bin/dump"
 
@@ -164,7 +165,8 @@ def main():
   dependent_pkgs = {}
   for checker in checkers:
     pkgname = checker.pkgname
-    declared_dependencies = checker.GetDependencies()
+    dir_format_pkg = opencsw.DirectoryFormatPackage(checker.pkgpath)
+    declared_dependencies = dir_format_pkg.GetDependencies()
     if options.debug:
       sanitized_pkgname = pkgname.replace("-", "_")
       data_file_name = "/var/tmp/checkpkg_test_data_%s.py" % sanitized_pkgname

@@ -18,16 +18,51 @@ path_list = [os.getcwd(),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 
+# Defining checking functions.
+
+def CheckIndividualPackage(pkg):
+  """Checks an individual package.
+  
+  Gets a DirctoryFormatPackage as an argument, and returns a list of errors.
+
+  Errors should be a list of checkpkg.PackageError objects:
+
+  errors.append(checkpkg.PackageError("There's something wrong."))
+  """
+  errors = []
+  # Checking code for an individual package goes here.
+  return errors
+
+
+def CheckAsetOfPackages(pkgs):
+  """Checks a set of packages.
+
+  Sometimes individual checks aren't enough. If you need to write code which
+  needs to examine multiple packages at the same time, use this function.
+
+  Gets a list of packages.
+  """
+  errors = []
+  # Checking code goes here.
+  return errors
+
+
 def main():
   options, args = checkpkg.GetOptions()
-  if not os.path.isdir(options.extractdir):
-  	raise checkpkg.PackageError("The extract base directory doesn't exist: %s" % options.extractdir)
-  for pkgname in args:
-    pkgpath = os.path.join(options.extractdir, pkgname)
-    if not os.path.isdir(pkgpath):
-      raise checkpkg.PackageError("The package directory doesn't exist: %s" % pkgpath)
-    logging.debug("Dummy plugin says the package %s is extracted to %s",
-                  pkgname, options.extractdir)
+  pkgnames = args
+  # CheckpkgManager class abstracts away things such as the collection of
+  # results.
+  check_manager = checkpkg.CheckpkgManager("a template of a checkpkg module",
+                                           options.extractdir,
+                                           pkgnames,
+                                           options.debug)
+  # Registering previously defined checks.
+  check_manager.RegisterIndividualCheck(CheckIndividualPackage)
+  check_manager.RegisterSetCheck(CheckAsetOfPackages)
+  # Running the checks, reporting and exiting.
+  exit_code, report = check_manager.Run()
+  print report.strip()
+  sys.exit(exit_code)
 
 
 if __name__ == '__main__':

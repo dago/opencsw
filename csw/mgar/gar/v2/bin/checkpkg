@@ -599,11 +599,11 @@ fi
 echo
 for log_file in ${log_files}; do
 	if [[ -s "${log_file}" ]]; then
-		debugmsg "LOG START: ${log_file}"
-		debugmsg
+		debugmsg ">> LOG START: ${log_file}"
 		cat "${log_file}"
-		debugmsg
-		debugmsg "LOG END: ${log_file}"
+		debugmsg "<< LOG END: ${log_file}"
+  else
+  	debugmsg "-- LOG ${log_file} is empty"
 	fi
 done
 echo
