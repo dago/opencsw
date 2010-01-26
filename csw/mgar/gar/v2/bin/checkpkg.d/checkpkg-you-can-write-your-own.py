@@ -12,8 +12,7 @@ import sys
 
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
-path_list = [os.getcwd(),
-             os.path.split(sys.argv[0])[0],
+path_list = [os.path.dirname(__file__),
              "..", "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg

@@ -2,8 +2,9 @@
 # $Id$
 
 import opencsw
-import unittest
+import os.path
 import re
+import unittest
 
 CATALOG_DATA_1 = """amavisd_new 2.6.3,REV=2009.04.23 CSWamavisdnew amavisd_new-2.6.3,REV=2009.04.23-SunOS5.8-all-CSW.pkg.gz 831f063d1ba20eb8bea0e0e60ceef3cb 813802 CSWperl|CSWcswclassutils|CSWpmunixsyslog|CSWpmiostringy|CSWpmnetserver|CSWpmmailtools|CSWpmmimetools|CSWpmcompresszlib|CSWpmarchivetar|CSWpmarchivezip|CSWspamassassin|CSWpmberkeleydb|CSWpmconverttnef|CSWpmconvertuulib|CSWpmmaildkim|CSWcommon none
 amsn 0.94 CSWamsn amsn-0.94-SunOS5.8-all-CSW.pkg.gz 99afd828dd38fb39a37cb8ffd448b098 2420919 CSWtcl|CSWtk|CSWtcltls none
@@ -46,9 +47,7 @@ PKG_CAS_PASSRELATIVE= none
 class ParsePackageFileNameTest(unittest.TestCase):
 
   def testParsePackageFileName1(self):
-    # FIXME: it doesn't find the file if the pwd is not the same as the
-    # location of this file.
-    test_data = open("testdata/example-catalog.txt")
+    test_data = open(os.path.join(os.path.split(__file__)[0], "testdata/example-catalog.txt"))
     split_re = re.compile(r"\s+")
     for line in test_data:
       fields = re.split(split_re, line)
