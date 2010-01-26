@@ -8,7 +8,6 @@
 # unit tests and it appears to be working.  The main problem is that it's not
 # divided into smaller testable sections.
 
-import checkpkg
 import os
 import os.path
 import copy
@@ -17,6 +16,14 @@ import subprocess
 import logging
 import sys
 import textwrap
+
+# The following bit of code sets the correct path to Python libraries
+# distributed with GAR.
+path_list = [os.getcwd(),
+             os.path.split(sys.argv[0])[0],
+             "..", "..", "lib", "python"]
+sys.path.append(os.path.join(*path_list))
+import checkpkg
 
 DUMP_BIN = "/usr/ccs/bin/dump"
 

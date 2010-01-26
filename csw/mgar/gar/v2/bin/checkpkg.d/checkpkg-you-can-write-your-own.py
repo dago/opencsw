@@ -6,9 +6,17 @@
 Copy it and modify.
 """
 
-import checkpkg
 import logging
 import os.path
+import sys
+
+# The following bit of code sets the correct path to Python libraries
+# distributed with GAR.
+path_list = [os.getcwd(),
+             os.path.split(sys.argv[0])[0],
+             "..", "..", "lib", "python"]
+sys.path.append(os.path.join(*path_list))
+import checkpkg
 
 def main():
   options, args = checkpkg.GetOptions()
@@ -23,4 +31,4 @@ def main():
 
 
 if __name__ == '__main__':
-	main()
+  main()

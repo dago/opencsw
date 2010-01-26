@@ -5,9 +5,18 @@
 # This file only creates an instance of SystemPkgmap in order to update the
 # package cache (if necessary), and display the information about the update.
 
-import checkpkg
+import os
+import os.path
+import sys
 import logging
 
+# The following bit of code sets the correct path to Python libraries
+# distributed with GAR.
+path_list = [os.getcwd(),
+             os.path.split(sys.argv[0])[0],
+             "..", "..", "lib", "python"]
+sys.path.append(os.path.join(*path_list))
+import checkpkg
 
 def main():
   print "Checking if the package cache is up to date."
