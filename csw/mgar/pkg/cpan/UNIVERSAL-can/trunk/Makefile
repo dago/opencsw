@@ -1,0 +1,27 @@
+GARNAME = UNIVERSAL-can
+GARVERSION = 1.16
+CATEGORIES = cpan
+AUTHOR = CHROMATIC
+
+DESCRIPTION = Hack around people calling UNIVERSAL::can() as a function
+define BLURB
+  The UNIVERSAL class provides a few default methods so that all objects 
+  can use them. Object orientation allows programmers to override these 
+  methods in subclasses to provide more specific and appropriate behavior.
+  Some authors call methods in the UNIVERSAL class on potential invocants 
+  as functions, bypassing any possible overriding. This is wrong and you 
+  should not do it. Unfortunately, not everyone heeds this warning and 
+  their bad code can break your good code.
+endef
+
+PACKAGES = CSWpmuniversalcan
+CATALOGNAME = pm_universalcan
+
+REQUIRED_PKGS = CSWpmmodulebuild
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
+
+include gar/category.mk
