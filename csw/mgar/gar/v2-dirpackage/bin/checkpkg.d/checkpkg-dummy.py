@@ -1,9 +1,17 @@
 #!/opt/csw/bin/python2.6
 # $Id$
 
-import checkpkg
 import os.path
 import logging
+import sys
+
+# The following bit of code sets the correct path to Python libraries
+# distributed with GAR.
+path_list = [os.getcwd(),
+             os.path.split(sys.argv[0])[0],
+             "..", "..", "lib", "python"]
+sys.path.append(os.path.join(*path_list))
+import checkpkg
 
 def main():
   options, args = checkpkg.GetOptions()
