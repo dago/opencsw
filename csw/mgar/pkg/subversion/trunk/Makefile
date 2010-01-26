@@ -56,6 +56,7 @@ CATALOGNAME_CSWsvn-devel   = subversion_devel
 REQUIRED_PKGS_CSWsvn-devel = CSWsvn
 ARCHALL_CSWsvn-devel       = 1
 PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
+PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
 
 SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn      = ap2_subversion
@@ -63,6 +64,7 @@ REQUIRED_PKGS_CSWap2svn    = CSWsvn
 REQUIRED_PKGS_CSWap2svn   += CSWggettextrt
 REQUIRED_PKGS_CSWap2svn   += CSWiconv
 PKGFILES_CSWap2svn         = $(prefix)/apache2.*
+PKGFILES_CSWap2svn        += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
@@ -74,6 +76,7 @@ REQUIRED_PKGS_CSWjavasvn  += CSWiconv
 REQUIRED_PKGS_CSWjavasvn  += CSWneon
 REQUIRED_PKGS_CSWjavasvn  += CSWoldaprt
 PKGFILES_CSWjavasvn        = $(SVNLIB)/.*java.*
+PKGFILES_CSWjavasvn       += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
@@ -87,6 +90,7 @@ REQUIRED_PKGS_CSWpmsvn    += CSWoldaprt
 PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
+PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
 
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
@@ -99,6 +103,7 @@ REQUIRED_PKGS_CSWrbsvn    += CSWiconv
 REQUIRED_PKGS_CSWrbsvn    += CSWoldaprt
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
+PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
 
 SPKG_DESC_CSWpythonsvn       = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn     = pythonsvn
@@ -111,6 +116,7 @@ REQUIRED_PKGS_CSWpythonsvn  += CSWiconv
 REQUIRED_PKGS_CSWpythonsvn  += CSWoldaprt
 PKGFILES_CSWpythonsvn        = $(libdir)/python.*
 PKGFILES_CSWpythonsvn       += $(SVNLIB)/.*swig_py.*
+PKGFILES_CSWpythonsvn       += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
 
 
 DISTFILES += CSWsvn.checkinstall
