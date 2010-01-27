@@ -13,6 +13,7 @@ PACKAGES = CSWpmnetpcap
 CATALOGNAME = pm_netpcap
 
 # depends
+REQUIRED_PKGS     = CSWlibpcap
 PREREQUISITE_PKGS = CSWlibpcap
 
 include gar/category.mk
