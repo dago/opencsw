@@ -2,10 +2,17 @@
 # $Id$
 
 import unittest
+import sys
+import os.path
+module_path = [os.path.dirname(__file__),
+               "..", "lib", "python"]
+sys.path.append(os.path.join(*module_path))
 
 # To add more test files, create <name>.py file and add a corresponding line
 # here:
-from example_test import *
+from opencsw_test  import *
+from checkpkg_test import *
+from example_test  import *
 
 if __name__ == '__main__':
   unittest.main()

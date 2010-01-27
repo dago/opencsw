@@ -58,7 +58,13 @@ class GarBuild(object):
   def Build(self):
     if self.built:
       return 0
-    args = ["gmake", "dirpackage"]
+    # There's a need to turn off the use of checkpkg, as it needs a pkg.gz
+    # file, and the dirpackage target doesn't create it.  But it's not
+    # a problem, since the built package needs to be examined in a very
+    # specific way, we don't want to run all the tests against it.
+    #
+    # Hence, "ENABLE_CHECK=".
+    args = ["gmake", "ENABLE_CHECK=", "dirpackage"]
     gar_proc = subprocess.Popen(args, cwd=self.build_dir,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
@@ -125,9 +131,10 @@ class DynamicGarBuild(GarBuild):
         "TEST_SCRIPTS": "",
         "INSTALL_SCRIPTS": "",
     }
+    garsrc = os.path.join(os.getcwd(), os.path.dirname(__file__), "..", "..")
     self.tmpldata = {
         "garvars": self.garvars,
-        "garsrc": os.path.join(os.getcwd(), ".."),
+        "garsrc": garsrc,
         "blurb": None,
         "install_files": self.install_files,
         "build_dir": self.build_dir,
@@ -168,7 +175,8 @@ class DynamicGarBuild(GarBuild):
 
   def __del__(self):
     if self.cleanup:
-      shutil.rmtree(self.build_dir)
+      if os.path.isdir(self.build_dir):
+        shutil.rmtree(self.build_dir)
 
 
 class StaticGarBuild(GarBuild):
@@ -176,8 +184,13 @@ class StaticGarBuild(GarBuild):
   def __init__(self, build_dir):
     super(StaticGarBuild, self).__init__(build_dir)
 
+  def GetDebugHelp(self):
+    return ("Please look into %s.\n"
+            % repr(self.build_dir))
+
   def __del__(self):
     if self.cleanup:
-      shutil.rmtree(os.path.join(self.build_dir, "work"))
+      if os.path.isdir(self.build_dir):
+        shutil.rmtree(os.path.join(self.build_dir, "work"))
 
 # vim:set ts=2 sts=2 sw=2 expandtab:

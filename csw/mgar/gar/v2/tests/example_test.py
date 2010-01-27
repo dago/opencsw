@@ -1,7 +1,8 @@
 # $Id$
 
-import unittest
+import os.path
 import sys
+import unittest
 sys.path.append("../lib/python")
 import gartest
 
@@ -29,7 +30,8 @@ class StaticBuildTestExample(unittest.TestCase):
   """
 
   def testLooseFiles(self):
-    mybuild = gartest.StaticGarBuild("static/example")
+    mybuild = gartest.StaticGarBuild(
+        os.path.join(os.path.dirname(__file__), "static/example"))
     mybuild.Build()
     pkg = mybuild.GetFirstBuiltPackage()
     pkginfo = pkg.GetParsedPkginfo()
