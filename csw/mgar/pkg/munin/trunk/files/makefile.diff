@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Makefile
---- munin-1.4.0.orig/Makefile	2009-11-27 12:17:18.000000000 +0100
-+++ munin-1.4.0/Makefile	2009-11-28 18:13:47.250778081 +0100
+diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile munin-1.4.3/Makefile
+--- munin-1.4.3.orig/Makefile	2009-12-30 13:55:56.000000000 +0100
++++ munin-1.4.3/Makefile	2010-01-27 22:01:51.419441374 +0100
 @@ -49,8 +49,8 @@
  # This removes the installed config so that the next install-pass installs
  # a new config.  Target _only_ suitable for maintainers.
@@ -12,7 +12,7 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
  
  tags:
  	-rm -f TAGS
-@@ -66,50 +66,47 @@
+@@ -66,52 +66,51 @@
  
  install-pre: Makefile Makefile.config
  	@$(CHECKUSER)
@@ -35,8 +35,6 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
 -	mkdir -p $(HTMLDIR)
 -	mkdir -p $(DBDIR)
 -	mkdir -p $(CGIDIR)
--
--	$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR) 
 +	mkdir -p $(DESTDIR)$(CONFDIR)/templates
 +	mkdir -p $(DESTDIR)$(CONFDIR)/templates/partial
 +	mkdir -p $(DESTDIR)$(CONFDIR)/munin-conf.d
@@ -47,6 +45,11 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
 +	mkdir -p $(DESTDIR)$(HTMLDIR)
 +	mkdir -p $(DESTDIR)$(DBDIR)
 +	mkdir -p $(DESTDIR)$(CGIDIR)
+ 
+-	$(CHOWN) $(USER) $(HTMLDIR) $(DBDIR) 
+-	$(CHMOD) 0755 $(DBDIR)
++	#$(CHOWN) $(USER) $(DESTDIR)$(HTMLDIR) $(DESTDIR)$(DBDIR) 
++	$(CHMOD) 0755 $(DESTDIR)$(DBDIR)
  
  	for p in master/www/*.tmpl master/www/*.png master/www/*.css resources/favicon.ico; do \
 -		$(INSTALL) -m 0644 "$$p" $(CONFDIR)/templates/ ; \
@@ -59,9 +62,11 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
  	done
  
 -	$(INSTALL) -m 0644 master/www/definitions.html $(CONFDIR)/templates/
--	$(INSTALL) -m 0755 master/VeraMono.ttf $(LIBDIR)/
+-	$(INSTALL) -m 0755 master/DejaVuSansMono.ttf $(LIBDIR)/
+-	$(INSTALL) -m 0755 master/DejaVuSans.ttf $(LIBDIR)/
 +	$(INSTALL) -m 0644 master/www/definitions.html $(DESTDIR)$(CONFDIR)/templates/
-+	$(INSTALL) -m 0755 master/VeraMono.ttf $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0755 master/DejaVuSansMono.ttf $(DESTDIR)$(LIBDIR)/
++	$(INSTALL) -m 0755 master/DejaVuSans.ttf $(DESTDIR)$(LIBDIR)/
  
 -	test -f $(HTMLDIR)/.htaccess || $(INSTALL) -m 0644 build/master/www/munin-htaccess $(HTMLDIR)/.htaccess
 -	test -f "$(CONFDIR)/munin.conf"  || $(INSTALL) -m 0644 build/master/munin.conf $(CONFDIR)/
@@ -91,22 +96,23 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
  
  # ALWAYS DO THE OS SPECIFIC PLUGINS LAST! THAT WAY THEY OVERWRITE THE
  # GENERIC ONES
-@@ -120,28 +117,24 @@
+@@ -122,28 +121,24 @@
  install-plugins-prime: install-plugins build $(PLUGINS) Makefile Makefile.config
  	@$(CHECKGROUP)
  
 -	mkdir -p $(CONFDIR)/plugins
 -	mkdir -p $(CONFDIR)/plugin-conf.d
 -	mkdir -p $(LIBDIR)/plugins
-+	mkdir -p $(DESTDIR)$(CONFDIR)/plugins
-+	mkdir -p $(DESTDIR)$(CONFDIR)/plugin-conf.d
-+	mkdir -p $(DESTDIR)$(LIBDIR)/plugins
- 	mkdir -p $(PLUGSTATE)
- 
+-	mkdir -p $(PLUGSTATE)
+-
 -	$(CHOWN) $(PLUGINUSER):$(GROUP) $(PLUGSTATE)
 -	$(CHMOD) 0775 $(PLUGSTATE)
 -	$(CHMOD) 0755 $(CONFDIR)/plugin-conf.d
--
++	mkdir -p $(DESTDIR)$(CONFDIR)/plugins
++	mkdir -p $(DESTDIR)$(CONFDIR)/plugin-conf.d
++	mkdir -p $(DESTDIR)$(LIBDIR)/plugins
++	mkdir -p $(DESTDIR)$(PLUGSTATE)
+ 
  	for p in build/plugins/node.d/* build/plugins/node.d.$(OSTYPE)/* ; do \
  	    if test -f "$$p" ; then                            \
  		echo Installing $$p;                           \
@@ -129,7 +135,7 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
  
  #TODO:
  # configure plugins.  Or not. Better done under the direction of the installer
-@@ -150,30 +143,30 @@
+@@ -152,30 +147,30 @@
  install-node-prime: install-node-pre install-node
  
  install-node-pre: build/node/munin-node.conf install-pre
@@ -175,7 +181,49 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
  
  ######################################################################
  
-@@ -370,20 +363,20 @@
+@@ -189,28 +184,28 @@
+ 	@echo "$< -> $@"
+ 	@mkdir -p build/`dirname $<`
+ 	@sed -e 's|@@PREFIX@@|$(PREFIX)|g'                      \
+-             -e 's|@@CONFDIR@@|$(CONFDIR)|g'                    \
+-             -e 's|@@BINDIR@@|$(BINDIR)|g'                      \
+-             -e 's|@@SBINDIR@@|$(SBINDIR)|g'                    \
+-             -e 's|@@DOCDIR@@|$(DOCDIR)|g'                      \
+-             -e 's|@@LIBDIR@@|$(LIBDIR)|g'                      \
++             -e 's|@@CONFDIR@@|$(DESTDIR)$(CONFDIR)|g'                    \
++             -e 's|@@BINDIR@@|$(DESTDIR)$(BINDIR)|g'                      \
++             -e 's|@@SBINDIR@@|$(DESTDIR)$(SBINDIR)|g'                    \
++             -e 's|@@DOCDIR@@|$(DESTDIR)$(DOCDIR)|g'                      \
++             -e 's|@@LIBDIR@@|$(DESTDIR)$(LIBDIR)|g'                      \
+              -e 's|@@MANDIR@@|$(MANDIR)|g'                      \
+-             -e 's|@@LOGDIR@@|$(LOGDIR)|g'                      \
+-             -e 's|@@HTMLDIR@@|$(HTMLDIR)|g'                    \
+-             -e 's|@@DBDIR@@|$(DBDIR)|g'                        \
+-             -e 's|@@STATEDIR@@|$(STATEDIR)|g'                  \
++             -e 's|@@LOGDIR@@|$(DESTDIR)$(LOGDIR)|g'                      \
++             -e 's|@@HTMLDIR@@|$(DESTDIR)$(HTMLDIR)|g'                    \
++             -e 's|@@DBDIR@@|$(DESTDIR)$(DBDIR)|g'                        \
++             -e 's|@@STATEDIR@@|$(DESTDIR)$(STATEDIR)|g'                  \
+              -e 's|@@PERL@@|$(PERL)|g'                          \
+-             -e 's|@@PERLLIB@@|$(PERLLIB)|g'                    \
++             -e 's|@@PERLLIB@@|$(DESTDIR)$(PERLLIB)|g'                    \
+              -e 's|@@PYTHON@@|$(PYTHON)|g'                      \
+              -e 's|@@RUBY@@|$(RUBY)|g'                          \
+              -e 's|@@JAVARUN@@|$(JAVARUN)|g'                    \
+-             -e 's|@@JAVALIBDIR@@|$(JAVALIBDIR)|g'              \
++             -e 's|@@JAVALIBDIR@@|$(DESTDIR)$(JAVALIBDIR)|g'              \
+              -e 's|@@OSTYPE@@|$(OSTYPE)|g'                      \
+              -e 's|@@HOSTNAME@@|$(HOSTNAME)|g'                  \
+              -e 's|@@MKTEMP@@|$(MKTEMP)|g'                      \
+              -e 's|@@VERSION@@|$(VERSION)|g'                    \
+-             -e 's|@@PLUGSTATE@@|$(PLUGSTATE)|g'                \
+-             -e 's|@@CGIDIR@@|$(CGIDIR)|g'                      \
++             -e 's|@@PLUGSTATE@@|$(DESTDIR)$(PLUGSTATE)|g'                \
++             -e 's|@@CGIDIR@@|$(DESTDIR)$(CGIDIR)|g'                      \
+              -e 's|@@USER@@|$(USER)|g'                          \
+              -e 's|@@GROUP@@|$(GROUP)|g'                        \
+              -e 's|@@PLUGINUSER@@|$(PLUGINUSER)|g'              \
+@@ -354,20 +349,20 @@
  	$(MAKE) $@ CONFIG=t/Makefile.config
  else
  test_plugins = id_default id_root env
@@ -204,7 +252,7 @@ diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile munin-1.4.0/Ma
  	echo 'Done?'
  
  t/install: 
-@@ -407,12 +400,12 @@
+@@ -391,12 +386,12 @@
  # can't seem to find a way to persuade it to write otherwhere.
  install-%: %/Build
  	cd $* && $(PERL) Build install			\

@@ -1,5 +1,5 @@
 GARNAME = munin
-GARVERSION = 1.4.0
+GARVERSION = 1.4.3
 CATEGORIES = apps
 
 SPKG_DESC_CSWmuninmaster = master component of the graphical network and system monitoring munin
@@ -12,7 +12,7 @@ endef
 
 SF_PROJ = munin
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWmuninmaster.postinstall
 DISTFILES += CSWmuninmaster.prototype CSWmuninmaster.postinstall
 DISTFILES += CSWmuninnode.prototype cswmuninnode
@@ -96,6 +96,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
 	@ginstall -d $(DESTDIR)/opt/csw/share/munin/fonts
-	@ginstall -m 644 $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
-	@rm $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf
+	#@ginstall -m 644 $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
+	@ginstall -m 644 $(WORKSRC)/master/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
+	#@rm $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf
 	@$(MAKECOOKIE)

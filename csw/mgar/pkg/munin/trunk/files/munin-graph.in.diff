@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru munin-1.4.0.orig/master/_bin/munin-graph.in munin-1.4.0/master/_bin/munin-graph.in
---- munin-1.4.0.orig/master/_bin/munin-graph.in	2009-11-27 12:17:18.000000000 +0100
-+++ munin-1.4.0/master/_bin/munin-graph.in	2009-11-28 13:41:02.135025435 +0100
+diff --speed-large-files --minimal -Nru munin-1.4.3.orig/master/_bin/munin-graph.in munin-1.4.3/master/_bin/munin-graph.in
+--- munin-1.4.3.orig/master/_bin/munin-graph.in	2009-12-30 13:55:56.000000000 +0100
++++ munin-1.4.3/master/_bin/munin-graph.in	2010-01-27 15:37:25.532990968 +0100
 @@ -135,10 +135,10 @@
  
  =head1 FILES

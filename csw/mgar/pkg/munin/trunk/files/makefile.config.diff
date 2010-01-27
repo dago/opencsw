@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru munin-1.4.0.orig/Makefile.config munin-1.4.0/Makefile.config
---- munin-1.4.0.orig/Makefile.config	2009-11-27 12:17:18.000000000 +0100
-+++ munin-1.4.0/Makefile.config	2009-11-28 16:51:45.380818848 +0100
+diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1.4.3/Makefile.config
+--- munin-1.4.3.orig/Makefile.config	2009-12-30 13:55:56.000000000 +0100
++++ munin-1.4.3/Makefile.config	2010-01-27 12:26:29.445565248 +0100
 @@ -14,13 +14,15 @@
  # and LOGDIR as subdirectories.  Today, DBDIR contains configured
  # domains, as well as PLUGSTATE, and we risk collisions.

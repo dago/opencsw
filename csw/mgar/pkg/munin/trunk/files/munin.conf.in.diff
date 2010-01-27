@@ -1,6 +1,6 @@
-diff --speed-large-files --minimal -Nru munin-1.4.0.orig/master/munin.conf.in munin-1.4.0/master/munin.conf.in
---- munin-1.4.0.orig/master/munin.conf.in	2009-11-27 12:17:18.000000000 +0100
-+++ munin-1.4.0/master/munin.conf.in	2009-11-28 12:03:14.865737210 +0100
+diff --speed-large-files --minimal -Nru munin-1.4.3.orig/master/munin.conf.in munin-1.4.3/master/munin.conf.in
+--- munin-1.4.3.orig/master/munin.conf.in	2009-12-30 13:55:56.000000000 +0100
++++ munin-1.4.3/master/munin.conf.in	2010-01-27 15:26:42.127815407 +0100
 @@ -57,7 +57,7 @@
  #contact.nagios.command /usr/bin/send_nsca nagios.host.comm -c /etc/nsca.conf
  
