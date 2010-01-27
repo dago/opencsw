@@ -1,12 +1,11 @@
 #!/opt/csw/bin/python2.6
 # $Id$
 
-"""This is a dummy check. You can use it as a boilerplate for your own checks.
+"""This is a dummy module. You can use it as a boilerplate for your own modules.
 
 Copy it and modify.
 """
 
-import logging
 import os.path
 import sys
 
@@ -19,7 +18,7 @@ import checkpkg
 
 # Defining checking functions.
 
-def CheckIndividualPackage(pkg):
+def MyCheckForAsinglePackage(pkg):
   """Checks an individual package.
   
   Gets a DirctoryFormatPackage as an argument, and returns a list of errors.
@@ -29,17 +28,24 @@ def CheckIndividualPackage(pkg):
   errors.append(checkpkg.PackageError("There's something wrong."))
   """
   errors = []
-  # Checking code for an individual package goes here.
+  # Checking code for an individual package goes here.  See the
+  # DirectoryFormatPackage class in lib/python/opencsw.py for the available
+  # APIs.
+
+  # Here's how to report an error:
+  something_is_wrong = False
+  if something_is_wrong:
+    errors.append(checkpkg.PackageError("There's something wrong."))
   return errors
 
 
-def CheckAsetOfPackages(pkgs):
+def MyCheckForAsetOfPackages(pkgs):
   """Checks a set of packages.
 
   Sometimes individual checks aren't enough. If you need to write code which
   needs to examine multiple packages at the same time, use this function.
 
-  Gets a list of packages.
+  Gets a list of packages, returns a list of errors.
   """
   errors = []
   # Checking code goes here.
@@ -55,9 +61,9 @@ def main():
                                            options.extractdir,
                                            pkgnames,
                                            options.debug)
-  # Registering previously defined checks.
-  check_manager.RegisterIndividualCheck(CheckIndividualPackage)
-  check_manager.RegisterSetCheck(CheckAsetOfPackages)
+  # Registering functions defined above.
+  check_manager.RegisterIndividualCheck(MyCheckForAsinglePackage)
+  check_manager.RegisterSetCheck(MyCheckForAsetOfPackages)
   # Running the checks, reporting and exiting.
   exit_code, report = check_manager.Run()
   print report.strip()
