@@ -1,22 +1,11 @@
 GARNAME = graphviz
-GARVERSION = 2.20.3
+GARVERSION = 2.20.1
 CATEGORIES = utils
 
-DESCRIPTION = Graph drawing utilities with web and graphical interfaces.
+DESCRIPTION = ( CSWgraphviz2 is deprecated and replaced by CSWgraphviz 2.24.0 or later )
 define BLURB
-    graphviz is a set of graph drawing tools and libraries. It supports
-    hierarchical and mass-spring drawings; although the tools are scalable, their
-    emphasis is on making very good drawings of reasonably-sized graphs.
 endef
 
-MASTER_SITES = http://www.graphviz.org/pub/graphviz/ARCHIVE/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
+MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 
 include gar/category.mk
