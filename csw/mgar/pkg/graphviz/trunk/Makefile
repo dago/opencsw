@@ -52,22 +52,22 @@ PREREQUISITE_PKGS =
 REQUIRED_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender \
 	CSWgs CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWiconv \
 	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm CSWlibrsvg
-REQUIRED_PKGS_CSWgraphvizdevel =
+REQUIRED_PKGS_CSWgraphvizdevel = CSWgraphviz
 REQUIRED_PKGS_CSWgraphvizdoc = 
 REQUIRED_PKGS_CSWgraphvizgraphs = 
-REQUIRED_PKGS_CSWgraphvizgd = CSWgd CSWjpeg
+REQUIRED_PKGS_CSWgraphvizgd = CSWgd CSWjpeg CSWgraphviz
 REQUIRED_PKGS_CSWgraphvizdevil = CSWdevil
-REQUIRED_PKGS_CSWgraphvizsharp = CSWmono
+REQUIRED_PKGS_CSWgraphvizsharp = CSWmono CSWexpat CSWgraphviz CSWzlib
 REQUIRED_PKGS_CSWgraphvizguile = CSWguile
 REQUIRED_PKGS_CSWgraphvizjava = CSWjava
 REQUIRED_PKGS_CSWgraphvizlua = CSWlua
 REQUIRED_PKGS_CSWgraphvizocaml = CSWocaml
 REQUIRED_PKGS_CSWgraphvizperl = CSWperl
 REQUIRED_PKGS_CSWgraphvizphp = CSWphp5
-REQUIRED_PKGS_CSWgraphvizpython = CSWpython
+REQUIRED_PKGS_CSWgraphvizpython = CSWpython CSWexpat CSWgraphviz CSWzlib 
 REQUIRED_PKGS_CSWgraphvizr = CSWr
 REQUIRED_PKGS_CSWgraphvizruby = CSWruby
-REQUIRED_PKGS_CSWgraphviztcl = CSWtcl CSWtk
+REQUIRED_PKGS_CSWgraphviztcl = CSWtcl CSWtk CSWgraphviz
 
 LICENSE_CSWgraphviz = COPYING
 LICENSE_CSWgraphvizdevel = COPYING
