@@ -563,6 +563,16 @@ checkpkg_scriptname=`basename $0`
 checkpkg_basedir=${0%/${checkpkg_scriptname}}
 plugindir=${checkpkg_basedir}/checkpkg.d
 
+# Cleaning up old *.pyc files which can cause grief.  This is because of the
+# move of Python libraries.
+for pyc_file in ${plugindir}/opencsw.pyc \
+                ${plugindir}/checkpkg.pyc; do
+  if [ -f "${pyc_file}" ]; then
+    echo "Removing old pyc file: '${pyc_file}'"
+    rm "${pyc_file}"
+  fi
+done
+
 # /var/sadm/install/contents cache update
 ${plugindir}/update_contents_cache.py
 
