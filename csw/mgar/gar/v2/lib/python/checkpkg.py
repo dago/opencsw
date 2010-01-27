@@ -12,7 +12,6 @@ import re
 import socket
 import sqlite3
 import subprocess
-import StringIO
 from Cheetah import Template
 import opencsw
 
@@ -191,7 +190,7 @@ class SystemPkgmap(object):
       logging.debug("Connecting to the %s database.", self.db_path)
       self.conn = sqlite3.connect(self.db_path)
       if not self.IsDatabaseUpToDate():
-      	logging.warning("Rebuilding the package cache, can take a few minutes.")
+        logging.warning("Rebuilding the package cache, can take a few minutes.")
         self.PurgeDatabase()
         self.PopulateDatabase()
     else:
@@ -471,14 +470,13 @@ def Emulate64BitSymlinks(runpath_list):
   for runpath in runpath_list:
     for symlink, expansion_list in SYSTEM_SYMLINKS:
       for target in expansion_list:
-      	expanded = ExpandSymlink(symlink, target, runpath)
+        expanded = ExpandSymlink(symlink, target, runpath)
         if expanded not in symlinked_list:
-        	symlinked_list.append(expanded)
+          symlinked_list.append(expanded)
   return symlinked_list
 
 
 def SanitizeRunpath(runpath):
-  ok = False
   while True:
     if runpath.endswith("/"):
       runpath = runpath[:-1]
@@ -507,7 +505,7 @@ def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
       # RPATH does not contain $ISALIST.
       new_soname_runpath_data = {}
       for p in soname_runpath_data:
-      	expanded_p_list = Emulate64BitSymlinks([p])
+        expanded_p_list = Emulate64BitSymlinks([p])
         for expanded_p in expanded_p_list:
           new_soname_runpath_data[expanded_p] = soname_runpath_data[p]
       soname_runpath_data = new_soname_runpath_data
@@ -599,14 +597,14 @@ class CheckpkgManager(object):
     packages = []
     errors = []
     for pkgname in self.pkgname_list:
-    	pkg_path = os.path.join(self.extractdir, pkgname)
-    	packages.append(opencsw.DirectoryFormatPackage(pkg_path))
+        pkg_path = os.path.join(self.extractdir, pkgname)
+        packages.append(opencsw.DirectoryFormatPackage(pkg_path))
     for pkg in packages:
       for function in self.individual_checks:
-      	errors.extend(function(pkg))
+        errors.extend(function(pkg))
     # Set checks
     for function in self.set_checks:
-    	errors.extend(function(packages))
+        errors.extend(function(packages))
     namespace = {
         "name": self.name,
         "errors": errors,

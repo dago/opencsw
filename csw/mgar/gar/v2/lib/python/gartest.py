@@ -6,11 +6,9 @@
 import Cheetah.Template
 import shutil
 import tempfile
-import unittest
 import os
 import os.path
 import subprocess
-import sys
 import opencsw
 
 """A module used to do end-to-end testing of GAR."""
@@ -45,10 +43,11 @@ class Error(Exception):
 
 class GarBuild(object):
 
-  def __init__(self):
+  def __init__(self, build_dir):
     self.built = False
     self.packages = None
     self.cleanup = True
+    self.build_dir = build_dir
 
   def GetDebugHelp(self):
     """To be overriden in subclasses."""
@@ -83,7 +82,7 @@ class GarBuild(object):
     args = ["gmake", "pkglist"]
     gar_proc = subprocess.Popen(args, cwd=self.build_dir, stdout=subprocess.PIPE)
     stdout, stderr = gar_proc.communicate()
-    ret = gar_proc.wait()
+    unused_ret = gar_proc.wait()
     pkglist = []
     for line in stdout.splitlines():
       # directory, catalogname, pkgname
@@ -107,8 +106,8 @@ class DynamicGarBuild(GarBuild):
   Can create a GAR build and execute it.
   """
   def __init__(self):
-    super(DynamicGarBuild, self).__init__()
-    self.build_dir = tempfile.mkdtemp(prefix=TMPDIR_PREFIX)
+    build_dir = tempfile.mkdtemp(prefix=TMPDIR_PREFIX)
+    super(DynamicGarBuild, self).__init__(build_dir)
     self.filedir = os.path.join(self.build_dir, "files")
     self.makefile_filename = os.path.join(self.build_dir, "Makefile")
     os.mkdir(self.filedir)
@@ -175,11 +174,10 @@ class DynamicGarBuild(GarBuild):
 class StaticGarBuild(GarBuild):
 
   def __init__(self, build_dir):
-    super(StaticGarBuild, self).__init__()
-    self.build_dir = build_dir
+    super(StaticGarBuild, self).__init__(build_dir)
 
   def __del__(self):
     if self.cleanup:
-    	shutil.rmtree(os.path.join(self.build_dir, "work"))
+      shutil.rmtree(os.path.join(self.build_dir, "work"))
 
 # vim:set ts=2 sts=2 sw=2 expandtab:

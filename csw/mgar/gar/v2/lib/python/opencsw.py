@@ -372,7 +372,7 @@ class CswSrv4File(ShellMixin, object):
         shutil.copy(self.pkg_path, self.GetWorkDir())
         self.pkg_path = os.path.join(self.GetWorkDir(), base_name_gz)
         args = ["gunzip", "-f", self.pkg_path]
-        retcode = self.ShellCommand(args)
+        unused_retcode = self.ShellCommand(args)
         self.gunzipped_path = self.pkg_path[:(-len(gzip_suffix))]
       elif self.pkg_path.endswith(pkg_suffix):
         self.gunzipped_path = self.pkg_path
@@ -385,7 +385,7 @@ class CswSrv4File(ShellMixin, object):
     if not self.transformed:
       args = ["pkgtrans", "-a", self.GetAdminFilePath(),
               self.GetGunzippedPath(), self.GetWorkDir(), "all"]
-      retcode = self.ShellCommand(args, quiet=True)
+      unused_retcode = self.ShellCommand(args, quiet=True)
       dirs = self.GetDirs()
       if len(dirs) != 1:
         raise Error("Need exactly one package in the package stream: "
@@ -394,7 +394,7 @@ class CswSrv4File(ShellMixin, object):
       self.transformed = True
 
   def GetDirFormatPkg(self):
-    self.TransformToDir(self)
+    self.TransformToDir()
     return self.dir_format_pkg
 
   def GetDirs(self):
@@ -578,9 +578,9 @@ class DirectoryFormatPackage(ShellMixin, object):
         sum_process = subprocess.Popen(args, stdout=subprocess.PIPE)
         stdout, stderr = sum_process.communicate()
         sum_process.wait()
-        sum = ws_re.split(stdout)[0]
+        sum_value = ws_re.split(stdout)[0]
         fields[3] = size
-        fields[4] = sum
+        fields[4] = sum_value
         logging.debug("New pkgmap line: %s", fields)
         line = " ".join(fields)
       new_pkgmap_lines.append(line.strip())
