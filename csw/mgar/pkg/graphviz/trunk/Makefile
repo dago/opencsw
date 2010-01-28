@@ -107,14 +107,14 @@ SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
 
 PKGFILES_CSWgraphviz = $(bindir)/(?!(diffimg|dot_static)).*
 PKGFILES_CSWgraphviz += $(libdir)/lib.*.so\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_core\..*\..*\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_pango\..*\..*\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_rsvg\..*\..*\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_lasi\..*\..*\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_gtk\..*\..*\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_gdk_pixbuf\..*\..*\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_xlib\..*\..*\..*
-PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_.*layout\..*\..*\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_core\.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_pango\.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_rsvg\.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_lasi\.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_gtk\.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_gdk_pixbuf\.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_xlib\.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_.*layout\.so\..*
 PKGFILES_CSWgraphviz += $(sharedstatedir)/graphviz/lefty/.* 
 PKGFILES_CSWgraphviz += $(mandir)/man1/.*\.1
 PKGFILES_CSWgraphviz += $(mandir)/man7/.*\.7
@@ -128,11 +128,11 @@ PKGFILES_CSWgraphvizdoc = $(sharedstatedir)/graphviz/doc/.*
 
 PKGFILES_CSWgraphvizgraphs = $(sharedstatedir)/graphviz/graphs/.* 
 
-PKGFILES_CSWgraphvizgd = $(libdir)/graphviz/libgvplugin_gd\..*\..*\..*
+PKGFILES_CSWgraphvizgd = $(libdir)/graphviz/libgvplugin_gd\.so\..*
 PKGFILES_CSWgraphvizgd += $(bindir)/diffimg
 PKGFILES_CSWgraphvizgd += $(bindir)/dot_static
 
-PKGFILES_CSWgraphvizdevil = $(libdir)/graphviz/libgvplugin_devil\..*\..*\..*
+PKGFILES_CSWgraphvizdevil = $(libdir)/graphviz/libgvplugin_devil\.so\..*
 
 PKGFILES_CSWgraphvizsharp = $(libdir)/graphviz/sharp/.*
 PKGFILES_CSWgraphvizsharp += $(mandir)/man3/.*\.3sharp
