@@ -196,7 +196,7 @@ class CatalogBasedOpencswPackage(object):
     for line in catalog_source:
       # Working around the GPG signature
       if line.startswith("#"): continue
-      if "BEGIN PGP SIGNED MESSAGE" in line: continue	
+      if "BEGIN PGP SIGNED MESSAGE" in line: continue 
       if line.startswith("Hash:"): continue
       if len(line.strip()) <= 0: continue 
       if "BEGIN PGP SIGNATURE" in line: break
@@ -631,11 +631,25 @@ class DirectoryFormatPackage(ShellMixin, object):
 
 
 class Pkgmap(object):
+  """Represents the pkgmap of the package.
+
+  The plan:
+
+    entries = [
+      {
+        'path': ...,
+        'class': ...,
+        (more fields?)
+      }, ...
+    ]
+  """
 
   def __init__(self, input, permissions=False,
                strip=None):
     self.paths = set()
     self.analyze_permissions = permissions
+    self.entries = []
+    self.classes = None
     for line in input:
       fields = re.split(r'\s+', line)
       if strip:
@@ -643,17 +657,39 @@ class Pkgmap(object):
         fields = [re.sub(strip_re, "", x) for x in fields]
       logging.debug(fields)
       line_to_add = None
+      installed_path = None
+      prototype_class = None
       if len(fields) < 2:
         continue
       elif fields[1] in ('f', 'd'):
         line_to_add = fields[3]
+        installed_path = fields[3]
+        prototype_class = fields[2]
         if self.analyze_permissions:
           line_to_add += " %s" % fields[4]
       elif fields[1] in ('s', 'l'):
         link_from, link_to = fields[3].split("=")
+        installed_path = link_from
         line_to_add = "%s --> %s" % (link_from, link_to)
+        prototype_class = fields[2]
       if line_to_add:
         self.paths.add(line_to_add)
+      entry = {
+          "line": line,
+      }
+      if installed_path:
+        entry["path"] = installed_path
+      entry["class"] = prototype_class
+      self.entries.append(entry)
+
+  def GetClasses(self):
+    """The assumtion is that the set of classes never changes."""
+    if not self.classes:
+      self.classes = set()
+      for entry in self.entries:
+        if entry["class"]:
+          self.classes.add(entry["class"])
+    return self.classes
 
 
 class PackageComparator(object):
