@@ -522,6 +522,7 @@ class DirectoryFormatPackage(ShellMixin, object):
 
   def __init__(self, directory):
     self.directory = directory
+    self.pkgname = os.path.split(directory)[1]
     self.pkginfo_dict = None
 
   def GetParsedPkginfo(self):

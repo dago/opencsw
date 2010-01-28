@@ -30,16 +30,14 @@ def CheckActionClasses(pkg):
   only_in_pkginfo = pkginfo_classes.difference(pkgmap_classes)
   only_in_pkgmap = pkgmap_classes.difference(pkginfo_classes)
   for cls in only_in_pkginfo:
-  	errors.append(
-  	    opencsw.PackageError("Class %s is only in pkginfo" % repr(cls)))
+    print "Class %s of %s is only in pkginfo" % (repr(cls), pkg.pkgname)
+    print "This shouldn't cause any problems, but it might be not necessary."
   for cls in only_in_pkgmap:
-  	errors.append(
-  	    opencsw.PackageError("Class %s is only in pkgmap" % repr(cls)))
+    errors.append(
+        opencsw.PackageError("Class %s is only in pkgmap" % repr(cls)))
   if only_in_pkginfo or only_in_pkgmap:
-  	errors.append(
-        opencsw.PackageError(
-            "pkginfo_classes: %s, pkgmap classes: %s" % (
-                pkginfo_classes, pkgmap_classes)))
+    print ("pkginfo_classes: %s, pkgmap classes: %s"
+           % (pkginfo_classes, pkgmap_classes))
   return errors
 
 

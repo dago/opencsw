@@ -68,8 +68,11 @@ REQUIRED_PKGS_$pkgname += $pkg
 
 ERROR_REPORT_TMPL = u"""#if $errors
 ERROR: One or more errors have been found by $name.
-#for $error in $errors
-$repr($error)
+#for $pkgname in $errors
+$pkgname:
+#for $error in $errors[$pkgname]
+  $repr($error)
+#end for
 #end for
 #else
 #if $debug
@@ -595,16 +598,20 @@ class CheckpkgManager(object):
     Returns a tuple of an exit code and a report.
     """
     packages = []
-    errors = []
+    errors = {}
     for pkgname in self.pkgname_list:
         pkg_path = os.path.join(self.extractdir, pkgname)
         packages.append(opencsw.DirectoryFormatPackage(pkg_path))
     for pkg in packages:
       for function in self.individual_checks:
-        errors.extend(function(pkg))
+        errors_for_pkg = function(pkg)
+        if errors_for_pkg:
+          errors[pkg.pkgname] = errors_for_pkg
     # Set checks
     for function in self.set_checks:
-        errors.extend(function(packages))
+      set_errors = function(packages)
+      if set_errors:
+        errors["The package set"] = set_errors
     namespace = {
         "name": self.name,
         "errors": errors,
