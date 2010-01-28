@@ -38,11 +38,16 @@ PACKAGES = CSWgraphviz \
 
 INCOMPATIBLE_PKGS = CSWgraphvis
 
+# This is a compatibility package which should go away after some time.
+# It only contains a link to CSWgraphviz.
+PACKAGES += CSWgraphviz2
+
 # defer for some time to allow CSWgraphviz2 upgrades
 # INCOMPATIBLE_PKGS = CSWgraphviz2
 
 ARCHALL_CSWgraphvizdoc = 1
 ARCHALL_CSWgraphvizgraphs = 1
+ARCHALL_CSWgraphviz2 = 1
 
 # Sun's CC is broken on 64bit architectures!
 #BUILD64 = 1
@@ -68,6 +73,7 @@ REQUIRED_PKGS_CSWgraphvizpython = CSWpython CSWexpat CSWgraphviz CSWzlib
 REQUIRED_PKGS_CSWgraphvizr = CSWr
 REQUIRED_PKGS_CSWgraphvizruby = CSWruby
 REQUIRED_PKGS_CSWgraphviztcl = CSWtcl CSWtk CSWgraphviz
+REQUIRED_PKGS_CSWgraphviz2 = CSWgraphviz
 
 LICENSE_CSWgraphviz = COPYING
 LICENSE_CSWgraphvizdevel = COPYING
@@ -86,6 +92,7 @@ LICENSE_CSWgraphvizpython = COPYING
 LICENSE_CSWgraphvizr = COPYING
 LICENSE_CSWgraphvizruby = COPYING
 LICENSE_CSWgraphviztcl = COPYING
+LICENSE_CSWgraphviz2 = COPYING
 
 SPKG_DESC_CSWgraphviz = Graph Visualization Tools
 SPKG_DESC_CSWgraphvizdevel = Graphviz Headers etc. for development
@@ -104,6 +111,7 @@ SPKG_DESC_CSWgraphvizpython = Graphviz language binding for python
 SPKG_DESC_CSWgraphvizr = Graphviz language binding for R
 SPKG_DESC_CSWgraphvizruby = Graphviz language binding for ruby
 SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
+SPKG_DESC_CSWgraphviz2 = Stub to the CSWgraphviz package
 
 PKGFILES_CSWgraphviz = $(bindir)/(?!(diffimg|dot_static)).*
 PKGFILES_CSWgraphviz += $(libdir)/lib.*.so\..*
@@ -181,6 +189,8 @@ PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/.*\.tcl
 PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/.*\.tcl.README
 PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/pathplan_data/.*
 
+PKGFILES_CSWgraphviz2 = $(prefix)/graphviz2
+
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWgraphviz.postinstall
 DISTFILES += CSWgraphvizgd.postinstall CSWgraphvizgd.postuninstall
@@ -216,4 +226,8 @@ include gar/category.mk
 
 test-custom:
 	@echo " ==> Testing $(GARNAME) (custom)"
+	@$(MAKECOOKIE)
+
+post-merge:
+	gln -s . $(PKGROOT)$(prefix)/graphviz2
 	@$(MAKECOOKIE)
