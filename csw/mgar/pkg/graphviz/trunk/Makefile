@@ -114,7 +114,7 @@ SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
 SPKG_DESC_CSWgraphviz2 = Stub to the CSWgraphviz package
 
 PKGFILES_CSWgraphviz = $(bindir)/(?!(diffimg|dot_static)).*
-PKGFILES_CSWgraphviz += $(libdir)/lib.*.so\..*
+PKGFILES_CSWgraphviz += $(libdir)/lib.*\.so\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_core\.so\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_pango\.so\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_rsvg\.so\..*
@@ -128,7 +128,7 @@ PKGFILES_CSWgraphviz += $(mandir)/man1/.*\.1
 PKGFILES_CSWgraphviz += $(mandir)/man7/.*\.7
 
 PKGFILES_CSWgraphvizdevel = $(libdir)/pkgconfig/.*\.pc
-PKGFILES_CSWgraphvizdevel += $(libdir)/.*\.so
+PKGFILES_CSWgraphvizdevel += $(libdir)/lib.*\.so
 PKGFILES_CSWgraphvizdevel += $(includedir)/.*\.h
 PKGFILES_CSWgraphvizdevel += $(mandir)/man3/.*\.3
 
