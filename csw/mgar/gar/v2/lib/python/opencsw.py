@@ -112,6 +112,19 @@ def ParseVersionString(s):
   return version_str, version_info, revision_info
 
 
+def IndexDictsBy(list_of_dicts, field_key):
+  """Creates an index of list of dictionaries by a field name.
+
+  Returns a dictionary of lists.
+  """
+  index = {}
+  for d in list_of_dicts:
+    if d[field_key] not in index:
+      index[d[field_key]] = []
+    index[d[field_key]].append(d)
+  return index
+
+
 class CatalogBasedOpencswPackage(object):
 
   catalog_downloaded = False
@@ -643,7 +656,17 @@ class Pkgmap(object):
         (more fields?)
       }, ...
     ]
+
+  + indexes
   """
+  ENTRY_TYPES = {
+      "1": "header (?)",
+      "d": "directory",
+      "f": "file",
+      "s": "symlink",
+      "l": "link",
+      "i": "script",
+  }
 
   def __init__(self, input, permissions=False,
                strip=None):
@@ -660,15 +683,22 @@ class Pkgmap(object):
       line_to_add = None
       installed_path = None
       prototype_class = None
+      line_type = fields[1]
+      mode = None
+      user = None
+      group = None
       if len(fields) < 2:
         continue
-      elif fields[1] in ('f', 'd'):
+      elif line_type in ('f', 'd'):
+        # Files and directories
         line_to_add = fields[3]
         installed_path = fields[3]
         prototype_class = fields[2]
         if self.analyze_permissions:
           line_to_add += " %s" % fields[4]
-      elif fields[1] in ('s', 'l'):
+        mode, user, group = fields[4:7]
+      elif line_type in ('s', 'l'):
+        # soft- and hardlinks
         link_from, link_to = fields[3].split("=")
         installed_path = link_from
         line_to_add = "%s --> %s" % (link_from, link_to)
@@ -677,18 +707,25 @@ class Pkgmap(object):
         self.paths.add(line_to_add)
       entry = {
           "line": line,
+          "type": line_type,
       }
-      if installed_path:
-        entry["path"] = installed_path
+      entry["path"] = installed_path
       entry["class"] = prototype_class
+      entry["mode"] = mode
+      entry["user"] = user
+      entry["group"] = group
       self.entries.append(entry)
+    self.entries_by_line = IndexDictsBy(self.entries, "line")
+    self.entries_by_type = IndexDictsBy(self.entries, "type")
+    self.entries_by_class = IndexDictsBy(self.entries, "class")
+    self.entries_by_path = IndexDictsBy(self.entries, "path")
 
   def GetClasses(self):
     """The assumtion is that the set of classes never changes."""
     if not self.classes:
       self.classes = set()
       for entry in self.entries:
-        if entry["class"]:
+        if entry["class"]:  # might be None
           self.classes.add(entry["class"])
     return self.classes
 

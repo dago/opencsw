@@ -18,6 +18,7 @@ libfoo 1.7.1,REV=2008.10.29 CSWlibfoo libfoo-1.7.1,REV=2008.10.29-SunOS5.8-all-C
 foodoc 1.7.1,REV=2008.10.29 CSWfoodoc foodoc-1.7.1,REV=2008.10.29-SunOS5.8-all-CSW.pkg.gz 0945884a52a3b43b743650c60ac21236 2055045 CSWcommon|CSWxercesj|CSWxmlcommonsext none
 bar 1.7.1,REV=2008.10.29 CSWbar bar-1.7.1,REV=2008.10.29-SunOS5.8-all-CSW.pkg.gz 0945884a52a3b43b743650c60ac21236 2055045 CSWcommon|CSWxercesj|CSWxmlcommonsext none
 antdoc 1.7.1,REV=2008.10.29 CSWantdoc antdoc-1.7.1,REV=2008.10.29-SunOS5.8-all-CSW.pkg.gz e6555e61e7e7f1740935d970e5efad57 5851724 CSWcommon none"""
+
 TEST_PKGINFO="""ARCH=i386
 BASEDIR=/
 CATEGORY=system
@@ -41,6 +42,22 @@ PKG_SRC_NOVERIFY= none
 PKG_DST_QKVERIFY= none
 PKG_CAS_PASSRELATIVE= none
 #FASPACD= none
+"""
+
+PKGMAP_1 = """1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689
+"""
+
+PKGMAP_2 = """: 1 18128
+1 d none /etc/opt/csw/cups 0755 root bin
+1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689
+1 f none /etc/opt/csw/cups/cupsd.conf.default 0640 root bin 4053 20987 1264420689
+1 d none /etc/opt/csw/cups/interfaces 0755 root bin
+1 d none /etc/opt/csw/cups/ppd 0755 root bin
+1 f cswinitsmf /etc/opt/csw/init.d/cswcups 0555 root bin 4547 14118 1264420798
+1 i depend 122 11155 1264524848
+1 i pkginfo 489 41685 1264524852
+1 i postremove 151 12419 1256302505
+1 i preinstall 1488 45678 125630250
 """
 
 
@@ -227,6 +244,64 @@ class PackageGroupNameTest(unittest.TestCase):
 
   def testLongestCommonSubstring_4(self):
     self.assertEqual(set(['bcd', 'hij']), opencsw.LongestCommonSubstring("abcdefghijk", "bcdhij"))
+
+
+class PkgmapUnitTest(unittest.TestCase):
+  
+  def test_1(self):
+    pkgmap = opencsw.Pkgmap(PKGMAP_1.splitlines())
+    expected = [
+        {
+        	  'group': 'bin',
+        	  'user':  'root',
+        	  'path':  '/etc/opt/csw/cups/cupsd.conf.CSW',
+        	  'line':  '1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689',
+        	  'type':  'f',
+        	  'class': 'cswcpsampleconf',
+        	  'mode':  '0644'
+        }
+    ]
+    self.assertEqual(expected, pkgmap.entries)
+
+  def test_2(self):
+    pkgmap = opencsw.Pkgmap(PKGMAP_2.splitlines())
+    line = ": 1 18128"
+    self.assertTrue(line in pkgmap.entries_by_line)
+
+  def test_3(self):
+    pkgmap = opencsw.Pkgmap(PKGMAP_2.splitlines())
+    self.assertTrue("cswcpsampleconf" in pkgmap.entries_by_class)
+
+
+class IndexByUnitTest(unittest.TestCase):
+
+  def testIndexDictsBy_1(self):
+    list_of_dicts = [
+        {"a": 1},
+        {"a": 2},
+        {"a": 3},
+    ]
+    expected = {
+    	  1: [{'a': 1}],
+    	  2: [{'a': 2}],
+    	  3: [{'a': 3}],
+    }
+    self.assertEquals(expected, opencsw.IndexDictsBy(list_of_dicts, "a"))
+
+  def testIndexDictsBy_2(self):
+    list_of_dicts = [
+        {"a": 1, "b": 1},
+        {"a": 1, "b": 2},
+        {"a": 1, "b": 3},
+    ]
+    expected = {
+        1: [
+          {'a': 1, 'b': 1},
+          {'a': 1, 'b': 2},
+          {'a': 1, 'b': 3},
+        ]
+    }
+    self.assertEquals(expected, opencsw.IndexDictsBy(list_of_dicts, "a"))
 
 
 if __name__ == '__main__':
