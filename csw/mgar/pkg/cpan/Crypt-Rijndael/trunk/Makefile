@@ -1,7 +1,7 @@
 GARNAME = Crypt-Rijndael
-GARVERSION = 0.05
+GARVERSION = 1.09
 CATEGORIES = cpan
-AUTHOR = DIDO
+AUTHOR = BDFOY
 
 DESCRIPTION = Crypt::CBC compliant Rijndael encryption module
 define BLURB
@@ -9,12 +9,13 @@ define BLURB
   the Advanced Encryption Standard.
 endef
 
-DISTFILES = $(call admfiles,CSWpmcryptrijndael,depend prototype)
+PACKAGES     = CSWpmcryptrijndael
+CATALOGNAME  = pm_cryptrijndael
 
 # MODE_CTR (not common AFAIK) tests fail on Solaris/x86 32-bit, but
 # not on Solaris/SPARC 64-bit.  This does not appear to be a show
 # stopper, as the tests are able to recover the plaintext, but are
 # not seeing the expected encrypted text.
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
 
 include gar/category.mk
