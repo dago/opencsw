@@ -9,9 +9,7 @@ define BLURB
   methods
 endef
 
-DISTFILES += CSWpmcryptdes.gspec
-
-# Fix name collision with des_*() functions
-PATCHFILES = des_workaround.s9.diff
+CATALOGNAME = pm_cryptdes
+PACKAGES = CSWpmcryptdes
 
 include gar/category.mk
