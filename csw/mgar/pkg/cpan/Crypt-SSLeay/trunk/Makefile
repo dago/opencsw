@@ -1,5 +1,5 @@
 GARNAME = Crypt-SSLeay
-GARVERSION = 0.54
+GARVERSION = 0.57
 CATEGORIES = cpan
 AUTHOR = DLAND
 
@@ -10,12 +10,14 @@ define BLURB
   perldoc LWP for more information on POST requests.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcryptssleay,depend prototype)
-
 # Don't ask about networked tests -- the answer is no.
 PATCHFILES += noask.diff
 
-#DEPENDS += lib/openssl
+PACKAGES = CSWpmcryptssleay
+CATALOGNAME = pm_cryptssleay
+
+REQUIRED_PKGS     = CSWosslrt
+PREREQUISITE_PKGS = CSWosslrt
 
 CONFIGURE_ARGS = --lib=$(prefix)
 
