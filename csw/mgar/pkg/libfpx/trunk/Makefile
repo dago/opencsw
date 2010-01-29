@@ -32,7 +32,7 @@ PKGFILES_CSWlibfpxdevel = $(PKGFILES_DEVEL)
 SPKG_SOURCEURL = http://www.imagemagick.org
 
 PATCHFILES = olecomm.h.patch
-#PATCHFILES += tchar.patch
+PATCHFILES += tchar.patch
 
 LICENSE = flashpix.h
 
@@ -49,6 +49,6 @@ TEST_TARGET = check
 BUILD64 = 1
 
 # libfpx have some problems with rw/trait
-GARCOMPILER = GCC4
+#GARCOMPILER = GCC4
 
 include gar/category.mk

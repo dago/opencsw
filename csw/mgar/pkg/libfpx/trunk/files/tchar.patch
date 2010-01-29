@@ -1,0 +1,45 @@
+diff -Nru libfpx-1.3.0.orig/oless/h/tchar.h libfpx-1.3.0/oless/h/tchar.h
+--- libfpx-1.3.0.orig/oless/h/tchar.h	2002-02-08 02:04:15.000000000 +0100
++++ libfpx-1.3.0/oless/h/tchar.h	2010-01-05 01:51:56.302027510 +0100
+@@ -78,7 +78,7 @@
+ #define _tcsnicmp _strnicmp
+ #define _tcscat   strcat
+ #define _itot     _itoa
+-#define _T(str)   str
++#define OLE_TEXT(str)   str
+ 
+ #ifdef _WIN32
+ 
+@@ -125,7 +125,7 @@
+ #define _tcscat   wcscat
+ #define _tcsnicmp wcsnicmp
+ #define _itot     _itow
+-#define _T(str)   L##str
++#define OLE_TEXT(str)   L##str
+ 
+ /* Io functions */
+ #define _tfopen    _wfopen
+diff -Nru libfpx-1.3.0.orig/oless/props/h/windef.h libfpx-1.3.0/oless/props/h/windef.h
+--- libfpx-1.3.0.orig/oless/props/h/windef.h	2007-11-02 08:10:05.000000000 +0100
++++ libfpx-1.3.0/oless/props/h/windef.h	2010-01-05 01:53:25.581245781 +0100
+@@ -60,7 +60,7 @@
+ #include <assert.h>
+ #define Win4Assert assert
+ 
+-#define TEXT(x) _T(x)
++#define TEXT(x) OLE_TEXT(x)
+ 
+ /* memory manupulation routines */
+ #define RtlCopyMemory(dest,src,count)    memcpy(dest, src, count)
+diff -Nru libfpx-1.3.0.orig/oless/test/stgdrt/drt.hxx libfpx-1.3.0/oless/test/stgdrt/drt.hxx
+--- libfpx-1.3.0.orig/oless/test/stgdrt/drt.hxx	2002-02-08 20:23:42.000000000 +0100
++++ libfpx-1.3.0/oless/test/stgdrt/drt.hxx	2010-01-05 01:53:30.320886391 +0100
+@@ -34,7 +34,7 @@
+ #define EXIT_OOM 2
+ #define EXIT_UNKNOWN 3
+ 
+-#define STR(x) _T(x)
++#define STR(x) OLE_TEXT(x)
+ 
+ #ifdef _UNICODE
+ #ifndef ATOT
