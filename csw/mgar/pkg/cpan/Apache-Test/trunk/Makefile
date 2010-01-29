@@ -9,6 +9,10 @@ define BLURB
   testing an Apache server.
 endef
 
+# depends
+REQUIRED_PKGS     = CSWap2prefork
+PREREQUISITE_PKGS = CSWap2prefork
+
 PACKAGES = CSWpmapachetst
 CATALOGNAME = pm_apachetst
 
