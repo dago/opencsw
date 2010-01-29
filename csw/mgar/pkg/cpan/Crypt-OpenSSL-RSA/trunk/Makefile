@@ -14,5 +14,6 @@ PACKAGES = CSWpmcryptosslrsa
 CATALOGNAME = pm_osslrsa
 
 REQUIRED_PKGS = CSWpmcryptosslrandom
+PREREQUISITE_PKGS = CSWpmcryptosslrandom
 
 include gar/category.mk
