@@ -168,7 +168,21 @@ DESTIMG ?= $(LOGNAME)-$(shell hostname)
 COMMON_PKG_DEPENDS ?= CSWcommon
 
 # These are the core packages which must be installed for GAR to function correctly
-DEF_BASE_PKGS = CSWgmake CSWgtar CSWggrep CSWdiffutils CSWgfile CSWtextutils CSWwget CSWfindutils CSWgsed CSWgawk CSWbzip2
+
+DEF_BASE_PKGS += CSWbzip2
+DEF_BASE_PKGS += CSWdiffutils
+DEF_BASE_PKGS += CSWfindutils
+DEF_BASE_PKGS += CSWgawk
+DEF_BASE_PKGS += CSWgfile
+DEF_BASE_PKGS += CSWggrep
+DEF_BASE_PKGS += CSWgmake
+DEF_BASE_PKGS += CSWgsed
+DEF_BASE_PKGS += CSWgtar
+DEF_BASE_PKGS += CSWpy-cheetah
+DEF_BASE_PKGS += CSWpython
+DEF_BASE_PKGS += CSWtextutils
+DEF_BASE_PKGS += CSWwget
+
 ifdef GIT_REPOS
 # netcat and bash are for the gitproxy script.
 DEF_BASE_PKGS += CSWgit CSWnetcat
@@ -546,6 +560,10 @@ UPSTREAM_USE_SF	?= 0
 # Google Code
 GOOGLE_PROJECT ?= $(GARNAME)
 GOOGLE_MIRROR  ?= http://$(GOOGLE_PROJECT).googlecode.com/files/
+
+# Berlios
+BERLIOS_PROJECT ?= $(GARNAME)
+BERLIOS_MIRROR ?= http://download.berlios.de/$(BERLIOS_PROJECT)/ http://download2.berlios.de/$(BERLIOS_PROJECT)/
 
 # GNU
 GNU_SITE     = http://mirrors.kernel.org

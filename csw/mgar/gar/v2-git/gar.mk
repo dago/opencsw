@@ -356,9 +356,11 @@ checksum-p:
 	@$(foreach COOKIEFILE,$(CHECKSUM_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 # makesum		- Generate distinfo (only do this for your own ports!).
+GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(filter-out $(ALLFILES_DYNSCRIPTS), $(ALLFILES)))
+
 MAKESUM_TARGETS =  $(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES))
 
-makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS))
+makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS)) $(GARCHIVE_TARGETS)
 	@if test "x$(MAKESUM_TARGETS)" != "x "; then \
 		(cd $(DOWNLOADDIR) && gmd5sum $(MAKESUM_TARGETS)) > $(CHECKSUM_FILE) ; \
 		echo "Checksums made for $(MAKESUM_TARGETS)" ; \
@@ -367,8 +369,6 @@ makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS))
 
 # I am always typing this by mistake
 makesums: makesum
-
-GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(ALLFILES))
 
 garchive: checksum $(GARCHIVE_TARGETS) ;
 
@@ -631,7 +631,9 @@ _DBG_MERGE=
 endif
 
 ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
-MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-default ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= $(MERGE_SCRIPTS_isa-default)
+MERGE_SCRIPTS_$(MODULATION) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED))
 else
 ISAEXEC_DIRS ?= $(if $(NO_ISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
 MERGE_DIRS_isa-default ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
@@ -887,7 +889,7 @@ printdepends:
 
 # Update inter-package depends
 makedepend:
-	@for gspec in `gfind $(CURDIR) -type f -name '*.gspec' | ggrep files`; do \
+	$(_DBG)for gspec in `gfind $(CURDIR) -type f -name '*.gspec' | ggrep files`; do \
 		pkgname=`basename $$gspec .gspec` ; \
 		pkgfiles=`dirname $$gspec` ; \
 		pkgdir=`dirname $$pkgfiles` ; \

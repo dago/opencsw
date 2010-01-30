@@ -141,7 +141,7 @@ endif
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
-SPKG_SOURCEURL ?= $(firstword $(MASTER_SITES))
+SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) $(MASTER_SITES) $(GIT_REPOS))
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
@@ -154,16 +154,11 @@ SPKG_EXPORT    ?= $(HOME)/staging/build-$(shell date '+%d.%b.%Y')
 SPKG_PKGROOT   ?= $(PKGROOT)
 SPKG_PKGBASE   ?= $(PKGROOT)
 SPKG_WORKDIR   ?= $(CURDIR)/$(WORKDIR)
+SPKG_TMPDIR    ?= /tmp
 
 SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
-
-# Handle cswclassutils
-# append $2 to SPKG_CLASSES if $1 is non-null
-define _spkg_cond_add
-$(SPKG_CLASSES) $(if $($(1)),$(if $(filter $(2),$(SPKG_CLASSES)),,$(2)))
-endef
 
 MIGRATECONF ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
 
@@ -175,21 +170,6 @@ _ETCSERVICES_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_etcser
 USERGROUP += $(_USERGROUP_FILES)
 INETDCONF += $(_INETDCONF_FILES)
 ETCSERVICES += $(_ETCSERVICES_FILES)
-
-# NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
-#	always be the last two added.  The reason for this is that
-#	you need to ensure any binaries and config files are already on disk
-#	and able to be consumed by a service that might be started.
-SPKG_CLASSES := $(call _spkg_cond_add,MIGRATECONF,cswmigrateconf)
-SPKG_CLASSES := $(call _spkg_cond_add,SAMPLECONF,cswcpsampleconf)
-SPKG_CLASSES := $(call _spkg_cond_add,PRESERVECONF,cswpreserveconf)
-SPKG_CLASSES := $(call _spkg_cond_add,ETCSERVICES,cswetcservices)
-SPKG_CLASSES := $(call _spkg_cond_add,USERGROUP,cswusergroup)
-SPKG_CLASSES := $(call _spkg_cond_add,CRONTABS,cswcrontab)
-SPKG_CLASSES := $(call _spkg_cond_add,PYCOMPILE,cswpycompile)
-SPKG_CLASSES := $(call _spkg_cond_add,INETDCONF,cswinetd)
-SPKG_CLASSES := $(call _spkg_cond_add,INITSMF,cswinitsmf)
-
 
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
@@ -208,13 +188,27 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		print join(" ",@F),"\n";'
 
-# The TEXINFO dependency is handled dynamically by looking at the prototype for matching files
-ifneq ($(MIGRATECONF)$(SAMPLECONF)$(PRESERVECONF)$(ETCSERVICES)$(INETDCONF)$(INITSMF)$(USERGROUP)$(PYCOMPILE),)
-_EXTRA_GAR_PKGS += CSWcswclassutils
+# If you add another filter above, also add the class to this list. It is used
+# to detect if a package needs to depends on CSWcswclassutils by looking at
+# files belonging to one of these in the prototype.
+
+# NOTE: Order _can_  be important here.  cswinitsmf and cswinetd should
+#	always be the last two added.  The reason for this is that
+#	you need to ensure any binaries and config files are already on disk
+#	and able to be consumed by a service that might be started.
+
+_CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf
+_CSWCLASSES += cswetcservices
+_CSWCLASSES += cswusergroup ugfiles
+_CSWCLASSES += cswcrontab
+_CSWCLASSES += cswpycompile
+_CSWCLASSES += cswinetd
+_CSWCLASSES += cswinitsmf
+_CSWCLASSES += cswtexinfo
+
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
 _EXTRA_PAX_ARGS += $(foreach FILE,$(SAMPLECONF:%\.CSW=%) $(PRESERVECONF:%\.CSW=%),-s ",^\.\($(FILE)\)$$,.\1\.CSW,p")
-endif
 
 PKGGET_DESTDIR ?=
 
@@ -372,7 +366,8 @@ PROTOTYPE = $(WORKDIR)/prototype
 $(PROTOTYPE): $(WORKDIR) merge
 	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=/ >$@
 
-# The pathfilter rules are as follows:
+# pathfilter lives in bin/pathfilter and takes care of including/excluding paths from
+# a prototype (see "perldoc bin/pathfilter"). We employ it here to:
 # - include license for current package
 # - exclude licenses for all other packages
 # - if other includes are given, only include these files
@@ -427,7 +422,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
-$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),CSWcswclassutils)
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
 $(WORKDIR)/%.depend: $(WORKDIR)
 	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
@@ -532,7 +527,7 @@ $(foreach P,$(SPKG_SPECS),\
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
-$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach FILE,$(TEXINFO),print "$$F[2]\n" if( $$F[2] =~ m(^$(FILE)$$) );)'),cswtexinfo)
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	$(_DBG)(echo "PKG=$*"; \
@@ -710,20 +705,34 @@ package: _package
 	@echo
 	@$(DONADA)
 
+dirpackage: _DIRPACKAGE=1
+dirpackage: ENABLE_CHECK=
+dirpackage: _package
+	@echo "The following packages have been built:"
+	@echo
+	@$(MAKE) -s PLATFORM=$(PLATFORM) _dirpkgshow
+	@echo
+	@$(DONADA)
+
+_dirpkgshow:
+	@$(foreach SPEC,$(_PKG_SPECS),echo "  $(SPKG_SPOOLDIR)/$(SPEC)";)
+
 _pkgshow:
 	@$(foreach SPEC,$(_PKG_SPECS),printf "  %-20s %s\n"  $(SPEC) $(SPKG_EXPORT)/$(shell $(call _PKG_ENV,$(SPEC)) $(GARBIN)/mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile).gz;)
 
 # The dynamic pkginfo is only generated for dynamic gspec-files
 package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depend $(if $(findstring %.gspec,$(DISTFILES)),,$(WORKDIR)/%.pkginfo)
 	@echo " ==> Processing $*.gspec"
-	$(_DBG)( $(call _PKG_ENV,$*) mkpackage --spec $(WORKDIR)/$*.gspec \
+	$(_DBG)( $(call _PKG_ENV,$*) mkpackage \
+						 --spec $(WORKDIR)/$*.gspec \
 						 --spooldir $(SPKG_SPOOLDIR) \
+						 --tmpdir   $(SPKG_TMPDIR)  \
 						 --destdir  $(SPKG_EXPORT) \
 						 --workdir  $(SPKG_WORKDIR) \
 						 --pkgbase  $(SPKG_PKGBASE) \
 						 --pkgroot  $(SPKG_PKGROOT) \
 						-v WORKDIR_FIRSTMOD=../build-$(firstword $(MODULATIONS)) \
-						 --compress \
+						 $(if $(_DIRPACKAGE),--notransfer --nocompress,--compress) \
 						 $(MKPACKAGE_ARGS) ) || exit 2
 	@$(MAKECOOKIE)
 
@@ -733,7 +742,7 @@ package-p:
 # pkgcheck - check if the package is compliant
 #
 pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
-	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
+	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
 	@$(MAKECOOKIE)
 
 pkgcheck-p:
@@ -756,6 +765,8 @@ pkgreset-%:
 	$(_DBG)rm -rf $(addprefix $(WORKDIR)/,$(filter-out $(DISTFILES),$(patsubst $(WORKDIR)/%,%,$(wildcard $(WORKDIR)/$*.*)) prototype copyright $*.copyright))
 
 repackage: pkgreset package
+
+redirpackage: pkgreset dirpackage
 
 # This rule automatically logs into every host where a package for this software should
 # be built. It is especially suited for automated build bots.
@@ -782,6 +793,17 @@ platforms:
 		)\
 	)
 	@$(MAKECOOKIE)
+
+platforms-%:
+	$(foreach P,$(PACKAGING_PLATFORMS),\
+		$(if $(PACKAGING_HOST_$P),\
+			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
+				$(MAKE) PLATFORM=$P $* && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P $*" && \
+			),\
+			$(error *** No host has been defined for platform $P)\
+		)\
+	) true
 
 replatforms: spotless platforms
 

@@ -509,17 +509,17 @@ configure-%/waf:
 # build from a standard gnu-style makefile's default rule.
 build-%/Makefile:
 	@echo " ==> Running make in $*"
-	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
+	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/makefile:
 	@echo " ==> Running make in $*"
-	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
+	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/GNUmakefile:
 	@echo " ==> Running make in $*"
-	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
+	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))")  $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/Jamfile:
@@ -564,17 +564,17 @@ TEST_TARGET ?= test
 # Run tests on pre-built sources
 test-%/Makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/GNUmakefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 # Ruby makefiles

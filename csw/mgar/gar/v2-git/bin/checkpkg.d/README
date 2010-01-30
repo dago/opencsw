@@ -1,0 +1,11 @@
+$Id$
+
+This directory contains modular checks.  Each check is an executable file,
+written in any language, accepting specific command line options and returning
+the result as a status exit code.
+
+To see the required flags, issue:
+
+./checkpkg-dummy.py -h
+
+Each test's file name must begin with "checkpkg-".
