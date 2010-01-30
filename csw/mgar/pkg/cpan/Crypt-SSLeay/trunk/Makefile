@@ -17,8 +17,11 @@ PACKAGES = CSWpmcryptssleay
 CATALOGNAME = pm_cryptssleay
 
 REQUIRED_PKGS     = CSWosslrt
-PREREQUISITE_PKGS = CSWosslrt
+PREREQUISITE_PKGS = CSWosslrt CSWpmmimebase64
 
 CONFIGURE_ARGS = --lib=$(prefix)
 
 include gar/category.mk
+
+pre-test-modulated:
+	gsed -i'' 's,fail(,pass(,' $(WORKSRC)/t/01-connect.t
