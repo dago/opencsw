@@ -1,0 +1,43 @@
+diff --git a/Makefile b/Makefile
+index cf927aa..0a178b9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,10 +4,10 @@
+ # In general, you should only need to change the compiler and the
+ # location of your python header files.
+ 
+-CC =	gcc
+-PY_INCLUDES =	-I/s/include/python1.5
+-PY_LIBDIR =	/s/lib/python1.5
++PY_INCLUDES =	-I/opt/csw/include/python2.6
++PY_LIBDIR =	/opt/csw/lib/python2.6
+ DEBUG=
++INSTALL = ginstall
+ 
+ # Don't change below this line!
+ SOLIBS= -lkstat
+@@ -18,10 +18,14 @@ PY_SITE_LIB_DIR = 	$(PY_LIBDIR)/site-packages
+ all: wkstatmodule.so utmpxmodule.so
+ 
+ install: all
+-	/bin/cp wkstatmodule.so utmpxmodule.so $(PY_SO_LIB_DIR)
+-	/bin/cp kstat.py kstats.py $(PY_SITE_LIB_DIR)
++	$(INSTALL) -m 755 -d $(DESTDIR)$(PY_SO_LIB_DIR)
++	$(INSTALL) -m 755 -d $(DESTDIR)$(PY_SITE_LIB_DIR)
++	$(INSTALL) -m 755 wkstatmodule.so $(DESTDIR)$(PY_SO_LIB_DIR)
++	$(INSTALL) -m 755 utmpxmodule.so  $(DESTDIR)$(PY_SO_LIB_DIR)
++	$(INSTALL) -m 644 kstat.py  $(DESTDIR)$(PY_SITE_LIB_DIR)
++	$(INSTALL) -m 644 kstats.py $(DESTDIR)$(PY_SITE_LIB_DIR)
+ 	@echo "You may wish to run:"
+-	@echo "	python $(PY_LIBDIR)/compileall.py $(PY_SITE_LIB_DIR)"
++	@echo "	python $(PY_LIBDIR)/compileall.py $(DESTDIR)$(PY_SITE_LIB_DIR)"
+ 	@echo "to compile the new libraries for your users."
+ 
+ swig: wkstatmodule.so
+@@ -60,4 +64,4 @@ dist:
+ 	tardist PyKstat-0.5
+ 
+ clean:
+-	/bin/rm -f *~ *.o *.so main0 test1
+\ No newline at end of file
++	/bin/rm -f *~ *.o *.so main0 test1
