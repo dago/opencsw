@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index cf927aa..0a178b9 100644
+index cf927aa..9617708 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -4,10 +4,10 @@
@@ -10,7 +10,7 @@ index cf927aa..0a178b9 100644
 -PY_INCLUDES =	-I/s/include/python1.5
 -PY_LIBDIR =	/s/lib/python1.5
 +PY_INCLUDES =	-I/opt/csw/include/python2.6
-+PY_LIBDIR =	/opt/csw/lib/python2.6
++PY_LIBDIR =	/opt/csw/lib/python
  DEBUG=
 +INSTALL = ginstall
  
