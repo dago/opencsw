@@ -1,12 +1,16 @@
 GARNAME = FCGI
-GARVERSION = 0.67
+GARVERSION = 0.68
 CATEGORIES = cpan
-AUTHOR = SKIMO
+AUTHOR = MSTROUT
 
-DESCRIPTION = fast CGI module
+DESCRIPTION = Fast CGI module
 define BLURB
+  Fast CGI module for Perl
 endef
 
-DISTFILES += CSWpmfcgi.gspec
+PACKAGES = CSWpmfcgi
+CATALOGNAME = pm_fcgi
+
+LICENSE = README
 
 include gar/category.mk
