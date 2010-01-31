@@ -1,5 +1,5 @@
 GARNAME = Devel-Cover
-GARVERSION = 0.61
+GARVERSION = 0.65
 CATEGORIES = cpan
 AUTHOR = PJCJ
 
@@ -8,6 +8,7 @@ define BLURB
   This module provides code coverage metrics for Perl.
 endef
 
-DISTFILES += $(call admfiles,CSWpmdevelcover,prototype)
+PACKAGES = CSWpmdevelcover
+CATALOGNAME = pm_develcover
 
 include gar/category.mk
