@@ -1,5 +1,5 @@
 GARNAME = Date-Calc
-GARVERSION = 5.4
+GARVERSION = 6.3
 CATEGORIES = cpan
 AUTHOR = STBEY
 
@@ -12,9 +12,10 @@ define BLURB
   and, to some extent, ISO 8601 (where applicable).
 endef
 
-DISTFILES += $(call admfiles,CSWpmdatecalc,depend prototype)
+PACKAGES = CSWpmdatecalc
+CATALOGNAME = pm_datecalc
 
-DEPENDS += cpan/Carp-Clan
-DEPENDS += cpan/Bit-Vector
+PREREQUISITE_PKGS = CSWpmbitvec CSWpmcarpclan
+REQUIRES = CSWpmbitvec CSWpmcarpclan
 
 include gar/category.mk
