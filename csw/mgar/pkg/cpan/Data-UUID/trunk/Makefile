@@ -1,7 +1,7 @@
 GARNAME = Data-UUID
-GARVERSION = 0.11
+GARVERSION = 1.203
 CATEGORIES = cpan
-AUTHOR = AGOLOMSH
+AUTHOR = RJBS
 
 DESCRIPTION = extension for generating unique identifiers
 define BLURB
@@ -11,7 +11,8 @@ define BLURB
   generated until 3400 CE.
 endef
 
-DISTFILES = $(call admfiles,CSWpmdatauuid,)
+PACKAGES     = CSWpmdatauuid
+CATALOGNAME  = pm_datauuid
 
 CONFIGURE_ENV += PERL_MM_USE_DEFAULT=1
 
