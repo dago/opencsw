@@ -32,6 +32,7 @@ ARCHALL_CSWgitcompletion = 1
 PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
 PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
+PREREQUISITE_PKGS += CSWpython
 
 REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
 REQUIRED_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
@@ -123,6 +124,7 @@ CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 CONFIGURE_ARGS += --with-gitconfig=$(sysconfdir)/gitconfig
 CONFIGURE_ARGS += --with-pager=/opt/csw/bin/less
+CONFIGURE_ARGS += --with-python=/opt/csw/bin/python
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ASCIIDOC_NO_ROFF=YesPlease \
