@@ -1,5 +1,5 @@
 GARNAME      = sqlite3
-GARVERSION   = 3.6.21
+GARVERSION   = 3.6.22
 CATEGORIES   = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
@@ -12,7 +12,6 @@ endef
 MASTER_SITES = http://sqlite.org/
 DISTNAME = sqlite-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz 
-DISTFILES += COPYING
 
 PATCHFILES = gar-base.diff
 PATCHFILES += shell.c.diff
