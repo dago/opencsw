@@ -11,6 +11,7 @@ PACKAGES = CSWpmdevelcaller
 CATALOGNAME = pm_develcaller
 
 REQUIRED_PKGS = CSWpmpadwalker
+PREREQUISITE_PKGS = CSWpmpadwalker
 
 include gar/category.mk
 
