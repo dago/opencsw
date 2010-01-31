@@ -13,8 +13,9 @@ define BLURB
   Term::ReadKey" on any architecture and have a good likelyhood of it working.
 endef
 
-DISTFILES = $(call admfiles,CSWpmtermreadkey,depend prototype)
+PACKAGES = CSWpmtermreadkey
+CATALOGNAME = pm_termreadkey
 
-DEPENDS += lib/ncurses
+REQUIRED_PKGS = CSWncurses
 
 include gar/category.mk
