@@ -1,0 +1,20 @@
+GARNAME = Scope-Guard
+GARVERSION = 0.03
+CATEGORIES = cpan
+AUTHOR = CHOCOLATE
+
+DESCRIPTION = lexically scoped resource management
+define BLURB
+  This module provides a convenient way to perform cleanup or other 
+  forms of resource management at the end of a scope. It is particularly 
+  useful when dealing with exceptions: the Scope::Guard constructor takes 
+  a reference to a subroutine that is guaranteed to be called even if the 
+  thread of execution is aborted prematurely. This effectively allows 
+  lexically-scoped "promises" to be made that are automatically honoured 
+  by perl's garbage collector.
+endef
+
+PACKAGES = CSWpmscopeguard
+CATALOGNAME = pm_scopeguard
+
+include gar/category.mk
