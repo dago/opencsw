@@ -62,10 +62,11 @@ TEST_ENV      += PERL5LIB=$(PERL5LIB)
 INSTALL_ENV   += PERL5LIB=$(PERL5LIB)
 
 # Configure a target using Makefile.PL
-PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor $(EXTRA_PERL_CONFIGURE_ARGS)
+BIND_LIBPERL ?= LIBS=-lperl
+PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor $(BIND_LIBPERL) $(EXTRA_PERL_CONFIGURE_ARGS)
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
-	@( cd $* ; \
+	( cd $* ; \
 	    $(CONFIGURE_ENV) perl Makefile.PL \
 	        $(CONFIGURE_ARGS) $(PERL_CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
@@ -73,14 +74,14 @@ configure-%/Makefile.PL:
 PERLBUILD_CONFIGURE_ARGS ?= installdirs=vendor $(EXTRA_PERLBUILD_CONFIGURE_ARGS)
 configure-%/Build.PL:
 	@echo " ==> Running Build.PL in $*"
-	@( cd $* ; \
+	( cd $* ; \
 	    $(CONFIGURE_ENV) perl Build.PL \
 	        $(PERLBUILD_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
 build-%/Build:
 	@echo " ==> Running Build in $*"
-	@( cd $* ; $(BUILD_ENV) ./Build )
+	( cd $* ; $(BUILD_ENV) ./Build )
 	@$(MAKECOOKIE)
 
 test-%/Build:
