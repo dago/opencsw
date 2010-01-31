@@ -33,6 +33,9 @@ INCLUDE_FLAGS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+# tk need the static tclstub library for some reason
+EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libtclstub.*\.a
+
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
