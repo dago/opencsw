@@ -19,8 +19,8 @@ CATALOGNAME_CSWpmxmllibxmlcom = pm_xmllibxmlcom
 SPKG_DESC_CSWpmxmllibxmlcom = Constants and Character Encoding Routines
 PKGFILES_CSWpmxmllibxmlcom = this-is-just-an-empty-stub
 
-PREREQUISITE_PKGS = CSWpmxmlnssupp CSWpmxmlsax CSWlibxml2
-REQUIRED_PKGS = CSWpmxmlnssupp CSWpmxmlsax CSWlibxml2
+PREREQUISITE_PKGS = CSWpmxmlnssupp CSWpmxmlsax CSWlibxml2 CSWlibxml2devel
+REQUIRED_PKGS = CSWpmxmlnssupp CSWpmxmlsax CSWlibxml2 CSWlibxml2devel
 
 CONFIGURE_ENV += SKIP_SAX_INSTALL=1
 
