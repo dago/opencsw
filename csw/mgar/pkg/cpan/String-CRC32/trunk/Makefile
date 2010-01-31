@@ -11,6 +11,7 @@ define BLURB
   files.
 endef
 
-DISTFILES = $(call admfiles,CSWpmstringcrc32,depend prototype)
+PACKAGES = CSWpmstringcrc32
+CATALOGNAME = pm_stringcrc32
 
 include gar/category.mk
