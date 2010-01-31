@@ -187,4 +187,6 @@ post-install-modulated:
 		ginstall -c -m 0755 -d $(BD); \
 		cp contrib/completion/* \
 			$(BD)/ )
+	@echo TEMP UNTIL USED: Purging Remote Helper Python Stuff
+	@( cd $(DESTDIR)/opt/csw/lib; rm -rf python )
 	@$(MAKECOOKIE)
