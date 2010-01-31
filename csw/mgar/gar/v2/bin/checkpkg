@@ -265,8 +265,12 @@ if [ "$basedir" != "" ] ; then
 	print basedir="'$basedir'"
 fi
 
-if [[ ${#software} -gt ${NAME_MAX_LENGTH} ]] ; then errmsg $f: software name greater than 20 chars ; fi
-if [[ ${#pkgname} -gt ${NAME_MAX_LENGTH} ]] ; then errmsg $f: pkg name greater than 20 chars; fi
+if [[ ${#software} -gt ${NAME_MAX_LENGTH} ]] ; then
+	errmsg "$f: software name longer than ${NAME_MAX_LENGTH} chars"
+fi
+if [[ ${#pkgname} -gt ${NAME_MAX_LENGTH} ]] ; then
+	errmsg "$f: pkg name longer than ${NAME_MAX_LENGTH} chars"
+fi
 
 if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
 if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
@@ -522,8 +526,8 @@ do
     if [[ $? -ne 0 ]]; then
 	#if we've already looked at the package named $dep,
 	#it'll be in the file.
- 	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/bin/grep $dep >/dev/null
- 	if [[ $? -ne 0 ]]; then #we haven't yet seen this package in our set
+	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/bin/grep $dep >/dev/null
+	if [[ $? -ne 0 ]]; then #we haven't yet seen this package in our set
 	    echo "Can't validate dependence on $dep.  Storing for delayed validation."
 	    #store for validation at the end.
 	    echo "$dep $pkgname" >> $SETDEPS.missing
@@ -584,8 +588,9 @@ if [[ "${DEBUG}" != "" ]]; then
 fi
 debugmsg "plugindir: '$plugindir'"
 log_files=""
+module_name_format="%-40s"
 if [[ -d "$plugindir" ]]; then
-  echo "Running modular tests"
+	echo "Running modular tests"
 	# echo plugin dir exists
 	for plugin in "${plugindir}"/checkpkg-*; do
 		if [[ -x "${plugin}" ]]; then
@@ -594,29 +599,29 @@ if [[ -d "$plugindir" ]]; then
 			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
 			log_files="${log_files} ${plugin_log}"
 			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
-			printf "TEST: ${BOLD}${plugin_name}${COLOR_RESET} running..."
+			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
 			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
-				printf "\rTEST: ${plugin_name} ${RED}[FAIL]${COLOR_RESET}        \\n"
+				printf "\r${module_name_format} ${RED}[FAIL]${COLOR_RESET}        \\n" "${plugin_name}"
 				test_suite_ok=0
 			else
-				printf "\rTEST: ${plugin_name} ${GREEN}[OK]${COLOR_RESET}        \\n"
+				printf "\r${module_name_format} ${GREEN}[OK]${COLOR_RESET}        \\n" "${plugin_name}"
 			fi
 		else
 			debugmsg "'${plugin}' is not executable"
 		fi
 	done
 else
-	debugmsg "plugin dir does not exist"
+	debugmsg "plugin dir ${plugindir} does not exist"
 fi
 
 for log_file in ${log_files}; do
-	if [[ -s "${log_file}" ]]; then
+	if [[ `gwc -c "${log_file}" | awk '{print $1}'` -gt 1 ]]; then
 		debugmsg ">> LOG START: ${log_file}"
 		cat "${log_file}"
 		debugmsg "<< LOG END: ${log_file}"
-  else
-  	debugmsg "-- LOG ${log_file} is empty"
+	else
+		debugmsg "-- LOG ${log_file} is empty"
 	fi
 done
 
