@@ -38,7 +38,7 @@ CATALOGNAME_CSWpy-yaml = py_yaml
 CATALOGNAME_CSWpy-yaml-rt = py_yaml_rt
 
 REQUIRED_PKGS_CSWpy-yaml =
-REQUIRED_PKGS_CSWpy-yaml-rt = CSWpython-rt CSWlibyaml
+REQUIRED_PKGS_CSWpy-yaml-rt = CSWlibyaml
 PREREQUISITE_PKGS = $(REQUIRED_PKGS_CSWpy-yaml) $(REQUIRED_PKGS_CSWpy-yaml-rt)
 
 SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
