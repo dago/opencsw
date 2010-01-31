@@ -10,7 +10,7 @@ define BLURB
   inside the "qw()" term (or argument list).
 endef
 
-OCKAGES = CSWpmcarpclan
+PACKAGES = CSWpmcarpclan
 CATALOGNAME = pm_carpclan
 
 include gar/category.mk
