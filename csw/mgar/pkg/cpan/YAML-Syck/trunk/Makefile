@@ -13,6 +13,4 @@ endef
 PACKAGES = CSWpmyamlsyck
 CATALOGNAME = pm_yamlsyck
 
-ARCHALL = 1
-
 include gar/category.mk
