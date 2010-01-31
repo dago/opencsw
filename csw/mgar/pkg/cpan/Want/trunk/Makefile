@@ -1,5 +1,5 @@
 GARNAME = Want
-GARVERSION = 0.12
+GARVERSION = 0.18
 CATEGORIES = cpan
 AUTHOR = ROBIN
 
@@ -10,6 +10,7 @@ define BLURB
   immediately used.
 endef
 
-DISTFILES += CSWpmwant.gspec
+PACKAGES = CSWpmwant
+CATALOGNAME = pm_want
 
 include gar/category.mk
