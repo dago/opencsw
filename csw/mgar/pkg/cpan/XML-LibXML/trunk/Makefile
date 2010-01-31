@@ -1,7 +1,7 @@
 GARNAME = XML-LibXML
-GARVERSION = 1.58
+GARVERSION = 1.70
 CATEGORIES = cpan
-AUTHOR = PHISH
+AUTHOR = PAJAS
 
 DESCRIPTION = binding for libxml2
 define BLURB
@@ -11,10 +11,17 @@ define BLURB
   several packages which are not described in this section.
 endef
 
-DISTFILES += $(call admfiles,CSWpmxmllibxml,depend prototype)
+PACKAGES  = CSWpmxmllibxml CSWpmxmllibxmlcom
+CATALOGNAME_CSWpmxmllibxml = pm_xmllibxml
+SPKG_DESC_CSWpmxmllibxml = Binding for libxml2
+# PKGFILES_CSWpmxmllibxml = 
+CATALOGNAME_CSWpmxmllibxmlcom = pm_xmllibxmlcom
+SPKG_DESC_CSWpmxmllibxmlcom = Constants and Character Encoding Routines
+PKGFILES_CSWpmxmllibxmlcom = this-is-just-an-empty-stub
 
-DEPENDS += cpan/XML-LibXML-Common
-DEPENDS += cpan/XML-NamespaceSupport
-DEPENDS += cpan/XML-SAX
+PREREQUISITE_PKGS = CSWpmxmlnssupp CSWpmxmlsax
+REQUIRED_PKGS = CSWpmxmlnssupp CSWpmxmlsax
+
+CONFIGURE_ENV += SKIP_SAX_INSTALL=1
 
 include gar/category.mk
