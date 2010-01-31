@@ -11,15 +11,13 @@ define BLURB
   invoked.
 endef
 
-DISTFILES = COPYING
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWpmhtmlparser
 CATALOGNAME = pm_htmlparser
 
 REQUIRED_PKGS = CSWpmhtmltagset
+
+LICENSE = README
 
 CONFIGURE_ARGS = -n
 
