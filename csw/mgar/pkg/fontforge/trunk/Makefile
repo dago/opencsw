@@ -17,7 +17,6 @@ REQUIRED_PKGS += CSWiconv
 REQUIRED_PKGS += CSWlibice
 REQUIRED_PKGS += CSWlibsm
 REQUIRED_PKGS += CSWpython
-REQUIRED_PKGS += CSWpython-rt
 
 DISTNAME = fontforge-$(VERSION_DATESTAMP)
 PATCHFILES  = grayscale.patch
