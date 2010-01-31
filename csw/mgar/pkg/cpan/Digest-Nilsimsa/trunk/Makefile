@@ -10,6 +10,7 @@ define BLURB
   around nilsimsa implementation in C by cmeclax.
 endef
 
-DISTFILES += CSWpmdigestnilsimsa.gspec
+PACKAGES = CSWpmdigestnilsimsa
+CATALOGNAME = pm_digestnilsimsa
 
 include gar/category.mk
