@@ -1,5 +1,5 @@
 GARNAME = Proc-ProcessTable
-GARVERSION = 0.41
+GARVERSION = 0.45
 CATEGORIES = cpan
 AUTHOR = DURIST
 
@@ -8,6 +8,7 @@ define BLURB
   Perl interface to the unix process table.
 endef
 
-DISTFILES += $(call admfiles,CSWpmproctbl,prototype)
+PACKAGES = CSWpmproctbl
+CATALOGNAME = pm_proctbl
 
 include gar/category.mk
