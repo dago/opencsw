@@ -643,6 +643,48 @@ class DirectoryFormatPackage(ShellMixin, object):
     fd.close()
     return depends
 
+  def CheckPkgpathExists(self):
+    if not os.path.isdir(self.directory):
+      raise PackageError("%s does not exist or is not a directory"
+                         % self.directory)
+
+  def ListBinaries(self):
+    """Shells out to list all the binaries from a given package.
+
+    Original checkpkg code:
+
+    #########################################
+    # find all executables and dynamic libs,and list their filenames.
+    listbinaries() {
+      if [ ! -d $1 ] ; then
+        print errmsg $1 not a directory
+        rm -rf $EXTRACTDIR
+        exit 1
+      fi
+    
+      find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
+    }
+
+    Returns a list of absolute paths.
+    """
+    self.CheckPkgpathExists()
+    find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
+    find_proc = subprocess.Popen(find_tmpl % self.directory,
+                                 shell=True,
+                                 stdout=subprocess.PIPE)
+    stdout, stderr = find_proc.communicate()
+    ret = find_proc.wait()
+    if ret:
+      logging.error("The find command returned an error.")
+    return stdout.splitlines()
+
+  def GetAllFilenames(self):
+    self.CheckPkgpathExists()
+    file_basenames = []
+    for root, dirs, files in os.walk(self.pkgpath):
+      file_basenames.extend(files)
+    return file_basenames
+
 
 class Pkgmap(object):
   """Represents the pkgmap of the package.

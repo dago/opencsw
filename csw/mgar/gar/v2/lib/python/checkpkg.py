@@ -107,7 +107,7 @@ def GetOptions():
   return options, set(args)
 
 
-class CheckpkgBase(object):
+class CheckpkgBase(opencsw.DirectoryFormatPackage):
   """This class has functionality overlapping with DirectoryFormatPackage
   from the opencsw.py library. The classes should be merged.
   """
@@ -116,45 +116,7 @@ class CheckpkgBase(object):
     self.extractdir = extractdir
     self.pkgname = pkgname
     self.pkgpath = os.path.join(self.extractdir, self.pkgname)
-
-  def CheckPkgpathExists(self):
-    if not os.path.isdir(self.pkgpath):
-      raise PackageError("%s does not exist or is not a directory"
-                         % self.pkgpath)
-
-  def ListBinaries(self):
-    """Shells out to list all the binaries from a given package.
-
-    Original checkpkg code:
-
-    # #########################################
-    # # find all executables and dynamic libs,and list their filenames.
-    # listbinaries() {
-    #   if [ ! -d $1 ] ; then
-    #     print errmsg $1 not a directory
-    #     rm -rf $EXTRACTDIR
-    #     exit 1
-    #   fi
-    # 
-    #   find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
-    # }
-    """
-    self.CheckPkgpathExists()
-    find_tmpl = "find %s -print | xargs file | grep ELF | nawk -F: '{print $1}'"
-    find_proc = subprocess.Popen(find_tmpl % self.pkgpath,
-                                 shell=True, stdout=subprocess.PIPE)
-    stdout, stderr = find_proc.communicate()
-    ret = find_proc.wait()
-    if ret:
-      logging.error("The find command returned an error.")
-    return stdout.splitlines()
-
-  def GetAllFilenames(self):
-    self.CheckPkgpathExists()
-    file_basenames = []
-    for root, dirs, files in os.walk(self.pkgpath):
-      file_basenames.extend(files)
-    return file_basenames
+    super(CheckpkgBase, self).__init__(self.pkgpath)
 
   def FormatDepsReport(self, missing_deps, surplus_deps, orphan_sonames):
     """To be removed."""

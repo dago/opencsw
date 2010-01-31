@@ -36,10 +36,12 @@ fi
 if [[ -t 1 ]]; then
 	GREEN="\\033[0;32;40m"
 	RED="\\033[1;31;40m"
+	BOLD="\\033[1m"
 	COLOR_RESET="\\033[00m"
 else
 	GREEN=""
 	RED=""
+	BOLD=""
 	COLOR_RESET=""
 fi
 
@@ -591,13 +593,14 @@ if [[ -d "$plugindir" ]]; then
 			plugin_base_name=`basename ${plugin}`
 			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
 			log_files="${log_files} ${plugin_log}"
-			printf "TEST: ${plugin} running..."
+			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
+			printf "TEST: ${BOLD}${plugin_name}${COLOR_RESET} running..."
 			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
-				printf "\rTEST: ${plugin} ${RED}[FAIL]${COLOR_RESET}        \\n"
+				printf "\rTEST: ${plugin_name} ${RED}[FAIL]${COLOR_RESET}        \\n"
 				test_suite_ok=0
 			else
-				printf "\rTEST: ${plugin} ${GREEN}[OK]${COLOR_RESET}        \\n"
+				printf "\rTEST: ${plugin_name} ${GREEN}[OK]${COLOR_RESET}        \\n"
 			fi
 		else
 			debugmsg "'${plugin}' is not executable"
@@ -607,7 +610,6 @@ else
 	debugmsg "plugin dir does not exist"
 fi
 
-echo
 for log_file in ${log_files}; do
 	if [[ -s "${log_file}" ]]; then
 		debugmsg ">> LOG START: ${log_file}"
@@ -617,7 +619,6 @@ for log_file in ${log_files}; do
   	debugmsg "-- LOG ${log_file} is empty"
 	fi
 done
-echo
 
 if [[ ${test_suite_ok} -ne 1 ]]; then
 	errmsg "One or more modular tests have failed."

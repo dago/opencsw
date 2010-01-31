@@ -9,6 +9,8 @@ Copy it and modify.
 import os.path
 import sys
 
+CHECKPKG_MODULE_NAME = "a template of a checkpkg module"
+
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
 path_list = [os.path.dirname(__file__),
@@ -57,7 +59,7 @@ def main():
   pkgnames = args
   # CheckpkgManager class abstracts away things such as the collection of
   # results.
-  check_manager = checkpkg.CheckpkgManager("a template of a checkpkg module",
+  check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
                                            options.extractdir,
                                            pkgnames,
                                            options.debug)
