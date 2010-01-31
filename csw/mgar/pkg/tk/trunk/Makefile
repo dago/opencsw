@@ -1,8 +1,8 @@
 GARNAME = tk
-GARVERSION = 8.4.19
+GARVERSION = 8.5.7
 CATEGORIES = lang
 
-DESCRIPTION = Tcl programming language
+DESCRIPTION = GUI toolkit for tcl
 define BLURB
 endef
 
@@ -11,7 +11,13 @@ MASTER_SITES = $(SF_MIRRORS)
 
 DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
-DISTFILES += $(call admfiles,CSWtk,)
+
+REQUIRED_PKGS_CSWtk += CSWfconfig
+REQUIRED_PKGS_CSWtk += CSWftype2
+REQUIRED_PKGS_CSWtk += CSWlibx11
+REQUIRED_PKGS_CSWtk += CSWlibxft2
+REQUIRED_PKGS_CSWtk += CSWlibxrender
+REQUIRED_PKGS_CSWtk += CSWtcl
 
 SPKG_SOURCEURL = http://www.tcl.tk/
 
@@ -23,11 +29,22 @@ UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*)-src.tar.gz
 BUILD64 = 1
 NO_ISAEXEC = 1
 
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+#EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
 WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 
 # INCLUDE_FLAGS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libtkstub.*\.a
+
+TEST_TARGET =
 
 include gar/category.mk
 
