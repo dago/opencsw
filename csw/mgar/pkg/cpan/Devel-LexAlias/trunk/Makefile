@@ -13,6 +13,7 @@ PACKAGES = CSWpmdevellexalias
 CATALOGNAME = pm_devellexalias
 
 REQUIRED_PKGS = CSWpmdevelcaller CSWpmpadwalker
+PREREQUISITE_PKGS = CSWpmdevelcaller CSWpmpadwalker
 
 include gar/category.mk
 
