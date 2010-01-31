@@ -1,7 +1,7 @@
 GARNAME = DBD-Pg
-GARVERSION = 1.32
+GARVERSION = 2.16.1
 CATEGORIES = cpan
-AUTHOR = RUDY
+AUTHOR = TURNSTEP
 
 DESCRIPTION = PostgreSQL database driver for the DBI module
 define BLURB
@@ -9,8 +9,9 @@ define BLURB
   to PostgreSQL databases.
 endef
 
-DISTFILES += CSWpmdbdpg.gspec CSWpmdbdpg.depend
+PACKAGES = CSWpmdbdpg
+CATALOGNAME = pm_dbdpg
 
-DEPENDS += server/postgresql
+LICENSE = README
 
 include gar/category.mk
