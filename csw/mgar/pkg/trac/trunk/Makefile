@@ -1,6 +1,8 @@
+# $Id$
+
 GARNAME = Trac
 GARVERSION = 0.11.6
-CATEGORIES = apps
+CATEGORIES = python
 
 DESCRIPTION = Integrated SCM and Project Management
 define BLURB
@@ -11,35 +13,24 @@ define BLURB
 	established development process and policies.
 endef
 
-MASTER_SITES = http://ftp.edgewall.com/pub/trac/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES           = http://ftp.edgewall.com/pub/trac/
+SPKG_SOURCEURL         = http://trac.edgewall.org/wiki/TracDownload
+DISTFILES              = $(GARNAME)-$(GARVERSION).tar.gz
+UFILES_REGEX           = (\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWtrac
 REQUIRED_PKGS_CSWtrac  = CSWpysetuptools CSWpythonsvn CSWgenshi
-REQUIRED_PKGS_CSWtrac += CSWpython 
+ARCHALL_CSWtrac = 1
 
 CATALOGNAME_CSWtrac    = trac
 SPKG_DESC_CSWtrac      = Integrated SCM and Project Management
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL         = http://trac.edgewall.org/wiki/TracDownload
-SPKG_CLASSES           = none cswpycompile
-
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-
-CONFIGURE_SCRIPTS      =
-BUILD_SCRIPTS          = $(WORKSRC)/setup.py
 TEST_SCRIPTS           =
-INSTALL_SCRIPTS        = $(WORKSRC)/setup.py
-INSTALL_ARGS           = --root=$(DESTDIR)
 
 include gar/category.mk
 
 post-install-modulated: copy-docs
-	$(DONADA)
+	@$(DONADA)
 
 copy-docs:
 	@install -d $(DESTDIR)$(docdir)/trac
@@ -47,5 +38,5 @@ copy-docs:
 	@for f in COPYING ChangeLog INSTALL README README.tracd UPGRADE ; do \
 		ginstall -m 0644 $(WORKSRC)/$$f $(DESTDIR)$(docdir)/trac ; \
 	done
-	$(DONADA)
+	@$(DONADA)
 
