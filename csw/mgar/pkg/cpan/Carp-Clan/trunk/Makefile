@@ -1,5 +1,5 @@
 GARNAME = Carp-Clan
-GARVERSION = 5.3
+GARVERSION = 6.04
 CATEGORIES = cpan
 AUTHOR = STBEY
 
@@ -10,6 +10,7 @@ define BLURB
   inside the "qw()" term (or argument list).
 endef
 
-DISTFILES += $(call admfiles,CSWpmcarpclan,prototype)
+OCKAGES = CSWpmcarpclan
+CATALOGNAME = pm_carpclan
 
 include gar/category.mk
