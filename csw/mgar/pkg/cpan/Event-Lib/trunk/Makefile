@@ -20,7 +20,7 @@ REQUIRED_PKGS = CSWlibevent
 # Sun cc inline function patch
 PATCHFILES = inline.diff
 
-CONFIGURE_ARGS += LIBS="-L$(libdir) -levent -lperl"
+CONFIGURE_ARGS += LIBS="-L$(libdir) -levent"
 CONFIGURE_ARGS += INC="-I$(includedir)"
 
 # Skip tests as some of them are failing. Remove after the
