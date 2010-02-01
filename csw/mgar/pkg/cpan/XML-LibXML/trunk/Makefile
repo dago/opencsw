@@ -14,7 +14,6 @@ endef
 PACKAGES  = CSWpmxmllibxml CSWpmxmllibxmlcom
 CATALOGNAME_CSWpmxmllibxml = pm_xmllibxml
 SPKG_DESC_CSWpmxmllibxml = Binding for libxml2
-# PKGFILES_CSWpmxmllibxml = 
 CATALOGNAME_CSWpmxmllibxmlcom = pm_xmllibxmlcom
 SPKG_DESC_CSWpmxmllibxmlcom = Constants and Character Encoding Routines
 PKGFILES_CSWpmxmllibxmlcom = this-is-just-an-empty-stub
