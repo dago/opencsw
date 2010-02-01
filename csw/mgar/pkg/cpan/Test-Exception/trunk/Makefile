@@ -20,11 +20,3 @@ PREREQUISITE_PKGS = CSWpmsubuplevel
 ARCHALL = 1
 
 include gar/category.mk
-
-# needed because of perl 5.8
-pre-install-modulated:
-	gsed -i'' 's,^DESTDIR =,DESTDIR = $(DESTDIR),' $(WORKSRC)/Makefile
-	gsed -i'' 's,^\(MOD_INSTALL\) =,\1= PERL_INSTALL_ROOT=$(DESTDIR),'\
-		$(WORKSRC)/Makefile
-	perl -pi -e 's/install\(\[ from_to/install_default\(\[ from_to/' \
-		$(WORKSRC)/Makefile
