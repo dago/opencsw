@@ -13,7 +13,8 @@ define BLURB
   Crypt::OpenSSL::RSA.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcryptosslbignum,)
+PACKAGES = CSWpmcryptosslbignum
+CATALOGNAME = pm_cryptosslbignum
 
 REQUIRED_PKGS = CSWosslrt
 
