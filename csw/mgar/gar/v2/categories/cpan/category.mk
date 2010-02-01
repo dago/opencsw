@@ -62,8 +62,8 @@ TEST_ENV      += PERL5LIB=$(PERL5LIB)
 INSTALL_ENV   += PERL5LIB=$(PERL5LIB)
 
 # Configure a target using Makefile.PL
-BIND_LIBPERL ?= LIBS=-lperl
-PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor $(BIND_LIBPERL) $(EXTRA_PERL_CONFIGURE_ARGS)
+_CATEGORY_LD_OPTIONS ?= -L$(libdir) -lperl
+PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor $(EXTRA_PERL_CONFIGURE_ARGS)
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
 	( cd $* ; \
