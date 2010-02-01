@@ -117,7 +117,6 @@ CONFIGURE_ARGS = $(DIRPATHS) --with-shell=$(bindir)/bash
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --with-tcltk=$(bindir)/wish
 CONFIGURE_ARGS += --with-zlib=$(prefix)
-CONFIGURE_ARGS += --with-default_pager=/opt/csw/bin/less
 CONFIGURE_ARGS += --with-iconv=$(prefix)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-expat=$(prefix)
