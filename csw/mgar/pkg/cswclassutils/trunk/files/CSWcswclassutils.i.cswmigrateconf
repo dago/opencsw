@@ -36,7 +36,8 @@ deprecated_file_ext="README.migration"
 readonly deprecated_file_ext
 
 # Create /etc/opt/csw/cswclassutils.DEBUG to enable debugging of this script
-if [ -r ${PKG_INSTALL_ROOT}/etc/opt/csw/cswclassutils.DEBUG ]; then
+debug_hint="${PKG_INSTALL_ROOT}/etc/opt/csw/cswclassutils.DEBUG"
+if [ -r "${debug_hint}" -o -n "${CLASSUTILS_DEBUG:-}" ]; then
   DEBUG=1
 else
   DEBUG=0
@@ -75,7 +76,7 @@ drop_warning() {
 }
 
 sanitize() {
-  echo "$1" | sed -e 's/[^a-zA-Z0-9]/_/g'
+  echo "$1" | LC_ALL=C sed -e 's/[^a-zA-Z0-9]/_/g'
 }
 
 expand_modifiers() {
@@ -220,7 +221,9 @@ while read confsrc confdst ; do
     # moved already.
     if [ -r "${srcpath}" ]
     then
-      give_a_chance_to_stop
+      if [ "${DEBUG}" -ne 1 ]; then
+        give_a_chance_to_stop
+      fi
       place_signpost_for "${srcpath}"
       debug "Moving '${srcpath}' to '${archpath}'"
       mv "${srcpath}" "${archpath}"
