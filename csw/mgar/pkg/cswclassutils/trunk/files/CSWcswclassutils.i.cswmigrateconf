@@ -42,10 +42,17 @@ if [ -r "${debug_hint}" -o -n "${CLASSUTILS_DEBUG:-}" ]; then
 else
   DEBUG=0
 fi
+readonly DEBUG
+
+CLASSUTILS_SKIP_WARNING="${CLASSUTILS_SKIP_WARNING:-0}"
+readonly CLASSUTILS_SKIP_WARNING
 
 give_a_chance_to_stop() {
   if [ "${chance_to_stop_given}" -ne 0 ]; then
     return
+  fi
+  if [ "${CLASSUTILS_SKIP_WARNING}" != "0" ]; then
+  	return
   fi
   echo "----8<---- migration configuration start ----8<----"
   cat "${confdst}"
@@ -221,9 +228,7 @@ while read confsrc confdst ; do
     # moved already.
     if [ -r "${srcpath}" ]
     then
-      if [ "${DEBUG}" -ne 1 ]; then
-        give_a_chance_to_stop
-      fi
+      give_a_chance_to_stop
       place_signpost_for "${srcpath}"
       debug "Moving '${srcpath}' to '${archpath}'"
       mv "${srcpath}" "${archpath}"
