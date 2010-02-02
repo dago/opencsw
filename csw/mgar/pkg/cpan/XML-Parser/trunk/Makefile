@@ -15,16 +15,12 @@ define BLURB
   options given at XML::Parser creation time.
 endef
 
+PACKAGES = CSWpmxmlparser
+CATALOGNAME = pm_xmlparser
 
-DISTFILES = $(call admfiles,CSWpmxmlparser,)
-
-REQUIRED_PKGS += CSWexpat
-
-DEPENDS += lib/expat
+REQUIRED_PKGS = CSWexpat
 
 CONFIGURE_ARGS  = EXPATINCPATH=$(includedir)
 CONFIGURE_ARGS += EXPATLIBPATH=$(libdir)
-
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 include gar/category.mk
