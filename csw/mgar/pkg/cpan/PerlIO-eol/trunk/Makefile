@@ -1,7 +1,7 @@
 GARNAME = PerlIO-eol
-GARVERSION = 0.13
+GARVERSION = 0.14
 CATEGORIES = cpan
-AUTHOR = AUTRIJUS
+AUTHOR = AUDREYT
 
 DESCRIPTION = PerlIO layer for normalizing line endings
 define BLURB
