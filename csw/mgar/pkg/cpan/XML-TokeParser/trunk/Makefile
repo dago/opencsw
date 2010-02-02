@@ -1,0 +1,18 @@
+GARNAME = XML-TokeParser
+GARVERSION = 0.05
+CATEGORIES = cpan
+AUTHOR = PODMASTER
+
+DESCRIPTION = Perl XML::TokeParser module
+define BLURB
+  Simplified interface to XML::Parser
+endef
+
+PACKAGES = CSWpmxmltokeparser
+CATALOGNAME = pm_xmltokeparser
+
+REQUIRED_PKGS = CSWpmxmlparser
+
+ARCHALL = 1
+
+include gar/category.mk
