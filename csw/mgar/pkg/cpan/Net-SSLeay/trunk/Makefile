@@ -1,9 +1,9 @@
 GARNAME = Net-SSLeay
-GARVERSION = 1.35
+GARVERSION = 1.36
 CATEGORIES = cpan
 AUTHOR = FLORA
 
-DESCRIPTION = extension for using OpenSSL
+DESCRIPTION = Extension for using OpenSSL
 define BLURB
   This module offers some high level convinience functions for accessing web
   pages on SSL servers (for symmetry, same API is offered for accessing http
@@ -13,9 +13,12 @@ define BLURB
 endef
 
 MODDIST  = $(DISTNAME).tar.gz
-WORKSRC  = $(WORKDIR)/$(DISTNAME)
 
-DISTFILES += $(call admfiles,CSWpmnetssleay,depend)
+PACKAGES = CSWpmnetssleay
+CATALOGNAME = pm_netssleay
+
+REQUIRED_PKGS = CSWosslrt
+PREREQUISITE_PKGS = CSWossldevel
 
 PERL_CONFIGURE_ARGS = $(prefix) INSTALLDIRS=vendor
 
