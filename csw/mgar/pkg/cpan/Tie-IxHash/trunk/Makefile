@@ -3,7 +3,7 @@ GARVERSION = 1.21
 CATEGORIES = cpan
 AUTHOR = GSAR
 
-DESCRIPTION = ordered associative arrays for Perl
+DESCRIPTION = Ordered associative arrays for Perl
 define BLURB
   This Perl module implements Perl hashes that preserve the order in which the
   hash elements were added. The order is not affected when values
@@ -12,6 +12,9 @@ define BLURB
   operations can also be performed on the IxHash.
 endef
 
-DISTFILES = $(call admfiles,CSWpmtieixhash,depend prototype)
+PACKAGES = CSWpmtieixhash
+CATALOGNAME = pm_tieixhash
+
+ARCHALL = 1
 
 include gar/category.mk
