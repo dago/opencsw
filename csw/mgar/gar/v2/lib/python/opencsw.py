@@ -538,6 +538,15 @@ class DirectoryFormatPackage(ShellMixin, object):
     self.pkgname = os.path.split(directory)[1]
     self.pkginfo_dict = None
 
+  def GetCatalogname(self):
+    """Returns the catalog name of the package.
+
+    A bit hacky.  Looks for the first word of the NAME field in the package.
+    """
+    pkginfo = self.GetParsedPkginfo()
+    words = re.split(WS_RE, pkginfo["NAME"])
+    return words[0]
+
   def GetParsedPkginfo(self):
     if not self.pkginfo_dict:
       pkginfo_fd = open(self.GetPkginfoFilename(), "r")

@@ -6,6 +6,6 @@ the result as a status exit code.
 
 To see the required flags, issue:
 
-./checkpkg-dummy.py -h
+./checkpkg-you-can-write-your-own.py -h
 
 Each test's file name must begin with "checkpkg-".
