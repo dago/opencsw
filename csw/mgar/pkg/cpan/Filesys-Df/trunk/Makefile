@@ -9,9 +9,11 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpmfilesysdf,)
+DISTFILES += COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
+PACKAGES = CSWpmfilesysdf
+CATALOGNAME = pm_filesysdf
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
