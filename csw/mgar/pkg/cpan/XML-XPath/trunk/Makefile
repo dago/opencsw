@@ -3,7 +3,7 @@ GARVERSION = 1.13
 CATEGORIES = cpan
 AUTHOR = MSERGEANT
 
-DESCRIPTION = a set of modules for parsing and evaluating XPath statements
+DESCRIPTION = A set of modules for parsing and evaluating XPath statements
 define BLURB
   This module aims to comply exactly to the XPath specification at
   http://www.w3.org/TR/xpath and yet allow extensions to be added in the form
@@ -11,8 +11,11 @@ define BLURB
   support functionality beyond XPath.
 endef
 
-DISTFILES += CSWpmxmlxpath.gspec CSWpmxmlxpath.depend
+PACKAGES = CSWpmxmlxpath
+CATALOGNAME = pm_xmlxpath
 
-DEPENDS += cpan/XML-Parser
+REQUIRED_PKGS = CSWpmxmlparser
+
+ARCHALL = 1
 
 include gar/category.mk
