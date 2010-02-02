@@ -14,8 +14,8 @@ CATALOGNAME = pm_berkeleydb
 PATCHFILES = CSWpmberkeleydb.config.in.diff
 
 NOISALIST = 1
-EXTRA_LIB = /opt/csw/bdb47/lib
+EXTRA_LIB = /opt/csw/bdb48/lib
 
-REQUIRED_PKGS = CSWbdb47
+REQUIRED_PKGS = CSWbdb48
 
 include gar/category.mk
