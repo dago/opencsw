@@ -19,4 +19,5 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 CONFIGURE_SCRIPTS =
 SKIPTEST = 1
+LICENSE = LICENSE
 include gar/category.mk
