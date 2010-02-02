@@ -30,6 +30,9 @@ def CheckLicenseFile(pkg):
         opencsw.PackageError(
           "%s file not present in the %s package"
           % (repr(license_path), pkg.pkgname)))
+    errors.append(
+        opencsw.PackageError(
+          "See also: http://sourceforge.net/apps/trac/gar/wiki/CopyRight"))
   return errors
 
 
