@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = tree
-GARVERSION = 1.5.2.2
+GARVERSION = 1.5.3
 CATEGORIES = utils
 DESCRIPTION = A recursive directory listing program
 define BLURB

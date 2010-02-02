@@ -1,7 +1,5 @@
-diff --git a/Makefile b/Makefile
-index 54260a7..e622acd 100644
---- a/Makefile
-+++ b/Makefile
+--- tree-1.5.3/Makefile.orig	2010-02-02 09:04:08.804909345 +0100
++++ tree-1.5.3/Makefile	2010-02-02 09:04:12.780237318 +0100
 @@ -6,9 +6,9 @@
  # warranties, including, without limitation, the implied warranties
  # of merchant-ability and fitness for a particular purpose.
@@ -12,30 +10,25 @@ index 54260a7..e622acd 100644
 -CC=gcc
 +# CC=gcc
  
- VERSION=1.5.2.2
+ VERSION=1.5.3
  TREE_DEST=tree
-@@ -20,8 +20,9 @@ MANDIR=${prefix}/man/man1
+@@ -19,7 +19,7 @@
+ # Uncomment options below for your particular OS:
  
  # Linux defaults:
- #CFLAGS=-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
--CFLAGS=-O2 -Wall -fomit-frame-pointer -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
--LDFLAGS=-s
-+#CFLAGS=-O2 -Wall -fomit-frame-pointer -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
-+#LDFLAGS=-s
-+#INSTALL=$(INSTALL)
+-CFLAGS=-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
++# CFLAGS=-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+ #CFLAGS=-O2 -Wall -fomit-frame-pointer -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+ #LDFLAGS=-s
  
- # Uncomment for FreeBSD:
- #CFLAGS=-O2 -Wall -fomit-frame-pointer
-@@ -29,11 +30,12 @@ LDFLAGS=-s
- #XOBJS=strverscmp.o
+@@ -30,10 +30,11 @@
  
  # Uncomment for Solaris:
--#CC=cc
+ #CC=cc
 -#CFLAGS=-xO0 -v
 -#LDFLAGS=
 -#XOBJS=strverscmp.o
 -#MANDIR=${prefix}/share/man/man1
-+CC=cc
 +CFLAGS=-xO0 -v
 +LDFLAGS=
 +XOBJS=strverscmp.o
@@ -44,7 +37,7 @@ index 54260a7..e622acd 100644
  
  # Uncomment for Cygwin:
  #CFLAGS=-O2 -Wall -fomit-frame-pointer -DCYGWIN
-@@ -83,12 +85,12 @@ clean:
+@@ -83,12 +84,12 @@
  	rm -f *~
  
  install: tree
@@ -52,12 +45,13 @@ index 54260a7..e622acd 100644
 -	install -d $(MANDIR)
 -	if [ -e $(TREE_DEST) ]; then \
 -		install -s $(TREE_DEST) $(BINDIR)/$(TREE_DEST); \
+-	fi
+-	install man/$(MAN) $(MANDIR)/$(MAN)
 +	$(INSTALL) -d $(DESTDIR)$(BINDIR)
 +	$(INSTALL) -d $(DESTDIR)$(MANDIR)
 +	if [ -r $(TREE_DEST) ]; then \
 +		$(INSTALL) -s $(TREE_DEST) $(DESTDIR)$(BINDIR)/$(TREE_DEST); \
- 	fi
--	install man/$(MAN) $(MANDIR)/$(MAN)
++ 	fi
 +	$(INSTALL) man/$(MAN) $(DESTDIR)$(MANDIR)/$(MAN)
  
  distclean:
