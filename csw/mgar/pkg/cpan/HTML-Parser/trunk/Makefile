@@ -1,5 +1,5 @@
 GARNAME = HTML-Parser
-GARVERSION = 3.63
+GARVERSION = 3.64
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -11,13 +11,12 @@ define BLURB
   invoked.
 endef
 
+DISTFILES += COPYING
 
 PACKAGES = CSWpmhtmlparser
 CATALOGNAME = pm_htmlparser
 
 REQUIRED_PKGS = CSWpmhtmltagset
-
-LICENSE = README
 
 CONFIGURE_ARGS = -n
 
