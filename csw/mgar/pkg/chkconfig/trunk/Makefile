@@ -21,10 +21,12 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWchkconfig CSWalternatives
 
+SPKG_DESC_CSWchkconfig = Checkconfig engine from Red Hat chkconfig-$(GARVERSION)
 SPKG_DESC_CSWalternatives = Alternatives engine from Red Hat chkconfig-$(GARVERSION)
 
+REQUIRED_PKGS  = CSWggettextrt CSWlibpopt
+
 PKGFILES_CSWalternatives = .*alternatives.*
-CATALOGNAME_CSWalternatives = alternatives
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
