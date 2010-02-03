@@ -97,8 +97,12 @@ PKGFILES_CSWkrb5libdev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss
 include gar/category.mk
 
 # The flags must not contain additional spaces or the build freaks out
-CFLAGS := $(strip $(CFLAGS) -L$(libdir)/$(MM_LIBDIR))
+CFLAGS := $(strip $(CFLAGS) -L$(libdir) -D__EXTENSIONS__)
+CXXFLAGS := $(strip $(CXXFLAGS) -D__EXTENSIONS__)
 #LDFLAGS := $(strip $(LDFLAGS))
+
+EXTRA_LINKER_FLAGS := $(LD_OPTIONS)
+LD_OPTIONS :=
 
 post-extract-modulated:
 	@# TODO: Check signature
