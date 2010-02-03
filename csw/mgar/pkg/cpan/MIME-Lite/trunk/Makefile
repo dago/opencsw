@@ -1,9 +1,9 @@
 GARNAME = MIME-Lite
-GARVERSION = 3.01_04
+GARVERSION = 3.027
 CATEGORIES = cpan
-AUTHOR = YVES
+AUTHOR = RJBS
 
-DESCRIPTION = low-calorie MIME generator
+DESCRIPTION = Perl low-calorie MIME generator
 define BLURB
   MIME::Lite is intended as a simple, standalone module for generating (not
   parsing!) MIME messages... specifically, it allows you to output a simple,
@@ -11,15 +11,15 @@ define BLURB
   does not require that you have the Mail:: or MIME:: modules installed.
 endef
 
-DISTFILES += CSWpmmimelite.gspec CSWpmmimelite.depend
+PACKAGES = CSWpmmimelite
+CATALOGNAME = pm_mimelite
 
-# Always add the prerequisite modules
-PATCHFILES = config.diff
+REQUIRED_PKGS = CSWpmmimetypes CSWpmmailtools CSWpmemaildateformat
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
-DEPENDS += cpan/MIME-Types
+# Do not prompt for stuff
+PATCHFILES = 0001-Skip-prompting.patch
 
-# Test seems to work, but wierd test harness makes it difficult
-# to tell why the test fails.  Disable for now.
-TEST_SCRIPTS =
+ARCHALL = 1
 
 include gar/category.mk

@@ -1,0 +1,34 @@
+From 86a30aff5287b758ebccdc5d6d96165b9ba83773 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 2 Feb 2010 17:52:02 +0100
+Subject: [PATCH] Skip prompting
+
+---
+ Makefile.PL |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index 2b0fa6e..cdfeac7 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -21,7 +21,7 @@ my %prereq = (
+   'File::Spec'          => 0,
+   'Email::Date::Format' => '1.000', # first release
+ );
+-if (prompt("Add prereqs?",'Yes')=~/y/i) {
++#if (prompt("Add prereqs?",'Yes')=~/y/i) {
+     %prereq=( %prereq,
+               'Mail::Address'     => 1.62,
+               'MIME::Types'       => 1.28,
+@@ -29,7 +29,7 @@ if (prompt("Add prereqs?",'Yes')=~/y/i) {
+               'MIME::Base64'      => undef,
+               'MIME::QuotedPrint' => undef,
+             );
+-}
++#}
+ 
+ # Write the Makefile:
+ WriteMakefile(
+-- 
+1.6.6
+
