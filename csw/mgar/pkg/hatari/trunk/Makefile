@@ -1,5 +1,5 @@
 GARNAME = hatari
-GARVERSION = 1.2.0
+GARVERSION = 1.3.1
 CATEGORIES = apps
 
 DESCRIPTION = Atari ST emulator
@@ -9,14 +9,17 @@ endef
 
 MASTER_SITES = http://download.berlios.de/hatari/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWhatari, depend )
+PACKAGES = CSWhatari
+RUNTIME_DEP_PKGS = CSWlibsdl CSWpng CSWreadline CSWzlib
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = gpl.txt
-PATCHFILES = stdint.h.diff
+PATCHFILES = solaris8-compile.patch
+
 GARCOMPILER = GNU
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS) LIBS='-lm -lsocket'
 BUILD_ARGS = LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
+
 include gar/category.mk
