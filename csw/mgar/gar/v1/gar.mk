@@ -121,7 +121,7 @@ announce:
 	@echo "[===== NOW BUILDING:	$(DISTNAME)	=====]"
 
 # prerequisite	- Make sure that the system is in a sane state for building the package
-PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(PREREQUISITE_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
+PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
 
 prerequisite: announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-prerequisite $(PREREQUISITE_TARGETS) post-prerequisite
 	$(DONADA)
@@ -136,7 +136,7 @@ install-prerequisitepkg-%:
 	@$(MAKECOOKIE)
 
 # install-prerequisites - Install all packages which are prerequisites for the package to be build
-install-prerequisites: $(addprefix install-prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(PREREQUISITE_PKGS))
+install-prerequisites: $(addprefix install-prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS))
 
 # fetch-list	- Show list of files that would be retrieved by fetch.
 # NOTE: DOES NOT RUN pre-everything!

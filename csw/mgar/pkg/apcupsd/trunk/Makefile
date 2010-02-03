@@ -18,7 +18,7 @@ DISTFILES += cswapcupsd
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWcswclassutils
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswapcupsd$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/apcupsd\/apcupsd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }' | grep -v \/etc\/rc

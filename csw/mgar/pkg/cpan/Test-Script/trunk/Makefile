@@ -7,7 +7,7 @@ DESCRIPTION = Cross-platform basic tests for scripts
 define BLURB
 endef
 
-REQUIRED_PKGS = CSWpmipcrun3
+RUNTIME_DEP_PKGS = CSWpmipcrun3
 
 PACKAGES = CSWpmtestscript
 CATALOGNAME = pm_testscript

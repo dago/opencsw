@@ -126,38 +126,38 @@ AUXLIBS = -L/opt/csw/lib
 # http://www.postfix.org/PCRE_README.html
 FEATURES += -DHAS_PCRE
 AUXLIBS  += -lpcre
-PREREQUISITE_PKGS += CSWpcre
-REQUIRED_PKGS += CSWpcrert
+BUILD_DEP_PKGS += CSWpcre
+RUNTIME_DEP_PKGS += CSWpcrert
 
 # Activate support for hash and btree lookup tables
 # http://www.postfix.org/DB_README.html
 FEATURES += -DHAS_DB
 INCLUDES += -I/opt/csw/bdb42/include 
 AUXLIBS  += -L/opt/csw/bdb42/lib -R/opt/csw/bdb42/lib -ldb-4.2
-PREREQUISITE_PKGS += CSWbdb42devel
-REQUIRED_PKGS += CSWbdb42
+BUILD_DEP_PKGS += CSWbdb42devel
+RUNTIME_DEP_PKGS += CSWbdb42
 
 # Activate support for SSL/TLS
 # http://www.postfix.org/TLS_README.html
 FEATURES += -DUSE_TLS
 AUXLIBS  += -lssl -lcrypto
-PREREQUISITE_PKGS += CSWossldevel
-REQUIRED_PKGS += CSWosslrt
+BUILD_DEP_PKGS += CSWossldevel
+RUNTIME_DEP_PKGS += CSWosslrt
 
 # Activate support for Cyrus SASL (dovecot is incl. automatically)
 # http://www.postfix.org/SASL_README.html
 FEATURES += -DUSE_SASL_AUTH -DUSE_CYRUS_SASL
 INCLUDES += -I/opt/csw/include/sasl/
 AUXLIBS  += -lsasl2
-PREREQUISITE_PKGS += CSWsasl
-REQUIRED_PKGS += CSWsasl
+BUILD_DEP_PKGS += CSWsasl
+RUNTIME_DEP_PKGS += CSWsasl
 
 # Activate support for OpenLDAP
 # http://www.postfix.org/LDAP_README.html
 FEATURES += -DHAS_LDAP
 AUXLIBS  += -lldap -llber
-PREREQUISITE_PKGS += CSWoldapdevel
-REQUIRED_PKGS += CSWoldaprt
+BUILD_DEP_PKGS += CSWoldapdevel
+RUNTIME_DEP_PKGS += CSWoldaprt
 
 # Activate support for MySQL
 # http://www.postfix.org/MYSQL_README.html
@@ -165,8 +165,8 @@ FEATURES += -DHAS_MYSQL
 INCLUDES += -I/opt/csw/mysql5/include/mysql
 AUXLIBS  += -L/opt/csw/mysql5/lib/mysql -R/opt/csw/mysql5/lib/mysql
 AUXLIBS  += -lmysqlclient
-PREREQUISITE_PKGS += CSWmysql5devel
-REQUIRED_PKGS += CSWmysql5rt
+BUILD_DEP_PKGS += CSWmysql5devel
+RUNTIME_DEP_PKGS += CSWmysql5rt
 
 # Activate support for PostgreSQL
 # http://www.postfix.org/PGSQL_README.html
@@ -174,8 +174,8 @@ FEATURES += -DHAS_PGSQL
 INCLUDES += -I/opt/csw/postgresql/include/
 AUXLIBS  += -L/opt/csw/postgresql/lib/ -R/opt/csw/postgresql/lib/
 AUXLIBS  += -lpq
-PREREQUISITE_PKGS += CSWlibpq
-REQUIRED_PKGS += CSWlibpq
+BUILD_DEP_PKGS += CSWlibpq
+RUNTIME_DEP_PKGS += CSWlibpq
 
 
 # Make sure to include $(CFLAGS) so that we get sane defaults via GAR

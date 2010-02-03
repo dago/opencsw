@@ -21,10 +21,10 @@ SPKG_DESC_CSWtiffrt += lib and tools for Tag Image File Format - runtime package
 SPKG_DESC_CSWtiffdevel += lib and tools for Tag Image File Format - developer package
 SPKG_DESC_CSWtiffdoc += lib and tools for Tag Image File Format - documentation
 
-REQUIRED_PKGS_CSWtiff += CSWtiffrtCSWjbigkit CSWjpeg CSWzlib
-REQUIRED_PKGS_CSWtiffrt += CSWjbigkit CSWjpeg CSWzlib
-REQUIRED_PKGS_CSWtiffdevel += CSWtiffrt
-REQUIRED_PKGS_CSWtiffdoc += 
+RUNTIME_DEP_PKGS_CSWtiff += CSWtiffrtCSWjbigkit CSWjpeg CSWzlib
+RUNTIME_DEP_PKGS_CSWtiffrt += CSWjbigkit CSWjpeg CSWzlib
+RUNTIME_DEP_PKGS_CSWtiffdevel += CSWtiffrt
+RUNTIME_DEP_PKGS_CSWtiffdoc += 
 
 PKGFILES_CSWtiffrt = $(PKGFILES_RT)
 PKGFILES_CSWtiffdevel = $(PKGFILES_DEVEL)

@@ -21,7 +21,7 @@ SPKG_SOURCEURL = http://projects.gnome.org/gconf/
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 TEST_TARGET = check
 

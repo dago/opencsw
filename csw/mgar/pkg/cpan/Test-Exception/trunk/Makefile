@@ -14,8 +14,8 @@ PACKAGES = CSWpmtstexception
 CATALOGNAME = pm_tstexception
 
 # depends
-REQUIRED_PKGS     = CSWpmsubuplevel
-PREREQUISITE_PKGS = CSWpmsubuplevel
+RUNTIME_DEP_PKGS     = CSWpmsubuplevel
+BUILD_DEP_PKGS = CSWpmsubuplevel
 
 ARCHALL = 1
 

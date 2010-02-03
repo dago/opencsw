@@ -20,7 +20,7 @@ DISTFILES += cswpostfix.xml svc-cswpostfix cswpostfix
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWbdb4 CSWmysql4devel CSWlibpq CSWossldevel CSWoldapdevel
+BUILD_DEP_PKGS = CSWbdb4 CSWmysql4devel CSWlibpq CSWossldevel CSWoldapdevel
 
 SPKG_CLASSES = none csw_conf
 

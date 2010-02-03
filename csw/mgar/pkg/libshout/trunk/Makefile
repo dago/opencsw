@@ -12,8 +12,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWlibogg CSWtheora CSWvorbis
-PRERQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWlibogg CSWtheora CSWvorbis
+PRERQUISITE_PKGS = $(RUNTIME_DEP_PKGS)
 
 #         GAR default: -xO3 -xarch=v8 -I/opt/csw/include
 # Configure hardwired: -xO4 -fast -w -fsimple -native -xcg92

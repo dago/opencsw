@@ -20,21 +20,21 @@ PACKAGES 		= CSWfirefox
 CATALOGNAME_CSWfirefox 	= $(GARNAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWfirefox  = CSWdbusglib
-REQUIRED_PKGS_CSWfirefox += CSWfconfig
-REQUIRED_PKGS_CSWfirefox += CSWftype2
-REQUIRED_PKGS_CSWfirefox += CSWgconf2
-REQUIRED_PKGS_CSWfirefox += CSWglib2
-REQUIRED_PKGS_CSWfirefox += CSWgnomevfs2
-REQUIRED_PKGS_CSWfirefox += CSWgtk2
-REQUIRED_PKGS_CSWfirefox += CSWlibatk
-REQUIRED_PKGS_CSWfirefox += CSWlibcairo
-REQUIRED_PKGS_CSWfirefox += CSWlibdbus
-REQUIRED_PKGS_CSWfirefox += CSWlibgnome
-REQUIRED_PKGS_CSWfirefox += CSWlibx11
-REQUIRED_PKGS_CSWfirefox += CSWlibxrender
-REQUIRED_PKGS_CSWfirefox += CSWpango
-REQUIRED_PKGS_CSWfirefox += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWfirefox  = CSWdbusglib
+RUNTIME_DEP_PKGS_CSWfirefox += CSWfconfig
+RUNTIME_DEP_PKGS_CSWfirefox += CSWftype2
+RUNTIME_DEP_PKGS_CSWfirefox += CSWgconf2
+RUNTIME_DEP_PKGS_CSWfirefox += CSWglib2
+RUNTIME_DEP_PKGS_CSWfirefox += CSWgnomevfs2
+RUNTIME_DEP_PKGS_CSWfirefox += CSWgtk2
+RUNTIME_DEP_PKGS_CSWfirefox += CSWlibatk
+RUNTIME_DEP_PKGS_CSWfirefox += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWfirefox += CSWlibdbus
+RUNTIME_DEP_PKGS_CSWfirefox += CSWlibgnome
+RUNTIME_DEP_PKGS_CSWfirefox += CSWlibx11
+RUNTIME_DEP_PKGS_CSWfirefox += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWfirefox += CSWpango
+RUNTIME_DEP_PKGS_CSWfirefox += CSWsqlite3rt
 
 # Defines the list of patches to be applied to the sources
 PATCHFILES = autoconf.mk.in.diff

@@ -12,7 +12,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 LICENSE = LICENSE
 
-REQUIRED_PKGS = CSWlibpcap
+RUNTIME_DEP_PKGS = CSWlibpcap
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

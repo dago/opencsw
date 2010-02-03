@@ -4,7 +4,7 @@ PACKAGES += CSWphp5dba
 
 CATALOGNAME_CSWphp5dba = php5_dba
 SPKG_DESC_CSWphp5dba = dba Extention for PHP5
-REQUIRED_PKGS_CSWphp5dba = CSWphp5 CSWbdb CSWgdbm
+RUNTIME_DEP_PKGS_CSWphp5dba = CSWphp5 CSWbdb CSWgdbm
 
 CONFIGURE_ARGS += --enable-dba=shared
 CONFIGURE_ARGS += --with-ndbm

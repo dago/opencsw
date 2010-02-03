@@ -16,7 +16,7 @@ CATALOGNAME_CSWphpsysinfo = phpsysinfo
 SPKG_DESC = $(DESCRIPTION)
 SPKG_SOURCEURL = http://phpsysinfo.sourceforge.net
 
-REQUIRED_PKGS = CSWapache2 CSWap2modphp5 CSWphp5
+RUNTIME_DEP_PKGS = CSWapache2 CSWap2modphp5 CSWphp5
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

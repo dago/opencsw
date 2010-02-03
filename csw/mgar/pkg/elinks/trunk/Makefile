@@ -26,12 +26,12 @@ endef
 
 PACKAGES = CSWelinks
 
-REQUIRED_PKGS  = CSWbzip2
-REQUIRED_PKGS += CSWexpat 
-REQUIRED_PKGS += CSWiconv 
-REQUIRED_PKGS += CSWlibidn 
-REQUIRED_PKGS += CSWosslrt 
-REQUIRED_PKGS += CSWzlib 
+RUNTIME_DEP_PKGS  = CSWbzip2
+RUNTIME_DEP_PKGS += CSWexpat 
+RUNTIME_DEP_PKGS += CSWiconv 
+RUNTIME_DEP_PKGS += CSWlibidn 
+RUNTIME_DEP_PKGS += CSWosslrt 
+RUNTIME_DEP_PKGS += CSWzlib 
 
 
 ###### Upstream and opencsw files information #######

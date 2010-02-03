@@ -37,7 +37,7 @@ libexecdir = $(prefix)/libexec/nagios-plugins
 localstatedir = /var/opt/csw/pnp
 #localstatedir =$(prefix)/nagios/pnp/var
 
-REQUIRED_PKGS += CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd CSWnagios CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWphp5 CSWphp5gd CSWap2modphp5 CSWrrd CSWnagios CSWcswclassutils
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
 
 ENABLE_CHECK=0

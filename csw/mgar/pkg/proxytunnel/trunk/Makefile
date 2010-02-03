@@ -16,8 +16,8 @@ PATCHFILES = patch-Makefile.diff
 
 SPKG_SOURCEURL = http://proxytunnel.sourceforge.net/
 
-PREREQUISITE_PKGS = CSWossldevel
-REQUIRED_PKGS = CSWosslrt
+BUILD_DEP_PKGS = CSWossldevel
+RUNTIME_DEP_PKGS = CSWosslrt
 
 # UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 # UPSTREAM_MASTER_SITES = 

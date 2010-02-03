@@ -22,8 +22,8 @@ SPKG_DESC_CSWdbusglibdevel = $(DESCRIPTION) development package
 DISTFILES    += $(call admfiles,CSWdbusglib, )
 DISTFILES    += $(call admfiles,CSWdbusglibdev, )
 
-REQUIRED_PKGS_CSWdbusglibdev	= CSWdbusglib
-REQUIRED_PKGS_CSWdbusglib      	= CSWexpat CSWggettextrt CSWglib2 CSWiconv CSWsunmath CSWlibdbus
+RUNTIME_DEP_PKGS_CSWdbusglibdev	= CSWdbusglib
+RUNTIME_DEP_PKGS_CSWdbusglib      	= CSWexpat CSWggettextrt CSWglib2 CSWiconv CSWsunmath CSWlibdbus
 
 PKGFILES_CSWdbusglibdev  = $(PKGFILES_DEVEL)
 # PKGFILES_CSWdbusglibdev += $(prefix)/include/.*

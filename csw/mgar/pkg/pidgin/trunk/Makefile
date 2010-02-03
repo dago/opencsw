@@ -50,14 +50,14 @@ EXTRA_LDFLAGS = -R $(prefix)/X11/lib
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
-REQUIRED_PKGS  = CSWaspell CSWdbusglib CSWgcrypt CSWggettextrt CSWglib2
-REQUIRED_PKGS += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
-REQUIRED_PKGS += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
-REQUIRED_PKGS += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
-REQUIRED_PKGS += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus
-REQUIRED_PKGS += CSWfconfig CSWftype2 CSWlibx11 CSWbdb CSWlibidn
+RUNTIME_DEP_PKGS  = CSWaspell CSWdbusglib CSWgcrypt CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
+RUNTIME_DEP_PKGS += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
+RUNTIME_DEP_PKGS += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
+RUNTIME_DEP_PKGS += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus
+RUNTIME_DEP_PKGS += CSWfconfig CSWftype2 CSWlibx11 CSWbdb CSWlibidn
 
 
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWlibdbusdev CSWdbusglibdev CSWgnutlsdevel
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWlibdbusdev CSWdbusglibdev CSWgnutlsdevel
 
 include gar/category.mk

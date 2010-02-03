@@ -16,12 +16,12 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 SPKG_SOURCEURL = http://www.icecast.org/
 
-REQUIRED_PKGS = CSWlibogg CSWlibshout CSWspeex CSWtheora CSWvorbis
+RUNTIME_DEP_PKGS = CSWlibogg CSWlibshout CSWspeex CSWtheora CSWvorbis
 
 PACKAGES = CSWpyshout
 CATALOGNAME_CSWpyshout = py_shout
 
-REQUIRED_PKGS_CSWpyshout =
+RUNTIME_DEP_PKGS_CSWpyshout =
 
 BUILD_SCRIPTS = custom
 

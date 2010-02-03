@@ -15,7 +15,7 @@ DISTFILES  = Botnet-$(GARVERSION).tar
 DISTFILES += $(call admfiles,CSWbotnet,)
 
 SPKG_DESC_CSWspamassassin = mail filter with a wide range of tests
-REQUIRED_PKGS = CSWspamassassin CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWspamassassin CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar

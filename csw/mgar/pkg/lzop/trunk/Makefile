@@ -21,7 +21,7 @@ CATALOGNAME = lzop
 SPKG_DESC = $(DESCRIPTION)
 SPKG_SOURCEURL = http://www.lzop.org
 
-REQUIRED_PKGS = CSWlzo
+RUNTIME_DEP_PKGS = CSWlzo
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

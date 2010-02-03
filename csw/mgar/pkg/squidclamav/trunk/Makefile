@@ -19,7 +19,7 @@ PACKAGES = CSWsquidclamav
 CATALOGNAME_CSWsquidclamav = squidclamav
 SPKG_DESC_CSWsquidclamav = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWsquidclamav = CSWcurlrt
+RUNTIME_DEP_PKGS_CSWsquidclamav = CSWcurlrt
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

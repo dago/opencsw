@@ -55,7 +55,7 @@ MERGE_DIRS_isa-pentium = $(libdir)
 
 PKGFILES_CSWlibpcapdevel = $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWlibpcapdevel = CSWlibpcap
+RUNTIME_DEP_PKGS_CSWlibpcapdevel = CSWlibpcap
 
 include gar/category.mk
 

@@ -15,7 +15,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 SPKG_SOURCEURL = http://w3m.sourceforge.net/
 
-REQUIRED_PKGS += CSWggettextrt CSWlibgc CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS += CSWggettextrt CSWlibgc CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=39518

@@ -14,7 +14,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 PACKAGES = CSWorbit2
 CATALOGNAME = orbit2
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2 CSWlibidl
+RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWlibidl
 
 SPKG_SOURCEURL = http://projects.gnome.org/ORBit2/
 
@@ -31,7 +31,7 @@ STRIP_LIBTOOL = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 TEST_TARGET = check
 

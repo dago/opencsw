@@ -17,8 +17,8 @@ MODDIST  = $(DISTNAME).tar.gz
 PACKAGES = CSWpmnetssleay
 CATALOGNAME = pm_netssleay
 
-REQUIRED_PKGS = CSWosslrt
-PREREQUISITE_PKGS = CSWossldevel
+RUNTIME_DEP_PKGS = CSWosslrt
+BUILD_DEP_PKGS = CSWossldevel
 
 PERL_CONFIGURE_ARGS = $(prefix) INSTALLDIRS=vendor
 

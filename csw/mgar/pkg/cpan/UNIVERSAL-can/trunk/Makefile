@@ -17,7 +17,7 @@ endef
 PACKAGES = CSWpmuniversalcan
 CATALOGNAME = pm_universalcan
 
-REQUIRED_PKGS = CSWpmmodulebuild
+RUNTIME_DEP_PKGS = CSWpmmodulebuild
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build

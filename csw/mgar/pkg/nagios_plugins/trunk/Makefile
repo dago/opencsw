@@ -19,9 +19,9 @@ PATCHFILES += pst3.c.diff
 PACKAGES = CSWnagiosp
 CATALOGNAME_CSWnagiosp = nagios_plugins
 
-REQUIRED_PKGS_CSWnagiosp  = CSWggettextrt CSWiconv CSWlibnet CSWlibpq 
-REQUIRED_PKGS_CSWnagiosp += CSWmysql5rt CSWoldaprt CSWosslrt CSWsasl
-REQUIRED_PKGS_CSWnagiosp += CSWzlib CSWperl
+RUNTIME_DEP_PKGS_CSWnagiosp  = CSWggettextrt CSWiconv CSWlibnet CSWlibpq 
+RUNTIME_DEP_PKGS_CSWnagiosp += CSWmysql5rt CSWoldaprt CSWosslrt CSWsasl
+RUNTIME_DEP_PKGS_CSWnagiosp += CSWzlib CSWperl
 
 NOISALIST = 1
 

@@ -24,9 +24,9 @@ CATALOGNAME_CSWxapiandevel = xapian_devel
 SPKG_DESC_CSWxapian = An open source search engine library
 SPKG_DESC_CSWxapianrt = Xapian runtime libraries
 SPKG_DESC_CSWxapiandevel = Xapian development files
-REQUIRED_PKGS_CSWxapianrt = CSWstlport CSWzlib
-REQUIRED_PKGS_CSWxapian = CSWxapianrt
-REQUIRED_PKGS_CSWxapiandevel = CSWxapian
+RUNTIME_DEP_PKGS_CSWxapianrt = CSWstlport CSWzlib
+RUNTIME_DEP_PKGS_CSWxapian = CSWxapianrt
+RUNTIME_DEP_PKGS_CSWxapiandevel = CSWxapian
 
 # If we compile with Sun Studio it is impossible to build the Ruby bindings as
 # Ruby is compiled with GCC.

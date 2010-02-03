@@ -7,7 +7,7 @@ DESCRIPTION = Guess the gender of an American first name
 define BLURB
 endef
 
-REQUIRED_PKGS = CSWpmtextdblmetaphon
+RUNTIME_DEP_PKGS = CSWpmtextdblmetaphon
 
 PACKAGES = CSWpmtextgendername
 CATALOGNAME = pm_textgendername

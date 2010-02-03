@@ -14,8 +14,8 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWpmlocalegettext
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWpmlocalegettext
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # We need to disable NLS as we don't have preloadable_libintl.so

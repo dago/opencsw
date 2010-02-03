@@ -18,7 +18,7 @@ MASTER_SITES = http://www.vanheusden.com/httping/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tgz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 # Makefile comes pre-set with gcc defaults and hardcoded tools
 # Already submitted upstream, feedback pending.

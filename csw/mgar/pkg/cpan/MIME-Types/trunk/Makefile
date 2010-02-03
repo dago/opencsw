@@ -14,7 +14,7 @@ endef
 PACKAGES = CSWpmmimetypes
 CATALOGNAME = pm_mimetypes
 
-PREREQUISITE_PKGS = CSWpmtestpod
+BUILD_DEP_PKGS = CSWpmtestpod
 
 ARCHALL = 1
 

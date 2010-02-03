@@ -10,7 +10,7 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-REQUIRED_PKGS = CSWpython CSWpygtk
+RUNTIME_DEP_PKGS = CSWpython CSWpygtk
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release

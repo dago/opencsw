@@ -28,23 +28,23 @@ PKGFILES_CSWlibcairodevel += $(docdir)/libcairo_devel/.*
 PKGFILES_CSWlibcairodoc    = $(sharedstatedir)/gtk-doc.*
 PKGFILES_CSWlibcairodoc   += $(docdir)/libcairo_doc/.*
 
-PREREQUISITE_PKGS += CSWlibxrenderdevel CSWkbproto CSWrenderproto
-PREREQUISITE_PKGS += CSWlibspectre 
+BUILD_DEP_PKGS += CSWlibxrenderdevel CSWkbproto CSWrenderproto
+BUILD_DEP_PKGS += CSWlibspectre 
 
-REQUIRED_PKGS_CSWlibcairo      = CSWfconfig
-REQUIRED_PKGS_CSWlibcairo     += CSWftype2
-REQUIRED_PKGS_CSWlibcairo     += CSWlibxrender
-REQUIRED_PKGS_CSWlibcairo     += CSWpixman
-REQUIRED_PKGS_CSWlibcairo     += CSWpng
-REQUIRED_PKGS_CSWlibcairo     += CSWzlib
-REQUIRED_PKGS_CSWlibcairo     += CSWexpat
-REQUIRED_PKGS_CSWlibcairo     += CSWiconv
-REQUIRED_PKGS_CSWlibcairo     += CSWlibx11
-REQUIRED_PKGS_CSWlibcairo     += CSWlibxcb
-REQUIRED_PKGS_CSWlibcairo     += CSWxcbutil
+RUNTIME_DEP_PKGS_CSWlibcairo      = CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWpixman
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWpng
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWexpat
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWlibxcb
+RUNTIME_DEP_PKGS_CSWlibcairo     += CSWxcbutil
 
-REQUIRED_PKGS_CSWlibcairodevel = CSWlibcairo
-REQUIRED_PKGS_CSWlibcairodoc   = 
+RUNTIME_DEP_PKGS_CSWlibcairodevel = CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibcairodoc   = 
 
 ARCHALL_CSWlibcairodoc = 1
 

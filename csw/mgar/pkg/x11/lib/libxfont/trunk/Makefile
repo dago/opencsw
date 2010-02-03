@@ -26,9 +26,9 @@ SPKG_DESC_CSWlibxfontdevel = $(DESCRIPTION) development files
 PATCHFILES = pcfread.c.diff
 
 #
-# PREREQUISITE_PKGS = CSWlibfontencdevel
-REQUIRED_PKGS_CSWlibxfontdevel = CSWlibxfont
-REQUIRED_PKGS_CSWlibxfont = CSWftype2 CSWlibfontenc CSWzlib
+# BUILD_DEP_PKGS = CSWlibfontencdevel
+RUNTIME_DEP_PKGS_CSWlibxfontdevel = CSWlibxfont
+RUNTIME_DEP_PKGS_CSWlibxfont = CSWftype2 CSWlibfontenc CSWzlib
 
 PKGFILES_CSWlibxfontdevel  = $(PKGFILES_DEVEL)
 

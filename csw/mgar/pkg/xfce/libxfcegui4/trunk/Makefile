@@ -31,14 +31,14 @@ PKGFILES_CSWlibxfcegui4devel += /opt/csw/include/xfce4/libxfcegui4/.*
 PKGFILES_CSWlibxfcegui4doc    = /opt/csw/share/gtk-doc/.*
 
 # Defines dependencies
-REQUIRED_PKGS_CSWlibxfcegui4      = CSWdbusglib CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
-REQUIRED_PKGS_CSWlibxfcegui4     += CSWlibdbus CSWlibglade2 CSWlibxfce4util CSWlibxml2 CSWpango
-REQUIRED_PKGS_CSWlibxfcegui4     += CSWstartupnotif CSWxfconf CSWfconfig
-REQUIRED_PKGS_CSWlibxfcegui4     += CSWftype2
-REQUIRED_PKGS_CSWlibxfcegui4     += CSWsunmath
+RUNTIME_DEP_PKGS_CSWlibxfcegui4      = CSWdbusglib CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibxfcegui4     += CSWlibdbus CSWlibglade2 CSWlibxfce4util CSWlibxml2 CSWpango
+RUNTIME_DEP_PKGS_CSWlibxfcegui4     += CSWstartupnotif CSWxfconf CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibxfcegui4     += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibxfcegui4     += CSWsunmath
 
-REQUIRED_PKGS_CSWlibxfcegui4devel = 
-REQUIRED_PKGS_CSWlibxfcegui4doc   = 
+RUNTIME_DEP_PKGS_CSWlibxfcegui4devel = 
+RUNTIME_DEP_PKGS_CSWlibxfcegui4doc   = 
 
 # BUILD64 = 1
 # NOISALIST = 1

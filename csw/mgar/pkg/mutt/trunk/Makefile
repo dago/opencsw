@@ -23,18 +23,18 @@ LICENSE = COPYRIGHT
 
 PACKAGES = CSWmutt-base CSWmutt-ncurses CSWmutt-slang
 
-REQUIRED_PKGS_core  = CSWgdbm
-REQUIRED_PKGS_core += CSWggettextrt
-REQUIRED_PKGS_core += CSWgpgerr
-REQUIRED_PKGS_core += CSWgpgme
-REQUIRED_PKGS_core += CSWiconv
-REQUIRED_PKGS_core += CSWlibidn
-REQUIRED_PKGS_core += CSWosslrt
-REQUIRED_PKGS_core += CSWsasl
-REQUIRED_PKGS_core += CSWzlib
-REQUIRED_PKGS_CSWmutt-ncurses = $(REQUIRED_PKGS_core) CSWmutt-base CSWncurses
-REQUIRED_PKGS_CSWmutt-slang   = $(REQUIRED_PKGS_core) CSWmutt-base CSWslang
-REQUIRED_PKGS_CSWmutt-base    = CSWggettextrt CSWiconv CSWlibidn
+RUNTIME_DEP_PKGS_core  = CSWgdbm
+RUNTIME_DEP_PKGS_core += CSWggettextrt
+RUNTIME_DEP_PKGS_core += CSWgpgerr
+RUNTIME_DEP_PKGS_core += CSWgpgme
+RUNTIME_DEP_PKGS_core += CSWiconv
+RUNTIME_DEP_PKGS_core += CSWlibidn
+RUNTIME_DEP_PKGS_core += CSWosslrt
+RUNTIME_DEP_PKGS_core += CSWsasl
+RUNTIME_DEP_PKGS_core += CSWzlib
+RUNTIME_DEP_PKGS_CSWmutt-ncurses = $(RUNTIME_DEP_PKGS_core) CSWmutt-base CSWncurses
+RUNTIME_DEP_PKGS_CSWmutt-slang   = $(RUNTIME_DEP_PKGS_core) CSWmutt-base CSWslang
+RUNTIME_DEP_PKGS_CSWmutt-base    = CSWggettextrt CSWiconv CSWlibidn
 
 CATALOGNAME_CSWmutt-base = mutt_base
 CATALOGNAME_CSWmutt-ncurses = mutt_ncurses

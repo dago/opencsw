@@ -19,9 +19,9 @@ SPKG_DESC_CSWjpeg += JPEG library and tools by the Independent JPEG Group
 SPKG_DESC_CSWjpegrt += JPEG library and tools by the Independent JPEG Group - runtime package
 SPKG_DESC_CSWjpegdevel += JPEG library and tools by the Independent JPEG Group - developer pa ckage
 
-REQUIRED_PKGS_CSWjpeg += CSWjpegrt 
-REQUIRED_PKGS_CSWjpegrt += 
-REQUIRED_PKGS_CSWjpegdevel += CSWjpegrt
+RUNTIME_DEP_PKGS_CSWjpeg += CSWjpegrt 
+RUNTIME_DEP_PKGS_CSWjpegrt += 
+RUNTIME_DEP_PKGS_CSWjpegdevel += CSWjpegrt
 
 PKGFILES_CSWjpegrt = $(PKGFILES_RT)
 PKGFILES_CSWjpegdevel = $(PKGFILES_DEVEL)

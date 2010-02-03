@@ -23,10 +23,10 @@ CATALOGNAME_CSWlibxvmcdevel = libxvmc_devel
 SPKG_DESC_CSWlibxvmc = $(DESCRIPTION)
 SPKG_DESC_CSWlibxvmcdevel = $(DESCRIPTION) development files
 
-# PREREQUISITE_PKGS = CSWlibxvdevel CSWxvideoproto
+# BUILD_DEP_PKGS = CSWlibxvdevel CSWxvideoproto
 
-REQUIRED_PKGS_CSWlibxvmc      = CSWlibx11 CSWlibxext CSWlibxv
-REQUIRED_PKGS_CSWlibxvmcdevel = CSWlibxvmc
+RUNTIME_DEP_PKGS_CSWlibxvmc      = CSWlibx11 CSWlibxext CSWlibxv
+RUNTIME_DEP_PKGS_CSWlibxvmcdevel = CSWlibxvmc
 
 PKGFILES_CSWlibxvmcdevel  = $(PKGFILES_DEVEL)
 

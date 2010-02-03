@@ -25,18 +25,18 @@ CATALOGNAME_CSWlibxpmdevel = libxpm_devel
 SPKG_DESC_CSWlibxpm = X11 pixmap library
 SPKG_DESC_CSWlibxpmdevel = X11 pixmap library development files
 
-PREREQUISITE_PKGS = CSWx11xproto CSWlibx11devel
+BUILD_DEP_PKGS = CSWx11xproto CSWlibx11devel
 
-REQUIRED_PKGS_CSWlibxpm = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxt
-REQUIRED_PKGS_CSWlibxpmdevel = CSWlibxpm
-REQUIRED_PKGS_CSWxpm = CSWlibxpm
+RUNTIME_DEP_PKGS_CSWlibxpm = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibxpmdevel = CSWlibxpm
+RUNTIME_DEP_PKGS_CSWxpm = CSWlibxpm
 
 PKGFILES_CSWlibxpmdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWxpm  = /opt/csw/bin/.*
 PKGFILES_CSWxpm += /opt/csw/lib/.*
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis
 CONFIGURE_ARGS = $(DIRPATHS)
 

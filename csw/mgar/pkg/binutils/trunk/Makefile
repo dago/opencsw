@@ -14,7 +14,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 PATCHFILES  = 0001-Remove-gcc-specific-warning-no-error.patch
 PATCHFILES += 0002-Use-func-instead-of-FUNCTION.patch
 
-REQUIRED_PKGS = CSWzlib CSWiconv CSWggettextrt
+RUNTIME_DEP_PKGS = CSWzlib CSWiconv CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

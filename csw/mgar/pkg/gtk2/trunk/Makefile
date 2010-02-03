@@ -34,11 +34,11 @@ SPKG_DESC_CSWgtk2 = A feature rich toolkit for creating graphical user interface
 SPKG_DESC_CSWgtk2devel = A feature rich toolkit for creating graphical user interfaces development package
 SPKG_DESC_CSWgtk2doc = A feature rich toolkit for creating graphical user interfaces documentation
 
-PREREQUISITE_PKGS = CSWbash
-REQUIRED_PKGS_CSWgtk2 = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
-REQUIRED_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
-REQUIRED_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel
-REQUIRED_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibx11devel CSWlibxrenderdevel CSWpangodevel
+BUILD_DEP_PKGS = CSWbash
+RUNTIME_DEP_PKGS_CSWgtk2 = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel
+RUNTIME_DEP_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibx11devel CSWlibxrenderdevel CSWpangodevel
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
@@ -46,7 +46,7 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 NOISALIST = 1
 BUILD64 = 1
 

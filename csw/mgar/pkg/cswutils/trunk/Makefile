@@ -21,9 +21,9 @@ DISTFILES += stagepkg stagepkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += $(foreach F,$(SVN_FILES),$(F)-r$(SVN_REV))
 
-REQUIRED_PKGS = CSWtextutils CSWfakeroot CSWperl
-REQUIRED_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
-REQUIRED_PKGS += CSWpython
+RUNTIME_DEP_PKGS = CSWtextutils CSWfakeroot CSWperl
+RUNTIME_DEP_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
+RUNTIME_DEP_PKGS += CSWpython
 
 WORKSRC = $(WORKDIR)
 

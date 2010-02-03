@@ -15,7 +15,7 @@ SPKG_SOURCEURL = http://www.gnome.org/
 MASTER_SITES = http://ftp.heanet.ie/pub/ftp.gnome.org/sources/gnome-terminal/$(GT_MAJOR_VERSION).$(GT_MINOR_VERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWlibxft2devel
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWlibxft2devel
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 

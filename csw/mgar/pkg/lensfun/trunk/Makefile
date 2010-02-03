@@ -15,8 +15,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWzlib CSWpng
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpython CSWdoxygen
+RUNTIME_DEP_PKGS = CSWzlib CSWpng
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython CSWdoxygen
 
 PACKAGES = CSWliblensfun
 CATALOGNAME = liblensfun

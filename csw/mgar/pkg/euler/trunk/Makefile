@@ -21,11 +21,11 @@ PATCHFILES = 0001-Remove-static-setting-of-CFLAGS.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tz
 
-REQUIRED_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
-REQUIRED_PKGS += CSWlibatk CSWlibcairo CSWlibxext CSWpango
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
-PREREQUISITE_PKGS += CSWglib2devel CSWgtk2devel
-PREREQUISITE_PKGS += CSWlibcairodevel CSWlibxextdevel CSWpangodevel
+RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
+RUNTIME_DEP_PKGS += CSWlibatk CSWlibcairo CSWlibxext CSWpango
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS += CSWglib2devel CSWgtk2devel
+BUILD_DEP_PKGS += CSWlibcairodevel CSWlibxextdevel CSWpangodevel
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

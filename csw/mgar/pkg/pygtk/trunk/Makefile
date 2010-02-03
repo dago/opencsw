@@ -13,9 +13,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpygtk
-REQUIRED_PKGS_CSWpygtk  = CSWpython CSWfconfig CSWftype2 CSWggettextrt
-REQUIRED_PKGS_CSWpygtk += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
-REQUIRED_PKGS_CSWpygtk += CSWlibglade2 CSWlibxml2 CSWpango
+RUNTIME_DEP_PKGS_CSWpygtk  = CSWpython CSWfconfig CSWftype2 CSWggettextrt
+RUNTIME_DEP_PKGS_CSWpygtk += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
+RUNTIME_DEP_PKGS_CSWpygtk += CSWlibglade2 CSWlibxml2 CSWpango
 
 CATALOGNAME_CSWpygtk = pygtk
 SPKG_DESC_CSWpygtk = pygtk support for Python
@@ -23,7 +23,7 @@ SPKG_DESC_CSWpygtk = pygtk support for Python
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

@@ -18,7 +18,7 @@ WORKSRC = $(WORKDIR)/antlr_python_runtime-$(GARVERSION)
 
 PACKAGES = CSWpy-antlr
 CATALOGNAME = py_antlr
-PREREQUISITE_PKGS = CSWpysetuptools
+BUILD_DEP_PKGS = CSWpysetuptools
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

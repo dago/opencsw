@@ -24,8 +24,8 @@ PATCHFILES += 0002-Add-missing-prototypes-for-db_sql.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWcurlrt CSWgcrypt CSWgpgerr CSWlibidn CSWlibmhash CSWlibpq
-REQUIRED_PKGS += CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS = CSWcurlrt CSWgcrypt CSWgpgerr CSWlibidn CSWlibmhash CSWlibpq
+RUNTIME_DEP_PKGS += CSWoldaprt CSWosslrt CSWzlib
 
 sysconfdir = /etc/opt/csw/aide
 PRESERVECONF = $(sysconfdir)/aide.conf

@@ -11,7 +11,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 SPKG_DESC_CSWmercurial = Mercurial
 
-REQUIRED_PKGS_CSWmercurial = CSWpython
+RUNTIME_DEP_PKGS_CSWmercurial = CSWpython
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

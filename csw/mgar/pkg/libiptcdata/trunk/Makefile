@@ -17,7 +17,7 @@ SPKG_SOURCEURL = http://libiptcdata.sourceforge.net
 
 LICENSE = COPYING
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=130582

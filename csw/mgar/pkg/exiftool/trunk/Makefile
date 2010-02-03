@@ -14,7 +14,7 @@ MASTER_SITES = http://owl.phy.queensu.ca/~phil/exiftool/
 MODDIST =
 DISTFILES  = $(DISTNAME).tar.gz
 
-REQUIRED_PKGS += CSWpmiocompress 
+RUNTIME_DEP_PKGS += CSWpmiocompress 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = Image-ExifTool-(\d+(?:\.\d+)*).tar.gz

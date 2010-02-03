@@ -20,7 +20,7 @@ MASTER_SITES = http://pipeviewer.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 LICENSE = doc/COPYING
 
-REQUIRED_PKGS = CSWiconv CSWggettextrt
+RUNTIME_DEP_PKGS = CSWiconv CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

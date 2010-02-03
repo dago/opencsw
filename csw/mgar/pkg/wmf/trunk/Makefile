@@ -26,12 +26,12 @@ SPKG_DESC_CSWwmf += Library and tools for manipulating Windows metafiles
 SPKG_DESC_CSWwmfdevel += Library and tools for manipulating Windows metafiles - developer package
 SPKG_DESC_CSWwmfdoc += Library and tools for manipulating Windows metafiles - documentation
 
-REQUIRED_PKGS_CSWwmf += CSWexpat CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
-REQUIRED_PKGS_CSWwmf += CSWjpeg CSWlibx11 CSWpng CSWzlib
-REQUIRED_PKGS_CSWwmfdevel += CSWwmf
-REQUIRED_PKGS_CSWwmfdoc += CSWwmf
+RUNTIME_DEP_PKGS_CSWwmf += CSWexpat CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
+RUNTIME_DEP_PKGS_CSWwmf += CSWjpeg CSWlibx11 CSWpng CSWzlib
+RUNTIME_DEP_PKGS_CSWwmfdevel += CSWwmf
+RUNTIME_DEP_PKGS_CSWwmfdoc += CSWwmf
 
-PREREQUISITE_PKGS += CSWgtk2devel
+BUILD_DEP_PKGS += CSWgtk2devel
 
 PKGFILES_CSWwmfdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWwmfdoc = $(sharedstatedir)/doc/.*

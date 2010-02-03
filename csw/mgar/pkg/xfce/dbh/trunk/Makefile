@@ -21,7 +21,7 @@ CATALOGNAME = dbh
 PACKAGES    = CSWdbh
 
 # Defines dependencies
-REQUIRED_PKGS_CSWdbh    = 
+RUNTIME_DEP_PKGS_CSWdbh    = 
 
 TEST_SCRIPTS = 
 

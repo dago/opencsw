@@ -17,10 +17,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 
-REQUIRED_PKGS = CSWgcc4corert CSWgcc4g++rt CSWiconv
+RUNTIME_DEP_PKGS = CSWgcc4corert CSWgcc4g++rt CSWiconv
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_DIRS_isa-extra = $(libdir)

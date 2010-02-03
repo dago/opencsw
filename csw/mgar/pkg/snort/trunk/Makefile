@@ -15,8 +15,8 @@ endef
 MASTER_SITES = http://dl.snort.org/snort-current/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS  = CSWpcrert CSWlibpcap CSWgcc4corert
-#REQUIRED_PKGS += CSWosslrt CSWmysql4rt CSWzlib
+RUNTIME_DEP_PKGS  = CSWpcrert CSWlibpcap CSWgcc4corert
+#RUNTIME_DEP_PKGS += CSWosslrt CSWmysql4rt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

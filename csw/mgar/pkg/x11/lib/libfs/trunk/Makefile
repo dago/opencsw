@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibfsdevel = libfs_devel
 SPKG_DESC_CSWlibfs = $(DESCRIPTION)
 SPKG_DESC_CSWlibfsdevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWlibfsdevel = CSWlibfs
+RUNTIME_DEP_PKGS_CSWlibfsdevel = CSWlibfs
 
 PKGFILES_CSWlibfsdevel  = $(PKGFILES_DEVEL)
 

@@ -18,7 +18,7 @@ UPSTREAM_MASTER_SITES = $(VENDOR_URL)/download/vanessa_socket/
 
 PACKAGES = CSWlibvanessa-socket
 CATALOGNAME = libvanessa_socket
-REQUIRED_PKGS = CSWlibvanessa-logger
+RUNTIME_DEP_PKGS = CSWlibvanessa-logger
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -20,7 +20,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
 DISTFILES += $(call admfiles,CSWbind,preinstall postinstall preremove)
 
 LICENSE = COPYRIGHT
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)-([A-Z][0-9])

@@ -12,7 +12,7 @@ DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
@@ -22,7 +22,7 @@ PACKAGES = CSWpycairo
 CATALOGNAME_CSWpycairo      = pycairo
 SPKG_DESC_CSWpycairo        = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWpycairo = CSWlibcairo CSWpython
+RUNTIME_DEP_PKGS_CSWpycairo = CSWlibcairo CSWpython
 
 CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/$$ISALIST
 CAIRO_CFLAGS = -I/opt/csw/include -I/opt/csw/include/cairo

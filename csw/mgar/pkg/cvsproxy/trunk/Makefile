@@ -10,7 +10,7 @@ endef
 MASTER_SITES = http://www.sra.co.jp/people/m-kasahr/cvsproxy/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWtcpwrap
+RUNTIME_DEP_PKGS = CSWtcpwrap
 SPKG_SOURCEURL = http://www.sra.co.jp/people/m-kasahr/cvsproxy
 
 # We define upstream file regex so we can be notifed of new upstream software release

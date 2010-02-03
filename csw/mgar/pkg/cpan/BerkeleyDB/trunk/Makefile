@@ -16,6 +16,6 @@ PATCHFILES = CSWpmberkeleydb.config.in.diff
 NOISALIST = 1
 EXTRA_LIB = /opt/csw/bdb47/lib
 
-REQUIRED_PKGS = CSWbdb47
+RUNTIME_DEP_PKGS = CSWbdb47
 
 include gar/category.mk

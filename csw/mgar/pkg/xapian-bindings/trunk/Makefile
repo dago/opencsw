@@ -27,11 +27,11 @@ CATALOGNAME_CSWrbxapian = rb_xapian
 SPKG_DESC_CSWpyxapian = Xapian bindings for Python
 SPKG_DESC_CSWrbxapian = Xapian bindings for Ruby
 
-PREREQUISITE_PKGS = CSWrubydev
-REQUIRED_PKGS_CSWpyxapian = CSWpython CSWxapianrt
-REQUIRED_PKGS_CSWrbxapian = CSWruby CSWxapianrt CSWgcc3corert
+BUILD_DEP_PKGS = CSWrubydev
+RUNTIME_DEP_PKGS_CSWpyxapian = CSWpython CSWxapianrt
+RUNTIME_DEP_PKGS_CSWrbxapian = CSWruby CSWxapianrt CSWgcc3corert
 # This should be CSWgcc3g++rt, but the lib is actually in CSWgcc3g++
-REQUIRED_PKGS_CSWrbxapian += CSWgcc3g++
+RUNTIME_DEP_PKGS_CSWrbxapian += CSWgcc3g++
 
 GARCOMPILER_ruby = GCC3
 GARCOMPILER_python = SOS11

@@ -22,7 +22,7 @@ PKGFILES_CSWcfenginedoc += .*/share/cfengine/.*
 
 CATALOGNAME_CSWcfengine = cfengine
 SPKG_DESC_CSWcfengine = A tool for administering Networks of Diverse Machines
-REQUIRED_PKGS_CSWcfengine = CSWosslrt CSWbdb3
+RUNTIME_DEP_PKGS_CSWcfengine = CSWosslrt CSWbdb3
 
 CATALOGNAME_CSWcfenginedoc = cfengine_doc
 SPKG_DESC_CSWcfenginedoc = Cfengine documentation

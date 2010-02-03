@@ -21,7 +21,7 @@ LICENSE = license.txt
 
 SPKG_CLASSES = none cswcpsampleconf
 
-REQUIRED_PKGS = CSWncurses CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWncurses CSWcswclassutils
 
 CONFIGURE_SCRIPTS = 
 TEST_SCRIPTS =

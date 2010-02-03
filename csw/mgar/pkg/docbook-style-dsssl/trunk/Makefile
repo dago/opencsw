@@ -23,7 +23,7 @@ DISTFILES = docbook-dsssl-$(GARVERSION).tar.gz
 DISTFILES += CSWdocbookdsssl.postinstall CSWdocbookdsssl.preremove
 PATCHFILES = add_makefile.patch fix_perl_path.patch
 
-REQUIRED_PKGS = CSWdocbookdtds CSWsgmlcommon CSWopenjade CSWperl
+RUNTIME_DEP_PKGS = CSWdocbookdtds CSWsgmlcommon CSWopenjade CSWperl
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release

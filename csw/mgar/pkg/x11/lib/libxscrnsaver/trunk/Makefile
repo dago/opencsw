@@ -23,9 +23,9 @@ CATALOGNAME_CSWlibxscrnsaverdev = libxscrnsaver_devel
 SPKG_DESC_CSWlibxscrnsaver = $(DESCRIPTION)
 SPKG_DESC_CSWlibxscrnsaverdev = $(DESCRIPTION) development files
 
-# PREREQUISITE_PKGS = CSWscrnsaverproto
-REQUIRED_PKGS_CSWlibxscrnsaver      = CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibxscrnsaverdev = CSWlibxscrnsaver
+# BUILD_DEP_PKGS = CSWscrnsaverproto
+RUNTIME_DEP_PKGS_CSWlibxscrnsaver      = CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxscrnsaverdev = CSWlibxscrnsaver
 
 PKGFILES_CSWlibxscrnsaverdev  = $(PKGFILES_DEVEL)
 

@@ -19,8 +19,8 @@ CATALOGNAME_CSWlibpaperdevel = libpaper_devel
 SPKG_DESC_CSWlibpaper += Library and tools for handling papersize
 SPKG_DESC_CSWlibpaperdevel += Library and tools for handling papersize - developer package
 
-REQUIRED_PKGS_CSWlibpaper = 
-REQUIRED_PKGS_CSWlibpaperdevel += CSWlibpaper
+RUNTIME_DEP_PKGS_CSWlibpaper = 
+RUNTIME_DEP_PKGS_CSWlibpaperdevel += CSWlibpaper
 
 PKGFILES_CSWlibpaperdevel = $(PKGFILES_DEVEL)
 

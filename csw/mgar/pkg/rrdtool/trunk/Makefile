@@ -16,17 +16,17 @@ DISTFILES += $(call admfiles,CSWrrdtool)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWggettextrt
-REQUIRED_PKGS += CSWglib2
-REQUIRED_PKGS += CSWiconv
-REQUIRED_PKGS += CSWlibcairo
-REQUIRED_PKGS += CSWlibxml2
-REQUIRED_PKGS += CSWpango
-REQUIRED_PKGS += CSWpng
-REQUIRED_PKGS += CSWsunmath
-REQUIRED_PKGS += CSWzlib
-REQUIRED_PKGS += CSWperl
-REQUIRED_PKGS += CSWruby
+RUNTIME_DEP_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS += CSWglib2
+RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWlibcairo
+RUNTIME_DEP_PKGS += CSWlibxml2
+RUNTIME_DEP_PKGS += CSWpango
+RUNTIME_DEP_PKGS += CSWpng
+RUNTIME_DEP_PKGS += CSWsunmath
+RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWruby
 
 EXTRA_INC = $(prefix)/include/cairo
 EXTRA_INC += $(prefix)/include/libxml2/libxml

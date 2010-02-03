@@ -18,7 +18,7 @@ endef
 PACKAGES = CSWpmxmlparser
 CATALOGNAME = pm_xmlparser
 
-REQUIRED_PKGS = CSWexpat
+RUNTIME_DEP_PKGS = CSWexpat
 
 CONFIGURE_ARGS  = EXPATINCPATH=$(includedir)
 CONFIGURE_ARGS += EXPATLIBPATH=$(libdir)

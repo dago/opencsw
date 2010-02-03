@@ -47,12 +47,12 @@ SPKG_DESC_CSWlibproxy = A library that provides automatic proxy configuration ma
 SPKG_DESC_CSWlibproxydevel = A library that provides automatic proxy configuration management - development files
 SPKG_DESC_CSWpy-libproxy = A library that provides automatic proxy configuration management - Python bindings
 
-REQUIRED_PKGS_CSWlibproxy += CSWlibice CSWlibsm CSWlibx11 CSWlibxmu CSWlibxt
-REQUIRED_PKGS_CSWlibproxydevel += CSWlibproxy
-REQUIRED_PKGS_CSWpy-libproxy += CSWpython CSWlibproxy
-PREREQUISITE_PKGS += CSWlibx11devel CSWlibxmudevel CSWlibdbusdev
+RUNTIME_DEP_PKGS_CSWlibproxy += CSWlibice CSWlibsm CSWlibx11 CSWlibxmu CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibproxydevel += CSWlibproxy
+RUNTIME_DEP_PKGS_CSWpy-libproxy += CSWpython CSWlibproxy
+BUILD_DEP_PKGS += CSWlibx11devel CSWlibxmudevel CSWlibdbusdev
 #Disable Mozilla/Firefox/Seamonkey plugin until there is a 64-bit version
-#PREREQUISITE_PKGS += CSWmozilla CSWseamonkey CSWfirefox
+#BUILD_DEP_PKGS += CSWmozilla CSWseamonkey CSWfirefox
 
 PKGFILES_CSWlibproxydevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWpy-libproxy = $(libdir).*/python/site-packages/.*

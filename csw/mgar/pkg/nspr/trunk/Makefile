@@ -34,7 +34,7 @@ ARCHALL_CSWnspr-devel = 1
 SPKG_DESC_CSWnspr = Netscape Portable Runtime
 SPKG_DESC_CSWnspr-devel = Netscape Portable Runtime header files
 CATALOGNAME_CSWnspr-devel = nspr_devel
-REQUIRED_PKGS_CSWnspr-devel = CSWnspr
+RUNTIME_DEP_PKGS_CSWnspr-devel = CSWnspr
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

@@ -14,7 +14,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://linux.thai.net/~thep/datrie/datrie.html
 
-REQUIRED_PKGS = CSWiconv
+RUNTIME_DEP_PKGS = CSWiconv
 
 EXTRA_LINKER_FLAGS = -liconv
 BUILD64 = 1

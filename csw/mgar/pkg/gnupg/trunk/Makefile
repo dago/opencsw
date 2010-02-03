@@ -38,8 +38,8 @@ CONFIGURE_ARGS += --disable-asm
 EXTRA_MERGE_EXCLUDE_FILES += .*/charset.alias
 PROTOTYPE_FILTER = awk '$$$$3 ~/\/gpg$$$$/ { $$$$4 = 4755 } { print }'
 
-REQUIRED_PKGS_CSWgnupg  = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
-REQUIRED_PKGS_CSWgnupg += CSWoldaprt CSWreadline CSWzlib
+RUNTIME_DEP_PKGS_CSWgnupg  = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt CSWreadline CSWzlib
 
 TEST_TARGET = check
 

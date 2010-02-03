@@ -24,7 +24,7 @@ PACKAGES = CSWlcms
 CATALOGNAME_CSWlcms = lcms
 SPKG_DESC_CSWlcms = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWlcms   = CSWjpeg CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWlcms   = CSWjpeg CSWtiff CSWzlib
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

@@ -24,14 +24,14 @@ CATALOGNAME = myodbc
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-REQUIRED_PKGS  = CSWiconv
-REQUIRED_PKGS += CSWlibtoolrt
-REQUIRED_PKGS += CSWmysql5rt
-REQUIRED_PKGS += CSWunixodbc
-REQUIRED_PKGS += CSWzlib
+RUNTIME_DEP_PKGS  = CSWiconv
+RUNTIME_DEP_PKGS += CSWlibtoolrt
+RUNTIME_DEP_PKGS += CSWmysql5rt
+RUNTIME_DEP_PKGS += CSWunixodbc
+RUNTIME_DEP_PKGS += CSWzlib
 
-PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
-PREREQUISITE_PKGS += CSWmysql5devel
+BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS += CSWmysql5devel
 
 # The tests act weird. They require a shared library that doesn't get built at all.
 TEST_SCRIPTS =

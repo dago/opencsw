@@ -32,8 +32,8 @@ PACKAGES = CSWnsca CSWsendnsca
 CATALOGNAME_CSWnsca = nsca
 CATALOGNAME_CSWsendnsca = send_nsca
 
-REQUIRED_PKGS_CSWnsca     = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
-REQUIRED_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWnsca     = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
 
 SPKG_CLASSES_CSWnsca = none cswusergroup cswpreserveconf cswinitsmf
 SPKG_CLASSES_CSWsendnsca = none cswusergroup cswpreserveconf

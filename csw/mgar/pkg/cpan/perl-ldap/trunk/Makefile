@@ -16,7 +16,7 @@ PACKAGES = CSWpmldap
 CATALOGNAME = pm_ldap
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmxmlsax CSWpmauthensasl CSWpmiosocketssl CSWpmuri CSWpmconvertasn1 CSWpmmimebase64
+RUNTIME_DEP_PKGS = CSWpmxmlsax CSWpmauthensasl CSWpmiosocketssl CSWpmuri CSWpmconvertasn1 CSWpmmimebase64
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

@@ -15,9 +15,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.pcre.org
 
-PREREQUISITE_PKGS = CSWgnulinks
-REQUIRED_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline CSWncurses
-REQUIRED_PKGS_CSWpcre = CSWpcrert $(REQUIRED_PKGS_CSWpcrert)
+BUILD_DEP_PKGS = CSWgnulinks
+RUNTIME_DEP_PKGS_CSWpcrert = CSWzlib CSWbzip2 CSWreadline CSWncurses
+RUNTIME_DEP_PKGS_CSWpcre = CSWpcrert $(RUNTIME_DEP_PKGS_CSWpcrert)
 
 PACKAGES = CSWpcre CSWpcrert
 CATALOGNAME_CSWpcrert = pcre_rt
@@ -30,7 +30,7 @@ SPKG_DESC_CSWpcre = Perl-compatible regular expression tools
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-unicode-properties

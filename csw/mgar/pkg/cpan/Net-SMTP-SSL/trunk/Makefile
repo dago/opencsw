@@ -19,8 +19,8 @@ ARCHALL = 1
 PACKAGES = CSWpmnetsmtpssl
 CATALOGNAME_CSWpmnetsmtpssl = pm_netsmtpssl
 
-PREREQUISITE_PKGS = CSWperl
-REQUIRED_PKGS = CSWpmiosocketssl
+BUILD_DEP_PKGS = CSWperl
+RUNTIME_DEP_PKGS = CSWpmiosocketssl
 
 include gar/category.mk
 

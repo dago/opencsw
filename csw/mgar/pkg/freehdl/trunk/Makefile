@@ -37,7 +37,7 @@ CONFIGURE_ARGS_DBG  = --enable-trace --enable-warnings
 
 TEST_SCRIPTS =
 
-REQUIRED_PKGS = CSWlibtool CSWgcc4corert CSWgcc4g++ CSWgcc4g++rt CSWpkgconfig
+RUNTIME_DEP_PKGS = CSWlibtool CSWgcc4corert CSWgcc4g++ CSWgcc4g++rt CSWpkgconfig
 #CSWgcc3core CSWgcc3corert CSWgcc3g++ CSWgcc3g++rt
 
 include gar/category.mk

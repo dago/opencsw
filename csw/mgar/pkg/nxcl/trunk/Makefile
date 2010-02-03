@@ -26,8 +26,8 @@ DISTFILES += $(PATCHFILES)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PREREQUISITE_PKGS  = CSWautoconf CSWautomake CSWlibtool
-PREREQUISITE_PKGS += CSWdoxygen CSWspeex
+BUILD_DEP_PKGS  = CSWautoconf CSWautomake CSWlibtool
+BUILD_DEP_PKGS += CSWdoxygen CSWspeex
 
 CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 TEST_SCRIPTS =

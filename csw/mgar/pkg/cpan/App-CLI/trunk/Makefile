@@ -12,7 +12,7 @@ endef
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpmappcli,)
 
-REQUIRED_PKGS = CSWpmlclemktxtsimple CSWpmpodsimple
+RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmpodsimple
 
 DEPENDS += cpan/Locale-Maketext-Simple
 DEPENDS += cpan/Pod-Simple

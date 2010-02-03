@@ -25,7 +25,7 @@ SPKG_DESC_CSWjunit    = $(DESCRIPTION)
 SPKG_DESC_CSWjunitdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-# REQUIRED_PKGS_CSWjunit = No dependency
+# RUNTIME_DEP_PKGS_CSWjunit = No dependency
 
 # Defines package content
 PKGFILES_CSWjunit  = $(prefix)/share/doc/$(GARNAME)/License.html

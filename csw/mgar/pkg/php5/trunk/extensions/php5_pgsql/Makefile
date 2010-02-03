@@ -4,7 +4,7 @@ PACKAGES += CSWphp5pgsql
 
 CATALOGNAME_CSWphp5pgsql = php5_pgsql
 SPKG_DESC_CSWphp5pgsql = pgsql Extention for PHP5
-REQUIRED_PKGS_CSWphp5pgsql = CSWphp5 CSWlibpq
+RUNTIME_DEP_PKGS_CSWphp5pgsql = CSWphp5 CSWlibpq
 
 PATCHFILES += pgsql.diff
 

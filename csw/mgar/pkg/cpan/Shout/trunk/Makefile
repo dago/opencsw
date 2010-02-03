@@ -10,8 +10,8 @@ endef
 MASTER_SITES = http://downloads.us.xiph.org/releases/libshout/
 DISTFILES = $(DISTNAME).tar.gz
 
-REQUIRED_PKGS = CSWlibogg CSWlibshout CSWspeex CSWtheora CSWvorbis CSWpkgconfig
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWlibogg CSWlibshout CSWspeex CSWtheora CSWvorbis CSWpkgconfig
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 PACKAGES = CSWpmshout
 CATALOGNAME = pm_shout

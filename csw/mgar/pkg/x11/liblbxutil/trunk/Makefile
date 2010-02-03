@@ -23,8 +23,8 @@ CATALOGNAME_CSWliblbxutildevel = liblbxutil_devel
 SPKG_DESC_CSWliblbxutil = $(DESCRIPTION)
 SPKG_DESC_CSWliblbxutildevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWliblbxutil      = CSWzlib
-REQUIRED_PKGS_CSWliblbxutildevel = CSWliblbxutil
+RUNTIME_DEP_PKGS_CSWliblbxutil      = CSWzlib
+RUNTIME_DEP_PKGS_CSWliblbxutildevel = CSWliblbxutil
 
 PKGFILES_CSWliblbxutildevel  = $(PKGFILES_DEVEL)
 

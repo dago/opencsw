@@ -23,9 +23,9 @@ CATALOGNAME_CSWlibxcompositedev = libxcomposite_devel
 SPKG_DESC_CSWlibxcomposite = $(DESCRIPTION)
 SPKG_DESC_CSWlibxcompositedev = $(DESCRIPTION) development files
 
-# PREREQUISITE_PKGS = CSWcompositeproto
-REQUIRED_PKGS_CSWlibxcompositedev = CSWlibxcomposite
-REQUIRED_PKGS_CSWlibxcomposite    = CSWlibx11 CSWlibxext CSWlibxfixes
+# BUILD_DEP_PKGS = CSWcompositeproto
+RUNTIME_DEP_PKGS_CSWlibxcompositedev = CSWlibxcomposite
+RUNTIME_DEP_PKGS_CSWlibxcomposite    = CSWlibx11 CSWlibxext CSWlibxfixes
 
 PKGFILES_CSWlibxcompositedev  = $(PKGFILES_DEVEL)
 

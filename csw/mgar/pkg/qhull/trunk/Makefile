@@ -31,7 +31,7 @@ SPKG_DESC_CSWqhullrt = Qhull runtime libraries
 
 PKGFILES_CSWqhullrt = $(PKGFILES_RT)
 
-REQUIRED_PKGS_CSWqhull = CSWqhullrt
+RUNTIME_DEP_PKGS_CSWqhull = CSWqhullrt
 
 SPKG_SOURCEURL = http://www.qhull.org/
 

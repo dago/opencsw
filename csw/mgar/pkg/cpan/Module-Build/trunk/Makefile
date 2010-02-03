@@ -16,8 +16,8 @@ LICENSE = LICENSE
 PACKAGES = CSWpmmodulebuild
 CATALOGNAME = pm_modulebuild
 
-REQUIRED_PKGS = CSWpmarchivetar CSWpmextutparsexs CSWpmextutcbuilder CSWpmmodulesign
-PREREQUISITE_PKGS = CSWperl
+RUNTIME_DEP_PKGS = CSWpmarchivetar CSWpmextutparsexs CSWpmextutcbuilder CSWpmmodulesign
+BUILD_DEP_PKGS = CSWperl
 
 ARCHALL = 1
 

@@ -15,7 +15,7 @@ DISTFILES += $(call admfiles,CSWvispan)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWpmgeoippureperl CSWpmnetcidr CSWpmnetdns CSWpmgd CSWpmgdgraph CSWpmnumberformat CSWpmmailsendmail
+RUNTIME_DEP_PKGS = CSWpmgeoippureperl CSWpmnetcidr CSWpmnetdns CSWpmgd CSWpmgdgraph CSWpmnumberformat CSWpmmailsendmail
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

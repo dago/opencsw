@@ -12,8 +12,8 @@ endef
 PACKAGES = CSWpmdevellexalias
 CATALOGNAME = pm_devellexalias
 
-REQUIRED_PKGS = CSWpmdevelcaller CSWpmpadwalker
-PREREQUISITE_PKGS = CSWpmdevelcaller CSWpmpadwalker
+RUNTIME_DEP_PKGS = CSWpmdevelcaller CSWpmpadwalker
+BUILD_DEP_PKGS = CSWpmdevelcaller CSWpmpadwalker
 
 include gar/category.mk
 

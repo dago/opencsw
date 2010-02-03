@@ -18,17 +18,17 @@ PACKAGES  += CSWlibsoup2dev
 SPKG_DESC_CSWlibsoup2 = HTTP client/server library for GNOME
 SPKG_DESC_CSWlibsoup2dev = HTTP client/server library for GNOME, dev files
 
-REQUIRED_PKGS_CSWlibsoup2 = CSWgconf2
-REQUIRED_PKGS_CSWlibsoup2 += CSWgcrypt
-REQUIRED_PKGS_CSWlibsoup2 += CSWggettextrt
-REQUIRED_PKGS_CSWlibsoup2 += CSWglib2
-REQUIRED_PKGS_CSWlibsoup2 += CSWgnutls
-REQUIRED_PKGS_CSWlibsoup2 += CSWgpgerr
-REQUIRED_PKGS_CSWlibsoup2 += CSWlibproxy
-REQUIRED_PKGS_CSWlibsoup2 += CSWlibxml2
-REQUIRED_PKGS_CSWlibsoup2 += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWlibsoup2 = CSWgconf2
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWgnutls
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWlibproxy
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibsoup2 += CSWsqlite3rt
 
-REQUIRED_PKGS_CSWlibsoup2dev += CSWlibsoup2
+RUNTIME_DEP_PKGS_CSWlibsoup2dev += CSWlibsoup2
 
 
 PKGFILES_CSWlibsoup2dev  = /opt/csw/lib/pkgconfig/.*

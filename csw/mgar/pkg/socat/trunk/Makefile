@@ -18,7 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.dest-unreach.org/socat/
 
-REQUIRED_PKGS = CSWosslrt CSWreadline CSWtcpwrap
+RUNTIME_DEP_PKGS = CSWosslrt CSWreadline CSWtcpwrap
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

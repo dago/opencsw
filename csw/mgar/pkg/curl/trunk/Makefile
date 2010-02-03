@@ -42,12 +42,12 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_isa-$(ISA))
 BUILD64 = 1
 
 # We are doing 64 bit only for the libs
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
-REQUIRED_PKGS_CSWcurl  = CSWiconv CSWlibidn CSWlibnet CSWoldaprt CSWosslrt
-REQUIRED_PKGS_CSWcurl += CSWsasl CSWzlib CSWcurlrt
-REQUIRED_PKGS_CSWcurlrt = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl
-REQUIRED_PKGS_CSWcurldevel = CSWcurlrt
+RUNTIME_DEP_PKGS_CSWcurl  = CSWiconv CSWlibidn CSWlibnet CSWoldaprt CSWosslrt
+RUNTIME_DEP_PKGS_CSWcurl += CSWsasl CSWzlib CSWcurlrt
+RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl
+RUNTIME_DEP_PKGS_CSWcurldevel = CSWcurlrt
 
 SKIPTEST = 1
 

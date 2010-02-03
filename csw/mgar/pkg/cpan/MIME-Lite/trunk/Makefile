@@ -14,8 +14,8 @@ endef
 PACKAGES = CSWpmmimelite
 CATALOGNAME = pm_mimelite
 
-REQUIRED_PKGS = CSWpmmimetypes CSWpmmailtools CSWpmemaildateformat
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWpmmimetypes CSWpmmailtools CSWpmemaildateformat
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 # Do not prompt for stuff
 PATCHFILES = 0001-Skip-prompting.patch

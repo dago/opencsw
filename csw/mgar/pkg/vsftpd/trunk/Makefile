@@ -29,9 +29,9 @@ MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
 
 PACKAGES = CSWvsftpd
 
-REQUIRED_PKGS  = CSWtcpwrap 
-REQUIRED_PKGS += CSWosslrt 
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS  = CSWtcpwrap 
+RUNTIME_DEP_PKGS += CSWosslrt 
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # adding configuration handling classes
 # (init/smf classes are dynamically added in checkinstall)

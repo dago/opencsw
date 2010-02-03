@@ -23,9 +23,9 @@ CATALOGNAME_CSWlibxxf86miscdevel = libxxf86misc_devel
 SPKG_DESC_CSWlibxxf86misc = $(DESCRIPTION)
 SPKG_DESC_CSWlibxxf86miscdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWxf86miscproto
-REQUIRED_PKGS_CSWlibxxf86misc = CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibxxf86miscdevel = CSWlibxxf86misc
+BUILD_DEP_PKGS = CSWxf86miscproto
+RUNTIME_DEP_PKGS_CSWlibxxf86misc = CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxxf86miscdevel = CSWlibxxf86misc
 
 PKGFILES_CSWlibxxf86miscdevel  = $(PKGFILES_DEVEL)
 

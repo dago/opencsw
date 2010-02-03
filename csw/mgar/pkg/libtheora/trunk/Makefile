@@ -15,8 +15,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 SPKG_SOURCEURL = http://www.theora.org
 
-PREREQUISITE_PKGS = CSWtransfig
-REQUIRED_PKGS = CSWlibogg
+BUILD_DEP_PKGS = CSWtransfig
+RUNTIME_DEP_PKGS = CSWlibogg
 
 PACKAGES = CSWtheora
 CATALOGNAME = libtheora

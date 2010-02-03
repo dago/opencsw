@@ -11,8 +11,8 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
-PREREQUISITE_PKGS = CSWgnulinks
-REQUIRED_PKGS = CSWggettextrt CSWiconv CSWgm4
+BUILD_DEP_PKGS = CSWgnulinks
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWgm4
 
 SPKG_SOURCEURL = http://www.gnu.org/software/bison/
 

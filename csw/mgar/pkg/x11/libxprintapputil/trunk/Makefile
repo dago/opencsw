@@ -23,9 +23,9 @@ CATALOGNAME_CSWlibxprintapputildevel = libxprintapputil_devel
 SPKG_DESC_CSWlibxprintapputil = $(DESCRIPTION)
 SPKG_DESC_CSWlibxprintapputildevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWlibxprintutildevel
-REQUIRED_PKGS_CSWlibxprintapputil = CSWlibice CSWlibx11 CSWlibxau CSWlibxp CSWlibxprintutil CSWlibxt
-REQUIRED_PKGS_CSWlibxprintapputildevel = CSWlibxprintapputil
+BUILD_DEP_PKGS = CSWlibxprintutildevel
+RUNTIME_DEP_PKGS_CSWlibxprintapputil = CSWlibice CSWlibx11 CSWlibxau CSWlibxp CSWlibxprintutil CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibxprintapputildevel = CSWlibxprintapputil
 
 PKGFILES_CSWlibxprintapputildevel  = $(PKGFILES_DEVEL)
 

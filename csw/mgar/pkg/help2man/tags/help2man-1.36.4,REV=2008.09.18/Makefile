@@ -15,7 +15,7 @@ DISTFILES += $(call admfiles,CSWhelp2man,depend)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWpmlocalegettext
+BUILD_DEP_PKGS = CSWpmlocalegettext
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # We need to disable NLS as we don't have preloadable_libintl.so

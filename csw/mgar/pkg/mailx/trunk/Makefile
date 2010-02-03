@@ -19,7 +19,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 SPKG_CLASSES = none cswcpsampleconf
 
-REQUIRED_PKGS = CSWcswclassutils CSWosslrt CSWiconv
+RUNTIME_DEP_PKGS = CSWcswclassutils CSWosslrt CSWiconv
 
 # nail _is_ mailx now
 INCOMPATIBLE_PKGS = CSWnail

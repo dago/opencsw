@@ -32,9 +32,9 @@ PKGFILES_CSWjson-glibdoc = $(sharedstatedir)/gtk-doc/.*
 
 ARCHALL_CSWjson-glibdoc = 1
 
-REQUIRED_PKGS_CSWjson-glib += CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWjson-glibdevel += CSWjson-glib
-REQUIRED_PKGS_CSWjson-glibdoc += CSWjson-glib
+RUNTIME_DEP_PKGS_CSWjson-glib += CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWjson-glibdevel += CSWjson-glib
+RUNTIME_DEP_PKGS_CSWjson-glibdoc += CSWjson-glib
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -44,7 +44,7 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 #NOISALIST = 1
 BUILD64 = 1
 

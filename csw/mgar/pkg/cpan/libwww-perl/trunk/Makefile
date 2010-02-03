@@ -17,6 +17,6 @@ CATALOGNAME = pm_libwww
 PACKAGES = CSWpmlibwww
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmhtmltagset CSWpmuri CSWpmhtmlparser CSWpmiocompress CSWpmhtmlfmt CSWpmmimebase64
+RUNTIME_DEP_PKGS = CSWpmhtmltagset CSWpmuri CSWpmhtmlparser CSWpmiocompress CSWpmhtmlfmt CSWpmmimebase64
 
 include gar/category.mk

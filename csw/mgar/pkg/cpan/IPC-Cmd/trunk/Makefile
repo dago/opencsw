@@ -13,7 +13,7 @@ PACKAGES = CSWpmipccmd
 CATALOGNAME = pm_ipccmd 
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
+RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
 
 include gar/category.mk
 

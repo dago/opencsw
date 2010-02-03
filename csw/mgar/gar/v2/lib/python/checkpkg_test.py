@@ -561,8 +561,8 @@ class FormatDepsReportUnitTest(unittest.TestCase):
     expected = u"""# CSWfoo:
 # SUGGESTION: you may want to add some or all of the following as depends:
 #    (Feel free to ignore SUNW or SPRO packages)
-REQUIRED_PKGS_CSWfoo += *SUNWlxsl
-REQUIRED_PKGS_CSWfoo += SUNWgss
+RUNTIME_DEP_PKGS_CSWfoo += *SUNWlxsl
+RUNTIME_DEP_PKGS_CSWfoo += SUNWgss
 # The following dependencies might be unnecessary:
 # ? CSWlibxslt
 # ? CSWsudo

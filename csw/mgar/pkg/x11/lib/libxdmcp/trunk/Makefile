@@ -22,7 +22,7 @@ CATALOGNAME_CSWlibxdmcpdevel = libxdmcp_devel
 SPKG_DESC_CSWlibxdmcp = X11 display manager control protocol library
 SPKG_DESC_CSWlibxdmcpdevel = X11 display manager control protocol library development package
 
-REQUIRED_PKGS_CSWlibxdmcpdevel = CSWlibxdmcp
+RUNTIME_DEP_PKGS_CSWlibxdmcpdevel = CSWlibxdmcp
 
 BUILD64 = 1
 NOISALIST = 1

@@ -15,8 +15,8 @@ MASTER_SITES   = http://rubyforge.org/frs/download.php/60718/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
 ARCHALL = 1
-PREREQUISITE_PKGS = CSWruby
-REQUIRED_PKGS_CSWrubygems = CSWruby
+BUILD_DEP_PKGS = CSWruby
+RUNTIME_DEP_PKGS_CSWrubygems = CSWruby
 
 LICENSE_CSWrubygems = LICENSE.txt
 

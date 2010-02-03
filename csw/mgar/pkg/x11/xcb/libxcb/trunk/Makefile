@@ -11,8 +11,8 @@ endef
 MASTER_SITES = http://xcb.freedesktop.org/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen CSWpython CSWxcbproto CSWgraphviz2
-REQUIRED_PKGS_CSWlibxcb = CSWlibxau
+BUILD_DEP_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen CSWpython CSWxcbproto CSWgraphviz2
+RUNTIME_DEP_PKGS_CSWlibxcb = CSWlibxau
 PACKAGES = CSWlibxcb CSWlibxcbdevel CSWlibxcbdoc
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -29,8 +29,8 @@ CATALOGNAME_CSWlibxcbdoc   = libxcb_doc
 PKGFILES_CSWlibxcbdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxcbdoc   = $(PKGFILES_DOC)
 
-REQUIRED_PKGS_CSWlibxcbdevel = CSWlibxcb
-REQUIRED_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau CSWlibxdmcp
+RUNTIME_DEP_PKGS_CSWlibxcbdevel = CSWlibxcb
+RUNTIME_DEP_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau CSWlibxdmcp
 
 ARCHALL_CSWlibxcbdoc = 1
 

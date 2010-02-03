@@ -12,7 +12,7 @@ endef
 PACKAGES = CSWpmtermreadlineg
 CATALOGNAME = pm_termreadlineg
 
-REQUIRED_PKGS = CSWreadline
+RUNTIME_DEP_PKGS = CSWreadline
 
 include gar/category.mk
 

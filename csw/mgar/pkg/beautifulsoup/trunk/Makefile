@@ -35,7 +35,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = beautifulsoup
 
 PACKAGES = CSWbeautifulsoup
-REQUIRED_PKGS_CSWbeautifulsoup = CSWpython CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWbeautifulsoup = CSWpython CSWcswclassutils
 
 PROTOTYPE_FILTER = awk ' \
   $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \

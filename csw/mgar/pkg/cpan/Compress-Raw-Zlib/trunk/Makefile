@@ -9,7 +9,7 @@ define BLURB
   compression library.
 endef
 
-REQUIRED_PKGS = CSWzlib
+RUNTIME_DEP_PKGS = CSWzlib
 
 CATALOGNAME = pm_compressrawzlib
 PACKAGES = CSWpmcompressrawzlib

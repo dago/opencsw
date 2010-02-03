@@ -16,7 +16,7 @@ CATALOGNAME_CSWlibmpfr = libmpfr
 SPKG_DESC_CSWlibmpfr = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWlibmpfr = http://www.mpfr.org/
 
-REQUIRED_PKGS_CSWlibmpfr  = 
+RUNTIME_DEP_PKGS_CSWlibmpfr  = 
 PATCHFILES = patches
 
 # We define upstream file regex so we can be notifed of 

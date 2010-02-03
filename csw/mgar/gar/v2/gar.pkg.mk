@@ -49,7 +49,7 @@ ARCHALL_$(SRCPACKAGE)       ?= 1
 GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane 'if($$F[0] eq "gar") { print ($$F[1]=~m(https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/(.*))),"\n";}')
 GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
-REQUIRED_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
+RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
@@ -65,7 +65,7 @@ ARCHALL_$(SRCPACKAGE)       ?= 1
 GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane 'if($$F[0] eq "gar") { print ($$F[1]=~m(https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/(.*))),"\n";}')
 GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
-REQUIRED_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
+RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
@@ -403,7 +403,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 
 # Dynamic depends are constructed as follows:
 # - Packages the currently constructed one depends on can be specified with
-#   REQUIRED_PKGS_<pkg> specifically, or REQUIRED_PKGS for all packages build.
+#   RUNTIME_DEP_PKGS_<pkg> specifically, or RUNTIME_DEP_PKGS for all packages build.
 #   These are flagged as 'P' in the depend file.
 # - If multiple packages are build at the same time it is valid to have
 #   dependencies between them. In this case it is necessary to define the package
@@ -425,11 +425,11 @@ $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
 $(WORKDIR)/%.depend: $(WORKDIR)
-	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(REQUIRED_PKGS_$*)$(REQUIRED_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
+	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(RUNTIME_DEP_PKGS_$*)$(RUNTIME_DEP_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
 			echo "I $(PKG)";\
 		)\
-		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(REQUIRED_PKGS_$*) $(REQUIRED_PKGS),\
+		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(RUNTIME_DEP_PKGS_$*) $(RUNTIME_DEP_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | $(GAWK) '{ $$1 = "P"; print } ')"; \

@@ -23,10 +23,10 @@ PACKAGES = CSWnetsnmp CSWnetsnmp-py
 CATALOGNAME_CSWnetsnmp = netsnmp
 CATALOGNAME_CSWnetsnmp-py = netsnmp_py
 
-PREREQUISITE_PKGS = CSWpysetuptools
+BUILD_DEP_PKGS = CSWpysetuptools
 
-REQUIRED_PKGS_CSWnetsnmp += CSWosslrt CSWtcpwrap CSWperl
-REQUIRED_PKGS_CSWnetsnmp-py += CSWnetsnmp CSWpython
+RUNTIME_DEP_PKGS_CSWnetsnmp += CSWosslrt CSWtcpwrap CSWperl
+RUNTIME_DEP_PKGS_CSWnetsnmp-py += CSWnetsnmp CSWpython
 PKGFILES_CSWnetsnmp-py = $(libdir)/python.*
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -35,7 +35,7 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 #BUILD64 = 1
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-snmp-version=1

@@ -9,7 +9,7 @@ define BLURB
   simliar to cvs annotate.
 endef
 
-REQUIRED_PKGS = CSWpmalgdiff
+RUNTIME_DEP_PKGS = CSWpmalgdiff
 
 PACKAGES = CSWpmalgannotate
 CATALOGNAME = pm_algorithmannotate

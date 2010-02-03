@@ -21,7 +21,7 @@ NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib CSWoniguruma
+RUNTIME_DEP_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib CSWoniguruma
 
 SPKG_SOURCEURL = http://www.s-lang.org/
 
@@ -31,7 +31,7 @@ LINKER_FLAGS =
 
 sysconfdir = /etc/opt/csw
 
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 

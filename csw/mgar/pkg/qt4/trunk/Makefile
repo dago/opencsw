@@ -21,8 +21,8 @@ UFILES_REGEX = qt-everywhere-opensource-src-(\d+(?:\.\d+)*).tar.gz
 #PACKAGES  = CSWqt4 CSWqt4-devel
 
 WORKSRC = $(WORKDIR)/qt-everywhere-opensource-src-$(GARVERSION)
-REQUIRED_PKGS_CSWqt4 = CSWfconfig CSWftype2 CSWggettext CSWglib2 CSWjpeg CSWlibxrender CSWpng CSWtiff CSWzlib 
-#REQUIRED_PKGS_CSWqt4-devel = CSWqt4
+RUNTIME_DEP_PKGS_CSWqt4 = CSWfconfig CSWftype2 CSWggettext CSWglib2 CSWjpeg CSWlibxrender CSWpng CSWtiff CSWzlib 
+#RUNTIME_DEP_PKGS_CSWqt4-devel = CSWqt4
 
 #ifndef DO64
 #PLATFORM=solaris-cc
@@ -30,7 +30,7 @@ REQUIRED_PKGS_CSWqt4 = CSWfconfig CSWftype2 CSWggettext CSWglib2 CSWjpeg CSWlibx
 #PLATFORM=solaris-cc-64
 #endif
 
-#PREREQUISITE_PKGS = CSWpkgconfig CSWfconfig CSWlibdbusdev
+#BUILD_DEP_PKGS = CSWpkgconfig CSWfconfig CSWlibdbusdev
 
 CONFIGURE_ARGS = -prefix $(prefix) \
 			-bindir $(bindir) \

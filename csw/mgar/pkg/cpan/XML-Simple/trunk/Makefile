@@ -13,7 +13,7 @@ endef
 PACKAGES = CSWpmxmlsimple
 CATALOGNAME = pm_xmlsimple
 
-REQUIRED_PKGS = CSWpmxmlparser CSWpmxmlsax
+RUNTIME_DEP_PKGS = CSWpmxmlparser CSWpmxmlsax
 
 ARCHALL = 1
 

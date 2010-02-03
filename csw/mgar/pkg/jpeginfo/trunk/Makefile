@@ -11,7 +11,7 @@ endef
 MASTER_SITES = http://www.kokkonen.net/tjko/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWjpeg
+RUNTIME_DEP_PKGS = CSWjpeg
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

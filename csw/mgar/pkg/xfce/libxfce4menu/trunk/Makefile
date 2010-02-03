@@ -29,9 +29,9 @@ PKGFILES_CSWlibxfce4menudev += /opt/csw/include/xfce4/libxfce4menu/.*
 PKGFILES_CSWlibxfce4menudoc  = /opt/csw/share/gtk-doc/.*
 
 # Defines dependencies
-REQUIRED_PKGS_CSWlibxfce4menu    = CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWlibxfce4menudev = CSWlibxfce4menu
-REQUIRED_PKGS_CSWlibxfce4menudoc = CSWlibxfce4menu
+RUNTIME_DEP_PKGS_CSWlibxfce4menu    = CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWlibxfce4menudev = CSWlibxfce4menu
+RUNTIME_DEP_PKGS_CSWlibxfce4menudoc = CSWlibxfce4menu
 
 # BUILD64 = 1
 # NOISALIST = 1

@@ -20,7 +20,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
-REQUIRED_PKGS = CSWftype2 CSWt1lib CSWxpm CSWgsfonts
+RUNTIME_DEP_PKGS = CSWftype2 CSWt1lib CSWxpm CSWgsfonts
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-Xpm-library=$(libdir)

@@ -24,11 +24,11 @@ SPKG_DESC_CSWgtksourceview += A text widget with features typical of a source co
 SPKG_DESC_CSWgtksourceviewdev += A text widget with features typical of a source code editor - developer package
 SPKG_DESC_CSWgtksourceviewdoc += A text widget with features typical of a source code editor - documentation
 
-REQUIRED_PKGS_CSWgtksourceview += CSWfconfig CSWftype2 CSWgconf2 CSWggettextrt 
-REQUIRED_PKGS_CSWgtksourceview += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
-REQUIRED_PKGS_CSWgtksourceview += CSWlibxml2 CSWpango CSWlibxext
-REQUIRED_PKGS_CSWgtksourceviewdev += CSWgtksourceview
-REQUIRED_PKGS_CSWgtksourceviewdoc += CSWgtksourceview
+RUNTIME_DEP_PKGS_CSWgtksourceview += CSWfconfig CSWftype2 CSWgconf2 CSWggettextrt 
+RUNTIME_DEP_PKGS_CSWgtksourceview += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
+RUNTIME_DEP_PKGS_CSWgtksourceview += CSWlibxml2 CSWpango CSWlibxext
+RUNTIME_DEP_PKGS_CSWgtksourceviewdev += CSWgtksourceview
+RUNTIME_DEP_PKGS_CSWgtksourceviewdoc += CSWgtksourceview
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -39,7 +39,7 @@ EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 #NOISALIST = 1
 # gconf-2 not 64-bit yet
 #BUILD64 = 1

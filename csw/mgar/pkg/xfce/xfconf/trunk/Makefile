@@ -31,13 +31,13 @@ PKGFILES_CSWxfconfdevel += /opt/csw/include/xfce4/xfconf/.*
 PKGFILES_CSWxfconfdoc    = /opt/csw/share/gtk-doc/.*
 
 # Required packages for compilation
-PREREQUISITE_PKGS        = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf
+BUILD_DEP_PKGS        = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf
 
 # Defines dependencies
-REQUIRED_PKGS_CSWxfconf      = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf CSWdbusglib
-REQUIRED_PKGS_CSWxfconf     += CSWggettextrt CSWglib2 CSWiconv CSWlibdbus CSWlibxfce4util
-REQUIRED_PKGS_CSWxfconfdevel = 
-REQUIRED_PKGS_CSWxfconfdoc   = 
+RUNTIME_DEP_PKGS_CSWxfconf      = CSWpmglib CSWpmextutilsdepends CSWpmextutpkgconf CSWdbusglib
+RUNTIME_DEP_PKGS_CSWxfconf     += CSWggettextrt CSWglib2 CSWiconv CSWlibdbus CSWlibxfce4util
+RUNTIME_DEP_PKGS_CSWxfconfdevel = 
+RUNTIME_DEP_PKGS_CSWxfconfdoc   = 
 
 PATCHFILES = xf-conf-locking-utils.h.diff xfconf-gvaluefuncs.h.diff Makefile.PL.in.diff
 

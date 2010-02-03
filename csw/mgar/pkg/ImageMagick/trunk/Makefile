@@ -20,12 +20,12 @@ SPKG_SOURCEURL = http://www.imagemagick.org
 
 LICENSE = LICENSE
 
-REQUIRED_PKGS += CSWbzip2 CSWdjvulibrert CSWfconfig CSWftype2 CSWggettextrt
-REQUIRED_PKGS += CSWglib2 CSWgs CSWgtk2 CSWilmbase CSWjasper CSWjbigkit
-REQUIRED_PKGS += CSWjpeg CSWlcms CSWlibcairo CSWlibfpx CSWlibrsvg CSWlibxml2
-REQUIRED_PKGS += CSWopenexr CSWperl CSWpng CSWsunmath CSWtiff CSWwmf CSWzlib
-REQUIRED_PKGS += CSWlibtoolrt CSWlibice CSWlibsm CSWlibxext CSWgraphviz
-REQUIRED_PKGS += CSWlibx11 CSWlibxt
+RUNTIME_DEP_PKGS += CSWbzip2 CSWdjvulibrert CSWfconfig CSWftype2 CSWggettextrt
+RUNTIME_DEP_PKGS += CSWglib2 CSWgs CSWgtk2 CSWilmbase CSWjasper CSWjbigkit
+RUNTIME_DEP_PKGS += CSWjpeg CSWlcms CSWlibcairo CSWlibfpx CSWlibrsvg CSWlibxml2
+RUNTIME_DEP_PKGS += CSWopenexr CSWperl CSWpng CSWsunmath CSWtiff CSWwmf CSWzlib
+RUNTIME_DEP_PKGS += CSWlibtoolrt CSWlibice CSWlibsm CSWlibxext CSWgraphviz
+RUNTIME_DEP_PKGS += CSWlibx11 CSWlibxt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = ImageMagick-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2

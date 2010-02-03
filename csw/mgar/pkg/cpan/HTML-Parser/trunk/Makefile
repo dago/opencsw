@@ -16,7 +16,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpmhtmlparser
 CATALOGNAME = pm_htmlparser
 
-REQUIRED_PKGS = CSWpmhtmltagset
+RUNTIME_DEP_PKGS = CSWpmhtmltagset
 
 CONFIGURE_ARGS = -n
 

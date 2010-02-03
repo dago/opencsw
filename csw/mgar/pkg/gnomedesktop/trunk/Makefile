@@ -21,11 +21,11 @@ SPKG_DESC_CSWgnomedesktop += Evolution database backend server
 SPKG_DESC_CSWgnomedesktop-devel += Evolution database backend server - developer package
 SPKG_DESC_CSWgnomedesktop-doc += Evolution database backend server - documentation
 
-REQUIRED_PKGS_CSWgnomedesktop += 
-REQUIRED_PKGS_CSWgnomedesktop += 
-REQUIRED_PKGS_CSWgnomedesktop += 
-REQUIRED_PKGS_CSWgnomedesktopdevel += CSWevolution
-REQUIRED_PKGS_CSWgnomedesktopdoc += CSWevolution
+RUNTIME_DEP_PKGS_CSWgnomedesktop += 
+RUNTIME_DEP_PKGS_CSWgnomedesktop += 
+RUNTIME_DEP_PKGS_CSWgnomedesktop += 
+RUNTIME_DEP_PKGS_CSWgnomedesktopdevel += CSWevolution
+RUNTIME_DEP_PKGS_CSWgnomedesktopdoc += CSWevolution
 
 PKGFILES_CSWgnomedesktopdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWgnomedesktopdoc = $(sharedstatedir)/gtk-doc/.*

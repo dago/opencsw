@@ -17,8 +17,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = use-csw-tools.patch
 
-PREREQUISITE_PKGS = CSWhelp2man
-REQUIRED_PKGS = CSWgawk CSWgm4 CSWperl
+BUILD_DEP_PKGS = CSWhelp2man
+RUNTIME_DEP_PKGS = CSWgawk CSWgm4 CSWperl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

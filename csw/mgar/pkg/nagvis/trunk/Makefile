@@ -25,9 +25,9 @@ PATCHFILES += nagvis.ini.php-sample.diff
 PACKAGES = CSWnagvis
 CATALOGNAME_CSWnagvis = nagvis
 
-REQUIRED_PKGS_CSWnagvis  = CSWnagios CSWphp5gd CSWphp5mysql CSWphp5mbstring CSWphp5session
-REQUIRED_PKGS_CSWnagvis += CSWphp5xmlreader CSWphp5xmlwriter CSWgraphviz2 CSWphp5gettext
-REQUIRED_PKGS_CSWnagvis += CSWap2modphp5 CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWnagvis  = CSWnagios CSWphp5gd CSWphp5mysql CSWphp5mbstring CSWphp5session
+RUNTIME_DEP_PKGS_CSWnagvis += CSWphp5xmlreader CSWphp5xmlwriter CSWgraphviz2 CSWphp5gettext
+RUNTIME_DEP_PKGS_CSWnagvis += CSWap2modphp5 CSWcswclassutils
 
 SPKG_CLASSES_CSWnagvis = none cswpreserveconf
 

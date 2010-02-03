@@ -13,8 +13,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpyorbit
-REQUIRED_PKGS_CSWpyorbit  = CSWpython CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWpyorbit += CSWlibidl CSWorbit2
+RUNTIME_DEP_PKGS_CSWpyorbit  = CSWpython CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWpyorbit += CSWlibidl CSWorbit2
 
 CATALOGNAME_CSWpyorbit = pyorbit
 SPKG_SOURCEURL_CSWpyorbit = http://freshmeat.net/projects/pyorbit/

@@ -41,11 +41,11 @@ SPKG_DESC_CSWlibbind = ISC BIND DNS library package
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 SPKG_DESC_CSWbindchroot = ISC BIND DNS chroot package
 
-REQUIRED_PKGS_CSWbind = CSWlibbind CSWbindutils CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-REQUIRED_PKGS_CSWbinddevel = CSWbind
-REQUIRED_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-REQUIRED_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-REQUIRED_PKGS_CSWbindchroot = CSWbind
+RUNTIME_DEP_PKGS_CSWbind = CSWlibbind CSWbindutils CSWiconv CSWlibxml2 CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWbinddevel = CSWbind
+RUNTIME_DEP_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWbindchroot = CSWbind
 
 UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
 UFILES_REGEX = (\d+(?:\.\d+)*)

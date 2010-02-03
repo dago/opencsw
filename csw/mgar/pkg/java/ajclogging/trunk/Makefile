@@ -25,7 +25,7 @@ SPKG_DESC_CSWajclogging    = $(DESCRIPTION)
 SPKG_DESC_CSWajcloggingdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajclogging = CSWlog4j
+RUNTIME_DEP_PKGS_CSWajclogging = CSWlog4j
 
 # Defines package content
 PKGFILES_CSWajclogging  = $(prefix)/share/doc/$(GARNAME)/License.txt

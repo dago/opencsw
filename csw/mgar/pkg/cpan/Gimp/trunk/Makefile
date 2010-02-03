@@ -15,7 +15,7 @@ DEPENDS += utils/gimp
 DEPENDS += cpan/PDL cpan/Gtk2
 
 
-PREREQUISITE_PKGS       = CSWpmpdl CSWpmgtk2 
+BUILD_DEP_PKGS       = CSWpmpdl CSWpmgtk2 
 PKGS_REQUIRED_CSWpmglib = CSWpmpdl CSWpmgtk2 CSWgimplibs
 
 CATALOGNAME = pm_gimp

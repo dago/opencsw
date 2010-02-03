@@ -15,7 +15,7 @@ DISTFILES += $(call admfiles,CSWsmbldap-tools,depend)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-#PREREQUISITE_PKGS = CSWpmldap CSWpmdigestsha1 CSWpmunicodemap
+#BUILD_DEP_PKGS = CSWpmldap CSWpmdigestsha1 CSWpmunicodemap
 
 PATCHFILES = header-confdir-fix.diff
 

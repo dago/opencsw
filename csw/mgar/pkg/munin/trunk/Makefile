@@ -45,14 +45,14 @@ ARCHALL_CSWmuninmaster = 1
 ARCHALL_CSWmuninnode = 1
 ARCHALL_CSWmunincommon = 1
 
-REQUIRED_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
-REQUIRED_PKGS_CSWmuninmaster += CSWrrd CSWapache2
-REQUIRED_PKGS_CSWmuninmaster += CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
+RUNTIME_DEP_PKGS_CSWmuninmaster += CSWrrd CSWapache2
+RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils
 
-REQUIRED_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
-REQUIRED_PKGS_CSWmuninnode += CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
+RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils
 
-REQUIRED_PKGS_CSWmuninnode += CSWperl CSWpmnetssleay
+RUNTIME_DEP_PKGS_CSWmuninnode += CSWperl CSWpmnetssleay
 
 SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswpreserveconf ugfiles
 SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswpreserveconf cswinitsmf

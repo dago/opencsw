@@ -21,7 +21,7 @@ MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 SPKG_SOURCEURL = http://www.rpcurnow.force9.co.uk/mairix/
 
-REQUIRED_PKGS = CSWbzip2 CSWzlib
+RUNTIME_DEP_PKGS = CSWbzip2 CSWzlib
 
 TEST_SCRIPTS =
 

@@ -21,8 +21,8 @@ endef
 MASTER_SITES = http://reductivelabs.com/downloads/facter/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWruby
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWruby
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

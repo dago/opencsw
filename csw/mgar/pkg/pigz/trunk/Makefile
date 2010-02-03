@@ -25,7 +25,7 @@ SPKG_SOURCEURL = http://www.zlib.net/pigz/
 
 LICENSE = README
 
-REQUIRED_PKGS = CSWzlib
+RUNTIME_DEP_PKGS = CSWzlib
 
 # Optimization show effects < 5%
 #REQUESTED_ISAS = $(ISALIST_$(GARCOMPILER))

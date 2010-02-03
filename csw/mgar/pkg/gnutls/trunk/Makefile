@@ -32,14 +32,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 LD_OPTIONS =
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-REQUIRED_PKGS_CSWgnutls  = CSWgcrypt CSWggettextrt
-REQUIRED_PKGS_CSWgnutls += CSWgpgerr CSWlibtasn1 CSWreadline CSWzlib CSWiconv
-REQUIRED_PKGS_CSWgnutlsdevel = CSWgnutls
+RUNTIME_DEP_PKGS_CSWgnutls  = CSWgcrypt CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgnutls += CSWgpgerr CSWlibtasn1 CSWreadline CSWzlib CSWiconv
+RUNTIME_DEP_PKGS_CSWgnutlsdevel = CSWgnutls
 
 PKGFILES_CSWgnutlsdevel = $(PKGFILES_DEVEL)
 

@@ -44,7 +44,7 @@ PROTOTYPE_FILTER = awk '$$$$3 !~/^\/usr\/include/ && $$$$6 == "bin" { $$$$6 = "s
 
 # build 64bit modules
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 # no build tests
 SKIPTEST = 1

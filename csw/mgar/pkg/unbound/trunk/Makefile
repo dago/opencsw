@@ -33,7 +33,7 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 ifeq ($(shell uname -r),5.8)
 	GARCOMPILER = GCC4
-	REQUIRED_PKGS += CSWgcc4corert
+	RUNTIME_DEP_PKGS += CSWgcc4corert
 	DESCRIPTION = A validating, recursive, and caching DNS resolver (gcc)
 endif
 ifeq ($(shell uname -r),5.10)
@@ -49,9 +49,9 @@ CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
 STRIP_LIBTOOL = 0
 
-REQUIRED_PKGS += CSWosslrt
-REQUIRED_PKGS += CSWcswclassutils
-REQUIRED_PKGS += CSWldns
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWldns
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d

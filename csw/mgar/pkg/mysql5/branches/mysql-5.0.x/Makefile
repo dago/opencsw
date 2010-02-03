@@ -110,21 +110,21 @@ PKGFILES_CSW$(GARNAME)rt      = $(libdir)
 PKGFILES_CSW$(GARNAME)rt     += $(libdir)/.*
 PKGFILES_CSW$(GARNAME)test    = $(prefix)/mysql-test.*
 
-REQUIRED_PKGS_CSW$(GARNAME)            = CSW$(GARNAME)client
-REQUIRED_PKGS_CSW$(GARNAME)           += CSW$(GARNAME)rt
-# REQUIRED_PKGS_CSW$(GARNAME)           += CSWosslrt
-REQUIRED_PKGS_CSW$(GARNAME)           += CSWzlib
-# REQUIRED_PKGS_CSW$(GARNAME)rt          = CSWosslrt
-REQUIRED_PKGS_CSW$(GARNAME)rt         += CSWzlib
-REQUIRED_PKGS_CSW$(GARNAME)bench       = CSW$(GARNAME)
-REQUIRED_PKGS_CSW$(GARNAME)bench      += CSWperl
-REQUIRED_PKGS_CSW$(GARNAME)client      = CSW$(GARNAME)rt
-# REQUIRED_PKGS_CSW$(GARNAME)client     += CSWosslrt
-REQUIRED_PKGS_CSW$(GARNAME)client     += CSWncurses
-REQUIRED_PKGS_CSW$(GARNAME)client     += CSWzlib
-REQUIRED_PKGS_CSW$(GARNAME)devel       = CSW$(GARNAME)
-REQUIRED_PKGS_CSW$(GARNAME)test        = CSW$(GARNAME)
-REQUIRED_PKGS_CSW$(GARNAME)test       += CSWperl
+RUNTIME_DEP_PKGS_CSW$(GARNAME)            = CSW$(GARNAME)client
+RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSW$(GARNAME)rt
+# RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWzlib
+# RUNTIME_DEP_PKGS_CSW$(GARNAME)rt          = CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(GARNAME)rt         += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(GARNAME)bench       = CSW$(GARNAME)
+RUNTIME_DEP_PKGS_CSW$(GARNAME)bench      += CSWperl
+RUNTIME_DEP_PKGS_CSW$(GARNAME)client      = CSW$(GARNAME)rt
+# RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWncurses
+RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(GARNAME)devel       = CSW$(GARNAME)
+RUNTIME_DEP_PKGS_CSW$(GARNAME)test        = CSW$(GARNAME)
+RUNTIME_DEP_PKGS_CSW$(GARNAME)test       += CSWperl
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
@@ -136,7 +136,7 @@ DISTFILES += cswusergroup
 UFILES_REGEX = mysql-(\d+(?:\.\d+)*).tar.gz
 
 # TODO: Do the proper prerequsite pkgs.
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__

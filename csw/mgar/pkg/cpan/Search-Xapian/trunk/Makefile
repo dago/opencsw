@@ -10,7 +10,7 @@ endef
 PACKAGES = CSWpmsearchxapian
 CATALOGNAME = pm_searchxapian
 
-PREREQUISITE_PKGS = CSWxapiancore
-REQUIRED_PKGS = $(PREREQUISITE_PKGS)
+BUILD_DEP_PKGS = CSWxapiancore
+RUNTIME_DEP_PKGS = $(BUILD_DEP_PKGS)
 
 include gar/category.mk

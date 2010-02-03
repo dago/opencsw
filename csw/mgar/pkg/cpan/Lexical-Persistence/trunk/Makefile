@@ -11,7 +11,7 @@ PACKAGES = CSWpmlexicalpersist
 CATALOGNAME = pm_lexicalpersist
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmpadwalker CSWpmdevellexalias
+RUNTIME_DEP_PKGS = CSWpmpadwalker CSWpmdevellexalias
 
 include gar/category.mk
 

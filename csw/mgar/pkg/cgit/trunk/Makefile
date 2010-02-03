@@ -16,7 +16,7 @@ cgit is
  * maintained by Lars Hjemli, who is happy to receive patches, suggestions and bug reports.
 endef
 
-REQUIRED_PKGS_CSWcgit = CSWiconv CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWcgit = CSWiconv CSWosslrt CSWzlib
 
 #MASTER_SITES = http://hjemli.net/git/cgit/snapshot/
 #DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz

@@ -18,10 +18,10 @@ PATCHFILES += 0001-Add-support-for-Sun-Studio-compiler.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWiconv
+RUNTIME_DEP_PKGS = CSWiconv
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

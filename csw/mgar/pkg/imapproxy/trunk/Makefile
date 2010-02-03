@@ -27,9 +27,9 @@ endef
 
 PACKAGES = CSWimapproxy
 
-REQUIRED_PKGS  = CSWtcpwrap 
-REQUIRED_PKGS += CSWosslrt 
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS  = CSWtcpwrap 
+RUNTIME_DEP_PKGS += CSWosslrt 
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 
 

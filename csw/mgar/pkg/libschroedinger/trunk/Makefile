@@ -26,11 +26,11 @@ PACKAGES = CSWlibschro CSWlibschrodevel
 SPKG_DESC_CSWlibschro = $(DESCRIPTION)
 SPKG_DESC_CSWlibschrodevel = libschroedinger developer files
 
-REQUIRED_PKGS_CSWlibschro = CSWliboil
-REQUIRED_PKGS_CSWlibschrodevel = CSWlibschro
+RUNTIME_DEP_PKGS_CSWlibschro = CSWliboil
+RUNTIME_DEP_PKGS_CSWlibschrodevel = CSWlibschro
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

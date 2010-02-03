@@ -23,7 +23,7 @@ DISTFILES  = $(SRCNAME)-$(GARVERSION).tar.gz
 WORKSRC = $(WORKDIR)/$(SRCNAME)-$(GARVERSION)
 
 # we require openssl for tls
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

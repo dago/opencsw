@@ -8,7 +8,7 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
 
 SPKG_SOURCEURL = http://projects.gnome.org/$(GARNAME)/
 
@@ -20,7 +20,7 @@ STRIP_LIBTOOL = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 TEST_TARGET = check
 

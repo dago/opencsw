@@ -21,11 +21,11 @@ PATCHFILES += 0002-Add-getopt.h.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWdoxygen
-REQUIRED_PKGS = CSWlibogg
+BUILD_DEP_PKGS = CSWdoxygen
+RUNTIME_DEP_PKGS = CSWlibogg
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

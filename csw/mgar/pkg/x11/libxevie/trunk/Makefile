@@ -23,10 +23,10 @@ CATALOGNAME_CSWlibxeviedevel = libxevie_devel
 SPKG_DESC_CSWlibxevie = $(DESCRIPTION)
 SPKG_DESC_CSWlibxeviedevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWevieext
+BUILD_DEP_PKGS = CSWevieext
 
-REQUIRED_PKGS_CSWlibxeviedevel = CSWlibxevie
-REQUIRED_PKGS_CSWlibxevie      = CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxeviedevel = CSWlibxevie
+RUNTIME_DEP_PKGS_CSWlibxevie      = CSWlibx11 CSWlibxext
 
 PKGFILES_CSWlibxeviedevel  = $(PKGFILES_DEVEL)
 

@@ -7,7 +7,7 @@ DESCRIPTION = No capitalization on method names
 define BLURB
 endef
 
-REQUIRED_PKGS = CSWpmdevelsymdump
+RUNTIME_DEP_PKGS = CSWpmdevelsymdump
 
 PACKAGES = CSWpmcapitalization
 CATALOGNAME = pm_capitalization

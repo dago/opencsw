@@ -21,8 +21,8 @@ SPKG_DESC_CSWgd = $(DESCRIPTION)
 
 #PATCHFILES = Makefile.diff
 
-REQUIRED_PKGS_CSWgd  = CSWexpat CSWfconfig CSWftype2 CSWiconv 
-REQUIRED_PKGS_CSWgd += CSWjpeg CSWpng CSWxpm CSWzlib
+RUNTIME_DEP_PKGS_CSWgd  = CSWexpat CSWfconfig CSWftype2 CSWiconv 
+RUNTIME_DEP_PKGS_CSWgd += CSWjpeg CSWpng CSWxpm CSWzlib
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

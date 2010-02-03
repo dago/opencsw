@@ -11,8 +11,8 @@ MASTER_SITES = http://geolite.maxmind.com/download/geoip/api/c/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWgeoip CSWgeoipdevel
-REQUIRED_PKGS_CSWgeoip = CSWgeolitedb CSWzlib CSWgcc3corert
-REQUIRED_PKGS_CSWgeoipdevel = CSWgeoip
+RUNTIME_DEP_PKGS_CSWgeoip = CSWgeolitedb CSWzlib CSWgcc3corert
+RUNTIME_DEP_PKGS_CSWgeoipdevel = CSWgeoip
 CATALOGNAME_CSWgeoip = geoip
 CATALOGNAME_CSWgeoipdevel = geoip_devel
 SPKG_DESC_CSWgeoip = $(DESCRIPTION)

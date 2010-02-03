@@ -15,8 +15,8 @@ DISTFILES += COPYING
 PACKAGES = CSWpmauthensasl
 CATALOGNAME = pm_authensasl
 
-REQUIRED_PKGS = CSWpmgssapi CSWpmdigesthmac
-PREREQUISITE_PKGS = CSWperl
+RUNTIME_DEP_PKGS = CSWpmgssapi CSWpmdigesthmac
+BUILD_DEP_PKGS = CSWperl
 
 ARCHALL = 1
 

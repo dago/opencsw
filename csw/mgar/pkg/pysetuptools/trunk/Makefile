@@ -15,7 +15,7 @@ ARCHALL_CSWpysetuptools = 1
 MASTER_SITES = http://cheeseshop.python.org/packages/source/s/setuptools/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS_CSWpysetuptools = CSWpython CSWpydistutils
+RUNTIME_DEP_PKGS_CSWpysetuptools = CSWpython CSWpydistutils
 PACKAGES = CSWpysetuptools
 CATALOGNAME_CSWpysetuptools = pysetuptools
 SPKG_DESC_CSWpysetuptools = Distribution Utiltiies for Python
@@ -23,7 +23,7 @@ SPKG_DESC_CSWpysetuptools = Distribution Utiltiies for Python
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc .*\.exe
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile 
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 ENABLE_CHECK = 0
 

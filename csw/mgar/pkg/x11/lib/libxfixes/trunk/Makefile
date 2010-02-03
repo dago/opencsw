@@ -23,10 +23,10 @@ CATALOGNAME_CSWlibxfixesdevel = libxfixes_devel
 SPKG_DESC_CSWlibxfixes = $(DESCRIPTION)
 SPKG_DESC_CSWlibxfixesdevel = $(DESCRIPTION) development files
 
-# PREREQUISITE_PKGS = CSWfixesproto
+# BUILD_DEP_PKGS = CSWfixesproto
 
-REQUIRED_PKGS_CSWlibxfixes      = CSWlibx11
-REQUIRED_PKGS_CSWlibxfixesdevel = CSWlibxfixes
+RUNTIME_DEP_PKGS_CSWlibxfixes      = CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibxfixesdevel = CSWlibxfixes
 
 PKGFILES_CSWlibxfixesdevel  = $(PKGFILES_DEVEL)
 

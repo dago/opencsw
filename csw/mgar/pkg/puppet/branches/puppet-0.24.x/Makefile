@@ -34,9 +34,9 @@ USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 # service isn't started upon the installation of CSWpuppet.
 PACKAGES = CSWpuppet CSWpuppetmaster
 
-REQUIRED_PKGS = CSWfacter
-PREREQUISITE_PKGS =
-REQUIRED_PKGS_CSWpuppetmaster = CSWpuppet
+RUNTIME_DEP_PKGS = CSWfacter
+BUILD_DEP_PKGS =
+RUNTIME_DEP_PKGS_CSWpuppetmaster = CSWpuppet
 
 PKGFILES_CSWpuppetmaster = $(sysconfdir)/init\.d/cswpuppetmasterd
 SPKG_DESC_CSWpuppet = System configuration management tool, client daemon

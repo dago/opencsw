@@ -17,8 +17,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.danga.com/memcached/
 
-PREREQUISITE_PKGS = CSWlibevent-devel
-REQUIRED_PKGS = CSWlibevent
+BUILD_DEP_PKGS = CSWlibevent-devel
+RUNTIME_DEP_PKGS = CSWlibevent
 
 # Solaris 8 Sparc does work, but Solaris 8 x86 has many failed tests due to
 # errors in Solaris 8 itself. For consistency we build from Solaris 9 on for

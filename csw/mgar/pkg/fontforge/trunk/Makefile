@@ -12,9 +12,9 @@ endef
 SPKG_SOURCEURL = http://fontforge.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = fontforge
-REQUIRED_PKGS += CSWggettextrt
-REQUIRED_PKGS += CSWiconv
-REQUIRED_PKGS += CSWpython
+RUNTIME_DEP_PKGS += CSWggettextrt
+RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWpython
 
 DISTNAME = fontforge-$(VERSION_DATESTAMP)
 PATCHFILES  = grayscale.patch

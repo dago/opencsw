@@ -33,8 +33,8 @@ SPKG_DESC_CSWlutefisksmor     = Lutefisk med smor $(DESCRIPTION) OpenCSW package
 SPKG_DESC_CSWlutefisktilbehor = Lutefisk med tilbehor $(DESCRIPTION) OpenCSW mirrors use
 
 # Defines dependencies
-REQUIRED_PKGS_CSWlutefisktilbehor = CSWwget CSWgawk 
-REQUIRED_PKGS_CSWlutefisksmor     = CSWwget CSWgawk CSWgsed
+RUNTIME_DEP_PKGS_CSWlutefisktilbehor = CSWwget CSWgawk 
+RUNTIME_DEP_PKGS_CSWlutefisksmor     = CSWwget CSWgawk CSWgsed
 
 # Defines package content
 PKGFILES_CSWlutefisktilbehor = .*/lutefisk_med_tilbehor

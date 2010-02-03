@@ -25,8 +25,8 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-REQUIRED_PKGS = CSWrrd CSWnetsnmp CSWmysql5client CSWcswclassutils
-REQUIRED_PKGS = CSWphp5 CSWap2modphp5 CSWphp5mysql CSWphp5snmp CSWphp5session CSWphp5sockets
+RUNTIME_DEP_PKGS = CSWrrd CSWnetsnmp CSWmysql5client CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWphp5 CSWap2modphp5 CSWphp5mysql CSWphp5snmp CSWphp5session CSWphp5sockets
 
 SPKG_CLASSES = none cswusergroup
 

@@ -18,7 +18,7 @@ CATALOGNAME_CSWasciidoc = asciidoc
 
 ARCHALL_CSWasciidoc = 1
 
-REQUIRED_PKGS_CSWasciidoc = CSWpython CSWgnulinks CSWggetopt
+RUNTIME_DEP_PKGS_CSWasciidoc = CSWpython CSWgnulinks CSWggetopt
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz

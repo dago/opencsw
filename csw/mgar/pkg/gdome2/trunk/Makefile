@@ -13,7 +13,7 @@ PATCHFILES = patch-nowall.diff
 PATCHFILES += patch-doc-destdir.diff
 PATCHFILES += patch-use-install.diff
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2 CSWiconv CSWlibxml2 CSWzlib
+RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWiconv CSWlibxml2 CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

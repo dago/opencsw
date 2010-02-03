@@ -15,7 +15,7 @@ CATALOGNAME = pm_netdns
 
 DISTFILES += COPYING
 
-REQUIRED_PKGS = CSWpmdigesthmac CSWpmnetip
+RUNTIME_DEP_PKGS = CSWpmdigesthmac CSWpmnetip
 
 DEPENDS += cpan/Net-IP
 

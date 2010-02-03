@@ -14,9 +14,9 @@ DISTFILES += wgetpaste.conf
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS  = CSWbash
-REQUIRED_PKGS += CSWshutils
-REQUIRED_PKGS += CSWwget
+RUNTIME_DEP_PKGS  = CSWbash
+RUNTIME_DEP_PKGS += CSWshutils
+RUNTIME_DEP_PKGS += CSWwget
 
 PATCHFILES  = 0001-Using-gwhoami-instead-of-whoami.patch
 PATCHFILES += 0002-CSW-bash.patch

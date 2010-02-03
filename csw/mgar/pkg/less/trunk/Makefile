@@ -16,7 +16,7 @@ LICENSE = LICENSE
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWncurses CSWggettextrt
+RUNTIME_DEP_PKGS = CSWncurses CSWggettextrt
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)

@@ -19,7 +19,7 @@ MASTER_SITES   = ftp://invisible-island.net/xterm/
 DISTFILES      = $(GARNAME)-$(GARVERSION).tgz
 UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
-REQUIRED_PKGS = CSWfconfig CSWlibxft2
+RUNTIME_DEP_PKGS = CSWfconfig CSWlibxft2
 
 # xterm Makefile doesn't have a test target
 TEST_TARGET =
@@ -59,7 +59,7 @@ CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
 
-REQUIRED_PKGS += CSWlibice CSWlibx11 CSWlibxaw CSWlibxmu CSWlibxt
+RUNTIME_DEP_PKGS += CSWlibice CSWlibx11 CSWlibxaw CSWlibxmu CSWlibxt
 
 # The need for the explicit -lfontconfig linkage also came along when 
 # we upgraded from xterm-243 (CSW X11 libs had been introduced in the

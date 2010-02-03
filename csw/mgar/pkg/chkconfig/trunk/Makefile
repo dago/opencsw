@@ -24,7 +24,7 @@ PACKAGES = CSWchkconfig CSWalternatives
 SPKG_DESC_CSWchkconfig = Checkconfig engine from Red Hat chkconfig-$(GARVERSION)
 SPKG_DESC_CSWalternatives = Alternatives engine from Red Hat chkconfig-$(GARVERSION)
 
-REQUIRED_PKGS  = CSWggettextrt CSWlibpopt
+RUNTIME_DEP_PKGS  = CSWggettextrt CSWlibpopt
 
 PKGFILES_CSWalternatives = .*alternatives.*
 

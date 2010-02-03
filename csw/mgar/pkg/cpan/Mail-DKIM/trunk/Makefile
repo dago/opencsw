@@ -22,12 +22,12 @@ DEPENDS += cpan/Error
 DEPENDS += cpan/MailTools
 DEPENDS += cpan/Net-DNS
 
-REQUIRED_PKGS += CSWpmcryptosslrsa
-REQUIRED_PKGS += CSWpmdigestsha
-REQUIRED_PKGS += CSWpmdigestsha1
-REQUIRED_PKGS += CSWpmerror
-REQUIRED_PKGS += CSWpmmailtools
-REQUIRED_PKGS += CSWpmmimebase64
-REQUIRED_PKGS += CSWpmnetdns
+RUNTIME_DEP_PKGS += CSWpmcryptosslrsa
+RUNTIME_DEP_PKGS += CSWpmdigestsha
+RUNTIME_DEP_PKGS += CSWpmdigestsha1
+RUNTIME_DEP_PKGS += CSWpmerror
+RUNTIME_DEP_PKGS += CSWpmmailtools
+RUNTIME_DEP_PKGS += CSWpmmimebase64
+RUNTIME_DEP_PKGS += CSWpmnetdns
 
 include gar/category.mk

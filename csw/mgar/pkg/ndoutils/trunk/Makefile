@@ -27,8 +27,8 @@ PATCHFILES += installdb.diff
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-REQUIRED_PKGS_CSWndoutils2x = CSWmysql5rt CSWzlib CSWnagios CSWcswclassutils
-REQUIRED_PKGS_CSWndoutils3x = CSWmysql5rt CSWzlib CSWnagios CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWndoutils2x = CSWmysql5rt CSWzlib CSWnagios CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWndoutils3x = CSWmysql5rt CSWzlib CSWnagios CSWcswclassutils
 
 SPKG_CLASSES_CSWndoutils2x = none cswpreserveconf cswinitsmf
 SPKG_CLASSES_CSWndoutils3x = none cswpreserveconf cswinitsmf

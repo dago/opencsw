@@ -23,7 +23,7 @@ LICENSE = README
 SPKG_SOURCEURL = http://www.gnu.org/software/ncurses/ncurses.html
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 RUNPATHQUOTE = 1
 
 EXTRA_MODULATORS = WIDEC

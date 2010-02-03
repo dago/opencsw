@@ -11,7 +11,7 @@ MASTER_SITES = http://www.libsdl.org/projects/SDL_image/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWsdlimage
-REQUIRED_PKGS = CSWlibsdl
+RUNTIME_DEP_PKGS = CSWlibsdl
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

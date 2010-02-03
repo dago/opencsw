@@ -7,8 +7,8 @@ CATEGORIES = lang
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
-PREREQUISITE_PKGS = CSWbdb47 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
-PREREQUISITE_PKGS += CSWreadline CSWzlib
+BUILD_DEP_PKGS = CSWbdb47 CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
+BUILD_DEP_PKGS += CSWreadline CSWzlib
 
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymodeel
 
@@ -18,18 +18,18 @@ ARCHALL_CSWrubymodeel = 1
 
 LICENSE = COPYING
 
-REQUIRED_PKGS_CSWruby = CSWbdb47 CSWgdbm CSWiconv 
-REQUIRED_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
+RUNTIME_DEP_PKGS_CSWruby = CSWbdb47 CSWgdbm CSWiconv 
+RUNTIME_DEP_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
-REQUIRED_PKGS_CSWrubydoc = CSWruby
+RUNTIME_DEP_PKGS_CSWrubydoc = CSWruby
 
-REQUIRED_PKGS_CSWrubytk = CSWruby CSWtk CSWtcl
+RUNTIME_DEP_PKGS_CSWrubytk = CSWruby CSWtk CSWtcl
 
-REQUIRED_PKGS_CSWrubydev = CSWruby CSWgfile
+RUNTIME_DEP_PKGS_CSWrubydev = CSWruby CSWgfile
 
-REQUIRED_PKGS_CSWrubymode = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWrubymode = CSWemacscommon
 
-REQUIRED_PKGS_CSWrubymodeel = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWrubymodeel = CSWemacscommon
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -101,8 +101,8 @@ COMPILE_ELISP = 1
 
 ifdef USEGCC
 GARCOMPILER = GNU
-REQUIRED_PKGS_CSWruby += CSWgcc4corert
-REQUIRED_PKGS_CSWrubydev += CSWgcc4core
+RUNTIME_DEP_PKGS_CSWruby += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWrubydev += CSWgcc4core
 # This is for rbconfig.rb: without this, modules built may not get a proper
 # setting.
 EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))

@@ -25,7 +25,7 @@ SPKG_DESC_CSWajchttpclient  = $(DESCRIPTION)
 SPKG_DESC_CSWajchttpcldoc   = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajchttpclient = CSWajclogging 
+RUNTIME_DEP_PKGS_CSWajchttpclient = CSWajclogging 
 
 # Defines package content
 PKGFILES_CSWajchttpclient  = $(prefix)/share/doc/$(GARNAME)/License.txt

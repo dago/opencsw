@@ -18,9 +18,9 @@ PACKAGES = CSWetckeeper
 CATALOGNAME = etckeeper
 ARCHALL_CSWetckeeper = 1
 
-PREREQUISITE_PKGS = CSWgnulinks
+BUILD_DEP_PKGS = CSWgnulinks
 
-REQUIRED_PKGS_CSWetckeeper = CSWgit CSWbash
+RUNTIME_DEP_PKGS_CSWetckeeper = CSWgit CSWbash
 
 SPKG_DESC_CSWetckeeper = Versioning for /etc
 

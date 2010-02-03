@@ -18,7 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 # handle config file
 PRESERVECONF = $(sysconfdir)/urls.txt

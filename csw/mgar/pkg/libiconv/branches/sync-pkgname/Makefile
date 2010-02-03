@@ -50,15 +50,15 @@ PKGFILES_CSWlibiconvdevel = $(PKGFILES_DEVEL) .*.3.html
 #  But DO NOT put CSWggettext in depend, or it will break things!!!
 #  Read: Circular dependency between ggettextrt and libiconv
 
-REQUIRED_PKGS_CSWlibiconvdevel = CSWlibiconv
-REQUIRED_PKGS_CSWiconv = CSWlibiconv CSWlibiconvdevel
+RUNTIME_DEP_PKGS_CSWlibiconvdevel = CSWlibiconv
+RUNTIME_DEP_PKGS_CSWiconv = CSWlibiconv CSWlibiconvdevel
 
 # CSWiconv depends on CSWlibiconv which we don't have yet
 ENABLE_CHECK = 0
 
 # The current 1.12 only has a 32-Bit iconv binary, leave it that way
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/.*/iconv
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 BUILD64 = 1
 
 # Optimize. -fast causes ./configure on Sparc to hang on the stdbool.h test.

@@ -14,9 +14,9 @@ MASTER_SITES = http://build.chromium.org/buildbot/archives/
 # DISTFILES  = chromium.r$(CHROMIUM_REVISION).tgz
 DISTFILES   =
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-REQUIRED_PKGS = CSWnspr CSWnss CSWffmpeg
+RUNTIME_DEP_PKGS = CSWnspr CSWnss CSWffmpeg
 # CSWpyxml must be uninstalled
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWnspr-devel CSWlibxcbdevel CSWffmpeg CSWgperf CSWpython
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-devel CSWlibxcbdevel CSWffmpeg CSWgperf CSWpython
 CONFIGURE_SCRIPTS = chromium
 BUILD_SCRIPTS     = chromium
 INSTALL_SCRIPTS   = chromium

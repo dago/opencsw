@@ -18,6 +18,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpmdbi
 CATALOGNAME = pm_dbi
 
-#REQUIRED_PKGS = CSWpmplrpc
+#RUNTIME_DEP_PKGS = CSWpmplrpc
 
 include gar/category.mk

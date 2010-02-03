@@ -21,8 +21,8 @@ define BLURB
 
 endef
 
-REQUIRED_PKGS  = CSWpmcompressrawzlib
-REQUIRED_PKGS += CSWpmcompressrawbz2
+RUNTIME_DEP_PKGS  = CSWpmcompressrawzlib
+RUNTIME_DEP_PKGS += CSWpmcompressrawbz2
 
 PACKAGES = CSWpmiocompress
 CATALOGNAME = pm_iocompress

@@ -21,10 +21,10 @@ SPKG_DESC_CSWgoocanvas += A cairo-based canvas widget for GTK
 SPKG_DESC_CSWgoocanvasdevel += A cairo-based canvas widget for GTK - developer package
 SPKG_DESC_CSWgoocanvasdoc += A cairo-based canvas widget for GTK - documentation
 
-REQUIRED_PKGS_CSWgoocanvas += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWgoocanvas += CSWgtk2 CSWlibatk CSWlibcairo CSWpango
-REQUIRED_PKGS_CSWgoocanvasdevel += CSWgoocanvas
-REQUIRED_PKGS_CSWgoocanvasdoc += CSWgoocanvas
+RUNTIME_DEP_PKGS_CSWgoocanvas += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWgoocanvas += CSWgtk2 CSWlibatk CSWlibcairo CSWpango
+RUNTIME_DEP_PKGS_CSWgoocanvasdevel += CSWgoocanvas
+RUNTIME_DEP_PKGS_CSWgoocanvasdoc += CSWgoocanvas
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -35,7 +35,7 @@ EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 #NOISALIST = 1
 BUILD64 = 1
 

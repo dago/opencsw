@@ -19,9 +19,9 @@ PATCHFILES += 0006-enabled-imported-gnulib-functions.patch
 PATCHFILES += 0007-enable-installation-of-man-pages.patch
 PATCHFILES += 0008-Replace-z-use-in-strftime.patch
 
-PREREQUISITE_PKGS = CSWzlib CSWautomake CSWautoconf
+BUILD_DEP_PKGS = CSWzlib CSWautomake CSWautoconf
 
-REQUIRED_PKGS = CSWzlib CSWcvs
+RUNTIME_DEP_PKGS = CSWzlib CSWcvs
 
 PACKAGES = CSWcvsps
 

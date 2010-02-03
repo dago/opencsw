@@ -43,12 +43,12 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-REQUIRED_PKGS_CSWoldap       = CSWbdb47 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
-REQUIRED_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc CSWcswclassutils
-REQUIRED_PKGS_CSWoldap      += CSWkrb5lib CSWlibicu CSWperl
-REQUIRED_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWkrb5lib
-REQUIRED_PKGS_CSWoldapdevel  = CSWoldaprt
-REQUIRED_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb47 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
+RUNTIME_DEP_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWoldap      += CSWkrb5lib CSWlibicu CSWperl
+RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWoldapdevel  = CSWoldaprt
+RUNTIME_DEP_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl CSWkrb5lib
 
 SPKG_SOURCEURL = http://www.openldap.org
 
@@ -70,7 +70,7 @@ localstatedir = /var/opt/csw
 MIGRATECONF = openldap
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-crypt
 CONFIGURE_ARGS += --enable-lmpasswd

@@ -14,7 +14,7 @@ PACKAGES    = CSWpmparserecdescent
 
 ARCHALL_CSWpmparserecdescent = 1
 
-REQUIRED_PKGS_CSWpmparserecdescent = CSWpmversion
+RUNTIME_DEP_PKGS_CSWpmparserecdescent = CSWpmversion
 
 LICENSE = README
 

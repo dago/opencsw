@@ -20,6 +20,6 @@ PACKAGES = CSWpmpodsimple
 CATALOGNAME = pm_podsimple
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmpodescapes
+RUNTIME_DEP_PKGS = CSWpmpodescapes
 
 include gar/category.mk

@@ -16,6 +16,6 @@ endef
 PACKAGES = CSWpmtermreadkey
 CATALOGNAME = pm_termreadkey
 
-REQUIRED_PKGS = CSWncurses
+RUNTIME_DEP_PKGS = CSWncurses
 
 include gar/category.mk

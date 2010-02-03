@@ -29,8 +29,8 @@ CATALOGNAME_CSWpy-django = py_django
 ARCHALL = 1
 UFILES_REGEX = Django-(\d+(?:\.\d+)*).tar.gz
 WORKSRC = $(WORKDIR)/Django-$(GARVERSION)
-REQUIRED_PKGS =
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpython-devel
+RUNTIME_DEP_PKGS =
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython-devel
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 # There's a problem that the download URL of the Django source tarball does not

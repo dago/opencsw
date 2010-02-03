@@ -12,7 +12,7 @@ MASTER_SITES = http://openvpn.net/release/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 # we require
-REQUIRED_PKGS = CSWosslrt CSWlzo
+RUNTIME_DEP_PKGS = CSWosslrt CSWlzo
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

@@ -12,6 +12,6 @@ endef
 PACKAGES = CSWpmcryptosslrandom
 CATALOGNAME = pm_osslrandom
 
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 include gar/category.mk

@@ -9,8 +9,8 @@ define BLURB
   data attached to a hierarchical environment (like filesystem).
 endef
 
-PREREQUISITE_PKGS = CSWpmtstexcept
-REQUIRED_PKGS = CSWpmclone
+BUILD_DEP_PKGS = CSWpmtstexcept
+RUNTIME_DEP_PKGS = CSWpmclone
 
 PACKAGES = CSWpmdatahier
 CATALOGNAME = pm_datahier

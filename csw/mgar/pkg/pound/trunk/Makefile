@@ -20,7 +20,7 @@ DISTNAME   = Pound-$(GARVERSION)
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
 # we require
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 # patch conf/pid directory to fit our needs
 PATCHFILES  = patch-pound.h

@@ -17,8 +17,8 @@ SPKG_SOURCEURL = http://www.libsdl.org/
 
 PACKAGES = CSWlibsdl CSWlibsdldevel
 
-REQUIRED_PKGS_CSWlibsdl = CSWiconv CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibsdldevel = CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibsdl = CSWiconv CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibsdldevel = CSWlibsdl
 
 CATALOGNAME_CSWlibsdl      = libsdl
 CATALOGNAME_CSWlibsdldevel = libsdl_devel

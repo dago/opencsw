@@ -16,7 +16,7 @@ SPKG_SOURCEURL = http://libspectre.freedesktop.org
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWgs
+RUNTIME_DEP_PKGS = CSWgs
 
 # Disable for now as libgs is missing 64 bit
 #BUILD64 = 1

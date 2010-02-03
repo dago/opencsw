@@ -18,6 +18,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = py_hachoir_parser
 ARCHALL = 1
-REQUIRED_PKGS = CSWpy-hachoir-core
+RUNTIME_DEP_PKGS = CSWpy-hachoir-core
 TEST_SCRIPTS =
 include gar/category.mk

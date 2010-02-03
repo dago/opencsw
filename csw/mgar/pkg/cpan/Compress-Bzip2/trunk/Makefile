@@ -7,7 +7,7 @@ DESCRIPTION = Interface to Bzip2 compression library
 define BLURB
 endef
 
-REQUIRED_PKGS = CSWbzip2
+RUNTIME_DEP_PKGS = CSWbzip2
 
 PACKAGES = CSWpmcompressbzip2
 CATALOGNAME = pm_compressbzip2

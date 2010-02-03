@@ -26,7 +26,7 @@ PATCHFILES += 0006-sig-SunOS.right-is-same-as-sig-41.right.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWbash
+RUNTIME_DEP_PKGS = CSWbash
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -17,7 +17,7 @@ PACKAGES = CSWsquid
 CATALOGNAME_CSWsquid = squid
 SPKG_DESC_CSWsquid = $(DESCRIPTION)
 SPKG_CLASSES_CSWsquid = none cswinitsmf
-REQUIRED_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl CSWcswclassutils
 PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/

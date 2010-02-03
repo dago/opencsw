@@ -18,12 +18,12 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PACKAGES = CSWpysqlite
 CATALOGNAME_CSWpysqlite = pysqlite
 SPKG_DESC_CSWpysqlite = SQLite 1.x support for Python
-REQUIRED_PKGS_CSWpysqlite = CSWpython-rt CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWpysqlite = CSWpython-rt CSWsqlite3rt
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 
 # We define upstream file regex so we can be notifed of 

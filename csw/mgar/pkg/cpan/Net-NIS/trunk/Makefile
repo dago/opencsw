@@ -11,7 +11,7 @@ endef
 PACKAGES = CSWpmnetnis
 CATALOGNAME = pm_netnis
 
-REQUIRED_PKGS = SUNWnisu
+RUNTIME_DEP_PKGS = SUNWnisu
 
 include gar/category.mk
 

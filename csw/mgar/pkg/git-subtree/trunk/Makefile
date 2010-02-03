@@ -15,9 +15,9 @@ CATALOGNAME_CSWgitsubtree = git_subtree
 
 ARCHALL_CSWgitsubtree = 1
 
-PREREQUISITE_PKGS = CSWasciidoc CSWxmlto
+BUILD_DEP_PKGS = CSWasciidoc CSWxmlto
 
-REQUIRED_PKGS_CSWgitsubtree = CSWbash CSWgit
+RUNTIME_DEP_PKGS_CSWgitsubtree = CSWbash CSWgit
 
 GIT_REPOS = git://github.com/apenwarr/git-subtree.git
 GIT_TREEISH_git-subtree.git = $(PATCHLEVEL)

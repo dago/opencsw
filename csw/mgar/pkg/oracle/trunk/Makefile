@@ -21,7 +21,7 @@ PACKAGES = CSWoracle
 CATALOGNAME_CSWoracle = oracle
 SPKG_DESC_CSWoracle = The Oracle database
 
-REQUIRED_PKGS =
+RUNTIME_DEP_PKGS =
 # Maybe CSWunixodbc, but how would it know how to locate the shared library?
 
 PROTOTYPE_FILTER = awk '$$$$3 ~/\/extjob$$$$/ \

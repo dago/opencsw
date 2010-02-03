@@ -21,11 +21,11 @@ SPKG_DESC_CSWevolution-ds += Evolution database backend server
 SPKG_DESC_CSWevolution-ds-devel += Evolution database backend server - developer package
 SPKG_DESC_CSWevolution-ds-doc += Evolution database backend server - documentation
 
-REQUIRED_PKGS_CSWevolution-ds += 
-REQUIRED_PKGS_CSWevolution-ds += 
-REQUIRED_PKGS_CSWevolution-ds += 
-REQUIRED_PKGS_CSWevolution-dsdevel += CSWevolution
-REQUIRED_PKGS_CSWevolution-dsdoc += CSWevolution
+RUNTIME_DEP_PKGS_CSWevolution-ds += 
+RUNTIME_DEP_PKGS_CSWevolution-ds += 
+RUNTIME_DEP_PKGS_CSWevolution-ds += 
+RUNTIME_DEP_PKGS_CSWevolution-dsdevel += CSWevolution
+RUNTIME_DEP_PKGS_CSWevolution-dsdoc += CSWevolution
 
 PKGFILES_CSWevolution-dsdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWevolution-dsdoc = $(sharedstatedir)/gtk-doc/.*

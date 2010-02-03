@@ -19,7 +19,7 @@ SPKG_SOURCEURL = http://web.taranis.org/shmux/
 MASTER_SITES = http://web.taranis.org/shmux/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
-REQUIRED_PKGS = CSWpcrert
+RUNTIME_DEP_PKGS = CSWpcrert
 
 # We define upstream file regex so we can be notifed of new upstream software 
 # release

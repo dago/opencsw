@@ -4,7 +4,7 @@ PACKAGES += CSWphp5pdopgsql
 
 CATALOGNAME_CSWphp5pdopgsql = php5_pdopgsql
 SPKG_DESC_CSWphp5pdopgsql = A PgSQL specific database access abstraction module for PHP applications
-REQUIRED_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq CSWphp5pdo
+RUNTIME_DEP_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq CSWphp5pdo
 
 PATCHFILES += pdopgsql.diff
 

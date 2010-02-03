@@ -4,8 +4,8 @@ PACKAGES += CSWphp5gd
 
 CATALOGNAME_CSWphp5gd = php5_gd
 SPKG_DESC_CSWphp5gd = gd Extention for PHP5
-REQUIRED_PKGS_CSWphp5gd  = CSWphp5 CSWftype2 CSWgd CSWjpeg
-REQUIRED_PKGS_CSWphp5gd += CSWpng CSWt1lib CSWxpm CSWzlib
+RUNTIME_DEP_PKGS_CSWphp5gd  = CSWphp5 CSWftype2 CSWgd CSWjpeg
+RUNTIME_DEP_PKGS_CSWphp5gd += CSWpng CSWt1lib CSWxpm CSWzlib
 
 
 CONFIGURE_ARGS += --with-gd=shared,$(prefix)

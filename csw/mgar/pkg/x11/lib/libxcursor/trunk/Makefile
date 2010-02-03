@@ -23,8 +23,8 @@ CATALOGNAME_CSWlibxcursordevel = libxcursor_devel
 SPKG_DESC_CSWlibxcursor = $(DESCRIPTION)
 SPKG_DESC_CSWlibxcursordevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWlibxcursordevel = CSWlibxcursor
-REQUIRED_PKGS_CSWlibxcursor      = CSWlibx11 CSWlibxcomposite CSWlibxfixes CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibxcursordevel = CSWlibxcursor
+RUNTIME_DEP_PKGS_CSWlibxcursor      = CSWlibx11 CSWlibxcomposite CSWlibxfixes CSWlibxrender
 
 PKGFILES_CSWlibxcursordevel  = $(PKGFILES_DEVEL)
 

@@ -28,7 +28,7 @@ DISTFILES = $(DISTNAME).tgz
 
 CATALOGNAME_CSWphp5apc = php5_apc
 SPKG_DESC_CSWphp5apc = APC Extention for PHP5
-REQUIRED_PKGS_CSWphp5apc = CSWphp5
+RUNTIME_DEP_PKGS_CSWphp5apc = CSWphp5
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config

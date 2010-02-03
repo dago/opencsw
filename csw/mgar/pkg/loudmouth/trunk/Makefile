@@ -20,10 +20,10 @@ PKGFILES_CSWloudmouth = $(PKGFILES_RT)
 CATALOGNAME_CSWloudmouth = loudmouth
 CATALOGNAME_CSWloudmouthdevel = loudmouth_devel
 
-REQUIRED_PKGS_CSWloudmouth = CSWgcrypt CSWggettextrt CSWglib2 CSWgnutls
-REQUIRED_PKGS_CSWloudmouth += CSWgpgerr CSWlibidn CSWlibtasn1
+RUNTIME_DEP_PKGS_CSWloudmouth = CSWgcrypt CSWggettextrt CSWglib2 CSWgnutls
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWgpgerr CSWlibidn CSWlibtasn1
 
-REQUIRED_PKGS_CSWloudmouthdevel = CSWloudmouth
+RUNTIME_DEP_PKGS_CSWloudmouthdevel = CSWloudmouth
 
 
 # We define upstream file regex so we can be notifed of new upstream software release

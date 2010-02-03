@@ -4,7 +4,7 @@ PACKAGES += CSWphp5mhash
 
 CATALOGNAME_CSWphp5mhash = php5_mhash
 SPKG_DESC_CSWphp5mhash = mhash Extention for PHP5
-REQUIRED_PKGS_CSWphp5mhash = CSWphp5 CSWlibmhash
+RUNTIME_DEP_PKGS_CSWphp5mhash = CSWphp5 CSWlibmhash
 
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 

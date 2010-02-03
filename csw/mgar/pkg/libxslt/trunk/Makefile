@@ -18,7 +18,7 @@ CATALOGNAME_CSWpylibxslt = py_libxslt
 
 PATCHFILES = fix-segfault-in-debug.patch
 
-PREREQUISITE_PKGS = CSWlibxml2 CSWlibxml2devel
+BUILD_DEP_PKGS = CSWlibxml2 CSWlibxml2devel
 
 SPKG_DESC_CSWlibxslt =  XSLT engine runtime package
 SPKG_DESC_CSWlibxsltdevel = XSLT engine development package
@@ -39,12 +39,12 @@ CONFIGURE_ARGS_64 = --without-python
 CONFIGURE_ARGS = $(DIRPATHS) $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 STRIP_LIBTOOL = 1
 
-REQUIRED_PKGS_CSWlibxslt = CSWgcrypt CSWgpgerr CSWiconv CSWlibxml2 CSWzlib
-REQUIRED_PKGS_CSWlibxsltdevel = CSWlibxslt
-REQUIRED_PKGS_CSWpylibxslt = CSWpython CSWlibxslt
+RUNTIME_DEP_PKGS_CSWlibxslt = CSWgcrypt CSWgpgerr CSWiconv CSWlibxml2 CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxsltdevel = CSWlibxslt
+RUNTIME_DEP_PKGS_CSWpylibxslt = CSWpython CSWlibxslt
 
 PKGFILES_CSWlibxsltdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxsltdevel += $(docdir)/libxslt-$(GARVERSION)/.*

@@ -18,7 +18,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 PACKAGES = CSWpydes
-REQUIRED_PKGS = CSWpython
+RUNTIME_DEP_PKGS = CSWpython
 CATALOGNAME = pydes
 SPKG_DESC = implementation of the DES encryption algorithm
 

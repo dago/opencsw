@@ -25,10 +25,10 @@ PACKAGES = CSWneon CSWneon-devel
 CATALOGNAME_CSWneon = neon
 CATALOGNAME_CSWneon-devel = neon_devel
 
-REQUIRED_PKGS_CSWneon = CSWexpat CSWkrb5lib CSWosslrt CSWzlib CSWggettextrt CSWpakchois CSWlibproxy
-REQUIRED_PKGS_CSWneon-devel = CSWneon
+RUNTIME_DEP_PKGS_CSWneon = CSWexpat CSWkrb5lib CSWosslrt CSWzlib CSWggettextrt CSWpakchois CSWlibproxy
+RUNTIME_DEP_PKGS_CSWneon-devel = CSWneon
 
-PREREQUISITE_PKGS = $(REQUIRED_PKGS_CSWneon)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWneon)
 
 SPKG_DESC_CSWneon       = Neon HTTP and WebDAV client library
 SPKG_DESC_CSWneon-devel = Neon HTTP and WebDAV development support
@@ -42,7 +42,7 @@ CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-expat
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 # Omit version number suffix on docdir
 INSTALL_OVERRIDE_VARS = docdir

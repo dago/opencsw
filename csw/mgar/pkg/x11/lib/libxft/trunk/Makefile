@@ -27,8 +27,8 @@ PACKAGES = CSWlibxft2 CSWlibxft2devel
 CATALOGNAME_CSWlibxft2 = libxft2
 CATALOGNAME_CSWlibxft2devel = libxft2_devel
 
-REQUIRED_PKGS_CSWlibxft2 = CSWzlib CSWfconfig CSWftype2 CSWlibx11 CSWlibxrender
-REQUIRED_PKGS_CSWlibxft2devel = CSWlibxft2
+RUNTIME_DEP_PKGS_CSWlibxft2 = CSWzlib CSWfconfig CSWftype2 CSWlibx11 CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibxft2devel = CSWlibxft2
 
 SPKG_DESC_CSWlibxft2 = $(DESCRIPTION)
 SPKG_DESC_CSWlibxft2devel = $(DESCRIPTION) development package

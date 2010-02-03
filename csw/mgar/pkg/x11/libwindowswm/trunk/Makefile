@@ -23,10 +23,10 @@ CATALOGNAME_CSWlibwindowswmdevel = libwindowswm_devel
 SPKG_DESC_CSWlibwindowswm = $(DESCRIPTION)
 SPKG_DESC_CSWlibwindowswmdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWx11windowswmproto
+BUILD_DEP_PKGS = CSWx11windowswmproto
 
-REQUIRED_PKGS_CSWlibwindowswm =  CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibwindowswmdevel = CSWlibwindowswm
+RUNTIME_DEP_PKGS_CSWlibwindowswm =  CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibwindowswmdevel = CSWlibwindowswm
 
 PKGFILES_CSWlibwindowswmdevel  = $(PKGFILES_DEVEL)
 

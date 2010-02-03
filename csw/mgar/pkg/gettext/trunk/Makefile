@@ -46,11 +46,11 @@ EXTRA_LD_FLAGS = -lsec
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
-REQUIRED_PKGS_CSWggettextrt = CSWiconv
-REQUIRED_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
-REQUIRED_PKGS_CSWggettextdoc = CSWggettext
+RUNTIME_DEP_PKGS_CSWggettextrt = CSWiconv
+RUNTIME_DEP_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
+RUNTIME_DEP_PKGS_CSWggettextdoc = CSWggettext
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside

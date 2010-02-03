@@ -17,7 +17,7 @@ SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS =
+RUNTIME_DEP_PKGS =
 
 BUILD64 = 1
 

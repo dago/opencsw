@@ -14,7 +14,7 @@ endef
 PACKAGES = CSWpmxmlxpath
 CATALOGNAME = pm_xmlxpath
 
-REQUIRED_PKGS = CSWpmxmlparser
+RUNTIME_DEP_PKGS = CSWpmxmlparser
 
 ARCHALL = 1
 

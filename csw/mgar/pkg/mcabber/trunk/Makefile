@@ -16,13 +16,13 @@ SPKG_SOURCEURL = http://www.lilotux.net/~mikael/mcabber/
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWncurses CSWossldevel CSWotrdevel
-PREREQUISITE_PKGS += CSWaspell CSWggettext CSWglib2devel CSWpkgconfig
-PREREQUISITE_PKGS += CSWgpgerr CSWgpgme CSWiconv
+BUILD_DEP_PKGS = CSWncurses CSWossldevel CSWotrdevel
+BUILD_DEP_PKGS += CSWaspell CSWggettext CSWglib2devel CSWpkgconfig
+BUILD_DEP_PKGS += CSWgpgerr CSWgpgme CSWiconv
 
-REQUIRED_PKGS = CSWncurses CSWosslrt CSWotr
-REQUIRED_PKGS += CSWaspell CSWggettextrt CSWglib2 
-REQUIRED_PKGS += CSWgpgerr CSWgpgme CSWiconv
+RUNTIME_DEP_PKGS = CSWncurses CSWosslrt CSWotr
+RUNTIME_DEP_PKGS += CSWaspell CSWggettextrt CSWglib2 
+RUNTIME_DEP_PKGS += CSWgpgerr CSWgpgme CSWiconv
 
 TEST_SCRIPTS = 
 

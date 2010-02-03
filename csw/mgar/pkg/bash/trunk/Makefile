@@ -26,8 +26,8 @@ BASH_PATCHLEVEL = $(shell echo -n $(GARVERSION) | cut -d. -f3)
 
 PACKAGES = CSWbash
 
-REQUIRED_PKGS = CSWggettextrt
-REQUIRED_PKGS += CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS += CSWiconv
 
 SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
 

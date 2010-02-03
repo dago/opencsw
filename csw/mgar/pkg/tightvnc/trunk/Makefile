@@ -32,15 +32,15 @@ SPKG_DESC_CSWvncv = TightVNC viewer
 MIGRATE_FILES_CSWvncs = vncservers
 INITSMF = /etc/opt/csw/init.d/cswvncserver
 
-REQUIRED_PKGS  = CSWbash
-REQUIRED_PKGS += CSWjpeg
-REQUIRED_PKGS += CSWlibice
-REQUIRED_PKGS += CSWlibsm
-REQUIRED_PKGS += CSWlibxext
-REQUIRED_PKGS += CSWtcpwrap
-REQUIRED_PKGS += CSWzlib
+RUNTIME_DEP_PKGS  = CSWbash
+RUNTIME_DEP_PKGS += CSWjpeg
+RUNTIME_DEP_PKGS += CSWlibice
+RUNTIME_DEP_PKGS += CSWlibsm
+RUNTIME_DEP_PKGS += CSWlibxext
+RUNTIME_DEP_PKGS += CSWtcpwrap
+RUNTIME_DEP_PKGS += CSWzlib
 
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw

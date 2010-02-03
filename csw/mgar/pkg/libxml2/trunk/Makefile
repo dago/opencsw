@@ -25,9 +25,9 @@ SPKG_DESC_CSWlibxml2      = XML Parser Library
 SPKG_DESC_CSWlibxml2devel = XML Parser Library Developer Files
 SPKG_DESC_CSWpylibxml2    = XML Parser Library Python Bindings
 
-REQUIRED_PKGS_CSWlibxml2 = CSWiconv CSWzlib
-REQUIRED_PKGS_CSWlibxml2devel = CSWlibxml2
-REQUIRED_PKGS_CSWpylibxml2 = CSWpython CSWpython-rt CSWlibxml2 CSWiconv CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxml2 = CSWiconv CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxml2devel = CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpylibxml2 = CSWpython CSWpython-rt CSWlibxml2 CSWiconv CSWzlib
 
 # We don't have 64 bit Python yet
 CONFIGURE_ARGS_32 = --with-python=$(prefix)
@@ -39,7 +39,7 @@ EXTRA_CPPFLAGS += -DXML_SGML_DEFAULT_CATALOG=\\\"$(sysconfdir)/sgml/catalog\\\"
 CONFIGURE_ARGS = $(DIRPATHS) $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 PYCOMPILE = 1
 

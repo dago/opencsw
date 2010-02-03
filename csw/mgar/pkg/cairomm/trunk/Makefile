@@ -23,7 +23,7 @@ PKGFILES_CSWcairomm-devel += $(prefix)/include/.*
 PKGFILES_CSWcairomm-devel += $(prefix)/lib/.*\.a
 PKGFILES_CSWcairomm-devel += $(prefix)/lib/pkgconfig/.*
 
-REQUIRED_PKGS_CSWcairomm-devel = CSWcairomm
+RUNTIME_DEP_PKGS_CSWcairomm-devel = CSWcairomm
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 

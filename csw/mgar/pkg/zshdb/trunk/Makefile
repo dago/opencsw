@@ -18,7 +18,7 @@ GIT_USE_PROXY = 1
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWzsh
+RUNTIME_DEP_PKGS = CSWzsh
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

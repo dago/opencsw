@@ -13,8 +13,8 @@ endef
 PACKAGES = CSWpmgd
 CATALOGNAME = pm_gd
 
-REQUIRED_PKGS = CSWftype2 CSWgd CSWiconv CSWjpeg CSWpng
-REQUIRED_PKGS += CSWxpm CSWzlib CSWfconfig
+RUNTIME_DEP_PKGS = CSWftype2 CSWgd CSWiconv CSWjpeg CSWpng
+RUNTIME_DEP_PKGS += CSWxpm CSWzlib CSWfconfig
 
 CONFIGURE_ARGS  = lib_gd_path $(libdir)
 CONFIGURE_ARGS += lib_ft_path $(libdir)

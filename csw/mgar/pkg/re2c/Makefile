@@ -20,7 +20,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 DISTFILES = $(DISTNAME).tar.gz
 CATALOGNAME_CSWre2c = re2c
 SPKG_DESC_CSWre2c = $(DESCRIPTION)
-REQUIRED_PKGS_CSWre2c = CSWgcc4corert CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWre2c = CSWgcc4corert CSWgcc4g++rt
 
 # Compiling with GNU based on upstream bug-id
 # [ 2535084 ] re2c 0.13.5 not compile with Sun C

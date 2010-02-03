@@ -18,9 +18,9 @@ SPKG_SOURCEURL = http://www.gnu.org/software/texinfo/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWbash CSWgsed CSWncurses CSWiconv CSWggettextrt
+RUNTIME_DEP_PKGS = CSWbash CSWgsed CSWncurses CSWiconv CSWggettextrt
 # CSWgzip is needed for zdiff
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWgzip
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWgzip
 
 DISTNAME = $(GARNAME)-4.13
 

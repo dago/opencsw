@@ -32,17 +32,17 @@ CONFIGURE_ARGS += --enable-static
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
-REQUIRED_PKGS_CSWglib2 += CSWggettextrt
-REQUIRED_PKGS_CSWglib2 += CSWiconv
-REQUIRED_PKGS_CSWglib2 += CSWzlib
-REQUIRED_PKGS_CSWglib2devel += CSWfam
-REQUIRED_PKGS_CSWglib2devel += CSWggettextrt
-REQUIRED_PKGS_CSWglib2devel += CSWglib2
-REQUIRED_PKGS_CSWglib2devel += CSWiconv
-REQUIRED_PKGS_CSWglib2devel += CSWpython
-REQUIRED_PKGS_CSWglib2devel += CSWzlib
+RUNTIME_DEP_PKGS_CSWglib2 += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWglib2 += CSWiconv
+RUNTIME_DEP_PKGS_CSWglib2 += CSWzlib
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWfam
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWglib2
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWiconv
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWpython
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWzlib
 
 TEST_TARGET = check
 SKIPTEST ?= 0

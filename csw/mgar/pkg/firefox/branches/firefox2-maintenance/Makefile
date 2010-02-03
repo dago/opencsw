@@ -32,29 +32,29 @@ WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 # Dependencies tracking
-REQUIRED_PKGS_CSWfirefox  += CSWbonobo2
-REQUIRED_PKGS_CSWfirefox  += CSWfconfig
-REQUIRED_PKGS_CSWfirefox  += CSWftype2
-REQUIRED_PKGS_CSWfirefox  += CSWgconf2
-REQUIRED_PKGS_CSWfirefox  += CSWggettextrt
-REQUIRED_PKGS_CSWfirefox  += CSWglib2
-REQUIRED_PKGS_CSWfirefox  += CSWgnomekeyring
-REQUIRED_PKGS_CSWfirefox  += CSWgnomevfs2
-REQUIRED_PKGS_CSWfirefox  += CSWgtk2
-REQUIRED_PKGS_CSWfirefox  += CSWlibart
-REQUIRED_PKGS_CSWfirefox  += CSWlibatk
-REQUIRED_PKGS_CSWfirefox  += CSWlibbonoboui
-REQUIRED_PKGS_CSWfirefox  += CSWlibcairo
-REQUIRED_PKGS_CSWfirefox  += CSWlibgnome
-REQUIRED_PKGS_CSWfirefox  += CSWlibgnomecanvas
-REQUIRED_PKGS_CSWfirefox  += CSWlibgnomeui
-REQUIRED_PKGS_CSWfirefox  += CSWlibidl
-REQUIRED_PKGS_CSWfirefox  += CSWlibpopt
-REQUIRED_PKGS_CSWfirefox  += CSWlibxft2
-REQUIRED_PKGS_CSWfirefox  += CSWlibxrender
-REQUIRED_PKGS_CSWfirefox  += CSWorbit2
-REQUIRED_PKGS_CSWfirefox  += CSWpango
-REQUIRED_PKGS_CSWfirefox  += CSWzlib
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWbonobo2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWfconfig
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWftype2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWgconf2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWglib2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWgnomekeyring
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWgnomevfs2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWgtk2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibart
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibatk
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibbonoboui
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibgnome
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibgnomecanvas
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibgnomeui
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibidl
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibpopt
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWorbit2
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWpango
+RUNTIME_DEP_PKGS_CSWfirefox  += CSWzlib
 
 post-extract:
 	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)

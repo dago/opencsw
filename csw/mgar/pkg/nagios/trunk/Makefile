@@ -23,8 +23,8 @@ PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (emp
 PACKAGES = CSWnagios
 CATALOGNAME = nagios
 
-REQUIRED_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
-REQUIRED_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
+RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWcswclassutils
 
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
 

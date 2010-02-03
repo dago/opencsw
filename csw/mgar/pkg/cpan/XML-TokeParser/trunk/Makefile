@@ -11,7 +11,7 @@ endef
 PACKAGES = CSWpmxmltokeparser
 CATALOGNAME = pm_xmltokeparser
 
-REQUIRED_PKGS = CSWpmxmlparser
+RUNTIME_DEP_PKGS = CSWpmxmlparser
 
 ARCHALL = 1
 

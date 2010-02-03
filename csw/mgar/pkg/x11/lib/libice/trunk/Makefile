@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibicedevel = libice_devel
 SPKG_DESC_CSWlibice = X11 Inter-Client Exchange library
 SPKG_DESC_CSWlibicedevel = X11 Inter-Client Exchange library development files
 
-REQUIRED_PKGS_CSWlibicedevel = CSWlibice
+RUNTIME_DEP_PKGS_CSWlibicedevel = CSWlibice
 
 PKGFILES_CSWlibicedevel  = $(PKGFILES_DEVEL)
 

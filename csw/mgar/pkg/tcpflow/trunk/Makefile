@@ -20,7 +20,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
-REQUIRED_PKGS = CSWlibpcap
+RUNTIME_DEP_PKGS = CSWlibpcap
 
 # no testscript
 CONFIGURE_ARGS = $(DIRPATHS)

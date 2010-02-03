@@ -9,14 +9,14 @@ endef
 SPKG_DESC_CSWglibmm_rt    = C++ interface to glib2 runtime libs
 SPKG_DESC_CSWglibmm_devel = C++ interface to glib2 development files
 
-#REQUIRED_PKGS = CSWggettextrt CSWiconv
+#RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 MAKE = gmake

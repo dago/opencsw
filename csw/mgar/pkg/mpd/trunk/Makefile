@@ -57,16 +57,16 @@ post-install-modulated:
 	ginstall $(FILEDIR)/cswmpd.init $(DESTDIR)/etc/opt/csw/init.d/cswmpd
 	ginstall -D $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmpd/cswusergroup
 
-REQUIRED_PKGS  = CSWaudiofile
-REQUIRED_PKGS += CSWcswclassutils
-REQUIRED_PKGS += CSWflac
-REQUIRED_PKGS += CSWggettextrt
-REQUIRED_PKGS += CSWglib2
-REQUIRED_PKGS += CSWlibao
-REQUIRED_PKGS += CSWlibid3tag
-REQUIRED_PKGS += CSWlibmad
-REQUIRED_PKGS += CSWzlib
+RUNTIME_DEP_PKGS  = CSWaudiofile
+RUNTIME_DEP_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWflac
+RUNTIME_DEP_PKGS += CSWggettextrt
+RUNTIME_DEP_PKGS += CSWglib2
+RUNTIME_DEP_PKGS += CSWlibao
+RUNTIME_DEP_PKGS += CSWlibid3tag
+RUNTIME_DEP_PKGS += CSWlibmad
+RUNTIME_DEP_PKGS += CSWzlib
 
-PREREQUISITE_PKGS  = $(REQUIRED_PKGS)
+BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
 
 include gar/category.mk

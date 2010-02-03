@@ -20,7 +20,7 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS_CSWrdesktop = CSWiconv CSWosslrt
+RUNTIME_DEP_PKGS_CSWrdesktop = CSWiconv CSWosslrt
 
 #No test/check target provided by rdesktop
 SKIPTEST=1

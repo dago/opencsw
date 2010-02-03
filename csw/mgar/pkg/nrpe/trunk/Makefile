@@ -32,8 +32,8 @@ PACKAGES = CSWnrpe CSWnrpeplugin
 CATALOGNAME_CSWnrpe = nrpe
 CATALOGNAME_CSWnrpeplugin = nrpe_plugin
 
-REQUIRED_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap CSWcswclassutils
-REQUIRED_PKGS_CSWnrpeplugin = CSWosslrt 
+RUNTIME_DEP_PKGS_CSWnrpe       = CSWosslrt CSWtcpwrap CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWnrpeplugin = CSWosslrt 
 
 SPKG_CLASSES_CSWnrpe = none cswusergroup cswpreserveconf cswinitsmf
 

@@ -17,7 +17,7 @@ PACKAGES = CSWpmlogmessage
 CATALOGNAME = pm_logmessage 
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmlclemktxtsimple CSWpmprmscheck CSWpmmodload
+RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmprmscheck CSWpmmodload
 
 include gar/category.mk
 

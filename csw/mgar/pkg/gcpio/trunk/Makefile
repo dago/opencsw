@@ -20,7 +20,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/cpio/
 
-REQUIRED_PKGS =
+RUNTIME_DEP_PKGS =
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g

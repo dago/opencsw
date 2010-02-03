@@ -12,7 +12,7 @@ endef
 
 SPKG_DESC_CSWglib2 = Utility library commonly associated with GNOME programs
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 MASTER_SITES = $(GNOME_MIRROR)
 
@@ -20,7 +20,7 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 # glib 1.x doesn't seem to be 64 bit clean
 #BUILD64 = 1
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 
 # Only needed for 1.3.x
 #EXTRA_BUILD_EXPORTS = SGML_CATALOG_FILES

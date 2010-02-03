@@ -24,9 +24,9 @@ SPKG_DESC_CSWlibxprintutil = $(DESCRIPTION)
 SPKG_DESC_CSWlibxprintutildevel = $(DESCRIPTION) development files
 
 
-PREREQUISITE_PKGS = CSWlibxpdevel CSWlibicedevel
-REQUIRED_PKGS_CSWlibxprintutil = CSWlibice CSWlibx11 CSWlibxau CSWlibxp CSWlibxt
-REQUIRED_PKGS_CSWlibxprintutildevel = CSWlibxprintutil
+BUILD_DEP_PKGS = CSWlibxpdevel CSWlibicedevel
+RUNTIME_DEP_PKGS_CSWlibxprintutil = CSWlibice CSWlibx11 CSWlibxau CSWlibxp CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibxprintutildevel = CSWlibxprintutil
 
 PKGFILES_CSWlibxprintutildevel  = $(PKGFILES_DEVEL)
 

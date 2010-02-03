@@ -30,6 +30,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-colors
 CONFIGURE_ARGS += --enable-lyrics-screen
 
-REQUIRED_PKGS  = CSWggettextrt
-REQUIRED_PKGS += CSWglib2
-REQUIRED_PKGS += CSWncurses
+RUNTIME_DEP_PKGS  = CSWggettextrt
+RUNTIME_DEP_PKGS += CSWglib2
+RUNTIME_DEP_PKGS += CSWncurses

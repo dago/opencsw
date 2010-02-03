@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcio    = $(DESCRIPTION)
 SPKG_DESC_CSWajciodoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-# REQUIRED_PKGS_CSWajcio = No dependency
+# RUNTIME_DEP_PKGS_CSWajcio = No dependency
 
 # Defines package content
 PKGFILES_CSWajcio  = $(prefix)/share/doc/$(GARNAME)/License.txt

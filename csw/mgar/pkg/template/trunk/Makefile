@@ -113,7 +113,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## none cswpreserveconf cswcpsampleconf cswpycompile cswusergroup cswinitsmf
 ##	cswinetd cswetcservices
 ## The class 'cswinitsmf' must be the last class listed. When you use cswclassutils,
-## you need to add CSWcswclassutils to REQUIRED_PKGS.
+## you need to add CSWcswclassutils to RUNTIME_DEP_PKGS.
 ## SPKG_CLASSES = none
 ## Simplified settings for classes:
 ## PRESERVECONF =
@@ -123,13 +123,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## ETCSERVICES = <file containing an entry for /etc/services>
 ## INETDCONF = <file containing an inetd.conf formatted entry>
 ## A list of runtime package dependencies in the form of CSWfoo.
-## REQUIRED_PKGS =
+## RUNTIME_DEP_PKGS =
 ##
 ## A list of packages necessary to build this package
-## PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+## BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 ##
 ## When using non-empty $(PACKAGES):
-## REQUIRED_PKGS_CSWpkgname =
+## RUNTIME_DEP_PKGS_CSWpkgname =
 ## SPKG_DESC_CSWpkgname =
 ## PKGFILES_CSWpkgname =
 ## CATALOGNAME_CSWpkgname =

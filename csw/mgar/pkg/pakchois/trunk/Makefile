@@ -21,6 +21,6 @@ NOISALIST = 1
 EXTRA_LINKER_FLAGS = -lintl
 CONFIGURE_ARGS = $(DIRPATHS)
 
-REQUIRED_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS = CSWggettextrt
 
 include gar/category.mk

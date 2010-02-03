@@ -11,7 +11,7 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWncurses
+RUNTIME_DEP_PKGS = CSWncurses
 
 SPKG_SOURCEURL = http://lame.sourceforge.net/
 

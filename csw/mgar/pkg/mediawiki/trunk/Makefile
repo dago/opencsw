@@ -21,7 +21,7 @@ RELOCATE_PREFIX = /opt/csw/share/www
 CATALOGNAME_CSWmediawiki = mediawiki
 SPKG_DESC_CSWmediawiki = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWmediawiki  = CSWphp5 CSWapache2c
+RUNTIME_DEP_PKGS_CSWmediawiki  = CSWphp5 CSWapache2c
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

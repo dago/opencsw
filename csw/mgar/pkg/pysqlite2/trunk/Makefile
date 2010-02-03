@@ -13,7 +13,7 @@ MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWpysqlite2
-REQUIRED_PKGS_CSWpysqlite2 = CSWpython CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWpysqlite2 = CSWpython CSWsqlite3rt
 CATALOGNAME_CSWpysqlite2 = pysqlite2
 SPKG_DESC_CSWpysqlite2 = SQLite3 support for Python
 

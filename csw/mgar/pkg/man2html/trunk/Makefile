@@ -16,7 +16,7 @@ UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://hydra.nac.uci.edu/indiv/ehood/man2html.html
 
-REQUIRED_PKGS = CSWperl
+RUNTIME_DEP_PKGS = CSWperl
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

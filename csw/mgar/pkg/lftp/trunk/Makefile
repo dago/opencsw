@@ -24,10 +24,10 @@ endef
 PACKAGES = CSWlftp
 CATALOGNAME_CSWlftp = lftp
 
-REQUIRED_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline 
+RUNTIME_DEP_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline 
 
 # we're using conf handling class from the cswclassutils package
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 SPKG_CLASSES = none cswpreserveconf
 
 

@@ -29,7 +29,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://awstats.sourceforge.net
 
-REQUIRED_PKGS = CSWapache2 CSWperl
+RUNTIME_DEP_PKGS = CSWapache2 CSWperl
 
 LICENSE = docs/LICENSE.TXT
 

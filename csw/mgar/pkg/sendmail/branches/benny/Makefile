@@ -24,7 +24,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 # we require
-REQUIRED_PKGS = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap
+RUNTIME_DEP_PKGS = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap
 INITSMF = /etc/opt/csw/init.d/cswsendmail
 PROTOTYPE_FILTER = awk '$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
                         $$$$3 ~/sol9\./ { $$$$2 = "sol9" } \

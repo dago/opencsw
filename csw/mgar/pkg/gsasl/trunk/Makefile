@@ -19,9 +19,9 @@ PACKAGES = CSWlibgsasl CSWgsasl
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS = CSWkrb5libdev CSWgnulinks
-REQUIRED_PKGS_CSWlibgsasl = CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm CSWreadline
-REQUIRED_PKGS_CSWgsasl = CSWlibgsasl CSWgnutls CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm CSWreadline
+BUILD_DEP_PKGS = CSWkrb5libdev CSWgnulinks
+RUNTIME_DEP_PKGS_CSWlibgsasl = CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm CSWreadline
+RUNTIME_DEP_PKGS_CSWgsasl = CSWlibgsasl CSWgnutls CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm CSWreadline
 
 SPKG_SOURCEURL = http://www.gnu.org/software/$(GNU_PROJ)
 

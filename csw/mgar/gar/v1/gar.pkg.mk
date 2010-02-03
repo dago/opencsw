@@ -208,4 +208,4 @@ srcpack:
 	@echo
 	@echo "*** Dependencies"
 
-	@$(foreach P,$(PREREQUISITE_PKGS),echo "$P";)
+	@$(foreach P,$(BUILD_DEP_PKGS),echo "$P";)

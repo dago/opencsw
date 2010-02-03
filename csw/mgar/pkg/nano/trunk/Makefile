@@ -17,7 +17,7 @@ DISTFILES += CSWnano.postinstall CSWnano.postremove
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWggettextrt CSWncurses
+RUNTIME_DEP_PKGS = CSWggettextrt CSWncurses
 
 EXTRA_INC = /opt/csw/include/ncurses
 

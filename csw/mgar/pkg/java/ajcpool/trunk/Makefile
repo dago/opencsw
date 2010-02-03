@@ -30,7 +30,7 @@ CATALOGNAME_CSWajcpool = commons_pool
 CATALOGNAME_CSWajcpooldoc = commons_pool_doc
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcpool = CSWajclogging CSWajcdigester
+RUNTIME_DEP_PKGS_CSWajcpool = CSWajclogging CSWajcdigester
 
 # Defines package content
 PKGFILES_CSWajcpool = $(prefix)/share/java/.*

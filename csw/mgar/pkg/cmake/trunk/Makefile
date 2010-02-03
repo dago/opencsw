@@ -21,8 +21,8 @@ PACKAGES = CSWcmake
 CATALOGNAME_CSWcmake = cmake
 SPKG_DESC_CSWcmake = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWcmake  = CSWcurlrt CSWexpat CSWlibidn CSWoldaprt
-REQUIRED_PKGS_CSWcmake += CSWosslrt CSWxmlrpc-c CSWzlib 
+RUNTIME_DEP_PKGS_CSWcmake  = CSWcurlrt CSWexpat CSWlibidn CSWoldaprt
+RUNTIME_DEP_PKGS_CSWcmake += CSWosslrt CSWxmlrpc-c CSWzlib 
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

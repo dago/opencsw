@@ -15,9 +15,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWcs CSWpmcs CSWpycs
 
-REQUIRED_PKGS_CSWcs   = CSWzlib CSWggettextrt
-REQUIRED_PKGS_CSWpmcs = CSWcs CSWperl
-REQUIRED_PKGS_CSWpycs = CSWcs CSWpython
+RUNTIME_DEP_PKGS_CSWcs   = CSWzlib CSWggettextrt
+RUNTIME_DEP_PKGS_CSWpmcs = CSWcs CSWperl
+RUNTIME_DEP_PKGS_CSWpycs = CSWcs CSWpython
 
 CATALOGNAME_CSWcs   = clearsilver
 CATALOGNAME_CSWpmcs = pm_clearsilver
@@ -35,7 +35,7 @@ PKGFILES_CSWpycs += $(mandir)/.*python.*
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

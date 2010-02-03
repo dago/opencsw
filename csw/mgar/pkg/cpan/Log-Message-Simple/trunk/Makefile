@@ -13,7 +13,7 @@ PACKAGES = CSWpmlogmsgsimple
 CATALOGNAME = pm_logmsgsimple 
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmlogmessage
+RUNTIME_DEP_PKGS = CSWpmlogmessage
 
 include gar/category.mk
 

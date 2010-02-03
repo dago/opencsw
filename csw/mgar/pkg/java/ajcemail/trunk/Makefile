@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcemail    = $(DESCRIPTION)
 SPKG_DESC_CSWajcemaildoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcemail = CSWajclogging CSWajccollect CSWajcbeanutils 	
+RUNTIME_DEP_PKGS_CSWajcemail = CSWajclogging CSWajccollect CSWajcbeanutils 	
 
 # Defines package content
 PKGFILES_CSWajcemail  = $(prefix)/share/doc/$(GARNAME)/License.txt

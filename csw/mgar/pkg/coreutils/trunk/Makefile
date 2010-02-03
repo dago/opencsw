@@ -12,7 +12,7 @@ GARCOMPILER = GCC4
 
 SHELL = /opt/csw/bin/bash
 
-PREREQUISITE_PKGS = CSWbash
+BUILD_DEP_PKGS = CSWbash
 
 DESCRIPTION = GNU core utilities
 define BLURB
@@ -25,8 +25,8 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 0001-Fix-solaris-acl-support-breakage.patch
 
-PREREQUISITE_PKGS =  CSWautomake CSWautoconf CSWbison CSWggettext CSWgit
-PREREQUISITE_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
+BUILD_DEP_PKGS =  CSWautomake CSWautoconf CSWbison CSWggettext CSWgit
+BUILD_DEP_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

@@ -19,7 +19,7 @@ endef
 MASTER_SITES = http://www.maier-komor.de/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tgz
 
-REQUIRED_PKGS = CSWncurses
+RUNTIME_DEP_PKGS = CSWncurses
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

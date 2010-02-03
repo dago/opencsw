@@ -18,11 +18,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS  = CSWosslrt CSWzlib
-PREREQUISITE_PKGS = CSWossldevel CSWzlib
+RUNTIME_DEP_PKGS  = CSWosslrt CSWzlib
+BUILD_DEP_PKGS = CSWossldevel CSWzlib
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libz

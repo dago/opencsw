@@ -4,7 +4,7 @@ PACKAGES += CSWphp5calendar
 
 CATALOGNAME_CSWphp5calendar = php5_calendar
 SPKG_DESC_CSWphp5calendar = calendar Extention for PHP5
-REQUIRED_PKGS_CSWphp5calendar = CSWphp5
+RUNTIME_DEP_PKGS_CSWphp5calendar = CSWphp5
 
 CONFIGURE_ARGS += --enable-calendar=shared
 

@@ -25,10 +25,10 @@ LICENSE = LICENSE
 PATCHFILES = 0001-Makefile-put-background-jobs-in-same-shell-as-the-wa.patch
 
 # Required during packaging (for the "test" target)
-PREREQUISITE_PKGS  = CSWmktemp
-PREREQUISITE_PKGS += CSWgcc4core
+BUILD_DEP_PKGS  = CSWmktemp
+BUILD_DEP_PKGS += CSWgcc4core
 
-REQUIRED_PKGS = CSWlibmhash
+RUNTIME_DEP_PKGS = CSWlibmhash
 
 # 64-bit build enables buffers >= 2GB (see README).
 BUILD64 = 1

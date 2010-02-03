@@ -4,7 +4,7 @@ PACKAGES += CSWphp5session
 
 CATALOGNAME_CSWphp5session = php5_session
 SPKG_DESC_CSWphp5session = session Extention for PHP5
-REQUIRED_PKGS_CSWphp5session = CSWphp5 CSWlibmm
+RUNTIME_DEP_PKGS_CSWphp5session = CSWphp5 CSWlibmm
 
 CONFIGURE_ARGS += --enable-session=shared
 

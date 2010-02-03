@@ -12,9 +12,9 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-REQUIRED_PKGS += CSWgcrypt CSWgeoip CSWggettextrt CSWglib2 CSWgnutls
-REQUIRED_PKGS += CSWgpgerr CSWgtk2 CSWkrb5lib CSWlibpcap CSWlibxext
-REQUIRED_PKGS += CSWlua CSWpango CSWpcrert CSWzlib
+RUNTIME_DEP_PKGS += CSWgcrypt CSWgeoip CSWggettextrt CSWglib2 CSWgnutls
+RUNTIME_DEP_PKGS += CSWgpgerr CSWgtk2 CSWkrb5lib CSWlibpcap CSWlibxext
+RUNTIME_DEP_PKGS += CSWlua CSWpango CSWpcrert CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2

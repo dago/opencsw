@@ -22,7 +22,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES = patch_pth_fdsetsize64.diff
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

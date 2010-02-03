@@ -18,9 +18,9 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 # comment what this does or remove it
 # PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
-REQUIRED_PKGS_CSWipython = CSWpython-rt
+RUNTIME_DEP_PKGS_CSWipython = CSWpython-rt
 CATALOGNAME_CSWipython = ipython
 SPKG_DESC_CSWipython   = $(DESCRIPTION)
 

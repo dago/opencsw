@@ -23,10 +23,10 @@ CATALOGNAME_CSWlibxineramadevel = libxinerama_devel
 SPKG_DESC_CSWlibxinerama = $(DESCRIPTION)
 SPKG_DESC_CSWlibxineramadevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWx11xineramaproto
+BUILD_DEP_PKGS = CSWx11xineramaproto
 
-REQUIRED_PKGS_CSWlibxineramadevel = CSWlibxinerama
-REQUIRED_PKGS_CSWlibxinerama      = CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxineramadevel = CSWlibxinerama
+RUNTIME_DEP_PKGS_CSWlibxinerama      = CSWlibx11 CSWlibxext
 
 PKGFILES_CSWlibxineramadevel  = $(PKGFILES_DEVEL)
 

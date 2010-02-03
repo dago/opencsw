@@ -19,10 +19,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.libspf2.org
 
-REQUIRED_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS = CSWggettextrt
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_LINKER_FLAGS = -lresolv  -lsocket  -lnsl 

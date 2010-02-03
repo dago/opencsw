@@ -24,7 +24,7 @@ SPKG_DESC_CSWlog4j    = $(DESCRIPTION)
 SPKG_DESC_CSWlog4jdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-# REQUIRED_PKGS_CSWlog4j = No dependency
+# RUNTIME_DEP_PKGS_CSWlog4j = No dependency
 
 # Defines package content
 PKGFILES_CSWlog4j  = $(prefix)/share/doc/$(GARNAME)/License.txt

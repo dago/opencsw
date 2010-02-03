@@ -15,7 +15,7 @@ SPKG_SOURCEURL = http://pxlib.sourceforge.net
 
 LICENSE = COPYING
 
-#REQUIRED_PKGS += CSWggettextrt
+#RUNTIME_DEP_PKGS += CSWggettextrt
 
 UPSTREAM_MASTER_SITES = http://sourceforge.net/projects/pxlib/files
 UPSTREAM_USE_SF = 1

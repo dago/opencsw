@@ -38,8 +38,8 @@ SPKG_DESC_CSWilmbasedevel += Base libraries used by OpenEXR - developer package
 
 PKGFILES_CSWilmbasedevel = $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWilmbase += 
-REQUIRED_PKGS_CSWilmbasedevel += CSWilmbase
+RUNTIME_DEP_PKGS_CSWilmbase += 
+RUNTIME_DEP_PKGS_CSWilmbasedevel += CSWilmbase
 
 SPKG_SOURCEURL = http://www.openexr.com
 

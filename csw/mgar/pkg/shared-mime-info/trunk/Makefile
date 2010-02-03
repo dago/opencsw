@@ -17,14 +17,14 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PREREQUISITE_PKGS = CSWgnulinks
+BUILD_DEP_PKGS = CSWgnulinks
 
 PACKAGES = CSWsharedmimeinfo
 CATALOGNAME = shared_mime_info
 
 SPKG_SOURCEURL = http://freedesktop.org/Software/shared-mime-info
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2 CSWlibxml2
+RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWlibxml2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

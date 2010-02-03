@@ -20,7 +20,7 @@ PACKAGES = CSWpmlclemktxtsimple
 CATALOGNAME = pm_lclemktxtsimple 
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmlclemktxtlex
+RUNTIME_DEP_PKGS = CSWpmlclemktxtlex
 
 include gar/category.mk
 

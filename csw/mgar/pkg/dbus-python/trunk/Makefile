@@ -19,12 +19,12 @@ SPKG_SOURCEURL = http://www.freedesktop.org/wiki/Software/DBusBindings
 PACKAGES = CSWdbuspython
 CATALOGNAME_CSWdbuspython = dbus_python
 SPKG_DESC_CSWdbuspython = $(DESCRIPTION)
-REQUIRED_PKGS_CSWdbuspython  = CSWdbusglib CSWggettextrt CSWglib2 CSWlibdbus
+RUNTIME_DEP_PKGS_CSWdbuspython  = CSWdbusglib CSWggettextrt CSWglib2 CSWlibdbus
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

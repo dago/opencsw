@@ -14,7 +14,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpygobject
-REQUIRED_PKGS_CSWpygobject  = CSWpython CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWpygobject  = CSWpython CSWggettextrt CSWglib2
 
 CATALOGNAME_CSWpygobject = pygobject
 SPKG_DESC_CSWpygobject = pygobject support for Python

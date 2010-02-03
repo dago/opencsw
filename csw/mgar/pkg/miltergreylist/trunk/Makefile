@@ -16,7 +16,7 @@ MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
 DISTFILES  = milter-greylist-$(DISTVERSION).tgz
 DISTFILES += COPYING
 
-REQUIRED_PKGS = CSWsendmail CSWcurlrt CSWgeoip
+RUNTIME_DEP_PKGS = CSWsendmail CSWcurlrt CSWgeoip
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz

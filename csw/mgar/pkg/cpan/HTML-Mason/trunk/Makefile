@@ -15,7 +15,7 @@ LICENSE = LICENSE
 PACKAGES = CSWpmhtmlmason
 CATALOGNAME = pm_htmlmason
 
-REQUIRED_PKGS  = CSWpmexceptcls CSWpmclscontainer CSWpmprmsvldt CSWpmcachecache
+RUNTIME_DEP_PKGS  = CSWpmexceptcls CSWpmclscontainer CSWpmprmsvldt CSWpmcachecache
 
 ARCHALL = 1
 

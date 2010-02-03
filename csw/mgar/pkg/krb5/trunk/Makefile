@@ -19,7 +19,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
 
 PATCHFILES = patch-man2html-perl.diff
 
-PREREQUISITE_PKGS = CSWtcl
+BUILD_DEP_PKGS = CSWtcl
 
 PACKAGES = CSWkrb5adminserver CSWkrb5doc CSWkrb5kdc CSWkrb5lib CSWkrb5libdev CSWkrb5user
 
@@ -37,10 +37,10 @@ SPKG_DESC_CSWkrb5lib         = MIT Kerberos 5 core libraries
 SPKG_DESC_CSWkrb5libdev      = MIT Kerberos 5 developer libraries
 SPKG_DESC_CSWkrb5user        = MIT Kerberos 5 user tools
 
-REQUIRED_PKGS_CSWkrb5adminserver = CSWkrb5kdc CSWkrb5lib
-REQUIRED_PKGS_CSWkrb5kdc = CSWkrb5lib CSWkrb5user
-REQUIRED_PKGS_CSWkrb5libdev = CSWkrb5lib
-REQUIRED_PKGS_CSWkrb5user = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWkrb5adminserver = CSWkrb5kdc CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWkrb5kdc = CSWkrb5lib CSWkrb5user
+RUNTIME_DEP_PKGS_CSWkrb5libdev = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWkrb5user = CSWkrb5lib
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 

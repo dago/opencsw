@@ -25,7 +25,7 @@ ENABLE_CHECK = 0
 PACKAGES = CSWbdb44 
 SPKG_DESC = BerkeleyDB 4.4 embedded database libraries and utilities
 CATALOGNAME = berkeleydb44
-REQUIRED_PKGS = CSWbdb
+RUNTIME_DEP_PKGS = CSWbdb
 
 include gar/category.mk
 

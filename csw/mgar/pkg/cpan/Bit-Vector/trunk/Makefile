@@ -10,7 +10,7 @@ endef
 PACKAGES = CSWpmbitvec
 CATALOGNAME = pm_bitvec
 
-REQUIRED_PKGS = CSWpmcarpclan
-PREREQUISITE_PKGS = CSWpmcarpclan
+RUNTIME_DEP_PKGS = CSWpmcarpclan
+BUILD_DEP_PKGS = CSWpmcarpclan
 
 include gar/category.mk

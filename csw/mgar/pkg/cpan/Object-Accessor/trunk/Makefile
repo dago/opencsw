@@ -14,7 +14,7 @@ PACKAGES    = CSWpmobjaccessor
 
 ARCHALL_CSWpmobjaccessor = 1
 
-REQUIRED_PKGS_CSWpmobjaccessor += CSWpmprmscheck
+RUNTIME_DEP_PKGS_CSWpmobjaccessor += CSWpmprmscheck
 
 LICENSE = README
 

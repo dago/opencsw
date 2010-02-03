@@ -12,15 +12,15 @@ endef
 MASTER_SITES = http://www.lichteblau.com/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWggettextrt CSWreadline CSWglib2 CSWlibpopt
-REQUIRED_PKGS += CSWosslrt CSWsasl CSWoldaprt
+RUNTIME_DEP_PKGS = CSWggettextrt CSWreadline CSWglib2 CSWlibpopt
+RUNTIME_DEP_PKGS += CSWosslrt CSWsasl CSWoldaprt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = patch-putenv.diff
 
-PREREQUISITE_PKGS = CSWoldapdevel
+BUILD_DEP_PKGS = CSWoldapdevel
 
 RUNPATHQUOTE = 1
 CONFIGURE_ARGS = $(DIRPATHS)

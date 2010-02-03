@@ -13,7 +13,7 @@ endef
 MASTER_SITES = http://libtorrent.rakshasa.no/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWlibtorrent
+RUNTIME_DEP_PKGS = CSWlibtorrent
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

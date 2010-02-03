@@ -19,7 +19,7 @@ DISTFILES  = $(GARNAME)-install-$(DISTVERSION).tar.gz
 PACKAGES = CSWmailscanner
 CATALOGNAME = mailscanner
 
-#REQUIRED_PKGS = 
+#RUNTIME_DEP_PKGS = 
 
 #ARCHALL = 1
 

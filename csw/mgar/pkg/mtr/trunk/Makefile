@@ -36,19 +36,19 @@ PKGFILES_CSWmtr-x11 += .*/xmtr.*
 
 CATALOGNAME_CSWmtr         = mtr
 SPKG_DESC_CSWmtr           = Combined traceroute and ping utility (CLI only)
-REQUIRED_PKGS_CSWmtr      += CSWncurses
+RUNTIME_DEP_PKGS_CSWmtr      += CSWncurses
 
 CATALOGNAME_CSWmtr-x11     = mtr_x11
 SPKG_DESC_CSWmtr-x11       = Combined traceroute and ping utility (GUI version)
-REQUIRED_PKGS_CSWmtr-x11   = CSWgtk2
-REQUIRED_PKGS_CSWmtr-x11  += CSWfconfig
-REQUIRED_PKGS_CSWmtr-x11  += CSWftype2
-REQUIRED_PKGS_CSWmtr-x11  += CSWggettextrt
-REQUIRED_PKGS_CSWmtr-x11  += CSWglib2
-REQUIRED_PKGS_CSWmtr-x11  += CSWlibatk
-REQUIRED_PKGS_CSWmtr-x11  += CSWlibcairo
-REQUIRED_PKGS_CSWmtr-x11  += CSWncurses
-REQUIRED_PKGS_CSWmtr-x11  += CSWpango
+RUNTIME_DEP_PKGS_CSWmtr-x11   = CSWgtk2
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWfconfig
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWftype2
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWglib2
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWlibatk
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWncurses
+RUNTIME_DEP_PKGS_CSWmtr-x11  += CSWpango
 
 # 1) Check for socklen_t via sys/socket.h (not netinet/in.h)
 # 2) Don't cast sin_addr to (struct in_addr), cc bails out with invalid cast

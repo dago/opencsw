@@ -21,11 +21,11 @@ SPKG_DESC_CSWevolutionmapi += Evolution extension for MS Exchange 2007 servers
 SPKG_DESC_CSWevolutionmapidevel += Evolution extension for MS Exchange 2007 servers - developer package
 SPKG_DESC_CSWevolutionmapidoc += Evolution extension for MS Exchange 2007 servers - documentation
 
-REQUIRED_PKGS_CSWevolutionmapi += 
-REQUIRED_PKGS_CSWevolutionmapi += 
-REQUIRED_PKGS_CSWevolutionmapi += 
-REQUIRED_PKGS_CSWevolutionmapidev += CSWevolutionmapi
-REQUIRED_PKGS_CSWevolutionmapidoc += CSWevolutionmapi
+RUNTIME_DEP_PKGS_CSWevolutionmapi += 
+RUNTIME_DEP_PKGS_CSWevolutionmapi += 
+RUNTIME_DEP_PKGS_CSWevolutionmapi += 
+RUNTIME_DEP_PKGS_CSWevolutionmapidev += CSWevolutionmapi
+RUNTIME_DEP_PKGS_CSWevolutionmapidoc += CSWevolutionmapi
 
 PKGFILES_CSWevolutionmapidev = $(PKGFILES_DEVEL)
 PKGFILES_CSWevolutionmapidoc = $(sharedstatedir)/gtk-doc/.*

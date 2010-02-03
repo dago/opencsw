@@ -16,7 +16,7 @@ MASTER_SITES   = http://dev.yorhel.nl/download/
 DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWncurses
+RUNTIME_DEP_PKGS = CSWncurses
 
 # ncdu doesn't come with a test suite
 TEST_SCRIPTS = 

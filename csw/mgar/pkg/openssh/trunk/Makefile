@@ -35,12 +35,12 @@ PACKAGES = CSWossh CSWosshclient
 
 CATALOGNAME_CSWossh = openssh
 SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
-REQUIRED_PKGS_CSWossh = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWosshclient
+RUNTIME_DEP_PKGS_CSWossh = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWosshclient
 SPKG_CLASSES_CSWossh = none cswpreserveconf cswinitsmf
 
 CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
-REQUIRED_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
+RUNTIME_DEP_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
 SPKG_CLASSES_CSWosshclient = none cswpreserveconf
 
 PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386 solaris10-sparc solaris10-i386
@@ -78,7 +78,7 @@ DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README RE
 DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
 
 # we're using conf handling class from the cswclassutils package
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 
 ##### Build and installation information #####
@@ -103,7 +103,7 @@ ifdef LPK
 	PACKAGES = CSWosshlpk
 	CATALOGNAME_CSWosshlpk = openssh_lpk
 	SPKG_DESC_CSWosshlpk = $(SPKG_DESC_CSWossh) with ldap public key support
-	REQUIRED_PKGS_CSWosshlpk = $(REQUIRED_PKGS_CSWossh) CSWoldaprt
+	RUNTIME_DEP_PKGS_CSWosshlpk = $(RUNTIME_DEP_PKGS_CSWossh) CSWoldaprt
 	SPKG_CLASSES_CSWosshlpk = none cswpreserveconf cswinitsmf
 	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch

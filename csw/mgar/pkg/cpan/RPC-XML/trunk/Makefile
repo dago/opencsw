@@ -13,7 +13,7 @@ define BLURB
 	from CPAN.
 endef
 
-REQUIRED_PKGS_CSWpmrpcxml = CSWpmlibwww CSWpmxmllibxml
+RUNTIME_DEP_PKGS_CSWpmrpcxml = CSWpmlibwww CSWpmxmllibxml
 
 PACKAGES = CSWpmrpcxml
 CATALOGNAME = pm_rpcxml

@@ -19,9 +19,9 @@ endef
 
 GARCOMPILER = GNU
 
-PREREQUISITE_PKGS = CSWncurses CSWasciidoc CSWxmlto CSWiconv
+BUILD_DEP_PKGS = CSWncurses CSWasciidoc CSWxmlto CSWiconv
 
-REQUIRED_PKGS = CSWncurses CSWiconv CSWgit
+RUNTIME_DEP_PKGS = CSWncurses CSWiconv CSWgit
 
 GIT_REPOS = http://jonas.nitro.dk/tig/tig.git
 GIT_TREEISH_tig.git = $(PATCHLEVEL)

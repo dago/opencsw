@@ -8,7 +8,7 @@ GLINKPKGS = CSWdiffutils CSWggettext CSWggettextrt CSWbison CSWbinutils
 GLINKPKGS += CSWggrep CSWgawk CSWgsed CSWggetopt CSWfindutils
 GLINKPKGS += CSWgmake CSWgpatch CSWgm4 CSWgwhois CSWgtar
 GLINKPKGS += CSWshutils CSWgfile CSWtextutils
-PREREQUISITE_PKGS = $(GLINKPKGS) CSWpkgutil
+BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
 define BLURB

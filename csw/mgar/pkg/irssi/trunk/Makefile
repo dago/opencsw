@@ -30,13 +30,13 @@ CONFIGURE_ARGS += --with-perl-lib=vendor
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
-REQUIRED_PKGS += CSWglib2
-REQUIRED_PKGS += CSWiconv
-REQUIRED_PKGS += CSWosslrt
-REQUIRED_PKGS += CSWperl
-REQUIRED_PKGS += CSWsunmath
-REQUIRED_PKGS += CSWggettextrt
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWglib2
+RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWsunmath
+RUNTIME_DEP_PKGS += CSWggettextrt
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 TEST_TARGET = check
 

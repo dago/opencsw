@@ -11,7 +11,7 @@ define BLURB
   module aims to provide such a capability.
 endef
 
-REQUIRED_PKGS = CSWpmclassinspector CSWpmconfigtiny CSWpmparamsutil
+RUNTIME_DEP_PKGS = CSWpmclassinspector CSWpmconfigtiny CSWpmparamsutil
 
 PACKAGES = CSWpmtestclassapi
 CATALOGNAME = pm_testclassapi

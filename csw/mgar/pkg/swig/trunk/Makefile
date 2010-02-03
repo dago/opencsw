@@ -27,7 +27,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1645
 UPSTREAM_USE_SF = 1
 
-REQUIRED_PKGS = CSWzlib
+RUNTIME_DEP_PKGS = CSWzlib
 
 #SWIG doesn't DEPEND on the languages it supports being instaalled
 # but, for the record, languages we *do* have:

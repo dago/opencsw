@@ -12,7 +12,7 @@ endef
 MASTER_SITES = http://effbot.org/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
-REQUIRED_PKGS_CSWpil = CSWftype2 CSWjpeg CSWpython 
+RUNTIME_DEP_PKGS_CSWpil = CSWftype2 CSWjpeg CSWpython 
 
 
 # We define upstream file regex so we can be notifed of new upstream software release

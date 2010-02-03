@@ -31,9 +31,9 @@ PACKAGES = CSWgitosis
 CATALOGNAME_CSWgitosis = $(GARNAME)
 ARCHALL_CSWgitosis = 1
 
-PREREQUISITE_PKGS_CSWgitosis = CSWpython CSWpysetuptools
+BUILD_DEP_PKGS_CSWgitosis = CSWpython CSWpysetuptools
 
-REQUIRED_PKGS_CSWgitosis = CSWgit CSWpysetuptools CSWbash
+RUNTIME_DEP_PKGS_CSWgitosis = CSWgit CSWpysetuptools CSWbash
 
 GIT_REPOS = git://eagain.net/gitosis.git
 GIT_USE_PROXY = 1

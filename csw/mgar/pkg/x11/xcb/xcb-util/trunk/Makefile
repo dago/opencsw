@@ -9,8 +9,8 @@ endef
 MASTER_SITES = http://xcb.freedesktop.org/dist/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS = CSWgnulinks
-REQUIRED_PKGS = CSWlibxcb
+BUILD_DEP_PKGS = CSWgnulinks
+RUNTIME_DEP_PKGS = CSWlibxcb
 PACKAGES = CSWxcbutil
 
 # We define upstream file regex so we can be notifed of new upstream software release

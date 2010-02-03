@@ -21,7 +21,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 PACKAGES = CSWflex-new
 CATALOGNAME = flex_new
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 NOISALIST = 1
 CONFIGURE_ARGS = --prefix=$(libexecdir)/$(GARNAME)-$(GARVERSION)

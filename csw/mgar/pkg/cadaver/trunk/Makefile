@@ -25,7 +25,7 @@ endef
 PACKAGES = CSWcadav
 CATALOGNAME_CSWcadav = cadaver
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv CSWneon CSWosslrt CSWreadline CSWzlib CSWgcrypt CSWgnutls CSWgpgerr
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWneon CSWosslrt CSWreadline CSWzlib CSWgcrypt CSWgnutls CSWgpgerr
 
 
 

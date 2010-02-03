@@ -15,11 +15,11 @@ DISTFILES += CSWgtk-doc.postinstall
 DISTFILES += CSWgtk-doc.postremove
 CATALOGNAME_CSWgtk-doc = gtk_doc
 
-PREREQUISITE_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl
-PREREQUISITE_PKGS += CSWopenjade CSWgnomedocutils
+BUILD_DEP_PKGS += CSWsgmlcommon CSWxmlcommon CSWdocbookxsl
+BUILD_DEP_PKGS += CSWopenjade CSWgnomedocutils
 
-REQUIRED_PKGS += CSWperl CSWpython CSWsgmlcommon CSWxmlcommon
-REQUIRED_PKGS += CSWdocbookxsl CSWopenjade CSWgnomedocutils
+RUNTIME_DEP_PKGS += CSWperl CSWpython CSWsgmlcommon CSWxmlcommon
+RUNTIME_DEP_PKGS += CSWdocbookxsl CSWopenjade CSWgnomedocutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

@@ -10,7 +10,7 @@ define BLURB
   the digests after written a file.
 endef
 
-REQUIRED_PKGS = pm_perlioviadyn
+RUNTIME_DEP_PKGS = pm_perlioviadyn
 
 PACKAGES = CSWpmiodigest
 CATALOGNAME = pm_iodigest

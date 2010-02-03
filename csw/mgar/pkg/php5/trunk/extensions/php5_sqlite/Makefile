@@ -4,7 +4,7 @@ PACKAGES += CSWphp5sqlite
 
 CATALOGNAME_CSWphp5sqlite = php5_sqlite
 SPKG_DESC_CSWphp5sqlite = sqlite Extention for PHP5
-REQUIRED_PKGS_CSWphp5sqlite = CSWphp5 CSWsqlite
+RUNTIME_DEP_PKGS_CSWphp5sqlite = CSWphp5 CSWsqlite
 
 CONFIGURE_ARGS += --with-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --enable-sqlite-utf8

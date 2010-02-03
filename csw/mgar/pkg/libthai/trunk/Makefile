@@ -30,9 +30,9 @@ SPKG_DESC_CSWlibthaidevel = Thai language support routines development files
 
 SPKG_SOURCEURL = http://linux.thai.net/projects/libthai/
 
-REQUIRED_PKGS_CSWlibthai = CSWlibdatrie
-REQUIRED_PKGS_CSWlibthaidevel = CSWlibthai
-PREREQUISUITE_PKGS = $(REQUIRED_PKGS_CSWlibthai)
+RUNTIME_DEP_PKGS_CSWlibthai = CSWlibdatrie
+RUNTIME_DEP_PKGS_CSWlibthaidevel = CSWlibthai
+PREREQUISUITE_PKGS = $(RUNTIME_DEP_PKGS_CSWlibthai)
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)

@@ -3,7 +3,7 @@ GARVERSION = 1.74.3
 CATEGORIES = xtra
 
 # for our (modified from rhel) copied in Makefile.
-PREREQUISITE_PKGS = CSWgfile CSWbash
+BUILD_DEP_PKGS = CSWgfile CSWbash
 
 PACKAGES = CSWdocbookxsl CSWdocbookxsldoc
 ARCHALL = 1
@@ -11,9 +11,9 @@ ARCHALL = 1
 CATALOGNAME_CSWdocbookxsl = $(GARNAME)
 CATALOGNAME_CSWdocbookxsldoc = $(GARNAME)doc
 
-REQUIRED_PKGS_CSWdocbookxsl = CSWsgmlcommon CSWxmlcommon CSWdocbookdtds
-REQUIRED_PKGS_CSWdocbookxsl += CSWlibxml2
-REQUIRED_PKGS_CSWdocbookxsldoc = CSWdocbookxsl
+RUNTIME_DEP_PKGS_CSWdocbookxsl = CSWsgmlcommon CSWxmlcommon CSWdocbookdtds
+RUNTIME_DEP_PKGS_CSWdocbookxsl += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWdocbookxsldoc = CSWdocbookxsl
 
 PKGFILES_CSWdocbookxsldoc = $(datadir)/doc/.*
 

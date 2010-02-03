@@ -14,6 +14,6 @@ PACKAGES = CSWpmnetanalysis
 CATALOGNAME = pm_netanalysis
 
 # depends
-PREREQUISITE_PKGS = CSWpmnetpcap CSWpmnetpacket CSWpmtstmockobject
+BUILD_DEP_PKGS = CSWpmnetpcap CSWpmnetpacket CSWpmtstmockobject
 
 include gar/category.mk

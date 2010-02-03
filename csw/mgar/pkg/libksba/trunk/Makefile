@@ -18,10 +18,10 @@ UFILES_REGEX = $(GARVERSION)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.gnupg.org/related_software/libksba/
 
-REQUIRED_PKGS = CSWgpgerr
+RUNTIME_DEP_PKGS = CSWgpgerr
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

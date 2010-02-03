@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcdiscovery    = $(DESCRIPTION)
 SPKG_DESC_CSWajcdiscoverydoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcdiscovery = CSWajclogging
+RUNTIME_DEP_PKGS_CSWajcdiscovery = CSWajclogging
 
 # Defines package content
 PKGFILES_CSWajcdiscovery  = $(prefix)/share/doc/$(GARNAME)/License.txt

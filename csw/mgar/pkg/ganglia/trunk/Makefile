@@ -42,18 +42,18 @@ SPKG_DESC_CSWgangliadevel	= Ganglia headers for metric module development
 SPKG_DESC_CSWgangliagmetad	= Ganglia gmetad
 SPKG_DESC_CSWgangliaweb		= Ganglia web
 
-PREREQUISITE_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-devel CSWrrd
+BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-devel CSWrrd
 
-REQUIRED_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
-REQUIRED_PKGS_CSWgangliaagent = CSWexpat CSWlibconfuse CSWapache2rt
-REQUIRED_PKGS_CSWgangliaagent += CSWgangliart
-REQUIRED_PKGS_CSWgangliamodpython = CSWlibconfuse CSWapache2rt CSWgangliart
-REQUIRED_PKGS_CSWgangliamodpython += CSWgangliaagent
-REQUIRED_PKGS_CSWgangliadevel = CSWexpat CSWlibconfuse CSWapache2rt
-REQUIRED_PKGS_CSWgangliagmetad = CSWexpat CSWlibconfuse CSWapache2rt
-REQUIRED_PKGS_CSWgangliagmetad += CSWgangliart CSWgangliaagent CSWrrd
-REQUIRED_PKGS_CSWgangliaweb = CSWgangliagmetad 
-REQUIRED_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2modphp5 CSWrrd
+RUNTIME_DEP_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
+RUNTIME_DEP_PKGS_CSWgangliaagent = CSWexpat CSWlibconfuse CSWapache2rt
+RUNTIME_DEP_PKGS_CSWgangliaagent += CSWgangliart
+RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWlibconfuse CSWapache2rt CSWgangliart
+RUNTIME_DEP_PKGS_CSWgangliamodpython += CSWgangliaagent
+RUNTIME_DEP_PKGS_CSWgangliadevel = CSWexpat CSWlibconfuse CSWapache2rt
+RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWexpat CSWlibconfuse CSWapache2rt
+RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWgangliart CSWgangliaagent CSWrrd
+RUNTIME_DEP_PKGS_CSWgangliaweb = CSWgangliagmetad 
+RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2modphp5 CSWrrd
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=43021

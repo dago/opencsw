@@ -13,7 +13,7 @@ endef
 PACKAGES = CSWpmcryptosslrsa
 CATALOGNAME = pm_osslrsa
 
-REQUIRED_PKGS = CSWpmcryptosslrandom
-PREREQUISITE_PKGS = CSWpmcryptosslrandom
+RUNTIME_DEP_PKGS = CSWpmcryptosslrandom
+BUILD_DEP_PKGS = CSWpmcryptosslrandom
 
 include gar/category.mk

@@ -12,7 +12,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWlibgnugetopt CSWliblensfun
+RUNTIME_DEP_PKGS = CSWlibgnugetopt CSWliblensfun
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

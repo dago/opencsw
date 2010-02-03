@@ -30,7 +30,7 @@ CATALOGNAME_CSWiconv = libiconv
 
 # The current 1.12 only has a 32-Bit iconv binary, leave it that way
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/.*/iconv
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 BUILD64 = 1
 
 # Optimize. -fast causes ./configure on Sparc to hang on the stdbool.h test.

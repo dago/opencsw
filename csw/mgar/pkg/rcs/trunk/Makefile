@@ -12,7 +12,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWdiffutils
+RUNTIME_DEP_PKGS = CSWdiffutils
 
 man1dir = $(mandir)/man1
 man5dir = $(mandir)/man5

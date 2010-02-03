@@ -30,7 +30,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-REQUIRED_PKGS = CSWmysql5rt CSWnetsnmp CSWosslrt CSWzlib CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWmysql5rt CSWnetsnmp CSWosslrt CSWzlib CSWcswclassutils
 
 SPKG_CLASSES = none cswpreserveconf
 

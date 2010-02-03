@@ -28,7 +28,7 @@ SPKG_SOURCEURL = http://java.sun.com/javase/downloads/index_jdk5.jsp
 SPKG_DESC_CSWjdk5 = Java Development Kit 6
 SPKG_DESC_CSWjre5 = Java Runtime Environment 6
 
-REQUIRED_PKGS_CSWjdk6 = CSWjre6
+RUNTIME_DEP_PKGS_CSWjdk6 = CSWjre6
 
 MANPAGES_JRE  = java.1 javaws.1 keytool.1 orbd.1 pack200.1 policytool.1 rmid.1 rmiregistry.1
 MANPAGES_JRE += servertool.1 tnameserv.1 unpack200.1

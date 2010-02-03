@@ -10,7 +10,7 @@ endef
 MASTER_SITES = http://postgrey.schweikert.ch/pub/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWperl CSWpmiomultiplex CSWpmnetserver CSWbdb48 CSWpostfix
+RUNTIME_DEP_PKGS = CSWperl CSWpmiomultiplex CSWpmnetserver CSWbdb48 CSWpostfix
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release

@@ -16,7 +16,7 @@ DISTFILES += $(call admfiles,CSWpmgeoippureperl,)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWgeolitedb
+RUNTIME_DEP_PKGS = CSWgeolitedb
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 

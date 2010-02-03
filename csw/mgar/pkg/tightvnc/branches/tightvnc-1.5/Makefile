@@ -27,8 +27,8 @@ PKGFILES_CSWvncv += $(mandir)/man1/vncviewer\.1
 SPKG_DESC_CSWvncs = TightVNC server
 SPKG_DESC_CSWvncv = TightVNC viewer
 
-REQUIRED_PKGS = CSWjpeg CSWtcpwrap CSWzlib
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWjpeg CSWtcpwrap CSWzlib
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw

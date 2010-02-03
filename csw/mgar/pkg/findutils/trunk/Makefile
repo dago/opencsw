@@ -19,7 +19,7 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWfindutils.postinstall
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

@@ -46,7 +46,7 @@ REPORT_TMPL = u"""# $pkgname:
 # SUGGESTION: you may want to add some or all of the following as depends:
 #    (Feel free to ignore SUNW or SPRO packages)
 #for $pkg in $sorted($missing_deps)
-REQUIRED_PKGS_$pkgname += $pkg
+RUNTIME_DEP_PKGS_$pkgname += $pkg
 #end for
 #end if
 #if $surplus_deps

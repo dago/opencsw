@@ -23,9 +23,9 @@ CATALOGNAME_CSWlibxxf86vmdevel = libxxf86vm_devel
 SPKG_DESC_CSWlibxxf86vm = $(DESCRIPTION)
 SPKG_DESC_CSWlibxxf86vmdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWx11xf86vidmdproto
-REQUIRED_PKGS_CSWlibxxf86vm = CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibxxf86vmdevel = CSWlibxxf86vm
+BUILD_DEP_PKGS = CSWx11xf86vidmdproto
+RUNTIME_DEP_PKGS_CSWlibxxf86vm = CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxxf86vmdevel = CSWlibxxf86vm
 
 PKGFILES_CSWlibxxf86vmdevel  = $(PKGFILES_DEVEL)
 

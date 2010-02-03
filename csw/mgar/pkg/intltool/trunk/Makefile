@@ -19,7 +19,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_TARGET = check
 
-REQUIRED_PKGS_CSWintltool = CSWperl CSWpmxmlparser
+RUNTIME_DEP_PKGS_CSWintltool = CSWperl CSWpmxmlparser
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

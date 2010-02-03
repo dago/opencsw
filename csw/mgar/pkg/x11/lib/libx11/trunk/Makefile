@@ -19,7 +19,7 @@ PATCHFILES += patch-xlib-sentinel.diff
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PREREQUISITE_PKGS =  CSWx11xextproto CSWxtrans CSWx11inputproto CSWlibpthreadstubs CSWlibxcbdevel
+BUILD_DEP_PKGS =  CSWx11xextproto CSWxtrans CSWx11inputproto CSWlibpthreadstubs CSWlibxcbdevel
 
 PACKAGES = CSWlibx11 CSWlibx11devel
 
@@ -31,8 +31,8 @@ CATALOGNAME_CSWlibx11devel = libx11_devel
 
 PKGFILES_CSWlibx11devel  = $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWlibx11      = CSWx11common CSWlibxcb
-REQUIRED_PKGS_CSWlibx11devel = CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibx11      = CSWx11common CSWlibxcb
+RUNTIME_DEP_PKGS_CSWlibx11devel = CSWlibx11
 
 BUILD64 = 1
 NOISALIST = 1

@@ -13,10 +13,10 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS += CSWgnulinks CSWgtk-doc CSWglib2devel CSWlibxml2devel
+BUILD_DEP_PKGS += CSWgnulinks CSWgtk-doc CSWglib2devel CSWlibxml2devel
 
-REQUIRED_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
-REQUIRED_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib CSWiconv
+RUNTIME_DEP_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib CSWiconv
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

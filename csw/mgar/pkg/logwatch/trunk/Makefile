@@ -3,7 +3,7 @@ GARVERSION = 7.3.6
 CATEGORIES = utils
 
 ARCHALL = 1
-REQUIRED_PKGS = CSWperl CSWgnulinks CSWgfile CSWggrep CSWfortune CSWgawk
+RUNTIME_DEP_PKGS = CSWperl CSWgnulinks CSWgfile CSWggrep CSWfortune CSWgawk
 
 LICENSE = License
 

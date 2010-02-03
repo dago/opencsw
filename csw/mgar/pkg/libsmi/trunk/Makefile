@@ -27,10 +27,10 @@ SPKG_DESC_CSWlibsmimibs = SMI MIB definitions
 
 SPKG_SOURCEURL = http://www.ibr.cs.tu-bs.de/projects/libsmi/
 
-REQUIRED_PKGS_CSWlibsmi = CSWlibsmimibs
+RUNTIME_DEP_PKGS_CSWlibsmi = CSWlibsmimibs
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_CPPFLAGS_isa-sparcv8 = -Dfabsf=fabs

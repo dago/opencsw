@@ -28,7 +28,7 @@ INSTALL_SCRIPTS = custom
 
 LICENSE = COPYING
 ARCHALL = 1
-REQUIRED_PKGS = CSWtcl CSWtk CSWtkdiff
+RUNTIME_DEP_PKGS = CSWtcl CSWtk CSWtkdiff
 POST_INSTALL_TARGETS := fixscript
 
 # Script needs to run wish from /opt/csw

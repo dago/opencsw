@@ -17,7 +17,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 SPKG_SOURCEURL = http://libnids.sourceforge.net/
 
-REQUIRED_PKGS += CSWggettextrt CSWglib2 CSWlibnet CSWlibpcap
+RUNTIME_DEP_PKGS += CSWggettextrt CSWglib2 CSWlibnet CSWlibpcap
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=92215

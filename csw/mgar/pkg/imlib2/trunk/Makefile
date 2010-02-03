@@ -18,8 +18,8 @@ DISTFILES += $(GARNAME)_loaders-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWbzip2 CSWftype2 CSWgiflibrt CSWjpeg CSWlibid3tag
-REQUIRED_PKGS += CSWlibxext CSWpng CSWtiff CSWzlib
+RUNTIME_DEP_PKGS = CSWbzip2 CSWftype2 CSWgiflibrt CSWjpeg CSWlibid3tag
+RUNTIME_DEP_PKGS += CSWlibxext CSWpng CSWtiff CSWzlib
 
 #EXTRA_INC = $(prefix)/X11/include
 #EXTRA_LIB = $(prefix)/X11/lib

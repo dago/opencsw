@@ -21,7 +21,7 @@ PACKAGES = CSWlibpopt
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 BUILD64 = 1
 NORUNPATH = 1

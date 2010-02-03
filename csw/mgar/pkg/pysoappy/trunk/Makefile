@@ -27,7 +27,7 @@ DISTFILES = $(DISTNAME).tar.gz
 ARCHALL = 1
 PACKAGES = CSWpysoappy
 CATALOGNAME = py_soappy
-REQUIRED_PKGS = CSWpyfpconst CSWpyxml
+RUNTIME_DEP_PKGS = CSWpyfpconst CSWpyxml
 
 # import __future__ statements need to occur first within a file
 # SyntaxError: from __future__ imports must occur at the beginning of the file

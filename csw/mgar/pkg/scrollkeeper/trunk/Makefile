@@ -19,7 +19,7 @@ SPKG_SOURCEURL = http://scrollkeeper.sourceforge.net/
 
 LICENSE = COPYING
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv CSWlibxml2 CSWlibxslt CSWzlib
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWlibxml2 CSWlibxslt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=11543

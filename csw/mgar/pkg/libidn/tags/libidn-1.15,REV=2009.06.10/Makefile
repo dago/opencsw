@@ -19,9 +19,9 @@ SPKG_SOURCEURL = http://www.gnu.org/software/libidn/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
-REQUIRED_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

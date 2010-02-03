@@ -4,7 +4,7 @@ PACKAGES += CSWphp5iconv
 
 CATALOGNAME_CSWphp5iconv = php5_iconv
 SPKG_DESC_CSWphp5iconv = iconv Extention for PHP5
-REQUIRED_PKGS_CSWphp5iconv = CSWphp5 CSWiconv
+RUNTIME_DEP_PKGS_CSWphp5iconv = CSWphp5 CSWiconv
 
 CONFIGURE_ARGS += --with-iconv=shared
 CONFIGURE_ARGS += --with-iconv-dir=$(prefix)

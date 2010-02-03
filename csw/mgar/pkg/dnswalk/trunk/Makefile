@@ -13,7 +13,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += COPYING
 
 PACKAGES = CSWdnswalk
-REQUIRED_PKGS = CSWperl CSWpmnetdns
+RUNTIME_DEP_PKGS = CSWperl CSWpmnetdns
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release

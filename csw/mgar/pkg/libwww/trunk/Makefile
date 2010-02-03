@@ -21,14 +21,14 @@ SPKG_DESC_CSWgd = $(DESCRIPTION)
 
 #PATCHFILES = 
 
-#REQUIRED_PKGS_CSWlibwww  = 
+#RUNTIME_DEP_PKGS_CSWlibwww  = 
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
 #BUILD64 = 1
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 

@@ -9,8 +9,8 @@ endef
 
 # 3/73 skipped: Test::Number::Delta not available
 # all skipped: need Cairo with FreeType support and Font::FreeType
-PREREQUISITE_PKGS = CSWlibcairodevel
-REQUIRED_PKGS = CSWfconfig CSWftype2 CSWlibcairo CSWzlib
+BUILD_DEP_PKGS = CSWlibcairodevel
+RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWlibcairo CSWzlib
 
 PACKAGES = CSWpmcairo
 CATALOGNAME = pm_cairo

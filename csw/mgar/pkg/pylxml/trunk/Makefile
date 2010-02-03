@@ -22,7 +22,7 @@ UFILES_REGEX = lxml-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpylxml
 CATALOGNAME = py_lxml
 
-REQUIRED_PKGS = CSWlibxml2 CSWlibxslt CSWzlib
+RUNTIME_DEP_PKGS = CSWlibxml2 CSWlibxslt CSWzlib
 
 EXTRA_PAX_ARGS = '-s,CHANGES.txt,changelog,p'
 

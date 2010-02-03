@@ -23,9 +23,9 @@ CATALOGNAME_CSWlibxfontcachedevel = libxfontcache_devel
 SPKG_DESC_CSWlibxfontcache = $(DESCRIPTION)
 SPKG_DESC_CSWlibxfontcachedevel = $(DESCRIPTION) development files
 
-# PREREQUISITE_PKGS = CSWfontcacheproto
-REQUIRED_PKGS_CSWlibxfontcachedevel = CSWlibxfontcache
-REQUIRED_PKGS_CSWlibxfontcache      = CSWlibx11 CSWlibxext
+# BUILD_DEP_PKGS = CSWfontcacheproto
+RUNTIME_DEP_PKGS_CSWlibxfontcachedevel = CSWlibxfontcache
+RUNTIME_DEP_PKGS_CSWlibxfontcache      = CSWlibx11 CSWlibxext
 
 PKGFILES_CSWlibxfontcachedevel  = $(PKGFILES_DEVEL)
 

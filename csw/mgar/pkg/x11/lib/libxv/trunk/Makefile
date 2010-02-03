@@ -14,7 +14,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-# PREREQUISITE_PKGS = CSWxvideoproto
+# BUILD_DEP_PKGS = CSWxvideoproto
 
 PACKAGES = CSWlibxv CSWlibxvdevel
 
@@ -24,8 +24,8 @@ CATALOGNAME_CSWlibxvdevel = libxv_devel
 SPKG_DESC_CSWlibxv = The Xv Library
 SPKG_DESC_CSWlibxvdevel = The Xv Library development files
 
-REQUIRED_PKGS_CSWlibxv = CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibxvdevel = CSWlibxv
+RUNTIME_DEP_PKGS_CSWlibxv = CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxvdevel = CSWlibxv
 
 PKGFILES_CSWlibxvdevel  = $(PKGFILES_DEVEL)
 

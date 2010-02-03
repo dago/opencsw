@@ -29,10 +29,10 @@ CATALOGNAME_CSWsaslauthd = saslauthd
 CATALOGNAME_CSWsaslgssapi = sasl_gssapi
 CATALOGNAME_CSWsaslsql = sasl_sql
 
-REQUIRED_PKGS_CSWsasl = CSWosslrt CSWbdb47
-REQUIRED_PKGS_CSWsaslauthd = CSWosslrt CSWoldaprt CSWkrb5lib
-REQUIRED_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
-REQUIRED_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
+RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt CSWbdb47
+RUNTIME_DEP_PKGS_CSWsaslauthd = CSWosslrt CSWoldaprt CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
 
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon

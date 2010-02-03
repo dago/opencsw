@@ -47,11 +47,11 @@ SPKG_SOURCEURL = http://www.orcaware.com/orca
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PREREQUISITE_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
+BUILD_DEP_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
 
-REQUIRED_PKGS_CSWorca     = CSWsetoolkit CSWperl CSWpmtimedate
-REQUIRED_PKGS_CSWorca    += CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
-REQUIRED_PKGS_CSWorcaweb  = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
+RUNTIME_DEP_PKGS_CSWorca     = CSWsetoolkit CSWperl CSWpmtimedate
+RUNTIME_DEP_PKGS_CSWorca    += CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
+RUNTIME_DEP_PKGS_CSWorcaweb  = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
 
 sysconfdir    = /etc/opt/csw
 localstatedir = /var/opt/csw

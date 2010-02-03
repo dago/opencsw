@@ -11,7 +11,7 @@ MASTER_SITES = http://www.libsdl.org/projects/SDL_mixer/release/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWsdlmixer
-REQUIRED_PKGS = CSWlibsdl
+RUNTIME_DEP_PKGS = CSWlibsdl
 EXTRA_LDFLAGS = -lm
 
 # We define upstream file regex so we can be notifed of new upstream software release

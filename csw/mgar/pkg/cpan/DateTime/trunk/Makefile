@@ -14,8 +14,8 @@ endef
 PACKAGES = CSWpmdatetime
 CATALOGNAME = pm_datetime
 
-REQUIRED_PKGS  = CSWpmdatetimetimezone
-REQUIRED_PKGS += CSWpmdatetimelocale
+RUNTIME_DEP_PKGS  = CSWpmdatetimetimezone
+RUNTIME_DEP_PKGS += CSWpmdatetimelocale
 
 include gar/category.mk
 

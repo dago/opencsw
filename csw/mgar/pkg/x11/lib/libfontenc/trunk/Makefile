@@ -23,8 +23,8 @@ CATALOGNAME_CSWlibfontencdevel = libfontenc_devel
 SPKG_DESC_CSWlibfontenc = $(DESCRIPTION)
 SPKG_DESC_CSWlibfontencdevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWlibfontencdevel = CSWlibfontenc
-REQUIRED_PKGS_CSWlibfontenc      = CSWzlib
+RUNTIME_DEP_PKGS_CSWlibfontencdevel = CSWlibfontenc
+RUNTIME_DEP_PKGS_CSWlibfontenc      = CSWzlib
 
 PKGFILES_CSWlibfontencdevel  = $(PKGFILES_DEVEL)
 

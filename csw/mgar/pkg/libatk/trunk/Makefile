@@ -18,7 +18,7 @@ DISTFILES = $(DISTNAME).tar.bz2
 # UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
 
 BUILD64 = 1
 CONFIGURE_ARGS  = $(DIRPATHS)

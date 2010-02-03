@@ -23,8 +23,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # See http://markmail.org/message/7ki46iiok3ddu3sa
 GARCOMPILER = GNU
 
-REQUIRED_PKGS = CSWiconv
-REQUIRED_PKGS += CSWggettextrt
+RUNTIME_DEP_PKGS = CSWiconv
+RUNTIME_DEP_PKGS += CSWggettextrt
 
 # No special platform optimization 
 NOISALIST = 1

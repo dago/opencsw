@@ -17,14 +17,14 @@ endef
 SPKG_DESC_CSWguilelib12 = GNU extensibility library (shared libraries)
 
 # There has to be something wrong when a package depends on *both* gcc3 and gcc4 - trygve
-REQUIRED_PKGS  = CSWgcc3core
-REQUIRED_PKGS += CSWgcc3corert
-REQUIRED_PKGS += CSWgcc4corert
-REQUIRED_PKGS += CSWggettextrt
-REQUIRED_PKGS += CSWlibgmp
-REQUIRED_PKGS += CSWlibtoolrt
-REQUIRED_PKGS += CSWncurses
-REQUIRED_PKGS += CSWreadline
+RUNTIME_DEP_PKGS  = CSWgcc3core
+RUNTIME_DEP_PKGS += CSWgcc3corert
+RUNTIME_DEP_PKGS += CSWgcc4corert
+RUNTIME_DEP_PKGS += CSWggettextrt
+RUNTIME_DEP_PKGS += CSWlibgmp
+RUNTIME_DEP_PKGS += CSWlibtoolrt
+RUNTIME_DEP_PKGS += CSWncurses
+RUNTIME_DEP_PKGS += CSWreadline
 
 MASTER_SITES = ftp://ftp.gnu.org/pub/gnu/guile/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz

@@ -33,15 +33,15 @@ SPKG_DESC_CSWsqlite3devel = $(SPKG_DESC_CSWsqlite3) development package
 PKGFILES_CSWsqlite3 = $(bindir)/.*
 PKGFILES_CSWsqlite3devel = $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWsqlite3  = CSWsqlite3rt
-REQUIRED_PKGS_CSWsqlite3 += CSWreadline
-REQUIRED_PKGS_CSWsqlite3 += CSWncurses
-REQUIRED_PKGS_CSWsqlite3devel = CSWsqlite3
+RUNTIME_DEP_PKGS_CSWsqlite3  = CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWsqlite3 += CSWreadline
+RUNTIME_DEP_PKGS_CSWsqlite3 += CSWncurses
+RUNTIME_DEP_PKGS_CSWsqlite3devel = CSWsqlite3
 
-PREREQUISITE_PKGS = CSWreadline CSWncurses
+BUILD_DEP_PKGS = CSWreadline CSWncurses
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 # Make configure options
 CONFIGURE_ARGS = $(DIRPATHS)

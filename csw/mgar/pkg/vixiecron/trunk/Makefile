@@ -32,7 +32,7 @@ DISTFILES += run-crons-0.3.2
 WORKSRC = $(WORKDIR)/cron-$(GARVERSION).orig
 
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
-REQUIRED_PKGS = CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWcswclassutils
 
 PROTOTYPE_FILTER  = awk ' \
     $$$$3 ~ /\/init.d\/cswvixiecron$$$$/ { $$$$2 = "cswinitsmf" } \

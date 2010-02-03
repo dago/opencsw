@@ -12,7 +12,7 @@ Install, upgrade and removal actions are logged, both on success and on
 failure.  Currently, the default of user.notice is used.
 endef
 
-REQUIRED_PKGS = CSWbash
+RUNTIME_DEP_PKGS = CSWbash
 
 MASTER_SITES = 
 DISTFILES =

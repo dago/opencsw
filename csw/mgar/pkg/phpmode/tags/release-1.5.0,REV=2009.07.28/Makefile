@@ -10,13 +10,13 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PREREQUISITE_PKGS = CSWemacs
+BUILD_DEP_PKGS = CSWemacs
 
 PACKAGES = CSWphpmode
 
 CATALOGNAME_CSWphpmode = php_mode
 
-REQUIRED_PKGS_CSWphpmode = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWphpmode = CSWemacscommon
 
 ARCHALL = 1
 

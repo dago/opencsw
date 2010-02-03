@@ -17,10 +17,10 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWesound CSWlibsdl CSWlibtoolrt
+RUNTIME_DEP_PKGS = CSWesound CSWlibsdl CSWlibtoolrt
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-cpu=generic_fpu

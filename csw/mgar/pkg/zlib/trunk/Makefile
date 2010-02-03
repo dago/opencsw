@@ -30,7 +30,7 @@ PATCHFILES = Makefile.in.diff
 PATCHFILES += configure.diff
 
 BUILD64 = 1
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 EXTRA_BUILD_ISAS = sparcv8plus sparcv8plus+vis pentium_pro+mmx pentium
 
 CONFIGURE_ARGS = --prefix=$(prefix) --exec_prefix=$(exec_prefix) 

@@ -12,8 +12,8 @@ define BLURB
   environment, and are used in many unrelated projects.
 endef
 
-PREREQUISITE_PKGS 	= CSWpmextutilsdepends CSWpmextutpkgconf
-REQUIRED_PKGS_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf CSWggettextrt CSWglib2
+BUILD_DEP_PKGS 	= CSWpmextutilsdepends CSWpmextutpkgconf
+RUNTIME_DEP_PKGS_CSWpmglib = CSWpmextutilsdepends CSWpmextutpkgconf CSWggettextrt CSWglib2
 
 CATALOGNAME 	= pm_glib
 PACKAGES	= CSWpmglib

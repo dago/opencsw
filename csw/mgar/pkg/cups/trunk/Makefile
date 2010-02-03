@@ -56,16 +56,16 @@ PATCHFILES += 0005-Mapping-gnutls_record_recv-return-error-codes-to-err.patch
 PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
 PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
 
-PREREQUISITE_PKGS  = CSWggettext
-PREREQUISITE_PKGS += CSWjpeg
-PREREQUISITE_PKGS += CSWkrb5libdev
-PREREQUISITE_PKGS += CSWoldapdevel
-PREREQUISITE_PKGS += CSWossldevel
-PREREQUISITE_PKGS += CSWtiff
-PREREQUISITE_PKGS += CSWzlib
-PREREQUISITE_PKGS += SUNWhea
-PREREQUISITE_PKGS += SUNWlibm
-PREREQUISITE_PKGS += SUNWslpu
+BUILD_DEP_PKGS  = CSWggettext
+BUILD_DEP_PKGS += CSWjpeg
+BUILD_DEP_PKGS += CSWkrb5libdev
+BUILD_DEP_PKGS += CSWoldapdevel
+BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWtiff
+BUILD_DEP_PKGS += CSWzlib
+BUILD_DEP_PKGS += SUNWhea
+BUILD_DEP_PKGS += SUNWlibm
+BUILD_DEP_PKGS += SUNWslpu
 
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 
@@ -81,25 +81,25 @@ ARCHALL_CSWcupslinks = 1
 ARCHALL_CSWcupsdoc = 1
 ARCHALL_CSWcupsdev = 1
 
-REQUIRED_PKGS_CSWcups  = CSWcupsd CSWcupsclient
-REQUIRED_PKGS_CSWcupsd += CSWgnutls
-REQUIRED_PKGS_CSWcupsd += CSWkrb5lib
-REQUIRED_PKGS_CSWcupsd += CSWlibcups
-REQUIRED_PKGS_CSWcupsd += CSWlibdbus
-REQUIRED_PKGS_CSWcupsd += CSWoldaprt
-REQUIRED_PKGS_CSWcupsd += CSWzlib
+RUNTIME_DEP_PKGS_CSWcups  = CSWcupsd CSWcupsclient
+RUNTIME_DEP_PKGS_CSWcupsd += CSWgnutls
+RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcups
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus
+RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWcupsd += CSWzlib
 
-REQUIRED_PKGS_CSWcupsclient  = CSWgnutls
-REQUIRED_PKGS_CSWcupsclient += CSWlibcups
-REQUIRED_PKGS_CSWcupsclient += CSWzlib
-REQUIRED_PKGS_CSWcupsdoc = 
-REQUIRED_PKGS_CSWcupsdev = CSWcupsd
-REQUIRED_PKGS_CSWlibcups += CSWgnutls
-REQUIRED_PKGS_CSWlibcups += CSWjpeg
-REQUIRED_PKGS_CSWlibcups += CSWpng
-REQUIRED_PKGS_CSWlibcups += CSWtiff
-REQUIRED_PKGS_CSWlibcups += CSWzlib
-REQUIRED_PKGS_CSWcupslinks = CSWcupsclient
+RUNTIME_DEP_PKGS_CSWcupsclient  = CSWgnutls
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
+RUNTIME_DEP_PKGS_CSWcupsdoc = 
+RUNTIME_DEP_PKGS_CSWcupsdev = CSWcupsd
+RUNTIME_DEP_PKGS_CSWlibcups += CSWgnutls
+RUNTIME_DEP_PKGS_CSWlibcups += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibcups += CSWpng
+RUNTIME_DEP_PKGS_CSWlibcups += CSWtiff
+RUNTIME_DEP_PKGS_CSWlibcups += CSWzlib
+RUNTIME_DEP_PKGS_CSWcupslinks = CSWcupsclient
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
 

@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcupload    = $(DESCRIPTION)
 SPKG_DESC_CSWajcuploaddoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcupload = CSWajclogging CSWajcdigester
+RUNTIME_DEP_PKGS_CSWajcupload = CSWajclogging CSWajcdigester
 
 # Defines package content
 PKGFILES_CSWajcupload  = $(prefix)/share/doc/$(GARNAME)/License.txt

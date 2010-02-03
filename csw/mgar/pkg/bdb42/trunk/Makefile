@@ -27,7 +27,7 @@ PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_SCRIPTS = dist
 
@@ -64,7 +64,7 @@ SPKG_DESC_CSWbdb42doc   = BerkeleyDB 4.2 documentation
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
-REQUIRED_PKGS_CSWbdb42devel = CSWbdb42
+RUNTIME_DEP_PKGS_CSWbdb42devel = CSWbdb42
 
 LICENSE = LICENSE
 

@@ -14,7 +14,7 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-REQUIRED_PKGS = CSWaudiofile
+RUNTIME_DEP_PKGS = CSWaudiofile
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -29,7 +29,7 @@ PRESERVECONF = $(sysconfdir)/esd.conf
 MIGRATE_FILES = esd.conf
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

@@ -33,20 +33,20 @@ SPKG_DESC_CSWdovecot = Secure IMAP server
 SPKG_DESC_CSWdovecot-devel = Dovecot secure IMAP server header files
 SPKG_DESC_CSWdovecot-sieve = Dovecot secure IMAP server sieve plugin
 
-REQUIRED_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
-REQUIRED_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
-REQUIRED_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
-REQUIRED_PKGS_CSWdovecot      += CSWkrb5lib
-REQUIRED_PKGS_CSWdovecot-devel = CSWdovecot
-REQUIRED_PKGS_CSWdovecot-sieve = CSWdovecot
+RUNTIME_DEP_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
+RUNTIME_DEP_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
+RUNTIME_DEP_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWdovecot      += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWdovecot-devel = CSWdovecot
+RUNTIME_DEP_PKGS_CSWdovecot-sieve = CSWdovecot
 
-PREREQUISITE_PKGS  = CSWossldevel CSWosslrt
-PREREQUISITE_PKGS += CSWmysql5devel CSWmysql5rt
-PREREQUISITE_PKGS += CSWoldaprt CSWoldapdevel
-PREREQUISITE_PKGS += CSWsasl 
-PREREQUISITE_PKGS += CSWsqlite3
-PREREQUISITE_PKGS += CSWlibpq
-PREREQUISITE_PKGS += CSWkrb5lib CSWkrb5libdev
+BUILD_DEP_PKGS  = CSWossldevel CSWosslrt
+BUILD_DEP_PKGS += CSWmysql5devel CSWmysql5rt
+BUILD_DEP_PKGS += CSWoldaprt CSWoldapdevel
+BUILD_DEP_PKGS += CSWsasl 
+BUILD_DEP_PKGS += CSWsqlite3
+BUILD_DEP_PKGS += CSWlibpq
+BUILD_DEP_PKGS += CSWkrb5lib CSWkrb5libdev
 
 PKGFILES_CSWdovecot-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWdovecot-sieve = .*sieve.*

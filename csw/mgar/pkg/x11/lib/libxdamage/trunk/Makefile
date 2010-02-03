@@ -23,10 +23,10 @@ CATALOGNAME_CSWlibxdamagedevel = libxdamage_devel
 SPKG_DESC_CSWlibxdamage = $(DESCRIPTION)
 SPKG_DESC_CSWlibxdamagedevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWlibxdamage =  CSWlibx11 CSWlibxfixes
-REQUIRED_PKGS_CSWlibxdamagedevel = CSWlibxdamage
+RUNTIME_DEP_PKGS_CSWlibxdamage =  CSWlibx11 CSWlibxfixes
+RUNTIME_DEP_PKGS_CSWlibxdamagedevel = CSWlibxdamage
 
-# PREREQUISITE_PKGS = CSWdamageproto
+# BUILD_DEP_PKGS = CSWdamageproto
 
 PKGFILES_CSWlibxdamagedevel  = $(PKGFILES_DEVEL)
 

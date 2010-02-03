@@ -24,7 +24,7 @@ SPKG_DESC_CSWajccollect    = $(DESCRIPTION)
 SPKG_DESC_CSWajccollectdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajccollect  = CSWjunit
+RUNTIME_DEP_PKGS_CSWajccollect  = CSWjunit
 
 # Defines package content
 PKGFILES_CSWajccollect     	 = $(prefix)/share/doc/$(GARNAME)/LICENSE.txt

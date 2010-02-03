@@ -22,7 +22,7 @@ DISTFILES  = $(DLOAD_NAME)-$(GARVERSION).tar.bz2
 
 WORKSRC = $(WORKDIR)/$(DLOAD_NAME)-$(GARVERSION)
 SPKG_CLASSES = none cswpycompile
-REQUIRED_PKGS = CSWcswclassutils CSWpython CSWpython-rt
+RUNTIME_DEP_PKGS = CSWcswclassutils CSWpython CSWpython-rt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2

@@ -26,7 +26,7 @@ DISTFILES      = $(SF_PROJ)-$(SF_PROJ_VER).tar.gz
 DISTNAME       = $(SF_PROJ)-$(SF_PROJ_VER)
 UFILES_REGEX   = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWncurses
+RUNTIME_DEP_PKGS = CSWncurses
 
 TEST_SCRIPTS =
 CONFIGURE_SCRIPTS =

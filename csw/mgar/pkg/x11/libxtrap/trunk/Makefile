@@ -23,9 +23,9 @@ CATALOGNAME_CSWlibxtrapdevel = libxtrap_devel
 SPKG_DESC_CSWlibxtrap = $(DESCRIPTION)
 SPKG_DESC_CSWlibxtrapdevel = $(DESCRIPTION) development files
 
-PREREQUISITE_PKGS = CSWtrapproto CSWlibxtdevel CSWlibsmdevel CSWlibicedevel
-REQUIRED_PKGS_CSWlibxtrap      = CSWlibice CSWlibx11 CSWlibxext CSWlibxt
-REQUIRED_PKGS_CSWlibxtrapdevel = CSWlibxtrap
+BUILD_DEP_PKGS = CSWtrapproto CSWlibxtdevel CSWlibsmdevel CSWlibicedevel
+RUNTIME_DEP_PKGS_CSWlibxtrap      = CSWlibice CSWlibx11 CSWlibxext CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibxtrapdevel = CSWlibxtrap
 
 PKGFILES_CSWlibxtrapdevel  = $(PKGFILES_DEVEL)
 

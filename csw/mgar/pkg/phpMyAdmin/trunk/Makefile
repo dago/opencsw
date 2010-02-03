@@ -18,8 +18,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)-all-languages.tar.bz2
 PACKAGES = CSWphpmyadmin
 CATALOGNAME = phpmyadmin
 
-REQUIRED_PKGS  = CSWapache2 CSWap2modphp5 CSWmysql5 CSWphp5 CSWphp5gd CSWphp5mcrypt
-REQUIRED_PKGS += CSWphp5mysqli CSWphp5session CSWphp5mbstring CSWphp5ctype CSWphp5zip
+RUNTIME_DEP_PKGS  = CSWapache2 CSWap2modphp5 CSWmysql5 CSWphp5 CSWphp5gd CSWphp5mcrypt
+RUNTIME_DEP_PKGS += CSWphp5mysqli CSWphp5session CSWphp5mbstring CSWphp5ctype CSWphp5zip
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-all-languages.tar.bz2

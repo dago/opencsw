@@ -21,8 +21,8 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
 DISTNAME = ldns-$(GARVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)/drill
 
-REQUIRED_PKGS = CSWldns
-REQUIRED_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS = CSWldns
+RUNTIME_DEP_PKGS += CSWosslrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw

@@ -27,7 +27,7 @@ NOEXTRACT = $(filter-out $(GARNAME)-$(DISTVERSION-$(GARVERSION)).tar.gz,$(SOURCE
 
 PACKAGES = CSWlibevent CSWlibevent-devel
 
-REQUIRED_PKGS_CSWlibevent-devel = CSWlibevent
+RUNTIME_DEP_PKGS_CSWlibevent-devel = CSWlibevent
 
 CATALOGNAME_CSWlibevent = libevent
 CATALOGNAME_CSWlibevent-devel = libevent_devel
@@ -43,7 +43,7 @@ SPKG_SOURCEURL = http://www.monkey.org/~provos/libevent/
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION-$(GARVERSION))
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS) 
 
 TEST_TARGET = verify

@@ -24,7 +24,7 @@ SPKG_DESC_CSWajcchain    = $(DESCRIPTION)
 SPKG_DESC_CSWajcchaindoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-# REQUIRED_PKGS_CSWajcchain  = 
+# RUNTIME_DEP_PKGS_CSWajcchain  = 
 
 # Defines package content
 PKGFILES_CSWajcchain   	 = $(prefix)/share/doc/$(GARNAME)/LICENSE.txt

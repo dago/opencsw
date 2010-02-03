@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcnet    = $(DESCRIPTION)
 SPKG_DESC_CSWajcnetdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcnet = CSWajclogging CSWajccollect CSWajcbeanutils 	
+RUNTIME_DEP_PKGS_CSWajcnet = CSWajclogging CSWajccollect CSWajcbeanutils 	
 
 # Defines package content
 PKGFILES_CSWajcnet  = $(prefix)/share/doc/$(GARNAME)/License.txt

@@ -20,7 +20,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic/firth/software/pdfjam
 
-REQUIRED_PKGS = CSWtetex CSWbash
+RUNTIME_DEP_PKGS = CSWtetex CSWbash
 
 DISTNAME = pdfjam
 

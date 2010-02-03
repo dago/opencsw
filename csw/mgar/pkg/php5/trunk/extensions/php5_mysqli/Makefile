@@ -4,7 +4,7 @@ PACKAGES += CSWphp5mysqli
 
 CATALOGNAME_CSWphp5mysqli = php5_mysqli
 SPKG_DESC_CSWphp5mysqli = mysqli Extention for PHP5
-REQUIRED_PKGS_CSWphp5mysqli = CSWphp5 CSWmysql5rt CSWzlib
+RUNTIME_DEP_PKGS_CSWphp5mysqli = CSWphp5 CSWmysql5rt CSWzlib
 
 CONFIGURE_ARGS += --with-mysqli=shared,$(bindir)/mysql_config
 

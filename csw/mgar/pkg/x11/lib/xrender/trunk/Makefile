@@ -31,9 +31,9 @@ PACKAGES = CSWlibxrender CSWlibxrenderdevel
 CATALOGNAME_CSWlibxrender      = libxrender
 CATALOGNAME_CSWlibxrenderdevel = libxrender_devel
 
-PREREQUISITE_PKGS = CSWx11renderproto
-REQUIRED_PKGS_CSWlibxrenderdevel = CSWlibxrender
-REQUIRED_PKGS_CSWlibxrender = CSWx11common CSWlibx11
+BUILD_DEP_PKGS = CSWx11renderproto
+RUNTIME_DEP_PKGS_CSWlibxrenderdevel = CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibxrender = CSWx11common CSWlibx11
 
 SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
 SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) Development Package

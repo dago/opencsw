@@ -54,36 +54,36 @@ PKGFILES_CSWgnupg-agent += .*gpg-connect-agent.*
 PKGFILES_CSWgnupg-agent += .*gpgkey2ssh.*
 PKGFILES_CSWgnupg-agent += .*symcryptrun.*
 
-REQUIRED_PKGS_common  = CSWbzip2
-REQUIRED_PKGS_common += CSWcurlrt
-REQUIRED_PKGS_common += CSWgcrypt
-REQUIRED_PKGS_common += CSWggettextrt
-REQUIRED_PKGS_common += CSWgpgerr
-REQUIRED_PKGS_common += CSWiconv
-REQUIRED_PKGS_common += CSWlibassuan
-REQUIRED_PKGS_common += CSWlibidn
-REQUIRED_PKGS_common += CSWlibksba
-REQUIRED_PKGS_common += CSWoldaprt
-REQUIRED_PKGS_common += CSWosslrt
-REQUIRED_PKGS_common += CSWpth
-REQUIRED_PKGS_common += CSWreadline
-REQUIRED_PKGS_common += CSWzlib
+RUNTIME_DEP_PKGS_common  = CSWbzip2
+RUNTIME_DEP_PKGS_common += CSWcurlrt
+RUNTIME_DEP_PKGS_common += CSWgcrypt
+RUNTIME_DEP_PKGS_common += CSWggettextrt
+RUNTIME_DEP_PKGS_common += CSWgpgerr
+RUNTIME_DEP_PKGS_common += CSWiconv
+RUNTIME_DEP_PKGS_common += CSWlibassuan
+RUNTIME_DEP_PKGS_common += CSWlibidn
+RUNTIME_DEP_PKGS_common += CSWlibksba
+RUNTIME_DEP_PKGS_common += CSWoldaprt
+RUNTIME_DEP_PKGS_common += CSWosslrt
+RUNTIME_DEP_PKGS_common += CSWpth
+RUNTIME_DEP_PKGS_common += CSWreadline
+RUNTIME_DEP_PKGS_common += CSWzlib
 
 
-REQUIRED_PKGS_CSWgnupg2 += $(REQUIRED_PKGS_common)
-REQUIRED_PKGS_CSWgnupg2 += CSWgnupg-agent
+RUNTIME_DEP_PKGS_CSWgnupg2 += $(RUNTIME_DEP_PKGS_common)
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWgnupg-agent
 
-REQUIRED_PKGS_CSWgnupg-agent  = CSWpinentry
-REQUIRED_PKGS_CSWgnupg-agent += CSWgcrypt
-REQUIRED_PKGS_CSWgnupg-agent += CSWggettextrt
-REQUIRED_PKGS_CSWgnupg-agent += CSWgpgerr
-REQUIRED_PKGS_CSWgnupg-agent += CSWiconv
-REQUIRED_PKGS_CSWgnupg-agent += CSWpth
-REQUIRED_PKGS_CSWgnupg-agent += CSWreadline
+RUNTIME_DEP_PKGS_CSWgnupg-agent  = CSWpinentry
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWiconv
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWpth
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWreadline
 
 
-PREREQUISITE_PKGS  = $(REQUIRED_PKGS_common)
-PREREQUISITE_PKGS += $(REQUIRED_PKGS_CSWgnupg-agent)
+BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS_common)
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWgnupg-agent)
 
 TEST_TARGET = check
 

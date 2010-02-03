@@ -23,7 +23,7 @@ PATCHFILES_isa-sparcv9-garversion-6.0 = patch-history.3.diff
 PATCHFILES_isa-i386-garversion-6.0 = patch-history.3.diff
 PATCHFILES_isa-amd64-garversion-6.0 = patch-history.3.diff
 
-REQUIRED_PKGS = CSWncurses
+RUNTIME_DEP_PKGS = CSWncurses
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

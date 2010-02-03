@@ -12,7 +12,7 @@ endef
 MASTER_SITES = http://downloads.sourceforge.net/tnef/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS = CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=57057

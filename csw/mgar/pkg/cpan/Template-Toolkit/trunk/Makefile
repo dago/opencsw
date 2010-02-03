@@ -17,8 +17,8 @@ endef
 PACKAGES  = CSWpmtt2
 CATALOGNAME = pm_tt2
 
-PREREQUISITE_PKGS = CSWpmxmldom CSWpmappconfig CSWpmpodpom
-REQUIRED_PKGS = CSWpmxmldom CSWpmappconfig CSWpmpodpom
+BUILD_DEP_PKGS = CSWpmxmldom CSWpmappconfig CSWpmpodpom
+RUNTIME_DEP_PKGS = CSWpmxmldom CSWpmappconfig CSWpmpodpom
 
 CONFIGURE_ARGS  = TT_PREFIX=$(DESTDIR)$(datadir)/tt2
 CONFIGURE_ARGS += TT_ACCEPT=y

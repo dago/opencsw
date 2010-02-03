@@ -31,14 +31,14 @@ SPKG_DESC_CSWxmlrpc-c = $(DESCRIPTION)
 
 PATCHFILES = mainpatch
 
-REQUIRED_PKGS_CSWxmlrpc-c  = CSWcurlrt CSWlibidn CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWxmlrpc-c  = CSWcurlrt CSWlibidn CSWoldaprt CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 #UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
 #BUILD64 = 1
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 

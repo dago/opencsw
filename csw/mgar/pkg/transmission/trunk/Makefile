@@ -18,33 +18,33 @@ PACKAGES += CSWtransmissiongtk2
 SPKG_DESC_CSWtransmission = Fast, easy, and free multi-platform BitTorrent client
 SPKG_DESC_CSWtransmissiongtk2 = Fast, easy, and free multi-platform BitTorrent client ,  gtk2 Interface
 
-REQUIRED_PKGS_CSWtransmissiongtk2 = CSWcurlrt
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWdbusglib
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWfconfig
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWftype2
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWggettextrt
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWglib2
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWgtk2
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibatk
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibcairo
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibdbus
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibevent
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWlibxext
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWosslrt
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWpango
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWzlib
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWdbus
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWgconf2
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 = CSWcurlrt
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWdbusglib
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWftype2
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWglib2
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWgtk2
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibatk
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibdbus
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibevent
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibxext
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWpango
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWzlib
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWdbus
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWgconf2
 
-REQUIRED_PKGS_CSWtransmission = CSWcurlrt
-REQUIRED_PKGS_CSWtransmission += CSWlibevent
-REQUIRED_PKGS_CSWtransmission += CSWggettextrt
-REQUIRED_PKGS_CSWtransmission += CSWosslrt
-REQUIRED_PKGS_CSWtransmission += CSWzlib
+RUNTIME_DEP_PKGS_CSWtransmission = CSWcurlrt
+RUNTIME_DEP_PKGS_CSWtransmission += CSWlibevent
+RUNTIME_DEP_PKGS_CSWtransmission += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWtransmission += CSWosslrt
+RUNTIME_DEP_PKGS_CSWtransmission += CSWzlib
 
 
 
-REQUIRED_PKGS_CSWtransmissiongtk2 += CSWtransmission
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWtransmission
 
 PKGFILES_CSWtransmission  = /opt/csw/bin/transmissioncli
 PKGFILES_CSWtransmission  += /opt/csw/bin/transmission-.*

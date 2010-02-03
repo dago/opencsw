@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcmath    = $(DESCRIPTION)
 SPKG_DESC_CSWajcmathdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcmath = CSWajcdiscovery
+RUNTIME_DEP_PKGS_CSWajcmath = CSWajcdiscovery
 
 # Defines package content
 PKGFILES_CSWajcmath  = $(prefix)/share/doc/$(GARNAME)/License.txt

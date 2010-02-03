@@ -15,7 +15,7 @@ PACKAGES = CSWpidginsipe
 CATALOGNAME_CSWpidginsipe = pidgin_sipe
 SPKG_DESC_CSWpidginsipe = $(DESCRIPTION)
 SPKG_SOURCEURL = http://sipe.sourceforge.net/
-REQUIRED_PKGS_CSWpidginsipe  = CSWpidgin
+RUNTIME_DEP_PKGS_CSWpidginsipe  = CSWpidgin
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

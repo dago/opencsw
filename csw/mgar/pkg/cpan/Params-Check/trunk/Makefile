@@ -14,7 +14,7 @@ PACKAGES = CSWpmprmscheck
 CATALOGNAME = pm_prmscheck 
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmlclemktxtsimple
+RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple
 
 include gar/category.mk
 

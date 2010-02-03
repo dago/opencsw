@@ -35,8 +35,8 @@ BUILD64 = 1
 EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
-REQUIRED_PKGS_CSWldns += CSWosslrt
-REQUIRED_PKGS_CSWldnsdevel += CSWldns
+RUNTIME_DEP_PKGS_CSWldns += CSWosslrt
+RUNTIME_DEP_PKGS_CSWldnsdevel += CSWldns
 
 PATCHFILES = CSWldns.doxyparse.diff
 

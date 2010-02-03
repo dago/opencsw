@@ -19,7 +19,7 @@ DISTFILES              = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX           = (\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWtrac
-REQUIRED_PKGS_CSWtrac  = CSWpysetuptools CSWpythonsvn CSWgenshi
+RUNTIME_DEP_PKGS_CSWtrac  = CSWpysetuptools CSWpythonsvn CSWgenshi
 ARCHALL_CSWtrac = 1
 
 CATALOGNAME_CSWtrac    = trac

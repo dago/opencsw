@@ -25,7 +25,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 1343
 UPSTREAM_USE_SF = 1
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-glibtest
 

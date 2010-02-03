@@ -17,8 +17,8 @@ PACKAGES = CSWpmdatetimetimezone
 CATALOGNAME = pm_datetimetimezone
 ARCHALL = 1
 
-REQUIRED_PKGS  = CSWpmclasssingleton
-REQUIRED_PKGS += CSWpmparamsvalidate
+RUNTIME_DEP_PKGS  = CSWpmclasssingleton
+RUNTIME_DEP_PKGS += CSWpmparamsvalidate
 
 include gar/category.mk
 

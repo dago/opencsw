@@ -16,9 +16,9 @@ SPKG_DESC_CSWhtmldoc = $(DESCRIPTION)
 SPKG_DESC_CSWhtmldoc-common = This package contains the htmldoc files common to all architectures.
 ARCHALL_CSWhtmldoc-common = 1
 
-REQUIRED_PKGS_CSWhtmldoc  = CSWfltk CSWjpeg CSWosslrt CSWpng CSWzlib
-REQUIRED_PKGS_CSWhtmldoc += CSWhtmldoc-common
-#REQUIRED_PKGS_CSWhtmldoc-common = 
+RUNTIME_DEP_PKGS_CSWhtmldoc  = CSWfltk CSWjpeg CSWosslrt CSWpng CSWzlib
+RUNTIME_DEP_PKGS_CSWhtmldoc += CSWhtmldoc-common
+#RUNTIME_DEP_PKGS_CSWhtmldoc-common = 
 
 PKGFILES_CSWhtmldoc = $(bindir)/.*
 PKGFILES_CSWhtmldoc-common = $(datadir)/.*

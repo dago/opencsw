@@ -15,8 +15,8 @@ PACKAGES = CSWgnupgminimal
 CATALOGNAME_CSWgnupgminimal = gnupg_minimal
 SPKG_DESC_CSWgnupgminimal = $(DESCRIPTION)
 PKGFILES_CSWgnupgminimal = .*/bin/.*
-REQUIRED_PKGS_CSWgnupgminimal = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
-REQUIRED_PKGS_CSWgnupgminimal += CSWoldaprt CSWreadline CSWzlib
+RUNTIME_DEP_PKGS_CSWgnupgminimal = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS_CSWgnupgminimal += CSWoldaprt CSWreadline CSWzlib
 
 BUILD64 = 1
 

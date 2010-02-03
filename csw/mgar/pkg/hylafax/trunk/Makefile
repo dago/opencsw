@@ -20,7 +20,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PATCHFILES = patch-hylafax.diff
 
-PREREQUISITE_PKGS = CSWoldapdevel
+BUILD_DEP_PKGS = CSWoldapdevel
 
 #export CC=/opt/SUNWspro/bin/cc
 #export CXX=/opt/SUNWspro/bin/CC

@@ -7,7 +7,7 @@ DESCRIPTION = Read font files and render glyphs from Perl using FreeType2
 define BLURB
 endef
 
-REQUIRED_PKGS = CSWftype2
+RUNTIME_DEP_PKGS = CSWftype2
 
 PACKAGES = CSWpmfontfreetype
 CATALOGNAME = pm_fontfreetype

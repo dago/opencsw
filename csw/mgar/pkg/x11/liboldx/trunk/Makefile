@@ -23,7 +23,7 @@ CATALOGNAME_CSWliboldxdevel = liboldx_devel
 SPKG_DESC_CSWliboldx = $(DESCRIPTION)
 SPKG_DESC_CSWliboldxdevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWliboldxdevel = CSWliboldx
+RUNTIME_DEP_PKGS_CSWliboldxdevel = CSWliboldx
 
 PKGFILES_CSWliboldxdevel  = $(PKGFILES_DEVEL)
 

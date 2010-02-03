@@ -25,8 +25,8 @@ NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 
 PACKAGES = CSWhdf5rt CSWhdf5
 
-REQUIRED_PKGS_CSWhdf5 = CSWhdf5rt CSWzlib
-REQUIRED_PKGS_CSWhdf5rt = CSWzlib
+RUNTIME_DEP_PKGS_CSWhdf5 = CSWhdf5rt CSWzlib
+RUNTIME_DEP_PKGS_CSWhdf5rt = CSWzlib
 
 CATALOGNAME_CSWhdf5 = hdf5
 CATALOGNAME_CSWhdf5rt = hdf5_rt
@@ -40,7 +40,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.hdfgroup.org/HDF5/
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS) 
 
 TEST_TARGET = check

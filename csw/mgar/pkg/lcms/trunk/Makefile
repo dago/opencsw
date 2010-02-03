@@ -27,9 +27,9 @@ SPKG_DESC_CSWlcms += The little color management system and tools
 SPKG_DESC_CSWlcmsrt += The little color management system and tools - runtime package
 SPKG_DESC_CSWlcmsdevel += The little color management system and tools - developer package
 
-REQUIRED_PKGS_CSWlcms += CSWlcmsrt CSWjpeg CSWtiff CSWzlib
-REQUIRED_PKGS_CSWlcmsrt += 
-REQUIRED_PKGS_CSWlcmsdevel += CSWlcms
+RUNTIME_DEP_PKGS_CSWlcms += CSWlcmsrt CSWjpeg CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWlcmsrt += 
+RUNTIME_DEP_PKGS_CSWlcmsdevel += CSWlcms
 
 PKGFILES_CSWlcmsrt = $(PKGFILES_RT)
 PKGFILES_CSWlcmsdevel = $(PKGFILES_DEVEL)

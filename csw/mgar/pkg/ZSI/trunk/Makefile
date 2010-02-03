@@ -27,6 +27,6 @@ PACKAGES = CSWpyzsi
 CATALOGNAME = py_zsi
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpyxml
+RUNTIME_DEP_PKGS = CSWpyxml
 
 include gar/category.mk

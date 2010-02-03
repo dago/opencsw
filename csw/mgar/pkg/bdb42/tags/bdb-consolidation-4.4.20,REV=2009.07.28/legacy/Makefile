@@ -55,7 +55,7 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb44/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 PACKAGES = CSWbdb44 CSWbdb44-devel CSWbdb44-doc
 
@@ -69,7 +69,7 @@ SPKG_DESC_CSWbdb44       = BerkeleyDB 4.4 embedded database libraries and utilit
 SPKG_DESC_CSWbdb44-devel = BerkeleyDB 4.4 development support
 SPKG_DESC_CSWbdb44-doc   = BerkeleyDB 4.4 documentation
 
-REQUIRED_PKGS_CSWbdb44-devel = CSWbdb44
+RUNTIME_DEP_PKGS_CSWbdb44-devel = CSWbdb44
 INCOMPATIBLE_PKGS_CSWbdb44-doc = CSWbdb44doc
 
 LICENSE = LICENSE

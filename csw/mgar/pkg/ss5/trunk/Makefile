@@ -21,7 +21,7 @@ PACKAGES = CSWss5
 CATALOGNAME_CSWss5 = ss5
 SPKG_DESC_CSWss5 = $(DESCRIPTION)
 
-#REQUIRED_PKGS_CSWss5  = 
+#RUNTIME_DEP_PKGS_CSWss5  = 
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
@@ -34,7 +34,7 @@ test-skip:
 	@$(DONADA)
 
 #BUILD64 = 1
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 
 prefix = $(DESTDIR)
 

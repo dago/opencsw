@@ -20,10 +20,10 @@ SPKG_SOURCEURL = http://www.vorbis.com
 PACKAGES = CSWvtools
 CATALOGNAME = vorbistools
 
-PREREQUISITE_PKGS = CSWcurldevel
+BUILD_DEP_PKGS = CSWcurldevel
 
-REQUIRED_PKGS = CSWcurlrt CSWflac CSWggettextrt CSWiconv CSWlibao
-REQUIRED_PKGS += CSWlibogg CSWspeex CSWsunmath CSWvorbis
+RUNTIME_DEP_PKGS = CSWcurlrt CSWflac CSWggettextrt CSWiconv CSWlibao
+RUNTIME_DEP_PKGS += CSWlibogg CSWspeex CSWsunmath CSWvorbis
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)

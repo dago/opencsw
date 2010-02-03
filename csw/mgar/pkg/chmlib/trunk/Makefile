@@ -23,7 +23,7 @@ PATCHFILES += 0004-add-autoconf-checks-for-lnsl-and-lsocket.patch
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-examples
 

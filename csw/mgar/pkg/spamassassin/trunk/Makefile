@@ -16,11 +16,11 @@ DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
 #DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc3.tar.gz
 DISTFILES += COPYING
 
-REQUIRED_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha
-REQUIRED_PKGS += CSWpmiosocketinet6 CSWpmiosocketssl CSWpmiozlib
-REQUIRED_PKGS += CSWpmipcountry CSWpmldap CSWpmlibwww CSWpmmaildkim
-REQUIRED_PKGS += CSWpmmailspf CSWpmmailtools CSWpmmimebase64 CSWpmnetaddrip CSWpmnetdns
-REQUIRED_PKGS += CSWpmuri CSWpmhtmlparser CSWzlib
+RUNTIME_DEP_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha
+RUNTIME_DEP_PKGS += CSWpmiosocketinet6 CSWpmiosocketssl CSWpmiozlib
+RUNTIME_DEP_PKGS += CSWpmipcountry CSWpmldap CSWpmlibwww CSWpmmaildkim
+RUNTIME_DEP_PKGS += CSWpmmailspf CSWpmmailtools CSWpmmimebase64 CSWpmnetaddrip CSWpmnetdns
+RUNTIME_DEP_PKGS += CSWpmuri CSWpmhtmlparser CSWzlib
 
 UFILES_REGEX = $(SPKG_NAME)-(\d+(?:\.\d+)*).tar.gz
 

@@ -52,28 +52,28 @@ ARCHALL_CSWgraphviz2 = 1
 # Sun's CC is broken on 64bit architectures!
 #BUILD64 = 1
 
-PREREQUISITE_PKGS = 
+BUILD_DEP_PKGS = 
 
-REQUIRED_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender \
+RUNTIME_DEP_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender \
 	CSWgs CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWiconv \
 	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm CSWlibrsvg
-REQUIRED_PKGS_CSWgraphvizdevel = CSWgraphviz
-REQUIRED_PKGS_CSWgraphvizdoc = 
-REQUIRED_PKGS_CSWgraphvizgraphs = 
-REQUIRED_PKGS_CSWgraphvizgd = CSWgd CSWjpeg CSWgraphviz
-REQUIRED_PKGS_CSWgraphvizdevil = CSWdevil
-REQUIRED_PKGS_CSWgraphvizsharp = CSWmono CSWexpat CSWgraphviz CSWzlib
-REQUIRED_PKGS_CSWgraphvizguile = CSWguile
-REQUIRED_PKGS_CSWgraphvizjava = CSWjava
-REQUIRED_PKGS_CSWgraphvizlua = CSWlua
-REQUIRED_PKGS_CSWgraphvizocaml = CSWocaml
-REQUIRED_PKGS_CSWgraphvizperl = CSWperl
-REQUIRED_PKGS_CSWgraphvizphp = CSWphp5
-REQUIRED_PKGS_CSWgraphvizpython = CSWpython CSWexpat CSWgraphviz CSWzlib 
-REQUIRED_PKGS_CSWgraphvizr = CSWr
-REQUIRED_PKGS_CSWgraphvizruby = CSWruby
-REQUIRED_PKGS_CSWgraphviztcl = CSWtcl CSWtk CSWgraphviz
-REQUIRED_PKGS_CSWgraphviz2 = CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizdevel = CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizdoc = 
+RUNTIME_DEP_PKGS_CSWgraphvizgraphs = 
+RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWgd CSWjpeg CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizdevil = CSWdevil
+RUNTIME_DEP_PKGS_CSWgraphvizsharp = CSWmono CSWexpat CSWgraphviz CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizguile = CSWguile
+RUNTIME_DEP_PKGS_CSWgraphvizjava = CSWjava
+RUNTIME_DEP_PKGS_CSWgraphvizlua = CSWlua
+RUNTIME_DEP_PKGS_CSWgraphvizocaml = CSWocaml
+RUNTIME_DEP_PKGS_CSWgraphvizperl = CSWperl
+RUNTIME_DEP_PKGS_CSWgraphvizphp = CSWphp5
+RUNTIME_DEP_PKGS_CSWgraphvizpython = CSWpython CSWexpat CSWgraphviz CSWzlib 
+RUNTIME_DEP_PKGS_CSWgraphvizr = CSWr
+RUNTIME_DEP_PKGS_CSWgraphvizruby = CSWruby
+RUNTIME_DEP_PKGS_CSWgraphviztcl = CSWtcl CSWtk CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphviz2 = CSWgraphviz
 
 LICENSE_CSWgraphviz = COPYING
 LICENSE_CSWgraphvizdevel = COPYING

@@ -19,12 +19,12 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 MERGE_EXCLUDE_FILES = /opt/csw/bin/$(ISA)/.*
 
-REQUIRED_PKGS_CSWotr = CSWgcrypt CSWgpgerr
-REQUIRED_PKGS_CSWotrdevel = CSWotr
+RUNTIME_DEP_PKGS_CSWotr = CSWgcrypt CSWgpgerr
+RUNTIME_DEP_PKGS_CSWotrdevel = CSWotr
 
 TEST_TARGET = check
 

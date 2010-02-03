@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcvalidator    = $(DESCRIPTION)
 SPKG_DESC_CSWajcvalidatordoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-# REQUIRED_PKGS_CSWajcvalidator = No dependency
+# RUNTIME_DEP_PKGS_CSWajcvalidator = No dependency
 
 # Defines package content
 PKGFILES_CSWajcvalidator  = $(prefix)/share/doc/$(GARNAME)/License.txt

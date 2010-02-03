@@ -15,7 +15,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # xproto x11 xext xextproto xt xmu xpm
-# PREREQUISITE_PKGS = CSWlibxpmdevel
+# BUILD_DEP_PKGS = CSWlibxpmdevel
 
 PACKAGES = CSWlibxaw CSWlibxawdevel
 
@@ -25,8 +25,8 @@ CATALOGNAME_CSWlibxawdevel = libxaw_devel
 SPKG_DESC_CSWlibxaw = X Athena Widgets
 SPKG_DESC_CSWlibxawdevel = X Athena Widgets development files
 
-REQUIRED_PKGS_CSWlibxaw = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxmu CSWlibxt CSWlibxpm
-REQUIRED_PKGS_CSWlibxawdevel = CSWlibxpmdevel
+RUNTIME_DEP_PKGS_CSWlibxaw = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxmu CSWlibxt CSWlibxpm
+RUNTIME_DEP_PKGS_CSWlibxawdevel = CSWlibxpmdevel
 
 BUILD64 = 1
 NOISALIST = 1

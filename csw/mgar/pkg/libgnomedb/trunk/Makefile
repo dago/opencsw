@@ -15,9 +15,9 @@ MASTER_SITES =  $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTNAME  = $(GARNAME)-$(GARVERSION)
 
-#REQUIRED_PKGS += CSWgconf2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk
-#REQUIRED_PKGS += CSWlibcairo CSWlibglade2 CSWlibgsf CSWlibxml2 CSWlibxrender
-#REQUIRED_PKGS += CSWpango CSWsunmath CSWzlib
+#RUNTIME_DEP_PKGS += CSWgconf2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk
+#RUNTIME_DEP_PKGS += CSWlibcairo CSWlibglade2 CSWlibgsf CSWlibxml2 CSWlibxrender
+#RUNTIME_DEP_PKGS += CSWpango CSWsunmath CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2

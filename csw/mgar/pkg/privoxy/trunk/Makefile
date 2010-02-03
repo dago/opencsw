@@ -25,7 +25,7 @@ DISTNAME = $(GARNAME)-$(GARVERSION)-stable
 SPKG_SOURCEURL = http://www.privoxy.org/
 SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
 
-REQUIRED_PKGS = CSWclassutils CSWpcrert CSWzlib
+RUNTIME_DEP_PKGS = CSWclassutils CSWpcrert CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-stable-src.tar.gz

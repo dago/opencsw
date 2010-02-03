@@ -20,7 +20,7 @@ PATCHFILES = gnu-grep.patch
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 FFMPEG_CONFIGURE_ARGS_1 = $(filter-out --exec_%,$(DIRPATHS))
 FFMPEG_CONFIGURE_ARGS_2 = $(filter-out --sbindir%,$(FFMPEG_CONFIGURE_ARGS_1))

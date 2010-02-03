@@ -12,7 +12,7 @@ define BLURB
   compressed or gzipped tar files.
 endef
 
-REQUIRED_PKGS = CSWpmiozlib CSWpmiocompress CSWpmpkgconst CSWpmtextdiff
+RUNTIME_DEP_PKGS = CSWpmiozlib CSWpmiocompress CSWpmpkgconst CSWpmtextdiff
 
 PACKAGES = CSWpmarchivetar
 CATALOGNAME = pm_archivetar

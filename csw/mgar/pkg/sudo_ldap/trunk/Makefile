@@ -27,7 +27,7 @@ PACKAGES = CSWsudoldap
 CATALOGNAME_CSWsudoldap = sudo_ldap
 SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
-REQUIRED_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt 
+RUNTIME_DEP_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam

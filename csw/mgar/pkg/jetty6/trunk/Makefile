@@ -20,7 +20,7 @@ DISTFILES += cswjetty6 cswjetty6.xml svc-cswjetty6
 DISTFILES += $(call admfiles,CSW$(GARNAME),prototype csw_usrgrp_config postinstall)
 DISTFILES += $(call admfiles,CSW$(GARNAME)doc,prototype)
 
-REQUIRED_PKGS = 
+RUNTIME_DEP_PKGS = 
 
 SPKG_SOURCEURL = http://jetty.mortbay.org
 

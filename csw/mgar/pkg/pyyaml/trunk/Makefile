@@ -37,9 +37,9 @@ PACKAGES = CSWpy-yaml CSWpy-yaml-rt
 CATALOGNAME_CSWpy-yaml = py_yaml
 CATALOGNAME_CSWpy-yaml-rt = py_yaml_rt
 
-REQUIRED_PKGS_CSWpy-yaml =
-REQUIRED_PKGS_CSWpy-yaml-rt = CSWlibyaml
-PREREQUISITE_PKGS = $(REQUIRED_PKGS_CSWpy-yaml) $(REQUIRED_PKGS_CSWpy-yaml-rt)
+RUNTIME_DEP_PKGS_CSWpy-yaml =
+RUNTIME_DEP_PKGS_CSWpy-yaml-rt = CSWlibyaml
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWpy-yaml) $(RUNTIME_DEP_PKGS_CSWpy-yaml-rt)
 
 SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
 SPKG_DESC_CSWpy-yaml-rt = Runtime libraries for YAML parser and emitter

@@ -14,8 +14,8 @@ endef
 PACKAGES = CSWpmeventlib
 CATALOGNAME = pm_eventlib
 
-PREREQUISITE_PKGS = CSWlibevent-devel
-REQUIRED_PKGS = CSWlibevent
+BUILD_DEP_PKGS = CSWlibevent-devel
+RUNTIME_DEP_PKGS = CSWlibevent
 
 # Sun cc inline function patch
 PATCHFILES = inline.diff

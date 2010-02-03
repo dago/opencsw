@@ -122,11 +122,11 @@ PKGFILES_CSWmysql5devel  += /opt/csw/include/mysql
 PKGFILES_CSWmysql5rt      = $(prefix)/lib/.*\.so.*
 PKGFILES_CSWmysql5test    = $(prefix)/mysql-test.*
 
-REQUIRED_PKGS_CSWmysql5bench       = CSWmysql5
-REQUIRED_PKGS_CSWmysql5client      = CSWmysql5rt
-REQUIRED_PKGS_CSWmysql5            = CSWmysql5client CSWmysql5rt
-REQUIRED_PKGS_CSWmysql5devel       = CSWmysql5
-REQUIRED_PKGS_CSWmysql5test        = CSWmysql5 CSWperl
+RUNTIME_DEP_PKGS_CSWmysql5bench       = CSWmysql5
+RUNTIME_DEP_PKGS_CSWmysql5client      = CSWmysql5rt
+RUNTIME_DEP_PKGS_CSWmysql5            = CSWmysql5client CSWmysql5rt
+RUNTIME_DEP_PKGS_CSWmysql5devel       = CSWmysql5
+RUNTIME_DEP_PKGS_CSWmysql5test        = CSWmysql5 CSWperl
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(GARVERSION).tar.gz
@@ -137,8 +137,8 @@ DISTFILES += cswusergroup
 
 UFILES_REGEX = mysql-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWncurses CSWzlib
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWncurses CSWzlib
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 # MySQL-5.1.40 doesn't compile without setting EXTRA_INC.
 EXTRA_INC = /opt/csw/include

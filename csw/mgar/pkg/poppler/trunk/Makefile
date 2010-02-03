@@ -20,8 +20,8 @@ BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-REQUIRED_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2
-REQUIRED_PKGS += CSWjpeg CSWlibxml2 CSWzlib
+RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS += CSWjpeg CSWlibxml2 CSWzlib
 
 SPKG_SOURCEURL = http://poppler.freedesktop.org/
 

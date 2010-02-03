@@ -23,8 +23,8 @@ CATALOGNAME_CSWlibxresdevel = libxres_devel
 SPKG_DESC_CSWlibxres = $(DESCRIPTION)
 SPKG_DESC_CSWlibxresdevel = $(DESCRIPTION) development files
 
-REQUIRED_PKGS_CSWlibxres      = CSWlibx11 CSWlibxext
-REQUIRED_PKGS_CSWlibxresdevel = CSWlibxres
+RUNTIME_DEP_PKGS_CSWlibxres      = CSWlibx11 CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxresdevel = CSWlibxres
 
 PKGFILES_CSWlibxresdevel  = $(PKGFILES_DEVEL)
 

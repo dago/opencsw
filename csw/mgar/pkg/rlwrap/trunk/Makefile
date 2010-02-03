@@ -23,7 +23,7 @@ endef
 
 PACKAGES = CSWrlwrap
 
-REQUIRED_PKGS  = CSWreadline 
+RUNTIME_DEP_PKGS  = CSWreadline 
 
 ###### Upstream and opencsw files information #######
 

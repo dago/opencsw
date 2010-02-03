@@ -33,7 +33,7 @@ DISTFILES = $(DISTNAME).tgz
 
 CATALOGNAME_CSWphp5xdebug = php5_xdebug
 SPKG_DESC_CSWphp5xdebug = Xdebug Extention for PHP5
-REQUIRED_PKGS_CSWphp5xdebug = CSWphp5
+RUNTIME_DEP_PKGS_CSWphp5xdebug = CSWphp5
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config

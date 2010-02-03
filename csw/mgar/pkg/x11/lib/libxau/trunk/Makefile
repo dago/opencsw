@@ -12,16 +12,16 @@ MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTNAME = libXau-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
-# PREREQUISITE_PKGS = CSWinputproto CSWxkbproto CSWxrenderproto CSWxcbproto
-# PREREQUISITE_PKGS += CSWxextproto CSWxproto CSWxtrans CSWlibpthreadstubs
+# BUILD_DEP_PKGS = CSWinputproto CSWxkbproto CSWxrenderproto CSWxcbproto
+# BUILD_DEP_PKGS += CSWxextproto CSWxproto CSWxtrans CSWlibpthreadstubs
 
 PACKAGES = CSWlibxau CSWlibxaudevel
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS_CSWlibxau = CSWx11common
-REQUIRED_PKGS_CSWlibxaudevel = CSWlibxau
+RUNTIME_DEP_PKGS_CSWlibxau = CSWx11common
+RUNTIME_DEP_PKGS_CSWlibxaudevel = CSWlibxau
 
 CATALOGNAME_CSWlibxau = libxau
 CATALOGNAME_CSWlibxaudevel = libxau_devel

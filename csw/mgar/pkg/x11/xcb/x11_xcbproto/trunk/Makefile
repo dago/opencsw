@@ -33,9 +33,9 @@ PACKAGES = CSWx11xcbproto CSWpyx11xcbproto
 CATALOGNAME_CSWx11xcbproto = x11_xcbproto
 CATALOGNAME_CSWpyx11xcbproto = py_x11xcbproto
 
-PREREQUISITE_PKGS = CSWpython
-REQUIRED_PKGS_CSWxcbproto = CSWx11common
-REQUIRED_PKGS_CSWpyxcbproto = CSWx11xcbproto CSWpython
+BUILD_DEP_PKGS = CSWpython
+RUNTIME_DEP_PKGS_CSWxcbproto = CSWx11common
+RUNTIME_DEP_PKGS_CSWpyxcbproto = CSWx11xcbproto CSWpython
 
 SPKG_DESC_CSWx11xcbproto = XCB protocol descriptions (in XML)
 SPKG_DESC_CSWpyx11xcbproto = XCB protocol descriptions (in XML) Python Bindings

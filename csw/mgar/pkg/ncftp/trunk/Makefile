@@ -15,7 +15,7 @@ DISTFILES = $(DISTNAME)-src.tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.bz2
 
-REQUIRED_PKGS = CSWgtar
+RUNTIME_DEP_PKGS = CSWgtar
 
 LICENSE = doc/LICENSE.txt
 

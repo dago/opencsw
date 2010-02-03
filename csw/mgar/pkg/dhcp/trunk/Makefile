@@ -17,10 +17,10 @@ LICENSE = LICENSE
 
 PACKAGES = CSWdhcp CSWdhcpdevel
 
-REQUIRED_PKGS_CSWdhcp = CSWosslrt
+RUNTIME_DEP_PKGS_CSWdhcp = CSWosslrt
 SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
 
-REQUIRED_PKGS_CSWdhcpdevel = CSWdhcp
+RUNTIME_DEP_PKGS_CSWdhcpdevel = CSWdhcp
 CATALOGNAME_CSWdhcpdevel = dhcp_devel
 ARCHALL_CSWdhcpdevel = 1
 

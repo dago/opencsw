@@ -19,16 +19,16 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://sox.sourceforge.net/
 
 # XXX: Add gsm, lpc10 and wavpack
-REQUIRED_PKGS = CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
-REQUIRED_PKGS += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib
+RUNTIME_DEP_PKGS = CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
+RUNTIME_DEP_PKGS += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib
 
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS +=  --without-libltdl
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 TEST_TARGET = check
 
 MERGE_DIRS_isa-extra = $(libdir)

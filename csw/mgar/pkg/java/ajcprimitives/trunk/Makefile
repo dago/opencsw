@@ -25,7 +25,7 @@ SPKG_DESC_CSWajcprimitives    = $(DESCRIPTION)
 SPKG_DESC_CSWajcprimitivesdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajcprimitives  = CSWajclogging CSWajccollect CSWajcbeanutils
+RUNTIME_DEP_PKGS_CSWajcprimitives  = CSWajclogging CSWajccollect CSWajcbeanutils
 
 # Defines package content
 PKGFILES_CSWajcprimitives  = $(prefix)/share/doc/$(GARNAME)/LICENSE.txt

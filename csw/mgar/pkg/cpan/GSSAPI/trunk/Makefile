@@ -13,6 +13,6 @@ DISTFILES += COPYING
 PACKAGES = CSWpmgssapi
 CATALOGNAME = pm_gssapi
 
-REQUIRED_PKGS = CSWkrb5lib
+RUNTIME_DEP_PKGS = CSWkrb5lib
 
 include gar/category.mk

@@ -19,8 +19,8 @@ MASTER_SITES = http://www.linux-france.org/prj/imapsync/dist/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 DISTFILES += $(call admfiles,CSWimapsync,)
 
-REQUIRED_PKGS  = CSWperl CSWpmmailimapclient CSWpmdatemanip CSWpmiosocketssl
-REQUIRED_PKGS += CSWpmtermreadkey CSWpmdigesthmac
+RUNTIME_DEP_PKGS  = CSWperl CSWpmmailimapclient CSWpmdatemanip CSWpmiosocketssl
+RUNTIME_DEP_PKGS += CSWpmtermreadkey CSWpmdigesthmac
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz

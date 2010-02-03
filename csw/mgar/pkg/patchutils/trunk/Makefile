@@ -18,9 +18,9 @@ PATCHFILES = patch-use-csw-bash.diff
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PREREQUISITE_PKGS = CSWgnulinks CSWbash CSWdiffutils
+BUILD_DEP_PKGS = CSWgnulinks CSWbash CSWdiffutils
 
-REQUIRED_PKGS = CSWbash CSWperl
+RUNTIME_DEP_PKGS = CSWbash CSWperl
 
 SPKG_SOURCEURL = http://cyberelk.net/tim/software/patchutils/
 

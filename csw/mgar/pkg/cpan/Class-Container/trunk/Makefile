@@ -13,7 +13,7 @@ define BLURB
   any of these objects.
 endef
 
-REQUIRED_PKGS = CSWpmprmsvldt
+RUNTIME_DEP_PKGS = CSWpmprmsvldt
 
 PACKAGES = CSWpmclscontainer
 CATALOGNAME = pm_clscontainer

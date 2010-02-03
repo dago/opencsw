@@ -10,8 +10,8 @@ define BLURB
   return values)
 endef
 
-PREREQUISITE_PKGS = CSWpmtestinline
-REQUIRED_PKGS = CSWpmdevstacktrace
+BUILD_DEP_PKGS = CSWpmtestinline
+RUNTIME_DEP_PKGS = CSWpmdevstacktrace
 
 PACKAGES = CSWpmclassretval
 CATALOGNAME = pm_classretval

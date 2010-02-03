@@ -12,7 +12,7 @@ included in multiple packages.  Sgml-common also includes an
 up-to-date Open Catalog file.
 endef
 
-PREREQUISITE_PKGS = CSWautomake CSWautoconf
+BUILD_DEP_PKGS = CSWautomake CSWautoconf
 
 ARCHALL = 1
 
@@ -31,7 +31,7 @@ PKGFILES_CSWsgmlcommon += /opt/csw/share/sgml/.*soc /opt/csw/share/sgml/.*dcl
 
 PKGFILES_CSWxmlcommon = /etc/opt/csw/xml/.* /opt/csw/share/xml.* /opt/csw/share/sgml/docbook/xmlcatalog
 
-REQUIRED_PKGS_CSWsgmlcommon = CSWbash CSWggrep CSWgsed
+RUNTIME_DEP_PKGS_CSWsgmlcommon = CSWbash CSWggrep CSWgsed
 
 EXTRA_FILES = xml.dcl html.dcl xml.soc html.soc
 

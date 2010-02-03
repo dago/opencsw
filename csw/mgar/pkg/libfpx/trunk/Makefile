@@ -17,8 +17,8 @@ CATALOGNAME_CSWlibfpxdevel = libfpx_devel
 SPKG_DESC_CSWlibfpx += FlashPIX library
 SPKG_DESC_CSWlibfpxdevel += FlashPIX library - developer package
 
-REQUIRED_PKGS_CSWlibfpx +=
-REQUIRED_PKGS_CSWlibfpxdevel += CSWlibfpx
+RUNTIME_DEP_PKGS_CSWlibfpx +=
+RUNTIME_DEP_PKGS_CSWlibfpxdevel += CSWlibfpx
 
 PKGFILES_CSWlibfpxdevel = $(PKGFILES_DEVEL)
 

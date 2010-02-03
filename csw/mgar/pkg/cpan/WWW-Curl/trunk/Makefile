@@ -13,7 +13,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpmwwwcurl
 CATALOGNAME = pm_wwwcurl
 
-REQUIRED_PKGS = CSWcurlrt CSWlibidn CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS = CSWcurlrt CSWlibidn CSWoldaprt CSWosslrt CSWzlib
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 

@@ -18,10 +18,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.gnupg.org/download/
 
-REQUIRED_PKGS = CSWiconv CSWggettextrt
+RUNTIME_DEP_PKGS = CSWiconv CSWggettextrt
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

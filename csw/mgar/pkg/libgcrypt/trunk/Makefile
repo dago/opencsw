@@ -15,10 +15,10 @@ CATALOGNAME = libgcrypt
 
 SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.en.html#lib-libgcrypt
 
-REQUIRED_PKGS = CSWgpgerr
+RUNTIME_DEP_PKGS = CSWgpgerr
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-asm

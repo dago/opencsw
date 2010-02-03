@@ -18,8 +18,8 @@ PATCHFILES += 0003-Use-inttypes.h-instead-of-stdint.h.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWchmlib CSWwxwidgetscommon CSWwxwidgetsgtk2
-PREREQUISITE_PKGS = $(REQUIRED_PGKS) CSWwxwidgetsdevel
+RUNTIME_DEP_PKGS = CSWchmlib CSWwxwidgetscommon CSWwxwidgetsgtk2
+BUILD_DEP_PKGS = $(REQUIRED_PGKS) CSWwxwidgetsdevel
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

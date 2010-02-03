@@ -27,20 +27,20 @@ endef
 PACKAGES = CSWossl1rt CSWossl1devel CSWossl1utils
 
 CATALOGNAME_CSWossl1rt = openssl1_rt
-REQUIRED_PKGS_CSWossl1rt = CSWcacertificates
+RUNTIME_DEP_PKGS_CSWossl1rt = CSWcacertificates
 SPKG_DESC_CSWossl1rt = Openssl 1.0 runtime libraries
 PKGFILES_CSWossl1rt = $(libdir).*\.so(\.\d+)*
 PKGFILES_CSWossl1rt += $(sysconfdir)/etc/ssl/private $(prefix)/ssl/private $(prefix)/ssl/certs /etc/$(prefix)/ssl/private
 PKGFILES_CSWossl1rt += $(docdir)/openssl1_rt/.* 
 
 CATALOGNAME_CSWossl1devel = openssl1_devel
-REQUIRED_PKGS_CSWossl1devel = CSWossl1rt
+RUNTIME_DEP_PKGS_CSWossl1devel = CSWossl1rt
 SPKG_DESC_CSWossl1devel = Openssl 1.0 development support files
 PKGFILES_CSWossl1devel = $(PKGFILES_DEVEL) 
 PKGFILES_CSWossl1devel += $(docdir)/openssl1_devel/.*
 
 CATALOGNAME_CSWossl1utils = openssl1_utils
-REQUIRED_PKGS_CSWossl1utils = CSWossl1rt
+RUNTIME_DEP_PKGS_CSWossl1utils = CSWossl1rt
 SPKG_DESC_CSWossl1utils = Openssl 1.0 binaries and related tools
 SPKG_CLASSES_CSWossl1utils = none cswpreserveconf
 PKGFILES_CSWossl1utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
@@ -81,7 +81,7 @@ EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
 # we don't yet use isaexec support so we disable
 # isa relocation for default isa
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 # GAR wants and puts sparcv9 in lib/64 but openssl build system
 # isn't the standard autoconf/automake one so we disable this

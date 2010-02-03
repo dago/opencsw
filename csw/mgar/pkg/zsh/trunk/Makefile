@@ -13,7 +13,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWzsh,postinstall postremove)
 
-REQUIRED_PKGS = CSWiconv CSWncurses CSWpcrert CSWgdbm
+RUNTIME_DEP_PKGS = CSWiconv CSWncurses CSWpcrert CSWgdbm
 
 SPKG_SOURCEURL = http://www.zsh.org
 

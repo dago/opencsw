@@ -25,11 +25,11 @@ CATALOGNAME_CSWexempidevel = exempi_devel
 SPKG_DESC_CSWexempi = Exempi is an implementation of XMP
 SPKG_DESC_CSWexempidevel = Exempi is an implementation of XMP - developer package
 
-REQUIRED_PKGS_CSWexempi += CSWexpat CSWstlport CSWzlib CSWiconv
-REQUIRED_PKGS_CSWexempidevel += CSWexempi
+RUNTIME_DEP_PKGS_CSWexempi += CSWexpat CSWstlport CSWzlib CSWiconv
+RUNTIME_DEP_PKGS_CSWexempidevel += CSWexempi
 
-PREREQUISITE_PKGS += $(REQUIRED_PKGS_CSWexempi)
-PREREQUISITE_PKGS += CSWboostrt CSWboostdevel
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWexempi)
+BUILD_DEP_PKGS += CSWboostrt CSWboostdevel
 
 PKGFILES_CSWexempidevel = $(PKGFILES_DEVEL)
 

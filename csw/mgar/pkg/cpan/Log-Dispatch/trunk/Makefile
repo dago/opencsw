@@ -9,7 +9,7 @@ define BLURB
   and remove output objects as desired.
 endef
 
-REQUIRED_PKGS = CSWpmprmsvldt CSWpmunivrequire
+RUNTIME_DEP_PKGS = CSWpmprmsvldt CSWpmunivrequire
 
 PACKAGES = CSWpmlogdispatch
 CATALOGNAME = pm_logdispatch

@@ -23,7 +23,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 SPKG_SOURCEURL = http://www.stunnel.org
 SPKG_CLASSES = none cswcpsampleconf cswinitsmf
 
-REQUIRED_PKGS = CSWzlib CSWosslrt CSWtcpwrap CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

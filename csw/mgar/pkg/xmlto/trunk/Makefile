@@ -2,12 +2,12 @@ GARNAME = xmlto
 GARVERSION = 0.0.23
 CATEGORIES = utils
 
-PREREQUISITE_PKGS += CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt
-PREREQUISITE_PKGS += CSWflex CSWggetopt
+BUILD_DEP_PKGS += CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt
+BUILD_DEP_PKGS += CSWflex CSWggetopt
 
-REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
-REQUIRED_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m CSWmktemp
-REQUIRED_PKGS += CSWggetopt CSWbash CSWgfile
+RUNTIME_DEP_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
+RUNTIME_DEP_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m CSWmktemp
+RUNTIME_DEP_PKGS += CSWggetopt CSWbash CSWgfile
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB

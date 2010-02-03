@@ -38,7 +38,7 @@ CATALOGNAME_CSWlibtoolrt = libtool_rt
 
 SPKG_SOURCEURL = http://www.gnu.org/software/libtool/
 
-REQUIRED_PKGS_CSWlibtool = CSWlibtoolrt
+RUNTIME_DEP_PKGS_CSWlibtool = CSWlibtoolrt
 
 SPKG_DESC_CSWlibtool   = A generic library support tool
 SPKG_DESC_CSWlibtoolrt = A generic library support tool runtime libraries
@@ -49,7 +49,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 SKIPTEST = 1
 TEST_TARGET = check

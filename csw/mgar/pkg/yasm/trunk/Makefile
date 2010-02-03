@@ -21,7 +21,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES  = 0001-Force-bash-on-testsuite.patch
 PATCHFILES += 0002-Additional-force-to-bash.patch
 
-REQUIRED_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS = CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

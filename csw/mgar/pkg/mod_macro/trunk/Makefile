@@ -14,7 +14,7 @@ LICENSE = LICENSE
 
 PACKAGES = CSWap2modmacro
 CATALOGNAME = ap2_modmacro
-REQUIRED_PKGS = CSWap2prefork
+RUNTIME_DEP_PKGS = CSWap2prefork
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2

@@ -13,7 +13,7 @@ define BLURB
 endef
 
 PREREQUISITE_PKS = CSWpmmodulebuild CSWpmtestpod
-REQUIRED_PKGS = CSWpmdevelsymdump
+RUNTIME_DEP_PKGS = CSWpmdevelsymdump
 
 DISTFILES = COPYING
 

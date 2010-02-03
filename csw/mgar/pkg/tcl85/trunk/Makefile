@@ -27,7 +27,7 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*)-src.tar.gz
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 

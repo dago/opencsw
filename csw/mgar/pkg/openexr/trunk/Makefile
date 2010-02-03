@@ -31,8 +31,8 @@ SPKG_DESC_CSWopenexrdevel += High dynamic-range (HDR) image file format develope
 
 PKGFILES_CSWopenexrdevel = $(PKGFILES_DEVEL)
 
-REQUIRED_PKGS_CSWopenexr += CSWilmbase CSWzlib
-REQUIRED_PKGS_CSWopenexrdevel += CSWopenexr
+RUNTIME_DEP_PKGS_CSWopenexr += CSWilmbase CSWzlib
+RUNTIME_DEP_PKGS_CSWopenexrdevel += CSWopenexr
 
 SPKG_SOURCEURL = http://www.openexr.com
 
@@ -51,7 +51,7 @@ EXTRA_CXX_FLAGS_isa-sparcv9 = -KPIC
 EXTRA_CXX_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 # Check fails if library isn't installed /opt/csw/lib and until a 64-bit
 # lib is installed test has to be disabled

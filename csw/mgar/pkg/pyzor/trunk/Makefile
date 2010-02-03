@@ -23,7 +23,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 PACKAGES = CSWpyzor
-REQUIRED_PKGS = CSWpython
+RUNTIME_DEP_PKGS = CSWpython
 CATALOGNAME = pyzor
 SPKG_DESC = A collaborative, networked system to detect and block spam
 

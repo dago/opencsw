@@ -17,7 +17,7 @@ CATALOGNAME = pm_extutparsexs
 
 ARCHALL = 1
 
-REQUIRED_PKGS = CSWpmextutcbuilder
+RUNTIME_DEP_PKGS = CSWpmextutcbuilder
 
 SPKG_VERSION = 2.20.02
 

@@ -42,8 +42,8 @@ PATCHFILES += 0004-Disable-stop-on-error-until-cpp_test-refcount-error-.patch
 #   http://mail-index.netbsd.org/pkgsrc-users/2009/05/18/msg009885.html
 # PATCHFILES += sunpro-extensions.patch
 
-REQUIRED_PKGS = CSWvorbis CSWflac CSWlibogg CSWsqlite3rt
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWvorbis CSWflac CSWlibogg CSWsqlite3rt
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 SPKG_SOURCEURL = http://www.mega-nerd.com/libsndfile/
 
@@ -53,7 +53,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # EXTRA_CXXFLAGS = -features=extensions
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

@@ -22,7 +22,7 @@ CATALOGNAME_CSWlibffi = libffi
 SPKG_DESC_CSWlibffi = $(DESCRIPTION)
 
 
-REQUIRED_PKGS_CSWlibffi = CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibffi = CSWgcc4corert
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

@@ -15,7 +15,7 @@ endef
 PACKAGES = CSWpmdatecalc
 CATALOGNAME = pm_datecalc
 
-PREREQUISITE_PKGS = CSWpmbitvec CSWpmcarpclan
+BUILD_DEP_PKGS = CSWpmbitvec CSWpmcarpclan
 REQUIRES = CSWpmbitvec CSWpmcarpclan
 
 include gar/category.mk

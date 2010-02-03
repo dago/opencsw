@@ -16,7 +16,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = py_gdata
 PACKAGES = CSWpygdata
 ARCHALL_CSWpygdata = 1
-REQUIRED_PKGS =
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpysetuptools
+RUNTIME_DEP_PKGS =
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpysetuptools
 TEST_SCRIPTS =
 include gar/category.mk

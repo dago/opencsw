@@ -7,7 +7,7 @@ DESCRIPTION = Perl Email::Simple module for RFC2822 message format and headers
 define BLURB
 endef
 
-REQUIRED_PKGS = CSWpmemaildateformat
+RUNTIME_DEP_PKGS = CSWpmemaildateformat
 
 PACKAGES = CSWpmemailsimple
 CATALOGNAME = pm_emailsimple

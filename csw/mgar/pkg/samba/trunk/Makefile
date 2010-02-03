@@ -29,13 +29,13 @@ SPKG_DESC_CSWsambaswat = Web-based samba administration tools
 CATALOGNAME_CSWsambawb = samba_wb
 SPKG_DESC_CSWsambawb = not sure what this is
 
-REQUIRED_PKGS_CSWsamba = CSWsasl CSWsambacommon CSWoldaprt CSWlibpopt CSWlibnet CSWlibcups CSWkrb5lib CSWiconv CSWggettext CSWfam
-REQUIRED_PKGS_CSWsambaclient = CSWsasl  CSWsambacommon CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
-REQUIRED_PKGS_CSWsambacommon = CSWsasl CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
-REQUIRED_PKGS_CSWsambalib = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
-REQUIRED_PKGS_CSWsambalibdev = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
-REQUIRED_PKGS_CSWsambaswat = CSWsasl CSWlibpopt CSWlibnet CSWlibcups CSWkrb5lib CSWiconv CSWggettext
-REQUIRED_PKGS_CSWsambawb = CSWsamba
+RUNTIME_DEP_PKGS_CSWsamba = CSWsasl CSWsambacommon CSWoldaprt CSWlibpopt CSWlibnet CSWlibcups CSWkrb5lib CSWiconv CSWggettext CSWfam
+RUNTIME_DEP_PKGS_CSWsambaclient = CSWsasl  CSWsambacommon CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
+RUNTIME_DEP_PKGS_CSWsambacommon = CSWsasl CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
+RUNTIME_DEP_PKGS_CSWsambalib = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
+RUNTIME_DEP_PKGS_CSWsambalibdev = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
+RUNTIME_DEP_PKGS_CSWsambaswat = CSWsasl CSWlibpopt CSWlibnet CSWlibcups CSWkrb5lib CSWiconv CSWggettext
+RUNTIME_DEP_PKGS_CSWsambawb = CSWsamba
 
 ARCHALL_CSWsambadoc = 1
 

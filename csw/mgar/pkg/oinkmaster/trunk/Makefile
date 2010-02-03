@@ -13,7 +13,7 @@ DISTFILES += $(GARNAME)-$(GARVERSION).tar.gz
 
 LICENSE = LICENSE
 
-REQUIRED_PKGS = CSWperl CSWwget
+RUNTIME_DEP_PKGS = CSWperl CSWwget
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release

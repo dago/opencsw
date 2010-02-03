@@ -35,7 +35,7 @@ CONFIGURE_ARGS += --disable-nls
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_STATIC-$(STATIC))
 
 TEST_TARGET = check
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 SAMPLECONF = $(sysconfdir)/wgetrc.CSW
 EXTRA_PAX_ARGS = -s ",^\(.$(sysconfdir)/wgetrc\)\$$,\1.CSW,p"

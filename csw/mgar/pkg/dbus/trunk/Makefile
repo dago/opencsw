@@ -31,8 +31,8 @@ PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/.*
 PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
 
 # Dependencies tracking
-REQUIRED_PKGS_CSWdbus	     = CSWexpat CSWlibdbus CSWcswclassutils
-REQUIRED_PKGS_CSWlibdbusdev  = CSWlibdbus
+RUNTIME_DEP_PKGS_CSWdbus	     = CSWexpat CSWlibdbus CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWlibdbusdev  = CSWlibdbus
 
 # SMF support
 SPKG_CLASSES_CSWdbus = none cswcpsampleconf cswinitsmf 

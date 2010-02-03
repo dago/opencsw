@@ -16,8 +16,8 @@ CATALOGNAME = libglade2
 SPKG_DESC = $(DESCRIPTION)
 SPKG_SOURCEURL = http://www.gnome.org/
 
-REQUIRED_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2
-REQUIRED_PKGS += CSWgtk2 CSWlibatk CSWlibcairo CSWlibxml2 CSWpango
+RUNTIME_DEP_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS += CSWgtk2 CSWlibatk CSWlibcairo CSWlibxml2 CSWpango
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
@@ -32,7 +32,7 @@ SUNX11SUB_amd64 = amd64/
 EXTRA_LDFLAGS = -lm /usr/openwin/lib/$(SUNX11SUB_$(ISA))libXext.so
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 TEST_TARGET = check

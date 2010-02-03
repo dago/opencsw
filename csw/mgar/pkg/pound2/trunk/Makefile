@@ -19,7 +19,7 @@ DISTNAME   = Pound-$(GARVERSION)
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
 # we require
-REQUIRED_PKGS = CSWosslrt CSWpcrert
+RUNTIME_DEP_PKGS = CSWosslrt CSWpcrert
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-super

@@ -13,8 +13,8 @@ endef
 MASTER_SITES = http://tukaani.org/xz/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-#REQUIRED_PKGS = CSWgcc3core CSWgcc3corert CSWgcc4corert CSWggettextrt
-REQUIRED_PKGS = CSWgcc4corert CSWggettextrt
+#RUNTIME_DEP_PKGS = CSWgcc3core CSWgcc3corert CSWgcc4corert CSWggettextrt
+RUNTIME_DEP_PKGS = CSWgcc4corert CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

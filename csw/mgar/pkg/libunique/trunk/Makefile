@@ -26,11 +26,11 @@ SPKG_DESC_CSWlibunique += Library for writing single instance application
 SPKG_DESC_CSWlibuniquedevel += Library for writing single instance application - developer package
 SPKG_DESC_CSWlibuniquedoc += Library for writing single instance application - documentation
 
-REQUIRED_PKGS_CSWlibunique += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWlibunique += CSWgtk2 CSWlibatk CSWlibcairo CSWlibx11 CSWpango
-REQUIRED_PKGS_CSWlibunique += CSWdbusglib CSWlibdbus CSWlibxext
-REQUIRED_PKGS_CSWlibuniquedevel += CSWlibunique
-REQUIRED_PKGS_CSWlibuniquedoc += CSWlibunique
+RUNTIME_DEP_PKGS_CSWlibunique += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWlibunique += CSWgtk2 CSWlibatk CSWlibcairo CSWlibx11 CSWpango
+RUNTIME_DEP_PKGS_CSWlibunique += CSWdbusglib CSWlibdbus CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibuniquedevel += CSWlibunique
+RUNTIME_DEP_PKGS_CSWlibuniquedoc += CSWlibunique
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -46,7 +46,7 @@ EXTRA_LD_FLAGS_isa-amd64   = -L/usr/openwin/lib/amd64 -lXext
 EXTRA_LD_FLAGS_isa-sparcv9 = -L/usr/openwin/lib/sparcv9 -lXext
 EXTRA_LD_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
 
-#NO_ISAEXEC = 1
+#NOISAEXEC = 1
 #NOISALIST = 1
 # libdbus not 64-bit yet
 #BUILD64 = 1

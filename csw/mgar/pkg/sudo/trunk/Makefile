@@ -27,12 +27,12 @@ PACKAGES = CSWsudo CSWsudo-common
 CATALOGNAME_CSWsudo = sudo
 SPKG_DESC_CSWsudo = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws
-REQUIRED_PKGS_CSWsudo = CSWsudo-common CSWggettextrt
+RUNTIME_DEP_PKGS_CSWsudo = CSWsudo-common CSWggettextrt
 
 CATALOGNAME_CSWsudo-common = sudo_common
 SPKG_DESC_CSWsudo-common = Common files for sudo
 SPKG_SOURCEURL_CSWsudo-common = http://www.sudo.ws
-REQUIRED_PKGS_CSWsudo-common = CSWggettextrt
+RUNTIME_DEP_PKGS_CSWsudo-common = CSWggettextrt
 
 DISTFILES += CSWsudo-common.postinstall 
 

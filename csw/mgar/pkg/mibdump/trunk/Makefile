@@ -19,10 +19,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.ibr.cs.tu-bs.de/projects/libsmi/
 
-REQUIRED_PKGS = CSWlibsmi
+RUNTIME_DEP_PKGS = CSWlibsmi
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_DIRS_isa-extra = $(libdir)

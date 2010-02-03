@@ -14,7 +14,7 @@ CATALOGNAME_CSWsendmail = sendmail
 SPKG_DESC_CSWsendmail = $(DESCRIPTION)
 SPKG_SOURCEURL = http://www.sendmail.org/
 
-REQUIRED_PKGS_CSWsendmail  = CSWolddaprt CSWsasl CSWosslrt CSWbdb
+RUNTIME_DEP_PKGS_CSWsendmail  = CSWolddaprt CSWsasl CSWosslrt CSWbdb
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

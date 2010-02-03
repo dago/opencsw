@@ -23,7 +23,7 @@ PKGFILES_CSWrcairo-devel += $(prefix)/include/.*
 PKGFILES_CSWrcairo-devel += $(prefix)/lib/.*\.a
 PKGFILES_CSWrcairo-devel += $(prefix)/lib/pkgconfig/.*
 
-REQUIRED_PKGS_CSWrcairo-devel = CSWrcairo
+RUNTIME_DEP_PKGS_CSWrcairo-devel = CSWrcairo
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

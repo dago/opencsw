@@ -15,10 +15,10 @@ MASTER_SITES = http://pycurl.sourceforge.net/download/
 PATCHFILES = remove-static-libs.patch
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-REQUIRED_PKGS += CSWcurlrt
-REQUIRED_PKGS += CSWlibidn
-REQUIRED_PKGS += CSWoldaprt
-REQUIRED_PKGS += CSWosslrt
-REQUIRED_PKGS += CSWzlib
+RUNTIME_DEP_PKGS += CSWcurlrt
+RUNTIME_DEP_PKGS += CSWlibidn
+RUNTIME_DEP_PKGS += CSWoldaprt
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWzlib
 TEST_SCRIPTS =
 include gar/category.mk

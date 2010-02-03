@@ -9,7 +9,7 @@ endef
 
 DISTFILES = CSWpmtestdistribution.gspec
 
-PREREQUISITE_PKGS = CSWpmmodulebuild
+BUILD_DEP_PKGS = CSWpmmodulebuild
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build

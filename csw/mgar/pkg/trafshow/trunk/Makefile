@@ -21,7 +21,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
-REQUIRED_PKGS = CSWlibpcap CSWslang
+RUNTIME_DEP_PKGS = CSWlibpcap CSWslang
 
 # patch away GNUishm
 PATCHFILES  = Makefile.patch

@@ -9,7 +9,7 @@ define BLURB
   **DON'T** trust it with your data.
 endef
 
-REQUIRED_PKGS = CSWzlib
+RUNTIME_DEP_PKGS = CSWzlib
 
 PACKAGES = CSWpmperliogzip
 CATALOGNAME = pm_perliogzip

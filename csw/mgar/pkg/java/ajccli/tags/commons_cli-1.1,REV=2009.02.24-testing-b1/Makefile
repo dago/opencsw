@@ -25,7 +25,7 @@ SPKG_DESC_CSWajccli    = $(DESCRIPTION)
 SPKG_DESC_CSWajcclidoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-REQUIRED_PKGS_CSWajccli  = CSWajclang
+RUNTIME_DEP_PKGS_CSWajccli  = CSWajclang
 
 # Defines package content
 PKGFILES_CSWajccli   	 = $(prefix)/share/doc/$(GARNAME)/LICENSE.txt

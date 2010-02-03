@@ -18,7 +18,7 @@ UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWx11applewmproto
 CATALOGNAME_CSWx11applewmproto = x11_applewmproto
 
-REQUIRED_PKGS = CSWx11common
+RUNTIME_DEP_PKGS = CSWx11common
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)

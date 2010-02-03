@@ -13,8 +13,8 @@ endef
 PACKAGES = CSWpmalgorithmdep
 CATALOGNAME = pm_algorithmdep
 
-PREREQUISITE_PKGS = CSWpmtestclassapi
-REQUIRED_PKGS = CSWpmparamsutil
+BUILD_DEP_PKGS = CSWpmtestclassapi
+RUNTIME_DEP_PKGS = CSWpmparamsutil
 
 ARCHALL = 1
 

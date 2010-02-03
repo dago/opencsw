@@ -19,7 +19,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.darwinsys.com/file/
 
-REQUIRED_PKGS = CSWzlib
+RUNTIME_DEP_PKGS = CSWzlib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

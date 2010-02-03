@@ -10,7 +10,7 @@ GARVERSION = 4.5
 CATEGORIES = xtra
 
 PACKAGES = CSWdocbookdtds
-REQUIRED_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2
+RUNTIME_DEP_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2
 ARCHALL = 1
 
 DESCRIPTION = SGML and XML document type definitions for DocBook.

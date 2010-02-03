@@ -21,7 +21,7 @@ PACKAGES = CSWlibcddb CSWlibcddbutil
 SPKG_DESC_CSWlibcddb = A C library to access data on a CDDB server
 SPKG_DESC_CSWlibcddbutil = A CDDB query tool
 
-REQUIRED_PKGS_CSWlibcddbutil = CSWlibcddb CSWlibcdio
+RUNTIME_DEP_PKGS_CSWlibcddbutil = CSWlibcddb CSWlibcdio
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)

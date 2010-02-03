@@ -17,9 +17,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 #CATALOGNAME_CSWgobjectintrospectiondevel = gobject_introspection_devel
 #CATALOGNAME_CSWgobjectintrospectiondoc = gobject_introspection_doc
 
-PREREQUISITE_PKGS += CSWbison CSWlibffi
+BUILD_DEP_PKGS += CSWbison CSWlibffi
 
-REQUIRED_PKGS += CSWgcc4corert
+RUNTIME_DEP_PKGS += CSWgcc4corert
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -29,7 +29,7 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 NOISALIST = 1
 BUILD64 = 1
 

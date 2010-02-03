@@ -13,7 +13,7 @@ DISTFILES += COPYING
 
 PACKAGES = CSWspamass-milter
 CATALOGNAME = spamass_milter
-REQUIRED_PKGS = CSWspamassassin
+RUNTIME_DEP_PKGS = CSWspamassassin
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

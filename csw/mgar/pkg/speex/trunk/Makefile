@@ -36,8 +36,8 @@ PATCHFILES = speex-getopt.patch.bz2
 
 PACKAGES = CSWspeex
 CATALOGNAME = libspeex
-REQUIRED_PKGS = CSWlibogg
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWlibogg
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 SPKG_SOURCEURL = http://www.speex.org/
 

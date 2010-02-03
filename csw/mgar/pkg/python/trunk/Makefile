@@ -113,14 +113,14 @@ PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
 
 ARCHALL_CSWpython-rt = 1
 
-REQUIRED_PKGS_CSWidle         = CSWpython CSWpython-tk
-REQUIRED_PKGS_CSWpython       = CSWbdb47 CSWbzip2 CSWgdbm CSWggettextrt 
-REQUIRED_PKGS_CSWpython      += CSWncurses CSWosslrt CSWreadline 
-REQUIRED_PKGS_CSWpython      += CSWsqlite3rt CSWzlib
-REQUIRED_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 
-REQUIRED_PKGS_CSWpython-devel = CSWpython
-REQUIRED_PKGS_CSWpython-test  = CSWpython
-REQUIRED_PKGS_CSWpython-rt    = CSWpython
+RUNTIME_DEP_PKGS_CSWidle         = CSWpython CSWpython-tk
+RUNTIME_DEP_PKGS_CSWpython       = CSWbdb47 CSWbzip2 CSWgdbm CSWggettextrt 
+RUNTIME_DEP_PKGS_CSWpython      += CSWncurses CSWosslrt CSWreadline 
+RUNTIME_DEP_PKGS_CSWpython      += CSWsqlite3rt CSWzlib
+RUNTIME_DEP_PKGS_CSWpython-tk    = CSWpython CSWtcl CSWtk 
+RUNTIME_DEP_PKGS_CSWpython-devel = CSWpython
+RUNTIME_DEP_PKGS_CSWpython-test  = CSWpython
+RUNTIME_DEP_PKGS_CSWpython-rt    = CSWpython
 
 CATALOGNAME_CSWidle = idle
 CATALOGNAME_CSWpython = python

@@ -24,7 +24,7 @@ SPKG_SOURCEURL = http://www.audiocoding.com/
 UFILES_REGEX = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check

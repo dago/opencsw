@@ -60,20 +60,20 @@ SPKG_DESC_CSWgcc4objc       = GNU Objective C Compiler
 SPKG_DESC_CSWgcc4objcrt     = GNU Objective C Compiler Run Time
 
 ## Define Dependencies 
-REQUIRED_PKGS_CSWgcc4adart       = CSWgcc4corert
-REQUIRED_PKGS_CSWgcc4ada         = CSWgcc4adart CSWiconv CSWlibgmp CSWlibmpfr
-REQUIRED_PKGS_CSWgcc4core        = CSWgcc4corert CSWbinutils CSWiconv 
-REQUIRED_PKGS_CSWgcc4core		+= CSWlibgmp CSWlibmpfr
-REQUIRED_PKGS_CSWgcc4g++rt       = CSWgcc4corert
-REQUIRED_PKGS_CSWgcc4g++         = CSWgcc4g++rt CSWiconv CSWlibgmp CSWlibmpfr
-REQUIRED_PKGS_CSWgcc4gfortranrt  = CSWgcc4corert
-REQUIRED_PKGS_CSWgcc4gfortran    = CSWgcc4gfortranrt CSWiconv CSWlibgmp 
-REQUIRED_PKGS_CSWgcc4gfortran	+= CSWlibmpfr
-REQUIRED_PKGS_CSWgcc4javart      = CSWgcc4corert CSWgcc4g++rt
-REQUIRED_PKGS_CSWgcc4java        = CSWgcc4corert CSWgcc4javart
-REQUIRED_PKGS_CSWgcc4java       += CSWzlib CSWiconv CSWlibgmp CSWlibmpfr
-REQUIRED_PKGS_CSWgcc4objcrt      = CSWgcc4corert
-REQUIRED_PKGS_CSWgcc4objc        = CSWgcc4objcrt CSWiconv CSWlibgmp CSWlibmpfr
+RUNTIME_DEP_PKGS_CSWgcc4adart       = CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgcc4ada         = CSWgcc4adart CSWiconv CSWlibgmp CSWlibmpfr
+RUNTIME_DEP_PKGS_CSWgcc4core        = CSWgcc4corert CSWbinutils CSWiconv 
+RUNTIME_DEP_PKGS_CSWgcc4core		+= CSWlibgmp CSWlibmpfr
+RUNTIME_DEP_PKGS_CSWgcc4g++rt       = CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgcc4g++         = CSWgcc4g++rt CSWiconv CSWlibgmp CSWlibmpfr
+RUNTIME_DEP_PKGS_CSWgcc4gfortranrt  = CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgcc4gfortran    = CSWgcc4gfortranrt CSWiconv CSWlibgmp 
+RUNTIME_DEP_PKGS_CSWgcc4gfortran	+= CSWlibmpfr
+RUNTIME_DEP_PKGS_CSWgcc4javart      = CSWgcc4corert CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgcc4java        = CSWgcc4corert CSWgcc4javart
+RUNTIME_DEP_PKGS_CSWgcc4java       += CSWzlib CSWiconv CSWlibgmp CSWlibmpfr
+RUNTIME_DEP_PKGS_CSWgcc4objcrt      = CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgcc4objc        = CSWgcc4objcrt CSWiconv CSWlibgmp CSWlibmpfr
 
 DISTFILES += CSWgcc4core.space
 

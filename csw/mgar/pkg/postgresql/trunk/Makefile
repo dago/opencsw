@@ -58,12 +58,12 @@ SPKG_DESC_CSWpostgresql-84-doc = PostgreSQL Documentation
 SPKG_DESC_CSWpostgresql-84-dev = PostgreSQL Developer Files
 SPKG_DESC_CSWlibpq-84          = PostgreSQL Libraries
 
-REQUIRED_PKGS_CSWpostgresql        = CSWpostgresql-84
-REQUIRED_PKGS_CSWpostgresql-84     = CSWreadline CSWzlib CSWlibpq-84
-REQUIRED_PKGS_CSWpostgresql-84    += CSWlibxml2 CSWlibxslt CSWosslrt CSWkrb5lib
-REQUIRED_PKGS_CSWpostgresql-84-dev = CSWpostgresql-84
-REQUIRED_PKGS_CSWlibpq-84          = CSWkrb5lib CSWlibxml2 CSWlibxslt CSWosslrt
-REQUIRED_PKGS_CSWlibpq-84         += CSWzlib
+RUNTIME_DEP_PKGS_CSWpostgresql        = CSWpostgresql-84
+RUNTIME_DEP_PKGS_CSWpostgresql-84     = CSWreadline CSWzlib CSWlibpq-84
+RUNTIME_DEP_PKGS_CSWpostgresql-84    += CSWlibxml2 CSWlibxslt CSWosslrt CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWpostgresql-84-dev = CSWpostgresql-84
+RUNTIME_DEP_PKGS_CSWlibpq-84          = CSWkrb5lib CSWlibxml2 CSWlibxslt CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibpq-84         += CSWzlib
 
 ARCHALL_CSWpostgresql        = 1
 ARCHALL_CSWpostgresql-84-doc = 1
@@ -90,7 +90,7 @@ BUILD64 = 1
 # footprint, and what is the difference in execution speed between 32 and
 # 64-bit versions?
 #
-# NO_ISAEXEC = 1
+# NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-includes=/opt/csw/include

@@ -4,7 +4,7 @@ PACKAGES += CSWphp5pdo
 
 CATALOGNAME_CSWphp5pdo = php5_pdo
 SPKG_DESC_CSWphp5pdo = A database access abstraction module for PHP applications
-REQUIRED_PKGS_CSWphp5pdo = CSWphp5 
+RUNTIME_DEP_PKGS_CSWphp5pdo = CSWphp5 
 
 CONFIGURE_ARGS += --enable-pdo=shared
 

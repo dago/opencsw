@@ -34,12 +34,12 @@ CONFIGURE_ARGS += --disable-perl
 
 GARCOMPILER = GNU
 
-REQUIRED_PKGS_CSWurxvt  = CSWbash
-REQUIRED_PKGS_CSWurxvt += CSWfconfig
-REQUIRED_PKGS_CSWurxvt += CSWftype2
-REQUIRED_PKGS_CSWurxvt += CSWlibxft2
-REQUIRED_PKGS_CSWurxvt += CSWlibxrender
-REQUIRED_PKGS_CSWurxvt += CSWzlib
+RUNTIME_DEP_PKGS_CSWurxvt  = CSWbash
+RUNTIME_DEP_PKGS_CSWurxvt += CSWfconfig
+RUNTIME_DEP_PKGS_CSWurxvt += CSWftype2
+RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWurxvt += CSWzlib
 TEST_SCRIPTS =
 
 post-install-modulated:

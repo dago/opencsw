@@ -14,7 +14,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS =
 
-REQUIRED_PKGS = CSWpmiocompress
+RUNTIME_DEP_PKGS = CSWpmiocompress
 
 CATALOGNAME = pm_iocompresszlib
 PACKAGES = CSWpmiocompresszlib

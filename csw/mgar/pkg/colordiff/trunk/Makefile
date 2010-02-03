@@ -16,7 +16,7 @@ PATCHFILES += force-csw-gdiff.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWdiffutils CSWperl CSWless
+RUNTIME_DEP_PKGS = CSWdiffutils CSWperl CSWless
 
 CONFIGURE_SCRIPTS = 
 BUILD_ARGS = doc

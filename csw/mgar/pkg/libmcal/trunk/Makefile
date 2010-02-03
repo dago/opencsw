@@ -15,7 +15,7 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(DRIVERNAME)-$(DRIVERVERSION).tar.gz
@@ -24,7 +24,7 @@ PACKAGES = CSWlibmcal
 CATALOGNAME_CSWlibmcal = libmcal
 SPKG_DESC_CSWlibmcal = $(DESCRIPTION)
 
-#REQUIRED_PKGS_CSWlibmcal  = 
+#RUNTIME_DEP_PKGS_CSWlibmcal  = 
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

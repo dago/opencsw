@@ -17,7 +17,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATHREV).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)$(PATHREV)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWcswclassutils
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py

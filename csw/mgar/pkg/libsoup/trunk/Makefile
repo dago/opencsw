@@ -19,13 +19,13 @@ SPKG_DESC_CSWlibsoup += HTTP client/server library for GNOME
 SPKG_DESC_CSWlibsoupdevel += HTTP client/server library for GNOME - developer package
 SPKG_DESC_CSWlibsoupdoc += HTTP client/server library for GNOME - documentation
 
-REQUIRED_PKGS_CSWlibsoup += CSWgconf2 CSWgcrypt CSWggettextrt CSWglib2
-REQUIRED_PKGS_CSWlibsoup += CSWgnutls CSWgpgerr CSWlibproxy CSWlibxml2
-REQUIRED_PKGS_CSWlibsoup += CSWsqlite3rt
-REQUIRED_PKGS_CSWlibsoupdevel += CSWlibsoup
-REQUIRED_PKGS_CSWlibsoupdoc += 
+RUNTIME_DEP_PKGS_CSWlibsoup += CSWgconf2 CSWgcrypt CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWlibsoup += CSWgnutls CSWgpgerr CSWlibproxy CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibsoup += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWlibsoupdevel += CSWlibsoup
+RUNTIME_DEP_PKGS_CSWlibsoupdoc += 
 
-PREREQUISITE_PKGS += CSWlibproxy
+BUILD_DEP_PKGS += CSWlibproxy
 
 PKGFILES_CSWlibsoupdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibsoupdoc = $(sharedstatedir)/gtk-doc/.*

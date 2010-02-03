@@ -231,7 +231,7 @@ announce-modulation:
 	@echo "[===== NOW BUILDING: $(DISTNAME) MODULATION $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) =====]"
 
 # prerequisite	- Make sure that the system is in a sane state for building the package
-PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(PREREQUISITE_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
+PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
 
 prerequisite: announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-prerequisite $(PREREQUISITE_TARGETS) post-prerequisite
 	$(DONADA)
@@ -507,7 +507,7 @@ reset-install-modulated:
 #   the binaries should be executed by isaexec. This is usually bin, sbin and libexec.
 #
 # default:        relocate to ISA subdirs if more than one ISA, use isaexec-wrapper for bin/, etc.
-# NO_ISAEXEC = 1: ISA_DEFAULT gets installed in bin/..., all others in bin/$ISA/
+# NOISAEXEC = 1: ISA_DEFAULT gets installed in bin/..., all others in bin/$ISA/
 #
 # Automatic merging is only possible if you have the default modulation "ISA"
 # Otherwise you *must* specify merge scripts for all modulations.
@@ -521,7 +521,7 @@ endif
 ifeq ($(NEEDED_ISAS),$(ISA_DEFAULT))
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
 else
-ISAEXEC_DIRS ?= $(if $(NO_ISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
+ISAEXEC_DIRS ?= $(if $(NOISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
 MERGE_DIRS_isa-$(ISA_DEFAULT) ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
 MERGE_DIRS_isa-$(ISA) ?= $(bindir) $(sbindir) $(libexecdir) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA))
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)

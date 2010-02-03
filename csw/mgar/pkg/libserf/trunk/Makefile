@@ -15,7 +15,7 @@ endef
 MASTER_SITES = http://serf.googlecode.com/files/
 DISTFILES  = $(DISTNAME).tar.bz2
 
-REQUIRED_PKGS_CSWlibserf = CSWapache2rt CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWlibserf = CSWapache2rt CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2

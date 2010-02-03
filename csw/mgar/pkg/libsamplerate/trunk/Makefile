@@ -21,8 +21,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-REQUIRED_PKGS = CSWlibsndfile
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWlibsndfile
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static

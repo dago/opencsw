@@ -19,11 +19,11 @@ SPKG_DESC_CSWevolutionexchange += Evolution Web Calendar
 SPKG_DESC_CSWevolutionexchange-devel += Evolution Web Calendar - developer package
 SPKG_DESC_CSWevolutionexchange-doc += Evolution Web Calendar - documentation
 
-REQUIRED_PKGS_CSWevolutionexchange += 
-REQUIRED_PKGS_CSWevolutionexchange += 
-REQUIRED_PKGS_CSWevolutionexchange += 
-REQUIRED_PKGS_CSWevolutionexchange-devel += CSWevolution
-REQUIRED_PKGS_CSWevolutionexchange-doc += CSWevolution
+RUNTIME_DEP_PKGS_CSWevolutionexchange += 
+RUNTIME_DEP_PKGS_CSWevolutionexchange += 
+RUNTIME_DEP_PKGS_CSWevolutionexchange += 
+RUNTIME_DEP_PKGS_CSWevolutionexchange-devel += CSWevolution
+RUNTIME_DEP_PKGS_CSWevolutionexchange-doc += CSWevolution
 
 PKGFILES_CSWevolutionexchange-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWevolutionexchange-doc = $(sharedstatedir)/gtk-doc/.*

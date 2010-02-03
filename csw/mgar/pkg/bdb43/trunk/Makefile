@@ -27,7 +27,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_SCRIPTS = dist
 
@@ -64,7 +64,7 @@ SPKG_DESC_CSWbdb43-doc   = BerkeleyDB 4.3 documentation
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/products/berkeley-db/index.html
 
-REQUIRED_PKGS_CSWbdb43-devel = CSWbdb43
+RUNTIME_DEP_PKGS_CSWbdb43-devel = CSWbdb43
 
 LICENSE = LICENSE
 

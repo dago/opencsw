@@ -25,7 +25,7 @@ ARCHALL = 1
 PACKAGES = CSWbdb43
 SPKG_DESC = BerkeleyDB 4.3 libraries and utilities
 CATALOGNAME = berkeleydb43
-REQUIRED_PKGS = CSWbdb
+RUNTIME_DEP_PKGS = CSWbdb
 
 include gar/category.mk
 install-custom:

@@ -16,7 +16,7 @@ SPKG_SOURCEURL = http://libexif.sourceforge.net
 
 LICENSE = COPYING
 
-REQUIRED_PKGS += CSWggettextrt
+RUNTIME_DEP_PKGS += CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=12272

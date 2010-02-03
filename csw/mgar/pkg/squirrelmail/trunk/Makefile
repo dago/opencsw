@@ -25,7 +25,7 @@ PACKAGES = CSWsquirrelmail
 CATALOGNAME_CSWsquirrelmail = squirrelmail
 SPKG_DESC_CSWsquirrelmail = $(DESCRIPTION)
 
-REQUIRED_PKGS_CSWsquirrelmail  = CSWphp5 CSWapache2c
+RUNTIME_DEP_PKGS_CSWsquirrelmail  = CSWphp5 CSWapache2c
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

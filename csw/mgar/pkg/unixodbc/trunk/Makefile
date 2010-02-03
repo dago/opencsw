@@ -15,8 +15,8 @@ DISTFILES  = $(DL_NAME)-$(GARVERSION).tar.gz
 DISTFILES += cswmigrateconf
 WORKSRC = $(WORKDIR)/$(DL_NAME)-$(GARVERSION)
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
-REQUIRED_PKGS  = CSWiconv
-REQUIRED_PKGS += CSWreadline
+RUNTIME_DEP_PKGS  = CSWiconv
+RUNTIME_DEP_PKGS += CSWreadline
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS) --enable-gui=no

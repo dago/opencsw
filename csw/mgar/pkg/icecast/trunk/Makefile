@@ -14,11 +14,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.icecast.org/
 
-REQUIRED_PKGS = CSWlibogg CSWosslrt CSWtheora CSWvorbis CSWzlib
-REQUIRED_PKGS += CSWcurlrt CSWlibidn CSWoldaprt CSWspeex
-REQUIRED_PKGS += CSWiconv CSWlibnet CSWlibxml2 CSWlibxslt CSWsasl
+RUNTIME_DEP_PKGS = CSWlibogg CSWosslrt CSWtheora CSWvorbis CSWzlib
+RUNTIME_DEP_PKGS += CSWcurlrt CSWlibidn CSWoldaprt CSWspeex
+RUNTIME_DEP_PKGS += CSWiconv CSWlibnet CSWlibxml2 CSWlibxslt CSWsasl
 
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw

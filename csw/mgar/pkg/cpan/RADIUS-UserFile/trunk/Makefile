@@ -11,8 +11,8 @@ endef
 PACKAGES = CSWpmradiususerfile
 CATALOGNAME = pm_radiususerfile
 
-REQUIRED_PKGS = CSWpmtieixhash
-PREREQUISITE_PKGS = $(REQUIRED_PKGS)
+RUNTIME_DEP_PKGS = CSWpmtieixhash
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 ARCHALL = 1
 

@@ -12,8 +12,8 @@ define BLURB
   Cygwin, OS/2, and NetWare.
 endef
 
-PREREQUISITE_PKGS               = CSWpmextutilsdepends CSWpmextutpkgconf
-REQUIRED_PKGS_CSWpmpathclass = CSWpmextutilsdepends CSWpmextutpkgconf
+BUILD_DEP_PKGS               = CSWpmextutilsdepends CSWpmextutpkgconf
+RUNTIME_DEP_PKGS_CSWpmpathclass = CSWpmextutilsdepends CSWpmextutpkgconf
 
 CATALOGNAME = pm_pathclass
 PACKAGES        = CSWpmpathclass

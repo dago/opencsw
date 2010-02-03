@@ -16,6 +16,6 @@ TEST_SCRIPTS =
 ENABLE_CHECK = 0
 
 ARCHALL = 1
-REQUIRED_PKGS = CSWgtk2
+RUNTIME_DEP_PKGS = CSWgtk2
 
 include gar/category.mk

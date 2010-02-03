@@ -28,7 +28,7 @@ DISTFILES  = $(SOURCENAME)-$(GARVERSION).tar.gz
 
 PATCHFILES = liblasi-consts.diff
 
-REQUIRED_PKGS = CSWftype2 CSWggettextrt CSWglib2 CSWpango CSWzlib
+RUNTIME_DEP_PKGS = CSWftype2 CSWggettextrt CSWglib2 CSWpango CSWzlib
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom

@@ -4,7 +4,7 @@ PACKAGES += CSWphp5pdomysql
 
 CATALOGNAME_CSWphp5pdomysql = php5_pdomysql
 SPKG_DESC_CSWphp5pdomysql = A MySQL specific database access abstraction module for PHP applications
-REQUIRED_PKGS_CSWphp5pdomysql = CSWphp5 CSWmysql5rt CSWzlib CSWphp5pdo
+RUNTIME_DEP_PKGS_CSWphp5pdomysql = CSWphp5 CSWmysql5rt CSWzlib CSWphp5pdo
 
 CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)

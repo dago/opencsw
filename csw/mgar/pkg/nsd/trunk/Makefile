@@ -19,7 +19,7 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWnsd
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 CATALOGNAME = nsd
 SPKG_DESC = An authoritative only non-recursive name server
 

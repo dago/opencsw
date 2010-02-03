@@ -14,7 +14,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# PREREQUISITE_PKGS = CSWlibxtdevel CSWlibxextdevel
+# BUILD_DEP_PKGS = CSWlibxtdevel CSWlibxextdevel
 
 PACKAGES = CSWlibxmu CSWlibxmudevel
 
@@ -24,8 +24,8 @@ CATALOGNAME_CSWlibxmudevel = libxmu_devel
 SPKG_DESC_CSWlibxmu = X11 miscellaneous utility library
 SPKG_DESC_CSWlibxmudevel = X11 miscellaneous utility library development files
 
-REQUIRED_PKGS_CSWlibxmu = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxt
-REQUIRED_PKGS_CSWlibxmudevel = CSWlibxmu
+RUNTIME_DEP_PKGS_CSWlibxmu = CSWlibice CSWlibsm CSWlibx11 CSWlibxext CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibxmudevel = CSWlibxmu
 
 PKGFILES_CSWlibxmudevel = $(PKGFILES_DEVEL)
 

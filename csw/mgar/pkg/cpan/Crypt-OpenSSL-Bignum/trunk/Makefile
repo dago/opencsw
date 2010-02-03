@@ -16,6 +16,6 @@ endef
 PACKAGES = CSWpmcryptosslbignum
 CATALOGNAME = pm_cryptosslbignum
 
-REQUIRED_PKGS = CSWosslrt
+RUNTIME_DEP_PKGS = CSWosslrt
 
 include gar/category.mk

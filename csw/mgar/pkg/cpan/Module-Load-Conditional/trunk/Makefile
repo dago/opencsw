@@ -11,7 +11,7 @@ endef
 
 DISTFILES += $(call admfiles,CSWpmmodloadcond,)
 
-REQUIRED_PKGS = CSWpmprmscheck CSWpmmodload CSWpmlclemktxtsimple
+RUNTIME_DEP_PKGS = CSWpmprmscheck CSWpmmodload CSWpmlclemktxtsimple
 
 #SKIPTEST = 1
 

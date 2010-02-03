@@ -13,11 +13,11 @@ PACKAGES = CSWgs
 CATALOGNAME_CSWgs = ghostscript
 SPKG_DESC_CSWgs = Ghostscript, a PostScript and PDF interpreter for previewing, conversion and printing
 
-REQUIRED_PKGS_CSWgs += CSWfconfig CSWjpeg CSWlibcairo CSWgsfonts
-REQUIRED_PKGS_CSWgs += CSWftype2 CSWggettextrt CSWglib2 CSWgnutls CSWgtk2
-REQUIRED_PKGS_CSWgs += CSWkrb5lib CSWlibatk CSWlibcups CSWpango CSWperl CSWzlib
+RUNTIME_DEP_PKGS_CSWgs += CSWfconfig CSWjpeg CSWlibcairo CSWgsfonts
+RUNTIME_DEP_PKGS_CSWgs += CSWftype2 CSWggettextrt CSWglib2 CSWgnutls CSWgtk2
+RUNTIME_DEP_PKGS_CSWgs += CSWkrb5lib CSWlibatk CSWlibcups CSWpango CSWperl CSWzlib
 # Pending release of libpaper
-#REQUIRED_PKGS_CSWgs += CSWlibpaper
+#RUNTIME_DEP_PKGS_CSWgs += CSWlibpaper
 
 SPKG_SOURCEURL = http://www.ghostscript.com
 

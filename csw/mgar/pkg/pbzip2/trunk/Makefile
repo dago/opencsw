@@ -21,14 +21,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 # we require
-REQUIRED_PKGS = CSWbzip2
+RUNTIME_DEP_PKGS = CSWbzip2
 
 # since there is no configure script, this is intentionally left empty
 CONFIGURE_SCRIPTS =
 
 # build 64bit binary
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 # no build tests
 SKIPTEST = 1

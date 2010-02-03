@@ -14,7 +14,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWvorbis
 CATALOGNAME = libvorbis
-REQUIRED_PKGS = CSWlibogg CSWsunmath
+RUNTIME_DEP_PKGS = CSWlibogg CSWsunmath
 
 SPKG_SOURCEURL = http://www.vorbis.com/
 

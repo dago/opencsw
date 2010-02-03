@@ -9,7 +9,7 @@ define BLURB
   and Pareto.
 endef
 
-REQUIRED_PKGS = CSWpmgd
+RUNTIME_DEP_PKGS = CSWpmgd
 
 PACKAGES = CSWpmchart
 CATALOGNAME = pm_chart

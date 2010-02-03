@@ -26,7 +26,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES  = gsed-check.patch
 PATCHFILES += manpage-macro.patch
 
-REQUIRED_PKGS = CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
 
 CONFIGURE_ARGS = $(DIRPATHS) --with-installed-glib
 

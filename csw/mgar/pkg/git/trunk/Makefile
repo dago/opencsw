@@ -29,32 +29,32 @@ ARCHALL_CSWgitemacs = 1
 ARCHALL_CSWgitdoc = 1
 ARCHALL_CSWgitcompletion = 1
 
-PREREQUISITE_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
-PREREQUISITE_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
-PREREQUISITE_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
-PREREQUISITE_PKGS += CSWpython
+BUILD_DEP_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
+BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
+BUILD_DEP_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
+BUILD_DEP_PKGS += CSWpython
 
-REQUIRED_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
-REQUIRED_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
-REQUIRED_PKGS_CSWgit += CSWpmtermreadkey CSWpmnetsmtpssl CSWless
+RUNTIME_DEP_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
+RUNTIME_DEP_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
+RUNTIME_DEP_PKGS_CSWgit += CSWpmtermreadkey CSWpmnetsmtpssl CSWless
 
-REQUIRED_PKGS_CSWgitk = CSWgit CSWtk
+RUNTIME_DEP_PKGS_CSWgitk = CSWgit CSWtk
 
-REQUIRED_PKGS_CSWgitgui = CSWgit CSWtk
+RUNTIME_DEP_PKGS_CSWgitgui = CSWgit CSWtk
 
-REQUIRED_PKGS_CSWgitsvn = CSWgit CSWpmsvn
+RUNTIME_DEP_PKGS_CSWgitsvn = CSWgit CSWpmsvn
 
-REQUIRED_PKGS_CSWgitcvs = CSWgit CSWcvs CSWcvsps
+RUNTIME_DEP_PKGS_CSWgitcvs = CSWgit CSWcvs CSWcvsps
 
-REQUIRED_PKGS_CSWgitemacs = CSWgit CSWemacs
+RUNTIME_DEP_PKGS_CSWgitemacs = CSWgit CSWemacs
 
-REQUIRED_PKGS_CSWgitdoc = CSWgit
+RUNTIME_DEP_PKGS_CSWgitdoc = CSWgit
 
-REQUIRED_PKGS_CSWgitdevel = CSWgit
+RUNTIME_DEP_PKGS_CSWgitdevel = CSWgit
 
 # We include bash here even though git itself depends on it because in theory
 # git could use any other POSIX compliant shell and drop the dependency...
-REQUIRED_PKGS_CSWgitcompletion = CSWgit CSWbash CSWbashcmplt
+RUNTIME_DEP_PKGS_CSWgitcompletion = CSWgit CSWbash CSWbashcmplt
 
 LICENSE_CSWgit = COPYING
 LICENSE_CSWgitk = COPYING

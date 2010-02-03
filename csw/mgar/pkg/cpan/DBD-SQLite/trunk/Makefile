@@ -13,7 +13,7 @@ endef
 
 PACKAGES = CSWpmdbdsqlite
 CATALOGNAME = pm_dbdsqlite
-REQUIRED_PKGS = CSWpmdbi
+RUNTIME_DEP_PKGS = CSWpmdbi
 
 LICENSE = LICENSE
 

@@ -25,15 +25,15 @@ PATCHFILES = Makefile-cups-$(GARVERSION).patch
 DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
 DISTFILES += CSWcupsd.postremove
 
-PREREQUISITE_PKGS  = CSWggettext
-PREREQUISITE_PKGS += CSWjpeg
-PREREQUISITE_PKGS += CSWoldapdevel
-PREREQUISITE_PKGS += CSWossldevel
-PREREQUISITE_PKGS += CSWtiff
-PREREQUISITE_PKGS += CSWzlib
-PREREQUISITE_PKGS += SUNWhea
-PREREQUISITE_PKGS += SUNWlibm
-PREREQUISITE_PKGS += SUNWslpu
+BUILD_DEP_PKGS  = CSWggettext
+BUILD_DEP_PKGS += CSWjpeg
+BUILD_DEP_PKGS += CSWoldapdevel
+BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWtiff
+BUILD_DEP_PKGS += CSWzlib
+BUILD_DEP_PKGS += SUNWhea
+BUILD_DEP_PKGS += SUNWlibm
+BUILD_DEP_PKGS += SUNWslpu
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
@@ -45,18 +45,18 @@ PACKAGES = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
 ARCHALL_CSWcupsdoc = 1
 ARCHALL_CSWcupsdev = 1
 
-REQUIRED_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient CSWcupsdoc
-REQUIRED_PKGS_CSWcups += CSWcupsdev
-REQUIRED_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
-REQUIRED_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
-REQUIRED_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
-REQUIRED_PKGS_CSWcupsd += CSWkrb5lib
-REQUIRED_PKGS_CSWcupsclient  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
-REQUIRED_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1
-REQUIRED_PKGS_CSWcupsdoc = CSWcswclassutils
-REQUIRED_PKGS_CSWcupsdev = CSWcswclassutils
-REQUIRED_PKGS_CSWlibcups  = CSWcswclassutils CSWjpeg CSWpng CSWtiff CSWzlib
-REQUIRED_PKGS_CSWlibcups += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1
+RUNTIME_DEP_PKGS_CSWcups  = CSWcswclassutils CSWcupsd CSWcupsclient CSWcupsdoc
+RUNTIME_DEP_PKGS_CSWcups += CSWcupsdev
+RUNTIME_DEP_PKGS_CSWcupsd  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
+RUNTIME_DEP_PKGS_CSWcupsd += CSWjpeg CSWpng CSWtiff CSWlibtasn1
+RUNTIME_DEP_PKGS_CSWcupsd += CSWgcrypt CSWgnutls CSWgpgerr CSWlibdbus
+RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWcupsclient  = CSWcswclassutils CSWlibcups CSWoldaprt CSWzlib
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1
+RUNTIME_DEP_PKGS_CSWcupsdoc = CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWcupsdev = CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWlibcups  = CSWcswclassutils CSWjpeg CSWpng CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWlibcups += CSWgcrypt CSWgnutls CSWgpgerr CSWlibtasn1
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
 

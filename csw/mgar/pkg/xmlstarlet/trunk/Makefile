@@ -15,7 +15,7 @@ SF_PROJ = xmlstar
 MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-REQUIRED_PKGS = CSWgcrypt CSWggettextrt CSWgpgerr CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
+RUNTIME_DEP_PKGS = CSWgcrypt CSWggettextrt CSWgpgerr CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=66612

@@ -16,9 +16,9 @@ MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = rox
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-REQUIRED_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
-REQUIRED_PKGS += CSWlibatk CSWlibcairo CSWlibglade2 CSWlibxml2 CSWpango
-REQUIRED_PKGS += CSWbash CSWlibice CSWlibsm
+RUNTIME_DEP_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
+RUNTIME_DEP_PKGS += CSWlibatk CSWlibcairo CSWlibglade2 CSWlibxml2 CSWpango
+RUNTIME_DEP_PKGS += CSWbash CSWlibice CSWlibsm
 
 
 CONFIGURE_SCRIPTS =

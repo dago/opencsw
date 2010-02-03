@@ -18,7 +18,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.trickytools.com/php/sar2rrd.php
 
-REQUIRED_PKGS = CSWrrd CSWperl CSWpmdatecalc
+RUNTIME_DEP_PKGS = CSWrrd CSWperl CSWpmdatecalc
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

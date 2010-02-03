@@ -18,9 +18,9 @@ DISTNAME = $(SF_PROJ)-$(GARVERSION)
 
 SPKG_SOURCEURL = http://www.net-snmp.org/
 
-PREREQUISITE_PKGS = CSWpysetuptools
+BUILD_DEP_PKGS = CSWpysetuptools
 
-REQUIRED_PKGS += CSWosslrt CSWtcpwrap CSWpython
+RUNTIME_DEP_PKGS += CSWosslrt CSWtcpwrap CSWpython
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=12694
@@ -28,7 +28,7 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-default-snmp-version=1

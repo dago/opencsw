@@ -36,11 +36,11 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
-REQUIRED_PKGS_CSWapache2        = CSWbdb CSWexpat CSWgdbm CSWiconv
-REQUIRED_PKGS_CSWapache2       += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
-REQUIRED_PKGS_CSWapache2       += CSWsqlite3rt CSWsqlite3 CSWcswclassutils
-REQUIRED_PKGS_CSWapache2       += CSWggettextrt CSWgsed
-REQUIRED_PKGS_CSWapache2       += CSWperl
+RUNTIME_DEP_PKGS_CSWapache2        = CSWbdb CSWexpat CSWgdbm CSWiconv
+RUNTIME_DEP_PKGS_CSWapache2       += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
+RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt CSWsqlite3 CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWapache2       += CSWggettextrt CSWgsed
+RUNTIME_DEP_PKGS_CSWapache2       += CSWperl
 
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during

@@ -20,10 +20,10 @@ SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.en.html#lib-GPG
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
-REQUIRED_PKGS = CSWgpgerr CSWpth
+RUNTIME_DEP_PKGS = CSWgpgerr CSWpth
 
 BUILD64 = 1
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

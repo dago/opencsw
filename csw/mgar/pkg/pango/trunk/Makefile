@@ -20,10 +20,10 @@ CATALOGNAME_CSWpango      = libpango
 CATALOGNAME_CSWpangodevel = libpango_devel
 CATALOGNAME_CSWpangodoc   = libpango_doc
 
-PREREQUISITE_PKGS = CSWgtk-doc CSWlibxslt CSWglib2devel CSWlibxft2devel
-REQUIRED_PKGS_CSWpango  = CSWggettextrt CSWglib2 CSWfconfig CSWftype2
-REQUIRED_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib CSWlibx11
-REQUIRED_PKGS_CSWpangodevel = CSWpango
+BUILD_DEP_PKGS = CSWgtk-doc CSWlibxslt CSWglib2devel CSWlibxft2devel
+RUNTIME_DEP_PKGS_CSWpango  = CSWggettextrt CSWglib2 CSWfconfig CSWftype2
+RUNTIME_DEP_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib CSWlibx11
+RUNTIME_DEP_PKGS_CSWpangodevel = CSWpango
 
 SPKG_DESC_CSWpango = Pango, a framework for the layout and rendering of international text
 SPKG_DESC_CSWpangodevel = Pango Developer Files

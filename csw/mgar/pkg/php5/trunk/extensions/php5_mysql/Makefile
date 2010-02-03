@@ -4,7 +4,7 @@ PACKAGES += CSWphp5mysql
 
 CATALOGNAME_CSWphp5mysql = php5_mysql
 SPKG_DESC_CSWphp5mysql = mysql Extention for PHP5
-REQUIRED_PKGS_CSWphp5mysql = CSWphp5 CSWmysql5rt
+RUNTIME_DEP_PKGS_CSWphp5mysql = CSWphp5 CSWmysql5rt
 
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
 

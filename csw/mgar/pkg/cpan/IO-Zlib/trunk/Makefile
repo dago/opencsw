@@ -10,7 +10,7 @@ define BLURB
   IO::Handle interface.
 endef
 
-REQUIRED_PKGS = CSWpmcompresszlib
+RUNTIME_DEP_PKGS = CSWpmcompresszlib
 
 PACKAGES = CSWpmiozlib
 CATALOGNAME = pm_iozlib

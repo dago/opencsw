@@ -25,9 +25,9 @@ endef
 
 GARCOMPILER = GCC4
 
-REQUIRED_PKGS_CSWghc  = CSWiconv
-REQUIRED_PKGS_CSWghc += CSWlibgmp
-REQUIRED_PKGS_CSWghc += CSWncurses
+RUNTIME_DEP_PKGS_CSWghc  = CSWiconv
+RUNTIME_DEP_PKGS_CSWghc += CSWlibgmp
+RUNTIME_DEP_PKGS_CSWghc += CSWncurses
 
 # The location of the solaris binaries seems to vary a bit from version to version
 MASTER_SITES = http://www.haskell.org/ghc/dist/$(GARVERSION)/

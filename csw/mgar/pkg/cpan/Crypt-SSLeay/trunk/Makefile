@@ -16,8 +16,8 @@ PATCHFILES += noask.diff
 PACKAGES = CSWpmcryptssleay
 CATALOGNAME = pm_cryptssleay
 
-REQUIRED_PKGS     = CSWosslrt
-PREREQUISITE_PKGS = CSWosslrt CSWpmmimebase64
+RUNTIME_DEP_PKGS     = CSWosslrt
+BUILD_DEP_PKGS = CSWosslrt CSWpmmimebase64
 
 CONFIGURE_ARGS = --lib=$(prefix)
 

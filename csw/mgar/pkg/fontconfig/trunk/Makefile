@@ -16,7 +16,7 @@ DISTFILES += CSWfconfig.postinstall
 
 PATCHFILES = fix-zerowidth-struct.patch
 
-REQUIRED_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
+RUNTIME_DEP_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

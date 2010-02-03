@@ -40,19 +40,19 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
-REQUIRED_PKGS_CSWapache2 = CSWapache2c CSWap2prefork
-REQUIRED_PKGS_CSWapache2c = CSWapache2rt CSWbdb CSWexpat CSWgdbm CSWiconv
-REQUIRED_PKGS_CSWapache2c += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
-REQUIRED_PKGS_CSWapache2c += CSWsqlite3 CSWcswclassutils
-REQUIRED_PKGS_CSWapache2rt = CSWbdb CSWexpat CSWgdbm CSWggettextrt CSWgsed
-REQUIRED_PKGS_CSWapache2rt += CSWiconv CSWoldaprt CSWosslrt CSWperl CSWsasl
-REQUIRED_PKGS_CSWapache2rt += CSWzlib CSWsqlite3 CSWlibnet CSWsqlite3rt
-REQUIRED_PKGS_CSWap2prefork = CSWapache2c CSWapache2rt CSWbdb CSWexpat CSWgdbm
-REQUIRED_PKGS_CSWap2prefork += CSWiconv CSWlibnet CSWoldaprt CSWosslrt CSWsasl
-REQUIRED_PKGS_CSWap2prefork += CSWzlib CSWsqlite3
-REQUIRED_PKGS_CSWap2suexec = CSWapache2
-REQUIRED_PKGS_CSWapache2-devel = CSWapache2rt
-REQUIRED_PKGS_CSWapache2-manual = CSWapache2
+RUNTIME_DEP_PKGS_CSWapache2 = CSWapache2c CSWap2prefork
+RUNTIME_DEP_PKGS_CSWapache2c = CSWapache2rt CSWbdb CSWexpat CSWgdbm CSWiconv
+RUNTIME_DEP_PKGS_CSWapache2c += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
+RUNTIME_DEP_PKGS_CSWapache2c += CSWsqlite3 CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWapache2rt = CSWbdb CSWexpat CSWgdbm CSWggettextrt CSWgsed
+RUNTIME_DEP_PKGS_CSWapache2rt += CSWiconv CSWoldaprt CSWosslrt CSWperl CSWsasl
+RUNTIME_DEP_PKGS_CSWapache2rt += CSWzlib CSWsqlite3 CSWlibnet CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWap2prefork = CSWapache2c CSWapache2rt CSWbdb CSWexpat CSWgdbm
+RUNTIME_DEP_PKGS_CSWap2prefork += CSWiconv CSWlibnet CSWoldaprt CSWosslrt CSWsasl
+RUNTIME_DEP_PKGS_CSWap2prefork += CSWzlib CSWsqlite3
+RUNTIME_DEP_PKGS_CSWap2suexec = CSWapache2
+RUNTIME_DEP_PKGS_CSWapache2-devel = CSWapache2rt
+RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 
 SPKG_CLASSES_CSWapache2c = none cswinitsmf
 

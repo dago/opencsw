@@ -10,8 +10,8 @@ endef
 PACKAGES = CSWpmdevelcaller
 CATALOGNAME = pm_develcaller
 
-REQUIRED_PKGS = CSWpmpadwalker
-PREREQUISITE_PKGS = CSWpmpadwalker
+RUNTIME_DEP_PKGS = CSWpmpadwalker
+BUILD_DEP_PKGS = CSWpmpadwalker
 
 include gar/category.mk
 

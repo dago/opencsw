@@ -20,7 +20,7 @@ SPKG_SOURCEURL = http://websvn.tigris.org/
 
 LICENSE = license.txt
 
-REQUIRED_PKGS = CSWapache2 CSWdiffutils CSWsvn CSWenscript CSWgsed CSWgtar CSWgzip
+RUNTIME_DEP_PKGS = CSWapache2 CSWdiffutils CSWsvn CSWenscript CSWgsed CSWgtar CSWgzip
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

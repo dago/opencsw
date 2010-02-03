@@ -18,7 +18,7 @@ DISTFILES += $(call admfiles,CSWap2modproxyhtml,depend)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).c
 
-PREREQUISITE_PKGS = CSWapache2-devel CSWapache2 CSWlibxml2
+BUILD_DEP_PKGS = CSWapache2-devel CSWapache2 CSWlibxml2
 
 WORKSRC = $(WORKDIR)
 

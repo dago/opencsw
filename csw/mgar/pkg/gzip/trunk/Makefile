@@ -38,7 +38,7 @@ CATALOGNAME_CSWgzipextras = gzip_extras
 SPKG_DESC_CSWgzip       = GNU zip
 SPKG_DESC_CSWgzipextras = GNU zip additional tools
 
-REQUIRED_PKGS_CSWgzipextras = CSWgzip CSWggrep
+RUNTIME_DEP_PKGS_CSWgzipextras = CSWgzip CSWggrep
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

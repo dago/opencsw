@@ -22,8 +22,8 @@ CATALOGNAME_CSWlibxkbfiledevel = libxkbfile_devel
 SPKG_DESC_CSWlibxkbfile = X11 keyboard file manipulation library
 SPKG_DESC_CSWlibxkbfiledevel = X11 keyboard file manipulation library development files
 
-REQUIRED_PKGS_CSWlibxkbfile = CSWlibx11
-REQUIRED_PKGS_CSWlibxkbfiledevel = CSWlibxkbfile
+RUNTIME_DEP_PKGS_CSWlibxkbfile = CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibxkbfiledevel = CSWlibxkbfile
 
 BUILD64 = 1
 NOISALIST = 1

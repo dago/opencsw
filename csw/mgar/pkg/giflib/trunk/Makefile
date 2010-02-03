@@ -29,8 +29,8 @@ SPKG_DESC_CSWungif = Links to giflib now the patent is dropped
 
 SPKG_SOURCEURL = http://giflib.sourceforge.net/
 
-REQUIRED_PKGS_CSWgiflib = CSWgiflibrt
-REQUIRED_PKGS_CSWungif = CSWgiflib
+RUNTIME_DEP_PKGS_CSWgiflib = CSWgiflibrt
+RUNTIME_DEP_PKGS_CSWungif = CSWgiflib
 
 BUILD64 = 1
 
@@ -39,7 +39,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 # We don't want 64 bit executables as they gain no speed
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-amd64 = $(libdir)
 

@@ -28,20 +28,20 @@ PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils
 
 SPKG_DESC_CSWossl = Openssl meta package
 CATALOGNAME_CSWossl = openssl
-REQUIRED_PKGS_CSWossl = CSWossldevel CSWosslutils CSWosslrt
+RUNTIME_DEP_PKGS_CSWossl = CSWossldevel CSWosslutils CSWosslrt
 ARCHALL_CSWossl = 1
 
 SPKG_DESC_CSWosslrt = Openssl runtime libraries
 CATALOGNAME_CSWosslrt = openssl_rt
-REQUIRED_PKGS_CSWosslrt = CSWcacertificates
+RUNTIME_DEP_PKGS_CSWosslrt = CSWcacertificates
 
 SPKG_DESC_CSWossldevel = Openssl development files
 CATALOGNAME_CSWossldevel = openssl_devel
-REQUIRED_PKGS_CSWossldevel = CSWosslrt
+RUNTIME_DEP_PKGS_CSWossldevel = CSWosslrt
 
 SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
 CATALOGNAME_CSWosslutils = openssl_utils
-REQUIRED_PKGS_CSWosslutils = CSWosslrt CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWosslutils = CSWosslrt CSWcswclassutils
 SPKG_CLASSES_CSWosslutils = none cswpreserveconf
 
 
@@ -78,7 +78,7 @@ EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
 # we don't yet use isaexec support so we disable
 # isa relocation for default isa
-NO_ISAEXEC = 1
+NOISAEXEC = 1
 
 # GAR wants and puts sparcv9 in lib/64 but openssl build system
 # isn't the standard autoconf/automake one so we disable this

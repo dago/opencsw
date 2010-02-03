@@ -18,7 +18,7 @@ PATCHFILES = 0001-Removeprototypes-unknown-to-Sun-Studio.patch
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # X11 is also used, but Openwin X11 is sufficient.
-REQUIRED_PKGS = CSWiconv
+RUNTIME_DEP_PKGS = CSWiconv
 
 EXTRA_LINKER_FLAGS = -liconv
 

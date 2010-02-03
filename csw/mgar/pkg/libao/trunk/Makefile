@@ -14,7 +14,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.xiph.org/ao/
 
-REQUIRED_PKGS = CSWaudiofile CSWesound
+RUNTIME_DEP_PKGS = CSWaudiofile CSWesound
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
