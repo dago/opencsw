@@ -1,0 +1,74 @@
+From 71e72baa80d1aae18ca0026aadac032a40a773b3 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 3 Feb 2010 11:38:17 +0100
+Subject: [PATCH 2/2] Don't use named struct initializers
+
+---
+ leveldb.c |   44 ++++++++++++++++++++++----------------------
+ 1 files changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/leveldb.c b/leveldb.c
+index f2883c0..a98fa3b 100644
+--- a/leveldb.c
++++ b/leveldb.c
+@@ -150,17 +150,17 @@ int readXinetdServiceInfo(char *name, struct service * service, int honorHide) {
+ 	char * filename = alloca(strlen(name) + strlen(XINETDDIR) + 50);
+ 	int fd;
+ 	struct service serv = { 
+-			name: NULL,
+-			levels: -1,
+-			kPriority: -1,
+-			sPriority: -1, 
+-			desc: NULL, 
+-			startDeps: NULL, 
+-			stopDeps: NULL,
+-		        provides: NULL,
+-			type: TYPE_XINETD, 
+-			isLSB: 0, 
+-			enabled: -1
++			NULL,
++			-1,
++			-1,
++			-1, 
++			NULL, 
++			NULL, 
++			NULL,
++		        NULL,
++			TYPE_XINETD, 
++			0, 
++			-1
+ 	};
+ 	struct stat sb;
+ 	char * buf, *ptr;
+@@ -247,17 +247,17 @@ int readServiceInfo(char * name, struct service * service, int honorHide) {
+     struct stat sb;
+     char * bufstart, * bufstop, * start, * end, * next, *tmpbufstart;
+     struct service serv = { 
+-	    	    name: NULL, 
+-		    levels: -1, 
+-		    kPriority: -1, 
+-		    sPriority: -1, 
+-		    desc: NULL, 
+-		    startDeps: NULL, 
+-		    stopDeps: NULL,
+-		    provides: NULL,
+-		    type: TYPE_INIT_D, 
+-		    isLSB: 0, 
+-		    enabled: 0
++	    	    NULL, 
++		    -1, 
++		    -1, 
++		    -1, 
++		    NULL, 
++		    NULL, 
++		    NULL,
++		    NULL,
++		    TYPE_INIT_D, 
++		    0, 
++		    0
+     };
+     char overflow;
+     char levelbuf[20];
+-- 
+1.6.6
+
