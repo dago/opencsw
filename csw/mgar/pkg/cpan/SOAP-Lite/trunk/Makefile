@@ -1,25 +1,24 @@
 GARNAME = SOAP-Lite
-GARVERSION = 0.69
+GARVERSION = 0.710.10
 CATEGORIES = cpan
-AUTHOR = BYRNE
+AUTHOR = MKUTTER
 
-DESCRIPTION = client and server side SOAP implementation
+DESCRIPTION = Client and server side SOAP implementation
 define BLURB
   SOAP::Lite is a collection of Perl modules which provides a simple and
   lightweight interface to the Simple Object Access Protocol (SOAP) both on
   client and server side.
 endef
 
-DISTFILES += $(call admfiles,CSWpmsoaplite,depend prototype)
+REQUIRED_PKGS = CSWpmiocompress CSWpmlibwww CSWpmmimelite CSWpmmimetools CSWpmuri CSWpmxmlparser
+PREREQUISITE_PKGS = $(REQUIRED_PKGS)
 
-DEPENDS += cpan/URI
-DEPENDS += cpan/XML-Parser
-DEPENDS += cpan/libwww-perl
-DEPENDS += cpan/MIME-Lite
-DEPENDS += cpan/MIME-tools
-DEPENDS += cpan/Compress-Zlib
+PACKAGES = CSWpmsoaplite
+CATALOGNAME = pm_soaplite
 
 CONFIGURE_ARGS = --noprompt
+
+ARCHALL = 1
 
 include gar/category.mk
 
