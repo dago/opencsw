@@ -14,6 +14,8 @@ endef
 PACKAGES = CSWpmmimetypes
 CATALOGNAME = pm_mimetypes
 
+PREREQUISITE_PKGS = CSWpmtestpod
+
 ARCHALL = 1
 
 include gar/category.mk
