@@ -1,0 +1,8 @@
+--- slack-0.15.2/test/gen_config_file.orig	2010-02-04 02:09:19.029289626 +0100
++++ slack-0.15.2/test/gen_config_file	2010-02-04 02:09:27.503141517 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ use test_util qw(gen_config_file);
+ 

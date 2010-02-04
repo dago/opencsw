@@ -1,0 +1,32 @@
+--- slack-0.15.2/Makefile.common.orig	2010-02-04 02:16:22.634323566 +0100
++++ slack-0.15.2/Makefile.common	2010-02-04 02:16:38.426419871 +0100
+@@ -4,24 +4,22 @@
+ PACKAGE=slack
+ VERSION=0.15.2
+ 
+-DESTDIR		=
+-
+-prefix		= /
+-exec_prefix	= /usr
+-sysconfdir	= ${prefix}/etc
++prefix		= /opt/csw
++exec_prefix	= /opt/csw
++sysconfdir	= /etc${prefix}
+ mandir		= ${exec_prefix}/share/man
+ bindir		= ${exec_prefix}/bin
+ sbindir		= ${exec_prefix}/sbin
+ libdir		= ${exec_prefix}/lib
+ libexecdir	= ${exec_prefix}/lib
+-localstatedir	= ${prefix}/var
++localstatedir	= /var${prefix}
+ 
+ slack_libdir		= ${libdir}/slack
+ slack_libexecdir	= ${libexecdir}/slack
+ slack_localstatedir	= ${localstatedir}/lib/slack
+ slack_localcachedir	= ${localstatedir}/cache/slack
+ 
+-INSTALL		= install
++INSTALL		= ginstall
+ MKDIR		= mkdir -p
+ 
+ PRIVDIRMODE	= 0700
