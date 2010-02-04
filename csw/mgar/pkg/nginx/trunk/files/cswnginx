@@ -143,7 +143,7 @@ start)
 stop)
 	stop
 	;;
-refresh|reload)
+reload|refresh)
 	check
 	[ $RETVAL -eq 0 ] && reload ||:
 	;;
