@@ -1,0 +1,22 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
+GARNAME = slack
+GARVERSION = 0.15.2
+CATEGORIES = lib
+DESCRIPTION = a glorified wrapper around rsync
+define BLURB
+endef
+SPKG_SOURCEURL = http://code.google.com/p/slack/
+MASTER_SITES = $(GOOGLE_MIRROR)
+PATCHFILES  = OpenCSW-layout.patch
+PATCHFILES += use-OpenCSW-perl.patch
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+RUNTIME_DEP_PKGS_CSWslack += CSWperl
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+TEST_SCRIPTS =
+CONFIGURE_ARGS = $(DIRPATHS)
+include gar/category.mk
