@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 GARNAME = puppet
-GARVERSION = 0.25.1
+GARVERSION = 0.25.4
 CATEGORIES = apps
 
 define BLURB
@@ -34,18 +34,22 @@ USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 # service isn't started upon the installation of CSWpuppet.
 PACKAGES = CSWpuppet CSWpuppetmaster
 
-RUNTIME_DEP_PKGS = CSWfacter
-#BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
-RUNTIME_DEP_PKGS_CSWpuppetmaster = CSWpuppet
-
-PKGFILES_CSWpuppetmaster = $(sysconfdir)/init\.d/cswpuppetmasterd
-SPKG_DESC_CSWpuppet = System configuration management tool, client daemon
+SPKG_DESC_CSWpuppet       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
 
-ARCHALL=1
+RUNTIME_DEP_PKGS                  = CSWfacter
+RUNTIME_DEP_PKGS                 += CSWruby
+RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
 
-sysconfdir = /etc/opt/csw
-localstatedir = /var/opt/csw
+PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
+PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
+PKGFILES_CSWpuppetmaster += $(mandir)/man8/puppetmasterd.8
+PKGFILES_CSWpuppetmaster += $(libdir)/.*/puppet/application/puppetmasterd.rb
+
+ARCHALL = 1
+
+sysconfdir    = /etc$(prefix)
+localstatedir = /var$(prefix)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     =
