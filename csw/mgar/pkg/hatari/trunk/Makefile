@@ -10,7 +10,7 @@ endef
 MASTER_SITES = http://download.berlios.de/hatari/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 PACKAGES = CSWhatari
-RUNTIME_DEP_PKGS = CSWlibsdl CSWpng CSWreadline CSWzlib
+RUNTIME_DEP_PKGS = CSWlibsdl CSWpng CSWpython CSWreadline CSWzlib
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -19,7 +19,6 @@ PATCHFILES = solaris8-compile.patch
 
 GARCOMPILER = GNU
 TEST_SCRIPTS =
-CONFIGURE_ARGS = $(DIRPATHS) LIBS='-lm -lsocket'
-BUILD_ARGS = LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
+CONFIGURE_ARGS = $(DIRPATHS) LIBS='-lm -lsocket -L/opt/csw/lib'
 
 include gar/category.mk
