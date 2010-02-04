@@ -30,9 +30,16 @@ RUNTIME_DEP_PKGS  = CSWggettextrt CSWlibpopt
 PKGFILES_CSWalternatives = .*alternatives.*
 
 CONFIGURE_ARGS = $(DIRPATHS)
+# The pathes are hardcoded in the manpage. If you adjust them here
+# make sure to adjust it too.
 CONFIGURE_ARGS += --with-alt-links-dir=/etc/opt/csw/alternatives
 CONFIGURE_ARGS += --with-alt-admin-dir=/var/opt/csw/alternatives
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-merge:
+	ginstall -d $(PKGROOT)/etc/opt/csw/alternatives
+	ginstall -d $(PKGROOT)/var/opt/csw/alternatives
+	@$(MAKECOOKIE)
