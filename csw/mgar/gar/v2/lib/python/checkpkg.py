@@ -41,7 +41,9 @@ DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.rb", u"CSWruby"),
 )
 
-REPORT_TMPL = u"""# $pkgname:
+REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
+# $pkgname:
+#end if
 #if $missing_deps
 # SUGGESTION: you may want to add some or all of the following as depends:
 #    (Feel free to ignore SUNW or SPRO packages)
@@ -60,9 +62,6 @@ RUNTIME_DEP_PKGS_$pkgname += $pkg
 #for $soname in $sorted($orphan_sonames)
 # ! $soname
 #end for
-#end if
-#if not $missing_deps and not $surplus_deps and not $orphan_sonames
-# + Dependencies of $pkgname look good.
 #end if
 """
 

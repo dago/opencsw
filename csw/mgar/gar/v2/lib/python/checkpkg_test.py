@@ -578,9 +578,7 @@ RUNTIME_DEP_PKGS_CSWfoo += SUNWgss
     orphan_sonames = set([])
     testdata = (missing_deps, surplus_deps, orphan_sonames)
     checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
-    expected = u"""# CSWfoo:
-# + Dependencies of CSWfoo look good.
-"""
+    expected = u""
     result = checker.FormatDepsReport(*testdata)
     self.AssertTextEqual(result, expected)
 
