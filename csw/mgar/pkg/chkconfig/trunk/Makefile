@@ -16,6 +16,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = alloca.patch
 PATCHFILES += 0001-Add-missing-include-to-alloca.h.patch
 PATCHFILES += 0002-Don-t-use-named-struct-initializers.patch
+PATCHFILES += 0003-Fix-manpage-to-use-csw-pathes.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -29,6 +30,8 @@ RUNTIME_DEP_PKGS  = CSWggettextrt CSWlibpopt
 PKGFILES_CSWalternatives = .*alternatives.*
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-alt-links-dir=/etc/opt/csw/alternatives
+CONFIGURE_ARGS += --with-alt-admin-dir=/var/opt/csw/alternatives
 
 TEST_TARGET = check
 

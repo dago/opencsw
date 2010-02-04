@@ -1,0 +1,47 @@
+From 0e158bd176da683072207633e7b2dddf68e33d7c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 4 Feb 2010 18:57:15 +0100
+Subject: [PATCH] Fix manpage to use csw pathes
+
+---
+ alternatives.8 |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/alternatives.8 b/alternatives.8
+index 5598bf7..74e3783 100644
+--- a/alternatives.8
++++ b/alternatives.8
+@@ -184,12 +184,12 @@ accessible via a generic name using the alternatives system.
+ .TP
+ alternatives directory
+ A directory, by default
+-.IR /etc/alternatives ,
++.IR /etc/opt/csw/alternatives ,
+ containing the symlinks.
+ .TP
+ administrative directory
+ A directory, by default
+-.IR /var/lib/alternatives ,
++.IR /var/opt/csw/alternatives ,
+ containing
+ .BR alternatives '
+ state information.
+@@ -352,13 +352,13 @@ what other alternatives are available
+ and the highest priority alternative currently installed.
+ .SH FILES
+ .TP
+-.I /etc/alternatives/
++.I /etc/opt/csw/alternatives/
+ The default alternatives directory.
+ Can be overridden by the
+ .B --altdir
+ option.
+ .TP
+-.I /var/lib/alternatives/
++.I /var/opt/csw/alternatives/
+ The default administration directory.
+ Can be overridden by the
+ .B --admindir
+-- 
+1.6.6
+
