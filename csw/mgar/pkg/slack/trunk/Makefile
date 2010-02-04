@@ -10,8 +10,9 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://code.google.com/p/slack/
 MASTER_SITES = $(GOOGLE_MIRROR)
-PATCHFILES  = OpenCSW-layout.patch
-PATCHFILES += use-OpenCSW-perl.patch
+PATCHFILES  = 0001-OpenCSW-layout.patch
+PATCHFILES += 0002-use-OpenCSW-perl.patch
+PATCHFILES += 0003-gen_config_file-with-OpenCSW-perl.patch
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS_CSWslack += CSWperl

@@ -1,0 +1,173 @@
+From a455e74b9e71d83f4a039e8781036e9bb62bf242 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 4 Feb 2010 13:45:25 +0100
+Subject: [PATCH 2/2] use OpenCSW perl
+
+---
+ src/slack              |    6 +++---
+ src/slack-diff         |    2 +-
+ src/slack-getroles     |    4 ++--
+ src/slack-installfiles |    4 ++--
+ src/slack-rolediff     |    4 ++--
+ src/slack-runscript    |    6 +++---
+ src/slack-stage        |    4 ++--
+ src/slack-sync         |    4 ++--
+ 8 files changed, 17 insertions(+), 17 deletions(-)
+
+diff --git a/src/slack b/src/slack
+index d8e9fbb..3c9c4ce 100755
+--- a/src/slack
++++ b/src/slack
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack 180 2008-01-19 08:26:19Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+@@ -19,8 +19,8 @@ use File::Path;
+ use File::Find;
+ use POSIX; # for strftime
+ 
+-use constant LIBEXEC_DIR => '/usr/lib/slack';
+-use constant LIB_DIR => '/usr/lib/slack';
++use constant LIBEXEC_DIR => '/opt/csw/lib/slack';
++use constant LIB_DIR => '/opt/csw/lib/slack';
+ use lib LIB_DIR;
+ use Slack;
+ 
+diff --git a/src/slack-diff b/src/slack-diff
+index dde4f16..9b2ca65 100755
+--- a/src/slack-diff
++++ b/src/slack-diff
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack-diff 122 2006-09-27 07:34:32Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+diff --git a/src/slack-getroles b/src/slack-getroles
+index 77eba20..604f4f6 100755
+--- a/src/slack-getroles
++++ b/src/slack-getroles
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack-getroles 180 2008-01-19 08:26:19Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+@@ -17,7 +17,7 @@ use sigtrap qw(die untrapped normal-signals
+ 
+ use File::Path;
+ 
+-use constant LIB_DIR => '/usr/lib/slack';
++use constant LIB_DIR => '/opt/csw/lib/slack';
+ use lib LIB_DIR;
+ use Slack;
+ 
+diff --git a/src/slack-installfiles b/src/slack-installfiles
+index 65d1e22..5c3659d 100755
+--- a/src/slack-installfiles
++++ b/src/slack-installfiles
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack-installfiles 180 2008-01-19 08:26:19Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+@@ -17,7 +17,7 @@ use sigtrap qw(die untrapped normal-signals
+ 
+ use File::Path;
+ 
+-use constant LIB_DIR => '/usr/lib/slack';
++use constant LIB_DIR => '/opt/csw/lib/slack';
+ use lib LIB_DIR;
+ use Slack;
+ 
+diff --git a/src/slack-rolediff b/src/slack-rolediff
+index 92def93..bd11fc4 100755
+--- a/src/slack-rolediff
++++ b/src/slack-rolediff
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack-rolediff 125 2006-09-27 07:50:07Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+@@ -18,7 +18,7 @@ use sigtrap qw(die untrapped normal-signals
+ use File::Path;
+ use File::Find;
+ 
+-use constant LIB_DIR => '/usr/lib/slack';
++use constant LIB_DIR => '/opt/csw/lib/slack';
+ use lib LIB_DIR;
+ use Slack;
+ 
+diff --git a/src/slack-runscript b/src/slack-runscript
+index 5125a83..3215074 100755
+--- a/src/slack-runscript
++++ b/src/slack-runscript
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack-runscript 118 2006-09-25 18:35:17Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+@@ -17,7 +17,7 @@ use sigtrap qw(die untrapped normal-signals
+ use File::Path;
+ use File::Find;
+ 
+-use constant LIB_DIR => '/usr/lib/slack';
++use constant LIB_DIR => '/opt/csw/lib/slack';
+ use lib LIB_DIR;
+ use Slack;
+ 
+@@ -57,7 +57,7 @@ die "No roles given!\n\n$usage" unless @ARGV;
+ 
+ # Start with a clean environment
+ %ENV = (
+-  PATH => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
++  PATH => '/opt/csw/sbin:/opt/csw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+ );
+ # Export certain variables to the environment.  These are guaranteed to
+ # be set because we require them in get_options above.
+diff --git a/src/slack-stage b/src/slack-stage
+index 3833736..43f1bce 100755
+--- a/src/slack-stage
++++ b/src/slack-stage
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack-stage 180 2008-01-19 08:26:19Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+@@ -19,7 +19,7 @@ use sigtrap qw(die untrapped normal-signals
+ use File::Path;
+ use File::Find;
+ 
+-use constant LIB_DIR => '/usr/lib/slack';
++use constant LIB_DIR => '/opt/csw/lib/slack';
+ use lib LIB_DIR;
+ use Slack;
+ 
+diff --git a/src/slack-sync b/src/slack-sync
+index 3c58034..c886ce1 100755
+--- a/src/slack-sync
++++ b/src/slack-sync
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # $Id: slack-sync 180 2008-01-19 08:26:19Z alan $
+ # vim:sw=2
+ # vim600:fdm=marker
+@@ -17,7 +17,7 @@ use sigtrap qw(die untrapped normal-signals
+ 
+ use File::Path;
+ 
+-use constant LIB_DIR => '/usr/lib/slack';
++use constant LIB_DIR => '/opt/csw/lib/slack';
+ use lib LIB_DIR;
+ use Slack;
+ 
+-- 
+1.6.6
+

@@ -1,3 +1,4 @@
-a833b28145a02bcda5a3572d8e9500bc  OpenCSW-layout.patch
+322b69da09e4676bed40231652b5c4e7  0001-OpenCSW-layout.patch
+f11a6f0d4d7a40c73171ea10aede34e0  0002-use-OpenCSW-perl.patch
+9788deb3ea2ecaa7b722e8b3afeacda1  0003-gen_config_file-with-OpenCSW-perl.patch
 4056df8e7e152a6e4e6730708a86bd25  slack-0.15.2.tar.gz
-c9b4cfbdb8bbb49725b3d5214582911a  use-OpenCSW-perl.patch

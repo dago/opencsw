@@ -1,0 +1,22 @@
+From e80d079670eec46817df4756d014a32f5c0f4c42 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 4 Feb 2010 13:51:00 +0100
+Subject: [PATCH] gen_config_file with OpenCSW perl
+
+---
+ test/gen_config_file |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/test/gen_config_file b/test/gen_config_file
+index b70161e..99461b2 100755
+--- a/test/gen_config_file
++++ b/test/gen_config_file
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ use test_util qw(gen_config_file);
+ 
+-- 
+1.6.6
+
