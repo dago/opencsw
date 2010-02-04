@@ -10,24 +10,30 @@ define BLURB
   DNS blocklists, and collaborative filtering databases.
 endef
 
-#MASTER_SITES = http://apache.jumper.nu/spamassassin/source/
-MASTER_SITES = http://people.apache.org/~jm/devel/
+#MASTER_SITES = http://people.apache.org/~jm/devel/
+MASTER_SITES = http://apache.dataphone.se/spamassassin/source/
 DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
 #DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc3.tar.gz
 DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS  = CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha
+RUNTIME_DEP_PKGS  = CSWgnupg CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha
 RUNTIME_DEP_PKGS += CSWpmiosocketinet6 CSWpmiosocketssl CSWpmiozlib
 RUNTIME_DEP_PKGS += CSWpmipcountry CSWpmldap CSWpmlibwww CSWpmmaildkim
 RUNTIME_DEP_PKGS += CSWpmmailspf CSWpmmailtools CSWpmmimebase64 CSWpmnetaddrip CSWpmnetdns
-RUNTIME_DEP_PKGS += CSWpmuri CSWpmhtmlparser CSWzlib
+RUNTIME_DEP_PKGS += CSWrazor CSWpmuri CSWpmhtmlparser CSWzlib
 
 UFILES_REGEX = $(SPKG_NAME)-(\d+(?:\.\d+)*).tar.gz
 
-SAMPLECONF  = /opt/csw/etc/spamassassin/.+\.pre\.CSW
-SAMPLECONF += /opt/csw/etc/spamassassin/local\.cf\.CSW
+#SAMPLECONF  = /opt/csw/etc/spamassassin/.+\.pre\.CSW
+#SAMPLECONF += /opt/csw/etc/spamassassin/local\.cf\.CSW
+SAMPLECONF  = /etc/opt/csw/spamassassin/.+\.pre\.CSW
+SAMPLECONF += /etc/opt/csw/spamassassin/local\.cf\.CSW
+SAMPLECONF += /etc/opt/csw/spamassassin/spamd\.CSW
+USERGROUP = /etc/opt/csw/pkg/CSWspamassassin/cswusergroup
 INITSMF = /etc/opt/csw/init.d/cswspamd
-USERGROUP = /opt/csw/etc/CSWspamassassin/cswusergroup
+
+MIGRATE_FILES = /opt/csw/etc/spamassassin
+MIGRATE_DEST_DIR = /etc/opt/csw/spamassassin
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
@@ -49,7 +55,7 @@ endif
 configure-custom:
 	@echo " ==> Configuring $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/opt/csw/etc/spamassassin LOCALSTATEDIR=/var/opt/csw/spamassassin CONTACT_ADDRESS=postmaster )
+	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/etc/opt/csw/spamassassin LOCALSTATEDIR=/var/opt/csw/spamassassin CONTACT_ADDRESS=postmaster )
 	@$(MAKECOOKIE)
 
 pre-build-modulated:
@@ -76,10 +82,13 @@ install-custom:
 	@rm -rf $(DESTDIR)
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
-	@ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/CSWspamassassin
+#	@ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/CSWspamassassin
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/spamassassin
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/etc/opt/csw/init.d/cswspamd
-	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.cswusergroup $(DESTDIR)$(sysconfdir)/CSWspamassassin/cswusergroup
+	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin/cswusergroup
+	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.spamd.CSW $(DESTDIR)/etc/opt/csw/spamassassin/spamd.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(GARNAME)/README.spamd
 	echo "WORKSRC: $(WORKSRC)"
@@ -87,11 +96,12 @@ install-custom:
 	   gmake DESTDIR=$(DESTDIR) install )
 	@( cd $(WORKSRC) ; \
 	   cp -r C* INSTALL NOTICE README TRADEMARK U* ldap/ sql/ procmailrc.example sample-* $(DESTDIR)$(docdir)/$(GARNAME)/ )
-	@( cd $(DESTDIR)/opt/csw/etc/spamassassin ; \
+	@( cd $(DESTDIR)/etc/opt/csw/spamassassin ; \
 	   mv local.cf local.cf.CSW ; \
 	   mv init.pre init.pre.CSW ; \
 	   mv v310.pre v310.pre.CSW ; \
 	   mv v312.pre v312.pre.CSW ; \
+	   mv v330.pre v330.pre.CSW ; \
 	   mv v320.pre v320.pre.CSW )
 	@rm -rf $(DESTDIR)/opt/csw/lib
 	@$(MAKECOOKIE)

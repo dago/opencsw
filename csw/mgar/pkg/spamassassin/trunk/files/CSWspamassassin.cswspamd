@@ -1,35 +1,61 @@
 #!/sbin/sh
-# 
-# From: skod@ises-llc.com (Scott Griffith, ISES-LLC)
-# To: <craig@stanfordalumni.org>, <spamassassin-talk@lists.sourceforge.net>
-# Subject: Re: [Spamassassin-talk] SysV-style startup script
-# Date: Sat, 24 Nov 2001 12:09:16 -0700
-# Modified for CSW by Alex Moore
-#
-# In case there are any Solaris folks out there who aren't comfortable
-# with their own rc scripts, here's what I've been using for Solaris 7
-# from day 1 with no problems. Filename:
-# 
-# /etc/rc2.d/S78spamd
 
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+
+# rc-script for CSW SpamAssassin
+# Peter Bonivart, 2010-02-01
+
+# Source SMF includes
+[ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
+
+# Source config file
+[ -r /etc/opt/csw/spamassassin/spamd ] && . /etc/opt/csw/spamassassin/spamd
+
+PROG=spamd
 PATH=$PATH:/usr/bin:/opt/csw/bin
+#OPTIONS=-i 127.0.0.1 -m 10 --min-children=2 --max-conn-per-child=50 -s local2 --syslog-socket=inet -u spamd -x -r /opt/csw/var/spamd/spamd.pid
+
+ZONE= # used for initialization, do not change
 
 case "$1" in
-'start')
-	if [ -x /usr/bin/spamd -o -x /opt/csw/bin/spamd ]
-	then
-		spamd -d -i 127.0.0.1 -m 10 --min-children=2 --max-conn-per-child=50 -s local2 --syslog-socket=inet -u spamd -x -r /opt/csw/var/spamd/spamd.pid
-	fi
-	;;
+  start)
+    if [ -x /opt/csw/bin/spamd ]; then
+      if [ -d /var/opt/csw/spamassassin/3.003000 ]; then
+        echo "Starting $PROG."
+        /opt/csw/bin/spamd -d $OPTIONS
+      else
+        echo "Rules directory not found. Run sa-update to fetch rules."
+      fi
+    fi
+    ;;
 
-'stop')
-	/usr/bin/pkill -9 -x -u 0 '(spamd)'
-	;;
+  stop)
+    echo "Shutting down $PROG."
+    if [ -x /usr/bin/zonename ]; then
+      if [ "`/usr/bin/zonename`" = "global" ]; then
+        ZONE="-z global"
+      fi
+    fi
+    pkill $ZONE -x spamd
+    ;;
 
-*)
-	echo "Usage: $0 { start | stop }"
-	exit 1
-	;;
+  restart)
+    $0 stop
+    echo "Waiting for $PROG to stop.\c"
+    while ( /usr/bin/pgrep -x $PROG > /dev/null ) ; do
+      echo ".\c"
+      sleep 1
+    done
+    echo
+    sleep 1
+    $0 start
+    ;;
+
+  *)
+    echo "Usage: $0 { start | stop | restart }"
+    exit 1
+    ;;
 esac
-exit 0
 
+exit 0

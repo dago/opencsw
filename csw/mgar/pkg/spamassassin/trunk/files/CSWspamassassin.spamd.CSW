@@ -1,0 +1,7 @@
+# This is where you customize some settings of your SpamAssassin installation so
+# you don't have to edit the scripts themselves as they will be replaced during
+# upgrades.
+#
+# Peter Bonivart, OpenCSW
+
+OPTIONS=-i 127.0.0.1 -m 10 --min-children=2 --max-conn-per-child=50 -s local2 --syslog-socket=inet -u spamd -x -r /opt/csw/var/spamd/spamd.pid
