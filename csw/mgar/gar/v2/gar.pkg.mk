@@ -67,6 +67,13 @@ GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
 
+# Sanity checks for r8335
+$(if $(NO_ISAEXEC),$(error The deprecated variable 'NO_ISAEXEC' is defined, please replace it with NOISAEXEC))
+$(if $(PREREQUISITE_PKGS),$(error The deprecated variable 'PREREQUISITE_PKGS' is defined, please replace it with BUILD_DEP_PKGS))
+$(foreach P,$(SPKG_SPECS),$(if $(PREREQUISITE_PKGS_$P),$(error The deprecated variable 'PREREQUISITE_PKGS_$P' is defined, please replace it with BUILD_DEP_PKGS_$P)))
+$(if $(REQUIRED_PKGS),$(error The deprecated variable 'REQUIRED_PKGS' is defined, please replace it with RUNTIME_DEP_PKGS))
+$(foreach P,$(SPKG_SPECS),$(if $(REQUIRED_PKGS_$P),$(error The deprecated variable 'REQUIRED_PACKAGES_$P' is defined, please replace it with RUNTIME_DEP_PKGS_$P)))
+
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 # pkgname - Get the name of a package from a gspec-name or package-name
