@@ -33,6 +33,8 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 INSTALL_ARGS += --root=$(DESTDIR)
 INSTALL_ARGS += --prefix=$(prefix)
 
+LICENSE = LICENSE
+
 include gar/category.mk
 
 post-install-modulated:
