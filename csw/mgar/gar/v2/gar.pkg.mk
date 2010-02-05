@@ -608,8 +608,8 @@ merge-migrateconf-%:
 	@echo "X: $(MIGRATE_FILES_$*) Y: $(MIGRATE_FILES)"
 	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
 	$(_DBG)(echo "MIGRATE_FILES=\"$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES))\"";\
-		 $(if $(MIGRATE_SOURCE_DIR_$*),echo "SOURCE_DIR___default__=\"$(MIGRATE_SOURCE_DIR_$*)\"";)\
-		 $(if $(MIGRATE_DEST_DIR_$*),echo "DEST_DIR___default__=\"$(MIGRATE_DEST_DIR_$*)\"";)\
+		 $(if $(or $(MIGRATE_SOURCE_DIR_$*),$(MIGRATE_SOURCE_DIR)),echo "SOURCE_DIR___default__=\"$(or $(MIGRATE_SOURCE_DIR_$*),$(MIGRATE_SOURCE_DIR))\"";)\
+		 $(if $(or $(MIGRATE_DEST_DIR_$*),$(MIGRATE_DEST_DIR)),echo "DEST_DIR___default__=\"$(or $(MIGRATE_DEST_DIR_$*),$(MIGRATE_DEST_DIR))\"";)\
 		 $(foreach F,$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES)),\
 			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
 			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
