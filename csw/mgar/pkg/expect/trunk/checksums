@@ -1,0 +1,7 @@
+c458386d5502fab2b49da03d16fb108c  expect-5.39.0-libdir.patch
+5661004ca23ddc9592f488142367c2f5  expect-5.43.0-avoid-tcl-internals-1.patch
+3d67a79c1d7790c7e49b5df7f57b0290  expect-5.43.0-missing-includes.patch
+2103ff302f6e8a0dd748772f6512b3a5  expect-5.43.0-multilib.patch
+af7966f18f7ebc7ec48b7a6e095e90ff  expect-5.44.1-destdir.patch
+595b7a7c63f7ddb42e19c2537bb2891b  expect.m4
+43e1dc0e0bc9492cf2e1a6f59f276bc3  expect.tar.gz
