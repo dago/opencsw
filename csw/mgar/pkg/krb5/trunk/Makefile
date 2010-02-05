@@ -17,7 +17,10 @@ DISTFILES  = $(GARNAME)-$(GARVERSION)-signed.tar
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
 
-PATCHFILES = patch-man2html-perl.diff
+PATCHFILES  = patch-man2html-perl.patch
+PATCHFILES += 0002-libintl-for-kproplog.patch
+PATCHFILES += 0003-local-libraries-first-when-linking.patch
+PATCHFILES += 0004-libkdb_ldap-isblank-define.patch
 
 BUILD_DEP_PKGS = CSWtcl
 
