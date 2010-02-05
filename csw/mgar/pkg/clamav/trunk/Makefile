@@ -36,6 +36,9 @@ SPKG_CLASSES_CSWclamav = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
 
+# Seems to be a compiler bug forcing us to use -xO2 instead of -xO3
+# http://bugs.sun.com/view_bug.do?bug_id=6683773
+# New bug filed since the above one isn't really solved, no bug id yet
 OPT_FLAGS_SOS = -xO2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
