@@ -45,6 +45,8 @@ RUNTIME_DEP_PKGS_CSWkrb5kdc = CSWkrb5lib CSWkrb5user
 RUNTIME_DEP_PKGS_CSWkrb5libdev = CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWkrb5user = CSWkrb5lib
 
+LICENSE = doc/copyright.texinfo
+
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
 CONFIGURE_ARGS  = $(DIRPATHS)
