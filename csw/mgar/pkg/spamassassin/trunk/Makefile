@@ -32,7 +32,8 @@ SAMPLECONF += /etc/opt/csw/spamassassin/spamd\.CSW
 USERGROUP = /etc/opt/csw/pkg/CSWspamassassin/cswusergroup
 INITSMF = /etc/opt/csw/init.d/cswspamd
 
-MIGRATE_FILES = /opt/csw/etc/spamassassin
+MIGRATE_FILES = init.pre local.cf v310.pre v312.pre v320.pre
+MIGRATE_SOURCE_DIR = /opt/csw/etc/spamassassin
 MIGRATE_DEST_DIR = /etc/opt/csw/spamassassin
 
 CONFIGURE_SCRIPTS = custom
