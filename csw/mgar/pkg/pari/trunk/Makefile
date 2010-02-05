@@ -1,5 +1,5 @@
 GARNAME = pari
-GARVERSION = 2.1.7
+GARVERSION = 2.3.5
 CATEGORIES = lib
 
 DESCRIPTION = efficient computations in number theory
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://pari.math.u-bordeaux.fr/pub/pari/unix/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(call admfiles,CSWparigp,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -16,8 +16,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS = custom
 CONFIGURE_ARGS    = --prefix=$(prefix)
-CONFIGURE_ARGS   += --miscdir=$(docdir)/pari
+# CONFIGURE_ARGS   += --miscdir=$(docdir)/pari
 BUILD_ARGS        = gp
+
+TEST_SCRIPTS =
 
 include gar/category.mk
 
