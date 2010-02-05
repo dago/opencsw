@@ -540,8 +540,9 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "PSTAMP=$(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')"; \
 	echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)"; \
 	echo "HOTLINE=http://www.opencsw.org/bugtrack/"; \
-	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
+	echo "OPENCSW_CATALOGNAME=$(call catalogname,$*)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
+	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
 	) >$@
 
 
